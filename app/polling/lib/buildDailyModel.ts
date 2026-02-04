@@ -42,9 +42,9 @@ export function recencyWeight(daysAgo: number) {
 }
 
 export function sampleTypeWeight(type: SampleType) {
-  if (type === "LV") return 1.15;
-  if (type === "RV") return 1.0;
-  return 0.85; // Adults
+  if (type === "LV") return 1.5;
+  if (type === "RV") return 1;
+  return 0.5; // Adults
 }
 
 export function pollWeight(p: Poll, asOfDateISO: string) {

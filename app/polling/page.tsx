@@ -12,15 +12,6 @@ type PollPage = {
 
 const PAGES: PollPage[] = [
   {
-    title: "Florida Governor • 2026 • GOP Primary",
-    description:
-      "Daily weighted polling average using recency + √n + LV/RV/A adjustments. Includes trend chart + current leaderboard.",
-    href: "/polling/floridagovernorgop2026",
-    badge: "Daily average",
-    tag: "Florida",
-    status: "live",
-  },
-  {
     title: "Donald Trump • Job Approval",
     description:
       "Tracking the President's job approval in real time",
@@ -30,22 +21,40 @@ const PAGES: PollPage[] = [
     status: "live",
   },
   {
-    title: "2028 President - Democrat Primary",
+    title: "2026 National Generic Ballot",
     description:
       "View how the 2028 Democrat candidates are shaping up in one of the most contested primaries of all time",
-    href: "/polling/president/h2h",
-    badge: "Multi-candidate",
+    href: "/polling/genericballot",
+    badge: "Daily average",
     tag: "National",
-    status: "building",
+    status: "live",
   },
   {
-    title: "Issue Tracker • National",
+    title: "Florida Governor • 2026 • GOP Primary",
     description:
-      "Repeatable issue questions over time with clean disclosure and consistent wording.",
-    href: "/polling/issues/national",
+      "Daily weighted polling average using recency + √n + LV/RV/A adjustments. Includes trend chart + current leaderboard.",
+    href: "/polling/floridagovernorgop2026",
+    badge: "Daily average",
+    tag: "Florida",
+    status: "live",
+  },
+  {
+    title: "2026 Senate - State Polling",
+    description:
+      "View a map of all Senate races for the November 2026 election and their polling data",
+    href: "/polling/2026senatepollingview",
     badge: "Tracker",
     tag: "National",
-    status: "planned",
+    status: "live",
+  },
+  {
+    title: "2026 Senate - Governor Polling",
+    description:
+      "View a map of all Governor races for the November 2026 election and their polling data",
+    href: "/polling/2026governorpollingview",
+    badge: "Tracker",
+    tag: "National",
+    status: "live",
   },
 ];
 
@@ -105,11 +114,11 @@ function Card({ p }: { p: PollPage }) {
       <div className="mt-5 flex items-center justify-between gap-3">
         {isDisabled ? (
           <span className="psi-mono text-xs text-white/45">
-            Route not wired yet
+            Not wired yet
           </span>
         ) : (
           <span className="psi-mono text-xs text-white/45">
-            Public display • no editing
+            Click Open to view polling average
           </span>
         )}
 
