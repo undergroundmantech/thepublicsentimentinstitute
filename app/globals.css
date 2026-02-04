@@ -1,0 +1,333 @@
+@import "tailwindcss";
+
+/* =========================================================
+   PSI DARK MODERN THEME (dashboard + subtle motion)
+   - Dark, modern, "polling / election results" aesthetic
+   - Soft grid background + glow accents
+   - Polished cards, tables, tooltips, charts
+   - Subtle animations (fade/slide, hover lift)
+   - Unique fonts: use next/font in layout.tsx (see below)
+   ========================================================= */
+
+/* =========================
+   GLOBAL VARIABLES
+   ========================= */
+
+:root {
+  /* Surfaces */
+  --background: #070A10;          /* base page */
+  --surface: rgba(255, 255, 255, 0.03);
+  --surface2: rgba(255, 255, 255, 0.05);
+  --surface3: rgba(255, 255, 255, 0.08);
+
+  /* Text */
+  --foreground: #EAF0FF;
+  --muted: rgba(234, 240, 255, 0.65);
+  --muted2: rgba(234, 240, 255, 0.45);
+
+  /* Borders */
+  --border: rgba(255, 255, 255, 0.10);
+  --border2: rgba(255, 255, 255, 0.14);
+
+  /* Brand */
+  --psi-red: #B01F3A;
+  --psi-magenta: #7A1F7A;
+  --psi-purple: #4A1BB3;
+  --psi-blue: #2563EB;
+
+  /* Brand gradient + glow */
+  --psi-gradient: linear-gradient(
+    90deg,
+    var(--psi-red) 0%,
+    var(--psi-magenta) 45%,
+    var(--psi-purple) 100%
+  );
+  --psi-glow: radial-gradient(
+    800px 420px at 20% 10%,
+    rgba(122, 31, 122, 0.22),
+    transparent 60%
+  );
+  --psi-glow2: radial-gradient(
+    720px 460px at 85% 20%,
+    rgba(74, 27, 179, 0.18),
+    transparent 55%
+  );
+
+  /* Grid */
+  --grid-dot: radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.10) 1px, transparent 0);
+  --grid-size: 26px 26px;
+
+  /* Elevation */
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.35);
+  --shadow-md: 0 8px 28px rgba(0,0,0,0.40);
+  --shadow-lg: 0 18px 60px rgba(0,0,0,0.55);
+
+  /* Radii */
+  --r-lg: 1.5rem;
+  --r-md: 1rem;
+  --r-sm: 0.85rem;
+
+  /* Fonts (wired via layout.tsx using next/font) */
+  --font-sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, Helvetica, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+
+  /* Animation */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-soft: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur-1: 140ms;
+  --dur-2: 220ms;
+  --dur-3: 420ms;
+
+  /* Status */
+  --green: #22C55E;
+  --amber: #F59E0B;
+  --red2: #EF4444;
+}
+
+/* =========================
+   BASE
+   ========================= */
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+
+  /* dark dashboard background with glows + grid */
+  background:
+    var(--psi-glow),
+    var(--psi-glow2),
+    var(--grid-dot);
+  background-color: var(--background);
+  background-size: auto, auto, var(--grid-size);
+  background-attachment: fixed;
+}
+
+/* Prevent harsh selection */
+::selection {
+  background: rgba(122, 31, 122, 0.28);
+}
+
+/* =========================
+   TYPOGRAPHY
+   ========================= */
+
+h1, h2, h3, h4, h5 {
+  font-weight: 650;
+  letter-spacing: -0.03em;
+  color: var(--foreground);
+}
+
+p, small {
+  color: var(--muted);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Accent headline text */
+.psi-gradient-text {
+  background: var(--psi-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Mono */
+.psi-mono {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+/* =========================
+   SUBTLE PAGE ANIMATION
+   ========================= */
+
+@keyframes psi-fade-up {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.psi-animate-in {
+  animation: psi-fade-up var(--dur-3) var(--ease-soft) both;
+}
+
+/* =========================
+   GLASS CARD SYSTEM
+   ========================= */
+
+.psi-card {
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+  box-shadow: var(--shadow-md);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition:
+    transform var(--dur-2) var(--ease-out),
+    border-color var(--dur-2) var(--ease-out),
+    box-shadow var(--dur-2) var(--ease-out),
+    background var(--dur-2) var(--ease-out);
+}
+
+.psi-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--border2);
+  box-shadow: var(--shadow-lg);
+}
+
+.psi-panel {
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  background: rgba(255,255,255,0.03);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.psi-divider {
+  height: 1px;
+  width: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.14), transparent);
+}
+
+/* =========================
+   BUTTONS / CHIPS
+   ========================= */
+
+.psi-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.35rem 0.65rem;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,0.04);
+  color: rgba(234, 240, 255, 0.8);
+  font-size: 0.75rem;
+  font-weight: 600;
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--dur-1) var(--ease-out), border-color var(--dur-1) var(--ease-out);
+}
+
+.psi-chip:hover {
+  transform: translateY(-1px);
+  border-color: var(--border2);
+}
+
+.psi-chip-gradient {
+  border: 1px solid rgba(122, 31, 122, 0.35);
+  background: linear-gradient(90deg, rgba(176,31,58,0.14), rgba(122,31,122,0.14), rgba(74,27,179,0.14));
+}
+
+/* =========================
+   TABLES (POLLING / RESULTS)
+   ========================= */
+
+.psi-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  overflow: hidden;
+  background: rgba(255,255,255,0.03);
+  box-shadow: var(--shadow-sm);
+}
+
+.psi-table thead th {
+  text-align: left;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted2);
+  background: rgba(255,255,255,0.03);
+  border-bottom: 1px solid var(--border);
+  padding: 12px 14px;
+}
+
+.psi-table tbody td {
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.95rem;
+  color: rgba(234, 240, 255, 0.90);
+}
+
+.psi-table tbody tr {
+  transition: background var(--dur-1) var(--ease-out);
+}
+
+.psi-table tbody tr:hover td {
+  background: rgba(122, 31, 122, 0.08);
+}
+
+.psi-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.psi-num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  font-family: var(--font-mono);
+}
+
+/* =========================
+   TOOLTIP / POPOVERS
+   ========================= */
+
+.psi-tooltip {
+  border-radius: 1rem;
+  border: 1px solid var(--border);
+  background: rgba(7, 10, 16, 0.78);
+  color: rgba(234, 240, 255, 0.92);
+  box-shadow: var(--shadow-lg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* =========================
+   RECHARTS POLISH
+   ========================= */
+
+/* Make the recharts legend + axis text look premium in dark mode */
+.recharts-text,
+.recharts-cartesian-axis-tick-value {
+  fill: rgba(234, 240, 255, 0.70) !important;
+}
+
+.recharts-legend-item-text {
+  color: rgba(234, 240, 255, 0.75) !important;
+}
+
+/* Lighter grid lines */
+.recharts-cartesian-grid line {
+  stroke: rgba(255, 255, 255, 0.10) !important;
+}
+
+/* Brush polish */
+.recharts-brush .recharts-brush-slide {
+  fill: rgba(255, 255, 255, 0.05) !important;
+  stroke: rgba(255, 255, 255, 0.14) !important;
+}
+
+.recharts-brush .recharts-brush-traveller {
+  fill: rgba(255, 255, 255, 0.10) !important;
+  stroke: rgba(255, 255, 255, 0.18) !important;
+}
+
+/* =========================
+   REDUCED MOTION
+   ========================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .psi-animate-in { animation: none !important; }
+  .psi-card, .psi-chip { transition: none !important; }
+}
