@@ -47,9 +47,91 @@ export function sampleTypeWeight(type: SampleType) {
   return 0.5; // Adults
 }
 
-export function pollWeight(p: Poll, asOfDateISO: string) {
+/**
+ * Undecided handling + penalty
+ *
+ * 1) If a poll omits Undecided and/or Other, we infer it from 100 - sum(known results).
+ * 2) We penalize polls with high (Undecided + Other) share by shrinking their weight.
+ *
+ * Tuning notes:
+ * - "undecidedPenaltyStart" = the point where penalty begins
+ * - "undecidedPenaltyMax" = the maximum shrink applied to poll weight
+ */
+const undecidedPenaltyStart = 1; // % (no penalty up to this)
+const undecidedPenaltyMax = 0.95; // max shrink: at very high undecided, w *= (1 - 0.55) = 0.45
+const undecidedPenaltyCap = 75; // % (cap to avoid extreme outliers)
+
+function round1(n: number) {
+  return Math.round(n * 10) / 10;
+}
+
+function normalize100(p: Poll, candidates: string[]) {
+  // Compute undecided + other, even if missing, using residual.
+  // Then proportionally rescale candidate results to (100 - uo).
+  let sumCandidates = 0;
+  for (const c of candidates) {
+    const v = p.results[c];
+    if (typeof v === "number") sumCandidates += v;
+  }
+
+  const reportedUnd = typeof p.results["Undecided"] === "number" ? p.results["Undecided"] : 0;
+  const reportedOther = typeof p.results["Other"] === "number" ? p.results["Other"] : 0;
+
+  // Residual (in case they didn't report Undecided/Other, or rounding leaves remainder)
+  const residual = Math.max(0, 100 - (sumCandidates + reportedUnd + reportedOther));
+
+  // Treat residual as undecided by default (conservative) unless you want it split.
+  const undecided = round1(reportedUnd + residual);
+  const other = round1(reportedOther);
+
+  const uo = clamp(undecided + other, 0, 100);
+
+  // Scale candidates so they sum to 100 - uo (so "decided share" is consistent)
+  const targetSum = 100 - uo;
+  const scale = sumCandidates > 0 ? targetSum / sumCandidates : 0;
+
+  const scaled: Record<string, number> = {};
+  for (const c of candidates) {
+    const v = p.results[c];
+    if (typeof v !== "number") continue;
+    scaled[c] = round1(v * scale);
+  }
+
+  return { scaledResults: scaled, undecided, other, undecidedPlusOther: uo };
+}
+
+function undecidedPenaltyFactor(undecidedPlusOtherPct: number) {
+  // No penalty until start; then linear ramp to max by cap.
+  const uo = clamp(undecidedPlusOtherPct, 0, undecidedPenaltyCap);
+  if (uo <= undecidedPenaltyStart) return 1;
+
+  const t = (uo - undecidedPenaltyStart) / Math.max(1, undecidedPenaltyCap - undecidedPenaltyStart);
+  const shrink = clamp(t * undecidedPenaltyMax, 0, undecidedPenaltyMax);
+  return 1 - shrink; // multiply weight by this
+}
+
+export function pollWeight(p: Poll, asOfDateISO: string, candidatesForUndecidedCalc?: string[]) {
   const dAgo = clamp(daysBetween(p.endDate, asOfDateISO), 0, 3650);
-  return Math.sqrt(Math.max(0, p.sampleSize)) * recencyWeight(dAgo) * sampleTypeWeight(p.sampleType);
+
+  // Base weight
+  let w =
+    Math.sqrt(Math.max(0, p.sampleSize)) *
+    recencyWeight(dAgo) *
+    sampleTypeWeight(p.sampleType);
+
+  // Apply undecided/other penalty if we can compute it
+  if (candidatesForUndecidedCalc && candidatesForUndecidedCalc.length) {
+    const { undecidedPlusOther } = normalize100(p, candidatesForUndecidedCalc);
+    w *= undecidedPenaltyFactor(undecidedPlusOther);
+  } else {
+    // Fallback: use reported Undecided/Other only (no residual inference)
+    const und = typeof p.results["Undecided"] === "number" ? p.results["Undecided"] : 0;
+    const oth = typeof p.results["Other"] === "number" ? p.results["Other"] : 0;
+    const uo = clamp(und + oth, 0, 100);
+    w *= undecidedPenaltyFactor(uo);
+  }
+
+  return w;
 }
 
 export function getCandidateList(polls: Poll[]) {
@@ -71,6 +153,12 @@ export function getDateRange(polls: Poll[]) {
 /**
  * Builds DAILY weighted averages from start..end (inclusive).
  * Uses all polls with endDate <= asOfDate.
+ *
+ * Changes:
+ * - Infers missing Undecided as residual (100 - sum(results)).
+ * - Rescales candidate shares to "decided share" (100 - (Undecided+Other)),
+ *   so polls with big undecided don't artificially look like "low support".
+ * - Penalizes polls with high Undecided+Other by shrinking their weight.
  */
 export function buildDailyWeightedSeries(
   polls: Poll[],
@@ -98,14 +186,17 @@ export function buildDailyWeightedSeries(
       let den = 0;
 
       for (const p of available) {
-        const v = p.results[c];
+        // Normalize poll results to decided share and infer undecided if missing
+        const { scaledResults } = normalize100(p, candidates);
+        const v = scaledResults[c];
         if (typeof v !== "number") continue;
-        const w = pollWeight(p, dayISO);
+
+        const w = pollWeight(p, dayISO, candidates);
         num += v * w;
         den += w;
       }
 
-      row[c] = den ? Math.round((num / den) * 10) / 10 : 0;
+      row[c] = den ? round1(num / den) : 0;
     }
 
     out.push(row);
