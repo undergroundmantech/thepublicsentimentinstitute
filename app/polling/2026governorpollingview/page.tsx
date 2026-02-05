@@ -22,8 +22,14 @@ import * as GovernorPennsylvania from "@/app/polling/governorpolling/pennsylvani
 import * as GovernorCalifornia from "@/app/polling/governorpolling/california";
 import * as GovernorNewYork from "@/app/polling/governorpolling/newyork";
 
-// ✅ shared weighting (same as approval/generic ballot pages)
-import { Poll, SampleType, pollWeight } from "@/app/polling/lib/buildDailyModel";
+// ✅ shared daily model (THIS is the key change)
+import {
+  Poll,
+  SampleType,
+  getCandidateList,
+  getDateRange,
+  buildDailyWeightedSeries,
+} from "@/app/polling/lib/buildDailyModel";
 
 /**
  * 2026 Governor races (per list you provided)
@@ -160,16 +166,15 @@ type LeaderSummary = {
 };
 
 /* =========================
-   Normalize poll -> shared Poll type
+   Normalize poll -> buildDailyModel Poll
 ========================= */
-function toWeightedPoll(p: any): Poll | null {
+function toDailyModelPoll(p: any): (Poll & { raceId?: string }) | null {
   const endDate = String(p?.endDate ?? p?.end ?? "").trim();
   if (!endDate) return null;
 
   const sampleSize = Number(p?.sampleSize ?? 0);
   const results = (p?.results ?? {}) as Record<string, number>;
 
-  // population/sampleType mapping
   const pop = String(p?.sampleType ?? p?.population ?? "RV").toUpperCase();
   const sampleType: SampleType =
     pop === "LV" ? "LV" : pop === "RV" ? "RV" : "A";
@@ -180,57 +185,22 @@ function toWeightedPoll(p: any): Poll | null {
     sampleSize: Number.isFinite(sampleSize) ? sampleSize : 0,
     sampleType,
     results,
-  } as Poll;
+    raceId: String(p?.raceId ?? "").trim() || undefined,
+  };
 }
 
 /* =========================
-   Weighted leader calc
-   ✅ Uses SAME pollWeight() as approval/generic ballot
-   ✅ Does NOT let Undecided/Other become "candidates"
-   ✅ Does NOT mix multiple matchups into one bucket:
-      - groups by raceId and chooses the group with the most recent poll
+   ✅ DAILY MODEL summary (latest point)
+   - Groups by raceId (matchup) so you don't mix matchups
+   - Picks the matchup with the most recent poll
+   - Builds daily weighted series and uses the LAST row (latest datapoint)
 ========================= */
-const EXCLUDE_KEYS = new Set([
-  "Undecided",
-  "Undecided/Other",
-  "Other",
-  "Other/Undecided",
-  "DK/NA",
-  "Don't know",
-  "Refused",
-]);
+function computeLeaderFromPollsUsingDailyModel(rawPolls: any[]): LeaderSummary | null {
+  if (!rawPolls?.length) return null;
 
-function cleanCandidateEntries(results: Record<string, number>) {
-  return Object.entries(results || {}).filter(([name, v]) => {
-    const val = Number(v);
-    if (!Number.isFinite(val)) return false;
-
-    const n = String(name).trim();
-    if (!n) return false;
-
-    if (EXCLUDE_KEYS.has(n)) return false;
-
-    const low = n.toLowerCase();
-    if (low.includes("undecid")) return false;
-    if (low === "other") return false;
-
-    return true;
-  });
-}
-
-function computeLeaderFromPolls(rawPolls: any[]): LeaderSummary | null {
-  if (!rawPolls || rawPolls.length === 0) return null;
-
-  const polls: (Poll & { raceId?: string })[] = rawPolls
-    .map((p) => {
-      const wp = toWeightedPoll(p);
-      if (!wp) return null;
-      return {
-        ...wp,
-        raceId: String(p?.raceId ?? "") || undefined,
-      };
-    })
-    .filter(Boolean) as any;
+  const polls = rawPolls
+    .map(toDailyModelPoll)
+    .filter(Boolean) as (Poll & { raceId?: string })[];
 
   if (!polls.length) return null;
 
@@ -242,7 +212,7 @@ function computeLeaderFromPolls(rawPolls: any[]): LeaderSummary | null {
     groups.get(key)!.push(p);
   }
 
-  // choose the group whose latest poll is most recent
+  // choose the matchup whose latest poll is most recent
   const groupList = [...groups.values()];
   groupList.sort((a, b) => {
     const aLast = a.map((p) => p.endDate).sort().slice(-1)[0] ?? "";
@@ -252,39 +222,35 @@ function computeLeaderFromPolls(rawPolls: any[]): LeaderSummary | null {
   const chosen = groupList[0];
   if (!chosen?.length) return null;
 
-  // as-of date = latest poll end date in chosen group
-  const asOfDateISO = chosen.map((p) => p.endDate).sort().slice(-1)[0] ?? "";
-  if (!asOfDateISO) return null;
+  // candidates + range
+  const candidates = getCandidateList(chosen); // auto excludes Undecided/Other
+  if (!candidates.length) return null;
 
-  const weights = chosen.map((p) => pollWeight(p, asOfDateISO));
-  const wSum = weights.reduce((a, b) => a + b, 0) || 1;
+  const { start, end } = getDateRange(chosen);
+  if (!start || !end) return null;
 
-  const totals: Record<string, number> = {};
-  chosen.forEach((p, i) => {
-    const w = weights[i] / wSum;
-    for (const [name, pct] of cleanCandidateEntries(p.results || {})) {
-      totals[name] = (totals[name] ?? 0) + Number(pct) * w;
-    }
-  });
+  const series = buildDailyWeightedSeries(chosen, candidates, start, end);
+  const last = series[series.length - 1];
+  if (!last) return null;
 
-  const ranked = Object.entries(totals)
-    .map(([name, pct]) => ({ name, pct: round1(pct) }))
+  // rank by LAST datapoint (same behavior as your approval maps)
+  const ranked = candidates
+    .map((c) => ({ name: c, pct: Number(last[c] ?? 0) }))
+    .filter((x) => Number.isFinite(x.pct))
+    .map((x) => ({ ...x, pct: round1(x.pct) }))
     .sort((a, b) => b.pct - a.pct);
 
   const leader = ranked[0];
   const runner = ranked[1];
   if (!leader) return null;
 
-  const leaderPct = leader.pct ?? 0;
-  const runnerPct = runner?.pct ?? 0;
-
   return {
     leaderName: leader.name,
-    leaderPct,
+    leaderPct: leader.pct,
     runnerUpName: runner?.name,
     runnerUpPct: runner?.pct,
-    margin: round1(leaderPct - runnerPct),
-    lastDate: asOfDateISO,
+    margin: round1((leader.pct ?? 0) - (runner?.pct ?? 0)),
+    lastDate: end, // ✅ latest datapoint date
     pollsUsed: chosen.length,
   };
 }
@@ -297,11 +263,10 @@ const STATE_MODS = [
   GovernorWisconsin,
   GovernorTexas,
   GovernorOhio,
+  GovernorNevada,
   GovernorFlorida,
   GovernorArizona,
-  GovernorNevada,
   GovernorPennsylvania,
-  GovernorWisconsin,
   GovernorCalifornia,
   GovernorNewYork,
 ] as const;
@@ -318,8 +283,8 @@ function getStateSummaryMerged(abbr: string): LeaderSummary | null {
 
     // Fallback: STATE_POLLS map
     const pollsMap = anyMod.STATE_POLLS as Record<string, any[]> | undefined;
-    const polls = pollsMap?.[abbr];
-    if (polls && polls.length) return computeLeaderFromPolls(polls);
+    const raw = pollsMap?.[abbr];
+    if (raw?.length) return computeLeaderFromPollsUsingDailyModel(raw);
   }
   return null;
 }
@@ -350,16 +315,12 @@ function partyFromCandidateName(name: string): "D" | "R" | "U" {
   if (isGop(name)) return "R";
   return "U";
 }
-function classForWinner(
-  summary: LeaderSummary | null,
-  incumbentParty: "R" | "D"
-) {
+function classForWinner(summary: LeaderSummary | null, incumbentParty: "R" | "D") {
+  // if no polling, tint by incumbent party so map still looks sane
   const p = summary ? partyFromCandidateName(summary.leaderName) : incumbentParty;
 
-  if (p === "D")
-    return "fill-[rgba(59,130,246,0.35)] hover:fill-[rgba(59,130,246,0.55)]";
-  if (p === "R")
-    return "fill-[rgba(239,68,68,0.35)] hover:fill-[rgba(239,68,68,0.55)]";
+  if (p === "D") return "fill-[rgba(59,130,246,0.35)] hover:fill-[rgba(59,130,246,0.55)]";
+  if (p === "R") return "fill-[rgba(239,68,68,0.35)] hover:fill-[rgba(239,68,68,0.55)]";
   return "fill-[rgba(148,163,184,0.25)] hover:fill-[rgba(148,163,184,0.4)]";
 }
 function shortName(s: string) {
@@ -370,13 +331,10 @@ function shortName(s: string) {
 function tooltipLine(summary: LeaderSummary | null) {
   if (!summary) return "No polling yet";
   const leaderParty = partyFromCandidateName(summary.leaderName);
-  const runnerParty = summary.runnerUpName
-    ? partyFromCandidateName(summary.runnerUpName)
-    : "U";
+  const runnerParty = summary.runnerUpName ? partyFromCandidateName(summary.runnerUpName) : "U";
   const leaderTag = leaderParty !== "U" ? `(${leaderParty})` : "";
   const runnerTag = runnerParty !== "U" ? `(${runnerParty})` : "";
-  const m =
-    typeof summary.margin === "number" ? fmtMargin(summary.margin) : "—";
+  const m = typeof summary.margin === "number" ? fmtMargin(summary.margin) : "—";
 
   return `${shortName(summary.leaderName)} ${leaderTag} ${summary.leaderPct.toFixed(
     1
@@ -410,7 +368,7 @@ export default function Governor2026Page() {
 
     const active = GOVERNOR_2026_ACTIVE.map((s) => {
       const party = INCUMBENT_PARTY[s.abbr] ?? "R";
-      const summary = getStateSummaryMerged(s.abbr);
+      const summary = getStateSummaryMerged(s.abbr); // ✅ now uses DAILY MODEL
       return { ...s, party, inTopo: topoNameSet.has(s.name), summary };
     });
 
@@ -419,9 +377,7 @@ export default function Governor2026Page() {
     const incumbentD = active.filter((x) => x.party === "D").length;
     const openCount = active.filter((x) => x.status === "Open").length;
 
-    const polled = active.filter(
-      (x) => x.summary && (x.summary.pollsUsed ?? 0) > 0
-    );
+    const polled = active.filter((x) => x.summary && (x.summary.pollsUsed ?? 0) > 0);
     const polledCount = polled.length;
 
     const latestAsOf =
@@ -456,10 +412,7 @@ export default function Governor2026Page() {
     };
   }, []);
 
-  const projection = useMemo(
-    () => geoAlbersUsa().translate([520, 310]).scale(1100),
-    []
-  );
+  const projection = useMemo(() => geoAlbersUsa().translate([520, 310]).scale(1100), []);
   const path = useMemo(() => geoPath(projection), [projection]);
 
   return (
@@ -473,12 +426,19 @@ export default function Governor2026Page() {
 
         <div className="relative flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
           <div className="max-w-3xl">
+            <div className="flex flex-wrap items-center gap-2">
+              <Chip>U.S. Governors</Chip>
+              <Chip>2026</Chip>
+              <Chip>Daily weighted averages</Chip>
+            </div>
+
             <h1 className="mt-4 text-3xl font-semibold tracking-tight text-white/90 md:text-6xl">
               2026 Governor Races: Polling Leaderboard
             </h1>
 
             <p className="mt-3 text-white/65">
-              All governorship races for 2026. Latest aggregated data for each race.
+              Map + table show the <span className="font-semibold text-white/85">latest daily datapoint</span> produced by
+              <span className="font-semibold text-white/85"> buildDailyWeightedSeries()</span>.
             </p>
           </div>
         </div>
@@ -500,23 +460,15 @@ export default function Governor2026Page() {
       <section className="psi-card p-6">
         <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
           <div>
-            <div className="text-sm font-semibold text-white/85">
-              2026 Governor Elections
-            </div>
-            <div className="mt-1 text-sm text-white/60">
-              Hover a highlighted state to see leader & margin.
-            </div>
+            <div className="text-sm font-semibold text-white/85">2026 Governor Elections</div>
+            <div className="mt-1 text-sm text-white/60">Hover a highlighted state to see leader & margin.</div>
           </div>
         </div>
 
         <div className="my-4 psi-divider" />
 
         <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-black/20">
-          <svg
-            viewBox="-15 0 1040 620"
-            className="h-[650px] w-full"
-            onMouseLeave={() => setTip(null)}
-          >
+          <svg viewBox="-15 0 1040 620" className="h-[650px] w-full" onMouseLeave={() => setTip(null)}>
             <g>
               {mapFeatures.map((f: any, idx: number) => {
                 const name = String(f?.properties?.name ?? "").trim();
@@ -543,7 +495,6 @@ export default function Governor2026Page() {
                     className={`${cls} stroke-[rgba(255,255,255,0.18)] cursor-pointer transition`}
                     strokeWidth={1.2}
                     onMouseMove={(e) => {
-                      // ✅ use viewport coords so tooltip can be fixed + portaled
                       setTip({
                         x: e.clientX + 12,
                         y: e.clientY + 12,
@@ -562,35 +513,27 @@ export default function Governor2026Page() {
         </div>
 
         <div className="mt-3 text-xs text-white/45">
-          Color reflects polling leader party (based on “(D)” / “(R)” in candidate
-          name).
+          Color reflects polling leader party (based on “(D)” / “(R)” in candidate name).
         </div>
       </section>
 
-      {/* ✅ TOOLTIP PORTAL (NOT CLIPPED BY overflow-hidden) */}
+      {/* ✅ TOOLTIP PORTAL (NOT CLIPPED) */}
       {tip && typeof document !== "undefined"
         ? createPortal(
             <div
               className="pointer-events-none fixed z-[9999] w-[320px] rounded-2xl border border-white/10 bg-black/80 p-4 backdrop-blur"
-              style={{
-                left: tip.x,
-                top: tip.y,
-                maxWidth: "calc(100vw - 24px)",
-              }}
+              style={{ left: tip.x, top: tip.y, maxWidth: "calc(100vw - 24px)" }}
             >
               <div className="flex items-center justify-between">
                 <div className="text-sm font-semibold text-white/90">
-                  {tip.name}{" "}
-                  <span className="psi-mono text-xs text-white/55">{tip.abbr}</span>
+                  {tip.name} <span className="psi-mono text-xs text-white/55">{tip.abbr}</span>
                 </div>
                 <span className="psi-chip text-[11px] text-white/75">
                   {tip.status === "Open" ? "Open" : "Incumbent"}
                 </span>
               </div>
 
-              <div className="mt-2 text-sm text-white/75">
-                {tooltipLine(tip.summary)}
-              </div>
+              <div className="mt-2 text-sm text-white/75">{tooltipLine(tip.summary)}</div>
 
               <div className="mt-2 flex flex-wrap gap-2 text-xs text-white/55">
                 <span className="psi-chip">Incumbent: {tip.party}</span>
@@ -608,9 +551,7 @@ export default function Governor2026Page() {
         <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <div className="text-sm font-semibold text-white/85">State polling</div>
-            <div className="mt-1 text-sm text-white/60">
-              Sorted by most recent poll end date.
-            </div>
+            <div className="mt-1 text-sm text-white/60">Sorted by most recent datapoint date.</div>
           </div>
         </div>
 
@@ -629,7 +570,7 @@ export default function Governor2026Page() {
                 <th className="psi-num">Runner-up</th>
                 <th className="psi-num">Margin</th>
                 <th className="psi-num">Polls</th>
-                <th className="psi-num">Last poll</th>
+                <th className="psi-num">As-of</th>
               </tr>
             </thead>
             <tbody>
@@ -642,17 +583,11 @@ export default function Governor2026Page() {
                       <div className="flex items-center gap-2">
                         <span className="font-medium">{r.name}</span>
                         <span className="psi-mono text-xs text-white/45">{r.abbr}</span>
-                        {!r.inTopo ? (
-                          <span className="psi-chip text-[11px] text-white/70">
-                            Topo?
-                          </span>
-                        ) : null}
+                        {!r.inTopo ? <span className="psi-chip text-[11px] text-white/70">Topo?</span> : null}
                       </div>
                     </td>
 
-                    <td className="psi-num text-white/70">
-                      {r.status === "Open" ? "Open" : "Incumbent"}
-                    </td>
+                    <td className="psi-num text-white/70">{r.status === "Open" ? "Open" : "Incumbent"}</td>
 
                     <td className="psi-num text-white/70">
                       <span className="text-white/85">{r.party}</span>
@@ -660,21 +595,15 @@ export default function Governor2026Page() {
 
                     <td className="text-white/85">{s?.leaderName ?? "No polling"}</td>
                     <td className="psi-num text-white/85">
-                      {Number.isFinite(s?.leaderPct)
-                        ? `${s!.leaderPct.toFixed(1)}%`
-                        : "—"}
+                      {Number.isFinite(s?.leaderPct) ? `${s!.leaderPct.toFixed(1)}%` : "—"}
                     </td>
 
                     <td className="text-white/70">{s?.runnerUpName ?? "—"}</td>
                     <td className="psi-num text-white/70">
-                      {Number.isFinite(s?.runnerUpPct)
-                        ? `${s!.runnerUpPct!.toFixed(1)}%`
-                        : "—"}
+                      {Number.isFinite(s?.runnerUpPct) ? `${s!.runnerUpPct!.toFixed(1)}%` : "—"}
                     </td>
 
-                    <td className="psi-num text-white/85">
-                      {fmtMargin(Number(s?.margin))}
-                    </td>
+                    <td className="psi-num text-white/85">{fmtMargin(Number(s?.margin))}</td>
                     <td className="psi-num text-white/70">{s?.pollsUsed ?? 0}</td>
                     <td className="psi-num text-white/70">{s?.lastDate ?? "—"}</td>
                   </tr>

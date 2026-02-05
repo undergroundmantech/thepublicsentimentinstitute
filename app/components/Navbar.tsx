@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 
 const nav = [
   { href: "/", label: "Home" },
+  { href: "/electoralmap", label: "Interactive Maps" },
   { href: "/polling", label: "Polling Averages" },
   { href: "/goldstandard", label: "Gold Standard Pollsters" },
   { href: "/contact", label: "Contact" },
