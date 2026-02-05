@@ -714,7 +714,7 @@ export default function ElectoralCollegeMapPage() {
                   {/* Bar */}
                   <div
                     className="relative w-10 flex-shrink-0 overflow-hidden rounded-xl border border-white/10 bg-black/40"
-                    style={{ height: "clamp(220px, 51vh, 650px)" }}
+                    style={{ height: "clamp(220px, 40vh, 650px)" }}
                   >
                     {/* Democrat fill (bottom) */}
                     <div
