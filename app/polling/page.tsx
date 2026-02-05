@@ -56,6 +56,15 @@ const PAGES: PollPage[] = [
     tag: "National",
     status: "live",
   },
+  {
+    title: "2025 Elections - Retrospective Polling Averages",
+    description:
+      "A view of the New Jersey & Virginia Election polling, with unique modeling from The Public Sentiment Institute",
+    href: "/polling/2025pollingview",
+    badge: "Tracker",
+    tag: "National",
+    status: "live",
+  },
 ];
 
 function StatusPill({ status }: { status?: PollPage["status"] }) {
