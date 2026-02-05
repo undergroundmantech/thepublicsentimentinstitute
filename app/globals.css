@@ -6,7 +6,7 @@
    - Soft grid background + glow accents
    - Polished cards, tables, tooltips, charts
    - Subtle animations (fade/slide, hover lift)
-   - Unique fonts: use next/font in layout.tsx (see below)
+   - Adds animated floating glows + gentle grid drift
    ========================================================= */
 
 /* =========================
@@ -53,6 +53,18 @@
     transparent 55%
   );
 
+  /* Animated overlay glows (extra subtle) */
+  --psi-glow3: radial-gradient(
+    700px 420px at 30% 85%,
+    rgba(176, 31, 58, 0.14),
+    transparent 60%
+  );
+  --psi-glow4: radial-gradient(
+    820px 520px at 70% 70%,
+    rgba(37, 99, 235, 0.10),
+    transparent 62%
+  );
+
   /* Grid */
   --grid-dot: radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.10) 1px, transparent 0);
   --grid-size: 26px 26px;
@@ -70,6 +82,9 @@
   /* Fonts (wired via layout.tsx using next/font) */
   --font-sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, Helvetica, sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+
+  /* Slightly “tighter” type feel */
+  --psi-letter-tight: -0.018em;
 
   /* Animation */
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
@@ -97,22 +112,31 @@ body {
   color: var(--foreground);
   font-family: var(--font-sans);
   line-height: 1.55;
+  letter-spacing: var(--psi-letter-tight);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 
-  /* dark dashboard background with glows + grid */
+  /* dark dashboard background with animated glows + subtle grid */
   background:
     var(--psi-glow),
     var(--psi-glow2),
+    var(--psi-glow3),
+    var(--psi-glow4),
     var(--grid-dot);
   background-color: var(--background);
-  background-size: auto, auto, var(--grid-size);
+  background-size: auto, auto, auto, auto, var(--grid-size);
   background-attachment: fixed;
+  animation: psi-bg-drift 18s var(--ease-soft) infinite;
 }
 
 /* Prevent harsh selection */
 ::selection {
   background: rgba(122, 31, 122, 0.28);
+}
+
+/* Smooth scroll for dashboards */
+html {
+  scroll-behavior: smooth;
 }
 
 /* =========================
@@ -161,6 +185,25 @@ a {
   animation: psi-fade-up var(--dur-3) var(--ease-soft) both;
 }
 
+/* New: background drift (moves glows slightly without moving layout) */
+@keyframes psi-bg-drift {
+  0%   { background-position: 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0 0; }
+  50%  { background-position: 8% 2%, -6% 4%, 4% -6%, -2% -4%, 0 0; }
+  100% { background-position: 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0 0; }
+}
+
+/* Requested */
+@keyframes bgfloat {
+  0% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(12px, -10px, 0) scale(1.03); }
+  100% { transform: translate3d(0, 0, 0) scale(1); }
+}
+
+/* Optional utility to float any decorative layer */
+.psi-bgfloat {
+  animation: bgfloat 10s var(--ease-soft) infinite;
+}
+
 /* =========================
    GLASS CARD SYSTEM
    ========================= */
@@ -199,6 +242,15 @@ a {
   background: linear-gradient(90deg, transparent, rgba(255,255,255,0.14), transparent);
 }
 
+/* New: gentle “lift” utility for interactive blocks */
+.psi-lift {
+  transition: transform var(--dur-2) var(--ease-out), box-shadow var(--dur-2) var(--ease-out);
+}
+.psi-lift:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
 /* =========================
    BUTTONS / CHIPS
    ========================= */
@@ -226,6 +278,14 @@ a {
 .psi-chip-gradient {
   border: 1px solid rgba(122, 31, 122, 0.35);
   background: linear-gradient(90deg, rgba(176,31,58,0.14), rgba(122,31,122,0.14), rgba(74,27,179,0.14));
+}
+
+/* New: “press” feel for buttons */
+button, [role="button"] {
+  transition: transform var(--dur-1) var(--ease-out);
+}
+button:active, [role="button"]:active {
+  transform: translateY(1px);
 }
 
 /* =========================
@@ -293,6 +353,15 @@ a {
   -webkit-backdrop-filter: blur(12px);
 }
 
+/* New: tooltip “pop” animation */
+@keyframes psi-pop {
+  from { opacity: 0; transform: translateY(6px) scale(0.98); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+.psi-tooltip-pop {
+  animation: psi-pop 180ms var(--ease-soft) both;
+}
+
 /* =========================
    RECHARTS POLISH
    ========================= */
@@ -324,10 +393,41 @@ a {
 }
 
 /* =========================
+   SCROLLBAR POLISH (optional)
+   ========================= */
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,0.18) transparent;
+}
+
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+*::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.14);
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+*::-webkit-scrollbar-thumb:hover {
+  background: rgba(255,255,255,0.22);
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* =========================
    REDUCED MOTION
    ========================= */
 
 @media (prefers-reduced-motion: reduce) {
+  body { animation: none !important; }
   .psi-animate-in { animation: none !important; }
-  .psi-card, .psi-chip { transition: none !important; }
+  .psi-card, .psi-chip, button, [role="button"] { transition: none !important; }
+  .psi-bgfloat { animation: none !important; }
+  .psi-tooltip-pop { animation: none !important; }
 }
