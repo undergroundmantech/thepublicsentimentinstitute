@@ -1,12 +1,10 @@
 @import "tailwindcss";
 
 /* =========================================================
-   PSI DARK MODERN THEME (dashboard + subtle motion)
-   - Dark, modern, "polling / election results" aesthetic
-   - Soft grid background + glow accents
-   - Polished cards, tables, tooltips, charts
-   - Subtle animations (fade/slide, hover lift)
-   - Adds animated floating glows + gentle grid drift
+   PSI DARK MODERN THEME (clean / no grid)
+   - Removes grid + “weird” background
+   - Keeps subtle premium depth + glass surfaces
+   - Cleaner typography defaults
    ========================================================= */
 
 /* =========================
@@ -15,76 +13,69 @@
 
 :root {
   /* Surfaces */
-  --background: #070A10;          /* base page */
-  --surface: rgba(255, 255, 255, 0.03);
-  --surface2: rgba(255, 255, 255, 0.05);
-  --surface3: rgba(255, 255, 255, 0.08);
+  --background: #060810;           /* flatter, cleaner base */
+  --surface: rgba(255, 255, 255, 0.035);
+  --surface2: rgba(255, 255, 255, 0.055);
+  --surface3: rgba(255, 255, 255, 0.085);
 
   /* Text */
-  --foreground: #EAF0FF;
-  --muted: rgba(234, 240, 255, 0.65);
-  --muted2: rgba(234, 240, 255, 0.45);
+  --foreground: rgba(245, 247, 255, 0.96);
+  --muted: rgba(245, 247, 255, 0.68);
+  --muted2: rgba(245, 247, 255, 0.48);
 
   /* Borders */
   --border: rgba(255, 255, 255, 0.10);
-  --border2: rgba(255, 255, 255, 0.14);
+  --border2: rgba(255, 255, 255, 0.16);
 
-  /* Brand */
-  --psi-red: #B01F3A;
-  --psi-magenta: #7A1F7A;
-  --psi-purple: #4A1BB3;
-  --psi-blue: #2563EB;
+  /* Brand (slightly cooler + cleaner) */
+  --psi-red: #C0263D;
+  --psi-magenta: #8B2C8B;
+  --psi-purple: #5B2BD6;
+  --psi-blue: #2B74FF;
 
-  /* Brand gradient + glow */
   --psi-gradient: linear-gradient(
     90deg,
     var(--psi-red) 0%,
     var(--psi-magenta) 45%,
     var(--psi-purple) 100%
   );
+
+  /* Ambient glows (SUBTLE — not a “weird background”) */
   --psi-glow: radial-gradient(
-    800px 420px at 20% 10%,
-    rgba(122, 31, 122, 0.22),
-    transparent 60%
+    900px 520px at 20% 10%,
+    rgba(139, 44, 139, 0.14),
+    transparent 62%
   );
   --psi-glow2: radial-gradient(
-    720px 460px at 85% 20%,
-    rgba(74, 27, 179, 0.18),
-    transparent 55%
-  );
-
-  /* Animated overlay glows (extra subtle) */
-  --psi-glow3: radial-gradient(
-    700px 420px at 30% 85%,
-    rgba(176, 31, 58, 0.14),
+    820px 520px at 85% 18%,
+    rgba(91, 43, 214, 0.12),
     transparent 60%
   );
-  --psi-glow4: radial-gradient(
-    820px 520px at 70% 70%,
-    rgba(37, 99, 235, 0.10),
+  --psi-glow3: radial-gradient(
+    900px 560px at 40% 90%,
+    rgba(192, 38, 61, 0.10),
     transparent 62%
   );
 
-  /* Grid */
-  --grid-dot: radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.10) 1px, transparent 0);
-  --grid-size: 26px 26px;
-
   /* Elevation */
   --shadow-sm: 0 1px 2px rgba(0,0,0,0.35);
-  --shadow-md: 0 8px 28px rgba(0,0,0,0.40);
-  --shadow-lg: 0 18px 60px rgba(0,0,0,0.55);
+  --shadow-md: 0 10px 30px rgba(0,0,0,0.48);
+  --shadow-lg: 0 18px 70px rgba(0,0,0,0.62);
 
   /* Radii */
   --r-lg: 1.5rem;
-  --r-md: 1rem;
+  --r-md: 1.05rem;
   --r-sm: 0.85rem;
 
-  /* Fonts (wired via layout.tsx using next/font) */
-  --font-sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, Helvetica, sans-serif;
-  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  /* Fonts (prefer modern UI fonts; fallback safe) */
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI",
+    Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji",
+    "Segoe UI Emoji";
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    "Liberation Mono", monospace;
 
-  /* Slightly “tighter” type feel */
-  --psi-letter-tight: -0.018em;
+  /* Type feel */
+  --psi-letter-tight: -0.012em;
 
   /* Animation */
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
@@ -116,25 +107,23 @@ body {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 
-  /* dark dashboard background with animated glows + subtle grid */
-  background:
-    var(--psi-glow),
-    var(--psi-glow2),
-    var(--psi-glow3),
-    var(--psi-glow4),
-    var(--grid-dot);
+  /* ✅ Clean background: NO GRID */
   background-color: var(--background);
-  background-size: auto, auto, auto, auto, var(--grid-size);
+
+  /* ✅ Optional ambient depth (still clean) */
+  background-image: var(--psi-glow), var(--psi-glow2), var(--psi-glow3);
+  background-repeat: no-repeat;
+  background-size: auto;
   background-attachment: fixed;
-  animation: psi-bg-drift 18s var(--ease-soft) infinite;
+
+  /* If you want ZERO glow at all, comment out the 3 lines above and keep background-color only. */
 }
 
 /* Prevent harsh selection */
 ::selection {
-  background: rgba(122, 31, 122, 0.28);
+  background: rgba(139, 44, 139, 0.24);
 }
 
-/* Smooth scroll for dashboards */
 html {
   scroll-behavior: smooth;
 }
@@ -144,8 +133,8 @@ html {
    ========================= */
 
 h1, h2, h3, h4, h5 {
-  font-weight: 650;
-  letter-spacing: -0.03em;
+  font-weight: 700; /* crisper headings */
+  letter-spacing: -0.028em;
   color: var(--foreground);
 }
 
@@ -185,24 +174,7 @@ a {
   animation: psi-fade-up var(--dur-3) var(--ease-soft) both;
 }
 
-/* New: background drift (moves glows slightly without moving layout) */
-@keyframes psi-bg-drift {
-  0%   { background-position: 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0 0; }
-  50%  { background-position: 8% 2%, -6% 4%, 4% -6%, -2% -4%, 0 0; }
-  100% { background-position: 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0 0; }
-}
-
-/* Requested */
-@keyframes bgfloat {
-  0% { transform: translate3d(0, 0, 0) scale(1); }
-  50% { transform: translate3d(12px, -10px, 0) scale(1.03); }
-  100% { transform: translate3d(0, 0, 0) scale(1); }
-}
-
-/* Optional utility to float any decorative layer */
-.psi-bgfloat {
-  animation: bgfloat 10s var(--ease-soft) infinite;
-}
+/* (Removed background drift animation entirely to avoid “weird” movement) */
 
 /* =========================
    GLASS CARD SYSTEM
@@ -211,15 +183,21 @@ a {
 .psi-card {
   border: 1px solid var(--border);
   border-radius: var(--r-lg);
-  background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+
+  /* cleaner glass */
+  background: linear-gradient(
+    180deg,
+    rgba(255,255,255,0.06),
+    rgba(255,255,255,0.035)
+  );
+
   box-shadow: var(--shadow-md);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   transition:
     transform var(--dur-2) var(--ease-out),
     border-color var(--dur-2) var(--ease-out),
-    box-shadow var(--dur-2) var(--ease-out),
-    background var(--dur-2) var(--ease-out);
+    box-shadow var(--dur-2) var(--ease-out);
 }
 
 .psi-card:hover {
@@ -231,18 +209,17 @@ a {
 .psi-panel {
   border: 1px solid var(--border);
   border-radius: var(--r-md);
-  background: rgba(255,255,255,0.03);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  background: rgba(255,255,255,0.035);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }
 
 .psi-divider {
   height: 1px;
   width: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.14), transparent);
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent);
 }
 
-/* New: gentle “lift” utility for interactive blocks */
 .psi-lift {
   transition: transform var(--dur-2) var(--ease-out), box-shadow var(--dur-2) var(--ease-out);
 }
@@ -259,13 +236,13 @@ a {
   display: inline-flex;
   align-items: center;
   gap: 0.45rem;
-  padding: 0.35rem 0.65rem;
+  padding: 0.38rem 0.70rem;
   border-radius: 999px;
   border: 1px solid var(--border);
-  background: rgba(255,255,255,0.04);
-  color: rgba(234, 240, 255, 0.8);
-  font-size: 0.75rem;
-  font-weight: 600;
+  background: rgba(255,255,255,0.045);
+  color: rgba(245, 247, 255, 0.86);
+  font-size: 0.78rem;
+  font-weight: 650;
   box-shadow: var(--shadow-sm);
   transition: transform var(--dur-1) var(--ease-out), border-color var(--dur-1) var(--ease-out);
 }
@@ -276,11 +253,15 @@ a {
 }
 
 .psi-chip-gradient {
-  border: 1px solid rgba(122, 31, 122, 0.35);
-  background: linear-gradient(90deg, rgba(176,31,58,0.14), rgba(122,31,122,0.14), rgba(74,27,179,0.14));
+  border: 1px solid rgba(139, 44, 139, 0.35);
+  background: linear-gradient(
+    90deg,
+    rgba(192,38,61,0.12),
+    rgba(139,44,139,0.12),
+    rgba(91,43,214,0.12)
+  );
 }
 
-/* New: “press” feel for buttons */
 button, [role="button"] {
   transition: transform var(--dur-1) var(--ease-out);
 }
@@ -318,7 +299,7 @@ button:active, [role="button"]:active {
   padding: 12px 14px;
   border-bottom: 1px solid var(--border);
   font-size: 0.95rem;
-  color: rgba(234, 240, 255, 0.90);
+  color: rgba(245, 247, 255, 0.92);
 }
 
 .psi-table tbody tr {
@@ -326,7 +307,7 @@ button:active, [role="button"]:active {
 }
 
 .psi-table tbody tr:hover td {
-  background: rgba(122, 31, 122, 0.08);
+  background: rgba(139, 44, 139, 0.07);
 }
 
 .psi-table tbody tr:last-child td {
@@ -346,14 +327,13 @@ button:active, [role="button"]:active {
 .psi-tooltip {
   border-radius: 1rem;
   border: 1px solid var(--border);
-  background: rgba(7, 10, 16, 0.78);
-  color: rgba(234, 240, 255, 0.92);
+  background: rgba(6, 8, 16, 0.86);
+  color: rgba(245, 247, 255, 0.92);
   box-shadow: var(--shadow-lg);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
 }
 
-/* New: tooltip “pop” animation */
 @keyframes psi-pop {
   from { opacity: 0; transform: translateY(6px) scale(0.98); }
   to   { opacity: 1; transform: translateY(0) scale(1); }
@@ -366,22 +346,19 @@ button:active, [role="button"]:active {
    RECHARTS POLISH
    ========================= */
 
-/* Make the recharts legend + axis text look premium in dark mode */
 .recharts-text,
 .recharts-cartesian-axis-tick-value {
-  fill: rgba(234, 240, 255, 0.70) !important;
+  fill: rgba(245, 247, 255, 0.70) !important;
 }
 
 .recharts-legend-item-text {
-  color: rgba(234, 240, 255, 0.75) !important;
+  color: rgba(245, 247, 255, 0.78) !important;
 }
 
-/* Lighter grid lines */
 .recharts-cartesian-grid line {
   stroke: rgba(255, 255, 255, 0.10) !important;
 }
 
-/* Brush polish */
 .recharts-brush .recharts-brush-slide {
   fill: rgba(255, 255, 255, 0.05) !important;
   stroke: rgba(255, 255, 255, 0.14) !important;
@@ -425,9 +402,7 @@ button:active, [role="button"]:active {
    ========================= */
 
 @media (prefers-reduced-motion: reduce) {
-  body { animation: none !important; }
   .psi-animate-in { animation: none !important; }
   .psi-card, .psi-chip, button, [role="button"] { transition: none !important; }
-  .psi-bgfloat { animation: none !important; }
   .psi-tooltip-pop { animation: none !important; }
 }
