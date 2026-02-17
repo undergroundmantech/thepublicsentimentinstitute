@@ -29,12 +29,12 @@ export default function RootLayout({
     <html lang="en" className={`${sans.variable} ${mono.variable}`}>
       <body className="min-h-screen antialiased overflow-x-hidden">
         {/* Shell: full height, flex column so footer sits naturally */}
-        <div className="min-h-screen flex flex-col">
+        <div className="min-h-screen flex flex-col w-full overflow-x-hidden">
           <Navbar />
 
           {/* Main grows to fill remaining height */}
-          <main className="flex-1">
-            <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8 py-8 sm:py-10">
+          <main className="flex-1 w-full min-w-0">
+            <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 lg:px-8 py-8 sm:py-10 min-w-0">
               {children}
             </div>
           </main>

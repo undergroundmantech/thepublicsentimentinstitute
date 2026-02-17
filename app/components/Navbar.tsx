@@ -19,24 +19,34 @@ export default function Navbar() {
     href === "/" ? pathname === "/" : pathname.startsWith(href);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-white/10 bg-black/25 backdrop-blur">
+    <header className="sticky top-0 z-50 border-b border-white/10 bg-black/55 backdrop-blur-xl">
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3">
-        <Link href="/" className="flex items-center gap-3">
-          <Image
-  src="/logo.png"
-  alt="The Public Sentiment Institute"
-  width={40}
-  height={40}
-  className="h-15 w-15 rounded-3xl border border-white/5 bg-white/5 shadow-sm object-contain p-1"
-/>
+        {/* Brand */}
+        <Link href="/" className="group flex items-center gap-3">
+          <div className="relative">
+            <div className="absolute -inset-1 rounded-2xl bg-white/10 blur-md opacity-0 transition group-hover:opacity-100" />
+            <Image
+              src="/logo.png"
+              alt="The Public Sentiment Institute"
+              width={44}
+              height={44}
+              className="relative h-11 w-11 rounded-2xl border border-white/10 bg-white/5 object-contain p-1 shadow-sm"
+              priority
+            />
+          </div>
+
           <div className="leading-tight">
             <div className="text-sm font-semibold text-white/90">
-              The Public Sentiment Institute
+              The Public Sentiment
+            </div>
+            <div className="text-xs font-medium tracking-wide text-white/55">
+              Institute
             </div>
           </div>
         </Link>
 
-        <nav className="hidden items-center gap-1 md:flex">
+        {/* Desktop nav */}
+        <nav className="hidden md:flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-2 py-1">
           {nav.map((item) => {
             const active = isActive(item.href);
             return (
@@ -44,23 +54,33 @@ export default function Navbar() {
                 key={item.href}
                 href={item.href}
                 className={[
-                  "rounded-full px-3 py-2 text-sm font-semibold transition",
-                  "border border-transparent",
-                  active
-                    ? "bg-white/10 text-white/90 border-white/10"
-                    : "text-white/70 hover:bg-white/5 hover:text-white/90",
+                  "relative rounded-full px-3 py-2 text-sm font-semibold transition",
+                  "text-white/70 hover:text-white/90",
+                  active ? "text-white" : "",
                 ].join(" ")}
               >
+                {active && (
+                  <span className="absolute inset-0 -z-10 rounded-full bg-white/10 ring-1 ring-white/15" />
+                )}
                 {item.label}
               </Link>
             );
           })}
         </nav>
 
+        {/* CTA */}
         <div className="flex items-center gap-2">
-          <Link href="https://wss.pollfish.com/link/522d0e01-b70f-4955-8514-b42a7f10d4b6" className="psi-btn psi-btn-ghost px-4 py-2 text-sm">
-            Take survey
-          </Link>
+          <Link
+  href="https://wss.pollfish.com/link/522d0e01-b70f-4955-8514-b42a7f10d4b6"
+  className={[
+    "inline-flex items-center justify-center rounded-full px-4 py-2 text-sm font-semibold transition",
+    "text-white/80 border border-white/10 bg-white/[0.04]",
+    "hover:bg-white/10 hover:text-white hover:border-white/20",
+  ].join(" ")}
+>
+  Take survey
+</Link>
+
         </div>
       </div>
     </header>
