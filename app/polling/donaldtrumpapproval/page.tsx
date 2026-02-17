@@ -47,9 +47,20 @@ function effectiveSampleSize(pollster: string, n: number) {
 }
 
 const RAW_POLLS: Poll[] = [
+  { pollster: "Economist/YouGov", endDate: "2026-02-16", sampleSize: 1512, sampleType: "RV", results: { Approve: 43, Disapprove: 55 } },
+{ pollster: "AP/NORC", endDate: "2026-02-09", sampleSize: 1156, sampleType: "A", results: { Approve: 36, Disapprove: 62 } },
+{ pollster: "Rasmussen Reports", endDate: "2026-02-16", sampleSize: 1500, sampleType: "LV", results: { Approve: 47, Disapprove: 51 } },
+{ pollster: "Quantus Insights", endDate: "2026-02-13", sampleSize: 1515, sampleType: "LV", results: { Approve: 43, Disapprove: 56 } },
+{ pollster: "RMG Research*", endDate: "2026-02-12", sampleSize: 3000, sampleType: "RV", results: { Approve: 47, Disapprove: 52 } },
+{ pollster: "Morning Consult", endDate: "2026-02-09", sampleSize: 2200, sampleType: "RV", results: { Approve: 44, Disapprove: 53 } },
+{ pollster: "NBC News Decision Desk", endDate: "2026-02-06", sampleSize: 21995, sampleType: "A", results: { Approve: 39, Disapprove: 61 } },
+{ pollster: "Quinnipiac", endDate: "2026-02-02", sampleSize: 1191, sampleType: "RV", results: { Approve: 37, Disapprove: 56 } },
+{ pollster: "InsiderAdvantage", endDate: "2026-02-01", sampleSize: 1000, sampleType: "LV", results: { Approve: 50, Disapprove: 49 } },
+{ pollster: "PPP", endDate: "2026-01-30", sampleSize: 652, sampleType: "RV", results: { Approve: 39, Disapprove: 56 } },
+{ pollster: "NPR/PBS/Marist", endDate: "2026-01-30", sampleSize: 1326, sampleType: "RV", results: { Approve: 39, Disapprove: 57 } },
   { pollster: "Marquette", endDate: "2026-01-28", sampleSize: 1003, sampleType: "A", results: { Approve: 42, Disapprove: 58 } },
   { pollster: "Morning Consult", endDate: "2026-02-01", sampleSize: 2201, sampleType: "RV", results: { Approve: 45, Disapprove: 53 } },
-  { pollster: "Rasmussen Reports", endDate: "2026-02-03", sampleSize: 1500, sampleType: "LV", results: { Approve: 43, Disapprove: 56 } },
+  { pollster: "Rasmussen Reports", endDate: "2026-02-05", sampleSize: 1500, sampleType: "LV", results: { Approve: 41, Disapprove: 57 } },
   { pollster: "InsiderAdvantage", endDate: "2026-02-01", sampleSize: 1000, sampleType: "LV", results: { Approve: 50, Disapprove: 49 } },
   { pollster: "Economist/YouGov", endDate: "2026-02-02", sampleSize: 1504, sampleType: "RV", results: { Approve: 42, Disapprove: 55 } },
   { pollster: "Harvard-Harris", endDate: "2026-01-29", sampleSize: 2000, sampleType: "RV", results: { Approve: 45, Disapprove: 51 } },

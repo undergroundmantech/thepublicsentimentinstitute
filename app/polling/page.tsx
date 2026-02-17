@@ -13,8 +13,7 @@ type PollPage = {
 const PAGES: PollPage[] = [
   {
     title: "Donald Trump • Job Approval",
-    description:
-      "Tracking the President's job approval in real time",
+    description: "Tracking the President's job approval in real time",
     href: "/polling/donaldtrumpapproval",
     badge: "Approval",
     tag: "National",
@@ -85,7 +84,7 @@ function StatusPill({ status }: { status?: PollPage["status"] }) {
   return (
     <span
       className={[
-        "inline-flex items-center rounded-full border px-2.5 py-1 text-[11px] font-semibold tracking-wide",
+        "inline-flex items-center rounded-full border px-2.5 py-1 text-[11px] font-semibold tracking-wide flex-none",
         cls,
       ].join(" ")}
     >
@@ -98,8 +97,8 @@ function Card({ p }: { p: PollPage }) {
   const isDisabled = p.status !== "live";
 
   return (
-    <div className="psi-card p-6 psi-animate-in">
-      <div className="flex items-start justify-between gap-3">
+    <div className="psi-card p-5 sm:p-6 psi-animate-in w-full min-w-0">
+      <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
         <div className="min-w-0">
           <div className="flex flex-wrap items-center gap-2">
             {p.badge ? <span className="psi-chip">{p.badge}</span> : null}
@@ -110,17 +109,19 @@ function Card({ p }: { p: PollPage }) {
             ) : null}
           </div>
 
-          <h2 className="mt-3 text-lg font-semibold tracking-tight text-white/90">
+          <h2 className="mt-3 text-base sm:text-lg font-semibold tracking-tight text-white/90">
             {p.title}
           </h2>
 
-          <p className="mt-2 text-sm text-white/60">{p.description}</p>
+          <p className="mt-2 text-sm text-white/60 break-words">
+            {p.description}
+          </p>
         </div>
 
         <StatusPill status={p.status} />
       </div>
 
-      <div className="mt-5 flex items-center justify-between gap-3">
+      <div className="mt-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
         {isDisabled ? (
           <span className="psi-mono text-xs text-white/45">
             Not wired yet
@@ -132,9 +133,14 @@ function Card({ p }: { p: PollPage }) {
         )}
 
         {isDisabled ? (
-          <span className="psi-btn psi-btn-ghost opacity-60">Open →</span>
+          <span className="psi-btn psi-btn-ghost opacity-60 w-full sm:w-auto text-center">
+            Open →
+          </span>
         ) : (
-          <Link href={p.href} className="psi-btn psi-btn-primary">
+          <Link
+            href={p.href}
+            className="psi-btn psi-btn-primary w-full sm:w-auto text-center"
+          >
             Open →
           </Link>
         )}
@@ -149,11 +155,11 @@ export default function PollingHomePage() {
       {/* HERO */}
       <header className="space-y-4 psi-animate-in">
 
-        <h2 className="text-5xl font-semibold tracking-tight text-white/90">
+        <h2 className="text-3xl sm:text-4xl lg:text-5xl font-semibold tracking-tight text-white/90">
           <span className="psi-gradient-text">Polling</span> Dashboard
         </h2>
 
-        <p className="max-w-3xl text-white/60">
+        <p className="max-w-3xl text-sm sm:text-base text-white/60">
           Public-facing pages built on the same measurement standard: documented question
           wording, field dates, sample notes, and transparent weighting decisions.
         </p>
