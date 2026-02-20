@@ -79,7 +79,7 @@ export default function Navbar() {
   }, [mobileOpen]);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-white/10 bg-black/55 backdrop-blur-xl">
+    <header className="sticky top-0 z-50 border-b border-white/10 bg-[#0b0b0f] shadow-lg">
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3">
         {/* Brand */}
         <Link href="/" className="group flex items-center gap-3">
@@ -108,16 +108,18 @@ export default function Navbar() {
         {/* Desktop nav */}
         <nav className="hidden md:flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-2 py-1">
           {nav.map((item) => {
+            const hideOnMobile = item.href === "/electoralmap";
             const active = isActive(item.href);
             return (
               <Link
                 key={item.href}
                 href={item.href}
                 className={[
-                  "relative rounded-full px-3 py-2 text-sm font-semibold transition",
-                  "text-white/70 hover:text-white/90",
-                  active ? "text-white" : "",
-                ].join(" ")}
+  "relative rounded-full px-3 py-2 text-sm font-semibold transition",
+  "text-white/70 hover:text-white/90",
+  active ? "text-white" : "",
+  hideOnMobile ? "hidden md:block" : "",
+].join(" ")}
               >
                 {active && (
                   <span className="absolute inset-0 -z-10 rounded-full bg-white/10 ring-1 ring-white/15" />
@@ -177,16 +179,14 @@ export default function Navbar() {
           ].join(" ")}
           onClick={() => setMobileOpen(false)}
           aria-label="Close menu overlay"
-          style={{
-            background: "rgba(0,0,0,0.65)",
-          }}
+          style={{ background: "rgba(0,0,0,0.85)" }}
         />
 
         {/* Panel */}
         <aside
           className={[
             "absolute right-0 top-0 h-full w-[86%] max-w-sm",
-            "border-l border-white/10 bg-black/80 backdrop-blur-xl",
+            "border-l border-white/10 bg-[#0b0b0f]",
             "transition-transform duration-200",
             mobileOpen ? "translate-x-0" : "translate-x-full",
           ].join(" ")}
@@ -200,7 +200,7 @@ export default function Navbar() {
               type="button"
               className={[
                 "inline-flex items-center justify-center rounded-full p-2 transition",
-                "border border-white/10 bg-white/[0.04] text-white/85",
+                "border border-white/10 bg-[#111118] text-white/85",
                 "hover:bg-white/10 hover:border-white/20",
                 "focus:outline-none focus:ring-2 focus:ring-white/20",
               ].join(" ")}
@@ -213,7 +213,9 @@ export default function Navbar() {
 
           <div className="p-4">
             <nav className="space-y-2">
-              {nav.map((item) => {
+              {nav
+  .filter((item) => item.href !== "/electoralmap")
+  .map((item) => {
                 const active = isActive(item.href);
                 return (
                   <Link
