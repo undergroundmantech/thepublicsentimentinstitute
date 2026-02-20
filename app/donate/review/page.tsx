@@ -1,69 +1,25 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useState, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 
 /**
- * FIXED MODAL COMPONENT
+ * MAIN PAGE ENTRY
+ * This wraps the client logic in Suspense to handle useSearchParams()
  */
-function ConfirmModal({
-  open,
-  title,
-  message,
-  confirmText = "Yes, continue",
-  cancelText = "Cancel",
-  onConfirm,
-  onCancel,
-}: {
-  open: boolean;
-  title?: string;
-  message: string;
-  confirmText?: string;
-  cancelText?: string;
-  onConfirm: () => void;
-  onCancel: () => void;
-}) {
-  if (!open) return null;
-
+export default function Page() {
   return (
-    <div
-      role="dialog"
-      aria-modal="true"
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-md"
-      onClick={onCancel}
-    >
-      <div
-        className="w-full max-w-md bg-[#161b26] border border-white/10 rounded-[2rem] p-8 shadow-2xl"
-        onClick={(e) => e.stopPropagation()}
-      >
-        <h2 className="text-xl font-black uppercase tracking-tight mb-4 text-white italic">
-          {title ?? "Confirm Entry"}
-        </h2>
-        <div className="text-white/60 mb-8 whitespace-pre-wrap leading-relaxed font-medium">
-          {message}
-        </div>
-
-        <div className="flex flex-col gap-3">
-          <button
-            onClick={onConfirm}
-            className="w-full py-4 bg-white text-black rounded-xl font-black uppercase tracking-widest text-xs hover:bg-gray-200 transition-all shadow-lg"
-          >
-            {confirmText}
-          </button>
-          <button 
-            onClick={onCancel} 
-            className="w-full py-4 rounded-xl font-black uppercase tracking-widest text-[10px] text-white/30 hover:text-white transition-colors"
-          >
-            {cancelText}
-          </button>
-        </div>
-      </div>
-    </div>
+    <Suspense fallback={<div className="p-6 text-white uppercase tracking-widest text-xs">Loading…</div>}>
+      <DonateReviewClient />
+    </Suspense>
   );
 }
 
-export default function DonateReviewPage() {
+/**
+ * CLIENT COMPONENT LOGIC
+ */
+function DonateReviewClient() {
   const router = useRouter();
   const sp = useSearchParams();
 
@@ -194,7 +150,6 @@ export default function DonateReviewPage() {
         </p>
       </div>
 
-      {/* Confirmation popup */}
       <ConfirmModal
         open={confirmOpen}
         title="Finalize Allocation"
@@ -208,5 +163,64 @@ export default function DonateReviewPage() {
         }}
       />
     </main>
+  );
+}
+
+/**
+ * MODAL COMPONENT
+ */
+function ConfirmModal({
+  open,
+  title,
+  message,
+  confirmText = "Yes, continue",
+  cancelText = "Cancel",
+  onConfirm,
+  onCancel,
+}: {
+  open: boolean;
+  title?: string;
+  message: string;
+  confirmText?: string;
+  cancelText?: string;
+  onConfirm: () => void;
+  onCancel: () => void;
+}) {
+  if (!open) return null;
+
+  return (
+    <div
+      role="dialog"
+      aria-modal="true"
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-md"
+      onClick={onCancel}
+    >
+      <div
+        className="w-full max-w-md bg-[#161b26] border border-white/10 rounded-[2rem] p-8 shadow-2xl"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <h2 className="text-xl font-black uppercase tracking-tight mb-4 text-white italic">
+          {title ?? "Confirm Entry"}
+        </h2>
+        <div className="text-white/60 mb-8 whitespace-pre-wrap leading-relaxed font-medium">
+          {message}
+        </div>
+
+        <div className="flex flex-col gap-3">
+          <button
+            onClick={onConfirm}
+            className="w-full py-4 bg-white text-black rounded-xl font-black uppercase tracking-widest text-xs hover:bg-gray-200 transition-all shadow-lg"
+          >
+            {confirmText}
+          </button>
+          <button 
+            onClick={onCancel} 
+            className="w-full py-4 rounded-xl font-black uppercase tracking-widest text-[10px] text-white/30 hover:text-white transition-colors"
+          >
+            {cancelText}
+          </button>
+        </div>
+      </div>
+    </div>
   );
 }
