@@ -141,9 +141,61 @@ function fmtPct(x?: number) {
   return `${x.toFixed(1)}%`;
 }
 
+function getRaceReportingPct(race?: RaceDetail) {
+  const v = race?.percent_reporting;
+  return typeof v === "number" && Number.isFinite(v) ? Math.max(0, Math.min(100, v)) : null;
+}
+
+function getRaceProjectionAlways(race?: RaceDetail): { leaderName: string; prob: number } | null {
+  if (!race?.candidates?.length) return null;
+
+  const reporting = typeof race.percent_reporting === "number" ? race.percent_reporting : 0;
+
+  const officialWinner = race.candidates.find((c) => c.winner);
+  if (officialWinner) return { leaderName: officialWinner.name, prob: 100 };
+
+  const ordered = [...race.candidates].sort((a, b) => (b.percent ?? 0) - (a.percent ?? 0));
+  const leader = ordered[0];
+  const runnerUp = ordered[1];
+
+  // If we don't even have 2 candidates, still show something
+  if (!leader || !runnerUp) return { leaderName: leader?.name ?? "—", prob: 50 };
+
+  // Your model already returns 50 if reporting <= 0, so this is safe
+  const prob = calculateWinProbability(leader.votes, runnerUp.votes, reporting);
+  return { leaderName: leader.name, prob };
+}
+
 function prettyTime(iso?: string | null) {
   if (!iso) return "—";
   return new Date(iso).toLocaleString();
+}
+
+function parseIsoDate(iso?: string | null): Date | null {
+  if (!iso) return null;
+  const d = new Date(iso); // ISO with Z auto converts to local time internally
+  return Number.isNaN(d.getTime()) ? null : d;
+}
+
+function formatCountdown(msLeft: number): string {
+  if (msLeft <= 0) return "Polls closed";
+
+  const totalSec = Math.floor(msLeft / 1000);
+  const days = Math.floor(totalSec / 86400);
+  const hours = Math.floor((totalSec % 86400) / 3600);
+  const mins = Math.floor((totalSec % 3600) / 60);
+  const secs = totalSec % 60;
+
+  if (days > 0) return `${days}d ${hours}h ${mins}m`;
+  if (hours > 0) return `${hours}h ${mins}m ${secs}s`;
+  return `${mins}m ${secs}s`;
+}
+
+function formatLocalCloseTime(d: Date): string {
+  return d.toLocaleTimeString(undefined, {
+    hour: "numeric",
+    minute: "2-digit",
+  });
 }
 
 function Pill({ children }: { children: React.ReactNode }) {
@@ -797,6 +849,7 @@ export default function March3FeaturedClient() {
   const [raceCache, setRaceCache] = useState<Record<number, RaceDetail | undefined>>({});
   const [mapBlankSvg, setMapBlankSvg] = useState<string | null>(null);
   const [mapLoadPct, setMapLoadPct] = useState(0);
+  const [nowMs, setNowMs] = useState(() => Date.now());
 
   // ✅ NEW: overlay state (top of whole screen)
   const [overlay, setOverlay] = useState<null | { id: number; name: string; prob: number; color: string; reporting: number }>(null);
@@ -829,6 +882,11 @@ export default function March3FeaturedClient() {
     const t = setInterval(refreshFeatured, POLL_MS);
     return () => clearInterval(t);
   }, []);
+
+  useEffect(() => {
+  const t = setInterval(() => setNowMs(Date.now()), 1000);
+  return () => clearInterval(t);
+}, []);
 
   // ✅ IMPORTANT: hard-hide SVG BEFORE the browser paints when the race changes
   useLayoutEffect(() => {
@@ -934,7 +992,8 @@ export default function March3FeaturedClient() {
               <div className="h-2 w-2 rounded-full bg-red-500 animate-pulse" />
               <span className="text-[10px] font-black uppercase tracking-[0.2em] opacity-50">Live Election Results</span>
             </div>
-            <h1 className="text-3xl md:text-4xl font-black tracking-tighter">SUPER TUESDAY PRIMARIES</h1>
+            <h1 className="text-3xl md:text-4xl font-black tracking-tighter">MARCH 3RD PRIMARIES</h1>
+            <p className="text-1xl md:text-1xl font-black tracking-tighter">Powered by CivicAPI.org</p>
           </div>
         </header>
 
@@ -954,40 +1013,136 @@ export default function March3FeaturedClient() {
         </div>
 
         <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {featuredByState[activeState].map((fr) => {
-            const liveData = raceCache[fr.id];
-            const winner = liveData?.candidates?.find((c) => c.winner);
-            return (
-              <button
-                key={fr.id}
-                onClick={() => setSelectedId(fr.id)}
-                className={[
-                  "w-full text-left p-4 rounded-2xl border transition-all flex flex-col justify-between min-h-[110px]",
-                  fr.id === selectedId ? "bg-white/10 border-white/20 ring-1 ring-white/20" : "bg-white/5 border-transparent hover:bg-white/10",
-                ].join(" ")}
-              >
-                <div>
-                  <div className="font-bold text-[13px] leading-tight mb-1">{fr.label}</div>
-                  <div className="text-[9px] opacity-40 uppercase font-black tracking-widest">{fr.party} Primary</div>
-                </div>
-                <div className="mt-3">
-                  {winner ? (
-                    <div className="flex items-center gap-2">
-                      <div className="flex items-center gap-1.5 px-2 py-0.5 rounded bg-green-500/10 border border-green-500/20">
-                        <span className="h-1.5 w-1.5 rounded-full bg-green-400 shadow-[0_0_5px_rgba(74,222,128,0.5)]" />
-                        <span className="text-[10px] font-black text-green-400 uppercase tracking-tighter">Winner: {winner.name}</span>
-                      </div>
-                    </div>
-                  ) : liveData?.percent_reporting && liveData.percent_reporting > 0 ? (
-                    <div className="text-[9px] font-bold opacity-30 uppercase tracking-tight italic">Results coming in...</div>
-                  ) : (
-                    <div className="text-[9px] font-bold opacity-20 uppercase tracking-tight italic">Waiting for polls</div>
-                  )}
-                </div>
-              </button>
-            );
-          })}
-        </section>
+  {featuredByState[activeState].map((fr) => {
+    const liveData = raceCache[fr.id];
+    const winner = liveData?.candidates?.find((c) => c.winner);
+
+    const reporting = getRaceReportingPct(liveData);
+    const reportingLabel =
+      reporting === null ? "—" : `${reporting.toFixed(1)}% reporting`;
+
+    const projection = getRaceProjectionAlways(liveData);
+    const hasWinner = !!winner || projection?.prob === 100;
+    const showProjection = !hasWinner && !!projection;
+
+    // ✅ Poll Close Timer Logic
+    const closeDate = parseIsoDate(liveData?.polls_close ?? null);
+    const closeTimeLocal = closeDate
+      ? formatLocalCloseTime(closeDate)
+      : "—";
+
+    const msLeft = closeDate
+      ? closeDate.getTime() - nowMs
+      : null;
+
+    const countdownLabel =
+      msLeft === null ? "—" : formatCountdown(msLeft);
+
+    return (
+      <button
+        key={fr.id}
+        onClick={() => setSelectedId(fr.id)}
+        className={[
+          "w-full text-left p-4 rounded-2xl border transition-all flex flex-col",
+          hasWinner ? "min-h-[100px] py-3" : "min-h-[160px]",
+          fr.id === selectedId
+            ? "bg-white/10 border-white/20 ring-1 ring-white/20"
+            : "bg-white/5 border-transparent hover:bg-white/10",
+        ].join(" ")}
+      >
+        <div>
+          <div className="font-bold text-[13px] leading-tight mb-1">
+            {fr.label}
+          </div>
+
+          <div className="flex items-center justify-between gap-3">
+            <div className="text-[9px] opacity-40 uppercase font-black tracking-widest">
+              {fr.party} Primary
+            </div>
+            <div className="text-[9px] font-black uppercase tracking-widest tabular-nums opacity-55">
+              {reportingLabel}
+            </div>
+          </div>
+
+          {!hasWinner && (
+            <div className="mt-2 h-1.5 w-full rounded-full bg-white/10 overflow-hidden">
+              <div
+                className="h-full bg-white/40 transition-all duration-700 ease-out"
+                style={{ width: `${reporting ?? 0}%` }}
+              />
+            </div>
+          )}
+
+          {/* ✅ NEW — Poll Closing Timer */}
+          <div className="mt-3 flex items-center justify-between">
+            <span className="text-[9px] uppercase font-black tracking-widest opacity-50">
+              Closes {closeTimeLocal}
+            </span>
+            <span
+              className={`text-[10px] font-black tabular-nums ${
+                msLeft && msLeft > 0
+                  ? "text-white"
+                  : "text-red-400"
+              }`}
+            >
+              {countdownLabel}
+            </span>
+          </div>
+
+          {showProjection && (
+            <div className="mt-3">
+              <div className="flex items-center justify-between">
+                <span className="text-[9px] font-black uppercase tracking-widest text-blue-400">
+                  Projected Win
+                </span>
+                <span className="text-[10px] font-black tabular-nums">
+                  {projection!.prob.toFixed(0)}%
+                </span>
+              </div>
+
+              <div className="mt-1 h-1.5 w-full rounded-full bg-white/10 overflow-hidden">
+                <div
+                  className="h-full bg-blue-500 transition-all duration-700 ease-out"
+                  style={{
+                    width: `${Math.max(
+                      0,
+                      Math.min(100, projection!.prob)
+                    )}%`,
+                  }}
+                />
+              </div>
+
+              <div className="mt-1 text-[9px] opacity-40 font-bold truncate">
+                Leader: {projection!.leaderName}
+              </div>
+            </div>
+          )}
+        </div>
+
+        <div className={hasWinner ? "mt-2" : "mt-3"}>
+          {winner ? (
+            <div className="flex items-center gap-2">
+              <div className="flex items-center gap-1.5 px-2 py-0.5 rounded bg-green-500/10 border border-green-500/20">
+                <span className="h-1.5 w-1.5 rounded-full bg-green-400 shadow-[0_0_5px_rgba(74,222,128,0.5)]" />
+                <span className="text-[10px] font-black text-green-400 uppercase tracking-tighter">
+                  Winner: {winner.name}
+                </span>
+              </div>
+            </div>
+          ) : (reporting ?? 0) > 0 ? (
+            <div className="text-[9px] font-bold opacity-30 uppercase tracking-tight italic">
+              Results coming in...
+            </div>
+          ) : (
+            <div className="text-[9px] font-bold opacity-20 uppercase tracking-tight italic">
+              Waiting for polls
+            </div>
+          )}
+        </div>
+      </button>
+    );
+  })}
+</section>
 
         <section className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           <div className="lg:col-span-8 space-y-8">
