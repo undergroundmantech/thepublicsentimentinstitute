@@ -406,3 +406,13 @@ button:active, [role="button"]:active {
   .psi-card, .psi-chip, button, [role="button"] { transition: none !important; }
   .psi-tooltip-pop { animation: none !important; }
 }
+
+@keyframes county-ping {
+  0% { filter: brightness(1); stroke-width: 0.6; }
+  20% { filter: brightness(2.5) saturate(1.5); stroke-width: 2.5; stroke: #ffffff; }
+  100% { filter: brightness(1); stroke-width: 0.6; stroke: var(--border); }
+}
+
+.animate-update {
+  animation: county-ping 1.2s var(--ease-out);
+}
