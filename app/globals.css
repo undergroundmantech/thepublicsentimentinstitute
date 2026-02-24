@@ -1,418 +1,540 @@
 @import "tailwindcss";
 
 /* =========================================================
-   PSI DARK MODERN THEME (clean / no grid)
-   - Removes grid + “weird” background
-   - Keeps subtle premium depth + glass surfaces
-   - Cleaner typography defaults
+   PSI — ELECTION / BROADCAST THEME (PATRIOT EDITION)
+   Color Scheme: Red · Blue · White · Purple on Black/Gray
    ========================================================= */
 
-/* =========================
-   GLOBAL VARIABLES
-   ========================= */
-
+/* -------------------------------------------
+   1) DESIGN TOKENS
+-------------------------------------------- */
 :root {
-  /* Surfaces */
-  --background: #060810;           /* flatter, cleaner base */
-  --surface: rgba(255, 255, 255, 0.035);
-  --surface2: rgba(255, 255, 255, 0.055);
-  --surface3: rgba(255, 255, 255, 0.085);
+  /* Core surfaces */
+  --background:  #070709;
+  --background2: #0b0b0f;
+  --panel:       #0f0f15;
+  --panel2:      #141420;
 
   /* Text */
-  --foreground: rgba(245, 247, 255, 0.96);
-  --muted: rgba(245, 247, 255, 0.68);
-  --muted2: rgba(245, 247, 255, 0.48);
+  --foreground: #f0f0f5;
+  --muted:      rgba(240, 240, 245, 0.62);
+  --muted2:     rgba(240, 240, 245, 0.40);
+  --muted3:     rgba(240, 240, 245, 0.22);
 
   /* Borders */
-  --border: rgba(255, 255, 255, 0.10);
-  --border2: rgba(255, 255, 255, 0.16);
+  --border:  rgba(255, 255, 255, 0.09);
+  --border2: rgba(255, 255, 255, 0.15);
+  --border3: rgba(255, 255, 255, 0.22);
 
-  /* Brand (slightly cooler + cleaner) */
-  --psi-red: #C0263D;
-  --psi-magenta: #8B2C8B;
-  --psi-purple: #5B2BD6;
-  --psi-blue: #2B74FF;
+  /* Primary accent — Electric Indigo / Purple */
+  --purple:      #7c3aed;
+  --purple2:     #9d5cf0;
+  --purple-soft: #a78bfa;
+  --purple-dim:  rgba(124, 58, 237, 0.14);
+  --purple-glow: rgba(124, 58, 237, 0.28);
 
-  --psi-gradient: linear-gradient(
-    90deg,
-    var(--psi-red) 0%,
-    var(--psi-magenta) 45%,
-    var(--psi-purple) 100%
-  );
+  /* Red (Republican / Alert) */
+  --red:      #e63946;
+  --red2:     #ff4d5a;
+  --red-dim:  rgba(230, 57, 70, 0.14);
+  --red-glow: rgba(230, 57, 70, 0.28);
 
-  /* Ambient glows (SUBTLE — not a “weird background”) */
-  --psi-glow: radial-gradient(
-    900px 520px at 20% 10%,
-    rgba(139, 44, 139, 0.14),
-    transparent 62%
-  );
-  --psi-glow2: radial-gradient(
-    820px 520px at 85% 18%,
-    rgba(91, 43, 214, 0.12),
-    transparent 60%
-  );
-  --psi-glow3: radial-gradient(
-    900px 560px at 40% 90%,
-    rgba(192, 38, 61, 0.10),
-    transparent 62%
-  );
+  /* Blue (Democrat / Primary) */
+  --blue:      #2563eb;
+  --blue2:     #3b82f6;
+  --blue-dim:  rgba(37, 99, 235, 0.14);
+  --blue-glow: rgba(37, 99, 235, 0.28);
 
-  /* Elevation */
-  --shadow-sm: 0 1px 2px rgba(0,0,0,0.35);
-  --shadow-md: 0 10px 30px rgba(0,0,0,0.48);
-  --shadow-lg: 0 18px 70px rgba(0,0,0,0.62);
+  /* White accent */
+  --white-accent: rgba(255, 255, 255, 0.92);
+
+  /* Party aliases (keep semantic names for chart code) */
+  --dem: #3b82f6;
+  --rep: #e63946;
+  --win: #4ade80;
+
+  /* Shadows */
+  --shadow-sm:     0 2px 12px rgba(0, 0, 0, 0.60);
+  --shadow-md:     0 10px 40px rgba(0, 0, 0, 0.75);
+  --shadow-purple: 0 0 60px rgba(124, 58, 237, 0.18);
+  --shadow-red:    0 0 60px rgba(230, 57, 70, 0.16);
+  --shadow-blue:   0 0 60px rgba(37, 99, 235, 0.16);
 
   /* Radii */
-  --r-lg: 1.5rem;
-  --r-md: 1.05rem;
-  --r-sm: 0.85rem;
+  --r-sm: 8px;
+  --r-md: 12px;
+  --r-lg: 16px;
+  --r-xl: 20px;
 
-  /* Fonts (prefer modern UI fonts; fallback safe) */
-  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI",
-    Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji",
-    "Segoe UI Emoji";
-  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
-    "Liberation Mono", monospace;
+  /* Fonts (set via next/font) */
+  --font-display: var(--font-display);
+  --font-body:    var(--font-body);
 
-  /* Type feel */
-  --psi-letter-tight: -0.012em;
+  /* Tracking */
+  --trk-1: 0.06em;
+  --trk-2: 0.12em;
+  --trk-3: 0.22em;
 
-  /* Animation */
-  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  /* Motion */
+  --ease-out:  cubic-bezier(0.22, 1, 0.36, 1);
   --ease-soft: cubic-bezier(0.16, 1, 0.3, 1);
   --dur-1: 140ms;
   --dur-2: 220ms;
   --dur-3: 420ms;
-
-  /* Status */
-  --green: #22C55E;
-  --amber: #F59E0B;
-  --red2: #EF4444;
 }
 
-/* =========================
-   BASE
-   ========================= */
+/* -------------------------------------------
+   2) BASE / RESET
+-------------------------------------------- */
+*,
+*::before,
+*::after { box-sizing: border-box; }
 
-html,
-body {
-  height: 100%;
-}
-
-body {
-  color: var(--foreground);
-  font-family: var(--font-sans);
-  line-height: 1.55;
-  letter-spacing: var(--psi-letter-tight);
-  -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
-
-  /* ✅ Clean background: NO GRID */
-  background-color: var(--background);
-
-  /* ✅ Optional ambient depth (still clean) */
-  background-image: var(--psi-glow), var(--psi-glow2), var(--psi-glow3);
-  background-repeat: no-repeat;
-  background-size: auto;
-  background-attachment: fixed;
-
-  /* If you want ZERO glow at all, comment out the 3 lines above and keep background-color only. */
-}
-
-/* Prevent harsh selection */
-::selection {
-  background: rgba(139, 44, 139, 0.24);
-}
+html, body { height: 100%; }
 
 html {
   scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
 }
 
-/* =========================
-   TYPOGRAPHY
-   ========================= */
-
-h1, h2, h3, h4, h5 {
-  font-weight: 700; /* crisper headings */
-  letter-spacing: -0.028em;
+body {
+  margin: 0;
   color: var(--foreground);
+  background: var(--background);
+  font-family: var(--font-body), ui-monospace, SFMono-Regular, Menlo, Monaco,
+    Consolas, "Liberation Mono", monospace;
+  font-size: 15px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
-p, small {
-  color: var(--muted);
+/* Subtle tri-color gradient noise overlay */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse 60% 40% at 15% 20%, rgba(230, 57, 70, 0.04) 0%, transparent 70%),
+    radial-gradient(ellipse 50% 35% at 85% 80%, rgba(37, 99, 235, 0.05) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 30% at 50% 50%, rgba(124, 58, 237, 0.04) 0%, transparent 70%);
 }
 
+/* Selection */
+::selection {
+  background: rgba(124, 58, 237, 0.30);
+  color: #fff;
+}
+
+/* Links */
 a {
-  color: inherit;
+  color: var(--purple-soft);
   text-decoration: none;
+  transition: opacity var(--dur-1) var(--ease-out);
 }
+a:hover { opacity: 0.80; }
 
-/* Accent headline text */
+/* Media */
+img, svg, video, canvas { display: block; max-width: 100%; }
+
+/* Forms */
+button, input, textarea, select { font: inherit; color: inherit; }
+
+/* -------------------------------------------
+   3) TYPOGRAPHY
+-------------------------------------------- */
+h1, h2, h3, h4, h5, h6 {
+  margin: 0 0 0.5em;
+  font-family: var(--font-display), ui-sans-serif, system-ui, sans-serif;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  color: #fff;
+  line-height: 1.05;
+  text-transform: uppercase;
+}
+h1 { line-height: 0.92; margin-bottom: 0.35em; }
+h2 { margin-bottom: 0.45em; }
+h3, h4, h5, h6 { margin-bottom: 0.5em; }
+
+p { margin: 0 0 1em; color: var(--muted); }
+p:last-child { margin-bottom: 0; }
+
+small { color: var(--muted2); }
+
+ul, ol { margin: 0 0 1em; padding-left: 1.25em; color: var(--muted); }
+li { margin: 0.35em 0; }
+
+/* -------------------------------------------
+   4) PSI UTILITY CLASSES
+-------------------------------------------- */
+.psi-label {
+  font-family: var(--font-body), ui-monospace, monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: var(--trk-3);
+  text-transform: uppercase;
+  color: var(--muted2);
+}
+.psi-label-purple { color: var(--purple-soft); }
+.psi-label-red    { color: rgba(230, 57, 70, 0.95); }
+.psi-label-blue   { color: rgba(59, 130, 246, 0.95); }
+
+/* Gradient text — purple-to-blue, echoes the brand */
 .psi-gradient-text {
-  background: var(--psi-gradient);
+  background: linear-gradient(90deg, var(--red2) 0%, var(--purple-soft) 50%, var(--blue2) 100%);
   -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
   background-clip: text;
-  color: transparent;
 }
 
-/* Mono */
 .psi-mono {
-  font-family: var(--font-mono);
+  font-family: var(--font-body), ui-monospace, monospace;
   font-variant-numeric: tabular-nums;
-}
-
-/* =========================
-   SUBTLE PAGE ANIMATION
-   ========================= */
-
-@keyframes psi-fade-up {
-  from { opacity: 0; transform: translateY(10px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-.psi-animate-in {
-  animation: psi-fade-up var(--dur-3) var(--ease-soft) both;
-}
-
-/* (Removed background drift animation entirely to avoid “weird” movement) */
-
-/* =========================
-   GLASS CARD SYSTEM
-   ========================= */
-
-.psi-card {
-  border: 1px solid var(--border);
-  border-radius: var(--r-lg);
-
-  /* cleaner glass */
-  background: linear-gradient(
-    180deg,
-    rgba(255,255,255,0.06),
-    rgba(255,255,255,0.035)
-  );
-
-  box-shadow: var(--shadow-md);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  transition:
-    transform var(--dur-2) var(--ease-out),
-    border-color var(--dur-2) var(--ease-out),
-    box-shadow var(--dur-2) var(--ease-out);
-}
-
-.psi-card:hover {
-  transform: translateY(-2px);
-  border-color: var(--border2);
-  box-shadow: var(--shadow-lg);
-}
-
-.psi-panel {
-  border: 1px solid var(--border);
-  border-radius: var(--r-md);
-  background: rgba(255,255,255,0.035);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  font-feature-settings: "tnum" 1;
 }
 
 .psi-divider {
   height: 1px;
   width: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent);
-}
-
-.psi-lift {
-  transition: transform var(--dur-2) var(--ease-out), box-shadow var(--dur-2) var(--ease-out);
-}
-.psi-lift:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-lg);
-}
-
-/* =========================
-   BUTTONS / CHIPS
-   ========================= */
-
-.psi-chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.45rem;
-  padding: 0.38rem 0.70rem;
-  border-radius: 999px;
-  border: 1px solid var(--border);
-  background: rgba(255,255,255,0.045);
-  color: rgba(245, 247, 255, 0.86);
-  font-size: 0.78rem;
-  font-weight: 650;
-  box-shadow: var(--shadow-sm);
-  transition: transform var(--dur-1) var(--ease-out), border-color var(--dur-1) var(--ease-out);
-}
-
-.psi-chip:hover {
-  transform: translateY(-1px);
-  border-color: var(--border2);
-}
-
-.psi-chip-gradient {
-  border: 1px solid rgba(139, 44, 139, 0.35);
   background: linear-gradient(
     90deg,
-    rgba(192,38,61,0.12),
-    rgba(139,44,139,0.12),
-    rgba(91,43,214,0.12)
+    transparent 0%,
+    var(--border2) 30%,
+    var(--border2) 70%,
+    transparent 100%
   );
 }
 
-button, [role="button"] {
-  transition: transform var(--dur-1) var(--ease-out);
-}
-button:active, [role="button"]:active {
-  transform: translateY(1px);
+/* Tri-color divider variant */
+.psi-divider-tri {
+  height: 2px;
+  width: 100%;
+  background: linear-gradient(
+    90deg,
+    var(--red)    0%,
+    var(--red)    33%,
+    var(--purple) 33%,
+    var(--purple) 66%,
+    var(--blue)   66%,
+    var(--blue)   100%
+  );
+  opacity: 0.55;
 }
 
-/* =========================
-   TABLES (POLLING / RESULTS)
-   ========================= */
+/* -------------------------------------------
+   5) SURFACES
+-------------------------------------------- */
+.psi-card {
+  background: linear-gradient(180deg, var(--panel) 0%, var(--background2) 100%);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-md);
+  transition:
+    transform    var(--dur-2) var(--ease-out),
+    border-color var(--dur-2) var(--ease-out),
+    box-shadow   var(--dur-2) var(--ease-out);
+}
+.psi-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(124, 58, 237, 0.28);
+  box-shadow: var(--shadow-md), var(--shadow-purple);
+}
 
+.psi-card-active {
+  border-color: rgba(124, 58, 237, 0.55);
+  box-shadow: var(--shadow-md), 0 0 0 1px rgba(124, 58, 237, 0.15);
+}
+
+/* Red accent card (Republican / Alert) */
+.psi-card-red:hover {
+  border-color: rgba(230, 57, 70, 0.28);
+  box-shadow: var(--shadow-md), var(--shadow-red);
+}
+
+/* Blue accent card (Democrat / Info) */
+.psi-card-blue:hover {
+  border-color: rgba(37, 99, 235, 0.28);
+  box-shadow: var(--shadow-md), var(--shadow-blue);
+}
+
+.psi-glass {
+  background: rgba(10, 10, 18, 0.78);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  box-shadow: var(--shadow-md);
+}
+
+.psi-inset {
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+}
+
+/* -------------------------------------------
+   6) BUTTONS / BADGES
+-------------------------------------------- */
+a.psi-btn,
+button.psi-btn,
+.psi-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.65rem 1rem;
+  border-radius: 0;
+  border: 1px solid var(--border);
+  background: transparent;
+  font-family: var(--font-body), ui-monospace, monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: var(--trk-2);
+  text-transform: uppercase;
+  line-height: 1;
+  transition:
+    background    var(--dur-1) var(--ease-out),
+    border-color  var(--dur-1) var(--ease-out),
+    transform     var(--dur-1) var(--ease-out),
+    opacity       var(--dur-1) var(--ease-out);
+  user-select: none;
+  cursor: pointer;
+}
+a.psi-btn:hover,
+button.psi-btn:hover { opacity: 0.95; }
+a.psi-btn:active,
+button.psi-btn:active { transform: translateY(1px); opacity: 0.9; }
+
+/* Primary — purple */
+.psi-btn-primary {
+  background: var(--purple);
+  border-color: rgba(124, 58, 237, 0.65);
+  color: #fff;
+}
+.psi-btn-primary:hover {
+  background: var(--purple2);
+  border-color: rgba(157, 92, 240, 0.75);
+}
+
+/* Red variant */
+.psi-btn-red {
+  background: var(--red);
+  border-color: rgba(230, 57, 70, 0.65);
+  color: #fff;
+}
+.psi-btn-red:hover {
+  background: var(--red2);
+  border-color: rgba(255, 77, 90, 0.75);
+}
+
+/* Blue variant */
+.psi-btn-blue {
+  background: var(--blue);
+  border-color: rgba(37, 99, 235, 0.65);
+  color: #fff;
+}
+.psi-btn-blue:hover {
+  background: var(--blue2);
+  border-color: rgba(59, 130, 246, 0.75);
+}
+
+/* Ghost */
+.psi-btn-ghost {
+  background: transparent;
+  color: rgba(255, 255, 255, 0.70);
+}
+.psi-btn-ghost:hover {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.18);
+  color: rgba(255, 255, 255, 0.92);
+}
+
+/* Badges */
+.psi-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.2rem 0.55rem;
+  border-radius: 0;
+  font-family: var(--font-body), ui-monospace, monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: var(--trk-2);
+  text-transform: uppercase;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--muted2);
+}
+
+.psi-badge-purple {
+  border-color: rgba(124, 58, 237, 0.45);
+  background: rgba(124, 58, 237, 0.08);
+  color: var(--purple-soft);
+}
+
+.psi-badge-red {
+  border-color: rgba(230, 57, 70, 0.35);
+  background: rgba(230, 57, 70, 0.08);
+  color: rgba(230, 57, 70, 0.95);
+}
+
+.psi-badge-blue {
+  border-color: rgba(59, 130, 246, 0.35);
+  background: rgba(59, 130, 246, 0.08);
+  color: rgba(59, 130, 246, 0.95);
+}
+
+.psi-badge-live {
+  border-color: rgba(230, 57, 70, 0.35);
+  background: rgba(230, 57, 70, 0.10);
+  color: rgba(230, 57, 70, 0.95);
+}
+
+.psi-live-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--rep);
+  box-shadow: 0 0 10px rgba(230, 57, 70, 0.6);
+  animation: psi-pulse 2s infinite;
+}
+
+@keyframes psi-pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.40; }
+}
+
+/* -------------------------------------------
+   7) TOOLTIP / POPOVERS
+-------------------------------------------- */
+.psi-tooltip {
+  position: relative;
+  border-radius: 0;
+  border: 1px solid rgba(124, 58, 237, 0.55);
+  background: rgba(10, 10, 18, 0.94);
+  color: var(--foreground);
+  box-shadow: var(--shadow-md), 0 0 40px rgba(0, 0, 0, 0.8);
+  font-family: var(--font-body), ui-monospace, monospace;
+}
+.psi-tooltip::before {
+  content: "";
+  position: absolute;
+  top: -1px; left: -1px; right: -1px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--red) 0%, var(--purple) 50%, var(--blue) 100%);
+}
+
+/* -------------------------------------------
+   8) TABLES
+-------------------------------------------- */
 .psi-table {
   width: 100%;
   border-collapse: separate;
   border-spacing: 0;
   border: 1px solid var(--border);
-  border-radius: var(--r-md);
+  border-radius: 0;
   overflow: hidden;
-  background: rgba(255,255,255,0.03);
+  background: var(--panel);
   box-shadow: var(--shadow-sm);
 }
-
 .psi-table thead th {
   text-align: left;
-  font-size: 0.72rem;
-  letter-spacing: 0.12em;
+  font-family: var(--font-body), ui-monospace, monospace;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: var(--trk-2);
   text-transform: uppercase;
-  color: var(--muted2);
-  background: rgba(255,255,255,0.03);
+  color: rgba(255, 255, 255, 0.30);
+  background: var(--background2);
   border-bottom: 1px solid var(--border);
-  padding: 12px 14px;
+  padding: 10px 14px;
+  white-space: nowrap;
 }
-
 .psi-table tbody td {
-  padding: 12px 14px;
-  border-bottom: 1px solid var(--border);
+  padding: 10px 14px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
   font-size: 0.95rem;
-  color: rgba(245, 247, 255, 0.92);
+  color: rgba(255, 255, 255, 0.85);
 }
-
-.psi-table tbody tr {
-  transition: background var(--dur-1) var(--ease-out);
-}
-
 .psi-table tbody tr:hover td {
-  background: rgba(139, 44, 139, 0.07);
+  background: rgba(124, 58, 237, 0.04);
 }
-
-.psi-table tbody tr:last-child td {
-  border-bottom: none;
-}
-
 .psi-num {
   text-align: right;
   font-variant-numeric: tabular-nums;
-  font-family: var(--font-mono);
+  font-family: var(--font-body), ui-monospace, monospace;
 }
 
-/* =========================
-   TOOLTIP / POPOVERS
-   ========================= */
-
-.psi-tooltip {
-  border-radius: 1rem;
-  border: 1px solid var(--border);
-  background: rgba(6, 8, 16, 0.86);
-  color: rgba(245, 247, 255, 0.92);
-  box-shadow: var(--shadow-lg);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-}
-
-@keyframes psi-pop {
-  from { opacity: 0; transform: translateY(6px) scale(0.98); }
-  to   { opacity: 1; transform: translateY(0) scale(1); }
-}
-.psi-tooltip-pop {
-  animation: psi-pop 180ms var(--ease-soft) both;
-}
-
-/* =========================
-   RECHARTS POLISH
-   ========================= */
-
-.recharts-text,
-.recharts-cartesian-axis-tick-value {
-  fill: rgba(245, 247, 255, 0.70) !important;
-}
-
-.recharts-legend-item-text {
-  color: rgba(245, 247, 255, 0.78) !important;
-}
-
-.recharts-cartesian-grid line {
-  stroke: rgba(255, 255, 255, 0.10) !important;
-}
-
-.recharts-brush .recharts-brush-slide {
-  fill: rgba(255, 255, 255, 0.05) !important;
-  stroke: rgba(255, 255, 255, 0.14) !important;
-}
-
-.recharts-brush .recharts-brush-traveller {
-  fill: rgba(255, 255, 255, 0.10) !important;
-  stroke: rgba(255, 255, 255, 0.18) !important;
-}
-
-/* =========================
-   SCROLLBAR POLISH (optional)
-   ========================= */
-
+/* -------------------------------------------
+   9) SCROLLBAR
+-------------------------------------------- */
 * {
   scrollbar-width: thin;
-  scrollbar-color: rgba(255,255,255,0.18) transparent;
+  scrollbar-color: rgba(255, 255, 255, 0.14) transparent;
+}
+*::-webkit-scrollbar { width: 4px; height: 4px; }
+*::-webkit-scrollbar-track { background: #0f0f15; }
+*::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.12); }
+*::-webkit-scrollbar-thumb:hover { background: rgba(124, 58, 237, 0.55); }
+
+/* -------------------------------------------
+   10) RECHARTS POLISH
+-------------------------------------------- */
+.recharts-text,
+.recharts-cartesian-axis-tick-value {
+  fill: rgba(255, 255, 255, 0.32) !important;
+  font-family: var(--font-body), ui-monospace, monospace !important;
+  font-size: 0.70rem !important;
+  letter-spacing: 0.05em !important;
+}
+.recharts-cartesian-grid line {
+  stroke: rgba(255, 255, 255, 0.06) !important;
+}
+.recharts-tooltip-wrapper .recharts-default-tooltip {
+  background: rgba(10, 10, 18, 0.94) !important;
+  border: 1px solid rgba(124, 58, 237, 0.55) !important;
+  border-radius: 0 !important;
+  box-shadow: var(--shadow-md) !important;
 }
 
-*::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
+/* -------------------------------------------
+   11) ANIMATIONS
+-------------------------------------------- */
+@keyframes psi-fade-up {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
-*::-webkit-scrollbar-thumb {
-  background: rgba(255,255,255,0.14);
-  border-radius: 999px;
-  border: 2px solid transparent;
-  background-clip: content-box;
-}
-*::-webkit-scrollbar-thumb:hover {
-  background: rgba(255,255,255,0.22);
-  border: 2px solid transparent;
-  background-clip: content-box;
-}
-*::-webkit-scrollbar-track {
-  background: transparent;
+.psi-animate-in {
+  animation: psi-fade-up var(--dur-3) var(--ease-soft) both;
 }
 
-/* =========================
-   REDUCED MOTION
-   ========================= */
-
-@media (prefers-reduced-motion: reduce) {
-  .psi-animate-in { animation: none !important; }
-  .psi-card, .psi-chip, button, [role="button"] { transition: none !important; }
-  .psi-tooltip-pop { animation: none !important; }
+/* County map pop */
+.county-pop { animation: countyPop 520ms ease-out; }
+@keyframes countyPop {
+  0%   { filter: drop-shadow(0 0 0px rgba(124, 58, 237, 0)); transform: scale(1); }
+  45%  { filter: drop-shadow(0 0 12px rgba(124, 58, 237, 0.45)); transform: scale(1.003); }
+  100% { filter: drop-shadow(0 0 6px rgba(124, 58, 237, 0.18)); transform: scale(1); }
 }
 
 @keyframes county-ping {
-  0% { filter: brightness(1); stroke-width: 0.6; }
-  20% { filter: brightness(2.5) saturate(1.5); stroke-width: 2.5; stroke: #ffffff; }
+  0%   { filter: brightness(1); stroke-width: 0.6; }
+  20%  { filter: brightness(2.5) saturate(1.5); stroke-width: 2.5; stroke: #ffffff; }
   100% { filter: brightness(1); stroke-width: 0.6; stroke: var(--border); }
 }
+.animate-update { animation: county-ping 1.2s var(--ease-out); }
 
-.animate-update {
-  animation: county-ping 1.2s var(--ease-out);
+/* -------------------------------------------
+   12) REDUCED MOTION
+-------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .psi-animate-in,
+  .county-pop,
+  .animate-update { animation: none !important; }
+  .psi-card,
+  .psi-btn { transition: none !important; }
 }
+
