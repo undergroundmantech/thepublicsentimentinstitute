@@ -7,7 +7,7 @@ import React, { useEffect, useMemo, useState } from "react";
 
 const nav = [
   { href: "/", label: "Home" },
-  { href: "/donate", label: "Public Polling Fund" },
+  { href: "/floridapoll", label: "Latest Poll Results" },
   { href: "/results", label: "Election Results" },
   { href: "/electoralmap", label: "Interactive Maps" },
   { href: "/polling", label: "Polling Averages" },
