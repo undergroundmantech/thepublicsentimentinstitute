@@ -1,6 +1,7 @@
 "use client";
 
-import { useMemo } from "react";
+import React, { useMemo } from "react";
+import Link from "next/link";
 
 /**
  * POLL META
@@ -154,8 +155,7 @@ const ISRAEL_PAC: IsraelPACRow[] = [
   { label: "More likely to vote for them", pct: 25.3 },
 ];
 
-/* ---------- helpers ---------- */
-
+/* ---------- helpers (UNCHANGED behavior) ---------- */
 function clampPct(v: number) {
   return Math.max(0, Math.min(100, v));
 }
@@ -179,35 +179,131 @@ function netApprove(row: ApprovalRow) {
   return row.approve - row.disapprove;
 }
 
-function StatPill({ label, value }: { label: string; value: string | number }) {
+/* ---------- UI blocks (coded like your HomePage) ---------- */
+
+function TriColorTop() {
   return (
-    <div className="flex items-center justify-between gap-3 rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3">
-      <span className="text-[10px] font-black uppercase tracking-[0.3em] text-white/35">
-        {label}
-      </span>
-      <span className="font-mono text-sm font-black text-white/80">{value}</span>
+    <div
+      className="h-[3px] w-full"
+      style={{
+        background:
+          "linear-gradient(90deg, var(--red) 0%, var(--red) 33%, var(--purple) 33%, var(--purple) 66%, var(--blue) 66%, var(--blue) 100%)",
+      }}
+    />
+  );
+}
+
+function SectionHeader({
+  kicker,
+  title,
+  sub,
+}: {
+  kicker: string;
+  title: React.ReactNode;
+  sub?: string;
+}) {
+  return (
+    <div className="psi-animate-in">
+      <div
+        className="psi-mono"
+        style={{ fontSize: "9px", fontWeight: 700, letterSpacing: "0.28em", color: "var(--purple-soft)" }}
+      >
+        {kicker}
+      </div>
+      <h2
+        className="mt-2"
+        style={{
+          fontFamily: "var(--font-display), ui-sans-serif, system-ui",
+          fontSize: "clamp(28px, 4vw, 40px)",
+          fontWeight: 800,
+          textTransform: "uppercase",
+          letterSpacing: "0.04em",
+          color: "#fff",
+          lineHeight: 1,
+        }}
+      >
+        {title}
+      </h2>
+      {sub ? (
+        <p className="mt-3 text-sm sm:text-base max-w-3xl" style={{ color: "var(--muted2)" }}>
+          {sub}
+        </p>
+      ) : null}
     </div>
   );
 }
 
-function SectionTitle({
-  kicker,
-  title,
-  desc,
+function MetricCard({ k, v }: { k: string; v: string }) {
+  return (
+    <div className="border px-3 py-3" style={{ borderColor: "var(--border)", background: "var(--panel)" }}>
+      <div className="psi-mono" style={{ fontSize: "8px", letterSpacing: "0.2em", color: "var(--muted3)" }}>
+        {k}
+      </div>
+      <div
+        className="mt-1"
+        style={{
+          fontFamily: "var(--font-display), ui-sans-serif, system-ui",
+          fontSize: "13px",
+          fontWeight: 800,
+          textTransform: "uppercase",
+          letterSpacing: "0.03em",
+          color: "#fff",
+        }}
+      >
+        {v}
+      </div>
+    </div>
+  );
+}
+
+function CompactTable({
+  columns,
+  rows,
+  rightAlignCols = [],
 }: {
-  kicker?: string;
-  title: string;
-  desc?: string;
+  columns: string[];
+  rows: (string | number)[][];
+  rightAlignCols?: number[];
 }) {
   return (
-    <div className="space-y-2 border-l-4 border-blue-600 pl-6">
-      {kicker ? (
-        <p className="text-[10px] font-black uppercase tracking-[0.35em] text-blue-400/80">
-          {kicker}
-        </p>
-      ) : null}
-      <h2 className="text-3xl font-black tracking-tight uppercase">{title}</h2>
-      {desc ? <p className="text-white/50 text-lg">{desc}</p> : null}
+    <div className="overflow-x-auto border" style={{ borderColor: "var(--border)", background: "var(--panel)" }}>
+      <table className="min-w-[980px] w-full text-left">
+        <thead style={{ background: "rgba(255,255,255,0.04)" }}>
+          <tr>
+            {columns.map((c, i) => (
+              <th
+                key={c}
+                className={[
+                  "px-4 py-3",
+                  rightAlignCols.includes(i) ? "text-right" : "text-left",
+                ].join(" ")}
+              >
+                <span className="psi-mono" style={{ fontSize: "9px", letterSpacing: "0.22em", color: "var(--muted3)" }}>
+                  {c}
+                </span>
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map((r, idx) => (
+            <tr key={idx} style={{ borderTop: "1px solid var(--border)" }}>
+              {r.map((cell, i) => (
+                <td
+                  key={i}
+                  className={[
+                    "px-4 py-3 text-sm whitespace-nowrap",
+                    rightAlignCols.includes(i) ? "text-right psi-mono font-semibold" : "text-left",
+                  ].join(" ")}
+                  style={{ color: "rgba(255,255,255,0.78)" }}
+                >
+                  {typeof cell === "number" ? cell.toFixed(1) : cell}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }
@@ -226,172 +322,81 @@ function InlineBar({
   undecidedPct: number;
 }) {
   const total = leftPct + rightPct + undecidedPct;
-  const d = total ? (leftPct / total) * 100 : 0;
-  const r = total ? (rightPct / total) * 100 : 0;
+  const a = total ? (leftPct / total) * 100 : 0;
+  const b = total ? (rightPct / total) * 100 : 0;
   const u = total ? (undecidedPct / total) * 100 : 0;
 
   return (
-    <div className="space-y-2">
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 text-[11px] font-bold text-white/70">
-        <span className="text-blue-300">
-          {leftLabel}: {leftPct.toFixed(1)}%
+    <div className="space-y-3">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+        <span className="psi-mono" style={{ fontSize: "10px", letterSpacing: "0.18em", color: "var(--muted3)" }}>
+          {leftLabel}: <span style={{ color: "#fff", fontWeight: 800 }}>{leftPct.toFixed(1)}%</span>
         </span>
-        <span className="text-red-300">
-          {rightLabel}: {rightPct.toFixed(1)}%
+        <span className="psi-mono" style={{ fontSize: "10px", letterSpacing: "0.18em", color: "var(--muted3)" }}>
+          {rightLabel}: <span style={{ color: "#fff", fontWeight: 800 }}>{rightPct.toFixed(1)}%</span>
         </span>
       </div>
 
-      <div className="h-3 w-full overflow-hidden rounded-full border border-white/10 bg-white/[0.03]">
-        <div className="flex h-full w-full">
-          <div className="h-full bg-blue-600/80" style={{ width: `${clampPct(d)}%` }} />
-          <div className="h-full bg-red-600/80" style={{ width: `${clampPct(r)}%` }} />
-          <div className="h-full bg-white/20" style={{ width: `${clampPct(u)}%` }} />
+      <div className="h-[3px] w-full" style={{ background: "var(--border)" }}>
+        <div className="h-full flex">
+          <div className="h-full" style={{ width: `${clampPct(a)}%`, background: "var(--blue)" }} />
+          <div className="h-full" style={{ width: `${clampPct(b)}%`, background: "var(--red)" }} />
+          <div className="h-full" style={{ width: `${clampPct(u)}%`, background: "rgba(255,255,255,0.18)" }} />
         </div>
       </div>
 
-      <div className="flex items-center justify-between text-[10px] font-black uppercase tracking-[0.28em] text-white/30">
-        <span>Undecided: {undecidedPct.toFixed(1)}%</span>
-        <span>Total: {(leftPct + rightPct + undecidedPct).toFixed(1)}%</span>
+      <div className="flex items-center justify-between">
+        <span className="psi-mono" style={{ fontSize: "9px", letterSpacing: "0.18em", color: "var(--muted3)" }}>
+          UNDECIDED {undecidedPct.toFixed(1)}%
+        </span>
+        <span className="psi-mono" style={{ fontSize: "9px", letterSpacing: "0.18em", color: "var(--muted3)" }}>
+          TOTAL {(leftPct + rightPct + undecidedPct).toFixed(1)}%
+        </span>
       </div>
     </div>
   );
 }
 
-function Card({
-  title,
-  note,
-  children,
-}: {
-  title: string;
-  note?: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <div className="rounded-[2rem] border border-white/10 bg-white/[0.02] p-6 backdrop-blur-xl">
-      <div className="mb-4 flex items-center justify-between gap-4">
-        <h3 className="text-sm font-black uppercase tracking-[0.25em] text-white/70">
-          {title}
-        </h3>
-        {note ? (
-          <span className="text-[10px] font-black uppercase tracking-[0.25em] text-white/25">
-            {note}
-          </span>
-        ) : null}
-      </div>
-      {children}
-    </div>
-  );
-}
-
-function TableWrap({ children }: { children: React.ReactNode }) {
-  return (
-    <div className="overflow-x-auto rounded-2xl border border-white/10 bg-black/20">
-      {children}
-    </div>
-  );
-}
-
-function CompactTable({
-  columns,
-  rows,
-  rightAlignCols = [],
-}: {
-  columns: string[];
-  rows: (string | number)[][];
-  rightAlignCols?: number[];
-}) {
-  return (
-    <TableWrap>
-      <table className="min-w-[760px] w-full text-left">
-        <thead className="bg-white/[0.04]">
-          <tr>
-            {columns.map((c, i) => (
-              <th
-                key={c}
-                className={[
-                  "px-4 py-3 text-[10px] font-black uppercase tracking-[0.28em] text-white/60",
-                  rightAlignCols.includes(i) ? "text-right" : "text-left",
-                ].join(" ")}
-              >
-                {c}
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {rows.map((r, idx) => (
-            <tr key={idx} className="border-t border-white/10">
-              {r.map((cell, i) => (
-                <td
-                  key={i}
-                  className={[
-                    "px-4 py-3 text-sm text-white/80 whitespace-nowrap",
-                    rightAlignCols.includes(i) ? "text-right font-mono" : "text-left",
-                  ].join(" ")}
-                >
-                  {typeof cell === "number" ? cell.toFixed(1) : cell}
-                </td>
-              ))}
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </TableWrap>
-  );
-}
-
-function RankedBars({
-  items,
-  undecided,
-  color,
-}: {
-  items: PrimaryRow[];
-  undecided: number;
-  color: "red" | "blue";
-}) {
+function RankedBars({ items, undecided }: { items: PrimaryRow[]; undecided: number }) {
   const max = Math.max(...items.map((x) => x.pct), undecided);
-
   return (
-    <div className="space-y-3">
+    <div className="space-y-4">
       {items.map((it) => {
         const w = max ? (it.pct / max) * 100 : 0;
         return (
-          <div key={it.name} className="space-y-1">
+          <div key={it.name}>
             <div className="flex items-center justify-between gap-4">
-              <span className="text-sm font-semibold text-white/85">{it.name}</span>
-              <span className="font-mono text-sm font-black text-white/70">
+              <div style={{ color: "#fff", fontWeight: 700 }}>{it.name}</div>
+              <div className="psi-mono" style={{ color: "var(--muted2)", fontWeight: 800 }}>
                 {it.pct.toFixed(1)}%
-              </span>
+              </div>
             </div>
-            <div className="h-2.5 w-full overflow-hidden rounded-full border border-white/10 bg-white/[0.03]">
-              <div
-                className={[
-                  "h-full",
-                  color === "red" ? "bg-red-600/80" : "bg-blue-600/80",
-                ].join(" ")}
-                style={{ width: `${clampPct(w)}%` }}
-              />
+            <div className="mt-2 h-[3px] w-full" style={{ background: "var(--border)" }}>
+              <div className="h-full" style={{ width: `${clampPct(w)}%`, background: "var(--purple-soft)" }} />
             </div>
           </div>
         );
       })}
 
-      <div className="pt-2 space-y-1">
+      <div style={{ borderTop: "1px solid var(--border)" }} className="pt-4">
         <div className="flex items-center justify-between gap-4">
-          <span className="text-sm font-semibold text-white/55">Undecided</span>
-          <span className="font-mono text-sm font-black text-white/70">
+          <div style={{ color: "var(--muted2)", fontWeight: 700 }}>Undecided</div>
+          <div className="psi-mono" style={{ color: "var(--muted2)", fontWeight: 800 }}>
             {undecided.toFixed(1)}%
-          </span>
+          </div>
         </div>
-        <div className="h-2.5 w-full overflow-hidden rounded-full border border-white/10 bg-white/[0.03]">
-          <div className="h-full bg-white/25" style={{ width: `${clampPct((undecided / max) * 100)}%` }} />
+        <div className="mt-2 h-[3px] w-full" style={{ background: "var(--border)" }}>
+          <div
+            className="h-full"
+            style={{ width: `${clampPct(max ? (undecided / max) * 100 : 0)}%`, background: "rgba(255,255,255,0.18)" }}
+          />
         </div>
       </div>
     </div>
   );
 }
 
-/* ---------- page ---------- */
+/* ---------- page (UPDATED to match HomePage code style) ---------- */
 
 export default function PollReleasePage() {
   const generalDerived = useMemo(() => {
@@ -402,299 +407,596 @@ export default function PollReleasePage() {
     });
   }, []);
 
+  const metrics = [
+    { k: "RELEASED", v: POLL.releaseDate.toUpperCase() },
+    { k: "ADULTS (N)", v: String(POLL.sample.adults) },
+    { k: "REGISTERED (N)", v: String(POLL.sample.registeredVoters) },
+    { k: "LIKELY (N)", v: String(POLL.sample.likelyVoters) },
+    { k: "MOE (ADULTS)", v: POLL.moe.adults },
+    { k: "MOE (LV)", v: POLL.moe.lv },
+  ];
+
   return (
-    <main className="min-h-screen flex flex-col items-center pt-12 pb-24 px-4 bg-transparent text-white">
-      <div className="w-full max-w-6xl space-y-12">
-        {/* Header */}
-        <header className="space-y-5 text-center">
-          <div className="inline-flex items-center gap-3 px-4 py-1.5 bg-white/5 border border-white/10 rounded-full">
-            <span className="uppercase tracking-[0.2em] text-[10px] font-black text-blue-400">
-              {POLL.org} poll
+    <div className="space-y-12">
+      {/* ── HERO ── */}
+      <section className="grid gap-8 lg:grid-cols-2 lg:items-start">
+        {/* Left — copy */}
+        <div className="psi-animate-in max-w-prose lg:max-w-none">
+          {/* Live badge */}
+          <div
+            className="mb-5 inline-flex items-center gap-3 border px-3 py-2"
+            style={{ borderColor: "var(--border)", background: "var(--panel)" }}
+          >
+            <span className="psi-live-dot" />
+            <span
+              className="psi-mono"
+              style={{ fontSize: "9px", fontWeight: 700, letterSpacing: "0.28em", color: "var(--purple-soft)" }}
+            >
+              POLL RELEASE
             </span>
-            <span className="text-white/20 text-xs font-black">•</span>
-            <span className="uppercase tracking-[0.2em] text-[10px] font-black text-white/35">
-              Released {POLL.releaseDate}
+            <span className="h-3 w-px" style={{ background: "var(--border3)" }} />
+            <span className="psi-mono" style={{ fontSize: "9px", letterSpacing: "0.22em", color: "var(--muted3)" }}>
+              DISCLOSURE-FIRST
             </span>
           </div>
 
-          <h1 className="text-5xl md:text-7xl font-black tracking-tighter leading-none italic">
-            {POLL.title}
-            <br />
-            <span className="text-white/30 not-italic">{POLL.subtitle}</span>
+          {/* Headline */}
+          <h1
+            style={{
+              fontFamily: "var(--font-display), ui-sans-serif, system-ui",
+              fontSize: "clamp(32px, 3.8vw, 52px)",
+              fontWeight: 800,
+              textTransform: "uppercase",
+              letterSpacing: "0.02em",
+              lineHeight: 1.0,
+              color: "#fff",
+            }}
+          >
+            {POLL.title} <span className="psi-gradient-text">Toplines</span>
           </h1>
 
-          <p className="mx-auto max-w-3xl text-white/55 text-lg leading-relaxed">
+          <h2
+            className="mt-4"
+            style={{
+              fontFamily: "var(--font-display), ui-sans-serif, system-ui",
+              fontSize: "clamp(14px, 1.6vw, 18px)",
+              fontWeight: 600,
+              textTransform: "uppercase",
+              letterSpacing: "0.04em",
+              color: "var(--muted)",
+            }}
+          >
+            {POLL.org} · <span className="psi-gradient-text">{POLL.subtitle}</span>
+          </h2>
+
+          <p className="mt-4 text-base sm:text-lg" style={{ color: "var(--muted)" }}>
             A statewide Florida survey of{" "}
-            <span className="font-bold text-white/80">{POLL.sample.adults} adults</span>{" "}
-            (including{" "}
-            <span className="font-bold text-white/80">{POLL.sample.registeredVoters} registered voters</span>{" "}
-            and a modeled universe of{" "}
-            <span className="font-bold text-white/80">{POLL.sample.likelyVoters} likely voters</span>
-            ) provides an early snapshot of the 2026 governor’s race, primaries, and the broader approval/policy climate.
+            <span style={{ color: "#fff", fontWeight: 800 }}>{POLL.sample.adults} adults</span> (including{" "}
+            <span style={{ color: "#fff", fontWeight: 800 }}>{POLL.sample.registeredVoters} registered voters</span> and a
+            modeled universe of{" "}
+            <span style={{ color: "#fff", fontWeight: 800 }}>{POLL.sample.likelyVoters} likely voters</span>) provides an
+            early snapshot of the 2026 governor’s race, primaries, and the broader approval/policy climate.
           </p>
 
-          <div className="grid grid-cols-1 md:grid-cols-5 gap-3 max-w-5xl mx-auto">
-            <StatPill label="Adults (n)" value={POLL.sample.adults} />
-            <StatPill label="Registered (n)" value={POLL.sample.registeredVoters} />
-            <StatPill label="Likely (n)" value={POLL.sample.likelyVoters} />
-            <StatPill label="MOE (Adults)" value={POLL.moe.adults} />
-            <StatPill label="MOE (LV)" value={POLL.moe.lv} />
+          <p className="mt-3 text-sm sm:text-base" style={{ color: "var(--muted2)" }}>
+            We completely understand that a <span style={{ color: "#fff", fontWeight: 800 }}>200 adult</span> sample is low.
+            We will return to the field in about <span style={{ color: "#fff", fontWeight: 800 }}>2 weeks</span> and poll{" "}
+            <span style={{ color: "#fff", fontWeight: 800 }}>200 more</span>, releasing the second set and the combined{" "}
+            <span style={{ color: "#fff", fontWeight: 800 }}>n=400</span>. Fielded on the{" "}
+            <span style={{ color: "#fff", fontWeight: 800 }}>Pollfish IDE Panel</span>.
+          </p>
+
+          {/* Metrics strip */}
+          <div className="mt-6 grid grid-cols-2 sm:grid-cols-3 gap-2 max-w-xl">
+            {metrics.map((m) => (
+              <MetricCard key={m.k} k={m.k} v={m.v} />
+            ))}
           </div>
 
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
-            <a
+          {/* CTAs */}
+          <div className="mt-8 flex flex-col sm:flex-row flex-wrap gap-3">
+            <Link
               href={POLL.links.crosstabs}
+              className="psi-btn psi-btn-primary"
+              style={{ padding: "12px 24px", fontSize: "11px", letterSpacing: "0.22em" }}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center justify-center rounded-2xl border border-white/10 bg-white/[0.03] px-5 py-4 text-[11px] font-black uppercase tracking-[0.28em] text-white/80 hover:bg-white/[0.06] transition"
             >
-              View Crosstabs
-            </a>
-            <a
+              VIEW CROSSTABS →
+            </Link>
+            <Link
               href={POLL.links.questionnaire}
+              className="psi-btn psi-btn-ghost"
+              style={{ padding: "12px 24px", fontSize: "11px", letterSpacing: "0.22em" }}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center justify-center rounded-2xl border border-white/10 bg-white/[0.03] px-5 py-4 text-[11px] font-black uppercase tracking-[0.28em] text-white/80 hover:bg-white/[0.06] transition"
             >
-              View Questionnaire
-            </a>
+              VIEW QUESTIONNAIRE
+            </Link>
           </div>
-        </header>
+        </div>
 
-        {/* Disclaimer */}
-        <section className="rounded-[2rem] border border-white/10 bg-white/[0.02] p-8">
-          <div className="rounded-2xl border border-amber-400/20 bg-amber-400/10 p-5">
-            <div className="text-[10px] font-black uppercase tracking-[0.3em] text-amber-200/90">
-              DISCLAIMER
+        {/* Right — feature card (Key findings) */}
+        <div
+          className="psi-card w-full max-w-xl lg:max-w-none mx-auto overflow-hidden"
+          style={{ border: "1px solid var(--border)", background: "var(--panel)" }}
+        >
+          <TriColorTop />
+          <div className="p-5 sm:p-6">
+            <div className="flex items-start justify-between gap-4">
+              <div>
+                <div
+                  className="psi-mono"
+                  style={{ fontSize: "9px", fontWeight: 700, letterSpacing: "0.25em", color: "var(--purple-soft)" }}
+                >
+                  QUICK READ
+                </div>
+                <div
+                  className="mt-2"
+                  style={{
+                    fontFamily: "var(--font-display), ui-sans-serif, system-ui",
+                    fontSize: "22px",
+                    fontWeight: 800,
+                    textTransform: "uppercase",
+                    letterSpacing: "0.04em",
+                    color: "#fff",
+                  }}
+                >
+                  What stands out
+                </div>
+              </div>
+              <div className="psi-mono hidden sm:block" style={{ fontSize: "9px", letterSpacing: "0.22em", color: "var(--muted3)" }}>
+                PSI · FL · v0.1
+              </div>
             </div>
-            <p className="mt-2 text-white/70 leading-relaxed">
-              We completely understand that a <span className="font-bold text-white/85">200 adult</span> sample is low.
-              We will return to the field in about <span className="font-bold text-white/85">2 weeks</span> and poll{" "}
-              <span className="font-bold text-white/85">200 more</span>, releasing the second set and the combined{" "}
-              <span className="font-bold text-white/85">n=400</span>. This poll was conducted using the{" "}
-              <span className="font-bold text-white/85">Pollfish IDE Panel</span>. MOE is {POLL.moe.adults} (Adults) to{" "}
-              {POLL.moe.lv} (LV), depending on the screen.
-            </p>
-          </div>
-        </section>
 
-        {/* General election */}
-        <section className="space-y-8">
-          <SectionTitle
-            kicker="Toplines"
+            <div className="my-5 psi-divider" />
+
+            <ul className="space-y-4">
+              {[
+                {
+                  title: "General ballots: Jolly ahead",
+                  sub: `Both tests show Jolly leading with sizable undecided.`,
+                  accent: "var(--blue2)",
+                },
+                {
+                  title: "Primaries: big undecided",
+                  sub: `Neither party close to consolidation; early sorting only.`,
+                  accent: "var(--purple-soft)",
+                },
+                {
+                  title: "Issue approvals: mixed environment",
+                  sub: `Approval varies sharply by issue for Trump/DeSantis.`,
+                  accent: "var(--red2)",
+                },
+                {
+                  title: "Policy terrain: broad support on housing/insurance",
+                  sub: `Several policies test strongly above 60% approval.`,
+                  accent: "var(--purple-soft)",
+                },
+              ].map((f) => (
+                <li key={f.title} className="flex gap-3">
+                  <span
+                    className="mt-[7px] h-2 w-2 rounded-full flex-none"
+                    style={{
+                      background: f.accent,
+                      boxShadow: `0 0 10px rgba(124,58,237,0.30)`,
+                    }}
+                  />
+                  <span className="min-w-0">
+                    <span
+                      style={{
+                        fontFamily: "var(--font-display), ui-sans-serif, system-ui",
+                        fontSize: "14px",
+                        fontWeight: 800,
+                        textTransform: "uppercase",
+                        letterSpacing: "0.05em",
+                        color: "#fff",
+                        display: "block",
+                      }}
+                    >
+                      {f.title}
+                    </span>
+                    <span
+                      className="psi-mono block mt-[3px]"
+                      style={{ fontSize: "10px", letterSpacing: "0.14em", color: "var(--muted3)" }}
+                    >
+                      {f.sub}
+                    </span>
+                  </span>
+                </li>
+              ))}
+            </ul>
+
+            <div className="mt-6 pt-5" style={{ borderTop: "1px solid var(--border)" }}>
+              <div className="flex items-center justify-between gap-4 mb-3">
+                <div className="psi-mono" style={{ fontSize: "9px", letterSpacing: "0.22em", color: "var(--muted3)" }}>
+                  NOTE
+                </div>
+                <div className="psi-mono" style={{ fontSize: "9px", fontWeight: 700, letterSpacing: "0.22em", color: "var(--purple-soft)" }}>
+                  SMALL N · EARLY READ
+                </div>
+              </div>
+              <div className="h-[3px] w-full" style={{ background: "var(--border)" }}>
+                <div
+                  className="h-full"
+                  style={{
+                    width: "50%",
+                    background: "linear-gradient(90deg, var(--red), var(--purple), var(--blue))",
+                    boxShadow: "0 0 12px rgba(124,58,237,0.35)",
+                  }}
+                />
+              </div>
+              <div className="psi-mono mt-2" style={{ fontSize: "9px", letterSpacing: "0.18em", color: "var(--muted3)" }}>
+                Next wave planned ~2 weeks; combined n=400 release.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── PARTY BARS — visual split (like your homepage) ── */}
+      <section className="grid grid-cols-2 gap-1">
+        {[
+          { label: "DEMOCRATIC VOTE (TEST #1)", color: "var(--blue)", pct: `${GENERAL[0].dem.pct.toFixed(1)}%` },
+          { label: "REPUBLICAN VOTE (TEST #1)", color: "var(--red)", pct: `${GENERAL[0].rep.pct.toFixed(1)}%` },
+        ].map((bar) => (
+          <div key={bar.label} className="border p-4" style={{ borderColor: "var(--border)", background: "var(--panel)" }}>
+            <div className="psi-mono" style={{ fontSize: "9px", letterSpacing: "0.24em", color: "var(--muted3)" }}>
+              {bar.label}
+            </div>
+            <div className="mt-2 h-[3px] w-full" style={{ background: "var(--border)" }}>
+              <div className="h-full" style={{ width: bar.pct, background: bar.color }} />
+            </div>
+            <div
+              className="mt-2"
+              style={{
+                fontFamily: "var(--font-display), ui-sans-serif, system-ui",
+                fontSize: "28px",
+                fontWeight: 800,
+                color: bar.color,
+                lineHeight: 1,
+              }}
+            >
+              {bar.pct}
+            </div>
+          </div>
+        ))}
+      </section>
+
+      {/* ── GENERAL ELECTION ── */}
+      <section
+        className="psi-card overflow-hidden"
+        style={{ border: "1px solid var(--border)", background: "var(--panel)" }}
+      >
+        <TriColorTop />
+        <div className="p-5 sm:p-8 space-y-6">
+          <SectionHeader
+            kicker="TOPLINES"
             title="General Election Ballots"
-            desc="Both tested matchups show Jolly leading, with a large undecided bloc keeping the race fluid."
+            sub="Both tested matchups show Jolly leading, with a large undecided bloc keeping the race fluid."
           />
 
-          <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
-            <Card
-              title="General Election Test #1"
-              note={`Raw margin (D−R): ${formatSignedMargin(generalDerived[0].rawMargin)} • Decided-only: ${formatSignedMargin(
-                generalDerived[0].decidedOnlyMargin
-              )}`}
-            >
-              <InlineBar
-                leftLabel={GENERAL[0].dem.name}
-                leftPct={GENERAL[0].dem.pct}
-                rightLabel={GENERAL[0].rep.name}
-                rightPct={GENERAL[0].rep.pct}
-                undecidedPct={GENERAL[0].undecided}
-              />
+          <div className="grid gap-4 lg:grid-cols-2">
+            {GENERAL.map((row, i) => (
+              <div key={row.matchup} className="border p-5" style={{ borderColor: "var(--border)", background: "var(--panel2)" }}>
+                <div className="flex items-start justify-between gap-4">
+                  <div>
+                    <div className="psi-mono" style={{ fontSize: "9px", letterSpacing: "0.22em", color: "var(--muted3)" }}>
+                      {row.matchup.toUpperCase()}
+                    </div>
+                    <div
+                      className="mt-2"
+                      style={{
+                        fontFamily: "var(--font-display), ui-sans-serif, system-ui",
+                        fontSize: "18px",
+                        fontWeight: 800,
+                        textTransform: "uppercase",
+                        letterSpacing: "0.04em",
+                        color: "#fff",
+                      }}
+                    >
+                      Margin: {formatSignedMargin(generalDerived[i].rawMargin)} <span style={{ color: "var(--muted2)" }}> (D−R)</span>
+                    </div>
+                    <div className="psi-mono mt-1" style={{ fontSize: "9px", letterSpacing: "0.18em", color: "var(--muted3)" }}>
+                      Decided-only: {formatSignedMargin(generalDerived[i].decidedOnlyMargin)}
+                    </div>
+                  </div>
+                  <span className="psi-badge psi-badge-amber">LV Model</span>
+                </div>
 
-              <div className="mt-5">
-                <CompactTable
-                  columns={["Matchup", "Dem", "Dem %", "Rep", "Rep %", "3rd %", "Und %", "Margin (D−R)"]}
-                  rows={[
-                    [
-                      GENERAL[0].matchup,
-                      GENERAL[0].dem.name,
-                      GENERAL[0].dem.pct,
-                      GENERAL[0].rep.name,
-                      GENERAL[0].rep.pct,
-                      GENERAL[0].third ?? 0,
-                      GENERAL[0].undecided,
-                      generalDerived[0].rawMargin,
-                    ],
-                  ]}
-                  rightAlignCols={[2, 4, 5, 6, 7]}
-                />
+                <div className="mt-5">
+                  <InlineBar
+                    leftLabel={row.dem.name}
+                    leftPct={row.dem.pct}
+                    rightLabel={row.rep.name}
+                    rightPct={row.rep.pct}
+                    undecidedPct={row.undecided}
+                  />
+                </div>
+
+                <div className="mt-6">
+                  <CompactTable
+                    columns={["Matchup", "Dem", "Dem %", "Rep", "Rep %", "3rd %", "Und %", "Margin (D−R)"]}
+                    rows={[
+                      [row.matchup, row.dem.name, row.dem.pct, row.rep.name, row.rep.pct, row.third ?? 0, row.undecided, generalDerived[i].rawMargin],
+                    ]}
+                    rightAlignCols={[2, 4, 5, 6, 7]}
+                  />
+                </div>
               </div>
-            </Card>
-
-            <Card
-              title="General Election Test #2"
-              note={`Raw margin (D−R): ${formatSignedMargin(generalDerived[1].rawMargin)} • Decided-only: ${formatSignedMargin(
-                generalDerived[1].decidedOnlyMargin
-              )}`}
-            >
-              <InlineBar
-                leftLabel={GENERAL[1].dem.name}
-                leftPct={GENERAL[1].dem.pct}
-                rightLabel={GENERAL[1].rep.name}
-                rightPct={GENERAL[1].rep.pct}
-                undecidedPct={GENERAL[1].undecided}
-              />
-
-              <div className="mt-5">
-                <CompactTable
-                  columns={["Matchup", "Dem", "Dem %", "Rep", "Rep %", "3rd %", "Und %", "Margin (D−R)"]}
-                  rows={[
-                    [
-                      GENERAL[1].matchup,
-                      GENERAL[1].dem.name,
-                      GENERAL[1].dem.pct,
-                      GENERAL[1].rep.name,
-                      GENERAL[1].rep.pct,
-                      GENERAL[1].third ?? 0,
-                      GENERAL[1].undecided,
-                      generalDerived[1].rawMargin,
-                    ],
-                  ]}
-                  rightAlignCols={[2, 4, 5, 6, 7]}
-                />
-              </div>
-            </Card>
+            ))}
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* Primaries */}
-        <section className="space-y-8">
-          <SectionTitle
-            kicker="Party primaries"
+      {/* ── PRIMARIES ── */}
+      <section
+        className="psi-card overflow-hidden"
+        style={{ border: "1px solid var(--border)", background: "var(--panel)" }}
+      >
+        <TriColorTop />
+        <div className="p-5 sm:p-8 space-y-6">
+          <SectionHeader
+            kicker="PARTY PRIMARIES"
             title="High Undecided, Early Sorting"
-            desc="Donalds is the early GOP leader, but neither party is close to consolidation."
+            sub="Donalds is the early GOP leader, but neither party is close to consolidation."
           />
 
-          <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
-            <Card title="Republican Primary" note={`Undecided: ${UNDECIDED.gop.toFixed(1)}%`}>
-              <RankedBars items={GOP_PRIMARY} undecided={UNDECIDED.gop} color="red" />
+          <div className="grid gap-4 lg:grid-cols-2">
+            <div className="border p-5" style={{ borderColor: "var(--border)", background: "var(--panel2)" }}>
+              <div className="flex items-start justify-between gap-4">
+                <div>
+                  <div className="psi-mono" style={{ fontSize: "9px", letterSpacing: "0.22em", color: "var(--muted3)" }}>
+                    REPUBLICAN PRIMARY
+                  </div>
+                  <div
+                    className="mt-2"
+                    style={{
+                      fontFamily: "var(--font-display), ui-sans-serif, system-ui",
+                      fontSize: "18px",
+                      fontWeight: 800,
+                      textTransform: "uppercase",
+                      letterSpacing: "0.04em",
+                      color: "#fff",
+                    }}
+                  >
+                    Undecided {UNDECIDED.gop.toFixed(1)}%
+                  </div>
+                </div>
+                <span className="psi-badge">GOP</span>
+              </div>
+
+              <div className="mt-5">
+                <RankedBars items={GOP_PRIMARY} undecided={UNDECIDED.gop} />
+              </div>
 
               <div className="mt-6">
                 <CompactTable
                   columns={["Candidate", "%"]}
-                  rows={[
-                    ...GOP_PRIMARY.map((x) => [x.name, x.pct]),
-                    ["Undecided", UNDECIDED.gop],
-                  ]}
+                  rows={[...GOP_PRIMARY.map((x) => [x.name, x.pct]), ["Undecided", UNDECIDED.gop]]}
                   rightAlignCols={[1]}
                 />
               </div>
-            </Card>
+            </div>
 
-            <Card title="Democratic Primary" note={`Undecided: ${UNDECIDED.dem.toFixed(1)}%`}>
-              <RankedBars items={DEM_PRIMARY} undecided={UNDECIDED.dem} color="blue" />
+            <div className="border p-5" style={{ borderColor: "var(--border)", background: "var(--panel2)" }}>
+              <div className="flex items-start justify-between gap-4">
+                <div>
+                  <div className="psi-mono" style={{ fontSize: "9px", letterSpacing: "0.22em", color: "var(--muted3)" }}>
+                    DEMOCRATIC PRIMARY
+                  </div>
+                  <div
+                    className="mt-2"
+                    style={{
+                      fontFamily: "var(--font-display), ui-sans-serif, system-ui",
+                      fontSize: "18px",
+                      fontWeight: 800,
+                      textTransform: "uppercase",
+                      letterSpacing: "0.04em",
+                      color: "#fff",
+                    }}
+                  >
+                    Undecided {UNDECIDED.dem.toFixed(1)}%
+                  </div>
+                </div>
+                <span className="psi-badge">DEM</span>
+              </div>
+
+              <div className="mt-5">
+                <RankedBars items={DEM_PRIMARY} undecided={UNDECIDED.dem} />
+              </div>
 
               <div className="mt-6">
                 <CompactTable
                   columns={["Candidate", "%"]}
-                  rows={[
-                    ...DEM_PRIMARY.map((x) => [x.name, x.pct]),
-                    ["Undecided", UNDECIDED.dem],
-                  ]}
+                  rows={[...DEM_PRIMARY.map((x) => [x.name, x.pct]), ["Undecided", UNDECIDED.dem]]}
                   rightAlignCols={[1]}
                 />
               </div>
-            </Card>
+            </div>
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* Commentators & candidates approvals */}
-        <section className="space-y-8">
-          <SectionTitle
-            kicker="Approval"
-            title="Commentators & Candidate Ratings"
-            desc="Net shows whether approval exceeds disapproval."
+      {/* ── APPROVALS ── */}
+      <section className="psi-card overflow-hidden" style={{ border: "1px solid var(--border)", background: "var(--panel)" }}>
+        <TriColorTop />
+        <div className="p-5 sm:p-8 space-y-6">
+          <SectionHeader kicker="APPROVAL" title="Commentators & Candidate Ratings" sub="Net shows whether approval exceeds disapproval." />
+
+          <CompactTable
+            columns={["Subject", "Approve", "Disapprove", "Neutral", "Net"]}
+            rows={COMMENTATOR_APPROVALS.map((r) => [r.name, r.approve, r.disapprove, r.neutral, netApprove(r)])}
+            rightAlignCols={[1, 2, 3, 4]}
           />
+        </div>
+      </section>
 
-          <Card title="Approval Toplines" note="Net = Approve − Disapprove">
-            <CompactTable
-              columns={["Subject", "Approve", "Disapprove", "Neutral", "Net"]}
-              rows={COMMENTATOR_APPROVALS.map((r) => [r.name, r.approve, r.disapprove, r.neutral, netApprove(r)])}
-              rightAlignCols={[1, 2, 3, 4]}
-            />
-          </Card>
-        </section>
-
-        {/* Trump / DeSantis issue approvals */}
-        <section className="space-y-8">
-          <SectionTitle
-            kicker="Executive environment"
+      {/* ── ISSUE APPROVALS ── */}
+      <section className="psi-card overflow-hidden" style={{ border: "1px solid var(--border)", background: "var(--panel)" }}>
+        <TriColorTop />
+        <div className="p-5 sm:p-8 space-y-6">
+          <SectionHeader
+            kicker="EXECUTIVE ENVIRONMENT"
             title="Trump & DeSantis Approval By Issue"
-            desc="Tables are horizontally scrollable on mobile, and fixed-width to prevent overflow."
+            sub="Two side-by-side tables on desktop, stacked on mobile."
           />
 
-          <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
-            <Card title="Trump Approval By Issue" note="Net = Approve − Disapprove">
-              <CompactTable
-                columns={["Issue", "Approve", "Disapprove", "Neutral", "Net"]}
-                rows={TRUMP_APPROVAL_BY_ISSUE.map((r) => [r.name, r.approve, r.disapprove, r.neutral, netApprove(r)])}
-                rightAlignCols={[1, 2, 3, 4]}
-              />
-            </Card>
-
-            <Card title="DeSantis Approval By Issue" note="Net = Approve − Disapprove">
-              <CompactTable
-                columns={["Issue", "Approve", "Disapprove", "Neutral", "Net"]}
-                rows={DESANTIS_APPROVAL_BY_ISSUE.map((r) => [r.name, r.approve, r.disapprove, r.neutral, netApprove(r)])}
-                rightAlignCols={[1, 2, 3, 4]}
-              />
-            </Card>
-          </div>
-        </section>
-
-        {/* Policy approval */}
-        <section className="space-y-8">
-          <SectionTitle
-            kicker="Issue terrain"
-            title="Policy Approval"
-            desc="Mobile-friendly table: scrolls horizontally, doesn’t smash the layout."
-          />
-
-          <Card title="Policy Approval (Toplines)" note="Net = Approve − Disapprove">
-            <CompactTable
-              columns={["Policy", "Approve", "Disapprove", "Neutral", "Net"]}
-              rows={POLICY_APPROVAL.map((r) => [r.policy, r.approve, r.disapprove, r.neutral, r.approve - r.disapprove])}
-              rightAlignCols={[1, 2, 3, 4]}
-            />
-          </Card>
-        </section>
-
-        {/* Israel PAC question */}
-        <section className="space-y-8">
-          <SectionTitle
-            kicker="Attitudes"
-            title="Israel-Supporting PAC Donation Effect"
-            desc="Nearly half say it makes no difference; the remainder is split."
-          />
-
-          <Card title="PAC Donations (Israel-supporting) • Vote Impact">
-            <CompactTable
-              columns={["Response", "%"]}
-              rows={ISRAEL_PAC.map((r) => [r.label, r.pct])}
-              rightAlignCols={[1]}
-            />
-
-            <div className="mt-4 rounded-2xl border border-white/10 bg-black/20 p-4">
-              <div className="text-[10px] font-black uppercase tracking-[0.28em] text-white/35">
-                Quick read
+          <div className="grid gap-4 lg:grid-cols-2">
+            <div className="border p-5" style={{ borderColor: "var(--border)", background: "var(--panel2)" }}>
+              <div className="psi-mono" style={{ fontSize: "9px", letterSpacing: "0.22em", color: "var(--muted3)" }}>
+                TRUMP APPROVAL BY ISSUE
               </div>
-              <p className="mt-2 text-white/70 leading-relaxed">
+              <div className="mt-4">
+                <CompactTable
+                  columns={["Issue", "Approve", "Disapprove", "Neutral", "Net"]}
+                  rows={TRUMP_APPROVAL_BY_ISSUE.map((r) => [r.name, r.approve, r.disapprove, r.neutral, netApprove(r)])}
+                  rightAlignCols={[1, 2, 3, 4]}
+                />
+              </div>
+            </div>
+
+            <div className="border p-5" style={{ borderColor: "var(--border)", background: "var(--panel2)" }}>
+              <div className="psi-mono" style={{ fontSize: "9px", letterSpacing: "0.22em", color: "var(--muted3)" }}>
+                DESANTIS APPROVAL BY ISSUE
+              </div>
+              <div className="mt-4">
+                <CompactTable
+                  columns={["Issue", "Approve", "Disapprove", "Neutral", "Net"]}
+                  rows={DESANTIS_APPROVAL_BY_ISSUE.map((r) => [r.name, r.approve, r.disapprove, r.neutral, netApprove(r)])}
+                  rightAlignCols={[1, 2, 3, 4]}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── POLICY APPROVAL ── */}
+      <section className="psi-card overflow-hidden" style={{ border: "1px solid var(--border)", background: "var(--panel)" }}>
+        <TriColorTop />
+        <div className="p-5 sm:p-8 space-y-6">
+          <SectionHeader kicker="ISSUE TERRAIN" title="Policy Approval" sub="Toplines across tested policies." />
+
+          <CompactTable
+            columns={["Policy", "Approve", "Disapprove", "Neutral", "Net"]}
+            rows={POLICY_APPROVAL.map((r) => [r.policy, r.approve, r.disapprove, r.neutral, r.approve - r.disapprove])}
+            rightAlignCols={[1, 2, 3, 4]}
+          />
+        </div>
+      </section>
+
+      {/* ── ISRAEL PAC ── */}
+      <section className="psi-card overflow-hidden" style={{ border: "1px solid var(--border)", background: "var(--panel)" }}>
+        <TriColorTop />
+        <div className="p-5 sm:p-8 space-y-6">
+          <SectionHeader
+            kicker="ATTITUDES"
+            title="Israel-Supporting PAC Donation Effect"
+            sub="Nearly half say it makes no difference; the remainder is split."
+          />
+
+          <div className="grid gap-4 lg:grid-cols-[1.2fr_0.8fr]">
+            <div>
+              <CompactTable columns={["Response", "%"]} rows={ISRAEL_PAC.map((r) => [r.label, r.pct])} rightAlignCols={[1]} />
+            </div>
+
+            <div className="border p-5" style={{ borderColor: "var(--border)", background: "var(--panel2)", borderLeft: "2px solid var(--purple-soft)" }}>
+              <div className="psi-mono" style={{ fontSize: "9px", fontWeight: 700, letterSpacing: "0.22em", color: "var(--purple-soft)" }}>
+                QUICK READ
+              </div>
+              <p className="mt-3 text-sm sm:text-base" style={{ color: "var(--muted2)" }}>
                 Net impact is essentially neutral:{" "}
-                <span className="font-bold text-white/80">25.3%</span> more likely vs{" "}
-                <span className="font-bold text-white/80">25.5%</span> less likely, while{" "}
-                <span className="font-bold text-white/80">49.1%</span> say no difference.
+                <span style={{ color: "#fff", fontWeight: 800 }}>25.3%</span> more likely vs{" "}
+                <span style={{ color: "#fff", fontWeight: 800 }}>25.5%</span> less likely, while{" "}
+                <span style={{ color: "#fff", fontWeight: 800 }}>49.1%</span> say no difference.
               </p>
             </div>
-          </Card>
-        </section>
+          </div>
+        </div>
+      </section>
 
-        {/* Footer */}
-        <footer className="text-center pt-10 border-t border-white/5">
-          <p className="text-[10px] font-black uppercase tracking-[0.4em] text-white/20">
-            Powered by The Public Sentiment Institute & Pollfish.
+      {/* ── FOOTER CTA (coded like your “Get involved” block) ── */}
+      <section className="psi-card overflow-hidden" style={{ border: "1px solid var(--border)", background: "var(--panel)" }}>
+        <TriColorTop />
+        <div className="p-5 sm:p-8">
+          <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <div className="psi-mono" style={{ fontSize: "9px", fontWeight: 700, letterSpacing: "0.28em", color: "var(--purple-soft)" }}>
+                NEXT STEPS
+              </div>
+              <h2
+                className="mt-2"
+                style={{
+                  fontFamily: "var(--font-display), ui-sans-serif, system-ui",
+                  fontSize: "clamp(28px, 4vw, 40px)",
+                  fontWeight: 800,
+                  textTransform: "uppercase",
+                  letterSpacing: "0.04em",
+                  color: "#fff",
+                  lineHeight: 1,
+                }}
+              >
+                Full Disclosure Materials
+              </h2>
+            </div>
+            <div className="psi-mono" style={{ fontSize: "9px", letterSpacing: "0.22em", color: "var(--muted3)" }}>
+              CROSSTABS · QUESTIONNAIRE
+            </div>
+          </div>
+
+          <div className="my-5 psi-divider" />
+
+          <p className="text-sm sm:text-base max-w-3xl" style={{ color: "var(--muted2)" }}>
+            Use the underlying tables for deeper analysis. We publish crosstabs and the exact questionnaire for transparency.
           </p>
-        </footer>
-      </div>
-    </main>
+
+          <div className="mt-7 grid gap-4 sm:grid-cols-2">
+            {[
+              { color: "var(--blue)", label: "VIEW CROSSTABS", desc: "Full tables and slices for verification + analysis", href: POLL.links.crosstabs },
+              { color: "var(--purple)", label: "VIEW QUESTIONNAIRE", desc: "Exact wording and ordering used in the field", href: POLL.links.questionnaire },
+            ].map((c) => (
+              <Link
+                key={c.label}
+                href={c.href}
+                target="_blank"
+                rel="noreferrer"
+                className="border p-4 block"
+                style={{ borderColor: "var(--border)", background: "var(--panel2)", borderLeft: `2px solid ${c.color}` }}
+              >
+                <div className="psi-mono" style={{ fontSize: "9px", fontWeight: 700, letterSpacing: "0.22em", color: c.color }}>
+                  {c.label}
+                </div>
+                <p className="mt-2 text-sm" style={{ color: "var(--muted2)" }}>
+                  {c.desc}
+                </p>
+              </Link>
+            ))}
+          </div>
+
+          <div className="mt-8 flex flex-col sm:flex-row flex-wrap gap-3">
+            <Link
+              href={POLL.links.crosstabs}
+              className="psi-btn psi-btn-primary w-full sm:w-auto justify-center"
+              style={{ padding: "13px 28px", fontSize: "11px", letterSpacing: "0.22em" }}
+              target="_blank"
+              rel="noreferrer"
+            >
+              VIEW CROSSTABS →
+            </Link>
+            <Link
+              href={POLL.links.questionnaire}
+              className="psi-btn psi-btn-ghost w-full sm:w-auto justify-center"
+              style={{ padding: "13px 28px", fontSize: "11px", letterSpacing: "0.22em" }}
+              target="_blank"
+              rel="noreferrer"
+            >
+              VIEW QUESTIONNAIRE
+            </Link>
+          </div>
+        </div>
+      </section>
+    </div>
   );
 }
