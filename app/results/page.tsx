@@ -3,7 +3,7 @@
 import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 
 const CIVIC_BASE = "https://civicapi.org";
-const POLL_MS = 15_000;
+const POLL_MS = 30_000;
 
 // --- PREDICTIVE LOGIC HELPER ---
 function calculateWinProbability(leaderVotes: number, runnerUpVotes: number, percentReporting: number): number {
@@ -1276,7 +1276,7 @@ export default function March3FeaturedClient() {
                     <span className="res-live-dot" style={{ background: "var(--rep)" }} />
                     LIVE
                   </span>
-                  <span className="res-badge res-badge-purple">UPDATES / 15s</span>
+                  <span className="res-badge res-badge-purple">UPDATES / 30s</span>
                   {selectedRace?.last_updated && (
                     <span className="res-badge">UPDATED {prettyTime(selectedRace.last_updated)}</span>
                   )}
@@ -1285,7 +1285,7 @@ export default function March3FeaturedClient() {
 
               {/* State switcher */}
               <div style={{ display: "flex", gap: "1px" }}>
-                {(["TX", "NC", "AR"] as const).map((st) => (
+                {(["TX", "NC", "AR",] as const).map((st) => (
                   <button key={st} className={`res-btn-state ${activeState === st ? "active" : ""}`} onClick={() => setActiveState(st)}>
                     {stateLabels[st]}
                   </button>

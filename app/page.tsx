@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 const metrics = [
-  { k: "RESPONDENTS", v: "7", delta: "+0 TODAY" },
+  { k: "RESPONDENTS", v: "10", delta: "+3 TODAY" },
   { k: "STATES COVERED", v: "50", delta: "ALL REGIONS" },
   { k: "RELEASE CYCLE", v: "LIVE", delta: "CONTINUOUS" },
 ];

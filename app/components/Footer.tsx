@@ -31,7 +31,7 @@ const navCols = [
 ];
 
 const stats = [
-  { k: "RESPONDENTS", v: "7" },
+  { k: "RESPONDENTS", v: "10" },
   { k: "STATES", v: "50" },
   { k: "RELEASE", v: "LIVE" },
 ];
