@@ -28,6 +28,14 @@ const PAGES: PollPage[] = [
     status: "live",
   },
   {
+    title: "2028 National Generic Ballot",
+    description: "View how the 2028 Presidential Election is shaping up with JD Vance against Gavin Newsom",
+    href: "/polling/2028polling",
+    badge: "Daily Average",
+    tag: "National",
+    status: "live",
+  },
+  {
     title: "2026 Texas Senate Democrat Primary",
     description: "View how the 2026 Texas Democrat Senate candidates are shaping up in one of the most contested primaries of all time",
     href: "/polling/texasdemocratprimary",
