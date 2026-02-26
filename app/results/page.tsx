@@ -42,6 +42,17 @@ const FEATURED: FeaturedRace[] = [
   { id: 44294, state: "TX", office: "Land Commissioner", party: "Democratic", label: "TX Land Commissioner — Democratic Primary" },
   { id: 44295, state: "TX", office: "Railroad Commissioner", party: "Republican", label: "TX Railroad Commissioner — Republican Primary" },
   { id: 44344, state: "TX", office: "US House 23", party: "Republican", label: "TX District 23 — Republican Primary" },
+
+  // ✅ Added requested TX featured races
+  { id: 44374, state: "TX", office: "US House 2", party: "Republican", label: "TX District 2 — Republican Primary" },
+  { id: 44366, state: "TX", office: "US House 8", party: "Republican", label: "TX District 8 — Republican Primary" },
+  { id: 44323, state: "TX", office: "US House 35", party: "Republican", label: "TX District 35 — Republican Primary" },
+  { id: 44324, state: "TX", office: "US House 35", party: "Democratic", label: "TX District 35 — Democratic Primary" },
+  { id: 44328, state: "TX", office: "US House 33", party: "Democratic", label: "TX District 33 — Democratic Primary" },
+  { id: 44329, state: "TX", office: "US House 32", party: "Republican", label: "TX District 32 — Republican Primary" },
+  { id: 44351, state: "TX", office: "US House 19", party: "Republican", label: "TX District 19 — Republican Primary" },
+  { id: 44331, state: "TX", office: "US House 31", party: "Republican", label: "TX District 31 — Republican Primary" },
+
   { id: 44722, state: "AR", office: "Governor", party: "Republican", label: "AR Governor — Republican Primary" },
   { id: 44721, state: "AR", office: "Governor", party: "Democratic", label: "AR Governor — Democratic Primary" },
   { id: 44729, state: "AR", office: "US Senate", party: "Republican", label: "AR US Senate — Republican Primary" },
@@ -52,8 +63,14 @@ const FEATURED: FeaturedRace[] = [
   { id: 44726, state: "AR", office: "Secretary of State", party: "Democratic", label: "AR Secretary of State — Democratic Primary" },
   { id: 44728, state: "AR", office: "Land Commissioner", party: "Republican", label: "AR Land Commissioner — Republican Primary" },
   { id: 44727, state: "AR", office: "Treasurer", party: "Republican", label: "AR Treasurer — Republican Primary" },
+
   { id: 46303, state: "NC", office: "US Senate", party: "Republican", label: "NC US Senate — Republican Primary" },
   { id: 46302, state: "NC", office: "US Senate", party: "Democratic", label: "NC US Senate — Democratic Primary" },
+
+  // ✅ Added requested NC featured races
+  { id: 46306, state: "NC", office: "US House 4", party: "Democratic", label: "NC District 4 — Democratic Primary" },
+  { id: 46304, state: "NC", office: "US House 1", party: "Republican", label: "NC District 1 — Republican Primary" },
+
   { id: 9999999, state: "TEST", office: "Test Map", party: "N/A", label: "Map Test — Blank Counties" },
 ];
 
