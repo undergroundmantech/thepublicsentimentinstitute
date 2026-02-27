@@ -21,7 +21,7 @@ const PAGES: PollPage[] = [
   },
   {
     title: "JD Vance • Favorable/Unfavorable",
-    description: "Tracking the Vice President'sl favorability in real time",
+    description: "Tracking the Vice President's favorability in real time",
     href: "/polling/jdvanceapproval",
     badge: "Approval",
     tag: "National",
@@ -55,6 +55,14 @@ const PAGES: PollPage[] = [
     title: "2026 Texas Senate Republican Primary",
     description: "View how the 2026 Texas Republican Senate candidates are shaping up in one of the most contested primaries of all time",
     href: "/polling/texasrepublicanprimary",
+    badge: "Daily Average",
+    tag: "National",
+    status: "live",
+  },
+  {
+    title: "2026 Florida Governor Republican Primary",
+    description: "View how the 2026 Florida Republican Gubernatorial candidates are shaping up in one of the most contested primaries of all time",
+    href: "/polling/floridarepublicanprimary",
     badge: "Daily Average",
     tag: "National",
     status: "live",

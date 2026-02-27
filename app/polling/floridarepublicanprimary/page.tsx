@@ -1,4 +1,3 @@
-// app/polling/texasrepublicanprimary/page.tsx
 "use client";
 
 import React, { useState, useMemo } from "react";
@@ -12,56 +11,44 @@ import {
 
 // ─── Polls data ───────────────────────────────────────────────────────────────
 const RAW_POLLS: Poll[] = [
-  { pollster: "American Opportunity Alliance", endDate: "2025-05-01", sampleSize: 800, sampleType: "LV", results: { Paxton: 43, Cornyn: 27, Hunt: 14 } },
-{ pollster: "Quantus Insights", endDate: "2025-05-13", sampleSize: 600, sampleType: "RV", results: { Paxton: 46, Cornyn: 38, Hunt: 16 } },
-{ pollster: "TSU/YouGov", endDate: "2025-05-19", sampleSize: 510, sampleType: "LV", results: { Paxton: 34, Cornyn: 27, Hunt: 15 } },
-{ pollster: "Pulse Decision Science", endDate: "2025-06-22", sampleSize: 806, sampleType: "LV", results: { Paxton: 49, Cornyn: 32, Hunt: 13 } },
-{ pollster: "G1 Research", endDate: "2025-06-30", sampleSize: 0, sampleType: "LV", results: { Paxton: 41, Cornyn: 28, Hunt: 17 } },
-{ pollster: "TSU/YouGov", endDate: "2025-08-12", sampleSize: 1500, sampleType: "RV", results: { Paxton: 35, Cornyn: 30, Hunt: 22 } },
-{ pollster: "Emerson", endDate: "2025-08-12", sampleSize: 491, sampleType: "RV", results: { Paxton: 29, Cornyn: 30, Hunt: 0 } },
-{ pollster: "Texas Southern University", endDate: "2025-08-12", sampleSize: 1500, sampleType: "LV", results: { Paxton: 35, Cornyn: 30, Hunt: 22 } },
-{ pollster: "UT Tyler", endDate: "2025-09-24", sampleSize: 492, sampleType: "RV", results: { Paxton: 31, Cornyn: 29, Hunt: 14 } },
-{ pollster: "Ragnar Research Partners", endDate: "2025-09-22", sampleSize: 760, sampleType: "LV", results: { Paxton: 31, Cornyn: 32, Hunt: 17 } },
-{ pollster: "Deep Root Analytics", endDate: "2025-09-28", sampleSize: 1142, sampleType: "LV", results: { Paxton: 28, Cornyn: 33, Hunt: 21 } },
-{ pollster: "U. of Houston/TSU", endDate: "2025-10-01", sampleSize: 0, sampleType: "LV", results: { Paxton: 34, Cornyn: 33, Hunt: 22 } },
-{ pollster: "Hunt Research", endDate: "2025-10-10", sampleSize: 1097, sampleType: "LV", results: { Paxton: 28, Cornyn: 24, Hunt: 19 } },
-{ pollster: "Harper Polling", endDate: "2025-10-30", sampleSize: 614, sampleType: "LV", results: { Paxton: 25, Cornyn: 26, Hunt: 24 } },
-{ pollster: "Peak Insights", endDate: "2025-10-31", sampleSize: 600, sampleType: "LV", results: { Paxton: 36, Cornyn: 34, Hunt: 19 } },
-{ pollster: "Stratus Intelligence", endDate: "2025-11-06", sampleSize: 811, sampleType: "LV", results: { Paxton: 34, Cornyn: 27, Hunt: 26 } },
-{ pollster: "Ragnar Research Partners", endDate: "2025-11-16", sampleSize: 758, sampleType: "LV", results: { Paxton: 31, Cornyn: 32, Hunt: 21 } },
-{ pollster: "Stratus Intelligence", endDate: "2025-11-22", sampleSize: 857, sampleType: "LV", results: { Paxton: 36, Cornyn: 25, Hunt: 26 } },
-{ pollster: "Peak Insights", endDate: "2025-11-25", sampleSize: 600, sampleType: "LV", results: { Paxton: 33, Cornyn: 35, Hunt: 18 } },
-{ pollster: "1892 Polling", endDate: "2025-12-04", sampleSize: 0, sampleType: "LV", results: { Paxton: 29, Cornyn: 28, Hunt: 19 } },
-{ pollster: "McLaughlin & Associates", endDate: "2025-12-04", sampleSize: 800, sampleType: "LV", results: { Paxton: 33, Cornyn: 27, Hunt: 28 } },
-{ pollster: "Public Policy Polling", endDate: "2025-12-02", sampleSize: 527, sampleType: "LV", results: { Paxton: 32, Cornyn: 22, Hunt: 22 } },
-{ pollster: "J.L. Partners", endDate: "2025-12-03", sampleSize: 600, sampleType: "LV", results: { Paxton: 29, Cornyn: 24, Hunt: 24 } },
-{ pollster: "Pulse Decision Science", endDate: "2025-12-17", sampleSize: 809, sampleType: "LV", results: { Paxton: 38, Cornyn: 38, Hunt: 16 } },
-{ pollster: "co/efficient", endDate: "2025-12-31", sampleSize: 1022, sampleType: "LV", results: { Paxton: 27, Cornyn: 28, Hunt: 19 } },
-{ pollster: "Deep Root Analytics", endDate: "2026-01-11", sampleSize: 0, sampleType: "LV", results: { Paxton: 26, Cornyn: 29, Hunt: 19 } },
-{ pollster: "Emerson", endDate: "2026-01-12", sampleSize: 550, sampleType: "LV", results: { Paxton: 27, Cornyn: 26, Hunt: 16 } },
-{ pollster: "University of Houston", endDate: "2026-01-31", sampleSize: 550, sampleType: "LV", results: { Paxton: 38, Cornyn: 31, Hunt: 17 } },
-{ pollster: "University of Houston/YouGov", endDate: "2026-01-31", sampleSize: 550, sampleType: "LV", results: { Paxton: 38, Cornyn: 31, Hunt: 17 } },
-{ pollster: "Ragnar Research Partners", endDate: "2026-02-01", sampleSize: 0, sampleType: "LV", results: { Paxton: 29, Cornyn: 31, Hunt: 24 } },
-{ pollster: "Pulse Decision Science", endDate: "2026-02-03", sampleSize: 801, sampleType: "LV", results: { Paxton: 34, Cornyn: 26, Hunt: 18 } },
-{ pollster: "J.L. Partners", endDate: "2026-02-03", sampleSize: 600, sampleType: "LV", results: { Paxton: 27, Cornyn: 26, Hunt: 26 } },
-{ pollster: "Peak Insights", endDate: "2026-02-08", sampleSize: 1000, sampleType: "LV", results: { Paxton: 31, Cornyn: 29, Hunt: 25 } },
-{ pollster: "Pulse Decision Science", endDate: "2026-02-11", sampleSize: 800, sampleType: "LV", results: { Paxton: 36, Cornyn: 27, Hunt: 15 } },
-{ pollster: "University of Texas", endDate: "2026-02-16", sampleSize: 350, sampleType: "LV", results: { Paxton: 36, Cornyn: 34, Hunt: 26 } },
-{ pollster: "Peak Insights", endDate: "2026-02-23", sampleSize: 800, sampleType: "LV", results: { Paxton: 36, Cornyn: 36, Hunt: 14 } },
-{ pollster: "Chism/Blueprint", endDate: "2026-02-24", sampleSize: 472, sampleType: "LV", results: { Paxton: 42, Cornyn: 30, Hunt: 14 } },
-{ pollster: "Quantus Insights", endDate: "2026-02-26", sampleSize: 939, sampleType: "LV", results: { Paxton: 43, Cornyn: 38, Hunt: 16 } }
+  // February 2026
+  { pollster: "The Public Sentiment Institute", endDate: "2026-02-20", sampleSize: 0, sampleType: "LV", results: { Collins: 12, Donalds: 30, Fishback: 8, Renner: 2 } },
+  { pollster: "The Public Sentiment Institute", endDate: "2026-02-20", sampleSize: 0, sampleType: "RV", results: { Collins: 7, Donalds: 29, Fishback: 5, Renner: 1 } },
+  { pollster: "University of North Florida", endDate: "2026-02-20", sampleSize: 657, sampleType: "LV", results: { Collins: 4, Donalds: 31, Fishback: 6, Renner: 1 } },
+  { pollster: "Targoz Market Research**", endDate: "2026-02-16", sampleSize: 401, sampleType: "RV", results: { Collins: 15, Donalds: 33, Fishback: 3, Renner: 9 } },
+
+  // January 2026
+  { pollster: "Patriot Polling**", endDate: "2026-01-29", sampleSize: 827, sampleType: "LV", results: { Collins: 0, Donalds: 37, Fishback: 23, Renner: 0 } },
+  { pollster: "Mason-Dixon Polling & Strategy", endDate: "2026-01-13", sampleSize: 400, sampleType: "RV", results: { Collins: 7, Donalds: 37, Fishback: 3, Renner: 4 } },
+  { pollster: "Fabrizio, Lee & Associates**", endDate: "2026-01-06", sampleSize: 600, sampleType: "LV", results: { Collins: 6, Donalds: 45, Fishback: 4, Renner: 3 } },
+
+  // December 2025
+  { pollster: "Public Opinion Strategies**", endDate: "2025-12-11", sampleSize: 700, sampleType: "RV", results: { Collins: 13, Donalds: 40, Fishback: 0, Renner: 0 } },
+  { pollster: "The Tyson Group**", endDate: "2025-12-09", sampleSize: 800, sampleType: "LV", results: { Collins: 9, Donalds: 38, Fishback: 2, Renner: 1 } },
+
+  // November 2025
+  { pollster: "The American Promise", endDate: "2025-11-19", sampleSize: 800, sampleType: "LV", results: { Collins: 1, Donalds: 43, Fishback: 0, Renner: 2 } },
+  { pollster: "Victory Insights**", endDate: "2025-11-13", sampleSize: 600, sampleType: "LV", results: { Collins: 1, Donalds: 45, Fishback: 1, Renner: 3 } },
+
+  // October 2025
+  { pollster: "St. Pete Polls", endDate: "2025-10-15", sampleSize: 1034, sampleType: "LV", results: { Collins: 4, Donalds: 39, Fishback: 0, Renner: 3 } },
+
+  // September 2025
+  { pollster: "Targoz Market Research**", endDate: "2025-09-18", sampleSize: 506, sampleType: "RV", results: { Collins: 0, Donalds: 29, Fishback: 0, Renner: 9 } },
+  { pollster: "The American Promise", endDate: "2025-09-05", sampleSize: 800, sampleType: "LV", results: { Collins: 2, Donalds: 40, Fishback: 0, Renner: 2 } },
 ];
 
 const COLORS: Record<string, string> = {
-  Paxton: "#ef4444",
-  Cornyn: "#f97316",
-  Hunt:   "#a855f7",
+  Donalds:  "#ef4444",
+  Collins:  "#f97316",
+  Fishback: "#facc15",
+  Renner:   "#a78bfa",
 };
 
 function round1(n: number) { return Math.round(n * 10) / 10; }
 
 // ─── Main Page ────────────────────────────────────────────────────────────────
-export default function TexasRepPrimaryPage() {
+export default function FloridaGovRepublicanPrimaryPage() {
   const { daily, latestValues, seriesForChart } = useMemo(() => {
     const keys = getCandidateList(RAW_POLLS).sort((a, b) => a.localeCompare(b));
     const range = getDateRange(RAW_POLLS);
@@ -86,9 +73,9 @@ export default function TexasRepPrimaryPage() {
           <div className="pap-stripe" />
           <div className="pap-hero-inner">
             <div>
-              <div className="pap-eyebrow">Texas · 2026 U.S. Senate · Republican Primary</div>
+              <div className="pap-eyebrow">Florida · 2026 Governor · Republican Primary</div>
               <h1 className="pap-hero-title">
-                Texas Senate<br />
+                Florida Governor<br />
                 <em className="pap-em-rep">Republican</em><br />
                 Primary
               </h1>
@@ -132,7 +119,7 @@ export default function TexasRepPrimaryPage() {
             <div className="pap-kpi-val">{RAW_POLLS.length}</div>
             <div className="pap-kpi-sub">Included in model</div>
             <div className="pap-kpi-bar">
-              <div className="pap-kpi-bar-fill" style={{ width: `${Math.min(100, RAW_POLLS.length * 8)}%`, background: "var(--purple)" }} />
+              <div className="pap-kpi-bar-fill" style={{ width: `${Math.min(100, RAW_POLLS.length * 7)}%`, background: "var(--red)" }} />
             </div>
           </div>
         </div>
@@ -142,8 +129,8 @@ export default function TexasRepPrimaryPage() {
           data={daily as any[]}
           series={seriesForChart}
           yDomain={[0, 60]}
-          title="Texas Republican Senate Primary polling average"
-          subtitle="Paxton, Cornyn & Hunt trendlines — hover to view daily values"
+          title="Florida Republican Governor Primary polling average"
+          subtitle="Donalds, Collins, Fishback & Renner trendlines — hover to view daily values"
         />
 
         {/* ── POLL TABLE ── */}
@@ -164,9 +151,10 @@ export default function TexasRepPrimaryPage() {
                   <th className="r">END DATE</th>
                   <th className="r">N</th>
                   <th className="r">TYPE</th>
-                  <th className="r" style={{ color: COLORS.Paxton }}>PAXTON</th>
-                  <th className="r" style={{ color: COLORS.Cornyn }}>CORNYN</th>
-                  <th className="r" style={{ color: COLORS.Hunt }}>HUNT</th>
+                  <th className="r" style={{ color: COLORS.Donalds }}>DONALDS</th>
+                  <th className="r" style={{ color: COLORS.Collins }}>COLLINS</th>
+                  <th className="r" style={{ color: COLORS.Fishback }}>FISHBACK</th>
+                  <th className="r" style={{ color: COLORS.Renner }}>RENNER</th>
                   <th className="r">SPREAD</th>
                 </tr>
               </thead>
@@ -174,14 +162,15 @@ export default function TexasRepPrimaryPage() {
                 {[...RAW_POLLS]
                   .sort((a, b) => (a.endDate < b.endDate ? 1 : -1))
                   .map((p, i) => {
-                    const px = Number((p.results as any).Paxton ?? 0);
-                    const co = Number((p.results as any).Cornyn ?? 0);
-                    const hu = Number((p.results as any).Hunt ?? 0);
-                    const vals = [px, co, hu].filter(v => v > 0);
+                    const d = Number((p.results as any).Donalds ?? 0);
+                    const c = Number((p.results as any).Collins ?? 0);
+                    const f = Number((p.results as any).Fishback ?? 0);
+                    const r = Number((p.results as any).Renner ?? 0);
+                    const vals = [d, c, f, r];
                     const top = Math.max(...vals);
-                    const second = [...vals].sort((a, b) => b - a)[1] ?? 0;
+                    const second = [...vals].sort((a, b) => b - a)[1];
                     const spread = round1(top - second);
-                    const topName = px === top ? "Paxton" : co === top ? "Cornyn" : "Hunt";
+                    const topName = d === top ? "Donalds" : c === top ? "Collins" : f === top ? "Fishback" : "Renner";
                     const isPartisan = p.pollster.includes("**");
                     const displayName = p.pollster.replace(/\*\*/g, "");
                     return (
@@ -195,9 +184,10 @@ export default function TexasRepPrimaryPage() {
                         <td className="r">{p.endDate}</td>
                         <td className="r">{p.sampleSize > 0 ? p.sampleSize.toLocaleString() : "—"}</td>
                         <td className="r">{p.sampleType}</td>
-                        <td className="r" style={{ color: COLORS.Paxton, fontWeight: px === top ? 700 : 400 }}>{px > 0 ? `${px}%` : "—"}</td>
-                        <td className="r" style={{ color: COLORS.Cornyn, fontWeight: co === top ? 700 : 400 }}>{co > 0 ? `${co}%` : "—"}</td>
-                        <td className="r" style={{ color: COLORS.Hunt,   fontWeight: hu === top ? 700 : 400 }}>{hu > 0 ? `${hu}%` : "—"}</td>
+                        <td className="r" style={{ color: COLORS.Donalds, fontWeight: d === top ? 700 : 400 }}>{d > 0 ? `${d}%` : "—"}</td>
+                        <td className="r" style={{ color: COLORS.Collins, fontWeight: c === top ? 700 : 400 }}>{c > 0 ? `${c}%` : "—"}</td>
+                        <td className="r" style={{ color: COLORS.Fishback, fontWeight: f === top ? 700 : 400 }}>{f > 0 ? `${f}%` : "—"}</td>
+                        <td className="r" style={{ color: COLORS.Renner, fontWeight: r === top ? 700 : 400 }}>{r > 0 ? `${r}%` : "—"}</td>
                         <td className="r" style={{ color: COLORS[topName], fontWeight: 700 }}>
                           {topName} +{spread.toFixed(1)}
                         </td>
@@ -212,14 +202,14 @@ export default function TexasRepPrimaryPage() {
         {/* ── METHODOLOGY ── */}
         <div className="pap-table-panel" style={{ borderTop: "none" }}>
           <div style={{ padding: "12px 18px" }}>
-            <div style={{ fontFamily: "ui-monospace,monospace", fontSize: 7, fontWeight: 700, letterSpacing: "0.28em", textTransform: "uppercase", color: "rgba(239,68,68,0.6)", marginBottom: 6 }}>
+            <div style={{ fontFamily: "ui-monospace,monospace", fontSize: 7, fontWeight: 700, letterSpacing: "0.28em", textTransform: "uppercase", color: "var(--red-soft)", marginBottom: 6 }}>
               METHODOLOGY
             </div>
             <p style={{ fontFamily: "ui-monospace,monospace", fontSize: 8.5, lineHeight: 1.75, letterSpacing: "0.08em", color: "rgba(240,240,245,0.22)", margin: 0 }}>
               Polling averages are computed using a daily weighted model incorporating recency decay,
               square-root sample size adjustment, and screen type (LV/RV/A) weighting. Polls marked
-              ** are internal or partisan and may carry reduced weight. Candidates not listed in a
-              given poll (shown as —) are excluded from that poll's spread calculation.
+              ** are internal or partisan and may carry reduced weight. All candidates with 0% in a
+              given poll are excluded from that poll's spread calculation.
             </p>
           </div>
         </div>
@@ -239,9 +229,9 @@ const CSS = `
     --muted:       rgba(240,240,245,0.62);
     --muted2:      rgba(240,240,245,0.40);
     --muted3:      rgba(240,240,245,0.22);
-    --purple:      #7c3aed;
-    --purple-soft: #a78bfa;
-    --red-soft:    #f87171;
+    --red:         #ef4444;
+    --red2:        #f87171;
+    --red-soft:    #fca5a5;
   }
 
   @keyframes pap-fade-up {
@@ -257,7 +247,9 @@ const CSS = `
   }
 
   .pap-root {
-    display: flex; flex-direction: column; gap: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
     animation: pap-fade-up 0.5s cubic-bezier(0.22,1,0.36,1) both;
   }
 
@@ -265,7 +257,7 @@ const CSS = `
     height: 3px;
     background: linear-gradient(90deg,
       #991b1b 0%, #991b1b 33.33%,
-      #dc2626 33.33%, #dc2626 66.66%,
+      #b91c1c 33.33%, #b91c1c 66.66%,
       #ef4444 66.66%, #ef4444 100%
     );
   }
@@ -333,7 +325,7 @@ const CSS = `
   }
   .pap-em-rep {
     font-style: normal;
-    background: linear-gradient(110deg,#991b1b,#f87171);
+    background: linear-gradient(110deg,#991b1b,#fca5a5);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -361,7 +353,7 @@ const CSS = `
   .pap-badge-red  { border-color:rgba(239,68,68,0.35); background:rgba(239,68,68,0.07); color:var(--red-soft); }
 
   .pap-hero-read {
-    display: flex; flex-direction: column; gap: 6px; min-width: 200px;
+    display: flex; flex-direction: column; gap: 6px; min-width: 220px;
   }
   .pap-hero-read-row {
     display: flex; align-items: center; justify-content: space-between;
@@ -405,7 +397,9 @@ const CSS = `
     transition: border-color 150ms ease;
   }
   .pap-kpi:hover { border-color: var(--border2); }
-  .pap-kpi-accent { position: absolute; top: 0; left: 0; right: 0; height: 2px; }
+  .pap-kpi-accent {
+    position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  }
   .pap-kpi-label {
     font-family: ui-monospace,monospace;
     font-size: 7.5px; font-weight: 700;
@@ -454,7 +448,7 @@ const CSS = `
   .pap-table-scroll { overflow-x: auto; max-height: 520px; overflow-y: auto; }
 
   table.pap-table {
-    width: 100%; border-collapse: collapse; min-width: 760px;
+    width: 100%; border-collapse: collapse; min-width: 820px;
   }
   table.pap-table thead {
     position: sticky; top: 0; background: var(--bg2); z-index: 2;
