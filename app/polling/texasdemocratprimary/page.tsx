@@ -12,7 +12,7 @@ import {
 
 // ─── Polls data ───────────────────────────────────────────────────────────────
 const RAW_POLLS: Poll[] = [
-  { pollster: "University of Texas", endDate: "2026-02-16", sampleSize: 369, sampleType: "LV", results: { Crockett: 56, Talarico: 44, Hassan: 0 } },
+  { pollster: "Chism/Blueprint", endDate: "2026-02-24", sampleSize: 472, sampleType: "LV", results: { Talarico: 52, Crockett: 40, Hassan: 0 } },
   { pollster: "University of Houston", endDate: "2026-01-31", sampleSize: 550, sampleType: "LV", results: { Crockett: 47, Talarico: 39, Hassan: 2 } },
   { pollster: "TPOR", endDate: "2026-01-21", sampleSize: 1290, sampleType: "LV", results: { Crockett: 38, Talarico: 37, Hassan: 0 } },
   { pollster: "Emerson", endDate: "2026-01-12", sampleSize: 413, sampleType: "LV", results: { Crockett: 38, Talarico: 47, Hassan: 1 } },
