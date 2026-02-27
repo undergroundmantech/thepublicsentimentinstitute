@@ -85,30 +85,6 @@ export default function HomePage() {
   return (
     <>
       <style>{`
-        /* ── Tokens ── */
-        :root {
-          --background:  #070709;
-          --background2: #0b0b0f;
-          --panel:       #0f0f15;
-          --panel2:      #141420;
-          --foreground:  #f0f0f5;
-          --muted:       rgba(240,240,245,0.62);
-          --muted2:      rgba(240,240,245,0.40);
-          --muted3:      rgba(240,240,245,0.22);
-          --border:      rgba(255,255,255,0.09);
-          --border2:     rgba(255,255,255,0.15);
-          --border3:     rgba(255,255,255,0.22);
-          --purple:      #7c3aed;
-          --purple2:     #9d5cf0;
-          --purple-soft: #a78bfa;
-          --red:         #e63946;
-          --red2:        #ff4d5a;
-          --blue:        #2563eb;
-          --blue2:       #3b82f6;
-          --dem:         #3b82f6;
-          --rep:         #e63946;
-        }
-
         /* ── Animations ── */
         @keyframes fadeUp {
           from { opacity:0; transform:translateY(18px); }
@@ -121,10 +97,6 @@ export default function HomePage() {
         @keyframes barGrow {
           from { width: 0%; }
           to   { width: var(--target); }
-        }
-        @keyframes scanline {
-          0%   { transform: translateY(-100%); }
-          100% { transform: translateY(100vh); }
         }
         @keyframes pulse-glow {
           0%,100% { opacity:1; }
@@ -157,8 +129,6 @@ export default function HomePage() {
             radial-gradient(ellipse 50% 40% at 92% 88%, rgba(37,99,235,0.065) 0%, transparent 65%),
             radial-gradient(ellipse 40% 35% at 50% 50%, rgba(124,58,237,0.04) 0%, transparent 70%);
         }
-
-        /* Subtle scanline texture */
         .hp-bg::after {
           content: '';
           position: absolute;
@@ -190,8 +160,6 @@ export default function HomePage() {
           border-bottom: 1px solid var(--border);
           overflow: hidden;
         }
-
-        /* Diagonal separator line */
         .hp-hero::before {
           content: '';
           position: absolute;
@@ -201,13 +169,11 @@ export default function HomePage() {
           background: var(--border);
           z-index: 2;
         }
-
         @media (max-width: 900px) {
           .hp-hero { grid-template-columns: 1fr; min-height: auto; }
           .hp-hero::before { display: none; }
         }
 
-        /* Left hero */
         .hp-hero-left {
           grid-column: 1;
           grid-row: 1 / 3;
@@ -222,7 +188,6 @@ export default function HomePage() {
           .hp-hero-left { padding: 36px 20px; grid-column:1; grid-row:1; border-right:none; }
         }
 
-        /* Right hero */
         .hp-hero-right {
           grid-column: 2;
           grid-row: 1 / 3;
@@ -254,7 +219,7 @@ export default function HomePage() {
           border: 1px solid var(--border2);
           background: var(--panel);
           padding: 6px 14px 6px 10px;
-          font-family: ui-monospace, 'Courier New', monospace;
+          font-family: var(--font-body), ui-monospace, 'Courier New', monospace;
           font-size: 8.5px;
           font-weight: 700;
           letter-spacing: 0.28em;
@@ -270,9 +235,9 @@ export default function HomePage() {
           flex-shrink: 0;
         }
 
-        /* Big headline */
+        /* Big headline — uses display font (Syne) */
         .hp-headline {
-          font-family: ui-monospace, 'Courier New', monospace;
+          font-family: var(--font-display), ui-sans-serif, system-ui, sans-serif;
           font-weight: 900;
           font-size: clamp(40px, 5.5vw, 78px);
           text-transform: uppercase;
@@ -289,9 +254,9 @@ export default function HomePage() {
           background-clip: text;
         }
 
-        /* Subhead */
+        /* Subhead — uses body font (DM Mono) */
         .hp-subhead {
-          font-family: ui-monospace, 'Courier New', monospace;
+          font-family: var(--font-body), ui-monospace, 'Courier New', monospace;
           font-size: clamp(10px, 1.1vw, 12px);
           font-weight: 700;
           letter-spacing: 0.22em;
@@ -324,7 +289,7 @@ export default function HomePage() {
           opacity: 0.5;
         }
         .hp-metric-key {
-          font-family: ui-monospace, monospace;
+          font-family: var(--font-body), ui-monospace, 'Courier New', monospace;
           font-size: 7.5px;
           font-weight: 700;
           letter-spacing: 0.26em;
@@ -332,7 +297,7 @@ export default function HomePage() {
           text-transform: uppercase;
         }
         .hp-metric-val {
-          font-family: ui-monospace, monospace;
+          font-family: var(--font-body), ui-monospace, 'Courier New', monospace;
           font-size: clamp(18px, 2vw, 24px);
           font-weight: 900;
           color: #fff;
@@ -342,7 +307,7 @@ export default function HomePage() {
           animation: count-up 0.6s cubic-bezier(0.22,1,0.36,1) both;
         }
         .hp-metric-delta {
-          font-family: ui-monospace, monospace;
+          font-family: var(--font-body), ui-monospace, 'Courier New', monospace;
           font-size: 7.5px;
           font-weight: 700;
           letter-spacing: 0.18em;
@@ -365,7 +330,7 @@ export default function HomePage() {
           background: var(--purple);
           border: 1px solid rgba(124,58,237,0.65);
           color: #fff;
-          font-family: ui-monospace, monospace;
+          font-family: var(--font-body), ui-monospace, 'Courier New', monospace;
           font-size: 10px;
           font-weight: 700;
           letter-spacing: 0.22em;
@@ -397,7 +362,7 @@ export default function HomePage() {
           background: transparent;
           border: 1px solid var(--border2);
           color: rgba(255,255,255,0.55);
-          font-family: ui-monospace, monospace;
+          font-family: var(--font-body), ui-monospace, 'Courier New', monospace;
           font-size: 10px;
           font-weight: 700;
           letter-spacing: 0.22em;
@@ -418,7 +383,6 @@ export default function HomePage() {
           flex-direction: column;
           background: var(--background2);
         }
-
         .hp-panel-header {
           padding: 20px 24px 16px;
           border-bottom: 1px solid var(--border);
@@ -427,7 +391,7 @@ export default function HomePage() {
           justify-content: space-between;
         }
         .hp-panel-tag {
-          font-family: ui-monospace, monospace;
+          font-family: var(--font-body), ui-monospace, 'Courier New', monospace;
           font-size: 8px;
           font-weight: 700;
           letter-spacing: 0.28em;
@@ -435,17 +399,13 @@ export default function HomePage() {
           color: var(--purple-soft);
         }
         .hp-panel-status {
-          font-family: ui-monospace, monospace;
+          font-family: var(--font-body), ui-monospace, 'Courier New', monospace;
           font-size: 8px;
           letter-spacing: 0.22em;
           color: var(--muted3);
         }
 
-        /* Feature list */
-        .hp-feature-list {
-          flex: 1;
-          overflow-y: auto;
-        }
+        .hp-feature-list { flex: 1; overflow-y: auto; }
         .hp-feature {
           padding: 16px 24px;
           border-bottom: 1px solid var(--border);
@@ -454,7 +414,7 @@ export default function HomePage() {
         }
         .hp-feature:hover { background: rgba(255,255,255,0.015); }
         .hp-feature-tag {
-          font-family: ui-monospace, monospace;
+          font-family: var(--font-body), ui-monospace, 'Courier New', monospace;
           font-size: 7.5px;
           font-weight: 700;
           letter-spacing: 0.26em;
@@ -462,7 +422,7 @@ export default function HomePage() {
           margin-bottom: 5px;
         }
         .hp-feature-title {
-          font-family: ui-monospace, monospace;
+          font-family: var(--font-body), ui-monospace, 'Courier New', monospace;
           font-size: 12px;
           font-weight: 900;
           text-transform: uppercase;
@@ -471,7 +431,7 @@ export default function HomePage() {
           line-height: 1;
         }
         .hp-feature-sub {
-          font-family: ui-monospace, monospace;
+          font-family: var(--font-body), ui-monospace, 'Courier New', monospace;
           font-size: 9.5px;
           letter-spacing: 0.10em;
           color: var(--muted3);
@@ -497,18 +457,16 @@ export default function HomePage() {
         .hp-feature-pct {
           position: absolute;
           right: 0; top: -16px;
-          font-family: ui-monospace, monospace;
+          font-family: var(--font-body), ui-monospace, 'Courier New', monospace;
           font-size: 7px;
           font-weight: 700;
           letter-spacing: 0.14em;
         }
 
-        /* ── SECTION LAYOUT ── */
-        .hp-section {
-          border-bottom: 1px solid var(--border);
-        }
+        /* ── SECTION LABEL ── */
+        .hp-section { border-bottom: 1px solid var(--border); }
         .hp-section-label {
-          font-family: ui-monospace, monospace;
+          font-family: var(--font-body), ui-monospace, 'Courier New', monospace;
           font-size: 8px;
           font-weight: 700;
           letter-spacing: 0.32em;
@@ -524,85 +482,9 @@ export default function HomePage() {
         .hp-section-label::before {
           content: '';
           display: block;
-          width: 18px;
-          height: 1px;
+          width: 18px; height: 1px;
           background: var(--purple-soft);
           opacity: 0.6;
-        }
-
-        /* ── RECENT POLLS TABLE ── */
-        .hp-polls {
-          display: grid;
-          grid-template-columns: 1fr;
-          padding: 0;
-        }
-
-        .hp-poll-row {
-          display: grid;
-          grid-template-columns: 1fr auto;
-          align-items: center;
-          gap: 20px;
-          padding: 18px 24px;
-          border-bottom: 1px solid var(--border);
-          transition: background 120ms ease;
-        }
-        .hp-poll-row:last-child { border-bottom: none; }
-        .hp-poll-row:hover { background: rgba(255,255,255,0.015); }
-
-        .hp-poll-issue {
-          font-family: ui-monospace, monospace;
-          font-size: 11px;
-          font-weight: 700;
-          letter-spacing: 0.10em;
-          text-transform: uppercase;
-          color: #fff;
-        }
-        .hp-poll-meta {
-          font-family: ui-monospace, monospace;
-          font-size: 8px;
-          letter-spacing: 0.18em;
-          color: var(--muted3);
-          margin-top: 3px;
-        }
-
-        .hp-split-bar {
-          width: 180px;
-          flex-shrink: 0;
-        }
-        .hp-split-bar-track {
-          height: 6px;
-          display: flex;
-          overflow: hidden;
-          border-radius: 0;
-        }
-        .hp-split-dem {
-          height: 100%;
-          background: var(--dem);
-          transition: width 1s cubic-bezier(0.22,1,0.36,1);
-        }
-        .hp-split-rep {
-          height: 100%;
-          background: var(--rep);
-          transition: width 1s cubic-bezier(0.22,1,0.36,1);
-        }
-        .hp-split-labels {
-          display: flex;
-          justify-content: space-between;
-          margin-top: 4px;
-        }
-        .hp-split-label-d {
-          font-family: ui-monospace, monospace;
-          font-size: 8px;
-          font-weight: 700;
-          letter-spacing: 0.14em;
-          color: var(--dem);
-        }
-        .hp-split-label-r {
-          font-family: ui-monospace, monospace;
-          font-size: 8px;
-          font-weight: 700;
-          letter-spacing: 0.14em;
-          color: var(--rep);
         }
 
         /* ── CALLOUTS ── */
@@ -614,7 +496,6 @@ export default function HomePage() {
         @media (max-width: 768px) {
           .hp-callouts { grid-template-columns: 1fr; }
         }
-
         .hp-callout {
           padding: 28px 24px;
           border-right: 1px solid var(--border);
@@ -627,26 +508,16 @@ export default function HomePage() {
         }
         .hp-callout:last-child { border-right: none; }
         .hp-callout:hover { background: var(--panel); }
-        .hp-callout::before {
-          content: '';
-          position: absolute;
-          top: 0; left: 0; right: 0;
-          height: 2px;
-        }
-
-        .hp-callout-icon {
-          font-size: 22px;
-          line-height: 1;
-        }
+        .hp-callout-icon { font-size: 22px; line-height: 1; }
         .hp-callout-label {
-          font-family: ui-monospace, monospace;
+          font-family: var(--font-body), ui-monospace, 'Courier New', monospace;
           font-size: 8.5px;
           font-weight: 700;
           letter-spacing: 0.28em;
           text-transform: uppercase;
         }
         .hp-callout-desc {
-          font-family: ui-monospace, monospace;
+          font-family: var(--font-body), ui-monospace, 'Courier New', monospace;
           font-size: 10px;
           letter-spacing: 0.10em;
           color: var(--muted2);
@@ -654,7 +525,7 @@ export default function HomePage() {
           flex: 1;
         }
         .hp-callout-link {
-          font-family: ui-monospace, monospace;
+          font-family: var(--font-body), ui-monospace, 'Courier New', monospace;
           font-size: 9px;
           font-weight: 700;
           letter-spacing: 0.22em;
@@ -670,63 +541,7 @@ export default function HomePage() {
         }
         .hp-callout-link:hover { opacity: 0.75; }
 
-        /* ── BOTTOM TICKER ── */
-        .hp-ticker {
-          border-top: 1px solid var(--border);
-          background: var(--background2);
-          overflow: hidden;
-          padding: 8px 0;
-          position: relative;
-        }
-        .hp-ticker::before,
-        .hp-ticker::after {
-          content: '';
-          position: absolute;
-          top: 0; bottom: 0;
-          width: 60px;
-          z-index: 2;
-          pointer-events: none;
-        }
-        .hp-ticker::before { left: 0; background: linear-gradient(90deg, var(--background2), transparent); }
-        .hp-ticker::after  { right: 0; background: linear-gradient(270deg, var(--background2), transparent); }
-
-        .hp-ticker-track {
-          display: flex;
-          gap: 0;
-          animation: ticker-scroll 28s linear infinite;
-          width: max-content;
-        }
-        .hp-ticker-item {
-          display: inline-flex;
-          align-items: center;
-          gap: 10px;
-          padding: 0 28px;
-          white-space: nowrap;
-          border-right: 1px solid var(--border);
-        }
-        .hp-ticker-key {
-          font-family: ui-monospace, monospace;
-          font-size: 7.5px;
-          font-weight: 700;
-          letter-spacing: 0.22em;
-          text-transform: uppercase;
-          color: var(--muted3);
-        }
-        .hp-ticker-val {
-          font-family: ui-monospace, monospace;
-          font-size: 8px;
-          font-weight: 700;
-          letter-spacing: 0.16em;
-          text-transform: uppercase;
-          color: #fff;
-        }
-        .hp-ticker-dot {
-          width: 5px; height: 5px;
-          border-radius: 50%;
-          flex-shrink: 0;
-        }
-
-        /* ── STATUS PROGRESS BAR ── */
+        /* ── PROGRESS BAR ── */
         .hp-progress-section {
           padding: 24px;
           background: var(--panel);
@@ -737,7 +552,7 @@ export default function HomePage() {
           flex-wrap: wrap;
         }
         .hp-progress-label {
-          font-family: ui-monospace, monospace;
+          font-family: var(--font-body), ui-monospace, 'Courier New', monospace;
           font-size: 8px;
           font-weight: 700;
           letter-spacing: 0.28em;
@@ -763,7 +578,7 @@ export default function HomePage() {
           --target: 1%;
         }
         .hp-progress-pct {
-          font-family: ui-monospace, monospace;
+          font-family: var(--font-body), ui-monospace, 'Courier New', monospace;
           font-size: 11px;
           font-weight: 900;
           letter-spacing: 0.06em;
@@ -771,16 +586,10 @@ export default function HomePage() {
           white-space: nowrap;
         }
         .hp-progress-note {
-          font-family: ui-monospace, monospace;
+          font-family: var(--font-body), ui-monospace, 'Courier New', monospace;
           font-size: 8px;
           letter-spacing: 0.16em;
           color: var(--muted3);
-        }
-
-        /* ── PAGE PADDING ── */
-        .hp-page-wrap {
-          max-width: 1200px;
-          margin: 0 auto;
         }
       `}</style>
 
@@ -796,7 +605,6 @@ export default function HomePage() {
           {/* LEFT */}
           <div className="hp-hero-left">
 
-            {/* Live badge */}
             <div className="hp-animate-1">
               <div className="hp-live-badge">
                 <div className="live-pulse" />
@@ -806,12 +614,11 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* Headline block */}
             <div style={{ margin: "28px 0 24px" }}>
               <div className="hp-animate-2">
                 <p
                   style={{
-                    fontFamily: "ui-monospace, 'Courier New', monospace",
+                    fontFamily: "var(--font-body), ui-monospace, 'Courier New', monospace",
                     fontSize: "9px",
                     fontWeight: 700,
                     letterSpacing: "0.32em",
@@ -842,7 +649,6 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* Metrics */}
             <div className="hp-animate-4">
               <div className="hp-metrics">
                 {metrics.map((m, i) => (
@@ -855,7 +661,6 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* CTA */}
             <div className="hp-animate-5">
               <div className="hp-cta-row" style={{ marginTop: "24px" }}>
                 <Link
@@ -912,7 +717,6 @@ export default function HomePage() {
                   </div>
                 ))}
 
-                {/* Status row */}
                 <div className="hp-progress-section">
                   <div className="hp-progress-label">DEPLOY STATUS</div>
                   <div className="hp-progress-track">
@@ -926,8 +730,6 @@ export default function HomePage() {
           </div>
 
         </section>
-
-        
 
         {/* ══════════════════════════════════
             CALLOUTS
@@ -958,10 +760,6 @@ export default function HomePage() {
             ))}
           </div>
         </section>
-
-        {/* ══════════════════════════════════
-            SCROLLING TICKER
-        ══════════════════════════════════ */}
 
       </div>
     </>

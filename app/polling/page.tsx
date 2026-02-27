@@ -21,7 +21,7 @@ const PAGES: PollPage[] = [
   },
   {
     title: "JD Vance • Favorable/Unfavorable",
-    description: "Tracking the President's job approval in real time",
+    description: "Tracking the Vice President'sl favorability in real time",
     href: "/polling/jdvanceapproval",
     badge: "Approval",
     tag: "National",
