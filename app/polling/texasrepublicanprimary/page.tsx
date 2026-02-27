@@ -12,6 +12,7 @@ import {
 
 // ─── Polls data ───────────────────────────────────────────────────────────────
 const RAW_POLLS: Poll[] = [
+  { pollster: "Chism/Blueprint", endDate: "2026-02-24", sampleSize: 472, sampleType: "LV", results: { Paxton: 42, Cornyn: 30, Hunt: 14 } },
   { pollster: "University of Texas",    endDate: "2026-02-16", sampleSize: 350,  sampleType: "LV", results: { Paxton: 36, Cornyn: 34, Hunt: 26 } },
   { pollster: "University of Houston",  endDate: "2026-01-31", sampleSize: 550,  sampleType: "LV", results: { Paxton: 38, Cornyn: 31, Hunt: 17 } },
   { pollster: "J.L. Partners",          endDate: "2026-02-03", sampleSize: 600,  sampleType: "LV", results: { Paxton: 27, Cornyn: 26, Hunt: 26 } },

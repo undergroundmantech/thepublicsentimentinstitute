@@ -20,6 +20,14 @@ const PAGES: PollPage[] = [
     status: "live",
   },
   {
+    title: "JD Vance • Favorable/Unfavorable",
+    description: "Tracking the President's job approval in real time",
+    href: "/polling/jdvanceapproval",
+    badge: "Approval",
+    tag: "National",
+    status: "live",
+  },
+  {
     title: "2026 National Generic Ballot",
     description: "View how the 2026 National Environment is shaping up in one of the most interesting midterms of all time",
     href: "/polling/genericballot",
@@ -28,7 +36,7 @@ const PAGES: PollPage[] = [
     status: "live",
   },
   {
-    title: "2028 National Generic Ballot",
+    title: "2028 National Popular Vote",
     description: "View how the 2028 Presidential Election is shaping up with JD Vance against Gavin Newsom",
     href: "/polling/2028polling",
     badge: "Daily Average",
