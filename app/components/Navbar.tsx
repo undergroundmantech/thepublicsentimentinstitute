@@ -155,16 +155,21 @@ export default function Navbar() {
         /* ── Brand block ── */
         .nav-brand {
           display: flex;
-          flex-direction: column;
-          justify-content: center;
+          flex-direction: row;
+          align-items: center;
+          gap: 10px;
           padding-right: 20px;
           margin-right: 4px;
           border-right: 1px solid var(--border);
           text-decoration: none;
           flex-shrink: 0;
-          gap: 1px;
         }
         .nav-brand:hover { opacity: 1; }
+        .nav-brand-text {
+          display: flex;
+          flex-direction: column;
+          gap: 1px;
+        }
         .brand-primary {
           font-family: var(--font-display);
           font-size: 13px;
@@ -421,11 +426,14 @@ export default function Navbar() {
         <div className="nav-inner">
           {/* Brand */}
           <Link href="/" className="nav-brand">
-            <div className="brand-primary">
-              <span className="brand-r">P</span>ublic{" "}
-              <span className="brand-b">S</span>entiment
+            <img src="/logo.png" alt="PSI Logo" style={{ height: "36px", width: "auto" }} />
+            <div className="nav-brand-text">
+              <div className="brand-primary">
+                <span className="brand-r">P</span>ublic{" "}
+                <span className="brand-b">S</span>entiment
+              </div>
+              <div className="brand-sub">Institute</div>
             </div>
-            <div className="brand-sub">Institute</div>
           </Link>
 
           {/* Desktop links */}
