@@ -180,7 +180,7 @@ const CSS = `
 
   .p28-eyebrow {
     display: flex; align-items: center; gap: 8px;
-    font-family: ui-monospace,'Courier New',monospace;
+    font-family: var(--font-body), "Geist Mono", monospace;
     font-size: 8px; font-weight: 700; letter-spacing: 0.32em;
     text-transform: uppercase; color: var(--purple-soft); margin-bottom: 12px;
   }
@@ -242,14 +242,14 @@ const CSS = `
 
   .p28-name-tag {
     position: absolute; bottom: 0; z-index: 5;
-    font-family: ui-monospace,'Courier New',monospace;
+    font-family: var(--font-body), "Geist Mono", monospace;
     font-size: clamp(18px,2.8vw,32px); font-weight: 900;
     text-transform: uppercase; letter-spacing: 0.06em; line-height: 1;
   }
   .p28-name-tag.left  { left:0; padding-left:20px; color:var(--rep); text-shadow:0 0 36px rgba(255,23,23,0.55); }
   .p28-name-tag.right { right:0; padding-right:20px; color:var(--dem); text-shadow:0 0 36px rgba(24,77,252,0.55); text-align:right; }
   .p28-name-sub {
-    display: block; font-family: ui-monospace,monospace;
+    display: block; font-family: var(--font-body), "Geist Mono", monospace;
     font-size: 8px; font-weight: 700; letter-spacing: 0.26em;
     text-transform: uppercase; opacity: 0.55; margin-top: 3px;
   }
@@ -259,12 +259,12 @@ const CSS = `
     padding-bottom: 40px; position: relative; z-index: 10; gap: 4px;
   }
   .p28-election-label {
-    font-family: ui-monospace,monospace; font-size: 8px; font-weight: 700;
+    font-family: var(--font-body), "Geist Mono", monospace; font-size: 8px; font-weight: 700;
     letter-spacing: 0.36em; text-transform: uppercase; color: var(--gold);
     margin-bottom: 8px; display: flex; align-items: center; gap: 7px;
   }
   .p28-vs-text {
-    font-family: ui-monospace,'Courier New',monospace;
+    font-family: var(--font-body), "Geist Mono", monospace;
     font-size: clamp(48px,6vw,72px); font-weight: 900; line-height: 1;
     background: linear-gradient(135deg, var(--rep) 0%, #fff 50%, var(--dem) 100%);
     -webkit-background-clip: text; -webkit-text-fill-color: transparent;
@@ -272,7 +272,7 @@ const CSS = `
     text-transform: uppercase; letter-spacing: 0.02em;
   }
   .p28-vs-sub {
-    font-family: ui-monospace,monospace; font-size: 8px; letter-spacing: 0.24em;
+    font-family: var(--font-body), "Geist Mono", monospace; font-size: 8px; letter-spacing: 0.24em;
     text-transform: uppercase; color: var(--muted3); margin-top: 4px;
   }
 
@@ -283,7 +283,7 @@ const CSS = `
   @media (max-width:640px) { .p28-hero-inner { grid-template-columns:1fr; } }
 
   .p28-hero-title {
-    font-family: ui-monospace,'Courier New',monospace;
+    font-family: "Quantico", system-ui, -apple-system, BlinkMacOSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: clamp(22px,3.5vw,46px); font-weight: 900; text-transform: uppercase;
     letter-spacing: 0.02em; line-height: 0.92; color: #fff; margin: 0 0 14px;
   }
@@ -298,7 +298,7 @@ const CSS = `
     -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
   }
   .p28-hero-desc {
-    font-family: ui-monospace,monospace; font-size: 9.5px; letter-spacing: 0.12em;
+    font-family: var(--font-body), "Geist Mono", monospace; font-size: 9.5px; letter-spacing: 0.12em;
     line-height: 1.75; color: var(--muted2); text-transform: uppercase; max-width: 520px;
   }
   .p28-hero-badge-row { display:flex; flex-wrap:wrap; gap:6px; margin-top:16px; }
@@ -306,7 +306,7 @@ const CSS = `
   .p28-badge {
     display: inline-flex; align-items: center; gap: 5px; padding: 3px 8px;
     border: 1px solid var(--border); background: rgba(255,255,255,0.03);
-    font-family: ui-monospace,monospace; font-size: 7.5px; font-weight: 700;
+    font-family: var(--font-body), "Geist Mono", monospace; font-size: 7.5px; font-weight: 700;
     letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted3);
   }
   .p28-badge-live   { border-color:rgba(124,58,237,0.35); background:rgba(124,58,237,0.07); color:var(--purple-soft); }
@@ -320,16 +320,16 @@ const CSS = `
     background: rgba(255,255,255,0.03); position: relative; overflow: hidden;
   }
   .p28-hero-read-label {
-    font-family: ui-monospace,monospace; font-size: 7.5px; font-weight: 700;
+    font-family: var(--font-body), "Geist Mono", monospace; font-size: 7.5px; font-weight: 700;
     letter-spacing: 0.24em; text-transform: uppercase; color: var(--muted3);
   }
   .p28-hero-read-val {
-    font-family: ui-monospace,monospace; font-size: 20px; font-weight: 900;
+    font-family: var(--font-body), "Geist Mono", monospace; font-size: 20px; font-weight: 900;
     font-variant-numeric: tabular-nums;
   }
 
   .p28-section-label {
-    font-family: ui-monospace,monospace; font-size: 7.5px; font-weight: 700;
+    font-family: var(--font-body), "Geist Mono", monospace; font-size: 7.5px; font-weight: 700;
     letter-spacing: 0.32em; text-transform: uppercase; color: var(--muted3);
     display: flex; align-items: center; gap: 10px; margin-bottom: 12px;
   }
@@ -348,15 +348,15 @@ const CSS = `
   .p28-kpi:hover { border-color: var(--border2); }
   .p28-kpi-accent { position:absolute; top:0; left:0; right:0; height:2px; }
   .p28-kpi-label {
-    font-family: ui-monospace,monospace; font-size: 7.5px; font-weight: 700;
+    font-family: var(--font-body); font-size: 7.5px; font-weight: 700;
     letter-spacing: 0.28em; text-transform: uppercase; color: var(--muted3); margin-bottom: 8px;
   }
   .p28-kpi-val {
-    font-family: ui-monospace,monospace; font-size: clamp(22px,2.5vw,30px);
+    font-family: var(--font-body), "Geist Mono", monospace;
     font-weight: 900; color: #fff; line-height: 1; font-variant-numeric: tabular-nums;
   }
   .p28-kpi-sub {
-    font-family: ui-monospace,monospace; font-size: 8px; letter-spacing: 0.16em;
+    font-family: var(--font-body), "Geist Mono", monospace;
     text-transform: uppercase; color: var(--muted3); margin-top: 6px;
   }
   .p28-kpi-bar { height:2px; margin-top:10px; background:rgba(255,255,255,0.07); }
@@ -373,13 +373,13 @@ const CSS = `
     justify-content:space-between; gap:12px; flex-wrap:wrap;
   }
   .p28-map-title {
-    font-family: ui-monospace,monospace; font-size: 9px; font-weight: 700;
+    font-family: var(--font-body); font-size: 9px; font-weight: 700;
     letter-spacing: 0.26em; text-transform: uppercase; color: var(--purple-soft);
   }
   .p28-map-ev-row {
     display: flex; align-items: stretch; gap: 0;
     border: 1px solid var(--border); overflow: hidden;
-    font-family: ui-monospace,monospace;
+    font-family: var(--font-body), "Geist Mono", monospace; font-weight: 500;
   }
   .p28-map-ev-block {
     display: flex; flex-direction: column; align-items: center;
@@ -401,11 +401,11 @@ const CSS = `
     background: rgba(124,58,237,0.07);
   }
   .p28-map-ev-needed-num {
-    font-family: ui-monospace,monospace; font-size: 14px; font-weight: 900;
+    font-family: var(--font-body), "Geist Mono", monospace; font-size: 14px; font-weight: 900;
     color: var(--purple-soft); font-variant-numeric: tabular-nums;
   }
   .p28-map-ev-needed-label {
-    font-family: ui-monospace,monospace; font-size: 7px; font-weight: 700;
+    font-family: var(--font-body), "Geist Mono", monospace; font-size: 7px; font-weight: 700;
     letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted3);
   }
 
@@ -425,7 +425,7 @@ const CSS = `
   }
   .p28-ev-bar-labels {
     display: flex; justify-content: space-between;
-    font-family: ui-monospace,monospace; font-size: 7.5px; font-weight: 700;
+    font-family: var(--font-body), "Geist Mono", monospace; font-size: 7.5px; font-weight: 700;
     letter-spacing: 0.16em; text-transform: uppercase;
     color: var(--muted3); margin-top: 6px; padding: 0 2px;
   }
@@ -447,7 +447,7 @@ const CSS = `
     background: #0f0f15; border: 1px solid rgba(255,255,255,0.15);
     padding: 10px 14px; min-width: 200px;
     box-shadow: 0 8px 32px rgba(0,0,0,0.7);
-    font-family: ui-monospace,monospace;
+    font-family: var(--font-body), "Geist Mono", monospace;
     transition: opacity 100ms ease;
   }
   .p28-tt-state {
@@ -495,7 +495,7 @@ const CSS = `
   }
   .p28-legend-item {
     display: flex; align-items: center; gap: 5px;
-    font-family: ui-monospace,monospace; font-size: 7.5px; font-weight: 700;
+    font-family: var(--font-body), "Geist Mono", monospace; font-size: 7.5px; font-weight: 700;
     letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted3);
   }
   .p28-legend-swatch { width: 12px; height: 12px; flex-shrink: 0; }
@@ -508,11 +508,11 @@ const CSS = `
     justify-content:space-between; gap:12px; flex-wrap:wrap;
   }
   .p28-table-head-title {
-    font-family: ui-monospace,monospace; font-size: 9px; font-weight: 700;
+    font-family: var(--font-body), "Geist Mono", monospace; font-size: 9px; font-weight: 700;
     letter-spacing: 0.26em; text-transform: uppercase; color: var(--purple-soft);
   }
   .p28-table-head-note {
-    font-family: ui-monospace,monospace; font-size: 7.5px;
+    font-family: var(--font-body), "Geist Mono", monospace; font-size: 7.5px;
     letter-spacing: 0.20em; text-transform: uppercase; color: var(--muted3);
   }
   .p28-table-scroll { overflow-x:auto; max-height:520px; overflow-y:auto; }
@@ -525,7 +525,7 @@ const CSS = `
   }
   table.p28-table th.r { text-align:right; }
   table.p28-table td {
-    font-family: ui-monospace,monospace; font-size: 10.5px;
+    font-family: var(--font-body), "Geist Mono", monospace; font-size: 10.5px;
     padding: 10px 16px; border-bottom: 1px solid rgba(255,255,255,0.04);
     color: var(--muted); vertical-align: middle; font-variant-numeric: tabular-nums;
   }
@@ -536,7 +536,7 @@ const CSS = `
   .p28-gold-badge {
     display: inline-flex; align-items: center; padding: 1px 6px;
     border: 1px solid rgba(167,139,250,0.28); background: rgba(124,58,237,0.07);
-    font-family: ui-monospace,monospace; font-size: 7px; font-weight: 700;
+    font-family: var(--font-body), "Geist Mono", monospace; font-size: 7px; font-weight: 700;
     letter-spacing: 0.18em; text-transform: uppercase; color: var(--purple-soft);
   }
 

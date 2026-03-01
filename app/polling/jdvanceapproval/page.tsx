@@ -162,7 +162,7 @@ const RAW_POLLS: Poll[] = [
   { pollster: "Economist/YouGov", endDate: "2025-01-08", sampleSize: 1522, sampleType: "RV", results: { Favorable: 44, Unfavorable: 47 } },
 ];
 
-const COLORS: Record<string, string> = { Favorable: "#2bff00", Unfavorable: "#ff0040" };
+const COLORS: Record<string, string> = { Favorable: "#4d7fd4", Unfavorable: "#ff0040" };
 
 function round1(n: number) { return Math.round(n * 10) / 10; }
 
@@ -196,7 +196,7 @@ export default function JDVanceFavorabilityPage() {
   const netText = latestNet === 0 ? "EVEN"
     : latestNet > 0 ? `+${round1(latestNet).toFixed(1)}`
     : `${round1(latestNet).toFixed(1)}`;
-  const netColor = latestNet >= 0 ? "rgba(43,255,0,0.85)" : "rgba(255,0,64,0.85)";
+  const netColor = latestNet >= 0 ? "rgba(77,127,212,1)" : "rgba(255,0,64,0.85)";
 
   return (
     <>
@@ -227,7 +227,7 @@ export default function JDVanceFavorabilityPage() {
             </div>
             <div className="pap-hero-read">
               {[
-                { label: "FAVORABLE",   val: `${round1(latestFavorable).toFixed(1)}%`,   color: "rgba(43,255,0,0.9)"  },
+                { label: "FAVORABLE",   val: `${round1(latestFavorable).toFixed(1)}%`,   color: "rgba(77,127,212,1)"  },
                 { label: "UNFAVORABLE", val: `${round1(latestUnfavorable).toFixed(1)}%`, color: "rgba(255,0,64,0.9)" },
                 { label: "NET",         val: netText,                                      color: netColor               },
               ].map(({ label, val, color }) => (
@@ -244,7 +244,7 @@ export default function JDVanceFavorabilityPage() {
         <div className="pap-section-label">CURRENT AVERAGES</div>
         <div className="pap-kpi-grid">
           {[
-            { label: "Favorable",    value: `${round1(latestFavorable).toFixed(1)}%`,   sub: "Daily weighted avg",    color: "rgba(43,255,0,0.75)",  bar: latestFavorable },
+            { label: "Favorable",    value: `${round1(latestFavorable).toFixed(1)}%`,   sub: "Daily weighted avg",    color: "rgba(77,127,212,1)",  bar: latestFavorable },
             { label: "Unfavorable",  value: `${round1(latestUnfavorable).toFixed(1)}%`, sub: "Daily weighted avg",    color: "rgba(255,0,64,0.75)",  bar: latestUnfavorable },
             { label: "Net Rating",   value: netText,                                     sub: "Favorable − Unfavorable", color: netColor,              bar: undefined },
             { label: "Polls",        value: `${RAW_POLLS.length}`,                      sub: "Included in model",     color: undefined,              bar: Math.min(100, RAW_POLLS.length / 2) },
@@ -373,7 +373,7 @@ const CSS = `
     --purple:      #7c3aed;
     --purple2:     #9d5cf0;
     --purple-soft: #a78bfa;
-    --approve:     rgba(43,255,0,0.85);
+    --approve:     rgba(77,127,212,1);
     --disapprove:  rgba(255,0,64,0.85);
   }
 
@@ -402,7 +402,7 @@ const CSS = `
     background: linear-gradient(90deg,
       rgba(255,0,64,0.9)   0%,    rgba(255,0,64,0.9)   33.33%,
       var(--purple)         33.33%,var(--purple)         66.66%,
-      rgba(43,255,0,0.9)   66.66%,rgba(43,255,0,0.9)   100%
+      rgba(77,127,212,1)   66.66%,rgba(77,127,212,1)   100%
     );
   }
 
@@ -422,7 +422,7 @@ const CSS = `
     display: flex;
     align-items: center;
     gap: 8px;
-    font-family: ui-monospace,'Courier New',monospace;
+    font-family: var(--font-body), "Geist Mono", monospace;
     font-size: 8px;
     font-weight: 700;
     letter-spacing: 0.32em;
@@ -450,7 +450,7 @@ const CSS = `
     position: absolute; inset: 0;
     background:
       radial-gradient(ellipse 45% 100% at 0% 60%,   rgba(255,0,64,0.05)    0%, transparent 65%),
-      radial-gradient(ellipse 45% 100% at 100% 60%,  rgba(43,255,0,0.04)   0%, transparent 65%),
+      radial-gradient(ellipse 45% 100% at 100% 60%,  rgba(77,127,212,0.04) 0%, transparent 65%),
       radial-gradient(ellipse 30% 60%  at 50% 0%,    rgba(124,58,237,0.04) 0%, transparent 70%);
     pointer-events: none;
   }
@@ -474,7 +474,7 @@ const CSS = `
   @media (max-width: 640px) { .pap-hero-inner { grid-template-columns: 1fr; } }
 
   .pap-hero-title {
-    font-family: ui-monospace,'Courier New',monospace;
+    font-family: "Quantico", system-ui, -apple-system, BlinkMacOSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: clamp(22px,3.5vw,46px);
     font-weight: 900;
     text-transform: uppercase;
@@ -492,7 +492,7 @@ const CSS = `
   }
 
   .pap-hero-desc {
-    font-family: ui-monospace,monospace;
+    font-family: var(--font-body), "Geist Mono", monospace;
     font-size: 9.5px;
     letter-spacing: 0.12em;
     line-height: 1.75;
@@ -513,7 +513,7 @@ const CSS = `
     padding: 3px 8px;
     border: 1px solid var(--border);
     background: rgba(255,255,255,0.03);
-    font-family: ui-monospace,monospace;
+    font-family: var(--font-body), "Geist Mono", monospace;
     font-size: 7.5px; font-weight: 700; letter-spacing: 0.22em;
     text-transform: uppercase; color: var(--muted3);
   }
@@ -540,20 +540,20 @@ const CSS = `
     overflow: hidden;
   }
   .pap-hero-read-label {
-    font-family: ui-monospace,monospace;
+    font-family: var(--font-body), "Geist Mono", monospace;
     font-size: 7.5px; font-weight: 700;
     letter-spacing: 0.24em; text-transform: uppercase;
     color: var(--muted3);
   }
   .pap-hero-read-val {
-    font-family: ui-monospace,monospace;
+    font-family: var(--font-body), "Geist Mono", monospace;
     font-size: 20px; font-weight: 900;
     font-variant-numeric: tabular-nums;
   }
 
   /* SECTION LABEL */
   .pap-section-label {
-    font-family: ui-monospace,monospace;
+    font-family: var(--font-body), "Geist Mono", monospace;
     font-size: 7.5px; font-weight: 700;
     letter-spacing: 0.32em; text-transform: uppercase;
     color: var(--muted3);
@@ -585,20 +585,20 @@ const CSS = `
     position: absolute; top: 0; left: 0; right: 0; height: 2px;
   }
   .pap-kpi-label {
-    font-family: ui-monospace,monospace;
+    font-family: var(--font-body), "Geist Mono", monospace;
     font-size: 7.5px; font-weight: 700;
     letter-spacing: 0.28em; text-transform: uppercase;
     color: var(--muted3); margin-bottom: 8px;
   }
   .pap-kpi-val {
-    font-family: ui-monospace,monospace;
+    font-family: var(--font-body), "Geist Mono", monospace;
     font-size: clamp(22px,2.5vw,30px);
     font-weight: 900;
     color: #fff; line-height: 1;
     font-variant-numeric: tabular-nums;
   }
   .pap-kpi-sub {
-    font-family: ui-monospace,monospace;
+    font-family: var(--font-body), "Geist Mono", monospace;
     font-size: 8px; letter-spacing: 0.16em;
     text-transform: uppercase; color: var(--muted3);
     margin-top: 6px;
@@ -623,13 +623,13 @@ const CSS = `
     gap: 12px; flex-wrap: wrap;
   }
   .pap-table-head-title {
-    font-family: ui-monospace,monospace;
+    font-family: var(--font-body), "Geist Mono", monospace;
     font-size: 9px; font-weight: 700;
     letter-spacing: 0.26em; text-transform: uppercase;
     color: var(--purple-soft);
   }
   .pap-table-head-note {
-    font-family: ui-monospace,monospace;
+    font-family: var(--font-body), "Geist Mono", monospace;
     font-size: 7.5px; letter-spacing: 0.20em;
     text-transform: uppercase; color: var(--muted3);
   }
@@ -649,7 +649,7 @@ const CSS = `
     z-index: 2;
   }
   table.pap-table th {
-    font-family: ui-monospace,monospace;
+    font-family: var(--font-body), "Geist Mono", monospace;
     font-size: 7.5px; font-weight: 700;
     letter-spacing: 0.22em; text-transform: uppercase;
     color: var(--muted3);
@@ -660,7 +660,7 @@ const CSS = `
   }
   table.pap-table th.r { text-align: right; }
   table.pap-table td {
-    font-family: ui-monospace,monospace;
+    font-family: var(--font-body), "Geist Mono", monospace;
     font-size: 10.5px;
     padding: 10px 16px;
     border-bottom: 1px solid rgba(255,255,255,0.04);
@@ -676,15 +676,15 @@ const CSS = `
     padding: 1px 6px;
     border: 1px solid rgba(167,139,250,0.28);
     background: rgba(124,58,237,0.07);
-    font-family: ui-monospace,monospace;
+    font-family: var(--font-body), "Geist Mono", monospace;
     font-size: 7px; font-weight: 700;
     letter-spacing: 0.18em; text-transform: uppercase;
     color: var(--purple-soft);
   }
 
-  .pap-approve-col    { color: rgba(43,255,0,0.85)  !important; font-weight: 700; }
+  .pap-approve-col    { color: rgba(77,127,212,1)   !important; font-weight: 700; }
   .pap-disapprove-col { color: rgba(255,0,64,0.85)  !important; font-weight: 700; }
-  .pap-net-pos        { color: rgba(43,255,0,0.9)   !important; font-weight: 700; }
+  .pap-net-pos        { color: rgba(77,127,212,1)   !important; font-weight: 700; }
   .pap-net-neg        { color: rgba(255,80,80,0.9)  !important; font-weight: 700; }
 
   @media (prefers-reduced-motion: reduce) {

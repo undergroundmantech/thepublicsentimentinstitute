@@ -100,7 +100,7 @@ export default function Navbar() {
           display: flex;
           align-items: center;
           gap: 8px;
-          font-family: ui-monospace, 'Courier New', monospace;
+          font-family: var(--font-body);
           font-size: 9px;
           font-weight: 700;
           letter-spacing: var(--trk-3);
@@ -128,7 +128,7 @@ export default function Navbar() {
           color: rgba(255,255,255,0.12);
         }
         .nav-ticker-right {
-          font-family: ui-monospace, 'Courier New', monospace;
+          font-family: var(--font-body);
           font-size: 9px;
           font-weight: 700;
           letter-spacing: var(--trk-3);
@@ -166,7 +166,7 @@ export default function Navbar() {
         }
         .nav-brand:hover { opacity: 1; }
         .brand-primary {
-          font-family: ui-monospace, 'Courier New', monospace;
+          font-family: var(--font-display);
           font-size: 13px;
           font-weight: 900;
           letter-spacing: 0.10em;
@@ -177,9 +177,9 @@ export default function Navbar() {
         .brand-primary span.brand-r { color: var(--red); }
         .brand-primary span.brand-b { color: var(--blue2); }
         .brand-sub {
-          font-family: ui-monospace, 'Courier New', monospace;
-          font-size: 7.5px;
-          font-weight: 700;
+          font-family: var(--font-display);
+          font-size: 8.5px;
+          font-weight: 500;
           letter-spacing: 0.38em;
           text-transform: uppercase;
           color: var(--purple-soft);
@@ -201,7 +201,7 @@ export default function Navbar() {
           display: inline-flex;
           align-items: center;
           padding: 0 14px;
-          font-family: ui-monospace, 'Courier New', monospace;
+          font-family: var(--font-body);
           font-size: 9.5px;
           font-weight: 700;
           letter-spacing: var(--trk-2);
@@ -251,7 +251,7 @@ export default function Navbar() {
           background: var(--purple);
           border: 1px solid rgba(124,58,237,0.65);
           color: #fff;
-          font-family: ui-monospace, 'Courier New', monospace;
+          font-family: var(--font-body);
           font-size: 9px;
           font-weight: 700;
           letter-spacing: var(--trk-2);
@@ -322,7 +322,7 @@ export default function Navbar() {
           align-items: center;
           justify-content: space-between;
           padding: 14px 24px;
-          font-family: ui-monospace, 'Courier New', monospace;
+          font-family: var(--font-body);
           font-size: 10px;
           font-weight: 700;
           letter-spacing: var(--trk-2);
@@ -351,7 +351,7 @@ export default function Navbar() {
           background: var(--purple);
           border: 1px solid rgba(124,58,237,0.65);
           color: #fff;
-          font-family: ui-monospace, 'Courier New', monospace;
+          font-family: var(--font-body);
           font-size: 10px;
           font-weight: 700;
           letter-spacing: var(--trk-2);
@@ -385,7 +385,7 @@ export default function Navbar() {
           gap: 2px;
         }
         .stat-chip-val {
-          font-family: ui-monospace, monospace;
+          font-family: var(--font-body);
           font-size: 13px;
           font-weight: 900;
           line-height: 1;
@@ -394,7 +394,7 @@ export default function Navbar() {
         .stat-chip-val.dem { color: var(--blue2); }
         .stat-chip-val.rep { color: var(--red); }
         .stat-chip-label {
-          font-family: ui-monospace, monospace;
+          font-family: var(--font-body);
           font-size: 7px;
           font-weight: 700;
           letter-spacing: 0.28em;

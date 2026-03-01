@@ -619,7 +619,7 @@ const RAW_POLLS: Poll[] = [
   { pollster: "InsiderAdvantage", endDate: "2025-01-20", sampleSize: 800, sampleType: "RV", results: { Approve: 56, Disapprove: 39 } },
 ];
 
-const COLORS: Record<string, string> = { Approve: "#2bff00", Disapprove: "#ff0040" };
+const COLORS: Record<string, string> = { Approve: "#2563eb", Disapprove: "#ff0040" };
 
 function round1(n: number) { return Math.round(n * 10) / 10; }
 
@@ -741,9 +741,9 @@ function StateMap({ tpsiNet, tpsiApprove, tpsiDisapprove }: {
           </div>
           <div className="pap-hero-read">
             {[
-              { label: "TPSI APPROVE",    val: `${tpsiApprove.toFixed(1)}%`,    color: "rgba(43,255,0,0.9)" },
+              { label: "TPSI APPROVE",    val: `${tpsiApprove.toFixed(1)}%`,    color: "rgba(77,127,212,1)"},
               { label: "TPSI DISAPPROVE", val: `${tpsiDisapprove.toFixed(1)}%`, color: "rgba(255,0,64,0.9)" },
-              { label: "TPSI NET",        val: `${tpsiNet >= 0 ? "+" : ""}${tpsiNet.toFixed(1)}`, color: tpsiNet >= 0 ? "rgba(43,255,0,0.9)" : "rgba(255,0,64,0.9)" },
+              { label: "TPSI NET",        val: `${tpsiNet >= 0 ? "+" : ""}${tpsiNet.toFixed(1)}`, color: tpsiNet >= 0 ? "rgba(77,127,212,1) " : "rgba(255,0,64,0.9)" },
             ].map(({ label, val, color }) => (
               <div key={label} className="pap-hero-read-row">
                 <span className="pap-hero-read-label">{label}</span>
@@ -856,7 +856,7 @@ function StateMap({ tpsiNet, tpsiApprove, tpsiDisapprove }: {
                       textAnchor="middle"
                       dominantBaseline="middle"
                       fontSize="9"
-                      fontFamily="ui-monospace,'Courier New',monospace"
+                      fontFamily="var(--font-body), 'Geist Mono', monospace"
                       fontWeight="700"
                       fill="rgba(255,255,255,0.65)"
                       style={{ pointerEvents: "none", userSelect: "none" }}
@@ -877,7 +877,7 @@ function StateMap({ tpsiNet, tpsiApprove, tpsiDisapprove }: {
               const tx = Math.min(rawTx, W - tooltipW - 8);
               const ty = Math.max(rawTy, 4);
               const net = ttData.correctedNet;
-              const netColor = net >= 0 ? "rgba(43,255,0,0.9)" : "rgba(255,0,64,0.9)";
+              const netColor = net >= 0 ? "rgba(77,127,212,1) " : "rgba(255,0,64,0.9)";
               const netStr = `${net >= 0 ? "+" : ""}${net.toFixed(1)}`;
               return (
                 <g transform={`translate(${tx},${ty})`} style={{ pointerEvents: "none" }}>
@@ -895,7 +895,7 @@ function StateMap({ tpsiNet, tpsiApprove, tpsiDisapprove }: {
                   <text x={10} y={32} fontSize={7} fontFamily="ui-monospace,monospace" fill="rgba(255,255,255,0.3)" letterSpacing={2}>{tooltip.code}</text>
                   <line x1={8} y1={38} x2={tooltipW - 8} y2={38} stroke="rgba(255,255,255,0.08)" strokeWidth={1} />
                   <text x={10} y={52} fontSize={7} fontFamily="ui-monospace,monospace" fill="rgba(255,255,255,0.35)" letterSpacing={1.5}>APPROVE</text>
-                  <text x={tooltipW - 10} y={52} fontSize={11} fontFamily="ui-monospace,monospace" fontWeight="700" fill="rgba(43,255,0,0.9)" textAnchor="end">{ttData.approve.toFixed(1)}%</text>
+                  <text x={tooltipW - 10} y={52} fontSize={11} fontFamily="ui-monospace,monospace" fontWeight="700" fill="rgba(77,127,212,1) " textAnchor="end">{ttData.approve.toFixed(1)}%</text>
                   <text x={10} y={67} fontSize={7} fontFamily="ui-monospace,monospace" fill="rgba(255,255,255,0.35)" letterSpacing={1.5}>DISAPPROVE</text>
                   <text x={tooltipW - 10} y={67} fontSize={11} fontFamily="ui-monospace,monospace" fontWeight="700" fill="rgba(255,0,64,0.9)" textAnchor="end">{ttData.disapprove.toFixed(1)}%</text>
                   <text x={10} y={82} fontSize={7} fontFamily="ui-monospace,monospace" fill="rgba(255,255,255,0.35)" letterSpacing={1.5}>NET</text>
@@ -952,19 +952,19 @@ function StateMap({ tpsiNet, tpsiApprove, tpsiDisapprove }: {
                         <span style={{ color: "rgba(255,255,255,0.3)", fontSize: 9 }}>{code}</span>
                       </div>
                     </td>
-                    <td className="r" style={{ color: d.civiqs >= 0 ? "rgba(43,255,0,0.8)" : "rgba(255,80,80,0.8)" }}>
+                    <td className="r" style={{ color: d.civiqs >= 0 ? "rgba(77,127,212,1) " : "rgba(255,80,80,0.8)" }}>
                       {d.civiqs >= 0 ? "+" : ""}{d.civiqs.toFixed(1)}
                     </td>
-                    <td className="r" style={{ color: d.economist >= 0 ? "rgba(43,255,0,0.8)" : "rgba(255,80,80,0.8)" }}>
+                    <td className="r" style={{ color: d.economist >= 0 ? "rgba(77,127,212,1) " : "rgba(255,80,80,0.8)" }}>
                       {d.economist >= 0 ? "+" : ""}{d.economist.toFixed(1)}
                     </td>
-                    <td className="r" style={{ color: d.mc >= 0 ? "rgba(43,255,0,0.8)" : "rgba(255,80,80,0.8)" }}>
+                    <td className="r" style={{ color: d.mc >= 0 ? "rgba(77,127,212,1)" : "rgba(255,80,80,0.8)" }}>
                       {d.mc >= 0 ? "+" : ""}{d.mc.toFixed(1)}
                     </td>
-                    <td className="r" style={{ color: d.rawNet >= 0 ? "rgba(43,255,0,0.5)" : "rgba(255,80,80,0.5)" }}>
+                    <td className="r" style={{ color: d.rawNet >= 0 ? "rgba(77,127,212,1) " : "rgba(255,80,80,0.5)" }}>
                       {d.rawNet >= 0 ? "+" : ""}{d.rawNet.toFixed(1)}
                     </td>
-                    <td className="r" style={{ color: pos ? "rgba(43,255,0,0.9)" : "rgba(255,80,80,0.9)", fontWeight: 700 }}>
+                    <td className="r" style={{ color: pos ? "rgba(77,127,212,1) " : "rgba(255,80,80,0.9)", fontWeight: 700 }}>
                       {net >= 0 ? "+" : ""}{net.toFixed(1)}
                     </td>
                     <td className="r pap-approve-col">{d.approve.toFixed(1)}%</td>
@@ -1060,7 +1060,7 @@ export default function TrumpApprovalPage() {
             </div>
             <div className="pap-hero-read">
               {[
-                { label: "APPROVE",    val: `${round1(latestApprove).toFixed(1)}%`,    color: "rgba(43,255,0,0.9)"  },
+                { label: "APPROVE",    val: `${round1(latestApprove).toFixed(1)}%`,    color: "rgba(77,127,212,1) "  },
                 { label: "DISAPPROVE", val: `${round1(latestDisapprove).toFixed(1)}%`, color: "rgba(255,0,64,0.9)" },
                 { label: "NET",        val: netText,                                    color: netColor               },
               ].map(({ label, val, color }) => (
@@ -1077,7 +1077,7 @@ export default function TrumpApprovalPage() {
         <div className="pap-section-label">CURRENT AVERAGES</div>
         <div className="pap-kpi-grid">
           {[
-            { label: "Approve",     value: `${round1(latestApprove).toFixed(1)}%`,    sub: "Daily weighted avg",   color: "rgba(43,255,0,0.75)",  bar: latestApprove },
+            { label: "Approve", value: `${round1(latestApprove).toFixed(1)}%`, sub: "Daily weighted avg", color: "#2563eb", bar: latestApprove },
             { label: "Disapprove",  value: `${round1(latestDisapprove).toFixed(1)}%`, sub: "Daily weighted avg",   color: "rgba(255,0,64,0.75)",  bar: latestDisapprove },
             { label: "Net Approval",value: netText,                                    sub: "Approve − Disapprove", color: netColor,               bar: undefined },
             { label: "Polls",       value: `${RAW_POLLS.length}`,                     sub: "Included in model",    color: undefined,              bar: Math.min(100, RAW_POLLS.length / 3) },
@@ -1197,8 +1197,8 @@ const CSS = `
     --purple:      #7c3aed;
     --purple2:     #9d5cf0;
     --purple-soft: #a78bfa;
-    --approve:     rgba(43,255,0,0.85);
-    --disapprove:  rgba(255,0,64,0.85);
+    --approve:     rgba(204, 0, 0, 0.85);     /* Republican Red */
+    --disapprove:  rgba(0, 51, 160, 0.85);    /* Democratic Blue */
   }
 
   @keyframes pap-fade-up {
@@ -1224,9 +1224,9 @@ const CSS = `
   .pap-stripe {
     height: 3px;
     background: linear-gradient(90deg,
-      rgba(255,0,64,0.9)   0%,    rgba(255,0,64,0.9)   33.33%,
-      var(--purple)         33.33%,var(--purple)         66.66%,
-      rgba(43,255,0,0.9)   66.66%,rgba(43,255,0,0.9)   100%
+      rgba(204,0,0,0.9)    0%,     rgba(204,0,0,0.9)    33.33%,
+      var(--purple)        33.33%, var(--purple)        66.66%,
+      rgba(77,127,212,1)   66.66%, rgba(77,127,212,1)   100%);
     );
   }
 
@@ -1246,7 +1246,7 @@ const CSS = `
     display: flex;
     align-items: center;
     gap: 8px;
-    font-family: ui-monospace,'Courier New',monospace;
+    font-family: var(--font-body), "Geist Mono", monospace;
     font-size: 8px;
     font-weight: 700;
     letter-spacing: 0.32em;
@@ -1298,7 +1298,7 @@ const CSS = `
   @media (max-width: 640px) { .pap-hero-inner { grid-template-columns: 1fr; } }
 
   .pap-hero-title {
-    font-family: ui-monospace,'Courier New',monospace;
+    font-family: "Quantico", system-ui, -apple-system, BlinkMacOSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: clamp(22px,3.5vw,46px);
     font-weight: 900;
     text-transform: uppercase;
@@ -1506,10 +1506,10 @@ const CSS = `
     color: var(--purple-soft);
   }
 
-  .pap-approve-col    { color: rgba(43,255,0,0.85)  !important; font-weight: 700; }
-  .pap-disapprove-col { color: rgba(255,0,64,0.85)  !important; font-weight: 700; }
-  .pap-net-pos        { color: rgba(43,255,0,0.9)   !important; font-weight: 700; }
-  .pap-net-neg        { color: rgba(255,80,80,0.9)  !important; font-weight: 700; }
+  .pap-approve-col    { color: rgba(204,0,0,0.85)   !important; font-weight: 700; }
+  .pap-disapprove-col { color: rgba(77,127,212,.95)  !important; font-weight: 700; }
+  .pap-net-pos        { color: rgba(204,0,0,0.9)    !important; font-weight: 700; }
+  .pap-net-neg        { color: rgba(77,127,212,1)   !important; font-weight: 700; }
 
   @media (prefers-reduced-motion: reduce) {
     .pap-root { animation: none !important; }

@@ -95,14 +95,14 @@ html, body { height: 100%; }
 html {
   scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
+  font-family: var(--font-body);
 }
 
 body {
   margin: 0;
   color: var(--foreground);
   background: var(--background);
-  font-family: var(--font-body), ui-monospace, SFMono-Regular, Menlo, Monaco,
-    Consolas, "Liberation Mono", monospace;
+  font-family: var(--font-body);
   font-size: 15px;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
@@ -148,7 +148,7 @@ button, input, textarea, select { font: inherit; color: inherit; }
 -------------------------------------------- */
 h1, h2, h3, h4, h5, h6 {
   margin: 0 0 0.5em;
-  font-family: var(--font-display), ui-sans-serif, system-ui, sans-serif;
+  font-family: var(--font-display), sans-serif;
   font-weight: 800;
   letter-spacing: 0.02em;
   color: #fff;
@@ -167,11 +167,16 @@ small { color: var(--muted2); }
 ul, ol { margin: 0 0 1em; padding-left: 1.25em; color: var(--muted); }
 li { margin: 0.35em 0; }
 
+.ui-monospace {
+  font-family: var(--font-mono), ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Menlo, Consolas, 'Liberation Mono', monospace;
+  font-feature-settings: "liga" 0, "calt" 0; /* optional: disable ligatures if desired */
+}
+
 /* -------------------------------------------
    4) PSI UTILITY CLASSES
 -------------------------------------------- */
 .psi-label {
-  font-family: var(--font-body), ui-monospace, monospace;
+  font-family: var(--font-body);
   font-size: 10px;
   font-weight: 700;
   letter-spacing: var(--trk-3);
@@ -191,7 +196,7 @@ li { margin: 0.35em 0; }
 }
 
 .psi-mono {
-  font-family: var(--font-body), ui-monospace, monospace;
+  font-family: var(--font-body);
   font-variant-numeric: tabular-nums;
   font-feature-settings: "tnum" 1;
 }
@@ -289,7 +294,7 @@ button.psi-btn,
   border-radius: 0;
   border: 1px solid var(--border);
   background: transparent;
-  font-family: var(--font-body), ui-monospace, monospace;
+  font-family: var(--font-body);
   font-size: 11px;
   font-weight: 700;
   letter-spacing: var(--trk-2);
@@ -359,7 +364,7 @@ button.psi-btn:active { transform: translateY(1px); opacity: 0.9; }
   gap: 0.35rem;
   padding: 0.2rem 0.55rem;
   border-radius: 0;
-  font-family: var(--font-body), ui-monospace, monospace;
+  font-family: var(--font-body);
   font-size: 10px;
   font-weight: 700;
   letter-spacing: var(--trk-2);
@@ -418,7 +423,7 @@ button.psi-btn:active { transform: translateY(1px); opacity: 0.9; }
   background: rgba(10, 10, 18, 0.94);
   color: var(--foreground);
   box-shadow: var(--shadow-md), 0 0 40px rgba(0, 0, 0, 0.8);
-  font-family: var(--font-body), ui-monospace, monospace;
+  font-family: var(--font-body);
 }
 .psi-tooltip::before {
   content: "";
@@ -443,7 +448,7 @@ button.psi-btn:active { transform: translateY(1px); opacity: 0.9; }
 }
 .psi-table thead th {
   text-align: left;
-  font-family: var(--font-body), ui-monospace, monospace;
+  font-family: var(--font-body);
   font-size: 9px;
   font-weight: 700;
   letter-spacing: var(--trk-2);
@@ -466,7 +471,7 @@ button.psi-btn:active { transform: translateY(1px); opacity: 0.9; }
 .psi-num {
   text-align: right;
   font-variant-numeric: tabular-nums;
-  font-family: var(--font-body), ui-monospace, monospace;
+  font-family: var(--font-body);
 }
 
 /* -------------------------------------------
@@ -487,7 +492,7 @@ button.psi-btn:active { transform: translateY(1px); opacity: 0.9; }
 .recharts-text,
 .recharts-cartesian-axis-tick-value {
   fill: rgba(255, 255, 255, 0.32) !important;
-  font-family: var(--font-body), ui-monospace, monospace !important;
+  font-family: var(--font-body) !important;
   font-size: 0.70rem !important;
   letter-spacing: 0.05em !important;
 }
@@ -537,4 +542,3 @@ button.psi-btn:active { transform: translateY(1px); opacity: 0.9; }
   .psi-card,
   .psi-btn { transition: none !important; }
 }
-
