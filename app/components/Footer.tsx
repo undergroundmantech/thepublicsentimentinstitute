@@ -116,7 +116,7 @@ export default function Footer() {
         }
 
         .ft-cta-eyebrow {
-          font-family: ui-monospace, 'Courier New', monospace;
+          font-family: var(--font-body);
           font-size: 8px;
           font-weight: 700;
           letter-spacing: 0.32em;
@@ -137,9 +137,9 @@ export default function Footer() {
         }
 
         .ft-cta-heading {
-          font-family: ui-monospace, 'Courier New', monospace;
+          font-family: var(--font-display);
           font-size: clamp(18px, 2.5vw, 28px);
-          font-weight: 900;
+          font-weight: 700;
           text-transform: uppercase;
           letter-spacing: 0.04em;
           color: #fff;
@@ -154,7 +154,7 @@ export default function Footer() {
         }
 
         .ft-cta-sub {
-          font-family: ui-monospace, monospace;
+          font-family: var(--font-body);
           font-size: 9.5px;
           letter-spacing: 0.14em;
           color: var(--muted3);
@@ -179,7 +179,7 @@ export default function Footer() {
           background: var(--purple);
           border: 1px solid rgba(124,58,237,0.65);
           color: #fff;
-          font-family: ui-monospace, monospace;
+          font-family: var(--font-body);
           font-size: 9.5px;
           font-weight: 700;
           letter-spacing: 0.18em;
@@ -202,7 +202,7 @@ export default function Footer() {
           background: transparent;
           border: 1px solid var(--border2);
           color: rgba(255,255,255,0.45);
-          font-family: ui-monospace, monospace;
+          font-family: var(--font-body);
           font-size: 9.5px;
           font-weight: 700;
           letter-spacing: 0.18em;
@@ -256,9 +256,9 @@ export default function Footer() {
         .ft-brand-wordmark:hover { opacity: 1; }
 
         .ft-brand-name {
-          font-family: ui-monospace, 'Courier New', monospace;
+          font-family: var(--font-display);
           font-size: 15px;
-          font-weight: 900;
+          font-weight: 700;
           letter-spacing: 0.08em;
           text-transform: uppercase;
           color: #fff;
@@ -268,7 +268,7 @@ export default function Footer() {
         .ft-brand-name .bb { color: var(--blue2); }
 
         .ft-brand-institute {
-          font-family: ui-monospace, monospace;
+          font-family: var(--font-body);
           font-size: 7.5px;
           font-weight: 700;
           letter-spacing: 0.42em;
@@ -277,7 +277,7 @@ export default function Footer() {
         }
 
         .ft-brand-desc {
-          font-family: ui-monospace, monospace;
+          font-family: var(--font-body);
           font-size: 9.5px;
           letter-spacing: 0.10em;
           color: var(--muted3);
@@ -311,7 +311,7 @@ export default function Footer() {
         .ft-stat:hover::before { opacity: 0.4; }
 
         .ft-stat-k {
-          font-family: ui-monospace, monospace;
+          font-family: var(--font-body);
           font-size: 7px;
           font-weight: 700;
           letter-spacing: 0.26em;
@@ -319,9 +319,9 @@ export default function Footer() {
           color: var(--muted3);
         }
         .ft-stat-v {
-          font-family: ui-monospace, monospace;
+          font-family: var(--font-display);
           font-size: 16px;
-          font-weight: 900;
+          font-weight: 700;
           color: #fff;
           letter-spacing: -0.01em;
           font-variant-numeric: tabular-nums;
@@ -345,7 +345,7 @@ export default function Footer() {
         }
 
         .ft-nav-col-label {
-          font-family: ui-monospace, monospace;
+          font-family: var(--font-body);
           font-size: 7.5px;
           font-weight: 700;
           letter-spacing: 0.30em;
@@ -374,7 +374,7 @@ export default function Footer() {
           align-items: center;
           gap: 8px;
           padding: 6px 0;
-          font-family: ui-monospace, monospace;
+          font-family: var(--font-body);
           font-size: 9.5px;
           font-weight: 700;
           letter-spacing: 0.12em;
@@ -437,7 +437,7 @@ export default function Footer() {
         }
 
         .ft-copyright {
-          font-family: ui-monospace, monospace;
+          font-family: var(--font-body);
           font-size: 8px;
           font-weight: 700;
           letter-spacing: 0.20em;
@@ -452,7 +452,7 @@ export default function Footer() {
         }
 
         .ft-bottom-link {
-          font-family: ui-monospace, monospace;
+          font-family: var(--font-body);
           font-size: 8px;
           font-weight: 700;
           letter-spacing: 0.18em;
@@ -484,7 +484,7 @@ export default function Footer() {
         }
 
         .ft-status-text {
-          font-family: ui-monospace, monospace;
+          font-family: var(--font-body);
           font-size: 8px;
           font-weight: 700;
           letter-spacing: 0.22em;

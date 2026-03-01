@@ -239,7 +239,7 @@ export default function PollingHomePage() {
           display: flex;
           align-items: center;
           gap: 8px;
-          font-family: ui-monospace,'Courier New',monospace;
+          font-family: var(--font-body), "Geist Mono", monospace;
           font-size: 8px;
           font-weight: 700;
           letter-spacing: 0.32em;
@@ -247,6 +247,7 @@ export default function PollingHomePage() {
           color: var(--purple-soft);
           margin-bottom: 14px;
         }
+
         .pd-eyebrow-line {
           width: 20px;
           height: 1px;
@@ -255,7 +256,7 @@ export default function PollingHomePage() {
         }
 
         .pd-hero-title {
-          font-family: ui-monospace,'Courier New',monospace;
+          font-family: "Quantico", system-ui, -apple-system, BlinkMacOSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
           font-size: clamp(32px, 5vw, 62px);
           font-weight: 900;
           text-transform: uppercase;
@@ -264,6 +265,7 @@ export default function PollingHomePage() {
           color: #fff;
           margin: 0 0 16px;
         }
+
         .pd-hero-title em {
           font-style: normal;
           background: linear-gradient(100deg, var(--red2) 0%, var(--purple-soft) 50%, var(--blue2) 100%);
@@ -490,7 +492,7 @@ export default function PollingHomePage() {
         }
 
         .pd-card-title {
-          font-family: ui-monospace,'Courier New',monospace;
+          font-family: var(--font-body), "Geist Mono", monospace;
           font-size: 13px;
           font-weight: 900;
           text-transform: uppercase;

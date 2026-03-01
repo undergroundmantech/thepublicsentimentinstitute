@@ -38,18 +38,58 @@ const RACE_FORECAST_DEFAULTS: Partial<Record<number, {
 }>> = {
   // TX US Senate — Democratic Primary (Kalshi: 2.66M forecast)
   44286: {
-    raceRule: "PLURALITY",
+    raceRule: "MAJORITY",
     expectedTurnout: 2_660_000,
     pollAvg: { "Talarico": 46.0, "Crockett": 44.5, "Hassan": 0.3 },
   },
   // TX US Senate — Republican Primary (Kalshi: 2.39M forecast)
   44285: {
-    raceRule: "PLURALITY",
+    raceRule: "MAJORITY",
     expectedTurnout: 2_390_000,
     pollAvg: { "Paxton": 37.2, "Cornyn": 32.7, "Hunt": 18.7 },
   },
+  44287: {  // Gov Rep
+    raceRule: "MAJORITY",
+    expectedTurnout: 2_190_000,  // same as Senate or adjust
+    pollAvg: { "Abbott": 91.0 /* add challengers if needed */ },
+  },
+  44288: {  // Gov Dem
+    raceRule: "MAJORITY",
+    expectedTurnout: 2_660_000,
+    pollAvg: { "Hinojosa": 65.0, "Bell": 15.0 /* etc. */ },
+  },
 };
 
+// ─── POLL-ORDERED CANDIDATE SORT ─────────────────────────────────────────────
+// Sorts by pollAvg match (descending), then live vote percent, then alpha.
+// Ensures top-3 are electorally relevant — NOT alphabetical.
+function sortCandidatesByPollData(
+  candidates: RaceCandidate[],
+  pollAvg?: Record<string, number>
+): RaceCandidate[] {
+  if (!pollAvg || Object.keys(pollAvg).length === 0) {
+    return [...candidates].sort((a, b) => (b.percent ?? 0) - (a.percent ?? 0));
+  }
+  return [...candidates].sort((a, b) => {
+    const getPollScore = (name: string): number => {
+      const lower = name.toLowerCase();
+      for (const [key, score] of Object.entries(pollAvg)) {
+        if (lower.includes(key.toLowerCase()) || key.toLowerCase().includes(lower)) return score;
+      }
+      return -1;
+    };
+    const sa = getPollScore(a.name), sb = getPollScore(b.name);
+    if (sa >= 0 && sb >= 0) return sb - sa;
+    if (sa >= 0) return -1;
+    if (sb >= 0) return 1;
+    return (b.percent ?? 0) - (a.percent ?? 0);
+  });
+}
+
+function getTopCandidatesByPoll(candidates: RaceCandidate[], raceId: number): RaceCandidate[] {
+  const defaults = RACE_FORECAST_DEFAULTS[raceId];
+  return sortCandidatesByPollData(candidates, defaults?.pollAvg).slice(0, 3);
+}
 const FEATURED: FeaturedRace[] = [
   { id: 44287, state: "TX", office: "Governor", party: "Republican", label: "TX Governor — Republican Primary" },
   { id: 44288, state: "TX", office: "Governor", party: "Democratic", label: "TX Governor — Democratic Primary" },
@@ -361,8 +401,10 @@ function MapWithCountyTooltip({ svgText, regionResults }: { svgText: string; reg
 }
 
 // ─── CANDIDATE LIST ──────────────────────────────────────────────────────────
-function CandidateList({ candidates, reporting }: { candidates: RaceCandidate[]; reporting: number }) {
-  const ordered = [...candidates].sort((a, b) => (b.percent ?? 0) - (a.percent ?? 0));
+function CandidateList({ candidates, reporting, raceId }: { candidates: RaceCandidate[]; reporting: number; raceId?: number }) {
+  const defaults = raceId ? RACE_FORECAST_DEFAULTS[raceId] : undefined;
+  const ordered = useMemo(() => sortCandidatesByPollData(candidates, defaults?.pollAvg), [candidates, defaults?.pollAvg]);
+
   const winProb = useMemo(() => {
     if (ordered.length < 2 || reporting < 1) return null;
     return calculateWinProbability(ordered[0].votes, ordered[1].votes, reporting);
@@ -374,7 +416,7 @@ function CandidateList({ candidates, reporting }: { candidates: RaceCandidate[];
         <div className="res-stat-block mb-3">
           <div className="res-stat-row mb-2">
             <span className="res-stat-label">PROJECTED WIN CHANCE</span>
-            <span style={{ color: "var(--purple-soft)", fontFamily: "ui-monospace,monospace", fontSize: "10px", fontWeight: 700, letterSpacing: "0.14em" }}>{winProb.toFixed(1)}%</span>
+            <span style={{ color: "var(--purple-soft)", fontFamily: "var(--font-body)", fontSize: "10px", fontWeight: 700, letterSpacing: "0.14em" }}>{winProb.toFixed(1)}%</span>
           </div>
           <div className="res-bar-track">
             <div className="res-bar-fill" style={{ width: `${Math.max(0, Math.min(100, winProb))}%`, background: "linear-gradient(90deg,var(--purple),var(--purple2))", transition: "width 700ms ease" }} />
@@ -520,8 +562,8 @@ function FcastProbBar({ label, value, color }: { label: string; value: number; c
   return (
     <div style={{ marginBottom: 8 }}>
       <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 3 }}>
-        <span style={{ fontSize: 10, fontWeight: 600, color: "rgba(240,240,245,0.75)", fontFamily: "ui-monospace,monospace", letterSpacing: "0.06em", textTransform: "uppercase" }}>{label}</span>
-        <span style={{ fontSize: 10, fontWeight: 700, color, fontFamily: "ui-monospace,monospace" }}>{fcastPct(value)}</span>
+        <span style={{ fontSize: 10, fontWeight: 600, color: "rgba(240,240,245,0.75)", fontFamily: "var(--font-body)", letterSpacing: "0.06em", textTransform: "uppercase" }}>{label}</span>
+        <span style={{ fontSize: 10, fontWeight: 700, color, fontFamily: "var(--font-body)" }}>{fcastPct(value)}</span>
       </div>
       <div style={{ height: 3, background: "rgba(255,255,255,0.07)", borderRadius: 99, overflow: "hidden" }}>
         <div style={{ height: "100%", width: fcastPct(Math.min(value, 1)), background: color, borderRadius: 99, transition: "width 0.6s cubic-bezier(.4,0,.2,1)" }} />
@@ -536,7 +578,11 @@ function FcastProbBar({ label, value, color }: { label: string; value: number; c
 function ForecastPanel({ raceId, refreshTick }: { raceId: number; refreshTick: number }) {
   const defaults = RACE_FORECAST_DEFAULTS[raceId];
 
-  const [raceRule, setRaceRule] = useState<RaceRule>(defaults?.raceRule ?? "PLURALITY");
+  const [raceRule, setRaceRule] = useState<RaceRule>(() => {
+  // Force MAJORITY for all Texas races (check raceId or add logic for state)
+  const isTexas = raceId && [44285, 44286, 44287, 44288, 44289, 44290, 44291, 44292, 44293, 44294, 44295 /* add any other TX IDs */].includes(raceId);
+  return isTexas ? "MAJORITY" : (defaults?.raceRule ?? "PLURALITY");
+});
   const [expectedTurnoutOverride, setExpectedTurnoutOverride] = useState(
     defaults?.expectedTurnout ? String(defaults.expectedTurnout) : ""
   );
@@ -559,50 +605,68 @@ function ForecastPanel({ raceId, refreshTick }: { raceId: number; refreshTick: n
 
   const timestamps = useMemo(() => historyList?.timestamps?.map((t) => t.timestamp) ?? [], [historyList]);
 
+  // Auto-re-run forecast when raceRule or expectedTurnoutOverride changes
+  useEffect(() => {
+    if (!raceId) return;
+
+    const timer = setTimeout(() => {
+      if (timestamps.length > 0 && historyList) {
+        runForecastAtIndex(raceId, historyList.timestamps, historyIndex, raceRule, expectedTurnoutOverride);
+      } else {
+        runForecastLive(raceId, raceRule, expectedTurnoutOverride);
+      }
+    }, 400);
+
+    return () => clearTimeout(timer);
+  }, [raceRule, expectedTurnoutOverride, raceId, timestamps, historyList, historyIndex]);
+
+
   async function runForecastAtIndex(id: number, tsList: ForecastHistoryTimestamp[], idx: number, rule?: RaceRule, turnout?: string) {
-    setLoadingForecast(true);
-    setError(null);
-    try {
-      const timestamp = tsList[idx].timestamp;
-      const priorTimestamp = idx > 0 ? tsList[0].timestamp : undefined;
-      const res = await fetch("/api/forecast", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          type: "civic_history",
-          raceId: String(id),
-          timestamp,
-          priorTimestamp,
-          race_rule: rule ?? raceRuleRef.current,
-          expected_turnout: (turnout ?? turnoutRef.current) ? Number(turnout ?? turnoutRef.current) : undefined,
-        }),
-      });
-      const data = await res.json();
-      if (data.error) throw new Error(data.details ?? data.error);
-      setForecast(data);
-    } catch (e: any) { setError(e.message); }
-    finally { setLoadingForecast(false); }
+  setLoadingForecast(true);
+  setError(null);
+  try {
+    const timestamp = tsList[idx].timestamp;
+    const priorTimestamp = idx > 0 ? tsList[0].timestamp : undefined;
+    const res = await fetch("/api/forecast", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        type: "civic_history",
+        raceId: String(id),
+        timestamp,
+        priorTimestamp,
+        race_rule: rule ?? raceRuleRef.current,
+        expected_turnout: (turnout ?? turnoutRef.current) ? Number(turnout ?? turnoutRef.current) : undefined,
+        poll_avg: RACE_FORECAST_DEFAULTS[id]?.pollAvg,  // ← add this
+      }),
+    });
+    const data = await res.json();
+    if (data.error) throw new Error(data.details ?? data.error);
+    setForecast(data);
+  } catch (e: any) { setError(e.message); }
+  finally { setLoadingForecast(false); }
   }
 
   async function runForecastLive(id: number, rule?: RaceRule, turnout?: string) {
-    setLoadingForecast(true);
-    setError(null);
-    try {
-      const res = await fetch("/api/forecast", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          type: "civic",
-          raceId: String(id),
-          race_rule: rule ?? raceRuleRef.current,
-          expected_turnout: (turnout ?? turnoutRef.current) ? Number(turnout ?? turnoutRef.current) : undefined,
-        }),
-      });
-      const data = await res.json();
-      if (data.error) throw new Error(data.details ?? data.error);
-      setForecast(data);
-    } catch (e: any) { setError(e.message); }
-    finally { setLoadingForecast(false); }
+  setLoadingForecast(true);
+  setError(null);
+  try {
+    const res = await fetch("/api/forecast", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        type: "civic",
+        raceId: String(id),
+        race_rule: rule ?? raceRuleRef.current,
+        expected_turnout: (turnout ?? turnoutRef.current) ? Number(turnout ?? turnoutRef.current) : undefined,
+        poll_avg: RACE_FORECAST_DEFAULTS[id]?.pollAvg,  // ← add this
+      }),
+    });
+    const data = await res.json();
+    if (data.error) throw new Error(data.details ?? data.error);
+    setForecast(data);
+  } catch (e: any) { setError(e.message); }
+  finally { setLoadingForecast(false); }
   }
 
   // ── Initial load + race switch ───────────────────────────────────────────
@@ -761,7 +825,7 @@ function ForecastPanel({ raceId, refreshTick }: { raceId: number; refreshTick: n
 
       <div style={{ padding: "12px" }}>
         {error && (
-          <div style={{ border: "1px solid rgba(230,57,70,0.25)", background: "rgba(230,57,70,0.06)", color: "rgba(255,77,90,0.90)", padding: "8px 10px", fontFamily: "ui-monospace,monospace", fontSize: "9.5px", letterSpacing: "0.10em", marginBottom: 10 }}>
+          <div style={{ border: "1px solid rgba(230,57,70,0.25)", background: "rgba(230,57,70,0.06)", color: "rgba(255,77,90,0.90)", padding: "8px 10px", fontFamily: "var(--font-body)", fontSize: "9.5px", letterSpacing: "0.10em", marginBottom: 10 }}>
             ⚠ {error}
           </div>
         )}
@@ -798,7 +862,7 @@ function ForecastPanel({ raceId, refreshTick }: { raceId: number; refreshTick: n
                 return (
                   <div key={key} className="res-stat-block" style={{ borderColor: isLeader ? color + "55" : "var(--border)", position: "relative" }}>
                     {isLeader && (
-                      <div style={{ position: "absolute", top: 6, right: 8, fontSize: 7, color, fontWeight: 700, fontFamily: "ui-monospace,monospace", letterSpacing: "0.16em" }}>
+                      <div style={{ position: "absolute", top: 6, right: 8, fontSize: 7, color, fontWeight: 700, fontFamily: "var(--font-body)", letterSpacing: "0.16em" }}>
                         LEADER
                       </div>
                     )}
@@ -816,8 +880,25 @@ function ForecastPanel({ raceId, refreshTick }: { raceId: number; refreshTick: n
                 {(["Candidate3", "Others"] as const).map((key) => {
                   const color = candidateColors[key];
                   const name = candidateLabels[key];
-                  const share = forecast.forecast.modeled_share[key];
-                  const votes = forecast.forecast.modeled_votes[key];
+                  const share = key === "Others"
+                    ? Math.max(0,
+                        1 -
+                        forecast.forecast.modeled_share["Candidate1"] -
+                        forecast.forecast.modeled_share["Candidate2"] -
+                        forecast.forecast.modeled_share["Candidate3"]
+                      )
+                    : forecast.forecast.modeled_share[key];
+
+                  const votes = key === "Others"
+                    ? Math.max(0,
+                        forecast.forecast.modeled_total_vote -
+                        forecast.forecast.modeled_votes["Candidate1"] -
+                        forecast.forecast.modeled_votes["Candidate2"] -
+                        forecast.forecast.modeled_votes["Candidate3"]
+                      )
+                    : forecast.forecast.modeled_votes[key];
+
+                  
                   return (
                     <div key={key} className="res-stat-block">
                       <div className="res-stat-block-label" style={{ color: color + "cc" }}>{name}</div>
@@ -829,19 +910,40 @@ function ForecastPanel({ raceId, refreshTick }: { raceId: number; refreshTick: n
               </div>
             )}
 
-            {/* Win probability bars */}
+            {/* Win probability bars – now conditional on raceRule */}
             <div className="res-stat-block" style={{ marginBottom: 10 }}>
-              <div className="res-stat-block-label" style={{ marginBottom: 8 }}>WIN PROBABILITY</div>
-              {FORECAST_CANDIDATE_KEYS.map((k) => (
-                forecast.forecast.plurality_odds_to_win[k] > 0.005 && (
+              <div className="res-stat-block-label" style={{ marginBottom: 8 }}>
+                {raceRule === "PLURALITY" ? "WIN PROBABILITY (Most Votes)" : "MAJORITY WIN PROBABILITY (≥50%)"}
+              </div>
+
+              {FORECAST_CANDIDATE_KEYS.slice(0, 3).map((k) => {  // exclude Others
+                // Pick the correct field based on current dropdown selection
+                const probValue = raceRule === "PLURALITY"
+                  ? forecast.forecast.plurality_odds_to_win[k]
+                  : forecast.forecast.majority_win_prob[k];
+
+                return (
+                  probValue > 0.005 && (
+                    <FcastProbBar
+                      key={`${k}-${raceRule}`}  // force re-render on rule change
+                      label={candidateLabels[k]}
+                      value={probValue}
+                      color={candidateColors[k]}
+                    />
+                  )
+                );
+              })}
+
+              {/* Runoff Needed – only in majority */}
+              {raceRule === "MAJORITY" && (
+                <div style={{ marginTop: 8, paddingTop: 8, borderTop: "1px solid var(--border)" }}>
                   <FcastProbBar
-                    key={k}
-                    label={candidateLabels[k]}
-                    value={forecast.forecast.plurality_odds_to_win[k]}
-                    color={candidateColors[k]}
+                    label="Runoff Needed"
+                    value={forecast.forecast.runoff_needed_prob}
+                    color="#f59e0b"
                   />
-                )
-              ))}
+                </div>
+              )}
             </div>
 
             {/* Runoff prob if majority rule */}
@@ -876,7 +978,7 @@ function ForecastPanel({ raceId, refreshTick }: { raceId: number; refreshTick: n
                 ].map(([label, val]) => (
                   <div key={label} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", paddingBottom: 3, borderBottom: "1px solid rgba(255,255,255,0.04)" }}>
                     <span className="res-note">{label}</span>
-                    <span style={{ fontFamily: "ui-monospace,monospace", fontSize: "10px", fontWeight: 700, color: "rgba(255,255,255,0.75)" }}>{val}</span>
+                    <span style={{ fontFamily: "var(--font-body)", fontSize: "10px", fontWeight: 700, color: "rgba(255,255,255,0.75)" }}>{val}</span>
                   </div>
                 ))}
               </div>
@@ -1099,27 +1201,27 @@ export default function March3FeaturedClient() {
         }
         .res-eyebrow {
           display: flex; align-items: center; gap: 7px;
-          font-family: ui-monospace,'Courier New',monospace; font-size: 8.5px;
+          font-family: var(--font-body); font-size: 8.5px;
           font-weight: 700; letter-spacing: 0.30em; text-transform: uppercase; color: var(--muted3);
         }
         .res-note {
-          font-family: ui-monospace,monospace; font-size: 8.5px;
+          font-family: var(--font-body); font-size: 8.5px;
           letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted3);
         }
         .res-th {
-          font-family: ui-monospace,monospace; font-size: 7.5px; font-weight: 700;
+          font-family: var(--font-body); font-size: 7.5px; font-weight: 700;
           letter-spacing: 0.24em; text-transform: uppercase; color: var(--muted3);
         }
-        .res-num { font-family: ui-monospace,monospace; font-size: 10.5px; color: var(--muted); font-variant-numeric: tabular-nums; }
-        .res-pct-big { font-family: ui-monospace,monospace; font-size: 13px; font-weight: 900; color: #fff; font-variant-numeric: tabular-nums; }
-        .res-pct-xl { font-family: ui-monospace,monospace; font-size: clamp(22px, 2.5vw, 30px); font-weight: 900; color: #fff; font-variant-numeric: tabular-nums; line-height: 1; }
-        .res-stat-label { font-family: ui-monospace,monospace; font-size: 7.5px; font-weight: 700; letter-spacing: 0.26em; text-transform: uppercase; color: var(--muted3); }
-        .res-stat-val { font-family: ui-monospace,monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.14em; color: var(--muted); }
+        .res-num { font-family: var(--font-body); font-size: 10.5px; color: var(--muted); font-variant-numeric: tabular-nums; }
+        .res-pct-big { font-family: var(--font-body); font-size: 13px; font-weight: 900; color: #fff; font-variant-numeric: tabular-nums; }
+        .res-pct-xl { font-family: var(--font-body); font-size: clamp(22px, 2.5vw, 30px); font-weight: 900; color: #fff; font-variant-numeric: tabular-nums; line-height: 1; }
+        .res-stat-label { font-family: var(--font-body); font-size: 7.5px; font-weight: 700; letter-spacing: 0.26em; text-transform: uppercase; color: var(--muted3); }
+        .res-stat-val { font-family: var(--font-body); font-size: 10px; font-weight: 700; letter-spacing: 0.14em; color: var(--muted); }
         .res-stat-row { display: flex; align-items: center; justify-content: space-between; }
 
         .res-badge {
           display: inline-flex; align-items: center; gap: 4px; padding: 2px 6px;
-          font-family: ui-monospace,monospace; font-size: 7.5px; font-weight: 700;
+          font-family: var(--font-body); font-size: 7.5px; font-weight: 700;
           letter-spacing: 0.20em; text-transform: uppercase;
           border: 1px solid var(--border); background: rgba(255,255,255,0.03); color: var(--muted3);
         }
@@ -1133,31 +1235,31 @@ export default function March3FeaturedClient() {
 
         .res-panel { background: var(--panel); border: 1px solid var(--border); overflow: hidden; animation: res-fade-up 0.5s cubic-bezier(0.22,1,0.36,1) both; }
         .res-panel-header { display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; border-bottom: 1px solid var(--border); background: var(--background2); }
-        .res-panel-tag { font-family: ui-monospace,monospace; font-size: 8px; font-weight: 700; letter-spacing: 0.28em; text-transform: uppercase; color: var(--purple-soft); }
+        .res-panel-tag { font-family: var(--font-body); font-size: 8px; font-weight: 700; letter-spacing: 0.28em; text-transform: uppercase; color: var(--purple-soft); }
 
         .res-stat-block { background: rgba(255,255,255,0.025); border: 1px solid var(--border); padding: 12px 14px; }
-        .res-stat-block-label { font-family: ui-monospace,monospace; font-size: 7.5px; font-weight: 700; letter-spacing: 0.26em; text-transform: uppercase; color: var(--muted3); margin-bottom: 4px; }
-        .res-stat-block-val { font-family: ui-monospace,monospace; font-size: clamp(20px, 2.5vw, 28px); font-weight: 900; color: #fff; line-height: 1; font-variant-numeric: tabular-nums; }
+        .res-stat-block-label { font-family: var(--font-body); font-size: 7.5px; font-weight: 700; letter-spacing: 0.26em; text-transform: uppercase; color: var(--muted3); margin-bottom: 4px; }
+        .res-stat-block-val { font-family: var(--font-body); font-size: clamp(20px, 2.5vw, 28px); font-weight: 900; color: #fff; line-height: 1; font-variant-numeric: tabular-nums; }
 
-        .res-btn-primary { display: inline-flex; align-items: center; gap: 6px; padding: 10px 20px; background: var(--purple); border: 1px solid rgba(124,58,237,0.65); color: #fff; font-family: ui-monospace,monospace; font-size: 9.5px; font-weight: 700; letter-spacing: 0.20em; text-transform: uppercase; cursor: pointer; transition: background 140ms ease, transform 140ms ease; }
+        .res-btn-primary { display: inline-flex; align-items: center; gap: 6px; padding: 10px 20px; background: var(--purple); border: 1px solid rgba(124,58,237,0.65); color: #fff; font-family: var(--font-body); font-size: 9.5px; font-weight: 700; letter-spacing: 0.20em; text-transform: uppercase; cursor: pointer; transition: background 140ms ease, transform 140ms ease; }
         .res-btn-primary:hover { background: var(--purple2); transform: translateY(-1px); }
-        .res-btn-ghost { display: inline-flex; align-items: center; gap: 6px; padding: 8px 14px; background: transparent; border: 1px solid var(--border); color: var(--muted3); font-family: ui-monospace,monospace; font-size: 9px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; cursor: pointer; transition: all 140ms ease; }
+        .res-btn-ghost { display: inline-flex; align-items: center; gap: 6px; padding: 8px 14px; background: transparent; border: 1px solid var(--border); color: var(--muted3); font-family: var(--font-body); font-size: 9px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; cursor: pointer; transition: all 140ms ease; }
         .res-btn-ghost:hover { border-color: var(--border2); color: var(--muted); }
-        .res-btn-state { display: inline-flex; align-items: center; padding: 8px 16px; background: transparent; border: 1px solid var(--border); color: var(--muted3); font-family: ui-monospace,monospace; font-size: 9px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; cursor: pointer; transition: all 120ms ease; position: relative; overflow: hidden; }
+        .res-btn-state { display: inline-flex; align-items: center; padding: 8px 16px; background: transparent; border: 1px solid var(--border); color: var(--muted3); font-family: var(--font-body); font-size: 9px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; cursor: pointer; transition: all 120ms ease; position: relative; overflow: hidden; }
         .res-btn-state::before { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px; background: var(--purple); transform: scaleX(0); transform-origin: left; transition: transform 200ms ease; }
         .res-btn-state:hover { color: rgba(255,255,255,0.7); border-color: var(--border2); }
         .res-btn-state:hover::before { transform: scaleX(1); }
         .res-btn-state.active { background: rgba(124,58,237,0.10); border-color: rgba(124,58,237,0.40); color: #fff; }
         .res-btn-state.active::before { transform: scaleX(1); }
-        .res-close-btn { display: inline-flex; align-items: center; padding: 7px 12px; background: rgba(255,255,255,0.04); border: 1px solid var(--border); color: var(--muted2); font-family: ui-monospace,monospace; font-size: 8.5px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; cursor: pointer; flex-shrink: 0; transition: all 120ms ease; }
+        .res-close-btn { display: inline-flex; align-items: center; padding: 7px 12px; background: rgba(255,255,255,0.04); border: 1px solid var(--border); color: var(--muted2); font-family: var(--font-body); font-size: 8.5px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; cursor: pointer; flex-shrink: 0; transition: all 120ms ease; }
         .res-close-btn:hover { border-color: var(--border2); color: rgba(255,255,255,0.7); }
 
         .res-overlay-card { background: var(--panel); border: 1px solid rgba(124,58,237,0.45); box-shadow: 0 0 80px rgba(124,58,237,0.25), 0 30px 80px rgba(0,0,0,0.8); }
-        .res-overlay-title { font-family: ui-monospace,'Courier New',monospace; font-size: clamp(32px, 4vw, 48px); font-weight: 900; text-transform: uppercase; letter-spacing: 0.02em; color: #fff; line-height: 0.92; }
-        .res-overlay-name { font-family: ui-monospace,monospace; font-size: clamp(18px, 2.5vw, 26px); font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; }
+        .res-overlay-title { font-family: var(--font-body); font-size: clamp(32px, 4vw, 48px); font-weight: 900; text-transform: uppercase; letter-spacing: 0.02em; color: #fff; line-height: 0.92; }
+        .res-overlay-name { font-family: var(--font-body); font-size: clamp(18px, 2.5vw, 26px); font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; }
 
         .res-map-tooltip { background: rgba(8,8,14,0.96); border: 1px solid rgba(124,58,237,0.45); box-shadow: 0 20px 60px rgba(0,0,0,0.85); }
-        .res-tooltip-title { font-family: ui-monospace,monospace; font-size: 11px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.08em; color: #fff; }
+        .res-tooltip-title { font-family: var(--font-body); font-size: 11px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.08em; color: #fff; }
         .res-reporting-row { display: flex; align-items: center; justify-content: space-between; }
 
         .res-candidate-list { border: 1px solid var(--border); background: var(--panel); overflow: hidden; }
@@ -1166,9 +1268,9 @@ export default function March3FeaturedClient() {
         .res-candidate-row:hover { background: rgba(255,255,255,0.015); }
         .res-cand-bar { width: 3px; height: 100%; position: absolute; left: 0; top: 0; bottom: 0; opacity: 0.7; }
         .res-cand-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
-        .res-cand-name { font-family: ui-monospace,monospace; font-size: 10.5px; font-weight: 700; letter-spacing: 0.08em; color: rgba(255,255,255,0.85); }
-        .res-cand-name-lg { font-family: ui-monospace,monospace; font-size: 12px; font-weight: 900; letter-spacing: 0.06em; text-transform: uppercase; color: rgba(255,255,255,0.9); }
-        .res-cand-party { font-family: ui-monospace,monospace; font-size: 8px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted3); margin-top: 1px; }
+        .res-cand-name { font-family: var(--font-body); font-size: 10.5px; font-weight: 700; letter-spacing: 0.08em; color: rgba(255,255,255,0.85); }
+        .res-cand-name-lg { font-family: var(--font-body); font-size: 12px; font-weight: 900; letter-spacing: 0.06em; text-transform: uppercase; color: rgba(255,255,255,0.9); }
+        .res-cand-party { font-family: var(--font-body); font-size: 8px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted3); margin-top: 1px; }
 
         .res-thead { position: sticky; top: 0; background: var(--background2); border-bottom: 1px solid var(--border); }
         .res-table-row { border-bottom: 1px solid rgba(255,255,255,0.04); transition: background 100ms ease; }
@@ -1180,7 +1282,7 @@ export default function March3FeaturedClient() {
         .res-race-item:hover::before { transform: scaleY(1); }
         .res-race-item.active { background: rgba(124,58,237,0.07); border-color: rgba(124,58,237,0.35); }
         .res-race-item.active::before { transform: scaleY(1); }
-        .res-race-label { font-family: ui-monospace,monospace; font-size: 10px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.08em; color: rgba(255,255,255,0.88); display: block; margin-bottom: 4px; line-height: 1.3; }
+        .res-race-label { font-family: var(--font-body); font-size: 10px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.08em; color: rgba(255,255,255,0.88); display: block; margin-bottom: 4px; line-height: 1.3; }
         .res-race-meta { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
         .res-race-party-rep { color: var(--rep); }
         .res-race-party-dem { color: var(--dem); }
@@ -1189,10 +1291,10 @@ export default function March3FeaturedClient() {
         .res-proj-chip { border: 1px solid rgba(124,58,237,0.20); background: rgba(124,58,237,0.05); padding: 6px 10px; margin-top: 8px; }
         .res-win-chip { border: 1px solid rgba(74,222,128,0.20); background: rgba(74,222,128,0.05); padding: 6px 10px; margin-top: 8px; }
 
-        .res-input { width: 100%; background: rgba(255,255,255,0.03); border: 1px solid var(--border); color: var(--foreground); padding: 8px 12px; font-family: ui-monospace,monospace; font-size: 10px; letter-spacing: 0.10em; outline: none; transition: border-color 140ms ease; }
+        .res-input { width: 100%; background: rgba(255,255,255,0.03); border: 1px solid var(--border); color: var(--foreground); padding: 8px 12px; font-family: var(--font-body); font-size: 10px; letter-spacing: 0.10em; outline: none; transition: border-color 140ms ease; }
         .res-input:focus { border-color: rgba(124,58,237,0.40); }
         .res-input::placeholder { color: var(--muted3); }
-        .res-select { background: rgba(255,255,255,0.03); border: 1px solid var(--border); color: var(--muted2); padding: 8px 10px; font-family: ui-monospace,monospace; font-size: 9px; letter-spacing: 0.10em; outline: none; }
+        .res-select { background: rgba(255,255,255,0.03); border: 1px solid var(--border); color: var(--muted2); padding: 8px 10px; font-family: var(--font-body); font-size: 9px; letter-spacing: 0.10em; outline: none; }
 
         .res-status-bar { background: var(--background2); border-bottom: 1px solid var(--border); padding: 8px 0; }
         .res-status-bar-inner { max-width: 1720px; margin: 0 auto; padding: 0 20px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
@@ -1200,13 +1302,13 @@ export default function March3FeaturedClient() {
         .res-page-header { border-bottom: 1px solid var(--border); background: var(--background2); position: relative; overflow: hidden; }
         .res-page-header::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 40% 80% at 0% 50%, rgba(230,57,70,0.04) 0%, transparent 70%), radial-gradient(ellipse 40% 80% at 100% 50%, rgba(37,99,235,0.05) 0%, transparent 70%); pointer-events: none; }
         .res-page-header-inner { max-width: 1720px; margin: 0 auto; padding: 24px 20px 20px; position: relative; }
-        .res-page-title { font-family: ui-monospace,'Courier New',monospace; font-size: clamp(28px, 4vw, 58px); font-weight: 900; text-transform: uppercase; letter-spacing: 0.01em; color: #fff; line-height: 0.92; margin: 0; }
+        .res-page-title { font-family: var(--font-display); font-size: clamp(28px, 4vw, 58px); font-weight: 900; text-transform: uppercase; letter-spacing: 0.01em; color: #fff; line-height: 0.92; margin: 0; }
         .res-page-title em { font-style: normal; background: linear-gradient(100deg, var(--red2) 0%, var(--purple-soft) 50%, var(--blue2) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-        .res-page-sub { font-family: ui-monospace,monospace; font-size: 8.5px; font-weight: 700; letter-spacing: 0.30em; text-transform: uppercase; color: var(--purple-soft); margin-bottom: 12px; }
+        .res-page-sub { font-family: var(--font-body); font-size: 8.5px; font-weight: 700; letter-spacing: 0.30em; text-transform: uppercase; color: var(--purple-soft); margin-bottom: 12px; }
 
         .res-map-loading { display: flex; align-items: center; justify-content: center; aspect-ratio: 16/9; background: rgba(0,0,0,0.30); border: 1px solid var(--border); }
         .res-map-wrap { background: rgba(0,0,0,0.20); border: 1px solid var(--border); padding: 8px; }
-        .res-error { border: 1px solid rgba(230,57,70,0.25); background: rgba(230,57,70,0.06); color: rgba(255,77,90,0.90); padding: 12px 16px; font-family: ui-monospace,monospace; font-size: 10.5px; letter-spacing: 0.12em; }
+        .res-error { border: 1px solid rgba(230,57,70,0.25); background: rgba(230,57,70,0.06); color: rgba(255,77,90,0.90); padding: 12px 16px; font-family: var(--font-body); font-size: 10.5px; letter-spacing: 0.12em; }
 
         .res-layout { max-width: 1720px; margin: 0 auto; display: grid; grid-template-columns: 320px 1fr 320px; gap: 16px; padding: 20px; align-items: stretch; }
         @media (max-width: 1200px) {
@@ -1426,7 +1528,7 @@ export default function March3FeaturedClient() {
               </div>
               <div style={{ padding: "12px" }}>
                 {selectedRace?.candidates
-                  ? <CandidateList candidates={selectedRace.candidates} reporting={selectedRace.percent_reporting ?? 0} />
+                  ? <CandidateList candidates={selectedRace.candidates} reporting={selectedRace.percent_reporting ?? 0} raceId={selectedId} />
                   : <div style={{ padding: "40px 0", textAlign: "center" }} className="res-note">LOADING…</div>
                 }
               </div>
@@ -1461,7 +1563,7 @@ export default function March3FeaturedClient() {
                       {selectedWinner ? "OFFICIAL" : selectedProj ? `${selectedProj.prob.toFixed(1)}%` : "—"}
                     </span>
                   </div>
-                  <div style={{ fontFamily: "ui-monospace,monospace", fontSize: "13px", fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: "rgba(255,255,255,0.88)" }}>
+                  <div style={{ fontFamily: "var(--font-body)", fontSize: "13px", fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: "rgba(255,255,255,0.88)" }}>
                     {selectedWinner ? `✓ ${selectedWinner.name}` : selectedProj ? selectedProj.leaderName : "No projection yet"}
                   </div>
                   {selectedProj && !selectedWinner && (

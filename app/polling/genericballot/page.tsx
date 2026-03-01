@@ -48,8 +48,8 @@ function effectiveSampleSize(pollster: string, n: number) {
 
 const RAW_POLLS: Poll[] = [
   { pollster: "Economist/YouGov", endDate: "2026-02-23", sampleSize: 1402, sampleType: "RV", results: { Democrats: 45, Republicans: 41 } },
-{ pollster: "Reuters/Ipsos", endDate: "2026-02-23", sampleSize: 3686, sampleType: "RV", results: { Democrats: 40, Republicans: 38 } },
-{ pollster: "Big Data Poll", endDate: "2026-02-18", sampleSize: 1805, sampleType: "LV", results: { Democrats: 50, Republicans: 41 } },
+  { pollster: "Reuters/Ipsos", endDate: "2026-02-23", sampleSize: 3686, sampleType: "RV", results: { Democrats: 40, Republicans: 38 } },
+  { pollster: "Big Data Poll", endDate: "2026-02-18", sampleSize: 1805, sampleType: "LV", results: { Democrats: 50, Republicans: 41 } },
   { pollster: "Economist/YouGov", endDate: "2026-02-16", sampleSize: 1512, sampleType: "RV", results: { Democrats: 47, Republicans: 40 } },
   { pollster: "Quantus Insights", endDate: "2026-02-13", sampleSize: 1515, sampleType: "LV", results: { Democrats: 48, Republicans: 42 } },
   { pollster: "Morning Consult", endDate: "2026-02-09", sampleSize: 2200, sampleType: "RV", results: { Democrats: 45, Republicans: 41 } },
@@ -204,14 +204,14 @@ const RAW_POLLS: Poll[] = [
 
 const COLORS: Record<string, string> = {
   Republicans: "#ff1717",
-  Democrats: "#184dfc",
+  Democrats: "#4d7fd4",
 };
 
 function round1(n: number) {
   return Math.round(n * 10) / 10;
 }
 
-// ─── Shared CSS Design System (matching Trump approval page) ──────────────────
+// ─── CSS ──────────────────────────────────────────────────────────────────────
 const CSS = `
   .pgb-root {
     --bg:          #070709;
@@ -225,7 +225,7 @@ const CSS = `
     --purple:      #7c3aed;
     --purple2:     #9d5cf0;
     --purple-soft: #a78bfa;
-    --dem:         #184dfc;
+    --dem:         #4d7fd4;
     --rep:         #ff1717;
   }
 
@@ -274,7 +274,7 @@ const CSS = `
     display: flex;
     align-items: center;
     gap: 8px;
-    font-family: ui-monospace,'Courier New',monospace;
+    font-family: var(--font-body), "Geist Mono", monospace;
     font-size: 8px;
     font-weight: 700;
     letter-spacing: 0.32em;
@@ -301,7 +301,7 @@ const CSS = `
     content: '';
     position: absolute; inset: 0;
     background:
-      radial-gradient(ellipse 45% 100% at 0% 60%,   rgba(24,77,252,0.06)   0%, transparent 65%),
+      radial-gradient(ellipse 45% 100% at 0% 60%,   rgba(77,127,212,0.06)  0%, transparent 65%),
       radial-gradient(ellipse 45% 100% at 100% 60%,  rgba(255,23,23,0.07)  0%, transparent 65%),
       radial-gradient(ellipse 30% 60%  at 50% 0%,    rgba(124,58,237,0.04) 0%, transparent 70%);
     pointer-events: none;
@@ -326,7 +326,7 @@ const CSS = `
   @media (max-width:640px) { .pgb-hero-inner { grid-template-columns:1fr; } }
 
   .pgb-hero-title {
-    font-family: ui-monospace,'Courier New',monospace;
+    font-family: "Quantico", system-ui, -apple-system, BlinkMacOSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: clamp(22px,3.5vw,46px);
     font-weight: 900;
     text-transform: uppercase;
@@ -337,7 +337,7 @@ const CSS = `
   }
   .pgb-hero-title .dem {
     font-style: normal;
-    background: linear-gradient(110deg, rgba(24,77,252,1) 0%, rgba(100,140,255,0.85) 100%);
+    background: linear-gradient(110deg, rgba(77,127,212,1) 0%, rgba(107,157,242,0.85) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -350,7 +350,7 @@ const CSS = `
     background-clip: text;
   }
   .pgb-hero-desc {
-    font-family: ui-monospace,monospace;
+    font-family: var(--font-body), "Geist Mono", monospace;
     font-size: 9.5px;
     letter-spacing: 0.12em;
     line-height: 1.75;
@@ -371,7 +371,7 @@ const CSS = `
     padding: 3px 8px;
     border: 1px solid var(--border);
     background: rgba(255,255,255,0.03);
-    font-family: ui-monospace,monospace;
+    font-family: var(--font-body), "Geist Mono", monospace;
     font-size: 7.5px; font-weight: 700; letter-spacing: 0.22em;
     text-transform: uppercase; color: var(--muted3);
   }
@@ -379,7 +379,7 @@ const CSS = `
   .pgb-badge-purple { border-color:rgba(124,58,237,0.35); background:rgba(124,58,237,0.07); color:var(--purple-soft); }
   .pgb-badge-gold   { border-color:rgba(167,139,250,0.30); background:rgba(124,58,237,0.07); color:var(--purple-soft); }
 
-  /* HERO RIGHT — current reading panel */
+  /* HERO RIGHT */
   .pgb-hero-read {
     display: flex;
     flex-direction: column;
@@ -398,20 +398,20 @@ const CSS = `
     overflow: hidden;
   }
   .pgb-hero-read-label {
-    font-family: ui-monospace,monospace;
+    font-family: var(--font-body), "Geist Mono", monospace;
     font-size: 7.5px; font-weight: 700;
     letter-spacing: 0.24em; text-transform: uppercase;
     color: var(--muted3);
   }
   .pgb-hero-read-val {
-    font-family: ui-monospace,monospace;
+    font-family: var(--font-body), "Geist Mono", monospace;
     font-size: 20px; font-weight: 900;
     font-variant-numeric: tabular-nums;
   }
 
   /* SECTION LABEL */
   .pgb-section-label {
-    font-family: ui-monospace,monospace;
+    font-family: var(--font-body), "Geist Mono", monospace;
     font-size: 7.5px; font-weight: 700;
     letter-spacing: 0.32em; text-transform: uppercase;
     color: var(--muted3);
@@ -445,20 +445,20 @@ const CSS = `
     height: 2px;
   }
   .pgb-kpi-label {
-    font-family: ui-monospace,monospace;
+    font-family: var(--font-body), "Geist Mono", monospace;
     font-size: 7.5px; font-weight: 700;
     letter-spacing: 0.28em; text-transform: uppercase;
     color: var(--muted3); margin-bottom: 8px;
   }
   .pgb-kpi-val {
-    font-family: ui-monospace,monospace;
+    font-family: var(--font-body), "Geist Mono", monospace;
     font-size: clamp(22px,2.5vw,30px);
     font-weight: 900;
     color: #fff; line-height: 1;
     font-variant-numeric: tabular-nums;
   }
   .pgb-kpi-sub {
-    font-family: ui-monospace,monospace;
+    font-family: var(--font-body), "Geist Mono", monospace;
     font-size: 8px; letter-spacing: 0.16em;
     text-transform: uppercase; color: var(--muted3);
     margin-top: 6px;
@@ -483,13 +483,13 @@ const CSS = `
     gap: 12px; flex-wrap: wrap;
   }
   .pgb-table-head-title {
-    font-family: ui-monospace,monospace;
+    font-family: var(--font-body), "Geist Mono", monospace;
     font-size: 9px; font-weight: 700;
     letter-spacing: 0.26em; text-transform: uppercase;
     color: var(--purple-soft);
   }
   .pgb-table-head-note {
-    font-family: ui-monospace,monospace;
+    font-family: var(--font-body), "Geist Mono", monospace;
     font-size: 7.5px; letter-spacing: 0.20em;
     text-transform: uppercase; color: var(--muted3);
   }
@@ -509,7 +509,7 @@ const CSS = `
     z-index: 2;
   }
   table.pgb-table th {
-    font-family: ui-monospace,monospace;
+    font-family: var(--font-body), "Geist Mono", monospace;
     font-size: 7.5px; font-weight: 700;
     letter-spacing: 0.22em; text-transform: uppercase;
     color: var(--muted3);
@@ -520,7 +520,7 @@ const CSS = `
   }
   table.pgb-table th.r { text-align: right; }
   table.pgb-table td {
-    font-family: ui-monospace,monospace;
+    font-family: var(--font-body), "Geist Mono", monospace;
     font-size: 10.5px;
     padding: 10px 16px;
     border-bottom: 1px solid rgba(255,255,255,0.04);
@@ -536,16 +536,16 @@ const CSS = `
     padding: 1px 6px;
     border: 1px solid rgba(167,139,250,0.28);
     background: rgba(124,58,237,0.07);
-    font-family: ui-monospace,monospace;
+    font-family: var(--font-body), "Geist Mono", monospace;
     font-size: 7px; font-weight: 700;
     letter-spacing: 0.18em; text-transform: uppercase;
     color: var(--purple-soft);
   }
 
-  .pgb-dem-col   { color: rgba(100,140,255,0.95) !important; font-weight: 700; }
-  .pgb-rep-col   { color: rgba(255,80,80,0.95)   !important; font-weight: 700; }
-  .pgb-net-dem   { color: rgba(100,140,255,0.9)  !important; font-weight: 700; }
-  .pgb-net-rep   { color: rgba(255,80,80,0.9)    !important; font-weight: 700; }
+  .pgb-dem-col   { color: rgba(77,127,212,1)    !important; font-weight: 700; }
+  .pgb-rep-col   { color: rgba(255,80,80,0.95)  !important; font-weight: 700; }
+  .pgb-net-dem   { color: rgba(77,127,212,1)    !important; font-weight: 700; }
+  .pgb-net-rep   { color: rgba(255,80,80,0.9)   !important; font-weight: 700; }
   .pgb-net-even  { color: rgba(167,139,250,0.85) !important; font-weight: 700; }
 
   @media (prefers-reduced-motion:reduce) {
@@ -608,7 +608,7 @@ export default function GenericBallotPage() {
     const dailyWithNet = dailyBase.map((row) => {
       const r = Number((row as any).Republicans ?? 0);
       const d = Number((row as any).Democrats ?? 0);
-      return { ...row, Net: round1(d - r) } as any; // Dem margin
+      return { ...row, Net: round1(d - r) } as any;
     });
 
     const latest = dailyWithNet[dailyWithNet.length - 1] ?? null;
@@ -633,7 +633,7 @@ export default function GenericBallotPage() {
 
   const netColor =
     latestNet > 0
-      ? "rgba(100,140,255,0.9)"
+      ? "rgba(77,127,212,1)"
       : latestNet < 0
       ? "rgba(255,80,80,0.9)"
       : "rgba(167,139,250,0.85)";
@@ -642,7 +642,6 @@ export default function GenericBallotPage() {
     <>
       <style>{CSS}</style>
       <div className="pgb-root">
-        {/* TRI STRIPE */}
         <div className="pgb-stripe" />
 
         {/* ── HERO ── */}
@@ -669,26 +668,15 @@ export default function GenericBallotPage() {
               </div>
             </div>
 
-            {/* Current readings panel */}
             <div className="pgb-hero-read">
               {[
-                {
-                  label: "DEMOCRATS",
-                  val: `${round1(latestDemocrats).toFixed(1)}%`,
-                  color: "rgba(100,140,255,0.95)",
-                },
-                {
-                  label: "REPUBLICANS",
-                  val: `${round1(latestRepublicans).toFixed(1)}%`,
-                  color: "rgba(255,80,80,0.95)",
-                },
-                { label: "MARGIN", val: netText, color: netColor },
+                { label: "DEMOCRATS",   val: `${round1(latestDemocrats).toFixed(1)}%`,   color: "rgba(77,127,212,1)"   },
+                { label: "REPUBLICANS", val: `${round1(latestRepublicans).toFixed(1)}%`, color: "rgba(255,80,80,0.95)" },
+                { label: "MARGIN",      val: netText,                                     color: netColor               },
               ].map(({ label, val, color }) => (
                 <div key={label} className="pgb-hero-read-row">
                   <span className="pgb-hero-read-label">{label}</span>
-                  <span className="pgb-hero-read-val" style={{ color }}>
-                    {val}
-                  </span>
+                  <span className="pgb-hero-read-val" style={{ color }}>{val}</span>
                 </div>
               ))}
             </div>
@@ -702,7 +690,7 @@ export default function GenericBallotPage() {
             label="Democrats"
             value={`${round1(latestDemocrats).toFixed(1)}%`}
             sub="Daily weighted avg"
-            accentColor="rgba(100,140,255,0.8)"
+            accentColor="rgba(77,127,212,1)"
             barPct={latestDemocrats}
           />
           <KpiCard
@@ -770,14 +758,9 @@ export default function GenericBallotPage() {
                     const d = Number((p.results as any).Democrats ?? 0);
                     const net = round1(d - r);
                     const netStr =
-                      net === 0
-                        ? "EVEN"
-                        : net > 0
-                        ? `D+${net.toFixed(1)}`
-                        : `R+${Math.abs(net).toFixed(1)}`;
+                      net === 0 ? "EVEN" : net > 0 ? `D+${net.toFixed(1)}` : `R+${Math.abs(net).toFixed(1)}`;
                     const netClass =
                       net > 0 ? "pgb-net-dem" : net < 0 ? "pgb-net-rep" : "pgb-net-even";
-
                     const gold = isGoldStandard(p.pollster);
                     const effN = effectiveSampleSize(p.pollster, p.sampleSize);
 

@@ -472,7 +472,7 @@ const CSS = `
 
   /* EYEBROW */
   .gs-eyebrow {
-    font-family: ui-monospace,'Courier New',monospace;
+    font-family: var(--font-body), "Geist Mono", monospace;
     font-size: 8px; font-weight: 700;
     letter-spacing: 0.32em; text-transform: uppercase;
     color: var(--gold-soft);
@@ -511,7 +511,7 @@ const CSS = `
   @media (max-width: 640px) { .gs-hero-inner { grid-template-columns: 1fr; } }
 
   .gs-hero-title {
-    font-family: ui-monospace,'Courier New',monospace;
+    font-family: "Quantico", system-ui, -apple-system, BlinkMacOSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: clamp(26px,4vw,52px);
     font-weight: 900;
     text-transform: uppercase;

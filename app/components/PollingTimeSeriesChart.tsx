@@ -66,7 +66,7 @@ function CustomTooltip({ active, payload, label }: { active?: boolean; payload?:
         background: "rgba(7,7,9,0.97)",
         border: "1px solid rgba(124,58,237,0.45)",
         boxShadow: "0 20px 60px rgba(0,0,0,0.85)",
-        fontFamily: "ui-monospace,'Courier New',monospace",
+        fontFamily: "var(--font-body), 'Geist Mono', monospace",
         pointerEvents: "none",
         overflow: "hidden",
       }}
@@ -142,7 +142,7 @@ function LegendPills({ series }: { series: Array<{ key: string; label: string; c
             padding: "4px 10px",
             border: "1px solid rgba(255,255,255,0.09)",
             background: "rgba(255,255,255,0.025)",
-            fontFamily: "ui-monospace,'Courier New',monospace",
+            fontFamily: "var(--font-body), 'Geist Mono', monospace",
             fontSize: "8.5px",
             fontWeight: 700,
             letterSpacing: "0.20em",
@@ -262,7 +262,7 @@ export default function PollingTimeSeriesChart({
         }
 
         .pst-eyebrow {
-          font-family: ui-monospace,'Courier New',monospace;
+          font-family: var(--font-body), "Geist Mono", monospace;
           font-size: 7.5px;
           font-weight: 700;
           letter-spacing: 0.32em;
@@ -283,7 +283,7 @@ export default function PollingTimeSeriesChart({
         }
 
         .pst-title {
-          font-family: ui-monospace,'Courier New',monospace;
+          font-family: var(--font-body), "Geist Mono", monospace;
           font-size: clamp(15px, 2vw, 20px);
           font-weight: 900;
           text-transform: uppercase;

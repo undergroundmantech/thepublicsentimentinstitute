@@ -274,7 +274,7 @@ const CSS = `
 
   .pap-eyebrow {
     display: flex; align-items: center; gap: 8px;
-    font-family: ui-monospace,'Courier New',monospace;
+    font-family: var(--font-body), "Geist Mono", monospace;
     font-size: 8px; font-weight: 700;
     letter-spacing: 0.32em; text-transform: uppercase;
     color: var(--red-soft); margin-bottom: 12px;
@@ -317,7 +317,7 @@ const CSS = `
   @media (max-width: 640px) { .pap-hero-inner { grid-template-columns: 1fr; } }
 
   .pap-hero-title {
-    font-family: ui-monospace,'Courier New',monospace;
+    font-family: "Quantico", system-ui, -apple-system, BlinkMacOSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: clamp(22px,3.5vw,46px);
     font-weight: 900; text-transform: uppercase;
     letter-spacing: 0.02em; line-height: 0.92;
@@ -332,7 +332,7 @@ const CSS = `
   }
 
   .pap-hero-desc {
-    font-family: ui-monospace,monospace;
+    font-family: var(--font-body), "Geist Mono", monospace;
     font-size: 9.5px; letter-spacing: 0.12em; line-height: 1.75;
     color: var(--muted2); text-transform: uppercase; max-width: 520px;
   }
@@ -345,7 +345,7 @@ const CSS = `
     padding: 3px 8px;
     border: 1px solid var(--border);
     background: rgba(255,255,255,0.03);
-    font-family: ui-monospace,monospace;
+    font-family: var(--font-body), "Geist Mono", monospace;
     font-size: 7.5px; font-weight: 700; letter-spacing: 0.22em;
     text-transform: uppercase; color: var(--muted3);
   }
@@ -363,18 +363,18 @@ const CSS = `
     position: relative; overflow: hidden;
   }
   .pap-hero-read-label {
-    font-family: ui-monospace,monospace;
+    font-family: var(--font-body), "Geist Mono", monospace;
     font-size: 7.5px; font-weight: 700;
     letter-spacing: 0.24em; text-transform: uppercase; color: var(--muted3);
   }
   .pap-hero-read-val {
-    font-family: ui-monospace,monospace;
+    font-family: var(--font-body), "Geist Mono", monospace;
     font-size: 20px; font-weight: 900;
     font-variant-numeric: tabular-nums;
   }
 
   .pap-section-label {
-    font-family: ui-monospace,monospace;
+    font-family: var(--font-body), "Geist Mono", monospace;
     font-size: 7.5px; font-weight: 700;
     letter-spacing: 0.32em; text-transform: uppercase;
     color: var(--muted3);
@@ -401,19 +401,19 @@ const CSS = `
     position: absolute; top: 0; left: 0; right: 0; height: 2px;
   }
   .pap-kpi-label {
-    font-family: ui-monospace,monospace;
+    font-family: var(--font-body), "Geist Mono", monospace;
     font-size: 7.5px; font-weight: 700;
     letter-spacing: 0.28em; text-transform: uppercase;
     color: var(--muted3); margin-bottom: 8px;
   }
   .pap-kpi-val {
-    font-family: ui-monospace,monospace;
+    font-family: var(--font-body), "Geist Mono", monospace;
     font-size: clamp(22px,2.5vw,30px); font-weight: 900;
     color: #fff; line-height: 1;
     font-variant-numeric: tabular-nums;
   }
   .pap-kpi-sub {
-    font-family: ui-monospace,monospace;
+    font-family: var(--font-body), "Geist Mono", monospace;
     font-size: 8px; letter-spacing: 0.16em;
     text-transform: uppercase; color: var(--muted3); margin-top: 6px;
   }
@@ -436,12 +436,12 @@ const CSS = `
     gap: 12px; flex-wrap: wrap;
   }
   .pap-table-head-title {
-    font-family: ui-monospace,monospace;
+    font-family: var(--font-body), "Geist Mono", monospace;
     font-size: 9px; font-weight: 700;
     letter-spacing: 0.26em; text-transform: uppercase; color: var(--red-soft);
   }
   .pap-table-head-note {
-    font-family: ui-monospace,monospace;
+    font-family: var(--font-body), "Geist Mono", monospace;
     font-size: 7.5px; letter-spacing: 0.20em;
     text-transform: uppercase; color: var(--muted3);
   }
@@ -454,7 +454,7 @@ const CSS = `
     position: sticky; top: 0; background: var(--bg2); z-index: 2;
   }
   table.pap-table th {
-    font-family: ui-monospace,monospace;
+    font-family: var(--font-body), "Geist Mono", monospace;
     font-size: 7.5px; font-weight: 700;
     letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted3);
     padding: 10px 16px; text-align: left;
@@ -462,7 +462,7 @@ const CSS = `
   }
   table.pap-table th.r { text-align: right; }
   table.pap-table td {
-    font-family: ui-monospace,monospace;
+    font-family: var(--font-body), "Geist Mono", monospace;
     font-size: 10.5px;
     padding: 10px 16px;
     border-bottom: 1px solid rgba(255,255,255,0.04);
@@ -478,7 +478,7 @@ const CSS = `
     padding: 1px 6px;
     border: 1px solid rgba(245,158,11,0.28);
     background: rgba(245,158,11,0.07);
-    font-family: ui-monospace,monospace;
+    font-family: var(--font-body), "Geist Mono", monospace;
     font-size: 7px; font-weight: 700;
     letter-spacing: 0.18em; text-transform: uppercase;
     color: rgba(245,158,11,0.8);

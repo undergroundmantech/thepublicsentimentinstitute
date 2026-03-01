@@ -618,38 +618,38 @@ export default function Home() {
                 })}
               </div>
 
-              {/* Win probabilities */}
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14, marginBottom: 14 }}>
-                <div style={S.card}>
-                  <div style={S.sectionTitle}>Plurality Win Odds</div>
-                  {CANDIDATE_KEYS.map((k) => (
-                    <ProbBar
-                      key={k}
-                      label={candidateLabels[k]}
-                      value={forecast.forecast.plurality_odds_to_win[k]}
-                      color={candidateColors[k]}
-                    />
-                  ))}
-                </div>
-
+              {/* Win probabilities – show the appropriate one based on rule */}
+              <div style={{ display: "grid", gridTemplateColumns: "1fr", gap: 14, marginBottom: 14 }}>
                 <div style={S.card}>
                   <div style={S.sectionTitle}>
-                    {forecast.forecast.race_rule === "MAJORITY" ? "Majority Win Prob" : "Win Probability"}
+                    {raceRule === "PLURALITY"
+                      ? "Win Probability (Most Votes)"
+                      : "Majority Win Probability (≥50%)"}
                   </div>
-                  {CANDIDATE_KEYS.map((k) => (
-                    <ProbBar
-                      key={k}
-                      label={candidateLabels[k]}
-                      value={forecast.forecast.majority_win_prob[k]}
-                      color={candidateColors[k]}
-                    />
-                  ))}
-                  {forecast.forecast.race_rule === "MAJORITY" && (
-                    <div style={{ marginTop: 10, paddingTop: 10, borderTop: "1px solid #1e293b" }}>
+
+                  {CANDIDATE_KEYS.slice(0, 3).map((k) => {   // exclude Others from win probs
+                    const probField = raceRule === "PLURALITY"
+                      ? forecast.forecast.plurality_odds_to_win[k]
+                      : forecast.forecast.majority_win_prob[k];
+
+                    return (
+                      <ProbBar
+                        key={k}
+                        label={candidateLabels[k]}
+                        value={probField}
+                        color={candidateColors[k]}
+                      />
+                    );
+                  })}
+
+                  {/* Optional: show runoff needed only in majority mode */}
+                  {raceRule === "MAJORITY" && (
+                    <div style={{ marginTop: 12, paddingTop: 12, borderTop: "1px solid #1e293b" }}>
                       <ProbBar
                         label="Runoff Needed"
                         value={forecast.forecast.runoff_needed_prob}
                         color="#f59e0b"
+                        sub="(no one ≥50%)"
                       />
                     </div>
                   )}

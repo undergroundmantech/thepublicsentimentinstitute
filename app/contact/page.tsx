@@ -434,7 +434,7 @@ const CSS = `
 
   /* EYEBROW */
   .ct-eyebrow {
-    font-family: ui-monospace,'Courier New',monospace;
+    font-family: var(--font-body);
     font-size: 8px; font-weight: 700; letter-spacing: 0.32em;
     text-transform: uppercase; color: var(--ct-soft);
     margin-bottom: 12px;
@@ -468,8 +468,8 @@ const CSS = `
   @media (max-width: 640px) { .ct-hero-inner { grid-template-columns: 1fr; } }
 
   .ct-hero-title {
-    font-family: ui-monospace,'Courier New',monospace;
-    font-size: clamp(26px,4vw,52px); font-weight: 900;
+    font-family: var(--font-display);
+    font-size: clamp(26px,4vw,52px); font-weight: 700;
     text-transform: uppercase; letter-spacing: 0.02em;
     line-height: 0.9; color: #fff; margin: 0 0 16px;
   }
@@ -481,7 +481,7 @@ const CSS = `
     background-clip: text;
   }
   .ct-hero-desc {
-    font-family: ui-monospace,monospace;
+    font-family: var(--font-body);
     font-size: 9.5px; letter-spacing: 0.11em; line-height: 1.8;
     color: var(--ct-muted2); text-transform: uppercase; max-width: 520px;
   }
@@ -496,7 +496,7 @@ const CSS = `
     padding: 3px 9px;
     border: 1px solid var(--ct-border);
     background: rgba(255,255,255,0.03);
-    font-family: ui-monospace,monospace;
+    font-family: var(--font-body);
     font-size: 7.5px; font-weight: 700; letter-spacing: 0.22em;
     text-transform: uppercase; color: var(--ct-muted3);
   }
@@ -514,13 +514,13 @@ const CSS = `
     background: rgba(255,255,255,0.025);
   }
   .ct-fact-label {
-    font-family: ui-monospace,monospace;
+    font-family: var(--font-body);
     font-size: 7px; font-weight: 700; letter-spacing: 0.28em;
     text-transform: uppercase; color: var(--ct-muted3);
   }
   .ct-fact-val {
-    font-family: ui-monospace,monospace;
-    font-size: 13px; font-weight: 900; color: var(--ct-soft);
+    font-family: var(--font-display);
+    font-size: 13px; font-weight: 700; color: var(--ct-soft);
   }
 
   /* LAYOUT */
@@ -545,12 +545,12 @@ const CSS = `
     gap: 12px; flex-wrap: wrap;
   }
   .ct-form-title {
-    font-family: ui-monospace,monospace;
+    font-family: var(--font-body);
     font-size: 10px; font-weight: 900; letter-spacing: 0.28em;
     text-transform: uppercase; color: var(--ct-soft);
   }
   .ct-form-sub {
-    font-family: ui-monospace,monospace;
+    font-family: var(--font-body);
     font-size: 8px; letter-spacing: 0.16em; color: var(--ct-muted3);
     margin-top: 4px;
   }
@@ -561,7 +561,7 @@ const CSS = `
     padding: 4px 10px;
     border: 1px solid var(--ct-border);
     background: rgba(255,255,255,0.03);
-    font-family: ui-monospace,monospace;
+    font-family: var(--font-body);
     font-size: 8px; font-weight: 700; letter-spacing: 0.2em;
     text-transform: uppercase; color: var(--ct-muted2);
   }
@@ -576,7 +576,7 @@ const CSS = `
   /* FIELD */
   .ct-field { display: flex; flex-direction: column; gap: 0; }
   .ct-label {
-    font-family: ui-monospace,monospace;
+    font-family: var(--font-body);
     font-size: 7.5px; font-weight: 700; letter-spacing: 0.26em;
     text-transform: uppercase; color: var(--ct-muted3);
     margin-bottom: 6px;
@@ -589,7 +589,7 @@ const CSS = `
     background: rgba(255,255,255,0.03);
     border: 1px solid var(--ct-border);
     color: rgba(255,255,255,0.85);
-    font-family: ui-monospace,monospace;
+    font-family: var(--font-body);
     font-size: 11px; letter-spacing: 0.06em;
     padding: 10px 14px;
     outline: none;
@@ -635,7 +635,7 @@ const CSS = `
     background: rgba(124,58,237,0.15);
     border: 1px solid rgba(124,58,237,0.45);
     color: var(--ct-soft);
-    font-family: ui-monospace,monospace;
+    font-family: var(--font-body);
     font-size: 9px; font-weight: 800; letter-spacing: 0.24em;
     text-transform: uppercase; cursor: pointer;
     transition: background 150ms, border-color 150ms;
@@ -652,7 +652,7 @@ const CSS = `
     background: transparent;
     border: 1px solid var(--ct-border);
     color: var(--ct-muted3);
-    font-family: ui-monospace,monospace;
+    font-family: var(--font-body);
     font-size: 9px; font-weight: 700; letter-spacing: 0.24em;
     text-transform: uppercase; cursor: pointer;
     transition: background 120ms, color 120ms;
@@ -661,12 +661,12 @@ const CSS = `
     background: rgba(255,255,255,0.04); color: var(--ct-muted2);
   }
   .ct-sent-note {
-    font-family: ui-monospace,monospace;
+    font-family: var(--font-body);
     font-size: 8.5px; letter-spacing: 0.1em;
     color: var(--ct-green);
   }
   .ct-disclaimer {
-    font-family: ui-monospace,monospace;
+    font-family: var(--font-body);
     font-size: 7.5px; letter-spacing: 0.18em;
     text-transform: uppercase; color: var(--ct-muted3);
     padding-top: 4px;
@@ -687,12 +687,12 @@ const CSS = `
     display: flex; flex-direction: column; gap: 12px;
   }
   .ct-sidebar-title {
-    font-family: ui-monospace,monospace;
+    font-family: var(--font-body);
     font-size: 8.5px; font-weight: 800; letter-spacing: 0.28em;
     text-transform: uppercase; color: var(--ct-soft);
   }
   .ct-sidebar-sub {
-    font-family: ui-monospace,monospace;
+    font-family: var(--font-body);
     font-size: 8px; letter-spacing: 0.12em; color: var(--ct-muted3);
     margin-top: -6px;
   }
@@ -702,7 +702,7 @@ const CSS = `
   }
   .ct-checklist-item {
     display: flex; align-items: flex-start; gap: 10px;
-    font-family: ui-monospace,monospace;
+    font-family: var(--font-body);
     font-size: 9px; letter-spacing: 0.08em; line-height: 1.6;
     color: var(--ct-muted2);
   }
@@ -723,19 +723,19 @@ const CSS = `
   }
   .ct-response-type {
     display: flex; align-items: center; gap: 8px;
-    font-family: ui-monospace,monospace;
+    font-family: var(--font-body);
     font-size: 9px; letter-spacing: 0.1em; color: var(--ct-muted2);
   }
   .ct-response-dot {
     display: inline-block; width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0;
   }
   .ct-response-time {
-    font-family: ui-monospace,monospace;
+    font-family: var(--font-body);
     font-size: 9px; font-weight: 800; letter-spacing: 0.14em;
     color: rgba(255,255,255,0.75);
   }
   .ct-sidebar-note {
-    font-family: ui-monospace,monospace;
+    font-family: var(--font-body);
     font-size: 8.5px; letter-spacing: 0.08em; line-height: 1.7;
     color: var(--ct-muted3); margin: 0;
   }
@@ -748,12 +748,12 @@ const CSS = `
     display: flex; flex-direction: column; gap: 8px;
   }
   .ct-email-card-label {
-    font-family: ui-monospace,monospace;
+    font-family: var(--font-body);
     font-size: 7px; font-weight: 800; letter-spacing: 0.32em;
     text-transform: uppercase; color: rgba(167,139,250,0.6);
   }
   .ct-email-addr {
-    font-family: ui-monospace,monospace;
+    font-family: var(--font-body);
     font-size: 11px; font-weight: 700; letter-spacing: 0.06em;
     color: var(--ct-soft); text-decoration: none;
     word-break: break-all;
@@ -761,7 +761,7 @@ const CSS = `
   }
   .ct-email-addr:hover { color: #fff; }
   .ct-email-card-note {
-    font-family: ui-monospace,monospace;
+    font-family: var(--font-body);
     font-size: 8px; letter-spacing: 0.1em; line-height: 1.65;
     color: var(--ct-muted3);
   }
