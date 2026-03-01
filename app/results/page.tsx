@@ -846,8 +846,8 @@ function ForecastPanel({ raceId, refreshTick }: { raceId: number; refreshTick: n
               <span className="res-note" style={{ color: "rgba(255,255,255,0.35)" }}>
                 {forecast.race.percent_reporting}% REPORTING
               </span>
-              <span className={`res-badge ${forecast.forecast.mode_trigger === "RUNOFF" ? "res-badge-red" : "res-badge-purple"}`}>
-                {forecast.forecast.mode_trigger}
+              <span className={`res-badge ${raceRule === "MAJORITY" ? "res-badge-purple" : "res-badge-red"}`}>
+                {raceRule === "MAJORITY" ? "MAJORITY" : forecast.forecast.mode_trigger}
               </span>
             </div>
 
@@ -1133,7 +1133,12 @@ export default function March3FeaturedClient() {
   const selectedCloseDate = parseIsoDate(selectedRace?.polls_close ?? null);
   const selectedCloseLocal = selectedCloseDate ? formatLocalCloseTime(selectedCloseDate) : "—";
   const selectedMsLeft = selectedCloseDate ? selectedCloseDate.getTime() - nowMs : null;
-  const selectedProj = useMemo(() => getRaceProjectionAlways(selectedRace), [selectedRace]);
+  const selectedProj = useMemo(() => {
+    if (!selectedRace) return null;
+    const reporting = selectedRace.percent_reporting ?? 0;
+    if (reporting < 5) return null;
+    return getRaceProjectionAlways(selectedRace);
+  }, [selectedRace]);
   const selectedWinner = selectedRace?.candidates?.find((c) => c.winner);
 
   const timeStr = nowMs > 0
