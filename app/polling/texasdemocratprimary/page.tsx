@@ -12,6 +12,8 @@ import {
 
 // ─── Polls data ───────────────────────────────────────────────────────────────
 const RAW_POLLS: Poll[] = [
+  { pollster: "Emerson", endDate: "2026-02-27", sampleSize: 850, sampleType: "LV", results: { Talarico: 52, Crockett: 47, Hassan: 1 } },
+  
 { pollster: "Public Policy Polling", endDate: "2026-02-25", sampleSize: 599, sampleType: "LV", results: { Crockett: 42, Talarico: 48, Hassan: 0 } },
 
   { pollster: "Chism/Blueprint", endDate: "2026-02-24", sampleSize: 472, sampleType: "LV", results: { Talarico: 52, Crockett: 40, Hassan: 0 } },

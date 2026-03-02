@@ -12,6 +12,7 @@ import {
 
 // ─── Polls data ───────────────────────────────────────────────────────────────
 const RAW_POLLS: Poll[] = [
+  { pollster: "Emerson", endDate: "2026-02-27", sampleSize: 547, sampleType: "LV", results: { Paxton: 40, Cornyn: 36, Hunt: 17 } },
   { pollster: "American Opportunity Alliance", endDate: "2025-05-01", sampleSize: 800, sampleType: "LV", results: { Paxton: 43, Cornyn: 27, Hunt: 14 } },
 { pollster: "Quantus Insights", endDate: "2025-05-13", sampleSize: 600, sampleType: "RV", results: { Paxton: 46, Cornyn: 38, Hunt: 16 } },
 { pollster: "TSU/YouGov", endDate: "2025-05-19", sampleSize: 510, sampleType: "LV", results: { Paxton: 34, Cornyn: 27, Hunt: 15 } },
