@@ -40,13 +40,13 @@ const RACE_FORECAST_DEFAULTS: Partial<Record<number, {
   44286: {
     raceRule: "MAJORITY",
     expectedTurnout: 2_800_000,
-    pollAvg: { "Talarico": 47.5, "Crockett": 45.1, "Hassan": 0.4 },
+    pollAvg: { "Talarico": 48.5, "Crockett": 44.1, "Hassan": 0.4 },
   },
   // TX US Senate — Republican Primary (Kalshi: 2.39M forecast)
   44285: {
     raceRule: "MAJORITY",
     expectedTurnout: 2_500_000,
-    pollAvg: { "Paxton": 37.6, "Cornyn": 33.1, "Hunt": 18.5 },
+    pollAvg: { "Paxton": 37.5, "Cornyn": 33.0, "Hunt": 18.3 },
   },
   44287: {  // Gov Rep
     raceRule: "MAJORITY",
