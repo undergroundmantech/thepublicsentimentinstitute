@@ -4,7 +4,7 @@ import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from "re
 import type { ForecastOutput, RaceRule } from "@/app/lib/electoralModel";
 
 const CIVIC_BASE = "https://civicapi.org";
-const POLL_MS = 30_000;
+const POLL_MS = 5_000;
 
 // --- PREDICTIVE LOGIC HELPER ---
 function calculateWinProbability(leaderVotes: number, runnerUpVotes: number, percentReporting: number): number {
@@ -769,7 +769,7 @@ function ForecastPanel({ raceId, refreshTick }: { raceId: number; refreshTick: n
             </span>
           )}
           {!isLoading && forecast && (
-            <span className="res-badge" style={{ fontSize: "7px", color: "rgba(255,255,255,0.25)" }}>AUTO / 30s</span>
+            <span className="res-badge" style={{ fontSize: "7px", color: "rgba(255,255,255,0.25)" }}>AUTO / 5s</span>
           )}
         </div>
         <button
@@ -1371,14 +1371,14 @@ export default function March3FeaturedClient() {
                     <span className="res-live-dot" style={{ background: "var(--rep)" }} />
                     LIVE
                   </span>
-                  <span className="res-badge res-badge-purple">RESULTS + FORECAST / 30s</span>
+                  <span className="res-badge res-badge-purple">RESULTS + FORECAST / 5s</span>
                   {selectedRace?.last_updated && (
                     <span className="res-badge">UPDATED {prettyTime(selectedRace.last_updated)}</span>
                   )}
                 </div>
               </div>
               <div style={{ display: "flex", gap: "1px" }}>
-                {(["TX", "NC", "AR"] as const).map((st) => (
+                {(["TX", "NC", "AR", "TEST"] as const).map((st) => (
                   <button key={st} className={`res-btn-state ${activeState === st ? "active" : ""}`} onClick={() => setActiveState(st)}>
                     {stateLabels[st]}
                   </button>
