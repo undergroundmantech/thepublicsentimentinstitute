@@ -1,12 +1,11 @@
 "use client";
 
-import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import type { ForecastOutput, RaceRule } from "@/app/lib/electoralModel";
 
 const CIVIC_BASE = "https://civicapi.org";
-const POLL_MS = 5_000;
+const POLL_MS = 30_000;
 
-// --- PREDICTIVE LOGIC HELPER ---
 function calculateWinProbability(leaderVotes: number, runnerUpVotes: number, percentReporting: number): number {
   if (percentReporting >= 99) return 100;
   if (percentReporting <= 0 || (leaderVotes === 0 && runnerUpVotes === 0)) return 50;
@@ -28,68 +27,56 @@ type RegionResult = { region: { name: string; type: string; fill?: string; perce
 type RaceDetail = { election_name: string; election_type: string; election_scope: string; election_date: string; country: string; province: string | null; district: string | null; municipality: string | null; polls_open: string | null; polls_close: string | null; last_updated: string | null; percent_reporting?: number; candidates: RaceCandidate[]; region_results?: RegionResult[] | Record<string, RegionResult>; };
 type FeaturedRace = { id: number; state: "TX" | "NC" | "AR" | "TEST"; office: string; party: "Democratic" | "Republican" | "N/A"; label: string; };
 
-// ─── RACE FORECAST DEFAULTS ──────────────────────────────────────────────────
-// Only races listed here will show the ForecastPanel. Others are hidden.
-// expectedTurnout sourced from Kalshi prediction markets.
-const RACE_FORECAST_DEFAULTS: Partial<Record<number, {
-  raceRule: RaceRule;
-  expectedTurnout?: number;
-  pollAvg?: Record<string, number>;
-}>> = {
-  // TX US Senate — Democratic Primary (Kalshi: 2.66M forecast)
-  44286: {
-    raceRule: "MAJORITY",
-    expectedTurnout: 2_800_000,
-    pollAvg: { "Talarico": 48.5, "Crockett": 44.1, "Hassan": 0.4 },
-  },
-  // TX US Senate — Republican Primary (Kalshi: 2.39M forecast)
-  44285: {
-    raceRule: "MAJORITY",
-    expectedTurnout: 2_500_000,
-    pollAvg: { "Paxton": 37.5, "Cornyn": 33.0, "Hunt": 18.3 },
-  },
-  44287: {  // Gov Rep
-    raceRule: "MAJORITY",
-    expectedTurnout: 2_190_000,  // same as Senate or adjust
-    pollAvg: { "Abbott": 91.0 /* add challengers if needed */ },
-  },
-  44288: {  // Gov Dem
-    raceRule: "MAJORITY",
-    expectedTurnout: 2_660_000,
-    pollAvg: { "Hinojosa": 65.0, "Bell": 15.0 /* etc. */ },
-  },
+const RACE_FORECAST_DEFAULTS: Partial<Record<number, { raceRule: RaceRule; expectedTurnout?: number; pollAvg?: Record<string, number>; }>> = {
+  44286: { raceRule: "MAJORITY", expectedTurnout: 2_800_000, pollAvg: { "Talarico": 48.5, "Crockett": 44.1, "Hassan": 0.4 } },
+  44285: { raceRule: "MAJORITY", expectedTurnout: 2_500_000, pollAvg: { "Paxton": 37.5, "Cornyn": 33.0, "Hunt": 18.3 } },
+  44287: { raceRule: "MAJORITY", expectedTurnout: 2_190_000, pollAvg: { "Abbott": 91.0 } },
+  44288: { raceRule: "MAJORITY", expectedTurnout: 2_660_000, pollAvg: { "Hinojosa": 65.0, "Bell": 15.0 } },
+  44292: { raceRule: "MAJORITY", expectedTurnout: 1_950_000, pollAvg: { "Patrick": 78.0, "Hopkins": 8.0, "Mabry": 7.0 } },
+  44293: { raceRule: "MAJORITY", expectedTurnout: 980_000, pollAvg: { "Goodwin": 72.0, "Head": 15.0, "Velez": 7.0 } },
+  44289: { raceRule: "MAJORITY", expectedTurnout: 1_900_000, pollAvg: { "Roy": 33.0, "Middleton": 23.0, "Huffman": 13.0, "Reitz": 6.0 } },
+  44290: { raceRule: "MAJORITY", expectedTurnout: 980_000, pollAvg: { "Johnson": 25.0, "Jaworski": 22.0, "Box": 13.0 } },
+  44208: { raceRule: "MAJORITY", expectedTurnout: 1_900_000, pollAvg: { "Huffines": 33.0, "Craddick": 21.0, "Hancock": 13.0, "Berlanga": 4.0 } },
+  44209: { raceRule: "MAJORITY", expectedTurnout: 970_000, pollAvg: { "Eckhardt": 65.0 } },
+  44291: { raceRule: "MAJORITY", expectedTurnout: 1_850_000, pollAvg: { "Miller": 48.0, "Sheets": 18.0 } },
+  44294: { raceRule: "MAJORITY", expectedTurnout: 960_000, pollAvg: {} },
+  44295: { raceRule: "MAJORITY", expectedTurnout: 1_850_000, pollAvg: { "Wright": 21.0, "Matlock": 20.0 } },
+  44344: { raceRule: "MAJORITY", expectedTurnout: 90_000, pollAvg: { "Herrera": 43.0, "Gonzales": 34.0, "Canseco": 14.0, "Barton": 8.0 } },
+  44374: { raceRule: "MAJORITY", expectedTurnout: 90_000 },
+  44366: { raceRule: "MAJORITY", expectedTurnout: 85_000 },
+  44323: { raceRule: "MAJORITY", expectedTurnout: 55_000 },
+  44324: { raceRule: "MAJORITY", expectedTurnout: 45_000 },
+  44328: { raceRule: "MAJORITY", expectedTurnout: 55_000 },
+  44329: { raceRule: "MAJORITY", expectedTurnout: 85_000 },
+  44351: { raceRule: "MAJORITY", expectedTurnout: 60_000 },
+  44331: { raceRule: "MAJORITY", expectedTurnout: 90_000 },
+  44722: { raceRule: "MAJORITY", expectedTurnout: 250_000, pollAvg: { "Sanders": 98.0 } },
+  44721: { raceRule: "MAJORITY", expectedTurnout: 38_000 },
+  44729: { raceRule: "MAJORITY", expectedTurnout: 265_000, pollAvg: { "Cotton": 86.0, "Little": 8.0, "Ashby": 4.0 } },
+  44730: { raceRule: "MAJORITY", expectedTurnout: 33_000, pollAvg: { "Shoffner": 58.0, "Dunbar": 36.0 } },
+  44723: { raceRule: "MAJORITY", expectedTurnout: 250_000, pollAvg: { "Rutledge": 98.0 } },
+  44724: { raceRule: "MAJORITY", expectedTurnout: 250_000, pollAvg: { "Griffin": 98.0 } },
+  44725: { raceRule: "MAJORITY", expectedTurnout: 260_000, pollAvg: { "Hammer": 35.0, "Norris": 30.0, "Harrison": 24.0 } },
+  44726: { raceRule: "MAJORITY", expectedTurnout: 33_000, pollAvg: { "Grappe": 98.0 } },
+  44728: { raceRule: "MAJORITY", expectedTurnout: 250_000, pollAvg: { "Jester": 62.0, "Olson": 28.0 } },
+  44727: { raceRule: "MAJORITY", expectedTurnout: 250_000 },
+  46303: { raceRule: "PLURALITY", expectedTurnout: 700_000, pollAvg: { "Whatley": 52.0, "Brown": 18.0, "Morrow": 15.0 } },
+  46302: { raceRule: "PLURALITY", expectedTurnout: 760_000, pollAvg: { "Cooper": 76.0, "Colon": 5.0, "Dues": 4.0 } },
+  46306: { raceRule: "PLURALITY", expectedTurnout: 80_000, pollAvg: { "Foushee": 44.0, "Allam": 42.0, "Patterson": 8.0 } },
+  46304: { raceRule: "PLURALITY", expectedTurnout: 62_000, pollAvg: { "Buckhout": 28.0, "Buck": 24.0, "Hanig": 18.0, "Rouse": 12.0 } },
 };
 
-// ─── POLL-ORDERED CANDIDATE SORT ─────────────────────────────────────────────
-// Sorts by pollAvg match (descending), then live vote percent, then alpha.
-// Ensures top-3 are electorally relevant — NOT alphabetical.
-function sortCandidatesByPollData(
-  candidates: RaceCandidate[],
-  pollAvg?: Record<string, number>
-): RaceCandidate[] {
-  if (!pollAvg || Object.keys(pollAvg).length === 0) {
-    return [...candidates].sort((a, b) => (b.percent ?? 0) - (a.percent ?? 0));
-  }
+function sortCandidatesByPollData(candidates: RaceCandidate[], pollAvg?: Record<string, number>): RaceCandidate[] {
+  if (!pollAvg || Object.keys(pollAvg).length === 0) return [...candidates].sort((a, b) => (b.percent ?? 0) - (a.percent ?? 0));
   return [...candidates].sort((a, b) => {
-    const getPollScore = (name: string): number => {
-      const lower = name.toLowerCase();
-      for (const [key, score] of Object.entries(pollAvg)) {
-        if (lower.includes(key.toLowerCase()) || key.toLowerCase().includes(lower)) return score;
-      }
-      return -1;
-    };
+    const getPollScore = (name: string): number => { const lower = name.toLowerCase(); for (const [key, score] of Object.entries(pollAvg)) { if (lower.includes(key.toLowerCase()) || key.toLowerCase().includes(lower)) return score; } return -1; };
     const sa = getPollScore(a.name), sb = getPollScore(b.name);
     if (sa >= 0 && sb >= 0) return sb - sa;
-    if (sa >= 0) return -1;
-    if (sb >= 0) return 1;
+    if (sa >= 0) return -1; if (sb >= 0) return 1;
     return (b.percent ?? 0) - (a.percent ?? 0);
   });
 }
 
-function getTopCandidatesByPoll(candidates: RaceCandidate[], raceId: number): RaceCandidate[] {
-  const defaults = RACE_FORECAST_DEFAULTS[raceId];
-  return sortCandidatesByPollData(candidates, defaults?.pollAvg).slice(0, 3);
-}
 const FEATURED: FeaturedRace[] = [
   { id: 44287, state: "TX", office: "Governor", party: "Republican", label: "TX Governor — Republican Primary" },
   { id: 44288, state: "TX", office: "Governor", party: "Democratic", label: "TX Governor — Democratic Primary" },
@@ -190,8 +177,7 @@ function buildTooltipLines(rr: any): TooltipLine[] { return [...getCandidatesFro
 type MarginBucket = "tilt" | "lean" | "likely" | "safe" | "tied";
 function marginBucket(absMargin: number): MarginBucket { if (absMargin < 0.0001) return "tied"; if (absMargin < 2) return "tilt"; if (absMargin < 6) return "lean"; if (absMargin < 12) return "likely"; return "safe"; }
 function toShaded(hex: string, bucket: MarginBucket) {
-  let r = 0, g = 0, b = 0;
-  const h = hex.replace("#", "");
+  let r = 0, g = 0, b = 0; const h = hex.replace("#", "");
   if (h.length === 3) { r = parseInt(h[0] + h[0], 16); g = parseInt(h[1] + h[1], 16); b = parseInt(h[2] + h[2], 16); }
   else { r = parseInt(h.slice(0, 2), 16); g = parseInt(h.slice(2, 4), 16); b = parseInt(h.slice(4, 6), 16); }
   r /= 255; g /= 255; b /= 255;
@@ -229,30 +215,19 @@ function ProjectedWinnerOverlay({ show, candidate, prob, color, reporting, onDis
         <div className="p-7 md:p-8">
           <div className="flex items-start justify-between gap-4">
             <div>
-              <div className="res-eyebrow" style={{ color: "var(--rep)" }}>
-                <span className="res-live-dot" style={{ background: "var(--rep)" }} />
-                PROJECTION ALERT
-              </div>
+              <div className="res-eyebrow" style={{ color: "var(--rep)" }}><span className="res-live-dot" style={{ background: "var(--rep)" }} />PROJECTION ALERT</div>
               <div className="res-overlay-title mt-3">Projected<br />Winner</div>
               <div className="res-overlay-name mt-2" style={{ color: color || "var(--purple-soft)" }}>{candidate}</div>
             </div>
             <button onClick={onDismiss} className="res-close-btn">CLOSE ✕</button>
           </div>
           <div className="mt-6">
-            <div className="res-stat-row mb-2">
-              <span className="res-stat-label">WIN CONFIDENCE</span>
-              <span className="res-stat-val" style={{ color: "var(--purple-soft)" }}>{prob.toFixed(1)}%</span>
-            </div>
-            <div className="res-bar-track">
-              <div className="res-bar-fill" style={{ width: `${Math.max(0, Math.min(100, prob))}%`, background: "linear-gradient(90deg, var(--purple), var(--purple2))", boxShadow: "0 0 20px rgba(124,58,237,0.5)" }} />
-            </div>
+            <div className="res-stat-row mb-2"><span className="res-stat-label">WIN CONFIDENCE</span><span className="res-stat-val" style={{ color: "var(--purple-soft)" }}>{prob.toFixed(1)}%</span></div>
+            <div className="res-bar-track"><div className="res-bar-fill" style={{ width: `${Math.max(0, Math.min(100, prob))}%`, background: "linear-gradient(90deg, var(--purple), var(--purple2))", boxShadow: "0 0 20px rgba(124,58,237,0.5)" }} /></div>
           </div>
           <div className="mt-6 grid grid-cols-3 gap-2">
             {[["STATUS", "PROJECTED"], ["CONFIDENCE", `${prob.toFixed(1)}%`], ["REPORTING", `${reporting.toFixed(1)}%`]].map(([label, val]) => (
-              <div key={label} className="res-stat-block">
-                <div className="res-stat-block-label">{label}</div>
-                <div className="res-stat-block-val">{val}</div>
-              </div>
+              <div key={label} className="res-stat-block"><div className="res-stat-block-label">{label}</div><div className="res-stat-block-val">{val}</div></div>
             ))}
           </div>
           <div className="mt-6 flex items-center justify-between">
@@ -266,10 +241,17 @@ function ProjectedWinnerOverlay({ show, candidate, prob, color, reporting, onDis
 }
 
 // ─── MAP ────────────────────────────────────────────────────────────────────
+function countyTotalVotes(rr: any): number {
+  return getCandidatesFromRR(rr).reduce((sum, c) => sum + (safeNum(c?.votes) ?? 0), 0);
+}
+
 function MapWithCountyTooltip({ svgText, regionResults }: { svgText: string; regionResults: RegionResult[] | Record<string, RegionResult> }) {
   const wrapRef = useRef<HTMLDivElement | null>(null);
   const [tooltip, setTooltip] = useState<TooltipState>({ show: false, x: 0, y: 0, title: "", reporting: null, reportingPct: null, lines: [] });
+  // tracks fingerprint (for fill changes) — persists across regionMap updates
   const countyFingerprintsRef = useRef<Map<string, string>>(new Map());
+  // tracks last known vote total per county — persists across refreshes, never reset on svgText change
+  const countyVoteTotalsRef = useRef<Map<string, number>>(new Map());
 
   const regionResultsArr = useMemo(() => coerceRegionResults(regionResults), [regionResults]);
   const regionMap = useMemo(() => {
@@ -278,84 +260,110 @@ function MapWithCountyTooltip({ svgText, regionResults }: { svgText: string; reg
     return m;
   }, [regionResultsArr]);
 
+  // Fire update-flash on counties where vote total grew since last refresh
+  const flashCounty = useCallback((shape: SVGGraphicsElement) => {
+    shape.classList.remove("county-updated");
+    // force reflow so re-adding the class restarts the animation
+    void (shape as any).offsetWidth;
+    shape.classList.add("county-updated");
+    setTimeout(() => shape.classList.remove("county-updated"), 1200);
+  }, []);
+
+  // Initial SVG inject + event wiring
   useEffect(() => {
-    const host = wrapRef.current;
-    if (!host) return;
+    const host = wrapRef.current; if (!host) return;
     host.innerHTML = svgText;
-    const svg = host.querySelector("svg");
-    if (!svg) return;
+    const svg = host.querySelector("svg"); if (!svg) return;
     countyFingerprintsRef.current = new Map();
+    // NOTE: do NOT reset countyVoteTotalsRef here — we want totals to persist across race switches only if needed
     const shapes = Array.from(svg.querySelectorAll("path, polygon")) as SVGGraphicsElement[];
     shapes.forEach((shape) => {
-      const key = getRegionKeyFromElement(shape);
-      if (!key) return;
+      const key = getRegionKeyFromElement(shape); if (!key) return;
       const prettyKey = titleCaseKey(key);
-      shape.style.pointerEvents = "all";
-      shape.style.cursor = "crosshair";
-      shape.style.stroke = "rgba(255,255,255,0.08)";
-      shape.style.strokeWidth = "0.8";
+      shape.style.pointerEvents = "all"; shape.style.cursor = "crosshair";
+      shape.style.stroke = "rgba(255,255,255,0.08)"; shape.style.strokeWidth = "0.8";
       shape.style.transition = "fill 420ms ease, filter 300ms ease, stroke 200ms ease, stroke-width 200ms ease";
 
       const onMove = (ev: PointerEvent) => {
         const currentRR = regionMap.get(key);
-        const tw = 320, th = 260, p = 12, offset = 14;
+        const tw = 320, th = 280, p = 12, offset = 14;
         const rect = host.getBoundingClientRect();
-        const px = ev.clientX - rect.left;
-        const py = ev.clientY - rect.top;
-        let x = px + offset;
-        let y = py + offset;
+        const px = ev.clientX - rect.left, py = ev.clientY - rect.top;
+        let x = px + offset, y = py + offset;
         if (x + tw > rect.width - p) x = px - tw - offset;
         if (y + th > rect.height - p) y = py - th - offset;
-        x = Math.max(p, Math.min(rect.width - tw - p, x));
-        y = Math.max(p, Math.min(rect.height - th - p, y));
+        x = Math.max(p, Math.min(rect.width - tw - p, x)); y = Math.max(p, Math.min(rect.height - th - p, y));
         const pct = typeof currentRR?.region?.percent_reporting === "number" ? currentRR.region.percent_reporting : typeof currentRR?.percent_reporting === "number" ? currentRR.percent_reporting : null;
-        setTooltip({ show: true, x, y, title: currentRR?.region?.name ?? (currentRR?.name ? titleCaseKey(currentRR.name) : prettyKey), reporting: pct !== null ? `${pct.toFixed(1)}% REPORTING` : "0% REPORTING", reportingPct: pct ?? 0, lines: currentRR ? buildTooltipLines(currentRR) : [] });
+        const lines = currentRR ? buildTooltipLines(currentRR) : [];
+        const hasVotes = lines.some((l) => l.votes !== null && l.votes > 0);
+        setTooltip({
+          show: true, x, y,
+          title: currentRR?.region?.name ?? (currentRR?.name ? titleCaseKey(currentRR.name) : prettyKey),
+          reporting: pct !== null ? `${pct.toFixed(1)}% REPORTING` : "0% REPORTING",
+          reportingPct: pct ?? 0,
+          lines: hasVotes ? lines : [],
+        });
       };
       const onEnter = (ev: PointerEvent) => { shape.style.stroke = "rgba(255,255,255,0.9)"; shape.style.strokeWidth = "2.0"; shape.style.filter = "brightness(1.22) saturate(1.1)"; onMove(ev); };
       const onLeave = () => { shape.style.stroke = "rgba(255,255,255,0.08)"; shape.style.strokeWidth = "0.8"; shape.style.filter = ""; setTooltip((t) => ({ ...t, show: false })); };
-      shape.addEventListener("pointerenter", onEnter);
-      shape.addEventListener("pointermove", onMove);
-      shape.addEventListener("pointerleave", onLeave);
+      shape.addEventListener("pointerenter", onEnter); shape.addEventListener("pointermove", onMove); shape.addEventListener("pointerleave", onLeave);
 
       const currentRR = regionMap.get(key);
-      const hasData = !!currentRR;
-      const fill = hasData ? countyFill(currentRR) : "rgba(255,255,255,0.04)";
+      const fill = currentRR ? countyFill(currentRR) : null;
       shape.style.opacity = "0";
       requestAnimationFrame(() => {
-        shape.style.fill = fill || "rgba(255,255,255,0.04)";
-        shape.style.opacity = "1";
-        if (hasData) {
+        shape.style.fill = fill || "rgba(255,255,255,0.04)"; shape.style.opacity = "1";
+        if (currentRR) {
           const fp = countyFingerprint(currentRR);
           const prevFp = countyFingerprintsRef.current.get(key);
-          if (prevFp === undefined) { shape.classList.add("county-pop"); setTimeout(() => shape.classList.remove("county-pop"), 520); }
+          if (prevFp === undefined) {
+            shape.classList.add("county-pop");
+            setTimeout(() => shape.classList.remove("county-pop"), 520);
+          }
           countyFingerprintsRef.current.set(key, fp);
+          countyVoteTotalsRef.current.set(key, countyTotalVotes(currentRR));
         }
       });
     });
-  }, [svgText, regionMap]);
+  }, [svgText, regionMap]); // eslint-disable-line
 
+  // Live data update — re-color counties and flash those with new votes
   useEffect(() => {
-    const host = wrapRef.current;
-    if (!host) return;
-    const svg = host.querySelector("svg");
-    if (!svg) return;
+    const host = wrapRef.current; if (!host) return;
+    const svg = host.querySelector("svg"); if (!svg) return;
     const shapes = Array.from(svg.querySelectorAll("path, polygon")) as SVGGraphicsElement[];
     shapes.forEach((shape) => {
-      const key = getRegionKeyFromElement(shape);
-      if (!key) return;
-      const currentRR = regionMap.get(key);
-      if (!currentRR) return;
+      const key = getRegionKeyFromElement(shape); if (!key) return;
+      const currentRR = regionMap.get(key); if (!currentRR) return;
+
+      // Update fill
+      const fill = countyFill(currentRR); if (fill) shape.style.fill = fill;
+
+      // Check fingerprint for any change
       const fp = countyFingerprint(currentRR);
       const prevFp = countyFingerprintsRef.current.get(key);
-      const fill = countyFill(currentRR);
-      if (fill) shape.style.fill = fill;
-      if (prevFp !== undefined && fp !== prevFp) { shape.classList.add("county-pop"); setTimeout(() => shape.classList.remove("county-pop"), 520); }
+
+      // Check vote total growth
+      const newTotal = countyTotalVotes(currentRR);
+      const prevTotal = countyVoteTotalsRef.current.get(key) ?? 0;
+      const votesGrew = newTotal > prevTotal;
+
+      if (prevFp !== undefined && fp !== prevFp) {
+        if (votesGrew) {
+          flashCounty(shape);
+        } else {
+          shape.classList.add("county-pop");
+          setTimeout(() => shape.classList.remove("county-pop"), 520);
+        }
+      }
+
       countyFingerprintsRef.current.set(key, fp);
+      countyVoteTotalsRef.current.set(key, newTotal);
     });
-  }, [regionMap]);
+  }, [regionMap, flashCounty]);
 
   return (
-    <div className="relative">
+    <div className="relative h-full">
       <div ref={wrapRef} className="w-full overflow-hidden [&_svg]:h-auto [&_svg]:w-full" />
       {tooltip.show && (
         <div className="res-map-tooltip absolute z-50 pointer-events-none w-[320px]" style={{ left: tooltip.x, top: tooltip.y }}>
@@ -365,32 +373,33 @@ function MapWithCountyTooltip({ svgText, regionResults }: { svgText: string; reg
               <div className="res-tooltip-title">{tooltip.title}</div>
               <div className="res-badge res-badge-purple">COUNTY</div>
             </div>
-            <div className="res-reporting-row">
-              <span className="res-note">{tooltip.reporting}</span>
-            </div>
-            <div className="res-bar-track mt-1" style={{ height: "2px" }}>
-              <div className="res-bar-fill" style={{ width: `${tooltip.reportingPct}%`, background: "var(--purple)", height: "2px" }} />
-            </div>
+            <div className="res-reporting-row"><span className="res-note">{tooltip.reporting}</span></div>
+            <div className="res-bar-track mt-1" style={{ height: "2px" }}><div className="res-bar-fill" style={{ width: `${tooltip.reportingPct}%`, background: "var(--purple)", height: "2px" }} /></div>
             <div className="mt-3 border-t pt-2" style={{ borderColor: "rgba(255,255,255,0.08)" }}>
-              <div className="grid grid-cols-[1fr_72px_52px] gap-1 pb-1 mb-1 border-b" style={{ borderColor: "rgba(255,255,255,0.08)" }}>
-                {["CANDIDATE", "VOTES", "PCT"].map((h) => (
-                  <div key={h} className={`res-th ${h !== "CANDIDATE" ? "text-right" : ""}`}>{h}</div>
-                ))}
-              </div>
-              {tooltip.lines.length > 0 ? tooltip.lines.map((c, i) => (
-                <div key={i} className="grid grid-cols-[1fr_72px_52px] items-center gap-1 py-1.5 border-b" style={{ borderColor: "rgba(255,255,255,0.04)" }}>
-                  <div className="flex items-center gap-2 min-w-0">
-                    <span className="h-2 w-2 rounded-full flex-shrink-0" style={{ background: c.color || "rgba(255,255,255,0.35)" }} />
-                    <div className="min-w-0">
-                      <div className="res-cand-name truncate">{c.name}{c.winner ? " ✓" : ""}</div>
-                      <div className="res-cand-party">{c.party}</div>
-                    </div>
+              {tooltip.lines.length > 0 ? (
+                <>
+                  <div className="grid grid-cols-[1fr_72px_52px] gap-1 pb-1 mb-1 border-b" style={{ borderColor: "rgba(255,255,255,0.08)" }}>
+                    {["CANDIDATE", "VOTES", "PCT"].map((h) => (<div key={h} className={`res-th ${h !== "CANDIDATE" ? "text-right" : ""}`}>{h}</div>))}
                   </div>
-                  <div className="text-right res-num">{c.votes?.toLocaleString() ?? "—"}</div>
-                  <div className="text-right res-pct-big">{c.pct !== null ? `${c.pct.toFixed(1)}%` : "—"}</div>
+                  {tooltip.lines.map((c, i) => (
+                    <div key={i} className="grid grid-cols-[1fr_72px_52px] items-center gap-1 py-1.5 border-b" style={{ borderColor: "rgba(255,255,255,0.04)" }}>
+                      <div className="flex items-center gap-2 min-w-0">
+                        <span className="h-2 w-2 rounded-full flex-shrink-0" style={{ background: c.color || "rgba(255,255,255,0.35)" }} />
+                        <div className="min-w-0"><div className="res-cand-name truncate">{c.name}{c.winner ? " ✓" : ""}</div><div className="res-cand-party">{c.party}</div></div>
+                      </div>
+                      <div className="text-right res-num">{c.votes?.toLocaleString() ?? "—"}</div>
+                      <div className="text-right res-pct-big">{c.pct !== null ? `${c.pct.toFixed(1)}%` : "—"}</div>
+                    </div>
+                  ))}
+                </>
+              ) : (
+                <div className="py-5 flex flex-col items-center gap-2">
+                  <div style={{ width: 28, height: 28, borderRadius: "50%", border: "1.5px solid rgba(255,255,255,0.10)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                    <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="rgba(255,255,255,0.20)" strokeWidth="1.5"/><line x1="8" y1="5" x2="8" y2="8.5" stroke="rgba(255,255,255,0.30)" strokeWidth="1.5" strokeLinecap="round"/><circle cx="8" cy="11" r="0.8" fill="rgba(255,255,255,0.30)"/></svg>
+                  </div>
+                  <div className="res-note" style={{ color: "rgba(255,255,255,0.30)", letterSpacing: "0.18em" }}>NO RESULTS YET</div>
+                  {(tooltip.reportingPct ?? 0) === 0 && <div className="res-note" style={{ color: "rgba(255,255,255,0.15)", fontSize: "7.5px" }}>AWAITING FIRST RETURNS</div>}
                 </div>
-              )) : (
-                <div className="py-4 text-center res-note">NO DATA YET</div>
               )}
             </div>
           </div>
@@ -404,23 +413,13 @@ function MapWithCountyTooltip({ svgText, regionResults }: { svgText: string; reg
 function CandidateList({ candidates, reporting, raceId }: { candidates: RaceCandidate[]; reporting: number; raceId?: number }) {
   const defaults = raceId ? RACE_FORECAST_DEFAULTS[raceId] : undefined;
   const ordered = useMemo(() => sortCandidatesByPollData(candidates, defaults?.pollAvg), [candidates, defaults?.pollAvg]);
-
-  const winProb = useMemo(() => {
-    if (ordered.length < 2 || reporting < 1) return null;
-    return calculateWinProbability(ordered[0].votes, ordered[1].votes, reporting);
-  }, [ordered, reporting]);
-
+  const winProb = useMemo(() => { if (ordered.length < 2 || reporting < 1) return null; return calculateWinProbability(ordered[0].votes, ordered[1].votes, reporting); }, [ordered, reporting]);
   return (
     <div className="space-y-2">
       {winProb !== null && !ordered[0].winner && reporting > 5 && (
         <div className="res-stat-block mb-3">
-          <div className="res-stat-row mb-2">
-            <span className="res-stat-label">PROJECTED WIN CHANCE</span>
-            <span style={{ color: "var(--purple-soft)", fontFamily: "var(--font-body)", fontSize: "10px", fontWeight: 700, letterSpacing: "0.14em" }}>{winProb.toFixed(1)}%</span>
-          </div>
-          <div className="res-bar-track">
-            <div className="res-bar-fill" style={{ width: `${Math.max(0, Math.min(100, winProb))}%`, background: "linear-gradient(90deg,var(--purple),var(--purple2))", transition: "width 700ms ease" }} />
-          </div>
+          <div className="res-stat-row mb-2"><span className="res-stat-label">PROJECTED WIN CHANCE</span><span style={{ color: "var(--purple-soft)", fontFamily: "var(--font-body)", fontSize: "10px", fontWeight: 700, letterSpacing: "0.14em" }}>{winProb.toFixed(1)}%</span></div>
+          <div className="res-bar-track"><div className="res-bar-fill" style={{ width: `${Math.max(0, Math.min(100, winProb))}%`, background: "linear-gradient(90deg,var(--purple),var(--purple2))", transition: "width 700ms ease" }} /></div>
         </div>
       )}
       <div className="res-candidate-list">
@@ -461,54 +460,38 @@ function CountyTotalsTable({ regionResults }: { regionResults: RegionResult[] | 
       return { name: titleCaseKey(rawName), reporting: rr?.region?.percent_reporting ?? (rr as any)?.percent_reporting ?? 0, candidates, margin: absMargin };
     }).sort((a, b) => a.name.localeCompare(b.name));
   }, [regionResults]);
-
   if (!data.length) return null;
-
   return (
     <div className="res-panel">
       <div className="res-panel-header">
         <span className="res-panel-tag">COUNTY BREAKDOWN</span>
         <span className="res-note">{data.length} REGIONS</span>
       </div>
-      <div style={{ maxHeight: "580px", overflowY: "auto" }}>
+      <div style={{ overflowY: "auto" }}>
         <table className="w-full border-collapse">
           <thead className="res-thead">
-            <tr>
-              {["COUNTY / RPT", "CANDIDATES", "MARGIN"].map((h, i) => (
-                <th key={h} className={`res-th px-4 py-2.5 ${i === 2 ? "text-right" : "text-left"}`}>{h}</th>
-              ))}
-            </tr>
+            <tr>{["COUNTY / RPT", "CANDIDATES", "MARGIN"].map((h, i) => (<th key={h} className={`res-th px-4 py-2.5 ${i === 2 ? "text-right" : "text-left"}`}>{h}</th>))}</tr>
           </thead>
           <tbody>
             {data.map((row, i) => (
               <tr key={i} className="res-table-row">
                 <td className="px-4 py-3 align-top" style={{ width: "160px" }}>
                   <div className="res-cand-name-lg">{row.name}</div>
-                  <div className="res-bar-track mt-2" style={{ width: "80px", height: "2px" }}>
-                    <div className="res-bar-fill" style={{ width: `${row.reporting}%`, background: "var(--purple)", height: "2px" }} />
-                  </div>
+                  <div className="res-bar-track mt-2" style={{ width: "80px", height: "2px" }}><div className="res-bar-fill" style={{ width: `${row.reporting}%`, background: "var(--purple)", height: "2px" }} /></div>
                   <div className="res-note mt-1">{row.reporting.toFixed(1)}% RPT</div>
                 </td>
                 <td className="px-4 py-3 align-top">
                   <div className="grid grid-cols-1 gap-1 md:grid-cols-2">
                     {row.candidates.length > 0 ? row.candidates.slice(0, 4).map((cand, idx) => (
                       <div key={idx} className="flex items-center justify-between gap-2 py-1 border-b" style={{ borderColor: "rgba(255,255,255,0.04)" }}>
-                        <div className="flex items-center gap-2 min-w-0">
-                          <span className="h-1.5 w-1.5 rounded-full flex-shrink-0" style={{ background: cand.color || "rgba(255,255,255,0.35)" }} />
-                          <span className="res-note truncate">{cand.name}</span>
-                        </div>
+                        <div className="flex items-center gap-2 min-w-0"><span className="h-1.5 w-1.5 rounded-full flex-shrink-0" style={{ background: cand.color || "rgba(255,255,255,0.35)" }} /><span className="res-note truncate">{cand.name}</span></div>
                         <span className="res-cand-name shrink-0">{cand.pct !== null ? `${cand.pct.toFixed(1)}%` : "—"}</span>
                       </div>
                     )) : <span className="res-note italic">Awaiting…</span>}
                   </div>
                 </td>
                 <td className="px-4 py-3 align-top text-right">
-                  {row.margin !== null ? (
-                    <>
-                      <div className="res-pct-xl">{row.margin >= 0 ? "+" : ""}{row.margin.toFixed(1)}%</div>
-                      <div className="res-note">SPREAD</div>
-                    </>
-                  ) : <span className="res-note">—</span>}
+                  {row.margin !== null ? (<><div className="res-pct-xl">{row.margin >= 0 ? "+" : ""}{row.margin.toFixed(1)}%</div><div className="res-note">SPREAD</div></>) : <span className="res-note">—</span>}
                 </td>
               </tr>
             ))}
@@ -525,67 +508,105 @@ function Legend() {
   return (
     <div className="flex flex-wrap items-center gap-2">
       <span className="res-note mr-1">SHADE</span>
-      {stops.map(([label]) => (
-        <span key={label} className="res-badge">{label}</span>
-      ))}
+      {stops.map(([label]) => (<span key={label} className="res-badge">{label}</span>))}
     </div>
   );
 }
 
-// ═══════════════════════════════════════════════════════════════════════════════
-// ─── FORECAST PANEL ───────────────────────────────────────────────────────────
-// Auto-runs on mount and re-runs automatically every 30s alongside results.
-// Manual "RERUN" button still available in options panel.
-// ═══════════════════════════════════════════════════════════════════════════════
-
-interface ForecastCivicCandidate {
-  name: string; party: string; color: string; votes: number; percent: number; winner: boolean;
+// ─── SWING-O-METER ────────────────────────────────────────────────────────────
+function SwingOMeter({ candidates, colors, probabilities, raceRule, reportingPct }: {
+  candidates: [string, string, string, string]; colors: [string, string, string, string];
+  probabilities: { c1: number; c2: number; c3: number }; raceRule: "PLURALITY" | "MAJORITY"; reportingPct: number;
+}) {
+  const needleRef = useRef<SVGGElement>(null);
+  const c1Prob = probabilities.c1, c2Prob = probabilities.c2;
+  const total12 = c1Prob + c2Prob;
+  const c1Share = total12 > 0 ? c1Prob / total12 : 0.5;
+  const svgNeedleRot = (1 - c1Share) * 180 - 90;
+  useEffect(() => { const el = needleRef.current; if (!el) return; el.style.transition = "transform 1.2s cubic-bezier(0.34,1.56,0.64,1)"; el.style.transform = `rotate(${svgNeedleRot}deg)`; }, [svgNeedleRot]);
+  const W = 280, H = 160, CX = W / 2, CY = H - 20;
+  const R_OUTER = 110, R_INNER = 68, R_NEEDLE = 100;
+  const zones = [
+    { startDeg: 0, endDeg: 30, side: "c1", alpha: 1.0 }, { startDeg: 30, endDeg: 60, side: "c1", alpha: 0.72 },
+    { startDeg: 60, endDeg: 80, side: "c1", alpha: 0.48 }, { startDeg: 80, endDeg: 90, side: "c1", alpha: 0.28 },
+    { startDeg: 90, endDeg: 100, side: "c2", alpha: 0.28 }, { startDeg: 100, endDeg: 120, side: "c2", alpha: 0.48 },
+    { startDeg: 120, endDeg: 150, side: "c2", alpha: 0.72 }, { startDeg: 150, endDeg: 180, side: "c2", alpha: 1.0 },
+  ];
+  function polarToXY(angleDeg: number, r: number) { const rad = (angleDeg - 180) * (Math.PI / 180); return { x: CX + r * Math.cos(rad), y: CY + r * Math.sin(rad) }; }
+  function describeArc(startDeg: number, endDeg: number, rOuter: number, rInner: number) {
+    const s = polarToXY(startDeg, rOuter), e = polarToXY(endDeg, rOuter), si = polarToXY(endDeg, rInner), ei = polarToXY(startDeg, rInner);
+    const large = endDeg - startDeg > 180 ? 1 : 0;
+    return `M ${s.x} ${s.y} A ${rOuter} ${rOuter} 0 ${large} 1 ${e.x} ${e.y} L ${si.x} ${si.y} A ${rInner} ${rInner} 0 ${large} 0 ${ei.x} ${ei.y} Z`;
+  }
+  const ticks = [0, 30, 60, 90, 120, 150, 180];
+  const tickLabels: Record<number, string> = { 0: "100", 30: "80", 60: "60", 90: "50", 120: "60", 150: "80", 180: "100" };
+  return (
+    <div style={{ position: "relative", userSelect: "none" }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: 6, padding: "0 4px" }}>
+        <div style={{ textAlign: "left", maxWidth: "42%" }}>
+          <div style={{ fontFamily: "var(--font-body)", fontSize: "7px", fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: colors[0] + "cc", marginBottom: 2 }}>C1</div>
+          <div style={{ fontFamily: "var(--font-body)", fontSize: "11px", fontWeight: 900, textTransform: "uppercase", letterSpacing: "0.04em", color: colors[0], lineHeight: 1.1, wordBreak: "break-word" }}>{candidates[0]}</div>
+        </div>
+        <div style={{ textAlign: "right", maxWidth: "42%" }}>
+          <div style={{ fontFamily: "var(--font-body)", fontSize: "7px", fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: colors[1] + "cc", marginBottom: 2 }}>C2</div>
+          <div style={{ fontFamily: "var(--font-body)", fontSize: "11px", fontWeight: 900, textTransform: "uppercase", letterSpacing: "0.04em", color: colors[1], lineHeight: 1.1, wordBreak: "break-word" }}>{candidates[1]}</div>
+        </div>
+      </div>
+      <svg viewBox={`0 0 ${W} ${H}`} style={{ width: "100%", height: "auto", overflow: "visible" }}>
+        <path d={describeArc(0, 180, R_OUTER, R_INNER)} fill="rgba(255,255,255,0.04)" />
+        {zones.map((z, i) => <path key={i} d={describeArc(z.startDeg, z.endDeg, R_OUTER, R_INNER)} fill={z.side === "c1" ? colors[0] : colors[1]} opacity={z.alpha * 0.85} />)}
+        <line x1={CX} y1={CY - R_OUTER + 4} x2={CX} y2={CY - R_INNER - 4} stroke="rgba(255,255,255,0.35)" strokeWidth="1.5" />
+        {ticks.map((deg) => { const outer = polarToXY(deg, R_OUTER + 7), inner = polarToXY(deg, R_OUTER + 2), label = polarToXY(deg, R_OUTER + 16); return (<g key={deg}><line x1={inner.x} y1={inner.y} x2={outer.x} y2={outer.y} stroke="rgba(255,255,255,0.25)" strokeWidth="1" /><text x={label.x} y={label.y + 3} textAnchor="middle" fontSize="6" fill="rgba(255,255,255,0.25)" fontFamily="monospace">{tickLabels[deg]}</text></g>); })}
+        <circle cx={CX} cy={CY} r="14" fill="rgba(0,0,0,0.6)" /><circle cx={CX} cy={CY} r="14" fill="none" stroke="rgba(255,255,255,0.10)" strokeWidth="1" />
+        <g ref={needleRef} style={{ transformOrigin: `${CX}px ${CY}px`, transform: `rotate(${svgNeedleRot}deg)` }}>
+          <line x1={CX} y1={CY + 6} x2={CX} y2={CY - R_NEEDLE} stroke="rgba(0,0,0,0.4)" strokeWidth="4" strokeLinecap="round" />
+          <line x1={CX} y1={CY + 6} x2={CX} y2={CY - R_NEEDLE} stroke="#fff" strokeWidth="2" strokeLinecap="round" />
+          <line x1={CX} y1={CY + 6} x2={CX} y2={CY + 12} stroke="rgba(255,255,255,0.3)" strokeWidth="2" strokeLinecap="round" />
+        </g>
+        <circle cx={CX} cy={CY} r="5" fill="#fff" /><circle cx={CX} cy={CY} r="3" fill="rgba(0,0,0,0.7)" />
+        <text x={CX} y={CY - 22} textAnchor="middle" fontSize="18" fontWeight="900" fill="white" fontFamily="monospace" letterSpacing="-0.5">{(c1Share * 100).toFixed(0)}%</text>
+        <text x={CX} y={CY - 10} textAnchor="middle" fontSize="7" fill="rgba(255,255,255,0.45)" fontFamily="monospace" letterSpacing="1">{c1Share >= 0.5 ? candidates[0].split(" ")[0].toUpperCase() : candidates[1].split(" ")[0].toUpperCase()}</text>
+      </svg>
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1px 1fr", gap: 0, marginTop: 2 }}>
+        <div style={{ textAlign: "center", padding: "8px 4px" }}><div style={{ fontFamily: "var(--font-body)", fontSize: "16px", fontWeight: 900, color: colors[0], lineHeight: 1 }}>{(c1Prob * 100).toFixed(1)}%</div><div style={{ fontFamily: "var(--font-body)", fontSize: "7px", fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(255,255,255,0.3)", marginTop: 3 }}>WIN PROB</div></div>
+        <div style={{ background: "rgba(255,255,255,0.08)", width: 1 }} />
+        <div style={{ textAlign: "center", padding: "8px 4px" }}><div style={{ fontFamily: "var(--font-body)", fontSize: "16px", fontWeight: 900, color: colors[1], lineHeight: 1 }}>{(c2Prob * 100).toFixed(1)}%</div><div style={{ fontFamily: "var(--font-body)", fontSize: "7px", fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(255,255,255,0.3)", marginTop: 3 }}>WIN PROB</div></div>
+      </div>
+      {probabilities.c3 > 0.01 && (
+        <div style={{ marginTop: 6, padding: "6px 10px", borderTop: "1px solid var(--border)", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 6 }}><span style={{ width: 6, height: 6, borderRadius: "50%", background: colors[2], display: "inline-block" }} /><span style={{ fontFamily: "var(--font-body)", fontSize: "9px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", color: "rgba(255,255,255,0.55)" }}>{candidates[2]}</span></div>
+          <span style={{ fontFamily: "var(--font-body)", fontSize: "10px", fontWeight: 700, color: colors[2] }}>{(probabilities.c3 * 100).toFixed(1)}%</span>
+        </div>
+      )}
+      <div style={{ marginTop: 8, padding: "6px 0 0" }}>
+        <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 4 }}>
+          <span style={{ fontFamily: "var(--font-body)", fontSize: "7px", fontWeight: 700, letterSpacing: "0.20em", textTransform: "uppercase", color: "rgba(255,255,255,0.25)" }}>REPORTING</span>
+          <span style={{ fontFamily: "var(--font-body)", fontSize: "7px", fontWeight: 700, color: "rgba(255,255,255,0.45)" }}>{reportingPct.toFixed(1)}%</span>
+        </div>
+        <div style={{ height: 2, background: "rgba(255,255,255,0.07)", overflow: "hidden" }}><div style={{ height: "100%", width: `${reportingPct}%`, background: "rgba(255,255,255,0.30)", transition: "width 800ms ease" }} /></div>
+      </div>
+    </div>
+  );
 }
+
+// ─── FORECAST PANEL TYPES ────────────────────────────────────────────────────
+interface ForecastCivicCandidate { name: string; party: string; color: string; votes: number; percent: number; winner: boolean; }
 interface ForecastHistoryTimestamp { timestamp: string; }
 interface ForecastHistoryList { id: number; count: number; timestamps: ForecastHistoryTimestamp[]; }
-interface ForecastResponse {
-  forecast: ForecastOutput;
-  race: { election_name: string; election_date: string; percent_reporting: number; candidates: ForecastCivicCandidate[]; };
-}
-
+interface ForecastResponse { forecast: ForecastOutput; race: { election_name: string; election_date: string; percent_reporting: number; candidates: ForecastCivicCandidate[]; }; }
 const FORECAST_CANDIDATE_KEYS = ["Candidate1", "Candidate2", "Candidate3", "Others"] as const;
 type FCKey = (typeof FORECAST_CANDIDATE_KEYS)[number];
-
 function fcastPct(n: number, decimals = 1) { return (n * 100).toFixed(decimals) + "%"; }
 function fcastFmt(n: number) { return n.toLocaleString("en-US", { maximumFractionDigits: 0 }); }
-function fcastShortDate(ts: string) {
-  const d = new Date(ts);
-  return d.toLocaleString("en-US", { month: "short", day: "numeric", hour: "2-digit", minute: "2-digit" });
-}
+function fcastShortDate(ts: string) { return new Date(ts).toLocaleString("en-US", { month: "short", day: "numeric", hour: "2-digit", minute: "2-digit" }); }
+function getTimestamps(hl: ForecastHistoryList | null): ForecastHistoryTimestamp[] { return hl?.timestamps ?? []; }
 
-function FcastProbBar({ label, value, color }: { label: string; value: number; color: string; }) {
-  return (
-    <div style={{ marginBottom: 8 }}>
-      <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 3 }}>
-        <span style={{ fontSize: 10, fontWeight: 600, color: "rgba(240,240,245,0.75)", fontFamily: "var(--font-body)", letterSpacing: "0.06em", textTransform: "uppercase" }}>{label}</span>
-        <span style={{ fontSize: 10, fontWeight: 700, color, fontFamily: "var(--font-body)" }}>{fcastPct(value)}</span>
-      </div>
-      <div style={{ height: 3, background: "rgba(255,255,255,0.07)", borderRadius: 99, overflow: "hidden" }}>
-        <div style={{ height: "100%", width: fcastPct(Math.min(value, 1)), background: color, borderRadius: 99, transition: "width 0.6s cubic-bezier(.4,0,.2,1)" }} />
-      </div>
-    </div>
-  );
-}
-
-// The ForecastPanel now accepts a `refreshTick` prop — an incrementing number
-// that the parent bumps every 30s alongside the results refresh. This triggers
-// an automatic re-run of the live forecast without any user interaction.
-function ForecastPanel({ raceId, refreshTick }: { raceId: number; refreshTick: number }) {
+// ─── FORECAST PANEL ───────────────────────────────────────────────────────────
+function ForecastPanel({ raceId, refreshTick, raceData }: { raceId: number; refreshTick: number; raceData?: RaceDetail }) {
   const defaults = RACE_FORECAST_DEFAULTS[raceId];
-
-  const [raceRule, setRaceRule] = useState<RaceRule>(() => {
-  // Force MAJORITY for all Texas races (check raceId or add logic for state)
-  const isTexas = raceId && [44285, 44286, 44287, 44288, 44289, 44290, 44291, 44292, 44293, 44294, 44295 /* add any other TX IDs */].includes(raceId);
-  return isTexas ? "MAJORITY" : (defaults?.raceRule ?? "PLURALITY");
-});
-  const [expectedTurnoutOverride, setExpectedTurnoutOverride] = useState(
-    defaults?.expectedTurnout ? String(defaults.expectedTurnout) : ""
-  );
+  const TX_RACE_IDS = [44285, 44286, 44287, 44288, 44289, 44290, 44291, 44292, 44293, 44294, 44295];
+  const [raceRule, setRaceRule] = useState<RaceRule>(() => TX_RACE_IDS.includes(raceId) ? "MAJORITY" : (defaults?.raceRule ?? "PLURALITY"));
+  const [expectedTurnoutOverride, setExpectedTurnoutOverride] = useState(defaults?.expectedTurnout ? String(defaults.expectedTurnout) : "");
   const [historyList, setHistoryList] = useState<ForecastHistoryList | null>(null);
   const [historyIndex, setHistoryIndex] = useState(0);
   const [loadingHistory, setLoadingHistory] = useState(false);
@@ -595,441 +616,478 @@ function ForecastPanel({ raceId, refreshTick }: { raceId: number; refreshTick: n
   const [playing, setPlaying] = useState(false);
   const [showOptions, setShowOptions] = useState(false);
   const playRef = useRef<ReturnType<typeof setInterval> | null>(null);
-  const prevRaceIdRef = useRef<number | null>(null);
-
-  // Track the raceRule/turnout in refs so the auto-refresh effect always uses current values
-  const raceRuleRef = useRef(raceRule);
-  const turnoutRef = useRef(expectedTurnoutOverride);
+  const raceDataRef = useRef<RaceDetail | undefined>(raceData);
+  useEffect(() => { raceDataRef.current = raceData; }, [raceData]);
+  const raceIdRef = useRef(raceId); const raceRuleRef = useRef(raceRule); const turnoutRef = useRef(expectedTurnoutOverride);
+  const playingRef = useRef(playing); const historyListRef = useRef<ForecastHistoryList | null>(null); const historyIndexRef = useRef(historyIndex);
+  useEffect(() => { raceIdRef.current = raceId; }, [raceId]);
   useEffect(() => { raceRuleRef.current = raceRule; }, [raceRule]);
   useEffect(() => { turnoutRef.current = expectedTurnoutOverride; }, [expectedTurnoutOverride]);
+  useEffect(() => { playingRef.current = playing; }, [playing]);
+  useEffect(() => { historyListRef.current = historyList; }, [historyList]);
+  useEffect(() => { historyIndexRef.current = historyIndex; }, [historyIndex]);
+  const timestamps = useMemo(() => getTimestamps(historyList).map((t) => t.timestamp), [historyList]);
 
-  const timestamps = useMemo(() => historyList?.timestamps?.map((t) => t.timestamp) ?? [], [historyList]);
+  const runForecastLive = useCallback(async (id: number, rule?: RaceRule, turnout?: string) => {
+    setLoadingForecast(true); setError(null);
+    try {
+      const res = await fetch("/api/forecast", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ...(raceDataRef.current ? { type: "civic_raw", raceData: raceDataRef.current } : { type: "civic", raceId: String(id) }), race_rule: rule ?? raceRuleRef.current, expected_turnout: (turnout ?? turnoutRef.current) ? Number(turnout ?? turnoutRef.current) : undefined, poll_avg: RACE_FORECAST_DEFAULTS[id]?.pollAvg }) });
+      const data = await res.json();
+      if (raceIdRef.current !== id) return;
+      if (data.error) throw new Error(data.details ?? data.error);
+      setForecast(data);
+    } catch (e: any) { if (raceIdRef.current === id) setError(e.message); }
+    finally { if (raceIdRef.current === id) setLoadingForecast(false); }
+  }, []);
 
-  // Auto-re-run forecast when raceRule or expectedTurnoutOverride changes
+  const runForecastAtIndex = useCallback(async (id: number, tsList: ForecastHistoryTimestamp[], idx: number, rule?: RaceRule, turnout?: string) => {
+    if (!tsList.length) return runForecastLive(id, rule, turnout);
+    setLoadingForecast(true); setError(null);
+    try {
+      const timestamp = tsList[idx].timestamp; const priorTimestamp = idx > 0 ? tsList[0].timestamp : undefined;
+      const res = await fetch("/api/forecast", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ type: "civic_history", raceId: String(id), timestamp, priorTimestamp, race_rule: rule ?? raceRuleRef.current, expected_turnout: (turnout ?? turnoutRef.current) ? Number(turnout ?? turnoutRef.current) : undefined, poll_avg: RACE_FORECAST_DEFAULTS[id]?.pollAvg }) });
+      const data = await res.json();
+      if (raceIdRef.current !== id) return;
+      if (data.error) throw new Error(data.details ?? data.error);
+      setForecast(data);
+    } catch (e: any) { if (raceIdRef.current === id) setError(e.message); }
+    finally { if (raceIdRef.current === id) setLoadingForecast(false); }
+  }, [runForecastLive]);
+
   useEffect(() => {
-    if (!raceId) return;
-
-    const timer = setTimeout(() => {
-      if (timestamps.length > 0 && historyList) {
-        runForecastAtIndex(raceId, historyList.timestamps, historyIndex, raceRule, expectedTurnoutOverride);
-      } else {
-        runForecastLive(raceId, raceRule, expectedTurnoutOverride);
-      }
-    }, 400);
-
-    return () => clearTimeout(timer);
-  }, [raceRule, expectedTurnoutOverride, raceId, timestamps, historyList, historyIndex]);
-
-
-  async function runForecastAtIndex(id: number, tsList: ForecastHistoryTimestamp[], idx: number, rule?: RaceRule, turnout?: string) {
-  setLoadingForecast(true);
-  setError(null);
-  try {
-    const timestamp = tsList[idx].timestamp;
-    const priorTimestamp = idx > 0 ? tsList[0].timestamp : undefined;
-    const res = await fetch("/api/forecast", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        type: "civic_history",
-        raceId: String(id),
-        timestamp,
-        priorTimestamp,
-        race_rule: rule ?? raceRuleRef.current,
-        expected_turnout: (turnout ?? turnoutRef.current) ? Number(turnout ?? turnoutRef.current) : undefined,
-        poll_avg: RACE_FORECAST_DEFAULTS[id]?.pollAvg,  // ← add this
-      }),
-    });
-    const data = await res.json();
-    if (data.error) throw new Error(data.details ?? data.error);
-    setForecast(data);
-  } catch (e: any) { setError(e.message); }
-  finally { setLoadingForecast(false); }
-  }
-
-  async function runForecastLive(id: number, rule?: RaceRule, turnout?: string) {
-  setLoadingForecast(true);
-  setError(null);
-  try {
-    const res = await fetch("/api/forecast", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        type: "civic",
-        raceId: String(id),
-        race_rule: rule ?? raceRuleRef.current,
-        expected_turnout: (turnout ?? turnoutRef.current) ? Number(turnout ?? turnoutRef.current) : undefined,
-        poll_avg: RACE_FORECAST_DEFAULTS[id]?.pollAvg,  // ← add this
-      }),
-    });
-    const data = await res.json();
-    if (data.error) throw new Error(data.details ?? data.error);
-    setForecast(data);
-  } catch (e: any) { setError(e.message); }
-  finally { setLoadingForecast(false); }
-  }
-
-  // ── Initial load + race switch ───────────────────────────────────────────
-  useEffect(() => {
-    if (prevRaceIdRef.current === raceId) return;
-    prevRaceIdRef.current = raceId;
-
-    // Reset to race-specific defaults whenever race changes
     const d = RACE_FORECAST_DEFAULTS[raceId];
-    const newRule = d?.raceRule ?? "PLURALITY";
+    const newRule: RaceRule = TX_RACE_IDS.includes(raceId) ? "MAJORITY" : (d?.raceRule ?? "PLURALITY");
     const newTurnout = d?.expectedTurnout ? String(d.expectedTurnout) : "";
-    setRaceRule(newRule);
-    setExpectedTurnoutOverride(newTurnout);
-    raceRuleRef.current = newRule;
-    turnoutRef.current = newTurnout;
-
-    setForecast(null);
-    setHistoryList(null);
-    setHistoryIndex(0);
-    setPlaying(false);
-    setError(null);
-    setLoadingHistory(true);
-
+    setRaceRule(newRule); setExpectedTurnoutOverride(newTurnout);
+    raceRuleRef.current = newRule; turnoutRef.current = newTurnout;
+    setForecast(null); setHistoryList(null); historyListRef.current = null;
+    setHistoryIndex(0); historyIndexRef.current = 0;
+    setPlaying(false); setError(null); setLoadingHistory(true);
+    let cancelled = false;
     (async () => {
       try {
         const res = await fetch(`/api/forecast?action=timestamps&raceId=${raceId}`);
         const data: ForecastHistoryList = await res.json();
-        setHistoryList(data);
-        if (data.timestamps?.length > 0) {
-          const last = data.timestamps.length - 1;
-          setHistoryIndex(last);
-          await runForecastAtIndex(raceId, data.timestamps, last, newRule, newTurnout);
-        } else {
-          await runForecastLive(raceId, newRule, newTurnout);
-        }
-      } catch (e: any) { setError(e.message); }
-      finally { setLoadingHistory(false); }
+        if (cancelled) return;
+        setHistoryList(data); historyListRef.current = data;
+        const tsList = getTimestamps(data);
+        if (tsList.length > 0) { const last = tsList.length - 1; setHistoryIndex(last); historyIndexRef.current = last; await runForecastAtIndex(raceId, tsList, last, newRule, newTurnout); }
+        else { await runForecastLive(raceId, newRule, newTurnout); }
+      } catch (e: any) { if (!cancelled) setError(e.message); }
+      finally { if (!cancelled) setLoadingHistory(false); }
     })();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [raceId]);
+    return () => { cancelled = true; };
+  }, [raceId]); // eslint-disable-line
 
-  // ── Auto-refresh every 30s in sync with results poll ────────────────────
-  // refreshTick is bumped by the parent each time results are refreshed.
-  // We skip tick=0 (handled by the initial load above).
   const prevTickRef = useRef(0);
   useEffect(() => {
-    if (refreshTick === 0) return;
-    if (refreshTick === prevTickRef.current) return;
+    if (refreshTick === 0 || refreshTick === prevTickRef.current) return;
     prevTickRef.current = refreshTick;
+    if (playingRef.current) return;
+    runForecastLive(raceIdRef.current);
+  }, [refreshTick]); // eslint-disable-line
 
-    // Don't auto-refresh if user is in historical playback mode
-    if (playing) return;
+  const isFirstOptionsRender = useRef(true);
+  useEffect(() => {
+    if (isFirstOptionsRender.current) { isFirstOptionsRender.current = false; return; }
+    const timer = setTimeout(() => { const id = raceIdRef.current; const hl = historyListRef.current; const tsList = getTimestamps(hl); if (tsList.length > 0) runForecastAtIndex(id, tsList, historyIndexRef.current); else runForecastLive(id); }, 400);
+    return () => clearTimeout(timer);
+  }, [raceRule, expectedTurnoutOverride]); // eslint-disable-line
+  useEffect(() => { isFirstOptionsRender.current = true; }, [raceId]);
 
-    // Re-run the live forecast (not historical) to pick up latest vote data
-    runForecastLive(raceId);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [refreshTick]);
-
-  // ── Autoplay ─────────────────────────────────────────────────────────────
   useEffect(() => {
     if (playing && timestamps.length > 1) {
-      playRef.current = setInterval(() => {
-        setHistoryIndex((prev) => {
-          const next = prev + 1;
-          if (next >= timestamps.length) { setPlaying(false); return prev; }
-          if (historyList) runForecastAtIndex(raceId, historyList.timestamps, next);
-          return next;
-        });
-      }, 1800);
-    } else {
-      if (playRef.current) clearInterval(playRef.current);
-    }
+      playRef.current = setInterval(() => { setHistoryIndex((prev) => { const next = prev + 1; if (next >= timestamps.length) { setPlaying(false); return prev; } historyIndexRef.current = next; const hl = historyListRef.current; if (hl) runForecastAtIndex(raceIdRef.current, hl.timestamps, next); return next; }); }, 1800);
+    } else { if (playRef.current) clearInterval(playRef.current); }
     return () => { if (playRef.current) clearInterval(playRef.current); };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [playing, timestamps.length, historyList, raceId]);
+  }, [playing, timestamps.length]); // eslint-disable-line
 
-  const candidateLabels: Record<FCKey, string> = useMemo(() => {
-    const names = forecast?.forecast.candidate_names ?? ["Candidate 1", "Candidate 2", "Candidate 3", "Others"];
-    return { Candidate1: names[0], Candidate2: names[1], Candidate3: names[2], Others: names[3] };
-  }, [forecast]);
-
-  const candidateColors: Record<FCKey, string> = useMemo(() => {
-    const colors = forecast?.forecast.candidate_colors ?? ["#3b82f6", "#ef4444", "#22c55e", "#94a3b8"];
-    return { Candidate1: colors[0], Candidate2: colors[1], Candidate3: colors[2], Others: colors[3] };
-  }, [forecast]);
-
+  const candidateLabels: Record<FCKey, string> = useMemo(() => { const names = forecast?.forecast.candidate_names ?? ["Candidate 1", "Candidate 2", "Candidate 3", "Others"]; return { Candidate1: names[0], Candidate2: names[1], Candidate3: names[2], Others: names[3] }; }, [forecast]);
+  const candidateColors: Record<FCKey, string> = useMemo(() => { const colors = forecast?.forecast.candidate_colors ?? ["#3b82f6", "#ef4444", "#22c55e", "#94a3b8"]; return { Candidate1: colors[0], Candidate2: colors[1], Candidate3: colors[2], Others: colors[3] }; }, [forecast]);
   const isLoading = loadingHistory || loadingForecast;
+  const swingoProbs = useMemo(() => { if (!forecast) return { c1: 0.5, c2: 0.5, c3: 0 }; const f = forecast.forecast; const src = raceRule === "PLURALITY" ? f.plurality_odds_to_win : f.majority_win_prob; return { c1: src.Candidate1, c2: src.Candidate2, c3: src.Candidate3 }; }, [forecast, raceRule]);
 
   return (
     <div className="res-panel" style={{ padding: 0 }}>
-      {/* Header */}
       <div className="res-tri-stripe" />
       <div className="res-panel-header" style={{ flexWrap: "wrap", gap: 8 }}>
         <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
           <span className="res-panel-tag">FORECAST MODEL</span>
-          {isLoading && (
-            <span className="res-badge res-badge-purple" style={{ fontSize: "7px" }}>
-              <span className="res-live-dot" style={{ background: "var(--purple)", width: 4, height: 4 }} />
-              UPDATING
-            </span>
-          )}
-          {!isLoading && forecast && (
-            <span className="res-badge" style={{ fontSize: "7px", color: "rgba(255,255,255,0.25)" }}>AUTO / 5s</span>
-          )}
+          {isLoading && <span className="res-badge res-badge-purple" style={{ fontSize: "7px" }}><span className="res-live-dot" style={{ background: "var(--purple)", width: 4, height: 4 }} />UPDATING</span>}
+          {!isLoading && forecast && <span className="res-badge" style={{ fontSize: "7px", color: "rgba(255,255,255,0.25)" }}>AUTO / 30s</span>}
         </div>
-        <button
-          className="res-btn-ghost"
-          style={{ padding: "4px 10px", fontSize: "8px" }}
-          onClick={() => setShowOptions((v) => !v)}
-        >
-          {showOptions ? "HIDE OPTIONS" : "OPTIONS ⚙"}
-        </button>
+        <button className="res-btn-ghost" style={{ padding: "3px 8px", fontSize: "7px" }} onClick={() => setShowOptions((v) => !v)}>{showOptions ? "HIDE OPTIONS" : "OPTIONS"}</button>
       </div>
-
-      {/* Collapsible options */}
       {showOptions && (
-        <div style={{ padding: "10px 12px", borderBottom: "1px solid var(--border)", background: "var(--background2)", display: "flex", flexDirection: "column", gap: 8 }}>
-          <div>
-            <div className="res-note" style={{ marginBottom: 4 }}>RACE RULE</div>
-            <select
-              value={raceRule}
-              onChange={(e) => setRaceRule(e.target.value as RaceRule)}
-              className="res-select"
-              style={{ width: "100%" }}
-            >
-              <option value="PLURALITY">Plurality</option>
-              <option value="MAJORITY">Majority / Runoff</option>
-            </select>
-          </div>
-          <div>
-            <div className="res-note" style={{ marginBottom: 4 }}>EXPECTED TURNOUT (OPTIONAL)</div>
-            <input
-              type="number"
-              placeholder="e.g. 5000000"
-              value={expectedTurnoutOverride}
-              onChange={(e) => setExpectedTurnoutOverride(e.target.value)}
-              className="res-input"
-            />
-          </div>
-          <button
-            className="res-btn-primary"
-            style={{ width: "100%", justifyContent: "center" }}
-            disabled={isLoading}
-            onClick={() => {
-              if (timestamps.length > 0 && historyList) {
-                runForecastAtIndex(raceId, historyList.timestamps, historyIndex);
-              } else {
-                runForecastLive(raceId);
-              }
-            }}
-          >
-            {isLoading ? "RUNNING…" : "RERUN FORECAST"}
-          </button>
+        <div style={{ padding: "12px 14px", borderBottom: "1px solid var(--border)", background: "var(--background2)", display: "flex", flexDirection: "column", gap: 10 }}>
+          <div><div className="res-note" style={{ marginBottom: 5 }}>RACE RULE</div><select value={raceRule} onChange={(e) => setRaceRule(e.target.value as RaceRule)} className="res-select" style={{ width: "100%" }}><option value="PLURALITY">Plurality</option><option value="MAJORITY">Majority / Runoff</option></select></div>
+          <div><div className="res-note" style={{ marginBottom: 5 }}>EXPECTED TURNOUT (OPTIONAL)</div><input type="number" placeholder="e.g. 5000000" value={expectedTurnoutOverride} onChange={(e) => setExpectedTurnoutOverride(e.target.value)} className="res-input" /></div>
+          <button className="res-btn-primary" style={{ width: "100%", justifyContent: "center" }} disabled={isLoading} onClick={() => { const id = raceIdRef.current; const hl = historyListRef.current; const tsList = getTimestamps(hl); if (tsList.length > 0) runForecastAtIndex(id, tsList, historyIndexRef.current); else runForecastLive(id); }}>{isLoading ? "RUNNING…" : "RERUN FORECAST"}</button>
         </div>
       )}
-
-      <div style={{ padding: "12px" }}>
-        {error && (
-          <div style={{ border: "1px solid rgba(230,57,70,0.25)", background: "rgba(230,57,70,0.06)", color: "rgba(255,77,90,0.90)", padding: "8px 10px", fontFamily: "var(--font-body)", fontSize: "9.5px", letterSpacing: "0.10em", marginBottom: 10 }}>
-            ⚠ {error}
-          </div>
-        )}
-
+      <div className="res-forecast-body" style={{ padding: "14px 16px" }}>
+        {error && <div style={{ border: "1px solid rgba(230,57,70,0.25)", background: "rgba(230,57,70,0.06)", color: "rgba(255,77,90,0.90)", padding: "8px 10px", fontFamily: "var(--font-body)", fontSize: "9.5px", letterSpacing: "0.10em", marginBottom: 12 }}>⚠ {error}</div>}
         {isLoading && !forecast && (
-          <div style={{ padding: "32px 0", textAlign: "center" }}>
+          <div style={{ padding: "36px 0", textAlign: "center" }}>
             <div className="res-note" style={{ color: "var(--purple-soft)", marginBottom: 10 }}>RUNNING FORECAST MODEL…</div>
-            <div className="res-bar-track" style={{ width: "80%", margin: "0 auto" }}>
-              <div className="res-bar-fill" style={{ width: "60%", background: "linear-gradient(90deg,var(--purple),var(--blue2))", animation: "res-loading-pulse 1.4s ease-in-out infinite" }} />
-            </div>
+            <div className="res-bar-track" style={{ width: "80%", margin: "0 auto" }}><div className="res-bar-fill" style={{ width: "60%", background: "linear-gradient(90deg,var(--purple),var(--blue2))", animation: "res-loading-pulse 1.4s ease-in-out infinite" }} /></div>
           </div>
         )}
-
         {forecast && (
           <>
-            {/* Mode trigger badge */}
-            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 10 }}>
-              <span className="res-note" style={{ color: "rgba(255,255,255,0.35)" }}>
-                {forecast.race.percent_reporting}% REPORTING
-              </span>
-              <span className={`res-badge ${raceRule === "MAJORITY" ? "res-badge-purple" : "res-badge-red"}`}>
-                {raceRule === "MAJORITY" ? "MAJORITY" : forecast.forecast.mode_trigger}
-              </span>
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 14 }}>
+              <span className="res-note" style={{ color: "rgba(255,255,255,0.3)" }}>{forecast.race.percent_reporting}% REPORTING</span>
+              <span className={`res-badge ${raceRule === "MAJORITY" ? "res-badge-purple" : "res-badge-red"}`}>{raceRule === "MAJORITY" ? "MAJORITY" : forecast.forecast.mode_trigger}</span>
             </div>
-
-            {/* Candidate vote share cards */}
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 6, marginBottom: 10 }}>
-              {(["Candidate1", "Candidate2"] as const).map((key) => {
-                const color = candidateColors[key];
-                const name = candidateLabels[key];
-                const share = forecast.forecast.modeled_share[key];
-                const votes = forecast.forecast.modeled_votes[key];
-                const isLeader = forecast.forecast.leader === key;
+            <div style={{ marginBottom: 16, padding: "14px 12px", background: "rgba(0,0,0,0.25)", border: "1px solid rgba(255,255,255,0.07)" }}>
+              <div style={{ fontFamily: "var(--font-body)", fontSize: "7px", fontWeight: 700, letterSpacing: "0.26em", textTransform: "uppercase", color: "rgba(255,255,255,0.3)", marginBottom: 10 }}>WIN PROBABILITY · {raceRule === "PLURALITY" ? "MOST VOTES" : "MAJORITY ≥50%"}</div>
+              <SwingOMeter candidates={forecast.forecast.candidate_names ?? ["C1", "C2", "C3", "Others"]} colors={forecast.forecast.candidate_colors ?? ["#3b82f6", "#ef4444", "#22c55e", "#94a3b8"]} probabilities={swingoProbs} raceRule={raceRule} reportingPct={forecast.race.percent_reporting} />
+            </div>
+            <div style={{ display: "grid", gridTemplateColumns: forecast.forecast.modeled_share["Candidate3"] > 0.005 ? "1fr 1fr 1fr" : "1fr 1fr", gap: 6, marginBottom: 14 }}>
+              {(["Candidate1", "Candidate2", "Candidate3"] as const).filter(k => k !== "Candidate3" || forecast.forecast.modeled_share["Candidate3"] > 0.005).map((key) => {
+                const color = candidateColors[key], share = forecast.forecast.modeled_share[key], votes = forecast.forecast.modeled_votes[key], isLeader = forecast.forecast.leader === key;
                 return (
-                  <div key={key} className="res-stat-block" style={{ borderColor: isLeader ? color + "55" : "var(--border)", position: "relative" }}>
-                    {isLeader && (
-                      <div style={{ position: "absolute", top: 6, right: 8, fontSize: 7, color, fontWeight: 700, fontFamily: "var(--font-body)", letterSpacing: "0.16em" }}>
-                        LEADER
-                      </div>
-                    )}
-                    <div className="res-stat-block-label" style={{ color: color + "cc" }}>{name}</div>
-                    <div className="res-stat-block-val" style={{ color, fontSize: "clamp(18px, 1.8vw, 24px)" }}>{fcastPct(share)}</div>
-                    <div className="res-note" style={{ marginTop: 2 }}>{fcastFmt(votes)} PROJ</div>
+                  <div key={key} style={{ padding: "10px 10px 8px", background: "rgba(255,255,255,0.025)", border: `1px solid ${isLeader ? color + "44" : "rgba(255,255,255,0.06)"}`, position: "relative" }}>
+                    {isLeader && <div style={{ position: "absolute", top: 5, right: 6, fontSize: 6, color, fontWeight: 700, fontFamily: "var(--font-body)", letterSpacing: "0.16em", textTransform: "uppercase" }}>LEADER</div>}
+                    <div style={{ fontFamily: "var(--font-body)", fontSize: "7px", fontWeight: 700, letterSpacing: "0.20em", textTransform: "uppercase", color: color + "cc", marginBottom: 4, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{candidateLabels[key]}</div>
+                    <div style={{ fontFamily: "var(--font-body)", fontSize: "clamp(17px, 1.8vw, 22px)", fontWeight: 900, color, lineHeight: 1 }}>{fcastPct(share)}</div>
+                    <div style={{ fontFamily: "var(--font-body)", fontSize: "7.5px", letterSpacing: "0.10em", color: "rgba(255,255,255,0.35)", marginTop: 3 }}>{fcastFmt(votes)} PROJ</div>
                   </div>
                 );
               })}
             </div>
-
-            {/* If 3+ candidates */}
-            {forecast.forecast.modeled_share["Candidate3"] > 0.005 && (
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 6, marginBottom: 10 }}>
-                {(["Candidate3", "Others"] as const).map((key) => {
-                  const color = candidateColors[key];
-                  const name = candidateLabels[key];
-                  const share = key === "Others"
-                    ? Math.max(0,
-                        1 -
-                        forecast.forecast.modeled_share["Candidate1"] -
-                        forecast.forecast.modeled_share["Candidate2"] -
-                        forecast.forecast.modeled_share["Candidate3"]
-                      )
-                    : forecast.forecast.modeled_share[key];
-
-                  const votes = key === "Others"
-                    ? Math.max(0,
-                        forecast.forecast.modeled_total_vote -
-                        forecast.forecast.modeled_votes["Candidate1"] -
-                        forecast.forecast.modeled_votes["Candidate2"] -
-                        forecast.forecast.modeled_votes["Candidate3"]
-                      )
-                    : forecast.forecast.modeled_votes[key];
-
-                  
-                  return (
-                    <div key={key} className="res-stat-block">
-                      <div className="res-stat-block-label" style={{ color: color + "cc" }}>{name}</div>
-                      <div className="res-stat-block-val" style={{ color, fontSize: "clamp(14px, 1.4vw, 18px)" }}>{fcastPct(share)}</div>
-                      <div className="res-note" style={{ marginTop: 2 }}>{fcastFmt(votes)} PROJ</div>
-                    </div>
-                  );
-                })}
+            {raceRule === "MAJORITY" && (
+              <div style={{ marginBottom: 14, padding: "10px 12px", background: "rgba(245,158,11,0.05)", border: "1px solid rgba(245,158,11,0.15)" }}>
+                <div style={{ fontFamily: "var(--font-body)", fontSize: "7px", fontWeight: 700, letterSpacing: "0.24em", textTransform: "uppercase", color: "rgba(245,158,11,0.7)", marginBottom: 8 }}>RUNOFF PROBABILITY</div>
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 5 }}><span style={{ fontFamily: "var(--font-body)", fontSize: "7.5px", letterSpacing: "0.12em", textTransform: "uppercase", color: "rgba(255,255,255,0.4)" }}>Runoff needed</span><span style={{ fontFamily: "var(--font-body)", fontSize: "12px", fontWeight: 900, color: "#f59e0b" }}>{fcastPct(forecast.forecast.runoff_needed_prob)}</span></div>
+                <div style={{ height: 3, background: "rgba(255,255,255,0.07)", overflow: "hidden", marginBottom: 8 }}><div style={{ height: "100%", width: fcastPct(Math.min(forecast.forecast.runoff_needed_prob, 1)), background: "#f59e0b", transition: "width 600ms ease" }} /></div>
+                {FORECAST_CANDIDATE_KEYS.map(k => forecast.forecast.runoff_prob[k] > 0.005 ? (
+                  <div key={k} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 3 }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: 5 }}><span style={{ width: 5, height: 5, borderRadius: "50%", background: candidateColors[k], display: "inline-block" }} /><span style={{ fontFamily: "var(--font-body)", fontSize: "8px", letterSpacing: "0.08em", textTransform: "uppercase", color: "rgba(255,255,255,0.45)" }}>{candidateLabels[k]}</span></div>
+                    <span style={{ fontFamily: "var(--font-body)", fontSize: "9px", fontWeight: 700, color: candidateColors[k] }}>{fcastPct(forecast.forecast.runoff_prob[k])}</span>
+                  </div>
+                ) : null)}
               </div>
             )}
-
-            {/* Win probability bars – now conditional on raceRule */}
-            <div className="res-stat-block" style={{ marginBottom: 10 }}>
-              <div className="res-stat-block-label" style={{ marginBottom: 8 }}>
-                {raceRule === "PLURALITY" ? "WIN PROBABILITY (Most Votes)" : "MAJORITY WIN PROBABILITY (≥50%)"}
+            <div style={{ padding: "10px 12px", background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.06)", marginBottom: 14 }}>
+              <div style={{ fontFamily: "var(--font-body)", fontSize: "7px", fontWeight: 700, letterSpacing: "0.26em", textTransform: "uppercase", color: "rgba(255,255,255,0.25)", marginBottom: 8 }}>MODEL STATISTICS</div>
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "4px 16px" }}>
+                {[["TOTAL", fcastFmt(forecast.forecast.modeled_total_vote)], ["REMAINING", fcastFmt(forecast.forecast.modeled_vote_remaining)], ["MARGIN", `${fcastFmt(forecast.forecast.projected_margin_votes)} (${fcastPct(forecast.forecast.projected_margin_pct)})`], ["STD DEV", fcastFmt(forecast.forecast.sd_race)]].map(([label, val]) => (
+                  <div key={label} style={{ paddingBottom: 4, borderBottom: "1px solid rgba(255,255,255,0.04)" }}>
+                    <div style={{ fontFamily: "var(--font-body)", fontSize: "6.5px", fontWeight: 700, letterSpacing: "0.20em", textTransform: "uppercase", color: "rgba(255,255,255,0.25)", marginBottom: 2 }}>{label}</div>
+                    <div style={{ fontFamily: "var(--font-body)", fontSize: "10px", fontWeight: 700, color: "rgba(255,255,255,0.70)" }}>{val}</div>
+                  </div>
+                ))}
               </div>
-
-              {FORECAST_CANDIDATE_KEYS.slice(0, 3).map((k) => {  // exclude Others
-                // Pick the correct field based on current dropdown selection
-                const probValue = raceRule === "PLURALITY"
-                  ? forecast.forecast.plurality_odds_to_win[k]
-                  : forecast.forecast.majority_win_prob[k];
-
-                return (
-                  probValue > 0.005 && (
-                    <FcastProbBar
-                      key={`${k}-${raceRule}`}  // force re-render on rule change
-                      label={candidateLabels[k]}
-                      value={probValue}
-                      color={candidateColors[k]}
-                    />
-                  )
-                );
-              })}
-
-              {/* Runoff Needed – only in majority */}
-              {raceRule === "MAJORITY" && (
-                <div style={{ marginTop: 8, paddingTop: 8, borderTop: "1px solid var(--border)" }}>
-                  <FcastProbBar
-                    label="Runoff Needed"
-                    value={forecast.forecast.runoff_needed_prob}
-                    color="#f59e0b"
-                  />
+            </div>
+            {timestamps.length > 1 && (
+              <div style={{ padding: "10px 12px", background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.06)" }}>
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 10 }}>
+                  <div style={{ fontFamily: "var(--font-body)", fontSize: "7px", fontWeight: 700, letterSpacing: "0.26em", textTransform: "uppercase", color: "rgba(255,255,255,0.25)" }}>HISTORICAL PLAYBACK</div>
+                  <button className="res-btn-ghost" style={{ padding: "3px 9px", fontSize: "8px" }} onClick={() => { if (playing) { setPlaying(false); return; } if (historyIndex >= timestamps.length - 1) setHistoryIndex(0); setPlaying(true); }}>{playing ? "⏹ STOP" : "▶ PLAY"}</button>
                 </div>
+                <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 5 }}><span className="res-note">{fcastShortDate(timestamps[0])}</span><span className="res-note">{fcastShortDate(timestamps[timestamps.length - 1])}</span></div>
+                <input type="range" min={0} max={timestamps.length - 1} value={historyIndex} onChange={(e) => { const idx = Number(e.target.value); setHistoryIndex(idx); historyIndexRef.current = idx; const hl = historyListRef.current; if (hl) runForecastAtIndex(raceIdRef.current, hl.timestamps, idx); }} style={{ width: "100%", accentColor: "var(--purple)", height: "4px", cursor: "pointer" }} />
+                <div className="res-note" style={{ textAlign: "center", marginTop: 6, color: "var(--purple-soft)" }}>{fcastShortDate(timestamps[historyIndex])} · {historyIndex + 1}/{timestamps.length}</div>
+              </div>
+            )}
+            {timestamps.length === 0 && <div className="res-note" style={{ textAlign: "center", fontStyle: "italic", paddingTop: 4 }}>No history snapshots — live data only</div>}
+          </>
+        )}
+      </div>
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// ─── RACE PICKER TAB BAR ──────────────────────────────────────────────────────
+// ═══════════════════════════════════════════════════════════════════════════════
+function RaceTabBar({ races, raceCache, selectedId, onSelect, nowMs }: {
+  races: FeaturedRace[]; raceCache: Record<number, RaceDetail | undefined>;
+  selectedId: number; onSelect: (id: number) => void; nowMs: number;
+}) {
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const searchRef = useRef<HTMLInputElement>(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  const [search, setSearch] = useState("");
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [highlightIndex, setHighlightIndex] = useState(0);
+
+  // Search across all FEATURED races (not just current state)
+  const searchResults = useMemo(() => {
+    const q = search.trim().toLowerCase();
+    if (!q) return [];
+    return FEATURED.filter(
+      (r) => r.label.toLowerCase().includes(q) || r.office.toLowerCase().includes(q) || r.party.toLowerCase().includes(q)
+    ).slice(0, 10);
+  }, [search]);
+
+  // Reset highlight when results change
+  useEffect(() => { setHighlightIndex(0); }, [searchResults.length]);
+
+  // Keyboard navigation
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      // Open with Cmd/Ctrl+K or /
+      if ((e.key === "/" || ((e.metaKey || e.ctrlKey) && e.key === "k")) && !searchOpen) {
+        e.preventDefault(); setSearchOpen(true); setSearch("");
+        return;
+      }
+      if (!searchOpen) return;
+      if (e.key === "Escape") { setSearchOpen(false); setSearch(""); }
+      if (e.key === "ArrowDown") { e.preventDefault(); setHighlightIndex((h) => Math.min(h + 1, searchResults.length - 1)); }
+      if (e.key === "ArrowUp") { e.preventDefault(); setHighlightIndex((h) => Math.max(h - 1, 0)); }
+      if (e.key === "Enter" && searchResults[highlightIndex]) {
+        onSelect(searchResults[highlightIndex].id);
+        setSearchOpen(false); setSearch("");
+      }
+    };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, [searchOpen, searchResults, highlightIndex, onSelect]);
+
+  // Focus input when opened
+  useEffect(() => {
+    if (searchOpen) setTimeout(() => searchRef.current?.focus(), 30);
+  }, [searchOpen]);
+
+  // Click outside to close
+  useEffect(() => {
+    if (!searchOpen) return;
+    const handler = (e: MouseEvent) => {
+      if (!dropdownRef.current?.contains(e.target as Node)) {
+        setSearchOpen(false); setSearch("");
+      }
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, [searchOpen]);
+
+  // Group by office
+  const groups = useMemo(() => {
+    const map = new Map<string, FeaturedRace[]>();
+    for (const r of races) { const g = map.get(r.office) ?? []; g.push(r); map.set(r.office, g); }
+    return Array.from(map.entries());
+  }, [races]);
+
+  // Auto-scroll selected tab into view
+  useEffect(() => {
+    const el = scrollRef.current?.querySelector(`[data-raceid="${selectedId}"]`) as HTMLElement | null;
+    el?.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
+  }, [selectedId]);
+
+  return (
+    <div style={{ background: "var(--background2)", borderBottom: "1px solid var(--border)", position: "relative", display: "flex", alignItems: "stretch" }}>
+
+      {/* Search trigger button — pinned left */}
+      <div ref={dropdownRef} style={{ position: "relative", flexShrink: 0, borderRight: "1px solid var(--border)" }}>
+        <button
+          onClick={() => { setSearchOpen((v) => !v); setSearch(""); }}
+          style={{
+            height: "100%", display: "flex", alignItems: "center", gap: 8,
+            padding: "0 16px", background: searchOpen ? "rgba(124,58,237,0.08)" : "transparent",
+            border: "none", borderRight: searchOpen ? "1px solid rgba(124,58,237,0.3)" : "none",
+            cursor: "pointer", transition: "background 140ms ease",
+          }}
+          title="Search races (/ or ⌘K)"
+        >
+          {/* Magnifier icon */}
+          <svg width="13" height="13" viewBox="0 0 16 16" fill="none" style={{ flexShrink: 0 }}>
+            <circle cx="6.5" cy="6.5" r="5" stroke={searchOpen ? "var(--purple-soft)" : "rgba(255,255,255,0.35)"} strokeWidth="1.5" />
+            <line x1="10.5" y1="10.5" x2="14" y2="14" stroke={searchOpen ? "var(--purple-soft)" : "rgba(255,255,255,0.35)"} strokeWidth="1.5" strokeLinecap="round" />
+          </svg>
+          <span style={{
+            fontFamily: "var(--font-body)", fontSize: "7.5px", fontWeight: 700, letterSpacing: "0.20em",
+            textTransform: "uppercase", color: searchOpen ? "var(--purple-soft)" : "rgba(255,255,255,0.25)",
+            whiteSpace: "nowrap",
+          }}>
+            SEARCH
+          </span>
+          <span style={{
+            fontFamily: "var(--font-body)", fontSize: "7px", letterSpacing: "0.08em",
+            color: "rgba(255,255,255,0.15)", padding: "1px 5px",
+            border: "1px solid rgba(255,255,255,0.10)", background: "rgba(255,255,255,0.03)",
+            display: "none",
+          }} className="res-search-kbd">/</span>
+        </button>
+
+        {/* Dropdown panel */}
+        {searchOpen && (
+          <div style={{
+            position: "absolute", top: "100%", left: 0, zIndex: 200,
+            width: 380, background: "var(--panel)",
+            border: "1px solid rgba(124,58,237,0.35)",
+            boxShadow: "0 20px 60px rgba(0,0,0,0.85), 0 0 0 1px rgba(124,58,237,0.1)",
+            animation: "res-fade-up 0.15s cubic-bezier(0.22,1,0.36,1) both",
+          }}>
+            <div className="res-tri-stripe" style={{ height: "2px" }} />
+
+            {/* Input */}
+            <div style={{ display: "flex", alignItems: "center", gap: 10, padding: "10px 14px", borderBottom: "1px solid var(--border)" }}>
+              <svg width="12" height="12" viewBox="0 0 16 16" fill="none" style={{ flexShrink: 0 }}>
+                <circle cx="6.5" cy="6.5" r="5" stroke="var(--purple-soft)" strokeWidth="1.5" />
+                <line x1="10.5" y1="10.5" x2="14" y2="14" stroke="var(--purple-soft)" strokeWidth="1.5" strokeLinecap="round" />
+              </svg>
+              <input
+                ref={searchRef}
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                placeholder="Search races, offices, parties…"
+                style={{
+                  flex: 1, background: "transparent", border: "none", outline: "none",
+                  fontFamily: "var(--font-body)", fontSize: "11px", fontWeight: 600,
+                  letterSpacing: "0.04em", color: "var(--foreground)",
+                  caretColor: "var(--purple-soft)",
+                }}
+              />
+              {search && (
+                <button onClick={() => setSearch("")} style={{ background: "none", border: "none", cursor: "pointer", color: "rgba(255,255,255,0.3)", padding: 0, fontSize: 12, lineHeight: 1 }}>✕</button>
               )}
             </div>
 
-            {/* Runoff prob if majority rule */}
-            {forecast.forecast.race_rule === "MAJORITY" && (
-              <div className="res-stat-block" style={{ marginBottom: 10 }}>
-                <div className="res-stat-block-label" style={{ marginBottom: 8 }}>RUNOFF PROBABILITY</div>
-                {FORECAST_CANDIDATE_KEYS.map((k) => (
-                  forecast.forecast.runoff_prob[k] > 0.005 && (
-                    <FcastProbBar
-                      key={k}
-                      label={candidateLabels[k]}
-                      value={forecast.forecast.runoff_prob[k]}
-                      color={candidateColors[k]}
-                    />
-                  )
-                ))}
-                <div style={{ marginTop: 8, paddingTop: 8, borderTop: "1px solid var(--border)" }}>
-                  <FcastProbBar label="Runoff Needed" value={forecast.forecast.runoff_needed_prob} color="#f59e0b" />
+            {/* Results */}
+            <div style={{ maxHeight: 320, overflowY: "auto" }}>
+              {search.trim() === "" ? (
+                <div style={{ padding: "20px 14px", textAlign: "center" }}>
+                  <div className="res-note" style={{ marginBottom: 8, color: "rgba(255,255,255,0.2)" }}>TYPE TO SEARCH ALL RACES</div>
+                  <div className="res-note" style={{ color: "rgba(255,255,255,0.12)" }}>↑↓ NAVIGATE · ENTER SELECT · ESC CLOSE</div>
                 </div>
-              </div>
-            )}
+              ) : searchResults.length === 0 ? (
+                <div style={{ padding: "20px 14px", textAlign: "center" }}>
+                  <div className="res-note" style={{ color: "rgba(255,255,255,0.25)" }}>NO RACES FOUND</div>
+                </div>
+              ) : searchResults.map((r, i) => {
+                const liveData = raceCache[r.id];
+                const winner = liveData?.candidates?.find((c) => c.winner);
+                const reporting = getRaceReportingPct(liveData);
+                const isRep = r.party === "Republican";
+                const isDem = r.party === "Democratic";
+                const partyColor = isRep ? "var(--rep)" : isDem ? "var(--dem)" : "rgba(255,255,255,0.4)";
+                const isHighlighted = i === highlightIndex;
+                const isCurrentlySelected = r.id === selectedId;
 
-            {/* Key stats */}
-            <div className="res-stat-block" style={{ marginBottom: 10 }}>
-              <div className="res-stat-block-label" style={{ marginBottom: 8 }}>MODEL STATISTICS</div>
-              <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
-                {[
-                  ["MODELED TOTAL", fcastFmt(forecast.forecast.modeled_total_vote)],
-                  ["VOTES REMAINING", fcastFmt(forecast.forecast.modeled_vote_remaining)],
-                  ["PROJ MARGIN", `${fcastFmt(forecast.forecast.projected_margin_votes)} (${fcastPct(forecast.forecast.projected_margin_pct)})`],
-                  ["STD DEV", fcastFmt(forecast.forecast.sd_race)],
-                ].map(([label, val]) => (
-                  <div key={label} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", paddingBottom: 3, borderBottom: "1px solid rgba(255,255,255,0.04)" }}>
-                    <span className="res-note">{label}</span>
-                    <span style={{ fontFamily: "var(--font-body)", fontSize: "10px", fontWeight: 700, color: "rgba(255,255,255,0.75)" }}>{val}</span>
+                // Highlight matching text
+                const q = search.trim();
+                const labelLower = r.label.toLowerCase();
+                const qIdx = labelLower.indexOf(q.toLowerCase());
+                const labelNode = qIdx >= 0
+                  ? <>{r.label.slice(0, qIdx)}<mark style={{ background: "rgba(124,58,237,0.35)", color: "var(--purple-soft)", padding: 0 }}>{r.label.slice(qIdx, qIdx + q.length)}</mark>{r.label.slice(qIdx + q.length)}</>
+                  : r.label;
+
+                return (
+                  <button
+                    key={r.id}
+                    onMouseEnter={() => setHighlightIndex(i)}
+                    onClick={() => { onSelect(r.id); setSearchOpen(false); setSearch(""); }}
+                    style={{
+                      display: "flex", alignItems: "center", width: "100%", gap: 12,
+                      padding: "10px 14px", background: isHighlighted ? "rgba(124,58,237,0.10)" : "transparent",
+                      border: "none", borderBottom: "1px solid rgba(255,255,255,0.04)",
+                      borderLeft: isHighlighted ? "2px solid var(--purple)" : "2px solid transparent",
+                      cursor: "pointer", textAlign: "left", transition: "background 80ms ease",
+                    }}
+                  >
+                    {/* State badge */}
+                    <span style={{
+                      fontFamily: "var(--font-body)", fontSize: "7px", fontWeight: 900,
+                      letterSpacing: "0.14em", color: "rgba(255,255,255,0.3)",
+                      background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.08)",
+                      padding: "2px 5px", flexShrink: 0,
+                    }}>{r.state}</span>
+
+                    {/* Label */}
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      <div style={{
+                        fontFamily: "var(--font-body)", fontSize: "10px", fontWeight: 700,
+                        letterSpacing: "0.04em", color: isHighlighted ? "#fff" : "rgba(255,255,255,0.75)",
+                        textOverflow: "ellipsis", overflow: "hidden", whiteSpace: "nowrap",
+                      }}>{labelNode}</div>
+                      <div style={{ display: "flex", gap: 6, marginTop: 3, alignItems: "center" }}>
+                        <span style={{ fontFamily: "var(--font-body)", fontSize: "7.5px", fontWeight: 700, color: partyColor }}>{r.party}</span>
+                        {RACE_FORECAST_DEFAULTS[r.id] && <span style={{ fontFamily: "var(--font-body)", fontSize: "6px", fontWeight: 700, color: "var(--purple-soft)", letterSpacing: "0.14em" }}>FORECAST</span>}
+                      </div>
+                    </div>
+
+                    {/* Right: reporting + winner */}
+                    <div style={{ flexShrink: 0, textAlign: "right" }}>
+                      {winner ? (
+                        <span style={{ fontFamily: "var(--font-body)", fontSize: "7px", fontWeight: 700, color: "var(--win)", letterSpacing: "0.12em" }}>✓ CALLED</span>
+                      ) : (
+                        <span style={{ fontFamily: "var(--font-body)", fontSize: "8px", fontWeight: 700, color: isHighlighted ? "rgba(255,255,255,0.5)" : "rgba(255,255,255,0.2)" }}>
+                          {reporting !== null ? `${reporting.toFixed(0)}%` : "—"}
+                        </span>
+                      )}
+                      {isCurrentlySelected && (
+                        <div style={{ fontFamily: "var(--font-body)", fontSize: "6px", fontWeight: 700, color: "var(--purple-soft)", letterSpacing: "0.14em", marginTop: 2 }}>ACTIVE</div>
+                      )}
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Footer hint */}
+            {searchResults.length > 0 && (
+              <div style={{ padding: "7px 14px", borderTop: "1px solid var(--border)", display: "flex", gap: 12 }}>
+                {[["↑↓", "NAVIGATE"], ["↵", "SELECT"], ["ESC", "CLOSE"]].map(([key, label]) => (
+                  <div key={key} style={{ display: "flex", alignItems: "center", gap: 4 }}>
+                    <span style={{ fontFamily: "var(--font-body)", fontSize: "7px", padding: "1px 4px", border: "1px solid rgba(255,255,255,0.12)", background: "rgba(255,255,255,0.04)", color: "rgba(255,255,255,0.35)" }}>{key}</span>
+                    <span style={{ fontFamily: "var(--font-body)", fontSize: "6.5px", letterSpacing: "0.16em", color: "rgba(255,255,255,0.2)" }}>{label}</span>
                   </div>
                 ))}
               </div>
-            </div>
-
-            {/* Historical playback slider */}
-            {timestamps.length > 1 && (
-              <div className="res-stat-block">
-                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 8 }}>
-                  <div className="res-stat-block-label">HISTORICAL PLAYBACK</div>
-                  <button
-                    className="res-btn-ghost"
-                    style={{ padding: "4px 10px", fontSize: "8px" }}
-                    onClick={() => {
-                      if (playing) { setPlaying(false); return; }
-                      if (historyIndex >= timestamps.length - 1) setHistoryIndex(0);
-                      setPlaying(true);
-                    }}
-                  >
-                    {playing ? "⏹ STOP" : "▶ PLAY"}
-                  </button>
-                </div>
-                <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 4 }}>
-                  <span className="res-note">{fcastShortDate(timestamps[0])}</span>
-                  <span className="res-note">{fcastShortDate(timestamps[timestamps.length - 1])}</span>
-                </div>
-                <input
-                  type="range"
-                  min={0}
-                  max={timestamps.length - 1}
-                  value={historyIndex}
-                  onChange={(e) => {
-                    const idx = Number(e.target.value);
-                    setHistoryIndex(idx);
-                    if (historyList) runForecastAtIndex(raceId, historyList.timestamps, idx);
-                  }}
-                  style={{ width: "100%", accentColor: "var(--purple)", height: "4px", cursor: "pointer" }}
-                />
-                <div className="res-note" style={{ textAlign: "center", marginTop: 5, color: "var(--purple-soft)" }}>
-                  {fcastShortDate(timestamps[historyIndex])} &nbsp;·&nbsp; {historyIndex + 1}/{timestamps.length}
-                </div>
-              </div>
             )}
-
-            {timestamps.length === 0 && (
-              <div className="res-note" style={{ textAlign: "center", fontStyle: "italic", paddingTop: 4 }}>
-                No history snapshots available
-              </div>
-            )}
-          </>
+          </div>
         )}
+      </div>
+
+      {/* Scrollable tabs */}
+      <div ref={scrollRef} style={{ flex: 1, display: "flex", overflowX: "auto", gap: 0, scrollbarWidth: "none", WebkitOverflowScrolling: "touch" }}>
+        {groups.map(([office, groupRaces]) => (
+          <div key={office} style={{ display: "flex", flexShrink: 0, borderRight: "1px solid var(--border)" }}>
+            {/* Office label */}
+            <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", padding: "0 10px", borderRight: "1px solid rgba(255,255,255,0.04)", background: "rgba(0,0,0,0.2)" }}>
+              <span style={{ fontFamily: "var(--font-body)", fontSize: "6px", fontWeight: 700, letterSpacing: "0.28em", textTransform: "uppercase", color: "rgba(255,255,255,0.2)", whiteSpace: "nowrap" }}>{office}</span>
+            </div>
+            {/* Party tabs within office */}
+            {groupRaces.map((r) => {
+              const liveData = raceCache[r.id];
+              const winner = liveData?.candidates?.find((c) => c.winner);
+              const reporting = getRaceReportingPct(liveData);
+              const isSelected = r.id === selectedId;
+              const isRep = r.party === "Republican";
+              const isDem = r.party === "Democratic";
+              const partyColor = isRep ? "var(--rep)" : isDem ? "var(--dem)" : "rgba(255,255,255,0.4)";
+              const partyShort = isRep ? "R" : isDem ? "D" : "—";
+              return (
+                <button
+                  key={r.id}
+                  data-raceid={r.id}
+                  onClick={() => onSelect(r.id)}
+                  style={{
+                    display: "flex", flexDirection: "column", justifyContent: "center",
+                    padding: "10px 14px", minWidth: 72, cursor: "pointer", border: "none",
+                    borderBottom: isSelected ? `2px solid ${partyColor}` : "2px solid transparent",
+                    background: isSelected ? `${partyColor}10` : "transparent",
+                    transition: "all 140ms ease", position: "relative",
+                  }}
+                >
+                  <div style={{ display: "flex", alignItems: "center", gap: 5, marginBottom: 4 }}>
+                    <span style={{ fontFamily: "var(--font-body)", fontSize: "8px", fontWeight: 900, color: partyColor, letterSpacing: "0.10em" }}>{partyShort}</span>
+                    {winner && <span style={{ width: 5, height: 5, borderRadius: "50%", background: "var(--win)", display: "inline-block", flexShrink: 0 }} title="Winner called" />}
+                    {RACE_FORECAST_DEFAULTS[r.id] && !winner && <span style={{ fontFamily: "var(--font-body)", fontSize: "5.5px", fontWeight: 700, color: "var(--purple-soft)", letterSpacing: "0.14em" }}>FCT</span>}
+                  </div>
+                  <div style={{ width: "100%", height: 2, background: "rgba(255,255,255,0.07)", overflow: "hidden" }}>
+                    <div style={{ height: "100%", width: `${reporting ?? 0}%`, background: winner ? "var(--win)" : partyColor, opacity: 0.7, transition: "width 800ms ease" }} />
+                  </div>
+                  <div style={{ fontFamily: "var(--font-body)", fontSize: "7px", fontWeight: 700, color: isSelected ? "rgba(255,255,255,0.6)" : "rgba(255,255,255,0.25)", marginTop: 4, letterSpacing: "0.10em" }}>
+                    {reporting !== null ? `${reporting.toFixed(0)}%` : "—"}
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+        ))}
       </div>
     </div>
   );
@@ -1047,14 +1105,9 @@ export default function March3FeaturedClient() {
   const [nowMs, setNowMs] = useState(0);
   useEffect(() => { setNowMs(Date.now()); }, []);
 
-  // ── refreshTick: incremented every time results are refreshed.
-  // Passed to ForecastPanel so it auto-reruns in sync. ──────────────────────
   const [refreshTick, setRefreshTick] = useState(0);
-
   const [overlay, setOverlay] = useState<null | { id: number; name: string; prob: number; color: string; reporting: number }>(null);
   const lastProjectedKeyRef = useRef<string>("");
-  const [raceSearch, setRaceSearch] = useState("");
-  const [raceSort, setRaceSort] = useState<"label" | "reporting" | "close">("reporting");
 
   const featuredByState = useMemo(() => ({
     TX: FEATURED.filter((r) => r.state === "TX"),
@@ -1070,14 +1123,12 @@ export default function March3FeaturedClient() {
     try {
       const results = await Promise.all(FEATURED.map((r) => fetchRaceById(r.id).then((d) => [r.id, d] as const)));
       setRaceCache(Object.fromEntries(results));
-      // Bump the tick so ForecastPanel knows to re-run
       setRefreshTick((t) => t + 1);
     } catch (e: any) { setError(e?.message ?? "Error refreshing."); }
   }
 
   useEffect(() => { refreshFeatured(); const t = setInterval(refreshFeatured, POLL_MS); return () => clearInterval(t); }, []);
   useEffect(() => { const t = setInterval(() => setNowMs(Date.now()), 1000); return () => clearInterval(t); }, []);
-
   useLayoutEffect(() => { setLoadingMap(true); setMapBlankSvg(null); setMapLoadPct(0); }, [selectedId]);
 
   useEffect(() => {
@@ -1095,14 +1146,15 @@ export default function March3FeaturedClient() {
     return () => { cancelled = true; if (interval) clearInterval(interval); if (raf) cancelAnimationFrame(raf); };
   }, [selectedId]);
 
-  useEffect(() => { const first = featuredByState[activeState]?.[0]; if (first && !FEATURED.some((r) => r.id === selectedId && r.state === activeState)) setSelectedId(first.id); }, [activeState, featuredByState, selectedId]);
+  useEffect(() => {
+    const first = featuredByState[activeState]?.[0];
+    if (first && !FEATURED.some((r) => r.id === selectedId && r.state === activeState)) setSelectedId(first.id);
+  }, [activeState, featuredByState, selectedId]);
 
   useEffect(() => {
-    const race = selectedRace;
-    if (!race?.candidates?.length) return;
+    const race = selectedRace; if (!race?.candidates?.length) return;
     const reporting = race.percent_reporting ?? 0;
-    if (race.candidates.find((c) => c.winner)) return;
-    if (reporting < 5) return;
+    if (race.candidates.find((c) => c.winner)) return; if (reporting < 5) return;
     const ordered = [...race.candidates].sort((a, b) => (b.percent ?? 0) - (a.percent ?? 0));
     if (ordered.length < 2) return;
     const leader = ordered[0], runnerUp = ordered[1];
@@ -1117,17 +1169,7 @@ export default function March3FeaturedClient() {
   }, [selectedRace, selectedId]);
 
   const stateLabels: Record<string, string> = { TX: "TEXAS", NC: "N. CAROLINA", AR: "ARKANSAS", TEST: "TEST" };
-
-  const racesForState = useMemo(() => {
-    const base = featuredByState[activeState] ?? [];
-    const filtered = raceSearch.trim() ? base.filter((r) => r.label.toLowerCase().includes(raceSearch.trim().toLowerCase())) : base;
-    return [...filtered].sort((a, b) => {
-      const ra = raceCache[a.id], rb = raceCache[b.id];
-      if (raceSort === "label") return a.label.localeCompare(b.label);
-      if (raceSort === "close") { const da = parseIsoDate(ra?.polls_close ?? null)?.getTime() ?? Infinity; const db = parseIsoDate(rb?.polls_close ?? null)?.getTime() ?? Infinity; return da - db; }
-      return (getRaceReportingPct(rb) ?? -1) - (getRaceReportingPct(ra) ?? -1);
-    });
-  }, [activeState, featuredByState, raceSearch, raceSort, raceCache]);
+  const racesForState = featuredByState[activeState] ?? [];
 
   const selectedReporting = selectedRace?.percent_reporting ?? 0;
   const selectedCloseDate = parseIsoDate(selectedRace?.polls_close ?? null);
@@ -1148,359 +1190,242 @@ export default function March3FeaturedClient() {
   return (
     <>
       <style>{`
-        /* ── PSI Design Tokens ── */
         .res-root {
-          --background:  #070709;
-          --background2: #0b0b0f;
-          --panel:       #0f0f15;
-          --panel2:      #141420;
-          --foreground:  #f0f0f5;
-          --muted:       rgba(240,240,245,0.62);
-          --muted2:      rgba(240,240,245,0.40);
-          --muted3:      rgba(240,240,245,0.22);
-          --border:      rgba(255,255,255,0.09);
-          --border2:     rgba(255,255,255,0.15);
-          --border3:     rgba(255,255,255,0.22);
-          --purple:      #7c3aed;
-          --purple2:     #9d5cf0;
-          --purple-soft: #a78bfa;
-          --purple-dim:  rgba(124,58,237,0.14);
-          --red:         #e63946;
-          --red2:        #ff4d5a;
-          --blue:        #2563eb;
-          --blue2:       #3b82f6;
-          --win:         #4ade80;
-          --rep:         #e63946;
-          --dem:         #3b82f6;
-          --shadow-md:   0 10px 40px rgba(0,0,0,0.75);
+          --background: #070709; --background2: #0b0b0f; --panel: #0f0f15; --panel2: #141420;
+          --foreground: #f0f0f5; --muted: rgba(240,240,245,0.62); --muted2: rgba(240,240,245,0.40);
+          --muted3: rgba(240,240,245,0.22); --border: rgba(255,255,255,0.09); --border2: rgba(255,255,255,0.15);
+          --border3: rgba(255,255,255,0.22); --purple: #7c3aed; --purple2: #9d5cf0;
+          --purple-soft: #a78bfa; --purple-dim: rgba(124,58,237,0.14); --red: #e63946; --red2: #ff4d5a;
+          --blue: #2563eb; --blue2: #3b82f6; --win: #4ade80; --rep: #e63946; --dem: #3b82f6;
+          --shadow-md: 0 10px 40px rgba(0,0,0,0.75);
         }
-
-        @keyframes res-fade-up {
-          from { opacity:0; transform:translateY(10px); }
-          to   { opacity:1; transform:translateY(0); }
-        }
-        @keyframes res-pulse {
-          0%,100% { opacity:1; transform:scale(1); }
-          50%      { opacity:0.35; transform:scale(0.82); }
-        }
-        @keyframes county-pop {
-          0%   { filter: brightness(1); }
-          40%  { filter: brightness(2.2) saturate(1.4); }
-          100% { filter: brightness(1); }
-        }
-        @keyframes res-loading-pulse {
-          0%,100% { opacity: 0.4; }
-          50%     { opacity: 1; }
-        }
+        @keyframes res-fade-up { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
+        @keyframes res-pulse { 0%,100% { opacity:1; transform:scale(1); } 50% { opacity:0.35; transform:scale(0.82); } }
+        @keyframes county-pop { 0% { filter:brightness(1); } 40% { filter:brightness(2.2) saturate(1.4); } 100% { filter:brightness(1); } }
+        @keyframes res-loading-pulse { 0%,100% { opacity:0.4; } 50% { opacity:1; } }
         .county-pop { animation: county-pop 520ms ease-out; }
+        @keyframes county-updated { 0% { filter:brightness(1) saturate(1); } 12% { filter:brightness(3.2) saturate(2.0); } 35% { filter:brightness(2.0) saturate(1.4); } 100% { filter:brightness(1) saturate(1); } }
+        .county-updated { animation: county-updated 1200ms cubic-bezier(0.22,1,0.36,1); }
+        .res-tri-stripe { height:3px; width:100%; background:linear-gradient(90deg,var(--red) 0%,var(--red) 33.33%,var(--purple) 33.33%,var(--purple) 66.66%,var(--blue) 66.66%,var(--blue) 100%); flex-shrink:0; }
+        .res-live-dot { display:inline-block; width:6px; height:6px; border-radius:50%; background:var(--rep); box-shadow:0 0 8px rgba(230,57,70,0.7); animation:res-pulse 1.8s ease-in-out infinite; flex-shrink:0; }
+        .res-eyebrow { display:flex; align-items:center; gap:7px; font-family:var(--font-body); font-size:8.5px; font-weight:700; letter-spacing:0.30em; text-transform:uppercase; color:var(--muted3); }
+        .res-note { font-family:var(--font-body); font-size:8.5px; letter-spacing:0.16em; text-transform:uppercase; color:var(--muted3); }
+        .res-th { font-family:var(--font-body); font-size:7.5px; font-weight:700; letter-spacing:0.24em; text-transform:uppercase; color:var(--muted3); }
+        .res-num { font-family:var(--font-body); font-size:10.5px; color:var(--muted); font-variant-numeric:tabular-nums; }
+        .res-pct-big { font-family:var(--font-body); font-size:13px; font-weight:900; color:#fff; font-variant-numeric:tabular-nums; }
+        .res-pct-xl { font-family:var(--font-body); font-size:clamp(22px,2.5vw,30px); font-weight:900; color:#fff; font-variant-numeric:tabular-nums; line-height:1; }
+        .res-stat-label { font-family:var(--font-body); font-size:7.5px; font-weight:700; letter-spacing:0.26em; text-transform:uppercase; color:var(--muted3); }
+        .res-stat-val { font-family:var(--font-body); font-size:10px; font-weight:700; letter-spacing:0.14em; color:var(--muted); }
+        .res-stat-row { display:flex; align-items:center; justify-content:space-between; }
+        .res-badge { display:inline-flex; align-items:center; gap:4px; padding:2px 6px; font-family:var(--font-body); font-size:7.5px; font-weight:700; letter-spacing:0.20em; text-transform:uppercase; border:1px solid var(--border); background:rgba(255,255,255,0.03); color:var(--muted3); }
+        .res-badge-purple { border-color:rgba(124,58,237,0.40); background:rgba(124,58,237,0.08); color:var(--purple-soft); }
+        .res-badge-win { border-color:rgba(74,222,128,0.28); background:rgba(74,222,128,0.08); color:var(--win); }
+        .res-badge-red { border-color:rgba(230,57,70,0.30); background:rgba(230,57,70,0.08); color:var(--rep); }
+        .res-badge-blue { border-color:rgba(59,130,246,0.30); background:rgba(59,130,246,0.08); color:var(--dem); }
+        .res-bar-track { width:100%; height:3px; background:rgba(255,255,255,0.08); position:relative; overflow:hidden; }
+        .res-bar-fill { position:absolute; top:0; left:0; bottom:0; background:var(--purple); transition:width 600ms cubic-bezier(0.22,1,0.36,1); }
+        .res-panel { background:var(--panel); border:1px solid var(--border); overflow:hidden; animation:res-fade-up 0.5s cubic-bezier(0.22,1,0.36,1) both; }
+        .res-panel-header { display:flex; align-items:center; justify-content:space-between; padding:10px 14px; border-bottom:1px solid var(--border); background:var(--background2); }
+        .res-panel-tag { font-family:var(--font-body); font-size:8px; font-weight:700; letter-spacing:0.28em; text-transform:uppercase; color:var(--purple-soft); }
+        .res-stat-block { background:rgba(255,255,255,0.025); border:1px solid var(--border); padding:10px 12px; }
+        .res-stat-block-label { font-family:var(--font-body); font-size:7.5px; font-weight:700; letter-spacing:0.26em; text-transform:uppercase; color:var(--muted3); margin-bottom:4px; }
+        .res-stat-block-val { font-family:var(--font-body); font-size:clamp(20px,2.5vw,28px); font-weight:900; color:#fff; line-height:1; font-variant-numeric:tabular-nums; }
+        .res-btn-primary { display:inline-flex; align-items:center; gap:6px; padding:9px 18px; background:var(--purple); border:1px solid rgba(124,58,237,0.65); color:#fff; font-family:var(--font-body); font-size:9px; font-weight:700; letter-spacing:0.20em; text-transform:uppercase; cursor:pointer; transition:background 140ms ease,transform 140ms ease; }
+        .res-btn-primary:hover { background:var(--purple2); transform:translateY(-1px); }
+        .res-btn-ghost { display:inline-flex; align-items:center; gap:6px; padding:7px 12px; background:transparent; border:1px solid var(--border); color:var(--muted3); font-family:var(--font-body); font-size:9px; font-weight:700; letter-spacing:0.18em; text-transform:uppercase; cursor:pointer; transition:all 140ms ease; }
+        .res-btn-ghost:hover { border-color:var(--border2); color:var(--muted); }
+        .res-btn-state { display:inline-flex; align-items:center; padding:8px 16px; background:transparent; border:1px solid var(--border); color:var(--muted3); font-family:var(--font-body); font-size:9px; font-weight:700; letter-spacing:0.22em; text-transform:uppercase; cursor:pointer; transition:all 120ms ease; position:relative; overflow:hidden; }
+        .res-btn-state::before { content:''; position:absolute; bottom:0; left:0; right:0; height:2px; background:var(--purple); transform:scaleX(0); transform-origin:left; transition:transform 200ms ease; }
+        .res-btn-state:hover { color:rgba(255,255,255,0.7); border-color:var(--border2); }
+        .res-btn-state:hover::before { transform:scaleX(1); }
+        .res-btn-state.active { background:rgba(124,58,237,0.10); border-color:rgba(124,58,237,0.40); color:#fff; }
+        .res-btn-state.active::before { transform:scaleX(1); }
+        .res-close-btn { display:inline-flex; align-items:center; padding:7px 12px; background:rgba(255,255,255,0.04); border:1px solid var(--border); color:var(--muted2); font-family:var(--font-body); font-size:8.5px; font-weight:700; letter-spacing:0.18em; text-transform:uppercase; cursor:pointer; flex-shrink:0; transition:all 120ms ease; }
+        .res-close-btn:hover { border-color:var(--border2); color:rgba(255,255,255,0.7); }
+        .res-overlay-card { background:var(--panel); border:1px solid rgba(124,58,237,0.45); box-shadow:0 0 80px rgba(124,58,237,0.25),0 30px 80px rgba(0,0,0,0.8); }
+        .res-overlay-title { font-family:var(--font-body); font-size:clamp(32px,4vw,48px); font-weight:900; text-transform:uppercase; letter-spacing:0.02em; color:#fff; line-height:0.92; }
+        .res-overlay-name { font-family:var(--font-body); font-size:clamp(18px,2.5vw,26px); font-weight:700; text-transform:uppercase; letter-spacing:0.06em; }
+        .res-map-tooltip { background:rgba(8,8,14,0.96); border:1px solid rgba(124,58,237,0.45); box-shadow:0 20px 60px rgba(0,0,0,0.85); }
+        .res-tooltip-title { font-family:var(--font-body); font-size:11px; font-weight:900; text-transform:uppercase; letter-spacing:0.08em; color:#fff; }
+        .res-reporting-row { display:flex; align-items:center; justify-content:space-between; }
+        .res-candidate-list { border:1px solid var(--border); background:var(--panel); overflow:hidden; }
+        .res-candidate-row { display:flex; align-items:center; gap:0; border-bottom:1px solid rgba(255,255,255,0.07); padding:10px 14px; transition:background 120ms ease; position:relative; }
+        .res-candidate-row:last-child { border-bottom:none; }
+        .res-candidate-row:hover { background:rgba(255,255,255,0.015); }
+        .res-cand-bar { width:3px; height:100%; position:absolute; left:0; top:0; bottom:0; opacity:0.7; }
+        .res-cand-dot { display:inline-block; width:8px; height:8px; border-radius:50%; flex-shrink:0; }
+        .res-cand-name { font-family:var(--font-body); font-size:10.5px; font-weight:700; letter-spacing:0.08em; color:rgba(255,255,255,0.85); }
+        .res-cand-name-lg { font-family:var(--font-body); font-size:11px; font-weight:900; letter-spacing:0.06em; text-transform:uppercase; color:rgba(255,255,255,0.9); }
+        .res-cand-party { font-family:var(--font-body); font-size:8px; letter-spacing:0.16em; text-transform:uppercase; color:var(--muted3); margin-top:1px; }
+        .res-thead { position:sticky; top:0; background:var(--background2); border-bottom:1px solid var(--border); }
+        .res-table-row { border-bottom:1px solid rgba(255,255,255,0.04); transition:background 100ms ease; }
+        .res-table-row:hover { background:rgba(255,255,255,0.012); }
+        .res-input { width:100%; background:rgba(255,255,255,0.03); border:1px solid var(--border); color:var(--foreground); padding:8px 12px; font-family:var(--font-body); font-size:10px; letter-spacing:0.10em; outline:none; transition:border-color 140ms ease; }
+        .res-input:focus { border-color:rgba(124,58,237,0.40); }
+        .res-input::placeholder { color:var(--muted3); }
+        .res-select { background:rgba(255,255,255,0.03); border:1px solid var(--border); color:var(--muted2); padding:7px 10px; font-family:var(--font-body); font-size:9px; letter-spacing:0.10em; outline:none; }
+        .res-error { border:1px solid rgba(230,57,70,0.25); background:rgba(230,57,70,0.06); color:rgba(255,77,90,0.90); padding:12px 16px; font-family:var(--font-body); font-size:10.5px; letter-spacing:0.12em; }
+        .res-map-loading { display:flex; align-items:center; justify-content:center; aspect-ratio:4/3; background:rgba(0,0,0,0.30); border:1px solid var(--border); }
+        .res-map-wrap { background:rgba(0,0,0,0.20); border:1px solid var(--border); padding:6px; }
 
-        .res-tri-stripe {
-          height: 3px; width: 100%;
-          background: linear-gradient(90deg, var(--red) 0%, var(--red) 33.33%, var(--purple) 33.33%, var(--purple) 66.66%, var(--blue) 66.66%, var(--blue) 100%);
-          flex-shrink: 0;
+        /* ── STATUS BAR ── */
+        .res-status-bar { background:var(--background2); border-bottom:1px solid var(--border); padding:7px 0; }
+        .res-status-bar-inner { max-width:1800px; margin:0 auto; padding:0 20px; display:flex; align-items:center; justify-content:space-between; gap:12px; }
+
+        /* ── PAGE HEADER ── */
+        .res-page-header { border-bottom:1px solid var(--border); background:var(--background2); position:relative; overflow:hidden; }
+        .res-page-header::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse 40% 80% at 0% 50%,rgba(230,57,70,0.04) 0%,transparent 70%),radial-gradient(ellipse 40% 80% at 100% 50%,rgba(37,99,235,0.05) 0%,transparent 70%); pointer-events:none; }
+        .res-page-header-inner { max-width:1800px; margin:0 auto; padding:16px 20px; position:relative; }
+        .res-page-title { font-family:var(--font-display); font-size:clamp(22px,2.8vw,44px); font-weight:900; text-transform:uppercase; letter-spacing:0.01em; color:#fff; line-height:0.92; margin:0; }
+        .res-page-title em { font-style:normal; background:linear-gradient(100deg,var(--red2) 0%,var(--purple-soft) 50%,var(--blue2) 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+        .res-page-sub { font-family:var(--font-body); font-size:8px; font-weight:700; letter-spacing:0.30em; text-transform:uppercase; color:var(--purple-soft); margin-bottom:8px; }
+
+        /* ── MAIN BODY LAYOUT ── */
+        .res-body {
+          max-width: 1800px;
+          margin: 0 auto;
+          display: grid;
+          /* Left: map+forecast center | Right: topline+status */
+          grid-template-columns: 1fr 300px;
+          gap: 14px;
+          padding: 14px 20px;
+          align-items: stretch;
+          height: calc(100vh - 28px);
+          box-sizing: border-box;
         }
-        .res-live-dot {
-          display: inline-block; width: 6px; height: 6px; border-radius: 50%;
-          background: var(--rep); box-shadow: 0 0 8px rgba(230,57,70,0.7);
-          animation: res-pulse 1.8s ease-in-out infinite; flex-shrink: 0;
+        @media (max-width: 900px) { .res-body { grid-template-columns: 1fr; padding: 10px 12px; height: auto; } }
+
+        /* ── CENTER: map left + forecast right ── */
+        .res-center-split {
+          display: grid;
+          grid-template-columns: 1fr 380px;
+          gap: 14px;
+          align-items: stretch;
+          min-height: 0;
         }
-        .res-eyebrow {
-          display: flex; align-items: center; gap: 7px;
-          font-family: var(--font-body); font-size: 8.5px;
-          font-weight: 700; letter-spacing: 0.30em; text-transform: uppercase; color: var(--muted3);
+        .res-center-split > .res-panel {
+          display: flex;
+          flex-direction: column;
+          min-height: 0;
+          overflow: hidden;
         }
-        .res-note {
-          font-family: var(--font-body); font-size: 8.5px;
-          letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted3);
+        .res-center-split > .res-panel .res-map-body {
+          flex: 1;
+          min-height: 0;
+          overflow-y: auto;
         }
-        .res-th {
-          font-family: var(--font-body); font-size: 7.5px; font-weight: 700;
-          letter-spacing: 0.24em; text-transform: uppercase; color: var(--muted3);
+        .res-center-split > .res-forecast-wrap {
+          display: flex;
+          flex-direction: column;
+          min-height: 0;
+          overflow: hidden;
         }
-        .res-num { font-family: var(--font-body); font-size: 10.5px; color: var(--muted); font-variant-numeric: tabular-nums; }
-        .res-pct-big { font-family: var(--font-body); font-size: 13px; font-weight: 900; color: #fff; font-variant-numeric: tabular-nums; }
-        .res-pct-xl { font-family: var(--font-body); font-size: clamp(22px, 2.5vw, 30px); font-weight: 900; color: #fff; font-variant-numeric: tabular-nums; line-height: 1; }
-        .res-stat-label { font-family: var(--font-body); font-size: 7.5px; font-weight: 700; letter-spacing: 0.26em; text-transform: uppercase; color: var(--muted3); }
-        .res-stat-val { font-family: var(--font-body); font-size: 10px; font-weight: 700; letter-spacing: 0.14em; color: var(--muted); }
-        .res-stat-row { display: flex; align-items: center; justify-content: space-between; }
-
-        .res-badge {
-          display: inline-flex; align-items: center; gap: 4px; padding: 2px 6px;
-          font-family: var(--font-body); font-size: 7.5px; font-weight: 700;
-          letter-spacing: 0.20em; text-transform: uppercase;
-          border: 1px solid var(--border); background: rgba(255,255,255,0.03); color: var(--muted3);
+        .res-center-split > .res-forecast-wrap > .res-panel {
+          flex: 1;
+          min-height: 0;
+          display: flex;
+          flex-direction: column;
+          overflow: hidden;
         }
-        .res-badge-purple { border-color: rgba(124,58,237,0.40); background: rgba(124,58,237,0.08); color: var(--purple-soft); }
-        .res-badge-win { border-color: rgba(74,222,128,0.28); background: rgba(74,222,128,0.08); color: var(--win); }
-        .res-badge-red { border-color: rgba(230,57,70,0.30); background: rgba(230,57,70,0.08); color: var(--rep); }
-        .res-badge-blue { border-color: rgba(59,130,246,0.30); background: rgba(59,130,246,0.08); color: var(--dem); }
-
-        .res-bar-track { width: 100%; height: 3px; background: rgba(255,255,255,0.08); position: relative; overflow: hidden; }
-        .res-bar-fill { position: absolute; top:0; left:0; bottom:0; background: var(--purple); transition: width 600ms cubic-bezier(0.22,1,0.36,1); }
-
-        .res-panel { background: var(--panel); border: 1px solid var(--border); overflow: hidden; animation: res-fade-up 0.5s cubic-bezier(0.22,1,0.36,1) both; }
-        .res-panel-header { display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; border-bottom: 1px solid var(--border); background: var(--background2); }
-        .res-panel-tag { font-family: var(--font-body); font-size: 8px; font-weight: 700; letter-spacing: 0.28em; text-transform: uppercase; color: var(--purple-soft); }
-
-        .res-stat-block { background: rgba(255,255,255,0.025); border: 1px solid var(--border); padding: 12px 14px; }
-        .res-stat-block-label { font-family: var(--font-body); font-size: 7.5px; font-weight: 700; letter-spacing: 0.26em; text-transform: uppercase; color: var(--muted3); margin-bottom: 4px; }
-        .res-stat-block-val { font-family: var(--font-body); font-size: clamp(20px, 2.5vw, 28px); font-weight: 900; color: #fff; line-height: 1; font-variant-numeric: tabular-nums; }
-
-        .res-btn-primary { display: inline-flex; align-items: center; gap: 6px; padding: 10px 20px; background: var(--purple); border: 1px solid rgba(124,58,237,0.65); color: #fff; font-family: var(--font-body); font-size: 9.5px; font-weight: 700; letter-spacing: 0.20em; text-transform: uppercase; cursor: pointer; transition: background 140ms ease, transform 140ms ease; }
-        .res-btn-primary:hover { background: var(--purple2); transform: translateY(-1px); }
-        .res-btn-ghost { display: inline-flex; align-items: center; gap: 6px; padding: 8px 14px; background: transparent; border: 1px solid var(--border); color: var(--muted3); font-family: var(--font-body); font-size: 9px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; cursor: pointer; transition: all 140ms ease; }
-        .res-btn-ghost:hover { border-color: var(--border2); color: var(--muted); }
-        .res-btn-state { display: inline-flex; align-items: center; padding: 8px 16px; background: transparent; border: 1px solid var(--border); color: var(--muted3); font-family: var(--font-body); font-size: 9px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; cursor: pointer; transition: all 120ms ease; position: relative; overflow: hidden; }
-        .res-btn-state::before { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px; background: var(--purple); transform: scaleX(0); transform-origin: left; transition: transform 200ms ease; }
-        .res-btn-state:hover { color: rgba(255,255,255,0.7); border-color: var(--border2); }
-        .res-btn-state:hover::before { transform: scaleX(1); }
-        .res-btn-state.active { background: rgba(124,58,237,0.10); border-color: rgba(124,58,237,0.40); color: #fff; }
-        .res-btn-state.active::before { transform: scaleX(1); }
-        .res-close-btn { display: inline-flex; align-items: center; padding: 7px 12px; background: rgba(255,255,255,0.04); border: 1px solid var(--border); color: var(--muted2); font-family: var(--font-body); font-size: 8.5px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; cursor: pointer; flex-shrink: 0; transition: all 120ms ease; }
-        .res-close-btn:hover { border-color: var(--border2); color: rgba(255,255,255,0.7); }
-
-        .res-overlay-card { background: var(--panel); border: 1px solid rgba(124,58,237,0.45); box-shadow: 0 0 80px rgba(124,58,237,0.25), 0 30px 80px rgba(0,0,0,0.8); }
-        .res-overlay-title { font-family: var(--font-body); font-size: clamp(32px, 4vw, 48px); font-weight: 900; text-transform: uppercase; letter-spacing: 0.02em; color: #fff; line-height: 0.92; }
-        .res-overlay-name { font-family: var(--font-body); font-size: clamp(18px, 2.5vw, 26px); font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; }
-
-        .res-map-tooltip { background: rgba(8,8,14,0.96); border: 1px solid rgba(124,58,237,0.45); box-shadow: 0 20px 60px rgba(0,0,0,0.85); }
-        .res-tooltip-title { font-family: var(--font-body); font-size: 11px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.08em; color: #fff; }
-        .res-reporting-row { display: flex; align-items: center; justify-content: space-between; }
-
-        .res-candidate-list { border: 1px solid var(--border); background: var(--panel); overflow: hidden; }
-        .res-candidate-row { display: flex; align-items: center; gap: 0; border-bottom: 1px solid rgba(255,255,255,0.07); padding: 14px 16px; transition: background 120ms ease; position: relative; }
-        .res-candidate-row:last-child { border-bottom: none; }
-        .res-candidate-row:hover { background: rgba(255,255,255,0.015); }
-        .res-cand-bar { width: 3px; height: 100%; position: absolute; left: 0; top: 0; bottom: 0; opacity: 0.7; }
-        .res-cand-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
-        .res-cand-name { font-family: var(--font-body); font-size: 10.5px; font-weight: 700; letter-spacing: 0.08em; color: rgba(255,255,255,0.85); }
-        .res-cand-name-lg { font-family: var(--font-body); font-size: 12px; font-weight: 900; letter-spacing: 0.06em; text-transform: uppercase; color: rgba(255,255,255,0.9); }
-        .res-cand-party { font-family: var(--font-body); font-size: 8px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted3); margin-top: 1px; }
-
-        .res-thead { position: sticky; top: 0; background: var(--background2); border-bottom: 1px solid var(--border); }
-        .res-table-row { border-bottom: 1px solid rgba(255,255,255,0.04); transition: background 100ms ease; }
-        .res-table-row:hover { background: rgba(255,255,255,0.012); }
-
-        .res-race-item { display: block; width: 100%; text-align: left; padding: 12px 14px; border: 1px solid var(--border); background: transparent; cursor: pointer; transition: all 140ms ease; position: relative; overflow: hidden; }
-        .res-race-item::before { content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 2px; background: var(--purple); transform: scaleY(0); transform-origin: top; transition: transform 200ms ease; }
-        .res-race-item:hover { background: rgba(255,255,255,0.02); border-color: var(--border2); }
-        .res-race-item:hover::before { transform: scaleY(1); }
-        .res-race-item.active { background: rgba(124,58,237,0.07); border-color: rgba(124,58,237,0.35); }
-        .res-race-item.active::before { transform: scaleY(1); }
-        .res-race-label { font-family: var(--font-body); font-size: 10px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.08em; color: rgba(255,255,255,0.88); display: block; margin-bottom: 4px; line-height: 1.3; }
-        .res-race-meta { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
-        .res-race-party-rep { color: var(--rep); }
-        .res-race-party-dem { color: var(--dem); }
-        .res-reporting-mini { height: 2px; background: rgba(255,255,255,0.08); margin-top: 8px; overflow: hidden; }
-        .res-reporting-mini-fill { height: 100%; background: rgba(255,255,255,0.20); transition: width 800ms ease; }
-        .res-proj-chip { border: 1px solid rgba(124,58,237,0.20); background: rgba(124,58,237,0.05); padding: 6px 10px; margin-top: 8px; }
-        .res-win-chip { border: 1px solid rgba(74,222,128,0.20); background: rgba(74,222,128,0.05); padding: 6px 10px; margin-top: 8px; }
-
-        .res-input { width: 100%; background: rgba(255,255,255,0.03); border: 1px solid var(--border); color: var(--foreground); padding: 8px 12px; font-family: var(--font-body); font-size: 10px; letter-spacing: 0.10em; outline: none; transition: border-color 140ms ease; }
-        .res-input:focus { border-color: rgba(124,58,237,0.40); }
-        .res-input::placeholder { color: var(--muted3); }
-        .res-select { background: rgba(255,255,255,0.03); border: 1px solid var(--border); color: var(--muted2); padding: 8px 10px; font-family: var(--font-body); font-size: 9px; letter-spacing: 0.10em; outline: none; }
-
-        .res-status-bar { background: var(--background2); border-bottom: 1px solid var(--border); padding: 8px 0; }
-        .res-status-bar-inner { max-width: 1720px; margin: 0 auto; padding: 0 20px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-
-        .res-page-header { border-bottom: 1px solid var(--border); background: var(--background2); position: relative; overflow: hidden; }
-        .res-page-header::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 40% 80% at 0% 50%, rgba(230,57,70,0.04) 0%, transparent 70%), radial-gradient(ellipse 40% 80% at 100% 50%, rgba(37,99,235,0.05) 0%, transparent 70%); pointer-events: none; }
-        .res-page-header-inner { max-width: 1720px; margin: 0 auto; padding: 24px 20px 20px; position: relative; }
-        .res-page-title { font-family: var(--font-display); font-size: clamp(28px, 4vw, 58px); font-weight: 900; text-transform: uppercase; letter-spacing: 0.01em; color: #fff; line-height: 0.92; margin: 0; }
-        .res-page-title em { font-style: normal; background: linear-gradient(100deg, var(--red2) 0%, var(--purple-soft) 50%, var(--blue2) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-        .res-page-sub { font-family: var(--font-body); font-size: 8.5px; font-weight: 700; letter-spacing: 0.30em; text-transform: uppercase; color: var(--purple-soft); margin-bottom: 12px; }
-
-        .res-map-loading { display: flex; align-items: center; justify-content: center; aspect-ratio: 16/9; background: rgba(0,0,0,0.30); border: 1px solid var(--border); }
-        .res-map-wrap { background: rgba(0,0,0,0.20); border: 1px solid var(--border); padding: 8px; }
-        .res-error { border: 1px solid rgba(230,57,70,0.25); background: rgba(230,57,70,0.06); color: rgba(255,77,90,0.90); padding: 12px 16px; font-family: var(--font-body); font-size: 10.5px; letter-spacing: 0.12em; }
-
-        .res-layout { max-width: 1720px; margin: 0 auto; display: grid; grid-template-columns: 320px 1fr 320px; gap: 16px; padding: 20px; align-items: stretch; }
-        @media (max-width: 1200px) {
-          .res-layout { grid-template-columns: 280px 1fr; }
-          .res-right-rail { display: none; }
+        .res-center-split > .res-forecast-wrap > .res-panel .res-forecast-body {
+          flex: 1;
+          min-height: 0;
+          overflow-y: auto;
         }
-        @media (max-width: 860px) {
-          .res-layout { grid-template-columns: 1fr; padding: 12px; gap: 12px; }
-        }
-        .res-left-rail { overflow: hidden; }
-        .res-center { min-width: 0; display: flex; flex-direction: column; gap: 14px; }
-        .res-right-rail { position: sticky; top: 72px; display: flex; flex-direction: column; gap: 14px; }
+        @media (max-width: 1100px) { .res-center-split { grid-template-columns: 1fr; height: auto; } }
 
-        * { scrollbar-width: thin; scrollbar-color: rgba(255,255,255,0.10) transparent; }
-        *::-webkit-scrollbar { width: 3px; height: 3px; }
-        *::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.10); }
-        *::-webkit-scrollbar-thumb:hover { background: rgba(124,58,237,0.4); }
+        /* ── RIGHT RAIL ── */
+        .res-right-rail { display: flex; flex-direction: column; gap: 12px; position: sticky; top: 14px; height: calc(100vh - 28px); overflow: hidden; }
 
-        @media (prefers-reduced-motion: reduce) {
-          .res-bar-fill, .res-btn-primary, .res-btn-ghost, .res-btn-state { transition: none !important; }
-          .res-live-dot { animation: none !important; }
-        }
-        input[type=range] { height: 4px; cursor: pointer; }
+        /* ── FULL-WIDTH BOTTOM ── */
+        .res-bottom { max-width: 1800px; margin: 0 auto; padding: 0 20px 20px; }
+
+        /* ── RACE TAB BAR — hide scrollbar ── */
+        .res-tab-bar-scroll::-webkit-scrollbar { display: none; }
+
+        * { scrollbar-width:thin; scrollbar-color:rgba(255,255,255,0.10) transparent; }
+        *::-webkit-scrollbar { width:3px; height:3px; }
+        *::-webkit-scrollbar-thumb { background:rgba(255,255,255,0.10); }
+        *::-webkit-scrollbar-thumb:hover { background:rgba(124,58,237,0.4); }
+        @media (prefers-reduced-motion:reduce) { .res-bar-fill,.res-btn-primary,.res-btn-ghost,.res-btn-state { transition:none !important; } .res-live-dot { animation:none !important; } }
+        input[type=range] { height:4px; cursor:pointer; }
       `}</style>
 
       <main className="res-root" style={{ minHeight: "100vh", background: "var(--background)", color: "var(--foreground)" }}>
-
-        {overlay && (
-          <ProjectedWinnerOverlay show={!!overlay} candidate={overlay.name} prob={overlay.prob} color={overlay.color} reporting={overlay.reporting} onDismiss={() => setOverlay(null)} />
-        )}
+        {overlay && <ProjectedWinnerOverlay show={!!overlay} candidate={overlay.name} prob={overlay.prob} color={overlay.color} reporting={overlay.reporting} onDismiss={() => setOverlay(null)} />}
 
         <div className="res-tri-stripe" />
+
+        {/* STATUS BAR */}
         <div className="res-status-bar">
           <div className="res-status-bar-inner">
             <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
               <span className="res-live-dot" />
-              <span className="res-eyebrow" style={{ color: "rgba(255,255,255,0.40)" }}>
-                LIVE ELECTION RESULTS
-                <span style={{ color: "var(--border3)", margin: "0 4px" }}>·</span>
-                POWERED BY CIVICAPI.ORG
-              </span>
+              <span className="res-eyebrow" style={{ color: "rgba(255,255,255,0.40)" }}>LIVE ELECTION RESULTS<span style={{ color: "var(--border3)", margin: "0 4px" }}>·</span>POWERED BY CIVICAPI.ORG</span>
             </div>
             <div className="res-note" style={{ letterSpacing: "0.22em", color: "rgba(255,255,255,0.22)" }} suppressHydrationWarning>{timeStr}</div>
           </div>
         </div>
 
+        {/* PAGE HEADER */}
         <div className="res-page-header">
           <div className="res-page-header-inner">
-            <div style={{ display: "flex", flexWrap: "wrap", alignItems: "flex-end", justifyContent: "space-between", gap: "16px" }}>
+            <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: "12px" }}>
               <div>
                 <div className="res-page-sub">MARCH 3RD PRIMARY ELECTIONS · 2026</div>
                 <h1 className="res-page-title">Election <em>Night</em></h1>
-                <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: "8px", marginTop: "14px" }}>
-                  <span className="res-badge res-badge-red">
-                    <span className="res-live-dot" style={{ background: "var(--rep)" }} />
-                    LIVE
-                  </span>
-                  <span className="res-badge res-badge-purple">RESULTS + FORECAST / 5s</span>
-                  {selectedRace?.last_updated && (
-                    <span className="res-badge">UPDATED {prettyTime(selectedRace.last_updated)}</span>
-                  )}
-                </div>
               </div>
-              <div style={{ display: "flex", gap: "1px" }}>
-                {(["TX", "NC", "AR", "TEST"] as const).map((st) => (
-                  <button key={st} className={`res-btn-state ${activeState === st ? "active" : ""}`} onClick={() => setActiveState(st)}>
-                    {stateLabels[st]}
-                  </button>
-                ))}
+              <div style={{ display: "flex", alignItems: "center", gap: "12px", flexWrap: "wrap" }}>
+                <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: "6px" }}>
+                  <span className="res-badge res-badge-red"><span className="res-live-dot" style={{ background: "var(--rep)" }} />LIVE</span>
+                  <span className="res-badge res-badge-purple">RESULTS + FORECAST / 30s</span>
+                  {selectedRace?.last_updated && <span className="res-badge">UPDATED {prettyTime(selectedRace.last_updated)}</span>}
+                </div>
+                {/* State switcher */}
+                <div style={{ display: "flex", gap: "1px" }}>
+                  {(["TX", "NC", "AR", "TEST"] as const).map((st) => (
+                    <button key={st} className={`res-btn-state ${activeState === st ? "active" : ""}`} onClick={() => setActiveState(st)}>{stateLabels[st]}</button>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
         </div>
 
-        <div className="res-layout">
+        {/* ── RACE TAB BAR ── */}
+        <RaceTabBar races={racesForState} raceCache={raceCache} selectedId={selectedId} onSelect={setSelectedId} nowMs={nowMs} />
 
-          {/* LEFT RAIL */}
-          <aside className="res-left-rail res-panel">
-            <div className="res-panel-header">
-              <span className="res-panel-tag">RACES</span>
-              <span className="res-note">{racesForState.length} CONTESTS</span>
-            </div>
-            <div style={{ padding: "10px", borderBottom: "1px solid var(--border)", display: "flex", gap: "6px", background: "var(--background2)" }}>
-              <input className="res-input" value={raceSearch} onChange={(e) => setRaceSearch(e.target.value)} placeholder="SEARCH RACES…" />
-              <select className="res-select" value={raceSort} onChange={(e) => setRaceSort(e.target.value as any)}>
-                <option value="reporting">RPT</option>
-                <option value="close">CLOSE</option>
-                <option value="label">A–Z</option>
-              </select>
-            </div>
-            <div style={{ flex: 1, minHeight: 0, overflowY: "auto", padding: "8px", display: "flex", flexDirection: "column", gap: "4px" }}>
-              {racesForState.map((fr) => {
-                const liveData = raceCache[fr.id];
-                const winner = liveData?.candidates?.find((c) => c.winner);
-                const reporting = getRaceReportingPct(liveData);
-                const projection = getRaceProjectionAlways(liveData);
-                const closeDate = parseIsoDate(liveData?.polls_close ?? null);
-                const closeTimeLocal = closeDate ? formatLocalCloseTime(closeDate) : "—";
-                const msLeft = closeDate ? closeDate.getTime() - nowMs : null;
-                const countdownLabel = msLeft === null ? "—" : formatCountdown(msLeft);
-                const isSelected = fr.id === selectedId;
-                const partyClass = fr.party === "Republican" ? "res-race-party-rep" : fr.party === "Democratic" ? "res-race-party-dem" : "";
-                const hasForecast = !!RACE_FORECAST_DEFAULTS[fr.id];
+        {/* ── MAIN BODY ── */}
+        <div className="res-body">
 
-                return (
-                  <button key={fr.id} className={`res-race-item ${isSelected ? "active" : ""}`} onClick={() => setSelectedId(fr.id)}>
-                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 4 }}>
-                      <span className="res-race-label" style={{ margin: 0 }}>{fr.label}</span>
-                      {hasForecast && (
-                        <span className="res-badge res-badge-purple" style={{ fontSize: "6.5px", flexShrink: 0, marginLeft: 4 }}>FORECAST</span>
-                      )}
-                    </div>
-                    <div className="res-race-meta">
-                      <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
-                        <span className={`res-note ${partyClass}`} style={{ fontWeight: 700 }}>{fr.party.toUpperCase()}</span>
-                        <span className="res-note">· {closeTimeLocal}</span>
-                      </div>
-                      <div style={{ textAlign: "right" }}>
-                        <div className="res-note" style={{ color: "rgba(255,255,255,0.55)", fontWeight: 700 }}>{reporting !== null ? `${reporting.toFixed(1)}%` : "—"}</div>
-                        <div className="res-note" style={{ color: msLeft && msLeft > 0 ? "var(--muted3)" : "var(--rep)", fontWeight: 700 }}>{countdownLabel}</div>
-                      </div>
-                    </div>
-                    {!winner && (
-                      <div className="res-reporting-mini">
-                        <div className="res-reporting-mini-fill" style={{ width: `${reporting ?? 0}%` }} />
-                      </div>
-                    )}
-                    {!winner && projection && projection.prob > 50 && (
-                      <div className="res-proj-chip">
-                        <div className="res-stat-row" style={{ marginBottom: "4px" }}>
-                          <span className="res-note" style={{ color: "var(--purple-soft)", fontWeight: 700 }}>PROJ WIN</span>
-                          <span className="res-note" style={{ color: "var(--purple-soft)", fontWeight: 700 }}>{projection.prob.toFixed(0)}%</span>
-                        </div>
-                        <div className="res-bar-track" style={{ height: "2px" }}>
-                          <div className="res-bar-fill" style={{ width: `${Math.max(0, Math.min(100, projection.prob))}%`, height: "2px" }} />
-                        </div>
-                        <div className="res-note" style={{ marginTop: "4px" }}>{projection.leaderName}</div>
-                      </div>
-                    )}
-                    {winner && (
-                      <div className="res-win-chip">
-                        <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
-                          <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: "var(--win)", display: "inline-block", flexShrink: 0 }} />
-                          <span className="res-note" style={{ color: "var(--win)", fontWeight: 700 }}>WINNER: {winner.name.toUpperCase()}</span>
-                        </div>
-                      </div>
-                    )}
-                  </button>
-                );
-              })}
-            </div>
-          </aside>
+          {/* CENTER SPLIT: map (left) + forecast (right) */}
+          <div className="res-center-split">
 
-          {/* CENTER */}
-          <section className="res-center">
+            {/* MAP PANEL */}
             <div className="res-panel">
               <div className="res-tri-stripe" />
-              <div className="res-panel-header" style={{ flexWrap: "wrap", gap: "10px" }}>
+              <div className="res-panel-header" style={{ flexWrap: "wrap", gap: "8px" }}>
                 <div style={{ minWidth: 0 }}>
                   <div className="res-panel-tag">{selectedMeta?.label ?? "—"}</div>
-                  <div className="res-note" style={{ marginTop: "3px" }}>
-                    {selectedRace?.percent_reporting?.toFixed(1)}% REPORTING · {prettyTime(selectedRace?.last_updated)}
-                  </div>
+                  <div className="res-note" style={{ marginTop: "2px" }}>{selectedRace?.percent_reporting?.toFixed(1)}% REPORTING · {prettyTime(selectedRace?.last_updated)}</div>
                 </div>
-                <div style={{ display: "flex", flexWrap: "wrap", gap: "6px", alignItems: "center" }}>
+                <div style={{ display: "flex", flexWrap: "wrap", gap: "5px", alignItems: "center" }}>
                   <span className="res-badge">{selectedCloseLocal}</span>
-                  <span className={`res-badge ${selectedMsLeft && selectedMsLeft > 0 ? "" : "res-badge-red"}`}>
-                    {selectedMsLeft === null ? "—" : formatCountdown(selectedMsLeft)}
-                  </span>
-                  <span className="res-badge res-badge-purple">
-                    {loadingMap ? `SYNCING ${Math.round(mapLoadPct)}%` : "● LIVE"}
-                  </span>
+                  <span className={`res-badge ${selectedMsLeft && selectedMsLeft > 0 ? "" : "res-badge-red"}`}>{selectedMsLeft === null ? "—" : formatCountdown(selectedMsLeft)}</span>
+                  <span className="res-badge res-badge-purple">{loadingMap ? `SYNCING ${Math.round(mapLoadPct)}%` : "● LIVE"}</span>
                 </div>
               </div>
-              <div style={{ padding: "12px" }}>
-                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "10px", flexWrap: "wrap", gap: "8px" }}>
+              <div className="res-map-body" style={{ padding: "10px 14px" }}>
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "8px", flexWrap: "wrap", gap: "6px" }}>
                   <Legend />
-                  <span className="res-note">HOVER COUNTIES FOR DETAILS</span>
+                  <span className="res-note" style={{ color: "rgba(255,255,255,0.2)" }}>HOVER COUNTIES</span>
                 </div>
                 {loadingMap ? (
                   <div className="res-map-loading">
-                    <div style={{ width: "min(380px, 90%)" }}>
-                      <div className="res-note" style={{ textAlign: "center", marginBottom: "10px", color: "rgba(255,255,255,0.4)" }}>LOADING MAP</div>
-                      <div className="res-bar-track">
-                        <div className="res-bar-fill" style={{ width: `${mapLoadPct}%`, background: "linear-gradient(90deg,var(--purple),var(--blue2))" }} />
-                      </div>
-                      <div className="res-note" style={{ textAlign: "center", marginTop: "8px", color: "var(--purple-soft)", fontWeight: 700 }}>{Math.round(mapLoadPct)}%</div>
+                    <div style={{ width: "min(300px, 90%)" }}>
+                      <div className="res-note" style={{ textAlign: "center", marginBottom: "8px", color: "rgba(255,255,255,0.35)" }}>LOADING MAP</div>
+                      <div className="res-bar-track"><div className="res-bar-fill" style={{ width: `${mapLoadPct}%`, background: "linear-gradient(90deg,var(--purple),var(--blue2))" }} /></div>
+                      <div className="res-note" style={{ textAlign: "center", marginTop: "6px", color: "var(--purple-soft)", fontWeight: 700 }}>{Math.round(mapLoadPct)}%</div>
                     </div>
                   </div>
                 ) : mapBlankSvg ? (
@@ -1508,84 +1433,93 @@ export default function March3FeaturedClient() {
                     <MapWithCountyTooltip svgText={mapBlankSvg} regionResults={selectedRace?.region_results ?? []} />
                   </div>
                 ) : (
-                  <div className="res-map-loading">
-                    <span className="res-note" style={{ color: "var(--muted3)" }}>NO MAP DATA</span>
-                  </div>
+                  <div className="res-map-loading"><span className="res-note" style={{ color: "var(--muted3)" }}>NO MAP DATA</span></div>
                 )}
               </div>
             </div>
 
-            <CountyTotalsTable regionResults={selectedRace?.region_results ?? []} />
-            {error && <div className="res-error">ERROR: {error}</div>}
-          </section>
+            {/* FORECAST PANEL */}
+            <div className="res-forecast-wrap">
+              <ForecastPanel key={selectedId} raceId={selectedId} refreshTick={refreshTick} raceData={selectedRace} />
+            </div>
+          </div>
 
-          {/* RIGHT RAIL */}
+          {/* RIGHT RAIL: Topline + Race Status */}
           <aside className="res-right-rail">
 
-            {/* Topline */}
+            {/* TOPLINE */}
             <div className="res-panel">
               <div className="res-tri-stripe" />
               <div className="res-panel-header">
-                <span className="res-panel-tag">TOPLINE</span>
+                <span className="res-panel-tag">TOPLINE RESULTS</span>
                 {selectedRace?.percent_reporting !== undefined && (
-                  <span className="res-note" style={{ color: "rgba(255,255,255,0.5)", fontWeight: 700 }}>{selectedRace.percent_reporting.toFixed(1)}% IN</span>
+                  <span className="res-note" style={{ color: "rgba(255,255,255,0.45)", fontWeight: 700 }}>{selectedRace.percent_reporting.toFixed(1)}% IN</span>
                 )}
               </div>
-              <div style={{ padding: "12px" }}>
+              <div style={{ padding: "12px 14px" }}>
                 {selectedRace?.candidates
                   ? <CandidateList candidates={selectedRace.candidates} reporting={selectedRace.percent_reporting ?? 0} raceId={selectedId} />
-                  : <div style={{ padding: "40px 0", textAlign: "center" }} className="res-note">LOADING…</div>
+                  : <div style={{ padding: "32px 0", textAlign: "center" }} className="res-note">LOADING…</div>
                 }
               </div>
             </div>
 
-            {/* Status */}
-            <div className="res-panel" style={{ padding: "0" }}>
-              <div className="res-panel-header">
-                <span className="res-panel-tag">RACE STATUS</span>
-              </div>
-              <div style={{ padding: "12px", display: "flex", flexDirection: "column", gap: "8px" }}>
+            {/* RACE STATUS */}
+            <div className="res-panel" style={{ flex: 1, minHeight: 0, display: "flex", flexDirection: "column" }}>
+              <div className="res-panel-header"><span className="res-panel-tag">RACE STATUS</span></div>
+              <div style={{ padding: "12px 14px", display: "flex", flexDirection: "column", gap: "8px", flex: 1, minHeight: 0, overflowY: "auto" }}>
                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px" }}>
                   <div className="res-stat-block">
                     <div className="res-stat-block-label">REPORTING</div>
                     <div className="res-stat-block-val">{selectedReporting.toFixed(1)}%</div>
-                    <div className="res-bar-track" style={{ marginTop: "8px" }}>
-                      <div className="res-bar-fill" style={{ width: `${selectedReporting}%`, background: "var(--purple)" }} />
-                    </div>
+                    <div className="res-bar-track" style={{ marginTop: "6px" }}><div className="res-bar-fill" style={{ width: `${selectedReporting}%`, background: "var(--purple)" }} /></div>
                   </div>
                   <div className="res-stat-block">
                     <div className="res-stat-block-label">CLOSES</div>
-                    <div className="res-stat-block-val">{selectedCloseLocal}</div>
-                    <div className="res-note" style={{ marginTop: "6px", color: selectedMsLeft && selectedMsLeft > 0 ? "var(--muted3)" : "var(--rep)", fontWeight: 700 }}>
-                      {selectedMsLeft === null ? "—" : formatCountdown(selectedMsLeft)}
-                    </div>
+                    <div className="res-stat-block-val" style={{ fontSize: "clamp(16px,2vw,22px)" }}>{selectedCloseLocal}</div>
+                    <div className="res-note" style={{ marginTop: "5px", color: selectedMsLeft && selectedMsLeft > 0 ? "var(--muted3)" : "var(--rep)", fontWeight: 700 }}>{selectedMsLeft === null ? "—" : formatCountdown(selectedMsLeft)}</div>
                   </div>
                 </div>
                 <div className="res-stat-block">
-                  <div className="res-stat-row" style={{ marginBottom: "6px" }}>
+                  <div className="res-stat-row" style={{ marginBottom: "5px" }}>
                     <span className="res-stat-block-label">PROJECTION</span>
-                    <span className="res-note" style={{ color: selectedWinner ? "var(--win)" : "var(--purple-soft)", fontWeight: 700 }}>
-                      {selectedWinner ? "OFFICIAL" : selectedProj ? `${selectedProj.prob.toFixed(1)}%` : "—"}
-                    </span>
+                    <span className="res-note" style={{ color: selectedWinner ? "var(--win)" : "var(--purple-soft)", fontWeight: 700 }}>{selectedWinner ? "OFFICIAL" : selectedProj ? `${selectedProj.prob.toFixed(1)}%` : "—"}</span>
                   </div>
-                  <div style={{ fontFamily: "var(--font-body)", fontSize: "13px", fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: "rgba(255,255,255,0.88)" }}>
-                    {selectedWinner ? `✓ ${selectedWinner.name}` : selectedProj ? selectedProj.leaderName : "No projection yet"}
-                  </div>
+                  <div style={{ fontFamily: "var(--font-body)", fontSize: "12px", fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: "rgba(255,255,255,0.88)" }}>{selectedWinner ? `✓ ${selectedWinner.name}` : selectedProj ? selectedProj.leaderName : "No projection yet"}</div>
                   {selectedProj && !selectedWinner && (
-                    <div className="res-bar-track" style={{ marginTop: "8px" }}>
-                      <div className="res-bar-fill" style={{ width: `${Math.max(0, Math.min(100, selectedProj.prob))}%`, background: "linear-gradient(90deg,var(--purple),var(--blue2))" }} />
-                    </div>
+                    <div className="res-bar-track" style={{ marginTop: "7px" }}><div className="res-bar-fill" style={{ width: `${Math.max(0, Math.min(100, selectedProj.prob))}%`, background: "linear-gradient(90deg,var(--purple),var(--blue2))" }} /></div>
                   )}
                 </div>
+
+                {/* Mini candidate bars in status panel */}
+                {selectedRace?.candidates && selectedRace.candidates.length > 0 && (
+                  <div style={{ marginTop: 4 }}>
+                    <div className="res-note" style={{ marginBottom: 8 }}>VOTE SHARE</div>
+                    {[...selectedRace.candidates].sort((a, b) => (b.percent ?? 0) - (a.percent ?? 0)).slice(0, 4).map((c) => (
+                      <div key={c.name} style={{ marginBottom: 8 }}>
+                        <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 3 }}>
+                          <span style={{ fontFamily: "var(--font-body)", fontSize: "8.5px", fontWeight: 700, letterSpacing: "0.06em", color: "rgba(255,255,255,0.7)", display: "flex", alignItems: "center", gap: 5 }}>
+                            <span style={{ width: 5, height: 5, borderRadius: "50%", background: c.color, display: "inline-block", flexShrink: 0 }} />
+                            {c.name.split(" ").pop()}
+                          </span>
+                          <span style={{ fontFamily: "var(--font-body)", fontSize: "9px", fontWeight: 900, color: c.color }}>{fmtPct(c.percent)}</span>
+                        </div>
+                        <div style={{ height: 3, background: "rgba(255,255,255,0.07)", overflow: "hidden" }}>
+                          <div style={{ height: "100%", width: `${c.percent ?? 0}%`, background: c.color, transition: "width 600ms ease" }} />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
             </div>
-
-            {/* Forecast — only for races with known predictions, auto-updates every 30s */}
-            {RACE_FORECAST_DEFAULTS[selectedId] && (
-              <ForecastPanel raceId={selectedId} refreshTick={refreshTick} />
-            )}
-
           </aside>
+        </div>
+
+        {/* ── FULL-WIDTH COUNTY BREAKDOWN ── */}
+        <div className="res-bottom">
+          <CountyTotalsTable regionResults={selectedRace?.region_results ?? []} />
+          {error && <div className="res-error" style={{ marginTop: 10 }}>ERROR: {error}</div>}
         </div>
       </main>
     </>

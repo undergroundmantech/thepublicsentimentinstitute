@@ -6,10 +6,10 @@ import React, { useEffect, useMemo, useState } from "react";
 
 const nav = [
   { href: "/", label: "Home" },
-  { href: "/electoralmap", label: "Electoral Map" },
   { href: "/results", label: "Election Results" },
   { href: "/polling", label: "Polling Averages" },
-  { href: "/goldstandard", label: "Gold Standard Pollsters" },
+  { href: "/forecastratings", label: "2026 Forecast Ratings" },
+  { href: "/electoralmap", label: "Electoral Map" },
   { href: "/contact", label: "Contact" },
 ];
 
@@ -241,6 +241,34 @@ export default function Navbar() {
         }
         .nav-link.active::after { transform: scaleX(1); }
 
+        /* ── Forecast badge highlight ── */
+        .nav-link.forecast-link {
+          color: rgba(167,139,250,0.75);
+        }
+        .nav-link.forecast-link::after {
+          background: var(--purple-soft);
+        }
+        .nav-link.forecast-link:hover,
+        .nav-link.forecast-link.active {
+          color: var(--purple-soft);
+          background: rgba(124,58,237,0.12);
+        }
+        .forecast-badge {
+          display: inline-flex;
+          align-items: center;
+          margin-left: 6px;
+          padding: 1px 5px;
+          background: rgba(124,58,237,0.30);
+          border: 1px solid rgba(167,139,250,0.35);
+          border-radius: 3px;
+          font-size: 7px;
+          font-weight: 800;
+          letter-spacing: 0.18em;
+          color: var(--purple-soft);
+          text-transform: uppercase;
+          line-height: 1.4;
+        }
+
         /* ── CTA button ── */
         .nav-cta-wrap {
           display: flex;
@@ -320,7 +348,7 @@ export default function Navbar() {
           transition: max-height 300ms var(--ease-out);
         }
         .nav-mobile.open {
-          max-height: 500px;
+          max-height: 560px;
         }
         .nav-mobile-link {
           display: flex;
@@ -344,6 +372,13 @@ export default function Navbar() {
           padding-left: 28px;
         }
         .nav-mobile-link.active { color: var(--purple-soft); }
+        .nav-mobile-link.forecast-mobile {
+          color: rgba(167,139,250,0.75);
+        }
+        .nav-mobile-link.forecast-mobile:hover,
+        .nav-mobile-link.forecast-mobile.active {
+          color: var(--purple-soft);
+        }
         .nav-mobile-cta {
           margin: 14px 24px;
         }
@@ -438,15 +473,25 @@ export default function Navbar() {
 
           {/* Desktop links */}
           <nav className="nav-links">
-            {nav.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={["nav-link", isActive(item.href) ? "active" : ""].join(" ")}
-              >
-                {item.label}
-              </Link>
-            ))}
+            {nav.map((item) => {
+              const isForecast = item.href === "/forecast";
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={[
+                    "nav-link",
+                    isForecast ? "forecast-link" : "",
+                    isActive(item.href) ? "active" : "",
+                  ]
+                    .filter(Boolean)
+                    .join(" ")}
+                >
+                  {item.label}
+                  {isForecast && <span className="forecast-badge">2026</span>}
+                </Link>
+              );
+            })}
           </nav>
 
           {/* CTA */}
@@ -474,17 +519,29 @@ export default function Navbar() {
 
         {/* Mobile drawer */}
         <div className={["nav-mobile", mobileOpen ? "open" : ""].join(" ")}>
-          {nav.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={["nav-mobile-link", isActive(item.href) ? "active" : ""].join(" ")}
-              onClick={() => setMobileOpen(false)}
-            >
-              {item.label}
-              <span style={{ opacity: 0.3, fontSize: "10px" }}>›</span>
-            </Link>
-          ))}
+          {nav.map((item) => {
+            const isForecast = item.href === "/forecast";
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={[
+                  "nav-mobile-link",
+                  isForecast ? "forecast-mobile" : "",
+                  isActive(item.href) ? "active" : "",
+                ]
+                  .filter(Boolean)
+                  .join(" ")}
+                onClick={() => setMobileOpen(false)}
+              >
+                <span style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                  {item.label}
+                  {isForecast && <span className="forecast-badge">2026</span>}
+                </span>
+                <span style={{ opacity: 0.3, fontSize: "10px" }}>›</span>
+              </Link>
+            );
+          })}
           <div className="nav-mobile-cta">
             <Link
               href="https://wss.pollfish.com/link/522d0e01-b70f-4955-8514-b42a7f10d4b6"

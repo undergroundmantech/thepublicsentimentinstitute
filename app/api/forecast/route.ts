@@ -5,66 +5,79 @@ import { forecastRace, civicToForecastInput, ForecastInput, CivicRace, RaceRule 
 const CIVIC_BASE = "https://civicapi.org/api/v2";
 
 // ─── POLL-ORDER HELPER ────────────────────────────────────────────────────────
-// Sorts candidates by poll_avg match first (descending), then live votes.
-// This ensures Candidate1/2/3 slots in the model reflect real contenders,
-// not whoever comes first alphabetically when votes are at 0.
 function sortCandidatesByPollAvg(
   candidates: CivicRace["candidates"],
   pollAvg?: Record<string, number>
 ): CivicRace["candidates"] {
   if (!pollAvg || Object.keys(pollAvg).length === 0) {
-    // No poll data — fall back to live votes descending
     return [...candidates].sort((a, b) => (b.votes ?? 0) - (a.votes ?? 0));
   }
-
   return [...candidates].sort((a, b) => {
     const getScore = (name: string): number => {
       const lower = name.toLowerCase();
       for (const [key, score] of Object.entries(pollAvg)) {
-        if (lower.includes(key.toLowerCase()) || key.toLowerCase().includes(lower)) {
-          return score;
-        }
+        if (lower.includes(key.toLowerCase()) || key.toLowerCase().includes(lower)) return score;
       }
-      return -1; // Not in poll data — push to bottom
+      return -1;
     };
-
     const sa = getScore(a.name), sb = getScore(b.name);
-    if (sa >= 0 && sb >= 0) return sb - sa;   // Both polled — higher poll % first
-    if (sa >= 0) return -1;                    // Only a polled — a goes first
-    if (sb >= 0) return 1;                     // Only b polled — b goes first
-    return (b.votes ?? 0) - (a.votes ?? 0);   // Neither polled — live votes
+    if (sa >= 0 && sb >= 0) return sb - sa;
+    if (sa >= 0) return -1;
+    if (sb >= 0) return 1;
+    return (b.votes ?? 0) - (a.votes ?? 0);
   });
 }
 
+// ─── SHARED FORECAST RUNNER ───────────────────────────────────────────────────
+// All turnout estimation and prior logic lives in civicToForecastInput.
+// This function passes through only what the caller explicitly provided —
+// undefined means "let the model figure it out via back-calculation fallback."
+// No duplicate estimation here; every race uses the same code path.
+function runForecastFromCivicRace(
+  race: CivicRace,
+  prior: CivicRace | undefined,
+  race_rule: RaceRule,
+  expected_turnout: number | undefined,
+  poll_avg: Record<string, number> | undefined
+) {
+  const sorted = sortCandidatesByPollAvg(race.candidates, poll_avg);
+  const top3 = sorted.slice(0, 3);
+  const names = top3.map((c) => c.name);
+  const colors = top3.map((c) => c.color);
+
+  const input = civicToForecastInput(race, prior, race_rule, expected_turnout, poll_avg);
+  const result = forecastRace(input, names, colors);
+  return NextResponse.json({ forecast: result, race });
+}
+
 // POST /api/forecast
-// Body can be either:
+// Body types:
 //   { type: "manual", input: ForecastInput }
-//   { type: "civic", raceId: string, race_rule?: RaceRule, expected_turnout?: number, poll_avg?: Record<string, number> }
-//   { type: "civic_history", raceId: string, timestamp: string, priorTimestamp?: string, race_rule?: RaceRule, expected_turnout?: number, poll_avg?: Record<string, number> }
+//   { type: "civic", raceId: string, race_rule?, expected_turnout?, poll_avg? }
+//   { type: "civic_raw", raceData: CivicRace, race_rule?, expected_turnout?, poll_avg? }
+//   { type: "civic_history", raceId: string, timestamp: string, priorTimestamp?, race_rule?, expected_turnout?, poll_avg? }
 export async function POST(req: Request) {
   try {
     const body = await req.json();
 
     if (!body.type || body.type === "manual") {
-      // Legacy: raw ForecastInput passed directly
       const input = (body.input ?? body) as ForecastInput;
       const result = forecastRace(input);
       return NextResponse.json(result);
     }
 
+    if (body.type === "civic_raw") {
+      const { raceData, race_rule = "PLURALITY", expected_turnout, poll_avg } = body;
+      if (!raceData) {
+        return NextResponse.json({ error: "raceData is required for type civic_raw" }, { status: 400 });
+      }
+      return runForecastFromCivicRace(raceData as CivicRace, undefined, race_rule, expected_turnout, poll_avg);
+    }
+
     if (body.type === "civic") {
       const { raceId, race_rule = "PLURALITY", expected_turnout, poll_avg } = body;
       const race = await fetchCivicRace(raceId);
-
-      // Sort by poll_avg if provided, otherwise by live votes
-      const sorted = sortCandidatesByPollAvg(race.candidates, poll_avg);
-      const top3 = sorted.slice(0, 3);
-      const names = top3.map((c) => c.name);
-      const colors = top3.map((c) => c.color);
-
-      const input = civicToForecastInput(race, undefined, race_rule, expected_turnout, poll_avg);
-      const result = forecastRace(input, names, colors);
-      return NextResponse.json({ forecast: result, race });
+      return runForecastFromCivicRace(race, undefined, race_rule, expected_turnout, poll_avg);
     }
 
     if (body.type === "civic_history") {
@@ -73,16 +86,7 @@ export async function POST(req: Request) {
         fetchCivicRaceHistory(raceId, timestamp),
         priorTimestamp ? fetchCivicRaceHistory(raceId, priorTimestamp) : Promise.resolve(undefined),
       ]);
-
-      // Sort by poll_avg if provided, otherwise by live votes
-      const sorted = sortCandidatesByPollAvg(current.candidates, poll_avg);
-      const top3 = sorted.slice(0, 3);
-      const names = top3.map((c) => c.name);
-      const colors = top3.map((c) => c.color);
-
-      const input = civicToForecastInput(current, prior, race_rule, expected_turnout, poll_avg);
-      const result = forecastRace(input, names, colors);
-      return NextResponse.json({ forecast: result, race: current });
+      return runForecastFromCivicRace(current, prior, race_rule, expected_turnout, poll_avg);
     }
 
     return NextResponse.json({ error: "Unknown request type" }, { status: 400 });
@@ -92,8 +96,8 @@ export async function POST(req: Request) {
 }
 
 // GET /api/forecast?action=search&...
-// GET /api/forecast?action=history&raceId=...
 // GET /api/forecast?action=timestamps&raceId=...
+// GET /api/forecast?action=race&raceId=...
 export async function GET(req: Request) {
   try {
     const url = new URL(req.url);
@@ -131,7 +135,7 @@ export async function GET(req: Request) {
 }
 
 async function fetchCivicRace(raceId: string): Promise<CivicRace> {
-  const res = await fetch(`${CIVIC_BASE}/race/${raceId}`);
+  const res = await fetch(`${CIVIC_BASE}/race/${raceId}?testdata`);
   if (!res.ok) throw new Error(`CivicAPI error ${res.status} fetching race ${raceId}`);
   return res.json();
 }

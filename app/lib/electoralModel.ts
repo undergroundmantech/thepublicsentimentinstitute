@@ -82,11 +82,30 @@ export function civicToForecastInput(
     expected_share = { ...reported_share };
   }
 
-  const est_turnout =
-    expected_turnout ??
-    (current.registered_voters > 0
-      ? Math.round(current.registered_voters * 0.65)
-      : Math.max(totalReported * 4, 100_000));
+  // ── Expected turnout ──────────────────────────────────────────────────────
+  // Priority:
+  //   1. Explicit override (from RACE_FORECAST_DEFAULTS) — always most accurate.
+  //   2. Back-calculate from current votes ÷ percent_reporting.
+  //      This works universally for ANY race with no configuration needed.
+  //      It guarantees self-consistency: remaining = total * (1 - pct) / pct,
+  //      so "votes remaining" always reconciles with "% reporting" in the UI.
+  //   3. registered_voters * 0.18 — only used when 0 votes are in yet.
+  //      The old code used * 0.65 (general election rate against full registration),
+  //      which produced ~20M expected turnout for Texas primaries that draw ~2M.
+  //      18% is a reasonable US primary turnout rate and avoids that explosion.
+  //   4. Hard floor of 100,000 for completely unknown races.
+  const PRIMARY_TURNOUT_RATE = 0.18;
+
+  let est_turnout: number;
+  if (expected_turnout && expected_turnout > 0) {
+    est_turnout = Math.max(expected_turnout, totalReported);
+  } else if (pct > 0.005 && totalReported > 0) {
+    est_turnout = Math.max(Math.round(totalReported / pct), totalReported);
+  } else if (current.registered_voters > 0) {
+    est_turnout = Math.round(current.registered_voters * PRIMARY_TURNOUT_RATE);
+  } else {
+    est_turnout = 100_000;
+  }
 
   return {
     race_rule,
@@ -136,13 +155,12 @@ function buildPollAvgShares(
     getScore(top3[1]?.name ?? ""),
     getScore(top3[2]?.name ?? ""),
   ];
-    const pollTotal = raw.reduce((s, v) => s + v, 0);
-    // Normalize to pollTotal so shares sum to < 1, leaving room for Others
-    const normalize = pollTotal > 0 ? (v: number) => v / 100 : () => 1 / 4;
-    return {
-      Candidate1: normalize(raw[0]),
-      Candidate2: normalize(raw[1]),
-      Candidate3: normalize(raw[2]),
+  const pollTotal = raw.reduce((s, v) => s + v, 0);
+  const normalize = pollTotal > 0 ? (v: number) => v / 100 : () => 1 / 4;
+  return {
+    Candidate1: normalize(raw[0]),
+    Candidate2: normalize(raw[1]),
+    Candidate3: normalize(raw[2]),
   };
 }
 
@@ -166,8 +184,8 @@ export interface ForecastOutput {
   sd_race: number;
   modeled_votes: Votes4;
   modeled_share: Shares4;
-  plurality_odds_to_win: Shares4;       // P(highest vote share) — use in PLURALITY
-  majority_win_prob: Shares4;           // P(>50%) — use in MAJORITY
+  plurality_odds_to_win: Shares4;
+  majority_win_prob: Shares4;
   prob_someone_majority: number;
   runoff_needed_prob: number;
   runoff_prob: Shares4;
@@ -209,7 +227,6 @@ function sortCandidatesByVotes(v: Votes4): CandidateKey[] {
     .sort((a, b) => v[b] - v[a]);
 }
 
-// Normal CDF approximation (Abramowitz & Stegun 7.1.26)
 function phi(z: number): number {
   const sign = z < 0 ? -1 : 1;
   const absZ = Math.abs(z) / Math.SQRT2;
@@ -220,13 +237,12 @@ function phi(z: number): number {
   return 0.5 * (1 + sign * y);
 }
 
-// P(A > B) under normal uncertainty (margin ~ N(diff, sd * √2))
 function pBeats(meanA: number, meanB: number, sdRace: number): number {
   const denom = sdRace * Math.SQRT2;
   if (denom === 0) {
     if (meanA > meanB) return 1;
     if (meanA < meanB) return 0;
-    return 0.5; // exact tie
+    return 0.5;
   }
   return phi((meanA - meanB) / denom);
 }
@@ -236,7 +252,6 @@ function pBeats(meanA: number, meanB: number, sdRace: number): number {
 function calcPluralityOdds(mean_vote: Votes4, sd_race: number): Shares4 {
   const TOP3: CandidateKey[] = ["Candidate1", "Candidate2", "Candidate3"];
   const score: Record<CandidateKey, number> = { Candidate1: 0, Candidate2: 0, Candidate3: 0, Others: 0 };
-
   for (const A of TOP3) {
     let s = 1;
     for (const B of TOP3) {
@@ -244,13 +259,11 @@ function calcPluralityOdds(mean_vote: Votes4, sd_race: number): Shares4 {
     }
     score[A] = s;
   }
-
   const total = TOP3.reduce((s, c) => s + score[c], 0);
   if (total === 0) {
     const uniform = 1 / 3;
     return { Candidate1: uniform, Candidate2: uniform, Candidate3: uniform, Others: 0 };
   }
-
   return {
     Candidate1: score.Candidate1 / total,
     Candidate2: score.Candidate2 / total,
@@ -263,7 +276,6 @@ function calcMajorityWinProb(mean_vote: Votes4, sd_race: number, modeled_total_v
   const threshold = 0.5 * modeled_total_vote;
   const TOP3: CandidateKey[] = ["Candidate1", "Candidate2", "Candidate3"];
   const result: Shares4 = { Candidate1: 0, Candidate2: 0, Candidate3: 0, Others: 0 };
-
   for (const c of TOP3) {
     if (sd_race === 0) {
       result[c] = mean_vote[c] >= threshold ? 1 : 0;
@@ -282,10 +294,8 @@ function calcRunoffProb(mean_vote: Votes4, sd_race: number): Shares4 {
     ["Candidate1", "Candidate3"],
     ["Candidate2", "Candidate3"],
   ];
-
   const pairScore = new Map<string, number>();
   let pairSum = 0;
-
   for (const [i, j] of pairs) {
     let ps = 1;
     for (const k of TOP3) {
@@ -297,7 +307,6 @@ function calcRunoffProb(mean_vote: Votes4, sd_race: number): Shares4 {
     pairScore.set(`${i}|${j}`, ps);
     pairSum += ps;
   }
-
   const result: Shares4 = { Candidate1: 0, Candidate2: 0, Candidate3: 0, Others: 0 };
   if (pairSum !== 0) {
     for (const [i, j] of pairs) {
@@ -345,9 +354,8 @@ export function forecastRace(
   const modeled_vote_remaining = modeled_total_vote - reported_vote_total;
   const modeled_percent_reporting = safeDiv(reported_vote_total, modeled_total_vote);
 
-  // Step 2: Uncertainty (sd_race) with early-reporting protection
+  // Step 2: Uncertainty (sd_race)
   const sd_pre_election = roundToNearest100(expected_turnout / 6.5);
-
   let sd_race: number;
   if (percent_reporting < 0.05) {
     sd_race = sd_pre_election;
@@ -356,28 +364,23 @@ export function forecastRace(
     const scale = safeDiv(modeled_vote_remaining, implied_total);
     sd_race = sd_pre_election * Math.max(0.1, Math.min(1, scale));
   }
-
-  // Emergency floor when lots of votes still out
-  if (modeled_vote_remaining > 100000) {
+  if (modeled_vote_remaining > 100_000) {
     sd_race = Math.max(sd_race, modeled_vote_remaining / 20);
   }
 
-  // Step 3: Projected votes (proportional allocation of remaining)
+  // Step 3: Projected votes
   const modeled_votes: Votes4 = {
     Candidate1: reported_votes.Candidate1 + modeled_vote_remaining * expected_share4.Candidate1,
     Candidate2: reported_votes.Candidate2 + modeled_vote_remaining * expected_share4.Candidate2,
     Candidate3: reported_votes.Candidate3 + modeled_vote_remaining * expected_share4.Candidate3,
     Others: 0,
   };
-
   const tmpC1 = safeDiv(modeled_votes.Candidate1, modeled_total_vote);
   const tmpC2 = safeDiv(modeled_votes.Candidate2, modeled_total_vote);
   const tmpC3 = safeDiv(modeled_votes.Candidate3, modeled_total_vote);
   modeled_votes.Others = modeled_total_vote * Math.max(0, 1 - tmpC1 - tmpC2 - tmpC3);
 
   const modeled_share = sharesFromVotes(modeled_votes, modeled_total_vote);
-
-  // Mean vote = modeled_votes (already includes expected allocation)
   const mean_vote: Votes4 = { ...modeled_votes };
 
   // Step 4: Probabilities
@@ -387,7 +390,6 @@ export function forecastRace(
     majority_win_prob.Candidate1 + majority_win_prob.Candidate2 + majority_win_prob.Candidate3,
     0, 1
   );
-
   const runoff_prob = calcRunoffProb(mean_vote, sd_race);
   const runoff_needed_prob = calcRunoffNeededProb(majority_win_prob);
 
