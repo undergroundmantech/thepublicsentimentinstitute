@@ -1383,7 +1383,7 @@ export default function March3FeaturedClient() {
                 </div>
                 {/* State switcher */}
                 <div style={{ display: "flex", gap: "1px" }}>
-                  {(["TX", "NC", "AR", "TEST"] as const).map((st) => (
+                  {(["TX", "NC", "AR"] as const).map((st) => (
                     <button key={st} className={`res-btn-state ${activeState === st ? "active" : ""}`} onClick={() => setActiveState(st)}>{stateLabels[st]}</button>
                   ))}
                 </div>
