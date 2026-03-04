@@ -748,7 +748,18 @@ function ForecastPanel({ raceId, refreshTick, raceData }: { raceId: number; refr
     return () => { if (playRef.current) clearInterval(playRef.current); };
   }, [playing, timestamps.length]); // eslint-disable-line
 
-  const candidateLabels: Record<FCKey, string> = useMemo(() => { const names = forecast?.forecast.candidate_names ?? ["Candidate 1", "Candidate 2", "Candidate 3", "Others"]; return { Candidate1: names[0], Candidate2: names[1], Candidate3: names[2], Others: names[3] }; }, [forecast]);
+  const candidateLabels: Record<FCKey, string> = useMemo(() => {
+    const names = forecast?.forecast.candidate_names ?? ["Candidate 1", "Candidate 2", "Candidate 3", "Others"];
+    return { Candidate1: names[0], Candidate2: names[1], Candidate3: names[2], Others: names[3] };
+  }, [forecast]);
+
+  const formatCandidateName = (name: string) => {
+    const parts = name.trim().split(/\s+/);
+    if (parts.length <= 1) return <>{name}</>;
+    const last = parts[parts.length - 1];
+    const first = parts.slice(0, -1).join(" ");
+    return <>{first}<br />{last}</>;
+  };
   const candidateColors: Record<FCKey, string> = useMemo(() => { const colors = forecast?.forecast.candidate_colors ?? ["#3b82f6", "#ef4444", "#22c55e", "#94a3b8"]; return { Candidate1: colors[0], Candidate2: colors[1], Candidate3: colors[2], Others: colors[3] }; }, [forecast]);
   const isLoading = loadingHistory || loadingForecast;
   const swingoProbs = useMemo(() => { if (!forecast) return { c1: 0.5, c2: 0.5, c3: 0 }; const f = forecast.forecast; const src = raceRule === "PLURALITY" ? f.plurality_odds_to_win : f.majority_win_prob; return { c1: src.Candidate1, c2: src.Candidate2, c3: src.Candidate3 }; }, [forecast, raceRule]);
@@ -800,11 +811,11 @@ function ForecastPanel({ raceId, refreshTick, raceData }: { raceId: number; refr
               {(["Candidate1", "Candidate2", "Candidate3"] as const).filter(k => k !== "Candidate3" || forecast.forecast.modeled_share["Candidate3"] > 0.005).map((key) => {
                 const color = candidateColors[key], share = forecast.forecast.modeled_share[key], votes = forecast.forecast.modeled_votes[key], isLeader = forecast.forecast.leader === key;
                 return (
-                  <div key={key} style={{ padding: "10px 10px 8px", background: "rgba(255,255,255,0.025)", border: `1px solid ${isLeader ? color + "44" : "rgba(255,255,255,0.06)"}`, position: "relative" }}>
-                    {isLeader && <div style={{ position: "absolute", top: 5, right: 6, fontSize: 6, color, fontWeight: 700, fontFamily: "var(--font-body)", letterSpacing: "0.16em", textTransform: "uppercase" }}>LEADER</div>}
-                    <div style={{ fontFamily: "var(--font-body)", fontSize: "7px", fontWeight: 700, letterSpacing: "0.20em", textTransform: "uppercase", color: color + "cc", marginBottom: 4, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{candidateLabels[key]}</div>
+                  <div key={key} style={{ padding: "10px 10px 8px", background: "rgba(255,255,255,0.025)", border: `1px solid ${isLeader ? color + "44" : "rgba(255,255,255,0.06)"}` }}>
+                    <div style={{ fontFamily: "var(--font-body)", fontSize: "7px", fontWeight: 700, letterSpacing: "0.20em", textTransform: "uppercase", color: color + "cc", marginBottom: 4, lineHeight: 1.4 }}>{formatCandidateName(candidateLabels[key])}</div>
                     <div style={{ fontFamily: "var(--font-body)", fontSize: "clamp(17px, 1.8vw, 22px)", fontWeight: 900, color, lineHeight: 1 }}>{fcastPct(share)}</div>
                     <div style={{ fontFamily: "var(--font-body)", fontSize: "7.5px", letterSpacing: "0.10em", color: "rgba(255,255,255,0.35)", marginTop: 3 }}>{fcastFmt(votes)} PROJ</div>
+                    {isLeader && <div style={{ marginTop: 6, fontSize: "5.5px", color, fontWeight: 700, fontFamily: "var(--font-body)", letterSpacing: "0.16em", textTransform: "uppercase", border: `1px solid ${color}55`, padding: "1px 4px", display: "inline-block" }}>LEADER</div>}
                   </div>
                 );
               })}
