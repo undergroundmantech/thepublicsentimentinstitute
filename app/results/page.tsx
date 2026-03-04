@@ -390,21 +390,14 @@ function MapWithCountyTooltip({ svgText, regionResults }: { svgText: string; reg
 }
 
 // ─── CANDIDATE LIST ──────────────────────────────────────────────────────────
-function CandidateList({ candidates, reporting, raceId }: { candidates: RaceCandidate[]; reporting: number; raceId?: number }) {
+function CandidateList({ candidates, reporting, raceId, isMajorityRunoff }: { candidates: RaceCandidate[]; reporting: number; raceId?: number; isMajorityRunoff?: boolean }) {
   const defaults = raceId ? RACE_FORECAST_DEFAULTS[raceId] : undefined;
   const ordered = useMemo(() => sortCandidatesByPollData(candidates, defaults?.pollAvg), [candidates, defaults?.pollAvg]);
-  const winProb = useMemo(() => { if (ordered.length < 2 || reporting < 1) return null; return calculateWinProbability(ordered[0].votes, ordered[1].votes, reporting); }, [ordered, reporting]);
   return (
     <div className="space-y-2">
-      {winProb !== null && !ordered[0].winner && reporting > 5 && (
-        <div className="res-stat-block mb-3">
-          <div className="res-stat-row mb-2"><span className="res-stat-label">PROJECTED WIN CHANCE</span><span style={{ color: "var(--purple-soft)", fontFamily: "var(--font-body)", fontSize: "10px", fontWeight: 700, letterSpacing: "0.14em" }}>{winProb.toFixed(1)}%</span></div>
-          <div className="res-bar-track"><div className="res-bar-fill" style={{ width: `${Math.max(0, Math.min(100, winProb))}%`, background: "linear-gradient(90deg,var(--purple),var(--purple2))", transition: "width 700ms ease" }} /></div>
-        </div>
-      )}
       <div className="res-candidate-list">
         {ordered.map((c, idx) => {
-          const isLeading = idx === 0 && !c.winner && winProb && winProb > 75;
+          const isLeading = idx === 0 && !c.winner;
           return (
             <div key={`${c.name}-${c.party}`} className="res-candidate-row">
               <div className="res-cand-bar" style={{ background: c.color || "rgba(255,255,255,0.2)" }} />
@@ -414,13 +407,14 @@ function CandidateList({ candidates, reporting, raceId }: { candidates: RaceCand
                   <div className="min-w-0">
                     <div className="flex flex-wrap items-center gap-2 mb-0.5">
                       <span className="res-cand-name-lg">{c.name}</span>
-                      {c.winner && <span className="res-badge res-badge-win">✓ WINNER</span>}
-                      {isLeading && <span className="res-badge res-badge-purple">LEADING</span>}
+                      {c.winner && !isMajorityRunoff && <span className="res-badge res-badge-win">✓ WINNER</span>}
+                      {c.winner && isMajorityRunoff && <span className="res-badge" style={{ borderColor: "rgba(245,158,11,0.4)", background: "rgba(245,158,11,0.08)", color: "#f59e0b" }}>RUNOFF</span>}
+                      {isLeading && !c.winner && <span className="res-badge res-badge-purple">LEADING</span>}
                     </div>
                     <div className="res-cand-party">{c.party} · {c.votes.toLocaleString()} votes</div>
                   </div>
                 </div>
-                <div className="res-pct-xl shrink-0">{fmtPct(c.percent)}</div>
+                <div className="res-pct-topline shrink-0">{fmtPct(c.percent)}</div>
               </div>
             </div>
           );
@@ -648,7 +642,7 @@ function fcastShortDate(ts: string) { return new Date(ts).toLocaleString("en-US"
 function getTimestamps(hl: ForecastHistoryList | null): ForecastHistoryTimestamp[] { return hl?.timestamps ?? []; }
 
 // ─── FORECAST PANEL ───────────────────────────────────────────────────────────
-function ForecastPanel({ raceId, refreshTick, raceData }: { raceId: number; refreshTick: number; raceData?: RaceDetail }) {
+function ForecastPanel({ raceId, refreshTick, raceData, onForecastUpdate }: { raceId: number; refreshTick: number; raceData?: RaceDetail; onForecastUpdate?: (leader: string, prob: number) => void }) {
   const defaults = RACE_FORECAST_DEFAULTS[raceId];
   const TX_RACE_IDS = [44285, 44286, 44287, 44288, 44289, 44290, 44291, 44292, 44293, 44294, 44295];
   const [raceRule, setRaceRule] = useState<RaceRule>(() => TX_RACE_IDS.includes(raceId) ? "MAJORITY" : (defaults?.raceRule ?? "PLURALITY"));
@@ -682,6 +676,13 @@ function ForecastPanel({ raceId, refreshTick, raceData }: { raceId: number; refr
       if (raceIdRef.current !== id) return;
       if (data.error) throw new Error(data.details ?? data.error);
       setForecast(data);
+      if (onForecastUpdate && data.forecast) {
+        const src = data.forecast.majority_win_prob ?? data.forecast.plurality_odds_to_win;
+        const names = data.forecast.candidate_names ?? [];
+        const keys = ["Candidate1","Candidate2","Candidate3"] as const;
+        const best = keys.reduce((a,b) => ((src[b]??0) > (src[a]??0) ? b : a), "Candidate1" as typeof keys[number]);
+        onForecastUpdate(names[keys.indexOf(best)] ?? "", (src[best] ?? 0) * 100);
+      }
     } catch (e: any) { if (raceIdRef.current === id) setError(e.message); }
     finally { if (raceIdRef.current === id) setLoadingForecast(false); }
   }, []);
@@ -1220,6 +1221,12 @@ export default function March3FeaturedClient() {
     return getRaceProjectionAlways(selectedRace);
   }, [selectedRace]);
   const selectedWinner = selectedRace?.candidates?.find((c) => c.winner);
+  const selectedRaceIsMajority = RACE_FORECAST_DEFAULTS[selectedId]?.raceRule === "MAJORITY" || 
+    [44285,44286,44287,44288,44289,44290,44291,44292,44293,44295,44344,44729,44730,44209,44208].includes(selectedId);
+  const selectedWinners = selectedRace?.candidates?.filter((c) => c.winner) ?? [];
+  const isRunoffConfirmed = selectedRaceIsMajority && selectedWinners.length >= 2;
+  const [forecastProj, setForecastProj] = useState<{ leader: string; prob: number } | null>(null);
+  useEffect(() => { setForecastProj(null); }, [selectedId]);
 
   const timeStr = nowMs > 0
     ? new Date(nowMs).toLocaleTimeString("en-US", { hour12: false, hour: "2-digit", minute: "2-digit", second: "2-digit" })
@@ -1252,6 +1259,7 @@ export default function March3FeaturedClient() {
         .res-num { font-family:var(--font-body); font-size:10.5px; color:var(--muted); font-variant-numeric:tabular-nums; }
         .res-pct-big { font-family:var(--font-body); font-size:13px; font-weight:900; color:#fff; font-variant-numeric:tabular-nums; }
         .res-pct-xl { font-family:var(--font-body); font-size:clamp(22px,2.5vw,30px); font-weight:900; color:#fff; font-variant-numeric:tabular-nums; line-height:1; }
+        .res-pct-topline { font-family:var(--font-body); font-size:clamp(20px,2.2vw,28px); font-weight:900; color:#fff; font-variant-numeric:tabular-nums; line-height:1; }
         .res-stat-label { font-family:var(--font-body); font-size:7.5px; font-weight:700; letter-spacing:0.26em; text-transform:uppercase; color:var(--muted3); }
         .res-stat-val { font-family:var(--font-body); font-size:10px; font-weight:700; letter-spacing:0.14em; color:var(--muted); }
         .res-stat-row { display:flex; align-items:center; justify-content:space-between; }
@@ -1327,10 +1335,10 @@ export default function March3FeaturedClient() {
           max-width: 1800px;
           margin: 0 auto;
           display: grid;
-          grid-template-columns: 260px 1fr 290px;
-          grid-template-rows: calc(100vh - 210px);
-          gap: 14px;
-          padding: 14px 20px;
+          grid-template-columns: 190px 1fr 300px;
+          grid-template-rows: calc(100vh - 175px);
+          gap: 8px;
+          padding: 8px 10px;
           box-sizing: border-box;
         }
 
@@ -1349,15 +1357,19 @@ export default function March3FeaturedClient() {
           overflow: hidden;
         }
 
-        /* ── CENTER SPLIT: [map | forecast+scroll] ── */
+        /* ── CENTER SPLIT: map only on desktop ── */
         .res-center-split {
-          display: grid;
-          grid-template-columns: 1fr 340px;
-          gap: 14px;
+          display: flex;
+          flex-direction: column;
           min-height: 0;
+          overflow: hidden;
         }
-        .res-center-split.no-forecast {
-          grid-template-columns: 1fr 300px;
+        .res-center-split > .res-map-panel {
+          flex: 1;
+          min-height: 0;
+          display: flex;
+          flex-direction: column;
+          overflow: hidden;
         }
         .res-center-split > .res-map-panel {
           display: flex;
@@ -1371,22 +1383,6 @@ export default function March3FeaturedClient() {
           overflow-y: auto;
         }
 
-        /* ── RIGHT COLUMN inside center split ── */
-        .res-center-right {
-          display: flex;
-          flex-direction: column;
-          gap: 10px;
-          min-height: 0;
-          overflow: hidden;
-        }
-        .res-center-right > .res-forecast-wrap {
-          flex: 1;
-          min-height: 0;
-          overflow: hidden;
-        }
-        .res-center-right > .res-panel {
-          flex-shrink: 0;
-        }
 
         /* ── FORECAST WRAP ── */
         .res-forecast-wrap {
@@ -1411,22 +1407,22 @@ export default function March3FeaturedClient() {
         .res-right-rail {
           display: flex;
           flex-direction: column;
-          gap: 12px;
+          gap: 8px;
           min-height: 0;
           height: 100%;
           overflow: hidden;
         }
-        /* Topline: gets generous fixed space */
+        /* All three panels equal height, each scrolls internally */
         .res-right-rail > .res-panel:first-child {
-          min-height: 260px;
-          flex: 2;
+          flex: 1;
+          min-height: 0;
+          overflow: hidden;
         }
-        /* Race status: gets solid fixed space */
         .res-right-rail > .res-race-status-panel {
-          min-height: 240px;
-          flex: 2;
+          flex: 1;
+          min-height: 0;
+          overflow: hidden;
         }
-        /* Forecast panel: smaller, scrolls internally */
         .res-forecast-wrap {
           flex: 1 !important;
           min-height: 0;
@@ -1474,8 +1470,8 @@ export default function March3FeaturedClient() {
         /* ── TABLET INLINE COUNTY TABLE ── */
         .res-tablet-county { display: none; }
 
-        /* ════ TABLET ≤1400px ════ */
-        @media (max-width: 1400px) {
+        /* ════ TABLET ≤768px ════ */
+        @media (max-width: 768px) {
           /* Fixed height so both columns end at same line */
           .res-body {
             grid-template-columns: 1fr 300px;
@@ -1485,28 +1481,22 @@ export default function March3FeaturedClient() {
           .res-race-picker { display: none; }
           .res-mobile-race-strip { display: flex; }
           /* Center column: map panel fills height, county scrolls below */
-          .res-center-split { grid-template-columns: 1fr; min-height: 0; height: 100%; }
-          .res-center-split.no-forecast { grid-template-columns: 1fr; }
+          .res-center-split { flex-direction: column; min-height: 0; height: 100%; }
           .res-center-split > .res-map-panel { display: flex; flex-direction: column; height: 100%; min-height: 0; overflow: hidden; }
           .res-center-split > .res-map-panel .res-map-body { flex-shrink: 0; }
           .res-tablet-county { display: flex; flex-direction: column; flex: 1; min-height: 0; overflow: hidden; border-top: 1px solid var(--border); }
           .res-tablet-county .res-panel { display: flex; flex-direction: column; height: 100%; }
           .res-tablet-county .res-panel > div:last-child { flex: 1; overflow-y: auto; max-height: none !important; }
-          .res-center-right { display: none; }
-          /* Right rail: race scroll at top, then topline/status/forecast, scrollable */
+          /* Right rail scrollable, with race scroll window at top */
           .res-right-rail { height: 100%; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
-          .res-right-rail > .res-panel:last-child { flex: none; }
           .res-race-scroll-window { display: flex; max-height: 200px; flex-shrink: 0; }
-          .res-tablet-forecast { display: flex !important; }
           /* Hide full-width bottom on tablet */
           .res-bottom { display: none; }
         }
 
-        /* ════ MOBILE ≤900px ════ */
-        @media (max-width: 900px) {
-          /* Switch entire page to flex column so we can reorder blocks */
+        /* ════ MOBILE ≤640px ════ */
+        @media (max-width: 640px) {
           .res-root { display: flex; flex-direction: column; }
-          .res-mobile-race-search { order: 1; }
           .res-body {
             order: 2;
             display: flex !important;
@@ -1516,23 +1506,26 @@ export default function March3FeaturedClient() {
             padding: 8px 10px;
             gap: 10px;
           }
-          /* Order within res-body: race scroll → map → right rail → forecast */
           .res-race-picker { display: none !important; }
-          .res-center-split { order: 1; grid-template-columns: 1fr; height: auto; }
-          .res-center-split > .res-map-panel { height: auto; overflow: visible; }
-          .res-center-split > .res-map-panel .res-map-body { flex: none; }
-          .res-tablet-county { display: none; }
-          .res-right-rail { order: 2; display: flex; flex-direction: column; gap: 10px; height: auto; overflow: visible; min-height: 0; }
+          /* Right rail: normal column order = Topline then Race Status, appears first */
+          .res-right-rail { order: 1; display: flex; flex-direction: column; gap: 10px; height: auto; overflow: visible; min-height: 0; }
+          /* Hide the tablet race scroll inside right rail on mobile — mobile has its own */
+          .res-right-rail > .res-race-scroll-window { display: none !important; }
           .res-right-rail > .res-panel:first-child { min-height: 0; flex: none; }
           .res-right-rail > .res-race-status-panel { min-height: 0; flex: none; overflow: visible !important; }
           .res-race-status-panel { flex: none !important; overflow: visible !important; }
-          .res-center-right { order: 3; display: flex !important; flex-direction: column; }
-          .res-center-right > .res-race-scroll-window { display: none !important; }
-          .res-tablet-forecast { display: none !important; }
-          /* Bottom county last */
-          .res-bottom { order: 3; display: block; padding: 0 10px 16px; }
-          /* Race scroll window shown in mobile race search block */
+          /* Forecast pushed to after map via order */
+          .res-forecast-wrap { order: 3; flex: none !important; height: auto; min-height: 0; overflow: visible; }
+          .res-forecast-wrap > .res-panel { overflow: visible; }
+          .res-forecast-wrap > .res-panel .res-forecast-body { overflow-y: visible; max-height: none; }
+          /* Map second */
+          .res-center-split { order: 2; grid-template-columns: 1fr; height: auto; }
+          .res-center-split > .res-map-panel { height: auto; overflow: visible; }
+          .res-center-split > .res-map-panel .res-map-body { flex: none; }
+          .res-tablet-county { display: none; }
+          .res-bottom { order: 4; display: block; padding: 0 10px 16px; }
           .res-race-scroll-window { display: flex; max-height: 190px; flex-shrink: 0; }
+          .res-mobile-race-search { order: 1; }
         }
 
         /* ── TABLET RACE SEARCH (top of right rail, tablet only) ── */
@@ -1540,7 +1533,7 @@ export default function March3FeaturedClient() {
 
         /* ── MOBILE RACE LIST (phones only, above map) ── */
         .res-mobile-race-search { display: none; }
-        @media (max-width: 900px) {
+        @media (max-width: 640px) {
           .res-mobile-race-search { display: block; }
           .res-mobile-race-search .res-race-scroll-window { display: flex !important; margin: 8px 10px 0; }
         }
@@ -1608,7 +1601,7 @@ export default function March3FeaturedClient() {
           </div>
         </div>
 
-        {/* ── MOBILE RACE SELECTOR (visible below 1400px) ── */}
+        {/* ── MOBILE RACE SELECTOR (visible below 768px) ── */}
         <div className="res-mobile-race-strip">
           {/* Live indicator */}
           <span className="res-live-dot" style={{ flexShrink: 0 }} />
@@ -1728,50 +1721,15 @@ export default function March3FeaturedClient() {
               </div>
             </div>
 
-            {/* RIGHT COLUMN: compact race scroll (tablet only) + forecast (or no-forecast placeholder) */}
-            <div className="res-center-right">
+          </div>{/* end res-center-split */}
 
-              {/* COMPACT RACE SCROLL WINDOW */}
-              <div className="res-race-scroll-window">
-                <RaceScrollWindow races={racesForState} raceCache={raceCache} selectedId={selectedId} onSelect={setSelectedId} search={scrollWindowSearch} onSearchChange={setScrollWindowSearch} />
-              </div>
-
-              {/* FORECAST PANEL or NO-FORECAST PLACEHOLDER */}
-              {hasForecastForSelected ? (
-                <div className="res-forecast-wrap">
-                  <ForecastPanel key={selectedId} raceId={selectedId} refreshTick={refreshTick} raceData={selectedRace} />
-                </div>
-              ) : (
-                <div className="res-panel" style={{ display: "flex", flexDirection: "column" }}>
-                  <div className="res-tri-stripe" />
-                  <div className="res-panel-header">
-                    <span className="res-panel-tag">FORECAST MODEL</span>
-                    <span style={{ fontFamily: "var(--font-body)", fontSize: "7px", fontWeight: 700, letterSpacing: "0.18em", color: "rgba(255,255,255,0.18)", textTransform: "uppercase" }}>NOT AVAILABLE</span>
-                  </div>
-                  <div style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "space-between", padding: "20px 18px 18px" }}>
-                    <div>
-                      <div style={{ fontFamily: "var(--font-body)", fontSize: "11px", fontWeight: 900, letterSpacing: "0.10em", textTransform: "uppercase", color: "rgba(255,255,255,0.55)", marginBottom: 10, lineHeight: 1.4 }}>
-                        No Forecast<br />for This Race
-                      </div>
-                      <div style={{ fontFamily: "var(--font-body)", fontSize: "8.5px", fontWeight: 500, color: "rgba(255,255,255,0.22)", lineHeight: 1.7, letterSpacing: "0.04em" }}>
-                        Our forecast model requires reliable poll averages and turnout baselines. For this race, we don't have enough data to model outcomes responsibly — so we've chosen not to publish one.
-                      </div>
-                    </div>
-                    <div style={{ marginTop: 20, paddingTop: 14, borderTop: "1px solid rgba(255,255,255,0.06)" }}>
-                      <div style={{ fontFamily: "var(--font-body)", fontSize: "7px", fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(255,255,255,0.15)", marginBottom: 8 }}>WHAT WE'RE WATCHING</div>
-                      <div style={{ fontFamily: "var(--font-body)", fontSize: "8px", color: "rgba(255,255,255,0.28)", lineHeight: 1.6 }}>
-                        Live results and county-level returns will update automatically as precincts report in.
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              )}
-
-            </div>
-          </div>
-
-          {/* RIGHT RAIL: Topline + Race Status */}
+          {/* RIGHT RAIL: Topline + Race Status + Forecast stacked */}
           <aside className="res-right-rail">
+
+            {/* TABLET RACE SCROLL — hidden on desktop, shown on tablet */}
+            <div className="res-race-scroll-window">
+              <RaceScrollWindow races={racesForState} raceCache={raceCache} selectedId={selectedId} onSelect={setSelectedId} search={scrollWindowSearch} onSearchChange={setScrollWindowSearch} />
+            </div>
 
             {/* TOPLINE */}
             <div className="res-panel" style={{ display: "flex", flexDirection: "column", minHeight: 0 }}>
@@ -1779,12 +1737,12 @@ export default function March3FeaturedClient() {
               <div className="res-panel-header" style={{ flexShrink: 0 }}>
                 <span className="res-panel-tag">TOPLINE RESULTS</span>
                 {selectedRace?.percent_reporting !== undefined && (
-                  <span className="res-note" style={{ color: "rgba(255,255,255,0.45)", fontWeight: 700 }}>{selectedRace.percent_reporting.toFixed(1)}% IN</span>
+                  <span style={{ fontFamily: "var(--font-body)", fontSize: "9px", fontWeight: 700, color: "rgba(255,255,255,0.4)", letterSpacing: "0.10em" }}>{selectedRace.percent_reporting.toFixed(1)}% IN</span>
                 )}
               </div>
               <div style={{ padding: "12px 14px", overflowY: "auto", flex: 1, minHeight: 0 }}>
                 {selectedRace?.candidates
-                  ? <CandidateList candidates={selectedRace.candidates} reporting={selectedRace.percent_reporting ?? 0} raceId={selectedId} />
+                  ? <CandidateList candidates={selectedRace.candidates} reporting={selectedRace.percent_reporting ?? 0} raceId={selectedId} isMajorityRunoff={isRunoffConfirmed} />
                   : <div style={{ padding: "32px 0", textAlign: "center" }} className="res-note">LOADING…</div>
                 }
               </div>
@@ -1794,7 +1752,6 @@ export default function March3FeaturedClient() {
             <div className="res-panel res-race-status-panel" style={{ display: "flex", flexDirection: "column", minHeight: 0 }}>
               <div className="res-panel-header" style={{ flexShrink: 0 }}><span className="res-panel-tag">RACE STATUS</span></div>
               <div style={{ padding: "12px 14px", display: "flex", flexDirection: "column", gap: "8px", overflowY: "auto", flex: 1, minHeight: 0 }}>
-
                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px" }}>
                   <div className="res-stat-block">
                     <div className="res-stat-block-label">REPORTING</div>
@@ -1810,15 +1767,22 @@ export default function March3FeaturedClient() {
                 <div className="res-stat-block">
                   <div className="res-stat-row" style={{ marginBottom: "5px" }}>
                     <span className="res-stat-block-label">PROJECTION</span>
-                    <span className="res-note" style={{ color: selectedWinner ? "var(--win)" : "var(--purple-soft)", fontWeight: 700 }}>{selectedWinner ? "OFFICIAL" : selectedProj ? `${selectedProj.prob.toFixed(1)}%` : "—"}</span>
+                    <span className="res-note" style={{ color: isRunoffConfirmed ? "#f59e0b" : selectedWinner ? "var(--win)" : forecastProj ? "var(--purple-soft)" : "var(--muted3)", fontWeight: 700 }}>
+                      {isRunoffConfirmed ? "CONFIRMED" : selectedWinner ? "OFFICIAL" : forecastProj ? `${forecastProj.prob.toFixed(1)}%` : "—"}
+                    </span>
                   </div>
-                  <div style={{ fontFamily: "var(--font-body)", fontSize: "12px", fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: "rgba(255,255,255,0.88)" }}>{selectedWinner ? `✓ ${selectedWinner.name}` : selectedProj ? selectedProj.leaderName : "No projection yet"}</div>
-                  {selectedProj && !selectedWinner && (
-                    <div className="res-bar-track" style={{ marginTop: "7px" }}><div className="res-bar-fill" style={{ width: `${Math.max(0, Math.min(100, selectedProj.prob))}%`, background: "linear-gradient(90deg,var(--purple),var(--blue2))" }} /></div>
+                  <div style={{ fontFamily: "var(--font-body)", fontSize: "12px", fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: isRunoffConfirmed ? "#f59e0b" : "rgba(255,255,255,0.88)" }}>
+                    {isRunoffConfirmed ? "⚡ RUNOFF NEEDED" : selectedWinner ? `✓ ${selectedWinner.name}` : forecastProj ? forecastProj.leader : "No projection yet"}
+                  </div>
+                  {isRunoffConfirmed && (
+                    <div className="res-note" style={{ marginTop: 4, color: "rgba(255,255,255,0.4)" }}>
+                      {selectedWinners.map(w => w.name.split(" ").pop()).join(" vs ")} advance
+                    </div>
+                  )}
+                  {forecastProj && !selectedWinner && !isRunoffConfirmed && (
+                    <div className="res-bar-track" style={{ marginTop: "7px" }}><div className="res-bar-fill" style={{ width: `${Math.max(0, Math.min(100, forecastProj.prob))}%`, background: "linear-gradient(90deg,var(--purple),var(--blue2))" }} /></div>
                   )}
                 </div>
-
-                {/* Mini candidate bars in status panel */}
                 {selectedRace?.candidates && selectedRace.candidates.length > 0 && (
                   <div style={{ marginTop: 4 }}>
                     <div className="res-note" style={{ marginBottom: 8 }}>VOTE SHARE</div>
@@ -1841,30 +1805,30 @@ export default function March3FeaturedClient() {
               </div>
             </div>
 
-            {/* TABLET FORECAST — hidden on desktop (forecast is in center-right), shown on tablet */}
-            <div className="res-tablet-forecast" style={{ display: "none", flexDirection: "column" }}>
-              {hasForecastForSelected ? (
-                <div className="res-forecast-wrap" style={{ flex: 1 }}>
-                  <ForecastPanel key={`tablet-${selectedId}`} raceId={selectedId} refreshTick={refreshTick} raceData={selectedRace} />
+            {/* FORECAST */}
+            {hasForecastForSelected ? (
+              <div className="res-forecast-wrap">
+                <ForecastPanel key={selectedId} raceId={selectedId} refreshTick={refreshTick} raceData={selectedRace} onForecastUpdate={(leader, prob) => setForecastProj({ leader, prob })} />
+              </div>
+            ) : (
+              <div className="res-panel" style={{ display: "flex", flexDirection: "column" }}>
+                <div className="res-tri-stripe" />
+                <div className="res-panel-header">
+                  <span className="res-panel-tag">FORECAST MODEL</span>
+                  <span style={{ fontFamily: "var(--font-body)", fontSize: "7px", fontWeight: 700, letterSpacing: "0.18em", color: "rgba(255,255,255,0.18)", textTransform: "uppercase" }}>NOT AVAILABLE</span>
                 </div>
-              ) : (
-                <div className="res-panel">
-                  <div className="res-tri-stripe" />
-                  <div className="res-panel-header">
-                    <span className="res-panel-tag">FORECAST MODEL</span>
-                    <span style={{ fontFamily: "var(--font-body)", fontSize: "7px", fontWeight: 700, letterSpacing: "0.18em", color: "rgba(255,255,255,0.18)", textTransform: "uppercase" }}>NOT AVAILABLE</span>
+                <div style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "space-between", padding: "20px 18px 18px" }}>
+                  <div>
+                    <div style={{ fontFamily: "var(--font-body)", fontSize: "11px", fontWeight: 900, letterSpacing: "0.10em", textTransform: "uppercase", color: "rgba(255,255,255,0.55)", marginBottom: 10, lineHeight: 1.4 }}>No Forecast<br />for This Race</div>
+                    <div style={{ fontFamily: "var(--font-body)", fontSize: "8.5px", fontWeight: 500, color: "rgba(255,255,255,0.22)", lineHeight: 1.7, letterSpacing: "0.04em" }}>Our forecast model requires reliable poll averages and turnout baselines. For this race, we don't have enough data to model outcomes responsibly.</div>
                   </div>
-                  <div style={{ padding: "20px 18px 18px", display: "flex", flexDirection: "column", gap: 12 }}>
-                    <div style={{ fontFamily: "var(--font-body)", fontSize: "11px", fontWeight: 900, letterSpacing: "0.10em", textTransform: "uppercase", color: "rgba(255,255,255,0.55)", lineHeight: 1.4 }}>No Forecast<br />for This Race</div>
-                    <div style={{ fontFamily: "var(--font-body)", fontSize: "8.5px", color: "rgba(255,255,255,0.22)", lineHeight: 1.7 }}>Our forecast model requires reliable poll averages and turnout baselines. For this race, we've chosen not to publish one.</div>
-                    <div style={{ paddingTop: 14, borderTop: "1px solid rgba(255,255,255,0.06)" }}>
-                      <div style={{ fontFamily: "var(--font-body)", fontSize: "7px", fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(255,255,255,0.15)", marginBottom: 6 }}>WHAT WE'RE WATCHING</div>
-                      <div style={{ fontFamily: "var(--font-body)", fontSize: "8px", color: "rgba(255,255,255,0.28)", lineHeight: 1.6 }}>Live results and county-level returns will update automatically.</div>
-                    </div>
+                  <div style={{ marginTop: 20, paddingTop: 14, borderTop: "1px solid rgba(255,255,255,0.06)" }}>
+                    <div style={{ fontFamily: "var(--font-body)", fontSize: "7px", fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(255,255,255,0.15)", marginBottom: 8 }}>WHAT WE'RE WATCHING</div>
+                    <div style={{ fontFamily: "var(--font-body)", fontSize: "8px", color: "rgba(255,255,255,0.28)", lineHeight: 1.6 }}>Live results and county-level returns will update automatically.</div>
                   </div>
                 </div>
-              )}
-            </div>
+              </div>
+            )}
 
           </aside>
         </div>
