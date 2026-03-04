@@ -50,11 +50,11 @@ export default function RootLayout({
          This prevents Windows from ever falling back to Courier.
       */}
         <body
-          className={[
-            mono.className,
-            "min-h-screen antialiased overflow-x-hidden",
-            "bg-[var(--background)] text-[var(--foreground)]",
-          ].join(" ")}
+        suppressHydrationWarning
+        className={[
+          mono.className,
+          "min-h-screen antialiased overflow-x-hidden",
+        ].join(" ")}
       >
         {/* --------------------------------
            Ambient tri-color glow background

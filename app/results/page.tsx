@@ -47,7 +47,7 @@ const RACE_FORECAST_DEFAULTS: Partial<Record<number, { raceRule: RaceRule; expec
   // 44323: { raceRule: "MAJORITY", expectedTurnout: 55_000 },
   // 44324: { raceRule: "MAJORITY", expectedTurnout: 45_000 },
   // 44328: { raceRule: "MAJORITY", expectedTurnout: 55_000 },
-  // 44329: { raceRule: "MAJORITY", expectedTurnout: 85_000 },
+  44329: { raceRule: "MAJORITY", expectedTurnout: 85_000, pollAvg: { "Yarbrough": 48.0, "Binkley": 32.0 } },
   // 44351: { raceRule: "MAJORITY", expectedTurnout: 60_000 },
   // 44331: { raceRule: "MAJORITY", expectedTurnout: 90_000 },
   // 44722: { raceRule: "MAJORITY", expectedTurnout: 250_000, pollAvg: { "Sanders": 98.0 } },
@@ -251,6 +251,18 @@ function MapWithCountyTooltip({ svgText, regionResults }: { svgText: string; reg
   const countyFingerprintsRef = useRef<Map<string, string>>(new Map());
   const countyVoteTotalsRef = useRef<Map<string, number>>(new Map());
 
+  // Zoom/pan state
+  const transformRef = useRef({ scale: 1, x: 0, y: 0 });
+  const isPanningRef = useRef(false);
+  const panStartRef = useRef({ mx: 0, my: 0, tx: 0, ty: 0 });
+  const [scale, setScale] = useState(1);
+  const [locked, setLocked] = useState(false);
+  const lockedRef = useRef(false);
+  const toggleLock = useCallback(() => {
+    lockedRef.current = !lockedRef.current;
+    setLocked(lockedRef.current);
+  }, []);
+
   const regionResultsArr = useMemo(() => coerceRegionResults(regionResults), [regionResults]);
   const regionMap = useMemo(() => {
     const m = new Map<string, any>();
@@ -265,20 +277,97 @@ function MapWithCountyTooltip({ svgText, regionResults }: { svgText: string; reg
     setTimeout(() => shape.classList.remove("county-updated"), 1200);
   }, []);
 
+  const applyTransform = useCallback(() => {
+    const host = wrapRef.current; if (!host) return;
+    const svg = host.querySelector("svg"); if (!svg) return;
+    const { scale, x, y } = transformRef.current;
+    svg.style.transform = `translate(${x}px, ${y}px) scale(${scale})`;
+    svg.style.transformOrigin = "0 0";
+  }, []);
+
+  const resetZoom = useCallback(() => {
+    transformRef.current = { scale: 1, x: 0, y: 0 };
+    setScale(1);
+    applyTransform();
+  }, [applyTransform]);
+
+  // Wheel zoom
+  useEffect(() => {
+    const host = wrapRef.current; if (!host) return;
+    const onWheel = (e: WheelEvent) => {
+      if (lockedRef.current) return; // locked — let scroll pass through
+      e.preventDefault();
+      const rect = host.getBoundingClientRect();
+      const mx = e.clientX - rect.left;
+      const my = e.clientY - rect.top;
+      const { scale: s, x, y } = transformRef.current;
+      const delta = e.deltaY < 0 ? 1.15 : 1 / 1.15;
+      const newScale = Math.min(8, Math.max(1, s * delta));
+      const newX = mx - (mx - x) * (newScale / s);
+      const newY = my - (my - y) * (newScale / s);
+      transformRef.current = { scale: newScale, x: newX, y: newY };
+      setScale(newScale);
+      applyTransform();
+    };
+    host.addEventListener("wheel", onWheel, { passive: false });
+    return () => host.removeEventListener("wheel", onWheel);
+  }, [applyTransform]);
+
+  // Pan via pointer drag — works everywhere including county shapes
+  useEffect(() => {
+    const host = wrapRef.current; if (!host) return;
+    let capturedId: number | null = null;
+    const onDown = (e: PointerEvent) => {
+      isPanningRef.current = false;
+      capturedId = e.pointerId;
+      panStartRef.current = { mx: e.clientX, my: e.clientY, tx: transformRef.current.x, ty: transformRef.current.y };
+    };
+    const onMove = (e: PointerEvent) => {
+      if (e.buttons === 0) return;
+      const dx = e.clientX - panStartRef.current.mx;
+      const dy = e.clientY - panStartRef.current.my;
+      if (!isPanningRef.current && Math.sqrt(dx * dx + dy * dy) > 4) {
+        isPanningRef.current = true;
+        setTooltip((t) => ({ ...t, show: false }));
+        if (capturedId !== null) { try { host.setPointerCapture(capturedId); } catch {} }
+        host.style.cursor = "grabbing";
+      }
+      if (!isPanningRef.current) return;
+      transformRef.current.x = panStartRef.current.tx + dx;
+      transformRef.current.y = panStartRef.current.ty + dy;
+      applyTransform();
+    };
+    const onUp = () => {
+      isPanningRef.current = false;
+      capturedId = null;
+      host.style.cursor = "crosshair";
+    };
+    host.addEventListener("pointerdown", onDown);
+    host.addEventListener("pointermove", onMove);
+    host.addEventListener("pointerup", onUp);
+    return () => { host.removeEventListener("pointerdown", onDown); host.removeEventListener("pointermove", onMove); host.removeEventListener("pointerup", onUp); };
+  }, [applyTransform]);
+
   useEffect(() => {
     const host = wrapRef.current; if (!host) return;
     host.innerHTML = svgText;
     const svg = host.querySelector("svg"); if (!svg) return;
+    svg.setAttribute("preserveAspectRatio", "xMidYMid meet");
+    svg.style.width = "100%";
+    svg.style.height = "100%";
+    svg.style.display = "block";
+    svg.style.transformOrigin = "0 0";
     countyFingerprintsRef.current = new Map();
     const shapes = Array.from(svg.querySelectorAll("path, polygon")) as SVGGraphicsElement[];
     shapes.forEach((shape) => {
       const key = getRegionKeyFromElement(shape); if (!key) return;
       const prettyKey = titleCaseKey(key);
       shape.style.pointerEvents = "all"; shape.style.cursor = "crosshair";
-      shape.style.stroke = "rgba(255,255,255,0.08)"; shape.style.strokeWidth = "0.8";
+      shape.style.stroke = "#0a0f1e"; shape.style.strokeWidth = "0.8";
       shape.style.transition = "fill 420ms ease, filter 300ms ease, stroke 200ms ease, stroke-width 200ms ease";
 
       const onMove = (ev: PointerEvent) => {
+        if (isPanningRef.current) return; // dragging — no tooltip
         const currentRR = regionMap.get(key);
         const tw = 320, th = 280, p = 12, offset = 14;
         const rect = host.getBoundingClientRect();
@@ -298,8 +387,15 @@ function MapWithCountyTooltip({ svgText, regionResults }: { svgText: string; reg
           lines: hasVotes ? lines : [],
         });
       };
-      const onEnter = (ev: PointerEvent) => { shape.style.stroke = "rgba(255,255,255,0.9)"; shape.style.strokeWidth = "2.0"; shape.style.filter = "brightness(1.22) saturate(1.1)"; onMove(ev); };
-      const onLeave = () => { shape.style.stroke = "rgba(255,255,255,0.08)"; shape.style.strokeWidth = "0.8"; shape.style.filter = ""; setTooltip((t) => ({ ...t, show: false })); };
+      const onEnter = (ev: PointerEvent) => {
+        if (isPanningRef.current) return;
+        shape.style.stroke = "rgba(255,255,255,0.9)"; shape.style.strokeWidth = "2.0"; shape.style.filter = "brightness(1.22) saturate(1.1)";
+        onMove(ev);
+      };
+      const onLeave = () => {
+        shape.style.stroke = "#0a0f1e"; shape.style.strokeWidth = "0.8"; shape.style.filter = "";
+        setTooltip((t) => ({ ...t, show: false }));
+      };
       shape.addEventListener("pointerenter", onEnter); shape.addEventListener("pointermove", onMove); shape.addEventListener("pointerleave", onLeave);
 
       const currentRR = regionMap.get(key);
@@ -310,10 +406,7 @@ function MapWithCountyTooltip({ svgText, regionResults }: { svgText: string; reg
         if (currentRR) {
           const fp = countyFingerprint(currentRR);
           const prevFp = countyFingerprintsRef.current.get(key);
-          if (prevFp === undefined) {
-            shape.classList.add("county-pop");
-            setTimeout(() => shape.classList.remove("county-pop"), 520);
-          }
+          if (prevFp === undefined) { shape.classList.add("county-pop"); setTimeout(() => shape.classList.remove("county-pop"), 520); }
           countyFingerprintsRef.current.set(key, fp);
           countyVoteTotalsRef.current.set(key, countyTotalVotes(currentRR));
         }
@@ -343,8 +436,20 @@ function MapWithCountyTooltip({ svgText, regionResults }: { svgText: string; reg
   }, [regionMap, flashCounty]);
 
   return (
-    <div className="relative h-full">
-      <div ref={wrapRef} className="w-full overflow-hidden [&_svg]:h-auto [&_svg]:w-full" />
+    <div className="relative h-full" style={{ overflow: "hidden" }}>
+      <div ref={wrapRef} className="w-full h-full [&_svg]:w-full [&_svg]:h-full" style={{ display: "flex", alignItems: "stretch", cursor: "crosshair" }} />
+      {/* Zoom controls */}
+      <div style={{ position: "absolute", bottom: 10, right: 10, display: "flex", flexDirection: "column", gap: 4, zIndex: 40 }}>
+        <button onClick={toggleLock} title={locked ? "Unlock zoom" : "Lock zoom"} style={{ width: 28, height: 28, background: locked ? "rgba(245,158,11,0.15)" : "rgba(10,15,30,0.85)", border: `1px solid ${locked ? "#f59e0b" : "rgba(255,255,255,0.15)"}`, color: locked ? "#f59e0b" : "rgba(255,255,255,0.4)", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", padding: "5px" }}>
+          {locked
+            ? <svg height="12" strokeLinejoin="round" viewBox="0 0 16 16" width="12" style={{color:"currentColor", display:"block"}}><path fillRule="evenodd" clipRule="evenodd" d="M9.5 6V7H6.5V6C6.5 5.17157 7.17157 4.5 8 4.5C8.82843 4.5 9.5 5.17157 9.5 6ZM5 7V6C5 4.34315 6.34315 3 8 3C9.65685 3 11 4.34315 11 6V7H12V11.5C12 12.3284 11.3284 13 10.5 13H5.5C4.67157 13 4 12.3284 4 11.5V7H5Z" fill="currentColor"/></svg>
+            : <svg height="12" strokeLinejoin="round" viewBox="0 0 16 16" width="12" style={{color:"currentColor", display:"block"}}><path fillRule="evenodd" clipRule="evenodd" d="M13.5 7V6C13.5 5.17157 12.8284 4.5 12 4.5C11.1716 4.5 10.5 5.17157 10.5 6V7H12V8.5V9V11.5C12 12.3284 11.3284 13 10.5 13H5.5C4.67157 13 4 12.3284 4 11.5V7H9V6C9 4.34315 10.3431 3 12 3C13.6569 3 15 4.34315 15 6V7H13.5Z" fill="currentColor"/></svg>
+          }
+        </button>
+        {!locked && <button onClick={() => { const host = wrapRef.current; if (!host) return; const rect = host.getBoundingClientRect(); const cx = rect.width / 2, cy = rect.height / 2; const { scale: s, x, y } = transformRef.current; const ns = Math.min(8, s * 1.4); transformRef.current = { scale: ns, x: cx - (cx - x) * (ns / s), y: cy - (cy - y) * (ns / s) }; setScale(ns); applyTransform(); }} style={{ width: 28, height: 28, background: "rgba(10,15,30,0.85)", border: "1px solid rgba(255,255,255,0.15)", color: "#fff", fontSize: 16, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "var(--font-body)", fontWeight: 700 }}>+</button>}
+        {!locked && <button onClick={() => { const host = wrapRef.current; if (!host) return; const rect = host.getBoundingClientRect(); const cx = rect.width / 2, cy = rect.height / 2; const { scale: s, x, y } = transformRef.current; const ns = Math.max(1, s / 1.4); if (ns <= 1) { resetZoom(); return; } transformRef.current = { scale: ns, x: cx - (cx - x) * (ns / s), y: cy - (cy - y) * (ns / s) }; setScale(ns); applyTransform(); }} style={{ width: 28, height: 28, background: "rgba(10,15,30,0.85)", border: "1px solid rgba(255,255,255,0.15)", color: "#fff", fontSize: 16, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "var(--font-body)", fontWeight: 700 }}>−</button>}
+        {!locked && scale > 1 && <button onClick={resetZoom} style={{ width: 28, height: 28, background: "rgba(10,15,30,0.85)", border: "1px solid rgba(255,255,255,0.15)", color: "rgba(255,255,255,0.6)", fontSize: 8, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "var(--font-body)", fontWeight: 700, letterSpacing: "0.05em" }}>RST</button>}
+      </div>
       {tooltip.show && (
         <div className="res-map-tooltip absolute z-50 pointer-events-none w-[320px]" style={{ left: tooltip.x, top: tooltip.y }}>
           <div className="res-tri-stripe" style={{ height: "2px" }} />
@@ -425,7 +530,7 @@ function CandidateList({ candidates, reporting, raceId, isMajorityRunoff }: { ca
 }
 
 // ─── COUNTY TABLE ────────────────────────────────────────────────────────────
-function CountyTotalsTable({ regionResults, collapsed, onToggle }: { regionResults: RegionResult[] | Record<string, RegionResult>; collapsed: boolean; onToggle: () => void; }) {
+function CountyTotalsTable({ regionResults, collapsed, onToggle, maxHeight }: { regionResults: RegionResult[] | Record<string, RegionResult>; collapsed: boolean; onToggle: () => void; maxHeight?: string }) {
   const data = useMemo(() => {
     return coerceRegionResults(regionResults).map((rr) => {
       const candidates = buildTooltipLines(rr);
@@ -484,7 +589,7 @@ function CountyTotalsTable({ regionResults, collapsed, onToggle }: { regionResul
       {/* Collapsible content */}
       <div style={{
         overflow: collapsed ? "hidden" : "auto",
-        maxHeight: collapsed ? "0px" : "340px",
+        maxHeight: collapsed ? "0px" : (maxHeight ?? "340px"),
         transition: "max-height 400ms cubic-bezier(0.22,1,0.36,1)",
       }}>
         {data.length === 0 ? (
@@ -1335,8 +1440,9 @@ export default function March3FeaturedClient() {
           max-width: 1800px;
           margin: 0 auto;
           display: grid;
-          grid-template-columns: 190px 1fr 300px;
-          grid-template-rows: calc(100vh - 175px);
+          grid-template-columns: minmax(190px, 22%) 1fr minmax(280px, 22%);
+          grid-template-rows: auto;
+          align-items: start;
           gap: 8px;
           padding: 8px 10px;
           box-sizing: border-box;
@@ -1347,7 +1453,9 @@ export default function March3FeaturedClient() {
           display: flex;
           flex-direction: column;
           min-height: 0;
+          height: 1216px;
           overflow: hidden;
+          align-self: start;
         }
         .res-race-picker > .res-panel {
           flex: 1;
@@ -1357,75 +1465,85 @@ export default function March3FeaturedClient() {
           overflow: hidden;
         }
 
-        /* ── CENTER SPLIT: map only on desktop ── */
+        /* ── CENTER SPLIT: map + county ── */
         .res-center-split {
           display: flex;
           flex-direction: column;
-          min-height: 0;
+          height: 1216px;
+          min-height: 1216px;
           overflow: hidden;
         }
         .res-center-split > .res-map-panel {
-          flex: 1;
-          min-height: 0;
+          height: 500px;
+          min-height: 500px;
+          max-height: 500px;
+          flex: none;
           display: flex;
           flex-direction: column;
-          overflow: hidden;
-        }
-        .res-center-split > .res-map-panel {
-          display: flex;
-          flex-direction: column;
-          min-height: 0;
           overflow: hidden;
         }
         .res-center-split > .res-map-panel .res-map-body {
           flex: 1;
           min-height: 0;
-          overflow-y: auto;
-        }
-
-
-        /* ── FORECAST WRAP ── */
-        .res-forecast-wrap {
+          overflow: hidden;
           display: flex;
           flex-direction: column;
-          min-height: 0;
+          padding: 0 !important;
         }
-        .res-forecast-wrap > .res-panel {
+        .res-map-wrap {
           flex: 1;
           min-height: 0;
           display: flex;
-          flex-direction: column;
+          align-items: stretch;
+        }
+        .res-map-wrap svg, .res-map-wrap > div {
+          width: 100% !important;
+          height: 100% !important;
+        }
+        /* County fills all remaining space below map */
+        .res-inline-county {
+          flex: 1;
+          height: 708px;
+          min-height: 708px;
           overflow: hidden;
         }
-        .res-forecast-wrap > .res-panel .res-forecast-body {
-          flex: 1;
-          min-height: 0;
-          overflow-y: auto;
-        }
-
+        .res-inline-county .res-county-table-wrap { max-height: none !important; }
+        .res-inline-county > .res-panel { height: 100% !important; display: flex !important; flex-direction: column; overflow: hidden; border-top: 1px solid var(--border); border-radius: 0; }
+        .res-inline-county > .res-panel > div:last-child { flex: 1; overflow-y: auto !important; max-height: none !important; min-height: 0; }
         /* ── RIGHT RAIL ── */
         .res-right-rail {
           display: flex;
           flex-direction: column;
           gap: 8px;
-          min-height: 0;
-          height: 100%;
-          overflow: hidden;
+          overflow-y: auto;
+          height: 1216px;
         }
-        /* All three panels equal height, each scrolls internally */
-        .res-right-rail > .res-panel:first-child {
-          flex: 1;
-          min-height: 0;
-          overflow: hidden;
-        }
+        /* Race status: fixed 300px */
         .res-right-rail > .res-race-status-panel {
-          flex: 1;
-          min-height: 0;
+          height: 300px;
+          min-height: 300px;
+          max-height: 300px;
+          flex: none;
           overflow: hidden;
+          display: flex;
+          flex-direction: column;
         }
+        /* Topline: fixed 300px */
+        .res-right-rail > .res-topline-panel {
+          height: 300px;
+          min-height: 300px;
+          max-height: 300px;
+          flex: none;
+          overflow: hidden;
+          display: flex;
+          flex-direction: column;
+        }
+        /* Forecast: fixed 600px */
         .res-forecast-wrap {
-          flex: 1 !important;
-          min-height: 0;
+          height: 600px;
+          min-height: 600px;
+          max-height: 600px;
+          flex: none !important;
           overflow: hidden;
           display: flex;
           flex-direction: column;
@@ -1465,7 +1583,7 @@ export default function March3FeaturedClient() {
         }
 
         /* ── FULL-WIDTH BOTTOM ── */
-        .res-bottom { max-width: 1800px; margin: 0 auto; padding: 0 20px 20px; }
+        .res-bottom { display: none; }
 
         /* ── TABLET INLINE COUNTY TABLE ── */
         .res-tablet-county { display: none; }
@@ -1484,11 +1602,13 @@ export default function March3FeaturedClient() {
           .res-center-split { flex-direction: column; min-height: 0; height: 100%; }
           .res-center-split > .res-map-panel { display: flex; flex-direction: column; height: 100%; min-height: 0; overflow: hidden; }
           .res-center-split > .res-map-panel .res-map-body { flex-shrink: 0; }
-          .res-tablet-county { display: flex; flex-direction: column; flex: 1; min-height: 0; overflow: hidden; border-top: 1px solid var(--border); }
-          .res-tablet-county .res-panel { display: flex; flex-direction: column; height: 100%; }
-          .res-tablet-county .res-panel > div:last-child { flex: 1; overflow-y: auto; max-height: none !important; }
-          /* Right rail scrollable, with race scroll window at top */
+          .res-inline-county { max-height: 240px; }
+          /* Hide full-width bottom on tablet */
+          .res-bottom { display: none; }
           .res-right-rail { height: 100%; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
+          .res-right-rail > .res-race-status-panel { height: 300px; min-height: 300px; max-height: 300px; flex: none; }
+          .res-right-rail > .res-topline-panel { height: 300px; min-height: 300px; max-height: 300px; flex: none; }
+          .res-forecast-wrap { height: 600px; min-height: 600px; max-height: 600px; flex: none !important; }
           .res-race-scroll-window { display: flex; max-height: 200px; flex-shrink: 0; }
           /* Hide full-width bottom on tablet */
           .res-bottom { display: none; }
@@ -1503,26 +1623,38 @@ export default function March3FeaturedClient() {
             flex-direction: column;
             grid-template-columns: unset;
             grid-template-rows: unset;
+            height: auto !important;
+            min-height: unset !important;
             padding: 8px 10px;
             gap: 10px;
           }
+          /* Reset all fixed desktop heights */
           .res-race-picker { display: none !important; }
-          /* Right rail: normal column order = Topline then Race Status, appears first */
-          .res-right-rail { order: 1; display: flex; flex-direction: column; gap: 10px; height: auto; overflow: visible; min-height: 0; }
-          /* Hide the tablet race scroll inside right rail on mobile — mobile has its own */
+          .res-right-rail {
+            order: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            height: auto !important;
+            min-height: unset !important;
+            overflow: visible;
+            width: 100%;
+          }
           .res-right-rail > .res-race-scroll-window { display: none !important; }
-          .res-right-rail > .res-panel:first-child { min-height: 0; flex: none; }
-          .res-right-rail > .res-race-status-panel { min-height: 0; flex: none; overflow: visible !important; }
+          .res-right-rail > .res-race-status-panel { height: auto !important; min-height: unset !important; max-height: unset !important; overflow: visible !important; flex: none; width: 100%; box-sizing: border-box; }
+          .res-right-rail > .res-topline-panel { height: auto !important; min-height: unset !important; max-height: unset !important; overflow: visible !important; flex: none; width: 100%; box-sizing: border-box; }
+          .res-forecast-wrap { order: 3; height: auto !important; min-height: unset !important; max-height: unset !important; flex: none !important; overflow: visible; width: 100%; box-sizing: border-box; }
+          .res-forecast-wrap > .res-panel { overflow: visible; height: auto !important; width: 100%; }
+          .res-forecast-wrap > .res-panel .res-forecast-body { overflow-y: visible; max-height: none; height: auto !important; }
           .res-race-status-panel { flex: none !important; overflow: visible !important; }
-          /* Forecast pushed to after map via order */
-          .res-forecast-wrap { order: 3; flex: none !important; height: auto; min-height: 0; overflow: visible; }
-          .res-forecast-wrap > .res-panel { overflow: visible; }
-          .res-forecast-wrap > .res-panel .res-forecast-body { overflow-y: visible; max-height: none; }
-          /* Map second */
-          .res-center-split { order: 2; grid-template-columns: 1fr; height: auto; }
-          .res-center-split > .res-map-panel { height: auto; overflow: visible; }
-          .res-center-split > .res-map-panel .res-map-body { flex: none; }
-          .res-tablet-county { display: none; }
+          /* Center: map auto height, county hidden (res-bottom used instead) */
+          .res-center-split { order: 2; height: auto !important; min-height: unset !important; overflow: visible; width: 100%; }
+          .res-center-split > .res-map-panel { height: auto !important; min-height: unset !important; max-height: unset !important; overflow: visible; width: 100%; box-sizing: border-box; }
+          .res-center-split > .res-map-panel .res-map-body { flex: none; padding: 6px 10px !important; }
+          .res-map-wrap { height: auto !important; width: 100%; }
+          .res-map-wrap svg, .res-map-wrap > div { width: 100% !important; height: auto !important; }
+          .res-inline-county { display: none; }
+          /* County at bottom via res-bottom */
           .res-bottom { order: 4; display: block; padding: 0 10px 16px; }
           .res-race-scroll-window { display: flex; max-height: 190px; flex-shrink: 0; }
           .res-mobile-race-search { order: 1; }
@@ -1560,7 +1692,7 @@ export default function March3FeaturedClient() {
         input[type=range] { height:4px; cursor:pointer; }
       `}</style>
 
-      <main className="res-root" style={{ minHeight: "100vh", background: "var(--background)", color: "var(--foreground)" }}>
+      <main className="res-root" style={{ minHeight: "100vh", background: "transparent", color: "var(--foreground)" }}>
         {overlay && <ProjectedWinnerOverlay show={!!overlay} candidate={overlay.name} prob={overlay.prob} color={overlay.color} reporting={overlay.reporting} onDismiss={() => setOverlay(null)} />}
 
         <div className="res-tri-stripe" />
@@ -1690,13 +1822,13 @@ export default function March3FeaturedClient() {
                   <span className="res-badge res-badge-purple">{loadingMap ? `SYNCING ${Math.round(mapLoadPct)}%` : "● LIVE"}</span>
                 </div>
               </div>
-              <div className="res-map-body" style={{ padding: "10px 14px" }}>
-                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "8px", flexWrap: "wrap", gap: "6px" }}>
+              <div className="res-map-body" style={{ padding: "6px 10px 0", display: "flex", flexDirection: "column", flex: 1, minHeight: 0 }}>
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "6px", flexWrap: "wrap", gap: "6px", flexShrink: 0 }}>
                   <Legend />
                   <span className="res-note" style={{ color: "rgba(255,255,255,0.2)" }}>HOVER COUNTIES</span>
                 </div>
                 {loadingMap ? (
-                  <div className="res-map-loading">
+                  <div className="res-map-loading" style={{ flex: 1 }}>
                     <div style={{ width: "min(300px, 90%)" }}>
                       <div className="res-note" style={{ textAlign: "center", marginBottom: "8px", color: "rgba(255,255,255,0.35)" }}>LOADING MAP</div>
                       <div className="res-bar-track"><div className="res-bar-fill" style={{ width: `${mapLoadPct}%`, background: "linear-gradient(90deg,var(--purple),var(--blue2))" }} /></div>
@@ -1704,21 +1836,23 @@ export default function March3FeaturedClient() {
                     </div>
                   </div>
                 ) : mapBlankSvg ? (
-                  <div className="res-map-wrap">
+                  <div className="res-map-wrap" style={{ flex: 1, minHeight: 0 }}>
                     <MapWithCountyTooltip svgText={mapBlankSvg} regionResults={selectedRace?.region_results ?? []} />
                   </div>
                 ) : (
-                  <div className="res-map-loading"><span className="res-note" style={{ color: "var(--muted3)" }}>NO MAP DATA</span></div>
+                  <div className="res-map-loading" style={{ flex: 1 }}><span className="res-note" style={{ color: "var(--muted3)" }}>NO MAP DATA</span></div>
                 )}
               </div>
-              {/* TABLET INLINE COUNTY TABLE — scrollable, shown below map on tablet only */}
-              <div className="res-tablet-county">
-                <CountyTotalsTable
-                  regionResults={selectedRace?.region_results ?? []}
-                  collapsed={false}
-                  onToggle={() => {}}
-                />
-              </div>
+            </div>{/* end map panel */}
+
+            {/* COUNTY TABLE — sibling below map panel */}
+            <div className="res-inline-county">
+              <CountyTotalsTable
+                regionResults={selectedRace?.region_results ?? []}
+                collapsed={countyCollapsed}
+                onToggle={() => setCountyCollapsed(v => !v)}
+                maxHeight="9999px"
+              />
             </div>
 
           </div>{/* end res-center-split */}
@@ -1731,24 +1865,7 @@ export default function March3FeaturedClient() {
               <RaceScrollWindow races={racesForState} raceCache={raceCache} selectedId={selectedId} onSelect={setSelectedId} search={scrollWindowSearch} onSearchChange={setScrollWindowSearch} />
             </div>
 
-            {/* TOPLINE */}
-            <div className="res-panel" style={{ display: "flex", flexDirection: "column", minHeight: 0 }}>
-              <div className="res-tri-stripe" />
-              <div className="res-panel-header" style={{ flexShrink: 0 }}>
-                <span className="res-panel-tag">TOPLINE RESULTS</span>
-                {selectedRace?.percent_reporting !== undefined && (
-                  <span style={{ fontFamily: "var(--font-body)", fontSize: "9px", fontWeight: 700, color: "rgba(255,255,255,0.4)", letterSpacing: "0.10em" }}>{selectedRace.percent_reporting.toFixed(1)}% IN</span>
-                )}
-              </div>
-              <div style={{ padding: "12px 14px", overflowY: "auto", flex: 1, minHeight: 0 }}>
-                {selectedRace?.candidates
-                  ? <CandidateList candidates={selectedRace.candidates} reporting={selectedRace.percent_reporting ?? 0} raceId={selectedId} isMajorityRunoff={isRunoffConfirmed} />
-                  : <div style={{ padding: "32px 0", textAlign: "center" }} className="res-note">LOADING…</div>
-                }
-              </div>
-            </div>
-
-            {/* RACE STATUS */}
+            {/* RACE STATUS — top */}
             <div className="res-panel res-race-status-panel" style={{ display: "flex", flexDirection: "column", minHeight: 0 }}>
               <div className="res-panel-header" style={{ flexShrink: 0 }}><span className="res-panel-tag">RACE STATUS</span></div>
               <div style={{ padding: "12px 14px", display: "flex", flexDirection: "column", gap: "8px", overflowY: "auto", flex: 1, minHeight: 0 }}>
@@ -1802,6 +1919,23 @@ export default function March3FeaturedClient() {
                     ))}
                   </div>
                 )}
+              </div>
+            </div>
+
+            {/* TOPLINE — second */}
+            <div className="res-panel res-topline-panel" style={{ display: "flex", flexDirection: "column", minHeight: 0 }}>
+              <div className="res-tri-stripe" />
+              <div className="res-panel-header" style={{ flexShrink: 0 }}>
+                <span className="res-panel-tag">TOPLINE RESULTS</span>
+                {selectedRace?.percent_reporting !== undefined && (
+                  <span style={{ fontFamily: "var(--font-body)", fontSize: "9px", fontWeight: 700, color: "rgba(255,255,255,0.4)", letterSpacing: "0.10em" }}>{selectedRace.percent_reporting.toFixed(1)}% IN</span>
+                )}
+              </div>
+              <div style={{ padding: "12px 14px", overflowY: "auto", flex: 1, minHeight: 0 }}>
+                {selectedRace?.candidates
+                  ? <CandidateList candidates={selectedRace.candidates} reporting={selectedRace.percent_reporting ?? 0} raceId={selectedId} isMajorityRunoff={isRunoffConfirmed} />
+                  : <div style={{ padding: "32px 0", textAlign: "center" }} className="res-note">LOADING…</div>
+                }
               </div>
             </div>
 
