@@ -562,7 +562,7 @@ function SwingOMeter({ candidates, colors, probabilities, raceRule, reportingPct
     { key: "c1", prob: probabilities.c1, color: colors[0], name: candidates[0] },
     { key: "c2", prob: probabilities.c2, color: colors[1], name: candidates[1] },
     ...(showC3 ? [{ key: "c3", prob: probabilities.c3, color: colors[2], name: candidates[2] }] : []),
-    ...(showOthers ? [{ key: "others", prob: othersProb, color: colors[3], name: "Others" }] : []),
+    ...(showOthers ? [{ key: "others", prob: othersProb, color: raceRule === "MAJORITY" ? "#c0392b" : colors[3], name: raceRule === "MAJORITY" ? "RUNOFF" : "Others" }] : []),
   ];
 
   const total = segments.reduce((s, seg) => s + seg.prob, 0) || 1;
@@ -708,19 +708,24 @@ function ForecastPanel({ raceId, refreshTick, raceData }: { raceId: number; refr
     raceRuleRef.current = newRule; turnoutRef.current = newTurnout;
     setForecast(null); setHistoryList(null); historyListRef.current = null;
     setHistoryIndex(0); historyIndexRef.current = 0;
-    setPlaying(false); setError(null); setLoadingHistory(true);
+    setPlaying(false); setError(null); setLoadingHistory(false);
     let cancelled = false;
+    // HISTORY DISABLED — skip timestamp fetch, go straight to live
+    // (async () => {
+    //   try {
+    //     const res = await fetch(`/api/forecast?action=timestamps&raceId=${raceId}`);
+    //     const data: ForecastHistoryList = await res.json();
+    //     if (cancelled) return;
+    //     setHistoryList(data); historyListRef.current = data;
+    //     const tsList = getTimestamps(data);
+    //     if (tsList.length > 0) { const last = tsList.length - 1; setHistoryIndex(last); historyIndexRef.current = last; await runForecastAtIndex(raceId, tsList, last, newRule, newTurnout); }
+    //     else { await runForecastLive(raceId, newRule, newTurnout); }
+    //   } catch (e: any) { if (!cancelled) setError(e.message); }
+    //   finally { if (!cancelled) setLoadingHistory(false); }
+    // })();
     (async () => {
-      try {
-        const res = await fetch(`/api/forecast?action=timestamps&raceId=${raceId}`);
-        const data: ForecastHistoryList = await res.json();
-        if (cancelled) return;
-        setHistoryList(data); historyListRef.current = data;
-        const tsList = getTimestamps(data);
-        if (tsList.length > 0) { const last = tsList.length - 1; setHistoryIndex(last); historyIndexRef.current = last; await runForecastAtIndex(raceId, tsList, last, newRule, newTurnout); }
-        else { await runForecastLive(raceId, newRule, newTurnout); }
-      } catch (e: any) { if (!cancelled) setError(e.message); }
-      finally { if (!cancelled) setLoadingHistory(false); }
+      try { await runForecastLive(raceId, newRule, newTurnout); }
+      catch (e: any) { if (!cancelled) setError(e.message); }
     })();
     return () => { cancelled = true; };
   }, [raceId]); // eslint-disable-line
@@ -736,7 +741,7 @@ function ForecastPanel({ raceId, refreshTick, raceData }: { raceId: number; refr
   const isFirstOptionsRender = useRef(true);
   useEffect(() => {
     if (isFirstOptionsRender.current) { isFirstOptionsRender.current = false; return; }
-    const timer = setTimeout(() => { const id = raceIdRef.current; const hl = historyListRef.current; const tsList = getTimestamps(hl); if (tsList.length > 0) runForecastAtIndex(id, tsList, historyIndexRef.current); else runForecastLive(id); }, 400);
+    const timer = setTimeout(() => { const id = raceIdRef.current; /* HISTORY DISABLED */ runForecastLive(id); }, 400);
     return () => clearTimeout(timer);
   }, [raceRule, expectedTurnoutOverride]); // eslint-disable-line
   useEffect(() => { isFirstOptionsRender.current = true; }, [raceId]);
@@ -750,7 +755,7 @@ function ForecastPanel({ raceId, refreshTick, raceData }: { raceId: number; refr
 
   const candidateLabels: Record<FCKey, string> = useMemo(() => {
     const names = forecast?.forecast.candidate_names ?? ["Candidate 1", "Candidate 2", "Candidate 3", "Others"];
-    return { Candidate1: names[0], Candidate2: names[1], Candidate3: names[2], Others: names[3] };
+    return { Candidate1: names[0], Candidate2: names[1], Candidate3: names[2], Others: raceRule === "MAJORITY" ? "Runoff" : names[3] };
   }, [forecast]);
 
   const formatCandidateName = (name: string) => {
@@ -760,7 +765,7 @@ function ForecastPanel({ raceId, refreshTick, raceData }: { raceId: number; refr
     const first = parts.slice(0, -1).join(" ");
     return <>{first}<br />{last}</>;
   };
-  const candidateColors: Record<FCKey, string> = useMemo(() => { const colors = forecast?.forecast.candidate_colors ?? ["#3b82f6", "#ef4444", "#22c55e", "#94a3b8"]; return { Candidate1: colors[0], Candidate2: colors[1], Candidate3: colors[2], Others: colors[3] }; }, [forecast]);
+  const candidateColors: Record<FCKey, string> = useMemo(() => { const colors = forecast?.forecast.candidate_colors ?? ["#3b82f6", "#ef4444", "#22c55e", "#94a3b8"]; return { Candidate1: colors[0], Candidate2: colors[1], Candidate3: colors[2], Others: raceRule === "MAJORITY" ? "#c0392b" : colors[3] }; }, [forecast, raceRule]);
   const isLoading = loadingHistory || loadingForecast;
   const swingoProbs = useMemo(() => { if (!forecast) return { c1: 0.5, c2: 0.5, c3: 0 }; const f = forecast.forecast; const src = raceRule === "PLURALITY" ? f.plurality_odds_to_win : f.majority_win_prob; return { c1: src.Candidate1, c2: src.Candidate2, c3: src.Candidate3 }; }, [forecast, raceRule]);
 
@@ -786,7 +791,7 @@ function ForecastPanel({ raceId, refreshTick, raceData }: { raceId: number; refr
         <div style={{ padding: "12px 14px", borderBottom: "1px solid var(--border)", background: "var(--background2)", display: "flex", flexDirection: "column", gap: 10 }}>
           <div><div className="res-note" style={{ marginBottom: 5 }}>RACE RULE</div><select value={raceRule} onChange={(e) => setRaceRule(e.target.value as RaceRule)} className="res-select" style={{ width: "100%" }}><option value="PLURALITY">Plurality</option><option value="MAJORITY">Majority / Runoff</option></select></div>
           <div><div className="res-note" style={{ marginBottom: 5 }}>EXPECTED TURNOUT (OPTIONAL)</div><input type="number" placeholder="e.g. 5000000" value={expectedTurnoutOverride} onChange={(e) => setExpectedTurnoutOverride(e.target.value)} className="res-input" /></div>
-          <button className="res-btn-primary" style={{ width: "100%", justifyContent: "center" }} disabled={isLoading} onClick={() => { const id = raceIdRef.current; const hl = historyListRef.current; const tsList = getTimestamps(hl); if (tsList.length > 0) runForecastAtIndex(id, tsList, historyIndexRef.current); else runForecastLive(id); }}>{isLoading ? "RUNNING…" : "RERUN FORECAST"}</button>
+          <button className="res-btn-primary" style={{ width: "100%", justifyContent: "center" }} disabled={isLoading} onClick={() => { runForecastLive(raceIdRef.current); /* HISTORY DISABLED */ }}>{isLoading ? "RUNNING…" : "RERUN FORECAST"}</button>
         </div>
       )}
       <div className="res-forecast-body" style={{ padding: "14px 16px" }}>
@@ -866,6 +871,66 @@ function ForecastPanel({ raceId, refreshTick, raceData }: { raceId: number; refr
 // ═══════════════════════════════════════════════════════════════════════════════
 // ─── RACE PICKER PANEL (replaces old tab bar) ─────────────────────────────────
 // ═══════════════════════════════════════════════════════════════════════════════
+function RaceScrollWindow({ races, raceCache, selectedId, onSelect, search, onSearchChange, maxHeight }: {
+  races: FeaturedRace[]; raceCache: Record<number, RaceDetail | undefined>; selectedId: number;
+  onSelect: (id: number) => void; search: string; onSearchChange: (v: string) => void; maxHeight?: number;
+}) {
+  const filtered = races.filter(r => !search || r.office.toLowerCase().includes(search.toLowerCase()) || r.party.toLowerCase().includes(search.toLowerCase()));
+  const groups = filtered.reduce<{ office: string; races: FeaturedRace[] }[]>((acc, r) => {
+    const last = acc[acc.length - 1];
+    if (last && last.office === r.office) last.races.push(r);
+    else acc.push({ office: r.office, races: [r] });
+    return acc;
+  }, []);
+  return (
+    <>
+      <div style={{ padding: "6px 10px", borderBottom: "1px solid var(--border)", background: "var(--background2)", flexShrink: 0, display: "flex", alignItems: "center", gap: 8 }}>
+        <svg width="10" height="10" viewBox="0 0 16 16" fill="none" style={{ flexShrink: 0, opacity: 0.3 }}>
+          <circle cx="6.5" cy="6.5" r="5" stroke="white" strokeWidth="1.5"/>
+          <line x1="10.5" y1="10.5" x2="14" y2="14" stroke="white" strokeWidth="1.5" strokeLinecap="round"/>
+        </svg>
+        <input type="text" placeholder="Search races…" value={search} onChange={e => onSearchChange(e.target.value)}
+          style={{ flex: 1, background: "none", border: "none", outline: "none", fontFamily: "var(--font-body)", fontSize: "9px", fontWeight: 600, letterSpacing: "0.06em", color: "var(--foreground)", caretColor: "var(--purple-soft)" }} />
+        {search && <button onClick={() => onSearchChange("")} style={{ background: "none", border: "none", cursor: "pointer", color: "rgba(255,255,255,0.3)", fontSize: 11, padding: 0, lineHeight: 1 }}>✕</button>}
+      </div>
+      <div style={{ overflowY: "auto", flex: 1, maxHeight: maxHeight }}>
+        {groups.map(({ office, races: groupRaces }) => (
+          <div key={office}>
+            <div style={{ padding: "4px 10px 2px", fontFamily: "var(--font-body)", fontSize: "6px", fontWeight: 700, letterSpacing: "0.26em", textTransform: "uppercase", color: "rgba(255,255,255,0.18)", borderTop: "1px solid rgba(255,255,255,0.04)", marginTop: 2 }}>{office}</div>
+            {groupRaces.map(r => {
+              const liveData = raceCache[r.id];
+              const winner = liveData?.candidates?.find(c => c.winner);
+              const reporting = getRaceReportingPct(liveData);
+              const isSelected = r.id === selectedId;
+              const partyColor = r.party === "Republican" ? "var(--rep)" : r.party === "Democratic" ? "var(--dem)" : "rgba(255,255,255,0.4)";
+              const partyShort = r.party === "Republican" ? "R" : "D";
+              const hasForecast = !!RACE_FORECAST_DEFAULTS[r.id];
+              return (
+                <button key={r.id} onClick={() => onSelect(r.id)} style={{ display: "flex", alignItems: "center", width: "100%", padding: "6px 10px", background: isSelected ? "rgba(124,58,237,0.10)" : "transparent", border: "none", borderLeft: isSelected ? "2px solid var(--purple)" : "2px solid transparent", cursor: "pointer", textAlign: "left", transition: "background 100ms ease" }}>
+                  <span style={{ flexShrink: 0, width: 16, height: 16, borderRadius: 2, background: `${partyColor}22`, border: `1px solid ${partyColor}44`, display: "flex", alignItems: "center", justifyContent: "center", marginRight: 8, fontFamily: "var(--font-body)", fontSize: "6.5px", fontWeight: 900, color: partyColor }}>{partyShort}</span>
+                  <div style={{ flex: 1, minWidth: 0 }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: 4, marginBottom: 2 }}>
+                      <span style={{ fontFamily: "var(--font-body)", fontSize: "8.5px", fontWeight: isSelected ? 800 : 600, color: isSelected ? "#fff" : "rgba(255,255,255,0.65)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{r.party} Primary</span>
+                      {hasForecast && <span style={{ flexShrink: 0, display: "inline-flex", padding: "0px 4px", border: "1px solid rgba(124,58,237,0.45)", background: "rgba(124,58,237,0.10)", fontFamily: "var(--font-body)", fontSize: "5px", fontWeight: 700, letterSpacing: "0.12em", color: "var(--purple-soft)" }}>FORECAST β</span>}
+                    </div>
+                    <div style={{ height: 2, background: "rgba(255,255,255,0.07)", overflow: "hidden" }}>
+                      <div style={{ height: "100%", width: `${reporting ?? 0}%`, background: winner ? "var(--win)" : partyColor, opacity: 0.75, transition: "width 800ms ease" }} />
+                    </div>
+                  </div>
+                  <div style={{ flexShrink: 0, marginLeft: 8 }}>
+                    {winner ? <span style={{ fontFamily: "var(--font-body)", fontSize: "6px", fontWeight: 700, color: "var(--win)" }}>✓</span>
+                      : <span style={{ fontFamily: "var(--font-body)", fontSize: "7.5px", fontWeight: 700, color: isSelected ? "rgba(255,255,255,0.5)" : "rgba(255,255,255,0.2)" }}>{reporting !== null ? `${reporting.toFixed(0)}%` : "—"}</span>}
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+        ))}
+      </div>
+    </>
+  );
+}
+
 function RacePickerPanel({ races, raceCache, selectedId, onSelect }: {
   races: FeaturedRace[];
   raceCache: Record<number, RaceDetail | undefined>;
@@ -1312,11 +1377,15 @@ export default function March3FeaturedClient() {
           flex-direction: column;
           gap: 10px;
           min-height: 0;
+          overflow: hidden;
         }
-        .res-center-right > .res-forecast-wrap,
-        .res-center-right > .res-panel {
+        .res-center-right > .res-forecast-wrap {
           flex: 1;
           min-height: 0;
+          overflow: hidden;
+        }
+        .res-center-right > .res-panel {
+          flex-shrink: 0;
         }
 
         /* ── FORECAST WRAP ── */
@@ -1346,6 +1415,36 @@ export default function March3FeaturedClient() {
           min-height: 0;
           height: 100%;
           overflow: hidden;
+        }
+        /* Topline: gets generous fixed space */
+        .res-right-rail > .res-panel:first-child {
+          min-height: 260px;
+          flex: 2;
+        }
+        /* Race status: gets solid fixed space */
+        .res-right-rail > .res-race-status-panel {
+          min-height: 240px;
+          flex: 2;
+        }
+        /* Forecast panel: smaller, scrolls internally */
+        .res-forecast-wrap {
+          flex: 1 !important;
+          min-height: 0;
+          overflow: hidden;
+          display: flex;
+          flex-direction: column;
+        }
+        .res-forecast-wrap > .res-panel {
+          flex: 1;
+          min-height: 0;
+          display: flex;
+          flex-direction: column;
+          overflow: hidden;
+        }
+        .res-forecast-wrap > .res-panel .res-forecast-body {
+          flex: 1;
+          min-height: 0;
+          overflow-y: auto;
         }
 
         /* ── COMPACT RACE SCROLL (tablet only, hidden by default) ── */
@@ -1405,23 +1504,35 @@ export default function March3FeaturedClient() {
 
         /* ════ MOBILE ≤900px ════ */
         @media (max-width: 900px) {
-          .res-body { grid-template-columns: 1fr; grid-template-rows: auto; padding: 8px 10px; gap: 10px; }
-          /* Race scroll window at very top */
-          .res-race-scroll-window { display: flex; max-height: 190px; flex-shrink: 0; }
-          /* center-right shows (contains race scroll + forecast) */
-          .res-center-right { display: flex !important; }
-          .res-center-right > .res-race-scroll-window { display: none !important; }
-          .res-center-split { grid-template-columns: 1fr; height: auto; }
+          /* Switch entire page to flex column so we can reorder blocks */
+          .res-root { display: flex; flex-direction: column; }
+          .res-mobile-race-search { order: 1; }
+          .res-body {
+            order: 2;
+            display: flex !important;
+            flex-direction: column;
+            grid-template-columns: unset;
+            grid-template-rows: unset;
+            padding: 8px 10px;
+            gap: 10px;
+          }
+          /* Order within res-body: race scroll → map → right rail → forecast */
+          .res-race-picker { display: none !important; }
+          .res-center-split { order: 1; grid-template-columns: 1fr; height: auto; }
           .res-center-split > .res-map-panel { height: auto; overflow: visible; }
           .res-center-split > .res-map-panel .res-map-body { flex: none; }
           .res-tablet-county { display: none; }
-          /* Right rail flows inline */
-          .res-right-rail { display: flex; flex-direction: column; gap: 10px; height: auto; overflow: visible; }
-          .res-right-rail > .res-panel:last-child { flex: none; overflow: visible; }
+          .res-right-rail { order: 2; display: flex; flex-direction: column; gap: 10px; height: auto; overflow: visible; min-height: 0; }
+          .res-right-rail > .res-panel:first-child { min-height: 0; flex: none; }
+          .res-right-rail > .res-race-status-panel { min-height: 0; flex: none; overflow: visible !important; }
           .res-race-status-panel { flex: none !important; overflow: visible !important; }
+          .res-center-right { order: 3; display: flex !important; flex-direction: column; }
+          .res-center-right > .res-race-scroll-window { display: none !important; }
           .res-tablet-forecast { display: none !important; }
-          /* Show bottom county section on mobile */
-          .res-bottom { display: block; padding: 0 10px 16px; }
+          /* Bottom county last */
+          .res-bottom { order: 3; display: block; padding: 0 10px 16px; }
+          /* Race scroll window shown in mobile race search block */
+          .res-race-scroll-window { display: flex; max-height: 190px; flex-shrink: 0; }
         }
 
         /* ── TABLET RACE SEARCH (top of right rail, tablet only) ── */
@@ -1548,53 +1659,10 @@ export default function March3FeaturedClient() {
         </div>
 
 
-        {/* ── MOBILE RACE LIST — full compact window, phones only, above map ── */}
+        {/* ── MOBILE RACE LIST — phones only, above map ── */}
         <div className="res-mobile-race-search">
-          <div className="res-race-scroll-window" style={{ maxHeight: 200, margin: "8px 10px 0", border: "1px solid var(--border)" }}>
-            <div style={{ padding: "6px 10px", borderBottom: "1px solid var(--border)", background: "var(--background2)", flexShrink: 0, display: "flex", alignItems: "center", gap: 8 }}>
-              <svg width="10" height="10" viewBox="0 0 16 16" fill="none" style={{ flexShrink: 0, opacity: 0.3 }}>
-                <circle cx="6.5" cy="6.5" r="5" stroke="white" strokeWidth="1.5"/>
-                <line x1="10.5" y1="10.5" x2="14" y2="14" stroke="white" strokeWidth="1.5" strokeLinecap="round"/>
-              </svg>
-              <input type="text" placeholder="Search races…" value={scrollWindowSearch} onChange={e => setScrollWindowSearch(e.target.value)}
-                style={{ flex: 1, background: "none", border: "none", outline: "none", fontFamily: "var(--font-body)", fontSize: "9px", fontWeight: 600, letterSpacing: "0.06em", color: "var(--foreground)", caretColor: "var(--purple-soft)" }} />
-              {scrollWindowSearch && <button onClick={() => setScrollWindowSearch("")} style={{ background: "none", border: "none", cursor: "pointer", color: "rgba(255,255,255,0.3)", fontSize: 11, padding: 0, lineHeight: 1 }}>✕</button>}
-            </div>
-            <div style={{ overflowY: "auto", flex: 1 }}>
-              {racesForState.filter(r => !scrollWindowSearch || r.office.toLowerCase().includes(scrollWindowSearch.toLowerCase()) || r.party.toLowerCase().includes(scrollWindowSearch.toLowerCase()))
-                .reduce<{ office: string; races: FeaturedRace[] }[]>((groups, r) => {
-                  const last = groups[groups.length - 1];
-                  if (last && last.office === r.office) last.races.push(r);
-                  else groups.push({ office: r.office, races: [r] });
-                  return groups;
-                }, []).map(({ office, races }) => (
-                <div key={office}>
-                  <div style={{ padding: "4px 10px 2px", fontFamily: "var(--font-body)", fontSize: "6px", fontWeight: 700, letterSpacing: "0.26em", textTransform: "uppercase", color: "rgba(255,255,255,0.18)", borderTop: "1px solid rgba(255,255,255,0.04)", marginTop: 2 }}>{office}</div>
-                  {races.map(r => {
-                    const liveData = raceCache[r.id]; const winner = liveData?.candidates?.find(c => c.winner); const reporting = getRaceReportingPct(liveData);
-                    const isSelected = r.id === selectedId; const partyColor = r.party === "Republican" ? "var(--rep)" : r.party === "Democratic" ? "var(--dem)" : "rgba(255,255,255,0.4)"; const partyShort = r.party === "Republican" ? "R" : "D";
-                    const hasForecast = !!RACE_FORECAST_DEFAULTS[r.id];
-                    return (
-                      <button key={r.id} onClick={() => setSelectedId(r.id)} style={{ display: "flex", alignItems: "center", width: "100%", padding: "6px 10px", background: isSelected ? "rgba(124,58,237,0.10)" : "transparent", border: "none", borderLeft: isSelected ? "2px solid var(--purple)" : "2px solid transparent", cursor: "pointer", textAlign: "left", transition: "background 100ms ease" }}>
-                        <span style={{ flexShrink: 0, width: 16, height: 16, borderRadius: 2, background: `${partyColor}22`, border: `1px solid ${partyColor}44`, display: "flex", alignItems: "center", justifyContent: "center", marginRight: 8, fontFamily: "var(--font-body)", fontSize: "6.5px", fontWeight: 900, color: partyColor }}>{partyShort}</span>
-                        <div style={{ flex: 1, minWidth: 0 }}>
-                          <div style={{ display: "flex", alignItems: "center", gap: 4 }}>
-                            <span style={{ fontFamily: "var(--font-body)", fontSize: "8.5px", fontWeight: isSelected ? 800 : 600, color: isSelected ? "#fff" : "rgba(255,255,255,0.65)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{r.party} Primary</span>
-                            {hasForecast && <span style={{ flexShrink: 0, display: "inline-flex", padding: "0px 4px", border: "1px solid rgba(124,58,237,0.45)", background: "rgba(124,58,237,0.10)", fontFamily: "var(--font-body)", fontSize: "5px", fontWeight: 700, letterSpacing: "0.12em", color: "var(--purple-soft)" }}>FORECAST β</span>}
-                          </div>
-                          <div style={{ height: 2, background: "rgba(255,255,255,0.07)", marginTop: 3 }}>
-                            <div style={{ height: "100%", width: `${reporting ?? 0}%`, background: partyColor, opacity: 0.6 }} />
-                          </div>
-                        </div>
-                        <span style={{ flexShrink: 0, marginLeft: 8, fontFamily: "var(--font-body)", fontSize: "7.5px", fontWeight: 700, color: isSelected ? "rgba(255,255,255,0.5)" : "rgba(255,255,255,0.2)" }}>
-                          {winner ? <span style={{ color: "var(--win)" }}>✓</span> : reporting !== null ? `${reporting.toFixed(0)}%` : "—"}
-                        </span>
-                      </button>
-                    );
-                  })}
-                </div>
-              ))}
-            </div>
+          <div style={{ margin: "8px 10px 0", border: "1px solid var(--border)" }}>
+            <RaceScrollWindow races={racesForState} raceCache={raceCache} selectedId={selectedId} onSelect={setSelectedId} search={scrollWindowSearch} onSearchChange={setScrollWindowSearch} maxHeight={200} />
           </div>
         </div>
 
@@ -1665,68 +1733,7 @@ export default function March3FeaturedClient() {
 
               {/* COMPACT RACE SCROLL WINDOW */}
               <div className="res-race-scroll-window">
-                <div style={{ padding: "6px 10px", borderBottom: "1px solid var(--border)", background: "var(--background2)", flexShrink: 0, display: "flex", alignItems: "center", gap: 8 }}>
-                  <svg width="10" height="10" viewBox="0 0 16 16" fill="none" style={{ flexShrink: 0, opacity: 0.3 }}>
-                    <circle cx="6.5" cy="6.5" r="5" stroke="white" strokeWidth="1.5"/>
-                    <line x1="10.5" y1="10.5" x2="14" y2="14" stroke="white" strokeWidth="1.5" strokeLinecap="round"/>
-                  </svg>
-                  <input
-                    type="text"
-                    placeholder="Search races…"
-                    value={scrollWindowSearch}
-                    onChange={e => setScrollWindowSearch(e.target.value)}
-                    style={{ flex: 1, background: "none", border: "none", outline: "none", fontFamily: "var(--font-body)", fontSize: "9px", fontWeight: 600, letterSpacing: "0.06em", color: "var(--foreground)", caretColor: "var(--purple-soft)" }}
-                  />
-                  {scrollWindowSearch && (
-                    <button onClick={() => setScrollWindowSearch("")} style={{ background: "none", border: "none", cursor: "pointer", color: "rgba(255,255,255,0.3)", fontSize: 11, padding: 0, lineHeight: 1 }}>✕</button>
-                  )}
-                </div>
-                <div style={{ overflowY: "auto", flex: 1 }}>
-                  {racesForState.filter(r =>
-                    !scrollWindowSearch ||
-                    r.office.toLowerCase().includes(scrollWindowSearch.toLowerCase()) ||
-                    r.party.toLowerCase().includes(scrollWindowSearch.toLowerCase())
-                  ).reduce<{ office: string; races: FeaturedRace[] }[]>((groups, r) => {
-                    const last = groups[groups.length - 1];
-                    if (last && last.office === r.office) last.races.push(r);
-                    else groups.push({ office: r.office, races: [r] });
-                    return groups;
-                  }, []).map(({ office, races }) => (
-                    <div key={office}>
-                      <div style={{ padding: "4px 10px 2px", fontFamily: "var(--font-body)", fontSize: "6px", fontWeight: 700, letterSpacing: "0.26em", textTransform: "uppercase", color: "rgba(255,255,255,0.18)", borderTop: "1px solid rgba(255,255,255,0.04)", marginTop: 2 }}>{office}</div>
-                      {races.map(r => {
-                        const liveData = raceCache[r.id];
-                        const winner = liveData?.candidates?.find(c => c.winner);
-                        const reporting = getRaceReportingPct(liveData);
-                        const leader = liveData?.candidates ? [...liveData.candidates].sort((a, b) => (b.percent ?? 0) - (a.percent ?? 0))[0] : null;
-                        const isSelected = r.id === selectedId;
-                        const partyColor = r.party === "Republican" ? "var(--rep)" : r.party === "Democratic" ? "var(--dem)" : "rgba(255,255,255,0.4)";
-                        const partyShort = r.party === "Republican" ? "R" : r.party === "Democratic" ? "D" : "—";
-                        const hasForecast = !!RACE_FORECAST_DEFAULTS[r.id];
-                        return (
-                          <button key={r.id} onClick={() => setSelectedId(r.id)} style={{ display: "flex", alignItems: "center", width: "100%", gap: 0, padding: "6px 10px", background: isSelected ? "rgba(124,58,237,0.10)" : "transparent", border: "none", borderLeft: isSelected ? "2px solid var(--purple)" : "2px solid transparent", cursor: "pointer", textAlign: "left", transition: "background 100ms ease" }}>
-                            <span style={{ flexShrink: 0, width: 16, height: 16, borderRadius: 2, background: `${partyColor}22`, border: `1px solid ${partyColor}44`, display: "flex", alignItems: "center", justifyContent: "center", marginRight: 8, fontFamily: "var(--font-body)", fontSize: "6.5px", fontWeight: 900, color: partyColor }}>{partyShort}</span>
-                            <div style={{ flex: 1, minWidth: 0 }}>
-                              <div style={{ display: "flex", alignItems: "center", gap: 4, marginBottom: 2 }}>
-                                <span style={{ fontFamily: "var(--font-body)", fontSize: "8.5px", fontWeight: isSelected ? 800 : 600, color: isSelected ? "#fff" : "rgba(255,255,255,0.65)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{r.party} Primary</span>
-                                {hasForecast && <span style={{ flexShrink: 0, display: "inline-flex", padding: "0px 4px", border: "1px solid rgba(124,58,237,0.45)", background: "rgba(124,58,237,0.10)", fontFamily: "var(--font-body)", fontSize: "5px", fontWeight: 700, letterSpacing: "0.12em", color: "var(--purple-soft)" }}>FORECAST β</span>}
-                              </div>
-                              <div style={{ height: 2, background: "rgba(255,255,255,0.07)", overflow: "hidden" }}>
-                                <div style={{ height: "100%", width: `${reporting ?? 0}%`, background: winner ? "var(--win)" : partyColor, opacity: 0.75, transition: "width 800ms ease" }} />
-                              </div>
-                            </div>
-                            <div style={{ flexShrink: 0, marginLeft: 8, textAlign: "right" }}>
-                              {winner
-                                ? <span style={{ fontFamily: "var(--font-body)", fontSize: "6px", fontWeight: 700, color: "var(--win)" }}>✓</span>
-                                : <span style={{ fontFamily: "var(--font-body)", fontSize: "7.5px", fontWeight: 700, color: isSelected ? "rgba(255,255,255,0.5)" : "rgba(255,255,255,0.2)" }}>{reporting !== null ? `${reporting.toFixed(0)}%` : "—"}</span>
-                              }
-                            </div>
-                          </button>
-                        );
-                      })}
-                    </div>
-                  ))}
-                </div>
+                <RaceScrollWindow races={racesForState} raceCache={raceCache} selectedId={selectedId} onSelect={setSelectedId} search={scrollWindowSearch} onSearchChange={setScrollWindowSearch} />
               </div>
 
               {/* FORECAST PANEL or NO-FORECAST PLACEHOLDER */}
