@@ -1336,18 +1336,6 @@ export default function March3FeaturedClient() {
           height: 100%;
           overflow: hidden;
         }
-        .res-right-rail > .res-panel:last-child {
-          flex: 1;
-          min-height: 0;
-          overflow: hidden;
-          display: flex;
-          flex-direction: column;
-        }
-        .res-right-rail > .res-panel:last-child > div:last-child {
-          flex: 1;
-          min-height: 0;
-          overflow-y: auto;
-        }
 
         /* ── COMPACT RACE SCROLL (tablet only, hidden by default) ── */
         .res-race-scroll-window {
@@ -1381,7 +1369,7 @@ export default function March3FeaturedClient() {
           /* Fixed height so both columns end at same line */
           .res-body {
             grid-template-columns: 1fr 300px;
-            grid-template-rows: calc(100vh - 175px);
+            grid-template-rows: calc(100vh - 120px);
             padding: 10px 14px;
           }
           .res-race-picker { display: none; }
@@ -1411,6 +1399,7 @@ export default function March3FeaturedClient() {
           .res-race-scroll-window { display: flex; max-height: 190px; flex-shrink: 0; }
           /* center-right shows (contains race scroll + forecast) */
           .res-center-right { display: flex !important; }
+          .res-center-right > .res-race-scroll-window { display: none !important; }
           .res-center-split { grid-template-columns: 1fr; height: auto; }
           .res-center-split > .res-map-panel { height: auto; overflow: visible; }
           .res-center-split > .res-map-panel .res-map-body { flex: none; }
@@ -1424,7 +1413,17 @@ export default function March3FeaturedClient() {
           .res-bottom { display: block; padding: 0 10px 16px; }
         }
 
-        /* ── RACE SELECT DROPDOWN ── */
+        /* ── TABLET RACE SEARCH (top of right rail, tablet only) ── */
+        .res-tablet-race-search { display: none !important; }
+
+        /* ── MOBILE RACE LIST (phones only, above map) ── */
+        .res-mobile-race-search { display: none; }
+        @media (max-width: 900px) {
+          .res-mobile-race-search { display: block; }
+          .res-mobile-race-search .res-race-scroll-window { display: flex !important; margin: 8px 10px 0; }
+        }
+
+
         .res-race-select {
           flex: 1; appearance: none; -webkit-appearance: none;
           background: var(--panel); border: 1px solid var(--border); color: var(--foreground);
@@ -1536,6 +1535,58 @@ export default function March3FeaturedClient() {
             );
           })()}
         </div>
+
+
+        {/* ── MOBILE RACE LIST — full compact window, phones only, above map ── */}
+        <div className="res-mobile-race-search">
+          <div className="res-race-scroll-window" style={{ maxHeight: 200, margin: "8px 10px 0", border: "1px solid var(--border)" }}>
+            <div style={{ padding: "6px 10px", borderBottom: "1px solid var(--border)", background: "var(--background2)", flexShrink: 0, display: "flex", alignItems: "center", gap: 8 }}>
+              <svg width="10" height="10" viewBox="0 0 16 16" fill="none" style={{ flexShrink: 0, opacity: 0.3 }}>
+                <circle cx="6.5" cy="6.5" r="5" stroke="white" strokeWidth="1.5"/>
+                <line x1="10.5" y1="10.5" x2="14" y2="14" stroke="white" strokeWidth="1.5" strokeLinecap="round"/>
+              </svg>
+              <input type="text" placeholder="Search races…" value={scrollWindowSearch} onChange={e => setScrollWindowSearch(e.target.value)}
+                style={{ flex: 1, background: "none", border: "none", outline: "none", fontFamily: "var(--font-body)", fontSize: "9px", fontWeight: 600, letterSpacing: "0.06em", color: "var(--foreground)", caretColor: "var(--purple-soft)" }} />
+              {scrollWindowSearch && <button onClick={() => setScrollWindowSearch("")} style={{ background: "none", border: "none", cursor: "pointer", color: "rgba(255,255,255,0.3)", fontSize: 11, padding: 0, lineHeight: 1 }}>✕</button>}
+            </div>
+            <div style={{ overflowY: "auto", flex: 1 }}>
+              {racesForState.filter(r => !scrollWindowSearch || r.office.toLowerCase().includes(scrollWindowSearch.toLowerCase()) || r.party.toLowerCase().includes(scrollWindowSearch.toLowerCase()))
+                .reduce<{ office: string; races: FeaturedRace[] }[]>((groups, r) => {
+                  const last = groups[groups.length - 1];
+                  if (last && last.office === r.office) last.races.push(r);
+                  else groups.push({ office: r.office, races: [r] });
+                  return groups;
+                }, []).map(({ office, races }) => (
+                <div key={office}>
+                  <div style={{ padding: "4px 10px 2px", fontFamily: "var(--font-body)", fontSize: "6px", fontWeight: 700, letterSpacing: "0.26em", textTransform: "uppercase", color: "rgba(255,255,255,0.18)", borderTop: "1px solid rgba(255,255,255,0.04)", marginTop: 2 }}>{office}</div>
+                  {races.map(r => {
+                    const liveData = raceCache[r.id]; const winner = liveData?.candidates?.find(c => c.winner); const reporting = getRaceReportingPct(liveData);
+                    const isSelected = r.id === selectedId; const partyColor = r.party === "Republican" ? "var(--rep)" : r.party === "Democratic" ? "var(--dem)" : "rgba(255,255,255,0.4)"; const partyShort = r.party === "Republican" ? "R" : "D";
+                    const hasForecast = !!RACE_FORECAST_DEFAULTS[r.id];
+                    return (
+                      <button key={r.id} onClick={() => setSelectedId(r.id)} style={{ display: "flex", alignItems: "center", width: "100%", padding: "6px 10px", background: isSelected ? "rgba(124,58,237,0.10)" : "transparent", border: "none", borderLeft: isSelected ? "2px solid var(--purple)" : "2px solid transparent", cursor: "pointer", textAlign: "left", transition: "background 100ms ease" }}>
+                        <span style={{ flexShrink: 0, width: 16, height: 16, borderRadius: 2, background: `${partyColor}22`, border: `1px solid ${partyColor}44`, display: "flex", alignItems: "center", justifyContent: "center", marginRight: 8, fontFamily: "var(--font-body)", fontSize: "6.5px", fontWeight: 900, color: partyColor }}>{partyShort}</span>
+                        <div style={{ flex: 1, minWidth: 0 }}>
+                          <div style={{ display: "flex", alignItems: "center", gap: 4 }}>
+                            <span style={{ fontFamily: "var(--font-body)", fontSize: "8.5px", fontWeight: isSelected ? 800 : 600, color: isSelected ? "#fff" : "rgba(255,255,255,0.65)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{r.party} Primary</span>
+                            {hasForecast && <span style={{ flexShrink: 0, display: "inline-flex", padding: "0px 4px", border: "1px solid rgba(124,58,237,0.45)", background: "rgba(124,58,237,0.10)", fontFamily: "var(--font-body)", fontSize: "5px", fontWeight: 700, letterSpacing: "0.12em", color: "var(--purple-soft)" }}>FORECAST β</span>}
+                          </div>
+                          <div style={{ height: 2, background: "rgba(255,255,255,0.07)", marginTop: 3 }}>
+                            <div style={{ height: "100%", width: `${reporting ?? 0}%`, background: partyColor, opacity: 0.6 }} />
+                          </div>
+                        </div>
+                        <span style={{ flexShrink: 0, marginLeft: 8, fontFamily: "var(--font-body)", fontSize: "7.5px", fontWeight: 700, color: isSelected ? "rgba(255,255,255,0.5)" : "rgba(255,255,255,0.2)" }}>
+                          {winner ? <span style={{ color: "var(--win)" }}>✓</span> : reporting !== null ? `${reporting.toFixed(0)}%` : "—"}
+                        </span>
+                      </button>
+                    );
+                  })}
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
 
         {/* ── MAIN BODY ── */}
         <div className="res-body">
@@ -1705,15 +1756,15 @@ export default function March3FeaturedClient() {
           <aside className="res-right-rail">
 
             {/* TOPLINE */}
-            <div className="res-panel">
+            <div className="res-panel" style={{ display: "flex", flexDirection: "column", minHeight: 0 }}>
               <div className="res-tri-stripe" />
-              <div className="res-panel-header">
+              <div className="res-panel-header" style={{ flexShrink: 0 }}>
                 <span className="res-panel-tag">TOPLINE RESULTS</span>
                 {selectedRace?.percent_reporting !== undefined && (
                   <span className="res-note" style={{ color: "rgba(255,255,255,0.45)", fontWeight: 700 }}>{selectedRace.percent_reporting.toFixed(1)}% IN</span>
                 )}
               </div>
-              <div style={{ padding: "12px 14px" }}>
+              <div style={{ padding: "12px 14px", overflowY: "auto", flex: 1, minHeight: 0 }}>
                 {selectedRace?.candidates
                   ? <CandidateList candidates={selectedRace.candidates} reporting={selectedRace.percent_reporting ?? 0} raceId={selectedId} />
                   : <div style={{ padding: "32px 0", textAlign: "center" }} className="res-note">LOADING…</div>
@@ -1722,9 +1773,9 @@ export default function March3FeaturedClient() {
             </div>
 
             {/* RACE STATUS */}
-            <div className="res-panel res-race-status-panel">
-              <div className="res-panel-header"><span className="res-panel-tag">RACE STATUS</span></div>
-              <div style={{ padding: "12px 14px", display: "flex", flexDirection: "column", gap: "8px" }}>
+            <div className="res-panel res-race-status-panel" style={{ display: "flex", flexDirection: "column", minHeight: 0 }}>
+              <div className="res-panel-header" style={{ flexShrink: 0 }}><span className="res-panel-tag">RACE STATUS</span></div>
+              <div style={{ padding: "12px 14px", display: "flex", flexDirection: "column", gap: "8px", overflowY: "auto", flex: 1, minHeight: 0 }}>
 
                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px" }}>
                   <div className="res-stat-block">
