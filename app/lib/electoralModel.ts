@@ -355,7 +355,7 @@ export function forecastRace(
   const modeled_percent_reporting = safeDiv(reported_vote_total, modeled_total_vote);
 
   // Step 2: Uncertainty (sd_race)
-  const sd_pre_election = roundToNearest100(expected_turnout / 6.5);
+  const sd_pre_election = roundToNearest100(expected_turnout / 17.5);
   let sd_race: number;
   if (percent_reporting < 0.05) {
     sd_race = sd_pre_election;
