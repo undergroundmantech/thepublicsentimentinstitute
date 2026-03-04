@@ -15,44 +15,51 @@ const RAW_POLLS: Poll[] = [
   { pollster: "YouGov", endDate: "2026-03-02", sampleSize: 2000, sampleType: "LV", results: { Paxton: 36, Cornyn: 32, Hunt: 17 } },
   { pollster: "Emerson", endDate: "2026-02-27", sampleSize: 547, sampleType: "LV", results: { Paxton: 40, Cornyn: 36, Hunt: 17 } },
   { pollster: "American Opportunity Alliance", endDate: "2025-05-01", sampleSize: 800, sampleType: "LV", results: { Paxton: 43, Cornyn: 27, Hunt: 14 } },
-{ pollster: "Quantus Insights", endDate: "2025-05-13", sampleSize: 600, sampleType: "RV", results: { Paxton: 46, Cornyn: 38, Hunt: 16 } },
-{ pollster: "TSU/YouGov", endDate: "2025-05-19", sampleSize: 510, sampleType: "LV", results: { Paxton: 34, Cornyn: 27, Hunt: 15 } },
-{ pollster: "Pulse Decision Science", endDate: "2025-06-22", sampleSize: 806, sampleType: "LV", results: { Paxton: 49, Cornyn: 32, Hunt: 13 } },
-{ pollster: "G1 Research", endDate: "2025-06-30", sampleSize: 0, sampleType: "LV", results: { Paxton: 41, Cornyn: 28, Hunt: 17 } },
-{ pollster: "TSU/YouGov", endDate: "2025-08-12", sampleSize: 1500, sampleType: "RV", results: { Paxton: 35, Cornyn: 30, Hunt: 22 } },
-{ pollster: "Emerson", endDate: "2025-08-12", sampleSize: 491, sampleType: "RV", results: { Paxton: 29, Cornyn: 30, Hunt: 0 } },
-{ pollster: "Texas Southern University", endDate: "2025-08-12", sampleSize: 1500, sampleType: "LV", results: { Paxton: 35, Cornyn: 30, Hunt: 22 } },
-{ pollster: "UT Tyler", endDate: "2025-09-24", sampleSize: 492, sampleType: "RV", results: { Paxton: 31, Cornyn: 29, Hunt: 14 } },
-{ pollster: "Ragnar Research Partners", endDate: "2025-09-22", sampleSize: 760, sampleType: "LV", results: { Paxton: 31, Cornyn: 32, Hunt: 17 } },
-{ pollster: "Deep Root Analytics", endDate: "2025-09-28", sampleSize: 1142, sampleType: "LV", results: { Paxton: 28, Cornyn: 33, Hunt: 21 } },
-{ pollster: "U. of Houston/TSU", endDate: "2025-10-01", sampleSize: 0, sampleType: "LV", results: { Paxton: 34, Cornyn: 33, Hunt: 22 } },
-{ pollster: "Hunt Research", endDate: "2025-10-10", sampleSize: 1097, sampleType: "LV", results: { Paxton: 28, Cornyn: 24, Hunt: 19 } },
-{ pollster: "Harper Polling", endDate: "2025-10-30", sampleSize: 614, sampleType: "LV", results: { Paxton: 25, Cornyn: 26, Hunt: 24 } },
-{ pollster: "Peak Insights", endDate: "2025-10-31", sampleSize: 600, sampleType: "LV", results: { Paxton: 36, Cornyn: 34, Hunt: 19 } },
-{ pollster: "Stratus Intelligence", endDate: "2025-11-06", sampleSize: 811, sampleType: "LV", results: { Paxton: 34, Cornyn: 27, Hunt: 26 } },
-{ pollster: "Ragnar Research Partners", endDate: "2025-11-16", sampleSize: 758, sampleType: "LV", results: { Paxton: 31, Cornyn: 32, Hunt: 21 } },
-{ pollster: "Stratus Intelligence", endDate: "2025-11-22", sampleSize: 857, sampleType: "LV", results: { Paxton: 36, Cornyn: 25, Hunt: 26 } },
-{ pollster: "Peak Insights", endDate: "2025-11-25", sampleSize: 600, sampleType: "LV", results: { Paxton: 33, Cornyn: 35, Hunt: 18 } },
-{ pollster: "1892 Polling", endDate: "2025-12-04", sampleSize: 0, sampleType: "LV", results: { Paxton: 29, Cornyn: 28, Hunt: 19 } },
-{ pollster: "McLaughlin & Associates", endDate: "2025-12-04", sampleSize: 800, sampleType: "LV", results: { Paxton: 33, Cornyn: 27, Hunt: 28 } },
-{ pollster: "Public Policy Polling", endDate: "2025-12-02", sampleSize: 527, sampleType: "LV", results: { Paxton: 32, Cornyn: 22, Hunt: 22 } },
-{ pollster: "J.L. Partners", endDate: "2025-12-03", sampleSize: 600, sampleType: "LV", results: { Paxton: 29, Cornyn: 24, Hunt: 24 } },
-{ pollster: "Pulse Decision Science", endDate: "2025-12-17", sampleSize: 809, sampleType: "LV", results: { Paxton: 38, Cornyn: 38, Hunt: 16 } },
-{ pollster: "co/efficient", endDate: "2025-12-31", sampleSize: 1022, sampleType: "LV", results: { Paxton: 27, Cornyn: 28, Hunt: 19 } },
-{ pollster: "Deep Root Analytics", endDate: "2026-01-11", sampleSize: 0, sampleType: "LV", results: { Paxton: 26, Cornyn: 29, Hunt: 19 } },
-{ pollster: "Emerson", endDate: "2026-01-12", sampleSize: 550, sampleType: "LV", results: { Paxton: 27, Cornyn: 26, Hunt: 16 } },
-{ pollster: "University of Houston", endDate: "2026-01-31", sampleSize: 550, sampleType: "LV", results: { Paxton: 38, Cornyn: 31, Hunt: 17 } },
-{ pollster: "University of Houston/YouGov", endDate: "2026-01-31", sampleSize: 550, sampleType: "LV", results: { Paxton: 38, Cornyn: 31, Hunt: 17 } },
-{ pollster: "Ragnar Research Partners", endDate: "2026-02-01", sampleSize: 0, sampleType: "LV", results: { Paxton: 29, Cornyn: 31, Hunt: 24 } },
-{ pollster: "Pulse Decision Science", endDate: "2026-02-03", sampleSize: 801, sampleType: "LV", results: { Paxton: 34, Cornyn: 26, Hunt: 18 } },
-{ pollster: "J.L. Partners", endDate: "2026-02-03", sampleSize: 600, sampleType: "LV", results: { Paxton: 27, Cornyn: 26, Hunt: 26 } },
-{ pollster: "Peak Insights", endDate: "2026-02-08", sampleSize: 1000, sampleType: "LV", results: { Paxton: 31, Cornyn: 29, Hunt: 25 } },
-{ pollster: "Pulse Decision Science", endDate: "2026-02-11", sampleSize: 800, sampleType: "LV", results: { Paxton: 36, Cornyn: 27, Hunt: 15 } },
-{ pollster: "University of Texas", endDate: "2026-02-16", sampleSize: 350, sampleType: "LV", results: { Paxton: 36, Cornyn: 34, Hunt: 26 } },
-{ pollster: "Peak Insights", endDate: "2026-02-23", sampleSize: 800, sampleType: "LV", results: { Paxton: 36, Cornyn: 36, Hunt: 14 } },
-{ pollster: "Chism/Blueprint", endDate: "2026-02-24", sampleSize: 472, sampleType: "LV", results: { Paxton: 42, Cornyn: 30, Hunt: 14 } },
-{ pollster: "Quantus Insights", endDate: "2026-02-26", sampleSize: 939, sampleType: "LV", results: { Paxton: 43, Cornyn: 38, Hunt: 16 } }
+  { pollster: "Quantus Insights", endDate: "2025-05-13", sampleSize: 600, sampleType: "RV", results: { Paxton: 46, Cornyn: 38, Hunt: 16 } },
+  { pollster: "TSU/YouGov", endDate: "2025-05-19", sampleSize: 510, sampleType: "LV", results: { Paxton: 34, Cornyn: 27, Hunt: 15 } },
+  { pollster: "Pulse Decision Science", endDate: "2025-06-22", sampleSize: 806, sampleType: "LV", results: { Paxton: 49, Cornyn: 32, Hunt: 13 } },
+  { pollster: "G1 Research", endDate: "2025-06-30", sampleSize: 0, sampleType: "LV", results: { Paxton: 41, Cornyn: 28, Hunt: 17 } },
+  { pollster: "TSU/YouGov", endDate: "2025-08-12", sampleSize: 1500, sampleType: "RV", results: { Paxton: 35, Cornyn: 30, Hunt: 22 } },
+  { pollster: "Emerson", endDate: "2025-08-12", sampleSize: 491, sampleType: "RV", results: { Paxton: 29, Cornyn: 30, Hunt: 0 } },
+  { pollster: "Texas Southern University", endDate: "2025-08-12", sampleSize: 1500, sampleType: "LV", results: { Paxton: 35, Cornyn: 30, Hunt: 22 } },
+  { pollster: "UT Tyler", endDate: "2025-09-24", sampleSize: 492, sampleType: "RV", results: { Paxton: 31, Cornyn: 29, Hunt: 14 } },
+  { pollster: "Ragnar Research Partners", endDate: "2025-09-22", sampleSize: 760, sampleType: "LV", results: { Paxton: 31, Cornyn: 32, Hunt: 17 } },
+  { pollster: "Deep Root Analytics", endDate: "2025-09-28", sampleSize: 1142, sampleType: "LV", results: { Paxton: 28, Cornyn: 33, Hunt: 21 } },
+  { pollster: "U. of Houston/TSU", endDate: "2025-10-01", sampleSize: 0, sampleType: "LV", results: { Paxton: 34, Cornyn: 33, Hunt: 22 } },
+  { pollster: "Hunt Research", endDate: "2025-10-10", sampleSize: 1097, sampleType: "LV", results: { Paxton: 28, Cornyn: 24, Hunt: 19 } },
+  { pollster: "Harper Polling", endDate: "2025-10-30", sampleSize: 614, sampleType: "LV", results: { Paxton: 25, Cornyn: 26, Hunt: 24 } },
+  { pollster: "Peak Insights", endDate: "2025-10-31", sampleSize: 600, sampleType: "LV", results: { Paxton: 36, Cornyn: 34, Hunt: 19 } },
+  { pollster: "Stratus Intelligence", endDate: "2025-11-06", sampleSize: 811, sampleType: "LV", results: { Paxton: 34, Cornyn: 27, Hunt: 26 } },
+  { pollster: "Ragnar Research Partners", endDate: "2025-11-16", sampleSize: 758, sampleType: "LV", results: { Paxton: 31, Cornyn: 32, Hunt: 21 } },
+  { pollster: "Stratus Intelligence", endDate: "2025-11-22", sampleSize: 857, sampleType: "LV", results: { Paxton: 36, Cornyn: 25, Hunt: 26 } },
+  { pollster: "Peak Insights", endDate: "2025-11-25", sampleSize: 600, sampleType: "LV", results: { Paxton: 33, Cornyn: 35, Hunt: 18 } },
+  { pollster: "1892 Polling", endDate: "2025-12-04", sampleSize: 0, sampleType: "LV", results: { Paxton: 29, Cornyn: 28, Hunt: 19 } },
+  { pollster: "McLaughlin & Associates", endDate: "2025-12-04", sampleSize: 800, sampleType: "LV", results: { Paxton: 33, Cornyn: 27, Hunt: 28 } },
+  { pollster: "Public Policy Polling", endDate: "2025-12-02", sampleSize: 527, sampleType: "LV", results: { Paxton: 32, Cornyn: 22, Hunt: 22 } },
+  { pollster: "J.L. Partners", endDate: "2025-12-03", sampleSize: 600, sampleType: "LV", results: { Paxton: 29, Cornyn: 24, Hunt: 24 } },
+  { pollster: "Pulse Decision Science", endDate: "2025-12-17", sampleSize: 809, sampleType: "LV", results: { Paxton: 38, Cornyn: 38, Hunt: 16 } },
+  { pollster: "co/efficient", endDate: "2025-12-31", sampleSize: 1022, sampleType: "LV", results: { Paxton: 27, Cornyn: 28, Hunt: 19 } },
+  { pollster: "Deep Root Analytics", endDate: "2026-01-11", sampleSize: 0, sampleType: "LV", results: { Paxton: 26, Cornyn: 29, Hunt: 19 } },
+  { pollster: "Emerson", endDate: "2026-01-12", sampleSize: 550, sampleType: "LV", results: { Paxton: 27, Cornyn: 26, Hunt: 16 } },
+  { pollster: "University of Houston", endDate: "2026-01-31", sampleSize: 550, sampleType: "LV", results: { Paxton: 38, Cornyn: 31, Hunt: 17 } },
+  { pollster: "University of Houston/YouGov", endDate: "2026-01-31", sampleSize: 550, sampleType: "LV", results: { Paxton: 38, Cornyn: 31, Hunt: 17 } },
+  { pollster: "Ragnar Research Partners", endDate: "2026-02-01", sampleSize: 0, sampleType: "LV", results: { Paxton: 29, Cornyn: 31, Hunt: 24 } },
+  { pollster: "Pulse Decision Science", endDate: "2026-02-03", sampleSize: 801, sampleType: "LV", results: { Paxton: 34, Cornyn: 26, Hunt: 18 } },
+  { pollster: "J.L. Partners", endDate: "2026-02-03", sampleSize: 600, sampleType: "LV", results: { Paxton: 27, Cornyn: 26, Hunt: 26 } },
+  { pollster: "Peak Insights", endDate: "2026-02-08", sampleSize: 1000, sampleType: "LV", results: { Paxton: 31, Cornyn: 29, Hunt: 25 } },
+  { pollster: "Pulse Decision Science", endDate: "2026-02-11", sampleSize: 800, sampleType: "LV", results: { Paxton: 36, Cornyn: 27, Hunt: 15 } },
+  { pollster: "University of Texas", endDate: "2026-02-16", sampleSize: 350, sampleType: "LV", results: { Paxton: 36, Cornyn: 34, Hunt: 26 } },
+  { pollster: "Peak Insights", endDate: "2026-02-23", sampleSize: 800, sampleType: "LV", results: { Paxton: 36, Cornyn: 36, Hunt: 14 } },
+  { pollster: "Chism/Blueprint", endDate: "2026-02-24", sampleSize: 472, sampleType: "LV", results: { Paxton: 42, Cornyn: 30, Hunt: 14 } },
+  { pollster: "Quantus Insights", endDate: "2026-02-26", sampleSize: 939, sampleType: "LV", results: { Paxton: 43, Cornyn: 38, Hunt: 16 } }
 ];
+
+// ─── Actual election results (>95% reporting, Mar 3 2026) ─────────────────────
+const ACTUAL: Record<string, number> = {
+  Cornyn: 41.88,
+  Paxton: 40.69,
+  Hunt:   13.51,
+};
 
 const COLORS: Record<string, string> = {
   Paxton: "#ef4444",
@@ -76,6 +83,23 @@ export default function TexasRepPrimaryPage() {
   }, []);
 
   const candidates = Object.entries(latestValues).sort((a, b) => b[1] - a[1]);
+
+  // Accuracy rows: avg vs actual
+  const accuracyRows = Object.entries(ACTUAL).map(([name, actual]) => {
+    const avg = latestValues[name] ?? 0;
+    const error = round1(avg - actual);
+    return { name, avg: round1(avg), actual, error };
+  }).sort((a, b) => b.actual - a.actual);
+
+  // Mean absolute error
+  const mae = round1(
+    accuracyRows.reduce((sum, r) => sum + Math.abs(r.error), 0) / accuracyRows.length
+  );
+
+  // Winner call
+  const avgWinner = candidates[0]?.[0];
+  const actualWinner = Object.entries(ACTUAL).sort((a, b) => b[1] - a[1])[0][0];
+  const correctCall = avgWinner === actualWinner;
 
   return (
     <>
@@ -116,7 +140,7 @@ export default function TexasRepPrimaryPage() {
         </div>
 
         {/* ── KPIs ── */}
-        <div className="pap-section-label">CURRENT AVERAGES</div>
+        <div className="pap-section-label">POLLING AVERAGES</div>
         <div className="pap-kpi-grid" style={{ gridTemplateColumns: `repeat(${candidates.length + 1}, 1fr)` }}>
           {candidates.map(([name, val]) => (
             <div key={name} className="pap-kpi">
@@ -147,6 +171,113 @@ export default function TexasRepPrimaryPage() {
           title="Texas Republican Senate Primary polling average"
           subtitle="Paxton, Cornyn & Hunt trendlines — hover to view daily values"
         />
+
+        {/* ── ACCURACY PANEL ── */}
+        <div className="pap-section-label">ACCURACY · MARCH 3, 2026 RESULTS</div>
+        <div className="pap-accuracy-panel">
+          <div className="pap-stripe" />
+          <div className="pap-accuracy-header">
+            <div className="pap-accuracy-header-left">
+              <span className="pap-table-head-title">POLLING AVG vs. ACTUAL VOTE</span>
+              <span style={{ fontFamily: "ui-monospace,monospace", fontSize: 8, letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(240,240,245,0.3)", marginLeft: 12 }}>
+                &gt;95% REPORTING · MAR 3, 2026
+              </span>
+            </div>
+            <div style={{ display: "flex", gap: 10, alignItems: "center", flexWrap: "wrap" }}>
+              <span className={`pap-badge ${correctCall ? "pap-badge-green" : "pap-badge-red"}`}>
+                {correctCall ? "✓ CORRECT WINNER CALL" : "✗ WRONG WINNER CALL"}
+              </span>
+              <span className="pap-badge pap-badge-red">MAE {mae.toFixed(1)} pts</span>
+            </div>
+          </div>
+
+          <div style={{ overflowX: "auto" }}>
+            <table className="pap-table" style={{ minWidth: 560 }}>
+              <thead>
+                <tr>
+                  <th>CANDIDATE</th>
+                  <th className="r">POLLING AVG</th>
+                  <th className="r">ACTUAL VOTE</th>
+                  <th className="r">ERROR</th>
+                  <th style={{ width: "35%" }}>VISUAL</th>
+                </tr>
+              </thead>
+              <tbody>
+                {accuracyRows.map(({ name, avg, actual, error }) => {
+                  const absErr = Math.abs(error);
+                  const isOver = error > 0;
+                  const color = COLORS[name] ?? "#aaa";
+                  return (
+                    <tr key={name}>
+                      <td style={{ color: color, fontWeight: 700 }}>{name}</td>
+                      <td className="r" style={{ color: "rgba(240,240,245,0.7)" }}>{avg.toFixed(1)}%</td>
+                      <td className="r" style={{ color: "#fff", fontWeight: 700 }}>{actual.toFixed(2)}%</td>
+                      <td className="r">
+                        <span style={{
+                          color: absErr <= 2 ? "#4ade80" : absErr <= 4 ? "#facc15" : "#f87171",
+                          fontWeight: 700
+                        }}>
+                          {isOver ? "+" : ""}{error.toFixed(1)}
+                        </span>
+                      </td>
+                      <td style={{ padding: "10px 16px" }}>
+                        <div style={{ position: "relative", height: 6, background: "rgba(255,255,255,0.07)", borderRadius: 2 }}>
+                          {/* actual bar */}
+                          <div style={{
+                            position: "absolute", left: 0, top: 0, bottom: 0,
+                            width: `${Math.min(100, actual / 55 * 100)}%`,
+                            background: color, opacity: 0.25, borderRadius: 2
+                          }} />
+                          {/* avg marker */}
+                          <div style={{
+                            position: "absolute", top: -3, bottom: -3,
+                            left: `${Math.min(100, avg / 55 * 100)}%`,
+                            width: 2, background: color, borderRadius: 1,
+                            transform: "translateX(-50%)"
+                          }} />
+                        </div>
+                        <div style={{ display: "flex", justifyContent: "space-between", marginTop: 4 }}>
+                          <span style={{ fontFamily: "ui-monospace,monospace", fontSize: 7, color: "rgba(240,240,245,0.25)", letterSpacing: "0.1em" }}>
+                            AVG {avg.toFixed(1)}%
+                          </span>
+                          <span style={{ fontFamily: "ui-monospace,monospace", fontSize: 7, color: "rgba(240,240,245,0.5)", letterSpacing: "0.1em" }}>
+                            ACTUAL {actual.toFixed(2)}%
+                          </span>
+                        </div>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+
+          {/* summary stats */}
+          <div className="pap-accuracy-footer">
+            <div className="pap-accuracy-stat">
+              <div className="pap-accuracy-stat-val" style={{ color: correctCall ? "#4ade80" : "#f87171" }}>
+                {correctCall ? "✓" : "✗"}
+              </div>
+              <div className="pap-accuracy-stat-label">Winner Called</div>
+            </div>
+            <div className="pap-accuracy-stat">
+              <div className="pap-accuracy-stat-val">{mae.toFixed(1)}</div>
+              <div className="pap-accuracy-stat-label">Mean Abs. Error (pts)</div>
+            </div>
+            <div className="pap-accuracy-stat">
+              <div className="pap-accuracy-stat-val" style={{ color: COLORS.Cornyn }}>
+                {round1(ACTUAL.Cornyn - ACTUAL.Paxton).toFixed(2)}
+              </div>
+              <div className="pap-accuracy-stat-label">Actual Cornyn Margin</div>
+            </div>
+            <div className="pap-accuracy-stat">
+              <div className="pap-accuracy-stat-val" style={{ color: "rgba(240,240,245,0.5)" }}>
+                {round1((latestValues["Cornyn"] ?? 0) - (latestValues["Paxton"] ?? 0)).toFixed(1)}
+              </div>
+              <div className="pap-accuracy-stat-label">Avg Projected Margin</div>
+            </div>
+          </div>
+        </div>
 
         {/* ── POLL TABLE ── */}
         <div className="pap-table-panel">
@@ -206,6 +337,35 @@ export default function TexasRepPrimaryPage() {
                       </tr>
                     );
                   })}
+                {/* ── ACTUAL RESULTS ROW ── */}
+                <tr style={{ background: "rgba(255,255,255,0.04)", borderTop: "1px solid rgba(255,255,255,0.15)" }}>
+                  <td style={{ color: "#fff", fontWeight: 700 }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                      <span>ACTUAL RESULT</span>
+                      <span style={{
+                        display: "inline-flex", alignItems: "center",
+                        padding: "1px 6px",
+                        border: "1px solid rgba(74,222,128,0.35)",
+                        background: "rgba(74,222,128,0.08)",
+                        fontFamily: "ui-monospace,monospace",
+                        fontSize: 7, fontWeight: 700,
+                        letterSpacing: "0.18em", textTransform: "uppercase",
+                        color: "#4ade80"
+                      }}>
+                        &gt;95% REPORTING
+                      </span>
+                    </div>
+                  </td>
+                  <td className="r" style={{ color: "rgba(240,240,245,0.4)" }}>2026-03-03</td>
+                  <td className="r" style={{ color: "rgba(240,240,245,0.4)" }}>2,142,151</td>
+                  <td className="r" style={{ color: "rgba(240,240,245,0.4)" }}>—</td>
+                  <td className="r" style={{ color: COLORS.Paxton, fontWeight: 700 }}>{ACTUAL.Paxton.toFixed(2)}%</td>
+                  <td className="r" style={{ color: COLORS.Cornyn, fontWeight: 700 }}>{ACTUAL.Cornyn.toFixed(2)}%</td>
+                  <td className="r" style={{ color: COLORS.Hunt, fontWeight: 700 }}>{ACTUAL.Hunt.toFixed(2)}%</td>
+                  <td className="r" style={{ color: COLORS.Cornyn, fontWeight: 700 }}>
+                    Cornyn +{round1(ACTUAL.Cornyn - ACTUAL.Paxton).toFixed(2)}
+                  </td>
+                </tr>
               </tbody>
             </table>
           </div>
@@ -222,6 +382,7 @@ export default function TexasRepPrimaryPage() {
               square-root sample size adjustment, and screen type (LV/RV/A) weighting. Polls marked
               ** are internal or partisan and may carry reduced weight. Candidates not listed in a
               given poll (shown as —) are excluded from that poll's spread calculation.
+              Actual results sourced from official Texas election returns at &gt;95% reporting.
             </p>
           </div>
         </div>
@@ -359,8 +520,9 @@ const CSS = `
     font-size: 7.5px; font-weight: 700; letter-spacing: 0.22em;
     text-transform: uppercase; color: var(--muted3);
   }
-  .pap-badge-live { border-color:rgba(239,68,68,0.35); background:rgba(239,68,68,0.07); color:var(--red-soft); }
-  .pap-badge-red  { border-color:rgba(239,68,68,0.35); background:rgba(239,68,68,0.07); color:var(--red-soft); }
+  .pap-badge-live  { border-color:rgba(239,68,68,0.35); background:rgba(239,68,68,0.07); color:var(--red-soft); }
+  .pap-badge-red   { border-color:rgba(239,68,68,0.35); background:rgba(239,68,68,0.07); color:var(--red-soft); }
+  .pap-badge-green { border-color:rgba(74,222,128,0.35); background:rgba(74,222,128,0.07); color:#4ade80; }
 
   .pap-hero-read {
     display: flex; flex-direction: column; gap: 6px; min-width: 200px;
@@ -429,6 +591,45 @@ const CSS = `
   .pap-kpi-bar-fill {
     height: 100%;
     animation: pap-bar-in 800ms cubic-bezier(0.22,1,0.36,1) both;
+  }
+
+  /* ── accuracy panel ── */
+  .pap-accuracy-panel {
+    background: var(--panel);
+    border: 1px solid rgba(74,222,128,0.18);
+    overflow: hidden;
+  }
+  .pap-accuracy-header {
+    background: var(--bg2);
+    border-bottom: 1px solid var(--border);
+    padding: 14px 20px;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 12px; flex-wrap: wrap;
+  }
+  .pap-accuracy-header-left {
+    display: flex; align-items: center; gap: 0; flex-wrap: wrap;
+  }
+  .pap-accuracy-footer {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border-top: 1px solid var(--border);
+  }
+  @media (max-width: 600px) { .pap-accuracy-footer { grid-template-columns: repeat(2,1fr); } }
+  .pap-accuracy-stat {
+    padding: 14px 20px;
+    border-right: 1px solid var(--border);
+  }
+  .pap-accuracy-stat:last-child { border-right: none; }
+  .pap-accuracy-stat-val {
+    font-family: var(--font-body), "Geist Mono", monospace;
+    font-size: clamp(18px,2vw,24px); font-weight: 900;
+    color: #fff; font-variant-numeric: tabular-nums;
+  }
+  .pap-accuracy-stat-label {
+    font-family: var(--font-body), "Geist Mono", monospace;
+    font-size: 7.5px; font-weight: 700;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--muted3); margin-top: 4px;
   }
 
   .pap-table-panel {

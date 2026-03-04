@@ -14,31 +14,25 @@ import {
 const RAW_POLLS: Poll[] = [
   { pollster: "YouGov", endDate: "2026-03-02", sampleSize: 2400, sampleType: "LV", results: { Talarico: 53, Crockett: 40 , Hassan:0 } },
   { pollster: "Emerson", endDate: "2026-02-27", sampleSize: 850, sampleType: "LV", results: { Talarico: 52, Crockett: 47, Hassan: 1 } },
-  
-{ pollster: "Public Policy Polling", endDate: "2026-02-25", sampleSize: 599, sampleType: "LV", results: { Crockett: 42, Talarico: 48, Hassan: 0 } },
-
+  { pollster: "Public Policy Polling", endDate: "2026-02-25", sampleSize: 599, sampleType: "LV", results: { Crockett: 42, Talarico: 48, Hassan: 0 } },
   { pollster: "Chism/Blueprint", endDate: "2026-02-24", sampleSize: 472, sampleType: "LV", results: { Talarico: 52, Crockett: 40, Hassan: 0 } },
-
   { pollster: "Impact Research", endDate: "2026-02-12", sampleSize: 800, sampleType: "LV", results: { Crockett: 43, Talarico: 47, Hassan: 0 } },
-
   { pollster: "University of Texas / Texas Politics Project", endDate: "2026-02-16", sampleSize: 369, sampleType: "RV", results: { Crockett: 56, Talarico: 44, Hassan: 0 } },
-
   { pollster: "University of Houston", endDate: "2026-01-31", sampleSize: 550, sampleType: "LV", results: { Crockett: 47, Talarico: 39, Hassan: 2 } },
-
   { pollster: "TPOR", endDate: "2026-01-21", sampleSize: 1290, sampleType: "LV", results: { Crockett: 38, Talarico: 37, Hassan: 0 } },
-
   { pollster: "HIT Strategies", endDate: "2026-01-15", sampleSize: 1005, sampleType: "LV", results: { Crockett: 46, Talarico: 33, Hassan: 0 } },
-
   { pollster: "Emerson", endDate: "2026-01-12", sampleSize: 413, sampleType: "LV", results: { Crockett: 38, Talarico: 47, Hassan: 1 } },
-
-  // ===== 2025 =====
-
   { pollster: "TSU", endDate: "2025-12-11", sampleSize: 1600, sampleType: "LV", results: { Crockett: 51, Talarico: 43, Hassan: 0 } },
-
   { pollster: "U. of Houston/TSU", endDate: "2025-10-01", sampleSize: 478, sampleType: "RV", results: { Crockett: 52, Talarico: 34, Hassan: 0 } },
-
   { pollster: "TPOR", endDate: "2025-08-29", sampleSize: 267, sampleType: "RV", results: { Crockett: 26, Talarico: 27, Hassan: 0 } }
 ];
+
+// ─── Actual election results (>95% reporting, Mar 3 2026) ─────────────────────
+const ACTUAL: Record<string, number> = {
+  Talarico: 52.45,
+  Crockett: 46.22,
+  Hassan:   1.34,
+};
 
 const COLORS: Record<string, string> = {
   Crockett: "#3b82f6",
@@ -62,7 +56,21 @@ export default function TexasDemPrimaryPage() {
   }, []);
 
   const candidates = Object.entries(latestValues).sort((a, b) => b[1] - a[1]);
-  const leader = candidates[0];
+
+  // Accuracy rows
+  const accuracyRows = Object.entries(ACTUAL).map(([name, actual]) => {
+    const avg = latestValues[name] ?? 0;
+    const error = round1(avg - actual);
+    return { name, avg: round1(avg), actual, error };
+  }).sort((a, b) => b.actual - a.actual);
+
+  const mae = round1(
+    accuracyRows.reduce((sum, r) => sum + Math.abs(r.error), 0) / accuracyRows.length
+  );
+
+  const avgWinner = candidates[0]?.[0];
+  const actualWinner = Object.entries(ACTUAL).sort((a, b) => b[1] - a[1])[0][0];
+  const correctCall = avgWinner === actualWinner;
 
   return (
     <>
@@ -103,7 +111,7 @@ export default function TexasDemPrimaryPage() {
         </div>
 
         {/* ── KPIs ── */}
-        <div className="pap-section-label">CURRENT AVERAGES</div>
+        <div className="pap-section-label">POLLING AVERAGES</div>
         <div className="pap-kpi-grid" style={{ gridTemplateColumns: `repeat(${candidates.length + 1}, 1fr)` }}>
           {candidates.map(([name, val]) => (
             <div key={name} className="pap-kpi">
@@ -134,6 +142,111 @@ export default function TexasDemPrimaryPage() {
           title="Texas Democratic Senate Primary polling average"
           subtitle="Crockett, Talarico & Hassan trendlines — hover to view daily values"
         />
+
+        {/* ── ACCURACY PANEL ── */}
+        <div className="pap-section-label">ACCURACY · MARCH 3, 2026 RESULTS</div>
+        <div className="pap-accuracy-panel">
+          <div className="pap-stripe" />
+          <div className="pap-accuracy-header">
+            <div className="pap-accuracy-header-left">
+              <span className="pap-table-head-title">POLLING AVG vs. ACTUAL VOTE</span>
+              <span style={{ fontFamily: "ui-monospace,monospace", fontSize: 8, letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(240,240,245,0.3)", marginLeft: 12 }}>
+                &gt;95% REPORTING · MAR 3, 2026
+              </span>
+            </div>
+            <div style={{ display: "flex", gap: 10, alignItems: "center", flexWrap: "wrap" }}>
+              <span className={`pap-badge ${correctCall ? "pap-badge-green" : "pap-badge-red"}`}>
+                {correctCall ? "✓ CORRECT WINNER CALL" : "✗ WRONG WINNER CALL"}
+              </span>
+              <span className="pap-badge pap-badge-blue">MAE {mae.toFixed(1)} pts</span>
+            </div>
+          </div>
+
+          <div style={{ overflowX: "auto" }}>
+            <table className="pap-table" style={{ minWidth: 560 }}>
+              <thead>
+                <tr>
+                  <th>CANDIDATE</th>
+                  <th className="r">POLLING AVG</th>
+                  <th className="r">ACTUAL VOTE</th>
+                  <th className="r">ERROR</th>
+                  <th style={{ width: "35%" }}>VISUAL</th>
+                </tr>
+              </thead>
+              <tbody>
+                {accuracyRows.map(({ name, avg, actual, error }) => {
+                  const absErr = Math.abs(error);
+                  const isOver = error > 0;
+                  const color = COLORS[name] ?? "#aaa";
+                  return (
+                    <tr key={name}>
+                      <td style={{ color: color, fontWeight: 700 }}>{name}</td>
+                      <td className="r" style={{ color: "rgba(240,240,245,0.7)" }}>{avg.toFixed(1)}%</td>
+                      <td className="r" style={{ color: "#fff", fontWeight: 700 }}>{actual.toFixed(2)}%</td>
+                      <td className="r">
+                        <span style={{
+                          color: absErr <= 2 ? "#4ade80" : absErr <= 4 ? "#facc15" : "#f87171",
+                          fontWeight: 700
+                        }}>
+                          {isOver ? "+" : ""}{error.toFixed(1)}
+                        </span>
+                      </td>
+                      <td style={{ padding: "10px 16px" }}>
+                        <div style={{ position: "relative", height: 6, background: "rgba(255,255,255,0.07)", borderRadius: 2 }}>
+                          <div style={{
+                            position: "absolute", left: 0, top: 0, bottom: 0,
+                            width: `${Math.min(100, actual / 65 * 100)}%`,
+                            background: color, opacity: 0.25, borderRadius: 2
+                          }} />
+                          <div style={{
+                            position: "absolute", top: -3, bottom: -3,
+                            left: `${Math.min(100, avg / 65 * 100)}%`,
+                            width: 2, background: color, borderRadius: 1,
+                            transform: "translateX(-50%)"
+                          }} />
+                        </div>
+                        <div style={{ display: "flex", justifyContent: "space-between", marginTop: 4 }}>
+                          <span style={{ fontFamily: "ui-monospace,monospace", fontSize: 7, color: "rgba(240,240,245,0.25)", letterSpacing: "0.1em" }}>
+                            AVG {avg.toFixed(1)}%
+                          </span>
+                          <span style={{ fontFamily: "ui-monospace,monospace", fontSize: 7, color: "rgba(240,240,245,0.5)", letterSpacing: "0.1em" }}>
+                            ACTUAL {actual.toFixed(2)}%
+                          </span>
+                        </div>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+
+          {/* summary stats */}
+          <div className="pap-accuracy-footer">
+            <div className="pap-accuracy-stat">
+              <div className="pap-accuracy-stat-val" style={{ color: correctCall ? "#4ade80" : "#f87171" }}>
+                {correctCall ? "✓" : "✗"}
+              </div>
+              <div className="pap-accuracy-stat-label">Winner Called</div>
+            </div>
+            <div className="pap-accuracy-stat">
+              <div className="pap-accuracy-stat-val">{mae.toFixed(1)}</div>
+              <div className="pap-accuracy-stat-label">Mean Abs. Error (pts)</div>
+            </div>
+            <div className="pap-accuracy-stat">
+              <div className="pap-accuracy-stat-val" style={{ color: COLORS.Talarico }}>
+                {round1(ACTUAL.Talarico - ACTUAL.Crockett).toFixed(2)}
+              </div>
+              <div className="pap-accuracy-stat-label">Actual Talarico Margin</div>
+            </div>
+            <div className="pap-accuracy-stat">
+              <div className="pap-accuracy-stat-val" style={{ color: "rgba(240,240,245,0.5)" }}>
+                {round1((latestValues["Talarico"] ?? 0) - (latestValues["Crockett"] ?? 0)).toFixed(1)}
+              </div>
+              <div className="pap-accuracy-stat-label">Avg Projected Margin</div>
+            </div>
+          </div>
+        </div>
 
         {/* ── POLL TABLE ── */}
         <div className="pap-table-panel">
@@ -192,6 +305,35 @@ export default function TexasDemPrimaryPage() {
                       </tr>
                     );
                   })}
+                {/* ── ACTUAL RESULTS ROW ── */}
+                <tr style={{ background: "rgba(255,255,255,0.04)", borderTop: "1px solid rgba(255,255,255,0.15)" }}>
+                  <td style={{ color: "#fff", fontWeight: 700 }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                      <span>ACTUAL RESULT</span>
+                      <span style={{
+                        display: "inline-flex", alignItems: "center",
+                        padding: "1px 6px",
+                        border: "1px solid rgba(74,222,128,0.35)",
+                        background: "rgba(74,222,128,0.08)",
+                        fontFamily: "ui-monospace,monospace",
+                        fontSize: 7, fontWeight: 700,
+                        letterSpacing: "0.18em", textTransform: "uppercase",
+                        color: "#4ade80"
+                      }}>
+                        &gt;95% REPORTING
+                      </span>
+                    </div>
+                  </td>
+                  <td className="r" style={{ color: "rgba(240,240,245,0.4)" }}>2026-03-03</td>
+                  <td className="r" style={{ color: "rgba(240,240,245,0.4)" }}>2,309,696</td>
+                  <td className="r" style={{ color: "rgba(240,240,245,0.4)" }}>—</td>
+                  <td className="r" style={{ color: COLORS.Crockett, fontWeight: 700 }}>{ACTUAL.Crockett.toFixed(2)}%</td>
+                  <td className="r" style={{ color: COLORS.Talarico, fontWeight: 700 }}>{ACTUAL.Talarico.toFixed(2)}%</td>
+                  <td className="r" style={{ color: COLORS.Hassan, fontWeight: 700 }}>{ACTUAL.Hassan.toFixed(2)}%</td>
+                  <td className="r" style={{ color: COLORS.Talarico, fontWeight: 700 }}>
+                    Talarico +{round1(ACTUAL.Talarico - ACTUAL.Crockett).toFixed(2)}
+                  </td>
+                </tr>
               </tbody>
             </table>
           </div>
@@ -208,6 +350,7 @@ export default function TexasDemPrimaryPage() {
               square-root sample size adjustment, and screen type (LV/RV/A) weighting. Polls marked
               ** are internal or partisan and may carry reduced weight. All candidates with 0% in a
               given poll are excluded from that poll's spread calculation.
+              Actual results sourced from official Texas election returns at &gt;95% reporting.
             </p>
           </div>
         </div>
@@ -348,8 +491,10 @@ const CSS = `
     font-size: 7.5px; font-weight: 700; letter-spacing: 0.22em;
     text-transform: uppercase; color: var(--muted3);
   }
-  .pap-badge-live { border-color:rgba(59,130,246,0.35); background:rgba(59,130,246,0.07); color:var(--blue-soft); }
-  .pap-badge-blue { border-color:rgba(59,130,246,0.35); background:rgba(59,130,246,0.07); color:var(--blue-soft); }
+  .pap-badge-live  { border-color:rgba(59,130,246,0.35); background:rgba(59,130,246,0.07); color:var(--blue-soft); }
+  .pap-badge-blue  { border-color:rgba(59,130,246,0.35); background:rgba(59,130,246,0.07); color:var(--blue-soft); }
+  .pap-badge-green { border-color:rgba(74,222,128,0.35); background:rgba(74,222,128,0.07); color:#4ade80; }
+  .pap-badge-red   { border-color:rgba(239,68,68,0.35); background:rgba(239,68,68,0.07); color:#f87171; }
 
   .pap-hero-read {
     display: flex; flex-direction: column; gap: 6px; min-width: 200px;
@@ -396,9 +541,7 @@ const CSS = `
     transition: border-color 150ms ease;
   }
   .pap-kpi:hover { border-color: var(--border2); }
-  .pap-kpi-accent {
-    position: absolute; top: 0; left: 0; right: 0; height: 2px;
-  }
+  .pap-kpi-accent { position: absolute; top: 0; left: 0; right: 0; height: 2px; }
   .pap-kpi-label {
     font-family: var(--font-body), "Geist Mono", monospace;
     font-size: 7.5px; font-weight: 700;
@@ -420,6 +563,45 @@ const CSS = `
   .pap-kpi-bar-fill {
     height: 100%;
     animation: pap-bar-in 800ms cubic-bezier(0.22,1,0.36,1) both;
+  }
+
+  /* ── accuracy panel ── */
+  .pap-accuracy-panel {
+    background: var(--panel);
+    border: 1px solid rgba(74,222,128,0.18);
+    overflow: hidden;
+  }
+  .pap-accuracy-header {
+    background: var(--bg2);
+    border-bottom: 1px solid var(--border);
+    padding: 14px 20px;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 12px; flex-wrap: wrap;
+  }
+  .pap-accuracy-header-left {
+    display: flex; align-items: center; gap: 0; flex-wrap: wrap;
+  }
+  .pap-accuracy-footer {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border-top: 1px solid var(--border);
+  }
+  @media (max-width: 600px) { .pap-accuracy-footer { grid-template-columns: repeat(2,1fr); } }
+  .pap-accuracy-stat {
+    padding: 14px 20px;
+    border-right: 1px solid var(--border);
+  }
+  .pap-accuracy-stat:last-child { border-right: none; }
+  .pap-accuracy-stat-val {
+    font-family: var(--font-body), "Geist Mono", monospace;
+    font-size: clamp(18px,2vw,24px); font-weight: 900;
+    color: #fff; font-variant-numeric: tabular-nums;
+  }
+  .pap-accuracy-stat-label {
+    font-family: var(--font-body), "Geist Mono", monospace;
+    font-size: 7.5px; font-weight: 700;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--muted3); margin-top: 4px;
   }
 
   .pap-table-panel {

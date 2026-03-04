@@ -8,6 +8,8 @@ type PollPage = {
   badge?: string;
   tag?: string;
   status?: "live" | "building" | "planned";
+  archived?: boolean;
+  archiveResult?: string; // e.g. "Talarico wins · +6.23"
 };
 
 const PAGES: PollPage[] = [
@@ -23,6 +25,14 @@ const PAGES: PollPage[] = [
     title: "JD Vance • Favorable/Unfavorable",
     description: "Tracking the Vice President's favorability in real time",
     href: "/polling/jdvanceapproval",
+    badge: "Approval",
+    tag: "National",
+    status: "live",
+  },
+  {
+    title: "Right/Wrong National Tracker • Rolling Average",
+    description: "Tracking Americans' sentiment on the country's direction in real time",
+    href: "/polling/rightorwrongtrack",
     badge: "Approval",
     tag: "National",
     status: "live",
@@ -44,28 +54,35 @@ const PAGES: PollPage[] = [
     status: "live",
   },
   {
-    title: "2026 Texas Senate Democrat Primary",
-    description: "View how the 2026 Texas Democrat Senate candidates are shaping up in one of the most contested primaries of all time",
-    href: "/polling/texasdemocratprimary",
-    badge: "Daily Average",
-    tag: "National",
-    status: "live",
-  },
-  {
-    title: "2026 Texas Senate Republican Primary",
-    description: "View how the 2026 Texas Republican Senate candidates are shaping up in one of the most contested primaries of all time",
-    href: "/polling/texasrepublicanprimary",
-    badge: "Daily Average",
-    tag: "National",
-    status: "live",
-  },
-  {
     title: "2026 Florida Governor Republican Primary",
     description: "View how the 2026 Florida Republican Gubernatorial candidates are shaping up in one of the most contested primaries of all time",
     href: "/polling/floridarepublicanprimary",
     badge: "Daily Average",
     tag: "National",
     status: "live",
+  },
+];
+
+const ARCHIVE: PollPage[] = [
+  {
+    title: "2026 Texas Senate Democratic Primary",
+    description: "Final polling average vs. actual results — Talarico defeated Crockett in the March 3, 2026 primary.",
+    href: "/polling/texasdemocratprimary",
+    badge: "Daily Average",
+    tag: "Texas",
+    status: "live",
+    archived: true,
+    archiveResult: "Talarico wins · +6.23",
+  },
+  {
+    title: "2026 Texas Senate Republican Primary",
+    description: "Final polling average vs. actual results — Cornyn defeated Paxton in the March 3, 2026 primary.",
+    href: "/polling/texasrepublicanprimary",
+    badge: "Daily Average",
+    tag: "Texas",
+    status: "live",
+    archived: true,
+    archiveResult: "Cornyn wins · +1.19",
   },
 ];
 
@@ -78,57 +95,65 @@ const statusMeta = {
 const tagColors: Record<string, string> = {
   National: "var(--purple-soft)",
   Florida:  "var(--blue2)",
+  Texas:    "var(--red2)",
 };
 
-function Card({ p, index }: { p: PollPage; index: number }) {
+function Card({ p, index, isArchive = false }: { p: PollPage; index: number; isArchive?: boolean }) {
   const isLive = p.status === "live";
   const meta = statusMeta[p.status ?? "planned"];
   const tagColor = tagColors[p.tag ?? ""] ?? "var(--muted3)";
 
   return (
     <div
-      className="pd-card"
+      className={`pd-card${isArchive ? " pd-card-archive" : ""}`}
       style={{ animationDelay: `${index * 0.06}s` }}
     >
-      {/* Left accent stripe — colored by party tag */}
-      <div className="pd-card-stripe" style={{ background: tagColor }} />
+      <div className="pd-card-stripe" style={{ background: isArchive ? "var(--muted3)" : tagColor }} />
 
-      {/* Inner content */}
       <div className="pd-card-body">
-
-        {/* Top row: chips + status */}
         <div className="pd-card-top">
           <div className="pd-chip-row">
             {p.badge && <span className="pd-chip">{p.badge}</span>}
             {p.tag && (
-              <span className="pd-chip" style={{ borderColor: `${tagColor}44`, background: `${tagColor}11`, color: tagColor }}>
+              <span className="pd-chip" style={{
+                borderColor: isArchive ? "var(--border)" : `${tagColor}44`,
+                background:  isArchive ? "rgba(255,255,255,0.02)" : `${tagColor}11`,
+                color:       isArchive ? "var(--muted3)" : tagColor
+              }}>
                 {p.tag}
               </span>
             )}
           </div>
-          <span className={`pd-status-badge ${meta.cls}`}>
-            {meta.label === "LIVE" && <span className="pd-live-dot" />}
-            {meta.label}
-          </span>
+          <div style={{ display: "flex", gap: 5, alignItems: "center", flexShrink: 0 }}>
+            {isArchive && p.archiveResult && (
+              <span className="pd-result-badge">
+                ✓ {p.archiveResult}
+              </span>
+            )}
+            {!isArchive && (
+              <span className={`pd-status-badge ${meta.cls}`}>
+                {meta.label === "LIVE" && <span className="pd-live-dot" />}
+                {meta.label}
+              </span>
+            )}
+          </div>
         </div>
 
-        {/* Title */}
-        <div className="pd-card-title">{p.title}</div>
+        <div className="pd-card-title" style={{ color: isArchive ? "rgba(240,240,245,0.55)" : "#fff" }}>
+          {p.title}
+        </div>
 
-        {/* Description */}
         <div className="pd-card-desc">{p.description}</div>
 
-        {/* Divider */}
         <div className="pd-divider" />
 
-        {/* Footer row */}
         <div className="pd-card-footer">
           <span className="pd-footer-note">
-            {isLive ? "POLLING AVERAGE · UPDATED DAILY" : "NOT YET AVAILABLE"}
+            {isArchive ? "RACE CALLED · MAR 3, 2026 · RESULTS + ACCURACY ON FILE" : (isLive ? "POLLING AVERAGE · UPDATED DAILY" : "NOT YET AVAILABLE")}
           </span>
           {isLive ? (
-            <Link href={p.href} className="pd-open-btn">
-              OPEN →
+            <Link href={p.href} className={`pd-open-btn${isArchive ? " pd-open-archive" : ""}`}>
+              {isArchive ? "VIEW ARCHIVE →" : "OPEN →"}
             </Link>
           ) : (
             <span className="pd-open-btn pd-open-disabled" aria-disabled="true">
@@ -147,7 +172,6 @@ export default function PollingHomePage() {
   return (
     <>
       <style>{`
-        /* ── Tokens ── */
         .pd-root {
           --background:  #070709;
           --background2: #0b0b0f;
@@ -169,7 +193,6 @@ export default function PollingHomePage() {
           --win:         #4ade80;
         }
 
-        /* ── ANIMATIONS ── */
         @keyframes pd-fade-up {
           from { opacity:0; transform:translateY(14px); }
           to   { opacity:1; transform:translateY(0); }
@@ -178,21 +201,11 @@ export default function PollingHomePage() {
           0%,100% { opacity:1; transform:scale(1); }
           50%      { opacity:0.3; transform:scale(0.8); }
         }
-        @keyframes pd-scan-line {
-          from { background-position: 0 0; }
-          to   { background-position: 0 100px; }
-        }
 
-        /* ── PAGE SHELL ── */
-        .pd-root {
-          min-height: 100vh;
-          position: relative;
-        }
+        .pd-root { min-height: 100vh; position: relative; }
 
-        /* ── TRI STRIPE ── */
         .pd-tri-stripe {
-          height: 3px;
-          width: 100%;
+          height: 3px; width: 100%;
           background: linear-gradient(
             90deg,
             var(--red)    0%,    var(--red)    33.33%,
@@ -201,209 +214,106 @@ export default function PollingHomePage() {
           );
         }
 
-        /* ── HERO ── */
         .pd-hero {
           border-bottom: 1px solid var(--border);
           background: var(--background2);
-          position: relative;
-          overflow: hidden;
+          position: relative; overflow: hidden;
           padding: 36px 0 28px;
         }
         .pd-hero::before {
-          content: '';
-          position: absolute;
-          inset: 0;
+          content: ''; position: absolute; inset: 0;
           background:
             radial-gradient(ellipse 50% 100% at 0% 50%,   rgba(230,57,70,0.04)   0%, transparent 70%),
             radial-gradient(ellipse 50% 100% at 100% 50%, rgba(37,99,235,0.05)  0%, transparent 70%),
             radial-gradient(ellipse 30% 60% at 50% 100%, rgba(124,58,237,0.04) 0%, transparent 70%);
           pointer-events: none;
         }
-        .pd-hero-inner {
-          max-width: 1200px;
-          margin: 0 auto;
-          padding: 0 24px;
-          position: relative;
-        }
+        .pd-hero-inner { max-width: 1200px; margin: 0 auto; padding: 0 24px; position: relative; }
         .pd-hero-grid {
-          display: grid;
-          grid-template-columns: 1fr auto;
-          align-items: end;
-          gap: 24px;
+          display: grid; grid-template-columns: 1fr auto;
+          align-items: end; gap: 24px;
         }
-        @media (max-width: 640px) {
-          .pd-hero-grid { grid-template-columns: 1fr; }
-        }
+        @media (max-width: 640px) { .pd-hero-grid { grid-template-columns: 1fr; } }
 
         .pd-eyebrow {
-          display: flex;
-          align-items: center;
-          gap: 8px;
+          display: flex; align-items: center; gap: 8px;
           font-family: var(--font-body), "Geist Mono", monospace;
-          font-size: 8px;
-          font-weight: 700;
-          letter-spacing: 0.32em;
-          text-transform: uppercase;
-          color: var(--purple-soft);
-          margin-bottom: 14px;
+          font-size: 8px; font-weight: 700;
+          letter-spacing: 0.32em; text-transform: uppercase;
+          color: var(--purple-soft); margin-bottom: 14px;
         }
-
-        .pd-eyebrow-line {
-          width: 20px;
-          height: 1px;
-          background: var(--purple-soft);
-          opacity: 0.5;
-        }
+        .pd-eyebrow-line { width: 20px; height: 1px; background: var(--purple-soft); opacity: 0.5; }
 
         .pd-hero-title {
           font-family: "Quantico", system-ui, -apple-system, BlinkMacOSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
           font-size: clamp(32px, 5vw, 62px);
-          font-weight: 900;
-          text-transform: uppercase;
-          letter-spacing: 0.01em;
-          line-height: 0.92;
-          color: #fff;
-          margin: 0 0 16px;
+          font-weight: 900; text-transform: uppercase;
+          letter-spacing: 0.01em; line-height: 0.92;
+          color: #fff; margin: 0 0 16px;
         }
-
         .pd-hero-title em {
           font-style: normal;
           background: linear-gradient(100deg, var(--red2) 0%, var(--purple-soft) 50%, var(--blue2) 100%);
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          background-clip: text;
+          -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
         }
-
         .pd-hero-desc {
-          font-family: ui-monospace,monospace;
-          font-size: 10.5px;
-          letter-spacing: 0.12em;
-          line-height: 1.7;
-          color: var(--muted2);
-          max-width: 520px;
-          text-transform: uppercase;
+          font-family: ui-monospace,monospace; font-size: 10.5px;
+          letter-spacing: 0.12em; line-height: 1.7;
+          color: var(--muted2); max-width: 520px; text-transform: uppercase;
         }
 
-        /* Hero stat chips */
-        .pd-hero-stats {
-          display: flex;
-          flex-direction: column;
-          gap: 6px;
-          align-items: flex-end;
-        }
-        @media (max-width: 640px) {
-          .pd-hero-stats { flex-direction: row; align-items: flex-start; }
-        }
+        .pd-hero-stats { display: flex; flex-direction: column; gap: 6px; align-items: flex-end; }
+        @media (max-width: 640px) { .pd-hero-stats { flex-direction: row; align-items: flex-start; } }
         .pd-hero-stat {
-          border: 1px solid var(--border);
-          background: var(--panel);
-          padding: 10px 16px;
-          min-width: 120px;
-          text-align: center;
+          border: 1px solid var(--border); background: var(--panel);
+          padding: 10px 16px; min-width: 120px; text-align: center;
         }
         .pd-hero-stat-val {
-          font-family: ui-monospace,monospace;
-          font-size: 26px;
-          font-weight: 900;
-          color: #fff;
-          line-height: 1;
-          font-variant-numeric: tabular-nums;
+          font-family: ui-monospace,monospace; font-size: 26px; font-weight: 900;
+          color: #fff; line-height: 1; font-variant-numeric: tabular-nums;
         }
         .pd-hero-stat-key {
-          font-family: ui-monospace,monospace;
-          font-size: 7px;
-          font-weight: 700;
-          letter-spacing: 0.26em;
-          text-transform: uppercase;
-          color: var(--muted3);
-          margin-top: 4px;
+          font-family: ui-monospace,monospace; font-size: 7px; font-weight: 700;
+          letter-spacing: 0.26em; text-transform: uppercase;
+          color: var(--muted3); margin-top: 4px;
         }
 
-        /* Hero badge row */
         .pd-hero-badge-row {
-          display: flex;
-          flex-wrap: wrap;
-          align-items: center;
-          gap: 8px;
-          margin-top: 20px;
+          display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 20px;
         }
 
-        /* ── BADGES ── */
         .pd-badge {
-          display: inline-flex;
-          align-items: center;
-          gap: 5px;
-          padding: 3px 8px;
-          border: 1px solid var(--border);
+          display: inline-flex; align-items: center; gap: 5px;
+          padding: 3px 8px; border: 1px solid var(--border);
           background: rgba(255,255,255,0.03);
-          font-family: ui-monospace,monospace;
-          font-size: 7.5px;
-          font-weight: 700;
-          letter-spacing: 0.22em;
-          text-transform: uppercase;
-          color: var(--muted3);
+          font-family: ui-monospace,monospace; font-size: 7.5px; font-weight: 700;
+          letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted3);
         }
-        .pd-badge-live {
-          border-color: rgba(230,57,70,0.28);
-          background: rgba(230,57,70,0.07);
-          color: rgba(230,57,70,0.9);
-        }
-        .pd-badge-purple {
-          border-color: rgba(124,58,237,0.35);
-          background: rgba(124,58,237,0.07);
-          color: var(--purple-soft);
-        }
-        .pd-badge-neutral {
-          border-color: var(--border);
-          background: rgba(255,255,255,0.03);
-          color: var(--muted3);
-        }
+        .pd-badge-live    { border-color: rgba(230,57,70,0.28); background: rgba(230,57,70,0.07); color: rgba(230,57,70,0.9); }
+        .pd-badge-purple  { border-color: rgba(124,58,237,0.35); background: rgba(124,58,237,0.07); color: var(--purple-soft); }
+        .pd-badge-neutral { border-color: var(--border); background: rgba(255,255,255,0.03); color: var(--muted3); }
 
         .pd-live-dot {
-          display: inline-block;
-          width: 5px; height: 5px;
-          border-radius: 50%;
-          background: currentColor;
-          box-shadow: 0 0 6px currentColor;
-          animation: pd-live-pulse 1.8s ease-in-out infinite;
-          flex-shrink: 0;
+          display: inline-block; width: 5px; height: 5px; border-radius: 50%;
+          background: currentColor; box-shadow: 0 0 6px currentColor;
+          animation: pd-live-pulse 1.8s ease-in-out infinite; flex-shrink: 0;
         }
 
-        /* ── SECTION LABEL ── */
         .pd-section-label {
-          font-family: ui-monospace,monospace;
-          font-size: 7.5px;
-          font-weight: 700;
-          letter-spacing: 0.32em;
-          text-transform: uppercase;
-          color: var(--muted3);
-          display: flex;
-          align-items: center;
-          gap: 10px;
-          margin-bottom: 14px;
+          font-family: ui-monospace,monospace; font-size: 7.5px; font-weight: 700;
+          letter-spacing: 0.32em; text-transform: uppercase; color: var(--muted3);
+          display: flex; align-items: center; gap: 10px; margin-bottom: 14px;
         }
-        .pd-section-label::before {
-          content: '';
-          display: block;
-          width: 20px;
-          height: 1px;
-          background: var(--purple-soft);
-          opacity: 0.5;
-        }
-        .pd-section-label::after {
-          content: '';
-          flex: 1;
-          height: 1px;
-          background: var(--border);
-        }
+        .pd-section-label::before { content:''; display:block; width:20px; height:1px; background:var(--purple-soft); opacity:0.5; }
+        .pd-section-label::after  { content:''; flex:1; height:1px; background:var(--border); }
 
-        /* ── CARDS ── */
+        /* archive section label variant */
+        .pd-section-label-archive::before { background: var(--muted3); opacity: 0.4; }
+
         .pd-card {
-          display: flex;
-          background: var(--panel);
+          display: flex; background: var(--panel);
           border: 1px solid var(--border);
-          position: relative;
-          overflow: hidden;
+          position: relative; overflow: hidden;
           transition: border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
           animation: pd-fade-up 0.6s cubic-bezier(0.22,1,0.36,1) both;
         }
@@ -412,12 +322,8 @@ export default function PollingHomePage() {
           box-shadow: 0 8px 40px rgba(0,0,0,0.5), 0 0 0 1px rgba(124,58,237,0.10);
           transform: translateY(-2px);
         }
-
-        /* Scanline texture on card */
         .pd-card::after {
-          content: '';
-          position: absolute;
-          inset: 0;
+          content:''; position:absolute; inset:0;
           background-image: repeating-linear-gradient(
             0deg, transparent, transparent 3px,
             rgba(255,255,255,0.006) 3px, rgba(255,255,255,0.006) 4px
@@ -425,174 +331,145 @@ export default function PollingHomePage() {
           pointer-events: none;
         }
 
-        .pd-card-stripe {
-          width: 3px;
-          flex-shrink: 0;
-          opacity: 0.7;
-          transition: opacity 160ms ease;
+        /* archive card variant */
+        .pd-card-archive {
+          background: rgba(255,255,255,0.015);
+          border-color: rgba(255,255,255,0.06);
         }
+        .pd-card-archive:hover {
+          border-color: rgba(255,255,255,0.12);
+          box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+          transform: translateY(-1px);
+        }
+
+        .pd-card-stripe { width: 3px; flex-shrink: 0; opacity: 0.7; transition: opacity 160ms ease; }
         .pd-card:hover .pd-card-stripe { opacity: 1; }
 
         .pd-card-body {
-          flex: 1;
-          padding: 20px 20px 18px;
-          display: flex;
-          flex-direction: column;
-          gap: 10px;
-          min-width: 0;
+          flex: 1; padding: 20px 20px 18px;
+          display: flex; flex-direction: column; gap: 10px; min-width: 0;
         }
 
-        .pd-card-top {
-          display: flex;
-          align-items: flex-start;
-          justify-content: space-between;
-          gap: 10px;
-        }
-
-        .pd-chip-row {
-          display: flex;
-          flex-wrap: wrap;
-          gap: 5px;
-        }
+        .pd-card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
+        .pd-chip-row { display: flex; flex-wrap: wrap; gap: 5px; }
 
         .pd-chip {
-          display: inline-flex;
-          align-items: center;
-          padding: 2px 7px;
-          border: 1px solid var(--border);
+          display: inline-flex; align-items: center;
+          padding: 2px 7px; border: 1px solid var(--border);
           background: rgba(255,255,255,0.03);
-          font-family: ui-monospace,monospace;
-          font-size: 7.5px;
-          font-weight: 700;
-          letter-spacing: 0.20em;
-          text-transform: uppercase;
-          color: var(--muted3);
-          white-space: nowrap;
+          font-family: ui-monospace,monospace; font-size: 7.5px; font-weight: 700;
+          letter-spacing: 0.20em; text-transform: uppercase; color: var(--muted3); white-space: nowrap;
         }
 
         .pd-status-badge {
-          display: inline-flex;
-          align-items: center;
-          gap: 5px;
-          padding: 3px 8px;
-          border: 1px solid var(--border);
+          display: inline-flex; align-items: center; gap: 5px;
+          padding: 3px 8px; border: 1px solid var(--border);
           background: rgba(255,255,255,0.03);
-          font-family: ui-monospace,monospace;
-          font-size: 7.5px;
-          font-weight: 700;
-          letter-spacing: 0.22em;
-          text-transform: uppercase;
-          color: var(--muted3);
-          flex-shrink: 0;
+          font-family: ui-monospace,monospace; font-size: 7.5px; font-weight: 700;
+          letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted3); flex-shrink: 0;
         }
-        .pd-badge-live {
-          border-color: rgba(230,57,70,0.28);
-          background: rgba(230,57,70,0.07);
-          color: rgba(230,57,70,0.9);
+        .pd-badge-live { border-color: rgba(230,57,70,0.28); background: rgba(230,57,70,0.07); color: rgba(230,57,70,0.9); }
+
+        /* result badge for archive */
+        .pd-result-badge {
+          display: inline-flex; align-items: center;
+          padding: 3px 8px;
+          border: 1px solid rgba(74,222,128,0.28);
+          background: rgba(74,222,128,0.07);
+          font-family: ui-monospace,monospace; font-size: 7.5px; font-weight: 700;
+          letter-spacing: 0.18em; text-transform: uppercase;
+          color: #4ade80; flex-shrink: 0; white-space: nowrap;
         }
 
         .pd-card-title {
           font-family: var(--font-body), "Geist Mono", monospace;
-          font-size: 13px;
-          font-weight: 900;
-          text-transform: uppercase;
-          letter-spacing: 0.07em;
-          color: #fff;
-          line-height: 1.25;
+          font-size: 13px; font-weight: 900; text-transform: uppercase;
+          letter-spacing: 0.07em; line-height: 1.25;
         }
 
         .pd-card-desc {
-          font-family: ui-monospace,monospace;
-          font-size: 9.5px;
-          letter-spacing: 0.10em;
-          line-height: 1.65;
-          color: var(--muted2);
-          text-transform: uppercase;
+          font-family: ui-monospace,monospace; font-size: 9.5px;
+          letter-spacing: 0.10em; line-height: 1.65;
+          color: var(--muted2); text-transform: uppercase;
         }
 
-        .pd-divider {
-          height: 1px;
-          background: var(--border);
-          margin: 2px 0;
-        }
+        .pd-divider { height: 1px; background: var(--border); margin: 2px 0; }
 
         .pd-card-footer {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          gap: 12px;
+          display: flex; align-items: center; justify-content: space-between; gap: 12px;
         }
 
         .pd-footer-note {
-          font-family: ui-monospace,monospace;
-          font-size: 7.5px;
-          letter-spacing: 0.20em;
-          text-transform: uppercase;
-          color: var(--muted3);
+          font-family: ui-monospace,monospace; font-size: 7.5px;
+          letter-spacing: 0.20em; text-transform: uppercase; color: var(--muted3);
         }
 
         .pd-open-btn {
-          display: inline-flex;
-          align-items: center;
-          padding: 7px 16px;
-          background: var(--purple);
-          border: 1px solid rgba(124,58,237,0.55);
-          color: #fff;
-          font-family: ui-monospace,monospace;
-          font-size: 9px;
-          font-weight: 700;
-          letter-spacing: 0.22em;
-          text-transform: uppercase;
-          text-decoration: none;
+          display: inline-flex; align-items: center;
+          padding: 7px 16px; background: var(--purple);
+          border: 1px solid rgba(124,58,237,0.55); color: #fff;
+          font-family: ui-monospace,monospace; font-size: 9px; font-weight: 700;
+          letter-spacing: 0.22em; text-transform: uppercase; text-decoration: none;
           transition: background 130ms ease, transform 130ms ease;
-          white-space: nowrap;
-          flex-shrink: 0;
+          white-space: nowrap; flex-shrink: 0;
         }
-        .pd-open-btn:hover {
-          background: var(--purple2);
-          transform: translateY(-1px);
-          opacity: 1;
-        }
+        .pd-open-btn:hover { background: var(--purple2); transform: translateY(-1px); opacity: 1; }
         .pd-open-disabled {
-          background: rgba(255,255,255,0.04);
-          border-color: var(--border);
-          color: var(--muted3);
-          cursor: not-allowed;
+          background: rgba(255,255,255,0.04); border-color: var(--border);
+          color: var(--muted3); cursor: not-allowed;
         }
         .pd-open-disabled:hover { transform: none; background: rgba(255,255,255,0.04); }
 
-        /* ── GRID ── */
-        .pd-grid {
-          display: grid;
-          grid-template-columns: repeat(2, 1fr);
-          gap: 10px;
+        /* archive open button */
+        .pd-open-archive {
+          background: rgba(255,255,255,0.05);
+          border-color: rgba(255,255,255,0.12);
+          color: var(--muted2);
         }
+        .pd-open-archive:hover { background: rgba(255,255,255,0.09); }
+
+        .pd-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
         @media (max-width: 860px) { .pd-grid { grid-template-columns: 1fr; } }
 
-        /* ── MAIN LAYOUT ── */
-        .pd-content {
-          max-width: 1200px;
-          margin: 0 auto;
-          padding: 32px 24px 60px;
+        /* archive section wrapper */
+        .pd-archive-section {
+          margin-top: 36px;
+          padding-top: 28px;
+          border-top: 1px solid var(--border);
+        }
+        .pd-archive-header {
+          display: flex; align-items: center; gap: 12px; margin-bottom: 14px;
+        }
+        .pd-archive-label {
+          font-family: ui-monospace,monospace; font-size: 7.5px; font-weight: 700;
+          letter-spacing: 0.32em; text-transform: uppercase; color: var(--muted3);
+          display: flex; align-items: center; gap: 10px; flex: 1;
+        }
+        .pd-archive-label::before { content:''; display:block; width:20px; height:1px; background:var(--muted3); opacity:0.4; }
+        .pd-archive-label::after  { content:''; flex:1; height:1px; background:var(--border); }
+
+        .pd-archive-desc {
+          font-family: ui-monospace,monospace; font-size: 8.5px;
+          letter-spacing: 0.14em; line-height: 1.6; color: var(--muted3);
+          text-transform: uppercase; max-width: 580px;
+          margin-bottom: 16px;
+          padding: 10px 14px;
+          border: 1px solid var(--border);
+          border-left: 2px solid rgba(255,255,255,0.12);
+          background: rgba(255,255,255,0.02);
         }
 
-        /* ── FOOTNOTE ── */
+        .pd-content { max-width: 1200px; margin: 0 auto; padding: 32px 24px 60px; }
+
         .pd-footnote {
-          margin-top: 32px;
-          padding-top: 20px;
+          margin-top: 32px; padding-top: 20px;
           border-top: 1px solid var(--border);
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          flex-wrap: wrap;
-          gap: 12px;
+          display: flex; align-items: center; justify-content: space-between;
+          flex-wrap: wrap; gap: 12px;
         }
         .pd-footnote-text {
-          font-family: ui-monospace,monospace;
-          font-size: 8px;
-          letter-spacing: 0.18em;
-          text-transform: uppercase;
-          color: var(--muted3);
+          font-family: ui-monospace,monospace; font-size: 8px;
+          letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted3);
         }
 
         @media (prefers-reduced-motion: reduce) {
@@ -640,6 +517,10 @@ export default function PollingHomePage() {
                   <div className="pd-hero-stat-val">{liveCount}</div>
                   <div className="pd-hero-stat-key">LIVE TRACKERS</div>
                 </div>
+                <div className="pd-hero-stat">
+                  <div className="pd-hero-stat-val">{ARCHIVE.length}</div>
+                  <div className="pd-hero-stat-key">ARCHIVED RACES</div>
+                </div>
                 <div className="pd-hero-stat" style={{ borderTop: "2px solid var(--purple)", paddingTop: "8px" }}>
                   <div className="pd-hero-stat-val" style={{ background: "linear-gradient(90deg,var(--red2),var(--purple-soft),var(--blue2))", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
                     DAILY
@@ -653,9 +534,21 @@ export default function PollingHomePage() {
 
         {/* ── CONTENT ── */}
         <div className="pd-content">
-          <div className="pd-section-label">ALL POLLING AVERAGES</div>
+          <div className="pd-section-label">ACTIVE POLLING AVERAGES</div>
           <div className="pd-grid">
             {PAGES.map((p, i) => <Card key={p.href} p={p} index={i} />)}
+          </div>
+
+          {/* ── ARCHIVE SECTION ── */}
+          <div className="pd-archive-section">
+            <div className="pd-archive-label">RACE ARCHIVE</div>
+            <p className="pd-archive-desc">
+              Races that have been called. Polling averages are frozen at final pre-election values.
+              Each page includes a full accuracy breakdown — avg vs. actual vote, MAE, and winner call record.
+            </p>
+            <div className="pd-grid">
+              {ARCHIVE.map((p, i) => <Card key={p.href} p={p} index={i} isArchive />)}
+            </div>
           </div>
 
           <div className="pd-footnote">

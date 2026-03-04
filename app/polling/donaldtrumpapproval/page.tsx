@@ -136,6 +136,13 @@ function netToColor(net: number): string {
 
 // ─── Polls data ───────────────────────────────────────────────────────────────
 const RAW_POLLS: Poll[] = [
+{ pollster: "Quantus Insights", endDate: "2026-03-03", sampleSize: 1624, sampleType: "LV", results: { Approve: 45, Disapprove: 54 } },
+
+{ pollster: "Fox News", endDate: "2026-03-02", sampleSize: 1004, sampleType: "RV", results: { Approve: 43, Disapprove: 57 } },
+
+{ pollster: "Economist/YouGov", endDate: "2026-03-02", sampleSize: 1366, sampleType: "RV", results: { Approve: 42, Disapprove: 56 } },
+
+{ pollster: "Rasmussen Reports", endDate: "2026-03-03", sampleSize: 1500, sampleType: "LV", results: { Approve: 45, Disapprove: 54 } },  
 { pollster: "Public Sentiment Institute", endDate: "2026-02-28", sampleSize: 316, sampleType: "RV", results: { Approve: 35.5, Disapprove: 63.3 } },
 { pollster: "Public Sentiment Institute", endDate: "2026-02-28", sampleSize: 249, sampleType: "LV", results: { Approve: 40.8, Disapprove: 58.8 } },
 { pollster: "Reuters/Ipsos", endDate: "2026-03-01", sampleSize: 1282, sampleType: "A", results: { Approve: 38, Disapprove: 60 } },
