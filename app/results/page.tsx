@@ -39,27 +39,27 @@ const RACE_FORECAST_DEFAULTS: Partial<Record<number, { raceRule: RaceRule; expec
   44208: { raceRule: "MAJORITY", expectedTurnout: 1_900_000, pollAvg: { "Huffines": 33.0, "Craddick": 21.0, "Hancock": 13.0, "Berlanga": 4.0 } },
   44209: { raceRule: "MAJORITY", expectedTurnout: 970_000, pollAvg: { "Eckhardt": 65.0 } },
   44291: { raceRule: "MAJORITY", expectedTurnout: 1_850_000, pollAvg: { "Miller": 48.0, "Sheets": 18.0 } },
-  44294: { raceRule: "MAJORITY", expectedTurnout: 960_000, pollAvg: {} },
+  // 44294: { raceRule: "MAJORITY", expectedTurnout: 960_000, pollAvg: {} },
   44295: { raceRule: "MAJORITY", expectedTurnout: 1_850_000, pollAvg: { "Wright": 21.0, "Matlock": 20.0 } },
   44344: { raceRule: "MAJORITY", expectedTurnout: 90_000, pollAvg: { "Herrera": 43.0, "Gonzales": 34.0, "Canseco": 14.0, "Barton": 8.0 } },
-  44374: { raceRule: "MAJORITY", expectedTurnout: 90_000 },
-  44366: { raceRule: "MAJORITY", expectedTurnout: 85_000 },
-  44323: { raceRule: "MAJORITY", expectedTurnout: 55_000 },
-  44324: { raceRule: "MAJORITY", expectedTurnout: 45_000 },
-  44328: { raceRule: "MAJORITY", expectedTurnout: 55_000 },
-  44329: { raceRule: "MAJORITY", expectedTurnout: 85_000 },
-  44351: { raceRule: "MAJORITY", expectedTurnout: 60_000 },
-  44331: { raceRule: "MAJORITY", expectedTurnout: 90_000 },
-  44722: { raceRule: "MAJORITY", expectedTurnout: 250_000, pollAvg: { "Sanders": 98.0 } },
-  44721: { raceRule: "MAJORITY", expectedTurnout: 38_000 },
+  // 44374: { raceRule: "MAJORITY", expectedTurnout: 90_000 },
+  // 44366: { raceRule: "MAJORITY", expectedTurnout: 85_000 },
+  // 44323: { raceRule: "MAJORITY", expectedTurnout: 55_000 },
+  // 44324: { raceRule: "MAJORITY", expectedTurnout: 45_000 },
+  // 44328: { raceRule: "MAJORITY", expectedTurnout: 55_000 },
+  // 44329: { raceRule: "MAJORITY", expectedTurnout: 85_000 },
+  // 44351: { raceRule: "MAJORITY", expectedTurnout: 60_000 },
+  // 44331: { raceRule: "MAJORITY", expectedTurnout: 90_000 },
+  // 44722: { raceRule: "MAJORITY", expectedTurnout: 250_000, pollAvg: { "Sanders": 98.0 } },
+  // 44721: { raceRule: "MAJORITY", expectedTurnout: 38_000 },
   44729: { raceRule: "MAJORITY", expectedTurnout: 265_000, pollAvg: { "Cotton": 86.0, "Little": 8.0, "Ashby": 4.0 } },
   44730: { raceRule: "MAJORITY", expectedTurnout: 33_000, pollAvg: { "Shoffner": 58.0, "Dunbar": 36.0 } },
-  44723: { raceRule: "MAJORITY", expectedTurnout: 250_000, pollAvg: { "Rutledge": 98.0 } },
-  44724: { raceRule: "MAJORITY", expectedTurnout: 250_000, pollAvg: { "Griffin": 98.0 } },
+  // 44723: { raceRule: "MAJORITY", expectedTurnout: 250_000, pollAvg: { "Rutledge": 98.0 } },
+  // 44724: { raceRule: "MAJORITY", expectedTurnout: 250_000, pollAvg: { "Griffin": 98.0 } },
   44725: { raceRule: "MAJORITY", expectedTurnout: 260_000, pollAvg: { "Hammer": 35.0, "Norris": 30.0, "Harrison": 24.0 } },
-  44726: { raceRule: "MAJORITY", expectedTurnout: 33_000, pollAvg: { "Grappe": 98.0 } },
+  // 44726: { raceRule: "MAJORITY", expectedTurnout: 33_000, pollAvg: { "Grappe": 98.0 } },
   44728: { raceRule: "MAJORITY", expectedTurnout: 250_000, pollAvg: { "Jester": 62.0, "Olson": 28.0 } },
-  44727: { raceRule: "MAJORITY", expectedTurnout: 250_000 },
+  // 44727: { raceRule: "MAJORITY", expectedTurnout: 250_000 },
   46303: { raceRule: "PLURALITY", expectedTurnout: 700_000, pollAvg: { "Whatley": 52.0, "Brown": 18.0, "Morrow": 15.0 } },
   46302: { raceRule: "PLURALITY", expectedTurnout: 760_000, pollAvg: { "Cooper": 76.0, "Colon": 5.0, "Dues": 4.0 } },
   46306: { raceRule: "PLURALITY", expectedTurnout: 80_000, pollAvg: { "Foushee": 44.0, "Allam": 42.0, "Patterson": 8.0 } },
@@ -248,9 +248,7 @@ function countyTotalVotes(rr: any): number {
 function MapWithCountyTooltip({ svgText, regionResults }: { svgText: string; regionResults: RegionResult[] | Record<string, RegionResult> }) {
   const wrapRef = useRef<HTMLDivElement | null>(null);
   const [tooltip, setTooltip] = useState<TooltipState>({ show: false, x: 0, y: 0, title: "", reporting: null, reportingPct: null, lines: [] });
-  // tracks fingerprint (for fill changes) — persists across regionMap updates
   const countyFingerprintsRef = useRef<Map<string, string>>(new Map());
-  // tracks last known vote total per county — persists across refreshes, never reset on svgText change
   const countyVoteTotalsRef = useRef<Map<string, number>>(new Map());
 
   const regionResultsArr = useMemo(() => coerceRegionResults(regionResults), [regionResults]);
@@ -260,22 +258,18 @@ function MapWithCountyTooltip({ svgText, regionResults }: { svgText: string; reg
     return m;
   }, [regionResultsArr]);
 
-  // Fire update-flash on counties where vote total grew since last refresh
   const flashCounty = useCallback((shape: SVGGraphicsElement) => {
     shape.classList.remove("county-updated");
-    // force reflow so re-adding the class restarts the animation
     void (shape as any).offsetWidth;
     shape.classList.add("county-updated");
     setTimeout(() => shape.classList.remove("county-updated"), 1200);
   }, []);
 
-  // Initial SVG inject + event wiring
   useEffect(() => {
     const host = wrapRef.current; if (!host) return;
     host.innerHTML = svgText;
     const svg = host.querySelector("svg"); if (!svg) return;
     countyFingerprintsRef.current = new Map();
-    // NOTE: do NOT reset countyVoteTotalsRef here — we want totals to persist across race switches only if needed
     const shapes = Array.from(svg.querySelectorAll("path, polygon")) as SVGGraphicsElement[];
     shapes.forEach((shape) => {
       const key = getRegionKeyFromElement(shape); if (!key) return;
@@ -327,7 +321,6 @@ function MapWithCountyTooltip({ svgText, regionResults }: { svgText: string; reg
     });
   }, [svgText, regionMap]); // eslint-disable-line
 
-  // Live data update — re-color counties and flash those with new votes
   useEffect(() => {
     const host = wrapRef.current; if (!host) return;
     const svg = host.querySelector("svg"); if (!svg) return;
@@ -335,28 +328,15 @@ function MapWithCountyTooltip({ svgText, regionResults }: { svgText: string; reg
     shapes.forEach((shape) => {
       const key = getRegionKeyFromElement(shape); if (!key) return;
       const currentRR = regionMap.get(key); if (!currentRR) return;
-
-      // Update fill
       const fill = countyFill(currentRR); if (fill) shape.style.fill = fill;
-
-      // Check fingerprint for any change
       const fp = countyFingerprint(currentRR);
       const prevFp = countyFingerprintsRef.current.get(key);
-
-      // Check vote total growth
       const newTotal = countyTotalVotes(currentRR);
       const prevTotal = countyVoteTotalsRef.current.get(key) ?? 0;
       const votesGrew = newTotal > prevTotal;
-
       if (prevFp !== undefined && fp !== prevFp) {
-        if (votesGrew) {
-          flashCounty(shape);
-        } else {
-          shape.classList.add("county-pop");
-          setTimeout(() => shape.classList.remove("county-pop"), 520);
-        }
+        if (votesGrew) { flashCounty(shape); } else { shape.classList.add("county-pop"); setTimeout(() => shape.classList.remove("county-pop"), 520); }
       }
-
       countyFingerprintsRef.current.set(key, fp);
       countyVoteTotalsRef.current.set(key, newTotal);
     });
@@ -451,7 +431,7 @@ function CandidateList({ candidates, reporting, raceId }: { candidates: RaceCand
 }
 
 // ─── COUNTY TABLE ────────────────────────────────────────────────────────────
-function CountyTotalsTable({ regionResults }: { regionResults: RegionResult[] | Record<string, RegionResult> }) {
+function CountyTotalsTable({ regionResults, collapsed, onToggle }: { regionResults: RegionResult[] | Record<string, RegionResult>; collapsed: boolean; onToggle: () => void; }) {
   const data = useMemo(() => {
     return coerceRegionResults(regionResults).map((rr) => {
       const candidates = buildTooltipLines(rr);
@@ -460,43 +440,96 @@ function CountyTotalsTable({ regionResults }: { regionResults: RegionResult[] | 
       return { name: titleCaseKey(rawName), reporting: rr?.region?.percent_reporting ?? (rr as any)?.percent_reporting ?? 0, candidates, margin: absMargin };
     }).sort((a, b) => a.name.localeCompare(b.name));
   }, [regionResults]);
-  if (!data.length) return null;
+
+  const reportedCount = data.filter(d => d.reporting > 0).length;
+
   return (
-    <div className="res-panel">
-      <div className="res-panel-header">
-        <span className="res-panel-tag">COUNTY BREAKDOWN</span>
-        <span className="res-note">{data.length} REGIONS</span>
-      </div>
-      <div style={{ overflowY: "auto" }}>
-        <table className="w-full border-collapse">
-          <thead className="res-thead">
-            <tr>{["COUNTY / RPT", "CANDIDATES", "MARGIN"].map((h, i) => (<th key={h} className={`res-th px-4 py-2.5 ${i === 2 ? "text-right" : "text-left"}`}>{h}</th>))}</tr>
-          </thead>
-          <tbody>
-            {data.map((row, i) => (
-              <tr key={i} className="res-table-row">
-                <td className="px-4 py-3 align-top" style={{ width: "160px" }}>
-                  <div className="res-cand-name-lg">{row.name}</div>
-                  <div className="res-bar-track mt-2" style={{ width: "80px", height: "2px" }}><div className="res-bar-fill" style={{ width: `${row.reporting}%`, background: "var(--purple)", height: "2px" }} /></div>
-                  <div className="res-note mt-1">{row.reporting.toFixed(1)}% RPT</div>
-                </td>
-                <td className="px-4 py-3 align-top">
-                  <div className="grid grid-cols-1 gap-1 md:grid-cols-2">
-                    {row.candidates.length > 0 ? row.candidates.slice(0, 4).map((cand, idx) => (
-                      <div key={idx} className="flex items-center justify-between gap-2 py-1 border-b" style={{ borderColor: "rgba(255,255,255,0.04)" }}>
-                        <div className="flex items-center gap-2 min-w-0"><span className="h-1.5 w-1.5 rounded-full flex-shrink-0" style={{ background: cand.color || "rgba(255,255,255,0.35)" }} /><span className="res-note truncate">{cand.name}</span></div>
-                        <span className="res-cand-name shrink-0">{cand.pct !== null ? `${cand.pct.toFixed(1)}%` : "—"}</span>
+    <div className="res-panel" style={{ overflow: "hidden" }}>
+      {/* Clickable header with toggle */}
+      <button
+        onClick={onToggle}
+        style={{
+          width: "100%",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          padding: "10px 14px",
+          background: "var(--background2)",
+          border: "none",
+          borderBottom: collapsed ? "none" : "1px solid var(--border)",
+          cursor: "pointer",
+          transition: "background 140ms ease",
+        }}
+      >
+        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+          <span className="res-panel-tag">COUNTY BREAKDOWN</span>
+          {data.length > 0 && (
+            <span className="res-badge">
+              {reportedCount}/{data.length} REPORTING
+            </span>
+          )}
+        </div>
+        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+          <span className="res-note" style={{ color: "rgba(255,255,255,0.25)" }}>
+            {collapsed ? "SHOW TABLE" : "HIDE TABLE"}
+          </span>
+          {/* Chevron icon */}
+          <svg
+            width="12" height="12" viewBox="0 0 12 12" fill="none"
+            style={{
+              transform: collapsed ? "rotate(0deg)" : "rotate(180deg)",
+              transition: "transform 240ms cubic-bezier(0.22,1,0.36,1)",
+              flexShrink: 0,
+            }}
+          >
+            <path d="M2 4L6 8L10 4" stroke="rgba(255,255,255,0.35)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </div>
+      </button>
+
+      {/* Collapsible content */}
+      <div style={{
+        overflow: collapsed ? "hidden" : "auto",
+        maxHeight: collapsed ? "0px" : "340px",
+        transition: "max-height 400ms cubic-bezier(0.22,1,0.36,1)",
+      }}>
+        {data.length === 0 ? (
+          <div style={{ padding: "20px", textAlign: "center" }}>
+            <span className="res-note" style={{ color: "rgba(255,255,255,0.2)" }}>NO COUNTY DATA</span>
+          </div>
+        ) : (
+          <div style={{ overflowY: "auto" }}>
+            <table className="w-full border-collapse">
+              <thead className="res-thead">
+                <tr>{["COUNTY / RPT", "CANDIDATES", "MARGIN"].map((h, i) => (<th key={h} className={`res-th px-4 py-2.5 ${i === 2 ? "text-right" : "text-left"}`}>{h}</th>))}</tr>
+              </thead>
+              <tbody>
+                {data.map((row, i) => (
+                  <tr key={i} className="res-table-row">
+                    <td className="px-4 py-3 align-top" style={{ width: "160px" }}>
+                      <div className="res-cand-name-lg">{row.name}</div>
+                      <div className="res-bar-track mt-2" style={{ width: "80px", height: "2px" }}><div className="res-bar-fill" style={{ width: `${row.reporting}%`, background: "var(--purple)", height: "2px" }} /></div>
+                      <div className="res-note mt-1">{row.reporting.toFixed(1)}% RPT</div>
+                    </td>
+                    <td className="px-4 py-3 align-top">
+                      <div className="grid grid-cols-1 gap-1 md:grid-cols-2">
+                        {row.candidates.length > 0 ? row.candidates.slice(0, 4).map((cand, idx) => (
+                          <div key={idx} className="flex items-center justify-between gap-2 py-1 border-b" style={{ borderColor: "rgba(255,255,255,0.04)" }}>
+                            <div className="flex items-center gap-2 min-w-0"><span className="h-1.5 w-1.5 rounded-full flex-shrink-0" style={{ background: cand.color || "rgba(255,255,255,0.35)" }} /><span className="res-note truncate">{cand.name}</span></div>
+                            <span className="res-cand-name shrink-0">{cand.pct !== null ? `${cand.pct.toFixed(1)}%` : "—"}</span>
+                          </div>
+                        )) : <span className="res-note italic">Awaiting…</span>}
                       </div>
-                    )) : <span className="res-note italic">Awaiting…</span>}
-                  </div>
-                </td>
-                <td className="px-4 py-3 align-top text-right">
-                  {row.margin !== null ? (<><div className="res-pct-xl">{row.margin >= 0 ? "+" : ""}{row.margin.toFixed(1)}%</div><div className="res-note">SPREAD</div></>) : <span className="res-note">—</span>}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+                    </td>
+                    <td className="px-4 py-3 align-top text-right">
+                      {row.margin !== null ? (<><div className="res-pct-xl">{row.margin >= 0 ? "+" : ""}{row.margin.toFixed(1)}%</div><div className="res-note">SPREAD</div></>) : <span className="res-note">—</span>}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
       </div>
     </div>
   );
@@ -518,72 +551,85 @@ function SwingOMeter({ candidates, colors, probabilities, raceRule, reportingPct
   candidates: [string, string, string, string]; colors: [string, string, string, string];
   probabilities: { c1: number; c2: number; c3: number }; raceRule: "PLURALITY" | "MAJORITY"; reportingPct: number;
 }) {
-  const needleRef = useRef<SVGGElement>(null);
-  const c1Prob = probabilities.c1, c2Prob = probabilities.c2;
-  const total12 = c1Prob + c2Prob;
-  const c1Share = total12 > 0 ? c1Prob / total12 : 0.5;
-  const svgNeedleRot = (1 - c1Share) * 180 - 90;
-  useEffect(() => { const el = needleRef.current; if (!el) return; el.style.transition = "transform 1.2s cubic-bezier(0.34,1.56,0.64,1)"; el.style.transform = `rotate(${svgNeedleRot}deg)`; }, [svgNeedleRot]);
   const W = 280, H = 160, CX = W / 2, CY = H - 20;
-  const R_OUTER = 110, R_INNER = 68, R_NEEDLE = 100;
-  const zones = [
-    { startDeg: 0, endDeg: 30, side: "c1", alpha: 1.0 }, { startDeg: 30, endDeg: 60, side: "c1", alpha: 0.72 },
-    { startDeg: 60, endDeg: 80, side: "c1", alpha: 0.48 }, { startDeg: 80, endDeg: 90, side: "c1", alpha: 0.28 },
-    { startDeg: 90, endDeg: 100, side: "c2", alpha: 0.28 }, { startDeg: 100, endDeg: 120, side: "c2", alpha: 0.48 },
-    { startDeg: 120, endDeg: 150, side: "c2", alpha: 0.72 }, { startDeg: 150, endDeg: 180, side: "c2", alpha: 1.0 },
+  const R_OUTER = 110, R_INNER = 68;
+
+  const othersProb = Math.max(0, 1 - probabilities.c1 - probabilities.c2 - probabilities.c3);
+  const showC3 = probabilities.c3 > 0.01;
+  const showOthers = othersProb > 0.01;
+
+  const segments = [
+    { key: "c1", prob: probabilities.c1, color: colors[0], name: candidates[0] },
+    { key: "c2", prob: probabilities.c2, color: colors[1], name: candidates[1] },
+    ...(showC3 ? [{ key: "c3", prob: probabilities.c3, color: colors[2], name: candidates[2] }] : []),
+    ...(showOthers ? [{ key: "others", prob: othersProb, color: colors[3], name: "Others" }] : []),
   ];
-  function polarToXY(angleDeg: number, r: number) { const rad = (angleDeg - 180) * (Math.PI / 180); return { x: CX + r * Math.cos(rad), y: CY + r * Math.sin(rad) }; }
+
+  const total = segments.reduce((s, seg) => s + seg.prob, 0) || 1;
+
+  function polarToXY(angleDeg: number, r: number) {
+    const rad = (angleDeg - 180) * (Math.PI / 180);
+    return { x: CX + r * Math.cos(rad), y: CY + r * Math.sin(rad) };
+  }
   function describeArc(startDeg: number, endDeg: number, rOuter: number, rInner: number) {
-    const s = polarToXY(startDeg, rOuter), e = polarToXY(endDeg, rOuter), si = polarToXY(endDeg, rInner), ei = polarToXY(startDeg, rInner);
+    const s = polarToXY(startDeg, rOuter), e = polarToXY(endDeg, rOuter);
+    const si = polarToXY(endDeg, rInner), ei = polarToXY(startDeg, rInner);
     const large = endDeg - startDeg > 180 ? 1 : 0;
     return `M ${s.x} ${s.y} A ${rOuter} ${rOuter} 0 ${large} 1 ${e.x} ${e.y} L ${si.x} ${si.y} A ${rInner} ${rInner} 0 ${large} 0 ${ei.x} ${ei.y} Z`;
   }
-  const ticks = [0, 30, 60, 90, 120, 150, 180];
-  const tickLabels: Record<number, string> = { 0: "100", 30: "80", 60: "60", 90: "50", 120: "60", 150: "80", 180: "100" };
+
+  let cursor = 0;
+  const arcSegments = segments.map((seg) => {
+    const span = (seg.prob / total) * 180;
+    const start = cursor;
+    const end = cursor + span;
+    cursor = end;
+    const midDeg = start + span / 2;
+    const midPt = polarToXY(midDeg, (R_OUTER + R_INNER) / 2);
+    return { ...seg, start, end, midPt };
+  });
+
+  const leader = segments.reduce((a, b) => (b.prob > a.prob ? b : a), segments[0]);
+
   return (
     <div style={{ position: "relative", userSelect: "none" }}>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginBottom: 6, padding: "0 4px" }}>
-        <div style={{ textAlign: "left", maxWidth: "42%" }}>
-          <div style={{ fontFamily: "var(--font-body)", fontSize: "7px", fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: colors[0] + "cc", marginBottom: 2 }}>C1</div>
-          <div style={{ fontFamily: "var(--font-body)", fontSize: "11px", fontWeight: 900, textTransform: "uppercase", letterSpacing: "0.04em", color: colors[0], lineHeight: 1.1, wordBreak: "break-word" }}>{candidates[0]}</div>
-        </div>
-        <div style={{ textAlign: "right", maxWidth: "42%" }}>
-          <div style={{ fontFamily: "var(--font-body)", fontSize: "7px", fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: colors[1] + "cc", marginBottom: 2 }}>C2</div>
-          <div style={{ fontFamily: "var(--font-body)", fontSize: "11px", fontWeight: 900, textTransform: "uppercase", letterSpacing: "0.04em", color: colors[1], lineHeight: 1.1, wordBreak: "break-word" }}>{candidates[1]}</div>
-        </div>
-      </div>
       <svg viewBox={`0 0 ${W} ${H}`} style={{ width: "100%", height: "auto", overflow: "visible" }}>
         <path d={describeArc(0, 180, R_OUTER, R_INNER)} fill="rgba(255,255,255,0.04)" />
-        {zones.map((z, i) => <path key={i} d={describeArc(z.startDeg, z.endDeg, R_OUTER, R_INNER)} fill={z.side === "c1" ? colors[0] : colors[1]} opacity={z.alpha * 0.85} />)}
-        <line x1={CX} y1={CY - R_OUTER + 4} x2={CX} y2={CY - R_INNER - 4} stroke="rgba(255,255,255,0.35)" strokeWidth="1.5" />
-        {ticks.map((deg) => { const outer = polarToXY(deg, R_OUTER + 7), inner = polarToXY(deg, R_OUTER + 2), label = polarToXY(deg, R_OUTER + 16); return (<g key={deg}><line x1={inner.x} y1={inner.y} x2={outer.x} y2={outer.y} stroke="rgba(255,255,255,0.25)" strokeWidth="1" /><text x={label.x} y={label.y + 3} textAnchor="middle" fontSize="6" fill="rgba(255,255,255,0.25)" fontFamily="monospace">{tickLabels[deg]}</text></g>); })}
-        <circle cx={CX} cy={CY} r="14" fill="rgba(0,0,0,0.6)" /><circle cx={CX} cy={CY} r="14" fill="none" stroke="rgba(255,255,255,0.10)" strokeWidth="1" />
-        <g ref={needleRef} style={{ transformOrigin: `${CX}px ${CY}px`, transform: `rotate(${svgNeedleRot}deg)` }}>
-          <line x1={CX} y1={CY + 6} x2={CX} y2={CY - R_NEEDLE} stroke="rgba(0,0,0,0.4)" strokeWidth="4" strokeLinecap="round" />
-          <line x1={CX} y1={CY + 6} x2={CX} y2={CY - R_NEEDLE} stroke="#fff" strokeWidth="2" strokeLinecap="round" />
-          <line x1={CX} y1={CY + 6} x2={CX} y2={CY + 12} stroke="rgba(255,255,255,0.3)" strokeWidth="2" strokeLinecap="round" />
-        </g>
-        <circle cx={CX} cy={CY} r="5" fill="#fff" /><circle cx={CX} cy={CY} r="3" fill="rgba(0,0,0,0.7)" />
-        <text x={CX} y={CY - 22} textAnchor="middle" fontSize="18" fontWeight="900" fill="white" fontFamily="monospace" letterSpacing="-0.5">{(c1Share * 100).toFixed(0)}%</text>
-        <text x={CX} y={CY - 10} textAnchor="middle" fontSize="7" fill="rgba(255,255,255,0.45)" fontFamily="monospace" letterSpacing="1">{c1Share >= 0.5 ? candidates[0].split(" ")[0].toUpperCase() : candidates[1].split(" ")[0].toUpperCase()}</text>
+        {arcSegments.map((seg) => (
+          <g key={seg.key}>
+            <path d={describeArc(seg.start + 0.8, seg.end - 0.8, R_OUTER, R_INNER)} fill={seg.color} opacity={0.85} />
+            {(seg.end - seg.start) > 20 && (
+              <text x={seg.midPt.x} y={seg.midPt.y + 3} textAnchor="middle" fontSize="7" fontWeight="700" fill="rgba(255,255,255,0.85)" fontFamily="var(--font-body)" letterSpacing="0.5">
+                {(seg.prob * 100).toFixed(0)}%
+              </text>
+            )}
+          </g>
+        ))}
+        <text x={CX} y={CY - 22} textAnchor="middle" fontSize="20" fontWeight="900" fill="white" fontFamily="var(--font-body)" letterSpacing="-0.5">
+          {(leader.prob * 100).toFixed(1)}%
+        </text>
+        <text x={CX} y={CY - 8} textAnchor="middle" fontSize="7" fill="rgba(255,255,255,0.45)" fontFamily="var(--font-body)" letterSpacing="1">
+          {leader.name.split(" ").pop()?.toUpperCase()}
+        </text>
+        <circle cx={CX} cy={CY} r="5" fill="rgba(255,255,255,0.15)" />
       </svg>
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1px 1fr", gap: 0, marginTop: 2 }}>
-        <div style={{ textAlign: "center", padding: "8px 4px" }}><div style={{ fontFamily: "var(--font-body)", fontSize: "16px", fontWeight: 900, color: colors[0], lineHeight: 1 }}>{(c1Prob * 100).toFixed(1)}%</div><div style={{ fontFamily: "var(--font-body)", fontSize: "7px", fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(255,255,255,0.3)", marginTop: 3 }}>WIN PROB</div></div>
-        <div style={{ background: "rgba(255,255,255,0.08)", width: 1 }} />
-        <div style={{ textAlign: "center", padding: "8px 4px" }}><div style={{ fontFamily: "var(--font-body)", fontSize: "16px", fontWeight: 900, color: colors[1], lineHeight: 1 }}>{(c2Prob * 100).toFixed(1)}%</div><div style={{ fontFamily: "var(--font-body)", fontSize: "7px", fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(255,255,255,0.3)", marginTop: 3 }}>WIN PROB</div></div>
+      <div style={{ display: "flex", flexWrap: "wrap", gap: "6px 12px", marginTop: 6, justifyContent: "center" }}>
+        {arcSegments.map((seg) => (
+          <div key={seg.key} style={{ display: "flex", alignItems: "center", gap: 5 }}>
+            <span style={{ width: 8, height: 8, borderRadius: 2, background: seg.color, display: "inline-block", flexShrink: 0 }} />
+            <span style={{ fontFamily: "var(--font-body)", fontSize: "8px", fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", color: "rgba(255,255,255,0.55)" }}>{seg.name.split(" ").pop()}</span>
+            <span style={{ fontFamily: "var(--font-body)", fontSize: "9px", fontWeight: 900, color: seg.color }}>{(seg.prob * 100).toFixed(1)}%</span>
+          </div>
+        ))}
       </div>
-      {probabilities.c3 > 0.01 && (
-        <div style={{ marginTop: 6, padding: "6px 10px", borderTop: "1px solid var(--border)", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 6 }}><span style={{ width: 6, height: 6, borderRadius: "50%", background: colors[2], display: "inline-block" }} /><span style={{ fontFamily: "var(--font-body)", fontSize: "9px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", color: "rgba(255,255,255,0.55)" }}>{candidates[2]}</span></div>
-          <span style={{ fontFamily: "var(--font-body)", fontSize: "10px", fontWeight: 700, color: colors[2] }}>{(probabilities.c3 * 100).toFixed(1)}%</span>
-        </div>
-      )}
-      <div style={{ marginTop: 8, padding: "6px 0 0" }}>
+      <div style={{ marginTop: 10, padding: "6px 0 0" }}>
         <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 4 }}>
           <span style={{ fontFamily: "var(--font-body)", fontSize: "7px", fontWeight: 700, letterSpacing: "0.20em", textTransform: "uppercase", color: "rgba(255,255,255,0.25)" }}>REPORTING</span>
           <span style={{ fontFamily: "var(--font-body)", fontSize: "7px", fontWeight: 700, color: "rgba(255,255,255,0.45)" }}>{reportingPct.toFixed(1)}%</span>
         </div>
-        <div style={{ height: 2, background: "rgba(255,255,255,0.07)", overflow: "hidden" }}><div style={{ height: "100%", width: `${reportingPct}%`, background: "rgba(255,255,255,0.30)", transition: "width 800ms ease" }} /></div>
+        <div style={{ height: 2, background: "rgba(255,255,255,0.07)", overflow: "hidden" }}>
+          <div style={{ height: "100%", width: `${reportingPct}%`, background: "rgba(255,255,255,0.30)", transition: "width 800ms ease" }} />
+        </div>
       </div>
     </div>
   );
@@ -713,6 +759,13 @@ function ForecastPanel({ raceId, refreshTick, raceData }: { raceId: number; refr
       <div className="res-panel-header" style={{ flexWrap: "wrap", gap: 8 }}>
         <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
           <span className="res-panel-tag">FORECAST MODEL</span>
+          {/* FORECAST BETA badge */}
+          <span style={{
+            display: "inline-flex", alignItems: "center", padding: "2px 6px",
+            border: "1px solid rgba(124,58,237,0.45)", background: "rgba(124,58,237,0.10)",
+            fontFamily: "var(--font-body)", fontSize: "6.5px", fontWeight: 700,
+            letterSpacing: "0.16em", color: "var(--purple-soft)",
+          }}>FORECAST β</span>
           {isLoading && <span className="res-badge res-badge-purple" style={{ fontSize: "7px" }}><span className="res-live-dot" style={{ background: "var(--purple)", width: 4, height: 4 }} />UPDATING</span>}
           {!isLoading && forecast && <span className="res-badge" style={{ fontSize: "7px", color: "rgba(255,255,255,0.25)" }}>AUTO / 30s</span>}
         </div>
@@ -800,289 +853,195 @@ function ForecastPanel({ raceId, refreshTick, raceData }: { raceId: number; refr
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
-// ─── RACE PICKER TAB BAR ──────────────────────────────────────────────────────
+// ─── RACE PICKER PANEL (replaces old tab bar) ─────────────────────────────────
 // ═══════════════════════════════════════════════════════════════════════════════
-function RaceTabBar({ races, raceCache, selectedId, onSelect, nowMs }: {
-  races: FeaturedRace[]; raceCache: Record<number, RaceDetail | undefined>;
-  selectedId: number; onSelect: (id: number) => void; nowMs: number;
+function RacePickerPanel({ races, raceCache, selectedId, onSelect }: {
+  races: FeaturedRace[];
+  raceCache: Record<number, RaceDetail | undefined>;
+  selectedId: number;
+  onSelect: (id: number) => void;
 }) {
-  const scrollRef = useRef<HTMLDivElement>(null);
-  const searchRef = useRef<HTMLInputElement>(null);
-  const dropdownRef = useRef<HTMLDivElement>(null);
   const [search, setSearch] = useState("");
-  const [searchOpen, setSearchOpen] = useState(false);
-  const [highlightIndex, setHighlightIndex] = useState(0);
+  const searchRef = useRef<HTMLInputElement>(null);
 
-  // Search across all FEATURED races (not just current state)
-  const searchResults = useMemo(() => {
+  // Group by office
+  const groups = useMemo(() => {
     const q = search.trim().toLowerCase();
-    if (!q) return [];
-    return FEATURED.filter(
-      (r) => r.label.toLowerCase().includes(q) || r.office.toLowerCase().includes(q) || r.party.toLowerCase().includes(q)
-    ).slice(0, 10);
-  }, [search]);
+    const filtered = q
+      ? races.filter(r => r.office.toLowerCase().includes(q) || r.party.toLowerCase().includes(q) || r.label.toLowerCase().includes(q))
+      : races;
+    const map = new Map<string, FeaturedRace[]>();
+    for (const r of filtered) {
+      const g = map.get(r.office) ?? [];
+      g.push(r);
+      map.set(r.office, g);
+    }
+    return Array.from(map.entries());
+  }, [races, search]);
 
-  // Reset highlight when results change
-  useEffect(() => { setHighlightIndex(0); }, [searchResults.length]);
-
-  // Keyboard navigation
+  // Keyboard shortcut to focus search
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
-      // Open with Cmd/Ctrl+K or /
-      if ((e.key === "/" || ((e.metaKey || e.ctrlKey) && e.key === "k")) && !searchOpen) {
-        e.preventDefault(); setSearchOpen(true); setSearch("");
-        return;
-      }
-      if (!searchOpen) return;
-      if (e.key === "Escape") { setSearchOpen(false); setSearch(""); }
-      if (e.key === "ArrowDown") { e.preventDefault(); setHighlightIndex((h) => Math.min(h + 1, searchResults.length - 1)); }
-      if (e.key === "ArrowUp") { e.preventDefault(); setHighlightIndex((h) => Math.max(h - 1, 0)); }
-      if (e.key === "Enter" && searchResults[highlightIndex]) {
-        onSelect(searchResults[highlightIndex].id);
-        setSearchOpen(false); setSearch("");
+      if ((e.key === "/" || ((e.metaKey || e.ctrlKey) && e.key === "k")) && document.activeElement !== searchRef.current) {
+        e.preventDefault();
+        searchRef.current?.focus();
       }
     };
     window.addEventListener("keydown", handler);
     return () => window.removeEventListener("keydown", handler);
-  }, [searchOpen, searchResults, highlightIndex, onSelect]);
-
-  // Focus input when opened
-  useEffect(() => {
-    if (searchOpen) setTimeout(() => searchRef.current?.focus(), 30);
-  }, [searchOpen]);
-
-  // Click outside to close
-  useEffect(() => {
-    if (!searchOpen) return;
-    const handler = (e: MouseEvent) => {
-      if (!dropdownRef.current?.contains(e.target as Node)) {
-        setSearchOpen(false); setSearch("");
-      }
-    };
-    document.addEventListener("mousedown", handler);
-    return () => document.removeEventListener("mousedown", handler);
-  }, [searchOpen]);
-
-  // Group by office
-  const groups = useMemo(() => {
-    const map = new Map<string, FeaturedRace[]>();
-    for (const r of races) { const g = map.get(r.office) ?? []; g.push(r); map.set(r.office, g); }
-    return Array.from(map.entries());
-  }, [races]);
-
-  // Auto-scroll selected tab into view
-  useEffect(() => {
-    const el = scrollRef.current?.querySelector(`[data-raceid="${selectedId}"]`) as HTMLElement | null;
-    el?.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
-  }, [selectedId]);
+  }, []);
 
   return (
-    <div style={{ background: "var(--background2)", borderBottom: "1px solid var(--border)", position: "relative", display: "flex", alignItems: "stretch" }}>
-
-      {/* Search trigger button — pinned left */}
-      <div ref={dropdownRef} style={{ position: "relative", flexShrink: 0, borderRight: "1px solid var(--border)" }}>
-        <button
-          onClick={() => { setSearchOpen((v) => !v); setSearch(""); }}
-          style={{
-            height: "100%", display: "flex", alignItems: "center", gap: 8,
-            padding: "0 16px", background: searchOpen ? "rgba(124,58,237,0.08)" : "transparent",
-            border: "none", borderRight: searchOpen ? "1px solid rgba(124,58,237,0.3)" : "none",
-            cursor: "pointer", transition: "background 140ms ease",
-          }}
-          title="Search races (/ or ⌘K)"
-        >
-          {/* Magnifier icon */}
-          <svg width="13" height="13" viewBox="0 0 16 16" fill="none" style={{ flexShrink: 0 }}>
-            <circle cx="6.5" cy="6.5" r="5" stroke={searchOpen ? "var(--purple-soft)" : "rgba(255,255,255,0.35)"} strokeWidth="1.5" />
-            <line x1="10.5" y1="10.5" x2="14" y2="14" stroke={searchOpen ? "var(--purple-soft)" : "rgba(255,255,255,0.35)"} strokeWidth="1.5" strokeLinecap="round" />
+    <div style={{ display: "flex", flexDirection: "column", height: "100%", minHeight: 0, background: "var(--panel)", border: "1px solid var(--border)", overflow: "hidden" }}>
+      {/* Header */}
+      <div style={{ padding: "10px 12px", borderBottom: "1px solid var(--border)", background: "var(--background2)", flexShrink: 0 }}>
+        <div className="res-panel-tag" style={{ marginBottom: 8 }}>ALL RACES</div>
+        {/* Search input */}
+        <div style={{ display: "flex", alignItems: "center", gap: 8, background: "rgba(255,255,255,0.03)", border: "1px solid var(--border)", padding: "6px 10px" }}>
+          <svg width="11" height="11" viewBox="0 0 16 16" fill="none" style={{ flexShrink: 0, opacity: 0.4 }}>
+            <circle cx="6.5" cy="6.5" r="5" stroke="white" strokeWidth="1.5" />
+            <line x1="10.5" y1="10.5" x2="14" y2="14" stroke="white" strokeWidth="1.5" strokeLinecap="round" />
           </svg>
-          <span style={{
-            fontFamily: "var(--font-body)", fontSize: "7.5px", fontWeight: 700, letterSpacing: "0.20em",
-            textTransform: "uppercase", color: searchOpen ? "var(--purple-soft)" : "rgba(255,255,255,0.25)",
-            whiteSpace: "nowrap",
-          }}>
-            SEARCH
-          </span>
-          <span style={{
-            fontFamily: "var(--font-body)", fontSize: "7px", letterSpacing: "0.08em",
-            color: "rgba(255,255,255,0.15)", padding: "1px 5px",
-            border: "1px solid rgba(255,255,255,0.10)", background: "rgba(255,255,255,0.03)",
-            display: "none",
-          }} className="res-search-kbd">/</span>
-        </button>
-
-        {/* Dropdown panel */}
-        {searchOpen && (
-          <div style={{
-            position: "absolute", top: "100%", left: 0, zIndex: 200,
-            width: 380, background: "var(--panel)",
-            border: "1px solid rgba(124,58,237,0.35)",
-            boxShadow: "0 20px 60px rgba(0,0,0,0.85), 0 0 0 1px rgba(124,58,237,0.1)",
-            animation: "res-fade-up 0.15s cubic-bezier(0.22,1,0.36,1) both",
-          }}>
-            <div className="res-tri-stripe" style={{ height: "2px" }} />
-
-            {/* Input */}
-            <div style={{ display: "flex", alignItems: "center", gap: 10, padding: "10px 14px", borderBottom: "1px solid var(--border)" }}>
-              <svg width="12" height="12" viewBox="0 0 16 16" fill="none" style={{ flexShrink: 0 }}>
-                <circle cx="6.5" cy="6.5" r="5" stroke="var(--purple-soft)" strokeWidth="1.5" />
-                <line x1="10.5" y1="10.5" x2="14" y2="14" stroke="var(--purple-soft)" strokeWidth="1.5" strokeLinecap="round" />
-              </svg>
-              <input
-                ref={searchRef}
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                placeholder="Search races, offices, parties…"
-                style={{
-                  flex: 1, background: "transparent", border: "none", outline: "none",
-                  fontFamily: "var(--font-body)", fontSize: "11px", fontWeight: 600,
-                  letterSpacing: "0.04em", color: "var(--foreground)",
-                  caretColor: "var(--purple-soft)",
-                }}
-              />
-              {search && (
-                <button onClick={() => setSearch("")} style={{ background: "none", border: "none", cursor: "pointer", color: "rgba(255,255,255,0.3)", padding: 0, fontSize: 12, lineHeight: 1 }}>✕</button>
-              )}
-            </div>
-
-            {/* Results */}
-            <div style={{ maxHeight: 320, overflowY: "auto" }}>
-              {search.trim() === "" ? (
-                <div style={{ padding: "20px 14px", textAlign: "center" }}>
-                  <div className="res-note" style={{ marginBottom: 8, color: "rgba(255,255,255,0.2)" }}>TYPE TO SEARCH ALL RACES</div>
-                  <div className="res-note" style={{ color: "rgba(255,255,255,0.12)" }}>↑↓ NAVIGATE · ENTER SELECT · ESC CLOSE</div>
-                </div>
-              ) : searchResults.length === 0 ? (
-                <div style={{ padding: "20px 14px", textAlign: "center" }}>
-                  <div className="res-note" style={{ color: "rgba(255,255,255,0.25)" }}>NO RACES FOUND</div>
-                </div>
-              ) : searchResults.map((r, i) => {
-                const liveData = raceCache[r.id];
-                const winner = liveData?.candidates?.find((c) => c.winner);
-                const reporting = getRaceReportingPct(liveData);
-                const isRep = r.party === "Republican";
-                const isDem = r.party === "Democratic";
-                const partyColor = isRep ? "var(--rep)" : isDem ? "var(--dem)" : "rgba(255,255,255,0.4)";
-                const isHighlighted = i === highlightIndex;
-                const isCurrentlySelected = r.id === selectedId;
-
-                // Highlight matching text
-                const q = search.trim();
-                const labelLower = r.label.toLowerCase();
-                const qIdx = labelLower.indexOf(q.toLowerCase());
-                const labelNode = qIdx >= 0
-                  ? <>{r.label.slice(0, qIdx)}<mark style={{ background: "rgba(124,58,237,0.35)", color: "var(--purple-soft)", padding: 0 }}>{r.label.slice(qIdx, qIdx + q.length)}</mark>{r.label.slice(qIdx + q.length)}</>
-                  : r.label;
-
-                return (
-                  <button
-                    key={r.id}
-                    onMouseEnter={() => setHighlightIndex(i)}
-                    onClick={() => { onSelect(r.id); setSearchOpen(false); setSearch(""); }}
-                    style={{
-                      display: "flex", alignItems: "center", width: "100%", gap: 12,
-                      padding: "10px 14px", background: isHighlighted ? "rgba(124,58,237,0.10)" : "transparent",
-                      border: "none", borderBottom: "1px solid rgba(255,255,255,0.04)",
-                      borderLeft: isHighlighted ? "2px solid var(--purple)" : "2px solid transparent",
-                      cursor: "pointer", textAlign: "left", transition: "background 80ms ease",
-                    }}
-                  >
-                    {/* State badge */}
-                    <span style={{
-                      fontFamily: "var(--font-body)", fontSize: "7px", fontWeight: 900,
-                      letterSpacing: "0.14em", color: "rgba(255,255,255,0.3)",
-                      background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.08)",
-                      padding: "2px 5px", flexShrink: 0,
-                    }}>{r.state}</span>
-
-                    {/* Label */}
-                    <div style={{ flex: 1, minWidth: 0 }}>
-                      <div style={{
-                        fontFamily: "var(--font-body)", fontSize: "10px", fontWeight: 700,
-                        letterSpacing: "0.04em", color: isHighlighted ? "#fff" : "rgba(255,255,255,0.75)",
-                        textOverflow: "ellipsis", overflow: "hidden", whiteSpace: "nowrap",
-                      }}>{labelNode}</div>
-                      <div style={{ display: "flex", gap: 6, marginTop: 3, alignItems: "center" }}>
-                        <span style={{ fontFamily: "var(--font-body)", fontSize: "7.5px", fontWeight: 700, color: partyColor }}>{r.party}</span>
-                        {RACE_FORECAST_DEFAULTS[r.id] && <span style={{ fontFamily: "var(--font-body)", fontSize: "6px", fontWeight: 700, color: "var(--purple-soft)", letterSpacing: "0.14em" }}>FORECAST</span>}
-                      </div>
-                    </div>
-
-                    {/* Right: reporting + winner */}
-                    <div style={{ flexShrink: 0, textAlign: "right" }}>
-                      {winner ? (
-                        <span style={{ fontFamily: "var(--font-body)", fontSize: "7px", fontWeight: 700, color: "var(--win)", letterSpacing: "0.12em" }}>✓ CALLED</span>
-                      ) : (
-                        <span style={{ fontFamily: "var(--font-body)", fontSize: "8px", fontWeight: 700, color: isHighlighted ? "rgba(255,255,255,0.5)" : "rgba(255,255,255,0.2)" }}>
-                          {reporting !== null ? `${reporting.toFixed(0)}%` : "—"}
-                        </span>
-                      )}
-                      {isCurrentlySelected && (
-                        <div style={{ fontFamily: "var(--font-body)", fontSize: "6px", fontWeight: 700, color: "var(--purple-soft)", letterSpacing: "0.14em", marginTop: 2 }}>ACTIVE</div>
-                      )}
-                    </div>
-                  </button>
-                );
-              })}
-            </div>
-
-            {/* Footer hint */}
-            {searchResults.length > 0 && (
-              <div style={{ padding: "7px 14px", borderTop: "1px solid var(--border)", display: "flex", gap: 12 }}>
-                {[["↑↓", "NAVIGATE"], ["↵", "SELECT"], ["ESC", "CLOSE"]].map(([key, label]) => (
-                  <div key={key} style={{ display: "flex", alignItems: "center", gap: 4 }}>
-                    <span style={{ fontFamily: "var(--font-body)", fontSize: "7px", padding: "1px 4px", border: "1px solid rgba(255,255,255,0.12)", background: "rgba(255,255,255,0.04)", color: "rgba(255,255,255,0.35)" }}>{key}</span>
-                    <span style={{ fontFamily: "var(--font-body)", fontSize: "6.5px", letterSpacing: "0.16em", color: "rgba(255,255,255,0.2)" }}>{label}</span>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-        )}
+          <input
+            ref={searchRef}
+            value={search}
+            onChange={e => setSearch(e.target.value)}
+            placeholder="Filter races…"
+            style={{ flex: 1, background: "transparent", border: "none", outline: "none", fontFamily: "var(--font-body)", fontSize: "9px", fontWeight: 600, letterSpacing: "0.08em", color: "var(--foreground)", caretColor: "var(--purple-soft)" }}
+          />
+          {search && (
+            <button onClick={() => setSearch("")} style={{ background: "none", border: "none", cursor: "pointer", color: "rgba(255,255,255,0.3)", padding: 0, fontSize: 11, lineHeight: 1 }}>✕</button>
+          )}
+        </div>
       </div>
 
-      {/* Scrollable tabs */}
-      <div ref={scrollRef} style={{ flex: 1, display: "flex", overflowX: "auto", gap: 0, scrollbarWidth: "none", WebkitOverflowScrolling: "touch" }}>
+      {/* Race list */}
+      <div style={{ flex: 1, overflowY: "auto", padding: "6px 0" }}>
+        {groups.length === 0 && (
+          <div style={{ padding: "20px 12px", textAlign: "center" }}>
+            <span className="res-note" style={{ color: "rgba(255,255,255,0.2)" }}>NO RACES FOUND</span>
+          </div>
+        )}
         {groups.map(([office, groupRaces]) => (
-          <div key={office} style={{ display: "flex", flexShrink: 0, borderRight: "1px solid var(--border)" }}>
-            {/* Office label */}
-            <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", padding: "0 10px", borderRight: "1px solid rgba(255,255,255,0.04)", background: "rgba(0,0,0,0.2)" }}>
-              <span style={{ fontFamily: "var(--font-body)", fontSize: "6px", fontWeight: 700, letterSpacing: "0.28em", textTransform: "uppercase", color: "rgba(255,255,255,0.2)", whiteSpace: "nowrap" }}>{office}</span>
+          <div key={office} style={{ marginBottom: 2 }}>
+            {/* Office group header */}
+            <div style={{
+              padding: "5px 12px 3px",
+              fontFamily: "var(--font-body)",
+              fontSize: "6.5px",
+              fontWeight: 700,
+              letterSpacing: "0.28em",
+              textTransform: "uppercase",
+              color: "rgba(255,255,255,0.18)",
+              borderTop: "1px solid rgba(255,255,255,0.04)",
+              marginTop: 4,
+            }}>
+              {office}
             </div>
-            {/* Party tabs within office */}
-            {groupRaces.map((r) => {
+            {/* Race buttons */}
+            {groupRaces.map(r => {
               const liveData = raceCache[r.id];
-              const winner = liveData?.candidates?.find((c) => c.winner);
+              const winner = liveData?.candidates?.find(c => c.winner);
               const reporting = getRaceReportingPct(liveData);
+              const leader = liveData?.candidates ? [...liveData.candidates].sort((a, b) => (b.percent ?? 0) - (a.percent ?? 0))[0] : null;
               const isSelected = r.id === selectedId;
               const isRep = r.party === "Republican";
               const isDem = r.party === "Democratic";
               const partyColor = isRep ? "var(--rep)" : isDem ? "var(--dem)" : "rgba(255,255,255,0.4)";
               const partyShort = isRep ? "R" : isDem ? "D" : "—";
+
               return (
                 <button
                   key={r.id}
-                  data-raceid={r.id}
                   onClick={() => onSelect(r.id)}
                   style={{
-                    display: "flex", flexDirection: "column", justifyContent: "center",
-                    padding: "10px 14px", minWidth: 72, cursor: "pointer", border: "none",
-                    borderBottom: isSelected ? `2px solid ${partyColor}` : "2px solid transparent",
-                    background: isSelected ? `${partyColor}10` : "transparent",
-                    transition: "all 140ms ease", position: "relative",
+                    display: "flex",
+                    alignItems: "center",
+                    width: "100%",
+                    gap: 0,
+                    padding: "7px 12px",
+                    background: isSelected ? `rgba(124,58,237,0.10)` : "transparent",
+                    border: "none",
+                    borderLeft: isSelected ? "2px solid var(--purple)" : "2px solid transparent",
+                    cursor: "pointer",
+                    textAlign: "left",
+                    transition: "background 100ms ease, border-color 100ms ease",
+                    position: "relative",
                   }}
+                  onMouseEnter={e => { if (!isSelected) (e.currentTarget as HTMLButtonElement).style.background = "rgba(255,255,255,0.03)"; }}
+                  onMouseLeave={e => { if (!isSelected) (e.currentTarget as HTMLButtonElement).style.background = "transparent"; }}
                 >
-                  <div style={{ display: "flex", alignItems: "center", gap: 5, marginBottom: 4 }}>
-                    <span style={{ fontFamily: "var(--font-body)", fontSize: "8px", fontWeight: 900, color: partyColor, letterSpacing: "0.10em" }}>{partyShort}</span>
-                    {winner && <span style={{ width: 5, height: 5, borderRadius: "50%", background: "var(--win)", display: "inline-block", flexShrink: 0 }} title="Winner called" />}
-                    {RACE_FORECAST_DEFAULTS[r.id] && !winner && <span style={{ fontFamily: "var(--font-body)", fontSize: "5.5px", fontWeight: 700, color: "var(--purple-soft)", letterSpacing: "0.14em" }}>FCT</span>}
+                  {/* Party color pill */}
+                  <span style={{
+                    flexShrink: 0,
+                    width: 18,
+                    height: 18,
+                    borderRadius: 2,
+                    background: partyColor + "22",
+                    border: `1px solid ${partyColor}44`,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    marginRight: 9,
+                    fontFamily: "var(--font-body)",
+                    fontSize: "7px",
+                    fontWeight: 900,
+                    color: partyColor,
+                    letterSpacing: 0,
+                  }}>{partyShort}</span>
+
+                  {/* Main content */}
+                  <div style={{ flex: 1, minWidth: 0 }}>
+                    <div style={{
+                      fontFamily: "var(--font-body)",
+                      fontSize: "9px",
+                      fontWeight: isSelected ? 800 : 600,
+                      letterSpacing: "0.04em",
+                      color: isSelected ? "#fff" : "rgba(255,255,255,0.65)",
+                      whiteSpace: "nowrap",
+                      overflow: "hidden",
+                      textOverflow: "ellipsis",
+                      marginBottom: 3,
+                    }}>
+                      {r.party === "Republican" ? "Republican" : r.party === "Democratic" ? "Democratic" : r.party} Primary
+                    </div>
+                    {/* Reporting bar */}
+                    <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                      <div style={{ flex: 1, height: 2, background: "rgba(255,255,255,0.07)", overflow: "hidden", maxWidth: 60 }}>
+                        <div style={{ height: "100%", width: `${reporting ?? 0}%`, background: winner ? "var(--win)" : partyColor, opacity: 0.8, transition: "width 800ms ease" }} />
+                      </div>
+                      {winner ? (
+                        <span style={{ fontFamily: "var(--font-body)", fontSize: "6.5px", fontWeight: 700, color: "var(--win)", letterSpacing: "0.12em" }}>✓ CALLED</span>
+                      ) : leader && (reporting ?? 0) > 0 ? (
+                        <span style={{ fontFamily: "var(--font-body)", fontSize: "6.5px", fontWeight: 600, color: "rgba(255,255,255,0.3)", letterSpacing: "0.08em" }}>
+                          {leader.name.split(" ").pop()} {fmtPct(leader.percent)}
+                        </span>
+                      ) : (
+                        <span style={{ fontFamily: "var(--font-body)", fontSize: "6.5px", fontWeight: 600, color: "rgba(255,255,255,0.2)", letterSpacing: "0.08em" }}>
+                          {reporting !== null ? `${reporting.toFixed(0)}% IN` : "PENDING"}
+                        </span>
+                      )}
+                    </div>
                   </div>
-                  <div style={{ width: "100%", height: 2, background: "rgba(255,255,255,0.07)", overflow: "hidden" }}>
-                    <div style={{ height: "100%", width: `${reporting ?? 0}%`, background: winner ? "var(--win)" : partyColor, opacity: 0.7, transition: "width 800ms ease" }} />
-                  </div>
-                  <div style={{ fontFamily: "var(--font-body)", fontSize: "7px", fontWeight: 700, color: isSelected ? "rgba(255,255,255,0.6)" : "rgba(255,255,255,0.25)", marginTop: 4, letterSpacing: "0.10em" }}>
-                    {reporting !== null ? `${reporting.toFixed(0)}%` : "—"}
-                  </div>
+
+                  {/* Forecast badge */}
+                  {RACE_FORECAST_DEFAULTS[r.id] && (
+                    <span style={{
+                      flexShrink: 0,
+                      marginLeft: 4,
+                      display: "inline-flex",
+                      alignItems: "center",
+                      padding: "1px 5px",
+                      border: "1px solid rgba(124,58,237,0.45)",
+                      background: "rgba(124,58,237,0.10)",
+                      fontFamily: "var(--font-body)",
+                      fontSize: "5.5px",
+                      fontWeight: 700,
+                      letterSpacing: "0.14em",
+                      color: "var(--purple-soft)",
+                      whiteSpace: "nowrap",
+                    }}>FORECAST β</span>
+                  )}
                 </button>
               );
             })}
@@ -1103,6 +1062,8 @@ export default function March3FeaturedClient() {
   const [mapBlankSvg, setMapBlankSvg] = useState<string | null>(null);
   const [mapLoadPct, setMapLoadPct] = useState(0);
   const [nowMs, setNowMs] = useState(0);
+  const [countyCollapsed, setCountyCollapsed] = useState(false);
+  const [scrollWindowSearch, setScrollWindowSearch] = useState("");
   useEffect(() => { setNowMs(Date.now()); }, []);
 
   const [refreshTick, setRefreshTick] = useState(0);
@@ -1118,6 +1079,7 @@ export default function March3FeaturedClient() {
 
   const selectedRace = raceCache[selectedId];
   const selectedMeta = useMemo(() => FEATURED.find((r) => r.id === selectedId), [selectedId]);
+  const hasForecastForSelected = !!RACE_FORECAST_DEFAULTS[selectedId];
 
   async function refreshFeatured() {
     try {
@@ -1280,68 +1242,201 @@ export default function March3FeaturedClient() {
         .res-page-title em { font-style:normal; background:linear-gradient(100deg,var(--red2) 0%,var(--purple-soft) 50%,var(--blue2) 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
         .res-page-sub { font-family:var(--font-body); font-size:8px; font-weight:700; letter-spacing:0.30em; text-transform:uppercase; color:var(--purple-soft); margin-bottom:8px; }
 
-        /* ── MAIN BODY LAYOUT ── */
+        /* ════════════════════════════════════════
+           LAYOUT — desktop / tablet / mobile
+        ════════════════════════════════════════ */
+
+        /* ── MAIN BODY ── */
         .res-body {
           max-width: 1800px;
           margin: 0 auto;
           display: grid;
-          /* Left: map+forecast center | Right: topline+status */
-          grid-template-columns: 1fr 300px;
+          grid-template-columns: 260px 1fr 290px;
+          grid-template-rows: calc(100vh - 210px);
           gap: 14px;
           padding: 14px 20px;
-          align-items: stretch;
-          height: calc(100vh - 28px);
           box-sizing: border-box;
         }
-        @media (max-width: 900px) { .res-body { grid-template-columns: 1fr; padding: 10px 12px; height: auto; } }
 
-        /* ── CENTER: map left + forecast right ── */
+        /* ── LEFT RACE PICKER (desktop only) ── */
+        .res-race-picker {
+          display: flex;
+          flex-direction: column;
+          min-height: 0;
+          overflow: hidden;
+        }
+        .res-race-picker > .res-panel {
+          flex: 1;
+          min-height: 0;
+          display: flex;
+          flex-direction: column;
+          overflow: hidden;
+        }
+
+        /* ── CENTER SPLIT: [map | forecast+scroll] ── */
         .res-center-split {
           display: grid;
-          grid-template-columns: 1fr 380px;
+          grid-template-columns: 1fr 340px;
           gap: 14px;
-          align-items: stretch;
           min-height: 0;
         }
-        .res-center-split > .res-panel {
+        .res-center-split.no-forecast {
+          grid-template-columns: 1fr 300px;
+        }
+        .res-center-split > .res-map-panel {
           display: flex;
           flex-direction: column;
           min-height: 0;
           overflow: hidden;
         }
-        .res-center-split > .res-panel .res-map-body {
+        .res-center-split > .res-map-panel .res-map-body {
           flex: 1;
           min-height: 0;
           overflow-y: auto;
         }
-        .res-center-split > .res-forecast-wrap {
+
+        /* ── RIGHT COLUMN inside center split ── */
+        .res-center-right {
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+          min-height: 0;
+        }
+        .res-center-right > .res-forecast-wrap,
+        .res-center-right > .res-panel {
+          flex: 1;
+          min-height: 0;
+        }
+
+        /* ── FORECAST WRAP ── */
+        .res-forecast-wrap {
           display: flex;
           flex-direction: column;
           min-height: 0;
-          overflow: hidden;
         }
-        .res-center-split > .res-forecast-wrap > .res-panel {
+        .res-forecast-wrap > .res-panel {
           flex: 1;
           min-height: 0;
           display: flex;
           flex-direction: column;
           overflow: hidden;
         }
-        .res-center-split > .res-forecast-wrap > .res-panel .res-forecast-body {
+        .res-forecast-wrap > .res-panel .res-forecast-body {
           flex: 1;
           min-height: 0;
           overflow-y: auto;
         }
-        @media (max-width: 1100px) { .res-center-split { grid-template-columns: 1fr; height: auto; } }
 
         /* ── RIGHT RAIL ── */
-        .res-right-rail { display: flex; flex-direction: column; gap: 12px; position: sticky; top: 14px; height: calc(100vh - 28px); overflow: hidden; }
+        .res-right-rail {
+          display: flex;
+          flex-direction: column;
+          gap: 12px;
+          min-height: 0;
+          height: 100%;
+          overflow: hidden;
+        }
+        .res-right-rail > .res-panel:last-child {
+          flex: 1;
+          min-height: 0;
+          overflow: hidden;
+          display: flex;
+          flex-direction: column;
+        }
+        .res-right-rail > .res-panel:last-child > div:last-child {
+          flex: 1;
+          min-height: 0;
+          overflow-y: auto;
+        }
+
+        /* ── COMPACT RACE SCROLL (tablet only, hidden by default) ── */
+        .res-race-scroll-window {
+          display: none;
+          flex-direction: column;
+          background: var(--panel);
+          border: 1px solid var(--border);
+          overflow: hidden;
+          max-height: 240px;
+          flex-shrink: 0;
+        }
+
+        /* ── MOBILE RACE SELECTOR BAR (hidden by default) ── */
+        .res-mobile-race-strip {
+          display: none;
+          background: var(--background2);
+          border-bottom: 1px solid var(--border);
+          padding: 8px 14px;
+          align-items: center;
+          gap: 10px;
+        }
 
         /* ── FULL-WIDTH BOTTOM ── */
         .res-bottom { max-width: 1800px; margin: 0 auto; padding: 0 20px 20px; }
 
-        /* ── RACE TAB BAR — hide scrollbar ── */
-        .res-tab-bar-scroll::-webkit-scrollbar { display: none; }
+        /* ── TABLET INLINE COUNTY TABLE ── */
+        .res-tablet-county { display: none; }
+
+        /* ════ TABLET ≤1400px ════ */
+        @media (max-width: 1400px) {
+          /* Fixed height so both columns end at same line */
+          .res-body {
+            grid-template-columns: 1fr 300px;
+            grid-template-rows: calc(100vh - 175px);
+            padding: 10px 14px;
+          }
+          .res-race-picker { display: none; }
+          .res-mobile-race-strip { display: flex; }
+          /* Center column: map panel fills height, county scrolls below */
+          .res-center-split { grid-template-columns: 1fr; min-height: 0; height: 100%; }
+          .res-center-split.no-forecast { grid-template-columns: 1fr; }
+          .res-center-split > .res-map-panel { display: flex; flex-direction: column; height: 100%; min-height: 0; overflow: hidden; }
+          .res-center-split > .res-map-panel .res-map-body { flex-shrink: 0; }
+          .res-tablet-county { display: flex; flex-direction: column; flex: 1; min-height: 0; overflow: hidden; border-top: 1px solid var(--border); }
+          .res-tablet-county .res-panel { display: flex; flex-direction: column; height: 100%; }
+          .res-tablet-county .res-panel > div:last-child { flex: 1; overflow-y: auto; max-height: none !important; }
+          .res-center-right { display: none; }
+          /* Right rail: race scroll at top, then topline/status/forecast, scrollable */
+          .res-right-rail { height: 100%; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
+          .res-right-rail > .res-panel:last-child { flex: none; }
+          .res-race-scroll-window { display: flex; max-height: 200px; flex-shrink: 0; }
+          .res-tablet-forecast { display: flex !important; }
+          /* Hide full-width bottom on tablet */
+          .res-bottom { display: none; }
+        }
+
+        /* ════ MOBILE ≤900px ════ */
+        @media (max-width: 900px) {
+          .res-body { grid-template-columns: 1fr; grid-template-rows: auto; padding: 8px 10px; gap: 10px; }
+          /* Race scroll window at very top */
+          .res-race-scroll-window { display: flex; max-height: 190px; flex-shrink: 0; }
+          /* center-right shows (contains race scroll + forecast) */
+          .res-center-right { display: flex !important; }
+          .res-center-split { grid-template-columns: 1fr; height: auto; }
+          .res-center-split > .res-map-panel { height: auto; overflow: visible; }
+          .res-center-split > .res-map-panel .res-map-body { flex: none; }
+          .res-tablet-county { display: none; }
+          /* Right rail flows inline */
+          .res-right-rail { display: flex; flex-direction: column; gap: 10px; height: auto; overflow: visible; }
+          .res-right-rail > .res-panel:last-child { flex: none; overflow: visible; }
+          .res-race-status-panel { flex: none !important; overflow: visible !important; }
+          .res-tablet-forecast { display: none !important; }
+          /* Show bottom county section on mobile */
+          .res-bottom { display: block; padding: 0 10px 16px; }
+        }
+
+        /* ── RACE SELECT DROPDOWN ── */
+        .res-race-select {
+          flex: 1; appearance: none; -webkit-appearance: none;
+          background: var(--panel); border: 1px solid var(--border); color: var(--foreground);
+          padding: 8px 32px 8px 12px; font-family: var(--font-body); font-size: 10px;
+          font-weight: 700; letter-spacing: 0.06em; outline: none; cursor: pointer;
+          transition: border-color 140ms ease; min-width: 0;
+          background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L5 5L9 1' stroke='rgba(255,255,255,0.35)' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+          background-repeat: no-repeat; background-position: right 10px center;
+        }
+        .res-race-select:focus { border-color: rgba(124,58,237,0.5); }
+        .res-race-select option { background: #0f0f15; color: #f0f0f5; font-weight: 600; }
+        .res-race-select optgroup { color: rgba(255,255,255,0.35); font-size: 9px; }
 
         * { scrollbar-width:thin; scrollbar-color:rgba(255,255,255,0.10) transparent; }
         *::-webkit-scrollbar { width:3px; height:3px; }
@@ -1392,17 +1487,74 @@ export default function March3FeaturedClient() {
           </div>
         </div>
 
-        {/* ── RACE TAB BAR ── */}
-        <RaceTabBar races={racesForState} raceCache={raceCache} selectedId={selectedId} onSelect={setSelectedId} nowMs={nowMs} />
+        {/* ── MOBILE RACE SELECTOR (visible below 1400px) ── */}
+        <div className="res-mobile-race-strip">
+          {/* Live indicator */}
+          <span className="res-live-dot" style={{ flexShrink: 0 }} />
+          {/* Dropdown */}
+          <select
+            className="res-race-select"
+            value={selectedId}
+            onChange={e => setSelectedId(Number(e.target.value))}
+          >
+            {racesForState.reduce<{ office: string; races: FeaturedRace[] }[]>((groups, r) => {
+              const last = groups[groups.length - 1];
+              if (last && last.office === r.office) { last.races.push(r); }
+              else { groups.push({ office: r.office, races: [r] }); }
+              return groups;
+            }, []).map(({ office, races }) => (
+              <optgroup key={office} label={`── ${office.toUpperCase()} ──`}>
+                {races.map(r => {
+                  const liveData = raceCache[r.id];
+                  const winner = liveData?.candidates?.find(c => c.winner);
+                  const reporting = getRaceReportingPct(liveData);
+                  const partyShort = r.party === "Republican" ? "R" : r.party === "Democratic" ? "D" : "—";
+                  const statusStr = winner ? " ✓ CALLED" : reporting !== null && reporting > 0 ? ` · ${reporting.toFixed(0)}% IN` : "";
+                  return (
+                    <option key={r.id} value={r.id}>
+                      [{partyShort}] {r.office}{statusStr}
+                    </option>
+                  );
+                })}
+              </optgroup>
+            ))}
+          </select>
+          {/* Selected race quick-status */}
+          {(() => {
+            const meta = FEATURED.find(r => r.id === selectedId);
+            const liveData = raceCache[selectedId];
+            const winner = liveData?.candidates?.find(c => c.winner);
+            const reporting = getRaceReportingPct(liveData);
+            const partyColor = meta?.party === "Republican" ? "var(--rep)" : meta?.party === "Democratic" ? "var(--dem)" : "rgba(255,255,255,0.4)";
+            return (
+              <div style={{ flexShrink: 0, display: "flex", alignItems: "center", gap: 6 }}>
+                {winner
+                  ? <span className="res-badge res-badge-win" style={{ fontSize: "7px" }}>✓ CALLED</span>
+                  : <span style={{ fontFamily: "var(--font-body)", fontSize: "9px", fontWeight: 700, color: partyColor }}>{reporting !== null ? `${reporting.toFixed(0)}%` : "—"}</span>
+                }
+              </div>
+            );
+          })()}
+        </div>
 
         {/* ── MAIN BODY ── */}
         <div className="res-body">
 
-          {/* CENTER SPLIT: map (left) + forecast (right) */}
-          <div className="res-center-split">
+          {/* LEFT: Race Picker Panel */}
+          <div className="res-race-picker">
+            <RacePickerPanel
+              races={racesForState}
+              raceCache={raceCache}
+              selectedId={selectedId}
+              onSelect={setSelectedId}
+            />
+          </div>
+
+          {/* CENTER SPLIT: map (left) + right column (race-scroll + forecast stacked) */}
+          <div className={`res-center-split${hasForecastForSelected ? "" : " no-forecast"}`}>
 
             {/* MAP PANEL */}
-            <div className="res-panel">
+            <div className="res-panel res-map-panel">
               <div className="res-tri-stripe" />
               <div className="res-panel-header" style={{ flexWrap: "wrap", gap: "8px" }}>
                 <div style={{ minWidth: 0 }}>
@@ -1436,11 +1588,116 @@ export default function March3FeaturedClient() {
                   <div className="res-map-loading"><span className="res-note" style={{ color: "var(--muted3)" }}>NO MAP DATA</span></div>
                 )}
               </div>
+              {/* TABLET INLINE COUNTY TABLE — scrollable, shown below map on tablet only */}
+              <div className="res-tablet-county">
+                <CountyTotalsTable
+                  regionResults={selectedRace?.region_results ?? []}
+                  collapsed={false}
+                  onToggle={() => {}}
+                />
+              </div>
             </div>
 
-            {/* FORECAST PANEL */}
-            <div className="res-forecast-wrap">
-              <ForecastPanel key={selectedId} raceId={selectedId} refreshTick={refreshTick} raceData={selectedRace} />
+            {/* RIGHT COLUMN: compact race scroll (tablet only) + forecast (or no-forecast placeholder) */}
+            <div className="res-center-right">
+
+              {/* COMPACT RACE SCROLL WINDOW */}
+              <div className="res-race-scroll-window">
+                <div style={{ padding: "6px 10px", borderBottom: "1px solid var(--border)", background: "var(--background2)", flexShrink: 0, display: "flex", alignItems: "center", gap: 8 }}>
+                  <svg width="10" height="10" viewBox="0 0 16 16" fill="none" style={{ flexShrink: 0, opacity: 0.3 }}>
+                    <circle cx="6.5" cy="6.5" r="5" stroke="white" strokeWidth="1.5"/>
+                    <line x1="10.5" y1="10.5" x2="14" y2="14" stroke="white" strokeWidth="1.5" strokeLinecap="round"/>
+                  </svg>
+                  <input
+                    type="text"
+                    placeholder="Search races…"
+                    value={scrollWindowSearch}
+                    onChange={e => setScrollWindowSearch(e.target.value)}
+                    style={{ flex: 1, background: "none", border: "none", outline: "none", fontFamily: "var(--font-body)", fontSize: "9px", fontWeight: 600, letterSpacing: "0.06em", color: "var(--foreground)", caretColor: "var(--purple-soft)" }}
+                  />
+                  {scrollWindowSearch && (
+                    <button onClick={() => setScrollWindowSearch("")} style={{ background: "none", border: "none", cursor: "pointer", color: "rgba(255,255,255,0.3)", fontSize: 11, padding: 0, lineHeight: 1 }}>✕</button>
+                  )}
+                </div>
+                <div style={{ overflowY: "auto", flex: 1 }}>
+                  {racesForState.filter(r =>
+                    !scrollWindowSearch ||
+                    r.office.toLowerCase().includes(scrollWindowSearch.toLowerCase()) ||
+                    r.party.toLowerCase().includes(scrollWindowSearch.toLowerCase())
+                  ).reduce<{ office: string; races: FeaturedRace[] }[]>((groups, r) => {
+                    const last = groups[groups.length - 1];
+                    if (last && last.office === r.office) last.races.push(r);
+                    else groups.push({ office: r.office, races: [r] });
+                    return groups;
+                  }, []).map(({ office, races }) => (
+                    <div key={office}>
+                      <div style={{ padding: "4px 10px 2px", fontFamily: "var(--font-body)", fontSize: "6px", fontWeight: 700, letterSpacing: "0.26em", textTransform: "uppercase", color: "rgba(255,255,255,0.18)", borderTop: "1px solid rgba(255,255,255,0.04)", marginTop: 2 }}>{office}</div>
+                      {races.map(r => {
+                        const liveData = raceCache[r.id];
+                        const winner = liveData?.candidates?.find(c => c.winner);
+                        const reporting = getRaceReportingPct(liveData);
+                        const leader = liveData?.candidates ? [...liveData.candidates].sort((a, b) => (b.percent ?? 0) - (a.percent ?? 0))[0] : null;
+                        const isSelected = r.id === selectedId;
+                        const partyColor = r.party === "Republican" ? "var(--rep)" : r.party === "Democratic" ? "var(--dem)" : "rgba(255,255,255,0.4)";
+                        const partyShort = r.party === "Republican" ? "R" : r.party === "Democratic" ? "D" : "—";
+                        const hasForecast = !!RACE_FORECAST_DEFAULTS[r.id];
+                        return (
+                          <button key={r.id} onClick={() => setSelectedId(r.id)} style={{ display: "flex", alignItems: "center", width: "100%", gap: 0, padding: "6px 10px", background: isSelected ? "rgba(124,58,237,0.10)" : "transparent", border: "none", borderLeft: isSelected ? "2px solid var(--purple)" : "2px solid transparent", cursor: "pointer", textAlign: "left", transition: "background 100ms ease" }}>
+                            <span style={{ flexShrink: 0, width: 16, height: 16, borderRadius: 2, background: `${partyColor}22`, border: `1px solid ${partyColor}44`, display: "flex", alignItems: "center", justifyContent: "center", marginRight: 8, fontFamily: "var(--font-body)", fontSize: "6.5px", fontWeight: 900, color: partyColor }}>{partyShort}</span>
+                            <div style={{ flex: 1, minWidth: 0 }}>
+                              <div style={{ display: "flex", alignItems: "center", gap: 4, marginBottom: 2 }}>
+                                <span style={{ fontFamily: "var(--font-body)", fontSize: "8.5px", fontWeight: isSelected ? 800 : 600, color: isSelected ? "#fff" : "rgba(255,255,255,0.65)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{r.party} Primary</span>
+                                {hasForecast && <span style={{ flexShrink: 0, display: "inline-flex", padding: "0px 4px", border: "1px solid rgba(124,58,237,0.45)", background: "rgba(124,58,237,0.10)", fontFamily: "var(--font-body)", fontSize: "5px", fontWeight: 700, letterSpacing: "0.12em", color: "var(--purple-soft)" }}>FORECAST β</span>}
+                              </div>
+                              <div style={{ height: 2, background: "rgba(255,255,255,0.07)", overflow: "hidden" }}>
+                                <div style={{ height: "100%", width: `${reporting ?? 0}%`, background: winner ? "var(--win)" : partyColor, opacity: 0.75, transition: "width 800ms ease" }} />
+                              </div>
+                            </div>
+                            <div style={{ flexShrink: 0, marginLeft: 8, textAlign: "right" }}>
+                              {winner
+                                ? <span style={{ fontFamily: "var(--font-body)", fontSize: "6px", fontWeight: 700, color: "var(--win)" }}>✓</span>
+                                : <span style={{ fontFamily: "var(--font-body)", fontSize: "7.5px", fontWeight: 700, color: isSelected ? "rgba(255,255,255,0.5)" : "rgba(255,255,255,0.2)" }}>{reporting !== null ? `${reporting.toFixed(0)}%` : "—"}</span>
+                              }
+                            </div>
+                          </button>
+                        );
+                      })}
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* FORECAST PANEL or NO-FORECAST PLACEHOLDER */}
+              {hasForecastForSelected ? (
+                <div className="res-forecast-wrap">
+                  <ForecastPanel key={selectedId} raceId={selectedId} refreshTick={refreshTick} raceData={selectedRace} />
+                </div>
+              ) : (
+                <div className="res-panel" style={{ display: "flex", flexDirection: "column" }}>
+                  <div className="res-tri-stripe" />
+                  <div className="res-panel-header">
+                    <span className="res-panel-tag">FORECAST MODEL</span>
+                    <span style={{ fontFamily: "var(--font-body)", fontSize: "7px", fontWeight: 700, letterSpacing: "0.18em", color: "rgba(255,255,255,0.18)", textTransform: "uppercase" }}>NOT AVAILABLE</span>
+                  </div>
+                  <div style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "space-between", padding: "20px 18px 18px" }}>
+                    <div>
+                      <div style={{ fontFamily: "var(--font-body)", fontSize: "11px", fontWeight: 900, letterSpacing: "0.10em", textTransform: "uppercase", color: "rgba(255,255,255,0.55)", marginBottom: 10, lineHeight: 1.4 }}>
+                        No Forecast<br />for This Race
+                      </div>
+                      <div style={{ fontFamily: "var(--font-body)", fontSize: "8.5px", fontWeight: 500, color: "rgba(255,255,255,0.22)", lineHeight: 1.7, letterSpacing: "0.04em" }}>
+                        Our forecast model requires reliable poll averages and turnout baselines. For this race, we don't have enough data to model outcomes responsibly — so we've chosen not to publish one.
+                      </div>
+                    </div>
+                    <div style={{ marginTop: 20, paddingTop: 14, borderTop: "1px solid rgba(255,255,255,0.06)" }}>
+                      <div style={{ fontFamily: "var(--font-body)", fontSize: "7px", fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(255,255,255,0.15)", marginBottom: 8 }}>WHAT WE'RE WATCHING</div>
+                      <div style={{ fontFamily: "var(--font-body)", fontSize: "8px", color: "rgba(255,255,255,0.28)", lineHeight: 1.6 }}>
+                        Live results and county-level returns will update automatically as precincts report in.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+
             </div>
           </div>
 
@@ -1465,9 +1722,10 @@ export default function March3FeaturedClient() {
             </div>
 
             {/* RACE STATUS */}
-            <div className="res-panel" style={{ flex: 1, minHeight: 0, display: "flex", flexDirection: "column" }}>
+            <div className="res-panel res-race-status-panel">
               <div className="res-panel-header"><span className="res-panel-tag">RACE STATUS</span></div>
-              <div style={{ padding: "12px 14px", display: "flex", flexDirection: "column", gap: "8px", flex: 1, minHeight: 0, overflowY: "auto" }}>
+              <div style={{ padding: "12px 14px", display: "flex", flexDirection: "column", gap: "8px" }}>
+
                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px" }}>
                   <div className="res-stat-block">
                     <div className="res-stat-block-label">REPORTING</div>
@@ -1513,12 +1771,42 @@ export default function March3FeaturedClient() {
                 )}
               </div>
             </div>
+
+            {/* TABLET FORECAST — hidden on desktop (forecast is in center-right), shown on tablet */}
+            <div className="res-tablet-forecast" style={{ display: "none", flexDirection: "column" }}>
+              {hasForecastForSelected ? (
+                <div className="res-forecast-wrap" style={{ flex: 1 }}>
+                  <ForecastPanel key={`tablet-${selectedId}`} raceId={selectedId} refreshTick={refreshTick} raceData={selectedRace} />
+                </div>
+              ) : (
+                <div className="res-panel">
+                  <div className="res-tri-stripe" />
+                  <div className="res-panel-header">
+                    <span className="res-panel-tag">FORECAST MODEL</span>
+                    <span style={{ fontFamily: "var(--font-body)", fontSize: "7px", fontWeight: 700, letterSpacing: "0.18em", color: "rgba(255,255,255,0.18)", textTransform: "uppercase" }}>NOT AVAILABLE</span>
+                  </div>
+                  <div style={{ padding: "20px 18px 18px", display: "flex", flexDirection: "column", gap: 12 }}>
+                    <div style={{ fontFamily: "var(--font-body)", fontSize: "11px", fontWeight: 900, letterSpacing: "0.10em", textTransform: "uppercase", color: "rgba(255,255,255,0.55)", lineHeight: 1.4 }}>No Forecast<br />for This Race</div>
+                    <div style={{ fontFamily: "var(--font-body)", fontSize: "8.5px", color: "rgba(255,255,255,0.22)", lineHeight: 1.7 }}>Our forecast model requires reliable poll averages and turnout baselines. For this race, we've chosen not to publish one.</div>
+                    <div style={{ paddingTop: 14, borderTop: "1px solid rgba(255,255,255,0.06)" }}>
+                      <div style={{ fontFamily: "var(--font-body)", fontSize: "7px", fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(255,255,255,0.15)", marginBottom: 6 }}>WHAT WE'RE WATCHING</div>
+                      <div style={{ fontFamily: "var(--font-body)", fontSize: "8px", color: "rgba(255,255,255,0.28)", lineHeight: 1.6 }}>Live results and county-level returns will update automatically.</div>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+
           </aside>
         </div>
 
-        {/* ── FULL-WIDTH COUNTY BREAKDOWN ── */}
+        {/* ── FULL-WIDTH COUNTY BREAKDOWN — hidden on tablet, shown on desktop + mobile ── */}
         <div className="res-bottom">
-          <CountyTotalsTable regionResults={selectedRace?.region_results ?? []} />
+          <CountyTotalsTable
+            regionResults={selectedRace?.region_results ?? []}
+            collapsed={countyCollapsed}
+            onToggle={() => setCountyCollapsed(v => !v)}
+          />
           {error && <div className="res-error" style={{ marginTop: 10 }}>ERROR: {error}</div>}
         </div>
       </main>
