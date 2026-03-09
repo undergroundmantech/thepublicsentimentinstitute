@@ -25,45 +25,20 @@ type RaceCandidate = { name: string; party: string; votes: number; percent: numb
 type RegionCandidate = { name: string; party: string; votes: string | number; percent: string | number; winner: boolean; color: string; incumbent?: boolean; major_candidate?: boolean; };
 type RegionResult = { region: { name: string; type: string; fill?: string; percent_reporting?: number; }; candidates: RegionCandidate[]; };
 type RaceDetail = { election_name: string; election_type: string; election_scope: string; election_date: string; country: string; province: string | null; district: string | null; municipality: string | null; polls_open: string | null; polls_close: string | null; last_updated: string | null; percent_reporting?: number; candidates: RaceCandidate[]; region_results?: RegionResult[] | Record<string, RegionResult>; };
-type FeaturedRace = { id: number; state: "TX" | "NC" | "AR" | "TEST"; office: string; party: "Democratic" | "Republican" | "N/A"; label: string; };
+type FeaturedRace = { id: number; state: | "MS" | "GA" | "TEST"; office: string; party: "Democratic" | "Republican" | "N/A"; label: string; };
 
 const RACE_FORECAST_DEFAULTS: Partial<Record<number, { raceRule: RaceRule; expectedTurnout?: number; pollAvg?: Record<string, number>; }>> = {
-  44286: { raceRule: "MAJORITY", expectedTurnout: 2_800_000, pollAvg: { "Talarico": 48.5, "Crockett": 44.1, "Hassan": 0.4 } },
-  44285: { raceRule: "MAJORITY", expectedTurnout: 2_500_000, pollAvg: { "Paxton": 37.5, "Cornyn": 33.0, "Hunt": 18.3 } },
-  44287: { raceRule: "MAJORITY", expectedTurnout: 2_190_000, pollAvg: { "Abbott": 91.0 } },
-  44288: { raceRule: "MAJORITY", expectedTurnout: 2_660_000, pollAvg: { "Hinojosa": 65.0, "Bell": 15.0 } },
-  44292: { raceRule: "MAJORITY", expectedTurnout: 1_950_000, pollAvg: { "Patrick": 78.0, "Hopkins": 8.0, "Mabry": 7.0 } },
-  44293: { raceRule: "MAJORITY", expectedTurnout: 980_000, pollAvg: { "Goodwin": 72.0, "Head": 15.0, "Velez": 7.0 } },
-  44289: { raceRule: "MAJORITY", expectedTurnout: 1_900_000, pollAvg: { "Roy": 33.0, "Middleton": 23.0, "Huffman": 13.0, "Reitz": 6.0 } },
-  44290: { raceRule: "MAJORITY", expectedTurnout: 980_000, pollAvg: { "Johnson": 25.0, "Jaworski": 22.0, "Box": 13.0 } },
-  44208: { raceRule: "MAJORITY", expectedTurnout: 1_900_000, pollAvg: { "Huffines": 33.0, "Craddick": 21.0, "Hancock": 13.0, "Berlanga": 4.0 } },
-  44209: { raceRule: "MAJORITY", expectedTurnout: 970_000, pollAvg: { "Eckhardt": 65.0 } },
-  44291: { raceRule: "MAJORITY", expectedTurnout: 1_850_000, pollAvg: { "Miller": 48.0, "Sheets": 18.0 } },
-  // 44294: { raceRule: "MAJORITY", expectedTurnout: 960_000, pollAvg: {} },
-  44295: { raceRule: "MAJORITY", expectedTurnout: 1_850_000, pollAvg: { "Wright": 21.0, "Matlock": 20.0 } },
-  44344: { raceRule: "MAJORITY", expectedTurnout: 90_000, pollAvg: { "Herrera": 43.0, "Gonzales": 34.0, "Canseco": 14.0, "Barton": 8.0 } },
-  // 44374: { raceRule: "MAJORITY", expectedTurnout: 90_000 },
-  // 44366: { raceRule: "MAJORITY", expectedTurnout: 85_000 },
-  // 44323: { raceRule: "MAJORITY", expectedTurnout: 55_000 },
-  // 44324: { raceRule: "MAJORITY", expectedTurnout: 45_000 },
-  // 44328: { raceRule: "MAJORITY", expectedTurnout: 55_000 },
-  44329: { raceRule: "MAJORITY", expectedTurnout: 85_000, pollAvg: { "Yarbrough": 48.0, "Binkley": 32.0 } },
-  // 44351: { raceRule: "MAJORITY", expectedTurnout: 60_000 },
-  // 44331: { raceRule: "MAJORITY", expectedTurnout: 90_000 },
-  // 44722: { raceRule: "MAJORITY", expectedTurnout: 250_000, pollAvg: { "Sanders": 98.0 } },
-  // 44721: { raceRule: "MAJORITY", expectedTurnout: 38_000 },
-  44729: { raceRule: "MAJORITY", expectedTurnout: 265_000, pollAvg: { "Cotton": 86.0, "Little": 8.0, "Ashby": 4.0 } },
-  44730: { raceRule: "MAJORITY", expectedTurnout: 33_000, pollAvg: { "Shoffner": 58.0, "Dunbar": 36.0 } },
-  // 44723: { raceRule: "MAJORITY", expectedTurnout: 250_000, pollAvg: { "Rutledge": 98.0 } },
-  // 44724: { raceRule: "MAJORITY", expectedTurnout: 250_000, pollAvg: { "Griffin": 98.0 } },
-  44725: { raceRule: "MAJORITY", expectedTurnout: 260_000, pollAvg: { "Hammer": 35.0, "Norris": 30.0, "Harrison": 24.0 } },
-  // 44726: { raceRule: "MAJORITY", expectedTurnout: 33_000, pollAvg: { "Grappe": 98.0 } },
-  44728: { raceRule: "MAJORITY", expectedTurnout: 250_000, pollAvg: { "Jester": 62.0, "Olson": 28.0 } },
-  // 44727: { raceRule: "MAJORITY", expectedTurnout: 250_000 },
-  46303: { raceRule: "PLURALITY", expectedTurnout: 700_000, pollAvg: { "Whatley": 52.0, "Brown": 18.0, "Morrow": 15.0 } },
-  46302: { raceRule: "PLURALITY", expectedTurnout: 760_000, pollAvg: { "Cooper": 76.0, "Colon": 5.0, "Dues": 4.0 } },
-  46306: { raceRule: "PLURALITY", expectedTurnout: 80_000, pollAvg: { "Foushee": 44.0, "Allam": 42.0, "Patterson": 8.0 } },
-  46304: { raceRule: "PLURALITY", expectedTurnout: 62_000, pollAvg: { "Buckhout": 28.0, "Buck": 24.0, "Hanig": 18.0, "Rouse": 12.0 } },
+  46673: { raceRule: "PLURALITY", expectedTurnout: 280_000 },
+  51420: { raceRule: "PLURALITY", expectedTurnout: 280_000 },
+  51421: { raceRule: "PLURALITY", expectedTurnout: 55_000 },
+  51422: { raceRule: "PLURALITY", expectedTurnout: 40_000 },
+  51423: { raceRule: "PLURALITY", expectedTurnout: 60_000 },
+  51424: { raceRule: "PLURALITY", expectedTurnout: 55_000 },
+  51425: { raceRule: "PLURALITY", expectedTurnout: 50_000 },
+  51426: { raceRule: "PLURALITY", expectedTurnout: 45_000 },
+  51427: { raceRule: "PLURALITY", expectedTurnout: 55_000 },
+  51428: { raceRule: "PLURALITY", expectedTurnout: 40_000 },
+  52551: { raceRule: "PLURALITY", expectedTurnout: 120_000 },
 };
 
 function sortCandidatesByPollData(candidates: RaceCandidate[], pollAvg?: Record<string, number>): RaceCandidate[] {
@@ -78,42 +53,17 @@ function sortCandidatesByPollData(candidates: RaceCandidate[], pollAvg?: Record<
 }
 
 const FEATURED: FeaturedRace[] = [
-  { id: 44287, state: "TX", office: "Governor", party: "Republican", label: "TX Governor — Republican Primary" },
-  { id: 44288, state: "TX", office: "Governor", party: "Democratic", label: "TX Governor — Democratic Primary" },
-  { id: 44285, state: "TX", office: "US Senate", party: "Republican", label: "TX US Senate — Republican Primary" },
-  { id: 44286, state: "TX", office: "US Senate", party: "Democratic", label: "TX US Senate — Democratic Primary" },
-  { id: 44292, state: "TX", office: "Lieutenant Governor", party: "Republican", label: "TX Lt. Governor — Republican Primary" },
-  { id: 44293, state: "TX", office: "Lieutenant Governor", party: "Democratic", label: "TX Lt. Governor — Democratic Primary" },
-  { id: 44289, state: "TX", office: "Attorney General", party: "Republican", label: "TX Attorney General — Republican Primary" },
-  { id: 44290, state: "TX", office: "Attorney General", party: "Democratic", label: "TX Attorney General — Democratic Primary" },
-  { id: 44208, state: "TX", office: "Comptroller", party: "Republican", label: "TX Comptroller — Republican Primary" },
-  { id: 44209, state: "TX", office: "Comptroller", party: "Democratic", label: "TX Comptroller — Democratic Primary" },
-  { id: 44291, state: "TX", office: "Agriculture Commissioner", party: "Republican", label: "TX Ag Commissioner — Republican Primary" },
-  { id: 44294, state: "TX", office: "Land Commissioner", party: "Democratic", label: "TX Land Commissioner — Democratic Primary" },
-  { id: 44295, state: "TX", office: "Railroad Commissioner", party: "Republican", label: "TX Railroad Commissioner — Republican Primary" },
-  { id: 44344, state: "TX", office: "US House 23", party: "Republican", label: "TX District 23 — Republican Primary" },
-  { id: 44374, state: "TX", office: "US House 2", party: "Republican", label: "TX District 2 — Republican Primary" },
-  { id: 44366, state: "TX", office: "US House 8", party: "Republican", label: "TX District 8 — Republican Primary" },
-  { id: 44323, state: "TX", office: "US House 35", party: "Republican", label: "TX District 35 — Republican Primary" },
-  { id: 44324, state: "TX", office: "US House 35", party: "Democratic", label: "TX District 35 — Democratic Primary" },
-  { id: 44328, state: "TX", office: "US House 33", party: "Democratic", label: "TX District 33 — Democratic Primary" },
-  { id: 44329, state: "TX", office: "US House 32", party: "Republican", label: "TX District 32 — Republican Primary" },
-  { id: 44351, state: "TX", office: "US House 19", party: "Republican", label: "TX District 19 — Republican Primary" },
-  { id: 44331, state: "TX", office: "US House 31", party: "Republican", label: "TX District 31 — Republican Primary" },
-  { id: 44722, state: "AR", office: "Governor", party: "Republican", label: "AR Governor — Republican Primary" },
-  { id: 44721, state: "AR", office: "Governor", party: "Democratic", label: "AR Governor — Democratic Primary" },
-  { id: 44729, state: "AR", office: "US Senate", party: "Republican", label: "AR US Senate — Republican Primary" },
-  { id: 44730, state: "AR", office: "US Senate", party: "Democratic", label: "AR US Senate — Democratic Primary" },
-  { id: 44723, state: "AR", office: "Lieutenant Governor", party: "Republican", label: "AR Lt. Governor — Republican Primary" },
-  { id: 44724, state: "AR", office: "Attorney General", party: "Republican", label: "AR Attorney General — Republican Primary" },
-  { id: 44725, state: "AR", office: "Secretary of State", party: "Republican", label: "AR Secretary of State — Republican Primary" },
-  { id: 44726, state: "AR", office: "Secretary of State", party: "Democratic", label: "AR Secretary of State — Democratic Primary" },
-  { id: 44728, state: "AR", office: "Land Commissioner", party: "Republican", label: "AR Land Commissioner — Republican Primary" },
-  { id: 44727, state: "AR", office: "Treasurer", party: "Republican", label: "AR Treasurer — Republican Primary" },
-  { id: 46303, state: "NC", office: "US Senate", party: "Republican", label: "NC US Senate — Republican Primary" },
-  { id: 46302, state: "NC", office: "US Senate", party: "Democratic", label: "NC US Senate — Democratic Primary" },
-  { id: 46306, state: "NC", office: "US House 4", party: "Democratic", label: "NC District 4 — Democratic Primary" },
-  { id: 46304, state: "NC", office: "US House 1", party: "Republican", label: "NC District 1 — Republican Primary" },
+  { id: 46673, state: "MS", office: "US Senate", party: "Democratic", label: "MS US Senate — Democratic Primary" },
+  { id: 51420, state: "MS", office: "US Senate", party: "Republican", label: "MS US Senate — Republican Primary" },
+  { id: 51421, state: "MS", office: "US House 1", party: "Republican", label: "MS District 1 — Republican Primary" },
+  { id: 51422, state: "MS", office: "US House 1", party: "Democratic", label: "MS District 1 — Democratic Primary" },
+  { id: 51423, state: "MS", office: "US House 2", party: "Republican", label: "MS District 2 — Republican Primary" },
+  { id: 51424, state: "MS", office: "US House 2", party: "Democratic", label: "MS District 2 — Democratic Primary" },
+  { id: 51425, state: "MS", office: "US House 3", party: "Republican", label: "MS District 3 — Republican Primary" },
+  { id: 51426, state: "MS", office: "US House 3", party: "Democratic", label: "MS District 3 — Democratic Primary" },
+  { id: 51427, state: "MS", office: "US House 4", party: "Republican", label: "MS District 4 — Republican Primary" },
+  { id: 51428, state: "MS", office: "US House 4", party: "Democratic", label: "MS District 4 — Democratic Primary" },
+  { id: 52551, state: "GA", office: "US House 14", party: "N/A", label: "GA District 14 — Special Election" },
   { id: 9999999, state: "TEST", office: "Test Map", party: "N/A", label: "Map Test — Blank Counties" },
 ];
 
@@ -1236,7 +1186,7 @@ function RacePickerPanel({ races, raceCache, selectedId, onSelect }: {
 
 // ─── MAIN PAGE ───────────────────────────────────────────────────────────────
 export default function March3FeaturedClient() {
-  const [activeState, setActiveState] = useState<"TX" | "NC" | "AR" | "TEST">("TX");
+  const [activeState, setActiveState] = useState<"MS" | "GA" | "TEST">("MS")
   const [selectedId, setSelectedId] = useState<number>(44286);
   const [error, setError] = useState<string | null>(null);
   const [loadingMap, setLoadingMap] = useState(false);
@@ -1253,9 +1203,8 @@ export default function March3FeaturedClient() {
   const lastProjectedKeyRef = useRef<string>("");
 
   const featuredByState = useMemo(() => ({
-    TX: FEATURED.filter((r) => r.state === "TX"),
-    NC: FEATURED.filter((r) => r.state === "NC"),
-    AR: FEATURED.filter((r) => r.state === "AR"),
+    MS: FEATURED.filter((r) => r.state === "MS"),
+    GA: FEATURED.filter((r) => r.state === "GA"),
     TEST: FEATURED.filter((r) => r.state === "TEST"),
   }), []);
 
@@ -1312,7 +1261,7 @@ export default function March3FeaturedClient() {
     return () => clearTimeout(t);
   }, [selectedRace, selectedId]);
 
-  const stateLabels: Record<string, string> = { TX: "TEXAS", NC: "N. CAROLINA", AR: "ARKANSAS", TEST: "TEST" };
+  const stateLabels: Record<string, string> = { MS: "MISSISSIPPI", GA: "GEORGIA", TEST: "TEST" };
   const racesForState = featuredByState[activeState] ?? [];
 
   const selectedReporting = selectedRace?.percent_reporting ?? 0;
@@ -1713,7 +1662,7 @@ export default function March3FeaturedClient() {
           <div className="res-page-header-inner">
             <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: "12px" }}>
               <div>
-                <div className="res-page-sub">MARCH 3RD PRIMARY ELECTIONS · 2026</div>
+                <div className="res-page-sub">MARCH 10TH PRIMARY ELECTIONS · 2026</div>
                 <h1 className="res-page-title">Election <em>Night</em></h1>
               </div>
               <div style={{ display: "flex", alignItems: "center", gap: "12px", flexWrap: "wrap" }}>
@@ -1724,7 +1673,7 @@ export default function March3FeaturedClient() {
                 </div>
                 {/* State switcher */}
                 <div style={{ display: "flex", gap: "1px" }}>
-                  {(["TX", "NC", "AR"] as const).map((st) => (
+                  {(["MS", "GA"] as const).map((st) => (
                     <button key={st} className={`res-btn-state ${activeState === st ? "active" : ""}`} onClick={() => setActiveState(st)}>{stateLabels[st]}</button>
                   ))}
                 </div>

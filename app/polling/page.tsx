@@ -61,28 +61,13 @@ const PAGES: PollPage[] = [
     tag: "National",
     status: "live",
   },
-];
-
-const ARCHIVE: PollPage[] = [
   {
-    title: "2026 Texas Senate Democratic Primary",
-    description: "Final polling average vs. actual results — Talarico defeated Crockett in the March 3, 2026 primary.",
-    href: "/polling/texasdemocratprimary",
+    title: "2026 Maine Senate Democrat Primary",
+    description: "View how the 2026 Maine Senate Democrat candidates are shaping up in one of the most contested primaries of all time",
+    href: "/polling/mainedemocratprimary",
     badge: "Daily Average",
-    tag: "Texas",
+    tag: "National",
     status: "live",
-    archived: true,
-    archiveResult: "Talarico wins · +6.23",
-  },
-  {
-    title: "2026 Texas Senate Republican Primary",
-    description: "Final polling average vs. actual results — Cornyn defeated Paxton in the March 3, 2026 primary.",
-    href: "/polling/texasrepublicanprimary",
-    badge: "Daily Average",
-    tag: "Texas",
-    status: "live",
-    archived: true,
-    archiveResult: "Cornyn wins · +1.19",
   },
 ];
 
@@ -517,10 +502,6 @@ export default function PollingHomePage() {
                   <div className="pd-hero-stat-val">{liveCount}</div>
                   <div className="pd-hero-stat-key">LIVE TRACKERS</div>
                 </div>
-                <div className="pd-hero-stat">
-                  <div className="pd-hero-stat-val">{ARCHIVE.length}</div>
-                  <div className="pd-hero-stat-key">ARCHIVED RACES</div>
-                </div>
                 <div className="pd-hero-stat" style={{ borderTop: "2px solid var(--purple)", paddingTop: "8px" }}>
                   <div className="pd-hero-stat-val" style={{ background: "linear-gradient(90deg,var(--red2),var(--purple-soft),var(--blue2))", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
                     DAILY
@@ -537,18 +518,6 @@ export default function PollingHomePage() {
           <div className="pd-section-label">ACTIVE POLLING AVERAGES</div>
           <div className="pd-grid">
             {PAGES.map((p, i) => <Card key={p.href} p={p} index={i} />)}
-          </div>
-
-          {/* ── ARCHIVE SECTION ── */}
-          <div className="pd-archive-section">
-            <div className="pd-archive-label">RACE ARCHIVE</div>
-            <p className="pd-archive-desc">
-              Races that have been called. Polling averages are frozen at final pre-election values.
-              Each page includes a full accuracy breakdown — avg vs. actual vote, MAE, and winner call record.
-            </p>
-            <div className="pd-grid">
-              {ARCHIVE.map((p, i) => <Card key={p.href} p={p} index={i} isArchive />)}
-            </div>
           </div>
 
           <div className="pd-footnote">
