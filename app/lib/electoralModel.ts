@@ -355,7 +355,18 @@ export function forecastRace(
   const modeled_percent_reporting = safeDiv(reported_vote_total, modeled_total_vote);
 
   // Step 2: Uncertainty (sd_race)
-  const sd_pre_election = roundToNearest100(expected_turnout / 17.5);
+  function getPreElectionDivisor(expectedTurnout: number): number {
+    if (expectedTurnout <= 100_000) return 6.5;
+    if (expectedTurnout >= 5_000_000) return 14.5;
+
+    const t = (expectedTurnout - 100_000) / (5_000_000 - 100_000);
+    return 6.5 + t * (19.5 - 6.5);
+  }
+
+  const sd_pre_election = roundToNearest100(
+    expected_turnout / getPreElectionDivisor(expected_turnout)
+  );
+
   let sd_race: number;
   if (percent_reporting < 0.05) {
     sd_race = sd_pre_election;

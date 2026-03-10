@@ -53,7 +53,7 @@ const RACE_FORECAST_DEFAULTS: Partial<Record<number, { raceRule: RaceRule; expec
   51426: { raceRule: "PLURALITY", expectedTurnout: 45_000, pollAvg: { "Michael A. Chiaradio": 100.0 } },  // 1 candidate
   51427: { raceRule: "PLURALITY", expectedTurnout: 55_000, pollAvg: { "Mike Ezell": 75.0, "Sawyer Walters": 25.0 } },  // 2 candidates (per pollAvg)
   51428: { raceRule: "MAJORITY", expectedTurnout: 40_000, pollAvg: { "Jeffrey Hulum III": 45.0, "D. Ryan Grover": 30.0, "Paul James Blackman": 25.0 } },  // 3 candidates → runoff opp.
-  52551: { raceRule: "MAJORITY", expectedTurnout: 120_000, pollAvg: { "Clayton Fuller": 35.0, "Shawn Harris": 28.0, "Colton Moore": 20.0, "Others": 17.0 } }  // many candidates → high runoff opp.
+  52551: { raceRule: "MAJORITY", expectedTurnout: 120_000, pollAvg: { "Clay Fuller": 35.0, "Harris": 28.0, "Moore": 20.0, "Others": 17.0 } }  // many candidates → high runoff opp.
 };
 
 function sortCandidatesByPollData(candidates: RaceCandidate[], pollAvg?: Record<string, number>): RaceCandidate[] {
@@ -613,7 +613,7 @@ function Legend() {
 // ─── SWING-O-METER ────────────────────────────────────────────────────────────
 function SwingOMeter({ candidates, colors, probabilities, raceRule, reportingPct, candidateCount }: {
   candidates: [string, string, string, string]; colors: [string, string, string, string];
-  probabilities: { c1: number; c2: number; c3: number }; raceRule: "PLURALITY" | "MAJORITY"; reportingPct: number; candidateCount: number;
+  probabilities: { c1: number; c2: number; c3: number; runoffNeeded?: number }; raceRule: "PLURALITY" | "MAJORITY"; reportingPct: number; candidateCount: number;
 }) {
   const W = 280, H = 160, CX = W / 2, CY = H - 20;
   const R_OUTER = 110, R_INNER = 68;
@@ -624,12 +624,38 @@ function SwingOMeter({ candidates, colors, probabilities, raceRule, reportingPct
   const showC3 = probabilities.c3 > 0.01;
   const showOthers = othersProb > 0.01;
 
-  const segments = [
-    { key: "c1", prob: probabilities.c1, color: colors[0], name: candidates[0] },
-    ...(showC2 ? [{ key: "c2", prob: probabilities.c2, color: colors[1], name: candidates[1] }] : []),
-    ...(showC3 ? [{ key: "c3", prob: probabilities.c3, color: colors[2], name: candidates[2] }] : []),
-    ...(showOthers ? [{ key: "others", prob: othersProb, color: raceRule === "MAJORITY" ? "#c0392b" : colors[3], name: raceRule === "MAJORITY" ? "RUNOFF" : "Others" }] : []),
-  ];
+  const segments = raceRule === "MAJORITY"
+    ? (() => {
+        const major = [
+          { key: "c1", prob: Math.max(0, probabilities.c1), color: colors[0], name: candidates[0] },
+          { key: "c2", prob: Math.max(0, probabilities.c2), color: colors[1], name: candidates[1] },
+          { key: "c3", prob: Math.max(0, probabilities.c3), color: colors[2], name: candidates[2] },
+        ].sort((a, b) => b.prob - a.prob);
+
+        const topA = major[0];
+        const topB = major[1] ?? { key: "c2", prob: 0, color: colors[1], name: candidates[1] };
+        const runoffProb = Math.max(
+          0,
+          Math.min(
+            1,
+            typeof probabilities.runoffNeeded === "number"
+              ? probabilities.runoffNeeded
+              : 1 - (probabilities.c1 + probabilities.c2 + probabilities.c3),
+          ),
+        );
+
+        return [
+          { key: topA.key, prob: topA.prob, color: topA.color, name: topA.name },
+          { key: topB.key, prob: topB.prob, color: topB.color, name: topB.name },
+          { key: "others", prob: runoffProb, color: "#c0392b", name: "RUNOFF" },
+        ];
+      })()
+    : [
+        { key: "c1", prob: probabilities.c1, color: colors[0], name: candidates[0] },
+        ...(showC2 ? [{ key: "c2", prob: probabilities.c2, color: colors[1], name: candidates[1] }] : []),
+        ...(showC3 ? [{ key: "c3", prob: probabilities.c3, color: colors[2], name: candidates[2] }] : []),
+        ...(showOthers ? [{ key: "others", prob: othersProb, color: colors[3], name: "Others" }] : []),
+      ];
 
   const total = segments.reduce((s, seg) => s + seg.prob, 0) || 1;
 
@@ -752,7 +778,7 @@ function normalizeWinProbabilitiesByCandidateCount(
 }
 
 // ─── FORECAST PANEL ───────────────────────────────────────────────────────────
-function ForecastPanel({ raceId, refreshTick, raceData, onForecastUpdate }: { raceId: number; refreshTick: number; raceData?: RaceDetail; onForecastUpdate?: (leader: string, prob: number) => void }) {
+function ForecastPanel({ raceId, refreshTick, raceData, onForecastUpdate }: { raceId: number; refreshTick: number; raceData?: RaceDetail; onForecastUpdate?: (update: { leader: string; prob: number; runoffNeededProb: number }) => void }) {
   const defaults = RACE_FORECAST_DEFAULTS[raceId];
   const TX_RACE_IDS = [44285, 44286, 44287, 44288, 44289, 44290, 44291, 44292, 44293, 44294, 44295];
   const [raceRule, setRaceRule] = useState<RaceRule>(() => TX_RACE_IDS.includes(raceId) ? "MAJORITY" : (defaults?.raceRule ?? "PLURALITY"));
@@ -794,7 +820,10 @@ function ForecastPanel({ raceId, refreshTick, raceData, onForecastUpdate }: { ra
         const keys = ["Candidate1","Candidate2","Candidate3"] as const;
         const best = keys.reduce((a, b) => ((normalized[a === "Candidate1" ? "c1" : a === "Candidate2" ? "c2" : "c3"] ?? 0) >= (normalized[b === "Candidate1" ? "c1" : b === "Candidate2" ? "c2" : "c3"] ?? 0) ? a : b), "Candidate1" as typeof keys[number]);
         const bestProb = best === "Candidate1" ? normalized.c1 : best === "Candidate2" ? normalized.c2 : normalized.c3;
-        onForecastUpdate(names[keys.indexOf(best)] ?? "", bestProb * 100);
+        const runoffNeededProb = typeof data.forecast.runoff_needed_prob === "number"
+          ? Math.max(0, Math.min(1, data.forecast.runoff_needed_prob))
+          : Math.max(0, Math.min(1, 1 - ((data.forecast.majority_win_prob?.Candidate1 ?? 0) + (data.forecast.majority_win_prob?.Candidate2 ?? 0) + (data.forecast.majority_win_prob?.Candidate3 ?? 0))));
+        onForecastUpdate({ leader: names[keys.indexOf(best)] ?? "", prob: bestProb * 100, runoffNeededProb });
       }
     } catch (e: any) { if (raceIdRef.current === id) setError(e.message); }
     finally { if (raceIdRef.current === id) setLoadingForecast(false); }
@@ -885,10 +914,16 @@ function ForecastPanel({ raceId, refreshTick, raceData, onForecastUpdate }: { ra
     return getEffectiveForecastCandidateCount(raceData?.candidates, forecast?.forecast?.candidate_names);
   }, [raceData?.candidates, forecast?.forecast?.candidate_names]);
   const swingoProbs = useMemo(() => {
-    if (!forecast) return { c1: 0.5, c2: 0.5, c3: 0 };
+    if (!forecast) return { c1: 0.5, c2: 0.5, c3: 0, runoffNeeded: 0 };
     const f = forecast.forecast;
-    const src = raceRule === "PLURALITY" ? f.plurality_odds_to_win : f.majority_win_prob;
-    return normalizeWinProbabilitiesByCandidateCount(src, activeCandidateCount);
+    if (raceRule === "MAJORITY") {
+      const c1 = Math.max(0, f.majority_win_prob.Candidate1 ?? 0);
+      const c2 = Math.max(0, f.majority_win_prob.Candidate2 ?? 0);
+      const c3 = Math.max(0, f.majority_win_prob.Candidate3 ?? 0);
+      const runoffNeeded = Math.max(0, Math.min(1, typeof f.runoff_needed_prob === "number" ? f.runoff_needed_prob : 1 - (c1 + c2 + c3)));
+      return { c1, c2, c3, runoffNeeded };
+    }
+    return { ...normalizeWinProbabilitiesByCandidateCount(f.plurality_odds_to_win, activeCandidateCount), runoffNeeded: 0 };
   }, [forecast, raceRule, activeCandidateCount]);
 
   return (
@@ -1343,7 +1378,7 @@ export default function March3FeaturedClient() {
     [44285,44286,44287,44288,44289,44290,44291,44292,44293,44295,44344,44729,44730,44209,44208].includes(selectedId);
   const selectedWinners = selectedRace?.candidates?.filter((c) => c.winner) ?? [];
   const isRunoffConfirmed = selectedRaceIsMajority && selectedWinners.length >= 2;
-  const [forecastProj, setForecastProj] = useState<{ leader: string; prob: number } | null>(null);
+  const [forecastProj, setForecastProj] = useState<{ leader: string; prob: number; runoffNeededProb: number } | null>(null);
   useEffect(() => { setForecastProj(null); }, [selectedId]);
 
   const timeStr = nowMs > 0
@@ -1897,12 +1932,12 @@ export default function March3FeaturedClient() {
                 <div className="res-stat-block">
                   <div className="res-stat-row" style={{ marginBottom: "5px" }}>
                     <span className="res-stat-block-label">PROJECTION</span>
-                    <span className="res-note" style={{ color: isRunoffConfirmed ? "#f59e0b" : selectedWinner ? "var(--win)" : forecastProj ? "var(--purple-soft)" : "var(--muted3)", fontWeight: 700 }}>
-                      {isRunoffConfirmed ? "CONFIRMED" : selectedWinner ? "OFFICIAL" : forecastProj ? `${forecastProj.prob.toFixed(1)}%` : "—"}
+                    <span className="res-note" style={{ color: isRunoffConfirmed ? "#f59e0b" : selectedWinner ? "var(--win)" : (selectedRaceIsMajority && forecastProj) ? "#f59e0b" : forecastProj ? "var(--purple-soft)" : "var(--muted3)", fontWeight: 700 }}>
+                      {isRunoffConfirmed ? "CONFIRMED" : selectedWinner ? "OFFICIAL" : (selectedRaceIsMajority && forecastProj) ? `${(forecastProj.runoffNeededProb * 100).toFixed(1)}%` : forecastProj ? `${forecastProj.prob.toFixed(1)}%` : "—"}
                     </span>
                   </div>
-                  <div style={{ fontFamily: "var(--font-body)", fontSize: "12px", fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: isRunoffConfirmed ? "#f59e0b" : "rgba(255,255,255,0.88)" }}>
-                    {isRunoffConfirmed ? "⚡ RUNOFF NEEDED" : selectedWinner ? `✓ ${selectedWinner.name}` : forecastProj ? forecastProj.leader : "No projection yet"}
+                  <div style={{ fontFamily: "var(--font-body)", fontSize: "12px", fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: isRunoffConfirmed ? "#f59e0b" : (selectedRaceIsMajority && forecastProj) ? "#f59e0b" : "rgba(255,255,255,0.88)" }}>
+                    {isRunoffConfirmed ? "⚡ RUNOFF NEEDED" : selectedWinner ? `✓ ${selectedWinner.name}` : (selectedRaceIsMajority && forecastProj) ? "Runoff chance" : forecastProj ? forecastProj.leader : "No projection yet"}
                   </div>
                   {isRunoffConfirmed && (
                     <div className="res-note" style={{ marginTop: 4, color: "rgba(255,255,255,0.4)" }}>
@@ -1910,7 +1945,12 @@ export default function March3FeaturedClient() {
                     </div>
                   )}
                   {forecastProj && !selectedWinner && !isRunoffConfirmed && (
-                    <div className="res-bar-track" style={{ marginTop: "7px" }}><div className="res-bar-fill" style={{ width: `${Math.max(0, Math.min(100, forecastProj.prob))}%`, background: "linear-gradient(90deg,var(--purple),var(--blue2))" }} /></div>
+                    <div className="res-bar-track" style={{ marginTop: "7px" }}><div className="res-bar-fill" style={{ width: `${Math.max(0, Math.min(100, selectedRaceIsMajority ? forecastProj.runoffNeededProb * 100 : forecastProj.prob))}%`, background: selectedRaceIsMajority ? "linear-gradient(90deg,#d97706,#f59e0b)" : "linear-gradient(90deg,var(--purple),var(--blue2))" }} /></div>
+                  )}
+                  {selectedRaceIsMajority && forecastProj && !selectedWinner && !isRunoffConfirmed && (
+                    <div className="res-note" style={{ marginTop: 5, color: "rgba(245,158,11,0.85)", letterSpacing: "0.12em" }}>
+                      outright winner chance: {(100 - (forecastProj.runoffNeededProb * 100)).toFixed(1)}%
+                    </div>
                   )}
                 </div>
                 {selectedRace?.candidates && selectedRace.candidates.length > 0 && (
@@ -1955,7 +1995,7 @@ export default function March3FeaturedClient() {
             {/* FORECAST */}
             {hasForecastForSelected ? (
               <div className="res-forecast-wrap">
-                <ForecastPanel key={selectedId} raceId={selectedId} refreshTick={refreshTick} raceData={selectedRace} onForecastUpdate={(leader, prob) => setForecastProj({ leader, prob })} />
+                <ForecastPanel key={selectedId} raceId={selectedId} refreshTick={refreshTick} raceData={selectedRace} onForecastUpdate={(update) => setForecastProj(update)} />
               </div>
             ) : (
               <div className="res-panel" style={{ display: "flex", flexDirection: "column" }}>
