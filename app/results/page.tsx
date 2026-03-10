@@ -25,11 +25,26 @@ type RaceCandidate = { name: string; party: string; votes: number; percent: numb
 type RegionCandidate = { name: string; party: string; votes: string | number; percent: string | number; winner: boolean; color: string; incumbent?: boolean; major_candidate?: boolean; };
 type RegionResult = { region: { name: string; type: string; fill?: string; percent_reporting?: number; }; candidates: RegionCandidate[]; };
 type RaceDetail = { election_name: string; election_type: string; election_scope: string; election_date: string; country: string; province: string | null; district: string | null; municipality: string | null; polls_open: string | null; polls_close: string | null; last_updated: string | null; percent_reporting?: number; candidates: RaceCandidate[]; region_results?: RegionResult[] | Record<string, RegionResult>; };
-type FeaturedRace = { id: number; state: | "MS" | "GA" | "TEST"; office: string; party: "Democratic" | "Republican" | "N/A"; label: string; };
+type RaceType = "Democratic Primary" | "Republican Primary" | "Special Election" | "General Election";
+type FeaturedRace = { id: number; state: | "MS" | "GA" | "TEST"; office: string; raceType: RaceType; label: string; };
+
+function getRaceTypeColor(raceType: RaceType): string {
+  if (raceType === "Republican Primary") return "var(--rep)";
+  if (raceType === "Democratic Primary") return "var(--dem)";
+  if (raceType === "General Election") return "var(--purple-soft)";
+  return "rgba(255,255,255,0.4)";
+}
+
+function getRaceTypeShort(raceType: RaceType): string {
+  if (raceType === "Republican Primary") return "R";
+  if (raceType === "Democratic Primary") return "D";
+  if (raceType === "General Election") return "G";
+  return "S";
+}
 
 const RACE_FORECAST_DEFAULTS: Partial<Record<number, { raceRule: RaceRule; expectedTurnout?: number; pollAvg?: Record<string, number>; }>> = {
-  46673: { raceRule: "PLURALITY", expectedTurnout: 280_000 },
-  51420: { raceRule: "PLURALITY", expectedTurnout: 280_000 },
+  46673: { raceRule: "PLURALITY", expectedTurnout: 280_000, pollAvg: { "Little": 16.0, "Till": 12.0,  "Colom": 72.0} },
+  51420: { raceRule: "PLURALITY", expectedTurnout: 280_000, pollAvg: { "Hyde-Smith": 88.0, "Adlakha": 8.0} },
   51421: { raceRule: "PLURALITY", expectedTurnout: 55_000 },
   51422: { raceRule: "PLURALITY", expectedTurnout: 40_000 },
   51423: { raceRule: "PLURALITY", expectedTurnout: 60_000 },
@@ -53,18 +68,18 @@ function sortCandidatesByPollData(candidates: RaceCandidate[], pollAvg?: Record<
 }
 
 const FEATURED: FeaturedRace[] = [
-  { id: 46673, state: "MS", office: "US Senate", party: "Democratic", label: "MS US Senate — Democratic Primary" },
-  { id: 51420, state: "MS", office: "US Senate", party: "Republican", label: "MS US Senate — Republican Primary" },
-  { id: 51421, state: "MS", office: "US House 1", party: "Republican", label: "MS District 1 — Republican Primary" },
-  { id: 51422, state: "MS", office: "US House 1", party: "Democratic", label: "MS District 1 — Democratic Primary" },
-  { id: 51423, state: "MS", office: "US House 2", party: "Republican", label: "MS District 2 — Republican Primary" },
-  { id: 51424, state: "MS", office: "US House 2", party: "Democratic", label: "MS District 2 — Democratic Primary" },
-  { id: 51425, state: "MS", office: "US House 3", party: "Republican", label: "MS District 3 — Republican Primary" },
-  { id: 51426, state: "MS", office: "US House 3", party: "Democratic", label: "MS District 3 — Democratic Primary" },
-  { id: 51427, state: "MS", office: "US House 4", party: "Republican", label: "MS District 4 — Republican Primary" },
-  { id: 51428, state: "MS", office: "US House 4", party: "Democratic", label: "MS District 4 — Democratic Primary" },
-  { id: 52551, state: "GA", office: "US House 14", party: "N/A", label: "GA District 14 — Special Election" },
-  { id: 9999999, state: "TEST", office: "Test Map", party: "N/A", label: "Map Test — Blank Counties" },
+  { id: 46673, state: "MS", office: "US Senate", raceType: "Democratic Primary", label: "MS US Senate — Democratic Primary" },
+  { id: 51420, state: "MS", office: "US Senate", raceType: "Republican Primary", label: "MS US Senate — Republican Primary" },
+  { id: 51421, state: "MS", office: "US House 1", raceType: "Republican Primary", label: "MS District 1 — Republican Primary" },
+  { id: 51422, state: "MS", office: "US House 1", raceType: "Democratic Primary", label: "MS District 1 — Democratic Primary" },
+  { id: 51423, state: "MS", office: "US House 2", raceType: "Republican Primary", label: "MS District 2 — Republican Primary" },
+  { id: 51424, state: "MS", office: "US House 2", raceType: "Democratic Primary", label: "MS District 2 — Democratic Primary" },
+  { id: 51425, state: "MS", office: "US House 3", raceType: "Republican Primary", label: "MS District 3 — Republican Primary" },
+  { id: 51426, state: "MS", office: "US House 3", raceType: "Democratic Primary", label: "MS District 3 — Democratic Primary" },
+  { id: 51427, state: "MS", office: "US House 4", raceType: "Republican Primary", label: "MS District 4 — Republican Primary" },
+  { id: 51428, state: "MS", office: "US House 4", raceType: "Democratic Primary", label: "MS District 4 — Democratic Primary" },
+  { id: 52551, state: "GA", office: "US House 14", raceType: "Special Election", label: "GA District 14 — Special Election" },
+  { id: 9999999, state: "TEST", office: "Test Map", raceType: "General Election", label: "Map Test — Blank Counties" },
 ];
 
 async function fetchRaceById(id: number): Promise<RaceDetail> {
@@ -695,6 +710,24 @@ function fcastPct(n: number, decimals = 1) { return (n * 100).toFixed(decimals) 
 function fcastFmt(n: number) { return n.toLocaleString("en-US", { maximumFractionDigits: 0 }); }
 function fcastShortDate(ts: string) { return new Date(ts).toLocaleString("en-US", { month: "short", day: "numeric", hour: "2-digit", minute: "2-digit" }); }
 function getTimestamps(hl: ForecastHistoryList | null): ForecastHistoryTimestamp[] { return hl?.timestamps ?? []; }
+function normalizeWinProbabilitiesByCandidateCount(
+  src: Partial<Record<"Candidate1" | "Candidate2" | "Candidate3", number>>,
+  candidateCount: number,
+): { c1: number; c2: number; c3: number } {
+  const count = Math.max(1, Math.min(3, candidateCount));
+  if (count === 1) return { c1: 1, c2: 0, c3: 0 };
+
+  const raw = [Math.max(0, src.Candidate1 ?? 0), Math.max(0, src.Candidate2 ?? 0), Math.max(0, src.Candidate3 ?? 0)];
+  for (let i = count; i < 3; i += 1) raw[i] = 0;
+
+  const total = raw[0] + raw[1] + raw[2];
+  if (total <= 0) {
+    if (count === 2) return { c1: 0.5, c2: 0.5, c3: 0 };
+    return { c1: 1 / 3, c2: 1 / 3, c3: 1 / 3 };
+  }
+
+  return { c1: raw[0] / total, c2: raw[1] / total, c3: raw[2] / total };
+}
 
 // ─── FORECAST PANEL ───────────────────────────────────────────────────────────
 function ForecastPanel({ raceId, refreshTick, raceData, onForecastUpdate }: { raceId: number; refreshTick: number; raceData?: RaceDetail; onForecastUpdate?: (leader: string, prob: number) => void }) {
@@ -733,10 +766,13 @@ function ForecastPanel({ raceId, refreshTick, raceData, onForecastUpdate }: { ra
       setForecast(data);
       if (onForecastUpdate && data.forecast) {
         const src = data.forecast.majority_win_prob ?? data.forecast.plurality_odds_to_win;
+        const candidateCount = Math.max(1, Math.min(3, data?.race?.candidates?.length ?? 2));
+        const normalized = normalizeWinProbabilitiesByCandidateCount(src, candidateCount);
         const names = data.forecast.candidate_names ?? [];
         const keys = ["Candidate1","Candidate2","Candidate3"] as const;
-        const best = keys.reduce((a,b) => ((src[b]??0) > (src[a]??0) ? b : a), "Candidate1" as typeof keys[number]);
-        onForecastUpdate(names[keys.indexOf(best)] ?? "", (src[best] ?? 0) * 100);
+        const best = keys.reduce((a, b) => ((normalized[a === "Candidate1" ? "c1" : a === "Candidate2" ? "c2" : "c3"] ?? 0) >= (normalized[b === "Candidate1" ? "c1" : b === "Candidate2" ? "c2" : "c3"] ?? 0) ? a : b), "Candidate1" as typeof keys[number]);
+        const bestProb = best === "Candidate1" ? normalized.c1 : best === "Candidate2" ? normalized.c2 : normalized.c3;
+        onForecastUpdate(names[keys.indexOf(best)] ?? "", bestProb * 100);
       }
     } catch (e: any) { if (raceIdRef.current === id) setError(e.message); }
     finally { if (raceIdRef.current === id) setLoadingForecast(false); }
@@ -823,7 +859,16 @@ function ForecastPanel({ raceId, refreshTick, raceData, onForecastUpdate }: { ra
   };
   const candidateColors: Record<FCKey, string> = useMemo(() => { const colors = forecast?.forecast.candidate_colors ?? ["#3b82f6", "#ef4444", "#22c55e", "#94a3b8"]; return { Candidate1: colors[0], Candidate2: colors[1], Candidate3: colors[2], Others: raceRule === "MAJORITY" ? "#c0392b" : colors[3] }; }, [forecast, raceRule]);
   const isLoading = loadingHistory || loadingForecast;
-  const swingoProbs = useMemo(() => { if (!forecast) return { c1: 0.5, c2: 0.5, c3: 0 }; const f = forecast.forecast; const src = raceRule === "PLURALITY" ? f.plurality_odds_to_win : f.majority_win_prob; return { c1: src.Candidate1, c2: src.Candidate2, c3: src.Candidate3 }; }, [forecast, raceRule]);
+  const activeCandidateCount = useMemo(() => {
+    if (!forecast?.race?.candidates) return 2;
+    return Math.max(1, Math.min(3, forecast.race.candidates.length));
+  }, [forecast]);
+  const swingoProbs = useMemo(() => {
+    if (!forecast) return { c1: 0.5, c2: 0.5, c3: 0 };
+    const f = forecast.forecast;
+    const src = raceRule === "PLURALITY" ? f.plurality_odds_to_win : f.majority_win_prob;
+    return normalizeWinProbabilitiesByCandidateCount(src, activeCandidateCount);
+  }, [forecast, raceRule, activeCandidateCount]);
 
   return (
     <div className="res-panel" style={{ padding: 0 }}>
@@ -868,8 +913,8 @@ function ForecastPanel({ raceId, refreshTick, raceData, onForecastUpdate }: { ra
               <div style={{ fontFamily: "var(--font-body)", fontSize: "7px", fontWeight: 700, letterSpacing: "0.26em", textTransform: "uppercase", color: "rgba(255,255,255,0.3)", marginBottom: 10 }}>WIN PROBABILITY · {raceRule === "PLURALITY" ? "MOST VOTES" : "MAJORITY ≥50%"}</div>
               <SwingOMeter candidates={forecast.forecast.candidate_names ?? ["C1", "C2", "C3", "Others"]} colors={forecast.forecast.candidate_colors ?? ["#3b82f6", "#ef4444", "#22c55e", "#94a3b8"]} probabilities={swingoProbs} raceRule={raceRule} reportingPct={forecast.race.percent_reporting} />
             </div>
-            <div style={{ display: "grid", gridTemplateColumns: forecast.forecast.modeled_share["Candidate3"] > 0.005 ? "1fr 1fr 1fr" : "1fr 1fr", gap: 6, marginBottom: 14 }}>
-              {(["Candidate1", "Candidate2", "Candidate3"] as const).filter(k => k !== "Candidate3" || forecast.forecast.modeled_share["Candidate3"] > 0.005).map((key) => {
+            <div style={{ display: "grid", gridTemplateColumns: activeCandidateCount >= 3 ? "1fr 1fr 1fr" : activeCandidateCount === 2 ? "1fr 1fr" : "1fr", gap: 6, marginBottom: 14 }}>
+              {(["Candidate1", "Candidate2", "Candidate3"] as const).filter((_, idx) => idx < activeCandidateCount).map((key) => {
                 const color = candidateColors[key], share = forecast.forecast.modeled_share[key], votes = forecast.forecast.modeled_votes[key], isLeader = forecast.forecast.leader === key;
                 return (
                   <div key={key} style={{ padding: "10px 10px 8px", background: "rgba(255,255,255,0.025)", border: `1px solid ${isLeader ? color + "44" : "rgba(255,255,255,0.06)"}` }}>
@@ -931,7 +976,7 @@ function RaceScrollWindow({ races, raceCache, selectedId, onSelect, search, onSe
   races: FeaturedRace[]; raceCache: Record<number, RaceDetail | undefined>; selectedId: number;
   onSelect: (id: number) => void; search: string; onSearchChange: (v: string) => void; maxHeight?: number;
 }) {
-  const filtered = races.filter(r => !search || r.office.toLowerCase().includes(search.toLowerCase()) || r.party.toLowerCase().includes(search.toLowerCase()));
+  const filtered = races.filter(r => !search || r.office.toLowerCase().includes(search.toLowerCase()) || r.raceType.toLowerCase().includes(search.toLowerCase()));
   const groups = filtered.reduce<{ office: string; races: FeaturedRace[] }[]>((acc, r) => {
     const last = acc[acc.length - 1];
     if (last && last.office === r.office) last.races.push(r);
@@ -958,19 +1003,19 @@ function RaceScrollWindow({ races, raceCache, selectedId, onSelect, search, onSe
               const winner = liveData?.candidates?.find(c => c.winner);
               const reporting = getRaceReportingPct(liveData);
               const isSelected = r.id === selectedId;
-              const partyColor = r.party === "Republican" ? "var(--rep)" : r.party === "Democratic" ? "var(--dem)" : "rgba(255,255,255,0.4)";
-              const partyShort = r.party === "Republican" ? "R" : "D";
+              const raceTypeColor = getRaceTypeColor(r.raceType);
+              const raceTypeShort = getRaceTypeShort(r.raceType);
               const hasForecast = !!RACE_FORECAST_DEFAULTS[r.id];
               return (
                 <button key={r.id} onClick={() => onSelect(r.id)} style={{ display: "flex", alignItems: "center", width: "100%", padding: "6px 10px", background: isSelected ? "rgba(124,58,237,0.10)" : "transparent", border: "none", borderLeft: isSelected ? "2px solid var(--purple)" : "2px solid transparent", cursor: "pointer", textAlign: "left", transition: "background 100ms ease" }}>
-                  <span style={{ flexShrink: 0, width: 16, height: 16, borderRadius: 2, background: `${partyColor}22`, border: `1px solid ${partyColor}44`, display: "flex", alignItems: "center", justifyContent: "center", marginRight: 8, fontFamily: "var(--font-body)", fontSize: "6.5px", fontWeight: 900, color: partyColor }}>{partyShort}</span>
+                  <span style={{ flexShrink: 0, width: 16, height: 16, borderRadius: 2, background: `${raceTypeColor}22`, border: `1px solid ${raceTypeColor}44`, display: "flex", alignItems: "center", justifyContent: "center", marginRight: 8, fontFamily: "var(--font-body)", fontSize: "6.5px", fontWeight: 900, color: raceTypeColor }}>{raceTypeShort}</span>
                   <div style={{ flex: 1, minWidth: 0 }}>
                     <div style={{ display: "flex", alignItems: "center", gap: 4, marginBottom: 2 }}>
-                      <span style={{ fontFamily: "var(--font-body)", fontSize: "8.5px", fontWeight: isSelected ? 800 : 600, color: isSelected ? "#fff" : "rgba(255,255,255,0.65)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{r.party} Primary</span>
+                      <span style={{ fontFamily: "var(--font-body)", fontSize: "8.5px", fontWeight: isSelected ? 800 : 600, color: isSelected ? "#fff" : "rgba(255,255,255,0.65)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{r.raceType} </span>
                       {hasForecast && <span style={{ flexShrink: 0, display: "inline-flex", padding: "0px 4px", border: "1px solid rgba(124,58,237,0.45)", background: "rgba(124,58,237,0.10)", fontFamily: "var(--font-body)", fontSize: "5px", fontWeight: 700, letterSpacing: "0.12em", color: "var(--purple-soft)" }}>FORECAST β</span>}
                     </div>
                     <div style={{ height: 2, background: "rgba(255,255,255,0.07)", overflow: "hidden" }}>
-                      <div style={{ height: "100%", width: `${reporting ?? 0}%`, background: winner ? "var(--win)" : partyColor, opacity: 0.75, transition: "width 800ms ease" }} />
+                      <div style={{ height: "100%", width: `${reporting ?? 0}%`, background: winner ? "var(--win)" : raceTypeColor, opacity: 0.75, transition: "width 800ms ease" }} />
                     </div>
                   </div>
                   <div style={{ flexShrink: 0, marginLeft: 8 }}>
@@ -1000,7 +1045,7 @@ function RacePickerPanel({ races, raceCache, selectedId, onSelect }: {
   const groups = useMemo(() => {
     const q = search.trim().toLowerCase();
     const filtered = q
-      ? races.filter(r => r.office.toLowerCase().includes(q) || r.party.toLowerCase().includes(q) || r.label.toLowerCase().includes(q))
+      ? races.filter(r => r.office.toLowerCase().includes(q) || r.raceType.toLowerCase().includes(q) || r.label.toLowerCase().includes(q))
       : races;
     const map = new Map<string, FeaturedRace[]>();
     for (const r of filtered) {
@@ -1077,10 +1122,8 @@ function RacePickerPanel({ races, raceCache, selectedId, onSelect }: {
               const reporting = getRaceReportingPct(liveData);
               const leader = liveData?.candidates ? [...liveData.candidates].sort((a, b) => (b.percent ?? 0) - (a.percent ?? 0))[0] : null;
               const isSelected = r.id === selectedId;
-              const isRep = r.party === "Republican";
-              const isDem = r.party === "Democratic";
-              const partyColor = isRep ? "var(--rep)" : isDem ? "var(--dem)" : "rgba(255,255,255,0.4)";
-              const partyShort = isRep ? "R" : isDem ? "D" : "—";
+              const raceTypeColor = getRaceTypeColor(r.raceType);
+              const raceTypeShort = getRaceTypeShort(r.raceType);
 
               return (
                 <button
@@ -1109,8 +1152,8 @@ function RacePickerPanel({ races, raceCache, selectedId, onSelect }: {
                     width: 18,
                     height: 18,
                     borderRadius: 2,
-                    background: partyColor + "22",
-                    border: `1px solid ${partyColor}44`,
+                    background: raceTypeColor + "22",
+                    border: `1px solid ${raceTypeColor}44`,
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
@@ -1118,9 +1161,9 @@ function RacePickerPanel({ races, raceCache, selectedId, onSelect }: {
                     fontFamily: "var(--font-body)",
                     fontSize: "7px",
                     fontWeight: 900,
-                    color: partyColor,
+                    color: raceTypeColor,
                     letterSpacing: 0,
-                  }}>{partyShort}</span>
+                  }}>{raceTypeShort}</span>
 
                   {/* Main content */}
                   <div style={{ flex: 1, minWidth: 0 }}>
@@ -1135,12 +1178,12 @@ function RacePickerPanel({ races, raceCache, selectedId, onSelect }: {
                       textOverflow: "ellipsis",
                       marginBottom: 3,
                     }}>
-                      {r.party === "Republican" ? "Republican" : r.party === "Democratic" ? "Democratic" : r.party} Primary
+                      {r.raceType}
                     </div>
                     {/* Reporting bar */}
                     <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
                       <div style={{ flex: 1, height: 2, background: "rgba(255,255,255,0.07)", overflow: "hidden", maxWidth: 60 }}>
-                        <div style={{ height: "100%", width: `${reporting ?? 0}%`, background: winner ? "var(--win)" : partyColor, opacity: 0.8, transition: "width 800ms ease" }} />
+                        <div style={{ height: "100%", width: `${reporting ?? 0}%`, background: winner ? "var(--win)" : raceTypeColor, opacity: 0.8, transition: "width 800ms ease" }} />
                       </div>
                       {winner ? (
                         <span style={{ fontFamily: "var(--font-body)", fontSize: "6.5px", fontWeight: 700, color: "var(--win)", letterSpacing: "0.12em" }}>✓ CALLED</span>
@@ -1703,11 +1746,11 @@ export default function March3FeaturedClient() {
                   const liveData = raceCache[r.id];
                   const winner = liveData?.candidates?.find(c => c.winner);
                   const reporting = getRaceReportingPct(liveData);
-                  const partyShort = r.party === "Republican" ? "R" : r.party === "Democratic" ? "D" : "—";
+                  const raceTypeShort = getRaceTypeShort(r.raceType);
                   const statusStr = winner ? " ✓ CALLED" : reporting !== null && reporting > 0 ? ` · ${reporting.toFixed(0)}% IN` : "";
                   return (
                     <option key={r.id} value={r.id}>
-                      [{partyShort}] {r.office}{statusStr}
+                      [{raceTypeShort}] {r.office}{statusStr}
                     </option>
                   );
                 })}
@@ -1720,12 +1763,12 @@ export default function March3FeaturedClient() {
             const liveData = raceCache[selectedId];
             const winner = liveData?.candidates?.find(c => c.winner);
             const reporting = getRaceReportingPct(liveData);
-            const partyColor = meta?.party === "Republican" ? "var(--rep)" : meta?.party === "Democratic" ? "var(--dem)" : "rgba(255,255,255,0.4)";
+            const raceTypeColor = meta ? getRaceTypeColor(meta.raceType) : "rgba(255,255,255,0.4)";
             return (
               <div style={{ flexShrink: 0, display: "flex", alignItems: "center", gap: 6 }}>
                 {winner
                   ? <span className="res-badge res-badge-win" style={{ fontSize: "7px" }}>✓ CALLED</span>
-                  : <span style={{ fontFamily: "var(--font-body)", fontSize: "9px", fontWeight: 700, color: partyColor }}>{reporting !== null ? `${reporting.toFixed(0)}%` : "—"}</span>
+                  : <span style={{ fontFamily: "var(--font-body)", fontSize: "9px", fontWeight: 700, color: raceTypeColor }}>{reporting !== null ? `${reporting.toFixed(0)}%` : "—"}</span>
                 }
               </div>
             );
