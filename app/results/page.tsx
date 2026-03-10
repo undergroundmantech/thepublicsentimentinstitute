@@ -43,17 +43,17 @@ function getRaceTypeShort(raceType: RaceType): string {
 }
 
 const RACE_FORECAST_DEFAULTS: Partial<Record<number, { raceRule: RaceRule; expectedTurnout?: number; pollAvg?: Record<string, number>; }>> = {
-  46673: { raceRule: "PLURALITY", expectedTurnout: 280_000, pollAvg: { "Little": 16.0, "Till": 12.0,  "Colom": 72.0} },
-  51420: { raceRule: "PLURALITY", expectedTurnout: 280_000, pollAvg: { "Hyde-Smith": 88.0, "Adlakha": 8.0} },
-  51421: { raceRule: "PLURALITY", expectedTurnout: 55_000, pollAvg: { "Trent Kelly": 100.0 } },
-  51422: { raceRule: "PLURALITY", expectedTurnout: 40_000, pollAvg: { "Cliff Johnson": 55.0, "Kelvin Buck": 45.0 } },
-  51423: { raceRule: "PLURALITY", expectedTurnout: 60_000, pollAvg: { "Ron Eller": 52.0, "Kevin Wilson": 48.0 } },
-  51424: { raceRule: "PLURALITY", expectedTurnout: 55_000, pollAvg: { "Bennie Thompson": 68.0, "Evan Turnage": 20.0, "Pertis Herman Williams III": 12.0 } },
-  51425: { raceRule: "PLURALITY", expectedTurnout: 50_000, pollAvg: { "Michael Guest": 100.0 } },
-  51426: { raceRule: "PLURALITY", expectedTurnout: 45_000, pollAvg: { "Michael A. Chiaradio": 100.0 } },
-  51427: { raceRule: "PLURALITY", expectedTurnout: 55_000, pollAvg: { "Mike Ezell": 75.0, "Sawyer Walters": 25.0 } },
-  51428: { raceRule: "PLURALITY", expectedTurnout: 40_000, pollAvg: { "Jeffrey Hulum III": 45.0, "D. Ryan Grover": 30.0, "Paul James Blackman": 25.0 } },
-  52551: { raceRule: "PLURALITY", expectedTurnout: 120_000, pollAvg: { "Clayton Fuller": 35.0, "Shawn Harris": 28.0, "Colton Moore": 20.0, "Others": 17.0 } }
+  46673: { raceRule: "PLURALITY", expectedTurnout: 280_000, pollAvg: { "Little": 16.0, "Till": 12.0, "Colom": 72.0} },  // unchanged
+  51420: { raceRule: "PLURALITY", expectedTurnout: 280_000, pollAvg: { "Hyde-Smith": 88.0, "Adlakha": 8.0} },  // 2 candidates
+  51421: { raceRule: "PLURALITY", expectedTurnout: 55_000, pollAvg: { "Trent Kelly": 100.0 } },  // 1 candidate
+  51422: { raceRule: "PLURALITY", expectedTurnout: 40_000, pollAvg: { "Cliff Johnson": 55.0, "Kelvin Buck": 45.0 } },  // 2 candidates
+  51423: { raceRule: "PLURALITY", expectedTurnout: 60_000, pollAvg: { "Ron Eller": 52.0, "Kevin Wilson": 48.0 } },  // 2 candidates
+  51424: { raceRule: "MAJORITY", expectedTurnout: 55_000, pollAvg: { "Bennie Thompson": 68.0, "Evan Turnage": 20.0, "Pertis Herman Williams III": 12.0 } },  // 3 candidates → runoff opp.
+  51425: { raceRule: "PLURALITY", expectedTurnout: 50_000, pollAvg: { "Michael Guest": 100.0 } },  // 1 candidate
+  51426: { raceRule: "PLURALITY", expectedTurnout: 45_000, pollAvg: { "Michael A. Chiaradio": 100.0 } },  // 1 candidate
+  51427: { raceRule: "PLURALITY", expectedTurnout: 55_000, pollAvg: { "Mike Ezell": 75.0, "Sawyer Walters": 25.0 } },  // 2 candidates (per pollAvg)
+  51428: { raceRule: "MAJORITY", expectedTurnout: 40_000, pollAvg: { "Jeffrey Hulum III": 45.0, "D. Ryan Grover": 30.0, "Paul James Blackman": 25.0 } },  // 3 candidates → runoff opp.
+  52551: { raceRule: "MAJORITY", expectedTurnout: 120_000, pollAvg: { "Clayton Fuller": 35.0, "Shawn Harris": 28.0, "Colton Moore": 20.0, "Others": 17.0 } }  // many candidates → high runoff opp.
 };
 
 function sortCandidatesByPollData(candidates: RaceCandidate[], pollAvg?: Record<string, number>): RaceCandidate[] {
