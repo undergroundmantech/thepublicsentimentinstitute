@@ -45,15 +45,15 @@ function getRaceTypeShort(raceType: RaceType): string {
 const RACE_FORECAST_DEFAULTS: Partial<Record<number, { raceRule: RaceRule; expectedTurnout?: number; pollAvg?: Record<string, number>; }>> = {
   46673: { raceRule: "PLURALITY", expectedTurnout: 280_000, pollAvg: { "Little": 16.0, "Till": 12.0,  "Colom": 72.0} },
   51420: { raceRule: "PLURALITY", expectedTurnout: 280_000, pollAvg: { "Hyde-Smith": 88.0, "Adlakha": 8.0} },
-  51421: { raceRule: "PLURALITY", expectedTurnout: 55_000 },
-  51422: { raceRule: "PLURALITY", expectedTurnout: 40_000 },
-  51423: { raceRule: "PLURALITY", expectedTurnout: 60_000 },
-  51424: { raceRule: "PLURALITY", expectedTurnout: 55_000 },
-  51425: { raceRule: "PLURALITY", expectedTurnout: 50_000 },
-  51426: { raceRule: "PLURALITY", expectedTurnout: 45_000 },
-  51427: { raceRule: "PLURALITY", expectedTurnout: 55_000 },
-  51428: { raceRule: "PLURALITY", expectedTurnout: 40_000 },
-  52551: { raceRule: "PLURALITY", expectedTurnout: 120_000 },
+  51421: { raceRule: "PLURALITY", expectedTurnout: 55_000, pollAvg: { "Trent Kelly": 100.0 } },
+  51422: { raceRule: "PLURALITY", expectedTurnout: 40_000, pollAvg: { "Cliff Johnson": 55.0, "Kelvin Buck": 45.0 } },
+  51423: { raceRule: "PLURALITY", expectedTurnout: 60_000, pollAvg: { "Ron Eller": 52.0, "Kevin Wilson": 48.0 } },
+  51424: { raceRule: "PLURALITY", expectedTurnout: 55_000, pollAvg: { "Bennie Thompson": 68.0, "Evan Turnage": 20.0, "Pertis Herman Williams III": 12.0 } },
+  51425: { raceRule: "PLURALITY", expectedTurnout: 50_000, pollAvg: { "Michael Guest": 100.0 } },
+  51426: { raceRule: "PLURALITY", expectedTurnout: 45_000, pollAvg: { "Michael A. Chiaradio": 100.0 } },
+  51427: { raceRule: "PLURALITY", expectedTurnout: 55_000, pollAvg: { "Mike Ezell": 75.0, "Sawyer Walters": 25.0 } },
+  51428: { raceRule: "PLURALITY", expectedTurnout: 40_000, pollAvg: { "Jeffrey Hulum III": 45.0, "D. Ryan Grover": 30.0, "Paul James Blackman": 25.0 } },
+  52551: { raceRule: "PLURALITY", expectedTurnout: 120_000, pollAvg: { "Clayton Fuller": 35.0, "Shawn Harris": 28.0, "Colton Moore": 20.0, "Others": 17.0 } }
 };
 
 function sortCandidatesByPollData(candidates: RaceCandidate[], pollAvg?: Record<string, number>): RaceCandidate[] {
@@ -611,20 +611,22 @@ function Legend() {
 }
 
 // ─── SWING-O-METER ────────────────────────────────────────────────────────────
-function SwingOMeter({ candidates, colors, probabilities, raceRule, reportingPct }: {
+function SwingOMeter({ candidates, colors, probabilities, raceRule, reportingPct, candidateCount }: {
   candidates: [string, string, string, string]; colors: [string, string, string, string];
-  probabilities: { c1: number; c2: number; c3: number }; raceRule: "PLURALITY" | "MAJORITY"; reportingPct: number;
+  probabilities: { c1: number; c2: number; c3: number }; raceRule: "PLURALITY" | "MAJORITY"; reportingPct: number; candidateCount: number;
 }) {
   const W = 280, H = 160, CX = W / 2, CY = H - 20;
   const R_OUTER = 110, R_INNER = 68;
 
+  const count = Math.max(1, Math.min(3, candidateCount));
   const othersProb = Math.max(0, 1 - probabilities.c1 - probabilities.c2 - probabilities.c3);
+  const showC2 = count >= 2;
   const showC3 = probabilities.c3 > 0.01;
   const showOthers = othersProb > 0.01;
 
   const segments = [
     { key: "c1", prob: probabilities.c1, color: colors[0], name: candidates[0] },
-    { key: "c2", prob: probabilities.c2, color: colors[1], name: candidates[1] },
+    ...(showC2 ? [{ key: "c2", prob: probabilities.c2, color: colors[1], name: candidates[1] }] : []),
     ...(showC3 ? [{ key: "c3", prob: probabilities.c3, color: colors[2], name: candidates[2] }] : []),
     ...(showOthers ? [{ key: "others", prob: othersProb, color: raceRule === "MAJORITY" ? "#c0392b" : colors[3], name: raceRule === "MAJORITY" ? "RUNOFF" : "Others" }] : []),
   ];
@@ -710,6 +712,26 @@ function fcastPct(n: number, decimals = 1) { return (n * 100).toFixed(decimals) 
 function fcastFmt(n: number) { return n.toLocaleString("en-US", { maximumFractionDigits: 0 }); }
 function fcastShortDate(ts: string) { return new Date(ts).toLocaleString("en-US", { month: "short", day: "numeric", hour: "2-digit", minute: "2-digit" }); }
 function getTimestamps(hl: ForecastHistoryList | null): ForecastHistoryTimestamp[] { return hl?.timestamps ?? []; }
+function getEffectiveForecastCandidateCount(
+  raceCandidates?: Array<{ name?: string | null; major_candidate?: boolean }> | null,
+  forecastCandidateNames?: string[] | null,
+): number {
+  const fromRace = (raceCandidates ?? []).filter((c) => {
+    const name = String(c?.name ?? "").trim();
+    if (!name) return false;
+    if (/^(others?|write[\s-]?in)$/i.test(name)) return false;
+    return true;
+  }).length;
+  if (fromRace > 0) return Math.max(1, Math.min(3, fromRace));
+
+  const fromNames = (forecastCandidateNames ?? []).slice(0, 3).filter((n) => {
+    const name = String(n ?? "").trim();
+    return !!name && !/^candidate\s*\d+$/i.test(name);
+  }).length;
+  if (fromNames > 0) return Math.max(1, Math.min(3, fromNames));
+
+  return 2;
+}
 function normalizeWinProbabilitiesByCandidateCount(
   src: Partial<Record<"Candidate1" | "Candidate2" | "Candidate3", number>>,
   candidateCount: number,
@@ -766,7 +788,7 @@ function ForecastPanel({ raceId, refreshTick, raceData, onForecastUpdate }: { ra
       setForecast(data);
       if (onForecastUpdate && data.forecast) {
         const src = data.forecast.majority_win_prob ?? data.forecast.plurality_odds_to_win;
-        const candidateCount = Math.max(1, Math.min(3, data?.race?.candidates?.length ?? 2));
+        const candidateCount = getEffectiveForecastCandidateCount(data?.race?.candidates, data?.forecast?.candidate_names);
         const normalized = normalizeWinProbabilitiesByCandidateCount(src, candidateCount);
         const names = data.forecast.candidate_names ?? [];
         const keys = ["Candidate1","Candidate2","Candidate3"] as const;
@@ -860,9 +882,8 @@ function ForecastPanel({ raceId, refreshTick, raceData, onForecastUpdate }: { ra
   const candidateColors: Record<FCKey, string> = useMemo(() => { const colors = forecast?.forecast.candidate_colors ?? ["#3b82f6", "#ef4444", "#22c55e", "#94a3b8"]; return { Candidate1: colors[0], Candidate2: colors[1], Candidate3: colors[2], Others: raceRule === "MAJORITY" ? "#c0392b" : colors[3] }; }, [forecast, raceRule]);
   const isLoading = loadingHistory || loadingForecast;
   const activeCandidateCount = useMemo(() => {
-    if (!forecast?.race?.candidates) return 2;
-    return Math.max(1, Math.min(3, forecast.race.candidates.length));
-  }, [forecast]);
+    return getEffectiveForecastCandidateCount(raceData?.candidates, forecast?.forecast?.candidate_names);
+  }, [raceData?.candidates, forecast?.forecast?.candidate_names]);
   const swingoProbs = useMemo(() => {
     if (!forecast) return { c1: 0.5, c2: 0.5, c3: 0 };
     const f = forecast.forecast;
@@ -911,7 +932,7 @@ function ForecastPanel({ raceId, refreshTick, raceData, onForecastUpdate }: { ra
             </div>
             <div style={{ marginBottom: 16, padding: "14px 12px", background: "rgba(0,0,0,0.25)", border: "1px solid rgba(255,255,255,0.07)" }}>
               <div style={{ fontFamily: "var(--font-body)", fontSize: "7px", fontWeight: 700, letterSpacing: "0.26em", textTransform: "uppercase", color: "rgba(255,255,255,0.3)", marginBottom: 10 }}>WIN PROBABILITY · {raceRule === "PLURALITY" ? "MOST VOTES" : "MAJORITY ≥50%"}</div>
-              <SwingOMeter candidates={forecast.forecast.candidate_names ?? ["C1", "C2", "C3", "Others"]} colors={forecast.forecast.candidate_colors ?? ["#3b82f6", "#ef4444", "#22c55e", "#94a3b8"]} probabilities={swingoProbs} raceRule={raceRule} reportingPct={forecast.race.percent_reporting} />
+              <SwingOMeter candidates={forecast.forecast.candidate_names ?? ["C1", "C2", "C3", "Others"]} colors={forecast.forecast.candidate_colors ?? ["#3b82f6", "#ef4444", "#22c55e", "#94a3b8"]} probabilities={swingoProbs} raceRule={raceRule} reportingPct={forecast.race.percent_reporting} candidateCount={activeCandidateCount} />
             </div>
             <div style={{ display: "grid", gridTemplateColumns: activeCandidateCount >= 3 ? "1fr 1fr 1fr" : activeCandidateCount === 2 ? "1fr 1fr" : "1fr", gap: 6, marginBottom: 14 }}>
               {(["Candidate1", "Candidate2", "Candidate3"] as const).filter((_, idx) => idx < activeCandidateCount).map((key) => {
