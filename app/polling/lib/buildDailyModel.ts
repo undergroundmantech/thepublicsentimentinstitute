@@ -402,6 +402,48 @@ function computeTrendSlopes(
 }
 
 // =============================================================================
+// CHANGE 8: Outlier correction — Z-score clipping per candidate per day
+//
+// After collecting raw per-poll values for a candidate, any poll whose result
+// deviates more than OUTLIER_Z_THRESHOLD standard deviations from the
+// unweighted mean across available polls is clipped toward the mean:
+//
+//   clipped_value = mean + sign(v - mean) × OUTLIER_Z_THRESHOLD × stddev
+//
+// This prevents a single rogue poll (e.g. +10 pts off baseline) from dragging
+// the weighted average materially, while still partially incorporating the
+// signal rather than hard-discarding it.
+//
+// Design choices:
+//   - Threshold: 2.0σ — catches the top/bottom ~2.5% of a normal distribution.
+//   - Min polls: 3 — below this, σ is unreliable; clipping is skipped entirely.
+//   - Unweighted mean/σ for detection — outlier detection uses raw poll values
+//     so a cluster of high-quality polls can't suppress a legitimately different
+//     result merely because they're A-rated.
+//   - Clip (not drop) — the outlier value is pulled to the 2σ boundary,
+//     preserving directional signal while capping its influence.
+// =============================================================================
+const OUTLIER_Z_THRESHOLD = 2.0;
+const OUTLIER_MIN_POLLS   = 3;
+
+function clipOutliers(values: number[]): number[] {
+  if (values.length < OUTLIER_MIN_POLLS) return values;
+
+  const mean = values.reduce((a, b) => a + b, 0) / values.length;
+  const variance = values.reduce((s, v) => s + (v - mean) ** 2, 0) / values.length;
+  const stddev = Math.sqrt(variance);
+
+  if (stddev === 0) return values;
+
+  return values.map((v) => {
+    const z = (v - mean) / stddev;
+    if (Math.abs(z) <= OUTLIER_Z_THRESHOLD) return v;
+    // Clip toward mean — preserve direction but cap magnitude
+    return mean + Math.sign(z) * OUTLIER_Z_THRESHOLD * stddev;
+  });
+}
+
+// =============================================================================
 // buildDailyWeightedSeries
 //
 // Builds daily weighted averages from startISO to endISO (inclusive).
@@ -423,6 +465,9 @@ function computeTrendSlopes(
 //  7. POLLSTER QUALITY SCORECARD: every poll weight × 538-grade factor.
 //     A++=2.0×, B=1.0× (baseline), C=0.5× (YouGov), D-=0.12× (PPP),
 //     Super F=0.02×, unrated=0.70×.
+//
+//  8. OUTLIER CORRECTION: per-candidate Z-score clipping (2.0σ threshold,
+//     min 3 polls). Rogue polls are clipped toward the mean before weighting.
 // =============================================================================
 export function buildDailyWeightedSeries(
   polls: Poll[],
@@ -451,9 +496,10 @@ export function buildDailyWeightedSeries(
 
     // ── Raw weighted average per candidate ──────────────────────────────────
     for (const c of candidates) {
-      let num = 0;
-      let den = 0;
       const pollsterIdx = new Map<string, number>();
+
+      // Collect raw values + weights before weighting so we can clip outliers.
+      const entries: { value: number; weight: number }[] = [];
 
       for (const p of availableDesc) {
         const v = p.results[c];
@@ -463,9 +509,17 @@ export function buildDailyWeightedSeries(
         const occ = (pollsterIdx.get(key) ?? 0) + 1;
         pollsterIdx.set(key, occ);
 
-        const w = pollWeight(p, dayISO, occ);
-        num += v * w;
-        den += w;
+        entries.push({ value: v, weight: pollWeight(p, dayISO, occ) });
+      }
+
+      // CHANGE 8: clip outlier poll values before computing weighted average.
+      const clipped = clipOutliers(entries.map((e) => e.value));
+
+      let num = 0;
+      let den = 0;
+      for (let i = 0; i < entries.length; i++) {
+        num += clipped[i] * entries[i].weight;
+        den += entries[i].weight;
       }
 
       rawAvg[c] = den > 0 ? round1(num / den) : 0;

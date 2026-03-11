@@ -133,7 +133,12 @@ function netToColor(net: number): string {
 
 // ─── Polls data ───────────────────────────────────────────────────────────────
 const RAW_POLLS: Poll[] = [
-  { pollster: "Quantus Insights", endDate: "2026-03-03", sampleSize: 1624, sampleType: "LV", results: { Approve: 45, Disapprove: 54 } },
+{ pollster: "NPR/PBS/Marist", endDate: "2026-03-04", sampleSize: 1392, sampleType: "RV", results: { Approve: 40, Disapprove: 57 } },
+{ pollster: "Quinnipiac", endDate: "2026-03-08", sampleSize: 1002, sampleType: "RV", results: { Approve: 37, Disapprove: 57 } },
+{ pollster: "NBC News", endDate: "2026-03-03", sampleSize: 1000, sampleType: "RV", results: { Approve: 44, Disapprove: 54 } },
+{ pollster: "Rasmussen Reports", endDate: "2026-03-09", sampleSize: 1500, sampleType: "LV", results: { Approve: 46, Disapprove: 53 } },
+{ pollster: "Economist/YouGov", endDate: "2026-03-09", sampleSize: 1405, sampleType: "RV", results: { Approve: 43, Disapprove: 54 } },
+{ pollster: "Quantus Insights", endDate: "2026-03-03", sampleSize: 1624, sampleType: "LV", results: { Approve: 45, Disapprove: 54 } },
 { pollster: "Fox News", endDate: "2026-03-02", sampleSize: 1004, sampleType: "RV", results: { Approve: 43, Disapprove: 57 } },
 { pollster: "Economist/YouGov", endDate: "2026-03-02", sampleSize: 1366, sampleType: "RV", results: { Approve: 42, Disapprove: 56 } },
 { pollster: "Rasmussen Reports", endDate: "2026-03-03", sampleSize: 1500, sampleType: "LV", results: { Approve: 45, Disapprove: 54 } },  

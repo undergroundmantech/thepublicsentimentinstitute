@@ -32,8 +32,10 @@ function effectiveSampleSize(pollster: string, n: number) {
 // ─── Polls data ───────────────────────────────────────────────────────────────
 const RAW_POLLS: Poll[] = [
   // 2026
+  { pollster: "NBC News", endDate: "2026-03-03", sampleSize: 1000, sampleType: "RV", results: { Favorable: 38, Unfavorable: 49 } },
+  { pollster: "Harvard-Harris", endDate: "2026-02-26", sampleSize: 1999, sampleType: "RV", results: { Favorable: 40, Unfavorable: 45 } },
   { pollster: "Public Sentiment Institute", endDate: "2026-02-28", sampleSize: 316, sampleType: "RV", results: { Favorable: 33.6, Unfavorable: 53.3 } },
-{ pollster: "Public Sentiment Institute", endDate: "2026-02-28", sampleSize: 249, sampleType: "LV", results: { Favorable: 38.8, Unfavorable: 57.5 } },
+  { pollster: "Public Sentiment Institute", endDate: "2026-02-28", sampleSize: 249, sampleType: "LV", results: { Favorable: 38.8, Unfavorable: 57.5 } },
   { pollster: "Morning Consult", endDate: "2026-02-22", sampleSize: 2202, sampleType: "RV", results: { Favorable: 40, Unfavorable: 49 } },
   { pollster: "Big Data Poll", endDate: "2026-02-18", sampleSize: 2012, sampleType: "RV", results: { Favorable: 41, Unfavorable: 51 } },
   { pollster: "Morning Consult", endDate: "2026-02-16", sampleSize: 2200, sampleType: "RV", results: { Favorable: 40, Unfavorable: 46 } },
