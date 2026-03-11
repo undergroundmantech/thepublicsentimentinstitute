@@ -31,6 +31,10 @@ function effectiveSampleSize(pollster: string, n: number) {
 
 // ─── Polls data ───────────────────────────────────────────────────────────────
 const RAW_POLLS: Poll[] = [
+  { pollster: "Economist/YouGov", endDate: "2026-03-09", sampleSize: 1405, sampleType: "RV", results: { RightTrack: 35, WrongTrack: 59 } },
+  { pollster: "Cygnal", endDate: "2026-03-04", sampleSize: 1500, sampleType: "LV", results: { RightTrack: 43, WrongTrack: 55 } },
+  { pollster: "NPR/PBS/Marist", endDate: "2026-03-04", sampleSize: 1392, sampleType: "RV", results: { RightTrack: 40, WrongTrack: 60 } },
+  { pollster: "Rasmussen Reports", endDate: "2026-03-05", sampleSize: 1851, sampleType: "LV", results: { RightTrack: 41, WrongTrack: 54 } },
   { pollster: "Quantus Insights",       endDate: "2026-03-03", sampleSize: 1624,  sampleType: "LV", results: { RightTrack: 41, WrongTrack: 54 } },
   { pollster: "Economist/YouGov",       endDate: "2026-03-02", sampleSize: 1366,  sampleType: "RV", results: { RightTrack: 34, WrongTrack: 58 } },
   { pollster: "Harvard-Harris",         endDate: "2026-02-26", sampleSize: 1999,  sampleType: "RV", results: { RightTrack: 38, WrongTrack: 52 } },

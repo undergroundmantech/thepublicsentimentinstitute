@@ -12,6 +12,163 @@ type PollPage = {
   archiveResult?: string; // e.g. "Talarico wins · +6.23"
 };
 
+const ARCHIVED_PAGES: PollPage[] = [
+  {
+    title: "2024 National Presidential Average",
+    description:
+      "Final weighted average for the 2024 National Presidential race between Donald Trump and Kamala Harris — tracking the last 60 days of polling through Election Day",
+    href: "/polling/2024president",
+    badge: "Daily Average",
+    tag: "National",
+    status: "live",
+    archived: true,
+    archiveResult: "Trump wins · +1.4",
+  },
+  {
+    title: "2024 Pennsylvania Presidential Average",
+    description:
+      "Final weighted average for the 2024 Pennsylvania Presidential race between Donald Trump and Kamala Harris — tracking the last 60 days of polling through Election Day",
+    href: "/polling/pa2024president",
+    badge: "Daily Average",
+    tag: "Pennsylvania",
+    status: "live",
+    archived: true,
+    archiveResult: "Trump wins · +1.7",
+  },
+  {
+  title: "2024 Wisconsin Presidential Average",
+  description:
+    "Final weighted average for the 2024 Wisconsin Presidential race between Donald Trump and Kamala Harris — tracking the last 60 days of polling through Election Day",
+  href: "/polling/wi2024president",
+  badge: "Daily Average",
+  tag: "Wisconsin",
+  status: "live",
+  archived: true,
+  archiveResult: "Trump wins · +0.9",
+},
+{
+  title: "2024 Michigan Presidential Average",
+  description:
+    "Final weighted average for the 2024 Michigan Presidential race between Donald Trump and Kamala Harris — tracking the last 60 days of polling through Election Day",
+  href: "/polling/mi2024president",
+  badge: "Daily Average",
+  tag: "Michigan",
+  status: "live",
+  archived: true,
+  archiveResult: "Trump wins · +1.4",
+},
+{
+  title: "2024 Georgia Presidential Average",
+  description:
+    "Final weighted average for the 2024 Georgia Presidential race between Donald Trump and Kamala Harris — tracking the last 60 days of polling through Election Day",
+  href: "/polling/ga2024president",
+  badge: "Daily Average",
+  tag: "Georgia",
+  status: "live",
+  archived: true,
+  archiveResult: "Trump wins · +2.2",
+},
+{
+  title: "2024 Arizona Presidential Average",
+  description:
+    "Final weighted average for the 2024 Arizona Presidential race between Donald Trump and Kamala Harris — tracking the last 60 days of polling through Election Day",
+  href: "/polling/az2024president",
+  badge: "Daily Average",
+  tag: "Arizona",
+  status: "live",
+  archived: true,
+  archiveResult: "Trump wins · +5.5",
+},
+{
+  title: "2024 Nevada Presidential Average",
+  description:
+    "Final weighted average for the 2024 Nevada Presidential race between Donald Trump and Kamala Harris — tracking the last 60 days of polling through Election Day",
+  href: "/polling/nv2024president",
+  badge: "Daily Average",
+  tag: "Nevada",
+  status: "live",
+  archived: true,
+  archiveResult: "Trump wins · +3.1",
+},
+{
+  title: "2024 North Carolina Presidential Average",
+  description:
+    "Final weighted average for the 2024 North Carolina Presidential race between Donald Trump and Kamala Harris — tracking the last 60 days of polling through Election Day",
+  href: "/polling/nc2024president",
+  badge: "Daily Average",
+  tag: "North Carolina",
+  status: "live",
+  archived: true,
+  archiveResult: "Trump wins · +3.2",
+},
+{
+  title: "2024 Florida Presidential Average",
+  description:
+    "Final weighted average for the 2024 Florida Presidential race between Donald Trump and Kamala Harris — tracking the last 60 days of polling through Election Day",
+  href: "/polling/old/florida2024",
+  badge: "Daily Average",
+  tag: "Florida",
+  status: "live",
+  archived: true,
+  archiveResult: "Trump wins · +13.1",
+},
+{
+  title: "2024 Texas Presidential Average",
+  description:
+    "Final weighted average for the 2024 Texas Presidential race between Donald Trump and Kamala Harris — tracking the last 60 days of polling through Election Day",
+  href: "/polling/tx2024president",
+  badge: "Daily Average",
+  tag: "Texas",
+  status: "live",
+  archived: true,
+  archiveResult: "Trump wins · +14.2",
+},
+{
+  title: "2024 New Hampshire Presidential Average",
+  description:
+    "Final weighted average for the 2024 New Hampshire Presidential race between Donald Trump and Kamala Harris — tracking the last 60 days of polling through Election Day",
+  href: "/polling/newhampshire",
+  badge: "Daily Average",
+  tag: "New Hampshire",
+  status: "live",
+  archived: true,
+  archiveResult: "Harris wins · +2.2",
+},
+{
+  title: "2024 Virginia Presidential Average",
+  description:
+    "Final weighted average for the 2024 Virginia Presidential race between Donald Trump and Kamala Harris — tracking the last 60 days of polling through Election Day",
+  href: "/polling/va2024president",
+  badge: "Daily Average",
+  tag: "Virginia",
+  status: "live",
+  archived: true,
+  archiveResult: "Harris wins · +6.3",
+},
+{
+  title: "2024 Minnesota Presidential Average",
+  description:
+    "Final weighted average for the 2024 Minnesota Presidential race between Donald Trump and Kamala Harris — tracking the last 60 days of polling through Election Day",
+  href: "/polling/mn2024president",
+  badge: "Daily Average",
+  tag: "Minnesota",
+  status: "live",
+  archived: true,
+  archiveResult: "Harris wins · +3.4",
+},
+{
+  title: "2024 New Mexico Presidential Average",
+  description:
+    "Final weighted average for the 2024 New Mexico Presidential race between Donald Trump and Kamala Harris — tracking the last 60 days of polling through Election Day",
+  href: "/polling/nm2024president",
+  badge: "Daily Average",
+  tag: "New Mexico",
+  status: "live",
+  archived: true,
+  archiveResult: "Harris wins · +10.8",
+},
+];
+
 const PAGES: PollPage[] = [
   {
     title: "Donald Trump • Job Approval",
@@ -39,7 +196,8 @@ const PAGES: PollPage[] = [
   },
   {
     title: "2026 National Generic Ballot",
-    description: "View how the 2026 National Environment is shaping up in one of the most interesting midterms of all time",
+    description:
+      "View how the 2026 National Environment is shaping up in one of the most interesting midterms of all time",
     href: "/polling/genericballot",
     badge: "Daily Average",
     tag: "National",
@@ -47,7 +205,8 @@ const PAGES: PollPage[] = [
   },
   {
     title: "2028 National Popular Vote",
-    description: "View how the 2028 Presidential Election is shaping up with JD Vance against Gavin Newsom",
+    description:
+      "View how the 2028 Presidential Election is shaping up with JD Vance against Gavin Newsom",
     href: "/polling/2028polling",
     badge: "Daily Average",
     tag: "National",
@@ -55,7 +214,8 @@ const PAGES: PollPage[] = [
   },
   {
     title: "2026 Florida Governor Republican Primary",
-    description: "View how the 2026 Florida Republican Gubernatorial candidates are shaping up in one of the most contested primaries of all time",
+    description:
+      "View how the 2026 Florida Republican Gubernatorial candidates are shaping up in one of the most contested primaries of all time",
     href: "/polling/floridarepublicanprimary",
     badge: "Daily Average",
     tag: "National",
@@ -63,7 +223,8 @@ const PAGES: PollPage[] = [
   },
   {
     title: "2026 Maine Senate Democrat Primary",
-    description: "View how the 2026 Maine Senate Democrat candidates are shaping up in one of the most contested primaries of all time",
+    description:
+      "View how the 2026 Maine Senate Democrat candidates are shaping up in one of the most contested primaries of all time",
     href: "/polling/mainedemocratprimary",
     badge: "Daily Average",
     tag: "National",
@@ -78,9 +239,10 @@ const statusMeta = {
 };
 
 const tagColors: Record<string, string> = {
-  National: "var(--purple-soft)",
-  Florida:  "var(--blue2)",
-  Texas:    "var(--red2)",
+  National:     "var(--purple-soft)",
+  Florida:      "var(--blue2)",
+  Texas:        "var(--red2)",
+  Pennsylvania: "var(--gold)",
 };
 
 function Card({ p, index, isArchive = false }: { p: PollPage; index: number; isArchive?: boolean }) {
@@ -100,20 +262,21 @@ function Card({ p, index, isArchive = false }: { p: PollPage; index: number; isA
           <div className="pd-chip-row">
             {p.badge && <span className="pd-chip">{p.badge}</span>}
             {p.tag && (
-              <span className="pd-chip" style={{
-                borderColor: isArchive ? "var(--border)" : `${tagColor}44`,
-                background:  isArchive ? "rgba(255,255,255,0.02)" : `${tagColor}11`,
-                color:       isArchive ? "var(--muted3)" : tagColor
-              }}>
+              <span
+                className="pd-chip"
+                style={{
+                  borderColor: isArchive ? "var(--border)"       : `${tagColor}44`,
+                  background:  isArchive ? "rgba(255,255,255,0.02)" : `${tagColor}11`,
+                  color:       isArchive ? "var(--muted3)"        : tagColor,
+                }}
+              >
                 {p.tag}
               </span>
             )}
           </div>
           <div style={{ display: "flex", gap: 5, alignItems: "center", flexShrink: 0 }}>
             {isArchive && p.archiveResult && (
-              <span className="pd-result-badge">
-                ✓ {p.archiveResult}
-              </span>
+              <span className="pd-result-badge">✓ {p.archiveResult}</span>
             )}
             {!isArchive && (
               <span className={`pd-status-badge ${meta.cls}`}>
@@ -134,7 +297,11 @@ function Card({ p, index, isArchive = false }: { p: PollPage; index: number; isA
 
         <div className="pd-card-footer">
           <span className="pd-footer-note">
-            {isArchive ? "RACE CALLED · MAR 3, 2026 · RESULTS + ACCURACY ON FILE" : (isLive ? "POLLING AVERAGE · UPDATED DAILY" : "NOT YET AVAILABLE")}
+            {isArchive
+              ? "RACE CALLED · NOV 5, 2024 · RESULTS + ACCURACY ON FILE"
+              : isLive
+              ? "POLLING AVERAGE · UPDATED DAILY"
+              : "NOT YET AVAILABLE"}
           </span>
           {isLive ? (
             <Link href={p.href} className={`pd-open-btn${isArchive ? " pd-open-archive" : ""}`}>
@@ -175,6 +342,7 @@ export default function PollingHomePage() {
           --red2:        #ff4d5a;
           --blue:        #2563eb;
           --blue2:       #3b82f6;
+          --gold:        #f59e0b;
           --win:         #4ade80;
         }
 
@@ -291,9 +459,6 @@ export default function PollingHomePage() {
         }
         .pd-section-label::before { content:''; display:block; width:20px; height:1px; background:var(--purple-soft); opacity:0.5; }
         .pd-section-label::after  { content:''; flex:1; height:1px; background:var(--border); }
-
-        /* archive section label variant */
-        .pd-section-label-archive::before { background: var(--muted3); opacity: 0.4; }
 
         .pd-card {
           display: flex; background: var(--panel);
@@ -416,32 +581,30 @@ export default function PollingHomePage() {
         .pd-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
         @media (max-width: 860px) { .pd-grid { grid-template-columns: 1fr; } }
 
-        /* archive section wrapper */
-        .pd-archive-section {
-          margin-top: 36px;
-          padding-top: 28px;
+        /* ── retrospective section ── */
+        .pd-retro-section {
+          margin-top: 48px;
+          padding-top: 32px;
           border-top: 1px solid var(--border);
         }
-        .pd-archive-header {
-          display: flex; align-items: center; gap: 12px; margin-bottom: 14px;
+        .pd-retro-header {
+          display: flex; align-items: center; gap: 12px; margin-bottom: 10px;
         }
-        .pd-archive-label {
+        .pd-retro-label {
           font-family: ui-monospace,monospace; font-size: 7.5px; font-weight: 700;
           letter-spacing: 0.32em; text-transform: uppercase; color: var(--muted3);
           display: flex; align-items: center; gap: 10px; flex: 1;
         }
-        .pd-archive-label::before { content:''; display:block; width:20px; height:1px; background:var(--muted3); opacity:0.4; }
-        .pd-archive-label::after  { content:''; flex:1; height:1px; background:var(--border); }
-
-        .pd-archive-desc {
+        .pd-retro-label::before { content:''; display:block; width:20px; height:1px; background:var(--muted3); opacity:0.4; }
+        .pd-retro-label::after  { content:''; flex:1; height:1px; background:var(--border); }
+        .pd-retro-callout {
           font-family: ui-monospace,monospace; font-size: 8.5px;
-          letter-spacing: 0.14em; line-height: 1.6; color: var(--muted3);
-          text-transform: uppercase; max-width: 580px;
-          margin-bottom: 16px;
-          padding: 10px 14px;
+          letter-spacing: 0.13em; line-height: 1.65; color: var(--muted3);
+          text-transform: uppercase;
+          padding: 10px 14px; margin-bottom: 16px;
           border: 1px solid var(--border);
-          border-left: 2px solid rgba(255,255,255,0.12);
-          background: rgba(255,255,255,0.02);
+          border-left: 2px solid rgba(245,158,11,0.35);
+          background: rgba(245,158,11,0.04);
         }
 
         .pd-content { max-width: 1200px; margin: 0 auto; padding: 32px 24px 60px; }
@@ -502,8 +665,18 @@ export default function PollingHomePage() {
                   <div className="pd-hero-stat-val">{liveCount}</div>
                   <div className="pd-hero-stat-key">LIVE TRACKERS</div>
                 </div>
-                <div className="pd-hero-stat" style={{ borderTop: "2px solid var(--purple)", paddingTop: "8px" }}>
-                  <div className="pd-hero-stat-val" style={{ background: "linear-gradient(90deg,var(--red2),var(--purple-soft),var(--blue2))", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
+                <div
+                  className="pd-hero-stat"
+                  style={{ borderTop: "2px solid var(--purple)", paddingTop: "8px" }}
+                >
+                  <div
+                    className="pd-hero-stat-val"
+                    style={{
+                      background: "linear-gradient(90deg,var(--red2),var(--purple-soft),var(--blue2))",
+                      WebkitBackgroundClip: "text",
+                      WebkitTextFillColor: "transparent",
+                    }}
+                  >
                     DAILY
                   </div>
                   <div className="pd-hero-stat-key">UPDATE CADENCE</div>
@@ -517,7 +690,25 @@ export default function PollingHomePage() {
         <div className="pd-content">
           <div className="pd-section-label">ACTIVE POLLING AVERAGES</div>
           <div className="pd-grid">
-            {PAGES.map((p, i) => <Card key={p.href} p={p} index={i} />)}
+            {PAGES.map((p, i) => (
+              <Card key={p.href} p={p} index={i} />
+            ))}
+          </div>
+
+          {/* ── RETROSPECTIVE SECTION ── */}
+          <div className="pd-retro-section">
+            <div className="pd-retro-header">
+              <div className="pd-retro-label">RETROSPECTIVE · RACE CALLED</div>
+            </div>
+            <div className="pd-retro-callout">
+              These averages are frozen as of Election Day. Results, accuracy scores,
+              and full daily series are preserved on file for post-mortem review.
+            </div>
+            <div className="pd-grid">
+              {ARCHIVED_PAGES.map((p, i) => (
+                <Card key={p.href} p={p} index={i} isArchive />
+              ))}
+            </div>
           </div>
 
           <div className="pd-footnote">

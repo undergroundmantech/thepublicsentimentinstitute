@@ -12,6 +12,7 @@ import {
 // ─── Polls data ───────────────────────────────────────────────────────────────
 const RAW_POLLS: Poll[] = [
   // February 2026
+  { pollster: "The American Promise", endDate: "2026-02-26", sampleSize: 800, sampleType: "LV", results: { Collins: 4, Donalds: 44, Fishback: 5, Renner: 2 } },
   { pollster: "The Public Sentiment Institute", endDate: "2026-02-20", sampleSize: 0, sampleType: "LV", results: { Collins: 12, Donalds: 30, Fishback: 8, Renner: 2 } },
   { pollster: "The Public Sentiment Institute", endDate: "2026-02-20", sampleSize: 0, sampleType: "RV", results: { Collins: 7, Donalds: 29, Fishback: 5, Renner: 1 } },
   { pollster: "University of North Florida", endDate: "2026-02-20", sampleSize: 657, sampleType: "LV", results: { Collins: 4, Donalds: 31, Fishback: 6, Renner: 1 } },
