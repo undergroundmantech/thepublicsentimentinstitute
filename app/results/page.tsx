@@ -26,7 +26,7 @@ type RegionCandidate = { name: string; party: string; votes: string | number; pe
 type RegionResult = { region: { name: string; type: string; fill?: string; percent_reporting?: number; }; candidates: RegionCandidate[]; };
 type RaceDetail = { election_name: string; election_type: string; election_scope: string; election_date: string; country: string; province: string | null; district: string | null; municipality: string | null; polls_open: string | null; polls_close: string | null; last_updated: string | null; percent_reporting?: number; candidates: RaceCandidate[]; region_results?: RegionResult[] | Record<string, RegionResult>; };
 type RaceType = "Democratic Primary" | "Republican Primary" | "Special Election" | "General Election";
-type FeaturedRace = { id: number; state: | "MS" | "GA" | "TEST"; office: string; raceType: RaceType; label: string; };
+type FeaturedRace = { id: number; state: "IL" | "TEST"; office: string; raceType: RaceType; label: string; };
 
 function getRaceTypeColor(raceType: RaceType): string {
   if (raceType === "Republican Primary") return "var(--rep)";
@@ -42,18 +42,241 @@ function getRaceTypeShort(raceType: RaceType): string {
   return "S";
 }
 
+// ─── FEATURED RACES ──────────────────────────────────────────────────────────
+const FEATURED: FeaturedRace[] = [
+  // Illinois US Senate
+  { id: 55550, state: "IL", office: "US Senate", raceType: "Democratic Primary", label: "IL US Senate — Democratic Primary" },
+  { id: 55551, state: "IL", office: "US Senate", raceType: "Republican Primary", label: "IL US Senate — Republican Primary" },
+  // Illinois Governor
+  { id: 55552, state: "IL", office: "Governor", raceType: "Democratic Primary", label: "IL Governor — Democratic Primary" },
+  { id: 55553, state: "IL", office: "Governor", raceType: "Republican Primary", label: "IL Governor — Republican Primary" },
+  // Secretary of State
+  { id: 55554, state: "IL", office: "Secretary of State", raceType: "Democratic Primary", label: "IL Secretary of State — Democratic Primary" },
+  { id: 55555, state: "IL", office: "Secretary of State", raceType: "Republican Primary", label: "IL Secretary of State — Republican Primary" },
+  // Attorney General
+  { id: 55556, state: "IL", office: "Attorney General", raceType: "Democratic Primary", label: "IL Attorney General — Democratic Primary" },
+  { id: 55557, state: "IL", office: "Attorney General", raceType: "Republican Primary", label: "IL Attorney General — Republican Primary" },
+  // Comptroller
+  { id: 55558, state: "IL", office: "Comptroller", raceType: "Democratic Primary", label: "IL Comptroller — Democratic Primary" },
+  { id: 55559, state: "IL", office: "Comptroller", raceType: "Republican Primary", label: "IL Comptroller — Republican Primary" },
+  // Treasurer
+  { id: 55560, state: "IL", office: "Treasurer", raceType: "Republican Primary", label: "IL Treasurer — Republican Primary" },
+  { id: 55561, state: "IL", office: "Treasurer", raceType: "Democratic Primary", label: "IL Treasurer — Democratic Primary" },
+  // US House races
+  { id: 55562, state: "IL", office: "US House 1", raceType: "Democratic Primary", label: "IL District 1 — Democratic Primary" },
+  { id: 55563, state: "IL", office: "US House 1", raceType: "Republican Primary", label: "IL District 1 — Republican Primary" },
+  { id: 55564, state: "IL", office: "US House 2", raceType: "Republican Primary", label: "IL District 2 — Republican Primary" },
+  { id: 55565, state: "IL", office: "US House 2", raceType: "Democratic Primary", label: "IL District 2 — Democratic Primary" },
+  { id: 55566, state: "IL", office: "US House 3", raceType: "Democratic Primary", label: "IL District 3 — Democratic Primary" },
+  { id: 55567, state: "IL", office: "US House 3", raceType: "Republican Primary", label: "IL District 3 — Republican Primary" },
+  { id: 55568, state: "IL", office: "US House 4", raceType: "Democratic Primary", label: "IL District 4 — Democratic Primary" },
+  { id: 55569, state: "IL", office: "US House 4", raceType: "Republican Primary", label: "IL District 4 — Republican Primary" },
+  { id: 55570, state: "IL", office: "US House 5", raceType: "Democratic Primary", label: "IL District 5 — Democratic Primary" },
+  { id: 55571, state: "IL", office: "US House 5", raceType: "Republican Primary", label: "IL District 5 — Republican Primary" },
+  { id: 55572, state: "IL", office: "US House 6", raceType: "Democratic Primary", label: "IL District 6 — Democratic Primary" },
+  { id: 55573, state: "IL", office: "US House 6", raceType: "Republican Primary", label: "IL District 6 — Republican Primary" },
+  { id: 55574, state: "IL", office: "US House 7", raceType: "Democratic Primary", label: "IL District 7 — Democratic Primary" },
+  { id: 55575, state: "IL", office: "US House 7", raceType: "Republican Primary", label: "IL District 7 — Republican Primary" },
+  { id: 55576, state: "IL", office: "US House 8", raceType: "Democratic Primary", label: "IL District 8 — Democratic Primary" },
+  { id: 55577, state: "IL", office: "US House 8", raceType: "Republican Primary", label: "IL District 8 — Republican Primary" },
+  { id: 55578, state: "IL", office: "US House 9", raceType: "Democratic Primary", label: "IL District 9 — Democratic Primary" },
+  { id: 55579, state: "IL", office: "US House 9", raceType: "Republican Primary", label: "IL District 9 — Republican Primary" },
+  { id: 55580, state: "IL", office: "US House 10", raceType: "Democratic Primary", label: "IL District 10 — Democratic Primary" },
+  { id: 55581, state: "IL", office: "US House 10", raceType: "Republican Primary", label: "IL District 10 — Republican Primary" },
+  { id: 55582, state: "IL", office: "US House 11", raceType: "Democratic Primary", label: "IL District 11 — Democratic Primary" },
+  { id: 55583, state: "IL", office: "US House 11", raceType: "Republican Primary", label: "IL District 11 — Republican Primary" },
+  { id: 55584, state: "IL", office: "US House 12", raceType: "Democratic Primary", label: "IL District 12 — Democratic Primary" },
+  { id: 55585, state: "IL", office: "US House 12", raceType: "Republican Primary", label: "IL District 12 — Republican Primary" },
+  { id: 55586, state: "IL", office: "US House 13", raceType: "Democratic Primary", label: "IL District 13 — Democratic Primary" },
+  { id: 55587, state: "IL", office: "US House 13", raceType: "Republican Primary", label: "IL District 13 — Republican Primary" },
+  { id: 55588, state: "IL", office: "US House 14", raceType: "Democratic Primary", label: "IL District 14 — Democratic Primary" },
+  { id: 55589, state: "IL", office: "US House 14", raceType: "Republican Primary", label: "IL District 14 — Republican Primary" },
+  { id: 55590, state: "IL", office: "US House 15", raceType: "Democratic Primary", label: "IL District 15 — Democratic Primary" },
+  { id: 55591, state: "IL", office: "US House 15", raceType: "Republican Primary", label: "IL District 15 — Republican Primary" },
+  { id: 55592, state: "IL", office: "US House 16", raceType: "Democratic Primary", label: "IL District 16 — Democratic Primary" },
+  { id: 55593, state: "IL", office: "US House 16", raceType: "Republican Primary", label: "IL District 16 — Republican Primary" },
+  { id: 55594, state: "IL", office: "US House 17", raceType: "Democratic Primary", label: "IL District 17 — Democratic Primary" },
+  { id: 55595, state: "IL", office: "US House 17", raceType: "Republican Primary", label: "IL District 17 — Republican Primary" },
+];
+
+// ─── RACE FORECAST DEFAULTS ───────────────────────────────────────────────────
+// Sourcing notes:
+//   IL Senate D  — Emerson/AARP poll (eve-of-primary): Krishnamoorthi 31.6%, Stratton 29.4%, Kelly 13.6%
+//   IL Senate R  — Jan 2026 internal: Tracy leads fundraising ~$2.1M; 84% undecided in public poll
+//   IL Gov R     — Bailey (2022 nominee, highest name-ID), Dabrowski, Heidner, Mendrick; no public polling
+//   IL House 2 D — 10-candidate open seat (Kelly vacated for Senate); Jackson Jr., Miller, Peters, Preston
+//   IL House 5 D — 15-candidate open seat (Schakowsky); Biss, Fine, Abughazaleh, Huynh lead
+//   IL House 7 D — 13-candidate open seat (Davis retiring); Conyears-Ervin, Ford, Boykin, Friedman
+//   IL House 8 D — 8-candidate open seat (Krishnamoorthi); Morrison, Khot, Bean, Bankole
+//   IL House 9 D — contested; Dem stronghold North Shore/Evanston
+//   Uncontested  — set to 100% for sole candidate per source data
 const RACE_FORECAST_DEFAULTS: Partial<Record<number, { raceRule: RaceRule; expectedTurnout?: number; pollAvg?: Record<string, number>; }>> = {
-  46673: { raceRule: "PLURALITY", expectedTurnout: 280_000, pollAvg: { "Little": 16.0, "Till": 12.0, "Colom": 72.0} },  // unchanged
-  51420: { raceRule: "PLURALITY", expectedTurnout: 280_000, pollAvg: { "Hyde-Smith": 88.0, "Adlakha": 8.0} },  // 2 candidates
-  51421: { raceRule: "PLURALITY", expectedTurnout: 55_000, pollAvg: { "Trent Kelly": 100.0 } },  // 1 candidate
-  51422: { raceRule: "PLURALITY", expectedTurnout: 40_000, pollAvg: { "Cliff Johnson": 55.0, "Kelvin Buck": 45.0 } },  // 2 candidates
-  51423: { raceRule: "PLURALITY", expectedTurnout: 60_000, pollAvg: { "Ron Eller": 52.0, "Kevin Wilson": 48.0 } },  // 2 candidates
-  51424: { raceRule: "MAJORITY", expectedTurnout: 55_000, pollAvg: { "Bennie Thompson": 68.0, "Evan Turnage": 20.0, "Pertis Herman Williams III": 12.0 } },  // 3 candidates → runoff opp.
-  51425: { raceRule: "PLURALITY", expectedTurnout: 50_000, pollAvg: { "Michael Guest": 100.0 } },  // 1 candidate
-  51426: { raceRule: "PLURALITY", expectedTurnout: 45_000, pollAvg: { "Michael A. Chiaradio": 100.0 } },  // 1 candidate
-  51427: { raceRule: "PLURALITY", expectedTurnout: 55_000, pollAvg: { "Mike Ezell": 75.0, "Sawyer Walters": 25.0 } },  // 2 candidates (per pollAvg)
-  51428: { raceRule: "MAJORITY", expectedTurnout: 40_000, pollAvg: { "Jeffrey Hulum III": 45.0, "D. Ryan Grover": 30.0, "Paul James Blackman": 25.0 } },  // 3 candidates → runoff opp.
-  52551: { raceRule: "MAJORITY", expectedTurnout: 120_000, pollAvg: { "Clay Fuller": 35.0, "Harris": 28.0, "Moore": 20.0, "Others": 17.0 } }  // many candidates → high runoff opp.
+
+  // ─── IL US SENATE ────────────────────────────────────────────────────────────
+  // Dem primary: latest eve-of-primary poll Krishnamoorthi 31.6% / Stratton 29.4% / Kelly 13.6%
+  // Krishnamoorthi raised ~$30M; Stratton backed by Gov. Pritzker; Kelly endorsed by CBC
+  55550: { raceRule: "PLURALITY", expectedTurnout: 850_000, pollAvg: { "Krishnamoorthi": 31.6, "Stratton": 29.4, "Kelly": 13.6, "Bustos": 3.0, "Others": 22.4 } },
+
+  // Rep primary: Tracy leads fundraising (~$2.1M), Evans ~$500K, Chlebek ~$100K; Jan poll 84% undecided
+  55551: { raceRule: "PLURALITY", expectedTurnout: 700_000, pollAvg: { "Tracy": 45.0, "Evans": 32.0, "Chlebek": 13.0, "Others": 10.0 } },
+
+  // ─── IL GOVERNOR ─────────────────────────────────────────────────────────────
+  // Dem: Pritzker uncontested (seeking historic 3rd term)
+  55552: { raceRule: "PLURALITY", expectedTurnout: 900_000, pollAvg: { "Pritzker": 100.0 } },
+
+  // Rep: Bailey (2022 nominee, returns with highest name-ID), Dabrowski, Heidner, Mendrick; no public poll
+  55553: { raceRule: "PLURALITY", expectedTurnout: 700_000, pollAvg: { "Bailey": 38.0, "Dabrowski": 28.0, "Heidner": 20.0, "Mendrick": 14.0 } },
+
+  // ─── IL SECRETARY OF STATE ───────────────────────────────────────────────────
+  // Dem: Giannoulias (incumbent, uncontested)
+  55554: { raceRule: "PLURALITY", expectedTurnout: 800_000, pollAvg: { "Giannoulias": 100.0 } },
+
+  // Rep: Competitive; projecting based on available name recognition / fundraising signals
+  55555: { raceRule: "PLURALITY", expectedTurnout: 650_000, pollAvg: { "GOP Candidate A": 50.0, "GOP Candidate B": 30.0, "Others": 20.0 } },
+
+  // ─── IL ATTORNEY GENERAL ─────────────────────────────────────────────────────
+  // Dem: Raoul (incumbent, uncontested)
+  55556: { raceRule: "PLURALITY", expectedTurnout: 800_000, pollAvg: { "Raoul": 100.0 } },
+
+  // Rep: Uncontested per source data
+  55557: { raceRule: "PLURALITY", expectedTurnout: 600_000, pollAvg: { "GOP Candidate": 100.0 } },
+
+  // ─── IL COMPTROLLER ──────────────────────────────────────────────────────────
+  // Dem: Mendoza not seeking re-election; 4 candidates — 3 state legislators + Lake County treasurer
+  55558: { raceRule: "PLURALITY", expectedTurnout: 800_000, pollAvg: { "State Legislator A": 35.0, "State Legislator B": 28.0, "State Legislator C": 22.0, "Lake County Treasurer": 15.0 } },
+
+  // Rep: Uncontested per source data
+  55559: { raceRule: "PLURALITY", expectedTurnout: 600_000, pollAvg: { "GOP Candidate": 100.0 } },
+
+  // ─── IL TREASURER ────────────────────────────────────────────────────────────
+  // Rep: Uncontested per source data
+  55560: { raceRule: "PLURALITY", expectedTurnout: 600_000, pollAvg: { "GOP Candidate": 100.0 } },
+
+  // Dem: Frerichs (incumbent, uncontested)
+  55561: { raceRule: "PLURALITY", expectedTurnout: 800_000, pollAvg: { "Frerichs": 100.0 } },
+
+  // ─── IL US HOUSE 1 ───────────────────────────────────────────────────────────
+  // Dem: Uncontested (Chicago South Side safe D seat)
+  55562: { raceRule: "PLURALITY", expectedTurnout: 55_000, pollAvg: { "Democratic Candidate": 100.0 } },
+
+  // Rep: Contested; safe D district, low-resource GOP primary
+  55563: { raceRule: "PLURALITY", expectedTurnout: 15_000, pollAvg: { "GOP Candidate A": 60.0, "GOP Candidate B": 40.0 } },
+
+  // ─── IL US HOUSE 2 ───────────────────────────────────────────────────────────
+  // Rep: Noack uncontested
+  55564: { raceRule: "PLURALITY", expectedTurnout: 10_000, pollAvg: { "Noack": 100.0 } },
+
+  // Dem: Robin Kelly vacated for Senate; 10-candidate field — Jackson Jr. returns (name-ID), Miller, Peters, Preston
+  // Heavily Black-majority district (Chicago South suburbs); identity + endorsement driven
+  55565: { raceRule: "PLURALITY", expectedTurnout: 60_000, pollAvg: { "Jackson Jr.": 28.0, "Miller": 22.0, "Peters": 20.0, "Preston": 15.0, "Others": 15.0 } },
+
+  // ─── IL US HOUSE 3 ───────────────────────────────────────────────────────────
+  // Dem: Uncontested
+  55566: { raceRule: "PLURALITY", expectedTurnout: 45_000, pollAvg: { "Democratic Candidate": 100.0 } },
+
+  // Rep: Uncontested
+  55567: { raceRule: "PLURALITY", expectedTurnout: 10_000, pollAvg: { "GOP Candidate": 100.0 } },
+
+  // ─── IL US HOUSE 4 ───────────────────────────────────────────────────────────
+  // Dem: Uncontested
+  55568: { raceRule: "PLURALITY", expectedTurnout: 40_000, pollAvg: { "Democratic Candidate": 100.0 } },
+
+  // Rep: Uncontested
+  55569: { raceRule: "PLURALITY", expectedTurnout: 8_000, pollAvg: { "GOP Candidate": 100.0 } },
+
+  // ─── IL US HOUSE 5 ───────────────────────────────────────────────────────────
+  // Dem: Schakowsky retired; 15-candidate field — Biss (Evanston Mayor), Fine (State Sen.),
+  // Abughazaleh (progressive content creator), Huynh (State Rep.) as top tier; no public polling
+  55570: { raceRule: "PLURALITY", expectedTurnout: 65_000, pollAvg: { "Biss": 27.0, "Fine": 24.0, "Abughazaleh": 22.0, "Huynh": 14.0, "Others": 13.0 } },
+
+  // Rep: 4 candidates (Elleson, Friedman, Cleveland, Su) — D-leaning suburban district
+  55571: { raceRule: "PLURALITY", expectedTurnout: 12_000, pollAvg: { "Elleson": 35.0, "Friedman": 28.0, "Cleveland": 22.0, "Su": 15.0 } },
+
+  // ─── IL US HOUSE 6 ───────────────────────────────────────────────────────────
+  // Dem: Contested — suburban Chicago swing district
+  55572: { raceRule: "PLURALITY", expectedTurnout: 50_000, pollAvg: { "Dem Candidate A": 55.0, "Dem Candidate B": 45.0 } },
+
+  // Rep: Contested — suburban swing district
+  55573: { raceRule: "PLURALITY", expectedTurnout: 40_000, pollAvg: { "GOP Candidate A": 55.0, "GOP Candidate B": 45.0 } },
+
+  // ─── IL US HOUSE 7 ───────────────────────────────────────────────────────────
+  // Dem: Danny Davis retiring; 13-candidate field — Conyears-Ervin (Chicago Treasurer),
+  // La Shawn Ford (State Rep.), Boykin, Collins, Friedman; safe D Chicago district — primary is the race
+  55574: { raceRule: "PLURALITY", expectedTurnout: 55_000, pollAvg: { "Conyears-Ervin": 28.0, "Ford": 22.0, "Boykin": 18.0, "Friedman": 14.0, "Collins": 10.0, "Others": 8.0 } },
+
+  // Rep: No meaningful opposition in this heavily D Chicago district
+  55575: { raceRule: "PLURALITY", expectedTurnout: 8_000, pollAvg: { "GOP Candidate": 100.0 } },
+
+  // ─── IL US HOUSE 8 ───────────────────────────────────────────────────────────
+  // Dem: Krishnamoorthi vacated for Senate; 8-candidate field — Morrison (Cook County Board),
+  // Khot (businessman), Bean (former Rep.), Bankole (Hanover Park Trustee)
+  55576: { raceRule: "PLURALITY", expectedTurnout: 55_000, pollAvg: { "Morrison": 30.0, "Khot": 25.0, "Bean": 22.0, "Bankole": 13.0, "Others": 10.0 } },
+
+  // Rep: 4 candidates — Rice, Jennifer Davis, Ake, Hebein; competitive suburban primary
+  55577: { raceRule: "PLURALITY", expectedTurnout: 25_000, pollAvg: { "Rice": 32.0, "Davis": 26.0, "Ake": 24.0, "Hebein": 18.0 } },
+
+  // ─── IL US HOUSE 9 ───────────────────────────────────────────────────────────
+  // Dem: Contested — North Shore Dem stronghold; multi-candidate field
+  55578: { raceRule: "PLURALITY", expectedTurnout: 60_000, pollAvg: { "Dem Candidate A": 32.0, "Dem Candidate B": 28.0, "Dem Candidate C": 22.0, "Others": 18.0 } },
+
+  // Rep: Contested
+  55579: { raceRule: "PLURALITY", expectedTurnout: 15_000, pollAvg: { "GOP Candidate A": 55.0, "GOP Candidate B": 45.0 } },
+
+  // ─── IL US HOUSE 10 ──────────────────────────────────────────────────────────
+  // Dem: Contested — North Shore suburban district
+  55580: { raceRule: "PLURALITY", expectedTurnout: 50_000, pollAvg: { "Dem Candidate A": 60.0, "Dem Candidate B": 40.0 } },
+
+  // Rep: Uncontested per source data
+  55581: { raceRule: "PLURALITY", expectedTurnout: 20_000, pollAvg: { "GOP Candidate": 100.0 } },
+
+  // ─── IL US HOUSE 11 ──────────────────────────────────────────────────────────
+  // Dem: Uncontested per source data
+  55582: { raceRule: "PLURALITY", expectedTurnout: 45_000, pollAvg: { "Democratic Candidate": 100.0 } },
+
+  // Rep: Contested — suburban SW Chicago
+  55583: { raceRule: "PLURALITY", expectedTurnout: 20_000, pollAvg: { "GOP Candidate A": 55.0, "GOP Candidate B": 45.0 } },
+
+  // ─── IL US HOUSE 12 ──────────────────────────────────────────────────────────
+  // Dem: Uncontested — deep R district Southern IL
+  55584: { raceRule: "PLURALITY", expectedTurnout: 15_000, pollAvg: { "Democratic Candidate": 100.0 } },
+
+  // Rep: Bost (incumbent) uncontested per source data
+  55585: { raceRule: "PLURALITY", expectedTurnout: 40_000, pollAvg: { "Bost": 100.0 } },
+
+  // ─── IL US HOUSE 13 ──────────────────────────────────────────────────────────
+  // Dem: Contested — Central IL swing district (formerly Rodney Davis seat)
+  55586: { raceRule: "PLURALITY", expectedTurnout: 30_000, pollAvg: { "Dem Candidate A": 55.0, "Dem Candidate B": 45.0 } },
+
+  // Rep: Contested — competitive central IL district; key 2026 battleground
+  55587: { raceRule: "PLURALITY", expectedTurnout: 30_000, pollAvg: { "GOP Candidate A": 50.0, "GOP Candidate B": 35.0, "GOP Candidate C": 15.0 } },
+
+  // ─── IL US HOUSE 14 ──────────────────────────────────────────────────────────
+  // Dem: Underwood uncontested — she declined Senate race, chose re-election
+  55588: { raceRule: "PLURALITY", expectedTurnout: 50_000, pollAvg: { "Underwood": 100.0 } },
+
+  // Rep: Contested — suburban Chicago exurban district (key pickup target)
+  55589: { raceRule: "PLURALITY", expectedTurnout: 30_000, pollAvg: { "GOP Candidate A": 52.0, "GOP Candidate B": 30.0, "GOP Candidate C": 18.0 } },
+
+  // ─── IL US HOUSE 15 ──────────────────────────────────────────────────────────
+  // Dem: Contested — deep R downstate district; nominal opposition
+  55590: { raceRule: "PLURALITY", expectedTurnout: 10_000, pollAvg: { "Dem Candidate": 100.0 } },
+
+  // Rep: Contested — safe R downstate; primary is the meaningful race
+  55591: { raceRule: "PLURALITY", expectedTurnout: 50_000, pollAvg: { "GOP Candidate A": 55.0, "GOP Candidate B": 30.0, "GOP Candidate C": 15.0 } },
+
+  // ─── IL US HOUSE 16 ──────────────────────────────────────────────────────────
+  // Dem: Uncontested — deep R NW Illinois district
+  55592: { raceRule: "PLURALITY", expectedTurnout: 8_000, pollAvg: { "Democratic Candidate": 100.0 } },
+
+  // Rep: Uncontested per source data
+  55593: { raceRule: "PLURALITY", expectedTurnout: 45_000, pollAvg: { "GOP Candidate": 100.0 } },
+
+  // ─── IL US HOUSE 17 ──────────────────────────────────────────────────────────
+  // Dem: Sorensen uncontested — competitive general-election district (Quad Cities)
+  55594: { raceRule: "PLURALITY", expectedTurnout: 30_000, pollAvg: { "Democratic Candidate": 100.0 } },
+
+  // Rep: Contested — several candidates; key 2026 GOP pickup target
+  55595: { raceRule: "PLURALITY", expectedTurnout: 25_000, pollAvg: { "GOP Candidate A": 50.0, "GOP Candidate B": 35.0, "GOP Candidate C": 15.0 } },
 };
 
 function sortCandidatesByPollData(candidates: RaceCandidate[], pollAvg?: Record<string, number>): RaceCandidate[] {
@@ -66,21 +289,6 @@ function sortCandidatesByPollData(candidates: RaceCandidate[], pollAvg?: Record<
     return (b.percent ?? 0) - (a.percent ?? 0);
   });
 }
-
-const FEATURED: FeaturedRace[] = [
-  { id: 46673, state: "MS", office: "US Senate", raceType: "Democratic Primary", label: "MS US Senate — Democratic Primary" },
-  { id: 51420, state: "MS", office: "US Senate", raceType: "Republican Primary", label: "MS US Senate — Republican Primary" },
-  { id: 51421, state: "MS", office: "US House 1", raceType: "Republican Primary", label: "MS District 1 — Republican Primary" },
-  { id: 51422, state: "MS", office: "US House 1", raceType: "Democratic Primary", label: "MS District 1 — Democratic Primary" },
-  { id: 51423, state: "MS", office: "US House 2", raceType: "Republican Primary", label: "MS District 2 — Republican Primary" },
-  { id: 51424, state: "MS", office: "US House 2", raceType: "Democratic Primary", label: "MS District 2 — Democratic Primary" },
-  { id: 51425, state: "MS", office: "US House 3", raceType: "Republican Primary", label: "MS District 3 — Republican Primary" },
-  { id: 51426, state: "MS", office: "US House 3", raceType: "Democratic Primary", label: "MS District 3 — Democratic Primary" },
-  { id: 51427, state: "MS", office: "US House 4", raceType: "Republican Primary", label: "MS District 4 — Republican Primary" },
-  { id: 51428, state: "MS", office: "US House 4", raceType: "Democratic Primary", label: "MS District 4 — Democratic Primary" },
-  { id: 52551, state: "GA", office: "US House 14", raceType: "Special Election", label: "GA District 14 — Special Election" },
-  { id: 9999999, state: "TEST", office: "Test Map", raceType: "General Election", label: "Map Test — Blank Counties" },
-];
 
 async function fetchRaceById(id: number): Promise<RaceDetail> {
   const res = await fetch(`${CIVIC_BASE}/api/v2/race/${id}`, { cache: "no-store" });
@@ -216,7 +424,6 @@ function MapWithCountyTooltip({ svgText, regionResults }: { svgText: string; reg
   const countyFingerprintsRef = useRef<Map<string, string>>(new Map());
   const countyVoteTotalsRef = useRef<Map<string, number>>(new Map());
 
-  // Zoom/pan state
   const transformRef = useRef({ scale: 1, x: 0, y: 0 });
   const isPanningRef = useRef(false);
   const panStartRef = useRef({ mx: 0, my: 0, tx: 0, ty: 0 });
@@ -256,11 +463,10 @@ function MapWithCountyTooltip({ svgText, regionResults }: { svgText: string; reg
     applyTransform();
   }, [applyTransform]);
 
-  // Wheel zoom
   useEffect(() => {
     const host = wrapRef.current; if (!host) return;
     const onWheel = (e: WheelEvent) => {
-      if (lockedRef.current) return; // locked — let scroll pass through
+      if (lockedRef.current) return;
       e.preventDefault();
       const rect = host.getBoundingClientRect();
       const mx = e.clientX - rect.left;
@@ -278,7 +484,6 @@ function MapWithCountyTooltip({ svgText, regionResults }: { svgText: string; reg
     return () => host.removeEventListener("wheel", onWheel);
   }, [applyTransform]);
 
-  // Pan via pointer drag — works everywhere including county shapes
   useEffect(() => {
     const host = wrapRef.current; if (!host) return;
     let capturedId: number | null = null;
@@ -332,7 +537,7 @@ function MapWithCountyTooltip({ svgText, regionResults }: { svgText: string; reg
       shape.style.transition = "fill 420ms ease, filter 300ms ease, stroke 200ms ease, stroke-width 200ms ease";
 
       const onMove = (ev: PointerEvent) => {
-        if (isPanningRef.current) return; // dragging — no tooltip
+        if (isPanningRef.current) return;
         const currentRR = regionMap.get(key);
         const tw = 320, th = 280, p = 12, offset = 14;
         const rect = host.getBoundingClientRect();
@@ -403,7 +608,6 @@ function MapWithCountyTooltip({ svgText, regionResults }: { svgText: string; reg
   return (
     <div className="relative h-full" style={{ overflow: "hidden" }}>
       <div ref={wrapRef} className="w-full h-full [&_svg]:w-full [&_svg]:h-full" style={{ display: "flex", alignItems: "stretch", cursor: "crosshair" }} />
-      {/* Zoom controls */}
       <div style={{ position: "absolute", bottom: 10, right: 10, display: "flex", flexDirection: "column", gap: 4, zIndex: 40 }}>
         <button onClick={toggleLock} title={locked ? "Unlock zoom" : "Lock zoom"} style={{ width: 28, height: 28, background: locked ? "rgba(245,158,11,0.15)" : "rgba(10,15,30,0.85)", border: `1px solid ${locked ? "#f59e0b" : "rgba(255,255,255,0.15)"}`, color: locked ? "#f59e0b" : "rgba(255,255,255,0.4)", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", padding: "5px" }}>
           {locked
@@ -509,58 +713,24 @@ function CountyTotalsTable({ regionResults, collapsed, onToggle, maxHeight }: { 
 
   return (
     <div className="res-panel" style={{ overflow: "hidden" }}>
-      {/* Clickable header with toggle */}
       <button
         onClick={onToggle}
-        style={{
-          width: "100%",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          padding: "10px 14px",
-          background: "var(--background2)",
-          border: "none",
-          borderBottom: collapsed ? "none" : "1px solid var(--border)",
-          cursor: "pointer",
-          transition: "background 140ms ease",
-        }}
+        style={{ width: "100%", display: "flex", alignItems: "center", justifyContent: "space-between", padding: "10px 14px", background: "var(--background2)", border: "none", borderBottom: collapsed ? "none" : "1px solid var(--border)", cursor: "pointer", transition: "background 140ms ease" }}
       >
         <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
           <span className="res-panel-tag">COUNTY BREAKDOWN</span>
-          {data.length > 0 && (
-            <span className="res-badge">
-              {reportedCount}/{data.length} REPORTING
-            </span>
-          )}
+          {data.length > 0 && <span className="res-badge">{reportedCount}/{data.length} REPORTING</span>}
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-          <span className="res-note" style={{ color: "rgba(255,255,255,0.25)" }}>
-            {collapsed ? "SHOW TABLE" : "HIDE TABLE"}
-          </span>
-          {/* Chevron icon */}
-          <svg
-            width="12" height="12" viewBox="0 0 12 12" fill="none"
-            style={{
-              transform: collapsed ? "rotate(0deg)" : "rotate(180deg)",
-              transition: "transform 240ms cubic-bezier(0.22,1,0.36,1)",
-              flexShrink: 0,
-            }}
-          >
+          <span className="res-note" style={{ color: "rgba(255,255,255,0.25)" }}>{collapsed ? "SHOW TABLE" : "HIDE TABLE"}</span>
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" style={{ transform: collapsed ? "rotate(0deg)" : "rotate(180deg)", transition: "transform 240ms cubic-bezier(0.22,1,0.36,1)", flexShrink: 0 }}>
             <path d="M2 4L6 8L10 4" stroke="rgba(255,255,255,0.35)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         </div>
       </button>
-
-      {/* Collapsible content */}
-      <div style={{
-        overflow: collapsed ? "hidden" : "auto",
-        maxHeight: collapsed ? "0px" : (maxHeight ?? "340px"),
-        transition: "max-height 400ms cubic-bezier(0.22,1,0.36,1)",
-      }}>
+      <div style={{ overflow: collapsed ? "hidden" : "auto", maxHeight: collapsed ? "0px" : (maxHeight ?? "340px"), transition: "max-height 400ms cubic-bezier(0.22,1,0.36,1)" }}>
         {data.length === 0 ? (
-          <div style={{ padding: "20px", textAlign: "center" }}>
-            <span className="res-note" style={{ color: "rgba(255,255,255,0.2)" }}>NO COUNTY DATA</span>
-          </div>
+          <div style={{ padding: "20px", textAlign: "center" }}><span className="res-note" style={{ color: "rgba(255,255,255,0.2)" }}>NO COUNTY DATA</span></div>
         ) : (
           <div style={{ overflowY: "auto" }}>
             <table className="w-full border-collapse">
@@ -631,19 +801,9 @@ function SwingOMeter({ candidates, colors, probabilities, raceRule, reportingPct
           { key: "c2", prob: Math.max(0, probabilities.c2), color: colors[1], name: candidates[1] },
           { key: "c3", prob: Math.max(0, probabilities.c3), color: colors[2], name: candidates[2] },
         ].sort((a, b) => b.prob - a.prob);
-
         const topA = major[0];
         const topB = major[1] ?? { key: "c2", prob: 0, color: colors[1], name: candidates[1] };
-        const runoffProb = Math.max(
-          0,
-          Math.min(
-            1,
-            typeof probabilities.runoffNeeded === "number"
-              ? probabilities.runoffNeeded
-              : 1 - (probabilities.c1 + probabilities.c2 + probabilities.c3),
-          ),
-        );
-
+        const runoffProb = Math.max(0, Math.min(1, typeof probabilities.runoffNeeded === "number" ? probabilities.runoffNeeded : 1 - (probabilities.c1 + probabilities.c2 + probabilities.c3)));
         return [
           { key: topA.key, prob: topA.prob, color: topA.color, name: topA.name },
           { key: topB.key, prob: topB.prob, color: topB.color, name: topB.name },
@@ -749,13 +909,11 @@ function getEffectiveForecastCandidateCount(
     return true;
   }).length;
   if (fromRace > 0) return Math.max(1, Math.min(3, fromRace));
-
   const fromNames = (forecastCandidateNames ?? []).slice(0, 3).filter((n) => {
     const name = String(n ?? "").trim();
     return !!name && !/^candidate\s*\d+$/i.test(name);
   }).length;
   if (fromNames > 0) return Math.max(1, Math.min(3, fromNames));
-
   return 2;
 }
 function normalizeWinProbabilitiesByCandidateCount(
@@ -764,24 +922,20 @@ function normalizeWinProbabilitiesByCandidateCount(
 ): { c1: number; c2: number; c3: number } {
   const count = Math.max(1, Math.min(3, candidateCount));
   if (count === 1) return { c1: 1, c2: 0, c3: 0 };
-
   const raw = [Math.max(0, src.Candidate1 ?? 0), Math.max(0, src.Candidate2 ?? 0), Math.max(0, src.Candidate3 ?? 0)];
   for (let i = count; i < 3; i += 1) raw[i] = 0;
-
   const total = raw[0] + raw[1] + raw[2];
   if (total <= 0) {
     if (count === 2) return { c1: 0.5, c2: 0.5, c3: 0 };
     return { c1: 1 / 3, c2: 1 / 3, c3: 1 / 3 };
   }
-
   return { c1: raw[0] / total, c2: raw[1] / total, c3: raw[2] / total };
 }
 
 // ─── FORECAST PANEL ───────────────────────────────────────────────────────────
 function ForecastPanel({ raceId, refreshTick, raceData, onForecastUpdate }: { raceId: number; refreshTick: number; raceData?: RaceDetail; onForecastUpdate?: (update: { leader: string; prob: number; runoffNeededProb: number; projectionType: "WIN" | "RUNOFF" }) => void }) {
   const defaults = RACE_FORECAST_DEFAULTS[raceId];
-  const TX_RACE_IDS = [44285, 44286, 44287, 44288, 44289, 44290, 44291, 44292, 44293, 44294, 44295];
-  const [raceRule, setRaceRule] = useState<RaceRule>(() => TX_RACE_IDS.includes(raceId) ? "MAJORITY" : (defaults?.raceRule ?? "PLURALITY"));
+  const [raceRule, setRaceRule] = useState<RaceRule>(() => defaults?.raceRule ?? "PLURALITY");
   const [expectedTurnoutOverride, setExpectedTurnoutOverride] = useState(defaults?.expectedTurnout ? String(defaults.expectedTurnout) : "");
   const [historyList, setHistoryList] = useState<ForecastHistoryList | null>(null);
   const [historyIndex, setHistoryIndex] = useState(0);
@@ -816,7 +970,6 @@ function ForecastPanel({ raceId, refreshTick, raceData, onForecastUpdate }: { ra
         const candidateCount = getEffectiveForecastCandidateCount(data?.race?.candidates, data?.forecast?.candidate_names);
         const names = data.forecast.candidate_names ?? [];
         const keys = ["Candidate1", "Candidate2", "Candidate3"] as const;
-
         if (data.forecast.race_rule === "PLURALITY") {
           const normalized = normalizeWinProbabilitiesByCandidateCount(data.forecast.plurality_odds_to_win, candidateCount);
           const best = keys.reduce((a, b) => ((normalized[a === "Candidate1" ? "c1" : a === "Candidate2" ? "c2" : "c3"] ?? 0) >= (normalized[b === "Candidate1" ? "c1" : b === "Candidate2" ? "c2" : "c3"] ?? 0) ? a : b), "Candidate1" as typeof keys[number]);
@@ -829,11 +982,9 @@ function ForecastPanel({ raceId, refreshTick, raceData, onForecastUpdate }: { ra
           const runoffNeededProb = typeof data.forecast.runoff_needed_prob === "number"
             ? Math.max(0, Math.min(1, data.forecast.runoff_needed_prob))
             : Math.max(0, Math.min(1, 1 - (c1 + c2 + c3)));
-
           const candidateMajority = [c1, c2, c3].map((p, idx) => (idx < candidateCount ? p : 0));
           const bestIdx = candidateMajority.reduce((best, val, idx, arr) => (val >= arr[best] ? idx : best), 0);
           const bestCandidateProb = candidateMajority[bestIdx] ?? 0;
-
           if (runoffNeededProb >= bestCandidateProb) {
             onForecastUpdate({ leader: "Runoff chance", prob: runoffNeededProb * 100, runoffNeededProb, projectionType: "RUNOFF" });
           } else {
@@ -861,7 +1012,7 @@ function ForecastPanel({ raceId, refreshTick, raceData, onForecastUpdate }: { ra
 
   useEffect(() => {
     const d = RACE_FORECAST_DEFAULTS[raceId];
-    const newRule: RaceRule = TX_RACE_IDS.includes(raceId) ? "MAJORITY" : (d?.raceRule ?? "PLURALITY");
+    const newRule: RaceRule = d?.raceRule ?? "PLURALITY";
     const newTurnout = d?.expectedTurnout ? String(d.expectedTurnout) : "";
     setRaceRule(newRule); setExpectedTurnoutOverride(newTurnout);
     raceRuleRef.current = newRule; turnoutRef.current = newTurnout;
@@ -869,19 +1020,6 @@ function ForecastPanel({ raceId, refreshTick, raceData, onForecastUpdate }: { ra
     setHistoryIndex(0); historyIndexRef.current = 0;
     setPlaying(false); setError(null); setLoadingHistory(false);
     let cancelled = false;
-    // HISTORY DISABLED — skip timestamp fetch, go straight to live
-    // (async () => {
-    //   try {
-    //     const res = await fetch(`/api/forecast?action=timestamps&raceId=${raceId}`);
-    //     const data: ForecastHistoryList = await res.json();
-    //     if (cancelled) return;
-    //     setHistoryList(data); historyListRef.current = data;
-    //     const tsList = getTimestamps(data);
-    //     if (tsList.length > 0) { const last = tsList.length - 1; setHistoryIndex(last); historyIndexRef.current = last; await runForecastAtIndex(raceId, tsList, last, newRule, newTurnout); }
-    //     else { await runForecastLive(raceId, newRule, newTurnout); }
-    //   } catch (e: any) { if (!cancelled) setError(e.message); }
-    //   finally { if (!cancelled) setLoadingHistory(false); }
-    // })();
     (async () => {
       try { await runForecastLive(raceId, newRule, newTurnout); }
       catch (e: any) { if (!cancelled) setError(e.message); }
@@ -900,7 +1038,7 @@ function ForecastPanel({ raceId, refreshTick, raceData, onForecastUpdate }: { ra
   const isFirstOptionsRender = useRef(true);
   useEffect(() => {
     if (isFirstOptionsRender.current) { isFirstOptionsRender.current = false; return; }
-    const timer = setTimeout(() => { const id = raceIdRef.current; /* HISTORY DISABLED */ runForecastLive(id); }, 400);
+    const timer = setTimeout(() => { const id = raceIdRef.current; runForecastLive(id); }, 400);
     return () => clearTimeout(timer);
   }, [raceRule, expectedTurnoutOverride]); // eslint-disable-line
   useEffect(() => { isFirstOptionsRender.current = true; }, [raceId]);
@@ -948,13 +1086,7 @@ function ForecastPanel({ raceId, refreshTick, raceData, onForecastUpdate }: { ra
       <div className="res-panel-header" style={{ flexWrap: "wrap", gap: 8 }}>
         <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
           <span className="res-panel-tag">FORECAST MODEL</span>
-          {/* FORECAST BETA badge */}
-          <span style={{
-            display: "inline-flex", alignItems: "center", padding: "2px 6px",
-            border: "1px solid rgba(124,58,237,0.45)", background: "rgba(124,58,237,0.10)",
-            fontFamily: "var(--font-body)", fontSize: "6.5px", fontWeight: 700,
-            letterSpacing: "0.16em", color: "var(--purple-soft)",
-          }}>FORECAST β</span>
+          <span style={{ display: "inline-flex", alignItems: "center", padding: "2px 6px", border: "1px solid rgba(124,58,237,0.45)", background: "rgba(124,58,237,0.10)", fontFamily: "var(--font-body)", fontSize: "6.5px", fontWeight: 700, letterSpacing: "0.16em", color: "var(--purple-soft)" }}>FORECAST β</span>
           {isLoading && <span className="res-badge res-badge-purple" style={{ fontSize: "7px" }}><span className="res-live-dot" style={{ background: "var(--purple)", width: 4, height: 4 }} />UPDATING</span>}
           {!isLoading && forecast && <span className="res-badge" style={{ fontSize: "7px", color: "rgba(255,255,255,0.25)" }}>AUTO / 30s</span>}
         </div>
@@ -964,7 +1096,7 @@ function ForecastPanel({ raceId, refreshTick, raceData, onForecastUpdate }: { ra
         <div style={{ padding: "12px 14px", borderBottom: "1px solid var(--border)", background: "var(--background2)", display: "flex", flexDirection: "column", gap: 10 }}>
           <div><div className="res-note" style={{ marginBottom: 5 }}>RACE RULE</div><select value={raceRule} onChange={(e) => setRaceRule(e.target.value as RaceRule)} className="res-select" style={{ width: "100%" }}><option value="PLURALITY">Plurality</option><option value="MAJORITY">Majority / Runoff</option></select></div>
           <div><div className="res-note" style={{ marginBottom: 5 }}>EXPECTED TURNOUT (OPTIONAL)</div><input type="number" placeholder="e.g. 5000000" value={expectedTurnoutOverride} onChange={(e) => setExpectedTurnoutOverride(e.target.value)} className="res-input" /></div>
-          <button className="res-btn-primary" style={{ width: "100%", justifyContent: "center" }} disabled={isLoading} onClick={() => { runForecastLive(raceIdRef.current); /* HISTORY DISABLED */ }}>{isLoading ? "RUNNING…" : "RERUN FORECAST"}</button>
+          <button className="res-btn-primary" style={{ width: "100%", justifyContent: "center" }} disabled={isLoading} onClick={() => { runForecastLive(raceIdRef.current); }}>{isLoading ? "RUNNING…" : "RERUN FORECAST"}</button>
         </div>
       )}
       <div className="res-forecast-body" style={{ padding: "14px 16px" }}>
@@ -1041,9 +1173,7 @@ function ForecastPanel({ raceId, refreshTick, raceData, onForecastUpdate }: { ra
   );
 }
 
-// ═══════════════════════════════════════════════════════════════════════════════
-// ─── RACE PICKER PANEL (replaces old tab bar) ─────────────────────────────────
-// ═══════════════════════════════════════════════════════════════════════════════
+// ─── RACE PICKER PANEL ────────────────────────────────────────────────────────
 function RaceScrollWindow({ races, raceCache, selectedId, onSelect, search, onSearchChange, maxHeight }: {
   races: FeaturedRace[]; raceCache: Record<number, RaceDetail | undefined>; selectedId: number;
   onSelect: (id: number) => void; search: string; onSearchChange: (v: string) => void; maxHeight?: number;
@@ -1113,7 +1243,6 @@ function RacePickerPanel({ races, raceCache, selectedId, onSelect }: {
   const [search, setSearch] = useState("");
   const searchRef = useRef<HTMLInputElement>(null);
 
-  // Group by office
   const groups = useMemo(() => {
     const q = search.trim().toLowerCase();
     const filtered = q
@@ -1128,7 +1257,6 @@ function RacePickerPanel({ races, raceCache, selectedId, onSelect }: {
     return Array.from(map.entries());
   }, [races, search]);
 
-  // Keyboard shortcut to focus search
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
       if ((e.key === "/" || ((e.metaKey || e.ctrlKey) && e.key === "k")) && document.activeElement !== searchRef.current) {
@@ -1142,10 +1270,8 @@ function RacePickerPanel({ races, raceCache, selectedId, onSelect }: {
 
   return (
     <div style={{ display: "flex", flexDirection: "column", height: "100%", minHeight: 0, background: "var(--panel)", border: "1px solid var(--border)", overflow: "hidden" }}>
-      {/* Header */}
       <div style={{ padding: "10px 12px", borderBottom: "1px solid var(--border)", background: "var(--background2)", flexShrink: 0 }}>
         <div className="res-panel-tag" style={{ marginBottom: 8 }}>ALL RACES</div>
-        {/* Search input */}
         <div style={{ display: "flex", alignItems: "center", gap: 8, background: "rgba(255,255,255,0.03)", border: "1px solid var(--border)", padding: "6px 10px" }}>
           <svg width="11" height="11" viewBox="0 0 16 16" fill="none" style={{ flexShrink: 0, opacity: 0.4 }}>
             <circle cx="6.5" cy="6.5" r="5" stroke="white" strokeWidth="1.5" />
@@ -1163,8 +1289,6 @@ function RacePickerPanel({ races, raceCache, selectedId, onSelect }: {
           )}
         </div>
       </div>
-
-      {/* Race list */}
       <div style={{ flex: 1, overflowY: "auto", padding: "6px 0" }}>
         {groups.length === 0 && (
           <div style={{ padding: "20px 12px", textAlign: "center" }}>
@@ -1173,21 +1297,9 @@ function RacePickerPanel({ races, raceCache, selectedId, onSelect }: {
         )}
         {groups.map(([office, groupRaces]) => (
           <div key={office} style={{ marginBottom: 2 }}>
-            {/* Office group header */}
-            <div style={{
-              padding: "5px 12px 3px",
-              fontFamily: "var(--font-body)",
-              fontSize: "6.5px",
-              fontWeight: 700,
-              letterSpacing: "0.28em",
-              textTransform: "uppercase",
-              color: "rgba(255,255,255,0.18)",
-              borderTop: "1px solid rgba(255,255,255,0.04)",
-              marginTop: 4,
-            }}>
+            <div style={{ padding: "5px 12px 3px", fontFamily: "var(--font-body)", fontSize: "6.5px", fontWeight: 700, letterSpacing: "0.28em", textTransform: "uppercase", color: "rgba(255,255,255,0.18)", borderTop: "1px solid rgba(255,255,255,0.04)", marginTop: 4 }}>
               {office}
             </div>
-            {/* Race buttons */}
             {groupRaces.map(r => {
               const liveData = raceCache[r.id];
               const winner = liveData?.candidates?.find(c => c.winner);
@@ -1196,63 +1308,19 @@ function RacePickerPanel({ races, raceCache, selectedId, onSelect }: {
               const isSelected = r.id === selectedId;
               const raceTypeColor = getRaceTypeColor(r.raceType);
               const raceTypeShort = getRaceTypeShort(r.raceType);
-
               return (
                 <button
                   key={r.id}
                   onClick={() => onSelect(r.id)}
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    width: "100%",
-                    gap: 0,
-                    padding: "7px 12px",
-                    background: isSelected ? `rgba(124,58,237,0.10)` : "transparent",
-                    border: "none",
-                    borderLeft: isSelected ? "2px solid var(--purple)" : "2px solid transparent",
-                    cursor: "pointer",
-                    textAlign: "left",
-                    transition: "background 100ms ease, border-color 100ms ease",
-                    position: "relative",
-                  }}
+                  style={{ display: "flex", alignItems: "center", width: "100%", gap: 0, padding: "7px 12px", background: isSelected ? `rgba(124,58,237,0.10)` : "transparent", border: "none", borderLeft: isSelected ? "2px solid var(--purple)" : "2px solid transparent", cursor: "pointer", textAlign: "left", transition: "background 100ms ease, border-color 100ms ease", position: "relative" }}
                   onMouseEnter={e => { if (!isSelected) (e.currentTarget as HTMLButtonElement).style.background = "rgba(255,255,255,0.03)"; }}
                   onMouseLeave={e => { if (!isSelected) (e.currentTarget as HTMLButtonElement).style.background = "transparent"; }}
                 >
-                  {/* Party color pill */}
-                  <span style={{
-                    flexShrink: 0,
-                    width: 18,
-                    height: 18,
-                    borderRadius: 2,
-                    background: raceTypeColor + "22",
-                    border: `1px solid ${raceTypeColor}44`,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    marginRight: 9,
-                    fontFamily: "var(--font-body)",
-                    fontSize: "7px",
-                    fontWeight: 900,
-                    color: raceTypeColor,
-                    letterSpacing: 0,
-                  }}>{raceTypeShort}</span>
-
-                  {/* Main content */}
+                  <span style={{ flexShrink: 0, width: 18, height: 18, borderRadius: 2, background: raceTypeColor + "22", border: `1px solid ${raceTypeColor}44`, display: "flex", alignItems: "center", justifyContent: "center", marginRight: 9, fontFamily: "var(--font-body)", fontSize: "7px", fontWeight: 900, color: raceTypeColor, letterSpacing: 0 }}>{raceTypeShort}</span>
                   <div style={{ flex: 1, minWidth: 0 }}>
-                    <div style={{
-                      fontFamily: "var(--font-body)",
-                      fontSize: "9px",
-                      fontWeight: isSelected ? 800 : 600,
-                      letterSpacing: "0.04em",
-                      color: isSelected ? "#fff" : "rgba(255,255,255,0.65)",
-                      whiteSpace: "nowrap",
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
-                      marginBottom: 3,
-                    }}>
+                    <div style={{ fontFamily: "var(--font-body)", fontSize: "9px", fontWeight: isSelected ? 800 : 600, letterSpacing: "0.04em", color: isSelected ? "#fff" : "rgba(255,255,255,0.65)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", marginBottom: 3 }}>
                       {r.raceType}
                     </div>
-                    {/* Reporting bar */}
                     <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
                       <div style={{ flex: 1, height: 2, background: "rgba(255,255,255,0.07)", overflow: "hidden", maxWidth: 60 }}>
                         <div style={{ height: "100%", width: `${reporting ?? 0}%`, background: winner ? "var(--win)" : raceTypeColor, opacity: 0.8, transition: "width 800ms ease" }} />
@@ -1270,24 +1338,8 @@ function RacePickerPanel({ races, raceCache, selectedId, onSelect }: {
                       )}
                     </div>
                   </div>
-
-                  {/* Forecast badge */}
                   {RACE_FORECAST_DEFAULTS[r.id] && (
-                    <span style={{
-                      flexShrink: 0,
-                      marginLeft: 4,
-                      display: "inline-flex",
-                      alignItems: "center",
-                      padding: "1px 5px",
-                      border: "1px solid rgba(124,58,237,0.45)",
-                      background: "rgba(124,58,237,0.10)",
-                      fontFamily: "var(--font-body)",
-                      fontSize: "5.5px",
-                      fontWeight: 700,
-                      letterSpacing: "0.14em",
-                      color: "var(--purple-soft)",
-                      whiteSpace: "nowrap",
-                    }}>FORECAST β</span>
+                    <span style={{ flexShrink: 0, marginLeft: 4, display: "inline-flex", alignItems: "center", padding: "1px 5px", border: "1px solid rgba(124,58,237,0.45)", background: "rgba(124,58,237,0.10)", fontFamily: "var(--font-body)", fontSize: "5.5px", fontWeight: 700, letterSpacing: "0.14em", color: "var(--purple-soft)", whiteSpace: "nowrap" }}>FORECAST β</span>
                   )}
                 </button>
               );
@@ -1300,9 +1352,9 @@ function RacePickerPanel({ races, raceCache, selectedId, onSelect }: {
 }
 
 // ─── MAIN PAGE ───────────────────────────────────────────────────────────────
-export default function March3FeaturedClient() {
-  const [activeState, setActiveState] = useState<"MS" | "GA" | "TEST">("MS")
-  const [selectedId, setSelectedId] = useState<number>(44286);
+export default function March17FeaturedClient() {
+  const [activeState] = useState<"IL">("IL");
+  const [selectedId, setSelectedId] = useState<number>(55550); // default: IL Senate D primary
   const [error, setError] = useState<string | null>(null);
   const [loadingMap, setLoadingMap] = useState(false);
   const [raceCache, setRaceCache] = useState<Record<number, RaceDetail | undefined>>({});
@@ -1317,11 +1369,8 @@ export default function March3FeaturedClient() {
   const [overlay, setOverlay] = useState<null | { id: number; name: string; prob: number; color: string; reporting: number }>(null);
   const lastProjectedKeyRef = useRef<string>("");
 
-  const featuredByState = useMemo(() => ({
-    MS: FEATURED.filter((r) => r.state === "MS"),
-    GA: FEATURED.filter((r) => r.state === "GA"),
-    TEST: FEATURED.filter((r) => r.state === "TEST"),
-  }), []);
+  // All races are IL
+  const racesForState = useMemo(() => FEATURED.filter(r => r.state === "IL"), []);
 
   const selectedRace = raceCache[selectedId];
   const selectedMeta = useMemo(() => FEATURED.find((r) => r.id === selectedId), [selectedId]);
@@ -1355,11 +1404,6 @@ export default function March3FeaturedClient() {
   }, [selectedId]);
 
   useEffect(() => {
-    const first = featuredByState[activeState]?.[0];
-    if (first && !FEATURED.some((r) => r.id === selectedId && r.state === activeState)) setSelectedId(first.id);
-  }, [activeState, featuredByState, selectedId]);
-
-  useEffect(() => {
     const race = selectedRace; if (!race?.candidates?.length) return;
     const reporting = race.percent_reporting ?? 0;
     if (race.candidates.find((c) => c.winner)) return; if (reporting < 5) return;
@@ -1376,9 +1420,6 @@ export default function March3FeaturedClient() {
     return () => clearTimeout(t);
   }, [selectedRace, selectedId]);
 
-  const stateLabels: Record<string, string> = { MS: "MISSISSIPPI", GA: "GEORGIA", TEST: "TEST" };
-  const racesForState = featuredByState[activeState] ?? [];
-
   const selectedReporting = selectedRace?.percent_reporting ?? 0;
   const selectedCloseDate = parseIsoDate(selectedRace?.polls_close ?? null);
   const selectedCloseLocal = selectedCloseDate ? formatLocalCloseTime(selectedCloseDate) : "—";
@@ -1390,8 +1431,7 @@ export default function March3FeaturedClient() {
     return getRaceProjectionAlways(selectedRace);
   }, [selectedRace]);
   const selectedWinner = selectedRace?.candidates?.find((c) => c.winner);
-  const selectedRaceIsMajority = RACE_FORECAST_DEFAULTS[selectedId]?.raceRule === "MAJORITY" || 
-    [44285,44286,44287,44288,44289,44290,44291,44292,44293,44295,44344,44729,44730,44209,44208].includes(selectedId);
+  const selectedRaceIsMajority = RACE_FORECAST_DEFAULTS[selectedId]?.raceRule === "MAJORITY";
   const selectedWinners = selectedRace?.candidates?.filter((c) => c.winner) ?? [];
   const isRunoffConfirmed = selectedRaceIsMajority && selectedWinners.length >= 2;
   const [forecastProj, setForecastProj] = useState<{ leader: string; prob: number; runoffNeededProb: number; projectionType: "WIN" | "RUNOFF" } | null>(null);
@@ -1450,12 +1490,6 @@ export default function March3FeaturedClient() {
         .res-btn-primary:hover { background:var(--purple2); transform:translateY(-1px); }
         .res-btn-ghost { display:inline-flex; align-items:center; gap:6px; padding:7px 12px; background:transparent; border:1px solid var(--border); color:var(--muted3); font-family:var(--font-body); font-size:9px; font-weight:700; letter-spacing:0.18em; text-transform:uppercase; cursor:pointer; transition:all 140ms ease; }
         .res-btn-ghost:hover { border-color:var(--border2); color:var(--muted); }
-        .res-btn-state { display:inline-flex; align-items:center; padding:8px 16px; background:transparent; border:1px solid var(--border); color:var(--muted3); font-family:var(--font-body); font-size:9px; font-weight:700; letter-spacing:0.22em; text-transform:uppercase; cursor:pointer; transition:all 120ms ease; position:relative; overflow:hidden; }
-        .res-btn-state::before { content:''; position:absolute; bottom:0; left:0; right:0; height:2px; background:var(--purple); transform:scaleX(0); transform-origin:left; transition:transform 200ms ease; }
-        .res-btn-state:hover { color:rgba(255,255,255,0.7); border-color:var(--border2); }
-        .res-btn-state:hover::before { transform:scaleX(1); }
-        .res-btn-state.active { background:rgba(124,58,237,0.10); border-color:rgba(124,58,237,0.40); color:#fff; }
-        .res-btn-state.active::before { transform:scaleX(1); }
         .res-close-btn { display:inline-flex; align-items:center; padding:7px 12px; background:rgba(255,255,255,0.04); border:1px solid var(--border); color:var(--muted2); font-family:var(--font-body); font-size:8.5px; font-weight:700; letter-spacing:0.18em; text-transform:uppercase; cursor:pointer; flex-shrink:0; transition:all 120ms ease; }
         .res-close-btn:hover { border-color:var(--border2); color:rgba(255,255,255,0.7); }
         .res-overlay-card { background:var(--panel); border:1px solid rgba(124,58,237,0.45); box-shadow:0 0 80px rgba(124,58,237,0.25),0 30px 80px rgba(0,0,0,0.8); }
@@ -1483,277 +1517,89 @@ export default function March3FeaturedClient() {
         .res-error { border:1px solid rgba(230,57,70,0.25); background:rgba(230,57,70,0.06); color:rgba(255,77,90,0.90); padding:12px 16px; font-family:var(--font-body); font-size:10.5px; letter-spacing:0.12em; }
         .res-map-loading { display:flex; align-items:center; justify-content:center; aspect-ratio:4/3; background:rgba(0,0,0,0.30); border:1px solid var(--border); }
         .res-map-wrap { background:rgba(0,0,0,0.20); border:1px solid var(--border); padding:6px; }
-
-        /* ── STATUS BAR ── */
         .res-status-bar { background:var(--background2); border-bottom:1px solid var(--border); padding:7px 0; }
         .res-status-bar-inner { max-width:1800px; margin:0 auto; padding:0 20px; display:flex; align-items:center; justify-content:space-between; gap:12px; }
-
-        /* ── PAGE HEADER ── */
         .res-page-header { border-bottom:1px solid var(--border); background:var(--background2); position:relative; overflow:hidden; }
         .res-page-header::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse 40% 80% at 0% 50%,rgba(230,57,70,0.04) 0%,transparent 70%),radial-gradient(ellipse 40% 80% at 100% 50%,rgba(37,99,235,0.05) 0%,transparent 70%); pointer-events:none; }
         .res-page-header-inner { max-width:1800px; margin:0 auto; padding:16px 20px; position:relative; }
         .res-page-title { font-family:var(--font-display); font-size:clamp(22px,2.8vw,44px); font-weight:900; text-transform:uppercase; letter-spacing:0.01em; color:#fff; line-height:0.92; margin:0; }
         .res-page-title em { font-style:normal; background:linear-gradient(100deg,var(--red2) 0%,var(--purple-soft) 50%,var(--blue2) 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
         .res-page-sub { font-family:var(--font-body); font-size:8px; font-weight:700; letter-spacing:0.30em; text-transform:uppercase; color:var(--purple-soft); margin-bottom:8px; }
-
-        /* ════════════════════════════════════════
-           LAYOUT — desktop / tablet / mobile
-        ════════════════════════════════════════ */
-
-        /* ── MAIN BODY ── */
-        .res-body {
-          max-width: 1800px;
-          margin: 0 auto;
-          display: grid;
-          grid-template-columns: minmax(190px, 22%) 1fr minmax(280px, 22%);
-          grid-template-rows: auto;
-          align-items: start;
-          gap: 8px;
-          padding: 8px 10px;
-          box-sizing: border-box;
+        .res-body { max-width:1800px; margin:0 auto; display:grid; grid-template-columns:minmax(190px,22%) 1fr minmax(280px,22%); grid-template-rows:auto; align-items:start; gap:8px; padding:8px 10px; box-sizing:border-box; }
+        .res-race-picker { display:flex; flex-direction:column; min-height:0; height:1216px; overflow:hidden; align-self:start; }
+        .res-race-picker > .res-panel { flex:1; min-height:0; display:flex; flex-direction:column; overflow:hidden; }
+        .res-center-split { display:flex; flex-direction:column; height:1216px; min-height:1216px; overflow:hidden; }
+        .res-center-split > .res-map-panel { height:500px; min-height:500px; max-height:500px; flex:none; display:flex; flex-direction:column; overflow:hidden; }
+        .res-center-split > .res-map-panel .res-map-body { flex:1; min-height:0; overflow:hidden; display:flex; flex-direction:column; padding:0 !important; }
+        .res-map-wrap { flex:1; min-height:0; display:flex; align-items:stretch; }
+        .res-map-wrap svg, .res-map-wrap > div { width:100% !important; height:100% !important; }
+        .res-inline-county { flex:1; height:708px; min-height:708px; overflow:hidden; }
+        .res-inline-county .res-county-table-wrap { max-height:none !important; }
+        .res-inline-county > .res-panel { height:100% !important; display:flex !important; flex-direction:column; overflow:hidden; border-top:1px solid var(--border); border-radius:0; }
+        .res-inline-county > .res-panel > div:last-child { flex:1; overflow-y:auto !important; max-height:none !important; min-height:0; }
+        .res-right-rail { display:flex; flex-direction:column; gap:8px; overflow-y:auto; height:1216px; }
+        .res-right-rail > .res-race-status-panel { height:300px; min-height:300px; max-height:300px; flex:none; overflow:hidden; display:flex; flex-direction:column; }
+        .res-right-rail > .res-topline-panel { height:300px; min-height:300px; max-height:300px; flex:none; overflow:hidden; display:flex; flex-direction:column; }
+        .res-forecast-wrap { height:600px; min-height:600px; max-height:600px; flex:none !important; overflow:hidden; display:flex; flex-direction:column; }
+        .res-forecast-wrap > .res-panel { flex:1; min-height:0; display:flex; flex-direction:column; overflow:hidden; }
+        .res-forecast-wrap > .res-panel .res-forecast-body { flex:1; min-height:0; overflow-y:auto; }
+        .res-race-scroll-window { display:none; flex-direction:column; background:var(--panel); border:1px solid var(--border); overflow:hidden; max-height:240px; flex-shrink:0; }
+        .res-mobile-race-strip { display:none; background:var(--background2); border-bottom:1px solid var(--border); padding:8px 14px; align-items:center; gap:10px; }
+        .res-bottom { display:none; }
+        .res-tablet-county { display:none; }
+        @media (max-width:768px) {
+          .res-body { grid-template-columns:1fr 300px; grid-template-rows:calc(100vh - 120px); padding:10px 14px; }
+          .res-race-picker { display:none; }
+          .res-mobile-race-strip { display:flex; }
+          .res-center-split { flex-direction:column; min-height:0; height:100%; }
+          .res-center-split > .res-map-panel { display:flex; flex-direction:column; height:100%; min-height:0; overflow:hidden; }
+          .res-center-split > .res-map-panel .res-map-body { flex-shrink:0; }
+          .res-inline-county { max-height:240px; }
+          .res-bottom { display:none; }
+          .res-right-rail { height:100%; overflow-y:auto; display:flex; flex-direction:column; gap:10px; }
+          .res-right-rail > .res-race-status-panel { height:300px; min-height:300px; max-height:300px; flex:none; }
+          .res-right-rail > .res-topline-panel { height:300px; min-height:300px; max-height:300px; flex:none; }
+          .res-forecast-wrap { height:600px; min-height:600px; max-height:600px; flex:none !important; }
+          .res-race-scroll-window { display:flex; max-height:200px; flex-shrink:0; }
+          .res-bottom { display:none; }
         }
-
-        /* ── LEFT RACE PICKER (desktop only) ── */
-        .res-race-picker {
-          display: flex;
-          flex-direction: column;
-          min-height: 0;
-          height: 1216px;
-          overflow: hidden;
-          align-self: start;
+        @media (max-width:640px) {
+          .res-root { display:flex; flex-direction:column; }
+          .res-body { order:2; display:flex !important; flex-direction:column; grid-template-columns:unset; grid-template-rows:unset; height:auto !important; min-height:unset !important; padding:8px 10px; gap:10px; }
+          .res-race-picker { display:none !important; }
+          .res-right-rail { order:1; display:flex; flex-direction:column; gap:10px; height:auto !important; min-height:unset !important; overflow:visible; width:100%; }
+          .res-right-rail > .res-race-scroll-window { display:none !important; }
+          .res-right-rail > .res-race-status-panel { height:auto !important; min-height:unset !important; max-height:unset !important; overflow:visible !important; flex:none; width:100%; box-sizing:border-box; }
+          .res-right-rail > .res-topline-panel { height:auto !important; min-height:unset !important; max-height:unset !important; overflow:visible !important; flex:none; width:100%; box-sizing:border-box; }
+          .res-forecast-wrap { order:3; height:auto !important; min-height:unset !important; max-height:unset !important; flex:none !important; overflow:visible; width:100%; box-sizing:border-box; }
+          .res-forecast-wrap > .res-panel { overflow:visible; height:auto !important; width:100%; }
+          .res-forecast-wrap > .res-panel .res-forecast-body { overflow-y:visible; max-height:none; height:auto !important; }
+          .res-race-status-panel { flex:none !important; overflow:visible !important; }
+          .res-center-split { order:2; height:auto !important; min-height:unset !important; overflow:visible; width:100%; }
+          .res-center-split > .res-map-panel { height:auto !important; min-height:unset !important; max-height:unset !important; overflow:visible; width:100%; box-sizing:border-box; }
+          .res-center-split > .res-map-panel .res-map-body { flex:none; padding:6px 10px !important; }
+          .res-map-wrap { height:auto !important; width:100%; }
+          .res-map-wrap svg, .res-map-wrap > div { width:100% !important; height:auto !important; }
+          .res-inline-county { display:none; }
+          .res-bottom { order:4; display:block; padding:0 10px 16px; }
+          .res-race-scroll-window { display:flex; max-height:190px; flex-shrink:0; }
+          .res-mobile-race-search { order:1; }
         }
-        .res-race-picker > .res-panel {
-          flex: 1;
-          min-height: 0;
-          display: flex;
-          flex-direction: column;
-          overflow: hidden;
+        .res-tablet-race-search { display:none !important; }
+        .res-mobile-race-search { display:none; }
+        @media (max-width:640px) {
+          .res-mobile-race-search { display:block; }
+          .res-mobile-race-search .res-race-scroll-window { display:flex !important; margin:8px 10px 0; }
         }
-
-        /* ── CENTER SPLIT: map + county ── */
-        .res-center-split {
-          display: flex;
-          flex-direction: column;
-          height: 1216px;
-          min-height: 1216px;
-          overflow: hidden;
-        }
-        .res-center-split > .res-map-panel {
-          height: 500px;
-          min-height: 500px;
-          max-height: 500px;
-          flex: none;
-          display: flex;
-          flex-direction: column;
-          overflow: hidden;
-        }
-        .res-center-split > .res-map-panel .res-map-body {
-          flex: 1;
-          min-height: 0;
-          overflow: hidden;
-          display: flex;
-          flex-direction: column;
-          padding: 0 !important;
-        }
-        .res-map-wrap {
-          flex: 1;
-          min-height: 0;
-          display: flex;
-          align-items: stretch;
-        }
-        .res-map-wrap svg, .res-map-wrap > div {
-          width: 100% !important;
-          height: 100% !important;
-        }
-        /* County fills all remaining space below map */
-        .res-inline-county {
-          flex: 1;
-          height: 708px;
-          min-height: 708px;
-          overflow: hidden;
-        }
-        .res-inline-county .res-county-table-wrap { max-height: none !important; }
-        .res-inline-county > .res-panel { height: 100% !important; display: flex !important; flex-direction: column; overflow: hidden; border-top: 1px solid var(--border); border-radius: 0; }
-        .res-inline-county > .res-panel > div:last-child { flex: 1; overflow-y: auto !important; max-height: none !important; min-height: 0; }
-        /* ── RIGHT RAIL ── */
-        .res-right-rail {
-          display: flex;
-          flex-direction: column;
-          gap: 8px;
-          overflow-y: auto;
-          height: 1216px;
-        }
-        /* Race status: fixed 300px */
-        .res-right-rail > .res-race-status-panel {
-          height: 300px;
-          min-height: 300px;
-          max-height: 300px;
-          flex: none;
-          overflow: hidden;
-          display: flex;
-          flex-direction: column;
-        }
-        /* Topline: fixed 300px */
-        .res-right-rail > .res-topline-panel {
-          height: 300px;
-          min-height: 300px;
-          max-height: 300px;
-          flex: none;
-          overflow: hidden;
-          display: flex;
-          flex-direction: column;
-        }
-        /* Forecast: fixed 600px */
-        .res-forecast-wrap {
-          height: 600px;
-          min-height: 600px;
-          max-height: 600px;
-          flex: none !important;
-          overflow: hidden;
-          display: flex;
-          flex-direction: column;
-        }
-        .res-forecast-wrap > .res-panel {
-          flex: 1;
-          min-height: 0;
-          display: flex;
-          flex-direction: column;
-          overflow: hidden;
-        }
-        .res-forecast-wrap > .res-panel .res-forecast-body {
-          flex: 1;
-          min-height: 0;
-          overflow-y: auto;
-        }
-
-        /* ── COMPACT RACE SCROLL (tablet only, hidden by default) ── */
-        .res-race-scroll-window {
-          display: none;
-          flex-direction: column;
-          background: var(--panel);
-          border: 1px solid var(--border);
-          overflow: hidden;
-          max-height: 240px;
-          flex-shrink: 0;
-        }
-
-        /* ── MOBILE RACE SELECTOR BAR (hidden by default) ── */
-        .res-mobile-race-strip {
-          display: none;
-          background: var(--background2);
-          border-bottom: 1px solid var(--border);
-          padding: 8px 14px;
-          align-items: center;
-          gap: 10px;
-        }
-
-        /* ── FULL-WIDTH BOTTOM ── */
-        .res-bottom { display: none; }
-
-        /* ── TABLET INLINE COUNTY TABLE ── */
-        .res-tablet-county { display: none; }
-
-        /* ════ TABLET ≤768px ════ */
-        @media (max-width: 768px) {
-          /* Fixed height so both columns end at same line */
-          .res-body {
-            grid-template-columns: 1fr 300px;
-            grid-template-rows: calc(100vh - 120px);
-            padding: 10px 14px;
-          }
-          .res-race-picker { display: none; }
-          .res-mobile-race-strip { display: flex; }
-          /* Center column: map panel fills height, county scrolls below */
-          .res-center-split { flex-direction: column; min-height: 0; height: 100%; }
-          .res-center-split > .res-map-panel { display: flex; flex-direction: column; height: 100%; min-height: 0; overflow: hidden; }
-          .res-center-split > .res-map-panel .res-map-body { flex-shrink: 0; }
-          .res-inline-county { max-height: 240px; }
-          /* Hide full-width bottom on tablet */
-          .res-bottom { display: none; }
-          .res-right-rail { height: 100%; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
-          .res-right-rail > .res-race-status-panel { height: 300px; min-height: 300px; max-height: 300px; flex: none; }
-          .res-right-rail > .res-topline-panel { height: 300px; min-height: 300px; max-height: 300px; flex: none; }
-          .res-forecast-wrap { height: 600px; min-height: 600px; max-height: 600px; flex: none !important; }
-          .res-race-scroll-window { display: flex; max-height: 200px; flex-shrink: 0; }
-          /* Hide full-width bottom on tablet */
-          .res-bottom { display: none; }
-        }
-
-        /* ════ MOBILE ≤640px ════ */
-        @media (max-width: 640px) {
-          .res-root { display: flex; flex-direction: column; }
-          .res-body {
-            order: 2;
-            display: flex !important;
-            flex-direction: column;
-            grid-template-columns: unset;
-            grid-template-rows: unset;
-            height: auto !important;
-            min-height: unset !important;
-            padding: 8px 10px;
-            gap: 10px;
-          }
-          /* Reset all fixed desktop heights */
-          .res-race-picker { display: none !important; }
-          .res-right-rail {
-            order: 1;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            height: auto !important;
-            min-height: unset !important;
-            overflow: visible;
-            width: 100%;
-          }
-          .res-right-rail > .res-race-scroll-window { display: none !important; }
-          .res-right-rail > .res-race-status-panel { height: auto !important; min-height: unset !important; max-height: unset !important; overflow: visible !important; flex: none; width: 100%; box-sizing: border-box; }
-          .res-right-rail > .res-topline-panel { height: auto !important; min-height: unset !important; max-height: unset !important; overflow: visible !important; flex: none; width: 100%; box-sizing: border-box; }
-          .res-forecast-wrap { order: 3; height: auto !important; min-height: unset !important; max-height: unset !important; flex: none !important; overflow: visible; width: 100%; box-sizing: border-box; }
-          .res-forecast-wrap > .res-panel { overflow: visible; height: auto !important; width: 100%; }
-          .res-forecast-wrap > .res-panel .res-forecast-body { overflow-y: visible; max-height: none; height: auto !important; }
-          .res-race-status-panel { flex: none !important; overflow: visible !important; }
-          /* Center: map auto height, county hidden (res-bottom used instead) */
-          .res-center-split { order: 2; height: auto !important; min-height: unset !important; overflow: visible; width: 100%; }
-          .res-center-split > .res-map-panel { height: auto !important; min-height: unset !important; max-height: unset !important; overflow: visible; width: 100%; box-sizing: border-box; }
-          .res-center-split > .res-map-panel .res-map-body { flex: none; padding: 6px 10px !important; }
-          .res-map-wrap { height: auto !important; width: 100%; }
-          .res-map-wrap svg, .res-map-wrap > div { width: 100% !important; height: auto !important; }
-          .res-inline-county { display: none; }
-          /* County at bottom via res-bottom */
-          .res-bottom { order: 4; display: block; padding: 0 10px 16px; }
-          .res-race-scroll-window { display: flex; max-height: 190px; flex-shrink: 0; }
-          .res-mobile-race-search { order: 1; }
-        }
-
-        /* ── TABLET RACE SEARCH (top of right rail, tablet only) ── */
-        .res-tablet-race-search { display: none !important; }
-
-        /* ── MOBILE RACE LIST (phones only, above map) ── */
-        .res-mobile-race-search { display: none; }
-        @media (max-width: 640px) {
-          .res-mobile-race-search { display: block; }
-          .res-mobile-race-search .res-race-scroll-window { display: flex !important; margin: 8px 10px 0; }
-        }
-
-
-        .res-race-select {
-          flex: 1; appearance: none; -webkit-appearance: none;
-          background: var(--panel); border: 1px solid var(--border); color: var(--foreground);
-          padding: 8px 32px 8px 12px; font-family: var(--font-body); font-size: 10px;
-          font-weight: 700; letter-spacing: 0.06em; outline: none; cursor: pointer;
-          transition: border-color 140ms ease; min-width: 0;
-          background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L5 5L9 1' stroke='rgba(255,255,255,0.35)' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
-          background-repeat: no-repeat; background-position: right 10px center;
-        }
-        .res-race-select:focus { border-color: rgba(124,58,237,0.5); }
-        .res-race-select option { background: #0f0f15; color: #f0f0f5; font-weight: 600; }
-        .res-race-select optgroup { color: rgba(255,255,255,0.35); font-size: 9px; }
-
+        .res-race-select { flex:1; appearance:none; -webkit-appearance:none; background:var(--panel); border:1px solid var(--border); color:var(--foreground); padding:8px 32px 8px 12px; font-family:var(--font-body); font-size:10px; font-weight:700; letter-spacing:0.06em; outline:none; cursor:pointer; transition:border-color 140ms ease; min-width:0; background-image:url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L5 5L9 1' stroke='rgba(255,255,255,0.35)' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C%2Fsvg%3E"); background-repeat:no-repeat; background-position:right 10px center; }
+        .res-race-select:focus { border-color:rgba(124,58,237,0.5); }
+        .res-race-select option { background:#0f0f15; color:#f0f0f5; font-weight:600; }
+        .res-race-select optgroup { color:rgba(255,255,255,0.35); font-size:9px; }
         * { scrollbar-width:thin; scrollbar-color:rgba(255,255,255,0.10) transparent; }
         *::-webkit-scrollbar { width:3px; height:3px; }
         *::-webkit-scrollbar-thumb { background:rgba(255,255,255,0.10); }
         *::-webkit-scrollbar-thumb:hover { background:rgba(124,58,237,0.4); }
-        @media (prefers-reduced-motion:reduce) { .res-bar-fill,.res-btn-primary,.res-btn-ghost,.res-btn-state { transition:none !important; } .res-live-dot { animation:none !important; } }
+        @media (prefers-reduced-motion:reduce) { .res-bar-fill,.res-btn-primary,.res-btn-ghost { transition:none !important; } .res-live-dot { animation:none !important; } }
         input[type=range] { height:4px; cursor:pointer; }
       `}</style>
 
@@ -1778,7 +1624,7 @@ export default function March3FeaturedClient() {
           <div className="res-page-header-inner">
             <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: "12px" }}>
               <div>
-                <div className="res-page-sub">MARCH 10TH PRIMARY ELECTIONS · 2026</div>
+                <div className="res-page-sub">MARCH 17TH PRIMARY ELECTIONS · ILLINOIS 2026</div>
                 <h1 className="res-page-title">Election <em>Night</em></h1>
               </div>
               <div style={{ display: "flex", alignItems: "center", gap: "12px", flexWrap: "wrap" }}>
@@ -1787,22 +1633,21 @@ export default function March3FeaturedClient() {
                   <span className="res-badge res-badge-purple">RESULTS + FORECAST / 30s</span>
                   {selectedRace?.last_updated && <span className="res-badge">UPDATED {prettyTime(selectedRace.last_updated)}</span>}
                 </div>
-                {/* State switcher */}
+                {/* Illinois-only — no state switcher needed */}
                 <div style={{ display: "flex", gap: "1px" }}>
-                  {(["MS", "GA"] as const).map((st) => (
-                    <button key={st} className={`res-btn-state ${activeState === st ? "active" : ""}`} onClick={() => setActiveState(st)}>{stateLabels[st]}</button>
-                  ))}
+                  <div style={{ display: "inline-flex", alignItems: "center", padding: "8px 16px", background: "rgba(124,58,237,0.10)", border: "1px solid rgba(124,58,237,0.40)", fontFamily: "var(--font-body)", fontSize: "9px", fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: "#fff", position: "relative" }}>
+                    <span style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: 2, background: "var(--purple)" }} />
+                    ILLINOIS
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
 
-        {/* ── MOBILE RACE SELECTOR (visible below 768px) ── */}
+        {/* MOBILE RACE SELECTOR */}
         <div className="res-mobile-race-strip">
-          {/* Live indicator */}
           <span className="res-live-dot" style={{ flexShrink: 0 }} />
-          {/* Dropdown */}
           <select
             className="res-race-select"
             value={selectedId}
@@ -1830,7 +1675,6 @@ export default function March3FeaturedClient() {
               </optgroup>
             ))}
           </select>
-          {/* Selected race quick-status */}
           {(() => {
             const meta = FEATURED.find(r => r.id === selectedId);
             const liveData = raceCache[selectedId];
@@ -1848,16 +1692,14 @@ export default function March3FeaturedClient() {
           })()}
         </div>
 
-
-        {/* ── MOBILE RACE LIST — phones only, above map ── */}
+        {/* MOBILE RACE LIST */}
         <div className="res-mobile-race-search">
           <div style={{ margin: "8px 10px 0", border: "1px solid var(--border)" }}>
             <RaceScrollWindow races={racesForState} raceCache={raceCache} selectedId={selectedId} onSelect={setSelectedId} search={scrollWindowSearch} onSearchChange={setScrollWindowSearch} maxHeight={200} />
           </div>
         </div>
 
-
-        {/* ── MAIN BODY ── */}
+        {/* MAIN BODY */}
         <div className="res-body">
 
           {/* LEFT: Race Picker Panel */}
@@ -1870,9 +1712,8 @@ export default function March3FeaturedClient() {
             />
           </div>
 
-          {/* CENTER SPLIT: map (left) + right column (race-scroll + forecast stacked) */}
+          {/* CENTER SPLIT */}
           <div className={`res-center-split${hasForecastForSelected ? "" : " no-forecast"}`}>
-
             {/* MAP PANEL */}
             <div className="res-panel res-map-panel">
               <div className="res-tri-stripe" />
@@ -1908,9 +1749,9 @@ export default function March3FeaturedClient() {
                   <div className="res-map-loading" style={{ flex: 1 }}><span className="res-note" style={{ color: "var(--muted3)" }}>NO MAP DATA</span></div>
                 )}
               </div>
-            </div>{/* end map panel */}
+            </div>
 
-            {/* COUNTY TABLE — sibling below map panel */}
+            {/* COUNTY TABLE */}
             <div className="res-inline-county">
               <CountyTotalsTable
                 regionResults={selectedRace?.region_results ?? []}
@@ -1919,18 +1760,17 @@ export default function March3FeaturedClient() {
                 maxHeight="9999px"
               />
             </div>
+          </div>
 
-          </div>{/* end res-center-split */}
-
-          {/* RIGHT RAIL: Topline + Race Status + Forecast stacked */}
+          {/* RIGHT RAIL */}
           <aside className="res-right-rail">
 
-            {/* TABLET RACE SCROLL — hidden on desktop, shown on tablet */}
+            {/* TABLET RACE SCROLL */}
             <div className="res-race-scroll-window">
               <RaceScrollWindow races={racesForState} raceCache={raceCache} selectedId={selectedId} onSelect={setSelectedId} search={scrollWindowSearch} onSearchChange={setScrollWindowSearch} />
             </div>
 
-            {/* RACE STATUS — top */}
+            {/* RACE STATUS */}
             <div className="res-panel res-race-status-panel" style={{ display: "flex", flexDirection: "column", minHeight: 0 }}>
               <div className="res-panel-header" style={{ flexShrink: 0 }}><span className="res-panel-tag">RACE STATUS</span></div>
               <div style={{ padding: "12px 14px", display: "flex", flexDirection: "column", gap: "8px", overflowY: "auto", flex: 1, minHeight: 0 }}>
@@ -1997,7 +1837,7 @@ export default function March3FeaturedClient() {
               </div>
             </div>
 
-            {/* TOPLINE — second */}
+            {/* TOPLINE */}
             <div className="res-panel res-topline-panel" style={{ display: "flex", flexDirection: "column", minHeight: 0 }}>
               <div className="res-tri-stripe" />
               <div className="res-panel-header" style={{ flexShrink: 0 }}>
@@ -2042,7 +1882,7 @@ export default function March3FeaturedClient() {
           </aside>
         </div>
 
-        {/* ── FULL-WIDTH COUNTY BREAKDOWN — hidden on tablet, shown on desktop + mobile ── */}
+        {/* FULL-WIDTH COUNTY BREAKDOWN (mobile) */}
         <div className="res-bottom">
           <CountyTotalsTable
             regionResults={selectedRace?.region_results ?? []}

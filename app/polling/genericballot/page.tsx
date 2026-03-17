@@ -47,6 +47,8 @@ function effectiveSampleSize(pollster: string, n: number) {
 }
 
 const RAW_POLLS: Poll[] = [
+  { pollster: "Morning Consult", endDate: "2026-03-16", sampleSize: 2200, sampleType: "RV", results: { Democrats: 48, Republicans: 40 } },
+  { pollster: "Economist/YouGov", endDate: "2026-03-16", sampleSize: 1429, sampleType: "RV", results: { Democrats: 43, Republicans: 41 } },
   { pollster: "Economist/YouGov", endDate: "2026-03-09", sampleSize: 1405, sampleType: "RV", results: { Democrats: 45, Republicans: 42 } },
   { pollster: "Cygnal", endDate: "2026-03-04", sampleSize: 1500, sampleType: "LV", results: { Democrats: 49, Republicans: 45 } },
   { pollster: "NPR/PBS/Marist", endDate: "2026-03-04", sampleSize: 1392, sampleType: "RV", results: { Democrats: 53, Republicans: 44 } },
