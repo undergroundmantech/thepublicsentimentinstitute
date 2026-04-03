@@ -75,23 +75,10 @@ const SIDE_TILES = [
   {key:"NE-03", label:"NE-03", ev:1  },
 ];
 
-const TICKER_ITEMS = [
-  {key:"TOSSUP",          val:"538 EV",          color:"rgba(255,255,255,.5)"},
-  {key:"WIN THRESHOLD",   val:"270 EV",           color:"#a78bfa"},
-  {key:"ELECTORAL VOTES", val:"538 TOTAL",        color:"rgba(255,255,255,.5)"},
-  {key:"STATES",          val:"50 + DC",          color:"rgba(255,255,255,.5)"},
-  {key:"SPLIT DISTRICTS", val:"ME · NE",          color:"rgba(255,255,255,.5)"},
-  {key:"LAST UPDATED",    val:"LIVE",             color:"#4ade80"},
-  {key:"VERSION",         val:"STREAMER EDITION", color:"#a78bfa"},
-];
-
 const STORAGE_KEY = "psi-electoral-map-picks-v1";
 const TOTAL_EV    = 538;
 
 // ─── helpers ──────────────────────────────────────────────────────────────────
-// Exact fill colors per party + rating, sampled from the reference image
-// D: SAFE=deep navy, LIKELY=medium cobalt, LEAN=medium-light blue, TILT=pale blue
-// R: SAFE=deep crimson, LIKELY=medium red, LEAN=medium-light red, TILT=pale red
 const DEM_FILLS: Record<Rating, string> = {
   SAFE:   "#1a3a8f",
   LIKELY: "#1e50b3",
@@ -104,17 +91,15 @@ const REP_FILLS: Record<Rating, string> = {
   LEAN:   "#cc3333",
   TILT:   "#e05555",
 };
-const DEM_STROKE = "#2d6fd4";
-const REP_STROKE = "#cc3333";
 
 function fillFor(p?: Pick) {
-  if (!p || p === "T") return "rgba(255,255,255,0.055)";
+  if (!p || p === "T") return "#2a2a2a";
   const [party, rating] = p.split("_") as ["D"|"R", Rating];
   return party === "D" ? DEM_FILLS[rating] : REP_FILLS[rating];
 }
 function strokeFor(p?: Pick) {
-  if (!p || p === "T") return "rgba(255,255,255,0.15)";
-  return p.startsWith("D_") ? DEM_STROKE : REP_STROKE;
+  if (!p || p === "T") return "#444";
+  return p.startsWith("D_") ? "#2d6fd4" : "#cc3333";
 }
 function labelFor(p?: Pick) {
   if (!p || p === "T") return "TOSSUP";
@@ -122,7 +107,7 @@ function labelFor(p?: Pick) {
   return `${party === "D" ? "DEM" : "GOP"} · ${rating}`;
 }
 function colorFor(p?: Pick) {
-  if (!p || p === "T") return "var(--muted2)";
+  if (!p || p === "T") return "rgba(255,255,255,.45)";
   return p.startsWith("D_") ? "rgba(147,197,253,.9)" : "rgba(252,165,165,.9)";
 }
 function nextRating(cur: Rating): Rating {
@@ -159,14 +144,16 @@ function applyBrush(picks: Record<string, Pick>, key: string, brush: PartyBrush)
 export default function ElectoralMapPage() {
   const [brush,      setBrush]      = useState<PartyBrush>("T");
   const [picks,      setPicks]      = useState<Record<string, Pick>>({});
-  const [shareLabel, setShareLabel] = useState("↗ Share Map");
+  const [shareLabel, setShareLabel] = useState("↗ Share");
+  const [isFullscreen, setIsFullscreen] = useState(false);
   const [tooltip,    setTooltip]    = useState<TooltipState>({
     visible:false, x:0, y:0, abbr:"", name:"", ev:0, isAtLarge:false, pick:"T", hint:"",
   });
 
-  const svgRef   = useRef<SVGSVGElement>(null);
-  const brushRef = useRef<PartyBrush>("T");
-  brushRef.current = brush;
+  const svgRef        = useRef<SVGSVGElement>(null);
+  const containerRef  = useRef<HTMLDivElement>(null);
+  const brushRef      = useRef<PartyBrush>("T");
+  brushRef.current    = brush;
 
   // localStorage
   useEffect(() => {
@@ -175,6 +162,18 @@ export default function ElectoralMapPage() {
   useEffect(() => {
     try { localStorage.setItem(STORAGE_KEY, JSON.stringify(picks)); } catch {}
   }, [picks]);
+
+  // fullscreen
+  useEffect(() => {
+    const handler = () => setIsFullscreen(!!document.fullscreenElement);
+    document.addEventListener("fullscreenchange", handler);
+    return () => document.removeEventListener("fullscreenchange", handler);
+  }, []);
+
+  const toggleFullscreen = useCallback(() => {
+    if (!document.fullscreenElement) containerRef.current?.requestFullscreen();
+    else document.exitFullscreen();
+  }, []);
 
   const applyPick = useCallback((key: string) => {
     setPicks(prev => applyBrush(prev, key, brushRef.current));
@@ -211,11 +210,11 @@ export default function ElectoralMapPage() {
           el.setAttribute("d", path(f) ?? "");
           el.setAttribute("data-key", key);
           el.setAttribute("data-abbr", abbr);
-          el.style.cssText = `fill:${fillFor("T")};stroke:${strokeFor("T")};stroke-width:0.6;cursor:${clickable?"pointer":"default"};transition:filter 160ms ease;`;
+          el.style.cssText = `fill:${fillFor("T")};stroke:#111;stroke-width:0.8;cursor:${clickable?"pointer":"default"};transition:filter 160ms ease;`;
 
           if (clickable) {
             el.addEventListener("click", () => applyPick(key));
-            el.addEventListener("mouseover",  () => { el.style.filter = "brightness(1.35)"; });
+            el.addEventListener("mouseover",  () => { el.style.filter = "brightness(1.4)"; });
             el.addEventListener("mouseout",   () => { el.style.filter = ""; });
           }
           el.addEventListener("mousemove", (ev: MouseEvent) => {
@@ -233,11 +232,10 @@ export default function ElectoralMapPage() {
           svg.appendChild(el);
         }
 
-        // border mesh
         const be = document.createElementNS("http://www.w3.org/2000/svg", "path");
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         be.setAttribute("d", path(border as any) ?? "");
-        be.style.cssText = "fill:none;stroke:rgba(255,255,255,0.06);stroke-width:0.6;pointer-events:none;";
+        be.style.cssText = "fill:none;stroke:#111;stroke-width:0.8;pointer-events:none;";
         svg.appendChild(be);
       } catch { /* network unavailable */ }
     })();
@@ -250,25 +248,18 @@ export default function ElectoralMapPage() {
     svgRef.current?.querySelectorAll<SVGPathElement>("[data-key]").forEach(el => {
       const p = (picks[el.getAttribute("data-key")!] ?? "T") as Pick;
       el.style.fill   = fillFor(p);
-      el.style.stroke = strokeFor(p);
+      el.style.stroke = "#111";
     });
   }, [picks]);
 
-  // totals
   const { d, r, t } = sumEV(picks);
   const pct = (n: number) => `${((n / TOTAL_EV) * 100).toFixed(2)}%`;
-
-  const modeLabel: Record<PartyBrush, string> = {
-    D: "RATING CYCLE (DEM)",
-    R: "RATING CYCLE (GOP)",
-    T: "NEUTRAL (TOSSUP)",
-  };
 
   const handleShare = () => {
     const url = window.location.href.split("?")[0] + "?picks=" + encodeURIComponent(JSON.stringify(picks));
     navigator.clipboard?.writeText(url).catch(() => {});
     setShareLabel("✓ Copied!");
-    setTimeout(() => setShareLabel("↗ Share Map"), 2000);
+    setTimeout(() => setShareLabel("↗ Share"), 2000);
   };
 
   const setAllTossup = () => {
@@ -278,364 +269,456 @@ export default function ElectoralMapPage() {
     setPicks(next);
   };
 
-  // ── render ──────────────────────────────────────────────────────────────────
+  const dWins = d >= 270;
+  const rWins = r >= 270;
+
   return (
     <>
-      <style>{`
-        @keyframes em-ticker { from{transform:translateX(0)} to{transform:translateX(-50%)} }
-        @keyframes em-pulse  { 0%,100%{opacity:1} 50%{opacity:.3} }
-        @keyframes em-count  { from{opacity:0;transform:scale(.9)} to{opacity:1;transform:scale(1)} }
+      <style>{CSS}</style>
+      <div ref={containerRef} className={`em-root${isFullscreen ? " em-fs" : ""}`}>
 
-        .em-live-dot {
-          display:inline-block; width:6px; height:6px; border-radius:50%; flex-shrink:0;
-          background:var(--rep); box-shadow:0 0 8px rgba(230,57,70,.7);
-          animation:em-pulse 1.8s ease-in-out infinite;
-        }
+        {/* ── TOP BAR ── */}
+        <div className="em-top">
+          <div className="em-top-brand">
+            <span className="em-logo">PSI</span>
+            <div className="em-brand-text">
+              <span className="em-brand-main">Electoral Forecaster</span>
+              <span className="em-brand-sub">2028 Presidential · Interactive Map</span>
+            </div>
+          </div>
 
-        /* Layout */
-        .em-page-hdr {
-          display:flex; align-items:flex-end; justify-content:space-between;
-          flex-wrap:wrap; gap:16px; padding-bottom:24px;
-          border-bottom:1px solid var(--border); margin-bottom:0;
-        }
-        .em-eyebrow {
-          display:flex; align-items:center; gap:10px;
-          font-size:9px; font-weight:700; letter-spacing:.30em; text-transform:uppercase;
-          color:var(--purple-soft); margin-bottom:10px;
-        }
-        .em-eyebrow::before { content:''; display:block; width:18px; height:1px; background:var(--purple-soft); opacity:.6; }
-        .em-title { font-size:clamp(28px,3.5vw,52px); font-weight:900; text-transform:uppercase; letter-spacing:-.01em; line-height:.92; color:#fff; font-family:var(--font-display),ui-sans-serif,sans-serif; }
-        .em-title em { font-style:normal; background:linear-gradient(100deg,var(--red2) 0%,var(--purple-soft) 50%,var(--blue2) 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
-        .em-sub { margin-top:8px; font-size:10px; letter-spacing:.10em; color:var(--muted2); line-height:1.6; }
-
-        /* Main grid — maps + scoreboard */
-        .em-grid {
-          display:grid; grid-template-columns:1fr 300px;
-          border:1px solid var(--border); border-top:none;
-        }
-        @media(max-width:1024px) { .em-grid { grid-template-columns:1fr; } }
-
-        /* Map panel */
-        .em-map-panel { display:flex; flex-direction:column; border-right:1px solid var(--border); }
-        @media(max-width:1024px) { .em-map-panel { border-right:none; border-bottom:1px solid var(--border); } }
-
-        .em-toolbar {
-          padding:10px 14px; border-bottom:1px solid var(--border); background:var(--background2);
-          display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px;
-        }
-        .em-brush-grp { display:flex; align-items:center; gap:8px; }
-        .em-brush-lbl { font-size:8px; font-weight:700; letter-spacing:.26em; text-transform:uppercase; color:var(--muted3); }
-        .em-brush-bar { display:flex; border:1px solid var(--border); background:rgba(0,0,0,.4); padding:2px; gap:2px; }
-        .em-brush-btn {
-          padding:6px 14px; font-size:8.5px; font-weight:700; letter-spacing:.16em; text-transform:uppercase;
-          border:1px solid transparent; background:transparent; color:var(--muted3);
-          cursor:pointer; transition:all 120ms ease; font-family:var(--font-body),ui-monospace,monospace;
-        }
-        .em-brush-btn:hover { color:var(--foreground); background:rgba(255,255,255,.04); }
-        .em-b-d { background:#1e40af !important; border-color:rgba(59,130,246,.5) !important; color:#fff !important; box-shadow:0 0 12px rgba(37,99,235,.4); }
-        .em-b-r { background:#991b1b !important; border-color:rgba(239,68,68,.5)  !important; color:#fff !important; box-shadow:0 0 12px rgba(239,68,68,.4); }
-        .em-b-t { background:rgba(255,255,255,.08) !important; border-color:rgba(255,255,255,.15) !important; color:#fff !important; }
-        .em-mode { display:flex; align-items:center; gap:7px; font-size:7.5px; font-weight:700; letter-spacing:.20em; text-transform:uppercase; color:var(--muted3); }
-        .em-mode-val { padding:5px 9px; border:1px solid var(--border); background:rgba(0,0,0,.3); color:var(--foreground); font-size:7.5px; letter-spacing:.14em; }
-
-        .em-map-area { flex:1; padding:10px; display:flex; align-items:center; justify-content:center; min-height:280px; position:relative; }
-        #em-svg { width:100%; height:auto; display:block; }
-
-        /* Legend */
-        .em-legend { padding:9px 14px; border-top:1px solid var(--border); background:var(--background2); display:flex; align-items:center; gap:5px; flex-wrap:wrap; }
-        .em-ll { font-size:7.5px; font-weight:700; letter-spacing:.24em; text-transform:uppercase; color:var(--muted3); margin-right:2px; }
-        .em-chip { padding:3px 7px; border:1px solid; font-size:7px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; }
-        .lcd4{border-color:#1a3a8f;background:#1a3a8f;color:rgba(255,255,255,.9)}
-        .lcd3{border-color:#1e50b3;background:#1e50b3;color:rgba(255,255,255,.85)}
-        .lcd2{border-color:#2d6fd4;background:#2d6fd4;color:rgba(255,255,255,.85)}
-        .lcd1{border-color:#4d8ee8;background:#4d8ee8;color:rgba(255,255,255,.8)}
-        .lct {border-color:rgba(255,255,255,.1);background:rgba(255,255,255,.04);color:rgba(255,255,255,.5)}
-        .lcr1{border-color:#e05555;background:#e05555;color:rgba(255,255,255,.8)}
-        .lcr2{border-color:#cc3333;background:#cc3333;color:rgba(255,255,255,.85)}
-        .lcr3{border-color:#b02020;background:#b02020;color:rgba(255,255,255,.85)}
-        .lcr4{border-color:#8b1a1a;background:#8b1a1a;color:rgba(255,255,255,.9)}
-
-        /* Tiles */
-        .em-tiles { padding:10px 12px; border-top:1px solid var(--border); background:var(--background2); }
-        .em-tiles-hdr { display:flex; align-items:center; justify-content:space-between; margin-bottom:7px; }
-        .em-tiles-ttl { font-size:7.5px; font-weight:700; letter-spacing:.24em; text-transform:uppercase; color:var(--muted3); display:flex; align-items:center; gap:7px; }
-        .em-tiles-ttl::before { content:''; width:12px; height:1px; background:var(--purple-soft); opacity:.5; }
-        .em-tiles-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(58px,1fr)); gap:4px; }
-        .em-tile {
-          display:flex; flex-direction:column; align-items:center; padding:5px 3px;
-          border:1px solid; cursor:pointer; font-family:var(--font-body),ui-monospace,monospace;
-          font-size:7.5px; font-weight:700; letter-spacing:.08em; text-transform:uppercase;
-          transition:filter 120ms ease; line-height:1;
-        }
-        .em-tile:hover { filter:brightness(1.2); }
-        .em-tile-ev { font-size:6px; margin-top:3px; opacity:.6; font-weight:700; }
-        .em-tiles-note { margin-top:7px; padding:6px 8px; border:1px solid var(--border); background:rgba(255,255,255,.02); font-size:7px; letter-spacing:.08em; line-height:1.6; color:var(--muted3); }
-        .em-tiles-note strong { color:var(--foreground); }
-
-        /* Scoreboard */
-        .em-score { display:flex; flex-direction:column; overflow:hidden; }
-        .em-score-hdr { padding:14px 16px 10px; border-bottom:1px solid var(--border); background:var(--background2); display:flex; align-items:flex-start; justify-content:space-between; }
-        .em-score-eyebrow { font-size:7px; font-weight:700; letter-spacing:.28em; text-transform:uppercase; color:var(--muted3); }
-        .em-score-270 { font-size:22px; font-weight:900; text-transform:uppercase; letter-spacing:-.01em; color:#fff; line-height:1; margin-top:3px; }
-        .em-score-270 span { color:var(--purple-soft); }
-        .em-live-badge { display:inline-flex; align-items:center; gap:5px; border:1px solid rgba(230,57,70,.25); background:rgba(230,57,70,.07); padding:4px 8px; font-size:7px; font-weight:700; letter-spacing:.24em; text-transform:uppercase; color:rgba(230,57,70,.9); }
-
-        /* Win bar */
-        .em-wb-sec { padding:10px 14px; border-bottom:1px solid var(--border); background:var(--background2); }
-        .em-wb-lbl { font-size:6.5px; font-weight:700; letter-spacing:.22em; text-transform:uppercase; color:var(--muted3); margin-bottom:6px; display:flex; justify-content:space-between; }
-        .em-wb-track { height:7px; background:rgba(255,255,255,.05); display:flex; overflow:hidden; position:relative; }
-        .em-wb-d { height:100%; background:var(--dem); transition:width .6s cubic-bezier(.22,1,.36,1); }
-        .em-wb-t { height:100%; background:rgba(255,255,255,.12); transition:width .6s cubic-bezier(.22,1,.36,1); }
-        .em-wb-r { height:100%; background:var(--rep); transition:width .6s cubic-bezier(.22,1,.36,1); }
-        .em-wb-line { position:absolute; top:0; bottom:0; left:calc(270/538*100%); width:1px; background:#fff; opacity:.5; }
-        .em-wb-270  { position:absolute; top:-14px; left:calc(270/538*100%); transform:translateX(-50%); font-size:6px; font-weight:700; letter-spacing:.10em; color:rgba(255,255,255,.35); }
-
-        /* EV cards */
-        .em-score-body { padding:12px; display:flex; flex-direction:column; gap:10px; flex:1; overflow-y:auto; }
-        .em-ev-card { border:1px solid var(--border); padding:10px 12px; background:rgba(0,0,0,.25); position:relative; overflow:hidden; }
-        .em-ev-card::before { content:''; position:absolute; top:0; left:0; bottom:0; width:2px; }
-        .em-evc-d::before { background:var(--dem); box-shadow:2px 0 8px rgba(37,99,235,.4); }
-        .em-evc-r::before { background:var(--rep); box-shadow:2px 0 8px rgba(230,57,70,.4); }
-        .em-evc-t::before { background:rgba(255,255,255,.18); }
-        .em-ev-label { font-size:7.5px; font-weight:700; letter-spacing:.24em; text-transform:uppercase; }
-        .em-evl-d { color:rgba(147,197,253,.8); }
-        .em-evl-r { color:rgba(252,165,165,.8); }
-        .em-evl-t { color:var(--muted2); }
-        .em-ev-num  { font-size:30px; font-weight:900; letter-spacing:-.02em; color:#fff; line-height:1; animation:em-count .5s cubic-bezier(.22,1,.36,1) both; }
-        .em-ev-unit { font-size:8px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:rgba(255,255,255,.3); margin-left:3px; }
-        .em-ev-track { margin-top:8px; height:3px; background:rgba(255,255,255,.06); position:relative; overflow:hidden; }
-        .em-ev-fill  { position:absolute; top:0; left:0; bottom:0; transition:width .6s cubic-bezier(.22,1,.36,1); }
-        .em-evf-d { background:var(--dem); box-shadow:0 0 8px rgba(37,99,235,.4); }
-        .em-evf-r { background:var(--rep); box-shadow:0 0 8px rgba(230,57,70,.4); }
-        .em-evf-t { background:rgba(255,255,255,.22); }
-        .em-ev-status { margin-top:5px; text-align:right; font-size:7px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--muted3); }
-        .em-ev-win    { color:rgba(74,222,128,.85); }
-
-        /* How it works */
-        .em-how { padding:10px 12px; background:rgba(255,255,255,.02); border:1px solid var(--border); }
-        .em-how-ttl { font-size:7px; font-weight:700; letter-spacing:.24em; text-transform:uppercase; color:var(--muted3); margin-bottom:6px; }
-        .em-how-body { font-size:8px; letter-spacing:.07em; color:var(--muted2); line-height:1.7; }
-        .em-how-body strong { color:var(--foreground); }
-        .em-chip-sm { display:inline-block; padding:1px 5px; border:1px solid rgba(255,255,255,.12); background:rgba(255,255,255,.05); font-size:7px; font-weight:700; letter-spacing:.09em; margin:0 1px; }
-
-        /* Ticker */
-        .em-ticker { border-top:1px solid var(--border); background:var(--background2); overflow:hidden; padding:5px 0; position:relative; margin:0 -16px; }
-        @media(min-width:640px) { .em-ticker { margin:0 -24px; } }
-        @media(min-width:1024px){ .em-ticker { margin:0 -32px; } }
-        .em-ticker::before,.em-ticker::after { content:''; position:absolute; top:0; bottom:0; width:60px; z-index:2; pointer-events:none; }
-        .em-ticker::before { left:0;  background:linear-gradient(90deg,var(--background2),transparent); }
-        .em-ticker::after  { right:0; background:linear-gradient(270deg,var(--background2),transparent); }
-        .em-ticker-track { display:flex; animation:em-ticker 28s linear infinite; width:max-content; }
-        .em-ticker-item  { display:inline-flex; align-items:center; gap:7px; padding:0 18px; white-space:nowrap; border-right:1px solid var(--border); }
-        .em-tk-key { font-size:6.5px; font-weight:700; letter-spacing:.18em; text-transform:uppercase; color:var(--muted3); }
-        .em-tk-val { font-size:7px;   font-weight:700; letter-spacing:.13em; text-transform:uppercase; color:#fff; }
-        .em-tk-dot { width:4px; height:4px; border-radius:50%; flex-shrink:0; }
-
-        /* Footer row */
-        .em-footer { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px; padding-top:12px; }
-        .em-footer-l { font-size:7.5px; font-weight:700; letter-spacing:.18em; text-transform:uppercase; color:var(--muted3); }
-        .em-footer-l strong { color:var(--purple-soft); }
-        .em-footer-r { font-size:7px; letter-spacing:.12em; color:rgba(255,255,255,.18); }
-
-        /* Tooltip */
-        .em-tooltip {
-          position:fixed; pointer-events:none; z-index:9999; width:240px;
-          background:rgba(7,7,9,.94); border:1px solid rgba(124,58,237,.45);
-          padding:10px 12px; backdrop-filter:blur(16px); box-shadow:0 20px 60px rgba(0,0,0,.8);
-        }
-        .em-tooltip::before { content:''; position:absolute; top:-1px; left:-1px; right:-1px; height:2px; background:linear-gradient(90deg,var(--red) 0%,var(--purple) 50%,var(--blue) 100%); }
-        .em-tt-st   { font-size:7px;   font-weight:700; letter-spacing:.28em; text-transform:uppercase; color:var(--muted3); }
-        .em-tt-name { font-size:11px;  font-weight:900; text-transform:uppercase; letter-spacing:.07em; color:#fff; margin-top:3px; }
-        .em-tt-ev   { font-size:8px;   letter-spacing:.12em; color:var(--muted2); margin-top:3px; }
-        .em-tt-div  { height:1px; background:var(--border); margin:6px 0; }
-        .em-tt-pick { font-size:8px;   font-weight:700; letter-spacing:.18em; text-transform:uppercase; }
-        .em-tt-hint { font-size:7.5px; letter-spacing:.09em; color:var(--muted3); margin-top:5px; }
-      `}</style>
-
-      {/* ── PAGE HEADER ── */}
-      <div className="em-page-hdr">
-        <div>
-          <div className="em-eyebrow">ELECTION TOOLS · FORECASTER</div>
-          <h1 className="em-title">Electoral<br /><em>Forecaster</em></h1>
-          <p className="em-sub">Select a brush · Click states to cycle confidence ratings · ME/NE districts below</p>
-        </div>
-        <div style={{ display:"flex", gap:8, flexWrap:"wrap" }}>
-          <button className="psi-btn psi-btn-ghost" onClick={setAllTossup}>⬡ All Tossup</button>
-          <button className="psi-btn psi-btn-ghost" onClick={() => setPicks({})}>✕ Clear</button>
-          <button className="psi-btn psi-btn-primary" onClick={handleShare}>{shareLabel}</button>
-        </div>
-      </div>
-
-      {/* ── MAIN GRID ── */}
-      <div className="em-grid">
-
-        {/* MAP PANEL */}
-        <div className="em-map-panel">
-
-          <div className="em-toolbar">
-            <div className="em-brush-grp">
-              <span className="em-brush-lbl">Brush</span>
-              <div className="em-brush-bar">
-                {(["D","R","T"] as PartyBrush[]).map(b => (
-                  <button key={b}
-                    className={`em-brush-btn${brush===b ? b==="D"?" em-b-d":b==="R"?" em-b-r":" em-b-t" : ""}`}
-                    onClick={() => setBrush(b)}
-                  >
-                    {b==="D"?"DEM":b==="R"?"GOP":"TOSSUP"}
-                  </button>
-                ))}
+          {/* EV bar – center */}
+          <div className="em-ev-center">
+            <div className="em-ev-side" style={{ color:"#4d8ee8" }}>
+              <span className="em-ev-label">DEM</span>
+              <span className="em-ev-num">{d}</span>
+            </div>
+            <div className="em-ev-middle">
+              <div className="em-ev-bar">
+                <div style={{ width:pct(d), background:"#2d6fd4", height:"100%", transition:"width .5s" }} />
+                <div style={{ width:pct(t), background:"#333",   height:"100%", transition:"width .5s" }} />
+                <div style={{ flex:1,       background:"#cc3333", height:"100%" }} />
               </div>
+              <span className="em-270-txt">270 TO WIN</span>
             </div>
-            <div className="em-mode">
-              <span>Mode</span>
-              <span className="em-mode-val">{modeLabel[brush]}</span>
+            <div className="em-ev-side" style={{ color:"#e05555" }}>
+              <span className="em-ev-label">GOP</span>
+              <span className="em-ev-num">{r}</span>
             </div>
           </div>
 
-          <div className="em-map-area">
-            <svg ref={svgRef} id="em-svg" viewBox="0 0 960 600" />
+          {/* Actions – right */}
+          <div className="em-top-actions">
+            <button className="em-btn" onClick={setAllTossup}>Reset</button>
+            <button className="em-btn" onClick={() => setPicks({})}>Clear</button>
+            <button className="em-btn" onClick={handleShare}>{shareLabel}</button>
+            <button className="em-btn em-btn-gold" onClick={toggleFullscreen}>
+              {isFullscreen ? (
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3"/></svg>
+              ) : (
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
+              )}
+              {isFullscreen ? "Exit" : "Fullscreen"}
+            </button>
           </div>
+        </div>
 
-          <div className="em-legend">
-            <span className="em-ll">Legend</span>
-            {[["lcd4","D·SAFE"],["lcd3","D·LIKELY"],["lcd2","D·LEAN"],["lcd1","D·TILT"],["lct","TOSSUP"],["lcr1","R·TILT"],["lcr2","R·LEAN"],["lcr3","R·LIKELY"],["lcr4","R·SAFE"]].map(([cls,lbl])=>(
-              <span key={cls} className={`em-chip ${cls}`}>{lbl}</span>
+        {/* ── WIN BANNER ── */}
+        {(dWins || rWins) && (
+          <div className="em-win" style={{ background: dWins ? "rgba(29,80,179,0.15)" : "rgba(176,32,32,0.15)", borderColor: dWins ? "#2d6fd4" : "#cc3333" }}>
+            <span style={{ color: dWins ? "#4d8ee8" : "#e05555" }}>
+              ★ {dWins ? "DEMOCRAT" : "REPUBLICAN"} WINS WITH {dWins ? d : r} ELECTORAL VOTES
+            </span>
+          </div>
+        )}
+
+        {/* ── BRUSH BAR ── */}
+        <div className="em-brush-bar">
+          <span className="em-brush-label">PAINT:</span>
+          <div className="em-brush-group">
+            {(["D","R","T"] as PartyBrush[]).map(b => (
+              <button key={b}
+                className={`em-brush-btn${brush === b ? " active" : ""}`}
+                style={brush === b ? {
+                  background: b === "D" ? "#1e50b3" : b === "R" ? "#b02020" : "#444",
+                  borderColor: b === "D" ? "#4d8ee8" : b === "R" ? "#e05555" : "#888",
+                  color: "#fff",
+                } : {}}
+                onClick={() => setBrush(b)}
+              >
+                {b === "D" ? "◀ Democrat" : b === "R" ? "Republican ▶" : "○ Tossup"}
+              </button>
             ))}
           </div>
+          <span className="em-brush-hint">
+            {brush === "D" ? "Click → DEM, click again to cycle SAFE→LIKELY→LEAN→TILT" :
+             brush === "R" ? "Click → GOP, click again to cycle SAFE→LIKELY→LEAN→TILT" :
+             "Click states to reset to TOSSUP"}
+          </span>
+          <span className="em-tossup-chip">{t} TOSSUP</span>
+        </div>
 
-          <div className="em-tiles">
-            <div className="em-tiles-hdr">
-              <div className="em-tiles-ttl">Districts + Small States</div>
-              <span style={{ fontSize:"7px", letterSpacing:".14em", color:"var(--purple-soft)", fontWeight:700 }}>CLICK TO TOGGLE</span>
-            </div>
-            <div className="em-tiles-grid">
+        {/* ── MAIN BODY ── */}
+        <div className="em-body">
+
+          {/* MAP */}
+          <div className="em-map-area">
+            <svg ref={svgRef} viewBox="0 0 960 600" className="em-svg" preserveAspectRatio="xMidYMid meet" />
+            {/* Small-state tiles */}
+            <div className="em-tiles">
               {SIDE_TILES.map(tile => {
                 const p = (picks[tile.key] ?? "T") as Pick;
                 return (
-                  <button key={tile.key} className="em-tile" onClick={() => applyPick(tile.key)}
+                  <button key={tile.key} className="em-tile"
+                    onClick={() => applyPick(tile.key)}
                     style={{ background:fillFor(p), borderColor:strokeFor(p), color:colorFor(p) }}
                   >
-                    <span>{tile.label}</span>
-                    <span className="em-tile-ev">{tile.ev} EV</span>
+                    <span className="em-tile-lbl">{tile.label}</span>
+                    <span className="em-tile-ev">{tile.ev}</span>
                   </button>
                 );
               })}
             </div>
-            <div className="em-tiles-note">
-              Map shows <strong>ME-AL</strong> / <strong>NE-AL</strong> at-large color. Districts painted here individually.
+          </div>
+
+          {/* SIDEBAR */}
+          <div className="em-sidebar">
+
+            {/* Legend */}
+            <div className="em-panel">
+              <div className="em-panel-title">LEGEND</div>
+              <div className="em-legend">
+                {[
+                  { l:"Safe D",   f:"#1a3a8f", t:"rgba(147,197,253,.9)" },
+                  { l:"Likely D", f:"#1e50b3", t:"rgba(147,197,253,.9)" },
+                  { l:"Lean D",   f:"#2d6fd4", t:"rgba(147,197,253,.9)" },
+                  { l:"Tilt D",   f:"#4d8ee8", t:"rgba(147,197,253,.9)" },
+                  { l:"Tossup",   f:"#2a2a2a", t:"rgba(255,255,255,.45)" },
+                  { l:"Tilt R",   f:"#e05555", t:"rgba(252,165,165,.9)" },
+                  { l:"Lean R",   f:"#cc3333", t:"rgba(252,165,165,.9)" },
+                  { l:"Likely R", f:"#b02020", t:"rgba(252,165,165,.9)" },
+                  { l:"Safe R",   f:"#8b1a1a", t:"rgba(252,165,165,.9)" },
+                ].map(({ l, f, t: tc }) => (
+                  <div key={l} className="em-chip" style={{ background:f, color:tc }}>{l}</div>
+                ))}
+              </div>
             </div>
+
+            {/* Scoreboard */}
+            <div className="em-panel">
+              <div className="em-panel-title">SCOREBOARD</div>
+              <div className="em-score-card">
+                <div className="em-score-party">DEMOCRAT</div>
+                <div className="em-score-num" style={{ color:"#4d8ee8" }}>{d}</div>
+                <div className="em-score-track">
+                  <div style={{ width:`${Math.min((d/270)*100, 100)}%`, background:"#2d6fd4", height:"100%", transition:"width .5s cubic-bezier(.22,1,.36,1)" }} />
+                </div>
+                <div className="em-score-need" style={{ color:d>=270?"#4ade80":"rgba(255,255,255,.3)" }}>
+                  {d >= 270 ? "★ WINNER" : `Needs ${270-d} more`}
+                </div>
+              </div>
+              <div className="em-score-tossup">{t} EV TOSSUP</div>
+              <div className="em-score-card">
+                <div className="em-score-party">REPUBLICAN</div>
+                <div className="em-score-num" style={{ color:"#e05555" }}>{r}</div>
+                <div className="em-score-track">
+                  <div style={{ width:`${Math.min((r/270)*100, 100)}%`, background:"#cc3333", height:"100%", transition:"width .5s cubic-bezier(.22,1,.36,1)" }} />
+                </div>
+                <div className="em-score-need" style={{ color:r>=270?"#4ade80":"rgba(255,255,255,.3)" }}>
+                  {r >= 270 ? "★ WINNER" : `Needs ${270-r} more`}
+                </div>
+              </div>
+            </div>
+
+            {/* How to use */}
+            <div className="em-panel em-how">
+              <div className="em-panel-title">HOW TO USE</div>
+              <p className="em-how-text">Select a <strong>brush</strong> above, then click any state. Click again to cycle ratings: SAFE → LIKELY → LEAN → TILT. Use <strong>Tossup</strong> brush to reset. Picks auto-save locally.</p>
+            </div>
+
           </div>
         </div>
 
-        {/* SCOREBOARD */}
-        <div className="em-score">
-          <div className="em-score-hdr">
-            <div>
-              <div className="em-score-eyebrow">◈ SCOREBOARD</div>
-              <div className="em-score-270"><span>270</span> TO WIN</div>
-            </div>
-            <div className="em-live-badge"><div className="em-live-dot" />LIVE</div>
-          </div>
-
-          <div className="em-wb-sec">
-            <div className="em-wb-lbl">
-              <span style={{color:"rgba(147,197,253,.7)"}}>DEM · {d}</span>
-              <span>538 EV</span>
-              <span style={{color:"rgba(252,165,165,.7)"}}>{r} · GOP</span>
-            </div>
-            <div className="em-wb-track">
-              <div className="em-wb-d" style={{width:pct(d)}} />
-              <div className="em-wb-t" style={{width:pct(t)}} />
-              <div className="em-wb-r" style={{width:pct(r)}} />
-              <div className="em-wb-270">270</div>
-              <div className="em-wb-line" />
-            </div>
-          </div>
-
-          <div className="em-score-body">
-            {/* DEM */}
-            <div className="em-ev-card em-evc-d">
-              <div className="em-ev-label em-evl-d">Democrat</div>
-              <div style={{display:"flex",alignItems:"baseline",marginTop:5}}>
-                <div className="em-ev-num">{d}</div><div className="em-ev-unit">EV</div>
-              </div>
-              <div className="em-ev-track"><div className="em-ev-fill em-evf-d" style={{width:pct(d)}} /></div>
-              <div className={d>=270?"em-ev-status em-ev-win":"em-ev-status"}>
-                {d>=270?"★ WINNER CONFIRMED":`Needs ${270-d} more`}
-              </div>
-            </div>
-
-            {/* REP */}
-            <div className="em-ev-card em-evc-r">
-              <div className="em-ev-label em-evl-r">Republican</div>
-              <div style={{display:"flex",alignItems:"baseline",marginTop:5}}>
-                <div className="em-ev-num">{r}</div><div className="em-ev-unit">EV</div>
-              </div>
-              <div className="em-ev-track"><div className="em-ev-fill em-evf-r" style={{width:pct(r)}} /></div>
-              <div className={r>=270?"em-ev-status em-ev-win":"em-ev-status"}>
-                {r>=270?"★ WINNER CONFIRMED":`Needs ${270-r} more`}
-              </div>
-            </div>
-
-            {/* TOSSUP */}
-            <div className="em-ev-card em-evc-t">
-              <div className="em-ev-label em-evl-t">Tossup / Uncalled</div>
-              <div style={{display:"flex",alignItems:"baseline",marginTop:5}}>
-                <div className="em-ev-num">{t}</div><div className="em-ev-unit">EV</div>
-              </div>
-              <div className="em-ev-track"><div className="em-ev-fill em-evf-t" style={{width:pct(t)}} /></div>
-              <div className="em-ev-status">Remaining electoral votes</div>
-            </div>
-
-            <div className="em-how">
-              <div className="em-how-ttl">◫ How It Works</div>
-              <div className="em-how-body">
-                Select <strong>DEM</strong> or <strong>GOP</strong> brush then click any state.
-                Click again to cycle:&nbsp;
-                <span className="em-chip-sm">SAFE</span>→
-                <span className="em-chip-sm">LIKELY</span>→
-                <span className="em-chip-sm">LEAN</span>→
-                <span className="em-chip-sm">TILT</span>→
-                <span className="em-chip-sm">SAFE</span>
-                <br /><br />
-                Use <strong>TOSSUP</strong> brush to instantly reset a state.
-                Picks auto-save to localStorage.
-              </div>
-            </div>
-          </div>
+        {/* ── BOTTOM BAR ── */}
+        <div className="em-bottom">
+          <span>PSI · Electoral Forecaster · 538 Total EV · 270 to Win</span>
+          <span style={{ color:"rgba(255,255,255,.18)" }}>Picks saved locally · Share via URL</span>
         </div>
+
       </div>
 
-      {/* ── TICKER ── */}
-      <div className="em-ticker">
-        <div className="em-ticker-track">
-          {[...TICKER_ITEMS,...TICKER_ITEMS].map((item,i) => (
-            <div key={i} className="em-ticker-item">
-              <div className="em-tk-dot" style={{background:item.color}} />
-              <span className="em-tk-key">{item.key}</span>
-              <span className="em-tk-val">{item.val}</span>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* ── FOOTER ROW ── */}
-      <div className="em-footer">
-        <div className="em-footer-l"><strong>PSI</strong> · Electoral Forecaster · Streamer Edition · Broadcast-ready</div>
-        <div className="em-footer-r">SAVE KEY: {STORAGE_KEY} · 538 EV TOTAL</div>
-      </div>
-
-      {/* ── TOOLTIP ── */}
+      {/* TOOLTIP */}
       {tooltip.visible && (
-        <div className="em-tooltip" style={{left:tooltip.x+14, top:tooltip.y+14}}>
-          <div className="em-tt-st">{tooltip.abbr}</div>
-          <div className="em-tt-name">{tooltip.name}</div>
-          <div className="em-tt-ev">EV: {tooltip.ev}{tooltip.isAtLarge?" (AT-LARGE)":""}</div>
+        <div className="em-tooltip" style={{ left:tooltip.x+16, top:tooltip.y+16 }}>
+          <div className="em-tt-name">{tooltip.name} <span className="em-tt-abbr">({tooltip.abbr})</span></div>
+          <div className="em-tt-ev">{tooltip.ev} Electoral Vote{tooltip.ev !== 1 ? "s" : ""}</div>
           <div className="em-tt-div" />
-          <div className="em-tt-pick" style={{color:colorFor(tooltip.pick)}}>{labelFor(tooltip.pick)}</div>
+          <div className="em-tt-pick" style={{ color:colorFor(tooltip.pick) }}>{labelFor(tooltip.pick)}</div>
           <div className="em-tt-hint">{tooltip.hint}</div>
         </div>
       )}
     </>
   );
 }
+
+// ─── CSS ──────────────────────────────────────────────────────────────────────
+const CSS = `
+  /* Force page to exactly fill viewport — no scroll */
+  html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden;
+    background: #0a0a0a;
+  }
+
+  .em-root {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    max-height: 100vh;
+    overflow: hidden;
+    background: #0a0a0a;
+    color: #fff;
+    font-family: 'DM Mono', 'Geist Mono', ui-monospace, monospace;
+    position: relative;
+  }
+  .em-root.em-fs {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+  }
+
+  /* ── TOP BAR ── */
+  .em-top {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 18px;
+    height: 52px;
+    background: #111;
+    border-bottom: 1px solid #1e1e1e;
+    gap: 12px;
+  }
+  .em-top-brand { display:flex; align-items:center; gap:10px; flex-shrink:0; }
+  .em-logo {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    color: #c5a55a;
+    border: 1px solid #c5a55a44;
+    padding: 3px 7px;
+    flex-shrink: 0;
+  }
+  .em-brand-text { display:flex; flex-direction:column; gap:1px; }
+  .em-brand-main { font-size:12px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:#fff; }
+  .em-brand-sub  { font-size:7.5px; letter-spacing:0.18em; text-transform:uppercase; color:rgba(255,255,255,.25); }
+
+  /* EV center */
+  .em-ev-center {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex: 1;
+    max-width: 420px;
+    justify-content: center;
+  }
+  .em-ev-side { display:flex; flex-direction:column; align-items:center; gap:1px; flex-shrink:0; }
+  .em-ev-label { font-size:6.5px; letter-spacing:0.22em; text-transform:uppercase; color:rgba(255,255,255,.3); }
+  .em-ev-num   { font-size:28px; font-weight:900; line-height:1; letter-spacing:-0.02em; font-variant-numeric:tabular-nums; }
+  .em-ev-middle { flex:1; display:flex; flex-direction:column; gap:3px; align-items:center; }
+  .em-ev-bar {
+    width: 100%;
+    height: 5px;
+    background: #1a1a1a;
+    display: flex;
+    overflow: hidden;
+    border: 1px solid #2a2a2a;
+  }
+  .em-270-txt { font-size:6.5px; letter-spacing:0.18em; text-transform:uppercase; color:rgba(255,255,255,.18); }
+
+  /* Actions */
+  .em-top-actions { display:flex; align-items:center; gap:6px; flex-shrink:0; }
+  .em-btn {
+    font-family: 'DM Mono', ui-monospace, monospace;
+    font-size: 8.5px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    border: 1px solid #2a2a2a;
+    background: transparent;
+    color: rgba(255,255,255,.4);
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: all 100ms;
+  }
+  .em-btn:hover { border-color:#555; color:rgba(255,255,255,.8); background:rgba(255,255,255,.04); }
+  .em-btn-gold { border-color:#c5a55a44; color:#c5a55a; display:flex; align-items:center; gap:5px; }
+  .em-btn-gold:hover { border-color:#c5a55a; background:rgba(197,165,90,.08); color:#d4b46a; }
+
+  /* ── WIN BANNER ── */
+  .em-win {
+    flex-shrink: 0;
+    padding: 5px 18px;
+    border-bottom: 1px solid;
+    text-align: center;
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+  }
+
+  /* ── BRUSH BAR ── */
+  .em-brush-bar {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    padding: 0 18px;
+    height: 36px;
+    background: #0d0d0d;
+    border-bottom: 1px solid #161616;
+    gap: 10px;
+    overflow: hidden;
+  }
+  .em-brush-label { font-size:7.5px; letter-spacing:0.22em; text-transform:uppercase; color:rgba(255,255,255,.2); flex-shrink:0; }
+  .em-brush-group { display:flex; border:1px solid #252525; overflow:hidden; flex-shrink:0; }
+  .em-brush-btn {
+    font-family: 'DM Mono', ui-monospace, monospace;
+    font-size: 8.5px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border: none;
+    border-right: 1px solid #252525;
+    background: #0a0a0a;
+    color: rgba(255,255,255,.35);
+    padding: 6px 12px;
+    cursor: pointer;
+    transition: all 100ms;
+    height: 26px;
+  }
+  .em-brush-btn:last-child { border-right:none; }
+  .em-brush-btn:hover:not(.active) { background:rgba(255,255,255,.04); color:rgba(255,255,255,.7); }
+  .em-brush-hint { font-size:7.5px; letter-spacing:0.08em; color:rgba(255,255,255,.18); text-transform:uppercase; flex:1; min-width:0; overflow:hidden; white-space:nowrap; text-overflow:ellipsis; }
+  .em-tossup-chip {
+    display: inline-flex; align-items:center;
+    padding: 3px 8px; border:1px solid #2a2a2a; background:#161616;
+    font-size:8px; font-weight:700; letter-spacing:0.16em; text-transform:uppercase; color:rgba(255,255,255,.35);
+    flex-shrink:0;
+  }
+
+  /* ── BODY — fills all remaining height ── */
+  .em-body {
+    flex: 1;
+    min-height: 0;
+    display: grid;
+    grid-template-columns: 1fr 210px;
+    overflow: hidden;
+  }
+  @media(max-width: 860px) { .em-body { grid-template-columns: 1fr; } }
+
+  /* ── MAP ── */
+  .em-map-area {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #0a0a0a;
+    border-right: 1px solid #161616;
+    overflow: hidden;
+    min-height: 0;
+  }
+  .em-svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+    /* SVG will scale to fill the container while preserving aspect ratio */
+  }
+
+  /* ── TILES (NE/ME/small states) ── */
+  .em-tiles {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    display: grid;
+    grid-template-columns: repeat(2, 52px);
+    gap: 2px;
+  }
+  .em-tile {
+    display: flex; flex-direction:column; align-items:center; justify-content:center;
+    padding: 3px 2px; border: 1px solid;
+    cursor: pointer;
+    font-family: 'DM Mono', ui-monospace, monospace;
+    font-size: 7px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase;
+    transition: filter 120ms; line-height:1.2;
+  }
+  .em-tile:hover { filter:brightness(1.35); }
+  .em-tile-lbl { font-size:7.5px; }
+  .em-tile-ev  { font-size:7px; opacity:0.55; }
+
+  /* ── SIDEBAR ── */
+  .em-sidebar {
+    background: #0d0d0d;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    overflow-x: hidden;
+    min-height: 0;
+  }
+  .em-panel { padding:12px 14px; border-bottom:1px solid #161616; }
+  .em-panel-title { font-size:7px; font-weight:700; letter-spacing:0.28em; text-transform:uppercase; color:rgba(255,255,255,.22); margin-bottom:9px; }
+
+  /* Legend */
+  .em-legend { display:grid; grid-template-columns:1fr 1fr; gap:2px; }
+  .em-chip { padding:3px 5px; font-size:7px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; text-align:center; }
+
+  /* Scoreboard */
+  .em-score-card { padding:10px; border:1px solid #1e1e1e; background:#0a0a0a; margin-bottom:3px; }
+  .em-score-party { font-size:7px; font-weight:700; letter-spacing:0.22em; text-transform:uppercase; color:rgba(255,255,255,.25); margin-bottom:3px; }
+  .em-score-num   { font-size:34px; font-weight:900; line-height:1; letter-spacing:-0.02em; font-variant-numeric:tabular-nums; }
+  .em-score-track { height:3px; background:#1a1a1a; margin-top:7px; overflow:hidden; }
+  .em-score-need  { font-size:7.5px; letter-spacing:0.1em; text-transform:uppercase; margin-top:4px; }
+  .em-score-tossup { text-align:center; padding:5px; font-size:7.5px; letter-spacing:0.16em; text-transform:uppercase; color:rgba(255,255,255,.25); }
+
+  /* How */
+  .em-how-text { font-size:8.5px; line-height:1.75; letter-spacing:0.04em; color:rgba(255,255,255,.22); margin:0; }
+  .em-how-text strong { color:rgba(255,255,255,.45); font-weight:700; }
+
+  /* ── BOTTOM BAR ── */
+  .em-bottom {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 18px;
+    height: 28px;
+    background: #0d0d0d;
+    border-top: 1px solid #161616;
+    font-size: 7px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,.18);
+  }
+
+  /* ── TOOLTIP ── */
+  .em-tooltip {
+    position: fixed;
+    pointer-events: none;
+    z-index: 99999;
+    width: 196px;
+    background: #111;
+    border: 1px solid #2e2e2e;
+    padding: 11px 13px;
+    box-shadow: 0 16px 40px rgba(0,0,0,.85);
+  }
+  .em-tt-name { font-size:11.5px; font-weight:700; letter-spacing:0.05em; text-transform:uppercase; color:#fff; }
+  .em-tt-abbr { color:rgba(255,255,255,.3); font-size:9.5px; }
+  .em-tt-ev   { font-size:7.5px; letter-spacing:0.14em; color:rgba(255,255,255,.25); margin-top:3px; text-transform:uppercase; }
+  .em-tt-div  { height:1px; background:#222; margin:7px 0; }
+  .em-tt-pick { font-size:9.5px; font-weight:700; letter-spacing:0.16em; text-transform:uppercase; }
+  .em-tt-hint { font-size:7.5px; letter-spacing:0.1em; color:rgba(255,255,255,.22); margin-top:4px; text-transform:uppercase; }
+
+  @media(prefers-reduced-motion:reduce) {
+    .em-score-track div { transition:none !important; }
+  }
+`;

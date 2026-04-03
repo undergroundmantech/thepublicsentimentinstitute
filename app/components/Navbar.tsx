@@ -2,552 +2,481 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import React, { useEffect, useMemo, useState } from "react";
+import { useState } from "react";
 
-const nav = [
-  { href: "/", label: "Home" },
-  { href: "/results", label: "Election Results" },
-  { href: "/polling", label: "Polling Averages" },
-  { href: "/forecastratings", label: "2026 Forecast Ratings" },
-  { href: "/electoralmap", label: "Electoral Map" },
-  { href: "/contact", label: "Contact" },
+const NAV = [
+  { href: "/",                label: "Home" },
+  { href: "/polling",         label: "Polling" },
+  { href: "/results",         label: "Results" },
+  { href: "/electoralmap",    label: "Electoral Map" },
+  { href: "/contact",         label: "Contact" },
+  { href: "/SMSOptIn",         label: "SMS Opt-In" },
+  { href: "/TermsAndConditions",         label: "Terms & Conditions" },
+];
+
+const TICKER = [
+  { label: "Trump Approval", dem: 43, rep: 55 },
+  { label: "Generic Ballot", dem: 47, rep: 42 },
+  { label: "Right Track",    dem: 37, rep: 54 },
 ];
 
 export default function Navbar() {
   const pathname = usePathname();
-  const [mobileOpen, setMobileOpen] = useState(false);
-  const [nowMs, setNowMs] = useState(() => Date.now());
-
+  const [open, setOpen] = useState(false);
   const isActive = (href: string) =>
     href === "/" ? pathname === "/" : pathname.startsWith(href);
-
-  const activeLabel = useMemo(() => {
-    const found =
-      nav.find((n) =>
-        n.href === "/" ? pathname === "/" : pathname.startsWith(n.href)
-      ) ?? nav[0];
-    return found?.label ?? "Menu";
-  }, [pathname]);
-
-  useEffect(() => {
-    const t = setInterval(() => setNowMs(Date.now()), 1000);
-    return () => clearInterval(t);
-  }, []);
-
-  const timeStr = new Date(nowMs).toLocaleTimeString("en-US", {
-    hour12: false,
-    hour: "2-digit",
-    minute: "2-digit",
-    second: "2-digit",
-  });
 
   return (
     <>
       <style>{`
-        :root {
-          --background:  #070709;
-          --background2: #0b0b0f;
-          --panel:       #0f0f15;
-          --foreground:  #f0f0f5;
-          --muted:       rgba(240,240,245,0.62);
-          --muted2:      rgba(240,240,245,0.40);
-          --muted3:      rgba(240,240,245,0.22);
-          --border:      rgba(255,255,255,0.09);
-          --border2:     rgba(255,255,255,0.15);
-          --purple:      #7c3aed;
-          --purple2:     #9d5cf0;
-          --purple-soft: #a78bfa;
-          --red:         #e63946;
-          --red2:        #ff4d5a;
-          --blue:        #2563eb;
-          --blue2:       #3b82f6;
-          --trk-2:       0.12em;
-          --trk-3:       0.22em;
-          --dur-1:       140ms;
-          --dur-2:       220ms;
-          --ease-out:    cubic-bezier(0.22,1,0.36,1);
+        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap');
+
+        .nb-root {
+          position: sticky;
+          top: 0;
+          z-index: 200;
+          background: #0a0a08;
+          border-bottom: 1px solid rgba(255,255,255,0.08);
         }
 
-        /* ── Tri-color top stripe ── */
-        .nav-stripe {
-          height: 3px;
-          background: linear-gradient(
-            90deg,
-            var(--red)    0%,
-            var(--red)    33.33%,
-            var(--purple) 33.33%,
-            var(--purple) 66.66%,
-            var(--blue)   66.66%,
-            var(--blue)   100%
-          );
-        }
-
-        /* ── Ticker row ── */
-        .nav-ticker {
-          background: var(--background2);
-          border-bottom: 1px solid var(--border);
-          padding: 6px 0;
-        }
-        .nav-ticker-inner {
-          max-width: 1152px;
-          margin: 0 auto;
-          padding: 0 1rem;
+        /* Top utility bar */
+        .nb-topbar {
+          background: #0a0a08;
+          border-bottom: 1px solid rgba(255,255,255,0.06);
+          padding: 0 32px;
           display: flex;
           align-items: center;
           justify-content: space-between;
-        }
-        .nav-ticker-left {
-          display: flex;
-          align-items: center;
-          gap: 8px;
-          font-family: var(--font-body);
-          font-size: 9px;
-          font-weight: 700;
-          letter-spacing: var(--trk-3);
-          text-transform: uppercase;
-          color: rgba(255,255,255,0.35);
-        }
-        .live-dot {
-          width: 7px;
-          height: 7px;
-          border-radius: 50%;
-          background: var(--red);
-          box-shadow: 0 0 8px rgba(230,57,70,0.75);
-          animation: pulse-dot 1.8s ease-in-out infinite;
-          flex-shrink: 0;
-        }
-        @keyframes pulse-dot {
-          0%,100% { opacity:1; transform:scale(1); }
-          50%      { opacity:0.4; transform:scale(0.85); }
-        }
-        .nav-ticker-live {
-          color: var(--red);
-          letter-spacing: var(--trk-3);
-        }
-        .nav-ticker-sep {
-          color: rgba(255,255,255,0.12);
-        }
-        .nav-ticker-right {
-          font-family: var(--font-body);
-          font-size: 9px;
-          font-weight: 700;
-          letter-spacing: var(--trk-3);
-          color: rgba(255,255,255,0.20);
-        }
-
-        /* ── Main nav shell ── */
-        .nav-main {
-          background: var(--panel);
-          border-bottom: 1px solid var(--border);
-          position: sticky;
-          top: 0;
-          z-index: 50;
-        }
-        .nav-inner {
-          max-width: 1152px;
+          height: 32px;
+          max-width: 1280px;
           margin: 0 auto;
-          padding: 0 1rem;
-          display: flex;
-          align-items: stretch;
-          min-height: 54px;
         }
 
-        /* ── Brand block ── */
-        .nav-brand {
+        .nb-date {
+          font-family: 'DM Mono', monospace;
+          font-size: 10px;
+          letter-spacing: 0.12em;
+          color: rgba(255,255,255,0.3);
+          text-transform: uppercase;
+        }
+
+        .nb-edition {
           display: flex;
-          flex-direction: row;
           align-items: center;
-          gap: 10px;
-          padding-right: 20px;
-          margin-right: 4px;
-          border-right: 1px solid var(--border);
-          text-decoration: none;
+          gap: 16px;
+        }
+
+        .nb-edition-text {
+          font-family: 'DM Mono', monospace;
+          font-size: 10px;
+          letter-spacing: 0.1em;
+          color: rgba(255,255,255,0.3);
+          text-transform: uppercase;
+        }
+
+        .nb-live-pill {
+          display: inline-flex;
+          align-items: center;
+          gap: 5px;
+          padding: 2px 8px;
+          background: rgba(192,57,43,0.15);
+          border: 1px solid rgba(192,57,43,0.4);
+          border-radius: 2px;
+          font-family: 'DM Mono', monospace;
+          font-size: 9px;
+          font-weight: 500;
+          letter-spacing: 0.14em;
+          color: #e05a4a;
+          text-transform: uppercase;
+        }
+
+        .nb-live-dot {
+          width: 5px; height: 5px;
+          border-radius: 50%;
+          background: #e05a4a;
+          animation: nb-pulse 1.8s ease-in-out infinite;
           flex-shrink: 0;
         }
-        .nav-brand:hover { opacity: 1; }
-        .nav-brand-text {
+        @keyframes nb-pulse { 0%,100%{opacity:1} 50%{opacity:0.25} }
+
+        /* Main masthead row */
+        .nb-masthead {
+          max-width: 1280px;
+          margin: 0 auto;
+          padding: 0 32px;
+          height: 64px;
+          display: flex;
+          align-items: center;
+          gap: 0;
+          border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+
+        .nb-logo {
           display: flex;
           flex-direction: column;
-          gap: 1px;
+          text-decoration: none;
+          flex-shrink: 0;
+          margin-right: 40px;
+          padding-right: 40px;
+          border-right: 1px solid rgba(255,255,255,0.1);
+          line-height: 1;
+          gap: 2px;
         }
-        .brand-primary {
-          font-family: var(--font-display);
-          font-size: 13px;
-          font-weight: 900;
-          letter-spacing: 0.10em;
-          text-transform: uppercase;
+        .nb-logo:hover { text-decoration: none; opacity: 0.85; }
+
+        .nb-logo-mark {
+          font-family: 'Bebas Neue', sans-serif;
+          font-size: 36px;
           color: #fff;
+          letter-spacing: 0.05em;
           line-height: 1;
-        }
-        .brand-primary span.brand-r { color: var(--red); }
-        .brand-primary span.brand-b { color: var(--blue2); }
-        .brand-sub {
-          font-family: var(--font-display);
-          font-size: 8.5px;
-          font-weight: 500;
-          letter-spacing: 0.38em;
-          text-transform: uppercase;
-          color: var(--purple-soft);
-          line-height: 1;
-          margin-top: 3px;
         }
 
-        /* ── Desktop nav links ── */
-        .nav-links {
+        .nb-logo-sub {
+          font-family: 'DM Mono', monospace;
+          font-size: 8px;
+          font-weight: 400;
+          letter-spacing: 0.2em;
+          text-transform: uppercase;
+          color: rgba(255,255,255,0.35);
+          white-space: nowrap;
+        }
+
+        /* Nav links */
+        .nb-links {
           display: flex;
           align-items: stretch;
+          height: 100%;
           flex: 1;
+          gap: 0;
           overflow-x: auto;
           scrollbar-width: none;
         }
-        .nav-links::-webkit-scrollbar { display: none; }
+        .nb-links::-webkit-scrollbar { display: none; }
 
-        .nav-link {
+        .nb-link {
           display: inline-flex;
           align-items: center;
           padding: 0 14px;
-          font-family: var(--font-body);
-          font-size: 9.5px;
-          font-weight: 700;
-          letter-spacing: var(--trk-2);
+          font-family: 'DM Mono', monospace;
+          font-size: 11px;
+          font-weight: 400;
+          letter-spacing: 0.1em;
           text-transform: uppercase;
           color: rgba(255,255,255,0.45);
           text-decoration: none;
-          position: relative;
-          border-right: 1px solid var(--border);
-          transition:
-            color var(--dur-1) var(--ease-out),
-            background var(--dur-1) var(--ease-out);
           white-space: nowrap;
+          border-bottom: 2px solid transparent;
+          position: relative;
+          top: 1px;
+          transition: color 120ms ease, border-color 120ms ease;
         }
-        .nav-link::after {
-          content: '';
-          position: absolute;
-          bottom: 0; left: 0; right: 0;
-          height: 2px;
-          background: var(--purple);
-          transform: scaleX(0);
-          transform-origin: left;
-          transition: transform var(--dur-2) var(--ease-out);
-        }
-        .nav-link:hover {
-          color: rgba(255,255,255,0.82);
-          background: rgba(255,255,255,0.025);
-        }
-        .nav-link:hover::after { transform: scaleX(1); }
-        .nav-link.active {
+        .nb-link:hover { color: rgba(255,255,255,0.85); text-decoration: none; }
+        .nb-link.nb-active {
           color: #fff;
-          background: rgba(124,58,237,0.10);
-        }
-        .nav-link.active::after { transform: scaleX(1); }
-
-        /* ── Forecast badge highlight ── */
-        .nav-link.forecast-link {
-          color: rgba(167,139,250,0.75);
-        }
-        .nav-link.forecast-link::after {
-          background: var(--purple-soft);
-        }
-        .nav-link.forecast-link:hover,
-        .nav-link.forecast-link.active {
-          color: var(--purple-soft);
-          background: rgba(124,58,237,0.12);
-        }
-        .forecast-badge {
-          display: inline-flex;
-          align-items: center;
-          margin-left: 6px;
-          padding: 1px 5px;
-          background: rgba(124,58,237,0.30);
-          border: 1px solid rgba(167,139,250,0.35);
-          border-radius: 3px;
-          font-size: 7px;
-          font-weight: 800;
-          letter-spacing: 0.18em;
-          color: var(--purple-soft);
-          text-transform: uppercase;
-          line-height: 1.4;
+          border-bottom-color: #c5a55a;
         }
 
-        /* ── CTA button ── */
-        .nav-cta-wrap {
+        /* Right side */
+        .nb-right {
           display: flex;
           align-items: center;
-          padding-left: 14px;
+          gap: 12px;
           flex-shrink: 0;
+          margin-left: 20px;
+          padding-left: 20px;
+          border-left: 1px solid rgba(255,255,255,0.1);
         }
-        .nav-cta {
+
+        .nb-cta {
           display: inline-flex;
           align-items: center;
           gap: 6px;
-          padding: 7px 14px;
-          background: var(--purple);
-          border: 1px solid rgba(124,58,237,0.65);
-          color: #fff;
-          font-family: var(--font-body);
-          font-size: 9px;
-          font-weight: 700;
-          letter-spacing: var(--trk-2);
+          padding: 7px 16px;
+          background: #c5a55a;
+          color: #0a0a08 !important;
+          font-family: 'DM Mono', monospace;
+          font-size: 10px;
+          font-weight: 500;
+          letter-spacing: 0.12em;
           text-transform: uppercase;
           text-decoration: none;
-          transition:
-            background var(--dur-1) var(--ease-out),
-            border-color var(--dur-1) var(--ease-out),
-            transform var(--dur-1) var(--ease-out);
+          border: none;
+          cursor: pointer;
+          transition: background 120ms ease, transform 80ms ease;
+          white-space: nowrap;
         }
-        .nav-cta:hover {
-          background: var(--purple2);
-          border-color: rgba(157,92,240,0.8);
-          opacity: 1;
-          transform: translateY(-1px);
-        }
-        .nav-cta-arrow {
-          font-size: 10px;
-          opacity: 0.7;
+        .nb-cta:hover { background: #d4b46a; text-decoration: none; transform: translateY(-1px); }
+        .nb-cta:active { transform: translateY(0); }
+
+        /* Ticker */
+        .nb-ticker {
+          background: #111110;
+          padding: 0 32px;
+          display: flex;
+          align-items: center;
+          height: 34px;
+          gap: 0;
+          overflow: hidden;
+          position: relative;
         }
 
-        /* ── Hamburger (mobile) ── */
-        .nav-hamburger {
+        .nb-ticker::after {
+          content: '';
+          position: absolute;
+          right: 0;
+          top: 0;
+          bottom: 0;
+          width: 60px;
+          background: linear-gradient(to right, transparent, #111110);
+          pointer-events: none;
+        }
+
+        .nb-ticker-label {
+          font-family: 'DM Mono', monospace;
+          font-size: 9px;
+          font-weight: 500;
+          letter-spacing: 0.18em;
+          text-transform: uppercase;
+          color: #c5a55a;
+          flex-shrink: 0;
+          padding-right: 20px;
+          margin-right: 20px;
+          border-right: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .nb-ticker-scroll {
+          display: flex;
+          align-items: center;
+          gap: 0;
+          overflow: hidden;
+        }
+
+        .nb-ticker-item {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          white-space: nowrap;
+          padding: 0 24px 0 0;
+          margin-right: 24px;
+          border-right: 1px solid rgba(255,255,255,0.08);
+        }
+        .nb-ticker-item:last-child { border-right: none; }
+
+        .nb-ticker-name {
+          font-family: 'DM Mono', monospace;
+          font-size: 10px;
+          color: rgba(255,255,255,0.4);
+          letter-spacing: 0.06em;
+        }
+        .nb-ticker-dem {
+          font-family: 'DM Mono', monospace;
+          font-size: 11px;
+          font-weight: 500;
+          color: #5b8fd4;
+          letter-spacing: 0.04em;
+        }
+        .nb-ticker-sep {
+          font-size: 10px;
+          color: rgba(255,255,255,0.2);
+        }
+        .nb-ticker-rep {
+          font-family: 'DM Mono', monospace;
+          font-size: 11px;
+          font-weight: 500;
+          color: #d45b5b;
+          letter-spacing: 0.04em;
+        }
+
+        /* Mini split bar in ticker */
+        .nb-ticker-bar {
+          width: 40px;
+          height: 3px;
+          border-radius: 1px;
+          overflow: hidden;
+          background: rgba(255,255,255,0.1);
+          display: inline-flex;
+          flex-shrink: 0;
+        }
+        .nb-ticker-bar-dem { background: #5b8fd4; height: 100%; }
+        .nb-ticker-bar-rep { background: #d45b5b; height: 100%; }
+
+        /* Hamburger */
+        .nb-ham {
           display: none;
           flex-direction: column;
-          justify-content: center;
           gap: 5px;
-          cursor: pointer;
-          padding: 8px;
-          margin-left: auto;
           background: none;
           border: none;
+          cursor: pointer;
+          padding: 6px;
+          margin-left: auto;
         }
-        .nav-hamburger span {
+        .nb-ham span {
           display: block;
-          width: 22px;
-          height: 1.5px;
-          background: rgba(255,255,255,0.5);
-          transition: all var(--dur-2) var(--ease-out);
+          width: 22px; height: 1.5px;
+          background: rgba(255,255,255,0.6);
+          border-radius: 1px;
+          transition: all 200ms ease;
         }
-        .nav-hamburger.open span:nth-child(1) {
-          transform: translateY(6.5px) rotate(45deg);
-          background: var(--purple-soft);
-        }
-        .nav-hamburger.open span:nth-child(2) {
-          opacity: 0; transform: scaleX(0);
-        }
-        .nav-hamburger.open span:nth-child(3) {
-          transform: translateY(-6.5px) rotate(-45deg);
-          background: var(--purple-soft);
-        }
+        .nb-ham.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+        .nb-ham.open span:nth-child(2) { opacity: 0; }
+        .nb-ham.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
 
-        /* ── Mobile drawer ── */
-        .nav-mobile {
+        /* Mobile menu */
+        .nb-mobile {
           display: none;
           flex-direction: column;
-          background: var(--background2);
-          border-top: 1px solid var(--border);
-          overflow: hidden;
+          background: #0f0f0d;
+          border-top: 1px solid rgba(255,255,255,0.08);
           max-height: 0;
-          transition: max-height 300ms var(--ease-out);
+          overflow: hidden;
+          transition: max-height 300ms ease;
         }
-        .nav-mobile.open {
-          max-height: 560px;
-        }
-        .nav-mobile-link {
+        .nb-mobile.open { max-height: 600px; }
+
+        .nb-mob-link {
           display: flex;
           align-items: center;
           justify-content: space-between;
           padding: 14px 24px;
-          font-family: var(--font-body);
-          font-size: 10px;
-          font-weight: 700;
-          letter-spacing: var(--trk-2);
+          font-family: 'DM Mono', monospace;
+          font-size: 12px;
+          letter-spacing: 0.1em;
           text-transform: uppercase;
-          color: rgba(255,255,255,0.45);
+          color: rgba(255,255,255,0.5);
           text-decoration: none;
-          border-bottom: 1px solid var(--border);
-          transition: all var(--dur-1) var(--ease-out);
+          border-bottom: 1px solid rgba(255,255,255,0.06);
+          transition: background 80ms, color 80ms;
         }
-        .nav-mobile-link:hover,
-        .nav-mobile-link.active {
-          color: #fff;
-          background: rgba(124,58,237,0.08);
-          padding-left: 28px;
+        .nb-mob-link:hover { background: rgba(255,255,255,0.04); color: #fff; text-decoration: none; }
+        .nb-mob-link.nb-active { color: #c5a55a; }
+
+        .nb-mob-cta {
+          padding: 16px 24px;
         }
-        .nav-mobile-link.active { color: var(--purple-soft); }
-        .nav-mobile-link.forecast-mobile {
-          color: rgba(167,139,250,0.75);
-        }
-        .nav-mobile-link.forecast-mobile:hover,
-        .nav-mobile-link.forecast-mobile.active {
-          color: var(--purple-soft);
-        }
-        .nav-mobile-cta {
-          margin: 14px 24px;
-        }
-        .nav-mobile-cta a {
+        .nb-mob-cta a {
           display: flex;
           align-items: center;
           justify-content: center;
-          gap: 8px;
           padding: 12px;
-          background: var(--purple);
-          border: 1px solid rgba(124,58,237,0.65);
-          color: #fff;
-          font-family: var(--font-body);
-          font-size: 10px;
-          font-weight: 700;
-          letter-spacing: var(--trk-2);
+          background: #c5a55a;
+          color: #0a0a08;
+          font-family: 'DM Mono', monospace;
+          font-size: 11px;
+          letter-spacing: 0.12em;
           text-transform: uppercase;
           text-decoration: none;
+          transition: background 100ms;
         }
-
-        /* ── Responsive breakpoint ── */
-        @media (max-width: 768px) {
-          .nav-links { display: none; }
-          .nav-cta-wrap { display: none; }
-          .nav-hamburger { display: flex; }
-          .nav-mobile { display: flex; }
-          .nav-brand { border-right: none; padding-right: 0; }
-        }
-
-        /* ── Stat chips (desktop only) ── */
-        .nav-stat-chips {
-          display: flex;
-          align-items: center;
-          gap: 1px;
-          padding: 0 10px;
-          border-right: 1px solid var(--border);
-          flex-shrink: 0;
-        }
-        .stat-chip {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          padding: 4px 10px;
-          gap: 2px;
-        }
-        .stat-chip-val {
-          font-family: var(--font-body);
-          font-size: 13px;
-          font-weight: 900;
-          line-height: 1;
-          font-variant-numeric: tabular-nums;
-        }
-        .stat-chip-val.dem { color: var(--blue2); }
-        .stat-chip-val.rep { color: var(--red); }
-        .stat-chip-label {
-          font-family: var(--font-body);
-          font-size: 7px;
-          font-weight: 700;
-          letter-spacing: 0.28em;
-          text-transform: uppercase;
-          color: rgba(255,255,255,0.25);
-        }
-        .stat-chip-divider {
-          width: 1px;
-          height: 24px;
-          background: var(--border2);
-          margin: 0 2px;
-        }
+        .nb-mob-cta a:hover { background: #d4b46a; }
 
         @media (max-width: 900px) {
-          .nav-stat-chips { display: none; }
+          .nb-topbar { display: none; }
+          .nb-links, .nb-right { display: none; }
+          .nb-ham { display: flex; }
+          .nb-mobile { display: flex; }
+          .nb-ticker { display: none; }
+          .nb-masthead { padding: 0 20px; }
+          .nb-logo { margin-right: 0; border-right: none; padding-right: 0; }
         }
       `}</style>
 
-      <header className="nav-main">
-        {/* Tri-color stripe */}
-        <div className="nav-stripe" />
-
-        {/* Main nav */}
-        <div className="nav-inner">
-          {/* Brand */}
-          <Link href="/" className="nav-brand">
-            <img src="/logo.png" alt="PSI Logo" style={{ height: "36px", width: "auto" }} />
-            <div className="nav-brand-text">
-              <div className="brand-primary">
-                <span className="brand-r">P</span>ublic{" "}
-                <span className="brand-b">S</span>entiment
-              </div>
-              <div className="brand-sub">Institute</div>
-            </div>
-          </Link>
-
-          {/* Desktop links */}
-          <nav className="nav-links">
-            {nav.map((item) => {
-              const isForecast = item.href === "/forecast";
-              return (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className={[
-                    "nav-link",
-                    isForecast ? "forecast-link" : "",
-                    isActive(item.href) ? "active" : "",
-                  ]
-                    .filter(Boolean)
-                    .join(" ")}
-                >
-                  {item.label}
-                  {isForecast && <span className="forecast-badge">2026</span>}
-                </Link>
-              );
-            })}
-          </nav>
-
-          {/* CTA */}
-          <div className="nav-cta-wrap">
-            <Link
-              href="https://wss.pollfish.com/link/522d0e01-b70f-4955-8514-b42a7f10d4b6"
-              className="nav-cta"
-            >
-              Take Survey
-              <span className="nav-cta-arrow">→</span>
-            </Link>
+      <header className="nb-root">
+        {/* Top utility bar */}
+        <div className="nb-topbar">
+          <span className="nb-date">
+            {new Date().toLocaleDateString("en-US", { weekday:"long", year:"numeric", month:"long", day:"numeric" })}
+          </span>
+          <div className="nb-edition">
+            <span className="nb-edition-text">National Edition</span>
+            <span className="nb-live-pill">
+              <span className="nb-live-dot" />
+              Live Data
+            </span>
           </div>
-
-          {/* Hamburger */}
-          <button
-            className={["nav-hamburger", mobileOpen ? "open" : ""].join(" ")}
-            onClick={() => setMobileOpen((v) => !v)}
-            aria-label="Toggle menu"
-          >
-            <span />
-            <span />
-            <span />
-          </button>
         </div>
 
-        {/* Mobile drawer */}
-        <div className={["nav-mobile", mobileOpen ? "open" : ""].join(" ")}>
-          {nav.map((item) => {
-            const isForecast = item.href === "/forecast";
-            return (
+        {/* Masthead */}
+        <div className="nb-masthead">
+          <Link href="/" className="nb-logo">
+            <span className="nb-logo-mark">PSI</span>
+            <span className="nb-logo-sub">Public Sentiment Institute</span>
+          </Link>
+
+          <nav className="nb-links" aria-label="Main navigation">
+            {NAV.map(item => (
               <Link
                 key={item.href}
                 href={item.href}
-                className={[
-                  "nav-mobile-link",
-                  isForecast ? "forecast-mobile" : "",
-                  isActive(item.href) ? "active" : "",
-                ]
-                  .filter(Boolean)
-                  .join(" ")}
-                onClick={() => setMobileOpen(false)}
+                className={`nb-link${isActive(item.href) ? " nb-active" : ""}`}
               >
-                <span style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                  {item.label}
-                  {isForecast && <span className="forecast-badge">2026</span>}
-                </span>
-                <span style={{ opacity: 0.3, fontSize: "10px" }}>›</span>
+                {item.label}
               </Link>
-            );
-          })}
-          <div className="nav-mobile-cta">
+            ))}
+          </nav>
+
+          <div className="nb-right">
             <Link
               href="https://wss.pollfish.com/link/522d0e01-b70f-4955-8514-b42a7f10d4b6"
-              onClick={() => setMobileOpen(false)}
+              className="nb-cta"
+              target="_blank" rel="noopener noreferrer"
             >
               Take Survey →
+            </Link>
+          </div>
+
+          <button
+            className={`nb-ham${open ? " open" : ""}`}
+            onClick={() => setOpen(v => !v)}
+            aria-label="Toggle menu"
+          >
+            <span /><span /><span />
+          </button>
+        </div>
+
+        {/* Ticker */}
+        <div className="nb-ticker" aria-label="Latest polling snapshot">
+          <span className="nb-ticker-label">Latest</span>
+          <div className="nb-ticker-scroll">
+            {TICKER.map((item, i) => {
+              const demPct = (item.dem / (item.dem + item.rep)) * 100;
+              return (
+                <span key={item.label} className="nb-ticker-item">
+                  <span className="nb-ticker-name">{item.label}</span>
+                  <span className="nb-ticker-dem">{item.dem}%</span>
+                  <span className="nb-ticker-sep">·</span>
+                  <span className="nb-ticker-rep">{item.rep}%</span>
+                  <span className="nb-ticker-bar">
+                    <span className="nb-ticker-bar-dem" style={{ width: `${demPct}%` }} />
+                    <span className="nb-ticker-bar-rep" style={{ flex: 1 }} />
+                  </span>
+                </span>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Mobile menu */}
+        <div className={`nb-mobile${open ? " open" : ""}`} aria-hidden={!open}>
+          {NAV.map(item => (
+            <Link
+              key={item.href}
+              href={item.href}
+              className={`nb-mob-link${isActive(item.href) ? " nb-active" : ""}`}
+              onClick={() => setOpen(false)}
+            >
+              {item.label}
+              <span style={{ opacity: 0.3, fontSize: 14 }}>›</span>
+            </Link>
+          ))}
+          <div className="nb-mob-cta">
+            <Link
+              href="https://wss.pollfish.com/link/522d0e01-b70f-4955-8514-b42a7f10d4b6"
+              onClick={() => setOpen(false)}
+              target="_blank" rel="noopener noreferrer"
+            >
+              Take the Survey →
             </Link>
           </div>
         </div>

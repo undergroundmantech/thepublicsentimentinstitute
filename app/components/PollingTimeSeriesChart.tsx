@@ -30,133 +30,96 @@ function niceDomain(min: number, max: number): [number, number] {
   if (!Number.isFinite(min) || !Number.isFinite(max)) return [0, 60];
   if (min === max) return [min - 2, max + 2];
   const pad = Math.max(1.5, (max - min) * 0.12);
-  const lo = Math.floor((min - pad) * 2) / 2;
-  const hi = Math.ceil((max + pad) * 2) / 2;
-  return [lo, hi];
+  return [Math.floor((min - pad) * 2) / 2, Math.ceil((max + pad) * 2) / 2];
 }
 
 function formatDateLabel(iso: string): string {
   const d = new Date(iso + "T00:00:00");
-  if (Number.isNaN(d.getTime())) return iso;
+  if (isNaN(d.getTime())) return iso;
   return d.toLocaleDateString(undefined, { month: "short", day: "numeric" });
 }
 
 function formatDateTooltip(iso: string): string {
   const d = new Date(iso + "T00:00:00");
-  if (Number.isNaN(d.getTime())) return iso;
-  return d.toLocaleDateString(undefined, { year: "numeric", month: "short", day: "2-digit" });
+  if (isNaN(d.getTime())) return iso;
+  return d.toLocaleDateString(undefined, { year: "numeric", month: "long", day: "numeric" });
 }
 
 function fmtPct(v: number): string {
-  if (!Number.isFinite(v)) return "–";
-  return `${v.toFixed(1)}%`;
+  return Number.isFinite(v) ? `${v.toFixed(1)}%` : "–";
 }
 
-function CustomTooltip({ active, payload, label }: { active?: boolean; payload?: any[]; label?: string; }) {
-  if (!active || !payload || payload.length === 0) return null;
+function CustomTooltip({ active, payload, label }: any) {
+  if (!active || !payload?.length) return null;
 
   const rows = payload
     .filter((it: any) => it?.value != null && it.dataKey !== "date")
     .sort((a: any, b: any) => (b.value ?? 0) - (a.value ?? 0));
 
   return (
-    <div
-      style={{
-        width: "300px",
-        background: "rgba(7,7,9,0.97)",
-        border: "1px solid rgba(124,58,237,0.45)",
-        boxShadow: "0 20px 60px rgba(0,0,0,0.85)",
-        fontFamily: "var(--font-body), 'Geist Mono', monospace",
-        pointerEvents: "none",
-        overflow: "hidden",
-      }}
-    >
-      {/* Tri stripe */}
+    <div style={{
+      background: "#fff",
+      border: "1px solid #e2e0db",
+      borderRadius: 6,
+      boxShadow: "0 4px 20px rgba(0,0,0,0.12)",
+      fontFamily: "var(--font-body), Georgia, serif",
+      minWidth: 200,
+      overflow: "hidden",
+      pointerEvents: "none",
+    }}>
+      {/* Header */}
       <div style={{
-        height: "2px",
-        width: "100%",
-        background: "linear-gradient(90deg, #e63946 0%, #e63946 33.33%, #7c3aed 33.33%, #7c3aed 66.66%, #2563eb 66.66%, #2563eb 100%)",
-      }} />
+        padding: "8px 12px",
+        background: "#f8f7f4",
+        borderBottom: "1px solid #e2e0db",
+        fontSize: 11,
+        fontWeight: 600,
+        color: "#555",
+        letterSpacing: "0.04em",
+      }}>
+        {formatDateTooltip(label ?? "")}
+      </div>
 
-      <div style={{ padding: "10px 12px" }}>
-        {/* Date header */}
-        <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", marginBottom: "8px" }}>
-          <div style={{ fontSize: "8.5px", fontWeight: 700, letterSpacing: "0.26em", textTransform: "uppercase", color: "rgba(255,255,255,0.35)" }}>
-            {formatDateTooltip(label ?? "")}
-          </div>
-          <div style={{ fontSize: "7.5px", fontWeight: 700, letterSpacing: "0.28em", textTransform: "uppercase", color: "rgba(124,58,237,0.85)" }}>
-            DAILY AVG
-          </div>
-        </div>
-
-        {/* Divider */}
-        <div style={{ height: "1px", background: "rgba(255,255,255,0.08)", marginBottom: "8px" }} />
-
-        {/* Candidates */}
-        <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
-          {rows.map((item: any, i: number) => (
-            <div
-              key={item.dataKey}
-              style={{
-                display: "grid",
-                gridTemplateColumns: "1fr auto",
-                alignItems: "center",
-                gap: "12px",
-                paddingBottom: i < rows.length - 1 ? "6px" : 0,
-                borderBottom: i < rows.length - 1 ? "1px solid rgba(255,255,255,0.05)" : "none",
-              }}
-            >
-              <div style={{ display: "flex", alignItems: "center", gap: "8px", minWidth: 0 }}>
-                <span style={{
-                  width: "8px", height: "8px",
-                  borderRadius: "50%",
-                  background: item.color,
-                  boxShadow: `0 0 10px ${item.color}60`,
-                  flexShrink: 0,
-                }} />
-                <span style={{ fontSize: "10.5px", color: "rgba(255,255,255,0.80)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", letterSpacing: "0.08em" }}>
-                  {item.name}
-                </span>
-              </div>
-              <span style={{ fontSize: "14px", fontWeight: 900, color: "#fff", fontVariantNumeric: "tabular-nums", letterSpacing: "0.02em" }}>
-                {fmtPct(Number(item.value))}
-              </span>
+      {/* Rows */}
+      <div style={{ padding: "8px 12px", display: "flex", flexDirection: "column", gap: 6 }}>
+        {rows.map((item: any) => (
+          <div key={item.dataKey} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 16 }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
+              <span style={{
+                width: 10, height: 10,
+                borderRadius: "50%",
+                background: item.color,
+                flexShrink: 0,
+              }} />
+              <span style={{ fontSize: 13, color: "#444" }}>{item.name}</span>
             </div>
-          ))}
-        </div>
+            <span style={{ fontSize: 15, fontWeight: 700, color: item.color, fontVariantNumeric: "tabular-nums" }}>
+              {fmtPct(Number(item.value))}
+            </span>
+          </div>
+        ))}
       </div>
     </div>
   );
 }
 
-function LegendPills({ series }: { series: Array<{ key: string; label: string; color: string }>; }) {
+function Legend({ series }: { series: Array<{ key: string; label: string; color: string }> }) {
   return (
-    <div style={{ display: "flex", flexWrap: "wrap", gap: "6px", marginTop: "14px" }}>
+    <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginTop: 12 }}>
       {series.map((s) => (
-        <span
-          key={s.key}
-          style={{
-            display: "inline-flex",
-            alignItems: "center",
-            gap: "7px",
-            padding: "4px 10px",
-            border: "1px solid rgba(255,255,255,0.09)",
-            background: "rgba(255,255,255,0.025)",
-            fontFamily: "var(--font-body), 'Geist Mono', monospace",
-            fontSize: "8.5px",
-            fontWeight: 700,
-            letterSpacing: "0.20em",
-            textTransform: "uppercase",
-            color: "rgba(255,255,255,0.55)",
-          }}
-        >
-          <span style={{
-            width: "8px", height: "8px",
-            borderRadius: "50%",
-            background: s.color,
-            boxShadow: `0 0 10px ${s.color}55`,
-            flexShrink: 0,
-          }} />
+        <span key={s.key} style={{
+          display: "inline-flex",
+          alignItems: "center",
+          gap: 6,
+          padding: "4px 10px",
+          border: "1px solid #e2e0db",
+          borderRadius: 100,
+          background: "#fff",
+          fontSize: 12,
+          fontWeight: 600,
+          color: "#444",
+        }}>
+          <span style={{ width: 8, height: 8, borderRadius: "50%", background: s.color, flexShrink: 0 }} />
           {s.label}
         </span>
       ))}
@@ -168,23 +131,21 @@ export default function PollingTimeSeriesChart({
   data,
   series,
   yDomain,
-  title = "Polling trend over time",
-  subtitle = "Daily weighted averages across the dataset (recency + √n + LV/RV/A).",
+  title = "Polling Trend",
+  subtitle = "Daily weighted averages across the dataset.",
 }: Props) {
   const computedDomain = useMemo<[number, number]>(() => {
     if (yDomain) return yDomain;
-    let min = Number.POSITIVE_INFINITY;
-    let max = Number.NEGATIVE_INFINITY;
+    let min = Infinity, max = -Infinity;
     for (const row of data) {
       for (const s of series) {
         const v = Number(row[s.key]);
-        if (!Number.isFinite(v)) continue;
+        if (!isFinite(v)) continue;
         min = Math.min(min, v);
         max = Math.max(max, v);
       }
     }
-    if (!Number.isFinite(min) || !Number.isFinite(max)) return [0, 60];
-    return niceDomain(min, max);
+    return isFinite(min) && isFinite(max) ? niceDomain(min, max) : [0, 60];
   }, [data, series, yDomain]);
 
   const tickDates = useMemo(() => {
@@ -197,267 +158,134 @@ export default function PollingTimeSeriesChart({
   return (
     <>
       <style>{`
-        .pst-root {
-          --background2: #0b0b0f;
-          --panel:       #0f0f15;
-          --border:      rgba(255,255,255,0.09);
-          --border2:     rgba(255,255,255,0.15);
-          --muted3:      rgba(240,240,245,0.22);
-          --purple:      #7c3aed;
-          --purple-soft: #a78bfa;
-          --red:         #e63946;
-          --blue:        #2563eb;
-          --blue2:       #3b82f6;
-        }
-
-        @keyframes pst-hover-in {
-          from { opacity:0.6; transform:scaleX(0); }
-          to   { opacity:1; transform:scaleX(1); }
-        }
-
-        .pst-root {
-          background: var(--panel);
-          border: 1px solid var(--border);
+        .psc {
+          background: #fff;
+          border: 1px solid #e2e0db;
+          border-radius: 8px;
           overflow: hidden;
-          position: relative;
+          box-shadow: 0 1px 3px rgba(0,0,0,0.06);
         }
 
-        /* Scanline texture */
-        .pst-root::before {
-          content: '';
-          position: absolute;
-          inset: 0;
-          background-image: repeating-linear-gradient(
-            0deg, transparent, transparent 3px,
-            rgba(255,255,255,0.006) 3px, rgba(255,255,255,0.006) 4px
-          );
-          pointer-events: none;
-          z-index: 0;
-        }
-
-        .pst-tri-stripe {
+        .psc-stripe {
           height: 3px;
-          width: 100%;
-          background: linear-gradient(
-            90deg,
-            #e63946 0%, #e63946 33.33%,
-            #7c3aed 33.33%, #7c3aed 66.66%,
-            #2563eb 66.66%, #2563eb 100%
-          );
-          position: relative;
-          z-index: 1;
+          background: linear-gradient(90deg, #1a6bbf 50%, #c0392b 50%);
         }
 
-        .pst-header {
-          padding: 16px 20px 14px;
-          border-bottom: 1px solid var(--border);
-          background: var(--background2);
+        .psc-header {
+          padding: 16px 20px;
+          border-bottom: 1px solid #e2e0db;
+          background: #fff;
           display: flex;
-          align-items: flex-end;
+          align-items: flex-start;
           justify-content: space-between;
           gap: 16px;
           flex-wrap: wrap;
-          position: relative;
-          z-index: 1;
         }
 
-        .pst-eyebrow {
-          font-family: var(--font-body), "Geist Mono", monospace;
-          font-size: 7.5px;
+        .psc-title {
+          font-family: var(--font-display), Georgia, serif;
+          font-size: 18px;
           font-weight: 700;
-          letter-spacing: 0.32em;
-          text-transform: uppercase;
-          color: var(--purple-soft);
-          margin-bottom: 6px;
+          color: #1a1a1a;
+          margin-bottom: 3px;
+        }
+
+        .psc-subtitle {
+          font-size: 12px;
+          color: #888;
+          line-height: 1.5;
+        }
+
+        .psc-hint {
+          font-size: 11px;
+          color: #aaa;
           display: flex;
           align-items: center;
-          gap: 8px;
-        }
-        .pst-eyebrow::before {
-          content: '';
-          display: block;
-          width: 14px;
-          height: 1px;
-          background: var(--purple-soft);
-          opacity: 0.55;
-        }
-
-        .pst-title {
-          font-family: var(--font-body), "Geist Mono", monospace;
-          font-size: clamp(15px, 2vw, 20px);
-          font-weight: 900;
-          text-transform: uppercase;
-          letter-spacing: 0.05em;
-          color: #fff;
-          line-height: 1;
-        }
-
-        .pst-subtitle {
-          font-family: ui-monospace,monospace;
-          font-size: 8.5px;
-          letter-spacing: 0.14em;
-          text-transform: uppercase;
-          color: var(--muted3);
-          margin-top: 5px;
-          line-height: 1.6;
-        }
-
-        .pst-hover-hint {
-          display: inline-flex;
-          align-items: center;
-          gap: 6px;
-          padding: 4px 10px;
-          border: 1px solid var(--border);
-          background: rgba(255,255,255,0.025);
-          font-family: ui-monospace,monospace;
-          font-size: 7.5px;
-          font-weight: 700;
-          letter-spacing: 0.22em;
-          text-transform: uppercase;
-          color: var(--muted3);
+          gap: 5px;
+          white-space: nowrap;
           flex-shrink: 0;
-        }
-        .pst-hover-dot {
-          width: 6px; height: 6px;
-          border-radius: 50%;
-          background: var(--purple-soft);
-          box-shadow: 0 0 8px rgba(167,139,250,0.6);
+          padding-top: 2px;
         }
 
-        .pst-chart-area {
+        .psc-chart-area {
           padding: 16px 12px 8px;
-          position: relative;
-          z-index: 1;
+          background: #fff;
         }
 
-        .pst-footer {
-          padding: 0 20px 16px;
+        .psc-footer {
+          padding: 10px 20px 14px;
           display: flex;
           align-items: center;
           justify-content: space-between;
           flex-wrap: wrap;
-          gap: 10px;
-          position: relative;
-          z-index: 1;
+          gap: 8px;
+          border-top: 1px solid #e2e0db;
+          background: #f8f7f4;
         }
-        .pst-footer-note {
-          font-family: ui-monospace,monospace;
-          font-size: 7.5px;
-          letter-spacing: 0.18em;
-          text-transform: uppercase;
-          color: var(--muted3);
-        }
-        .pst-data-badge {
+        .psc-footer-note { font-size: 11px; color: #aaa; }
+        .psc-footer-badge {
           display: inline-flex;
           align-items: center;
           gap: 5px;
-          padding: 3px 8px;
-          border: 1px solid rgba(124,58,237,0.28);
-          background: rgba(124,58,237,0.06);
-          font-family: ui-monospace,monospace;
-          font-size: 7.5px;
-          font-weight: 700;
-          letter-spacing: 0.20em;
-          text-transform: uppercase;
-          color: var(--purple-soft);
+          padding: 3px 10px;
+          border: 1px solid rgba(26,107,191,0.2);
+          background: #e8f0fa;
+          border-radius: 100px;
+          font-size: 11px;
+          font-weight: 600;
+          color: #1a6bbf;
         }
 
-        /* Recharts overrides */
-        .pst-root .recharts-cartesian-axis-tick-value {
-          font-family: ui-monospace,monospace !important;
-          font-size: 9px !important;
-          fill: rgba(255,255,255,0.28) !important;
-          letter-spacing: 0.06em !important;
-        }
-        .pst-root .recharts-cartesian-grid line {
-          stroke: rgba(255,255,255,0.055) !important;
-        }
+        /* Recharts overrides inside chart */
+        .psc .recharts-cartesian-axis-tick-value { fill: #aaa !important; font-size: 11px !important; }
+        .psc .recharts-cartesian-grid line { stroke: #f0eeea !important; }
       `}</style>
 
-      <div className="pst-root">
-        <div className="pst-tri-stripe" />
+      <div className="psc">
+        <div className="psc-stripe" />
 
-        {/* Header */}
-        <div className="pst-header">
+        <div className="psc-header">
           <div>
-            <div className="pst-eyebrow">TRENDLINE</div>
-            <div className="pst-title">{title}</div>
-            <div className="pst-subtitle">{subtitle}</div>
+            <div className="psc-title">{title}</div>
+            <div className="psc-subtitle">{subtitle}</div>
           </div>
-          <div className="pst-hover-hint">
-            <div className="pst-hover-dot" />
-            HOVER FOR VALUES
+          <div className="psc-hint">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+              <circle cx="6" cy="6" r="5.5" stroke="#ccc" />
+              <path d="M6 5v4M6 4h.01" stroke="#aaa" strokeWidth="1.2" strokeLinecap="round" />
+            </svg>
+            Hover for values
           </div>
         </div>
 
-        {/* Divider — full-width split bar between header and chart */}
-        <div style={{
-          height: "1px",
-          background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.10) 20%, rgba(255,255,255,0.10) 80%, transparent)",
-        }} />
-
-        {/* Chart */}
-        <div className="pst-chart-area">
-          <div style={{ height: "clamp(280px, 40vh, 480px)" }}>
+        <div className="psc-chart-area">
+          <div style={{ height: "clamp(260px, 38vh, 460px)" }}>
             <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={data} margin={{ top: 16, right: 20, left: 4, bottom: 8 }}>
-                <defs>
-                  {/* Per-series glow filters */}
-                  {series.map((s) => (
-                    <filter key={s.key} id={`glow-${s.key}`} x="-50%" y="-50%" width="200%" height="200%">
-                      <feGaussianBlur stdDeviation="2.5" result="blur" />
-                      <feColorMatrix in="blur" type="matrix"
-                        values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 0.5 0" result="glow" />
-                      <feMerge>
-                        <feMergeNode in="glow" />
-                        <feMergeNode in="SourceGraphic" />
-                      </feMerge>
-                    </filter>
-                  ))}
-                  {/* Vertical cursor gradient */}
-                  <linearGradient id="cursorGrad" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="rgba(124,58,237,0.4)" />
-                    <stop offset="100%" stopColor="rgba(124,58,237,0)" />
-                  </linearGradient>
-                </defs>
-
-                <CartesianGrid
-                  stroke="rgba(255,255,255,0.055)"
-                  strokeDasharray="2 12"
-                  vertical={false}
-                />
-
+              <LineChart data={data} margin={{ top: 12, right: 16, left: 4, bottom: 4 }}>
+                <CartesianGrid stroke="#f0eeea" strokeDasharray="3 8" vertical={false} />
                 <XAxis
                   dataKey="date"
                   tickLine={false}
-                  axisLine={{ stroke: "rgba(255,255,255,0.10)" }}
-                  tick={{ fontFamily: "ui-monospace,monospace", fontSize: 9, fill: "rgba(255,255,255,0.28)" }}
+                  axisLine={{ stroke: "#e2e0db" }}
+                  tick={{ fontFamily: "var(--font-body),Georgia,serif", fontSize: 11, fill: "#aaa" }}
                   ticks={tickDates}
                   tickFormatter={formatDateLabel}
                   minTickGap={20}
                 />
-
                 <YAxis
                   domain={computedDomain}
                   tickLine={false}
                   axisLine={false}
-                  tick={{ fontFamily: "ui-monospace,monospace", fontSize: 9, fill: "rgba(255,255,255,0.28)" }}
+                  tick={{ fontFamily: "var(--font-body),Georgia,serif", fontSize: 11, fill: "#aaa" }}
                   tickFormatter={(v) => `${v}%`}
-                  width={42}
+                  width={40}
                 />
-
-                <ReferenceLine y={0} stroke="rgba(255,255,255,0.08)" />
-
+                <ReferenceLine y={50} stroke="#e2e0db" strokeDasharray="3 4" />
                 <Tooltip
-                  cursor={{
-                    stroke: "rgba(124,58,237,0.30)",
-                    strokeWidth: 1,
-                    strokeDasharray: "3 4",
-                  }}
+                  cursor={{ stroke: "#e2e0db", strokeWidth: 1 }}
                   content={<CustomTooltip />}
                   wrapperStyle={{ zIndex: 10 }}
                 />
-
                 {series.map((s) => (
                   <Line
                     key={s.key}
@@ -468,27 +296,18 @@ export default function PollingTimeSeriesChart({
                     strokeWidth={2.5}
                     dot={false}
                     connectNulls
-                    filter={`url(#glow-${s.key})`}
-                    activeDot={{
-                      r: 5,
-                      stroke: "rgba(255,255,255,0.9)",
-                      strokeWidth: 1.5,
-                      fill: s.color,
-                    }}
+                    activeDot={{ r: 5, stroke: "#fff", strokeWidth: 2, fill: s.color }}
                   />
                 ))}
               </LineChart>
             </ResponsiveContainer>
           </div>
-
-          <LegendPills series={series} />
+          <Legend series={series} />
         </div>
 
-        {/* Footer */}
-        <div style={{ height: "1px", background: "var(--border)", margin: "0 0 0" }} />
-        <div className="pst-footer">
-          <span className="pst-footer-note">DAILY WEIGHTED AVERAGES · NOT RAW POLL POINTS</span>
-          <span className="pst-data-badge">PSI · METHODOLOGY DOCUMENTED</span>
+        <div className="psc-footer">
+          <span className="psc-footer-note">Daily weighted averages · not raw poll points</span>
+          <span className="psc-footer-badge">PSI · Methodology documented</span>
         </div>
       </div>
     </>
