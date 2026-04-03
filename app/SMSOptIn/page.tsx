@@ -516,6 +516,7 @@ export default function SmsOptInPage() {
               <div className="sms-success">
                 <div className="sms-success-icon">✓</div>
                 <div className="sms-success-title">You're In</div>
+             
                 <p className="sms-success-text">
                   Thanks for signing up. Watch for a confirmation text. You'll receive polling
                   invitations and data updates from the Public Sentiment Institute.

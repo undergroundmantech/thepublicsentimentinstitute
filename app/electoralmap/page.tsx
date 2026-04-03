@@ -75,43 +75,62 @@ const SIDE_TILES = [
   {key:"NE-03", label:"NE-03", ev:1  },
 ];
 
-const STORAGE_KEY = "psi-electoral-map-picks-v1";
+const STORAGE_KEY = "psi-electoral-map-picks-v2";
 const TOTAL_EV    = 538;
 
 // ─── helpers ──────────────────────────────────────────────────────────────────
+const RATINGS_LIST: Rating[] = ["SAFE", "LIKELY", "LEAN", "TILT"];
+
+// High-contrast palette — blues vs reds, clearly distinguishable at each tier
 const DEM_FILLS: Record<Rating, string> = {
-  SAFE:   "#1a3a8f",
-  LIKELY: "#1e50b3",
-  LEAN:   "#2d6fd4",
-  TILT:   "#4d8ee8",
+  SAFE:   "#0033a0",   // deep royal blue
+  LIKELY: "#1a5fd4",   // vivid blue
+  LEAN:   "#4a9dff",   // bright sky blue
+  TILT:   "#8dc8ff",   // pale blue
 };
 const REP_FILLS: Record<Rating, string> = {
-  SAFE:   "#8b1a1a",
-  LIKELY: "#b02020",
-  LEAN:   "#cc3333",
-  TILT:   "#e05555",
+  SAFE:   "#9b0000",   // deep crimson
+  LIKELY: "#d42020",   // vivid red
+  LEAN:   "#ff6040",   // orange-red
+  TILT:   "#ffaa88",   // peach
 };
 
-function fillFor(p?: Pick) {
-  if (!p || p === "T") return "#2a2a2a";
+const DEM_FILLS_LIGHT: Record<Rating, string> = {
+  SAFE:   "#0033a0",
+  LIKELY: "#1a5fd4",
+  LEAN:   "#3a88f0",
+  TILT:   "#70b0f8",
+};
+const REP_FILLS_LIGHT: Record<Rating, string> = {
+  SAFE:   "#8b0000",
+  LIKELY: "#c41c1c",
+  LEAN:   "#e84020",
+  TILT:   "#f08060",
+};
+
+function fillFor(p: Pick | undefined, dark: boolean): string {
+  if (!p || p === "T") return dark ? "#2a2a2a" : "#d4d4d4";
   const [party, rating] = p.split("_") as ["D"|"R", Rating];
-  return party === "D" ? DEM_FILLS[rating] : REP_FILLS[rating];
+  const table = dark
+    ? (party === "D" ? DEM_FILLS : REP_FILLS)
+    : (party === "D" ? DEM_FILLS_LIGHT : REP_FILLS_LIGHT);
+  return table[rating];
 }
-function strokeFor(p?: Pick) {
-  if (!p || p === "T") return "#444";
-  return p.startsWith("D_") ? "#2d6fd4" : "#cc3333";
+function strokeFor(p: Pick | undefined, dark: boolean): string {
+  if (!p || p === "T") return dark ? "#444" : "#aaa";
+  return p.startsWith("D_") ? "#1a5fd4" : "#d42020";
 }
-function labelFor(p?: Pick) {
+function labelFor(p: Pick | undefined): string {
   if (!p || p === "T") return "TOSSUP";
   const [party, rating] = p.split("_") as ["D"|"R", Rating];
   return `${party === "D" ? "DEM" : "GOP"} · ${rating}`;
 }
-function colorFor(p?: Pick) {
-  if (!p || p === "T") return "rgba(255,255,255,.45)";
-  return p.startsWith("D_") ? "rgba(147,197,253,.9)" : "rgba(252,165,165,.9)";
+function labelColorFor(p: Pick | undefined, dark: boolean): string {
+  if (!p || p === "T") return dark ? "rgba(255,255,255,.45)" : "rgba(0,0,0,.45)";
+  return p.startsWith("D_") ? (dark ? "rgba(147,197,253,.9)" : "#1a3a8f") : (dark ? "rgba(252,165,165,.9)" : "#7f1d1d");
 }
 function nextRating(cur: Rating): Rating {
-  return RATINGS[(RATINGS.indexOf(cur) + 1) % RATINGS.length];
+  return RATINGS_LIST[(RATINGS_LIST.indexOf(cur) + 1) % RATINGS_LIST.length];
 }
 function stateKey(abbr: string) {
   return abbr === "ME" ? "ME-AL" : abbr === "NE" ? "NE-AL" : abbr;
@@ -140,12 +159,14 @@ function applyBrush(picks: Record<string, Pick>, key: string, brush: PartyBrush)
   return next;
 }
 
+
 // ─── page ─────────────────────────────────────────────────────────────────────
 export default function ElectoralMapPage() {
   const [brush,      setBrush]      = useState<PartyBrush>("T");
   const [picks,      setPicks]      = useState<Record<string, Pick>>({});
   const [shareLabel, setShareLabel] = useState("↗ Share");
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [darkMode,   setDarkMode]   = useState(true);
   const [tooltip,    setTooltip]    = useState<TooltipState>({
     visible:false, x:0, y:0, abbr:"", name:"", ev:0, isAtLarge:false, pick:"T", hint:"",
   });
@@ -153,7 +174,9 @@ export default function ElectoralMapPage() {
   const svgRef        = useRef<SVGSVGElement>(null);
   const containerRef  = useRef<HTMLDivElement>(null);
   const brushRef      = useRef<PartyBrush>("T");
+  const darkRef       = useRef<boolean>(true);
   brushRef.current    = brush;
+  darkRef.current     = darkMode;
 
   // localStorage
   useEffect(() => {
@@ -179,7 +202,7 @@ export default function ElectoralMapPage() {
     setPicks(prev => applyBrush(prev, key, brushRef.current));
   }, []);
 
-  // draw map once
+  // draw map once + labels
   useEffect(() => {
     let dead = false;
     (async () => {
@@ -205,26 +228,27 @@ export default function ElectoralMapPage() {
           if (!abbr) continue;
           const key       = stateKey(abbr);
           const clickable = abbr === "ME" || abbr === "NE" || EV_BY_STATE[abbr] != null;
+          const evCount   = EV_BY_STATE[abbr] ?? 0;
 
           const el = document.createElementNS("http://www.w3.org/2000/svg", "path");
           el.setAttribute("d", path(f) ?? "");
           el.setAttribute("data-key", key);
           el.setAttribute("data-abbr", abbr);
-          el.style.cssText = `fill:${fillFor("T")};stroke:#111;stroke-width:0.8;cursor:${clickable?"pointer":"default"};transition:filter 160ms ease;`;
+          el.style.cssText = `fill:${fillFor("T", darkRef.current)};stroke:#111;stroke-width:0.8;cursor:${clickable?"pointer":"default"};transition:filter 160ms ease;`;
 
           if (clickable) {
             el.addEventListener("click", () => applyPick(key));
-            el.addEventListener("mouseover",  () => { el.style.filter = "brightness(1.4)"; });
+            el.addEventListener("mouseover",  () => { el.style.filter = "brightness(1.25) saturate(1.3)"; });
             el.addEventListener("mouseout",   () => { el.style.filter = ""; });
           }
           el.addEventListener("mousemove", (ev: MouseEvent) => {
-            const evCount = abbr === "ME" || abbr === "NE" ? (EV_SPLIT[key] ?? 0) : (EV_BY_STATE[abbr] ?? 0);
+            const evC = abbr === "ME" || abbr === "NE" ? (EV_SPLIT[key] ?? 0) : (EV_BY_STATE[abbr] ?? 0);
             setPicks(cur => {
               const p    = (cur[key] ?? "T") as Pick;
               const hint = brushRef.current === "T"
                 ? "Click to set TOSSUP"
                 : `Click: ${brushRef.current === "D" ? "DEM" : "GOP"} · cycles rating`;
-              setTooltip({ visible:true, x:ev.clientX, y:ev.clientY, abbr, name:STATE_NAMES[abbr]??abbr, ev:evCount, isAtLarge:abbr==="ME"||abbr==="NE", pick:p, hint });
+              setTooltip({ visible:true, x:ev.clientX, y:ev.clientY, abbr, name:STATE_NAMES[abbr]??abbr, ev:evC, isAtLarge:abbr==="ME"||abbr==="NE", pick:p, hint });
               return cur;
             });
           });
@@ -243,14 +267,18 @@ export default function ElectoralMapPage() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // sync colors to picks
+  // sync colors to picks + dark mode
   useEffect(() => {
     svgRef.current?.querySelectorAll<SVGPathElement>("[data-key]").forEach(el => {
       const p = (picks[el.getAttribute("data-key")!] ?? "T") as Pick;
-      el.style.fill   = fillFor(p);
-      el.style.stroke = "#111";
+      el.style.fill   = fillFor(p, darkMode);
+      el.style.stroke = darkMode ? "#111" : "#888";
     });
-  }, [picks]);
+    // Update border stroke
+    svgRef.current?.querySelectorAll<SVGPathElement>("path:not([data-key])").forEach(el => {
+      if (el.style.fill === "none") el.style.stroke = darkMode ? "#111" : "#999";
+    });
+  }, [picks, darkMode]);
 
   const { d, r, t } = sumEV(picks);
   const pct = (n: number) => `${((n / TOTAL_EV) * 100).toFixed(2)}%`;
@@ -272,10 +300,12 @@ export default function ElectoralMapPage() {
   const dWins = d >= 270;
   const rWins = r >= 270;
 
+  const dm = darkMode;
+
   return (
     <>
-      <style>{CSS}</style>
-      <div ref={containerRef} className={`em-root${isFullscreen ? " em-fs" : ""}`}>
+      <style>{buildCSS(dm)}</style>
+      <div ref={containerRef} className={`em-root${isFullscreen ? " em-fs" : ""}${dm ? " em-dark" : " em-light"}`}>
 
         {/* ── TOP BAR ── */}
         <div className="em-top">
@@ -289,19 +319,19 @@ export default function ElectoralMapPage() {
 
           {/* EV bar – center */}
           <div className="em-ev-center">
-            <div className="em-ev-side" style={{ color:"#4d8ee8" }}>
+            <div className="em-ev-side" style={{ color: dm ? "#4a9dff" : "#0033a0" }}>
               <span className="em-ev-label">DEM</span>
               <span className="em-ev-num">{d}</span>
             </div>
             <div className="em-ev-middle">
               <div className="em-ev-bar">
-                <div style={{ width:pct(d), background:"#2d6fd4", height:"100%", transition:"width .5s" }} />
-                <div style={{ width:pct(t), background:"#333",   height:"100%", transition:"width .5s" }} />
-                <div style={{ flex:1,       background:"#cc3333", height:"100%" }} />
+                <div style={{ width:pct(d), background: dm ? "#1a5fd4" : "#0033a0", height:"100%", transition:"width .5s" }} />
+                <div style={{ width:pct(t), background: dm ? "#333" : "#bbb",       height:"100%", transition:"width .5s" }} />
+                <div style={{ flex:1,       background: dm ? "#d42020" : "#9b0000", height:"100%" }} />
               </div>
               <span className="em-270-txt">270 TO WIN</span>
             </div>
-            <div className="em-ev-side" style={{ color:"#e05555" }}>
+            <div className="em-ev-side" style={{ color: dm ? "#ff6040" : "#9b0000" }}>
               <span className="em-ev-label">GOP</span>
               <span className="em-ev-num">{r}</span>
             </div>
@@ -309,6 +339,9 @@ export default function ElectoralMapPage() {
 
           {/* Actions – right */}
           <div className="em-top-actions">
+            <button className="em-btn" onClick={() => setDarkMode(v => !v)}>
+              {dm ? "☀ Light" : "☾ Dark"}
+            </button>
             <button className="em-btn" onClick={setAllTossup}>Reset</button>
             <button className="em-btn" onClick={() => setPicks({})}>Clear</button>
             <button className="em-btn" onClick={handleShare}>{shareLabel}</button>
@@ -325,8 +358,13 @@ export default function ElectoralMapPage() {
 
         {/* ── WIN BANNER ── */}
         {(dWins || rWins) && (
-          <div className="em-win" style={{ background: dWins ? "rgba(29,80,179,0.15)" : "rgba(176,32,32,0.15)", borderColor: dWins ? "#2d6fd4" : "#cc3333" }}>
-            <span style={{ color: dWins ? "#4d8ee8" : "#e05555" }}>
+          <div className="em-win" style={{
+            background: dWins
+              ? (dm ? "rgba(0,51,160,0.18)" : "rgba(0,51,160,0.08)")
+              : (dm ? "rgba(155,0,0,0.18)" : "rgba(155,0,0,0.08)"),
+            borderColor: dWins ? "#1a5fd4" : "#d42020"
+          }}>
+            <span style={{ color: dWins ? (dm ? "#4a9dff" : "#0033a0") : (dm ? "#ff6040" : "#9b0000") }}>
               ★ {dWins ? "DEMOCRAT" : "REPUBLICAN"} WINS WITH {dWins ? d : r} ELECTORAL VOTES
             </span>
           </div>
@@ -340,8 +378,12 @@ export default function ElectoralMapPage() {
               <button key={b}
                 className={`em-brush-btn${brush === b ? " active" : ""}`}
                 style={brush === b ? {
-                  background: b === "D" ? "#1e50b3" : b === "R" ? "#b02020" : "#444",
-                  borderColor: b === "D" ? "#4d8ee8" : b === "R" ? "#e05555" : "#888",
+                  background: b === "D" ? (dm ? "#1a5fd4" : "#0033a0")
+                            : b === "R" ? (dm ? "#d42020" : "#9b0000")
+                            : (dm ? "#444" : "#888"),
+                  borderColor: b === "D" ? (dm ? "#4a9dff" : "#1a5fd4")
+                             : b === "R" ? (dm ? "#ff6040" : "#d42020")
+                             : (dm ? "#888" : "#666"),
                   color: "#fff",
                 } : {}}
                 onClick={() => setBrush(b)}
@@ -371,7 +413,11 @@ export default function ElectoralMapPage() {
                 return (
                   <button key={tile.key} className="em-tile"
                     onClick={() => applyPick(tile.key)}
-                    style={{ background:fillFor(p), borderColor:strokeFor(p), color:colorFor(p) }}
+                    style={{
+                      background: fillFor(p, dm),
+                      borderColor: strokeFor(p, dm),
+                      color: labelColorFor(p, dm),
+                    }}
                   >
                     <span className="em-tile-lbl">{tile.label}</span>
                     <span className="em-tile-ev">{tile.ev}</span>
@@ -389,16 +435,16 @@ export default function ElectoralMapPage() {
               <div className="em-panel-title">LEGEND</div>
               <div className="em-legend">
                 {[
-                  { l:"Safe D",   f:"#1a3a8f", t:"rgba(147,197,253,.9)" },
-                  { l:"Likely D", f:"#1e50b3", t:"rgba(147,197,253,.9)" },
-                  { l:"Lean D",   f:"#2d6fd4", t:"rgba(147,197,253,.9)" },
-                  { l:"Tilt D",   f:"#4d8ee8", t:"rgba(147,197,253,.9)" },
-                  { l:"Tossup",   f:"#2a2a2a", t:"rgba(255,255,255,.45)" },
-                  { l:"Tilt R",   f:"#e05555", t:"rgba(252,165,165,.9)" },
-                  { l:"Lean R",   f:"#cc3333", t:"rgba(252,165,165,.9)" },
-                  { l:"Likely R", f:"#b02020", t:"rgba(252,165,165,.9)" },
-                  { l:"Safe R",   f:"#8b1a1a", t:"rgba(252,165,165,.9)" },
-                ].map(({ l, f, t: tc }) => (
+                  { l:"Safe D",   f: dm ? "#0033a0" : "#0033a0", tc: "rgba(255,255,255,.9)" },
+                  { l:"Likely D", f: dm ? "#1a5fd4" : "#1a5fd4", tc: "rgba(255,255,255,.9)" },
+                  { l:"Lean D",   f: dm ? "#4a9dff" : "#3a88f0", tc: "rgba(255,255,255,.9)" },
+                  { l:"Tilt D",   f: dm ? "#8dc8ff" : "#70b0f8", tc: dm ? "rgba(0,0,0,.7)" : "rgba(0,0,0,.75)" },
+                  { l:"Tossup",   f: dm ? "#2a2a2a" : "#d4d4d4", tc: dm ? "rgba(255,255,255,.45)" : "rgba(0,0,0,.55)" },
+                  { l:"Tilt R",   f: dm ? "#ffaa88" : "#f08060", tc: dm ? "rgba(0,0,0,.7)" : "rgba(0,0,0,.75)" },
+                  { l:"Lean R",   f: dm ? "#ff6040" : "#e84020", tc: "rgba(255,255,255,.9)" },
+                  { l:"Likely R", f: dm ? "#d42020" : "#c41c1c", tc: "rgba(255,255,255,.9)" },
+                  { l:"Safe R",   f: dm ? "#9b0000" : "#8b0000", tc: "rgba(255,255,255,.9)" },
+                ].map(({ l, f, tc }) => (
                   <div key={l} className="em-chip" style={{ background:f, color:tc }}>{l}</div>
                 ))}
               </div>
@@ -409,22 +455,22 @@ export default function ElectoralMapPage() {
               <div className="em-panel-title">SCOREBOARD</div>
               <div className="em-score-card">
                 <div className="em-score-party">DEMOCRAT</div>
-                <div className="em-score-num" style={{ color:"#4d8ee8" }}>{d}</div>
+                <div className="em-score-num" style={{ color: dm ? "#4a9dff" : "#0033a0" }}>{d}</div>
                 <div className="em-score-track">
-                  <div style={{ width:`${Math.min((d/270)*100, 100)}%`, background:"#2d6fd4", height:"100%", transition:"width .5s cubic-bezier(.22,1,.36,1)" }} />
+                  <div style={{ width:`${Math.min((d/270)*100, 100)}%`, background: dm ? "#1a5fd4" : "#0033a0", height:"100%", transition:"width .5s cubic-bezier(.22,1,.36,1)" }} />
                 </div>
-                <div className="em-score-need" style={{ color:d>=270?"#4ade80":"rgba(255,255,255,.3)" }}>
+                <div className="em-score-need" style={{ color:d>=270?"#22c55e": dm ? "rgba(255,255,255,.3)" : "rgba(0,0,0,.3)" }}>
                   {d >= 270 ? "★ WINNER" : `Needs ${270-d} more`}
                 </div>
               </div>
               <div className="em-score-tossup">{t} EV TOSSUP</div>
               <div className="em-score-card">
                 <div className="em-score-party">REPUBLICAN</div>
-                <div className="em-score-num" style={{ color:"#e05555" }}>{r}</div>
+                <div className="em-score-num" style={{ color: dm ? "#ff6040" : "#9b0000" }}>{r}</div>
                 <div className="em-score-track">
-                  <div style={{ width:`${Math.min((r/270)*100, 100)}%`, background:"#cc3333", height:"100%", transition:"width .5s cubic-bezier(.22,1,.36,1)" }} />
+                  <div style={{ width:`${Math.min((r/270)*100, 100)}%`, background: dm ? "#d42020" : "#9b0000", height:"100%", transition:"width .5s cubic-bezier(.22,1,.36,1)" }} />
                 </div>
-                <div className="em-score-need" style={{ color:r>=270?"#4ade80":"rgba(255,255,255,.3)" }}>
+                <div className="em-score-need" style={{ color:r>=270?"#22c55e": dm ? "rgba(255,255,255,.3)" : "rgba(0,0,0,.3)" }}>
                   {r >= 270 ? "★ WINNER" : `Needs ${270-r} more`}
                 </div>
               </div>
@@ -442,18 +488,18 @@ export default function ElectoralMapPage() {
         {/* ── BOTTOM BAR ── */}
         <div className="em-bottom">
           <span>PSI · Electoral Forecaster · 538 Total EV · 270 to Win</span>
-          <span style={{ color:"rgba(255,255,255,.18)" }}>Picks saved locally · Share via URL</span>
+          <span className="em-bottom-sub">Picks saved locally · Share via URL</span>
         </div>
 
       </div>
 
       {/* TOOLTIP */}
       {tooltip.visible && (
-        <div className="em-tooltip" style={{ left:tooltip.x+16, top:tooltip.y+16 }}>
+        <div className={`em-tooltip${dm ? "" : " em-tooltip-light"}`} style={{ left:tooltip.x+16, top:tooltip.y+16 }}>
           <div className="em-tt-name">{tooltip.name} <span className="em-tt-abbr">({tooltip.abbr})</span></div>
           <div className="em-tt-ev">{tooltip.ev} Electoral Vote{tooltip.ev !== 1 ? "s" : ""}</div>
           <div className="em-tt-div" />
-          <div className="em-tt-pick" style={{ color:colorFor(tooltip.pick) }}>{labelFor(tooltip.pick)}</div>
+          <div className="em-tt-pick" style={{ color:labelColorFor(tooltip.pick, dm) }}>{labelFor(tooltip.pick)}</div>
           <div className="em-tt-hint">{tooltip.hint}</div>
         </div>
       )}
@@ -461,264 +507,190 @@ export default function ElectoralMapPage() {
   );
 }
 
-// ─── CSS ──────────────────────────────────────────────────────────────────────
-const CSS = `
-  /* Force page to exactly fill viewport — no scroll */
+// ─── CSS factory ──────────────────────────────────────────────────────────────
+function buildCSS(dm: boolean): string {
+  const bg        = dm ? "#0a0a0a" : "#f0ede8";
+  const bg2       = dm ? "#111"    : "#e8e4de";
+  const bg3       = dm ? "#0d0d0d" : "#ebe7e0";
+  const border1   = dm ? "#1e1e1e" : "#d4cfc8";
+  const border2   = dm ? "#161616" : "#cbc6be";
+  const text      = dm ? "#fff"    : "#111";
+  const textSub   = dm ? "rgba(255,255,255,.18)"  : "rgba(0,0,0,.35)";
+  const textMuted = dm ? "rgba(255,255,255,.22)"  : "rgba(0,0,0,.35)";
+  const textFaint = dm ? "rgba(255,255,255,.25)"  : "rgba(0,0,0,.25)";
+  const panelBg   = dm ? "#0a0a0a" : "#e4e0d8";
+  const btnBorder = dm ? "#2a2a2a" : "#b8b3aa";
+  const btnText   = dm ? "rgba(255,255,255,.4)" : "rgba(0,0,0,.5)";
+  const btnHover  = dm ? "rgba(255,255,255,.04)" : "rgba(0,0,0,.04)";
+  const brushGrp  = dm ? "#252525" : "#c4bfb8";
+  const brushBtn  = dm ? "#0a0a0a" : "#ddd9d2";
+  const tossupChip = dm ? "#161616" : "#ddd9d2";
+  const evBar     = dm ? "#1a1a1a" : "#ccc8c0";
+  const scoreCard = dm ? "#0a0a0a" : "#ddd9d2";
+  const scoreTrack = dm ? "#1a1a1a" : "#ccc8c0";
+
+  return `
   html, body {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    overflow: hidden;
-    background: #0a0a0a;
+    margin: 0; padding: 0; height: 100%; overflow: hidden;
+    background: ${bg};
   }
 
   .em-root {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    max-height: 100vh;
-    overflow: hidden;
-    background: #0a0a0a;
-    color: #fff;
+    display: flex; flex-direction: column; height: 100vh; max-height: 100vh;
+    overflow: hidden; background: ${bg}; color: ${text};
     font-family: 'DM Mono', 'Geist Mono', ui-monospace, monospace;
-    position: relative;
+    position: relative; transition: background 0.2s, color 0.2s;
   }
-  .em-root.em-fs {
-    position: fixed;
-    inset: 0;
-    z-index: 9999;
-  }
+  .em-root.em-fs { position: fixed; inset: 0; z-index: 9999; }
 
-  /* ── TOP BAR ── */
   .em-top {
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 18px;
-    height: 52px;
-    background: #111;
-    border-bottom: 1px solid #1e1e1e;
-    gap: 12px;
+    flex-shrink: 0; display: flex; align-items: center;
+    justify-content: space-between; padding: 0 18px; height: 52px;
+    background: ${bg2}; border-bottom: 1px solid ${border1}; gap: 12px;
   }
   .em-top-brand { display:flex; align-items:center; gap:10px; flex-shrink:0; }
   .em-logo {
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 0.22em;
-    color: #c5a55a;
-    border: 1px solid #c5a55a44;
-    padding: 3px 7px;
-    flex-shrink: 0;
+    font-size: 10px; font-weight: 700; letter-spacing: 0.22em; color: #c5a55a;
+    border: 1px solid #c5a55a44; padding: 3px 7px; flex-shrink: 0;
   }
   .em-brand-text { display:flex; flex-direction:column; gap:1px; }
-  .em-brand-main { font-size:12px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:#fff; }
-  .em-brand-sub  { font-size:7.5px; letter-spacing:0.18em; text-transform:uppercase; color:rgba(255,255,255,.25); }
+  .em-brand-main { font-size:12px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:${text}; }
+  .em-brand-sub  { font-size:7.5px; letter-spacing:0.18em; text-transform:uppercase; color:${textFaint}; }
 
-  /* EV center */
   .em-ev-center {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    flex: 1;
-    max-width: 420px;
-    justify-content: center;
+    display: flex; align-items: center; gap: 14px; flex: 1;
+    max-width: 420px; justify-content: center;
   }
   .em-ev-side { display:flex; flex-direction:column; align-items:center; gap:1px; flex-shrink:0; }
-  .em-ev-label { font-size:6.5px; letter-spacing:0.22em; text-transform:uppercase; color:rgba(255,255,255,.3); }
+  .em-ev-label { font-size:6.5px; letter-spacing:0.22em; text-transform:uppercase; color:${textFaint}; }
   .em-ev-num   { font-size:28px; font-weight:900; line-height:1; letter-spacing:-0.02em; font-variant-numeric:tabular-nums; }
   .em-ev-middle { flex:1; display:flex; flex-direction:column; gap:3px; align-items:center; }
   .em-ev-bar {
-    width: 100%;
-    height: 5px;
-    background: #1a1a1a;
-    display: flex;
-    overflow: hidden;
-    border: 1px solid #2a2a2a;
+    width: 100%; height: 5px; background: ${evBar}; display: flex;
+    overflow: hidden; border: 1px solid ${border1};
   }
-  .em-270-txt { font-size:6.5px; letter-spacing:0.18em; text-transform:uppercase; color:rgba(255,255,255,.18); }
+  .em-270-txt { font-size:6.5px; letter-spacing:0.18em; text-transform:uppercase; color:${textSub}; }
 
-  /* Actions */
   .em-top-actions { display:flex; align-items:center; gap:6px; flex-shrink:0; }
   .em-btn {
     font-family: 'DM Mono', ui-monospace, monospace;
-    font-size: 8.5px;
-    font-weight: 700;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    border: 1px solid #2a2a2a;
-    background: transparent;
-    color: rgba(255,255,255,.4);
-    padding: 5px 10px;
-    cursor: pointer;
-    transition: all 100ms;
+    font-size: 8.5px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
+    border: 1px solid ${btnBorder}; background: transparent; color: ${btnText};
+    padding: 5px 10px; cursor: pointer; transition: all 100ms;
   }
-  .em-btn:hover { border-color:#555; color:rgba(255,255,255,.8); background:rgba(255,255,255,.04); }
+  .em-btn:hover { border-color:${dm?"#555":"#888"}; color:${dm?"rgba(255,255,255,.8)":"rgba(0,0,0,.8)"}; background:${btnHover}; }
   .em-btn-gold { border-color:#c5a55a44; color:#c5a55a; display:flex; align-items:center; gap:5px; }
   .em-btn-gold:hover { border-color:#c5a55a; background:rgba(197,165,90,.08); color:#d4b46a; }
 
-  /* ── WIN BANNER ── */
   .em-win {
-    flex-shrink: 0;
-    padding: 5px 18px;
-    border-bottom: 1px solid;
-    text-align: center;
-    font-weight: 700;
-    font-size: 11px;
-    letter-spacing: 0.2em;
+    flex-shrink: 0; padding: 5px 18px; border-bottom: 1px solid;
+    text-align: center; font-weight: 700; font-size: 11px; letter-spacing: 0.2em;
   }
 
-  /* ── BRUSH BAR ── */
   .em-brush-bar {
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    padding: 0 18px;
-    height: 36px;
-    background: #0d0d0d;
-    border-bottom: 1px solid #161616;
-    gap: 10px;
-    overflow: hidden;
+    flex-shrink: 0; display: flex; align-items: center; padding: 0 18px;
+    height: 36px; background: ${bg3}; border-bottom: 1px solid ${border2}; gap: 10px; overflow: hidden;
   }
-  .em-brush-label { font-size:7.5px; letter-spacing:0.22em; text-transform:uppercase; color:rgba(255,255,255,.2); flex-shrink:0; }
-  .em-brush-group { display:flex; border:1px solid #252525; overflow:hidden; flex-shrink:0; }
+  .em-brush-label { font-size:7.5px; letter-spacing:0.22em; text-transform:uppercase; color:${textFaint}; flex-shrink:0; }
+  .em-brush-group { display:flex; border:1px solid ${brushGrp}; overflow:hidden; flex-shrink:0; }
   .em-brush-btn {
     font-family: 'DM Mono', ui-monospace, monospace;
-    font-size: 8.5px;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    border: none;
-    border-right: 1px solid #252525;
-    background: #0a0a0a;
-    color: rgba(255,255,255,.35);
-    padding: 6px 12px;
-    cursor: pointer;
-    transition: all 100ms;
-    height: 26px;
+    font-size: 8.5px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+    border: none; border-right: 1px solid ${brushGrp}; background: ${brushBtn};
+    color: ${dm ? "rgba(255,255,255,.35)" : "rgba(0,0,0,.4)"}; padding: 6px 12px; cursor: pointer;
+    transition: all 100ms; height: 26px;
   }
   .em-brush-btn:last-child { border-right:none; }
-  .em-brush-btn:hover:not(.active) { background:rgba(255,255,255,.04); color:rgba(255,255,255,.7); }
-  .em-brush-hint { font-size:7.5px; letter-spacing:0.08em; color:rgba(255,255,255,.18); text-transform:uppercase; flex:1; min-width:0; overflow:hidden; white-space:nowrap; text-overflow:ellipsis; }
+  .em-brush-btn:hover:not(.active) { background:${btnHover}; color:${dm?"rgba(255,255,255,.7)":"rgba(0,0,0,.7)"}; }
+  .em-brush-hint { font-size:7.5px; letter-spacing:0.08em; color:${textMuted}; text-transform:uppercase; flex:1; min-width:0; overflow:hidden; white-space:nowrap; text-overflow:ellipsis; }
   .em-tossup-chip {
-    display: inline-flex; align-items:center;
-    padding: 3px 8px; border:1px solid #2a2a2a; background:#161616;
-    font-size:8px; font-weight:700; letter-spacing:0.16em; text-transform:uppercase; color:rgba(255,255,255,.35);
-    flex-shrink:0;
+    display: inline-flex; align-items:center; padding: 3px 8px;
+    border:1px solid ${btnBorder}; background:${tossupChip};
+    font-size:8px; font-weight:700; letter-spacing:0.16em; text-transform:uppercase; color:${btnText}; flex-shrink:0;
   }
 
-  /* ── BODY — fills all remaining height ── */
   .em-body {
-    flex: 1;
-    min-height: 0;
-    display: grid;
-    grid-template-columns: 1fr 210px;
-    overflow: hidden;
+    flex: 1; min-height: 0; display: grid;
+    grid-template-columns: 1fr 210px; overflow: hidden;
   }
   @media(max-width: 860px) { .em-body { grid-template-columns: 1fr; } }
 
-  /* ── MAP ── */
   .em-map-area {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #0a0a0a;
-    border-right: 1px solid #161616;
-    overflow: hidden;
-    min-height: 0;
+    position: relative; display: flex; align-items: center; justify-content: center;
+    background: ${bg}; border-right: 1px solid ${border2}; overflow: hidden; min-height: 0;
   }
-  .em-svg {
-    width: 100%;
-    height: 100%;
-    display: block;
-    /* SVG will scale to fill the container while preserving aspect ratio */
-  }
+  .em-svg { width: 100%; height: 100%; display: block; }
 
-  /* ── TILES (NE/ME/small states) ── */
   .em-tiles {
-    position: absolute;
-    top: 8px;
-    right: 8px;
-    display: grid;
-    grid-template-columns: repeat(2, 52px);
-    gap: 2px;
+    position: absolute; top: 8px; right: 8px;
+    display: grid; grid-template-columns: repeat(2, 52px); gap: 2px;
   }
   .em-tile {
     display: flex; flex-direction:column; align-items:center; justify-content:center;
-    padding: 3px 2px; border: 1px solid;
-    cursor: pointer;
+    padding: 3px 2px; border: 1px solid; cursor: pointer;
     font-family: 'DM Mono', ui-monospace, monospace;
     font-size: 7px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase;
     transition: filter 120ms; line-height:1.2;
   }
-  .em-tile:hover { filter:brightness(1.35); }
+  .em-tile:hover { filter:brightness(1.2) saturate(1.2); }
   .em-tile-lbl { font-size:7.5px; }
-  .em-tile-ev  { font-size:7px; opacity:0.55; }
+  .em-tile-ev  { font-size:7px; opacity:0.65; }
 
-  /* ── SIDEBAR ── */
   .em-sidebar {
-    background: #0d0d0d;
-    display: flex;
-    flex-direction: column;
-    overflow-y: auto;
-    overflow-x: hidden;
-    min-height: 0;
+    background: ${bg3}; display: flex; flex-direction: column;
+    overflow-y: auto; overflow-x: hidden; min-height: 0;
   }
-  .em-panel { padding:12px 14px; border-bottom:1px solid #161616; }
-  .em-panel-title { font-size:7px; font-weight:700; letter-spacing:0.28em; text-transform:uppercase; color:rgba(255,255,255,.22); margin-bottom:9px; }
+  .em-panel { padding:12px 14px; border-bottom:1px solid ${border2}; }
+  .em-panel-title { font-size:7px; font-weight:700; letter-spacing:0.28em; text-transform:uppercase; color:${textFaint}; margin-bottom:9px; }
 
-  /* Legend */
   .em-legend { display:grid; grid-template-columns:1fr 1fr; gap:2px; }
   .em-chip { padding:3px 5px; font-size:7px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; text-align:center; }
 
-  /* Scoreboard */
-  .em-score-card { padding:10px; border:1px solid #1e1e1e; background:#0a0a0a; margin-bottom:3px; }
-  .em-score-party { font-size:7px; font-weight:700; letter-spacing:0.22em; text-transform:uppercase; color:rgba(255,255,255,.25); margin-bottom:3px; }
+  .em-score-card { padding:10px; border:1px solid ${border1}; background:${scoreCard}; margin-bottom:3px; }
+  .em-score-party { font-size:7px; font-weight:700; letter-spacing:0.22em; text-transform:uppercase; color:${textFaint}; margin-bottom:3px; }
   .em-score-num   { font-size:34px; font-weight:900; line-height:1; letter-spacing:-0.02em; font-variant-numeric:tabular-nums; }
-  .em-score-track { height:3px; background:#1a1a1a; margin-top:7px; overflow:hidden; }
+  .em-score-track { height:3px; background:${scoreTrack}; margin-top:7px; overflow:hidden; }
   .em-score-need  { font-size:7.5px; letter-spacing:0.1em; text-transform:uppercase; margin-top:4px; }
-  .em-score-tossup { text-align:center; padding:5px; font-size:7.5px; letter-spacing:0.16em; text-transform:uppercase; color:rgba(255,255,255,.25); }
+  .em-score-tossup { text-align:center; padding:5px; font-size:7.5px; letter-spacing:0.16em; text-transform:uppercase; color:${textFaint}; }
 
-  /* How */
-  .em-how-text { font-size:8.5px; line-height:1.75; letter-spacing:0.04em; color:rgba(255,255,255,.22); margin:0; }
-  .em-how-text strong { color:rgba(255,255,255,.45); font-weight:700; }
+  .em-how-text { font-size:8.5px; line-height:1.75; letter-spacing:0.04em; color:${textMuted}; margin:0; }
+  .em-how-text strong { color:${dm?"rgba(255,255,255,.45)":"rgba(0,0,0,.6)"}; font-weight:700; }
 
-  /* ── BOTTOM BAR ── */
   .em-bottom {
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 18px;
-    height: 28px;
-    background: #0d0d0d;
-    border-top: 1px solid #161616;
-    font-size: 7px;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: rgba(255,255,255,.18);
+    flex-shrink: 0; display: flex; align-items: center; justify-content: space-between;
+    padding: 0 18px; height: 28px; background: ${bg3}; border-top: 1px solid ${border2};
+    font-size: 7px; letter-spacing: 0.14em; text-transform: uppercase; color: ${textSub};
   }
+  .em-bottom-sub { color: ${textSub}; }
 
-  /* ── TOOLTIP ── */
   .em-tooltip {
-    position: fixed;
-    pointer-events: none;
-    z-index: 99999;
-    width: 196px;
-    background: #111;
-    border: 1px solid #2e2e2e;
-    padding: 11px 13px;
+    position: fixed; pointer-events: none; z-index: 99999; width: 196px;
+    background: #111; border: 1px solid #2e2e2e; padding: 11px 13px;
     box-shadow: 0 16px 40px rgba(0,0,0,.85);
   }
-  .em-tt-name { font-size:11.5px; font-weight:700; letter-spacing:0.05em; text-transform:uppercase; color:#fff; }
-  .em-tt-abbr { color:rgba(255,255,255,.3); font-size:9.5px; }
-  .em-tt-ev   { font-size:7.5px; letter-spacing:0.14em; color:rgba(255,255,255,.25); margin-top:3px; text-transform:uppercase; }
-  .em-tt-div  { height:1px; background:#222; margin:7px 0; }
+  .em-tooltip-light {
+    background: #fff; border-color: #ccc;
+    box-shadow: 0 16px 40px rgba(0,0,0,.2);
+  }
+  .em-tt-name { font-size:11.5px; font-weight:700; letter-spacing:0.05em; text-transform:uppercase; }
+  .em-tooltip .em-tt-name { color: #fff; }
+  .em-tooltip-light .em-tt-name { color: #111; }
+  .em-tt-abbr { font-size:9.5px; }
+  .em-tooltip .em-tt-abbr { color: rgba(255,255,255,.3); }
+  .em-tooltip-light .em-tt-abbr { color: rgba(0,0,0,.4); }
+  .em-tt-ev { font-size:7.5px; letter-spacing:0.14em; margin-top:3px; text-transform:uppercase; }
+  .em-tooltip .em-tt-ev { color: rgba(255,255,255,.25); }
+  .em-tooltip-light .em-tt-ev { color: rgba(0,0,0,.4); }
+  .em-tt-div { height:1px; margin:7px 0; }
+  .em-tooltip .em-tt-div { background: #222; }
+  .em-tooltip-light .em-tt-div { background: #ddd; }
   .em-tt-pick { font-size:9.5px; font-weight:700; letter-spacing:0.16em; text-transform:uppercase; }
-  .em-tt-hint { font-size:7.5px; letter-spacing:0.1em; color:rgba(255,255,255,.22); margin-top:4px; text-transform:uppercase; }
+  .em-tt-hint { font-size:7.5px; letter-spacing:0.1em; margin-top:4px; text-transform:uppercase; }
+  .em-tooltip .em-tt-hint { color: rgba(255,255,255,.22); }
+  .em-tooltip-light .em-tt-hint { color: rgba(0,0,0,.35); }
 
   @media(prefers-reduced-motion:reduce) {
     .em-score-track div { transition:none !important; }
   }
 `;
+}
