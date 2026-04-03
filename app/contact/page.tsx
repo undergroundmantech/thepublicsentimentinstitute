@@ -66,7 +66,6 @@ export default function ContactPage() {
       if (!res.ok) throw new Error("server error");
       setStatus({ type: "sent" });
     } catch {
-      // Mailto fallback
       const subject = encodeURIComponent("[PSI Project Request] " + (form.topic || "General Inquiry"));
       const body = encodeURIComponent(
         [
@@ -95,64 +94,75 @@ export default function ContactPage() {
     <>
       <style>{CSS}</style>
       <div className="ct-root">
-        <div className="ct-stripe" />
 
         {/* ── HERO ── */}
         <div className="ct-hero">
-          <div className="ct-stripe" />
-          <div className="ct-hero-inner">
-            <div>
-              <div className="ct-eyebrow">Public Sentiment Institute · Intake</div>
-              <h1 className="ct-hero-title">
-                Contact<br />
-                <em className="ct-em">PSI</em>
-              </h1>
-              <p className="ct-hero-desc">
-                Request a poll, propose a partnership, or discuss recurring fielding.
-                All inquiries route to our research team at{" "}
-                <span className="ct-email-inline">{CONTACT_EMAIL}</span>.
-              </p>
-              <div className="ct-badge-row">
-                <span className="ct-badge ct-badge-live"><span className="ct-live-dot" />SAME-DAY RESPONSE</span>
-                <span className="ct-badge ct-badge-purple">CUSTOM FIELDING AVAILABLE</span>
-                <span className="ct-badge">NATIONAL · STATE · DISTRICT</span>
+          <div className="ct-hero-left">
+            <div className="ct-hero-tag">
+              <span className="ct-tag-sep">—</span>
+              <span>Public Sentiment Institute</span>
+              <span className="ct-tag-sep">·</span>
+              <span style={{ color: "#c5a55a" }}>Intake</span>
+            </div>
+
+            <h1 className="ct-hero-headline">
+              Partner<br />
+              <span className="ct-headline-gold">With Us.</span>
+            </h1>
+
+            <p className="ct-hero-desc">
+              Request a poll, propose a partnership, or discuss recurring fielding.
+              All inquiries route directly to our research team at{" "}
+              <span style={{ color: "rgba(255,255,255,0.6)" }}>{CONTACT_EMAIL}</span>.
+            </p>
+
+            <div className="ct-badge-row">
+              <span className="ct-badge ct-badge-live">
+                <span className="ct-live-dot" />
+                Same-Day Response
+              </span>
+              <span className="ct-badge">Custom Fielding Available</span>
+              <span className="ct-badge">National · State · District</span>
+            </div>
+
+            <div className="ct-hero-meta">
+              Direct line: <span>{CONTACT_EMAIL}</span>
+            </div>
+          </div>
+
+          {/* Right panel — quick stats */}
+          <div className="ct-hero-right">
+            {[
+              { label: "Response Time", val: "Same Day" },
+              { label: "Contact Team",  val: "Research" },
+              { label: "Fielding",      val: "Custom" },
+            ].map(({ label, val }) => (
+              <div key={label} className="ct-hero-metric">
+                <div className="ct-metric-eyebrow">{label}</div>
+                <div className="ct-metric-num">{val}</div>
               </div>
-            </div>
-            <div className="ct-hero-facts">
-              {[
-                { label: "RESPONSE", val: "Same Day" },
-                { label: "CONTACT",  val: "Research" },
-                { label: "FIELDING", val: "Custom" },
-              ].map(({ label, val }) => (
-                <div key={label} className="ct-fact">
-                  <div className="ct-fact-label">{label}</div>
-                  <div className="ct-fact-val">{val}</div>
-                </div>
-              ))}
-            </div>
+            ))}
           </div>
         </div>
 
-        {/* ── MAIN CONTENT ── */}
+        {/* ── MAIN LAYOUT ── */}
         <div className="ct-layout">
+
           {/* ── FORM ── */}
           <form onSubmit={onSubmit} className="ct-form-panel">
-            <div className="ct-stripe" />
-            <div className="ct-form-inner">
-              <div className="ct-form-header">
-                <div>
-                  <div className="ct-form-title">PROJECT REQUEST</div>
-                  <div className="ct-form-sub">Fields marked * are required</div>
-                </div>
-                <StatusPill status={status} />
+            <div className="ct-panel-header">
+              <div>
+                <div className="ct-panel-title">Project Request</div>
+                <div className="ct-panel-sub">Fields marked * are required</div>
               </div>
+              <StatusPill status={status} />
+            </div>
 
-              <div className="ct-divider" />
-
+            <div className="ct-form-body">
               {/* Row 1: Name + Email */}
               <div className="ct-row-2">
                 <div className="ct-field">
-                  <label className="ct-label">NAME *</label>
+                  <label className="ct-label">Name *</label>
                   <input
                     className={fieldClass("name")}
                     value={form.name}
@@ -165,7 +175,7 @@ export default function ContactPage() {
                   />
                 </div>
                 <div className="ct-field">
-                  <label className="ct-label">EMAIL *</label>
+                  <label className="ct-label">Email *</label>
                   <input
                     type="email"
                     className={fieldClass("email")}
@@ -180,9 +190,9 @@ export default function ContactPage() {
                 </div>
               </div>
 
-              {/* Row 2: Org */}
+              {/* Org */}
               <div className="ct-field">
-                <label className="ct-label">ORGANIZATION</label>
+                <label className="ct-label">Organization</label>
                 <input
                   className={fieldClass("org")}
                   value={form.org}
@@ -194,10 +204,10 @@ export default function ContactPage() {
                 />
               </div>
 
-              {/* Row 3: Topic + Geography */}
+              {/* Topic + Geography */}
               <div className="ct-row-2">
                 <div className="ct-field">
-                  <label className="ct-label">TOPIC / ISSUE AREA</label>
+                  <label className="ct-label">Topic / Issue Area</label>
                   <select
                     className={`ct-select${focused === "topic" ? " ct-input--focused" : ""}`}
                     value={form.topic}
@@ -212,7 +222,7 @@ export default function ContactPage() {
                   </select>
                 </div>
                 <div className="ct-field">
-                  <label className="ct-label">GEOGRAPHY</label>
+                  <label className="ct-label">Geography</label>
                   <input
                     className={fieldClass("geography")}
                     value={form.geography}
@@ -224,10 +234,10 @@ export default function ContactPage() {
                 </div>
               </div>
 
-              {/* Row 4: Audience + Timeline */}
+              {/* Audience + Timeline */}
               <div className="ct-row-2">
                 <div className="ct-field">
-                  <label className="ct-label">TARGET AUDIENCE</label>
+                  <label className="ct-label">Target Audience</label>
                   <input
                     className={fieldClass("audience")}
                     value={form.audience}
@@ -238,7 +248,7 @@ export default function ContactPage() {
                   />
                 </div>
                 <div className="ct-field">
-                  <label className="ct-label">TIMELINE</label>
+                  <label className="ct-label">Timeline</label>
                   <input
                     className={fieldClass("timeline")}
                     value={form.timeline}
@@ -252,7 +262,7 @@ export default function ContactPage() {
 
               {/* Message */}
               <div className="ct-field">
-                <label className="ct-label">MESSAGE *</label>
+                <label className="ct-label">Message *</label>
                 <textarea
                   className={`ct-textarea${focused === "message" ? " ct-input--focused" : ""}`}
                   value={form.message}
@@ -271,14 +281,14 @@ export default function ContactPage() {
                   disabled={!canSubmit || status.type === "sending"}
                   className="ct-btn-primary"
                 >
-                  {status.type === "sending" ? "TRANSMITTING…" : "SEND REQUEST →"}
+                  {status.type === "sending" ? "Transmitting…" : "Send Request →"}
                 </button>
                 <button
                   type="button"
-                  className="ct-btn-ghost"
+                  className="ct-btn-outline"
                   onClick={() => { setForm(EMPTY_FORM); setStatus({ type: "idle" }); }}
                 >
-                  CLEAR
+                  Clear
                 </button>
                 {status.type === "sent" && (
                   <span className="ct-sent-note">
@@ -288,27 +298,28 @@ export default function ContactPage() {
               </div>
 
               <div className="ct-disclaimer">
-                DIRECT SEND TARGET: {CONTACT_EMAIL} · PLEASE AVOID SENSITIVE PERSONAL INFORMATION
+                Direct send target: {CONTACT_EMAIL} · Please avoid sensitive personal information
               </div>
             </div>
           </form>
 
           {/* ── SIDEBAR ── */}
           <aside className="ct-sidebar">
+
             {/* What to include */}
             <div className="ct-sidebar-card">
-              <div className="ct-stripe" />
-              <div className="ct-sidebar-inner">
-                <div className="ct-sidebar-title">WHAT TO INCLUDE</div>
+              <div className="ct-panel-header">
+                <div className="ct-panel-title">What to Include</div>
+              </div>
+              <div className="ct-sidebar-body">
                 <div className="ct-sidebar-sub">Fastest replies come with full context</div>
-                <div className="ct-divider" />
                 <ul className="ct-checklist">
                   {[
-                    { color: "var(--ct-purple)", text: "Target geography + audience (A18+, RV, LV)" },
-                    { color: "var(--ct-accent)", text: "Field dates / cadence (one-time vs recurring)" },
-                    { color: "#ef4444",           text: "Required outputs (tabs, memo, toplines, trend)" },
-                    { color: "#3b82f6",           text: "Demographics, oversamples, or special targets" },
-                    { color: "rgba(245,158,11,0.9)", text: "Budget range or sample size target" },
+                    { color: "#5b8fd4", text: "Target geography + audience (A18+, RV, LV)" },
+                    { color: "#c5a55a", text: "Field dates / cadence (one-time vs recurring)" },
+                    { color: "#d45b5b", text: "Required outputs (tabs, memo, toplines, trend)" },
+                    { color: "#5b8fd4", text: "Demographics, oversamples, or special targets" },
+                    { color: "#c5a55a", text: "Budget range or sample size target" },
                   ].map(({ color, text }) => (
                     <li key={text} className="ct-checklist-item">
                       <span className="ct-checklist-dot" style={{ background: color }} />
@@ -319,48 +330,43 @@ export default function ContactPage() {
               </div>
             </div>
 
-            {/* Response info */}
+            {/* Response time */}
             <div className="ct-sidebar-card">
-              <div className="ct-stripe" />
-              <div className="ct-sidebar-inner">
-                <div className="ct-sidebar-title">RESPONSE TIME</div>
-                <div className="ct-divider" />
-                <div className="ct-response-grid">
-                  {[
-                    { type: "Simple request",  time: "Same day",  dot: "var(--ct-green)" },
-                    { type: "Custom project",  time: "24–48 hrs", dot: "var(--ct-accent)" },
-                    { type: "Urgent (noted)",  time: "Priority",  dot: "#ef4444" },
-                  ].map(({ type, time, dot }) => (
-                    <div key={type} className="ct-response-row">
-                      <div className="ct-response-type">
-                        <span className="ct-response-dot" style={{ background: dot }} />
-                        {type}
-                      </div>
-                      <div className="ct-response-time">{time}</div>
+              <div className="ct-panel-header">
+                <div className="ct-panel-title">Response Time</div>
+              </div>
+              <div className="ct-sidebar-body">
+                {[
+                  { type: "Simple request",  time: "Same day",  color: "#5b8fd4" },
+                  { type: "Custom project",  time: "24–48 hrs", color: "#c5a55a" },
+                  { type: "Urgent (noted)",  time: "Priority",  color: "#d45b5b" },
+                ].map(({ type, time, color }) => (
+                  <div key={type} className="ct-response-row">
+                    <div className="ct-response-type">
+                      <span className="ct-response-dot" style={{ background: color }} />
+                      {type}
                     </div>
-                  ))}
-                </div>
-                <div className="ct-divider" />
+                    <div className="ct-response-time" style={{ color }}>{time}</div>
+                  </div>
+                ))}
                 <p className="ct-sidebar-note">
-                  For urgent timelines, include "URGENT" in your timeline field.
-                  Mark media inquiries clearly for expedited routing.
+                  Include "URGENT" in your timeline field for expedited routing.
+                  Mark media inquiries clearly.
                 </p>
               </div>
             </div>
 
             {/* Direct email */}
             <div className="ct-email-card">
-              <div className="ct-email-card-label">DIRECT EMAIL</div>
-              <a
-                href={`mailto:${CONTACT_EMAIL}`}
-                className="ct-email-addr"
-              >
+              <div className="ct-email-label">Direct Email</div>
+              <a href={`mailto:${CONTACT_EMAIL}`} className="ct-email-addr">
                 {CONTACT_EMAIL}
               </a>
-              <div className="ct-email-card-note">
-                You can also email us directly — form submission routes here automatically.
+              <div className="ct-email-note">
+                Form submission routes here automatically.
               </div>
             </div>
+
           </aside>
         </div>
       </div>
@@ -371,259 +377,244 @@ export default function ContactPage() {
 function StatusPill({ status }: { status: Status }) {
   if (status.type === "idle") return null;
   const configs = {
-    sending: { dot: "rgba(167,139,250,0.9)", text: "TRANSMITTING…" },
-    sent:    { dot: "rgba(34,197,94,0.9)",  text: "SUBMITTED" },
-    error:   { dot: "rgba(239,68,68,0.9)",  text: status.type === "error" ? status.message : "" },
+    sending: { color: "#c5a55a", text: "Transmitting…" },
+    sent:    { color: "#5b8fd4", text: "Submitted" },
+    error:   { color: "#d45b5b", text: status.type === "error" ? (status as any).message : "Error" },
   };
   const cfg = configs[status.type] ?? configs.error;
   return (
-    <div className="ct-status-pill">
-      <span className="ct-status-dot" style={{ background: cfg.dot }} />
-      <span>{cfg.text}</span>
+    <div style={{
+      display: "inline-flex", alignItems: "center", gap: 7,
+      padding: "3px 10px",
+      border: `1px solid rgba(255,255,255,0.08)`,
+      background: "rgba(255,255,255,0.03)",
+      fontFamily: "'DM Mono', monospace",
+      fontSize: 9, letterSpacing: "0.18em", textTransform: "uppercase",
+      color: cfg.color,
+    }}>
+      <span style={{
+        display: "inline-block", width: 6, height: 6, borderRadius: "50%",
+        background: cfg.color, flexShrink: 0,
+      }} />
+      {cfg.text}
     </div>
   );
 }
 
 const CSS = `
-  .ct-root {
-    --ct-bg:       #070709;
-    --ct-panel:    #0f0f15;
-    --ct-border:   rgba(255,255,255,0.09);
-    --ct-border2:  rgba(255,255,255,0.16);
-    --ct-muted:    rgba(240,240,245,0.62);
-    --ct-muted2:   rgba(240,240,245,0.38);
-    --ct-muted3:   rgba(240,240,245,0.20);
-    --ct-purple:   #7c3aed;
-    --ct-soft:     #a78bfa;
-    --ct-accent:   rgba(167,139,250,0.85);
-    --ct-green:    rgba(34,197,94,0.9);
+  @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&display=swap');
 
+  body { background: #0a0a08 !important; }
+
+  .ct-root {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 32px 32px 80px;
     display: flex;
     flex-direction: column;
     gap: 20px;
-    animation: ct-fade-up 0.45s cubic-bezier(0.22,1,0.36,1) both;
   }
+  @media (max-width: 768px) { .ct-root { padding: 20px 16px 60px; } }
 
-  @keyframes ct-fade-up {
-    from { opacity:0; transform:translateY(10px); }
-    to   { opacity:1; transform:translateY(0); }
-  }
-  @keyframes ct-pulse {
-    0%,100% { opacity:1; transform:scale(1); }
-    50%      { opacity:0.3; transform:scale(0.7); }
-  }
-
-  /* STRIPE */
-  .ct-stripe {
-    height: 3px;
-    background: linear-gradient(90deg,
-      var(--ct-purple) 0%,var(--ct-purple) 33%,
-      rgba(167,139,250,0.6) 33%,rgba(167,139,250,0.6) 66%,
-      rgba(255,255,255,0.1) 66%,rgba(255,255,255,0.1) 100%
-    );
-  }
-
-  /* LIVE DOT */
-  .ct-live-dot {
-    display: inline-block; width: 6px; height: 6px;
-    border-radius: 50%; background: var(--ct-purple);
-    box-shadow: 0 0 7px rgba(124,58,237,0.8);
-    animation: ct-pulse 1.8s ease-in-out infinite;
-    flex-shrink: 0;
-  }
-
-  /* EYEBROW */
-  .ct-eyebrow {
-    font-family: var(--font-body);
-    font-size: 8px; font-weight: 700; letter-spacing: 0.32em;
-    text-transform: uppercase; color: var(--ct-soft);
-    margin-bottom: 12px;
-    display: flex; align-items: center; gap: 10px;
-  }
-  .ct-eyebrow::before {
-    content: ''; display: inline-block; width: 16px; height: 1px;
-    background: var(--ct-soft); opacity: 0.5;
-  }
-
-  /* HERO */
+  /* ── HERO ── */
   .ct-hero {
-    border: 1px solid var(--ct-border);
-    background: var(--ct-panel);
-    position: relative; overflow: hidden;
+    display: grid;
+    grid-template-columns: 1fr 260px;
+    border: 1px solid rgba(255,255,255,0.08);
+    background: #0f0f0d;
+    overflow: hidden;
   }
-  .ct-hero::before {
+  @media (max-width: 900px) { .ct-hero { grid-template-columns: 1fr; } }
+
+  .ct-hero-left {
+    padding: 48px 48px 40px;
+    border-right: 1px solid rgba(255,255,255,0.06);
+    position: relative;
+    overflow: hidden;
+  }
+  @media (max-width: 768px) { .ct-hero-left { padding: 28px 20px; border-right: none; border-bottom: 1px solid rgba(255,255,255,0.06); } }
+
+  .ct-hero-left::before {
     content: '';
-    position: absolute; inset: 0;
-    background:
-      radial-gradient(ellipse 50% 120% at 0% 60%, rgba(124,58,237,0.07) 0%, transparent 60%),
-      radial-gradient(ellipse 30% 80% at 100% 30%, rgba(167,139,250,0.04) 0%, transparent 60%),
-      repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(255,255,255,0.005) 3px, rgba(255,255,255,0.005) 4px);
+    position: absolute; top: -60px; right: -60px;
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, rgba(197,165,90,0.05) 0%, transparent 70%);
     pointer-events: none;
   }
-  .ct-hero-inner {
-    position: relative; padding: 28px 30px 26px;
-    display: grid; grid-template-columns: 1fr auto;
-    align-items: end; gap: 24px;
-  }
-  @media (max-width: 640px) { .ct-hero-inner { grid-template-columns: 1fr; } }
 
-  .ct-hero-title {
-    font-family: var(--font-display);
-    font-size: clamp(26px,4vw,52px); font-weight: 700;
-    text-transform: uppercase; letter-spacing: 0.02em;
-    line-height: 0.9; color: #fff; margin: 0 0 16px;
+  .ct-hero-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-family: 'DM Mono', monospace;
+    font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase;
+    color: rgba(255,255,255,0.35);
+    margin-bottom: 20px;
   }
-  .ct-em {
-    font-style: normal;
-    background: linear-gradient(110deg, var(--ct-purple), var(--ct-soft));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+  .ct-tag-sep { color: rgba(255,255,255,0.15); }
+
+  .ct-hero-headline {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(52px, 7vw, 88px);
+    letter-spacing: 0.03em; line-height: 0.95;
+    color: #fff; margin: 0 0 20px;
+    position: relative; z-index: 1;
   }
+  .ct-headline-gold { color: #c5a55a; }
+
   .ct-hero-desc {
-    font-family: var(--font-body);
-    font-size: 9.5px; letter-spacing: 0.11em; line-height: 1.8;
-    color: var(--ct-muted2); text-transform: uppercase; max-width: 520px;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px; color: rgba(255,255,255,0.35);
+    line-height: 1.8; max-width: 480px;
+    margin-bottom: 24px; letter-spacing: 0.04em;
+    position: relative; z-index: 1;
   }
-  .ct-email-inline {
-    color: var(--ct-soft); font-weight: 700;
-  }
+
   .ct-badge-row {
-    display: flex; flex-wrap: wrap; gap: 6px; margin-top: 18px;
+    display: flex; flex-wrap: wrap; gap: 8px;
+    position: relative; z-index: 1;
+    margin-bottom: 24px;
   }
   .ct-badge {
     display: inline-flex; align-items: center; gap: 5px;
-    padding: 3px 9px;
-    border: 1px solid var(--ct-border);
+    padding: 3px 10px;
+    border: 1px solid rgba(255,255,255,0.08);
     background: rgba(255,255,255,0.03);
-    font-family: var(--font-body);
-    font-size: 7.5px; font-weight: 700; letter-spacing: 0.22em;
-    text-transform: uppercase; color: var(--ct-muted3);
+    font-family: 'DM Mono', monospace;
+    font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: rgba(255,255,255,0.3);
   }
-  .ct-badge-live   { border-color:rgba(124,58,237,0.35); background:rgba(124,58,237,0.07); color:var(--ct-soft); }
-  .ct-badge-purple { border-color:rgba(167,139,250,0.3); background:rgba(124,58,237,0.06); color:var(--ct-soft); }
+  .ct-badge-live {
+    border-color: rgba(197,165,90,0.3);
+    background: rgba(197,165,90,0.06);
+    color: #c5a55a;
+  }
+  .ct-live-dot {
+    display: inline-block; width: 5px; height: 5px;
+    border-radius: 50%; background: #c5a55a;
+    animation: ct-pulse 1.8s ease-in-out infinite;
+    flex-shrink: 0;
+  }
+  @keyframes ct-pulse { 0%,100%{opacity:1} 50%{opacity:0.25} }
 
-  /* HERO FACTS */
-  .ct-hero-facts {
-    display: flex; flex-direction: column; gap: 6px; min-width: 140px;
+  .ct-hero-meta {
+    padding-top: 20px;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    font-family: 'DM Mono', monospace;
+    font-size: 9px; color: rgba(255,255,255,0.2);
+    letter-spacing: 0.1em; text-transform: uppercase;
+    position: relative; z-index: 1;
   }
-  .ct-fact {
-    display: flex; align-items: center; justify-content: space-between;
-    gap: 12px; padding: 10px 14px;
-    border: 1px solid var(--ct-border);
-    background: rgba(255,255,255,0.025);
-  }
-  .ct-fact-label {
-    font-family: var(--font-body);
-    font-size: 7px; font-weight: 700; letter-spacing: 0.28em;
-    text-transform: uppercase; color: var(--ct-muted3);
-  }
-  .ct-fact-val {
-    font-family: var(--font-display);
-    font-size: 13px; font-weight: 700; color: var(--ct-soft);
+  .ct-hero-meta span { color: rgba(255,255,255,0.4); }
+
+  /* Hero right panel */
+  .ct-hero-right {
+    padding: 32px 24px;
+    display: flex; flex-direction: column;
+    background: #0d0d0b;
   }
 
-  /* LAYOUT */
+  .ct-hero-metric {
+    padding: 20px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    flex: 1;
+    display: flex; flex-direction: column; justify-content: center;
+  }
+  .ct-hero-metric:last-child { border-bottom: none; }
+
+  .ct-metric-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 8px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: rgba(255,255,255,0.25); margin-bottom: 6px;
+  }
+  .ct-metric-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 36px; letter-spacing: 0.03em;
+    line-height: 1; color: #c5a55a;
+  }
+
+  /* ── LAYOUT ── */
   .ct-layout {
-    display: grid; grid-template-columns: 1fr 320px; gap: 16px;
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 20px;
     align-items: start;
   }
   @media (max-width: 900px) { .ct-layout { grid-template-columns: 1fr; } }
 
-  /* FORM PANEL */
+  /* ── SHARED PANEL HEADER ── */
+  .ct-panel-header {
+    padding: 14px 20px 12px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    display: flex; align-items: center;
+    justify-content: space-between; gap: 10px;
+    background: #0d0d0b;
+  }
+  .ct-panel-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px; font-weight: 500;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: rgba(255,255,255,0.6);
+  }
+  .ct-panel-sub {
+    font-family: 'DM Mono', monospace;
+    font-size: 8px; color: rgba(255,255,255,0.2);
+    letter-spacing: 0.08em; margin-top: 3px;
+  }
+
+  /* ── FORM PANEL ── */
   .ct-form-panel {
-    background: var(--ct-panel);
-    border: 1px solid var(--ct-border);
+    border: 1px solid rgba(255,255,255,0.08);
+    background: #0f0f0d;
     overflow: hidden;
   }
-  .ct-form-inner {
-    padding: 24px 26px;
+
+  .ct-form-body {
+    padding: 22px 22px 20px;
     display: flex; flex-direction: column; gap: 16px;
   }
-  .ct-form-header {
-    display: flex; align-items: flex-start; justify-content: space-between;
-    gap: 12px; flex-wrap: wrap;
-  }
-  .ct-form-title {
-    font-family: var(--font-body);
-    font-size: 10px; font-weight: 900; letter-spacing: 0.28em;
-    text-transform: uppercase; color: var(--ct-soft);
-  }
-  .ct-form-sub {
-    font-family: var(--font-body);
-    font-size: 8px; letter-spacing: 0.16em; color: var(--ct-muted3);
-    margin-top: 4px;
-  }
 
-  /* STATUS PILL */
-  .ct-status-pill {
-    display: inline-flex; align-items: center; gap: 7px;
-    padding: 4px 10px;
-    border: 1px solid var(--ct-border);
-    background: rgba(255,255,255,0.03);
-    font-family: var(--font-body);
-    font-size: 8px; font-weight: 700; letter-spacing: 0.2em;
-    text-transform: uppercase; color: var(--ct-muted2);
-  }
-  .ct-status-dot {
-    display: inline-block; width: 7px; height: 7px; border-radius: 50%;
-    flex-shrink: 0;
-  }
-
-  /* DIVIDER */
-  .ct-divider { height: 1px; background: var(--ct-border); }
-
-  /* FIELD */
+  /* FIELDS */
   .ct-field { display: flex; flex-direction: column; gap: 0; }
   .ct-label {
-    font-family: var(--font-body);
-    font-size: 7.5px; font-weight: 700; letter-spacing: 0.26em;
-    text-transform: uppercase; color: var(--ct-muted3);
+    font-family: 'DM Mono', monospace;
+    font-size: 8px; font-weight: 500;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: rgba(255,255,255,0.25);
     margin-bottom: 6px;
   }
   .ct-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
   @media (max-width: 560px) { .ct-row-2 { grid-template-columns: 1fr; } }
 
-  /* INPUTS */
   .ct-input, .ct-select, .ct-textarea {
     background: rgba(255,255,255,0.03);
-    border: 1px solid var(--ct-border);
-    color: rgba(255,255,255,0.85);
-    font-family: var(--font-body);
-    font-size: 11px; letter-spacing: 0.06em;
+    border: 1px solid rgba(255,255,255,0.08);
+    color: rgba(255,255,255,0.75);
+    font-family: 'DM Mono', monospace;
+    font-size: 11px; letter-spacing: 0.04em;
     padding: 10px 14px;
     outline: none;
     transition: border-color 120ms, background 120ms;
     width: 100%; box-sizing: border-box;
-    border-radius: 0;
-    appearance: none;
-    -webkit-appearance: none;
+    border-radius: 0; appearance: none; -webkit-appearance: none;
   }
   .ct-input::placeholder, .ct-textarea::placeholder {
-    color: var(--ct-muted3); font-size: 10px; letter-spacing: 0.08em;
-  }
-  .ct-select {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='rgba(167,139,250,0.5)'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 12px center;
-    padding-right: 32px;
-    cursor: pointer;
-  }
-  .ct-select option {
-    background: #0f0f15; color: rgba(255,255,255,0.85);
-  }
-  .ct-textarea {
-    min-height: 160px; resize: vertical;
-    line-height: 1.65;
-  }
-  .ct-input--focused {
-    border-color: rgba(124,58,237,0.5) !important;
-    background: rgba(124,58,237,0.04) !important;
-    box-shadow: 0 0 0 2px rgba(124,58,237,0.1);
+    color: rgba(255,255,255,0.15);
+    font-size: 10px; letter-spacing: 0.06em;
   }
   .ct-input:hover, .ct-select:hover, .ct-textarea:hover {
     border-color: rgba(255,255,255,0.14);
   }
+  .ct-input--focused {
+    border-color: rgba(197,165,90,0.45) !important;
+    background: rgba(197,165,90,0.04) !important;
+  }
+  .ct-select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='rgba(197,165,90,0.6)'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    padding-right: 32px; cursor: pointer;
+  }
+  .ct-select option { background: #0f0f0d; color: rgba(255,255,255,0.75); }
+  .ct-textarea { min-height: 160px; resize: vertical; line-height: 1.65; }
 
   /* ACTIONS */
   .ct-actions {
@@ -631,143 +622,121 @@ const CSS = `
     margin-top: 4px;
   }
   .ct-btn-primary {
+    display: inline-flex; align-items: center;
     padding: 10px 22px;
-    background: rgba(124,58,237,0.15);
-    border: 1px solid rgba(124,58,237,0.45);
-    color: var(--ct-soft);
-    font-family: var(--font-body);
-    font-size: 9px; font-weight: 800; letter-spacing: 0.24em;
-    text-transform: uppercase; cursor: pointer;
-    transition: background 150ms, border-color 150ms;
+    background: #c5a55a;
+    color: #0a0a08;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px; font-weight: 500;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    border: none; cursor: pointer;
+    transition: background 120ms, transform 80ms;
   }
-  .ct-btn-primary:hover:not(:disabled) {
-    background: rgba(124,58,237,0.25);
-    border-color: rgba(124,58,237,0.7);
-  }
-  .ct-btn-primary:disabled {
-    opacity: 0.45; cursor: not-allowed;
-  }
-  .ct-btn-ghost {
+  .ct-btn-primary:hover:not(:disabled) { background: #d4b46a; transform: translateY(-1px); }
+  .ct-btn-primary:disabled { opacity: 0.4; cursor: not-allowed; }
+
+  .ct-btn-outline {
+    display: inline-flex; align-items: center;
     padding: 10px 18px;
     background: transparent;
-    border: 1px solid var(--ct-border);
-    color: var(--ct-muted3);
-    font-family: var(--font-body);
-    font-size: 9px; font-weight: 700; letter-spacing: 0.24em;
-    text-transform: uppercase; cursor: pointer;
-    transition: background 120ms, color 120ms;
+    color: rgba(255,255,255,0.35);
+    font-family: 'DM Mono', monospace;
+    font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+    border: 1px solid rgba(255,255,255,0.12); cursor: pointer;
+    transition: border-color 120ms, color 120ms;
   }
-  .ct-btn-ghost:hover {
-    background: rgba(255,255,255,0.04); color: var(--ct-muted2);
-  }
+  .ct-btn-outline:hover { border-color: rgba(255,255,255,0.3); color: rgba(255,255,255,0.6); }
+
   .ct-sent-note {
-    font-family: var(--font-body);
-    font-size: 8.5px; letter-spacing: 0.1em;
-    color: var(--ct-green);
+    font-family: 'DM Mono', monospace;
+    font-size: 9px; letter-spacing: 0.1em;
+    color: #5b8fd4;
   }
   .ct-disclaimer {
-    font-family: var(--font-body);
-    font-size: 7.5px; letter-spacing: 0.18em;
-    text-transform: uppercase; color: var(--ct-muted3);
-    padding-top: 4px;
+    font-family: 'DM Mono', monospace;
+    font-size: 8px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: rgba(255,255,255,0.12);
+    padding-top: 8px;
     border-top: 1px solid rgba(255,255,255,0.04);
   }
 
-  /* SIDEBAR */
-  .ct-sidebar {
-    display: flex; flex-direction: column; gap: 14px;
-  }
+  /* ── SIDEBAR ── */
+  .ct-sidebar { display: flex; flex-direction: column; gap: 1px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.06); }
+
   .ct-sidebar-card {
-    background: var(--ct-panel);
-    border: 1px solid var(--ct-border);
-    overflow: hidden;
-  }
-  .ct-sidebar-inner {
-    padding: 18px 20px;
-    display: flex; flex-direction: column; gap: 12px;
-  }
-  .ct-sidebar-title {
-    font-family: var(--font-body);
-    font-size: 8.5px; font-weight: 800; letter-spacing: 0.28em;
-    text-transform: uppercase; color: var(--ct-soft);
-  }
-  .ct-sidebar-sub {
-    font-family: var(--font-body);
-    font-size: 8px; letter-spacing: 0.12em; color: var(--ct-muted3);
-    margin-top: -6px;
-  }
-  .ct-checklist {
-    list-style: none; padding: 0; margin: 0;
-    display: flex; flex-direction: column; gap: 10px;
-  }
-  .ct-checklist-item {
-    display: flex; align-items: flex-start; gap: 10px;
-    font-family: var(--font-body);
-    font-size: 9px; letter-spacing: 0.08em; line-height: 1.6;
-    color: var(--ct-muted2);
-  }
-  .ct-checklist-dot {
-    display: inline-block; width: 7px; height: 7px; border-radius: 50%;
-    margin-top: 4px; flex-shrink: 0;
+    background: #0f0f0d;
+    display: flex; flex-direction: column;
   }
 
-  /* RESPONSE GRID */
-  .ct-response-grid {
-    display: flex; flex-direction: column; gap: 8px;
+  .ct-sidebar-body {
+    padding: 16px 18px;
+    display: flex; flex-direction: column; gap: 12px;
   }
+
+  .ct-sidebar-sub {
+    font-family: 'DM Mono', monospace;
+    font-size: 8px; color: rgba(255,255,255,0.2);
+    letter-spacing: 0.1em;
+  }
+
+  .ct-checklist { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; }
+  .ct-checklist-item {
+    display: flex; align-items: flex-start; gap: 10px;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px; letter-spacing: 0.04em; line-height: 1.65;
+    color: rgba(255,255,255,0.4);
+  }
+  .ct-checklist-dot {
+    display: inline-block; width: 6px; height: 6px;
+    border-radius: 50%; margin-top: 5px; flex-shrink: 0;
+  }
+
   .ct-response-row {
     display: flex; align-items: center; justify-content: space-between;
-    padding: 8px 10px;
-    border: 1px solid rgba(255,255,255,0.04);
-    background: rgba(255,255,255,0.015);
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
   }
+  .ct-response-row:last-of-type { border-bottom: none; }
   .ct-response-type {
     display: flex; align-items: center; gap: 8px;
-    font-family: var(--font-body);
-    font-size: 9px; letter-spacing: 0.1em; color: var(--ct-muted2);
+    font-family: 'DM Mono', monospace;
+    font-size: 10px; letter-spacing: 0.06em;
+    color: rgba(255,255,255,0.35);
   }
-  .ct-response-dot {
-    display: inline-block; width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0;
-  }
+  .ct-response-dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
   .ct-response-time {
-    font-family: var(--font-body);
-    font-size: 9px; font-weight: 800; letter-spacing: 0.14em;
-    color: rgba(255,255,255,0.75);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 18px; letter-spacing: 0.04em;
   }
   .ct-sidebar-note {
-    font-family: var(--font-body);
-    font-size: 8.5px; letter-spacing: 0.08em; line-height: 1.7;
-    color: var(--ct-muted3); margin: 0;
+    font-family: 'DM Mono', monospace;
+    font-size: 9px; letter-spacing: 0.06em; line-height: 1.75;
+    color: rgba(255,255,255,0.2); margin: 0;
   }
 
   /* EMAIL CARD */
   .ct-email-card {
-    background: rgba(124,58,237,0.05);
-    border: 1px solid rgba(124,58,237,0.25);
-    padding: 18px 20px;
-    display: flex; flex-direction: column; gap: 8px;
+    background: rgba(197,165,90,0.05);
+    border-top: 1px solid rgba(197,165,90,0.15);
+    padding: 18px 18px;
+    display: flex; flex-direction: column; gap: 6px;
   }
-  .ct-email-card-label {
-    font-family: var(--font-body);
-    font-size: 7px; font-weight: 800; letter-spacing: 0.32em;
-    text-transform: uppercase; color: rgba(167,139,250,0.6);
+  .ct-email-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 8px; font-weight: 500;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: rgba(197,165,90,0.5);
   }
   .ct-email-addr {
-    font-family: var(--font-body);
-    font-size: 11px; font-weight: 700; letter-spacing: 0.06em;
-    color: var(--ct-soft); text-decoration: none;
-    word-break: break-all;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px; font-weight: 500; letter-spacing: 0.04em;
+    color: #c5a55a; text-decoration: none; word-break: break-all;
     transition: color 120ms;
   }
-  .ct-email-addr:hover { color: #fff; }
-  .ct-email-card-note {
-    font-family: var(--font-body);
-    font-size: 8px; letter-spacing: 0.1em; line-height: 1.65;
-    color: var(--ct-muted3);
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .ct-root { animation: none !important; }
-    .ct-live-dot { animation: none !important; }
+  .ct-email-addr:hover { color: #d4b46a; }
+  .ct-email-note {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px; letter-spacing: 0.08em; line-height: 1.65;
+    color: rgba(255,255,255,0.2);
   }
 `;

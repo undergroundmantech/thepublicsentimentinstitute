@@ -29,10 +29,10 @@ type RaceType = "Democratic Primary" | "Republican Primary" | "Special Election"
 type FeaturedRace = { id: number; state: "IL" | "TEST"; office: string; raceType: RaceType; label: string; };
 
 function getRaceTypeColor(raceType: RaceType): string {
-  if (raceType === "Republican Primary") return "var(--rep)";
-  if (raceType === "Democratic Primary") return "var(--dem)";
-  if (raceType === "General Election") return "var(--purple-soft)";
-  return "rgba(255,255,255,0.4)";
+  if (raceType === "Republican Primary") return "#d45b5b";
+  if (raceType === "Democratic Primary") return "#5b8fd4";
+  if (raceType === "General Election") return "#c5a55a";
+  return "#888";
 }
 
 function getRaceTypeShort(raceType: RaceType): string {
@@ -42,241 +42,28 @@ function getRaceTypeShort(raceType: RaceType): string {
   return "S";
 }
 
-// ─── FEATURED RACES ──────────────────────────────────────────────────────────
 const FEATURED: FeaturedRace[] = [
-  // Illinois US Senate
   { id: 55550, state: "IL", office: "US Senate", raceType: "Democratic Primary", label: "IL US Senate — Democratic Primary" },
   { id: 55551, state: "IL", office: "US Senate", raceType: "Republican Primary", label: "IL US Senate — Republican Primary" },
-  // Illinois Governor
   { id: 55552, state: "IL", office: "Governor", raceType: "Democratic Primary", label: "IL Governor — Democratic Primary" },
   { id: 55553, state: "IL", office: "Governor", raceType: "Republican Primary", label: "IL Governor — Republican Primary" },
-  // Secretary of State
   { id: 55554, state: "IL", office: "Secretary of State", raceType: "Democratic Primary", label: "IL Secretary of State — Democratic Primary" },
   { id: 55555, state: "IL", office: "Secretary of State", raceType: "Republican Primary", label: "IL Secretary of State — Republican Primary" },
-  // Attorney General
   { id: 55556, state: "IL", office: "Attorney General", raceType: "Democratic Primary", label: "IL Attorney General — Democratic Primary" },
   { id: 55557, state: "IL", office: "Attorney General", raceType: "Republican Primary", label: "IL Attorney General — Republican Primary" },
-  // Comptroller
   { id: 55558, state: "IL", office: "Comptroller", raceType: "Democratic Primary", label: "IL Comptroller — Democratic Primary" },
   { id: 55559, state: "IL", office: "Comptroller", raceType: "Republican Primary", label: "IL Comptroller — Republican Primary" },
-  // Treasurer
   { id: 55560, state: "IL", office: "Treasurer", raceType: "Republican Primary", label: "IL Treasurer — Republican Primary" },
   { id: 55561, state: "IL", office: "Treasurer", raceType: "Democratic Primary", label: "IL Treasurer — Democratic Primary" },
-  // US House races
   { id: 55562, state: "IL", office: "US House 1", raceType: "Democratic Primary", label: "IL District 1 — Democratic Primary" },
   { id: 55563, state: "IL", office: "US House 1", raceType: "Republican Primary", label: "IL District 1 — Republican Primary" },
-  { id: 55564, state: "IL", office: "US House 2", raceType: "Republican Primary", label: "IL District 2 — Republican Primary" },
-  { id: 55565, state: "IL", office: "US House 2", raceType: "Democratic Primary", label: "IL District 2 — Democratic Primary" },
-  { id: 55566, state: "IL", office: "US House 3", raceType: "Democratic Primary", label: "IL District 3 — Democratic Primary" },
-  { id: 55567, state: "IL", office: "US House 3", raceType: "Republican Primary", label: "IL District 3 — Republican Primary" },
-  { id: 55568, state: "IL", office: "US House 4", raceType: "Democratic Primary", label: "IL District 4 — Democratic Primary" },
-  { id: 55569, state: "IL", office: "US House 4", raceType: "Republican Primary", label: "IL District 4 — Republican Primary" },
-  { id: 55570, state: "IL", office: "US House 5", raceType: "Democratic Primary", label: "IL District 5 — Democratic Primary" },
-  { id: 55571, state: "IL", office: "US House 5", raceType: "Republican Primary", label: "IL District 5 — Republican Primary" },
-  { id: 55572, state: "IL", office: "US House 6", raceType: "Democratic Primary", label: "IL District 6 — Democratic Primary" },
-  { id: 55573, state: "IL", office: "US House 6", raceType: "Republican Primary", label: "IL District 6 — Republican Primary" },
-  { id: 55574, state: "IL", office: "US House 7", raceType: "Democratic Primary", label: "IL District 7 — Democratic Primary" },
-  { id: 55575, state: "IL", office: "US House 7", raceType: "Republican Primary", label: "IL District 7 — Republican Primary" },
-  { id: 55576, state: "IL", office: "US House 8", raceType: "Democratic Primary", label: "IL District 8 — Democratic Primary" },
-  { id: 55577, state: "IL", office: "US House 8", raceType: "Republican Primary", label: "IL District 8 — Republican Primary" },
-  { id: 55578, state: "IL", office: "US House 9", raceType: "Democratic Primary", label: "IL District 9 — Democratic Primary" },
-  { id: 55579, state: "IL", office: "US House 9", raceType: "Republican Primary", label: "IL District 9 — Republican Primary" },
-  { id: 55580, state: "IL", office: "US House 10", raceType: "Democratic Primary", label: "IL District 10 — Democratic Primary" },
-  { id: 55581, state: "IL", office: "US House 10", raceType: "Republican Primary", label: "IL District 10 — Republican Primary" },
-  { id: 55582, state: "IL", office: "US House 11", raceType: "Democratic Primary", label: "IL District 11 — Democratic Primary" },
-  { id: 55583, state: "IL", office: "US House 11", raceType: "Republican Primary", label: "IL District 11 — Republican Primary" },
-  { id: 55584, state: "IL", office: "US House 12", raceType: "Democratic Primary", label: "IL District 12 — Democratic Primary" },
-  { id: 55585, state: "IL", office: "US House 12", raceType: "Republican Primary", label: "IL District 12 — Republican Primary" },
-  { id: 55586, state: "IL", office: "US House 13", raceType: "Democratic Primary", label: "IL District 13 — Democratic Primary" },
-  { id: 55587, state: "IL", office: "US House 13", raceType: "Republican Primary", label: "IL District 13 — Republican Primary" },
-  { id: 55588, state: "IL", office: "US House 14", raceType: "Democratic Primary", label: "IL District 14 — Democratic Primary" },
-  { id: 55589, state: "IL", office: "US House 14", raceType: "Republican Primary", label: "IL District 14 — Republican Primary" },
-  { id: 55590, state: "IL", office: "US House 15", raceType: "Democratic Primary", label: "IL District 15 — Democratic Primary" },
-  { id: 55591, state: "IL", office: "US House 15", raceType: "Republican Primary", label: "IL District 15 — Republican Primary" },
-  { id: 55592, state: "IL", office: "US House 16", raceType: "Democratic Primary", label: "IL District 16 — Democratic Primary" },
-  { id: 55593, state: "IL", office: "US House 16", raceType: "Republican Primary", label: "IL District 16 — Republican Primary" },
-  { id: 55594, state: "IL", office: "US House 17", raceType: "Democratic Primary", label: "IL District 17 — Democratic Primary" },
-  { id: 55595, state: "IL", office: "US House 17", raceType: "Republican Primary", label: "IL District 17 — Republican Primary" },
 ];
 
-// ─── RACE FORECAST DEFAULTS ───────────────────────────────────────────────────
-// Sourcing notes:
-//   IL Senate D  — Emerson/AARP poll (eve-of-primary): Krishnamoorthi 31.6%, Stratton 29.4%, Kelly 13.6%
-//   IL Senate R  — Jan 2026 internal: Tracy leads fundraising ~$2.1M; 84% undecided in public poll
-//   IL Gov R     — Bailey (2022 nominee, highest name-ID), Dabrowski, Heidner, Mendrick; no public polling
-//   IL House 2 D — 10-candidate open seat (Kelly vacated for Senate); Jackson Jr., Miller, Peters, Preston
-//   IL House 5 D — 15-candidate open seat (Schakowsky); Biss, Fine, Abughazaleh, Huynh lead
-//   IL House 7 D — 13-candidate open seat (Davis retiring); Conyears-Ervin, Ford, Boykin, Friedman
-//   IL House 8 D — 8-candidate open seat (Krishnamoorthi); Morrison, Khot, Bean, Bankole
-//   IL House 9 D — contested; Dem stronghold North Shore/Evanston
-//   Uncontested  — set to 100% for sole candidate per source data
 const RACE_FORECAST_DEFAULTS: Partial<Record<number, { raceRule: RaceRule; expectedTurnout?: number; pollAvg?: Record<string, number>; }>> = {
-
-  // ─── IL US SENATE ────────────────────────────────────────────────────────────
-  // Dem primary: latest eve-of-primary poll Krishnamoorthi 31.6% / Stratton 29.4% / Kelly 13.6%
-  // Krishnamoorthi raised ~$30M; Stratton backed by Gov. Pritzker; Kelly endorsed by CBC
   55550: { raceRule: "PLURALITY", expectedTurnout: 850_000, pollAvg: { "Krishnamoorthi": 31.6, "Stratton": 29.4, "Kelly": 13.6, "Bustos": 3.0, "Others": 22.4 } },
-
-  // Rep primary: Tracy leads fundraising (~$2.1M), Evans ~$500K, Chlebek ~$100K; Jan poll 84% undecided
   55551: { raceRule: "PLURALITY", expectedTurnout: 700_000, pollAvg: { "Tracy": 45.0, "Evans": 32.0, "Chlebek": 13.0, "Others": 10.0 } },
-
-  // ─── IL GOVERNOR ─────────────────────────────────────────────────────────────
-  // Dem: Pritzker uncontested (seeking historic 3rd term)
   55552: { raceRule: "PLURALITY", expectedTurnout: 900_000, pollAvg: { "Pritzker": 100.0 } },
-
-  // Rep: Bailey (2022 nominee, returns with highest name-ID), Dabrowski, Heidner, Mendrick; no public poll
   55553: { raceRule: "PLURALITY", expectedTurnout: 700_000, pollAvg: { "Bailey": 38.0, "Dabrowski": 28.0, "Heidner": 20.0, "Mendrick": 14.0 } },
-
-  // ─── IL SECRETARY OF STATE ───────────────────────────────────────────────────
-  // Dem: Giannoulias (incumbent, uncontested)
-  55554: { raceRule: "PLURALITY", expectedTurnout: 800_000, pollAvg: { "Giannoulias": 100.0 } },
-
-  // Rep: Competitive; projecting based on available name recognition / fundraising signals
-  55555: { raceRule: "PLURALITY", expectedTurnout: 650_000, pollAvg: { "GOP Candidate A": 50.0, "GOP Candidate B": 30.0, "Others": 20.0 } },
-
-  // ─── IL ATTORNEY GENERAL ─────────────────────────────────────────────────────
-  // Dem: Raoul (incumbent, uncontested)
-  55556: { raceRule: "PLURALITY", expectedTurnout: 800_000, pollAvg: { "Raoul": 100.0 } },
-
-  // Rep: Uncontested per source data
-  55557: { raceRule: "PLURALITY", expectedTurnout: 600_000, pollAvg: { "GOP Candidate": 100.0 } },
-
-  // ─── IL COMPTROLLER ──────────────────────────────────────────────────────────
-  // Dem: Mendoza not seeking re-election; 4 candidates — 3 state legislators + Lake County treasurer
-  55558: { raceRule: "PLURALITY", expectedTurnout: 800_000, pollAvg: { "State Legislator A": 35.0, "State Legislator B": 28.0, "State Legislator C": 22.0, "Lake County Treasurer": 15.0 } },
-
-  // Rep: Uncontested per source data
-  55559: { raceRule: "PLURALITY", expectedTurnout: 600_000, pollAvg: { "GOP Candidate": 100.0 } },
-
-  // ─── IL TREASURER ────────────────────────────────────────────────────────────
-  // Rep: Uncontested per source data
-  55560: { raceRule: "PLURALITY", expectedTurnout: 600_000, pollAvg: { "GOP Candidate": 100.0 } },
-
-  // Dem: Frerichs (incumbent, uncontested)
-  55561: { raceRule: "PLURALITY", expectedTurnout: 800_000, pollAvg: { "Frerichs": 100.0 } },
-
-  // ─── IL US HOUSE 1 ───────────────────────────────────────────────────────────
-  // Dem: Uncontested (Chicago South Side safe D seat)
-  55562: { raceRule: "PLURALITY", expectedTurnout: 55_000, pollAvg: { "Democratic Candidate": 100.0 } },
-
-  // Rep: Contested; safe D district, low-resource GOP primary
-  55563: { raceRule: "PLURALITY", expectedTurnout: 15_000, pollAvg: { "GOP Candidate A": 60.0, "GOP Candidate B": 40.0 } },
-
-  // ─── IL US HOUSE 2 ───────────────────────────────────────────────────────────
-  // Rep: Noack uncontested
-  55564: { raceRule: "PLURALITY", expectedTurnout: 10_000, pollAvg: { "Noack": 100.0 } },
-
-  // Dem: Robin Kelly vacated for Senate; 10-candidate field — Jackson Jr. returns (name-ID), Miller, Peters, Preston
-  // Heavily Black-majority district (Chicago South suburbs); identity + endorsement driven
-  55565: { raceRule: "PLURALITY", expectedTurnout: 60_000, pollAvg: { "Jackson Jr.": 28.0, "Miller": 22.0, "Peters": 20.0, "Preston": 15.0, "Others": 15.0 } },
-
-  // ─── IL US HOUSE 3 ───────────────────────────────────────────────────────────
-  // Dem: Uncontested
-  55566: { raceRule: "PLURALITY", expectedTurnout: 45_000, pollAvg: { "Democratic Candidate": 100.0 } },
-
-  // Rep: Uncontested
-  55567: { raceRule: "PLURALITY", expectedTurnout: 10_000, pollAvg: { "GOP Candidate": 100.0 } },
-
-  // ─── IL US HOUSE 4 ───────────────────────────────────────────────────────────
-  // Dem: Uncontested
-  55568: { raceRule: "PLURALITY", expectedTurnout: 40_000, pollAvg: { "Democratic Candidate": 100.0 } },
-
-  // Rep: Uncontested
-  55569: { raceRule: "PLURALITY", expectedTurnout: 8_000, pollAvg: { "GOP Candidate": 100.0 } },
-
-  // ─── IL US HOUSE 5 ───────────────────────────────────────────────────────────
-  // Dem: Schakowsky retired; 15-candidate field — Biss (Evanston Mayor), Fine (State Sen.),
-  // Abughazaleh (progressive content creator), Huynh (State Rep.) as top tier; no public polling
-  55570: { raceRule: "PLURALITY", expectedTurnout: 65_000, pollAvg: { "Biss": 27.0, "Fine": 24.0, "Abughazaleh": 22.0, "Huynh": 14.0, "Others": 13.0 } },
-
-  // Rep: 4 candidates (Elleson, Friedman, Cleveland, Su) — D-leaning suburban district
-  55571: { raceRule: "PLURALITY", expectedTurnout: 12_000, pollAvg: { "Elleson": 35.0, "Friedman": 28.0, "Cleveland": 22.0, "Su": 15.0 } },
-
-  // ─── IL US HOUSE 6 ───────────────────────────────────────────────────────────
-  // Dem: Contested — suburban Chicago swing district
-  55572: { raceRule: "PLURALITY", expectedTurnout: 50_000, pollAvg: { "Dem Candidate A": 55.0, "Dem Candidate B": 45.0 } },
-
-  // Rep: Contested — suburban swing district
-  55573: { raceRule: "PLURALITY", expectedTurnout: 40_000, pollAvg: { "GOP Candidate A": 55.0, "GOP Candidate B": 45.0 } },
-
-  // ─── IL US HOUSE 7 ───────────────────────────────────────────────────────────
-  // Dem: Danny Davis retiring; 13-candidate field — Conyears-Ervin (Chicago Treasurer),
-  // La Shawn Ford (State Rep.), Boykin, Collins, Friedman; safe D Chicago district — primary is the race
-  55574: { raceRule: "PLURALITY", expectedTurnout: 55_000, pollAvg: { "Conyears-Ervin": 28.0, "Ford": 22.0, "Boykin": 18.0, "Friedman": 14.0, "Collins": 10.0, "Others": 8.0 } },
-
-  // Rep: No meaningful opposition in this heavily D Chicago district
-  55575: { raceRule: "PLURALITY", expectedTurnout: 8_000, pollAvg: { "GOP Candidate": 100.0 } },
-
-  // ─── IL US HOUSE 8 ───────────────────────────────────────────────────────────
-  // Dem: Krishnamoorthi vacated for Senate; 8-candidate field — Morrison (Cook County Board),
-  // Khot (businessman), Bean (former Rep.), Bankole (Hanover Park Trustee)
-  55576: { raceRule: "PLURALITY", expectedTurnout: 55_000, pollAvg: { "Morrison": 30.0, "Khot": 25.0, "Bean": 22.0, "Bankole": 13.0, "Others": 10.0 } },
-
-  // Rep: 4 candidates — Rice, Jennifer Davis, Ake, Hebein; competitive suburban primary
-  55577: { raceRule: "PLURALITY", expectedTurnout: 25_000, pollAvg: { "Rice": 32.0, "Davis": 26.0, "Ake": 24.0, "Hebein": 18.0 } },
-
-  // ─── IL US HOUSE 9 ───────────────────────────────────────────────────────────
-  // Dem: Contested — North Shore Dem stronghold; multi-candidate field
-  55578: { raceRule: "PLURALITY", expectedTurnout: 60_000, pollAvg: { "Dem Candidate A": 32.0, "Dem Candidate B": 28.0, "Dem Candidate C": 22.0, "Others": 18.0 } },
-
-  // Rep: Contested
-  55579: { raceRule: "PLURALITY", expectedTurnout: 15_000, pollAvg: { "GOP Candidate A": 55.0, "GOP Candidate B": 45.0 } },
-
-  // ─── IL US HOUSE 10 ──────────────────────────────────────────────────────────
-  // Dem: Contested — North Shore suburban district
-  55580: { raceRule: "PLURALITY", expectedTurnout: 50_000, pollAvg: { "Dem Candidate A": 60.0, "Dem Candidate B": 40.0 } },
-
-  // Rep: Uncontested per source data
-  55581: { raceRule: "PLURALITY", expectedTurnout: 20_000, pollAvg: { "GOP Candidate": 100.0 } },
-
-  // ─── IL US HOUSE 11 ──────────────────────────────────────────────────────────
-  // Dem: Uncontested per source data
-  55582: { raceRule: "PLURALITY", expectedTurnout: 45_000, pollAvg: { "Democratic Candidate": 100.0 } },
-
-  // Rep: Contested — suburban SW Chicago
-  55583: { raceRule: "PLURALITY", expectedTurnout: 20_000, pollAvg: { "GOP Candidate A": 55.0, "GOP Candidate B": 45.0 } },
-
-  // ─── IL US HOUSE 12 ──────────────────────────────────────────────────────────
-  // Dem: Uncontested — deep R district Southern IL
-  55584: { raceRule: "PLURALITY", expectedTurnout: 15_000, pollAvg: { "Democratic Candidate": 100.0 } },
-
-  // Rep: Bost (incumbent) uncontested per source data
-  55585: { raceRule: "PLURALITY", expectedTurnout: 40_000, pollAvg: { "Bost": 100.0 } },
-
-  // ─── IL US HOUSE 13 ──────────────────────────────────────────────────────────
-  // Dem: Contested — Central IL swing district (formerly Rodney Davis seat)
-  55586: { raceRule: "PLURALITY", expectedTurnout: 30_000, pollAvg: { "Dem Candidate A": 55.0, "Dem Candidate B": 45.0 } },
-
-  // Rep: Contested — competitive central IL district; key 2026 battleground
-  55587: { raceRule: "PLURALITY", expectedTurnout: 30_000, pollAvg: { "GOP Candidate A": 50.0, "GOP Candidate B": 35.0, "GOP Candidate C": 15.0 } },
-
-  // ─── IL US HOUSE 14 ──────────────────────────────────────────────────────────
-  // Dem: Underwood uncontested — she declined Senate race, chose re-election
-  55588: { raceRule: "PLURALITY", expectedTurnout: 50_000, pollAvg: { "Underwood": 100.0 } },
-
-  // Rep: Contested — suburban Chicago exurban district (key pickup target)
-  55589: { raceRule: "PLURALITY", expectedTurnout: 30_000, pollAvg: { "GOP Candidate A": 52.0, "GOP Candidate B": 30.0, "GOP Candidate C": 18.0 } },
-
-  // ─── IL US HOUSE 15 ──────────────────────────────────────────────────────────
-  // Dem: Contested — deep R downstate district; nominal opposition
-  55590: { raceRule: "PLURALITY", expectedTurnout: 10_000, pollAvg: { "Dem Candidate": 100.0 } },
-
-  // Rep: Contested — safe R downstate; primary is the meaningful race
-  55591: { raceRule: "PLURALITY", expectedTurnout: 50_000, pollAvg: { "GOP Candidate A": 55.0, "GOP Candidate B": 30.0, "GOP Candidate C": 15.0 } },
-
-  // ─── IL US HOUSE 16 ──────────────────────────────────────────────────────────
-  // Dem: Uncontested — deep R NW Illinois district
-  55592: { raceRule: "PLURALITY", expectedTurnout: 8_000, pollAvg: { "Democratic Candidate": 100.0 } },
-
-  // Rep: Uncontested per source data
-  55593: { raceRule: "PLURALITY", expectedTurnout: 45_000, pollAvg: { "GOP Candidate": 100.0 } },
-
-  // ─── IL US HOUSE 17 ──────────────────────────────────────────────────────────
-  // Dem: Sorensen uncontested — competitive general-election district (Quad Cities)
-  55594: { raceRule: "PLURALITY", expectedTurnout: 30_000, pollAvg: { "Democratic Candidate": 100.0 } },
-
-  // Rep: Contested — several candidates; key 2026 GOP pickup target
-  55595: { raceRule: "PLURALITY", expectedTurnout: 25_000, pollAvg: { "GOP Candidate A": 50.0, "GOP Candidate B": 35.0, "GOP Candidate C": 15.0 } },
 };
 
 function sortCandidatesByPollData(candidates: RaceCandidate[], pollAvg?: Record<string, number>): RaceCandidate[] {
@@ -303,21 +90,10 @@ async function fetchRaceMapBlankSvg(id: number): Promise<string | null> {
 
 function fmtPct(x?: number) { if (typeof x !== "number") return "—"; return `${x.toFixed(1)}%`; }
 function getRaceReportingPct(race?: RaceDetail) { const v = race?.percent_reporting; return typeof v === "number" && Number.isFinite(v) ? Math.max(0, Math.min(100, v)) : null; }
-function getRaceProjectionAlways(race?: RaceDetail): { leaderName: string; prob: number } | null {
-  if (!race?.candidates?.length) return null;
-  const reporting = typeof race.percent_reporting === "number" ? race.percent_reporting : 0;
-  const officialWinner = race.candidates.find((c) => c.winner);
-  if (officialWinner) return { leaderName: officialWinner.name, prob: 100 };
-  const ordered = [...race.candidates].sort((a, b) => (b.percent ?? 0) - (a.percent ?? 0));
-  const leader = ordered[0], runnerUp = ordered[1];
-  if (!leader || !runnerUp) return { leaderName: leader?.name ?? "—", prob: 50 };
-  const prob = calculateWinProbability(leader.votes, runnerUp.votes, reporting);
-  return { leaderName: leader.name, prob };
-}
 function prettyTime(iso?: string | null) { if (!iso) return "—"; return new Date(iso).toLocaleString(); }
 function parseIsoDate(iso?: string | null): Date | null { if (!iso) return null; const d = new Date(iso); return Number.isNaN(d.getTime()) ? null : d; }
 function formatCountdown(msLeft: number): string {
-  if (msLeft <= 0) return "CLOSED";
+  if (msLeft <= 0) return "Closed";
   const totalSec = Math.floor(msLeft / 1000);
   const days = Math.floor(totalSec / 86400);
   const hours = Math.floor((totalSec % 86400) / 3600);
@@ -358,7 +134,7 @@ function toShaded(hex: string, bucket: MarginBucket) {
   let hue = 0, saturation = 0, lightness = (max + min) / 2;
   if (max !== min) { const d = max - min; saturation = lightness > 0.5 ? d / (2 - max - min) : d / (max + min); switch (max) { case r: hue = (g - b) / d + (g < b ? 6 : 0); break; case g: hue = (b - r) / d + 2; break; case b: hue = (r - g) / d + 4; break; } hue /= 6; }
   let l = 0.5;
-  switch (bucket) { case "safe": l = 0.5; break; case "likely": l = 0.65; break; case "lean": l = 0.8; break; case "tilt": l = 0.95; break; case "tied": l = 1.0; break; }
+  switch (bucket) { case "safe": l = 0.5; break; case "likely": l = 0.65; break; case "lean": l = 0.8; break; case "tilt": l = 0.92; break; case "tied": l = 0.96; break; }
   return `hsl(${hue * 360}, ${saturation * 100}%, ${l * 100}%)`;
 }
 function computeCountyMargin(rr: any): { leaderName: string | null; leaderColor: string | null; absMargin: number | null; bucket: MarginBucket | null } {
@@ -376,110 +152,34 @@ function computeCountyMargin(rr: any): { leaderName: string | null; leaderColor:
 }
 function countyFill(rr: any): string | null { const apiFill = rr?.region?.fill; if (typeof apiFill === "string" && apiFill.trim()) return apiFill; const { leaderColor, bucket } = computeCountyMargin(rr); if (!leaderColor || !bucket) return null; return toShaded(leaderColor, bucket); }
 function countyFingerprint(rr: any): string { const candidates = getCandidatesFromRR(rr); if (!candidates.length) return ""; return candidates.map((c) => `${c.name}:${safeNum(c?.votes) ?? 0}`).sort().join("|"); }
+function countyTotalVotes(rr: any): number { return getCandidatesFromRR(rr).reduce((sum, c) => sum + (safeNum(c?.votes) ?? 0), 0); }
 
-// ─── OVERLAY ────────────────────────────────────────────────────────────────
-function ProjectedWinnerOverlay({ show, candidate, prob, color, reporting, onDismiss }: { show: boolean; candidate: string; prob: number; color: string; reporting: number; onDismiss: () => void; }) {
-  if (!show) return null;
-  return (
-    <div className="fixed inset-0 z-[80] flex items-center justify-center">
-      <div className="absolute inset-0 bg-black/85 backdrop-blur-sm" onClick={onDismiss} />
-      <div className="res-overlay-card relative w-[min(680px,92vw)] overflow-hidden">
-        <div className="res-tri-stripe" />
-        <div className="p-7 md:p-8">
-          <div className="flex items-start justify-between gap-4">
-            <div>
-              <div className="res-eyebrow" style={{ color: "var(--rep)" }}><span className="res-live-dot" style={{ background: "var(--rep)" }} />PROJECTION ALERT</div>
-              <div className="res-overlay-title mt-3">Projected<br />Winner</div>
-              <div className="res-overlay-name mt-2" style={{ color: color || "var(--purple-soft)" }}>{candidate}</div>
-            </div>
-            <button onClick={onDismiss} className="res-close-btn">CLOSE ✕</button>
-          </div>
-          <div className="mt-6">
-            <div className="res-stat-row mb-2"><span className="res-stat-label">WIN CONFIDENCE</span><span className="res-stat-val" style={{ color: "var(--purple-soft)" }}>{prob.toFixed(1)}%</span></div>
-            <div className="res-bar-track"><div className="res-bar-fill" style={{ width: `${Math.max(0, Math.min(100, prob))}%`, background: "linear-gradient(90deg, var(--purple), var(--purple2))", boxShadow: "0 0 20px rgba(124,58,237,0.5)" }} /></div>
-          </div>
-          <div className="mt-6 grid grid-cols-3 gap-2">
-            {[["STATUS", "PROJECTED"], ["CONFIDENCE", `${prob.toFixed(1)}%`], ["REPORTING", `${reporting.toFixed(1)}%`]].map(([label, val]) => (
-              <div key={label} className="res-stat-block"><div className="res-stat-block-label">{label}</div><div className="res-stat-block-val">{val}</div></div>
-            ))}
-          </div>
-          <div className="mt-6 flex items-center justify-between">
-            <div className="res-note">Click outside to dismiss</div>
-            <button onClick={onDismiss} className="res-btn-primary">CONTINUE →</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-// ─── MAP ────────────────────────────────────────────────────────────────────
-function countyTotalVotes(rr: any): number {
-  return getCandidatesFromRR(rr).reduce((sum, c) => sum + (safeNum(c?.votes) ?? 0), 0);
-}
-
+// ─── MAP ──────────────────────────────────────────────────────────────────────
 function MapWithCountyTooltip({ svgText, regionResults }: { svgText: string; regionResults: RegionResult[] | Record<string, RegionResult> }) {
   const wrapRef = useRef<HTMLDivElement | null>(null);
   const [tooltip, setTooltip] = useState<TooltipState>({ show: false, x: 0, y: 0, title: "", reporting: null, reportingPct: null, lines: [] });
   const countyFingerprintsRef = useRef<Map<string, string>>(new Map());
   const countyVoteTotalsRef = useRef<Map<string, number>>(new Map());
-
   const transformRef = useRef({ scale: 1, x: 0, y: 0 });
   const isPanningRef = useRef(false);
   const panStartRef = useRef({ mx: 0, my: 0, tx: 0, ty: 0 });
   const [scale, setScale] = useState(1);
   const [locked, setLocked] = useState(false);
   const lockedRef = useRef(false);
-  const toggleLock = useCallback(() => {
-    lockedRef.current = !lockedRef.current;
-    setLocked(lockedRef.current);
-  }, []);
-
+  const toggleLock = useCallback(() => { lockedRef.current = !lockedRef.current; setLocked(lockedRef.current); }, []);
   const regionResultsArr = useMemo(() => coerceRegionResults(regionResults), [regionResults]);
   const regionMap = useMemo(() => {
     const m = new Map<string, any>();
     for (const rr of regionResultsArr as any[]) { const k = normalizeRegionName(String(rr?.region?.name ?? rr?.name ?? "")); if (!k) continue; m.set(k, rr); }
     return m;
   }, [regionResultsArr]);
-
-  const flashCounty = useCallback((shape: SVGGraphicsElement) => {
-    shape.classList.remove("county-updated");
-    void (shape as any).offsetWidth;
-    shape.classList.add("county-updated");
-    setTimeout(() => shape.classList.remove("county-updated"), 1200);
-  }, []);
-
-  const applyTransform = useCallback(() => {
-    const host = wrapRef.current; if (!host) return;
-    const svg = host.querySelector("svg"); if (!svg) return;
-    const { scale, x, y } = transformRef.current;
-    svg.style.transform = `translate(${x}px, ${y}px) scale(${scale})`;
-    svg.style.transformOrigin = "0 0";
-  }, []);
-
-  const resetZoom = useCallback(() => {
-    transformRef.current = { scale: 1, x: 0, y: 0 };
-    setScale(1);
-    applyTransform();
-  }, [applyTransform]);
+  const flashCounty = useCallback((shape: SVGGraphicsElement) => { shape.classList.remove("er-county-update"); void (shape as any).offsetWidth; shape.classList.add("er-county-update"); setTimeout(() => shape.classList.remove("er-county-update"), 1200); }, []);
+  const applyTransform = useCallback(() => { const host = wrapRef.current; if (!host) return; const svg = host.querySelector("svg"); if (!svg) return; const { scale, x, y } = transformRef.current; svg.style.transform = `translate(${x}px, ${y}px) scale(${scale})`; svg.style.transformOrigin = "0 0"; }, []);
+  const resetZoom = useCallback(() => { transformRef.current = { scale: 1, x: 0, y: 0 }; setScale(1); applyTransform(); }, [applyTransform]);
 
   useEffect(() => {
     const host = wrapRef.current; if (!host) return;
-    const onWheel = (e: WheelEvent) => {
-      if (lockedRef.current) return;
-      e.preventDefault();
-      const rect = host.getBoundingClientRect();
-      const mx = e.clientX - rect.left;
-      const my = e.clientY - rect.top;
-      const { scale: s, x, y } = transformRef.current;
-      const delta = e.deltaY < 0 ? 1.15 : 1 / 1.15;
-      const newScale = Math.min(8, Math.max(1, s * delta));
-      const newX = mx - (mx - x) * (newScale / s);
-      const newY = my - (my - y) * (newScale / s);
-      transformRef.current = { scale: newScale, x: newX, y: newY };
-      setScale(newScale);
-      applyTransform();
-    };
+    const onWheel = (e: WheelEvent) => { if (lockedRef.current) return; e.preventDefault(); const rect = host.getBoundingClientRect(); const mx = e.clientX - rect.left, my = e.clientY - rect.top; const { scale: s, x, y } = transformRef.current; const delta = e.deltaY < 0 ? 1.15 : 1 / 1.15; const newScale = Math.min(8, Math.max(1, s * delta)); const newX = mx - (mx - x) * (newScale / s), newY = my - (my - y) * (newScale / s); transformRef.current = { scale: newScale, x: newX, y: newY }; setScale(newScale); applyTransform(); };
     host.addEventListener("wheel", onWheel, { passive: false });
     return () => host.removeEventListener("wheel", onWheel);
   }, [applyTransform]);
@@ -487,34 +187,10 @@ function MapWithCountyTooltip({ svgText, regionResults }: { svgText: string; reg
   useEffect(() => {
     const host = wrapRef.current; if (!host) return;
     let capturedId: number | null = null;
-    const onDown = (e: PointerEvent) => {
-      isPanningRef.current = false;
-      capturedId = e.pointerId;
-      panStartRef.current = { mx: e.clientX, my: e.clientY, tx: transformRef.current.x, ty: transformRef.current.y };
-    };
-    const onMove = (e: PointerEvent) => {
-      if (e.buttons === 0) return;
-      const dx = e.clientX - panStartRef.current.mx;
-      const dy = e.clientY - panStartRef.current.my;
-      if (!isPanningRef.current && Math.sqrt(dx * dx + dy * dy) > 4) {
-        isPanningRef.current = true;
-        setTooltip((t) => ({ ...t, show: false }));
-        if (capturedId !== null) { try { host.setPointerCapture(capturedId); } catch {} }
-        host.style.cursor = "grabbing";
-      }
-      if (!isPanningRef.current) return;
-      transformRef.current.x = panStartRef.current.tx + dx;
-      transformRef.current.y = panStartRef.current.ty + dy;
-      applyTransform();
-    };
-    const onUp = () => {
-      isPanningRef.current = false;
-      capturedId = null;
-      host.style.cursor = "crosshair";
-    };
-    host.addEventListener("pointerdown", onDown);
-    host.addEventListener("pointermove", onMove);
-    host.addEventListener("pointerup", onUp);
+    const onDown = (e: PointerEvent) => { isPanningRef.current = false; capturedId = e.pointerId; panStartRef.current = { mx: e.clientX, my: e.clientY, tx: transformRef.current.x, ty: transformRef.current.y }; };
+    const onMove = (e: PointerEvent) => { if (e.buttons === 0) return; const dx = e.clientX - panStartRef.current.mx, dy = e.clientY - panStartRef.current.my; if (!isPanningRef.current && Math.sqrt(dx * dx + dy * dy) > 4) { isPanningRef.current = true; setTooltip((t) => ({ ...t, show: false })); if (capturedId !== null) { try { host.setPointerCapture(capturedId); } catch {} } host.style.cursor = "grabbing"; } if (!isPanningRef.current) return; transformRef.current.x = panStartRef.current.tx + dx; transformRef.current.y = panStartRef.current.ty + dy; applyTransform(); };
+    const onUp = () => { isPanningRef.current = false; capturedId = null; host.style.cursor = "crosshair"; };
+    host.addEventListener("pointerdown", onDown); host.addEventListener("pointermove", onMove); host.addEventListener("pointerup", onUp);
     return () => { host.removeEventListener("pointerdown", onDown); host.removeEventListener("pointermove", onMove); host.removeEventListener("pointerup", onUp); };
   }, [applyTransform]);
 
@@ -523,23 +199,19 @@ function MapWithCountyTooltip({ svgText, regionResults }: { svgText: string; reg
     host.innerHTML = svgText;
     const svg = host.querySelector("svg"); if (!svg) return;
     svg.setAttribute("preserveAspectRatio", "xMidYMid meet");
-    svg.style.width = "100%";
-    svg.style.height = "100%";
-    svg.style.display = "block";
-    svg.style.transformOrigin = "0 0";
+    svg.style.width = "100%"; svg.style.height = "100%"; svg.style.display = "block"; svg.style.transformOrigin = "0 0";
     countyFingerprintsRef.current = new Map();
     const shapes = Array.from(svg.querySelectorAll("path, polygon")) as SVGGraphicsElement[];
     shapes.forEach((shape) => {
       const key = getRegionKeyFromElement(shape); if (!key) return;
       const prettyKey = titleCaseKey(key);
       shape.style.pointerEvents = "all"; shape.style.cursor = "crosshair";
-      shape.style.stroke = "#0a0f1e"; shape.style.strokeWidth = "0.8";
-      shape.style.transition = "fill 420ms ease, filter 300ms ease, stroke 200ms ease, stroke-width 200ms ease";
-
+      shape.style.stroke = "rgba(255,255,255,0.12)"; shape.style.strokeWidth = "0.6";
+      shape.style.transition = "fill 420ms ease, filter 300ms ease";
       const onMove = (ev: PointerEvent) => {
         if (isPanningRef.current) return;
         const currentRR = regionMap.get(key);
-        const tw = 320, th = 280, p = 12, offset = 14;
+        const tw = 280, th = 240, p = 10, offset = 12;
         const rect = host.getBoundingClientRect();
         const px = ev.clientX - rect.left, py = ev.clientY - rect.top;
         let x = px + offset, y = py + offset;
@@ -549,40 +221,17 @@ function MapWithCountyTooltip({ svgText, regionResults }: { svgText: string; reg
         const pct = typeof currentRR?.region?.percent_reporting === "number" ? currentRR.region.percent_reporting : typeof currentRR?.percent_reporting === "number" ? currentRR.percent_reporting : null;
         const lines = currentRR ? buildTooltipLines(currentRR) : [];
         const hasVotes = lines.some((l) => l.votes !== null && l.votes > 0);
-        setTooltip({
-          show: true, x, y,
-          title: currentRR?.region?.name ?? (currentRR?.name ? titleCaseKey(currentRR.name) : prettyKey),
-          reporting: pct !== null ? `${pct.toFixed(1)}% REPORTING` : "0% REPORTING",
-          reportingPct: pct ?? 0,
-          lines: hasVotes ? lines : [],
-        });
+        setTooltip({ show: true, x, y, title: currentRR?.region?.name ?? (currentRR?.name ? titleCaseKey(currentRR.name) : prettyKey), reporting: pct !== null ? `${pct.toFixed(1)}% reporting` : "0% reporting", reportingPct: pct ?? 0, lines: hasVotes ? lines : [] });
       };
-      const onEnter = (ev: PointerEvent) => {
-        if (isPanningRef.current) return;
-        shape.style.stroke = "rgba(255,255,255,0.9)"; shape.style.strokeWidth = "2.0"; shape.style.filter = "brightness(1.22) saturate(1.1)";
-        onMove(ev);
-      };
-      const onLeave = () => {
-        shape.style.stroke = "#0a0f1e"; shape.style.strokeWidth = "0.8"; shape.style.filter = "";
-        setTooltip((t) => ({ ...t, show: false }));
-      };
+      const onEnter = (ev: PointerEvent) => { if (isPanningRef.current) return; shape.style.stroke = "rgba(255,255,255,0.5)"; shape.style.strokeWidth = "1.5"; shape.style.filter = "brightness(1.15)"; onMove(ev); };
+      const onLeave = () => { shape.style.stroke = "rgba(255,255,255,0.12)"; shape.style.strokeWidth = "0.6"; shape.style.filter = ""; setTooltip((t) => ({ ...t, show: false })); };
       shape.addEventListener("pointerenter", onEnter); shape.addEventListener("pointermove", onMove); shape.addEventListener("pointerleave", onLeave);
-
       const currentRR = regionMap.get(key);
       const fill = currentRR ? countyFill(currentRR) : null;
       shape.style.opacity = "0";
-      requestAnimationFrame(() => {
-        shape.style.fill = fill || "rgba(255,255,255,0.04)"; shape.style.opacity = "1";
-        if (currentRR) {
-          const fp = countyFingerprint(currentRR);
-          const prevFp = countyFingerprintsRef.current.get(key);
-          if (prevFp === undefined) { shape.classList.add("county-pop"); setTimeout(() => shape.classList.remove("county-pop"), 520); }
-          countyFingerprintsRef.current.set(key, fp);
-          countyVoteTotalsRef.current.set(key, countyTotalVotes(currentRR));
-        }
-      });
+      requestAnimationFrame(() => { shape.style.fill = fill || "#1e2028"; shape.style.opacity = "1"; if (currentRR) { const fp = countyFingerprint(currentRR); countyFingerprintsRef.current.set(key, fp); countyVoteTotalsRef.current.set(key, countyTotalVotes(currentRR)); } });
     });
-  }, [svgText, regionMap]); // eslint-disable-line
+  }, [svgText, regionMap]);
 
   useEffect(() => {
     const host = wrapRef.current; if (!host) return;
@@ -594,68 +243,50 @@ function MapWithCountyTooltip({ svgText, regionResults }: { svgText: string; reg
       const fill = countyFill(currentRR); if (fill) shape.style.fill = fill;
       const fp = countyFingerprint(currentRR);
       const prevFp = countyFingerprintsRef.current.get(key);
-      const newTotal = countyTotalVotes(currentRR);
-      const prevTotal = countyVoteTotalsRef.current.get(key) ?? 0;
-      const votesGrew = newTotal > prevTotal;
-      if (prevFp !== undefined && fp !== prevFp) {
-        if (votesGrew) { flashCounty(shape); } else { shape.classList.add("county-pop"); setTimeout(() => shape.classList.remove("county-pop"), 520); }
-      }
-      countyFingerprintsRef.current.set(key, fp);
-      countyVoteTotalsRef.current.set(key, newTotal);
+      const newTotal = countyTotalVotes(currentRR), prevTotal = countyVoteTotalsRef.current.get(key) ?? 0;
+      if (prevFp !== undefined && fp !== prevFp) { if (newTotal > prevTotal) { flashCounty(shape); } }
+      countyFingerprintsRef.current.set(key, fp); countyVoteTotalsRef.current.set(key, newTotal);
     });
   }, [regionMap, flashCounty]);
 
   return (
-    <div className="relative h-full" style={{ overflow: "hidden" }}>
-      <div ref={wrapRef} className="w-full h-full [&_svg]:w-full [&_svg]:h-full" style={{ display: "flex", alignItems: "stretch", cursor: "crosshair" }} />
-      <div style={{ position: "absolute", bottom: 10, right: 10, display: "flex", flexDirection: "column", gap: 4, zIndex: 40 }}>
-        <button onClick={toggleLock} title={locked ? "Unlock zoom" : "Lock zoom"} style={{ width: 28, height: 28, background: locked ? "rgba(245,158,11,0.15)" : "rgba(10,15,30,0.85)", border: `1px solid ${locked ? "#f59e0b" : "rgba(255,255,255,0.15)"}`, color: locked ? "#f59e0b" : "rgba(255,255,255,0.4)", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", padding: "5px" }}>
-          {locked
-            ? <svg height="12" strokeLinejoin="round" viewBox="0 0 16 16" width="12" style={{color:"currentColor", display:"block"}}><path fillRule="evenodd" clipRule="evenodd" d="M9.5 6V7H6.5V6C6.5 5.17157 7.17157 4.5 8 4.5C8.82843 4.5 9.5 5.17157 9.5 6ZM5 7V6C5 4.34315 6.34315 3 8 3C9.65685 3 11 4.34315 11 6V7H12V11.5C12 12.3284 11.3284 13 10.5 13H5.5C4.67157 13 4 12.3284 4 11.5V7H5Z" fill="currentColor"/></svg>
-            : <svg height="12" strokeLinejoin="round" viewBox="0 0 16 16" width="12" style={{color:"currentColor", display:"block"}}><path fillRule="evenodd" clipRule="evenodd" d="M13.5 7V6C13.5 5.17157 12.8284 4.5 12 4.5C11.1716 4.5 10.5 5.17157 10.5 6V7H12V8.5V9V11.5C12 12.3284 11.3284 13 10.5 13H5.5C4.67157 13 4 12.3284 4 11.5V7H9V6C9 4.34315 10.3431 3 12 3C13.6569 3 15 4.34315 15 6V7H13.5Z" fill="currentColor"/></svg>
-          }
-        </button>
-        {!locked && <button onClick={() => { const host = wrapRef.current; if (!host) return; const rect = host.getBoundingClientRect(); const cx = rect.width / 2, cy = rect.height / 2; const { scale: s, x, y } = transformRef.current; const ns = Math.min(8, s * 1.4); transformRef.current = { scale: ns, x: cx - (cx - x) * (ns / s), y: cy - (cy - y) * (ns / s) }; setScale(ns); applyTransform(); }} style={{ width: 28, height: 28, background: "rgba(10,15,30,0.85)", border: "1px solid rgba(255,255,255,0.15)", color: "#fff", fontSize: 16, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "var(--font-body)", fontWeight: 700 }}>+</button>}
-        {!locked && <button onClick={() => { const host = wrapRef.current; if (!host) return; const rect = host.getBoundingClientRect(); const cx = rect.width / 2, cy = rect.height / 2; const { scale: s, x, y } = transformRef.current; const ns = Math.max(1, s / 1.4); if (ns <= 1) { resetZoom(); return; } transformRef.current = { scale: ns, x: cx - (cx - x) * (ns / s), y: cy - (cy - y) * (ns / s) }; setScale(ns); applyTransform(); }} style={{ width: 28, height: 28, background: "rgba(10,15,30,0.85)", border: "1px solid rgba(255,255,255,0.15)", color: "#fff", fontSize: 16, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "var(--font-body)", fontWeight: 700 }}>−</button>}
-        {!locked && scale > 1 && <button onClick={resetZoom} style={{ width: 28, height: 28, background: "rgba(10,15,30,0.85)", border: "1px solid rgba(255,255,255,0.15)", color: "rgba(255,255,255,0.6)", fontSize: 8, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "var(--font-body)", fontWeight: 700, letterSpacing: "0.05em" }}>RST</button>}
+    <div style={{ position: "relative", height: "100%", overflow: "hidden", background: "#0d0d0b", borderRadius: 1 }}>
+      <div ref={wrapRef} style={{ width: "100%", height: "100%", display: "flex", alignItems: "stretch", cursor: "crosshair" }} />
+      <div style={{ position: "absolute", bottom: 10, right: 10, display: "flex", flexDirection: "column", gap: 3, zIndex: 40 }}>
+        {[
+          { label: locked ? "🔒" : "🔓", onClick: toggleLock, active: locked },
+          ...(!locked ? [
+            { label: "+", onClick: () => { const h = wrapRef.current; if (!h) return; const r = h.getBoundingClientRect(); const cx = r.width / 2, cy = r.height / 2; const { scale: s, x, y } = transformRef.current; const ns = Math.min(8, s * 1.4); transformRef.current = { scale: ns, x: cx - (cx - x) * (ns / s), y: cy - (cy - y) * (ns / s) }; setScale(ns); applyTransform(); }, active: false },
+            { label: "−", onClick: () => { const h = wrapRef.current; if (!h) return; const r = h.getBoundingClientRect(); const cx = r.width / 2, cy = r.height / 2; const { scale: s, x, y } = transformRef.current; const ns = Math.max(1, s / 1.4); if (ns <= 1) { resetZoom(); return; } transformRef.current = { scale: ns, x: cx - (cx - x) * (ns / s), y: cy - (cy - y) * (ns / s) }; setScale(ns); applyTransform(); }, active: false },
+            ...(scale > 1 ? [{ label: "⌂", onClick: resetZoom, active: false }] : []),
+          ] : []),
+        ].map((btn, i) => (
+          <button key={i} onClick={btn.onClick} style={{ width: 26, height: 26, background: btn.active ? "rgba(197,165,90,0.15)" : "rgba(255,255,255,0.06)", border: `1px solid ${btn.active ? "rgba(197,165,90,0.4)" : "rgba(255,255,255,0.1)"}`, borderRadius: 1, color: btn.active ? "#c5a55a" : "rgba(255,255,255,0.4)", cursor: "pointer", fontSize: 12, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "'DM Mono', monospace" }}>
+            {btn.label}
+          </button>
+        ))}
       </div>
       {tooltip.show && (
-        <div className="res-map-tooltip absolute z-50 pointer-events-none w-[320px]" style={{ left: tooltip.x, top: tooltip.y }}>
-          <div className="res-tri-stripe" style={{ height: "2px" }} />
-          <div className="p-3">
-            <div className="flex items-baseline justify-between mb-1">
-              <div className="res-tooltip-title">{tooltip.title}</div>
-              <div className="res-badge res-badge-purple">COUNTY</div>
+        <div style={{ position: "absolute", left: tooltip.x, top: tooltip.y, width: 260, background: "#141412", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 1, boxShadow: "0 8px 32px rgba(0,0,0,0.7)", pointerEvents: "none", zIndex: 50, overflow: "hidden", fontFamily: "'DM Mono', monospace" }}>
+          <div style={{ padding: "10px 12px", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
+            <div style={{ fontSize: 11, fontWeight: 700, color: "rgba(255,255,255,0.8)", marginBottom: 4, letterSpacing: "0.04em" }}>{tooltip.title}</div>
+            <div style={{ fontSize: 9, color: "rgba(255,255,255,0.25)", letterSpacing: "0.1em", textTransform: "uppercase" }}>{tooltip.reporting}</div>
+            <div style={{ height: 2, background: "rgba(255,255,255,0.06)", marginTop: 6, overflow: "hidden" }}>
+              <div style={{ height: "100%", width: `${tooltip.reportingPct}%`, background: "rgba(197,165,90,0.6)" }} />
             </div>
-            <div className="res-reporting-row"><span className="res-note">{tooltip.reporting}</span></div>
-            <div className="res-bar-track mt-1" style={{ height: "2px" }}><div className="res-bar-fill" style={{ width: `${tooltip.reportingPct}%`, background: "var(--purple)", height: "2px" }} /></div>
-            <div className="mt-3 border-t pt-2" style={{ borderColor: "rgba(255,255,255,0.08)" }}>
-              {tooltip.lines.length > 0 ? (
-                <>
-                  <div className="grid grid-cols-[1fr_72px_52px] gap-1 pb-1 mb-1 border-b" style={{ borderColor: "rgba(255,255,255,0.08)" }}>
-                    {["CANDIDATE", "VOTES", "PCT"].map((h) => (<div key={h} className={`res-th ${h !== "CANDIDATE" ? "text-right" : ""}`}>{h}</div>))}
-                  </div>
-                  {tooltip.lines.map((c, i) => (
-                    <div key={i} className="grid grid-cols-[1fr_72px_52px] items-center gap-1 py-1.5 border-b" style={{ borderColor: "rgba(255,255,255,0.04)" }}>
-                      <div className="flex items-center gap-2 min-w-0">
-                        <span className="h-2 w-2 rounded-full flex-shrink-0" style={{ background: c.color || "rgba(255,255,255,0.35)" }} />
-                        <div className="min-w-0"><div className="res-cand-name truncate">{c.name}{c.winner ? " ✓" : ""}</div><div className="res-cand-party">{c.party}</div></div>
-                      </div>
-                      <div className="text-right res-num">{c.votes?.toLocaleString() ?? "—"}</div>
-                      <div className="text-right res-pct-big">{c.pct !== null ? `${c.pct.toFixed(1)}%` : "—"}</div>
-                    </div>
-                  ))}
-                </>
-              ) : (
-                <div className="py-5 flex flex-col items-center gap-2">
-                  <div style={{ width: 28, height: 28, borderRadius: "50%", border: "1.5px solid rgba(255,255,255,0.10)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                    <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="rgba(255,255,255,0.20)" strokeWidth="1.5"/><line x1="8" y1="5" x2="8" y2="8.5" stroke="rgba(255,255,255,0.30)" strokeWidth="1.5" strokeLinecap="round"/><circle cx="8" cy="11" r="0.8" fill="rgba(255,255,255,0.30)"/></svg>
-                  </div>
-                  <div className="res-note" style={{ color: "rgba(255,255,255,0.30)", letterSpacing: "0.18em" }}>NO RESULTS YET</div>
-                  {(tooltip.reportingPct ?? 0) === 0 && <div className="res-note" style={{ color: "rgba(255,255,255,0.15)", fontSize: "7.5px" }}>AWAITING FIRST RETURNS</div>}
+          </div>
+          <div style={{ padding: "8px 12px" }}>
+            {tooltip.lines.length > 0 ? tooltip.lines.map((c, i) => (
+              <div key={i} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "4px 0", borderBottom: i < tooltip.lines.length - 1 ? "1px solid rgba(255,255,255,0.04)" : "none" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                  <span style={{ width: 6, height: 6, borderRadius: "50%", background: c.color || "rgba(255,255,255,0.3)", flexShrink: 0 }} />
+                  <span style={{ fontSize: 11, color: "rgba(255,255,255,0.5)" }}>{c.name}</span>
                 </div>
-              )}
-            </div>
+                <span style={{ fontSize: 12, fontWeight: 700, color: c.color || "rgba(255,255,255,0.7)" }}>{c.pct !== null ? `${c.pct.toFixed(1)}%` : "—"}</span>
+              </div>
+            )) : (
+              <div style={{ fontSize: 10, color: "rgba(255,255,255,0.2)", letterSpacing: "0.08em", padding: "6px 0" }}>No results yet</div>
+            )}
           </div>
         </div>
       )}
@@ -663,32 +294,107 @@ function MapWithCountyTooltip({ svgText, regionResults }: { svgText: string; reg
   );
 }
 
-// ─── CANDIDATE LIST ──────────────────────────────────────────────────────────
-function CandidateList({ candidates, reporting, raceId, isMajorityRunoff }: { candidates: RaceCandidate[]; reporting: number; raceId?: number; isMajorityRunoff?: boolean }) {
+// ─── CANDIDATE RESULTS TABLE (CNN-style: compact, scannable) ──────────────────
+function CandidateResultsTable({ candidates, raceId }: { candidates: RaceCandidate[]; raceId?: number }) {
   const defaults = raceId ? RACE_FORECAST_DEFAULTS[raceId] : undefined;
   const ordered = useMemo(() => sortCandidatesByPollData(candidates, defaults?.pollAvg), [candidates, defaults?.pollAvg]);
+  const leader = ordered[0];
+  const maxPct = Math.max(...ordered.map(c => c.percent ?? 0), 1);
+
   return (
-    <div className="space-y-2">
-      <div className="res-candidate-list">
-        {ordered.map((c, idx) => {
-          const isLeading = idx === 0 && !c.winner;
-          return (
-            <div key={`${c.name}-${c.party}`} className="res-candidate-row">
-              <div className="res-cand-bar" style={{ background: c.color || "rgba(255,255,255,0.2)" }} />
-              <div className="flex items-center justify-between gap-3 flex-1 min-w-0">
-                <div className="flex items-center gap-3 min-w-0">
-                  <span className="res-cand-dot" style={{ background: c.color || "rgba(255,255,255,0.35)", boxShadow: `0 0 10px ${c.color || "rgba(255,255,255,0.2)"}40` }} />
-                  <div className="min-w-0">
-                    <div className="flex flex-wrap items-center gap-2 mb-0.5">
-                      <span className="res-cand-name-lg">{c.name}</span>
-                      {c.winner && !isMajorityRunoff && <span className="res-badge res-badge-win">✓ WINNER</span>}
-                      {c.winner && isMajorityRunoff && <span className="res-badge" style={{ borderColor: "rgba(245,158,11,0.4)", background: "rgba(245,158,11,0.08)", color: "#f59e0b" }}>RUNOFF</span>}
-                      {isLeading && !c.winner && <span className="res-badge res-badge-purple">LEADING</span>}
-                    </div>
-                    <div className="res-cand-party">{c.party} · {c.votes.toLocaleString()} votes</div>
-                  </div>
+    <div>
+      {ordered.map((c, idx) => {
+        const isLeading = idx === 0 && !c.winner && (c.percent ?? 0) > 0;
+        const barWidth = ((c.percent ?? 0) / maxPct) * 100;
+        return (
+          <div key={`${c.name}-${c.party}`} style={{
+            display: "grid",
+            gridTemplateColumns: "auto 1fr auto",
+            alignItems: "center",
+            gap: "0 12px",
+            padding: "10px 0",
+            borderBottom: idx < ordered.length - 1 ? "1px solid rgba(255,255,255,0.05)" : "none",
+          }}>
+            {/* Color dot + name */}
+            <div style={{ display: "flex", alignItems: "center", gap: 8, minWidth: 0 }}>
+              <span style={{ width: 8, height: 8, borderRadius: "50%", background: c.color || "rgba(255,255,255,0.3)", flexShrink: 0 }} />
+              <div>
+                <div style={{ fontSize: 12, fontWeight: 700, color: c.winner ? "#c5a55a" : isLeading ? "rgba(255,255,255,0.85)" : "rgba(255,255,255,0.55)", fontFamily: "'DM Mono', monospace", letterSpacing: "0.03em", whiteSpace: "nowrap" }}>
+                  {c.name}
+                  {c.winner && <span style={{ marginLeft: 8, fontSize: 8, color: "#c5a55a", background: "rgba(197,165,90,0.15)", padding: "1px 6px", border: "1px solid rgba(197,165,90,0.3)", letterSpacing: "0.14em" }}>WINNER</span>}
+                  {isLeading && !c.winner && <span style={{ marginLeft: 8, fontSize: 8, color: "rgba(255,255,255,0.3)", background: "rgba(255,255,255,0.05)", padding: "1px 6px", letterSpacing: "0.12em" }}>LEADING</span>}
                 </div>
-                <div className="res-pct-topline shrink-0">{fmtPct(c.percent)}</div>
+                <div style={{ fontFamily: "'DM Mono', monospace", fontSize: 9, color: "rgba(255,255,255,0.2)", marginTop: 2 }}>
+                  {(c.votes ?? 0).toLocaleString()} votes
+                </div>
+              </div>
+            </div>
+            {/* Bar */}
+            <div style={{ height: 3, background: "rgba(255,255,255,0.06)", overflow: "hidden" }}>
+              <div style={{ height: "100%", width: `${barWidth}%`, background: c.color || "rgba(255,255,255,0.3)", transition: "width 600ms ease" }} />
+            </div>
+            {/* Percent */}
+            <div style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 22, color: c.color || "rgba(255,255,255,0.8)", letterSpacing: "0.05em", textAlign: "right", minWidth: 54 }}>
+              {fmtPct(c.percent)}
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+// ─── RACE PICKER TABS (horizontal tabs, not sidebar list) ─────────────────────
+function RaceTabPicker({ races, raceCache, selectedId, onSelect }: { races: FeaturedRace[]; raceCache: Record<number, RaceDetail | undefined>; selectedId: number; onSelect: (id: number) => void; }) {
+  // Group by office
+  const groups = useMemo(() => {
+    const map = new Map<string, FeaturedRace[]>();
+    for (const r of races) { const g = map.get(r.office) ?? []; g.push(r); map.set(r.office, g); }
+    return Array.from(map.entries());
+  }, [races]);
+
+  const selectedMeta = useMemo(() => races.find(r => r.id === selectedId), [races, selectedId]);
+
+  return (
+    <div style={{ background: "#0f0f0d", borderBottom: "1px solid rgba(255,255,255,0.07)" }}>
+      {/* Office groups as scroll tabs */}
+      <div style={{ overflowX: "auto", display: "flex", gap: 0, padding: "0 20px" }}>
+        {groups.map(([office, groupRaces]) => {
+          const isGroupSelected = groupRaces.some(r => r.id === selectedId);
+          return (
+            <div key={office} style={{ position: "relative", flexShrink: 0 }}>
+              <div style={{
+                fontSize: 9, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase",
+                color: isGroupSelected ? "rgba(255,255,255,0.7)" : "rgba(255,255,255,0.25)",
+                padding: "10px 14px 4px",
+                borderBottom: isGroupSelected ? "2px solid #c5a55a" : "2px solid transparent",
+                transition: "color 120ms",
+                whiteSpace: "nowrap",
+                fontFamily: "'DM Mono', monospace",
+              }}>{office}</div>
+              <div style={{ display: "flex", gap: 4, padding: "4px 14px 10px" }}>
+                {groupRaces.map(r => {
+                  const isSelected = r.id === selectedId;
+                  const color = getRaceTypeColor(r.raceType);
+                  const short = getRaceTypeShort(r.raceType);
+                  const liveData = raceCache[r.id];
+                  const winner = liveData?.candidates?.find(c => c.winner);
+                  const reporting = getRaceReportingPct(liveData) ?? 0;
+                  return (
+                    <button key={r.id} onClick={() => onSelect(r.id)} style={{
+                      display: "flex", alignItems: "center", gap: 5,
+                      padding: "5px 10px",
+                      background: isSelected ? `${color}18` : "rgba(255,255,255,0.03)",
+                      border: `1px solid ${isSelected ? `${color}55` : "rgba(255,255,255,0.07)"}`,
+                      cursor: "pointer", transition: "all 100ms ease",
+                      fontFamily: "'DM Mono', monospace",
+                    }}>
+                      <span style={{ fontSize: 8, fontWeight: 900, color: isSelected ? color : "rgba(255,255,255,0.3)", letterSpacing: "0.1em" }}>{short}</span>
+                      {winner && <span style={{ width: 4, height: 4, borderRadius: "50%", background: "#c5a55a", display: "inline-block" }} />}
+                      {!winner && reporting > 0 && <span style={{ fontSize: 8, color: "rgba(255,255,255,0.2)", letterSpacing: "0.04em" }}>{reporting.toFixed(0)}%</span>}
+                    </button>
+                  );
+                })}
               </div>
             </div>
           );
@@ -698,689 +404,196 @@ function CandidateList({ candidates, reporting, raceId, isMajorityRunoff }: { ca
   );
 }
 
-// ─── COUNTY TABLE ────────────────────────────────────────────────────────────
-function CountyTotalsTable({ regionResults, collapsed, onToggle, maxHeight }: { regionResults: RegionResult[] | Record<string, RegionResult>; collapsed: boolean; onToggle: () => void; maxHeight?: string }) {
-  const data = useMemo(() => {
-    return coerceRegionResults(regionResults).map((rr) => {
-      const candidates = buildTooltipLines(rr);
-      const { absMargin } = computeCountyMargin(rr);
-      const rawName = (rr as any)?.region?.name || (rr as any)?.name || "Unknown";
-      return { name: titleCaseKey(rawName), reporting: rr?.region?.percent_reporting ?? (rr as any)?.percent_reporting ?? 0, candidates, margin: absMargin };
-    }).sort((a, b) => a.name.localeCompare(b.name));
-  }, [regionResults]);
-
-  const reportedCount = data.filter(d => d.reporting > 0).length;
-
-  return (
-    <div className="res-panel" style={{ overflow: "hidden" }}>
-      <button
-        onClick={onToggle}
-        style={{ width: "100%", display: "flex", alignItems: "center", justifyContent: "space-between", padding: "10px 14px", background: "var(--background2)", border: "none", borderBottom: collapsed ? "none" : "1px solid var(--border)", cursor: "pointer", transition: "background 140ms ease" }}
-      >
-        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-          <span className="res-panel-tag">COUNTY BREAKDOWN</span>
-          {data.length > 0 && <span className="res-badge">{reportedCount}/{data.length} REPORTING</span>}
-        </div>
-        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-          <span className="res-note" style={{ color: "rgba(255,255,255,0.25)" }}>{collapsed ? "SHOW TABLE" : "HIDE TABLE"}</span>
-          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" style={{ transform: collapsed ? "rotate(0deg)" : "rotate(180deg)", transition: "transform 240ms cubic-bezier(0.22,1,0.36,1)", flexShrink: 0 }}>
-            <path d="M2 4L6 8L10 4" stroke="rgba(255,255,255,0.35)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-        </div>
-      </button>
-      <div style={{ overflow: collapsed ? "hidden" : "auto", maxHeight: collapsed ? "0px" : (maxHeight ?? "340px"), transition: "max-height 400ms cubic-bezier(0.22,1,0.36,1)" }}>
-        {data.length === 0 ? (
-          <div style={{ padding: "20px", textAlign: "center" }}><span className="res-note" style={{ color: "rgba(255,255,255,0.2)" }}>NO COUNTY DATA</span></div>
-        ) : (
-          <div style={{ overflowY: "auto" }}>
-            <table className="w-full border-collapse">
-              <thead className="res-thead">
-                <tr>{["COUNTY / RPT", "CANDIDATES", "MARGIN"].map((h, i) => (<th key={h} className={`res-th px-4 py-2.5 ${i === 2 ? "text-right" : "text-left"}`}>{h}</th>))}</tr>
-              </thead>
-              <tbody>
-                {data.map((row, i) => (
-                  <tr key={i} className="res-table-row">
-                    <td className="px-4 py-3 align-top" style={{ width: "160px" }}>
-                      <div className="res-cand-name-lg">{row.name}</div>
-                      <div className="res-bar-track mt-2" style={{ width: "80px", height: "2px" }}><div className="res-bar-fill" style={{ width: `${row.reporting}%`, background: "var(--purple)", height: "2px" }} /></div>
-                      <div className="res-note mt-1">{row.reporting.toFixed(1)}% RPT</div>
-                    </td>
-                    <td className="px-4 py-3 align-top">
-                      <div className="grid grid-cols-1 gap-1 md:grid-cols-2">
-                        {row.candidates.length > 0 ? row.candidates.slice(0, 4).map((cand, idx) => (
-                          <div key={idx} className="flex items-center justify-between gap-2 py-1 border-b" style={{ borderColor: "rgba(255,255,255,0.04)" }}>
-                            <div className="flex items-center gap-2 min-w-0"><span className="h-1.5 w-1.5 rounded-full flex-shrink-0" style={{ background: cand.color || "rgba(255,255,255,0.35)" }} /><span className="res-note truncate">{cand.name}</span></div>
-                            <span className="res-cand-name shrink-0">{cand.pct !== null ? `${cand.pct.toFixed(1)}%` : "—"}</span>
-                          </div>
-                        )) : <span className="res-note italic">Awaiting…</span>}
-                      </div>
-                    </td>
-                    <td className="px-4 py-3 align-top text-right">
-                      {row.margin !== null ? (<><div className="res-pct-xl">{row.margin >= 0 ? "+" : ""}{row.margin.toFixed(1)}%</div><div className="res-note">SPREAD</div></>) : <span className="res-note">—</span>}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        )}
-      </div>
-    </div>
-  );
-}
-
-// ─── LEGEND ──────────────────────────────────────────────────────────────────
-function Legend() {
-  const stops: Array<[string, string]> = [["TIED", "#888"], ["TILT", "#aaa"], ["LEAN", "#bbb"], ["LIKELY", "#ccc"], ["SAFE", "#ddd"]];
-  return (
-    <div className="flex flex-wrap items-center gap-2">
-      <span className="res-note mr-1">SHADE</span>
-      {stops.map(([label]) => (<span key={label} className="res-badge">{label}</span>))}
-    </div>
-  );
-}
-
-// ─── SWING-O-METER ────────────────────────────────────────────────────────────
-function SwingOMeter({ candidates, colors, probabilities, raceRule, reportingPct, candidateCount }: {
-  candidates: [string, string, string, string]; colors: [string, string, string, string];
-  probabilities: { c1: number; c2: number; c3: number; runoffNeeded?: number }; raceRule: "PLURALITY" | "MAJORITY"; reportingPct: number; candidateCount: number;
-}) {
-  const W = 280, H = 160, CX = W / 2, CY = H - 20;
-  const R_OUTER = 110, R_INNER = 68;
-
-  const count = Math.max(1, Math.min(3, candidateCount));
-  const othersProb = Math.max(0, 1 - probabilities.c1 - probabilities.c2 - probabilities.c3);
-  const showC2 = count >= 2;
-  const showC3 = probabilities.c3 > 0.01;
-  const showOthers = othersProb > 0.01;
-
-  const segments = raceRule === "MAJORITY"
-    ? (() => {
-        const major = [
-          { key: "c1", prob: Math.max(0, probabilities.c1), color: colors[0], name: candidates[0] },
-          { key: "c2", prob: Math.max(0, probabilities.c2), color: colors[1], name: candidates[1] },
-          { key: "c3", prob: Math.max(0, probabilities.c3), color: colors[2], name: candidates[2] },
-        ].sort((a, b) => b.prob - a.prob);
-        const topA = major[0];
-        const topB = major[1] ?? { key: "c2", prob: 0, color: colors[1], name: candidates[1] };
-        const runoffProb = Math.max(0, Math.min(1, typeof probabilities.runoffNeeded === "number" ? probabilities.runoffNeeded : 1 - (probabilities.c1 + probabilities.c2 + probabilities.c3)));
-        return [
-          { key: topA.key, prob: topA.prob, color: topA.color, name: topA.name },
-          { key: topB.key, prob: topB.prob, color: topB.color, name: topB.name },
-          { key: "others", prob: runoffProb, color: "#c0392b", name: "RUNOFF" },
-        ];
-      })()
-    : [
-        { key: "c1", prob: probabilities.c1, color: colors[0], name: candidates[0] },
-        ...(showC2 ? [{ key: "c2", prob: probabilities.c2, color: colors[1], name: candidates[1] }] : []),
-        ...(showC3 ? [{ key: "c3", prob: probabilities.c3, color: colors[2], name: candidates[2] }] : []),
-        ...(showOthers ? [{ key: "others", prob: othersProb, color: colors[3], name: "Others" }] : []),
-      ];
-
-  const total = segments.reduce((s, seg) => s + seg.prob, 0) || 1;
-
-  function polarToXY(angleDeg: number, r: number) {
-    const rad = (angleDeg - 180) * (Math.PI / 180);
-    return { x: CX + r * Math.cos(rad), y: CY + r * Math.sin(rad) };
-  }
-  function describeArc(startDeg: number, endDeg: number, rOuter: number, rInner: number) {
-    const s = polarToXY(startDeg, rOuter), e = polarToXY(endDeg, rOuter);
-    const si = polarToXY(endDeg, rInner), ei = polarToXY(startDeg, rInner);
-    const large = endDeg - startDeg > 180 ? 1 : 0;
-    return `M ${s.x} ${s.y} A ${rOuter} ${rOuter} 0 ${large} 1 ${e.x} ${e.y} L ${si.x} ${si.y} A ${rInner} ${rInner} 0 ${large} 0 ${ei.x} ${ei.y} Z`;
-  }
-
-  let cursor = 0;
-  const arcSegments = segments.map((seg) => {
-    const span = (seg.prob / total) * 180;
-    const start = cursor;
-    const end = cursor + span;
-    cursor = end;
-    const midDeg = start + span / 2;
-    const midPt = polarToXY(midDeg, (R_OUTER + R_INNER) / 2);
-    return { ...seg, start, end, midPt };
-  });
-
-  const leader = segments.reduce((a, b) => (b.prob > a.prob ? b : a), segments[0]);
-
-  return (
-    <div style={{ position: "relative", userSelect: "none" }}>
-      <svg viewBox={`0 0 ${W} ${H}`} style={{ width: "100%", height: "auto", overflow: "visible" }}>
-        <path d={describeArc(0, 180, R_OUTER, R_INNER)} fill="rgba(255,255,255,0.04)" />
-        {arcSegments.map((seg) => (
-          <g key={seg.key}>
-            <path d={describeArc(seg.start + 0.8, seg.end - 0.8, R_OUTER, R_INNER)} fill={seg.color} opacity={0.85} />
-            {(seg.end - seg.start) > 20 && (
-              <text x={seg.midPt.x} y={seg.midPt.y + 3} textAnchor="middle" fontSize="7" fontWeight="700" fill="rgba(255,255,255,0.85)" fontFamily="var(--font-body)" letterSpacing="0.5">
-                {(seg.prob * 100).toFixed(0)}%
-              </text>
-            )}
-          </g>
-        ))}
-        <text x={CX} y={CY - 22} textAnchor="middle" fontSize="20" fontWeight="900" fill="white" fontFamily="var(--font-body)" letterSpacing="-0.5">
-          {(leader.prob * 100).toFixed(1)}%
-        </text>
-        <text x={CX} y={CY - 8} textAnchor="middle" fontSize="7" fill="rgba(255,255,255,0.45)" fontFamily="var(--font-body)" letterSpacing="1">
-          {leader.name.split(" ").pop()?.toUpperCase()}
-        </text>
-        <circle cx={CX} cy={CY} r="5" fill="rgba(255,255,255,0.15)" />
-      </svg>
-      <div style={{ display: "flex", flexWrap: "wrap", gap: "6px 12px", marginTop: 6, justifyContent: "center" }}>
-        {arcSegments.map((seg) => (
-          <div key={seg.key} style={{ display: "flex", alignItems: "center", gap: 5 }}>
-            <span style={{ width: 8, height: 8, borderRadius: 2, background: seg.color, display: "inline-block", flexShrink: 0 }} />
-            <span style={{ fontFamily: "var(--font-body)", fontSize: "8px", fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", color: "rgba(255,255,255,0.55)" }}>{seg.name.split(" ").pop()}</span>
-            <span style={{ fontFamily: "var(--font-body)", fontSize: "9px", fontWeight: 900, color: seg.color }}>{(seg.prob * 100).toFixed(1)}%</span>
-          </div>
-        ))}
-      </div>
-      <div style={{ marginTop: 10, padding: "6px 0 0" }}>
-        <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 4 }}>
-          <span style={{ fontFamily: "var(--font-body)", fontSize: "7px", fontWeight: 700, letterSpacing: "0.20em", textTransform: "uppercase", color: "rgba(255,255,255,0.25)" }}>REPORTING</span>
-          <span style={{ fontFamily: "var(--font-body)", fontSize: "7px", fontWeight: 700, color: "rgba(255,255,255,0.45)" }}>{reportingPct.toFixed(1)}%</span>
-        </div>
-        <div style={{ height: 2, background: "rgba(255,255,255,0.07)", overflow: "hidden" }}>
-          <div style={{ height: "100%", width: `${reportingPct}%`, background: "rgba(255,255,255,0.30)", transition: "width 800ms ease" }} />
-        </div>
-      </div>
-    </div>
-  );
-}
-
-// ─── FORECAST PANEL TYPES ────────────────────────────────────────────────────
-interface ForecastCivicCandidate { name: string; party: string; color: string; votes: number; percent: number; winner: boolean; }
-interface ForecastHistoryTimestamp { timestamp: string; }
-interface ForecastHistoryList { id: number; count: number; timestamps: ForecastHistoryTimestamp[]; }
-interface ForecastResponse { forecast: ForecastOutput; race: { election_name: string; election_date: string; percent_reporting: number; candidates: ForecastCivicCandidate[]; }; }
-const FORECAST_CANDIDATE_KEYS = ["Candidate1", "Candidate2", "Candidate3", "Others"] as const;
-type FCKey = (typeof FORECAST_CANDIDATE_KEYS)[number];
-function fcastPct(n: number, decimals = 1) { return (n * 100).toFixed(decimals) + "%"; }
-function fcastFmt(n: number) { return n.toLocaleString("en-US", { maximumFractionDigits: 0 }); }
-function fcastShortDate(ts: string) { return new Date(ts).toLocaleString("en-US", { month: "short", day: "numeric", hour: "2-digit", minute: "2-digit" }); }
-function getTimestamps(hl: ForecastHistoryList | null): ForecastHistoryTimestamp[] { return hl?.timestamps ?? []; }
-function getEffectiveForecastCandidateCount(
-  raceCandidates?: Array<{ name?: string | null; major_candidate?: boolean }> | null,
-  forecastCandidateNames?: string[] | null,
-): number {
-  const fromRace = (raceCandidates ?? []).filter((c) => {
-    const name = String(c?.name ?? "").trim();
-    if (!name) return false;
-    if (/^(others?|write[\s-]?in)$/i.test(name)) return false;
-    return true;
-  }).length;
-  if (fromRace > 0) return Math.max(1, Math.min(3, fromRace));
-  const fromNames = (forecastCandidateNames ?? []).slice(0, 3).filter((n) => {
-    const name = String(n ?? "").trim();
-    return !!name && !/^candidate\s*\d+$/i.test(name);
-  }).length;
-  if (fromNames > 0) return Math.max(1, Math.min(3, fromNames));
-  return 2;
-}
-function normalizeWinProbabilitiesByCandidateCount(
-  src: Partial<Record<"Candidate1" | "Candidate2" | "Candidate3", number>>,
-  candidateCount: number,
-): { c1: number; c2: number; c3: number } {
-  const count = Math.max(1, Math.min(3, candidateCount));
-  if (count === 1) return { c1: 1, c2: 0, c3: 0 };
-  const raw = [Math.max(0, src.Candidate1 ?? 0), Math.max(0, src.Candidate2 ?? 0), Math.max(0, src.Candidate3 ?? 0)];
-  for (let i = count; i < 3; i += 1) raw[i] = 0;
-  const total = raw[0] + raw[1] + raw[2];
-  if (total <= 0) {
-    if (count === 2) return { c1: 0.5, c2: 0.5, c3: 0 };
-    return { c1: 1 / 3, c2: 1 / 3, c3: 1 / 3 };
-  }
-  return { c1: raw[0] / total, c2: raw[1] / total, c3: raw[2] / total };
-}
-
 // ─── FORECAST PANEL ───────────────────────────────────────────────────────────
-function ForecastPanel({ raceId, refreshTick, raceData, onForecastUpdate }: { raceId: number; refreshTick: number; raceData?: RaceDetail; onForecastUpdate?: (update: { leader: string; prob: number; runoffNeededProb: number; projectionType: "WIN" | "RUNOFF" }) => void }) {
-  const defaults = RACE_FORECAST_DEFAULTS[raceId];
-  const [raceRule, setRaceRule] = useState<RaceRule>(() => defaults?.raceRule ?? "PLURALITY");
-  const [expectedTurnoutOverride, setExpectedTurnoutOverride] = useState(defaults?.expectedTurnout ? String(defaults.expectedTurnout) : "");
-  const [historyList, setHistoryList] = useState<ForecastHistoryList | null>(null);
-  const [historyIndex, setHistoryIndex] = useState(0);
-  const [loadingHistory, setLoadingHistory] = useState(false);
-  const [forecast, setForecast] = useState<ForecastResponse | null>(null);
-  const [loadingForecast, setLoadingForecast] = useState(false);
+function ForecastPanel({ raceId, refreshTick, raceData }: { raceId: number; refreshTick: number; raceData?: RaceDetail }) {
+  const [forecast, setForecast] = useState<any>(null);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [playing, setPlaying] = useState(false);
-  const [showOptions, setShowOptions] = useState(false);
-  const playRef = useRef<ReturnType<typeof setInterval> | null>(null);
-  const raceDataRef = useRef<RaceDetail | undefined>(raceData);
-  useEffect(() => { raceDataRef.current = raceData; }, [raceData]);
-  const raceIdRef = useRef(raceId); const raceRuleRef = useRef(raceRule); const turnoutRef = useRef(expectedTurnoutOverride);
-  const playingRef = useRef(playing); const historyListRef = useRef<ForecastHistoryList | null>(null); const historyIndexRef = useRef(historyIndex);
-  useEffect(() => { raceIdRef.current = raceId; }, [raceId]);
-  useEffect(() => { raceRuleRef.current = raceRule; }, [raceRule]);
-  useEffect(() => { turnoutRef.current = expectedTurnoutOverride; }, [expectedTurnoutOverride]);
-  useEffect(() => { playingRef.current = playing; }, [playing]);
-  useEffect(() => { historyListRef.current = historyList; }, [historyList]);
-  useEffect(() => { historyIndexRef.current = historyIndex; }, [historyIndex]);
-  const timestamps = useMemo(() => getTimestamps(historyList).map((t) => t.timestamp), [historyList]);
-
-  const runForecastLive = useCallback(async (id: number, rule?: RaceRule, turnout?: string) => {
-    setLoadingForecast(true); setError(null);
-    try {
-      const res = await fetch("/api/forecast", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ...(raceDataRef.current ? { type: "civic_raw", raceData: raceDataRef.current } : { type: "civic", raceId: String(id) }), race_rule: rule ?? raceRuleRef.current, expected_turnout: (turnout ?? turnoutRef.current) ? Number(turnout ?? turnoutRef.current) : undefined, poll_avg: RACE_FORECAST_DEFAULTS[id]?.pollAvg }) });
-      const data = await res.json();
-      if (raceIdRef.current !== id) return;
-      if (data.error) throw new Error(data.details ?? data.error);
-      setForecast(data);
-      if (onForecastUpdate && data.forecast) {
-        const candidateCount = getEffectiveForecastCandidateCount(data?.race?.candidates, data?.forecast?.candidate_names);
-        const names = data.forecast.candidate_names ?? [];
-        const keys = ["Candidate1", "Candidate2", "Candidate3"] as const;
-        if (data.forecast.race_rule === "PLURALITY") {
-          const normalized = normalizeWinProbabilitiesByCandidateCount(data.forecast.plurality_odds_to_win, candidateCount);
-          const best = keys.reduce((a, b) => ((normalized[a === "Candidate1" ? "c1" : a === "Candidate2" ? "c2" : "c3"] ?? 0) >= (normalized[b === "Candidate1" ? "c1" : b === "Candidate2" ? "c2" : "c3"] ?? 0) ? a : b), "Candidate1" as typeof keys[number]);
-          const bestProb = best === "Candidate1" ? normalized.c1 : best === "Candidate2" ? normalized.c2 : normalized.c3;
-          onForecastUpdate({ leader: names[keys.indexOf(best)] ?? "", prob: bestProb * 100, runoffNeededProb: 0, projectionType: "WIN" });
-        } else {
-          const c1 = Math.max(0, data.forecast.majority_win_prob?.Candidate1 ?? 0);
-          const c2 = Math.max(0, data.forecast.majority_win_prob?.Candidate2 ?? 0);
-          const c3 = Math.max(0, data.forecast.majority_win_prob?.Candidate3 ?? 0);
-          const runoffNeededProb = typeof data.forecast.runoff_needed_prob === "number"
-            ? Math.max(0, Math.min(1, data.forecast.runoff_needed_prob))
-            : Math.max(0, Math.min(1, 1 - (c1 + c2 + c3)));
-          const candidateMajority = [c1, c2, c3].map((p, idx) => (idx < candidateCount ? p : 0));
-          const bestIdx = candidateMajority.reduce((best, val, idx, arr) => (val >= arr[best] ? idx : best), 0);
-          const bestCandidateProb = candidateMajority[bestIdx] ?? 0;
-          if (runoffNeededProb >= bestCandidateProb) {
-            onForecastUpdate({ leader: "Runoff chance", prob: runoffNeededProb * 100, runoffNeededProb, projectionType: "RUNOFF" });
-          } else {
-            onForecastUpdate({ leader: names[bestIdx] ?? "", prob: bestCandidateProb * 100, runoffNeededProb, projectionType: "WIN" });
-          }
-        }
-      }
-    } catch (e: any) { if (raceIdRef.current === id) setError(e.message); }
-    finally { if (raceIdRef.current === id) setLoadingForecast(false); }
-  }, []);
-
-  const runForecastAtIndex = useCallback(async (id: number, tsList: ForecastHistoryTimestamp[], idx: number, rule?: RaceRule, turnout?: string) => {
-    if (!tsList.length) return runForecastLive(id, rule, turnout);
-    setLoadingForecast(true); setError(null);
-    try {
-      const timestamp = tsList[idx].timestamp; const priorTimestamp = idx > 0 ? tsList[0].timestamp : undefined;
-      const res = await fetch("/api/forecast", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ type: "civic_history", raceId: String(id), timestamp, priorTimestamp, race_rule: rule ?? raceRuleRef.current, expected_turnout: (turnout ?? turnoutRef.current) ? Number(turnout ?? turnoutRef.current) : undefined, poll_avg: RACE_FORECAST_DEFAULTS[id]?.pollAvg }) });
-      const data = await res.json();
-      if (raceIdRef.current !== id) return;
-      if (data.error) throw new Error(data.details ?? data.error);
-      setForecast(data);
-    } catch (e: any) { if (raceIdRef.current === id) setError(e.message); }
-    finally { if (raceIdRef.current === id) setLoadingForecast(false); }
-  }, [runForecastLive]);
+  const defaults = RACE_FORECAST_DEFAULTS[raceId];
 
   useEffect(() => {
-    const d = RACE_FORECAST_DEFAULTS[raceId];
-    const newRule: RaceRule = d?.raceRule ?? "PLURALITY";
-    const newTurnout = d?.expectedTurnout ? String(d.expectedTurnout) : "";
-    setRaceRule(newRule); setExpectedTurnoutOverride(newTurnout);
-    raceRuleRef.current = newRule; turnoutRef.current = newTurnout;
-    setForecast(null); setHistoryList(null); historyListRef.current = null;
-    setHistoryIndex(0); historyIndexRef.current = 0;
-    setPlaying(false); setError(null); setLoadingHistory(false);
     let cancelled = false;
+    setForecast(null); setError(null);
     (async () => {
-      try { await runForecastLive(raceId, newRule, newTurnout); }
-      catch (e: any) { if (!cancelled) setError(e.message); }
+      setLoading(true);
+      try {
+        const res = await fetch("/api/forecast", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ...(raceData ? { type: "civic_raw", raceData } : { type: "civic", raceId: String(raceId) }), race_rule: defaults?.raceRule ?? "PLURALITY", expected_turnout: defaults?.expectedTurnout, poll_avg: defaults?.pollAvg }) });
+        const data = await res.json();
+        if (!cancelled) { if (data.error) throw new Error(data.details ?? data.error); setForecast(data); }
+      } catch (e: any) { if (!cancelled) setError(e.message); }
+      finally { if (!cancelled) setLoading(false); }
     })();
     return () => { cancelled = true; };
-  }, [raceId]); // eslint-disable-line
+  }, [raceId, refreshTick]);
 
-  const prevTickRef = useRef(0);
-  useEffect(() => {
-    if (refreshTick === 0 || refreshTick === prevTickRef.current) return;
-    prevTickRef.current = refreshTick;
-    if (playingRef.current) return;
-    runForecastLive(raceIdRef.current);
-  }, [refreshTick]); // eslint-disable-line
+  const names = forecast?.forecast?.candidate_names ?? [];
+  const colors = forecast?.forecast?.candidate_colors ?? ["#5b8fd4", "#d45b5b", "#c5a55a"];
 
-  const isFirstOptionsRender = useRef(true);
-  useEffect(() => {
-    if (isFirstOptionsRender.current) { isFirstOptionsRender.current = false; return; }
-    const timer = setTimeout(() => { const id = raceIdRef.current; runForecastLive(id); }, 400);
-    return () => clearTimeout(timer);
-  }, [raceRule, expectedTurnoutOverride]); // eslint-disable-line
-  useEffect(() => { isFirstOptionsRender.current = true; }, [raceId]);
+  if (error) return <div style={{ fontFamily: "'DM Mono', monospace", fontSize: 9, color: "#d45b5b", padding: "12px 0", letterSpacing: "0.06em" }}>⚠ Forecast unavailable</div>;
 
-  useEffect(() => {
-    if (playing && timestamps.length > 1) {
-      playRef.current = setInterval(() => { setHistoryIndex((prev) => { const next = prev + 1; if (next >= timestamps.length) { setPlaying(false); return prev; } historyIndexRef.current = next; const hl = historyListRef.current; if (hl) runForecastAtIndex(raceIdRef.current, hl.timestamps, next); return next; }); }, 1800);
-    } else { if (playRef.current) clearInterval(playRef.current); }
-    return () => { if (playRef.current) clearInterval(playRef.current); };
-  }, [playing, timestamps.length]); // eslint-disable-line
+  if (loading && !forecast) return (
+    <div style={{ padding: "20px 0", textAlign: "center" }}>
+      <div style={{ fontFamily: "'DM Mono', monospace", fontSize: 9, color: "rgba(255,255,255,0.2)", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 8 }}>Running model…</div>
+      <div style={{ height: 2, background: "rgba(255,255,255,0.05)", overflow: "hidden", maxWidth: 100, margin: "0 auto" }}>
+        <div style={{ height: "100%", width: "60%", background: "#c5a55a", animation: "er-loading 1.4s ease-in-out infinite" }} />
+      </div>
+    </div>
+  );
 
-  const candidateLabels: Record<FCKey, string> = useMemo(() => {
-    const names = forecast?.forecast.candidate_names ?? ["Candidate 1", "Candidate 2", "Candidate 3", "Others"];
-    return { Candidate1: names[0], Candidate2: names[1], Candidate3: names[2], Others: raceRule === "MAJORITY" ? "Runoff" : names[3] };
-  }, [forecast]);
-
-  const formatCandidateName = (name: string) => {
-    const parts = name.trim().split(/\s+/);
-    if (parts.length <= 1) return <>{name}</>;
-    const last = parts[parts.length - 1];
-    const first = parts.slice(0, -1).join(" ");
-    return <>{first}<br />{last}</>;
-  };
-  const candidateColors: Record<FCKey, string> = useMemo(() => { const colors = forecast?.forecast.candidate_colors ?? ["#3b82f6", "#ef4444", "#22c55e", "#94a3b8"]; return { Candidate1: colors[0], Candidate2: colors[1], Candidate3: colors[2], Others: raceRule === "MAJORITY" ? "#c0392b" : colors[3] }; }, [forecast, raceRule]);
-  const isLoading = loadingHistory || loadingForecast;
-  const activeCandidateCount = useMemo(() => {
-    return getEffectiveForecastCandidateCount(raceData?.candidates, forecast?.forecast?.candidate_names);
-  }, [raceData?.candidates, forecast?.forecast?.candidate_names]);
-  const swingoProbs = useMemo(() => {
-    if (!forecast) return { c1: 0.5, c2: 0.5, c3: 0, runoffNeeded: 0 };
-    const f = forecast.forecast;
-    if (raceRule === "MAJORITY") {
-      const c1 = Math.max(0, f.majority_win_prob.Candidate1 ?? 0);
-      const c2 = Math.max(0, f.majority_win_prob.Candidate2 ?? 0);
-      const c3 = Math.max(0, f.majority_win_prob.Candidate3 ?? 0);
-      const runoffNeeded = Math.max(0, Math.min(1, typeof f.runoff_needed_prob === "number" ? f.runoff_needed_prob : 1 - (c1 + c2 + c3)));
-      return { c1, c2, c3, runoffNeeded };
-    }
-    return { ...normalizeWinProbabilitiesByCandidateCount(f.plurality_odds_to_win, activeCandidateCount), runoffNeeded: 0 };
-  }, [forecast, raceRule, activeCandidateCount]);
+  if (!forecast) return null;
 
   return (
-    <div className="res-panel" style={{ padding: 0 }}>
-      <div className="res-tri-stripe" />
-      <div className="res-panel-header" style={{ flexWrap: "wrap", gap: 8 }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-          <span className="res-panel-tag">FORECAST MODEL</span>
-          <span style={{ display: "inline-flex", alignItems: "center", padding: "2px 6px", border: "1px solid rgba(124,58,237,0.45)", background: "rgba(124,58,237,0.10)", fontFamily: "var(--font-body)", fontSize: "6.5px", fontWeight: 700, letterSpacing: "0.16em", color: "var(--purple-soft)" }}>FORECAST β</span>
-          {isLoading && <span className="res-badge res-badge-purple" style={{ fontSize: "7px" }}><span className="res-live-dot" style={{ background: "var(--purple)", width: 4, height: 4 }} />UPDATING</span>}
-          {!isLoading && forecast && <span className="res-badge" style={{ fontSize: "7px", color: "rgba(255,255,255,0.25)" }}>AUTO / 30s</span>}
-        </div>
-        <button className="res-btn-ghost" style={{ padding: "3px 8px", fontSize: "7px" }} onClick={() => setShowOptions((v) => !v)}>{showOptions ? "HIDE OPTIONS" : "OPTIONS"}</button>
-      </div>
-      {showOptions && (
-        <div style={{ padding: "12px 14px", borderBottom: "1px solid var(--border)", background: "var(--background2)", display: "flex", flexDirection: "column", gap: 10 }}>
-          <div><div className="res-note" style={{ marginBottom: 5 }}>RACE RULE</div><select value={raceRule} onChange={(e) => setRaceRule(e.target.value as RaceRule)} className="res-select" style={{ width: "100%" }}><option value="PLURALITY">Plurality</option><option value="MAJORITY">Majority / Runoff</option></select></div>
-          <div><div className="res-note" style={{ marginBottom: 5 }}>EXPECTED TURNOUT (OPTIONAL)</div><input type="number" placeholder="e.g. 5000000" value={expectedTurnoutOverride} onChange={(e) => setExpectedTurnoutOverride(e.target.value)} className="res-input" /></div>
-          <button className="res-btn-primary" style={{ width: "100%", justifyContent: "center" }} disabled={isLoading} onClick={() => { runForecastLive(raceIdRef.current); }}>{isLoading ? "RUNNING…" : "RERUN FORECAST"}</button>
-        </div>
-      )}
-      <div className="res-forecast-body" style={{ padding: "14px 16px" }}>
-        {error && <div style={{ border: "1px solid rgba(230,57,70,0.25)", background: "rgba(230,57,70,0.06)", color: "rgba(255,77,90,0.90)", padding: "8px 10px", fontFamily: "var(--font-body)", fontSize: "9.5px", letterSpacing: "0.10em", marginBottom: 12 }}>⚠ {error}</div>}
-        {isLoading && !forecast && (
-          <div style={{ padding: "36px 0", textAlign: "center" }}>
-            <div className="res-note" style={{ color: "var(--purple-soft)", marginBottom: 10 }}>RUNNING FORECAST MODEL…</div>
-            <div className="res-bar-track" style={{ width: "80%", margin: "0 auto" }}><div className="res-bar-fill" style={{ width: "60%", background: "linear-gradient(90deg,var(--purple),var(--blue2))", animation: "res-loading-pulse 1.4s ease-in-out infinite" }} /></div>
+    <div>
+      {names.slice(0, 3).map((name: string, i: number) => {
+        const prob = (forecast.forecast.plurality_odds_to_win?.[`Candidate${i + 1}`] ?? 0) * 100;
+        return (
+          <div key={name} style={{ display: "grid", gridTemplateColumns: "1fr auto", alignItems: "center", gap: 10, marginBottom: 10 }}>
+            <div>
+              <div style={{ fontFamily: "'DM Mono', monospace", fontSize: 9, color: "rgba(255,255,255,0.4)", marginBottom: 4 }}>{name}</div>
+              <div style={{ height: 3, background: "rgba(255,255,255,0.06)", overflow: "hidden" }}>
+                <div style={{ height: "100%", width: `${Math.min(100, prob)}%`, background: colors[i], transition: "width 600ms ease" }} />
+              </div>
+            </div>
+            <div style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 20, color: colors[i], letterSpacing: "0.05em", minWidth: 44, textAlign: "right" }}>{prob.toFixed(0)}%</div>
           </div>
-        )}
-        {forecast && (
-          <>
-            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 14 }}>
-              <span className="res-note" style={{ color: "rgba(255,255,255,0.3)" }}>{forecast.race.percent_reporting}% REPORTING</span>
-              <span className={`res-badge ${raceRule === "MAJORITY" ? "res-badge-purple" : "res-badge-red"}`}>{raceRule === "MAJORITY" ? "MAJORITY" : forecast.forecast.mode_trigger}</span>
-            </div>
-            <div style={{ marginBottom: 16, padding: "14px 12px", background: "rgba(0,0,0,0.25)", border: "1px solid rgba(255,255,255,0.07)" }}>
-              <div style={{ fontFamily: "var(--font-body)", fontSize: "7px", fontWeight: 700, letterSpacing: "0.26em", textTransform: "uppercase", color: "rgba(255,255,255,0.3)", marginBottom: 10 }}>WIN PROBABILITY · {raceRule === "PLURALITY" ? "MOST VOTES" : "MAJORITY ≥50%"}</div>
-              <SwingOMeter candidates={forecast.forecast.candidate_names ?? ["C1", "C2", "C3", "Others"]} colors={forecast.forecast.candidate_colors ?? ["#3b82f6", "#ef4444", "#22c55e", "#94a3b8"]} probabilities={swingoProbs} raceRule={raceRule} reportingPct={forecast.race.percent_reporting} candidateCount={activeCandidateCount} />
-            </div>
-            <div style={{ display: "grid", gridTemplateColumns: activeCandidateCount >= 3 ? "1fr 1fr 1fr" : activeCandidateCount === 2 ? "1fr 1fr" : "1fr", gap: 6, marginBottom: 14 }}>
-              {(["Candidate1", "Candidate2", "Candidate3"] as const).filter((_, idx) => idx < activeCandidateCount).map((key) => {
-                const color = candidateColors[key], share = forecast.forecast.modeled_share[key], votes = forecast.forecast.modeled_votes[key], isLeader = forecast.forecast.leader === key;
+        );
+      })}
+      <div style={{ marginTop: 12, paddingTop: 10, borderTop: "1px solid rgba(255,255,255,0.05)", display: "flex", gap: 16 }}>
+        <div>
+          <div style={{ fontFamily: "'DM Mono', monospace", fontSize: 8, color: "rgba(255,255,255,0.2)", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 2 }}>Projected total</div>
+          <div style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 16, color: "rgba(255,255,255,0.5)" }}>{(forecast.forecast.modeled_total_vote ?? 0).toLocaleString()}</div>
+        </div>
+        <div>
+          <div style={{ fontFamily: "'DM Mono', monospace", fontSize: 8, color: "rgba(255,255,255,0.2)", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 2 }}>Votes remaining</div>
+          <div style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 16, color: "rgba(255,255,255,0.5)" }}>{(forecast.forecast.modeled_vote_remaining ?? 0).toLocaleString()}</div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─── PROJECTED WINNER OVERLAY ─────────────────────────────────────────────────
+function ProjectedWinnerOverlay({ show, candidate, prob, color, reporting, onDismiss }: { show: boolean; candidate: string; prob: number; color: string; reporting: number; onDismiss: () => void; }) {
+  if (!show) return null;
+  return (
+    <div style={{ position: "fixed", inset: 0, zIndex: 80, display: "flex", alignItems: "center", justifyContent: "center" }}>
+      <div style={{ position: "absolute", inset: 0, background: "rgba(0,0,0,0.8)" }} onClick={onDismiss} />
+      <div style={{ position: "relative", width: "min(480px, 92vw)", background: "#0f0f0d", border: "1px solid rgba(197,165,90,0.3)", overflow: "hidden" }}>
+        <div style={{ height: 2, background: "linear-gradient(90deg, #5b8fd4 50%, #d45b5b 50%)" }} />
+        <div style={{ padding: "28px 32px" }}>
+          <div style={{ fontFamily: "'DM Mono', monospace", fontSize: 8, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: "#d45b5b", marginBottom: 16, display: "flex", alignItems: "center", gap: 6 }}>
+            <span style={{ width: 5, height: 5, borderRadius: "50%", background: "#d45b5b", animation: "er-pulse 1.8s ease-in-out infinite", display: "inline-block" }} />
+            Projection Alert
+          </div>
+          <div style={{ fontFamily: "'DM Mono', monospace", fontSize: 9, color: "rgba(255,255,255,0.25)", letterSpacing: "0.16em", textTransform: "uppercase", marginBottom: 8 }}>Projected Winner</div>
+          <div style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 42, letterSpacing: "0.04em", color: color || "#5b8fd4", lineHeight: 1, marginBottom: 24 }}>{candidate}</div>
+          <div style={{ marginBottom: 6, display: "flex", justifyContent: "space-between" }}>
+            <span style={{ fontFamily: "'DM Mono', monospace", fontSize: 9, color: "rgba(255,255,255,0.3)", letterSpacing: "0.1em", textTransform: "uppercase" }}>Confidence</span>
+            <span style={{ fontFamily: "'DM Mono', monospace", fontSize: 9, fontWeight: 700, color: color || "#5b8fd4" }}>{prob.toFixed(1)}%</span>
+          </div>
+          <div style={{ height: 3, background: "rgba(255,255,255,0.06)", marginBottom: 24 }}>
+            <div style={{ height: "100%", width: `${Math.min(100, prob)}%`, background: color || "#5b8fd4", transition: "width 600ms ease" }} />
+          </div>
+          <button onClick={onDismiss} style={{ width: "100%", padding: "10px", background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.1)", color: "rgba(255,255,255,0.5)", fontFamily: "'DM Mono', monospace", fontSize: 9, fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", cursor: "pointer" }}>
+            Continue →
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─── COUNTY TABLE ─────────────────────────────────────────────────────────────
+function CountyTable({ countyData }: { countyData: { name: string; reporting: number; candidates: TooltipLine[]; margin: number | null }[] }) {
+  const [collapsed, setCollapsed] = useState(true);
+  const reporting = countyData.filter(d => d.reporting > 0).length;
+
+  return (
+    <div style={{ background: "#0f0f0d", border: "1px solid rgba(255,255,255,0.07)", overflow: "hidden" }}>
+      <button onClick={() => setCollapsed(v => !v)} style={{ width: "100%", display: "flex", alignItems: "center", justifyContent: "space-between", padding: "11px 16px", background: "transparent", border: "none", borderBottom: collapsed ? "none" : "1px solid rgba(255,255,255,0.05)", cursor: "pointer" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+          <span style={{ fontSize: 9, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(255,255,255,0.3)", fontFamily: "'DM Mono', monospace" }}>Results by County</span>
+          {countyData.length > 0 && <span style={{ fontSize: 8, color: "rgba(255,255,255,0.2)", fontFamily: "'DM Mono', monospace", letterSpacing: "0.08em" }}>{reporting}/{countyData.length} reporting</span>}
+        </div>
+        <span style={{ color: "rgba(255,255,255,0.2)", fontSize: 10, transform: collapsed ? "rotate(0)" : "rotate(180deg)", transition: "transform 240ms ease", display: "inline-block" }}>▾</span>
+      </button>
+      {!collapsed && (
+        <div style={{ maxHeight: 340, overflow: "auto" }}>
+          <table style={{ width: "100%", borderCollapse: "collapse" }}>
+            <thead>
+              <tr style={{ background: "#0d0d0b", position: "sticky", top: 0 }}>
+                {[{ h: "County", align: "left" }, { h: "Reporting", align: "left" }, { h: "Leader", align: "left" }, { h: "2nd", align: "left" }, { h: "Margin", align: "right" }].map(col => (
+                  <th key={col.h} style={{ textAlign: col.align as any, fontSize: 8, fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", color: "rgba(255,255,255,0.2)", padding: "8px 14px", borderBottom: "1px solid rgba(255,255,255,0.07)", fontFamily: "'DM Mono', monospace" }}>{col.h}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {countyData.map((row, i) => {
+                const leader = row.candidates[0];
+                const second = row.candidates[1];
                 return (
-                  <div key={key} style={{ padding: "10px 10px 8px", background: "rgba(255,255,255,0.025)", border: `1px solid ${isLeader ? color + "44" : "rgba(255,255,255,0.06)"}` }}>
-                    <div style={{ fontFamily: "var(--font-body)", fontSize: "7px", fontWeight: 700, letterSpacing: "0.20em", textTransform: "uppercase", color: color + "cc", marginBottom: 4, lineHeight: 1.4 }}>{formatCandidateName(candidateLabels[key])}</div>
-                    <div style={{ fontFamily: "var(--font-body)", fontSize: "clamp(17px, 1.8vw, 22px)", fontWeight: 900, color, lineHeight: 1 }}>{fcastPct(share)}</div>
-                    <div style={{ fontFamily: "var(--font-body)", fontSize: "7.5px", letterSpacing: "0.10em", color: "rgba(255,255,255,0.35)", marginTop: 3 }}>{fcastFmt(votes)} PROJ</div>
-                    {isLeader && <div style={{ marginTop: 6, fontSize: "5.5px", color, fontWeight: 700, fontFamily: "var(--font-body)", letterSpacing: "0.16em", textTransform: "uppercase", border: `1px solid ${color}55`, padding: "1px 4px", display: "inline-block" }}>LEADER</div>}
-                  </div>
+                  <tr key={i} style={{ borderBottom: "1px solid rgba(255,255,255,0.03)" }}>
+                    <td style={{ padding: "9px 14px", fontFamily: "'DM Mono', monospace", fontSize: 11, color: "rgba(255,255,255,0.6)" }}>{row.name}</td>
+                    <td style={{ padding: "9px 14px" }}>
+                      <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                        <div style={{ width: 40, height: 2, background: "rgba(255,255,255,0.06)" }}>
+                          <div style={{ height: "100%", width: `${row.reporting}%`, background: "#c5a55a" }} />
+                        </div>
+                        <span style={{ fontFamily: "'DM Mono', monospace", fontSize: 9, color: "rgba(255,255,255,0.3)" }}>{row.reporting.toFixed(0)}%</span>
+                      </div>
+                    </td>
+                    <td style={{ padding: "9px 14px" }}>
+                      {leader ? <div style={{ display: "flex", alignItems: "center", gap: 5 }}>
+                        <span style={{ width: 5, height: 5, borderRadius: "50%", background: leader.color || "#fff", flexShrink: 0 }} />
+                        <span style={{ fontFamily: "'DM Mono', monospace", fontSize: 10, color: "rgba(255,255,255,0.5)" }}>{leader.name.split(" ").pop()}</span>
+                        <span style={{ fontFamily: "'DM Mono', monospace", fontSize: 10, fontWeight: 700, color: leader.color || "rgba(255,255,255,0.7)" }}>{leader.pct !== null ? `${leader.pct.toFixed(1)}%` : "—"}</span>
+                      </div> : <span style={{ color: "rgba(255,255,255,0.15)", fontSize: 9 }}>—</span>}
+                    </td>
+                    <td style={{ padding: "9px 14px" }}>
+                      {second ? <div style={{ display: "flex", alignItems: "center", gap: 5 }}>
+                        <span style={{ width: 5, height: 5, borderRadius: "50%", background: second.color || "#fff", flexShrink: 0 }} />
+                        <span style={{ fontFamily: "'DM Mono', monospace", fontSize: 10, color: "rgba(255,255,255,0.35)" }}>{second.name.split(" ").pop()}</span>
+                        <span style={{ fontFamily: "'DM Mono', monospace", fontSize: 10, color: "rgba(255,255,255,0.4)" }}>{second.pct !== null ? `${second.pct.toFixed(1)}%` : "—"}</span>
+                      </div> : <span style={{ color: "rgba(255,255,255,0.15)", fontSize: 9 }}>—</span>}
+                    </td>
+                    <td style={{ padding: "9px 14px", textAlign: "right" }}>
+                      {row.margin !== null ? <span style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 16, color: "rgba(255,255,255,0.4)" }}>+{row.margin.toFixed(1)}%</span> : <span style={{ color: "rgba(255,255,255,0.15)" }}>—</span>}
+                    </td>
+                  </tr>
                 );
               })}
-            </div>
-            {raceRule === "MAJORITY" && (
-              <div style={{ marginBottom: 14, padding: "10px 12px", background: "rgba(245,158,11,0.05)", border: "1px solid rgba(245,158,11,0.15)" }}>
-                <div style={{ fontFamily: "var(--font-body)", fontSize: "7px", fontWeight: 700, letterSpacing: "0.24em", textTransform: "uppercase", color: "rgba(245,158,11,0.7)", marginBottom: 8 }}>RUNOFF PROBABILITY</div>
-                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 5 }}><span style={{ fontFamily: "var(--font-body)", fontSize: "7.5px", letterSpacing: "0.12em", textTransform: "uppercase", color: "rgba(255,255,255,0.4)" }}>Runoff needed</span><span style={{ fontFamily: "var(--font-body)", fontSize: "12px", fontWeight: 900, color: "#f59e0b" }}>{fcastPct(forecast.forecast.runoff_needed_prob)}</span></div>
-                <div style={{ height: 3, background: "rgba(255,255,255,0.07)", overflow: "hidden", marginBottom: 8 }}><div style={{ height: "100%", width: fcastPct(Math.min(forecast.forecast.runoff_needed_prob, 1)), background: "#f59e0b", transition: "width 600ms ease" }} /></div>
-                {FORECAST_CANDIDATE_KEYS.map(k => forecast.forecast.runoff_prob[k] > 0.005 ? (
-                  <div key={k} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 3 }}>
-                    <div style={{ display: "flex", alignItems: "center", gap: 5 }}><span style={{ width: 5, height: 5, borderRadius: "50%", background: candidateColors[k], display: "inline-block" }} /><span style={{ fontFamily: "var(--font-body)", fontSize: "8px", letterSpacing: "0.08em", textTransform: "uppercase", color: "rgba(255,255,255,0.45)" }}>{candidateLabels[k]}</span></div>
-                    <span style={{ fontFamily: "var(--font-body)", fontSize: "9px", fontWeight: 700, color: candidateColors[k] }}>{fcastPct(forecast.forecast.runoff_prob[k])}</span>
-                  </div>
-                ) : null)}
-              </div>
-            )}
-            <div style={{ padding: "10px 12px", background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.06)", marginBottom: 14 }}>
-              <div style={{ fontFamily: "var(--font-body)", fontSize: "7px", fontWeight: 700, letterSpacing: "0.26em", textTransform: "uppercase", color: "rgba(255,255,255,0.25)", marginBottom: 8 }}>MODEL STATISTICS</div>
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "4px 16px" }}>
-                {[["TOTAL", fcastFmt(forecast.forecast.modeled_total_vote)], ["REMAINING", fcastFmt(forecast.forecast.modeled_vote_remaining)], ["MARGIN", `${fcastFmt(forecast.forecast.projected_margin_votes)} (${fcastPct(forecast.forecast.projected_margin_pct)})`], ["STD DEV", fcastFmt(forecast.forecast.sd_race)]].map(([label, val]) => (
-                  <div key={label} style={{ paddingBottom: 4, borderBottom: "1px solid rgba(255,255,255,0.04)" }}>
-                    <div style={{ fontFamily: "var(--font-body)", fontSize: "6.5px", fontWeight: 700, letterSpacing: "0.20em", textTransform: "uppercase", color: "rgba(255,255,255,0.25)", marginBottom: 2 }}>{label}</div>
-                    <div style={{ fontFamily: "var(--font-body)", fontSize: "10px", fontWeight: 700, color: "rgba(255,255,255,0.70)" }}>{val}</div>
-                  </div>
-                ))}
-              </div>
-            </div>
-            {timestamps.length > 1 && (
-              <div style={{ padding: "10px 12px", background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.06)" }}>
-                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 10 }}>
-                  <div style={{ fontFamily: "var(--font-body)", fontSize: "7px", fontWeight: 700, letterSpacing: "0.26em", textTransform: "uppercase", color: "rgba(255,255,255,0.25)" }}>HISTORICAL PLAYBACK</div>
-                  <button className="res-btn-ghost" style={{ padding: "3px 9px", fontSize: "8px" }} onClick={() => { if (playing) { setPlaying(false); return; } if (historyIndex >= timestamps.length - 1) setHistoryIndex(0); setPlaying(true); }}>{playing ? "⏹ STOP" : "▶ PLAY"}</button>
-                </div>
-                <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 5 }}><span className="res-note">{fcastShortDate(timestamps[0])}</span><span className="res-note">{fcastShortDate(timestamps[timestamps.length - 1])}</span></div>
-                <input type="range" min={0} max={timestamps.length - 1} value={historyIndex} onChange={(e) => { const idx = Number(e.target.value); setHistoryIndex(idx); historyIndexRef.current = idx; const hl = historyListRef.current; if (hl) runForecastAtIndex(raceIdRef.current, hl.timestamps, idx); }} style={{ width: "100%", accentColor: "var(--purple)", height: "4px", cursor: "pointer" }} />
-                <div className="res-note" style={{ textAlign: "center", marginTop: 6, color: "var(--purple-soft)" }}>{fcastShortDate(timestamps[historyIndex])} · {historyIndex + 1}/{timestamps.length}</div>
-              </div>
-            )}
-            {timestamps.length === 0 && <div className="res-note" style={{ textAlign: "center", fontStyle: "italic", paddingTop: 4 }}>No history snapshots — live data only</div>}
-          </>
-        )}
-      </div>
-    </div>
-  );
-}
-
-// ─── RACE PICKER PANEL ────────────────────────────────────────────────────────
-function RaceScrollWindow({ races, raceCache, selectedId, onSelect, search, onSearchChange, maxHeight }: {
-  races: FeaturedRace[]; raceCache: Record<number, RaceDetail | undefined>; selectedId: number;
-  onSelect: (id: number) => void; search: string; onSearchChange: (v: string) => void; maxHeight?: number;
-}) {
-  const filtered = races.filter(r => !search || r.office.toLowerCase().includes(search.toLowerCase()) || r.raceType.toLowerCase().includes(search.toLowerCase()));
-  const groups = filtered.reduce<{ office: string; races: FeaturedRace[] }[]>((acc, r) => {
-    const last = acc[acc.length - 1];
-    if (last && last.office === r.office) last.races.push(r);
-    else acc.push({ office: r.office, races: [r] });
-    return acc;
-  }, []);
-  return (
-    <>
-      <div style={{ padding: "6px 10px", borderBottom: "1px solid var(--border)", background: "var(--background2)", flexShrink: 0, display: "flex", alignItems: "center", gap: 8 }}>
-        <svg width="10" height="10" viewBox="0 0 16 16" fill="none" style={{ flexShrink: 0, opacity: 0.3 }}>
-          <circle cx="6.5" cy="6.5" r="5" stroke="white" strokeWidth="1.5"/>
-          <line x1="10.5" y1="10.5" x2="14" y2="14" stroke="white" strokeWidth="1.5" strokeLinecap="round"/>
-        </svg>
-        <input type="text" placeholder="Search races…" value={search} onChange={e => onSearchChange(e.target.value)}
-          style={{ flex: 1, background: "none", border: "none", outline: "none", fontFamily: "var(--font-body)", fontSize: "9px", fontWeight: 600, letterSpacing: "0.06em", color: "var(--foreground)", caretColor: "var(--purple-soft)" }} />
-        {search && <button onClick={() => onSearchChange("")} style={{ background: "none", border: "none", cursor: "pointer", color: "rgba(255,255,255,0.3)", fontSize: 11, padding: 0, lineHeight: 1 }}>✕</button>}
-      </div>
-      <div style={{ overflowY: "auto", flex: 1, maxHeight: maxHeight }}>
-        {groups.map(({ office, races: groupRaces }) => (
-          <div key={office}>
-            <div style={{ padding: "4px 10px 2px", fontFamily: "var(--font-body)", fontSize: "6px", fontWeight: 700, letterSpacing: "0.26em", textTransform: "uppercase", color: "rgba(255,255,255,0.18)", borderTop: "1px solid rgba(255,255,255,0.04)", marginTop: 2 }}>{office}</div>
-            {groupRaces.map(r => {
-              const liveData = raceCache[r.id];
-              const winner = liveData?.candidates?.find(c => c.winner);
-              const reporting = getRaceReportingPct(liveData);
-              const isSelected = r.id === selectedId;
-              const raceTypeColor = getRaceTypeColor(r.raceType);
-              const raceTypeShort = getRaceTypeShort(r.raceType);
-              const hasForecast = !!RACE_FORECAST_DEFAULTS[r.id];
-              return (
-                <button key={r.id} onClick={() => onSelect(r.id)} style={{ display: "flex", alignItems: "center", width: "100%", padding: "6px 10px", background: isSelected ? "rgba(124,58,237,0.10)" : "transparent", border: "none", borderLeft: isSelected ? "2px solid var(--purple)" : "2px solid transparent", cursor: "pointer", textAlign: "left", transition: "background 100ms ease" }}>
-                  <span style={{ flexShrink: 0, width: 16, height: 16, borderRadius: 2, background: `${raceTypeColor}22`, border: `1px solid ${raceTypeColor}44`, display: "flex", alignItems: "center", justifyContent: "center", marginRight: 8, fontFamily: "var(--font-body)", fontSize: "6.5px", fontWeight: 900, color: raceTypeColor }}>{raceTypeShort}</span>
-                  <div style={{ flex: 1, minWidth: 0 }}>
-                    <div style={{ display: "flex", alignItems: "center", gap: 4, marginBottom: 2 }}>
-                      <span style={{ fontFamily: "var(--font-body)", fontSize: "8.5px", fontWeight: isSelected ? 800 : 600, color: isSelected ? "#fff" : "rgba(255,255,255,0.65)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{r.raceType} </span>
-                      {hasForecast && <span style={{ flexShrink: 0, display: "inline-flex", padding: "0px 4px", border: "1px solid rgba(124,58,237,0.45)", background: "rgba(124,58,237,0.10)", fontFamily: "var(--font-body)", fontSize: "5px", fontWeight: 700, letterSpacing: "0.12em", color: "var(--purple-soft)" }}>FORECAST β</span>}
-                    </div>
-                    <div style={{ height: 2, background: "rgba(255,255,255,0.07)", overflow: "hidden" }}>
-                      <div style={{ height: "100%", width: `${reporting ?? 0}%`, background: winner ? "var(--win)" : raceTypeColor, opacity: 0.75, transition: "width 800ms ease" }} />
-                    </div>
-                  </div>
-                  <div style={{ flexShrink: 0, marginLeft: 8 }}>
-                    {winner ? <span style={{ fontFamily: "var(--font-body)", fontSize: "6px", fontWeight: 700, color: "var(--win)" }}>✓</span>
-                      : <span style={{ fontFamily: "var(--font-body)", fontSize: "7.5px", fontWeight: 700, color: isSelected ? "rgba(255,255,255,0.5)" : "rgba(255,255,255,0.2)" }}>{reporting !== null ? `${reporting.toFixed(0)}%` : "—"}</span>}
-                  </div>
-                </button>
-              );
-            })}
-          </div>
-        ))}
-      </div>
-    </>
-  );
-}
-
-function RacePickerPanel({ races, raceCache, selectedId, onSelect }: {
-  races: FeaturedRace[];
-  raceCache: Record<number, RaceDetail | undefined>;
-  selectedId: number;
-  onSelect: (id: number) => void;
-}) {
-  const [search, setSearch] = useState("");
-  const searchRef = useRef<HTMLInputElement>(null);
-
-  const groups = useMemo(() => {
-    const q = search.trim().toLowerCase();
-    const filtered = q
-      ? races.filter(r => r.office.toLowerCase().includes(q) || r.raceType.toLowerCase().includes(q) || r.label.toLowerCase().includes(q))
-      : races;
-    const map = new Map<string, FeaturedRace[]>();
-    for (const r of filtered) {
-      const g = map.get(r.office) ?? [];
-      g.push(r);
-      map.set(r.office, g);
-    }
-    return Array.from(map.entries());
-  }, [races, search]);
-
-  useEffect(() => {
-    const handler = (e: KeyboardEvent) => {
-      if ((e.key === "/" || ((e.metaKey || e.ctrlKey) && e.key === "k")) && document.activeElement !== searchRef.current) {
-        e.preventDefault();
-        searchRef.current?.focus();
-      }
-    };
-    window.addEventListener("keydown", handler);
-    return () => window.removeEventListener("keydown", handler);
-  }, []);
-
-  return (
-    <div style={{ display: "flex", flexDirection: "column", height: "100%", minHeight: 0, background: "var(--panel)", border: "1px solid var(--border)", overflow: "hidden" }}>
-      <div style={{ padding: "10px 12px", borderBottom: "1px solid var(--border)", background: "var(--background2)", flexShrink: 0 }}>
-        <div className="res-panel-tag" style={{ marginBottom: 8 }}>ALL RACES</div>
-        <div style={{ display: "flex", alignItems: "center", gap: 8, background: "rgba(255,255,255,0.03)", border: "1px solid var(--border)", padding: "6px 10px" }}>
-          <svg width="11" height="11" viewBox="0 0 16 16" fill="none" style={{ flexShrink: 0, opacity: 0.4 }}>
-            <circle cx="6.5" cy="6.5" r="5" stroke="white" strokeWidth="1.5" />
-            <line x1="10.5" y1="10.5" x2="14" y2="14" stroke="white" strokeWidth="1.5" strokeLinecap="round" />
-          </svg>
-          <input
-            ref={searchRef}
-            value={search}
-            onChange={e => setSearch(e.target.value)}
-            placeholder="Filter races…"
-            style={{ flex: 1, background: "transparent", border: "none", outline: "none", fontFamily: "var(--font-body)", fontSize: "9px", fontWeight: 600, letterSpacing: "0.08em", color: "var(--foreground)", caretColor: "var(--purple-soft)" }}
-          />
-          {search && (
-            <button onClick={() => setSearch("")} style={{ background: "none", border: "none", cursor: "pointer", color: "rgba(255,255,255,0.3)", padding: 0, fontSize: 11, lineHeight: 1 }}>✕</button>
-          )}
+            </tbody>
+          </table>
         </div>
-      </div>
-      <div style={{ flex: 1, overflowY: "auto", padding: "6px 0" }}>
-        {groups.length === 0 && (
-          <div style={{ padding: "20px 12px", textAlign: "center" }}>
-            <span className="res-note" style={{ color: "rgba(255,255,255,0.2)" }}>NO RACES FOUND</span>
-          </div>
-        )}
-        {groups.map(([office, groupRaces]) => (
-          <div key={office} style={{ marginBottom: 2 }}>
-            <div style={{ padding: "5px 12px 3px", fontFamily: "var(--font-body)", fontSize: "6.5px", fontWeight: 700, letterSpacing: "0.28em", textTransform: "uppercase", color: "rgba(255,255,255,0.18)", borderTop: "1px solid rgba(255,255,255,0.04)", marginTop: 4 }}>
-              {office}
-            </div>
-            {groupRaces.map(r => {
-              const liveData = raceCache[r.id];
-              const winner = liveData?.candidates?.find(c => c.winner);
-              const reporting = getRaceReportingPct(liveData);
-              const leader = liveData?.candidates ? [...liveData.candidates].sort((a, b) => (b.percent ?? 0) - (a.percent ?? 0))[0] : null;
-              const isSelected = r.id === selectedId;
-              const raceTypeColor = getRaceTypeColor(r.raceType);
-              const raceTypeShort = getRaceTypeShort(r.raceType);
-              return (
-                <button
-                  key={r.id}
-                  onClick={() => onSelect(r.id)}
-                  style={{ display: "flex", alignItems: "center", width: "100%", gap: 0, padding: "7px 12px", background: isSelected ? `rgba(124,58,237,0.10)` : "transparent", border: "none", borderLeft: isSelected ? "2px solid var(--purple)" : "2px solid transparent", cursor: "pointer", textAlign: "left", transition: "background 100ms ease, border-color 100ms ease", position: "relative" }}
-                  onMouseEnter={e => { if (!isSelected) (e.currentTarget as HTMLButtonElement).style.background = "rgba(255,255,255,0.03)"; }}
-                  onMouseLeave={e => { if (!isSelected) (e.currentTarget as HTMLButtonElement).style.background = "transparent"; }}
-                >
-                  <span style={{ flexShrink: 0, width: 18, height: 18, borderRadius: 2, background: raceTypeColor + "22", border: `1px solid ${raceTypeColor}44`, display: "flex", alignItems: "center", justifyContent: "center", marginRight: 9, fontFamily: "var(--font-body)", fontSize: "7px", fontWeight: 900, color: raceTypeColor, letterSpacing: 0 }}>{raceTypeShort}</span>
-                  <div style={{ flex: 1, minWidth: 0 }}>
-                    <div style={{ fontFamily: "var(--font-body)", fontSize: "9px", fontWeight: isSelected ? 800 : 600, letterSpacing: "0.04em", color: isSelected ? "#fff" : "rgba(255,255,255,0.65)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", marginBottom: 3 }}>
-                      {r.raceType}
-                    </div>
-                    <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                      <div style={{ flex: 1, height: 2, background: "rgba(255,255,255,0.07)", overflow: "hidden", maxWidth: 60 }}>
-                        <div style={{ height: "100%", width: `${reporting ?? 0}%`, background: winner ? "var(--win)" : raceTypeColor, opacity: 0.8, transition: "width 800ms ease" }} />
-                      </div>
-                      {winner ? (
-                        <span style={{ fontFamily: "var(--font-body)", fontSize: "6.5px", fontWeight: 700, color: "var(--win)", letterSpacing: "0.12em" }}>✓ CALLED</span>
-                      ) : leader && (reporting ?? 0) > 0 ? (
-                        <span style={{ fontFamily: "var(--font-body)", fontSize: "6.5px", fontWeight: 600, color: "rgba(255,255,255,0.3)", letterSpacing: "0.08em" }}>
-                          {leader.name.split(" ").pop()} {fmtPct(leader.percent)}
-                        </span>
-                      ) : (
-                        <span style={{ fontFamily: "var(--font-body)", fontSize: "6.5px", fontWeight: 600, color: "rgba(255,255,255,0.2)", letterSpacing: "0.08em" }}>
-                          {reporting !== null ? `${reporting.toFixed(0)}% IN` : "PENDING"}
-                        </span>
-                      )}
-                    </div>
-                  </div>
-                  {RACE_FORECAST_DEFAULTS[r.id] && (
-                    <span style={{ flexShrink: 0, marginLeft: 4, display: "inline-flex", alignItems: "center", padding: "1px 5px", border: "1px solid rgba(124,58,237,0.45)", background: "rgba(124,58,237,0.10)", fontFamily: "var(--font-body)", fontSize: "5.5px", fontWeight: 700, letterSpacing: "0.14em", color: "var(--purple-soft)", whiteSpace: "nowrap" }}>FORECAST β</span>
-                  )}
-                </button>
-              );
-            })}
-          </div>
-        ))}
-      </div>
+      )}
     </div>
   );
 }
 
-// ─── MAIN PAGE ───────────────────────────────────────────────────────────────
+// ─── MAIN PAGE ─────────────────────────────────────────────────────────────────
 export default function March17FeaturedClient() {
-  const [activeState] = useState<"IL">("IL");
-  const [selectedId, setSelectedId] = useState<number>(55550); // default: IL Senate D primary
+  const [selectedId, setSelectedId] = useState<number>(55550);
   const [error, setError] = useState<string | null>(null);
   const [loadingMap, setLoadingMap] = useState(false);
   const [raceCache, setRaceCache] = useState<Record<number, RaceDetail | undefined>>({});
   const [mapBlankSvg, setMapBlankSvg] = useState<string | null>(null);
   const [mapLoadPct, setMapLoadPct] = useState(0);
   const [nowMs, setNowMs] = useState(0);
-  const [countyCollapsed, setCountyCollapsed] = useState(false);
-  const [scrollWindowSearch, setScrollWindowSearch] = useState("");
-  useEffect(() => { setNowMs(Date.now()); }, []);
-
   const [refreshTick, setRefreshTick] = useState(0);
   const [overlay, setOverlay] = useState<null | { id: number; name: string; prob: number; color: string; reporting: number }>(null);
   const lastProjectedKeyRef = useRef<string>("");
 
-  // All races are IL
+  useEffect(() => { setNowMs(Date.now()); }, []);
   const racesForState = useMemo(() => FEATURED.filter(r => r.state === "IL"), []);
-
   const selectedRace = raceCache[selectedId];
-  const selectedMeta = useMemo(() => FEATURED.find((r) => r.id === selectedId), [selectedId]);
+  const selectedMeta = useMemo(() => FEATURED.find(r => r.id === selectedId), [selectedId]);
   const hasForecastForSelected = !!RACE_FORECAST_DEFAULTS[selectedId];
 
   async function refreshFeatured() {
     try {
-      const results = await Promise.all(FEATURED.map((r) => fetchRaceById(r.id).then((d) => [r.id, d] as const)));
+      const results = await Promise.all(FEATURED.map(r => fetchRaceById(r.id).then(d => [r.id, d] as const)));
       setRaceCache(Object.fromEntries(results));
-      setRefreshTick((t) => t + 1);
+      setRefreshTick(t => t + 1);
     } catch (e: any) { setError(e?.message ?? "Error refreshing."); }
   }
 
@@ -1389,24 +602,23 @@ export default function March17FeaturedClient() {
   useLayoutEffect(() => { setLoadingMap(true); setMapBlankSvg(null); setMapLoadPct(0); }, [selectedId]);
 
   useEffect(() => {
-    let cancelled = false, raf: number | null = null, interval: any = null;
+    let cancelled = false, interval: any = null;
     async function loadMap() {
       const start = performance.now();
-      interval = setInterval(() => { const elapsed = performance.now() - start; const eased = Math.min(92, 10 + (elapsed / 1200) * 82); setMapLoadPct((p) => (p < eased ? eased : p)); }, 60);
+      interval = setInterval(() => { const elapsed = performance.now() - start; const eased = Math.min(92, 10 + (elapsed / 1200) * 82); setMapLoadPct(p => p < eased ? eased : p); }, 60);
       const svg = await fetchRaceMapBlankSvg(selectedId);
       if (cancelled) return;
-      if (interval) clearInterval(interval);
-      setMapBlankSvg(svg); setMapLoadPct(100);
-      raf = requestAnimationFrame(() => { if (!cancelled) setLoadingMap(false); });
+      clearInterval(interval); setMapBlankSvg(svg); setMapLoadPct(100);
+      requestAnimationFrame(() => { if (!cancelled) setLoadingMap(false); });
     }
     loadMap();
-    return () => { cancelled = true; if (interval) clearInterval(interval); if (raf) cancelAnimationFrame(raf); };
+    return () => { cancelled = true; if (interval) clearInterval(interval); };
   }, [selectedId]);
 
   useEffect(() => {
     const race = selectedRace; if (!race?.candidates?.length) return;
     const reporting = race.percent_reporting ?? 0;
-    if (race.candidates.find((c) => c.winner)) return; if (reporting < 5) return;
+    if (race.candidates.find(c => c.winner)) return; if (reporting < 5) return;
     const ordered = [...race.candidates].sort((a, b) => (b.percent ?? 0) - (a.percent ?? 0));
     if (ordered.length < 2) return;
     const leader = ordered[0], runnerUp = ordered[1];
@@ -1415,7 +627,7 @@ export default function March17FeaturedClient() {
     const key = `${selectedId}:${leader.name}:${Math.floor(prob)}:${Math.floor(reporting)}`;
     if (key === lastProjectedKeyRef.current) return;
     lastProjectedKeyRef.current = key;
-    setOverlay({ id: selectedId, name: leader.name, prob, color: leader.color || "var(--purple-soft)", reporting });
+    setOverlay({ id: selectedId, name: leader.name, prob, color: leader.color || "#5b8fd4", reporting });
     const t = setTimeout(() => setOverlay(null), 5200);
     return () => clearTimeout(t);
   }, [selectedRace, selectedId]);
@@ -1424,474 +636,224 @@ export default function March17FeaturedClient() {
   const selectedCloseDate = parseIsoDate(selectedRace?.polls_close ?? null);
   const selectedCloseLocal = selectedCloseDate ? formatLocalCloseTime(selectedCloseDate) : "—";
   const selectedMsLeft = selectedCloseDate ? selectedCloseDate.getTime() - nowMs : null;
-  const selectedProj = useMemo(() => {
-    if (!selectedRace) return null;
-    const reporting = selectedRace.percent_reporting ?? 0;
-    if (reporting < 5) return null;
-    return getRaceProjectionAlways(selectedRace);
-  }, [selectedRace]);
-  const selectedWinner = selectedRace?.candidates?.find((c) => c.winner);
-  const selectedRaceIsMajority = RACE_FORECAST_DEFAULTS[selectedId]?.raceRule === "MAJORITY";
-  const selectedWinners = selectedRace?.candidates?.filter((c) => c.winner) ?? [];
-  const isRunoffConfirmed = selectedRaceIsMajority && selectedWinners.length >= 2;
-  const [forecastProj, setForecastProj] = useState<{ leader: string; prob: number; runoffNeededProb: number; projectionType: "WIN" | "RUNOFF" } | null>(null);
-  useEffect(() => { setForecastProj(null); }, [selectedId]);
-  const showProjectionDebug = process.env.NODE_ENV !== "production";
+  const selectedWinner = selectedRace?.candidates?.find(c => c.winner);
+  const timeStr = nowMs > 0 ? new Date(nowMs).toLocaleTimeString("en-US", { hour12: true, hour: "2-digit", minute: "2-digit", second: "2-digit" }) : "--:--:--";
+  const raceTypeColor = getRaceTypeColor(selectedMeta?.raceType ?? "General Election");
 
-  const timeStr = nowMs > 0
-    ? new Date(nowMs).toLocaleTimeString("en-US", { hour12: false, hour: "2-digit", minute: "2-digit", second: "2-digit" })
-    : "--:--:--";
+  const countyData = useMemo(() => {
+    return coerceRegionResults(selectedRace?.region_results ?? []).map((rr) => {
+      const candidates = buildTooltipLines(rr);
+      const { absMargin } = computeCountyMargin(rr);
+      const rawName = (rr as any)?.region?.name || (rr as any)?.name || "Unknown";
+      return { name: titleCaseKey(rawName), reporting: rr?.region?.percent_reporting ?? (rr as any)?.percent_reporting ?? 0, candidates, margin: absMargin };
+    }).sort((a, b) => a.name.localeCompare(b.name));
+  }, [selectedRace]);
+
+  // Sort candidates for top display
+  const topCandidates = useMemo(() => {
+    if (!selectedRace?.candidates?.length) return [];
+    const defaults = RACE_FORECAST_DEFAULTS[selectedId];
+    return sortCandidatesByPollData(selectedRace.candidates, defaults?.pollAvg);
+  }, [selectedRace, selectedId]);
+
+  const leader = topCandidates[0];
+  const runnerUp = topCandidates[1];
 
   return (
     <>
       <style>{`
-        .res-root {
-          --background: #070709; --background2: #0b0b0f; --panel: #0f0f15; --panel2: #141420;
-          --foreground: #f0f0f5; --muted: rgba(240,240,245,0.62); --muted2: rgba(240,240,245,0.40);
-          --muted3: rgba(240,240,245,0.22); --border: rgba(255,255,255,0.09); --border2: rgba(255,255,255,0.15);
-          --border3: rgba(255,255,255,0.22); --purple: #7c3aed; --purple2: #9d5cf0;
-          --purple-soft: #a78bfa; --purple-dim: rgba(124,58,237,0.14); --red: #e63946; --red2: #ff4d5a;
-          --blue: #2563eb; --blue2: #3b82f6; --win: #4ade80; --rep: #e63946; --dem: #3b82f6;
-          --shadow-md: 0 10px 40px rgba(0,0,0,0.75);
-        }
-        @keyframes res-fade-up { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
-        @keyframes res-pulse { 0%,100% { opacity:1; transform:scale(1); } 50% { opacity:0.35; transform:scale(0.82); } }
-        @keyframes county-pop { 0% { filter:brightness(1); } 40% { filter:brightness(2.2) saturate(1.4); } 100% { filter:brightness(1); } }
-        @keyframes res-loading-pulse { 0%,100% { opacity:0.4; } 50% { opacity:1; } }
-        .county-pop { animation: county-pop 520ms ease-out; }
-        @keyframes county-updated { 0% { filter:brightness(1) saturate(1); } 12% { filter:brightness(3.2) saturate(2.0); } 35% { filter:brightness(2.0) saturate(1.4); } 100% { filter:brightness(1) saturate(1); } }
-        .county-updated { animation: county-updated 1200ms cubic-bezier(0.22,1,0.36,1); }
-        .res-tri-stripe { height:3px; width:100%; background:linear-gradient(90deg,var(--red) 0%,var(--red) 33.33%,var(--purple) 33.33%,var(--purple) 66.66%,var(--blue) 66.66%,var(--blue) 100%); flex-shrink:0; }
-        .res-live-dot { display:inline-block; width:6px; height:6px; border-radius:50%; background:var(--rep); box-shadow:0 0 8px rgba(230,57,70,0.7); animation:res-pulse 1.8s ease-in-out infinite; flex-shrink:0; }
-        .res-eyebrow { display:flex; align-items:center; gap:7px; font-family:var(--font-body); font-size:8.5px; font-weight:700; letter-spacing:0.30em; text-transform:uppercase; color:var(--muted3); }
-        .res-note { font-family:var(--font-body); font-size:8.5px; letter-spacing:0.16em; text-transform:uppercase; color:var(--muted3); }
-        .res-th { font-family:var(--font-body); font-size:7.5px; font-weight:700; letter-spacing:0.24em; text-transform:uppercase; color:var(--muted3); }
-        .res-num { font-family:var(--font-body); font-size:10.5px; color:var(--muted); font-variant-numeric:tabular-nums; }
-        .res-pct-big { font-family:var(--font-body); font-size:13px; font-weight:900; color:#fff; font-variant-numeric:tabular-nums; }
-        .res-pct-xl { font-family:var(--font-body); font-size:clamp(22px,2.5vw,30px); font-weight:900; color:#fff; font-variant-numeric:tabular-nums; line-height:1; }
-        .res-pct-topline { font-family:var(--font-body); font-size:clamp(20px,2.2vw,28px); font-weight:900; color:#fff; font-variant-numeric:tabular-nums; line-height:1; }
-        .res-stat-label { font-family:var(--font-body); font-size:7.5px; font-weight:700; letter-spacing:0.26em; text-transform:uppercase; color:var(--muted3); }
-        .res-stat-val { font-family:var(--font-body); font-size:10px; font-weight:700; letter-spacing:0.14em; color:var(--muted); }
-        .res-stat-row { display:flex; align-items:center; justify-content:space-between; }
-        .res-badge { display:inline-flex; align-items:center; gap:4px; padding:2px 6px; font-family:var(--font-body); font-size:7.5px; font-weight:700; letter-spacing:0.20em; text-transform:uppercase; border:1px solid var(--border); background:rgba(255,255,255,0.03); color:var(--muted3); }
-        .res-badge-purple { border-color:rgba(124,58,237,0.40); background:rgba(124,58,237,0.08); color:var(--purple-soft); }
-        .res-badge-win { border-color:rgba(74,222,128,0.28); background:rgba(74,222,128,0.08); color:var(--win); }
-        .res-badge-red { border-color:rgba(230,57,70,0.30); background:rgba(230,57,70,0.08); color:var(--rep); }
-        .res-badge-blue { border-color:rgba(59,130,246,0.30); background:rgba(59,130,246,0.08); color:var(--dem); }
-        .res-bar-track { width:100%; height:3px; background:rgba(255,255,255,0.08); position:relative; overflow:hidden; }
-        .res-bar-fill { position:absolute; top:0; left:0; bottom:0; background:var(--purple); transition:width 600ms cubic-bezier(0.22,1,0.36,1); }
-        .res-panel { background:var(--panel); border:1px solid var(--border); overflow:hidden; animation:res-fade-up 0.5s cubic-bezier(0.22,1,0.36,1) both; }
-        .res-panel-header { display:flex; align-items:center; justify-content:space-between; padding:10px 14px; border-bottom:1px solid var(--border); background:var(--background2); }
-        .res-panel-tag { font-family:var(--font-body); font-size:8px; font-weight:700; letter-spacing:0.28em; text-transform:uppercase; color:var(--purple-soft); }
-        .res-stat-block { background:rgba(255,255,255,0.025); border:1px solid var(--border); padding:10px 12px; }
-        .res-stat-block-label { font-family:var(--font-body); font-size:7.5px; font-weight:700; letter-spacing:0.26em; text-transform:uppercase; color:var(--muted3); margin-bottom:4px; }
-        .res-stat-block-val { font-family:var(--font-body); font-size:clamp(20px,2.5vw,28px); font-weight:900; color:#fff; line-height:1; font-variant-numeric:tabular-nums; }
-        .res-btn-primary { display:inline-flex; align-items:center; gap:6px; padding:9px 18px; background:var(--purple); border:1px solid rgba(124,58,237,0.65); color:#fff; font-family:var(--font-body); font-size:9px; font-weight:700; letter-spacing:0.20em; text-transform:uppercase; cursor:pointer; transition:background 140ms ease,transform 140ms ease; }
-        .res-btn-primary:hover { background:var(--purple2); transform:translateY(-1px); }
-        .res-btn-ghost { display:inline-flex; align-items:center; gap:6px; padding:7px 12px; background:transparent; border:1px solid var(--border); color:var(--muted3); font-family:var(--font-body); font-size:9px; font-weight:700; letter-spacing:0.18em; text-transform:uppercase; cursor:pointer; transition:all 140ms ease; }
-        .res-btn-ghost:hover { border-color:var(--border2); color:var(--muted); }
-        .res-close-btn { display:inline-flex; align-items:center; padding:7px 12px; background:rgba(255,255,255,0.04); border:1px solid var(--border); color:var(--muted2); font-family:var(--font-body); font-size:8.5px; font-weight:700; letter-spacing:0.18em; text-transform:uppercase; cursor:pointer; flex-shrink:0; transition:all 120ms ease; }
-        .res-close-btn:hover { border-color:var(--border2); color:rgba(255,255,255,0.7); }
-        .res-overlay-card { background:var(--panel); border:1px solid rgba(124,58,237,0.45); box-shadow:0 0 80px rgba(124,58,237,0.25),0 30px 80px rgba(0,0,0,0.8); }
-        .res-overlay-title { font-family:var(--font-body); font-size:clamp(32px,4vw,48px); font-weight:900; text-transform:uppercase; letter-spacing:0.02em; color:#fff; line-height:0.92; }
-        .res-overlay-name { font-family:var(--font-body); font-size:clamp(18px,2.5vw,26px); font-weight:700; text-transform:uppercase; letter-spacing:0.06em; }
-        .res-map-tooltip { background:rgba(8,8,14,0.96); border:1px solid rgba(124,58,237,0.45); box-shadow:0 20px 60px rgba(0,0,0,0.85); }
-        .res-tooltip-title { font-family:var(--font-body); font-size:11px; font-weight:900; text-transform:uppercase; letter-spacing:0.08em; color:#fff; }
-        .res-reporting-row { display:flex; align-items:center; justify-content:space-between; }
-        .res-candidate-list { border:1px solid var(--border); background:var(--panel); overflow:hidden; }
-        .res-candidate-row { display:flex; align-items:center; gap:0; border-bottom:1px solid rgba(255,255,255,0.07); padding:10px 14px; transition:background 120ms ease; position:relative; }
-        .res-candidate-row:last-child { border-bottom:none; }
-        .res-candidate-row:hover { background:rgba(255,255,255,0.015); }
-        .res-cand-bar { width:3px; height:100%; position:absolute; left:0; top:0; bottom:0; opacity:0.7; }
-        .res-cand-dot { display:inline-block; width:8px; height:8px; border-radius:50%; flex-shrink:0; }
-        .res-cand-name { font-family:var(--font-body); font-size:10.5px; font-weight:700; letter-spacing:0.08em; color:rgba(255,255,255,0.85); }
-        .res-cand-name-lg { font-family:var(--font-body); font-size:11px; font-weight:900; letter-spacing:0.06em; text-transform:uppercase; color:rgba(255,255,255,0.9); }
-        .res-cand-party { font-family:var(--font-body); font-size:8px; letter-spacing:0.16em; text-transform:uppercase; color:var(--muted3); margin-top:1px; }
-        .res-thead { position:sticky; top:0; background:var(--background2); border-bottom:1px solid var(--border); }
-        .res-table-row { border-bottom:1px solid rgba(255,255,255,0.04); transition:background 100ms ease; }
-        .res-table-row:hover { background:rgba(255,255,255,0.012); }
-        .res-input { width:100%; background:rgba(255,255,255,0.03); border:1px solid var(--border); color:var(--foreground); padding:8px 12px; font-family:var(--font-body); font-size:10px; letter-spacing:0.10em; outline:none; transition:border-color 140ms ease; }
-        .res-input:focus { border-color:rgba(124,58,237,0.40); }
-        .res-input::placeholder { color:var(--muted3); }
-        .res-select { background:rgba(255,255,255,0.03); border:1px solid var(--border); color:var(--muted2); padding:7px 10px; font-family:var(--font-body); font-size:9px; letter-spacing:0.10em; outline:none; }
-        .res-error { border:1px solid rgba(230,57,70,0.25); background:rgba(230,57,70,0.06); color:rgba(255,77,90,0.90); padding:12px 16px; font-family:var(--font-body); font-size:10.5px; letter-spacing:0.12em; }
-        .res-map-loading { display:flex; align-items:center; justify-content:center; aspect-ratio:4/3; background:rgba(0,0,0,0.30); border:1px solid var(--border); }
-        .res-map-wrap { background:rgba(0,0,0,0.20); border:1px solid var(--border); padding:6px; }
-        .res-status-bar { background:var(--background2); border-bottom:1px solid var(--border); padding:7px 0; }
-        .res-status-bar-inner { max-width:1800px; margin:0 auto; padding:0 20px; display:flex; align-items:center; justify-content:space-between; gap:12px; }
-        .res-page-header { border-bottom:1px solid var(--border); background:var(--background2); position:relative; overflow:hidden; }
-        .res-page-header::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse 40% 80% at 0% 50%,rgba(230,57,70,0.04) 0%,transparent 70%),radial-gradient(ellipse 40% 80% at 100% 50%,rgba(37,99,235,0.05) 0%,transparent 70%); pointer-events:none; }
-        .res-page-header-inner { max-width:1800px; margin:0 auto; padding:16px 20px; position:relative; }
-        .res-page-title { font-family:var(--font-display); font-size:clamp(22px,2.8vw,44px); font-weight:900; text-transform:uppercase; letter-spacing:0.01em; color:#fff; line-height:0.92; margin:0; }
-        .res-page-title em { font-style:normal; background:linear-gradient(100deg,var(--red2) 0%,var(--purple-soft) 50%,var(--blue2) 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
-        .res-page-sub { font-family:var(--font-body); font-size:8px; font-weight:700; letter-spacing:0.30em; text-transform:uppercase; color:var(--purple-soft); margin-bottom:8px; }
-        .res-body { max-width:1800px; margin:0 auto; display:grid; grid-template-columns:minmax(190px,22%) 1fr minmax(280px,22%); grid-template-rows:auto; align-items:start; gap:8px; padding:8px 10px; box-sizing:border-box; }
-        .res-race-picker { display:flex; flex-direction:column; min-height:0; height:1216px; overflow:hidden; align-self:start; }
-        .res-race-picker > .res-panel { flex:1; min-height:0; display:flex; flex-direction:column; overflow:hidden; }
-        .res-center-split { display:flex; flex-direction:column; height:1216px; min-height:1216px; overflow:hidden; }
-        .res-center-split > .res-map-panel { height:500px; min-height:500px; max-height:500px; flex:none; display:flex; flex-direction:column; overflow:hidden; }
-        .res-center-split > .res-map-panel .res-map-body { flex:1; min-height:0; overflow:hidden; display:flex; flex-direction:column; padding:0 !important; }
-        .res-map-wrap { flex:1; min-height:0; display:flex; align-items:stretch; }
-        .res-map-wrap svg, .res-map-wrap > div { width:100% !important; height:100% !important; }
-        .res-inline-county { flex:1; height:708px; min-height:708px; overflow:hidden; }
-        .res-inline-county .res-county-table-wrap { max-height:none !important; }
-        .res-inline-county > .res-panel { height:100% !important; display:flex !important; flex-direction:column; overflow:hidden; border-top:1px solid var(--border); border-radius:0; }
-        .res-inline-county > .res-panel > div:last-child { flex:1; overflow-y:auto !important; max-height:none !important; min-height:0; }
-        .res-right-rail { display:flex; flex-direction:column; gap:8px; overflow-y:auto; height:1216px; }
-        .res-right-rail > .res-race-status-panel { height:300px; min-height:300px; max-height:300px; flex:none; overflow:hidden; display:flex; flex-direction:column; }
-        .res-right-rail > .res-topline-panel { height:300px; min-height:300px; max-height:300px; flex:none; overflow:hidden; display:flex; flex-direction:column; }
-        .res-forecast-wrap { height:600px; min-height:600px; max-height:600px; flex:none !important; overflow:hidden; display:flex; flex-direction:column; }
-        .res-forecast-wrap > .res-panel { flex:1; min-height:0; display:flex; flex-direction:column; overflow:hidden; }
-        .res-forecast-wrap > .res-panel .res-forecast-body { flex:1; min-height:0; overflow-y:auto; }
-        .res-race-scroll-window { display:none; flex-direction:column; background:var(--panel); border:1px solid var(--border); overflow:hidden; max-height:240px; flex-shrink:0; }
-        .res-mobile-race-strip { display:none; background:var(--background2); border-bottom:1px solid var(--border); padding:8px 14px; align-items:center; gap:10px; }
-        .res-bottom { display:none; }
-        .res-tablet-county { display:none; }
-        @media (max-width:768px) {
-          .res-body { grid-template-columns:1fr 300px; grid-template-rows:calc(100vh - 120px); padding:10px 14px; }
-          .res-race-picker { display:none; }
-          .res-mobile-race-strip { display:flex; }
-          .res-center-split { flex-direction:column; min-height:0; height:100%; }
-          .res-center-split > .res-map-panel { display:flex; flex-direction:column; height:100%; min-height:0; overflow:hidden; }
-          .res-center-split > .res-map-panel .res-map-body { flex-shrink:0; }
-          .res-inline-county { max-height:240px; }
-          .res-bottom { display:none; }
-          .res-right-rail { height:100%; overflow-y:auto; display:flex; flex-direction:column; gap:10px; }
-          .res-right-rail > .res-race-status-panel { height:300px; min-height:300px; max-height:300px; flex:none; }
-          .res-right-rail > .res-topline-panel { height:300px; min-height:300px; max-height:300px; flex:none; }
-          .res-forecast-wrap { height:600px; min-height:600px; max-height:600px; flex:none !important; }
-          .res-race-scroll-window { display:flex; max-height:200px; flex-shrink:0; }
-          .res-bottom { display:none; }
-        }
-        @media (max-width:640px) {
-          .res-root { display:flex; flex-direction:column; }
-          .res-body { order:2; display:flex !important; flex-direction:column; grid-template-columns:unset; grid-template-rows:unset; height:auto !important; min-height:unset !important; padding:8px 10px; gap:10px; }
-          .res-race-picker { display:none !important; }
-          .res-right-rail { order:1; display:flex; flex-direction:column; gap:10px; height:auto !important; min-height:unset !important; overflow:visible; width:100%; }
-          .res-right-rail > .res-race-scroll-window { display:none !important; }
-          .res-right-rail > .res-race-status-panel { height:auto !important; min-height:unset !important; max-height:unset !important; overflow:visible !important; flex:none; width:100%; box-sizing:border-box; }
-          .res-right-rail > .res-topline-panel { height:auto !important; min-height:unset !important; max-height:unset !important; overflow:visible !important; flex:none; width:100%; box-sizing:border-box; }
-          .res-forecast-wrap { order:3; height:auto !important; min-height:unset !important; max-height:unset !important; flex:none !important; overflow:visible; width:100%; box-sizing:border-box; }
-          .res-forecast-wrap > .res-panel { overflow:visible; height:auto !important; width:100%; }
-          .res-forecast-wrap > .res-panel .res-forecast-body { overflow-y:visible; max-height:none; height:auto !important; }
-          .res-race-status-panel { flex:none !important; overflow:visible !important; }
-          .res-center-split { order:2; height:auto !important; min-height:unset !important; overflow:visible; width:100%; }
-          .res-center-split > .res-map-panel { height:auto !important; min-height:unset !important; max-height:unset !important; overflow:visible; width:100%; box-sizing:border-box; }
-          .res-center-split > .res-map-panel .res-map-body { flex:none; padding:6px 10px !important; }
-          .res-map-wrap { height:auto !important; width:100%; }
-          .res-map-wrap svg, .res-map-wrap > div { width:100% !important; height:auto !important; }
-          .res-inline-county { display:none; }
-          .res-bottom { order:4; display:block; padding:0 10px 16px; }
-          .res-race-scroll-window { display:flex; max-height:190px; flex-shrink:0; }
-          .res-mobile-race-search { order:1; }
-        }
-        .res-tablet-race-search { display:none !important; }
-        .res-mobile-race-search { display:none; }
-        @media (max-width:640px) {
-          .res-mobile-race-search { display:block; }
-          .res-mobile-race-search .res-race-scroll-window { display:flex !important; margin:8px 10px 0; }
-        }
-        .res-race-select { flex:1; appearance:none; -webkit-appearance:none; background:var(--panel); border:1px solid var(--border); color:var(--foreground); padding:8px 32px 8px 12px; font-family:var(--font-body); font-size:10px; font-weight:700; letter-spacing:0.06em; outline:none; cursor:pointer; transition:border-color 140ms ease; min-width:0; background-image:url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L5 5L9 1' stroke='rgba(255,255,255,0.35)' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C%2Fsvg%3E"); background-repeat:no-repeat; background-position:right 10px center; }
-        .res-race-select:focus { border-color:rgba(124,58,237,0.5); }
-        .res-race-select option { background:#0f0f15; color:#f0f0f5; font-weight:600; }
-        .res-race-select optgroup { color:rgba(255,255,255,0.35); font-size:9px; }
-        * { scrollbar-width:thin; scrollbar-color:rgba(255,255,255,0.10) transparent; }
-        *::-webkit-scrollbar { width:3px; height:3px; }
-        *::-webkit-scrollbar-thumb { background:rgba(255,255,255,0.10); }
-        *::-webkit-scrollbar-thumb:hover { background:rgba(124,58,237,0.4); }
-        @media (prefers-reduced-motion:reduce) { .res-bar-fill,.res-btn-primary,.res-btn-ghost { transition:none !important; } .res-live-dot { animation:none !important; } }
-        input[type=range] { height:4px; cursor:pointer; }
+        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&display=swap');
+        body { background: #0a0a08 !important; }
+        @keyframes er-pulse { 0%,100%{opacity:1} 50%{opacity:0.25} }
+        @keyframes er-county-update { 0%{filter:brightness(1)} 12%{filter:brightness(2) saturate(1.8)} 100%{filter:brightness(1)} }
+        @keyframes er-loading { 0%,100%{opacity:0.3} 50%{opacity:1} }
+        .er-county-update { animation: er-county-update 1200ms ease-out; }
+        * { scrollbar-width: thin; scrollbar-color: rgba(255,255,255,0.08) transparent; }
+        *::-webkit-scrollbar { width: 3px; height: 3px; }
+        *::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.08); }
       `}</style>
 
-      <main className="res-root" style={{ minHeight: "100vh", background: "transparent", color: "var(--foreground)" }}>
-        {overlay && <ProjectedWinnerOverlay show={!!overlay} candidate={overlay.name} prob={overlay.prob} color={overlay.color} reporting={overlay.reporting} onDismiss={() => setOverlay(null)} />}
+      {overlay && <ProjectedWinnerOverlay show={!!overlay} candidate={overlay.name} prob={overlay.prob} color={overlay.color} reporting={overlay.reporting} onDismiss={() => setOverlay(null)} />}
 
-        <div className="res-tri-stripe" />
+      <div style={{ background: "#0a0a08", minHeight: "100vh", fontFamily: "'DM Mono', monospace" }}>
 
-        {/* STATUS BAR */}
-        <div className="res-status-bar">
-          <div className="res-status-bar-inner">
-            <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-              <span className="res-live-dot" />
-              <span className="res-eyebrow" style={{ color: "rgba(255,255,255,0.40)" }}>LIVE ELECTION RESULTS<span style={{ color: "var(--border3)", margin: "0 4px" }}>·</span>POWERED BY CIVICAPI.ORG</span>
+        {/* ── HEADER ── */}
+        <div style={{ background: "#0f0f0d", borderBottom: "1px solid rgba(255,255,255,0.07)" }}>
+          <div style={{ maxWidth: 1400, margin: "0 auto", padding: "16px 24px", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 10 }}>
+            <div>
+              <div style={{ fontFamily: "'DM Mono', monospace", fontSize: 8, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: "#c5a55a", marginBottom: 4 }}>March 17, 2026 Primary Elections · Illinois</div>
+              <div style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: "clamp(24px, 4vw, 40px)", letterSpacing: "0.04em", color: "#fff", lineHeight: 1 }}>
+                Election Night <span style={{ color: "#5b8fd4" }}>Results</span>
+              </div>
             </div>
-            <div className="res-note" style={{ letterSpacing: "0.22em", color: "rgba(255,255,255,0.22)" }} suppressHydrationWarning>{timeStr}</div>
-          </div>
-        </div>
-
-        {/* PAGE HEADER */}
-        <div className="res-page-header">
-          <div className="res-page-header-inner">
-            <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: "12px" }}>
-              <div>
-                <div className="res-page-sub">MARCH 17TH PRIMARY ELECTIONS · ILLINOIS 2026</div>
-                <h1 className="res-page-title">Election <em>Night</em></h1>
+            <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#d45b5b", animation: "er-pulse 1.8s ease-in-out infinite", display: "inline-block" }} />
+                <span style={{ fontSize: 9, fontWeight: 700, color: "rgba(255,255,255,0.4)", letterSpacing: "0.16em", textTransform: "uppercase" }}>Live · 30s refresh</span>
               </div>
-              <div style={{ display: "flex", alignItems: "center", gap: "12px", flexWrap: "wrap" }}>
-                <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: "6px" }}>
-                  <span className="res-badge res-badge-red"><span className="res-live-dot" style={{ background: "var(--rep)" }} />LIVE</span>
-                  <span className="res-badge res-badge-purple">RESULTS + FORECAST / 30s</span>
-                  {selectedRace?.last_updated && <span className="res-badge">UPDATED {prettyTime(selectedRace.last_updated)}</span>}
-                </div>
-                {/* Illinois-only — no state switcher needed */}
-                <div style={{ display: "flex", gap: "1px" }}>
-                  <div style={{ display: "inline-flex", alignItems: "center", padding: "8px 16px", background: "rgba(124,58,237,0.10)", border: "1px solid rgba(124,58,237,0.40)", fontFamily: "var(--font-body)", fontSize: "9px", fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: "#fff", position: "relative" }}>
-                    <span style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: 2, background: "var(--purple)" }} />
-                    ILLINOIS
-                  </div>
-                </div>
-              </div>
+              <span style={{ fontSize: 9, color: "rgba(255,255,255,0.25)", fontFamily: "'DM Mono', monospace", letterSpacing: "0.08em" }} suppressHydrationWarning>{timeStr}</span>
             </div>
           </div>
         </div>
 
-        {/* MOBILE RACE SELECTOR */}
-        <div className="res-mobile-race-strip">
-          <span className="res-live-dot" style={{ flexShrink: 0 }} />
-          <select
-            className="res-race-select"
-            value={selectedId}
-            onChange={e => setSelectedId(Number(e.target.value))}
-          >
-            {racesForState.reduce<{ office: string; races: FeaturedRace[] }[]>((groups, r) => {
-              const last = groups[groups.length - 1];
-              if (last && last.office === r.office) { last.races.push(r); }
-              else { groups.push({ office: r.office, races: [r] }); }
-              return groups;
-            }, []).map(({ office, races }) => (
-              <optgroup key={office} label={`── ${office.toUpperCase()} ──`}>
-                {races.map(r => {
-                  const liveData = raceCache[r.id];
-                  const winner = liveData?.candidates?.find(c => c.winner);
-                  const reporting = getRaceReportingPct(liveData);
-                  const raceTypeShort = getRaceTypeShort(r.raceType);
-                  const statusStr = winner ? " ✓ CALLED" : reporting !== null && reporting > 0 ? ` · ${reporting.toFixed(0)}% IN` : "";
-                  return (
-                    <option key={r.id} value={r.id}>
-                      [{raceTypeShort}] {r.office}{statusStr}
-                    </option>
-                  );
-                })}
-              </optgroup>
-            ))}
-          </select>
-          {(() => {
-            const meta = FEATURED.find(r => r.id === selectedId);
-            const liveData = raceCache[selectedId];
-            const winner = liveData?.candidates?.find(c => c.winner);
-            const reporting = getRaceReportingPct(liveData);
-            const raceTypeColor = meta ? getRaceTypeColor(meta.raceType) : "rgba(255,255,255,0.4)";
-            return (
-              <div style={{ flexShrink: 0, display: "flex", alignItems: "center", gap: 6 }}>
-                {winner
-                  ? <span className="res-badge res-badge-win" style={{ fontSize: "7px" }}>✓ CALLED</span>
-                  : <span style={{ fontFamily: "var(--font-body)", fontSize: "9px", fontWeight: 700, color: raceTypeColor }}>{reporting !== null ? `${reporting.toFixed(0)}%` : "—"}</span>
-                }
-              </div>
-            );
-          })()}
+        {/* ── RACE TABS ── */}
+        <div style={{ maxWidth: 1400, margin: "0 auto" }}>
+          <RaceTabPicker races={racesForState} raceCache={raceCache} selectedId={selectedId} onSelect={setSelectedId} />
         </div>
 
-        {/* MOBILE RACE LIST */}
-        <div className="res-mobile-race-search">
-          <div style={{ margin: "8px 10px 0", border: "1px solid var(--border)" }}>
-            <RaceScrollWindow races={racesForState} raceCache={raceCache} selectedId={selectedId} onSelect={setSelectedId} search={scrollWindowSearch} onSearchChange={setScrollWindowSearch} maxHeight={200} />
-          </div>
-        </div>
+        {/* ── RACE HERO: selected race summary ── */}
+        <div style={{ maxWidth: 1400, margin: "0 auto" }}>
+          <div style={{ background: "#0f0f0d", borderBottom: `3px solid ${raceTypeColor}`, padding: "20px 24px" }}>
+            <div style={{ display: "flex", flexWrap: "wrap", alignItems: "flex-start", justifyContent: "space-between", gap: 16 }}>
 
-        {/* MAIN BODY */}
-        <div className="res-body">
-
-          {/* LEFT: Race Picker Panel */}
-          <div className="res-race-picker">
-            <RacePickerPanel
-              races={racesForState}
-              raceCache={raceCache}
-              selectedId={selectedId}
-              onSelect={setSelectedId}
-            />
-          </div>
-
-          {/* CENTER SPLIT */}
-          <div className={`res-center-split${hasForecastForSelected ? "" : " no-forecast"}`}>
-            {/* MAP PANEL */}
-            <div className="res-panel res-map-panel">
-              <div className="res-tri-stripe" />
-              <div className="res-panel-header" style={{ flexWrap: "wrap", gap: "8px" }}>
-                <div style={{ minWidth: 0 }}>
-                  <div className="res-panel-tag">{selectedMeta?.label ?? "—"}</div>
-                  <div className="res-note" style={{ marginTop: "2px" }}>{selectedRace?.percent_reporting?.toFixed(1)}% REPORTING · {prettyTime(selectedRace?.last_updated)}</div>
+              {/* Race title + status */}
+              <div style={{ flex: "1 1 260px" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 8 }}>
+                  <span style={{ fontSize: 8, fontWeight: 700, color: raceTypeColor, background: `${raceTypeColor}18`, border: `1px solid ${raceTypeColor}44`, padding: "3px 8px", letterSpacing: "0.16em", textTransform: "uppercase" }}>
+                    {selectedMeta?.raceType ?? "—"}
+                  </span>
+                  {selectedWinner && <span style={{ fontSize: 8, fontWeight: 700, color: "#c5a55a", background: "rgba(197,165,90,0.12)", border: "1px solid rgba(197,165,90,0.3)", padding: "3px 8px", letterSpacing: "0.14em" }}>RACE CALLED</span>}
                 </div>
-                <div style={{ display: "flex", flexWrap: "wrap", gap: "5px", alignItems: "center" }}>
-                  <span className="res-badge">{selectedCloseLocal}</span>
-                  <span className={`res-badge ${selectedMsLeft && selectedMsLeft > 0 ? "" : "res-badge-red"}`}>{selectedMsLeft === null ? "—" : formatCountdown(selectedMsLeft)}</span>
-                  <span className="res-badge res-badge-purple">{loadingMap ? `SYNCING ${Math.round(mapLoadPct)}%` : "● LIVE"}</span>
+                <div style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: "clamp(20px, 3vw, 30px)", letterSpacing: "0.04em", color: "#fff", lineHeight: 1, marginBottom: 8 }}>
+                  {selectedMeta?.office ?? "—"}
                 </div>
-              </div>
-              <div className="res-map-body" style={{ padding: "6px 10px 0", display: "flex", flexDirection: "column", flex: 1, minHeight: 0 }}>
-                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "6px", flexWrap: "wrap", gap: "6px", flexShrink: 0 }}>
-                  <Legend />
-                  <span className="res-note" style={{ color: "rgba(255,255,255,0.2)" }}>HOVER COUNTIES</span>
-                </div>
-                {loadingMap ? (
-                  <div className="res-map-loading" style={{ flex: 1 }}>
-                    <div style={{ width: "min(300px, 90%)" }}>
-                      <div className="res-note" style={{ textAlign: "center", marginBottom: "8px", color: "rgba(255,255,255,0.35)" }}>LOADING MAP</div>
-                      <div className="res-bar-track"><div className="res-bar-fill" style={{ width: `${mapLoadPct}%`, background: "linear-gradient(90deg,var(--purple),var(--blue2))" }} /></div>
-                      <div className="res-note" style={{ textAlign: "center", marginTop: "6px", color: "var(--purple-soft)", fontWeight: 700 }}>{Math.round(mapLoadPct)}%</div>
-                    </div>
-                  </div>
-                ) : mapBlankSvg ? (
-                  <div className="res-map-wrap" style={{ flex: 1, minHeight: 0 }}>
-                    <MapWithCountyTooltip svgText={mapBlankSvg} regionResults={selectedRace?.region_results ?? []} />
-                  </div>
-                ) : (
-                  <div className="res-map-loading" style={{ flex: 1 }}><span className="res-note" style={{ color: "var(--muted3)" }}>NO MAP DATA</span></div>
-                )}
-              </div>
-            </div>
-
-            {/* COUNTY TABLE */}
-            <div className="res-inline-county">
-              <CountyTotalsTable
-                regionResults={selectedRace?.region_results ?? []}
-                collapsed={countyCollapsed}
-                onToggle={() => setCountyCollapsed(v => !v)}
-                maxHeight="9999px"
-              />
-            </div>
-          </div>
-
-          {/* RIGHT RAIL */}
-          <aside className="res-right-rail">
-
-            {/* TABLET RACE SCROLL */}
-            <div className="res-race-scroll-window">
-              <RaceScrollWindow races={racesForState} raceCache={raceCache} selectedId={selectedId} onSelect={setSelectedId} search={scrollWindowSearch} onSearchChange={setScrollWindowSearch} />
-            </div>
-
-            {/* RACE STATUS */}
-            <div className="res-panel res-race-status-panel" style={{ display: "flex", flexDirection: "column", minHeight: 0 }}>
-              <div className="res-panel-header" style={{ flexShrink: 0 }}><span className="res-panel-tag">RACE STATUS</span></div>
-              <div style={{ padding: "12px 14px", display: "flex", flexDirection: "column", gap: "8px", overflowY: "auto", flex: 1, minHeight: 0 }}>
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px" }}>
-                  <div className="res-stat-block">
-                    <div className="res-stat-block-label">REPORTING</div>
-                    <div className="res-stat-block-val">{selectedReporting.toFixed(1)}%</div>
-                    <div className="res-bar-track" style={{ marginTop: "6px" }}><div className="res-bar-fill" style={{ width: `${selectedReporting}%`, background: "var(--purple)" }} /></div>
-                  </div>
-                  <div className="res-stat-block">
-                    <div className="res-stat-block-label">CLOSES</div>
-                    <div className="res-stat-block-val" style={{ fontSize: "clamp(16px,2vw,22px)" }}>{selectedCloseLocal}</div>
-                    <div className="res-note" style={{ marginTop: "5px", color: selectedMsLeft && selectedMsLeft > 0 ? "var(--muted3)" : "var(--rep)", fontWeight: 700 }}>{selectedMsLeft === null ? "—" : formatCountdown(selectedMsLeft)}</div>
-                  </div>
-                </div>
-                <div className="res-stat-block">
-                  <div className="res-stat-row" style={{ marginBottom: "5px" }}>
-                    <span className="res-stat-block-label">PROJECTION</span>
-                    <span className="res-note" style={{ color: isRunoffConfirmed ? "#f59e0b" : selectedWinner ? "var(--win)" : (forecastProj?.projectionType === "RUNOFF") ? "#f59e0b" : forecastProj ? "var(--purple-soft)" : "var(--muted3)", fontWeight: 700 }}>
-                      {isRunoffConfirmed ? "CONFIRMED" : selectedWinner ? "OFFICIAL" : forecastProj ? `${forecastProj.prob.toFixed(1)}%` : "—"}
+                <div style={{ display: "flex", gap: 12, alignItems: "center", flexWrap: "wrap" }}>
+                  <span style={{ fontFamily: "'DM Mono', monospace", fontSize: 9, color: "rgba(255,255,255,0.3)", letterSpacing: "0.08em" }}>
+                    {selectedReporting.toFixed(1)}% precincts reporting
+                  </span>
+                  {selectedMsLeft !== null && (
+                    <span style={{ fontFamily: "'DM Mono', monospace", fontSize: 9, color: selectedMsLeft > 0 ? "rgba(255,255,255,0.3)" : "#d45b5b", letterSpacing: "0.08em" }}>
+                      Polls {selectedMsLeft > 0 ? `close ${selectedCloseLocal}` : "closed"} · {formatCountdown(selectedMsLeft)}
                     </span>
-                  </div>
-                  <div style={{ fontFamily: "var(--font-body)", fontSize: "12px", fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: isRunoffConfirmed ? "#f59e0b" : (forecastProj?.projectionType === "RUNOFF") ? "#f59e0b" : "rgba(255,255,255,0.88)" }}>
-                    {isRunoffConfirmed ? "⚡ RUNOFF NEEDED" : selectedWinner ? `✓ ${selectedWinner.name}` : forecastProj ? forecastProj.leader : "No projection yet"}
-                  </div>
-                  {isRunoffConfirmed && (
-                    <div className="res-note" style={{ marginTop: 4, color: "rgba(255,255,255,0.4)" }}>
-                      {selectedWinners.map(w => w.name.split(" ").pop()).join(" vs ")} advance
-                    </div>
                   )}
-                  {forecastProj && !selectedWinner && !isRunoffConfirmed && (
-                    <div className="res-bar-track" style={{ marginTop: "7px" }}><div className="res-bar-fill" style={{ width: `${Math.max(0, Math.min(100, forecastProj.prob))}%`, background: forecastProj.projectionType === "RUNOFF" ? "linear-gradient(90deg,#d97706,#f59e0b)" : "linear-gradient(90deg,var(--purple),var(--blue2))" }} /></div>
-                  )}
-                  {selectedRaceIsMajority && forecastProj && !selectedWinner && !isRunoffConfirmed && (
-                    <div className="res-note" style={{ marginTop: 5, color: "rgba(245,158,11,0.85)", letterSpacing: "0.12em" }}>
-                      outright winner chance: {(100 - (forecastProj.runoffNeededProb * 100)).toFixed(1)}%
-                    </div>
-                  )}
-                  {showProjectionDebug && forecastProj && !selectedWinner && !isRunoffConfirmed && (
-                    <div className="res-note" style={{ marginTop: 4, color: "rgba(255,255,255,0.35)", letterSpacing: "0.08em" }}>
-                      debug: {forecastProj.projectionType} selected={forecastProj.prob.toFixed(1)}% | runoff={(forecastProj.runoffNeededProb * 100).toFixed(1)}%
-                    </div>
+                  {selectedRace?.last_updated && (
+                    <span style={{ fontFamily: "'DM Mono', monospace", fontSize: 8, color: "rgba(255,255,255,0.18)" }}>Updated {prettyTime(selectedRace.last_updated)}</span>
                   )}
                 </div>
-                {selectedRace?.candidates && selectedRace.candidates.length > 0 && (
-                  <div style={{ marginTop: 4 }}>
-                    <div className="res-note" style={{ marginBottom: 8 }}>VOTE SHARE</div>
-                    {[...selectedRace.candidates].sort((a, b) => (b.percent ?? 0) - (a.percent ?? 0)).slice(0, 4).map((c) => (
-                      <div key={c.name} style={{ marginBottom: 8 }}>
-                        <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 3 }}>
-                          <span style={{ fontFamily: "var(--font-body)", fontSize: "8.5px", fontWeight: 700, letterSpacing: "0.06em", color: "rgba(255,255,255,0.7)", display: "flex", alignItems: "center", gap: 5 }}>
-                            <span style={{ width: 5, height: 5, borderRadius: "50%", background: c.color, display: "inline-block", flexShrink: 0 }} />
-                            {c.name.split(" ").pop()}
-                          </span>
-                          <span style={{ fontFamily: "var(--font-body)", fontSize: "9px", fontWeight: 900, color: c.color }}>{fmtPct(c.percent)}</span>
-                        </div>
-                        <div style={{ height: 3, background: "rgba(255,255,255,0.07)", overflow: "hidden" }}>
-                          <div style={{ height: "100%", width: `${c.percent ?? 0}%`, background: c.color, transition: "width 600ms ease" }} />
-                        </div>
-                      </div>
+              </div>
+
+              {/* Top 2 candidate summary */}
+              {leader && runnerUp && (selectedReporting > 0) && (
+                <div style={{ display: "flex", gap: 12, flex: "0 1 auto" }}>
+                  {[leader, runnerUp].map((c, i) => (
+                    <div key={c.name} style={{
+                      padding: "12px 16px",
+                      background: c.winner ? `${c.color}12` : i === 0 ? "rgba(255,255,255,0.04)" : "rgba(255,255,255,0.02)",
+                      border: `1px solid ${c.winner ? `${c.color}44` : i === 0 ? `${c.color}22` : "rgba(255,255,255,0.06)"}`,
+                      minWidth: 110, textAlign: "center",
+                    }}>
+                      <div style={{ fontFamily: "'DM Mono', monospace", fontSize: 8, color: "rgba(255,255,255,0.3)", marginBottom: 4, letterSpacing: "0.06em", textOverflow: "ellipsis", overflow: "hidden", whiteSpace: "nowrap", maxWidth: 110 }}>{c.name}</div>
+                      <div style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 32, color: c.color, letterSpacing: "0.04em", lineHeight: 1 }}>{fmtPct(c.percent)}</div>
+                      <div style={{ fontFamily: "'DM Mono', monospace", fontSize: 8, color: "rgba(255,255,255,0.2)", marginTop: 4 }}>{(c.votes ?? 0).toLocaleString()} votes</div>
+                      {c.winner && <div style={{ marginTop: 6, fontFamily: "'DM Mono', monospace", fontSize: 7, fontWeight: 700, color: "#c5a55a", letterSpacing: "0.14em" }}>✓ WINNER</div>}
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {/* Reporting progress */}
+              <div style={{ alignSelf: "flex-end", flex: "0 0 auto" }}>
+                <div style={{ width: 120 }}>
+                  <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 4 }}>
+                    <span style={{ fontFamily: "'DM Mono', monospace", fontSize: 8, color: "rgba(255,255,255,0.2)", letterSpacing: "0.12em", textTransform: "uppercase" }}>Precincts in</span>
+                    <span style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 16, color: "#c5a55a", letterSpacing: "0.04em" }}>{selectedReporting.toFixed(0)}%</span>
+                  </div>
+                  <div style={{ height: 4, background: "rgba(255,255,255,0.06)", overflow: "hidden" }}>
+                    <div style={{ height: "100%", width: `${selectedReporting}%`, background: "#c5a55a", transition: "width 800ms ease" }} />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* ── MAIN CONTENT ── */}
+        <div style={{ maxWidth: 1400, margin: "0 auto", padding: "16px 24px" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 340px", gap: 16 }}>
+
+            {/* LEFT: Map + County table */}
+            <div style={{ display: "flex", flexDirection: "column", gap: 14, minWidth: 0 }}>
+
+              {/* Map */}
+              <div style={{ background: "#0f0f0d", border: "1px solid rgba(255,255,255,0.07)", overflow: "hidden" }}>
+                <div style={{ padding: "10px 16px", borderBottom: "1px solid rgba(255,255,255,0.05)", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                  <span style={{ fontSize: 9, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(255,255,255,0.3)" }}>County Map</span>
+                  <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
+                    {[["Safe", "rgba(91,143,212,0.8)"], ["Likely", "rgba(91,143,212,0.55)"], ["Lean", "rgba(91,143,212,0.35)"], ["Tilt", "rgba(91,143,212,0.15)"]].map(([label, color]) => (
+                      <span key={label} style={{ display: "inline-flex", alignItems: "center", gap: 4, fontSize: 8, color: "rgba(255,255,255,0.3)", letterSpacing: "0.1em", textTransform: "uppercase" }}>
+                        <span style={{ width: 7, height: 7, background: color, display: "inline-block" }} />{label}
+                      </span>
                     ))}
                   </div>
-                )}
-              </div>
-            </div>
-
-            {/* TOPLINE */}
-            <div className="res-panel res-topline-panel" style={{ display: "flex", flexDirection: "column", minHeight: 0 }}>
-              <div className="res-tri-stripe" />
-              <div className="res-panel-header" style={{ flexShrink: 0 }}>
-                <span className="res-panel-tag">TOPLINE RESULTS</span>
-                {selectedRace?.percent_reporting !== undefined && (
-                  <span style={{ fontFamily: "var(--font-body)", fontSize: "9px", fontWeight: 700, color: "rgba(255,255,255,0.4)", letterSpacing: "0.10em" }}>{selectedRace.percent_reporting.toFixed(1)}% IN</span>
-                )}
-              </div>
-              <div style={{ padding: "12px 14px", overflowY: "auto", flex: 1, minHeight: 0 }}>
-                {selectedRace?.candidates
-                  ? <CandidateList candidates={selectedRace.candidates} reporting={selectedRace.percent_reporting ?? 0} raceId={selectedId} isMajorityRunoff={isRunoffConfirmed} />
-                  : <div style={{ padding: "32px 0", textAlign: "center" }} className="res-note">LOADING…</div>
-                }
-              </div>
-            </div>
-
-            {/* FORECAST */}
-            {hasForecastForSelected ? (
-              <div className="res-forecast-wrap">
-                <ForecastPanel key={selectedId} raceId={selectedId} refreshTick={refreshTick} raceData={selectedRace} onForecastUpdate={(update) => setForecastProj(update)} />
-              </div>
-            ) : (
-              <div className="res-panel" style={{ display: "flex", flexDirection: "column" }}>
-                <div className="res-tri-stripe" />
-                <div className="res-panel-header">
-                  <span className="res-panel-tag">FORECAST MODEL</span>
-                  <span style={{ fontFamily: "var(--font-body)", fontSize: "7px", fontWeight: 700, letterSpacing: "0.18em", color: "rgba(255,255,255,0.18)", textTransform: "uppercase" }}>NOT AVAILABLE</span>
                 </div>
-                <div style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "space-between", padding: "20px 18px 18px" }}>
-                  <div>
-                    <div style={{ fontFamily: "var(--font-body)", fontSize: "11px", fontWeight: 900, letterSpacing: "0.10em", textTransform: "uppercase", color: "rgba(255,255,255,0.55)", marginBottom: 10, lineHeight: 1.4 }}>No Forecast<br />for This Race</div>
-                    <div style={{ fontFamily: "var(--font-body)", fontSize: "8.5px", fontWeight: 500, color: "rgba(255,255,255,0.22)", lineHeight: 1.7, letterSpacing: "0.04em" }}>Our forecast model requires reliable poll averages and turnout baselines. For this race, we don't have enough data to model outcomes responsibly.</div>
-                  </div>
-                  <div style={{ marginTop: 20, paddingTop: 14, borderTop: "1px solid rgba(255,255,255,0.06)" }}>
-                    <div style={{ fontFamily: "var(--font-body)", fontSize: "7px", fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(255,255,255,0.15)", marginBottom: 8 }}>WHAT WE'RE WATCHING</div>
-                    <div style={{ fontFamily: "var(--font-body)", fontSize: "8px", color: "rgba(255,255,255,0.28)", lineHeight: 1.6 }}>Live results and county-level returns will update automatically.</div>
-                  </div>
+                <div style={{ height: 440, padding: 8 }}>
+                  {loadingMap ? (
+                    <div style={{ height: "100%", display: "flex", alignItems: "center", justifyContent: "center", background: "#0d0d0b" }}>
+                      <div style={{ textAlign: "center" }}>
+                        <div style={{ fontSize: 9, color: "rgba(255,255,255,0.2)", letterSpacing: "0.14em", textTransform: "uppercase", marginBottom: 10 }}>Loading map…</div>
+                        <div style={{ height: 2, background: "rgba(255,255,255,0.05)", width: 160, overflow: "hidden", margin: "0 auto" }}>
+                          <div style={{ height: "100%", width: `${mapLoadPct}%`, background: "#c5a55a", transition: "width 200ms ease" }} />
+                        </div>
+                      </div>
+                    </div>
+                  ) : mapBlankSvg ? (
+                    <MapWithCountyTooltip svgText={mapBlankSvg} regionResults={selectedRace?.region_results ?? []} />
+                  ) : (
+                    <div style={{ height: "100%", display: "flex", alignItems: "center", justifyContent: "center", background: "#0d0d0b", color: "rgba(255,255,255,0.15)", fontSize: 11 }}>No map data</div>
+                  )}
                 </div>
               </div>
-            )}
 
-          </aside>
-        </div>
+              {/* County table */}
+              <CountyTable countyData={countyData} />
 
-        {/* FULL-WIDTH COUNTY BREAKDOWN (mobile) */}
-        <div className="res-bottom">
-          <CountyTotalsTable
-            regionResults={selectedRace?.region_results ?? []}
-            collapsed={countyCollapsed}
-            onToggle={() => setCountyCollapsed(v => !v)}
-          />
-          {error && <div className="res-error" style={{ marginTop: 10 }}>ERROR: {error}</div>}
+              {error && <div style={{ fontFamily: "'DM Mono', monospace", fontSize: 9, color: "#d45b5b", padding: "10px 14px", border: "1px solid rgba(212,91,91,0.2)", background: "rgba(212,91,91,0.05)", letterSpacing: "0.06em" }}>Error: {error}</div>}
+            </div>
+
+            {/* RIGHT: Results + Forecast */}
+            <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+
+              {/* Full candidate results */}
+              <div style={{ background: "#0f0f0d", border: "1px solid rgba(255,255,255,0.07)" }}>
+                <div style={{ padding: "11px 16px", borderBottom: "1px solid rgba(255,255,255,0.05)", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                  <span style={{ fontSize: 9, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(255,255,255,0.3)" }}>Results</span>
+                  <span style={{ fontSize: 9, color: "rgba(255,255,255,0.2)", letterSpacing: "0.08em" }}>{selectedReporting.toFixed(1)}% in</span>
+                </div>
+                <div style={{ padding: "0 16px" }}>
+                  {selectedRace?.candidates
+                    ? <CandidateResultsTable candidates={selectedRace.candidates} raceId={selectedId} />
+                    : <div style={{ padding: "28px 0", textAlign: "center", fontSize: 10, color: "rgba(255,255,255,0.15)", letterSpacing: "0.1em" }}>Loading…</div>}
+                </div>
+              </div>
+
+              {/* Forecast */}
+              <div style={{ background: "#0f0f0d", border: "1px solid rgba(255,255,255,0.07)" }}>
+                <div style={{ padding: "11px 16px", borderBottom: "1px solid rgba(255,255,255,0.05)", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                  <span style={{ fontSize: 9, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(255,255,255,0.3)" }}>Forecast Model</span>
+                  <span style={{ fontSize: 8, color: "#c5a55a", letterSpacing: "0.1em", textTransform: "uppercase", fontFamily: "'DM Mono', monospace" }}>Beta</span>
+                </div>
+                <div style={{ padding: "14px 16px" }}>
+                  {hasForecastForSelected
+                    ? <ForecastPanel key={selectedId} raceId={selectedId} refreshTick={refreshTick} raceData={selectedRace} />
+                    : <div style={{ fontSize: 10, color: "rgba(255,255,255,0.2)", lineHeight: 1.7, letterSpacing: "0.03em" }}>No forecast available — insufficient poll baseline for this race.</div>
+                  }
+                </div>
+              </div>
+
+              {/* Poll close countdown */}
+              {selectedMsLeft !== null && selectedMsLeft > 0 && (
+                <div style={{ background: "#0f0f0d", border: "1px solid rgba(255,255,255,0.07)", padding: "14px 16px" }}>
+                  <div style={{ fontFamily: "'DM Mono', monospace", fontSize: 8, color: "rgba(255,255,255,0.2)", letterSpacing: "0.16em", textTransform: "uppercase", marginBottom: 8 }}>Polls close in</div>
+                  <div style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 32, color: "rgba(255,255,255,0.7)", letterSpacing: "0.04em", lineHeight: 1 }} suppressHydrationWarning>
+                    {formatCountdown(selectedMsLeft)}
+                  </div>
+                  <div style={{ fontFamily: "'DM Mono', monospace", fontSize: 9, color: "rgba(255,255,255,0.2)", marginTop: 6 }}>{selectedCloseLocal}</div>
+                </div>
+              )}
+            </div>
+          </div>
         </div>
-      </main>
+      </div>
     </>
   );
 }
