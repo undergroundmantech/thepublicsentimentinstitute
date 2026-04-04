@@ -1,5 +1,6 @@
 "use client";
 
+import React from "react";
 import Link from "next/link";
 import {
   LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, ReferenceLine,
@@ -195,7 +196,7 @@ function ChartTip({ active, payload, label }: any) {
       borderRadius: "2px",
       padding: "10px 14px",
       fontSize: 11,
-      fontFamily: "'DM Mono', monospace",
+      fontFamily: "var(--font-body), monospace",
       boxShadow: "0 8px 24px rgba(0,0,0,0.6)",
     }}>
       <div style={{ color: "rgba(255,255,255,0.3)", marginBottom: 6, fontWeight: 500, letterSpacing: "0.1em", textTransform: "uppercase", fontSize: 9 }}>{label}</div>
@@ -214,8 +215,8 @@ function SplitBar({ dem, rep, h = 6 }: { dem: number; rep: number; h?: number })
   const pct = (dem / (dem + rep)) * 100;
   return (
     <div style={{ display: "flex", height: h, borderRadius: 1, overflow: "hidden", background: "rgba(255,255,255,0.06)" }}>
-      <div style={{ width: `${pct}%`, background: "#5b8fd4", transition: "width 700ms cubic-bezier(0.22,1,0.36,1)" }} />
-      <div style={{ flex: 1, background: "#d45b5b" }} />
+      <div style={{ width: `${pct}%`, background: "#2563eb", transition: "width 700ms cubic-bezier(0.22,1,0.36,1)" }} />
+      <div style={{ flex: 1, background: "#e63946" }} />
     </div>
   );
 }
@@ -223,13 +224,13 @@ function SplitBar({ dem, rep, h = 6 }: { dem: number; rep: number; h?: number })
 function SpreadBadge({ a, b }: { a: number; b: number }) {
   const diff = round1(Math.abs(a - b));
   const lead = a > b ? "D" : "R";
-  const color = a > b ? "#5b8fd4" : "#d45b5b";
-  const bg    = a > b ? "rgba(91,143,212,0.12)" : "rgba(212,91,91,0.12)";
+  const color = a > b ? "#2563eb" : "#e63946";
+  const bg    = a > b ? "rgba(37,99,235,0.12)" : "rgba(230,57,70,0.12)";
   return (
     <span style={{
       display: "inline-flex", alignItems: "center",
       padding: "2px 8px", borderRadius: 2,
-      fontFamily: "'DM Mono', monospace", fontSize: 11, fontWeight: 500,
+      fontFamily: "var(--font-body), monospace", fontSize: 11, fontWeight: 500,
       color, background: bg, letterSpacing: "0.04em",
     }}>
       {lead}+{diff}
@@ -245,8 +246,22 @@ function ChartCard({ title, sub, href, data, lines, domain, refY, stats }: {
 }) {
   const step = Math.max(1, Math.floor(data.length / 40));
   const pts  = data.filter((_, i) => i % step === 0 || i === data.length - 1);
+  const axisTickDates: string[] = [];
+  if (pts.length > 1) {
+    const count = 4;
+    for (let i = 0; i < count; i++) {
+      const idx = Math.round(i * (pts.length - 1) / (count - 1));
+      axisTickDates.push(pts[Math.min(idx, pts.length - 1)].date);
+    }
+  }
+  const fmtTick = (v: string) => {
+    const d = new Date(v + "T00:00:00");
+    if (isNaN(d.getTime())) return v;
+    return d.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+  };
   return (
     <div className="hp-chart-card">
+      <div className="hp-tri-stripe" />
       <div className="hp-chart-header">
         <div>
           <div className="hp-chart-title">{title}</div>
@@ -254,11 +269,11 @@ function ChartCard({ title, sub, href, data, lines, domain, refY, stats }: {
         </div>
         <Link href={href} className="hp-chart-link">Full data →</Link>
       </div>
-      <div style={{ padding: "12px 2px 2px 0" }}>
-        <ResponsiveContainer width="100%" height={120}>
-          <LineChart data={pts} margin={{ top: 4, right: 8, left: -24, bottom: 0 }}>
-            <XAxis dataKey="date" tick={{ fontSize: 8, fill: "rgba(255,255,255,0.2)", fontFamily: "'DM Mono', monospace" }} tickLine={false} axisLine={false} interval="preserveStartEnd" />
-            <YAxis domain={domain} tick={{ fontSize: 8, fill: "rgba(255,255,255,0.2)", fontFamily: "'DM Mono', monospace" }} tickLine={false} axisLine={false} tickFormatter={v => `${v}%`} />
+      <div style={{ padding: "14px 4px 4px 0" }}>
+        <ResponsiveContainer width="100%" height={145}>
+          <LineChart data={pts} margin={{ top: 4, right: 10, left: -20, bottom: 0 }}>
+            <XAxis dataKey="date" ticks={axisTickDates} tickFormatter={fmtTick} tick={{ fontSize: 8, fill: "rgba(255,255,255,0.25)", fontFamily: "var(--font-body), monospace" }} tickLine={false} axisLine={false} />
+            <YAxis domain={domain} tick={{ fontSize: 8, fill: "rgba(255,255,255,0.25)", fontFamily: "var(--font-body), monospace" }} tickLine={false} axisLine={false} tickFormatter={v => `${v}%`} />
             <Tooltip content={<ChartTip />} />
             {refY !== undefined && <ReferenceLine y={refY} stroke="rgba(255,255,255,0.1)" strokeDasharray="3 3" />}
             {lines.map(l => (
@@ -279,6 +294,28 @@ function ChartCard({ title, sub, href, data, lines, domain, refY, stats }: {
     </div>
   );
 }
+
+// ─── Live Results Config ───────────────────────────────────────────────────────
+// To go live on election night: set mode → "live", fill in pct/votes, set percentReporting.
+const LIVE_CONFIG = {
+  mode: "upcoming" as "upcoming" | "live",
+  race: {
+    name: "Wisconsin Supreme Court",
+    subtitle: "State Supreme Court · Spring Election",
+    date: "April 7, 2026",
+    dateISO: "2026-04-07",
+    href: "/results/forecast",
+  },
+  races: [
+    { name: "WI Supreme Court", dPct: 62, rPct: 38 },
+  ],
+  candidates: [
+    { name: "Brad Schimel",   party: "R", color: "#e63946", pct: 0, votes: 0 },
+    { name: "Susan Crawford", party: "D", color: "#2563eb", pct: 0, votes: 0 },
+  ],
+  percentReporting: 0,
+  lastUpdated: "",
+};
 
 // ─── Page ─────────────────────────────────────────────────────────────────────
 export default function HomePage() {
@@ -315,7 +352,10 @@ export default function HomePage() {
         @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap');
 
         /* Override page bg for dark theme */
-        body { background: #0a0a08 !important; }
+        body { background: #070709 !important; }
+
+        /* ── Tri-stripe (red/purple/blue) ── */
+        .hp-tri-stripe { height: 3px; width: 100%; background: linear-gradient(90deg, #e63946 0%, #e63946 33.33%, #7c3aed 33.33%, #7c3aed 66.66%, #2563eb 66.66%, #2563eb 100%); flex-shrink: 0; }
 
         .hp-wrap {
           max-width: 1280px;
@@ -327,17 +367,18 @@ export default function HomePage() {
         /* ── Hero ── */
         .hp-hero {
           display: grid;
-          grid-template-columns: 1fr 300px;
-          border: 1px solid rgba(255,255,255,0.08);
-          background: #0f0f0d;
+          grid-template-columns: 1fr 240px 240px;
+          gap: 12px;
+          background: transparent;
           margin-bottom: 20px;
-          overflow: hidden;
         }
-        @media(max-width: 900px) { .hp-hero { grid-template-columns: 1fr; } }
+        @media(max-width: 1100px) { .hp-hero { grid-template-columns: 1fr 220px 220px; } }
+        @media(max-width: 900px)  { .hp-hero { grid-template-columns: 1fr; } }
 
         .hp-hero-left {
           padding: 48px 48px 40px;
-          border-right: 1px solid rgba(255,255,255,0.06);
+          background: #0f0f15;
+          border: 1px solid rgba(255,255,255,0.09);
           position: relative;
           overflow: hidden;
         }
@@ -349,7 +390,7 @@ export default function HomePage() {
           position: absolute;
           top: -60px; right: -60px;
           width: 300px; height: 300px;
-          background: radial-gradient(circle, rgba(91,143,212,0.06) 0%, transparent 70%);
+          background: radial-gradient(circle, rgba(37,99,235,0.06) 0%, transparent 70%);
           pointer-events: none;
         }
         .hp-hero-left::after {
@@ -357,7 +398,7 @@ export default function HomePage() {
           position: absolute;
           bottom: -40px; left: 200px;
           width: 200px; height: 200px;
-          background: radial-gradient(circle, rgba(212,91,91,0.05) 0%, transparent 70%);
+          background: radial-gradient(circle, rgba(230,57,70,0.05) 0%, transparent 70%);
           pointer-events: none;
         }
 
@@ -365,7 +406,7 @@ export default function HomePage() {
           display: inline-flex;
           align-items: center;
           gap: 6px;
-          font-family: 'DM Mono', monospace;
+          font-family: var(--font-body), monospace;
           font-size: 9px;
           letter-spacing: 0.18em;
           text-transform: uppercase;
@@ -375,20 +416,26 @@ export default function HomePage() {
         .hp-hero-tag-sep { color: rgba(255,255,255,0.15); }
 
         .hp-hero-headline {
-          font-family: 'Bebas Neue', sans-serif;
-          font-size: clamp(52px, 7vw, 96px);
+          font-family: var(--font-display), sans-serif;
+          font-size: clamp(36px, 5vw, 68px);
           letter-spacing: 0.03em;
           line-height: 0.95;
+          text-transform: uppercase;
           color: #fff;
           margin-bottom: 20px;
           position: relative;
           z-index: 1;
         }
-        .hp-hero-headline .dem { color: #5b8fd4; }
-        .hp-hero-headline .rep { color: #d45b5b; }
+        .hp-hero-headline .dem { color: #3b82f6; }
+        .hp-hero-headline .rep {
+          background: linear-gradient(100deg, #ff4d5a 0%, #a78bfa 50%, #3b82f6 100%);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+        }
 
         .hp-hero-desc {
-          font-family: 'DM Mono', monospace;
+          font-family: var(--font-body), monospace;
           font-size: 11px;
           color: rgba(255,255,255,0.35);
           line-height: 1.8;
@@ -411,9 +458,9 @@ export default function HomePage() {
           display: inline-flex;
           align-items: center;
           padding: 10px 22px;
-          background: #c5a55a;
-          color: #0a0a08;
-          font-family: 'DM Mono', monospace;
+          background: #7c3aed;
+          color: #fff;
+          font-family: var(--font-body), monospace;
           font-size: 10px;
           font-weight: 500;
           letter-spacing: 0.14em;
@@ -421,7 +468,7 @@ export default function HomePage() {
           text-decoration: none;
           transition: background 120ms, transform 80ms;
         }
-        .hp-btn-gold:hover { background: #d4b46a; text-decoration: none; transform: translateY(-1px); }
+        .hp-btn-gold:hover { background: #9d5cf0; text-decoration: none; transform: translateY(-1px); }
 
         .hp-btn-outline {
           display: inline-flex;
@@ -429,7 +476,7 @@ export default function HomePage() {
           padding: 10px 22px;
           background: transparent;
           color: rgba(255,255,255,0.4);
-          font-family: 'DM Mono', monospace;
+          font-family: var(--font-body), monospace;
           font-size: 10px;
           letter-spacing: 0.14em;
           text-transform: uppercase;
@@ -443,7 +490,7 @@ export default function HomePage() {
           margin-top: 24px;
           padding-top: 20px;
           border-top: 1px solid rgba(255,255,255,0.06);
-          font-family: 'DM Mono', monospace;
+          font-family: var(--font-body), monospace;
           font-size: 9px;
           color: rgba(255,255,255,0.2);
           letter-spacing: 0.1em;
@@ -453,46 +500,162 @@ export default function HomePage() {
         }
         .hp-hero-meta span { color: rgba(255,255,255,0.4); }
 
-        /* Hero right panel – key numbers */
-        .hp-hero-right {
-          padding: 32px 28px;
+        /* Hero Box 2: Polling metrics */
+        .hp-hero-right-polls {
+          background: #0b0b0f;
+          border: 1px solid rgba(255,255,255,0.09);
           display: flex;
           flex-direction: column;
-          gap: 0;
-          background: #0d0d0b;
+          overflow: hidden;
+          flex-shrink: 0;
         }
+        .hp-hero-right-polls-hd {
+          padding: 11px 20px 9px;
+          border-bottom: 1px solid rgba(255,255,255,0.05);
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+        }
+        .hp-hero-right-polls-lbl {
+          font-family: var(--font-body), monospace;
+          font-size: 8px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase;
+          color: rgba(255,255,255,0.25);
+        }
+        .hp-hero-right-polls-link {
+          display: inline-flex;
+          align-items: center;
+          padding: 3px 8px;
+          border: 1px solid rgba(124,58,237,0.28);
+          font-family: var(--font-body), monospace;
+          font-size: 8px; letter-spacing: 0.12em; text-transform: uppercase;
+          color: #7c3aed; text-decoration: none; transition: border-color 120ms, color 120ms;
+        }
+        .hp-hero-right-polls-link:hover { border-color: rgba(124,58,237,0.6); color: #9d5cf0; text-decoration: none; }
+
+        .hp-polls-desc {
+          padding: 8px 20px 6px;
+          font-family: var(--font-body), monospace;
+          font-size: 8.5px; line-height: 1.5;
+          color: rgba(255,255,255,0.38);
+          border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .hp-polls-cta {
+          padding: 10px 20px;
+          border-top: 1px solid rgba(255,255,255,0.05);
+          display: flex;
+        }
+        .hp-polls-cta-link {
+          display: inline-flex;
+          align-items: center;
+          padding: 4px 10px;
+          border: 1px solid rgba(124,58,237,0.28);
+          font-family: var(--font-body), monospace; font-size: 8px; letter-spacing: 0.14em;
+          text-transform: uppercase; color: #7c3aed; text-decoration: none;
+          transition: border-color 120ms, color 120ms;
+        }
+        .hp-polls-cta-link:hover { border-color: rgba(124,58,237,0.6); color: #9d5cf0; text-decoration: none; }
 
         .hp-hero-metric {
-          padding: 20px 0;
+          padding: 10px 20px;
           border-bottom: 1px solid rgba(255,255,255,0.05);
         }
         .hp-hero-metric:last-child { border-bottom: none; }
 
         .hp-metric-eyebrow {
-          font-family: 'DM Mono', monospace;
-          font-size: 8px;
+          font-family: var(--font-body), monospace;
+          font-size: 7.5px;
           letter-spacing: 0.2em;
           text-transform: uppercase;
           color: rgba(255,255,255,0.25);
-          margin-bottom: 6px;
+          margin-bottom: 4px;
         }
 
         .hp-metric-num {
-          font-family: 'Bebas Neue', sans-serif;
-          font-size: 44px;
+          font-family: var(--font-display), sans-serif;
+          font-size: 32px;
           letter-spacing: 0.03em;
           line-height: 1;
-          margin-bottom: 8px;
+          text-transform: uppercase;
+          margin-bottom: 5px;
         }
 
         .hp-metric-sub-row {
           display: flex;
           justify-content: space-between;
-          margin-top: 6px;
-          font-family: 'DM Mono', monospace;
-          font-size: 9px;
+          margin-top: 4px;
+          font-family: var(--font-body), monospace;
+          font-size: 8.5px;
           font-weight: 500;
           letter-spacing: 0.08em;
+        }
+
+        /* Hero Box 3: Live / Upcoming */
+        .hp-hero-right-live {
+          background: #0b0b0f;
+          border: 1px solid rgba(255,255,255,0.09);
+          display: flex;
+          flex-direction: column;
+          overflow: hidden;
+          flex: 1;
+        }
+        .hp-hero-right-live .hp-live-panel { flex: 1; display: flex; flex-direction: column; }
+        .hp-hero-right-live .hp-live-body { flex: 1; padding: 13px 18px 13px; gap: 9px; display: flex; flex-direction: column; }
+        .hp-hero-right-live .hp-live-race-name { font-size: 17px; }
+
+        /* Upcoming capabilities showcase */
+        .hp-cap-headline {
+          font-family: var(--font-display), sans-serif;
+          font-size: 22px; line-height: 1.1; letter-spacing: 0.04em;
+          text-transform: uppercase; color: #fff;
+        }
+        .hp-cap-headline em {
+          font-style: normal; color: #9d5cf0;
+        }
+        .hp-cap-tiles {
+          display: flex; flex-direction: column; gap: 4px;
+        }
+        .hp-cap-tile {
+          display: flex; align-items: center; gap: 9px;
+          padding: 8px 11px;
+          border: 1px solid rgba(124,58,237,0.18);
+          background: rgba(124,58,237,0.05);
+        }
+        .hp-cap-tile-icon {
+          font-family: var(--font-display), sans-serif;
+          font-size: 14px; line-height: 1; color: #7c3aed; flex-shrink: 0; width: 18px; text-align: center; text-transform: uppercase;
+        }
+        .hp-cap-tile-label {
+          font-family: var(--font-display), sans-serif;
+          font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; color: #fff;
+        }
+        .hp-cap-next-race {
+          display: flex; align-items: center; justify-content: space-between;
+          padding: 9px 11px;
+          border: 1px solid rgba(124,58,237,0.28);
+          background: rgba(124,58,237,0.07);
+          margin-top: 2px;
+        }
+        .hp-cap-next-race-left { display: flex; flex-direction: column; gap: 2px; }
+        .hp-cap-next-race-eyebrow {
+          font-family: var(--font-body), monospace;
+          font-size: 7px; font-weight: 600; letter-spacing: 0.2em;
+          text-transform: uppercase; color: #7c3aed;
+        }
+        .hp-cap-next-race-name {
+          font-family: var(--font-display), sans-serif;
+          font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: #fff;
+        }
+        .hp-cap-next-race-countdown {
+          display: flex; flex-direction: column; align-items: flex-end; gap: 1px;
+        }
+        .hp-cap-next-race-num {
+          font-family: var(--font-display), sans-serif;
+          font-size: 26px; line-height: 1; color: #9d5cf0; letter-spacing: 0.02em; text-transform: uppercase;
+        }
+        .hp-cap-next-race-unit {
+          font-family: var(--font-body), monospace;
+          font-size: 7px; letter-spacing: 0.18em; text-transform: uppercase;
+          color: rgba(255,255,255,0.3);
         }
 
         /* ── Section header ── */
@@ -505,7 +668,7 @@ export default function HomePage() {
           border-bottom: 1px solid rgba(255,255,255,0.06);
         }
         .hp-section-title {
-          font-family: 'DM Mono', monospace;
+          font-family: var(--font-body), monospace;
           font-size: 9px;
           font-weight: 500;
           letter-spacing: 0.2em;
@@ -513,36 +676,40 @@ export default function HomePage() {
           color: rgba(255,255,255,0.35);
         }
         .hp-section-link {
-          font-family: 'DM Mono', monospace;
-          font-size: 9px;
+          display: inline-flex;
+          align-items: center;
+          padding: 3px 9px;
+          border: 1px solid rgba(124,58,237,0.28);
+          font-family: var(--font-body), monospace;
+          font-size: 8px;
           letter-spacing: 0.12em;
           text-transform: uppercase;
-          color: #c5a55a;
+          color: #7c3aed;
           text-decoration: none;
-          transition: opacity 100ms;
+          transition: border-color 120ms, color 120ms;
         }
-        .hp-section-link:hover { opacity: 0.7; text-decoration: none; }
+        .hp-section-link:hover { border-color: rgba(124,58,237,0.6); color: #9d5cf0; text-decoration: none; }
 
         /* ── Chart cards ── */
         .hp-charts-grid {
           display: grid;
           grid-template-columns: repeat(3, 1fr);
-          gap: 1px;
-          background: rgba(255,255,255,0.06);
-          border: 1px solid rgba(255,255,255,0.06);
+          gap: 14px;
           margin-bottom: 20px;
         }
         @media(max-width: 900px) { .hp-charts-grid { grid-template-columns: 1fr; } }
 
         .hp-chart-card {
-          background: #0f0f0d;
+          background: #0f0f15;
+          border: 1px solid rgba(255,255,255,0.07);
           display: flex;
           flex-direction: column;
+          overflow: hidden;
         }
 
         .hp-chart-header {
-          padding: 14px 18px 10px;
-          border-bottom: 1px solid rgba(255,255,255,0.05);
+          padding: 16px 18px 12px;
+          border-bottom: 1px solid rgba(255,255,255,0.06);
           display: flex;
           align-items: flex-start;
           justify-content: space-between;
@@ -550,62 +717,68 @@ export default function HomePage() {
         }
 
         .hp-chart-title {
-          font-family: 'DM Mono', monospace;
+          font-family: var(--font-body), monospace;
           font-size: 10px;
           font-weight: 500;
           letter-spacing: 0.1em;
           text-transform: uppercase;
-          color: rgba(255,255,255,0.7);
-          margin-bottom: 2px;
+          color: rgba(255,255,255,0.75);
+          margin-bottom: 4px;
         }
 
         .hp-chart-sub {
-          font-family: 'DM Mono', monospace;
+          font-family: var(--font-body), monospace;
           font-size: 8px;
-          color: rgba(255,255,255,0.2);
+          color: rgba(255,255,255,0.25);
           letter-spacing: 0.06em;
         }
 
         .hp-chart-link {
-          font-family: 'DM Mono', monospace;
+          display: inline-flex;
+          align-items: center;
+          padding: 3px 9px;
+          border: 1px solid rgba(124,58,237,0.28);
+          font-family: var(--font-body), monospace;
           font-size: 8px;
           letter-spacing: 0.1em;
           text-transform: uppercase;
-          color: #c5a55a;
+          color: #7c3aed;
           text-decoration: none;
           flex-shrink: 0;
-          transition: opacity 100ms;
+          transition: border-color 120ms, color 120ms;
+          margin-top: 2px;
         }
-        .hp-chart-link:hover { opacity: 0.7; text-decoration: none; }
+        .hp-chart-link:hover { border-color: rgba(124,58,237,0.6); color: #9d5cf0; text-decoration: none; }
 
         .hp-chart-stats {
           display: flex;
           gap: 0;
-          border-top: 1px solid rgba(255,255,255,0.05);
-          background: #0d0d0b;
+          border-top: 1px solid rgba(255,255,255,0.06);
+          background: #0b0b0f;
         }
 
         .hp-chart-stat {
           flex: 1;
           padding: 10px 14px;
-          border-right: 1px solid rgba(255,255,255,0.04);
+          border-right: 1px solid rgba(255,255,255,0.05);
         }
         .hp-chart-stat:last-child { border-right: none; }
 
         .hp-chart-stat-label {
-          font-family: 'DM Mono', monospace;
+          font-family: var(--font-body), monospace;
           font-size: 8px;
           letter-spacing: 0.12em;
           text-transform: uppercase;
-          color: rgba(255,255,255,0.2);
-          margin-bottom: 3px;
+          color: rgba(255,255,255,0.25);
+          margin-bottom: 4px;
         }
 
         .hp-chart-stat-val {
-          font-family: 'Bebas Neue', sans-serif;
-          font-size: 20px;
+          font-family: var(--font-display), sans-serif;
+          font-size: 18px;
           letter-spacing: 0.04em;
           line-height: 1;
+          text-transform: uppercase;
         }
 
         /* ── Data grid: issues + meta ── */
@@ -619,8 +792,8 @@ export default function HomePage() {
 
         /* Issue table */
         .hp-issue-table {
-          border: 1px solid rgba(255,255,255,0.06);
-          background: #0f0f0d;
+          border: 1px solid rgba(255,255,255,0.09);
+          background: #0f0f15;
           overflow: hidden;
         }
 
@@ -630,7 +803,7 @@ export default function HomePage() {
           padding: 8px 18px;
           gap: 10px;
           border-bottom: 1px solid rgba(255,255,255,0.06);
-          background: #0d0d0b;
+          background: #0b0b0f;
         }
 
         .hp-issue-row {
@@ -646,7 +819,7 @@ export default function HomePage() {
         .hp-issue-row:hover { background: rgba(255,255,255,0.02); }
 
         .hp-th {
-          font-family: 'DM Mono', monospace;
+          font-family: var(--font-body), monospace;
           font-size: 8px;
           font-weight: 500;
           letter-spacing: 0.14em;
@@ -657,14 +830,14 @@ export default function HomePage() {
         .hp-th:first-child { text-align: left; }
 
         .hp-issue-name {
-          font-family: 'DM Mono', monospace;
+          font-family: var(--font-body), monospace;
           font-size: 11px;
           color: rgba(255,255,255,0.65);
           letter-spacing: 0.04em;
         }
 
         .hp-issue-pct {
-          font-family: 'DM Mono', monospace;
+          font-family: var(--font-body), monospace;
           font-size: 12px;
           font-weight: 500;
           text-align: right;
@@ -674,8 +847,8 @@ export default function HomePage() {
         .hp-issue-footer {
           padding: 10px 18px;
           border-top: 1px solid rgba(255,255,255,0.04);
-          background: #0d0d0b;
-          font-family: 'DM Mono', monospace;
+          background: #0b0b0f;
+          font-family: var(--font-body), monospace;
           font-size: 8px;
           letter-spacing: 0.1em;
           text-transform: uppercase;
@@ -691,7 +864,7 @@ export default function HomePage() {
         }
 
         .hp-meta-card {
-          background: #0f0f0d;
+          background: #0f0f15;
           padding: 0;
         }
 
@@ -704,7 +877,7 @@ export default function HomePage() {
         }
 
         .hp-meta-title {
-          font-family: 'DM Mono', monospace;
+          font-family: var(--font-body), monospace;
           font-size: 9px;
           font-weight: 500;
           letter-spacing: 0.16em;
@@ -716,28 +889,28 @@ export default function HomePage() {
           display: inline-flex;
           align-items: center;
           gap: 4px;
-          font-family: 'DM Mono', monospace;
+          font-family: var(--font-body), monospace;
           font-size: 8px;
           letter-spacing: 0.14em;
           text-transform: uppercase;
-          color: #e05a4a;
+          color: #e63946;
         }
         .hp-meta-live-dot {
           width: 4px; height: 4px;
           border-radius: 50%;
-          background: #e05a4a;
+          background: #e63946;
           animation: hp-pulse 1.8s ease-in-out infinite;
         }
         @keyframes hp-pulse { 0%,100%{opacity:1} 50%{opacity:0.25} }
 
         .hp-meta-stat {
-          padding: 12px 18px;
+          padding: 8px 18px;
           border-bottom: 1px solid rgba(255,255,255,0.04);
         }
         .hp-meta-stat:last-child { border-bottom: none; }
 
         .hp-meta-stat-label {
-          font-family: 'DM Mono', monospace;
+          font-family: var(--font-body), monospace;
           font-size: 8px;
           letter-spacing: 0.16em;
           text-transform: uppercase;
@@ -746,16 +919,17 @@ export default function HomePage() {
         }
 
         .hp-meta-stat-val {
-          font-family: 'Bebas Neue', sans-serif;
-          font-size: 24px;
+          font-family: var(--font-display), sans-serif;
+          font-size: 18px;
           letter-spacing: 0.04em;
           color: #fff;
           line-height: 1;
+          text-transform: uppercase;
         }
 
         .hp-meta-stat-sub {
-          font-family: 'DM Mono', monospace;
-          font-size: 9px;
+          font-family: var(--font-body), monospace;
+          font-size: 8px;
           color: rgba(255,255,255,0.2);
           letter-spacing: 0.04em;
           margin-top: 2px;
@@ -763,22 +937,22 @@ export default function HomePage() {
 
         /* CTA card */
         .hp-participate {
-          background: rgba(91,143,212,0.06);
-          border: 1px solid rgba(91,143,212,0.15);
+          background: rgba(37,99,235,0.06);
+          border: 1px solid rgba(37,99,235,0.15);
           padding: 20px 18px;
         }
 
         .hp-participate-eyebrow {
-          font-family: 'DM Mono', monospace;
+          font-family: var(--font-body), monospace;
           font-size: 8px;
           letter-spacing: 0.2em;
           text-transform: uppercase;
-          color: #5b8fd4;
+          color: #2563eb;
           margin-bottom: 8px;
         }
 
         .hp-participate-text {
-          font-family: 'DM Mono', monospace;
+          font-family: var(--font-body), monospace;
           font-size: 11px;
           color: rgba(255,255,255,0.4);
           line-height: 1.75;
@@ -789,36 +963,37 @@ export default function HomePage() {
         /* ── Explore cards ── */
         .hp-explore-grid {
           display: grid;
-          grid-template-columns: repeat(3, 1fr);
+          grid-template-columns: repeat(4, 1fr);
           gap: 1px;
           background: rgba(255,255,255,0.06);
           border: 1px solid rgba(255,255,255,0.06);
         }
-        @media(max-width: 768px) { .hp-explore-grid { grid-template-columns: 1fr; } }
+        @media(max-width: 900px) { .hp-explore-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media(max-width: 540px) { .hp-explore-grid { grid-template-columns: 1fr; } }
 
         .hp-explore-card {
-          background: #0f0f0d;
-          padding: 24px 22px;
+          background: #0f0f15;
+          padding: 18px 16px;
           display: flex;
           flex-direction: column;
-          gap: 10px;
+          gap: 7px;
           text-decoration: none;
           transition: background 120ms;
           position: relative;
           overflow: hidden;
         }
-        .hp-explore-card:hover { background: #141412; text-decoration: none; }
+        .hp-explore-card:hover { background: #141420; text-decoration: none; }
         .hp-explore-card:hover .hp-explore-arrow { transform: translateX(4px); }
 
         .hp-explore-rule {
-          height: 2px;
-          width: 32px;
-          border-radius: 1px;
+          height: 3px;
+          width: 100%;
           margin-bottom: 4px;
+          background: linear-gradient(90deg, #e63946 0%, #e63946 33.33%, #7c3aed 33.33%, #7c3aed 66.66%, #2563eb 66.66%, #2563eb 100%) !important;
         }
 
         .hp-explore-label {
-          font-family: 'DM Mono', monospace;
+          font-family: var(--font-body), monospace;
           font-size: 9px;
           font-weight: 500;
           letter-spacing: 0.2em;
@@ -826,15 +1001,16 @@ export default function HomePage() {
         }
 
         .hp-explore-name {
-          font-family: 'Bebas Neue', sans-serif;
-          font-size: 22px;
+          font-family: var(--font-display), sans-serif;
+          font-size: 17px;
           letter-spacing: 0.04em;
           color: #fff;
           line-height: 1;
+          text-transform: uppercase;
         }
 
         .hp-explore-desc {
-          font-family: 'DM Mono', monospace;
+          font-family: var(--font-body), monospace;
           font-size: 10px;
           color: rgba(255,255,255,0.3);
           line-height: 1.7;
@@ -843,12 +1019,109 @@ export default function HomePage() {
         }
 
         .hp-explore-arrow {
-          font-family: 'DM Mono', monospace;
+          font-family: var(--font-body), monospace;
           font-size: 10px;
           letter-spacing: 0.1em;
           text-transform: uppercase;
           transition: transform 150ms;
         }
+
+        /* ── Live Results Panel ── */
+        .hp-live-panel { display: flex; flex-direction: column; height: 100%; }
+        .hp-live-panel-header {
+          padding: 14px 20px 12px;
+          border-bottom: 1px solid rgba(255,255,255,0.06);
+          display: flex; align-items: center; justify-content: space-between; flex-shrink: 0;
+        }
+        .hp-live-label {
+          font-family: var(--font-body), monospace;
+          font-size: 8px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase;
+          color: #7c3aed; display: flex; align-items: center; gap: 5px;
+        }
+        .hp-live-label-red { color: #e63946; }
+        .hp-live-dot {
+          width: 5px; height: 5px; border-radius: 50%; background: #e63946;
+          animation: hp-pulse 1.8s ease-in-out infinite; display: inline-block; flex-shrink: 0;
+        }
+        .hp-live-updated {
+          font-family: var(--font-body), monospace;
+          font-size: 8px; color: rgba(255,255,255,0.2); letter-spacing: 0.06em;
+        }
+        .hp-live-body {
+          padding: 20px; display: flex; flex-direction: column; gap: 14px; flex: 1;
+        }
+        .hp-live-race-sub {
+          font-family: var(--font-body), monospace;
+          font-size: 8px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(255,255,255,0.25);
+        }
+        .hp-live-race-name {
+          font-family: var(--font-display), sans-serif;
+          font-size: 22px; letter-spacing: 0.04em; color: #fff; line-height: 1.1; text-transform: uppercase;
+        }
+        .hp-live-date-row {
+          display: flex; justify-content: space-between; align-items: center;
+          padding: 9px 0; border-top: 1px solid rgba(255,255,255,0.05); border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .hp-live-date-label {
+          font-family: var(--font-body), monospace;
+          font-size: 8px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.25);
+        }
+        .hp-live-date-val {
+          font-family: var(--font-body), monospace;
+          font-size: 10px; font-weight: 500; letter-spacing: 0.06em; color: rgba(255,255,255,0.55);
+        }
+        .hp-live-countdown { display: flex; align-items: baseline; gap: 10px; }
+        .hp-live-countdown-num {
+          font-family: var(--font-display), sans-serif;
+          font-size: 62px; letter-spacing: 0.02em; line-height: 1; color: #7c3aed; text-transform: uppercase;
+        }
+        .hp-live-countdown-lbl {
+          font-family: var(--font-body), monospace;
+          font-size: 9px; font-weight: 500; letter-spacing: 0.18em;
+          text-transform: uppercase; color: rgba(255,255,255,0.3); line-height: 1.6;
+        }
+        .hp-live-upcoming-note {
+          font-family: var(--font-body), monospace;
+          font-size: 10px; color: rgba(255,255,255,0.3); line-height: 1.8; letter-spacing: 0.02em; margin: 0;
+        }
+        .hp-live-spacer { flex: 1; }
+        .hp-live-reporting { display: flex; flex-direction: column; gap: 5px; }
+        .hp-live-reporting-track {
+          height: 3px; background: rgba(255,255,255,0.07); border-radius: 1px; overflow: hidden;
+        }
+        .hp-live-reporting-fill {
+          height: 100%; background: #7c3aed; transition: width 600ms ease;
+        }
+        .hp-live-reporting-lbl {
+          font-family: var(--font-body), monospace;
+          font-size: 8px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.3);
+        }
+        .hp-live-candidates { display: flex; flex-direction: column; gap: 12px; }
+        .hp-live-cand-top { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 4px; }
+        .hp-live-cand-name {
+          font-family: var(--font-body), monospace; font-size: 11px; color: rgba(255,255,255,0.7); letter-spacing: 0.04em;
+        }
+        .hp-live-cand-pct {
+          font-family: var(--font-display), sans-serif;
+          font-size: 20px; letter-spacing: 0.04em; line-height: 1; text-transform: uppercase;
+        }
+        .hp-live-cand-bar {
+          height: 4px; background: rgba(255,255,255,0.06); border-radius: 1px; overflow: hidden; margin-bottom: 3px;
+        }
+        .hp-live-cand-fill { height: 100%; border-radius: 1px; transition: width 600ms cubic-bezier(0.22,1,0.36,1); }
+        .hp-live-cand-votes {
+          font-family: var(--font-body), monospace; font-size: 8px; color: rgba(255,255,255,0.2); letter-spacing: 0.06em;
+        }
+        .hp-live-full-link {
+          display: inline-flex;
+          align-items: center;
+          padding: 4px 10px;
+          border: 1px solid rgba(124,58,237,0.28);
+          font-family: var(--font-body), monospace; font-size: 8px; letter-spacing: 0.14em;
+          text-transform: uppercase; color: #7c3aed; text-decoration: none;
+          transition: border-color 120ms, color 120ms; margin-top: 4px; align-self: flex-start;
+        }
+        .hp-live-full-link:hover { border-color: rgba(124,58,237,0.6); color: #9d5cf0; text-decoration: none; }
       `}</style>
 
       <div className="hp-wrap">
@@ -856,11 +1129,12 @@ export default function HomePage() {
         {/* ══ HERO ══ */}
         <div className="hp-hero">
           <div className="hp-hero-left">
+            <div className="hp-tri-stripe" style={{ margin: "-48px -48px 28px" }} />
             <div className="hp-hero-tag">
               <span className="hp-hero-tag-sep">—</span>
               <span>National Polling Index</span>
               <span className="hp-hero-tag-sep">·</span>
-              <span style={{ color: "#c5a55a" }}>Live</span>
+              <span style={{ color: "#7c3aed" }}>Live</span>
             </div>
 
             <h1 className="hp-hero-headline">
@@ -897,45 +1171,154 @@ export default function HomePage() {
             </div>
           </div>
 
-          {/* Key numbers sidebar */}
-          <div className="hp-hero-right">
-            {[
-              {
-                label: "Trump Approval",
-                num: `${approve}%`,
-                color: "#5b8fd4",
-                dem: approve, rep: disapprove,
-                left: { label: `${approve}% App.`, color: "#5b8fd4" },
-                right: { label: `${disapprove}% Dis.`, color: "#d45b5b" },
-              },
-              {
-                label: "Right / Wrong Track",
-                num: `${wt}%`,
-                color: "#d45b5b",
-                dem: rt, rep: wt,
-                left: { label: `${rt}% Right`, color: "#5b8fd4" },
-                right: { label: `${wt}% Wrong`, color: "#d45b5b" },
-              },
-              {
-                label: "Generic Ballot",
-                num: gbNetStr,
-                color: gbNet >= 0 ? "#5b8fd4" : "#d45b5b",
-                dem, rep,
-                left: { label: `D ${dem}%`, color: "#5b8fd4" },
-                right: { label: `R ${rep}%`, color: "#d45b5b" },
-              },
-            ].map((m, i) => (
-              <div key={m.label} className="hp-hero-metric">
-                <div className="hp-metric-eyebrow">{m.label}</div>
-                <div className="hp-metric-num" style={{ color: m.color }}>{m.num}</div>
-                <SplitBar dem={m.dem} rep={m.rep} h={4} />
-                <div className="hp-metric-sub-row">
-                  <span style={{ color: m.left.color }}>{m.left.label}</span>
-                  <span style={{ color: m.right.color }}>{m.right.label}</span>
-                </div>
+          {/* Box 2: Polling Index */}
+          <div className="hp-hero-right-polls">
+            <div className="hp-tri-stripe" />
+              <div className="hp-hero-right-polls-hd">
+                <span className="hp-hero-right-polls-lbl">Polling Index</span>
               </div>
-            ))}
+              <div className="hp-polls-desc">National polling averages, updated continuously.</div>
+              {[
+                {
+                  label: "Trump Approval",
+                  num: `${approve}%`,
+                  color: "#2563eb",
+                  dem: approve, rep: disapprove,
+                  left: { label: `${approve}% App.`, color: "#2563eb" },
+                  right: { label: `${disapprove}% Dis.`, color: "#e63946" },
+                },
+                {
+                  label: "Right / Wrong Track",
+                  num: `${wt}%`,
+                  color: "#e63946",
+                  dem: rt, rep: wt,
+                  left: { label: `${rt}% Right`, color: "#2563eb" },
+                  right: { label: `${wt}% Wrong`, color: "#e63946" },
+                },
+                {
+                  label: "Generic Ballot",
+                  num: gbNetStr,
+                  color: gbNet >= 0 ? "#2563eb" : "#e63946",
+                  dem, rep,
+                  left: { label: `D ${dem}%`, color: "#2563eb" },
+                  right: { label: `R ${rep}%`, color: "#e63946" },
+                },
+              ].map((m) => (
+                <div key={m.label} className="hp-hero-metric">
+                  <div className="hp-metric-eyebrow">{m.label}</div>
+                  <div className="hp-metric-num" style={{ color: m.color }}>{m.num}</div>
+                  <SplitBar dem={m.dem} rep={m.rep} h={3} />
+                  <div className="hp-metric-sub-row">
+                    <span style={{ color: m.left.color }}>{m.left.label}</span>
+                    <span style={{ color: m.right.color }}>{m.right.label}</span>
+                  </div>
+                </div>
+              ))}
+              <div className="hp-polls-cta">
+                <Link href="/polling" className="hp-polls-cta-link">View All Polls →</Link>
+              </div>
           </div>
+
+          {/* Box 3: Live / Upcoming */}
+          <div className="hp-hero-right-live">
+            <div className="hp-tri-stripe" />
+              {(() => {
+                const daysUntil = Math.max(0, Math.ceil(
+                  (new Date(LIVE_CONFIG.race.dateISO + "T00:00:00").getTime() - Date.now()) / 86400000
+                ));
+                return LIVE_CONFIG.mode === "upcoming" ? (
+                  <div className="hp-live-panel">
+                    <div className="hp-live-panel-header">
+                      <span className="hp-live-label">
+                        <span className="hp-live-dot" style={{ background: "#7c3aed", animationDuration: "2.4s" }} />
+                        Election Results
+                      </span>
+                      <span className="hp-live-updated">Apr 7</span>
+                    </div>
+                    <div className="hp-live-body">
+                      <div className="hp-cap-headline">
+                        We <em>forecast</em>,<br />project &amp; model<br />every major race.
+                      </div>
+                      <div className="hp-cap-tiles">
+                        <div className="hp-cap-tile">
+                          <span className="hp-cap-tile-icon">&#9642;</span>
+                          <span className="hp-cap-tile-label">Pre-Election Forecast</span>
+                        </div>
+                        <div className="hp-cap-tile">
+                          <span className="hp-cap-tile-icon">&#9642;</span>
+                          <span className="hp-cap-tile-label">Live Night-of Projection</span>
+                        </div>
+                        <div className="hp-cap-tile">
+                          <span className="hp-cap-tile-icon">&#9642;</span>
+                          <span className="hp-cap-tile-label">Electoral Modeling</span>
+                        </div>
+                      </div>
+                      <div className="hp-cap-next-race">
+                        <div className="hp-cap-next-race-left">
+                          <span className="hp-cap-next-race-eyebrow">Next Race</span>
+                          <span className="hp-cap-next-race-name">{LIVE_CONFIG.race.name}</span>
+                          <span style={{ fontFamily: "var(--font-body), monospace", fontSize: "8px", color: "rgba(255,255,255,0.25)", letterSpacing: "0.06em" }}>{LIVE_CONFIG.race.date}</span>
+                        </div>
+                        <div className="hp-cap-next-race-countdown">
+                          <span className="hp-cap-next-race-num">{daysUntil}</span>
+                          <span className="hp-cap-next-race-unit">{daysUntil === 1 ? "day" : "days"}</span>
+                        </div>
+                      </div>
+                      <div className="hp-live-spacer" />
+                      <Link href={LIVE_CONFIG.race.href} className="hp-live-full-link">
+                        See the Apr 7 Forecast →
+                      </Link>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="hp-live-panel">
+                    <div className="hp-live-panel-header" style={{ borderBottomColor: "rgba(230,57,70,0.2)" }}>
+                      <span className="hp-live-label hp-live-label-red">
+                        <span className="hp-live-dot" /> Live Results
+                      </span>
+                      {LIVE_CONFIG.lastUpdated && (
+                        <span className="hp-live-updated">{LIVE_CONFIG.lastUpdated}</span>
+                      )}
+                    </div>
+                    <div className="hp-live-body">
+                      <div>
+                        <div className="hp-live-race-sub">{LIVE_CONFIG.race.subtitle}</div>
+                        <div className="hp-live-race-name">{LIVE_CONFIG.race.name}</div>
+                      </div>
+                      <div className="hp-live-reporting">
+                        <div className="hp-live-reporting-track">
+                          <div className="hp-live-reporting-fill" style={{ width: `${LIVE_CONFIG.percentReporting}%` }} />
+                        </div>
+                        <span className="hp-live-reporting-lbl">{LIVE_CONFIG.percentReporting}% Reporting</span>
+                      </div>
+                      <div className="hp-live-candidates">
+                        {LIVE_CONFIG.candidates.map(c => (
+                          <div key={c.name}>
+                            <div className="hp-live-cand-top">
+                              <span className="hp-live-cand-name">{c.name}</span>
+                              <span className="hp-live-cand-pct" style={{ color: c.color }}>
+                                {c.pct > 0 ? `${c.pct.toFixed(1)}%` : "—"}
+                              </span>
+                            </div>
+                            <div className="hp-live-cand-bar">
+                              <div className="hp-live-cand-fill" style={{ width: `${c.pct}%`, background: c.color }} />
+                            </div>
+                            {c.votes > 0 && (
+                              <div className="hp-live-cand-votes">{c.votes.toLocaleString()} votes</div>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                      <div className="hp-live-spacer" />
+                      <Link href={LIVE_CONFIG.race.href} className="hp-live-full-link">
+                        Full Results →
+                      </Link>
+                    </div>
+                  </div>
+                );
+              })()}
+          </div>
+
         </div>
 
         {/* ══ CHARTS ══ */}
@@ -950,42 +1333,42 @@ export default function HomePage() {
             title="Presidential Approval" sub={`${TRUMP_POLLS.length} polls · weighted avg`}
             href="/polling/donaldtrumpapproval" data={trumpDaily}
             lines={[
-              { key: "Approve",    name: "Approve",    color: "#5b8fd4" },
-              { key: "Disapprove", name: "Disapprove", color: "#d45b5b" },
+              { key: "Approve",    name: "Approve",    color: "#e63946" },
+              { key: "Disapprove", name: "Disapprove", color: "#2563eb" },
             ]}
             domain={[30, 62]} refY={50}
             stats={[
-              { label: "Approve",    val: `${approve}%`,    color: "#5b8fd4" },
-              { label: "Disapprove", val: `${disapprove}%`, color: "#d45b5b" },
-              { label: "Net",        val: `${approve > disapprove ? "+" : ""}${round1(approve - disapprove).toFixed(1)}`, color: approve > disapprove ? "#5b8fd4" : "#d45b5b" },
+              { label: "Approve",    val: `${approve}%`,    color: "#e63946" },
+              { label: "Disapprove", val: `${disapprove}%`, color: "#2563eb" },
+              { label: "Net",        val: `${approve > disapprove ? "+" : ""}${round1(approve - disapprove).toFixed(1)}`, color: approve > disapprove ? "#e63946" : "#2563eb" },
             ]}
           />
           <ChartCard
             title="Right / Wrong Track" sub={`${RT_POLLS.length} polls · weighted avg`}
             href="/polling/rightorwrongtrack" data={rtDaily}
             lines={[
-              { key: "RightTrack", name: "Right Track", color: "#5b8fd4" },
-              { key: "WrongTrack", name: "Wrong Track", color: "#d45b5b" },
+              { key: "RightTrack", name: "Right Track", color: "#e63946" },
+              { key: "WrongTrack", name: "Wrong Track", color: "#2563eb" },
             ]}
             domain={[20, 75]}
             stats={[
-              { label: "Right",  val: `${rt}%`, color: "#5b8fd4" },
-              { label: "Wrong",  val: `${wt}%`, color: "#d45b5b" },
-              { label: "Net",    val: round1(rt - wt).toFixed(1), color: rt > wt ? "#5b8fd4" : "#d45b5b" },
+              { label: "Right",  val: `${rt}%`, color: "#e63946" },
+              { label: "Wrong",  val: `${wt}%`, color: "#2563eb" },
+              { label: "Net",    val: round1(rt - wt).toFixed(1), color: rt > wt ? "#e63946" : "#2563eb" },
             ]}
           />
           <ChartCard
             title="Generic Congressional Ballot" sub={`${GB_POLLS.length} polls · weighted avg`}
             href="/polling/genericballot" data={gbDaily}
             lines={[
-              { key: "Democrats",   name: "Democrat",   color: "#5b8fd4" },
-              { key: "Republicans", name: "Republican", color: "#d45b5b" },
+              { key: "Democrats",   name: "Democrat",   color: "#2563eb" },
+              { key: "Republicans", name: "Republican", color: "#e63946" },
             ]}
             domain={[35, 58]} refY={50}
             stats={[
-              { label: "Democrat",   val: `${dem}%`, color: "#5b8fd4" },
-              { label: "Republican", val: `${rep}%`, color: "#d45b5b" },
-              { label: "Margin",     val: gbNetStr,  color: gbNet >= 0 ? "#5b8fd4" : "#d45b5b" },
+              { label: "Democrat",   val: `${dem}%`, color: "#2563eb" },
+              { label: "Republican", val: `${rep}%`, color: "#e63946" },
+              { label: "Margin",     val: gbNetStr,  color: gbNet >= 0 ? "#2563eb" : "#e63946" },
             ]}
           />
         </div>
@@ -999,18 +1382,19 @@ export default function HomePage() {
               <Link href="/results" className="hp-section-link">All issues →</Link>
             </div>
             <div className="hp-issue-table">
+              <div className="hp-tri-stripe" />
               <div className="hp-issue-table-head">
                 <div className="hp-th">Issue</div>
-                <div className="hp-th" style={{ color: "#5b8fd4" }}>Dem</div>
-                <div className="hp-th" style={{ color: "#d45b5b" }}>Rep</div>
+                <div className="hp-th" style={{ color: "#2563eb" }}>Dem</div>
+                <div className="hp-th" style={{ color: "#e63946" }}>Rep</div>
                 <div className="hp-th">Bar</div>
                 <div className="hp-th">Spread</div>
               </div>
               {issues.map(r => (
                 <div key={r.issue} className="hp-issue-row">
                   <div className="hp-issue-name">{r.issue}</div>
-                  <div className="hp-issue-pct" style={{ color: "#5b8fd4" }}>{r.dem}%</div>
-                  <div className="hp-issue-pct" style={{ color: "#d45b5b" }}>{r.rep}%</div>
+                  <div className="hp-issue-pct" style={{ color: "#2563eb" }}>{r.dem}%</div>
+                  <div className="hp-issue-pct" style={{ color: "#e63946" }}>{r.rep}%</div>
                   <SplitBar dem={r.dem} rep={r.rep} h={5} />
                   <div style={{ textAlign: "right" }}><SpreadBadge a={r.dem} b={r.rep} /></div>
                 </div>
@@ -1027,6 +1411,7 @@ export default function HomePage() {
               </div>
               <div className="hp-meta-stack">
                 <div className="hp-meta-card">
+                  <div className="hp-tri-stripe" />
                   <div className="hp-meta-header">
                     <span className="hp-meta-title">Data Status</span>
                     <span className="hp-meta-live">
@@ -1076,7 +1461,7 @@ export default function HomePage() {
         <div className="hp-explore-grid">
           {[
             {
-              color: "#5b8fd4",
+              color: "#2563eb",
               label: "Analysis",
               name: "Electoral Map",
               desc: "State-by-state data with 2024 vs. 2026 comparison overlays.",
@@ -1092,7 +1477,15 @@ export default function HomePage() {
               cta: "View Ratings →",
             },
             {
-              color: "#d45b5b",
+              color: "#e63946",
+              label: "Results",
+              name: "Live Election Results",
+              desc: "Real-time vote totals and night-of projections for every major race.",
+              href: "/results",
+              cta: "See Results →",
+            },
+            {
+              color: "#e63946",
               label: "Methodology",
               name: "Gold Standard",
               desc: "Curated aggregation of high-quality polls ranked by historical accuracy.",
@@ -1101,7 +1494,7 @@ export default function HomePage() {
             },
           ].map(c => (
             <Link key={c.name} href={c.href} className="hp-explore-card">
-              <div className="hp-explore-rule" style={{ background: c.color }} />
+              <div className="hp-explore-rule" />
               <div className="hp-explore-label" style={{ color: c.color }}>{c.label}</div>
               <div className="hp-explore-name">{c.name}</div>
               <div className="hp-explore-desc">{c.desc}</div>

@@ -974,15 +974,20 @@ function ChartTip({ active, payload, label }: any) {
   if (!active || !payload?.length) return null;
   return (
     <div style={{
-      background:"#0f0f15",border:"1px solid rgba(255,255,255,0.12)",padding:"12px 16px",
-      fontFamily:"ui-monospace,monospace",fontSize:11,boxShadow:"0 8px 32px rgba(0,0,0,.7)",
+      background: "#141412",
+      border: "1px solid rgba(255,255,255,0.1)",
+      borderRadius: "2px",
+      padding: "10px 14px",
+      fontSize: 11,
+      fontFamily: "var(--font-body), monospace",
+      boxShadow: "0 8px 24px rgba(0,0,0,0.6)",
     }}>
-      <div style={{color:"rgba(255,255,255,.3)",marginBottom:8,fontSize:9,letterSpacing:"0.12em",textTransform:"uppercase"}}>{label}</div>
+      <div style={{color:"rgba(255,255,255,.3)",marginBottom:6,fontWeight:500,letterSpacing:"0.1em",textTransform:"uppercase",fontSize:9}}>{label}</div>
       {payload.map((p: any) => (
-        <div key={p.name} style={{display:"flex",alignItems:"center",gap:10,marginBottom:4}}>
-          <div style={{width:8,height:8,borderRadius:"50%",background:p.color,flexShrink:0}} />
-          <span style={{color:"rgba(255,255,255,.4)",fontSize:10,letterSpacing:"0.06em"}}>{p.name}</span>
-          <span style={{fontWeight:700,color:p.color,marginLeft:"auto",paddingLeft:16,fontSize:13}}>{round1(p.value)}%</span>
+        <div key={p.name} style={{display:"flex",alignItems:"center",gap:8,marginBottom:3}}>
+          <div style={{width:6,height:6,borderRadius:"50%",background:p.color,flexShrink:0}} />
+          <span style={{color:"rgba(255,255,255,.4)"}}>{p.name}</span>
+          <span style={{fontWeight:700,color:p.color,marginLeft:"auto",paddingLeft:14}}>{round1(p.value)}%</span>
         </div>
       ))}
     </div>
@@ -1060,10 +1065,23 @@ function LargeChartPanel({
 }) {
   const step = Math.max(1, Math.floor(data.length / 80));
   const pts  = data.filter((_,i) => i % step === 0 || i === data.length - 1);
+  const axisTickDates: string[] = [];
+  if (pts.length > 1) {
+    const count = 6;
+    for (let i = 0; i < count; i++) {
+      const idx = Math.round(i * (pts.length - 1) / (count - 1));
+      axisTickDates.push(pts[Math.min(idx, pts.length - 1)].date);
+    }
+  }
+  const fmtTick = (v: string) => {
+    const d = new Date(v + "T00:00:00");
+    if (isNaN(d.getTime())) return v;
+    return d.toLocaleDateString("en-US", { month: "short", year: "2-digit" });
+  };
 
   return (
     <div className="lcp-wrap">
-      <div style={{height:3,background:tagColor,flexShrink:0}} />
+      <div style={{height:3,background:"linear-gradient(90deg,#e63946 33%,#7c3aed 66%,#2563eb 100%)",flexShrink:0}} />
       <div className="lcp-header">
         <div>
           <div className="lcp-eyebrow">{eyebrow}</div>
@@ -1086,12 +1104,14 @@ function LargeChartPanel({
           <LineChart data={pts} margin={{top:8,right:24,left:-16,bottom:4}}>
             <XAxis
               dataKey="date"
-              tick={{fontSize:9,fill:"rgba(255,255,255,.2)",fontFamily:"ui-monospace,monospace"}}
-              tickLine={false} axisLine={false} interval="preserveStartEnd"
+              ticks={axisTickDates}
+              tickFormatter={fmtTick}
+              tick={{fontSize:8,fill:"rgba(255,255,255,.25)",fontFamily:"var(--font-body), monospace"}}
+              tickLine={false} axisLine={false}
             />
             <YAxis
               domain={domain}
-              tick={{fontSize:9,fill:"rgba(255,255,255,.2)",fontFamily:"ui-monospace,monospace"}}
+              tick={{fontSize:8,fill:"rgba(255,255,255,.25)",fontFamily:"var(--font-body), monospace"}}
               tickLine={false} axisLine={false} tickFormatter={v=>`${v}%`}
             />
             <Tooltip content={<ChartTip />} />
@@ -1147,16 +1167,16 @@ export default function PollingDashboardPage() {
   const latestPoll = [...TRUMP_POLLS].sort((a,b) => b.endDate.localeCompare(a.endDate))[0];
 
   const approvalKeys = [
-    { key: "Approve",    name: "Approve",    color: "#4ade80" },
-    { key: "Disapprove", name: "Disapprove", color: "#ef4444" },
+    { key: "Approve",    name: "Approve",    color: "#e63946" },
+    { key: "Disapprove", name: "Disapprove", color: "#2563eb" },
   ];
   const gbKeys = [
-    { key: "Democrats",   name: "Democrats",   color: "#5b8fd4" },
-    { key: "Republicans", name: "Republicans", color: "#ef4444" },
+    { key: "Democrats",   name: "Democrats",   color: "#2563eb" },
+    { key: "Republicans", name: "Republicans", color: "#e63946" },
   ];
   const rtKeys = [
-    { key: "RightTrack", name: "Right Track", color: "#4ade80" },
-    { key: "WrongTrack", name: "Wrong Track", color: "#ef4444" },
+    { key: "RightTrack", name: "Right Track", color: "#e63946" },
+    { key: "WrongTrack", name: "Wrong Track", color: "#2563eb" },
   ];
 
   return (
@@ -1189,21 +1209,21 @@ export default function PollingDashboardPage() {
             <div className="pd-hero-metrics">
               {[
                 {
-                  label:"Trump Approval", primary:`${approve}%`, primaryColor:"#4ade80",
-                  secondary:apNetStr, secondaryColor:approvalNet>=0?"#4ade80":"#ef4444",
-                  secondaryLabel:"Net", a:approve, b:disapprove, colorA:"#4ade80", colorB:"#ef4444",
+                  label:"Trump Approval", primary:`${approve}%`, primaryColor:"#e63946",
+                  secondary:apNetStr, secondaryColor:approvalNet>=0?"#e63946":"#2563eb",
+                  secondaryLabel:"Net", a:approve, b:disapprove, colorA:"#e63946", colorB:"#2563eb",
                   subLeft:`${approve}% App.`, subRight:`${disapprove}% Dis.`, href:"/polling/",
                 },
                 {
-                  label:"Generic Ballot", primary:gbNetStr, primaryColor:gbNet>=0?"#5b8fd4":"#ef4444",
+                  label:"Generic Ballot", primary:gbNetStr, primaryColor:gbNet>=0?"#2563eb":"#e63946",
                   secondary:`D ${dem}% / R ${rep}%`, secondaryColor:"rgba(255,255,255,.35)",
-                  secondaryLabel:"Split", a:dem, b:rep, colorA:"#5b8fd4", colorB:"#ef4444",
+                  secondaryLabel:"Split", a:dem, b:rep, colorA:"#2563eb", colorB:"#e63946",
                   subLeft:`D ${dem}%`, subRight:`R ${rep}%`, href:"/polling/",
                 },
                 {
-                  label:"Right / Wrong Track", primary:`${wt}%`, primaryColor:"#ef4444",
-                  secondary:rtNetStr, secondaryColor:rtNet>=0?"#4ade80":"#ef4444",
-                  secondaryLabel:"Spread", a:rt, b:wt, colorA:"#4ade80", colorB:"#ef4444",
+                  label:"Right / Wrong Track", primary:`${wt}%`, primaryColor:"#e63946",
+                  secondary:rtNetStr, secondaryColor:rtNet>=0?"#e63946":"#2563eb",
+                  secondaryLabel:"Spread", a:rt, b:wt, colorA:"#e63946", colorB:"#2563eb",
                   subLeft:`${rt}% Right`, subRight:`${wt}% Wrong`, href:"/polling/",
                 },
               ].map(m => (
@@ -1229,14 +1249,14 @@ export default function PollingDashboardPage() {
         <LargeChartPanel
           title="Donald Trump Job Approval Rating"
           eyebrow="47th President of the United States"
-          tag="Approval" tagColor="#4ade80"
+          tag="Approval" tagColor="#7c3aed"
           href="/polling/donaldtrumpapproval"
           data={trumpDaily} lines={approvalKeys}
           domain={[30,65]} refY={50}
           stats={[
-            {label:"Approve",    val:`${approve}%`,    color:"#4ade80"},
-            {label:"Disapprove", val:`${disapprove}%`, color:"#ef4444"},
-            {label:"Net",        val:apNetStr,          color:approvalNet>=0?"#4ade80":"#ef4444"},
+            {label:"Approve",    val:`${approve}%`,    color:"#e63946"},
+            {label:"Disapprove", val:`${disapprove}%`, color:"#2563eb"},
+            {label:"Net",        val:apNetStr,          color:approvalNet>=0?"#e63946":"#2563eb"},
             {label:"Polls",      val:`${TRUMP_POLLS.length}`, color:"rgba(255,255,255,.3)"},
           ]}
           pollCount={TRUMP_POLLS.length}
@@ -1252,9 +1272,9 @@ export default function PollingDashboardPage() {
           data={gbDaily} lines={gbKeys}
           domain={[35,58]} refY={50}
           stats={[
-            {label:"Democrat",   val:`${dem}%`, color:"#5b8fd4"},
-            {label:"Republican", val:`${rep}%`, color:"#ef4444"},
-            {label:"Margin",     val:gbNetStr,  color:gbNet>=0?"#5b8fd4":"#ef4444"},
+            {label:"Democrat",   val:`${dem}%`, color:"#2563eb"},
+            {label:"Republican", val:`${rep}%`, color:"#e63946"},
+            {label:"Margin",     val:gbNetStr,  color:gbNet>=0?"#2563eb":"#e63946"},
             {label:"Polls",      val:`${GB_POLLS.length}`, color:"rgba(255,255,255,.3)"},
           ]}
           pollCount={GB_POLLS.length}
@@ -1265,14 +1285,14 @@ export default function PollingDashboardPage() {
         <LargeChartPanel
           title="Right Track / Wrong Track"
           eyebrow="National Sentiment · Direction of the Country"
-          tag="Direction" tagColor="#f59e0b"
+          tag="Direction" tagColor="#7c3aed"
           href="/polling/rightorwrongtrack"
           data={rtDaily} lines={rtKeys}
           domain={[20,75]}
           stats={[
-            {label:"Right",  val:`${rt}%`, color:"#4ade80"},
-            {label:"Wrong",  val:`${wt}%`, color:"#ef4444"},
-            {label:"Spread", val:rtNetStr, color:rtNet>=0?"#4ade80":"#ef4444"},
+            {label:"Right",  val:`${rt}%`, color:"#e63946"},
+            {label:"Wrong",  val:`${wt}%`, color:"#2563eb"},
+            {label:"Spread", val:rtNetStr, color:rtNet>=0?"#e63946":"#2563eb"},
             {label:"Polls",  val:`${RT_POLLS.length}`, color:"rgba(255,255,255,.3)"},
           ]}
           pollCount={RT_POLLS.length}
@@ -1292,8 +1312,6 @@ export default function PollingDashboardPage() {
 
 // ─── CSS ──────────────────────────────────────────────────────────────────────
 const CSS = `
-  @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&display=swap');
-
   body { background: #070709 !important; }
 
   .pd-root {
@@ -1306,11 +1324,11 @@ const CSS = `
     --muted2:      rgba(240,240,245,0.40);
     --muted3:      rgba(240,240,245,0.22);
     --purple:      #7c3aed;
-    --purple-soft: #a78bfa;
+    --purple-soft: #9d5cf0;
     max-width: 1320px;
     margin: 0 auto;
     padding: 28px 28px 72px;
-    font-family: 'DM Mono', ui-monospace, monospace;
+    font-family: var(--font-body), ui-monospace, monospace;
     display: flex;
     flex-direction: column;
     gap: 0;
@@ -1326,7 +1344,7 @@ const CSS = `
   }
   .pd-hero-stripe {
     height: 3px;
-    background: linear-gradient(90deg, #4ade80 0%, #4ade80 33%, #a78bfa 33%, #a78bfa 66%, #ef4444 66%, #ef4444 100%);
+    background: linear-gradient(90deg, #e63946 33%, #7c3aed 66%, #2563eb 100%);
   }
   .pd-hero-inner {
     display: grid;
@@ -1347,19 +1365,19 @@ const CSS = `
     color: rgba(255,255,255,.3); margin-bottom: 18px;
   }
   .pd-live-dot {
-    width: 5px; height: 5px; border-radius: 50%; background: #4ade80; flex-shrink: 0;
-    box-shadow: 0 0 6px rgba(74,222,128,.6);
+    width: 5px; height: 5px; border-radius: 50%; background: #7c3aed; flex-shrink: 0;
+    box-shadow: 0 0 6px rgba(124,58,237,.5);
     animation: pd-pulse 1.8s ease-in-out infinite;
   }
   @keyframes pd-pulse { 0%,100%{opacity:1} 50%{opacity:.3} }
 
   .pd-hero-title {
-    font-family: 'Bebas Neue', sans-serif;
+    font-family: var(--font-display), sans-serif;
     font-size: clamp(44px,5.5vw,80px);
     letter-spacing: 0.03em; line-height: 0.92;
-    color: #fff; margin: 0 0 16px;
+    color: #fff; margin: 0 0 16px; text-transform: uppercase;
   }
-  .pd-hero-title em { font-style: normal; color: #c5a55a; }
+  .pd-hero-title em { font-style: normal; color: #9d5cf0; }
   .pd-hero-desc {
     font-size: 10px; letter-spacing: 0.08em; line-height: 1.85;
     color: rgba(255,255,255,.3); max-width: 460px; margin-bottom: 22px;
@@ -1372,9 +1390,9 @@ const CSS = `
     font-size: 7.5px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase;
     color: rgba(255,255,255,.3);
   }
-  .pd-badge-live { border-color: rgba(74,222,128,.3); background: rgba(74,222,128,.07); color: #4ade80; }
+  .pd-badge-live { border-color: rgba(124,58,237,.3); background: rgba(124,58,237,.07); color: #9d5cf0; }
   .pd-live-dot-sm {
-    width: 5px; height: 5px; border-radius: 50%; background: #4ade80;
+    width: 5px; height: 5px; border-radius: 50%; background: #7c3aed;
     animation: pd-pulse 1.8s ease-in-out infinite; display: inline-block;
   }
 
@@ -1393,8 +1411,8 @@ const CSS = `
     color: rgba(255,255,255,.25); margin-bottom: 6px;
   }
   .pd-metric-primary {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 42px; letter-spacing: 0.03em; line-height: 1; margin-bottom: 8px;
+    font-family: var(--font-display), sans-serif;
+    font-size: 42px; letter-spacing: 0.03em; line-height: 1; margin-bottom: 8px; text-transform: uppercase;
   }
   .pd-metric-sub-row {
     display: flex; justify-content: space-between;
@@ -1426,7 +1444,7 @@ const CSS = `
   }
   .lcp-eyebrow {
     font-size: 7.5px; font-weight: 700; letter-spacing: 0.28em; text-transform: uppercase;
-    color: var(--purple-soft, #a78bfa); margin-bottom: 6px;
+    color: var(--purple-soft, #9d5cf0); margin-bottom: 6px;
   }
   .lcp-title {
     font-size: 13px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase;
@@ -1452,8 +1470,8 @@ const CSS = `
     color: rgba(255,255,255,.2); margin-bottom: 4px;
   }
   .lcp-stat-val {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 24px; letter-spacing: 0.04em; line-height: 1;
+    font-family: var(--font-display), sans-serif;
+    font-size: 24px; letter-spacing: 0.04em; line-height: 1; text-transform: uppercase;
   }
   .lcp-chart-area {
     height: 280px; padding: 16px 8px 8px; background: #0f0f15;
@@ -1480,7 +1498,7 @@ const CSS = `
     width: 100%;
     border-collapse: collapse;
     font-size: 10px;
-    font-family: 'DM Mono', ui-monospace, monospace;
+    font-family: var(--font-body), ui-monospace, monospace;
     letter-spacing: 0.05em;
   }
   .pt-th {
@@ -1513,7 +1531,7 @@ const CSS = `
     border: none;
     border-top: 1px solid rgba(255,255,255,.06);
     color: rgba(255,255,255,.28);
-    font-family: 'DM Mono', ui-monospace, monospace;
+    font-family: var(--font-body), ui-monospace, monospace;
     font-size: 9px;
     letter-spacing: 0.18em;
     text-transform: uppercase;

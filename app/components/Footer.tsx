@@ -1,12 +1,13 @@
 import Link from "next/link";
+import Image from "next/image";
 
 const COLS = [
   {
     label: "Tracking",
     links: [
-      { href: "/polling/", label: "Trump Approval" },
-      { href: "/polling/",        label: "Generic Ballot" },
-      { href: "/polling/",     label: "Right / Wrong Track" },
+      { href: "/polling/donaldtrumpapproval", label: "Trump Approval" },
+      { href: "/polling/genericballot",        label: "Generic Ballot" },
+      { href: "/polling/rightorwrongtrack",     label: "Right / Wrong Track" },
       { href: "/polling",                       label: "All Polling Averages" },
     ],
   },
@@ -17,6 +18,7 @@ const COLS = [
       { href: "/contact", label: "Request a Poll" },
       { href: "/contact", label: "Contact" },
       { href: "https://wss.pollfish.com/link/522d0e01-b70f-4955-8514-b42a7f10d4b6", label: "Take the Survey" },
+      { href: "/SMSOptIn", label: "SMS Sign-Up" },
     ],
   },
 ];
@@ -33,29 +35,27 @@ export default function Footer() {
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap');
-
         .ft-root {
-          background: #0a0a08;
+          background: #070709;
           border-top: 1px solid rgba(255,255,255,0.08);
-          font-family: 'DM Mono', monospace;
+          font-family: var(--font-body), monospace;
           margin-top: 0;
         }
 
-        /* Bicolor rule */
+        /* Tri-color rule matching the page hero */
         .ft-stripe {
           height: 3px;
-          background: linear-gradient(90deg, #5b8fd4 50%, #d45b5b 50%);
+          background: linear-gradient(90deg, #e63946 0%, #e63946 33.33%, #7c3aed 33.33%, #7c3aed 66.66%, #2563eb 66.66%, #2563eb 100%);
         }
 
         /* CTA band */
         .ft-cta-wrap {
-          border-bottom: 1px solid rgba(255,255,255,0.08);
+          border-bottom: 1px solid rgba(255,255,255,0.07);
         }
         .ft-cta {
           max-width: 1280px;
           margin: 0 auto;
-          padding: 40px 32px;
+          padding: 36px 32px;
           display: grid;
           grid-template-columns: 1fr auto;
           align-items: center;
@@ -66,34 +66,37 @@ export default function Footer() {
         }
 
         .ft-cta-eyebrow {
+          font-family: var(--font-body), monospace;
           font-size: 9px;
           font-weight: 500;
           letter-spacing: 0.22em;
           text-transform: uppercase;
-          color: #c5a55a;
+          color: #7c3aed;
           margin-bottom: 8px;
         }
 
         .ft-cta-head {
-          font-family: 'Bebas Neue', sans-serif;
-          font-size: clamp(28px, 4vw, 52px);
+          font-family: var(--font-display), sans-serif;
+          font-size: clamp(26px, 3.5vw, 46px);
           letter-spacing: 0.04em;
           color: #fff;
           line-height: 1;
           margin-bottom: 6px;
+          text-transform: uppercase;
         }
-        .ft-cta-head .dem { color: #5b8fd4; }
-        .ft-cta-head .rep { color: #d45b5b; }
+        .ft-cta-head .dem { color: #2563eb; }
+        .ft-cta-head .rep { color: #e63946; }
 
         .ft-cta-sub {
-          font-size: 11px;
-          color: rgba(255,255,255,0.35);
+          font-family: var(--font-body), monospace;
+          font-size: 10px;
+          color: rgba(255,255,255,0.32);
           letter-spacing: 0.06em;
         }
 
         .ft-cta-btns {
           display: flex;
-          gap: 12px;
+          gap: 10px;
           flex-wrap: wrap;
           flex-shrink: 0;
         }
@@ -101,40 +104,41 @@ export default function Footer() {
         .ft-btn-primary {
           display: inline-flex;
           align-items: center;
-          padding: 10px 22px;
-          background: #c5a55a;
-          color: #0a0a08;
-          font-family: 'DM Mono', monospace;
-          font-size: 10px;
+          padding: 9px 20px;
+          background: rgba(124,58,237,0.15);
+          border: 1px solid rgba(124,58,237,0.5);
+          color: #9d5cf0;
+          font-family: var(--font-body), monospace;
+          font-size: 9px;
           font-weight: 500;
           letter-spacing: 0.14em;
           text-transform: uppercase;
           text-decoration: none;
-          transition: background 120ms, transform 80ms;
+          transition: border-color 120ms, color 120ms, background 120ms;
         }
-        .ft-btn-primary:hover { background: #d4b46a; text-decoration: none; transform: translateY(-1px); }
+        .ft-btn-primary:hover { border-color: rgba(124,58,237,0.8); color: #b97ef5; background: rgba(124,58,237,0.22); text-decoration: none; }
 
         .ft-btn-ghost {
           display: inline-flex;
           align-items: center;
-          padding: 10px 22px;
+          padding: 9px 20px;
           background: transparent;
-          color: rgba(255,255,255,0.5);
-          font-family: 'DM Mono', monospace;
-          font-size: 10px;
+          color: rgba(255,255,255,0.4);
+          font-family: var(--font-body), monospace;
+          font-size: 9px;
           font-weight: 400;
           letter-spacing: 0.14em;
           text-transform: uppercase;
           text-decoration: none;
-          border: 1px solid rgba(255,255,255,0.15);
+          border: 1px solid rgba(255,255,255,0.12);
           transition: border-color 120ms, color 120ms;
         }
-        .ft-btn-ghost:hover { border-color: rgba(255,255,255,0.4); color: rgba(255,255,255,0.8); text-decoration: none; }
+        .ft-btn-ghost:hover { border-color: rgba(255,255,255,0.35); color: rgba(255,255,255,0.75); text-decoration: none; }
 
         /* Stats strip */
         .ft-stats-wrap {
-          border-bottom: 1px solid rgba(255,255,255,0.08);
-          background: #0f0f0d;
+          border-bottom: 1px solid rgba(255,255,255,0.07);
+          background: #0b0b0f;
         }
         .ft-stats {
           max-width: 1280px;
@@ -146,88 +150,81 @@ export default function Footer() {
         @media (max-width: 600px) { .ft-stats { grid-template-columns: repeat(2, 1fr); } }
 
         .ft-stat {
-          padding: 20px 0;
+          padding: 18px 0;
           border-right: 1px solid rgba(255,255,255,0.06);
           padding-right: 24px;
           margin-right: 24px;
         }
         .ft-stat:last-child { border-right: none; }
         .ft-stat-k {
-          font-size: 9px;
+          font-family: var(--font-body), monospace;
+          font-size: 8px;
           font-weight: 500;
-          letter-spacing: 0.18em;
+          letter-spacing: 0.2em;
           text-transform: uppercase;
-          color: rgba(255,255,255,0.3);
+          color: rgba(255,255,255,0.25);
           margin-bottom: 4px;
         }
         .ft-stat-v {
-          font-family: 'Bebas Neue', sans-serif;
-          font-size: 28px;
+          font-family: var(--font-display), sans-serif;
+          font-size: 26px;
           letter-spacing: 0.04em;
-          color: #c5a55a;
+          color: #9d5cf0;
           line-height: 1;
+          text-transform: uppercase;
         }
 
         /* Main grid */
         .ft-grid-wrap {
-          border-bottom: 1px solid rgba(255,255,255,0.08);
+          border-bottom: 1px solid rgba(255,255,255,0.07);
         }
         .ft-grid {
           max-width: 1280px;
           margin: 0 auto;
           padding: 0 32px;
           display: grid;
-          grid-template-columns: 1.8fr repeat(3, 1fr);
+          grid-template-columns: 1.8fr repeat(2, 1fr);
         }
         @media (max-width: 900px) { .ft-grid { grid-template-columns: 1fr 1fr; } }
         @media (max-width: 560px) { .ft-grid { grid-template-columns: 1fr; } }
 
         .ft-brand-col {
-          padding: 36px 40px 36px 0;
+          padding: 32px 40px 32px 0;
           border-right: 1px solid rgba(255,255,255,0.06);
           display: flex;
           flex-direction: column;
-          gap: 16px;
+          gap: 14px;
         }
         @media (max-width: 900px) {
           .ft-brand-col {
             grid-column: 1 / -1;
             border-right: none;
             border-bottom: 1px solid rgba(255,255,255,0.06);
-            padding: 28px 0;
+            padding: 24px 0;
           }
         }
 
-        .ft-brand-mark {
-          font-family: 'Bebas Neue', sans-serif;
-          font-size: 48px;
-          letter-spacing: 0.05em;
-          color: #fff;
-          line-height: 1;
+        .ft-brand-logo {
           display: block;
-          text-decoration: none;
+          width: 140px;
+          height: auto;
+          opacity: 0.9;
+          transition: opacity 120ms;
         }
-        .ft-brand-mark:hover { text-decoration: none; opacity: 0.8; }
-
-        .ft-brand-eyebrow {
-          font-size: 8px;
-          letter-spacing: 0.22em;
-          text-transform: uppercase;
-          color: rgba(255,255,255,0.25);
-          margin-top: -4px;
-        }
+        .ft-brand-logo:hover { opacity: 1; }
 
         .ft-brand-desc {
-          font-size: 12px;
-          color: rgba(255,255,255,0.3);
-          line-height: 1.75;
+          font-family: var(--font-body), monospace;
+          font-size: 10px;
+          color: rgba(255,255,255,0.28);
+          line-height: 1.8;
           max-width: 260px;
           letter-spacing: 0.02em;
         }
 
         /* Nav columns */
         .ft-nav-col {
-          padding: 36px 28px;
+          padding: 32px 28px;
           border-right: 1px solid rgba(255,255,255,0.06);
         }
         .ft-nav-col:last-child { border-right: none; }
@@ -235,37 +232,42 @@ export default function Footer() {
           .ft-nav-col {
             border-right: none;
             border-bottom: 1px solid rgba(255,255,255,0.06);
-            padding: 24px 0;
+            padding: 22px 0;
           }
         }
 
         .ft-col-label {
-          font-size: 9px;
+          font-family: var(--font-body), monospace;
+          font-size: 8px;
           font-weight: 500;
           letter-spacing: 0.22em;
           text-transform: uppercase;
-          color: #c5a55a;
-          margin-bottom: 16px;
-          padding-bottom: 10px;
-          border-bottom: 1px solid rgba(255,255,255,0.06);
+          color: #7c3aed;
+          margin-bottom: 14px;
+          padding-bottom: 9px;
+          border-bottom: 1px solid rgba(124,58,237,0.2);
         }
 
         .ft-nav-link {
           display: block;
-          font-size: 11px;
-          color: rgba(255,255,255,0.4);
+          font-family: var(--font-body), monospace;
+          font-size: 10px;
+          color: rgba(255,255,255,0.35);
           text-decoration: none;
           padding: 5px 0;
           letter-spacing: 0.04em;
           transition: color 80ms;
         }
-        .ft-nav-link:hover { color: rgba(255,255,255,0.85); text-decoration: none; }
+        .ft-nav-link:hover { color: rgba(255,255,255,0.8); text-decoration: none; }
 
         /* Bottom bar */
+        .ft-bottom-wrap {
+          background: #0b0b0f;
+        }
         .ft-bottom {
           max-width: 1280px;
           margin: 0 auto;
-          padding: 16px 32px;
+          padding: 14px 32px;
           display: flex;
           align-items: center;
           justify-content: space-between;
@@ -273,12 +275,13 @@ export default function Footer() {
           flex-wrap: wrap;
         }
         @media (max-width: 768px) {
-          .ft-bottom { padding: 16px 20px; flex-direction: column; align-items: flex-start; gap: 10px; }
+          .ft-bottom { padding: 14px 20px; flex-direction: column; align-items: flex-start; gap: 8px; }
         }
 
         .ft-copyright {
-          font-size: 10px;
-          color: rgba(255,255,255,0.2);
+          font-family: var(--font-body), monospace;
+          font-size: 9px;
+          color: rgba(255,255,255,0.18);
           letter-spacing: 0.08em;
         }
 
@@ -289,28 +292,30 @@ export default function Footer() {
         }
 
         .ft-bottom-link {
-          font-size: 10px;
-          color: rgba(255,255,255,0.25);
+          font-family: var(--font-body), monospace;
+          font-size: 9px;
+          color: rgba(255,255,255,0.22);
           text-decoration: none;
           letter-spacing: 0.08em;
           transition: color 80ms;
         }
-        .ft-bottom-link:hover { color: rgba(255,255,255,0.6); }
+        .ft-bottom-link:hover { color: rgba(255,255,255,0.55); }
 
         .ft-live-indicator {
           display: inline-flex;
           align-items: center;
           gap: 6px;
-          font-size: 9px;
+          font-family: var(--font-body), monospace;
+          font-size: 8px;
           font-weight: 500;
           letter-spacing: 0.16em;
           text-transform: uppercase;
-          color: #e05a4a;
+          color: #7c3aed;
         }
         .ft-live-dot-sm {
           width: 5px; height: 5px;
           border-radius: 50%;
-          background: #e05a4a;
+          background: #7c3aed;
           animation: ft-pulse 1.8s ease-in-out infinite;
         }
         @keyframes ft-pulse { 0%,100%{opacity:1} 50%{opacity:0.25} }
@@ -360,10 +365,15 @@ export default function Footer() {
         <div className="ft-grid-wrap">
           <div className="ft-grid">
             <div className="ft-brand-col">
-              <div>
-                <Link href="/" className="ft-brand-mark">PSI</Link>
-                <div className="ft-brand-eyebrow">Public Sentiment Institute</div>
-              </div>
+              <Link href="/">
+                <Image
+                  src="/full_logo_clean.png"
+                  alt="Public Sentiment Institute"
+                  width={160}
+                  height={56}
+                  className="ft-brand-logo"
+                />
+              </Link>
               <div className="ft-brand-desc">
                 A living, continuously updated national polling database —
                 capturing what Americans believe by issue, region, demographic,
@@ -390,18 +400,21 @@ export default function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div className="ft-bottom">
-          <span className="ft-copyright">
-            © {year} Public Sentiment Institute · Open Methodology
-          </span>
-          <div className="ft-bottom-links">
-            <Link href="/" className="ft-bottom-link">Methodology</Link>
-            <Link href="/" className="ft-bottom-link">Data Disclosure</Link>
-            <Link href="/contact" className="ft-bottom-link">Contact</Link>
-          </div>
-          <div className="ft-live-indicator">
-            <span className="ft-live-dot-sm" />
-            Data collection active
+        <div className="ft-bottom-wrap">
+          <div className="ft-bottom">
+            <span className="ft-copyright">
+              © {year} Public Sentiment Institute · Open Methodology
+            </span>
+            <div className="ft-bottom-links">
+              <Link href="/" className="ft-bottom-link">Methodology</Link>
+              <Link href="/" className="ft-bottom-link">Data Disclosure</Link>
+              <Link href="/contact" className="ft-bottom-link">Contact</Link>
+              <Link href="/TermsAndConditions" className="ft-bottom-link">Terms &amp; Conditions</Link>
+            </div>
+            <div className="ft-live-indicator">
+              <span className="ft-live-dot-sm" />
+              Data collection active
+            </div>
           </div>
         </div>
       </footer>

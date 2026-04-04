@@ -538,7 +538,7 @@ function buildCSS(dm: boolean): string {
   .em-root {
     display: flex; flex-direction: column; height: 100vh; max-height: 100vh;
     overflow: hidden; background: ${bg}; color: ${text};
-    font-family: 'DM Mono', 'Geist Mono', ui-monospace, monospace;
+    font-family: var(--font-body), monospace;
     position: relative; transition: background 0.2s, color 0.2s;
   }
   .em-root.em-fs { position: fixed; inset: 0; z-index: 9999; }
@@ -550,8 +550,8 @@ function buildCSS(dm: boolean): string {
   }
   .em-top-brand { display:flex; align-items:center; gap:10px; flex-shrink:0; }
   .em-logo {
-    font-size: 10px; font-weight: 700; letter-spacing: 0.22em; color: #c5a55a;
-    border: 1px solid #c5a55a44; padding: 3px 7px; flex-shrink: 0;
+    font-size: 10px; font-weight: 700; letter-spacing: 0.22em; color: #7c3aed;
+    border: 1px solid #7c3aed44; padding: 3px 7px; flex-shrink: 0;
   }
   .em-brand-text { display:flex; flex-direction:column; gap:1px; }
   .em-brand-main { font-size:12px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:${text}; }
@@ -573,14 +573,14 @@ function buildCSS(dm: boolean): string {
 
   .em-top-actions { display:flex; align-items:center; gap:6px; flex-shrink:0; }
   .em-btn {
-    font-family: 'DM Mono', ui-monospace, monospace;
+    font-family: var(--font-body), monospace;
     font-size: 8.5px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
     border: 1px solid ${btnBorder}; background: transparent; color: ${btnText};
     padding: 5px 10px; cursor: pointer; transition: all 100ms;
   }
   .em-btn:hover { border-color:${dm?"#555":"#888"}; color:${dm?"rgba(255,255,255,.8)":"rgba(0,0,0,.8)"}; background:${btnHover}; }
-  .em-btn-gold { border-color:#c5a55a44; color:#c5a55a; display:flex; align-items:center; gap:5px; }
-  .em-btn-gold:hover { border-color:#c5a55a; background:rgba(197,165,90,.08); color:#d4b46a; }
+  .em-btn-gold { border-color:#7c3aed44; color:#7c3aed; display:flex; align-items:center; gap:5px; }
+  .em-btn-gold:hover { border-color:#7c3aed; background:rgba(124,58,237,.08); color:#9d5cf0; }
 
   .em-win {
     flex-shrink: 0; padding: 5px 18px; border-bottom: 1px solid;
@@ -594,7 +594,7 @@ function buildCSS(dm: boolean): string {
   .em-brush-label { font-size:7.5px; letter-spacing:0.22em; text-transform:uppercase; color:${textFaint}; flex-shrink:0; }
   .em-brush-group { display:flex; border:1px solid ${brushGrp}; overflow:hidden; flex-shrink:0; }
   .em-brush-btn {
-    font-family: 'DM Mono', ui-monospace, monospace;
+    font-family: var(--font-body), monospace;
     font-size: 8.5px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
     border: none; border-right: 1px solid ${brushGrp}; background: ${brushBtn};
     color: ${dm ? "rgba(255,255,255,.35)" : "rgba(0,0,0,.4)"}; padding: 6px 12px; cursor: pointer;
@@ -628,7 +628,7 @@ function buildCSS(dm: boolean): string {
   .em-tile {
     display: flex; flex-direction:column; align-items:center; justify-content:center;
     padding: 3px 2px; border: 1px solid; cursor: pointer;
-    font-family: 'DM Mono', ui-monospace, monospace;
+    font-family: var(--font-body), monospace;
     font-size: 7px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase;
     transition: filter 120ms; line-height:1.2;
   }

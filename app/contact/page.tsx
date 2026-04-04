@@ -102,7 +102,7 @@ export default function ContactPage() {
               <span className="ct-tag-sep">—</span>
               <span>Public Sentiment Institute</span>
               <span className="ct-tag-sep">·</span>
-              <span style={{ color: "#c5a55a" }}>Intake</span>
+              <span style={{ color: "#9d5cf0" }}>Intake</span>
             </div>
 
             <h1 className="ct-hero-headline">
@@ -316,10 +316,10 @@ export default function ContactPage() {
                 <ul className="ct-checklist">
                   {[
                     { color: "#5b8fd4", text: "Target geography + audience (A18+, RV, LV)" },
-                    { color: "#c5a55a", text: "Field dates / cadence (one-time vs recurring)" },
+                    { color: "#9d5cf0", text: "Field dates / cadence (one-time vs recurring)" },
                     { color: "#d45b5b", text: "Required outputs (tabs, memo, toplines, trend)" },
                     { color: "#5b8fd4", text: "Demographics, oversamples, or special targets" },
-                    { color: "#c5a55a", text: "Budget range or sample size target" },
+                    { color: "#9d5cf0", text: "Budget range or sample size target" },
                   ].map(({ color, text }) => (
                     <li key={text} className="ct-checklist-item">
                       <span className="ct-checklist-dot" style={{ background: color }} />
@@ -338,7 +338,7 @@ export default function ContactPage() {
               <div className="ct-sidebar-body">
                 {[
                   { type: "Simple request",  time: "Same day",  color: "#5b8fd4" },
-                  { type: "Custom project",  time: "24–48 hrs", color: "#c5a55a" },
+                  { type: "Custom project",  time: "24–48 hrs", color: "#9d5cf0" },
                   { type: "Urgent (noted)",  time: "Priority",  color: "#d45b5b" },
                 ].map(({ type, time, color }) => (
                   <div key={type} className="ct-response-row">
@@ -377,7 +377,7 @@ export default function ContactPage() {
 function StatusPill({ status }: { status: Status }) {
   if (status.type === "idle") return null;
   const configs = {
-    sending: { color: "#c5a55a", text: "Transmitting…" },
+    sending: { color: "#9d5cf0", text: "Transmitting…" },
     sent:    { color: "#5b8fd4", text: "Submitted" },
     error:   { color: "#d45b5b", text: status.type === "error" ? (status as any).message : "Error" },
   };
@@ -388,7 +388,7 @@ function StatusPill({ status }: { status: Status }) {
       padding: "3px 10px",
       border: `1px solid rgba(255,255,255,0.08)`,
       background: "rgba(255,255,255,0.03)",
-      fontFamily: "'DM Mono', monospace",
+      fontFamily: "var(--font-body), monospace",
       fontSize: 9, letterSpacing: "0.18em", textTransform: "uppercase",
       color: cfg.color,
     }}>
@@ -402,9 +402,7 @@ function StatusPill({ status }: { status: Status }) {
 }
 
 const CSS = `
-  @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&display=swap');
-
-  body { background: #0a0a08 !important; }
+  body { background: #070709 !important; }
 
   .ct-root {
     max-width: 1280px;
@@ -421,7 +419,7 @@ const CSS = `
     display: grid;
     grid-template-columns: 1fr 260px;
     border: 1px solid rgba(255,255,255,0.08);
-    background: #0f0f0d;
+    background: #0f0f15;
     overflow: hidden;
   }
   @media (max-width: 900px) { .ct-hero { grid-template-columns: 1fr; } }
@@ -438,13 +436,13 @@ const CSS = `
     content: '';
     position: absolute; top: -60px; right: -60px;
     width: 300px; height: 300px;
-    background: radial-gradient(circle, rgba(197,165,90,0.05) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(124,58,237,0.05) 0%, transparent 70%);
     pointer-events: none;
   }
 
   .ct-hero-tag {
     display: inline-flex; align-items: center; gap: 6px;
-    font-family: 'DM Mono', monospace;
+    font-family: var(--font-body), monospace;
     font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase;
     color: rgba(255,255,255,0.35);
     margin-bottom: 20px;
@@ -452,16 +450,16 @@ const CSS = `
   .ct-tag-sep { color: rgba(255,255,255,0.15); }
 
   .ct-hero-headline {
-    font-family: 'Bebas Neue', sans-serif;
+    font-family: var(--font-display), sans-serif;
     font-size: clamp(52px, 7vw, 88px);
-    letter-spacing: 0.03em; line-height: 0.95;
+    letter-spacing: 0.03em; line-height: 0.95; text-transform: uppercase;
     color: #fff; margin: 0 0 20px;
     position: relative; z-index: 1;
   }
-  .ct-headline-gold { color: #c5a55a; }
+  .ct-headline-gold { color: #9d5cf0; }
 
   .ct-hero-desc {
-    font-family: 'DM Mono', monospace;
+    font-family: var(--font-body), monospace;
     font-size: 11px; color: rgba(255,255,255,0.35);
     line-height: 1.8; max-width: 480px;
     margin-bottom: 24px; letter-spacing: 0.04em;
@@ -478,18 +476,18 @@ const CSS = `
     padding: 3px 10px;
     border: 1px solid rgba(255,255,255,0.08);
     background: rgba(255,255,255,0.03);
-    font-family: 'DM Mono', monospace;
+    font-family: var(--font-body), monospace;
     font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase;
     color: rgba(255,255,255,0.3);
   }
   .ct-badge-live {
-    border-color: rgba(197,165,90,0.3);
-    background: rgba(197,165,90,0.06);
-    color: #c5a55a;
+    border-color: rgba(124,58,237,0.3);
+    background: rgba(124,58,237,0.06);
+    color: #9d5cf0;
   }
   .ct-live-dot {
     display: inline-block; width: 5px; height: 5px;
-    border-radius: 50%; background: #c5a55a;
+    border-radius: 50%; background: #9d5cf0;
     animation: ct-pulse 1.8s ease-in-out infinite;
     flex-shrink: 0;
   }
@@ -498,7 +496,7 @@ const CSS = `
   .ct-hero-meta {
     padding-top: 20px;
     border-top: 1px solid rgba(255,255,255,0.06);
-    font-family: 'DM Mono', monospace;
+    font-family: var(--font-body), monospace;
     font-size: 9px; color: rgba(255,255,255,0.2);
     letter-spacing: 0.1em; text-transform: uppercase;
     position: relative; z-index: 1;
@@ -521,14 +519,14 @@ const CSS = `
   .ct-hero-metric:last-child { border-bottom: none; }
 
   .ct-metric-eyebrow {
-    font-family: 'DM Mono', monospace;
+    font-family: var(--font-body), monospace;
     font-size: 8px; letter-spacing: 0.2em; text-transform: uppercase;
     color: rgba(255,255,255,0.25); margin-bottom: 6px;
   }
   .ct-metric-num {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 36px; letter-spacing: 0.03em;
-    line-height: 1; color: #c5a55a;
+    font-family: var(--font-display), sans-serif;
+    font-size: 36px; letter-spacing: 0.03em; text-transform: uppercase;
+    line-height: 1; color: #9d5cf0;
   }
 
   /* ── LAYOUT ── */
@@ -549,13 +547,13 @@ const CSS = `
     background: #0d0d0b;
   }
   .ct-panel-title {
-    font-family: 'DM Mono', monospace;
+    font-family: var(--font-body), monospace;
     font-size: 10px; font-weight: 500;
     letter-spacing: 0.14em; text-transform: uppercase;
     color: rgba(255,255,255,0.6);
   }
   .ct-panel-sub {
-    font-family: 'DM Mono', monospace;
+    font-family: var(--font-body), monospace;
     font-size: 8px; color: rgba(255,255,255,0.2);
     letter-spacing: 0.08em; margin-top: 3px;
   }
@@ -563,7 +561,7 @@ const CSS = `
   /* ── FORM PANEL ── */
   .ct-form-panel {
     border: 1px solid rgba(255,255,255,0.08);
-    background: #0f0f0d;
+    background: #0f0f15;
     overflow: hidden;
   }
 
@@ -575,7 +573,7 @@ const CSS = `
   /* FIELDS */
   .ct-field { display: flex; flex-direction: column; gap: 0; }
   .ct-label {
-    font-family: 'DM Mono', monospace;
+    font-family: var(--font-body), monospace;
     font-size: 8px; font-weight: 500;
     letter-spacing: 0.2em; text-transform: uppercase;
     color: rgba(255,255,255,0.25);
@@ -588,7 +586,7 @@ const CSS = `
     background: rgba(255,255,255,0.03);
     border: 1px solid rgba(255,255,255,0.08);
     color: rgba(255,255,255,0.75);
-    font-family: 'DM Mono', monospace;
+    font-family: var(--font-body), monospace;
     font-size: 11px; letter-spacing: 0.04em;
     padding: 10px 14px;
     outline: none;
@@ -604,16 +602,16 @@ const CSS = `
     border-color: rgba(255,255,255,0.14);
   }
   .ct-input--focused {
-    border-color: rgba(197,165,90,0.45) !important;
-    background: rgba(197,165,90,0.04) !important;
+    border-color: rgba(124,58,237,0.45) !important;
+    background: rgba(124,58,237,0.04) !important;
   }
   .ct-select {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='rgba(197,165,90,0.6)'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='rgba(124,58,237,0.6)'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
     background-position: right 12px center;
     padding-right: 32px; cursor: pointer;
   }
-  .ct-select option { background: #0f0f0d; color: rgba(255,255,255,0.75); }
+  .ct-select option { background: #0f0f15; color: rgba(255,255,255,0.75); }
   .ct-textarea { min-height: 160px; resize: vertical; line-height: 1.65; }
 
   /* ACTIONS */
@@ -624,15 +622,15 @@ const CSS = `
   .ct-btn-primary {
     display: inline-flex; align-items: center;
     padding: 10px 22px;
-    background: #c5a55a;
-    color: #0a0a08;
-    font-family: 'DM Mono', monospace;
+    background: #7c3aed;
+    color: #fff;
+    font-family: var(--font-body), monospace;
     font-size: 10px; font-weight: 500;
     letter-spacing: 0.14em; text-transform: uppercase;
     border: none; cursor: pointer;
     transition: background 120ms, transform 80ms;
   }
-  .ct-btn-primary:hover:not(:disabled) { background: #d4b46a; transform: translateY(-1px); }
+  .ct-btn-primary:hover:not(:disabled) { background: #9d5cf0; transform: translateY(-1px); }
   .ct-btn-primary:disabled { opacity: 0.4; cursor: not-allowed; }
 
   .ct-btn-outline {
@@ -640,7 +638,7 @@ const CSS = `
     padding: 10px 18px;
     background: transparent;
     color: rgba(255,255,255,0.35);
-    font-family: 'DM Mono', monospace;
+    font-family: var(--font-body), monospace;
     font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
     border: 1px solid rgba(255,255,255,0.12); cursor: pointer;
     transition: border-color 120ms, color 120ms;
@@ -648,12 +646,12 @@ const CSS = `
   .ct-btn-outline:hover { border-color: rgba(255,255,255,0.3); color: rgba(255,255,255,0.6); }
 
   .ct-sent-note {
-    font-family: 'DM Mono', monospace;
+    font-family: var(--font-body), monospace;
     font-size: 9px; letter-spacing: 0.1em;
     color: #5b8fd4;
   }
   .ct-disclaimer {
-    font-family: 'DM Mono', monospace;
+    font-family: var(--font-body), monospace;
     font-size: 8px; letter-spacing: 0.14em; text-transform: uppercase;
     color: rgba(255,255,255,0.12);
     padding-top: 8px;
@@ -664,7 +662,7 @@ const CSS = `
   .ct-sidebar { display: flex; flex-direction: column; gap: 1px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.06); }
 
   .ct-sidebar-card {
-    background: #0f0f0d;
+    background: #0f0f15;
     display: flex; flex-direction: column;
   }
 
@@ -674,7 +672,7 @@ const CSS = `
   }
 
   .ct-sidebar-sub {
-    font-family: 'DM Mono', monospace;
+    font-family: var(--font-body), monospace;
     font-size: 8px; color: rgba(255,255,255,0.2);
     letter-spacing: 0.1em;
   }
@@ -682,7 +680,7 @@ const CSS = `
   .ct-checklist { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; }
   .ct-checklist-item {
     display: flex; align-items: flex-start; gap: 10px;
-    font-family: 'DM Mono', monospace;
+    font-family: var(--font-body), monospace;
     font-size: 10px; letter-spacing: 0.04em; line-height: 1.65;
     color: rgba(255,255,255,0.4);
   }
@@ -699,43 +697,43 @@ const CSS = `
   .ct-response-row:last-of-type { border-bottom: none; }
   .ct-response-type {
     display: flex; align-items: center; gap: 8px;
-    font-family: 'DM Mono', monospace;
+    font-family: var(--font-body), monospace;
     font-size: 10px; letter-spacing: 0.06em;
     color: rgba(255,255,255,0.35);
   }
   .ct-response-dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
   .ct-response-time {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 18px; letter-spacing: 0.04em;
+    font-family: var(--font-display), sans-serif;
+    font-size: 18px; letter-spacing: 0.04em; text-transform: uppercase;
   }
   .ct-sidebar-note {
-    font-family: 'DM Mono', monospace;
+    font-family: var(--font-body), monospace;
     font-size: 9px; letter-spacing: 0.06em; line-height: 1.75;
     color: rgba(255,255,255,0.2); margin: 0;
   }
 
   /* EMAIL CARD */
   .ct-email-card {
-    background: rgba(197,165,90,0.05);
-    border-top: 1px solid rgba(197,165,90,0.15);
+    background: rgba(124,58,237,0.05);
+    border-top: 1px solid rgba(124,58,237,0.15);
     padding: 18px 18px;
     display: flex; flex-direction: column; gap: 6px;
   }
   .ct-email-label {
-    font-family: 'DM Mono', monospace;
+    font-family: var(--font-body), monospace;
     font-size: 8px; font-weight: 500;
     letter-spacing: 0.2em; text-transform: uppercase;
-    color: rgba(197,165,90,0.5);
+    color: rgba(124,58,237,0.5);
   }
   .ct-email-addr {
-    font-family: 'DM Mono', monospace;
+    font-family: var(--font-body), monospace;
     font-size: 11px; font-weight: 500; letter-spacing: 0.04em;
-    color: #c5a55a; text-decoration: none; word-break: break-all;
+    color: #9d5cf0; text-decoration: none; word-break: break-all;
     transition: color 120ms;
   }
-  .ct-email-addr:hover { color: #d4b46a; }
+  .ct-email-addr:hover { color: #a855f7; }
   .ct-email-note {
-    font-family: 'DM Mono', monospace;
+    font-family: var(--font-body), monospace;
     font-size: 9px; letter-spacing: 0.08em; line-height: 1.65;
     color: rgba(255,255,255,0.2);
   }

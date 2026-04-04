@@ -22,9 +22,7 @@ export default function SmsOptInPage() {
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap');
-
-        body { background: #0a0a08 !important; margin: 0; }
+        body { background: #070709 !important; margin: 0; }
 
         .sms-wrap {
           max-width: 1280px;
@@ -38,7 +36,7 @@ export default function SmsOptInPage() {
           display: flex;
           align-items: center;
           gap: 8px;
-          font-family: 'DM Mono', monospace;
+          font-family: var(--font-body), monospace;
           font-size: 9px;
           letter-spacing: 0.18em;
           text-transform: uppercase;
@@ -50,7 +48,7 @@ export default function SmsOptInPage() {
           text-decoration: none;
           transition: color 100ms;
         }
-        .sms-breadcrumb a:hover { color: #c5a55a; }
+        .sms-breadcrumb a:hover { color: #9d5cf0; }
         .sms-breadcrumb-sep { color: rgba(255,255,255,0.1); }
 
         /* ── Layout ── */
@@ -65,7 +63,7 @@ export default function SmsOptInPage() {
         /* ── Left: Hero copy ── */
         .sms-hero {
           border: 1px solid rgba(255,255,255,0.08);
-          background: #0f0f0d;
+          background: #0f0f15;
           padding: 52px 52px 44px;
           position: relative;
           overflow: hidden;
@@ -77,7 +75,7 @@ export default function SmsOptInPage() {
           position: absolute;
           top: -80px; right: -80px;
           width: 320px; height: 320px;
-          background: radial-gradient(circle, rgba(197,165,90,0.07) 0%, transparent 70%);
+          background: radial-gradient(circle, rgba(124,58,237,0.07) 0%, transparent 70%);
           pointer-events: none;
         }
 
@@ -85,23 +83,23 @@ export default function SmsOptInPage() {
           display: inline-flex;
           align-items: center;
           gap: 8px;
-          font-family: 'DM Mono', monospace;
+          font-family: var(--font-body), monospace;
           font-size: 9px;
           letter-spacing: 0.2em;
           text-transform: uppercase;
-          color: #c5a55a;
+          color: #9d5cf0;
           margin-bottom: 20px;
         }
         .sms-eyebrow-dot {
           width: 5px; height: 5px;
           border-radius: 50%;
-          background: #c5a55a;
+          background: #9d5cf0;
           animation: sms-pulse 1.8s ease-in-out infinite;
         }
         @keyframes sms-pulse { 0%,100%{opacity:1} 50%{opacity:0.2} }
 
         .sms-headline {
-          font-family: 'Bebas Neue', sans-serif;
+          font-family: var(--font-display), sans-serif;
           font-size: clamp(48px, 6vw, 80px);
           letter-spacing: 0.03em;
           line-height: 0.95;
@@ -109,11 +107,12 @@ export default function SmsOptInPage() {
           margin-bottom: 24px;
           position: relative;
           z-index: 1;
+          text-transform: uppercase;
         }
-        .sms-headline .accent { color: #c5a55a; }
+        .sms-headline .accent { color: #9d5cf0; }
 
         .sms-desc {
-          font-family: 'DM Mono', monospace;
+          font-family: var(--font-body), monospace;
           font-size: 11px;
           color: rgba(255,255,255,0.35);
           line-height: 1.85;
@@ -146,18 +145,18 @@ export default function SmsOptInPage() {
         .sms-benefit-icon {
           width: 28px;
           height: 28px;
-          border: 1px solid rgba(197,165,90,0.3);
+          border: 1px solid rgba(124,58,237,0.3);
           display: flex;
           align-items: center;
           justify-content: center;
           flex-shrink: 0;
           font-size: 12px;
-          color: #c5a55a;
-          background: rgba(197,165,90,0.05);
+          color: #9d5cf0;
+          background: rgba(124,58,237,0.05);
         }
 
         .sms-benefit-title {
-          font-family: 'DM Mono', monospace;
+          font-family: var(--font-body), monospace;
           font-size: 10px;
           font-weight: 500;
           letter-spacing: 0.1em;
@@ -167,7 +166,7 @@ export default function SmsOptInPage() {
         }
 
         .sms-benefit-desc {
-          font-family: 'DM Mono', monospace;
+          font-family: var(--font-body), monospace;
           font-size: 10px;
           color: rgba(255,255,255,0.25);
           line-height: 1.65;
@@ -178,7 +177,7 @@ export default function SmsOptInPage() {
           margin-top: 24px;
           padding-top: 20px;
           border-top: 1px solid rgba(255,255,255,0.06);
-          font-family: 'DM Mono', monospace;
+          font-family: var(--font-body), monospace;
           font-size: 9px;
           color: rgba(255,255,255,0.18);
           letter-spacing: 0.08em;
@@ -198,11 +197,11 @@ export default function SmsOptInPage() {
         .sms-form-header {
           padding: 22px 28px 18px;
           border-bottom: 1px solid rgba(255,255,255,0.06);
-          background: #0f0f0d;
+          background: #0f0f15;
         }
 
         .sms-form-title {
-          font-family: 'DM Mono', monospace;
+          font-family: var(--font-body), monospace;
           font-size: 10px;
           font-weight: 500;
           letter-spacing: 0.18em;
@@ -212,7 +211,7 @@ export default function SmsOptInPage() {
         }
 
         .sms-form-sub {
-          font-family: 'DM Mono', monospace;
+          font-family: var(--font-body), monospace;
           font-size: 9px;
           color: rgba(255,255,255,0.2);
           letter-spacing: 0.06em;
@@ -232,20 +231,20 @@ export default function SmsOptInPage() {
         }
 
         .sms-label {
-          font-family: 'DM Mono', monospace;
+          font-family: var(--font-body), monospace;
           font-size: 8px;
           font-weight: 500;
           letter-spacing: 0.2em;
           text-transform: uppercase;
           color: rgba(255,255,255,0.3);
         }
-        .sms-label .required { color: #c5a55a; margin-left: 2px; }
+        .sms-label .required { color: #9d5cf0; margin-left: 2px; }
 
         .sms-input {
           background: rgba(255,255,255,0.04);
           border: 1px solid rgba(255,255,255,0.1);
           padding: 10px 14px;
-          font-family: 'DM Mono', monospace;
+          font-family: var(--font-body), monospace;
           font-size: 11px;
           color: rgba(255,255,255,0.75);
           letter-spacing: 0.04em;
@@ -257,7 +256,7 @@ export default function SmsOptInPage() {
           -webkit-appearance: none;
         }
         .sms-input::placeholder { color: rgba(255,255,255,0.18); }
-        .sms-input:focus { border-color: rgba(197,165,90,0.5); background: rgba(255,255,255,0.06); }
+        .sms-input:focus { border-color: rgba(124,58,237,0.5); background: rgba(255,255,255,0.06); }
 
         /* ── Consent checkbox ── */
         .sms-consent {
@@ -286,33 +285,33 @@ export default function SmsOptInPage() {
           cursor: pointer;
         }
         .sms-checkbox.checked {
-          border-color: #c5a55a;
-          background: rgba(197,165,90,0.15);
+          border-color: #9d5cf0;
+          background: rgba(124,58,237,0.15);
         }
         .sms-checkbox-mark {
           width: 6px;
           height: 6px;
-          background: #c5a55a;
+          background: #9d5cf0;
           display: none;
         }
         .sms-checkbox.checked .sms-checkbox-mark { display: block; }
 
         .sms-consent-text {
-          font-family: 'DM Mono', monospace;
+          font-family: var(--font-body), monospace;
           font-size: 9px;
           color: rgba(255,255,255,0.25);
           line-height: 1.75;
           letter-spacing: 0.03em;
         }
         .sms-consent-text a {
-          color: #c5a55a;
+          color: #9d5cf0;
           text-decoration: none;
         }
         .sms-consent-text a:hover { text-decoration: underline; }
 
         /* ── Error ── */
         .sms-error {
-          font-family: 'DM Mono', monospace;
+          font-family: var(--font-body), monospace;
           font-size: 9px;
           letter-spacing: 0.1em;
           color: #e05a4a;
@@ -327,9 +326,9 @@ export default function SmsOptInPage() {
           align-items: center;
           justify-content: center;
           padding: 13px 22px;
-          background: #c5a55a;
-          color: #0a0a08;
-          font-family: 'DM Mono', monospace;
+          background: #7c3aed;
+          color: #fff;
+          font-family: var(--font-body), monospace;
           font-size: 10px;
           font-weight: 500;
           letter-spacing: 0.16em;
@@ -339,13 +338,13 @@ export default function SmsOptInPage() {
           transition: background 120ms, transform 80ms;
           width: 100%;
         }
-        .sms-submit:hover { background: #d4b46a; transform: translateY(-1px); }
+        .sms-submit:hover { background: #9d5cf0; transform: translateY(-1px); }
         .sms-submit:active { transform: translateY(0); }
 
         .sms-form-footer {
           padding: 14px 28px 18px;
           border-top: 1px solid rgba(255,255,255,0.05);
-          font-family: 'DM Mono', monospace;
+          font-family: var(--font-body), monospace;
           font-size: 8px;
           color: rgba(255,255,255,0.15);
           letter-spacing: 0.1em;
@@ -356,7 +355,7 @@ export default function SmsOptInPage() {
           color: rgba(255,255,255,0.3);
           text-decoration: none;
         }
-        .sms-form-footer a:hover { color: #c5a55a; }
+        .sms-form-footer a:hover { color: #9d5cf0; }
 
         /* ── Success state ── */
         .sms-success {
@@ -370,26 +369,27 @@ export default function SmsOptInPage() {
 
         .sms-success-icon {
           width: 48px; height: 48px;
-          border: 1px solid rgba(197,165,90,0.4);
-          background: rgba(197,165,90,0.08);
+          border: 1px solid rgba(124,58,237,0.4);
+          background: rgba(124,58,237,0.08);
           display: flex;
           align-items: center;
           justify-content: center;
           font-size: 20px;
-          color: #c5a55a;
+          color: #9d5cf0;
           margin-bottom: 8px;
         }
 
         .sms-success-title {
-          font-family: 'Bebas Neue', sans-serif;
+          font-family: var(--font-display), sans-serif;
           font-size: 32px;
           letter-spacing: 0.05em;
-          color: #c5a55a;
+          color: #9d5cf0;
           line-height: 1;
+          text-transform: uppercase;
         }
 
         .sms-success-text {
-          font-family: 'DM Mono', monospace;
+          font-family: var(--font-body), monospace;
           font-size: 10px;
           color: rgba(255,255,255,0.3);
           line-height: 1.8;
@@ -409,12 +409,12 @@ export default function SmsOptInPage() {
         @media(max-width: 768px) { .sms-info-strip { grid-template-columns: 1fr; } }
 
         .sms-info-item {
-          background: #0f0f0d;
+          background: #0f0f15;
           padding: 20px 22px;
         }
 
         .sms-info-eyebrow {
-          font-family: 'DM Mono', monospace;
+          font-family: var(--font-body), monospace;
           font-size: 8px;
           font-weight: 500;
           letter-spacing: 0.2em;
@@ -424,16 +424,17 @@ export default function SmsOptInPage() {
         }
 
         .sms-info-val {
-          font-family: 'Bebas Neue', sans-serif;
+          font-family: var(--font-display), sans-serif;
           font-size: 22px;
           letter-spacing: 0.04em;
-          color: #c5a55a;
+          color: #9d5cf0;
           line-height: 1;
           margin-bottom: 4px;
+          text-transform: uppercase;
         }
 
         .sms-info-sub {
-          font-family: 'DM Mono', monospace;
+          font-family: var(--font-body), monospace;
           font-size: 9px;
           color: rgba(255,255,255,0.2);
           letter-spacing: 0.04em;

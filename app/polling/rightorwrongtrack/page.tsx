@@ -469,10 +469,10 @@ export default function RightTrackWrongTrackPage() {
         {/* ── METHODOLOGY ── */}
         <div className="pap-table-panel" style={{ borderTop: "none" }}>
           <div style={{ padding: "12px 18px" }}>
-            <div style={{ fontFamily: "ui-monospace,monospace", fontSize: 7, fontWeight: 700, letterSpacing: "0.28em", textTransform: "uppercase", color: "var(--purple-soft)", marginBottom: 6 }}>
+            <div style={{ fontFamily: "var(--font-body),monospace", fontSize: 7, fontWeight: 700, letterSpacing: "0.28em", textTransform: "uppercase", color: "var(--purple-soft)", marginBottom: 6 }}>
               METHODOLOGY
             </div>
-            <p style={{ fontFamily: "ui-monospace,monospace", fontSize: 8.5, lineHeight: 1.75, letterSpacing: "0.08em", color: "rgba(240,240,245,0.22)", margin: 0 }}>
+            <p style={{ fontFamily: "var(--font-body),monospace", fontSize: 8.5, lineHeight: 1.75, letterSpacing: "0.08em", color: "rgba(240,240,245,0.22)", margin: 0 }}>
               Right Track / Wrong Track averages are computed using a daily weighted model incorporating
               recency decay, square-root sample size adjustment, and screen type (LV/RV/A) weighting.
               Gold Standard pollsters ({GOLD_STANDARD_NAMES.join(", ")}) receive ×{GOLD_STANDARD_MULTIPLIER}²
@@ -489,6 +489,8 @@ export default function RightTrackWrongTrackPage() {
 
 // ─── CSS — matches Trump approval design system exactly ───────────────────────
 const CSS = `
+  body { background: #070709 !important; }
+
   .pap-root {
     --bg:          #070709;
     --bg2:         #0b0b0f;
@@ -514,6 +516,9 @@ const CSS = `
   @keyframes pap-bar-in { from { width:0; } }
 
   .pap-root {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 32px 32px 80px;
     display: flex; flex-direction: column; gap: 20px;
     animation: pap-fade-up 0.5s cubic-bezier(0.22,1,0.36,1) both;
   }

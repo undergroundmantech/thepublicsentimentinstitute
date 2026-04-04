@@ -1,45 +1,39 @@
-import type { Metadata } from "next";
-import { Playfair_Display, Source_Serif_4, JetBrains_Mono } from "next/font/google";
-import "@/app/globals.css";
-import Navbar from "@/app/components/Navbar";
-import Footer from "@/app/components/Footer";
+import "./globals.css";
 
-/* ── Fonts ── */
-const playfair = Playfair_Display({
+import type { Metadata } from "next";
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
+import { Quantico, Geist_Mono } from "next/font/google";
+
+/* -----------------------------
+   FONTS
+------------------------------ */
+
+const display = Quantico({
   subsets: ["latin"],
-  weight: ["700", "900"],
+  weight: ["400", "700"],           // Quantico only has 400 and 700
   variable: "--font-display",
   display: "swap",
 });
 
-const sourceSerif = Source_Serif_4({
+const mono = Geist_Mono({
   subsets: ["latin"],
-  weight: ["400", "600"],
   variable: "--font-body",
   display: "swap",
 });
 
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ["latin"],
-  weight: ["400", "500"],
-  variable: "--font-mono",
-  display: "swap",
-});
+/* -----------------------------
+   META
+------------------------------ */
 
-/* ── Metadata ── */
 export const metadata: Metadata = {
-  title: {
-    default: "Public Sentiment Institute",
-    template: "%s | PSI",
-  },
-  description:
-    "A living national polling database capturing American opinion by issue, region, and demographic — built for transparency.",
-  openGraph: {
-    type: "website",
-    locale: "en_US",
-    siteName: "Public Sentiment Institute",
-  },
+  title: "Public Sentiment Institute",
+  description: "Polling • Research • Insights",
 };
+
+/* -----------------------------
+   ROOT LAYOUT
+------------------------------ */
 
 export default function RootLayout({
   children,
@@ -49,22 +43,91 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${playfair.variable} ${sourceSerif.variable} ${jetbrainsMono.variable}`}
+      className={`${display.variable} ${mono.variable}`}
     >
-      <body>
-        <Navbar />
-
-        <main
-          style={{
-            maxWidth: "var(--content-w)",
-            margin: "0 auto",
-            padding: "32px 20px 80px",
-          }}
+      {/* IMPORTANT:
+         mono.className forces Geist Mono as REAL font-family.
+         This prevents Windows from ever falling back to Courier.
+      */}
+        <body
+        suppressHydrationWarning
+        className={[
+          mono.className,
+          "min-h-screen antialiased overflow-x-hidden",
+        ].join(" ")}
+      >
+        {/* --------------------------------
+           Ambient tri-color glow background
+        -------------------------------- */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none fixed inset-0 z-0 overflow-hidden"
         >
-          {children}
-        </main>
+          {/* Red bloom */}
+          <div
+            className="absolute -top-32 -left-32 h-[480px] w-[480px] rounded-full opacity-[0.07]"
+            style={{
+              background:
+                "radial-gradient(circle, #e63946 0%, transparent 70%)",
+              filter: "blur(60px)",
+            }}
+          />
 
-        <Footer />
+          {/* Blue bloom */}
+          <div
+            className="absolute -bottom-32 -right-32 h-[520px] w-[520px] rounded-full opacity-[0.07]"
+            style={{
+              background:
+                "radial-gradient(circle, #2563eb 0%, transparent 70%)",
+              filter: "blur(60px)",
+            }}
+          />
+
+          {/* Purple bloom */}
+          <div
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[600px] w-[600px] rounded-full opacity-[0.05]"
+            style={{
+              background:
+                "radial-gradient(circle, #7c3aed 0%, transparent 70%)",
+              filter: "blur(80px)",
+            }}
+          />
+        </div>
+
+        {/* --------------------------------
+           PAGE STRUCTURE
+        -------------------------------- */}
+        <div className="relative z-10 min-h-screen flex flex-col w-full min-w-0">
+
+          {/* HEADER */}
+          <header className="w-full min-w-0">
+            <Navbar />
+
+            <div
+              className="h-[2px] w-full"
+              style={{
+                background:
+                  "linear-gradient(90deg,#e63946 0%,#e63946 33%,#7c3aed 33%,#7c3aed 66%,#2563eb 66%,#2563eb 100%)",
+                opacity: 0.55,
+              }}
+            />
+          </header>
+
+          {/* MAIN */}
+          <main className="flex-1 w-full min-w-0">
+            <div className="mx-auto w-full max-w-[1600px] px-4 sm:px-6 lg:px-8">
+              <div className="py-6 sm:py-8 lg:py-10 min-w-0 psi-animate-in">
+                {children}
+              </div>
+            </div>
+          </main>
+
+          {/* FOOTER */}
+          <footer className="w-full min-w-0">
+            <div className="h-px w-full bg-[linear-gradient(90deg,transparent_0%,var(--border2)_30%,var(--border2)_70%,transparent_100%)]" />
+            <Footer />
+          </footer>
+        </div>
       </body>
     </html>
   );
