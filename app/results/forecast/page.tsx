@@ -94,7 +94,7 @@ function SwingOMeter({ c1Name, c2Name, c1Color, c2Color, c1Prob, c2Prob, reporti
           <line x1={CX} y1={CY + 6} x2={CX} y2={CY - 104} stroke="rgba(0,0,0,0.6)" strokeWidth="4" strokeLinecap="round" />
           <line x1={CX} y1={CY + 6} x2={CX} y2={CY - 104} stroke="#ffffff" strokeWidth="2" strokeLinecap="round" />
         </g>
-        <circle cx={CX} cy={CY} r={5} fill="#c5a55a" />
+        <circle cx={CX} cy={CY} r={5} fill="#7c3aed" />
         <circle cx={CX} cy={CY} r={2.5} fill="#0a0a08" />
         <text x={CX} y={CY - 22} textAnchor="middle" fontSize="19" fontWeight="900" fill={leaderColor} fontFamily="'Bebas Neue', sans-serif" letterSpacing="1">
           {(leaderProb * 100).toFixed(0)}%
@@ -121,7 +121,7 @@ function SwingOMeter({ c1Name, c2Name, c1Color, c2Color, c1Prob, c2Prob, reporti
           <span style={{ fontFamily: "'DM Mono', monospace", fontSize: 7, fontWeight: 700, color: "rgba(255,255,255,0.35)" }}>{reportingPct.toFixed(1)}%</span>
         </div>
         <div style={{ height: 2, background: "rgba(255,255,255,0.05)", overflow: "hidden" }}>
-          <div style={{ height: "100%", width: `${reportingPct}%`, background: "rgba(197,165,90,0.5)", transition: "width 0.8s ease" }} />
+          <div style={{ height: "100%", width: `${reportingPct}%`, background: "rgba(124,58,237,0.5)", transition: "width 0.8s ease" }} />
         </div>
       </div>
     </div>
@@ -249,7 +249,7 @@ export default function ForecastEnginePage() {
   }, [forecast]);
 
   const candidateColors: Record<CKey, string> = useMemo(() => {
-    const colors = forecast?.forecast.candidate_colors ?? ["#5b8fd4", "#d45b5b", "#c5a55a", "rgba(255,255,255,0.3)"];
+    const colors = forecast?.forecast.candidate_colors ?? ["#5b8fd4", "#d45b5b", "#7c3aed", "rgba(255,255,255,0.3)"];
     return { Candidate1: colors[0], Candidate2: colors[1], Candidate3: colors[2], Others: colors[3] };
   }, [forecast]);
 
@@ -269,7 +269,7 @@ export default function ForecastEnginePage() {
           font-family: 'DM Mono', monospace; outline: none; letter-spacing: 0.06em;
           transition: border-color 120ms ease; box-sizing: border-box;
         }
-        .fcast-input:focus { border-color: rgba(197,165,90,0.4); }
+        .fcast-input:focus { border-color: rgba(124,58,237,0.4); }
         .fcast-input::placeholder { color: rgba(255,255,255,0.2); }
         .fcast-race-item {
           display: flex; align-items: flex-start; width: 100%;
@@ -278,8 +278,8 @@ export default function ForecastEnginePage() {
           cursor: pointer; text-align: left; transition: background 80ms ease;
         }
         .fcast-race-item:hover { background: rgba(255,255,255,0.03); }
-        .fcast-race-item.active { background: rgba(197,165,90,0.06); border-left: 2px solid #c5a55a; }
-        input[type=range] { height: 3px; cursor: pointer; accent-color: #c5a55a; }
+        .fcast-race-item.active { background: rgba(124,58,237,0.06); border-left: 2px solid #7c3aed; }
+        input[type=range] { height: 3px; cursor: pointer; accent-color: #7c3aed; }
       `}</style>
 
       <div style={{ background: "#0a0a08", minHeight: "100vh", fontFamily: "'DM Mono', monospace" }}>
@@ -287,7 +287,7 @@ export default function ForecastEnginePage() {
         {/* ── HERO HEADER ── */}
         <div style={{ background: "#0f0f0d", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
           <div style={{ maxWidth: 1280, margin: "0 auto", padding: "28px 32px 24px" }}>
-            <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: "#c5a55a", marginBottom: 10 }}>National Polling Index · Forecast Engine</div>
+            <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: "#7c3aed", marginBottom: 10 }}>National Polling Index · Forecast Engine</div>
             <div style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: "clamp(36px, 5vw, 64px)", letterSpacing: "0.04em", color: "#fff", lineHeight: 0.95, marginBottom: 14 }}>
               Election<br />
               <span style={{ color: "#5b8fd4" }}>Forecast</span>{" "}
@@ -299,7 +299,7 @@ export default function ForecastEnginePage() {
             </div>
             {selectedRace && (
               <div style={{ marginTop: 12, display: "flex", alignItems: "center", gap: 6, fontSize: 9, color: "rgba(255,255,255,0.25)", letterSpacing: "0.1em", textTransform: "uppercase" }}>
-                <span style={{ width: 5, height: 5, borderRadius: "50%", background: "#c5a55a", animation: "fcast-pulse 1.8s ease-in-out infinite", display: "inline-block" }} />
+                <span style={{ width: 5, height: 5, borderRadius: "50%", background: "#7c3aed", animation: "fcast-pulse 1.8s ease-in-out infinite", display: "inline-block" }} />
                 Auto-refresh · 30s
               </div>
             )}
@@ -325,7 +325,7 @@ export default function ForecastEnginePage() {
                   onChange={(e) => setCountry(e.target.value)}
                   onKeyDown={(e) => e.key === "Enter" && doSearch()} />
                 <button onClick={doSearch} disabled={searching}
-                  style={{ padding: "9px 16px", background: searching ? "rgba(255,255,255,0.05)" : "#c5a55a", color: searching ? "rgba(255,255,255,0.3)" : "#0a0a08", border: "none", fontFamily: "'DM Mono', monospace", fontSize: 9, fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", cursor: "pointer", width: "100%", transition: "background 120ms" }}>
+                  style={{ padding: "9px 16px", background: searching ? "rgba(255,255,255,0.05)" : "#7c3aed", color: searching ? "rgba(255,255,255,0.3)" : "#fff", border: "none", fontFamily: "'DM Mono', monospace", fontSize: 9, fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", cursor: "pointer", width: "100%", transition: "background 120ms" }}>
                   {searching ? "Searching…" : "Search →"}
                 </button>
               </div>
@@ -407,7 +407,7 @@ export default function ForecastEnginePage() {
                   {loadingHistory ? "Loading race history…" : "Running forecast model…"}
                 </div>
                 <div style={{ height: 2, background: "rgba(255,255,255,0.05)", width: 120, margin: "0 auto", overflow: "hidden" }}>
-                  <div style={{ height: "100%", width: "60%", background: "#c5a55a", animation: "fcast-load 1.4s ease-in-out infinite" }} />
+                  <div style={{ height: "100%", width: "60%", background: "#7c3aed", animation: "fcast-load 1.4s ease-in-out infinite" }} />
                 </div>
               </div>
             )}
@@ -424,7 +424,7 @@ export default function ForecastEnginePage() {
                         <div style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
                           <span style={{ fontFamily: "'DM Mono', monospace", fontSize: 9, color: "rgba(255,255,255,0.3)", letterSpacing: "0.08em" }}>{new Date(forecast.race.election_date).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}</span>
                           <span style={{ fontFamily: "'DM Mono', monospace", fontSize: 9, color: "rgba(255,255,255,0.2)", letterSpacing: "0.06em" }}>{forecast.race.percent_reporting}% reporting</span>
-                          {loadingForecast && <span style={{ fontFamily: "'DM Mono', monospace", fontSize: 8, color: "#c5a55a", letterSpacing: "0.1em" }}>↻ updating…</span>}
+                          {loadingForecast && <span style={{ fontFamily: "'DM Mono', monospace", fontSize: 8, color: "#9d5cf0", letterSpacing: "0.1em" }}>↻ updating…</span>}
                         </div>
                       </div>
                       <span style={{ fontFamily: "'DM Mono', monospace", fontSize: 8, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", padding: "4px 10px", background: forecast.forecast.mode_trigger === "RUNOFF" ? "rgba(212,91,91,0.12)" : "rgba(91,143,212,0.12)", border: `1px solid ${forecast.forecast.mode_trigger === "RUNOFF" ? "rgba(212,91,91,0.3)" : "rgba(91,143,212,0.3)"}`, color: forecast.forecast.mode_trigger === "RUNOFF" ? "#d45b5b" : "#5b8fd4", flexShrink: 0 }}>
@@ -438,7 +438,7 @@ export default function ForecastEnginePage() {
                         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 10 }}>
                           <span style={{ fontFamily: "'DM Mono', monospace", fontSize: 8, fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: "rgba(255,255,255,0.2)" }}>Historical Playback</span>
                           <button onClick={() => { if (playing) { setPlaying(false); return; } if (historyIndex >= timestamps.length - 1) setHistoryIndex(0); setPlaying(true); }}
-                            style={{ padding: "5px 14px", background: playing ? "rgba(212,91,91,0.12)" : "rgba(197,165,90,0.1)", color: playing ? "#d45b5b" : "#c5a55a", border: `1px solid ${playing ? "rgba(212,91,91,0.25)" : "rgba(197,165,90,0.25)"}`, fontFamily: "'DM Mono', monospace", fontSize: 8, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", cursor: "pointer" }}>
+                            style={{ padding: "5px 14px", background: playing ? "rgba(212,91,91,0.12)" : "rgba(124,58,237,0.1)", color: playing ? "#d45b5b" : "#7c3aed", border: `1px solid ${playing ? "rgba(212,91,91,0.25)" : "rgba(124,58,237,0.25)"}`, fontFamily: "'DM Mono', monospace", fontSize: 8, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", cursor: "pointer" }}>
                             {playing ? "⏹ Stop" : "▶ Play"}
                           </button>
                         </div>
@@ -509,7 +509,7 @@ export default function ForecastEnginePage() {
                             <div style={{ fontFamily: "'DM Mono', monospace", fontSize: 8, color: "rgba(255,255,255,0.3)", marginBottom: 4, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", letterSpacing: "0.04em" }}>{candidateLabels[key]}</div>
                             <div style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 26, color, lineHeight: 1, marginBottom: 2 }}>{pct(share)}</div>
                             <div style={{ fontFamily: "'DM Mono', monospace", fontSize: 8, color: "rgba(255,255,255,0.2)", letterSpacing: "0.06em" }}>{fmt(votes)} proj.</div>
-                            {isLeader && <div style={{ marginTop: 4, fontFamily: "'DM Mono', monospace", fontSize: 7, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "#c5a55a" }}>Leader</div>}
+                            {isLeader && <div style={{ marginTop: 4, fontFamily: "'DM Mono', monospace", fontSize: 7, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "#9d5cf0" }}>Leader</div>}
                           </div>
                         );
                       })}

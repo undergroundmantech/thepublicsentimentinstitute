@@ -434,6 +434,8 @@ export default function GoldStandardPollstersPage() {
 }
 
 const CSS = `
+  body { background: #070709 !important; }
+
   .gs-root {
     --bg:          #070709;
     --bg2:         #0b0b0f;
@@ -449,11 +451,15 @@ const CSS = `
     --gold-soft:   rgba(245,158,11,0.85);
     --green:       rgba(34,197,94,0.9);
     --red:         rgba(239,68,68,0.9);
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 32px 32px 80px;
     display: flex;
     flex-direction: column;
     gap: 20px;
     animation: gs-fade-up 0.45s cubic-bezier(0.22,1,0.36,1) both;
   }
+  @media (max-width: 768px) { .gs-root { padding: 20px 16px 60px; } }
 
   @keyframes gs-fade-up {
     from { opacity:0; transform:translateY(10px); }
@@ -621,14 +627,15 @@ const CSS = `
     background: linear-gradient(90deg, var(--gold), transparent);
   }
   .gs-criteria-code {
-    font-family: ui-monospace,monospace;
+    font-family: var(--font-display), sans-serif;
     font-size: 32px; font-weight: 900;
     color: rgba(245,158,11,0.12);
     letter-spacing: -0.02em;
     line-height: 1; margin-bottom: 4px;
+    text-transform: uppercase;
   }
   .gs-criteria-title {
-    font-family: ui-monospace,monospace;
+    font-family: var(--font-display), sans-serif;
     font-size: 11px; font-weight: 800;
     letter-spacing: 0.26em; text-transform: uppercase;
     color: rgba(255,255,255,0.85);

@@ -86,9 +86,7 @@ export default function TermsPage() {
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap');
-
-        body { background: #0a0a08 !important; margin: 0; }
+        body { background: #070709 !important; margin: 0; }
 
         .tc-wrap {
           max-width: 1280px;
@@ -102,7 +100,7 @@ export default function TermsPage() {
           display: flex;
           align-items: center;
           gap: 8px;
-          font-family: 'DM Mono', monospace;
+          font-family: var(--font-body), monospace;
           font-size: 9px;
           letter-spacing: 0.18em;
           text-transform: uppercase;
@@ -114,13 +112,13 @@ export default function TermsPage() {
           text-decoration: none;
           transition: color 100ms;
         }
-        .tc-breadcrumb a:hover { color: #c5a55a; }
+        .tc-breadcrumb a:hover { color: #9d5cf0; }
         .tc-breadcrumb-sep { color: rgba(255,255,255,0.1); }
 
         /* ── Hero ── */
         .tc-hero {
           border: 1px solid rgba(255,255,255,0.08);
-          background: #0f0f0d;
+          background: #0f0f15;
           padding: 48px 52px 40px;
           margin-bottom: 20px;
           position: relative;
@@ -149,7 +147,7 @@ export default function TermsPage() {
           display: inline-flex;
           align-items: center;
           gap: 8px;
-          font-family: 'DM Mono', monospace;
+          font-family: var(--font-body), monospace;
           font-size: 9px;
           letter-spacing: 0.2em;
           text-transform: uppercase;
@@ -159,7 +157,7 @@ export default function TermsPage() {
         .tc-eyebrow-sep { color: rgba(255,255,255,0.12); }
 
         .tc-headline {
-          font-family: 'Bebas Neue', sans-serif;
+          font-family: var(--font-display), sans-serif;
           font-size: clamp(40px, 5.5vw, 72px);
           letter-spacing: 0.03em;
           line-height: 0.95;
@@ -167,10 +165,11 @@ export default function TermsPage() {
           margin-bottom: 16px;
           position: relative;
           z-index: 1;
+          text-transform: uppercase;
         }
 
         .tc-desc {
-          font-family: 'DM Mono', monospace;
+          font-family: var(--font-body), monospace;
           font-size: 10px;
           color: rgba(255,255,255,0.28);
           line-height: 1.8;
@@ -194,7 +193,7 @@ export default function TermsPage() {
         @media(max-width: 768px) { .tc-meta-item { text-align: left; } }
 
         .tc-meta-label {
-          font-family: 'DM Mono', monospace;
+          font-family: var(--font-body), monospace;
           font-size: 8px;
           letter-spacing: 0.18em;
           text-transform: uppercase;
@@ -203,7 +202,7 @@ export default function TermsPage() {
         }
 
         .tc-meta-val {
-          font-family: 'DM Mono', monospace;
+          font-family: var(--font-body), monospace;
           font-size: 10px;
           font-weight: 500;
           color: rgba(255,255,255,0.4);
@@ -224,7 +223,7 @@ export default function TermsPage() {
           position: sticky;
           top: 24px;
           border: 1px solid rgba(255,255,255,0.06);
-          background: #0f0f0d;
+          background: #0f0f15;
           overflow: hidden;
         }
         @media(max-width: 900px) { .tc-toc { display: none; } }
@@ -232,8 +231,8 @@ export default function TermsPage() {
         .tc-toc-header {
           padding: 12px 16px;
           border-bottom: 1px solid rgba(255,255,255,0.06);
-          background: #0d0d0b;
-          font-family: 'DM Mono', monospace;
+          background: #0b0b0f;
+          font-family: var(--font-body), monospace;
           font-size: 8px;
           font-weight: 500;
           letter-spacing: 0.2em;
@@ -245,7 +244,7 @@ export default function TermsPage() {
           display: block;
           padding: 9px 16px;
           border-bottom: 1px solid rgba(255,255,255,0.04);
-          font-family: 'DM Mono', monospace;
+          font-family: var(--font-body), monospace;
           font-size: 9px;
           letter-spacing: 0.06em;
           color: rgba(255,255,255,0.25);
@@ -254,8 +253,8 @@ export default function TermsPage() {
           line-height: 1.4;
         }
         .tc-toc-item:last-child { border-bottom: none; }
-        .tc-toc-item:hover { color: #c5a55a; background: rgba(197,165,90,0.04); text-decoration: none; }
-        .tc-toc-item.active { color: #c5a55a; border-left: 2px solid #c5a55a; padding-left: 14px; background: rgba(197,165,90,0.04); }
+        .tc-toc-item:hover { color: #9d5cf0; background: rgba(124,58,237,0.04); text-decoration: none; }
+        .tc-toc-item.active { color: #9d5cf0; border-left: 2px solid #9d5cf0; padding-left: 14px; background: rgba(124,58,237,0.04); }
 
         /* ── Accordion sections ── */
         .tc-sections {
@@ -267,7 +266,7 @@ export default function TermsPage() {
         }
 
         .tc-section {
-          background: #0f0f0d;
+          background: #0f0f15;
         }
 
         .tc-section-trigger {
@@ -286,7 +285,7 @@ export default function TermsPage() {
         .tc-section-trigger:hover { background: rgba(255,255,255,0.02); }
 
         .tc-section-num {
-          font-family: 'DM Mono', monospace;
+          font-family: var(--font-body), monospace;
           font-size: 9px;
           letter-spacing: 0.16em;
           color: rgba(255,255,255,0.18);
@@ -295,7 +294,7 @@ export default function TermsPage() {
         }
 
         .tc-section-title {
-          font-family: 'DM Mono', monospace;
+          font-family: var(--font-body), monospace;
           font-size: 11px;
           font-weight: 500;
           letter-spacing: 0.06em;
@@ -312,7 +311,7 @@ export default function TermsPage() {
         }
         .tc-section-arrow.open {
           transform: rotate(90deg);
-          color: #c5a55a;
+          color: #9d5cf0;
         }
 
         .tc-section-body {
@@ -324,7 +323,7 @@ export default function TermsPage() {
 
         .tc-section-content {
           padding: 0 24px 24px 52px;
-          font-family: 'DM Mono', monospace;
+          font-family: var(--font-body), monospace;
           font-size: 10px;
           color: rgba(255,255,255,0.35);
           line-height: 1.9;
@@ -339,7 +338,7 @@ export default function TermsPage() {
         .tc-contact {
           margin-top: 20px;
           border: 1px solid rgba(255,255,255,0.06);
-          background: #0f0f0d;
+          background: #0f0f15;
           display: grid;
           grid-template-columns: 1fr auto;
           align-items: center;
@@ -351,7 +350,7 @@ export default function TermsPage() {
         .tc-contact-left {}
 
         .tc-contact-eyebrow {
-          font-family: 'DM Mono', monospace;
+          font-family: var(--font-body), monospace;
           font-size: 8px;
           letter-spacing: 0.2em;
           text-transform: uppercase;
@@ -360,16 +359,17 @@ export default function TermsPage() {
         }
 
         .tc-contact-title {
-          font-family: 'Bebas Neue', sans-serif;
+          font-family: var(--font-display), sans-serif;
           font-size: 24px;
           letter-spacing: 0.04em;
           color: rgba(255,255,255,0.7);
           line-height: 1;
           margin-bottom: 4px;
+          text-transform: uppercase;
         }
 
         .tc-contact-text {
-          font-family: 'DM Mono', monospace;
+          font-family: var(--font-body), monospace;
           font-size: 9px;
           color: rgba(255,255,255,0.2);
           letter-spacing: 0.06em;
@@ -377,7 +377,7 @@ export default function TermsPage() {
         }
 
         .tc-contact-text a {
-          color: #c5a55a;
+          color: #9d5cf0;
           text-decoration: none;
         }
         .tc-contact-text a:hover { text-decoration: underline; }
@@ -388,7 +388,7 @@ export default function TermsPage() {
           padding: 10px 20px;
           background: transparent;
           color: rgba(255,255,255,0.35);
-          font-family: 'DM Mono', monospace;
+          font-family: var(--font-body), monospace;
           font-size: 9px;
           letter-spacing: 0.16em;
           text-transform: uppercase;
@@ -411,7 +411,7 @@ export default function TermsPage() {
         @media(max-width: 768px) { .tc-strip { grid-template-columns: 1fr; } }
 
         .tc-strip-item {
-          background: #0f0f0d;
+          background: #0f0f15;
           padding: 18px 22px;
           display: flex;
           flex-direction: column;
@@ -419,7 +419,7 @@ export default function TermsPage() {
         }
 
         .tc-strip-label {
-          font-family: 'DM Mono', monospace;
+          font-family: var(--font-body), monospace;
           font-size: 8px;
           font-weight: 500;
           letter-spacing: 0.18em;
@@ -428,15 +428,16 @@ export default function TermsPage() {
         }
 
         .tc-strip-val {
-          font-family: 'Bebas Neue', sans-serif;
+          font-family: var(--font-display), sans-serif;
           font-size: 20px;
           letter-spacing: 0.04em;
           color: rgba(255,255,255,0.5);
           line-height: 1;
+          text-transform: uppercase;
         }
 
         .tc-strip-sub {
-          font-family: 'DM Mono', monospace;
+          font-family: var(--font-body), monospace;
           font-size: 9px;
           color: rgba(255,255,255,0.18);
           letter-spacing: 0.04em;

@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 
@@ -9,9 +10,8 @@ const NAV = [
   { href: "/polling",         label: "Polling" },
   { href: "/results",         label: "Results" },
   { href: "/electoralmap",    label: "Electoral Map" },
+  { href: "/goldstandard",    label: "Gold Standard" },
   { href: "/contact",         label: "Contact" },
-  { href: "/SMSOptIn",         label: "SMS Opt-In" },
-  { href: "/TermsAndConditions",         label: "Terms & Conditions" },
 ];
 
 const TICKER = [
@@ -29,71 +29,133 @@ export default function Navbar() {
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap');
-
         .nb-root {
           position: sticky;
           top: 0;
           z-index: 200;
-          background: #0a0a08;
+          background: #070709;
           border-bottom: 1px solid rgba(255,255,255,0.08);
         }
 
-        /* Top utility bar */
-        .nb-topbar {
-          background: #0a0a08;
+        /* Top utility bar — full-width bg, centered content */
+        .nb-topbar-wrap {
+          background: #0b0b0f;
           border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+        .nb-topbar {
+          max-width: 1280px;
+          margin: 0 auto;
           padding: 0 32px;
           display: flex;
           align-items: center;
           justify-content: space-between;
           height: 32px;
-          max-width: 1280px;
-          margin: 0 auto;
+          gap: 24px;
         }
 
         .nb-date {
-          font-family: 'DM Mono', monospace;
-          font-size: 10px;
-          letter-spacing: 0.12em;
-          color: rgba(255,255,255,0.3);
+          font-family: var(--font-body), monospace;
+          font-size: 9px;
+          letter-spacing: 0.14em;
+          color: rgba(255,255,255,0.25);
           text-transform: uppercase;
+          flex-shrink: 0;
         }
 
-        .nb-edition {
+        /* Latest ticker items inline */
+        .nb-latest-row {
           display: flex;
           align-items: center;
-          gap: 16px;
+          gap: 0;
+          flex: 1;
+          overflow: hidden;
         }
 
-        .nb-edition-text {
-          font-family: 'DM Mono', monospace;
-          font-size: 10px;
-          letter-spacing: 0.1em;
-          color: rgba(255,255,255,0.3);
+        .nb-latest-label {
+          font-family: var(--font-body), monospace;
+          font-size: 8px;
+          font-weight: 500;
+          letter-spacing: 0.2em;
           text-transform: uppercase;
+          color: #7c3aed;
+          flex-shrink: 0;
+          padding-right: 16px;
+          margin-right: 16px;
+          border-right: 1px solid rgba(124,58,237,0.25);
         }
+
+        .nb-latest-items {
+          display: flex;
+          align-items: center;
+          gap: 0;
+          overflow: hidden;
+        }
+
+        .nb-latest-item {
+          display: flex;
+          align-items: center;
+          gap: 7px;
+          white-space: nowrap;
+          padding-right: 20px;
+          margin-right: 20px;
+          border-right: 1px solid rgba(255,255,255,0.07);
+        }
+        .nb-latest-item:last-child { border-right: none; padding-right: 0; margin-right: 0; }
+
+        .nb-latest-name {
+          font-family: var(--font-body), monospace;
+          font-size: 9px;
+          color: rgba(255,255,255,0.35);
+          letter-spacing: 0.06em;
+        }
+        .nb-latest-dem {
+          font-family: var(--font-body), monospace;
+          font-size: 9px;
+          font-weight: 500;
+          color: #3b82f6;
+          letter-spacing: 0.04em;
+        }
+        .nb-latest-sep {
+          font-size: 9px;
+          color: rgba(255,255,255,0.15);
+        }
+        .nb-latest-rep {
+          font-family: var(--font-body), monospace;
+          font-size: 9px;
+          font-weight: 500;
+          color: #e63946;
+          letter-spacing: 0.04em;
+        }
+        .nb-latest-bar {
+          width: 32px;
+          height: 2px;
+          overflow: hidden;
+          background: rgba(255,255,255,0.08);
+          display: inline-flex;
+          flex-shrink: 0;
+        }
+        .nb-latest-bar-dem { background: #3b82f6; height: 100%; }
+        .nb-latest-bar-rep { background: #e63946; height: 100%; }
 
         .nb-live-pill {
           display: inline-flex;
           align-items: center;
           gap: 5px;
           padding: 2px 8px;
-          background: rgba(192,57,43,0.15);
-          border: 1px solid rgba(192,57,43,0.4);
-          border-radius: 2px;
-          font-family: 'DM Mono', monospace;
-          font-size: 9px;
+          background: rgba(124,58,237,0.1);
+          border: 1px solid rgba(124,58,237,0.3);
+          font-family: var(--font-body), monospace;
+          font-size: 8px;
           font-weight: 500;
           letter-spacing: 0.14em;
-          color: #e05a4a;
+          color: #9d5cf0;
           text-transform: uppercase;
+          flex-shrink: 0;
         }
-
         .nb-live-dot {
-          width: 5px; height: 5px;
+          width: 4px; height: 4px;
           border-radius: 50%;
-          background: #e05a4a;
+          background: #9d5cf0;
           animation: nb-pulse 1.8s ease-in-out infinite;
           flex-shrink: 0;
         }
@@ -104,41 +166,60 @@ export default function Navbar() {
           max-width: 1280px;
           margin: 0 auto;
           padding: 0 32px;
-          height: 64px;
+          height: 60px;
           display: flex;
           align-items: center;
           gap: 0;
-          border-bottom: 1px solid rgba(255,255,255,0.08);
         }
 
         .nb-logo {
           display: flex;
-          flex-direction: column;
+          flex-direction: row;
+          align-items: center;
           text-decoration: none;
           flex-shrink: 0;
-          margin-right: 40px;
-          padding-right: 40px;
-          border-right: 1px solid rgba(255,255,255,0.1);
-          line-height: 1;
-          gap: 2px;
+          margin-right: 36px;
+          padding-right: 36px;
+          border-right: 1px solid rgba(255,255,255,0.08);
+          gap: 12px;
         }
         .nb-logo:hover { text-decoration: none; opacity: 0.85; }
 
         .nb-logo-mark {
-          font-family: 'Bebas Neue', sans-serif;
-          font-size: 36px;
+          font-family: var(--font-display), sans-serif;
+          font-size: 32px;
           color: #fff;
           letter-spacing: 0.05em;
           line-height: 1;
+          text-transform: uppercase;
         }
 
         .nb-logo-sub {
-          font-family: 'DM Mono', monospace;
+          font-family: var(--font-body), monospace;
           font-size: 8px;
           font-weight: 400;
           letter-spacing: 0.2em;
           text-transform: uppercase;
           color: rgba(255,255,255,0.35);
+          white-space: nowrap;
+        }
+
+        .nb-logo-wordmark {
+          display: flex;
+          flex-direction: column;
+          gap: 1px;
+          border-left: 1px solid rgba(255,255,255,0.1);
+          padding-left: 12px;
+        }
+
+        .nb-logo-wordmark span {
+          font-family: var(--font-body), monospace;
+          font-size: 8px;
+          font-weight: 500;
+          letter-spacing: 0.18em;
+          text-transform: uppercase;
+          color: rgba(255,255,255,0.45);
+          line-height: 1.6;
           white-space: nowrap;
         }
 
@@ -157,13 +238,13 @@ export default function Navbar() {
         .nb-link {
           display: inline-flex;
           align-items: center;
-          padding: 0 14px;
-          font-family: 'DM Mono', monospace;
-          font-size: 11px;
+          padding: 0 13px;
+          font-family: var(--font-body), monospace;
+          font-size: 10px;
           font-weight: 400;
           letter-spacing: 0.1em;
           text-transform: uppercase;
-          color: rgba(255,255,255,0.45);
+          color: rgba(255,255,255,0.4);
           text-decoration: none;
           white-space: nowrap;
           border-bottom: 2px solid transparent;
@@ -174,7 +255,7 @@ export default function Navbar() {
         .nb-link:hover { color: rgba(255,255,255,0.85); text-decoration: none; }
         .nb-link.nb-active {
           color: #fff;
-          border-bottom-color: #c5a55a;
+          border-bottom-color: #7c3aed;
         }
 
         /* Right side */
@@ -192,114 +273,21 @@ export default function Navbar() {
           display: inline-flex;
           align-items: center;
           gap: 6px;
-          padding: 7px 16px;
-          background: #c5a55a;
-          color: #0a0a08 !important;
-          font-family: 'DM Mono', monospace;
-          font-size: 10px;
+          padding: 6px 14px;
+          background: rgba(124,58,237,0.15);
+          border: 1px solid rgba(124,58,237,0.4);
+          color: #9d5cf0 !important;
+          font-family: var(--font-body), monospace;
+          font-size: 9px;
           font-weight: 500;
           letter-spacing: 0.12em;
           text-transform: uppercase;
           text-decoration: none;
-          border: none;
           cursor: pointer;
-          transition: background 120ms ease, transform 80ms ease;
+          transition: border-color 120ms ease, background 120ms ease, color 120ms ease;
           white-space: nowrap;
         }
-        .nb-cta:hover { background: #d4b46a; text-decoration: none; transform: translateY(-1px); }
-        .nb-cta:active { transform: translateY(0); }
-
-        /* Ticker */
-        .nb-ticker {
-          background: #111110;
-          padding: 0 32px;
-          display: flex;
-          align-items: center;
-          height: 34px;
-          gap: 0;
-          overflow: hidden;
-          position: relative;
-        }
-
-        .nb-ticker::after {
-          content: '';
-          position: absolute;
-          right: 0;
-          top: 0;
-          bottom: 0;
-          width: 60px;
-          background: linear-gradient(to right, transparent, #111110);
-          pointer-events: none;
-        }
-
-        .nb-ticker-label {
-          font-family: 'DM Mono', monospace;
-          font-size: 9px;
-          font-weight: 500;
-          letter-spacing: 0.18em;
-          text-transform: uppercase;
-          color: #c5a55a;
-          flex-shrink: 0;
-          padding-right: 20px;
-          margin-right: 20px;
-          border-right: 1px solid rgba(255,255,255,0.1);
-        }
-
-        .nb-ticker-scroll {
-          display: flex;
-          align-items: center;
-          gap: 0;
-          overflow: hidden;
-        }
-
-        .nb-ticker-item {
-          display: flex;
-          align-items: center;
-          gap: 8px;
-          white-space: nowrap;
-          padding: 0 24px 0 0;
-          margin-right: 24px;
-          border-right: 1px solid rgba(255,255,255,0.08);
-        }
-        .nb-ticker-item:last-child { border-right: none; }
-
-        .nb-ticker-name {
-          font-family: 'DM Mono', monospace;
-          font-size: 10px;
-          color: rgba(255,255,255,0.4);
-          letter-spacing: 0.06em;
-        }
-        .nb-ticker-dem {
-          font-family: 'DM Mono', monospace;
-          font-size: 11px;
-          font-weight: 500;
-          color: #5b8fd4;
-          letter-spacing: 0.04em;
-        }
-        .nb-ticker-sep {
-          font-size: 10px;
-          color: rgba(255,255,255,0.2);
-        }
-        .nb-ticker-rep {
-          font-family: 'DM Mono', monospace;
-          font-size: 11px;
-          font-weight: 500;
-          color: #d45b5b;
-          letter-spacing: 0.04em;
-        }
-
-        /* Mini split bar in ticker */
-        .nb-ticker-bar {
-          width: 40px;
-          height: 3px;
-          border-radius: 1px;
-          overflow: hidden;
-          background: rgba(255,255,255,0.1);
-          display: inline-flex;
-          flex-shrink: 0;
-        }
-        .nb-ticker-bar-dem { background: #5b8fd4; height: 100%; }
-        .nb-ticker-bar-rep { background: #d45b5b; height: 100%; }
+        .nb-cta:hover { border-color: rgba(124,58,237,0.7); background: rgba(124,58,237,0.22); color: #b97ef5 !important; text-decoration: none; }
 
         /* Hamburger */
         .nb-ham {
@@ -327,7 +315,7 @@ export default function Navbar() {
         .nb-mobile {
           display: none;
           flex-direction: column;
-          background: #0f0f0d;
+          background: #0f0f15;
           border-top: 1px solid rgba(255,255,255,0.08);
           max-height: 0;
           overflow: hidden;
@@ -340,8 +328,8 @@ export default function Navbar() {
           align-items: center;
           justify-content: space-between;
           padding: 14px 24px;
-          font-family: 'DM Mono', monospace;
-          font-size: 12px;
+          font-family: var(--font-body), monospace;
+          font-size: 11px;
           letter-spacing: 0.1em;
           text-transform: uppercase;
           color: rgba(255,255,255,0.5);
@@ -350,7 +338,7 @@ export default function Navbar() {
           transition: background 80ms, color 80ms;
         }
         .nb-mob-link:hover { background: rgba(255,255,255,0.04); color: #fff; text-decoration: none; }
-        .nb-mob-link.nb-active { color: #c5a55a; }
+        .nb-mob-link.nb-active { color: #7c3aed; }
 
         .nb-mob-cta {
           padding: 16px 24px;
@@ -360,23 +348,23 @@ export default function Navbar() {
           align-items: center;
           justify-content: center;
           padding: 12px;
-          background: #c5a55a;
-          color: #0a0a08;
-          font-family: 'DM Mono', monospace;
-          font-size: 11px;
+          background: rgba(124,58,237,0.15);
+          border: 1px solid rgba(124,58,237,0.4);
+          color: #9d5cf0;
+          font-family: var(--font-body), monospace;
+          font-size: 10px;
           letter-spacing: 0.12em;
           text-transform: uppercase;
           text-decoration: none;
           transition: background 100ms;
         }
-        .nb-mob-cta a:hover { background: #d4b46a; }
+        .nb-mob-cta a:hover { background: rgba(124,58,237,0.25); }
 
         @media (max-width: 900px) {
-          .nb-topbar { display: none; }
+          .nb-topbar-wrap { display: none; }
           .nb-links, .nb-right { display: none; }
           .nb-ham { display: flex; }
           .nb-mobile { display: flex; }
-          .nb-ticker { display: none; }
           .nb-masthead { padding: 0 20px; }
           .nb-logo { margin-right: 0; border-right: none; padding-right: 0; }
         }
@@ -384,12 +372,31 @@ export default function Navbar() {
 
       <header className="nb-root">
         {/* Top utility bar */}
-        <div className="nb-topbar">
-          <span className="nb-date">
-            {new Date().toLocaleDateString("en-US", { weekday:"long", year:"numeric", month:"long", day:"numeric" })}
-          </span>
-          <div className="nb-edition">
-            <span className="nb-edition-text">National Edition</span>
+        <div className="nb-topbar-wrap">
+          <div className="nb-topbar">
+            <span className="nb-date">
+              {new Date().toLocaleDateString("en-US", { weekday:"long", year:"numeric", month:"long", day:"numeric" })}
+            </span>
+            <div className="nb-latest-row">
+              <span className="nb-latest-label">Latest</span>
+              <div className="nb-latest-items">
+                {TICKER.map(item => {
+                  const demPct = (item.dem / (item.dem + item.rep)) * 100;
+                  return (
+                    <span key={item.label} className="nb-latest-item">
+                      <span className="nb-latest-name">{item.label}</span>
+                      <span className="nb-latest-dem">{item.dem}%</span>
+                      <span className="nb-latest-sep">·</span>
+                      <span className="nb-latest-rep">{item.rep}%</span>
+                      <span className="nb-latest-bar">
+                        <span className="nb-latest-bar-dem" style={{ width: `${demPct}%` }} />
+                        <span className="nb-latest-bar-rep" style={{ flex: 1 }} />
+                      </span>
+                    </span>
+                  );
+                })}
+              </div>
+            </div>
             <span className="nb-live-pill">
               <span className="nb-live-dot" />
               Live Data
@@ -400,8 +407,12 @@ export default function Navbar() {
         {/* Masthead */}
         <div className="nb-masthead">
           <Link href="/" className="nb-logo">
-            <span className="nb-logo-mark">PSI</span>
-            <span className="nb-logo-sub">Public Sentiment Institute</span>
+            <Image src="/full_logo_clean.png" alt="The Public Sentiment Institute" height={36} width={142} style={{ objectFit: "contain", objectPosition: "left center" }} priority />
+            <div className="nb-logo-wordmark">
+              <span>The Public</span>
+              <span>Sentiment</span>
+              <span>Institute</span>
+            </div>
           </Link>
 
           <nav className="nb-links" aria-label="Main navigation">
@@ -433,28 +444,6 @@ export default function Navbar() {
           >
             <span /><span /><span />
           </button>
-        </div>
-
-        {/* Ticker */}
-        <div className="nb-ticker" aria-label="Latest polling snapshot">
-          <span className="nb-ticker-label">Latest</span>
-          <div className="nb-ticker-scroll">
-            {TICKER.map((item, i) => {
-              const demPct = (item.dem / (item.dem + item.rep)) * 100;
-              return (
-                <span key={item.label} className="nb-ticker-item">
-                  <span className="nb-ticker-name">{item.label}</span>
-                  <span className="nb-ticker-dem">{item.dem}%</span>
-                  <span className="nb-ticker-sep">·</span>
-                  <span className="nb-ticker-rep">{item.rep}%</span>
-                  <span className="nb-ticker-bar">
-                    <span className="nb-ticker-bar-dem" style={{ width: `${demPct}%` }} />
-                    <span className="nb-ticker-bar-rep" style={{ flex: 1 }} />
-                  </span>
-                </span>
-              );
-            })}
-          </div>
         </div>
 
         {/* Mobile menu */}
