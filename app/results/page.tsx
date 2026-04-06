@@ -26,7 +26,7 @@ type RegionCandidate = { name: string; party: string; votes: string | number; pe
 type RegionResult = { region: { name: string; type: string; fill?: string; percent_reporting?: number; }; candidates: RegionCandidate[]; };
 type RaceDetail = { election_name: string; election_type: string; election_scope: string; election_date: string; country: string; province: string | null; district: string | null; municipality: string | null; polls_open: string | null; polls_close: string | null; last_updated: string | null; percent_reporting?: number; candidates: RaceCandidate[]; region_results?: RegionResult[] | Record<string, RegionResult>; };
 type RaceType = "Democratic Primary" | "Republican Primary" | "Special Election" | "General Election";
-type FeaturedRace = { id: number; state: | "MS" | "GA" | "TEST"; office: string; raceType: RaceType; label: string; };
+type FeaturedRace = { id: number; state: | "WI" | "TEST"; office: string; raceType: RaceType; label: string; };
 
 function getRaceTypeColor(raceType: RaceType): string {
   if (raceType === "Republican Primary") return "var(--rep)";
@@ -68,17 +68,7 @@ function sortCandidatesByPollData(candidates: RaceCandidate[], pollAvg?: Record<
 }
 
 const FEATURED: FeaturedRace[] = [
-  { id: 46673, state: "MS", office: "US Senate", raceType: "Democratic Primary", label: "MS US Senate — Democratic Primary" },
-  { id: 51420, state: "MS", office: "US Senate", raceType: "Republican Primary", label: "MS US Senate — Republican Primary" },
-  { id: 51421, state: "MS", office: "US House 1", raceType: "Republican Primary", label: "MS District 1 — Republican Primary" },
-  { id: 51422, state: "MS", office: "US House 1", raceType: "Democratic Primary", label: "MS District 1 — Democratic Primary" },
-  { id: 51423, state: "MS", office: "US House 2", raceType: "Republican Primary", label: "MS District 2 — Republican Primary" },
-  { id: 51424, state: "MS", office: "US House 2", raceType: "Democratic Primary", label: "MS District 2 — Democratic Primary" },
-  { id: 51425, state: "MS", office: "US House 3", raceType: "Republican Primary", label: "MS District 3 — Republican Primary" },
-  { id: 51426, state: "MS", office: "US House 3", raceType: "Democratic Primary", label: "MS District 3 — Democratic Primary" },
-  { id: 51427, state: "MS", office: "US House 4", raceType: "Republican Primary", label: "MS District 4 — Republican Primary" },
-  { id: 51428, state: "MS", office: "US House 4", raceType: "Democratic Primary", label: "MS District 4 — Democratic Primary" },
-  { id: 52551, state: "GA", office: "US House 14", raceType: "Special Election", label: "GA District 14 — Special Election" },
+  { id: 59281, state: "WI", office: "Supreme Court", raceType: "General Election", label: "Wisconsin Supreme Court General Election" },
   { id: 9999999, state: "TEST", office: "Test Map", raceType: "General Election", label: "Map Test — Blank Counties" },
 ];
 
@@ -1301,7 +1291,7 @@ function RacePickerPanel({ races, raceCache, selectedId, onSelect }: {
 
 // ─── MAIN PAGE ───────────────────────────────────────────────────────────────
 export default function March3FeaturedClient() {
-  const [activeState, setActiveState] = useState<"MS" | "GA" | "TEST">("MS")
+  const [activeState, setActiveState] = useState<"WI"| "TEST">("WI")
   const [selectedId, setSelectedId] = useState<number>(44286);
   const [error, setError] = useState<string | null>(null);
   const [loadingMap, setLoadingMap] = useState(false);
@@ -1318,8 +1308,7 @@ export default function March3FeaturedClient() {
   const lastProjectedKeyRef = useRef<string>("");
 
   const featuredByState = useMemo(() => ({
-    MS: FEATURED.filter((r) => r.state === "MS"),
-    GA: FEATURED.filter((r) => r.state === "GA"),
+    WI: FEATURED.filter((r) => r.state === "WI"),
     TEST: FEATURED.filter((r) => r.state === "TEST"),
   }), []);
 
@@ -1376,7 +1365,7 @@ export default function March3FeaturedClient() {
     return () => clearTimeout(t);
   }, [selectedRace, selectedId]);
 
-  const stateLabels: Record<string, string> = { MS: "MISSISSIPPI", GA: "GEORGIA", TEST: "TEST" };
+  const stateLabels: Record<string, string> = { WI: "WISCONSIN", TEST: "TEST" };
   const racesForState = featuredByState[activeState] ?? [];
 
   const selectedReporting = selectedRace?.percent_reporting ?? 0;
@@ -1789,7 +1778,7 @@ export default function March3FeaturedClient() {
                 </div>
                 {/* State switcher */}
                 <div style={{ display: "flex", gap: "1px" }}>
-                  {(["MS", "GA"] as const).map((st) => (
+                  {(["WI"] as const).map((st) => (
                     <button key={st} className={`res-btn-state ${activeState === st ? "active" : ""}`} onClick={() => setActiveState(st)}>{stateLabels[st]}</button>
                   ))}
                 </div>
