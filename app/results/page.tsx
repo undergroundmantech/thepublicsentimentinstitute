@@ -26,7 +26,7 @@ type RegionCandidate = { name: string; party: string; votes: string | number; pe
 type RegionResult = { region: { name: string; type: string; fill?: string; percent_reporting?: number; }; candidates: RegionCandidate[]; };
 type RaceDetail = { election_name: string; election_type: string; election_scope: string; election_date: string; country: string; province: string | null; district: string | null; municipality: string | null; polls_open: string | null; polls_close: string | null; last_updated: string | null; percent_reporting?: number; candidates: RaceCandidate[]; region_results?: RegionResult[] | Record<string, RegionResult>; };
 type RaceType = "Democratic Primary" | "Republican Primary" | "Special Election" | "General Election";
-type FeaturedRace = { id: number; state: | "WI" | "TEST"; office: string; raceType: RaceType; label: string; };
+type FeaturedRace = { id: number; state: | "WI" | "GA" | "TEST"; office: string; raceType: RaceType; label: string; };
 
 function getRaceTypeColor(raceType: RaceType): string {
   if (raceType === "Republican Primary") return "var(--rep)";
@@ -69,6 +69,10 @@ function sortCandidatesByPollData(candidates: RaceCandidate[], pollAvg?: Record<
 
 const FEATURED: FeaturedRace[] = [
   { id: 59281, state: "WI", office: "Supreme Court", raceType: "General Election", label: "Wisconsin Supreme Court General Election" },
+  { id: 59277, state: "GA", office: "US House", raceType: "General Election", label: "Georgia US House 14 Special Runoff" },
+  { id: 59280, state: "GA", office: "State House", raceType: "General Election", label: "Georgia State House 94 Special Runoff" },
+  { id: 59278, state: "GA", office: "State Senate", raceType: "General Election", label: "Georgia State Senate 53 Special Runoff" },
+  { id: 59279, state: "GA", office: "State House", raceType: "General Election", label: "Georgia State House 130 Special Runoff" },
   { id: 9999999, state: "TEST", office: "Test Map", raceType: "General Election", label: "Map Test — Blank Counties" },
 ];
 
@@ -1291,7 +1295,7 @@ function RacePickerPanel({ races, raceCache, selectedId, onSelect }: {
 
 // ─── MAIN PAGE ───────────────────────────────────────────────────────────────
 export default function March3FeaturedClient() {
-  const [activeState, setActiveState] = useState<"WI"| "TEST">("WI")
+  const [activeState, setActiveState] = useState<"WI"| "GA" | "TEST">("WI")
   const [selectedId, setSelectedId] = useState<number>(44286);
   const [error, setError] = useState<string | null>(null);
   const [loadingMap, setLoadingMap] = useState(false);
@@ -1309,6 +1313,7 @@ export default function March3FeaturedClient() {
 
   const featuredByState = useMemo(() => ({
     WI: FEATURED.filter((r) => r.state === "WI"),
+    GA: FEATURED.filter((r) => r.state === "GA"),
     TEST: FEATURED.filter((r) => r.state === "TEST"),
   }), []);
 
@@ -1365,7 +1370,7 @@ export default function March3FeaturedClient() {
     return () => clearTimeout(t);
   }, [selectedRace, selectedId]);
 
-  const stateLabels: Record<string, string> = { WI: "WISCONSIN", TEST: "TEST" };
+  const stateLabels: Record<string, string> = { WI: "WISCONSIN", GA: "GEORGIA", TEST: "TEST" };
   const racesForState = featuredByState[activeState] ?? [];
 
   const selectedReporting = selectedRace?.percent_reporting ?? 0;
@@ -1767,7 +1772,7 @@ export default function March3FeaturedClient() {
           <div className="res-page-header-inner">
             <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: "12px" }}>
               <div>
-                <div className="res-page-sub">MARCH 10TH PRIMARY ELECTIONS · 2026</div>
+                <div className="res-page-sub">APRIL 7TH GENERAL ELECTIONS · 2026</div>
                 <h1 className="res-page-title">Election <em>Night</em></h1>
               </div>
               <div style={{ display: "flex", alignItems: "center", gap: "12px", flexWrap: "wrap" }}>
@@ -1778,7 +1783,7 @@ export default function March3FeaturedClient() {
                 </div>
                 {/* State switcher */}
                 <div style={{ display: "flex", gap: "1px" }}>
-                  {(["WI"] as const).map((st) => (
+                  {(["WI", "GA"] as const).map((st) => (
                     <button key={st} className={`res-btn-state ${activeState === st ? "active" : ""}`} onClick={() => setActiveState(st)}>{stateLabels[st]}</button>
                   ))}
                 </div>
