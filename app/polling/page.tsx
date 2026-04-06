@@ -14,7 +14,7 @@ import {
 
 // ─── Gold Standard helpers ────────────────────────────────────────────────────
 const GS_NAMES = [
-  "Big Data Poll","Rasmussen Reports","AtlasIntel","SoCalStrategies",
+  "Big Data Poll", "AtlasIntel","SoCalStrategies",
   "Emerson","Trafalgar","InsiderAdvantage","Patriot Polling",
 ];
 function normName(s: string) {
@@ -32,7 +32,7 @@ function round1(n: number) { return Math.round(n * 10) / 10; }
 
 // ─── Poll datasets ────────────────────────────────────────────────────────────
 const TRUMP_POLLS: Poll[] = [
-  { pollster: "CNN", endDate: "2026-03-30", sampleSize: 1500, sampleType: "RV", results: { Approve: 38, Disapprove: 62 } },
+{ pollster: "CNN", endDate: "2026-03-30", sampleSize: 1500, sampleType: "RV", results: { Approve: 38, Disapprove: 62 } },
 { pollster: "Morning Consult", endDate: "2026-03-29", sampleSize: 2203, sampleType: "RV", results: { Approve: 43, Disapprove: 54 } },
 { pollster: "Rasmussen Reports", endDate: "2026-04-01", sampleSize: 1500, sampleType: "LV", results: { Approve: 46, Disapprove: 52 } },
 { pollster: "Economist/YouGov", endDate: "2026-03-30", sampleSize: 1505, sampleType: "RV", results: { Approve: 39, Disapprove: 58 } },
