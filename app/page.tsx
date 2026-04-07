@@ -1413,12 +1413,17 @@ export default function HomePage() {
           font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; color: #fff;
         }
         .hp-cap-next-race {
-          display: flex; align-items: center; justify-content: space-between;
+          display: flex; flex-direction: column; gap: 6px;
           padding: 9px 11px;
           border: 1px solid rgba(124,58,237,0.28);
           background: rgba(124,58,237,0.07);
           margin-top: 2px;
+          text-decoration: none;
+          transition: background 120ms, border-color 120ms;
+          cursor: pointer;
         }
+        .hp-cap-next-race:hover { background: rgba(124,58,237,0.13); border-color: rgba(124,58,237,0.5); text-decoration: none; }
+        .hp-cap-next-race-top { display: flex; align-items: center; justify-content: space-between; }
         .hp-cap-next-race-left { display: flex; flex-direction: column; gap: 2px; }
         .hp-cap-next-race-eyebrow {
           font-family: var(--font-body), monospace;
@@ -1429,17 +1434,64 @@ export default function HomePage() {
           font-family: var(--font-display), sans-serif;
           font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: #fff;
         }
-        .hp-cap-next-race-countdown {
-          display: flex; flex-direction: column; align-items: flex-end; gap: 1px;
-        }
-        .hp-cap-next-race-num {
-          font-family: var(--font-display), sans-serif;
-          font-size: 26px; line-height: 1; color: #9d5cf0; letter-spacing: 0.02em; text-transform: uppercase;
-        }
-        .hp-cap-next-race-unit {
+        .hp-cap-next-race-arrow {
           font-family: var(--font-body), monospace;
-          font-size: 7px; letter-spacing: 0.18em; text-transform: uppercase;
-          color: rgba(255,255,255,0.3);
+          font-size: 10px; color: #7c3aed; transition: transform 150ms;
+        }
+        .hp-cap-next-race:hover .hp-cap-next-race-arrow { transform: translateX(3px); }
+        .hp-cap-results-row {
+          display: flex; align-items: center; gap: 6px;
+        }
+        .hp-cap-results-cand {
+          font-family: var(--font-body), monospace;
+          font-size: 8px; letter-spacing: 0.04em; font-weight: 500;
+        }
+        .hp-cap-results-bar {
+          flex: 1; height: 4px; border-radius: 1px; overflow: hidden;
+          display: flex; background: rgba(255,255,255,0.06);
+        }
+        .hp-cap-results-fill { height: 100%; transition: width 600ms ease; }
+        .hp-cap-results-prob {
+          display: flex; align-items: center; justify-content: space-between;
+          padding-top: 2px;
+        }
+        .hp-cap-results-prob-label {
+          font-family: var(--font-body), monospace;
+          font-size: 7px; letter-spacing: 0.14em; text-transform: uppercase;
+          color: rgba(255,255,255,0.25);
+        }
+        .hp-cap-results-prob-val {
+          font-family: var(--font-display), sans-serif;
+          font-size: 13px; letter-spacing: 0.02em; line-height: 1;
+          animation: hp-prob-glow 2.4s ease-in-out infinite;
+        }
+
+        /* Live animations */
+        @keyframes hp-bar-fill { from { width: 0%; } }
+        @keyframes hp-prob-glow {
+          0%, 100% { opacity: 1; filter: brightness(1); }
+          50% { opacity: 0.85; filter: brightness(1.35); }
+        }
+        @keyframes hp-live-border-pulse {
+          0%, 100% { border-color: rgba(124,58,237,0.28); }
+          50% { border-color: rgba(124,58,237,0.55); }
+        }
+        @keyframes hp-live-dot-ring {
+          0% { box-shadow: 0 0 0 0 rgba(124,58,237,0.5); }
+          70% { box-shadow: 0 0 0 4px rgba(124,58,237,0); }
+          100% { box-shadow: 0 0 0 0 rgba(124,58,237,0); }
+        }
+        .hp-cap-next-race {
+          animation: hp-live-border-pulse 3s ease-in-out infinite;
+        }
+        .hp-cap-results-fill {
+          animation: hp-bar-fill 1.2s cubic-bezier(0.22,1,0.36,1) forwards;
+        }
+        .hp-cap-live-dot {
+          display: inline-block;
+          width: 5px; height: 5px; border-radius: 50%; background: #7c3aed;
+          margin-right: 4px; flex-shrink: 0;
+          animation: hp-pulse 1.8s ease-in-out infinite, hp-live-dot-ring 1.8s ease-in-out infinite;
         }
 
         /* ── Section header ── */
@@ -1899,13 +1951,15 @@ export default function HomePage() {
         .hp-live-full-link {
           display: inline-flex;
           align-items: center;
-          padding: 4px 10px;
-          border: 1px solid rgba(124,58,237,0.28);
-          font-family: var(--font-body), monospace; font-size: 8px; letter-spacing: 0.14em;
-          text-transform: uppercase; color: #7c3aed; text-decoration: none;
-          transition: border-color 120ms, color 120ms; margin-top: 4px; align-self: flex-start;
+          gap: 6px;
+          padding: 10px 18px;
+          background: #7c3aed;
+          border: none;
+          font-family: var(--font-body), monospace; font-size: 8px; font-weight: 500; letter-spacing: 0.12em;
+          text-transform: uppercase; color: #fff; text-decoration: none; white-space: nowrap;
+          transition: background 120ms, transform 80ms; margin-top: 6px; align-self: stretch; justify-content: center;
         }
-        .hp-live-full-link:hover { border-color: rgba(124,58,237,0.6); color: #9d5cf0; text-decoration: none; }
+        .hp-live-full-link:hover { background: #9d5cf0; transform: translateY(-1px); text-decoration: none; }
       `}</style>
 
       <div className="hp-wrap">
@@ -2007,9 +2061,6 @@ export default function HomePage() {
           <div className="hp-hero-right-live">
             <div className="hp-tri-stripe" />
               {(() => {
-                const daysUntil = Math.max(0, Math.ceil(
-                  (new Date(LIVE_CONFIG.race.dateISO + "T00:00:00").getTime() - Date.now()) / 86400000
-                ));
                 return LIVE_CONFIG.mode === "upcoming" ? (
                   <div className="hp-live-panel">
                     <div className="hp-live-panel-header">
@@ -2037,20 +2088,42 @@ export default function HomePage() {
                           <span className="hp-cap-tile-label">Electoral Modeling</span>
                         </div>
                       </div>
-                      <div className="hp-cap-next-race">
-                        <div className="hp-cap-next-race-left">
-                          <span className="hp-cap-next-race-eyebrow">Next Race</span>
-                          <span className="hp-cap-next-race-name">{LIVE_CONFIG.race.name}</span>
-                          <span style={{ fontFamily: "var(--font-body), monospace", fontSize: "8px", color: "rgba(255,255,255,0.25)", letterSpacing: "0.06em" }}>{LIVE_CONFIG.race.date}</span>
+                      <Link href={LIVE_CONFIG.race.href} className="hp-cap-next-race">
+                        <div className="hp-cap-next-race-top">
+                          <div className="hp-cap-next-race-left">
+                            <span className="hp-cap-next-race-eyebrow"><span className="hp-cap-live-dot" />Election Results</span>
+                            <span className="hp-cap-next-race-name">{LIVE_CONFIG.race.name}</span>
+                            <span style={{ fontFamily: "var(--font-body), monospace", fontSize: "8px", color: "rgba(255,255,255,0.25)", letterSpacing: "0.06em" }}>{LIVE_CONFIG.race.date}</span>
+                          </div>
+                          <span className="hp-cap-next-race-arrow">→</span>
                         </div>
-                        <div className="hp-cap-next-race-countdown">
-                          <span className="hp-cap-next-race-num">{daysUntil}</span>
-                          <span className="hp-cap-next-race-unit">{daysUntil === 1 ? "day" : "days"}</span>
-                        </div>
-                      </div>
+                        {LIVE_CONFIG.races[0] && (() => {
+                          const r = LIVE_CONFIG.races[0];
+                          const dWin = r.dPct > r.rPct;
+                          const winProb = Math.round(Math.max(r.dPct, r.rPct));
+                          const winColor = dWin ? "#2563eb" : "#e63946";
+                          const winLabel = dWin ? "D" : "R";
+                          return (
+                            <>
+                              <div className="hp-cap-results-row">
+                                <span className="hp-cap-results-cand" style={{ color: "#2563eb", minWidth: 28 }}>D {r.dPct}%</span>
+                                <div className="hp-cap-results-bar">
+                                  <div className="hp-cap-results-fill" style={{ width: `${r.dPct}%`, background: "#2563eb" }} />
+                                  <div className="hp-cap-results-fill" style={{ width: `${r.rPct}%`, background: "#e63946" }} />
+                                </div>
+                                <span className="hp-cap-results-cand" style={{ color: "#e63946", minWidth: 28, textAlign: "right" }}>R {r.rPct}%</span>
+                              </div>
+                              <div className="hp-cap-results-prob">
+                                <span className="hp-cap-results-prob-label">Win Prob.</span>
+                                <span className="hp-cap-results-prob-val" style={{ color: winColor }}>{winLabel} {winProb}%</span>
+                              </div>
+                            </>
+                          );
+                        })()}
+                      </Link>
                       <div className="hp-live-spacer" />
                       <Link href={LIVE_CONFIG.race.href} className="hp-live-full-link">
-                        See the Apr 7 Forecast →
+                        See the Apr 7 Results →
                       </Link>
                     </div>
                   </div>
