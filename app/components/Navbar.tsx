@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 
@@ -251,6 +250,9 @@ export default function Navbar() {
           position: relative;
           top: 1px;
           transition: color 120ms ease, border-color 120ms ease;
+          padding-bottom: 0;
+          margin-bottom: 12px;
+          align-self: flex-end;
         }
         .nb-link:hover { color: rgba(255,255,255,0.85); text-decoration: none; }
         .nb-link.nb-active {
@@ -407,7 +409,23 @@ export default function Navbar() {
         {/* Masthead */}
         <div className="nb-masthead">
           <Link href="/" className="nb-logo">
-            <Image src="/full_logo_clean.png" alt="The Public Sentiment Institute" height={36} width={142} style={{ objectFit: "contain", objectPosition: "left center" }} priority />
+            <div
+              aria-label="The Public Sentiment Institute"
+              style={{
+                height: 36,
+                width: 142,
+                flexShrink: 0,
+                background: "linear-gradient(100deg, #ff4d5a 0%, #a78bfa 50%, #3b82f6 100%)",
+                WebkitMaskImage: "url(/full_logo_clean.png)",
+                WebkitMaskSize: "contain",
+                WebkitMaskRepeat: "no-repeat",
+                WebkitMaskPosition: "left center",
+                maskImage: "url(/full_logo_clean.png)",
+                maskSize: "contain",
+                maskRepeat: "no-repeat",
+                maskPosition: "left center",
+              }}
+            />
             <div className="nb-logo-wordmark">
               <span>The Public</span>
               <span>Sentiment</span>
