@@ -1088,17 +1088,40 @@ const LIVE_CONFIG = {
     subtitle: "State Supreme Court · Spring Election",
     date: "April 7, 2026",
     dateISO: "2026-04-07",
-    href: "/results/forecast",
+    href: "/results",
   },
   races: [
-    { name: "WI Supreme Court", dPct: 62, rPct: 38 },
+    {
+      name: "WI Supreme Court",
+      raceId: 59281,
+      called: true,
+      percentReporting: 57.8,
+      candidates: [
+        { name: "Chris Taylor", pct: 60.3, votes: 718546, color: "#2563eb" },
+        { name: "Maria Lazar", pct: 39.6, votes: 472432, color: "#e63946" },
+      ],
+      winner: "Chris Taylor",
+      winProb: 100,
+    },
+    {
+      name: "GA US House 14",
+      raceId: 59277,
+      called: true,
+      percentReporting: 99.9,
+      candidates: [
+        { name: "Clay Fuller", pct: 55.9, votes: 72304, color: "#e63946" },
+        { name: "Shawn Harris", pct: 44.1, votes: 57030, color: "#2563eb" },
+      ],
+      winner: "Clay Fuller",
+      winProb: 100,
+    },
   ],
   candidates: [
-    { name: "Brad Schimel",   party: "R", color: "#e63946", pct: 0, votes: 0 },
-    { name: "Susan Crawford", party: "D", color: "#2563eb", pct: 0, votes: 0 },
+    { name: "Chris Taylor", party: "D", color: "#2563eb", pct: 60.3, votes: 718546 },
+    { name: "Maria Lazar",  party: "R", color: "#e63946", pct: 39.6, votes: 472432 },
   ],
-  percentReporting: 0,
-  lastUpdated: "",
+  percentReporting: 57.8,
+  lastUpdated: "10:38 PM",
 };
 
 // ─── Page ─────────────────────────────────────────────────────────────────────
@@ -1414,13 +1437,15 @@ export default function HomePage() {
         }
         .hp-cap-next-race {
           display: flex; flex-direction: column; gap: 6px;
-          padding: 9px 11px;
+          padding: 10px 12px;
           border: 1px solid rgba(124,58,237,0.28);
           background: rgba(124,58,237,0.07);
           margin-top: 2px;
           text-decoration: none;
           transition: background 120ms, border-color 120ms;
           cursor: pointer;
+          min-width: 0;
+          align-self: stretch;
         }
         .hp-cap-next-race:hover { background: rgba(124,58,237,0.13); border-color: rgba(124,58,237,0.5); text-decoration: none; }
         .hp-cap-next-race-top { display: flex; align-items: center; justify-content: space-between; }
@@ -2074,6 +2099,7 @@ export default function HomePage() {
                       <div className="hp-cap-headline">
                         We <em>forecast</em>,<br />project &amp; model<br />every major race.
                       </div>
+                      {LIVE_CONFIG.races.length === 0 && (
                       <div className="hp-cap-tiles">
                         <div className="hp-cap-tile">
                           <span className="hp-cap-tile-icon">&#9642;</span>
@@ -2088,39 +2114,55 @@ export default function HomePage() {
                           <span className="hp-cap-tile-label">Electoral Modeling</span>
                         </div>
                       </div>
-                      <Link href={LIVE_CONFIG.race.href} className="hp-cap-next-race">
-                        <div className="hp-cap-next-race-top">
-                          <div className="hp-cap-next-race-left">
-                            <span className="hp-cap-next-race-eyebrow"><span className="hp-cap-live-dot" />Election Results</span>
-                            <span className="hp-cap-next-race-name">{LIVE_CONFIG.race.name}</span>
-                            <span style={{ fontFamily: "var(--font-body), monospace", fontSize: "8px", color: "rgba(255,255,255,0.25)", letterSpacing: "0.06em" }}>{LIVE_CONFIG.race.date}</span>
-                          </div>
-                          <span className="hp-cap-next-race-arrow">→</span>
-                        </div>
-                        {LIVE_CONFIG.races[0] && (() => {
-                          const r = LIVE_CONFIG.races[0];
-                          const dWin = r.dPct > r.rPct;
-                          const winProb = Math.round(Math.max(r.dPct, r.rPct));
-                          const winColor = dWin ? "#2563eb" : "#e63946";
-                          const winLabel = dWin ? "D" : "R";
+                      )}
+                      {LIVE_CONFIG.races.slice(0, 2).map((r, i) => {
+                          const leader = r.candidates[0];
+                          const totalPct = r.candidates.reduce((s, c) => s + c.pct, 0);
                           return (
-                            <>
-                              <div className="hp-cap-results-row">
-                                <span className="hp-cap-results-cand" style={{ color: "#2563eb", minWidth: 28 }}>D {r.dPct}%</span>
-                                <div className="hp-cap-results-bar">
-                                  <div className="hp-cap-results-fill" style={{ width: `${r.dPct}%`, background: "#2563eb" }} />
-                                  <div className="hp-cap-results-fill" style={{ width: `${r.rPct}%`, background: "#e63946" }} />
+                            <Link key={i} href={LIVE_CONFIG.race.href} className="hp-cap-next-race">
+                              <div className="hp-cap-next-race-top">
+                                <div className="hp-cap-next-race-left">
+                                  <span className="hp-cap-next-race-eyebrow"><span className="hp-cap-live-dot" />{r.name}</span>
                                 </div>
-                                <span className="hp-cap-results-cand" style={{ color: "#e63946", minWidth: 28, textAlign: "right" }}>R {r.rPct}%</span>
+                                <span className="hp-cap-next-race-arrow">→</span>
                               </div>
-                              <div className="hp-cap-results-prob">
-                                <span className="hp-cap-results-prob-label">Win Prob.</span>
-                                <span className="hp-cap-results-prob-val" style={{ color: winColor }}>{winLabel} {winProb}%</span>
+                              {/* Results — compact candidate rows */}
+                              <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+                                {r.candidates.map((c) => (
+                                  <div key={c.name} style={{ minWidth: 0 }}>
+                                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 1 }}>
+                                      <span style={{ fontFamily: "var(--font-body), monospace", fontSize: 9, color: "rgba(255,255,255,0.5)", letterSpacing: "0.02em", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", minWidth: 0 }}>{c.name}</span>
+                                      <span style={{ fontFamily: "var(--font-display), sans-serif", fontSize: 14, letterSpacing: "0.01em", lineHeight: 1, color: c.color, flexShrink: 0, marginLeft: 6 }}>{c.pct.toFixed(1)}%</span>
+                                    </div>
+                                    <div style={{ height: 3, background: "rgba(255,255,255,0.06)", borderRadius: 1, overflow: "hidden" }}>
+                                      <div className="hp-cap-results-fill" style={{ width: `${totalPct > 0 ? (c.pct / totalPct) * 100 : 0}%`, background: c.color, height: "100%" }} />
+                                    </div>
+                                  </div>
+                                ))}
                               </div>
-                            </>
+                              {/* Reporting % */}
+                              <div style={{ fontFamily: "var(--font-body), monospace", fontSize: 7, color: "rgba(255,255,255,0.2)", letterSpacing: "0.06em", textTransform: "uppercase" }}>{r.percentReporting}% reporting</div>
+                              {/* TPSI Forecast */}
+                              {r.called ? (
+                                <div style={{ display: "flex", alignItems: "center", justifyContent: "flex-end", gap: 5, minWidth: 0 }}>
+                                  <span style={{ fontFamily: "var(--font-body), monospace", fontSize: 7, fontWeight: 500, color: "rgba(255,255,255,0.45)", letterSpacing: "0.02em", whiteSpace: "nowrap", flexShrink: 1, overflow: "hidden", textOverflow: "ellipsis" }}>TPSI Forecast:</span>
+                                  <span style={{ fontFamily: "var(--font-body), monospace", fontSize: 8.5, fontWeight: 600, color: "#fff", letterSpacing: "0.01em", whiteSpace: "nowrap", flexShrink: 0 }}>{r.winner}</span>
+                                  <span style={{ display: "inline-flex", alignItems: "center", padding: "1px 4px", border: "1px solid #22c55e", fontFamily: "var(--font-body), monospace", fontSize: 6, fontWeight: 600, letterSpacing: "0.04em", textTransform: "uppercase", color: "#22c55e", whiteSpace: "nowrap", lineHeight: 1.2, flexShrink: 0 }}>✓ winner</span>
+                                </div>
+                              ) : r.winProb != null ? (
+                                <div style={{ display: "flex", alignItems: "center", justifyContent: "flex-end", gap: 5, minWidth: 0 }}>
+                                  <span style={{ fontFamily: "var(--font-body), monospace", fontSize: 7, fontWeight: 500, color: "rgba(255,255,255,0.45)", letterSpacing: "0.02em", whiteSpace: "nowrap", flexShrink: 1, overflow: "hidden", textOverflow: "ellipsis" }}>TPSI Forecast:</span>
+                                  <span style={{ fontFamily: "var(--font-body), monospace", fontSize: 8.5, fontWeight: 600, color: leader.color, letterSpacing: "0.01em", whiteSpace: "nowrap", flexShrink: 0 }}>{leader.name}</span>
+                                  <span style={{ fontFamily: "var(--font-body), monospace", fontSize: 7, color: "rgba(255,255,255,0.35)", letterSpacing: "0.02em", whiteSpace: "nowrap", flexShrink: 0 }}>{r.winProb}%</span>
+                                </div>
+                              ) : (
+                                <div style={{ display: "flex", alignItems: "center", justifyContent: "flex-end" }}>
+                                  <span style={{ fontFamily: "var(--font-body), monospace", fontSize: 7, fontStyle: "italic", color: "rgba(255,255,255,0.25)", letterSpacing: "0.02em" }}>No TPSI Race Forecast</span>
+                                </div>
+                              )}
+                            </Link>
                           );
-                        })()}
-                      </Link>
+                      })}
                       <div className="hp-live-spacer" />
                       <Link href={LIVE_CONFIG.race.href} className="hp-live-full-link">
                         See the Apr 7 Results →
