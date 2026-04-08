@@ -53,7 +53,9 @@ const RACE_FORECAST_DEFAULTS: Partial<Record<number, { raceRule: RaceRule; expec
   51426: { raceRule: "PLURALITY", expectedTurnout: 45_000, pollAvg: { "Michael A. Chiaradio": 100.0 } },  // 1 candidate
   51427: { raceRule: "PLURALITY", expectedTurnout: 55_000, pollAvg: { "Mike Ezell": 75.0, "Sawyer Walters": 25.0 } },  // 2 candidates (per pollAvg)
   51428: { raceRule: "MAJORITY", expectedTurnout: 40_000, pollAvg: { "Jeffrey Hulum III": 45.0, "D. Ryan Grover": 30.0, "Paul James Blackman": 25.0 } },  // 3 candidates → runoff opp.
-  52551: { raceRule: "MAJORITY", expectedTurnout: 120_000, pollAvg: { "Clay Fuller": 35.0, "Harris": 28.0, "Moore": 20.0, "Others": 17.0 } }  // many candidates → high runoff opp.
+  52551: { raceRule: "MAJORITY", expectedTurnout: 120_000, pollAvg: { "Clay Fuller": 35.0, "Harris": 28.0, "Moore": 20.0, "Others": 17.0 } },  // many candidates → high runoff opp.
+  59281: { raceRule: "PLURALITY", expectedTurnout: 1_800_000, pollAvg: { "Crawford": 55.0, "Schimel": 45.0 } },  // WI Supreme Court
+  59277: { raceRule: "MAJORITY", expectedTurnout: 85_000, pollAvg: { "Austin Scott": 58.0, "Colton Griffin": 25.0, "Others": 17.0 } },  // GA US House 14 Special
 };
 
 function sortCandidatesByPollData(candidates: RaceCandidate[], pollAvg?: Record<string, number>): RaceCandidate[] {
