@@ -1,226 +1,623 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import React, { useState, useMemo, useEffect, useRef } from "react";
+import {
+  LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, ReferenceLine,
+} from "recharts";
 
-// ─── types ────────────────────────────────────────────────────────────────────
-type Rating = "Safe D" | "Likely D" | "Lean D" | "Tilt D" | "Tilt R" | "Lean R" | "Likely R" | "Safe R";
-type MapType = "senate" | "governor";
-
-interface RaceData {
-  state: string;
-  name: string;
-  inc: string;
-  pvi: string;
-  rating: Rating;
-  rPct: number;
-  dPct: number;
-  modelMargin: string;
-  trumpApp: string;
-  officeApp: string;
-}
-
-interface TooltipState {
-  visible: boolean;
-  x: number;
-  y: number;
-  data: RaceData | null;
-}
-
-// ─── Senate data ──────────────────────────────────────────────────────────────
-const SENATE_DATA: RaceData[] = [
-  { state:"NM", name:"Luján",       inc:"D", pvi:"D+3",    rating:"Safe D",   rPct:0.2,  dPct:99.8, modelMargin:"D +58.3", trumpApp:"-17.3", officeApp:"20" },
-  { state:"RI", name:"Reed",        inc:"D", pvi:"D+30",   rating:"Safe D",   rPct:0.9,  dPct:99.1, modelMargin:"D +42.6", trumpApp:"-25.5", officeApp:"36" },
-  { state:"MA", name:"Markey",      inc:"D", pvi:"D+33",   rating:"Safe D",   rPct:1.4,  dPct:98.6, modelMargin:"D +38.5", trumpApp:"-30",   officeApp:"22" },
-  { state:"DE", name:"Coons",       inc:"D", pvi:"D+18.4", rating:"Safe D",   rPct:4.3,  dPct:95.7, modelMargin:"D +28.0", trumpApp:"-17.7", officeApp:"20" },
-  { state:"OR", name:"Merkley",     inc:"D", pvi:"D+14.5", rating:"Safe D",   rPct:5.7,  dPct:94.3, modelMargin:"D +25.3", trumpApp:"-24",   officeApp:"21" },
-  { state:"NJ", name:"Booker",      inc:"D", pvi:"D+13.2", rating:"Safe D",   rPct:7.7,  dPct:92.3, modelMargin:"D +22.3", trumpApp:"-16.2", officeApp:"19" },
-  { state:"IL", name:"Durbin",      inc:"D", pvi:"D+13",   rating:"Safe D",   rPct:8.3,  dPct:91.7, modelMargin:"D +21.6", trumpApp:"-23",   officeApp:"ret." },
-  { state:"NH", name:"Shaheen",     inc:"D", pvi:"D+12.5", rating:"Safe D",   rPct:11.7, dPct:88.3, modelMargin:"D +18.2", trumpApp:"-12.4", officeApp:"ret." },
-  { state:"VA", name:"Warner",      inc:"D", pvi:"D+9",    rating:"Safe D",   rPct:12.1, dPct:87.9, modelMargin:"D +17.9", trumpApp:"-11.7", officeApp:"25" },
-  { state:"CO", name:"Hickenlooper",inc:"D", pvi:"D+6.2",  rating:"Safe D",   rPct:14.9, dPct:85.1, modelMargin:"D +15.7", trumpApp:"-16.4", officeApp:"22" },
-  { state:"NC", name:"Tillis",      inc:"R", pvi:"R+4.8",  rating:"Safe D",   rPct:19.3, dPct:80.7, modelMargin:"D +12.9", trumpApp:"-3.4",  officeApp:"ret." },
-  { state:"MN", name:"Smith",       inc:"D", pvi:"D+2.1",  rating:"Likely D", rPct:25.5, dPct:74.5, modelMargin:"D +9.6",  trumpApp:"-12.8", officeApp:"ret." },
-  { state:"GA", name:"Ossoff",      inc:"D", pvi:"D+1.5",  rating:"Likely D", rPct:29.1, dPct:70.9, modelMargin:"D +8.0",  trumpApp:"-7.8",  officeApp:"18" },
-  { state:"MI", name:"Peters",      inc:"D", pvi:"D+1.4",  rating:"Lean D",   rPct:35.0, dPct:65.0, modelMargin:"D +5.6",  trumpApp:"-9.3",  officeApp:"ret." },
-  { state:"ME", name:"Collins",     inc:"R", pvi:"R+11.7", rating:"Lean D",   rPct:38.5, dPct:61.5, modelMargin:"D +4.2",  trumpApp:"-13.3", officeApp:"-13" },
-  { state:"OH", name:"Husted",      inc:"R", pvi:"R+4.5",  rating:"Tilt D",   rPct:47.2, dPct:52.8, modelMargin:"D +1.0",  trumpApp:"-0.4",  officeApp:"15" },
-  { state:"AK", name:"Sullivan",    inc:"R", pvi:"R+15.8", rating:"Tilt D",   rPct:49.9, dPct:50.1, modelMargin:"D +0.0",  trumpApp:"-1.6",  officeApp:"-8" },
-  { state:"TX", name:"Cornyn",      inc:"R", pvi:"R+12.7", rating:"Tilt R",   rPct:52.7, dPct:47.3, modelMargin:"R +1.0",  trumpApp:"-1.5",  officeApp:"6" },
-  { state:"IA", name:"Ernst",       inc:"R", pvi:"R+9.6",  rating:"Tilt R",   rPct:55.1, dPct:44.9, modelMargin:"R +1.8",  trumpApp:"-1.6",  officeApp:"ret." },
-  { state:"SC", name:"Graham",      inc:"R", pvi:"R+13.4", rating:"Lean R",   rPct:65.7, dPct:34.3, modelMargin:"R +5.9",  trumpApp:"3.9",   officeApp:"-2" },
-  { state:"FL", name:"Moody",       inc:"R", pvi:"R+14.5", rating:"Likely R", rPct:71.5, dPct:28.5, modelMargin:"R +8.3",  trumpApp:"1.7",   officeApp:"17" },
-  { state:"KY", name:"McConnell",   inc:"R", pvi:"R+22.6", rating:"Likely R", rPct:73.4, dPct:26.6, modelMargin:"R +9.1",  trumpApp:"10.7",  officeApp:"ret." },
-  { state:"MT", name:"Daines",      inc:"R", pvi:"R+13.1", rating:"Likely R", rPct:78.7, dPct:21.3, modelMargin:"R +11.8", trumpApp:"11.5",  officeApp:"13" },
-  { state:"NE", name:"Ricketts",    inc:"R", pvi:"R+41.4", rating:"Likely R", rPct:78.7, dPct:21.3, modelMargin:"R +11.8", trumpApp:"8",     officeApp:"1" },
-  { state:"MS", name:"Hyde-Smith",  inc:"R", pvi:"R+13.1", rating:"Likely R", rPct:78.9, dPct:21.1, modelMargin:"R +11.9", trumpApp:"9.4",   officeApp:"9" },
-  { state:"KS", name:"Marshall",    inc:"R", pvi:"R+14.5", rating:"Safe R",   rPct:79.4, dPct:20.6, modelMargin:"R +12.1", trumpApp:"4.9",   officeApp:"6" },
-  { state:"AL", name:"Tuberville",  inc:"R", pvi:"R+23.5", rating:"Safe R",   rPct:84.3, dPct:15.7, modelMargin:"R +15.1", trumpApp:"15.6",  officeApp:"ret." },
-  { state:"OK", name:"Mullin",      inc:"R", pvi:"R+17",   rating:"Safe R",   rPct:88.5, dPct:11.5, modelMargin:"R +18.4", trumpApp:"18.3",  officeApp:"18" },
-  { state:"SD", name:"Rounds",      inc:"R", pvi:"R+34.6", rating:"Safe R",   rPct:93.8, dPct:6.2,  modelMargin:"R +24.4", trumpApp:"11.1",  officeApp:"23" },
-  { state:"TN", name:"Hagerty",     inc:"R", pvi:"R+30.1", rating:"Safe R",   rPct:97.2, dPct:2.8,  modelMargin:"R +32.0", trumpApp:"16.3",  officeApp:"27" },
-  { state:"ID", name:"Risch",       inc:"R", pvi:"R+32.5", rating:"Safe R",   rPct:98.2, dPct:1.8,  modelMargin:"R +36.0", trumpApp:"26.8",  officeApp:"22" },
-  { state:"AR", name:"Cotton",      inc:"R", pvi:"R+36.2", rating:"Safe R",   rPct:98.4, dPct:1.6,  modelMargin:"R +36.8", trumpApp:"15.8",  officeApp:"15" },
-  { state:"LA", name:"Cassidy",     inc:"R", pvi:"R+43.4", rating:"Safe R",   rPct:99.1, dPct:0.9,  modelMargin:"R +42.3", trumpApp:"9.6",   officeApp:"9" },
-  { state:"WV", name:"Capito",      inc:"R", pvi:"R+46.4", rating:"Safe R",   rPct:99.6, dPct:0.4,  modelMargin:"R +49.3", trumpApp:"26.1",  officeApp:"19" },
-  { state:"WY", name:"Lummis",      inc:"R", pvi:"R+48.1", rating:"Safe R",   rPct:99.6, dPct:0.4,  modelMargin:"R +50.2", trumpApp:"31.4",  officeApp:"ret." },
-];
-
-// ─── Governor data ────────────────────────────────────────────────────────────
-const GOV_DATA: RaceData[] = [
-  { state:"HI", name:"Green",     inc:"D", pvi:"D+29.3", rating:"Safe D",   rPct:1.6,  dPct:98.4, modelMargin:"D +41.5", trumpApp:"-38.1", officeApp:"27" },
-  { state:"MA", name:"Healey",    inc:"D", pvi:"D+32.1", rating:"Safe D",   rPct:3.7,  dPct:96.3, modelMargin:"D +32.7", trumpApp:"-30",   officeApp:"33" },
-  { state:"MD", name:"Moore",     inc:"D", pvi:"D+35.3", rating:"Safe D",   rPct:3.4,  dPct:96.6, modelMargin:"D +33.5", trumpApp:"-33.5", officeApp:"33" },
-  { state:"RI", name:"McKee",     inc:"D", pvi:"D+22",   rating:"Safe D",   rPct:4.6,  dPct:95.4, modelMargin:"D +30.2", trumpApp:"-25.5", officeApp:"12" },
-  { state:"CO", name:"Polis",     inc:"D", pvi:"D+22.2", rating:"Safe D",   rPct:6.0,  dPct:94.0, modelMargin:"D +27.5", trumpApp:"-16.4", officeApp:"ret." },
-  { state:"IL", name:"Pritzker",  inc:"D", pvi:"D+15.4", rating:"Safe D",   rPct:8.6,  dPct:91.4, modelMargin:"D +23.6", trumpApp:"-23",   officeApp:"17" },
-  { state:"CT", name:"Lamont",    inc:"D", pvi:"D+15.8", rating:"Safe D",   rPct:16.4, dPct:83.6, modelMargin:"D +16.3", trumpApp:"-22.6", officeApp:"33" },
-  { state:"ME", name:"Mills",     inc:"D", pvi:"D+16.1", rating:"Safe D",   rPct:11.2, dPct:88.8, modelMargin:"D +20.7", trumpApp:"-13.3", officeApp:"ret." },
-  { state:"MN", name:"Walz",      inc:"D", pvi:"D+10.6", rating:"Safe D",   rPct:12.3, dPct:87.7, modelMargin:"D +19.6", trumpApp:"-12.8", officeApp:"ret." },
-  { state:"NY", name:"Hochul",    inc:"D", pvi:"D+9.3",  rating:"Safe D",   rPct:11.3, dPct:88.7, modelMargin:"D +20.6", trumpApp:"-20.1", officeApp:"19" },
-  { state:"PA", name:"Shapiro",   inc:"D", pvi:"D+17.7", rating:"Safe D",   rPct:10.3, dPct:89.7, modelMargin:"D +21.6", trumpApp:"-6.7",  officeApp:"34" },
-  { state:"VT", name:"Scott",     inc:"R", pvi:"R+44.1", rating:"Safe D",   rPct:1.7,  dPct:98.3, modelMargin:"R +40.4", trumpApp:"-37.6", officeApp:"55" },
-  { state:"CA", name:"Newsom",    inc:"D", pvi:"D+21.3", rating:"Likely D", rPct:25.2, dPct:74.8, modelMargin:"D +10.9", trumpApp:"-25.2", officeApp:"ret." },
-  { state:"OR", name:"Kotek",     inc:"D", pvi:"D+6.3",  rating:"Likely D", rPct:27.6, dPct:72.4, modelMargin:"D +9.6",  trumpApp:"-24",   officeApp:"6" },
-  { state:"AZ", name:"Hobbs",     inc:"D", pvi:"D+3.6",  rating:"Likely D", rPct:34.6, dPct:65.4, modelMargin:"D +6.4",  trumpApp:"-1.2",  officeApp:"18" },
-  { state:"KS", name:"Kelly",     inc:"D", pvi:"D+5.1",  rating:"Likely D", rPct:35.1, dPct:64.9, modelMargin:"D +6.1",  trumpApp:"4.9",   officeApp:"ret." },
-  { state:"MI", name:"Whitmer",   inc:"D", pvi:"D+13.4", rating:"Likely D", rPct:33.7, dPct:66.3, modelMargin:"D +6.8",  trumpApp:"-9.3",  officeApp:"ret." },
-  { state:"NM", name:"Grisham",   inc:"D", pvi:"D+4",    rating:"Likely D", rPct:28.1, dPct:71.9, modelMargin:"D +9.4",  trumpApp:"-17.3", officeApp:"ret." },
-  { state:"WI", name:"Evers",     inc:"D", pvi:"D+6.3",  rating:"Likely D", rPct:29.8, dPct:70.2, modelMargin:"D +8.6",  trumpApp:"-7.7",  officeApp:"ret." },
-  { state:"NV", name:"Lombardo",  inc:"R", pvi:"R+1.4",  rating:"Tilt D",   rPct:49.2, dPct:50.8, modelMargin:"D +0.3",  trumpApp:"-6.5",  officeApp:"18" },
-  { state:"GA", name:"Kemp",      inc:"R", pvi:"R+4.6",  rating:"Tilt R",   rPct:52.6, dPct:47.4, modelMargin:"R +1.0",  trumpApp:"-7.8",  officeApp:"ret." },
-  { state:"IA", name:"Reynolds",  inc:"R", pvi:"R+15.6", rating:"Tilt R",   rPct:53.8, dPct:46.2, modelMargin:"R +1.5",  trumpApp:"-1.6",  officeApp:"ret." },
-  { state:"AK", name:"Dunleavy",  inc:"R", pvi:"R+23",   rating:"Lean R",   rPct:61.4, dPct:38.6, modelMargin:"R +4.6",  trumpApp:"-1.6",  officeApp:"ret." },
-  { state:"TX", name:"Abbott",    inc:"R", pvi:"R+8",    rating:"Lean R",   rPct:61.1, dPct:38.9, modelMargin:"R +4.5",  trumpApp:"-1.5",  officeApp:"12" },
-  { state:"FL", name:"DeSantis",  inc:"R", pvi:"R+16.8", rating:"Lean R",   rPct:64.2, dPct:35.8, modelMargin:"R +5.9",  trumpApp:"1.7",   officeApp:"ret." },
-  { state:"OH", name:"DeWine",    inc:"R", pvi:"R+22.1", rating:"Lean R",   rPct:63.6, dPct:36.4, modelMargin:"R +5.6",  trumpApp:"-0.4",  officeApp:"ret." },
-  { state:"NH", name:"Ayotte",    inc:"R", pvi:"R+12.6", rating:"Likely R", rPct:70.5, dPct:29.5, modelMargin:"R +8.7",  trumpApp:"-12.4", officeApp:"23" },
-  { state:"SC", name:"McMaster",  inc:"R", pvi:"R+14.5", rating:"Safe R",   rPct:79.1, dPct:20.9, modelMargin:"R +13.3", trumpApp:"3.9",   officeApp:"ret." },
-  { state:"OK", name:"Stitt",     inc:"R", pvi:"R+10.8", rating:"Safe R",   rPct:77.5, dPct:22.5, modelMargin:"R +12.4", trumpApp:"18.3",  officeApp:"ret." },
-  { state:"NE", name:"Pillen",    inc:"R", pvi:"R+20.5", rating:"Safe R",   rPct:88.8, dPct:11.2, modelMargin:"R +20.7", trumpApp:"8",     officeApp:"6" },
-  { state:"TN", name:"Lee",       inc:"R", pvi:"R+29.1", rating:"Safe R",   rPct:90.1, dPct:9.9,  modelMargin:"R +22.0", trumpApp:"16.3",  officeApp:"ret." },
-  { state:"AL", name:"Ivey",      inc:"R", pvi:"R+34",   rating:"Safe R",   rPct:89.1, dPct:10.9, modelMargin:"R +21.0", trumpApp:"15.6",  officeApp:"ret." },
-  { state:"AR", name:"Sanders",   inc:"R", pvi:"R+24.9", rating:"Safe R",   rPct:94.2, dPct:5.8,  modelMargin:"R +27.8", trumpApp:"15.8",  officeApp:"19" },
-  { state:"SD", name:"Rhoden",    inc:"R", pvi:"R+23.9", rating:"Safe R",   rPct:93.6, dPct:6.4,  modelMargin:"R +26.9", trumpApp:"11.1",  officeApp:"28" },
-  { state:"ID", name:"Little",    inc:"R", pvi:"R+37.3", rating:"Safe R",   rPct:98.7, dPct:1.3,  modelMargin:"R +43.5", trumpApp:"26.8",  officeApp:"30" },
-  { state:"WY", name:"Gordon",    inc:"R", pvi:"R+55.4", rating:"Safe R",   rPct:99.7, dPct:0.3,  modelMargin:"R +59.5", trumpApp:"31.4",  officeApp:"ret." },
-];
-
-// ─── FIPS map ─────────────────────────────────────────────────────────────────
+// ─── FIPS → State abbreviation ────────────────────────────────────────────────
 const FIPS: Record<string, string> = {
-  "01":"AL","02":"AK","04":"AZ","05":"AR","06":"CA","08":"CO","09":"CT",
-  "10":"DE","11":"DC","12":"FL","13":"GA","15":"HI","16":"ID","17":"IL",
-  "18":"IN","19":"IA","20":"KS","21":"KY","22":"LA","23":"ME","24":"MD",
-  "25":"MA","26":"MI","27":"MN","28":"MS","29":"MO","30":"MT","31":"NE",
-  "32":"NV","33":"NH","34":"NJ","35":"NM","36":"NY","37":"NC","38":"ND",
-  "39":"OH","40":"OK","41":"OR","42":"PA","44":"RI","45":"SC","46":"SD",
-  "47":"TN","48":"TX","49":"UT","50":"VT","51":"VA","53":"WA","54":"WV",
+  "01":"AL","02":"AK","04":"AZ","05":"AR","06":"CA","08":"CO","09":"CT","10":"DE",
+  "12":"FL","13":"GA","15":"HI","16":"ID","17":"IL","18":"IN","19":"IA","20":"KS",
+  "21":"KY","22":"LA","23":"ME","24":"MD","25":"MA","26":"MI","27":"MN","28":"MS",
+  "29":"MO","30":"MT","31":"NE","32":"NV","33":"NH","34":"NJ","35":"NM","36":"NY",
+  "37":"NC","38":"ND","39":"OH","40":"OK","41":"OR","42":"PA","44":"RI","45":"SC",
+  "46":"SD","47":"TN","48":"TX","49":"UT","50":"VT","51":"VA","53":"WA","54":"WV",
   "55":"WI","56":"WY",
 };
 
 const STATE_NAMES: Record<string, string> = {
-  AL:"Alabama",AK:"Alaska",AZ:"Arizona",AR:"Arkansas",CA:"California",
-  CO:"Colorado",CT:"Connecticut",DE:"Delaware",DC:"D.C.",FL:"Florida",
-  GA:"Georgia",HI:"Hawaii",ID:"Idaho",IL:"Illinois",IN:"Indiana",
-  IA:"Iowa",KS:"Kansas",KY:"Kentucky",LA:"Louisiana",ME:"Maine",
-  MD:"Maryland",MA:"Massachusetts",MI:"Michigan",MN:"Minnesota",
-  MS:"Mississippi",MO:"Missouri",MT:"Montana",NV:"Nevada",NH:"New Hampshire",
-  NJ:"New Jersey",NM:"New Mexico",NY:"New York",NC:"North Carolina",
+  AL:"Alabama",AK:"Alaska",AZ:"Arizona",AR:"Arkansas",CA:"California",CO:"Colorado",
+  CT:"Connecticut",DE:"Delaware",FL:"Florida",GA:"Georgia",HI:"Hawaii",ID:"Idaho",
+  IL:"Illinois",IN:"Indiana",IA:"Iowa",KS:"Kansas",KY:"Kentucky",LA:"Louisiana",
+  ME:"Maine",MD:"Maryland",MA:"Massachusetts",MI:"Michigan",MN:"Minnesota",
+  MS:"Mississippi",MO:"Missouri",MT:"Montana",NE:"Nebraska",NV:"Nevada",
+  NH:"New Hampshire",NJ:"New Jersey",NM:"New Mexico",NY:"New York",NC:"North Carolina",
   ND:"North Dakota",OH:"Ohio",OK:"Oklahoma",OR:"Oregon",PA:"Pennsylvania",
-  RI:"Rhode Island",SC:"South Carolina",SD:"South Dakota",TN:"Tennessee",
-  TX:"Texas",UT:"Utah",VT:"Vermont",VA:"Virginia",WA:"Washington",
-  WV:"West Virginia",WI:"Wisconsin",WY:"Wyoming",
+  RI:"Rhode Island",SC:"South Carolina",SD:"South Dakota",TN:"Tennessee",TX:"Texas",
+  UT:"Utah",VT:"Vermont",VA:"Virginia",WA:"Washington",WV:"West Virginia",
+  WI:"Wisconsin",WY:"Wyoming",
 };
 
-// ─── color helpers ────────────────────────────────────────────────────────────
-const RATING_FILLS: Record<Rating, string> = {
-  "Safe D":   "#1a3a8f",
-  "Likely D": "#1e50b3",
-  "Lean D":   "#2d6fd4",
-  "Tilt D":   "#4d8ee8",
-  "Tilt R":   "#e05555",
-  "Lean R":   "#cc3333",
-  "Likely R": "#b02020",
-  "Safe R":   "#8b1a1a",
-};
-
-const RATING_TEXT: Record<Rating, string> = {
-  "Safe D":   "rgba(147,197,253,.95)",
-  "Likely D": "rgba(147,197,253,.85)",
-  "Lean D":   "rgba(147,197,253,.8)",
-  "Tilt D":   "rgba(147,197,253,.75)",
-  "Tilt R":   "rgba(252,165,165,.75)",
-  "Lean R":   "rgba(252,165,165,.8)",
-  "Likely R": "rgba(252,165,165,.85)",
-  "Safe R":   "rgba(252,165,165,.95)",
-};
-
-function fillFor(rating?: Rating) {
-  if (!rating) return "rgba(255,255,255,0.055)";
-  return RATING_FILLS[rating];
+// ─── Types ────────────────────────────────────────────────────────────────────
+interface Poll {
+  date: string;
+  pollster: string;
+  grade: string;
+  sampleSize: number;
+  sampleType: string;
+  dem: number;
+  rep: number;
+  ind?: number;
+  demLabel?: string;
+  repLabel?: string;
+  indLabel?: string;
 }
 
-function isD(r: Rating) { return r.endsWith("D"); }
+interface Race {
+  state: string;
+  stateCode: string;         // abbreviation for map lookup
+  incumbent: string;
+  incumbentParty: "D" | "R" | "I";
+  demCandidate: string;
+  repCandidate: string;
+  indCandidate?: string;
+  rating: Rating;
+  trend: Trend;
+  latestDem: number;
+  latestRep: number;
+  latestInd?: number;
+  historicalLean: number;
+  forecastMargin: number;    // from spreadsheet "2028 Forecast" col (used as 2026 base)
+  polls: Poll[];
+  notes?: string;
+}
 
-// ─── Race lookup maps ─────────────────────────────────────────────────────────
-const senateByState = Object.fromEntries(SENATE_DATA.map(d => [d.state, d]));
-const govByState    = Object.fromEntries(GOV_DATA.map(d => [d.state, d]));
+type Rating = "Safe D" | "Likely D" | "Lean D" | "Toss-Up" | "Lean R" | "Likely R" | "Safe R";
+type Trend  = "→" | "←D" | "←R" | "↑D" | "↑R";
 
-// ─── Summary counters ─────────────────────────────────────────────────────────
-function summarize(data: RaceData[]) {
-  const counts: Record<Rating, number> = {
-    "Safe D":0,"Likely D":0,"Lean D":0,"Tilt D":0,
-    "Tilt R":0,"Lean R":0,"Likely R":0,"Safe R":0,
-  };
-  let dTotal = 0, rTotal = 0;
-  for (const r of data) {
-    counts[r.rating]++;
-    if (isD(r.rating)) dTotal++; else rTotal++;
+// ─── Helpers ──────────────────────────────────────────────────────────────────
+const r1 = (n: number) => Math.round(n * 10) / 10;
+
+function ratingColor(r: Rating): string {
+  return { "Safe D":"#1d4ed8","Likely D":"#2563eb","Lean D":"#60a5fa",
+    "Toss-Up":"#9333ea","Lean R":"#f87171","Likely R":"#ef4444","Safe R":"#b91c1c" }[r];
+}
+function ratingBg(r: Rating): string {
+  return { "Safe D":"rgba(29,78,216,0.14)","Likely D":"rgba(37,99,235,0.11)",
+    "Lean D":"rgba(96,165,250,0.10)","Toss-Up":"rgba(147,51,234,0.12)",
+    "Lean R":"rgba(248,113,113,0.10)","Likely R":"rgba(239,68,68,0.12)",
+    "Safe R":"rgba(185,28,28,0.16)" }[r];
+}
+
+function ratingFromMargin(m: number): Rating {
+  if (m >  12) return "Safe D";
+  if (m >   6) return "Likely D";
+  if (m >   2) return "Lean D";
+  if (m >  -2) return "Toss-Up";
+  if (m >  -6) return "Lean R";
+  if (m > -12) return "Likely R";
+  return "Safe R";
+}
+
+function gradeWeight(g: string): number {
+  return ({"A+":1.5,"A":1.3,"A-":1.2,"B+":1.1,"B":1.0,"B-":0.9,
+           "C+":0.75,"C":0.65,"C-":0.5,"D+":0.4,"D":0.3} as Record<string,number>)[g] ?? 0.7;
+}
+
+function computeRating(polls: Poll[], historicalLean: number, forecastMargin: number) {
+  if (polls.length === 0) {
+    const margin = forecastMargin !== 0 ? forecastMargin * 0.6 : historicalLean;
+    return { smoothedDem: 45 + margin/2, smoothedRep: 45 - margin/2,
+             margin: r1(margin), rating: ratingFromMargin(margin), trend: "→" as Trend };
   }
-  return { counts, dTotal, rTotal };
+  const now = Date.now();
+  const weighted = polls.map(p => {
+    const age    = (now - new Date(p.date + "T00:00:00").getTime()) / 86400000;
+    const gradeW = gradeWeight(p.grade);
+    const recW   = Math.exp(-age / 90);
+    const sizeW  = Math.sqrt(Math.min(p.sampleSize, 2000)) / Math.sqrt(2000);
+    const typeW  = p.sampleType.startsWith("LV") ? 1.1 : p.sampleType.startsWith("RV") ? 0.95 : 0.85;
+    return { dem: p.dem, rep: p.rep, w: gradeW * recW * sizeW * typeW };
+  });
+  const totalW  = weighted.reduce((s, x) => s + x.w, 0);
+  const avgDem  = weighted.reduce((s, x) => s + x.dem * x.w, 0) / totalW;
+  const avgRep  = weighted.reduce((s, x) => s + x.rep * x.w, 0) / totalW;
+
+  // Blend historical lean + spreadsheet forecast as a prior, diluted by poll count
+  const histW   = Math.max(0, 1 - polls.length / 10);
+  const priorM  = forecastMargin !== 0 ? forecastMargin * 0.5 : historicalLean;
+  const blDem   = avgDem * (1 - histW) + (45 + priorM / 2) * histW;
+  const blRep   = avgRep * (1 - histW) + (45 - priorM / 2) * histW;
+  const margin  = r1(blDem - blRep);
+
+  let trend: Trend = "→";
+  if (polls.length >= 4) {
+    const s = [...polls].sort((a, b) => b.date.localeCompare(a.date));
+    const nAvg = (s[0].dem - s[0].rep + s[1].dem - s[1].rep) / 2;
+    const oAvg = (s[s.length-2].dem - s[s.length-2].rep + s[s.length-1].dem - s[s.length-1].rep) / 2;
+    const d = nAvg - oAvg;
+    if (d > 3) trend = "↑D"; else if (d > 1) trend = "←D";
+    else if (d < -3) trend = "↑R"; else if (d < -1) trend = "←R";
+  }
+  return { smoothedDem: r1(blDem), smoothedRep: r1(blRep), margin, rating: ratingFromMargin(margin), trend };
 }
 
-// ─── Map component ────────────────────────────────────────────────────────────
-function RaceMap({ mapType, dataMap }: { mapType: MapType; dataMap: Record<string, RaceData> }) {
-  const svgRef  = useRef<SVGSVGElement>(null);
-  const [tooltip, setTooltip] = useState<TooltipState>({ visible:false, x:0, y:0, data:null });
+// ─── Race Data (sourced from spreadsheet + existing polls) ───────────────────
+// forecastMargin = spreadsheet "2028 Forecast" value (positive = D lead, negative = R lead)
+// historicalLean = adjusted for off-year cycle
+const RAW: Omit<Race, "rating"|"trend"|"latestDem"|"latestRep">[] = [
+  {
+    state: "Alaska", stateCode: "AK",
+    incumbent: "Dan Sullivan", incumbentParty: "R",
+    demCandidate: "Mary Peltola", repCandidate: "Dan Sullivan",
+    forecastMargin: 0.6,   // spreadsheet: 0.6 (true tossup)
+    historicalLean: -8,
+    polls: [
+      { date:"2026-03-29", pollster:"AK Survey Research",       grade:"A+", sampleSize:1340, sampleType:"LV", dem:49, rep:44, demLabel:"Peltola", repLabel:"Sullivan" },
+      { date:"2026-01-21", pollster:"PPP (D)",                  grade:"B",  sampleSize:611,  sampleType:"V",  dem:49, rep:47 },
+      { date:"2026-01-14", pollster:"AK Survey Research",       grade:"A+", sampleSize:1681, sampleType:"LV", dem:48, rep:46 },
+      { date:"2025-10-21", pollster:"Alaska Survey Research",   grade:"A+", sampleSize:1708, sampleType:"LV", dem:48, rep:46 },
+      { date:"2025-08-25", pollster:"Alaska Survey Research",   grade:"A+", sampleSize:2053, sampleType:"RV", dem:42, rep:47 },
+      { date:"2025-08-08", pollster:"Data for Progress",        grade:"B-", sampleSize:678,  sampleType:"LV", dem:45, rep:46 },
+    ],
+    notes: "Sullivan is a strong incumbent, but Peltola's name recognition from the House race makes this surprisingly competitive. Alaska's ranked-choice system adds uncertainty.",
+  },
+  {
+    state: "Colorado", stateCode: "CO",
+    incumbent: "John Hickenlooper", incumbentParty: "D",
+    demCandidate: "John Hickenlooper", repCandidate: "TBD (R)",
+    forecastMargin: -14.1,
+    historicalLean: 8,
+    polls: [],
+    notes: "Hickenlooper is a popular incumbent in a state that has trended strongly D. Spreadsheet projects a comfortable D+14 margin.",
+  },
+  {
+    state: "Delaware", stateCode: "DE",
+    incumbent: "Chris Coons", incumbentParty: "D",
+    demCandidate: "Chris Coons", repCandidate: "TBD (R)",
+    forecastMargin: -22.2,
+    historicalLean: 15,
+    polls: [],
+    notes: "Safe Democratic seat. Delaware has not elected a Republican senator in decades.",
+  },
+  {
+    state: "Florida", stateCode: "FL",
+    incumbent: "Ashley Moody", incumbentParty: "R",
+    demCandidate: "TBD (D)", repCandidate: "Ashley Moody",
+    forecastMargin: 8.9,
+    historicalLean: -9,
+    polls: [
+      { date:"2026-04-02", pollster:"Emerson College",        grade:"A+", sampleSize:1125, sampleType:"LV", dem:36, rep:47 },
+      { date:"2026-03-04", pollster:"Univ. of North Florida", grade:"A",  sampleSize:786,  sampleType:"LV", dem:38, rep:46 },
+    ],
+    notes: "Florida has shifted sharply R. Moody was appointed after Marco Rubio joined the cabinet. Democrats lack a strong recruit. Spreadsheet: R+8.9.",
+  },
+  {
+    state: "Georgia", stateCode: "GA",
+    incumbent: "Jon Ossoff", incumbentParty: "D",
+    demCandidate: "Jon Ossoff", repCandidate: "TBD (R)",
+    forecastMargin: -3.8,
+    historicalLean: 0,
+    polls: [
+      { date:"2026-03-05", pollster:"Emerson College",    grade:"A+", sampleSize:1000, sampleType:"LV", dem:48, rep:43 },
+      { date:"2025-09-15", pollster:"Quantus",            grade:"B-", sampleSize:624,  sampleType:"LV", dem:38, rep:38 },
+      { date:"2025-08-07", pollster:"TIPP",               grade:"A+", sampleSize:2424, sampleType:"LV", dem:45, rep:44 },
+      { date:"2025-05-22", pollster:"Cygnal",             grade:"A+", sampleSize:800,  sampleType:"LV", dem:46, rep:43 },
+      { date:"2025-04-30", pollster:"Trafalgar Group",    grade:"C+", sampleSize:1426, sampleType:"LV", dem:48, rep:43 },
+      { date:"2025-01-16", pollster:"WPAi (Kemp)",        grade:"B+", sampleSize:500,  sampleType:"LV", dem:44, rep:34 },
+    ],
+    notes: "Ossoff won his 2020 runoff in a rare D pickup. Spreadsheet gives Ossoff D+3.8 — genuine tossup in a cycle that typically favors the out-party.",
+  },
+  {
+    state: "Illinois", stateCode: "IL",
+    incumbent: "Dick Durbin (retiring)", incumbentParty: "D",
+    demCandidate: "TBD (D)", repCandidate: "TBD (R)",
+    forecastMargin: -17.4,
+    historicalLean: 14,
+    polls: [],
+    notes: "Safe D open seat. Illinois has not elected a Republican senator since 1998.",
+  },
+  {
+    state: "Iowa", stateCode: "IA",
+    incumbent: "Joni Ernst", incumbentParty: "R",
+    demCandidate: "TBD (D)", repCandidate: "Joni Ernst",
+    forecastMargin: 2.9,
+    historicalLean: -8,
+    polls: [
+      { date:"2026-02-20", pollster:"Change Research (D)", grade:"C-", sampleSize:1108, sampleType:"LV", dem:41, rep:44 },
+    ],
+    notes: "Iowa has drifted heavily R. Ernst is a strong incumbent. Spreadsheet shows R+2.9 — potentially competitive if D environment is strong but likely leans R.",
+  },
+  {
+    state: "Kansas", stateCode: "KS",
+    incumbent: "Roger Marshall", incumbentParty: "R",
+    demCandidate: "TBD (D)", repCandidate: "Roger Marshall",
+    forecastMargin: 9.6,
+    historicalLean: -16,
+    polls: [],
+    notes: "Safe Republican seat. Spreadsheet: R+9.6.",
+  },
+  {
+    state: "Kentucky", stateCode: "KY",
+    incumbent: "Mitch McConnell", incumbentParty: "R",
+    demCandidate: "TBD (D)", repCandidate: "TBD (R)",
+    forecastMargin: 8.6,
+    historicalLean: -20,
+    polls: [],
+    notes: "McConnell has announced he will not seek re-election in 2026. Open seat but Kentucky is safely R. Spreadsheet: R+8.6.",
+  },
+  {
+    state: "Louisiana", stateCode: "LA",
+    incumbent: "Bill Cassidy", incumbentParty: "R",
+    demCandidate: "TBD (D)", repCandidate: "Bill Cassidy",
+    forecastMargin: 24.4,
+    historicalLean: -18,
+    polls: [],
+    notes: "Safe Republican seat. Cassidy survived a primary challenge after voting to convict Trump. Spreadsheet: R+24.4.",
+  },
+  {
+    state: "Maine", stateCode: "ME",
+    incumbent: "Susan Collins", incumbentParty: "R",
+    demCandidate: "Chloe Maxmin / Sara Gideon", repCandidate: "Susan Collins",
+    forecastMargin: -1.2,
+    historicalLean: 4,
+    polls: [
+      { date:"2026-03-26", pollster:"Emerson College",    grade:"A+", sampleSize:1075, sampleType:"LV", dem:48, rep:41 },
+      { date:"2026-03-11", pollster:"OnMessage Inc.",     grade:"A+", sampleSize:600,  sampleType:"LV", dem:44, rep:42 },
+      { date:"2026-03-09", pollster:"Quantus",            grade:"B-", sampleSize:800,  sampleType:"LV", dem:49, rep:42 },
+      { date:"2026-03-04", pollster:"Pan Atlantic",       grade:"B+", sampleSize:810,  sampleType:"LV", dem:44, rep:40 },
+      { date:"2026-02-24", pollster:"UNH",                grade:"C",  sampleSize:1120, sampleType:"LV", dem:49, rep:38 },
+      { date:"2026-02-05", pollster:"Fabrizio (R)",       grade:"A-", sampleSize:800,  sampleType:"LV", dem:44, rep:45 },
+      { date:"2026-01-13", pollster:"Workbench (Platner)",grade:"B",  sampleSize:900,  sampleType:"RV", dem:50, rep:50 },
+      { date:"2025-12-10", pollster:"Pan Atlantic",       grade:"B+", sampleSize:820,  sampleType:"LV", dem:43, rep:42 },
+      { date:"2025-11-12", pollster:"ME Resource Center", grade:"B",  sampleSize:783,  sampleType:"RV", dem:45, rep:41 },
+      { date:"2025-10-10", pollster:"Zenith Polls",       grade:"B+", sampleSize:501,  sampleType:"LV", dem:38, rep:38 },
+      { date:"2025-09-19", pollster:"PPP (D)",            grade:"B",  sampleSize:642,  sampleType:"V",  dem:44, rep:35 },
+    ],
+    notes: "Collins is perennially competitive despite Maine trending D. Challenger 'Platner' polling shows a genuine race. Spreadsheet forecast: D+1.2 — true tossup.",
+  },
+  {
+    state: "Massachusetts", stateCode: "MA",
+    incumbent: "Ed Markey", incumbentParty: "D",
+    demCandidate: "Ed Markey", repCandidate: "TBD (R)",
+    forecastMargin: -24.6,
+    historicalLean: 20,
+    polls: [],
+    notes: "Safe D. Markey survived a high-profile primary challenge in 2020 and is well-positioned for re-election. Spreadsheet: D+24.6.",
+  },
+  {
+    state: "Michigan", stateCode: "MI",
+    incumbent: "Gary Peters (retiring)", incumbentParty: "D",
+    demCandidate: "Mallory McMorrow", repCandidate: "Mike Rogers",
+    forecastMargin: -1.2,
+    historicalLean: 2,
+    polls: [
+      { date:"2026-01-29", pollster:"Emerson College",      grade:"A+", sampleSize:1000, sampleType:"LV", dem:46, rep:43, demLabel:"McMorrow", repLabel:"Rogers" },
+      { date:"2026-01-14", pollster:"Glengariff Group",     grade:"B+", sampleSize:600,  sampleType:"LV", dem:42, rep:46 },
+      { date:"2025-12-02", pollster:"Mitchell Research (D)",grade:"D",  sampleSize:1456, sampleType:"LV", dem:38, rep:44 },
+      { date:"2025-11-14", pollster:"EPIC-MRA",             grade:"B+", sampleSize:600,  sampleType:"RV", dem:43, rep:42 },
+      { date:"2025-11-06", pollster:"Rosetta Stone",        grade:"B",  sampleSize:637,  sampleType:"LV", dem:39, rep:46 },
+      { date:"2025-07-07", pollster:"Normington Petts",     grade:"C-", sampleSize:700,  sampleType:"LV", dem:44, rep:48 },
+      { date:"2025-05-27", pollster:"Glengariff Group",     grade:"B+", sampleSize:600,  sampleType:"RV", dem:42, rep:46 },
+    ],
+    notes: "Open seat. Michigan remains a core battleground. Spreadsheet: D+1.2 — pure tossup. McMorrow is a rising star; Rogers lost the 2024 Senate race narrowly.",
+  },
+  {
+    state: "Minnesota", stateCode: "MN",
+    incumbent: "Tina Smith (retiring)", incumbentParty: "D",
+    demCandidate: "Angie Craig", repCandidate: "TBD (R)",
+    forecastMargin: -7.1,
+    historicalLean: 5,
+    polls: [
+      { date:"2026-02-11", pollster:"Emerson College", grade:"A+", sampleSize:1000, sampleType:"LV", dem:47, rep:40 },
+    ],
+    notes: "Open D seat. Craig is a strong recruit from MN-02. MN has voted D for Senate for decades. Spreadsheet: D+7.1 — likely but not safe.",
+  },
+  {
+    state: "Mississippi", stateCode: "MS",
+    incumbent: "Cindy Hyde-Smith", incumbentParty: "R",
+    demCandidate: "TBD (D)", repCandidate: "Cindy Hyde-Smith",
+    forecastMargin: 12.3,
+    historicalLean: -18,
+    polls: [],
+    notes: "Safe R. Hyde-Smith is an entrenched incumbent. Spreadsheet: R+12.3.",
+  },
+  {
+    state: "Montana", stateCode: "MT",
+    incumbent: "Steve Daines", incumbentParty: "R",
+    demCandidate: "TBD (D)", repCandidate: "Steve Daines",
+    forecastMargin: 16.4,
+    historicalLean: -14,
+    polls: [],
+    notes: "Safe R after Jon Tester's 2024 loss. Montana is now a reliably Republican state at the federal level. Spreadsheet: R+16.4.",
+  },
+  {
+    state: "Nebraska", stateCode: "NE",
+    incumbent: "Pete Ricketts", incumbentParty: "R",
+    demCandidate: "TBD (D)", repCandidate: "Pete Ricketts",
+    indCandidate: "Dan Osborn",
+    forecastMargin: 7.2,
+    historicalLean: -15,
+    polls: [
+      { date:"2026-02-19", pollster:"Impact Research (D)",    grade:"B",  sampleSize:600, sampleType:"LV", dem:0,  rep:48, ind:47, indLabel:"Osborn", repLabel:"Ricketts" },
+      { date:"2026-01-23", pollster:"Lake Research Partners", grade:"B+", sampleSize:900, sampleType:"LV", dem:0,  rep:48, ind:47 },
+      { date:"2025-04-10", pollster:"Change Research",        grade:"C-", sampleSize:526, sampleType:"LV", dem:0,  rep:46, ind:45 },
+    ],
+    notes: "Osborn nearly won in 2024 as an independent. A rematch is possible. Spreadsheet R+7.2, but three-way race dynamics make this more competitive than the number suggests.",
+  },
+  {
+    state: "New Hampshire", stateCode: "NH",
+    incumbent: "Jeanne Shaheen (retiring)", incumbentParty: "D",
+    demCandidate: "Chris Pappas", repCandidate: "Chris Sununu",
+    forecastMargin: -6.0,
+    historicalLean: 3,
+    polls: [
+      { date:"2026-03-26", pollster:"Emerson College",      grade:"A+", sampleSize:1000, sampleType:"LV", dem:45, rep:44 },
+      { date:"2026-03-23", pollster:"Saint Anselm",         grade:"A-", sampleSize:1491, sampleType:"RV", dem:46, rep:43 },
+      { date:"2026-01-21", pollster:"UNH",                  grade:"C",  sampleSize:2053, sampleType:"LV", dem:50, rep:45 },
+      { date:"2026-01-06", pollster:"One Nation (Sununu)",  grade:"B",  sampleSize:600,  sampleType:"LV", dem:47, rep:44 },
+      { date:"2026-01-05", pollster:"Praecones Analytica",  grade:"B+", sampleSize:603,  sampleType:"RV", dem:42, rep:36 },
+      { date:"2025-11-24", pollster:"Saint Anselm",         grade:"A-", sampleSize:2112, sampleType:"RV", dem:44, rep:41 },
+      { date:"2025-10-15", pollster:"co/efficient",         grade:"B",  sampleSize:1034, sampleType:"LV", dem:45, rep:42 },
+      { date:"2025-09-29", pollster:"UNH",                  grade:"C",  sampleSize:1235, sampleType:"LV", dem:49, rep:43 },
+      { date:"2025-09-15", pollster:"co/efficient",         grade:"B",  sampleSize:904,  sampleType:"LV", dem:46, rep:43 },
+      { date:"2025-09-09", pollster:"1892 Polling (R)",     grade:"C+", sampleSize:500,  sampleType:"LV", dem:45, rep:43 },
+    ],
+    notes: "Open D seat. Pappas leads in most polls; Sununu would be formidable if he enters. Spreadsheet: D+6 — leans D but Sununu candidacy changes the math.",
+  },
+  {
+    state: "New Jersey", stateCode: "NJ",
+    incumbent: "Cory Booker", incumbentParty: "D",
+    demCandidate: "Cory Booker", repCandidate: "TBD (R)",
+    forecastMargin: -19.1,
+    historicalLean: 14,
+    polls: [],
+    notes: "Likely D. NJ has trended toward Rs in recent cycles but a presidential-environment blowout is unlikely at Senate level. Spreadsheet: D+19.1.",
+  },
+  {
+    state: "New Mexico", stateCode: "NM",
+    incumbent: "Ben Ray Luján", incumbentParty: "D",
+    demCandidate: "Ben Ray Luján", repCandidate: "TBD (R)",
+    forecastMargin: -15.2,
+    historicalLean: 8,
+    polls: [],
+    notes: "Safe D. New Mexico has shifted blue over the past decade driven by its large Hispanic population and Albuquerque/Santa Fe metro areas. Spreadsheet: D+15.2.",
+  },
+  {
+    state: "North Carolina", stateCode: "NC",
+    incumbent: "Thom Tillis (retiring)", incumbentParty: "R",
+    demCandidate: "Roy Cooper", repCandidate: "TBD (R)",
+    forecastMargin: -9.8,
+    historicalLean: -2,
+    polls: [
+      { date:"2026-04-02", pollster:"Quantus",             grade:"B-", sampleSize:987,  sampleType:"LV", dem:49, rep:44 },
+      { date:"2026-03-31", pollster:"YouGov",              grade:"B+", sampleSize:871,  sampleType:"RV", dem:48, rep:34 },
+      { date:"2026-03-30", pollster:"Nexus Strategies",    grade:"C",  sampleSize:800,  sampleType:"RV", dem:50, rep:32 },
+      { date:"2026-03-26", pollster:"Harper Polling",      grade:"B+", sampleSize:600,  sampleType:"LV", dem:49, rep:41 },
+      { date:"2026-03-16", pollster:"PPP (D)",             grade:"B",  sampleSize:556,  sampleType:"LV", dem:47, rep:44 },
+      { date:"2026-02-20", pollster:"Change Research (D)", grade:"C-", sampleSize:1069, sampleType:"LV", dem:50, rep:40 },
+      { date:"2026-01-20", pollster:"Change Research (D)", grade:"C-", sampleSize:1105, sampleType:"LV", dem:47, rep:42 },
+      { date:"2026-01-19", pollster:"TIPP",                grade:"A+", sampleSize:1512, sampleType:"RV", dem:48, rep:24 },
+      { date:"2025-11-13", pollster:"Harper Polling",      grade:"B+", sampleSize:600,  sampleType:"LV", dem:47, rep:39 },
+      { date:"2025-09-19", pollster:"Harper Polling",      grade:"B+", sampleSize:600,  sampleType:"LV", dem:46, rep:42 },
+      { date:"2025-08-14", pollster:"Harper Polling",      grade:"B+", sampleSize:600,  sampleType:"LV", dem:47, rep:39 },
+      { date:"2025-08-01", pollster:"Emerson College",     grade:"A+", sampleSize:1000, sampleType:"RV", dem:47, rep:41 },
+      { date:"2025-07-31", pollster:"Victory Insights",    grade:"D+", sampleSize:600,  sampleType:"LV", dem:44, rep:44 },
+      { date:"2025-09-15", pollster:"Change Research (D)", grade:"C-", sampleSize:855,  sampleType:"LV", dem:48, rep:41 },
+    ],
+    notes: "Open seat with Cooper (former Gov.) polling strongly. Spreadsheet: D+9.8 — leans D but NC fundamentals are competitive. R nominee TBD; several candidates are exploring a run.",
+  },
+  {
+    state: "Ohio", stateCode: "OH",
+    incumbent: "Jon Husted (appointed)", incumbentParty: "R",
+    demCandidate: "Sherrod Brown", repCandidate: "Jon Husted",
+    forecastMargin: 3.7,
+    historicalLean: -6,
+    polls: [
+      { date:"2026-03-16", pollster:"Quantus",         grade:"B-", sampleSize:925,  sampleType:"LV", dem:44, rep:46 },
+      { date:"2026-03-12", pollster:"EMC Research (D)",grade:"D+", sampleSize:1343, sampleType:"LV", dem:51, rep:47 },
+      { date:"2026-03-11", pollster:"OnMessage Inc.",  grade:"A+", sampleSize:600,  sampleType:"LV", dem:47, rep:45 },
+      { date:"2025-12-11", pollster:"Emerson College", grade:"A+", sampleSize:850,  sampleType:"RV", dem:46, rep:49 },
+      { date:"2025-11-12", pollster:"Hart Research",   grade:"A-", sampleSize:800,  sampleType:"LV", dem:48, rep:45 },
+      { date:"2025-10-20", pollster:"YouGov",          grade:"B+", sampleSize:800,  sampleType:"RV", dem:49, rep:48 },
+      { date:"2025-08-22", pollster:"Emerson College", grade:"A+", sampleSize:1000, sampleType:"RV", dem:44, rep:50 },
+      { date:"2025-05-02", pollster:"YouGov",          grade:"B+", sampleSize:800,  sampleType:"RV", dem:46, rep:49 },
+      { date:"2025-03-09", pollster:"YouGov",          grade:"B+", sampleSize:800,  sampleType:"RV", dem:41, rep:47 },
+    ],
+    notes: "Husted holds an open seat appointment after JD Vance's VP election. Sherrod Brown may run again after his 2024 loss. Spreadsheet: R+3.7 — competitive lean R.",
+  },
+  {
+    state: "Oregon", stateCode: "OR",
+    incumbent: "Jeff Merkley", incumbentParty: "D",
+    demCandidate: "Jeff Merkley", repCandidate: "TBD (R)",
+    forecastMargin: -21.9,
+    historicalLean: 14,
+    polls: [],
+    notes: "Safe D. Merkley is well-entrenched. Oregon has trended left in recent cycles. Spreadsheet: D+21.9.",
+  },
+  {
+    state: "Rhode Island", stateCode: "RI",
+    incumbent: "Jack Reed", incumbentParty: "D",
+    demCandidate: "Jack Reed", repCandidate: "TBD (R)",
+    forecastMargin: -39.0,
+    historicalLean: 20,
+    polls: [],
+    notes: "Safe D. Reed is one of the most secure incumbents in the Senate. Spreadsheet: D+39.",
+  },
+  {
+    state: "South Carolina", stateCode: "SC",
+    incumbent: "Lindsey Graham", incumbentParty: "R",
+    demCandidate: "TBD (D)", repCandidate: "Lindsey Graham",
+    forecastMargin: 4.6,
+    historicalLean: -10,
+    polls: [],
+    notes: "Likely R. Graham remains a well-known incumbent. Spreadsheet: R+4.6.",
+  },
+  {
+    state: "South Dakota", stateCode: "SD",
+    incumbent: "Mike Rounds", incumbentParty: "R",
+    demCandidate: "TBD (D)", repCandidate: "Mike Rounds",
+    forecastMargin: 17.1,
+    historicalLean: -18,
+    polls: [],
+    notes: "Safe R. Spreadsheet: R+17.1.",
+  },
+  {
+    state: "Tennessee", stateCode: "TN",
+    incumbent: "Bill Hagerty", incumbentParty: "R",
+    demCandidate: "TBD (D)", repCandidate: "Bill Hagerty",
+    forecastMargin: 27.0,
+    historicalLean: -22,
+    polls: [],
+    notes: "Safe R. Tennessee has not been competitive for Democrats since the 1990s. Spreadsheet: R+27.",
+  },
+  {
+    state: "Texas", stateCode: "TX",
+    incumbent: "John Cornyn", incumbentParty: "R",
+    demCandidate: "James Talarico", repCandidate: "Ken Paxton",
+    forecastMargin: 4.0,
+    historicalLean: -12,
+    polls: [
+      { date:"2026-03-20", pollster:"Impact Research (D)", grade:"B",  sampleSize:900,  sampleType:"LV", dem:44, rep:43 },
+      { date:"2026-03-09", pollster:"PPP (D)",             grade:"B",  sampleSize:576,  sampleType:"LV", dem:47, rep:45 },
+      { date:"2026-02-09", pollster:"YouGov (TSU/UH)",    grade:"B+", sampleSize:1502, sampleType:"LV", dem:44, rep:46 },
+      { date:"2026-01-15", pollster:"Emerson College",     grade:"A+", sampleSize:1165, sampleType:"LV", dem:46, rep:46 },
+      { date:"2025-11-19", pollster:"Ragnar",              grade:"B",  sampleSize:1000, sampleType:"LV", dem:44, rep:44 },
+      { date:"2025-10-21", pollster:"Texas at Tyler",      grade:"C-", sampleSize:1032, sampleType:"RV", dem:37, rep:38 },
+      { date:"2025-10-09", pollster:"YouGov (TSU/UH)",    grade:"B+", sampleSize:1650, sampleType:"RV", dem:46, rep:49 },
+    ],
+    notes: "Paxton's legal controversies and Texas's demographic shift make this interesting. Polls show a near-tie but the state's structural R lean is significant. Spreadsheet: R+4.",
+  },
+  {
+    state: "Virginia", stateCode: "VA",
+    incumbent: "Mark Warner", incumbentParty: "D",
+    demCandidate: "Mark Warner", repCandidate: "Hung Cao / TBD",
+    forecastMargin: -16.8,
+    historicalLean: 6,
+    polls: [
+      { date:"2026-03-17", pollster:"Impact Research (D)", grade:"B", sampleSize:700, sampleType:"LV", dem:42, rep:47 },
+      { date:"2025-12-11", pollster:"PPP (D)",             grade:"B", sampleSize:704, sampleType:"V",  dem:36, rep:42 },
+    ],
+    notes: "Warner is seeking re-election in a state that has trended D but polls show him underperforming. Spreadsheet: D+16.8, though recent polls are tighter.",
+  },
+  {
+    state: "West Virginia", stateCode: "WV",
+    incumbent: "Shelley Moore Capito", incumbentParty: "R",
+    demCandidate: "TBD (D)", repCandidate: "Shelley Moore Capito",
+    forecastMargin: 30.4,
+    historicalLean: -25,
+    polls: [],
+    notes: "Safe R. WV is the most Republican state in the nation at the Senate level since Manchin's retirement. Spreadsheet: R+30.4.",
+  },
+  {
+    state: "Wyoming", stateCode: "WY",
+    incumbent: "Cynthia Lummis", incumbentParty: "R",
+    demCandidate: "TBD (D)", repCandidate: "Cynthia Lummis",
+    forecastMargin: 36.9,
+    historicalLean: -30,
+    polls: [],
+    notes: "Safe R. Wyoming is the most Republican state in presidential elections. Spreadsheet: R+36.9.",
+  },
+];
+
+// Build full race objects
+const RACES: Race[] = RAW.map(r => {
+  const { smoothedDem, smoothedRep, margin, rating, trend } = computeRating(r.polls, r.historicalLean, r.forecastMargin);
+  const sorted = [...r.polls].sort((a, b) => b.date.localeCompare(a.date));
+  const latest = sorted[0];
+  return {
+    ...r,
+    rating,
+    trend,
+    latestDem: latest?.dem ?? smoothedDem,
+    latestRep: latest?.rep ?? smoothedRep,
+    latestInd: latest?.ind,
+  };
+});
+
+// ─── Constants ────────────────────────────────────────────────────────────────
+const CURRENT = { D: 47, R: 53 };
+const RATING_ORDER: Rating[] = ["Safe D","Likely D","Lean D","Toss-Up","Lean R","Likely R","Safe R"];
+
+// ─── Tooltip ──────────────────────────────────────────────────────────────────
+function ChartTip({ active, payload, label }: { active?: boolean; payload?: {name:string;value:number;color:string}[]; label?: string }) {
+  if (!active || !payload?.length) return null;
+  return (
+    <div style={{ background:"#141412", border:"1px solid rgba(255,255,255,0.1)", borderRadius:2,
+      padding:"10px 14px", fontSize:11, fontFamily:"monospace", boxShadow:"0 8px 24px rgba(0,0,0,0.6)" }}>
+      <div style={{ color:"rgba(255,255,255,0.3)", marginBottom:6, fontSize:9, textTransform:"uppercase", letterSpacing:"0.1em" }}>{label}</div>
+      {payload.map(p => (
+        <div key={p.name} style={{ display:"flex", alignItems:"center", gap:8, marginBottom:3 }}>
+          <div style={{ width:6, height:6, borderRadius:"50%", background:p.color, flexShrink:0 }} />
+          <span style={{ color:"rgba(255,255,255,0.4)" }}>{p.name}</span>
+          <span style={{ fontWeight:700, color:p.color, marginLeft:"auto", paddingLeft:14 }}>{Math.round(p.value * 10) / 10}%</span>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+// ─── Split bar ────────────────────────────────────────────────────────────────
+function SplitBar({ dem, rep, h = 5 }: { dem: number; rep: number; h?: number }) {
+  const total = dem + rep;
+  if (total === 0) return <div style={{ height:h, background:"rgba(255,255,255,0.06)", borderRadius:1 }} />;
+  const pct = (dem / total) * 100;
+  return (
+    <div style={{ display:"flex", height:h, borderRadius:1, overflow:"hidden", background:"rgba(255,255,255,0.06)" }}>
+      <div style={{ width:`${pct}%`, background:"#2563eb", transition:"width 700ms cubic-bezier(0.22,1,0.36,1)" }} />
+      <div style={{ flex:1, background:"#e63946" }} />
+    </div>
+  );
+}
+
+// ─── D3 US Map ────────────────────────────────────────────────────────────────
+function SenateMap({ races, onSelect }: { races: Race[]; onSelect: (r: Race) => void }) {
+  const svgRef = useRef<SVGSVGElement>(null);
+  const raceMap = useMemo(() => {
+    const m: Record<string, Race> = {};
+    races.forEach(r => { m[r.stateCode] = r; });
+    return m;
+  }, [races]);
+
+  // colors for states not in model
+  const defaultFill = "#2a2a35";
+
+  function fillFor(stateCode: string): string {
+    const race = raceMap[stateCode];
+    if (!race) return defaultFill;
+    return ratingColor(race.rating);
+  }
 
   useEffect(() => {
     let dead = false;
     (async () => {
       try {
-        const [{ geoAlbersUsa, geoPath }, { feature, mesh }, topo] = await Promise.all([
-          import("d3-geo"),
-          import("topojson-client"),
-          fetch("https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json").then(r => r.json()),
-        ]);
+        // Dynamic imports for D3 modules
+        const d3geo = await import("https://esm.sh/d3-geo@3?bundle" as string);
+        const topoclient = await import("https://esm.sh/topojson-client@3?bundle" as string);
+        const topo = await fetch("https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json").then(r => r.json());
         if (dead || !svgRef.current) return;
-        const svg  = svgRef.current;
-        const proj = geoAlbersUsa().scale(1280).translate([480, 300]);
-        const path = geoPath().projection(proj);
+
+        const svg = svgRef.current;
+        const proj = d3geo.geoAlbersUsa().scale(1280).translate([480, 300]);
+        const path = d3geo.geoPath().projection(proj);
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const states = feature(topo as any, (topo as any).objects.states) as any;
+        const states = (topoclient as any).feature(topo, topo.objects.states);
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const border = mesh(topo as any, (topo as any).objects.states, (a: any, b: any) => a !== b);
+        const border = (topoclient as any).mesh(topo, topo.objects.states, (a: any, b: any) => a !== b);
+
         while (svg.firstChild) svg.removeChild(svg.firstChild);
 
-        for (const f of states.features) {
-          const fips  = String(f.id).padStart(2, "0");
-          const abbr  = FIPS[fips];
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        for (const f of states.features as any[]) {
+          const fips = String(f.id).padStart(2, "0");
+          const abbr = FIPS[fips];
           if (!abbr) continue;
-          const race  = dataMap[abbr];
-          const fill  = fillFor(race?.rating);
+          const race = raceMap[abbr];
 
           const el = document.createElementNS("http://www.w3.org/2000/svg", "path");
           el.setAttribute("d", path(f) ?? "");
-          el.style.cssText = `fill:${fill};stroke:rgba(0,0,0,0.5);stroke-width:0.6;cursor:${race?"pointer":"default"};transition:filter 140ms ease;`;
+          el.style.fill = fillFor(abbr);
+          el.style.stroke = "#111";
+          el.style.strokeWidth = "0.8";
+          el.style.cursor = race ? "pointer" : "default";
+          el.style.transition = "filter 160ms ease, opacity 160ms ease";
 
           if (race) {
-            el.addEventListener("mouseover",  () => { el.style.filter = "brightness(1.3) saturate(1.15)"; });
-            el.addEventListener("mouseout",   () => { el.style.filter = ""; });
-            el.addEventListener("mousemove",  (ev: MouseEvent) => {
-              setTooltip({ visible:true, x:ev.clientX, y:ev.clientY, data:race });
-            });
-            el.addEventListener("mouseleave", () => setTooltip(t => ({ ...t, visible:false })));
+            el.addEventListener("click", () => onSelect(race));
+            el.addEventListener("mouseover", () => { el.style.filter = "brightness(1.3) saturate(1.2)"; });
+            el.addEventListener("mouseout",  () => { el.style.filter = ""; });
           }
           svg.appendChild(el);
         }
@@ -229,307 +626,573 @@ function RaceMap({ mapType, dataMap }: { mapType: MapType; dataMap: Record<strin
         const be = document.createElementNS("http://www.w3.org/2000/svg", "path");
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         be.setAttribute("d", path(border as any) ?? "");
-        be.style.cssText = "fill:none;stroke:rgba(255,255,255,0.07);stroke-width:0.5;pointer-events:none;";
+        be.style.fill = "none";
+        be.style.stroke = "#111";
+        be.style.strokeWidth = "0.6";
+        be.style.pointerEvents = "none";
         svg.appendChild(be);
-      } catch (e) { console.error(e); }
+
+      } catch (e) {
+        // Map unavailable — fail silently
+        console.warn("Map load failed", e);
+      }
     })();
     return () => { dead = true; };
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [mapType]);
-
-  // re-color on data change (no-op here since data is static, but good practice)
-  useEffect(() => {
-    svgRef.current?.querySelectorAll<SVGPathElement>("path[style]").forEach(el => {
-      // paths don't have data-key so we skip re-color; map remounts with key anyway
-    });
-  }, [dataMap]);
-
-  const tt = tooltip.data;
-  const ttColor = tt ? RATING_TEXT[tt.rating] : "#fff";
+  }, [raceMap]);
 
   return (
-    <div style={{ position:"relative" }}>
+    <div style={{ background:"#0b0b0f", border:"1px solid rgba(255,255,255,0.07)", padding:"16px 20px", marginBottom:20 }}>
+      <div style={{ fontFamily:"monospace", fontSize:8, letterSpacing:"0.16em", textTransform:"uppercase",
+        color:"rgba(255,255,255,0.3)", marginBottom:10 }}>
+        Interactive race map — click a state
+      </div>
       <svg ref={svgRef} viewBox="0 0 960 600" style={{ width:"100%", height:"auto", display:"block" }} />
-
-      {tooltip.visible && tt && (
-        <div className="race-tooltip" style={{ left: tooltip.x + 16, top: tooltip.y + 16 }}>
-          <div className="rtt-stripe" />
-          <div style={{ padding:"10px 13px" }}>
-            <div className="rtt-abbr">{tt.state} · {STATE_NAMES[tt.state] ?? tt.state}</div>
-            <div className="rtt-name">{tt.name}</div>
-            <div className="rtt-inc">{tt.inc === "D" ? "Dem. Incumbent" : tt.inc === "R" ? "Rep. Incumbent" : "Open Seat"} · PVI {tt.pvi}</div>
-            <div className="rtt-div" />
-            <div className="rtt-rating" style={{ color: ttColor }}>
-              {tt.rating}
-            </div>
-            <div className="rtt-margin">{tt.modelMargin}</div>
-            <div className="rtt-div" />
-            <div className="rtt-bars">
-              <div className="rtt-bar-row">
-                <span className="rtt-party dem">D</span>
-                <div className="rtt-bar-track">
-                  <div className="rtt-bar-fill dem-fill" style={{ width:`${tt.dPct}%` }} />
-                </div>
-                <span className="rtt-pct">{tt.dPct.toFixed(1)}%</span>
-              </div>
-              <div className="rtt-bar-row">
-                <span className="rtt-party rep">R</span>
-                <div className="rtt-bar-track">
-                  <div className="rtt-bar-fill rep-fill" style={{ width:`${tt.rPct}%` }} />
-                </div>
-                <span className="rtt-pct">{tt.rPct.toFixed(1)}%</span>
-              </div>
-            </div>
-            <div className="rtt-meta">
-              <span>Trump app. {tt.trumpApp}</span>
-              <span>Off. app. {tt.officeApp}</span>
-            </div>
-          </div>
-        </div>
-      )}
+      <div style={{ display:"flex", flexWrap:"wrap", gap:6, marginTop:10 }}>
+        {RATING_ORDER.map(r => (
+          <span key={r} style={{ display:"inline-flex", alignItems:"center", gap:4, fontSize:9,
+            fontFamily:"monospace", color:"rgba(255,255,255,0.5)", letterSpacing:"0.06em" }}>
+            <span style={{ width:8, height:8, borderRadius:2, background:ratingColor(r), display:"inline-block" }} />
+            {r}
+          </span>
+        ))}
+        <span style={{ display:"inline-flex", alignItems:"center", gap:4, fontSize:9,
+          fontFamily:"monospace", color:"rgba(255,255,255,0.35)", letterSpacing:"0.06em" }}>
+          <span style={{ width:8, height:8, borderRadius:2, background:defaultFill, display:"inline-block" }} />
+          Not tracked
+        </span>
+      </div>
     </div>
   );
 }
 
-// ─── Rating legend row ────────────────────────────────────────────────────────
-const LEGEND_ITEMS: { rating: Rating; label: string }[] = [
-  { rating:"Safe D",   label:"Safe D"   },
-  { rating:"Likely D", label:"Likely D" },
-  { rating:"Lean D",   label:"Lean D"   },
-  { rating:"Tilt D",   label:"Tilt D"   },
-  { rating:"Tilt R",   label:"Tilt R"   },
-  { rating:"Lean R",   label:"Lean R"   },
-  { rating:"Likely R", label:"Likely R" },
-  { rating:"Safe R",   label:"Safe R"   },
-];
+// ─── Seat balance bar ─────────────────────────────────────────────────────────
+function SeatMap({ races }: { races: Race[] }) {
+  const proj = {
+    safe_d:    races.filter(r => r.rating === "Safe D").length,
+    likely_d:  races.filter(r => r.rating === "Likely D").length,
+    lean_d:    races.filter(r => r.rating === "Lean D").length,
+    toss:      races.filter(r => r.rating === "Toss-Up").length,
+    lean_r:    races.filter(r => r.rating === "Lean R").length,
+    likely_r:  races.filter(r => r.rating === "Likely R").length,
+    safe_r:    races.filter(r => r.rating === "Safe R").length,
+  };
 
-// ─── Seat count bar ───────────────────────────────────────────────────────────
-function SeatBar({ data, label }: { data: RaceData[]; label: string }) {
-  const { counts, dTotal, rTotal } = summarize(data);
-  const total = data.length;
+  // seats not in tracked races (the ~66 not up this cycle)
+  const tracked = Object.values(proj).reduce((a, b) => a + b, 0);
+  const notUp_D = Math.max(0, CURRENT.D - tracked);  // simplification
+  const notUp_R = Math.max(0, CURRENT.R - tracked);
+
+  const segments = [
+    { label:"Not up (D)",    count: notUp_D,       color:"#1e3a5f" },
+    { label:"Safe D",        count: proj.safe_d,   color:"#1d4ed8" },
+    { label:"Likely D",      count: proj.likely_d, color:"#2563eb" },
+    { label:"Lean D",        count: proj.lean_d,   color:"#60a5fa" },
+    { label:"Toss-Up",       count: proj.toss,     color:"#9333ea" },
+    { label:"Lean R",        count: proj.lean_r,   color:"#f87171" },
+    { label:"Likely R",      count: proj.likely_r, color:"#ef4444" },
+    { label:"Safe R",        count: proj.safe_r,   color:"#b91c1c" },
+    { label:"Not up (R)",    count: notUp_R,        color:"#3d1515" },
+  ];
+
   return (
-    <div className="seat-bar-wrap">
-      <div className="seat-bar-labels">
-        <span className="sbl-d">D · {dTotal}</span>
-        <span className="sbl-ttl">{label} · {total} RACES</span>
-        <span className="sbl-r">{rTotal} · R</span>
+    <div style={{ background:"#0b0b0f", border:"1px solid rgba(255,255,255,0.07)", padding:"16px 20px", marginBottom:20 }}>
+      <div style={{ display:"flex", justifyContent:"space-between", alignItems:"baseline", marginBottom:12 }}>
+        <div style={{ fontFamily:"monospace", fontSize:9, letterSpacing:"0.2em", textTransform:"uppercase", color:"rgba(255,255,255,0.35)" }}>
+          Senate balance of power · 2026 projection
+        </div>
+        <div style={{ fontFamily:"monospace", fontSize:8, color:"rgba(255,255,255,0.2)" }}>Majority = 51 seats</div>
       </div>
-      <div className="seat-bar-track">
-        {(["Safe D","Likely D","Lean D","Tilt D","Tilt R","Lean R","Likely R","Safe R"] as Rating[]).map(r => (
-          counts[r] > 0 && (
-            <div key={r} className="seat-bar-seg"
-              style={{ width:`${(counts[r]/total)*100}%`, background:RATING_FILLS[r] }}
-              title={`${r}: ${counts[r]}`}
-            />
-          )
+
+      <div style={{ display:"flex", height:24, borderRadius:1, overflow:"hidden", marginBottom:10 }}>
+        {segments.map(s => s.count > 0 && (
+          <div key={s.label} style={{ flex:s.count, background:s.color, position:"relative", display:"flex",
+            alignItems:"center", justifyContent:"center" }} title={`${s.label}: ${s.count}`}>
+            {s.count >= 5 && (
+              <span style={{ fontFamily:"monospace", fontSize:8, color:"rgba(255,255,255,0.75)", fontWeight:600 }}>
+                {s.count}
+              </span>
+            )}
+          </div>
         ))}
       </div>
-      <div className="seat-bar-chips">
-        {(["Safe D","Likely D","Lean D","Tilt D","Tilt R","Lean R","Likely R","Safe R"] as Rating[]).map(r =>
-          counts[r] > 0 ? (
-            <div key={r} className="sbc-chip" style={{ borderColor: RATING_FILLS[r]+"66", background: RATING_FILLS[r]+"22" }}>
-              <span style={{ color: RATING_TEXT[r] }}>{r}</span>
-              <span className="sbc-n" style={{ color: RATING_TEXT[r] }}>{counts[r]}</span>
-            </div>
-          ) : null
-        )}
+
+      <div style={{ display:"flex", gap:4, flexWrap:"wrap", marginBottom:14 }}>
+        {segments.filter(s => s.count > 0).map(s => (
+          <div key={s.label} style={{ display:"flex", alignItems:"center", gap:4, padding:"2px 7px",
+            background:`${s.color}22`, border:`1px solid ${s.color}44` }}>
+            <div style={{ width:5, height:5, background:s.color, flexShrink:0 }} />
+            <span style={{ fontFamily:"monospace", fontSize:7, color:"rgba(255,255,255,0.5)", letterSpacing:"0.08em" }}>{s.label}</span>
+            <span style={{ fontFamily:"var(--font-display), sans-serif", fontSize:11, color:s.color }}>{s.count}</span>
+          </div>
+        ))}
+      </div>
+
+      <div style={{ display:"grid", gridTemplateColumns:"1fr auto 1fr", gap:12, alignItems:"center" }}>
+        <div>
+          <div style={{ fontFamily:"monospace", fontSize:7, letterSpacing:"0.16em", textTransform:"uppercase", color:"#2563eb", marginBottom:3 }}>Democrats</div>
+          <div style={{ fontFamily:"Bebas Neue, sans-serif", fontSize:36, color:"#2563eb", lineHeight:1 }}>{CURRENT.D}</div>
+          <div style={{ fontFamily:"monospace", fontSize:7, color:"rgba(255,255,255,0.25)", marginTop:2 }}>Current seats</div>
+        </div>
+        <div style={{ textAlign:"center", padding:"0 16px", borderLeft:"1px solid rgba(255,255,255,0.06)", borderRight:"1px solid rgba(255,255,255,0.06)" }}>
+          <div style={{ fontFamily:"monospace", fontSize:7, letterSpacing:"0.16em", textTransform:"uppercase", color:"rgba(255,255,255,0.25)", marginBottom:3 }}>Majority</div>
+          <div style={{ fontFamily:"Bebas Neue, sans-serif", fontSize:26, color:"rgba(255,255,255,0.3)", lineHeight:1 }}>51</div>
+        </div>
+        <div style={{ textAlign:"right" }}>
+          <div style={{ fontFamily:"monospace", fontSize:7, letterSpacing:"0.16em", textTransform:"uppercase", color:"#e63946", marginBottom:3 }}>Republicans</div>
+          <div style={{ fontFamily:"Bebas Neue, sans-serif", fontSize:36, color:"#e63946", lineHeight:1 }}>{CURRENT.R}</div>
+          <div style={{ fontFamily:"monospace", fontSize:7, color:"rgba(255,255,255,0.25)", marginTop:2 }}>Current seats</div>
+        </div>
       </div>
     </div>
   );
 }
 
-// ─── Main page ────────────────────────────────────────────────────────────────
-export default function RaceRatingsPage() {
+// ─── Race detail drawer ────────────────────────────────────────────────────────
+function RaceDrawer({ race, onClose }: { race: Race; onClose: () => void }) {
+  const sorted = [...race.polls].sort((a, b) => b.date.localeCompare(a.date));
+  const chartData = [...race.polls]
+    .sort((a, b) => a.date.localeCompare(b.date))
+    .map(p => ({ date: p.date.slice(5), Dem: p.dem, Rep: p.rep }));
+
+  const margin = race.latestDem - race.latestRep;
+  const marginStr = margin > 0 ? `D+${Math.abs(margin)}` : margin < 0 ? `R+${Math.abs(margin)}` : "Even";
+  const marginColor = margin > 0 ? "#2563eb" : margin < 0 ? "#e63946" : "rgba(255,255,255,0.5)";
+
+  return (
+    <div style={{ position:"fixed", inset:0, zIndex:999, display:"flex", justifyContent:"flex-end",
+      background:"rgba(0,0,0,0.6)", backdropFilter:"blur(4px)" }} onClick={onClose}>
+      <div style={{ width:"min(620px, 100vw)", height:"100%", background:"#0b0b0f",
+        borderLeft:"1px solid rgba(255,255,255,0.1)", display:"flex", flexDirection:"column",
+        overflowY:"auto" }} onClick={e => e.stopPropagation()}>
+
+        <div style={{ height:3, background:"linear-gradient(90deg, #e63946 0%, #7c3aed 50%, #2563eb 100%)", flexShrink:0 }} />
+
+        {/* Header */}
+        <div style={{ padding:"20px 24px", borderBottom:"1px solid rgba(255,255,255,0.06)",
+          display:"flex", justifyContent:"space-between", alignItems:"flex-start", flexShrink:0 }}>
+          <div>
+            <div style={{ fontFamily:"monospace", fontSize:8, letterSpacing:"0.2em", textTransform:"uppercase",
+              color:"rgba(255,255,255,0.3)", marginBottom:6 }}>
+              {race.stateCode} · 2026 Senate · {race.incumbentParty === "D" ? "D Hold" : race.incumbentParty === "R" ? "R Hold" : "Open"}
+            </div>
+            <div style={{ fontFamily:"Bebas Neue, sans-serif", fontSize:28, letterSpacing:"0.04em",
+              textTransform:"uppercase", color:"#fff", lineHeight:1 }}>
+              {race.state}
+            </div>
+          </div>
+          <button onClick={onClose} style={{ background:"none", border:"1px solid rgba(255,255,255,0.15)",
+            color:"rgba(255,255,255,0.5)", fontFamily:"monospace", fontSize:9, letterSpacing:"0.1em",
+            padding:"4px 10px", cursor:"pointer", textTransform:"uppercase" }}>
+            Close ✕
+          </button>
+        </div>
+
+        {/* Stats row */}
+        <div style={{ padding:"20px 24px", borderBottom:"1px solid rgba(255,255,255,0.06)", flexShrink:0 }}>
+          <div style={{ display:"grid", gridTemplateColumns:"repeat(3,1fr)", gap:12, marginBottom:16 }}>
+            {[
+              { label:"Rating", val: race.rating, color: ratingColor(race.rating), bg: ratingBg(race.rating) },
+              { label:"Latest margin", val: marginStr, color: marginColor, bg: "#0f0f15" },
+              { label:"Trend", val: race.trend,
+                color: race.trend.includes("D") ? "#2563eb" : race.trend.includes("R") ? "#e63946" : "rgba(255,255,255,0.5)",
+                bg: "#0f0f15" },
+            ].map(s => (
+              <div key={s.label} style={{ padding:"12px 14px", background:s.bg,
+                border:`1px solid ${s.color}33` }}>
+                <div style={{ fontFamily:"monospace", fontSize:7, letterSpacing:"0.18em", textTransform:"uppercase",
+                  color:"rgba(255,255,255,0.3)", marginBottom:4 }}>{s.label}</div>
+                <div style={{ fontFamily:"Bebas Neue, sans-serif", fontSize:14, textTransform:"uppercase",
+                  color:s.color }}>{s.val}</div>
+              </div>
+            ))}
+          </div>
+
+          <div style={{ display:"flex", gap:16, marginBottom:10 }}>
+            <div style={{ flex:1 }}>
+              <div style={{ fontFamily:"monospace", fontSize:8, letterSpacing:"0.12em", textTransform:"uppercase",
+                color:"#2563eb", marginBottom:3 }}>{race.demCandidate}</div>
+              <div style={{ fontFamily:"Bebas Neue, sans-serif", fontSize:26, color:"#2563eb", lineHeight:1 }}>
+                {race.latestDem}%
+              </div>
+            </div>
+            {race.latestInd != null && (
+              <div style={{ flex:1, textAlign:"center" }}>
+                <div style={{ fontFamily:"monospace", fontSize:8, letterSpacing:"0.12em", textTransform:"uppercase",
+                  color:"#a855f7", marginBottom:3 }}>{race.indCandidate ?? "Ind."}</div>
+                <div style={{ fontFamily:"Bebas Neue, sans-serif", fontSize:26, color:"#a855f7", lineHeight:1 }}>
+                  {race.latestInd}%
+                </div>
+              </div>
+            )}
+            <div style={{ textAlign:"right", flex:1 }}>
+              <div style={{ fontFamily:"monospace", fontSize:8, letterSpacing:"0.12em", textTransform:"uppercase",
+                color:"#e63946", marginBottom:3 }}>{race.repCandidate}</div>
+              <div style={{ fontFamily:"Bebas Neue, sans-serif", fontSize:26, color:"#e63946", lineHeight:1 }}>
+                {race.latestRep}%
+              </div>
+            </div>
+          </div>
+          <SplitBar dem={race.latestDem} rep={race.latestRep} h={6} />
+
+          {/* Spreadsheet forecast note */}
+          <div style={{ marginTop:12, padding:"8px 10px", background:"rgba(124,58,237,0.08)",
+            border:"1px solid rgba(124,58,237,0.2)", fontFamily:"monospace", fontSize:8,
+            color:"rgba(255,255,255,0.45)", letterSpacing:"0.04em" }}>
+            PSI model forecast: {race.forecastMargin > 0
+              ? `D+${Math.abs(r1(race.forecastMargin))}`
+              : `R+${Math.abs(r1(race.forecastMargin))}`}
+            {" "}· {race.polls.length} polls in model
+          </div>
+        </div>
+
+        {/* Trend chart */}
+        {chartData.length > 1 && (
+          <div style={{ padding:"16px 24px", borderBottom:"1px solid rgba(255,255,255,0.06)", flexShrink:0 }}>
+            <div style={{ fontFamily:"monospace", fontSize:8, letterSpacing:"0.16em", textTransform:"uppercase",
+              color:"rgba(255,255,255,0.3)", marginBottom:10 }}>Poll trend</div>
+            <ResponsiveContainer width="100%" height={110}>
+              <LineChart data={chartData} margin={{ top:4, right:10, left:-20, bottom:0 }}>
+                <XAxis dataKey="date" tick={{ fontSize:8, fill:"rgba(255,255,255,0.25)", fontFamily:"monospace" }} tickLine={false} axisLine={false} />
+                <YAxis domain={[25, 65]} tick={{ fontSize:8, fill:"rgba(255,255,255,0.25)", fontFamily:"monospace" }} tickLine={false} axisLine={false} tickFormatter={v => `${v}%`} />
+                <Tooltip content={<ChartTip />} />
+                <ReferenceLine y={50} stroke="rgba(255,255,255,0.08)" strokeDasharray="3 3" />
+                <Line type="monotone" dataKey="Dem" stroke="#2563eb" strokeWidth={2} dot={{ fill:"#2563eb", r:3, strokeWidth:0 }} activeDot={{ r:4, fill:"#2563eb", strokeWidth:0 }} />
+                <Line type="monotone" dataKey="Rep" stroke="#e63946" strokeWidth={2} dot={{ fill:"#e63946", r:3, strokeWidth:0 }} activeDot={{ r:4, fill:"#e63946", strokeWidth:0 }} />
+              </LineChart>
+            </ResponsiveContainer>
+          </div>
+        )}
+
+        {/* Analysis */}
+        {race.notes && (
+          <div style={{ padding:"14px 24px", borderBottom:"1px solid rgba(255,255,255,0.06)", flexShrink:0 }}>
+            <div style={{ fontFamily:"monospace", fontSize:8, letterSpacing:"0.16em", textTransform:"uppercase",
+              color:"rgba(255,255,255,0.3)", marginBottom:6 }}>Analysis</div>
+            <div style={{ fontFamily:"monospace", fontSize:10, color:"rgba(255,255,255,0.45)", lineHeight:1.8, letterSpacing:"0.02em" }}>
+              {race.notes}
+            </div>
+          </div>
+        )}
+
+        {/* Poll table */}
+        <div style={{ padding:"14px 24px", flex:1 }}>
+          <div style={{ fontFamily:"monospace", fontSize:8, letterSpacing:"0.16em", textTransform:"uppercase",
+            color:"rgba(255,255,255,0.3)", marginBottom:10 }}>
+            Poll history · {sorted.length} polls
+          </div>
+          {sorted.length === 0 && (
+            <div style={{ fontFamily:"monospace", fontSize:10, color:"rgba(255,255,255,0.25)", padding:"12px 0" }}>
+              No public polls yet — forecast derived from historical lean and spreadsheet model.
+            </div>
+          )}
+          <div style={{ display:"flex", flexDirection:"column", gap:1 }}>
+            {sorted.map((p, i) => {
+              const m = p.dem - p.rep;
+              return (
+                <div key={i} style={{ display:"grid", gridTemplateColumns:"72px 1fr 40px 40px 70px",
+                  gap:8, alignItems:"center", padding:"8px 10px",
+                  background: i % 2 === 0 ? "rgba(255,255,255,0.02)" : "transparent", borderRadius:1 }}>
+                  <div style={{ fontFamily:"monospace", fontSize:8, color:"rgba(255,255,255,0.3)", letterSpacing:"0.04em" }}>
+                    {p.date}
+                  </div>
+                  <div>
+                    <div style={{ fontFamily:"monospace", fontSize:9, color:"rgba(255,255,255,0.6)", letterSpacing:"0.02em" }}>{p.pollster}</div>
+                    <div style={{ fontFamily:"monospace", fontSize:7, color:"rgba(255,255,255,0.2)", letterSpacing:"0.06em" }}>{p.sampleType} n={p.sampleSize} {p.grade}</div>
+                  </div>
+                  <div style={{ fontFamily:"Bebas Neue, sans-serif", fontSize:13, color:"#2563eb", textAlign:"right" }}>
+                    {p.dem > 0 ? `${p.dem}%` : "—"}
+                  </div>
+                  <div style={{ fontFamily:"Bebas Neue, sans-serif", fontSize:13, color:"#e63946", textAlign:"right" }}>
+                    {p.rep}%
+                  </div>
+                  <div style={{ textAlign:"right" }}>
+                    <span style={{
+                      display:"inline-flex", alignItems:"center", padding:"2px 7px", borderRadius:2,
+                      fontFamily:"monospace", fontSize:8, fontWeight:500, letterSpacing:"0.04em",
+                      color: m > 0 ? "#2563eb" : m < 0 ? "#e63946" : "rgba(255,255,255,0.4)",
+                      background: m > 0 ? "rgba(37,99,235,0.12)" : m < 0 ? "rgba(230,57,70,0.12)" : "rgba(255,255,255,0.05)",
+                    }}>
+                      {m > 0 ? `D+${m}` : m < 0 ? `R+${Math.abs(m)}` : "Even"}
+                    </span>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─── Race Card ────────────────────────────────────────────────────────────────
+function RaceCard({ race, onClick }: { race: Race; onClick: () => void }) {
+  const margin = race.latestDem - race.latestRep;
+  const marginStr = margin > 0 ? `D+${Math.abs(margin)}` : margin < 0 ? `R+${Math.abs(margin)}` : "Even";
+  const marginColor = margin > 0 ? "#2563eb" : margin < 0 ? "#e63946" : "rgba(255,255,255,0.5)";
+  const latestDate = [...race.polls].sort((a, b) => b.date.localeCompare(a.date))[0]?.date;
+
+  return (
+    <div onClick={onClick}
+      style={{ background:"#0f0f15", border:"1px solid rgba(255,255,255,0.07)", cursor:"pointer",
+        display:"flex", flexDirection:"column", transition:"border-color 120ms, background 120ms" }}
+      onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = "rgba(124,58,237,0.4)"; (e.currentTarget as HTMLElement).style.background = "#141420"; }}
+      onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor = "rgba(255,255,255,0.07)"; (e.currentTarget as HTMLElement).style.background = "#0f0f15"; }}>
+      <div style={{ height:3, background:`linear-gradient(90deg, #2563eb 0%, ${ratingColor(race.rating)} 100%)` }} />
+      <div style={{ padding:"14px 16px", flex:1, display:"flex", flexDirection:"column", gap:10 }}>
+        <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start" }}>
+          <div>
+            <div style={{ fontFamily:"monospace", fontSize:7, letterSpacing:"0.2em", textTransform:"uppercase",
+              color:"rgba(255,255,255,0.25)", marginBottom:3 }}>
+              {race.stateCode} · {race.incumbentParty === "D" ? "D Hold" : race.incumbentParty === "R" ? "R Hold" : "Open"}
+            </div>
+            <div style={{ fontFamily:"Bebas Neue, sans-serif", fontSize:18, letterSpacing:"0.04em",
+              textTransform:"uppercase", color:"#fff", lineHeight:1 }}>
+              {race.state}
+            </div>
+          </div>
+          <div style={{ display:"flex", flexDirection:"column", alignItems:"flex-end", gap:3 }}>
+            <span style={{ display:"inline-flex", alignItems:"center", padding:"3px 8px",
+              fontFamily:"monospace", fontSize:8, fontWeight:500, letterSpacing:"0.08em",
+              color: ratingColor(race.rating), background: ratingBg(race.rating),
+              border:`1px solid ${ratingColor(race.rating)}44` }}>
+              {race.rating}
+            </span>
+            <span style={{ fontFamily:"monospace", fontSize:9,
+              color: race.trend.includes("D") ? "#2563eb" : race.trend.includes("R") ? "#e63946" : "rgba(255,255,255,0.3)" }}>
+              {race.trend}
+            </span>
+          </div>
+        </div>
+
+        <div>
+          <div style={{ display:"flex", justifyContent:"space-between", marginBottom:5 }}>
+            <div>
+              <div style={{ fontFamily:"monospace", fontSize:7, letterSpacing:"0.12em", textTransform:"uppercase", color:"#2563eb", marginBottom:2 }}>
+                {race.demCandidate}
+              </div>
+              <div style={{ fontFamily:"Bebas Neue, sans-serif", fontSize:22, color:"#2563eb", lineHeight:1 }}>
+                {race.latestDem}%
+              </div>
+            </div>
+            <div style={{ textAlign:"center", display:"flex", flexDirection:"column", justifyContent:"center" }}>
+              <span style={{ fontFamily:"monospace", fontSize:9, color:marginColor, letterSpacing:"0.04em" }}>
+                {marginStr}
+              </span>
+            </div>
+            <div style={{ textAlign:"right" }}>
+              <div style={{ fontFamily:"monospace", fontSize:7, letterSpacing:"0.12em", textTransform:"uppercase", color:"#e63946", marginBottom:2 }}>
+                {race.repCandidate}
+              </div>
+              <div style={{ fontFamily:"Bebas Neue, sans-serif", fontSize:22, color:"#e63946", lineHeight:1 }}>
+                {race.latestRep}%
+              </div>
+            </div>
+          </div>
+          <SplitBar dem={race.latestDem} rep={race.latestRep} h={4} />
+        </div>
+
+        {/* PSI forecast badge */}
+        <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center" }}>
+          <div style={{ fontFamily:"monospace", fontSize:7, color:"rgba(255,255,255,0.2)", letterSpacing:"0.06em" }}>
+            {race.polls.length > 0 ? `${race.polls.length} poll${race.polls.length > 1 ? "s" : ""} · ${latestDate}` : "Model-only"}
+          </div>
+          <span style={{ fontFamily:"monospace", fontSize:7, color:"#7c3aed", letterSpacing:"0.1em", textTransform:"uppercase" }}>
+            Detail →
+          </span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─── Page ─────────────────────────────────────────────────────────────────────
+export default function SenateForecastPage() {
+  const [selectedRace, setSelectedRace] = useState<Race | null>(null);
+  const [filter, setFilter] = useState<"all" | "D" | "R" | "toss">("all");
+  const [sortBy, setSortBy] = useState<"rating" | "state" | "margin">("rating");
+
+  const filtered = useMemo(() => {
+    let list = [...RACES];
+    if (filter === "D")    list = list.filter(r => r.rating.includes("D") || r.rating === "Toss-Up");
+    if (filter === "R")    list = list.filter(r => r.rating.includes("R") || r.rating === "Toss-Up");
+    if (filter === "toss") list = list.filter(r => ["Toss-Up","Lean D","Lean R"].includes(r.rating));
+    if (sortBy === "state")  list.sort((a, b) => a.state.localeCompare(b.state));
+    if (sortBy === "margin") list.sort((a, b) => (b.latestDem - b.latestRep) - (a.latestDem - a.latestRep));
+    if (sortBy === "rating") list.sort((a, b) => RATING_ORDER.indexOf(a.rating) - RATING_ORDER.indexOf(b.rating));
+    return list;
+  }, [filter, sortBy]);
+
+  const totalPolls = RACES.reduce((s, r) => s + r.polls.length, 0);
+  const proj = {
+    safe_d:   RACES.filter(r => r.rating === "Safe D").length,
+    likely_d: RACES.filter(r => r.rating === "Likely D").length,
+    lean_d:   RACES.filter(r => r.rating === "Lean D").length,
+    toss:     RACES.filter(r => r.rating === "Toss-Up").length,
+    lean_r:   RACES.filter(r => r.rating === "Lean R").length,
+    likely_r: RACES.filter(r => r.rating === "Likely R").length,
+    safe_r:   RACES.filter(r => r.rating === "Safe R").length,
+  };
+
   return (
     <>
       <style>{`
-        @keyframes rr-fade-up { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
-        @keyframes rr-pulse   { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.3;transform:scale(.8)} }
+        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&display=swap');
+        body { background: #070709 !important; }
 
-        .rr-live-dot {
-          display:inline-block; width:6px; height:6px; border-radius:50%;
-          background:var(--rep); box-shadow:0 0 8px rgba(230,57,70,.7);
-          animation:rr-pulse 1.8s ease-in-out infinite; flex-shrink:0;
-        }
+        .sf-wrap { max-width: 1280px; margin: 0 auto; padding: 32px 32px 80px; }
+        @media(max-width:768px) { .sf-wrap { padding: 20px 16px 60px; } }
 
-        /* ── page header ── */
-        .rr-page-hdr {
-          border-bottom:1px solid var(--border);
-          padding-bottom:24px; margin-bottom:0;
-          display:flex; align-items:flex-end; justify-content:space-between; flex-wrap:wrap; gap:16px;
-        }
-        .rr-eyebrow {
-          display:flex; align-items:center; gap:9px; margin-bottom:10px;
-          font-size:8.5px; font-weight:700; letter-spacing:.30em; text-transform:uppercase; color:var(--purple-soft);
-        }
-        .rr-eyebrow::before { content:''; display:block; width:20px; height:1px; background:var(--purple-soft); opacity:.5; }
-        .rr-title { font-size:clamp(28px,3.5vw,52px); font-weight:900; text-transform:uppercase; letter-spacing:-.01em; line-height:.92; color:#fff; font-family:var(--font-display),ui-sans-serif,sans-serif; }
-        .rr-title em { font-style:normal; background:linear-gradient(100deg,var(--red2),var(--purple-soft) 50%,var(--blue2)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
-        .rr-sub { margin-top:10px; font-size:9.5px; letter-spacing:.10em; color:var(--muted2); line-height:1.7; max-width:560px; }
-        .rr-badge-row { display:flex; flex-wrap:wrap; gap:6px; align-items:center; }
-        .rr-badge { display:inline-flex; align-items:center; gap:5px; padding:4px 9px; border:1px solid var(--border); background:rgba(0,0,0,.3); font-size:7.5px; font-weight:700; letter-spacing:.18em; text-transform:uppercase; color:var(--muted2); }
-        .rr-badge-live { border-color:rgba(230,57,70,.25); background:rgba(230,57,70,.07); color:rgba(230,57,70,.9); }
-        .rr-badge-purple { border-color:rgba(124,58,237,.30); background:rgba(124,58,237,.08); color:var(--purple-soft); }
+        .sf-tri { height: 3px; background: linear-gradient(90deg, #e63946 0%, #7c3aed 50%, #2563eb 100%); }
 
-        /* ── section ── */
-        .rr-section { border:1px solid var(--border); margin-bottom:20px; animation:rr-fade-up .5s cubic-bezier(.22,1,.36,1) both; }
-        .rr-section:nth-child(2) { animation-delay:.08s; }
+        .sf-hero { background: #0f0f15; border: 1px solid rgba(255,255,255,0.09); margin-bottom: 20px; overflow: hidden; }
+        .sf-hero-inner { padding: 40px 48px 36px; }
+        @media(max-width:768px) { .sf-hero-inner { padding: 24px 20px; } }
+        .sf-hero-grid { display: grid; grid-template-columns: 1fr 340px; gap: 40px; align-items: center; }
+        @media(max-width:900px) { .sf-hero-grid { grid-template-columns: 1fr; } }
 
-        .rr-sec-hdr {
-          display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px;
-          padding:12px 16px; border-bottom:1px solid var(--border); background:var(--background2);
-        }
-        .rr-sec-tag { font-size:8px; font-weight:700; letter-spacing:.28em; text-transform:uppercase; color:var(--purple-soft); }
-        .rr-sec-sub { font-size:7.5px; letter-spacing:.12em; color:var(--muted3); margin-top:2px; }
+        .sf-tag { display: inline-flex; align-items: center; gap: 6px; font-family: "DM Mono", monospace; font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 20px; }
+        .sf-headline { font-family: "Bebas Neue", sans-serif; font-size: clamp(36px,5.5vw,72px); letter-spacing: 0.03em; line-height: 0.93; text-transform: uppercase; color: #fff; margin-bottom: 14px; }
+        .sf-headline .dem { color: #3b82f6; }
+        .sf-headline .rep { color: #ef4444; }
+        .sf-desc { font-family: "DM Mono", monospace; font-size: 10px; color: rgba(255,255,255,0.35); line-height: 1.85; letter-spacing: 0.04em; max-width: 480px; }
 
-        /* ── legend ── */
-        .rr-legend {
-          display:flex; align-items:center; gap:4px; flex-wrap:wrap;
-          padding:9px 14px; border-bottom:1px solid var(--border); background:var(--background2);
-        }
-        .rr-ll { font-size:7px; font-weight:700; letter-spacing:.24em; text-transform:uppercase; color:var(--muted3); margin-right:4px; }
-        .rr-chip { padding:3px 7px; border:1px solid; font-size:6.5px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; }
+        .sf-summary-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 1px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.06); }
+        @media(max-width:600px) { .sf-summary-grid { grid-template-columns: repeat(2,1fr); } }
+        .sf-summary-cell { background: #0b0b0f; padding: 14px 16px; }
+        .sf-summary-eyebrow { font-family: "DM Mono", monospace; font-size: 7px; letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 4px; }
+        .sf-summary-num { font-family: "Bebas Neue", sans-serif; font-size: 30px; line-height: 1; }
+        .sf-summary-sub { font-family: "DM Mono", monospace; font-size: 7px; color: rgba(255,255,255,0.2); letter-spacing: 0.06em; margin-top: 3px; }
 
-        /* ── seat bar ── */
-        .seat-bar-wrap { padding:10px 14px; border-bottom:1px solid var(--border); background:rgba(255,255,255,.015); }
-        .seat-bar-labels { display:flex; justify-content:space-between; margin-bottom:5px; font-size:8px; font-weight:700; letter-spacing:.16em; text-transform:uppercase; }
-        .sbl-d { color:rgba(147,197,253,.8); }
-        .sbl-ttl { color:var(--muted3); }
-        .sbl-r { color:rgba(252,165,165,.8); }
-        .seat-bar-track { display:flex; height:8px; overflow:hidden; gap:1px; }
-        .seat-bar-seg { height:100%; transition:width .6s cubic-bezier(.22,1,.36,1); }
-        .seat-bar-chips { display:flex; flex-wrap:wrap; gap:4px; margin-top:7px; }
-        .sbc-chip { display:flex; align-items:center; gap:5px; padding:3px 7px; border:1px solid; font-size:7px; font-weight:700; letter-spacing:.10em; text-transform:uppercase; }
-        .sbc-n { opacity:.8; }
+        .sf-controls { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; align-items: center; justify-content: space-between; }
+        .sf-filter-group { display: flex; gap: 4px; }
+        .sf-filter-btn { padding: 5px 14px; background: transparent; border: 1px solid rgba(255,255,255,0.1); font-family: "DM Mono", monospace; font-size: 8px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.4); cursor: pointer; transition: all 120ms; }
+        .sf-filter-btn.active { border-color: #7c3aed; color: #7c3aed; background: rgba(124,58,237,0.1); }
+        .sf-filter-btn:hover:not(.active) { border-color: rgba(255,255,255,0.3); color: rgba(255,255,255,0.6); }
 
-        /* ── map wrap ── */
-        .rr-map-wrap { padding:10px 12px; }
+        .sf-races-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; }
+        @media(max-width:1000px) { .sf-races-grid { grid-template-columns: repeat(2,1fr); } }
+        @media(max-width:640px) { .sf-races-grid { grid-template-columns: 1fr; } }
 
-        /* ── tooltip ── */
-        .race-tooltip {
-          position:fixed; pointer-events:none; z-index:9999; width:260px;
-          background:rgba(6,6,10,.96); border:1px solid rgba(124,58,237,.4);
-          backdrop-filter:blur(18px); box-shadow:0 24px 64px rgba(0,0,0,.85);
-        }
-        .rtt-stripe { height:2px; background:linear-gradient(90deg,var(--red) 0%,var(--purple) 50%,var(--blue) 100%); }
-        .rtt-abbr   { font-size:7px; font-weight:700; letter-spacing:.28em; text-transform:uppercase; color:var(--muted3); }
-        .rtt-name   { font-size:14px; font-weight:900; text-transform:uppercase; letter-spacing:.06em; color:#fff; margin-top:3px; }
-        .rtt-inc    { font-size:8px; letter-spacing:.10em; color:var(--muted3); margin-top:3px; }
-        .rtt-div    { height:1px; background:var(--border); margin:7px 0; }
-        .rtt-rating { font-size:9px; font-weight:700; letter-spacing:.18em; text-transform:uppercase; }
-        .rtt-margin { font-size:11px; font-weight:900; letter-spacing:.06em; color:rgba(255,255,255,.55); margin-top:3px; }
-        .rtt-bars   { display:flex; flex-direction:column; gap:4px; }
-        .rtt-bar-row { display:flex; align-items:center; gap:6px; }
-        .rtt-party  { font-size:8px; font-weight:900; width:12px; text-align:center; }
-        .rtt-party.dem { color:rgba(147,197,253,.8); }
-        .rtt-party.rep { color:rgba(252,165,165,.8); }
-        .rtt-bar-track { flex:1; height:4px; background:rgba(255,255,255,.07); overflow:hidden; }
-        .rtt-bar-fill  { height:100%; transition:width .5s ease; }
-        .dem-fill { background:var(--dem); }
-        .rep-fill { background:var(--rep); }
-        .rtt-pct   { font-size:8px; font-weight:700; letter-spacing:.08em; color:rgba(255,255,255,.45); width:36px; text-align:right; }
-        .rtt-meta  { display:flex; justify-content:space-between; margin-top:7px; font-size:7px; letter-spacing:.10em; text-transform:uppercase; color:var(--muted3); font-weight:700; }
-
-        /* ── no-race states note ── */
-        .rr-note { padding:7px 14px; border-top:1px solid var(--border); background:rgba(255,255,255,.01); font-size:7px; letter-spacing:.10em; color:var(--muted3); font-weight:700; text-transform:uppercase; }
-        .rr-note span { color:var(--muted2); }
+        .sf-methodology { background: #0f0f15; border: 1px solid rgba(255,255,255,0.07); padding: 24px 28px; margin-top: 20px; }
+        .sf-meth-title { font-family: "Bebas Neue", sans-serif; font-size: 18px; letter-spacing: 0.04em; text-transform: uppercase; color: rgba(255,255,255,0.7); margin-bottom: 10px; }
+        .sf-meth-text { font-family: "DM Mono", monospace; font-size: 9.5px; color: rgba(255,255,255,0.3); line-height: 1.85; letter-spacing: 0.02em; }
       `}</style>
 
-      {/* ── PAGE HEADER ── */}
-      <div className="rr-page-hdr">
-        <div>
-          <div className="rr-eyebrow">
-            <span className="rr-live-dot" />
-            ELECTION TOOLS · RACE RATINGS
+      {selectedRace && <RaceDrawer race={selectedRace} onClose={() => setSelectedRace(null)} />}
+
+      <div className="sf-wrap">
+
+        {/* ── Hero ── */}
+        <div className="sf-hero">
+          <div className="sf-tri" />
+          <div className="sf-hero-inner">
+            <div className="sf-hero-grid">
+              <div>
+                <div className="sf-tag">
+                  <span style={{ color:"rgba(255,255,255,0.15)" }}>—</span>
+                  <span>2026 Midterm Cycle</span>
+                  <span style={{ color:"rgba(255,255,255,0.15)" }}>·</span>
+                  <span style={{ color:"#7c3aed" }}>Senate Forecast</span>
+                </div>
+                <h1 className="sf-headline">
+                  2026<br />
+                  <span className="dem">Senate</span><br />
+                  <span className="rep">Forecast</span>
+                </h1>
+                <p className="sf-desc">
+                  PSI&rsquo;s weighted polling model for every competitive 2026 U.S. Senate race.
+                  Ratings incorporate poll quality grades, recency, sample type, and historical
+                  state lean. Forecast margins sourced from the PSI 2026 model spreadsheet and
+                  blended with live polling averages.
+                </p>
+              </div>
+              <div className="sf-summary-grid">
+                {[
+                  { label:"Safe / Likely D", val: proj.safe_d + proj.likely_d, color:"#2563eb", sub:"Strong D terrain" },
+                  { label:"Lean D",          val: proj.lean_d,                  color:"#60a5fa", sub:"D-favored" },
+                  { label:"Toss-Up",         val: proj.toss,                    color:"#9333ea", sub:"Could go either way" },
+                  { label:"Lean / Likely R", val: proj.lean_r + proj.likely_r,  color:"#ef4444", sub:"R-favored" },
+                  { label:"Safe R",          val: proj.safe_r,                  color:"#b91c1c", sub:"Uncompetitive" },
+                  { label:"Races tracked",   val: RACES.length,                 color:"rgba(255,255,255,0.6)", sub:"In model" },
+                  { label:"Polls ingested",  val: totalPolls,                   color:"rgba(255,255,255,0.6)", sub:"Total poll count" },
+                  { label:"Updated",         val:"Apr 6",                       color:"rgba(255,255,255,0.6)", sub:"2026" },
+                ].map(s => (
+                  <div key={s.label} className="sf-summary-cell">
+                    <div className="sf-summary-eyebrow"
+                      style={{ color: s.color === "rgba(255,255,255,0.6)" ? "rgba(255,255,255,0.25)" : s.color }}>
+                      {s.label}
+                    </div>
+                    <div className="sf-summary-num" style={{ color: s.color }}>{s.val}</div>
+                    <div className="sf-summary-sub">{s.sub}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
-          <h1 className="rr-title">2026 Race<br /><em>Ratings</em></h1>
-          <p className="rr-sub">
-            Model-based ratings for U.S. Senate and Governor races.
-            Hover any state for full details — margin projections, approval ratings, and win probability.
+        </div>
+
+        {/* ── Seat Balance Bar ── */}
+        <SeatMap races={RACES} />
+
+        {/* ── D3 Map ── */}
+        <SenateMap races={RACES} onSelect={setSelectedRace} />
+
+        {/* ── Controls ── */}
+        <div className="sf-controls">
+          <span style={{ fontFamily:"DM Mono, monospace", fontSize:9, fontWeight:500,
+            letterSpacing:"0.2em", textTransform:"uppercase", color:"rgba(255,255,255,0.35)" }}>
+            Race Ratings · {filtered.length} races
+          </span>
+          <div style={{ display:"flex", gap:16, alignItems:"center", flexWrap:"wrap" }}>
+            <div className="sf-filter-group">
+              {(["all","D","toss","R"] as const).map(f => (
+                <button key={f} className={`sf-filter-btn${filter === f ? " active" : ""}`}
+                  onClick={() => setFilter(f)}>
+                  {f === "all" ? "All" : f === "D" ? "D Races" : f === "toss" ? "Toss-Ups" : "R Races"}
+                </button>
+              ))}
+            </div>
+            <div className="sf-filter-group">
+              <span style={{ fontFamily:"DM Mono, monospace", fontSize:7, letterSpacing:"0.12em",
+                textTransform:"uppercase", color:"rgba(255,255,255,0.25)", marginRight:4 }}>Sort:</span>
+              {(["rating","state","margin"] as const).map(s => (
+                <button key={s} className={`sf-filter-btn${sortBy === s ? " active" : ""}`}
+                  onClick={() => setSortBy(s)}>
+                  {s === "rating" ? "Rating" : s === "state" ? "State" : "Margin"}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* ── Race Cards ── */}
+        <div className="sf-races-grid">
+          {filtered.map(race => (
+            <RaceCard key={race.stateCode} race={race} onClick={() => setSelectedRace(race)} />
+          ))}
+        </div>
+
+        {/* ── Methodology ── */}
+        <div className="sf-methodology">
+          <div className="sf-tri" style={{ margin:"-24px -28px 20px" }} />
+          <div className="sf-meth-title">Model Methodology</div>
+          <p className="sf-meth-text">
+            PSI&rsquo;s 2026 Senate Forecast blends three inputs: (1) a weighted polling average
+            that discounts polls by age (90-day half-life), pollster grade (A+ through D+), sample
+            size (&radic;n weighting), and sample type (LV 1.1&times;, RV 0.95&times;, adults
+            0.85&times;); (2) a prior derived from the PSI 2026 forecast spreadsheet
+            (blended at decreasing weight as more polls accumulate — zero weight at 10+ polls);
+            and (3) a trend signal that compares the two most-recent polls to the two oldest polls
+            in the dataset. Race ratings: Safe &ge; &plusmn;12 pts, Likely &plusmn;6&ndash;12, Lean
+            &plusmn;2&ndash;6, Toss-Up within &plusmn;2. Nebraska models a three-way race with
+            independent Dan Osborn. Spreadsheet forecast margins are sourced from PSI&rsquo;s
+            internal model incorporating state baselines, partisan elasticity, turnout, presidential
+            approval, and demographic shifts.
           </p>
-          <div className="rr-badge-row" style={{ marginTop:12 }}>
-            <span className="rr-badge rr-badge-live"><span className="rr-live-dot" />LIVE MODEL</span>
-            <span className="rr-badge rr-badge-purple">SENATE · {SENATE_DATA.length} RACES</span>
-            <span className="rr-badge rr-badge-purple">GOVERNORS · {GOV_DATA.length} RACES</span>
-            <span className="rr-badge">2026 MIDTERMS</span>
-          </div>
-        </div>
-      </div>
-
-      {/* ── SENATE MAP ── */}
-      <div className="rr-section" style={{ marginTop:24 }}>
-        <div className="res-tri-stripe" />
-        <div className="rr-sec-hdr">
-          <div>
-            <div className="rr-sec-tag">U.S. SENATE · 2026</div>
-            <div className="rr-sec-sub">{SENATE_DATA.length} seats rated · hover states for details</div>
-          </div>
-          <div className="rr-badge-row">
-            <span className="rr-badge" style={{ borderColor:"rgba(147,197,253,.2)", color:"rgba(147,197,253,.7)" }}>
-              D FAVORED {SENATE_DATA.filter(d=>isD(d.rating)).length}
-            </span>
-            <span className="rr-badge" style={{ borderColor:"rgba(252,165,165,.2)", color:"rgba(252,165,165,.7)" }}>
-              {SENATE_DATA.filter(d=>!isD(d.rating)).length} R FAVORED
-            </span>
-          </div>
         </div>
 
-        <div className="rr-legend">
-          <span className="rr-ll">Legend</span>
-          {LEGEND_ITEMS.map(({ rating, label }) => (
-            <span key={rating} className="rr-chip"
-              style={{ background:RATING_FILLS[rating], borderColor:RATING_FILLS[rating], color:RATING_TEXT[rating] }}>
-              {label}
-            </span>
-          ))}
-        </div>
-
-        <SeatBar data={SENATE_DATA} label="SENATE" />
-
-        <div className="rr-map-wrap">
-          <RaceMap key="senate" mapType="senate" dataMap={senateByState} />
-        </div>
-        <div className="rr-note">
-          Gray states have no Senate race in 2026. <span>Ratings based on model margin, PVI, incumbent approval, and Trump approval.</span>
-        </div>
-      </div>
-
-      {/* ── GOVERNOR MAP ── */}
-      <div className="rr-section">
-        <div className="res-tri-stripe" />
-        <div className="rr-sec-hdr">
-          <div>
-            <div className="rr-sec-tag">GOVERNORS · 2026</div>
-            <div className="rr-sec-sub">{GOV_DATA.length} seats rated · hover states for details</div>
-          </div>
-          <div className="rr-badge-row">
-            <span className="rr-badge" style={{ borderColor:"rgba(147,197,253,.2)", color:"rgba(147,197,253,.7)" }}>
-              D FAVORED {GOV_DATA.filter(d=>isD(d.rating)).length}
-            </span>
-            <span className="rr-badge" style={{ borderColor:"rgba(252,165,165,.2)", color:"rgba(252,165,165,.7)" }}>
-              {GOV_DATA.filter(d=>!isD(d.rating)).length} R FAVORED
-            </span>
-          </div>
-        </div>
-
-        <div className="rr-legend">
-          <span className="rr-ll">Legend</span>
-          {LEGEND_ITEMS.map(({ rating, label }) => (
-            <span key={rating} className="rr-chip"
-              style={{ background:RATING_FILLS[rating], borderColor:RATING_FILLS[rating], color:RATING_TEXT[rating] }}>
-              {label}
-            </span>
-          ))}
-        </div>
-
-        <SeatBar data={GOV_DATA} label="GOVERNORS" />
-
-        <div className="rr-map-wrap">
-          <RaceMap key="governor" mapType="governor" dataMap={govByState} />
-        </div>
-        <div className="rr-note">
-          Gray states have no Governor race in 2026. <span>Ratings based on model margin, PVI, incumbent approval, and Trump approval.</span>
-        </div>
       </div>
     </>
   );
