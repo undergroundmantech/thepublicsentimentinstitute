@@ -32,6 +32,15 @@ function round1(n: number) { return Math.round(n * 10) / 10; }
 
 // ─── Poll datasets ────────────────────────────────────────────────────────────
 const TRUMP_POLLS: Poll[] = [
+  { pollster: "CBS News", endDate: "2026-04-10", sampleSize: 2387, sampleType: "A", results: { Approve: 39, Disapprove: 61 } },
+{ pollster: "Daily Mail", endDate: "2026-04-08", sampleSize: 1013, sampleType: "RV", results: { Approve: 43, Disapprove: 57 } },
+{ pollster: "Rasmussen Reports", endDate: "2026-04-09", sampleSize: 1500, sampleType: "LV", results: { Approve: 45, Disapprove: 54 } },
+{ pollster: "Economist/YouGov", endDate: "2026-04-06", sampleSize: 1560, sampleType: "RV", results: { Approve: 41, Disapprove: 56 } },
+{ pollster: "Morning Consult", endDate: "2026-04-05", sampleSize: 2200, sampleType: "RV", results: { Approve: 45, Disapprove: 52 } },
+{ pollster: "RMG Research", endDate: "2026-04-09", sampleSize: 4000, sampleType: "RV", results: { Approve: 45, Disapprove: 54 } },
+{ pollster: "I&I/TIPP", endDate: "2026-04-02", sampleSize: 1464, sampleType: "A", results: { Approve: 39, Disapprove: 53 } },
+{ pollster: "RMG Research", endDate: "2026-04-02", sampleSize: 3000, sampleType: "RV", results: { Approve: 40, Disapprove: 58 } },
+{ pollster: "Economist/YouGov", endDate: "2026-03-30", sampleSize: 1505, sampleType: "RV", results: { Approve: 39, Disapprove: 58 } },
 { pollster: "CNN", endDate: "2026-03-30", sampleSize: 1500, sampleType: "RV", results: { Approve: 38, Disapprove: 62 } },
 { pollster: "Morning Consult", endDate: "2026-03-29", sampleSize: 2203, sampleType: "RV", results: { Approve: 43, Disapprove: 54 } },
 { pollster: "Rasmussen Reports", endDate: "2026-04-01", sampleSize: 1500, sampleType: "LV", results: { Approve: 46, Disapprove: 52 } },
@@ -556,7 +565,11 @@ const TRUMP_POLLS: Poll[] = [
 ];
 
 const GB_POLLS: Poll[] = [
-  { pollster: "Economist/YouGov", endDate: "2026-03-30", sampleSize: 1505, sampleType: "RV", results: { Democrats: 45, Republicans: 39 } },
+{ pollster: "RMG Research", endDate: "2026-04-09", sampleSize: 2000, sampleType: "RV", results: { Democrats: 49, Republicans: 44 } },
+{ pollster: "Economist/YouGov", endDate: "2026-04-06", sampleSize: 1560, sampleType: "RV", results: { Democrats: 44, Republicans: 42 } },
+{ pollster: "Morning Consult", endDate: "2026-04-05", sampleSize: 2200, sampleType: "RV", results: { Democrats: 45, Republicans: 42 } },
+{ pollster: "Cygnal", endDate: "2026-04-03", sampleSize: 1500, sampleType: "LV", results: { Democrats: 49, Republicans: 43 } },
+{ pollster: "Economist/YouGov", endDate: "2026-03-30", sampleSize: 1505, sampleType: "RV", results: { Democrats: 45, Republicans: 39 } },
 { pollster: "Harvard-Harris", endDate: "2026-03-26", sampleSize: 1000, sampleType: "LV", results: { Democrats: 52, Republicans: 48 } },
 { pollster: "Quantus Insights", endDate: "2026-03-26", sampleSize: 1472, sampleType: "LV", results: { Democrats: 47, Republicans: 41 } },
 { pollster: "Big Data Poll", endDate: "2026-03-24", sampleSize: 3003, sampleType: "LV", results: { Democrats: 48, Republicans: 40 } },
@@ -738,6 +751,10 @@ const GB_POLLS: Poll[] = [
 ];
 
 const RT_POLLS: Poll[] = [
+  { pollster: "Rasmussen Reports", endDate: "2026-04-09", sampleSize: 1776, sampleType: "LV", results: { RightTrack: 39, WrongTrack: 55 } },
+{ pollster: "Economist/YouGov", endDate: "2026-04-06", sampleSize: 1560, sampleType: "RV", results: { RightTrack: 33, WrongTrack: 60 } },
+{ pollster: "Cygnal", endDate: "2026-04-03", sampleSize: 1500, sampleType: "LV", results: { RightTrack: 38, WrongTrack: 59 } },
+{ pollster: "Rasmussen Reports", endDate: "2026-04-02", sampleSize: 1817, sampleType: "LV", results: { RightTrack: 40, WrongTrack: 55 } },
   { pollster: "Economist/YouGov", endDate: "2026-03-30", sampleSize: 1505, sampleType: "RV", results: { RightTrack: 30, WrongTrack: 62 } },
 { pollster: "Harvard-Harris", endDate: "2026-03-26", sampleSize: 2009, sampleType: "RV", results: { RightTrack: 35, WrongTrack: 55 } },
 { pollster: "Quantus Insights", endDate: "2026-03-26", sampleSize: 1472, sampleType: "LV", results: { RightTrack: 36, WrongTrack: 60 } },
