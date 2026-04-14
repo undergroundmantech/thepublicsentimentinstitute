@@ -7,10 +7,10 @@ import { useState } from "react";
 const NAV = [
   { href: "/",                label: "Home" },
   { href: "/tpsipoll",                label: "TPSI Poll" },
-  { href: "/polling",         label: "Polling" },
+  { href: "/forecastratings",    label: "TPSI 2026 Ratings" },
+  { href: "/polling",         label: "Polling Averages" },
   { href: "/results",         label: "Results" },
   { href: "/electoralmap",    label: "Electoral Map" },
-  { href: "/goldstandard",    label: "Gold Standard" },
   { href: "/contact",         label: "Contact" },
 ];
 
