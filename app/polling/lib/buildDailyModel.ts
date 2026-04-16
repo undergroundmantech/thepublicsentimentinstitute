@@ -19,26 +19,32 @@ export type DailyRow = {
 // Source: FiveThirtyEight/538 pollster ratings (grade + mean error + track record).
 // Every poll's final weight is multiplied by its pollster's quality factor.
 //
-// Grade → weight multiplier:
-//   A++      → 4.00×   Elite accuracy (mean error ~2.0), e.g. Quantus, AtlasIntel
-//   A+       → 3.00×   Top tier, strong multi-cycle track record
-//   A        → 2.25×   Above average
-//   A-       → 1.70×   Solid accuracy premium
-//   B+       → 1.30×   Slightly above baseline
-//   B        → 1.00×   Baseline — average pollster
-//   B-       → 0.75×   Slight discount
-//   C+       → 0.50×   Meaningful penalty
-//   C        → 0.25×   Notable discount — YouGov, Quinnipiac, Marist
-//   C-       → 0.15×   Significant discount
-//   D+/D     → 0.06×   Near-discard
-//   D-       → 0.03×   Severe discount — PPP, SurveyMonkey
-//   F/F-     → 0.01×   Essentially discarded
-//   Super F  → 0.005×  Discarded entirely
-//   Unknown  → 0.60×   Unrated: slight penalty vs B baseline
+// ── TIER STRUCTURE ──────────────────────────────────────────────────────────
+//   Gold Standard → 6.00×   Quantus Insights only. Exceptional accuracy &
+//                            methodology; reserved exclusively for this firm.
+//   A++           → 4.00×   Elite accuracy (mean error ~2.0)
+//   A+            → 3.00×   Top tier, strong multi-cycle track record
+//   A             → 2.25×   Above average
+//   A-            → 1.70×   Solid accuracy premium
+//   B+            → 1.30×   Slightly above baseline
+//   B             → 1.00×   Baseline — average pollster
+//   B-            → 0.75×   Slight discount
+//   C+            → 0.50×   Meaningful penalty
+//   C             → 0.25×   Notable discount
+//   C-            → 0.15×   Significant discount
+//   D+/D          → 0.06×   Near-discard
+//   D-            → 0.03×   Severe discount
+//   F/F-          → 0.01×   Essentially discarded
+//   Super F       → 0.005×  Discarded entirely
+//   Unknown       → 0.60×   Unrated: slight penalty vs B baseline
 // =============================================================================
 export const POLLSTER_SCORECARD: Record<string, { grade: string; weight: number }> = {
+  // ── GOLD STANDARD (6.00) ─────────────────────────────────────────────────
+  // Reserved exclusively for Quantus Insights. Tier exists for this firm alone.
+  "quantus insights":                           { grade: "Gold",   weight: 6.00 },
+  "quantus":                                    { grade: "Gold",   weight: 6.00 },
+
   // ── A++ (4.00) ───────────────────────────────────────────────────────────
-  "quantus insights":                           { grade: "A++",    weight: 4.00 },
   "atlasintel":                                 { grade: "A++",    weight: 4.00 },
   "bsp research/shaw & company":                { grade: "A++",    weight: 4.00 },
   "bsp research":                               { grade: "A++",    weight: 4.00 },
@@ -105,7 +111,7 @@ export const POLLSTER_SCORECARD: Record<string, { grade: string; weight: number 
   "washington post/george mason university":    { grade: "B",      weight: 1.00 },
   "washington post/george mason":               { grade: "B",      weight: 1.00 },
   // Rasmussen: rated A+ by 538 but carries a known Republican house effect;
-  // weight is held at B baseline (1.00) as a house-effect penalty.
+  // weight held at B baseline (1.00) as a house-effect penalty.
   "rasmussen":                                  { grade: "A+(adj)", weight: 1.00 },
   "rasmussen reports":                          { grade: "A+(adj)", weight: 1.00 },
   // ── B- (0.75) ────────────────────────────────────────────────────────────
@@ -210,7 +216,7 @@ export const POLLSTER_SCORECARD: Record<string, { grade: string; weight: number 
   "usc dornsife":                               { grade: "F-",     weight: 0.01 },
   "strategies 360":                             { grade: "F-",     weight: 0.01 },
   "citizen data":                               { grade: "F-",     weight: 0.01 },
-  // ── Super F (0.005) ───────────────────────────────────────────────────────
+  // ── Super F (0.005) ──────────────────────────────────────────────────────
   "outward intelligence":                       { grade: "Super F", weight: 0.005 },
   "research america":                           { grade: "Super F", weight: 0.005 },
   "ascend action":                              { grade: "Super F", weight: 0.005 },
@@ -298,6 +304,33 @@ export function recencyWeight(daysAgo: number): number {
 }
 
 // =============================================================================
+// Sample size weight — sigmoid curve heavily favouring n ≥ 1500
+//
+// Replaces the old √n formula. Key design goals:
+//   • Small polls (n < 400) are near-discarded (weight < 0.15)
+//   • n = 800  → ~0.50  (moderate weight)
+//   • n = 1500 → ~0.90  (strong weight — the target threshold)
+//   • n = 2000 → ~0.97  (near-maximum)
+//   • n = 3000+→ ~1.00  (saturates; no runaway reward for mega-samples)
+//
+// Formula: sigmoid(n) = 1 / (1 + exp(-k * (n - midpoint)))
+//   midpoint = 1100  — inflection point of the S-curve
+//   k        = 0.003 — controls steepness around the midpoint
+//
+// The result is then scaled to [MIN_SAMPLE_WEIGHT, 1.0] so even the smallest
+// poll retains a tiny non-zero weight (avoids hard divide-by-zero edge cases).
+// =============================================================================
+const SAMPLE_SIGMOID_MIDPOINT = 1100;
+const SAMPLE_SIGMOID_K        = 0.003;
+const MIN_SAMPLE_WEIGHT       = 0.05; // floor — never fully zero
+
+export function sampleSizeWeight(n: number): number {
+  const raw = 1 / (1 + Math.exp(-SAMPLE_SIGMOID_K * (n - SAMPLE_SIGMOID_MIDPOINT)));
+  // Rescale from (0,1) sigmoid range to [MIN_SAMPLE_WEIGHT, 1.0]
+  return MIN_SAMPLE_WEIGHT + (1 - MIN_SAMPLE_WEIGHT) * raw;
+}
+
+// =============================================================================
 // Sample type weight
 // LV=3× (likely voters, most predictive), RV=1× (baseline), A=0.1× (near-discard)
 // Adults polls are essentially useless for election forecasting.
@@ -312,8 +345,7 @@ export function sampleTypeWeight(type: SampleType): number {
 // Pollster repetition discount
 //
 // Polls iterated newest→oldest. Most-recent poll from each firm = 1.00×.
-// Older repeats discounted only if within 21 days of the newest — beyond that,
-// recency decay already handles the penalty and double-discounting is unfair.
+// Older repeats discounted only if within 21 days of the newest.
 //   1st (newest)          → 1.00×
 //   2nd (within 21 days)  → 0.75×
 //   3rd (within 21 days)  → 0.50×
@@ -332,24 +364,27 @@ function pollsterRepetitionFactor(
 // =============================================================================
 // Combined poll weight
 //
-// Final weight = √n                        [no cap — larger samples rewarded]
-//              × recencyWeight(dAgo)       [denom=21, exp=1.3, ~14-day half-life]
-//              × sampleTypeWeight          [LV=3×, RV=1×, A=0.1×]
-//              × pollsterRepetitionFactor  [same-firm repeat discount, 21-day window]
-//              × getPollsterWeight         [538-grade quality multiplier]
+// Final weight = sampleSizeWeight(n)          [sigmoid, inflection @ 1100, sat ~1.0]
+//              × recencyWeight(dAgo)           [denom=21, exp=1.3, ~14-day half-life]
+//              × sampleTypeWeight              [LV=3×, RV=1×, A=0.1×]
+//              × pollsterRepetitionFactor      [same-firm repeat discount, 21-day window]
+//              × getPollsterWeight             [538-grade multiplier; Gold=6×, B=1×]
+//              × undecidedPenalty              [penalises high uncommitted share]
+//
+// KEY CHANGE vs previous version:
+//   Old: √n (unbounded; a 10,000-sample poll earned only 2× a 2,500-sample poll)
+//   New: sampleSizeWeight (sigmoid S-curve saturating near 1.0 above ~2,000;
+//        polls under 400 are near-discarded; polls ≥ 1,500 earn near-maximum
+//        sample credit, strongly favouring high-quality large-n surveys).
 // =============================================================================
 const UNDECIDED_PENALTY_K = 3.0;
 
 export function undecidedPenalty(results: Record<string, number>): number {
-  // Sum only real candidates (skip Undecided/Other if explicitly present)
   const candidateSum = Object.entries(results)
     .filter(([k]) => k !== "Undecided" && k !== "Other")
     .reduce((sum, [, v]) => sum + v, 0);
 
-  // Explicit undecided/other bucket (if present)
   const explicit = (results["Undecided"] ?? 0) + (results["Other"] ?? 0);
-
-  // Use whichever is larger: explicit label or implicit gap from 100
   const uncommittedShare = Math.max(explicit, 100 - candidateSum) / 100;
 
   return clamp(1 - UNDECIDED_PENALTY_K * Math.sqrt(Math.max(0, uncommittedShare)), 0.10, 1.00);
@@ -364,12 +399,12 @@ export function pollWeight(
   const dAgo = clamp(daysBetween(p.endDate, asOfDateISO), 0, 3650);
   const effectiveN = Math.max(0, p.sampleSize);
   return (
-    Math.sqrt(effectiveN) *
+    sampleSizeWeight(effectiveN) *              // ← sigmoid S-curve (replaces √n)
     recencyWeight(dAgo) *
     sampleTypeWeight(p.sampleType) *
     pollsterRepetitionFactor(pollsterOccurrenceIndex, daysSinceNewestFromSameFirm) *
     getPollsterWeight(p.pollster) *
-    undecidedPenalty(p.results)           // ← new
+    undecidedPenalty(p.results)
   );
 }
 
@@ -391,14 +426,6 @@ export function getDateRange(polls: Poll[]) {
 
 // =============================================================================
 // Outlier correction — Z-score clipping per candidate
-//
-// Any poll result deviating more than OUTLIER_Z_THRESHOLD sample standard
-// deviations from the unweighted mean is clipped toward the mean boundary.
-// Preserves directional signal without letting a single rogue poll dominate.
-//
-//   - Threshold: 2.0σ
-//   - Min polls: 3 (below this σ is unreliable; clipping skipped)
-//   - Uses sample stddev (÷ n−1) for an unbiased estimate
 // =============================================================================
 const OUTLIER_Z_THRESHOLD = 2.0;
 const OUTLIER_MIN_POLLS   = 3;
@@ -421,17 +448,6 @@ function clipOutliers(values: number[]): number[] {
 
 // =============================================================================
 // buildDailyWeightedSeries
-//
-// Builds a daily weighted average for each candidate from startISO to endISO.
-// Only polls with endDate ≤ asOfDate are included on each day (no lookahead).
-//
-// Weighting factors applied per poll:
-//   1. RECENCY DECAY       — exponential, ~14-day half-life, exponent 1.3
-//   2. SAMPLE SIZE         — √n, no cap (larger samples continue to earn weight)
-//   3. SAMPLE TYPE         — LV=3×, RV=1×, Adults=0.1×
-//   4. REPETITION DISCOUNT — same-firm older polls discounted within 21-day window
-//   5. POLLSTER QUALITY    — 538-grade multiplier (A++=4×, B=1×, Super F=0.005×)
-//   6. OUTLIER CLIPPING    — per-candidate 2σ clip before weighted average
 // =============================================================================
 export function buildDailyWeightedSeries(
   polls: Poll[],
@@ -449,14 +465,11 @@ export function buildDailyWeightedSeries(
     const dayISO = iso(d);
 
     const available = sorted.filter((p) => p.endDate <= dayISO);
-
-    // Newest→oldest so occurrence index 1 = most recent poll from each firm.
     const availableDesc = [...available].sort((a, b) => b.endDate.localeCompare(a.endDate));
 
     const row: DailyRow = { date: dayISO };
 
     for (const c of candidates) {
-      // Track per-pollster: [occurrenceIndex, endDate of newest poll from firm]
       const pollsterMeta = new Map<string, { occ: number; newestDate: string }>();
       const entries: { value: number; weight: number }[] = [];
 
