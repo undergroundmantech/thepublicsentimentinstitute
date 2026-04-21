@@ -26,7 +26,7 @@ type RegionCandidate = { name: string; party: string; votes: string | number; pe
 type RegionResult = { region: { name: string; type: string; fill?: string; percent_reporting?: number; }; candidates: RegionCandidate[]; };
 type RaceDetail = { election_name: string; election_type: string; election_scope: string; election_date: string; country: string; province: string | null; district: string | null; municipality: string | null; polls_open: string | null; polls_close: string | null; last_updated: string | null; percent_reporting?: number; candidates: RaceCandidate[]; region_results?: RegionResult[] | Record<string, RegionResult>; };
 type RaceType = "Democratic Primary" | "Republican Primary" | "Special Election" | "General Election";
-type FeaturedRace = { id: number; state: | "WI" | "GA" | "TEST"; office: string; raceType: RaceType; label: string; };
+type FeaturedRace = { id: number; state: "VA"; office: string; raceType: RaceType; label: string; };
 
 function getRaceTypeColor(raceType: RaceType): string {
   if (raceType === "Republican Primary") return "var(--rep)";
@@ -43,19 +43,7 @@ function getRaceTypeShort(raceType: RaceType): string {
 }
 
 const RACE_FORECAST_DEFAULTS: Partial<Record<number, { raceRule: RaceRule; expectedTurnout?: number; pollAvg?: Record<string, number>; }>> = {
-  46673: { raceRule: "PLURALITY", expectedTurnout: 280_000, pollAvg: { "Little": 16.0, "Till": 12.0, "Colom": 72.0} },  // unchanged
-  51420: { raceRule: "PLURALITY", expectedTurnout: 280_000, pollAvg: { "Hyde-Smith": 88.0, "Adlakha": 8.0} },  // 2 candidates
-  51421: { raceRule: "PLURALITY", expectedTurnout: 55_000, pollAvg: { "Trent Kelly": 100.0 } },  // 1 candidate
-  51422: { raceRule: "PLURALITY", expectedTurnout: 40_000, pollAvg: { "Cliff Johnson": 55.0, "Kelvin Buck": 45.0 } },  // 2 candidates
-  51423: { raceRule: "PLURALITY", expectedTurnout: 60_000, pollAvg: { "Ron Eller": 52.0, "Kevin Wilson": 48.0 } },  // 2 candidates
-  51424: { raceRule: "MAJORITY", expectedTurnout: 55_000, pollAvg: { "Bennie Thompson": 68.0, "Evan Turnage": 20.0, "Pertis Herman Williams III": 12.0 } },  // 3 candidates → runoff opp.
-  51425: { raceRule: "PLURALITY", expectedTurnout: 50_000, pollAvg: { "Michael Guest": 100.0 } },  // 1 candidate
-  51426: { raceRule: "PLURALITY", expectedTurnout: 45_000, pollAvg: { "Michael A. Chiaradio": 100.0 } },  // 1 candidate
-  51427: { raceRule: "PLURALITY", expectedTurnout: 55_000, pollAvg: { "Mike Ezell": 75.0, "Sawyer Walters": 25.0 } },  // 2 candidates (per pollAvg)
-  51428: { raceRule: "MAJORITY", expectedTurnout: 40_000, pollAvg: { "Jeffrey Hulum III": 45.0, "D. Ryan Grover": 30.0, "Paul James Blackman": 25.0 } },  // 3 candidates → runoff opp.
-  52551: { raceRule: "MAJORITY", expectedTurnout: 120_000, pollAvg: { "Clay Fuller": 35.0, "Harris": 28.0, "Moore": 20.0, "Others": 17.0 } },  // many candidates → high runoff opp.
-  59281: { raceRule: "PLURALITY", expectedTurnout: 1_800_000, pollAvg: { "Crawford": 55.0, "Schimel": 45.0 } },  // WI Supreme Court
-  59277: { raceRule: "MAJORITY", expectedTurnout: 85_000, pollAvg: { "Austin Scott": 58.0, "Colton Griffin": 25.0, "Others": 17.0 } },  // GA US House 14 Special
+  52556: { raceRule: "PLURALITY", expectedTurnout: 2_000_000, pollAvg: { "Yes": 49.0, "No": 46.7} },  // unchanged
 };
 
 function sortCandidatesByPollData(candidates: RaceCandidate[], pollAvg?: Record<string, number>): RaceCandidate[] {
@@ -70,12 +58,8 @@ function sortCandidatesByPollData(candidates: RaceCandidate[], pollAvg?: Record<
 }
 
 const FEATURED: FeaturedRace[] = [
-  { id: 59281, state: "WI", office: "Supreme Court", raceType: "General Election", label: "Wisconsin Supreme Court General Election" },
-  { id: 59277, state: "GA", office: "US House", raceType: "General Election", label: "Georgia US House 14 Special Runoff" },
-  { id: 59280, state: "GA", office: "State House", raceType: "General Election", label: "Georgia State House 94 Special Runoff" },
-  { id: 59278, state: "GA", office: "State Senate", raceType: "General Election", label: "Georgia State Senate 53 Special Runoff" },
-  { id: 59279, state: "GA", office: "State House", raceType: "General Election", label: "Georgia State House 130 Special Runoff" },
-  { id: 9999999, state: "TEST", office: "Test Map", raceType: "General Election", label: "Map Test — Blank Counties" },
+  { id: 52556, state: "VA", office: "Referendum", raceType: "Special Election", label: "Virginia Redistricting Referendum" },
+
 ];
 
 async function fetchRaceById(id: number): Promise<RaceDetail> {
@@ -1297,8 +1281,8 @@ function RacePickerPanel({ races, raceCache, selectedId, onSelect }: {
 
 // ─── MAIN PAGE ───────────────────────────────────────────────────────────────
 export default function March3FeaturedClient() {
-  const [activeState, setActiveState] = useState<"WI"| "GA" | "TEST">("WI")
-  const [selectedId, setSelectedId] = useState<number>(44286);
+  const [activeState, setActiveState] = useState<"VA">("VA")
+  const [selectedId, setSelectedId] = useState<number>(52556);
   const [error, setError] = useState<string | null>(null);
   const [loadingMap, setLoadingMap] = useState(false);
   const [raceCache, setRaceCache] = useState<Record<number, RaceDetail | undefined>>({});
@@ -1314,9 +1298,7 @@ export default function March3FeaturedClient() {
   const lastProjectedKeyRef = useRef<string>("");
 
   const featuredByState = useMemo(() => ({
-    WI: FEATURED.filter((r) => r.state === "WI"),
-    GA: FEATURED.filter((r) => r.state === "GA"),
-    TEST: FEATURED.filter((r) => r.state === "TEST"),
+  VA: FEATURED.filter((r) => r.state === "VA"),
   }), []);
 
   const selectedRace = raceCache[selectedId];
@@ -1372,7 +1354,7 @@ export default function March3FeaturedClient() {
     return () => clearTimeout(t);
   }, [selectedRace, selectedId]);
 
-  const stateLabels: Record<string, string> = { WI: "WISCONSIN", GA: "GEORGIA", TEST: "TEST" };
+  const stateLabels: Record<string, string> = { VA: "VIRGINIA" };
   const racesForState = featuredByState[activeState] ?? [];
 
   const selectedReporting = selectedRace?.percent_reporting ?? 0;
@@ -1785,9 +1767,9 @@ export default function March3FeaturedClient() {
                 </div>
                 {/* State switcher */}
                 <div style={{ display: "flex", gap: "1px" }}>
-                  {(["WI", "GA"] as const).map((st) => (
-                    <button key={st} className={`res-btn-state ${activeState === st ? "active" : ""}`} onClick={() => setActiveState(st)}>{stateLabels[st]}</button>
-                  ))}
+                  {(["VA"] as const).map((st) => (
+  <button key={st} className={`res-btn-state ${activeState === st ? "active" : ""}`} onClick={() => setActiveState(st)}>{stateLabels[st]}</button>
+))}
                 </div>
               </div>
             </div>
@@ -1809,7 +1791,7 @@ export default function March3FeaturedClient() {
               if (last && last.office === r.office) { last.races.push(r); }
               else { groups.push({ office: r.office, races: [r] }); }
               return groups;
-            }, []).map(({ office, races }) => (
+            }, []).map(({ office, races }: { office: string; races: FeaturedRace[] }) => (
               <optgroup key={office} label={`── ${office.toUpperCase()} ──`}>
                 {races.map(r => {
                   const liveData = raceCache[r.id];
