@@ -32,6 +32,24 @@ function round1(n: number) { return Math.round(n * 10) / 10; }
 
 // ─── Poll datasets ────────────────────────────────────────────────────────────
 const TRUMP_POLLS: Poll[] = [
+
+{ pollster: "Emerson", endDate: "2026-04-26", sampleSize: 1000, sampleType: "LV", results: { Approve: 40, Disapprove: 56 } },
+{ pollster: "Morning Consult", endDate: "2026-04-27", sampleSize: 2201, sampleType: "RV", results: { Approve: 45, Disapprove: 53 } },
+{ pollster: "InsiderAdvantage", endDate: "2026-04-27", sampleSize: 800, sampleType: "LV", results: { Approve: 44, Disapprove: 49 } },
+{ pollster: "Reuters/Ipsos", endDate: "2026-04-27", sampleSize: 1014, sampleType: "RV", results: { Approve: 37, Disapprove: 62 } },
+{ pollster: "Economist/YouGov", endDate: "2026-04-27", sampleSize: 1647, sampleType: "RV", results: { Approve: 40, Disapprove: 57 } },
+{ pollster: "Harvard-Harris", endDate: "2026-04-26", sampleSize: 2745, sampleType: "RV", results: { Approve: 42, Disapprove: 53 } },
+{ pollster: "Rasmussen Reports", endDate: "2026-04-27", sampleSize: 1500, sampleType: "LV", results: { Approve: 45, Disapprove: 53 } },
+{ pollster: "Quantus Insights", endDate: "2026-04-23", sampleSize: 1452, sampleType: "LV", results: { Approve: 43, Disapprove: 56 } },
+{ pollster: "FOX News", endDate: "2026-04-20", sampleSize: 1001, sampleType: "RV", results: { Approve: 42, Disapprove: 58 } },
+{ pollster: "Morning Consult", endDate: "2026-04-20", sampleSize: 2203, sampleType: "RV", results: { Approve: 44, Disapprove: 53 } },
+{ pollster: "Economist/YouGov", endDate: "2026-04-20", sampleSize: 1553, sampleType: "RV", results: { Approve: 41, Disapprove: 56 } },
+{ pollster: "Echelon Insights", endDate: "2026-04-20", sampleSize: 1012, sampleType: "LV", results: { Approve: 41, Disapprove: 57 } },
+{ pollster: "RMG Research", endDate: "2026-04-23", sampleSize: 3000, sampleType: "RV", results: { Approve: 42, Disapprove: 55 } },
+{ pollster: "AP/NORC", endDate: "2026-04-20", sampleSize: 2596, sampleType: "A", results: { Approve: 33, Disapprove: 67 } },
+{ pollster: "Reuters/Ipsos", endDate: "2026-04-20", sampleSize: 4557, sampleType: "A", results: { Approve: 36, Disapprove: 62 } },
+{ pollster: "CNBC", endDate: "2026-04-19", sampleSize: 1000, sampleType: "RV", results: { Approve: 40, Disapprove: 58 } },
+
 // ── Rasmussen Reports ──────────────────────────────────────────────────────────
 { pollster: "Rasmussen Reports", endDate: "2026-04-14", sampleSize: 1500, sampleType: "LV", results: { Approve: 43, Disapprove: 55 } },
 { pollster: "Rasmussen Reports", endDate: "2026-04-09", sampleSize: 1500, sampleType: "LV", results: { Approve: 45, Disapprove: 54 } },
@@ -374,6 +392,20 @@ const TRUMP_POLLS: Poll[] = [
 ];
 
 const GB_POLLS: Poll[] = [
+{ pollster: "Emerson", endDate: "2026-04-26", sampleSize: 1000, sampleType: "LV", results: { Democrats: 50, Republicans: 40 } },
+{ pollster: "Harvard-Harris", endDate: "2026-04-26", sampleSize: 500, sampleType: "LV", results: { Democrats: 50, Republicans: 50 } },
+{ pollster: "Economist/YouGov", endDate: "2026-04-27", sampleSize: 1647, sampleType: "RV", results: { Democrats: 46, Republicans: 41 } },
+{ pollster: "Morning Consult", endDate: "2026-04-27", sampleSize: 2201, sampleType: "RV", results: { Democrats: 45, Republicans: 42 } },
+{ pollster: "Reuters/Ipsos", endDate: "2026-04-27", sampleSize: 1014, sampleType: "RV", results: { Democrats: 41, Republicans: 37 } },
+{ pollster: "Quantus Insights", endDate: "2026-04-23", sampleSize: 1452, sampleType: "LV", results: { Democrats: 47, Republicans: 42 } },
+{ pollster: "FOX News", endDate: "2026-04-20", sampleSize: 1001, sampleType: "RV", results: { Democrats: 52, Republicans: 47 } },
+{ pollster: "CNBC", endDate: "2026-04-19", sampleSize: 1000, sampleType: "RV", results: { Democrats: 49, Republicans: 45 } },
+{ pollster: "Morning Consult", endDate: "2026-04-20", sampleSize: 2203, sampleType: "RV", results: { Democrats: 45, Republicans: 42 } },
+{ pollster: "Economist/YouGov", endDate: "2026-04-20", sampleSize: 1553, sampleType: "RV", results: { Democrats: 45, Republicans: 40 } },
+{ pollster: "Echelon Insights", endDate: "2026-04-20", sampleSize: 1012, sampleType: "LV", results: { Democrats: 50, Republicans: 44 } },
+{ pollster: "Reuters/Ipsos", endDate: "2026-04-20", sampleSize: 3577, sampleType: "RV", results: { Democrats: 41, Republicans: 38 } },
+{ pollster: "Marquette", endDate: "2026-04-16", sampleSize: 500, sampleType: "LV", results: { Democrats: 53, Republicans: 43 } },
+{ pollster: "Economist/YouGov", endDate: "2026-04-13", sampleSize: 1573, sampleType: "RV", results: { Democrats: 45, Republicans: 40 } },
 { pollster: "RMG Research", endDate: "2026-04-09", sampleSize: 2000, sampleType: "RV", results: { Democrats: 49, Republicans: 44 } },
 { pollster: "Cygnal", endDate: "2026-04-03", sampleSize: 1500, sampleType: "LV", results: { Democrats: 49, Republicans: 43 } },
 { pollster: "Harvard-Harris", endDate: "2026-03-26", sampleSize: 1000, sampleType: "LV", results: { Democrats: 52, Republicans: 48 } },
@@ -480,6 +512,14 @@ const GB_POLLS: Poll[] = [
 ];
 
 const RT_POLLS: Poll[] = [
+  { pollster: "Economist/YouGov", endDate: "2026-04-27", sampleSize: 1647, sampleType: "RV", results: { RightTrack: 32, WrongTrack: 62 } },
+  { pollster: "Reuters/Ipsos", endDate: "2026-04-27", sampleSize: 1269, sampleType: "A", results: { RightTrack: 19, WrongTrack: 64 } },
+  { pollster: "Harvard-Harris", endDate: "2026-04-26", sampleSize: 2745, sampleType: "RV", results: { RightTrack: 37, WrongTrack: 53 } },
+  { pollster: "Rasmussen Reports", endDate: "2026-04-23", sampleSize: 1841, sampleType: "LV", results: { RightTrack: 38, WrongTrack: 56 } },
+  { pollster: "Economist/YouGov", endDate: "2026-04-20", sampleSize: 1553, sampleType: "RV", results: { RightTrack: 35, WrongTrack: 57 } },
+  { pollster: "Rasmussen Reports", endDate: "2026-04-16", sampleSize: 1765, sampleType: "LV", results: { RightTrack: 40, WrongTrack: 56 } },
+  { pollster: "Marquette", endDate: "2026-04-16", sampleSize: 870, sampleType: "RV", results: { RightTrack: 34, WrongTrack: 66 } },
+  { pollster: "Economist/YouGov", endDate: "2026-04-13", sampleSize: 1573, sampleType: "RV", results: { RightTrack: 34, WrongTrack: 59 } },
   { pollster: "Rasmussen Reports", endDate: "2026-04-09", sampleSize: 1776, sampleType: "LV", results: { RightTrack: 39, WrongTrack: 55 } },
   { pollster: "Cygnal", endDate: "2026-04-03", sampleSize: 1500, sampleType: "LV", results: { RightTrack: 38, WrongTrack: 59 } },
   { pollster: "Rasmussen Reports", endDate: "2026-04-02", sampleSize: 1817, sampleType: "LV", results: { RightTrack: 40, WrongTrack: 55 } },
