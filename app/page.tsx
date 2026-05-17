@@ -962,6 +962,22 @@ const RT_POLLS: Poll[] = [
   { pollster: "Economist/YouGov",       endDate: "2025-01-21", sampleSize: 1426,  sampleType: "RV", results: { RightTrack: 28, WrongTrack: 61 } },
 ];
 
+// ─── KY-04 Republican Primary Polls (Gallrein vs Massie) ──────────────────────
+const KY04_POLLS: Poll[] = [
+  // Big Data Poll Apr 3–7 (forced choice, no undecided)
+  { pollster: "Big Data Poll (R)",        endDate: "2026-04-07", sampleSize: 433, sampleType: "LV", results: { Gallrein: 48, Massie: 52 } },
+  // Quantus Insights Apr 6–7
+  { pollster: "Quantus Insights (R)",     endDate: "2026-04-07", sampleSize: 438, sampleType: "LV", results: { Gallrein: 38, Massie: 47 } },
+  // Big Data Poll May 12–14 (forced choice)
+  { pollster: "Big Data Poll (R)",        endDate: "2026-05-14", sampleSize: 518, sampleType: "LV", results: { Gallrein: 49, Massie: 51 } },
+  // Neighborhood Research & Media May 12–15 (39/39 tie, undecideds excluded from two-way)
+  { pollster: "Neighborhood R&M (R)",     endDate: "2026-05-15", sampleSize: 291, sampleType: "LV", results: { Gallrein: 50, Massie: 50 } },
+  // Quantus Insights May 11–12 (standard ballot with undecideds — 48/43/8%)
+  { pollster: "Quantus Insights (R)",     endDate: "2026-05-12", sampleSize: 908, sampleType: "LV", results: { Gallrein: 53, Massie: 45 } },
+  // SoCal Strategies May 15–16
+  { pollster: "SoCal Strategies (R)",     endDate: "2026-05-16", sampleSize: 450, sampleType: "LV", results: { Gallrein: 54, Massie: 46 } },
+];
+
 
 function buildAvg(polls: Poll[], mult = 3) {
   const adj = polls.map(p => ({ ...p, sampleSize: effN(p.pollster, p.sampleSize, mult) }));
@@ -1129,10 +1145,12 @@ export default function HomePage() {
   const trumpDaily = buildAvg(TRUMP_POLLS, 3);
   const gbDaily    = buildAvg(GB_POLLS, 2);
   const rtDaily    = buildAvg(RT_POLLS, 3);
+  const ky04Daily  = buildAvg(KY04_POLLS, 2);
 
   const tL  = trumpDaily[trumpDaily.length - 1] ?? {};
   const gbL = gbDaily[gbDaily.length - 1] ?? {};
   const rtL = rtDaily[rtDaily.length - 1] ?? {};
+  const ky04L = ky04Daily[ky04Daily.length - 1] ?? {};
 
   const approve    = round1(Number(tL.Approve    ?? 0));
   const disapprove = round1(Number(tL.Disapprove ?? 0));
@@ -1143,6 +1161,11 @@ export default function HomePage() {
   const gbNet      = round1(dem - rep);
   const gbNetStr   = gbNet === 0 ? "EVEN" : gbNet > 0 ? `D+${gbNet.toFixed(1)}` : `R+${Math.abs(gbNet).toFixed(1)}`;
   const latestPoll = [...TRUMP_POLLS].sort((a, b) => b.endDate.localeCompare(a.endDate))[0];
+
+  const ky04Gallrein = round1(Number(ky04L.Gallrein ?? 0));
+  const ky04Massie   = round1(Number(ky04L.Massie   ?? 0));
+  const ky04Net      = round1(ky04Gallrein - ky04Massie);
+  const ky04NetStr   = ky04Net === 0 ? "EVEN" : ky04Net > 0 ? `G+${Math.abs(ky04Net).toFixed(1)}` : `M+${Math.abs(ky04Net).toFixed(1)}`;
 
   const issues = [
     { issue: "Economy / Jobs",    dem: 36, rep: 59 },
@@ -1554,10 +1577,11 @@ export default function HomePage() {
         /* ── Chart cards ── */
         .hp-charts-grid {
           display: grid;
-          grid-template-columns: repeat(3, 1fr);
+          grid-template-columns: repeat(4, 1fr);
           gap: 14px;
           margin-bottom: 20px;
         }
+        @media(max-width: 1100px) { .hp-charts-grid { grid-template-columns: repeat(2, 1fr); } }
         @media(max-width: 900px) { .hp-charts-grid { grid-template-columns: 1fr; } }
 
         .hp-chart-card {
@@ -2268,6 +2292,20 @@ export default function HomePage() {
               { label: "Democrat",   val: `${dem}%`, color: "#2563eb" },
               { label: "Republican", val: `${rep}%`, color: "#e63946" },
               { label: "Margin",     val: gbNetStr,  color: gbNet >= 0 ? "#2563eb" : "#e63946" },
+            ]}
+          />
+          <ChartCard
+            title="KY-04 GOP Primary" sub={`${KY04_POLLS.length} polls · Gallrein vs Massie`}
+            href="/polling" data={ky04Daily}
+            lines={[
+              { key: "Gallrein", name: "Gallrein", color: "#e63946" },
+              { key: "Massie",   name: "Massie",   color: "#7c3aed" },
+            ]}
+            domain={[35, 65]} refY={50}
+            stats={[
+              { label: "Gallrein", val: `${ky04Gallrein}%`, color: "#e63946" },
+              { label: "Massie",   val: `${ky04Massie}%`,   color: "#7c3aed" },
+              { label: "Margin",   val: ky04NetStr,          color: ky04Net > 0 ? "#e63946" : "#7c3aed" },
             ]}
           />
         </div>

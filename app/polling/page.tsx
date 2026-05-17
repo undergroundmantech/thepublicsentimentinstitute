@@ -33,6 +33,26 @@ function round1(n: number) { return Math.round(n * 10) / 10; }
 // ─── Poll datasets ────────────────────────────────────────────────────────────
 const TRUMP_POLLS: Poll[] = [
 
+// ── May 2026 new polls ────────────────────────────────────────────────────────
+{ pollster: "CBS News",            endDate: "2026-05-15", sampleSize: 2064, sampleType: "A",  results: { Approve: 37, Disapprove: 63 } },
+{ pollster: "Rasmussen Reports",   endDate: "2026-05-14", sampleSize: 1500, sampleType: "LV", results: { Approve: 42, Disapprove: 57 } },
+{ pollster: "Economist/YouGov",    endDate: "2026-05-11", sampleSize: 1410, sampleType: "RV", results: { Approve: 41, Disapprove: 57 } },
+{ pollster: "Reuters/Ipsos",       endDate: "2026-05-11", sampleSize: 1254, sampleType: "A",  results: { Approve: 36, Disapprove: 62 } },
+{ pollster: "RMG Research*",       endDate: "2026-05-14", sampleSize: 3000, sampleType: "RV", results: { Approve: 42, Disapprove: 57 } },
+{ pollster: "Atlas Intel",         endDate: "2026-05-07", sampleSize: 2069, sampleType: "A",  results: { Approve: 40, Disapprove: 60 } },
+{ pollster: "Financial Times",     endDate: "2026-05-05", sampleSize: 3167, sampleType: "RV", results: { Approve: 39, Disapprove: 54 } },
+{ pollster: "Economist/YouGov",    endDate: "2026-05-04", sampleSize: 1409, sampleType: "RV", results: { Approve: 40, Disapprove: 58 } },
+{ pollster: "CNN",                 endDate: "2026-05-04", sampleSize: 0,    sampleType: "RV", results: { Approve: 36, Disapprove: 63 } },
+{ pollster: "Morning Consult",     endDate: "2026-05-03", sampleSize: 2200, sampleType: "RV", results: { Approve: 44, Disapprove: 53 } },
+{ pollster: "Forbes/HarrisX",      endDate: "2026-05-05", sampleSize: 1888, sampleType: "RV", results: { Approve: 41, Disapprove: 56 } },
+{ pollster: "RMG Research*",       endDate: "2026-05-06", sampleSize: 3000, sampleType: "RV", results: { Approve: 41, Disapprove: 58 } },
+{ pollster: "I&I/TIPP",            endDate: "2026-05-01", sampleSize: 1464, sampleType: "A",  results: { Approve: 38, Disapprove: 54 } },
+{ pollster: "NPR/PBS/Marist",      endDate: "2026-04-30", sampleSize: 1155, sampleType: "RV", results: { Approve: 39, Disapprove: 59 } },
+{ pollster: "Big Data Poll",       endDate: "2026-04-28", sampleSize: 3176, sampleType: "RV", results: { Approve: 40, Disapprove: 57 } },
+{ pollster: "InsiderAdvantage",    endDate: "2026-04-27", sampleSize: 800,  sampleType: "LV", results: { Approve: 44, Disapprove: 49 } },
+{ pollster: "ABC/Wash Post/Ipsos", endDate: "2026-04-28", sampleSize: 2059, sampleType: "RV", results: { Approve: 39, Disapprove: 60 } },
+{ pollster: "RMG Research*",       endDate: "2026-04-30", sampleSize: 3000, sampleType: "RV", results: { Approve: 42, Disapprove: 57 } },
+// ── April 2026 (existing) ─────────────────────────────────────────────────────
 { pollster: "Emerson", endDate: "2026-04-26", sampleSize: 1000, sampleType: "LV", results: { Approve: 40, Disapprove: 56 } },
 { pollster: "Morning Consult", endDate: "2026-04-27", sampleSize: 2201, sampleType: "RV", results: { Approve: 45, Disapprove: 53 } },
 { pollster: "InsiderAdvantage", endDate: "2026-04-27", sampleSize: 800, sampleType: "LV", results: { Approve: 44, Disapprove: 49 } },
@@ -392,6 +412,23 @@ const TRUMP_POLLS: Poll[] = [
 ];
 
 const GB_POLLS: Poll[] = [
+// ── May 2026 new polls ────────────────────────────────────────────────────────
+{ pollster: "Economist/YouGov",    endDate: "2026-05-11", sampleSize: 1410, sampleType: "RV", results: { Democrats: 45, Republicans: 40 } },
+{ pollster: "Reuters/Ipsos",       endDate: "2026-05-11", sampleSize: 993,  sampleType: "RV", results: { Democrats: 41, Republicans: 35 } },
+{ pollster: "Atlas Intel",         endDate: "2026-05-07", sampleSize: 2069, sampleType: "A",  results: { Democrats: 55, Republicans: 40 } },
+{ pollster: "Cygnal",              endDate: "2026-05-06", sampleSize: 1500, sampleType: "LV", results: { Democrats: 49, Republicans: 42 } },
+{ pollster: "RMG Research**",      endDate: "2026-05-06", sampleSize: 2000, sampleType: "RV", results: { Democrats: 50, Republicans: 41 } },
+{ pollster: "Financial Times",     endDate: "2026-05-05", sampleSize: 3167, sampleType: "RV", results: { Democrats: 52, Republicans: 44 } },
+{ pollster: "Economist/YouGov",    endDate: "2026-05-04", sampleSize: 1409, sampleType: "RV", results: { Democrats: 44, Republicans: 41 } },
+{ pollster: "CNN",                 endDate: "2026-05-04", sampleSize: 0,    sampleType: "RV", results: { Democrats: 45, Republicans: 42 } },
+{ pollster: "Forbes/HarrisX",      endDate: "2026-05-05", sampleSize: 1891, sampleType: "LV", results: { Democrats: 48, Republicans: 46 } },
+{ pollster: "Morning Consult",     endDate: "2026-05-03", sampleSize: 2200, sampleType: "RV", results: { Democrats: 46, Republicans: 43 } },
+{ pollster: "NPR/PBS/Marist",      endDate: "2026-04-30", sampleSize: 1155, sampleType: "RV", results: { Democrats: 52, Republicans: 42 } },
+{ pollster: "Big Data Poll",       endDate: "2026-04-28", sampleSize: 2874, sampleType: "LV", results: { Democrats: 50, Republicans: 39 } },
+{ pollster: "ABC/Wash Post/Ipsos", endDate: "2026-04-28", sampleSize: 2059, sampleType: "RV", results: { Democrats: 49, Republicans: 44 } },
+{ pollster: "Morning Consult",     endDate: "2026-04-27", sampleSize: 2201, sampleType: "RV", results: { Democrats: 45, Republicans: 42 } },
+{ pollster: "Reuters/Ipsos",       endDate: "2026-04-27", sampleSize: 1014, sampleType: "RV", results: { Democrats: 41, Republicans: 37 } },
+// ── April 2026 (existing) ─────────────────────────────────────────────────────
 { pollster: "Emerson", endDate: "2026-04-26", sampleSize: 1000, sampleType: "LV", results: { Democrats: 50, Republicans: 40 } },
 { pollster: "Harvard-Harris", endDate: "2026-04-26", sampleSize: 500, sampleType: "LV", results: { Democrats: 50, Republicans: 50 } },
 { pollster: "Economist/YouGov", endDate: "2026-04-27", sampleSize: 1647, sampleType: "RV", results: { Democrats: 46, Republicans: 41 } },
@@ -665,6 +702,16 @@ const RT_POLLS: Poll[] = [
   { pollster: "Reuters/Ipsos", endDate: "2025-01-26", sampleSize: 1034, sampleType: "A", results: { RightTrack: 25, WrongTrack: 54 } },
   { pollster: "Rasmussen Reports", endDate: "2025-01-23", sampleSize: 2070, sampleType: "LV", results: { RightTrack: 39, WrongTrack: 52 } },
   { pollster: "Reuters/Ipsos", endDate: "2025-01-21", sampleSize: 1077, sampleType: "A", results: { RightTrack: 29, WrongTrack: 45 } },
+];
+
+// ─── KY-04 Republican Primary Polls (Gallrein vs Massie) ──────────────────────
+const KY04_POLLS: Poll[] = [
+  { pollster: "Big Data Poll (R)",    endDate: "2026-04-07", sampleSize: 433, sampleType: "LV", results: { Gallrein: 48, Massie: 52 } },
+  { pollster: "Quantus Insights (R)", endDate: "2026-04-07", sampleSize: 438, sampleType: "LV", results: { Gallrein: 38, Massie: 47 } },
+  { pollster: "Big Data Poll (R)",    endDate: "2026-05-14", sampleSize: 518, sampleType: "LV", results: { Gallrein: 49, Massie: 51 } },
+  { pollster: "Neighborhood R&M (R)", endDate: "2026-05-15", sampleSize: 291, sampleType: "LV", results: { Gallrein: 50, Massie: 50 } },
+  { pollster: "Quantus Insights (R)", endDate: "2026-05-12", sampleSize: 908, sampleType: "LV", results: { Gallrein: 53, Massie: 45 } },
+  { pollster: "SoCal Strategies (R)", endDate: "2026-05-16", sampleSize: 450, sampleType: "LV", results: { Gallrein: 54, Massie: 46 } },
 ];
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -1167,6 +1214,58 @@ function FLPrimaryChartPanel() {
   );
 }
 
+// ─────────────────────────────────────────────────────────────────────────────
+// KY-04 PRIMARY CHART PANEL
+// ─────────────────────────────────────────────────────────────────────────────
+
+function KY04ChartPanel() {
+  const ky04Lines = [
+    { key: "Gallrein", name: "Gallrein", color: "#e63946" },
+    { key: "Massie",   name: "Massie",   color: "#7c3aed" },
+  ];
+  const daily = buildAvg(KY04_POLLS, 2);
+  const last  = daily[daily.length - 1] ?? {};
+  const gallrein = round1(Number(last.Gallrein ?? 0));
+  const massie   = round1(Number(last.Massie   ?? 0));
+  const net      = round1(gallrein - massie);
+  const netStr   = net === 0 ? "EVEN" : net > 0 ? `G+${Math.abs(net).toFixed(1)}` : `M+${Math.abs(net).toFixed(1)}`;
+  const netColor = net > 0 ? "#e63946" : net < 0 ? "#7c3aed" : "rgba(255,255,255,.4)";
+
+  return (
+    <div style={{ marginBottom: 28 }}>
+      <div style={{
+        display: "flex", alignItems: "center", gap: 16,
+        marginBottom: 22, paddingTop: 8,
+        borderTop: "1px solid rgba(255,255,255,.06)",
+      }}>
+        <div style={{
+          fontSize: 7.5, fontWeight: 700, letterSpacing: "0.28em", textTransform: "uppercase",
+          color: "#e63946", whiteSpace: "nowrap",
+        }}>
+          KY-04 Republican Primary
+        </div>
+        <div style={{ flex: 1, height: 1, background: "rgba(255,255,255,.06)" }} />
+      </div>
+      <LargeChartPanel
+        title="KY-04 GOP Primary · Gallrein vs Massie"
+        eyebrow="Kentucky 4th Congressional District · Republican Primary · May 19, 2026"
+        data={daily}
+        lines={ky04Lines}
+        domain={[35, 65]}
+        refY={50}
+        stats={[
+          { label: "Gallrein", val: `${gallrein}%`, color: "#e63946" },
+          { label: "Massie",   val: `${massie}%`,   color: "#7c3aed" },
+          { label: "Margin",   val: netStr,          color: netColor },
+          { label: "Polls",    val: `${KY04_POLLS.length}`, color: "rgba(255,255,255,.3)" },
+        ]}
+        pollCount={KY04_POLLS.length}
+      />
+      <SenatePollTable polls={KY04_POLLS} keys={ky04Lines} />
+    </div>
+  );
+}
+
 function SenateSection() {
   return (
     <div style={{ marginTop: 8 }}>
@@ -1285,10 +1384,12 @@ export default function PollingDashboardPage() {
   const trumpDaily = buildAvg(TRUMP_POLLS, 3);
   const gbDaily    = buildAvg(GB_POLLS, 2);
   const rtDaily    = buildAvg(RT_POLLS, 3);
+  const ky04Daily  = buildAvg(KY04_POLLS, 2);
 
   const tL  = trumpDaily[trumpDaily.length - 1] ?? {};
   const gbL = gbDaily[gbDaily.length - 1] ?? {};
   const rtL = rtDaily[rtDaily.length - 1] ?? {};
+  const ky04L = ky04Daily[ky04Daily.length - 1] ?? {};
 
   const approve    = round1(Number(tL.Approve    ?? 0));
   const disapprove = round1(Number(tL.Disapprove ?? 0));
@@ -1433,6 +1534,9 @@ export default function PollingDashboardPage() {
           pollCount={RT_POLLS.length}
         />
         <PollTable polls={RT_POLLS} keys={rtKeys} />
+
+        {/* ══ KY-04 PRIMARY ══ */}
+        <KY04ChartPanel />
 
         {/* ══ SENATE RACES ══ */}
         <SenateSection />
