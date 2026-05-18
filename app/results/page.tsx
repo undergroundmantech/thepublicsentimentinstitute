@@ -26,7 +26,7 @@ type RegionCandidate = { name: string; party: string; votes: string | number; pe
 type RegionResult = { region: { name: string; type: string; fill?: string; percent_reporting?: number; }; candidates: RegionCandidate[]; };
 type RaceDetail = { election_name: string; election_type: string; election_scope: string; election_date: string; country: string; province: string | null; district: string | null; municipality: string | null; polls_open: string | null; polls_close: string | null; last_updated: string | null; percent_reporting?: number; candidates: RaceCandidate[]; region_results?: RegionResult[] | Record<string, RegionResult>; };
 type RaceType = "Democratic Primary" | "Republican Primary" | "Special Election" | "General Election";
-type FeaturedRace = { id: number; state: "VA"; office: string; raceType: RaceType; label: string; };
+type FeaturedRace = { id: number; state: "AL" | "GA" | "KY" | "OR" | "ID" | "PA"; office: string; raceType: RaceType; label: string; };
 
 function getRaceTypeColor(raceType: RaceType): string {
   if (raceType === "Republican Primary") return "var(--rep)";
@@ -58,8 +58,173 @@ function sortCandidatesByPollData(candidates: RaceCandidate[], pollAvg?: Record<
 }
 
 const FEATURED: FeaturedRace[] = [
-  { id: 52556, state: "VA", office: "Referendum", raceType: "Special Election", label: "Virginia Redistricting Referendum" },
-
+  // ── ALABAMA ──
+  { id: 79431, state: "AL", office: "US Senate", raceType: "Democratic Primary", label: "Alabama US Senate Democratic Primary" },
+  { id: 79432, state: "AL", office: "US Senate", raceType: "Republican Primary", label: "Alabama US Senate Republican Primary" },
+  { id: 79439, state: "AL", office: "Governor", raceType: "Democratic Primary", label: "Alabama Governor Democratic Primary" },
+  { id: 79440, state: "AL", office: "Governor", raceType: "Republican Primary", label: "Alabama Governor Republican Primary" },
+  { id: 79441, state: "AL", office: "Lieutenant Governor", raceType: "Democratic Primary", label: "Alabama Lieutenant Governor Democratic Primary" },
+  { id: 79442, state: "AL", office: "Lieutenant Governor", raceType: "Republican Primary", label: "Alabama Lieutenant Governor Republican Primary" },
+  { id: 79443, state: "AL", office: "Attorney General", raceType: "Democratic Primary", label: "Alabama Attorney General Democratic Primary" },
+  { id: 79444, state: "AL", office: "Attorney General", raceType: "Republican Primary", label: "Alabama Attorney General Republican Primary" },
+  { id: 79445, state: "AL", office: "Secretary of State", raceType: "Democratic Primary", label: "Alabama Secretary of State Democratic Primary" },
+  { id: 79446, state: "AL", office: "Secretary of State", raceType: "Republican Primary", label: "Alabama Secretary of State Republican Primary" },
+  { id: 79447, state: "AL", office: "State Treasurer", raceType: "Democratic Primary", label: "Alabama State Treasurer Democratic Primary" },
+  { id: 79448, state: "AL", office: "State Treasurer", raceType: "Republican Primary", label: "Alabama State Treasurer Republican Primary" },
+  { id: 79449, state: "AL", office: "State Auditor", raceType: "Democratic Primary", label: "Alabama State Auditor Democratic Primary" },
+  { id: 79450, state: "AL", office: "State Auditor", raceType: "Republican Primary", label: "Alabama State Auditor Republican Primary" },
+  { id: 79451, state: "AL", office: "Commissioner of Agriculture and Industries", raceType: "Democratic Primary", label: "Alabama Commissioner of Agriculture and Industries Democratic Primary" },
+  { id: 79452, state: "AL", office: "Commissioner of Agriculture and Industries", raceType: "Republican Primary", label: "Alabama Commissioner of Agriculture and Industries Republican Primary" },
+  { id: 79433, state: "AL", office: "US House 3", raceType: "Democratic Primary", label: "Alabama US House 3 Democratic Primary" },
+  { id: 79434, state: "AL", office: "US House 3", raceType: "Republican Primary", label: "Alabama US House 3 Republican Primary" },
+  { id: 79435, state: "AL", office: "US House 4", raceType: "Democratic Primary", label: "Alabama US House 4 Democratic Primary" },
+  { id: 79436, state: "AL", office: "US House 4", raceType: "Republican Primary", label: "Alabama US House 4 Republican Primary" },
+  { id: 79437, state: "AL", office: "US House 5", raceType: "Democratic Primary", label: "Alabama US House 5 Democratic Primary" },
+  { id: 79438, state: "AL", office: "US House 5", raceType: "Republican Primary", label: "Alabama US House 5 Republican Primary" },
+  // ── GEORGIA ──
+  { id: 70367, state: "GA", office: "US Senate", raceType: "Democratic Primary", label: "Georgia US Senate Democratic Primary" },
+  { id: 70368, state: "GA", office: "US Senate", raceType: "Republican Primary", label: "Georgia US Senate Republican Primary" },
+  { id: 69257, state: "GA", office: "Governor", raceType: "Democratic Primary", label: "Georgia Governor Democratic Primary" },
+  { id: 69258, state: "GA", office: "Governor", raceType: "Republican Primary", label: "Georgia Governor Republican Primary" },
+  { id: 69545, state: "GA", office: "Lieutenant Governor", raceType: "Democratic Primary", label: "Georgia Lieutenant Governor Democratic Primary" },
+  { id: 69546, state: "GA", office: "Lieutenant Governor", raceType: "Republican Primary", label: "Georgia Lieutenant Governor Republican Primary" },
+  { id: 68712, state: "GA", office: "Attorney General", raceType: "Democratic Primary", label: "Georgia Attorney General Democratic Primary" },
+  { id: 68713, state: "GA", office: "Attorney General", raceType: "Republican Primary", label: "Georgia Attorney General Republican Primary" },
+  { id: 69821, state: "GA", office: "Secretary of State", raceType: "Democratic Primary", label: "Georgia Secretary of State Democratic Primary" },
+  { id: 69822, state: "GA", office: "Secretary of State", raceType: "Republican Primary", label: "Georgia Secretary of State Republican Primary" },
+  { id: 68998, state: "GA", office: "Agriculture Commissioner", raceType: "Democratic Primary", label: "Georgia Agriculture Commissioner Democratic Primary" },
+  { id: 68999, state: "GA", office: "Agriculture Commissioner", raceType: "Republican Primary", label: "Georgia Agriculture Commissioner Republican Primary" },
+  { id: 69000, state: "GA", office: "Insurance & Fire Safety Commissioner", raceType: "Democratic Primary", label: "Georgia Insurance & Fire Safety Commissioner Democratic Primary" },
+  { id: 69001, state: "GA", office: "Insurance & Fire Safety Commissioner", raceType: "Republican Primary", label: "Georgia Insurance & Fire Safety Commissioner Republican Primary" },
+  { id: 69002, state: "GA", office: "Labor Commissioner", raceType: "Democratic Primary", label: "Georgia Labor Commissioner Democratic Primary" },
+  { id: 69003, state: "GA", office: "Labor Commissioner", raceType: "Republican Primary", label: "Georgia Labor Commissioner Republican Primary" },
+  { id: 70138, state: "GA", office: "State School Superintendent", raceType: "Democratic Primary", label: "Georgia State School Superintendent Democratic Primary" },
+  { id: 70139, state: "GA", office: "State School Superintendent", raceType: "Republican Primary", label: "Georgia State School Superintendent Republican Primary" },
+  { id: 69406, state: "GA", office: "Judge Court of Appeals (Brown, III)", raceType: "General Election", label: "Georgia Judge Court of Appeals of Georgia (Brown, III)" },
+  { id: 69408, state: "GA", office: "Judge Court of Appeals (Gobeil)", raceType: "General Election", label: "Georgia Judge Court of Appeals of Georgia (Gobeil)" },
+  { id: 69503, state: "GA", office: "Justice Supreme Court (Bethel)", raceType: "General Election", label: "Georgia Justice Supreme Court of Georgia (Bethel)" },
+  { id: 69505, state: "GA", office: "Justice Supreme Court (Warren)", raceType: "General Election", label: "Georgia Justice Supreme Court of Georgia (Warren)" },
+  { id: 70339, state: "GA", office: "US House 10", raceType: "Democratic Primary", label: "Georgia US House 10 Democratic Primary" },
+  { id: 70340, state: "GA", office: "US House 10", raceType: "Republican Primary", label: "Georgia US House 10 Republican Primary" },
+  { id: 70341, state: "GA", office: "US House 11", raceType: "Democratic Primary", label: "Georgia US House 11 Democratic Primary" },
+  { id: 70342, state: "GA", office: "US House 11", raceType: "Republican Primary", label: "Georgia US House 11 Republican Primary" },
+  { id: 70343, state: "GA", office: "US House 12", raceType: "Democratic Primary", label: "Georgia US House 12 Democratic Primary" },
+  { id: 70344, state: "GA", office: "US House 12", raceType: "Republican Primary", label: "Georgia US House 12 Republican Primary" },
+  { id: 70345, state: "GA", office: "US House 13", raceType: "Democratic Primary", label: "Georgia US House 13 Democratic Primary" },
+  { id: 70346, state: "GA", office: "US House 13", raceType: "Republican Primary", label: "Georgia US House 13 Republican Primary" },
+  { id: 70347, state: "GA", office: "US House 14", raceType: "Democratic Primary", label: "Georgia US House 14 Democratic Primary" },
+  { id: 70348, state: "GA", office: "US House 14", raceType: "Republican Primary", label: "Georgia US House 14 Republican Primary" },
+  { id: 70349, state: "GA", office: "US House 1", raceType: "Democratic Primary", label: "Georgia US House 1 Democratic Primary" },
+  { id: 70350, state: "GA", office: "US House 1", raceType: "Republican Primary", label: "Georgia US House 1 Republican Primary" },
+  { id: 70351, state: "GA", office: "US House 2", raceType: "Democratic Primary", label: "Georgia US House 2 Democratic Primary" },
+  { id: 70352, state: "GA", office: "US House 2", raceType: "Republican Primary", label: "Georgia US House 2 Republican Primary" },
+  { id: 70353, state: "GA", office: "US House 3", raceType: "Democratic Primary", label: "Georgia US House 3 Democratic Primary" },
+  { id: 70354, state: "GA", office: "US House 3", raceType: "Republican Primary", label: "Georgia US House 3 Republican Primary" },
+  { id: 70355, state: "GA", office: "US House 4", raceType: "Democratic Primary", label: "Georgia US House 4 Democratic Primary" },
+  { id: 70356, state: "GA", office: "US House 4", raceType: "Republican Primary", label: "Georgia US House 4 Republican Primary" },
+  { id: 70357, state: "GA", office: "US House 5", raceType: "Democratic Primary", label: "Georgia US House 5 Democratic Primary" },
+  { id: 70358, state: "GA", office: "US House 5", raceType: "Republican Primary", label: "Georgia US House 5 Republican Primary" },
+  { id: 70359, state: "GA", office: "US House 6", raceType: "Democratic Primary", label: "Georgia US House 6 Democratic Primary" },
+  { id: 70360, state: "GA", office: "US House 6", raceType: "Republican Primary", label: "Georgia US House 6 Republican Primary" },
+  { id: 70361, state: "GA", office: "US House 7", raceType: "Democratic Primary", label: "Georgia US House 7 Democratic Primary" },
+  { id: 70362, state: "GA", office: "US House 7", raceType: "Republican Primary", label: "Georgia US House 7 Republican Primary" },
+  { id: 70363, state: "GA", office: "US House 8", raceType: "Democratic Primary", label: "Georgia US House 8 Democratic Primary" },
+  { id: 70364, state: "GA", office: "US House 8", raceType: "Republican Primary", label: "Georgia US House 8 Republican Primary" },
+  { id: 70365, state: "GA", office: "US House 9", raceType: "Democratic Primary", label: "Georgia US House 9 Democratic Primary" },
+  { id: 70366, state: "GA", office: "US House 9", raceType: "Republican Primary", label: "Georgia US House 9 Republican Primary" },
+  // ── KENTUCKY ──
+  { id: 76946, state: "KY", office: "US Senate", raceType: "Democratic Primary", label: "Kentucky US Senate Democratic Primary" },
+  { id: 76947, state: "KY", office: "US Senate", raceType: "Republican Primary", label: "Kentucky US Senate Republican Primary" },
+  { id: 76937, state: "KY", office: "US House 1", raceType: "Republican Primary", label: "Kentucky US House 1 Republican Primary" },
+  { id: 76938, state: "KY", office: "US House 2", raceType: "Democratic Primary", label: "Kentucky US House 2 Democratic Primary" },
+  { id: 76939, state: "KY", office: "US House 2", raceType: "Republican Primary", label: "Kentucky US House 2 Republican Primary" },
+  { id: 76940, state: "KY", office: "US House 3", raceType: "Republican Primary", label: "Kentucky US House 3 Republican Primary" },
+  { id: 76941, state: "KY", office: "US House 4", raceType: "Democratic Primary", label: "Kentucky US House 4 Democratic Primary" },
+  { id: 76942, state: "KY", office: "US House 4", raceType: "Republican Primary", label: "Kentucky US House 4 Republican Primary" },
+  { id: 76943, state: "KY", office: "US House 5", raceType: "Republican Primary", label: "Kentucky US House 5 Republican Primary" },
+  { id: 76944, state: "KY", office: "US House 6", raceType: "Democratic Primary", label: "Kentucky US House 6 Democratic Primary" },
+  { id: 76945, state: "KY", office: "US House 6", raceType: "Republican Primary", label: "Kentucky US House 6 Republican Primary" },
+  // ── OREGON ──
+  { id: 79429, state: "OR", office: "US Senate", raceType: "Democratic Primary", label: "Oregon US Senate Democratic Primary" },
+  { id: 79430, state: "OR", office: "US Senate", raceType: "Republican Primary", label: "Oregon US Senate Republican Primary" },
+  { id: 79219, state: "OR", office: "Governor", raceType: "Democratic Primary", label: "Oregon Governor Democratic Primary" },
+  { id: 79220, state: "OR", office: "Governor", raceType: "Republican Primary", label: "Oregon Governor Republican Primary" },
+  { id: 79417, state: "OR", office: "US House 1", raceType: "Democratic Primary", label: "Oregon US House 1 Democratic Primary" },
+  { id: 79418, state: "OR", office: "US House 1", raceType: "Republican Primary", label: "Oregon US House 1 Republican Primary" },
+  { id: 79419, state: "OR", office: "US House 2", raceType: "Democratic Primary", label: "Oregon US House 2 Democratic Primary" },
+  { id: 79420, state: "OR", office: "US House 2", raceType: "Republican Primary", label: "Oregon US House 2 Republican Primary" },
+  { id: 79421, state: "OR", office: "US House 3", raceType: "Democratic Primary", label: "Oregon US House 3 Democratic Primary" },
+  { id: 79422, state: "OR", office: "US House 3", raceType: "Republican Primary", label: "Oregon US House 3 Republican Primary" },
+  { id: 79423, state: "OR", office: "US House 4", raceType: "Democratic Primary", label: "Oregon US House 4 Democratic Primary" },
+  { id: 79424, state: "OR", office: "US House 4", raceType: "Republican Primary", label: "Oregon US House 4 Republican Primary" },
+  { id: 79425, state: "OR", office: "US House 5", raceType: "Democratic Primary", label: "Oregon US House 5 Democratic Primary" },
+  { id: 79426, state: "OR", office: "US House 5", raceType: "Republican Primary", label: "Oregon US House 5 Republican Primary" },
+  { id: 79427, state: "OR", office: "US House 6", raceType: "Democratic Primary", label: "Oregon US House 6 Democratic Primary" },
+  { id: 79428, state: "OR", office: "US House 6", raceType: "Republican Primary", label: "Oregon US House 6 Republican Primary" },
+  // ── IDAHO ──
+  { id: 78432, state: "ID", office: "US Senate", raceType: "Democratic Primary", label: "Idaho US Senate Democratic Primary" },
+  { id: 78433, state: "ID", office: "US Senate", raceType: "Special Election", label: "Idaho US Senate Libertarian Primary" },
+  { id: 78434, state: "ID", office: "US Senate", raceType: "Republican Primary", label: "Idaho US Senate Republican Primary" },
+  { id: 78179, state: "ID", office: "Governor", raceType: "Democratic Primary", label: "Idaho Governor Democratic Primary" },
+  { id: 78180, state: "ID", office: "Governor", raceType: "Special Election", label: "Idaho Governor Libertarian Primary" },
+  { id: 78181, state: "ID", office: "Governor", raceType: "Republican Primary", label: "Idaho Governor Republican Primary" },
+  { id: 78185, state: "ID", office: "Lieutenant Governor", raceType: "Democratic Primary", label: "Idaho Lieutenant Governor Democratic Primary" },
+  { id: 78186, state: "ID", office: "Lieutenant Governor", raceType: "Republican Primary", label: "Idaho Lieutenant Governor Republican Primary" },
+  { id: 78169, state: "ID", office: "Attorney General", raceType: "Democratic Primary", label: "Idaho Attorney General Democratic Primary" },
+  { id: 78170, state: "ID", office: "Attorney General", raceType: "Special Election", label: "Idaho Attorney General Libertarian Primary" },
+  { id: 78171, state: "ID", office: "Attorney General", raceType: "Republican Primary", label: "Idaho Attorney General Republican Primary" },
+  { id: 78220, state: "ID", office: "Secretary of State", raceType: "Democratic Primary", label: "Idaho Secretary of State Democratic Primary" },
+  { id: 78222, state: "ID", office: "Secretary of State", raceType: "Republican Primary", label: "Idaho Secretary of State Republican Primary" },
+  { id: 78421, state: "ID", office: "State Treasurer", raceType: "Democratic Primary", label: "Idaho State Treasurer Democratic Primary" },
+  { id: 78422, state: "ID", office: "State Treasurer", raceType: "Special Election", label: "Idaho State Treasurer Libertarian Primary" },
+  { id: 78423, state: "ID", office: "State Treasurer", raceType: "Republican Primary", label: "Idaho State Treasurer Republican Primary" },
+  { id: 78223, state: "ID", office: "State Controller", raceType: "Democratic Primary", label: "Idaho State Controller Democratic Primary" },
+  { id: 78224, state: "ID", office: "State Controller", raceType: "Republican Primary", label: "Idaho State Controller Republican Primary" },
+  { id: 78424, state: "ID", office: "Superintendent of Public Instruction", raceType: "Democratic Primary", label: "Idaho Superintendent of Public Instruction Democratic Primary" },
+  { id: 78425, state: "ID", office: "Superintendent of Public Instruction", raceType: "Special Election", label: "Idaho Superintendent of Public Instruction Libertarian Primary" },
+  { id: 78426, state: "ID", office: "Superintendent of Public Instruction", raceType: "Republican Primary", label: "Idaho Superintendent of Public Instruction Republican Primary" },
+  { id: 78427, state: "ID", office: "US House 1", raceType: "Democratic Primary", label: "Idaho US House 1 Democratic Primary" },
+  { id: 78428, state: "ID", office: "US House 1", raceType: "Republican Primary", label: "Idaho US House 1 Republican Primary" },
+  { id: 78429, state: "ID", office: "US House 2", raceType: "Democratic Primary", label: "Idaho US House 2 Democratic Primary" },
+  { id: 78431, state: "ID", office: "US House 2", raceType: "Republican Primary", label: "Idaho US House 2 Republican Primary" },
+  // ── PENNSYLVANIA ──
+  { id: 75514, state: "PA", office: "Governor", raceType: "Democratic Primary", label: "Pennsylvania Governor Democratic Primary" },
+  { id: 75515, state: "PA", office: "Governor", raceType: "Republican Primary", label: "Pennsylvania Governor Republican Primary" },
+  { id: 75516, state: "PA", office: "Lieutenant Governor", raceType: "Democratic Primary", label: "Pennsylvania Lieutenant Governor Democratic Primary" },
+  { id: 75517, state: "PA", office: "Lieutenant Governor", raceType: "Republican Primary", label: "Pennsylvania Lieutenant Governor Republican Primary" },
+  { id: 76040, state: "PA", office: "US House 10", raceType: "Democratic Primary", label: "Pennsylvania US House 10 Democratic Primary" },
+  { id: 76041, state: "PA", office: "US House 10", raceType: "Republican Primary", label: "Pennsylvania US House 10 Republican Primary" },
+  { id: 76042, state: "PA", office: "US House 11", raceType: "Democratic Primary", label: "Pennsylvania US House 11 Democratic Primary" },
+  { id: 76043, state: "PA", office: "US House 11", raceType: "Republican Primary", label: "Pennsylvania US House 11 Republican Primary" },
+  { id: 76044, state: "PA", office: "US House 12", raceType: "Democratic Primary", label: "Pennsylvania US House 12 Democratic Primary" },
+  { id: 76045, state: "PA", office: "US House 12", raceType: "Republican Primary", label: "Pennsylvania US House 12 Republican Primary" },
+  { id: 76046, state: "PA", office: "US House 13", raceType: "Democratic Primary", label: "Pennsylvania US House 13 Democratic Primary" },
+  { id: 76047, state: "PA", office: "US House 13", raceType: "Republican Primary", label: "Pennsylvania US House 13 Republican Primary" },
+  { id: 76048, state: "PA", office: "US House 14", raceType: "Democratic Primary", label: "Pennsylvania US House 14 Democratic Primary" },
+  { id: 76049, state: "PA", office: "US House 14", raceType: "Republican Primary", label: "Pennsylvania US House 14 Republican Primary" },
+  { id: 76050, state: "PA", office: "US House 15", raceType: "Democratic Primary", label: "Pennsylvania US House 15 Democratic Primary" },
+  { id: 76051, state: "PA", office: "US House 15", raceType: "Republican Primary", label: "Pennsylvania US House 15 Republican Primary" },
+  { id: 76052, state: "PA", office: "US House 16", raceType: "Democratic Primary", label: "Pennsylvania US House 16 Democratic Primary" },
+  { id: 76053, state: "PA", office: "US House 16", raceType: "Republican Primary", label: "Pennsylvania US House 16 Republican Primary" },
+  { id: 76054, state: "PA", office: "US House 17", raceType: "Democratic Primary", label: "Pennsylvania US House 17 Democratic Primary" },
+  { id: 76055, state: "PA", office: "US House 17", raceType: "Republican Primary", label: "Pennsylvania US House 17 Republican Primary" },
+  { id: 76056, state: "PA", office: "US House 1", raceType: "Democratic Primary", label: "Pennsylvania US House 1 Democratic Primary" },
+  { id: 76057, state: "PA", office: "US House 1", raceType: "Republican Primary", label: "Pennsylvania US House 1 Republican Primary" },
+  { id: 76058, state: "PA", office: "US House 2", raceType: "Democratic Primary", label: "Pennsylvania US House 2 Democratic Primary" },
+  { id: 76059, state: "PA", office: "US House 2", raceType: "Republican Primary", label: "Pennsylvania US House 2 Republican Primary" },
+  { id: 76060, state: "PA", office: "US House 3", raceType: "Democratic Primary", label: "Pennsylvania US House 3 Democratic Primary" },
+  { id: 76061, state: "PA", office: "US House 4", raceType: "Democratic Primary", label: "Pennsylvania US House 4 Democratic Primary" },
+  { id: 76062, state: "PA", office: "US House 4", raceType: "Republican Primary", label: "Pennsylvania US House 4 Republican Primary" },
+  { id: 76063, state: "PA", office: "US House 5", raceType: "Democratic Primary", label: "Pennsylvania US House 5 Democratic Primary" },
+  { id: 76064, state: "PA", office: "US House 5", raceType: "Republican Primary", label: "Pennsylvania US House 5 Republican Primary" },
+  { id: 76065, state: "PA", office: "US House 6", raceType: "Democratic Primary", label: "Pennsylvania US House 6 Democratic Primary" },
+  { id: 76066, state: "PA", office: "US House 6", raceType: "Republican Primary", label: "Pennsylvania US House 6 Republican Primary" },
+  { id: 76067, state: "PA", office: "US House 7", raceType: "Democratic Primary", label: "Pennsylvania US House 7 Democratic Primary" },
+  { id: 76068, state: "PA", office: "US House 7", raceType: "Republican Primary", label: "Pennsylvania US House 7 Republican Primary" },
+  { id: 76069, state: "PA", office: "US House 8", raceType: "Democratic Primary", label: "Pennsylvania US House 8 Democratic Primary" },
+  { id: 76070, state: "PA", office: "US House 8", raceType: "Republican Primary", label: "Pennsylvania US House 8 Republican Primary" },
+  { id: 76071, state: "PA", office: "US House 9", raceType: "Democratic Primary", label: "Pennsylvania US House 9 Democratic Primary" },
+  { id: 76072, state: "PA", office: "US House 9", raceType: "Republican Primary", label: "Pennsylvania US House 9 Republican Primary" },
 ];
 
 async function fetchRaceById(id: number): Promise<RaceDetail> {
@@ -1281,8 +1446,10 @@ function RacePickerPanel({ races, raceCache, selectedId, onSelect }: {
 
 // ─── MAIN PAGE ───────────────────────────────────────────────────────────────
 export default function March3FeaturedClient() {
-  const [activeState, setActiveState] = useState<"VA">("VA")
-  const [selectedId, setSelectedId] = useState<number>(52556);
+  const [pageTab, setPageTab] = useState<"all" | "ky04">("all");
+  const [activeState, setActiveState] = useState<"AL" | "GA" | "KY" | "OR" | "ID" | "PA">("AL")
+  const [selectedId, setSelectedId] = useState<number>(79432);
+  const KY04_ID = 76942;
   const [error, setError] = useState<string | null>(null);
   const [loadingMap, setLoadingMap] = useState(false);
   const [raceCache, setRaceCache] = useState<Record<number, RaceDetail | undefined>>({});
@@ -1298,7 +1465,12 @@ export default function March3FeaturedClient() {
   const lastProjectedKeyRef = useRef<string>("");
 
   const featuredByState = useMemo(() => ({
-  VA: FEATURED.filter((r) => r.state === "VA"),
+  AL: FEATURED.filter((r) => r.state === "AL"),
+  GA: FEATURED.filter((r) => r.state === "GA"),
+  KY: FEATURED.filter((r) => r.state === "KY"),
+  OR: FEATURED.filter((r) => r.state === "OR"),
+  ID: FEATURED.filter((r) => r.state === "ID"),
+  PA: FEATURED.filter((r) => r.state === "PA"),
   }), []);
 
   const selectedRace = raceCache[selectedId];
@@ -1333,7 +1505,7 @@ export default function March3FeaturedClient() {
   }, [selectedId]);
 
   useEffect(() => {
-    const first = featuredByState[activeState]?.[0];
+    const first = featuredByState[activeState as keyof typeof featuredByState]?.[0];
     if (first && !FEATURED.some((r) => r.id === selectedId && r.state === activeState)) setSelectedId(first.id);
   }, [activeState, featuredByState, selectedId]);
 
@@ -1354,8 +1526,15 @@ export default function March3FeaturedClient() {
     return () => clearTimeout(t);
   }, [selectedRace, selectedId]);
 
-  const stateLabels: Record<string, string> = { VA: "VIRGINIA" };
-  const racesForState = featuredByState[activeState] ?? [];
+  const stateLabels: Record<string, string> = { AL: "ALABAMA", GA: "GEORGIA", KY: "KENTUCKY", OR: "OREGON", ID: "IDAHO", PA: "PENNSYLVANIA" };
+  // When switching to KY04 tab, load its map
+  useEffect(() => {
+    if (pageTab === "ky04") {
+      setSelectedId(KY04_ID);
+    }
+  }, [pageTab]);
+
+  const racesForState = featuredByState[activeState as keyof typeof featuredByState] ?? [];
 
   const selectedReporting = selectedRace?.percent_reporting ?? 0;
   const selectedCloseDate = parseIsoDate(selectedRace?.polls_close ?? null);
@@ -1733,6 +1912,27 @@ export default function March3FeaturedClient() {
         *::-webkit-scrollbar-thumb:hover { background:rgba(124,58,237,0.4); }
         @media (prefers-reduced-motion:reduce) { .res-bar-fill,.res-btn-primary,.res-btn-ghost,.res-btn-state { transition:none !important; } .res-live-dot { animation:none !important; } }
         input[type=range] { height:4px; cursor:pointer; }
+
+        /* ── PAGE TABS ── */
+        .res-page-tabs { display:flex; align-items:stretch; background:var(--background2); border-bottom:1px solid var(--border); padding:0 20px; gap:0; }
+        .res-page-tab { display:flex; align-items:center; gap:7px; padding:11px 18px; background:transparent; border:none; border-bottom:2px solid transparent; color:rgba(255,255,255,0.38); font-family:var(--font-body); font-size:9px; font-weight:700; letter-spacing:0.22em; text-transform:uppercase; cursor:pointer; transition:color 140ms ease,border-color 140ms ease; white-space:nowrap; margin-bottom:-1px; }
+        .res-page-tab:hover { color:rgba(255,255,255,0.70); }
+        .res-page-tab.active { color:#fff; border-bottom-color:var(--rep); }
+        .res-page-tab.ky04-tab.active { border-bottom-color:#f59e0b; color:#f59e0b; }
+        .res-page-tab .tab-dot { width:6px; height:6px; border-radius:50%; background:var(--rep); flex-shrink:0; animation:res-pulse 1.8s ease-in-out infinite; }
+        .res-page-tab.ky04-tab .tab-dot { background:#f59e0b; }
+        @keyframes spotlight-flash { 0%,100%{box-shadow:0 0 0 rgba(245,158,11,0);} 50%{box-shadow:0 0 18px rgba(245,158,11,0.25);} }
+        .ky04-tab.active { animation: spotlight-flash 2.8s ease-in-out infinite; }
+
+        /* ── KY04 SPOTLIGHT ── */
+        .ky04-spotlight { max-width:1800px; margin:0 auto; padding:12px 20px 24px; display:grid; grid-template-columns:1fr minmax(280px,340px); gap:12px; align-items:start; }
+        .ky04-hero { background:rgba(245,158,11,0.04); border:1px solid rgba(245,158,11,0.20); padding:20px 22px 18px; position:relative; overflow:hidden; }
+        .ky04-hero::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse 60% 80% at 0% 50%,rgba(245,158,11,0.06) 0%,transparent 70%); pointer-events:none; }
+        .ky04-badge { display:inline-flex; align-items:center; gap:5px; padding:3px 8px; border:1px solid rgba(245,158,11,0.40); background:rgba(245,158,11,0.08); font-family:var(--font-body); font-size:7px; font-weight:700; letter-spacing:0.22em; color:#f59e0b; margin-bottom:10px; }
+        .ky04-race-title { font-family:var(--font-display); font-size:clamp(20px,2.4vw,34px); font-weight:900; text-transform:uppercase; color:#fff; letter-spacing:0.01em; line-height:1; margin-bottom:6px; }
+        .ky04-race-sub { font-family:var(--font-body); font-size:9px; font-weight:700; letter-spacing:0.22em; text-transform:uppercase; color:rgba(255,255,255,0.35); margin-bottom:18px; }
+        @media (max-width:768px) { .ky04-spotlight { grid-template-columns:1fr; padding:10px 14px 20px; } }
+        @media (max-width:640px) { .ky04-spotlight { padding:8px 10px 16px; } }
       `}</style>
 
       <main className="res-root" style={{ minHeight: "100vh", background: "transparent", color: "var(--foreground)" }}>
@@ -1756,7 +1956,7 @@ export default function March3FeaturedClient() {
           <div className="res-page-header-inner">
             <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: "12px" }}>
               <div>
-                <div className="res-page-sub">APRIL 7TH GENERAL ELECTIONS · 2026</div>
+                <div className="res-page-sub">MAY 19TH PRIMARY ELECTIONS · 2026</div>
                 <h1 className="res-page-title">Election <em>Night</em></h1>
               </div>
               <div style={{ display: "flex", alignItems: "center", gap: "12px", flexWrap: "wrap" }}>
@@ -1767,7 +1967,7 @@ export default function March3FeaturedClient() {
                 </div>
                 {/* State switcher */}
                 <div style={{ display: "flex", gap: "1px" }}>
-                  {(["VA"] as const).map((st) => (
+                  {(["AL", "GA", "KY", "OR", "ID", "PA"] as const).map((st) => (
   <button key={st} className={`res-btn-state ${activeState === st ? "active" : ""}`} onClick={() => setActiveState(st)}>{stateLabels[st]}</button>
 ))}
                 </div>
@@ -1775,6 +1975,167 @@ export default function March3FeaturedClient() {
             </div>
           </div>
         </div>
+
+        {/* PAGE TABS */}
+        <div className="res-page-tabs">
+          <button
+            className={`res-page-tab ${pageTab === "all" ? "active" : ""}`}
+            onClick={() => setPageTab("all")}
+          >
+            All Races
+          </button>
+          <button
+            className={`res-page-tab ky04-tab ${pageTab === "ky04" ? "active" : ""}`}
+            onClick={() => { setPageTab("ky04"); }}
+          >
+            <span className="tab-dot" />
+            ★ KY-04 Republican Primary
+          </button>
+        </div>
+
+        {/* ── KY-04 SPOTLIGHT TAB ── */}
+        {pageTab === "ky04" && (() => {
+          const ky04Race = raceCache[KY04_ID];
+          const ky04Reporting = ky04Race?.percent_reporting ?? 0;
+          const ky04Winner = ky04Race?.candidates?.find(c => c.winner);
+          const ky04CloseDate = parseIsoDate(ky04Race?.polls_close ?? null);
+          const ky04CloseLocal = ky04CloseDate ? formatLocalCloseTime(ky04CloseDate) : "—";
+          const ky04MsLeft = ky04CloseDate ? ky04CloseDate.getTime() - nowMs : null;
+          const ky04Winners = ky04Race?.candidates?.filter(c => c.winner) ?? [];
+          const isKy04MajorityRunoff = false;
+          return (
+            <div className="ky04-spotlight">
+              {/* LEFT: hero + topline */}
+              <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+                {/* Hero banner */}
+                <div className="ky04-hero res-panel">
+                  <div className="res-tri-stripe" style={{ background: "linear-gradient(90deg,#b91c1c 0%,#f59e0b 50%,#b91c1c 100%)" }} />
+                  <div style={{ padding: "18px 20px 16px", position: "relative" }}>
+                    <div className="ky04-badge">
+                      <span className="res-live-dot" style={{ background: "#f59e0b" }} />
+                      SPOTLIGHT RACE · KENTUCKY
+                    </div>
+                    <div className="ky04-race-title">KY-04 Republican Primary</div>
+                    <div className="ky04-race-sub">Kentucky US House District 4 · May 19, 2026</div>
+                    <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginBottom: 14 }}>
+                      <span className="res-badge res-badge-red"><span className="res-live-dot" style={{ background: "var(--rep)" }} />LIVE</span>
+                      <span className="res-badge" style={{ borderColor: "rgba(245,158,11,0.3)", color: "#f59e0b" }}>HIGH INTEREST</span>
+                      <span className="res-badge res-badge-purple">AUTO-REFRESH / 30s</span>
+                      {ky04Race?.last_updated && <span className="res-badge">UPDATED {prettyTime(ky04Race.last_updated)}</span>}
+                    </div>
+                    {/* Reporting bar */}
+                    <div style={{ marginBottom: 6 }}>
+                      <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 4 }}>
+                        <span className="res-note" style={{ color: "rgba(255,255,255,0.4)" }}>PRECINCTS REPORTING</span>
+                        <span style={{ fontFamily: "var(--font-body)", fontSize: "9px", fontWeight: 900, color: "#f59e0b" }}>{ky04Reporting.toFixed(1)}%</span>
+                      </div>
+                      <div className="res-bar-track" style={{ height: 5 }}>
+                        <div className="res-bar-fill" style={{ width: `${ky04Reporting}%`, background: "linear-gradient(90deg,#b91c1c,#f59e0b)", height: 5 }} />
+                      </div>
+                    </div>
+                    {/* Polls close */}
+                    <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginTop: 12 }}>
+                      <span className="res-badge">POLLS CLOSE {ky04CloseLocal}</span>
+                      <span className={`res-badge ${ky04MsLeft && ky04MsLeft > 0 ? "" : "res-badge-red"}`}>{ky04MsLeft === null ? "—" : formatCountdown(ky04MsLeft)}</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Topline candidates */}
+                <div className="res-panel" style={{ overflow: "hidden" }}>
+                  <div className="res-tri-stripe" />
+                  <div className="res-panel-header">
+                    <span className="res-panel-tag">TOPLINE RESULTS</span>
+                    <span style={{ fontFamily: "var(--font-body)", fontSize: "9px", fontWeight: 700, color: "rgba(255,255,255,0.4)", letterSpacing: "0.10em" }}>{ky04Reporting.toFixed(1)}% IN</span>
+                  </div>
+                  <div style={{ padding: "12px 14px" }}>
+                    {ky04Race?.candidates
+                      ? <CandidateList candidates={ky04Race.candidates} reporting={ky04Reporting} raceId={KY04_ID} isMajorityRunoff={isKy04MajorityRunoff} />
+                      : <div style={{ padding: "32px 0", textAlign: "center" }} className="res-note">AWAITING RESULTS…</div>
+                    }
+                  </div>
+                </div>
+
+                {/* Race Status */}
+                <div className="res-panel" style={{ overflow: "hidden" }}>
+                  <div className="res-panel-header"><span className="res-panel-tag">RACE STATUS</span></div>
+                  <div style={{ padding: "12px 14px", display: "flex", flexDirection: "column", gap: 8 }}>
+                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
+                      <div className="res-stat-block">
+                        <div className="res-stat-block-label">REPORTING</div>
+                        <div className="res-stat-block-val">{ky04Reporting.toFixed(1)}%</div>
+                        <div className="res-bar-track" style={{ marginTop: 6 }}><div className="res-bar-fill" style={{ width: `${ky04Reporting}%`, background: "#f59e0b" }} /></div>
+                      </div>
+                      <div className="res-stat-block">
+                        <div className="res-stat-block-label">CLOSES</div>
+                        <div className="res-stat-block-val" style={{ fontSize: "clamp(16px,2vw,22px)" }}>{ky04CloseLocal}</div>
+                        <div className="res-note" style={{ marginTop: 5, color: ky04MsLeft && ky04MsLeft > 0 ? "var(--muted3)" : "var(--rep)", fontWeight: 700 }}>{ky04MsLeft === null ? "—" : formatCountdown(ky04MsLeft)}</div>
+                      </div>
+                    </div>
+                    <div className="res-stat-block">
+                      <div className="res-stat-row" style={{ marginBottom: 5 }}>
+                        <span className="res-stat-block-label">LEADER</span>
+                        <span className="res-note" style={{ color: ky04Winner ? "var(--win)" : "var(--muted3)", fontWeight: 700 }}>
+                          {ky04Winner ? "OFFICIAL" : ky04Reporting > 0 ? `${ky04Reporting.toFixed(1)}% IN` : "PENDING"}
+                        </span>
+                      </div>
+                      <div style={{ fontFamily: "var(--font-body)", fontSize: "12px", fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: "rgba(255,255,255,0.88)" }}>
+                        {ky04Winner ? `✓ ${ky04Winner.name}` : ky04Race?.candidates?.length ? [...ky04Race.candidates].sort((a,b)=>(b.percent??0)-(a.percent??0))[0]?.name ?? "—" : "—"}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Map */}
+                {mapBlankSvg && selectedId === KY04_ID ? (
+                  <div className="res-panel" style={{ overflow: "hidden" }}>
+                    <div className="res-tri-stripe" />
+                    <div className="res-panel-header" style={{ flexWrap: "wrap", gap: 8 }}>
+                      <span className="res-panel-tag">COUNTY MAP</span>
+                      <div style={{ display: "flex", gap: 5 }}><Legend /></div>
+                    </div>
+                    <div style={{ height: 380, overflow: "hidden" }}>
+                      <MapWithCountyTooltip svgText={mapBlankSvg} regionResults={ky04Race?.region_results ?? []} />
+                    </div>
+                  </div>
+                ) : null}
+              </div>
+
+              {/* RIGHT: Forecast */}
+              <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+                <div className="res-panel" style={{ overflow: "hidden", padding: 0 }}>
+                  <div style={{ padding: "10px 14px", borderBottom: "1px solid var(--border)", background: "var(--background2)" }}>
+                    <span className="res-panel-tag">ABOUT THIS RACE</span>
+                  </div>
+                  <div style={{ padding: "14px 16px", fontFamily: "var(--font-body)", fontSize: "9px", lineHeight: 1.8, color: "rgba(255,255,255,0.50)", letterSpacing: "0.04em" }}>
+                    Kentucky's 4th Congressional District covers the northern and eastern parts of the state — including suburban Cincinnati and deep Appalachian counties. The Republican primary is the de facto general election in this heavily GOP district, making it one of the most watched intraparty contests in the state on May 19th.
+                  </div>
+                </div>
+
+                <ForecastPanel
+                  key={`ky04-${KY04_ID}`}
+                  raceId={KY04_ID}
+                  refreshTick={refreshTick}
+                  raceData={ky04Race}
+                  onForecastUpdate={() => {}}
+                />
+
+                {/* County table */}
+                {ky04Race?.region_results && (
+                  <CountyTotalsTable
+                    regionResults={ky04Race.region_results}
+                    collapsed={countyCollapsed}
+                    onToggle={() => setCountyCollapsed(v => !v)}
+                    maxHeight="420px"
+                  />
+                )}
+              </div>
+            </div>
+          );
+        })()}
+
+        {/* ── ALL RACES TAB ── */}
+        {pageTab === "all" && <>
 
         {/* ── MOBILE RACE SELECTOR (visible below 768px) ── */}
         <div className="res-mobile-race-strip">
@@ -2029,6 +2390,7 @@ export default function March3FeaturedClient() {
           />
           {error && <div className="res-error" style={{ marginTop: 10 }}>ERROR: {error}</div>}
         </div>
+        </>}
       </main>
     </>
   );
