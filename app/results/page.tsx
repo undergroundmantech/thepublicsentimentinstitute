@@ -379,6 +379,9 @@ function MapWithCountyTooltip({ svgText, regionResults }: { svgText: string; reg
     for (const rr of regionResultsArr as any[]) { const k = normalizeRegionName(String(rr?.region?.name ?? rr?.name ?? "")); if (!k) continue; m.set(k, rr); }
     return m;
   }, [regionResultsArr]);
+  // Ref so tooltip/hover handlers (attached once per svgText load) always see latest data
+  const regionMapRef = useRef(regionMap);
+  useEffect(() => { regionMapRef.current = regionMap; }, [regionMap]);
 
   const flashCounty = useCallback((shape: SVGGraphicsElement) => {
     shape.classList.remove("county-updated");
@@ -468,6 +471,7 @@ function MapWithCountyTooltip({ svgText, regionResults }: { svgText: string; reg
     svg.style.display = "block";
     svg.style.transformOrigin = "0 0";
     countyFingerprintsRef.current = new Map();
+    applyTransform(); // restore zoom/pan if switching back to a previously zoomed map
     const shapes = Array.from(svg.querySelectorAll("path, polygon")) as SVGGraphicsElement[];
     shapes.forEach((shape) => {
       const key = getRegionKeyFromElement(shape); if (!key) return;
@@ -478,7 +482,7 @@ function MapWithCountyTooltip({ svgText, regionResults }: { svgText: string; reg
 
       const onMove = (ev: PointerEvent) => {
         if (isPanningRef.current) return; // dragging — no tooltip
-        const currentRR = regionMap.get(key);
+        const currentRR = regionMapRef.current.get(key);
         const tw = 320, th = 280, p = 12, offset = 14;
         const rect = host.getBoundingClientRect();
         const px = ev.clientX - rect.left, py = ev.clientY - rect.top;
@@ -522,7 +526,7 @@ function MapWithCountyTooltip({ svgText, regionResults }: { svgText: string; reg
         }
       });
     });
-  }, [svgText, regionMap]); // eslint-disable-line
+  }, [svgText]); // eslint-disable-line — regionMap updates handled by the effect below
 
   useEffect(() => {
     const host = wrapRef.current; if (!host) return;
