@@ -1513,6 +1513,25 @@ export default function March3FeaturedClient() {
     if (first && !FEATURED.some((r) => r.id === selectedId && r.state === activeState)) setSelectedId(first.id);
   }, [activeState, featuredByState, selectedId]);
 
+  // Deep-link: support /results?race=<id> and /results?tab=ky04
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const params = new URLSearchParams(window.location.search);
+    const tabParam = params.get("tab");
+    const raceParam = params.get("race");
+    if (tabParam === "ky04") { setPageTab("ky04"); return; }
+    if (raceParam) {
+      const id = Number(raceParam);
+      if (id === KY04_ID) { setPageTab("ky04"); return; }
+      const match = FEATURED.find((r) => r.id === id);
+      if (match) {
+        setPageTab("all");
+        setActiveState(match.state as any);
+        setSelectedId(id);
+      }
+    }
+  }, []);
+
   useEffect(() => {
     const race = selectedRace; if (!race?.candidates?.length) return;
     const reporting = race.percent_reporting ?? 0;

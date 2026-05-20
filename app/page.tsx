@@ -1097,47 +1097,54 @@ function ChartCard({ title, sub, href, data, lines, domain, refY, stats }: {
 
 // ─── Live Results Config ───────────────────────────────────────────────────────
 // To go live on election night: set mode → "live", fill in pct/votes, set percentReporting.
+// `spotlight: true` highlights a race with amber spotlight styling.
+// `pollsClose`: shown until percentReporting > 0.
 const LIVE_CONFIG = {
   mode: "upcoming" as "upcoming" | "live",
   race: {
-    name: "Wisconsin Supreme Court",
-    subtitle: "State Supreme Court · Spring Election",
-    date: "April 7, 2026",
-    dateISO: "2026-04-07",
+    name: "Kentucky 4th Congressional District",
+    subtitle: "Republican Primary · Spotlight Race",
+    date: "May 19, 2026",
+    dateISO: "2026-05-19",
+    shortLabel: "May 19",
     href: "/results",
   },
   races: [
     {
-      name: "WI Supreme Court",
-      raceId: 59281,
-      called: true,
-      percentReporting: 57.8,
+      name: "KY-04 Republican Primary",
+      raceId: 76942,
+      spotlight: true,
+      called: false,
+      percentReporting: 0,
+      pollsClose: "7:00 PM ET",
       candidates: [
-        { name: "Chris Taylor", pct: 60.3, votes: 718546, color: "#2563eb" },
-        { name: "Maria Lazar", pct: 39.6, votes: 472432, color: "#e63946" },
+        { name: "Gallrein", pct: 50.8, votes: 0, color: "#e63946" },
+        { name: "Massie",   pct: 48.8, votes: 0, color: "#7c3aed" },
       ],
-      winner: "Chris Taylor",
-      winProb: 100,
+      winner: null as string | null,
+      winProb: 72,
     },
     {
-      name: "GA US House 14",
-      raceId: 59277,
-      called: true,
-      percentReporting: 99.9,
+      name: "AL US Senate (R)",
+      raceId: 79432,
+      spotlight: false,
+      called: false,
+      percentReporting: 0,
+      pollsClose: "8:00 PM CT",
       candidates: [
-        { name: "Clay Fuller", pct: 55.9, votes: 72304, color: "#e63946" },
-        { name: "Shawn Harris", pct: 44.1, votes: 57030, color: "#2563eb" },
+        { name: "Britt",      pct: 0, votes: 0, color: "#e63946" },
+        { name: "Challenger", pct: 0, votes: 0, color: "#9d5cf0" },
       ],
-      winner: "Clay Fuller",
-      winProb: 100,
+      winner: null as string | null,
+      winProb: null as number | null,
     },
   ],
   candidates: [
-    { name: "Chris Taylor", party: "D", color: "#2563eb", pct: 60.3, votes: 718546 },
-    { name: "Maria Lazar",  party: "R", color: "#e63946", pct: 39.6, votes: 472432 },
+    { name: "Gallrein", party: "R", color: "#e63946", pct: 50.8, votes: 0 },
+    { name: "Massie",   party: "R", color: "#7c3aed", pct: 48.8, votes: 0 },
   ],
-  percentReporting: 57.8,
-  lastUpdated: "10:38 PM",
+  percentReporting: 0,
+  lastUpdated: "Polls Closing Soon",
 };
 
 // ─── Page ─────────────────────────────────────────────────────────────────────
@@ -1166,6 +1173,75 @@ export default function HomePage() {
   const ky04Massie   = round1(Number(ky04L.Massie   ?? 0));
   const ky04Net      = round1(ky04Gallrein - ky04Massie);
   const ky04NetStr   = ky04Net === 0 ? "EVEN" : ky04Net > 0 ? `G+${Math.abs(ky04Net).toFixed(1)}` : `M+${Math.abs(ky04Net).toFixed(1)}`;
+
+  // ─── Live race data fetch (mirrors /results page; pulls from civicapi.org) ──
+  type LiveRaceData = {
+    percent_reporting?: number;
+    candidates: Array<{ name: string; party?: string; votes: number; percent: number; winner?: boolean; color?: string }>;
+    polls_close?: string | null;
+  };
+  const [liveData, setLiveData] = React.useState<Record<number, LiveRaceData | undefined>>({});
+  React.useEffect(() => {
+    const ids = LIVE_CONFIG.races.map((r) => r.raceId).filter((id): id is number => typeof id === "number" && id > 0);
+    if (ids.length === 0) return;
+    let cancelled = false;
+    const fetchAll = async () => {
+      const results = await Promise.all(
+        ids.map(async (id) => {
+          try {
+            const res = await fetch(`https://civicapi.org/api/v2/race/${id}`, { cache: "no-store" });
+            if (!res.ok) return [id, undefined] as const;
+            const json = (await res.json()) as LiveRaceData;
+            return [id, json] as const;
+          } catch {
+            return [id, undefined] as const;
+          }
+        })
+      );
+      if (!cancelled) setLiveData(Object.fromEntries(results));
+    };
+    fetchAll();
+    const t = setInterval(fetchAll, 30_000); // refresh every 30s
+    return () => { cancelled = true; clearInterval(t); };
+  }, []);
+
+  // Merge seed config with live data — live data wins when present.
+  const liveRaces = LIVE_CONFIG.races.map((seed) => {
+    const live = liveData[seed.raceId];
+    if (!live || !Array.isArray(live.candidates) || live.candidates.length === 0) return seed;
+    // Map live candidates onto seed candidates by name (case-insensitive surname match),
+    // preserving seed colors. Unmatched live candidates are appended.
+    const seedByKey = new Map(seed.candidates.map((c) => [c.name.toLowerCase(), c]));
+    const used = new Set<string>();
+    const mapped = live.candidates
+      .slice()
+      .sort((a, b) => (Number(b.votes) || 0) - (Number(a.votes) || 0))
+      .map((lc) => {
+        const key = String(lc.name || "").toLowerCase();
+        const seedMatch =
+          seedByKey.get(key) ||
+          [...seedByKey.entries()].find(([k]) => key.includes(k) || k.includes(key))?.[1];
+        if (seedMatch) used.add(seedMatch.name.toLowerCase());
+        return {
+          name: seedMatch?.name ?? String(lc.name ?? ""),
+          pct: Number(lc.percent) || 0,
+          votes: Number(lc.votes) || 0,
+          color: seedMatch?.color ?? lc.color ?? (String(lc.party).toUpperCase() === "R" ? "#e63946" : String(lc.party).toUpperCase() === "D" ? "#2563eb" : "#9d5cf0"),
+        };
+      });
+    const winnerCand = live.candidates.find((c) => c.winner);
+    const called = !!winnerCand;
+    const winnerName = winnerCand ? (mapped.find((m) => m.name.toLowerCase() === String(winnerCand.name).toLowerCase())?.name ?? String(winnerCand.name)) : seed.winner;
+    return {
+      ...seed,
+      called,
+      percentReporting: typeof live.percent_reporting === "number" ? Number(live.percent_reporting.toFixed(1)) : seed.percentReporting,
+      candidates: mapped.length >= 2 ? mapped.slice(0, Math.max(2, seed.candidates.length)) : seed.candidates,
+      winner: winnerName,
+      // If called, force winProb to 100. Otherwise keep seed forecast.
+      winProb: called ? 100 : seed.winProb,
+    };
+  });
 
   const issues = [
     { issue: "Economy / Jobs",    dem: 36, rep: 59 },
@@ -1458,11 +1534,12 @@ export default function HomePage() {
           font-family: var(--font-display), sans-serif;
           font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; color: #fff;
         }
-        .hp-cap-next-race {
+        /* ─── Compact race card (Idaho/Candidates inspired) ─── */
+        .hp-cap-race {
           display: flex; flex-direction: column; gap: 6px;
-          padding: 10px 12px;
+          padding: 8px 10px 7px;
           border: 1px solid rgba(124,58,237,0.28);
-          background: rgba(124,58,237,0.07);
+          background: rgba(124,58,237,0.06);
           margin-top: 2px;
           text-decoration: none;
           transition: background 120ms, border-color 120ms;
@@ -1470,23 +1547,139 @@ export default function HomePage() {
           min-width: 0;
           align-self: stretch;
         }
-        .hp-cap-next-race:hover { background: rgba(124,58,237,0.13); border-color: rgba(124,58,237,0.5); text-decoration: none; }
-        .hp-cap-next-race-top { display: flex; align-items: center; justify-content: space-between; }
-        .hp-cap-next-race-left { display: flex; flex-direction: column; gap: 2px; }
-        .hp-cap-next-race-eyebrow {
-          font-family: var(--font-body), monospace;
-          font-size: 7px; font-weight: 600; letter-spacing: 0.2em;
-          text-transform: uppercase; color: #7c3aed;
+        .hp-cap-race:hover { background: rgba(124,58,237,0.12); border-color: rgba(124,58,237,0.5); text-decoration: none; }
+        .hp-cap-race-spot {
+          border-color: rgba(245,158,11,0.45);
+          background: linear-gradient(180deg, rgba(245,158,11,0.09) 0%, rgba(245,158,11,0.03) 100%);
+          box-shadow: 0 0 0 1px rgba(245,158,11,0.16) inset, 0 6px 16px -10px rgba(245,158,11,0.4);
+          animation: hp-spotlight-pulse 3s ease-in-out infinite;
         }
-        .hp-cap-next-race-name {
+        .hp-cap-race-spot:hover {
+          border-color: rgba(245,158,11,0.75);
+          background: linear-gradient(180deg, rgba(245,158,11,0.15) 0%, rgba(245,158,11,0.05) 100%);
+        }
+        @keyframes hp-spotlight-pulse {
+          0%, 100% { border-color: rgba(245,158,11,0.45); box-shadow: 0 0 0 1px rgba(245,158,11,0.16) inset, 0 6px 16px -10px rgba(245,158,11,0.4); }
+          50% { border-color: rgba(245,158,11,0.7); box-shadow: 0 0 0 1px rgba(245,158,11,0.3) inset, 0 8px 20px -10px rgba(245,158,11,0.6); }
+        }
+        .hp-cap-race-head {
+          display: flex; align-items: center; gap: 6px;
+          min-width: 0;
+        }
+        .hp-cap-race-title {
+          flex: 1; min-width: 0;
           font-family: var(--font-display), sans-serif;
-          font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: #fff;
+          font-size: 10.5px; letter-spacing: 0.05em; text-transform: uppercase;
+          color: #fff; line-height: 1.2;
+          word-break: break-word; overflow-wrap: anywhere;
         }
-        .hp-cap-next-race-arrow {
+        .hp-cap-race-star {
+          font-size: 9px; color: #f59e0b; line-height: 1;
+          flex-shrink: 0; filter: drop-shadow(0 0 4px rgba(245,158,11,0.6));
+        }
+        .hp-cap-race-arrow {
           font-family: var(--font-body), monospace;
-          font-size: 10px; color: #7c3aed; transition: transform 150ms;
+          font-size: 9px; color: #7c3aed; transition: transform 150ms;
+          flex-shrink: 0;
         }
-        .hp-cap-next-race:hover .hp-cap-next-race-arrow { transform: translateX(3px); }
+        .hp-cap-race-spot .hp-cap-race-arrow { color: #f59e0b; }
+        .hp-cap-race:hover .hp-cap-race-arrow { transform: translateX(3px); }
+        .hp-cap-race-rows {
+          display: flex; flex-direction: column; gap: 3px;
+        }
+        .hp-cap-row {
+          position: relative;
+          display: flex; align-items: center;
+          padding: 4px 7px 4px 9px;
+          background: rgba(255,255,255,0.025);
+          border-left: 3px solid var(--stripe, #888);
+          min-width: 0; overflow: hidden;
+        }
+        .hp-cap-row-fill {
+          position: absolute; inset: 0 auto 0 0;
+          transition: width 600ms cubic-bezier(0.22,1,0.36,1);
+          pointer-events: none;
+        }
+        .hp-cap-row-name {
+          position: relative; z-index: 1;
+          flex: 1; min-width: 0;
+          font-family: var(--font-body), monospace;
+          font-size: 9.5px; font-weight: 600; letter-spacing: 0.02em;
+          color: #fff; line-height: 1.2;
+          overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+          display: inline-flex; align-items: center; gap: 5px;
+        }
+        .hp-cap-row-check {
+          display: inline-flex; align-items: center; justify-content: center;
+          width: 11px; height: 11px; border-radius: 50%;
+          background: #22c55e; color: #fff;
+          font-size: 7px; font-weight: 800; line-height: 1;
+        }
+        .hp-cap-row-pct {
+          position: relative; z-index: 1;
+          font-family: var(--font-display), sans-serif;
+          font-size: 11.5px; font-weight: 700; letter-spacing: 0.01em;
+          line-height: 1; flex-shrink: 0; margin-left: 8px;
+        }
+        .hp-cap-race-foot {
+          display: flex; align-items: center; justify-content: space-between;
+          gap: 8px; margin-top: 2px; min-width: 0;
+        }
+        .hp-cap-report {
+          display: flex; align-items: center; gap: 6px;
+          flex: 1; min-width: 0;
+        }
+        .hp-cap-report-bar {
+          flex: 1; min-width: 30px; height: 3px;
+          background: rgba(255,255,255,0.06);
+          overflow: hidden; border-radius: 1px;
+        }
+        .hp-cap-report-fill {
+          height: 100%; background: #22c55e;
+          transition: width 600ms cubic-bezier(0.22,1,0.36,1);
+        }
+        .hp-cap-report-lbl {
+          font-family: var(--font-body), monospace;
+          font-size: 7px; font-weight: 600; letter-spacing: 0.1em;
+          text-transform: uppercase; color: rgba(255,255,255,0.5);
+          flex-shrink: 0; white-space: nowrap;
+        }
+        .hp-cap-polls {
+          flex: 1; min-width: 0;
+          font-family: var(--font-body), monospace;
+          font-size: 6.5px; font-weight: 600; letter-spacing: 0.1em;
+          text-transform: uppercase; color: rgba(255,255,255,0.4);
+          line-height: 1.35;
+          white-space: normal; word-break: break-word;
+        }
+        .hp-cap-race-spot .hp-cap-polls { color: #f59e0b; }
+        .hp-cap-forecast-pill {
+          flex-shrink: 0;
+          display: inline-flex; align-items: center; gap: 5px;
+          padding: 2px 6px;
+          border: 1px solid currentColor;
+          background: rgba(0,0,0,0.25);
+          font-family: var(--font-body), monospace;
+          line-height: 1.3; text-transform: uppercase;
+          white-space: nowrap;
+        }
+        .hp-cap-forecast-pill-lbl {
+          font-size: 6px; font-weight: 700; letter-spacing: 0.14em;
+          opacity: 0.6;
+        }
+        .hp-cap-forecast-pill-name {
+          font-size: 7.5px; font-weight: 700; letter-spacing: 0.06em;
+        }
+        .hp-cap-forecast-pill-pct {
+          font-size: 8.5px; font-weight: 800; letter-spacing: 0.02em;
+        }
+        .hp-cap-forecast-called {
+          font-size: 8px; font-weight: 700; letter-spacing: 0.06em;
+        }
+        .hp-cap-forecast-called {
+          color: #22c55e; border-color: #22c55e;
+          background: rgba(34,197,94,0.1);
+        }
         .hp-cap-results-row {
           display: flex; align-items: center; gap: 6px;
         }
@@ -1528,9 +1721,6 @@ export default function HomePage() {
           0% { box-shadow: 0 0 0 0 rgba(124,58,237,0.5); }
           70% { box-shadow: 0 0 0 4px rgba(124,58,237,0); }
           100% { box-shadow: 0 0 0 0 rgba(124,58,237,0); }
-        }
-        .hp-cap-next-race {
-          animation: hp-live-border-pulse 3s ease-in-out infinite;
         }
         .hp-cap-results-fill {
           animation: hp-bar-fill 1.2s cubic-bezier(0.22,1,0.36,1) forwards;
@@ -2117,7 +2307,7 @@ export default function HomePage() {
                         <span className="hp-live-dot" style={{ background: "#7c3aed", animationDuration: "2.4s" }} />
                         Election Results
                       </span>
-                      <span className="hp-live-updated">Apr 7</span>
+                      <span className="hp-live-updated">{LIVE_CONFIG.race.shortLabel}</span>
                     </div>
                     <div className="hp-live-body">
                       <div className="hp-cap-headline">
@@ -2139,57 +2329,71 @@ export default function HomePage() {
                         </div>
                       </div>
                       )}
-                      {LIVE_CONFIG.races.slice(0, 2).map((r, i) => {
+                      {liveRaces.slice(0, 2).map((r, i) => {
                           const leader = r.candidates[0];
                           const totalPct = r.candidates.reduce((s, c) => s + c.pct, 0);
+                          const hasResults = r.percentReporting > 0 || r.called;
+                          const winnerName = r.winner ?? (r.called ? leader.name : null);
                           return (
-                            <Link key={i} href={LIVE_CONFIG.race.href} className="hp-cap-next-race">
-                              <div className="hp-cap-next-race-top">
-                                <div className="hp-cap-next-race-left">
-                                  <span className="hp-cap-next-race-eyebrow"><span className="hp-cap-live-dot" />{r.name}</span>
-                                </div>
-                                <span className="hp-cap-next-race-arrow">→</span>
+                            <Link
+                              key={i}
+                              href={r.raceId === 76942 ? "/results?tab=ky04" : r.raceId > 0 ? `/results?race=${r.raceId}` : "/results"}
+                              className={`hp-cap-race${r.spotlight ? " hp-cap-race-spot" : ""}`}
+                            >
+                              <div className="hp-cap-race-head">
+                                <span className="hp-cap-race-title">{r.name}</span>
+                                {r.spotlight && <span className="hp-cap-race-star" title="Spotlight">★</span>}
+                                <span className="hp-cap-race-arrow">→</span>
                               </div>
-                              {/* Results — compact candidate rows */}
-                              <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
-                                {r.candidates.map((c) => (
-                                  <div key={c.name} style={{ minWidth: 0 }}>
-                                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 1 }}>
-                                      <span style={{ fontFamily: "var(--font-body), monospace", fontSize: 9, color: "rgba(255,255,255,0.5)", letterSpacing: "0.02em", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", minWidth: 0 }}>{c.name}</span>
-                                      <span style={{ fontFamily: "var(--font-display), sans-serif", fontSize: 14, letterSpacing: "0.01em", lineHeight: 1, color: c.color, flexShrink: 0, marginLeft: 6 }}>{c.pct.toFixed(1)}%</span>
+                              <div className="hp-cap-race-rows">
+                                {r.candidates.slice(0, 2).map((c) => {
+                                  const isWinner = winnerName != null && c.name === winnerName;
+                                  const fillPct = hasResults && totalPct > 0 ? (c.pct / totalPct) * 100 : 0;
+                                  return (
+                                    <div key={c.name} className="hp-cap-row" style={{ ['--stripe' as string]: c.color } as React.CSSProperties}>
+                                      <div className="hp-cap-row-fill" style={{ width: `${fillPct}%`, background: `${c.color}26` }} />
+                                      <span className="hp-cap-row-name">
+                                        {c.name}
+                                        {isWinner && <span className="hp-cap-row-check">✓</span>}
+                                      </span>
+                                      <span className="hp-cap-row-pct" style={{ color: hasResults ? c.color : "rgba(255,255,255,0.3)" }}>
+                                        {hasResults ? `${c.pct.toFixed(1)}%` : "—"}
+                                      </span>
                                     </div>
-                                    <div style={{ height: 3, background: "rgba(255,255,255,0.06)", borderRadius: 1, overflow: "hidden" }}>
-                                      <div className="hp-cap-results-fill" style={{ width: `${totalPct > 0 ? (c.pct / totalPct) * 100 : 0}%`, background: c.color, height: "100%" }} />
+                                  );
+                                })}
+                              </div>
+                              <div className="hp-cap-race-foot">
+                                {hasResults ? (
+                                  <div className="hp-cap-report">
+                                    <div className="hp-cap-report-bar">
+                                      <div className="hp-cap-report-fill" style={{ width: `${r.called ? 100 : r.percentReporting}%` }} />
                                     </div>
+                                    <span className="hp-cap-report-lbl">
+                                      {r.called ? "CALLED" : `${r.percentReporting}% REPORTED`}
+                                    </span>
                                   </div>
-                                ))}
+                                ) : (
+                                  <span className="hp-cap-polls">
+                                    POLLS CLOSE {(r as { pollsClose?: string }).pollsClose ?? "TBD"}
+                                  </span>
+                                )}
+                                {r.called ? (
+                                  <span className="hp-cap-forecast-pill hp-cap-forecast-called">✓ {winnerName} wins</span>
+                                ) : r.winProb != null ? (
+                                  <span className="hp-cap-forecast-pill" style={{ borderColor: leader.color, color: leader.color }}>
+                                    <span className="hp-cap-forecast-pill-name">{leader.name}</span>
+                                    <span className="hp-cap-forecast-pill-pct">{r.winProb}%</span>
+                                    <span className="hp-cap-forecast-pill-lbl">Win Prob</span>
+                                  </span>
+                                ) : null}
                               </div>
-                              {/* Reporting % */}
-                              <div style={{ fontFamily: "var(--font-body), monospace", fontSize: 7, color: "rgba(255,255,255,0.2)", letterSpacing: "0.06em", textTransform: "uppercase" }}>{r.percentReporting}% reporting</div>
-                              {/* TPSI Forecast */}
-                              {r.called ? (
-                                <div style={{ display: "flex", alignItems: "center", justifyContent: "flex-end", gap: 5, minWidth: 0 }}>
-                                  <span style={{ fontFamily: "var(--font-body), monospace", fontSize: 7, fontWeight: 500, color: "rgba(255,255,255,0.45)", letterSpacing: "0.02em", whiteSpace: "nowrap", flexShrink: 1, overflow: "hidden", textOverflow: "ellipsis" }}>TPSI Forecast:</span>
-                                  <span style={{ fontFamily: "var(--font-body), monospace", fontSize: 8.5, fontWeight: 600, color: "#fff", letterSpacing: "0.01em", whiteSpace: "nowrap", flexShrink: 0 }}>{r.winner}</span>
-                                  <span style={{ display: "inline-flex", alignItems: "center", padding: "1px 4px", border: "1px solid #22c55e", fontFamily: "var(--font-body), monospace", fontSize: 6, fontWeight: 600, letterSpacing: "0.04em", textTransform: "uppercase", color: "#22c55e", whiteSpace: "nowrap", lineHeight: 1.2, flexShrink: 0 }}>✓ winner</span>
-                                </div>
-                              ) : r.winProb != null ? (
-                                <div style={{ display: "flex", alignItems: "center", justifyContent: "flex-end", gap: 5, minWidth: 0 }}>
-                                  <span style={{ fontFamily: "var(--font-body), monospace", fontSize: 7, fontWeight: 500, color: "rgba(255,255,255,0.45)", letterSpacing: "0.02em", whiteSpace: "nowrap", flexShrink: 1, overflow: "hidden", textOverflow: "ellipsis" }}>TPSI Forecast:</span>
-                                  <span style={{ fontFamily: "var(--font-body), monospace", fontSize: 8.5, fontWeight: 600, color: leader.color, letterSpacing: "0.01em", whiteSpace: "nowrap", flexShrink: 0 }}>{leader.name}</span>
-                                  <span style={{ fontFamily: "var(--font-body), monospace", fontSize: 7, color: "rgba(255,255,255,0.35)", letterSpacing: "0.02em", whiteSpace: "nowrap", flexShrink: 0 }}>{r.winProb}%</span>
-                                </div>
-                              ) : (
-                                <div style={{ display: "flex", alignItems: "center", justifyContent: "flex-end" }}>
-                                  <span style={{ fontFamily: "var(--font-body), monospace", fontSize: 7, fontStyle: "italic", color: "rgba(255,255,255,0.25)", letterSpacing: "0.02em" }}>No TPSI Race Forecast</span>
-                                </div>
-                              )}
                             </Link>
                           );
                       })}
                       <div className="hp-live-spacer" />
                       <Link href={LIVE_CONFIG.race.href} className="hp-live-full-link">
-                        See the Apr 7 Results →
+                        Get Latest Results →
                       </Link>
                     </div>
                   </div>
