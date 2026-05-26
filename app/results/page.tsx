@@ -26,7 +26,7 @@ type RegionCandidate = { name: string; party: string; votes: string | number; pe
 type RegionResult = { region: { name: string; type: string; fill?: string; percent_reporting?: number; }; candidates: RegionCandidate[]; };
 type RaceDetail = { election_name: string; election_type: string; election_scope: string; election_date: string; country: string; province: string | null; district: string | null; municipality: string | null; polls_open: string | null; polls_close: string | null; last_updated: string | null; percent_reporting?: number; candidates: RaceCandidate[]; region_results?: RegionResult[] | Record<string, RegionResult>; };
 type RaceType = "Democratic Primary" | "Republican Primary" | "Special Election" | "General Election";
-type FeaturedRace = { id: number; state: "AL" | "GA" | "KY" | "OR" | "ID" | "PA"; office: string; raceType: RaceType; label: string; };
+type FeaturedRace = { id: number; state: "AL" | "GA" | "KY" | "OR" | "ID" | "PA" | "TX"; office: string; raceType: RaceType; label: string; };
 
 function getRaceTypeColor(raceType: RaceType): string {
   if (raceType === "Republican Primary") return "var(--rep)";
@@ -225,6 +225,12 @@ const FEATURED: FeaturedRace[] = [
   { id: 76070, state: "PA", office: "US House 8", raceType: "Republican Primary", label: "Pennsylvania US House 8 Republican Primary" },
   { id: 76071, state: "PA", office: "US House 9", raceType: "Democratic Primary", label: "Pennsylvania US House 9 Democratic Primary" },
   { id: 76072, state: "PA", office: "US House 9", raceType: "Republican Primary", label: "Pennsylvania US House 9 Republican Primary" },
+  // TODO: Add TX Attorney General Democratic Runoff (Johnson vs Jaworski) once correct civicAPI race ID is confirmed.
+  // ── TEXAS ── (May 26, 2026 Primary Runoffs)
+  { id: 79766, state: "TX", office: "US Senate", raceType: "Republican Primary", label: "Texas US Senate Republican Runoff" },
+  { id: 79722, state: "TX", office: "Attorney General", raceType: "Republican Primary", label: "Texas Attorney General Republican Runoff" },
+  { id: 79739, state: "TX", office: "Railroad Commissioner", raceType: "Republican Primary", label: "Texas Railroad Commissioner Republican Runoff" },
+  { id: 79755, state: "TX", office: "US House 18", raceType: "Democratic Primary", label: "Texas US House 18 Democratic Runoff" },
 ];
 
 async function fetchRaceById(id: number): Promise<RaceDetail> {
@@ -1451,7 +1457,7 @@ function RacePickerPanel({ races, raceCache, selectedId, onSelect }: {
 // ─── MAIN PAGE ───────────────────────────────────────────────────────────────
 export default function March3FeaturedClient() {
   const [pageTab, setPageTab] = useState<"all" | "ky04">("all");
-  const [activeState, setActiveState] = useState<"AL" | "GA" | "KY" | "OR" | "ID" | "PA">("AL")
+  const [activeState, setActiveState] = useState<"AL" | "GA" | "KY" | "OR" | "ID" | "PA" | "TX">("AL")
   const [selectedId, setSelectedId] = useState<number>(79432);
   const KY04_ID = 76942;
   const [error, setError] = useState<string | null>(null);
@@ -1475,6 +1481,7 @@ export default function March3FeaturedClient() {
   OR: FEATURED.filter((r) => r.state === "OR"),
   ID: FEATURED.filter((r) => r.state === "ID"),
   PA: FEATURED.filter((r) => r.state === "PA"),
+  TX: FEATURED.filter((r) => r.state === "TX"),
   }), []);
 
   const selectedRace = raceCache[selectedId];
@@ -1549,7 +1556,7 @@ export default function March3FeaturedClient() {
     return () => clearTimeout(t);
   }, [selectedRace, selectedId]);
 
-  const stateLabels: Record<string, string> = { AL: "ALABAMA", GA: "GEORGIA", KY: "KENTUCKY", OR: "OREGON", ID: "IDAHO", PA: "PENNSYLVANIA" };
+  const stateLabels: Record<string, string> = { AL: "ALABAMA", GA: "GEORGIA", KY: "KENTUCKY", OR: "OREGON", ID: "IDAHO", PA: "PENNSYLVANIA", TX: "TEXAS" };
   // When switching to KY04 tab, load its map
   useEffect(() => {
     if (pageTab === "ky04") {
@@ -1979,7 +1986,7 @@ export default function March3FeaturedClient() {
           <div className="res-page-header-inner">
             <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: "12px" }}>
               <div>
-                <div className="res-page-sub">MAY 19TH PRIMARY ELECTIONS · 2026</div>
+                <div className="res-page-sub">MAY 2026 PRIMARY ELECTIONS</div>
                 <h1 className="res-page-title">Election <em>Night</em></h1>
               </div>
               <div style={{ display: "flex", alignItems: "center", gap: "12px", flexWrap: "wrap" }}>
@@ -1990,7 +1997,7 @@ export default function March3FeaturedClient() {
                 </div>
                 {/* State switcher */}
                 <div style={{ display: "flex", gap: "1px" }}>
-                  {(["AL", "GA", "KY", "OR", "ID", "PA"] as const).map((st) => (
+                  {(["AL", "GA", "KY", "OR", "ID", "PA", "TX"] as const).map((st) => (
   <button key={st} className={`res-btn-state ${activeState === st ? "active" : ""}`} onClick={() => setActiveState(st)}>{stateLabels[st]}</button>
 ))}
                 </div>
