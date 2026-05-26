@@ -2,6 +2,8 @@
 
 import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import type { ForecastOutput, RaceRule } from "@/app/lib/electoralModel";
+import type { Candidate as RunoffCandidate, RunoffRace } from "./data";
+import { races as txRunoffRaces } from "./data";
 
 const CIVIC_BASE = "https://civicapi.org";
 const POLL_MS = 30_000;
@@ -1448,9 +1450,114 @@ function RacePickerPanel({ races, raceCache, selectedId, onSelect }: {
   );
 }
 
+// ─── TX RUNOFF SECTION ────────────────────────────────────────────────────────
+
+function TxPctBar({ value, color, note }: { value: number | null; color: string; note?: string }) {
+  if (value === null) {
+    return (
+      <div>
+        <div style={{ height: 3, width: "100%", background: "rgba(255,255,255,0.08)" }} />
+        <div className="res-note" style={{ marginTop: 4, color: "rgba(255,255,255,0.28)", letterSpacing: "0.10em" }}>
+          {note ?? "N/A"}
+        </div>
+      </div>
+    );
+  }
+  return (
+    <div>
+      <div className="res-bar-track">
+        <div className="res-bar-fill" style={{ width: `${Math.min(value, 100)}%`, background: color }} />
+      </div>
+      <div className="res-note" style={{ marginTop: 4, color, fontWeight: 900, letterSpacing: "0.10em" }}>
+        {value.toFixed(1)}%
+      </div>
+    </div>
+  );
+}
+
+function TxCandidateRow({ candidate, barColor }: { candidate: RunoffCandidate; barColor: string }) {
+  return (
+    <div style={{ padding: "12px 0", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
+      {/* Name + Incumbent */}
+      <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap", marginBottom: 10 }}>
+        <span style={{ fontFamily: "var(--font-body)", fontSize: 11, fontWeight: 900, letterSpacing: "0.06em", textTransform: "uppercase", color: "rgba(255,255,255,0.92)" }}>
+          {candidate.name}
+        </span>
+        {candidate.incumbent && (
+          <span className="res-badge" style={{ borderColor: "rgba(167,139,250,0.40)", background: "rgba(124,58,237,0.08)", color: "var(--purple-soft)" }}>
+            INCUMBENT
+          </span>
+        )}
+      </div>
+      {/* Stats */}
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
+        <div>
+          <div className="res-stat-block-label" style={{ marginBottom: 6 }}>MARCH PRIMARY</div>
+          <TxPctBar value={candidate.marchPrimary} color={barColor} note={candidate.marchPrimaryNote ?? "N/A"} />
+        </div>
+        <div>
+          <div className="res-stat-block-label" style={{ marginBottom: 6 }}>RECENT POLLING</div>
+          <TxPctBar value={candidate.recentPolling} color={barColor} />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function TxRaceCard({ race }: { race: RunoffRace }) {
+  const isRep = race.party === "Republican";
+  const barColor = isRep ? "var(--rep)" : "var(--dem)";
+  const badgeClass = isRep ? "res-badge res-badge-red" : "res-badge res-badge-blue";
+  return (
+    <div className="res-panel" style={{ display: "flex", flexDirection: "column" }}>
+      <div className="res-tri-stripe" style={{ background: isRep ? "var(--rep)" : "var(--dem)", opacity: 0.8 }} />
+      <div className="res-panel-header" style={{ flexWrap: "wrap", gap: 8 }}>
+        <span className="res-panel-tag">{race.name}</span>
+        <span className={badgeClass}>{isRep ? "REP RUNOFF" : "DEM RUNOFF"}</span>
+      </div>
+      <div style={{ padding: "0 14px 12px" }}>
+        {race.candidates.map((c) => (
+          <TxCandidateRow key={c.name} candidate={c} barColor={barColor} />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function TxRunoffSection({ races }: { races: RunoffRace[] }) {
+  return (
+    <div style={{ maxWidth: 1200, margin: "0 auto", padding: "20px 20px 40px" }}>
+      {/* Section header */}
+      <div style={{ marginBottom: 20 }}>
+        <div className="res-eyebrow" style={{ marginBottom: 8 }}>
+          TEXAS RUNOFF RACES · 2026 · CIVIC API
+        </div>
+        <h2 style={{ fontFamily: "var(--font-body)", fontSize: "clamp(18px,2vw,26px)", fontWeight: 900, textTransform: "uppercase", letterSpacing: "0.04em", color: "#fff", margin: 0, lineHeight: 1 }}>
+          Texas Runoff Races
+        </h2>
+        <div className="res-note" style={{ marginTop: 8, letterSpacing: "0.12em", color: "rgba(255,255,255,0.32)" }}>
+          March Primary % and recent polling for five 2026 Texas runoff races.
+        </div>
+      </div>
+
+      {/* Race cards grid */}
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(min(100%,440px),1fr))", gap: 12 }}>
+        {races.map((race) => (
+          <TxRaceCard key={race.id} race={race} />
+        ))}
+      </div>
+
+      {/* Citation */}
+      <div className="res-note" style={{ marginTop: 24, textAlign: "center", color: "rgba(255,255,255,0.20)", letterSpacing: "0.14em" }}>
+        Data sourced from the Civic API · as of May 2026 · subject to update
+      </div>
+    </div>
+  );
+}
+
 // ─── MAIN PAGE ───────────────────────────────────────────────────────────────
 export default function March3FeaturedClient() {
-  const [pageTab, setPageTab] = useState<"all" | "ky04">("all");
+  const [pageTab, setPageTab] = useState<"all" | "ky04" | "tx-runoff">("all");
   const [activeState, setActiveState] = useState<"AL" | "GA" | "KY" | "OR" | "ID" | "PA">("AL")
   const [selectedId, setSelectedId] = useState<number>(79432);
   const KY04_ID = 76942;
@@ -2014,9 +2121,19 @@ export default function March3FeaturedClient() {
             <span className="tab-dot" />
             ★ KY-04 Republican Primary
           </button>
+          <button
+            className={`res-page-tab ${pageTab === "tx-runoff" ? "active" : ""}`}
+            onClick={() => setPageTab("tx-runoff")}
+            style={{ borderBottomColor: pageTab === "tx-runoff" ? "var(--rep)" : undefined, color: pageTab === "tx-runoff" ? "#fff" : undefined }}
+          >
+            ★ Texas Runoff Races
+          </button>
         </div>
 
-        {/* ── KY-04 SPOTLIGHT TAB ── */}
+        {/* ── TEXAS RUNOFF TAB ── */}
+        {pageTab === "tx-runoff" && (
+          <TxRunoffSection races={txRunoffRaces} />
+        )}
         {pageTab === "ky04" && (() => {
           const ky04Race = raceCache[KY04_ID];
           const ky04Reporting = ky04Race?.percent_reporting ?? 0;
