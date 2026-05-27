@@ -2451,24 +2451,24 @@ export default function HomePage() {
 
               {/* Generic CTA — replaces race-specific tiles */}
               <div className="hp-live-panel">
-               <div className="hp-live-panel-header">
-                 <span className="hp-live-label">
-                   <span className="hp-live-dot" style={{ background: "#7c3aed", animationDuration: "2.4s" }} />
-                   Live Election Results
-                 </span>
-               </div>
-               <div className="hp-live-body">
-                 <div className="hp-cap-headline">
-                   Live<br /><em>Election</em><br />Results
-                 </div>
-                 <div style={{ color: "rgba(255,255,255,0.6)", fontSize: "11px", lineHeight: 1.55, fontFamily: "var(--font-body), monospace" }}>
-                   Track primary, runoff, and special election results in real time — powered by civicAPI.
-                 </div>
-                 <div className="hp-live-spacer" />
-                 <Link href="/results" className="hp-live-full-link">
-                   View Live Results →
-                 </Link>
-               </div>
+                <div className="hp-live-panel-header">
+                  <span className="hp-live-label">
+                    <span className="hp-live-dot" style={{ background: "#7c3aed", animationDuration: "2.4s" }} />
+                    Live Election Results
+                  </span>
+                </div>
+                <div className="hp-live-body">
+                  <div className="hp-cap-headline">
+                    Live<br /><em>Election</em><br />Results
+                  </div>
+                  <div style={{ color: "rgba(255,255,255,0.6)", fontSize: "11px", lineHeight: 1.55, fontFamily: "var(--font-body), monospace" }}>
+                    Track primary, runoff, and special election results in real time — powered by civicAPI.
+                  </div>
+                  <div className="hp-live-spacer" />
+                  <Link href="/results" className="hp-live-full-link">
+                    View Live Results →
+                  </Link>
+                </div>
               </div>
           </div>
 
