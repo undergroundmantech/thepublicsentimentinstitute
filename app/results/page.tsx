@@ -1627,13 +1627,13 @@ export default function March3FeaturedClient() {
         .res-tri-stripe { height:3px; width:100%; background:linear-gradient(90deg,var(--red) 0%,var(--red) 33.33%,var(--purple) 33.33%,var(--purple) 66.66%,var(--blue) 66.66%,var(--blue) 100%); flex-shrink:0; }
         .res-live-dot { display:inline-block; width:6px; height:6px; border-radius:50%; background:var(--rep); box-shadow:0 0 8px rgba(230,57,70,0.7); animation:res-pulse 1.8s ease-in-out infinite; flex-shrink:0; }
         .res-eyebrow { display:flex; align-items:center; gap:7px; font-family:var(--font-body); font-size:10px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:var(--muted); }
-        .res-note { font-family:var(--font-body); font-size:8.5px; letter-spacing:0.16em; text-transform:uppercase; color:var(--muted3); }
-        .res-th { font-family:var(--font-body); font-size:7.5px; font-weight:700; letter-spacing:0.24em; text-transform:uppercase; color:var(--muted3); }
+        .res-note { font-family:var(--font-body); font-size:8.5px; letter-spacing:0.16em; text-transform:uppercase; color:var(--muted2); }
+        .res-th { font-family:var(--font-body); font-size:7.5px; font-weight:700; letter-spacing:0.24em; text-transform:uppercase; color:var(--muted2); }
         .res-num { font-family:var(--font-body); font-size:10.5px; color:var(--muted); font-variant-numeric:tabular-nums; }
         .res-pct-big { font-family:var(--font-numeric); font-size:13px; font-weight:800; color:var(--foreground); font-variant-numeric:tabular-nums; }
-        .res-pct-xl { font-family:var(--font-numeric); font-size:clamp(22px,2.5vw,30px); font-weight:800; color:var(--foreground); font-variant-numeric:tabular-nums; line-height:1; }
+        .res-pct-xl { font-family:var(--font-numeric); font-size:15px; font-weight:800; color:var(--foreground); font-variant-numeric:tabular-nums; line-height:1; }
         .res-pct-topline { font-family:var(--font-numeric); font-size:clamp(20px,2.2vw,28px); font-weight:800; color:var(--foreground); font-variant-numeric:tabular-nums; line-height:1; }
-        .res-stat-label { font-family:var(--font-body); font-size:7.5px; font-weight:700; letter-spacing:0.26em; text-transform:uppercase; color:var(--muted3); }
+        .res-stat-label { font-family:var(--font-body); font-size:7.5px; font-weight:700; letter-spacing:0.26em; text-transform:uppercase; color:var(--muted2); }
         .res-stat-val { font-family:var(--font-body); font-size:10px; font-weight:700; letter-spacing:0.14em; color:var(--muted); }
         .res-stat-row { display:flex; align-items:center; justify-content:space-between; }
         .res-badge { display:inline-flex; align-items:center; gap:4px; padding:3px 8px; font-family:var(--font-body); font-size:10px; font-weight:700; letter-spacing:0.10em; text-transform:uppercase; border:1px solid var(--border2); background:var(--panel2); color:var(--muted); border-radius:var(--r-pill); }
@@ -1675,7 +1675,7 @@ export default function March3FeaturedClient() {
         .res-cand-dot { display:inline-block; width:8px; height:8px; border-radius:50%; flex-shrink:0; }
         .res-cand-name { font-family:var(--font-body); font-size:12px; font-weight:700; letter-spacing:0.06em; color:var(--foreground); }
         .res-cand-name-lg { font-family:var(--font-body); font-size:13px; font-weight:900; letter-spacing:0.06em; text-transform:uppercase; color:var(--foreground); }
-        .res-cand-party { font-family:var(--font-body); font-size:8px; letter-spacing:0.16em; text-transform:uppercase; color:var(--muted3); margin-top:1px; }
+        .res-cand-party { font-family:var(--font-body); font-size:8px; letter-spacing:0.16em; text-transform:uppercase; color:var(--muted2); margin-top:1px; }
         .res-thead { position:sticky; top:0; background:var(--background2); border-bottom:1px solid var(--border); }
         .res-table-row { border-bottom:1px solid var(--border); transition:background 100ms ease; }
         .res-table-row:hover { background:rgba(124,58,237,0.04); }
