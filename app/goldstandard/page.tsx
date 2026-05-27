@@ -434,17 +434,17 @@ export default function GoldStandardPollstersPage() {
 }
 
 const CSS = `
-  body { background: #070709 !important; }
+  body { background: #f6f7fb !important; }
 
   .gs-root {
-    --bg:          #070709;
-    --bg2:         #0b0b0f;
-    --panel:       #0f0f15;
-    --border:      rgba(255,255,255,0.09);
-    --border2:     rgba(255,255,255,0.18);
-    --muted:       rgba(240,240,245,0.62);
-    --muted2:      rgba(240,240,245,0.40);
-    --muted3:      rgba(240,240,245,0.22);
+    --bg: #f6f7fb;
+    --bg2: #ffffff;
+    --panel: #ffffff;
+    --border: rgba(15, 16, 32, 0.08);
+    --border2: rgba(15, 16, 32, 0.14);
+    --muted: #6b7088;
+    --muted2: #9aa0b4;
+    --muted3: #b7bccc;
     --purple:      #7c3aed;
     --purple-soft: #a78bfa;
     --gold:        #f59e0b;
@@ -562,11 +562,11 @@ const CSS = `
     color: var(--purple-soft);
   }
   .gs-badge-link {
-    border-color: rgba(255,255,255,0.12);
+    border-color: rgba(15,16,32,0.14);
     color: var(--muted2);
     transition: background 120ms;
   }
-  .gs-badge-link:hover { background: rgba(255,255,255,0.06); }
+  .gs-badge-link:hover { background: rgba(15,16,32,0.08); }
 
   /* HERO STATS */
   .gs-hero-stats {
@@ -638,7 +638,7 @@ const CSS = `
     font-family: var(--font-display), sans-serif;
     font-size: 11px; font-weight: 800;
     letter-spacing: 0.26em; text-transform: uppercase;
-    color: rgba(255,255,255,0.85);
+    color: rgba(15,16,32,0.85);
     margin-bottom: 2px;
   }
   .gs-criteria-list {
@@ -712,7 +712,7 @@ const CSS = `
     display: flex; flex-direction: column;
   }
   .gs-pollster-row {
-    border-bottom: 1px solid rgba(255,255,255,0.04);
+    border-bottom: 1px solid rgba(15,16,32,0.05);
     cursor: pointer;
     transition: background 100ms;
   }
@@ -785,7 +785,7 @@ const CSS = `
     display: inline-block; width: 8px; height: 8px; border-radius: 50%;
   }
   .gs-disc-dot--on  { background: rgba(34,197,94,0.85); box-shadow: 0 0 4px rgba(34,197,94,0.4); }
-  .gs-disc-dot--off { background: rgba(255,255,255,0.12); }
+  .gs-disc-dot--off { background: rgba(15,16,32,0.14); }
   .gs-pollster-chevron {
     font-family: ui-monospace,monospace;
     font-size: 8px; color: var(--muted3);

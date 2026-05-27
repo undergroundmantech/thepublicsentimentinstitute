@@ -86,7 +86,7 @@ export default function TermsPage() {
   return (
     <>
       <style>{`
-        body { background: #070709 !important; margin: 0; }
+        body { background: #f6f7fb !important; margin: 0; }
 
         .tc-wrap {
           max-width: 1280px;
@@ -104,11 +104,11 @@ export default function TermsPage() {
           font-size: 9px;
           letter-spacing: 0.18em;
           text-transform: uppercase;
-          color: rgba(255,255,255,0.25);
+          color: rgba(15,16,32,0.45);
           margin-bottom: 32px;
         }
         .tc-breadcrumb a {
-          color: rgba(255,255,255,0.25);
+          color: rgba(15,16,32,0.45);
           text-decoration: none;
           transition: color 100ms;
         }
@@ -117,8 +117,8 @@ export default function TermsPage() {
 
         /* ── Hero ── */
         .tc-hero {
-          border: 1px solid rgba(255,255,255,0.08);
-          background: #0f0f15;
+          border: 1px solid rgba(15,16,32,0.10);
+          background: #ffffff;
           padding: 48px 52px 40px;
           margin-bottom: 20px;
           position: relative;
@@ -154,7 +154,7 @@ export default function TermsPage() {
           color: rgba(255,255,255,0.3);
           margin-bottom: 16px;
         }
-        .tc-eyebrow-sep { color: rgba(255,255,255,0.12); }
+        .tc-eyebrow-sep { color: rgba(15,16,32,0.14); }
 
         .tc-headline {
           font-family: var(--font-display), sans-serif;
@@ -171,7 +171,7 @@ export default function TermsPage() {
         .tc-desc {
           font-family: var(--font-body), monospace;
           font-size: 10px;
-          color: rgba(255,255,255,0.28);
+          color: rgba(15,16,32,0.45);
           line-height: 1.8;
           max-width: 560px;
           letter-spacing: 0.04em;
@@ -222,16 +222,16 @@ export default function TermsPage() {
         .tc-toc {
           position: sticky;
           top: 24px;
-          border: 1px solid rgba(255,255,255,0.06);
-          background: #0f0f15;
+          border: 1px solid rgba(15,16,32,0.08);
+          background: #ffffff;
           overflow: hidden;
         }
         @media(max-width: 900px) { .tc-toc { display: none; } }
 
         .tc-toc-header {
           padding: 12px 16px;
-          border-bottom: 1px solid rgba(255,255,255,0.06);
-          background: #0b0b0f;
+          border-bottom: 1px solid rgba(15,16,32,0.08);
+          background: #ffffff;
           font-family: var(--font-body), monospace;
           font-size: 8px;
           font-weight: 500;
@@ -243,11 +243,11 @@ export default function TermsPage() {
         .tc-toc-item {
           display: block;
           padding: 9px 16px;
-          border-bottom: 1px solid rgba(255,255,255,0.04);
+          border-bottom: 1px solid rgba(15,16,32,0.05);
           font-family: var(--font-body), monospace;
           font-size: 9px;
           letter-spacing: 0.06em;
-          color: rgba(255,255,255,0.25);
+          color: rgba(15,16,32,0.45);
           text-decoration: none;
           transition: color 100ms, background 100ms;
           line-height: 1.4;
@@ -261,12 +261,12 @@ export default function TermsPage() {
           display: flex;
           flex-direction: column;
           gap: 1px;
-          background: rgba(255,255,255,0.05);
-          border: 1px solid rgba(255,255,255,0.06);
+          background: rgba(15,16,32,0.06);
+          border: 1px solid rgba(15,16,32,0.08);
         }
 
         .tc-section {
-          background: #0f0f15;
+          background: #ffffff;
         }
 
         .tc-section-trigger {
@@ -288,7 +288,7 @@ export default function TermsPage() {
           font-family: var(--font-body), monospace;
           font-size: 9px;
           letter-spacing: 0.16em;
-          color: rgba(255,255,255,0.18);
+          color: rgba(15,16,32,0.40);
           flex-shrink: 0;
           width: 28px;
         }
@@ -325,11 +325,11 @@ export default function TermsPage() {
           padding: 0 24px 24px 52px;
           font-family: var(--font-body), monospace;
           font-size: 10px;
-          color: rgba(255,255,255,0.35);
+          color: rgba(15,16,32,0.50);
           line-height: 1.9;
           letter-spacing: 0.04em;
           white-space: pre-wrap;
-          border-top: 1px solid rgba(255,255,255,0.04);
+          border-top: 1px solid rgba(15,16,32,0.05);
           margin-left: 0;
         }
         .tc-section-content p { margin: 0 0 10px; }
@@ -337,8 +337,8 @@ export default function TermsPage() {
         /* ── Contact card ── */
         .tc-contact {
           margin-top: 20px;
-          border: 1px solid rgba(255,255,255,0.06);
-          background: #0f0f15;
+          border: 1px solid rgba(15,16,32,0.08);
+          background: #ffffff;
           display: grid;
           grid-template-columns: 1fr auto;
           align-items: center;
@@ -387,7 +387,7 @@ export default function TermsPage() {
           align-items: center;
           padding: 10px 20px;
           background: transparent;
-          color: rgba(255,255,255,0.35);
+          color: rgba(15,16,32,0.50);
           font-family: var(--font-body), monospace;
           font-size: 9px;
           letter-spacing: 0.16em;
@@ -397,7 +397,7 @@ export default function TermsPage() {
           transition: border-color 120ms, color 120ms;
           white-space: nowrap;
         }
-        .tc-btn-outline:hover { border-color: rgba(255,255,255,0.35); color: rgba(255,255,255,0.65); text-decoration: none; }
+        .tc-btn-outline:hover { border-color: rgba(15,16,32,0.50); color: rgba(15,16,32,0.65); text-decoration: none; }
 
         /* ── Strip ── */
         .tc-strip {
@@ -405,13 +405,13 @@ export default function TermsPage() {
           display: grid;
           grid-template-columns: repeat(3,1fr);
           gap: 1px;
-          background: rgba(255,255,255,0.05);
-          border: 1px solid rgba(255,255,255,0.06);
+          background: rgba(15,16,32,0.06);
+          border: 1px solid rgba(15,16,32,0.08);
         }
         @media(max-width: 768px) { .tc-strip { grid-template-columns: 1fr; } }
 
         .tc-strip-item {
-          background: #0f0f15;
+          background: #ffffff;
           padding: 18px 22px;
           display: flex;
           flex-direction: column;
@@ -424,7 +424,7 @@ export default function TermsPage() {
           font-weight: 500;
           letter-spacing: 0.18em;
           text-transform: uppercase;
-          color: rgba(255,255,255,0.18);
+          color: rgba(15,16,32,0.40);
         }
 
         .tc-strip-val {
@@ -439,7 +439,7 @@ export default function TermsPage() {
         .tc-strip-sub {
           font-family: var(--font-body), monospace;
           font-size: 9px;
-          color: rgba(255,255,255,0.18);
+          color: rgba(15,16,32,0.40);
           letter-spacing: 0.04em;
         }
       `}</style>

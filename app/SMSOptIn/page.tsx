@@ -22,7 +22,7 @@ export default function SmsOptInPage() {
   return (
     <>
       <style>{`
-        body { background: #070709 !important; margin: 0; }
+        body { background: #f6f7fb !important; margin: 0; }
 
         .sms-wrap {
           max-width: 1280px;
@@ -40,11 +40,11 @@ export default function SmsOptInPage() {
           font-size: 9px;
           letter-spacing: 0.18em;
           text-transform: uppercase;
-          color: rgba(255,255,255,0.25);
+          color: rgba(15,16,32,0.45);
           margin-bottom: 32px;
         }
         .sms-breadcrumb a {
-          color: rgba(255,255,255,0.25);
+          color: rgba(15,16,32,0.45);
           text-decoration: none;
           transition: color 100ms;
         }
@@ -62,8 +62,8 @@ export default function SmsOptInPage() {
 
         /* ── Left: Hero copy ── */
         .sms-hero {
-          border: 1px solid rgba(255,255,255,0.08);
-          background: #0f0f15;
+          border: 1px solid rgba(15,16,32,0.10);
+          background: #ffffff;
           padding: 52px 52px 44px;
           position: relative;
           overflow: hidden;
@@ -114,7 +114,7 @@ export default function SmsOptInPage() {
         .sms-desc {
           font-family: var(--font-body), monospace;
           font-size: 11px;
-          color: rgba(255,255,255,0.35);
+          color: rgba(15,16,32,0.50);
           line-height: 1.85;
           max-width: 500px;
           letter-spacing: 0.04em;
@@ -128,7 +128,7 @@ export default function SmsOptInPage() {
           display: flex;
           flex-direction: column;
           gap: 0;
-          border: 1px solid rgba(255,255,255,0.06);
+          border: 1px solid rgba(15,16,32,0.08);
           position: relative;
           z-index: 1;
         }
@@ -138,7 +138,7 @@ export default function SmsOptInPage() {
           align-items: flex-start;
           gap: 16px;
           padding: 16px 20px;
-          border-bottom: 1px solid rgba(255,255,255,0.05);
+          border-bottom: 1px solid rgba(15,16,32,0.06);
         }
         .sms-benefit:last-child { border-bottom: none; }
 
@@ -161,14 +161,14 @@ export default function SmsOptInPage() {
           font-weight: 500;
           letter-spacing: 0.1em;
           text-transform: uppercase;
-          color: rgba(255,255,255,0.65);
+          color: rgba(15,16,32,0.65);
           margin-bottom: 3px;
         }
 
         .sms-benefit-desc {
           font-family: var(--font-body), monospace;
           font-size: 10px;
-          color: rgba(255,255,255,0.25);
+          color: rgba(15,16,32,0.45);
           line-height: 1.65;
           letter-spacing: 0.03em;
         }
@@ -176,10 +176,10 @@ export default function SmsOptInPage() {
         .sms-footnote {
           margin-top: 24px;
           padding-top: 20px;
-          border-top: 1px solid rgba(255,255,255,0.06);
+          border-top: 1px solid rgba(15,16,32,0.08);
           font-family: var(--font-body), monospace;
           font-size: 9px;
-          color: rgba(255,255,255,0.18);
+          color: rgba(15,16,32,0.40);
           letter-spacing: 0.08em;
           line-height: 1.75;
           position: relative;
@@ -188,7 +188,7 @@ export default function SmsOptInPage() {
 
         /* ── Right: Form ── */
         .sms-form-panel {
-          border: 1px solid rgba(255,255,255,0.08);
+          border: 1px solid rgba(15,16,32,0.10);
           background: #0d0d0b;
           display: flex;
           flex-direction: column;
@@ -196,8 +196,8 @@ export default function SmsOptInPage() {
 
         .sms-form-header {
           padding: 22px 28px 18px;
-          border-bottom: 1px solid rgba(255,255,255,0.06);
-          background: #0f0f15;
+          border-bottom: 1px solid rgba(15,16,32,0.08);
+          background: #ffffff;
         }
 
         .sms-form-title {
@@ -241,12 +241,12 @@ export default function SmsOptInPage() {
         .sms-label .required { color: #9d5cf0; margin-left: 2px; }
 
         .sms-input {
-          background: rgba(255,255,255,0.04);
+          background: rgba(15,16,32,0.05);
           border: 1px solid rgba(255,255,255,0.1);
           padding: 10px 14px;
           font-family: var(--font-body), monospace;
           font-size: 11px;
-          color: rgba(255,255,255,0.75);
+          color: rgba(15,16,32,0.75);
           letter-spacing: 0.04em;
           outline: none;
           transition: border-color 120ms;
@@ -255,8 +255,8 @@ export default function SmsOptInPage() {
           border-radius: 0;
           -webkit-appearance: none;
         }
-        .sms-input::placeholder { color: rgba(255,255,255,0.18); }
-        .sms-input:focus { border-color: rgba(124,58,237,0.5); background: rgba(255,255,255,0.06); }
+        .sms-input::placeholder { color: rgba(15,16,32,0.40); }
+        .sms-input:focus { border-color: rgba(124,58,237,0.5); background: rgba(15,16,32,0.08); }
 
         /* ── Consent checkbox ── */
         .sms-consent {
@@ -265,17 +265,17 @@ export default function SmsOptInPage() {
           align-items: flex-start;
           padding: 16px;
           background: rgba(255,255,255,0.02);
-          border: 1px solid rgba(255,255,255,0.07);
+          border: 1px solid rgba(15,16,32,0.08);
           cursor: pointer;
           transition: background 100ms;
         }
-        .sms-consent:hover { background: rgba(255,255,255,0.04); }
+        .sms-consent:hover { background: rgba(15,16,32,0.05); }
 
         .sms-checkbox {
           width: 14px;
           height: 14px;
           border: 1px solid rgba(255,255,255,0.2);
-          background: rgba(255,255,255,0.04);
+          background: rgba(15,16,32,0.05);
           flex-shrink: 0;
           margin-top: 1px;
           display: flex;
@@ -299,7 +299,7 @@ export default function SmsOptInPage() {
         .sms-consent-text {
           font-family: var(--font-body), monospace;
           font-size: 9px;
-          color: rgba(255,255,255,0.25);
+          color: rgba(15,16,32,0.45);
           line-height: 1.75;
           letter-spacing: 0.03em;
         }
@@ -325,25 +325,27 @@ export default function SmsOptInPage() {
           display: flex;
           align-items: center;
           justify-content: center;
-          padding: 13px 22px;
-          background: #7c3aed;
+          padding: 14px 22px;
+          background: var(--gradient-purple);
           color: #fff;
-          font-family: var(--font-body), monospace;
-          font-size: 10px;
-          font-weight: 500;
-          letter-spacing: 0.16em;
+          font-family: var(--font-numeric), monospace;
+          font-size: 11px;
+          font-weight: 700;
+          letter-spacing: 0.12em;
           text-transform: uppercase;
           border: none;
+          border-radius: var(--r-pill);
+          box-shadow: var(--shadow-purple);
           cursor: pointer;
-          transition: background 120ms, transform 80ms;
+          transition: background 120ms, transform 80ms, box-shadow 120ms;
           width: 100%;
         }
-        .sms-submit:hover { background: #9d5cf0; transform: translateY(-1px); }
+        .sms-submit:hover { background: var(--gradient-purple-soft); transform: translateY(-1px); box-shadow: 0 8px 22px rgba(124,58,237,0.32); }
         .sms-submit:active { transform: translateY(0); }
 
         .sms-form-footer {
           padding: 14px 28px 18px;
-          border-top: 1px solid rgba(255,255,255,0.05);
+          border-top: 1px solid rgba(15,16,32,0.06);
           font-family: var(--font-body), monospace;
           font-size: 8px;
           color: rgba(255,255,255,0.15);
@@ -402,14 +404,14 @@ export default function SmsOptInPage() {
           display: grid;
           grid-template-columns: repeat(3, 1fr);
           gap: 1px;
-          background: rgba(255,255,255,0.06);
-          border: 1px solid rgba(255,255,255,0.06);
+          background: rgba(15,16,32,0.08);
+          border: 1px solid rgba(15,16,32,0.08);
           margin-top: 20px;
         }
         @media(max-width: 768px) { .sms-info-strip { grid-template-columns: 1fr; } }
 
         .sms-info-item {
-          background: #0f0f15;
+          background: #ffffff;
           padding: 20px 22px;
         }
 
@@ -522,7 +524,7 @@ export default function SmsOptInPage() {
                   Thanks for signing up. Watch for a confirmation text. You'll receive polling
                   invitations and data updates from the Public Sentiment Institute.
                 </p>
-                <p className="sms-success-text" style={{ color: "rgba(255,255,255,0.18)", fontSize: 9 }}>
+                <p className="sms-success-text" style={{ color: "rgba(15,16,32,0.40)", fontSize: 9 }}>
                   Reply STOP at any time to unsubscribe.
                 </p>
               </div>

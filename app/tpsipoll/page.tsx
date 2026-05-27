@@ -389,7 +389,7 @@ function Eyebrow({ children }: { children: React.ReactNode }) {
 }
 
 function SlideTitle({ children }: { children: React.ReactNode }) {
-  return <div style={{ fontFamily:font.display, fontSize:"clamp(22px,3vw,36px)", letterSpacing:"0.04em", lineHeight:1.05, color:"#eeeeff", marginBottom:4 }}>{children}</div>;
+  return <div style={{ fontFamily:font.display, textTransform: "uppercase", fontSize:"clamp(22px,3vw,36px)", letterSpacing:"0.04em", lineHeight:1.05, color:"#eeeeff", marginBottom:4 }}>{children}</div>;
 }
 
 function SubTitle({ children }: { children: React.ReactNode }) {
@@ -398,10 +398,10 @@ function SubTitle({ children }: { children: React.ReactNode }) {
 
 function Nets({ nets }: { nets: NetStat[] }) {
   return (
-    <div style={{ display:"flex", alignItems:"stretch", gap:0, marginBottom:22, border:"1px solid rgba(255,255,255,0.07)", background:"#111120", width:"fit-content" }}>
+    <div style={{ display:"flex", alignItems:"stretch", gap:0, marginBottom:22, border:"1px solid rgba(15,16,32,0.08)", background:"#111120", width:"fit-content" }}>
       {nets.map((n, i) => (
-        <div key={i} style={{ padding:"12px 22px", borderRight: i < nets.length-1 ? "1px solid rgba(255,255,255,0.07)" : undefined }}>
-          <div style={{ fontFamily:font.display, fontSize:32, letterSpacing:"0.04em", lineHeight:1, color:n.color }}>{n.val}</div>
+        <div key={i} style={{ padding:"12px 22px", borderRight: i < nets.length-1 ? "1px solid rgba(15,16,32,0.08)" : undefined }}>
+          <div style={{ fontFamily:font.display, textTransform: "uppercase", fontSize:32, letterSpacing:"0.04em", lineHeight:1, color:n.color }}>{n.val}</div>
           <div style={{ fontFamily:font.mono, fontSize:7.5, letterSpacing:"0.14em", textTransform:"uppercase", color:C.muted, marginTop:2 }}>{n.lbl}</div>
         </div>
       ))}
@@ -422,12 +422,12 @@ function BarChart({ bars }: { bars: BarRow[] }) {
       {groups.map((g, gi) => (
         <div key={gi} style={{ marginBottom:14 }}>
           {g.name && (
-            <div style={{ fontFamily:font.mono, fontSize:7.5, letterSpacing:"0.2em", textTransform:"uppercase", color:"rgba(238,238,255,0.28)", padding:"8px 0 5px 232px", borderBottom:"1px solid rgba(255,255,255,0.05)", marginBottom:2 }}>{g.name}</div>
+            <div style={{ fontFamily:font.mono, fontSize:7.5, letterSpacing:"0.2em", textTransform:"uppercase", color:"rgba(238,238,255,0.28)", padding:"8px 0 5px 232px", borderBottom:"1px solid rgba(15,16,32,0.06)", marginBottom:2 }}>{g.name}</div>
           )}
           {g.rows.map((row, ri) => (
             <div key={ri} style={{ display:"grid", gridTemplateColumns:"220px 1fr 52px", alignItems:"center", gap:12, padding:"7px 0", borderBottom:"1px solid rgba(255,255,255,0.03)" }}>
               <div style={{ fontSize:12, color:"rgba(238,238,255,0.75)", textAlign:"right", lineHeight:1.35 }}>{row.label}</div>
-              <div style={{ height:26, background:"rgba(255,255,255,0.04)", borderRadius:2, overflow:"hidden" }}>
+              <div style={{ height:26, background:"rgba(15,16,32,0.05)", borderRadius:2, overflow:"hidden" }}>
                 <div style={{ height:"100%", width:`${row.pct}%`, background:row.color, opacity:row.strong?1:0.65, transition:"width 0.6s cubic-bezier(0.16,1,0.3,1)", borderRadius:2 }} />
               </div>
               <div style={{ fontFamily:font.mono, fontSize:13, fontWeight:600, color:row.strong ? row.color : "rgba(238,238,255,0.5)" }}>{row.pct}%</div>
@@ -445,9 +445,9 @@ function IssueTable({ rows }: { rows: IssueRow[] }) {
     <table style={{ width:"100%", maxWidth:720, borderCollapse:"collapse" }}>
       <thead>
         <tr>
-          <th style={{ fontFamily:font.mono, fontSize:7.5, letterSpacing:"0.14em", textTransform:"uppercase", color:C.muted, padding:"6px 12px", borderBottom:"1px solid rgba(255,255,255,0.07)", textAlign:"left" }}>Issue</th>
-          <th style={{ fontFamily:font.mono, fontSize:7.5, letterSpacing:"0.14em", textTransform:"uppercase", color:C.pink, padding:"6px 12px", borderBottom:"1px solid rgba(255,255,255,0.07)", textAlign:"right" }}>NET Disapprove</th>
-          <th style={{ fontFamily:font.mono, fontSize:7.5, letterSpacing:"0.14em", textTransform:"uppercase", color:C.green, padding:"6px 12px", borderBottom:"1px solid rgba(255,255,255,0.07)", textAlign:"right" }}>NET Approve</th>
+          <th style={{ fontFamily:font.mono, fontSize:7.5, letterSpacing:"0.14em", textTransform:"uppercase", color:C.muted, padding:"6px 12px", borderBottom:"1px solid rgba(15,16,32,0.08)", textAlign:"left" }}>Issue</th>
+          <th style={{ fontFamily:font.mono, fontSize:7.5, letterSpacing:"0.14em", textTransform:"uppercase", color:C.pink, padding:"6px 12px", borderBottom:"1px solid rgba(15,16,32,0.08)", textAlign:"right" }}>NET Disapprove</th>
+          <th style={{ fontFamily:font.mono, fontSize:7.5, letterSpacing:"0.14em", textTransform:"uppercase", color:C.green, padding:"6px 12px", borderBottom:"1px solid rgba(15,16,32,0.08)", textAlign:"right" }}>NET Approve</th>
         </tr>
       </thead>
       <tbody>
@@ -456,7 +456,7 @@ function IssueTable({ rows }: { rows: IssueRow[] }) {
             <td style={{ padding:"9px 12px", fontSize:12, color:"#eeeeff" }}>{r.issue}</td>
             <td style={{ padding:"9px 12px", textAlign:"right" }}>
               <div style={{ display:"flex", alignItems:"center", gap:7, justifyContent:"flex-end" }}>
-                <div style={{ width:72, height:4, background:"rgba(255,255,255,0.06)", borderRadius:1, overflow:"hidden" }}>
+                <div style={{ width:72, height:4, background:"rgba(15,16,32,0.08)", borderRadius:1, overflow:"hidden" }}>
                   <div style={{ height:"100%", width:`${(r.disApprove/maxDis)*100}%`, background:C.pink, borderRadius:1 }} />
                 </div>
                 <span style={{ fontFamily:font.mono, fontSize:11, fontWeight:600, color:C.pink, width:32, textAlign:"right" }}>{r.disApprove}%</span>
@@ -464,7 +464,7 @@ function IssueTable({ rows }: { rows: IssueRow[] }) {
             </td>
             <td style={{ padding:"9px 12px", textAlign:"right" }}>
               <div style={{ display:"flex", alignItems:"center", gap:7, justifyContent:"flex-end" }}>
-                <div style={{ width:72, height:4, background:"rgba(255,255,255,0.06)", borderRadius:1, overflow:"hidden" }}>
+                <div style={{ width:72, height:4, background:"rgba(15,16,32,0.08)", borderRadius:1, overflow:"hidden" }}>
                   <div style={{ height:"100%", width:`${r.approve}%`, background:C.green, borderRadius:1 }} />
                 </div>
                 <span style={{ fontFamily:font.mono, fontSize:11, fontWeight:600, color:C.green, width:32, textAlign:"right" }}>{r.approve}%</span>
@@ -482,9 +482,9 @@ function RankTable({ rows }: { rows: NonNullable<Slide["rankTable"]> }) {
     <table style={{ width:"100%", maxWidth:720, borderCollapse:"collapse" }}>
       <thead>
         <tr>
-          <th style={{ fontFamily:font.mono, fontSize:7.5, letterSpacing:"0.14em", textTransform:"uppercase", color:C.muted, padding:"6px 12px", borderBottom:"1px solid rgba(255,255,255,0.07)", textAlign:"left" }}>Issue</th>
-          <th style={{ fontFamily:font.mono, fontSize:7.5, letterSpacing:"0.14em", textTransform:"uppercase", color:C.muted, padding:"6px 12px", borderBottom:"1px solid rgba(255,255,255,0.07)", textAlign:"right" }}>% Ranked #1</th>
-          <th style={{ fontFamily:font.mono, fontSize:7.5, letterSpacing:"0.14em", textTransform:"uppercase", color:C.muted, padding:"6px 12px", borderBottom:"1px solid rgba(255,255,255,0.07)", textAlign:"center" }}>Priority</th>
+          <th style={{ fontFamily:font.mono, fontSize:7.5, letterSpacing:"0.14em", textTransform:"uppercase", color:C.muted, padding:"6px 12px", borderBottom:"1px solid rgba(15,16,32,0.08)", textAlign:"left" }}>Issue</th>
+          <th style={{ fontFamily:font.mono, fontSize:7.5, letterSpacing:"0.14em", textTransform:"uppercase", color:C.muted, padding:"6px 12px", borderBottom:"1px solid rgba(15,16,32,0.08)", textAlign:"right" }}>% Ranked #1</th>
+          <th style={{ fontFamily:font.mono, fontSize:7.5, letterSpacing:"0.14em", textTransform:"uppercase", color:C.muted, padding:"6px 12px", borderBottom:"1px solid rgba(15,16,32,0.08)", textAlign:"center" }}>Priority</th>
         </tr>
       </thead>
       <tbody>
@@ -493,7 +493,7 @@ function RankTable({ rows }: { rows: NonNullable<Slide["rankTable"]> }) {
             <td style={{ padding:"9px 12px", fontSize:12, color:"#eeeeff" }}>{r.label}</td>
             <td style={{ padding:"9px 12px", textAlign:"right" }}>
               <div style={{ display:"flex", alignItems:"center", gap:7, justifyContent:"flex-end" }}>
-                <div style={{ width:100, height:4, background:"rgba(255,255,255,0.06)", borderRadius:1, overflow:"hidden" }}>
+                <div style={{ width:100, height:4, background:"rgba(15,16,32,0.08)", borderRadius:1, overflow:"hidden" }}>
                   <div style={{ height:"100%", width:`${r.pct1*2.1}%`, background:r.color, borderRadius:1 }} />
                 </div>
                 <span style={{ fontFamily:font.mono, fontSize:11, fontWeight:600, color:r.color, width:34, textAlign:"right" }}>{r.pct1}%</span>
@@ -537,17 +537,17 @@ function CoverSlide() {
           LV weighted · Score-favoring sigmoid · N=309 likely voters<br />
           Pollfish platform · April 2026 · 21 questions
         </p>
-        <div style={{ display:"flex", gap:0, border:"1px solid rgba(255,255,255,0.07)" }}>
+        <div style={{ display:"flex", gap:0, border:"1px solid rgba(15,16,32,0.08)" }}>
           {[["309","Total N (LV)","#2563eb"],["21","Questions","#e63946"],["5","Wave","#f7d94f"],["LV","Weight","#2fe4a0"]].map(([v,l,color],i)=>(
-            <div key={i} style={{ padding:"12px 18px", borderRight:i<3?"1px solid rgba(255,255,255,0.07)":undefined }}>
-              <div style={{ fontFamily:font.display, fontSize:26, letterSpacing:"0.04em", lineHeight:1, color }}>{v}</div>
+            <div key={i} style={{ padding:"12px 18px", borderRight:i<3?"1px solid rgba(15,16,32,0.08)":undefined }}>
+              <div style={{ fontFamily:font.display, textTransform: "uppercase", fontSize:26, letterSpacing:"0.04em", lineHeight:1, color }}>{v}</div>
               <div style={{ fontFamily:font.mono, fontSize:7, letterSpacing:"0.15em", textTransform:"uppercase", color:C.muted, marginTop:2 }}>{l}</div>
             </div>
           ))}
         </div>
       </div>
-      <div style={{ background:"#111120", border:"1px solid rgba(255,255,255,0.07)", padding:18 }}>
-        <div style={{ fontFamily:font.mono, fontSize:7, letterSpacing:"0.2em", textTransform:"uppercase", color:"rgba(238,238,255,0.28)", marginBottom:10, paddingBottom:8, borderBottom:"1px solid rgba(255,255,255,0.06)" }}>Contents</div>
+      <div style={{ background:"#111120", border:"1px solid rgba(15,16,32,0.08)", padding:18 }}>
+        <div style={{ fontFamily:font.mono, fontSize:7, letterSpacing:"0.2em", textTransform:"uppercase", color:"rgba(238,238,255,0.28)", marginBottom:10, paddingBottom:8, borderBottom:"1px solid rgba(15,16,32,0.08)" }}>Contents</div>
         {contents.map(([label,q],i)=>(
           <div key={i} style={{ display:"flex", justifyContent:"space-between", padding:"5px 0", borderBottom:"1px solid rgba(255,255,255,0.03)", fontFamily:font.mono, fontSize:9, color:C.muted }}>
             <span style={{ color:"#eeeeff" }}>{label}</span>
@@ -596,16 +596,16 @@ export default function TPSILVSlideshow() {
     <div style={{ display:"flex", flexDirection:"column", height:"calc(100vh - 64px)", background:"#09090f", color:"#eeeeff", fontFamily:font.sans, fontWeight:300, overflow:"hidden", position:"relative" }}>
 
       {/* ── TOOLBAR ── */}
-      <div style={{ height:44, display:"flex", alignItems:"center", gap:14, padding:"0 22px", borderBottom:"1px solid rgba(255,255,255,0.07)", background:"rgba(9,9,15,0.96)", backdropFilter:"blur(10px)", flexShrink:0 }}>
+      <div style={{ height:44, display:"flex", alignItems:"center", gap:14, padding:"0 22px", borderBottom:"1px solid rgba(15,16,32,0.08)", background:"rgba(9,9,15,0.96)", backdropFilter:"blur(10px)", flexShrink:0 }}>
         <div style={{ fontFamily:font.mono, fontSize:8, letterSpacing:"0.2em", textTransform:"uppercase", color:C.purpleLt, border:"1px solid rgba(124,58,237,0.3)", padding:"3px 10px" }}>LV WEIGHTED</div>
         <div style={{ fontFamily:font.mono, fontSize:9, letterSpacing:"0.1em", textTransform:"uppercase", color:C.muted, flex:1 }}>Maryland CD-6 · Likely Voter Results · Wave 5 · April 2026</div>
         <span style={{ fontFamily:font.mono, fontSize:9, color:C.muted, letterSpacing:"0.08em" }}>
           SLIDE <strong style={{ color:"#eeeeff" }}>{cur+1}</strong> / {total}
         </span>
-        <button onClick={() => setAutoplay(a=>!a)} style={{ fontFamily:font.mono, fontSize:8, letterSpacing:"0.12em", textTransform:"uppercase", padding:"4px 12px", border:`1px solid ${autoplay?C.purple:"rgba(255,255,255,0.07)"}`, background:autoplay?C.purple:"transparent", color:autoplay?"#fff":C.muted, cursor:"pointer" }}>
+        <button onClick={() => setAutoplay(a=>!a)} style={{ fontFamily:font.mono, fontSize:8, letterSpacing:"0.12em", textTransform:"uppercase", padding:"4px 12px", border:`1px solid ${autoplay?C.purple:"rgba(15,16,32,0.08)"}`, background:autoplay?C.purple:"transparent", color:autoplay?"#fff":C.muted, cursor:"pointer" }}>
           {autoplay ? "STOP ■" : "AUTOPLAY →"}
         </button>
-        <button onClick={() => goTo(0)} style={{ fontFamily:font.mono, fontSize:8, letterSpacing:"0.12em", textTransform:"uppercase", padding:"4px 12px", border:`1px solid rgba(255,255,255,0.07)`, background:"transparent", color:C.muted, cursor:"pointer" }}>COVER</button>
+        <button onClick={() => goTo(0)} style={{ fontFamily:font.mono, fontSize:8, letterSpacing:"0.12em", textTransform:"uppercase", padding:"4px 12px", border:`1px solid rgba(15,16,32,0.08)`, background:"transparent", color:C.muted, cursor:"pointer" }}>COVER</button>
       </div>
 
       {/* ── SLIDE AREA ── */}
@@ -638,12 +638,12 @@ export default function TPSILVSlideshow() {
       </div>
 
       {/* ── BOTTOM BAR ── */}
-      <div style={{ height:38, display:"flex", alignItems:"center", justifyContent:"space-between", padding:"0 22px", borderTop:"1px solid rgba(255,255,255,0.07)", background:"rgba(9,9,15,0.96)", backdropFilter:"blur(10px)", flexShrink:0 }}>
+      <div style={{ height:38, display:"flex", alignItems:"center", justifyContent:"space-between", padding:"0 22px", borderTop:"1px solid rgba(15,16,32,0.08)", background:"rgba(9,9,15,0.96)", backdropFilter:"blur(10px)", flexShrink:0 }}>
         <div style={{ display:"flex", gap:3, flexWrap:"wrap", maxWidth:"55%" }}>
           {SLIDES.map((_,i) => (
             <div key={i} onClick={() => goTo(i)} style={{
               width:i===cur?16:5, height:5, borderRadius:i===cur?2:"50%",
-              background:i===cur?C.purple:"rgba(255,255,255,0.12)",
+              background:i===cur?C.purple:"rgba(15,16,32,0.14)",
               cursor:"pointer", transition:"all 0.18s", flexShrink:0,
             }} />
           ))}
@@ -654,7 +654,7 @@ export default function TPSILVSlideshow() {
         <div style={{ display:"flex", gap:6 }}>
           {([["←", prev, cur===0],["→", next, cur===total-1]] as const).map(([lbl,fn,dis],i)=>(
             <button key={i} onClick={fn} disabled={dis} style={{
-              width:28, height:28, border:"1px solid rgba(255,255,255,0.07)", background:"transparent",
+              width:28, height:28, border:"1px solid rgba(15,16,32,0.08)", background:"transparent",
               color:dis?"rgba(238,238,255,0.2)":C.muted, cursor:dis?"default":"pointer",
               fontSize:13, display:"flex", alignItems:"center", justifyContent:"center",
               fontFamily:font.mono, transition:"all 0.15s",

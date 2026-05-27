@@ -524,7 +524,7 @@ function MapWithCountyTooltip({ svgText, regionResults }: { svgText: string; reg
       const fill = currentRR ? countyFill(currentRR) : null;
       shape.style.opacity = "0";
       requestAnimationFrame(() => {
-        shape.style.fill = fill || "rgba(255,255,255,0.04)"; shape.style.opacity = "1";
+        shape.style.fill = fill || "rgba(15,16,32,0.05)"; shape.style.opacity = "1";
         if (currentRR) {
           const fp = countyFingerprint(currentRR);
           const prevFp = countyFingerprintsRef.current.get(key);
@@ -582,16 +582,16 @@ function MapWithCountyTooltip({ svgText, regionResults }: { svgText: string; reg
             </div>
             <div className="res-reporting-row"><span className="res-note">{tooltip.reporting}</span></div>
             <div className="res-bar-track mt-1" style={{ height: "2px" }}><div className="res-bar-fill" style={{ width: `${tooltip.reportingPct}%`, background: "var(--purple)", height: "2px" }} /></div>
-            <div className="mt-3 border-t pt-2" style={{ borderColor: "rgba(255,255,255,0.08)" }}>
+            <div className="mt-3 border-t pt-2" style={{ borderColor: "rgba(15,16,32,0.10)" }}>
               {tooltip.lines.length > 0 ? (
                 <>
-                  <div className="grid grid-cols-[1fr_72px_52px] gap-1 pb-1 mb-1 border-b" style={{ borderColor: "rgba(255,255,255,0.08)" }}>
+                  <div className="grid grid-cols-[1fr_72px_52px] gap-1 pb-1 mb-1 border-b" style={{ borderColor: "rgba(15,16,32,0.10)" }}>
                     {["CANDIDATE", "VOTES", "PCT"].map((h) => (<div key={h} className={`res-th ${h !== "CANDIDATE" ? "text-right" : ""}`}>{h}</div>))}
                   </div>
                   {tooltip.lines.map((c, i) => (
-                    <div key={i} className="grid grid-cols-[1fr_72px_52px] items-center gap-1 py-1.5 border-b" style={{ borderColor: "rgba(255,255,255,0.04)" }}>
+                    <div key={i} className="grid grid-cols-[1fr_72px_52px] items-center gap-1 py-1.5 border-b" style={{ borderColor: "rgba(15,16,32,0.05)" }}>
                       <div className="flex items-center gap-2 min-w-0">
-                        <span className="h-2 w-2 rounded-full flex-shrink-0" style={{ background: c.color || "rgba(255,255,255,0.35)" }} />
+                        <span className="h-2 w-2 rounded-full flex-shrink-0" style={{ background: c.color || "rgba(15,16,32,0.50)" }} />
                         <div className="min-w-0"><div className="res-cand-name truncate">{c.name}{c.winner ? " ✓" : ""}</div><div className="res-cand-party">{c.party}</div></div>
                       </div>
                       <div className="text-right res-num">{c.votes?.toLocaleString() ?? "—"}</div>
@@ -601,10 +601,10 @@ function MapWithCountyTooltip({ svgText, regionResults }: { svgText: string; reg
                 </>
               ) : (
                 <div className="py-5 flex flex-col items-center gap-2">
-                  <div style={{ width: 28, height: 28, borderRadius: "50%", border: "1.5px solid rgba(255,255,255,0.10)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                    <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="rgba(255,255,255,0.20)" strokeWidth="1.5"/><line x1="8" y1="5" x2="8" y2="8.5" stroke="rgba(255,255,255,0.30)" strokeWidth="1.5" strokeLinecap="round"/><circle cx="8" cy="11" r="0.8" fill="rgba(255,255,255,0.30)"/></svg>
+                  <div style={{ width: 28, height: 28, borderRadius: "50%", border: "1.5px solid rgba(15,16,32,0.12)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                    <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="rgba(15,16,32,0.40)" strokeWidth="1.5"/><line x1="8" y1="5" x2="8" y2="8.5" stroke="rgba(15,16,32,0.50)" strokeWidth="1.5" strokeLinecap="round"/><circle cx="8" cy="11" r="0.8" fill="rgba(15,16,32,0.50)"/></svg>
                   </div>
-                  <div className="res-note" style={{ color: "rgba(255,255,255,0.30)", letterSpacing: "0.18em" }}>NO RESULTS YET</div>
+                  <div className="res-note" style={{ color: "rgba(15,16,32,0.50)", letterSpacing: "0.18em" }}>NO RESULTS YET</div>
                   {(tooltip.reportingPct ?? 0) === 0 && <div className="res-note" style={{ color: "rgba(255,255,255,0.15)", fontSize: "7.5px" }}>AWAITING FIRST RETURNS</div>}
                 </div>
               )}
@@ -630,7 +630,7 @@ function CandidateList({ candidates, reporting, raceId, isMajorityRunoff }: { ca
               <div className="res-cand-bar" style={{ background: c.color || "rgba(255,255,255,0.2)" }} />
               <div className="flex items-center justify-between gap-3 flex-1 min-w-0">
                 <div className="flex items-center gap-3 min-w-0">
-                  <span className="res-cand-dot" style={{ background: c.color || "rgba(255,255,255,0.35)", boxShadow: `0 0 10px ${c.color || "rgba(255,255,255,0.2)"}40` }} />
+                  <span className="res-cand-dot" style={{ background: c.color || "rgba(15,16,32,0.50)", boxShadow: `0 0 10px ${c.color || "rgba(255,255,255,0.2)"}40` }} />
                   <div className="min-w-0">
                     <div className="flex flex-wrap items-center gap-2 mb-0.5">
                       <span className="res-cand-name-lg">{c.name}</span>
@@ -691,7 +691,7 @@ function CountyTotalsTable({ regionResults, collapsed, onToggle, maxHeight }: { 
           )}
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-          <span className="res-note" style={{ color: "rgba(255,255,255,0.25)" }}>
+          <span className="res-note" style={{ color: "rgba(15,16,32,0.45)" }}>
             {collapsed ? "SHOW TABLE" : "HIDE TABLE"}
           </span>
           {/* Chevron icon */}
@@ -703,7 +703,7 @@ function CountyTotalsTable({ regionResults, collapsed, onToggle, maxHeight }: { 
               flexShrink: 0,
             }}
           >
-            <path d="M2 4L6 8L10 4" stroke="rgba(255,255,255,0.35)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M2 4L6 8L10 4" stroke="rgba(15,16,32,0.50)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         </div>
       </button>
@@ -735,8 +735,8 @@ function CountyTotalsTable({ regionResults, collapsed, onToggle, maxHeight }: { 
                     <td className="px-4 py-3 align-top">
                       <div className="grid grid-cols-1 gap-1 md:grid-cols-2">
                         {row.candidates.length > 0 ? row.candidates.slice(0, 4).map((cand, idx) => (
-                          <div key={idx} className="flex items-center justify-between gap-2 py-1 border-b" style={{ borderColor: "rgba(255,255,255,0.04)" }}>
-                            <div className="flex items-center gap-2 min-w-0"><span className="h-1.5 w-1.5 rounded-full flex-shrink-0" style={{ background: cand.color || "rgba(255,255,255,0.35)" }} /><span className="res-note truncate">{cand.name}</span></div>
+                          <div key={idx} className="flex items-center justify-between gap-2 py-1 border-b" style={{ borderColor: "rgba(15,16,32,0.05)" }}>
+                            <div className="flex items-center gap-2 min-w-0"><span className="h-1.5 w-1.5 rounded-full flex-shrink-0" style={{ background: cand.color || "rgba(15,16,32,0.50)" }} /><span className="res-note truncate">{cand.name}</span></div>
                             <span className="res-cand-name shrink-0">{cand.pct !== null ? `${cand.pct.toFixed(1)}%` : "—"}</span>
                           </div>
                         )) : <span className="res-note italic">Awaiting…</span>}
@@ -843,12 +843,12 @@ function SwingOMeter({ candidates, colors, probabilities, raceRule, reportingPct
   return (
     <div style={{ position: "relative", userSelect: "none" }}>
       <svg viewBox={`0 0 ${W} ${H}`} style={{ width: "100%", height: "auto", overflow: "visible" }}>
-        <path d={describeArc(0, 180, R_OUTER, R_INNER)} fill="rgba(255,255,255,0.04)" />
+        <path d={describeArc(0, 180, R_OUTER, R_INNER)} fill="rgba(15,16,32,0.05)" />
         {arcSegments.map((seg) => (
           <g key={seg.key}>
             <path d={describeArc(seg.start + 0.8, seg.end - 0.8, R_OUTER, R_INNER)} fill={seg.color} opacity={0.85} />
             {(seg.end - seg.start) > 20 && (
-              <text x={seg.midPt.x} y={seg.midPt.y + 3} textAnchor="middle" fontSize="7" fontWeight="700" fill="rgba(255,255,255,0.85)" fontFamily="var(--font-body)" letterSpacing="0.5">
+              <text x={seg.midPt.x} y={seg.midPt.y + 3} textAnchor="middle" fontSize="7" fontWeight="700" fill="rgba(15,16,32,0.85)" fontFamily="var(--font-body)" letterSpacing="0.5">
                 {(seg.prob * 100).toFixed(0)}%
               </text>
             )}
@@ -857,7 +857,7 @@ function SwingOMeter({ candidates, colors, probabilities, raceRule, reportingPct
         <text x={CX} y={CY - 22} textAnchor="middle" fontSize="20" fontWeight="900" fill="white" fontFamily="var(--font-body)" letterSpacing="-0.5">
           {(leader.prob * 100).toFixed(1)}%
         </text>
-        <text x={CX} y={CY - 8} textAnchor="middle" fontSize="7" fill="rgba(255,255,255,0.45)" fontFamily="var(--font-body)" letterSpacing="1">
+        <text x={CX} y={CY - 8} textAnchor="middle" fontSize="7" fill="rgba(15,16,32,0.55)" fontFamily="var(--font-body)" letterSpacing="1">
           {leader.name.split(" ").pop()?.toUpperCase()}
         </text>
         <circle cx={CX} cy={CY} r="5" fill="rgba(255,255,255,0.15)" />
@@ -866,18 +866,18 @@ function SwingOMeter({ candidates, colors, probabilities, raceRule, reportingPct
         {arcSegments.map((seg) => (
           <div key={seg.key} style={{ display: "flex", alignItems: "center", gap: 5 }}>
             <span style={{ width: 8, height: 8, borderRadius: 2, background: seg.color, display: "inline-block", flexShrink: 0 }} />
-            <span style={{ fontFamily: "var(--font-body)", fontSize: "8px", fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", color: "rgba(255,255,255,0.55)" }}>{seg.name.split(" ").pop()}</span>
+            <span style={{ fontFamily: "var(--font-body)", fontSize: "8px", fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", color: "rgba(15,16,32,0.55)" }}>{seg.name.split(" ").pop()}</span>
             <span style={{ fontFamily: "var(--font-body)", fontSize: "9px", fontWeight: 900, color: seg.color }}>{(seg.prob * 100).toFixed(1)}%</span>
           </div>
         ))}
       </div>
       <div style={{ marginTop: 10, padding: "6px 0 0" }}>
         <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 4 }}>
-          <span style={{ fontFamily: "var(--font-body)", fontSize: "7px", fontWeight: 700, letterSpacing: "0.20em", textTransform: "uppercase", color: "rgba(255,255,255,0.25)" }}>REPORTING</span>
-          <span style={{ fontFamily: "var(--font-body)", fontSize: "7px", fontWeight: 700, color: "rgba(255,255,255,0.45)" }}>{reportingPct.toFixed(1)}%</span>
+          <span style={{ fontFamily: "var(--font-body)", fontSize: "7px", fontWeight: 700, letterSpacing: "0.20em", textTransform: "uppercase", color: "rgba(15,16,32,0.45)" }}>REPORTING</span>
+          <span style={{ fontFamily: "var(--font-body)", fontSize: "7px", fontWeight: 700, color: "rgba(15,16,32,0.55)" }}>{reportingPct.toFixed(1)}%</span>
         </div>
-        <div style={{ height: 2, background: "rgba(255,255,255,0.07)", overflow: "hidden" }}>
-          <div style={{ height: "100%", width: `${reportingPct}%`, background: "rgba(255,255,255,0.30)", transition: "width 800ms ease" }} />
+        <div style={{ height: 2, background: "rgba(15,16,32,0.08)", overflow: "hidden" }}>
+          <div style={{ height: "100%", width: `${reportingPct}%`, background: "rgba(15,16,32,0.50)", transition: "width 800ms ease" }} />
         </div>
       </div>
     </div>
@@ -1113,7 +1113,7 @@ function ForecastPanel({ raceId, refreshTick, raceData, onForecastUpdate }: { ra
             letterSpacing: "0.16em", color: "var(--purple-soft)",
           }}>FORECAST β</span>
           {isLoading && <span className="res-badge res-badge-purple" style={{ fontSize: "7px" }}><span className="res-live-dot" style={{ background: "var(--purple)", width: 4, height: 4 }} />UPDATING</span>}
-          {!isLoading && forecast && <span className="res-badge" style={{ fontSize: "7px", color: "rgba(255,255,255,0.25)" }}>AUTO / 30s</span>}
+          {!isLoading && forecast && <span className="res-badge" style={{ fontSize: "7px", color: "rgba(15,16,32,0.45)" }}>AUTO / 30s</span>}
         </div>
         <button className="res-btn-ghost" style={{ padding: "3px 8px", fontSize: "7px" }} onClick={() => setShowOptions((v) => !v)}>{showOptions ? "HIDE OPTIONS" : "OPTIONS"}</button>
       </div>
@@ -1138,7 +1138,7 @@ function ForecastPanel({ raceId, refreshTick, raceData, onForecastUpdate }: { ra
               <span className="res-note" style={{ color: "rgba(255,255,255,0.3)" }}>{forecast.race.percent_reporting}% REPORTING</span>
               <span className={`res-badge ${raceRule === "MAJORITY" ? "res-badge-purple" : "res-badge-red"}`}>{raceRule === "MAJORITY" ? "MAJORITY" : forecast.forecast.mode_trigger}</span>
             </div>
-            <div style={{ marginBottom: 16, padding: "14px 12px", background: "rgba(0,0,0,0.25)", border: "1px solid rgba(255,255,255,0.07)" }}>
+            <div style={{ marginBottom: 16, padding: "14px 12px", background: "rgba(0,0,0,0.25)", border: "1px solid rgba(15,16,32,0.08)" }}>
               <div style={{ fontFamily: "var(--font-body)", fontSize: "7px", fontWeight: 700, letterSpacing: "0.26em", textTransform: "uppercase", color: "rgba(255,255,255,0.3)", marginBottom: 10 }}>WIN PROBABILITY · {raceRule === "PLURALITY" ? "MOST VOTES" : "MAJORITY ≥50%"}</div>
               <SwingOMeter candidates={forecast.forecast.candidate_names ?? ["C1", "C2", "C3", "Others"]} colors={forecast.forecast.candidate_colors ?? ["#3b82f6", "#ef4444", "#22c55e", "#94a3b8"]} probabilities={swingoProbs} raceRule={raceRule} reportingPct={forecast.race.percent_reporting} candidateCount={activeCandidateCount} />
             </div>
@@ -1146,10 +1146,10 @@ function ForecastPanel({ raceId, refreshTick, raceData, onForecastUpdate }: { ra
               {(["Candidate1", "Candidate2", "Candidate3"] as const).filter((_, idx) => idx < activeCandidateCount).map((key) => {
                 const color = candidateColors[key], share = forecast.forecast.modeled_share[key], votes = forecast.forecast.modeled_votes[key], isLeader = forecast.forecast.leader === key;
                 return (
-                  <div key={key} style={{ padding: "10px 10px 8px", background: "rgba(255,255,255,0.025)", border: `1px solid ${isLeader ? color + "44" : "rgba(255,255,255,0.06)"}` }}>
+                  <div key={key} style={{ padding: "10px 10px 8px", background: "rgba(255,255,255,0.025)", border: `1px solid ${isLeader ? color + "44" : "rgba(15,16,32,0.08)"}` }}>
                     <div style={{ fontFamily: "var(--font-body)", fontSize: "7px", fontWeight: 700, letterSpacing: "0.20em", textTransform: "uppercase", color: color + "cc", marginBottom: 4, lineHeight: 1.4 }}>{formatCandidateName(candidateLabels[key])}</div>
                     <div style={{ fontFamily: "var(--font-body)", fontSize: "clamp(17px, 1.8vw, 22px)", fontWeight: 900, color, lineHeight: 1 }}>{fcastPct(share)}</div>
-                    <div style={{ fontFamily: "var(--font-body)", fontSize: "7.5px", letterSpacing: "0.10em", color: "rgba(255,255,255,0.35)", marginTop: 3 }}>{fcastFmt(votes)} PROJ</div>
+                    <div style={{ fontFamily: "var(--font-body)", fontSize: "7.5px", letterSpacing: "0.10em", color: "rgba(15,16,32,0.50)", marginTop: 3 }}>{fcastFmt(votes)} PROJ</div>
                     {isLeader && <div style={{ marginTop: 6, fontSize: "5.5px", color, fontWeight: 700, fontFamily: "var(--font-body)", letterSpacing: "0.16em", textTransform: "uppercase", border: `1px solid ${color}55`, padding: "1px 4px", display: "inline-block" }}>LEADER</div>}
                   </div>
                 );
@@ -1159,30 +1159,30 @@ function ForecastPanel({ raceId, refreshTick, raceData, onForecastUpdate }: { ra
               <div style={{ marginBottom: 14, padding: "10px 12px", background: "rgba(245,158,11,0.05)", border: "1px solid rgba(245,158,11,0.15)" }}>
                 <div style={{ fontFamily: "var(--font-body)", fontSize: "7px", fontWeight: 700, letterSpacing: "0.24em", textTransform: "uppercase", color: "rgba(245,158,11,0.7)", marginBottom: 8 }}>RUNOFF PROBABILITY</div>
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 5 }}><span style={{ fontFamily: "var(--font-body)", fontSize: "7.5px", letterSpacing: "0.12em", textTransform: "uppercase", color: "rgba(255,255,255,0.4)" }}>Runoff needed</span><span style={{ fontFamily: "var(--font-body)", fontSize: "12px", fontWeight: 900, color: "#f59e0b" }}>{fcastPct(forecast.forecast.runoff_needed_prob)}</span></div>
-                <div style={{ height: 3, background: "rgba(255,255,255,0.07)", overflow: "hidden", marginBottom: 8 }}><div style={{ height: "100%", width: fcastPct(Math.min(forecast.forecast.runoff_needed_prob, 1)), background: "#f59e0b", transition: "width 600ms ease" }} /></div>
+                <div style={{ height: 3, background: "rgba(15,16,32,0.08)", overflow: "hidden", marginBottom: 8 }}><div style={{ height: "100%", width: fcastPct(Math.min(forecast.forecast.runoff_needed_prob, 1)), background: "#f59e0b", transition: "width 600ms ease" }} /></div>
                 {FORECAST_CANDIDATE_KEYS.map(k => forecast.forecast.runoff_prob[k] > 0.005 ? (
                   <div key={k} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 3 }}>
-                    <div style={{ display: "flex", alignItems: "center", gap: 5 }}><span style={{ width: 5, height: 5, borderRadius: "50%", background: candidateColors[k], display: "inline-block" }} /><span style={{ fontFamily: "var(--font-body)", fontSize: "8px", letterSpacing: "0.08em", textTransform: "uppercase", color: "rgba(255,255,255,0.45)" }}>{candidateLabels[k]}</span></div>
+                    <div style={{ display: "flex", alignItems: "center", gap: 5 }}><span style={{ width: 5, height: 5, borderRadius: "50%", background: candidateColors[k], display: "inline-block" }} /><span style={{ fontFamily: "var(--font-body)", fontSize: "8px", letterSpacing: "0.08em", textTransform: "uppercase", color: "rgba(15,16,32,0.55)" }}>{candidateLabels[k]}</span></div>
                     <span style={{ fontFamily: "var(--font-body)", fontSize: "9px", fontWeight: 700, color: candidateColors[k] }}>{fcastPct(forecast.forecast.runoff_prob[k])}</span>
                   </div>
                 ) : null)}
               </div>
             )}
-            <div style={{ padding: "10px 12px", background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.06)", marginBottom: 14 }}>
-              <div style={{ fontFamily: "var(--font-body)", fontSize: "7px", fontWeight: 700, letterSpacing: "0.26em", textTransform: "uppercase", color: "rgba(255,255,255,0.25)", marginBottom: 8 }}>MODEL STATISTICS</div>
+            <div style={{ padding: "10px 12px", background: "rgba(255,255,255,0.02)", border: "1px solid rgba(15,16,32,0.08)", marginBottom: 14 }}>
+              <div style={{ fontFamily: "var(--font-body)", fontSize: "7px", fontWeight: 700, letterSpacing: "0.26em", textTransform: "uppercase", color: "rgba(15,16,32,0.45)", marginBottom: 8 }}>MODEL STATISTICS</div>
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "4px 16px" }}>
                 {[["TOTAL", fcastFmt(forecast.forecast.modeled_total_vote)], ["REMAINING", fcastFmt(forecast.forecast.modeled_vote_remaining)], ["MARGIN", `${fcastFmt(forecast.forecast.projected_margin_votes)} (${fcastPct(forecast.forecast.projected_margin_pct)})`], ["STD DEV", fcastFmt(forecast.forecast.sd_race)]].map(([label, val]) => (
-                  <div key={label} style={{ paddingBottom: 4, borderBottom: "1px solid rgba(255,255,255,0.04)" }}>
-                    <div style={{ fontFamily: "var(--font-body)", fontSize: "6.5px", fontWeight: 700, letterSpacing: "0.20em", textTransform: "uppercase", color: "rgba(255,255,255,0.25)", marginBottom: 2 }}>{label}</div>
-                    <div style={{ fontFamily: "var(--font-body)", fontSize: "10px", fontWeight: 700, color: "rgba(255,255,255,0.70)" }}>{val}</div>
+                  <div key={label} style={{ paddingBottom: 4, borderBottom: "1px solid rgba(15,16,32,0.05)" }}>
+                    <div style={{ fontFamily: "var(--font-body)", fontSize: "6.5px", fontWeight: 700, letterSpacing: "0.20em", textTransform: "uppercase", color: "rgba(15,16,32,0.45)", marginBottom: 2 }}>{label}</div>
+                    <div style={{ fontFamily: "var(--font-body)", fontSize: "10px", fontWeight: 700, color: "rgba(15,16,32,0.70)" }}>{val}</div>
                   </div>
                 ))}
               </div>
             </div>
             {timestamps.length > 1 && (
-              <div style={{ padding: "10px 12px", background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.06)" }}>
+              <div style={{ padding: "10px 12px", background: "rgba(255,255,255,0.02)", border: "1px solid rgba(15,16,32,0.08)" }}>
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 10 }}>
-                  <div style={{ fontFamily: "var(--font-body)", fontSize: "7px", fontWeight: 700, letterSpacing: "0.26em", textTransform: "uppercase", color: "rgba(255,255,255,0.25)" }}>HISTORICAL PLAYBACK</div>
+                  <div style={{ fontFamily: "var(--font-body)", fontSize: "7px", fontWeight: 700, letterSpacing: "0.26em", textTransform: "uppercase", color: "rgba(15,16,32,0.45)" }}>HISTORICAL PLAYBACK</div>
                   <button className="res-btn-ghost" style={{ padding: "3px 9px", fontSize: "8px" }} onClick={() => { if (playing) { setPlaying(false); return; } if (historyIndex >= timestamps.length - 1) setHistoryIndex(0); setPlaying(true); }}>{playing ? "⏹ STOP" : "▶ PLAY"}</button>
                 </div>
                 <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 5 }}><span className="res-note">{fcastShortDate(timestamps[0])}</span><span className="res-note">{fcastShortDate(timestamps[timestamps.length - 1])}</span></div>
@@ -1226,7 +1226,7 @@ function RaceScrollWindow({ races, raceCache, selectedId, onSelect, search, onSe
       <div style={{ overflowY: "auto", flex: 1, maxHeight: maxHeight }}>
         {groups.map(({ office, races: groupRaces }) => (
           <div key={office}>
-            <div style={{ padding: "4px 10px 2px", fontFamily: "var(--font-body)", fontSize: "6px", fontWeight: 700, letterSpacing: "0.26em", textTransform: "uppercase", color: "rgba(255,255,255,0.18)", borderTop: "1px solid rgba(255,255,255,0.04)", marginTop: 2 }}>{office}</div>
+            <div style={{ padding: "4px 10px 2px", fontFamily: "var(--font-body)", fontSize: "6px", fontWeight: 700, letterSpacing: "0.26em", textTransform: "uppercase", color: "rgba(15,16,32,0.40)", borderTop: "1px solid rgba(15,16,32,0.05)", marginTop: 2 }}>{office}</div>
             {groupRaces.map(r => {
               const liveData = raceCache[r.id];
               const winner = liveData?.candidates?.find(c => c.winner);
@@ -1240,10 +1240,10 @@ function RaceScrollWindow({ races, raceCache, selectedId, onSelect, search, onSe
                   <span style={{ flexShrink: 0, width: 16, height: 16, borderRadius: 2, background: `${raceTypeColor}22`, border: `1px solid ${raceTypeColor}44`, display: "flex", alignItems: "center", justifyContent: "center", marginRight: 8, fontFamily: "var(--font-body)", fontSize: "6.5px", fontWeight: 900, color: raceTypeColor }}>{raceTypeShort}</span>
                   <div style={{ flex: 1, minWidth: 0 }}>
                     <div style={{ display: "flex", alignItems: "center", gap: 4, marginBottom: 2 }}>
-                      <span style={{ fontFamily: "var(--font-body)", fontSize: "8.5px", fontWeight: isSelected ? 800 : 600, color: isSelected ? "#fff" : "rgba(255,255,255,0.65)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{r.raceType} </span>
+                      <span style={{ fontFamily: "var(--font-body)", fontSize: "8.5px", fontWeight: isSelected ? 800 : 600, color: isSelected ? "#fff" : "rgba(15,16,32,0.65)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{r.raceType} </span>
                       {hasForecast && <span style={{ flexShrink: 0, display: "inline-flex", padding: "0px 4px", border: "1px solid rgba(124,58,237,0.45)", background: "rgba(124,58,237,0.10)", fontFamily: "var(--font-body)", fontSize: "5px", fontWeight: 700, letterSpacing: "0.12em", color: "var(--purple-soft)" }}>FORECAST β</span>}
                     </div>
-                    <div style={{ height: 2, background: "rgba(255,255,255,0.07)", overflow: "hidden" }}>
+                    <div style={{ height: 2, background: "rgba(15,16,32,0.08)", overflow: "hidden" }}>
                       <div style={{ height: "100%", width: `${reporting ?? 0}%`, background: winner ? "var(--win)" : raceTypeColor, opacity: 0.75, transition: "width 800ms ease" }} />
                     </div>
                   </div>
@@ -1338,8 +1338,8 @@ function RacePickerPanel({ races, raceCache, selectedId, onSelect }: {
               fontWeight: 700,
               letterSpacing: "0.28em",
               textTransform: "uppercase",
-              color: "rgba(255,255,255,0.18)",
-              borderTop: "1px solid rgba(255,255,255,0.04)",
+              color: "rgba(15,16,32,0.40)",
+              borderTop: "1px solid rgba(15,16,32,0.05)",
               marginTop: 4,
             }}>
               {office}
@@ -1401,7 +1401,7 @@ function RacePickerPanel({ races, raceCache, selectedId, onSelect }: {
                       fontSize: "9px",
                       fontWeight: isSelected ? 800 : 600,
                       letterSpacing: "0.04em",
-                      color: isSelected ? "#fff" : "rgba(255,255,255,0.65)",
+                      color: isSelected ? "#fff" : "rgba(15,16,32,0.65)",
                       whiteSpace: "nowrap",
                       overflow: "hidden",
                       textOverflow: "ellipsis",
@@ -1411,7 +1411,7 @@ function RacePickerPanel({ races, raceCache, selectedId, onSelect }: {
                     </div>
                     {/* Reporting bar */}
                     <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                      <div style={{ flex: 1, height: 2, background: "rgba(255,255,255,0.07)", overflow: "hidden", maxWidth: 60 }}>
+                      <div style={{ flex: 1, height: 2, background: "rgba(15,16,32,0.08)", overflow: "hidden", maxWidth: 60 }}>
                         <div style={{ height: "100%", width: `${reporting ?? 0}%`, background: winner ? "var(--win)" : raceTypeColor, opacity: 0.8, transition: "width 800ms ease" }} />
                       </div>
                       {winner ? (
@@ -1615,10 +1615,10 @@ export default function March3FeaturedClient() {
     <>
       <style>{`
         .res-root {
-          --background: #070709; --background2: #0b0b0f; --panel: #0f0f15; --panel2: #141420;
-          --foreground: #f0f0f5; --muted: rgba(240,240,245,0.62); --muted2: rgba(240,240,245,0.40);
-          --muted3: rgba(240,240,245,0.22); --border: rgba(255,255,255,0.09); --border2: rgba(255,255,255,0.15);
-          --border3: rgba(255,255,255,0.22); --purple: #7c3aed; --purple2: #9d5cf0;
+          --background: #f6f7fb; --background2: #ffffff; --panel: #ffffff; --panel2: #fbfbfd;
+          --foreground: #0b0d1c; --muted: #6b7088; --muted2: #9aa0b4;
+          --muted3: #b7bccc; --border: rgba(15, 16, 32, 0.08); --border2: rgba(15, 16, 32, 0.14);
+          --border3: rgba(15, 16, 32, 0.22); --purple: #7c3aed; --purple2: #9d5cf0;
           --purple-soft: #a78bfa; --purple-dim: rgba(124,58,237,0.14); --red: #e63946; --red2: #ff4d5a;
           --blue: #2563eb; --blue2: #3b82f6; --win: #4ade80; --rep: #e63946; --dem: #3b82f6;
           --shadow-md: 0 10px 40px rgba(0,0,0,0.75);
@@ -1647,7 +1647,7 @@ export default function March3FeaturedClient() {
         .res-badge-win { border-color:rgba(74,222,128,0.28); background:rgba(74,222,128,0.08); color:var(--win); }
         .res-badge-red { border-color:rgba(230,57,70,0.30); background:rgba(230,57,70,0.08); color:var(--rep); }
         .res-badge-blue { border-color:rgba(59,130,246,0.30); background:rgba(59,130,246,0.08); color:var(--dem); }
-        .res-bar-track { width:100%; height:3px; background:rgba(255,255,255,0.08); position:relative; overflow:hidden; }
+        .res-bar-track { width:100%; height:3px; background:rgba(15,16,32,0.10); position:relative; overflow:hidden; }
         .res-bar-fill { position:absolute; top:0; left:0; bottom:0; background:var(--purple); transition:width 600ms cubic-bezier(0.22,1,0.36,1); }
         .res-panel { background:var(--panel); border:1px solid var(--border); overflow:hidden; animation:res-fade-up 0.5s cubic-bezier(0.22,1,0.36,1) both; }
         .res-panel-header { display:flex; align-items:center; justify-content:space-between; padding:10px 14px; border-bottom:1px solid var(--border); background:var(--background2); }
@@ -1655,8 +1655,8 @@ export default function March3FeaturedClient() {
         .res-stat-block { background:rgba(255,255,255,0.025); border:1px solid var(--border); padding:10px 12px; }
         .res-stat-block-label { font-family:var(--font-body); font-size:7.5px; font-weight:700; letter-spacing:0.26em; text-transform:uppercase; color:var(--muted3); margin-bottom:4px; }
         .res-stat-block-val { font-family:var(--font-body); font-size:clamp(20px,2.5vw,28px); font-weight:900; color:#fff; line-height:1; font-variant-numeric:tabular-nums; }
-        .res-btn-primary { display:inline-flex; align-items:center; gap:6px; padding:9px 18px; background:var(--purple); border:1px solid rgba(124,58,237,0.65); color:#fff; font-family:var(--font-body); font-size:9px; font-weight:700; letter-spacing:0.20em; text-transform:uppercase; cursor:pointer; transition:background 140ms ease,transform 140ms ease; }
-        .res-btn-primary:hover { background:var(--purple2); transform:translateY(-1px); }
+        .res-btn-primary { display:inline-flex; align-items:center; gap:6px; padding:9px 18px; background:var(--gradient-purple); border:1px solid rgba(124,58,237,0.65); color:#fff; font-family:var(--font-numeric); font-size:11px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; cursor:pointer; box-shadow:var(--shadow-purple); transition:background 140ms ease,transform 140ms ease; }
+        .res-btn-primary:hover { background:var(--gradient-purple-soft); transform:translateY(-1px); }
         .res-btn-ghost { display:inline-flex; align-items:center; gap:6px; padding:7px 12px; background:transparent; border:1px solid var(--border); color:var(--muted3); font-family:var(--font-body); font-size:9px; font-weight:700; letter-spacing:0.18em; text-transform:uppercase; cursor:pointer; transition:all 140ms ease; }
         .res-btn-ghost:hover { border-color:var(--border2); color:var(--muted); }
         .res-btn-state { display:inline-flex; align-items:center; padding:8px 16px; background:transparent; border:1px solid var(--border); color:var(--muted3); font-family:var(--font-body); font-size:9px; font-weight:700; letter-spacing:0.22em; text-transform:uppercase; cursor:pointer; transition:all 120ms ease; position:relative; overflow:hidden; }
@@ -1665,7 +1665,7 @@ export default function March3FeaturedClient() {
         .res-btn-state:hover::before { transform:scaleX(1); }
         .res-btn-state.active { background:rgba(124,58,237,0.10); border-color:rgba(124,58,237,0.40); color:#fff; }
         .res-btn-state.active::before { transform:scaleX(1); }
-        .res-close-btn { display:inline-flex; align-items:center; padding:7px 12px; background:rgba(255,255,255,0.04); border:1px solid var(--border); color:var(--muted2); font-family:var(--font-body); font-size:8.5px; font-weight:700; letter-spacing:0.18em; text-transform:uppercase; cursor:pointer; flex-shrink:0; transition:all 120ms ease; }
+        .res-close-btn { display:inline-flex; align-items:center; padding:7px 12px; background:rgba(15,16,32,0.05); border:1px solid var(--border); color:var(--muted2); font-family:var(--font-body); font-size:8.5px; font-weight:700; letter-spacing:0.18em; text-transform:uppercase; cursor:pointer; flex-shrink:0; transition:all 120ms ease; }
         .res-close-btn:hover { border-color:var(--border2); color:rgba(255,255,255,0.7); }
         .res-overlay-card { background:var(--panel); border:1px solid rgba(124,58,237,0.45); box-shadow:0 0 80px rgba(124,58,237,0.25),0 30px 80px rgba(0,0,0,0.8); }
         .res-overlay-title { font-family:var(--font-body); font-size:clamp(32px,4vw,48px); font-weight:900; text-transform:uppercase; letter-spacing:0.02em; color:#fff; line-height:0.92; }
@@ -1674,23 +1674,23 @@ export default function March3FeaturedClient() {
         .res-tooltip-title { font-family:var(--font-body); font-size:11px; font-weight:900; text-transform:uppercase; letter-spacing:0.08em; color:#fff; }
         .res-reporting-row { display:flex; align-items:center; justify-content:space-between; }
         .res-candidate-list { border:1px solid var(--border); background:var(--panel); overflow:hidden; }
-        .res-candidate-row { display:flex; align-items:center; gap:0; border-bottom:1px solid rgba(255,255,255,0.07); padding:10px 14px; transition:background 120ms ease; position:relative; }
+        .res-candidate-row { display:flex; align-items:center; gap:0; border-bottom:1px solid rgba(15,16,32,0.08); padding:10px 14px; transition:background 120ms ease; position:relative; }
         .res-candidate-row:last-child { border-bottom:none; }
         .res-candidate-row:hover { background:rgba(255,255,255,0.015); }
         .res-cand-bar { width:3px; height:100%; position:absolute; left:0; top:0; bottom:0; opacity:0.7; }
         .res-cand-dot { display:inline-block; width:8px; height:8px; border-radius:50%; flex-shrink:0; }
-        .res-cand-name { font-family:var(--font-body); font-size:10.5px; font-weight:700; letter-spacing:0.08em; color:rgba(255,255,255,0.85); }
+        .res-cand-name { font-family:var(--font-body); font-size:10.5px; font-weight:700; letter-spacing:0.08em; color:rgba(15,16,32,0.85); }
         .res-cand-name-lg { font-family:var(--font-body); font-size:11px; font-weight:900; letter-spacing:0.06em; text-transform:uppercase; color:rgba(255,255,255,0.9); }
         .res-cand-party { font-family:var(--font-body); font-size:8px; letter-spacing:0.16em; text-transform:uppercase; color:var(--muted3); margin-top:1px; }
         .res-thead { position:sticky; top:0; background:var(--background2); border-bottom:1px solid var(--border); }
-        .res-table-row { border-bottom:1px solid rgba(255,255,255,0.04); transition:background 100ms ease; }
+        .res-table-row { border-bottom:1px solid rgba(15,16,32,0.05); transition:background 100ms ease; }
         .res-table-row:hover { background:rgba(255,255,255,0.012); }
         .res-input { width:100%; background:rgba(255,255,255,0.03); border:1px solid var(--border); color:var(--foreground); padding:8px 12px; font-family:var(--font-body); font-size:10px; letter-spacing:0.10em; outline:none; transition:border-color 140ms ease; }
         .res-input:focus { border-color:rgba(124,58,237,0.40); }
         .res-input::placeholder { color:var(--muted3); }
         .res-select { background:rgba(255,255,255,0.03); border:1px solid var(--border); color:var(--muted2); padding:7px 10px; font-family:var(--font-body); font-size:9px; letter-spacing:0.10em; outline:none; }
         .res-error { border:1px solid rgba(230,57,70,0.25); background:rgba(230,57,70,0.06); color:rgba(255,77,90,0.90); padding:12px 16px; font-family:var(--font-body); font-size:10.5px; letter-spacing:0.12em; }
-        .res-map-loading { display:flex; align-items:center; justify-content:center; aspect-ratio:4/3; background:rgba(0,0,0,0.30); border:1px solid var(--border); }
+        .res-map-loading { display:flex; align-items:center; justify-content:center; aspect-ratio:4/3; background:rgba(255,255,255,0.30); border:1px solid var(--border); }
         .res-map-wrap { background:rgba(0,0,0,0.20); border:1px solid var(--border); padding:6px; }
 
         /* ── STATUS BAR ── */
@@ -1951,24 +1951,24 @@ export default function March3FeaturedClient() {
           padding: 8px 32px 8px 12px; font-family: var(--font-body); font-size: 10px;
           font-weight: 700; letter-spacing: 0.06em; outline: none; cursor: pointer;
           transition: border-color 140ms ease; min-width: 0;
-          background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L5 5L9 1' stroke='rgba(255,255,255,0.35)' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+          background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L5 5L9 1' stroke='rgba(15,16,32,0.50)' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
           background-repeat: no-repeat; background-position: right 10px center;
         }
         .res-race-select:focus { border-color: rgba(124,58,237,0.5); }
-        .res-race-select option { background: #0f0f15; color: #f0f0f5; font-weight: 600; }
-        .res-race-select optgroup { color: rgba(255,255,255,0.35); font-size: 9px; }
+        .res-race-select option { background: #ffffff; color: #0b0d1c; font-weight: 600; }
+        .res-race-select optgroup { color: rgba(15,16,32,0.50); font-size: 9px; }
 
-        * { scrollbar-width:thin; scrollbar-color:rgba(255,255,255,0.10) transparent; }
+        * { scrollbar-width:thin; scrollbar-color:rgba(15,16,32,0.12) transparent; }
         *::-webkit-scrollbar { width:3px; height:3px; }
-        *::-webkit-scrollbar-thumb { background:rgba(255,255,255,0.10); }
+        *::-webkit-scrollbar-thumb { background:rgba(15,16,32,0.12); }
         *::-webkit-scrollbar-thumb:hover { background:rgba(124,58,237,0.4); }
         @media (prefers-reduced-motion:reduce) { .res-bar-fill,.res-btn-primary,.res-btn-ghost,.res-btn-state { transition:none !important; } .res-live-dot { animation:none !important; } }
         input[type=range] { height:4px; cursor:pointer; }
 
         /* ── PAGE TABS ── */
         .res-page-tabs { display:flex; align-items:stretch; background:var(--background2); border-bottom:1px solid var(--border); padding:0 20px; gap:0; }
-        .res-page-tab { display:flex; align-items:center; gap:7px; padding:11px 18px; background:transparent; border:none; border-bottom:2px solid transparent; color:rgba(255,255,255,0.38); font-family:var(--font-body); font-size:9px; font-weight:700; letter-spacing:0.22em; text-transform:uppercase; cursor:pointer; transition:color 140ms ease,border-color 140ms ease; white-space:nowrap; margin-bottom:-1px; }
-        .res-page-tab:hover { color:rgba(255,255,255,0.70); }
+        .res-page-tab { display:flex; align-items:center; gap:7px; padding:11px 18px; background:transparent; border:none; border-bottom:2px solid transparent; color:rgba(15,16,32,0.55); font-family:var(--font-body); font-size:9px; font-weight:700; letter-spacing:0.22em; text-transform:uppercase; cursor:pointer; transition:color 140ms ease,border-color 140ms ease; white-space:nowrap; margin-bottom:-1px; }
+        .res-page-tab:hover { color:rgba(15,16,32,0.70); }
         .res-page-tab.active { color:#fff; border-bottom-color:var(--rep); }
         .res-page-tab.ky04-tab.active { border-bottom-color:#f59e0b; color:#f59e0b; }
         .res-page-tab .tab-dot { width:6px; height:6px; border-radius:50%; background:var(--rep); flex-shrink:0; animation:res-pulse 1.8s ease-in-out infinite; }
@@ -1982,7 +1982,7 @@ export default function March3FeaturedClient() {
         .ky04-hero::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse 60% 80% at 0% 50%,rgba(245,158,11,0.06) 0%,transparent 70%); pointer-events:none; }
         .ky04-badge { display:inline-flex; align-items:center; gap:5px; padding:3px 8px; border:1px solid rgba(245,158,11,0.40); background:rgba(245,158,11,0.08); font-family:var(--font-body); font-size:7px; font-weight:700; letter-spacing:0.22em; color:#f59e0b; margin-bottom:10px; }
         .ky04-race-title { font-family:var(--font-display); font-size:clamp(20px,2.4vw,34px); font-weight:900; text-transform:uppercase; color:#fff; letter-spacing:0.01em; line-height:1; margin-bottom:6px; }
-        .ky04-race-sub { font-family:var(--font-body); font-size:9px; font-weight:700; letter-spacing:0.22em; text-transform:uppercase; color:rgba(255,255,255,0.35); margin-bottom:18px; }
+        .ky04-race-sub { font-family:var(--font-body); font-size:9px; font-weight:700; letter-spacing:0.22em; text-transform:uppercase; color:rgba(15,16,32,0.50); margin-bottom:18px; }
         @media (max-width:768px) { .ky04-spotlight { grid-template-columns:1fr; padding:10px 14px 20px; } }
         @media (max-width:640px) { .ky04-spotlight { padding:8px 10px 16px; } }
       `}</style>
@@ -1997,9 +1997,9 @@ export default function March3FeaturedClient() {
           <div className="res-status-bar-inner">
             <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
               <span className="res-live-dot" />
-              <span className="res-eyebrow" style={{ color: "rgba(255,255,255,0.40)" }}>LIVE ELECTION RESULTS<span style={{ color: "var(--border3)", margin: "0 4px" }}>·</span>POWERED BY CIVICAPI.ORG</span>
+              <span className="res-eyebrow" style={{ color: "rgba(15,16,32,0.55)" }}>LIVE ELECTION RESULTS<span style={{ color: "var(--border3)", margin: "0 4px" }}>·</span>POWERED BY CIVICAPI.ORG</span>
             </div>
-            <div className="res-note" style={{ letterSpacing: "0.22em", color: "rgba(255,255,255,0.22)" }} suppressHydrationWarning>{timeStr}</div>
+            <div className="res-note" style={{ letterSpacing: "0.22em", color: "rgba(15,16,32,0.45)" }} suppressHydrationWarning>{timeStr}</div>
           </div>
         </div>
 
@@ -2164,7 +2164,7 @@ export default function March3FeaturedClient() {
                   <div style={{ padding: "10px 14px", borderBottom: "1px solid var(--border)", background: "var(--background2)" }}>
                     <span className="res-panel-tag">ABOUT THIS RACE</span>
                   </div>
-                  <div style={{ padding: "14px 16px", fontFamily: "var(--font-body)", fontSize: "9px", lineHeight: 1.8, color: "rgba(255,255,255,0.50)", letterSpacing: "0.04em" }}>
+                  <div style={{ padding: "14px 16px", fontFamily: "var(--font-body)", fontSize: "9px", lineHeight: 1.8, color: "rgba(15,16,32,0.50)", letterSpacing: "0.04em" }}>
                     {spotlightMeta.about}
                   </div>
                 </div>
@@ -2291,7 +2291,7 @@ export default function March3FeaturedClient() {
                 {loadingMap ? (
                   <div className="res-map-loading" style={{ flex: 1 }}>
                     <div style={{ width: "min(300px, 90%)" }}>
-                      <div className="res-note" style={{ textAlign: "center", marginBottom: "8px", color: "rgba(255,255,255,0.35)" }}>LOADING MAP</div>
+                      <div className="res-note" style={{ textAlign: "center", marginBottom: "8px", color: "rgba(15,16,32,0.50)" }}>LOADING MAP</div>
                       <div className="res-bar-track"><div className="res-bar-fill" style={{ width: `${mapLoadPct}%`, background: "linear-gradient(90deg,var(--purple),var(--blue2))" }} /></div>
                       <div className="res-note" style={{ textAlign: "center", marginTop: "6px", color: "var(--purple-soft)", fontWeight: 700 }}>{Math.round(mapLoadPct)}%</div>
                     </div>
@@ -2366,7 +2366,7 @@ export default function March3FeaturedClient() {
                     </div>
                   )}
                   {showProjectionDebug && forecastProj && !selectedWinner && !isRunoffConfirmed && (
-                    <div className="res-note" style={{ marginTop: 4, color: "rgba(255,255,255,0.35)", letterSpacing: "0.08em" }}>
+                    <div className="res-note" style={{ marginTop: 4, color: "rgba(15,16,32,0.50)", letterSpacing: "0.08em" }}>
                       debug: {forecastProj.projectionType} selected={forecastProj.prob.toFixed(1)}% | runoff={(forecastProj.runoffNeededProb * 100).toFixed(1)}%
                     </div>
                   )}
@@ -2383,7 +2383,7 @@ export default function March3FeaturedClient() {
                           </span>
                           <span style={{ fontFamily: "var(--font-body)", fontSize: "9px", fontWeight: 900, color: c.color }}>{fmtPct(c.percent)}</span>
                         </div>
-                        <div style={{ height: 3, background: "rgba(255,255,255,0.07)", overflow: "hidden" }}>
+                        <div style={{ height: 3, background: "rgba(15,16,32,0.08)", overflow: "hidden" }}>
                           <div style={{ height: "100%", width: `${c.percent ?? 0}%`, background: c.color, transition: "width 600ms ease" }} />
                         </div>
                       </div>
@@ -2420,16 +2420,16 @@ export default function March3FeaturedClient() {
                 <div className="res-tri-stripe" />
                 <div className="res-panel-header">
                   <span className="res-panel-tag">FORECAST MODEL</span>
-                  <span style={{ fontFamily: "var(--font-body)", fontSize: "7px", fontWeight: 700, letterSpacing: "0.18em", color: "rgba(255,255,255,0.18)", textTransform: "uppercase" }}>NOT AVAILABLE</span>
+                  <span style={{ fontFamily: "var(--font-body)", fontSize: "7px", fontWeight: 700, letterSpacing: "0.18em", color: "rgba(15,16,32,0.40)", textTransform: "uppercase" }}>NOT AVAILABLE</span>
                 </div>
                 <div style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "space-between", padding: "20px 18px 18px" }}>
                   <div>
-                    <div style={{ fontFamily: "var(--font-body)", fontSize: "11px", fontWeight: 900, letterSpacing: "0.10em", textTransform: "uppercase", color: "rgba(255,255,255,0.55)", marginBottom: 10, lineHeight: 1.4 }}>No Forecast<br />for This Race</div>
-                    <div style={{ fontFamily: "var(--font-body)", fontSize: "8.5px", fontWeight: 500, color: "rgba(255,255,255,0.22)", lineHeight: 1.7, letterSpacing: "0.04em" }}>Our forecast model requires reliable poll averages and turnout baselines. For this race, we don't have enough data to model outcomes responsibly.</div>
+                    <div style={{ fontFamily: "var(--font-body)", fontSize: "11px", fontWeight: 900, letterSpacing: "0.10em", textTransform: "uppercase", color: "rgba(15,16,32,0.55)", marginBottom: 10, lineHeight: 1.4 }}>No Forecast<br />for This Race</div>
+                    <div style={{ fontFamily: "var(--font-body)", fontSize: "8.5px", fontWeight: 500, color: "rgba(15,16,32,0.45)", lineHeight: 1.7, letterSpacing: "0.04em" }}>Our forecast model requires reliable poll averages and turnout baselines. For this race, we don't have enough data to model outcomes responsibly.</div>
                   </div>
-                  <div style={{ marginTop: 20, paddingTop: 14, borderTop: "1px solid rgba(255,255,255,0.06)" }}>
+                  <div style={{ marginTop: 20, paddingTop: 14, borderTop: "1px solid rgba(15,16,32,0.08)" }}>
                     <div style={{ fontFamily: "var(--font-body)", fontSize: "7px", fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(255,255,255,0.15)", marginBottom: 8 }}>WHAT WE'RE WATCHING</div>
-                    <div style={{ fontFamily: "var(--font-body)", fontSize: "8px", color: "rgba(255,255,255,0.28)", lineHeight: 1.6 }}>Live results and county-level returns will update automatically.</div>
+                    <div style={{ fontFamily: "var(--font-body)", fontSize: "8px", color: "rgba(15,16,32,0.45)", lineHeight: 1.6 }}>Live results and county-level returns will update automatically.</div>
                   </div>
                 </div>
               </div>

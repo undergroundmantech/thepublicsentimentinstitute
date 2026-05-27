@@ -434,7 +434,7 @@ export default function RightTrackWrongTrackPage() {
                     const effN = effectiveSampleSize(p.pollster, p.sampleSize);
                     return (
                       <tr key={`${p.pollster}-${p.endDate}-${i}`}>
-                        <td style={{ color: "rgba(255,255,255,0.85)" }}>
+                        <td style={{ color: "rgba(15,16,32,0.85)" }}>
                           <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                             <span>{p.pollster}</span>
                             {gold && <span className="pap-gold-badge">GOLD</span>}
@@ -489,17 +489,17 @@ export default function RightTrackWrongTrackPage() {
 
 // ─── CSS — matches Trump approval design system exactly ───────────────────────
 const CSS = `
-  body { background: #070709 !important; }
+  body { background: #f6f7fb !important; }
 
   .pap-root {
-    --bg:          #070709;
-    --bg2:         #0b0b0f;
-    --panel:       #0f0f15;
-    --border:      rgba(255,255,255,0.09);
-    --border2:     rgba(255,255,255,0.15);
-    --muted:       rgba(240,240,245,0.62);
-    --muted2:      rgba(240,240,245,0.40);
-    --muted3:      rgba(240,240,245,0.22);
+    --bg: #f6f7fb;
+    --bg2: #ffffff;
+    --panel: #ffffff;
+    --border: rgba(15, 16, 32, 0.08);
+    --border2: rgba(15, 16, 32, 0.14);
+    --muted: #6b7088;
+    --muted2: #9aa0b4;
+    --muted3: #b7bccc;
     --purple:      #7c3aed;
     --purple2:     #9d5cf0;
     --purple-soft: #a78bfa;
@@ -629,7 +629,7 @@ const CSS = `
   .pap-kpi-label { font-family: ui-monospace,monospace; font-size: 7.5px; font-weight: 700; letter-spacing: 0.28em; text-transform: uppercase; color: var(--muted3); margin-bottom: 8px; }
   .pap-kpi-val   { font-family: ui-monospace,monospace; font-size: clamp(22px,2.5vw,30px); font-weight: 900; color: #fff; line-height: 1; font-variant-numeric: tabular-nums; }
   .pap-kpi-sub   { font-family: ui-monospace,monospace; font-size: 8px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted3); margin-top: 6px; }
-  .pap-kpi-bar { height: 2px; margin-top: 10px; background: rgba(255,255,255,0.07); }
+  .pap-kpi-bar { height: 2px; margin-top: 10px; background: rgba(15,16,32,0.08); }
   .pap-kpi-bar-fill { height: 100%; animation: pap-bar-in 800ms cubic-bezier(0.22,1,0.36,1) both; }
 
   .pap-context-panel {
@@ -664,7 +664,7 @@ const CSS = `
   table.pap-table th.r { text-align: right; }
   table.pap-table td {
     font-family: ui-monospace,monospace; font-size: 10.5px; padding: 10px 16px;
-    border-bottom: 1px solid rgba(255,255,255,0.04); color: var(--muted);
+    border-bottom: 1px solid rgba(15,16,32,0.05); color: var(--muted);
     vertical-align: middle; font-variant-numeric: tabular-nums;
   }
   table.pap-table td.r { text-align: right; }

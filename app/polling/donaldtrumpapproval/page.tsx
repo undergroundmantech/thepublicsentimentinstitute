@@ -774,10 +774,10 @@ function StateMap({ tpsiNet, tpsiApprove, tpsiDisapprove }: {
         display: "flex", alignItems: "center", gap: 10,
         padding: "10px 16px",
         background: "var(--panel, #0f0f15)",
-        border: "1px solid rgba(255,255,255,0.09)",
+        border: "1px solid rgba(15,16,32,0.10)",
         borderTop: "none",
       }}>
-        <span style={{ fontFamily: "ui-monospace,monospace", fontSize: 7, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(255,255,255,0.22)", whiteSpace: "nowrap" }}>NET APPROVE</span>
+        <span style={{ fontFamily: "ui-monospace,monospace", fontSize: 7, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(15,16,32,0.45)", whiteSpace: "nowrap" }}>NET APPROVE</span>
         <div style={{ display: "flex", gap: 2, flex: 1 }}>
           {[
             { label: "+30", net: 35 }, { label: "+20", net: 22 }, { label: "+10", net: 12 },
@@ -790,13 +790,13 @@ function StateMap({ tpsiNet, tpsiApprove, tpsiDisapprove }: {
             </div>
           ))}
         </div>
-        <span style={{ fontFamily: "ui-monospace,monospace", fontSize: 7, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(255,255,255,0.22)", whiteSpace: "nowrap" }}>NET DISAPPROVE</span>
+        <span style={{ fontFamily: "ui-monospace,monospace", fontSize: 7, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(15,16,32,0.45)", whiteSpace: "nowrap" }}>NET DISAPPROVE</span>
       </div>
 
       {/* ── D3 Albers USA Map ── */}
       <div style={{
         background: "#0b0b0f",
-        border: "1px solid rgba(255,255,255,0.09)",
+        border: "1px solid rgba(15,16,32,0.10)",
         borderTop: "none",
         padding: "10px",
         position: "relative",
@@ -805,7 +805,7 @@ function StateMap({ tpsiNet, tpsiApprove, tpsiDisapprove }: {
           <div style={{
             height: 400, display: "flex", alignItems: "center", justifyContent: "center",
             fontFamily: "ui-monospace,monospace", fontSize: 10, letterSpacing: "0.2em",
-            color: "rgba(255,255,255,0.25)", textTransform: "uppercase",
+            color: "rgba(15,16,32,0.45)", textTransform: "uppercase",
           }}>
             Loading map…
           </div>
@@ -873,7 +873,7 @@ function StateMap({ tpsiNet, tpsiApprove, tpsiDisapprove }: {
                       fontSize="9"
                       fontFamily="var(--font-body), 'Geist Mono', monospace"
                       fontWeight="700"
-                      fill="rgba(255,255,255,0.65)"
+                      fill="rgba(15,16,32,0.65)"
                       style={{ pointerEvents: "none", userSelect: "none" }}
                     >
                       {code}
@@ -908,20 +908,20 @@ function StateMap({ tpsiNet, tpsiApprove, tpsiDisapprove }: {
                     {ttName?.toUpperCase()}
                   </text>
                   <text x={10} y={32} fontSize={7} fontFamily="ui-monospace,monospace" fill="rgba(255,255,255,0.3)" letterSpacing={2}>{tooltip.code}</text>
-                  <line x1={8} y1={38} x2={tooltipW - 8} y2={38} stroke="rgba(255,255,255,0.08)" strokeWidth={1} />
-                  <text x={10} y={52} fontSize={7} fontFamily="ui-monospace,monospace" fill="rgba(255,255,255,0.35)" letterSpacing={1.5}>APPROVE</text>
+                  <line x1={8} y1={38} x2={tooltipW - 8} y2={38} stroke="rgba(15,16,32,0.10)" strokeWidth={1} />
+                  <text x={10} y={52} fontSize={7} fontFamily="ui-monospace,monospace" fill="rgba(15,16,32,0.50)" letterSpacing={1.5}>APPROVE</text>
                   <text x={tooltipW - 10} y={52} fontSize={11} fontFamily="ui-monospace,monospace" fontWeight="700" fill="rgba(77,127,212,1) " textAnchor="end">{ttData.approve.toFixed(1)}%</text>
-                  <text x={10} y={67} fontSize={7} fontFamily="ui-monospace,monospace" fill="rgba(255,255,255,0.35)" letterSpacing={1.5}>DISAPPROVE</text>
+                  <text x={10} y={67} fontSize={7} fontFamily="ui-monospace,monospace" fill="rgba(15,16,32,0.50)" letterSpacing={1.5}>DISAPPROVE</text>
                   <text x={tooltipW - 10} y={67} fontSize={11} fontFamily="ui-monospace,monospace" fontWeight="700" fill="rgba(255,0,64,0.9)" textAnchor="end">{ttData.disapprove.toFixed(1)}%</text>
-                  <text x={10} y={82} fontSize={7} fontFamily="ui-monospace,monospace" fill="rgba(255,255,255,0.35)" letterSpacing={1.5}>NET</text>
+                  <text x={10} y={82} fontSize={7} fontFamily="ui-monospace,monospace" fill="rgba(15,16,32,0.50)" letterSpacing={1.5}>NET</text>
                   <text x={tooltipW - 10} y={82} fontSize={11} fontFamily="ui-monospace,monospace" fontWeight="700" fill={netColor} textAnchor="end">{netStr}</text>
-                  <line x1={8} y1={90} x2={tooltipW - 8} y2={90} stroke="rgba(255,255,255,0.05)" strokeWidth={1} />
+                  <line x1={8} y1={90} x2={tooltipW - 8} y2={90} stroke="rgba(15,16,32,0.06)" strokeWidth={1} />
                   <text x={10} y={102} fontSize={6.5} fontFamily="ui-monospace,monospace" fontWeight="700" fill="rgba(167,139,250,0.6)" letterSpacing={1.5}>RAW SOURCES</text>
-                  <text x={10} y={115} fontSize={7} fontFamily="ui-monospace,monospace" fill="rgba(255,255,255,0.35)">CIVIQS</text>
+                  <text x={10} y={115} fontSize={7} fontFamily="ui-monospace,monospace" fill="rgba(15,16,32,0.50)">CIVIQS</text>
                   <text x={tooltipW - 10} y={115} fontSize={9} fontFamily="ui-monospace,monospace" fill="rgba(255,255,255,0.5)" textAnchor="end">{ttData.civiqs >= 0 ? "+" : ""}{ttData.civiqs.toFixed(1)}</text>
-                  <text x={10} y={128} fontSize={7} fontFamily="ui-monospace,monospace" fill="rgba(255,255,255,0.35)">ECONOMIST</text>
+                  <text x={10} y={128} fontSize={7} fontFamily="ui-monospace,monospace" fill="rgba(15,16,32,0.50)">ECONOMIST</text>
                   <text x={tooltipW - 10} y={128} fontSize={9} fontFamily="ui-monospace,monospace" fill="rgba(255,255,255,0.5)" textAnchor="end">{ttData.economist >= 0 ? "+" : ""}{ttData.economist.toFixed(1)}</text>
-                  <text x={10} y={141} fontSize={7} fontFamily="ui-monospace,monospace" fill="rgba(255,255,255,0.35)">MORNING CONSULT</text>
+                  <text x={10} y={141} fontSize={7} fontFamily="ui-monospace,monospace" fill="rgba(15,16,32,0.50)">MORNING CONSULT</text>
                   <text x={tooltipW - 10} y={141} fontSize={9} fontFamily="ui-monospace,monospace" fill="rgba(255,255,255,0.5)" textAnchor="end">{ttData.mc >= 0 ? "+" : ""}{ttData.mc.toFixed(1)}</text>
                 </g>
               );
@@ -960,9 +960,9 @@ function StateMap({ tpsiNet, tpsiApprove, tpsiDisapprove }: {
                 const pos = net >= 0;
                 return (
                   <tr key={code}>
-                    <td style={{ color: "rgba(255,255,255,0.85)" }}>
+                    <td style={{ color: "rgba(15,16,32,0.85)" }}>
                       <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                        <div style={{ width: 10, height: 10, background: netToColor(net), border: "1px solid rgba(255,255,255,0.12)", flexShrink: 0 }} />
+                        <div style={{ width: 10, height: 10, background: netToColor(net), border: "1px solid rgba(15,16,32,0.14)", flexShrink: 0 }} />
                         <span style={{ fontWeight: 600 }}>{STATE_NAMES[code] ?? code}</span>
                         <span style={{ color: "rgba(255,255,255,0.3)", fontSize: 9 }}>{code}</span>
                       </div>
@@ -1164,7 +1164,7 @@ export default function TrumpApprovalPage() {
                     const effN = effectiveSampleSize(p.pollster, p.sampleSize);
                     return (
                       <tr key={`${p.pollster}-${p.endDate}-${p.sampleSize}`}>
-                        <td style={{ color: "rgba(255,255,255,0.85)" }}>
+                        <td style={{ color: "rgba(15,16,32,0.85)" }}>
                           <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
                             <span>{p.pollster}</span>
                             {gold && <span className="pap-gold-badge">GOLD</span>}
@@ -1201,14 +1201,14 @@ export default function TrumpApprovalPage() {
 // ─── CSS — unified design system matching generic ballot page ─────────────────
 const CSS = `
   .pap-root {
-    --bg:          #070709;
-    --bg2:         #0b0b0f;
-    --panel:       #0f0f15;
-    --border:      rgba(255,255,255,0.09);
-    --border2:     rgba(255,255,255,0.15);
-    --muted:       rgba(240,240,245,0.62);
-    --muted2:      rgba(240,240,245,0.40);
-    --muted3:      rgba(240,240,245,0.22);
+    --bg: #f6f7fb;
+    --bg2: #ffffff;
+    --panel: #ffffff;
+    --border: rgba(15, 16, 32, 0.08);
+    --border2: rgba(15, 16, 32, 0.14);
+    --muted: #6b7088;
+    --muted2: #9aa0b4;
+    --muted3: #b7bccc;
     --purple:      #7c3aed;
     --purple2:     #9d5cf0;
     --purple-soft: #a78bfa;
@@ -1442,7 +1442,7 @@ const CSS = `
     text-transform: uppercase; color: var(--muted3);
     margin-top: 6px;
   }
-  .pap-kpi-bar { height: 2px; margin-top: 10px; background: rgba(255,255,255,0.07); }
+  .pap-kpi-bar { height: 2px; margin-top: 10px; background: rgba(15,16,32,0.08); }
   .pap-kpi-bar-fill {
     height: 100%;
     animation: pap-bar-in 800ms cubic-bezier(0.22,1,0.36,1) both;
@@ -1502,7 +1502,7 @@ const CSS = `
     font-family: ui-monospace,monospace;
     font-size: 10.5px;
     padding: 10px 16px;
-    border-bottom: 1px solid rgba(255,255,255,0.04);
+    border-bottom: 1px solid rgba(15,16,32,0.05);
     color: var(--muted); vertical-align: middle;
     font-variant-numeric: tabular-nums;
   }

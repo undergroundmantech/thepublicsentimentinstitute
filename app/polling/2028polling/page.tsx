@@ -134,14 +134,14 @@ const projByState = Object.fromEntries(
 // ─── CSS ──────────────────────────────────────────────────────────────────────
 const CSS = `
   .p28-root {
-    --bg:          #070709;
-    --bg2:         #0b0b0f;
-    --panel:       #0f0f15;
-    --border:      rgba(255,255,255,0.09);
-    --border2:     rgba(255,255,255,0.15);
-    --muted:       rgba(240,240,245,0.62);
-    --muted2:      rgba(240,240,245,0.40);
-    --muted3:      rgba(240,240,245,0.22);
+    --bg: #f6f7fb;
+    --bg2: #ffffff;
+    --panel: #ffffff;
+    --border: rgba(15, 16, 32, 0.08);
+    --border2: rgba(15, 16, 32, 0.14);
+    --muted: #6b7088;
+    --muted2: #9aa0b4;
+    --muted3: #b7bccc;
     --purple:      #7c3aed;
     --purple2:     #9d5cf0;
     --purple-soft: #a78bfa;
@@ -270,7 +270,7 @@ const CSS = `
     font-size: clamp(48px,6vw,72px); font-weight: 900; line-height: 1;
     background: linear-gradient(135deg, var(--rep) 0%, #fff 50%, var(--dem) 100%);
     -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-    background-clip: text; filter: drop-shadow(0 2px 10px rgba(0,0,0,0.6));
+    background-clip: text; filter: drop-shadow(0 2px 10px rgba(255,255,255,0.6));
     text-transform: uppercase; letter-spacing: 0.02em;
   }
   .p28-vs-sub {
@@ -361,7 +361,7 @@ const CSS = `
     font-family: var(--font-body), "Geist Mono", monospace;
     text-transform: uppercase; color: var(--muted3); margin-top: 6px;
   }
-  .p28-kpi-bar { height:2px; margin-top:10px; background:rgba(255,255,255,0.07); }
+  .p28-kpi-bar { height:2px; margin-top:10px; background:rgba(15,16,32,0.08); }
   .p28-kpi-bar-fill { height:100%; animation: p28-bar-in 800ms cubic-bezier(0.22,1,0.36,1) both; }
 
   /* ── ELECTORAL MAP ── */
@@ -446,7 +446,7 @@ const CSS = `
   /* Tooltip */
   .p28-map-tooltip {
     position: absolute; pointer-events: none; z-index: 9999;
-    background: #0f0f15; border: 1px solid rgba(255,255,255,0.15);
+    background: #ffffff; border: 1px solid rgba(255,255,255,0.15);
     padding: 10px 14px; min-width: 200px;
     box-shadow: 0 8px 32px rgba(0,0,0,0.7);
     font-family: var(--font-body), "Geist Mono", monospace;
@@ -466,7 +466,7 @@ const CSS = `
     font-size: 7.5px; font-weight: 700; letter-spacing: 0.2em;
     text-transform: uppercase; margin-bottom: 8px;
   }
-  .p28-tt-divider { height: 1px; background: rgba(255,255,255,0.08); margin: 6px 0; }
+  .p28-tt-divider { height: 1px; background: rgba(15,16,32,0.10); margin: 6px 0; }
   .p28-tt-row {
     display: flex; justify-content: space-between; align-items: center;
     gap: 16px; margin-bottom: 3px;
@@ -478,7 +478,7 @@ const CSS = `
   .p28-tt-val { font-size: 11px; font-weight: 900; font-variant-numeric: tabular-nums; }
   .p28-tt-margin-row {
     display: flex; justify-content: space-between; align-items: center;
-    margin-top: 6px; padding-top: 6px; border-top: 1px solid rgba(255,255,255,0.08);
+    margin-top: 6px; padding-top: 6px; border-top: 1px solid rgba(15,16,32,0.10);
   }
   .p28-tt-margin-label {
     font-size: 7.5px; font-weight: 700; letter-spacing: 0.2em;
@@ -528,7 +528,7 @@ const CSS = `
   table.p28-table th.r { text-align:right; }
   table.p28-table td {
     font-family: var(--font-body), "Geist Mono", monospace; font-size: 10.5px;
-    padding: 10px 16px; border-bottom: 1px solid rgba(255,255,255,0.04);
+    padding: 10px 16px; border-bottom: 1px solid rgba(15,16,32,0.05);
     color: var(--muted); vertical-align: middle; font-variant-numeric: tabular-nums;
   }
   table.p28-table td.r { text-align:right; }
@@ -763,7 +763,7 @@ export default function Election2028Page() {
                     const effN = effectiveSampleSize(p.pollster, p.sampleSize);
                     return (
                       <tr key={`${p.pollster}-${p.endDate}-${idx}`}>
-                        <td style={{ color: "rgba(255,255,255,0.85)" }}>
+                        <td style={{ color: "rgba(15,16,32,0.85)" }}>
                           <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
                             <span>{p.pollster}</span>
                             {gold && <span className="p28-gold-badge">GOLD</span>}

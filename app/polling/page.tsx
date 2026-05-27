@@ -820,7 +820,7 @@ function ChartTip({ active, payload, label }: any) {
     <div style={{
       background: "#141412", border: "1px solid rgba(255,255,255,0.1)",
       borderRadius: "2px", padding: "10px 14px", fontSize: 11,
-      fontFamily: "var(--font-body), monospace", boxShadow: "0 8px 24px rgba(0,0,0,0.6)",
+      fontFamily: "var(--font-body), monospace", boxShadow: "0 8px 24px rgba(255,255,255,0.6)",
     }}>
       <div style={{color:"rgba(255,255,255,.3)",marginBottom:6,fontWeight:500,letterSpacing:"0.1em",textTransform:"uppercase",fontSize:9}}>{label}</div>
       {payload.map((p: any) => (
@@ -1556,17 +1556,17 @@ export default function PollingDashboardPage() {
 // CSS
 // ─────────────────────────────────────────────────────────────────────────────
 const CSS = `
-  body { background: #070709 !important; }
+  body { background: #f6f7fb !important; }
 
   .pd-root {
-    --bg:          #070709;
-    --bg2:         #0b0b0f;
-    --panel:       #0f0f15;
-    --border:      rgba(255,255,255,0.09);
-    --border2:     rgba(255,255,255,0.15);
-    --muted:       rgba(240,240,245,0.62);
-    --muted2:      rgba(240,240,245,0.40);
-    --muted3:      rgba(240,240,245,0.22);
+    --bg: #f6f7fb;
+    --bg2: #ffffff;
+    --panel: #ffffff;
+    --border: rgba(15, 16, 32, 0.08);
+    --border2: rgba(15, 16, 32, 0.14);
+    --muted: #6b7088;
+    --muted2: #9aa0b4;
+    --muted3: #b7bccc;
     --purple:      #7c3aed;
     --purple-soft: #9d5cf0;
     max-width: 1320px;
@@ -1582,7 +1582,7 @@ const CSS = `
   /* ── HERO ── */
   .pd-hero {
     border: 1px solid rgba(255,255,255,.07);
-    background: #0f0f15;
+    background: #ffffff;
     margin-bottom: 28px;
     overflow: hidden;
   }
@@ -1675,7 +1675,7 @@ const CSS = `
   .lcp-wrap {
     border: 1px solid rgba(255,255,255,.09);
     border-bottom: none;
-    background: #0f0f15;
+    background: #ffffff;
     overflow: hidden;
     display: flex;
     flex-direction: column;
@@ -1684,7 +1684,7 @@ const CSS = `
     display: flex; align-items: flex-start; justify-content: space-between; gap: 20px;
     padding: 20px 24px 16px;
     border-bottom: 1px solid rgba(255,255,255,.06);
-    background: #0b0b0f;
+    background: #ffffff;
     flex-wrap: wrap;
   }
   .lcp-eyebrow {
@@ -1720,12 +1720,12 @@ const CSS = `
     font-size: 24px; letter-spacing: 0.04em; line-height: 1; text-transform: uppercase;
   }
   .lcp-chart-area {
-    height: 260px; padding: 16px 8px 8px; background: #0f0f15;
+    height: 260px; padding: 16px 8px 8px; background: #ffffff;
   }
   .lcp-legend {
     display: flex; gap: 24px; padding: 12px 24px; flex-wrap: wrap;
     border-top: 1px solid rgba(255,255,255,.05);
-    background: #0b0b0f;
+    background: #ffffff;
   }
   .lcp-legend-item {
     display: flex; align-items: center; gap: 8px;
