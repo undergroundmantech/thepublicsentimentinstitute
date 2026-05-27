@@ -605,7 +605,7 @@ function MapWithCountyTooltip({ svgText, regionResults }: { svgText: string; reg
                     <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="var(--muted2)" strokeWidth="1.5"/><line x1="8" y1="5" x2="8" y2="8.5" stroke="var(--muted)" strokeWidth="1.5" strokeLinecap="round"/><circle cx="8" cy="11" r="0.8" fill="var(--muted)" /></svg>
                   </div>
                   <div className="res-note" style={{ letterSpacing: "0.18em" }}>NO RESULTS YET</div>
-                  {(tooltip.reportingPct ?? 0) === 0 && <div className="res-note" style={{ fontSize: "7.5px" }}>AWAITING FIRST RETURNS</div>}
+                  {(tooltip.reportingPct ?? 0) === 0 && <div className="res-note">AWAITING FIRST RETURNS</div>}
                 </div>
               )}
             </div>
@@ -857,7 +857,7 @@ function SwingOMeter({ candidates, colors, probabilities, raceRule, reportingPct
         <text x={CX} y={CY - 22} textAnchor="middle" fontSize="20" fontWeight="900" fill="white" fontFamily="var(--font-numeric)" letterSpacing="-0.5">
           {(leader.prob * 100).toFixed(1)}%
         </text>
-        <text x={CX} y={CY - 8} textAnchor="middle" fontSize="7" fill="rgba(15,16,32,0.55)" fontFamily="var(--font-body)" letterSpacing="1">
+        <text x={CX} y={CY - 8} textAnchor="middle" fontSize="10" fill="var(--muted)" fontFamily="var(--font-body)" letterSpacing="1">
           {leader.name.split(" ").pop()?.toUpperCase()}
         </text>
         <circle cx={CX} cy={CY} r="5" fill="rgba(255,255,255,0.15)" />
@@ -866,18 +866,18 @@ function SwingOMeter({ candidates, colors, probabilities, raceRule, reportingPct
         {arcSegments.map((seg) => (
           <div key={seg.key} style={{ display: "flex", alignItems: "center", gap: 5 }}>
             <span style={{ width: 8, height: 8, borderRadius: 2, background: seg.color, display: "inline-block", flexShrink: 0 }} />
-            <span style={{ fontFamily: "var(--font-body)", fontSize: "8px", fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", color: "rgba(15,16,32,0.55)" }}>{seg.name.split(" ").pop()}</span>
+            <span style={{ fontFamily: "var(--font-body)", fontSize: "10px", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: "var(--muted)" }}>{seg.name.split(" ").pop()}</span>
             <span style={{ fontFamily: "var(--font-numeric)", fontSize: "9px", fontWeight: 900, color: seg.color }}>{(seg.prob * 100).toFixed(1)}%</span>
           </div>
         ))}
       </div>
       <div style={{ marginTop: 10, padding: "6px 0 0" }}>
         <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 4 }}>
-          <span style={{ fontFamily: "var(--font-body)", fontSize: "7px", fontWeight: 700, letterSpacing: "0.20em", textTransform: "uppercase", color: "rgba(15,16,32,0.45)" }}>REPORTING</span>
-          <span style={{ fontFamily: "var(--font-body)", fontSize: "7px", fontWeight: 700, color: "rgba(15,16,32,0.55)" }}>{reportingPct.toFixed(1)}%</span>
+          <span style={{ fontFamily: "var(--font-body)", fontSize: "10px", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--muted2)" }}>REPORTING</span>
+          <span style={{ fontFamily: "var(--font-body)", fontSize: "10px", fontWeight: 700, color: "var(--muted)" }}>{reportingPct.toFixed(1)}%</span>
         </div>
-        <div style={{ height: 2, background: "rgba(15,16,32,0.08)", overflow: "hidden" }}>
-          <div style={{ height: "100%", width: `${reportingPct}%`, background: "rgba(15,16,32,0.50)", transition: "width 800ms ease" }} />
+        <div style={{ height: 2, background: "var(--border2)", overflow: "hidden" }}>
+          <div style={{ height: "100%", width: `${reportingPct}%`, background: "var(--muted)", transition: "width 800ms ease" }} />
         </div>
       </div>
     </div>
@@ -1107,15 +1107,15 @@ function ForecastPanel({ raceId, refreshTick, raceData, onForecastUpdate }: { ra
           <span className="res-panel-tag">FORECAST MODEL</span>
           {/* FORECAST BETA badge */}
           <span style={{
-            display: "inline-flex", alignItems: "center", padding: "2px 6px",
+            display: "inline-flex", alignItems: "center", padding: "2px 7px",
             border: "1px solid rgba(124,58,237,0.45)", background: "rgba(124,58,237,0.10)",
-            fontFamily: "var(--font-body)", fontSize: "6.5px", fontWeight: 700,
-            letterSpacing: "0.16em", color: "var(--purple-soft)",
+            fontFamily: "var(--font-body)", fontSize: "9px", fontWeight: 700,
+            letterSpacing: "0.12em", color: "var(--purple-soft)", borderRadius: "var(--r-pill)",
           }}>FORECAST β</span>
-          {isLoading && <span className="res-badge res-badge-purple" style={{ fontSize: "7px" }}><span className="res-live-dot" style={{ background: "var(--purple)", width: 4, height: 4 }} />UPDATING</span>}
-          {!isLoading && forecast && <span className="res-badge" style={{ fontSize: "7px", color: "var(--muted2)" }}>AUTO / 30s</span>}
+          {isLoading && <span className="res-badge res-badge-purple"><span className="res-live-dot" style={{ background: "var(--purple)", width: 4, height: 4 }} />UPDATING</span>}
+          {!isLoading && forecast && <span className="res-badge" style={{ color: "var(--muted2)" }}>AUTO / 30s</span>}
         </div>
-        <button className="res-btn-ghost" style={{ padding: "3px 8px", fontSize: "7px" }} onClick={() => setShowOptions((v) => !v)}>{showOptions ? "HIDE OPTIONS" : "OPTIONS"}</button>
+        <button className="res-btn-ghost" style={{ padding: "3px 8px" }} onClick={() => setShowOptions((v) => !v)}>{showOptions ? "HIDE OPTIONS" : "OPTIONS"}</button>
       </div>
       {showOptions && (
         <div style={{ padding: "12px 14px", borderBottom: "1px solid var(--border)", background: "var(--background2)", display: "flex", flexDirection: "column", gap: 10 }}>
@@ -1138,52 +1138,52 @@ function ForecastPanel({ raceId, refreshTick, raceData, onForecastUpdate }: { ra
               <span className="res-note" style={{ color: "var(--muted2)" }}>{forecast.race.percent_reporting}% REPORTING</span>
               <span className={`res-badge ${raceRule === "MAJORITY" ? "res-badge-purple" : "res-badge-red"}`}>{raceRule === "MAJORITY" ? "MAJORITY" : forecast.forecast.mode_trigger}</span>
             </div>
-            <div style={{ marginBottom: 16, padding: "14px 12px", background: "var(--panel2)", border: "1px solid var(--border)" }}>
-              <div style={{ fontFamily: "var(--font-body)", fontSize: "7px", fontWeight: 700, letterSpacing: "0.26em", textTransform: "uppercase", color: "var(--muted2)", marginBottom: 10 }}>WIN PROBABILITY · {raceRule === "PLURALITY" ? "MOST VOTES" : "MAJORITY ≥50%"}</div>
+            <div style={{ marginBottom: 16, padding: "14px 12px", background: "var(--panel2)", border: "1px solid var(--border)", borderRadius: "var(--r-sm)" }}>
+              <div style={{ fontFamily: "var(--font-body)", fontSize: "10px", fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--muted2)", marginBottom: 10 }}>WIN PROBABILITY · {raceRule === "PLURALITY" ? "MOST VOTES" : "MAJORITY ≥50%"}</div>
               <SwingOMeter candidates={forecast.forecast.candidate_names ?? ["C1", "C2", "C3", "Others"]} colors={forecast.forecast.candidate_colors ?? ["#3b82f6", "#ef4444", "#22c55e", "#94a3b8"]} probabilities={swingoProbs} raceRule={raceRule} reportingPct={forecast.race.percent_reporting} candidateCount={activeCandidateCount} />
             </div>
             <div style={{ display: "grid", gridTemplateColumns: activeCandidateCount >= 3 ? "1fr 1fr 1fr" : activeCandidateCount === 2 ? "1fr 1fr" : "1fr", gap: 6, marginBottom: 14 }}>
               {(["Candidate1", "Candidate2", "Candidate3"] as const).filter((_, idx) => idx < activeCandidateCount).map((key) => {
                 const color = candidateColors[key], share = forecast.forecast.modeled_share[key], votes = forecast.forecast.modeled_votes[key], isLeader = forecast.forecast.leader === key;
                 return (
-                  <div key={key} style={{ padding: "10px 10px 8px", background: "var(--panel2)", border: `1px solid ${isLeader ? color + "44" : "var(--border)"}` }}>
-                    <div style={{ fontFamily: "var(--font-body)", fontSize: "7px", fontWeight: 700, letterSpacing: "0.20em", textTransform: "uppercase", color: color + "cc", marginBottom: 4, lineHeight: 1.4 }}>{formatCandidateName(candidateLabels[key])}</div>
+                  <div key={key} style={{ padding: "10px 10px 8px", background: "var(--panel2)", border: `1px solid ${isLeader ? color + "44" : "var(--border)"}`, borderRadius: "var(--r-sm)" }}>
+                    <div style={{ fontFamily: "var(--font-body)", fontSize: "10px", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: color + "cc", marginBottom: 4, lineHeight: 1.4 }}>{formatCandidateName(candidateLabels[key])}</div>
                     <div style={{ fontFamily: "var(--font-numeric)", fontSize: "clamp(17px, 1.8vw, 22px)", fontWeight: 800, color, lineHeight: 1 }}>{fcastPct(share)}</div>
-                    <div style={{ fontFamily: "var(--font-body)", fontSize: "7.5px", letterSpacing: "0.10em", color: "var(--muted2)", marginTop: 3 }}>{fcastFmt(votes)} PROJ</div>
-                    {isLeader && <div style={{ marginTop: 6, fontSize: "5.5px", color, fontWeight: 700, fontFamily: "var(--font-body)", letterSpacing: "0.16em", textTransform: "uppercase", border: `1px solid ${color}55`, padding: "1px 4px", display: "inline-block" }}>LEADER</div>}
+                    <div style={{ fontFamily: "var(--font-body)", fontSize: "10px", letterSpacing: "0.08em", color: "var(--muted2)", marginTop: 3 }}>{fcastFmt(votes)} PROJ</div>
+                    {isLeader && <div style={{ marginTop: 6, fontSize: "9px", color, fontWeight: 700, fontFamily: "var(--font-body)", letterSpacing: "0.12em", textTransform: "uppercase", border: `1px solid ${color}55`, padding: "2px 6px", borderRadius: "var(--r-pill)", display: "inline-block" }}>LEADER</div>}
                   </div>
                 );
               })}
             </div>
             {raceRule === "MAJORITY" && (
-              <div style={{ marginBottom: 14, padding: "10px 12px", background: "rgba(245,158,11,0.05)", border: "1px solid rgba(245,158,11,0.15)" }}>
-                <div style={{ fontFamily: "var(--font-body)", fontSize: "7px", fontWeight: 700, letterSpacing: "0.24em", textTransform: "uppercase", color: "rgba(245,158,11,0.7)", marginBottom: 8 }}>RUNOFF PROBABILITY</div>
-                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 5 }}><span style={{ fontFamily: "var(--font-body)", fontSize: "7.5px", letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--muted)" }}>Runoff needed</span><span style={{ fontFamily: "var(--font-numeric)", fontSize: "12px", fontWeight: 800, color: "#f59e0b" }}>{fcastPct(forecast.forecast.runoff_needed_prob)}</span></div>
+              <div style={{ marginBottom: 14, padding: "10px 12px", background: "rgba(245,158,11,0.05)", border: "1px solid rgba(245,158,11,0.15)", borderRadius: "var(--r-sm)" }}>
+                <div style={{ fontFamily: "var(--font-body)", fontSize: "10px", fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", color: "rgba(245,158,11,0.85)", marginBottom: 8 }}>RUNOFF PROBABILITY</div>
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 5 }}><span style={{ fontFamily: "var(--font-body)", fontSize: "10px", letterSpacing: "0.08em", textTransform: "uppercase", color: "var(--muted)" }}>Runoff needed</span><span style={{ fontFamily: "var(--font-numeric)", fontSize: "12px", fontWeight: 800, color: "#f59e0b" }}>{fcastPct(forecast.forecast.runoff_needed_prob)}</span></div>
                 <div style={{ height: 3, background: "var(--border2)", overflow: "hidden", marginBottom: 8 }}><div style={{ height: "100%", width: fcastPct(Math.min(forecast.forecast.runoff_needed_prob, 1)), background: "#f59e0b", transition: "width 600ms ease" }} /></div>
                 {FORECAST_CANDIDATE_KEYS.map(k => forecast.forecast.runoff_prob[k] > 0.005 ? (
                   <div key={k} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 3 }}>
-                    <div style={{ display: "flex", alignItems: "center", gap: 5 }}><span style={{ width: 5, height: 5, borderRadius: "50%", background: candidateColors[k], display: "inline-block" }} /><span style={{ fontFamily: "var(--font-body)", fontSize: "8px", letterSpacing: "0.08em", textTransform: "uppercase", color: "rgba(15,16,32,0.55)" }}>{candidateLabels[k]}</span></div>
+                    <div style={{ display: "flex", alignItems: "center", gap: 5 }}><span style={{ width: 6, height: 6, borderRadius: "50%", background: candidateColors[k], display: "inline-block" }} /><span style={{ fontFamily: "var(--font-body)", fontSize: "10px", letterSpacing: "0.06em", textTransform: "uppercase", color: "var(--muted)" }}>{candidateLabels[k]}</span></div>
                     <span style={{ fontFamily: "var(--font-body)", fontSize: "9px", fontWeight: 700, color: candidateColors[k] }}>{fcastPct(forecast.forecast.runoff_prob[k])}</span>
                   </div>
                 ) : null)}
               </div>
             )}
-            <div style={{ padding: "10px 12px", background: "var(--panel2)", border: "1px solid var(--border)", marginBottom: 14 }}>
-              <div style={{ fontFamily: "var(--font-body)", fontSize: "7px", fontWeight: 700, letterSpacing: "0.26em", textTransform: "uppercase", color: "var(--muted2)", marginBottom: 8 }}>MODEL STATISTICS</div>
+            <div style={{ padding: "10px 12px", background: "var(--panel2)", border: "1px solid var(--border)", marginBottom: 14, borderRadius: "var(--r-sm)" }}>
+              <div style={{ fontFamily: "var(--font-body)", fontSize: "10px", fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--muted2)", marginBottom: 8 }}>MODEL STATISTICS</div>
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "4px 16px" }}>
                 {[["TOTAL", fcastFmt(forecast.forecast.modeled_total_vote)], ["REMAINING", fcastFmt(forecast.forecast.modeled_vote_remaining)], ["MARGIN", `${fcastFmt(forecast.forecast.projected_margin_votes)} (${fcastPct(forecast.forecast.projected_margin_pct)})`], ["STD DEV", fcastFmt(forecast.forecast.sd_race)]].map(([label, val]) => (
                   <div key={label} style={{ paddingBottom: 4, borderBottom: "1px solid var(--border)" }}>
-                    <div style={{ fontFamily: "var(--font-body)", fontSize: "6.5px", fontWeight: 700, letterSpacing: "0.20em", textTransform: "uppercase", color: "var(--muted2)", marginBottom: 2 }}>{label}</div>
+                    <div style={{ fontFamily: "var(--font-body)", fontSize: "10px", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--muted2)", marginBottom: 2 }}>{label}</div>
                     <div style={{ fontFamily: "var(--font-body)", fontSize: "10px", fontWeight: 700, color: "var(--muted)" }}>{val}</div>
                   </div>
                 ))}
               </div>
             </div>
             {timestamps.length > 1 && (
-              <div style={{ padding: "10px 12px", background: "rgba(255,255,255,0.02)", border: "1px solid rgba(15,16,32,0.08)" }}>
+              <div style={{ padding: "10px 12px", background: "var(--panel2)", border: "1px solid var(--border)", borderRadius: "var(--r-sm)" }}>
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 10 }}>
-                  <div style={{ fontFamily: "var(--font-body)", fontSize: "7px", fontWeight: 700, letterSpacing: "0.26em", textTransform: "uppercase", color: "var(--muted2)" }}>HISTORICAL PLAYBACK</div>
-                  <button className="res-btn-ghost" style={{ padding: "3px 9px", fontSize: "8px" }} onClick={() => { if (playing) { setPlaying(false); return; } if (historyIndex >= timestamps.length - 1) setHistoryIndex(0); setPlaying(true); }}>{playing ? "⏹ STOP" : "▶ PLAY"}</button>
+                  <div style={{ fontFamily: "var(--font-body)", fontSize: "10px", fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--muted2)" }}>HISTORICAL PLAYBACK</div>
+                  <button className="res-btn-ghost" style={{ padding: "3px 9px" }} onClick={() => { if (playing) { setPlaying(false); return; } if (historyIndex >= timestamps.length - 1) setHistoryIndex(0); setPlaying(true); }}>{playing ? "⏹ STOP" : "▶ PLAY"}</button>
                 </div>
                 <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 5 }}><span className="res-note">{fcastShortDate(timestamps[0])}</span><span className="res-note">{fcastShortDate(timestamps[timestamps.length - 1])}</span></div>
                 <input type="range" min={0} max={timestamps.length - 1} value={historyIndex} onChange={(e) => { const idx = Number(e.target.value); setHistoryIndex(idx); historyIndexRef.current = idx; const hl = historyListRef.current; if (hl) runForecastAtIndex(raceIdRef.current, hl.timestamps, idx); }} style={{ width: "100%", accentColor: "var(--purple)", height: "4px", cursor: "pointer" }} />
@@ -1220,13 +1220,13 @@ function RaceScrollWindow({ races, raceCache, selectedId, onSelect, search, onSe
           <line x1="10.5" y1="10.5" x2="14" y2="14" stroke="white" strokeWidth="1.5" strokeLinecap="round"/>
         </svg>
         <input type="text" placeholder="Search races…" value={search} onChange={e => onSearchChange(e.target.value)}
-          style={{ flex: 1, background: "none", border: "none", outline: "none", fontFamily: "var(--font-body)", fontSize: "9px", fontWeight: 600, letterSpacing: "0.06em", color: "var(--foreground)", caretColor: "var(--purple-soft)" }} />
-        {search && <button onClick={() => onSearchChange("")} style={{ background: "none", border: "none", cursor: "pointer", color: "rgba(255,255,255,0.3)", fontSize: 11, padding: 0, lineHeight: 1 }}>✕</button>}
+          style={{ flex: 1, background: "none", border: "none", outline: "none", fontFamily: "var(--font-body)", fontSize: "11px", fontWeight: 600, letterSpacing: "0.04em", color: "var(--foreground)", caretColor: "var(--purple-soft)" }} />
+        {search && <button onClick={() => onSearchChange("")} style={{ background: "none", border: "none", cursor: "pointer", color: "var(--muted2)", fontSize: 11, padding: 0, lineHeight: 1 }}>✕</button>}
       </div>
       <div style={{ overflowY: "auto", flex: 1, maxHeight: maxHeight }}>
         {groups.map(({ office, races: groupRaces }) => (
           <div key={office}>
-            <div style={{ padding: "4px 10px 2px", fontFamily: "var(--font-body)", fontSize: "6px", fontWeight: 700, letterSpacing: "0.26em", textTransform: "uppercase", color: "var(--muted2)", borderTop: "1px solid var(--border)", marginTop: 2 }}>{office}</div>
+            <div style={{ padding: "4px 10px 2px", fontFamily: "var(--font-body)", fontSize: "10px", fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", color: "var(--muted2)", borderTop: "1px solid var(--border)", marginTop: 2 }}>{office}</div>
             {groupRaces.map(r => {
               const liveData = raceCache[r.id];
               const winner = liveData?.candidates?.find(c => c.winner);
@@ -1236,20 +1236,20 @@ function RaceScrollWindow({ races, raceCache, selectedId, onSelect, search, onSe
               const raceTypeShort = getRaceTypeShort(r.raceType);
               const hasForecast = !!RACE_FORECAST_DEFAULTS[r.id];
               return (
-                <button key={r.id} onClick={() => onSelect(r.id)} style={{ display: "flex", alignItems: "center", width: "100%", padding: "6px 10px", background: isSelected ? "rgba(124,58,237,0.10)" : "transparent", border: "none", borderLeft: isSelected ? "2px solid var(--purple)" : "2px solid transparent", cursor: "pointer", textAlign: "left", transition: "background 100ms ease" }}>
-                  <span style={{ flexShrink: 0, width: 16, height: 16, borderRadius: 2, background: `${raceTypeColor}22`, border: `1px solid ${raceTypeColor}44`, display: "flex", alignItems: "center", justifyContent: "center", marginRight: 8, fontFamily: "var(--font-body)", fontSize: "6.5px", fontWeight: 900, color: raceTypeColor }}>{raceTypeShort}</span>
+                <button key={r.id} onClick={() => onSelect(r.id)} style={{ display: "flex", alignItems: "center", width: "calc(100% - 8px)", margin: "1px 4px", padding: "6px 10px", background: isSelected ? "rgba(124,58,237,0.10)" : "transparent", border: "1px solid", borderColor: isSelected ? "rgba(124,58,237,0.35)" : "transparent", borderRadius: "var(--r-sm)", cursor: "pointer", textAlign: "left", transition: "background 100ms ease" }}>
+                  <span style={{ flexShrink: 0, width: 20, height: 20, borderRadius: "var(--r-sm)", background: `${raceTypeColor}22`, border: `1px solid ${raceTypeColor}55`, display: "flex", alignItems: "center", justifyContent: "center", marginRight: 8, fontFamily: "var(--font-body)", fontSize: "9px", fontWeight: 900, color: raceTypeColor }}>{raceTypeShort}</span>
                   <div style={{ flex: 1, minWidth: 0 }}>
                     <div style={{ display: "flex", alignItems: "center", gap: 4, marginBottom: 2 }}>
-                      <span style={{ fontFamily: "var(--font-body)", fontSize: "8.5px", fontWeight: isSelected ? 800 : 600, color: isSelected ? "var(--foreground)" : "var(--muted)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{r.raceType} </span>
-                      {hasForecast && <span style={{ flexShrink: 0, display: "inline-flex", padding: "0px 4px", border: "1px solid rgba(124,58,237,0.45)", background: "rgba(124,58,237,0.10)", fontFamily: "var(--font-body)", fontSize: "5px", fontWeight: 700, letterSpacing: "0.12em", color: "var(--purple-soft)" }}>FORECAST β</span>}
+                      <span style={{ fontFamily: "var(--font-body)", fontSize: "11px", fontWeight: isSelected ? 800 : 600, color: isSelected ? "var(--foreground)" : "var(--muted)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{r.raceType} </span>
+                      {hasForecast && <span style={{ flexShrink: 0, display: "inline-flex", padding: "2px 6px", border: "1px solid rgba(124,58,237,0.45)", background: "rgba(124,58,237,0.10)", fontFamily: "var(--font-body)", fontSize: "8px", fontWeight: 700, letterSpacing: "0.08em", color: "var(--purple-soft)", borderRadius: "var(--r-pill)" }}>FORECAST β</span>}
                     </div>
                     <div style={{ height: 2, background: "var(--border2)", overflow: "hidden" }}>
                       <div style={{ height: "100%", width: `${reporting ?? 0}%`, background: winner ? "var(--win)" : raceTypeColor, opacity: 0.75, transition: "width 800ms ease" }} />
                     </div>
                   </div>
                   <div style={{ flexShrink: 0, marginLeft: 8 }}>
-                    {winner ? <span style={{ fontFamily: "var(--font-body)", fontSize: "6px", fontWeight: 700, color: "var(--win)" }}>✓</span>
-                      : <span style={{ fontFamily: "var(--font-body)", fontSize: "7.5px", fontWeight: 700, color: isSelected ? "var(--muted)" : "var(--muted3)" }}>{reporting !== null ? `${reporting.toFixed(0)}%` : "—"}</span>}
+                    {winner ? <span style={{ fontFamily: "var(--font-body)", fontSize: "9px", fontWeight: 700, color: "var(--win)" }}>✓</span>
+                      : <span style={{ fontFamily: "var(--font-body)", fontSize: "9px", fontWeight: 700, color: isSelected ? "var(--muted)" : "var(--muted2)" }}>{reporting !== null ? `${reporting.toFixed(0)}%` : "—"}</span>}
                   </div>
                 </button>
               );
@@ -1298,12 +1298,12 @@ function RacePickerPanel({ races, raceCache, selectedId, onSelect }: {
   }, []);
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", height: "100%", minHeight: 0, background: "var(--panel)", border: "1px solid var(--border)", overflow: "hidden" }}>
+    <div style={{ display: "flex", flexDirection: "column", height: "100%", minHeight: 0, background: "var(--panel)", border: "1px solid var(--border)", overflow: "hidden", borderRadius: "var(--r-lg)", boxShadow: "var(--shadow-sm)" }}>
       {/* Header */}
-      <div style={{ padding: "10px 12px", borderBottom: "1px solid var(--border)", background: "var(--background2)", flexShrink: 0 }}>
+      <div style={{ padding: "12px 14px", borderBottom: "1px solid var(--border)", background: "var(--background2)", flexShrink: 0, borderRadius: "var(--r-lg) var(--r-lg) 0 0" }}>
         <div className="res-panel-tag" style={{ marginBottom: 8 }}>ALL RACES</div>
         {/* Search input */}
-        <div style={{ display: "flex", alignItems: "center", gap: 8, background: "var(--panel2)", border: "1px solid var(--border2)", padding: "6px 10px" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 8, background: "var(--panel2)", border: "1px solid var(--border2)", padding: "7px 12px", borderRadius: "var(--r-sm)" }}>
           <svg width="11" height="11" viewBox="0 0 16 16" fill="none" style={{ flexShrink: 0, opacity: 0.4 }}>
             <circle cx="6.5" cy="6.5" r="5" stroke="white" strokeWidth="1.5" />
             <line x1="10.5" y1="10.5" x2="14" y2="14" stroke="white" strokeWidth="1.5" strokeLinecap="round" />
@@ -1313,7 +1313,7 @@ function RacePickerPanel({ races, raceCache, selectedId, onSelect }: {
             value={search}
             onChange={e => setSearch(e.target.value)}
             placeholder="Filter races…"
-            style={{ flex: 1, background: "transparent", border: "none", outline: "none", fontFamily: "var(--font-body)", fontSize: "9px", fontWeight: 600, letterSpacing: "0.08em", color: "var(--foreground)", caretColor: "var(--purple-soft)" }}
+            style={{ flex: 1, background: "transparent", border: "none", outline: "none", fontFamily: "var(--font-body)", fontSize: "12px", fontWeight: 600, letterSpacing: "0.04em", color: "var(--foreground)", caretColor: "var(--purple-soft)" }}
           />
           {search && (
             <button onClick={() => setSearch("")} style={{ background: "none", border: "none", cursor: "pointer", color: "var(--muted2)", padding: 0, fontSize: 11, lineHeight: 1 }}>✕</button>
@@ -1332,11 +1332,11 @@ function RacePickerPanel({ races, raceCache, selectedId, onSelect }: {
           <div key={office} style={{ marginBottom: 2 }}>
             {/* Office group header */}
             <div style={{
-              padding: "5px 12px 3px",
+              padding: "6px 14px 4px",
               fontFamily: "var(--font-body)",
-              fontSize: "6.5px",
+              fontSize: "10px",
               fontWeight: 700,
-              letterSpacing: "0.28em",
+              letterSpacing: "0.18em",
               textTransform: "uppercase",
               color: "var(--muted2)",
               borderTop: "1px solid var(--border)",
@@ -1361,12 +1361,14 @@ function RacePickerPanel({ races, raceCache, selectedId, onSelect }: {
                   style={{
                     display: "flex",
                     alignItems: "center",
-                    width: "100%",
+                    width: "calc(100% - 8px)",
+                    margin: "1px 4px",
                     gap: 0,
-                    padding: "7px 12px",
+                    padding: "8px 10px",
                     background: isSelected ? `rgba(124,58,237,0.10)` : "transparent",
-                    border: "none",
-                    borderLeft: isSelected ? "2px solid var(--purple)" : "2px solid transparent",
+                    border: "1px solid",
+                    borderColor: isSelected ? "rgba(124,58,237,0.35)" : "transparent",
+                    borderRadius: "var(--r-sm)",
                     cursor: "pointer",
                     textAlign: "left",
                     transition: "background 100ms ease, border-color 100ms ease",
@@ -1378,17 +1380,17 @@ function RacePickerPanel({ races, raceCache, selectedId, onSelect }: {
                   {/* Party color pill */}
                   <span style={{
                     flexShrink: 0,
-                    width: 18,
-                    height: 18,
-                    borderRadius: 2,
+                    width: 22,
+                    height: 22,
+                    borderRadius: "var(--r-sm)",
                     background: raceTypeColor + "22",
-                    border: `1px solid ${raceTypeColor}44`,
+                    border: `1px solid ${raceTypeColor}55`,
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
-                    marginRight: 9,
+                    marginRight: 10,
                     fontFamily: "var(--font-body)",
-                    fontSize: "7px",
+                    fontSize: "10px",
                     fontWeight: 900,
                     color: raceTypeColor,
                     letterSpacing: 0,
@@ -1398,14 +1400,14 @@ function RacePickerPanel({ races, raceCache, selectedId, onSelect }: {
                   <div style={{ flex: 1, minWidth: 0 }}>
                     <div style={{
                       fontFamily: "var(--font-body)",
-                      fontSize: "9px",
+                      fontSize: "12px",
                       fontWeight: isSelected ? 800 : 600,
-                      letterSpacing: "0.04em",
+                      letterSpacing: "0.02em",
                       color: isSelected ? "var(--foreground)" : "var(--muted)",
                       whiteSpace: "nowrap",
                       overflow: "hidden",
                       textOverflow: "ellipsis",
-                      marginBottom: 3,
+                      marginBottom: 4,
                     }}>
                       {r.raceType}
                     </div>
@@ -1415,13 +1417,13 @@ function RacePickerPanel({ races, raceCache, selectedId, onSelect }: {
                         <div style={{ height: "100%", width: `${reporting ?? 0}%`, background: winner ? "var(--win)" : raceTypeColor, opacity: 0.8, transition: "width 800ms ease" }} />
                       </div>
                       {winner ? (
-                        <span style={{ fontFamily: "var(--font-body)", fontSize: "6.5px", fontWeight: 700, color: "var(--win)", letterSpacing: "0.12em" }}>✓ CALLED</span>
+                        <span style={{ fontFamily: "var(--font-body)", fontSize: "9px", fontWeight: 700, color: "var(--win)", letterSpacing: "0.08em" }}>✓ CALLED</span>
                       ) : leader && (reporting ?? 0) > 0 ? (
-                        <span style={{ fontFamily: "var(--font-body)", fontSize: "6.5px", fontWeight: 600, color: "var(--muted2)", letterSpacing: "0.08em" }}>
+                        <span style={{ fontFamily: "var(--font-body)", fontSize: "9px", fontWeight: 600, color: "var(--muted2)", letterSpacing: "0.04em" }}>
                           {leader.name.split(" ").pop()} {fmtPct(leader.percent)}
                         </span>
                       ) : (
-                        <span style={{ fontFamily: "var(--font-body)", fontSize: "6.5px", fontWeight: 600, color: "var(--muted2)", letterSpacing: "0.08em" }}>
+                        <span style={{ fontFamily: "var(--font-body)", fontSize: "9px", fontWeight: 600, color: "var(--muted2)", letterSpacing: "0.04em" }}>
                           {reporting !== null ? `${reporting.toFixed(0)}% IN` : "PENDING"}
                         </span>
                       )}
@@ -1432,18 +1434,19 @@ function RacePickerPanel({ races, raceCache, selectedId, onSelect }: {
                   {RACE_FORECAST_DEFAULTS[r.id] && (
                     <span style={{
                       flexShrink: 0,
-                      marginLeft: 4,
+                      marginLeft: 6,
                       display: "inline-flex",
                       alignItems: "center",
-                      padding: "1px 5px",
+                      padding: "2px 7px",
                       border: "1px solid rgba(124,58,237,0.45)",
                       background: "rgba(124,58,237,0.10)",
                       fontFamily: "var(--font-body)",
-                      fontSize: "5.5px",
+                      fontSize: "9px",
                       fontWeight: 700,
-                      letterSpacing: "0.14em",
+                      letterSpacing: "0.10em",
                       color: "var(--purple-soft)",
                       whiteSpace: "nowrap",
+                      borderRadius: "var(--r-pill)",
                     }}>FORECAST β</span>
                   )}
                 </button>
@@ -1627,13 +1630,13 @@ export default function March3FeaturedClient() {
         .res-tri-stripe { height:3px; width:100%; background:linear-gradient(90deg,var(--red) 0%,var(--red) 33.33%,var(--purple) 33.33%,var(--purple) 66.66%,var(--blue) 66.66%,var(--blue) 100%); flex-shrink:0; }
         .res-live-dot { display:inline-block; width:6px; height:6px; border-radius:50%; background:var(--rep); box-shadow:0 0 8px rgba(230,57,70,0.7); animation:res-pulse 1.8s ease-in-out infinite; flex-shrink:0; }
         .res-eyebrow { display:flex; align-items:center; gap:7px; font-family:var(--font-body); font-size:10px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:var(--muted); }
-        .res-note { font-family:var(--font-body); font-size:8.5px; letter-spacing:0.16em; text-transform:uppercase; color:var(--muted2); }
-        .res-th { font-family:var(--font-body); font-size:7.5px; font-weight:700; letter-spacing:0.24em; text-transform:uppercase; color:var(--muted2); }
+        .res-note { font-family:var(--font-body); font-size:11px; letter-spacing:0.12em; text-transform:uppercase; color:var(--muted2); }
+        .res-th { font-family:var(--font-body); font-size:10px; font-weight:700; letter-spacing:0.18em; text-transform:uppercase; color:var(--muted2); }
         .res-num { font-family:var(--font-body); font-size:10.5px; color:var(--muted); font-variant-numeric:tabular-nums; }
         .res-pct-big { font-family:var(--font-numeric); font-size:13px; font-weight:800; color:var(--foreground); font-variant-numeric:tabular-nums; }
         .res-pct-xl { font-family:var(--font-numeric); font-size:15px; font-weight:800; color:var(--foreground); font-variant-numeric:tabular-nums; line-height:1; }
         .res-pct-topline { font-family:var(--font-numeric); font-size:clamp(20px,2.2vw,28px); font-weight:800; color:var(--foreground); font-variant-numeric:tabular-nums; line-height:1; }
-        .res-stat-label { font-family:var(--font-body); font-size:7.5px; font-weight:700; letter-spacing:0.26em; text-transform:uppercase; color:var(--muted2); }
+        .res-stat-label { font-family:var(--font-body); font-size:10px; font-weight:700; letter-spacing:0.18em; text-transform:uppercase; color:var(--muted2); }
         .res-stat-val { font-family:var(--font-body); font-size:10px; font-weight:700; letter-spacing:0.14em; color:var(--muted); }
         .res-stat-row { display:flex; align-items:center; justify-content:space-between; }
         .res-badge { display:inline-flex; align-items:center; gap:4px; padding:3px 8px; font-family:var(--font-body); font-size:10px; font-weight:700; letter-spacing:0.10em; text-transform:uppercase; border:1px solid var(--border2); background:var(--panel2); color:var(--muted); border-radius:var(--r-pill); }
@@ -1641,25 +1644,25 @@ export default function March3FeaturedClient() {
         .res-badge-win { border-color:rgba(74,222,128,0.28); background:rgba(74,222,128,0.08); color:var(--win); }
         .res-badge-red { border-color:rgba(230,57,70,0.30); background:rgba(230,57,70,0.08); color:var(--rep); }
         .res-badge-blue { border-color:rgba(59,130,246,0.30); background:rgba(59,130,246,0.08); color:var(--dem); }
-        .res-bar-track { width:100%; height:3px; background:rgba(15,16,32,0.10); position:relative; overflow:hidden; }
+        .res-bar-track { width:100%; height:3px; background:var(--border2); position:relative; overflow:hidden; }
         .res-bar-fill { position:absolute; top:0; left:0; bottom:0; background:var(--purple); transition:width 600ms cubic-bezier(0.22,1,0.36,1); }
         .res-panel { background:var(--panel); border:1px solid var(--border); overflow:hidden; animation:res-fade-up 0.5s cubic-bezier(0.22,1,0.36,1) both; border-radius:var(--r-lg); box-shadow:var(--shadow-sm); }
         .res-panel-header { display:flex; align-items:center; justify-content:space-between; padding:10px 14px; border-bottom:1px solid var(--border); background:var(--panel2); border-radius:var(--r-lg) var(--r-lg) 0 0; }
-        .res-panel-tag { font-family:var(--font-body); font-size:8px; font-weight:700; letter-spacing:0.28em; text-transform:uppercase; color:var(--purple-soft); }
+        .res-panel-tag { font-family:var(--font-body); font-size:10px; font-weight:700; letter-spacing:0.20em; text-transform:uppercase; color:var(--purple-soft); }
         .res-stat-block { background:var(--panel2); border:1px solid var(--border); padding:10px 12px; border-radius:var(--r-sm); }
         .res-stat-block-label { font-family:var(--font-body); font-size:10px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:var(--muted2); margin-bottom:4px; }
         .res-stat-block-val { font-family:var(--font-numeric); font-size:clamp(20px,2.5vw,28px); font-weight:800; color:var(--foreground); line-height:1; font-variant-numeric:tabular-nums; }
         .res-btn-primary { display:inline-flex; align-items:center; gap:6px; padding:9px 18px; background:var(--gradient-purple); border:1px solid rgba(124,58,237,0.65); color:#fff; font-family:var(--font-numeric); font-size:13px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; cursor:pointer; box-shadow:var(--shadow-purple); transition:background 140ms ease,transform 140ms ease; border-radius:var(--r-pill); }
         .res-btn-primary:hover { background:var(--gradient-purple-soft); transform:translateY(-1px); }
-        .res-btn-ghost { display:inline-flex; align-items:center; gap:6px; padding:7px 12px; background:transparent; border:1px solid var(--border); color:var(--muted3); font-family:var(--font-body); font-size:9px; font-weight:700; letter-spacing:0.18em; text-transform:uppercase; cursor:pointer; transition:all 140ms ease; }
+        .res-btn-ghost { display:inline-flex; align-items:center; gap:6px; padding:7px 12px; background:transparent; border:1px solid var(--border); color:var(--muted2); font-family:var(--font-body); font-size:10px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; cursor:pointer; transition:all 140ms ease; border-radius:var(--r-pill); }
         .res-btn-ghost:hover { border-color:var(--border2); color:var(--muted); }
-        .res-btn-state { display:inline-flex; align-items:center; padding:8px 16px; background:transparent; border:1px solid var(--border); color:var(--muted3); font-family:var(--font-body); font-size:9px; font-weight:700; letter-spacing:0.22em; text-transform:uppercase; cursor:pointer; transition:all 120ms ease; position:relative; overflow:hidden; }
+        .res-btn-state { display:inline-flex; align-items:center; padding:8px 16px; background:transparent; border:1px solid var(--border); color:var(--muted2); font-family:var(--font-body); font-size:10px; font-weight:700; letter-spacing:0.16em; text-transform:uppercase; cursor:pointer; transition:all 120ms ease; position:relative; overflow:hidden; border-radius:var(--r-sm); }
         .res-btn-state::before { content:''; position:absolute; bottom:0; left:0; right:0; height:2px; background:var(--purple); transform:scaleX(0); transform-origin:left; transition:transform 200ms ease; }
         .res-btn-state:hover { color:var(--foreground); border-color:var(--border2); }
         .res-btn-state:hover::before { transform:scaleX(1); }
         .res-btn-state.active { background:rgba(124,58,237,0.10); border-color:rgba(124,58,237,0.40); color:var(--purple2); }
         .res-btn-state.active::before { transform:scaleX(1); }
-        .res-close-btn { display:inline-flex; align-items:center; padding:7px 12px; background:rgba(15,16,32,0.05); border:1px solid var(--border); color:var(--muted2); font-family:var(--font-body); font-size:8.5px; font-weight:700; letter-spacing:0.18em; text-transform:uppercase; cursor:pointer; flex-shrink:0; transition:all 120ms ease; }
+        .res-close-btn { display:inline-flex; align-items:center; padding:7px 12px; background:var(--panel2); border:1px solid var(--border); color:var(--muted2); font-family:var(--font-body); font-size:10px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; cursor:pointer; flex-shrink:0; transition:all 120ms ease; border-radius:var(--r-sm); }
         .res-close-btn:hover { border-color:var(--border2); color:var(--foreground); }
         .res-overlay-card { background:var(--panel); border:1px solid rgba(124,58,237,0.45); box-shadow:0 0 80px rgba(124,58,237,0.25),0 30px 80px rgba(0,0,0,0.8); }
         .res-overlay-title { font-family:var(--font-body); font-size:clamp(32px,4vw,48px); font-weight:900; text-transform:uppercase; letter-spacing:0.02em; color:var(--foreground); line-height:0.92; }
@@ -1667,22 +1670,22 @@ export default function March3FeaturedClient() {
         .res-map-tooltip { background:var(--panel); border:1px solid rgba(124,58,237,0.45); box-shadow:var(--shadow-md); border-radius:var(--r-md); }
         .res-tooltip-title { font-family:var(--font-body); font-size:13px; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; color:var(--foreground); }
         .res-reporting-row { display:flex; align-items:center; justify-content:space-between; }
-        .res-candidate-list { border:1px solid var(--border); background:var(--panel); overflow:hidden; }
-        .res-candidate-row { display:flex; align-items:center; gap:0; border-bottom:1px solid rgba(15,16,32,0.08); padding:10px 14px; transition:background 120ms ease; position:relative; }
+        .res-candidate-list { border:1px solid var(--border); background:var(--panel); overflow:hidden; border-radius:var(--r-md); }
+        .res-candidate-row { display:flex; align-items:center; gap:0; border-bottom:1px solid var(--border); padding:10px 14px; transition:background 120ms ease; position:relative; }
         .res-candidate-row:last-child { border-bottom:none; }
         .res-candidate-row:hover { background:rgba(124,58,237,0.04); }
         .res-cand-bar { width:3px; height:100%; position:absolute; left:0; top:0; bottom:0; opacity:0.7; }
         .res-cand-dot { display:inline-block; width:8px; height:8px; border-radius:50%; flex-shrink:0; }
         .res-cand-name { font-family:var(--font-body); font-size:12px; font-weight:700; letter-spacing:0.06em; color:var(--foreground); }
         .res-cand-name-lg { font-family:var(--font-body); font-size:13px; font-weight:900; letter-spacing:0.06em; text-transform:uppercase; color:var(--foreground); }
-        .res-cand-party { font-family:var(--font-body); font-size:8px; letter-spacing:0.16em; text-transform:uppercase; color:var(--muted2); margin-top:1px; }
+        .res-cand-party { font-family:var(--font-body); font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:var(--muted2); margin-top:1px; }
         .res-thead { position:sticky; top:0; background:var(--background2); border-bottom:1px solid var(--border); }
         .res-table-row { border-bottom:1px solid var(--border); transition:background 100ms ease; }
         .res-table-row:hover { background:rgba(124,58,237,0.04); }
         .res-input { width:100%; background:var(--panel2); border:1px solid var(--border2); color:var(--foreground); padding:8px 12px; font-family:var(--font-body); font-size:12px; letter-spacing:0.04em; outline:none; transition:border-color 140ms ease; border-radius:var(--r-sm); }
         .res-input:focus { border-color:rgba(124,58,237,0.40); }
-        .res-input::placeholder { color:var(--muted3); }
-        .res-select { background:rgba(255,255,255,0.03); border:1px solid var(--border); color:var(--muted2); padding:7px 10px; font-family:var(--font-body); font-size:9px; letter-spacing:0.10em; outline:none; }
+        .res-input::placeholder { color:var(--muted2); }
+        .res-select { background:var(--panel2); border:1px solid var(--border); color:var(--muted2); padding:8px 12px; font-family:var(--font-body); font-size:11px; letter-spacing:0.08em; outline:none; border-radius:var(--r-sm); }
         .res-error { border:1px solid rgba(230,57,70,0.25); background:rgba(230,57,70,0.06); color:rgba(255,77,90,0.90); padding:12px 16px; font-family:var(--font-body); font-size:10.5px; letter-spacing:0.12em; }
         .res-map-loading { display:flex; align-items:center; justify-content:center; aspect-ratio:4/3; background:rgba(255,255,255,0.30); border:1px solid var(--border); }
         .res-map-wrap { background:rgba(0,0,0,0.20); border:1px solid var(--border); padding:6px; }
@@ -1697,7 +1700,7 @@ export default function March3FeaturedClient() {
         .res-page-header-inner { max-width:1800px; margin:0 auto; padding:16px 20px; position:relative; }
         .res-page-title { font-family:var(--font-display); font-size:clamp(22px,2.8vw,44px); font-weight:900; text-transform:uppercase; letter-spacing:-0.01em; color:var(--foreground); line-height:0.92; margin:0; }
         .res-page-title em { font-style:normal; background:linear-gradient(100deg,var(--red2) 0%,var(--purple-soft) 50%,var(--blue2) 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
-        .res-page-sub { font-family:var(--font-body); font-size:8px; font-weight:700; letter-spacing:0.30em; text-transform:uppercase; color:var(--purple-soft); margin-bottom:8px; }
+        .res-page-sub { font-family:var(--font-body); font-size:10px; font-weight:700; letter-spacing:0.22em; text-transform:uppercase; color:var(--purple-soft); margin-bottom:8px; }
 
         /* ════════════════════════════════════════
            LAYOUT — desktop / tablet / mobile
@@ -2230,7 +2233,7 @@ export default function March3FeaturedClient() {
             return (
               <div style={{ flexShrink: 0, display: "flex", alignItems: "center", gap: 6 }}>
                 {winner
-                  ? <span className="res-badge res-badge-win" style={{ fontSize: "7px" }}>✓ CALLED</span>
+                  ? <span className="res-badge res-badge-win">✓ CALLED</span>
                   : <span style={{ fontFamily: "var(--font-body)", fontSize: "9px", fontWeight: 700, color: raceTypeColor }}>{reporting !== null ? `${reporting.toFixed(0)}%` : "—"}</span>
                 }
               </div>
@@ -2280,12 +2283,12 @@ export default function March3FeaturedClient() {
               <div className="res-map-body" style={{ padding: "6px 10px 0", display: "flex", flexDirection: "column", flex: 1, minHeight: 0 }}>
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "6px", flexWrap: "wrap", gap: "6px", flexShrink: 0 }}>
                   <Legend />
-                  <span className="res-note" style={{ color: "rgba(255,255,255,0.2)" }}>HOVER COUNTIES</span>
+                  <span className="res-note" style={{ color: "var(--muted2)" }}>HOVER COUNTIES</span>
                 </div>
                 {loadingMap ? (
                   <div className="res-map-loading" style={{ flex: 1 }}>
                     <div style={{ width: "min(300px, 90%)" }}>
-                      <div className="res-note" style={{ textAlign: "center", marginBottom: "8px", color: "rgba(15,16,32,0.50)" }}>LOADING MAP</div>
+                      <div className="res-note" style={{ textAlign: "center", marginBottom: "8px" }}>LOADING MAP</div>
                       <div className="res-bar-track"><div className="res-bar-fill" style={{ width: `${mapLoadPct}%`, background: "linear-gradient(90deg,var(--purple),var(--blue2))" }} /></div>
                       <div className="res-note" style={{ textAlign: "center", marginTop: "6px", color: "var(--purple-soft)", fontWeight: 700 }}>{Math.round(mapLoadPct)}%</div>
                     </div>
@@ -2295,7 +2298,7 @@ export default function March3FeaturedClient() {
                     <MapWithCountyTooltip svgText={mapBlankSvg} regionResults={selectedRace?.region_results ?? []} />
                   </div>
                 ) : (
-                  <div className="res-map-loading" style={{ flex: 1 }}><span className="res-note" style={{ color: "var(--muted3)" }}>NO MAP DATA</span></div>
+                  <div className="res-map-loading" style={{ flex: 1 }}><span className="res-note" style={{ color: "var(--muted2)" }}>NO MAP DATA</span></div>
                 )}
               </div>
             </div>{/* end map panel */}
@@ -2333,13 +2336,13 @@ export default function March3FeaturedClient() {
                   <div className="res-stat-block">
                     <div className="res-stat-block-label">CLOSES</div>
                     <div className="res-stat-block-val" style={{ fontSize: "clamp(16px,2vw,22px)" }}>{selectedCloseLocal}</div>
-                    <div className="res-note" style={{ marginTop: "5px", color: selectedMsLeft && selectedMsLeft > 0 ? "var(--muted3)" : "var(--rep)", fontWeight: 700 }}>{selectedMsLeft === null ? "—" : formatCountdown(selectedMsLeft)}</div>
+                    <div className="res-note" style={{ marginTop: "5px", color: selectedMsLeft && selectedMsLeft > 0 ? "var(--muted2)" : "var(--rep)", fontWeight: 700 }}>{selectedMsLeft === null ? "—" : formatCountdown(selectedMsLeft)}</div>
                   </div>
                 </div>
                 <div className="res-stat-block">
                   <div className="res-stat-row" style={{ marginBottom: "5px" }}>
                     <span className="res-stat-block-label">PROJECTION</span>
-                    <span className="res-note" style={{ color: isRunoffConfirmed ? "#f59e0b" : selectedWinner ? "var(--win)" : (forecastProj?.projectionType === "RUNOFF") ? "#f59e0b" : forecastProj ? "var(--purple-soft)" : "var(--muted3)", fontWeight: 700 }}>
+                    <span className="res-note" style={{ color: isRunoffConfirmed ? "#f59e0b" : selectedWinner ? "var(--win)" : (forecastProj?.projectionType === "RUNOFF") ? "#f59e0b" : forecastProj ? "var(--purple-soft)" : "var(--muted2)", fontWeight: 700 }}>
                       {isRunoffConfirmed ? "CONFIRMED" : selectedWinner ? "OFFICIAL" : forecastProj ? `${forecastProj.prob.toFixed(1)}%` : "—"}
                     </span>
                   </div>
@@ -2360,7 +2363,7 @@ export default function March3FeaturedClient() {
                     </div>
                   )}
                   {showProjectionDebug && forecastProj && !selectedWinner && !isRunoffConfirmed && (
-                    <div className="res-note" style={{ marginTop: 4, color: "rgba(15,16,32,0.50)", letterSpacing: "0.08em" }}>
+                    <div className="res-note" style={{ marginTop: 4, color: "var(--muted2)", letterSpacing: "0.06em" }}>
                       debug: {forecastProj.projectionType} selected={forecastProj.prob.toFixed(1)}% | runoff={(forecastProj.runoffNeededProb * 100).toFixed(1)}%
                     </div>
                   )}
@@ -2371,13 +2374,13 @@ export default function March3FeaturedClient() {
                     {[...selectedRace.candidates].sort((a, b) => (b.percent ?? 0) - (a.percent ?? 0)).slice(0, 4).map((c) => (
                       <div key={c.name} style={{ marginBottom: 8 }}>
                         <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 3 }}>
-                          <span style={{ fontFamily: "var(--font-body)", fontSize: "8.5px", fontWeight: 700, letterSpacing: "0.06em", color: "rgba(255,255,255,0.7)", display: "flex", alignItems: "center", gap: 5 }}>
+                          <span style={{ fontFamily: "var(--font-body)", fontSize: "11px", fontWeight: 700, letterSpacing: "0.04em", color: "var(--muted)", display: "flex", alignItems: "center", gap: 5 }}>
                             <span style={{ width: 5, height: 5, borderRadius: "50%", background: c.color, display: "inline-block", flexShrink: 0 }} />
                             {c.name.split(" ").pop()}
                           </span>
                           <span style={{ fontFamily: "var(--font-body)", fontSize: "9px", fontWeight: 900, color: c.color }}>{fmtPct(c.percent)}</span>
                         </div>
-                        <div style={{ height: 3, background: "rgba(15,16,32,0.08)", overflow: "hidden" }}>
+                        <div style={{ height: 3, background: "var(--border2)", overflow: "hidden" }}>
                           <div style={{ height: "100%", width: `${c.percent ?? 0}%`, background: c.color, transition: "width 600ms ease" }} />
                         </div>
                       </div>
@@ -2393,7 +2396,7 @@ export default function March3FeaturedClient() {
               <div className="res-panel-header" style={{ flexShrink: 0 }}>
                 <span className="res-panel-tag">TOPLINE RESULTS</span>
                 {selectedRace?.percent_reporting !== undefined && (
-                  <span style={{ fontFamily: "var(--font-body)", fontSize: "9px", fontWeight: 700, color: "rgba(255,255,255,0.4)", letterSpacing: "0.10em" }}>{selectedRace.percent_reporting.toFixed(1)}% IN</span>
+                  <span style={{ fontFamily: "var(--font-body)", fontSize: "10px", fontWeight: 700, color: "var(--muted2)", letterSpacing: "0.08em" }}>{selectedRace.percent_reporting.toFixed(1)}% IN</span>
                 )}
               </div>
               <div style={{ padding: "12px 14px", overflowY: "auto", flex: 1, minHeight: 0 }}>
@@ -2414,16 +2417,16 @@ export default function March3FeaturedClient() {
                 <div className="res-tri-stripe" />
                 <div className="res-panel-header">
                   <span className="res-panel-tag">FORECAST MODEL</span>
-                  <span style={{ fontFamily: "var(--font-body)", fontSize: "7px", fontWeight: 700, letterSpacing: "0.18em", color: "rgba(15,16,32,0.40)", textTransform: "uppercase" }}>NOT AVAILABLE</span>
+                  <span style={{ fontFamily: "var(--font-body)", fontSize: "10px", fontWeight: 700, letterSpacing: "0.14em", color: "var(--muted2)", textTransform: "uppercase" }}>NOT AVAILABLE</span>
                 </div>
                 <div style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "space-between", padding: "20px 18px 18px" }}>
                   <div>
                     <div style={{ fontFamily: "var(--font-body)", fontSize: "11px", fontWeight: 900, letterSpacing: "0.10em", textTransform: "uppercase", color: "rgba(15,16,32,0.55)", marginBottom: 10, lineHeight: 1.4 }}>No Forecast<br />for This Race</div>
                     <div style={{ fontFamily: "var(--font-body)", fontSize: "8.5px", fontWeight: 500, color: "rgba(15,16,32,0.45)", lineHeight: 1.7, letterSpacing: "0.04em" }}>Our forecast model requires reliable poll averages and turnout baselines. For this race, we don't have enough data to model outcomes responsibly.</div>
                   </div>
-                  <div style={{ marginTop: 20, paddingTop: 14, borderTop: "1px solid rgba(15,16,32,0.08)" }}>
-                    <div style={{ fontFamily: "var(--font-body)", fontSize: "7px", fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(255,255,255,0.15)", marginBottom: 8 }}>WHAT WE'RE WATCHING</div>
-                    <div style={{ fontFamily: "var(--font-body)", fontSize: "8px", color: "rgba(15,16,32,0.45)", lineHeight: 1.6 }}>Live results and county-level returns will update automatically.</div>
+                  <div style={{ marginTop: 20, paddingTop: 14, borderTop: "1px solid var(--border)" }}>
+                    <div style={{ fontFamily: "var(--font-body)", fontSize: "10px", fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", color: "var(--muted2)", marginBottom: 8 }}>WHAT WE'RE WATCHING</div>
+                    <div style={{ fontFamily: "var(--font-body)", fontSize: "11px", color: "var(--muted2)", lineHeight: 1.6 }}>Live results and county-level returns will update automatically.</div>
                   </div>
                 </div>
               </div>
