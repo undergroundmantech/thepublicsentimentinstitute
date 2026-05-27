@@ -386,7 +386,7 @@ function StatusPill({ status }: { status: Status }) {
     <div style={{
       display: "inline-flex", alignItems: "center", gap: 7,
       padding: "3px 10px",
-      border: `1px solid rgba(255,255,255,0.08)`,
+      border: `1px solid rgba(15,16,32,0.10)`,
       background: "rgba(255,255,255,0.03)",
       fontFamily: "var(--font-body), monospace",
       fontSize: 9, letterSpacing: "0.18em", textTransform: "uppercase",
@@ -402,7 +402,7 @@ function StatusPill({ status }: { status: Status }) {
 }
 
 const CSS = `
-  body { background: #070709 !important; }
+  body { background: #f6f7fb !important; }
 
   .ct-root {
     max-width: 1280px;
@@ -418,19 +418,19 @@ const CSS = `
   .ct-hero {
     display: grid;
     grid-template-columns: 1fr 260px;
-    border: 1px solid rgba(255,255,255,0.08);
-    background: #0f0f15;
+    border: 1px solid rgba(15,16,32,0.10);
+    background: #ffffff;
     overflow: hidden;
   }
   @media (max-width: 900px) { .ct-hero { grid-template-columns: 1fr; } }
 
   .ct-hero-left {
     padding: 48px 48px 40px;
-    border-right: 1px solid rgba(255,255,255,0.06);
+    border-right: 1px solid rgba(15,16,32,0.08);
     position: relative;
     overflow: hidden;
   }
-  @media (max-width: 768px) { .ct-hero-left { padding: 28px 20px; border-right: none; border-bottom: 1px solid rgba(255,255,255,0.06); } }
+  @media (max-width: 768px) { .ct-hero-left { padding: 28px 20px; border-right: none; border-bottom: 1px solid rgba(15,16,32,0.08); } }
 
   .ct-hero-left::before {
     content: '';
@@ -444,7 +444,7 @@ const CSS = `
     display: inline-flex; align-items: center; gap: 6px;
     font-family: var(--font-body), monospace;
     font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase;
-    color: rgba(255,255,255,0.35);
+    color: rgba(15,16,32,0.50);
     margin-bottom: 20px;
   }
   .ct-tag-sep { color: rgba(255,255,255,0.15); }
@@ -460,7 +460,7 @@ const CSS = `
 
   .ct-hero-desc {
     font-family: var(--font-body), monospace;
-    font-size: 11px; color: rgba(255,255,255,0.35);
+    font-size: 11px; color: rgba(15,16,32,0.50);
     line-height: 1.8; max-width: 480px;
     margin-bottom: 24px; letter-spacing: 0.04em;
     position: relative; z-index: 1;
@@ -474,7 +474,7 @@ const CSS = `
   .ct-badge {
     display: inline-flex; align-items: center; gap: 5px;
     padding: 3px 10px;
-    border: 1px solid rgba(255,255,255,0.08);
+    border: 1px solid rgba(15,16,32,0.10);
     background: rgba(255,255,255,0.03);
     font-family: var(--font-body), monospace;
     font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase;
@@ -495,7 +495,7 @@ const CSS = `
 
   .ct-hero-meta {
     padding-top: 20px;
-    border-top: 1px solid rgba(255,255,255,0.06);
+    border-top: 1px solid rgba(15,16,32,0.08);
     font-family: var(--font-body), monospace;
     font-size: 9px; color: rgba(255,255,255,0.2);
     letter-spacing: 0.1em; text-transform: uppercase;
@@ -512,7 +512,7 @@ const CSS = `
 
   .ct-hero-metric {
     padding: 20px 0;
-    border-bottom: 1px solid rgba(255,255,255,0.05);
+    border-bottom: 1px solid rgba(15,16,32,0.06);
     flex: 1;
     display: flex; flex-direction: column; justify-content: center;
   }
@@ -521,7 +521,7 @@ const CSS = `
   .ct-metric-eyebrow {
     font-family: var(--font-body), monospace;
     font-size: 8px; letter-spacing: 0.2em; text-transform: uppercase;
-    color: rgba(255,255,255,0.25); margin-bottom: 6px;
+    color: rgba(15,16,32,0.45); margin-bottom: 6px;
   }
   .ct-metric-num {
     font-family: var(--font-display), sans-serif;
@@ -541,7 +541,7 @@ const CSS = `
   /* ── SHARED PANEL HEADER ── */
   .ct-panel-header {
     padding: 14px 20px 12px;
-    border-bottom: 1px solid rgba(255,255,255,0.06);
+    border-bottom: 1px solid rgba(15,16,32,0.08);
     display: flex; align-items: center;
     justify-content: space-between; gap: 10px;
     background: #0d0d0b;
@@ -560,8 +560,8 @@ const CSS = `
 
   /* ── FORM PANEL ── */
   .ct-form-panel {
-    border: 1px solid rgba(255,255,255,0.08);
-    background: #0f0f15;
+    border: 1px solid rgba(15,16,32,0.10);
+    background: #ffffff;
     overflow: hidden;
   }
 
@@ -576,7 +576,7 @@ const CSS = `
     font-family: var(--font-body), monospace;
     font-size: 8px; font-weight: 500;
     letter-spacing: 0.2em; text-transform: uppercase;
-    color: rgba(255,255,255,0.25);
+    color: rgba(15,16,32,0.45);
     margin-bottom: 6px;
   }
   .ct-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
@@ -584,8 +584,8 @@ const CSS = `
 
   .ct-input, .ct-select, .ct-textarea {
     background: rgba(255,255,255,0.03);
-    border: 1px solid rgba(255,255,255,0.08);
-    color: rgba(255,255,255,0.75);
+    border: 1px solid rgba(15,16,32,0.10);
+    color: rgba(15,16,32,0.75);
     font-family: var(--font-body), monospace;
     font-size: 11px; letter-spacing: 0.04em;
     padding: 10px 14px;
@@ -599,7 +599,7 @@ const CSS = `
     font-size: 10px; letter-spacing: 0.06em;
   }
   .ct-input:hover, .ct-select:hover, .ct-textarea:hover {
-    border-color: rgba(255,255,255,0.14);
+    border-color: rgba(15,16,32,0.16);
   }
   .ct-input--focused {
     border-color: rgba(124,58,237,0.45) !important;
@@ -611,7 +611,7 @@ const CSS = `
     background-position: right 12px center;
     padding-right: 32px; cursor: pointer;
   }
-  .ct-select option { background: #0f0f15; color: rgba(255,255,255,0.75); }
+  .ct-select option { background: #ffffff; color: rgba(15,16,32,0.75); }
   .ct-textarea { min-height: 160px; resize: vertical; line-height: 1.65; }
 
   /* ACTIONS */
@@ -621,26 +621,28 @@ const CSS = `
   }
   .ct-btn-primary {
     display: inline-flex; align-items: center;
-    padding: 10px 22px;
-    background: #7c3aed;
+    padding: 11px 22px;
+    background: var(--gradient-purple);
     color: #fff;
-    font-family: var(--font-body), monospace;
-    font-size: 10px; font-weight: 500;
-    letter-spacing: 0.14em; text-transform: uppercase;
+    font-family: var(--font-numeric), monospace;
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 0.12em; text-transform: uppercase;
     border: none; cursor: pointer;
-    transition: background 120ms, transform 80ms;
+    border-radius: var(--r-pill);
+    box-shadow: var(--shadow-purple);
+    transition: background 120ms, transform 80ms, box-shadow 120ms;
   }
-  .ct-btn-primary:hover:not(:disabled) { background: #9d5cf0; transform: translateY(-1px); }
+  .ct-btn-primary:hover:not(:disabled) { background: var(--gradient-purple-soft); transform: translateY(-1px); box-shadow: 0 8px 22px rgba(124,58,237,0.32); }
   .ct-btn-primary:disabled { opacity: 0.4; cursor: not-allowed; }
 
   .ct-btn-outline {
     display: inline-flex; align-items: center;
     padding: 10px 18px;
     background: transparent;
-    color: rgba(255,255,255,0.35);
+    color: rgba(15,16,32,0.50);
     font-family: var(--font-body), monospace;
     font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
-    border: 1px solid rgba(255,255,255,0.12); cursor: pointer;
+    border: 1px solid rgba(15,16,32,0.14); cursor: pointer;
     transition: border-color 120ms, color 120ms;
   }
   .ct-btn-outline:hover { border-color: rgba(255,255,255,0.3); color: rgba(255,255,255,0.6); }
@@ -653,16 +655,16 @@ const CSS = `
   .ct-disclaimer {
     font-family: var(--font-body), monospace;
     font-size: 8px; letter-spacing: 0.14em; text-transform: uppercase;
-    color: rgba(255,255,255,0.12);
+    color: rgba(15,16,32,0.14);
     padding-top: 8px;
-    border-top: 1px solid rgba(255,255,255,0.04);
+    border-top: 1px solid rgba(15,16,32,0.05);
   }
 
   /* ── SIDEBAR ── */
-  .ct-sidebar { display: flex; flex-direction: column; gap: 1px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.06); }
+  .ct-sidebar { display: flex; flex-direction: column; gap: 1px; background: rgba(15,16,32,0.08); border: 1px solid rgba(15,16,32,0.08); }
 
   .ct-sidebar-card {
-    background: #0f0f15;
+    background: #ffffff;
     display: flex; flex-direction: column;
   }
 
@@ -692,14 +694,14 @@ const CSS = `
   .ct-response-row {
     display: flex; align-items: center; justify-content: space-between;
     padding: 8px 0;
-    border-bottom: 1px solid rgba(255,255,255,0.04);
+    border-bottom: 1px solid rgba(15,16,32,0.05);
   }
   .ct-response-row:last-of-type { border-bottom: none; }
   .ct-response-type {
     display: flex; align-items: center; gap: 8px;
     font-family: var(--font-body), monospace;
     font-size: 10px; letter-spacing: 0.06em;
-    color: rgba(255,255,255,0.35);
+    color: rgba(15,16,32,0.50);
   }
   .ct-response-dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
   .ct-response-time {

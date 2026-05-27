@@ -2,29 +2,58 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
-const NAV = [
-  { href: "/",                label: "Home" },
-  { href: "/tpsipoll",                label: "TPSI Poll" },
-  { href: "/forecastratings",    label: "TPSI 2026 Ratings" },
-  { href: "/polling",         label: "Polling Averages" },
-  { href: "/results",         label: "Results" },
-  { href: "/electoralmap",    label: "Electoral Map" },
-  { href: "/contact",         label: "Contact" },
-];
+// Flip to `true` on election night to light up Election Results with the purple glow.
+const RESULTS_LIVE = true;
 
-const TICKER = [
-  { label: "Trump Approval", dem: 43, rep: 55 },
-  { label: "Generic Ballot", dem: 47, rep: 42 },
-  { label: "Right Track",    dem: 37, rep: 54 },
+type NavChild = { href: string; label: string; desc?: string };
+type NavItem = {
+  href?: string;
+  label: string;
+  emphasize?: boolean;
+  children?: NavChild[];
+};
+
+const NAV: NavItem[] = [
+  { href: "/",         label: "Home" },
+  { href: "/results",  label: "Election Results", emphasize: RESULTS_LIVE },
+  { href: "/tpsipoll", label: "TPSI Poll" },
+  {
+    label: "Forecasts",
+    children: [
+      { href: "/forecastratings", label: "2026 Ratings",     desc: "Race ratings & competitiveness" },
+      { href: "/polling",         label: "Polling Averages", desc: "National & state averages" },
+      { href: "/electoralmap",    label: "Electoral Map",    desc: "Interactive state map" },
+    ],
+  },
+  { href: "/contact",  label: "Contact" },
 ];
 
 export default function Navbar() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState<string | null>(null);
+  const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const isActive = (href: string) =>
     href === "/" ? pathname === "/" : pathname.startsWith(href);
+  const isGroupActive = (item: NavItem) =>
+    !!item.children?.some(c => isActive(c.href));
+
+  const openMenu = (label: string) => {
+    if (closeTimer.current) clearTimeout(closeTimer.current);
+    setMenuOpen(label);
+  };
+  const scheduleClose = () => {
+    if (closeTimer.current) clearTimeout(closeTimer.current);
+    closeTimer.current = setTimeout(() => setMenuOpen(null), 140);
+  };
+
+  // close dropdown / mobile menu on route change
+  useEffect(() => {
+    setMenuOpen(null);
+    setOpen(false);
+  }, [pathname]);
 
   return (
     <>
@@ -33,417 +62,379 @@ export default function Navbar() {
           position: sticky;
           top: 0;
           z-index: 200;
-          background: #070709;
-          border-bottom: 1px solid rgba(255,255,255,0.08);
+          background: rgba(255, 255, 255, 0.78);
+          backdrop-filter: saturate(140%) blur(18px);
+          -webkit-backdrop-filter: saturate(140%) blur(18px);
+          border-bottom: 1px solid var(--border);
         }
 
-        /* Top utility bar — full-width bg, centered content */
-        .nb-topbar-wrap {
-          background: #0b0b0f;
-          border-bottom: 1px solid rgba(255,255,255,0.06);
-        }
-        .nb-topbar {
+        .nb-bar {
           max-width: 1280px;
           margin: 0 auto;
-          padding: 0 32px;
+          padding: 14px 20px;
           display: flex;
           align-items: center;
-          justify-content: space-between;
-          height: 32px;
-          gap: 24px;
-        }
-
-        .nb-date {
-          font-family: var(--font-body), monospace;
-          font-size: 9px;
-          letter-spacing: 0.14em;
-          color: rgba(255,255,255,0.25);
-          text-transform: uppercase;
-          flex-shrink: 0;
-        }
-
-        /* Latest ticker items inline */
-        .nb-latest-row {
-          display: flex;
-          align-items: center;
-          gap: 0;
-          flex: 1;
-          overflow: hidden;
-        }
-
-        .nb-latest-label {
-          font-family: var(--font-body), monospace;
-          font-size: 8px;
-          font-weight: 500;
-          letter-spacing: 0.2em;
-          text-transform: uppercase;
-          color: #7c3aed;
-          flex-shrink: 0;
-          padding-right: 16px;
-          margin-right: 16px;
-          border-right: 1px solid rgba(124,58,237,0.25);
-        }
-
-        .nb-latest-items {
-          display: flex;
-          align-items: center;
-          gap: 0;
-          overflow: hidden;
-        }
-
-        .nb-latest-item {
-          display: flex;
-          align-items: center;
-          gap: 7px;
-          white-space: nowrap;
-          padding-right: 20px;
-          margin-right: 20px;
-          border-right: 1px solid rgba(255,255,255,0.07);
-        }
-        .nb-latest-item:last-child { border-right: none; padding-right: 0; margin-right: 0; }
-
-        .nb-latest-name {
-          font-family: var(--font-body), monospace;
-          font-size: 9px;
-          color: rgba(255,255,255,0.35);
-          letter-spacing: 0.06em;
-        }
-        .nb-latest-dem {
-          font-family: var(--font-body), monospace;
-          font-size: 9px;
-          font-weight: 500;
-          color: #3b82f6;
-          letter-spacing: 0.04em;
-        }
-        .nb-latest-sep {
-          font-size: 9px;
-          color: rgba(255,255,255,0.15);
-        }
-        .nb-latest-rep {
-          font-family: var(--font-body), monospace;
-          font-size: 9px;
-          font-weight: 500;
-          color: #e63946;
-          letter-spacing: 0.04em;
-        }
-        .nb-latest-bar {
-          width: 32px;
-          height: 2px;
-          overflow: hidden;
-          background: rgba(255,255,255,0.08);
-          display: inline-flex;
-          flex-shrink: 0;
-        }
-        .nb-latest-bar-dem { background: #3b82f6; height: 100%; }
-        .nb-latest-bar-rep { background: #e63946; height: 100%; }
-
-        .nb-live-pill {
-          display: inline-flex;
-          align-items: center;
-          gap: 5px;
-          padding: 2px 8px;
-          background: rgba(124,58,237,0.1);
-          border: 1px solid rgba(124,58,237,0.3);
-          font-family: var(--font-body), monospace;
-          font-size: 8px;
-          font-weight: 500;
-          letter-spacing: 0.14em;
-          color: #9d5cf0;
-          text-transform: uppercase;
-          flex-shrink: 0;
-        }
-        .nb-live-dot {
-          width: 4px; height: 4px;
-          border-radius: 50%;
-          background: #9d5cf0;
-          animation: nb-pulse 1.8s ease-in-out infinite;
-          flex-shrink: 0;
-        }
-        @keyframes nb-pulse { 0%,100%{opacity:1} 50%{opacity:0.25} }
-
-        /* Main masthead row */
-        .nb-masthead {
-          max-width: 1280px;
-          margin: 0 auto;
-          padding: 0 32px;
-          height: 60px;
-          display: flex;
-          align-items: center;
-          gap: 0;
+          gap: 12px;
         }
 
         .nb-logo {
-          display: flex;
-          flex-direction: row;
-          align-items: center;
-          text-decoration: none;
-          flex-shrink: 0;
-          margin-right: 36px;
-          padding-right: 36px;
-          border-right: 1px solid rgba(255,255,255,0.08);
-          gap: 12px;
-        }
-        .nb-logo:hover { text-decoration: none; opacity: 0.85; }
-
-        .nb-logo-mark {
-          font-family: var(--font-display), sans-serif;
-          font-size: 32px;
-          color: #fff;
-          letter-spacing: 0.05em;
-          line-height: 1;
-          text-transform: uppercase;
-        }
-
-        .nb-logo-sub {
-          font-family: var(--font-body), monospace;
-          font-size: 8px;
-          font-weight: 400;
-          letter-spacing: 0.2em;
-          text-transform: uppercase;
-          color: rgba(255,255,255,0.35);
-          white-space: nowrap;
-        }
-
-        .nb-logo-wordmark {
-          display: flex;
-          flex-direction: column;
-          gap: 1px;
-          border-left: 1px solid rgba(255,255,255,0.1);
-          padding-left: 12px;
-        }
-
-        .nb-logo-wordmark span {
-          font-family: var(--font-body), monospace;
-          font-size: 8px;
-          font-weight: 500;
-          letter-spacing: 0.18em;
-          text-transform: uppercase;
-          color: rgba(255,255,255,0.45);
-          line-height: 1.6;
-          white-space: nowrap;
-        }
-
-        /* Nav links */
-        .nb-links {
-          display: flex;
-          align-items: stretch;
-          height: 100%;
-          flex: 1;
-          gap: 0;
-          overflow-x: auto;
-          scrollbar-width: none;
-        }
-        .nb-links::-webkit-scrollbar { display: none; }
-
-        .nb-link {
           display: inline-flex;
           align-items: center;
-          padding: 0 13px;
-          font-family: var(--font-body), monospace;
-          font-size: 10px;
-          font-weight: 400;
-          letter-spacing: 0.1em;
-          text-transform: uppercase;
-          color: rgba(255,255,255,0.4);
+          gap: 10px;
           text-decoration: none;
-          white-space: nowrap;
-          border-bottom: 2px solid transparent;
-          position: relative;
-          top: 1px;
-          transition: color 120ms ease, border-color 120ms ease;
-          padding-bottom: 0;
-          margin-bottom: 12px;
-          align-self: flex-end;
+          flex-shrink: 0;
+          padding-right: 10px;
+          border-right: 1px solid var(--border);
         }
-        .nb-link:hover { color: rgba(255,255,255,0.85); text-decoration: none; }
-        .nb-link.nb-active {
-          color: #fff;
-          border-bottom-color: #7c3aed;
+        .nb-logo-img {
+          height: 36px;
+          width: 140px;
+          flex-shrink: 0;
+          background:
+            linear-gradient(100deg, #e63946 0%, #7c3aed 50%, #2563eb 100%);
+          -webkit-mask-image: url(/full_logo_clean.png);
+          -webkit-mask-size: contain;
+          -webkit-mask-repeat: no-repeat;
+          -webkit-mask-position: left center;
+          mask-image: url(/full_logo_clean.png);
+          mask-size: contain;
+          mask-repeat: no-repeat;
+          mask-position: left center;
+        }
+        .nb-logo-sub {
+          display: none;
+          font-family: var(--font-body);
+          font-size: 10px;
+          font-weight: 500;
+          letter-spacing: 0.14em;
+          text-transform: uppercase;
+          color: var(--muted);
+        }
+        @media (min-width: 1100px) {
+          .nb-logo-sub { display: block; max-width: 100px; line-height: 1.25; }
         }
 
-        /* Right side */
+        .nb-links {
+          display: flex;
+          align-items: center;
+          gap: 2px;
+          margin-left: auto;
+          padding: 4px;
+          background: var(--panel2);
+          border: 1px solid var(--border);
+          border-radius: var(--r-pill);
+          overflow: visible;
+        }
+
+        .nb-link {
+          position: relative;
+          display: inline-flex;
+          align-items: center;
+          padding: 8px 12px;
+          border-radius: var(--r-pill);
+          font-family: var(--font-body);
+          font-size: 13px;
+          font-weight: 500;
+          color: var(--muted);
+          text-decoration: none;
+          white-space: nowrap;
+          background: transparent;
+          border: none;
+          cursor: pointer;
+          transition:
+            color var(--dur-1) var(--ease-out),
+            background var(--dur-1) var(--ease-out);
+        }
+        .nb-link:hover {
+          color: var(--foreground);
+          background: rgba(15, 16, 32, 0.04);
+          text-decoration: none;
+        }
+        .nb-link.nb-active {
+          color: var(--foreground);
+          background: #ffffff;
+          font-weight: 600;
+          box-shadow: var(--shadow-sm);
+        }
+        .nb-link.nb-active:hover { background: #ffffff; color: var(--foreground); }
+
+        .nb-caret {
+          margin-left: 5px;
+          width: 9px;
+          height: 9px;
+          opacity: 0.7;
+          transition: transform var(--dur-1) var(--ease-out);
+        }
+        .nb-group.nb-open .nb-caret { transform: rotate(180deg); }
+
+        .nb-link.nb-emphasize {
+          margin-left: 6px;
+          padding: 8px 12px 8px 10px;
+          gap: 7px;
+          background: transparent;
+          color: var(--purple);
+          font-family: var(--font-numeric);
+          font-size: 11px;
+          font-weight: 700;
+          letter-spacing: 0.06em;
+          text-transform: uppercase;
+          box-shadow: none;
+        }
+        .nb-link.nb-emphasize::before {
+          content: "";
+          display: inline-block;
+          width: 7px; height: 7px;
+          border-radius: 50%;
+          background: var(--purple);
+          box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.22);
+          animation: psi-pulse 2s infinite;
+        }
+        .nb-link.nb-emphasize:hover {
+          color: var(--purple);
+          background: rgba(15, 16, 32, 0.04);
+        }
+        .nb-link.nb-emphasize.nb-active {
+          background: #ffffff;
+          color: var(--purple);
+          box-shadow: var(--shadow-sm);
+        }
+        .nb-link.nb-emphasize.nb-active:hover {
+          background: #ffffff;
+          color: var(--purple);
+        }
+
+        /* Dropdown */
+        .nb-group { position: relative; }
+        .nb-menu {
+          position: absolute;
+          top: calc(100% + 10px);
+          left: 50%;
+          transform: translateX(-50%) translateY(-4px);
+          min-width: 260px;
+          padding: 8px;
+          background: rgba(255, 255, 255, 0.98);
+          backdrop-filter: blur(18px);
+          -webkit-backdrop-filter: blur(18px);
+          border: 1px solid var(--border);
+          border-radius: var(--r-md);
+          box-shadow: var(--shadow-lg);
+          opacity: 0;
+          pointer-events: none;
+          transition: opacity var(--dur-1) var(--ease-out), transform var(--dur-1) var(--ease-out);
+          z-index: 220;
+        }
+        .nb-group.nb-open .nb-menu {
+          opacity: 1;
+          transform: translateX(-50%) translateY(0);
+          pointer-events: auto;
+        }
+        .nb-menu-item {
+          display: block;
+          padding: 10px 12px;
+          border-radius: 10px;
+          text-decoration: none;
+          color: var(--foreground);
+          transition: background var(--dur-1) var(--ease-out);
+        }
+        .nb-menu-item:hover { background: var(--panel2); text-decoration: none; }
+        .nb-menu-item.nb-mi-active { background: var(--purple-dim); }
+        .nb-mi-label {
+          font-family: var(--font-body);
+          font-size: 13px;
+          font-weight: 600;
+          color: var(--foreground);
+          line-height: 1.2;
+        }
+        .nb-menu-item.nb-mi-active .nb-mi-label { color: var(--purple); }
+        .nb-mi-desc {
+          margin-top: 2px;
+          font-family: var(--font-body);
+          font-size: 11px;
+          font-weight: 400;
+          color: var(--muted);
+          line-height: 1.3;
+        }
+
         .nb-right {
           display: flex;
           align-items: center;
-          gap: 12px;
+          gap: 10px;
           flex-shrink: 0;
-          margin-left: 20px;
-          padding-left: 20px;
-          border-left: 1px solid rgba(255,255,255,0.1);
         }
 
         .nb-cta {
           display: inline-flex;
           align-items: center;
           gap: 6px;
-          padding: 6px 14px;
-          background: rgba(124,58,237,0.15);
-          border: 1px solid rgba(124,58,237,0.4);
-          color: #9d5cf0 !important;
-          font-family: var(--font-body), monospace;
-          font-size: 9px;
-          font-weight: 500;
-          letter-spacing: 0.12em;
-          text-transform: uppercase;
+          padding: 9px 18px;
+          border-radius: var(--r-pill);
+          background: var(--gradient-purple);
+          color: #fff !important;
+          font-family: var(--font-numeric);
+          font-size: 13px;
+          font-weight: 700;
+          letter-spacing: 0.02em;
           text-decoration: none;
-          cursor: pointer;
-          transition: border-color 120ms ease, background 120ms ease, color 120ms ease;
-          white-space: nowrap;
+          box-shadow: var(--shadow-purple);
+          transition: transform var(--dur-1) var(--ease-out), background var(--dur-1) var(--ease-out), box-shadow var(--dur-1) var(--ease-out);
         }
-        .nb-cta:hover { border-color: rgba(124,58,237,0.7); background: rgba(124,58,237,0.22); color: #b97ef5 !important; text-decoration: none; }
+        .nb-cta:hover { background: var(--gradient-purple-soft); transform: translateY(-1px); text-decoration: none; color: #fff !important; box-shadow: 0 8px 22px rgba(124, 58, 237, 0.32); }
 
-        /* Hamburger */
         .nb-ham {
           display: none;
           flex-direction: column;
-          gap: 5px;
-          background: none;
-          border: none;
+          gap: 4px;
+          background: var(--panel);
+          border: 1px solid var(--border);
+          border-radius: 12px;
           cursor: pointer;
-          padding: 6px;
+          padding: 9px;
           margin-left: auto;
         }
         .nb-ham span {
           display: block;
-          width: 22px; height: 1.5px;
-          background: rgba(255,255,255,0.6);
-          border-radius: 1px;
+          width: 18px; height: 1.6px;
+          background: var(--foreground);
+          border-radius: 2px;
           transition: all 200ms ease;
         }
-        .nb-ham.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+        .nb-ham.open span:nth-child(1) { transform: translateY(5.5px) rotate(45deg); }
         .nb-ham.open span:nth-child(2) { opacity: 0; }
-        .nb-ham.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+        .nb-ham.open span:nth-child(3) { transform: translateY(-5.6px) rotate(-45deg); }
 
-        /* Mobile menu */
         .nb-mobile {
           display: none;
           flex-direction: column;
-          background: #0f0f15;
-          border-top: 1px solid rgba(255,255,255,0.08);
+          gap: 4px;
+          padding: 12px 16px 18px;
+          background: rgba(255,255,255,0.96);
+          border-top: 1px solid var(--border);
           max-height: 0;
           overflow: hidden;
-          transition: max-height 300ms ease;
+          transition: max-height 260ms ease;
         }
-        .nb-mobile.open { max-height: 600px; }
+        .nb-mobile.open { max-height: 820px; }
 
         .nb-mob-link {
           display: flex;
           align-items: center;
           justify-content: space-between;
-          padding: 14px 24px;
-          font-family: var(--font-body), monospace;
-          font-size: 11px;
-          letter-spacing: 0.1em;
-          text-transform: uppercase;
-          color: rgba(255,255,255,0.5);
+          padding: 12px 14px;
+          border-radius: var(--r-md);
+          font-family: var(--font-body);
+          font-size: 14px;
+          font-weight: 500;
+          color: var(--muted);
           text-decoration: none;
-          border-bottom: 1px solid rgba(255,255,255,0.06);
-          transition: background 80ms, color 80ms;
+          transition: background var(--dur-1) var(--ease-out), color var(--dur-1) var(--ease-out);
         }
-        .nb-mob-link:hover { background: rgba(255,255,255,0.04); color: #fff; text-decoration: none; }
-        .nb-mob-link.nb-active { color: #7c3aed; }
+        .nb-mob-link:hover { background: var(--panel2); color: var(--foreground); text-decoration: none; }
+        .nb-mob-link.nb-active { background: var(--panel2); color: var(--foreground); }
+
+        .nb-mob-section {
+          margin: 10px 0 2px;
+          padding: 0 14px;
+          font-family: var(--font-body);
+          font-size: 10px;
+          font-weight: 600;
+          letter-spacing: 0.14em;
+          text-transform: uppercase;
+          color: var(--muted2);
+        }
+        .nb-mob-sublink { padding-left: 26px; }
 
         .nb-mob-cta {
-          padding: 16px 24px;
+          margin-top: 10px;
+          display: flex;
+          padding: 0 2px;
         }
         .nb-mob-cta a {
+          flex: 1;
           display: flex;
           align-items: center;
           justify-content: center;
           padding: 12px;
-          background: rgba(124,58,237,0.15);
-          border: 1px solid rgba(124,58,237,0.4);
-          color: #9d5cf0;
-          font-family: var(--font-body), monospace;
-          font-size: 10px;
-          letter-spacing: 0.12em;
-          text-transform: uppercase;
+          border-radius: var(--r-pill);
+          background: var(--gradient-purple);
+          color: #fff;
+          font-family: var(--font-numeric);
+          font-size: 13px;
+          font-weight: 700;
+          letter-spacing: 0.02em;
           text-decoration: none;
-          transition: background 100ms;
+          box-shadow: var(--shadow-purple);
         }
-        .nb-mob-cta a:hover { background: rgba(124,58,237,0.25); }
 
-        @media (max-width: 900px) {
-          .nb-topbar-wrap { display: none; }
+        @media (max-width: 980px) {
           .nb-links, .nb-right { display: none; }
           .nb-ham { display: flex; }
           .nb-mobile { display: flex; }
-          .nb-masthead { padding: 0 20px; }
-          .nb-logo { margin-right: 0; border-right: none; padding-right: 0; }
+          .nb-bar { padding: 12px 16px; }
         }
       `}</style>
 
       <header className="nb-root">
-        {/* Top utility bar */}
-        <div className="nb-topbar-wrap">
-          <div className="nb-topbar">
-            <span className="nb-date">
-              {new Date().toLocaleDateString("en-US", { weekday:"long", year:"numeric", month:"long", day:"numeric" })}
-            </span>
-            <div className="nb-latest-row">
-              <span className="nb-latest-label">Latest</span>
-              <div className="nb-latest-items">
-                {TICKER.map(item => {
-                  const demPct = (item.dem / (item.dem + item.rep)) * 100;
-                  return (
-                    <span key={item.label} className="nb-latest-item">
-                      <span className="nb-latest-name">{item.label}</span>
-                      <span className="nb-latest-dem">{item.dem}%</span>
-                      <span className="nb-latest-sep">·</span>
-                      <span className="nb-latest-rep">{item.rep}%</span>
-                      <span className="nb-latest-bar">
-                        <span className="nb-latest-bar-dem" style={{ width: `${demPct}%` }} />
-                        <span className="nb-latest-bar-rep" style={{ flex: 1 }} />
-                      </span>
-                    </span>
-                  );
-                })}
-              </div>
-            </div>
-            <span className="nb-live-pill">
-              <span className="nb-live-dot" />
-              Live Data
-            </span>
-          </div>
-        </div>
-
-        {/* Masthead */}
-        <div className="nb-masthead">
-          <Link href="/" className="nb-logo">
-            <div
-              aria-label="The Public Sentiment Institute"
-              style={{
-                height: 36,
-                width: 142,
-                flexShrink: 0,
-                background: "linear-gradient(100deg, #ff4d5a 0%, #a78bfa 50%, #3b82f6 100%)",
-                WebkitMaskImage: "url(/full_logo_clean.png)",
-                WebkitMaskSize: "contain",
-                WebkitMaskRepeat: "no-repeat",
-                WebkitMaskPosition: "left center",
-                maskImage: "url(/full_logo_clean.png)",
-                maskSize: "contain",
-                maskRepeat: "no-repeat",
-                maskPosition: "left center",
-              }}
-            />
-            <div className="nb-logo-wordmark">
-              <span>The Public</span>
-              <span>Sentiment</span>
-              <span>Institute</span>
-            </div>
+        <div className="nb-bar">
+          <Link href="/" className="nb-logo" aria-label="Public Sentiment Institute">
+            <span className="nb-logo-img" aria-hidden />
+            <span className="nb-logo-sub">Public Sentiment Institute</span>
           </Link>
 
           <nav className="nb-links" aria-label="Main navigation">
-            {NAV.map(item => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={`nb-link${isActive(item.href) ? " nb-active" : ""}`}
-              >
-                {item.label}
-              </Link>
-            ))}
+            {NAV.map(item => {
+              if (item.children) {
+                const groupActive = isGroupActive(item);
+                const isOpen = menuOpen === item.label;
+                return (
+                  <div
+                    key={item.label}
+                    className={`nb-group${isOpen ? " nb-open" : ""}`}
+                    onMouseEnter={() => openMenu(item.label)}
+                    onMouseLeave={scheduleClose}
+                  >
+                    <button
+                      type="button"
+                      className={`nb-link${groupActive ? " nb-active" : ""}`}
+                      aria-haspopup="menu"
+                      aria-expanded={isOpen}
+                      onClick={() => setMenuOpen(isOpen ? null : item.label)}
+                    >
+                      {item.label}
+                      <svg className="nb-caret" viewBox="0 0 10 6" fill="none" aria-hidden>
+                        <path d="M1 1l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                    </button>
+                    <div className="nb-menu" role="menu">
+                      {item.children.map(c => (
+                        <Link
+                          key={c.href}
+                          href={c.href}
+                          role="menuitem"
+                          className={`nb-menu-item${isActive(c.href) ? " nb-mi-active" : ""}`}
+                          onClick={() => setMenuOpen(null)}
+                        >
+                          <div className="nb-mi-label">{c.label}</div>
+                          {c.desc && <div className="nb-mi-desc">{c.desc}</div>}
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                );
+              }
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href!}
+                  className={[
+                    "nb-link",
+                    item.emphasize ? "nb-emphasize" : "",
+                    isActive(item.href!) ? "nb-active" : "",
+                  ].filter(Boolean).join(" ")}
+                >
+                  {item.label}
+                </Link>
+              );
+            })}
           </nav>
 
           <div className="nb-right">
@@ -452,7 +443,7 @@ export default function Navbar() {
               className="nb-cta"
               target="_blank" rel="noopener noreferrer"
             >
-              Take Survey →
+              Take the Survey →
             </Link>
           </div>
 
@@ -465,19 +456,38 @@ export default function Navbar() {
           </button>
         </div>
 
-        {/* Mobile menu */}
         <div className={`nb-mobile${open ? " open" : ""}`} aria-hidden={!open}>
-          {NAV.map(item => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={`nb-mob-link${isActive(item.href) ? " nb-active" : ""}`}
-              onClick={() => setOpen(false)}
-            >
-              {item.label}
-              <span style={{ opacity: 0.3, fontSize: 14 }}>›</span>
-            </Link>
-          ))}
+          {NAV.map(item => {
+            if (item.children) {
+              return (
+                <div key={item.label}>
+                  <div className="nb-mob-section">{item.label}</div>
+                  {item.children.map(c => (
+                    <Link
+                      key={c.href}
+                      href={c.href}
+                      className={`nb-mob-link nb-mob-sublink${isActive(c.href) ? " nb-active" : ""}`}
+                      onClick={() => setOpen(false)}
+                    >
+                      {c.label}
+                      <span style={{ opacity: 0.3, fontSize: 14 }}>›</span>
+                    </Link>
+                  ))}
+                </div>
+              );
+            }
+            return (
+              <Link
+                key={item.href}
+                href={item.href!}
+                className={`nb-mob-link${isActive(item.href!) ? " nb-active" : ""}`}
+                onClick={() => setOpen(false)}
+              >
+                {item.label}
+                <span style={{ opacity: 0.3, fontSize: 14 }}>›</span>
+              </Link>
+            );
+          })}
           <div className="nb-mob-cta">
             <Link
               href="https://wss.pollfish.com/link/522d0e01-b70f-4955-8514-b42a7f10d4b6"
