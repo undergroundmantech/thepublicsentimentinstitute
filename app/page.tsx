@@ -1206,6 +1206,7 @@ export default function HomePage() {
   }, []);
 
   // Merge seed config with live data — live data wins when present.
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const liveRaces = LIVE_CONFIG.races.map((seed) => {
     const live = liveData[seed.raceId];
     if (!live || !Array.isArray(live.candidates) || live.candidates.length === 0) return seed;
@@ -2299,151 +2300,176 @@ export default function HomePage() {
           {/* Box 3: Live / Upcoming */}
           <div className="hp-hero-right-live">
             <div className="hp-tri-stripe" />
-              {(() => {
-                return LIVE_CONFIG.mode === "upcoming" ? (
-                  <div className="hp-live-panel">
-                    <div className="hp-live-panel-header">
-                      <span className="hp-live-label">
-                        <span className="hp-live-dot" style={{ background: "#7c3aed", animationDuration: "2.4s" }} />
-                        Election Results
-                      </span>
-                      <span className="hp-live-updated">{LIVE_CONFIG.race.shortLabel}</span>
-                    </div>
-                    <div className="hp-live-body">
-                      <div className="hp-cap-headline">
-                        We <em>forecast</em>,<br />project &amp; model<br />every major race.
-                      </div>
-                      {LIVE_CONFIG.races.length === 0 && (
-                      <div className="hp-cap-tiles">
-                        <div className="hp-cap-tile">
-                          <span className="hp-cap-tile-icon">&#9642;</span>
-                          <span className="hp-cap-tile-label">Pre-Election Forecast</span>
-                        </div>
-                        <div className="hp-cap-tile">
-                          <span className="hp-cap-tile-icon">&#9642;</span>
-                          <span className="hp-cap-tile-label">Live Night-of Projection</span>
-                        </div>
-                        <div className="hp-cap-tile">
-                          <span className="hp-cap-tile-icon">&#9642;</span>
-                          <span className="hp-cap-tile-label">Electoral Modeling</span>
-                        </div>
-                      </div>
-                      )}
-                      {liveRaces.slice(0, 2).map((r, i) => {
-                          const leader = r.candidates[0];
-                          const totalPct = r.candidates.reduce((s, c) => s + c.pct, 0);
-                          const hasResults = r.percentReporting > 0 || r.called;
-                          const winnerName = r.winner ?? (r.called ? leader.name : null);
-                          return (
-                            <Link
-                              key={i}
-                              href={r.raceId === 76942 ? "/results?tab=ky04" : r.raceId > 0 ? `/results?race=${r.raceId}` : "/results"}
-                              className={`hp-cap-race${r.spotlight ? " hp-cap-race-spot" : ""}`}
-                            >
-                              <div className="hp-cap-race-head">
-                                <span className="hp-cap-race-title">{r.name}</span>
-                                {r.spotlight && <span className="hp-cap-race-star" title="Spotlight">★</span>}
-                                <span className="hp-cap-race-arrow">→</span>
-                              </div>
-                              <div className="hp-cap-race-rows">
-                                {r.candidates.slice(0, 2).map((c) => {
-                                  const isWinner = winnerName != null && c.name === winnerName;
-                                  const fillPct = hasResults && totalPct > 0 ? (c.pct / totalPct) * 100 : 0;
-                                  return (
-                                    <div key={c.name} className="hp-cap-row" style={{ ['--stripe' as string]: c.color } as React.CSSProperties}>
-                                      <div className="hp-cap-row-fill" style={{ width: `${fillPct}%`, background: `${c.color}26` }} />
-                                      <span className="hp-cap-row-name">
-                                        {c.name}
-                                        {isWinner && <span className="hp-cap-row-check">✓</span>}
-                                      </span>
-                                      <span className="hp-cap-row-pct" style={{ color: hasResults ? c.color : "rgba(255,255,255,0.3)" }}>
-                                        {hasResults ? `${c.pct.toFixed(1)}%` : "—"}
-                                      </span>
-                                    </div>
-                                  );
-                                })}
-                              </div>
-                              <div className="hp-cap-race-foot">
-                                {hasResults ? (
-                                  <div className="hp-cap-report">
-                                    <div className="hp-cap-report-bar">
-                                      <div className="hp-cap-report-fill" style={{ width: `${r.called ? 100 : r.percentReporting}%` }} />
-                                    </div>
-                                    <span className="hp-cap-report-lbl">
-                                      {r.called ? "CALLED" : `${r.percentReporting}% REPORTED`}
-                                    </span>
-                                  </div>
-                                ) : (
-                                  <span className="hp-cap-polls">
-                                    POLLS CLOSE {(r as { pollsClose?: string }).pollsClose ?? "TBD"}
-                                  </span>
-                                )}
-                                {r.called ? (
-                                  <span className="hp-cap-forecast-pill hp-cap-forecast-called">✓ {winnerName} wins</span>
-                                ) : r.winProb != null ? (
-                                  <span className="hp-cap-forecast-pill" style={{ borderColor: leader.color, color: leader.color }}>
-                                    <span className="hp-cap-forecast-pill-name">{leader.name}</span>
-                                    <span className="hp-cap-forecast-pill-pct">{r.winProb}%</span>
-                                    <span className="hp-cap-forecast-pill-lbl">Win Prob</span>
-                                  </span>
-                                ) : null}
-                              </div>
-                            </Link>
-                          );
-                      })}
-                      <div className="hp-live-spacer" />
-                      <Link href={LIVE_CONFIG.race.href} className="hp-live-full-link">
-                        Get Latest Results →
-                      </Link>
-                    </div>
-                  </div>
-                ) : (
-                  <div className="hp-live-panel">
-                    <div className="hp-live-panel-header" style={{ borderBottomColor: "rgba(230,57,70,0.2)" }}>
-                      <span className="hp-live-label hp-live-label-red">
-                        <span className="hp-live-dot" /> Live Results
-                      </span>
-                      {LIVE_CONFIG.lastUpdated && (
-                        <span className="hp-live-updated">{LIVE_CONFIG.lastUpdated}</span>
-                      )}
-                    </div>
-                    <div className="hp-live-body">
-                      <div>
-                        <div className="hp-live-race-sub">{LIVE_CONFIG.race.subtitle}</div>
-                        <div className="hp-live-race-name">{LIVE_CONFIG.race.name}</div>
-                      </div>
-                      <div className="hp-live-reporting">
-                        <div className="hp-live-reporting-track">
-                          <div className="hp-live-reporting-fill" style={{ width: `${LIVE_CONFIG.percentReporting}%` }} />
-                        </div>
-                        <span className="hp-live-reporting-lbl">{LIVE_CONFIG.percentReporting}% Reporting</span>
-                      </div>
-                      <div className="hp-live-candidates">
-                        {LIVE_CONFIG.candidates.map(c => (
-                          <div key={c.name}>
-                            <div className="hp-live-cand-top">
-                              <span className="hp-live-cand-name">{c.name}</span>
-                              <span className="hp-live-cand-pct" style={{ color: c.color }}>
-                                {c.pct > 0 ? `${c.pct.toFixed(1)}%` : "—"}
-                              </span>
-                            </div>
-                            <div className="hp-live-cand-bar">
-                              <div className="hp-live-cand-fill" style={{ width: `${c.pct}%`, background: c.color }} />
-                            </div>
-                            {c.votes > 0 && (
-                              <div className="hp-live-cand-votes">{c.votes.toLocaleString()} votes</div>
-                            )}
-                          </div>
-                        ))}
-                      </div>
-                      <div className="hp-live-spacer" />
-                      <Link href={LIVE_CONFIG.race.href} className="hp-live-full-link">
-                        Full Results →
-                      </Link>
-                    </div>
-                  </div>
-                );
-              })()}
+              {/* TEMP: race-specific homepage tiles disabled — replaced by generic CTA. Restore for next election cycle. */}
+              {/*
+               {(() => {
+                 return LIVE_CONFIG.mode === "upcoming" ? (
+                   <div className="hp-live-panel">
+                     <div className="hp-live-panel-header">
+                       <span className="hp-live-label">
+                         <span className="hp-live-dot" style={{ background: "#7c3aed", animationDuration: "2.4s" }} />
+                         Election Results
+                       </span>
+                       <span className="hp-live-updated">{LIVE_CONFIG.race.shortLabel}</span>
+                     </div>
+                     <div className="hp-live-body">
+                       <div className="hp-cap-headline">
+                         We <em>forecast</em>,<br />project &amp; model<br />every major race.
+                       </div>
+                       {LIVE_CONFIG.races.length === 0 && (
+                       <div className="hp-cap-tiles">
+                         <div className="hp-cap-tile">
+                           <span className="hp-cap-tile-icon">&#9642;</span>
+                           <span className="hp-cap-tile-label">Pre-Election Forecast</span>
+                         </div>
+                         <div className="hp-cap-tile">
+                           <span className="hp-cap-tile-icon">&#9642;</span>
+                           <span className="hp-cap-tile-label">Live Night-of Projection</span>
+                         </div>
+                         <div className="hp-cap-tile">
+                           <span className="hp-cap-tile-icon">&#9642;</span>
+                           <span className="hp-cap-tile-label">Electoral Modeling</span>
+                         </div>
+                       </div>
+                       )}
+                       {liveRaces.slice(0, 2).map((r, i) => {
+                           const leader = r.candidates[0];
+                           const totalPct = r.candidates.reduce((s, c) => s + c.pct, 0);
+                           const hasResults = r.percentReporting > 0 || r.called;
+                           const winnerName = r.winner ?? (r.called ? leader.name : null);
+                           return (
+                             <Link
+                               key={i}
+                               href={r.raceId === 76942 ? "/results?tab=ky04" : r.raceId > 0 ? `/results?race=${r.raceId}` : "/results"}
+                               className={`hp-cap-race${r.spotlight ? " hp-cap-race-spot" : ""}`}
+                             >
+                               <div className="hp-cap-race-head">
+                                 <span className="hp-cap-race-title">{r.name}</span>
+                                 {r.spotlight && <span className="hp-cap-race-star" title="Spotlight">★</span>}
+                                 <span className="hp-cap-race-arrow">→</span>
+                               </div>
+                               <div className="hp-cap-race-rows">
+                                 {r.candidates.slice(0, 2).map((c) => {
+                                   const isWinner = winnerName != null && c.name === winnerName;
+                                   const fillPct = hasResults && totalPct > 0 ? (c.pct / totalPct) * 100 : 0;
+                                   return (
+                                     <div key={c.name} className="hp-cap-row" style={{ ['--stripe' as string]: c.color } as React.CSSProperties}>
+                                       <div className="hp-cap-row-fill" style={{ width: `${fillPct}%`, background: `${c.color}26` }} />
+                                       <span className="hp-cap-row-name">
+                                         {c.name}
+                                         {isWinner && <span className="hp-cap-row-check">✓</span>}
+                                       </span>
+                                       <span className="hp-cap-row-pct" style={{ color: hasResults ? c.color : "rgba(255,255,255,0.3)" }}>
+                                         {hasResults ? `${c.pct.toFixed(1)}%` : "—"}
+                                       </span>
+                                     </div>
+                                   );
+                                 })}
+                               </div>
+                               <div className="hp-cap-race-foot">
+                                 {hasResults ? (
+                                   <div className="hp-cap-report">
+                                     <div className="hp-cap-report-bar">
+                                       <div className="hp-cap-report-fill" style={{ width: `${r.called ? 100 : r.percentReporting}%` }} />
+                                     </div>
+                                     <span className="hp-cap-report-lbl">
+                                       {r.called ? "CALLED" : `${r.percentReporting}% REPORTED`}
+                                     </span>
+                                   </div>
+                                 ) : (
+                                   <span className="hp-cap-polls">
+                                     POLLS CLOSE {(r as { pollsClose?: string }).pollsClose ?? "TBD"}
+                                   </span>
+                                 )}
+                                 {r.called ? (
+                                   <span className="hp-cap-forecast-pill hp-cap-forecast-called">✓ {winnerName} wins</span>
+                                 ) : r.winProb != null ? (
+                                   <span className="hp-cap-forecast-pill" style={{ borderColor: leader.color, color: leader.color }}>
+                                     <span className="hp-cap-forecast-pill-name">{leader.name}</span>
+                                     <span className="hp-cap-forecast-pill-pct">{r.winProb}%</span>
+                                     <span className="hp-cap-forecast-pill-lbl">Win Prob</span>
+                                   </span>
+                                 ) : null}
+                               </div>
+                             </Link>
+                           );
+                       })}
+                       <div className="hp-live-spacer" />
+                       <Link href={LIVE_CONFIG.race.href} className="hp-live-full-link">
+                         Get Latest Results →
+                       </Link>
+                     </div>
+                   </div>
+                 ) : (
+                   <div className="hp-live-panel">
+                     <div className="hp-live-panel-header" style={{ borderBottomColor: "rgba(230,57,70,0.2)" }}>
+                       <span className="hp-live-label hp-live-label-red">
+                         <span className="hp-live-dot" /> Live Results
+                       </span>
+                       {LIVE_CONFIG.lastUpdated && (
+                         <span className="hp-live-updated">{LIVE_CONFIG.lastUpdated}</span>
+                       )}
+                     </div>
+                     <div className="hp-live-body">
+                       <div>
+                         <div className="hp-live-race-sub">{LIVE_CONFIG.race.subtitle}</div>
+                         <div className="hp-live-race-name">{LIVE_CONFIG.race.name}</div>
+                       </div>
+                       <div className="hp-live-reporting">
+                         <div className="hp-live-reporting-track">
+                           <div className="hp-live-reporting-fill" style={{ width: `${LIVE_CONFIG.percentReporting}%` }} />
+                         </div>
+                         <span className="hp-live-reporting-lbl">{LIVE_CONFIG.percentReporting}% Reporting</span>
+                       </div>
+                       <div className="hp-live-candidates">
+                         {LIVE_CONFIG.candidates.map(c => (
+                           <div key={c.name}>
+                             <div className="hp-live-cand-top">
+                               <span className="hp-live-cand-name">{c.name}</span>
+                               <span className="hp-live-cand-pct" style={{ color: c.color }}>
+                                 {c.pct > 0 ? `${c.pct.toFixed(1)}%` : "—"}
+                               </span>
+                             </div>
+                             <div className="hp-live-cand-bar">
+                               <div className="hp-live-cand-fill" style={{ width: `${c.pct}%`, background: c.color }} />
+                             </div>
+                             {c.votes > 0 && (
+                               <div className="hp-live-cand-votes">{c.votes.toLocaleString()} votes</div>
+                             )}
+                           </div>
+                         ))}
+                       </div>
+                       <div className="hp-live-spacer" />
+                       <Link href={LIVE_CONFIG.race.href} className="hp-live-full-link">
+                         Full Results →
+                       </Link>
+                     </div>
+                   </div>
+                 );
+               })()}
+              */}
+
+              {/* Generic CTA — replaces race-specific tiles */}
+              <div className="hp-live-panel">
+               <div className="hp-live-panel-header">
+                 <span className="hp-live-label">
+                   <span className="hp-live-dot" style={{ background: "#7c3aed", animationDuration: "2.4s" }} />
+                   Live Election Results
+                 </span>
+               </div>
+               <div className="hp-live-body">
+                 <div className="hp-cap-headline">
+                   Live<br /><em>Election</em><br />Results
+                 </div>
+                 <div style={{ color: "rgba(255,255,255,0.6)", fontSize: "11px", lineHeight: 1.55, fontFamily: "var(--font-body), monospace" }}>
+                   Track primary, runoff, and special election results in real time — powered by civicAPI.
+                 </div>
+                 <div className="hp-live-spacer" />
+                 <Link href="/results" className="hp-live-full-link">
+                   View Live Results →
+                 </Link>
+               </div>
+              </div>
           </div>
 
         </div>
