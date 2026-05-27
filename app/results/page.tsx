@@ -26,7 +26,7 @@ type RegionCandidate = { name: string; party: string; votes: string | number; pe
 type RegionResult = { region: { name: string; type: string; fill?: string; percent_reporting?: number; }; candidates: RegionCandidate[]; };
 type RaceDetail = { election_name: string; election_type: string; election_scope: string; election_date: string; country: string; province: string | null; district: string | null; municipality: string | null; polls_open: string | null; polls_close: string | null; last_updated: string | null; percent_reporting?: number; candidates: RaceCandidate[]; region_results?: RegionResult[] | Record<string, RegionResult>; };
 type RaceType = "Democratic Primary" | "Republican Primary" | "Special Election" | "General Election";
-type FeaturedRace = { id: number; state: "AL" | "GA" | "KY" | "OR" | "ID" | "PA"; office: string; raceType: RaceType; label: string; };
+type FeaturedRace = { id: number; state: "AL" | "GA" | "KY" | "OR" | "ID" | "PA" | "TX"; office: string; raceType: RaceType; label: string; };
 
 function getRaceTypeColor(raceType: RaceType): string {
   if (raceType === "Republican Primary") return "var(--rep)";
@@ -44,6 +44,8 @@ function getRaceTypeShort(raceType: RaceType): string {
 
 const RACE_FORECAST_DEFAULTS: Partial<Record<number, { raceRule: RaceRule; expectedTurnout?: number; pollAvg?: Record<string, number>; }>> = {
   52556: { raceRule: "PLURALITY", expectedTurnout: 2_000_000, pollAvg: { "Yes": 49.0, "No": 46.7} },  // unchanged
+  79766: { raceRule: "PLURALITY", expectedTurnout: 1_400_000, pollAvg: { "Paxton": 58.0, "Cornyn": 42.0 } },
+  79739: { raceRule: "PLURALITY", expectedTurnout: 900_000,   pollAvg: { "Wright": 52.0, "French": 48.0 } },
 };
 
 function sortCandidatesByPollData(candidates: RaceCandidate[], pollAvg?: Record<string, number>): RaceCandidate[] {
@@ -225,6 +227,12 @@ const FEATURED: FeaturedRace[] = [
   { id: 76070, state: "PA", office: "US House 8", raceType: "Republican Primary", label: "Pennsylvania US House 8 Republican Primary" },
   { id: 76071, state: "PA", office: "US House 9", raceType: "Democratic Primary", label: "Pennsylvania US House 9 Democratic Primary" },
   { id: 76072, state: "PA", office: "US House 9", raceType: "Republican Primary", label: "Pennsylvania US House 9 Republican Primary" },
+  // ── TEXAS ──
+  { id: 79766, state: "TX", office: "US Senate", raceType: "Republican Primary", label: "Texas US Senate Republican Primary Runoff" },
+  { id: 79722, state: "TX", office: "Attorney General", raceType: "Republican Primary", label: "Texas Attorney General Republican Primary Runoff" },
+  { id: 79736, state: "TX", office: "Lieutenant Governor", raceType: "Democratic Primary", label: "Texas Lieutenant Governor Democratic Primary Runoff" },
+  { id: 79739, state: "TX", office: "Railroad Commissioner", raceType: "Republican Primary", label: "Texas Railroad Commissioner Republican Primary Runoff" },
+  { id: 79755, state: "TX", office: "US House 18", raceType: "Democratic Primary", label: "Texas US House 18 Democratic Primary Runoff" },
 ];
 
 async function fetchRaceById(id: number): Promise<RaceDetail> {
@@ -1450,10 +1458,30 @@ function RacePickerPanel({ races, raceCache, selectedId, onSelect }: {
 
 // ─── MAIN PAGE ───────────────────────────────────────────────────────────────
 export default function March3FeaturedClient() {
-  const [pageTab, setPageTab] = useState<"all" | "ky04">("all");
-  const [activeState, setActiveState] = useState<"AL" | "GA" | "KY" | "OR" | "ID" | "PA">("AL")
+  const [pageTab, setPageTab] = useState<"all" | "spotlight">("all");
+  const [activeState, setActiveState] = useState<"TX" | "AL" | "GA" | "KY" | "OR" | "ID" | "PA">("TX")
   const [selectedId, setSelectedId] = useState<number>(79432);
-  const KY04_ID = 76942;
+  const KY04_ID = 79766; // TX US Senate Republican Primary Runoff — current spotlight
+  const TX_RR_ID = 79739; // TX Railroad Commissioner Republican Primary Runoff — second spotlight
+  const SPOTLIGHT_RACES = [
+    {
+      id: KY04_ID,
+      shortLabel: "TX US Senate Runoff",
+      title: "TX US Senate Republican Primary Runoff",
+      subtitle: "Texas US Senate · May 26, 2026",
+      electionDate: "MAY 26, 2026",
+      about: "Texas's Republican primary for US Senate heads to a May 26th runoff after no candidate cleared 50% on Super Tuesday. With control of the chamber on the line in November and a deep GOP bench fighting for the nomination, this runoff is one of the most consequential intraparty contests of the 2026 cycle.",
+    },
+    {
+      id: TX_RR_ID,
+      shortLabel: "TX Railroad Commissioner Runoff",
+      title: "TX Railroad Commissioner Republican Primary Runoff",
+      subtitle: "Texas Railroad Commission · May 26, 2026",
+      electionDate: "MAY 26, 2026",
+      about: "The Texas Railroad Commission regulates the state's oil and gas industry — making this Republican runoff one of the most consequential statewide energy contests in the country. With Texas producing more crude oil than any other state, the commissioner's seat shapes drilling, pipeline, and environmental policy across the largest US producer.",
+    },
+  ] as const;
+  const [spotlightTab, setSpotlightTab] = useState<number>(KY04_ID);
   const [error, setError] = useState<string | null>(null);
   const [loadingMap, setLoadingMap] = useState(false);
   const [raceCache, setRaceCache] = useState<Record<number, RaceDetail | undefined>>({});
@@ -1475,6 +1503,7 @@ export default function March3FeaturedClient() {
   OR: FEATURED.filter((r) => r.state === "OR"),
   ID: FEATURED.filter((r) => r.state === "ID"),
   PA: FEATURED.filter((r) => r.state === "PA"),
+  TX: FEATURED.filter((r) => r.state === "TX"),
   }), []);
 
   const selectedRace = raceCache[selectedId];
@@ -1513,16 +1542,16 @@ export default function March3FeaturedClient() {
     if (first && !FEATURED.some((r) => r.id === selectedId && r.state === activeState)) setSelectedId(first.id);
   }, [activeState, featuredByState, selectedId]);
 
-  // Deep-link: support /results?race=<id> and /results?tab=ky04
+  // Deep-link: support /results?race=<id> and /results?tab=spotlight
   useEffect(() => {
     if (typeof window === "undefined") return;
     const params = new URLSearchParams(window.location.search);
     const tabParam = params.get("tab");
     const raceParam = params.get("race");
-    if (tabParam === "ky04") { setPageTab("ky04"); return; }
+    if (tabParam === "spotlight" || tabParam === "ky04") { setPageTab("spotlight"); return; }
     if (raceParam) {
       const id = Number(raceParam);
-      if (id === KY04_ID) { setPageTab("ky04"); return; }
+      if (SPOTLIGHT_RACES.some(s => s.id === id)) { setPageTab("spotlight"); setSpotlightTab(id); return; }
       const match = FEATURED.find((r) => r.id === id);
       if (match) {
         setPageTab("all");
@@ -1549,13 +1578,13 @@ export default function March3FeaturedClient() {
     return () => clearTimeout(t);
   }, [selectedRace, selectedId]);
 
-  const stateLabels: Record<string, string> = { AL: "ALABAMA", GA: "GEORGIA", KY: "KENTUCKY", OR: "OREGON", ID: "IDAHO", PA: "PENNSYLVANIA" };
-  // When switching to KY04 tab, load its map
+  const stateLabels: Record<string, string> = { AL: "ALABAMA", GA: "GEORGIA", KY: "KENTUCKY", OR: "OREGON", ID: "IDAHO", PA: "PENNSYLVANIA", TX: "TEXAS" };
+  // When switching to spotlight tab (or changing spotlight sub-tab), load that race's map
   useEffect(() => {
-    if (pageTab === "ky04") {
-      setSelectedId(KY04_ID);
+    if (pageTab === "spotlight") {
+      setSelectedId(spotlightTab);
     }
-  }, [pageTab]);
+  }, [pageTab, spotlightTab]);
 
   const racesForState = featuredByState[activeState as keyof typeof featuredByState] ?? [];
 
@@ -1979,8 +2008,8 @@ export default function March3FeaturedClient() {
           <div className="res-page-header-inner">
             <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: "12px" }}>
               <div>
-                <div className="res-page-sub">MAY 19TH PRIMARY ELECTIONS · 2026</div>
-                <h1 className="res-page-title">Election <em>Night</em></h1>
+                <div className="res-page-sub">{activeState === "TX" ? "MAY 26TH PRIMARY RUNOFFS · 2026" : "MAY 19TH PRIMARY ELECTIONS · 2026"}</div>
+                <h1 className="res-page-title">{activeState === "TX" ? <>Texas <em>Runoff</em> Night</> : <>Election <em>Night</em></>}</h1>
               </div>
               <div style={{ display: "flex", alignItems: "center", gap: "12px", flexWrap: "wrap" }}>
                 <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: "6px" }}>
@@ -1990,7 +2019,7 @@ export default function March3FeaturedClient() {
                 </div>
                 {/* State switcher */}
                 <div style={{ display: "flex", gap: "1px" }}>
-                  {(["AL", "GA", "KY", "OR", "ID", "PA"] as const).map((st) => (
+                  {(["TX", "AL", "GA", "KY", "OR", "ID", "PA"] as const).map((st) => (
   <button key={st} className={`res-btn-state ${activeState === st ? "active" : ""}`} onClick={() => setActiveState(st)}>{stateLabels[st]}</button>
 ))}
                 </div>
@@ -2007,18 +2036,23 @@ export default function March3FeaturedClient() {
           >
             All Races
           </button>
-          <button
-            className={`res-page-tab ky04-tab ${pageTab === "ky04" ? "active" : ""}`}
-            onClick={() => { setPageTab("ky04"); }}
-          >
-            <span className="tab-dot" />
-            ★ KY-04 Republican Primary
-          </button>
+          {SPOTLIGHT_RACES.map((s) => (
+            <button
+              key={s.id}
+              className={`res-page-tab ky04-tab ${pageTab === "spotlight" && spotlightTab === s.id ? "active" : ""}`}
+              onClick={() => { setPageTab("spotlight"); setSpotlightTab(s.id); }}
+            >
+              <span className="tab-dot" />
+              ★ {s.shortLabel}
+            </button>
+          ))}
         </div>
 
-        {/* ── KY-04 SPOTLIGHT TAB ── */}
-        {pageTab === "ky04" && (() => {
-          const ky04Race = raceCache[KY04_ID];
+        {/* ── SPOTLIGHT TAB ── */}
+        {pageTab === "spotlight" && (() => {
+          const spotlightMeta = SPOTLIGHT_RACES.find(s => s.id === spotlightTab) ?? SPOTLIGHT_RACES[0];
+          const SPOTLIGHT_ID = spotlightMeta.id;
+          const ky04Race = raceCache[SPOTLIGHT_ID];
           const ky04Reporting = ky04Race?.percent_reporting ?? 0;
           const ky04Winner = ky04Race?.candidates?.find(c => c.winner);
           const ky04CloseDate = parseIsoDate(ky04Race?.polls_close ?? null);
@@ -2036,10 +2070,10 @@ export default function March3FeaturedClient() {
                   <div style={{ padding: "18px 20px 16px", position: "relative" }}>
                     <div className="ky04-badge">
                       <span className="res-live-dot" style={{ background: "#f59e0b" }} />
-                      SPOTLIGHT RACE · KENTUCKY
+                      SPOTLIGHT RACE · TEXAS
                     </div>
-                    <div className="ky04-race-title">KY-04 Republican Primary</div>
-                    <div className="ky04-race-sub">Kentucky US House District 4 · May 19, 2026</div>
+                    <div className="ky04-race-title">{spotlightMeta.title}</div>
+                    <div className="ky04-race-sub">{spotlightMeta.subtitle}</div>
                     <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginBottom: 14 }}>
                       <span className="res-badge res-badge-red"><span className="res-live-dot" style={{ background: "var(--rep)" }} />LIVE</span>
                       <span className="res-badge" style={{ borderColor: "rgba(245,158,11,0.3)", color: "#f59e0b" }}>HIGH INTEREST</span>
@@ -2073,7 +2107,7 @@ export default function March3FeaturedClient() {
                   </div>
                   <div style={{ padding: "12px 14px" }}>
                     {ky04Race?.candidates
-                      ? <CandidateList candidates={ky04Race.candidates} reporting={ky04Reporting} raceId={KY04_ID} isMajorityRunoff={isKy04MajorityRunoff} />
+                      ? <CandidateList candidates={ky04Race.candidates} reporting={ky04Reporting} raceId={SPOTLIGHT_ID} isMajorityRunoff={isKy04MajorityRunoff} />
                       : <div style={{ padding: "32px 0", textAlign: "center" }} className="res-note">AWAITING RESULTS…</div>
                     }
                   </div>
@@ -2110,7 +2144,7 @@ export default function March3FeaturedClient() {
                 </div>
 
                 {/* Map */}
-                {mapBlankSvg && selectedId === KY04_ID ? (
+                {mapBlankSvg && selectedId === SPOTLIGHT_ID ? (
                   <div className="res-panel" style={{ overflow: "hidden" }}>
                     <div className="res-tri-stripe" />
                     <div className="res-panel-header" style={{ flexWrap: "wrap", gap: 8 }}>
@@ -2131,13 +2165,13 @@ export default function March3FeaturedClient() {
                     <span className="res-panel-tag">ABOUT THIS RACE</span>
                   </div>
                   <div style={{ padding: "14px 16px", fontFamily: "var(--font-body)", fontSize: "9px", lineHeight: 1.8, color: "rgba(255,255,255,0.50)", letterSpacing: "0.04em" }}>
-                    Kentucky's 4th Congressional District covers the northern and eastern parts of the state — including suburban Cincinnati and deep Appalachian counties. The Republican primary is the de facto general election in this heavily GOP district, making it one of the most watched intraparty contests in the state on May 19th.
+                    {spotlightMeta.about}
                   </div>
                 </div>
 
                 <ForecastPanel
-                  key={`ky04-${KY04_ID}`}
-                  raceId={KY04_ID}
+                  key={`spotlight-${SPOTLIGHT_ID}`}
+                  raceId={SPOTLIGHT_ID}
                   refreshTick={refreshTick}
                   raceData={ky04Race}
                   onForecastUpdate={() => {}}
