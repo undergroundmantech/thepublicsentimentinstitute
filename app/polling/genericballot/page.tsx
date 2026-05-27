@@ -228,22 +228,6 @@ function round1(n: number) {
 
 // ─── CSS ──────────────────────────────────────────────────────────────────────
 const CSS = `
-  .pgb-root {
-    --bg: #f6f7fb;
-    --bg2: #ffffff;
-    --panel: #ffffff;
-    --border: rgba(15, 16, 32, 0.08);
-    --border2: rgba(15, 16, 32, 0.14);
-    --muted: #6b7088;
-    --muted2: #9aa0b4;
-    --muted3: #b7bccc;
-    --purple:      #7c3aed;
-    --purple2:     #9d5cf0;
-    --purple-soft: #a78bfa;
-    --dem:         #4d7fd4;
-    --rep:         #ff1717;
-  }
-
   @keyframes pgb-fade-up {
     from { opacity:0; transform:translateY(12px); }
     to   { opacity:1; transform:translateY(0); }
@@ -385,7 +369,7 @@ const CSS = `
     display: inline-flex; align-items: center; gap: 5px;
     padding: 3px 8px;
     border: 1px solid var(--border);
-    background: rgba(255,255,255,0.03);
+    background: var(--panel2);
     font-family: var(--font-body), "Geist Mono", monospace;
     font-size: 7.5px; font-weight: 700; letter-spacing: 0.22em;
     text-transform: uppercase; color: var(--muted3);
@@ -408,7 +392,7 @@ const CSS = `
     gap: 12px;
     padding: 10px 14px;
     border: 1px solid var(--border);
-    background: rgba(255,255,255,0.03);
+    background: var(--panel2);
     position: relative;
     overflow: hidden;
   }
@@ -543,7 +527,7 @@ const CSS = `
     font-variant-numeric: tabular-nums;
   }
   table.pgb-table td.r { text-align: right; }
-  table.pgb-table tbody tr:hover { background: rgba(255,255,255,0.014); }
+  table.pgb-table tbody tr:hover { background: rgba(124,58,237,0.04); }
   table.pgb-table tbody tr:last-child td { border-bottom: none; }
 
   .pgb-gold-badge {
@@ -797,7 +781,7 @@ export default function GenericBallotPage() {
                           )}
                         </td>
                         <td className="r">{p.sampleType}</td>
-                        <td className="r" style={{ color: "rgba(255,255,255,0.7)" }}>
+                        <td className="r" style={{ color: "var(--foreground)" }}>
                           {gold ? `×${GOLD_STANDARD_MULTIPLIER}.00` : "×1.00"}
                         </td>
                         <td className={`r pgb-dem-col`}>{d.toFixed(0)}%</td>
