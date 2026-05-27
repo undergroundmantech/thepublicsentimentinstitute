@@ -58,6 +58,12 @@ function sortCandidatesByPollData(candidates: RaceCandidate[], pollAvg?: Record<
 }
 
 const FEATURED: FeaturedRace[] = [
+  // ── TEXAS ──
+  { id: 79766, state: "TX", office: "US Senate", raceType: "Republican Primary", label: "Texas US Senate Republican Primary Runoff" },
+  { id: 79722, state: "TX", office: "Attorney General", raceType: "Republican Primary", label: "Texas Attorney General Republican Primary Runoff" },
+  { id: 79736, state: "TX", office: "Lieutenant Governor", raceType: "Democratic Primary", label: "Texas Lieutenant Governor Democratic Primary Runoff" },
+  { id: 79739, state: "TX", office: "Railroad Commissioner", raceType: "Republican Primary", label: "Texas Railroad Commissioner Republican Primary Runoff" },
+  { id: 79755, state: "TX", office: "US House 18", raceType: "Democratic Primary", label: "Texas US House 18 Democratic Primary Runoff" },
   // ── ALABAMA ──
   { id: 79431, state: "AL", office: "US Senate", raceType: "Democratic Primary", label: "Alabama US Senate Democratic Primary" },
   { id: 79432, state: "AL", office: "US Senate", raceType: "Republican Primary", label: "Alabama US Senate Republican Primary" },
@@ -225,12 +231,6 @@ const FEATURED: FeaturedRace[] = [
   { id: 76070, state: "PA", office: "US House 8", raceType: "Republican Primary", label: "Pennsylvania US House 8 Republican Primary" },
   { id: 76071, state: "PA", office: "US House 9", raceType: "Democratic Primary", label: "Pennsylvania US House 9 Democratic Primary" },
   { id: 76072, state: "PA", office: "US House 9", raceType: "Republican Primary", label: "Pennsylvania US House 9 Republican Primary" },
-  // TODO: Add TX Attorney General Democratic Runoff (Johnson vs Jaworski) once correct civicAPI race ID is confirmed.
-  // ── TEXAS ── (May 26, 2026 Primary Runoffs)
-  { id: 79766, state: "TX", office: "US Senate", raceType: "Republican Primary", label: "Texas US Senate Republican Runoff" },
-  { id: 79722, state: "TX", office: "Attorney General", raceType: "Republican Primary", label: "Texas Attorney General Republican Runoff" },
-  { id: 79739, state: "TX", office: "Railroad Commissioner", raceType: "Republican Primary", label: "Texas Railroad Commissioner Republican Runoff" },
-  { id: 79755, state: "TX", office: "US House 18", raceType: "Democratic Primary", label: "Texas US House 18 Democratic Runoff" },
 ];
 
 async function fetchRaceById(id: number): Promise<RaceDetail> {
@@ -1457,8 +1457,8 @@ function RacePickerPanel({ races, raceCache, selectedId, onSelect }: {
 // ─── MAIN PAGE ───────────────────────────────────────────────────────────────
 export default function March3FeaturedClient() {
   const [pageTab, setPageTab] = useState<"all" | "ky04">("all");
-  const [activeState, setActiveState] = useState<"AL" | "GA" | "KY" | "OR" | "ID" | "PA" | "TX">("AL")
-  const [selectedId, setSelectedId] = useState<number>(79432);
+  const [activeState, setActiveState] = useState<"AL" | "GA" | "KY" | "OR" | "ID" | "PA" | "TX">("TX")
+  const [selectedId, setSelectedId] = useState<number>(79766);
   const KY04_ID = 76942;
   const [error, setError] = useState<string | null>(null);
   const [loadingMap, setLoadingMap] = useState(false);
