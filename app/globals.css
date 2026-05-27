@@ -1,71 +1,70 @@
 @import "tailwindcss";
 
 /* =========================================================
-   PSI — ELECTION / BROADCAST THEME (LIGHT · ROUNDED EDITION)
-   Color Scheme: Red · Blue · Purple accents on White/Cream
+   PSI — ELECTION / BROADCAST THEME (PATRIOT EDITION)
+   Color Scheme: Red · Blue · White · Purple on Black/Gray
    ========================================================= */
 
 /* -------------------------------------------
    1) DESIGN TOKENS
 -------------------------------------------- */
 :root {
-  /* Core surfaces (light) */
-  --background:  #f4f5f9;
-  --background2: #ffffff;
-  --panel:       #ffffff;
-  --panel2:      #f7f8fc;
+  /* Core surfaces */
+  --background:  #070709;
+  --background2: #0b0b0f;
+  --panel:       #0f0f15;
+  --panel2:      #141420;
 
   /* Text */
-  --foreground: #0f1020;
-  --muted:      rgba(15, 16, 32, 0.66);
-  --muted2:     rgba(15, 16, 32, 0.48);
-  --muted3:     rgba(15, 16, 32, 0.28);
+  --foreground: #f0f0f5;
+  --muted:      rgba(240, 240, 245, 0.62);
+  --muted2:     rgba(240, 240, 245, 0.40);
+  --muted3:     rgba(240, 240, 245, 0.22);
 
   /* Borders */
-  --border:  rgba(15, 16, 32, 0.08);
-  --border2: rgba(15, 16, 32, 0.14);
-  --border3: rgba(15, 16, 32, 0.22);
+  --border:  rgba(255, 255, 255, 0.09);
+  --border2: rgba(255, 255, 255, 0.15);
+  --border3: rgba(255, 255, 255, 0.22);
 
   /* Primary accent — Electric Indigo / Purple */
   --purple:      #7c3aed;
   --purple2:     #9d5cf0;
-  --purple-soft: #6d28d9;
-  --purple-dim:  rgba(124, 58, 237, 0.10);
-  --purple-glow: rgba(124, 58, 237, 0.22);
+  --purple-soft: #a78bfa;
+  --purple-dim:  rgba(124, 58, 237, 0.14);
+  --purple-glow: rgba(124, 58, 237, 0.28);
 
   /* Red (Republican / Alert) */
   --red:      #e63946;
   --red2:     #ff4d5a;
-  --red-dim:  rgba(230, 57, 70, 0.10);
-  --red-glow: rgba(230, 57, 70, 0.22);
+  --red-dim:  rgba(230, 57, 70, 0.14);
+  --red-glow: rgba(230, 57, 70, 0.28);
 
   /* Blue (Democrat / Primary) */
   --blue:      #2563eb;
   --blue2:     #3b82f6;
-  --blue-dim:  rgba(37, 99, 235, 0.10);
-  --blue-glow: rgba(37, 99, 235, 0.22);
+  --blue-dim:  rgba(37, 99, 235, 0.14);
+  --blue-glow: rgba(37, 99, 235, 0.28);
 
-  /* White accent (now a deep ink for use on light) */
-  --white-accent: rgba(15, 16, 32, 0.92);
+  /* White accent */
+  --white-accent: rgba(255, 255, 255, 0.92);
 
   /* Party aliases (keep semantic names for chart code) */
   --dem: #3b82f6;
   --rep: #e63946;
-  --win: #16a34a;
+  --win: #4ade80;
 
-  /* Shadows — soft, rounded-card friendly */
-  --shadow-sm:     0 1px 2px rgba(15, 16, 32, 0.04), 0 2px 8px rgba(15, 16, 32, 0.05);
-  --shadow-md:     0 6px 16px rgba(15, 16, 32, 0.06), 0 16px 48px rgba(15, 16, 32, 0.08);
-  --shadow-purple: 0 12px 40px rgba(124, 58, 237, 0.14);
-  --shadow-red:    0 12px 40px rgba(230, 57, 70, 0.14);
-  --shadow-blue:   0 12px 40px rgba(37, 99, 235, 0.14);
+  /* Shadows */
+  --shadow-sm:     0 2px 12px rgba(0, 0, 0, 0.60);
+  --shadow-md:     0 10px 40px rgba(0, 0, 0, 0.75);
+  --shadow-purple: 0 0 60px rgba(124, 58, 237, 0.18);
+  --shadow-red:    0 0 60px rgba(230, 57, 70, 0.16);
+  --shadow-blue:   0 0 60px rgba(37, 99, 235, 0.16);
 
-  /* Radii — rounded box UI */
-  --r-sm: 12px;
-  --r-md: 18px;
-  --r-lg: 24px;
-  --r-xl: 32px;
-  --r-pill: 9999px;
+  /* Radii */
+  --r-sm: 8px;
+  --r-md: 12px;
+  --r-lg: 16px;
+  --r-xl: 20px;
 
   /* Fonts (set via next/font) */
   --font-display: var(--font-display);
@@ -111,7 +110,7 @@ body {
   text-rendering: optimizeLegibility;
 }
 
-/* Subtle tri-color gradient wash — softer for light mode */
+/* Subtle tri-color gradient noise overlay */
 body::before {
   content: "";
   position: fixed;
@@ -119,15 +118,15 @@ body::before {
   pointer-events: none;
   z-index: 0;
   background:
-    radial-gradient(ellipse 60% 40% at 15% 20%, rgba(230, 57, 70, 0.05) 0%, transparent 70%),
-    radial-gradient(ellipse 50% 35% at 85% 80%, rgba(37, 99, 235, 0.06) 0%, transparent 70%),
-    radial-gradient(ellipse 40% 30% at 50% 50%, rgba(124, 58, 237, 0.05) 0%, transparent 70%);
+    radial-gradient(ellipse 60% 40% at 15% 20%, rgba(230, 57, 70, 0.04) 0%, transparent 70%),
+    radial-gradient(ellipse 50% 35% at 85% 80%, rgba(37, 99, 235, 0.05) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 30% at 50% 50%, rgba(124, 58, 237, 0.04) 0%, transparent 70%);
 }
 
 /* Selection */
 ::selection {
-  background: rgba(124, 58, 237, 0.22);
-  color: var(--foreground);
+  background: rgba(124, 58, 237, 0.30);
+  color: #fff;
 }
 
 /* Links */
@@ -152,7 +151,7 @@ h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-display), sans-serif;
   font-weight: 800;
   letter-spacing: 0.02em;
-  color: var(--foreground);
+  color: #fff;
   line-height: 1.05;
   text-transform: uppercase;
 }
@@ -170,7 +169,7 @@ li { margin: 0.35em 0; }
 
 .ui-monospace {
   font-family: var(--font-mono), ui-monospace, 'Cascadia Mono', 'Segoe UI Mono', Menlo, Consolas, 'Liberation Mono', monospace;
-  font-feature-settings: "liga" 0, "calt" 0;
+  font-feature-settings: "liga" 0, "calt" 0; /* optional: disable ligatures if desired */
 }
 
 /* -------------------------------------------
@@ -185,12 +184,12 @@ li { margin: 0.35em 0; }
   color: var(--muted2);
 }
 .psi-label-purple { color: var(--purple-soft); }
-.psi-label-red    { color: var(--red); }
-.psi-label-blue   { color: var(--blue); }
+.psi-label-red    { color: rgba(230, 57, 70, 0.95); }
+.psi-label-blue   { color: rgba(59, 130, 246, 0.95); }
 
-/* Gradient text — patriot tri-color */
+/* Gradient text — purple-to-blue, echoes the brand */
 .psi-gradient-text {
-  background: linear-gradient(90deg, var(--red) 0%, var(--purple) 50%, var(--blue) 100%);
+  background: linear-gradient(90deg, var(--red2) 0%, var(--purple-soft) 50%, var(--blue2) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -227,15 +226,14 @@ li { margin: 0.35em 0; }
     var(--blue)   66%,
     var(--blue)   100%
   );
-  opacity: 0.7;
-  border-radius: var(--r-pill);
+  opacity: 0.55;
 }
 
 /* -------------------------------------------
-   5) SURFACES — rounded boxes
+   5) SURFACES
 -------------------------------------------- */
 .psi-card {
-  background: var(--panel);
+  background: linear-gradient(180deg, var(--panel) 0%, var(--background2) 100%);
   border: 1px solid var(--border);
   border-radius: var(--r-lg);
   box-shadow: var(--shadow-md);
@@ -246,29 +244,29 @@ li { margin: 0.35em 0; }
 }
 .psi-card:hover {
   transform: translateY(-2px);
-  border-color: rgba(124, 58, 237, 0.30);
+  border-color: rgba(124, 58, 237, 0.28);
   box-shadow: var(--shadow-md), var(--shadow-purple);
 }
 
 .psi-card-active {
   border-color: rgba(124, 58, 237, 0.55);
-  box-shadow: var(--shadow-md), 0 0 0 2px rgba(124, 58, 237, 0.18);
+  box-shadow: var(--shadow-md), 0 0 0 1px rgba(124, 58, 237, 0.15);
 }
 
 /* Red accent card (Republican / Alert) */
 .psi-card-red:hover {
-  border-color: rgba(230, 57, 70, 0.30);
+  border-color: rgba(230, 57, 70, 0.28);
   box-shadow: var(--shadow-md), var(--shadow-red);
 }
 
 /* Blue accent card (Democrat / Info) */
 .psi-card-blue:hover {
-  border-color: rgba(37, 99, 235, 0.30);
+  border-color: rgba(37, 99, 235, 0.28);
   box-shadow: var(--shadow-md), var(--shadow-blue);
 }
 
 .psi-glass {
-  background: rgba(255, 255, 255, 0.78);
+  background: rgba(10, 10, 18, 0.78);
   border: 1px solid var(--border);
   border-radius: var(--r-lg);
   backdrop-filter: blur(18px);
@@ -277,13 +275,13 @@ li { margin: 0.35em 0; }
 }
 
 .psi-inset {
-  background: var(--panel2);
+  background: rgba(0, 0, 0, 0.35);
   border: 1px solid var(--border);
-  border-radius: var(--r-md);
+  border-radius: var(--r-sm);
 }
 
 /* -------------------------------------------
-   6) BUTTONS / BADGES — rounded
+   6) BUTTONS / BADGES
 -------------------------------------------- */
 a.psi-btn,
 button.psi-btn,
@@ -292,11 +290,10 @@ button.psi-btn,
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  padding: 0.7rem 1.15rem;
-  border-radius: var(--r-pill);
-  border: 1px solid var(--border2);
-  background: var(--panel);
-  color: var(--foreground);
+  padding: 0.65rem 1rem;
+  border-radius: 0;
+  border: 1px solid var(--border);
+  background: transparent;
   font-family: var(--font-body);
   font-size: 11px;
   font-weight: 700;
@@ -352,13 +349,12 @@ button.psi-btn:active { transform: translateY(1px); opacity: 0.9; }
 /* Ghost */
 .psi-btn-ghost {
   background: transparent;
-  color: var(--muted);
-  border-color: var(--border2);
+  color: rgba(255, 255, 255, 0.70);
 }
 .psi-btn-ghost:hover {
-  background: var(--panel2);
-  border-color: var(--border3);
-  color: var(--foreground);
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.18);
+  color: rgba(255, 255, 255, 0.92);
 }
 
 /* Badges */
@@ -366,40 +362,40 @@ button.psi-btn:active { transform: translateY(1px); opacity: 0.9; }
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
-  padding: 0.25rem 0.65rem;
-  border-radius: var(--r-pill);
+  padding: 0.2rem 0.55rem;
+  border-radius: 0;
   font-family: var(--font-body);
   font-size: 10px;
   font-weight: 700;
   letter-spacing: var(--trk-2);
   text-transform: uppercase;
-  border: 1px solid var(--border2);
-  background: var(--panel2);
-  color: var(--muted);
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--muted2);
 }
 
 .psi-badge-purple {
-  border-color: rgba(124, 58, 237, 0.35);
-  background: rgba(124, 58, 237, 0.10);
+  border-color: rgba(124, 58, 237, 0.45);
+  background: rgba(124, 58, 237, 0.08);
   color: var(--purple-soft);
 }
 
 .psi-badge-red {
-  border-color: rgba(230, 57, 70, 0.30);
-  background: rgba(230, 57, 70, 0.10);
-  color: var(--red);
+  border-color: rgba(230, 57, 70, 0.35);
+  background: rgba(230, 57, 70, 0.08);
+  color: rgba(230, 57, 70, 0.95);
 }
 
 .psi-badge-blue {
-  border-color: rgba(59, 130, 246, 0.30);
-  background: rgba(59, 130, 246, 0.10);
-  color: var(--blue);
+  border-color: rgba(59, 130, 246, 0.35);
+  background: rgba(59, 130, 246, 0.08);
+  color: rgba(59, 130, 246, 0.95);
 }
 
 .psi-badge-live {
-  border-color: rgba(230, 57, 70, 0.30);
-  background: rgba(230, 57, 70, 0.12);
-  color: var(--red);
+  border-color: rgba(230, 57, 70, 0.35);
+  background: rgba(230, 57, 70, 0.10);
+  color: rgba(230, 57, 70, 0.95);
 }
 
 .psi-live-dot {
@@ -422,19 +418,18 @@ button.psi-btn:active { transform: translateY(1px); opacity: 0.9; }
 -------------------------------------------- */
 .psi-tooltip {
   position: relative;
-  border-radius: var(--r-md);
-  border: 1px solid var(--border2);
-  background: rgba(255, 255, 255, 0.98);
+  border-radius: 0;
+  border: 1px solid rgba(124, 58, 237, 0.55);
+  background: rgba(10, 10, 18, 0.94);
   color: var(--foreground);
-  box-shadow: var(--shadow-md);
+  box-shadow: var(--shadow-md), 0 0 40px rgba(0, 0, 0, 0.8);
   font-family: var(--font-body);
-  overflow: hidden;
 }
 .psi-tooltip::before {
   content: "";
   position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 3px;
+  top: -1px; left: -1px; right: -1px;
+  height: 2px;
   background: linear-gradient(90deg, var(--red) 0%, var(--purple) 50%, var(--blue) 100%);
 }
 
@@ -446,7 +441,7 @@ button.psi-btn:active { transform: translateY(1px); opacity: 0.9; }
   border-collapse: separate;
   border-spacing: 0;
   border: 1px solid var(--border);
-  border-radius: var(--r-md);
+  border-radius: 0;
   overflow: hidden;
   background: var(--panel);
   box-shadow: var(--shadow-sm);
@@ -458,20 +453,20 @@ button.psi-btn:active { transform: translateY(1px); opacity: 0.9; }
   font-weight: 700;
   letter-spacing: var(--trk-2);
   text-transform: uppercase;
-  color: var(--muted2);
-  background: var(--panel2);
+  color: rgba(255, 255, 255, 0.30);
+  background: var(--background2);
   border-bottom: 1px solid var(--border);
-  padding: 12px 16px;
+  padding: 10px 14px;
   white-space: nowrap;
 }
 .psi-table tbody td {
-  padding: 12px 16px;
-  border-bottom: 1px solid var(--border);
+  padding: 10px 14px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
   font-size: 0.95rem;
-  color: var(--foreground);
+  color: rgba(255, 255, 255, 0.85);
 }
 .psi-table tbody tr:hover td {
-  background: rgba(124, 58, 237, 0.05);
+  background: rgba(124, 58, 237, 0.04);
 }
 .psi-num {
   text-align: right;
@@ -484,11 +479,11 @@ button.psi-btn:active { transform: translateY(1px); opacity: 0.9; }
 -------------------------------------------- */
 * {
   scrollbar-width: thin;
-  scrollbar-color: rgba(15, 16, 32, 0.18) transparent;
+  scrollbar-color: rgba(255, 255, 255, 0.14) transparent;
 }
-*::-webkit-scrollbar { width: 6px; height: 6px; }
-*::-webkit-scrollbar-track { background: transparent; }
-*::-webkit-scrollbar-thumb { background: rgba(15, 16, 32, 0.16); border-radius: var(--r-pill); }
+*::-webkit-scrollbar { width: 4px; height: 4px; }
+*::-webkit-scrollbar-track { background: #0f0f15; }
+*::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.12); }
 *::-webkit-scrollbar-thumb:hover { background: rgba(124, 58, 237, 0.55); }
 
 /* -------------------------------------------
@@ -496,20 +491,19 @@ button.psi-btn:active { transform: translateY(1px); opacity: 0.9; }
 -------------------------------------------- */
 .recharts-text,
 .recharts-cartesian-axis-tick-value {
-  fill: var(--muted2) !important;
+  fill: rgba(255, 255, 255, 0.32) !important;
   font-family: var(--font-body) !important;
   font-size: 0.70rem !important;
   letter-spacing: 0.05em !important;
 }
 .recharts-cartesian-grid line {
-  stroke: var(--border) !important;
+  stroke: rgba(255, 255, 255, 0.06) !important;
 }
 .recharts-tooltip-wrapper .recharts-default-tooltip {
-  background: rgba(255, 255, 255, 0.98) !important;
-  border: 1px solid var(--border2) !important;
-  border-radius: var(--r-md) !important;
+  background: rgba(10, 10, 18, 0.94) !important;
+  border: 1px solid rgba(124, 58, 237, 0.55) !important;
+  border-radius: 0 !important;
   box-shadow: var(--shadow-md) !important;
-  color: var(--foreground) !important;
 }
 
 /* -------------------------------------------
