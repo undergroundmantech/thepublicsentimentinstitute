@@ -582,14 +582,14 @@ function MapWithCountyTooltip({ svgText, regionResults }: { svgText: string; reg
             </div>
             <div className="res-reporting-row"><span className="res-note">{tooltip.reporting}</span></div>
             <div className="res-bar-track mt-1" style={{ height: "2px" }}><div className="res-bar-fill" style={{ width: `${tooltip.reportingPct}%`, background: "var(--purple)", height: "2px" }} /></div>
-            <div className="mt-3 border-t pt-2" style={{ borderColor: "rgba(15,16,32,0.10)" }}>
+            <div className="mt-3 border-t pt-2" style={{ borderColor: "var(--border)" }}>
               {tooltip.lines.length > 0 ? (
                 <>
-                  <div className="grid grid-cols-[1fr_72px_52px] gap-1 pb-1 mb-1 border-b" style={{ borderColor: "rgba(15,16,32,0.10)" }}>
+                  <div className="grid grid-cols-[1fr_72px_52px] gap-1 pb-1 mb-1 border-b" style={{ borderColor: "var(--border)" }}>
                     {["CANDIDATE", "VOTES", "PCT"].map((h) => (<div key={h} className={`res-th ${h !== "CANDIDATE" ? "text-right" : ""}`}>{h}</div>))}
                   </div>
                   {tooltip.lines.map((c, i) => (
-                    <div key={i} className="grid grid-cols-[1fr_72px_52px] items-center gap-1 py-1.5 border-b" style={{ borderColor: "rgba(15,16,32,0.05)" }}>
+                    <div key={i} className="grid grid-cols-[1fr_72px_52px] items-center gap-1 py-1.5 border-b" style={{ borderColor: "var(--border)" }}>
                       <div className="flex items-center gap-2 min-w-0">
                         <span className="h-2 w-2 rounded-full flex-shrink-0" style={{ background: c.color || "rgba(15,16,32,0.50)" }} />
                         <div className="min-w-0"><div className="res-cand-name truncate">{c.name}{c.winner ? " ✓" : ""}</div><div className="res-cand-party">{c.party}</div></div>
@@ -601,11 +601,11 @@ function MapWithCountyTooltip({ svgText, regionResults }: { svgText: string; reg
                 </>
               ) : (
                 <div className="py-5 flex flex-col items-center gap-2">
-                  <div style={{ width: 28, height: 28, borderRadius: "50%", border: "1.5px solid rgba(15,16,32,0.12)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                    <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="rgba(15,16,32,0.40)" strokeWidth="1.5"/><line x1="8" y1="5" x2="8" y2="8.5" stroke="rgba(15,16,32,0.50)" strokeWidth="1.5" strokeLinecap="round"/><circle cx="8" cy="11" r="0.8" fill="rgba(15,16,32,0.50)"/></svg>
+                  <div style={{ width: 28, height: 28, borderRadius: "50%", border: "1.5px solid var(--border2)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                    <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="var(--muted2)" strokeWidth="1.5"/><line x1="8" y1="5" x2="8" y2="8.5" stroke="var(--muted)" strokeWidth="1.5" strokeLinecap="round"/><circle cx="8" cy="11" r="0.8" fill="var(--muted)" /></svg>
                   </div>
-                  <div className="res-note" style={{ color: "rgba(15,16,32,0.50)", letterSpacing: "0.18em" }}>NO RESULTS YET</div>
-                  {(tooltip.reportingPct ?? 0) === 0 && <div className="res-note" style={{ color: "rgba(255,255,255,0.15)", fontSize: "7.5px" }}>AWAITING FIRST RETURNS</div>}
+                  <div className="res-note" style={{ letterSpacing: "0.18em" }}>NO RESULTS YET</div>
+                  {(tooltip.reportingPct ?? 0) === 0 && <div className="res-note" style={{ fontSize: "7.5px" }}>AWAITING FIRST RETURNS</div>}
                 </div>
               )}
             </div>
@@ -691,7 +691,7 @@ function CountyTotalsTable({ regionResults, collapsed, onToggle, maxHeight }: { 
           )}
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-          <span className="res-note" style={{ color: "rgba(15,16,32,0.45)" }}>
+          <span className="res-note">
             {collapsed ? "SHOW TABLE" : "HIDE TABLE"}
           </span>
           {/* Chevron icon */}
@@ -703,7 +703,7 @@ function CountyTotalsTable({ regionResults, collapsed, onToggle, maxHeight }: { 
               flexShrink: 0,
             }}
           >
-            <path d="M2 4L6 8L10 4" stroke="rgba(15,16,32,0.50)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M2 4L6 8L10 4" stroke="var(--muted2)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         </div>
       </button>
@@ -716,7 +716,7 @@ function CountyTotalsTable({ regionResults, collapsed, onToggle, maxHeight }: { 
       }}>
         {data.length === 0 ? (
           <div style={{ padding: "20px", textAlign: "center" }}>
-            <span className="res-note" style={{ color: "rgba(255,255,255,0.2)" }}>NO COUNTY DATA</span>
+            <span className="res-note">NO COUNTY DATA</span>
           </div>
         ) : (
           <div style={{ overflowY: "auto" }}>
@@ -735,8 +735,8 @@ function CountyTotalsTable({ regionResults, collapsed, onToggle, maxHeight }: { 
                     <td className="px-4 py-3 align-top">
                       <div className="grid grid-cols-1 gap-1 md:grid-cols-2">
                         {row.candidates.length > 0 ? row.candidates.slice(0, 4).map((cand, idx) => (
-                          <div key={idx} className="flex items-center justify-between gap-2 py-1 border-b" style={{ borderColor: "rgba(15,16,32,0.05)" }}>
-                            <div className="flex items-center gap-2 min-w-0"><span className="h-1.5 w-1.5 rounded-full flex-shrink-0" style={{ background: cand.color || "rgba(15,16,32,0.50)" }} /><span className="res-note truncate">{cand.name}</span></div>
+                          <div key={idx} className="flex items-center justify-between gap-2 py-1 border-b" style={{ borderColor: "var(--border)" }}>
+                            <div className="flex items-center gap-2 min-w-0"><span className="h-1.5 w-1.5 rounded-full flex-shrink-0" style={{ background: cand.color || "var(--muted2)" }} /><span className="res-note truncate">{cand.name}</span></div>
                             <span className="res-cand-name shrink-0">{cand.pct !== null ? `${cand.pct.toFixed(1)}%` : "—"}</span>
                           </div>
                         )) : <span className="res-note italic">Awaiting…</span>}
@@ -1113,7 +1113,7 @@ function ForecastPanel({ raceId, refreshTick, raceData, onForecastUpdate }: { ra
             letterSpacing: "0.16em", color: "var(--purple-soft)",
           }}>FORECAST β</span>
           {isLoading && <span className="res-badge res-badge-purple" style={{ fontSize: "7px" }}><span className="res-live-dot" style={{ background: "var(--purple)", width: 4, height: 4 }} />UPDATING</span>}
-          {!isLoading && forecast && <span className="res-badge" style={{ fontSize: "7px", color: "rgba(15,16,32,0.45)" }}>AUTO / 30s</span>}
+          {!isLoading && forecast && <span className="res-badge" style={{ fontSize: "7px", color: "var(--muted2)" }}>AUTO / 30s</span>}
         </div>
         <button className="res-btn-ghost" style={{ padding: "3px 8px", fontSize: "7px" }} onClick={() => setShowOptions((v) => !v)}>{showOptions ? "HIDE OPTIONS" : "OPTIONS"}</button>
       </div>
@@ -1159,7 +1159,7 @@ function ForecastPanel({ raceId, refreshTick, raceData, onForecastUpdate }: { ra
               <div style={{ marginBottom: 14, padding: "10px 12px", background: "rgba(245,158,11,0.05)", border: "1px solid rgba(245,158,11,0.15)" }}>
                 <div style={{ fontFamily: "var(--font-body)", fontSize: "7px", fontWeight: 700, letterSpacing: "0.24em", textTransform: "uppercase", color: "rgba(245,158,11,0.7)", marginBottom: 8 }}>RUNOFF PROBABILITY</div>
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 5 }}><span style={{ fontFamily: "var(--font-body)", fontSize: "7.5px", letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--muted)" }}>Runoff needed</span><span style={{ fontFamily: "var(--font-numeric)", fontSize: "12px", fontWeight: 800, color: "#f59e0b" }}>{fcastPct(forecast.forecast.runoff_needed_prob)}</span></div>
-                <div style={{ height: 3, background: "rgba(15,16,32,0.08)", overflow: "hidden", marginBottom: 8 }}><div style={{ height: "100%", width: fcastPct(Math.min(forecast.forecast.runoff_needed_prob, 1)), background: "#f59e0b", transition: "width 600ms ease" }} /></div>
+                <div style={{ height: 3, background: "var(--border2)", overflow: "hidden", marginBottom: 8 }}><div style={{ height: "100%", width: fcastPct(Math.min(forecast.forecast.runoff_needed_prob, 1)), background: "#f59e0b", transition: "width 600ms ease" }} /></div>
                 {FORECAST_CANDIDATE_KEYS.map(k => forecast.forecast.runoff_prob[k] > 0.005 ? (
                   <div key={k} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 3 }}>
                     <div style={{ display: "flex", alignItems: "center", gap: 5 }}><span style={{ width: 5, height: 5, borderRadius: "50%", background: candidateColors[k], display: "inline-block" }} /><span style={{ fontFamily: "var(--font-body)", fontSize: "8px", letterSpacing: "0.08em", textTransform: "uppercase", color: "rgba(15,16,32,0.55)" }}>{candidateLabels[k]}</span></div>
@@ -1226,7 +1226,7 @@ function RaceScrollWindow({ races, raceCache, selectedId, onSelect, search, onSe
       <div style={{ overflowY: "auto", flex: 1, maxHeight: maxHeight }}>
         {groups.map(({ office, races: groupRaces }) => (
           <div key={office}>
-            <div style={{ padding: "4px 10px 2px", fontFamily: "var(--font-body)", fontSize: "6px", fontWeight: 700, letterSpacing: "0.26em", textTransform: "uppercase", color: "rgba(15,16,32,0.40)", borderTop: "1px solid rgba(15,16,32,0.05)", marginTop: 2 }}>{office}</div>
+            <div style={{ padding: "4px 10px 2px", fontFamily: "var(--font-body)", fontSize: "6px", fontWeight: 700, letterSpacing: "0.26em", textTransform: "uppercase", color: "var(--muted2)", borderTop: "1px solid var(--border)", marginTop: 2 }}>{office}</div>
             {groupRaces.map(r => {
               const liveData = raceCache[r.id];
               const winner = liveData?.candidates?.find(c => c.winner);
@@ -1243,7 +1243,7 @@ function RaceScrollWindow({ races, raceCache, selectedId, onSelect, search, onSe
                       <span style={{ fontFamily: "var(--font-body)", fontSize: "8.5px", fontWeight: isSelected ? 800 : 600, color: isSelected ? "var(--foreground)" : "var(--muted)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{r.raceType} </span>
                       {hasForecast && <span style={{ flexShrink: 0, display: "inline-flex", padding: "0px 4px", border: "1px solid rgba(124,58,237,0.45)", background: "rgba(124,58,237,0.10)", fontFamily: "var(--font-body)", fontSize: "5px", fontWeight: 700, letterSpacing: "0.12em", color: "var(--purple-soft)" }}>FORECAST β</span>}
                     </div>
-                    <div style={{ height: 2, background: "rgba(15,16,32,0.08)", overflow: "hidden" }}>
+                    <div style={{ height: 2, background: "var(--border2)", overflow: "hidden" }}>
                       <div style={{ height: "100%", width: `${reporting ?? 0}%`, background: winner ? "var(--win)" : raceTypeColor, opacity: 0.75, transition: "width 800ms ease" }} />
                     </div>
                   </div>
@@ -1303,7 +1303,7 @@ function RacePickerPanel({ races, raceCache, selectedId, onSelect }: {
       <div style={{ padding: "10px 12px", borderBottom: "1px solid var(--border)", background: "var(--background2)", flexShrink: 0 }}>
         <div className="res-panel-tag" style={{ marginBottom: 8 }}>ALL RACES</div>
         {/* Search input */}
-        <div style={{ display: "flex", alignItems: "center", gap: 8, background: "rgba(255,255,255,0.03)", border: "1px solid var(--border)", padding: "6px 10px" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 8, background: "var(--panel2)", border: "1px solid var(--border2)", padding: "6px 10px" }}>
           <svg width="11" height="11" viewBox="0 0 16 16" fill="none" style={{ flexShrink: 0, opacity: 0.4 }}>
             <circle cx="6.5" cy="6.5" r="5" stroke="white" strokeWidth="1.5" />
             <line x1="10.5" y1="10.5" x2="14" y2="14" stroke="white" strokeWidth="1.5" strokeLinecap="round" />
@@ -1316,7 +1316,7 @@ function RacePickerPanel({ races, raceCache, selectedId, onSelect }: {
             style={{ flex: 1, background: "transparent", border: "none", outline: "none", fontFamily: "var(--font-body)", fontSize: "9px", fontWeight: 600, letterSpacing: "0.08em", color: "var(--foreground)", caretColor: "var(--purple-soft)" }}
           />
           {search && (
-            <button onClick={() => setSearch("")} style={{ background: "none", border: "none", cursor: "pointer", color: "rgba(255,255,255,0.3)", padding: 0, fontSize: 11, lineHeight: 1 }}>✕</button>
+            <button onClick={() => setSearch("")} style={{ background: "none", border: "none", cursor: "pointer", color: "var(--muted2)", padding: 0, fontSize: 11, lineHeight: 1 }}>✕</button>
           )}
         </div>
       </div>
@@ -1325,7 +1325,7 @@ function RacePickerPanel({ races, raceCache, selectedId, onSelect }: {
       <div style={{ flex: 1, overflowY: "auto", padding: "6px 0" }}>
         {groups.length === 0 && (
           <div style={{ padding: "20px 12px", textAlign: "center" }}>
-            <span className="res-note" style={{ color: "rgba(255,255,255,0.2)" }}>NO RACES FOUND</span>
+            <span className="res-note" style={{ color: "var(--muted2)" }}>NO RACES FOUND</span>
           </div>
         )}
         {groups.map(([office, groupRaces]) => (
@@ -1338,8 +1338,8 @@ function RacePickerPanel({ races, raceCache, selectedId, onSelect }: {
               fontWeight: 700,
               letterSpacing: "0.28em",
               textTransform: "uppercase",
-              color: "rgba(15,16,32,0.40)",
-              borderTop: "1px solid rgba(15,16,32,0.05)",
+              color: "var(--muted2)",
+              borderTop: "1px solid var(--border)",
               marginTop: 4,
             }}>
               {office}
@@ -1372,7 +1372,7 @@ function RacePickerPanel({ races, raceCache, selectedId, onSelect }: {
                     transition: "background 100ms ease, border-color 100ms ease",
                     position: "relative",
                   }}
-                  onMouseEnter={e => { if (!isSelected) (e.currentTarget as HTMLButtonElement).style.background = "rgba(255,255,255,0.03)"; }}
+                  onMouseEnter={e => { if (!isSelected) (e.currentTarget as HTMLButtonElement).style.background = "var(--panel2)"; }}
                   onMouseLeave={e => { if (!isSelected) (e.currentTarget as HTMLButtonElement).style.background = "transparent"; }}
                 >
                   {/* Party color pill */}
@@ -1401,7 +1401,7 @@ function RacePickerPanel({ races, raceCache, selectedId, onSelect }: {
                       fontSize: "9px",
                       fontWeight: isSelected ? 800 : 600,
                       letterSpacing: "0.04em",
-                      color: isSelected ? "#fff" : "rgba(15,16,32,0.65)",
+                      color: isSelected ? "var(--foreground)" : "var(--muted)",
                       whiteSpace: "nowrap",
                       overflow: "hidden",
                       textOverflow: "ellipsis",
@@ -1411,17 +1411,17 @@ function RacePickerPanel({ races, raceCache, selectedId, onSelect }: {
                     </div>
                     {/* Reporting bar */}
                     <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                      <div style={{ flex: 1, height: 2, background: "rgba(15,16,32,0.08)", overflow: "hidden", maxWidth: 60 }}>
+                      <div style={{ flex: 1, height: 2, background: "var(--border2)", overflow: "hidden", maxWidth: 60 }}>
                         <div style={{ height: "100%", width: `${reporting ?? 0}%`, background: winner ? "var(--win)" : raceTypeColor, opacity: 0.8, transition: "width 800ms ease" }} />
                       </div>
                       {winner ? (
                         <span style={{ fontFamily: "var(--font-body)", fontSize: "6.5px", fontWeight: 700, color: "var(--win)", letterSpacing: "0.12em" }}>✓ CALLED</span>
                       ) : leader && (reporting ?? 0) > 0 ? (
-                        <span style={{ fontFamily: "var(--font-body)", fontSize: "6.5px", fontWeight: 600, color: "rgba(255,255,255,0.3)", letterSpacing: "0.08em" }}>
+                        <span style={{ fontFamily: "var(--font-body)", fontSize: "6.5px", fontWeight: 600, color: "var(--muted2)", letterSpacing: "0.08em" }}>
                           {leader.name.split(" ").pop()} {fmtPct(leader.percent)}
                         </span>
                       ) : (
-                        <span style={{ fontFamily: "var(--font-body)", fontSize: "6.5px", fontWeight: 600, color: "rgba(255,255,255,0.2)", letterSpacing: "0.08em" }}>
+                        <span style={{ fontFamily: "var(--font-body)", fontSize: "6.5px", fontWeight: 600, color: "var(--muted2)", letterSpacing: "0.08em" }}>
                           {reporting !== null ? `${reporting.toFixed(0)}% IN` : "PENDING"}
                         </span>
                       )}
