@@ -29,9 +29,9 @@ function sortCandidatesByPollAvg(
 }
 
 // ─── COLOR VIBRANCY BOOSTER ───────────────────────────────────────────────────
-// Boosts saturation and normalizes lightness on API-sourced candidate colors
-// so muted/dull swatches (like the off-yellow or dusty-pink from CivicAPI)
-// become vivid and neon-looking in the UI.
+// Turns muted API-sourced candidate colors (dull gold, dusty pink, etc.) into
+// vivid neon versions. Yellow/orange hues need higher lightness to pop; all
+// hues get saturation pushed to ≥92%.
 function vibrateColor(hex: string): string {
   if (!/^#[0-9a-fA-F]{6}$/.test(hex)) return hex;
   const r = parseInt(hex.slice(1, 3), 16) / 255;
@@ -46,9 +46,14 @@ function vibrateColor(hex: string): string {
     else if (max === g) h = ((b - r) / d + 2) / 6;
     else                h = ((r - g) / d + 4) / 6;
   }
-  // Boost saturation to at least 0.82, clamp lightness to 0.50–0.62
-  const ns = Math.min(1, Math.max(s, 0.82));
-  const nl = Math.min(0.62, Math.max(0.50, l));
+  // Aggressively boost saturation
+  const ns = Math.min(1, Math.max(s, 0.92));
+  // Yellow/orange hues (20–70°) need higher lightness to look vibrant
+  const hueDeg = h * 360;
+  const isWarm = hueDeg >= 20 && hueDeg <= 70;
+  const nl = isWarm
+    ? Math.min(0.65, Math.max(0.55, l))
+    : Math.min(0.62, Math.max(0.50, l));
   const hue2rgb = (p: number, q: number, t: number) => {
     if (t < 0) t += 1; if (t > 1) t -= 1;
     if (t < 1/6) return p + (q - p) * 6 * t;
