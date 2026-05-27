@@ -35,24 +35,24 @@
   --purple-glow: rgba(124, 58, 237, 0.22);
 
   /* Red */
-  --red:      #ff1a4b;
-  --red2:     #ff5577;
-  --red-dim:  rgba(255, 26, 75, 0.10);
-  --red-glow: rgba(255, 26, 75, 0.22);
+  --red:      #e63946;
+  --red2:     #ff4d5a;
+  --red-dim:  rgba(230, 57, 70, 0.10);
+  --red-glow: rgba(230, 57, 70, 0.22);
 
   /* Blue */
-  --blue:      #0091ff;
-  --blue2:     #38b5ff;
-  --blue-dim:  rgba(0, 145, 255, 0.10);
-  --blue-glow: rgba(0, 145, 255, 0.22);
+  --blue:      #2563eb;
+  --blue2:     #3b82f6;
+  --blue-dim:  rgba(37, 99, 235, 0.10);
+  --blue-glow: rgba(37, 99, 235, 0.22);
 
   /* Ink accent */
   --white-accent: #0b0d1c;
 
   /* Party aliases */
-  --dem: #0091ff;
-  --rep: #ff1a4b;
-  --win: #00c566;
+  --dem: #2563eb;
+  --rep: #e63946;
+  --win: #16a34a;
 
   /* Shadows — soft for light mode */
   --shadow-sm:     0 1px 2px rgba(15, 16, 32, 0.04), 0 2px 8px rgba(15, 16, 32, 0.05);
@@ -60,7 +60,7 @@
   --shadow-lg:     0 6px 16px rgba(15, 16, 32, 0.05), 0 24px 64px rgba(15, 16, 32, 0.10);
   --shadow-purple: 0 12px 40px rgba(124, 58, 237, 0.14);
   --shadow-red:    0 12px 40px rgba(230, 57, 70, 0.14);
-  --shadow-blue:   0 12px 40px rgba(0, 145, 255, 0.14);
+  --shadow-blue:   0 12px 40px rgba(37, 99, 235, 0.14);
 
   /* Gradients */
   --gradient-purple:      linear-gradient(135deg, #a855f7 0%, #7c3aed 50%, #5b21b6 100%);
@@ -116,8 +116,8 @@
 
   /* Tinted dims (slightly stronger for contrast on dark) */
   --purple-dim:  rgba(124, 58, 237, 0.18);
-  --red-dim:     rgba(255, 26, 75, 0.18);
-  --blue-dim:    rgba(0, 145, 255, 0.18);
+  --red-dim:     rgba(230, 57, 70, 0.18);
+  --blue-dim:    rgba(37, 99, 235, 0.18);
 
   /* Ink accent flips to white */
   --white-accent: #f4f5fb;
@@ -127,15 +127,15 @@
   --shadow-md:     0 4px 12px rgba(0, 0, 0, 0.45), 0 12px 32px rgba(0, 0, 0, 0.40);
   --shadow-lg:     0 6px 16px rgba(0, 0, 0, 0.50), 0 24px 64px rgba(0, 0, 0, 0.55);
   --shadow-purple: 0 12px 40px rgba(124, 58, 237, 0.34);
-  --shadow-red:    0 12px 40px rgba(255, 26, 75, 0.30);
-  --shadow-blue:   0 12px 40px rgba(0, 145, 255, 0.30);
+  --shadow-red:    0 12px 40px rgba(230, 57, 70, 0.30);
+  --shadow-blue:   0 12px 40px rgba(37, 99, 235, 0.30);
 }
 
 :root[data-theme="dark"] body::before {
   background:
     radial-gradient(ellipse 70% 50% at 0% 0%,   rgba(124, 58, 237, 0.14) 0%, transparent 60%),
-    radial-gradient(ellipse 60% 40% at 100% 0%, rgba(0, 145, 255, 0.12)  0%, transparent 60%),
-    radial-gradient(ellipse 50% 35% at 50% 100%,rgba(255, 26, 75, 0.10)  0%, transparent 60%);
+    radial-gradient(ellipse 60% 40% at 100% 0%, rgba(37, 99, 235, 0.12)  0%, transparent 60%),
+    radial-gradient(ellipse 50% 35% at 50% 100%,rgba(230, 57, 70, 0.10)  0%, transparent 60%);
 }
 
 :root[data-theme="dark"] .psi-glass {
@@ -193,8 +193,8 @@ body::before {
   z-index: 0;
   background:
     radial-gradient(ellipse 70% 50% at 0% 0%,   rgba(124, 58, 237, 0.06) 0%, transparent 60%),
-    radial-gradient(ellipse 60% 40% at 100% 0%, rgba(0, 145, 255, 0.06)  0%, transparent 60%),
-    radial-gradient(ellipse 50% 35% at 50% 100%,rgba(255, 26, 75, 0.04)  0%, transparent 60%);
+    radial-gradient(ellipse 60% 40% at 100% 0%, rgba(37, 99, 235, 0.06)  0%, transparent 60%),
+    radial-gradient(ellipse 50% 35% at 50% 100%,rgba(230, 57, 70, 0.04)  0%, transparent 60%);
 }
 
 ::selection { background: rgba(124, 58, 237, 0.22); color: var(--foreground); }
@@ -391,16 +391,16 @@ button.psi-btn:active { transform: translateY(0); opacity: 0.95; }
   color: var(--muted);
 }
 .psi-badge-purple { border-color: rgba(124, 58, 237, 0.30); background: rgba(124, 58, 237, 0.10); color: var(--purple); }
-.psi-badge-red    { border-color: rgba(255, 26, 75, 0.25); background: rgba(255, 26, 75, 0.10); color: var(--red); }
-.psi-badge-blue   { border-color: rgba(0, 145, 255, 0.25); background: rgba(0, 145, 255, 0.10); color: var(--blue); }
-.psi-badge-live   { border-color: rgba(255, 26, 75, 0.30); background: rgba(255, 26, 75, 0.12); color: var(--red); }
+.psi-badge-red    { border-color: rgba(230, 57, 70, 0.25); background: rgba(230, 57, 70, 0.10); color: var(--red); }
+.psi-badge-blue   { border-color: rgba(37, 99, 235, 0.25); background: rgba(37, 99, 235, 0.10); color: var(--blue); }
+.psi-badge-live   { border-color: rgba(230, 57, 70, 0.30); background: rgba(230, 57, 70, 0.12); color: var(--red); }
 
 .psi-live-dot {
   display: inline-block;
   width: 8px; height: 8px;
   border-radius: 50%;
   background: var(--rep);
-  box-shadow: 0 0 0 4px rgba(255, 26, 75, 0.18);
+  box-shadow: 0 0 0 4px rgba(230, 57, 70, 0.18);
   animation: psi-pulse 2s infinite;
 }
 @keyframes psi-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.40; } }
