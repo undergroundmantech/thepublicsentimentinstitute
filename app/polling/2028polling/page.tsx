@@ -307,7 +307,7 @@ const CSS = `
 
   .p28-badge {
     display: inline-flex; align-items: center; gap: 5px; padding: 3px 8px;
-    border: 1px solid var(--border); background: rgba(255,255,255,0.03);
+    border: 1px solid var(--border); background: var(--panel2);
     font-family: var(--font-body), "Geist Mono", monospace; font-size: 7.5px; font-weight: 700;
     letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted3);
   }
@@ -319,7 +319,7 @@ const CSS = `
   .p28-hero-read-row {
     display: flex; align-items: center; justify-content: space-between;
     gap: 12px; padding: 10px 14px; border: 1px solid var(--border);
-    background: rgba(255,255,255,0.03); position: relative; overflow: hidden;
+    background: var(--panel2); position: relative; overflow: hidden;
   }
   .p28-hero-read-label {
     font-family: var(--font-body), "Geist Mono", monospace; font-size: 7.5px; font-weight: 700;
@@ -419,7 +419,7 @@ const CSS = `
   }
   .p28-ev-bar-rep { height: 100%; background: #dc2626; transition: width 600ms ease; }
   .p28-ev-bar-dem { height: 100%; background: #2563eb; transition: width 600ms ease; }
-  .p28-ev-bar-toss { height: 100%; background: rgba(255,255,255,0.1); }
+  .p28-ev-bar-toss { height: 100%; background: var(--border2); }
   .p28-ev-bar-line {
     position: absolute; top: 0; bottom: 0; width: 2px;
     background: var(--purple-soft); opacity: 0.8;
@@ -438,23 +438,24 @@ const CSS = `
   }
   .p28-map-svg { width: 100%; height: auto; display: block; }
   .p28-map-state {
-    stroke: #0f0f15; stroke-width: 0.5;
+    stroke: var(--border3); stroke-width: 0.5;
     cursor: pointer; transition: opacity 120ms ease, stroke-width 120ms ease;
   }
-  .p28-map-state:hover { opacity: 0.82; stroke-width: 1.5; stroke: rgba(255,255,255,0.5); }
+  .p28-map-state:hover { opacity: 0.82; stroke-width: 1.5; stroke: var(--purple); }
 
   /* Tooltip */
   .p28-map-tooltip {
     position: absolute; pointer-events: none; z-index: 9999;
-    background: #ffffff; border: 1px solid rgba(255,255,255,0.15);
+    background: var(--panel); border: 1px solid var(--border2);
     padding: 10px 14px; min-width: 200px;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.7);
+    box-shadow: var(--shadow-md);
+    border-radius: var(--r-md);
     font-family: var(--font-body), "Geist Mono", monospace;
     transition: opacity 100ms ease;
   }
   .p28-tt-state {
     font-size: 11px; font-weight: 900; text-transform: uppercase;
-    letter-spacing: 0.1em; color: #fff; margin-bottom: 6px;
+    letter-spacing: 0.1em; color: var(--foreground); margin-bottom: 6px;
     display: flex; align-items: center; justify-content: space-between;
   }
   .p28-tt-ev {
@@ -532,7 +533,7 @@ const CSS = `
     color: var(--muted); vertical-align: middle; font-variant-numeric: tabular-nums;
   }
   table.p28-table td.r { text-align:right; }
-  table.p28-table tbody tr:hover { background:rgba(255,255,255,0.014); }
+  table.p28-table tbody tr:hover { background:rgba(124,58,237,0.04); }
   table.p28-table tbody tr:last-child td { border-bottom:none; }
 
   .p28-gold-badge {

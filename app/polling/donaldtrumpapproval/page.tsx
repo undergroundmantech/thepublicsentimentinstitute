@@ -773,7 +773,7 @@ function StateMap({ tpsiNet, tpsiApprove, tpsiDisapprove }: {
       <div style={{
         display: "flex", alignItems: "center", gap: 10,
         padding: "10px 16px",
-        background: "var(--panel, #0f0f15)",
+        background: "var(--panel)",
         border: "1px solid rgba(15,16,32,0.10)",
         borderTop: "none",
       }}>
@@ -786,7 +786,7 @@ function StateMap({ tpsiNet, tpsiApprove, tpsiDisapprove }: {
           ].map(({ label, net }) => (
             <div key={label} style={{ display: "flex", flexDirection: "column", alignItems: "center", flex: 1, gap: 2 }}>
               <div style={{ width: "100%", height: 8, background: netToColor(net) }} />
-              <span style={{ fontFamily: "ui-monospace,monospace", fontSize: 6, color: "rgba(255,255,255,0.3)", letterSpacing: "0.1em" }}>{label}</span>
+              <span style={{ fontFamily: "ui-monospace,monospace", fontSize: 6, color: "var(--muted2)", letterSpacing: "0.1em" }}>{label}</span>
             </div>
           ))}
         </div>
@@ -795,7 +795,7 @@ function StateMap({ tpsiNet, tpsiApprove, tpsiDisapprove }: {
 
       {/* ── D3 Albers USA Map ── */}
       <div style={{
-        background: "#0b0b0f",
+        background: "var(--panel2)",
         border: "1px solid rgba(15,16,32,0.10)",
         borderTop: "none",
         padding: "10px",
@@ -964,7 +964,7 @@ function StateMap({ tpsiNet, tpsiApprove, tpsiDisapprove }: {
                       <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                         <div style={{ width: 10, height: 10, background: netToColor(net), border: "1px solid rgba(15,16,32,0.14)", flexShrink: 0 }} />
                         <span style={{ fontWeight: 600 }}>{STATE_NAMES[code] ?? code}</span>
-                        <span style={{ color: "rgba(255,255,255,0.3)", fontSize: 9 }}>{code}</span>
+                        <span style={{ color: "var(--muted2)", fontSize: 9 }}>{code}</span>
                       </div>
                     </td>
                     <td className="r" style={{ color: d.civiqs >= 0 ? "rgba(77,127,212,1) " : "rgba(255,80,80,0.8)" }}>
@@ -1180,7 +1180,7 @@ export default function TrumpApprovalPage() {
                           )}
                         </td>
                         <td className="r">{p.sampleType}</td>
-                        <td className="r" style={{ color: "rgba(255,255,255,0.7)" }}>
+                        <td className="r" style={{ color: "var(--foreground)" }}>
                           {gold ? `×${GOLD_STANDARD_MULTIPLIER}.00` : "×1.00"}
                         </td>
                         <td className="r pap-approve-col">{a.toFixed(0)}%</td>
@@ -1351,7 +1351,7 @@ const CSS = `
     display: inline-flex; align-items: center; gap: 5px;
     padding: 3px 8px;
     border: 1px solid var(--border);
-    background: rgba(255,255,255,0.03);
+    background: var(--panel2);
     font-family: ui-monospace,monospace;
     font-size: 7.5px; font-weight: 700; letter-spacing: 0.22em;
     text-transform: uppercase; color: var(--muted3);
@@ -1374,7 +1374,7 @@ const CSS = `
     gap: 12px;
     padding: 10px 14px;
     border: 1px solid var(--border);
-    background: rgba(255,255,255,0.03);
+    background: var(--panel2);
     position: relative;
     overflow: hidden;
   }
@@ -1507,7 +1507,7 @@ const CSS = `
     font-variant-numeric: tabular-nums;
   }
   table.pap-table td.r { text-align: right; }
-  table.pap-table tbody tr:hover { background: rgba(255,255,255,0.014); }
+  table.pap-table tbody tr:hover { background: rgba(124,58,237,0.04); }
   table.pap-table tbody tr:last-child td { border-bottom: none; }
 
   .pap-gold-badge {

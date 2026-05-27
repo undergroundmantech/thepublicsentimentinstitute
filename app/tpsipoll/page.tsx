@@ -13,8 +13,8 @@ const C = {
   green:     "#2fe4a0",
   orange:    "#f7a34f",
   gold:      "#f7d94f",
-  muted:     "rgba(238,238,255,0.42)",
-  neutral:   "rgba(238,238,255,0.2)",
+  muted:     "var(--muted2)",
+  neutral:   "var(--muted2)",
 };
 
 // ─── Types ────────────────────────────────────────────────────────────────────
@@ -425,7 +425,7 @@ function BarChart({ bars }: { bars: BarRow[] }) {
             <div style={{ fontFamily:font.mono, fontSize:7.5, letterSpacing:"0.2em", textTransform:"uppercase", color:"rgba(238,238,255,0.28)", padding:"8px 0 5px 232px", borderBottom:"1px solid rgba(15,16,32,0.06)", marginBottom:2 }}>{g.name}</div>
           )}
           {g.rows.map((row, ri) => (
-            <div key={ri} style={{ display:"grid", gridTemplateColumns:"220px 1fr 52px", alignItems:"center", gap:12, padding:"7px 0", borderBottom:"1px solid rgba(255,255,255,0.03)" }}>
+            <div key={ri} style={{ display:"grid", gridTemplateColumns:"220px 1fr 52px", alignItems:"center", gap:12, padding:"7px 0", borderBottom:"1px solid var(--border)" }}>
               <div style={{ fontSize:12, color:"rgba(238,238,255,0.75)", textAlign:"right", lineHeight:1.35 }}>{row.label}</div>
               <div style={{ height:26, background:"rgba(15,16,32,0.05)", borderRadius:2, overflow:"hidden" }}>
                 <div style={{ height:"100%", width:`${row.pct}%`, background:row.color, opacity:row.strong?1:0.65, transition:"width 0.6s cubic-bezier(0.16,1,0.3,1)", borderRadius:2 }} />
@@ -452,7 +452,7 @@ function IssueTable({ rows }: { rows: IssueRow[] }) {
       </thead>
       <tbody>
         {rows.map((r, i) => (
-          <tr key={i} style={{ borderBottom:"1px solid rgba(255,255,255,0.03)" }}>
+          <tr key={i} style={{ borderBottom:"1px solid var(--border)" }}>
             <td style={{ padding:"9px 12px", fontSize:12, color:"#eeeeff" }}>{r.issue}</td>
             <td style={{ padding:"9px 12px", textAlign:"right" }}>
               <div style={{ display:"flex", alignItems:"center", gap:7, justifyContent:"flex-end" }}>
@@ -489,7 +489,7 @@ function RankTable({ rows }: { rows: NonNullable<Slide["rankTable"]> }) {
       </thead>
       <tbody>
         {rows.map((r, i) => (
-          <tr key={i} style={{ borderBottom:"1px solid rgba(255,255,255,0.03)" }}>
+          <tr key={i} style={{ borderBottom:"1px solid var(--border)" }}>
             <td style={{ padding:"9px 12px", fontSize:12, color:"#eeeeff" }}>{r.label}</td>
             <td style={{ padding:"9px 12px", textAlign:"right" }}>
               <div style={{ display:"flex", alignItems:"center", gap:7, justifyContent:"flex-end" }}>
@@ -549,7 +549,7 @@ function CoverSlide() {
       <div style={{ background:"#111120", border:"1px solid rgba(15,16,32,0.08)", padding:18 }}>
         <div style={{ fontFamily:font.mono, fontSize:7, letterSpacing:"0.2em", textTransform:"uppercase", color:"rgba(238,238,255,0.28)", marginBottom:10, paddingBottom:8, borderBottom:"1px solid rgba(15,16,32,0.08)" }}>Contents</div>
         {contents.map(([label,q],i)=>(
-          <div key={i} style={{ display:"flex", justifyContent:"space-between", padding:"5px 0", borderBottom:"1px solid rgba(255,255,255,0.03)", fontFamily:font.mono, fontSize:9, color:C.muted }}>
+          <div key={i} style={{ display:"flex", justifyContent:"space-between", padding:"5px 0", borderBottom:"1px solid var(--border)", fontFamily:font.mono, fontSize:9, color:C.muted }}>
             <span style={{ color:"#eeeeff" }}>{label}</span>
             <span style={{ color:C.purpleLt }}>{q}</span>
           </div>
@@ -602,7 +602,7 @@ export default function TPSILVSlideshow() {
         <span style={{ fontFamily:font.mono, fontSize:9, color:C.muted, letterSpacing:"0.08em" }}>
           SLIDE <strong style={{ color:"#eeeeff" }}>{cur+1}</strong> / {total}
         </span>
-        <button onClick={() => setAutoplay(a=>!a)} style={{ fontFamily:font.mono, fontSize:8, letterSpacing:"0.12em", textTransform:"uppercase", padding:"4px 12px", border:`1px solid ${autoplay?C.purple:"rgba(15,16,32,0.08)"}`, background:autoplay?C.purple:"transparent", color:autoplay?"#fff":C.muted, cursor:"pointer" }}>
+        <button onClick={() => setAutoplay(a=>!a)} style={{ fontFamily:font.mono, fontSize:8, letterSpacing:"0.12em", textTransform:"uppercase", padding:"4px 12px", border:`1px solid ${autoplay?C.purple:"var(--border2)"}`, background:autoplay?C.purple:"transparent", color:autoplay?"#fff":C.muted, cursor:"pointer" }}>
           {autoplay ? "STOP ■" : "AUTOPLAY →"}
         </button>
         <button onClick={() => goTo(0)} style={{ fontFamily:font.mono, fontSize:8, letterSpacing:"0.12em", textTransform:"uppercase", padding:"4px 12px", border:`1px solid rgba(15,16,32,0.08)`, background:"transparent", color:C.muted, cursor:"pointer" }}>COVER</button>

@@ -450,7 +450,7 @@ export default function RightTrackWrongTrackPage() {
                           )}
                         </td>
                         <td className="r">{p.sampleType}</td>
-                        <td className="r" style={{ color: "rgba(255,255,255,0.7)" }}>
+                        <td className="r" style={{ color: "var(--foreground)" }}>
                           {gold ? `×${GOLD_STANDARD_MULTIPLIER}.00` : "×1.00"}
                         </td>
                         <td className="r pap-rt-col">{rt.toFixed(0)}%</td>
@@ -489,7 +489,7 @@ export default function RightTrackWrongTrackPage() {
 
 // ─── CSS — matches Trump approval design system exactly ───────────────────────
 const CSS = `
-  body { background: #f6f7fb !important; }
+  body { margin: 0; }
 
   .pap-root {
     --bg: #f6f7fb;
@@ -587,7 +587,7 @@ const CSS = `
 
   .pap-badge {
     display: inline-flex; align-items: center; gap: 5px; padding: 3px 8px;
-    border: 1px solid var(--border); background: rgba(255,255,255,0.03);
+    border: 1px solid var(--border); background: var(--panel2);
     font-family: ui-monospace,monospace; font-size: 7.5px; font-weight: 700;
     letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted3);
   }
@@ -598,7 +598,7 @@ const CSS = `
   .pap-hero-read { display: flex; flex-direction: column; gap: 6px; min-width: 170px; }
   .pap-hero-read-row {
     display: flex; align-items: center; justify-content: space-between; gap: 12px;
-    padding: 10px 14px; border: 1px solid var(--border); background: rgba(255,255,255,0.03);
+    padding: 10px 14px; border: 1px solid var(--border); background: var(--panel2);
   }
   .pap-hero-read-label {
     font-family: ui-monospace,monospace; font-size: 7.5px; font-weight: 700;
@@ -668,7 +668,7 @@ const CSS = `
     vertical-align: middle; font-variant-numeric: tabular-nums;
   }
   table.pap-table td.r { text-align: right; }
-  table.pap-table tbody tr:hover { background: rgba(255,255,255,0.014); }
+  table.pap-table tbody tr:hover { background: rgba(124,58,237,0.04); }
   table.pap-table tbody tr:last-child td { border-bottom: none; }
 
   .pap-gold-badge {
