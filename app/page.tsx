@@ -963,7 +963,7 @@ const RT_POLLS: Poll[] = [
 ];
 
 // ─── KY-04 Republican Primary Polls (Gallrein vs Massie) ──────────────────────
-const KY04_POLLS: Poll[] = [
+export const KY04_POLLS: Poll[] = [
   // Big Data Poll Apr 3–7 (forced choice, no undecided)
   { pollster: "Big Data Poll (R)",        endDate: "2026-04-07", sampleSize: 433, sampleType: "LV", results: { Gallrein: 48, Massie: 52 } },
   // Quantus Insights Apr 6–7
