@@ -1,816 +1,495 @@
-// app/polling/generic-ballot/page.tsx
 "use client";
 
-import React, { useMemo } from "react";
-import PollingTimeSeriesChart from "@/app/components/PollingTimeSeriesChart";
+import React, { useEffect, useMemo, useState } from "react";
+import AggregatePollChart from "@/app/components/AggregatePollChart";
+import MultiCandidateChart from "@/app/components/MultiCandidateChart";
 import {
-  Poll,
-  getCandidateList,
-  getDateRange,
-  buildDailyWeightedSeries,
-} from "@/app/polling/lib/buildDailyModel";
+  AGGREGATES, MULTI_AGGREGATES, buildAggregate, buildMulti,
+  type BuiltAggregate, type BuiltMulti, type AggregateDef, type MultiAggregateDef,
+} from "@/app/polling/lib/aggregates";
+import { getPollsterEntry } from "@/app/polling/lib/buildDailyModel";
 
-/**
- * Gold Standard upweighting (from /methodology/gold-standard-pollsters):
- * Implemented by inflating sampleSize: n' = n * (m^2) so √n' = m * √n.
- */
-const GOLD_STANDARD_MULTIPLIER = 2;
+const round0 = (n: number) => Math.round(n);
+const round1 = (n: number) => Math.round(n * 10) / 10;
+const clampN = (n: number, lo: number, hi: number) => Math.max(lo, Math.min(hi, n));
+const gradeIsHigh = (g: string) => ["Gold", "A++", "A+", "A"].some((x) => g.startsWith(x));
+const csvEscape = (v: string | number) => { const s = String(v); return /[",\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s; };
+const leaderIdx = (v: number[]) => v.reduce((best, x, i) => (Number.isFinite(x) && x > (v[best] ?? -Infinity) ? i : best), 0);
 
-const GOLD_STANDARD_NAMES = [
-  "Big Data Poll",
-  "Rasmussen Reports",
-  "AtlasIntel",
-  "SoCalStrategies",
-  "Emerson",
-  "Trafalgar",
-  "InsiderAdvantage",
-  "Patriot Polling",
+const GROUP_OF = (cat: string) =>
+  cat === "2024 President" ? "2024 President"
+  : cat === "2025 Governor" ? "2025 Races"
+  : cat === "2026 Senate" ? "2026 Senate"
+  : "National";
+
+type Item = { id: string; label: string; group: string; kind: "h2h" | "multi" };
+const H2H_BY_ID: Record<string, AggregateDef> = Object.fromEntries(AGGREGATES.map((d) => [d.id, d]));
+const MULTI_BY_ID: Record<string, MultiAggregateDef> = Object.fromEntries(MULTI_AGGREGATES.map((d) => [d.id, d]));
+const CATALOG: Item[] = [
+  ...AGGREGATES.map((d) => ({ id: d.id, label: d.label, group: GROUP_OF(d.category), kind: "h2h" as const })),
+  ...MULTI_AGGREGATES.map((d) => ({ id: d.id, label: d.label, group: d.group, kind: "multi" as const })),
 ];
+const GROUPS = CATALOG.reduce<string[]>((acc, c) => (acc.includes(c.group) ? acc : [...acc, c.group]), []);
 
-function normalizeName(s: string) {
-  return s
-    .toLowerCase()
-    .replace(/\(r\)/g, "")
-    .replace(/[^a-z0-9]+/g, " ")
-    .trim();
+function sample(arr: number[], n: number): number[] {
+  if (arr.length <= n) return arr;
+  const out: number[] = [];
+  const step = (arr.length - 1) / (n - 1);
+  for (let i = 0; i < n; i++) out.push(arr[Math.round(i * step)]);
+  return out;
 }
 
-function isGoldStandard(pollster: string) {
-  const p = normalizeName(pollster);
-  return GOLD_STANDARD_NAMES.some((n) => p.includes(normalizeName(n)));
-}
-
-function effectiveSampleSize(pollster: string, n: number) {
-  if (!Number.isFinite(n) || n <= 0) return n;
-  if (!isGoldStandard(pollster)) return n;
-  return Math.round(n * GOLD_STANDARD_MULTIPLIER * GOLD_STANDARD_MULTIPLIER);
-}
-
-const RAW_POLLS: Poll[] = [
-  { pollster: "Morning Consult", endDate: "2026-03-16", sampleSize: 2200, sampleType: "RV", results: { Democrats: 48, Republicans: 40 } },
-  { pollster: "Economist/YouGov", endDate: "2026-03-16", sampleSize: 1429, sampleType: "RV", results: { Democrats: 43, Republicans: 41 } },
-  { pollster: "Economist/YouGov", endDate: "2026-03-09", sampleSize: 1405, sampleType: "RV", results: { Democrats: 45, Republicans: 42 } },
-  { pollster: "Cygnal", endDate: "2026-03-04", sampleSize: 1500, sampleType: "LV", results: { Democrats: 49, Republicans: 45 } },
-  { pollster: "NPR/PBS/Marist", endDate: "2026-03-04", sampleSize: 1392, sampleType: "RV", results: { Democrats: 53, Republicans: 44 } },
-  { pollster: "NBC News", endDate: "2026-03-03", sampleSize: 1000, sampleType: "RV", results: { Democrats: 50, Republicans: 44 } },
-  { pollster: "RMG Research", endDate: "2026-03-04", sampleSize: 2000, sampleType: "RV", results: { Democrats: 46, Republicans: 46 } },
-  { pollster: "Quantus Insights", endDate: "2026-03-03", sampleSize: 1624, sampleType: "LV", results: { Democrats: 48, Republicans: 42 } },
-  { pollster: "Economist/YouGov", endDate: "2026-03-02", sampleSize: 1366, sampleType: "RV", results: { Democrats: 45, Republicans: 41 } },
-  { pollster: "CBS News", endDate: "2026-02-27", sampleSize: 2264, sampleType: "A", results: { Democrats: 45, Republicans: 40 } },
-  { pollster: "Harvard-Harris", endDate: "2026-02-26", sampleSize: 1999, sampleType: "RV", results: { Democrats: 50, Republicans: 50 } },
-  { pollster: "Public Sentiment Institute", endDate: "2026-02-28", sampleSize: 316, sampleType: "RV", results: { Republicans: 32.8, Democrats: 40.7, Other: 2.8, Undecided: 23.7 } },
-  { pollster: "Public Sentiment Institute", endDate: "2026-02-28", sampleSize: 249, sampleType: "LV", results: { Republicans: 41.0, Democrats: 50.1, Other: 1.7, Undecided: 7.2 } },
-  { pollster: "Emerson", endDate: "2026-02-22", sampleSize: 1000, sampleType: "LV", results: { Democrats: 50, Republicans: 42 } },
-  { pollster: "Morning Consult", endDate: "2026-02-22", sampleSize: 2202, sampleType: "RV", results: { Democrats: 46, Republicans: 42 } },
-  { pollster: "Economist/YouGov", endDate: "2026-02-23", sampleSize: 1402, sampleType: "RV", results: { Democrats: 45, Republicans: 41 } },
-  { pollster: "Reuters/Ipsos", endDate: "2026-02-23", sampleSize: 3686, sampleType: "RV", results: { Democrats: 40, Republicans: 38 } },
-  { pollster: "Big Data Poll", endDate: "2026-02-18", sampleSize: 1805, sampleType: "LV", results: { Democrats: 50, Republicans: 41 } },
-  { pollster: "Economist/YouGov", endDate: "2026-02-16", sampleSize: 1512, sampleType: "RV", results: { Democrats: 47, Republicans: 40 } },
-  { pollster: "Quantus Insights", endDate: "2026-02-13", sampleSize: 1515, sampleType: "LV", results: { Democrats: 48, Republicans: 42 } },
-  { pollster: "Morning Consult", endDate: "2026-02-09", sampleSize: 2200, sampleType: "RV", results: { Democrats: 45, Republicans: 41 } },
-  { pollster: "Cygnal", endDate: "2026-02-04", sampleSize: 1500, sampleType: "LV", results: { Democrats: 48, Republicans: 44 } },
-  { pollster: "PPP", endDate: "2026-01-30", sampleSize: 652, sampleType: "RV", results: { Democrats: 48, Republicans: 41 } },
-  { pollster: "Harvard-Harris", endDate: "2026-01-29", sampleSize: 2000, sampleType: "RV", results: { Democrats: 52, Republicans: 48 } },
-  { pollster: "I&I/TIPP", endDate: "2026-01-29", sampleSize: 1126, sampleType: "RV", results: { Democrats: 45, Republicans: 42 } },
-  { pollster: "FOX News", endDate: "2026-01-26", sampleSize: 1005, sampleType: "RV", results: { Democrats: 52, Republicans: 46 } },
-  { pollster: "Marquette", endDate: "2026-01-28", sampleSize: 0, sampleType: "LV", results: { Democrats: 52, Republicans: 45 } },
-  { pollster: "Morning Consult", endDate: "2026-02-01", sampleSize: 2201, sampleType: "RV", results: { Democrats: 47, Republicans: 42 } },
-  { pollster: "Harvard-Harris", endDate: "2026-01-29", sampleSize: 2000, sampleType: "RV", results: { Democrats: 52, Republicans: 48 } },
-  { pollster: "Economist/YouGov", endDate: "2026-02-02", sampleSize: 1504, sampleType: "RV", results: { Democrats: 44, Republicans: 40 } },
-  { pollster: "Cygnal", endDate: "2026-01-28", sampleSize: 1004, sampleType: "LV", results: { Democrats: 48, Republicans: 44 } },
-  { pollster: "FOX News", endDate: "2026-01-26", sampleSize: 1005, sampleType: "RV", results: { Democrats: 52, Republicans: 46 } },
-  { pollster: "Economist/YouGov", endDate: "2026-01-26", sampleSize: 1520, sampleType: "RV", results: { Democrats: 43, Republicans: 38 } },
-  { pollster: "Morning Consult", endDate: "2026-01-25", sampleSize: 2201, sampleType: "RV", results: { Democrats: 45, Republicans: 43 } },
-  { pollster: "Reuters/Ipsos", endDate: "2026-01-25", sampleSize: 906, sampleType: "RV", results: { Democrats: 41, Republicans: 37 } },
-  { pollster: "Big Data Poll", endDate: "2026-01-24", sampleSize: 2909, sampleType: "LV", results: { Democrats: 48, Republicans: 44 } },
-  { pollster: "Quantus Insights", endDate: "2026-01-22", sampleSize: 1000, sampleType: "RV", results: { Democrats: 47, Republicans: 41 } },
-  { pollster: "Emerson", endDate: "2026-01-19", sampleSize: 1000, sampleType: "LV", results: { Democrats: 48, Republicans: 42 } },
-  { pollster: "Economist/YouGov", endDate: "2026-01-19", sampleSize: 1549, sampleType: "RV", results: { Democrats: 43, Republicans: 39 } },
-  { pollster: "Morning Consult", endDate: "2026-01-18", sampleSize: 2201, sampleType: "RV", results: { Democrats: 45, Republicans: 43 } },
-  { pollster: "NY Times/Siena", endDate: "2026-01-17", sampleSize: 1625, sampleType: "RV", results: { Democrats: 48, Republicans: 43 } },
-  { pollster: "Reuters/Ipsos", endDate: "2026-01-13", sampleSize: 941, sampleType: "RV", results: { Democrats: 40, Republicans: 38 } },
-  { pollster: "Wall Street Journal", endDate: "2026-01-13", sampleSize: 1500, sampleType: "RV", results: { Democrats: 47, Republicans: 43 } },
-  { pollster: "Rasmussen Reports", endDate: "2026-01-14", sampleSize: 2273, sampleType: "LV", results: { Democrats: 47, Republicans: 41 } },
-  { pollster: "CNN", endDate: "2026-01-12", sampleSize: 968, sampleType: "RV", results: { Democrats: 46, Republicans: 41 } },
-  { pollster: "Morning Consult", endDate: "2026-01-12", sampleSize: 2201, sampleType: "RV", results: { Democrats: 46, Republicans: 43 } },
-  { pollster: "Economist/YouGov", endDate: "2026-01-12", sampleSize: 1437, sampleType: "RV", results: { Democrats: 44, Republicans: 40 } },
-  { pollster: "Cygnal", endDate: "2026-01-08", sampleSize: 1500, sampleType: "LV", results: { Democrats: 48, Republicans: 45 } },
-  { pollster: "RMG Research**", endDate: "2026-01-08", sampleSize: 2000, sampleType: "RV", results: { Democrats: 47, Republicans: 46 } },
-  { pollster: "Economist/YouGov", endDate: "2026-01-05", sampleSize: 1389, sampleType: "RV", results: { Democrats: 45, Republicans: 39 } },
-  { pollster: "Morning Consult", endDate: "2026-01-04", sampleSize: 2201, sampleType: "RV", results: { Democrats: 45, Republicans: 42 } },
-  { pollster: "Economist/YouGov", endDate: "2025-12-29", sampleSize: 1420, sampleType: "RV", results: { Democrats: 42, Republicans: 38 } },
-  { pollster: "Big Data Poll", endDate: "2025-12-28", sampleSize: 3412, sampleType: "LV", results: { Democrats: 49, Republicans: 44 } },
-  { pollster: "Economist/YouGov", endDate: "2025-12-22", sampleSize: 1425, sampleType: "RV", results: { Democrats: 43, Republicans: 40 } },
-  { pollster: "Morning Consult", endDate: "2025-12-21", sampleSize: 2203, sampleType: "RV", results: { Democrats: 47, Republicans: 43 } },
-  { pollster: "Atlas Intel", endDate: "2025-12-19", sampleSize: 2315, sampleType: "A", results: { Democrats: 54, Republicans: 38 } },
-  { pollster: "Quantus Insights", endDate: "2025-12-16", sampleSize: 1000, sampleType: "RV", results: { Democrats: 43, Republicans: 41 } },
-  { pollster: "Emerson", endDate: "2025-12-15", sampleSize: 1000, sampleType: "RV", results: { Democrats: 44, Republicans: 42 } },
-  { pollster: "Economist/YouGov", endDate: "2025-12-15", sampleSize: 1453, sampleType: "RV", results: { Democrats: 43, Republicans: 39 } },
-  { pollster: "Morning Consult", endDate: "2025-12-15", sampleSize: 2201, sampleType: "RV", results: { Democrats: 45, Republicans: 44 } },
-  { pollster: "Reuters/Ipsos", endDate: "2025-12-15", sampleSize: 775, sampleType: "RV", results: { Democrats: 40, Republicans: 36 } },
-  { pollster: "Quinnipiac", endDate: "2025-12-15", sampleSize: 1035, sampleType: "RV", results: { Democrats: 47, Republicans: 43 } },
-  { pollster: "Big Data Poll", endDate: "2025-12-12", sampleSize: 3004, sampleType: "RV", results: { Democrats: 47, Republicans: 43 } },
-  { pollster: "Economist/YouGov", endDate: "2025-12-08", sampleSize: 1380, sampleType: "RV", results: { Democrats: 42, Republicans: 37 } },
-  { pollster: "CNBC", endDate: "2025-12-08", sampleSize: 800, sampleType: "RV", results: { Democrats: 50, Republicans: 46 } },
-  { pollster: "Morning Consult", endDate: "2025-12-07", sampleSize: 2201, sampleType: "RV", results: { Democrats: 46, Republicans: 43 } },
-  { pollster: "Cygnal", endDate: "2025-12-07", sampleSize: 1500, sampleType: "LV", results: { Democrats: 48, Republicans: 44 } },
-  { pollster: "Reuters/Ipsos", endDate: "2025-12-08", sampleSize: 3521, sampleType: "RV", results: { Democrats: 40, Republicans: 39 } },
-  { pollster: "Quantus Insights", endDate: "2025-12-05", sampleSize: 1000, sampleType: "RV", results: { Democrats: 44, Republicans: 40 } },
-  { pollster: "RMG Research**", endDate: "2025-12-04", sampleSize: 2000, sampleType: "RV", results: { Democrats: 41, Republicans: 45 } },
-  { pollster: "Economist/YouGov", endDate: "2025-12-01", sampleSize: 1456, sampleType: "RV", results: { Democrats: 45, Republicans: 39 } },
-  { pollster: "Big Data Poll", endDate: "2025-12-01", sampleSize: 2008, sampleType: "RV", results: { Democrats: 44, Republicans: 42 } },
-  { pollster: "Morning Consult", endDate: "2025-11-30", sampleSize: 2200, sampleType: "RV", results: { Democrats: 45, Republicans: 41 } },
-  { pollster: "Economist/YouGov", endDate: "2025-11-24", sampleSize: 1511, sampleType: "RV", results: { Democrats: 44, Republicans: 39 } },
-  { pollster: "Morning Consult", endDate: "2025-11-23", sampleSize: 2200, sampleType: "RV", results: { Democrats: 45, Republicans: 43 } },
-  { pollster: "Daily Mail", endDate: "2025-11-25", sampleSize: 797, sampleType: "LV", results: { Democrats: 50, Republicans: 46 } },
-  { pollster: "Rasmussen Reports", endDate: "2025-11-23", sampleSize: 2410, sampleType: "LV", results: { Democrats: 45, Republicans: 42 } },
-  { pollster: "Economist/YouGov", endDate: "2025-11-17", sampleSize: 1382, sampleType: "RV", results: { Democrats: 43, Republicans: 40 } },
-  { pollster: "Morning Consult", endDate: "2025-11-16", sampleSize: 2201, sampleType: "RV", results: { Democrats: 46, Republicans: 44 } },
-  { pollster: "NPR/PBS/Marist", endDate: "2025-11-13", sampleSize: 1291, sampleType: "RV", results: { Democrats: 55, Republicans: 41 } },
-  { pollster: "Quantus Insights", endDate: "2025-11-12", sampleSize: 1000, sampleType: "RV", results: { Democrats: 44, Republicans: 39 } },
-  { pollster: "Reuters/Ipsos", endDate: "2025-11-12", sampleSize: 938, sampleType: "RV", results: { Democrats: 41, Republicans: 40 } },
-  { pollster: "Marquette", endDate: "2025-11-12", sampleSize: 903, sampleType: "RV", results: { Democrats: 49, Republicans: 44 } },
-  { pollster: "Economist/YouGov", endDate: "2025-11-10", sampleSize: 1500, sampleType: "RV", results: { Democrats: 46, Republicans: 39 } },
-  { pollster: "Morning Consult", endDate: "2025-11-09", sampleSize: 2201, sampleType: "RV", results: { Democrats: 48, Republicans: 43 } },
-  { pollster: "Cygnal", endDate: "2025-11-06", sampleSize: 1500, sampleType: "RV", results: { Democrats: 50, Republicans: 44 } },
-  { pollster: "Emerson", endDate: "2025-11-04", sampleSize: 1000, sampleType: "RV", results: { Democrats: 44, Republicans: 40 } },
-  { pollster: "Economist/YouGov", endDate: "2025-11-03", sampleSize: 1475, sampleType: "RV", results: { Democrats: 44, Republicans: 41 } },
-  { pollster: "Morning Consult", endDate: "2025-11-02", sampleSize: 2202, sampleType: "RV", results: { Democrats: 45, Republicans: 42 } },
-  { pollster: "CNN", endDate: "2025-10-30", sampleSize: 954, sampleType: "RV", results: { Democrats: 47, Republicans: 42 } },
-  { pollster: "NewsNation", endDate: "2025-10-29", sampleSize: 1159, sampleType: "LV", results: { Democrats: 47, Republicans: 47 } },
-  { pollster: "Big Data Poll", endDate: "2025-10-29", sampleSize: 2984, sampleType: "RV", results: { Democrats: 43, Republicans: 41 } },
-  { pollster: "NBC News", endDate: "2025-10-28", sampleSize: 1000, sampleType: "RV", results: { Democrats: 50, Republicans: 42 } },
-  { pollster: "ABC/Wash Post/Ipsos", endDate: "2025-10-28", sampleSize: 2203, sampleType: "RV", results: { Democrats: 46, Republicans: 44 } },
-  { pollster: "Economist/YouGov", endDate: "2025-10-27", sampleSize: 1476, sampleType: "RV", results: { Democrats: 43, Republicans: 40 } },
-  { pollster: "Morning Consult", endDate: "2025-10-26", sampleSize: 2202, sampleType: "RV", results: { Democrats: 45, Republicans: 42 } },
-  { pollster: "Yahoo News", endDate: "2025-10-27", sampleSize: 1197, sampleType: "RV", results: { Democrats: 45, Republicans: 40 } },
-  { pollster: "Economist/YouGov", endDate: "2025-10-20", sampleSize: 1448, sampleType: "RV", results: { Democrats: 45, Republicans: 40 } },
-  { pollster: "Morning Consult", endDate: "2025-10-19", sampleSize: 2200, sampleType: "RV", results: { Democrats: 46, Republicans: 43 } },
-  { pollster: "Quinnipiac", endDate: "2025-10-20", sampleSize: 1327, sampleType: "RV", results: { Democrats: 50, Republicans: 41 } },
-  { pollster: "Emerson", endDate: "2025-10-14", sampleSize: 1000, sampleType: "RV", results: { Democrats: 44, Republicans: 43 } },
-  { pollster: "Economist/YouGov", endDate: "2025-10-13", sampleSize: 1467, sampleType: "RV", results: { Democrats: 43, Republicans: 40 } },
-  { pollster: "Morning Consult", endDate: "2025-10-12", sampleSize: 2202, sampleType: "RV", results: { Democrats: 46, Republicans: 43 } },
-  { pollster: "CNBC", endDate: "2025-10-12", sampleSize: 0, sampleType: "RV", results: { Democrats: 48, Republicans: 47 } },
-  { pollster: "Quantus Insights", endDate: "2025-10-08", sampleSize: 1000, sampleType: "RV", results: { Democrats: 42, Republicans: 43 } },
-  { pollster: "Cygnal", endDate: "2025-10-08", sampleSize: 1500, sampleType: "LV", results: { Democrats: 48, Republicans: 45 } },
-  { pollster: "Economist/YouGov", endDate: "2025-10-06", sampleSize: 1490, sampleType: "RV", results: { Democrats: 44, Republicans: 39 } },
-  { pollster: "Morning Consult", endDate: "2025-10-05", sampleSize: 2200, sampleType: "RV", results: { Democrats: 46, Republicans: 43 } },
-  { pollster: "Economist/YouGov", endDate: "2025-09-29", sampleSize: 1518, sampleType: "RV", results: { Democrats: 44, Republicans: 41 } },
-  { pollster: "Yahoo News", endDate: "2025-09-29", sampleSize: 1126, sampleType: "RV", results: { Democrats: 44, Republicans: 40 } },
-  { pollster: "NY Times/Siena", endDate: "2025-09-27", sampleSize: 1313, sampleType: "RV", results: { Democrats: 47, Republicans: 45 } },
-  { pollster: "RMG Research**", endDate: "2025-09-24", sampleSize: 2000, sampleType: "RV", results: { Democrats: 45, Republicans: 46 } },
-  { pollster: "Economist/YouGov", endDate: "2025-09-22", sampleSize: 1392, sampleType: "RV", results: { Democrats: 45, Republicans: 42 } },
-  { pollster: "Atlas Intel", endDate: "2025-09-16", sampleSize: 1066, sampleType: "A", results: { Democrats: 52, Republicans: 44 } },
-  { pollster: "NAIP**", endDate: "2025-09-13", sampleSize: 2071, sampleType: "LV", results: { Democrats: 45, Republicans: 43 } },
-  { pollster: "Economist/YouGov", endDate: "2025-09-15", sampleSize: 1420, sampleType: "RV", results: { Democrats: 43, Republicans: 41 } },
-  { pollster: "Economist/YouGov", endDate: "2025-09-08", sampleSize: 1487, sampleType: "RV", results: { Democrats: 44, Republicans: 40 } },
-  { pollster: "Morning Consult", endDate: "2025-09-07", sampleSize: 2200, sampleType: "RV", results: { Democrats: 45, Republicans: 41 } },
-  { pollster: "Cygnal", endDate: "2025-09-03", sampleSize: 1500, sampleType: "RV", results: { Democrats: 48, Republicans: 45 } },
-  { pollster: "Economist/YouGov", endDate: "2025-09-02", sampleSize: 1549, sampleType: "RV", results: { Democrats: 43, Republicans: 39 } },
-  { pollster: "Yahoo News", endDate: "2025-09-02", sampleSize: 1136, sampleType: "RV", results: { Democrats: 44, Republicans: 40 } },
-  { pollster: "Emerson", endDate: "2025-08-26", sampleSize: 1000, sampleType: "RV", results: { Democrats: 43, Republicans: 43 } },
-  { pollster: "Economist/YouGov", endDate: "2025-08-25", sampleSize: 1377, sampleType: "RV", results: { Democrats: 43, Republicans: 41 } },
-  { pollster: "CNN", endDate: "2025-09-01", sampleSize: 0, sampleType: "RV", results: { Democrats: 52, Republicans: 48 } },
-  { pollster: "Reuters/Ipsos", endDate: "2025-08-24", sampleSize: 1022, sampleType: "A", results: { Democrats: 38, Republicans: 34 } },
-  { pollster: "RMG Research**", endDate: "2025-08-21", sampleSize: 2000, sampleType: "RV", results: { Democrats: 47, Republicans: 47 } },
-  { pollster: "Economist/YouGov", endDate: "2025-08-18", sampleSize: 1408, sampleType: "RV", results: { Democrats: 44, Republicans: 39 } },
-  { pollster: "Quantus Insights", endDate: "2025-08-13", sampleSize: 1000, sampleType: "RV", results: { Democrats: 45, Republicans: 42 } },
-  { pollster: "Economist/YouGov", endDate: "2025-08-11", sampleSize: 1474, sampleType: "RV", results: { Democrats: 42, Republicans: 40 } },
-  { pollster: "Cygnal", endDate: "2025-08-09", sampleSize: 1500, sampleType: "RV", results: { Democrats: 47, Republicans: 46 } },
-  { pollster: "Economist/YouGov", endDate: "2025-08-04", sampleSize: 1528, sampleType: "RV", results: { Democrats: 44, Republicans: 38 } },
-  { pollster: "CNBC", endDate: "2025-08-03", sampleSize: 1000, sampleType: "A", results: { Democrats: 49, Republicans: 44 } },
-  { pollster: "Economist/YouGov", endDate: "2025-07-28", sampleSize: 1610, sampleType: "RV", results: { Democrats: 43, Republicans: 41 } },
-  { pollster: "Yahoo News", endDate: "2025-07-28", sampleSize: 1167, sampleType: "RV", results: { Democrats: 46, Republicans: 39 } },
-  { pollster: "Emerson", endDate: "2025-07-22", sampleSize: 1400, sampleType: "RV", results: { Democrats: 44, Republicans: 42 } },
-  { pollster: "Wall Street Journal", endDate: "2025-07-20", sampleSize: 1500, sampleType: "RV", results: { Democrats: 46, Republicans: 43 } },
-  { pollster: "Atlas Intel", endDate: "2025-07-18", sampleSize: 1935, sampleType: "A", results: { Democrats: 51, Republicans: 43 } },
-  { pollster: "Rasmussen Reports", endDate: "2025-07-17", sampleSize: 2288, sampleType: "LV", results: { Democrats: 46, Republicans: 42 } },
-  { pollster: "Quantus Insights", endDate: "2025-07-16", sampleSize: 1000, sampleType: "RV", results: { Democrats: 44, Republicans: 42 } },
-  { pollster: "RMG Research**", endDate: "2025-07-16", sampleSize: 2000, sampleType: "RV", results: { Democrats: 45, Republicans: 49 } },
-  { pollster: "Big Data Poll", endDate: "2025-07-14", sampleSize: 3022, sampleType: "RV", results: { Democrats: 42, Republicans: 41 } },
-  { pollster: "Cygnal", endDate: "2025-07-02", sampleSize: 1500, sampleType: "LV", results: { Democrats: 47, Republicans: 46 } },
-  { pollster: "Emerson", endDate: "2025-06-25", sampleSize: 1000, sampleType: "RV", results: { Democrats: 43, Republicans: 40 } },
-  { pollster: "RMG Research**", endDate: "2025-06-19", sampleSize: 1000, sampleType: "RV", results: { Democrats: 44, Republicans: 52 } },
-  { pollster: "Quantus Insights", endDate: "2025-06-11", sampleSize: 1000, sampleType: "RV", results: { Democrats: 43, Republicans: 43 } },
-  { pollster: "Cygnal", endDate: "2025-06-04", sampleSize: 1500, sampleType: "LV", results: { Democrats: 47, Republicans: 47 } },
-  { pollster: "Quantus Insights", endDate: "2025-06-04", sampleSize: 1000, sampleType: "RV", results: { Democrats: 46, Republicans: 45 } },
-  { pollster: "Economist/YouGov", endDate: "2025-06-02", sampleSize: 1436, sampleType: "RV", results: { Democrats: 44, Republicans: 42 } },
-  { pollster: "Atlas Intel", endDate: "2025-05-27", sampleSize: 3469, sampleType: "A", results: { Democrats: 51, Republicans: 42 } },
-  { pollster: "RMG Research**", endDate: "2025-05-21", sampleSize: 1000, sampleType: "RV", results: { Democrats: 48, Republicans: 45 } },
-  { pollster: "Rasmussen Reports", endDate: "2025-05-15", sampleSize: 1012, sampleType: "LV", results: { Democrats: 45, Republicans: 44 } },
-  { pollster: "Quantus Insights", endDate: "2025-05-07", sampleSize: 1000, sampleType: "RV", results: { Democrats: 45, Republicans: 45 } },
-  { pollster: "Big Data Poll", endDate: "2025-05-05", sampleSize: 3128, sampleType: "RV", results: { Democrats: 40, Republicans: 42 } },
-  { pollster: "NewsNation", endDate: "2025-04-27", sampleSize: 1448, sampleType: "RV", results: { Democrats: 45, Republicans: 40 } },
-  { pollster: "NY Times/Siena", endDate: "2025-04-24", sampleSize: 913, sampleType: "RV", results: { Democrats: 47, Republicans: 44 } },
-  { pollster: "FOX News", endDate: "2025-04-21", sampleSize: 1104, sampleType: "RV", results: { Democrats: 49, Republicans: 42 } },
-  { pollster: "RMG Research**", endDate: "2025-04-16", sampleSize: 1000, sampleType: "RV", results: { Democrats: 50, Republicans: 45 } },
-  { pollster: "CNBC", endDate: "2025-04-13", sampleSize: 800, sampleType: "RV", results: { Democrats: 48, Republicans: 46 } },
-  { pollster: "Economist/YouGov", endDate: "2025-04-08", sampleSize: 1563, sampleType: "RV", results: { Democrats: 43, Republicans: 42 } },
-  { pollster: "Cygnal", endDate: "2025-04-03", sampleSize: 1500, sampleType: "LV", results: { Democrats: 48, Republicans: 47 } },
-  { pollster: "Wall Street Journal", endDate: "2025-04-01", sampleSize: 1500, sampleType: "RV", results: { Democrats: 44, Republicans: 43 } },
-  { pollster: "Quantus Insights", endDate: "2025-03-27", sampleSize: 1000, sampleType: "RV", results: { Democrats: 45, Republicans: 46 } },
-  { pollster: "NBC News", endDate: "2025-03-11", sampleSize: 1000, sampleType: "RV", results: { Democrats: 48, Republicans: 47 } },
-  { pollster: "Emerson", endDate: "2025-03-03", sampleSize: 1000, sampleType: "RV", results: { Democrats: 44, Republicans: 41 } },
-  { pollster: "Cygnal", endDate: "2025-02-05", sampleSize: 1500, sampleType: "LV", results: { Democrats: 46, Republicans: 47 } },
-  { pollster: "CC Labs**", endDate: "2025-02-06", sampleSize: 1102, sampleType: "RV", results: { Democrats: 45, Republicans: 44 } },
-  { pollster: "Fabrizio/Anzalone", endDate: "2025-02-01", sampleSize: 3000, sampleType: "RV", results: { Democrats: 43, Republicans: 43 } },
-  { pollster: "Quantus Insights", endDate: "2025-01-23", sampleSize: 1000, sampleType: "RV", results: { Democrats: 45, Republicans: 48 } },
-];
-
-const COLORS: Record<string, string> = {
-  Republicans: "#ff1717",
-  Democrats: "#4d7fd4",
-};
-
-function round1(n: number) {
-  return Math.round(n * 10) / 10;
-}
-
-// ─── CSS ──────────────────────────────────────────────────────────────────────
-const CSS = `
-  .pgb-root {
-    --bg:          #070709;
-    --bg2:         #0b0b0f;
-    --panel:       #0f0f15;
-    --border:      rgba(255,255,255,0.09);
-    --border2:     rgba(255,255,255,0.15);
-    --muted:       rgba(240,240,245,0.62);
-    --muted2:      rgba(240,240,245,0.40);
-    --muted3:      rgba(240,240,245,0.22);
-    --purple:      #7c3aed;
-    --purple2:     #9d5cf0;
-    --purple-soft: #a78bfa;
-    --dem:         #4d7fd4;
-    --rep:         #ff1717;
-  }
-
-  @keyframes pgb-fade-up {
-    from { opacity:0; transform:translateY(12px); }
-    to   { opacity:1; transform:translateY(0); }
-  }
-  @keyframes pgb-pulse {
-    0%,100% { opacity:1; transform:scale(1); }
-    50%      { opacity:0.35; transform:scale(0.75); }
-  }
-  @keyframes pgb-bar-in {
-    from { width:0; }
-  }
-
-  .pgb-root {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    animation: pgb-fade-up 0.5s cubic-bezier(0.22,1,0.36,1) both;
-  }
-
-  /* TRI STRIPE */
-  .pgb-stripe {
-    height: 3px;
-    background: linear-gradient(90deg,
-      var(--rep)    0%,    var(--rep)    33.33%,
-      var(--purple) 33.33%,var(--purple) 66.66%,
-      var(--dem)    66.66%,var(--dem)    100%
-    );
-  }
-
-  /* LIVE DOT */
-  .pgb-live-dot {
-    display: inline-block;
-    width: 6px; height: 6px;
-    border-radius: 50%;
-    background: var(--purple);
-    box-shadow: 0 0 8px rgba(124,58,237,0.7);
-    animation: pgb-pulse 1.8s ease-in-out infinite;
-    flex-shrink: 0;
-  }
-
-  /* EYEBROW */
-  .pgb-eyebrow {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-family: var(--font-body), "Geist Mono", monospace;
-    font-size: 8px;
-    font-weight: 700;
-    letter-spacing: 0.32em;
-    text-transform: uppercase;
-    color: var(--purple-soft);
-    margin-bottom: 12px;
-  }
-  .pgb-eyebrow::before {
-    content: '';
-    display: block;
-    width: 16px; height: 1px;
-    background: var(--purple-soft);
-    opacity: 0.5;
-  }
-
-  /* HERO */
-  .pgb-hero {
-    border: 1px solid var(--border);
-    background: var(--panel);
-    position: relative;
-    overflow: hidden;
-  }
-  .pgb-hero::before {
-    content: '';
-    position: absolute; inset: 0;
-    background:
-      radial-gradient(ellipse 45% 100% at 0% 60%,   rgba(77,127,212,0.06)  0%, transparent 65%),
-      radial-gradient(ellipse 45% 100% at 100% 60%,  rgba(255,23,23,0.07)  0%, transparent 65%),
-      radial-gradient(ellipse 30% 60%  at 50% 0%,    rgba(124,58,237,0.04) 0%, transparent 70%);
-    pointer-events: none;
-  }
-  .pgb-hero::after {
-    content: '';
-    position: absolute; inset: 0;
-    background-image: repeating-linear-gradient(
-      0deg, transparent, transparent 3px,
-      rgba(255,255,255,0.006) 3px, rgba(255,255,255,0.006) 4px
-    );
-    pointer-events: none;
-  }
-  .pgb-hero-inner {
-    position: relative;
-    padding: 26px 28px 24px;
-    display: grid;
-    grid-template-columns: 1fr auto;
-    align-items: end;
-    gap: 20px;
-  }
-  @media (max-width:640px) { .pgb-hero-inner { grid-template-columns:1fr; } }
-
-  .pgb-hero-title {
-    font-family: "Quantico", system-ui, -apple-system, BlinkMacOSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-size: clamp(22px,3.5vw,46px);
-    font-weight: 900;
-    text-transform: uppercase;
-    letter-spacing: 0.02em;
-    line-height: 0.92;
-    color: #fff;
-    margin: 0 0 14px;
-  }
-  .pgb-hero-title .dem {
-    font-style: normal;
-    background: linear-gradient(110deg, rgba(77,127,212,1) 0%, rgba(107,157,242,0.85) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-  .pgb-hero-title .rep {
-    font-style: normal;
-    background: linear-gradient(110deg, rgba(255,23,23,1) 0%, rgba(255,100,100,0.85) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-  .pgb-hero-desc {
-    font-family: var(--font-body), "Geist Mono", monospace;
-    font-size: 9.5px;
-    letter-spacing: 0.12em;
-    line-height: 1.75;
-    color: var(--muted2);
-    text-transform: uppercase;
-    max-width: 520px;
-  }
-  .pgb-hero-badge-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    margin-top: 16px;
-  }
-
-  /* BADGES */
-  .pgb-badge {
-    display: inline-flex; align-items: center; gap: 5px;
-    padding: 3px 8px;
-    border: 1px solid var(--border);
-    background: rgba(255,255,255,0.03);
-    font-family: var(--font-body), "Geist Mono", monospace;
-    font-size: 7.5px; font-weight: 700; letter-spacing: 0.22em;
-    text-transform: uppercase; color: var(--muted3);
-  }
-  .pgb-badge-live   { border-color:rgba(124,58,237,0.35); background:rgba(124,58,237,0.07); color:var(--purple-soft); }
-  .pgb-badge-purple { border-color:rgba(124,58,237,0.35); background:rgba(124,58,237,0.07); color:var(--purple-soft); }
-  .pgb-badge-gold   { border-color:rgba(167,139,250,0.30); background:rgba(124,58,237,0.07); color:var(--purple-soft); }
-
-  /* HERO RIGHT */
-  .pgb-hero-read {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    min-width: 170px;
-  }
-  .pgb-hero-read-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-    padding: 10px 14px;
-    border: 1px solid var(--border);
-    background: rgba(255,255,255,0.03);
-    position: relative;
-    overflow: hidden;
-  }
-  .pgb-hero-read-label {
-    font-family: var(--font-body), "Geist Mono", monospace;
-    font-size: 7.5px; font-weight: 700;
-    letter-spacing: 0.24em; text-transform: uppercase;
-    color: var(--muted3);
-  }
-  .pgb-hero-read-val {
-    font-family: var(--font-body), "Geist Mono", monospace;
-    font-size: 20px; font-weight: 900;
-    font-variant-numeric: tabular-nums;
-  }
-
-  /* SECTION LABEL */
-  .pgb-section-label {
-    font-family: var(--font-body), "Geist Mono", monospace;
-    font-size: 7.5px; font-weight: 700;
-    letter-spacing: 0.32em; text-transform: uppercase;
-    color: var(--muted3);
-    display: flex; align-items: center; gap: 10px;
-    margin-bottom: 12px;
-  }
-  .pgb-section-label::before { content:''; width:20px; height:1px; background:var(--purple-soft); opacity:0.5; }
-  .pgb-section-label::after  { content:''; flex:1; height:1px; background:var(--border); }
-
-  /* KPI GRID */
-  .pgb-kpi-grid {
-    display: grid;
-    grid-template-columns: repeat(4,1fr);
-    gap: 8px;
-  }
-  @media (max-width:860px) { .pgb-kpi-grid { grid-template-columns:repeat(2,1fr); } }
-  @media (max-width:480px) { .pgb-kpi-grid { grid-template-columns:1fr; } }
-
-  .pgb-kpi {
-    background: var(--panel);
-    border: 1px solid var(--border);
-    padding: 16px 18px;
-    position: relative;
-    overflow: hidden;
-    transition: border-color 150ms ease;
-  }
-  .pgb-kpi:hover { border-color: var(--border2); }
-  .pgb-kpi-accent {
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 2px;
-  }
-  .pgb-kpi-label {
-    font-family: var(--font-body), "Geist Mono", monospace;
-    font-size: 7.5px; font-weight: 700;
-    letter-spacing: 0.28em; text-transform: uppercase;
-    color: var(--muted3); margin-bottom: 8px;
-  }
-  .pgb-kpi-val {
-    font-family: var(--font-body), "Geist Mono", monospace;
-    font-size: clamp(22px,2.5vw,30px);
-    font-weight: 900;
-    color: #fff; line-height: 1;
-    font-variant-numeric: tabular-nums;
-  }
-  .pgb-kpi-sub {
-    font-family: var(--font-body), "Geist Mono", monospace;
-    font-size: 8px; letter-spacing: 0.16em;
-    text-transform: uppercase; color: var(--muted3);
-    margin-top: 6px;
-  }
-  .pgb-kpi-bar { height: 2px; margin-top: 10px; background: rgba(255,255,255,0.07); }
-  .pgb-kpi-bar-fill {
-    height: 100%;
-    animation: pgb-bar-in 800ms cubic-bezier(0.22,1,0.36,1) both;
-  }
-
-  /* TABLE PANEL */
-  .pgb-table-panel {
-    background: var(--panel);
-    border: 1px solid var(--border);
-    overflow: hidden;
-  }
-  .pgb-table-head {
-    background: var(--bg2);
-    border-bottom: 1px solid var(--border);
-    padding: 14px 20px;
-    display: flex; align-items: center; justify-content: space-between;
-    gap: 12px; flex-wrap: wrap;
-  }
-  .pgb-table-head-title {
-    font-family: var(--font-body), "Geist Mono", monospace;
-    font-size: 9px; font-weight: 700;
-    letter-spacing: 0.26em; text-transform: uppercase;
-    color: var(--purple-soft);
-  }
-  .pgb-table-head-note {
-    font-family: var(--font-body), "Geist Mono", monospace;
-    font-size: 7.5px; letter-spacing: 0.20em;
-    text-transform: uppercase; color: var(--muted3);
-  }
-  .pgb-table-scroll {
-    overflow-x: auto;
-    max-height: 520px;
-    overflow-y: auto;
-  }
-  table.pgb-table {
-    width: 100%;
-    border-collapse: collapse;
-    min-width: 820px;
-  }
-  table.pgb-table thead {
-    position: sticky; top: 0;
-    background: var(--bg2);
-    z-index: 2;
-  }
-  table.pgb-table th {
-    font-family: var(--font-body), "Geist Mono", monospace;
-    font-size: 7.5px; font-weight: 700;
-    letter-spacing: 0.22em; text-transform: uppercase;
-    color: var(--muted3);
-    padding: 10px 16px;
-    text-align: left;
-    border-bottom: 1px solid var(--border);
-    white-space: nowrap;
-  }
-  table.pgb-table th.r { text-align: right; }
-  table.pgb-table td {
-    font-family: var(--font-body), "Geist Mono", monospace;
-    font-size: 10.5px;
-    padding: 10px 16px;
-    border-bottom: 1px solid rgba(255,255,255,0.04);
-    color: var(--muted); vertical-align: middle;
-    font-variant-numeric: tabular-nums;
-  }
-  table.pgb-table td.r { text-align: right; }
-  table.pgb-table tbody tr:hover { background: rgba(255,255,255,0.014); }
-  table.pgb-table tbody tr:last-child td { border-bottom: none; }
-
-  .pgb-gold-badge {
-    display: inline-flex; align-items: center;
-    padding: 1px 6px;
-    border: 1px solid rgba(167,139,250,0.28);
-    background: rgba(124,58,237,0.07);
-    font-family: var(--font-body), "Geist Mono", monospace;
-    font-size: 7px; font-weight: 700;
-    letter-spacing: 0.18em; text-transform: uppercase;
-    color: var(--purple-soft);
-  }
-
-  .pgb-dem-col   { color: rgba(77,127,212,1)    !important; font-weight: 700; }
-  .pgb-rep-col   { color: rgba(255,80,80,0.95)  !important; font-weight: 700; }
-  .pgb-net-dem   { color: rgba(77,127,212,1)    !important; font-weight: 700; }
-  .pgb-net-rep   { color: rgba(255,80,80,0.9)   !important; font-weight: 700; }
-  .pgb-net-even  { color: rgba(167,139,250,0.85) !important; font-weight: 700; }
-
-  @media (prefers-reduced-motion:reduce) {
-    .pgb-root { animation:none !important; }
-    .pgb-live-dot { animation:none !important; }
-    .pgb-kpi-bar-fill { animation:none !important; }
-  }
-`;
-
-function KpiCard({
-  label,
-  value,
-  sub,
-  accentColor,
-  barPct,
-}: {
-  label: string;
-  value: string;
-  sub?: string;
-  accentColor?: string;
-  barPct?: number;
-}) {
+function Sparkline({ data, color, h = 28 }: { data: number[]; color: string; h?: number }) {
+  if (data.length < 2) return <svg style={{ width: "100%", height: h, display: "block" }} aria-hidden />;
+  const w = 100;
+  const min = Math.min(...data), max = Math.max(...data), span = max - min || 1;
+  const step = w / (data.length - 1);
+  const pts = data.map((v, i) => [+(i * step).toFixed(2), +(h - 2 - ((v - min) / span) * (h - 4)).toFixed(2)] as const);
+  const line = pts.map(([x, y], i) => `${i === 0 ? "M" : "L"}${x},${y}`).join(" ");
   return (
-    <div className="pgb-kpi">
-      {accentColor && <div className="pgb-kpi-accent" style={{ background: accentColor }} />}
-      <div className="pgb-kpi-label">{label}</div>
-      <div className="pgb-kpi-val" style={accentColor ? { color: accentColor } : {}}>
-        {value}
-      </div>
-      {sub && <div className="pgb-kpi-sub">{sub}</div>}
-      {barPct !== undefined && (
-        <div className="pgb-kpi-bar">
-          <div
-            className="pgb-kpi-bar-fill"
-            style={{ width: `${barPct}%`, background: accentColor ?? "var(--purple)" }}
-          />
-        </div>
-      )}
-    </div>
+    <svg viewBox={`0 0 ${w} ${h}`} preserveAspectRatio="none" style={{ width: "100%", height: h, display: "block", overflow: "visible" }} aria-hidden>
+      <path d={line} fill="none" stroke={color} strokeWidth={1.25} strokeOpacity={0.9} strokeLinejoin="round" strokeLinecap="round" vectorEffect="non-scaling-stroke" />
+    </svg>
   );
 }
 
-export default function GenericBallotPage() {
-  const {
-    daily,
-    latestRepublicans,
-    latestDemocrats,
-    latestNet,
-    seriesForChart,
-  } = useMemo(() => {
-    const pollsAdjusted = RAW_POLLS.map((p) => ({
-      ...p,
-      sampleSize: effectiveSampleSize(p.pollster, p.sampleSize),
-    }));
+export default function PollingAveragesPage() {
+  const [id, setId] = useState(CATALOG[0].id);
+  const [group, setGroup] = useState(CATALOG[0].group);
+  const [query, setQuery] = useState("");
+  const [sort, setSort] = useState<{ key: string; dir: "asc" | "desc" }>({ key: "date", dir: "desc" });
 
-    const keys = getCandidateList(RAW_POLLS).sort((a, b) => a.localeCompare(b));
-    const range = getDateRange(RAW_POLLS);
-    const dailyBase = buildDailyWeightedSeries(pollsAdjusted as any, keys, range.start, range.end);
-
-    const dailyWithNet = dailyBase.map((row) => {
-      const r = Number((row as any).Republicans ?? 0);
-      const d = Number((row as any).Democrats ?? 0);
-      return { ...row, Net: round1(d - r) } as any;
-    });
-
-    const latest = dailyWithNet[dailyWithNet.length - 1] ?? null;
-    const latestRepublicans = latest ? Number((latest as any).Republicans ?? 0) : 0;
-    const latestDemocrats = latest ? Number((latest as any).Democrats ?? 0) : 0;
-    const latestNet = latest ? Number((latest as any).Net ?? 0) : 0;
-
-    const seriesForChart = [
-      { key: "Republicans", label: "Republicans", color: COLORS.Republicans },
-      { key: "Democrats", label: "Democrats", color: COLORS.Democrats },
-    ];
-
-    return { daily: dailyWithNet, latestRepublicans, latestDemocrats, latestNet, seriesForChart };
+  // deep-link support: /polling/genericballot?race=<id> selects that aggregate
+  useEffect(() => {
+    const r = new URLSearchParams(window.location.search).get("race");
+    if (!r) return;
+    const it = CATALOG.find((c) => c.id === r);
+    if (it) { setId(it.id); setGroup(it.group); }
   }, []);
 
-  const netText =
-    latestNet === 0
-      ? "EVEN"
-      : latestNet > 0
-      ? `D+${round1(latestNet).toFixed(1)}`
-      : `R+${Math.abs(round1(latestNet)).toFixed(1)}`;
+  const item = useMemo(() => CATALOG.find((c) => c.id === id) ?? CATALOG[0], [id]);
+  const isMulti = item.kind === "multi";
+  const h2hDef = isMulti ? null : (H2H_BY_ID[item.id] ?? null);
+  const multiDef = isMulti ? (MULTI_BY_ID[item.id] ?? null) : null;
 
-  const netColor =
-    latestNet > 0
-      ? "rgba(77,127,212,1)"
-      : latestNet < 0
-      ? "rgba(255,80,80,0.9)"
-      : "rgba(167,139,250,0.85)";
+  const selfH2H = useMemo(() => (h2hDef ? buildAggregate(h2hDef) : null), [h2hDef]);
+  const selfMulti = useMemo(() => (multiDef ? buildMulti(multiDef) : null), [multiDef]);
+
+  // build everything after first paint (tile sparklines + instant switching)
+  const [allBuilt, setAllBuilt] = useState<Record<string, BuiltAggregate>>({});
+  const [allMulti, setAllMulti] = useState<Record<string, BuiltMulti>>({});
+  useEffect(() => {
+    let cancelled = false;
+    const t = setTimeout(() => {
+      const a: Record<string, BuiltAggregate> = {}; for (const d of AGGREGATES) a[d.id] = buildAggregate(d);
+      const m: Record<string, BuiltMulti> = {}; for (const d of MULTI_AGGREGATES) m[d.id] = buildMulti(d);
+      if (!cancelled) { setAllBuilt(a); setAllMulti(m); }
+    }, 0);
+    return () => { cancelled = true; clearTimeout(t); };
+  }, []);
+
+  const builtH2H = h2hDef ? (allBuilt[item.id] ?? selfH2H) : null;
+  const builtMulti = multiDef ? (allMulti[item.id] ?? selfMulti) : null;
+
+  const tiles = useMemo(() => CATALOG.filter((c) => c.group === group), [group]);
+
+  // head-to-head derived
+  const hLatest = builtH2H?.latest ?? null;
+  const leadColor = hLatest && h2hDef ? (hLatest.net >= 0 ? h2hDef.seriesA.color : h2hDef.seriesB.color) : "var(--muted)";
+  const scaleMax = hLatest ? Math.max(10, Math.ceil((Math.abs(hLatest.net) + 3) / 5) * 5) : 10;
+  const knobPct = hLatest ? 50 - clampN(hLatest.net / scaleMax, -1, 1) * 50 : 50;
+  const meterTicks: number[] = []; for (let k = 5; k < scaleMax; k += 5) meterTicks.push(k);
+
+  // poll lists (filter + sort)
+  const toggleSort = (key: string) => setSort((s) => (s.key === key ? { key, dir: s.dir === "desc" ? "asc" : "desc" } : { key, dir: key === "pollster" ? "asc" : "desc" }));
+  const sortVal = (p: Record<string, unknown> & { t: number; v?: number[] }, key: string): number | string => {
+    if (key === "date") return p.t;
+    if (key === "sample") return (p.sampleSize as number) || 0;
+    if (key === "pollster") return String(p.pollster).toLowerCase();
+    if (key === "margin") return (p.margin as number) ?? 0;
+    if (key === "a") return (p.a as number) ?? 0;
+    if (key === "b") return (p.b as number) ?? 0;
+    if (key.startsWith("c")) { const i = +key.slice(1); const v = p.v?.[i]; return Number.isFinite(v) ? (v as number) : -Infinity; }
+    return 0;
+  };
+  function applySort<T extends { t: number }>(arr: T[]): T[] {
+    const mul = sort.dir === "asc" ? 1 : -1;
+    return arr.slice().sort((a, b) => {
+      const av = sortVal(a as never, sort.key), bv = sortVal(b as never, sort.key);
+      if (av < bv) return -1 * mul;
+      if (av > bv) return 1 * mul;
+      return b.t - a.t;
+    });
+  }
+  const qx = query.trim().toLowerCase();
+  const h2hPolls = builtH2H?.polls ?? [];
+  const multiPolls = builtMulti?.polls ?? [];
+  const visH2H = applySort(h2hPolls.filter((p) => !qx || p.pollster.toLowerCase().includes(qx)));
+  const visMulti = applySort(multiPolls.filter((p) => !qx || p.pollster.toLowerCase().includes(qx)));
+
+  const sortHead = (k: string, label: string, cls = "r") => (
+    <th key={k} className={cls}>
+      <button type="button" className={`pa-sort ${sort.key === k ? "is-active" : ""}`} onClick={() => toggleSort(k)}>
+        {label}<span className="pa-sort-ind">{sort.key === k ? (sort.dir === "desc" ? "↓" : "↑") : ""}</span>
+      </button>
+    </th>
+  );
+  const maxAbsMargin = Math.max(8, ...h2hPolls.map((p) => Math.abs(p.margin)));
+  const totalPolls = isMulti ? multiPolls.length : h2hPolls.length;
+  const visCount = isMulti ? visMulti.length : visH2H.length;
+
+  const dailyArr = isMulti ? (builtMulti?.daily ?? []) : (builtH2H?.daily ?? []);
+  const updated = dailyArr.length ? dailyArr[dailyArr.length - 1].date : null;
+
+  function pickGroup(g: string) { setGroup(g); const first = CATALOG.find((c) => c.group === g); if (first) { setId(first.id); setQuery(""); } }
+  function pickAgg(aid: string) { setId(aid); setQuery(""); }
+
+  function downloadCSV() {
+    let header: (string | number)[] = [], rows: (string | number)[][] = [], fname = "psi-polls.csv";
+    if (isMulti && multiDef && builtMulti) {
+      header = ["Pollster", "Date", "Sample", "Type", "Grade", ...multiDef.series.map((s) => s.label)];
+      rows = builtMulti.polls.slice().sort((a, b) => b.t - a.t).map((p) => [p.pollster, p.date, p.sampleSize || "", p.sampleType, getPollsterEntry(p.pollster).grade, ...p.v.map((x) => (Number.isFinite(x) ? round1(x) : ""))]);
+      fname = `psi-${multiDef.id}-polls.csv`;
+    } else if (h2hDef && builtH2H) {
+      header = ["Pollster", "Date", "Sample", "Type", "Grade", h2hDef.seriesA.label, h2hDef.seriesB.label, h2hDef.marginLabel];
+      rows = builtH2H.polls.slice().sort((a, b) => b.t - a.t).map((p) => [p.pollster, p.date, p.sampleSize || "", p.sampleType, getPollsterEntry(p.pollster).grade, p.a, p.b, round1(p.margin)]);
+      fname = `psi-${h2hDef.id}-polls.csv`;
+    } else return;
+    const csv = [header, ...rows].map((r) => r.map(csvEscape).join(",")).join("\n");
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url; a.download = fname;
+    document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+  }
 
   return (
     <>
       <style>{CSS}</style>
-      <div className="pgb-root">
-        <div className="pgb-stripe" />
+      <div className="pa">
+        {/* ── top selector ── */}
+        <div className="pa-select">
+          <div className="pa-cats">
+            {GROUPS.map((g) => (
+              <button key={g} className={`pa-cat ${g === group ? "is-active" : ""}`} onClick={() => pickGroup(g)}>{g}</button>
+            ))}
+          </div>
+          <div className="pa-tiles">
+            {tiles.map((it) => {
+              let color = "rgba(255,255,255,0.4)", valueText = "·", spark: number[] = [];
+              if (it.kind === "h2h") {
+                const b = allBuilt[it.id]; const d = H2H_BY_ID[it.id];
+                if (b?.latest) { color = b.latest.net >= 0 ? d.seriesA.color : d.seriesB.color; valueText = d.fmtMargin(b.latest.net); spark = b.daily.map((x) => x.net); }
+              } else {
+                const b = allMulti[it.id]; const d = MULTI_BY_ID[it.id];
+                if (b?.latest) { const li = leaderIdx(b.latest); color = d.series[li].color; valueText = b.latest[li].toFixed(1); spark = b.daily.map((x) => x.v[li]); }
+              }
+              return (
+                <button key={it.id} className={`pa-tile ${it.id === id ? "is-active" : ""}`} onClick={() => pickAgg(it.id)}>
+                  <span className="pa-tile-bar" style={{ background: color }} />
+                  <div className="pa-tile-top"><span className="pa-tile-name">{it.label}</span><span className="pa-tile-val" style={{ color }}>{valueText}</span></div>
+                  <div className="pa-tile-spark">{spark.length ? <Sparkline data={sample(spark, 48)} color={color} /> : <div className="pa-tile-skel" />}</div>
+                </button>
+              );
+            })}
+          </div>
+        </div>
 
-        {/* ── HERO ── */}
-        <div className="pgb-hero">
-          <div className="pgb-stripe" />
-          <div className="pgb-hero-inner">
-            <div>
-              <div className="pgb-eyebrow">2026 Midterm Elections · U.S. House of Representatives</div>
-              <h1 className="pgb-hero-title">
-                National <span className="dem">Generic</span><br />
-                <span className="rep">Ballot</span> Poll
-              </h1>
-              <p className="pgb-hero-desc">
-                Daily weighted average across all included polls — recency decay,
-                √n sample adjustment, LV/RV/A screen, and PSI Gold Standard upweighting.
-              </p>
-              <div className="pgb-hero-badge-row">
-                <span className="pgb-badge pgb-badge-live">
-                  <span className="pgb-live-dot" />LIVE TRACKING
-                </span>
-                <span className="pgb-badge pgb-badge-gold">★ GOLD STANDARD ×2 WEIGHT</span>
-                <span className="pgb-badge">{RAW_POLLS.length} POLLS IN MODEL</span>
-                <span className="pgb-badge pgb-badge-purple">RECENCY · √N · LV/RV/A</span>
+        {/* ── header ── */}
+        <header className="pa-head">
+          <div className="pa-eyebrow">{isMulti ? "2026 Primary" : (h2hDef?.category ?? "")}<span className="pa-live"><span className="pa-live-dot" /> Live</span></div>
+          <h1 className="pa-title">{isMulti ? multiDef?.title : h2hDef?.title}</h1>
+          <p className="pa-sub">{isMulti ? multiDef?.subtitle : h2hDef?.subtitle} <span className="pa-sub-dim">{totalPolls} polls{updated ? ` · updated ${new Date(updated + "T00:00:00").toLocaleDateString(undefined, { month: "short", day: "numeric" })}` : ""}</span></p>
+        </header>
+
+        {/* head-to-head: key numbers + spread meter */}
+        {!isMulti && hLatest && h2hDef && (
+          <div className="pa-board">
+            <div className="pa-stats">
+              <div className="pa-stat">
+                <div className="pa-stat-label"><span className="pa-dot" style={{ background: h2hDef.seriesA.color }} />{h2hDef.seriesA.label}</div>
+                <div className="pa-stat-num" style={{ color: h2hDef.seriesA.color }}>{hLatest.a.toFixed(1)}<small>{h2hDef.unit}</small></div>
+              </div>
+              <div className="pa-stat">
+                <div className="pa-stat-label"><span className="pa-dot" style={{ background: h2hDef.seriesB.color }} />{h2hDef.seriesB.label}</div>
+                <div className="pa-stat-num" style={{ color: h2hDef.seriesB.color }}>{hLatest.b.toFixed(1)}<small>{h2hDef.unit}</small></div>
               </div>
             </div>
-
-            <div className="pgb-hero-read">
-              {[
-                { label: "DEMOCRATS",   val: `${round1(latestDemocrats).toFixed(1)}%`,   color: "rgba(77,127,212,1)"   },
-                { label: "REPUBLICANS", val: `${round1(latestRepublicans).toFixed(1)}%`, color: "rgba(255,80,80,0.95)" },
-                { label: "MARGIN",      val: netText,                                     color: netColor               },
-              ].map(({ label, val, color }) => (
-                <div key={label} className="pgb-hero-read-row">
-                  <span className="pgb-hero-read-label">{label}</span>
-                  <span className="pgb-hero-read-val" style={{ color }}>{val}</span>
+            <div className="pa-meter" aria-label={`${h2hDef.marginLabel} ${h2hDef.fmtMargin(hLatest.net)}`}>
+              <div className="pa-meter-valrow">
+                <div className="pa-meter-val" style={{ left: `${clampN(knobPct, 7, 93)}%`, color: leadColor }}>
+                  <span className="pa-meter-num">{h2hDef.fmtMargin(hLatest.net)}</span>
+                  <span className="pa-meter-eye">{h2hDef.marginLabel}</span>
+                  <span className="pa-meter-caret" style={{ borderTopColor: leadColor }} />
                 </div>
-              ))}
+              </div>
+              <div className="pa-meter-beam">
+                <span className="pa-meter-track" />
+                <span className="pa-meter-fill" style={hLatest.net >= 0
+                  ? { right: "50%", width: `${50 - knobPct}%`, background: leadColor }
+                  : { left: "50%", width: `${knobPct - 50}%`, background: leadColor }} />
+                {meterTicks.map((k) => (
+                  <React.Fragment key={k}>
+                    <span className="pa-meter-tick" style={{ left: `${50 + (k / scaleMax) * 50}%` }} />
+                    <span className="pa-meter-tick" style={{ left: `${50 - (k / scaleMax) * 50}%` }} />
+                  </React.Fragment>
+                ))}
+                <span className="pa-meter-tie" />
+                <span className="pa-meter-knob" style={{ left: `${knobPct}%`, background: leadColor, color: leadColor }} />
+              </div>
+              <div className="pa-meter-foot">
+                <span className="pa-meter-end" style={{ color: hLatest.net > 0.05 ? h2hDef.seriesA.color : undefined }}>{h2hDef.seriesA.label}</span>
+                <span className="pa-meter-even">even</span>
+                <span className="pa-meter-end" style={{ color: hLatest.net < -0.05 ? h2hDef.seriesB.color : undefined }}>{h2hDef.seriesB.label}</span>
+              </div>
             </div>
           </div>
+        )}
+
+        {/* multi: ranked standings */}
+        {isMulti && builtMulti?.latest && multiDef && (
+          <div className="pa-rank">
+            {(() => {
+              const lv = builtMulti.latest!;
+              const ranked = multiDef.series.map((s, i) => ({ s, v: lv[i] })).filter((r) => Number.isFinite(r.v)).sort((a, b) => b.v - a.v);
+              const maxV = ranked.length ? ranked[0].v || 1 : 1;
+              return ranked.map(({ s, v }) => (
+                <div className="pa-rank-row" key={s.key}>
+                  <span className="pa-rank-dot" style={{ background: s.color }} />
+                  <span className="pa-rank-name">{s.label}</span>
+                  <span className="pa-rank-bar"><span className="pa-rank-fill" style={{ width: `${(v / maxV) * 100}%`, background: s.color }} /></span>
+                  <span className="pa-rank-val" style={{ color: s.color }}>{v.toFixed(1)}<small>%</small></span>
+                </div>
+              ));
+            })()}
+          </div>
+        )}
+
+        {/* chart */}
+        <div className="pa-panel">
+          <div className="pa-panel-head">
+            <h2 className="pa-panel-title">Average over time</h2>
+            <span className="pa-panel-meta">Each dot is one poll · sized by sample</span>
+          </div>
+          {isMulti && builtMulti && multiDef ? (
+            <MultiCandidateChart animKey={multiDef.id} daily={builtMulti.daily} polls={builtMulti.polls} series={multiDef.series} unit={multiDef.unit} />
+          ) : builtH2H && h2hDef ? (
+            <AggregatePollChart animKey={h2hDef.id} daily={builtH2H.daily} polls={builtH2H.polls} seriesA={h2hDef.seriesA} seriesB={h2hDef.seriesB} fmtMargin={h2hDef.fmtMargin} marginLabel={h2hDef.marginLabel} unit={h2hDef.unit} />
+          ) : null}
         </div>
 
-        {/* ── KPIs ── */}
-        <div className="pgb-section-label">CURRENT AVERAGES</div>
-        <div className="pgb-kpi-grid">
-          <KpiCard
-            label="Democrats"
-            value={`${round1(latestDemocrats).toFixed(1)}%`}
-            sub="Daily weighted avg"
-            accentColor="rgba(77,127,212,1)"
-            barPct={latestDemocrats}
-          />
-          <KpiCard
-            label="Republicans"
-            value={`${round1(latestRepublicans).toFixed(1)}%`}
-            sub="Daily weighted avg"
-            accentColor="rgba(255,80,80,0.8)"
-            barPct={latestRepublicans}
-          />
-          <KpiCard
-            label="Margin"
-            value={netText}
-            sub="Democrats − Republicans"
-            accentColor={netColor}
-          />
-          <KpiCard
-            label="Polls"
-            value={`${RAW_POLLS.length}`}
-            sub="Included in model"
-            barPct={Math.min(100, RAW_POLLS.length / 2)}
-          />
-        </div>
-
-        {/* ── CHART ── */}
-        <PollingTimeSeriesChart
-          data={daily as any[]}
-          series={seriesForChart}
-          yDomain={[30, 60]}
-          title="2026 National Generic Ballot polling average"
-          subtitle="Democrat & Republican trendlines — hover to view daily values"
-        />
-
-        {/* ── POLL TABLE ── */}
-        <div className="pgb-table-panel">
-          <div className="pgb-stripe" />
-          <div className="pgb-table-head">
-            <span className="pgb-table-head-title">ALL INCLUDED POLLS</span>
-            <div style={{ display: "flex", gap: "8px", alignItems: "center", flexWrap: "wrap" }}>
-              <span className="pgb-badge pgb-badge-gold">
-                ★ GOLD STANDARD = ×{GOLD_STANDARD_MULTIPLIER} WEIGHT
-              </span>
-              <span className="pgb-table-head-note">SORTED BY END DATE ↓</span>
+        {/* all polls */}
+        <section className="pa-polls">
+          <div className="pa-polls-head">
+            <h2 className="pa-polls-h">All polls <span>{visCount} of {totalPolls}</span></h2>
+            <div className="pa-polls-actions">
+              <input className="pa-search" placeholder="Filter by pollster…" value={query} onChange={(e) => setQuery(e.target.value)} />
+              <button className="pa-csv" onClick={downloadCSV}>
+                <svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden><path d="M8 1.5v8.5m0 0L4.5 6.5M8 10l3.5-3.5M2.5 13.5h11" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                CSV
+              </button>
             </div>
           </div>
-
-          <div className="pgb-table-scroll">
-            <table className="pgb-table">
-              <thead>
-                <tr>
-                  <th>POLLSTER</th>
-                  <th className="r">END DATE</th>
-                  <th className="r">N</th>
-                  <th className="r">TYPE</th>
-                  <th className="r">WEIGHT</th>
-                  <th className="r">DEMOCRATS</th>
-                  <th className="r">REPUBLICANS</th>
-                  <th className="r">MARGIN</th>
-                </tr>
-              </thead>
-              <tbody>
-                {[...RAW_POLLS]
-                  .sort((a, b) => (a.endDate < b.endDate ? 1 : -1))
-                  .map((p) => {
-                    const r = Number((p.results as any).Republicans ?? 0);
-                    const d = Number((p.results as any).Democrats ?? 0);
-                    const net = round1(d - r);
-                    const netStr =
-                      net === 0 ? "EVEN" : net > 0 ? `D+${net.toFixed(1)}` : `R+${Math.abs(net).toFixed(1)}`;
-                    const netClass =
-                      net > 0 ? "pgb-net-dem" : net < 0 ? "pgb-net-rep" : "pgb-net-even";
-                    const gold = isGoldStandard(p.pollster);
-                    const effN = effectiveSampleSize(p.pollster, p.sampleSize);
-
-                    return (
-                      <tr key={`${p.pollster}-${p.endDate}-${p.sampleSize}`}>
-                        <td style={{ color: "rgba(255,255,255,0.85)" }}>
-                          <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                            <span>{p.pollster}</span>
-                            {gold && <span className="pgb-gold-badge">GOLD</span>}
-                          </div>
-                        </td>
-                        <td className="r">{p.endDate}</td>
-                        <td className="r">
-                          {p.sampleSize > 0 ? p.sampleSize.toLocaleString() : "—"}
-                          {gold && p.sampleSize > 0 && (
-                            <span style={{ marginLeft: "6px", fontSize: "9px", color: "var(--muted3)" }}>
-                              (eff {effN.toLocaleString()})
-                            </span>
-                          )}
-                        </td>
-                        <td className="r">{p.sampleType}</td>
-                        <td className="r" style={{ color: "rgba(255,255,255,0.7)" }}>
-                          {gold ? `×${GOLD_STANDARD_MULTIPLIER}.00` : "×1.00"}
-                        </td>
-                        <td className={`r pgb-dem-col`}>{d.toFixed(0)}%</td>
-                        <td className={`r pgb-rep-col`}>{r.toFixed(0)}%</td>
-                        <td className={`r ${netClass}`}>{netStr}</td>
-                      </tr>
-                    );
-                  })}
-              </tbody>
-            </table>
+          <div className="pa-table-wrap">
+            <div className="pa-table-min">
+              {isMulti && multiDef ? (
+                <table className="pa-table">
+                  <thead>
+                    <tr>
+                      {sortHead("pollster", "Pollster", "")}
+                      {sortHead("date", "Date")}
+                      {sortHead("sample", "Sample")}
+                      {multiDef.series.map((s, i) => sortHead(`c${i}`, s.label, "r"))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {visMulti.map((p, i) => {
+                      const entry = getPollsterEntry(p.pollster);
+                      const mi = leaderIdx(p.v);
+                      return (
+                        <tr key={`${p.pollster}-${p.date}-${i}`}>
+                          <td><span className="pa-pollster">{p.pollster}</span><span className={`pa-grade ${gradeIsHigh(entry.grade) ? "hi" : ""}`}>{entry.grade}</span></td>
+                          <td className="r">{new Date(p.t).toLocaleDateString(undefined, { month: "short", day: "numeric", year: "2-digit" })}</td>
+                          <td className="r">{p.sampleSize > 0 ? p.sampleSize.toLocaleString() : "—"}<span className="pa-type">{p.sampleType}</span></td>
+                          {multiDef.series.map((s, ci) => (
+                            <td key={s.key} className="r" style={ci === mi ? { color: s.color, fontWeight: 600 } : undefined}>{Number.isFinite(p.v[ci]) ? round0(p.v[ci]) : "—"}</td>
+                          ))}
+                        </tr>
+                      );
+                    })}
+                    {visMulti.length === 0 && <tr><td colSpan={3 + multiDef.series.length} className="pa-empty">No pollsters match “{query}”.</td></tr>}
+                  </tbody>
+                </table>
+              ) : h2hDef ? (
+                <table className="pa-table">
+                  <thead>
+                    <tr>
+                      {sortHead("pollster", "Pollster", "")}
+                      {sortHead("date", "Date")}
+                      {sortHead("sample", "Sample")}
+                      {sortHead("a", h2hDef.seriesA.label)}
+                      {sortHead("b", h2hDef.seriesB.label)}
+                      {sortHead("margin", h2hDef.marginLabel, "pa-mhead")}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {visH2H.map((p, i) => {
+                      const entry = getPollsterEntry(p.pollster);
+                      const pct = Math.min(50, (Math.abs(p.margin) / maxAbsMargin) * 50);
+                      const mColor = p.margin > 0 ? h2hDef.seriesA.color : p.margin < 0 ? h2hDef.seriesB.color : "rgba(255,255,255,0.5)";
+                      return (
+                        <tr key={`${p.pollster}-${p.date}-${i}`}>
+                          <td><span className="pa-pollster">{p.pollster}</span><span className={`pa-grade ${gradeIsHigh(entry.grade) ? "hi" : ""}`}>{entry.grade}</span></td>
+                          <td className="r">{new Date(p.t).toLocaleDateString(undefined, { month: "short", day: "numeric", year: "2-digit" })}</td>
+                          <td className="r">{p.sampleSize > 0 ? p.sampleSize.toLocaleString() : "—"}<span className="pa-type">{p.sampleType}</span></td>
+                          <td className="r" style={{ color: h2hDef.seriesA.color }}>{round0(p.a)}</td>
+                          <td className="r" style={{ color: h2hDef.seriesB.color }}>{round0(p.b)}</td>
+                          <td className="pa-mcell">
+                            <span className="pa-mbar"><span className="pa-mbar-fill" style={p.margin >= 0 ? { left: "50%", width: `${pct}%`, background: mColor } : { right: "50%", width: `${pct}%`, background: mColor }} /></span>
+                            <span className="pa-mnum" style={{ color: mColor }}>{h2hDef.fmtMargin(round1(p.margin))}</span>
+                          </td>
+                        </tr>
+                      );
+                    })}
+                    {visH2H.length === 0 && <tr><td colSpan={6} className="pa-empty">No pollsters match “{query}”.</td></tr>}
+                  </tbody>
+                </table>
+              ) : null}
+            </div>
           </div>
-        </div>
+        </section>
       </div>
     </>
   );
 }
+
+const CSS = `
+  html, body { background: #000 !important; }
+
+  .pa {
+    --line: rgba(255,255,255,0.08); --line2: rgba(255,255,255,0.05);
+    --ink: #ededed; --muted: rgba(255,255,255,0.56); --muted2: rgba(255,255,255,0.4); --faint: rgba(255,255,255,0.26);
+    --panel: rgba(255,255,255,0.018);
+    color: var(--ink); display: flex; flex-direction: column;
+  }
+  .pa * { box-sizing: border-box; }
+  @keyframes pa-in { from { opacity:0; transform: translateY(8px); } to { opacity:1; transform:none; } }
+
+  /* ── top selector ── */
+  .pa-select { border-bottom: 1px solid var(--line); padding-bottom: 18px; margin-bottom: 30px; }
+  .pa-cats { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 16px; }
+  .pa-cat { appearance: none; cursor: pointer; background: transparent; border: 0; border-radius: 8px; padding: 7px 12px; line-height: 1; font-family: var(--font-body), monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted2); transition: color 140ms ease, background 140ms ease; }
+  .pa-cat:hover { color: #fff; background: rgba(255,255,255,0.04); }
+  .pa-cat.is-active { color: #000; background: #fafafa; }
+
+  /* one cohesive "aggregate index" strip — cells flex to fill width, hairline-divided */
+  .pa-tiles { display: flex; flex-wrap: nowrap; gap: 0; overflow-x: auto; overflow-y: hidden; border: 1px solid var(--line); border-radius: 12px; background: rgba(255,255,255,0.012); scrollbar-width: thin; }
+  .pa-tile { position: relative; flex: 1 1 0; min-width: 156px; text-align: left; cursor: pointer; appearance: none; background: transparent; border: 0; padding: 13px 16px 12px; overflow: hidden; transition: background 150ms ease; }
+  .pa-tile::after { content: ""; position: absolute; right: 0; top: 24%; bottom: 24%; width: 1px; background: var(--line); }
+  .pa-tile:last-child::after { display: none; }
+  .pa-tile:hover { background: rgba(255,255,255,0.035); }
+  .pa-tile.is-active { background: rgba(255,255,255,0.05); }
+  .pa-tile.is-active::after, .pa-tile.is-active + .pa-tile::after { display: none; }
+  .pa-tile-bar { position: absolute; left: 0; right: 0; top: 0; height: 1.5px; opacity: 0; transition: opacity 150ms ease; }
+  .pa-tile.is-active .pa-tile-bar { opacity: 0.85; }
+  .pa-tile-top { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; margin-bottom: 11px; }
+  .pa-tile-name { font-family: var(--font-body), monospace; font-size: 12px; font-weight: 500; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .pa-tile:hover .pa-tile-name { color: var(--ink); }
+  .pa-tile.is-active .pa-tile-name { color: #fff; }
+  .pa-tile-val { font-family: var(--font-body), monospace; font-size: 12px; font-weight: 600; font-variant-numeric: tabular-nums; flex-shrink: 0; opacity: 0.85; }
+  .pa-tile.is-active .pa-tile-val { opacity: 1; }
+  .pa-tile-spark { height: 26px; opacity: 0.4; transition: opacity 150ms ease; }
+  .pa-tile:hover .pa-tile-spark { opacity: 0.7; }
+  .pa-tile.is-active .pa-tile-spark { opacity: 1; }
+  .pa-tile-skel { height: 28px; border-radius: 4px; background: linear-gradient(90deg, rgba(255,255,255,0.03), rgba(255,255,255,0.06), rgba(255,255,255,0.03)); }
+
+  /* ── header ── */
+  .pa-head { padding: 0; animation: pa-in 480ms cubic-bezier(0.16,1,0.3,1) both; }
+  .pa-eyebrow { display: inline-flex; align-items: center; gap: 12px; font-family: var(--font-body), monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted2); margin-bottom: 14px; }
+  .pa-live { display: inline-flex; align-items: center; gap: 6px; color: var(--muted); }
+  .pa-live-dot { width: 5px; height: 5px; border-radius: 50%; background: #3fb27f; opacity: 0.9; }
+  .pa-title { font-family: var(--font-body), "Geist Mono", monospace; font-weight: 600; letter-spacing: -0.02em; line-height: 1.08; font-size: clamp(25px, 3.2vw, 37px); color: #fff; margin: 0 0 13px; text-transform: none; }
+  .pa-sub { font-family: var(--font-body), monospace; font-size: 13px; line-height: 1.65; color: var(--muted); max-width: 74ch; margin: 0; }
+  .pa-sub-dim { color: var(--faint); }
+
+  /* ── key numbers ── */
+  .pa-board { margin: 28px 0 0; }
+  .pa-stats { display: flex; align-items: flex-start; gap: clamp(38px, 6vw, 80px); }
+  .pa-stat { display: flex; flex-direction: column; gap: 10px; }
+  .pa-stat-label { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-body), monospace; font-size: 10.5px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted2); }
+  .pa-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+  .pa-stat-num { font-family: var(--font-body), monospace; font-weight: 600; font-size: clamp(31px, 3.3vw, 43px); line-height: 0.95; font-variant-numeric: tabular-nums; letter-spacing: -0.025em; }
+  .pa-stat-num small { font-size: 0.4em; font-weight: 500; color: var(--faint); margin-left: 2px; }
+
+  /* spread meter */
+  .pa-meter { position: relative; margin-top: 26px; }
+  .pa-meter-valrow { position: relative; height: 46px; }
+  .pa-meter-val { position: absolute; bottom: 0; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 3px; white-space: nowrap; transition: left 360ms cubic-bezier(0.16,1,0.3,1); }
+  .pa-meter-num { font-family: var(--font-body), monospace; font-weight: 700; font-size: clamp(20px, 2.4vw, 26px); line-height: 1; font-variant-numeric: tabular-nums; letter-spacing: -0.01em; }
+  .pa-meter-eye { font-family: var(--font-body), monospace; font-size: 8px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--faint); }
+  .pa-meter-caret { width: 0; height: 0; border-left: 5px solid transparent; border-right: 5px solid transparent; border-top: 6px solid; margin-top: 4px; }
+  .pa-meter-beam { position: relative; height: 16px; }
+  .pa-meter-track { position: absolute; top: 50%; left: 0; right: 0; height: 3px; transform: translateY(-50%); background: rgba(255,255,255,0.08); border-radius: 2px; }
+  .pa-meter-fill { position: absolute; top: 50%; height: 3px; transform: translateY(-50%); border-radius: 2px; transition: width 360ms cubic-bezier(0.16,1,0.3,1); }
+  .pa-meter-tick { position: absolute; top: 50%; width: 1px; height: 7px; transform: translate(-50%, -50%); background: rgba(255,255,255,0.16); }
+  .pa-meter-tie { position: absolute; left: 50%; top: 50%; width: 2px; height: 16px; transform: translate(-50%, -50%); background: rgba(255,255,255,0.32); border-radius: 1px; }
+  .pa-meter-knob { position: absolute; top: 50%; width: 13px; height: 13px; border-radius: 50%; transform: translate(-50%, -50%); box-shadow: 0 0 0 3.5px #000, 0 0 14px -2px currentColor; transition: left 360ms cubic-bezier(0.16,1,0.3,1); }
+  .pa-meter-foot { display: flex; align-items: center; justify-content: space-between; margin-top: 11px; font-family: var(--font-body), monospace; font-size: 9px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; }
+  .pa-meter-end { color: var(--faint); max-width: 16ch; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .pa-meter-even { color: var(--muted2); letter-spacing: 0.22em; }
+
+  /* ── ranked standings (multi) ── */
+  .pa-rank { margin: 28px 0 0; display: flex; flex-direction: column; gap: 13px; max-width: 580px; }
+  .pa-rank-row { display: grid; grid-template-columns: 12px minmax(94px, 150px) 1fr auto; align-items: center; gap: 14px; }
+  .pa-rank-dot { width: 9px; height: 9px; border-radius: 50%; }
+  .pa-rank-name { font-family: var(--font-body), monospace; font-size: 13px; font-weight: 600; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .pa-rank-bar { position: relative; height: 8px; border-radius: 4px; background: rgba(255,255,255,0.05); overflow: hidden; }
+  .pa-rank-fill { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 4px; transition: width 380ms cubic-bezier(0.16,1,0.3,1); }
+  .pa-rank-val { font-family: var(--font-body), monospace; font-size: 20px; font-weight: 600; font-variant-numeric: tabular-nums; letter-spacing: -0.02em; }
+  .pa-rank-val small { font-size: 0.5em; color: var(--faint); margin-left: 1px; }
+
+  /* ── chart panel ── */
+  .pa-panel { margin-top: 40px; border: 1px solid var(--line); border-radius: 14px; background: #000; padding: 20px 20px 18px; }
+  .pa-panel-head { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+  .pa-panel-title { font-family: var(--font-body), monospace; font-weight: 600; font-size: 13px; letter-spacing: 0.04em; text-transform: uppercase; color: #f3f3f5; margin: 0; }
+  .pa-panel-meta { font-family: var(--font-body), monospace; font-size: 11px; color: var(--faint); }
+
+  /* ── polls ── */
+  .pa-polls { margin-top: 48px; }
+  .pa-polls-head { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px; margin-bottom: 16px; }
+  .pa-polls-h { font-family: var(--font-body), monospace; font-weight: 600; font-size: 14px; letter-spacing: 0.04em; text-transform: uppercase; color: #f3f3f5; margin: 0; display: flex; align-items: baseline; gap: 12px; }
+  .pa-polls-h span { font-size: 11px; font-weight: 600; color: var(--faint); letter-spacing: 0.04em; }
+  .pa-polls-actions { display: flex; align-items: center; gap: 8px; }
+  .pa-search { appearance: none; background: var(--panel); border: 1px solid var(--line); border-radius: 9px; color: var(--ink); font-family: var(--font-body), monospace; font-size: 12.5px; padding: 9px 13px; width: 200px; max-width: 44vw; transition: border-color 160ms ease, background 160ms ease; }
+  .pa-search::placeholder { color: var(--faint); }
+  .pa-search:focus { outline: none; border-color: rgba(255,255,255,0.22); background: rgba(255,255,255,0.03); }
+  .pa-csv { display: inline-flex; align-items: center; gap: 7px; cursor: pointer; appearance: none; background: var(--panel); border: 1px solid var(--line); border-radius: 9px; color: var(--muted); font-family: var(--font-body), monospace; font-size: 12px; font-weight: 600; letter-spacing: 0.04em; padding: 9px 13px; transition: color 150ms ease, border-color 150ms ease, background 150ms ease; }
+  .pa-csv:hover { color: #fff; border-color: rgba(255,255,255,0.22); background: rgba(255,255,255,0.04); }
+
+  .pa-table { width: 100%; border-collapse: collapse; }
+  .pa-table thead th { position: sticky; top: 0; z-index: 1; text-align: left; background: #000; font-family: var(--font-body), monospace; font-size: 10px; font-weight: 600; letter-spacing: 0.13em; text-transform: uppercase; color: var(--faint); padding: 0 16px 12px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+  .pa-table thead th.r { text-align: right; }
+  .pa-table thead th.pa-mhead { text-align: left; padding-left: 26px; }
+  .pa-sort { appearance: none; background: transparent; border: 0; cursor: pointer; font: inherit; color: inherit; letter-spacing: inherit; text-transform: inherit; padding: 0; display: inline-flex; align-items: center; gap: 4px; transition: color 140ms ease; }
+  .pa-sort:hover { color: var(--muted); }
+  .pa-sort.is-active { color: var(--ink); }
+  .pa-sort-ind { font-size: 9px; min-width: 6px; display: inline-block; }
+  .pa-table tbody td { font-family: var(--font-body), monospace; font-size: 13px; padding: 12px 16px; border-bottom: 1px solid var(--line2); color: var(--muted); vertical-align: middle; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .pa-table tbody td.r { text-align: right; }
+  .pa-table tbody tr { transition: background 120ms ease; }
+  .pa-table tbody tr:hover td { background: rgba(255,255,255,0.022); }
+  .pa-pollster { color: #e7e7ea; font-weight: 500; }
+  .pa-grade { display: inline-block; margin-left: 9px; padding: 1.5px 6px; border: 1px solid var(--line); border-radius: 5px; font-size: 9.5px; font-weight: 600; letter-spacing: 0.05em; color: var(--muted2); }
+  .pa-grade.hi { border-color: rgba(91,140,240,0.4); color: #9cc0ff; }
+  .pa-type { color: var(--faint); margin-left: 6px; }
+  .pa-mcell { display: flex; align-items: center; gap: 14px; }
+  .pa-mbar { position: relative; width: 72px; height: 6px; border-radius: 3px; background: rgba(255,255,255,0.05); flex-shrink: 0; }
+  .pa-mbar::before { content: ""; position: absolute; left: 50%; top: -2px; bottom: -2px; width: 1px; background: rgba(255,255,255,0.16); }
+  .pa-mbar-fill { position: absolute; top: 0; bottom: 0; border-radius: 3px; }
+  .pa-mnum { font-weight: 600; min-width: 56px; }
+  .pa-table-wrap { overflow-x: auto; }
+  .pa-table-min { min-width: 660px; }
+  .pa-empty { padding: 40px 16px; text-align: center; color: var(--faint); font-family: var(--font-body), monospace; font-size: 13px; }
+
+  @media (prefers-reduced-motion: reduce) { .pa-head { animation: none !important; } .pa-live-dot { animation: none !important; } }
+`;

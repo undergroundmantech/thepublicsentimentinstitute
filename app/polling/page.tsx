@@ -719,7 +719,7 @@ const KY04_POLLS: Poll[] = [
 // ─────────────────────────────────────────────────────────────────────────────
 
 // ── Texas Senate ──────────────────────────────────────────────────────────────
-const TX_CORNYN_POLLS: Poll[] = [
+export const TX_CORNYN_POLLS: Poll[] = [
   { pollster: "Impact Research (D)",                  endDate: "2026-03-17", sampleSize: 900,  sampleType: "LV", results: { Republican: 41, Democrat: 43 } },
   { pollster: "Public Policy Polling (D)",            endDate: "2026-03-05", sampleSize: 576,  sampleType: "RV", results: { Republican: 43, Democrat: 44 } },
   { pollster: "University of Houston/YouGov",         endDate: "2026-01-31", sampleSize: 1502, sampleType: "LV", results: { Republican: 44, Democrat: 43 } },
@@ -729,7 +729,7 @@ const TX_CORNYN_POLLS: Poll[] = [
   { pollster: "UT Tyler",                             endDate: "2025-09-24", sampleSize: 1032, sampleType: "RV", results: { Republican: 41, Democrat: 35 } },
 ];
 
-const TX_PAXTON_POLLS: Poll[] = [
+export const TX_PAXTON_POLLS: Poll[] = [
   { pollster: "Impact Research (D)",                  endDate: "2026-03-17", sampleSize: 900,  sampleType: "LV", results: { Republican: 43, Democrat: 44 } },
   { pollster: "Public Policy Polling (D)",            endDate: "2026-03-05", sampleSize: 576,  sampleType: "RV", results: { Republican: 45, Democrat: 47 } },
   { pollster: "University of Houston/YouGov",         endDate: "2026-01-31", sampleSize: 1502, sampleType: "LV", results: { Republican: 46, Democrat: 44 } },

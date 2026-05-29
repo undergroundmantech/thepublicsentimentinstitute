@@ -13,7 +13,7 @@ import {
 } from "@/app/polling/lib/buildDailyModel";
 
 const GOLD_STANDARD_MULTIPLIER = 3;
-const GOLD_STANDARD_NAMES = [
+export const GOLD_STANDARD_NAMES = [
   "Big Data Poll", "Rasmussen Reports", "AtlasIntel", "SoCalStrategies",
   "Emerson", "Trafalgar", "InsiderAdvantage", "Patriot Polling",
 ];
@@ -132,7 +132,7 @@ function netToColor(net: number): string {
 }
 
 // ─── Polls data ───────────────────────────────────────────────────────────────
-const RAW_POLLS: Poll[] = [
+export const RAW_POLLS: Poll[] = [
 { pollster: "Morning Consult", endDate: "2026-03-16", sampleSize: 2200, sampleType: "RV", results: { Approve: 43, Disapprove: 54 } },
 { pollster: "Economist/YouGov", endDate: "2026-03-16", sampleSize: 1429, sampleType: "RV", results: { Approve: 41, Disapprove: 56 } },
 { pollster: "Rasmussen Reports", endDate: "2026-03-16", sampleSize: 1500, sampleType: "LV", results: { Approve: 44, Disapprove: 54 } },
