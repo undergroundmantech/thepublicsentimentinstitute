@@ -16,6 +16,22 @@ const gradeIsHigh = (g: string) => ["Gold", "A++", "A+", "A"].some((x) => g.star
 const csvEscape = (v: string | number) => { const s = String(v); return /[",\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s; };
 const leaderIdx = (v: number[]) => v.reduce((best, x, i) => (Number.isFinite(x) && x > (v[best] ?? -Infinity) ? i : best), 0);
 
+// sample-type (voter screen) filter — collapses every raw label to one of three buckets
+type SampleFilter = "all" | "LV" | "RV" | "A";
+const SAMPLE_OPTS: { val: SampleFilter; label: string; full: string }[] = [
+  { val: "all", label: "All", full: "All polls" },
+  { val: "LV", label: "LV", full: "Likely voters" },
+  { val: "RV", label: "RV", full: "Registered voters" },
+  { val: "A", label: "Adults", full: "All adults" },
+];
+function canonType(t: string): "LV" | "RV" | "A" | null {
+  const s = (t || "").trim().toUpperCase();
+  if (s.startsWith("LV") || s.includes("LIKELY")) return "LV";
+  if (s.startsWith("RV") || s.includes("REGISTERED")) return "RV";
+  if (s === "A" || s.startsWith("ADULT")) return "A";
+  return null;
+}
+
 const GROUP_OF = (cat: string) =>
   cat === "2024 President" ? "2024 President"
   : cat === "2025 Governor" ? "2025 Races"
@@ -58,6 +74,7 @@ export default function PollingAveragesPage() {
   const [group, setGroup] = useState(CATALOG[0].group);
   const [query, setQuery] = useState("");
   const [sort, setSort] = useState<{ key: string; dir: "asc" | "desc" }>({ key: "date", dir: "desc" });
+  const [sampleFilter, setSampleFilter] = useState<SampleFilter>("all");
 
   // deep-link support: /polling/genericballot?race=<id> selects that aggregate
   useEffect(() => {
@@ -72,8 +89,9 @@ export default function PollingAveragesPage() {
   const h2hDef = isMulti ? null : (H2H_BY_ID[item.id] ?? null);
   const multiDef = isMulti ? (MULTI_BY_ID[item.id] ?? null) : null;
 
-  const selfH2H = useMemo(() => (h2hDef ? buildAggregate(h2hDef) : null), [h2hDef]);
-  const selfMulti = useMemo(() => (multiDef ? buildMulti(multiDef) : null), [multiDef]);
+  // unfiltered builds of the active aggregate — the "All" view, and the source of the sample counts
+  const baseH2H = useMemo(() => (h2hDef ? buildAggregate(h2hDef) : null), [h2hDef]);
+  const baseMulti = useMemo(() => (multiDef ? buildMulti(multiDef) : null), [multiDef]);
 
   // build everything after first paint (tile sparklines + instant switching)
   const [allBuilt, setAllBuilt] = useState<Record<string, BuiltAggregate>>({});
@@ -88,8 +106,35 @@ export default function PollingAveragesPage() {
     return () => { cancelled = true; clearTimeout(t); };
   }, []);
 
-  const builtH2H = h2hDef ? (allBuilt[item.id] ?? selfH2H) : null;
-  const builtMulti = multiDef ? (allMulti[item.id] ?? selfMulti) : null;
+  // sample-type counts for the active aggregate (drive the filter control + disable empty buckets)
+  const typeCounts = useMemo(() => {
+    const polls = (isMulti ? baseMulti?.polls : baseH2H?.polls) ?? [];
+    const c: Record<"LV" | "RV" | "A", number> = { LV: 0, RV: 0, A: 0 };
+    for (const p of polls) { const t = canonType(p.sampleType); if (t) c[t]++; }
+    return c;
+  }, [isMulti, baseH2H, baseMulti]);
+  const baseCount = (isMulti ? baseMulti?.polls.length : baseH2H?.polls.length) ?? 0;
+
+  // if the chosen sample type has no polls in the newly selected aggregate, fall back to All
+  useEffect(() => {
+    if (sampleFilter !== "all" && (typeCounts[sampleFilter] ?? 0) === 0) setSampleFilter("all");
+  }, [typeCounts, sampleFilter]);
+
+  // the displayed builds: the full set for "all", otherwise rebuilt from just the chosen sample type
+  const builtH2H = useMemo<BuiltAggregate | null>(() => {
+    if (!h2hDef) return null;
+    if (sampleFilter === "all") return baseH2H;
+    const polls = h2hDef.polls.filter((p) => canonType(p.sampleType) === sampleFilter);
+    if (!polls.length) return { daily: [], polls: [], latest: null };
+    return buildAggregate({ ...h2hDef, polls });
+  }, [h2hDef, baseH2H, sampleFilter]);
+  const builtMulti = useMemo<BuiltMulti | null>(() => {
+    if (!multiDef) return null;
+    if (sampleFilter === "all") return baseMulti;
+    const polls = multiDef.polls.filter((p) => canonType(p.sampleType) === sampleFilter);
+    if (!polls.length) return { daily: [], polls: [], latest: null };
+    return buildMulti({ ...multiDef, polls });
+  }, [multiDef, baseMulti, sampleFilter]);
 
   const tiles = useMemo(() => CATALOG.filter((c) => c.group === group), [group]);
 
@@ -202,6 +247,32 @@ export default function PollingAveragesPage() {
           <p className="pa-sub">{isMulti ? multiDef?.subtitle : h2hDef?.subtitle} <span className="pa-sub-dim">{totalPolls} polls{updated ? ` · updated ${new Date(updated + "T00:00:00").toLocaleDateString(undefined, { month: "short", day: "numeric" })}` : ""}</span></p>
         </header>
 
+        {/* ── sample-type filter — governs the average, chart & table below ── */}
+        <div className="pa-filter">
+          <span className="pa-filter-label">Voter sample</span>
+          <div className="pa-seg" role="group" aria-label="Filter polls by sample type">
+            {SAMPLE_OPTS.map((o) => {
+              const n = o.val === "all" ? baseCount : (typeCounts[o.val] ?? 0);
+              const disabled = o.val !== "all" && n === 0;
+              return (
+                <button
+                  key={o.val}
+                  type="button"
+                  className={`pa-seg-btn ${sampleFilter === o.val ? "is-active" : ""}`}
+                  disabled={disabled}
+                  title={disabled ? `No ${o.full.toLowerCase()} polls for this race` : o.full}
+                  onClick={() => setSampleFilter(o.val)}
+                >
+                  {o.label}<span className="pa-seg-n">{n}</span>
+                </button>
+              );
+            })}
+          </div>
+          {sampleFilter !== "all" && (
+            <span className="pa-filter-note">{SAMPLE_OPTS.find((o) => o.val === sampleFilter)?.full} only</span>
+          )}
+        </div>
+
         {/* head-to-head: key numbers + spread meter */}
         {!isMulti && hLatest && h2hDef && (
           <div className="pa-board">
@@ -271,10 +342,12 @@ export default function PollingAveragesPage() {
             <h2 className="pa-panel-title">Average over time</h2>
             <span className="pa-panel-meta">Each dot is one poll · sized by sample</span>
           </div>
-          {isMulti && builtMulti && multiDef ? (
-            <MultiCandidateChart animKey={multiDef.id} daily={builtMulti.daily} polls={builtMulti.polls} series={multiDef.series} unit={multiDef.unit} />
+          {dailyArr.length === 0 ? (
+            <div className="pa-chart-empty">No {(SAMPLE_OPTS.find((o) => o.val === sampleFilter)?.full ?? "matching").toLowerCase()} polls for this aggregate.</div>
+          ) : isMulti && builtMulti && multiDef ? (
+            <MultiCandidateChart animKey={`${multiDef.id}:${sampleFilter}`} daily={builtMulti.daily} polls={builtMulti.polls} series={multiDef.series} unit={multiDef.unit} />
           ) : builtH2H && h2hDef ? (
-            <AggregatePollChart animKey={h2hDef.id} daily={builtH2H.daily} polls={builtH2H.polls} seriesA={h2hDef.seriesA} seriesB={h2hDef.seriesB} fmtMargin={h2hDef.fmtMargin} marginLabel={h2hDef.marginLabel} unit={h2hDef.unit} />
+            <AggregatePollChart animKey={`${h2hDef.id}:${sampleFilter}`} daily={builtH2H.daily} polls={builtH2H.polls} seriesA={h2hDef.seriesA} seriesB={h2hDef.seriesB} fmtMargin={h2hDef.fmtMargin} marginLabel={h2hDef.marginLabel} unit={h2hDef.unit} />
           ) : null}
         </div>
 
@@ -411,6 +484,21 @@ const CSS = `
   .pa-title { font-family: var(--font-body), "Geist Mono", monospace; font-weight: 600; letter-spacing: -0.02em; line-height: 1.08; font-size: clamp(25px, 3.2vw, 37px); color: #fff; margin: 0 0 13px; text-transform: none; }
   .pa-sub { font-family: var(--font-body), monospace; font-size: 13px; line-height: 1.65; color: var(--muted); max-width: 74ch; margin: 0; }
   .pa-sub-dim { color: var(--faint); }
+
+  /* ── sample-type filter ── */
+  .pa-filter { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-top: 26px; }
+  .pa-filter-label { font-family: var(--font-body), monospace; font-size: 10px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted2); }
+  .pa-seg { display: inline-flex; align-items: stretch; border: 1px solid var(--line); border-radius: 9px; overflow: hidden; background: rgba(255,255,255,0.012); }
+  .pa-seg-btn { appearance: none; cursor: pointer; background: transparent; border: 0; border-right: 1px solid var(--line); padding: 7px 13px; line-height: 1; font-family: var(--font-body), monospace; font-size: 11.5px; font-weight: 600; letter-spacing: 0.04em; color: var(--muted); display: inline-flex; align-items: center; gap: 7px; transition: color 140ms ease, background 140ms ease; }
+  .pa-seg-btn:last-child { border-right: 0; }
+  .pa-seg-btn:hover:not(:disabled):not(.is-active) { color: #fff; background: rgba(255,255,255,0.04); }
+  .pa-seg-btn.is-active { background: #fafafa; color: #000; }
+  .pa-seg-btn:disabled { color: var(--faint); cursor: not-allowed; opacity: 0.5; }
+  .pa-seg-n { font-size: 10px; font-weight: 600; font-variant-numeric: tabular-nums; color: var(--faint); }
+  .pa-seg-btn:hover:not(:disabled):not(.is-active) .pa-seg-n { color: var(--muted); }
+  .pa-seg-btn.is-active .pa-seg-n { color: rgba(0,0,0,0.5); }
+  .pa-filter-note { font-family: var(--font-body), monospace; font-size: 10.5px; font-weight: 600; letter-spacing: 0.04em; color: var(--muted2); }
+  .pa-chart-empty { padding: 64px 16px; text-align: center; color: var(--faint); font-family: var(--font-body), monospace; font-size: 13px; }
 
   /* ── key numbers ── */
   .pa-board { margin: 28px 0 0; }
