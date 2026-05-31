@@ -105,8 +105,8 @@
   /* Text */
   --foreground: #f4f5fb;
   --foreground2:#c8cbdb;
-  --muted:      #8a90a8;
-  --muted2:     #6a6f87;
+  --muted:      #aab0c6;
+  --muted2:     #8a90a8;
   --muted3:     rgba(244, 245, 251, 0.22);
 
   /* Borders */
@@ -281,12 +281,15 @@ li { margin: 0.35em 0; }
   width: 100%;
   background: linear-gradient(90deg, var(--red) 0%, var(--purple) 50%, var(--blue) 100%);
   border-radius: var(--r-pill);
+  box-shadow: 0 0 12px 1px rgba(124, 58, 237, 0.28);
 }
 
 /* -------------------------------------------
    5) SURFACES — rounded boxes
 -------------------------------------------- */
 .psi-card {
+  position: relative;
+  overflow: hidden;
   background: var(--panel);
   border: 1px solid var(--border);
   border-radius: var(--r-lg);
@@ -295,6 +298,22 @@ li { margin: 0.35em 0; }
     transform    var(--dur-2) var(--ease-out),
     border-color var(--dur-2) var(--ease-out),
     box-shadow   var(--dur-2) var(--ease-out);
+}
+.psi-card::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 16px;
+  background: linear-gradient(90deg, var(--red) 0%, var(--purple) 50%, var(--blue) 100%);
+  border-radius: var(--r-lg) var(--r-lg) 0 0;
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  padding: 1.5px 0 0 0;
+  pointer-events: none;
+  z-index: 2;
 }
 .psi-card:hover {
   transform: translateY(-2px);
@@ -308,6 +327,8 @@ li { margin: 0.35em 0; }
 }
 
 .psi-glass {
+  position: relative;
+  overflow: hidden;
   background: rgba(255, 255, 255, 0.78);
   border: 1px solid var(--border);
   border-radius: var(--r-lg);
@@ -315,11 +336,45 @@ li { margin: 0.35em 0; }
   -webkit-backdrop-filter: blur(18px);
   box-shadow: var(--shadow-md);
 }
+.psi-glass::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 16px;
+  background: linear-gradient(90deg, var(--red) 0%, var(--purple) 50%, var(--blue) 100%);
+  border-radius: var(--r-lg) var(--r-lg) 0 0;
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  padding: 1.5px 0 0 0;
+  pointer-events: none;
+  z-index: 2;
+}
 
 .psi-inset {
+  position: relative;
+  overflow: hidden;
   background: var(--panel2);
   border: 1px solid var(--border);
   border-radius: var(--r-md);
+}
+.psi-inset::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 14px;
+  background: linear-gradient(90deg, var(--red) 0%, var(--purple) 50%, var(--blue) 100%);
+  border-radius: var(--r-md) var(--r-md) 0 0;
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  padding: 1.5px 0 0 0;
+  pointer-events: none;
+  z-index: 2;
 }
 
 /* -------------------------------------------

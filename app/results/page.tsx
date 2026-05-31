@@ -675,7 +675,7 @@ function CountyTotalsTable({ regionResults, collapsed, onToggle, maxHeight }: { 
           alignItems: "center",
           justifyContent: "space-between",
           padding: "10px 14px",
-          background: "var(--background2)",
+          background: "var(--panel)",
           border: "none",
           borderBottom: collapsed ? "none" : "1px solid var(--border)",
           cursor: "pointer",
@@ -843,41 +843,38 @@ function SwingOMeter({ candidates, colors, probabilities, raceRule, reportingPct
   return (
     <div style={{ position: "relative", userSelect: "none" }}>
       <svg viewBox={`0 0 ${W} ${H}`} style={{ width: "100%", height: "auto", overflow: "visible" }}>
-        <path d={describeArc(0, 180, R_OUTER, R_INNER)} fill="rgba(15,16,32,0.05)" />
+        {/* Track */}
+        <path d={describeArc(0, 180, R_OUTER, R_INNER)} style={{ fill: "var(--border)" }} />
+        {/* Colored segments — no inline labels */}
         {arcSegments.map((seg) => (
-          <g key={seg.key}>
-            <path d={describeArc(seg.start + 0.8, seg.end - 0.8, R_OUTER, R_INNER)} fill={seg.color} opacity={0.85} />
-            {(seg.end - seg.start) > 20 && (
-              <text x={seg.midPt.x} y={seg.midPt.y + 3} textAnchor="middle" fontSize="7" fontWeight="700" fill="rgba(15,16,32,0.85)" fontFamily="var(--font-body)" letterSpacing="0.5">
-                {(seg.prob * 100).toFixed(0)}%
-              </text>
-            )}
-          </g>
+          <path key={seg.key} d={describeArc(seg.start + 0.8, seg.end - 0.8, R_OUTER, R_INNER)} fill={seg.color} />
         ))}
-        <text x={CX} y={CY - 22} textAnchor="middle" fontSize="20" fontWeight="900" fill="white" fontFamily="var(--font-numeric)" letterSpacing="-0.5">
+        {/* Center: leader name above, probability below */}
+        <text x={CX} y={CY - 14} textAnchor="middle" fontSize="22" fontWeight="900" fontFamily="var(--font-numeric)" letterSpacing="-0.5" style={{ fill: leader.color }}>
           {(leader.prob * 100).toFixed(1)}%
         </text>
-        <text x={CX} y={CY - 8} textAnchor="middle" fontSize="10" fill="var(--muted)" fontFamily="var(--font-body)" letterSpacing="1">
+        <text x={CX} y={CY} textAnchor="middle" fontSize="11" fontWeight="700" fontFamily="var(--font-body)" letterSpacing="1.5" style={{ fill: "var(--muted)" }}>
           {leader.name.split(" ").pop()?.toUpperCase()}
         </text>
-        <circle cx={CX} cy={CY} r="5" fill="rgba(255,255,255,0.15)" />
       </svg>
-      <div style={{ display: "flex", flexWrap: "wrap", gap: "6px 12px", marginTop: 6, justifyContent: "center" }}>
+      {/* Legend rows — one per candidate */}
+      <div style={{ display: "flex", flexDirection: "column", gap: 5, marginTop: 2 }}>
         {arcSegments.map((seg) => (
-          <div key={seg.key} style={{ display: "flex", alignItems: "center", gap: 5 }}>
-            <span style={{ width: 8, height: 8, borderRadius: 2, background: seg.color, display: "inline-block", flexShrink: 0 }} />
-            <span style={{ fontFamily: "var(--font-body)", fontSize: "10px", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: "var(--muted)" }}>{seg.name.split(" ").pop()}</span>
-            <span style={{ fontFamily: "var(--font-numeric)", fontSize: "9px", fontWeight: 900, color: seg.color }}>{(seg.prob * 100).toFixed(1)}%</span>
+          <div key={seg.key} style={{ display: "flex", alignItems: "center", gap: 8 }}>
+            <span style={{ width: 10, height: 10, borderRadius: 3, background: seg.color, flexShrink: 0 }} />
+            <span style={{ fontFamily: "var(--font-body)", fontSize: "11px", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", color: "var(--foreground2)", flex: 1 }}>{seg.name.split(" ").pop()}</span>
+            <span style={{ fontFamily: "var(--font-numeric)", fontSize: "12px", fontWeight: 800, color: seg.color }}>{(seg.prob * 100).toFixed(1)}%</span>
           </div>
         ))}
       </div>
-      <div style={{ marginTop: 10, padding: "6px 0 0" }}>
-        <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 4 }}>
+      {/* Reporting bar */}
+      <div style={{ marginTop: 12, padding: "8px 0 0", borderTop: "1px solid var(--border)" }}>
+        <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 5 }}>
           <span style={{ fontFamily: "var(--font-body)", fontSize: "10px", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--muted2)" }}>REPORTING</span>
-          <span style={{ fontFamily: "var(--font-body)", fontSize: "10px", fontWeight: 700, color: "var(--muted)" }}>{reportingPct.toFixed(1)}%</span>
+          <span style={{ fontFamily: "var(--font-numeric)", fontSize: "11px", fontWeight: 800, color: "var(--muted)" }}>{reportingPct.toFixed(1)}%</span>
         </div>
-        <div style={{ height: 2, background: "var(--border2)", overflow: "hidden" }}>
-          <div style={{ height: "100%", width: `${reportingPct}%`, background: "var(--muted)", transition: "width 800ms ease" }} />
+        <div style={{ height: 3, background: "var(--border2)", overflow: "hidden", borderRadius: 99 }}>
+          <div style={{ height: "100%", width: `${reportingPct}%`, background: "var(--muted)", transition: "width 800ms ease", borderRadius: 99 }} />
         </div>
       </div>
     </div>
@@ -1101,7 +1098,6 @@ function ForecastPanel({ raceId, refreshTick, raceData, onForecastUpdate }: { ra
 
   return (
     <div className="res-panel" style={{ padding: 0 }}>
-      <div className="res-tri-stripe" />
       <div className="res-panel-header" style={{ flexWrap: "wrap", gap: 8 }}>
         <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
           <span className="res-panel-tag">FORECAST MODEL</span>
@@ -1298,9 +1294,11 @@ function RacePickerPanel({ races, raceCache, selectedId, onSelect }: {
   }, []);
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", height: "100%", minHeight: 0, background: "var(--panel)", border: "1px solid var(--border)", overflow: "hidden", borderRadius: "var(--r-lg)", boxShadow: "var(--shadow-sm)" }}>
+    <div style={{ display: "flex", flexDirection: "column", height: "100%", minHeight: 0, background: "var(--panel)", border: "1px solid var(--border)", overflow: "hidden", borderRadius: "var(--r-lg)", boxShadow: "var(--shadow-sm)", position: "relative" }}>
+      {/* Gradient border stripe */}
+      <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 22, background: "linear-gradient(90deg,var(--red) 0%,var(--purple) 50%,var(--blue) 100%)", borderRadius: "var(--r-lg) var(--r-lg) 0 0", WebkitMask: "linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0)", WebkitMaskComposite: "xor", maskComposite: "exclude", padding: "2.5px 2.5px 0 2.5px", pointerEvents: "none", zIndex: 2 }} />
       {/* Header */}
-      <div style={{ padding: "12px 14px", borderBottom: "1px solid var(--border)", background: "var(--background2)", flexShrink: 0, borderRadius: "var(--r-lg) var(--r-lg) 0 0" }}>
+      <div style={{ padding: "12px 14px", borderBottom: "1px solid var(--border)", background: "var(--panel)", flexShrink: 0, borderRadius: "var(--r-lg) var(--r-lg) 0 0" }}>
         <div className="res-panel-tag" style={{ marginBottom: 8 }}>ALL RACES</div>
         {/* Search input */}
         <div style={{ display: "flex", alignItems: "center", gap: 8, background: "var(--panel2)", border: "1px solid var(--border2)", padding: "7px 12px", borderRadius: "var(--r-sm)" }}>
@@ -1627,7 +1625,7 @@ export default function March3FeaturedClient() {
         .county-pop { animation: county-pop 520ms ease-out; }
         @keyframes county-updated { 0% { filter:brightness(1) saturate(1); } 12% { filter:brightness(3.2) saturate(2.0); } 35% { filter:brightness(2.0) saturate(1.4); } 100% { filter:brightness(1) saturate(1); } }
         .county-updated { animation: county-updated 1200ms cubic-bezier(0.22,1,0.36,1); }
-        .res-tri-stripe { height:3px; width:100%; background:linear-gradient(90deg,var(--red) 0%,var(--red) 33.33%,var(--purple) 33.33%,var(--purple) 66.66%,var(--blue) 66.66%,var(--blue) 100%); flex-shrink:0; }
+        .res-tri-stripe { height:3px; width:100%; background:linear-gradient(90deg,var(--red) 0%,var(--purple) 50%,var(--blue) 100%); flex-shrink:0; box-shadow:0 4px 18px -2px rgba(124,58,237,0.28); }
         .res-live-dot { display:inline-block; width:6px; height:6px; border-radius:50%; background:var(--rep); box-shadow:0 0 8px rgba(230,57,70,0.7); animation:res-pulse 1.8s ease-in-out infinite; flex-shrink:0; }
         .res-eyebrow { display:flex; align-items:center; gap:7px; font-family:var(--font-body); font-size:10px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:var(--muted); }
         .res-note { font-family:var(--font-body); font-size:11px; letter-spacing:0.12em; text-transform:uppercase; color:var(--muted2); }
@@ -1646,7 +1644,8 @@ export default function March3FeaturedClient() {
         .res-badge-blue { border-color:rgba(59,130,246,0.30); background:rgba(59,130,246,0.08); color:var(--dem); }
         .res-bar-track { width:100%; height:3px; background:var(--border2); position:relative; overflow:hidden; }
         .res-bar-fill { position:absolute; top:0; left:0; bottom:0; background:var(--purple); transition:width 600ms cubic-bezier(0.22,1,0.36,1); }
-        .res-panel { background:var(--panel); border:1px solid var(--border); overflow:hidden; animation:res-fade-up 0.5s cubic-bezier(0.22,1,0.36,1) both; border-radius:var(--r-lg); box-shadow:var(--shadow-sm); }
+        .res-panel { background:var(--panel); border:1px solid var(--border); overflow:hidden; animation:res-fade-up 0.5s cubic-bezier(0.22,1,0.36,1) both; border-radius:var(--r-lg); box-shadow:var(--shadow-sm); position:relative; }
+        .res-panel::before { content:''; position:absolute; top:0; left:0; right:0; height:22px; background:linear-gradient(90deg,var(--red) 0%,var(--purple) 50%,var(--blue) 100%); border-radius:var(--r-lg) var(--r-lg) 0 0; -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0); -webkit-mask-composite:xor; mask-composite:exclude; padding:2.5px 2.5px 0 2.5px; pointer-events:none; z-index:2; }
         .res-panel-header { display:flex; align-items:center; justify-content:space-between; padding:10px 14px; border-bottom:1px solid var(--border); background:var(--panel2); border-radius:var(--r-lg) var(--r-lg) 0 0; }
         .res-panel-tag { font-family:var(--font-body); font-size:10px; font-weight:700; letter-spacing:0.20em; text-transform:uppercase; color:var(--purple-soft); }
         .res-stat-block { background:var(--panel2); border:1px solid var(--border); padding:10px 12px; border-radius:var(--r-sm); }
@@ -1679,7 +1678,7 @@ export default function March3FeaturedClient() {
         .res-cand-name { font-family:var(--font-body); font-size:12px; font-weight:700; letter-spacing:0.06em; color:var(--foreground); }
         .res-cand-name-lg { font-family:var(--font-body); font-size:13px; font-weight:900; letter-spacing:0.06em; text-transform:uppercase; color:var(--foreground); }
         .res-cand-party { font-family:var(--font-body); font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:var(--muted2); margin-top:1px; }
-        .res-thead { position:sticky; top:0; background:var(--background2); border-bottom:1px solid var(--border); }
+        .res-thead { position:sticky; top:0; background:var(--panel2); border-bottom:1px solid var(--border); }
         .res-table-row { border-bottom:1px solid var(--border); transition:background 100ms ease; }
         .res-table-row:hover { background:rgba(124,58,237,0.04); }
         .res-input { width:100%; background:var(--panel2); border:1px solid var(--border2); color:var(--foreground); padding:8px 12px; font-family:var(--font-body); font-size:12px; letter-spacing:0.04em; outline:none; transition:border-color 140ms ease; border-radius:var(--r-sm); }
@@ -1691,12 +1690,11 @@ export default function March3FeaturedClient() {
         .res-map-wrap { background:rgba(0,0,0,0.20); border:1px solid var(--border); padding:6px; }
 
         /* ── STATUS BAR ── */
-        .res-status-bar { background:var(--background2); border-bottom:1px solid var(--border); padding:7px 0; }
+        .res-status-bar { background:transparent; padding:7px 0; }
         .res-status-bar-inner { max-width:1800px; margin:0 auto; padding:0 20px; display:flex; align-items:center; justify-content:space-between; gap:12px; }
 
         /* ── PAGE HEADER ── */
-        .res-page-header { border-bottom:1px solid var(--border); background:var(--background2); position:relative; overflow:hidden; }
-        .res-page-header::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse 40% 80% at 0% 50%,rgba(230,57,70,0.04) 0%,transparent 70%),radial-gradient(ellipse 40% 80% at 100% 50%,rgba(37,99,235,0.05) 0%,transparent 70%); pointer-events:none; }
+        .res-page-header { background:transparent; position:relative; }
         .res-page-header-inner { max-width:1800px; margin:0 auto; padding:16px 20px; position:relative; }
         .res-page-title { font-family:var(--font-display); font-size:clamp(22px,2.8vw,44px); font-weight:900; text-transform:uppercase; letter-spacing:-0.01em; color:var(--foreground); line-height:0.92; margin:0; }
         .res-page-title em { font-style:normal; background:linear-gradient(100deg,var(--red2) 0%,var(--purple-soft) 50%,var(--blue2) 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
@@ -1766,6 +1764,7 @@ export default function March3FeaturedClient() {
           min-height: 0;
           display: flex;
           align-items: stretch;
+          background: #e8eaed;
         }
         .res-map-wrap svg, .res-map-wrap > div {
           width: 100% !important;
@@ -1779,7 +1778,9 @@ export default function March3FeaturedClient() {
           overflow: hidden;
         }
         .res-inline-county .res-county-table-wrap { max-height: none !important; }
-        .res-inline-county > .res-panel { height: 100% !important; display: flex !important; flex-direction: column; overflow: hidden; border-top: 1px solid var(--border); border-radius: 0; }
+        .res-center-split > .res-map-panel { border-bottom-left-radius: 0 !important; border-bottom-right-radius: 0 !important; }
+        .res-inline-county > .res-panel { height: 100% !important; display: flex !important; flex-direction: column; overflow: hidden; border-top: none; border-radius: 0 0 var(--r-lg) var(--r-lg); }
+        .res-inline-county > .res-panel::before { content: none; }
         .res-inline-county > .res-panel > div:last-child { flex: 1; overflow-y: auto !important; max-height: none !important; min-height: 0; }
         /* ── RIGHT RAIL ── */
         .res-right-rail {
@@ -1963,7 +1964,7 @@ export default function March3FeaturedClient() {
         input[type=range] { height:4px; cursor:pointer; }
 
         /* ── PAGE TABS ── */
-        .res-page-tabs { display:flex; align-items:stretch; background:var(--background2); border-bottom:1px solid var(--border); padding:0 20px; gap:0; }
+        .res-page-tabs { display:flex; align-items:stretch; background:transparent; border-bottom:1px solid var(--border); padding:0 20px; gap:0; }
         .res-page-tab { display:flex; align-items:center; gap:7px; padding:11px 18px; background:transparent; border:none; border-bottom:2px solid transparent; color:var(--muted); font-family:var(--font-body); font-size:12px; font-weight:700; letter-spacing:0.10em; text-transform:uppercase; cursor:pointer; transition:color 140ms ease,border-color 140ms ease; white-space:nowrap; margin-bottom:-1px; }
         .res-page-tab:hover { color:var(--foreground); }
         .res-page-tab.active { color:var(--foreground); border-bottom-color:var(--rep); }
@@ -1987,16 +1988,14 @@ export default function March3FeaturedClient() {
       <main className="res-root" style={{ minHeight: "100vh", background: "transparent", color: "var(--foreground)" }}>
         {overlay && <ProjectedWinnerOverlay show={!!overlay} candidate={overlay.name} prob={overlay.prob} color={overlay.color} reporting={overlay.reporting} onDismiss={() => setOverlay(null)} />}
 
-        <div className="res-tri-stripe" />
-
         {/* STATUS BAR */}
         <div className="res-status-bar">
           <div className="res-status-bar-inner">
             <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
               <span className="res-live-dot" />
-              <span className="res-eyebrow" style={{ color: "rgba(15,16,32,0.55)" }}>LIVE ELECTION RESULTS<span style={{ color: "var(--border3)", margin: "0 4px" }}>·</span>POWERED BY CIVICAPI.ORG</span>
+              <span className="res-eyebrow">LIVE ELECTION RESULTS<span style={{ color: "var(--border3)", margin: "0 4px" }}>·</span>POWERED BY CIVICAPI.ORG</span>
             </div>
-            <div className="res-note" style={{ letterSpacing: "0.22em", color: "rgba(15,16,32,0.45)" }} suppressHydrationWarning>{timeStr}</div>
+            <div className="res-note" style={{ letterSpacing: "0.22em", color: "var(--foreground2)", background: "var(--panel)", border: "1px solid var(--border3)", borderRadius: "var(--r-pill)", padding: "5px 14px", boxShadow: "var(--shadow-sm)", fontWeight: 700 }} suppressHydrationWarning>{timeStr}</div>
           </div>
         </div>
 
