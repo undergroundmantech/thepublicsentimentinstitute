@@ -19,7 +19,7 @@ import {
 
 const GOLD_STANDARD_MULTIPLIER = 2;
 
-const GOLD_STANDARD_NAMES = [
+export const GOLD_STANDARD_NAMES = [
   "Big Data Poll", "Rasmussen Reports", "AtlasIntel", "SoCalStrategies",
   "Emerson", "Trafalgar", "InsiderAdvantage", "Patriot Polling",
 ];
@@ -37,7 +37,7 @@ function effectiveSampleSize(pollster: string, n: number) {
   return Math.round(n * GOLD_STANDARD_MULTIPLIER * GOLD_STANDARD_MULTIPLIER);
 }
 
-const RAW_POLLS: Poll[] = [
+export const RAW_POLLS: Poll[] = [
   { pollster: "The Public Sentiment Institute",          endDate: "2026-02-28", sampleSize: 316, sampleType: "RV", results: { Vance: 43, Newsom: 38 } },
   { pollster: "The Public Sentiment Institute",          endDate: "2026-02-28", sampleSize: 250, sampleType: "LV", results: { Vance: 41, Newsom: 46 } },
   { pollster: "Big Data Poll",          endDate: "2026-02-18", sampleSize: 1805, sampleType: "LV", results: { Vance: 46.8, Newsom: 53.2 } },
