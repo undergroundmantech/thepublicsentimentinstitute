@@ -3,7 +3,7 @@ import "./globals.css";
 import type { Metadata } from "next";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
-import { Quantico, Geist_Mono } from "next/font/google";
+import { Quantico, Geist_Mono, Fraunces } from "next/font/google";
 
 /* -----------------------------
    FONTS
@@ -19,6 +19,13 @@ const display = Quantico({
 const mono = Geist_Mono({
   subsets: ["latin"],
   variable: "--font-body",
+  display: "swap",
+});
+
+// Editorial serif — used for the redesigned polling section (data-journalism feel).
+const serif = Fraunces({
+  subsets: ["latin"],
+  variable: "--font-serif",
   display: "swap",
 });
 
@@ -43,7 +50,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${display.variable} ${mono.variable}`}
+      className={`${display.variable} ${mono.variable} ${serif.variable}`}
     >
       {/* IMPORTANT:
          mono.className forces Geist Mono as REAL font-family.
