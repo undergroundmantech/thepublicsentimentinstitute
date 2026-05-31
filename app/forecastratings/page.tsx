@@ -530,7 +530,7 @@ export default function ForecastRatingsPage() {
   return (
     <>
       <style>{`
-        .hp-tri-stripe { height: 3px; background: linear-gradient(90deg,#e63946 0%,#e63946 33.33%,#7c3aed 33.33%,#7c3aed 66.66%,#2563eb 66.66%,#2563eb 100%); border-radius: 9999px 9999px 0 0; }
+        .hp-tri-stripe { height: 3px; background: linear-gradient(90deg,var(--red) 0%,var(--purple) 50%,var(--blue) 100%); border-radius: 9999px 9999px 0 0; box-shadow: 0 4px 18px -2px rgba(124,58,237,0.28); }
         .fr-row:hover td { background: rgba(124,58,237,0.04) !important; }
         .fr-card { background: var(--panel); border: 1px solid var(--border); border-radius: var(--r-lg); padding: 20px 22px; }
         @media(max-width:900px) { .fr-mg { grid-template-columns: 1fr !important; } }
