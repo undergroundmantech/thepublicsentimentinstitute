@@ -115,6 +115,10 @@
   --border3: rgba(244, 245, 251, 0.22);
 
   /* Tinted dims (slightly stronger for contrast on dark) */
+  --purple:      hsl(271, 50%, 65%);
+  --purple2:     hsl(271, 50%, 74%);
+  --purple-soft: hsl(271, 45%, 58%);
+  --purple-glow: hsla(271, 50%, 65%, 0.35);
   --purple-dim:  rgba(124, 58, 237, 0.18);
   --red-dim:     rgba(230, 57, 70, 0.18);
   --blue-dim:    rgba(37, 99, 235, 0.18);
