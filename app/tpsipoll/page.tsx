@@ -1315,6 +1315,11 @@ export default function TPSIPollDashboard() {
           background: var(--panel); border: 1px solid var(--border); border-radius: var(--r-lg);
           box-shadow: var(--shadow-md); overflow: hidden; margin-bottom: 10px;
         }
+        .tl-section::before {
+          content: ''; display: block; height: 3px;
+          background: linear-gradient(90deg, var(--red) 0%, var(--purple) 50%, var(--blue) 100%);
+          box-shadow: 0 4px 18px -2px rgba(124,58,237,0.28);
+        }
         .tl-section-hdr {
           display: flex; align-items: center; justify-content: space-between; gap: 12px;
           padding: 10px 18px; border-bottom: 1px solid var(--border); background: var(--panel2);
