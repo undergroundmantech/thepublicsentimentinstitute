@@ -342,7 +342,446 @@ const SLIDES: Slide[] = [
   },
 ];
 
+// ─── National Poll Slide data (N=893, LV Weighted, May 2026) ─────────────────
+const NATIONAL_SLIDES: Slide[] = [
+  { id:"nat-cover", qNum:"", category:"", title:"", subtitle:"", isCover:true },
 
+  {
+    id:"nat-q3", qNum:"Q3", category:"Electorate",
+    title:"Voter Motivation — 2026 Midterm Election",
+    subtitle:"How would you describe your intention and motivation to vote? · N=893 · LV Weighted",
+    nets:[
+      { val:"93.0%", lbl:"Certain / Very Likely",      color:C.green },
+      { val:"77.2%", lbl:"Certain + Highly Motivated", color:C.blue },
+    ],
+    bars:[
+      { label:"Certain to vote & highly motivated",      pct:77, color:C.green, strong:true },
+      { label:"Very likely to vote & feel motivated",    pct:16, color:C.blue },
+      { label:"Somewhat likely, not strongly motivated", pct:3,  color:C.gold },
+      { label:"Motivated but unsure if will vote",       pct:2,  color:C.orange },
+      { label:"Not very likely, little motivation",      pct:1,  color:C.muted },
+      { label:"Certain not to vote",                     pct:1,  color:C.muted },
+    ],
+  },
+
+  {
+    id:"nat-q4", qNum:"Q4", category:"Electorate",
+    title:"How Do You Plan to Cast Your Ballot?",
+    subtitle:"2026 Midterm Election · N=893 · LV Weighted",
+    bars:[
+      { label:"In person Election Day — know polling location",    pct:49, color:C.blue,    strong:true },
+      { label:"Mail-in — already requested or received",           pct:20, color:C.blue },
+      { label:"Early in-person — know when and where",             pct:12, color:C.green },
+      { label:"In person Election Day — need to confirm location", pct:7,  color:C.cyan },
+      { label:"Mail-in — plan to request",                         pct:5,  color:C.purpleLt },
+      { label:"Haven't decided how I will vote yet",               pct:4,  color:C.gold },
+      { label:"Early in-person — still need to look up details",   pct:2,  color:C.orange },
+      { label:"Do not plan to vote",                               pct:2,  color:C.muted },
+    ],
+  },
+
+  {
+    id:"nat-q5", qNum:"Q5", category:"Electorate",
+    title:"Social Circle Turnout Expectation",
+    subtitle:"How many of the 5–10 people closest to you do you expect to vote? · N=893 · LV Weighted",
+    bars:[
+      { label:"All or nearly all of them", pct:46, color:C.green,  strong:true },
+      { label:"Most of them",              pct:36, color:C.blue },
+      { label:"About half",                pct:10, color:C.gold },
+      { label:"A few of them",             pct:5,  color:C.orange },
+      { label:"Not sure",                  pct:2,  color:C.muted },
+      { label:"None of them",              pct:1,  color:C.muted },
+    ],
+  },
+
+  {
+    id:"nat-q6", qNum:"Q6", category:"Electorate",
+    title:"Who Did You Vote for in 2024?",
+    subtitle:"Presidential Recall Vote · N=893 · LV Weighted",
+    nets:[
+      { val:"44.3%", lbl:"Kamala Harris", color:C.blue },
+      { val:"43.9%", lbl:"Donald Trump",  color:C.pink },
+      { val:"R+0.4", lbl:"LV Spread",     color:C.pink },
+    ],
+    bars:[
+      { label:"Kamala Harris", pct:44, color:C.blue,    strong:true },
+      { label:"Donald Trump",  pct:44, color:C.pink,    strong:true },
+      { label:"Third party",   pct:2,  color:C.purpleLt },
+      { label:"Did not vote",  pct:10, color:C.muted },
+    ],
+  },
+
+  {
+    id:"nat-q8", qNum:"Q8", category:"Political Identity",
+    title:"General Political Outlook",
+    subtitle:"Which best describes your political outlook? · N=893 · LV Weighted",
+    bars:[
+      { label:"Progressive / Socialist Democrat",    pct:14, color:C.blue,     strong:true, group:"DEMOCRAT" },
+      { label:"Mainline / Institutional Democrat",   pct:7,  color:C.blue },
+      { label:"Working-Class / Union Democrat",      pct:6,  color:C.blue },
+      { label:"Coalition / Civil Rights Democrat",   pct:3,  color:C.blue },
+      { label:"America First Republican",            pct:12, color:C.pink,     strong:true, group:"REPUBLICAN" },
+      { label:"Populist / Working-Class Republican", pct:6,  color:C.pink },
+      { label:"Suburban / Professional Republican",  pct:6,  color:C.pink },
+      { label:"Libertarian-Oriented Republican",     pct:4,  color:C.pink },
+      { label:"Lean Republican Independent",         pct:11, color:C.purpleLt, strong:true, group:"INDEPENDENT" },
+      { label:"Lean Democratic Independent",         pct:14, color:C.purpleLt },
+      { label:"Moderate Independent / Centrist",     pct:11, color:C.purpleLt },
+      { label:"Anti-Establishment Independent",      pct:2,  color:C.purpleLt },
+      { label:"None / No clear preference",          pct:3,  color:C.muted },
+    ],
+  },
+
+  {
+    id:"nat-q9", qNum:"Q9", category:"Political Identity",
+    title:"Which Party Do You Identify With?",
+    subtitle:"N=893 · LV Weighted",
+    nets:[
+      { val:"40.1%", lbl:"Democrat",          color:C.blue },
+      { val:"37.5%", lbl:"Republican",        color:C.pink },
+      { val:"22.5%", lbl:"Independent/Other", color:C.purpleLt },
+    ],
+    bars:[
+      { label:"Democrat",            pct:40, color:C.blue,     strong:true },
+      { label:"Republican",          pct:38, color:C.pink,     strong:true },
+      { label:"Independent / Other", pct:23, color:C.purpleLt },
+    ],
+  },
+
+  {
+    id:"nat-q10", qNum:"Q10", category:"Political Identity",
+    title:"Groyper Identification",
+    subtitle:"Do you identify as a Groyper (supporter of Nick Fuentes)? · N=893 · LV Weighted",
+    nets:[
+      { val:"7.8%",  lbl:"Yes — Groyper",     color:C.pink },
+      { val:"92.2%", lbl:"No — Not a Groyper", color:C.green },
+    ],
+    bars:[
+      { label:"Yes", pct:8,  color:C.pink },
+      { label:"No",  pct:92, color:C.green, strong:true },
+    ],
+  },
+
+  {
+    id:"nat-q11", qNum:"Q11", category:"Track & Ballot",
+    title:"Right Track / Wrong Track",
+    subtitle:"Is the direction of the country on the right track or wrong track? · N=893 · LV Weighted",
+    nets:[
+      { val:"30.2%", lbl:"Right Track", color:C.green },
+      { val:"62.1%", lbl:"Wrong Track", color:C.pink },
+      { val:"−31.9", lbl:"Net Track",   color:C.pink },
+    ],
+    bars:[
+      { label:"Right track", pct:30, color:C.green, strong:true },
+      { label:"Wrong track", pct:62, color:C.pink,  strong:true },
+      { label:"Not sure",    pct:8,  color:C.muted },
+    ],
+  },
+
+  {
+    id:"nat-q13", qNum:"Q13", category:"Track & Ballot",
+    title:"2026 Generic Congressional Ballot",
+    subtitle:"If the 2026 Midterms were held today, who would you vote for? · N=893 · LV Weighted",
+    nets:[
+      { val:"46.8%", lbl:"Democrat",   color:C.blue },
+      { val:"40.0%", lbl:"Republican", color:C.pink },
+      { val:"D+6.8", lbl:"Dem Lead",   color:C.blue },
+    ],
+    bars:[
+      { label:"The Democrat candidate",          pct:47, color:C.blue,     strong:true },
+      { label:"The Republican candidate",        pct:40, color:C.pink,     strong:true },
+      { label:"Undecided / Not sure",            pct:10, color:C.muted },
+      { label:"A third-party / independent",     pct:3,  color:C.purpleLt },
+    ],
+  },
+
+  {
+    id:"nat-q14", qNum:"Q14", category:"Trump",
+    title:"Trump — Presidential Approval",
+    subtitle:"Do you approve or disapprove of President Trump's performance? · N=893 · LV Weighted",
+    nets:[
+      { val:"41.6%", lbl:"NET Approve",    color:C.green },
+      { val:"57.6%", lbl:"NET Disapprove", color:C.pink },
+      { val:"−16.0", lbl:"Net Approval",   color:C.pink },
+    ],
+    bars:[
+      { label:"Strongly approve",     pct:22, color:C.green, strong:true, group:"APPROVE" },
+      { label:"Somewhat approve",     pct:20, color:C.green },
+      { label:"Strongly disapprove",  pct:50, color:C.pink,  strong:true, group:"DISAPPROVE" },
+      { label:"Somewhat disapprove",  pct:8,  color:C.pink },
+      { label:"Neutral / no opinion", pct:1,  color:C.muted, group:"NEUTRAL" },
+    ],
+  },
+
+  {
+    id:"nat-q16", qNum:"Q16", category:"Trump",
+    title:"Trump Approval by Issue",
+    subtitle:"NET Approve vs NET Disapprove per issue · N=893 · LV Weighted · Sorted by disapproval",
+    issueTable:[
+      { issue:"Economy, Jobs & Cost of Living",         disApprove:61, approve:37 },
+      { issue:"Healthcare, Social Security & Medicare", disApprove:57, approve:38 },
+      { issue:"Education, Housing & Family Issues",     disApprove:55, approve:39 },
+      { issue:"Foreign Policy & National Security",     disApprove:53, approve:43 },
+      { issue:"Immigration & Border Security",          disApprove:52, approve:47 },
+      { issue:"Crime, Public Safety & Policing",        disApprove:49, approve:47 },
+    ],
+  },
+
+  {
+    id:"nat-q18", qNum:"Q18", category:"Trump",
+    title:"Trump's Actions in Office — Assessment",
+    subtitle:"How would you describe President Trump's actions and policies in office so far? · N=893 · LV Weighted",
+    nets:[
+      { val:"54.0%", lbl:"Too Conservative", color:C.pink },
+      { val:"31.0%", lbl:"About Right",       color:C.green },
+      { val:"8.5%",  lbl:"Too Liberal",       color:C.gold },
+    ],
+    bars:[
+      { label:"Far too conservative",     pct:42, color:C.pink,   strong:true, group:"TOO CONSERVATIVE" },
+      { label:"Somewhat too conservative", pct:12, color:C.pink },
+      { label:"About the right balance",  pct:31, color:C.green,  strong:true, group:"ABOUT RIGHT" },
+      { label:"Somewhat too liberal",     pct:3,  color:C.gold,   group:"TOO LIBERAL" },
+      { label:"Far too liberal",          pct:6,  color:C.orange },
+      { label:"Not sure / no opinion",    pct:7,  color:C.muted,  group:"NOT SURE" },
+    ],
+  },
+
+  {
+    id:"nat-q12a", qNum:"Q12", category:"2028 Matchups",
+    title:"2028 Presidential Matchups — JD Vance",
+    subtitle:"JD Vance (R) vs Democratic candidates vs Thomas Massie (I) · N=893 · LV Weighted",
+    bars:[
+      { label:"Democrat (Gavin Newsom)",   pct:45, color:C.blue,     strong:true, group:"JD VANCE vs GAVIN NEWSOM" },
+      { label:"Republican (JD Vance)",     pct:39, color:C.pink },
+      { label:"Independent (T. Massie)",   pct:6,  color:C.purpleLt },
+      { label:"Undecided",                 pct:10, color:C.muted },
+      { label:"Democrat (Kamala Harris)",  pct:47, color:C.blue,     strong:true, group:"JD VANCE vs KAMALA HARRIS" },
+      { label:"Republican (JD Vance)",     pct:39, color:C.pink },
+      { label:"Independent (T. Massie)",   pct:7,  color:C.purpleLt },
+      { label:"Undecided",                 pct:7,  color:C.muted },
+      { label:"Democrat (Pete Buttigieg)", pct:46, color:C.blue,     strong:true, group:"JD VANCE vs PETE BUTTIGIEG" },
+      { label:"Republican (JD Vance)",     pct:40, color:C.pink },
+      { label:"Independent (T. Massie)",   pct:7,  color:C.purpleLt },
+      { label:"Undecided",                 pct:8,  color:C.muted },
+    ],
+  },
+
+  {
+    id:"nat-q12b", qNum:"Q12", category:"2028 Matchups",
+    title:"2028 Presidential Matchups — Marco Rubio",
+    subtitle:"Marco Rubio (R) vs Democratic candidates vs Thomas Massie (I) · N=893 · LV Weighted",
+    bars:[
+      { label:"Democrat (Gavin Newsom)",   pct:46, color:C.blue,     strong:true, group:"MARCO RUBIO vs GAVIN NEWSOM" },
+      { label:"Republican (M. Rubio)",     pct:39, color:C.pink },
+      { label:"Independent (T. Massie)",   pct:5,  color:C.purpleLt },
+      { label:"Undecided",                 pct:10, color:C.muted },
+      { label:"Democrat (Kamala Harris)",  pct:47, color:C.blue,     strong:true, group:"MARCO RUBIO vs KAMALA HARRIS" },
+      { label:"Republican (M. Rubio)",     pct:39, color:C.pink },
+      { label:"Independent (T. Massie)",   pct:7,  color:C.purpleLt },
+      { label:"Undecided",                 pct:8,  color:C.muted },
+      { label:"Democrat (Pete Buttigieg)", pct:44, color:C.blue,     strong:true, group:"MARCO RUBIO vs PETE BUTTIGIEG" },
+      { label:"Republican (M. Rubio)",     pct:39, color:C.pink },
+      { label:"Independent (T. Massie)",   pct:7,  color:C.purpleLt },
+      { label:"Undecided",                 pct:10, color:C.muted },
+    ],
+  },
+
+  {
+    id:"nat-q12c", qNum:"Q12", category:"2028 Matchups",
+    title:"2028 Presidential Matchups — Ted Cruz",
+    subtitle:"Ted Cruz (R) vs Democratic candidates vs Thomas Massie (I) · N=893 · LV Weighted",
+    bars:[
+      { label:"Democrat (Gavin Newsom)",   pct:44, color:C.blue,     strong:true, group:"TED CRUZ vs GAVIN NEWSOM" },
+      { label:"Republican (Ted Cruz)",     pct:39, color:C.pink },
+      { label:"Independent (T. Massie)",   pct:6,  color:C.purpleLt },
+      { label:"Undecided",                 pct:10, color:C.muted },
+      { label:"Democrat (Kamala Harris)",  pct:46, color:C.blue,     strong:true, group:"TED CRUZ vs KAMALA HARRIS" },
+      { label:"Republican (Ted Cruz)",     pct:39, color:C.pink },
+      { label:"Independent (T. Massie)",   pct:7,  color:C.purpleLt },
+      { label:"Undecided",                 pct:8,  color:C.muted },
+      { label:"Democrat (Pete Buttigieg)", pct:46, color:C.blue,     strong:true, group:"TED CRUZ vs PETE BUTTIGIEG" },
+      { label:"Republican (Ted Cruz)",     pct:38, color:C.pink },
+      { label:"Independent (T. Massie)",   pct:7,  color:C.purpleLt },
+      { label:"Undecided",                 pct:10, color:C.muted },
+    ],
+  },
+
+  {
+    id:"nat-q12d", qNum:"Q12", category:"2028 Matchups",
+    title:"2028 Presidential Matchups — Ron DeSantis",
+    subtitle:"Ron DeSantis (R) vs Democratic candidates vs Thomas Massie (I) · N=893 · LV Weighted",
+    bars:[
+      { label:"Democrat (Gavin Newsom)",   pct:45, color:C.blue,     strong:true, group:"RON DESANTIS vs GAVIN NEWSOM" },
+      { label:"Republican (R. DeSantis)",  pct:39, color:C.pink },
+      { label:"Independent (T. Massie)",   pct:7,  color:C.purpleLt },
+      { label:"Undecided",                 pct:10, color:C.muted },
+      { label:"Democrat (Kamala Harris)",  pct:47, color:C.blue,     strong:true, group:"RON DESANTIS vs KAMALA HARRIS" },
+      { label:"Republican (R. DeSantis)",  pct:39, color:C.pink },
+      { label:"Independent (T. Massie)",   pct:6,  color:C.purpleLt },
+      { label:"Undecided",                 pct:8,  color:C.muted },
+      { label:"Democrat (Pete Buttigieg)", pct:45, color:C.blue,     strong:true, group:"RON DESANTIS vs PETE BUTTIGIEG" },
+      { label:"Republican (R. DeSantis)",  pct:37, color:C.pink },
+      { label:"Independent (T. Massie)",   pct:7,  color:C.purpleLt },
+      { label:"Undecided",                 pct:10, color:C.muted },
+    ],
+  },
+
+  {
+    id:"nat-q19", qNum:"Q19", category:"Foreign Policy",
+    title:"Trump Foreign Policy — Whose Interests?",
+    subtitle:"Whose interests do Trump's foreign policy decisions primarily serve? · N=893 · LV Weighted",
+    nets:[
+      { val:"38.3%", lbl:"Foreign Over US",  color:C.pink },
+      { val:"43.0%", lbl:"American-First",   color:C.green },
+    ],
+    bars:[
+      { label:"The American people above all else",                                 pct:24, color:C.green,    strong:true, group:"AMERICAN-FIRST" },
+      { label:"Mostly American people w/ significant consideration for allies",     pct:19, color:C.green },
+      { label:"A balance between American and foreign ally interests",              pct:9,  color:C.gold,     group:"BALANCED" },
+      { label:"Mostly the interests of foreign allies like Israel over Americans",  pct:14, color:C.pink,     group:"FOREIGN-FIRST" },
+      { label:"Foreign allies like Israel above the American people",               pct:25, color:C.pink,     strong:true },
+      { label:"Not sure / no opinion",                                              pct:10, color:C.muted,    group:"NOT SURE" },
+    ],
+  },
+
+  {
+    id:"nat-q24", qNum:"Q24", category:"Foreign Policy",
+    title:"Israel PAC Donations Effect on Vote",
+    subtitle:"If a candidate accepted donations from a PAC supporting Israel, more or less likely to vote for them? · N=893 · LV Weighted",
+    nets:[
+      { val:"31.8%", lbl:"NET Less Likely", color:C.pink },
+      { val:"27.4%", lbl:"NET More Likely", color:C.green },
+      { val:"40.9%", lbl:"No Difference",   color:C.muted },
+    ],
+    bars:[
+      { label:"Much less likely",           pct:21, color:C.pink,   strong:true, group:"LESS LIKELY" },
+      { label:"Somewhat less likely",       pct:11, color:C.pink },
+      { label:"No difference / no opinion", pct:41, color:C.neutral, group:"NO DIFFERENCE" },
+      { label:"Somewhat more likely",       pct:15, color:C.green,  group:"MORE LIKELY" },
+      { label:"Much more likely",           pct:12, color:C.green,  strong:true },
+    ],
+  },
+
+  {
+    id:"nat-q20", qNum:"Q20", category:"Economy",
+    title:"Household Economic Difficulty",
+    subtitle:"Over the last month, how difficult has it been to pay usual household expenses? · N=893 · LV Weighted",
+    nets:[
+      { val:"58.0%", lbl:"Some Difficulty",   color:C.pink },
+      { val:"40.7%", lbl:"Little Difficulty", color:C.green },
+    ],
+    bars:[
+      { label:"Very difficult",        pct:19, color:C.pink,  strong:true },
+      { label:"Somewhat difficult",    pct:39, color:C.pink },
+      { label:"Not very difficult",    pct:22, color:C.green },
+      { label:"Not at all difficult",  pct:19, color:C.green, strong:true },
+      { label:"Not sure / no opinion", pct:1,  color:C.muted },
+    ],
+  },
+
+  {
+    id:"nat-q21", qNum:"Q21", category:"Immigration",
+    title:"Mass Deportation of Illegal Immigrants",
+    subtitle:"Do you support or oppose the mass deportation of all illegal immigrants? · N=893 · LV Weighted",
+    nets:[
+      { val:"46.7%", lbl:"NET Support", color:C.green },
+      { val:"48.1%", lbl:"NET Oppose",  color:C.pink },
+    ],
+    bars:[
+      { label:"Strongly support", pct:27, color:C.green, strong:true, group:"SUPPORT" },
+      { label:"Somewhat support", pct:20, color:C.green },
+      { label:"Strongly oppose",  pct:32, color:C.pink,  strong:true, group:"OPPOSE" },
+      { label:"Somewhat oppose",  pct:16, color:C.pink },
+      { label:"Not sure",         pct:5,  color:C.muted, group:"NOT SURE" },
+    ],
+  },
+
+  {
+    id:"nat-q22", qNum:"Q22", category:"Social",
+    title:"Preferred Candidate Generation",
+    subtitle:"When voting for a candidate, which generation do you most prefer? · N=893 · LV Weighted",
+    bars:[
+      { label:"Gen X (ages 45–60)",       pct:45, color:C.blue,     strong:true },
+      { label:"Millennial (ages 29–44)",  pct:21, color:C.purpleLt },
+      { label:"Baby Boomer (ages 61–79)", pct:13, color:C.gold },
+      { label:"Not sure / no opinion",    pct:17, color:C.muted },
+      { label:"Gen Z (ages 18–28)",       pct:4,  color:C.cyan },
+    ],
+  },
+
+  {
+    id:"nat-q23", qNum:"Q23", category:"Social",
+    title:"Most Important Quality in a Long-Term Partner",
+    subtitle:"Which is the single most important quality when considering a long-term partner? · N=893 · LV Weighted",
+    bars:[
+      { label:"Emotional availability",         pct:30, color:C.blue,     strong:true },
+      { label:"Sense of humor",                 pct:19, color:C.purpleLt },
+      { label:"Financial stability",            pct:15, color:C.gold },
+      { label:"Religious affiliation",          pct:10, color:C.cyan },
+      { label:"Ambition / work ethic",          pct:9,  color:C.orange },
+      { label:"Physical attractiveness",        pct:6,  color:C.pink },
+      { label:"Not sure / no opinion",          pct:8,  color:C.muted },
+      { label:"A lot of sexual experience",     pct:3,  color:C.muted },
+      { label:"Little to no sexual experience", pct:1,  color:C.muted },
+    ],
+  },
+
+  {
+    id:"nat-q17a", qNum:"Q17", category:"Favorability",
+    title:"Individual Favorability — Political Figures",
+    subtitle:"NET Approve vs NET Disapprove · N=893 · LV Weighted · Sorted by approval",
+    issueTable:[
+      { issue:"Kamala Harris",  approve:54, disApprove:44 },
+      { issue:"Pete Buttigieg", approve:45, disApprove:34 },
+      { issue:"Gavin Newsom",   approve:44, disApprove:40 },
+      { issue:"JD Vance",       approve:41, disApprove:53 },
+      { issue:"Marco Rubio",    approve:41, disApprove:46 },
+      { issue:"Ron DeSantis",   approve:40, disApprove:45 },
+      { issue:"Ted Cruz",       approve:39, disApprove:49 },
+      { issue:"Ben Shapiro",    approve:35, disApprove:30 },
+      { issue:"Tucker Carlson", approve:27, disApprove:50 },
+      { issue:"Thomas Massie",  approve:27, disApprove:26 },
+      { issue:"Megyn Kelly",    approve:27, disApprove:42 },
+      { issue:"Candace Owens",  approve:24, disApprove:39 },
+      { issue:"Mark Levin",     approve:24, disApprove:22 },
+      { issue:"Laura Loomer",   approve:15, disApprove:33 },
+      { issue:"Nick Fuentes",   approve:13, disApprove:38 },
+    ],
+  },
+
+  {
+    id:"nat-q17b", qNum:"Q17", category:"Favorability",
+    title:"Individual Favorability — Media & Pop Culture",
+    subtitle:"NET Approve vs NET Disapprove · N=893 · LV Weighted",
+    issueTable:[
+      { issue:"Michael Jackson", approve:45, disApprove:25 },
+      { issue:"Kendrick Lamar",  approve:34, disApprove:22 },
+      { issue:"Drake",           approve:27, disApprove:30 },
+      { issue:"Thomas Massie",   approve:27, disApprove:26 },
+      { issue:"Playboi Carti",   approve:14, disApprove:18 },
+      { issue:"Clavicular",      approve:10, disApprove:19 },
+    ],
+  },
+
+  {
+    id:"nat-q25", qNum:"Q25", category:"Other",
+    title:"Charlie Kirk Assassination — Responsibility",
+    subtitle:"Who do you believe was ultimately responsible for the assassination of Charlie Kirk? · N=893 · LV Weighted",
+    nets:[
+      { val:"29.5%", lbl:"Tyler Robinson Alone", color:C.gold },
+      { val:"27.6%", lbl:"Not Sure",             color:C.muted },
+    ],
+    bars:[
+      { label:"Tyler Robinson, acting alone",                         pct:30, color:C.gold,     strong:true },
+      { label:"Not sure / no opinion",                                pct:28, color:C.muted },
+      { label:"Tyler Robinson, part of a larger organization",        pct:14, color:C.orange },
+      { label:"A government or political actor",                      pct:9,  color:C.purpleLt },
+      { label:"A left-wing or anti-conservative organization",        pct:8,  color:C.blue },
+      { label:"Someone at Turning Point USA (TPUSA)",                 pct:8,  color:C.pink },
+      { label:"A right-wing or anti-liberal organization",            pct:5,  color:C.pink },
+    ],
+  },
+];
 
 
 // ─── Topline executive dashboard ─────────────────────────────────────────────
@@ -438,6 +877,100 @@ function KpiTile({ label, val, sub, color, border }: {
       <div className="tl-kpi-val" style={{ color }}>{val}</div>
       <div className="tl-kpi-lbl">{label}</div>
       <div className="tl-kpi-sub">{sub}</div>
+    </div>
+  );
+}
+
+function NationalToplineDashboard() {
+  return (
+    <div className="tl-section">
+      <div className="tl-section-hdr">
+        <span className="tl-section-hdr-lbl">TOPLINE RESULTS</span>
+        <span className="tl-section-hdr-sub">National Benchmark Survey · May 2026 · N=893 · LV-Weighted</span>
+      </div>
+      <div className="tl-ballot-grid">
+        {/* Trump Approval */}
+        <div className="tl-ballot-card">
+          <div className="tl-ballot-eyebrow">TRUMP PRESIDENTIAL APPROVAL</div>
+          <div className="tl-primary-rows">
+            {[
+              { name:"Strongly Approve",    pct:21.8, color:C.green },
+              { name:"Somewhat Approve",    pct:19.8, color:C.green },
+              { name:"Strongly Disapprove", pct:49.6, color:C.pink },
+              { name:"Somewhat Disapprove", pct:8.0,  color:C.pink },
+              { name:"Neutral / No Opinion",pct:0.9,  color:"var(--muted2)" },
+            ].map((r, i) => (
+              <div key={i} className="tl-primary-row">
+                <div className="tl-primary-name">{r.name}</div>
+                <div className="tl-primary-track">
+                  <div style={{ width:`${r.pct}%`, height:"100%", background:r.color,
+                    borderRadius:"var(--r-sm)", transition:"width 0.5s cubic-bezier(0.16,1,0.3,1)" }} />
+                </div>
+                <div className="tl-primary-pct" style={{ color:r.color }}>{r.pct}%</div>
+              </div>
+            ))}
+          </div>
+          <div className="tl-ballot-und">41.6% Approve · 57.6% Disapprove · N=893 LV</div>
+        </div>
+
+        {/* Generic Ballot */}
+        <div className="tl-ballot-card">
+          <div className="tl-ballot-eyebrow">2026 GENERIC CONGRESSIONAL BALLOT</div>
+          <div className="tl-ballot-matchup">
+            <div className="tl-ballot-side">
+              <div className="tl-ballot-pct" style={{ color:C.blue }}>46.8%</div>
+              <div className="tl-ballot-name">Democrat</div>
+              <div className="tl-ballot-party dem">DEM</div>
+            </div>
+            <div className="tl-ballot-center">
+              <div className="tl-ballot-net" style={{ color:C.blue }}>D+6.8</div>
+              <div className="tl-ballot-adv-lbl">ADVANTAGE</div>
+            </div>
+            <div className="tl-ballot-side right">
+              <div className="tl-ballot-pct" style={{ color:C.pink }}>40.0%</div>
+              <div className="tl-ballot-name">Republican</div>
+              <div className="tl-ballot-party rep">REP</div>
+            </div>
+          </div>
+          <div className="tl-split-bar">
+            <div style={{ flex:"46.8", background:C.blue }} />
+            <div style={{ flex:"10.3", background:"var(--panel2)" }} />
+            <div style={{ flex:"40", background:C.pink }} />
+          </div>
+          <div className="tl-ballot-und">2026 Midterm · N=893 · 10.3% Undecided</div>
+        </div>
+
+        {/* Mass Deportation */}
+        <div className="tl-ballot-card">
+          <div className="tl-ballot-eyebrow">MASS DEPORTATION — SUPPORT VS. OPPOSE</div>
+          <div className="tl-primary-rows">
+            {[
+              { name:"Strongly Support", pct:26.6, color:C.green },
+              { name:"Somewhat Support", pct:20.1, color:C.green },
+              { name:"Strongly Oppose",  pct:31.7, color:C.pink },
+              { name:"Somewhat Oppose",  pct:16.4, color:C.pink },
+              { name:"Not Sure",         pct:5.2,  color:"var(--muted2)" },
+            ].map((r, i) => (
+              <div key={i} className="tl-primary-row">
+                <div className="tl-primary-name">{r.name}</div>
+                <div className="tl-primary-track">
+                  <div style={{ width:`${r.pct}%`, height:"100%", background:r.color,
+                    borderRadius:"var(--r-sm)", transition:"width 0.5s cubic-bezier(0.16,1,0.3,1)" }} />
+                </div>
+                <div className="tl-primary-pct" style={{ color:r.color }}>{r.pct}%</div>
+              </div>
+            ))}
+          </div>
+          <div className="tl-ballot-und">46.7% Support · 48.1% Oppose · N=893 LV</div>
+        </div>
+      </div>
+      <div className="tl-kpi-row">
+        <KpiTile label="Trump Net Approval"  val="−16"   sub="41.6% Approve · 57.6% Disapprove"       color={C.pink}   border={C.pink} />
+        <KpiTile label="Right / Wrong Track" val="−31.9" sub="30.2% Right Track · 62.1% Wrong Track"  color={C.pink}   border={C.pink} />
+        <KpiTile label="Generic Ballot"      val="D+6.8" sub="Democrat 46.8% · Republican 40.0%"      color={C.blue}   border={C.blue} />
+        <KpiTile label="Household Difficulty"val="58%"   sub="Very or Somewhat Difficult to Pay Bills" color={C.orange} border={C.orange} />
+        <KpiTile label="2028: Dem Leads"     val="All 12" sub="Dem candidate leads all 12 matchups"   color={C.blue}   border={C.blue} />
+      </div>
     </div>
   );
 }
@@ -585,9 +1118,16 @@ function RankTableView({ rows }: { rows: NonNullable<Slide["rankTable"]> }) {
 
 // ─── Main dashboard ───────────────────────────────────────────────────────────
 export default function TPSIPollDashboard() {
-  const [activeId, setActiveId] = useState("q10a");
-  const categories = getCategories(SLIDES);
-  const slide = SLIDES.find(s => s.id === activeId) ?? SLIDES.find(s => !s.isCover)!;
+  const [activePoll, setActivePoll] = useState<'la'|'national'>('la');
+  const [laActiveId, setLaActiveId] = useState("q10a");
+  const [natActiveId, setNatActiveId] = useState("nat-q14");
+
+  const slides    = activePoll === 'la' ? SLIDES : NATIONAL_SLIDES;
+  const activeId  = activePoll === 'la' ? laActiveId : natActiveId;
+  const setActive = activePoll === 'la' ? setLaActiveId : setNatActiveId;
+
+  const categories = getCategories(slides);
+  const slide = slides.find(s => s.id === activeId) ?? slides.find(s => !s.isCover)!;
 
   return (
     <>
@@ -877,25 +1417,78 @@ export default function TPSIPollDashboard() {
         .tl-kpi-sub {
           font-family: var(--font-body); font-size: 9px; color: var(--muted2);
         }
+
+        /* Poll switcher tabs */
+        .poll-tabs {
+          display: flex; gap: 0; margin-bottom: 12px;
+          border: 1px solid var(--border); border-radius: var(--r-sm);
+          overflow: hidden; width: fit-content; background: var(--panel);
+        }
+        .poll-tab {
+          display: flex; align-items: center; gap: 7px; padding: 8px 18px;
+          background: transparent; border: none; border-right: 1px solid var(--border);
+          cursor: pointer; color: var(--muted);
+          font-family: var(--font-body); font-size: 11px; font-weight: 700;
+          letter-spacing: 0.12em; text-transform: uppercase;
+          transition: background 100ms, color 100ms;
+        }
+        .poll-tab:last-child { border-right: none; }
+        .poll-tab:hover { background: rgba(124,58,237,0.04); color: var(--foreground2); }
+        .poll-tab.active { background: rgba(124,58,237,0.10); color: var(--purple2); }
+        .poll-tab-dot {
+          width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0;
+        }
       `}</style>
 
       <div className="tpsi-page">
         {/* Page header */}
-        <div style={{ padding: "20px 0 14px" }}>
-          <div className="tpsi-eyebrow">TPSI POLL · LOS ANGELES MAYOR · WAVE 1 · MAY 2026</div>
-          <div style={{ display: "flex", flexWrap: "wrap", alignItems: "flex-end", justifyContent: "space-between", gap: 12 }}>
-            <h1 className="tpsi-page-title">Los Angeles <em>Mayoral Election</em></h1>
-            <div style={{ display: "flex", gap: 6, flexWrap: "wrap", alignItems: "center" }}>
-              <span className="tpsi-bdg tpsi-bdg-purple">N=465 LV</span>
-              <span className="tpsi-bdg">WAVE 1</span>
-              <span className="tpsi-bdg">17 QUESTIONS</span>
-              <span className="tpsi-bdg">MAY 2026</span>
+        {activePoll === 'la' ? (
+          <div style={{ padding:"20px 0 14px" }}>
+            <div className="tpsi-eyebrow">TPSI POLL · LOS ANGELES MAYOR · WAVE 1 · MAY 2026</div>
+            <div style={{ display:"flex", flexWrap:"wrap", alignItems:"flex-end", justifyContent:"space-between", gap:12 }}>
+              <h1 className="tpsi-page-title">Los Angeles <em>Mayoral Election</em></h1>
+              <div style={{ display:"flex", gap:6, flexWrap:"wrap", alignItems:"center" }}>
+                <span className="tpsi-bdg tpsi-bdg-purple">N=465 LV</span>
+                <span className="tpsi-bdg">WAVE 1</span>
+                <span className="tpsi-bdg">17 QUESTIONS</span>
+                <span className="tpsi-bdg">MAY 2026</span>
+              </div>
             </div>
           </div>
+        ) : (
+          <div style={{ padding:"20px 0 14px" }}>
+            <div className="tpsi-eyebrow">TPSI POLL · NATIONAL BENCHMARK · MAY 2026</div>
+            <div style={{ display:"flex", flexWrap:"wrap", alignItems:"flex-end", justifyContent:"space-between", gap:12 }}>
+              <h1 className="tpsi-page-title">National <em>Benchmark Survey</em></h1>
+              <div style={{ display:"flex", gap:6, flexWrap:"wrap", alignItems:"center" }}>
+                <span className="tpsi-bdg tpsi-bdg-purple">N=893 LV</span>
+                <span className="tpsi-bdg">25 QUESTIONS</span>
+                <span className="tpsi-bdg">MAY 2026</span>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Poll switcher */}
+        <div className="poll-tabs">
+          <button
+            className={`poll-tab${activePoll === 'la' ? ' active' : ''}`}
+            onClick={() => setActivePoll('la')}
+          >
+            <span className="poll-tab-dot" style={{ background: activePoll === 'la' ? 'var(--purple)' : 'var(--border2)' }} />
+            LA Mayoral · May 2026
+          </button>
+          <button
+            className={`poll-tab${activePoll === 'national' ? ' active' : ''}`}
+            onClick={() => setActivePoll('national')}
+          >
+            <span className="poll-tab-dot" style={{ background: activePoll === 'national' ? 'var(--purple)' : 'var(--border2)' }} />
+            National Benchmark · May 2026
+          </button>
         </div>
 
         {/* Topline executive summary */}
-        <ToplineDashboard />
+        {activePoll === 'la' ? <ToplineDashboard /> : <NationalToplineDashboard />}
 
         {/* Two-column body */}
         <div className="tpsi-layout">
@@ -908,7 +1501,7 @@ export default function TPSIPollDashboard() {
                   <button
                     key={s.id}
                     className={`tpsi-nav-item${activeId === s.id ? " active" : ""}`}
-                    onClick={() => setActiveId(s.id)}
+                    onClick={() => setActive(s.id)}
                   >
                     <span className="tpsi-nav-qnum">{s.qNum}</span>
                     <span className="tpsi-nav-title">{s.title}</span>
