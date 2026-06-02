@@ -3,7 +3,7 @@ import "./globals.css";
 import type { Metadata } from "next";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
-import { Quantico, Geist_Mono, Fraunces } from "next/font/google";
+import { Quantico, Geist_Mono, Fraunces, JetBrains_Mono } from "next/font/google";
 
 /* -----------------------------
    FONTS
@@ -29,6 +29,13 @@ const serif = Fraunces({
   display: "swap",
 });
 
+const numeric = JetBrains_Mono({
+  subsets: ["latin"],
+  weight: ["500", "700", "800"],
+  variable: "--font-numeric",
+  display: "swap",
+});
+
 /* -----------------------------
    META
 ------------------------------ */
@@ -50,12 +57,17 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${display.variable} ${mono.variable} ${serif.variable}`}
+      className={`${display.variable} ${mono.variable} ${serif.variable} ${numeric.variable}`}
+      suppressHydrationWarning
     >
-      {/* IMPORTANT:
-         mono.className forces Geist Mono as REAL font-family.
-         This prevents Windows from ever falling back to Courier.
-      */}
+      <head>
+        {/* No-flash theme init — runs before paint */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var s=localStorage.getItem('psi-theme');var m=window.matchMedia('(prefers-color-scheme: dark)').matches;var t=s||(m?'dark':'light');document.documentElement.setAttribute('data-theme',t);}catch(e){}})();`,
+          }}
+        />
+      </head>
         <body
         suppressHydrationWarning
         className={[

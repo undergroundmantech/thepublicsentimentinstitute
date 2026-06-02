@@ -1,24 +1,24 @@
 import Link from "next/link";
-import Image from "next/image";
+import ThemeToggle from "./ThemeToggle";
 
 const COLS = [
   {
     label: "Tracking",
     links: [
       { href: "/polling/donaldtrumpapproval", label: "Trump Approval" },
-      { href: "/polling/genericballot",        label: "Generic Ballot" },
-      { href: "/polling/rightorwrongtrack",     label: "Right / Wrong Track" },
-      { href: "/polling",                       label: "All Polling Averages" },
+      { href: "/polling/genericballot",       label: "Generic Ballot" },
+      { href: "/polling/rightorwrongtrack",   label: "Right / Wrong Track" },
+      { href: "/polling",                     label: "All Polling Averages" },
     ],
   },
   {
     label: "Institute",
     links: [
-      { href: "/contact", label: "Partner With Us" },
-      { href: "/contact", label: "Request a Poll" },
-      { href: "/contact", label: "Contact" },
-      { href: "https://wss.pollfish.com/link/522d0e01-b70f-4955-8514-b42a7f10d4b6", label: "Take the Survey" },
-      { href: "/SMSOptIn", label: "SMS Sign-Up" },
+      { href: "/contact",                                                                  label: "Partner With Us" },
+      { href: "/contact",                                                                  label: "Request a Poll" },
+      { href: "/contact",                                                                  label: "Contact" },
+      { href: "https://wss.pollfish.com/link/522d0e01-b70f-4955-8514-b42a7f10d4b6",        label: "Take the Survey" },
+      { href: "/SMSOptIn",                                                                 label: "SMS Sign-Up" },
     ],
   },
 ];
@@ -36,321 +36,268 @@ export default function Footer() {
     <>
       <style>{`
         .ft-root {
-          background: #070709;
-          border-top: 1px solid rgba(255,255,255,0.08);
-          font-family: var(--font-body), monospace;
-          margin-top: 0;
+          margin-top: 40px;
+          padding: 0 24px 28px;
+          font-family: var(--font-body);
         }
 
-        /* Tri-color rule matching the page hero */
-        .ft-stripe {
-          height: 3px;
-          background: linear-gradient(90deg, #e63946 0%, #e63946 33.33%, #7c3aed 33.33%, #7c3aed 66.66%, #2563eb 66.66%, #2563eb 100%);
+        .ft-shell {
+          max-width: 1280px;
+          margin: 0 auto;
+          background: var(--panel);
+          border: 1px solid var(--border);
+          border-radius: var(--r-xl);
+          box-shadow: var(--shadow-md);
+          overflow: hidden;
         }
 
         /* CTA band */
-        .ft-cta-wrap {
-          border-bottom: 1px solid rgba(255,255,255,0.07);
-        }
         .ft-cta {
-          max-width: 1280px;
-          margin: 0 auto;
-          padding: 36px 32px;
+          padding: 36px 36px 32px;
           display: grid;
           grid-template-columns: 1fr auto;
           align-items: center;
-          gap: 32px;
+          gap: 28px;
+          background:
+            radial-gradient(ellipse 70% 100% at 0% 100%, rgba(124,58,237,0.07) 0%, transparent 60%),
+            radial-gradient(ellipse 60% 100% at 100% 0%, rgba(37,99,235,0.05) 0%, transparent 60%),
+            var(--panel);
+          border-bottom: 1px solid var(--border);
         }
         @media (max-width: 768px) {
-          .ft-cta { grid-template-columns: 1fr; padding: 28px 20px; }
+          .ft-cta { grid-template-columns: 1fr; padding: 28px 22px; }
         }
 
         .ft-cta-eyebrow {
-          font-family: var(--font-body), monospace;
-          font-size: 9px;
-          font-weight: 500;
-          letter-spacing: 0.22em;
+          font-size: 11px;
+          font-weight: 600;
+          letter-spacing: 0.14em;
           text-transform: uppercase;
-          color: #7c3aed;
+          color: var(--purple);
+          margin-bottom: 10px;
+        }
+        .ft-cta-head {
+          font-family: var(--font-display), sans-serif; text-transform: uppercase;
+          font-size: clamp(24px, 3vw, 36px);
+          font-weight: 800;
+          letter-spacing: -0.02em;
+          color: var(--foreground);
+          line-height: 1.05;
           margin-bottom: 8px;
         }
-
-        .ft-cta-head {
-          font-family: var(--font-display), sans-serif;
-          font-size: clamp(26px, 3.5vw, 46px);
-          letter-spacing: 0.04em;
-          color: #fff;
-          line-height: 1;
-          margin-bottom: 6px;
-          text-transform: uppercase;
+        .ft-cta-head em {
+          font-style: normal;
+          background: linear-gradient(90deg, var(--red) 0%, var(--purple) 50%, var(--blue) 100%);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
         }
-        .ft-cta-head .dem { color: #2563eb; }
-        .ft-cta-head .rep { color: #e63946; }
-
         .ft-cta-sub {
-          font-family: var(--font-body), monospace;
-          font-size: 10px;
-          color: rgba(255,255,255,0.32);
-          letter-spacing: 0.06em;
+          font-size: 14px;
+          color: var(--muted);
+          max-width: 480px;
         }
+        .ft-cta-btns { display: flex; gap: 10px; flex-wrap: wrap; flex-shrink: 0; }
 
-        .ft-cta-btns {
-          display: flex;
-          gap: 10px;
-          flex-wrap: wrap;
-          flex-shrink: 0;
+        .ft-btn {
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          padding: 11px 22px;
+          border-radius: var(--r-pill);
+          font-family: var(--font-numeric), ui-monospace, monospace;
+          font-size: 13px;
+          font-weight: 700;
+          letter-spacing: 0.02em;
+          text-decoration: none;
+          border: 1px solid transparent;
+          transition: transform var(--dur-1) var(--ease-out), background var(--dur-1) var(--ease-out), box-shadow var(--dur-1) var(--ease-out), border-color var(--dur-1) var(--ease-out);
         }
-
         .ft-btn-primary {
-          display: inline-flex;
-          align-items: center;
-          padding: 9px 20px;
-          background: rgba(124,58,237,0.15);
-          border: 1px solid rgba(124,58,237,0.5);
-          color: #9d5cf0;
-          font-family: var(--font-body), monospace;
-          font-size: 9px;
-          font-weight: 500;
-          letter-spacing: 0.14em;
-          text-transform: uppercase;
-          text-decoration: none;
-          transition: border-color 120ms, color 120ms, background 120ms;
+          background: var(--gradient-purple);
+          color: #fff !important;
+          border-color: var(--purple);
+          box-shadow: var(--shadow-purple);
         }
-        .ft-btn-primary:hover { border-color: rgba(124,58,237,0.8); color: #b97ef5; background: rgba(124,58,237,0.22); text-decoration: none; }
-
+        .ft-btn-primary:hover {
+          background: var(--gradient-purple-soft);
+          border-color: var(--purple-soft);
+          transform: translateY(-1px);
+          text-decoration: none;
+          color: #fff !important;
+          box-shadow: 0 8px 22px rgba(124, 58, 237, 0.32);
+        }
         .ft-btn-ghost {
-          display: inline-flex;
-          align-items: center;
-          padding: 9px 20px;
-          background: transparent;
-          color: rgba(255,255,255,0.4);
-          font-family: var(--font-body), monospace;
-          font-size: 9px;
-          font-weight: 400;
-          letter-spacing: 0.14em;
-          text-transform: uppercase;
-          text-decoration: none;
-          border: 1px solid rgba(255,255,255,0.12);
-          transition: border-color 120ms, color 120ms;
+          background: var(--panel);
+          color: var(--foreground) !important;
+          border-color: var(--border2);
         }
-        .ft-btn-ghost:hover { border-color: rgba(255,255,255,0.35); color: rgba(255,255,255,0.75); text-decoration: none; }
+        .ft-btn-ghost:hover {
+          background: var(--panel2);
+          border-color: var(--border3);
+          text-decoration: none;
+          color: var(--foreground) !important;
+        }
 
         /* Stats strip */
-        .ft-stats-wrap {
-          border-bottom: 1px solid rgba(255,255,255,0.07);
-          background: #0b0b0f;
-        }
         .ft-stats {
-          max-width: 1280px;
-          margin: 0 auto;
-          padding: 0 32px;
           display: grid;
           grid-template-columns: repeat(4, 1fr);
+          padding: 4px 24px;
+          background: var(--panel2);
+          border-bottom: 1px solid var(--border);
         }
-        @media (max-width: 600px) { .ft-stats { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 600px) { .ft-stats { grid-template-columns: repeat(2, 1fr); padding: 4px 14px; } }
 
         .ft-stat {
-          padding: 18px 0;
-          border-right: 1px solid rgba(255,255,255,0.06);
-          padding-right: 24px;
-          margin-right: 24px;
+          position: relative;
+          padding: 20px 18px;
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
         }
-        .ft-stat:last-child { border-right: none; }
+        .ft-stat + .ft-stat::before {
+          content: "";
+          position: absolute;
+          left: 0;
+          top: 22%;
+          bottom: 22%;
+          width: 1px;
+          background: var(--border);
+        }
+        @media (max-width: 600px) {
+          .ft-stat:nth-child(2n+1)::before { display: none; }
+          .ft-stat:nth-child(-n+2) { border-bottom: 1px solid var(--border); }
+        }
         .ft-stat-k {
-          font-family: var(--font-body), monospace;
-          font-size: 8px;
-          font-weight: 500;
-          letter-spacing: 0.2em;
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          font-family: var(--font-body);
+          font-size: 10px;
+          font-weight: 600;
+          letter-spacing: 0.16em;
           text-transform: uppercase;
-          color: rgba(255,255,255,0.25);
-          margin-bottom: 4px;
+          color: var(--muted);
+        }
+        .ft-stat-k::before {
+          content: "";
+          width: 5px;
+          height: 5px;
+          border-radius: 50%;
+          background: var(--purple);
+          opacity: 0.55;
         }
         .ft-stat-v {
-          font-family: var(--font-display), sans-serif;
-          font-size: 26px;
-          letter-spacing: 0.04em;
-          color: #9d5cf0;
+          font-family: var(--font-numeric), ui-monospace, monospace;
+          font-size: 22px;
+          font-weight: 700;
+          letter-spacing: -0.01em;
+          color: var(--foreground);
           line-height: 1;
-          text-transform: uppercase;
+          font-variant-numeric: tabular-nums;
         }
 
         /* Main grid */
-        .ft-grid-wrap {
-          border-bottom: 1px solid rgba(255,255,255,0.07);
-        }
         .ft-grid {
-          max-width: 1280px;
-          margin: 0 auto;
-          padding: 0 32px;
           display: grid;
           grid-template-columns: 1.8fr repeat(2, 1fr);
-        }
-        @media (max-width: 900px) { .ft-grid { grid-template-columns: 1fr 1fr; } }
-        @media (max-width: 560px) { .ft-grid { grid-template-columns: 1fr; } }
-
-        .ft-brand-col {
-          padding: 32px 40px 32px 0;
-          border-right: 1px solid rgba(255,255,255,0.06);
-          display: flex;
-          flex-direction: column;
-          gap: 14px;
+          padding: 32px 36px;
+          gap: 32px;
         }
         @media (max-width: 900px) {
-          .ft-brand-col {
-            grid-column: 1 / -1;
-            border-right: none;
-            border-bottom: 1px solid rgba(255,255,255,0.06);
-            padding: 24px 0;
-          }
+          .ft-grid { grid-template-columns: 1fr 1fr; padding: 28px 22px; gap: 24px; }
         }
+        @media (max-width: 560px) { .ft-grid { grid-template-columns: 1fr; } }
 
+        .ft-brand-col { display: flex; flex-direction: column; gap: 14px; max-width: 320px; }
         .ft-brand-logo {
-          display: block;
-          width: 140px;
-          height: auto;
-          opacity: 0.9;
-          transition: opacity 120ms;
+          display: inline-block;
+          height: 56px;
+          width: 220px;
+          background:
+            linear-gradient(100deg, #e63946 0%, #7c3aed 50%, #2563eb 100%);
+          -webkit-mask-image: url(/full_logo_clean.png);
+          -webkit-mask-size: contain;
+          -webkit-mask-repeat: no-repeat;
+          -webkit-mask-position: left center;
+          mask-image: url(/full_logo_clean.png);
+          mask-size: contain;
+          mask-repeat: no-repeat;
+          mask-position: left center;
+          transition: opacity var(--dur-1) var(--ease-out);
         }
-        .ft-brand-logo:hover { opacity: 1; }
-
+        .ft-brand-logo:hover { opacity: 0.85; }
         .ft-brand-desc {
-          font-family: var(--font-body), monospace;
-          font-size: 10px;
-          color: rgba(255,255,255,0.28);
-          line-height: 1.8;
-          max-width: 260px;
-          letter-spacing: 0.02em;
-        }
-
-        /* Nav columns */
-        .ft-nav-col {
-          padding: 32px 28px;
-          border-right: 1px solid rgba(255,255,255,0.06);
-        }
-        .ft-nav-col:last-child { border-right: none; }
-        @media (max-width: 560px) {
-          .ft-nav-col {
-            border-right: none;
-            border-bottom: 1px solid rgba(255,255,255,0.06);
-            padding: 22px 0;
-          }
+          font-size: 13px;
+          color: var(--muted);
+          line-height: 1.6;
         }
 
         .ft-col-label {
-          font-family: var(--font-body), monospace;
-          font-size: 8px;
-          font-weight: 500;
-          letter-spacing: 0.22em;
+          font-size: 11px;
+          font-weight: 600;
+          letter-spacing: 0.14em;
           text-transform: uppercase;
-          color: #7c3aed;
+          color: var(--foreground);
           margin-bottom: 14px;
-          padding-bottom: 9px;
-          border-bottom: 1px solid rgba(124,58,237,0.2);
         }
-
         .ft-nav-link {
           display: block;
-          font-family: var(--font-body), monospace;
-          font-size: 10px;
-          color: rgba(255,255,255,0.35);
+          font-size: 13px;
+          color: var(--muted);
           text-decoration: none;
-          padding: 5px 0;
-          letter-spacing: 0.04em;
-          transition: color 80ms;
+          padding: 6px 0;
+          transition: color var(--dur-1) var(--ease-out);
         }
-        .ft-nav-link:hover { color: rgba(255,255,255,0.8); text-decoration: none; }
+        .ft-nav-link:hover { color: var(--foreground); text-decoration: none; }
 
         /* Bottom bar */
-        .ft-bottom-wrap {
-          background: #0b0b0f;
-        }
         .ft-bottom {
-          max-width: 1280px;
-          margin: 0 auto;
-          padding: 14px 32px;
+          padding: 16px 36px;
           display: flex;
           align-items: center;
           justify-content: space-between;
           gap: 16px;
           flex-wrap: wrap;
+          background: var(--panel2);
+          border-top: 1px solid var(--border);
         }
         @media (max-width: 768px) {
-          .ft-bottom { padding: 14px 20px; flex-direction: column; align-items: flex-start; gap: 8px; }
+          .ft-bottom { padding: 14px 22px; flex-direction: column; align-items: flex-start; gap: 10px; }
         }
-
-        .ft-copyright {
-          font-family: var(--font-body), monospace;
-          font-size: 9px;
-          color: rgba(255,255,255,0.18);
-          letter-spacing: 0.08em;
-        }
-
-        .ft-bottom-links {
-          display: flex;
-          align-items: center;
-          gap: 20px;
-        }
-
-        .ft-bottom-link {
-          font-family: var(--font-body), monospace;
-          font-size: 9px;
-          color: rgba(255,255,255,0.22);
-          text-decoration: none;
-          letter-spacing: 0.08em;
-          transition: color 80ms;
-        }
-        .ft-bottom-link:hover { color: rgba(255,255,255,0.55); }
-
-        .ft-live-indicator {
-          display: inline-flex;
-          align-items: center;
-          gap: 6px;
-          font-family: var(--font-body), monospace;
-          font-size: 8px;
-          font-weight: 500;
-          letter-spacing: 0.16em;
-          text-transform: uppercase;
-          color: #7c3aed;
-        }
-        .ft-live-dot-sm {
-          width: 5px; height: 5px;
-          border-radius: 50%;
-          background: #7c3aed;
-          animation: ft-pulse 1.8s ease-in-out infinite;
-        }
-        @keyframes ft-pulse { 0%,100%{opacity:1} 50%{opacity:0.25} }
+        .ft-copyright { font-size: 12px; color: var(--muted); }
+        .ft-bottom-links { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
+        .ft-bottom-link { font-size: 12px; color: var(--muted); text-decoration: none; }
+        .ft-bottom-link:hover { color: var(--foreground); text-decoration: none; }
       `}</style>
 
       <footer className="ft-root">
-        <div className="ft-stripe" />
-
-        {/* CTA band */}
-        <div className="ft-cta-wrap">
+        <div className="ft-shell">
+          {/* CTA band */}
           <div className="ft-cta">
             <div>
               <div className="ft-cta-eyebrow">Participate · Shape the Data</div>
               <div className="ft-cta-head">
-                Your Voice.{" "}
-                <span className="dem">National</span>{" "}
-                <span className="rep">Impact.</span>
+                Your voice. <em>National impact.</em>
               </div>
-              <div className="ft-cta-sub">Join thousands of Americans shaping the national sentiment baseline.</div>
+              <div className="ft-cta-sub">
+                Join thousands of Americans shaping the national sentiment baseline.
+              </div>
             </div>
             <div className="ft-cta-btns">
               <Link
                 href="https://wss.pollfish.com/link/522d0e01-b70f-4955-8514-b42a7f10d4b6"
-                className="ft-btn-primary"
+                className="ft-btn ft-btn-primary"
                 target="_blank" rel="noopener noreferrer"
               >
                 Take the Survey →
               </Link>
-              <Link href="/contact" className="ft-btn-ghost">Partner With Us</Link>
+              <Link href="/contact" className="ft-btn ft-btn-ghost">Partner With Us</Link>
             </div>
           </div>
-        </div>
 
-        {/* Stats strip */}
-        <div className="ft-stats-wrap">
+          {/* Stats strip */}
           <div className="ft-stats">
             {STATS.map(s => (
               <div key={s.k} className="ft-stat">
@@ -359,30 +306,21 @@ export default function Footer() {
               </div>
             ))}
           </div>
-        </div>
 
-        {/* Main grid */}
-        <div className="ft-grid-wrap">
+          {/* Main grid */}
           <div className="ft-grid">
             <div className="ft-brand-col">
-              <Link href="/">
-                <Image
-                  src="/full_logo_clean.png"
-                  alt="Public Sentiment Institute"
-                  width={160}
-                  height={56}
-                  className="ft-brand-logo"
-                />
+              <Link href="/" aria-label="Public Sentiment Institute" className="ft-brand-logo-link">
+                <span className="ft-brand-logo" aria-hidden />
               </Link>
               <div className="ft-brand-desc">
                 A living, continuously updated national polling database —
-                capturing what Americans believe by issue, region, demographic,
-                and time.
+                capturing what Americans believe by issue, region, demographic, and time.
               </div>
             </div>
 
             {COLS.map(col => (
-              <div key={col.label} className="ft-nav-col">
+              <div key={col.label}>
                 <div className="ft-col-label">{col.label}</div>
                 {col.links.map(link => (
                   <Link
@@ -397,23 +335,16 @@ export default function Footer() {
               </div>
             ))}
           </div>
-        </div>
 
-        {/* Bottom bar */}
-        <div className="ft-bottom-wrap">
+          {/* Bottom bar */}
           <div className="ft-bottom">
             <span className="ft-copyright">
               © {year} Public Sentiment Institute · Open Methodology
             </span>
             <div className="ft-bottom-links">
-              <Link href="/" className="ft-bottom-link">Methodology</Link>
-              <Link href="/" className="ft-bottom-link">Data Disclosure</Link>
+              <ThemeToggle />
               <Link href="/contact" className="ft-bottom-link">Contact</Link>
               <Link href="/TermsAndConditions" className="ft-bottom-link">Terms &amp; Conditions</Link>
-            </div>
-            <div className="ft-live-indicator">
-              <span className="ft-live-dot-sm" />
-              Data collection active
             </div>
           </div>
         </div>
