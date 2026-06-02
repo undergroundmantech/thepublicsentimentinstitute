@@ -355,12 +355,12 @@ const NATIONAL_SLIDES: Slide[] = [
       { val:"77.2%", lbl:"Certain + Highly Motivated", color:C.blue },
     ],
     bars:[
-      { label:"Certain to vote & highly motivated",      pct:77, color:C.green, strong:true },
-      { label:"Very likely to vote & feel motivated",    pct:16, color:C.blue },
-      { label:"Somewhat likely, not strongly motivated", pct:3,  color:C.gold },
-      { label:"Motivated but unsure if will vote",       pct:2,  color:C.orange },
-      { label:"Not very likely, little motivation",      pct:1,  color:C.muted },
-      { label:"Certain not to vote",                     pct:1,  color:C.muted },
+      { label:"Certain to vote & highly motivated",      pct:77.2, color:C.green, strong:true },
+      { label:"Very likely to vote & feel motivated",    pct:15.8, color:C.blue },
+      { label:"Somewhat likely, not strongly motivated", pct:2.9,  color:C.gold },
+      { label:"Motivated but unsure if will vote",       pct:2.1,  color:C.orange },
+      { label:"Not very likely, little motivation",      pct:1.3,  color:C.muted },
+      { label:"Certain not to vote",                     pct:0.7,  color:C.muted },
     ],
   },
 
@@ -369,14 +369,14 @@ const NATIONAL_SLIDES: Slide[] = [
     title:"How Do You Plan to Cast Your Ballot?",
     subtitle:"2026 Midterm Election · N=893 · LV Weighted",
     bars:[
-      { label:"In person Election Day — know polling location",    pct:49, color:C.blue,    strong:true },
-      { label:"Mail-in — already requested or received",           pct:20, color:C.blue },
-      { label:"Early in-person — know when and where",             pct:12, color:C.green },
-      { label:"In person Election Day — need to confirm location", pct:7,  color:C.cyan },
-      { label:"Mail-in — plan to request",                         pct:5,  color:C.purpleLt },
-      { label:"Haven't decided how I will vote yet",               pct:4,  color:C.gold },
-      { label:"Early in-person — still need to look up details",   pct:2,  color:C.orange },
-      { label:"Do not plan to vote",                               pct:2,  color:C.muted },
+      { label:"In person Election Day — know polling location",    pct:48.7, color:C.blue,    strong:true },
+      { label:"Mail-in — already requested or received",           pct:20.4, color:C.blue },
+      { label:"Early in-person — know when and where",             pct:11.9, color:C.green },
+      { label:"In person Election Day — need to confirm location", pct:6.6,  color:C.cyan },
+      { label:"Mail-in — plan to request",                         pct:5.2,  color:C.purpleLt },
+      { label:"Haven't decided how I will vote yet",               pct:3.7,  color:C.gold },
+      { label:"Early in-person — still need to look up details",   pct:2.0,  color:C.orange },
+      { label:"Do not plan to vote",                               pct:1.6,  color:C.muted },
     ],
   },
 
@@ -385,12 +385,12 @@ const NATIONAL_SLIDES: Slide[] = [
     title:"Social Circle Turnout Expectation",
     subtitle:"How many of the 5–10 people closest to you do you expect to vote? · N=893 · LV Weighted",
     bars:[
-      { label:"All or nearly all of them", pct:46, color:C.green,  strong:true },
-      { label:"Most of them",              pct:36, color:C.blue },
-      { label:"About half",                pct:10, color:C.gold },
-      { label:"A few of them",             pct:5,  color:C.orange },
-      { label:"Not sure",                  pct:2,  color:C.muted },
-      { label:"None of them",              pct:1,  color:C.muted },
+      { label:"All or nearly all of them", pct:45.7, color:C.green,  strong:true },
+      { label:"Most of them",              pct:35.5, color:C.blue },
+      { label:"About half",                pct:10.3, color:C.gold },
+      { label:"A few of them",             pct:5.2,  color:C.orange },
+      { label:"Not sure",                  pct:2.3,  color:C.muted },
+      { label:"None of them",              pct:0.9,  color:C.muted },
     ],
   },
 
@@ -404,10 +404,10 @@ const NATIONAL_SLIDES: Slide[] = [
       { val:"R+0.4", lbl:"LV Spread",     color:C.pink },
     ],
     bars:[
-      { label:"Kamala Harris", pct:44, color:C.blue,    strong:true },
-      { label:"Donald Trump",  pct:44, color:C.pink,    strong:true },
-      { label:"Third party",   pct:2,  color:C.purpleLt },
-      { label:"Did not vote",  pct:10, color:C.muted },
+      { label:"Kamala Harris", pct:44.3, color:C.blue,    strong:true },
+      { label:"Donald Trump",  pct:43.9, color:C.pink,    strong:true },
+      { label:"Third party",   pct:1.5,  color:C.purpleLt },
+      { label:"Did not vote",  pct:10.2, color:C.muted },
     ],
   },
 
@@ -416,19 +416,19 @@ const NATIONAL_SLIDES: Slide[] = [
     title:"General Political Outlook",
     subtitle:"Which best describes your political outlook? · N=893 · LV Weighted",
     bars:[
-      { label:"Progressive / Socialist Democrat",    pct:14, color:C.blue,     strong:true, group:"DEMOCRAT" },
-      { label:"Mainline / Institutional Democrat",   pct:7,  color:C.blue },
-      { label:"Working-Class / Union Democrat",      pct:6,  color:C.blue },
-      { label:"Coalition / Civil Rights Democrat",   pct:3,  color:C.blue },
-      { label:"America First Republican",            pct:12, color:C.pink,     strong:true, group:"REPUBLICAN" },
-      { label:"Populist / Working-Class Republican", pct:6,  color:C.pink },
-      { label:"Suburban / Professional Republican",  pct:6,  color:C.pink },
-      { label:"Libertarian-Oriented Republican",     pct:4,  color:C.pink },
-      { label:"Lean Republican Independent",         pct:11, color:C.purpleLt, strong:true, group:"INDEPENDENT" },
-      { label:"Lean Democratic Independent",         pct:14, color:C.purpleLt },
-      { label:"Moderate Independent / Centrist",     pct:11, color:C.purpleLt },
-      { label:"Anti-Establishment Independent",      pct:2,  color:C.purpleLt },
-      { label:"None / No clear preference",          pct:3,  color:C.muted },
+      { label:"Progressive / Socialist Democrat",    pct:14.0, color:C.blue,     strong:true, group:"DEMOCRAT" },
+      { label:"Mainline / Institutional Democrat",   pct:7.4,  color:C.blue },
+      { label:"Working-Class / Union Democrat",      pct:5.9,  color:C.blue },
+      { label:"Coalition / Civil Rights Democrat",   pct:2.8,  color:C.blue },
+      { label:"America First Republican",            pct:12.3, color:C.pink,     strong:true, group:"REPUBLICAN" },
+      { label:"Populist / Working-Class Republican", pct:6.3,  color:C.pink },
+      { label:"Suburban / Professional Republican",  pct:6.0,  color:C.pink },
+      { label:"Libertarian-Oriented Republican",     pct:3.7,  color:C.pink },
+      { label:"Lean Republican Independent",         pct:11.1, color:C.purpleLt, strong:true, group:"INDEPENDENT" },
+      { label:"Lean Democratic Independent",         pct:13.9, color:C.purpleLt },
+      { label:"Moderate Independent / Centrist",     pct:11.1, color:C.purpleLt },
+      { label:"Anti-Establishment Independent",      pct:2.3,  color:C.purpleLt },
+      { label:"None / No clear preference",          pct:3.1,  color:C.muted },
     ],
   },
 
@@ -442,9 +442,9 @@ const NATIONAL_SLIDES: Slide[] = [
       { val:"22.5%", lbl:"Independent/Other", color:C.purpleLt },
     ],
     bars:[
-      { label:"Democrat",            pct:40, color:C.blue,     strong:true },
-      { label:"Republican",          pct:38, color:C.pink,     strong:true },
-      { label:"Independent / Other", pct:23, color:C.purpleLt },
+      { label:"Democrat",            pct:40.1, color:C.blue,     strong:true },
+      { label:"Republican",          pct:37.5, color:C.pink,     strong:true },
+      { label:"Independent / Other", pct:22.5, color:C.purpleLt },
     ],
   },
 
@@ -457,8 +457,8 @@ const NATIONAL_SLIDES: Slide[] = [
       { val:"92.2%", lbl:"No — Not a Groyper", color:C.green },
     ],
     bars:[
-      { label:"Yes", pct:8,  color:C.pink },
-      { label:"No",  pct:92, color:C.green, strong:true },
+      { label:"Yes", pct:7.8,  color:C.pink },
+      { label:"No",  pct:92.2, color:C.green, strong:true },
     ],
   },
 
@@ -472,9 +472,9 @@ const NATIONAL_SLIDES: Slide[] = [
       { val:"−31.9", lbl:"Net Track",   color:C.pink },
     ],
     bars:[
-      { label:"Right track", pct:30, color:C.green, strong:true },
-      { label:"Wrong track", pct:62, color:C.pink,  strong:true },
-      { label:"Not sure",    pct:8,  color:C.muted },
+      { label:"Right track", pct:30.2, color:C.green, strong:true },
+      { label:"Wrong track", pct:62.1, color:C.pink,  strong:true },
+      { label:"Not sure",    pct:7.7,  color:C.muted },
     ],
   },
 
@@ -488,10 +488,10 @@ const NATIONAL_SLIDES: Slide[] = [
       { val:"D+6.8", lbl:"Dem Lead",   color:C.blue },
     ],
     bars:[
-      { label:"The Democrat candidate",          pct:47, color:C.blue,     strong:true },
-      { label:"The Republican candidate",        pct:40, color:C.pink,     strong:true },
-      { label:"Undecided / Not sure",            pct:10, color:C.muted },
-      { label:"A third-party / independent",     pct:3,  color:C.purpleLt },
+      { label:"The Democrat candidate",          pct:46.8, color:C.blue,     strong:true },
+      { label:"The Republican candidate",        pct:40.0, color:C.pink,     strong:true },
+      { label:"Undecided / Not sure",            pct:10.3, color:C.muted },
+      { label:"A third-party / independent",     pct:2.9,  color:C.purpleLt },
     ],
   },
 
@@ -505,11 +505,11 @@ const NATIONAL_SLIDES: Slide[] = [
       { val:"−16.0", lbl:"Net Approval",   color:C.pink },
     ],
     bars:[
-      { label:"Strongly approve",     pct:22, color:C.green, strong:true, group:"APPROVE" },
-      { label:"Somewhat approve",     pct:20, color:C.green },
-      { label:"Strongly disapprove",  pct:50, color:C.pink,  strong:true, group:"DISAPPROVE" },
-      { label:"Somewhat disapprove",  pct:8,  color:C.pink },
-      { label:"Neutral / no opinion", pct:1,  color:C.muted, group:"NEUTRAL" },
+      { label:"Strongly approve",     pct:21.8, color:C.green, strong:true, group:"APPROVE" },
+      { label:"Somewhat approve",     pct:19.8, color:C.green },
+      { label:"Strongly disapprove",  pct:49.6, color:C.pink,  strong:true, group:"DISAPPROVE" },
+      { label:"Somewhat disapprove",  pct:8.0,  color:C.pink },
+      { label:"Neutral / no opinion", pct:0.9,  color:C.muted, group:"NEUTRAL" },
     ],
   },
 
@@ -518,12 +518,12 @@ const NATIONAL_SLIDES: Slide[] = [
     title:"Trump Approval by Issue",
     subtitle:"NET Approve vs NET Disapprove per issue · N=893 · LV Weighted · Sorted by disapproval",
     issueTable:[
-      { issue:"Economy, Jobs & Cost of Living",         disApprove:61, approve:37 },
-      { issue:"Healthcare, Social Security & Medicare", disApprove:57, approve:38 },
-      { issue:"Education, Housing & Family Issues",     disApprove:55, approve:39 },
-      { issue:"Foreign Policy & National Security",     disApprove:53, approve:43 },
-      { issue:"Immigration & Border Security",          disApprove:52, approve:47 },
-      { issue:"Crime, Public Safety & Policing",        disApprove:49, approve:47 },
+      { issue:"Economy, Jobs & Cost of Living",         disApprove:61.3, approve:37.2 },
+      { issue:"Healthcare, Social Security & Medicare", disApprove:56.6, approve:38.1 },
+      { issue:"Education, Housing & Family Issues",     disApprove:55.1, approve:38.5 },
+      { issue:"Foreign Policy & National Security",     disApprove:53.4, approve:42.9 },
+      { issue:"Immigration & Border Security",          disApprove:51.7, approve:46.7 },
+      { issue:"Crime, Public Safety & Policing",        disApprove:49.3, approve:47.0 },
     ],
   },
 
@@ -537,12 +537,12 @@ const NATIONAL_SLIDES: Slide[] = [
       { val:"8.5%",  lbl:"Too Liberal",       color:C.gold },
     ],
     bars:[
-      { label:"Far too conservative",     pct:42, color:C.pink,   strong:true, group:"TOO CONSERVATIVE" },
-      { label:"Somewhat too conservative", pct:12, color:C.pink },
-      { label:"About the right balance",  pct:31, color:C.green,  strong:true, group:"ABOUT RIGHT" },
-      { label:"Somewhat too liberal",     pct:3,  color:C.gold,   group:"TOO LIBERAL" },
-      { label:"Far too liberal",          pct:6,  color:C.orange },
-      { label:"Not sure / no opinion",    pct:7,  color:C.muted,  group:"NOT SURE" },
+      { label:"Far too conservative",      pct:42.1, color:C.pink,   strong:true, group:"TOO CONSERVATIVE" },
+      { label:"Somewhat too conservative", pct:11.9, color:C.pink },
+      { label:"About the right balance",   pct:31.0, color:C.green,  strong:true, group:"ABOUT RIGHT" },
+      { label:"Somewhat too liberal",      pct:2.9,  color:C.gold,   group:"TOO LIBERAL" },
+      { label:"Far too liberal",           pct:5.6,  color:C.orange },
+      { label:"Not sure / no opinion",     pct:6.5,  color:C.muted,  group:"NOT SURE" },
     ],
   },
 
@@ -551,18 +551,18 @@ const NATIONAL_SLIDES: Slide[] = [
     title:"2028 Presidential Matchups — JD Vance",
     subtitle:"JD Vance (R) vs Democratic candidates vs Thomas Massie (I) · N=893 · LV Weighted",
     bars:[
-      { label:"Democrat (Gavin Newsom)",   pct:45, color:C.blue,     strong:true, group:"JD VANCE vs GAVIN NEWSOM" },
-      { label:"Republican (JD Vance)",     pct:39, color:C.pink },
-      { label:"Independent (T. Massie)",   pct:6,  color:C.purpleLt },
-      { label:"Undecided",                 pct:10, color:C.muted },
-      { label:"Democrat (Kamala Harris)",  pct:47, color:C.blue,     strong:true, group:"JD VANCE vs KAMALA HARRIS" },
-      { label:"Republican (JD Vance)",     pct:39, color:C.pink },
-      { label:"Independent (T. Massie)",   pct:7,  color:C.purpleLt },
-      { label:"Undecided",                 pct:7,  color:C.muted },
-      { label:"Democrat (Pete Buttigieg)", pct:46, color:C.blue,     strong:true, group:"JD VANCE vs PETE BUTTIGIEG" },
-      { label:"Republican (JD Vance)",     pct:40, color:C.pink },
-      { label:"Independent (T. Massie)",   pct:7,  color:C.purpleLt },
-      { label:"Undecided",                 pct:8,  color:C.muted },
+      { label:"Democrat (Gavin Newsom)",   pct:45.1, color:C.blue,     strong:true, group:"JD VANCE vs GAVIN NEWSOM" },
+      { label:"Republican (JD Vance)",     pct:38.6, color:C.pink },
+      { label:"Independent (T. Massie)",   pct:5.9,  color:C.purpleLt },
+      { label:"Undecided",                 pct:10.4, color:C.muted },
+      { label:"Democrat (Kamala Harris)",  pct:47.0, color:C.blue,     strong:true, group:"JD VANCE vs KAMALA HARRIS" },
+      { label:"Republican (JD Vance)",     pct:38.9, color:C.pink },
+      { label:"Independent (T. Massie)",   pct:7.2,  color:C.purpleLt },
+      { label:"Undecided",                 pct:6.8,  color:C.muted },
+      { label:"Democrat (Pete Buttigieg)", pct:45.7, color:C.blue,     strong:true, group:"JD VANCE vs PETE BUTTIGIEG" },
+      { label:"Republican (JD Vance)",     pct:39.8, color:C.pink },
+      { label:"Independent (T. Massie)",   pct:6.5,  color:C.purpleLt },
+      { label:"Undecided",                 pct:8.0,  color:C.muted },
     ],
   },
 
@@ -571,18 +571,18 @@ const NATIONAL_SLIDES: Slide[] = [
     title:"2028 Presidential Matchups — Marco Rubio",
     subtitle:"Marco Rubio (R) vs Democratic candidates vs Thomas Massie (I) · N=893 · LV Weighted",
     bars:[
-      { label:"Democrat (Gavin Newsom)",   pct:46, color:C.blue,     strong:true, group:"MARCO RUBIO vs GAVIN NEWSOM" },
-      { label:"Republican (M. Rubio)",     pct:39, color:C.pink },
-      { label:"Independent (T. Massie)",   pct:5,  color:C.purpleLt },
-      { label:"Undecided",                 pct:10, color:C.muted },
-      { label:"Democrat (Kamala Harris)",  pct:47, color:C.blue,     strong:true, group:"MARCO RUBIO vs KAMALA HARRIS" },
-      { label:"Republican (M. Rubio)",     pct:39, color:C.pink },
-      { label:"Independent (T. Massie)",   pct:7,  color:C.purpleLt },
-      { label:"Undecided",                 pct:8,  color:C.muted },
-      { label:"Democrat (Pete Buttigieg)", pct:44, color:C.blue,     strong:true, group:"MARCO RUBIO vs PETE BUTTIGIEG" },
-      { label:"Republican (M. Rubio)",     pct:39, color:C.pink },
-      { label:"Independent (T. Massie)",   pct:7,  color:C.purpleLt },
-      { label:"Undecided",                 pct:10, color:C.muted },
+      { label:"Democrat (Gavin Newsom)",   pct:45.9, color:C.blue,     strong:true, group:"MARCO RUBIO vs GAVIN NEWSOM" },
+      { label:"Republican (M. Rubio)",     pct:39.1, color:C.pink },
+      { label:"Independent (T. Massie)",   pct:4.9,  color:C.purpleLt },
+      { label:"Undecided",                 pct:10.1, color:C.muted },
+      { label:"Democrat (Kamala Harris)",  pct:46.9, color:C.blue,     strong:true, group:"MARCO RUBIO vs KAMALA HARRIS" },
+      { label:"Republican (M. Rubio)",     pct:38.9, color:C.pink },
+      { label:"Independent (T. Massie)",   pct:6.5,  color:C.purpleLt },
+      { label:"Undecided",                 pct:7.7,  color:C.muted },
+      { label:"Democrat (Pete Buttigieg)", pct:44.3, color:C.blue,     strong:true, group:"MARCO RUBIO vs PETE BUTTIGIEG" },
+      { label:"Republican (M. Rubio)",     pct:39.0, color:C.pink },
+      { label:"Independent (T. Massie)",   pct:6.7,  color:C.purpleLt },
+      { label:"Undecided",                 pct:10.0, color:C.muted },
     ],
   },
 
@@ -591,18 +591,18 @@ const NATIONAL_SLIDES: Slide[] = [
     title:"2028 Presidential Matchups — Ted Cruz",
     subtitle:"Ted Cruz (R) vs Democratic candidates vs Thomas Massie (I) · N=893 · LV Weighted",
     bars:[
-      { label:"Democrat (Gavin Newsom)",   pct:44, color:C.blue,     strong:true, group:"TED CRUZ vs GAVIN NEWSOM" },
-      { label:"Republican (Ted Cruz)",     pct:39, color:C.pink },
-      { label:"Independent (T. Massie)",   pct:6,  color:C.purpleLt },
-      { label:"Undecided",                 pct:10, color:C.muted },
-      { label:"Democrat (Kamala Harris)",  pct:46, color:C.blue,     strong:true, group:"TED CRUZ vs KAMALA HARRIS" },
-      { label:"Republican (Ted Cruz)",     pct:39, color:C.pink },
-      { label:"Independent (T. Massie)",   pct:7,  color:C.purpleLt },
-      { label:"Undecided",                 pct:8,  color:C.muted },
-      { label:"Democrat (Pete Buttigieg)", pct:46, color:C.blue,     strong:true, group:"TED CRUZ vs PETE BUTTIGIEG" },
-      { label:"Republican (Ted Cruz)",     pct:38, color:C.pink },
-      { label:"Independent (T. Massie)",   pct:7,  color:C.purpleLt },
-      { label:"Undecided",                 pct:10, color:C.muted },
+      { label:"Democrat (Gavin Newsom)",   pct:44.4, color:C.blue,     strong:true, group:"TED CRUZ vs GAVIN NEWSOM" },
+      { label:"Republican (Ted Cruz)",     pct:39.4, color:C.pink },
+      { label:"Independent (T. Massie)",   pct:5.9,  color:C.purpleLt },
+      { label:"Undecided",                 pct:10.3, color:C.muted },
+      { label:"Democrat (Kamala Harris)",  pct:46.1, color:C.blue,     strong:true, group:"TED CRUZ vs KAMALA HARRIS" },
+      { label:"Republican (Ted Cruz)",     pct:38.5, color:C.pink },
+      { label:"Independent (T. Massie)",   pct:7.4,  color:C.purpleLt },
+      { label:"Undecided",                 pct:8.0,  color:C.muted },
+      { label:"Democrat (Pete Buttigieg)", pct:45.5, color:C.blue,     strong:true, group:"TED CRUZ vs PETE BUTTIGIEG" },
+      { label:"Republican (Ted Cruz)",     pct:37.5, color:C.pink },
+      { label:"Independent (T. Massie)",   pct:6.7,  color:C.purpleLt },
+      { label:"Undecided",                 pct:10.3, color:C.muted },
     ],
   },
 
@@ -611,18 +611,18 @@ const NATIONAL_SLIDES: Slide[] = [
     title:"2028 Presidential Matchups — Ron DeSantis",
     subtitle:"Ron DeSantis (R) vs Democratic candidates vs Thomas Massie (I) · N=893 · LV Weighted",
     bars:[
-      { label:"Democrat (Gavin Newsom)",   pct:45, color:C.blue,     strong:true, group:"RON DESANTIS vs GAVIN NEWSOM" },
-      { label:"Republican (R. DeSantis)",  pct:39, color:C.pink },
-      { label:"Independent (T. Massie)",   pct:7,  color:C.purpleLt },
-      { label:"Undecided",                 pct:10, color:C.muted },
-      { label:"Democrat (Kamala Harris)",  pct:47, color:C.blue,     strong:true, group:"RON DESANTIS vs KAMALA HARRIS" },
-      { label:"Republican (R. DeSantis)",  pct:39, color:C.pink },
-      { label:"Independent (T. Massie)",   pct:6,  color:C.purpleLt },
-      { label:"Undecided",                 pct:8,  color:C.muted },
-      { label:"Democrat (Pete Buttigieg)", pct:45, color:C.blue,     strong:true, group:"RON DESANTIS vs PETE BUTTIGIEG" },
-      { label:"Republican (R. DeSantis)",  pct:37, color:C.pink },
-      { label:"Independent (T. Massie)",   pct:7,  color:C.purpleLt },
-      { label:"Undecided",                 pct:10, color:C.muted },
+      { label:"Democrat (Gavin Newsom)",   pct:44.7, color:C.blue,     strong:true, group:"RON DESANTIS vs GAVIN NEWSOM" },
+      { label:"Republican (R. DeSantis)",  pct:38.7, color:C.pink },
+      { label:"Independent (T. Massie)",   pct:6.7,  color:C.purpleLt },
+      { label:"Undecided",                 pct:9.9,  color:C.muted },
+      { label:"Democrat (Kamala Harris)",  pct:47.2, color:C.blue,     strong:true, group:"RON DESANTIS vs KAMALA HARRIS" },
+      { label:"Republican (R. DeSantis)",  pct:38.8, color:C.pink },
+      { label:"Independent (T. Massie)",   pct:6.2,  color:C.purpleLt },
+      { label:"Undecided",                 pct:7.8,  color:C.muted },
+      { label:"Democrat (Pete Buttigieg)", pct:45.2, color:C.blue,     strong:true, group:"RON DESANTIS vs PETE BUTTIGIEG" },
+      { label:"Republican (R. DeSantis)",  pct:37.3, color:C.pink },
+      { label:"Independent (T. Massie)",   pct:7.0,  color:C.purpleLt },
+      { label:"Undecided",                 pct:10.4, color:C.muted },
     ],
   },
 
@@ -635,12 +635,12 @@ const NATIONAL_SLIDES: Slide[] = [
       { val:"43.0%", lbl:"American-First",   color:C.green },
     ],
     bars:[
-      { label:"The American people above all else",                                 pct:24, color:C.green,    strong:true, group:"AMERICAN-FIRST" },
-      { label:"Mostly American people w/ significant consideration for allies",     pct:19, color:C.green },
-      { label:"A balance between American and foreign ally interests",              pct:9,  color:C.gold,     group:"BALANCED" },
-      { label:"Mostly the interests of foreign allies like Israel over Americans",  pct:14, color:C.pink,     group:"FOREIGN-FIRST" },
-      { label:"Foreign allies like Israel above the American people",               pct:25, color:C.pink,     strong:true },
-      { label:"Not sure / no opinion",                                              pct:10, color:C.muted,    group:"NOT SURE" },
+      { label:"The American people above all else",                                pct:23.7, color:C.green,    strong:true, group:"AMERICAN-FIRST" },
+      { label:"Mostly American people w/ significant consideration for allies",    pct:19.3, color:C.green },
+      { label:"A balance between American and foreign ally interests",             pct:8.6,  color:C.gold,     group:"BALANCED" },
+      { label:"Mostly the interests of foreign allies like Israel over Americans", pct:13.8, color:C.pink,     group:"FOREIGN-FIRST" },
+      { label:"Foreign allies like Israel above the American people",              pct:24.5, color:C.pink,     strong:true },
+      { label:"Not sure / no opinion",                                             pct:10.0, color:C.muted,    group:"NOT SURE" },
     ],
   },
 
@@ -654,11 +654,11 @@ const NATIONAL_SLIDES: Slide[] = [
       { val:"40.9%", lbl:"No Difference",   color:C.muted },
     ],
     bars:[
-      { label:"Much less likely",           pct:21, color:C.pink,   strong:true, group:"LESS LIKELY" },
-      { label:"Somewhat less likely",       pct:11, color:C.pink },
-      { label:"No difference / no opinion", pct:41, color:C.neutral, group:"NO DIFFERENCE" },
-      { label:"Somewhat more likely",       pct:15, color:C.green,  group:"MORE LIKELY" },
-      { label:"Much more likely",           pct:12, color:C.green,  strong:true },
+      { label:"Much less likely",           pct:20.6, color:C.pink,    strong:true, group:"LESS LIKELY" },
+      { label:"Somewhat less likely",       pct:11.2, color:C.pink },
+      { label:"No difference / no opinion", pct:40.9, color:C.neutral, group:"NO DIFFERENCE" },
+      { label:"Somewhat more likely",       pct:15.0, color:C.green,   group:"MORE LIKELY" },
+      { label:"Much more likely",           pct:12.4, color:C.green,   strong:true },
     ],
   },
 
@@ -671,11 +671,11 @@ const NATIONAL_SLIDES: Slide[] = [
       { val:"40.7%", lbl:"Little Difficulty", color:C.green },
     ],
     bars:[
-      { label:"Very difficult",        pct:19, color:C.pink,  strong:true },
-      { label:"Somewhat difficult",    pct:39, color:C.pink },
-      { label:"Not very difficult",    pct:22, color:C.green },
-      { label:"Not at all difficult",  pct:19, color:C.green, strong:true },
-      { label:"Not sure / no opinion", pct:1,  color:C.muted },
+      { label:"Very difficult",        pct:19.2, color:C.pink,  strong:true },
+      { label:"Somewhat difficult",    pct:38.8, color:C.pink },
+      { label:"Not very difficult",    pct:22.0, color:C.green },
+      { label:"Not at all difficult",  pct:18.7, color:C.green, strong:true },
+      { label:"Not sure / no opinion", pct:1.3,  color:C.muted },
     ],
   },
 
@@ -688,11 +688,11 @@ const NATIONAL_SLIDES: Slide[] = [
       { val:"48.1%", lbl:"NET Oppose",  color:C.pink },
     ],
     bars:[
-      { label:"Strongly support", pct:27, color:C.green, strong:true, group:"SUPPORT" },
-      { label:"Somewhat support", pct:20, color:C.green },
-      { label:"Strongly oppose",  pct:32, color:C.pink,  strong:true, group:"OPPOSE" },
-      { label:"Somewhat oppose",  pct:16, color:C.pink },
-      { label:"Not sure",         pct:5,  color:C.muted, group:"NOT SURE" },
+      { label:"Strongly support", pct:26.6, color:C.green, strong:true, group:"SUPPORT" },
+      { label:"Somewhat support", pct:20.1, color:C.green },
+      { label:"Strongly oppose",  pct:31.7, color:C.pink,  strong:true, group:"OPPOSE" },
+      { label:"Somewhat oppose",  pct:16.4, color:C.pink },
+      { label:"Not sure",         pct:5.2,  color:C.muted, group:"NOT SURE" },
     ],
   },
 
@@ -701,11 +701,11 @@ const NATIONAL_SLIDES: Slide[] = [
     title:"Preferred Candidate Generation",
     subtitle:"When voting for a candidate, which generation do you most prefer? · N=893 · LV Weighted",
     bars:[
-      { label:"Gen X (ages 45–60)",       pct:45, color:C.blue,     strong:true },
-      { label:"Millennial (ages 29–44)",  pct:21, color:C.purpleLt },
-      { label:"Baby Boomer (ages 61–79)", pct:13, color:C.gold },
-      { label:"Not sure / no opinion",    pct:17, color:C.muted },
-      { label:"Gen Z (ages 18–28)",       pct:4,  color:C.cyan },
+      { label:"Gen X (ages 45–60)",       pct:44.8, color:C.blue,     strong:true },
+      { label:"Millennial (ages 29–44)",  pct:20.9, color:C.purpleLt },
+      { label:"Baby Boomer (ages 61–79)", pct:13.2, color:C.gold },
+      { label:"Not sure / no opinion",    pct:17.4, color:C.muted },
+      { label:"Gen Z (ages 18–28)",       pct:3.7,  color:C.cyan },
     ],
   },
 
@@ -714,15 +714,15 @@ const NATIONAL_SLIDES: Slide[] = [
     title:"Most Important Quality in a Long-Term Partner",
     subtitle:"Which is the single most important quality when considering a long-term partner? · N=893 · LV Weighted",
     bars:[
-      { label:"Emotional availability",         pct:30, color:C.blue,     strong:true },
-      { label:"Sense of humor",                 pct:19, color:C.purpleLt },
-      { label:"Financial stability",            pct:15, color:C.gold },
-      { label:"Religious affiliation",          pct:10, color:C.cyan },
-      { label:"Ambition / work ethic",          pct:9,  color:C.orange },
-      { label:"Physical attractiveness",        pct:6,  color:C.pink },
-      { label:"Not sure / no opinion",          pct:8,  color:C.muted },
-      { label:"A lot of sexual experience",     pct:3,  color:C.muted },
-      { label:"Little to no sexual experience", pct:1,  color:C.muted },
+      { label:"Emotional availability",         pct:29.6, color:C.blue,     strong:true },
+      { label:"Sense of humor",                 pct:19.1, color:C.purpleLt },
+      { label:"Financial stability",            pct:14.6, color:C.gold },
+      { label:"Religious affiliation",          pct:9.9,  color:C.cyan },
+      { label:"Ambition / work ethic",          pct:9.4,  color:C.orange },
+      { label:"Physical attractiveness",        pct:5.7,  color:C.pink },
+      { label:"Not sure / no opinion",          pct:8.2,  color:C.muted },
+      { label:"A lot of sexual experience",     pct:2.6,  color:C.muted },
+      { label:"Little to no sexual experience", pct:0.8,  color:C.muted },
     ],
   },
 
@@ -731,21 +731,21 @@ const NATIONAL_SLIDES: Slide[] = [
     title:"Individual Favorability — Political Figures",
     subtitle:"NET Approve vs NET Disapprove · N=893 · LV Weighted · Sorted by approval",
     issueTable:[
-      { issue:"Kamala Harris",  approve:54, disApprove:44 },
-      { issue:"Pete Buttigieg", approve:45, disApprove:34 },
-      { issue:"Gavin Newsom",   approve:44, disApprove:40 },
-      { issue:"JD Vance",       approve:41, disApprove:53 },
-      { issue:"Marco Rubio",    approve:41, disApprove:46 },
-      { issue:"Ron DeSantis",   approve:40, disApprove:45 },
-      { issue:"Ted Cruz",       approve:39, disApprove:49 },
-      { issue:"Ben Shapiro",    approve:35, disApprove:30 },
-      { issue:"Tucker Carlson", approve:27, disApprove:50 },
-      { issue:"Thomas Massie",  approve:27, disApprove:26 },
-      { issue:"Megyn Kelly",    approve:27, disApprove:42 },
-      { issue:"Candace Owens",  approve:24, disApprove:39 },
-      { issue:"Mark Levin",     approve:24, disApprove:22 },
-      { issue:"Laura Loomer",   approve:15, disApprove:33 },
-      { issue:"Nick Fuentes",   approve:13, disApprove:38 },
+      { issue:"Kamala Harris",  approve:53.7, disApprove:43.7 },
+      { issue:"Pete Buttigieg", approve:44.6, disApprove:34.4 },
+      { issue:"Gavin Newsom",   approve:44.0, disApprove:39.9 },
+      { issue:"JD Vance",       approve:40.9, disApprove:53.3 },
+      { issue:"Marco Rubio",    approve:41.1, disApprove:45.8 },
+      { issue:"Ron DeSantis",   approve:40.2, disApprove:44.6 },
+      { issue:"Ted Cruz",       approve:38.5, disApprove:48.8 },
+      { issue:"Ben Shapiro",    approve:34.7, disApprove:29.7 },
+      { issue:"Tucker Carlson", approve:27.4, disApprove:50.4 },
+      { issue:"Thomas Massie",  approve:27.3, disApprove:26.4 },
+      { issue:"Megyn Kelly",    approve:27.0, disApprove:42.4 },
+      { issue:"Candace Owens",  approve:23.7, disApprove:38.5 },
+      { issue:"Mark Levin",     approve:24.0, disApprove:22.1 },
+      { issue:"Laura Loomer",   approve:14.8, disApprove:32.6 },
+      { issue:"Nick Fuentes",   approve:13.4, disApprove:37.5 },
     ],
   },
 
@@ -754,12 +754,12 @@ const NATIONAL_SLIDES: Slide[] = [
     title:"Individual Favorability — Media & Pop Culture",
     subtitle:"NET Approve vs NET Disapprove · N=893 · LV Weighted",
     issueTable:[
-      { issue:"Michael Jackson", approve:45, disApprove:25 },
-      { issue:"Kendrick Lamar",  approve:34, disApprove:22 },
-      { issue:"Drake",           approve:27, disApprove:30 },
-      { issue:"Thomas Massie",   approve:27, disApprove:26 },
-      { issue:"Playboi Carti",   approve:14, disApprove:18 },
-      { issue:"Clavicular",      approve:10, disApprove:19 },
+      { issue:"Michael Jackson", approve:44.8, disApprove:24.9 },
+      { issue:"Kendrick Lamar",  approve:33.5, disApprove:22.3 },
+      { issue:"Drake",           approve:27.3, disApprove:29.5 },
+      { issue:"Thomas Massie",   approve:27.3, disApprove:26.4 },
+      { issue:"Playboi Carti",   approve:14.0, disApprove:17.7 },
+      { issue:"Clavicular",      approve:9.8,  disApprove:18.7 },
     ],
   },
 
@@ -772,13 +772,13 @@ const NATIONAL_SLIDES: Slide[] = [
       { val:"27.6%", lbl:"Not Sure",             color:C.muted },
     ],
     bars:[
-      { label:"Tyler Robinson, acting alone",                         pct:30, color:C.gold,     strong:true },
-      { label:"Not sure / no opinion",                                pct:28, color:C.muted },
-      { label:"Tyler Robinson, part of a larger organization",        pct:14, color:C.orange },
-      { label:"A government or political actor",                      pct:9,  color:C.purpleLt },
-      { label:"A left-wing or anti-conservative organization",        pct:8,  color:C.blue },
-      { label:"Someone at Turning Point USA (TPUSA)",                 pct:8,  color:C.pink },
-      { label:"A right-wing or anti-liberal organization",            pct:5,  color:C.pink },
+      { label:"Tyler Robinson, acting alone",                         pct:29.5, color:C.gold,     strong:true },
+      { label:"Not sure / no opinion",                                pct:27.6, color:C.muted },
+      { label:"Tyler Robinson, part of a larger organization",        pct:13.7, color:C.orange },
+      { label:"A government or political actor",                      pct:8.5,  color:C.purpleLt },
+      { label:"A left-wing or anti-conservative organization",        pct:7.8,  color:C.blue },
+      { label:"Someone at Turning Point USA (TPUSA)",                 pct:7.5,  color:C.pink },
+      { label:"A right-wing or anti-liberal organization",            pct:5.4,  color:C.pink },
     ],
   },
 ];
@@ -803,9 +803,9 @@ function RaceSnapshotCard() {
             <div className="tl-primary-name">{r.name}</div>
             <div className="tl-primary-track">
               <div style={{ width: `${r.pct}%`, height: "100%", background: r.color,
-                borderRadius: "var(--r-sm)", transition: "width 0.5s cubic-bezier(0.16,1,0.3,1)" }} />
+                transition: "width 0.5s cubic-bezier(0.16,1,0.3,1)" }} />
             </div>
-            <div className="tl-primary-pct" style={{ color: r.color }}>{r.pct}%</div>
+            <div className="tl-primary-pct" style={{ color: r.color }}>{r.pct.toFixed(1)}%</div>
           </div>
         ))}
       </div>
@@ -831,9 +831,9 @@ function LeanersCard() {
             <div className="tl-primary-name">{r.name}</div>
             <div className="tl-primary-track">
               <div style={{ width: `${r.pct}%`, height: "100%", background: r.color,
-                borderRadius: "var(--r-sm)", transition: "width 0.5s cubic-bezier(0.16,1,0.3,1)" }} />
+                transition: "width 0.5s cubic-bezier(0.16,1,0.3,1)" }} />
             </div>
-            <div className="tl-primary-pct" style={{ color: r.color }}>{r.pct}%</div>
+            <div className="tl-primary-pct" style={{ color: r.color }}>{r.pct.toFixed(1)}%</div>
           </div>
         ))}
       </div>
@@ -857,8 +857,7 @@ function FavorabilityCard() {
           <div key={i} className="tl-primary-row">
             <div className="tl-primary-name">{r.name}</div>
             <div className="tl-primary-track">
-              <div style={{ width: `${r.app}%`, height: "100%", background: r.color,
-                borderRadius: "var(--r-sm)", opacity: 0.55 }} />
+              <div style={{ width: `${r.app}%`, height: "100%", background: r.color, opacity: 0.55 }} />
             </div>
             <div className="tl-primary-pct" style={{ color: r.color }}>{r.net}</div>
           </div>
@@ -904,9 +903,9 @@ function NationalToplineDashboard() {
                 <div className="tl-primary-name">{r.name}</div>
                 <div className="tl-primary-track">
                   <div style={{ width:`${r.pct}%`, height:"100%", background:r.color,
-                    borderRadius:"var(--r-sm)", transition:"width 0.5s cubic-bezier(0.16,1,0.3,1)" }} />
+                    transition:"width 0.5s cubic-bezier(0.16,1,0.3,1)" }} />
                 </div>
-                <div className="tl-primary-pct" style={{ color:r.color }}>{r.pct}%</div>
+                <div className="tl-primary-pct" style={{ color:r.color }}>{r.pct.toFixed(1)}%</div>
               </div>
             ))}
           </div>
@@ -955,9 +954,9 @@ function NationalToplineDashboard() {
                 <div className="tl-primary-name">{r.name}</div>
                 <div className="tl-primary-track">
                   <div style={{ width:`${r.pct}%`, height:"100%", background:r.color,
-                    borderRadius:"var(--r-sm)", transition:"width 0.5s cubic-bezier(0.16,1,0.3,1)" }} />
+                    transition:"width 0.5s cubic-bezier(0.16,1,0.3,1)" }} />
                 </div>
-                <div className="tl-primary-pct" style={{ color:r.color }}>{r.pct}%</div>
+                <div className="tl-primary-pct" style={{ color:r.color }}>{r.pct.toFixed(1)}%</div>
               </div>
             ))}
           </div>
@@ -965,10 +964,10 @@ function NationalToplineDashboard() {
         </div>
       </div>
       <div className="tl-kpi-row">
-        <KpiTile label="Trump Net Approval"  val="−16"   sub="41.6% Approve · 57.6% Disapprove"       color={C.pink}   border={C.pink} />
-        <KpiTile label="Right / Wrong Track" val="−31.9" sub="30.2% Right Track · 62.1% Wrong Track"  color={C.pink}   border={C.pink} />
-        <KpiTile label="Generic Ballot"      val="D+6.8" sub="Democrat 46.8% · Republican 40.0%"      color={C.blue}   border={C.blue} />
-        <KpiTile label="Household Difficulty"val="58%"   sub="Very or Somewhat Difficult to Pay Bills" color={C.orange} border={C.orange} />
+        <KpiTile label="Trump Net Approval"  val="−16.0"  sub="41.6% Approve · 57.6% Disapprove"       color={C.pink}   border={C.pink} />
+        <KpiTile label="Right / Wrong Track" val="−31.9"  sub="30.2% Right Track · 62.1% Wrong Track"  color={C.pink}   border={C.pink} />
+        <KpiTile label="Generic Ballot"      val="D+6.8"  sub="Democrat 46.8% · Republican 40.0%"      color={C.blue}   border={C.blue} />
+        <KpiTile label="Household Difficulty"val="58.0%"  sub="Very or Somewhat Difficult to Pay Bills" color={C.orange} border={C.orange} />
         <KpiTile label="2028: Dem Leads"     val="All 12" sub="Dem candidate leads all 12 matchups"   color={C.blue}   border={C.blue} />
       </div>
     </div>
@@ -988,11 +987,11 @@ function ToplineDashboard() {
         <FavorabilityCard />
       </div>
       <div className="tl-kpi-row">
-        <KpiTile label="Turnout Intensity"    val="82%"  sub="Certain / Very Likely to Vote"         color={C.green}  border={C.green} />
-        <KpiTile label="Trump Net Approval"   val="−55"  sub="21.4% Approve · 75.9% Disapprove"     color={C.pink}   border={C.pink} />
-        <KpiTile label="Top Issue: Economy"   val="43%"  sub="Ranked #1 Most Important Issue"         color={C.gold}   border={C.gold} />
-        <KpiTile label="Household Difficulty" val="57%"  sub="Somewhat or Very Difficult to Pay Bills" color={C.orange} border={C.orange} />
-        <KpiTile label="Israel PAC Net"       val="−23"  sub="44.8% Less Likely · 21.6% More Likely" color={C.pink}   border={C.pink} />
+        <KpiTile label="Turnout Intensity"    val="82.0%" sub="Certain / Very Likely to Vote"          color={C.green}  border={C.green} />
+        <KpiTile label="Trump Net Approval"   val="−54.5" sub="21.4% Approve · 75.9% Disapprove"     color={C.pink}   border={C.pink} />
+        <KpiTile label="Top Issue: Economy"   val="43.0%" sub="Ranked #1 Most Important Issue"         color={C.gold}   border={C.gold} />
+        <KpiTile label="Household Difficulty" val="56.9%" sub="Somewhat or Very Difficult to Pay Bills" color={C.orange} border={C.orange} />
+        <KpiTile label="Israel PAC Net"       val="−23.2" sub="44.8% Less Likely · 21.6% More Likely" color={C.pink}   border={C.pink} />
       </div>
     </div>
   );
@@ -1050,7 +1049,7 @@ function BarChartView({ bars }: { bars: BarRow[] }) {
                 />
               </div>
               <div className="tpsi-bar-num" style={{ color: row.strong ? row.color : "var(--muted2)" }}>
-                {row.pct}%
+                {Number(row.pct).toFixed(1)}%
               </div>
             </div>
           ))}
@@ -1061,7 +1060,6 @@ function BarChartView({ bars }: { bars: BarRow[] }) {
 }
 
 function IssueTableView({ rows }: { rows: IssueRow[] }) {
-  const maxDis = Math.max(...rows.map(r => r.disApprove));
   return (
     <div className="tpsi-table">
       <div className="tpsi-table-hdr" style={{ gridTemplateColumns: "1fr 190px 190px" }}>
@@ -1074,15 +1072,15 @@ function IssueTableView({ rows }: { rows: IssueRow[] }) {
           <div className="tpsi-table-lbl">{r.issue}</div>
           <div className="tpsi-table-bar-cell">
             <div className="tpsi-mini-track">
-              <div style={{ height: "100%", width: `${(r.disApprove / maxDis) * 100}%`, background: C.pink }} />
+              <div style={{ height: "100%", width: `${r.disApprove}%`, background: C.pink }} />
             </div>
-            <span className="tpsi-table-num" style={{ color: C.pink }}>{r.disApprove}%</span>
+            <span className="tpsi-table-num" style={{ color: C.pink }}>{Number(r.disApprove).toFixed(1)}%</span>
           </div>
           <div className="tpsi-table-bar-cell">
             <div className="tpsi-mini-track">
               <div style={{ height: "100%", width: `${r.approve}%`, background: C.green }} />
             </div>
-            <span className="tpsi-table-num" style={{ color: C.green }}>{r.approve}%</span>
+            <span className="tpsi-table-num" style={{ color: C.green }}>{Number(r.approve).toFixed(1)}%</span>
           </div>
         </div>
       ))}
@@ -1105,7 +1103,7 @@ function RankTableView({ rows }: { rows: NonNullable<Slide["rankTable"]> }) {
             <div className="tpsi-mini-track">
               <div style={{ height: "100%", width: `${Math.min(r.pct1 * 2, 100)}%`, background: r.color }} />
             </div>
-            <span className="tpsi-table-num" style={{ color: r.color }}>{r.pct1}%</span>
+            <span className="tpsi-table-num" style={{ color: r.color }}>{Number(r.pct1).toFixed(1)}%</span>
           </div>
           <div style={{ textAlign: "center" }}>
             <span className={`tpsi-rank-bdg${i === 0 ? " top" : ""}`}>{r.rank}</span>
@@ -1257,11 +1255,11 @@ export default function TPSIPollDashboard() {
         @media (max-width: 700px) { .tpsi-bar-row { grid-template-columns: 1fr 52px; } .tpsi-bar-lbl { text-align: left; } }
         .tpsi-bar-lbl { font-family: var(--font-body); font-size: 11.5px; color: var(--foreground2); text-align: right; line-height: 1.35; }
         .tpsi-bar-track {
-          height: 28px; background: var(--panel2); border-radius: var(--r-sm); overflow: hidden;
+          height: 28px; background: var(--panel2); border-radius: 0; overflow: hidden;
           border: 1px solid var(--border);
         }
         .tpsi-bar-fill {
-          height: 100%; border-radius: var(--r-sm);
+          height: 100%; border-radius: 0;
           transition: width 0.55s cubic-bezier(0.16,1,0.3,1);
         }
         .tpsi-bar-num {
@@ -1285,7 +1283,7 @@ export default function TPSIPollDashboard() {
         .tpsi-table-lbl { font-family: var(--font-body); font-size: 11.5px; color: var(--foreground2); line-height: 1.4; }
         .tpsi-table-bar-cell { display: flex; align-items: center; gap: 8px; justify-content: flex-end; }
         .tpsi-mini-track {
-          width: 80px; height: 5px; background: var(--panel2); border-radius: 99px;
+          width: 80px; height: 5px; background: var(--panel2); border-radius: 0;
           overflow: hidden; border: 1px solid var(--border); flex-shrink: 0;
         }
         .tpsi-table-num {
@@ -1373,7 +1371,7 @@ export default function TPSIPollDashboard() {
         .tl-primary-row { display: grid; grid-template-columns: 150px 1fr 40px; align-items: center; gap: 8px; }
         .tl-primary-name { font-family: var(--font-body); font-size: 10.5px; color: var(--foreground2); }
         .tl-primary-track {
-          height: 22px; background: var(--panel2); border-radius: var(--r-sm); overflow: hidden;
+          height: 22px; background: var(--panel2); border-radius: 0; overflow: hidden;
           border: 1px solid var(--border);
         }
         .tl-primary-pct {
