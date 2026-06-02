@@ -67,14 +67,14 @@ function round1(n: number) { return Math.round(n * 10) / 10; }
 // =============================================================================
 const CSS = `
   .pa24-root {
-    --bg:          #070709;
-    --bg2:         #0b0b0f;
-    --panel:       #0f0f15;
-    --border:      rgba(255,255,255,0.09);
-    --border2:     rgba(255,255,255,0.15);
-    --muted:       rgba(240,240,245,0.62);
-    --muted2:      rgba(240,240,245,0.40);
-    --muted3:      rgba(240,240,245,0.22);
+    --bg: #f6f7fb;
+    --bg2: #ffffff;
+    --panel: #ffffff;
+    --border: rgba(15, 16, 32, 0.08);
+    --border2: rgba(15, 16, 32, 0.14);
+    --muted: #6b7088;
+    --muted2: #9aa0b4;
+    --muted3: #b7bccc;
     --purple:      #7c3aed;
     --purple-soft: #a78bfa;
     --dem:         #4d7fd4;
@@ -244,7 +244,7 @@ const CSS = `
     font-family:ui-monospace,monospace; font-size:8px; letter-spacing:0.16em;
     text-transform:uppercase; color:var(--muted3); margin-top:6px;
   }
-  .pa24-kpi-bar { height:2px; margin-top:10px; background:rgba(255,255,255,0.07); }
+  .pa24-kpi-bar { height:2px; margin-top:10px; background:rgba(15,16,32,0.08); }
   .pa24-kpi-bar-fill { height:100%; animation:pa24-bar-in 800ms cubic-bezier(0.22,1,0.36,1) both; }
 
   /* ACCURACY PANEL */
@@ -300,7 +300,7 @@ const CSS = `
   table.pa24-table th.r { text-align:right; }
   table.pa24-table td {
     font-family:ui-monospace,monospace; font-size:10.5px; padding:10px 16px;
-    border-bottom:1px solid rgba(255,255,255,0.04); color:var(--muted);
+    border-bottom:1px solid rgba(15,16,32,0.05); color:var(--muted);
     vertical-align:middle; font-variant-numeric:tabular-nums;
   }
   table.pa24-table td.r { text-align:right; }
@@ -579,7 +579,7 @@ export default function PA2024PresidentPage() {
                                  p.pollster.toLowerCase().includes("progress");
                     return (
                       <tr key={`${p.pollster}-${p.endDate}-${i}`}>
-                        <td style={{ color: "rgba(255,255,255,0.85)" }}>
+                        <td style={{ color: "rgba(15,16,32,0.85)" }}>
                           <div style={{ display:"flex", alignItems:"center", gap:"7px", flexWrap:"wrap" }}>
                             <span>{p.pollster.replace(/\s*\(D\)/gi,"").replace(/\*\*/g,"")}</span>
                             {gold && <span className="pa24-gold-badge">GOLD</span>}

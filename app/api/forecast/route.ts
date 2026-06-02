@@ -28,6 +28,47 @@ function sortCandidatesByPollAvg(
   });
 }
 
+// ─── COLOR VIBRANCY BOOSTER ───────────────────────────────────────────────────
+// Turns muted API-sourced candidate colors (dull gold, dusty pink, etc.) into
+// vivid neon versions. Yellow/orange hues need higher lightness to pop; all
+// hues get saturation pushed to ≥92%.
+function vibrateColor(hex: string): string {
+  if (!/^#[0-9a-fA-F]{6}$/.test(hex)) return hex;
+  const r = parseInt(hex.slice(1, 3), 16) / 255;
+  const g = parseInt(hex.slice(3, 5), 16) / 255;
+  const b = parseInt(hex.slice(5, 7), 16) / 255;
+  const max = Math.max(r, g, b), min = Math.min(r, g, b), d = max - min;
+  let h = 0, s = 0;
+  const l = (max + min) / 2;
+  if (d) {
+    s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+    if (max === r)      h = ((g - b) / d + (g < b ? 6 : 0)) / 6;
+    else if (max === g) h = ((b - r) / d + 2) / 6;
+    else                h = ((r - g) / d + 4) / 6;
+  }
+  // Aggressively boost saturation
+  const ns = Math.min(1, Math.max(s, 0.92));
+  // Yellow/orange hues (20–70°) need higher lightness to look vibrant
+  const hueDeg = h * 360;
+  const isWarm = hueDeg >= 20 && hueDeg <= 70;
+  const nl = isWarm
+    ? Math.min(0.65, Math.max(0.55, l))
+    : Math.min(0.62, Math.max(0.50, l));
+  const hue2rgb = (p: number, q: number, t: number) => {
+    if (t < 0) t += 1; if (t > 1) t -= 1;
+    if (t < 1/6) return p + (q - p) * 6 * t;
+    if (t < 1/2) return q;
+    if (t < 2/3) return p + (q - p) * (2/3 - t) * 6;
+    return p;
+  };
+  const q = nl < 0.5 ? nl * (1 + ns) : nl + ns - nl * ns;
+  const p = 2 * nl - q;
+  const nr = Math.round(hue2rgb(p, q, h + 1/3) * 255);
+  const ng = Math.round(hue2rgb(p, q, h) * 255);
+  const nb = Math.round(hue2rgb(p, q, h - 1/3) * 255);
+  return '#' + [nr, ng, nb].map(x => x.toString(16).padStart(2, '0')).join('');
+}
+
 // ─── SHARED FORECAST RUNNER ───────────────────────────────────────────────────
 // All turnout estimation and prior logic lives in civicToForecastInput.
 // This function passes through only what the caller explicitly provided —
@@ -43,7 +84,7 @@ function runForecastFromCivicRace(
   const sorted = sortCandidatesByPollAvg(race.candidates, poll_avg);
   const top3 = sorted.slice(0, 3);
   const names = top3.map((c) => c.name);
-  const colors = top3.map((c) => c.color);
+  const colors = top3.map((c) => vibrateColor(c.color));
 
   const input = civicToForecastInput(race, prior, race_rule, expected_turnout, poll_avg);
   const result = forecastRace(input, names, colors);
