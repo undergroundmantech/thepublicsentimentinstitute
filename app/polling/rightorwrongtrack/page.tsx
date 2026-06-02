@@ -11,7 +11,7 @@ import {
 } from "@/app/polling/lib/buildDailyModel";
 
 const GOLD_STANDARD_MULTIPLIER = 3;
-const GOLD_STANDARD_NAMES = [
+export const GOLD_STANDARD_NAMES = [
   "Big Data Poll", "Rasmussen Reports", "AtlasIntel", "SoCalStrategies",
   "Emerson", "Trafalgar", "InsiderAdvantage", "Patriot Polling",
 ];
@@ -30,7 +30,7 @@ function effectiveSampleSize(pollster: string, n: number) {
 }
 
 // ─── Polls data ───────────────────────────────────────────────────────────────
-const RAW_POLLS: Poll[] = [
+export const RAW_POLLS: Poll[] = [
   { pollster: "Economist/YouGov", endDate: "2026-03-16", sampleSize: 1429, sampleType: "RV", results: { RightTrack: 34, WrongTrack: 59 } },
   { pollster: "Rasmussen Reports", endDate: "2026-03-12", sampleSize: 1845, sampleType: "LV", results: { RightTrack: 41, WrongTrack: 54 } },
   { pollster: "Economist/YouGov", endDate: "2026-03-09", sampleSize: 1405, sampleType: "RV", results: { RightTrack: 35, WrongTrack: 59 } },

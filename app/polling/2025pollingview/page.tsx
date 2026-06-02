@@ -128,7 +128,7 @@ type RaceDef = {
 // POLLS
 // -------------------------
 
-const VA_GOV_POLLS: Poll[] = [
+export const VA_GOV_POLLS: Poll[] = [
   { pollster: "Quantus Insights (R)", endDate: "2025-11-03", sampleSize: 1201, sampleType: "LV", results: { "Winsome Earle-Sears (R)": 44, "Abigail Spanberger (D)": 53, Other: 1, Undecided: 2 } },
   { pollster: "InsiderAdvantage (R)", endDate: "2025-11-03", sampleSize: 800, sampleType: "LV", results: { "Winsome Earle-Sears (R)": 40, "Abigail Spanberger (D)": 50, Other: 5, Undecided: 5 } },
   { pollster: "Research Co.", endDate: "2025-11-03", sampleSize: 423, sampleType: "LV", results: { "Winsome Earle-Sears (R)": 46, "Abigail Spanberger (D)": 54 } },
@@ -353,7 +353,7 @@ const VA_AG_POLLS: Poll[] = [
 ];
 
 
-const NJ_GOV_POLLS: Poll[] = [
+export const NJ_GOV_POLLS: Poll[] = [
   // Research Co. (2 samples)
   { pollster: "Research Co.", endDate: "2025-11-03", sampleSize: 429, sampleType: "LV", results: { "Mikie Sherrill (D)": 51, "Jack Ciattarelli (R)": 48, Other: 1 } },
   { pollster: "Research Co. (2)", endDate: "2025-11-03", sampleSize: 450, sampleType: "LV", results: { "Mikie Sherrill (D)": 48, "Jack Ciattarelli (R)": 46, Other: 1, Undecided: 5 } },

@@ -11,7 +11,7 @@ import {
 } from "@/app/polling/lib/buildDailyModel";
 
 // ─── Polls data ───────────────────────────────────────────────────────────────
-const RAW_POLLS: Poll[] = [
+export const RAW_POLLS: Poll[] = [
   { pollster: "YouGov", endDate: "2026-03-02", sampleSize: 2400, sampleType: "LV", results: { Talarico: 53, Crockett: 40 , Hassan:0 } },
   { pollster: "Emerson", endDate: "2026-02-27", sampleSize: 850, sampleType: "LV", results: { Talarico: 52, Crockett: 47, Hassan: 1 } },
   { pollster: "Public Policy Polling", endDate: "2026-02-25", sampleSize: 599, sampleType: "LV", results: { Crockett: 42, Talarico: 48, Hassan: 0 } },

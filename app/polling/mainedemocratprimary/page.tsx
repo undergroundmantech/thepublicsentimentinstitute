@@ -10,7 +10,7 @@ import {
 } from "@/app/polling/lib/buildDailyModel";
 
 // ─── Polls data ───────────────────────────────────────────────────────────────
-const RAW_POLLS: Poll[] = [
+export const RAW_POLLS: Poll[] = [
   // March 2026
   { pollster: "Quantus Insights**",          endDate: "2026-03-05", sampleSize: 450, sampleType: "LV", results: { Costello: 0,  Mills: 38, Platner: 43, Wood: 0 } },
 

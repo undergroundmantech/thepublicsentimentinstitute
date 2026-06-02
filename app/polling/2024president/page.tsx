@@ -14,7 +14,7 @@ import {
 // RAW POLL DATA
 // =============================================================================
 
-const RAW_POLLS: Poll[] = [
+export const RAW_POLLS: Poll[] = [
   { pollster: "AtlasIntel", endDate: "2024-11-04", sampleSize: 2703, sampleType: "LV", results: { Harris: 48, Trump: 49 } },
   { pollster: "I&I/TIPP", endDate: "2024-11-04", sampleSize: 1863, sampleType: "LV", results: { Harris: 48.3, Trump: 48.6 } },
   { pollster: "I&I/TIPP", endDate: "2024-11-03", sampleSize: 1411, sampleType: "LV", results: { Harris: 48.3, Trump: 48.8 } },
