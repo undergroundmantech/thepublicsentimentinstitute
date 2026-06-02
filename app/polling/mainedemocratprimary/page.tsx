@@ -10,7 +10,7 @@ import {
 } from "@/app/polling/lib/buildDailyModel";
 
 // ─── Polls data ───────────────────────────────────────────────────────────────
-const RAW_POLLS: Poll[] = [
+export const RAW_POLLS: Poll[] = [
   // March 2026
   { pollster: "Quantus Insights**",          endDate: "2026-03-05", sampleSize: 450, sampleType: "LV", results: { Costello: 0,  Mills: 38, Platner: 43, Wood: 0 } },
 
@@ -177,7 +177,7 @@ export default function MaineGovDemocraticPrimaryPage() {
                     const displayName = p.pollster.replace(/\*\*/g, "");
                     return (
                       <tr key={`${p.pollster}-${p.endDate}-${i}`}>
-                        <td style={{ color: "rgba(255,255,255,0.85)" }}>
+                        <td style={{ color: "rgba(15,16,32,0.85)" }}>
                           <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                             <span>{displayName}</span>
                             {isPartisan && <span className="map-partisan-badge">INTERNAL</span>}
@@ -244,14 +244,14 @@ export default function MaineGovDemocraticPrimaryPage() {
 // ─── CSS ───────────────────────────────────────────────────────────────────────
 const CSS = `
   .map-root {
-    --bg:          #060709;
-    --bg2:         #09090f;
-    --panel:       #0d0d14;
-    --border:      rgba(255,255,255,0.09);
-    --border2:     rgba(255,255,255,0.15);
-    --muted:       rgba(220,230,255,0.62);
-    --muted2:      rgba(220,230,255,0.40);
-    --muted3:      rgba(220,230,255,0.22);
+    --bg: #f6f7fb;
+    --bg2: #ffffff;
+    --panel: #ffffff;
+    --border: rgba(15, 16, 32, 0.08);
+    --border2: rgba(15, 16, 32, 0.14);
+    --muted: #6b7088;
+    --muted2: #9aa0b4;
+    --muted3: #b7bccc;
     --blue:        #3b82f6;
     --blue2:       #60a5fa;
     --blue-soft:   #93c5fd;
@@ -440,7 +440,7 @@ const CSS = `
     font-size: 8px; letter-spacing: 0.16em;
     text-transform: uppercase; color: var(--muted3); margin-top: 6px;
   }
-  .map-kpi-bar { height: 2px; margin-top: 10px; background: rgba(255,255,255,0.07); }
+  .map-kpi-bar { height: 2px; margin-top: 10px; background: rgba(15,16,32,0.08); }
   .map-kpi-bar-fill {
     height: 100%;
     animation: map-bar-in 800ms cubic-bezier(0.22,1,0.36,1) both;
@@ -488,7 +488,7 @@ const CSS = `
     font-family: ui-monospace, monospace;
     font-size: 10.5px;
     padding: 10px 16px;
-    border-bottom: 1px solid rgba(255,255,255,0.04);
+    border-bottom: 1px solid rgba(15,16,32,0.05);
     color: var(--muted); vertical-align: middle;
     font-variant-numeric: tabular-nums;
   }

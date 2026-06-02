@@ -19,7 +19,7 @@ import {
 
 const GOLD_STANDARD_MULTIPLIER = 2;
 
-const GOLD_STANDARD_NAMES = [
+export const GOLD_STANDARD_NAMES = [
   "Big Data Poll", "Rasmussen Reports", "AtlasIntel", "SoCalStrategies",
   "Emerson", "Trafalgar", "InsiderAdvantage", "Patriot Polling",
 ];
@@ -37,7 +37,7 @@ function effectiveSampleSize(pollster: string, n: number) {
   return Math.round(n * GOLD_STANDARD_MULTIPLIER * GOLD_STANDARD_MULTIPLIER);
 }
 
-const RAW_POLLS: Poll[] = [
+export const RAW_POLLS: Poll[] = [
   { pollster: "The Public Sentiment Institute",          endDate: "2026-02-28", sampleSize: 316, sampleType: "RV", results: { Vance: 43, Newsom: 38 } },
   { pollster: "The Public Sentiment Institute",          endDate: "2026-02-28", sampleSize: 250, sampleType: "LV", results: { Vance: 41, Newsom: 46 } },
   { pollster: "Big Data Poll",          endDate: "2026-02-18", sampleSize: 1805, sampleType: "LV", results: { Vance: 46.8, Newsom: 53.2 } },
@@ -134,14 +134,14 @@ const projByState = Object.fromEntries(
 // ─── CSS ──────────────────────────────────────────────────────────────────────
 const CSS = `
   .p28-root {
-    --bg:          #070709;
-    --bg2:         #0b0b0f;
-    --panel:       #0f0f15;
-    --border:      rgba(255,255,255,0.09);
-    --border2:     rgba(255,255,255,0.15);
-    --muted:       rgba(240,240,245,0.62);
-    --muted2:      rgba(240,240,245,0.40);
-    --muted3:      rgba(240,240,245,0.22);
+    --bg: #f6f7fb;
+    --bg2: #ffffff;
+    --panel: #ffffff;
+    --border: rgba(15, 16, 32, 0.08);
+    --border2: rgba(15, 16, 32, 0.14);
+    --muted: #6b7088;
+    --muted2: #9aa0b4;
+    --muted3: #b7bccc;
     --purple:      #7c3aed;
     --purple2:     #9d5cf0;
     --purple-soft: #a78bfa;
@@ -270,7 +270,7 @@ const CSS = `
     font-size: clamp(48px,6vw,72px); font-weight: 900; line-height: 1;
     background: linear-gradient(135deg, var(--rep) 0%, #fff 50%, var(--dem) 100%);
     -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-    background-clip: text; filter: drop-shadow(0 2px 10px rgba(0,0,0,0.6));
+    background-clip: text; filter: drop-shadow(0 2px 10px rgba(255,255,255,0.6));
     text-transform: uppercase; letter-spacing: 0.02em;
   }
   .p28-vs-sub {
@@ -307,7 +307,7 @@ const CSS = `
 
   .p28-badge {
     display: inline-flex; align-items: center; gap: 5px; padding: 3px 8px;
-    border: 1px solid var(--border); background: rgba(255,255,255,0.03);
+    border: 1px solid var(--border); background: var(--panel2);
     font-family: var(--font-body), "Geist Mono", monospace; font-size: 7.5px; font-weight: 700;
     letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted3);
   }
@@ -319,7 +319,7 @@ const CSS = `
   .p28-hero-read-row {
     display: flex; align-items: center; justify-content: space-between;
     gap: 12px; padding: 10px 14px; border: 1px solid var(--border);
-    background: rgba(255,255,255,0.03); position: relative; overflow: hidden;
+    background: var(--panel2); position: relative; overflow: hidden;
   }
   .p28-hero-read-label {
     font-family: var(--font-body), "Geist Mono", monospace; font-size: 7.5px; font-weight: 700;
@@ -361,7 +361,7 @@ const CSS = `
     font-family: var(--font-body), "Geist Mono", monospace;
     text-transform: uppercase; color: var(--muted3); margin-top: 6px;
   }
-  .p28-kpi-bar { height:2px; margin-top:10px; background:rgba(255,255,255,0.07); }
+  .p28-kpi-bar { height:2px; margin-top:10px; background:rgba(15,16,32,0.08); }
   .p28-kpi-bar-fill { height:100%; animation: p28-bar-in 800ms cubic-bezier(0.22,1,0.36,1) both; }
 
   /* ── ELECTORAL MAP ── */
@@ -419,7 +419,7 @@ const CSS = `
   }
   .p28-ev-bar-rep { height: 100%; background: #dc2626; transition: width 600ms ease; }
   .p28-ev-bar-dem { height: 100%; background: #2563eb; transition: width 600ms ease; }
-  .p28-ev-bar-toss { height: 100%; background: rgba(255,255,255,0.1); }
+  .p28-ev-bar-toss { height: 100%; background: var(--border2); }
   .p28-ev-bar-line {
     position: absolute; top: 0; bottom: 0; width: 2px;
     background: var(--purple-soft); opacity: 0.8;
@@ -438,23 +438,24 @@ const CSS = `
   }
   .p28-map-svg { width: 100%; height: auto; display: block; }
   .p28-map-state {
-    stroke: #0f0f15; stroke-width: 0.5;
+    stroke: var(--border3); stroke-width: 0.5;
     cursor: pointer; transition: opacity 120ms ease, stroke-width 120ms ease;
   }
-  .p28-map-state:hover { opacity: 0.82; stroke-width: 1.5; stroke: rgba(255,255,255,0.5); }
+  .p28-map-state:hover { opacity: 0.82; stroke-width: 1.5; stroke: var(--purple); }
 
   /* Tooltip */
   .p28-map-tooltip {
     position: absolute; pointer-events: none; z-index: 9999;
-    background: #0f0f15; border: 1px solid rgba(255,255,255,0.15);
+    background: var(--panel); border: 1px solid var(--border2);
     padding: 10px 14px; min-width: 200px;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.7);
+    box-shadow: var(--shadow-md);
+    border-radius: var(--r-md);
     font-family: var(--font-body), "Geist Mono", monospace;
     transition: opacity 100ms ease;
   }
   .p28-tt-state {
     font-size: 11px; font-weight: 900; text-transform: uppercase;
-    letter-spacing: 0.1em; color: #fff; margin-bottom: 6px;
+    letter-spacing: 0.1em; color: var(--foreground); margin-bottom: 6px;
     display: flex; align-items: center; justify-content: space-between;
   }
   .p28-tt-ev {
@@ -466,7 +467,7 @@ const CSS = `
     font-size: 7.5px; font-weight: 700; letter-spacing: 0.2em;
     text-transform: uppercase; margin-bottom: 8px;
   }
-  .p28-tt-divider { height: 1px; background: rgba(255,255,255,0.08); margin: 6px 0; }
+  .p28-tt-divider { height: 1px; background: rgba(15,16,32,0.10); margin: 6px 0; }
   .p28-tt-row {
     display: flex; justify-content: space-between; align-items: center;
     gap: 16px; margin-bottom: 3px;
@@ -478,7 +479,7 @@ const CSS = `
   .p28-tt-val { font-size: 11px; font-weight: 900; font-variant-numeric: tabular-nums; }
   .p28-tt-margin-row {
     display: flex; justify-content: space-between; align-items: center;
-    margin-top: 6px; padding-top: 6px; border-top: 1px solid rgba(255,255,255,0.08);
+    margin-top: 6px; padding-top: 6px; border-top: 1px solid rgba(15,16,32,0.10);
   }
   .p28-tt-margin-label {
     font-size: 7.5px; font-weight: 700; letter-spacing: 0.2em;
@@ -528,11 +529,11 @@ const CSS = `
   table.p28-table th.r { text-align:right; }
   table.p28-table td {
     font-family: var(--font-body), "Geist Mono", monospace; font-size: 10.5px;
-    padding: 10px 16px; border-bottom: 1px solid rgba(255,255,255,0.04);
+    padding: 10px 16px; border-bottom: 1px solid rgba(15,16,32,0.05);
     color: var(--muted); vertical-align: middle; font-variant-numeric: tabular-nums;
   }
   table.p28-table td.r { text-align:right; }
-  table.p28-table tbody tr:hover { background:rgba(255,255,255,0.014); }
+  table.p28-table tbody tr:hover { background:rgba(124,58,237,0.04); }
   table.p28-table tbody tr:last-child td { border-bottom:none; }
 
   .p28-gold-badge {
@@ -763,7 +764,7 @@ export default function Election2028Page() {
                     const effN = effectiveSampleSize(p.pollster, p.sampleSize);
                     return (
                       <tr key={`${p.pollster}-${p.endDate}-${idx}`}>
-                        <td style={{ color: "rgba(255,255,255,0.85)" }}>
+                        <td style={{ color: "rgba(15,16,32,0.85)" }}>
                           <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
                             <span>{p.pollster}</span>
                             {gold && <span className="p28-gold-badge">GOLD</span>}

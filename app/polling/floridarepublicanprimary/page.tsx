@@ -10,7 +10,7 @@ import {
 } from "@/app/polling/lib/buildDailyModel";
 
 // ─── Polls data ───────────────────────────────────────────────────────────────
-const RAW_POLLS: Poll[] = [
+export const RAW_POLLS: Poll[] = [
   // February 2026
   { pollster: "The American Promise", endDate: "2026-02-26", sampleSize: 800, sampleType: "LV", results: { Collins: 4, Donalds: 44, Fishback: 5, Renner: 2 } },
   { pollster: "The Public Sentiment Institute", endDate: "2026-02-20", sampleSize: 0, sampleType: "LV", results: { Collins: 12, Donalds: 30, Fishback: 8, Renner: 2 } },
@@ -176,7 +176,7 @@ export default function FloridaGovRepublicanPrimaryPage() {
                     const displayName = p.pollster.replace(/\*\*/g, "");
                     return (
                       <tr key={`${p.pollster}-${p.endDate}-${i}`}>
-                        <td style={{ color: "rgba(255,255,255,0.85)" }}>
+                        <td style={{ color: "rgba(15,16,32,0.85)" }}>
                           <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                             <span>{displayName}</span>
                             {isPartisan && <span className="pap-partisan-badge">INTERNAL</span>}
@@ -222,14 +222,14 @@ export default function FloridaGovRepublicanPrimaryPage() {
 // ─── CSS ───────────────────────────────────────────────────────────────────────
 const CSS = `
   .pap-root {
-    --bg:          #070709;
-    --bg2:         #0b0b0f;
-    --panel:       #0f0f15;
-    --border:      rgba(255,255,255,0.09);
-    --border2:     rgba(255,255,255,0.15);
-    --muted:       rgba(240,240,245,0.62);
-    --muted2:      rgba(240,240,245,0.40);
-    --muted3:      rgba(240,240,245,0.22);
+    --bg: #f6f7fb;
+    --bg2: #ffffff;
+    --panel: #ffffff;
+    --border: rgba(15, 16, 32, 0.08);
+    --border2: rgba(15, 16, 32, 0.14);
+    --muted: #6b7088;
+    --muted2: #9aa0b4;
+    --muted3: #b7bccc;
     --red:         #ef4444;
     --red2:        #f87171;
     --red-soft:    #fca5a5;
@@ -418,7 +418,7 @@ const CSS = `
     font-size: 8px; letter-spacing: 0.16em;
     text-transform: uppercase; color: var(--muted3); margin-top: 6px;
   }
-  .pap-kpi-bar { height: 2px; margin-top: 10px; background: rgba(255,255,255,0.07); }
+  .pap-kpi-bar { height: 2px; margin-top: 10px; background: rgba(15,16,32,0.08); }
   .pap-kpi-bar-fill {
     height: 100%;
     animation: pap-bar-in 800ms cubic-bezier(0.22,1,0.36,1) both;
@@ -466,7 +466,7 @@ const CSS = `
     font-family: var(--font-body), "Geist Mono", monospace;
     font-size: 10.5px;
     padding: 10px 16px;
-    border-bottom: 1px solid rgba(255,255,255,0.04);
+    border-bottom: 1px solid rgba(15,16,32,0.05);
     color: var(--muted); vertical-align: middle;
     font-variant-numeric: tabular-nums;
   }
