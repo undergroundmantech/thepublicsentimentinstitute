@@ -1570,6 +1570,7 @@ export default function March3FeaturedClient() {
         .res-root {
           --rep: #e63946; --dem: #3b82f6; --win: #4ade80;
         }
+        html, body { overflow-x: hidden; max-width: 100%; }
         @keyframes res-fade-up { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
         @keyframes res-pulse { 0%,100% { opacity:1; transform:scale(1); } 50% { opacity:0.35; transform:scale(0.82); } }
         @keyframes county-pop { 0% { filter:brightness(1); } 40% { filter:brightness(2.2) saturate(1.4); } 100% { filter:brightness(1); } }
@@ -1857,7 +1858,10 @@ export default function March3FeaturedClient() {
             gap: 10px;
           }
           /* Reset all fixed desktop heights */
-          .res-race-picker { display: none !important; }
+          .res-race-picker { display: contents !important; }
+          .res-spotlight-hero { order: 0; width: 100%; box-sizing: border-box; }
+          .res-spotlight-about { order: 10; width: 100%; box-sizing: border-box; }
+          .res-race-picker-list { display: none !important; }
           .res-right-rail {
             order: 1;
             display: flex;
@@ -1886,6 +1890,14 @@ export default function March3FeaturedClient() {
           .res-bottom { order: 4; display: block; padding: 0 10px 16px; }
           .res-race-scroll-window { display: flex; max-height: 190px; flex-shrink: 0; }
           .res-mobile-race-search { order: 1; }
+          /* Prevent horizontal overflow on mobile */
+          .res-root { overflow-x: hidden; max-width: 100vw; }
+          .res-page-tabs-wrap { overflow-x: hidden; }
+          .res-page-tabs { overflow-x: auto; -webkit-overflow-scrolling: touch; padding-bottom: 2px; width: 100%; min-width: 0; }
+          .res-page-tab { flex-shrink: 0; }
+          .res-state-btns { overflow-x: auto; -webkit-overflow-scrolling: touch; flex-shrink: 0; max-width: 100%; }
+          .res-state-btns::-webkit-scrollbar { height: 0; }
+          .res-page-header-inner > div { flex-wrap: wrap; }
         }
 
         /* ── TABLET RACE SEARCH (top of right rail, tablet only) ── */
@@ -1968,7 +1980,7 @@ export default function March3FeaturedClient() {
                   {selectedRace?.last_updated && <span className="res-badge">UPDATED {prettyTime(selectedRace.last_updated)}</span>}
                 </div>
                 {/* State switcher */}
-                <div style={{ display: "flex", gap: "1px" }}>
+                <div className="res-state-btns" style={{ display: "flex", gap: "1px" }}>
                   {(["CA", "IA", "MT", "NJ", "NM", "SD"] as const).map((st) => (
   <button key={st} className={`res-btn-state ${activeState === st ? "active" : ""}`} onClick={() => setActiveState(st)}>{stateLabels[st]}</button>
 ))}
@@ -2069,7 +2081,7 @@ export default function March3FeaturedClient() {
           <div className="res-race-picker" style={spotlightMeta ? { display: "flex", flexDirection: "column", gap: 8 } : undefined}>
             {spotlightMeta && (
               <>
-                <div className="ky04-hero-card" style={{ width: "100%", boxSizing: "border-box", flexShrink: 0 }}>
+                <div className="ky04-hero-card res-spotlight-hero" style={{ width: "100%", boxSizing: "border-box", flexShrink: 0 }}>
                   <div style={{ marginBottom: 10 }}>
                     <span style={{ display: "inline-flex", alignItems: "center", gap: 5, padding: "3px 9px", border: "1px solid rgba(255,255,255,0.30)", borderRadius: "var(--r-pill)", background: "rgba(255,255,255,0.15)", fontFamily: "var(--font-body)", fontSize: "7px", fontWeight: 700, letterSpacing: "0.20em", color: "#fff", textTransform: "uppercase" }}>
                       <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#fff", boxShadow: "0 0 0 3px rgba(255,255,255,0.28)", display: "inline-block", flexShrink: 0 }} />
@@ -2098,7 +2110,7 @@ export default function March3FeaturedClient() {
                     {selectedRace?.last_updated && <span style={{ display: "inline-flex", alignItems: "center", padding: "3px 8px", border: "1px solid rgba(255,255,255,0.16)", borderRadius: "var(--r-pill)", background: "rgba(255,255,255,0.07)", fontFamily: "var(--font-body)", fontSize: "7px", fontWeight: 700, letterSpacing: "0.16em", color: "rgba(255,255,255,0.50)", textTransform: "uppercase" }}>UPDATED {prettyTime(selectedRace.last_updated)}</span>}
                   </div>
                 </div>
-                <div className="res-panel" style={{ flex: "none" }}>
+                <div className="res-panel res-spotlight-about" style={{ flex: "none" }}>
                   <div className="res-panel-header"><span className="res-panel-tag">ABOUT THIS RACE</span></div>
                   <div style={{ padding: "12px 16px", fontFamily: "var(--font-body)", fontSize: "11px", lineHeight: 1.7, color: "var(--muted)", letterSpacing: "0.02em" }}>
                     {spotlightMeta.about}
@@ -2106,7 +2118,7 @@ export default function March3FeaturedClient() {
                 </div>
               </>
             )}
-            <div style={spotlightMeta ? { flex: 1, minHeight: 0, overflow: "hidden", display: "flex", flexDirection: "column" } : undefined}>
+            <div className="res-race-picker-list" style={spotlightMeta ? { flex: 1, minHeight: 0, overflow: "hidden", display: "flex", flexDirection: "column" } : undefined}>
               <RacePickerPanel
                 races={racesForState}
                 raceCache={raceCache}
@@ -2240,7 +2252,6 @@ export default function March3FeaturedClient() {
 
             {/* TOPLINE — second */}
             <div className="res-panel res-topline-panel" style={{ display: "flex", flexDirection: "column" }}>
-              <div className="res-tri-stripe" />
               <div className="res-panel-header" style={{ flexShrink: 0 }}>
                 <span className="res-panel-tag">TOPLINE RESULTS</span>
                 {selectedRace?.percent_reporting !== undefined && (
@@ -2261,7 +2272,6 @@ export default function March3FeaturedClient() {
                 <ForecastPanel key={selectedId} raceId={selectedId} refreshTick={refreshTick} raceData={selectedRace} onForecastUpdate={(update) => setForecastProj(update)} />
               ) : (
               <div className="res-panel" style={{ display: "flex", flexDirection: "column", flex: 1 }}>
-                <div className="res-tri-stripe" />
                 <div className="res-panel-header">
                   <span className="res-panel-tag">FORECAST MODEL</span>
                   <span style={{ fontFamily: "var(--font-body)", fontSize: "10px", fontWeight: 700, letterSpacing: "0.14em", color: "var(--muted2)", textTransform: "uppercase" }}>NOT AVAILABLE</span>
