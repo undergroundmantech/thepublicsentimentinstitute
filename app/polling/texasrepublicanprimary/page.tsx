@@ -11,7 +11,7 @@ import {
 } from "@/app/polling/lib/buildDailyModel";
 
 // ─── Polls data ───────────────────────────────────────────────────────────────
-const RAW_POLLS: Poll[] = [
+export const RAW_POLLS: Poll[] = [
   { pollster: "YouGov", endDate: "2026-03-02", sampleSize: 2000, sampleType: "LV", results: { Paxton: 36, Cornyn: 32, Hunt: 17 } },
   { pollster: "Emerson", endDate: "2026-02-27", sampleSize: 547, sampleType: "LV", results: { Paxton: 40, Cornyn: 36, Hunt: 17 } },
   { pollster: "American Opportunity Alliance", endDate: "2025-05-01", sampleSize: 800, sampleType: "LV", results: { Paxton: 43, Cornyn: 27, Hunt: 14 } },
@@ -221,7 +221,7 @@ export default function TexasRepPrimaryPage() {
                         </span>
                       </td>
                       <td style={{ padding: "10px 16px" }}>
-                        <div style={{ position: "relative", height: 6, background: "rgba(255,255,255,0.07)", borderRadius: 2 }}>
+                        <div style={{ position: "relative", height: 6, background: "rgba(15,16,32,0.08)", borderRadius: 2 }}>
                           {/* actual bar */}
                           <div style={{
                             position: "absolute", left: 0, top: 0, bottom: 0,
@@ -319,7 +319,7 @@ export default function TexasRepPrimaryPage() {
                     const displayName = p.pollster.replace(/\*\*/g, "");
                     return (
                       <tr key={`${p.pollster}-${p.endDate}-${i}`}>
-                        <td style={{ color: "rgba(255,255,255,0.85)" }}>
+                        <td style={{ color: "rgba(15,16,32,0.85)" }}>
                           <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                             <span>{displayName}</span>
                             {isPartisan && <span className="pap-partisan-badge">INTERNAL</span>}
@@ -338,7 +338,7 @@ export default function TexasRepPrimaryPage() {
                     );
                   })}
                 {/* ── ACTUAL RESULTS ROW ── */}
-                <tr style={{ background: "rgba(255,255,255,0.04)", borderTop: "1px solid rgba(255,255,255,0.15)" }}>
+                <tr style={{ background: "rgba(15,16,32,0.05)", borderTop: "1px solid rgba(255,255,255,0.15)" }}>
                   <td style={{ color: "#fff", fontWeight: 700 }}>
                     <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                       <span>ACTUAL RESULT</span>
@@ -394,14 +394,14 @@ export default function TexasRepPrimaryPage() {
 // ─── CSS ───────────────────────────────────────────────────────────────────────
 const CSS = `
   .pap-root {
-    --bg:          #070709;
-    --bg2:         #0b0b0f;
-    --panel:       #0f0f15;
-    --border:      rgba(255,255,255,0.09);
-    --border2:     rgba(255,255,255,0.15);
-    --muted:       rgba(240,240,245,0.62);
-    --muted2:      rgba(240,240,245,0.40);
-    --muted3:      rgba(240,240,245,0.22);
+    --bg: #f6f7fb;
+    --bg2: #ffffff;
+    --panel: #ffffff;
+    --border: rgba(15, 16, 32, 0.08);
+    --border2: rgba(15, 16, 32, 0.14);
+    --muted: #6b7088;
+    --muted2: #9aa0b4;
+    --muted3: #b7bccc;
     --purple:      #7c3aed;
     --purple-soft: #a78bfa;
     --red-soft:    #f87171;
@@ -587,7 +587,7 @@ const CSS = `
     font-size: 8px; letter-spacing: 0.16em;
     text-transform: uppercase; color: var(--muted3); margin-top: 6px;
   }
-  .pap-kpi-bar { height: 2px; margin-top: 10px; background: rgba(255,255,255,0.07); }
+  .pap-kpi-bar { height: 2px; margin-top: 10px; background: rgba(15,16,32,0.08); }
   .pap-kpi-bar-fill {
     height: 100%;
     animation: pap-bar-in 800ms cubic-bezier(0.22,1,0.36,1) both;
@@ -674,7 +674,7 @@ const CSS = `
     font-family: var(--font-body), "Geist Mono", monospace;
     font-size: 10.5px;
     padding: 10px 16px;
-    border-bottom: 1px solid rgba(255,255,255,0.04);
+    border-bottom: 1px solid rgba(15,16,32,0.05);
     color: var(--muted); vertical-align: middle;
     font-variant-numeric: tabular-nums;
   }

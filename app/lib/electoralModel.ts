@@ -1,6 +1,12 @@
 // lib/electoralModel.ts
 
-export type RaceRule = "PLURALITY" | "MAJORITY";
+export type RaceRule =
+  | "PLURALITY"           // highest vote-getter wins
+  | "MAJORITY"            // 50%+ to win; otherwise runoff (TX-style)
+  | "TOP_TWO"             // CA open primary: top 2 advance regardless of share
+  | "MAJORITY_RUNOFF"     // 50%+ wins outright; otherwise top-2 municipal runoff (LA Mayor)
+  | "THRESHOLD_35_CONVENTION" // IA: leader must clear 35% or party convention decides
+  | "THRESHOLD_35_RUNOFF";    // SD: leader must clear 35% or top-2 runoff 8 weeks later
 
 export type CandidateKey = "Candidate1" | "Candidate2" | "Candidate3" | "Others";
 export type MainCandidateKey = "Candidate1" | "Candidate2" | "Candidate3";
@@ -272,15 +278,17 @@ function calcPluralityOdds(mean_vote: Votes4, sd_race: number): Shares4 {
   };
 }
 
-function calcMajorityWinProb(mean_vote: Votes4, sd_race: number, modeled_total_vote: number): Shares4 {
-  const threshold = 0.5 * modeled_total_vote;
+function calcMajorityWinProb(mean_vote: Votes4, sd_race: number, modeled_total_vote: number, threshold = 0.5): Shares4 {
+  const threshVotes = threshold * modeled_total_vote;
+  // eslint-disable-next-line no-param-reassign
+  const threshold_ = threshVotes;
   const TOP3: CandidateKey[] = ["Candidate1", "Candidate2", "Candidate3"];
   const result: Shares4 = { Candidate1: 0, Candidate2: 0, Candidate3: 0, Others: 0 };
   for (const c of TOP3) {
     if (sd_race === 0) {
-      result[c] = mean_vote[c] >= threshold ? 1 : 0;
+      result[c] = mean_vote[c] >= threshold_ ? 1 : 0;
     } else {
-      result[c] = 1 - phi((threshold - mean_vote[c]) / sd_race);
+      result[c] = 1 - phi((threshold_ - mean_vote[c]) / sd_race);
     }
   }
   return result;
@@ -396,7 +404,8 @@ export function forecastRace(
 
   // Step 4: Probabilities
   const plurality_odds_to_win = calcPluralityOdds(mean_vote, sd_race);
-  const majority_win_prob = calcMajorityWinProb(mean_vote, sd_race, modeled_total_vote);
+  const winThreshold = (race_rule === "THRESHOLD_35_CONVENTION" || race_rule === "THRESHOLD_35_RUNOFF") ? 0.35 : 0.5;
+  const majority_win_prob = calcMajorityWinProb(mean_vote, sd_race, modeled_total_vote, winThreshold);
   const prob_someone_majority = clamp(
     majority_win_prob.Candidate1 + majority_win_prob.Candidate2 + majority_win_prob.Candidate3,
     0, 1
@@ -413,7 +422,7 @@ export function forecastRace(
 
   // Step 6: Mode trigger
   const mode_trigger: ForecastOutput["mode_trigger"] =
-    race_rule === "PLURALITY"
+    (race_rule === "PLURALITY" || race_rule === "TOP_TWO")
       ? "PLURALITY"
       : prob_someone_majority >= 0.5 ? "MAJORITY" : "RUNOFF";
 
