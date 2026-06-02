@@ -3,6 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import HeroElectoralMap from "@/app/components/HeroElectoralMap";
+import ElectionResultsCard from "@/app/components/SpotlightRaceCard";
 import {
   LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer, ReferenceLine,
 } from "recharts";
@@ -964,7 +965,7 @@ const RT_POLLS: Poll[] = [
 ];
 
 // ─── KY-04 Republican Primary Polls (Gallrein vs Massie) ──────────────────────
-const KY04_POLLS: Poll[] = [
+export const KY04_POLLS: Poll[] = [
   // Big Data Poll Apr 3–7 (forced choice, no undecided)
   { pollster: "Big Data Poll (R)",        endDate: "2026-04-07", sampleSize: 433, sampleType: "LV", results: { Gallrein: 48, Massie: 52 } },
   // Quantus Insights Apr 6–7
@@ -1945,30 +1946,8 @@ export default function HomePage() {
             </div>
           </div>
 
-          {/* Box 3: Election Results CTA */}
-          <div className="hp-hero-card">
-            <div className="hp-hero-side-head">Election Results</div>
-            <div className="hp-hero-side-sub">Forecasts, projections &amp; live night-of results.</div>
-            <div className="hp-cap-headline">
-              We <em>forecast</em>,<br />project &amp; model<br />every major race.
-            </div>
-            <div className="hp-cap-tiles">
-              {[
-                "Pre-Election Forecast",
-                "Live Night-of Projection",
-                "County-Level Results",
-                "Electoral Modeling",
-              ].map((t) => (
-                <div key={t} className="hp-cap-tile">
-                  <span className="hp-cap-tile-dot" />
-                  <span>{t}</span>
-                </div>
-              ))}
-            </div>
-            <Link href="/results" className="hp-cap-cta">
-              Explore Live Results &amp; Forecasts →
-            </Link>
-          </div>
+          {/* Box 3: Election Results — live spotlight card */}
+          <ElectionResultsCard />
           </div>
         </div>
 

@@ -18,13 +18,13 @@ type NavItem = {
 const NAV: NavItem[] = [
   { href: "/",         label: "Home" },
   { href: "/results",  label: "Election Results", emphasize: RESULTS_LIVE },
+  { href: "/polling/genericballot", label: "Polling Averages" },
   { href: "/tpsipoll", label: "TPSI Poll" },
   {
-    label: "Forecasts",
+    label: "Maps & Ratings",
     children: [
-      { href: "/forecastratings", label: "2026 Ratings",     desc: "Race ratings & competitiveness" },
-      { href: "/polling",         label: "Polling Averages", desc: "National & state averages" },
       { href: "/electoralmap",    label: "Electoral Map",    desc: "Interactive state map" },
+      { href: "/forecastratings", label: "2026 Ratings",     desc: "Race ratings & competitiveness" },
     ],
   },
   { href: "/contact",  label: "Contact" },
@@ -173,11 +173,6 @@ export default function Navbar() {
           gap: 7px;
           background: transparent;
           color: var(--purple);
-          font-family: var(--font-numeric);
-          font-size: 11px;
-          font-weight: 700;
-          letter-spacing: 0.06em;
-          text-transform: uppercase;
           box-shadow: none;
         }
         .nb-link.nb-emphasize::before {
