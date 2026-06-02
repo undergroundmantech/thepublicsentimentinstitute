@@ -933,7 +933,9 @@ const CSS = `
   @media (prefers-reduced-motion: reduce) {
     .gs-root { animation: none !important; }
   }
-`;
+  .gs-table-head-title {
+    font-family: ui-monospace,monospace;
+    font-size: 9px; font-weight: 700;
     letter-spacing: 0.26em; text-transform: uppercase;
     color: var(--gold-soft);
   }

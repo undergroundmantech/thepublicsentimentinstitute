@@ -580,12 +580,12 @@ export default function ForecastRatingsPage() {
           {TABS.map(t => (
             <button key={t.key} onClick={() => setTab(t.key)} style={{
               padding: "12px 22px", fontFamily: "var(--font-body),monospace", fontSize: 10,
-              fontWeight: 500, letterSpacing: "0.14em", textTransform: "uppercase",
-              cursor: "pointer", background: "transparent",
+              letterSpacing: "0.14em", textTransform: "uppercase",
+              cursor: "pointer", background: "transparent", border: "none",
               color: tab === t.key ? "var(--foreground)" : "var(--muted2)",
               borderBottom: `2px solid ${tab === t.key ? "var(--purple)" : "transparent"}`,
               fontWeight: tab === t.key ? 700 : 500,
-              border: "none", whiteSpace: "nowrap", transition: "color 120ms",
+              whiteSpace: "nowrap", transition: "color 120ms",
             }}>
               {t.label}
             </button>
