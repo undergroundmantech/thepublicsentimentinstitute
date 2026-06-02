@@ -301,14 +301,14 @@ export default function Navbar() {
           display: none;
           flex-direction: column;
           gap: 4px;
-          padding: 12px 16px 18px;
-          background: rgba(255,255,255,0.96);
+          padding: 0 16px;
+          background: var(--panel);
           border-top: 1px solid var(--border);
           max-height: 0;
           overflow: hidden;
-          transition: max-height 260ms ease;
+          transition: max-height 260ms ease, padding-top 260ms ease, padding-bottom 260ms ease;
         }
-        .nb-mobile.open { max-height: 820px; }
+        .nb-mobile.open { max-height: 820px; padding-top: 12px; padding-bottom: 18px; }
 
         .nb-mob-link {
           display: flex;
