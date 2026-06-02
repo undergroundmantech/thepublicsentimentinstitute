@@ -1313,15 +1313,7 @@ export default function TPSIPollDashboard() {
         /* ── Topline executive panel ────── */
         .tl-section {
           background: var(--panel); border: 1px solid var(--border); border-radius: var(--r-lg);
-          box-shadow: var(--shadow-md); overflow: hidden; margin-bottom: 10px; position: relative;
-        }
-        .tl-section::before {
-          content: ''; position: absolute; top: 0; left: 0; right: 0; height: 22px;
-          background: linear-gradient(90deg, var(--red) 0%, var(--purple) 50%, var(--blue) 100%);
-          border-radius: var(--r-lg) var(--r-lg) 0 0;
-          -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-          -webkit-mask-composite: xor; mask-composite: exclude;
-          padding: 2.5px 2.5px 0 2.5px; pointer-events: none; z-index: 2;
+          box-shadow: var(--shadow-md); overflow: hidden; margin-bottom: 10px;
         }
         .tl-section-hdr {
           display: flex; align-items: center; justify-content: space-between; gap: 12px;
