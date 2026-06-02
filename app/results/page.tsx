@@ -535,11 +535,24 @@ function MapWithCountyTooltip({ svgText, regionResults }: { svgText: string; reg
 // ─── CANDIDATE LIST ──────────────────────────────────────────────────────────
 function CandidateList({ candidates, reporting, raceId, isMajorityRunoff }: { candidates: RaceCandidate[]; reporting: number; raceId?: number; isMajorityRunoff?: boolean }) {
   const defaults = raceId ? RACE_FORECAST_DEFAULTS[raceId] : undefined;
-  const ordered = useMemo(() => sortCandidatesByPollData(candidates, defaults?.pollAvg), [candidates, defaults?.pollAvg]);
+  const ordered = useMemo(() => {
+    // Pre-election: use poll avg order. Once votes are coming in, sort purely by live vote share.
+    if (reporting > 0) return [...candidates].sort((a, b) => (b.percent ?? 0) - (a.percent ?? 0));
+    return sortCandidatesByPollData(candidates, defaults?.pollAvg);
+  }, [candidates, defaults?.pollAvg, reporting]);
+
+  // Top 5 + "Other Candidates" rollup for jungle primaries
+  const TOP_N = 5;
+  const topCandidates = ordered.slice(0, TOP_N);
+  const restCandidates = ordered.slice(TOP_N);
+  const otherVotes = restCandidates.reduce((sum, c) => sum + (c.votes ?? 0), 0);
+  const otherPercent = restCandidates.reduce((sum, c) => sum + (c.percent ?? 0), 0);
+  const showOthers = restCandidates.length > 0;
+
   return (
     <div className="space-y-2">
       <div className="res-candidate-list">
-        {ordered.map((c, idx) => {
+        {topCandidates.map((c, idx) => {
           const isLeading = idx === 0 && !c.winner && reporting > 0;
           return (
             <div key={`${c.name}-${c.party}`} className="res-candidate-row">
@@ -562,6 +575,21 @@ function CandidateList({ candidates, reporting, raceId, isMajorityRunoff }: { ca
             </div>
           );
         })}
+        {showOthers && (
+          <div className="res-candidate-row" style={{ opacity: 0.65 }}>
+            <div className="res-cand-bar" style={{ background: "var(--muted2)" }} />
+            <div className="flex items-center justify-between gap-3 flex-1 min-w-0">
+              <div className="flex items-center gap-3 min-w-0">
+                <span className="res-cand-dot" style={{ background: "var(--muted2)" }} />
+                <div className="min-w-0">
+                  <div className="res-cand-name-lg">Other Candidates</div>
+                  <div className="res-cand-party">{restCandidates.length} candidates · {otherVotes.toLocaleString()} votes</div>
+                </div>
+              </div>
+              <div className="res-pct-topline shrink-0">{fmtPct(otherPercent)}</div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
@@ -1559,6 +1587,8 @@ export default function March3FeaturedClient() {
   const effectiveProj = forecastProj ?? selectedApiProj;
   // Don't show a lean/projection until precincts start reporting
   const displayProj = selectedReporting > 0 ? effectiveProj : null;
+  // Auto-call: forecast races called at >99.73% (3σ); non-forecast races rely on API winner flag
+  const forecastCalled = hasForecastForSelected && forecastProj?.projectionType === "WIN" && (forecastProj?.prob ?? 0) > 99.73 ? forecastProj!.leader : null;
 
   const timeStr = nowMs > 0
     ? new Date(nowMs).toLocaleTimeString("en-US", { hour12: false, hour: "2-digit", minute: "2-digit", second: "2-digit" })
@@ -1608,7 +1638,7 @@ export default function March3FeaturedClient() {
         .res-btn-primary:hover { background:var(--gradient-purple-soft); transform:translateY(-1px); }
         .res-btn-ghost { display:inline-flex; align-items:center; gap:6px; padding:7px 12px; background:transparent; border:1px solid var(--border); color:var(--muted2); font-family:var(--font-body); font-size:10px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; cursor:pointer; transition:all 140ms ease; border-radius:var(--r-pill); }
         .res-btn-ghost:hover { border-color:var(--border2); color:var(--muted); }
-        .res-btn-state { display:inline-flex; align-items:center; padding:8px 16px; background:transparent; border:1px solid var(--border); color:var(--muted2); font-family:var(--font-body); font-size:10px; font-weight:700; letter-spacing:0.16em; text-transform:uppercase; cursor:pointer; transition:all 120ms ease; position:relative; overflow:hidden; border-radius:var(--r-sm); }
+        .res-btn-state { display:inline-flex; align-items:center; justify-content:center; text-align:center; padding:8px 16px; background:transparent; border:1px solid var(--border); color:var(--muted2); font-family:var(--font-body); font-size:10px; font-weight:700; letter-spacing:0.16em; text-transform:uppercase; cursor:pointer; transition:all 120ms ease; position:relative; overflow:hidden; border-radius:var(--r-sm); }
         .res-btn-state::before { content:''; position:absolute; bottom:0; left:0; right:0; height:2px; background:var(--purple); transform:scaleX(0); transform-origin:left; transition:transform 200ms ease; }
         .res-btn-state:hover { color:var(--foreground); border-color:var(--border2); }
         .res-btn-state:hover::before { transform:scaleX(1); }
@@ -1662,7 +1692,7 @@ export default function March3FeaturedClient() {
           max-width: 1240px;
           margin: 0 auto;
           display: grid;
-          grid-template-columns: 280px minmax(0, 620px) 300px;
+          grid-template-columns: 300px minmax(0, 590px) 320px;
           grid-template-rows: auto;
           align-items: stretch;
           gap: 8px;
@@ -1817,30 +1847,76 @@ export default function March3FeaturedClient() {
         /* ── TABLET INLINE COUNTY TABLE ── */
         .res-tablet-county { display: none; }
 
-        /* ════ TABLET ≤900px ════ */
-        @media (max-width: 900px) {
-          /* Fixed height so both columns end at same line */
+        /* ════ TABLET 641px–900px ════ */
+        @media (min-width: 641px) and (max-width: 1080px) {
           .res-body {
-            grid-template-columns: 1fr 300px;
-            grid-template-rows: calc(100vh - 120px);
-            padding: 10px 14px;
+            display: grid !important;
+            grid-template-columns: 1fr 1fr !important;
+            align-items: start !important;
+            column-gap: 10px !important;
+            row-gap: 0 !important;
+            padding: 10px 14px !important;
+            height: auto !important;
           }
-          .res-race-picker { display: none; }
-          .res-mobile-race-strip { display: flex; }
-          /* Center column: map panel fills height, county scrolls below */
-          .res-center-split { flex-direction: column; min-height: 0; height: 100%; }
-          .res-center-split > .res-map-panel { display: flex; flex-direction: column; height: 100%; min-height: 0; overflow: hidden; }
-          .res-center-split > .res-map-panel .res-map-body { flex-shrink: 0; }
-          .res-inline-county { max-height: 240px; }
-          /* Hide full-width bottom on tablet */
-          .res-bottom { display: none; }
-          .res-right-rail { height: 100%; overflow: hidden; display: flex; flex-direction: column; gap: 10px; }
-          .res-right-rail > .res-race-status-panel { flex: none; height: auto; overflow: visible; }
-          .res-right-rail > .res-topline-panel { flex: none; min-height: 180px; max-height: 520px; overflow-y: auto; }
-          .res-forecast-wrap { flex: none; height: auto; max-height: 560px; }
-          .res-race-scroll-window { display: flex; max-height: 200px; flex-shrink: 0; }
-          /* Hide full-width bottom on tablet */
-          .res-bottom { display: none; }
+
+          /* LEFT COLUMN — race picker is the left col container */
+          .res-race-picker {
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 10px !important;
+            grid-column: 1 !important;
+            grid-row: 1 !important;
+            height: auto !important;
+            overflow: visible !important;
+            max-height: none !important;
+            padding-bottom: 10px !important;
+          }
+
+          /* RIGHT COLUMN — right rail spans both rows */
+          .res-right-rail {
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 10px !important;
+            grid-column: 2 !important;
+            grid-row: 1 / 3 !important;
+            height: auto !important;
+            overflow: visible !important;
+            max-height: none !important;
+            align-self: start !important;
+          }
+
+          /* Map+county — left col, row 2 (directly below race picker) */
+          .res-center-split {
+            grid-column: 1 !important;
+            grid-row: 2 !important;
+            width: 100% !important;
+            flex-shrink: 0 !important;
+            height: auto !important;
+            min-height: 0 !important;
+            overflow: visible !important;
+          }
+
+          /* Left col items — stack naturally */
+          .res-spotlight-hero   { width: 100% !important; flex-shrink: 0 !important; }
+          .res-race-picker-list { width: 100% !important; flex-shrink: 0 !important; height: 420px !important; overflow: hidden !important; }
+          .res-forecast-wrap    { width: 100% !important; flex-shrink: 0 !important; height: auto !important; max-height: none !important; overflow: visible !important; }
+          .res-topline-panel    { width: 100% !important; flex-shrink: 0 !important; height: auto !important; max-height: none !important; overflow: visible !important; }
+          .res-spotlight-about  { width: 100% !important; flex-shrink: 0 !important; }
+
+          /* Right col items — stack naturally inside rail */
+          .res-race-status-panel { width: 100% !important; flex-shrink: 0 !important; height: auto !important; overflow: visible !important; }
+
+          /* Map fixed height on tablet */
+          .res-center-split > .res-map-panel {
+            height: 380px !important;
+            min-height: 380px !important;
+            max-height: 380px !important;
+          }
+
+          /* Hide mobile/desktop-only chrome */
+          .res-race-scroll-window { display: none !important; }
+          .res-mobile-race-strip  { display: none !important; }
+          .res-bottom             { display: none !important; }
         }
 
         /* ════ MOBILE ≤640px ════ */
@@ -1860,43 +1936,44 @@ export default function March3FeaturedClient() {
           /* Reset all fixed desktop heights */
           .res-race-picker { display: contents !important; }
           .res-spotlight-hero { order: 0; width: 100%; box-sizing: border-box; }
-          .res-spotlight-about { order: 10; width: 100%; box-sizing: border-box; }
-          .res-race-picker-list { display: none !important; }
-          .res-right-rail {
-            order: 1;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            height: auto !important;
-            min-height: unset !important;
-            overflow: visible;
-            width: 100%;
-          }
+          .res-spotlight-about { order: 20; width: 100%; box-sizing: border-box; }
+          .res-race-picker-list { display: flex !important; flex-direction: column; order: 0; height: 300px; overflow: hidden; width: 100%; box-sizing: border-box; }
+          /* Break rail apart so forecast can be ordered between race-status and topline */
+          .res-right-rail { display: contents !important; }
           .res-right-rail > .res-race-scroll-window { display: none !important; }
-          .res-right-rail > .res-race-status-panel { height: auto !important; min-height: unset !important; max-height: unset !important; overflow: visible !important; flex: none; width: 100%; box-sizing: border-box; }
-          .res-right-rail > .res-topline-panel { height: auto !important; min-height: unset !important; max-height: unset !important; overflow: visible !important; flex: none; width: 100%; box-sizing: border-box; }
-          .res-forecast-wrap { order: 3; height: auto !important; min-height: unset !important; max-height: unset !important; flex: none !important; overflow: visible; width: 100%; box-sizing: border-box; }
+          .res-right-rail > .res-race-status-panel { order: 1; height: auto !important; min-height: unset !important; max-height: unset !important; overflow: visible !important; flex: none; width: 100%; box-sizing: border-box; }
+          .res-forecast-wrap { order: 2; height: auto !important; min-height: unset !important; max-height: unset !important; flex: none !important; overflow: visible; width: 100%; box-sizing: border-box; }
           .res-forecast-wrap > .res-panel { overflow: visible; height: auto !important; width: 100%; }
           .res-forecast-wrap > .res-panel .res-forecast-body { overflow-y: visible; max-height: none; height: auto !important; }
+          .res-right-rail > .res-topline-panel { order: 3; height: auto !important; min-height: unset !important; max-height: unset !important; overflow: visible !important; flex: none; width: 100%; box-sizing: border-box; }
           .res-race-status-panel { flex: none !important; overflow: visible !important; }
-          /* Center: map auto height, county hidden (res-bottom used instead) */
-          .res-center-split { order: 2; height: auto !important; min-height: unset !important; overflow: visible; width: 100%; }
-          .res-center-split > .res-map-panel { height: auto !important; min-height: unset !important; max-height: unset !important; overflow: visible; width: 100%; box-sizing: border-box; }
+          /* Center: map + county wrapped as one card, clearly separated from sections above */
+          .res-center-split { order: 4 !important; height: auto !important; min-height: unset !important; width: 100%; box-sizing: border-box; margin-top: 6px; border: 1px solid var(--border); border-radius: var(--r-lg); box-shadow: var(--shadow-sm); overflow: hidden; display: flex; flex-direction: column; position: relative; }
+          .res-center-split::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 22px; background: linear-gradient(90deg,var(--red) 0%,var(--purple) 50%,var(--blue) 100%); border-radius: var(--r-lg) var(--r-lg) 0 0; -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude; padding: 2.5px 2.5px 0 2.5px; pointer-events: none; z-index: 2; }
+          .res-center-split > .res-map-panel { height: auto !important; min-height: unset !important; max-height: unset !important; overflow: hidden; width: 100%; box-sizing: border-box; border: none !important; border-radius: 0 !important; box-shadow: none !important; }
           .res-center-split > .res-map-panel .res-map-body { flex: none; padding: 6px 10px !important; }
+          .res-center-split > .res-map-panel::before { content: none !important; }
           .res-map-wrap { height: auto !important; width: 100%; }
           .res-map-wrap svg, .res-map-wrap > div { width: 100% !important; height: auto !important; }
-          .res-inline-county { display: none; }
-          /* County at bottom via res-bottom */
-          .res-bottom { order: 4; display: block; padding: 0 10px 16px; }
+          .res-inline-county { display: block !important; height: auto !important; overflow: visible !important; border-top: 1px solid var(--border) !important; }
+          .res-inline-county > .res-panel { height: auto !important; max-height: none !important; overflow: visible !important; border: none !important; border-radius: 0 !important; box-shadow: none !important; }
+          .res-inline-county > .res-panel > div:last-child { overflow-y: visible !important; max-height: none !important; }
+          /* County shown inline — hide res-bottom on mobile */
+          .res-bottom { display: none !important; }
           .res-race-scroll-window { display: flex; max-height: 190px; flex-shrink: 0; }
           .res-mobile-race-search { order: 1; }
           /* Prevent horizontal overflow on mobile */
           .res-root { overflow-x: hidden; max-width: 100vw; }
-          .res-page-tabs-wrap { overflow-x: hidden; }
-          .res-page-tabs { overflow-x: auto; -webkit-overflow-scrolling: touch; padding-bottom: 2px; width: 100%; min-width: 0; }
-          .res-page-tab { flex-shrink: 0; }
-          .res-state-btns { overflow-x: auto; -webkit-overflow-scrolling: touch; flex-shrink: 0; max-width: 100%; }
-          .res-state-btns::-webkit-scrollbar { height: 0; }
+          .res-page-tabs-wrap { overflow-x: visible; }
+          .res-page-tabs { overflow-x: visible; flex-wrap: wrap; gap: 2px; padding: 4px 6px; }
+          .res-page-tab { flex-shrink: 0; font-size: 10px; padding: 6px 10px; }
+          .res-page-tab.ky04-tab { font-size: 9px; padding: 5px 9px; }
+          .res-page-tab .tab-dot { width: 5px; height: 5px; }
+          .res-state-btns { flex-wrap: wrap; overflow-x: visible; flex-shrink: unset; max-width: 100%; }
+          .res-state-btns .res-btn-state { flex: 0 0 calc(33.333% - 1px); min-width: 0; justify-content: center; white-space: normal; overflow: visible; word-break: break-word; }
+          .res-race-status-panel > .res-panel-header { border-bottom: none; }
+          .res-mobile-race-strip { display: none !important; }
+          .res-mobile-race-search { display: none !important; }
           .res-page-header-inner > div { flex-wrap: wrap; }
         }
 
@@ -2110,12 +2187,6 @@ export default function March3FeaturedClient() {
                     {selectedRace?.last_updated && <span style={{ display: "inline-flex", alignItems: "center", padding: "3px 8px", border: "1px solid rgba(255,255,255,0.16)", borderRadius: "var(--r-pill)", background: "rgba(255,255,255,0.07)", fontFamily: "var(--font-body)", fontSize: "7px", fontWeight: 700, letterSpacing: "0.16em", color: "rgba(255,255,255,0.50)", textTransform: "uppercase" }}>UPDATED {prettyTime(selectedRace.last_updated)}</span>}
                   </div>
                 </div>
-                <div className="res-panel res-spotlight-about" style={{ flex: "none" }}>
-                  <div className="res-panel-header"><span className="res-panel-tag">ABOUT THIS RACE</span></div>
-                  <div style={{ padding: "12px 16px", fontFamily: "var(--font-body)", fontSize: "11px", lineHeight: 1.7, color: "var(--muted)", letterSpacing: "0.02em" }}>
-                    {spotlightMeta.about}
-                  </div>
-                </div>
               </>
             )}
             <div className="res-race-picker-list" style={spotlightMeta ? { flex: 1, minHeight: 0, overflow: "hidden", display: "flex", flexDirection: "column" } : undefined}>
@@ -2126,9 +2197,20 @@ export default function March3FeaturedClient() {
                 onSelect={setSelectedId}
               />
             </div>
+
+            {/* ABOUT THIS RACE — bottom of left col */}
+            {spotlightMeta && (
+              <div className="res-panel res-spotlight-about" style={{ flex: "none" }}>
+                <div className="res-panel-header"><span className="res-panel-tag">ABOUT THIS RACE</span></div>
+                <div style={{ padding: "12px 16px", fontFamily: "var(--font-body)", fontSize: "11px", lineHeight: 1.7, color: "var(--muted)", letterSpacing: "0.02em" }}>
+                  {spotlightMeta.about}
+                </div>
+              </div>
+            )}
+
           </div>
 
-          {/* CENTER SPLIT: map (left) + right column (race-scroll + forecast stacked) */}
+          {/* CENTER SPLIT: map + county */}
           <div className={`res-center-split${hasForecastForSelected ? "" : " no-forecast"}`}>
 
             {/* MAP PANEL */}
@@ -2168,7 +2250,7 @@ export default function March3FeaturedClient() {
               </div>
             </div>{/* end map panel */}
 
-            {/* COUNTY TABLE — sibling below map panel */}
+            {/* COUNTY TABLE */}
             <div className="res-inline-county">
               <CountyTotalsTable
                 regionResults={selectedRace?.region_results ?? []}
@@ -2180,7 +2262,7 @@ export default function March3FeaturedClient() {
 
           </div>{/* end res-center-split */}
 
-          {/* RIGHT RAIL: Topline + Race Status + Forecast stacked */}
+          {/* RIGHT RAIL: Race Status + Forecast + Topline */}
           <aside className="res-right-rail">
 
             {/* TABLET RACE SCROLL — hidden on desktop, shown on tablet */}
@@ -2207,16 +2289,16 @@ export default function March3FeaturedClient() {
                 <div className="res-stat-block">
                   <div className="res-stat-row" style={{ marginBottom: "5px" }}>
                     <span className="res-stat-block-label">PROJECTION</span>
-                    <span className="res-note" style={{ color: isRunoffConfirmed ? "#f59e0b" : selectedWinner ? "var(--win)" : (displayProj?.projectionType === "RUNOFF") ? "#f59e0b" : displayProj ? "var(--purple-soft)" : "var(--muted2)", fontWeight: 700 }}>
-                      {isRunoffConfirmed ? "CONFIRMED" : selectedWinner ? "OFFICIAL" : displayProj ? `${displayProj.prob.toFixed(1)}%` : "—"}
+                    <span className="res-note" style={{ color: isRunoffConfirmed ? "#f59e0b" : forecastCalled ? "var(--win)" : selectedWinner ? "var(--win)" : (displayProj?.projectionType === "RUNOFF") ? "#f59e0b" : displayProj ? "var(--purple-soft)" : "var(--muted2)", fontWeight: 700 }}>
+                      {isRunoffConfirmed ? "CONFIRMED" : forecastCalled ? "FORECAST CALL" : selectedWinner ? "OFFICIAL" : displayProj ? `${displayProj.prob.toFixed(1)}%` : "—"}
                     </span>
                   </div>
                   <div style={{ fontFamily: "var(--font-body)", fontSize: "12px", fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: isRunoffConfirmed ? "#f59e0b" : (displayProj?.projectionType === "RUNOFF") ? "#f59e0b" : "var(--foreground)" }}>
-                    {isRunoffConfirmed ? "⚡ RUNOFF NEEDED" : selectedWinner ? `✓ ${selectedWinner.name}` : displayProj ? displayProj.leader : "PENDING"}
+                    {isRunoffConfirmed ? "⚡ RUNOFF NEEDED" : forecastCalled ? `✓ ${forecastCalled}` : selectedWinner ? `✓ ${selectedWinner.name}` : displayProj ? displayProj.leader : "PENDING"}
                   </div>
                   {isRunoffConfirmed && (
                     <div className="res-note" style={{ marginTop: 4, color: "rgba(255,255,255,0.4)" }}>
-                      {selectedWinners.map(w => w.name.split(" ").pop()).join(" vs ")} advance
+                      {selectedWinners.map(w => w.name).join(" vs ")} advance
                     </div>
                   )}
                   {displayProj && !selectedWinner && !isRunoffConfirmed && (
@@ -2228,41 +2310,49 @@ export default function March3FeaturedClient() {
                     </div>
                   )}
                 </div>
-                {selectedRace?.candidates && selectedRace.candidates.length > 0 && (
-                  <div style={{ marginTop: 4 }}>
-                    <div className="res-note" style={{ marginBottom: 8 }}>VOTE SHARE</div>
-                    {[...selectedRace.candidates].sort((a, b) => (b.percent ?? 0) - (a.percent ?? 0)).slice(0, 4).map((c) => (
-                      <div key={c.name} style={{ marginBottom: 8 }}>
-                        <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 3 }}>
-                          <span style={{ fontFamily: "var(--font-body)", fontSize: "11px", fontWeight: 700, letterSpacing: "0.04em", color: "var(--muted)", display: "flex", alignItems: "center", gap: 5 }}>
-                            <span style={{ width: 5, height: 5, borderRadius: "50%", background: c.color, display: "inline-block", flexShrink: 0 }} />
-                            {c.name.split(" ").pop()}
-                          </span>
-                          <span style={{ fontFamily: "var(--font-body)", fontSize: "9px", fontWeight: 900, color: c.color }}>{fmtPct(c.percent)}</span>
+                {selectedRace?.candidates && selectedRace.candidates.length > 0 && (() => {
+                  const reporting = selectedRace.percent_reporting ?? 0;
+                  const vsDefs = RACE_FORECAST_DEFAULTS[selectedId];
+                  const vsOrdered = reporting > 0
+                    ? [...selectedRace.candidates].sort((a, b) => (b.percent ?? 0) - (a.percent ?? 0))
+                    : sortCandidatesByPollData(selectedRace.candidates, vsDefs?.pollAvg);
+                  const vsTop = vsOrdered.slice(0, 5);
+                  const vsRest = vsOrdered.slice(5);
+                  const vsOtherPct = vsRest.reduce((s, c) => s + (c.percent ?? 0), 0);
+                  return (
+                    <div style={{ marginTop: 4 }}>
+                      <div className="res-note" style={{ marginBottom: 8 }}>VOTE SHARE</div>
+                      {vsTop.map((c) => (
+                        <div key={c.name} style={{ marginBottom: 8 }}>
+                          <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 3 }}>
+                            <span style={{ fontFamily: "var(--font-body)", fontSize: "11px", fontWeight: 700, letterSpacing: "0.04em", color: "var(--muted)", display: "flex", alignItems: "center", gap: 5 }}>
+                              <span style={{ width: 5, height: 5, borderRadius: "50%", background: c.color, display: "inline-block", flexShrink: 0 }} />
+                              {c.name}
+                            </span>
+                            <span style={{ fontFamily: "var(--font-body)", fontSize: "9px", fontWeight: 900, color: c.color }}>{fmtPct(c.percent)}</span>
+                          </div>
+                          <div style={{ height: 3, background: "var(--border2)", overflow: "hidden" }}>
+                            <div style={{ height: "100%", width: `${c.percent ?? 0}%`, background: c.color, transition: "width 600ms ease" }} />
+                          </div>
                         </div>
-                        <div style={{ height: 3, background: "var(--border2)", overflow: "hidden" }}>
-                          <div style={{ height: "100%", width: `${c.percent ?? 0}%`, background: c.color, transition: "width 600ms ease" }} />
+                      ))}
+                      {vsRest.length > 0 && (
+                        <div style={{ marginBottom: 8, opacity: 0.6 }}>
+                          <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 3 }}>
+                            <span style={{ fontFamily: "var(--font-body)", fontSize: "11px", fontWeight: 700, letterSpacing: "0.04em", color: "var(--muted)", display: "flex", alignItems: "center", gap: 5 }}>
+                              <span style={{ width: 5, height: 5, borderRadius: "50%", background: "var(--muted2)", display: "inline-block", flexShrink: 0 }} />
+                              Others ({vsRest.length})
+                            </span>
+                            <span style={{ fontFamily: "var(--font-body)", fontSize: "9px", fontWeight: 900, color: "var(--muted2)" }}>{fmtPct(vsOtherPct)}</span>
+                          </div>
+                          <div style={{ height: 3, background: "var(--border2)", overflow: "hidden" }}>
+                            <div style={{ height: "100%", width: `${vsOtherPct}%`, background: "var(--muted2)", transition: "width 600ms ease" }} />
+                          </div>
                         </div>
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
-            </div>
-
-            {/* TOPLINE — second */}
-            <div className="res-panel res-topline-panel" style={{ display: "flex", flexDirection: "column" }}>
-              <div className="res-panel-header" style={{ flexShrink: 0 }}>
-                <span className="res-panel-tag">TOPLINE RESULTS</span>
-                {selectedRace?.percent_reporting !== undefined && (
-                  <span style={{ fontFamily: "var(--font-body)", fontSize: "10px", fontWeight: 700, color: "var(--muted2)", letterSpacing: "0.08em" }}>{selectedRace.percent_reporting.toFixed(1)}% IN</span>
-                )}
-              </div>
-              <div className="res-topline-body" style={{ overflowY: "auto", flex: 1, minHeight: 0, scrollbarGutter: "stable", padding: "6px 6px 6px 12px" }}>
-                {selectedRace?.candidates
-                  ? <CandidateList candidates={selectedRace.candidates} reporting={selectedRace.percent_reporting ?? 0} raceId={selectedId} isMajorityRunoff={isRunoffConfirmed} />
-                  : <div style={{ padding: "32px 0", textAlign: "center" }} className="res-note">LOADING…</div>
-                }
+                      )}
+                    </div>
+                  );
+                })()}
               </div>
             </div>
 
@@ -2279,15 +2369,31 @@ export default function March3FeaturedClient() {
                 <div style={{ display: "flex", flexDirection: "column", justifyContent: "space-between", padding: "20px 18px 18px" }}>
                   <div>
                     <div style={{ fontFamily: "var(--font-body)", fontSize: "11px", fontWeight: 900, letterSpacing: "0.10em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 10, lineHeight: 1.4 }}>No Forecast<br />for This Race</div>
-                    <div style={{ fontFamily: "var(--font-body)", fontSize: "8.5px", fontWeight: 500, color: "var(--muted2)", lineHeight: 1.7, letterSpacing: "0.04em" }}>Our forecast model requires reliable poll averages and turnout baselines. For this race, we don't have enough data to model outcomes responsibly.</div>
+                    <div style={{ fontFamily: "var(--font-body)", fontSize: "8.5px", fontWeight: 500, color: "var(--muted2)", lineHeight: 1.7, letterSpacing: "0.04em" }}>Our forecast model requires reliable poll averages and turnout baselines. For this race, we don&#39;t have enough data to model outcomes responsibly.</div>
                   </div>
                   <div style={{ marginTop: 20, paddingTop: 14, borderTop: "1px solid var(--border)" }}>
-                    <div style={{ fontFamily: "var(--font-body)", fontSize: "10px", fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", color: "var(--muted2)", marginBottom: 8 }}>WHAT WE'RE WATCHING</div>
+                    <div style={{ fontFamily: "var(--font-body)", fontSize: "10px", fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", color: "var(--muted2)", marginBottom: 8 }}>WHAT WE&#39;RE WATCHING</div>
                     <div style={{ fontFamily: "var(--font-body)", fontSize: "11px", color: "var(--muted2)", lineHeight: 1.6 }}>Live results and county-level returns will update automatically.</div>
                   </div>
                 </div>
               </div>
               )}
+            </div>
+
+            {/* TOPLINE */}
+            <div className="res-panel res-topline-panel" style={{ display: "flex", flexDirection: "column" }}>
+              <div className="res-panel-header" style={{ flexShrink: 0 }}>
+                <span className="res-panel-tag">TOPLINE RESULTS</span>
+                {selectedRace?.percent_reporting !== undefined && (
+                  <span style={{ fontFamily: "var(--font-body)", fontSize: "10px", fontWeight: 700, color: "var(--muted2)", letterSpacing: "0.08em" }}>{selectedRace.percent_reporting.toFixed(1)}% IN</span>
+                )}
+              </div>
+              <div className="res-topline-body" style={{ overflowY: "auto", flex: 1, minHeight: 0, scrollbarGutter: "stable", padding: "6px 6px 6px 12px" }}>
+                {selectedRace?.candidates
+                  ? <CandidateList candidates={selectedRace.candidates} reporting={selectedRace.percent_reporting ?? 0} raceId={selectedId} isMajorityRunoff={isRunoffConfirmed} />
+                  : <div style={{ padding: "32px 0", textAlign: "center" }} className="res-note">LOADING…</div>
+                }
+              </div>
             </div>
 
           </aside>
