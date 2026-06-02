@@ -206,7 +206,7 @@ function fmtMargin(n: number | null): string {
   return `${n > 0 ? "R+" : "D+"}${Math.abs(n).toFixed(1)}`;
 }
 function marginColor(n: number | null): string {
-  if (n === null) return "rgba(255,255,255,0.2)";
+  if (n === null) return "var(--muted2)";
   if (n === 0) return "#888";
   return n > 0 ? "#ff6040" : "#4a9dff";
 }
@@ -215,7 +215,7 @@ function fmtApproval(n: number | null): string {
   return `${n > 0 ? "+" : ""}${n}`;
 }
 function approvalColor(n: number | null): string {
-  if (n === null) return "rgba(255,255,255,0.2)";
+  if (n === null) return "var(--muted2)";
   return n >= 0 ? "#4a9dff" : "#ff6040";
 }
 
@@ -265,9 +265,9 @@ function SummaryBar({ races }: { races: Array<{ rating: RatingKey }> }) {
   return (
     <div style={{ display: "grid", gridTemplateColumns: "repeat(7,1fr)", gap: 8, marginBottom: 20 }}>
       {tiles.map(t => (
-        <div key={t.key} style={{ background: "#0f0f15", border: `1px solid ${t.color}33`, padding: "12px 10px", textAlign: "center" }}>
-          <div style={{ fontFamily: "var(--font-body),monospace", fontSize: 8, letterSpacing: "0.14em", textTransform: "uppercase", color: "rgba(255,255,255,0.28)", marginBottom: 6 }}>{t.label}</div>
-          <div style={{ fontFamily: "var(--font-display),sans-serif", fontSize: 28, lineHeight: 1, color: t.color }}>
+        <div key={t.key} style={{ background: "var(--panel)", border: `1px solid ${t.color}44`, borderRadius: "var(--r-sm)", padding: "12px 10px", textAlign: "center" }}>
+          <div style={{ fontFamily: "var(--font-body),monospace", fontSize: 9, letterSpacing: "0.10em", textTransform: "uppercase", color: "var(--muted2)", marginBottom: 6 }}>{t.label}</div>
+          <div style={{ fontFamily: "var(--font-display),sans-serif", textTransform: "uppercase", fontSize: 28, lineHeight: 1, color: t.color }}>
             {races.filter(r => r.rating === t.key).length}
           </div>
         </div>
@@ -317,22 +317,23 @@ function Tooltip({ d }: { d: TT }) {
       position: "absolute",
       left: Math.max(MARGIN + scrollX, left),
       top:  Math.max(MARGIN + scrollY, top),
-      background: "#0d0d12",
-      border: `1px solid ${c}88`,
+      background: "var(--panel)",
+      border: `1px solid ${c}55`,
       padding: "14px 16px",
       zIndex: 9999,
       pointerEvents: "none",
       minWidth: 230,
       maxWidth: 260,
-      boxShadow: `0 0 0 1px ${c}22, 0 12px 40px rgba(0,0,0,0.85)`,
+      boxShadow: `0 0 0 1px ${c}22, 0 12px 40px rgba(0,0,0,0.25)`,
+      borderRadius: "var(--r-md)",
     }}>
       {/* State name + race type */}
       <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: 8, marginBottom: 10 }}>
         <div>
-          <div style={{ fontFamily: "var(--font-display),sans-serif", fontSize: 20, letterSpacing: "0.04em", textTransform: "uppercase", color: "#fff", lineHeight: 1 }}>
+          <div style={{ fontFamily: "var(--font-display),sans-serif", fontSize: 20, letterSpacing: "-0.01em", textTransform: "uppercase", color: "var(--foreground)", lineHeight: 1 }}>
             {STATE_NAMES[d.state] || d.state}
           </div>
-          <div style={{ fontFamily: "var(--font-body),monospace", fontSize: 9, letterSpacing: "0.14em", textTransform: "uppercase", color: "rgba(255,255,255,0.28)", marginTop: 3 }}>
+          <div style={{ fontFamily: "var(--font-body),monospace", fontSize: 10, letterSpacing: "0.10em", textTransform: "uppercase", color: "var(--muted2)", marginTop: 3 }}>
             {d.raceType}
           </div>
         </div>
@@ -345,10 +346,10 @@ function Tooltip({ d }: { d: TT }) {
       {/* Candidate row */}
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 10, gap: 8 }}>
         <div style={{ minWidth: 0 }}>
-          <div style={{ fontFamily: "var(--font-body),monospace", fontSize: 11, color: "rgba(255,255,255,0.8)", fontWeight: 500, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+          <div style={{ fontFamily: "var(--font-body),monospace", fontSize: 12, color: "var(--foreground)", fontWeight: 600, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
             {d.name}
           </div>
-          <div style={{ fontFamily: "var(--font-body),monospace", fontSize: 9, color: "rgba(255,255,255,0.28)", letterSpacing: "0.08em", marginTop: 2 }}>
+          <div style={{ fontFamily: "var(--font-body),monospace", fontSize: 10, color: "var(--muted2)", letterSpacing: "0.06em", marginTop: 2 }}>
             {d.incRunning ? "Incumbent running" : "Not running · open seat"}
           </div>
         </div>
@@ -362,8 +363,8 @@ function Tooltip({ d }: { d: TT }) {
           { label: "Polling Avg",value: fmtMargin(displayPoll),      color: marginColor(displayPoll)      },
           { label: "Modeled",    value: fmtMargin(d.modeledResult),  color: marginColor(d.modeledResult)  },
         ].map(s => (
-          <div key={s.label} style={{ background: "rgba(255,255,255,0.05)", padding: "7px 6px", textAlign: "center" }}>
-            <div style={{ fontFamily: "var(--font-body),monospace", fontSize: 8, letterSpacing: "0.12em", textTransform: "uppercase", color: "rgba(255,255,255,0.25)", marginBottom: 4 }}>
+          <div key={s.label} style={{ background: "var(--panel2)", border: "1px solid var(--border)", borderRadius: "var(--r-sm)", padding: "7px 6px", textAlign: "center" }}>
+            <div style={{ fontFamily: "var(--font-body),monospace", fontSize: 9, letterSpacing: "0.10em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 4 }}>
               {s.label}
             </div>
             <div style={{ fontFamily: "var(--font-display),sans-serif", fontSize: 14, letterSpacing: "0.02em", textTransform: "uppercase", color: s.color, lineHeight: 1 }}>
@@ -458,14 +459,14 @@ function RaceMap({ svgId, races, raceType }: { svgId: string; races: MapRace[]; 
 
   return (
     <>
-      <div style={{ background: "#0f0f15", border: "1px solid rgba(255,255,255,0.07)", overflow: "hidden", marginBottom: 20 }}>
+      <div style={{ background: "var(--panel)", border: "1px solid var(--border)", overflow: "hidden", marginBottom: 20, borderRadius: "var(--r-lg)", boxShadow: "var(--shadow-sm)" }}>
         <div className="hp-tri-stripe" />
-        <div style={{ padding: "14px 20px 12px", borderBottom: "1px solid rgba(255,255,255,0.06)", display: "flex", alignItems: "flex-start", justifyContent: "space-between", flexWrap: "wrap", gap: 10 }}>
+        <div style={{ padding: "14px 20px 12px", borderBottom: "1px solid rgba(15,16,32,0.08)", display: "flex", alignItems: "flex-start", justifyContent: "space-between", flexWrap: "wrap", gap: 10 }}>
           <div>
-            <div style={{ fontFamily: "var(--font-body),monospace", fontSize: 10, fontWeight: 500, letterSpacing: "0.14em", textTransform: "uppercase", color: "rgba(255,255,255,0.7)", marginBottom: 3 }}>
+            <div style={{ fontFamily: "var(--font-body),monospace", fontSize: 11, fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase", color: "var(--foreground)", marginBottom: 3 }}>
               {raceType} Race Map · November 2026
             </div>
-            <div style={{ fontFamily: "var(--font-body),monospace", fontSize: 9, color: "rgba(255,255,255,0.25)" }}>
+            <div style={{ fontFamily: "var(--font-body),monospace", fontSize: 10, color: "var(--muted2)" }}>
               Hover states for full race details
             </div>
           </div>
@@ -518,57 +519,56 @@ export default function ForecastRatingsPage() {
   const TH: React.CSSProperties = {
     padding: "10px 14px", fontFamily: "var(--font-body),monospace", fontSize: 8,
     fontWeight: 500, letterSpacing: "0.18em", textTransform: "uppercase",
-    color: "rgba(255,255,255,0.25)", textAlign: "left",
-    borderBottom: "1px solid rgba(255,255,255,0.06)", background: "#0b0b0f", whiteSpace: "nowrap",
+    color: "var(--muted)", textAlign: "left",
+    borderBottom: "1px solid var(--border)", background: "var(--panel2)", whiteSpace: "nowrap",
   };
   const TD: React.CSSProperties = {
-    padding: "9px 14px", borderBottom: "1px solid rgba(255,255,255,0.04)",
-    fontFamily: "var(--font-body),monospace", fontSize: 11, color: "rgba(255,255,255,0.55)",
+    padding: "9px 14px", borderBottom: "1px solid rgba(15,16,32,0.05)",
+    fontFamily: "var(--font-body),monospace", fontSize: 12, color: "var(--foreground)",
   };
 
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&display=swap');
-        body { background: #070709 !important; }
-        .hp-tri-stripe { height: 3px; background: linear-gradient(90deg,#e63946 0%,#e63946 33.33%,#7c3aed 33.33%,#7c3aed 66.66%,#2563eb 66.66%,#2563eb 100%); }
-        .fr-row:hover td { background: rgba(255,255,255,0.025) !important; }
+        .hp-tri-stripe { height: 3px; background: linear-gradient(90deg,var(--red) 0%,var(--purple) 50%,var(--blue) 100%); border-radius: 9999px 9999px 0 0; box-shadow: 0 4px 18px -2px rgba(124,58,237,0.28); }
+        .fr-row:hover td { background: rgba(124,58,237,0.04) !important; }
+        .fr-card { background: var(--panel); border: 1px solid var(--border); border-radius: var(--r-lg); padding: 20px 22px; }
         @media(max-width:900px) { .fr-mg { grid-template-columns: 1fr !important; } }
         @media(max-width:640px) { .fr-sum { grid-template-columns: repeat(4,1fr) !important; } }
       `}</style>
 
-      <div style={{ maxWidth: 1280, margin: "0 auto", padding: "32px 32px 80px", fontFamily: "var(--font-body),monospace", color: "#fff" }}>
+      <div style={{ maxWidth: 1280, margin: "0 auto", padding: "32px 32px 80px", fontFamily: "var(--font-body),monospace", color: "var(--foreground)", position: "relative", zIndex: 1 }}>
 
         {/* ── Hero ── */}
-        <div style={{ background: "#0f0f15", border: "1px solid rgba(255,255,255,0.09)", marginBottom: 20, overflow: "hidden" }}>
+        <div style={{ background: "var(--panel)", border: "1px solid var(--border)", marginBottom: 20, overflow: "hidden", borderRadius: "var(--r-xl)", boxShadow: "var(--shadow-md)" }}>
           <div className="hp-tri-stripe" />
           <div style={{ padding: "40px 48px 36px" }}>
-            <div style={{ fontSize: 9, letterSpacing: "0.2em", textTransform: "uppercase", color: "rgba(255,255,255,0.3)", marginBottom: 14 }}>
+            <div style={{ fontSize: 11, letterSpacing: "0.10em", textTransform: "uppercase", color: "var(--muted2)", marginBottom: 14 }}>
               TPSI · 2026 Race Ratings · Updated April 2026
             </div>
-            <h1 style={{ fontFamily: "var(--font-display),sans-serif", fontSize: "clamp(36px,5vw,64px)", letterSpacing: "0.03em", lineHeight: 0.95, textTransform: "uppercase", color: "#fff", marginBottom: 18 }}>
+            <h1 style={{ fontFamily: "var(--font-display),sans-serif", fontSize: "clamp(36px,5vw,64px)", letterSpacing: "-0.02em", lineHeight: 0.95, textTransform: "uppercase", color: "var(--foreground)", marginBottom: 18 }}>
               <span style={{ color: "#4a9dff" }}>Senate</span> &amp;{" "}
               <span style={{ background: "linear-gradient(100deg,#ff4d5a,#a78bfa,#3b82f6)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
                 Governor
               </span>
               <br />Forecast Ratings
             </h1>
-            <p style={{ fontSize: 11, color: "rgba(255,255,255,0.35)", lineHeight: 1.8, maxWidth: 600, letterSpacing: "0.04em", marginBottom: 24 }}>
+            <p style={{ fontSize: 14, color: "var(--muted)", lineHeight: 1.6, maxWidth: 600, marginBottom: 24 }}>
               TPSI race ratings for all contested Senate seats and gubernatorial contests on the November 2026 ballot.
               Derived from weighted polling averages, structural state baselines, incumbency signals, and a national environment correction.
             </p>
             <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
-              <Link href="/polling" style={{ display: "inline-flex", alignItems: "center", padding: "10px 22px", background: "#7c3aed", color: "#fff", fontFamily: "var(--font-body),monospace", fontSize: 10, fontWeight: 500, letterSpacing: "0.14em", textTransform: "uppercase", textDecoration: "none" }}>
+              <Link href="/polling" style={{ display: "inline-flex", alignItems: "center", padding: "11px 20px", background: "var(--gradient-purple)", color: "#fff", fontFamily: "var(--font-numeric),ui-monospace,monospace", fontSize: 13, fontWeight: 700, letterSpacing: "0.02em", textDecoration: "none", borderRadius: "9999px", border: "1px solid var(--purple)", boxShadow: "var(--shadow-purple)" }}>
                 Polling Data →
               </Link>
-              <Link href="/electoralmap" style={{ display: "inline-flex", alignItems: "center", padding: "10px 22px", background: "transparent", color: "rgba(255,255,255,0.4)", fontFamily: "var(--font-body),monospace", fontSize: 10, letterSpacing: "0.14em", textTransform: "uppercase", textDecoration: "none", border: "1px solid rgba(255,255,255,0.12)" }}>
+              <Link href="/electoralmap" style={{ display: "inline-flex", alignItems: "center", padding: "10px 20px", background: "var(--panel2)", color: "var(--foreground)", fontFamily: "var(--font-numeric),ui-monospace,monospace", fontSize: 13, fontWeight: 700, textDecoration: "none", borderRadius: "9999px", border: "1px solid var(--border2)" }}>
                 Electoral Map
               </Link>
             </div>
-            <div style={{ marginTop: 20, paddingTop: 16, borderTop: "1px solid rgba(255,255,255,0.06)", fontFamily: "var(--font-body),monospace", fontSize: 9, color: "rgba(255,255,255,0.2)", letterSpacing: "0.1em", textTransform: "uppercase" }}>
-              <span style={{ color: "rgba(255,255,255,0.4)" }}>{SENATE_RACES.length}</span> Senate ·{" "}
-              <span style={{ color: "rgba(255,255,255,0.4)" }}>{GOV_RACES.length}</span> Governor ·{" "}
-              <span style={{ color: "rgba(255,255,255,0.4)" }}>
+            <div style={{ marginTop: 20, paddingTop: 16, borderTop: "1px solid var(--border)", fontSize: 11, color: "var(--muted2)", letterSpacing: "0.06em", textTransform: "uppercase" }}>
+              <span style={{ color: "var(--foreground)", fontWeight: 600 }}>{SENATE_RACES.length}</span> Senate ·{" "}
+              <span style={{ color: "var(--foreground)", fontWeight: 600 }}>{GOV_RACES.length}</span> Governor ·{" "}
+              <span style={{ color: "var(--foreground)", fontWeight: 600 }}>
                 {[...SENATE_RACES, ...GOV_RACES].filter(r => r.rating === "Toss-up").length}
               </span> Toss-ups
             </div>
@@ -576,15 +576,16 @@ export default function ForecastRatingsPage() {
         </div>
 
         {/* ── Tabs ── */}
-        <div style={{ display: "flex", borderBottom: "1px solid rgba(255,255,255,0.08)", background: "#0b0b0f", marginBottom: 20, overflowX: "auto" }}>
+        <div style={{ display: "flex", borderBottom: "1px solid var(--border)", background: "var(--panel2)", marginBottom: 20, overflowX: "auto", borderRadius: "var(--r-lg) var(--r-lg) 0 0" }}>
           {TABS.map(t => (
             <button key={t.key} onClick={() => setTab(t.key)} style={{
               padding: "12px 22px", fontFamily: "var(--font-body),monospace", fontSize: 10,
-              fontWeight: 500, letterSpacing: "0.14em", textTransform: "uppercase",
-              cursor: "pointer", background: "transparent",
-              color: tab === t.key ? "#fff" : "rgba(255,255,255,0.3)",
-              borderBottom: `2px solid ${tab === t.key ? "#7c3aed" : "transparent"}`,
-              border: "none", whiteSpace: "nowrap", transition: "color 120ms",
+              letterSpacing: "0.14em", textTransform: "uppercase",
+              cursor: "pointer", background: "transparent", border: "none",
+              color: tab === t.key ? "var(--foreground)" : "var(--muted2)",
+              borderBottom: `2px solid ${tab === t.key ? "var(--purple)" : "transparent"}`,
+              fontWeight: tab === t.key ? 700 : 500,
+              whiteSpace: "nowrap", transition: "color 120ms",
             }}>
               {t.label}
             </button>
@@ -594,12 +595,12 @@ export default function ForecastRatingsPage() {
         {/* ── Methodology ── */}
         {tab === "methodology" && (
           <div>
-            <div style={{ fontFamily: "var(--font-body),monospace", fontSize: 9, letterSpacing: "0.2em", textTransform: "uppercase", color: "rgba(255,255,255,0.25)", marginBottom: 16, paddingBottom: 10, borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
+            <div style={{ fontSize: 11, letterSpacing: "0.10em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 16, paddingBottom: 10, borderBottom: "1px solid var(--border)" }}>
               How we rate races
             </div>
             <div className="fr-mg" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, marginBottom: 24 }}>
-              <div style={{ background: "#0f0f15", border: "1px solid rgba(255,255,255,0.07)", padding: "20px 22px" }}>
-                <div style={{ fontFamily: "var(--font-body),monospace", fontSize: 9, letterSpacing: "0.2em", textTransform: "uppercase", color: "rgba(255,255,255,0.35)", marginBottom: 14 }}>Rating tiers</div>
+              <div style={{ background: "var(--panel)", border: "1px solid var(--border)", borderRadius: "var(--r-md)", padding: "20px 22px" }}>
+                <div style={{ fontSize: 10, fontWeight: 600, letterSpacing: "0.10em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 14 }}>Rating tiers</div>
                 <div style={{ display: "flex", flexDirection: "column", gap: 7 }}>
                   {[
                     { l: "Safe",   range: ">12 pts",  c: "#9b0000", desc: "Outcome not in doubt under any reasonable scenario." },
@@ -610,15 +611,15 @@ export default function ForecastRatingsPage() {
                     <div key={item.l} style={{ display: "flex", gap: 10, padding: "8px 10px", background: `${item.c}10`, border: `1px solid ${item.c}25` }}>
                       <div style={{ flexShrink: 0, width: 60 }}>
                         <div style={{ fontFamily: "var(--font-body),monospace", fontSize: 10, color: item.c, fontWeight: 500 }}>{item.l}</div>
-                        <div style={{ fontFamily: "var(--font-body),monospace", fontSize: 8, color: "rgba(255,255,255,0.25)" }}>{item.range}</div>
+                        <div style={{ fontFamily: "var(--font-body),monospace", fontSize: 11, color: "var(--muted2)" }}>{item.range}</div>
                       </div>
-                      <div style={{ fontFamily: "var(--font-body),monospace", fontSize: 11, color: "rgba(255,255,255,0.4)", lineHeight: 1.65 }}>{item.desc}</div>
+                      <div style={{ fontFamily: "var(--font-body),monospace", fontSize: 12, color: "var(--muted)", lineHeight: 1.65 }}>{item.desc}</div>
                     </div>
                   ))}
                 </div>
               </div>
-              <div style={{ background: "#0f0f15", border: "1px solid rgba(255,255,255,0.07)", padding: "20px 22px" }}>
-                <div style={{ fontFamily: "var(--font-body),monospace", fontSize: 9, letterSpacing: "0.2em", textTransform: "uppercase", color: "rgba(255,255,255,0.35)", marginBottom: 14 }}>Input signals</div>
+              <div style={{ background: "var(--panel)", border: "1px solid var(--border)", borderRadius: "var(--r-md)", padding: "20px 22px" }}>
+                <div style={{ fontSize: 10, fontWeight: 600, letterSpacing: "0.10em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 14 }}>Input signals</div>
                 <div style={{ display: "flex", flexDirection: "column", gap: 7 }}>
                   {[
                     { l: "Modeled result",      desc: "Primary signal. Structural baseline + polling + incumbency correction + national environment." },
@@ -626,15 +627,15 @@ export default function ForecastRatingsPage() {
                     { l: "Approval rating",      desc: "Net approval of the incumbent in state. Informs open-seat baseline and candidate quality." },
                     { l: "National environment", desc: "Generic ballot, presidential approval, and historical midterm wave patterns as a correction." },
                   ].map(item => (
-                    <div key={item.l} style={{ padding: "8px 10px", background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)" }}>
-                      <div style={{ fontFamily: "var(--font-body),monospace", fontSize: 10, color: "rgba(255,255,255,0.6)", fontWeight: 500, marginBottom: 3 }}>{item.l}</div>
-                      <div style={{ fontFamily: "var(--font-body),monospace", fontSize: 11, color: "rgba(255,255,255,0.3)", lineHeight: 1.65 }}>{item.desc}</div>
+                    <div key={item.l} style={{ padding: "8px 10px", background: "var(--panel2)", border: "1px solid var(--border)", borderRadius: "var(--r-sm)" }}>
+                      <div style={{ fontFamily: "var(--font-body),monospace", fontSize: 12, color: "var(--foreground)", fontWeight: 600, marginBottom: 3 }}>{item.l}</div>
+                      <div style={{ fontFamily: "var(--font-body),monospace", fontSize: 12, color: "var(--muted)", lineHeight: 1.65 }}>{item.desc}</div>
                     </div>
                   ))}
                 </div>
               </div>
-              <div style={{ background: "#0f0f15", border: "1px solid rgba(255,255,255,0.07)", padding: "20px 22px" }}>
-                <div style={{ fontFamily: "var(--font-body),monospace", fontSize: 9, letterSpacing: "0.2em", textTransform: "uppercase", color: "rgba(255,255,255,0.35)", marginBottom: 14 }}>Correction factors</div>
+              <div style={{ background: "var(--panel)", border: "1px solid var(--border)", borderRadius: "var(--r-md)", padding: "20px 22px" }}>
+                <div style={{ fontSize: 10, fontWeight: 600, letterSpacing: "0.10em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 14 }}>Correction factors</div>
                 <div style={{ display: "flex", flexDirection: "column", gap: 7 }}>
                   {[
                     { val: "−8.5 pts",  l: "Generic ballot correction",    desc: "Applied to Dem baseline to account for structural partisan lean per state." },
@@ -642,18 +643,18 @@ export default function ForecastRatingsPage() {
                     { val: "Partial",   l: "Senate / Governor independence",desc: "Popular incumbents can significantly outperform their state's presidential baseline." },
                     { val: "Live",      l: "Update cadence",                desc: "Ratings update automatically as new polls enter the TPSI database." },
                   ].map(item => (
-                    <div key={item.l} style={{ display: "flex", alignItems: "flex-start", gap: 10, padding: "8px 10px", background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)" }}>
-                      <div style={{ fontFamily: "var(--font-body),monospace", fontSize: 11, color: "#7c3aed", fontWeight: 500, flexShrink: 0, width: 64 }}>{item.val}</div>
+                    <div key={item.l} style={{ display: "flex", alignItems: "flex-start", gap: 10, padding: "8px 10px", background: "var(--panel2)", border: "1px solid var(--border)", borderRadius: "var(--r-sm)" }}>
+                      <div style={{ fontFamily: "var(--font-body),monospace", fontSize: 12, color: "var(--purple)", fontWeight: 500, flexShrink: 0, width: 64 }}>{item.val}</div>
                       <div>
-                        <div style={{ fontFamily: "var(--font-body),monospace", fontSize: 10, color: "rgba(255,255,255,0.55)", fontWeight: 500, marginBottom: 2 }}>{item.l}</div>
-                        <div style={{ fontFamily: "var(--font-body),monospace", fontSize: 10, color: "rgba(255,255,255,0.3)", lineHeight: 1.65 }}>{item.desc}</div>
+                        <div style={{ fontFamily: "var(--font-body),monospace", fontSize: 12, color: "var(--foreground)", fontWeight: 500, marginBottom: 2 }}>{item.l}</div>
+                        <div style={{ fontFamily: "var(--font-body),monospace", fontSize: 12, color: "var(--muted)", lineHeight: 1.65 }}>{item.desc}</div>
                       </div>
                     </div>
                   ))}
                 </div>
               </div>
-              <div style={{ background: "#0f0f15", border: "1px solid rgba(255,255,255,0.07)", padding: "20px 22px" }}>
-                <div style={{ fontFamily: "var(--font-body),monospace", fontSize: 9, letterSpacing: "0.2em", textTransform: "uppercase", color: "rgba(255,255,255,0.35)", marginBottom: 14 }}>Full rating scale</div>
+              <div style={{ background: "var(--panel)", border: "1px solid var(--border)", borderRadius: "var(--r-md)", padding: "20px 22px" }}>
+                <div style={{ fontSize: 10, fontWeight: 600, letterSpacing: "0.10em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 14 }}>Full rating scale</div>
                 <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
                   {[
                     { l: "Safe D",   c: "#0033a0", r: ">12 pts D"      },
@@ -669,13 +670,13 @@ export default function ForecastRatingsPage() {
                     <div key={r.l} style={{ display: "flex", alignItems: "center", gap: 10, padding: "5px 10px", background: `${r.c}12`, border: `1px solid ${r.c}25` }}>
                       <span style={{ width: 9, height: 9, borderRadius: "50%", background: r.c, display: "inline-block", flexShrink: 0 }} />
                       <span style={{ fontFamily: "var(--font-body),monospace", fontSize: 11, color: r.c, fontWeight: 500, width: 76 }}>{r.l}</span>
-                      <span style={{ fontFamily: "var(--font-body),monospace", fontSize: 9, color: "rgba(255,255,255,0.25)", marginLeft: "auto" }}>{r.r}</span>
+                      <span style={{ fontFamily: "var(--font-body),monospace", fontSize: 11, color: "var(--muted2)", marginLeft: "auto" }}>{r.r}</span>
                     </div>
                   ))}
                 </div>
               </div>
             </div>
-            <div style={{ background: "rgba(37,99,235,0.06)", border: "1px solid rgba(37,99,235,0.15)", padding: "14px 20px", fontFamily: "var(--font-body),monospace", fontSize: 11, color: "rgba(255,255,255,0.4)", lineHeight: 1.8 }}>
+            <div style={{ background: "var(--blue-dim)", border: "1px solid rgba(37,99,235,0.20)", borderRadius: "var(--r-md)", padding: "14px 20px", fontFamily: "var(--font-body),monospace", fontSize: 12, color: "var(--muted)", lineHeight: 1.8 }}>
               <span style={{ color: "#4a9dff", fontWeight: 500 }}>Note:</span> Toss-up is reserved for races where polling and structural signals are in direct conflict or unavailable. A "Tilt" has a measurable lean but remains within the margin of error. Modeled result convention: positive = R advantage, negative = D advantage.
             </div>
           </div>
@@ -684,7 +685,7 @@ export default function ForecastRatingsPage() {
         {/* ── Senate Map ── */}
         {tab === "senate-map" && (
           <div>
-            <div style={{ fontFamily: "var(--font-body),monospace", fontSize: 9, letterSpacing: "0.2em", textTransform: "uppercase", color: "rgba(255,255,255,0.25)", marginBottom: 16, paddingBottom: 10, borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
+            <div style={{ fontSize: 11, letterSpacing: "0.10em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 16, paddingBottom: 10, borderBottom: "1px solid var(--border)" }}>
               2026 Senate — {SENATE_RACES.length} seats rated
             </div>
             <SummaryBar races={SENATE_RACES} />
@@ -695,7 +696,7 @@ export default function ForecastRatingsPage() {
         {/* ── Governor Map ── */}
         {tab === "gov-map" && (
           <div>
-            <div style={{ fontFamily: "var(--font-body),monospace", fontSize: 9, letterSpacing: "0.2em", textTransform: "uppercase", color: "rgba(255,255,255,0.25)", marginBottom: 16, paddingBottom: 10, borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
+            <div style={{ fontSize: 11, letterSpacing: "0.10em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 16, paddingBottom: 10, borderBottom: "1px solid var(--border)" }}>
               2026 Governors — {GOV_RACES.length} seats rated
             </div>
             <SummaryBar races={GOV_RACES} />
@@ -706,11 +707,11 @@ export default function ForecastRatingsPage() {
         {/* ── Senate Table ── */}
         {tab === "senate-table" && (
           <div>
-            <div style={{ fontFamily: "var(--font-body),monospace", fontSize: 9, letterSpacing: "0.2em", textTransform: "uppercase", color: "rgba(255,255,255,0.25)", marginBottom: 16, paddingBottom: 10, borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
+            <div style={{ fontSize: 11, letterSpacing: "0.10em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 16, paddingBottom: 10, borderBottom: "1px solid var(--border)" }}>
               Senate ratings — sorted by competitiveness
             </div>
             <SummaryBar races={SENATE_RACES} />
-            <div style={{ background: "#0f0f15", border: "1px solid rgba(255,255,255,0.07)", overflow: "hidden" }}>
+            <div style={{ background: "var(--panel)", border: "1px solid var(--border)", borderRadius: "var(--r-lg)", overflow: "hidden", boxShadow: "var(--shadow-sm)" }}>
               <div className="hp-tri-stripe" />
               <div style={{ overflowX: "auto" }}>
                 <table style={{ width: "100%", borderCollapse: "collapse" }}>
@@ -724,10 +725,10 @@ export default function ForecastRatingsPage() {
                   <tbody>
                     {sortedSenate.map(r => (
                       <tr key={r.state} className="fr-row">
-                        <td style={{ ...TD, color: "#fff", fontWeight: 500, whiteSpace: "nowrap" }}>{STATE_NAMES[r.state]}</td>
+                        <td style={{ ...TD, color: "var(--foreground)", fontWeight: 600, whiteSpace: "nowrap" }}>{STATE_NAMES[r.state]}</td>
                         <td style={TD}>{r.senator}</td>
                         <td style={TD}><PartyBadge party={r.incParty} /></td>
-                        <td style={{ ...TD, fontSize: 9, letterSpacing: "0.1em", textTransform: "uppercase", color: r.incRunning ? "rgba(255,255,255,0.5)" : "rgba(255,255,255,0.2)" }}>
+                        <td style={{ ...TD, fontSize: 11, letterSpacing: "0.06em", textTransform: "uppercase", color: r.incRunning ? "var(--muted)" : "var(--muted2)" }}>
                           {r.incRunning ? "Yes" : "No"}
                         </td>
                         <td style={{ ...TD, color: approvalColor(r.approval), textAlign: "right" }}>{fmtApproval(r.approval)}</td>
@@ -746,11 +747,11 @@ export default function ForecastRatingsPage() {
         {/* ── Governor Table ── */}
         {tab === "gov-table" && (
           <div>
-            <div style={{ fontFamily: "var(--font-body),monospace", fontSize: 9, letterSpacing: "0.2em", textTransform: "uppercase", color: "rgba(255,255,255,0.25)", marginBottom: 16, paddingBottom: 10, borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
+            <div style={{ fontSize: 11, letterSpacing: "0.10em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 16, paddingBottom: 10, borderBottom: "1px solid var(--border)" }}>
               Governor ratings — sorted by competitiveness
             </div>
             <SummaryBar races={GOV_RACES} />
-            <div style={{ background: "#0f0f15", border: "1px solid rgba(255,255,255,0.07)", overflow: "hidden" }}>
+            <div style={{ background: "var(--panel)", border: "1px solid var(--border)", borderRadius: "var(--r-lg)", overflow: "hidden", boxShadow: "var(--shadow-sm)" }}>
               <div className="hp-tri-stripe" />
               <div style={{ overflowX: "auto" }}>
                 <table style={{ width: "100%", borderCollapse: "collapse" }}>
@@ -764,10 +765,10 @@ export default function ForecastRatingsPage() {
                   <tbody>
                     {sortedGov.map(r => (
                       <tr key={r.state} className="fr-row">
-                        <td style={{ ...TD, color: "#fff", fontWeight: 500, whiteSpace: "nowrap" }}>{STATE_NAMES[r.state]}</td>
+                        <td style={{ ...TD, color: "var(--foreground)", fontWeight: 600, whiteSpace: "nowrap" }}>{STATE_NAMES[r.state]}</td>
                         <td style={TD}>{r.governor}</td>
                         <td style={TD}><PartyBadge party={r.incParty} /></td>
-                        <td style={{ ...TD, fontSize: 9, letterSpacing: "0.1em", textTransform: "uppercase", color: r.incRunning ? "rgba(255,255,255,0.5)" : "rgba(255,255,255,0.2)" }}>
+                        <td style={{ ...TD, fontSize: 11, letterSpacing: "0.06em", textTransform: "uppercase", color: r.incRunning ? "var(--muted)" : "var(--muted2)" }}>
                           {r.incRunning ? "Yes" : "No"}
                         </td>
                         <td style={{ ...TD, color: approvalColor(r.approval), textAlign: "right" }}>{fmtApproval(r.approval)}</td>
