@@ -1103,24 +1103,24 @@ function ForecastPanel({ raceId, refreshTick, raceData, onForecastUpdate }: { ra
             </div>
             {(raceRule !== "PLURALITY" && raceRule !== "TOP_TWO") && (
               <div style={{ marginBottom: 12, padding: "9px 12px", background: "rgba(245,158,11,0.05)", border: "1px solid rgba(245,158,11,0.15)", borderRadius: "var(--r-sm)" }}>
-              <div style={{ fontFamily: "var(--font-body)", fontSize: "9px", fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", color: "rgba(245,158,11,0.85)", marginBottom: 7 }}>{raceRule === "THRESHOLD_35_CONVENTION" ? "CONVENTION PROBABILITY" : raceRule === "MAJORITY_RUNOFF" || raceRule === "MAJORITY" ? "RUNOFF PROBABILITY" : "RUNOFF PROBABILITY"}</div>
-                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 4 }}><span style={{ fontFamily: "var(--font-body)", fontSize: "9px", letterSpacing: "0.08em", textTransform: "uppercase", color: "var(--muted)" }}>RUNOFF NEEDED</span><span style={{ fontFamily: "var(--font-numeric)", fontSize: "11px", fontWeight: 800, color: "#f59e0b" }}>{fcastPct(forecast.forecast.runoff_needed_prob)}</span></div>
+              <div style={{ fontFamily: "var(--font-body)", fontSize: "11px", fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", color: "rgba(245,158,11,0.85)", marginBottom: 7 }}>{raceRule === "THRESHOLD_35_CONVENTION" ? "CONVENTION PROBABILITY" : raceRule === "MAJORITY_RUNOFF" || raceRule === "MAJORITY" ? "RUNOFF PROBABILITY" : "RUNOFF PROBABILITY"}</div>
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 4 }}><span style={{ fontFamily: "var(--font-body)", fontSize: "11px", letterSpacing: "0.08em", textTransform: "uppercase", color: "var(--muted)" }}>RUNOFF NEEDED</span><span style={{ fontFamily: "var(--font-numeric)", fontSize: "13px", fontWeight: 800, color: "#f59e0b" }}>{fcastPct(forecast.forecast.runoff_needed_prob)}</span></div>
                 <div style={{ height: 3, background: "var(--border2)", overflow: "hidden", marginBottom: 8 }}><div style={{ height: "100%", width: fcastPct(Math.min(forecast.forecast.runoff_needed_prob, 1)), background: "#f59e0b", transition: "width 600ms ease" }} /></div>
                 {FORECAST_CANDIDATE_KEYS.map(k => forecast.forecast.runoff_prob[k] > 0.005 ? (
                   <div key={k} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 3 }}>
-                    <div style={{ display: "flex", alignItems: "center", gap: 5 }}><span style={{ width: 6, height: 6, borderRadius: "50%", background: candidateColors[k], display: "inline-block" }} /><span style={{ fontFamily: "var(--font-body)", fontSize: "10px", letterSpacing: "0.06em", textTransform: "uppercase", color: "var(--muted)" }}>{candidateLabels[k]}</span></div>
-                    <span style={{ fontFamily: "var(--font-body)", fontSize: "9px", fontWeight: 700, color: candidateColors[k] }}>{fcastPct(forecast.forecast.runoff_prob[k])}</span>
+                    <div style={{ display: "flex", alignItems: "center", gap: 5 }}><span style={{ width: 6, height: 6, borderRadius: "50%", background: candidateColors[k], display: "inline-block" }} /><span style={{ fontFamily: "var(--font-body)", fontSize: "12px", letterSpacing: "0.06em", textTransform: "uppercase", color: "var(--muted)" }}>{candidateLabels[k]}</span></div>
+                    <span style={{ fontFamily: "var(--font-body)", fontSize: "11px", fontWeight: 700, color: candidateColors[k] }}>{fcastPct(forecast.forecast.runoff_prob[k])}</span>
                   </div>
                 ) : null)}
               </div>
             )}
             <div style={{ padding: "9px 12px", background: "var(--panel2)", border: "1px solid var(--border)", marginBottom: 12, borderRadius: "var(--r-sm)" }}>
-              <div style={{ fontFamily: "var(--font-body)", fontSize: "9px", fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--muted2)", marginBottom: 7 }}>MODEL STATISTICS</div>
+              <div style={{ fontFamily: "var(--font-body)", fontSize: "11px", fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--muted2)", marginBottom: 7 }}>MODEL STATISTICS</div>
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "3px 16px" }}>
                 {[["TOTAL", fcastFmt(forecast.forecast.modeled_total_vote)], ["REMAINING", fcastFmt(forecast.forecast.modeled_vote_remaining)], ["MARGIN", `${fcastFmt(forecast.forecast.projected_margin_votes)} (${fcastPct(forecast.forecast.projected_margin_pct)})`], ["STD DEV", fcastFmt(forecast.forecast.sd_race)]].map(([label, val]) => (
                   <div key={label} style={{ paddingBottom: 3, borderBottom: "1px solid var(--border)" }}>
-                    <div style={{ fontFamily: "var(--font-body)", fontSize: "9px", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--muted2)", marginBottom: 1 }}>{label}</div>
-                    <div style={{ fontFamily: "var(--font-body)", fontSize: "9px", fontWeight: 700, color: "var(--muted)" }}>{val}</div>
+                    <div style={{ fontFamily: "var(--font-body)", fontSize: "11px", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--muted2)", marginBottom: 1 }}>{label}</div>
+                    <div style={{ fontFamily: "var(--font-body)", fontSize: "11px", fontWeight: 700, color: "var(--muted)" }}>{val}</div>
                   </div>
                 ))}
               </div>
