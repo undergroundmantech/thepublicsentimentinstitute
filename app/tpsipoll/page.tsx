@@ -1264,7 +1264,7 @@ function RankTableView({ rows }: { rows: NonNullable<Slide["rankTable"]> }) {
 
 // ─── Main dashboard ───────────────────────────────────────────────────────────
 export default function TPSIPollDashboard() {
-  const [activePoll, setActivePoll] = useState<'la'|'national'|'sd'>('la');
+  const [activePoll, setActivePoll] = useState<'la'|'national'|'sd'>('national');
   const [laActiveId, setLaActiveId] = useState("q10a");
   const [natActiveId, setNatActiveId] = useState("nat-q14");
   const [sdActiveId, setSdActiveId] = useState("sd-q6");
@@ -1615,18 +1615,18 @@ export default function TPSIPollDashboard() {
         {/* Poll switcher */}
         <div className="poll-tabs">
           <button
-            className={`poll-tab${activePoll === 'la' ? ' active' : ''}`}
-            onClick={() => setActivePoll('la')}
-          >
-            <span className="poll-tab-dot" style={{ background: activePoll === 'la' ? 'var(--purple)' : 'var(--border2)' }} />
-            LA Mayoral · May 2026
-          </button>
-          <button
             className={`poll-tab${activePoll === 'national' ? ' active' : ''}`}
             onClick={() => setActivePoll('national')}
           >
             <span className="poll-tab-dot" style={{ background: activePoll === 'national' ? 'var(--purple)' : 'var(--border2)' }} />
             National Benchmark · May 2026
+          </button>
+          <button
+            className={`poll-tab${activePoll === 'la' ? ' active' : ''}`}
+            onClick={() => setActivePoll('la')}
+          >
+            <span className="poll-tab-dot" style={{ background: activePoll === 'la' ? 'var(--purple)' : 'var(--border2)' }} />
+            LA Mayoral · May 2026
           </button>
           <button
             className={`poll-tab${activePoll === 'sd' ? ' active' : ''}`}
