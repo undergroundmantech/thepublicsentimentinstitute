@@ -1185,14 +1185,11 @@ function ForecastPanel({ raceId, refreshTick, raceData, onForecastUpdate }: { ra
             <div style={{ display: "grid", gridTemplateColumns: activeCandidateCount >= 3 ? "1fr 1fr 1fr" : activeCandidateCount === 2 ? "1fr 1fr" : "1fr", gap: 5, marginBottom: 12 }}>
               {(["Candidate1", "Candidate2", "Candidate3"] as const).filter((_, idx) => idx < activeCandidateCount).map((key) => {
                 const color = candidateColors[key], share = forecast.forecast.modeled_share[key], votes = forecast.forecast.modeled_votes[key], isLeader = forecast.forecast.leader === key;
-                const _sdVotes = forecast.forecast.sd_race ?? 0;
-                const _totalProj = forecast.forecast.modeled_total_vote ?? 1;
-                const _marginOfError = _totalProj > 0 ? (_sdVotes / _totalProj) * 100 : 0;
                 return (
                   <div key={key} style={{ padding: "8px 8px 7px", background: "var(--panel2)", border: `1px solid ${isLeader ? color + "44" : "var(--border)"}`, borderRadius: "var(--r-sm)" }}>
                     <div style={{ fontFamily: "var(--font-body)", fontSize: "9px", fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", color: color + "cc", marginBottom: 3, lineHeight: 1.3 }}>{formatCandidateName(candidateLabels[key])}</div>
                     <div style={{ fontFamily: "var(--font-numeric)", fontSize: "18px", fontWeight: 800, color, lineHeight: 1 }}>{fcastPct(share)}</div>
-                    <div style={{ fontFamily: "var(--font-body)", fontSize: "9px", letterSpacing: "0.06em", color: "var(--muted2)", marginTop: 2 }}>{_marginOfError > 0.05 ? `±${_marginOfError.toFixed(1)}pp` : fcastFmt(votes)}</div>
+                    <div style={{ fontFamily: "var(--font-body)", fontSize: "9px", letterSpacing: "0.06em", color: "var(--muted2)", marginTop: 2 }}>{fcastFmt(votes)}</div>
                     {isLeader && <div style={{ marginTop: 5, fontSize: "8px", color, fontWeight: 700, fontFamily: "var(--font-body)", letterSpacing: "0.12em", textTransform: "uppercase", border: `1px solid ${color}44`, padding: "1px 5px", borderRadius: "var(--r-pill)", display: "inline-block" }}>LEADER</div>}
                   </div>
                 );
