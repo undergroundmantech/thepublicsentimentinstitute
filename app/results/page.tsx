@@ -44,7 +44,7 @@ function getRaceTypeShort(raceType: RaceType): string {
   return "S";
 }
 
-const RACE_FORECAST_DEFAULTS: Partial<Record<number, { raceRule: RaceRule; expectedTurnout?: number; pollAvg?: Record<string, number>; overrideReporting?: number; pollsCloseIso?: string; }>> = {
+const RACE_FORECAST_DEFAULTS: Partial<Record<number, { raceRule: RaceRule; expectedTurnout?: number; pollAvg?: Record<string, number>; overrideReporting?: number; pollsCloseIso?: string; turnoutBlendK?: number; }>> = {
 
   // ── CA TOP-TWO OPEN PRIMARY (June 2) ──────────────────────────────────────
   79777: { raceRule: "TOP_TWO", expectedTurnout: 6_750_000, pollAvg: { "Becerra": 29.0, "Steyer": 19.0, "Hilton": 16.0, "Thurmond": 12.0 }, overrideReporting: 0 }, // CA Governor (Becerra 99% adv, Steyer/Hilton competing for 2nd)
@@ -63,9 +63,12 @@ const RACE_FORECAST_DEFAULTS: Partial<Record<number, { raceRule: RaceRule; expec
   // ── NJ PLURALITY PRIMARIES (June 2) ──────────────────────────────────────
   81046: { raceRule: "PLURALITY", expectedTurnout: 57_500, pollAvg: { "Bennett": 62.0 }, overrideReporting: 0 }, // NJ-07 D (Bennett ~90–95%)
   // ── SD 35% RUNOFF THRESHOLD — top-2 runoff if unmet (June 2) ─────────────
-  80461: { raceRule: "THRESHOLD_35_RUNOFF", expectedTurnout: 150_000, pollAvg: { "Rhoden": 30.2, "Johnson": 27.3, "Doeden": 22.5, "Hansen": 16.8 }, overrideReporting: 0, pollsCloseIso: "2026-06-02T21:00:00-04:00" }, // SD Governor R (LV model) — 9pm ET
-  80511: { raceRule: "THRESHOLD_35_RUNOFF", overrideReporting: 0, pollsCloseIso: "2026-06-02T21:00:00-04:00" },   // SD US House At-Large R
-  80512: { raceRule: "THRESHOLD_35_RUNOFF", overrideReporting: 0, pollsCloseIso: "2026-06-02T21:00:00-04:00" },   // SD US Senate R
+  80461: { raceRule: "THRESHOLD_35_RUNOFF", expectedTurnout: 150_000, pollAvg: { "Rhoden": 30.2, "Johnson": 27.3, "Doeden": 22.5, "Hansen": 16.8 }, overrideReporting: 30.5, 
+  pollsCloseIso: "2026-06-02T21:00:00-04:00" }, // SD Governor R (LV model) — 9pm ET
+                                                                                                          80511: { raceRule: "THRESHOLD_35_RUNOFF", overrideReporting: 30.5, 
+    pollsCloseIso: "2026-06-02T21:00:00-04:00" },   // SD US House At-Large R
+                                                                                                          80512: { raceRule: "THRESHOLD_35_RUNOFF", overrideReporting: 30.5, 
+    pollsCloseIso: "2026-06-02T21:00:00-04:00" },   // SD US Senate R
   // ── NM close time override (June 2) ──────────────────────────────────────
   81014: { raceRule: "PLURALITY", overrideReporting: 0, pollsCloseIso: "2026-06-02T21:00:00-04:00" }, // NM US Senate D — 9pm ET
   81015: { raceRule: "PLURALITY", overrideReporting: 0, pollsCloseIso: "2026-06-02T21:00:00-04:00" }, // NM US Senate R — 9pm ET
@@ -904,7 +907,7 @@ function ForecastPanel({ raceId, refreshTick, raceData, onForecastUpdate }: { ra
   const runForecastLive = useCallback(async (id: number, rule?: RaceRule, turnout?: string) => {
     setLoadingForecast(true); setError(null);
     try {
-      const res = await fetch("/api/forecast", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ...(raceDataRef.current ? { type: "civic_raw", raceData: raceDataRef.current } : { type: "civic", raceId: String(id) }), race_rule: rule ?? raceRuleRef.current, expected_turnout: (turnout ?? turnoutRef.current) ? Number(turnout ?? turnoutRef.current) : undefined, poll_avg: RACE_FORECAST_DEFAULTS[id]?.pollAvg }) });
+      const res = await fetch("/api/forecast", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ...(raceDataRef.current ? { type: "civic_raw", raceData: raceDataRef.current } : { type: "civic", raceId: String(id) }), race_rule: rule ?? raceRuleRef.current, expected_turnout: (turnout ?? turnoutRef.current) ? Number(turnout ?? turnoutRef.current) : undefined, poll_avg: RACE_FORECAST_DEFAULTS[id]?.pollAvg, turnout_blend_k: RACE_FORECAST_DEFAULTS[id]?.turnoutBlendK }) });
       const data = await res.json();
       if (raceIdRef.current !== id) return;
       if (data.error) throw new Error(data.details ?? data.error);
@@ -943,7 +946,7 @@ function ForecastPanel({ raceId, refreshTick, raceData, onForecastUpdate }: { ra
     setLoadingForecast(true); setError(null);
     try {
       const timestamp = tsList[idx].timestamp; const priorTimestamp = idx > 0 ? tsList[0].timestamp : undefined;
-      const res = await fetch("/api/forecast", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ type: "civic_history", raceId: String(id), timestamp, priorTimestamp, race_rule: rule ?? raceRuleRef.current, expected_turnout: (turnout ?? turnoutRef.current) ? Number(turnout ?? turnoutRef.current) : undefined, poll_avg: RACE_FORECAST_DEFAULTS[id]?.pollAvg }) });
+      const res = await fetch("/api/forecast", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ type: "civic_history", raceId: String(id), timestamp, priorTimestamp, race_rule: rule ?? raceRuleRef.current, expected_turnout: (turnout ?? turnoutRef.current) ? Number(turnout ?? turnoutRef.current) : undefined, poll_avg: RACE_FORECAST_DEFAULTS[id]?.pollAvg, turnout_blend_k: RACE_FORECAST_DEFAULTS[id]?.turnoutBlendK }) });
       const data = await res.json();
       if (raceIdRef.current !== id) return;
       if (data.error) throw new Error(data.details ?? data.error);
