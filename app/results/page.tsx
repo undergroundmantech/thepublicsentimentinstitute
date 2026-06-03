@@ -2423,13 +2423,13 @@ export default function March3FeaturedClient() {
             <div className="res-panel res-topline-panel" style={{ display: "flex", flexDirection: "column" }}>
               <div className="res-panel-header" style={{ flexShrink: 0 }}>
                 <span className="res-panel-tag">TOPLINE RESULTS</span>
-                {selectedRace?.percent_reporting !== undefined && (
-                  <span style={{ fontFamily: "var(--font-body)", fontSize: "10px", fontWeight: 700, color: "var(--muted2)", letterSpacing: "0.08em" }}>{selectedRace.percent_reporting.toFixed(1)}% IN</span>
+                {selectedRace !== undefined && (
+                  <span style={{ fontFamily: "var(--font-body)", fontSize: "10px", fontWeight: 700, color: "var(--muted2)", letterSpacing: "0.08em" }}>{effectiveReporting.toFixed(1)}% IN</span>
                 )}
               </div>
               <div className="res-topline-body" style={{ overflowY: "auto", flex: 1, minHeight: 0, scrollbarGutter: "stable", padding: "6px 6px 6px 12px" }}>
                 {selectedRace?.candidates
-                  ? <CandidateList candidates={selectedRace.candidates} reporting={selectedRace.percent_reporting ?? 0} raceId={selectedId} isMajorityRunoff={isRunoffConfirmed} />
+                  ? <CandidateList candidates={selectedRace.candidates} reporting={effectiveReporting} raceId={selectedId} isMajorityRunoff={isRunoffConfirmed} />
                   : <div style={{ padding: "32px 0", textAlign: "center" }} className="res-note">LOADING…</div>
                 }
               </div>
