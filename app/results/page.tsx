@@ -64,13 +64,13 @@ const RACE_FORECAST_DEFAULTS: Partial<Record<number, { raceRule: RaceRule; expec
   81046: { raceRule: "PLURALITY", expectedTurnout: 57_500, pollAvg: { "Bennett": 62.0 }, overrideReporting: 0, turnoutBlendK: 2 }, // NJ-07 D (Bennett ~90–95%)
   // ── SD 35% RUNOFF THRESHOLD — top-2 runoff if unmet (June 2) ─────────────
   80461: { raceRule: "THRESHOLD_35_RUNOFF", expectedTurnout: 150_000, pollAvg: { "Rhoden": 30.2, "Johnson": 27.3, "Doeden": 22.5, "Hansen": 16.8 }, 
-  overrideReporting: 80.2, 
+  overrideReporting: 85.2, 
     pollsCloseIso: "2026-06-02T21:00:00-04:00", turnoutBlendK: 2 }, // SD Governor R (LV model) — 9pm ET
                                                                                                           80511: { raceRule: "THRESHOLD_35_RUNOFF", 
-  overrideReporting: 79.7, 
+  overrideReporting: 84.7, 
     pollsCloseIso: "2026-06-02T21:00:00-04:00" },   // SD US House At-Large R
                                                                                                           80512: { raceRule: "THRESHOLD_35_RUNOFF", 
-  overrideReporting: 79.1, 
+  overrideReporting: 84.1, 
     pollsCloseIso: "2026-06-02T21:00:00-04:00" },   // SD US Senate R
   // ── NM close time override (June 2) ──────────────────────────────────────
   81014: { raceRule: "PLURALITY", overrideReporting: 0, pollsCloseIso: "2026-06-02T21:00:00-04:00" }, // NM US Senate D — 9pm ET
