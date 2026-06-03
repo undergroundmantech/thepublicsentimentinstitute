@@ -65,7 +65,15 @@ export default function Navbar() {
           background: color-mix(in srgb, var(--panel) 82%, transparent);
           backdrop-filter: saturate(140%) blur(18px);
           -webkit-backdrop-filter: saturate(140%) blur(18px);
-          border-bottom: 1px solid var(--border);
+        }
+        .nb-root::after {
+          content: '';
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          height: 2px;
+          background: linear-gradient(90deg, #e63946 33%, #7c3aed 66%, #2563eb 100%);
         }
 
         .nb-bar {
