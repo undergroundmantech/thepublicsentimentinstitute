@@ -783,6 +783,63 @@ const NATIONAL_SLIDES: Slide[] = [
   },
 ];
 
+// ─── SD Republican Primary Slide data (N=400, LV Weighted, May 2026) ─────────
+const SD_SLIDES: Slide[] = [
+  {
+    id:"sd-q6", qNum:"Q6", category:"Primary Race",
+    title:"Republican Primary for Governor",
+    subtitle:"If the Republican Primary election for Governor were held today, for whom would you vote?",
+    bars:[
+      { label:"Larry Rhoden",  pct:32.4, color:C.pink,     strong:true },
+      { label:"Dusty Johnson", pct:27.2, color:C.orange,   strong:true },
+      { label:"Toby Doeden",   pct:24.0, color:C.gold,     strong:true },
+      { label:"Jon Hansen",    pct:13.2, color:C.purpleLt, strong:true },
+      { label:"Undecided",     pct:3.3,  color:C.muted },
+    ],
+  },
+  {
+    id:"sd-q3", qNum:"Q3", category:"Electorate",
+    title:"Voter Intent & Motivation",
+    subtitle:"How would you describe your intention and motivation to vote in the 2026 Republican Primary Election?",
+    bars:[
+      { label:"Certain to vote — highly motivated",      pct:80.6, color:C.green,  strong:true },
+      { label:"Very likely — feel motivated",            pct:11.2, color:C.green },
+      { label:"Somewhat likely — not strongly motivated",pct:5.0,  color:C.gold },
+      { label:"Motivated but unsure if will vote",       pct:2.1,  color:C.orange },
+      { label:"Not very likely — little motivation",     pct:0.9,  color:C.muted },
+      { label:"Certain not to vote",                     pct:0.2,  color:C.muted },
+    ],
+  },
+  {
+    id:"sd-q4", qNum:"Q4", category:"Electorate",
+    title:"How Respondents Plan to Cast Their Ballot",
+    subtitle:"How do you plan to cast your ballot in the 2026 Midterm Election?",
+    bars:[
+      { label:"In-person on Election Day (confirmed location)",  pct:46.9, color:C.blue,     strong:true },
+      { label:"Early in-person (confirmed details)",             pct:14.1, color:C.cyan,     strong:true },
+      { label:"Mail-in / absentee (already requested)",          pct:14.1, color:C.purpleLt, strong:true },
+      { label:"In-person on Election Day (need to confirm)",     pct:6.8,  color:C.blue },
+      { label:"Haven't decided how to vote",                     pct:5.8,  color:C.muted },
+      { label:"Do not plan to vote",                             pct:5.3,  color:C.muted },
+      { label:"Mail-in / absentee (plan to request)",            pct:4.9,  color:C.purpleLt },
+      { label:"Early in-person (need to look up details)",       pct:2.2,  color:C.cyan },
+    ],
+  },
+  {
+    id:"sd-q5", qNum:"Q5", category:"Electorate",
+    title:"Social Network Voting Expectation",
+    subtitle:"Thinking about the 5–10 people you are closest to, how many do you expect to vote?",
+    bars:[
+      { label:"All or nearly all of them", pct:42.5, color:C.green,  strong:true },
+      { label:"Most of them",              pct:31.0, color:C.green },
+      { label:"About half",                pct:16.2, color:C.gold },
+      { label:"A few of them",             pct:8.1,  color:C.orange },
+      { label:"Not sure",                  pct:1.9,  color:C.muted },
+      { label:"None of them",              pct:0.3,  color:C.muted },
+    ],
+  },
+];
+
 
 // ─── Topline executive dashboard ─────────────────────────────────────────────
 function RaceSnapshotCard() {
@@ -997,6 +1054,97 @@ function ToplineDashboard() {
   );
 }
 
+function SdToplineDashboard() {
+  return (
+    <div className="tl-section">
+      <div className="tl-section-hdr">
+        <span className="tl-section-hdr-lbl">TOPLINE RESULTS</span>
+        <span className="tl-section-hdr-sub">South Dakota Republican Primary · May 2026 · N=400 · LV-Weighted</span>
+      </div>
+      <div className="tl-ballot-grid">
+        {/* Governor Primary */}
+        <div className="tl-ballot-card">
+          <div className="tl-ballot-eyebrow">GOVERNOR — REPUBLICAN PRIMARY VOTE</div>
+          <div className="tl-primary-rows">
+            {[
+              { name:"Larry Rhoden",  pct:32.4, color:C.pink },
+              { name:"Dusty Johnson", pct:27.2, color:C.orange },
+              { name:"Toby Doeden",   pct:24.0, color:C.gold },
+              { name:"Jon Hansen",    pct:13.2, color:C.purpleLt },
+              { name:"Undecided",     pct:3.3,  color:"var(--muted2)" },
+            ].map((r, i) => (
+              <div key={i} className="tl-primary-row">
+                <div className="tl-primary-name">{r.name}</div>
+                <div className="tl-primary-track">
+                  <div style={{ width:`${r.pct}%`, height:"100%", background:r.color,
+                    transition:"width 0.5s cubic-bezier(0.16,1,0.3,1)" }} />
+                </div>
+                <div className="tl-primary-pct" style={{ color:r.color }}>{r.pct.toFixed(1)}%</div>
+              </div>
+            ))}
+          </div>
+          <div className="tl-ballot-und">Rhoden +5.2 over Johnson · N=400 LV</div>
+        </div>
+
+        {/* Voter Motivation */}
+        <div className="tl-ballot-card">
+          <div className="tl-ballot-eyebrow">VOTER INTENT &amp; MOTIVATION</div>
+          <div className="tl-primary-rows">
+            {[
+              { name:"Certain to vote — highly motivated", pct:80.6, color:C.green },
+              { name:"Very likely — feel motivated",       pct:11.2, color:C.green },
+              { name:"Somewhat likely",                   pct:5.0,  color:C.gold },
+              { name:"Motivated but unsure",              pct:2.1,  color:C.orange },
+              { name:"Not very likely",                   pct:0.9,  color:"var(--muted2)" },
+              { name:"Certain not to vote",               pct:0.2,  color:"var(--muted2)" },
+            ].map((r, i) => (
+              <div key={i} className="tl-primary-row">
+                <div className="tl-primary-name">{r.name}</div>
+                <div className="tl-primary-track">
+                  <div style={{ width:`${r.pct}%`, height:"100%", background:r.color,
+                    transition:"width 0.5s cubic-bezier(0.16,1,0.3,1)" }} />
+                </div>
+                <div className="tl-primary-pct" style={{ color:r.color }}>{r.pct.toFixed(1)}%</div>
+              </div>
+            ))}
+          </div>
+          <div className="tl-ballot-und">91.8% Likely to Vote · N=400 LV</div>
+        </div>
+
+        {/* Ballot Method (grouped) */}
+        <div className="tl-ballot-card">
+          <div className="tl-ballot-eyebrow">HOW RESPONDENTS PLAN TO VOTE</div>
+          <div className="tl-primary-rows">
+            {[
+              { name:"In-person on Election Day", pct:53.7, color:C.blue },
+              { name:"Mail-in / absentee",        pct:19.0, color:C.purpleLt },
+              { name:"Early in-person",           pct:16.3, color:C.cyan },
+              { name:"Haven't decided",           pct:5.8,  color:"var(--muted2)" },
+              { name:"Do not plan to vote",       pct:5.3,  color:"var(--muted2)" },
+            ].map((r, i) => (
+              <div key={i} className="tl-primary-row">
+                <div className="tl-primary-name">{r.name}</div>
+                <div className="tl-primary-track">
+                  <div style={{ width:`${r.pct}%`, height:"100%", background:r.color,
+                    transition:"width 0.5s cubic-bezier(0.16,1,0.3,1)" }} />
+                </div>
+                <div className="tl-primary-pct" style={{ color:r.color }}>{r.pct.toFixed(1)}%</div>
+              </div>
+            ))}
+          </div>
+          <div className="tl-ballot-und">53.7% In-Person · 16.3% Early · 19.0% Mail-in</div>
+        </div>
+      </div>
+      <div className="tl-kpi-row">
+        <KpiTile label="Rhoden (1st)"   val="32.4%" sub="Republican Primary for Governor"     color={C.pink}   border={C.pink} />
+        <KpiTile label="Rhoden Lead"    val="+5.2"  sub="Rhoden 32.4% · Johnson 27.2%"       color={C.pink}   border={C.pink} />
+        <KpiTile label="High Intent"    val="80.6%" sub="Certain to Vote · Highly Motivated"  color={C.green}  border={C.green} />
+        <KpiTile label="Undecided"      val="3.3%"  sub="Governor Primary Race · N=400 LV"   color="var(--muted2)" border="var(--border)" />
+      </div>
+    </div>
+  );
+}
+
 // ─── Dashboard components ─────────────────────────────────────────────────────
 function getCategories(slides: Slide[]) {
   const cats = new Map<string, Slide[]>();
@@ -1116,13 +1264,14 @@ function RankTableView({ rows }: { rows: NonNullable<Slide["rankTable"]> }) {
 
 // ─── Main dashboard ───────────────────────────────────────────────────────────
 export default function TPSIPollDashboard() {
-  const [activePoll, setActivePoll] = useState<'la'|'national'>('la');
+  const [activePoll, setActivePoll] = useState<'la'|'national'|'sd'>('la');
   const [laActiveId, setLaActiveId] = useState("q10a");
   const [natActiveId, setNatActiveId] = useState("nat-q14");
+  const [sdActiveId, setSdActiveId] = useState("sd-q6");
 
-  const slides    = activePoll === 'la' ? SLIDES : NATIONAL_SLIDES;
-  const activeId  = activePoll === 'la' ? laActiveId : natActiveId;
-  const setActive = activePoll === 'la' ? setLaActiveId : setNatActiveId;
+  const slides    = activePoll === 'la' ? SLIDES : activePoll === 'national' ? NATIONAL_SLIDES : SD_SLIDES;
+  const activeId  = activePoll === 'la' ? laActiveId : activePoll === 'national' ? natActiveId : sdActiveId;
+  const setActive = activePoll === 'la' ? setLaActiveId : activePoll === 'national' ? setNatActiveId : setSdActiveId;
 
   const categories = getCategories(slides);
   const slide = slides.find(s => s.id === activeId) ?? slides.find(s => !s.isCover)!;
@@ -1437,7 +1586,7 @@ export default function TPSIPollDashboard() {
               </div>
             </div>
           </div>
-        ) : (
+        ) : activePoll === 'national' ? (
           <div style={{ padding:"20px 0 14px" }}>
             <div className="tpsi-eyebrow">TPSI POLL · NATIONAL BENCHMARK · MAY 2026</div>
             <div style={{ display:"flex", flexWrap:"wrap", alignItems:"flex-end", justifyContent:"space-between", gap:12 }}>
@@ -1445,6 +1594,18 @@ export default function TPSIPollDashboard() {
               <div style={{ display:"flex", gap:6, flexWrap:"wrap", alignItems:"center" }}>
                 <span className="tpsi-bdg tpsi-bdg-purple">N=893 LV</span>
                 <span className="tpsi-bdg">25 QUESTIONS</span>
+                <span className="tpsi-bdg">MAY 2026</span>
+              </div>
+            </div>
+          </div>
+        ) : (
+          <div style={{ padding:"20px 0 14px" }}>
+            <div className="tpsi-eyebrow">TPSI POLL · SOUTH DAKOTA GOP PRIMARY · MAY 2026</div>
+            <div style={{ display:"flex", flexWrap:"wrap", alignItems:"flex-end", justifyContent:"space-between", gap:12 }}>
+              <h1 className="tpsi-page-title">South Dakota <em>Republican Primary</em></h1>
+              <div style={{ display:"flex", gap:6, flexWrap:"wrap", alignItems:"center" }}>
+                <span className="tpsi-bdg tpsi-bdg-purple">N=400 LV</span>
+                <span className="tpsi-bdg">4 QUESTIONS</span>
                 <span className="tpsi-bdg">MAY 2026</span>
               </div>
             </div>
@@ -1467,10 +1628,17 @@ export default function TPSIPollDashboard() {
             <span className="poll-tab-dot" style={{ background: activePoll === 'national' ? 'var(--purple)' : 'var(--border2)' }} />
             National Benchmark · May 2026
           </button>
+          <button
+            className={`poll-tab${activePoll === 'sd' ? ' active' : ''}`}
+            onClick={() => setActivePoll('sd')}
+          >
+            <span className="poll-tab-dot" style={{ background: activePoll === 'sd' ? 'var(--purple)' : 'var(--border2)' }} />
+            SD GOP Primary · May 2026
+          </button>
         </div>
 
         {/* Topline executive summary */}
-        {activePoll === 'la' ? <ToplineDashboard /> : <NationalToplineDashboard />}
+        {activePoll === 'la' ? <ToplineDashboard /> : activePoll === 'national' ? <NationalToplineDashboard /> : <SdToplineDashboard />}
 
         {/* Two-column body */}
         <div className="tpsi-layout">
