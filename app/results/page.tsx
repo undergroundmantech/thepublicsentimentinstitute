@@ -2362,7 +2362,10 @@ export default function March3FeaturedClient() {
                               <span style={{ width: 5, height: 5, borderRadius: "50%", background: c.color, display: "inline-block", flexShrink: 0 }} />
                               {c.name}
                             </span>
-                            <span style={{ fontFamily: "var(--font-body)", fontSize: "9px", fontWeight: 900, color: c.color }}>{fmtPct(c.percent)}</span>
+                            <span style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                              {c.votes > 0 && <span style={{ fontFamily: "var(--font-body)", fontSize: "9px", fontWeight: 700, color: "var(--muted2)" }}>{c.votes.toLocaleString()}</span>}
+                              <span style={{ fontFamily: "var(--font-body)", fontSize: "9px", fontWeight: 900, color: c.color }}>{fmtPct(c.percent)}</span>
+                            </span>
                           </div>
                           <div style={{ height: 3, background: "var(--border2)", overflow: "hidden" }}>
                             <div style={{ height: "100%", width: `${c.percent ?? 0}%`, background: c.color, transition: "width 600ms ease" }} />
