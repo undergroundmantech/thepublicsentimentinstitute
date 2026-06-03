@@ -48,7 +48,8 @@ export function civicToForecastInput(
   prior?: CivicRace,
   race_rule: RaceRule = "PLURALITY",
   expected_turnout?: number,
-  poll_avg?: Record<string, number>
+  poll_avg?: Record<string, number>,
+  turnout_blend_k?: number
 ): ForecastInput {
   const pct = Math.min(1, (current.percent_reporting ?? 0) / 100);
   const totalReported = current.candidates.reduce((s, c) => s + c.votes, 0);
@@ -120,6 +121,7 @@ export function civicToForecastInput(
     reported_share,
     expected_turnout: est_turnout,
     expected_share,
+    turnout_blend_k,
   };
 }
 
@@ -179,6 +181,14 @@ export interface ForecastInput {
   reported_share: Shares3;
   expected_turnout: number;
   expected_share: Shares3;
+  /** Controls how quickly the blended turnout shifts from the pre-election
+   *  prior toward the live extrapolation as votes come in.
+   *  liveWeight = pct_reporting ^ k
+   *  k=1 (default): linear — 50% in → 50% live weight
+   *  k=2: quadratic — 50% in → 25% live weight (slower shift)
+   *  k=3: cubic   — 50% in → 12.5% live weight (much slower shift)
+   */
+  turnout_blend_k?: number;
 }
 
 export interface ForecastOutput {
@@ -344,18 +354,21 @@ export function forecastRace(
   const percent_reporting = clamp(input.percent_reporting, 0, 1);
   const reported_vote_total = Math.max(0, input.reported_vote_total);
   const expected_turnout = Math.max(0, input.expected_turnout);
+  const blend_k = Math.max(0.5, input.turnout_blend_k ?? 1);
 
   const reported_share4 = addOthersShare(input.reported_share);
   const expected_share4 = addOthersShare(input.expected_share);
   const reported_votes = votesFromShare(reported_share4, reported_vote_total);
 
   // Step 1: Model total vote
+  // liveWeight = pct^k — higher k = trust the extrapolated total more slowly
   let modeled_total_vote: number;
   if (percent_reporting === 0) {
     modeled_total_vote = expected_turnout;
   } else {
     const implied_total = safeDiv(reported_vote_total, percent_reporting);
-    const blended_total = (1 - percent_reporting) * expected_turnout + percent_reporting * implied_total;
+    const liveWeight = Math.pow(percent_reporting, blend_k);
+    const blended_total = (1 - liveWeight) * expected_turnout + liveWeight * implied_total;
     modeled_total_vote = Math.max(reported_vote_total, blended_total);
   }
 
