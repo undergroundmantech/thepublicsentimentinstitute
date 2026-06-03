@@ -64,13 +64,13 @@ const RACE_FORECAST_DEFAULTS: Partial<Record<number, { raceRule: RaceRule; expec
   81046: { raceRule: "PLURALITY", expectedTurnout: 57_500, pollAvg: { "Bennett": 62.0 }, overrideReporting: 0, turnoutBlendK: 2 }, // NJ-07 D (Bennett ~90–95%)
   // ── SD 35% RUNOFF THRESHOLD — top-2 runoff if unmet (June 2) ─────────────
   80461: { raceRule: "THRESHOLD_35_RUNOFF", expectedTurnout: 150_000, pollAvg: { "Rhoden": 30.2, "Johnson": 27.3, "Doeden": 22.5, "Hansen": 16.8 }, 
-  overrideReporting: 65.2, 
+  overrideReporting: 71.2, 
     pollsCloseIso: "2026-06-02T21:00:00-04:00", turnoutBlendK: 2 }, // SD Governor R (LV model) — 9pm ET
                                                                                                           80511: { raceRule: "THRESHOLD_35_RUNOFF", 
-  overrideReporting: 65.7, 
+  overrideReporting: 70.7, 
     pollsCloseIso: "2026-06-02T21:00:00-04:00" },   // SD US House At-Large R
                                                                                                           80512: { raceRule: "THRESHOLD_35_RUNOFF", 
-  overrideReporting: 65.1, 
+  overrideReporting: 70.1, 
     pollsCloseIso: "2026-06-02T21:00:00-04:00" },   // SD US Senate R
   // ── NM close time override (June 2) ──────────────────────────────────────
   81014: { raceRule: "PLURALITY", overrideReporting: 0, pollsCloseIso: "2026-06-02T21:00:00-04:00" }, // NM US Senate D — 9pm ET
@@ -1179,7 +1179,9 @@ function RaceScrollWindow({ races, raceCache, selectedId, onSelect, search, onSe
             {groupRaces.map(r => {
               const liveData = raceCache[r.id];
               const winner = liveData?.candidates?.find(c => c.winner);
-              const reporting = getRaceReportingPct(liveData);
+              const _apiReporting = getRaceReportingPct(liveData);
+              const _overrideReporting = RACE_FORECAST_DEFAULTS[r.id]?.overrideReporting;
+              const reporting = (typeof _overrideReporting === "number" && _overrideReporting > 0) ? _overrideReporting : _apiReporting;
               const isSelected = r.id === selectedId;
               const raceTypeColor = getRaceTypeColor(r.raceType);
               const raceTypeShort = getRaceTypeShort(r.raceType);
@@ -1299,7 +1301,9 @@ function RacePickerPanel({ races, raceCache, selectedId, onSelect }: {
             {groupRaces.map(r => {
               const liveData = raceCache[r.id];
               const winner = liveData?.candidates?.find(c => c.winner);
-              const reporting = getRaceReportingPct(liveData);
+              const _apiReporting = getRaceReportingPct(liveData);
+              const _overrideReporting = RACE_FORECAST_DEFAULTS[r.id]?.overrideReporting;
+              const reporting = (typeof _overrideReporting === "number" && _overrideReporting > 0) ? _overrideReporting : _apiReporting;
               const leader = liveData?.candidates ? [...liveData.candidates].sort((a, b) => (b.percent ?? 0) - (a.percent ?? 0))[0] : null;
               const isSelected = r.id === selectedId;
               const raceTypeColor = getRaceTypeColor(r.raceType);
@@ -2147,7 +2151,9 @@ export default function March3FeaturedClient() {
                 {races.map(r => {
                   const liveData = raceCache[r.id];
                   const winner = liveData?.candidates?.find(c => c.winner);
-                  const reporting = getRaceReportingPct(liveData);
+                  const _apiReporting = getRaceReportingPct(liveData);
+                  const _ov = RACE_FORECAST_DEFAULTS[r.id]?.overrideReporting;
+                  const reporting = (typeof _ov === "number" && _ov > 0) ? _ov : _apiReporting;
                   const raceTypeShort = getRaceTypeShort(r.raceType);
                   const statusStr = winner ? " ✓ CALLED" : reporting !== null && reporting > 0 ? ` · ${reporting.toFixed(0)}% IN` : "";
                   return (
@@ -2164,7 +2170,9 @@ export default function March3FeaturedClient() {
             const meta = FEATURED.find(r => r.id === selectedId);
             const liveData = raceCache[selectedId];
             const winner = liveData?.candidates?.find(c => c.winner);
-            const reporting = getRaceReportingPct(liveData);
+            const _apiRpt = getRaceReportingPct(liveData);
+            const _ovRpt = RACE_FORECAST_DEFAULTS[selectedId]?.overrideReporting;
+            const reporting = (typeof _ovRpt === "number" && _ovRpt > 0) ? _ovRpt : _apiRpt;
             const raceTypeColor = meta ? getRaceTypeColor(meta.raceType) : "rgba(255,255,255,0.4)";
             return (
               <div style={{ flexShrink: 0, display: "flex", alignItems: "center", gap: 6 }}>
