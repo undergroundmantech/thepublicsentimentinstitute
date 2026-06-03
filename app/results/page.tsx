@@ -1583,7 +1583,7 @@ export default function March3FeaturedClient() {
     [44285,44286,44287,44288,44289,44290,44291,44292,44293,44295,44344,44729,44730,44209,44208].includes(selectedId);
   const selectedWinners = selectedRace?.candidates?.filter((c) => c.winner) ?? [];
   const isRunoffConfirmed = selectedRaceIsMajority && selectedWinners.length >= 2;
-  const [forecastProj, setForecastProj] = useState<{ leader: string; prob: number; runoffNeededProb: number; projectionType: "WIN" | "RUNOFF" } | null>(null);
+  const [forecastProj, setForecastProj] = useState<{ raceId: number; leader: string; prob: number; runoffNeededProb: number; projectionType: "WIN" | "RUNOFF" } | null>(null);
   useEffect(() => { setForecastProj(null); }, [selectedId]);
   // Locked forecast calls — once set at >99.73%, never retracted for that race
   const [lockedCalls, setLockedCalls] = useState<Record<number, string>>({});
@@ -1603,11 +1603,11 @@ export default function March3FeaturedClient() {
   const selectedTotalVotes = selectedRace?.candidates?.reduce((s, c) => s + (c.votes ?? 0), 0) ?? 0;
   // API-based projection fallback (used when ForecastPanel has not produced a result)
   const selectedApiProj = selectedProj ? { leader: selectedProj.leaderName, prob: selectedProj.prob, runoffNeededProb: 0, projectionType: "WIN" as const } : null;
-  const effectiveProj = forecastProj ?? selectedApiProj;
+  const effectiveProj = (forecastProj?.raceId === selectedId ? forecastProj : null) ?? selectedApiProj;
   // Don't show a lean/projection until precincts start reporting
   const displayProj = selectedReporting > 0 ? effectiveProj : null;
   // Auto-call: forecast races called at >99.73% (3σ); once locked, never retracted
-  const liveForecastCalled = hasForecastForSelected && forecastProj?.projectionType === "WIN" && (forecastProj?.prob ?? 0) > 99.73 ? forecastProj!.leader : null;
+  const liveForecastCalled = hasForecastForSelected && forecastProj?.raceId === selectedId && forecastProj?.projectionType === "WIN" && (forecastProj?.prob ?? 0) > 99.73 ? forecastProj!.leader : null;
   useEffect(() => {
     if (liveForecastCalled && selectedId && !lockedCalls[selectedId]) {
       setLockedCalls(prev => ({ ...prev, [selectedId]: liveForecastCalled }));
@@ -2395,7 +2395,7 @@ export default function March3FeaturedClient() {
             {/* FORECAST */}
             <div className="res-forecast-wrap">
               {hasForecastForSelected ? (
-                <ForecastPanel key={selectedId} raceId={selectedId} refreshTick={refreshTick} raceData={selectedRace} onForecastUpdate={(update) => setForecastProj(update)} />
+                <ForecastPanel key={selectedId} raceId={selectedId} refreshTick={refreshTick} raceData={selectedRace} onForecastUpdate={(update) => setForecastProj({ ...update, raceId: selectedId })} />
               ) : (
               <div className="res-panel" style={{ display: "flex", flexDirection: "column", flex: 1 }}>
                 <div className="res-panel-header">
