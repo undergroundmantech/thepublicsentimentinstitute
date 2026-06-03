@@ -828,7 +828,7 @@ function SwingOMeter({ candidates, colors, probabilities, raceRule, reportingPct
       <div style={{ marginTop: 12, padding: "8px 0 0", borderTop: "1px solid var(--border)" }}>
         <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 5 }}>
           <span style={{ fontFamily: "var(--font-body)", fontSize: "10px", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--muted2)" }}>REPORTING</span>
-          <span style={{ fontFamily: "var(--font-numeric)", fontSize: "11px", fontWeight: 800, color: "var(--muted)" }}>{reportingPct.toFixed(1)}%</span>
+          <span style={{ fontFamily: "var(--font-numeric)", fontSize: "11px", fontWeight: 800, color: "var(--muted)" }}>{reportingPct > 99 ? ">99" : reportingPct.toFixed(1)}%</span>
         </div>
         <div style={{ height: 3, background: "var(--border2)", overflow: "hidden", borderRadius: 99 }}>
           <div style={{ height: "100%", width: `${reportingPct}%`, background: "var(--muted)", transition: "width 800ms ease", borderRadius: 99 }} />
@@ -1141,7 +1141,7 @@ function ForecastPanel({ raceId, refreshTick, raceData, onForecastUpdate }: { ra
           /* ── NARROW LAYOUT ── */
           <div style={{ width: "100%" }}>
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 14 }}>
-              <span className="res-note" style={{ color: "var(--muted2)" }}>{forecast.race.percent_reporting}% REPORTING</span>
+              <span className="res-note" style={{ color: "var(--muted2)" }}>{forecast.race.percent_reporting > 99 ? ">99" : forecast.race.percent_reporting.toFixed(1)}% REPORTING</span>
               <span className="res-badge res-badge-red">{raceRule === "PLURALITY" ? "PLURALITY" : raceRule === "TOP_TWO" ? "TOP TWO" : raceRule === "MAJORITY" || raceRule === "MAJORITY_RUNOFF" ? "MAJORITY" : raceRule === "THRESHOLD_35_CONVENTION" ? "THRESHOLD 35%" : "THRESHOLD 35%"}</span>
             </div>
             {raceRule === "TOP_TWO" ? (

@@ -344,7 +344,7 @@ export default function ForecastEnginePage() {
                       <div style={{ flex: 1 }}>
                         <div style={{ fontFamily: "'DM Mono', monospace", fontSize: 10, fontWeight: selectedRace?.id === r.id ? 700 : 400, color: selectedRace?.id === r.id ? "rgba(255,255,255,0.8)" : "rgba(255,255,255,0.5)", marginBottom: 4, lineHeight: 1.4, letterSpacing: "0.02em" }}>{r.election_name}</div>
                         <div style={{ fontSize: 8, color: "rgba(15,16,32,0.45)", letterSpacing: "0.08em" }}>{r.country}{r.province ? ` · ${r.province}` : ""} · {new Date(r.election_date).toLocaleDateString()}</div>
-                        <div style={{ fontSize: 8, color: "rgba(255,255,255,0.2)", letterSpacing: "0.06em", marginTop: 2 }}>{r.percent_reporting}% reporting</div>
+                        <div style={{ fontSize: 8, color: "rgba(255,255,255,0.2)", letterSpacing: "0.06em", marginTop: 2 }}>{r.percent_reporting > 99 ? ">99" : r.percent_reporting}% reporting</div>
                       </div>
                     </button>
                   ))}
@@ -423,7 +423,7 @@ export default function ForecastEnginePage() {
                         <div style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 28, letterSpacing: "0.04em", color: "#fff", lineHeight: 1, marginBottom: 6 }}>{forecast.race.election_name}</div>
                         <div style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
                           <span style={{ fontFamily: "'DM Mono', monospace", fontSize: 9, color: "rgba(255,255,255,0.3)", letterSpacing: "0.08em" }}>{new Date(forecast.race.election_date).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}</span>
-                          <span style={{ fontFamily: "'DM Mono', monospace", fontSize: 9, color: "rgba(255,255,255,0.2)", letterSpacing: "0.06em" }}>{forecast.race.percent_reporting}% reporting</span>
+                          <span style={{ fontFamily: "'DM Mono', monospace", fontSize: 9, color: "rgba(255,255,255,0.2)", letterSpacing: "0.06em" }}>{forecast.race.percent_reporting > 99 ? ">99" : forecast.race.percent_reporting}% reporting</span>
                           {loadingForecast && <span style={{ fontFamily: "'DM Mono', monospace", fontSize: 8, color: "#9d5cf0", letterSpacing: "0.1em" }}>↻ updating…</span>}
                         </div>
                       </div>
