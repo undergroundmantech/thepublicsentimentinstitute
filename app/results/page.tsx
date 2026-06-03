@@ -45,12 +45,10 @@ function getRaceTypeShort(raceType: RaceType): string {
 }
 
 const RACE_FORECAST_DEFAULTS: Partial<Record<number, { raceRule: RaceRule; expectedTurnout?: number; pollAvg?: Record<string, number>; }>> = {
-  52556: { raceRule: "PLURALITY", expectedTurnout: 2_000_000, pollAvg: { "Yes": 49.0, "No": 46.7} },  // unchanged
-  79766: { raceRule: "PLURALITY", expectedTurnout: 1_400_000, pollAvg: { "Paxton": 58.0, "Cornyn": 42.0 } },
-  79739: { raceRule: "PLURALITY", expectedTurnout: 900_000,   pollAvg: { "Wright": 52.0, "French": 48.0 } },
+
   // ── CA TOP-TWO OPEN PRIMARY (June 2) ──────────────────────────────────────
   79777: { raceRule: "TOP_TWO", expectedTurnout: 6_750_000, pollAvg: { "Becerra": 29.0, "Steyer": 19.0, "Hilton": 16.0, "Thurmond": 12.0 } }, // CA Governor (Becerra 99% adv, Steyer/Hilton competing for 2nd)
-  79938: { raceRule: "MAJORITY_RUNOFF", expectedTurnout: 705_000, pollAvg: { "Bass": 43.4, "Pratt": 20.9, "Raman": 12.0, "Miller": 9.4, "Huang": 4.8 } }, // LA Mayor (Q10+Q11 LV)
+  79938: { raceRule: "MAJORITY_RUNOFF", expectedTurnout: 1_030_000, pollAvg: { "Bass": 43.2, "Pratt": 21.6, "Raman": 11.7, "Miller": 9.7, "Huang": 4.6 } }, // LA Mayor (Q10+Q11 LV)
   79893: { raceRule: "TOP_TWO" },                              // CA US House 1
   79932: { raceRule: "TOP_TWO" },                              // CA US House 7
   79884: { raceRule: "TOP_TWO" },                              // CA US House 11
@@ -65,7 +63,7 @@ const RACE_FORECAST_DEFAULTS: Partial<Record<number, { raceRule: RaceRule; expec
   // ── NJ PLURALITY PRIMARIES (June 2) ──────────────────────────────────────
   81046: { raceRule: "PLURALITY", expectedTurnout: 57_500, pollAvg: { "Bennett": 62.0 } }, // NJ-07 D (Bennett ~90–95%)
   // ── SD 35% RUNOFF THRESHOLD — top-2 runoff if unmet (June 2) ─────────────
-  80461: { raceRule: "THRESHOLD_35_RUNOFF", expectedTurnout: 118_000, pollAvg: { "Rhoden": 32.5, "Johnson": 26.5, "Doeden": 21.9, "Hansen": 15.7 } }, // SD Governor R (LV model)
+  80461: { raceRule: "THRESHOLD_35_RUNOFF", expectedTurnout: 125_000, pollAvg: { "Rhoden": 30.2, "Johnson": 27.3, "Doeden": 22.5, "Hansen": 16.8 } }, // SD Governor R (LV model)
   80511: { raceRule: "THRESHOLD_35_RUNOFF" },                  // SD US House At-Large R
   80512: { raceRule: "THRESHOLD_35_RUNOFF" },                  // SD US Senate R
 };
