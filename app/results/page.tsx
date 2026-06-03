@@ -44,7 +44,7 @@ function getRaceTypeShort(raceType: RaceType): string {
   return "S";
 }
 
-const RACE_FORECAST_DEFAULTS: Partial<Record<number, { raceRule: RaceRule; expectedTurnout?: number; pollAvg?: Record<string, number>; }>> = {
+const RACE_FORECAST_DEFAULTS: Partial<Record<number, { raceRule: RaceRule; expectedTurnout?: number; pollAvg?: Record<string, number>; overrideReporting?: number; pollsCloseIso?: string; }>> = {
 
   // ── CA TOP-TWO OPEN PRIMARY (June 2) ──────────────────────────────────────
   79777: { raceRule: "TOP_TWO", expectedTurnout: 6_750_000, pollAvg: { "Becerra": 29.0, "Steyer": 19.0, "Hilton": 16.0, "Thurmond": 12.0 } }, // CA Governor (Becerra 99% adv, Steyer/Hilton competing for 2nd)
@@ -63,9 +63,12 @@ const RACE_FORECAST_DEFAULTS: Partial<Record<number, { raceRule: RaceRule; expec
   // ── NJ PLURALITY PRIMARIES (June 2) ──────────────────────────────────────
   81046: { raceRule: "PLURALITY", expectedTurnout: 57_500, pollAvg: { "Bennett": 62.0 } }, // NJ-07 D (Bennett ~90–95%)
   // ── SD 35% RUNOFF THRESHOLD — top-2 runoff if unmet (June 2) ─────────────
-  80461: { raceRule: "THRESHOLD_35_RUNOFF", expectedTurnout: 125_000, pollAvg: { "Rhoden": 30.2, "Johnson": 27.3, "Doeden": 22.5, "Hansen": 16.8 } }, // SD Governor R (LV model)
-  80511: { raceRule: "THRESHOLD_35_RUNOFF" },                  // SD US House At-Large R
-  80512: { raceRule: "THRESHOLD_35_RUNOFF" },                  // SD US Senate R
+  80461: { raceRule: "THRESHOLD_35_RUNOFF", expectedTurnout: 125_000, pollAvg: { "Rhoden": 30.2, "Johnson": 27.3, "Doeden": 22.5, "Hansen": 16.8 }, pollsCloseIso: "2026-06-02T21:00:00-04:00" }, // SD Governor R (LV model) — 9pm ET
+  80511: { raceRule: "THRESHOLD_35_RUNOFF", pollsCloseIso: "2026-06-02T21:00:00-04:00" },     // SD US House At-Large R
+  80512: { raceRule: "THRESHOLD_35_RUNOFF", pollsCloseIso: "2026-06-02T21:00:00-04:00" },     // SD US Senate R
+  // ── NM close time override (June 2) ──────────────────────────────────────
+  81014: { raceRule: "PLURALITY", pollsCloseIso: "2026-06-02T21:00:00-04:00" },                // NM US Senate D — 9pm ET
+  81015: { raceRule: "PLURALITY", pollsCloseIso: "2026-06-02T21:00:00-04:00" },                // NM US Senate R — 9pm ET
 };
 
 function sortCandidatesByPollData(candidates: RaceCandidate[], pollAvg?: Record<string, number>): RaceCandidate[] {
@@ -405,7 +408,7 @@ function MapWithCountyTooltip({ svgText, regionResults }: { svgText: string; reg
       const onMove = (ev: PointerEvent) => {
         if (isPanningRef.current) return; // dragging — no tooltip
         const currentRR = regionMapRef.current.get(key);
-        const tw = 320, th = 280, p = 12, offset = 14;
+        const tw = 252, th = 260, p = 12, offset = 14;
         const rect = host.getBoundingClientRect();
         const px = ev.clientX - rect.left, py = ev.clientY - rect.top;
         let x = px + offset, y = py + offset;
@@ -487,7 +490,7 @@ function MapWithCountyTooltip({ svgText, regionResults }: { svgText: string; reg
         {!locked && scale > 1 && <button onClick={resetZoom} style={{ width: 28, height: 28, background: "var(--panel)", border: "1px solid var(--border2)", color: "var(--muted)", fontSize: 8, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "var(--font-body)", fontWeight: 700, letterSpacing: "0.05em" }}>RST</button>}
       </div>
       {tooltip.show && (
-        <div className="res-map-tooltip absolute z-50 pointer-events-none w-[180px]" style={{ left: tooltip.x, top: tooltip.y }}>
+        <div className="res-map-tooltip absolute z-50 pointer-events-none w-[252px]" style={{ left: tooltip.x, top: tooltip.y }}>
           <div className="p-2">
             <div className="flex items-baseline justify-between mb-1">
               <div className="res-tooltip-title">{tooltip.title}</div>
@@ -1580,6 +1583,16 @@ export default function March3FeaturedClient() {
   // Spotlight meta for the currently selected race (null when not a spotlight race)
   const spotlightMeta = SPOTLIGHT_RACES.find(s => s.id === selectedId) ?? null;
   const selectedStatusInfo = getRaceStatusInfo(nowMs, selectedRace?.polls_open, selectedRace?.polls_close, spotlightMeta?.electionDate ?? "");
+  // Close time: prefer code override, then API
+  const _closeIsoOverride = RACE_FORECAST_DEFAULTS[selectedId]?.pollsCloseIso;
+  const effectiveCloseDate = _closeIsoOverride ? parseIsoDate(_closeIsoOverride) : selectedCloseDate;
+  const effectiveCloseLocal = effectiveCloseDate ? formatLocalCloseTime(effectiveCloseDate) : selectedCloseLocal;
+  const effectiveMsLeft = effectiveCloseDate ? effectiveCloseDate.getTime() - nowMs : selectedMsLeft;
+  // Reporting: prefer code override if set, then API
+  const _reportingOverride = RACE_FORECAST_DEFAULTS[selectedId]?.overrideReporting;
+  const effectiveReporting = typeof _reportingOverride === "number" ? _reportingOverride : selectedReporting;
+  // Total votes reported
+  const selectedTotalVotes = selectedRace?.candidates?.reduce((s, c) => s + (c.votes ?? 0), 0) ?? 0;
   // API-based projection fallback (used when ForecastPanel has not produced a result)
   const selectedApiProj = selectedProj ? { leader: selectedProj.leaderName, prob: selectedProj.prob, runoffNeededProb: 0, projectionType: "WIN" as const } : null;
   const effectiveProj = forecastProj ?? selectedApiProj;
@@ -1654,13 +1667,13 @@ export default function March3FeaturedClient() {
         .res-overlay-title { font-family:var(--font-body); font-size:clamp(32px,4vw,48px); font-weight:900; text-transform:uppercase; letter-spacing:0.02em; color:var(--foreground); line-height:0.92; }
         .res-overlay-name { font-family:var(--font-body); font-size:clamp(18px,2.5vw,26px); font-weight:700; text-transform:uppercase; letter-spacing:0.06em; }
         .res-map-tooltip { background:var(--panel); border:1px solid rgba(124,58,237,0.45); box-shadow:var(--shadow-md); border-radius:var(--r-md); }
-        .res-map-tooltip .res-tooltip-title { font-size:9px; }
-        .res-map-tooltip .res-th { font-size:7px; }
-        .res-map-tooltip .res-num { font-size:7px; }
-        .res-map-tooltip .res-pct-big { font-size:8px; }
-        .res-map-tooltip .res-cand-name { font-size:7px; }
-        .res-map-tooltip .res-cand-party { font-size:6px; }
-        .res-map-tooltip .res-note { font-size:7px; }
+        .res-map-tooltip .res-tooltip-title { font-size:12.6px; }
+        .res-map-tooltip .res-th { font-size:9.8px; }
+        .res-map-tooltip .res-num { font-size:9.8px; }
+        .res-map-tooltip .res-pct-big { font-size:11.2px; }
+        .res-map-tooltip .res-cand-name { font-size:9.8px; }
+        .res-map-tooltip .res-cand-party { font-size:8.4px; }
+        .res-map-tooltip .res-note { font-size:9.8px; }
         .res-tooltip-title { font-family:var(--font-body); font-size:13px; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; color:var(--foreground); }
         .res-reporting-row { display:flex; align-items:center; justify-content:space-between; }
         .res-candidate-list { background:transparent; overflow:visible; }
@@ -2288,13 +2301,14 @@ export default function March3FeaturedClient() {
                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px" }}>
                   <div className="res-stat-block">
                     <div className="res-stat-block-label">REPORTING</div>
-                    <div className="res-stat-block-val">{selectedReporting.toFixed(1)}%</div>
-                    <div className="res-bar-track" style={{ marginTop: "6px" }}><div className="res-bar-fill" style={{ width: `${selectedReporting}%`, background: "var(--purple)" }} /></div>
+                    <div className="res-stat-block-val">{effectiveReporting.toFixed(1)}%</div>
+                    {selectedTotalVotes > 0 && <div className="res-note" style={{ marginTop: "3px" }}>{selectedTotalVotes.toLocaleString()} votes</div>}
+                    <div className="res-bar-track" style={{ marginTop: "6px" }}><div className="res-bar-fill" style={{ width: `${effectiveReporting}%`, background: "var(--purple)" }} /></div>
                   </div>
                   <div className="res-stat-block">
                     <div className="res-stat-block-label">CLOSES</div>
-                    <div className="res-stat-block-val" style={{ fontSize: "clamp(16px,2vw,22px)" }}>{selectedCloseLocal}</div>
-                    <div className="res-note" style={{ marginTop: "5px", color: selectedMsLeft && selectedMsLeft > 0 ? "var(--muted2)" : "var(--rep)", fontWeight: 700 }}>{selectedMsLeft === null ? "—" : formatCountdown(selectedMsLeft)}</div>
+                    <div className="res-stat-block-val" style={{ fontSize: "clamp(13px,1.6vw,18px)" }}>{effectiveCloseLocal}</div>
+                    <div className="res-note" style={{ marginTop: "4px", color: effectiveMsLeft && effectiveMsLeft > 0 ? "var(--muted2)" : "var(--rep)", fontWeight: 700 }}>{effectiveMsLeft === null ? "—" : formatCountdown(effectiveMsLeft)}</div>
                   </div>
                 </div>
                 <div className="res-stat-block">
