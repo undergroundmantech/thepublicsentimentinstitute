@@ -388,13 +388,16 @@ export function forecastRace(
     expected_turnout / getPreElectionDivisor(expected_turnout)
   );
 
+  // For runoff-style races (where margins matter), drop the floor so sd_race can
+  // collapse naturally as votes come in. Plurality/general races keep the 0.1 floor.
+  const isRunoffStyle = race_rule !== "PLURALITY";
   let sd_race: number;
   if (percent_reporting < 0.05) {
     sd_race = sd_pre_election;
   } else {
     const implied_total = safeDiv(reported_vote_total, percent_reporting);
     const scale = safeDiv(modeled_vote_remaining, implied_total);
-    sd_race = sd_pre_election * Math.max(0.1, Math.min(1, scale));
+    sd_race = sd_pre_election * (isRunoffStyle ? Math.min(1, scale) : Math.max(0.1, Math.min(1, scale)));
   }
   if (modeled_vote_remaining > 100_000) {
     sd_race = Math.max(sd_race, modeled_vote_remaining / 20);

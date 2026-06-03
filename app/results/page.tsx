@@ -44,7 +44,7 @@ function getRaceTypeShort(raceType: RaceType): string {
   return "S";
 }
 
-const RACE_FORECAST_DEFAULTS: Partial<Record<number, { raceRule: RaceRule; expectedTurnout?: number; pollAvg?: Record<string, number>; overrideReporting?: number; pollsCloseIso?: string; turnoutBlendK?: number; colorOverrides?: Record<string, string>; }>> = {
+const RACE_FORECAST_DEFAULTS: Partial<Record<number, { raceRule: RaceRule; expectedTurnout?: number; pollAvg?: Record<string, number>; overrideReporting?: number; pollsCloseIso?: string; turnoutBlendK?: number; colorOverrides?: Record<string, string>; manualCall?: string; }>> = {
 
   // ── CA TOP-TWO OPEN PRIMARY (June 2) ──────────────────────────────────────
   79777: { raceRule: "TOP_TWO", expectedTurnout: 6_750_000, pollAvg: { "Becerra": 29.0, "Steyer": 19.0, "Hilton": 16.0, "Thurmond": 12.0 }, overrideReporting: 0, turnoutBlendK: 2 }, // CA Governor
@@ -539,7 +539,7 @@ function MapWithCountyTooltip({ svgText, regionResults }: { svgText: string; reg
 }
 
 // ─── CANDIDATE LIST ──────────────────────────────────────────────────────────
-function CandidateList({ candidates, reporting, raceId, isMajorityRunoff }: { candidates: RaceCandidate[]; reporting: number; raceId?: number; isMajorityRunoff?: boolean }) {
+function CandidateList({ candidates, reporting, raceId, isMajorityRunoff, calledNames, isTopTwo }: { candidates: RaceCandidate[]; reporting: number; raceId?: number; isMajorityRunoff?: boolean; calledNames?: string[]; isTopTwo?: boolean }) {
   const defaults = raceId ? RACE_FORECAST_DEFAULTS[raceId] : undefined;
   const ordered = useMemo(() => {
     // Pre-election: use poll avg order. Once votes are coming in, sort purely by live vote share.
@@ -559,19 +559,26 @@ function CandidateList({ candidates, reporting, raceId, isMajorityRunoff }: { ca
     <div className="space-y-2">
       <div className="res-candidate-list">
         {topCandidates.map((c, idx) => {
-          const isLeading = idx === 0 && !c.winner && reporting > 0;
+          const isLeading = idx === 0 && !c.winner && !calledNames?.some(n => c.name.toLowerCase().includes(n.toLowerCase())) && reporting > 0;
+          const isForecastCalled = !c.winner && !!calledNames?.some(n => c.name.toLowerCase().includes(n.toLowerCase()));
+          const isRunoffAdvancing = isForecastCalled && !c.winner;
           return (
             <div key={`${c.name}-${c.party}`} className="res-candidate-row">
               <div className="res-cand-bar" style={{ background: c.color || "rgba(255,255,255,0.2)" }} />
               <div className="flex items-center justify-between gap-3 flex-1 min-w-0">
                 <div className="flex items-center gap-3 min-w-0">
-                  <span className="res-cand-dot" style={{ background: c.color || "rgba(15,16,32,0.50)", boxShadow: `0 0 10px ${c.color || "rgba(255,255,255,0.2)"}40` }} />
+              <span className="res-cand-dot" style={{ background: c.color || "rgba(15,16,32,0.50)", boxShadow: `0 0 10px ${c.color || "rgba(255,255,255,0.2)"}40` }} />
                   <div className="min-w-0">
                     <div className="flex flex-wrap items-center gap-2 mb-0.5">
                       <span className="res-cand-name-lg">{c.name}</span>
-                      {c.winner && !isMajorityRunoff && <span className="res-badge res-badge-win">✓ WINNER</span>}
-                      {c.winner && isMajorityRunoff && <span className="res-badge" style={{ borderColor: "rgba(245,158,11,0.4)", background: "rgba(245,158,11,0.08)", color: "#f59e0b" }}>RUNOFF</span>}
-                      {isLeading && !c.winner && <span className="res-badge res-badge-purple">LEADING</span>}
+                      {(c.winner || isForecastCalled) && (
+                        <svg viewBox="0 0 10 10" width="10" height="10" style={{ flexShrink: 0 }}><circle cx="5" cy="5" r="5" fill="#22c55e" /><path d="M2.5 5l2 2L7.5 3" stroke="white" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" fill="none" /></svg>
+                      )}
+                      {c.winner && !isMajorityRunoff && <span className="res-badge res-badge-win" style={{ fontSize: "8px", padding: "2px 6px" }}>WINNER</span>}
+                      {c.winner && isMajorityRunoff && <span className="res-badge" style={{ borderColor: "rgba(245,158,11,0.4)", background: "rgba(245,158,11,0.08)", color: "#f59e0b", fontSize: "8px", padding: "2px 6px" }}>ADVANCING</span>}
+                      {isRunoffAdvancing && isTopTwo && <span className="res-badge res-badge-win" style={{ fontSize: "8px", padding: "2px 6px" }}>WINNER</span>}
+                      {isRunoffAdvancing && !isTopTwo && <span className="res-badge" style={{ borderColor: "rgba(245,158,11,0.4)", background: "rgba(245,158,11,0.08)", color: "#f59e0b", fontSize: "8px", padding: "2px 6px" }}>ADVANCING</span>}
+                      {isLeading && <span className="res-badge res-badge-purple" style={{ fontSize: "8px", padding: "2px 6px" }}>LEADING</span>}
                     </div>
                     <div className="res-cand-party">{c.party} · {c.votes.toLocaleString()} votes</div>
                   </div>
@@ -882,7 +889,7 @@ function normalizeWinProbabilitiesByCandidateCount(
 }
 
 // ─── FORECAST PANEL ───────────────────────────────────────────────────────────
-function ForecastPanel({ raceId, refreshTick, raceData, onForecastUpdate }: { raceId: number; refreshTick: number; raceData?: RaceDetail; onForecastUpdate?: (update: { leader: string; prob: number; runoffNeededProb: number; projectionType: "WIN" | "RUNOFF" }) => void }) {
+function ForecastPanel({ raceId, refreshTick, raceData, onForecastUpdate }: { raceId: number; refreshTick: number; raceData?: RaceDetail; onForecastUpdate?: (update: { leader: string; prob: number; runoffNeededProb: number; projectionType: "WIN" | "RUNOFF"; runoffProbs?: Record<string, number> }) => void }) {
   const defaults = RACE_FORECAST_DEFAULTS[raceId];
   const TX_RACE_IDS = [44285, 44286, 44287, 44288, 44289, 44290, 44291, 44292, 44293, 44294, 44295];
   const [raceRule, setRaceRule] = useState<RaceRule>(() => TX_RACE_IDS.includes(raceId) ? "MAJORITY" : (defaults?.raceRule ?? "PLURALITY"));
@@ -942,7 +949,23 @@ function ForecastPanel({ raceId, refreshTick, raceData, onForecastUpdate }: { ra
         const names = data.forecast.candidate_names ?? [];
         const keys = ["Candidate1", "Candidate2", "Candidate3"] as const;
 
-        if (data.forecast.race_rule === "PLURALITY" || data.forecast.race_rule === "TOP_TWO") {
+        if (data.forecast.race_rule === "TOP_TWO") {
+          // Top-2 advance — emit the two projected advancers as a RUNOFF call
+          const mvKeys = ["Candidate1", "Candidate2", "Candidate3"] as const;
+          const top2 = [...mvKeys]
+            .map((k, i) => ({ name: names[i] ?? k, votes: (data.forecast.modeled_votes?.[k] ?? 0) }))
+            .sort((a, b) => b.votes - a.votes)
+            .slice(0, 2)
+            .map(x => x.name.split(" ").pop() ?? x.name);
+          const top2Prob = Math.max(
+            data.forecast.runoff_prob?.Candidate1 ?? 0,
+            data.forecast.runoff_prob?.Candidate2 ?? 0,
+            data.forecast.runoff_prob?.Candidate3 ?? 0
+          );
+          const top2RunoffProbs: Record<string, number> = {};
+          (["Candidate1", "Candidate2", "Candidate3"] as const).forEach((k, i) => { if (names[i]) top2RunoffProbs[names[i]] = data.forecast.runoff_prob?.[k] ?? 0; });
+          onForecastUpdate({ leader: `${top2[0]} vs. ${top2[1]}`, prob: top2Prob * 100, runoffNeededProb: 0, projectionType: "RUNOFF", runoffProbs: top2RunoffProbs });
+        } else if (data.forecast.race_rule === "PLURALITY") {
           const normalized = normalizeWinProbabilitiesByCandidateCount(data.forecast.plurality_odds_to_win, candidateCount);
           const best = keys.reduce((a, b) => ((normalized[a === "Candidate1" ? "c1" : a === "Candidate2" ? "c2" : "c3"] ?? 0) >= (normalized[b === "Candidate1" ? "c1" : b === "Candidate2" ? "c2" : "c3"] ?? 0) ? a : b), "Candidate1" as typeof keys[number]);
           const bestProb = best === "Candidate1" ? normalized.c1 : best === "Candidate2" ? normalized.c2 : normalized.c3;
@@ -956,7 +979,16 @@ function ForecastPanel({ raceId, refreshTick, raceData, onForecastUpdate }: { ra
           const bestIdx = candidateWinProbs.reduce((best, val, idx, arr) => (val >= arr[best] ? idx : best), 0);
           const bestCandidateProb = candidateWinProbs[bestIdx] ?? 0;
           if (runoffNeededProb >= bestCandidateProb) {
-            onForecastUpdate({ leader: "Runoff chance", prob: runoffNeededProb * 100, runoffNeededProb, projectionType: "RUNOFF" });
+            // Identify top-2 advancers by modeled votes for the call label
+            const mvKeys = ["Candidate1", "Candidate2", "Candidate3"] as const;
+            const top2 = [...mvKeys]
+              .map((k, i) => ({ name: names[i] ?? k, votes: (data.forecast.modeled_votes?.[k] ?? 0) }))
+              .sort((a, b) => b.votes - a.votes)
+              .slice(0, 2)
+              .map(x => x.name.split(" ").pop() ?? x.name);
+            const threshRunoffProbs: Record<string, number> = {};
+            (["Candidate1", "Candidate2", "Candidate3"] as const).forEach((k, i) => { if (names[i]) threshRunoffProbs[names[i]] = data.forecast.runoff_prob?.[k] ?? 0; });
+            onForecastUpdate({ leader: `${top2[0]} vs. ${top2[1]}`, prob: runoffNeededProb * 100, runoffNeededProb, projectionType: "RUNOFF", runoffProbs: threshRunoffProbs });
           } else {
             onForecastUpdate({ leader: names[bestIdx] ?? "", prob: bestCandidateProb * 100, runoffNeededProb, projectionType: "WIN" });
           }
@@ -1197,9 +1229,11 @@ function ForecastPanel({ raceId, refreshTick, raceData, onForecastUpdate }: { ra
 // ═══════════════════════════════════════════════════════════════════════════════
 // ─── RACE PICKER PANEL (replaces old tab bar) ─────────────────────────────────
 // ═══════════════════════════════════════════════════════════════════════════════
-function RaceScrollWindow({ races, raceCache, selectedId, onSelect, search, onSearchChange, maxHeight }: {
+function RaceScrollWindow({ races, raceCache, selectedId, onSelect, search, onSearchChange, maxHeight, lockedCalls, lockedCallTypes, lockedRunoffProbs }: {
   races: FeaturedRace[]; raceCache: Record<number, RaceDetail | undefined>; selectedId: number;
-  onSelect: (id: number) => void; search: string; onSearchChange: (v: string) => void; maxHeight?: number;
+  onSelect: (id: number) => void; search: string; onSearchChange: (v: string) => void; maxHeight?: number; lockedCalls?: Record<number, string>;
+  lockedCallTypes?: Record<number, "WIN" | "RUNOFF">;
+  lockedRunoffProbs?: Record<number, Record<string, number>>;
 }) {
   const filtered = races.filter(r => !search || r.office.toLowerCase().includes(search.toLowerCase()) || r.raceType.toLowerCase().includes(search.toLowerCase()));
   const groups = filtered.reduce<{ office: string; races: FeaturedRace[] }[]>((acc, r) => {
@@ -1226,6 +1260,18 @@ function RaceScrollWindow({ races, raceCache, selectedId, onSelect, search, onSe
             {groupRaces.map(r => {
               const liveData = raceCache[r.id];
               const winner = liveData?.candidates?.find(c => c.winner);
+              const isCalled = !!(winner || lockedCalls?.[r.id] || RACE_FORECAST_DEFAULTS[r.id]?.manualCall);
+              const _callType = lockedCallTypes?.[r.id] ?? (RACE_FORECAST_DEFAULTS[r.id]?.manualCall?.includes(" vs. ") ? "RUNOFF" : "WIN");
+              const _callLabel = (() => {
+                if (!isCalled) return null;
+                if (_callType === "RUNOFF" && lockedRunoffProbs?.[r.id]) {
+                  const frags = (lockedCalls?.[r.id] ?? RACE_FORECAST_DEFAULTS[r.id]?.manualCall ?? "").split(" vs. ");
+                  const rp = lockedRunoffProbs[r.id];
+                  const allOk = frags.length >= 2 && frags.every(frag => Object.entries(rp).some(([n, p]) => n.toLowerCase().includes(frag.toLowerCase()) && p > 0.9973));
+                  return allOk ? "✓ CALLED" : "✓ RUNOFF NEEDED";
+                }
+                return "✓ CALLED";
+              })();
               const _apiReporting = getRaceReportingPct(liveData);
               const _overrideReporting = RACE_FORECAST_DEFAULTS[r.id]?.overrideReporting;
               const reporting = (typeof _overrideReporting === "number" && _overrideReporting > 0) ? _overrideReporting : _apiReporting;
@@ -1242,11 +1288,11 @@ function RaceScrollWindow({ races, raceCache, selectedId, onSelect, search, onSe
                       {hasForecast && <span style={{ flexShrink: 0, display: "inline-flex", padding: "2px 6px", border: "1px solid rgba(124,58,237,0.45)", background: "rgba(124,58,237,0.10)", fontFamily: "var(--font-body)", fontSize: "8px", fontWeight: 700, letterSpacing: "0.08em", color: "var(--purple-soft)", borderRadius: "var(--r-pill)" }}>FORECAST β</span>}
                     </div>
                     <div style={{ height: 2, background: "var(--border2)", overflow: "hidden" }}>
-                      <div style={{ height: "100%", width: `${reporting ?? 0}%`, background: winner ? "var(--win)" : raceTypeColor, opacity: 0.75, transition: "width 800ms ease" }} />
+                      <div style={{ height: "100%", width: `${reporting ?? 0}%`, background: isCalled ? "var(--win)" : raceTypeColor, opacity: 0.75, transition: "width 800ms ease" }} />
                     </div>
                   </div>
                   <div style={{ flexShrink: 0, marginLeft: 8 }}>
-                    {winner ? <span style={{ fontFamily: "var(--font-body)", fontSize: "9px", fontWeight: 700, color: "var(--win)" }}>✓</span>
+                    {isCalled ? <span style={{ fontFamily: "var(--font-body)", fontSize: "9px", fontWeight: 700, color: "var(--win)" }}>{_callLabel}</span>
                       : <span style={{ fontFamily: "var(--font-body)", fontSize: "9px", fontWeight: 700, color: isSelected ? "var(--muted)" : "var(--muted2)" }}>{reporting !== null ? `${reporting.toFixed(0)}%` : "—"}</span>}
                   </div>
                 </button>
@@ -1259,11 +1305,14 @@ function RaceScrollWindow({ races, raceCache, selectedId, onSelect, search, onSe
   );
 }
 
-function RacePickerPanel({ races, raceCache, selectedId, onSelect }: {
+function RacePickerPanel({ races, raceCache, selectedId, onSelect, lockedCalls, lockedCallTypes, lockedRunoffProbs }: {
   races: FeaturedRace[];
   raceCache: Record<number, RaceDetail | undefined>;
   selectedId: number;
   onSelect: (id: number) => void;
+  lockedCalls?: Record<number, string>;
+  lockedCallTypes?: Record<number, "WIN" | "RUNOFF">;
+  lockedRunoffProbs?: Record<number, Record<string, number>>;
 }) {
   const [search, setSearch] = useState("");
   const searchRef = useRef<HTMLInputElement>(null);
@@ -1348,6 +1397,18 @@ function RacePickerPanel({ races, raceCache, selectedId, onSelect }: {
             {groupRaces.map(r => {
               const liveData = raceCache[r.id];
               const winner = liveData?.candidates?.find(c => c.winner);
+              const isCalled = !!(winner || lockedCalls?.[r.id] || RACE_FORECAST_DEFAULTS[r.id]?.manualCall);
+              const _callType2 = lockedCallTypes?.[r.id] ?? (RACE_FORECAST_DEFAULTS[r.id]?.manualCall?.includes(" vs. ") ? "RUNOFF" : "WIN");
+              const _callLabel2 = (() => {
+                if (!isCalled) return null;
+                if (_callType2 === "RUNOFF" && lockedRunoffProbs?.[r.id]) {
+                  const frags = (lockedCalls?.[r.id] ?? RACE_FORECAST_DEFAULTS[r.id]?.manualCall ?? "").split(" vs. ");
+                  const rp = lockedRunoffProbs[r.id];
+                  const allOk = frags.length >= 2 && frags.every(frag => Object.entries(rp).some(([n, p]) => n.toLowerCase().includes(frag.toLowerCase()) && p > 0.9973));
+                  return allOk ? "✓ CALLED" : "✓ RUNOFF NEEDED";
+                }
+                return "✓ CALLED";
+              })();
               const _apiReporting = getRaceReportingPct(liveData);
               const _overrideReporting = RACE_FORECAST_DEFAULTS[r.id]?.overrideReporting;
               const reporting = (typeof _overrideReporting === "number" && _overrideReporting > 0) ? _overrideReporting : _apiReporting;
@@ -1416,10 +1477,10 @@ function RacePickerPanel({ races, raceCache, selectedId, onSelect }: {
                     {/* Reporting bar */}
                     <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
                       <div style={{ flex: 1, height: 2, background: "var(--border2)", overflow: "hidden", maxWidth: 60 }}>
-                        <div style={{ height: "100%", width: `${reporting ?? 0}%`, background: winner ? "var(--win)" : raceTypeColor, opacity: 0.8, transition: "width 800ms ease" }} />
+                        <div style={{ height: "100%", width: `${reporting ?? 0}%`, background: isCalled ? "var(--win)" : raceTypeColor, opacity: 0.8, transition: "width 800ms ease" }} />
                       </div>
-                      {winner ? (
-                        <span style={{ fontFamily: "var(--font-body)", fontSize: "9px", fontWeight: 700, color: "var(--win)", letterSpacing: "0.08em" }}>✓ CALLED</span>
+                      {isCalled ? (
+                        <span style={{ fontFamily: "var(--font-body)", fontSize: "9px", fontWeight: 700, color: "var(--win)", letterSpacing: "0.08em" }}>{_callLabel2}</span>
                       ) : leader && (reporting ?? 0) > 0 ? (
                         <span style={{ fontFamily: "var(--font-body)", fontSize: "9px", fontWeight: 600, color: "var(--muted2)", letterSpacing: "0.04em" }}>
                           {leader.name.split(" ").pop()} {fmtPct(leader.percent)}
@@ -1637,12 +1698,15 @@ export default function March3FeaturedClient() {
     RACE_FORECAST_DEFAULTS[selectedId]?.raceRule !== "PLURALITY" &&
     RACE_FORECAST_DEFAULTS[selectedId]?.raceRule !== "TOP_TWO") ||
     [44285,44286,44287,44288,44289,44290,44291,44292,44293,44295,44344,44729,44730,44209,44208].includes(selectedId);
+  const selectedRaceIsTopTwo = RACE_FORECAST_DEFAULTS[selectedId]?.raceRule === "TOP_TWO";
   const selectedWinners = selectedRace?.candidates?.filter((c) => c.winner) ?? [];
   const isRunoffConfirmed = selectedRaceIsMajority && selectedWinners.length >= 2;
-  const [forecastProj, setForecastProj] = useState<{ raceId: number; leader: string; prob: number; runoffNeededProb: number; projectionType: "WIN" | "RUNOFF" } | null>(null);
+  const [forecastProj, setForecastProj] = useState<{ raceId: number; leader: string; prob: number; runoffNeededProb: number; projectionType: "WIN" | "RUNOFF"; runoffProbs?: Record<string, number> } | null>(null);
   useEffect(() => { setForecastProj(null); }, [selectedId]);
   // Locked forecast calls — once set at >99.73%, never retracted for that race
   const [lockedCalls, setLockedCalls] = useState<Record<number, string>>({});
+  const [lockedCallTypes, setLockedCallTypes] = useState<Record<number, "WIN" | "RUNOFF">>({}); 
+  const [lockedRunoffProbs, setLockedRunoffProbs] = useState<Record<number, Record<string, number>>>({});
   const showProjectionDebug = process.env.NODE_ENV !== "production";
   // Spotlight meta for the currently selected race (null when not a spotlight race)
   const spotlightMeta = SPOTLIGHT_RACES.find(s => s.id === selectedId) ?? null;
@@ -1663,13 +1727,14 @@ export default function March3FeaturedClient() {
   // Don't show a lean/projection until precincts start reporting
   const displayProj = selectedReporting > 0 ? effectiveProj : null;
   // Auto-call: forecast races called at >99.73% (3σ); once locked, never retracted
-  const liveForecastCalled = hasForecastForSelected && forecastProj?.raceId === selectedId && forecastProj?.projectionType === "WIN" && (forecastProj?.prob ?? 0) > 99.73 ? forecastProj!.leader : null;
+  const liveForecastCalled = hasForecastForSelected && forecastProj?.raceId === selectedId && (forecastProj?.prob ?? 0) > 99.73 ? forecastProj!.leader : null;
   useEffect(() => {
     if (liveForecastCalled && selectedId && !lockedCalls[selectedId]) {
       setLockedCalls(prev => ({ ...prev, [selectedId]: liveForecastCalled }));
+      setLockedCallTypes(prev => ({ ...prev, [selectedId]: forecastProj?.projectionType ?? "WIN" }));
     }
   }, [liveForecastCalled, selectedId]);
-  const forecastCalled = lockedCalls[selectedId] ?? liveForecastCalled;
+  const forecastCalled = RACE_FORECAST_DEFAULTS[selectedId]?.manualCall ?? lockedCalls[selectedId] ?? liveForecastCalled;
 
   const timeStr = nowMs > 0
     ? new Date(nowMs).toLocaleTimeString("en-US", { hour12: false, hour: "2-digit", minute: "2-digit", second: "2-digit" })
@@ -1697,7 +1762,7 @@ export default function March3FeaturedClient() {
         .res-num { font-family:var(--font-body); font-size:10.5px; color:var(--muted); font-variant-numeric:tabular-nums; }
         .res-pct-big { font-family:var(--font-numeric); font-size:13px; font-weight:800; color:var(--foreground); font-variant-numeric:tabular-nums; }
         .res-pct-xl { font-family:var(--font-numeric); font-size:15px; font-weight:800; color:var(--foreground); font-variant-numeric:tabular-nums; line-height:1; }
-        .res-pct-topline { font-family:var(--font-numeric); font-size:clamp(20px,2.2vw,28px); font-weight:800; color:var(--foreground); font-variant-numeric:tabular-nums; line-height:1; }
+        .res-pct-topline { font-family:var(--font-numeric); font-size:clamp(16px,1.8vw,22px); font-weight:800; color:var(--foreground); font-variant-numeric:tabular-nums; line-height:1; }
         .res-stat-label { font-family:var(--font-body); font-size:10px; font-weight:700; letter-spacing:0.18em; text-transform:uppercase; color:var(--muted2); }
         .res-stat-val { font-family:var(--font-body); font-size:10px; font-weight:700; letter-spacing:0.14em; color:var(--muted); }
         .res-stat-row { display:flex; align-items:center; justify-content:space-between; }
@@ -1748,7 +1813,7 @@ export default function March3FeaturedClient() {
         .res-cand-dot { display:inline-block; width:8px; height:8px; border-radius:50%; flex-shrink:0; }
         .res-cand-name { font-family:var(--font-body); font-size:12px; font-weight:700; letter-spacing:0.06em; color:var(--foreground); }
         .res-cand-name-lg { font-family:var(--font-body); font-size:13px; font-weight:900; letter-spacing:0.06em; text-transform:uppercase; color:var(--foreground); }
-        .res-cand-party { font-family:var(--font-body); font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:var(--muted2); margin-top:1px; }
+        .res-cand-party { font-family:var(--font-body); font-size:9px; letter-spacing:0.10em; text-transform:uppercase; color:var(--muted2); margin-top:1px; }
         .res-thead { position:sticky; top:0; background:var(--panel2); border-bottom:1px solid var(--border); }
         .res-table-row { border-bottom:1px solid var(--border); transition:background 100ms ease; }
         .res-table-row:hover { background:rgba(124,58,237,0.04); }
@@ -2204,7 +2269,19 @@ export default function March3FeaturedClient() {
                   const _ov = RACE_FORECAST_DEFAULTS[r.id]?.overrideReporting;
                   const reporting = (typeof _ov === "number" && _ov > 0) ? _ov : _apiReporting;
                   const raceTypeShort = getRaceTypeShort(r.raceType);
-                  const statusStr = winner ? " ✓ CALLED" : reporting !== null && reporting > 0 ? ` · ${reporting.toFixed(0)}% IN` : "";
+                  const isMobileCalled = !!(winner || lockedCalls[r.id] || RACE_FORECAST_DEFAULTS[r.id]?.manualCall);
+                  const _mCallType = lockedCallTypes[r.id] ?? (RACE_FORECAST_DEFAULTS[r.id]?.manualCall?.includes(" vs. ") ? "RUNOFF" : "WIN");
+                  const _mCallLabel = (() => {
+                    if (!isMobileCalled) return null;
+                    if (_mCallType === "RUNOFF" && lockedRunoffProbs[r.id]) {
+                      const frags = (lockedCalls[r.id] ?? RACE_FORECAST_DEFAULTS[r.id]?.manualCall ?? "").split(" vs. ");
+                      const rp = lockedRunoffProbs[r.id];
+                      const allOk = frags.length >= 2 && frags.every(frag => Object.entries(rp).some(([n, p]) => n.toLowerCase().includes(frag.toLowerCase()) && p > 0.9973));
+                      return allOk ? "✓ CALLED" : "✓ RUNOFF NEEDED";
+                    }
+                    return "✓ CALLED";
+                  })();
+                  const statusStr = isMobileCalled ? ` ${_mCallLabel}` : reporting !== null && reporting > 0 ? ` · ${reporting.toFixed(0)}% IN` : "";
                   return (
                     <option key={r.id} value={r.id}>
                       [{raceTypeShort}] {r.office}{statusStr}
@@ -2223,10 +2300,22 @@ export default function March3FeaturedClient() {
             const _ovRpt = RACE_FORECAST_DEFAULTS[selectedId]?.overrideReporting;
             const reporting = (typeof _ovRpt === "number" && _ovRpt > 0) ? _ovRpt : _apiRpt;
             const raceTypeColor = meta ? getRaceTypeColor(meta.raceType) : "rgba(255,255,255,0.4)";
+            const isMobileQuickCalled = !!(winner || lockedCalls[selectedId] || RACE_FORECAST_DEFAULTS[selectedId]?.manualCall);
+            const _mqCallType = lockedCallTypes[selectedId] ?? (RACE_FORECAST_DEFAULTS[selectedId]?.manualCall?.includes(" vs. ") ? "RUNOFF" : "WIN");
+            const _mqCallLabel = (() => {
+              if (!isMobileQuickCalled) return null;
+              if (_mqCallType === "RUNOFF" && lockedRunoffProbs[selectedId]) {
+                const frags = (lockedCalls[selectedId] ?? RACE_FORECAST_DEFAULTS[selectedId]?.manualCall ?? "").split(" vs. ");
+                const rp = lockedRunoffProbs[selectedId];
+                const allOk = frags.length >= 2 && frags.every(frag => Object.entries(rp).some(([n, p]) => n.toLowerCase().includes(frag.toLowerCase()) && p > 0.9973));
+                return allOk ? "✓ CALLED" : "✓ RUNOFF NEEDED";
+              }
+              return "✓ CALLED";
+            })();
             return (
               <div style={{ flexShrink: 0, display: "flex", alignItems: "center", gap: 6 }}>
-                {winner
-                  ? <span className="res-badge res-badge-win">✓ CALLED</span>
+                {isMobileQuickCalled
+                  ? <span className="res-badge res-badge-win">{_mqCallLabel}</span>
                   : <span style={{ fontFamily: "var(--font-body)", fontSize: "9px", fontWeight: 700, color: raceTypeColor }}>{reporting !== null ? `${reporting.toFixed(0)}%` : "—"}</span>
                 }
               </div>
@@ -2238,7 +2327,7 @@ export default function March3FeaturedClient() {
         {/* ── MOBILE RACE LIST — phones only, above map ── */}
         <div className="res-mobile-race-search">
           <div style={{ margin: "8px 10px 0", border: "1px solid var(--border)" }}>
-            <RaceScrollWindow races={racesForState} raceCache={patchedRaceCache} selectedId={selectedId} onSelect={setSelectedId} search={scrollWindowSearch} onSearchChange={setScrollWindowSearch} maxHeight={200} />
+            <RaceScrollWindow races={racesForState} raceCache={patchedRaceCache} selectedId={selectedId} onSelect={setSelectedId} search={scrollWindowSearch} onSearchChange={setScrollWindowSearch} maxHeight={200} lockedCalls={lockedCalls} lockedCallTypes={lockedCallTypes} lockedRunoffProbs={lockedRunoffProbs} />
           </div>
         </div>
 
@@ -2287,6 +2376,9 @@ export default function March3FeaturedClient() {
                 raceCache={patchedRaceCache}
                 selectedId={selectedId}
                 onSelect={setSelectedId}
+                lockedCalls={lockedCalls}
+                lockedCallTypes={lockedCallTypes}
+                lockedRunoffProbs={lockedRunoffProbs}
               />
             </div>
 
@@ -2359,7 +2451,7 @@ export default function March3FeaturedClient() {
 
             {/* TABLET RACE SCROLL — hidden on desktop, shown on tablet */}
             <div className="res-race-scroll-window">
-              <RaceScrollWindow races={racesForState} raceCache={patchedRaceCache} selectedId={selectedId} onSelect={setSelectedId} search={scrollWindowSearch} onSearchChange={setScrollWindowSearch} />
+              <RaceScrollWindow races={racesForState} raceCache={patchedRaceCache} selectedId={selectedId} onSelect={setSelectedId} search={scrollWindowSearch} onSearchChange={setScrollWindowSearch} lockedCalls={lockedCalls} lockedCallTypes={lockedCallTypes} lockedRunoffProbs={lockedRunoffProbs} />
             </div>
 
             {/* RACE STATUS — top */}
@@ -2380,27 +2472,57 @@ export default function March3FeaturedClient() {
                   </div>
                 </div>
                 <div className="res-stat-block">
+                  {/* Derive which runoff advancers are individually confirmed (>99.73%) */}
+                  {(() => {
+                    const _runoffProbs = lockedRunoffProbs[selectedId] ?? (forecastProj?.raceId === selectedId ? forecastProj.runoffProbs : undefined);
+                    const _confirmedAdvancers = _runoffProbs
+                      ? Object.entries(_runoffProbs).filter(([, p]) => p > 0.9973).map(([n]) => n)
+                      : null;
+                    const _isRunoffCall = !!(forecastCalled && forecastProj?.projectionType === "RUNOFF");
+                    const _top2Lines: string[] = _runoffProbs
+                      ? Object.entries(_runoffProbs).sort(([, a], [, b]) => b - a).slice(0, 2).map(([n, p]) => `${n} — ${(p * 100).toFixed(1)}% to adv.`)
+                      : [];
+                    const _projName = (() => {
+                      if (isRunoffConfirmed) return "RUNOFF NEEDED";
+                      if (forecastCalled) {
+                        if (_isRunoffCall) {
+                          if (selectedRaceIsTopTwo) {
+                            return _top2Lines.length > 0 ? _top2Lines.join("\n") : "TOP 2 PROJECTED";
+                          }
+                          if (_confirmedAdvancers && _confirmedAdvancers.length > 0) {
+                            return _confirmedAdvancers.map(n => n.split(" ").pop()).join(" vs. ");
+                          }
+                          return _top2Lines.length > 0 ? _top2Lines.join("\n") : "RUNOFF PROJECTED";
+                        }
+                        return `\u2713 ${forecastCalled}`;
+                      }
+                      if (selectedWinner) return `\u2713 ${selectedWinner.name}`;
+                      if (displayProj?.projectionType === "RUNOFF") return displayProj.leader;
+                      return displayProj ? displayProj.leader : "PENDING";
+                    })();
+                    return (
+                      <>
                   <div className="res-stat-row" style={{ marginBottom: "5px" }}>
                     <span className="res-stat-block-label">PROJECTION</span>
-                    <span className="res-note" style={{ color: isRunoffConfirmed ? "#f59e0b" : forecastCalled ? "var(--win)" : selectedWinner ? "var(--win)" : (displayProj?.projectionType === "RUNOFF") ? "#f59e0b" : displayProj ? "var(--purple-soft)" : "var(--muted2)", fontWeight: 700 }}>
-                      {isRunoffConfirmed ? "CONFIRMED" : forecastCalled ? "FORECAST CALL" : selectedWinner ? "OFFICIAL" : displayProj ? `${displayProj.prob.toFixed(1)}%` : "—"}
+                    <span className="res-note" style={{ color: isRunoffConfirmed ? "var(--win)" : forecastCalled ? "var(--win)" : selectedWinner ? "var(--win)" : (displayProj?.projectionType === "RUNOFF") ? "var(--win)" : displayProj ? "var(--purple-soft)" : "var(--muted2)", fontWeight: 700 }}>
+                      {isRunoffConfirmed ? "CONFIRMED" : forecastCalled ? (_isRunoffCall ? (selectedRaceIsTopTwo ? "TOP 2 PROJECTED" : "RUNOFF NEEDED") : "FORECAST CALL") : selectedWinner ? "OFFICIAL" : displayProj ? `${displayProj.prob.toFixed(1)}%` : "—"}
                     </span>
                   </div>
-                  <div style={{ fontFamily: "var(--font-body)", fontSize: "12px", fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: isRunoffConfirmed ? "#f59e0b" : (displayProj?.projectionType === "RUNOFF") ? "#f59e0b" : "var(--foreground)" }}>
-                    {isRunoffConfirmed ? "⚡ RUNOFF NEEDED" : forecastCalled ? `✓ ${forecastCalled}` : selectedWinner ? `✓ ${selectedWinner.name}` : displayProj ? displayProj.leader : "PENDING"}
+                  <div style={{ fontFamily: "var(--font-body)", fontSize: "11px", fontWeight: 700, letterSpacing: "0.04em", textTransform: "uppercase", color: "var(--foreground)", lineHeight: "1.6" }}>
+                    {_projName.includes("\n")
+                      ? _projName.split("\n").map((line, i) => <div key={i}>{line}</div>)
+                      : _projName}
                   </div>
+                      </>
+                    );
+                  })()}
                   {isRunoffConfirmed && (
                     <div className="res-note" style={{ marginTop: 4, color: "rgba(255,255,255,0.4)" }}>
                       {selectedWinners.map(w => w.name).join(" vs ")} advance
                     </div>
                   )}
                   {displayProj && !selectedWinner && !isRunoffConfirmed && (
-                    <div className="res-bar-track" style={{ marginTop: "7px" }}><div className="res-bar-fill" style={{ width: `${Math.max(0, Math.min(100, displayProj.prob))}%`, background: displayProj.projectionType === "RUNOFF" ? "linear-gradient(90deg,#d97706,#f59e0b)" : "linear-gradient(90deg,var(--purple),var(--blue2))" }} /></div>
-                  )}
-                  {selectedRaceIsMajority && displayProj && !selectedWinner && !isRunoffConfirmed && (
-                    <div className="res-note" style={{ marginTop: 5, color: "rgba(245,158,11,0.85)", letterSpacing: "0.12em" }}>
-                      outright winner chance: {(100 - (displayProj.runoffNeededProb * 100)).toFixed(1)}%
-                    </div>
+                    <div className="res-bar-track" style={{ marginTop: "7px" }}><div className="res-bar-fill" style={{ width: `${Math.max(0, Math.min(100, displayProj.prob))}%`, background: "linear-gradient(90deg,var(--purple),var(--blue2))" }} /></div>
                   )}
                 </div>
                 {selectedRace?.candidates && selectedRace.candidates.length > 0 && (() => {
@@ -2415,12 +2537,24 @@ export default function March3FeaturedClient() {
                   return (
                     <div style={{ marginTop: 4 }}>
                       <div className="res-note" style={{ marginBottom: 8 }}>VOTE SHARE</div>
-                      {vsTop.map((c) => (
+                      {vsTop.map((c) => {
+                        const vsCalledNames = forecastCalled ? (() => {
+                          if (forecastProj?.raceId === selectedId && forecastProj.projectionType === "RUNOFF" && forecastProj.runoffProbs) {
+                            // Use per-candidate threshold — don't fall back if nobody qualifies yet
+                            return Object.entries(forecastProj.runoffProbs).filter(([, p]) => p > 0.9973).map(([n]) => n);
+                          }
+                          return forecastCalled.split(" vs. ");
+                        })() : null;
+                        const vsIsCalled = c.winner || !!(vsCalledNames?.some(n => c.name.toLowerCase().includes(n.toLowerCase())));
+                        return (
                         <div key={c.name} style={{ marginBottom: 8 }}>
                           <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 3 }}>
                             <span style={{ fontFamily: "var(--font-body)", fontSize: "11px", fontWeight: 700, letterSpacing: "0.04em", color: "var(--muted)", display: "flex", alignItems: "center", gap: 5 }}>
                               <span style={{ width: 5, height: 5, borderRadius: "50%", background: c.color, display: "inline-block", flexShrink: 0 }} />
                               {c.name}
+                              {vsIsCalled && (
+                                <svg viewBox="0 0 10 10" width="9" height="9" style={{ flexShrink: 0 }}><circle cx="5" cy="5" r="5" fill="#22c55e" /><path d="M2.5 5l2 2L7.5 3" stroke="white" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" fill="none" /></svg>
+                              )}
                             </span>
                             <span style={{ display: "flex", alignItems: "center", gap: 6 }}>
                               {c.votes > 0 && <span style={{ fontFamily: "var(--font-body)", fontSize: "9px", fontWeight: 700, color: "var(--muted2)" }}>{c.votes.toLocaleString()} VOTES</span>}
@@ -2431,7 +2565,8 @@ export default function March3FeaturedClient() {
                             <div style={{ height: "100%", width: `${c.percent ?? 0}%`, background: c.color, transition: "width 600ms ease" }} />
                           </div>
                         </div>
-                      ))}
+                        );
+                      })}
                       {vsRest.length > 0 && (
                         <div style={{ marginBottom: 8, opacity: 0.6 }}>
                           <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 3 }}>
@@ -2455,7 +2590,12 @@ export default function March3FeaturedClient() {
             {/* FORECAST */}
             <div className="res-forecast-wrap">
               {hasForecastForSelected ? (
-                <ForecastPanel key={selectedId} raceId={selectedId} refreshTick={refreshTick} raceData={selectedRace} onForecastUpdate={(update) => setForecastProj({ ...update, raceId: selectedId })} />
+                <ForecastPanel key={selectedId} raceId={selectedId} refreshTick={refreshTick} raceData={selectedRace} onForecastUpdate={(update) => {
+                  setForecastProj({ ...update, raceId: selectedId });
+                  if (update.projectionType === "RUNOFF" && update.runoffProbs) {
+                    setLockedRunoffProbs(prev => ({ ...prev, [selectedId]: update.runoffProbs! }));
+                  }
+                }} />
               ) : (
               <div className="res-panel" style={{ display: "flex", flexDirection: "column", flex: 1 }}>
                 <div className="res-panel-header">
@@ -2486,7 +2626,14 @@ export default function March3FeaturedClient() {
               </div>
               <div className="res-topline-body" style={{ overflowY: "auto", flex: 1, minHeight: 0, scrollbarGutter: "stable", padding: "6px 6px 6px 12px" }}>
                 {selectedRace?.candidates
-                  ? <CandidateList candidates={selectedRace.candidates} reporting={effectiveReporting} raceId={selectedId} isMajorityRunoff={isRunoffConfirmed} />
+                  ? <CandidateList candidates={selectedRace.candidates} reporting={effectiveReporting} raceId={selectedId} isMajorityRunoff={isRunoffConfirmed} isTopTwo={selectedRaceIsTopTwo} calledNames={(() => {
+                      if (!forecastCalled) return undefined;
+                      if (forecastProj?.raceId === selectedId && forecastProj.projectionType === "RUNOFF" && forecastProj.runoffProbs) {
+                        // Use per-candidate threshold — don't fall back if nobody qualifies yet
+                        return Object.entries(forecastProj.runoffProbs).filter(([, p]) => p > 0.9973).map(([n]) => n);
+                      }
+                      return forecastCalled.split(" vs. ");
+                    })()} />
                   : <div style={{ padding: "32px 0", textAlign: "center" }} className="res-note">LOADING…</div>
                 }
               </div>
