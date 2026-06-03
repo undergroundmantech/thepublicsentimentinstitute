@@ -1144,50 +1144,101 @@ function ForecastPanel({ raceId, refreshTick, raceData, onForecastUpdate }: { ra
               <span className="res-note" style={{ color: "var(--muted2)" }}>{forecast.race.percent_reporting}% REPORTING</span>
               <span className="res-badge res-badge-red">{raceRule === "PLURALITY" ? "PLURALITY" : raceRule === "TOP_TWO" ? "TOP TWO" : raceRule === "MAJORITY" || raceRule === "MAJORITY_RUNOFF" ? "MAJORITY" : raceRule === "THRESHOLD_35_CONVENTION" ? "THRESHOLD 35%" : "THRESHOLD 35%"}</span>
             </div>
-            <div style={{ marginBottom: 12, padding: "12px 12px", background: "var(--panel2)", border: "1px solid var(--border)", borderRadius: "var(--r-sm)" }}>
-              <div style={{ fontFamily: "var(--font-body)", fontSize: "10px", fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--muted2)", marginBottom: 10 }}>{raceRule === "TOP_TWO" ? "ADVANCEMENT SHARE · TOP 2 ADVANCE" : `WIN PROBABILITY · ${raceRule === "PLURALITY" ? "MOST VOTES" : (raceRule === "THRESHOLD_35_CONVENTION" || raceRule === "THRESHOLD_35_RUNOFF") ? "THRESHOLD ≥35%" : "MAJORITY ≥50%"}`}</div>
-              <SwingOMeter candidates={forecast.forecast.candidate_names ?? ["C1", "C2", "C3", "Others"]} colors={forecast.forecast.candidate_colors ?? ["#3b82f6", "#ef4444", "#22c55e", "#94a3b8"]} probabilities={swingoProbs} raceRule={raceRule} reportingPct={forecast.race.percent_reporting} candidateCount={activeCandidateCount} />
-            </div>
-            <div style={{ display: "grid", gridTemplateColumns: activeCandidateCount >= 3 ? "1fr 1fr 1fr" : activeCandidateCount === 2 ? "1fr 1fr" : "1fr", gap: 5, marginBottom: 12 }}>
-              {(["Candidate1", "Candidate2", "Candidate3"] as const).filter((_, idx) => idx < activeCandidateCount).map((key) => {
-                const color = candidateColors[key], share = forecast.forecast.modeled_share[key], votes = forecast.forecast.modeled_votes[key], isLeader = forecast.forecast.leader === key;
-                return (
-                  <div key={key} style={{ padding: "8px 8px 7px", background: "var(--panel2)", border: `1px solid ${isLeader ? color + "44" : "var(--border)"}`, borderRadius: "var(--r-sm)" }}>
-                    <div style={{ fontFamily: "var(--font-body)", fontSize: "9px", fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", color: color + "cc", marginBottom: 3, lineHeight: 1.3 }}>{formatCandidateName(candidateLabels[key])}</div>
-                    <div style={{ fontFamily: "var(--font-numeric)", fontSize: "18px", fontWeight: 800, color, lineHeight: 1 }}>{fcastPct(share)}</div>
-                    <div style={{ fontFamily: "var(--font-body)", fontSize: "9px", letterSpacing: "0.06em", color: "var(--muted2)", marginTop: 2 }}>{fcastFmt(votes)} PROJ</div>
-                    {isLeader && <div style={{ marginTop: 5, fontSize: "8px", color, fontWeight: 700, fontFamily: "var(--font-body)", letterSpacing: "0.12em", textTransform: "uppercase", border: `1px solid ${color}44`, padding: "1px 5px", borderRadius: "var(--r-pill)", display: "inline-block" }}>LEADER</div>}
-                  </div>
-                );
-              })}
-            </div>
-            {raceRule === "TOP_TWO" && (
-              <div style={{ marginBottom: 12, padding: "9px 12px", background: "rgba(59,130,246,0.05)", border: "1px solid rgba(59,130,246,0.18)", borderRadius: "var(--r-sm)" }}>
-                <div style={{ fontFamily: "var(--font-body)", fontSize: "11px", fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", color: "rgba(96,165,250,0.90)", marginBottom: 9 }}>TOP 2 ADVANCEMENT ODDS</div>
-                {(["Candidate1", "Candidate2", "Candidate3"] as const).filter((_, idx) => idx < activeCandidateCount).map(k => {
+            {raceRule === "TOP_TWO" ? (
+              <div style={{ marginBottom: 12, padding: "12px 12px", background: "var(--panel2)", border: "1px solid var(--border)", borderRadius: "var(--r-sm)" }}>
+                <div style={{ fontFamily: "var(--font-body)", fontSize: "10px", fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--muted2)", marginBottom: 12 }}>ADVANCEMENT PROBABILITY · TOP 2 ADVANCE</div>
+                {((["Candidate1", "Candidate2", "Candidate3"] as const).filter((_, idx) => idx < activeCandidateCount).slice().sort((a, b) => (forecast.forecast.runoff_prob[b] ?? 0) - (forecast.forecast.runoff_prob[a] ?? 0))).map(k => {
                   const advProb = forecast.forecast.runoff_prob[k] ?? 0;
+                  const color = candidateColors[k];
+                  const isCalled = advProb >= 0.9973;
                   return (
-                    <div key={k} style={{ marginBottom: 8 }}>
-                      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 3 }}>
+                    <div key={k} style={{ marginBottom: 11 }}>
+                      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 5 }}>
                         <div style={{ display: "flex", alignItems: "center", gap: 5 }}>
-                          <span style={{ width: 6, height: 6, borderRadius: "50%", background: candidateColors[k], display: "inline-block", flexShrink: 0 }} />
+                          {isCalled && <span style={{ color: "rgba(255,255,255,0.85)", fontSize: "10px", lineHeight: 1 }}>✓</span>}
                           <span style={{ fontFamily: "var(--font-body)", fontSize: "11px", letterSpacing: "0.06em", textTransform: "uppercase", color: "var(--muted)" }}>{candidateLabels[k]}</span>
                         </div>
-                        <span style={{ fontFamily: "var(--font-numeric)", fontSize: "13px", fontWeight: 800, color: candidateColors[k] }}>{fcastPct(advProb)}</span>
+                        <span style={{ fontFamily: "var(--font-numeric)", fontSize: "14px", fontWeight: 800, color }}>{fcastPct(advProb)}</span>
                       </div>
-                      <div style={{ height: 3, background: "var(--border2)", overflow: "hidden", borderRadius: 99 }}>
-                        <div style={{ height: "100%", width: fcastPct(Math.min(advProb, 1)), background: candidateColors[k], opacity: 0.75, transition: "width 600ms ease" }} />
+                      <div style={{ height: 12, background: "var(--border2)", overflow: "hidden" }}>
+                        <div style={{ height: "100%", width: fcastPct(Math.min(advProb, 1)), background: color, transition: "width 600ms ease", opacity: 0.85 }} />
                       </div>
                     </div>
                   );
                 })}
               </div>
+            ) : (
+              <div style={{ marginBottom: 12, padding: "12px 12px", background: "var(--panel2)", border: "1px solid var(--border)", borderRadius: "var(--r-sm)" }}>
+                <div style={{ fontFamily: "var(--font-body)", fontSize: "10px", fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--muted2)", marginBottom: 10 }}>{`WIN PROBABILITY · ${raceRule === "PLURALITY" ? "MOST VOTES" : (raceRule === "THRESHOLD_35_CONVENTION" || raceRule === "THRESHOLD_35_RUNOFF") ? "THRESHOLD ≥35%" : "MAJORITY ≥50%"}`}</div>
+                <SwingOMeter candidates={forecast.forecast.candidate_names ?? ["C1", "C2", "C3", "Others"]} colors={forecast.forecast.candidate_colors ?? ["#3b82f6", "#ef4444", "#22c55e", "#94a3b8"]} probabilities={swingoProbs} raceRule={raceRule} reportingPct={forecast.race.percent_reporting} candidateCount={activeCandidateCount} />
+              </div>
             )}
+            <div style={{ marginBottom: 4 }}>
+              <div style={{ marginBottom: 2 }}>
+                <span style={{ fontFamily: "var(--font-body)", fontSize: "10px", fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--muted2)" }}>PROJECTED FINAL RESULT</span>
+              </div>
+              {(() => {
+                const _rem = forecast.forecast.modeled_vote_remaining ?? 0;
+                const _remLabel = _rem < 5000 ? "<5,000 VOTES REMAINING" : `~${(Math.round(_rem / 1000) * 1000).toLocaleString()} VOTES REMAINING`;
+                const _remColor = _rem < 5000 ? "var(--win)" : _rem < 50000 ? "#f59e0b" : "var(--muted2)";
+                return <div style={{ fontFamily: "var(--font-body)", fontSize: "9px", letterSpacing: "0.08em", textTransform: "uppercase", color: _remColor, marginBottom: 8 }}>{_remLabel}</div>;
+              })()}
+            </div>
+            <div style={{ display: "grid", gridTemplateColumns: activeCandidateCount >= 3 ? "1fr 1fr 1fr" : activeCandidateCount === 2 ? "1fr 1fr" : "1fr", gap: 5, marginBottom: 12 }}>
+              {(["Candidate1", "Candidate2", "Candidate3"] as const).filter((_, idx) => idx < activeCandidateCount).map((key) => {
+                const color = candidateColors[key], share = forecast.forecast.modeled_share[key], votes = forecast.forecast.modeled_votes[key], isLeader = forecast.forecast.leader === key;
+                const _sdVotes = forecast.forecast.sd_race ?? 0;
+                const _totalProj = forecast.forecast.modeled_total_vote ?? 1;
+                const _marginOfError = _totalProj > 0 ? (_sdVotes / _totalProj) * 100 : 0;
+                return (
+                  <div key={key} style={{ padding: "8px 8px 7px", background: "var(--panel2)", border: `1px solid ${isLeader ? color + "44" : "var(--border)"}`, borderRadius: "var(--r-sm)" }}>
+                    <div style={{ fontFamily: "var(--font-body)", fontSize: "9px", fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", color: color + "cc", marginBottom: 3, lineHeight: 1.3 }}>{formatCandidateName(candidateLabels[key])}</div>
+                    <div style={{ fontFamily: "var(--font-numeric)", fontSize: "18px", fontWeight: 800, color, lineHeight: 1 }}>{fcastPct(share)}</div>
+                    <div style={{ fontFamily: "var(--font-body)", fontSize: "9px", letterSpacing: "0.06em", color: "var(--muted2)", marginTop: 2 }}>{_marginOfError > 0.05 ? `±${_marginOfError.toFixed(1)}pp` : fcastFmt(votes)}</div>
+                    {isLeader && <div style={{ marginTop: 5, fontSize: "8px", color, fontWeight: 700, fontFamily: "var(--font-body)", letterSpacing: "0.12em", textTransform: "uppercase", border: `1px solid ${color}44`, padding: "1px 5px", borderRadius: "var(--r-pill)", display: "inline-block" }}>LEADER</div>}
+                  </div>
+                );
+              })}
+            </div>
+            {raceRule === "TOP_TWO" && activeCandidateCount >= 3 && (() => {
+              const _sorted = (["Candidate1", "Candidate2", "Candidate3"] as const)
+                .filter((_, idx) => idx < activeCandidateCount)
+                .map(k => ({ k, name: candidateLabels[k], votes: forecast.forecast.modeled_votes[k] ?? 0, share: (forecast.forecast.modeled_share[k] ?? 0) * 100, color: candidateColors[k] }))
+                .sort((a, b) => b.votes - a.votes);
+              const _2nd = _sorted[1], _3rd = _sorted[2];
+              if (!_2nd || !_3rd) return null;
+              const _gapVotes = Math.round(_2nd.votes - _3rd.votes);
+              const _gapPct = (_2nd.share - _3rd.share).toFixed(1);
+              const _remaining = forecast.forecast.modeled_vote_remaining ?? 0;
+              const _needsPct = _remaining > 0 ? ((_gapVotes / _remaining) * 100).toFixed(1) : null;
+              return (
+                <div style={{ marginBottom: 12, padding: "9px 12px", background: "rgba(59,130,246,0.05)", border: "1px solid rgba(59,130,246,0.18)", borderRadius: "var(--r-sm)" }}>
+                  <div style={{ fontFamily: "var(--font-body)", fontSize: "11px", fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", color: "rgba(96,165,250,0.90)", marginBottom: 9 }}>2ND PLACE BUBBLE WATCH</div>
+                  <div style={{ display: "flex", gap: 6, marginBottom: 8 }}>
+                    {[_2nd, _3rd].map((c, i) => (
+                      <div key={c.k} style={{ flex: 1, padding: "7px 8px", background: "var(--panel2)", border: `1px solid ${c.color}33`, borderRadius: "var(--r-sm)" }}>
+                        <div style={{ fontFamily: "var(--font-body)", fontSize: "9px", fontWeight: 700, letterSpacing: "0.10em", textTransform: "uppercase", color: c.color + "cc", marginBottom: 2 }}>{i === 0 ? "2ND" : "3RD"} · {c.name}</div>
+                        <div style={{ fontFamily: "var(--font-numeric)", fontSize: "17px", fontWeight: 800, color: c.color, lineHeight: 1 }}>{c.share.toFixed(1)}%</div>
+                        <div style={{ fontFamily: "var(--font-body)", fontSize: "9px", color: "var(--muted2)", marginTop: 2 }}>{fcastFmt(c.votes)} proj</div>
+                      </div>
+                    ))}
+                  </div>
+                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "3px 12px" }}>
+                    {[["GAP (VOTES)", _gapVotes > 0 ? `+${_gapVotes.toLocaleString()}` : _gapVotes.toLocaleString()], ["GAP (%)", `${_gapPct}%`], ["VOTES REMAINING", fcastFmt(_remaining)], ["NEEDS TO FLIP", _needsPct ? `${_needsPct}% of rem.` : "—"]].map(([label, val]) => (
+                      <div key={label} style={{ paddingBottom: 3, borderBottom: "1px solid var(--border)" }}>
+                        <div style={{ fontFamily: "var(--font-body)", fontSize: "9px", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--muted2)", marginBottom: 1 }}>{label}</div>
+                        <div style={{ fontFamily: "var(--font-body)", fontSize: "11px", fontWeight: 700, color: "var(--muted)" }}>{val}</div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              );
+            })()}
             {(raceRule !== "PLURALITY" && raceRule !== "TOP_TWO") && (
-              <div style={{ marginBottom: 12, padding: "9px 12px", background: "rgba(245,158,11,0.05)", border: "1px solid rgba(245,158,11,0.15)", borderRadius: "var(--r-sm)" }}>
-              <div style={{ fontFamily: "var(--font-body)", fontSize: "11px", fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", color: "rgba(245,158,11,0.85)", marginBottom: 7 }}>{raceRule === "THRESHOLD_35_CONVENTION" ? "CONVENTION PROBABILITY" : raceRule === "MAJORITY_RUNOFF" || raceRule === "MAJORITY" ? "RUNOFF PROBABILITY" : "RUNOFF PROBABILITY"}</div>
-                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 4 }}><span style={{ fontFamily: "var(--font-body)", fontSize: "11px", letterSpacing: "0.08em", textTransform: "uppercase", color: "var(--muted)" }}>RUNOFF NEEDED</span><span style={{ fontFamily: "var(--font-numeric)", fontSize: "13px", fontWeight: 800, color: "#f59e0b" }}>{fcastPct(forecast.forecast.runoff_needed_prob)}</span></div>
-                <div style={{ height: 3, background: "var(--border2)", overflow: "hidden", marginBottom: 8 }}><div style={{ height: "100%", width: fcastPct(Math.min(forecast.forecast.runoff_needed_prob, 1)), background: "#f59e0b", transition: "width 600ms ease" }} /></div>
+              <div style={{ marginBottom: 12, padding: "9px 12px", background: "rgba(59,130,246,0.05)", border: "1px solid rgba(59,130,246,0.18)", borderRadius: "var(--r-sm)" }}>
+              <div style={{ fontFamily: "var(--font-body)", fontSize: "11px", fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", color: "rgba(96,165,250,0.90)", marginBottom: 9 }}>{raceRule === "THRESHOLD_35_CONVENTION" ? "CONVENTION PROBABILITY" : "RUNOFF PROBABILITY"}</div>
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 4 }}><span style={{ fontFamily: "var(--font-body)", fontSize: "11px", letterSpacing: "0.08em", textTransform: "uppercase", color: "var(--muted)" }}>RUNOFF NEEDED</span><span style={{ fontFamily: "var(--font-numeric)", fontSize: "13px", fontWeight: 800, color: "rgba(96,165,250,0.90)" }}>{fcastPct(forecast.forecast.runoff_needed_prob)}</span></div>
+                <div style={{ height: 3, background: "var(--border2)", overflow: "hidden", marginBottom: 8, borderRadius: 99 }}><div style={{ height: "100%", width: fcastPct(Math.min(forecast.forecast.runoff_needed_prob, 1)), background: "rgba(96,165,250,0.75)", transition: "width 600ms ease" }} /></div>
                 {FORECAST_CANDIDATE_KEYS.map(k => forecast.forecast.runoff_prob[k] > 0.005 ? (
                   <div key={k} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 3 }}>
                     <div style={{ display: "flex", alignItems: "center", gap: 5 }}><span style={{ width: 6, height: 6, borderRadius: "50%", background: candidateColors[k], display: "inline-block" }} /><span style={{ fontFamily: "var(--font-body)", fontSize: "12px", letterSpacing: "0.06em", textTransform: "uppercase", color: "var(--muted)" }}>{candidateLabels[k]}</span></div>
