@@ -2363,7 +2363,7 @@ export default function March3FeaturedClient() {
                               {c.name}
                             </span>
                             <span style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                              {c.votes > 0 && <span style={{ fontFamily: "var(--font-body)", fontSize: "9px", fontWeight: 700, color: "var(--muted2)" }}>{c.votes.toLocaleString()}</span>}
+                              {c.votes > 0 && <span style={{ fontFamily: "var(--font-body)", fontSize: "9px", fontWeight: 700, color: "var(--muted2)" }}>{c.votes.toLocaleString()} VOTES</span>}
                               <span style={{ fontFamily: "var(--font-body)", fontSize: "9px", fontWeight: 900, color: c.color }}>{fmtPct(c.percent)}</span>
                             </span>
                           </div>
