@@ -1770,6 +1770,8 @@ export default function March3FeaturedClient() {
   // Reporting: prefer code override if set, then API
   const _reportingOverride = RACE_FORECAST_DEFAULTS[selectedId]?.overrideReporting;
   const effectiveReporting = (typeof _reportingOverride === "number" && _reportingOverride > 0) ? _reportingOverride : selectedReporting;
+  // Display-only: cap at "99" when > 99 to avoid showing 100%
+  const displayReportingStr = effectiveReporting > 99 ? ">99" : effectiveReporting.toFixed(1);
   // Total votes reported
   const selectedTotalVotes = selectedRace?.candidates?.reduce((s, c) => s + (c.votes ?? 0), 0) ?? 0;
   // API-based projection fallback (used when ForecastPanel has not produced a result)
@@ -2406,7 +2408,7 @@ export default function March3FeaturedClient() {
                   <div style={{ display: "flex", alignItems: "flex-end", gap: 10, marginBottom: 12 }}>
                     <div>
                       <div style={{ fontFamily: "var(--font-body)", fontSize: "7px", fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(255,255,255,0.55)", marginBottom: 2 }}>REPORTING</div>
-                      <div style={{ fontFamily: "var(--font-numeric)", fontSize: "30px", fontWeight: 900, color: "#fff", lineHeight: 1 }}>{effectiveReporting.toFixed(1)}%</div>
+                      <div style={{ fontFamily: "var(--font-numeric)", fontSize: "30px", fontWeight: 900, color: "#fff", lineHeight: 1 }}>{displayReportingStr}%</div>
                     </div>
                     <div style={{ marginBottom: 5 }}>
                       <span style={{ display: "inline-block", padding: "3px 9px", borderRadius: "var(--r-pill)", background: selectedStatusInfo.bg, border: `1px solid ${selectedStatusInfo.border}`, fontFamily: "var(--font-body)", fontSize: "8px", fontWeight: 700, letterSpacing: "0.14em", color: "#fff", textTransform: "uppercase" }}>
@@ -2454,7 +2456,7 @@ export default function March3FeaturedClient() {
               <div className="res-panel-header" style={{ flexWrap: "wrap", gap: "8px" }}>
                 <div style={{ minWidth: 0 }}>
                   <div className="res-panel-tag">{selectedMeta?.label ?? "—"}</div>
-                  <div className="res-note" style={{ marginTop: "2px" }}>{effectiveReporting.toFixed(1)}% REPORTING · {prettyTime(selectedRace?.last_updated)}</div>
+                  <div className="res-note" style={{ marginTop: "2px" }}>{displayReportingStr}% REPORTING · {prettyTime(selectedRace?.last_updated)}</div>
                 </div>
                 <div style={{ display: "flex", flexWrap: "wrap", gap: "5px", alignItems: "center" }}>
                   <span className="res-badge">{selectedCloseLocal}</span>
@@ -2512,7 +2514,7 @@ export default function March3FeaturedClient() {
                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px" }}>
                   <div className="res-stat-block">
                     <div className="res-stat-block-label">REPORTING</div>
-                    <div className="res-stat-block-val">{effectiveReporting.toFixed(1)}%</div>
+                    <div className="res-stat-block-val">{displayReportingStr}%</div>
                     {selectedTotalVotes > 0 && <div className="res-note" style={{ marginTop: "3px" }}>{selectedTotalVotes.toLocaleString()} votes</div>}
                     <div className="res-bar-track" style={{ marginTop: "6px" }}><div className="res-bar-fill" style={{ width: `${effectiveReporting}%`, background: "var(--purple)" }} /></div>
                   </div>
@@ -2672,7 +2674,7 @@ export default function March3FeaturedClient() {
               <div className="res-panel-header" style={{ flexShrink: 0 }}>
                 <span className="res-panel-tag">TOPLINE RESULTS</span>
                 {selectedRace !== undefined && (
-                  <span style={{ fontFamily: "var(--font-body)", fontSize: "10px", fontWeight: 700, color: "var(--muted2)", letterSpacing: "0.08em" }}>{effectiveReporting.toFixed(1)}% IN</span>
+                  <span style={{ fontFamily: "var(--font-body)", fontSize: "10px", fontWeight: 700, color: "var(--muted2)", letterSpacing: "0.08em" }}>{displayReportingStr}% IN</span>
                 )}
               </div>
               <div className="res-topline-body" style={{ overflowY: "auto", flex: 1, minHeight: 0, scrollbarGutter: "stable", padding: "6px 6px 6px 12px" }}>
