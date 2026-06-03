@@ -487,25 +487,23 @@ function MapWithCountyTooltip({ svgText, regionResults }: { svgText: string; reg
         {!locked && scale > 1 && <button onClick={resetZoom} style={{ width: 28, height: 28, background: "var(--panel)", border: "1px solid var(--border2)", color: "var(--muted)", fontSize: 8, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "var(--font-body)", fontWeight: 700, letterSpacing: "0.05em" }}>RST</button>}
       </div>
       {tooltip.show && (
-        <div className="res-map-tooltip absolute z-50 pointer-events-none w-[320px]" style={{ left: tooltip.x, top: tooltip.y }}>
-          <div className="res-tri-stripe" style={{ height: "2px" }} />
-          <div className="p-3">
+        <div className="res-map-tooltip absolute z-50 pointer-events-none w-[180px]" style={{ left: tooltip.x, top: tooltip.y }}>
+          <div className="p-2">
             <div className="flex items-baseline justify-between mb-1">
               <div className="res-tooltip-title">{tooltip.title}</div>
-              <div className="res-badge res-badge-purple">COUNTY</div>
             </div>
             <div className="res-reporting-row"><span className="res-note">{tooltip.reporting}</span></div>
             <div className="res-bar-track mt-1" style={{ height: "2px" }}><div className="res-bar-fill" style={{ width: `${tooltip.reportingPct}%`, background: "var(--purple)", height: "2px" }} /></div>
-            <div className="mt-3 border-t pt-2" style={{ borderColor: "var(--border)" }}>
+            <div className="mt-1.5 border-t pt-1.5" style={{ borderColor: "var(--border)" }}>
               {tooltip.lines.length > 0 ? (
                 <>
-                  <div className="grid grid-cols-[1fr_72px_52px] gap-1 pb-1 mb-1 border-b" style={{ borderColor: "var(--border)" }}>
+                  <div className="grid grid-cols-[1fr_36px_30px] gap-0.5 pb-1 mb-1 border-b" style={{ borderColor: "var(--border)" }}>
                     {["CANDIDATE", "VOTES", "PCT"].map((h) => (<div key={h} className={`res-th ${h !== "CANDIDATE" ? "text-right" : ""}`}>{h}</div>))}
                   </div>
                   {tooltip.lines.map((c, i) => (
-                    <div key={i} className="grid grid-cols-[1fr_72px_52px] items-center gap-1 py-1.5 border-b" style={{ borderColor: "var(--border)" }}>
-                      <div className="flex items-center gap-2 min-w-0">
-                        <span className="h-2 w-2 rounded-full flex-shrink-0" style={{ background: c.color || "rgba(15,16,32,0.50)" }} />
+                    <div key={i} className="grid grid-cols-[1fr_36px_30px] items-center gap-0.5 py-0.5 border-b" style={{ borderColor: "var(--border)" }}>
+                      <div className="flex items-center gap-1 min-w-0">
+                        <span className="h-1.5 w-1.5 rounded-full flex-shrink-0" style={{ background: c.color || "rgba(15,16,32,0.50)" }} />
                         <div className="min-w-0"><div className="res-cand-name truncate">{c.name}{c.winner ? " ✓" : ""}</div><div className="res-cand-party">{c.party}</div></div>
                       </div>
                       <div className="text-right res-num">{c.votes?.toLocaleString() ?? "—"}</div>
@@ -1576,6 +1574,8 @@ export default function March3FeaturedClient() {
   const isRunoffConfirmed = selectedRaceIsMajority && selectedWinners.length >= 2;
   const [forecastProj, setForecastProj] = useState<{ leader: string; prob: number; runoffNeededProb: number; projectionType: "WIN" | "RUNOFF" } | null>(null);
   useEffect(() => { setForecastProj(null); }, [selectedId]);
+  // Locked forecast calls — once set at >99.73%, never retracted for that race
+  const [lockedCalls, setLockedCalls] = useState<Record<number, string>>({});
   const showProjectionDebug = process.env.NODE_ENV !== "production";
   // Spotlight meta for the currently selected race (null when not a spotlight race)
   const spotlightMeta = SPOTLIGHT_RACES.find(s => s.id === selectedId) ?? null;
@@ -1585,8 +1585,14 @@ export default function March3FeaturedClient() {
   const effectiveProj = forecastProj ?? selectedApiProj;
   // Don't show a lean/projection until precincts start reporting
   const displayProj = selectedReporting > 0 ? effectiveProj : null;
-  // Auto-call: forecast races called at >99.73% (3σ); non-forecast races rely on API winner flag
-  const forecastCalled = hasForecastForSelected && forecastProj?.projectionType === "WIN" && (forecastProj?.prob ?? 0) > 99.73 ? forecastProj!.leader : null;
+  // Auto-call: forecast races called at >99.73% (3σ); once locked, never retracted
+  const liveForecastCalled = hasForecastForSelected && forecastProj?.projectionType === "WIN" && (forecastProj?.prob ?? 0) > 99.73 ? forecastProj!.leader : null;
+  useEffect(() => {
+    if (liveForecastCalled && selectedId && !lockedCalls[selectedId]) {
+      setLockedCalls(prev => ({ ...prev, [selectedId]: liveForecastCalled }));
+    }
+  }, [liveForecastCalled, selectedId]);
+  const forecastCalled = lockedCalls[selectedId] ?? liveForecastCalled;
 
   const timeStr = nowMs > 0
     ? new Date(nowMs).toLocaleTimeString("en-US", { hour12: false, hour: "2-digit", minute: "2-digit", second: "2-digit" })
@@ -1648,6 +1654,13 @@ export default function March3FeaturedClient() {
         .res-overlay-title { font-family:var(--font-body); font-size:clamp(32px,4vw,48px); font-weight:900; text-transform:uppercase; letter-spacing:0.02em; color:var(--foreground); line-height:0.92; }
         .res-overlay-name { font-family:var(--font-body); font-size:clamp(18px,2.5vw,26px); font-weight:700; text-transform:uppercase; letter-spacing:0.06em; }
         .res-map-tooltip { background:var(--panel); border:1px solid rgba(124,58,237,0.45); box-shadow:var(--shadow-md); border-radius:var(--r-md); }
+        .res-map-tooltip .res-tooltip-title { font-size:9px; }
+        .res-map-tooltip .res-th { font-size:7px; }
+        .res-map-tooltip .res-num { font-size:7px; }
+        .res-map-tooltip .res-pct-big { font-size:8px; }
+        .res-map-tooltip .res-cand-name { font-size:7px; }
+        .res-map-tooltip .res-cand-party { font-size:6px; }
+        .res-map-tooltip .res-note { font-size:7px; }
         .res-tooltip-title { font-family:var(--font-body); font-size:13px; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; color:var(--foreground); }
         .res-reporting-row { display:flex; align-items:center; justify-content:space-between; }
         .res-candidate-list { background:transparent; overflow:visible; }
