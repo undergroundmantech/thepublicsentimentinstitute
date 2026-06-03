@@ -44,10 +44,10 @@ function getRaceTypeShort(raceType: RaceType): string {
   return "S";
 }
 
-const RACE_FORECAST_DEFAULTS: Partial<Record<number, { raceRule: RaceRule; expectedTurnout?: number; pollAvg?: Record<string, number>; overrideReporting?: number; pollsCloseIso?: string; turnoutBlendK?: number; }>> = {
+const RACE_FORECAST_DEFAULTS: Partial<Record<number, { raceRule: RaceRule; expectedTurnout?: number; pollAvg?: Record<string, number>; overrideReporting?: number; pollsCloseIso?: string; turnoutBlendK?: number; colorOverrides?: Record<string, string>; }>> = {
 
   // ── CA TOP-TWO OPEN PRIMARY (June 2) ──────────────────────────────────────
-  79777: { raceRule: "TOP_TWO", expectedTurnout: 6_750_000, pollAvg: { "Becerra": 29.0, "Steyer": 19.0, "Hilton": 16.0, "Thurmond": 12.0 }, overrideReporting: 0, turnoutBlendK: 2 }, // CA Governor (Becerra 99% adv, Steyer/Hilton competing for 2nd)
+  79777: { raceRule: "TOP_TWO", expectedTurnout: 6_750_000, pollAvg: { "Becerra": 29.0, "Steyer": 19.0, "Hilton": 16.0, "Thurmond": 12.0 }, overrideReporting: 0, turnoutBlendK: 2, colorOverrides: { "Hilton": "#e63946" } }, // CA Governor
   79938: { raceRule: "MAJORITY_RUNOFF", expectedTurnout: 830_000, pollAvg: { "Bass": 43.2, "Pratt": 21.6, "Raman": 11.7, "Miller": 9.7, "Huang": 4.6 }, overrideReporting: 0, turnoutBlendK: 2 }, // LA Mayor (Q10+Q11 LV)
   79893: { raceRule: "TOP_TWO", overrideReporting: 0 },        // CA US House 1
   79932: { raceRule: "TOP_TWO", overrideReporting: 0 },        // CA US House 7
@@ -64,13 +64,13 @@ const RACE_FORECAST_DEFAULTS: Partial<Record<number, { raceRule: RaceRule; expec
   81046: { raceRule: "PLURALITY", expectedTurnout: 57_500, pollAvg: { "Bennett": 62.0 }, overrideReporting: 0, turnoutBlendK: 2 }, // NJ-07 D (Bennett ~90–95%)
   // ── SD 35% RUNOFF THRESHOLD — top-2 runoff if unmet (June 2) ─────────────
   80461: { raceRule: "THRESHOLD_35_RUNOFF", expectedTurnout: 150_000, pollAvg: { "Rhoden": 30.2, "Johnson": 27.3, "Doeden": 22.5, "Hansen": 16.8 }, 
-  overrideReporting: 71.2, 
+  overrideReporting: 80.2, 
     pollsCloseIso: "2026-06-02T21:00:00-04:00", turnoutBlendK: 2 }, // SD Governor R (LV model) — 9pm ET
                                                                                                           80511: { raceRule: "THRESHOLD_35_RUNOFF", 
-  overrideReporting: 70.7, 
+  overrideReporting: 79.7, 
     pollsCloseIso: "2026-06-02T21:00:00-04:00" },   // SD US House At-Large R
                                                                                                           80512: { raceRule: "THRESHOLD_35_RUNOFF", 
-  overrideReporting: 70.1, 
+  overrideReporting: 79.1, 
     pollsCloseIso: "2026-06-02T21:00:00-04:00" },   // SD US Senate R
   // ── NM close time override (June 2) ──────────────────────────────────────
   81014: { raceRule: "PLURALITY", overrideReporting: 0, pollsCloseIso: "2026-06-02T21:00:00-04:00" }, // NM US Senate D — 9pm ET
@@ -213,6 +213,7 @@ type TooltipState = { show: boolean; x: number; y: number; title: string; report
 function safeNum(x: unknown): number | null { if (typeof x === "number" && Number.isFinite(x)) return x; if (typeof x === "string") { const n = Number(x.replace(/,/g, "").trim()); return Number.isFinite(n) ? n : null; } return null; }
 function safePct(x: unknown): number | null { if (typeof x === "number" && Number.isFinite(x)) return x; if (typeof x === "string") { const n = parseFloat(x.replace("%", "").trim()); return Number.isFinite(n) ? n : null; } return null; }
 function getCandidatesFromRR(rr: any): RegionCandidate[] { const c1 = rr?.candidates, c2 = rr?.region?.candidates, c3 = rr?.data?.candidates; const found = (Array.isArray(c1) ? c1 : null) ?? (Array.isArray(c2) ? c2 : null) ?? (Array.isArray(c3) ? c3 : null); return (found ?? []) as RegionCandidate[]; }
+function applyColorOverridesToRace<T extends RaceDetail | undefined>(race: T, raceId: number): T { const overrides = RACE_FORECAST_DEFAULTS[raceId]?.colorOverrides; if (!race || !overrides || !Object.keys(overrides).length) return race; const candidates = race.candidates?.map((c) => { const lower = c.name.toLowerCase(); for (const [key, color] of Object.entries(overrides)) { if (lower.includes(key.toLowerCase())) return { ...c, color }; } return c; }); return { ...race, candidates } as T; }
 function buildTooltipLines(rr: any): TooltipLine[] { return [...getCandidatesFromRR(rr)].map((c) => ({ name: String(c?.name ?? ""), party: String(c?.party ?? ""), votes: safeNum(c?.votes), pct: safePct(c?.percent), winner: !!c?.winner, color: c?.color })).filter((x) => x.name).sort((a, b) => { const av = a.votes ?? -1, bv = b.votes ?? -1; if (bv !== av) return bv - av; return (b.pct ?? -1) - (a.pct ?? -1); }); }
 
 type MarginBucket = "tilt" | "lean" | "likely" | "safe" | "tied";
@@ -912,9 +913,25 @@ function ForecastPanel({ raceId, refreshTick, raceData, onForecastUpdate }: { ra
     try {
       const _repOverride = RACE_FORECAST_DEFAULTS[id]?.overrideReporting;
       const _effectivePct = (_repOverride && _repOverride > 0) ? _repOverride : undefined;
-      const _raceData = raceDataRef.current
+      const _colorOverrides = RACE_FORECAST_DEFAULTS[id]?.colorOverrides;
+      let _baseRaceData = raceDataRef.current
         ? (_effectivePct !== undefined ? { ...raceDataRef.current, percent_reporting: _effectivePct } : raceDataRef.current)
         : null;
+      if (_baseRaceData && _colorOverrides && Object.keys(_colorOverrides).length > 0) {
+        _baseRaceData = {
+          ..._baseRaceData,
+          candidates: _baseRaceData.candidates.map((c) => {
+            const lower = c.name.toLowerCase();
+            for (const [key, color] of Object.entries(_colorOverrides)) {
+              if (lower.includes(key.toLowerCase()) || key.toLowerCase().includes(lower)) {
+                return { ...c, color };
+              }
+            }
+            return c;
+          }),
+        };
+      }
+      const _raceData = _baseRaceData;
       const res = await fetch("/api/forecast", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ...(_raceData ? { type: "civic_raw", raceData: _raceData } : { type: "civic", raceId: String(id) }), race_rule: rule ?? raceRuleRef.current, expected_turnout: (turnout ?? turnoutRef.current) ? Number(turnout ?? turnoutRef.current) : undefined, poll_avg: RACE_FORECAST_DEFAULTS[id]?.pollAvg, turnout_blend_k: RACE_FORECAST_DEFAULTS[id]?.turnoutBlendK }) });
       const data = await res.json();
       if (raceIdRef.current !== id) return;
@@ -1036,7 +1053,15 @@ function ForecastPanel({ raceId, refreshTick, raceData, onForecastUpdate }: { ra
   const swingoProbs = useMemo(() => {
     if (!forecast) return { c1: 0.5, c2: 0.5, c3: 0, runoffNeeded: 0 };
     const f = forecast.forecast;
-    if (raceRule !== "PLURALITY" && raceRule !== "TOP_TWO") {
+    if (raceRule === "TOP_TWO") {
+      // runoff_prob = P(candidate finishes in top 2); sums to ~2 since 2 advance.
+      // Divide by 2 so arcs represent each candidate's share of the 2 advancement slots.
+      const c1 = Math.max(0, f.runoff_prob?.Candidate1 ?? 0) / 2;
+      const c2 = Math.max(0, f.runoff_prob?.Candidate2 ?? 0) / 2;
+      const c3 = Math.max(0, f.runoff_prob?.Candidate3 ?? 0) / 2;
+      return { c1, c2, c3, runoffNeeded: 0 };
+    }
+    if (raceRule !== "PLURALITY") {
       const runoffNeeded = Math.max(0, Math.min(1, typeof f.runoff_needed_prob === "number" ? f.runoff_needed_prob : 0));
       const c1 = Math.max(0, f.plurality_odds_to_win.Candidate1 ?? 0) * (1 - runoffNeeded);
       const c2 = Math.max(0, f.plurality_odds_to_win.Candidate2 ?? 0) * (1 - runoffNeeded);
@@ -1088,7 +1113,7 @@ function ForecastPanel({ raceId, refreshTick, raceData, onForecastUpdate }: { ra
               <span className="res-badge res-badge-red">{raceRule === "PLURALITY" ? "PLURALITY" : raceRule === "TOP_TWO" ? "TOP TWO" : raceRule === "MAJORITY" || raceRule === "MAJORITY_RUNOFF" ? "MAJORITY" : raceRule === "THRESHOLD_35_CONVENTION" ? "THRESHOLD 35%" : "THRESHOLD 35%"}</span>
             </div>
             <div style={{ marginBottom: 12, padding: "12px 12px", background: "var(--panel2)", border: "1px solid var(--border)", borderRadius: "var(--r-sm)" }}>
-              <div style={{ fontFamily: "var(--font-body)", fontSize: "10px", fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--muted2)", marginBottom: 10 }}>WIN PROBABILITY · {raceRule === "PLURALITY" || raceRule === "TOP_TWO" ? "MOST VOTES" : (raceRule === "THRESHOLD_35_CONVENTION" || raceRule === "THRESHOLD_35_RUNOFF") ? "THRESHOLD ≥35%" : "MAJORITY ≥50%"}</div>
+              <div style={{ fontFamily: "var(--font-body)", fontSize: "10px", fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--muted2)", marginBottom: 10 }}>{raceRule === "TOP_TWO" ? "ADVANCEMENT SHARE · TOP 2 ADVANCE" : `WIN PROBABILITY · ${raceRule === "PLURALITY" ? "MOST VOTES" : (raceRule === "THRESHOLD_35_CONVENTION" || raceRule === "THRESHOLD_35_RUNOFF") ? "THRESHOLD ≥35%" : "MAJORITY ≥50%"}`}</div>
               <SwingOMeter candidates={forecast.forecast.candidate_names ?? ["C1", "C2", "C3", "Others"]} colors={forecast.forecast.candidate_colors ?? ["#3b82f6", "#ef4444", "#22c55e", "#94a3b8"]} probabilities={swingoProbs} raceRule={raceRule} reportingPct={forecast.race.percent_reporting} candidateCount={activeCandidateCount} />
             </div>
             <div style={{ display: "grid", gridTemplateColumns: activeCandidateCount >= 3 ? "1fr 1fr 1fr" : activeCandidateCount === 2 ? "1fr 1fr" : "1fr", gap: 5, marginBottom: 12 }}>
@@ -1104,6 +1129,28 @@ function ForecastPanel({ raceId, refreshTick, raceData, onForecastUpdate }: { ra
                 );
               })}
             </div>
+            {raceRule === "TOP_TWO" && (
+              <div style={{ marginBottom: 12, padding: "9px 12px", background: "rgba(59,130,246,0.05)", border: "1px solid rgba(59,130,246,0.18)", borderRadius: "var(--r-sm)" }}>
+                <div style={{ fontFamily: "var(--font-body)", fontSize: "11px", fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", color: "rgba(96,165,250,0.90)", marginBottom: 9 }}>TOP 2 ADVANCEMENT ODDS</div>
+                {(["Candidate1", "Candidate2", "Candidate3"] as const).filter((_, idx) => idx < activeCandidateCount).map(k => {
+                  const advProb = forecast.forecast.runoff_prob[k] ?? 0;
+                  return (
+                    <div key={k} style={{ marginBottom: 8 }}>
+                      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 3 }}>
+                        <div style={{ display: "flex", alignItems: "center", gap: 5 }}>
+                          <span style={{ width: 6, height: 6, borderRadius: "50%", background: candidateColors[k], display: "inline-block", flexShrink: 0 }} />
+                          <span style={{ fontFamily: "var(--font-body)", fontSize: "11px", letterSpacing: "0.06em", textTransform: "uppercase", color: "var(--muted)" }}>{candidateLabels[k]}</span>
+                        </div>
+                        <span style={{ fontFamily: "var(--font-numeric)", fontSize: "13px", fontWeight: 800, color: candidateColors[k] }}>{fcastPct(advProb)}</span>
+                      </div>
+                      <div style={{ height: 3, background: "var(--border2)", overflow: "hidden", borderRadius: 99 }}>
+                        <div style={{ height: "100%", width: fcastPct(Math.min(advProb, 1)), background: candidateColors[k], opacity: 0.75, transition: "width 600ms ease" }} />
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
             {(raceRule !== "PLURALITY" && raceRule !== "TOP_TWO") && (
               <div style={{ marginBottom: 12, padding: "9px 12px", background: "rgba(245,158,11,0.05)", border: "1px solid rgba(245,158,11,0.15)", borderRadius: "var(--r-sm)" }}>
               <div style={{ fontFamily: "var(--font-body)", fontSize: "11px", fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", color: "rgba(245,158,11,0.85)", marginBottom: 7 }}>{raceRule === "THRESHOLD_35_CONVENTION" ? "CONVENTION PROBABILITY" : raceRule === "MAJORITY_RUNOFF" || raceRule === "MAJORITY" ? "RUNOFF PROBABILITY" : "RUNOFF PROBABILITY"}</div>
@@ -1469,6 +1516,7 @@ export default function March3FeaturedClient() {
   const [error, setError] = useState<string | null>(null);
   const [loadingMap, setLoadingMap] = useState(false);
   const [raceCache, setRaceCache] = useState<Record<number, RaceDetail | undefined>>({});
+  const patchedRaceCache = useMemo(() => Object.fromEntries(Object.entries(raceCache).map(([id, data]) => [id, applyColorOverridesToRace(data, Number(id))])) as Record<number, RaceDetail | undefined>, [raceCache]);
   const [mapBlankSvg, setMapBlankSvg] = useState<string | null>(null);
   const [mapLoadPct, setMapLoadPct] = useState(0);
   const [nowMs, setNowMs] = useState(0);
@@ -1489,7 +1537,7 @@ export default function March3FeaturedClient() {
   SD: FEATURED.filter((r) => r.state === "SD"),
   }), []);
 
-  const selectedRace = raceCache[selectedId];
+  const selectedRace = patchedRaceCache[selectedId];
   const selectedMeta = useMemo(() => FEATURED.find((r) => r.id === selectedId), [selectedId]);
   const hasForecastForSelected = !!(RACE_FORECAST_DEFAULTS[selectedId]?.pollAvg && RACE_FORECAST_DEFAULTS[selectedId]?.expectedTurnout);
 
@@ -1544,22 +1592,23 @@ export default function March3FeaturedClient() {
     }
   }, []);
 
-  useEffect(() => {
-    const race = selectedRace; if (!race?.candidates?.length) return;
-    const reporting = race.percent_reporting ?? 0;
-    if (race.candidates.find((c) => c.winner)) return; if (reporting < 5) return;
-    const ordered = [...race.candidates].sort((a, b) => (b.percent ?? 0) - (a.percent ?? 0));
-    if (ordered.length < 2) return;
-    const leader = ordered[0], runnerUp = ordered[1];
-    const prob = calculateWinProbability(leader.votes, runnerUp.votes, reporting);
-    if (prob < 90) return;
-    const key = `${selectedId}:${leader.name}:${Math.floor(prob)}:${Math.floor(reporting)}`;
-    if (key === lastProjectedKeyRef.current) return;
-    lastProjectedKeyRef.current = key;
-    setOverlay({ id: selectedId, name: leader.name, prob, color: leader.color || "var(--purple-soft)", reporting });
-    const t = setTimeout(() => setOverlay(null), 5200);
-    return () => clearTimeout(t);
-  }, [selectedRace, selectedId]);
+  // OVERLAY DISABLED — projection winner popup turned off
+  // useEffect(() => {
+  //   const race = selectedRace; if (!race?.candidates?.length) return;
+  //   const reporting = race.percent_reporting ?? 0;
+  //   if (race.candidates.find((c) => c.winner)) return; if (reporting < 5) return;
+  //   const ordered = [...race.candidates].sort((a, b) => (b.percent ?? 0) - (a.percent ?? 0));
+  //   if (ordered.length < 2) return;
+  //   const leader = ordered[0], runnerUp = ordered[1];
+  //   const prob = calculateWinProbability(leader.votes, runnerUp.votes, reporting);
+  //   if (prob < 90) return;
+  //   const key = `${selectedId}:${leader.name}:${Math.floor(prob)}:${Math.floor(reporting)}`;
+  //   if (key === lastProjectedKeyRef.current) return;
+  //   lastProjectedKeyRef.current = key;
+  //   setOverlay({ id: selectedId, name: leader.name, prob, color: leader.color || "var(--purple-soft)", reporting });
+  //   const t = setTimeout(() => setOverlay(null), 5200);
+  //   return () => clearTimeout(t);
+  // }, [selectedRace, selectedId]);
 
   const stateLabels: Record<string, string> = { CA: "CALIFORNIA", IA: "IOWA", MT: "MONTANA", NJ: "NEW JERSEY", NM: "NEW MEXICO", SD: "S. DAKOTA" };
   // When switching to spotlight tab (or changing spotlight sub-tab), sync selectedId + activeState
@@ -2068,7 +2117,7 @@ export default function March3FeaturedClient() {
       `}</style>
 
       <main className="res-root" style={{ minHeight: "100vh", background: "transparent", color: "var(--foreground)" }}>
-        {overlay && <ProjectedWinnerOverlay show={!!overlay} candidate={overlay.name} prob={overlay.prob} color={overlay.color} reporting={overlay.reporting} onDismiss={() => setOverlay(null)} />}
+        {/* OVERLAY DISABLED — {overlay && <ProjectedWinnerOverlay show={!!overlay} candidate={overlay.name} prob={overlay.prob} color={overlay.color} reporting={overlay.reporting} onDismiss={() => setOverlay(null)} />} */}
 
         {/* STATUS BAR */}
         <div className="res-status-bar">
@@ -2149,7 +2198,7 @@ export default function March3FeaturedClient() {
             }, []).map(({ office, races }: { office: string; races: FeaturedRace[] }) => (
               <optgroup key={office} label={`── ${office.toUpperCase()} ──`}>
                 {races.map(r => {
-                  const liveData = raceCache[r.id];
+                  const liveData = patchedRaceCache[r.id];
                   const winner = liveData?.candidates?.find(c => c.winner);
                   const _apiReporting = getRaceReportingPct(liveData);
                   const _ov = RACE_FORECAST_DEFAULTS[r.id]?.overrideReporting;
@@ -2168,7 +2217,7 @@ export default function March3FeaturedClient() {
           {/* Selected race quick-status */}
           {(() => {
             const meta = FEATURED.find(r => r.id === selectedId);
-            const liveData = raceCache[selectedId];
+            const liveData = patchedRaceCache[selectedId];
             const winner = liveData?.candidates?.find(c => c.winner);
             const _apiRpt = getRaceReportingPct(liveData);
             const _ovRpt = RACE_FORECAST_DEFAULTS[selectedId]?.overrideReporting;
@@ -2189,7 +2238,7 @@ export default function March3FeaturedClient() {
         {/* ── MOBILE RACE LIST — phones only, above map ── */}
         <div className="res-mobile-race-search">
           <div style={{ margin: "8px 10px 0", border: "1px solid var(--border)" }}>
-            <RaceScrollWindow races={racesForState} raceCache={raceCache} selectedId={selectedId} onSelect={setSelectedId} search={scrollWindowSearch} onSearchChange={setScrollWindowSearch} maxHeight={200} />
+            <RaceScrollWindow races={racesForState} raceCache={patchedRaceCache} selectedId={selectedId} onSelect={setSelectedId} search={scrollWindowSearch} onSearchChange={setScrollWindowSearch} maxHeight={200} />
           </div>
         </div>
 
@@ -2235,7 +2284,7 @@ export default function March3FeaturedClient() {
             <div className="res-race-picker-list" style={spotlightMeta ? { flex: 1, minHeight: 0, overflow: "hidden", display: "flex", flexDirection: "column" } : undefined}>
               <RacePickerPanel
                 races={racesForState}
-                raceCache={raceCache}
+                raceCache={patchedRaceCache}
                 selectedId={selectedId}
                 onSelect={setSelectedId}
               />
@@ -2310,7 +2359,7 @@ export default function March3FeaturedClient() {
 
             {/* TABLET RACE SCROLL — hidden on desktop, shown on tablet */}
             <div className="res-race-scroll-window">
-              <RaceScrollWindow races={racesForState} raceCache={raceCache} selectedId={selectedId} onSelect={setSelectedId} search={scrollWindowSearch} onSearchChange={setScrollWindowSearch} />
+              <RaceScrollWindow races={racesForState} raceCache={patchedRaceCache} selectedId={selectedId} onSelect={setSelectedId} search={scrollWindowSearch} onSearchChange={setScrollWindowSearch} />
             </div>
 
             {/* RACE STATUS — top */}
