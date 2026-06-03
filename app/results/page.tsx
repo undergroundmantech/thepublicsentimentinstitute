@@ -47,28 +47,28 @@ function getRaceTypeShort(raceType: RaceType): string {
 const RACE_FORECAST_DEFAULTS: Partial<Record<number, { raceRule: RaceRule; expectedTurnout?: number; pollAvg?: Record<string, number>; overrideReporting?: number; pollsCloseIso?: string; }>> = {
 
   // ── CA TOP-TWO OPEN PRIMARY (June 2) ──────────────────────────────────────
-  79777: { raceRule: "TOP_TWO", expectedTurnout: 6_750_000, pollAvg: { "Becerra": 29.0, "Steyer": 19.0, "Hilton": 16.0, "Thurmond": 12.0 } }, // CA Governor (Becerra 99% adv, Steyer/Hilton competing for 2nd)
-  79938: { raceRule: "MAJORITY_RUNOFF", expectedTurnout: 830_000, pollAvg: { "Bass": 43.2, "Pratt": 21.6, "Raman": 11.7, "Miller": 9.7, "Huang": 4.6 } }, // LA Mayor (Q10+Q11 LV)
-  79893: { raceRule: "TOP_TWO" },                              // CA US House 1
-  79932: { raceRule: "TOP_TWO" },                              // CA US House 7
-  79884: { raceRule: "TOP_TWO" },                              // CA US House 11
-  79916: { raceRule: "TOP_TWO" },                              // CA US House 40
-  79924: { raceRule: "TOP_TWO", expectedTurnout: 287_500, pollAvg: { "Desmond": 28.5, "Campa-Najjar": 17.5, "von Wilpert": 14.0, "Riker": 9.0, "O'Neil": 8.5, "Chavez": 6.5, "Contreras": 4.5, "Schaefer": 3.5, "Shaw": 2.5, "Porter": 2.0, "Clemons": 1.5, "Reyna": 1.5 } }, // CA US House 48
+  79777: { raceRule: "TOP_TWO", expectedTurnout: 6_750_000, pollAvg: { "Becerra": 29.0, "Steyer": 19.0, "Hilton": 16.0, "Thurmond": 12.0 }, overrideReporting: 0 }, // CA Governor (Becerra 99% adv, Steyer/Hilton competing for 2nd)
+  79938: { raceRule: "MAJORITY_RUNOFF", expectedTurnout: 830_000, pollAvg: { "Bass": 43.2, "Pratt": 21.6, "Raman": 11.7, "Miller": 9.7, "Huang": 4.6 }, overrideReporting: 0 }, // LA Mayor (Q10+Q11 LV)
+  79893: { raceRule: "TOP_TWO", overrideReporting: 0 },        // CA US House 1
+  79932: { raceRule: "TOP_TWO", overrideReporting: 0 },        // CA US House 7
+  79884: { raceRule: "TOP_TWO", overrideReporting: 0 },        // CA US House 11
+  79916: { raceRule: "TOP_TWO", overrideReporting: 0 },        // CA US House 40
+  79924: { raceRule: "TOP_TWO", expectedTurnout: 287_500, pollAvg: { "Desmond": 28.5, "Campa-Najjar": 17.5, "von Wilpert": 14.0, "Riker": 9.0, "O'Neil": 8.5, "Chavez": 6.5, "Contreras": 4.5, "Schaefer": 3.5, "Shaw": 2.5, "Porter": 2.0, "Clemons": 1.5, "Reyna": 1.5 }, overrideReporting: 0 }, // CA US House 48
   // ── IA 35% NOMINATION THRESHOLD — convention if unmet (June 2) ───────────
-  79945: { raceRule: "THRESHOLD_35_CONVENTION", expectedTurnout: 210_000, pollAvg: { "Feenstra": 52.0, "Lahn": 38.0, "Steen": 10.0 } }, // IA Governor R
-  80204: { raceRule: "THRESHOLD_35_CONVENTION" },              // IA US House 2 D
-  80205: { raceRule: "THRESHOLD_35_CONVENTION" },              // IA US House 2 R
-  80210: { raceRule: "THRESHOLD_35_CONVENTION", expectedTurnout: 122_000, pollAvg: { "Turek": 65.0, "Wahls": 32.0  } }, // IA US Senate D (Turek ~90–95% nomination)
-  80211: { raceRule: "THRESHOLD_35_CONVENTION" },              // IA US Senate R
+  79945: { raceRule: "THRESHOLD_35_CONVENTION", expectedTurnout: 210_000, pollAvg: { "Feenstra": 52.0, "Lahn": 38.0, "Steen": 10.0 }, overrideReporting: 0 }, // IA Governor R
+  80204: { raceRule: "THRESHOLD_35_CONVENTION", overrideReporting: 0 }, // IA US House 2 D
+  80205: { raceRule: "THRESHOLD_35_CONVENTION", overrideReporting: 0 }, // IA US House 2 R
+  80210: { raceRule: "THRESHOLD_35_CONVENTION", expectedTurnout: 122_000, pollAvg: { "Turek": 65.0, "Wahls": 32.0 }, overrideReporting: 0 }, // IA US Senate D (Turek ~90–95% nomination)
+  80211: { raceRule: "THRESHOLD_35_CONVENTION", overrideReporting: 0 }, // IA US Senate R
   // ── NJ PLURALITY PRIMARIES (June 2) ──────────────────────────────────────
-  81046: { raceRule: "PLURALITY", expectedTurnout: 57_500, pollAvg: { "Bennett": 62.0 } }, // NJ-07 D (Bennett ~90–95%)
+  81046: { raceRule: "PLURALITY", expectedTurnout: 57_500, pollAvg: { "Bennett": 62.0 }, overrideReporting: 0 }, // NJ-07 D (Bennett ~90–95%)
   // ── SD 35% RUNOFF THRESHOLD — top-2 runoff if unmet (June 2) ─────────────
-  80461: { raceRule: "THRESHOLD_35_RUNOFF", expectedTurnout: 150_000, pollAvg: { "Rhoden": 30.2, "Johnson": 27.3, "Doeden": 22.5, "Hansen": 16.8 },overrideReporting: 20, pollsCloseIso: "2026-06-02T21:00:00-04:00" }, // SD Governor R (LV model) — 9pm ET
-  80511: { raceRule: "THRESHOLD_35_RUNOFF",overrideReporting: 20, pollsCloseIso: "2026-06-02T21:00:00-04:00" },     // SD US House At-Large R
-  80512: { raceRule: "THRESHOLD_35_RUNOFF",overrideReporting: 20, pollsCloseIso: "2026-06-02T21:00:00-04:00" },     // SD US Senate R
+  80461: { raceRule: "THRESHOLD_35_RUNOFF", expectedTurnout: 150_000, pollAvg: { "Rhoden": 30.2, "Johnson": 27.3, "Doeden": 22.5, "Hansen": 16.8 }, overrideReporting: 0, pollsCloseIso: "2026-06-02T21:00:00-04:00" }, // SD Governor R (LV model) — 9pm ET
+  80511: { raceRule: "THRESHOLD_35_RUNOFF", overrideReporting: 0, pollsCloseIso: "2026-06-02T21:00:00-04:00" },   // SD US House At-Large R
+  80512: { raceRule: "THRESHOLD_35_RUNOFF", overrideReporting: 0, pollsCloseIso: "2026-06-02T21:00:00-04:00" },   // SD US Senate R
   // ── NM close time override (June 2) ──────────────────────────────────────
-  81014: { raceRule: "PLURALITY", pollsCloseIso: "2026-06-02T21:00:00-04:00" },                // NM US Senate D — 9pm ET
-  81015: { raceRule: "PLURALITY", pollsCloseIso: "2026-06-02T21:00:00-04:00" },                // NM US Senate R — 9pm ET
+  81014: { raceRule: "PLURALITY", overrideReporting: 0, pollsCloseIso: "2026-06-02T21:00:00-04:00" }, // NM US Senate D — 9pm ET
+  81015: { raceRule: "PLURALITY", overrideReporting: 0, pollsCloseIso: "2026-06-02T21:00:00-04:00" }, // NM US Senate R — 9pm ET
 };
 
 function sortCandidatesByPollData(candidates: RaceCandidate[], pollAvg?: Record<string, number>): RaceCandidate[] {
