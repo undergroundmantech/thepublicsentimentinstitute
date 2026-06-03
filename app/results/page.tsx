@@ -1826,6 +1826,7 @@ export default function March3FeaturedClient() {
         .res-panel-header { display:flex; align-items:center; justify-content:space-between; padding:10px 14px; border-bottom:1px solid var(--border); background:var(--panel2); border-radius:var(--r-lg) var(--r-lg) 0 0; }
         .res-panel-tag { font-family:var(--font-body); font-size:10px; font-weight:700; letter-spacing:0.20em; text-transform:uppercase; color:var(--purple-soft); }
         .res-stat-block { background:var(--panel2); border:1px solid var(--border); padding:10px 12px; border-radius:var(--r-sm); }
+        :root:not([data-theme="dark"]) .res-stat-block { background:#f2f2f2; border-color:#e0e0e0; }
         .res-stat-block-label { font-family:var(--font-body); font-size:10px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:var(--muted2); margin-bottom:4px; }
         .res-stat-block-val { font-family:var(--font-numeric); font-size:clamp(20px,2.5vw,28px); font-weight:800; color:var(--foreground); line-height:1; font-variant-numeric:tabular-nums; }
         .res-btn-primary { display:inline-flex; align-items:center; gap:6px; padding:9px 18px; background:var(--gradient-purple); border:1px solid rgba(124,58,237,0.65); color:#fff; font-family:var(--font-numeric); font-size:13px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; cursor:pointer; box-shadow:var(--shadow-purple); transition:background 140ms ease,transform 140ms ease; border-radius:var(--r-pill); }
@@ -2542,9 +2543,9 @@ export default function March3FeaturedClient() {
                           }
                           return _top2Lines.length > 0 ? _top2Lines.join("\n") : "RUNOFF PROJECTED";
                         }
-                        return `\u2713 ${forecastCalled}`;
+                        return forecastCalled;
                       }
-                      if (selectedWinner) return `\u2713 ${selectedWinner.name}`;
+                      if (selectedWinner) return selectedWinner.name;
                       if (displayProj?.projectionType === "RUNOFF") return displayProj.leader;
                       return displayProj ? displayProj.leader : "PENDING";
                     })();
@@ -2556,10 +2557,19 @@ export default function March3FeaturedClient() {
                       {isRunoffConfirmed ? "CONFIRMED" : forecastCalled ? (_isRunoffCall ? (selectedRaceIsTopTwo ? "TOP 2 PROJECTED" : "RUNOFF NEEDED") : "FORECAST CALL") : selectedWinner ? "OFFICIAL" : displayProj ? `${displayProj.prob.toFixed(1)}%` : "—"}
                     </span>
                   </div>
-                  <div style={{ fontFamily: "var(--font-body)", fontSize: "11px", fontWeight: 700, letterSpacing: "0.04em", textTransform: "uppercase", color: "var(--foreground)", lineHeight: "1.6" }}>
-                    {_projName.includes("\n")
-                      ? _projName.split("\n").map((line, i) => <div key={i}>{line}</div>)
-                      : _projName}
+                  <div style={{ display: "flex", alignItems: "center", gap: 5 }}>
+                    {((forecastCalled && !_isRunoffCall && !isRunoffConfirmed) || selectedWinner) && (
+                      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" style={{ flexShrink: 0 }}>
+                        <circle cx="7" cy="7" r="6.5" fill="var(--win)" opacity="0.18"/>
+                        <circle cx="7" cy="7" r="6.5" stroke="var(--win)" strokeWidth="1.2"/>
+                        <path d="M4 7l2 2 4-4" stroke="var(--win)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                    )}
+                    <div style={{ fontFamily: "var(--font-body)", fontSize: "11px", fontWeight: 700, letterSpacing: "0.04em", textTransform: "uppercase", color: "var(--foreground)", lineHeight: "1.6" }}>
+                      {_projName.includes("\n")
+                        ? _projName.split("\n").map((line, i) => <div key={i}>{line}</div>)
+                        : _projName}
+                    </div>
                   </div>
                       </>
                     );
