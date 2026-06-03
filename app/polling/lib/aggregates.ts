@@ -36,7 +36,7 @@ import { RAW_POLLS as FL_GOP } from "../floridarepublicanprimary/page";
 import { RAW_POLLS as TX_GOP } from "../texasrepublicanprimary/page";
 import { RAW_POLLS as TX_DEM } from "../texasdemocratprimary/page";
 import { RAW_POLLS as ME_DEM } from "../mainedemocratprimary/page";
-import { KY04_POLLS } from "../../page";
+import { KY04_POLLS } from "../page";
 
 // 2026 Senate matchups (state modules with RACES + STATE_POLLS keyed by raceId)
 import * as SEN_TX from "../senatepolling/texas";

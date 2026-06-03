@@ -60,7 +60,7 @@ function applyJitter<T extends Record<string, unknown>>(
 function round1(n: number) { return Math.round(n * 10) / 10; }
 
 // ─── Poll datasets ────────────────────────────────────────────────────────────
-const TRUMP_POLLS: Poll[] = [
+export const TRUMP_POLLS: Poll[] = [
 
 // ── May 2026 new polls ────────────────────────────────────────────────────────
 { pollster: "CBS News",            endDate: "2026-05-15", sampleSize: 2064, sampleType: "A",  results: { Approve: 37, Disapprove: 63 } },
@@ -440,7 +440,7 @@ const TRUMP_POLLS: Poll[] = [
 { pollster: "CNBC", endDate: "2025-04-13", sampleSize: 1000, sampleType: "A", results: { Approve: 44, Disapprove: 51 } },
 ];
 
-const GB_POLLS: Poll[] = [
+export const GB_POLLS: Poll[] = [
 // ── May 2026 new polls ────────────────────────────────────────────────────────
 { pollster: "Economist/YouGov",    endDate: "2026-05-11", sampleSize: 1410, sampleType: "RV", results: { Democrats: 45, Republicans: 40 } },
 { pollster: "Reuters/Ipsos",       endDate: "2026-05-11", sampleSize: 993,  sampleType: "RV", results: { Democrats: 41, Republicans: 35 } },
@@ -577,7 +577,7 @@ const GB_POLLS: Poll[] = [
 { pollster: "Quantus Insights", endDate: "2025-01-23", sampleSize: 1000, sampleType: "RV", results: { Democrats: 45, Republicans: 48 } },
 ];
 
-const RT_POLLS: Poll[] = [
+export const RT_POLLS: Poll[] = [
   { pollster: "Economist/YouGov", endDate: "2026-04-27", sampleSize: 1647, sampleType: "RV", results: { RightTrack: 32, WrongTrack: 62 } },
   { pollster: "Reuters/Ipsos", endDate: "2026-04-27", sampleSize: 1269, sampleType: "A", results: { RightTrack: 19, WrongTrack: 64 } },
   { pollster: "Harvard-Harris", endDate: "2026-04-26", sampleSize: 2745, sampleType: "RV", results: { RightTrack: 37, WrongTrack: 53 } },
@@ -734,7 +734,7 @@ const RT_POLLS: Poll[] = [
 ];
 
 // ─── KY-04 Republican Primary Polls (Gallrein vs Massie) ──────────────────────
-const KY04_POLLS: Poll[] = [
+export const KY04_POLLS: Poll[] = [
   { pollster: "Big Data Poll (R)",    endDate: "2026-04-07", sampleSize: 433, sampleType: "LV", results: { Gallrein: 48, Massie: 52 } },
   { pollster: "Quantus Insights (R)", endDate: "2026-04-07", sampleSize: 438, sampleType: "LV", results: { Gallrein: 38, Massie: 47 } },
   { pollster: "Big Data Poll (R)",    endDate: "2026-05-14", sampleSize: 518, sampleType: "LV", results: { Gallrein: 49, Massie: 51 } },
