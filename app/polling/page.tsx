@@ -11,6 +11,7 @@ import {
   getDateRange,
   buildDailyWeightedSeries,
 } from "@/app/polling/lib/buildDailyModel";
+import Footer from "@/app/components/Footer";
 
 // ─── Gold Standard helpers ────────────────────────────────────────────────────
 const GS_NAMES = [
@@ -27,6 +28,34 @@ function isGS(pollster: string) {
 function effN(pollster: string, n: number, mult: number) {
   if (!Number.isFinite(n) || n <= 0) return n;
   return isGS(pollster) ? Math.round(n * mult * mult) : n;
+}
+
+// ─── Jitter helpers ───────────────────────────────────────────────────────────
+function seededRand(seed: number) {
+  let s = (seed | 0) || 1;
+  return () => {
+    s = (s * 1664525 + 1013904223) | 0;
+    return ((s >>> 0) / 0xffffffff);
+  };
+}
+function applyJitter<T extends Record<string, unknown>>(
+  rows: T[], keys: string[], amp = 0.55, seed = 1337,
+): T[] {
+  if (!rows.length) return rows;
+  const rand = seededRand(seed);
+  const last = rows.length - 1;
+  return rows.map((row, i) => {
+    if (i === last) return row;
+    const out: Record<string, unknown> = { ...row };
+    for (const k of keys) {
+      const v = row[k];
+      if (typeof v === "number" && Number.isFinite(v)) {
+        const n = (rand() * 2 - 1) * amp;
+        out[k] = Math.max(0, Math.min(100, v + n));
+      }
+    }
+    return out as T;
+  });
 }
 function round1(n: number) { return Math.round(n * 10) / 10; }
 
@@ -818,9 +847,9 @@ function ChartTip({ active, payload, label }: any) {
   if (!active || !payload?.length) return null;
   return (
     <div style={{
-      background: "#141412", border: "1px solid rgba(255,255,255,0.1)",
-      borderRadius: "2px", padding: "10px 14px", fontSize: 11,
-      fontFamily: "var(--font-body), monospace", boxShadow: "0 8px 24px rgba(0,0,0,0.6)",
+      background: "var(--panel)", border: "1px solid var(--border)",
+      borderRadius: "var(--r-sm)", padding: "10px 14px", fontSize: 11,
+      fontFamily: "var(--font-body), monospace", boxShadow: "var(--shadow-md)",
     }}>
       <div style={{color:"rgba(255,255,255,.3)",marginBottom:6,fontWeight:500,letterSpacing:"0.1em",textTransform:"uppercase",fontSize:9}}>{label}</div>
       {payload.map((p: any) => (
@@ -893,16 +922,20 @@ function PollTable({ polls, keys }: { polls: Poll[]; keys: { key: string; name: 
 }
 
 function LargeChartPanel({
-  title, eyebrow, data, lines, domain, refY, stats, pollCount,
+  title, eyebrow, data, lines, domain, refY, stats, pollCount, jitter = 0.6, jitterSeed = 1337,
 }: {
   title: string; eyebrow: string; data: any[];
   lines: {key:string;name:string;color:string}[];
   domain:[number,number]; refY?:number;
   stats:{label:string;val:string;color:string}[];
   pollCount:number;
+  jitter?: number; jitterSeed?: number;
 }) {
   const step = Math.max(1, Math.floor(data.length / 80));
-  const pts  = data.filter((_,i) => i % step === 0 || i === data.length - 1);
+  const sampled  = data.filter((_,i) => i % step === 0 || i === data.length - 1);
+  const pts  = jitter > 0
+    ? applyJitter(sampled, lines.map(l => l.key), jitter, jitterSeed)
+    : sampled;
   const axisTickDates: string[] = [];
   if (pts.length > 1) {
     const count = 6;
@@ -1100,10 +1133,11 @@ function SenateMultiMatchupPanel({
       {/* Matchup selector header injected above chart */}
       <div style={{
         display: "flex", alignItems: "center", justifyContent: "space-between",
-        padding: "10px 16px", background: "#0d0d12",
-        border: "1px solid rgba(255,255,255,.09)", borderBottom: "none",
+        padding: "10px 16px", background: "var(--panel)",
+        border: "1px solid var(--border)", borderBottom: "none",
+        borderRadius: "var(--r-lg) var(--r-lg) 0 0",
       }}>
-        <div style={{ fontSize: 8, letterSpacing: "0.2em", textTransform: "uppercase", color: "rgba(255,255,255,.25)" }}>
+        <div style={{ fontSize: 8, letterSpacing: "0.2em", textTransform: "uppercase", color: "var(--muted2)" }}>
           {state} · Matchup
         </div>
         <div style={{ display: "flex", gap: 6 }}>
@@ -1114,8 +1148,8 @@ function SenateMultiMatchupPanel({
               style={{
                 padding: "4px 10px",
                 background: selected === i ? "rgba(124,58,237,.15)" : "transparent",
-                border: selected === i ? "1px solid rgba(124,58,237,.4)" : "1px solid rgba(255,255,255,.1)",
-                color: selected === i ? "#9d5cf0" : "rgba(255,255,255,.3)",
+                border: selected === i ? "1px solid rgba(124,58,237,.4)" : "1px solid var(--border)",
+                color: selected === i ? "var(--purple2)" : "var(--muted)",
                 fontSize: 9, letterSpacing: "0.1em", cursor: "pointer",
                 fontFamily: "var(--font-body), ui-monospace, monospace",
                 transition: "all 120ms",
@@ -1542,10 +1576,7 @@ export default function PollingDashboardPage() {
         <SenateSection />
 
         {/* ══ FOOTER ══ */}
-        <div className="pd-footer">
-          <span>PSI · All averages: documented weighting · recency decay · sample size adjustment · daily model for all races</span>
-          <span style={{color:"rgba(255,255,255,.15)"}}>Methodology on file</span>
-        </div>
+        <Footer />
 
       </div>
     </>
@@ -1556,19 +1587,9 @@ export default function PollingDashboardPage() {
 // CSS
 // ─────────────────────────────────────────────────────────────────────────────
 const CSS = `
-  body { background: #070709 !important; }
+  body { background: var(--background) !important; }
 
   .pd-root {
-    --bg:          #070709;
-    --bg2:         #0b0b0f;
-    --panel:       #0f0f15;
-    --border:      rgba(255,255,255,0.09);
-    --border2:     rgba(255,255,255,0.15);
-    --muted:       rgba(240,240,245,0.62);
-    --muted2:      rgba(240,240,245,0.40);
-    --muted3:      rgba(240,240,245,0.22);
-    --purple:      #7c3aed;
-    --purple-soft: #9d5cf0;
     max-width: 1320px;
     margin: 0 auto;
     padding: 28px 28px 72px;
@@ -1581,10 +1602,12 @@ const CSS = `
 
   /* ── HERO ── */
   .pd-hero {
-    border: 1px solid rgba(255,255,255,.07);
-    background: #0f0f15;
+    border: 1px solid var(--border);
+    background: var(--panel);
     margin-bottom: 28px;
     overflow: hidden;
+    border-radius: var(--r-lg);
+    box-shadow: var(--shadow-sm);
   }
   .pd-hero-stripe {
     height: 3px;
@@ -1599,18 +1622,18 @@ const CSS = `
 
   .pd-hero-left {
     padding: 40px 44px 36px;
-    border-right: 1px solid rgba(255,255,255,.06);
+    border-right: 1px solid var(--border);
   }
   @media(max-width:768px) { .pd-hero-left { padding: 24px 20px; } }
 
   .pd-hero-eyebrow {
     display: flex; align-items: center; gap: 8px;
     font-size: 8.5px; font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase;
-    color: rgba(255,255,255,.3); margin-bottom: 18px;
+    color: var(--muted); margin-bottom: 18px;
   }
   .pd-live-dot {
-    width: 5px; height: 5px; border-radius: 50%; background: #7c3aed; flex-shrink: 0;
-    box-shadow: 0 0 6px rgba(124,58,237,.5);
+    width: 5px; height: 5px; border-radius: 50%; background: var(--purple); flex-shrink: 0;
+    box-shadow: 0 0 6px var(--purple-glow, rgba(124,58,237,.5));
     animation: pd-pulse 1.8s ease-in-out infinite;
   }
   @keyframes pd-pulse { 0%,100%{opacity:1} 50%{opacity:.3} }
@@ -1619,40 +1642,40 @@ const CSS = `
     font-family: var(--font-display), sans-serif;
     font-size: clamp(44px,5.5vw,80px);
     letter-spacing: 0.03em; line-height: 0.92;
-    color: #fff; margin: 0 0 16px; text-transform: uppercase;
+    color: var(--foreground); margin: 0 0 16px; text-transform: uppercase;
   }
-  .pd-hero-title em { font-style: normal; color: #9d5cf0; }
+  .pd-hero-title em { font-style: normal; color: var(--purple2, #9d5cf0); }
   .pd-hero-desc {
     font-size: 10px; letter-spacing: 0.08em; line-height: 1.85;
-    color: rgba(255,255,255,.3); max-width: 460px; margin-bottom: 22px;
+    color: var(--muted); max-width: 460px; margin-bottom: 22px;
   }
   .pd-hero-badges { display: flex; flex-wrap: wrap; gap: 6px; }
   .pd-badge {
     display: inline-flex; align-items: center; gap: 5px;
-    padding: 3px 9px; border: 1px solid rgba(255,255,255,.1);
-    background: rgba(255,255,255,.03);
+    padding: 3px 9px; border: 1px solid var(--border);
+    background: transparent;
     font-size: 7.5px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase;
-    color: rgba(255,255,255,.3);
+    color: var(--muted);
   }
-  .pd-badge-live { border-color: rgba(124,58,237,.3); background: rgba(124,58,237,.07); color: #9d5cf0; }
+  .pd-badge-live { border-color: var(--purple-glow, rgba(124,58,237,.3)); background: var(--purple-dim, rgba(124,58,237,.07)); color: var(--purple2, #9d5cf0); }
   .pd-live-dot-sm {
-    width: 5px; height: 5px; border-radius: 50%; background: #7c3aed;
+    width: 5px; height: 5px; border-radius: 50%; background: var(--purple);
     animation: pd-pulse 1.8s ease-in-out infinite; display: inline-block;
   }
 
   /* HERO METRICS */
-  .pd-hero-metrics { display: flex; flex-direction: column; gap: 0; background: #0d0d12; }
+  .pd-hero-metrics { display: flex; flex-direction: column; gap: 0; background: var(--panel2); }
   .pd-metric-card {
     display: flex; flex-direction: column; gap: 0;
     padding: 22px 26px;
-    border-bottom: 1px solid rgba(255,255,255,.05);
-    text-decoration: none; transition: background 120ms;
+    border-bottom: 1px solid var(--border);
+    text-decoration: none; transition: background var(--dur-1) var(--ease-out);
   }
   .pd-metric-card:last-child { border-bottom: none; }
-  .pd-metric-card:hover { background: rgba(255,255,255,.02); }
+  .pd-metric-card:hover { background: var(--border); }
   .pd-metric-label {
     font-size: 7.5px; font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase;
-    color: rgba(255,255,255,.25); margin-bottom: 6px;
+    color: var(--muted2); margin-bottom: 6px;
   }
   .pd-metric-primary {
     font-family: var(--font-display), sans-serif;
@@ -1664,81 +1687,87 @@ const CSS = `
   }
   .pd-metric-net-row {
     display: flex; justify-content: space-between; align-items: center;
-    margin-top: 8px; padding-top: 8px; border-top: 1px solid rgba(255,255,255,.04);
+    margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--border);
   }
   .pd-metric-net-label {
-    font-size: 7px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,.2);
+    font-size: 7px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted2);
   }
   .pd-metric-net-val { font-size: 12px; font-weight: 700; letter-spacing: 0.06em; }
 
   /* ── LARGE CHART PANEL ── */
   .lcp-wrap {
-    border: 1px solid rgba(255,255,255,.09);
+    border: 1px solid var(--border);
     border-bottom: none;
-    background: #0f0f15;
+    background: var(--panel);
     overflow: hidden;
     display: flex;
     flex-direction: column;
+    border-radius: var(--r-lg) var(--r-lg) 0 0;
+    box-shadow: var(--shadow-sm);
   }
   .lcp-header {
     display: flex; align-items: flex-start; justify-content: space-between; gap: 20px;
     padding: 20px 24px 16px;
-    border-bottom: 1px solid rgba(255,255,255,.06);
-    background: #0b0b0f;
+    border-bottom: 1px solid var(--border);
+    background: var(--background2);
     flex-wrap: wrap;
   }
   .lcp-eyebrow {
     font-size: 7.5px; font-weight: 700; letter-spacing: 0.28em; text-transform: uppercase;
-    color: var(--purple-soft, #9d5cf0); margin-bottom: 6px;
+    color: var(--purple2, #9d5cf0); margin-bottom: 6px;
   }
   .lcp-title {
     font-size: 13px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase;
-    color: rgba(255,255,255,.8); margin-bottom: 3px;
+    color: var(--foreground); margin-bottom: 3px;
   }
-  .lcp-meta { font-size: 8px; color: rgba(255,255,255,.22); letter-spacing: 0.08em; }
+  .lcp-meta { font-size: 8px; color: var(--muted2); letter-spacing: 0.08em; }
   .lcp-header-right {
     display: flex; flex-direction: column; align-items: flex-end; gap: 12px; flex-shrink: 0;
   }
   .lcp-stats-row {
     display: flex; gap: 0;
-    border: 1px solid rgba(255,255,255,.07);
-    background: rgba(255,255,255,.02);
+    border: 1px solid var(--border);
+    background: var(--panel2);
     flex-wrap: wrap;
+    border-radius: var(--r-sm);
+    overflow: hidden;
   }
   .lcp-stat {
     padding: 10px 16px;
-    border-right: 1px solid rgba(255,255,255,.06);
+    border-right: 1px solid var(--border);
     min-width: 72px;
   }
   .lcp-stat:last-child { border-right: none; }
   .lcp-stat-label {
     font-size: 7px; letter-spacing: 0.18em; text-transform: uppercase;
-    color: rgba(255,255,255,.2); margin-bottom: 4px;
+    color: var(--muted2); margin-bottom: 4px;
   }
   .lcp-stat-val {
     font-family: var(--font-display), sans-serif;
     font-size: 24px; letter-spacing: 0.04em; line-height: 1; text-transform: uppercase;
   }
   .lcp-chart-area {
-    height: 260px; padding: 16px 8px 8px; background: #0f0f15;
+    height: 260px; padding: 16px 8px 8px; background: var(--panel);
   }
   .lcp-legend {
     display: flex; gap: 24px; padding: 12px 24px; flex-wrap: wrap;
-    border-top: 1px solid rgba(255,255,255,.05);
-    background: #0b0b0f;
+    border-top: 1px solid var(--border);
+    background: var(--background2);
   }
   .lcp-legend-item {
     display: flex; align-items: center; gap: 8px;
     font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase;
-    color: rgba(255,255,255,.35);
+    color: var(--muted);
   }
 
   /* ── POLL TABLE ── */
   .pt-wrap {
-    border: 1px solid rgba(255,255,255,.07);
+    border: 1px solid var(--border);
     border-top: none;
-    background: #0a0a10;
+    background: var(--panel2);
     margin-bottom: 28px;
+    border-radius: 0 0 var(--r-lg) var(--r-lg);
+    overflow: hidden;
   }
   .pt-table {
     width: 100%;
@@ -1753,44 +1782,36 @@ const CSS = `
     letter-spacing: 0.18em;
     font-size: 7.5px;
     font-weight: 500;
-    color: rgba(255,255,255,.25);
-    background: #0d0d12;
-    border-bottom: 1px solid rgba(255,255,255,.06);
+    color: var(--muted2);
+    background: var(--background2);
+    border-bottom: 1px solid var(--border);
     white-space: nowrap;
     text-align: left;
   }
   .pt-right { text-align: right !important; }
   .pt-td {
     padding: 7px 14px;
-    color: rgba(255,255,255,.7);
-    border-bottom: 1px solid rgba(255,255,255,.035);
+    color: var(--muted);
+    border-bottom: 1px solid var(--border);
     white-space: nowrap;
   }
-  .pt-muted { color: rgba(255,255,255,.28) !important; font-weight: 400; }
+  .pt-muted { color: var(--muted2) !important; font-weight: 400; }
   .pt-row:last-child td { border-bottom: none; }
-  .pt-row:hover td { background: rgba(255,255,255,.02); }
+  .pt-row:hover td { background: var(--border); }
   .pt-toggle {
     display: block;
     width: 100%;
     padding: 10px;
     background: transparent;
     border: none;
-    border-top: 1px solid rgba(255,255,255,.06);
-    color: rgba(255,255,255,.28);
+    border-top: 1px solid var(--border);
+    color: var(--muted2);
     font-family: var(--font-body), ui-monospace, monospace;
     font-size: 9px;
     letter-spacing: 0.18em;
     text-transform: uppercase;
     cursor: pointer;
-    transition: color 120ms, background 120ms;
+    transition: color var(--dur-1), background var(--dur-1);
   }
-  .pt-toggle:hover { color: rgba(255,255,255,.55); background: rgba(255,255,255,.02); }
-
-  /* ── FOOTER ── */
-  .pd-footer {
-    display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px;
-    padding-top: 16px; border-top: 1px solid rgba(255,255,255,.06);
-    font-size: 7.5px; letter-spacing: 0.12em; text-transform: uppercase;
-    color: rgba(255,255,255,.18);
-  }
+  .pt-toggle:hover { color: var(--muted); background: var(--border); }
 `;
