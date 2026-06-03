@@ -58,10 +58,10 @@ function CustomTooltip({ active, payload, label }: any) {
 
   return (
     <div style={{
-      background: "#141418",
-      border: "1px solid rgba(255,255,255,0.1)",
+      background: "var(--panel)",
+      border: "1px solid var(--border)",
       borderRadius: 2,
-      boxShadow: "0 8px 24px rgba(0,0,0,0.6)",
+      boxShadow: "var(--shadow-md)",
       fontFamily: "var(--font-body), monospace",
       minWidth: 200,
       overflow: "hidden",
@@ -70,11 +70,11 @@ function CustomTooltip({ active, payload, label }: any) {
       {/* Header */}
       <div style={{
         padding: "8px 12px",
-        background: "rgba(255,255,255,0.04)",
-        borderBottom: "1px solid rgba(255,255,255,0.08)",
+        background: "var(--background2)",
+        borderBottom: "1px solid var(--border)",
         fontSize: 11,
         fontWeight: 600,
-        color: "rgba(255,255,255,0.4)",
+        color: "var(--muted)",
         letterSpacing: "0.04em",
       }}>
         {formatDateTooltip(label ?? "")}
@@ -91,7 +91,7 @@ function CustomTooltip({ active, payload, label }: any) {
                 background: item.color,
                 flexShrink: 0,
               }} />
-              <span style={{ fontSize: 13, color: "rgba(255,255,255,0.7)" }}>{item.name}</span>
+              <span style={{ fontSize: 13, color: "var(--muted)" }}>{item.name}</span>
             </div>
             <span style={{ fontSize: 15, fontWeight: 700, color: item.color, fontVariantNumeric: "tabular-nums" }}>
               {fmtPct(Number(item.value))}
@@ -112,12 +112,12 @@ function Legend({ series }: { series: Array<{ key: string; label: string; color:
           alignItems: "center",
           gap: 6,
           padding: "4px 10px",
-          border: "1px solid rgba(255,255,255,0.1)",
+          border: "1px solid var(--border)",
           borderRadius: 100,
-          background: "rgba(255,255,255,0.04)",
+          background: "var(--border)",
           fontSize: 12,
           fontWeight: 600,
-          color: "rgba(255,255,255,0.7)",
+          color: "var(--muted)",
         }}>
           <span style={{ width: 8, height: 8, borderRadius: "50%", background: s.color, flexShrink: 0 }} />
           {s.label}
@@ -159,11 +159,11 @@ export default function PollingTimeSeriesChart({
     <>
       <style>{`
         .psc {
-          background: #0f0f15;
-          border: 1px solid rgba(255,255,255,0.08);
+          background: var(--panel);
+          border: 1px solid var(--border);
           border-radius: 8px;
           overflow: hidden;
-          box-shadow: 0 4px 24px rgba(0,0,0,0.4);
+          box-shadow: var(--shadow-md);
         }
 
         .psc-stripe {
@@ -173,8 +173,8 @@ export default function PollingTimeSeriesChart({
 
         .psc-header {
           padding: 16px 20px;
-          border-bottom: 1px solid rgba(255,255,255,0.08);
-          background: #0f0f15;
+          border-bottom: 1px solid var(--border);
+          background: var(--background2);
           display: flex;
           align-items: flex-start;
           justify-content: space-between;
@@ -186,20 +186,20 @@ export default function PollingTimeSeriesChart({
           font-family: var(--font-display), sans-serif;
           font-size: 18px;
           font-weight: 700;
-          color: rgba(255,255,255,0.9);
+          color: var(--foreground);
           margin-bottom: 3px;
           text-transform: uppercase;
         }
 
         .psc-subtitle {
           font-size: 12px;
-          color: rgba(255,255,255,0.4);
+          color: var(--muted);
           line-height: 1.5;
         }
 
         .psc-hint {
           font-size: 11px;
-          color: rgba(255,255,255,0.3);
+          color: var(--muted2);
           display: flex;
           align-items: center;
           gap: 5px;
@@ -210,7 +210,7 @@ export default function PollingTimeSeriesChart({
 
         .psc-chart-area {
           padding: 16px 12px 8px;
-          background: #0f0f15;
+          background: var(--panel);
         }
 
         .psc-footer {
@@ -220,10 +220,10 @@ export default function PollingTimeSeriesChart({
           justify-content: space-between;
           flex-wrap: wrap;
           gap: 8px;
-          border-top: 1px solid rgba(255,255,255,0.08);
-          background: rgba(255,255,255,0.02);
+          border-top: 1px solid var(--border);
+          background: var(--panel2);
         }
-        .psc-footer-note { font-size: 11px; color: rgba(255,255,255,0.3); }
+        .psc-footer-note { font-size: 11px; color: var(--muted2); }
         .psc-footer-badge {
           display: inline-flex;
           align-items: center;
@@ -238,8 +238,8 @@ export default function PollingTimeSeriesChart({
         }
 
         /* Recharts overrides inside chart */
-        .psc .recharts-cartesian-axis-tick-value { fill: rgba(255,255,255,0.3) !important; font-size: 11px !important; }
-        .psc .recharts-cartesian-grid line { stroke: rgba(255,255,255,0.06) !important; }
+        .psc .recharts-cartesian-axis-tick-value { fill: var(--muted) !important; font-size: 11px !important; }
+        .psc .recharts-cartesian-grid line { stroke: var(--border) !important; }
       `}</style>
 
       <div className="psc">
@@ -263,12 +263,12 @@ export default function PollingTimeSeriesChart({
           <div style={{ height: "clamp(260px, 38vh, 460px)" }}>
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={data} margin={{ top: 12, right: 16, left: 4, bottom: 4 }}>
-                <CartesianGrid stroke="rgba(255,255,255,0.06)" strokeDasharray="3 8" vertical={false} />
+                <CartesianGrid stroke="var(--border)" strokeDasharray="3 8" vertical={false} />
                 <XAxis
                   dataKey="date"
                   tickLine={false}
-                  axisLine={{ stroke: "rgba(255,255,255,0.1)" }}
-                  tick={{ fontFamily: "var(--font-body),monospace", fontSize: 11, fill: "rgba(255,255,255,0.3)" }}
+                  axisLine={{ stroke: "var(--border)" }}
+                  tick={{ fontFamily: "var(--font-body),monospace", fontSize: 11, fill: "var(--muted)" }}
                   ticks={tickDates}
                   tickFormatter={formatDateLabel}
                   minTickGap={20}
@@ -277,13 +277,13 @@ export default function PollingTimeSeriesChart({
                   domain={computedDomain}
                   tickLine={false}
                   axisLine={false}
-                  tick={{ fontFamily: "var(--font-body),monospace", fontSize: 11, fill: "rgba(255,255,255,0.3)" }}
+                  tick={{ fontFamily: "var(--font-body),monospace", fontSize: 11, fill: "var(--muted)" }}
                   tickFormatter={(v) => `${v}%`}
                   width={40}
                 />
-                <ReferenceLine y={50} stroke="rgba(255,255,255,0.1)" strokeDasharray="3 4" />
+                <ReferenceLine y={50} stroke="var(--border2)" strokeDasharray="3 4" />
                 <Tooltip
-                  cursor={{ stroke: "rgba(255,255,255,0.15)", strokeWidth: 1 }}
+                  cursor={{ stroke: "var(--border3)", strokeWidth: 1 }}
                   content={<CustomTooltip />}
                   wrapperStyle={{ zIndex: 10 }}
                 />
@@ -297,7 +297,7 @@ export default function PollingTimeSeriesChart({
                     strokeWidth={2.5}
                     dot={false}
                     connectNulls
-                    activeDot={{ r: 5, stroke: "#fff", strokeWidth: 2, fill: s.color }}
+                    activeDot={{ r: 5, stroke: "var(--panel)", strokeWidth: 2, fill: s.color }}
                   />
                 ))}
               </LineChart>
