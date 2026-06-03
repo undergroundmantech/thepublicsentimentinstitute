@@ -851,11 +851,11 @@ function ChartTip({ active, payload, label }: any) {
       borderRadius: "var(--r-sm)", padding: "10px 14px", fontSize: 11,
       fontFamily: "var(--font-body), monospace", boxShadow: "var(--shadow-md)",
     }}>
-      <div style={{color:"rgba(255,255,255,.3)",marginBottom:6,fontWeight:500,letterSpacing:"0.1em",textTransform:"uppercase",fontSize:9}}>{label}</div>
+      <div style={{color:"var(--muted)",marginBottom:6,fontWeight:500,letterSpacing:"0.1em",textTransform:"uppercase",fontSize:9}}>{label}</div>
       {payload.map((p: any) => (
         <div key={p.name} style={{display:"flex",alignItems:"center",gap:8,marginBottom:3}}>
           <div style={{width:6,height:6,borderRadius:"50%",background:p.color,flexShrink:0}} />
-          <span style={{color:"rgba(255,255,255,.4)"}}>{p.name}</span>
+          <span style={{color:"var(--muted2)"}}>{p.name}</span>
           <span style={{fontWeight:700,color:p.color,marginLeft:"auto",paddingLeft:14}}>{round1(p.value)}%</span>
         </div>
       ))}
@@ -868,7 +868,7 @@ function SplitBar({ a, b, colorA, colorB, h = 5 }: { a: number; b: number; color
   if (!total) return null;
   const pct = (a / total) * 100;
   return (
-    <div style={{display:"flex",height:h,overflow:"hidden",background:"rgba(255,255,255,.06)"}}>
+    <div style={{display:"flex",height:h,overflow:"hidden",background:"var(--border)"}}>
       <div style={{width:`${pct}%`,background:colorA,transition:"width 700ms"}} />
       <div style={{flex:1,background:colorB}} />
     </div>
@@ -974,17 +974,17 @@ function LargeChartPanel({
           <LineChart data={pts} margin={{top:8,right:24,left:-16,bottom:4}}>
             <XAxis
               dataKey="date" ticks={axisTickDates} tickFormatter={fmtTick}
-              tick={{fontSize:8,fill:"rgba(255,255,255,.25)",fontFamily:"var(--font-body), monospace"}}
+              tick={{fontSize:8,fill:"var(--muted)",fontFamily:"var(--font-body), monospace"}}
               tickLine={false} axisLine={false}
             />
             <YAxis
               domain={domain}
-              tick={{fontSize:8,fill:"rgba(255,255,255,.25)",fontFamily:"var(--font-body), monospace"}}
+              tick={{fontSize:8,fill:"var(--muted)",fontFamily:"var(--font-body), monospace"}}
               tickLine={false} axisLine={false} tickFormatter={v=>`${v}%`}
             />
             <Tooltip content={<ChartTip />} />
             {refY !== undefined && (
-              <ReferenceLine y={refY} stroke="rgba(255,255,255,.08)" strokeDasharray="4 4" />
+              <ReferenceLine y={refY} stroke="var(--border2)" strokeDasharray="4 4" />
             )}
             {lines.map(l => (
               <Line key={l.key} type="monotone" dataKey={l.key} name={l.name}
@@ -1022,7 +1022,7 @@ function SenatePollTable({
   const shown = expanded ? sorted : sorted.slice(0, 5);
   const hidden = sorted.length - 5;
   return (
-    <div className="pt-wrap" style={{ marginBottom: 0, borderTop: "1px solid rgba(255,255,255,.07)" }}>
+    <div className="pt-wrap" style={{ marginBottom: 0, borderTop: "1px solid var(--border)" }}>
       <div style={{ overflowX: "auto" }}>
         <table className="pt-table">
           <thead>
@@ -1086,15 +1086,15 @@ function SenateRaceChartPanel({
     : spread === 0 ? "EVEN"
     : spread > 0 ? `${a.name.split(" ")[0]}+${Math.abs(spread)}`
     : `${b.name.split(" ")[0]}+${Math.abs(spread)}`;
-  const spreadColor = spread === null ? "rgba(255,255,255,.3)"
+  const spreadColor = spread === null ? "var(--muted)"
     : spread > 0 ? a.color
     : spread < 0 ? b.color
-    : "rgba(255,255,255,.4)";
+    : "var(--muted2)";
 
   const stats = [
     ...latestVals.map(l => ({ label: l.name, val: `${l.val}%`, color: l.color })),
     { label: "Margin", val: spreadStr, color: spreadColor },
-    { label: "Polls", val: `${polls.length}`, color: "rgba(255,255,255,.3)" },
+    { label: "Polls", val: `${polls.length}`, color: "var(--muted)" },
   ];
 
   return (
@@ -1187,7 +1187,7 @@ function FLPrimaryChartPanel() {
 
   const stats = [
     ...latestVals.map(l => ({ label: l.name, val: `${l.val}%`, color: l.color })),
-    { label: "Polls", val: `${FL_SENATE_POLLS.length}`, color: "rgba(255,255,255,.3)" },
+    { label: "Polls", val: `${FL_SENATE_POLLS.length}`, color: "var(--muted)" },
   ];
 
   const [expanded, setExpanded] = React.useState(false);
@@ -1207,7 +1207,7 @@ function FLPrimaryChartPanel() {
         pollCount={FL_SENATE_POLLS.length}
       />
       {/* Custom table showing all 4 candidates */}
-      <div className="pt-wrap" style={{ borderTop: "1px solid rgba(255,255,255,.07)" }}>
+      <div className="pt-wrap" style={{ borderTop: "1px solid var(--border)" }}>
         <div style={{ overflowX: "auto" }}>
           <table className="pt-table">
             <thead>
@@ -1263,14 +1263,14 @@ function KY04ChartPanel() {
   const massie   = round1(Number(last.Massie   ?? 0));
   const net      = round1(gallrein - massie);
   const netStr   = net === 0 ? "EVEN" : net > 0 ? `G+${Math.abs(net).toFixed(1)}` : `M+${Math.abs(net).toFixed(1)}`;
-  const netColor = net > 0 ? "#e63946" : net < 0 ? "#7c3aed" : "rgba(255,255,255,.4)";
+  const netColor = net > 0 ? "#e63946" : net < 0 ? "#7c3aed" : "var(--muted2)";
 
   return (
     <div style={{ marginBottom: 28 }}>
       <div style={{
         display: "flex", alignItems: "center", gap: 16,
         marginBottom: 22, paddingTop: 8,
-        borderTop: "1px solid rgba(255,255,255,.06)",
+        borderTop: "1px solid var(--border)",
       }}>
         <div style={{
           fontSize: 7.5, fontWeight: 700, letterSpacing: "0.28em", textTransform: "uppercase",
@@ -1278,7 +1278,7 @@ function KY04ChartPanel() {
         }}>
           KY-04 Republican Primary
         </div>
-        <div style={{ flex: 1, height: 1, background: "rgba(255,255,255,.06)" }} />
+        <div style={{ flex: 1, height: 1, background: "var(--border)" }} />
       </div>
       <LargeChartPanel
         title="KY-04 GOP Primary · Gallrein vs Massie"
@@ -1291,7 +1291,7 @@ function KY04ChartPanel() {
           { label: "Gallrein", val: `${gallrein}%`, color: "#e63946" },
           { label: "Massie",   val: `${massie}%`,   color: "#7c3aed" },
           { label: "Margin",   val: netStr,          color: netColor },
-          { label: "Polls",    val: `${KY04_POLLS.length}`, color: "rgba(255,255,255,.3)" },
+          { label: "Polls",    val: `${KY04_POLLS.length}`, color: "var(--muted)" },
         ]}
         pollCount={KY04_POLLS.length}
       />
@@ -1306,7 +1306,7 @@ function SenateSection() {
       <div style={{
         display: "flex", alignItems: "center", gap: 16,
         marginBottom: 22, paddingTop: 8,
-        borderTop: "1px solid rgba(255,255,255,.06)",
+        borderTop: "1px solid var(--border)",
       }}>
         <div style={{
           fontSize: 7.5, fontWeight: 700, letterSpacing: "0.28em", textTransform: "uppercase",
@@ -1314,7 +1314,7 @@ function SenateSection() {
         }}>
           2026 U.S. Senate Races
         </div>
-        <div style={{ flex: 1, height: 1, background: "rgba(255,255,255,.06)" }} />
+        <div style={{ flex: 1, height: 1, background: "var(--border)" }} />
       </div>
 
       {/* Texas — matchup switcher */}
@@ -1478,7 +1478,7 @@ export default function PollingDashboardPage() {
                 <span className="pd-badge pd-badge-live"><span className="pd-live-dot-sm"/>LIVE</span>
                 <span className="pd-badge">GOLD STANDARD ×2–3</span>
                 <span className="pd-badge">√N · RECENCY · LV/RV/A</span>
-                <span className="pd-badge" style={{color:"rgba(255,255,255,.25)"}}>Latest: {latestPoll.pollster} · {latestPoll.endDate}</span>
+                <span className="pd-badge" style={{color:"var(--muted)"}}>Latest: {latestPoll.pollster} · {latestPoll.endDate}</span>
               </div>
             </div>
 
@@ -1492,7 +1492,7 @@ export default function PollingDashboardPage() {
                 },
                 {
                   label:"Generic Ballot", primary:gbNetStr, primaryColor:gbNet>=0?"#2563eb":"#e63946",
-                  secondary:`D ${dem}% / R ${rep}%`, secondaryColor:"rgba(255,255,255,.35)",
+                  secondary:`D ${dem}% / R ${rep}%`, secondaryColor:"var(--muted2)",
                   secondaryLabel:"Split", a:dem, b:rep, colorA:"#2563eb", colorB:"#e63946",
                   subLeft:`D ${dem}%`, subRight:`R ${rep}%`,
                 },
@@ -1531,7 +1531,7 @@ export default function PollingDashboardPage() {
             {label:"Approve",    val:`${approve}%`,    color:"#e63946"},
             {label:"Disapprove", val:`${disapprove}%`, color:"#2563eb"},
             {label:"Net",        val:apNetStr,          color:approvalNet>=0?"#e63946":"#2563eb"},
-            {label:"Polls",      val:`${TRUMP_POLLS.length}`, color:"rgba(255,255,255,.3)"},
+            {label:"Polls",      val:`${TRUMP_POLLS.length}`, color:"var(--muted)"},
           ]}
           pollCount={TRUMP_POLLS.length}
         />
@@ -1547,7 +1547,7 @@ export default function PollingDashboardPage() {
             {label:"Democrat",   val:`${dem}%`, color:"#2563eb"},
             {label:"Republican", val:`${rep}%`, color:"#e63946"},
             {label:"Margin",     val:gbNetStr,  color:gbNet>=0?"#2563eb":"#e63946"},
-            {label:"Polls",      val:`${GB_POLLS.length}`, color:"rgba(255,255,255,.3)"},
+            {label:"Polls",      val:`${GB_POLLS.length}`, color:"var(--muted)"},
           ]}
           pollCount={GB_POLLS.length}
         />
@@ -1563,7 +1563,7 @@ export default function PollingDashboardPage() {
             {label:"Right",  val:`${rt}%`, color:"#e63946"},
             {label:"Wrong",  val:`${wt}%`, color:"#2563eb"},
             {label:"Spread", val:rtNetStr, color:rtNet>=0?"#e63946":"#2563eb"},
-            {label:"Polls",  val:`${RT_POLLS.length}`, color:"rgba(255,255,255,.3)"},
+            {label:"Polls",  val:`${RT_POLLS.length}`, color:"var(--muted)"},
           ]}
           pollCount={RT_POLLS.length}
         />
