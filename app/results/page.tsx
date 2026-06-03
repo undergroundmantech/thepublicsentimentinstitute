@@ -48,7 +48,7 @@ const RACE_FORECAST_DEFAULTS: Partial<Record<number, { raceRule: RaceRule; expec
 
   // ── CA TOP-TWO OPEN PRIMARY (June 2) ──────────────────────────────────────
   79777: { raceRule: "TOP_TWO", expectedTurnout: 6_750_000, pollAvg: { "Becerra": 29.0, "Steyer": 19.0, "Hilton": 16.0, "Thurmond": 12.0 } }, // CA Governor (Becerra 99% adv, Steyer/Hilton competing for 2nd)
-  79938: { raceRule: "MAJORITY_RUNOFF", expectedTurnout: 1_030_000, pollAvg: { "Bass": 43.2, "Pratt": 21.6, "Raman": 11.7, "Miller": 9.7, "Huang": 4.6 } }, // LA Mayor (Q10+Q11 LV)
+  79938: { raceRule: "MAJORITY_RUNOFF", expectedTurnout: 830_000, pollAvg: { "Bass": 43.2, "Pratt": 21.6, "Raman": 11.7, "Miller": 9.7, "Huang": 4.6 } }, // LA Mayor (Q10+Q11 LV)
   79893: { raceRule: "TOP_TWO" },                              // CA US House 1
   79932: { raceRule: "TOP_TWO" },                              // CA US House 7
   79884: { raceRule: "TOP_TWO" },                              // CA US House 11
@@ -63,9 +63,9 @@ const RACE_FORECAST_DEFAULTS: Partial<Record<number, { raceRule: RaceRule; expec
   // ── NJ PLURALITY PRIMARIES (June 2) ──────────────────────────────────────
   81046: { raceRule: "PLURALITY", expectedTurnout: 57_500, pollAvg: { "Bennett": 62.0 } }, // NJ-07 D (Bennett ~90–95%)
   // ── SD 35% RUNOFF THRESHOLD — top-2 runoff if unmet (June 2) ─────────────
-  80461: { raceRule: "THRESHOLD_35_RUNOFF", expectedTurnout: 125_000, pollAvg: { "Rhoden": 30.2, "Johnson": 27.3, "Doeden": 22.5, "Hansen": 16.8 }, pollsCloseIso: "2026-06-02T21:00:00-04:00" }, // SD Governor R (LV model) — 9pm ET
-  80511: { raceRule: "THRESHOLD_35_RUNOFF", pollsCloseIso: "2026-06-02T21:00:00-04:00" },     // SD US House At-Large R
-  80512: { raceRule: "THRESHOLD_35_RUNOFF", pollsCloseIso: "2026-06-02T21:00:00-04:00" },     // SD US Senate R
+  80461: { raceRule: "THRESHOLD_35_RUNOFF", expectedTurnout: 150_000, pollAvg: { "Rhoden": 30.2, "Johnson": 27.3, "Doeden": 22.5, "Hansen": 16.8 },overrideReporting: 20, pollsCloseIso: "2026-06-02T21:00:00-04:00" }, // SD Governor R (LV model) — 9pm ET
+  80511: { raceRule: "THRESHOLD_35_RUNOFF",overrideReporting: 20, pollsCloseIso: "2026-06-02T21:00:00-04:00" },     // SD US House At-Large R
+  80512: { raceRule: "THRESHOLD_35_RUNOFF",overrideReporting: 20, pollsCloseIso: "2026-06-02T21:00:00-04:00" },     // SD US Senate R
   // ── NM close time override (June 2) ──────────────────────────────────────
   81014: { raceRule: "PLURALITY", pollsCloseIso: "2026-06-02T21:00:00-04:00" },                // NM US Senate D — 9pm ET
   81015: { raceRule: "PLURALITY", pollsCloseIso: "2026-06-02T21:00:00-04:00" },                // NM US Senate R — 9pm ET
@@ -1590,7 +1590,7 @@ export default function March3FeaturedClient() {
   const effectiveMsLeft = effectiveCloseDate ? effectiveCloseDate.getTime() - nowMs : selectedMsLeft;
   // Reporting: prefer code override if set, then API
   const _reportingOverride = RACE_FORECAST_DEFAULTS[selectedId]?.overrideReporting;
-  const effectiveReporting = typeof _reportingOverride === "number" ? _reportingOverride : selectedReporting;
+  const effectiveReporting = (typeof _reportingOverride === "number" && _reportingOverride > 0) ? _reportingOverride : selectedReporting;
   // Total votes reported
   const selectedTotalVotes = selectedRace?.candidates?.reduce((s, c) => s + (c.votes ?? 0), 0) ?? 0;
   // API-based projection fallback (used when ForecastPanel has not produced a result)
@@ -2198,7 +2198,7 @@ export default function March3FeaturedClient() {
                   <div style={{ display: "flex", alignItems: "flex-end", gap: 10, marginBottom: 12 }}>
                     <div>
                       <div style={{ fontFamily: "var(--font-body)", fontSize: "7px", fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(255,255,255,0.55)", marginBottom: 2 }}>REPORTING</div>
-                      <div style={{ fontFamily: "var(--font-numeric)", fontSize: "30px", fontWeight: 900, color: "#fff", lineHeight: 1 }}>{selectedReporting.toFixed(1)}%</div>
+                      <div style={{ fontFamily: "var(--font-numeric)", fontSize: "30px", fontWeight: 900, color: "#fff", lineHeight: 1 }}>{effectiveReporting.toFixed(1)}%</div>
                     </div>
                     <div style={{ marginBottom: 5 }}>
                       <span style={{ display: "inline-block", padding: "3px 9px", borderRadius: "var(--r-pill)", background: selectedStatusInfo.bg, border: `1px solid ${selectedStatusInfo.border}`, fontFamily: "var(--font-body)", fontSize: "8px", fontWeight: 700, letterSpacing: "0.14em", color: "#fff", textTransform: "uppercase" }}>
@@ -2243,7 +2243,7 @@ export default function March3FeaturedClient() {
               <div className="res-panel-header" style={{ flexWrap: "wrap", gap: "8px" }}>
                 <div style={{ minWidth: 0 }}>
                   <div className="res-panel-tag">{selectedMeta?.label ?? "—"}</div>
-                  <div className="res-note" style={{ marginTop: "2px" }}>{selectedRace?.percent_reporting?.toFixed(1)}% REPORTING · {prettyTime(selectedRace?.last_updated)}</div>
+                  <div className="res-note" style={{ marginTop: "2px" }}>{effectiveReporting.toFixed(1)}% REPORTING · {prettyTime(selectedRace?.last_updated)}</div>
                 </div>
                 <div style={{ display: "flex", flexWrap: "wrap", gap: "5px", alignItems: "center" }}>
                   <span className="res-badge">{selectedCloseLocal}</span>
