@@ -508,16 +508,36 @@ function MapWithCountyTooltip({ svgText, regionResults }: { svgText: string; reg
                   <div className="grid grid-cols-[1fr_36px_30px] gap-0.5 pb-1 mb-1 border-b" style={{ borderColor: "var(--border)" }}>
                     {["CANDIDATE", "VOTES", "PCT"].map((h) => (<div key={h} className={`res-th ${h !== "CANDIDATE" ? "text-right" : ""}`}>{h}</div>))}
                   </div>
-                  {tooltip.lines.map((c, i) => (
-                    <div key={i} className="grid grid-cols-[1fr_36px_30px] items-center gap-0.5 py-0.5 border-b" style={{ borderColor: "var(--border)" }}>
-                      <div className="flex items-center gap-1 min-w-0">
-                        <span className="h-1.5 w-1.5 rounded-full flex-shrink-0" style={{ background: c.color || "rgba(15,16,32,0.50)" }} />
-                        <div className="min-w-0"><div className="res-cand-name truncate">{c.name}{c.winner ? " ✓" : ""}</div><div className="res-cand-party">{c.party}</div></div>
-                      </div>
-                      <div className="text-right res-num">{c.votes?.toLocaleString() ?? "—"}</div>
-                      <div className="text-right res-pct-big">{c.pct !== null ? `${c.pct.toFixed(1)}%` : "—"}</div>
-                    </div>
-                  ))}
+                  {(() => {
+                    const top5 = tooltip.lines.slice(0, 5);
+                    const rest = tooltip.lines.slice(5);
+                    const othersVotes = rest.reduce((s, c) => s + (c.votes ?? 0), 0);
+                    const othersPct = rest.reduce((s, c) => s + (c.pct ?? 0), 0);
+                    return (
+                      <>
+                        {top5.map((c, i) => (
+                          <div key={i} className="grid grid-cols-[1fr_36px_30px] items-center gap-0.5 py-0.5 border-b" style={{ borderColor: "var(--border)" }}>
+                            <div className="flex items-center gap-1 min-w-0">
+                              <span className="h-1.5 w-1.5 rounded-full flex-shrink-0" style={{ background: c.color || "rgba(15,16,32,0.50)" }} />
+                              <div className="min-w-0"><div className="res-cand-name truncate">{c.name}{c.winner ? " ✓" : ""}</div><div className="res-cand-party">{c.party}</div></div>
+                            </div>
+                            <div className="text-right res-num">{c.votes?.toLocaleString() ?? "—"}</div>
+                            <div className="text-right res-pct-big">{c.pct !== null ? `${c.pct.toFixed(1)}%` : "—"}</div>
+                          </div>
+                        ))}
+                        {rest.length > 0 && (
+                          <div className="grid grid-cols-[1fr_36px_30px] items-center gap-0.5 py-0.5" style={{ opacity: 0.55 }}>
+                            <div className="flex items-center gap-1 min-w-0">
+                              <span className="h-1.5 w-1.5 rounded-full flex-shrink-0" style={{ background: "var(--muted2)" }} />
+                              <div className="res-cand-name truncate">Others ({rest.length})</div>
+                            </div>
+                            <div className="text-right res-num">{othersVotes > 0 ? othersVotes.toLocaleString() : "—"}</div>
+                            <div className="text-right res-pct-big">{othersPct > 0 ? `${othersPct.toFixed(1)}%` : "—"}</div>
+                          </div>
+                        )}
+                      </>
+                    );
+                  })()}
                 </>
               ) : (
                 <div className="py-5 flex flex-col items-center gap-2">
@@ -608,6 +628,8 @@ function CandidateList({ candidates, reporting, raceId, isMajorityRunoff, called
 
 // ─── COUNTY TABLE ────────────────────────────────────────────────────────────
 function CountyTotalsTable({ regionResults, collapsed, onToggle, maxHeight }: { regionResults: RegionResult[] | Record<string, RegionResult>; collapsed: boolean; onToggle: () => void; maxHeight?: string }) {
+  const [expandedRows, setExpandedRows] = React.useState<Set<number>>(new Set());
+  const toggleRow = (i: number) => setExpandedRows(prev => { const n = new Set(prev); n.has(i) ? n.delete(i) : n.add(i); return n; });
   const data = useMemo(() => {
     return coerceRegionResults(regionResults).map((rr) => {
       const candidates = buildTooltipLines(rr);
@@ -688,14 +710,34 @@ function CountyTotalsTable({ regionResults, collapsed, onToggle, maxHeight }: { 
                       <div className="res-note mt-1">{row.reporting.toFixed(1)}% RPT</div>
                     </td>
                     <td className="px-4 py-3 align-top">
-                      <div className="grid grid-cols-1 gap-1 md:grid-cols-2">
-                        {row.candidates.length > 0 ? row.candidates.slice(0, 4).map((cand, idx) => (
-                          <div key={idx} className="flex items-center justify-between gap-2 py-1 border-b" style={{ borderColor: "var(--border)" }}>
-                            <div className="flex items-center gap-2 min-w-0"><span className="h-1.5 w-1.5 rounded-full flex-shrink-0" style={{ background: cand.color || "var(--muted2)" }} /><span className="res-note truncate">{cand.name}</span></div>
-                            <span className="res-cand-name shrink-0">{cand.pct !== null ? `${cand.pct.toFixed(1)}%` : "—"}</span>
+                      {row.candidates.length > 0 ? (() => {
+                        const isExp = expandedRows.has(i);
+                        const visible = isExp ? row.candidates.slice(0, 5) : row.candidates.slice(0, 2);
+                        const rest = isExp ? row.candidates.slice(5) : row.candidates.slice(2);
+                        const othersVotes = rest.reduce((s, c) => s + (c.votes ?? 0), 0);
+                        const othersPct = rest.reduce((s, c) => s + (c.pct ?? 0), 0);
+                        return (
+                          <div className="grid grid-cols-1 gap-1">
+                            {visible.map((cand, idx) => (
+                              <div key={idx} className="flex items-center justify-between gap-2 py-1 border-b" style={{ borderColor: "var(--border)" }}>
+                                <div className="flex items-center gap-2 min-w-0"><span className="h-1.5 w-1.5 rounded-full flex-shrink-0" style={{ background: cand.color || "var(--muted2)" }} /><span className="res-note truncate">{cand.name}</span></div>
+                                <span className="res-cand-name shrink-0">{cand.pct !== null ? `${cand.pct.toFixed(1)}%` : "—"}</span>
+                              </div>
+                            ))}
+                            {(isExp && rest.length > 0) && (
+                              <div className="flex items-center justify-between gap-2 py-1" style={{ opacity: 0.55 }}>
+                                <div className="flex items-center gap-2 min-w-0"><span className="h-1.5 w-1.5 rounded-full flex-shrink-0" style={{ background: "var(--muted2)" }} /><span className="res-note truncate">Others ({rest.length})</span></div>
+                                <span className="res-cand-name shrink-0">{othersPct > 0 ? `${othersPct.toFixed(1)}%` : othersVotes > 0 ? othersVotes.toLocaleString() : "—"}</span>
+                              </div>
+                            )}
+                            {row.candidates.length > 2 && (
+                              <button onClick={() => toggleRow(i)} style={{ marginTop: 2, background: "none", border: "none", cursor: "pointer", padding: 0, textAlign: "left" }}>
+                                <span className="res-note" style={{ color: "var(--purple-soft)" }}>{isExp ? "▲ SHOW LESS" : `▼ +${row.candidates.length - 2} MORE`}</span>
+                              </button>
+                            )}
                           </div>
-                        )) : <span className="res-note italic">Awaiting…</span>}
-                      </div>
+                        );
+                      })() : <span className="res-note italic">Awaiting…</span>}
                     </td>
                     <td className="px-4 py-3 align-top text-right">
                       {row.margin !== null ? (<><div className="res-pct-xl">{row.margin >= 0 ? "+" : ""}{row.margin.toFixed(1)}%</div><div className="res-note">SPREAD</div></>) : <span className="res-note">—</span>}
@@ -901,8 +943,17 @@ function ForecastPanel({ raceId, refreshTick, raceData, onForecastUpdate }: { ra
   const [playing, setPlaying] = useState(false);
   const [showOptions, setShowOptions] = useState(false);
   const playRef = useRef<ReturnType<typeof setInterval> | null>(null);
-  const raceDataRef = useRef<RaceDetail | undefined>(raceData);
-  useEffect(() => { raceDataRef.current = raceData; }, [raceData]);
+  const raceDataRef = useRef<RaceDetail | undefined>(undefined);
+  const raceDataRaceIdRef = useRef<number>(-1);
+  useEffect(() => {
+    // Only accept raceData that belongs to the current raceId.
+    // On race change, raceId updates before raceData, so we'd briefly
+    // hold stale data from the previous race — guard against that here.
+    if (raceData !== undefined) {
+      raceDataRef.current = raceData;
+      raceDataRaceIdRef.current = raceId;
+    }
+  }, [raceData, raceId]);
   const raceIdRef = useRef(raceId); const raceRuleRef = useRef(raceRule); const turnoutRef = useRef(expectedTurnoutOverride);
   const playingRef = useRef(playing); const historyListRef = useRef<ForecastHistoryList | null>(null); const historyIndexRef = useRef(historyIndex);
   useEffect(() => { raceIdRef.current = raceId; }, [raceId]);
@@ -919,7 +970,9 @@ function ForecastPanel({ raceId, refreshTick, raceData, onForecastUpdate }: { ra
       const _repOverride = RACE_FORECAST_DEFAULTS[id]?.overrideReporting;
       const _effectivePct = (_repOverride && _repOverride > 0) ? _repOverride : undefined;
       const _colorOverrides = RACE_FORECAST_DEFAULTS[id]?.colorOverrides;
-      let _baseRaceData = raceDataRef.current
+      // Only use cached race data if it actually belongs to this race — on initial
+      // race selection, raceDataRef may still hold the previous race's data.
+      let _baseRaceData = (raceDataRef.current && raceDataRaceIdRef.current === id)
         ? (_effectivePct !== undefined ? { ...raceDataRef.current, percent_reporting: _effectivePct } : raceDataRef.current)
         : null;
       if (_baseRaceData && _colorOverrides && Object.keys(_colorOverrides).length > 0) {
