@@ -1313,11 +1313,11 @@ function RaceScrollWindow({ races, raceCache, selectedId, onSelect, search, onSe
               const liveData = raceCache[r.id];
               const winner = liveData?.candidates?.find(c => c.winner);
               const isCalled = !!(winner || lockedCalls?.[r.id] || RACE_FORECAST_DEFAULTS[r.id]?.manualCall);
-              const _callType = lockedCallTypes?.[r.id] ?? (RACE_FORECAST_DEFAULTS[r.id]?.manualCall?.includes(" vs. ") ? "RUNOFF" : "WIN");
+              const _callType = lockedCallTypes?.[r.id] ?? (lockedCalls?.[r.id]?.includes(" vs. ") ? "RUNOFF" : "WIN");
               const _callLabel = (() => {
                 if (!isCalled) return null;
                 if (_callType === "RUNOFF" && lockedRunoffProbs?.[r.id]) {
-                  const frags = (lockedCalls?.[r.id] ?? RACE_FORECAST_DEFAULTS[r.id]?.manualCall ?? "").split(" vs. ");
+                  const frags = (lockedCalls?.[r.id] ?? "").split(" vs. ");
                   const rp = lockedRunoffProbs[r.id];
                   const allOk = frags.length >= 2 && frags.every(frag => Object.entries(rp).some(([n, p]) => n.toLowerCase().includes(frag.toLowerCase()) && p > 0.9973));
                   return allOk ? "✓ CALLED" : "✓ RUNOFF NEEDED";
@@ -1450,11 +1450,11 @@ function RacePickerPanel({ races, raceCache, selectedId, onSelect, lockedCalls, 
               const liveData = raceCache[r.id];
               const winner = liveData?.candidates?.find(c => c.winner);
               const isCalled = !!(winner || lockedCalls?.[r.id] || RACE_FORECAST_DEFAULTS[r.id]?.manualCall);
-              const _callType2 = lockedCallTypes?.[r.id] ?? (RACE_FORECAST_DEFAULTS[r.id]?.manualCall?.includes(" vs. ") ? "RUNOFF" : "WIN");
+              const _callType2 = lockedCallTypes?.[r.id] ?? (lockedCalls?.[r.id]?.includes(" vs. ") ? "RUNOFF" : "WIN");
               const _callLabel2 = (() => {
                 if (!isCalled) return null;
                 if (_callType2 === "RUNOFF" && lockedRunoffProbs?.[r.id]) {
-                  const frags = (lockedCalls?.[r.id] ?? RACE_FORECAST_DEFAULTS[r.id]?.manualCall ?? "").split(" vs. ");
+                  const frags = (lockedCalls?.[r.id] ?? "").split(" vs. ");
                   const rp = lockedRunoffProbs[r.id];
                   const allOk = frags.length >= 2 && frags.every(frag => Object.entries(rp).some(([n, p]) => n.toLowerCase().includes(frag.toLowerCase()) && p > 0.9973));
                   return allOk ? "✓ CALLED" : "✓ RUNOFF NEEDED";
@@ -1788,7 +1788,8 @@ export default function March3FeaturedClient() {
       setLockedCallTypes(prev => ({ ...prev, [selectedId]: forecastProj?.projectionType ?? "WIN" }));
     }
   }, [liveForecastCalled, selectedId]);
-  const forecastCalled = RACE_FORECAST_DEFAULTS[selectedId]?.manualCall ?? lockedCalls[selectedId] ?? liveForecastCalled;
+  const manualWinner = RACE_FORECAST_DEFAULTS[selectedId]?.manualCall ?? null;
+  const forecastCalled = lockedCalls[selectedId] ?? liveForecastCalled;
 
   const timeStr = nowMs > 0
     ? new Date(nowMs).toLocaleTimeString("en-US", { hour12: false, hour: "2-digit", minute: "2-digit", second: "2-digit" })
@@ -2326,11 +2327,11 @@ export default function March3FeaturedClient() {
                   const reporting = (typeof _ov === "number" && _ov > 0) ? _ov : _apiReporting;
                   const raceTypeShort = getRaceTypeShort(r.raceType);
                   const isMobileCalled = !!(winner || lockedCalls[r.id] || RACE_FORECAST_DEFAULTS[r.id]?.manualCall);
-                  const _mCallType = lockedCallTypes[r.id] ?? (RACE_FORECAST_DEFAULTS[r.id]?.manualCall?.includes(" vs. ") ? "RUNOFF" : "WIN");
+                  const _mCallType = lockedCallTypes[r.id] ?? (lockedCalls[r.id]?.includes(" vs. ") ? "RUNOFF" : "WIN");
                   const _mCallLabel = (() => {
                     if (!isMobileCalled) return null;
                     if (_mCallType === "RUNOFF" && lockedRunoffProbs[r.id]) {
-                      const frags = (lockedCalls[r.id] ?? RACE_FORECAST_DEFAULTS[r.id]?.manualCall ?? "").split(" vs. ");
+                      const frags = (lockedCalls[r.id] ?? "").split(" vs. ");
                       const rp = lockedRunoffProbs[r.id];
                       const allOk = frags.length >= 2 && frags.every(frag => Object.entries(rp).some(([n, p]) => n.toLowerCase().includes(frag.toLowerCase()) && p > 0.9973));
                       return allOk ? "✓ CALLED" : "✓ RUNOFF NEEDED";
@@ -2357,11 +2358,11 @@ export default function March3FeaturedClient() {
             const reporting = (typeof _ovRpt === "number" && _ovRpt > 0) ? _ovRpt : _apiRpt;
             const raceTypeColor = meta ? getRaceTypeColor(meta.raceType) : "rgba(255,255,255,0.4)";
             const isMobileQuickCalled = !!(winner || lockedCalls[selectedId] || RACE_FORECAST_DEFAULTS[selectedId]?.manualCall);
-            const _mqCallType = lockedCallTypes[selectedId] ?? (RACE_FORECAST_DEFAULTS[selectedId]?.manualCall?.includes(" vs. ") ? "RUNOFF" : "WIN");
+            const _mqCallType = lockedCallTypes[selectedId] ?? (lockedCalls[selectedId]?.includes(" vs. ") ? "RUNOFF" : "WIN");
             const _mqCallLabel = (() => {
               if (!isMobileQuickCalled) return null;
               if (_mqCallType === "RUNOFF" && lockedRunoffProbs[selectedId]) {
-                const frags = (lockedCalls[selectedId] ?? RACE_FORECAST_DEFAULTS[selectedId]?.manualCall ?? "").split(" vs. ");
+                const frags = (lockedCalls[selectedId] ?? "").split(" vs. ");
                 const rp = lockedRunoffProbs[selectedId];
                 const allOk = frags.length >= 2 && frags.every(frag => Object.entries(rp).some(([n, p]) => n.toLowerCase().includes(frag.toLowerCase()) && p > 0.9973));
                 return allOk ? "✓ CALLED" : "✓ RUNOFF NEEDED";
@@ -2626,11 +2627,12 @@ export default function March3FeaturedClient() {
                       </div>
                     );
 
-                    // ── STATE 1 — API Official, single winner ─────────────────────
-                    if (selectedWinner && !isRunoffConfirmed && !_isRunoffProjected) return (
+                    // ── STATE 1 — API Official or manual override, single winner ──
+                    const _officialWinnerName = selectedWinner?.name ?? manualWinner ?? null;
+                    if (_officialWinnerName && !isRunoffConfirmed && !_isRunoffProjected) return (
                       <>
                         {headerRow("OFFICIAL", "var(--win)")}
-                        {nameRow(<>{checkSvg}<span style={_ns}>{_last(selectedWinner.name)}</span></>)}
+                        {nameRow(<>{checkSvg}<span style={_ns}>{_last(_officialWinnerName)}</span></>)}
                       </>
                     );
 
