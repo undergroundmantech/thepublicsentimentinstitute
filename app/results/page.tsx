@@ -1153,7 +1153,13 @@ function ForecastPanel({ raceId, refreshTick, raceData, onForecastUpdate }: { ra
                     <div key={k} style={{ marginBottom: 11 }}>
                       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 5 }}>
                         <div style={{ display: "flex", alignItems: "center", gap: 5 }}>
-                          {isCalled && <span style={{ color: "rgba(255,255,255,0.85)", fontSize: "10px", lineHeight: 1 }}>✓</span>}
+                          {isCalled && (
+                            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" style={{ flexShrink: 0 }}>
+                              <circle cx="7" cy="7" r="6.5" fill="var(--win)" opacity="0.18"/>
+                              <circle cx="7" cy="7" r="6.5" stroke="var(--win)" strokeWidth="1.2"/>
+                              <path d="M4 7l2 2 4-4" stroke="var(--win)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                            </svg>
+                          )}
                           <span style={{ fontFamily: "var(--font-body)", fontSize: "11px", letterSpacing: "0.06em", textTransform: "uppercase", color: "var(--muted)" }}>{candidateLabels[k]}</span>
                         </div>
                         <span style={{ fontFamily: "var(--font-numeric)", fontSize: "14px", fontWeight: 800, color }}>{fcastPct(advProb)}</span>
@@ -2227,6 +2233,7 @@ export default function March3FeaturedClient() {
         .ky04-hero-strip { max-width:1240px; margin:0 auto; padding:0 10px 8px; display:flex; gap:8px; box-sizing:border-box; }
         .ky04-hero-card { background:linear-gradient(135deg,var(--red) 0%,var(--purple) 55%,var(--blue) 100%); border-radius:var(--r-lg); border:none; flex-shrink:0; width:280px; padding:18px 16px 16px; position:relative; overflow:hidden; box-shadow:var(--shadow-md); }
         .ky04-hero-card::after { content:''; position:absolute; inset:0; background:radial-gradient(ellipse 80% 120% at 105% 50%,rgba(255,255,255,0.12) 0%,transparent 65%); pointer-events:none; }
+        :root:not([data-theme="dark"]) .ky04-hero-card { opacity: 0.8; }
         @media (max-width:900px) { .ky04-hero-strip { flex-direction:column; } .ky04-hero-card { width:100%; } }
       `}</style>
 
@@ -2388,7 +2395,7 @@ export default function March3FeaturedClient() {
           <div className="res-race-picker" style={spotlightMeta ? { display: "flex", flexDirection: "column", gap: 8 } : undefined}>
             {spotlightMeta && (
               <>
-                <div className="ky04-hero-card res-spotlight-hero" style={{ width: "100%", boxSizing: "border-box", flexShrink: 0 }}>
+                <div className="ky04-hero-card res-spotlight-hero" style={{ width: "100%", boxSizing: "border-box", flexShrink: 0, background: "linear-gradient(135deg, var(--red) 0%, var(--purple) 55%, var(--blue) 100%)" }}>
                   <div style={{ marginBottom: 10 }}>
                     <span style={{ display: "inline-flex", alignItems: "center", gap: 5, padding: "3px 9px", border: "1px solid rgba(255,255,255,0.30)", borderRadius: "var(--r-pill)", background: "rgba(255,255,255,0.15)", fontFamily: "var(--font-body)", fontSize: "7px", fontWeight: 700, letterSpacing: "0.20em", color: "#fff", textTransform: "uppercase" }}>
                       <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#fff", boxShadow: "0 0 0 3px rgba(255,255,255,0.28)", display: "inline-block", flexShrink: 0 }} />
@@ -2521,67 +2528,201 @@ export default function March3FeaturedClient() {
                   </div>
                 </div>
                 <div className="res-stat-block">
-                  {/* Derive which runoff advancers are individually confirmed (>99.73%) */}
                   {(() => {
-                    const _runoffProbs = lockedRunoffProbs[selectedId] ?? (forecastProj?.raceId === selectedId ? forecastProj.runoffProbs : undefined);
-                    const _confirmedAdvancers = _runoffProbs
-                      ? Object.entries(_runoffProbs).filter(([, p]) => p > 0.9973).map(([n]) => n)
-                      : null;
-                    const _isRunoffCall = !!(forecastCalled && forecastProj?.projectionType === "RUNOFF");
-                    const _top2Lines: string[] = _runoffProbs
-                      ? Object.entries(_runoffProbs).sort(([, a], [, b]) => b - a).slice(0, 2).map(([n, p]) => `${n} — ${(p * 100).toFixed(1)}% to adv.`)
+                    const _ns = { fontFamily: "var(--font-body)", fontSize: "11px", fontWeight: 700, letterSpacing: "0.04em", textTransform: "uppercase" as const, color: "var(--muted)", lineHeight: "1.6" };
+                    const _last = (n: string) => { const p = n.trim().split(/\s+/); return p.length > 2 ? `${p[0]} ${p[p.length - 1]}` : n.trim(); };
+
+                    const _runoffProbs = lockedRunoffProbs[selectedId] ??
+                      (forecastProj?.raceId === selectedId ? forecastProj?.runoffProbs : undefined);
+
+                    const _top2Entries: [string, number][] = _runoffProbs
+                      ? (Object.entries(_runoffProbs) as [string, number][])
+                          .sort(([, a], [, b]) => b - a)
+                          .slice(0, 2)
                       : [];
-                    const _projName = (() => {
-                      if (isRunoffConfirmed) return "RUNOFF NEEDED";
-                      if (forecastCalled) {
-                        if (_isRunoffCall) {
-                          if (selectedRaceIsTopTwo) {
-                            return _top2Lines.length > 0 ? _top2Lines.join("\n") : "TOP 2 PROJECTED";
-                          }
-                          if (_confirmedAdvancers && _confirmedAdvancers.length > 0) {
-                            return _confirmedAdvancers.map(n => n.split(" ").pop()).join(" vs. ");
-                          }
-                          return _top2Lines.length > 0 ? _top2Lines.join("\n") : "RUNOFF PROJECTED";
-                        }
-                        return forecastCalled;
-                      }
-                      if (selectedWinner) return selectedWinner.name;
-                      if (displayProj?.projectionType === "RUNOFF") return displayProj.leader;
-                      return displayProj ? displayProj.leader : "PENDING";
+
+                    const _combinedProb = _top2Entries.length === 2
+                      ? _top2Entries[0][1] * _top2Entries[1][1] * 100
+                      : 0;
+
+                    const _isRunoffProjected = forecastProj?.raceId === selectedId &&
+                      forecastProj?.projectionType === "RUNOFF" &&
+                      _top2Entries.length >= 2;
+
+                    const _bothConfirmed = _top2Entries.length === 2 &&
+                      _top2Entries.every(([, p]) => p > 0.9973);
+
+                    const _localDisplayProb = (() => {
+                      if (!selectedRace?.candidates?.length) return null;
+                      const ordered = [...selectedRace.candidates]
+                        .sort((a, b) => (b.percent ?? 0) - (a.percent ?? 0));
+                      const leader = ordered[0];
+                      const runnerUp = ordered[1];
+                      if (!leader || !runnerUp) return null;
+                      // Use votes if available, otherwise synthesise from percent
+                      const lv = (leader.votes > 0 || runnerUp.votes > 0) ? leader.votes : Math.round((leader.percent ?? 0) * 10000 / 100);
+                      const rv = (leader.votes > 0 || runnerUp.votes > 0) ? runnerUp.votes : Math.round((runnerUp.percent ?? 0) * 10000 / 100);
+                      if (lv === 0 && rv === 0) return null;
+                      return calculateWinProbability(lv, rv, effectiveReporting);
                     })();
-                    return (
-                      <>
-                  <div className="res-stat-row" style={{ marginBottom: "5px" }}>
-                    <span className="res-stat-block-label">PROJECTION</span>
-                    <span className="res-note" style={{ color: isRunoffConfirmed ? "var(--win)" : forecastCalled ? "var(--win)" : selectedWinner ? "var(--win)" : (displayProj?.projectionType === "RUNOFF") ? "var(--win)" : displayProj ? "var(--purple-soft)" : "var(--muted2)", fontWeight: 700 }}>
-                      {isRunoffConfirmed ? "CONFIRMED" : forecastCalled ? (_isRunoffCall ? (selectedRaceIsTopTwo ? "TOP 2 PROJECTED" : "RUNOFF NEEDED") : "FORECAST CALL") : selectedWinner ? "OFFICIAL" : displayProj ? `${displayProj.prob.toFixed(1)}%` : "—"}
-                    </span>
-                  </div>
-                  <div style={{ display: "flex", alignItems: "center", gap: 5 }}>
-                    {((forecastCalled && !_isRunoffCall && !isRunoffConfirmed) || selectedWinner) && (
+
+                    const _localLeadMargin = (() => {
+                      if (!selectedRace?.candidates?.length) return null;
+                      const ordered = [...selectedRace.candidates]
+                        .sort((a, b) => (b.percent ?? 0) - (a.percent ?? 0));
+                      const lp = ordered[0]?.percent ?? 0;
+                      const rp = ordered[1]?.percent ?? 0;
+                      if (lp === 0 && rp === 0) return null;
+                      return lp - rp;
+                    })();
+
+                    const _localLeaderLastName = (() => {
+                      if (!selectedRace?.candidates?.length) return null;
+                      const ordered = [...selectedRace.candidates]
+                        .sort((a, b) => (b.percent ?? 0) - (a.percent ?? 0));
+                      const p0 = ordered[0]?.name.trim().split(/\s+/) ?? [];
+                      return p0.length > 2 ? `${p0[0]} ${p0[p0.length - 1]}` : (p0.join(" ") || null);
+                    })();
+
+                    const _localRunnerUpLastName = (() => {
+                      if (!selectedRace?.candidates?.length) return null;
+                      const ordered = [...selectedRace.candidates]
+                        .sort((a, b) => (b.percent ?? 0) - (a.percent ?? 0));
+                      const p1 = ordered[1]?.name.trim().split(/\s+/) ?? [];
+                      return p1.length > 2 ? `${p1[0]} ${p1[p1.length - 1]}` : (p1.join(" ") || null);
+                    })();
+
+                    const checkSvg = (
                       <svg width="14" height="14" viewBox="0 0 14 14" fill="none" style={{ flexShrink: 0 }}>
                         <circle cx="7" cy="7" r="6.5" fill="var(--win)" opacity="0.18"/>
                         <circle cx="7" cy="7" r="6.5" stroke="var(--win)" strokeWidth="1.2"/>
                         <path d="M4 7l2 2 4-4" stroke="var(--win)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                       </svg>
-                    )}
-                    <div style={{ fontFamily: "var(--font-body)", fontSize: "11px", fontWeight: 700, letterSpacing: "0.04em", textTransform: "uppercase", color: "var(--foreground)", lineHeight: "1.6" }}>
-                      {_projName.includes("\n")
-                        ? _projName.split("\n").map((line, i) => <div key={i}>{line}</div>)
-                        : _projName}
-                    </div>
-                  </div>
+                    );
+
+                    const gradientBar = (widthPct: number, suffix?: string) => (
+                      <div style={{ marginTop: 6 }}>
+                        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 8 }}>
+                          <div style={{ flex: 1, height: 3, background: "var(--border2)", overflow: "hidden" }}>
+                            <div style={{ height: "100%", width: `${widthPct}%`, background: "linear-gradient(90deg,var(--purple),var(--blue2))", transition: "width 600ms ease" }} />
+                          </div>
+                          <span style={{ fontFamily: "var(--font-numeric)", fontSize: "11px", fontWeight: 700, color: "var(--muted)", flexShrink: 0 }}>
+                            {widthPct.toFixed(1)}%{suffix && <span style={{ fontFamily: "var(--font-body)", fontSize: "9px", fontWeight: 700, letterSpacing: "0.04em", marginLeft: 3, color: "var(--muted2)" }}>{suffix}</span>}
+                          </span>
+                        </div>
+                      </div>
+                    );
+
+                    const headerRow = (label: string, color: string, fontSize = "10px") => (
+                      <div className="res-stat-row" style={{ marginBottom: "5px" }}>
+                        <span className="res-stat-block-label">PROJECTION</span>
+                        <span className="res-note" style={{ color, fontWeight: 700, fontSize }}>{label}</span>
+                      </div>
+                    );
+
+                    const nameRow = (content: React.ReactNode) => (
+                      <div style={{ display: "flex", alignItems: "center", gap: 5 }}>
+                        {content}
+                      </div>
+                    );
+
+                    // ── STATE 1 — API Official, single winner ─────────────────────
+                    if (selectedWinner && !isRunoffConfirmed && !_isRunoffProjected) return (
+                      <>
+                        {headerRow("OFFICIAL", "var(--win)")}
+                        {nameRow(<>{checkSvg}<span style={_ns}>{_last(selectedWinner.name)}</span></>)}
+                      </>
+                    );
+
+                    // ── STATE 2 — API Official, runoff ────────────────────────────
+                    if (isRunoffConfirmed) {
+                      const _names = (selectedRace?.candidates ?? []).filter(c => c.winner).map(c => _last(c.name));
+                      return (
+                        <>
+                          {headerRow("OFFICIAL", "var(--win)")}
+                          {nameRow(<>{checkSvg}<span style={_ns}>{_names[0]} vs. {_names[1] ?? ""}</span></>)}
+                        </>
+                      );
+                    }
+
+                    // ── STATE 3 — Forecast Call, single winner ────────────────────
+                    if (forecastCalled && !_isRunoffProjected) return (
+                      <>
+                        {headerRow("FORECAST CALL", "var(--win)")}
+                        {nameRow(<>{checkSvg}<span style={_ns}>{_last(forecastCalled)}</span></>)}
+                      </>
+                    );
+
+                    // ── STATE 4 — Runoff, both confirmed ──────────────────────────
+                    if (_isRunoffProjected && _bothConfirmed) {
+                      const [e1, e2] = _top2Entries;
+                      return (
+                        <>
+                          {headerRow("RUNOFF SET", "var(--win)")}
+                          {nameRow(<>{checkSvg}<span style={_ns}>{_last(e1[0])} vs. {_last(e2[0])}</span></>)}
+                          {gradientBar(100, "RUNOFF PROB")}
+                        </>
+                      );
+                    }
+
+                    // ── STATE 5 — Runoff, one confirmed ───────────────────────────
+                    if (_isRunoffProjected && _top2Entries.some(([, p]) => p > 0.9973)) {
+                      const sorted = _top2Entries.slice().sort(([, a], [, b]) => b - a);
+                      const [[n1, p1], [n2]] = sorted;
+                      return (
+                        <>
+                          {headerRow("TOP 2 ADVANCE TO RUNOFF", "var(--purple-soft)", "9px")}
+                          {nameRow(<>
+                            {p1 > 0.9973 && checkSvg}
+                            <span style={_ns}>
+                              <span style={{ color: "var(--muted)" }}>{_last(n1)}</span>
+                              <span style={{ color: "var(--muted2)", fontWeight: 400, opacity: 0.7 }}>{" vs. "}{_last(n2)}</span>
+                            </span>
+                          </>)}
+                          {gradientBar(_combinedProb, "RUNOFF PROB")}
+                        </>
+                      );
+                    }
+
+                    // ── STATE 6 — Runoff projected, none confirmed ────────────────
+                    if (_isRunoffProjected) {
+                      const [e1, e2] = _top2Entries;
+                      return (
+                        <>
+                          {headerRow("TOP 2 ADVANCE TO RUNOFF", "var(--purple-soft)", "9px")}
+                          {nameRow(<span style={_ns}>{_last(e1[0])} vs. {_last(e2[0])}</span>)}
+                          {gradientBar(_combinedProb, "RUNOFF PROB")}
+                        </>
+                      );
+                    }
+
+                    // ── STATE 7a — Live data (reporting ≥ 5%) → TOO CLOSE TO CALL ─
+                    if (_localDisplayProb !== null && effectiveReporting >= 5) return (
+                      <>
+                        {headerRow("TOO CLOSE TO CALL", "var(--muted2)", "9px")}
+                        {nameRow(
+                          <span style={_ns}>
+                            <span style={{ color: "var(--muted)", opacity: 1 }}>{_localLeaderLastName ?? "—"}</span>
+                            {_localRunnerUpLastName && (
+                              <span style={{ color: "var(--muted2)", opacity: 0.5 }}>{" vs. "}{_localRunnerUpLastName}</span>
+                            )}
+                          </span>
+                        )}
+                        {gradientBar(_localDisplayProb, "PROB")}
+                      </>
+                    );
+
+                    // ── STATE 7b — Too early to call ─────────────────────────────
+                    const _pendingName = (!_localLeaderLastName || effectiveReporting < 0.1)
+                      ? "PENDING"
+                      : _localLeaderLastName;
+                    return (
+                      <>
+                        {headerRow("TOO EARLY TO CALL", "var(--muted2)", "9px")}
+                        {nameRow(<span style={_ns}>{_pendingName}</span>)}
                       </>
                     );
                   })()}
-                  {isRunoffConfirmed && (
-                    <div className="res-note" style={{ marginTop: 4, color: "rgba(255,255,255,0.4)" }}>
-                      {selectedWinners.map(w => w.name).join(" vs ")} advance
-                    </div>
-                  )}
-                  {displayProj && !selectedWinner && !isRunoffConfirmed && (
-                    <div className="res-bar-track" style={{ marginTop: "7px" }}><div className="res-bar-fill" style={{ width: `${Math.max(0, Math.min(100, displayProj.prob))}%`, background: "linear-gradient(90deg,var(--purple),var(--blue2))" }} /></div>
-                  )}
                 </div>
                 {selectedRace?.candidates && selectedRace.candidates.length > 0 && (() => {
                   const reporting = selectedRace.percent_reporting ?? 0;
