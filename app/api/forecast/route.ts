@@ -87,7 +87,11 @@ function runForecastFromCivicRace(
   const names = top3.map((c) => c.name);
   const colors = top3.map((c) => vibrateColor(c.color));
 
-  const input = civicToForecastInput(race, prior, race_rule, expected_turnout, poll_avg, turnout_blend_k);
+  // Pass pre-sorted top3 into civicToForecastInput so it uses the identical
+  // candidate ordering as `names` — eliminates dual-sort divergence where two
+  // independent sort calls on the same data could produce different orderings.
+  const input = civicToForecastInput(race, prior, race_rule, expected_turnout, poll_avg, turnout_blend_k, top3);
+
   const result = forecastRace(input, names, colors);
   return NextResponse.json({ forecast: result, race });
 }
