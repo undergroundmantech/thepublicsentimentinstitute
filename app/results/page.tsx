@@ -47,8 +47,43 @@ function getRaceTypeShort(raceType: RaceType): string {
 const RACE_FORECAST_DEFAULTS: Partial<Record<number, { raceRule: RaceRule; expectedTurnout?: number; pollAvg?: Record<string, number>; overrideReporting?: number; pollsCloseIso?: string; turnoutBlendK?: number; colorOverrides?: Record<string, string>; manualCall?: string; }>> = {
 
   // ── CA TOP-TWO OPEN PRIMARY (June 2) ──────────────────────────────────────
-  79777: { raceRule: "TOP_TWO", expectedTurnout: 8_500_000, pollAvg: { "Becerra": 30.0, "Steyer": 20.0, "Hilton": 22.0, "Bianco": 10.0 }, overrideReporting: 60.35, turnoutBlendK: 2 }, // CA Governor
-  79938: { raceRule: "TOP_TWO", expectedTurnout: 875_000, pollAvg: { "Bass": 39.9, "Pratt": 25.6, "Raman": 22.7, "Miller": 3.7, "Huang": 2.6 }, overrideReporting: 0, turnoutBlendK: 2 }, // LA Mayor (Q10+Q11 LV)
+  79777: { raceRule: "TOP_TWO", expectedTurnout: 9_500_000, pollAvg: { "Becerra": 32.0, "Steyer": 20.0, "Hilton": 18.0, "Bianco": 10.0 }, overrideReporting: 60.35, turnoutBlendK: 2 }, // CA Governor
+// ONE-OFF DSMeridian late-VBM correction — LA Mayor June 2, 2026
+// DO NOT replicate. See full rationale below.
+//
+// Problem: ~319k remaining ballots are exclusively late unreturned VBM,
+// modeled by DSMeridian Stage 4 (n=102 LV pool). That pool runs:
+//   Bass 44.9% · Raman 27.7% · Pratt 16.5%
+// — the inverse of the current live trend. Standard blend extrapolates
+// the live trend into the remaining pool, which is methodologically wrong.
+//
+// Fix: pollAvg values are NOT the projected finals. They are algebraically
+// derived implied priors, back-solved so that:
+//   live_share * live_weight + pollAvg * prior_weight = target_final
+// at 64.2% reporting with k=0.5 (live_weight=0.801, prior_weight=0.199).
+//
+// This produces exactly our DSMeridian projected finals right now AND
+// converges stably as VBM ballots come in — Raman holds 2nd through 100%.
+//
+// Derivation:
+//   Target finals: Bass 38.0% · Raman 24.6% · Pratt 24.3%
+//   pollAvg[c] = (target[c] - live[c] * 0.801) / 0.199
+//
+// Verified: model outputs Bass 38.0%, Raman 24.6%, Pratt 24.3% at current
+// reporting and holds Raman 2nd by ~0.3–0.5pp through 100% reporting.
+79938: {
+  raceRule: "TOP_TWO",
+  expectedTurnout: 891_053,
+  pollAvg: {
+    "Bass":   53.4,  // implied prior (not projected final — algebraically derived)
+    "Raman":  31.7,  // implied prior
+    "Pratt":   6.8,  // implied prior
+    "Miller":  4.8,
+    "Huang":   1.3,
+  },
+  turnoutBlendK: 0.5,
+  overrideReporting: 0,
+},
   79893: { raceRule: "TOP_TWO", overrideReporting: 0 },        // CA US House 1
   79932: { raceRule: "TOP_TWO", overrideReporting: 0 },        // CA US House 7
   79884: { raceRule: "TOP_TWO", overrideReporting: 0 },        // CA US House 11

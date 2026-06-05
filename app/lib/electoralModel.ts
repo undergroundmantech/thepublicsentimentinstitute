@@ -49,14 +49,15 @@ export function civicToForecastInput(
   race_rule: RaceRule = "PLURALITY",
   expected_turnout?: number,
   poll_avg?: Record<string, number>,
-  turnout_blend_k?: number
+  turnout_blend_k?: number,
+  preSortedTop3?: CivicCandidate[]  // ← caller-sorted top3; eliminates dual-sort divergence
 ): ForecastInput {
   const pct = Math.min(1, (current.percent_reporting ?? 0) / 100);
   const totalReported = current.candidates.reduce((s, c) => s + c.votes, 0);
 
-  const topCandidates = poll_avg
+  const topCandidates = preSortedTop3 ?? (poll_avg
     ? sortByPollAvg(current.candidates, poll_avg).slice(0, 3)
-    : [...current.candidates].sort((a, b) => b.votes - a.votes).slice(0, 3);
+    : [...current.candidates].sort((a, b) => b.votes - a.votes).slice(0, 3));
 
   const reported_share: Shares3 = {
     Candidate1: totalReported > 0 ? (topCandidates[0]?.votes ?? 0) / totalReported : 0,
@@ -200,6 +201,13 @@ export function civicToForecastInput(
     est_turnout = 100_000;
   }
 
+  // Pre-compute raw poll prior shares (not pct^k-weighted) for use in step 3
+  // of forecastRace when poll_avg is present. These are the poll values ÷ 100,
+  // matching the same name-lookup used by buildPollAvgShares.
+  const poll_avg_shares: Shares3 | undefined = (poll_avg && Object.keys(poll_avg).length > 0)
+    ? buildPollAvgShares(topCandidates, poll_avg)
+    : undefined;
+
   return {
     race_rule,
     percent_reporting: pct,
@@ -208,6 +216,7 @@ export function civicToForecastInput(
     expected_turnout: est_turnout,
     expected_share,
     turnout_blend_k,
+    poll_avg_shares,
   };
 }
 
@@ -275,6 +284,15 @@ export interface ForecastInput {
    *  k=3: cubic   — 50% in → 12.5% live weight (much slower shift)
    */
   turnout_blend_k?: number;
+  /**
+   * Raw poll-average prior shares for top 3 (each divided by 100, NOT
+   * normalised to sum-to-1). When present, step 3 of forecastRace computes
+   * modeled_votes as blendedShare * total instead of live + remaining *
+   * expected_share, where blendedShare = liveShare * pct^k + pollPrior *
+   * (1-pct^k). This eliminates the live-vote head-start distortion when the
+   * remaining ballot pool is compositionally inverse to the live trend.
+   */
+  poll_avg_shares?: Shares3;
 }
 
 export interface ForecastOutput {
@@ -490,12 +508,35 @@ export function forecastRace(
   }
 
   // Step 3: Projected votes
-  const modeled_votes: Votes4 = {
-    Candidate1: reported_votes.Candidate1 + modeled_vote_remaining * expected_share4.Candidate1,
-    Candidate2: reported_votes.Candidate2 + modeled_vote_remaining * expected_share4.Candidate2,
-    Candidate3: reported_votes.Candidate3 + modeled_vote_remaining * expected_share4.Candidate3,
-    Others: 0,
-  };
+  // When a poll_avg_shares prior is available, compute modeled_votes as
+  //   blendedShare * modeled_total_vote
+  // where blendedShare = liveShare * pct^k + pollPrior * (1-pct^k).
+  // This prevents a live-vote head-start from overriding the prior when
+  // the remaining ballot pool is compositionally different from the live trend
+  // (e.g. late unreturned VBM in the LA Mayor race).
+  // Without poll_avg_shares, fall back to the standard formula.
+  let modeled_votes: Votes4;
+  if (input.poll_avg_shares && percent_reporting > 0) {
+    const liveWt = Math.pow(percent_reporting, blend_k);
+    const priorWt = 1 - liveWt;
+    const keys: Array<keyof Shares3> = ["Candidate1", "Candidate2", "Candidate3"];
+    const blended = keys.map((k) =>
+      Math.max(0, reported_share4[k] * liveWt + input.poll_avg_shares![k] * priorWt)
+    );
+    modeled_votes = {
+      Candidate1: blended[0] * modeled_total_vote,
+      Candidate2: blended[1] * modeled_total_vote,
+      Candidate3: blended[2] * modeled_total_vote,
+      Others: 0,
+    };
+  } else {
+    modeled_votes = {
+      Candidate1: reported_votes.Candidate1 + modeled_vote_remaining * expected_share4.Candidate1,
+      Candidate2: reported_votes.Candidate2 + modeled_vote_remaining * expected_share4.Candidate2,
+      Candidate3: reported_votes.Candidate3 + modeled_vote_remaining * expected_share4.Candidate3,
+      Others: 0,
+    };
+  }
   const tmpC1 = safeDiv(modeled_votes.Candidate1, modeled_total_vote);
   const tmpC2 = safeDiv(modeled_votes.Candidate2, modeled_total_vote);
   const tmpC3 = safeDiv(modeled_votes.Candidate3, modeled_total_vote);
