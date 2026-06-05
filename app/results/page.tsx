@@ -1217,13 +1217,13 @@ function ForecastPanel({ raceId, refreshTick, raceData, onForecastUpdate }: { ra
       )}
       <div className="res-forecast-body" style={{ padding: "10px 14px" }}>
         {error && <div style={{ border: "1px solid rgba(230,57,70,0.25)", background: "rgba(230,57,70,0.06)", color: "rgba(255,77,90,0.90)", padding: "8px 10px", fontFamily: "var(--font-body)", fontSize: "9.5px", letterSpacing: "0.10em", marginBottom: 12 }}>⚠ {error}</div>}
-        {isLoading && !forecast && (
+        {isLoading && (
           <div style={{ padding: "36px 0", textAlign: "center" }}>
             <div className="res-note" style={{ color: "var(--purple-soft)", marginBottom: 10 }}>RUNNING FORECAST MODEL…</div>
             <div className="res-bar-track" style={{ width: "80%", margin: "0 auto" }}><div className="res-bar-fill" style={{ width: "60%", background: "linear-gradient(90deg,var(--purple),var(--blue2))", animation: "res-loading-pulse 1.4s ease-in-out infinite" }} /></div>
           </div>
         )}
-        {forecast && (
+        {!isLoading && forecast && (
           /* ── NARROW LAYOUT ── */
           <div style={{ width: "100%" }}>
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 14 }}>
@@ -1421,7 +1421,7 @@ function RaceScrollWindow({ races, raceCache, selectedId, onSelect, search, onSe
               const hasForecast = !!(RACE_FORECAST_DEFAULTS[r.id]?.pollAvg && RACE_FORECAST_DEFAULTS[r.id]?.expectedTurnout);
               return (
                 <button key={r.id} onClick={() => onSelect(r.id)} style={{ display: "flex", alignItems: "center", width: "calc(100% - 8px)", margin: "1px 4px", padding: "6px 10px", background: isSelected ? "rgba(124,58,237,0.10)" : "transparent", border: "1px solid", borderColor: isSelected ? "rgba(124,58,237,0.35)" : "transparent", borderRadius: "var(--r-sm)", cursor: "pointer", textAlign: "left", transition: "background 100ms ease" }}>
-                  <span style={{ flexShrink: 0, width: 20, height: 20, borderRadius: "var(--r-sm)", background: `${raceTypeColor}22`, border: `1px solid ${raceTypeColor}55`, display: "flex", alignItems: "center", justifyContent: "center", marginRight: 8, fontFamily: "var(--font-body)", fontSize: "9px", fontWeight: 900, color: raceTypeColor }}>{raceTypeShort}</span>
+                  <span style={{ flexShrink: 0, width: 7, height: 7, borderRadius: "50%", background: raceTypeColor, boxShadow: `0 0 7px ${raceTypeColor}bb`, animation: "res-pulse 1.8s ease-in-out infinite", marginRight: 10 }} />
                   <div style={{ flex: 1, minWidth: 0 }}>
                     <div style={{ display: "flex", alignItems: "center", gap: 4, marginBottom: 2 }}>
                       <span style={{ fontFamily: "var(--font-body)", fontSize: "11px", fontWeight: isSelected ? 800 : 600, color: isSelected ? "var(--foreground)" : "var(--muted)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{r.raceType} </span>
@@ -1580,24 +1580,17 @@ function RacePickerPanel({ races, raceCache, selectedId, onSelect, lockedCalls, 
                   onMouseEnter={e => { if (!isSelected) (e.currentTarget as HTMLButtonElement).style.background = "var(--panel2)"; }}
                   onMouseLeave={e => { if (!isSelected) (e.currentTarget as HTMLButtonElement).style.background = "transparent"; }}
                 >
-                  {/* Party color pill */}
+                  {/* Race type glow dot */}
                   <span style={{
                     flexShrink: 0,
-                    width: 22,
-                    height: 22,
-                    borderRadius: "var(--r-sm)",
-                    background: raceTypeColor + "22",
-                    border: `1px solid ${raceTypeColor}55`,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    marginRight: 10,
-                    fontFamily: "var(--font-body)",
-                    fontSize: "10px",
-                    fontWeight: 900,
-                    color: raceTypeColor,
-                    letterSpacing: 0,
-                  }}>{raceTypeShort}</span>
+                    width: 7,
+                    height: 7,
+                    borderRadius: "50%",
+                    background: raceTypeColor,
+                    boxShadow: `0 0 7px ${raceTypeColor}bb`,
+                    animation: "res-pulse 1.8s ease-in-out infinite",
+                    marginRight: 12,
+                  }} />
 
                   {/* Main content */}
                   <div style={{ flex: 1, minWidth: 0 }}>
