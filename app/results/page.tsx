@@ -47,8 +47,8 @@ function getRaceTypeShort(raceType: RaceType): string {
 const RACE_FORECAST_DEFAULTS: Partial<Record<number, { raceRule: RaceRule; expectedTurnout?: number; pollAvg?: Record<string, number>; overrideReporting?: number; pollsCloseIso?: string; turnoutBlendK?: number; colorOverrides?: Record<string, string>; manualCall?: string; }>> = {
 
   // ── CA TOP-TWO OPEN PRIMARY (June 2) ──────────────────────────────────────
-  79777: { raceRule: "TOP_TWO", expectedTurnout: 8_500_000, pollAvg: { "Becerra": 29.0, "Steyer": 19.0, "Hilton": 16.0, "Thurmond": 12.0 }, overrideReporting: 60.35, turnoutBlendK: 2 }, // CA Governor
-  79938: { raceRule: "TOP_TWO", expectedTurnout: 830_000, pollAvg: { "Bass": 43.2, "Pratt": 21.6, "Raman": 11.7, "Miller": 9.7, "Huang": 4.6 }, overrideReporting: 0, turnoutBlendK: 2 }, // LA Mayor (Q10+Q11 LV)
+  79777: { raceRule: "TOP_TWO", expectedTurnout: 8_500_000, pollAvg: { "Becerra": 30.0, "Steyer": 20.0, "Hilton": 22.0, "Bianco": 10.0 }, overrideReporting: 60.35, turnoutBlendK: 2 }, // CA Governor
+  79938: { raceRule: "TOP_TWO", expectedTurnout: 875_000, pollAvg: { "Bass": 39.9, "Pratt": 25.6, "Raman": 22.7, "Miller": 3.7, "Huang": 2.6 }, overrideReporting: 0, turnoutBlendK: 2 }, // LA Mayor (Q10+Q11 LV)
   79893: { raceRule: "TOP_TWO", overrideReporting: 0 },        // CA US House 1
   79932: { raceRule: "TOP_TWO", overrideReporting: 0 },        // CA US House 7
   79884: { raceRule: "TOP_TWO", overrideReporting: 0 },        // CA US House 11
