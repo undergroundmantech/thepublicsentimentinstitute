@@ -71,7 +71,7 @@ const RACE_FORECAST_DEFAULTS: Partial<Record<number, { raceRule: RaceRule; expec
   80512: { raceRule: "THRESHOLD_35_RUNOFF", overrideReporting: 99.9, 
     pollsCloseIso: "2026-06-02T21:00:00-04:00" },   // SD US Senate R
   // ── NM close time override (June 2) ──────────────────────────────────────
-  81014: { raceRule: "PLURALITY", overrideReporting: 0, pollsCloseIso: "2026-06-02T21:00:00-04:00" }, // NM US Senate D — 9pm ET
+  81014: { raceRule: "PLURALITY", overrideReporting: 99.9, pollsCloseIso: "2026-06-02T21:00:00-04:00", manualCall: "Ben Luján" }, // NM US Senate D — 9pm ET
   81015: { raceRule: "PLURALITY", overrideReporting: 0, pollsCloseIso: "2026-06-02T21:00:00-04:00" }, // NM US Senate R — 9pm ET
 };
 
