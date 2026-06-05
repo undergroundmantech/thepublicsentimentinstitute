@@ -720,19 +720,19 @@ function CountyTotalsTable({ regionResults, collapsed, onToggle, maxHeight }: { 
                           <div className="grid grid-cols-1 gap-1">
                             {visible.map((cand, idx) => (
                               <div key={idx} className="flex items-center justify-between gap-2 py-1 border-b" style={{ borderColor: "var(--border)" }}>
-                                <div className="flex items-center gap-2 min-w-0"><span className="h-1.5 w-1.5 rounded-full flex-shrink-0" style={{ background: cand.color || "var(--muted2)" }} /><span className="res-note truncate">{cand.name}</span></div>
-                                <span className="res-cand-name shrink-0">{cand.pct !== null ? `${cand.pct.toFixed(1)}%` : "—"}</span>
+                                <div className="flex items-center gap-2 min-w-0"><span className="h-1.5 w-1.5 rounded-full flex-shrink-0" style={{ background: cand.color || "var(--muted2)" }} /><span className="res-cand-name truncate">{cand.name}</span></div>
+                                <span className="res-cand-name shrink-0" style={{ fontWeight: 700 }}>{cand.pct !== null ? `${cand.pct.toFixed(1)}%` : "—"}</span>
                               </div>
                             ))}
                             {(isExp && rest.length > 0) && (
-                              <div className="flex items-center justify-between gap-2 py-1" style={{ opacity: 0.55 }}>
+                              <div className="flex items-center justify-between gap-2 py-1" style={{ opacity: 0.5 }}>
                                 <div className="flex items-center gap-2 min-w-0"><span className="h-1.5 w-1.5 rounded-full flex-shrink-0" style={{ background: "var(--muted2)" }} /><span className="res-note truncate">Others ({rest.length})</span></div>
                                 <span className="res-cand-name shrink-0">{othersPct > 0 ? `${othersPct.toFixed(1)}%` : othersVotes > 0 ? othersVotes.toLocaleString() : "—"}</span>
                               </div>
                             )}
                             {row.candidates.length > 2 && (
                               <button onClick={() => toggleRow(i)} style={{ marginTop: 2, background: "none", border: "none", cursor: "pointer", padding: 0, textAlign: "left" }}>
-                                <span className="res-note" style={{ color: "var(--purple-soft)" }}>{isExp ? "▲ SHOW LESS" : `▼ +${row.candidates.length - 2} MORE`}</span>
+                                <span style={{ fontFamily: "var(--font-body)", fontSize: "9px", fontWeight: 500, letterSpacing: "0.08em", color: "var(--muted2)", textTransform: "uppercase" }}>{isExp ? "▲ less" : `▼ +${row.candidates.length - 2} more`}</span>
                               </button>
                             )}
                           </div>
