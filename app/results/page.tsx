@@ -87,7 +87,7 @@ const RACE_FORECAST_DEFAULTS: Partial<Record<number, { raceRule: RaceRule; expec
   79893: { raceRule: "TOP_TWO", overrideReporting: 0 },        // CA US House 1
   79932: { raceRule: "TOP_TWO", overrideReporting: 0 },        // CA US House 7
   79884: { raceRule: "TOP_TWO", overrideReporting: 0 },        // CA US House 11
-  79916: { raceRule: "TOP_TWO", overrideReporting: 0 },        // CA US House 40
+  79916: { raceRule: "TOP_TWO", expectedTurnout: 225_000, pollAvg: { "Calvert": 32.0, "Kim": 18.0, "Kin-Varet": 15.0, "Ramirez": 10.0 }, overrideReporting: 0, turnoutBlendK: 2 },        // CA US House 40
   79924: { raceRule: "TOP_TWO", expectedTurnout: 287_500, pollAvg: { "Desmond": 28.5, "Campa-Najjar": 17.5, "von Wilpert": 14.0, "Riker": 9.0, "O'Neil": 8.5, "Chavez": 6.5, "Contreras": 4.5, "Schaefer": 3.5, "Shaw": 2.5, "Porter": 2.0, "Clemons": 1.5, "Reyna": 1.5 }, overrideReporting: 0, turnoutBlendK: 2 }, // CA US House 48
   // ── IA 35% NOMINATION THRESHOLD — convention if unmet (June 2) ───────────
   79945: { raceRule: "THRESHOLD_35_CONVENTION", expectedTurnout: 210_000, pollAvg: { "Feenstra": 52.0, "Lahn": 38.0, "Steen": 10.0 }, overrideReporting: 0, turnoutBlendK: 2 }, // IA Governor R
