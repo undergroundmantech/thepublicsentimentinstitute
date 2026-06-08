@@ -47,7 +47,7 @@ function getRaceTypeShort(raceType: RaceType): string {
 const RACE_FORECAST_DEFAULTS: Partial<Record<number, { raceRule: RaceRule; expectedTurnout?: number; pollAvg?: Record<string, number>; overrideReporting?: number; pollsCloseIso?: string; turnoutBlendK?: number; colorOverrides?: Record<string, string>; manualCall?: string; }>> = {
 
   // ── CA TOP-TWO OPEN PRIMARY (June 2) ──────────────────────────────────────
-  79777: { raceRule: "TOP_TWO", expectedTurnout: 9_500_000, pollAvg: { "Becerra": 32.0, "Steyer": 20.0, "Hilton": 18.0, "Bianco": 10.0 }, overrideReporting: 73.1, turnoutBlendK: 2 }, // CA Governor
+  79777: { raceRule: "TOP_TWO", expectedTurnout: 9_500_000, pollAvg: { "Becerra": 32.0, "Steyer": 20.0, "Hilton": 18.0, "Bianco": 10.0 }, overrideReporting: 74.4, turnoutBlendK: 2 }, // CA Governor
 // ONE-OFF DSMeridian late-VBM correction — LA Mayor June 2, 2026
 // DO NOT replicate. See full rationale below.
 //
