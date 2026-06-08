@@ -26,7 +26,7 @@ type RegionCandidate = { name: string; party: string; votes: string | number; pe
 type RegionResult = { region: { name: string; type: string; fill?: string; percent_reporting?: number; }; candidates: RegionCandidate[]; };
 type RaceDetail = { election_name: string; election_type: string; election_scope: string; election_date: string; country: string; province: string | null; district: string | null; municipality: string | null; polls_open: string | null; polls_close: string | null; last_updated: string | null; percent_reporting?: number; candidates: RaceCandidate[]; region_results?: RegionResult[] | Record<string, RegionResult>; };
 type RaceType = "Democratic Primary" | "Republican Primary" | "Special Election" | "General Election" | "Open Primary";
-type FeaturedRace = { id: number; state: "CA" | "IA" | "MT" | "NJ" | "NM" | "SD"; office: string; raceType: RaceType; label: string; };
+type FeaturedRace = { id: number; state: "CA" | "IA" | "MT" | "NJ" | "NM" | "SD" | "TX"; office: string; raceType: RaceType; label: string; archived?: boolean; };
 
 function getRaceTypeColor(raceType: RaceType): string {
   if (raceType === "Republican Primary") return "var(--rep)";
@@ -122,12 +122,12 @@ function sortCandidatesByPollData(candidates: RaceCandidate[], pollAvg?: Record<
 }
 
 const FEATURED: FeaturedRace[] = [
-  // ── TEXAS (kept for UI testing — May 26 runoff) ──
-  // { id: 79766, state: "TX", office: "US Senate", raceType: "Republican Primary", label: "Texas US Senate Republican Primary Runoff" },
-  // { id: 79722, state: "TX", office: "Attorney General", raceType: "Republican Primary", label: "Texas Attorney General Republican Primary Runoff" },
-  // { id: 79736, state: "TX", office: "Lieutenant Governor", raceType: "Democratic Primary", label: "Texas Lieutenant Governor Democratic Primary Runoff" },
-  // { id: 79739, state: "TX", office: "Railroad Commissioner", raceType: "Republican Primary", label: "Texas Railroad Commissioner Republican Primary Runoff" },
-  // { id: 79755, state: "TX", office: "US House 18", raceType: "Democratic Primary", label: "Texas US House 18 Democratic Primary Runoff" },
+  // ── TEXAS (May 26 runoff — ARCHIVED) ──
+  { id: 79766, state: "TX", office: "US Senate", raceType: "Republican Primary", label: "Texas US Senate Republican Primary Runoff", archived: true },
+  { id: 79722, state: "TX", office: "Attorney General", raceType: "Republican Primary", label: "Texas Attorney General Republican Primary Runoff", archived: true },
+  { id: 79736, state: "TX", office: "Lieutenant Governor", raceType: "Democratic Primary", label: "Texas Lieutenant Governor Democratic Primary Runoff", archived: true },
+  { id: 79739, state: "TX", office: "Railroad Commissioner", raceType: "Republican Primary", label: "Texas Railroad Commissioner Republican Primary Runoff", archived: true },
+  { id: 79755, state: "TX", office: "US House 18", raceType: "Democratic Primary", label: "Texas US House 18 Democratic Primary Runoff", archived: true },
   // ── CALIFORNIA (JUNE 2) ──
   { id: 79777, state: "CA", office: "Governor", raceType: "Open Primary", label: "California Governor Open Primary" },
   { id: 79938, state: "CA", office: "Los Angeles Mayor", raceType: "Open Primary", label: "Los Angeles Mayor Open Primary" },
@@ -136,34 +136,34 @@ const FEATURED: FeaturedRace[] = [
   { id: 79884, state: "CA", office: "US House 11", raceType: "Open Primary", label: "California US House 11 Open Primary" },
   { id: 79916, state: "CA", office: "US House 40", raceType: "Open Primary", label: "California US House 40 Open Primary" },
   { id: 79924, state: "CA", office: "US House 48", raceType: "Open Primary", label: "California US House 48 Open Primary" },
-  // ── IOWA (JUNE 2) ──
-  { id: 79945, state: "IA", office: "Governor", raceType: "Republican Primary", label: "Iowa Governor Republican Primary" },
-  { id: 80210, state: "IA", office: "US Senate", raceType: "Democratic Primary", label: "Iowa US Senate Democratic Primary" },
-  { id: 80211, state: "IA", office: "US Senate", raceType: "Republican Primary", label: "Iowa US Senate Republican Primary" },
-  { id: 80204, state: "IA", office: "US House 2", raceType: "Democratic Primary", label: "Iowa US House 2 Democratic Primary" },
-  { id: 80205, state: "IA", office: "US House 2", raceType: "Republican Primary", label: "Iowa US House 2 Republican Primary" },
-  // ── MONTANA (JUNE 2) ──
-  { id: 80458, state: "MT", office: "US Senate", raceType: "Democratic Primary", label: "Montana US Senate Democratic Primary" },
-  { id: 80460, state: "MT", office: "US Senate", raceType: "Republican Primary", label: "Montana US Senate Republican Primary" },
-  { id: 80452, state: "MT", office: "US House 1", raceType: "Democratic Primary", label: "Montana US House 1 Democratic Primary" },
-  { id: 80454, state: "MT", office: "US House 1", raceType: "Republican Primary", label: "Montana US House 1 Republican Primary" },
-  { id: 80455, state: "MT", office: "US House 2", raceType: "Democratic Primary", label: "Montana US House 2 Democratic Primary" },
-  { id: 80457, state: "MT", office: "US House 2", raceType: "Republican Primary", label: "Montana US House 2 Republican Primary" },
-  // ── NEW JERSEY (JUNE 2) ──
-  { id: 81057, state: "NJ", office: "US Senate", raceType: "Democratic Primary", label: "New Jersey US Senate Democratic Primary" },
-  { id: 81058, state: "NJ", office: "US Senate", raceType: "Republican Primary", label: "New Jersey US Senate Republican Primary" },
-  { id: 81046, state: "NJ", office: "US House 7", raceType: "Democratic Primary", label: "New Jersey US House 7 Democratic Primary" },
-  { id: 81047, state: "NJ", office: "US House 7", raceType: "Republican Primary", label: "New Jersey US House 7 Republican Primary" },
-  { id: 81048, state: "NJ", office: "US House 8", raceType: "Democratic Primary", label: "New Jersey US House 8 Democratic Primary" },
-  { id: 81055, state: "NJ", office: "US House 12", raceType: "Democratic Primary", label: "New Jersey US House 12 Democratic Primary" },
-  { id: 81056, state: "NJ", office: "US House 12", raceType: "Republican Primary", label: "New Jersey US House 12 Republican Primary" },
-  // ── NEW MEXICO (JUNE 2) ──
-  { id: 81014, state: "NM", office: "US Senate", raceType: "Democratic Primary", label: "New Mexico US Senate Democratic Primary" },
-  { id: 81015, state: "NM", office: "US Senate", raceType: "Republican Primary", label: "New Mexico US Senate Republican Primary" },
-  // ── SOUTH DAKOTA (JUNE 2) ──
-  { id: 80461, state: "SD", office: "Governor", raceType: "Republican Primary", label: "South Dakota Governor Republican Primary" },
-  { id: 80511, state: "SD", office: "US House At-Large", raceType: "Republican Primary", label: "South Dakota US House At-Large Republican Primary" },
-  { id: 80512, state: "SD", office: "US Senate", raceType: "Republican Primary", label: "South Dakota US Senate Republican Primary" },
+  // ── IOWA (JUNE 2 — ARCHIVED) ──
+  { id: 79945, state: "IA", office: "Governor", raceType: "Republican Primary", label: "Iowa Governor Republican Primary", archived: true },
+  { id: 80210, state: "IA", office: "US Senate", raceType: "Democratic Primary", label: "Iowa US Senate Democratic Primary", archived: true },
+  { id: 80211, state: "IA", office: "US Senate", raceType: "Republican Primary", label: "Iowa US Senate Republican Primary", archived: true },
+  { id: 80204, state: "IA", office: "US House 2", raceType: "Democratic Primary", label: "Iowa US House 2 Democratic Primary", archived: true },
+  { id: 80205, state: "IA", office: "US House 2", raceType: "Republican Primary", label: "Iowa US House 2 Republican Primary", archived: true },
+  // ── MONTANA (JUNE 2 — ARCHIVED) ──
+  { id: 80458, state: "MT", office: "US Senate", raceType: "Democratic Primary", label: "Montana US Senate Democratic Primary", archived: true },
+  { id: 80460, state: "MT", office: "US Senate", raceType: "Republican Primary", label: "Montana US Senate Republican Primary", archived: true },
+  { id: 80452, state: "MT", office: "US House 1", raceType: "Democratic Primary", label: "Montana US House 1 Democratic Primary", archived: true },
+  { id: 80454, state: "MT", office: "US House 1", raceType: "Republican Primary", label: "Montana US House 1 Republican Primary", archived: true },
+  { id: 80455, state: "MT", office: "US House 2", raceType: "Democratic Primary", label: "Montana US House 2 Democratic Primary", archived: true },
+  { id: 80457, state: "MT", office: "US House 2", raceType: "Republican Primary", label: "Montana US House 2 Republican Primary", archived: true },
+  // ── NEW JERSEY (JUNE 2 — ARCHIVED) ──
+  { id: 81057, state: "NJ", office: "US Senate", raceType: "Democratic Primary", label: "New Jersey US Senate Democratic Primary", archived: true },
+  { id: 81058, state: "NJ", office: "US Senate", raceType: "Republican Primary", label: "New Jersey US Senate Republican Primary", archived: true },
+  { id: 81046, state: "NJ", office: "US House 7", raceType: "Democratic Primary", label: "New Jersey US House 7 Democratic Primary", archived: true },
+  { id: 81047, state: "NJ", office: "US House 7", raceType: "Republican Primary", label: "New Jersey US House 7 Republican Primary", archived: true },
+  { id: 81048, state: "NJ", office: "US House 8", raceType: "Democratic Primary", label: "New Jersey US House 8 Democratic Primary", archived: true },
+  { id: 81055, state: "NJ", office: "US House 12", raceType: "Democratic Primary", label: "New Jersey US House 12 Democratic Primary", archived: true },
+  { id: 81056, state: "NJ", office: "US House 12", raceType: "Republican Primary", label: "New Jersey US House 12 Republican Primary", archived: true },
+  // ── NEW MEXICO (JUNE 2 — ARCHIVED) ──
+  { id: 81014, state: "NM", office: "US Senate", raceType: "Democratic Primary", label: "New Mexico US Senate Democratic Primary", archived: true },
+  { id: 81015, state: "NM", office: "US Senate", raceType: "Republican Primary", label: "New Mexico US Senate Republican Primary", archived: true },
+  // ── SOUTH DAKOTA (JUNE 2 — ARCHIVED) ──
+  { id: 80461, state: "SD", office: "Governor", raceType: "Republican Primary", label: "South Dakota Governor Republican Primary", archived: true },
+  { id: 80511, state: "SD", office: "US House At-Large", raceType: "Republican Primary", label: "South Dakota US House At-Large Republican Primary", archived: true },
+  { id: 80512, state: "SD", office: "US Senate", raceType: "Republican Primary", label: "South Dakota US Senate Republican Primary", archived: true },
 ];
 
 async function fetchRaceById(id: number): Promise<RaceDetail> {
@@ -333,6 +333,10 @@ function MapWithCountyTooltip({ svgText, regionResults }: { svgText: string; reg
   const [scale, setScale] = useState(1);
   const [locked, setLocked] = useState(false);
   const lockedRef = useRef(false);
+  const [tooltipLocked, setTooltipLocked] = useState(false);
+  const tooltipLockedRef = useRef(false);
+  const tooltipLockedShapeRef = useRef<SVGGraphicsElement | null>(null);
+  const longPressTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const toggleLock = useCallback(() => {
     lockedRef.current = !lockedRef.current;
     setLocked(lockedRef.current);
@@ -437,6 +441,18 @@ function MapWithCountyTooltip({ svgText, regionResults }: { svgText: string; reg
     svg.style.transformOrigin = "0 0";
     countyFingerprintsRef.current = new Map();
     applyTransform(); // restore zoom/pan if switching back to a previously zoomed map
+    // Dismiss locked tooltip when touching outside a county
+    const onHostTouchDown = (ev: PointerEvent) => {
+      if (ev.pointerType !== "touch") return;
+      const target = ev.target as Element;
+      if (target.closest("path") || target.closest("polygon")) return;
+      if (tooltipLockedRef.current) {
+        tooltipLockedRef.current = false; setTooltipLocked(false);
+        if (tooltipLockedShapeRef.current) { tooltipLockedShapeRef.current.style.stroke = "#0a0f1e"; tooltipLockedShapeRef.current.style.strokeWidth = "0.8"; tooltipLockedShapeRef.current.style.filter = ""; tooltipLockedShapeRef.current = null; }
+        setTooltip((t) => ({ ...t, show: false }));
+      }
+    };
+    host.addEventListener("pointerdown", onHostTouchDown);
     const shapes = Array.from(svg.querySelectorAll("path, polygon")) as SVGGraphicsElement[];
     shapes.forEach((shape) => {
       const key = getRegionKeyFromElement(shape); if (!key) return;
@@ -468,14 +484,50 @@ function MapWithCountyTooltip({ svgText, regionResults }: { svgText: string; reg
       };
       const onEnter = (ev: PointerEvent) => {
         if (isPanningRef.current) return;
+        if (ev.pointerType === "touch") return; // touch handled by tap
         shape.style.stroke = "rgba(255,255,255,0.9)"; shape.style.strokeWidth = "2.0"; shape.style.filter = "brightness(1.22) saturate(1.1)";
         onMove(ev);
       };
-      const onLeave = () => {
+      const onLeave = (ev: PointerEvent) => {
+        if (ev.pointerType === "touch") return; // touch handled by tap
+        if (tooltipLockedRef.current) return;
         shape.style.stroke = "#0a0f1e"; shape.style.strokeWidth = "0.8"; shape.style.filter = "";
         setTooltip((t) => ({ ...t, show: false }));
       };
-      shape.addEventListener("pointerenter", onEnter); shape.addEventListener("pointermove", onMove); shape.addEventListener("pointerleave", onLeave);
+      const onTouchUp = (ev: PointerEvent) => {
+        if (ev.pointerType !== "touch") return;
+        if (isPanningRef.current) return;
+        if (tooltipLockedRef.current && tooltipLockedShapeRef.current === shape) {
+          // Tap same county — dismiss
+          tooltipLockedRef.current = false; setTooltipLocked(false);
+          tooltipLockedShapeRef.current = null;
+          setTooltip((t) => ({ ...t, show: false }));
+          shape.style.stroke = "#0a0f1e"; shape.style.strokeWidth = "0.8"; shape.style.filter = "";
+        } else {
+          // Tap new county — lock
+          if (tooltipLockedShapeRef.current) {
+            tooltipLockedShapeRef.current.style.stroke = "#0a0f1e";
+            tooltipLockedShapeRef.current.style.strokeWidth = "0.8";
+            tooltipLockedShapeRef.current.style.filter = "";
+          }
+          tooltipLockedRef.current = true; setTooltipLocked(true);
+          tooltipLockedShapeRef.current = shape;
+          const currentRR = regionMapRef.current.get(key);
+          const tw = 252, th = 260, p = 12, offset = 14;
+          const rect = host.getBoundingClientRect();
+          const px = ev.clientX - rect.left, py = ev.clientY - rect.top;
+          let x = px + offset, y = py + offset;
+          if (x + tw > rect.width - p) x = px - tw - offset;
+          if (y + th > rect.height - p) y = py - th - offset;
+          x = Math.max(p, Math.min(rect.width - tw - p, x)); y = Math.max(p, Math.min(rect.height - th - p, y));
+          const pct = typeof currentRR?.region?.percent_reporting === "number" ? currentRR.region.percent_reporting : typeof currentRR?.percent_reporting === "number" ? currentRR.percent_reporting : null;
+          const lines = currentRR ? buildTooltipLines(currentRR) : [];
+          const hasVotes = lines.some((l) => l.votes !== null && l.votes > 0);
+          setTooltip({ show: true, x, y, title: currentRR?.region?.name ?? (currentRR?.name ? titleCaseKey(currentRR.name) : prettyKey), reporting: pct !== null ? `${pct.toFixed(1)}% REPORTING` : "0% REPORTING", reportingPct: pct ?? 0, lines: hasVotes ? lines : [] });
+          shape.style.stroke = "rgba(255,255,255,0.9)"; shape.style.strokeWidth = "2.0"; shape.style.filter = "brightness(1.22) saturate(1.1)";
+        }
+      };
+      shape.addEventListener("pointerenter", onEnter); shape.addEventListener("pointermove", onMove); shape.addEventListener("pointerleave", onLeave); shape.addEventListener("pointerup", onTouchUp);
 
       const currentRR = regionMap.get(key);
       const fill = currentRR ? countyFill(currentRR) : null;
@@ -530,7 +582,20 @@ function MapWithCountyTooltip({ svgText, regionResults }: { svgText: string; reg
         {!locked && scale > 1 && <button onClick={resetZoom} style={{ width: 28, height: 28, background: "var(--panel)", border: "1px solid var(--border2)", color: "var(--muted)", fontSize: 8, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "var(--font-body)", fontWeight: 700, letterSpacing: "0.05em" }}>RST</button>}
       </div>
       {tooltip.show && (
-        <div className="res-map-tooltip absolute z-50 pointer-events-none w-[252px]" style={{ left: tooltip.x, top: tooltip.y }}>
+        <div
+          className="res-map-tooltip absolute z-50 w-[252px]"
+          style={{ left: tooltip.x, top: tooltip.y, pointerEvents: tooltipLocked ? "auto" : "none", userSelect: "none" }}
+          onPointerDown={() => {
+            if (!tooltipLockedRef.current) return;
+            longPressTimerRef.current = setTimeout(() => {
+              tooltipLockedRef.current = false; setTooltipLocked(false);
+              if (tooltipLockedShapeRef.current) { tooltipLockedShapeRef.current.style.stroke = "#0a0f1e"; tooltipLockedShapeRef.current.style.strokeWidth = "0.8"; tooltipLockedShapeRef.current.style.filter = ""; tooltipLockedShapeRef.current = null; }
+              setTooltip((t) => ({ ...t, show: false }));
+            }, 600);
+          }}
+          onPointerUp={() => { if (longPressTimerRef.current) { clearTimeout(longPressTimerRef.current); longPressTimerRef.current = null; } }}
+          onPointerLeave={() => { if (longPressTimerRef.current) { clearTimeout(longPressTimerRef.current); longPressTimerRef.current = null; } }}
+        >
           <div className="p-2">
             <div className="flex items-baseline justify-between mb-1">
               <div className="res-tooltip-title">{tooltip.title}</div>
@@ -1369,13 +1434,19 @@ function ForecastPanel({ raceId, refreshTick, raceData, onForecastUpdate }: { ra
 // ═══════════════════════════════════════════════════════════════════════════════
 // ─── RACE PICKER PANEL (replaces old tab bar) ─────────────────────────────────
 // ═══════════════════════════════════════════════════════════════════════════════
-function RaceScrollWindow({ races, raceCache, selectedId, onSelect, search, onSearchChange, maxHeight, lockedCalls, lockedCallTypes, lockedRunoffProbs }: {
+function RaceScrollWindow({ races, raceCache, selectedId, onSelect, search, onSearchChange, maxHeight, lockedCalls, lockedCallTypes, lockedRunoffProbs, showArchived }: {
   races: FeaturedRace[]; raceCache: Record<number, RaceDetail | undefined>; selectedId: number;
   onSelect: (id: number) => void; search: string; onSearchChange: (v: string) => void; maxHeight?: number; lockedCalls?: Record<number, string>;
   lockedCallTypes?: Record<number, "WIN" | "RUNOFF">;
   lockedRunoffProbs?: Record<number, Record<string, number>>;
+  showArchived?: boolean;
 }) {
-  const filtered = races.filter(r => !search || r.office.toLowerCase().includes(search.toLowerCase()) || r.raceType.toLowerCase().includes(search.toLowerCase()));
+  const hasSearch = search.trim().length > 0;
+  const filtered = races.filter(r => {
+    if (r.archived && !showArchived && !hasSearch) return false;
+    if (!hasSearch) return true;
+    return r.office.toLowerCase().includes(search.toLowerCase()) || r.raceType.toLowerCase().includes(search.toLowerCase()) || r.label.toLowerCase().includes(search.toLowerCase());
+  });
   const groups = filtered.reduce<{ office: string; races: FeaturedRace[] }[]>((acc, r) => {
     const last = acc[acc.length - 1];
     if (last && last.office === r.office) last.races.push(r);
@@ -1445,7 +1516,7 @@ function RaceScrollWindow({ races, raceCache, selectedId, onSelect, search, onSe
   );
 }
 
-function RacePickerPanel({ races, raceCache, selectedId, onSelect, lockedCalls, lockedCallTypes, lockedRunoffProbs }: {
+function RacePickerPanel({ races, raceCache, selectedId, onSelect, lockedCalls, lockedCallTypes, lockedRunoffProbs, showArchived, onToggleArchive, activeState }: {
   races: FeaturedRace[];
   raceCache: Record<number, RaceDetail | undefined>;
   selectedId: number;
@@ -1453,24 +1524,56 @@ function RacePickerPanel({ races, raceCache, selectedId, onSelect, lockedCalls, 
   lockedCalls?: Record<number, string>;
   lockedCallTypes?: Record<number, "WIN" | "RUNOFF">;
   lockedRunoffProbs?: Record<number, Record<string, number>>;
+  showArchived?: boolean;
+  onToggleArchive?: () => void;
+  activeState?: string;
 }) {
   const [search, setSearch] = useState("");
   const searchRef = useRef<HTMLInputElement>(null);
+  const hasSearch = search.trim().length > 0;
+  const hasArchivedRaces = races.some(r => r.archived);
 
   // Group by office
   const groups = useMemo(() => {
     const q = search.trim().toLowerCase();
     const filtered = q
       ? races.filter(r => r.office.toLowerCase().includes(q) || r.raceType.toLowerCase().includes(q) || r.label.toLowerCase().includes(q))
-      : races;
+      : races.filter(r => r.archived ? !!showArchived : (!activeState || r.state === activeState));
+
+    // Active races: group by office
+    // Archived races: group by "STATE · DATE" section header
+    const stateArchiveLabel: Record<string, string> = {
+      TX: "TEXAS · MAY 26, 2026",
+      IA: "IOWA · JUNE 2, 2026",
+      MT: "MONTANA · JUNE 2, 2026",
+      NJ: "NEW JERSEY · JUNE 2, 2026",
+      NM: "NEW MEXICO · JUNE 2, 2026",
+      SD: "SOUTH DAKOTA · JUNE 2, 2026",
+    };
+    // State display order for archive
+    const archiveStateOrder = ["TX", "IA", "MT", "NJ", "NM", "SD"];
+
+    const activeRaces = filtered.filter(r => !r.archived);
+    const archivedRaces = filtered.filter(r => r.archived);
+
     const map = new Map<string, FeaturedRace[]>();
-    for (const r of filtered) {
+    for (const r of activeRaces) {
       const g = map.get(r.office) ?? [];
       g.push(r);
       map.set(r.office, g);
     }
+    // Add archived grouped by state, in date order
+    if (archivedRaces.length > 0) {
+      for (const st of archiveStateOrder) {
+        const stRaces = archivedRaces.filter(r => r.state === st);
+        if (stRaces.length > 0) {
+          const key = stateArchiveLabel[st] ?? st;
+          map.set(key, stRaces);
+        }
+      }
+    }
     return Array.from(map.entries());
-  }, [races, search]);
+  }, [races, search, showArchived, activeState]);
 
   // Keyboard shortcut to focus search
   useEffect(() => {
@@ -1490,7 +1593,33 @@ function RacePickerPanel({ races, raceCache, selectedId, onSelect, lockedCalls, 
       <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 22, background: "linear-gradient(90deg,var(--red) 0%,var(--purple) 50%,var(--blue) 100%)", borderRadius: "var(--r-lg) var(--r-lg) 0 0", WebkitMask: "linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0)", WebkitMaskComposite: "xor", maskComposite: "exclude", padding: "2.5px 2.5px 0 2.5px", pointerEvents: "none", zIndex: 2 }} />
       {/* Header */}
       <div style={{ padding: "12px 14px", borderBottom: "1px solid var(--border)", background: "var(--panel)", flexShrink: 0, borderRadius: "var(--r-lg) var(--r-lg) 0 0" }}>
-        <div className="res-panel-tag" style={{ marginBottom: 8 }}>ALL RACES</div>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 8 }}>
+          <div className="res-panel-tag">ALL RACES</div>
+          {hasArchivedRaces && (
+            <button
+              onClick={() => onToggleArchive?.()}
+              style={{
+                display: "inline-flex", alignItems: "center", gap: 4,
+                padding: "3px 9px",
+                background: showArchived
+                  ? "linear-gradient(135deg, rgba(230,57,70,0.18) 0%, rgba(124,58,237,0.18) 50%, rgba(37,99,235,0.18) 100%)"
+                  : "transparent",
+                border: `1px solid ${showArchived ? "rgba(124,58,237,0.45)" : "var(--border2)"}`,
+                borderRadius: "var(--r-pill)",
+                fontFamily: "var(--font-body)", fontSize: "9px", fontWeight: 700, letterSpacing: "0.10em",
+                color: showArchived ? "rgba(210,200,255,0.9)" : "var(--muted2)",
+                cursor: "pointer", transition: "all 150ms ease",
+                boxShadow: showArchived ? "0 0 10px rgba(124,58,237,0.25)" : "none",
+              }}
+            >
+              <svg width="9" height="9" viewBox="0 0 16 16" fill="none" style={{ opacity: showArchived ? 0.85 : 0.45 }}>
+                <circle cx="8" cy="8" r="6.5" stroke="currentColor" strokeWidth="1.5"/>
+                <path d="M8 5v3.5l2 1.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+              </svg>
+              {showArchived ? "HIDE ARCHIVE" : "ARCHIVE"}
+            </button>
+          )}
+        </div>
         {/* Search input */}
         <div style={{ display: "flex", alignItems: "center", gap: 8, background: "var(--panel2)", border: "1px solid var(--border2)", padding: "7px 12px", borderRadius: "var(--r-sm)" }}>
           <svg width="11" height="11" viewBox="0 0 16 16" fill="none" style={{ flexShrink: 0, opacity: 0.4 }}>
@@ -1517,21 +1646,38 @@ function RacePickerPanel({ races, raceCache, selectedId, onSelect, lockedCalls, 
             <span className="res-note" style={{ color: "var(--muted2)" }}>NO RACES FOUND</span>
           </div>
         )}
-        {groups.map(([office, groupRaces]) => (
+        {groups.map(([office, groupRaces]) => {
+          const isArchiveGroup = groupRaces[0]?.archived;
+          const isFirstArchiveGroup = isArchiveGroup && groups.find(([, gr]) => gr[0]?.archived)?.[0] === office;
+          return (
           <div key={office} style={{ marginBottom: 2 }}>
-            {/* Office group header */}
+            {/* Archive section divider — only before the first archived group */}
+            {isFirstArchiveGroup && (
+              <div style={{ margin: "10px 10px 6px", display: "flex", alignItems: "center", gap: 8 }}>
+                <div style={{ flex: 1, height: 1, background: "linear-gradient(90deg, rgba(180,180,220,0.25) 0%, transparent 100%)" }} />
+                <div style={{ display: "flex", alignItems: "center", gap: 5, padding: "3px 10px", background: "rgba(100,100,140,0.12)", border: "1px solid rgba(180,180,220,0.18)", borderRadius: "var(--r-pill)" }}>
+                  <svg width="9" height="9" viewBox="0 0 16 16" fill="none" style={{ opacity: 0.5 }}>
+                    <circle cx="8" cy="8" r="6.5" stroke="rgba(180,180,220,0.8)" strokeWidth="1.5"/>
+                    <path d="M8 5v3.5l2 1.5" stroke="rgba(180,180,220,0.8)" strokeWidth="1.5" strokeLinecap="round"/>
+                  </svg>
+                  <span style={{ fontFamily: "var(--font-body)", fontSize: "9px", fontWeight: 700, letterSpacing: "0.18em", color: "rgba(180,180,220,0.55)" }}>ARCHIVED RACES</span>
+                </div>
+                <div style={{ flex: 1, height: 1, background: "linear-gradient(90deg, transparent 0%, rgba(180,180,220,0.25) 100%)" }} />
+              </div>
+            )}
+            {/* Office / state group header */}
             <div style={{
-              padding: "6px 14px 4px",
+              padding: "5px 14px 3px",
               fontFamily: "var(--font-body)",
-              fontSize: "10px",
+              fontSize: "9.5px",
               fontWeight: 700,
-              letterSpacing: "0.18em",
+              letterSpacing: "0.16em",
               textTransform: "uppercase",
-              color: "var(--muted2)",
-              borderTop: "1px solid var(--border)",
-              marginTop: 4,
+              color: isArchiveGroup ? "rgba(180,180,220,0.4)" : "var(--muted2)",
+              borderTop: isArchiveGroup ? "none" : "1px solid var(--border)",
+              marginTop: isArchiveGroup ? 2 : 4,
             }}>
-              {office}
+              {isArchiveGroup ? office : office}
             </div>
             {/* Race buttons */}
             {groupRaces.map(r => {
@@ -1567,8 +1713,8 @@ function RacePickerPanel({ races, raceCache, selectedId, onSelect, lockedCalls, 
                     width: "calc(100% - 8px)",
                     margin: "1px 4px",
                     gap: 0,
-                    padding: "8px 10px",
-                    background: isSelected ? `rgba(124,58,237,0.10)` : "transparent",
+                    padding: "7px 10px",
+                    background: isSelected ? `rgba(124,58,237,0.10)` : isArchiveGroup ? "rgba(100,100,140,0.05)" : "transparent",
                     border: "1px solid",
                     borderColor: isSelected ? "rgba(124,58,237,0.35)" : "transparent",
                     borderRadius: "var(--r-sm)",
@@ -1576,6 +1722,7 @@ function RacePickerPanel({ races, raceCache, selectedId, onSelect, lockedCalls, 
                     textAlign: "left",
                     transition: "background 100ms ease, border-color 100ms ease",
                     position: "relative",
+                    opacity: isArchiveGroup ? 0.55 : 1,
                   }}
                   onMouseEnter={e => { if (!isSelected) (e.currentTarget as HTMLButtonElement).style.background = "var(--panel2)"; }}
                   onMouseLeave={e => { if (!isSelected) (e.currentTarget as HTMLButtonElement).style.background = "transparent"; }}
@@ -1587,8 +1734,9 @@ function RacePickerPanel({ races, raceCache, selectedId, onSelect, lockedCalls, 
                     height: 7,
                     borderRadius: "50%",
                     background: raceTypeColor,
-                    boxShadow: `0 0 7px ${raceTypeColor}bb`,
-                    animation: "res-pulse 1.8s ease-in-out infinite",
+                    boxShadow: isArchiveGroup ? "none" : `0 0 7px ${raceTypeColor}bb`,
+                    animation: isArchiveGroup ? "none" : "res-pulse 1.8s ease-in-out infinite",
+                    opacity: isArchiveGroup ? 0.4 : 1,
                     marginRight: 12,
                   }} />
 
@@ -1603,12 +1751,27 @@ function RacePickerPanel({ races, raceCache, selectedId, onSelect, lockedCalls, 
                       whiteSpace: "nowrap",
                       overflow: "hidden",
                       textOverflow: "ellipsis",
-                      marginBottom: 4,
+                      marginBottom: isArchiveGroup ? 2 : 4,
                     }}>
-                      {r.raceType}
+                      {isArchiveGroup ? r.office : r.raceType}
                     </div>
-                    {/* Reporting bar */}
-                    <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                    {/* Archive: race type label below office */}
+                    {isArchiveGroup && (
+                      <div style={{ display: "flex", alignItems: "center", gap: 5 }}>
+                        <span style={{ fontFamily: "var(--font-body)", fontSize: "9px", fontWeight: 600, letterSpacing: "0.08em", color: "var(--muted2)", opacity: 0.6, textTransform: "uppercase" }}>
+                          {r.raceType}
+                        </span>
+                        {isCalled && (
+                          <svg width="9" height="9" viewBox="0 0 14 14" fill="none" style={{ flexShrink: 0 }}>
+                            <circle cx="7" cy="7" r="6.5" fill="var(--win)" opacity="0.18"/>
+                            <circle cx="7" cy="7" r="6.5" stroke="var(--win)" strokeWidth="1.2"/>
+                            <path d="M4 7l2 2 4-4" stroke="var(--win)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                          </svg>
+                        )}
+                      </div>
+                    )}
+                    {/* Reporting bar — live races only */}
+                    {!isArchiveGroup && <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
                       <div style={{ flex: 1, height: 2, background: "var(--border2)", overflow: "hidden", maxWidth: 60 }}>
                         <div style={{ height: "100%", width: `${reporting ?? 0}%`, background: isCalled ? "var(--win)" : raceTypeColor, opacity: 0.8, transition: "width 800ms ease" }} />
                       </div>
@@ -1623,7 +1786,7 @@ function RacePickerPanel({ races, raceCache, selectedId, onSelect, lockedCalls, 
                           {reporting !== null ? `${reporting.toFixed(0)}% IN` : "PENDING"}
                         </span>
                       )}
-                    </div>
+                    </div>}
                   </div>
 
                   {/* Forecast badge */}
@@ -1649,7 +1812,8 @@ function RacePickerPanel({ races, raceCache, selectedId, onSelect, lockedCalls, 
               );
             })}
           </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   );
@@ -1658,13 +1822,17 @@ function RacePickerPanel({ races, raceCache, selectedId, onSelect, lockedCalls, 
 // ─── MAIN PAGE ───────────────────────────────────────────────────────────────
 export default function March3FeaturedClient() {
   const [pageTab, setPageTab] = useState<"all" | "spotlight">("all");
-  const [activeState, setActiveState] = useState<"CA" | "IA" | "MT" | "NJ" | "NM" | "SD">("CA")
+  const [showArchived, setShowArchived] = useState(false);
+  const [archiveDropdownOpen, setArchiveDropdownOpen] = useState(false);
+  const [archiveDate, setArchiveDate] = useState<string | null>(null);
+  const archiveDropdownRef = useRef<HTMLDivElement>(null);
+  const [activeState, setActiveState] = useState<"CA" | "IA" | "MT" | "NJ" | "NM" | "SD" | "TX">("CA")
   const [selectedId, setSelectedId] = useState<number>(79938);
   const LA_MAYOR_ID = 79938; // Los Angeles Mayor Open Primary — June 2 spotlight
   const CA_GOV_ID = 79777;  // California Governor Open Primary — June 2 spotlight
   const IA_GOV_ID = 79945;  // Iowa Governor Republican Primary — June 2 spotlight
   const SD_GOV_ID = 80461; // SD Governor Republican Primary — June 2 spotlight
-  const SPOTLIGHT_RACES = [
+  const ALL_SPOTLIGHT_META = [
     {
       id: LA_MAYOR_ID,
       shortLabel: "LA Mayor",
@@ -1706,6 +1874,8 @@ export default function March3FeaturedClient() {
       about: "Iowa Republicans will choose their nominee for governor in a primary shaped by an open-seat contest and competing claims to the party's conservative base. State rules require the winner to receive at least 35 percent of the vote, or the nomination could be decided at convention.",
     },
   ] as const;
+  // Only active (non-archived) races appear as spotlight tabs
+  const SPOTLIGHT_RACES = ALL_SPOTLIGHT_META.filter(s => !FEATURED.find(r => r.id === s.id)?.archived);
   const [spotlightTab, setSpotlightTab] = useState<number>(LA_MAYOR_ID);
   const [error, setError] = useState<string | null>(null);
   const [loadingMap, setLoadingMap] = useState(false);
@@ -1729,6 +1899,7 @@ export default function March3FeaturedClient() {
   NJ: FEATURED.filter((r) => r.state === "NJ"),
   NM: FEATURED.filter((r) => r.state === "NM"),
   SD: FEATURED.filter((r) => r.state === "SD"),
+  TX: FEATURED.filter((r) => r.state === "TX"),
   }), []);
 
   const selectedRace = patchedRaceCache[selectedId];
@@ -1804,11 +1975,33 @@ export default function March3FeaturedClient() {
   //   return () => clearTimeout(t);
   // }, [selectedRace, selectedId]);
 
-  const stateLabels: Record<string, string> = { CA: "CALIFORNIA", IA: "IOWA", MT: "MONTANA", NJ: "NEW JERSEY", NM: "NEW MEXICO", SD: "S. DAKOTA" };
+  const stateLabels: Record<string, string> = { CA: "CALIFORNIA", IA: "IOWA", MT: "MONTANA", NJ: "NEW JERSEY", NM: "NEW MEXICO", SD: "S. DAKOTA", TX: "TEXAS" };
+  const activeStates = (["CA", "IA", "MT", "NJ", "NM", "SD", "TX"] as const).filter(
+    st => FEATURED.some(r => r.state === st && !r.archived)
+  );
+
+  // Archive date → states mapping
+  const ARCHIVE_DATES: { label: string; date: string; states: string[] }[] = [
+    { label: "MAY 26, 2026", date: "2026-05-26", states: ["TX"] },
+    { label: "JUNE 2, 2026", date: "2026-06-02", states: ["IA", "MT", "NJ", "NM", "SD"] },
+  ];
+  const archiveDateStates = ARCHIVE_DATES.find(d => d.date === archiveDate)?.states ?? [];
+
+  // Close archive dropdown on outside click
+  useEffect(() => {
+    if (!archiveDropdownOpen) return;
+    const handler = (e: MouseEvent) => {
+      if (archiveDropdownRef.current && !archiveDropdownRef.current.contains(e.target as Node)) {
+        setArchiveDropdownOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, [archiveDropdownOpen]);
   // When switching to spotlight tab (or changing spotlight sub-tab), sync selectedId + activeState
   useEffect(() => {
     if (pageTab === "spotlight") {
-      const meta = SPOTLIGHT_RACES.find(s => s.id === spotlightTab);
+      const meta = ALL_SPOTLIGHT_META.find(s => s.id === spotlightTab);
       setSelectedId(spotlightTab);
       if (meta) setActiveState(meta.state);
     }
@@ -1842,7 +2035,7 @@ export default function March3FeaturedClient() {
   const [lockedRunoffProbs, setLockedRunoffProbs] = useState<Record<number, Record<string, number>>>({});
   const showProjectionDebug = process.env.NODE_ENV !== "production";
   // Spotlight meta for the currently selected race (null when not a spotlight race)
-  const spotlightMeta = SPOTLIGHT_RACES.find(s => s.id === selectedId) ?? null;
+  const spotlightMeta = ALL_SPOTLIGHT_META.find(s => s.id === selectedId) ?? null;
   const selectedStatusInfo = getRaceStatusInfo(nowMs, selectedRace?.polls_open, selectedRace?.polls_close, spotlightMeta?.electionDate ?? "");
   // Close time: prefer code override, then API
   const _closeIsoOverride = RACE_FORECAST_DEFAULTS[selectedId]?.pollsCloseIso;
@@ -1921,12 +2114,13 @@ export default function March3FeaturedClient() {
         .res-btn-primary:hover { background:var(--gradient-purple-soft); transform:translateY(-1px); }
         .res-btn-ghost { display:inline-flex; align-items:center; gap:6px; padding:7px 12px; background:transparent; border:1px solid var(--border); color:var(--muted2); font-family:var(--font-body); font-size:10px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; cursor:pointer; transition:all 140ms ease; border-radius:var(--r-pill); }
         .res-btn-ghost:hover { border-color:var(--border2); color:var(--muted); }
-        .res-btn-state { display:inline-flex; align-items:center; justify-content:center; text-align:center; padding:8px 16px; background:transparent; border:1px solid var(--border); color:var(--muted2); font-family:var(--font-body); font-size:10px; font-weight:700; letter-spacing:0.16em; text-transform:uppercase; cursor:pointer; transition:all 120ms ease; position:relative; overflow:hidden; border-radius:var(--r-sm); }
-        .res-btn-state::before { content:''; position:absolute; bottom:0; left:0; right:0; height:2px; background:var(--purple); transform:scaleX(0); transform-origin:left; transition:transform 200ms ease; }
-        .res-btn-state:hover { color:var(--foreground); border-color:var(--border2); }
+        .res-btn-state { display:inline-flex; align-items:center; justify-content:center; text-align:center; padding:4px 10px; background:linear-gradient(135deg,rgba(124,58,237,0.12) 0%,rgba(99,102,241,0.07) 100%); border:1px solid rgba(124,58,237,0.35); color:rgba(180,160,235,0.80); font-family:var(--font-body); font-size:10px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; cursor:pointer; transition:all 150ms ease; position:relative; border-radius:var(--r-pill); box-shadow:none; }
+        .res-btn-state:hover { color:rgba(200,180,255,0.85); border-color:rgba(124,58,237,0.38); background:linear-gradient(135deg,rgba(124,58,237,0.16) 0%,rgba(99,102,241,0.10) 100%); box-shadow:0 0 8px rgba(124,58,237,0.18); transform:translateY(-1px); }
+        .res-btn-state:active { transform:translateY(0px) scale(0.97); box-shadow:0 0 4px rgba(124,58,237,0.15); }
         .res-btn-state:hover::before { transform:scaleX(1); }
-        .res-btn-state.active { background:rgba(124,58,237,0.10); border-color:rgba(124,58,237,0.40); color:var(--purple2); }
-        .res-btn-state.active::before { transform:scaleX(1); }
+        .res-btn-state.active { background:linear-gradient(135deg,rgba(124,58,237,0.28) 0%,rgba(99,102,241,0.18) 100%); border-color:rgba(124,58,237,0.55); color:rgba(200,180,255,0.95); box-shadow:0 0 12px rgba(124,58,237,0.35),0 0 3px rgba(124,58,237,0.22); }
+        .res-btn-state.active::before { display:none; }
+        .res-btn-state.active:active { transform:scale(0.97); }
         .res-close-btn { display:inline-flex; align-items:center; padding:7px 12px; background:var(--panel2); border:1px solid var(--border); color:var(--muted2); font-family:var(--font-body); font-size:10px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; cursor:pointer; flex-shrink:0; transition:all 120ms ease; border-radius:var(--r-sm); }
         .res-close-btn:hover { border-color:var(--border2); color:var(--foreground); }
         .res-overlay-card { background:var(--panel); border:1px solid rgba(124,58,237,0.45); box-shadow:0 0 80px rgba(124,58,237,0.25),0 30px 80px rgba(0,0,0,0.8); }
@@ -2336,23 +2530,123 @@ export default function March3FeaturedClient() {
         {/* PAGE HEADER */}
         <div className="res-page-header">
           <div className="res-page-header-inner">
-            <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: "12px" }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+              {/* Row 1: title */}
               <div>
-                <div className="res-page-sub">{(["CA","IA","MT","NJ","NM","SD"] as const).includes(activeState as "CA"|"IA"|"MT"|"NJ"|"NM"|"SD") ? "JUNE 2ND PRIMARY ELECTIONS · 2026" : "MAY 19TH PRIMARY ELECTIONS · 2026"}</div>
+                <div className="res-page-sub">JUNE 2ND PRIMARY ELECTIONS · 2026</div>
                 <h1 className="res-page-title">Election <em>Night</em></h1>
               </div>
-              <div style={{ display: "flex", alignItems: "center", gap: "12px", flexWrap: "wrap" }}>
-                <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: "6px" }}>
-                  <span className="res-badge res-badge-red"><span className="res-live-dot" style={{ background: "var(--rep)" }} />LIVE</span>
-                  <span className="res-badge res-badge-purple">RESULTS + FORECAST / 30s</span>
-                  {selectedRace?.last_updated && <span className="res-badge">UPDATED {prettyTime(selectedRace.last_updated)}</span>}
+              {/* Row 2: archive + badges + state buttons */}
+              <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: "6px" }}>
+                {/* Archive toggle with dropdown — leftmost */}
+                <div ref={archiveDropdownRef} style={{ position: "relative" }}>
+                  <button
+                    onClick={() => {
+                      if (!showArchived) { setShowArchived(true); setArchiveDropdownOpen(true); }
+                      else { setArchiveDropdownOpen(v => !v); }
+                    }}
+                    style={{
+                      display: "inline-flex", alignItems: "center", gap: 5,
+                      padding: "4px 10px",
+                      background: showArchived
+                        ? "linear-gradient(135deg, rgba(124,58,237,0.14) 0%, rgba(99,102,241,0.08) 100%)"
+                        : "linear-gradient(135deg, rgba(124,58,237,0.06) 0%, rgba(99,102,241,0.03) 100%)",
+                      border: `1px solid ${showArchived ? "rgba(124,58,237,0.50)" : "rgba(124,58,237,0.22)"}`,
+                      borderRadius: "var(--r-pill)",
+                      fontFamily: "var(--font-body)", fontSize: "10px", fontWeight: 700,
+                      letterSpacing: "0.12em", textTransform: "uppercase",
+                      color: showArchived ? "rgba(200,180,255,0.95)" : "rgba(160,140,220,0.65)",
+                      cursor: "pointer",
+                      boxShadow: showArchived ? "0 0 10px rgba(124,58,237,0.30), 0 0 2px rgba(124,58,237,0.20)" : "none",
+                      transition: "all 150ms ease",
+                    }}
+                    onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.transform = "translateY(-1px)"; (e.currentTarget as HTMLButtonElement).style.boxShadow = showArchived ? "0 0 14px rgba(124,58,237,0.40), 0 0 4px rgba(124,58,237,0.25)" : "0 0 8px rgba(124,58,237,0.18)"; }}
+                    onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.transform = ""; (e.currentTarget as HTMLButtonElement).style.boxShadow = showArchived ? "0 0 10px rgba(124,58,237,0.30), 0 0 2px rgba(124,58,237,0.20)" : "none"; }}
+                    onMouseDown={e => { (e.currentTarget as HTMLButtonElement).style.transform = "scale(0.97)"; }}
+                    onMouseUp={e => { (e.currentTarget as HTMLButtonElement).style.transform = "translateY(-1px)"; }}
+                  >
+                    <svg width="10" height="10" viewBox="0 0 16 16" fill="none" style={{ opacity: showArchived ? 0.8 : 0.45 }}>
+                      <circle cx="8" cy="8" r="6.5" stroke="currentColor" strokeWidth="1.5"/>
+                      <path d="M8 5v3.5l2 1.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+                    </svg>
+                    ARCHIVE
+                    <svg width="8" height="8" viewBox="0 0 10 10" fill="none" style={{ opacity: 0.4, transform: archiveDropdownOpen ? "rotate(180deg)" : "none", transition: "transform 150ms" }}>
+                      <path d="M2 3.5l3 3 3-3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                  </button>
+
+                  {/* Archive dropdown */}
+                  {archiveDropdownOpen && (
+                    <div style={{
+                      position: "absolute", top: "calc(100% + 8px)", left: 0, zIndex: 100,
+                      background: "var(--panel)", border: "1px solid var(--border2)",
+                      borderRadius: "var(--r-lg)", padding: "12px 14px", minWidth: 220,
+                      boxShadow: "0 8px 32px rgba(0,0,0,0.45), 0 0 0 1px rgba(124,58,237,0.15)",
+                    }}>
+                      <div style={{ fontFamily: "var(--font-body)", fontSize: "9px", fontWeight: 700, letterSpacing: "0.18em", color: "var(--muted2)", marginBottom: 8 }}>ELECTION DATE</div>
+                      <div style={{ display: "flex", flexWrap: "wrap", gap: 4, marginBottom: 12 }}>
+                        {ARCHIVE_DATES.map(d => (
+                          <button key={d.date} onClick={() => setArchiveDate(d.date)} style={{
+                            padding: "4px 10px", fontFamily: "var(--font-body)", fontSize: "10px", fontWeight: 700, letterSpacing: "0.08em",
+                            background: archiveDate === d.date ? "linear-gradient(135deg, rgba(230,57,70,0.20), rgba(124,58,237,0.20))" : "var(--panel2)",
+                            border: `1px solid ${archiveDate === d.date ? "rgba(124,58,237,0.50)" : "var(--border2)"}`,
+                            borderRadius: "var(--r-pill)", color: archiveDate === d.date ? "rgba(210,200,255,0.95)" : "var(--muted)",
+                            cursor: "pointer", transition: "all 120ms ease",
+                            boxShadow: archiveDate === d.date ? "0 0 10px rgba(124,58,237,0.20)" : "none",
+                          }}>{d.label}</button>
+                        ))}
+                      </div>
+                      {archiveDate && (
+                        <>
+                          <div style={{ fontFamily: "var(--font-body)", fontSize: "9px", fontWeight: 700, letterSpacing: "0.18em", color: "var(--muted2)", marginBottom: 8 }}>STATE</div>
+                          <div style={{ display: "flex", flexWrap: "wrap", gap: 4 }}>
+                            {archiveDateStates.map(st => (
+                              <button key={st} onClick={() => {
+                                setActiveState(st as any);
+                                setArchiveDropdownOpen(false);
+                                setPageTab("all");
+                              }} style={{
+                                padding: "4px 10px", fontFamily: "var(--font-body)", fontSize: "10px", fontWeight: 700, letterSpacing: "0.08em",
+                                background: activeState === st ? "linear-gradient(135deg, rgba(230,57,70,0.20), rgba(124,58,237,0.20))" : "var(--panel2)",
+                                border: `1px solid ${activeState === st ? "rgba(124,58,237,0.50)" : "var(--border2)"}`,
+                                borderRadius: "var(--r-pill)", color: activeState === st ? "rgba(210,200,255,0.95)" : "var(--muted)",
+                                cursor: "pointer", transition: "all 120ms ease",
+                                boxShadow: activeState === st ? "0 0 10px rgba(124,58,237,0.20)" : "none",
+                              }}>{stateLabels[st] ?? st}</button>
+                            ))}
+                          </div>
+                        </>
+                      )}
+                      <div style={{ marginTop: 12, paddingTop: 10, borderTop: "1px solid var(--border)" }}>
+                        <button onClick={() => { setShowArchived(false); setArchiveDropdownOpen(false); setArchiveDate(null); }} style={{
+                          width: "100%", padding: "5px 0", fontFamily: "var(--font-body)", fontSize: "9px", fontWeight: 700, letterSpacing: "0.12em",
+                          background: "transparent", border: "1px solid var(--border2)", borderRadius: "var(--r-sm)",
+                          color: "var(--muted2)", cursor: "pointer",
+                        }}>HIDE ARCHIVE</button>
+                      </div>
+                    </div>
+                  )}
                 </div>
+                {/* Divider */}
+                <span style={{ width: 1, height: 16, background: "var(--border2)", margin: "0 2px", flexShrink: 0 }} />
+                <span className="res-badge res-badge-red"><span className="res-live-dot" style={{ background: "var(--rep)" }} />LIVE</span>
+                <span className="res-badge res-badge-purple">RESULTS + FORECAST / 30s</span>
+                {selectedRace?.last_updated && <span className="res-badge">UPDATED {prettyTime(selectedRace.last_updated)}</span>}
                 {/* State switcher */}
-                <div className="res-state-btns" style={{ display: "flex", gap: "1px" }}>
-                  {(["CA", "IA", "MT", "NJ", "NM", "SD"] as const).map((st) => (
-  <button key={st} className={`res-btn-state ${activeState === st ? "active" : ""}`} onClick={() => setActiveState(st)}>{stateLabels[st]}</button>
-))}
-                </div>
+                {activeStates.length > 0 && (
+                  <>
+                    <span style={{ width: 1, height: 16, background: "var(--border2)", margin: "0 2px", flexShrink: 0 }} />
+                    <div className="res-state-btns" style={{ display: "flex", gap: "1px" }}>
+                      {activeStates.map((st) => (
+                        <button key={st} className={`res-btn-state ${activeState === st ? "active" : ""}`} onClick={() => {
+                          setActiveState(st);
+                          const firstSpotlight = SPOTLIGHT_RACES.find(s => s.state === st);
+                          if (firstSpotlight) { setSpotlightTab(firstSpotlight.id); if (pageTab === "spotlight") setSelectedId(firstSpotlight.id); }
+                        }}>{stateLabels[st]}</button>
+                      ))}
+                    </div>
+                  </>
+                )}
               </div>
             </div>
           </div>
@@ -2510,13 +2804,16 @@ export default function March3FeaturedClient() {
             )}
             <div className="res-race-picker-list" style={spotlightMeta ? { flex: 1, minHeight: 0, overflow: "hidden", display: "flex", flexDirection: "column" } : undefined}>
               <RacePickerPanel
-                races={racesForState}
+                races={FEATURED}
                 raceCache={patchedRaceCache}
                 selectedId={selectedId}
                 onSelect={setSelectedId}
                 lockedCalls={lockedCalls}
                 lockedCallTypes={lockedCallTypes}
                 lockedRunoffProbs={lockedRunoffProbs}
+                showArchived={showArchived}
+                onToggleArchive={() => setShowArchived(v => !v)}
+                activeState={activeState}
               />
             </div>
 
@@ -2589,7 +2886,7 @@ export default function March3FeaturedClient() {
 
             {/* TABLET RACE SCROLL — hidden on desktop, shown on tablet */}
             <div className="res-race-scroll-window">
-              <RaceScrollWindow races={racesForState} raceCache={patchedRaceCache} selectedId={selectedId} onSelect={setSelectedId} search={scrollWindowSearch} onSearchChange={setScrollWindowSearch} lockedCalls={lockedCalls} lockedCallTypes={lockedCallTypes} lockedRunoffProbs={lockedRunoffProbs} />
+              <RaceScrollWindow races={racesForState} raceCache={patchedRaceCache} selectedId={selectedId} onSelect={setSelectedId} search={scrollWindowSearch} onSearchChange={setScrollWindowSearch} lockedCalls={lockedCalls} lockedCallTypes={lockedCallTypes} lockedRunoffProbs={lockedRunoffProbs} showArchived={false} />
             </div>
 
             {/* RACE STATUS — top */}
