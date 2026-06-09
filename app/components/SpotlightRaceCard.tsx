@@ -2,19 +2,38 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import { getRaceUrl } from "@/app/results/_data/raceRegistry";
 
 const CIVIC_BASE = "https://civicapi.org";
 const POLL_MS = 30_000;
 const CYCLE_MS = 5_000;
 
-const RACES = [
-  { id: 79938, label: "LA Mayor Open Primary",          location: "Los Angeles, CA",  dateShort: "06/02/26" },
-  { id: 79777, label: "California Governor Primary",    location: "California",        dateShort: "06/02/26" },
-  { id: 79945, label: "Iowa Governor Republican Primary", location: "Iowa",            dateShort: "06/02/26" },
-  { id: 80461, label: "South Dakota Governor Primary",  location: "South Dakota",      dateShort: "06/02/26" },
-] as const;
+type RaceConfig = {
+  id: number;
+  label: string;
+  location: string;
+  dateShort: string;
+  raceRule: "MAJORITY" | "PLURALITY";
+  expectedTurnout?: number;
+  pollAvg?: Record<string, number>;
+};
+
+const RACES: RaceConfig[] = [
+  { id: 82664, label: "SC US Senate Republican Primary",  location: "South Carolina", dateShort: "06/09/26", raceRule: "MAJORITY",  expectedTurnout: 400_000, pollAvg: { "Graham": 51.0, "Lynch": 26.4, "Dismukes": 6.6, "Herrmann": 5.4 } },
+  { id: 82596, label: "SC Governor Republican Primary",    location: "South Carolina", dateShort: "06/09/26", raceRule: "MAJORITY",  expectedTurnout: 380_000, pollAvg: { "Mace": 30.0, "Evette": 24.9, "Norman": 15.2, "Reddy": 13.4, "Wilson": 12.0 } },
+  { id: 83063, label: "ME US Senate Democratic Primary",   location: "Maine",          dateShort: "06/09/26", raceRule: "PLURALITY", expectedTurnout: 200_000, pollAvg: { "Platner": 66.0, "Mills": 20.0 } },
+  { id: 82693, label: "ME Governor Democratic Primary",    location: "Maine",          dateShort: "06/09/26", raceRule: "PLURALITY", expectedTurnout: 210_000, pollAvg: { "Shah": 29.0, "Jackson": 28.0, "King": 14.0, "Pingree": 12.0 } },
+  { id: 83111, label: "NV Governor Republican Primary",    location: "Nevada",         dateShort: "06/09/26", raceRule: "PLURALITY", expectedTurnout: 165_000, pollAvg: { "Lombardo": 78.0, "Hansen": 12.0 } },
+];
 
 type RaceData = { percent_reporting?: number; polls_open?: string | null; polls_close?: string | null; };
+type ForecastStat = {
+  leader: "Candidate1" | "Candidate2" | "Candidate3" | "Others";
+  candidate_names?: [string, string, string, string];
+  race_rule: string;
+  plurality_odds_to_win: Record<string, number>;
+  runoff_needed_prob: number;
+};
 
 function getStatus(data: RaceData | null, dateShort: string): string {
   if (!data) return `Scheduled · ${dateShort}`;
@@ -31,18 +50,37 @@ export default function ElectionResultsCard() {
   const [activeIdx, setActiveIdx] = useState(0);
   const [visible, setVisible] = useState(true);
   const [raceData, setRaceData] = useState<Record<number, RaceData>>({});
+  const [forecastData, setForecastData] = useState<Record<number, ForecastStat>>({});
   const cycleRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const pollRef  = useRef<ReturnType<typeof setInterval> | null>(null);
 
-  // Fetch race data for current race
+  // Fetch race data + forecast for current race
   useEffect(() => {
-    const id = RACES[activeIdx].id;
+    const race = RACES[activeIdx];
+    const id = race.id;
     async function fetch_() {
       try {
+        // Raw race data
         const res = await fetch(`${CIVIC_BASE}/api/v2/race/${id}`, { cache: "no-store" });
         if (!res.ok) return;
         const d: RaceData = await res.json();
         setRaceData(prev => ({ ...prev, [id]: d }));
+        // Forecast
+        const fRes = await fetch("/api/forecast", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            type: "civic_raw",
+            raceData: d,
+            race_rule: race.raceRule,
+            expected_turnout: race.expectedTurnout,
+            poll_avg: race.pollAvg,
+          }),
+        });
+        if (!fRes.ok) return;
+        const fJson = await fRes.json();
+        const fc: ForecastStat = fJson.forecast;
+        if (fc) setForecastData(prev => ({ ...prev, [id]: fc }));
       } catch {}
     }
     fetch_();
@@ -70,8 +108,23 @@ export default function ElectionResultsCard() {
 
   const race = RACES[activeIdx];
   const data = raceData[race.id] ?? null;
+  const fc = forecastData[race.id] ?? null;
   const reporting = typeof data?.percent_reporting === "number" ? data.percent_reporting : null;
   const status = getStatus(data, race.dateShort);
+
+  // Derive leader name + probability for ticker
+  const leaderKey = fc?.leader;
+  const leaderIdx = leaderKey === "Candidate1" ? 0 : leaderKey === "Candidate2" ? 1 : leaderKey === "Candidate3" ? 2 : -1;
+  const leaderFullName = leaderIdx >= 0 ? (fc?.candidate_names?.[leaderIdx] ?? null) : null;
+  const leaderLast = leaderFullName ? leaderFullName.split(" ").pop()! : null;
+  const isMajority = race.raceRule === "MAJORITY";
+  const prob = fc && leaderKey
+    ? isMajority
+      ? fc.runoff_needed_prob
+      : (fc.plurality_odds_to_win[leaderKey] ?? null)
+    : null;
+  const probPct = prob !== null ? Math.round(prob * 100) : null;
+  const probLabel = isMajority ? "runoff" : "win";
 
   return (
     <>
@@ -193,15 +246,24 @@ export default function ElectionResultsCard() {
           <span className="erc-ticker-label">Spotlight</span>
           <span className="erc-ticker-divider">·</span>
           <Link
-            href={`/results?race=${race.id}`}
+            href={getRaceUrl(race.id) ?? `/results?race=${race.id}`}
             className="erc-ticker-race"
             style={{ opacity: visible ? 1 : 0 }}
           >
             {race.label}
           </Link>
           <span className="erc-ticker-stat" style={{ opacity: visible ? 1 : 0 }}>
-            {reporting !== null ? `${reporting.toFixed(1)}% rep.` : status}
+            {leaderLast && probPct !== null
+              ? `${leaderLast} · ${probPct}% ${probLabel}`
+              : reporting !== null
+              ? `${reporting.toFixed(1)}% rep.`
+              : status}
           </span>
+          {reporting !== null && leaderLast && probPct !== null && (
+            <span className="erc-ticker-stat" style={{ opacity: visible ? 1 : 0, marginLeft: -4, color: "var(--muted)", opacity: 0.6 }}>
+              {` · ${reporting.toFixed(1)}% rep.`}
+            </span>
+          )}
           <div className="erc-dots">
             {RACES.map((_, i) => (
               <button key={i} className={`erc-dot-btn${i === activeIdx ? " active" : ""}`} onClick={() => goTo(i)} aria-label={`Race ${i + 1}`} />
