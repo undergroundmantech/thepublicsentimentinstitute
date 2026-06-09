@@ -342,6 +342,217 @@ const SLIDES: Slide[] = [
   },
 ];
 
+// ─── SC Republican Primary Slide data (N=369, LV Weighted, June 2026) ────────
+const SC_SLIDES: Slide[] = [
+  {
+    id:"sc-senate", qNum:"Q1", category:"Senate Primary",
+    title:"U.S. Senate — Republican Primary",
+    subtitle:"Meridian Coalition Voter model · N=369 · LV Weighted · June 2026",
+    nets:[
+      { val:"51.0%", lbl:"Lindsey Graham",   color:C.blue },
+      { val:"26.4%", lbl:"Mark Lynch",       color:C.pink },
+      { val:"G+24.6",lbl:"Graham Margin",    color:C.blue },
+    ],
+    bars:[
+      { label:"Lindsey Graham",    pct:51.0, color:C.blue,     strong:true },
+      { label:"Mark Lynch",        pct:26.4, color:C.pink,     strong:true },
+      { label:"Thomas Dismukes",   pct:6.6,  color:C.gold },
+      { label:"Patrick Herrmann",  pct:5.4,  color:C.orange },
+      { label:"Darius L. Mitchell",pct:4.2,  color:C.purpleLt },
+      { label:"Calvin Cowen",      pct:2.0,  color:C.cyan },
+      { label:"Undecided",         pct:4.4,  color:C.muted },
+    ],
+  },
+  {
+    id:"sc-gov", qNum:"Q2", category:"Governor Primary",
+    title:"Governor — Republican Primary",
+    subtitle:"Meridian Coalition Voter model · N=369 · LV Weighted · June 2026",
+    nets:[
+      { val:"30.0%", lbl:"Nancy Mace",    color:C.pink },
+      { val:"24.9%", lbl:"Pamela Evette", color:C.blue },
+      { val:"M+5.1", lbl:"Mace Margin",   color:C.pink },
+    ],
+    bars:[
+      { label:"Nancy Mace",    pct:30.0, color:C.pink,     strong:true },
+      { label:"Pamela Evette", pct:24.9, color:C.blue,     strong:true },
+      { label:"Ralph Norman",  pct:15.2, color:C.gold },
+      { label:"Rom Reddy",     pct:13.4, color:C.orange },
+      { label:"Alan Wilson",   pct:12.0, color:C.purpleLt },
+      { label:"Undecided",     pct:4.6,  color:C.muted },
+    ],
+  },
+  {
+    id:"sc-q3", qNum:"Q3", category:"Electorate",
+    title:"Voter Intent & Motivation",
+    subtitle:"How would you describe your intention and motivation to vote? · N=369 · LV Weighted",
+    nets:[
+      { val:"96.2%", lbl:"Certain / Very Likely",      color:C.green },
+      { val:"78.6%", lbl:"Certain + Highly Motivated", color:C.blue },
+    ],
+    bars:[
+      { label:"Certain to vote & highly motivated",      pct:78.6, color:C.green, strong:true },
+      { label:"Very likely to vote & feel motivated",    pct:17.6, color:C.blue },
+      { label:"Somewhat likely, not strongly motivated", pct:3.6,  color:C.gold },
+      { label:"Motivated but unsure if will vote",       pct:0.2,  color:C.orange },
+      { label:"Not very likely, little motivation",      pct:0.1,  color:C.muted },
+    ],
+  },
+  {
+    id:"sc-q4", qNum:"Q4", category:"Electorate",
+    title:"How Do You Plan to Cast Your Ballot?",
+    subtitle:"2026 Midterm Election · N=369 · LV Weighted",
+    bars:[
+      { label:"In person Election Day — know polling location",     pct:74.1, color:C.blue,     strong:true },
+      { label:"Early in-person — already voted",                    pct:9.0,  color:C.green,    strong:true },
+      { label:"Early in-person — know when and where",              pct:6.8,  color:C.cyan },
+      { label:"In person Election Day — need to confirm location",  pct:5.0,  color:C.blue },
+      { label:"Early in-person — still need to look up details",    pct:1.6,  color:C.orange },
+      { label:"Mail-in — already turned in ballot",                 pct:1.1,  color:C.purpleLt },
+      { label:"Haven't decided how I will vote yet",                pct:0.3,  color:C.gold },
+    ],
+  },
+  {
+    id:"sc-q5", qNum:"Q5", category:"Electorate",
+    title:"Social Circle Turnout Expectation",
+    subtitle:"How many of the 5–10 people closest to you do you expect to vote? · N=369 · LV Weighted",
+    bars:[
+      { label:"All or nearly all of them", pct:50.0, color:C.green, strong:true },
+      { label:"Most of them",              pct:37.9, color:C.blue },
+      { label:"About half",                pct:10.3, color:C.gold },
+      { label:"A few of them",             pct:1.3,  color:C.orange },
+      { label:"Not sure",                  pct:0.5,  color:C.muted },
+    ],
+  },
+  {
+    id:"sc-q6", qNum:"Q6", category:"Political Identity",
+    title:"General Political Outlook",
+    subtitle:"Which best describes your political outlook? · N=369 · LV Weighted",
+    bars:[
+      { label:"America First Republican",            pct:20.2, color:C.pink,     strong:true, group:"REPUBLICAN" },
+      { label:"Lean Rep. Independent",               pct:15.5, color:C.pink },
+      { label:"Suburban / Professional Republican",  pct:8.9,  color:C.pink },
+      { label:"Populist / Working-Class Republican", pct:7.1,  color:C.pink },
+      { label:"Libertarian Republican",              pct:4.6,  color:C.pink },
+      { label:"Lean Democratic Independent",         pct:11.3, color:C.purpleLt, strong:true, group:"INDEPENDENT" },
+      { label:"Moderate Independent / Centrist",     pct:5.8,  color:C.purpleLt },
+      { label:"Anti-Establishment Independent",      pct:1.3,  color:C.purpleLt },
+      { label:"Progressive Democrat",                pct:7.8,  color:C.blue,     strong:true, group:"DEMOCRAT" },
+      { label:"Working-Class Democrat",              pct:7.0,  color:C.blue },
+      { label:"Mainline Democrat",                   pct:2.2,  color:C.blue },
+      { label:"Coalition / Civil Rights Democrat",   pct:2.1,  color:C.blue },
+      { label:"No Clear Preference",                 pct:6.2,  color:C.muted,    group:"OTHER" },
+    ],
+  },
+  {
+    id:"sc-q12", qNum:"Q12", category:"Approval Ratings",
+    title:"Trump Job Approval",
+    subtitle:"Do you approve or disapprove of the job Donald Trump is doing as President? · N=369 · LV Weighted",
+    nets:[
+      { val:"54.1%", lbl:"NET Approve",    color:C.green },
+      { val:"43.9%", lbl:"NET Disapprove", color:C.pink },
+      { val:"+10.2", lbl:"Net Approval",   color:C.green },
+    ],
+    bars:[
+      { label:"Strongly approve",    pct:28.2, color:C.green, strong:true, group:"APPROVE" },
+      { label:"Somewhat approve",    pct:26.0, color:C.green },
+      { label:"Neutral / no opinion",pct:1.9,  color:C.muted, group:"NEUTRAL" },
+      { label:"Somewhat disapprove", pct:8.7,  color:C.pink,  group:"DISAPPROVE" },
+      { label:"Strongly disapprove", pct:35.2, color:C.pink,  strong:true },
+    ],
+  },
+  {
+    id:"sc-q13", qNum:"Q13", category:"Approval Ratings",
+    title:"Lindsey Graham Approval",
+    subtitle:"Do you approve or disapprove of the job Sen. Lindsey Graham is doing? · N=369 · LV Weighted",
+    nets:[
+      { val:"51.1%", lbl:"NET Approve",    color:C.blue },
+      { val:"44.8%", lbl:"NET Disapprove", color:C.pink },
+      { val:"+6.3",  lbl:"Net Approval",   color:C.blue },
+    ],
+    bars:[
+      { label:"Strongly approve",    pct:18.3, color:C.blue,  strong:true, group:"APPROVE" },
+      { label:"Somewhat approve",    pct:32.8, color:C.blue },
+      { label:"Neutral / no opinion",pct:4.2,  color:C.muted, group:"NEUTRAL" },
+      { label:"Somewhat disapprove", pct:12.9, color:C.pink,  group:"DISAPPROVE" },
+      { label:"Strongly disapprove", pct:31.9, color:C.pink,  strong:true },
+    ],
+  },
+  {
+    id:"sc-q15", qNum:"Q15", category:"Issues",
+    title:"Israel PAC Donations — Vote Likelihood",
+    subtitle:"If a candidate accepted donations from a PAC supporting Israel, would you be more or less likely to vote for them? · N=369 · LV",
+    nets:[
+      { val:"35.7%", lbl:"NET More Likely", color:C.green },
+      { val:"26.2%", lbl:"NET Less Likely", color:C.pink },
+      { val:"38.2%", lbl:"No Difference",  color:C.muted },
+    ],
+    bars:[
+      { label:"Much more likely",           pct:15.3, color:C.green, strong:true, group:"MORE LIKELY" },
+      { label:"Somewhat more likely",       pct:20.4, color:C.green },
+      { label:"No difference / no opinion", pct:38.2, color:C.muted, group:"NO DIFFERENCE" },
+      { label:"Somewhat less likely",       pct:10.9, color:C.pink,  group:"LESS LIKELY" },
+      { label:"Much less likely",           pct:15.3, color:C.pink,  strong:true },
+    ],
+  },
+  {
+    id:"sc-q16", qNum:"Q16", category:"Issues",
+    title:"Israel's Influence in American Politics",
+    subtitle:"Do you think Israel has too much, too little, or the right amount of influence in American politics? · N=369 · LV",
+    bars:[
+      { label:"Too much influence",      pct:36.0, color:C.pink,     strong:true },
+      { label:"The right amount",        pct:37.4, color:C.green,    strong:true },
+      { label:"Too little influence",    pct:6.8,  color:C.blue },
+      { label:"Not sure / no opinion",   pct:19.7, color:C.muted },
+    ],
+  },
+  {
+    id:"sc-q17", qNum:"Q17", category:"Graham Fox News",
+    title:"Graham Fox News Statement — Awareness",
+    subtitle:"Were you aware of Graham's recent statement on Fox News? · N=369 · LV Weighted",
+    nets:[
+      { val:"49.1%", lbl:"Aware",     color:C.blue },
+      { val:"50.9%", lbl:"Not Aware", color:C.muted },
+    ],
+    bars:[
+      { label:"Yes, I was aware",    pct:49.1, color:C.blue,  strong:true },
+      { label:"No, I was not aware", pct:50.9, color:C.muted },
+    ],
+  },
+  {
+    id:"sc-q18", qNum:"Q18", category:"Graham Fox News",
+    title:"Graham Fox News Statement — Approve or Disapprove?",
+    subtitle:"Do you approve or disapprove of Graham's statement? · N=369 · LV Weighted",
+    nets:[
+      { val:"58.4%", lbl:"NET Approve",    color:C.green },
+      { val:"35.8%", lbl:"NET Disapprove", color:C.pink },
+      { val:"+22.6", lbl:"Net Approval",   color:C.green },
+    ],
+    bars:[
+      { label:"Strongly approve",    pct:33.3, color:C.green, strong:true, group:"APPROVE" },
+      { label:"Somewhat approve",    pct:25.1, color:C.green },
+      { label:"Not sure / no opinion",pct:5.8, color:C.muted, group:"NEUTRAL" },
+      { label:"Somewhat disapprove", pct:8.7,  color:C.pink,  group:"DISAPPROVE" },
+      { label:"Strongly disapprove", pct:27.1, color:C.pink,  strong:true },
+    ],
+  },
+  {
+    id:"sc-coalition", qNum:"—", category:"Coalition Model",
+    title:"Meridian Coalition Assignment",
+    subtitle:"Voter coalition segmentation · N=369 · LV Weighted",
+    nets:[
+      { val:"42.2%", lbl:"Graham Base",           color:C.blue },
+      { val:"41.9%", lbl:"Open Primary Crossover", color:C.purple },
+      { val:"15.6%", lbl:"Lynch / Anti-Graham",   color:C.pink },
+    ],
+    bars:[
+      { label:"Graham Base",            pct:42.2, color:C.blue,     strong:true },
+      { label:"Open Primary Crossover", pct:41.9, color:C.purpleLt, strong:true },
+      { label:"Lynch / Anti-Graham",    pct:15.6, color:C.pink,     strong:true },
+      { label:"Unresolved",             pct:0.3,  color:C.muted },
+    ],
+  },
+];
+
 // ─── National Poll Slide data (N=893, LV Weighted, May 2026) ─────────────────
 const NATIONAL_SLIDES: Slide[] = [
   { id:"nat-cover", qNum:"", category:"", title:"", subtitle:"", isCover:true },
@@ -1146,6 +1357,93 @@ function SdToplineDashboard() {
 }
 
 // ─── Dashboard components ─────────────────────────────────────────────────────
+function ScToplineDashboard() {
+  return (
+    <div className="tl-section">
+      <div className="tl-section-hdr">
+        <span className="tl-section-hdr-lbl">TOPLINE RESULTS</span>
+        <span className="tl-section-hdr-sub">South Carolina Republican Primary · June 2026 · N=369 · LV-Weighted · Meridian Model</span>
+      </div>
+      <div className="tl-ballot-grid">
+        {/* Senate */}
+        <div className="tl-ballot-card">
+          <div className="tl-ballot-eyebrow">U.S. SENATE — REPUBLICAN PRIMARY</div>
+          <div className="tl-primary-rows">
+            {[
+              { name:"Lindsey Graham",     pct:51.0, color:C.blue },
+              { name:"Mark Lynch",         pct:26.4, color:C.pink },
+              { name:"Thomas Dismukes",    pct:6.6,  color:C.gold },
+              { name:"Patrick Herrmann",   pct:5.4,  color:C.orange },
+              { name:"Darius L. Mitchell", pct:4.2,  color:C.purpleLt },
+              { name:"Undecided",          pct:4.4,  color:"var(--muted2)" },
+            ].map((r, i) => (
+              <div key={i} className="tl-primary-row">
+                <div className="tl-primary-name">{r.name}</div>
+                <div className="tl-primary-track">
+                  <div style={{ width:`${r.pct}%`, height:"100%", background:r.color, transition:"width 0.5s cubic-bezier(0.16,1,0.3,1)" }} />
+                </div>
+                <div className="tl-primary-pct" style={{ color:r.color }}>{r.pct.toFixed(1)}%</div>
+              </div>
+            ))}
+          </div>
+          <div className="tl-ballot-und">Graham +24.6 over Lynch · Meridian CV · N=369 LV</div>
+        </div>
+        {/* Governor */}
+        <div className="tl-ballot-card">
+          <div className="tl-ballot-eyebrow">GOVERNOR — REPUBLICAN PRIMARY</div>
+          <div className="tl-primary-rows">
+            {[
+              { name:"Nancy Mace",    pct:30.0, color:C.pink },
+              { name:"Pamela Evette", pct:24.9, color:C.blue },
+              { name:"Ralph Norman",  pct:15.2, color:C.gold },
+              { name:"Rom Reddy",     pct:13.4, color:C.orange },
+              { name:"Alan Wilson",   pct:12.0, color:C.purpleLt },
+              { name:"Undecided",     pct:4.6,  color:"var(--muted2)" },
+            ].map((r, i) => (
+              <div key={i} className="tl-primary-row">
+                <div className="tl-primary-name">{r.name}</div>
+                <div className="tl-primary-track">
+                  <div style={{ width:`${r.pct}%`, height:"100%", background:r.color, transition:"width 0.5s cubic-bezier(0.16,1,0.3,1)" }} />
+                </div>
+                <div className="tl-primary-pct" style={{ color:r.color }}>{r.pct.toFixed(1)}%</div>
+              </div>
+            ))}
+          </div>
+          <div className="tl-ballot-und">Mace +5.1 over Evette · Meridian CV · N=369 LV</div>
+        </div>
+        {/* Approval */}
+        <div className="tl-ballot-card">
+          <div className="tl-ballot-eyebrow">APPROVAL RATINGS — NET</div>
+          <div className="tl-primary-rows">
+            {[
+              { name:"Trump — Approve",   pct:54.1, color:C.green },
+              { name:"Trump — Disapprove",pct:43.9, color:C.pink },
+              { name:"Graham — Approve",  pct:51.1, color:C.blue },
+              { name:"Graham — Disapprove",pct:44.8, color:C.pink },
+            ].map((r, i) => (
+              <div key={i} className="tl-primary-row">
+                <div className="tl-primary-name">{r.name}</div>
+                <div className="tl-primary-track">
+                  <div style={{ width:`${r.pct}%`, height:"100%", background:r.color, transition:"width 0.5s cubic-bezier(0.16,1,0.3,1)" }} />
+                </div>
+                <div className="tl-primary-pct" style={{ color:r.color }}>{r.pct.toFixed(1)}%</div>
+              </div>
+            ))}
+          </div>
+          <div className="tl-ballot-und">Trump Net +10.2 · Graham Net +6.3 · N=369 LV</div>
+        </div>
+      </div>
+      <div className="tl-kpi-row">
+        <KpiTile label="Graham Lead"    val="+24.6"  sub="51.0% vs Lynch 26.4% (Senate)"        color={C.blue}   border={C.blue} />
+        <KpiTile label="Mace Lead"      val="+5.1"   sub="30.0% vs Evette 24.9% (Governor)"     color={C.pink}   border={C.pink} />
+        <KpiTile label="High Intent"    val="78.6%"  sub="Certain to Vote · Highly Motivated"   color={C.green}  border={C.green} />
+        <KpiTile label="Trump Net"      val="+10.2"  sub="54.1% Approve · 43.9% Disapprove"     color={C.green}  border={C.green} />
+        <KpiTile label="Graham Net"     val="+6.3"   sub="51.1% Approve · 44.8% Disapprove"     color={C.blue}   border={C.blue} />
+      </div>
+    </div>
+  );
+}
+
 function getCategories(slides: Slide[]) {
   const cats = new Map<string, Slide[]>();
   slides.forEach(s => {
@@ -1264,14 +1562,15 @@ function RankTableView({ rows }: { rows: NonNullable<Slide["rankTable"]> }) {
 
 // ─── Main dashboard ───────────────────────────────────────────────────────────
 export default function TPSIPollDashboard() {
-  const [activePoll, setActivePoll] = useState<'la'|'national'|'sd'>('national');
+  const [activePoll, setActivePoll] = useState<'la'|'national'|'sd'|'sc'>('national');
   const [laActiveId, setLaActiveId] = useState("q10a");
   const [natActiveId, setNatActiveId] = useState("nat-q14");
   const [sdActiveId, setSdActiveId] = useState("sd-q6");
+  const [scActiveId, setScActiveId] = useState("sc-senate");
 
-  const slides    = activePoll === 'la' ? SLIDES : activePoll === 'national' ? NATIONAL_SLIDES : SD_SLIDES;
-  const activeId  = activePoll === 'la' ? laActiveId : activePoll === 'national' ? natActiveId : sdActiveId;
-  const setActive = activePoll === 'la' ? setLaActiveId : activePoll === 'national' ? setNatActiveId : setSdActiveId;
+  const slides    = activePoll === 'la' ? SLIDES : activePoll === 'national' ? NATIONAL_SLIDES : activePoll === 'sd' ? SD_SLIDES : SC_SLIDES;
+  const activeId  = activePoll === 'la' ? laActiveId : activePoll === 'national' ? natActiveId : activePoll === 'sd' ? sdActiveId : scActiveId;
+  const setActive = activePoll === 'la' ? setLaActiveId : activePoll === 'national' ? setNatActiveId : activePoll === 'sd' ? setSdActiveId : setScActiveId;
 
   const categories = getCategories(slides);
   const slide = slides.find(s => s.id === activeId) ?? slides.find(s => !s.isCover)!;
@@ -1598,7 +1897,7 @@ export default function TPSIPollDashboard() {
               </div>
             </div>
           </div>
-        ) : (
+        ) : activePoll === 'sd' ? (
           <div style={{ padding:"20px 0 14px" }}>
             <div className="tpsi-eyebrow">TPSI POLL · SOUTH DAKOTA GOP PRIMARY · MAY 2026</div>
             <div style={{ display:"flex", flexWrap:"wrap", alignItems:"flex-end", justifyContent:"space-between", gap:12 }}>
@@ -1607,6 +1906,19 @@ export default function TPSIPollDashboard() {
                 <span className="tpsi-bdg tpsi-bdg-purple">N=400 LV</span>
                 <span className="tpsi-bdg">4 QUESTIONS</span>
                 <span className="tpsi-bdg">MAY 2026</span>
+              </div>
+            </div>
+          </div>
+        ) : (
+          <div style={{ padding:"20px 0 14px" }}>
+            <div className="tpsi-eyebrow">TPSI POLL · SOUTH CAROLINA GOP PRIMARY · JUNE 2026</div>
+            <div style={{ display:"flex", flexWrap:"wrap", alignItems:"flex-end", justifyContent:"space-between", gap:12 }}>
+              <h1 className="tpsi-page-title">South Carolina <em>Republican Primary</em></h1>
+              <div style={{ display:"flex", gap:6, flexWrap:"wrap", alignItems:"center" }}>
+                <span className="tpsi-bdg tpsi-bdg-purple">N=369 LV</span>
+                <span className="tpsi-bdg">13 QUESTIONS</span>
+                <span className="tpsi-bdg">JUNE 2026</span>
+                <span className="tpsi-bdg">MERIDIAN MODEL</span>
               </div>
             </div>
           </div>
@@ -1635,10 +1947,17 @@ export default function TPSIPollDashboard() {
             <span className="poll-tab-dot" style={{ background: activePoll === 'sd' ? 'var(--purple)' : 'var(--border2)' }} />
             SD GOP Primary · May 2026
           </button>
+          <button
+            className={`poll-tab${activePoll === 'sc' ? ' active' : ''}`}
+            onClick={() => setActivePoll('sc')}
+          >
+            <span className="poll-tab-dot" style={{ background: activePoll === 'sc' ? 'var(--purple)' : 'var(--border2)' }} />
+            SC GOP Primary · June 2026
+          </button>
         </div>
 
         {/* Topline executive summary */}
-        {activePoll === 'la' ? <ToplineDashboard /> : activePoll === 'national' ? <NationalToplineDashboard /> : <SdToplineDashboard />}
+        {activePoll === 'la' ? <ToplineDashboard /> : activePoll === 'national' ? <NationalToplineDashboard /> : activePoll === 'sd' ? <SdToplineDashboard /> : <ScToplineDashboard />}
 
         {/* Two-column body */}
         <div className="tpsi-layout">
