@@ -26,7 +26,7 @@ type RegionCandidate = { name: string; party: string; votes: string | number; pe
 type RegionResult = { region: { name: string; type: string; fill?: string; percent_reporting?: number; }; candidates: RegionCandidate[]; };
 type RaceDetail = { election_name: string; election_type: string; election_scope: string; election_date: string; country: string; province: string | null; district: string | null; municipality: string | null; polls_open: string | null; polls_close: string | null; last_updated: string | null; percent_reporting?: number; candidates: RaceCandidate[]; region_results?: RegionResult[] | Record<string, RegionResult>; };
 type RaceType = "Democratic Primary" | "Republican Primary" | "Special Election" | "General Election" | "Open Primary";
-type FeaturedRace = { id: number; state: "CA" | "IA" | "MT" | "NJ" | "NM" | "SD" | "TX"; office: string; raceType: RaceType; label: string; archived?: boolean; };
+type FeaturedRace = { id: number; state: "CA" | "IA" | "ME" | "MT" | "ND" | "NJ" | "NM" | "NV" | "SC" | "SD" | "TX"; office: string; raceType: RaceType; label: string; archived?: boolean; };
 
 function getRaceTypeColor(raceType: RaceType): string {
   if (raceType === "Republican Primary") return "var(--rep)";
@@ -47,7 +47,7 @@ function getRaceTypeShort(raceType: RaceType): string {
 const RACE_FORECAST_DEFAULTS: Partial<Record<number, { raceRule: RaceRule; expectedTurnout?: number; pollAvg?: Record<string, number>; overrideReporting?: number; pollsCloseIso?: string; turnoutBlendK?: number; colorOverrides?: Record<string, string>; manualCall?: string; }>> = {
 
   // ── CA TOP-TWO OPEN PRIMARY (June 2) ──────────────────────────────────────
-  79777: { raceRule: "TOP_TWO", expectedTurnout: 9_500_000, pollAvg: { "Becerra": 32.0, "Steyer": 20.0, "Hilton": 18.0, "Bianco": 10.0 }, overrideReporting: 74.4, turnoutBlendK: 2 }, // CA Governor
+  79777: { raceRule: "TOP_TWO", expectedTurnout: 9_500_000, pollAvg: { "Becerra": 29.0, "Steyer": 22.0, "Hilton": 25.0, "Bianco": 10.0 }, overrideReporting: 84.3, turnoutBlendK: 2 }, // CA Governor
 // ONE-OFF DSMeridian late-VBM correction — LA Mayor June 2, 2026
 // DO NOT replicate. See full rationale below.
 //
@@ -108,6 +108,39 @@ const RACE_FORECAST_DEFAULTS: Partial<Record<number, { raceRule: RaceRule; expec
   // ── NM close time override (June 2) ──────────────────────────────────────
   81014: { raceRule: "PLURALITY", overrideReporting: 99.9, pollsCloseIso: "2026-06-02T21:00:00-04:00", manualCall: "Ben Luján" }, // NM US Senate D — 9pm ET
   81015: { raceRule: "PLURALITY", overrideReporting: 0, pollsCloseIso: "2026-06-02T21:00:00-04:00" }, // NM US Senate R — 9pm ET
+
+  // ── SOUTH CAROLINA — MAJORITY (50%+1 or runoff June 23) — June 9 ─────────
+  82664: { raceRule: "MAJORITY", expectedTurnout: 400_000, pollAvg: { "Graham": 51.0, "Lynch": 26.4, "Dismukes": 6.6, "Herrmann": 5.4, "Mitchell": 4.2, "Cowen": 2.0 } }, // SC US Senate R (TPSI DSMeridian Model 02 · June 3–4 · n=388)
+  82596: { raceRule: "MAJORITY", expectedTurnout: 380_000, pollAvg: { "Mace": 30.0, "Evette": 24.9, "Norman": 15.2, "Reddy": 13.4, "Wilson": 12.0 } }, // SC Governor R (pre-Trump-endorsement priors — live may diverge)
+  82663: { raceRule: "MAJORITY", expectedTurnout: 130_000, pollAvg: { "Andrews": 62.0, "Brown": 24.0, "Bruce": 8.0, "Freeman": 4.0, "Giracello": 2.0 } }, // SC US Senate D (market-implied · Andrews ~99%)
+  82595: { raceRule: "MAJORITY", expectedTurnout: 110_000, pollAvg: { "Johnson": 40.0, "Webster": 33.0, "McLeod": 18.0, "Bennett": 9.0 } }, // SC Governor D
+  82594: { raceRule: "MAJORITY", expectedTurnout: 95_000 },   // SC Comptroller General D
+  82597: { raceRule: "MAJORITY", expectedTurnout: 95_000 },   // SC Secretary of State D
+  82592: { raceRule: "MAJORITY", expectedTurnout: 340_000 },  // SC Attorney General R
+  82654: { raceRule: "MAJORITY", expectedTurnout: 40_000 },   // SC US House 1 D
+  82655: { raceRule: "MAJORITY", expectedTurnout: 85_000 },   // SC US House 1 R
+  82657: { raceRule: "MAJORITY", expectedTurnout: 75_000 },   // SC US House 2 R
+  82662: { raceRule: "MAJORITY", expectedTurnout: 70_000 },   // SC US House 6 R
+
+  // ── MAINE — PLURALITY (RCV primary; first-choice night totals only) — June 9 ──
+  83063: { raceRule: "PLURALITY", expectedTurnout: 200_000, pollAvg: { "Platner": 66.0, "Mills": 20.0, "Costello": 4.0 } }, // ME US Senate D (Fox News / Pan Atlantic May 2026 · Mills suspended but on ballot)
+  82693: { raceRule: "PLURALITY", expectedTurnout: 210_000, pollAvg: { "Shah": 29.0, "Jackson": 28.0, "King": 14.0, "Pingree": 12.0, "Bellows": 11.0 } }, // ME Governor D (SurveyUSA / FairVote June 3 · first-choice shares · Pingree wins RCV sim)
+  82694: { raceRule: "PLURALITY", expectedTurnout: 160_000, pollAvg: { "Charles": 36.0, "Bush": 20.0, "Mason": 13.0, "Midgley": 11.0, "Jones": 7.0, "Wessels": 1.0 } }, // ME Governor R (UNH Pine Tree State Poll · May 27 · RCV · Charles dominant)
+  83061: { raceRule: "PLURALITY", expectedTurnout: 55_000 },  // ME US House 2 D (API only · Baldacci + 3)
+
+  // ── NEVADA — PLURALITY (simple plurality wins) — June 9 ─────────────────
+  83111: { raceRule: "PLURALITY", expectedTurnout: 165_000, pollAvg: { "Lombardo": 78.0, "Hansen": 12.0, "Winterhawk": 6.0 } }, // NV Governor R (dominant incumbent)
+  83110: { raceRule: "PLURALITY", expectedTurnout: 155_000, pollAvg: { "Ford": 68.0, "Hill": 22.0, "Other": 10.0 } }, // NV Governor D
+  83081: { raceRule: "PLURALITY", expectedTurnout: 155_000 }, // NV Attorney General R
+  83080: { raceRule: "PLURALITY", expectedTurnout: 145_000 }, // NV Attorney General D
+  83112: { raceRule: "PLURALITY", expectedTurnout: 140_000 }, // NV Lieutenant Governor D
+  83113: { raceRule: "PLURALITY", expectedTurnout: 150_000 }, // NV Secretary of State R
+  83150: { raceRule: "PLURALITY", expectedTurnout: 50_000 },  // NV US House 1 R
+  83149: { raceRule: "PLURALITY", expectedTurnout: 55_000 },  // NV US House 1 D
+
+  // ── NORTH DAKOTA — PLURALITY — June 9 ───────────────────────────────────
+  82403: { raceRule: "PLURALITY", expectedTurnout: 120_000 }, // ND US House At-Large R
+  82384: { raceRule: "PLURALITY", expectedTurnout: 100_000 }, // ND Public Service Commissioner R
 };
 
 function sortCandidatesByPollData(candidates: RaceCandidate[], pollAvg?: Record<string, number>): RaceCandidate[] {
@@ -164,6 +197,35 @@ const FEATURED: FeaturedRace[] = [
   { id: 80461, state: "SD", office: "Governor", raceType: "Republican Primary", label: "South Dakota Governor Republican Primary", archived: true },
   { id: 80511, state: "SD", office: "US House At-Large", raceType: "Republican Primary", label: "South Dakota US House At-Large Republican Primary", archived: true },
   { id: 80512, state: "SD", office: "US Senate", raceType: "Republican Primary", label: "South Dakota US Senate Republican Primary", archived: true },
+  // ── SOUTH CAROLINA (JUNE 9) ──
+  { id: 82664, state: "SC", office: "US Senate", raceType: "Republican Primary", label: "South Carolina US Senate Republican Primary" },
+  { id: 82596, state: "SC", office: "Governor", raceType: "Republican Primary", label: "South Carolina Governor Republican Primary" },
+  { id: 82663, state: "SC", office: "US Senate", raceType: "Democratic Primary", label: "South Carolina US Senate Democratic Primary" },
+  { id: 82595, state: "SC", office: "Governor", raceType: "Democratic Primary", label: "South Carolina Governor Democratic Primary" },
+  { id: 82594, state: "SC", office: "Comptroller General", raceType: "Democratic Primary", label: "South Carolina Comptroller General Democratic Primary" },
+  { id: 82597, state: "SC", office: "Secretary of State", raceType: "Democratic Primary", label: "South Carolina Secretary of State Democratic Primary" },
+  { id: 82592, state: "SC", office: "Attorney General", raceType: "Republican Primary", label: "South Carolina Attorney General Republican Primary" },
+  { id: 82654, state: "SC", office: "US House 1", raceType: "Democratic Primary", label: "South Carolina US House 1 Democratic Primary" },
+  { id: 82655, state: "SC", office: "US House 1", raceType: "Republican Primary", label: "South Carolina US House 1 Republican Primary" },
+  { id: 82657, state: "SC", office: "US House 2", raceType: "Republican Primary", label: "South Carolina US House 2 Republican Primary" },
+  { id: 82662, state: "SC", office: "US House 6", raceType: "Republican Primary", label: "South Carolina US House 6 Republican Primary" },
+  // ── MAINE (JUNE 9) ──
+  { id: 83063, state: "ME", office: "US Senate", raceType: "Democratic Primary", label: "Maine US Senate Democratic Primary" },
+  { id: 82693, state: "ME", office: "Governor", raceType: "Democratic Primary", label: "Maine Governor Democratic Primary" },
+  { id: 82694, state: "ME", office: "Governor", raceType: "Republican Primary", label: "Maine Governor Republican Primary" },
+  { id: 83061, state: "ME", office: "US House 2", raceType: "Democratic Primary", label: "Maine US House 2 Democratic Primary" },
+  // ── NEVADA (JUNE 9) ──
+  { id: 83111, state: "NV", office: "Governor", raceType: "Republican Primary", label: "Nevada Governor Republican Primary" },
+  { id: 83110, state: "NV", office: "Governor", raceType: "Democratic Primary", label: "Nevada Governor Democratic Primary" },
+  { id: 83081, state: "NV", office: "Attorney General", raceType: "Republican Primary", label: "Nevada Attorney General Republican Primary" },
+  { id: 83080, state: "NV", office: "Attorney General", raceType: "Democratic Primary", label: "Nevada Attorney General Democratic Primary" },
+  { id: 83112, state: "NV", office: "Lieutenant Governor", raceType: "Democratic Primary", label: "Nevada Lieutenant Governor Democratic Primary" },
+  { id: 83113, state: "NV", office: "Secretary of State", raceType: "Republican Primary", label: "Nevada Secretary of State Republican Primary" },
+  { id: 83150, state: "NV", office: "US House 1", raceType: "Republican Primary", label: "Nevada US House 1 Republican Primary" },
+  { id: 83149, state: "NV", office: "US House 1", raceType: "Democratic Primary", label: "Nevada US House 1 Democratic Primary" },
+  // ── NORTH DAKOTA (JUNE 9) ──
+  { id: 82403, state: "ND", office: "US House At-Large", raceType: "Republican Primary", label: "North Dakota US House At-Large Republican Primary" },
+  { id: 82384, state: "ND", office: "Public Service Commissioner", raceType: "Republican Primary", label: "North Dakota Public Service Commissioner Republican Primary" },
 ];
 
 async function fetchRaceById(id: number): Promise<RaceDetail> {
@@ -1602,17 +1664,17 @@ function RacePickerPanel({ races, raceCache, selectedId, onSelect, lockedCalls, 
                 display: "inline-flex", alignItems: "center", gap: 4,
                 padding: "3px 9px",
                 background: showArchived
-                  ? "linear-gradient(135deg, rgba(230,57,70,0.18) 0%, rgba(124,58,237,0.18) 50%, rgba(37,99,235,0.18) 100%)"
-                  : "transparent",
-                border: `1px solid ${showArchived ? "rgba(124,58,237,0.45)" : "var(--border2)"}`,
+                  ? "linear-gradient(135deg, rgba(124,58,237,0.06) 0%, rgba(99,102,241,0.03) 100%)"
+                  : "linear-gradient(135deg, rgba(124,58,237,0.14) 0%, rgba(99,102,241,0.08) 100%)",
+                border: `1px solid ${showArchived ? "rgba(124,58,237,0.22)" : "rgba(124,58,237,0.50)"}`,
                 borderRadius: "var(--r-pill)",
                 fontFamily: "var(--font-body)", fontSize: "9px", fontWeight: 700, letterSpacing: "0.10em",
-                color: showArchived ? "rgba(210,200,255,0.9)" : "var(--muted2)",
+                color: showArchived ? "rgba(160,140,220,0.65)" : "rgba(200,180,255,0.95)",
                 cursor: "pointer", transition: "all 150ms ease",
-                boxShadow: showArchived ? "0 0 10px rgba(124,58,237,0.25)" : "none",
+                boxShadow: showArchived ? "none" : "0 0 10px rgba(124,58,237,0.30), 0 0 2px rgba(124,58,237,0.20)",
               }}
             >
-              <svg width="9" height="9" viewBox="0 0 16 16" fill="none" style={{ opacity: showArchived ? 0.85 : 0.45 }}>
+              <svg width="9" height="9" viewBox="0 0 16 16" fill="none" style={{ opacity: showArchived ? 0.45 : 0.8 }}>
                 <circle cx="8" cy="8" r="6.5" stroke="currentColor" strokeWidth="1.5"/>
                 <path d="M8 5v3.5l2 1.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
               </svg>
@@ -1826,13 +1888,57 @@ export default function March3FeaturedClient() {
   const [archiveDropdownOpen, setArchiveDropdownOpen] = useState(false);
   const [archiveDate, setArchiveDate] = useState<string | null>(null);
   const archiveDropdownRef = useRef<HTMLDivElement>(null);
-  const [activeState, setActiveState] = useState<"CA" | "IA" | "MT" | "NJ" | "NM" | "SD" | "TX">("CA")
-  const [selectedId, setSelectedId] = useState<number>(79938);
+  const [activeState, setActiveState] = useState<"CA" | "IA" | "ME" | "MT" | "ND" | "NJ" | "NM" | "NV" | "SC" | "SD" | "TX">("SC")
+  const [selectedId, setSelectedId] = useState<number>(82664);
   const LA_MAYOR_ID = 79938; // Los Angeles Mayor Open Primary — June 2 spotlight
   const CA_GOV_ID = 79777;  // California Governor Open Primary — June 2 spotlight
   const IA_GOV_ID = 79945;  // Iowa Governor Republican Primary — June 2 spotlight
   const SD_GOV_ID = 80461; // SD Governor Republican Primary — June 2 spotlight
+  const SC_SENATE_R_ID = 82664; // SC US Senate Republican Primary — June 9 spotlight
+  const SC_GOV_R_ID = 82596;   // SC Governor Republican Primary — June 9 spotlight
+  const ME_SENATE_D_ID = 83063; // ME US Senate Democratic Primary — June 9 spotlight
+  const ME_GOV_D_ID = 82693;   // ME Governor Democratic Primary — June 9 spotlight
   const ALL_SPOTLIGHT_META = [
+    {
+      id: SC_SENATE_R_ID,
+      shortLabel: "SC Senate",
+      stateLabel: "S. CAROLINA",
+      state: "SC" as const,
+      title: "SC US Senate Republican Primary",
+      subtitle: "South Carolina · June 9, 2026",
+      electionDate: "JUNE 9, 2026",
+      about: "South Carolina Republicans will choose a nominee for U.S. Senate as four-term incumbent Lindsey Graham, backed by President Trump, faces a crowded field led by MAGA challenger Mark Lynch, who consolidated anti-Graham support following Paul Dans' withdrawal. TPSI's Meridian CV model (June 3–4) shows Graham at 51% with Lynch surging to 26%. If no candidate clears 50%, the top two advance to a June 23 runoff.",
+    },
+    {
+      id: SC_GOV_R_ID,
+      shortLabel: "SC Governor",
+      stateLabel: "S. CAROLINA",
+      state: "SC" as const,
+      title: "SC Governor Republican Primary",
+      subtitle: "South Carolina · June 9, 2026",
+      electionDate: "JUNE 9, 2026",
+      about: "South Carolina Republicans will select a nominee for governor in one of the most competitive open-seat primaries in the South, with Lt. Gov. Pamela Evette, Attorney General Alan Wilson, Rep. Nancy Mace, Rep. Ralph Norman, and businessman Rom Reddy all in contention. TPSI's Meridian CV model (June 3–4) showed Mace leading at 30% ahead of Trump's late endorsement of Evette, which has since moved prediction markets heavily in her favor. A June 23 runoff between the top two finishers is expected.",
+    },
+    {
+      id: ME_SENATE_D_ID,
+      shortLabel: "ME Senate",
+      stateLabel: "MAINE",
+      state: "ME" as const,
+      title: "ME US Senate Democratic Primary",
+      subtitle: "Maine · June 9, 2026",
+      electionDate: "JUNE 9, 2026",
+      about: "Maine Democrats will choose a nominee to challenge incumbent Republican Susan Collins in November, with Chloe Platner holding a commanding lead in the field over challengers including Sara Gideon-aligned candidates and former officials. Platner has polled at 76% in the most recent public survey. TPSI fresh polling from today's fieldwork will update the forecast ahead of the general election matchup.",
+    },
+    {
+      id: ME_GOV_D_ID,
+      shortLabel: "ME Governor",
+      stateLabel: "MAINE",
+      state: "ME" as const,
+      title: "ME Governor Democratic Primary",
+      subtitle: "Maine · June 9, 2026",
+      electionDate: "JUNE 9, 2026",
+      about: "Maine Democrats will select a nominee for governor in a wide-open ranked-choice primary, with former Maine CDC Director Nirav Shah, former Senate President Troy Jackson, former House Speaker Hannah Pingree, renewable energy entrepreneur Angus King III, and Secretary of State Shenna Bellows all competing. Pingree, Jackson, and Bellows have formed a cross-endorsement alliance, with RCV simulations showing Pingree narrowly leading the final round 52–48 over Shah. First-choice totals will be reported election night; full RCV tabulation will follow in the days after June 9.",
+    },
     {
       id: LA_MAYOR_ID,
       shortLabel: "LA Mayor",
@@ -1876,7 +1982,7 @@ export default function March3FeaturedClient() {
   ] as const;
   // Only active (non-archived) races appear as spotlight tabs
   const SPOTLIGHT_RACES = ALL_SPOTLIGHT_META.filter(s => !FEATURED.find(r => r.id === s.id)?.archived);
-  const [spotlightTab, setSpotlightTab] = useState<number>(LA_MAYOR_ID);
+  const [spotlightTab, setSpotlightTab] = useState<number>(SC_SENATE_R_ID);
   const [error, setError] = useState<string | null>(null);
   const [loadingMap, setLoadingMap] = useState(false);
   const [raceCache, setRaceCache] = useState<Record<number, RaceDetail | undefined>>({});
@@ -1895,9 +2001,13 @@ export default function March3FeaturedClient() {
   const featuredByState = useMemo(() => ({
   CA: FEATURED.filter((r) => r.state === "CA"),
   IA: FEATURED.filter((r) => r.state === "IA"),
+  ME: FEATURED.filter((r) => r.state === "ME"),
   MT: FEATURED.filter((r) => r.state === "MT"),
+  ND: FEATURED.filter((r) => r.state === "ND"),
   NJ: FEATURED.filter((r) => r.state === "NJ"),
   NM: FEATURED.filter((r) => r.state === "NM"),
+  NV: FEATURED.filter((r) => r.state === "NV"),
+  SC: FEATURED.filter((r) => r.state === "SC"),
   SD: FEATURED.filter((r) => r.state === "SD"),
   TX: FEATURED.filter((r) => r.state === "TX"),
   }), []);
@@ -1975,8 +2085,8 @@ export default function March3FeaturedClient() {
   //   return () => clearTimeout(t);
   // }, [selectedRace, selectedId]);
 
-  const stateLabels: Record<string, string> = { CA: "CALIFORNIA", IA: "IOWA", MT: "MONTANA", NJ: "NEW JERSEY", NM: "NEW MEXICO", SD: "S. DAKOTA", TX: "TEXAS" };
-  const activeStates = (["CA", "IA", "MT", "NJ", "NM", "SD", "TX"] as const).filter(
+  const stateLabels: Record<string, string> = { CA: "CALIFORNIA", IA: "IOWA", ME: "MAINE", MT: "MONTANA", ND: "N. DAKOTA", NJ: "NEW JERSEY", NM: "NEW MEXICO", NV: "NEVADA", SC: "S. CAROLINA", SD: "S. DAKOTA", TX: "TEXAS" };
+  const activeStates = (["SC", "ME", "NV", "ND", "CA", "IA", "MT", "NJ", "NM", "SD", "TX"] as const).filter(
     st => FEATURED.some(r => r.state === st && !r.archived)
   );
 
@@ -1984,6 +2094,7 @@ export default function March3FeaturedClient() {
   const ARCHIVE_DATES: { label: string; date: string; states: string[] }[] = [
     { label: "MAY 26, 2026", date: "2026-05-26", states: ["TX"] },
     { label: "JUNE 2, 2026", date: "2026-06-02", states: ["IA", "MT", "NJ", "NM", "SD"] },
+    { label: "JUNE 9, 2026", date: "2026-06-09", states: ["SC", "ME", "NV", "ND"] },
   ];
   const archiveDateStates = ARCHIVE_DATES.find(d => d.date === archiveDate)?.states ?? [];
 
@@ -2055,7 +2166,7 @@ export default function March3FeaturedClient() {
   // Don't show a lean/projection until precincts start reporting
   const displayProj = selectedReporting > 0 ? effectiveProj : null;
   // Auto-call: forecast races called at >99.73% (3σ); once locked, never retracted
-  const liveForecastCalled = hasForecastForSelected && forecastProj?.raceId === selectedId && (forecastProj?.prob ?? 0) > 99.73 ? forecastProj!.leader : null;
+  const liveForecastCalled = hasForecastForSelected && forecastProj?.raceId === selectedId && effectiveReporting > 0 && (forecastProj?.prob ?? 0) > 99.73 ? forecastProj!.leader : null;
   useEffect(() => {
     if (liveForecastCalled && selectedId && !lockedCalls[selectedId]) {
       setLockedCalls(prev => ({ ...prev, [selectedId]: liveForecastCalled }));
@@ -2114,7 +2225,7 @@ export default function March3FeaturedClient() {
         .res-btn-primary:hover { background:var(--gradient-purple-soft); transform:translateY(-1px); }
         .res-btn-ghost { display:inline-flex; align-items:center; gap:6px; padding:7px 12px; background:transparent; border:1px solid var(--border); color:var(--muted2); font-family:var(--font-body); font-size:10px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; cursor:pointer; transition:all 140ms ease; border-radius:var(--r-pill); }
         .res-btn-ghost:hover { border-color:var(--border2); color:var(--muted); }
-        .res-btn-state { display:inline-flex; align-items:center; justify-content:center; text-align:center; padding:4px 10px; background:linear-gradient(135deg,rgba(124,58,237,0.12) 0%,rgba(99,102,241,0.07) 100%); border:1px solid rgba(124,58,237,0.35); color:rgba(180,160,235,0.80); font-family:var(--font-body); font-size:10px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; cursor:pointer; transition:all 150ms ease; position:relative; border-radius:var(--r-pill); box-shadow:none; }
+        .res-btn-state { display:inline-flex; align-items:center; justify-content:center; text-align:center; padding:4px 13px; background:linear-gradient(135deg,rgba(124,58,237,0.12) 0%,rgba(99,102,241,0.07) 100%); border:1px solid rgba(124,58,237,0.35); color:rgba(180,160,235,0.80); font-family:var(--font-body); font-size:10px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; cursor:pointer; transition:all 150ms ease; position:relative; border-radius:var(--r-pill); box-shadow:none; }
         .res-btn-state:hover { color:rgba(200,180,255,0.85); border-color:rgba(124,58,237,0.38); background:linear-gradient(135deg,rgba(124,58,237,0.16) 0%,rgba(99,102,241,0.10) 100%); box-shadow:0 0 8px rgba(124,58,237,0.18); transform:translateY(-1px); }
         .res-btn-state:active { transform:translateY(0px) scale(0.97); box-shadow:0 0 4px rgba(124,58,237,0.15); }
         .res-btn-state:hover::before { transform:scaleX(1); }
@@ -2533,7 +2644,7 @@ export default function March3FeaturedClient() {
             <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
               {/* Row 1: title */}
               <div>
-                <div className="res-page-sub">JUNE 2ND PRIMARY ELECTIONS · 2026</div>
+                <div className="res-page-sub">JUNE 9TH PRIMARY ELECTIONS · 2026</div>
                 <h1 className="res-page-title">Election <em>Night</em></h1>
               </div>
               {/* Row 2: archive + badges + state buttons */}
@@ -2636,7 +2747,7 @@ export default function March3FeaturedClient() {
                 {activeStates.length > 0 && (
                   <>
                     <span style={{ width: 1, height: 16, background: "var(--border2)", margin: "0 2px", flexShrink: 0 }} />
-                    <div className="res-state-btns" style={{ display: "flex", gap: "1px" }}>
+                    <div className="res-state-btns" style={{ display: "flex", gap: "5px" }}>
                       {activeStates.map((st) => (
                         <button key={st} className={`res-btn-state ${activeState === st ? "active" : ""}`} onClick={() => {
                           setActiveState(st);
@@ -3171,7 +3282,7 @@ export default function March3FeaturedClient() {
               {hasForecastForSelected ? (
                 <ForecastPanel key={selectedId} raceId={selectedId} refreshTick={refreshTick} raceData={selectedRace} onForecastUpdate={(update) => {
                   setForecastProj({ ...update, raceId: selectedId });
-                  if (update.projectionType === "RUNOFF" && update.runoffProbs) {
+                  if (effectiveReporting > 0 && update.projectionType === "RUNOFF" && update.runoffProbs) {
                     setLockedRunoffProbs(prev => ({ ...prev, [selectedId]: update.runoffProbs! }));
                   }
                 }} />
