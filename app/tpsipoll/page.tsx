@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 
 // ─── Color tokens (match homepage vars) ───────────────────────────────────────
 const C = {
@@ -1571,6 +1571,38 @@ export default function TPSIPollDashboard() {
   const slides    = activePoll === 'la' ? SLIDES : activePoll === 'national' ? NATIONAL_SLIDES : activePoll === 'sd' ? SD_SLIDES : SC_SLIDES;
   const activeId  = activePoll === 'la' ? laActiveId : activePoll === 'national' ? natActiveId : activePoll === 'sd' ? sdActiveId : scActiveId;
   const setActive = activePoll === 'la' ? setLaActiveId : activePoll === 'national' ? setNatActiveId : activePoll === 'sd' ? setSdActiveId : setScActiveId;
+
+  // Read URL params on mount
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const params = new URLSearchParams(window.location.search);
+    const pollParam = params.get("poll");
+    const slideParam = params.get("slide");
+    if (pollParam === 'la' || pollParam === 'national' || pollParam === 'sd' || pollParam === 'sc') {
+      setActivePoll(pollParam);
+    }
+    if (slideParam) {
+      // Set the slide for whichever poll is active after resolving pollParam
+      const resolvedPoll = (pollParam === 'la' || pollParam === 'national' || pollParam === 'sd' || pollParam === 'sc') ? pollParam : 'national';
+      if (resolvedPoll === 'la') setLaActiveId(slideParam);
+      else if (resolvedPoll === 'national') setNatActiveId(slideParam);
+      else if (resolvedPoll === 'sd') setSdActiveId(slideParam);
+      else if (resolvedPoll === 'sc') setScActiveId(slideParam);
+    }
+  }, []);
+
+  // Push URL & document.title on poll/slide change
+  const isInitialPollRender = useRef(true);
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    if (isInitialPollRender.current) { isInitialPollRender.current = false; return; }
+    const params = new URLSearchParams();
+    params.set("poll", activePoll);
+    params.set("slide", activeId);
+    window.history.replaceState(null, "", `?${params.toString()}`);
+    const pollLabels: Record<string, string> = { la: "LA Mayoral", national: "National Benchmark", sd: "SD GOP Primary", sc: "SC GOP Primary" };
+    document.title = `${pollLabels[activePoll] ?? "TPSI Poll"} · TPSI Polling`;
+  }, [activePoll, activeId]);
 
   const categories = getCategories(slides);
   const slide = slides.find(s => s.id === activeId) ?? slides.find(s => !s.isCover)!;
