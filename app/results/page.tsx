@@ -2,7 +2,7 @@
 
 import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import type { ForecastOutput, RaceRule } from "@/app/lib/electoralModel";
-import { slugToId, idToSlug, idToDate, idToLabel, ELECTION_DATES, getRacesByDate, formatElectionDate } from "./_data/raceRegistry";
+import { slugToId, idToDate, idToLabel, ELECTION_DATES, getRacesByDate, formatElectionDate, getRaceUrl } from "./_data/raceRegistry";
 
 const CIVIC_BASE = "https://civicapi.org";
 const POLL_MS = 30_000;
@@ -2050,17 +2050,19 @@ export default function March3FeaturedClient() {
   }, [activeState, featuredByState, selectedId]);
 
   // Deep-link: support /results?race=<id>, /results?tab=spotlight,
-  // and slug paths: /results/2026-06-09/south-carolina-us-senate-republican-primary
+  // active slug: /results/2026-06-09/south-carolina-us-senate-republican-primary
+  // archived slug: /results/archive/2026-06-09/south-carolina-...
   useEffect(() => {
     if (typeof window === "undefined") return;
-    // Check pathname for slug: /results/<date>/<slug>
-    const pathParts = window.location.pathname.replace(/^\/results\/?/, "").split("/").filter(Boolean);
-    if (pathParts.length >= 2) {
-      const slug = pathParts[1];
+    const path = window.location.pathname;
+    const activeMatch = path.match(/^\/results\/([\d-]+)\/([^/]+)$/);
+    const archiveMatch = path.match(/^\/results\/archive\/([\d-]+)\/([^/]+)$/);
+    const slug = activeMatch?.[2] ?? archiveMatch?.[2] ?? null;
+    if (slug) {
       const idFromSlug = slugToId[slug];
       if (idFromSlug) {
-        const match = FEATURED.find(r => r.id === idFromSlug);
         if (SPOTLIGHT_RACES.some(s => s.id === idFromSlug)) { setPageTab("spotlight"); setSpotlightTab(idFromSlug); return; }
+        const match = FEATURED.find(r => r.id === idFromSlug);
         if (match) { setPageTab("all"); setActiveState(match.state as any); setSelectedId(idFromSlug); return; }
       }
     }
@@ -2087,12 +2089,10 @@ export default function March3FeaturedClient() {
     if (typeof window === "undefined") return;
     if (isInitialUrlRead.current) { isInitialUrlRead.current = false; return; }
     const activeRaceId = pageTab === "spotlight" ? spotlightTab : selectedId;
-    const slug = idToSlug[activeRaceId];
-    const date = idToDate[activeRaceId];
-    if (slug && date) {
-      window.history.replaceState(null, "", `/results/${date}/${slug}`);
+    const raceUrl = getRaceUrl(activeRaceId);
+    if (raceUrl) {
+      window.history.replaceState(null, "", raceUrl);
     } else {
-      // Fallback for races not yet in registry
       const params = new URLSearchParams();
       if (pageTab === "spotlight") { params.set("tab", "spotlight"); params.set("race", String(spotlightTab)); }
       else { params.set("race", String(selectedId)); }
