@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ELECTION_DATES, getRacesByDate, formatElectionDate, idToSlug } from "../_data/raceRegistry";
+import { ELECTION_DATES, getRacesByDate, formatElectionDate, getRaceUrl } from "../_data/raceRegistry";
 
 export const metadata: Metadata = {
   title: "Election Results Archive · TPSI",
@@ -48,14 +48,13 @@ export default function ResultsArchive() {
                   {formatElectionDate(date)}
                 </h2>
                 <div style={{ flex: 1, height: 1, background: "var(--border)" }} />
-                <Link href={`/results?race=${races[0]?.id ?? ""}`} style={{ fontSize: 10, fontWeight: 700, letterSpacing: "0.12em", color: "var(--purple-soft)", textTransform: "uppercase", textDecoration: "none" }}>
+                <Link href={getRaceUrl(races[0]?.id ?? 0) ?? `/results?race=${races[0]?.id ?? ""}`} style={{ fontSize: 10, fontWeight: 700, letterSpacing: "0.12em", color: "var(--purple-soft)", textTransform: "uppercase", textDecoration: "none" }}>
                   Open Dashboard →
                 </Link>
               </div>
               <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))", gap: 8 }}>
                 {races.map(race => {
-                  const slug = idToSlug[race.id];
-                  const href = slug ? `/results/${date}/${slug}` : `/results?race=${race.id}`;
+                  const href = getRaceUrl(race.id) ?? `/results?race=${race.id}`;
                   const isRepublican = race.label.includes("Republican");
                   const isDemocratic = race.label.includes("Democratic");
                   const dotColor = isRepublican ? "var(--rep)" : isDemocratic ? "var(--dem)" : "var(--purple)";
