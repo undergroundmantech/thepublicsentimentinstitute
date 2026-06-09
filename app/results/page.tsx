@@ -2067,6 +2067,28 @@ export default function March3FeaturedClient() {
     }
   }, []);
 
+  // Push URL & document.title whenever the selected race/tab changes
+  const isInitialUrlRead = useRef(true);
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    // Skip the very first render — the read effect above handles initial state
+    if (isInitialUrlRead.current) { isInitialUrlRead.current = false; return; }
+    const params = new URLSearchParams();
+    if (pageTab === "spotlight") {
+      params.set("tab", "spotlight");
+      params.set("race", String(spotlightTab));
+    } else {
+      params.set("race", String(selectedId));
+    }
+    window.history.replaceState(null, "", `?${params.toString()}`);
+    // Update document title for SEO / tab readability
+    const activeId = pageTab === "spotlight" ? spotlightTab : selectedId;
+    const featuredMeta = FEATURED.find(r => r.id === activeId);
+    const spotMeta = ALL_SPOTLIGHT_META.find(s => s.id === activeId);
+    const raceName = featuredMeta?.label ?? spotMeta?.title ?? "Election Results";
+    document.title = `${raceName} · TPSI Results`;
+  }, [pageTab, spotlightTab, selectedId]);
+
   // OVERLAY DISABLED — projection winner popup turned off
   // useEffect(() => {
   //   const race = selectedRace; if (!race?.candidates?.length) return;
