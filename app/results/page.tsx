@@ -3,6 +3,7 @@
 import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import type { ForecastOutput, RaceRule } from "@/app/lib/electoralModel";
 import { slugToId, idToDate, idToLabel, ELECTION_DATES, getRacesByDate, formatElectionDate, getRaceUrl } from "./_data/raceRegistry";
+import ResultsLanding from "./components/ResultsLanding";
 
 const CIVIC_BASE = "https://civicapi.org";
 const POLL_MS = 30_000;
@@ -112,7 +113,7 @@ const RACE_FORECAST_DEFAULTS: Partial<Record<number, { raceRule: RaceRule; expec
 
   // ── SOUTH CAROLINA — MAJORITY (50%+1 or runoff June 23) — June 9 ─────────
   82664: { raceRule: "MAJORITY", expectedTurnout: 400_000, pollAvg: { "Graham": 51.0, "Lynch": 26.4, "Dismukes": 6.6, "Herrmann": 5.4, "Mitchell": 4.2, "Cowen": 2.0 } }, // SC US Senate R (TPSI DSMeridian Model 02 · June 3–4 · n=388)
-  82596: { raceRule: "MAJORITY", expectedTurnout: 380_000, pollAvg: { "Mace": 30.0, "Evette": 24.9, "Norman": 15.2, "Reddy": 13.4, "Wilson": 12.0 } }, // SC Governor R (pre-Trump-endorsement priors — live may diverge)
+  82596: { raceRule: "MAJORITY", expectedTurnout: 380_000, pollAvg: { "Mace": 15.0, "Evette": 24.9, "Norman": 17.2, "Reddy": 16.4, "Wilson": 21.0 } }, // SC Governor R (pre-Trump-endorsement priors — live may diverge)
   82663: { raceRule: "MAJORITY", expectedTurnout: 130_000, pollAvg: { "Andrews": 62.0, "Brown": 24.0, "Bruce": 8.0, "Freeman": 4.0, "Giracello": 2.0 } }, // SC US Senate D (market-implied · Andrews ~99%)
   82595: { raceRule: "MAJORITY", expectedTurnout: 110_000, pollAvg: { "Johnson": 40.0, "Webster": 33.0, "McLeod": 18.0, "Bennett": 9.0 } }, // SC Governor D
   82594: { raceRule: "MAJORITY", expectedTurnout: 95_000 },   // SC Comptroller General D
@@ -1528,8 +1529,8 @@ function RaceScrollWindow({ races, raceCache, selectedId, onSelect, search, onSe
         {search && <button onClick={() => onSearchChange("")} style={{ background: "none", border: "none", cursor: "pointer", color: "var(--muted2)", fontSize: 11, padding: 0, lineHeight: 1 }}>✕</button>}
       </div>
       <div style={{ overflowY: "auto", flex: 1, maxHeight: maxHeight }}>
-        {groups.map(({ office, races: groupRaces }) => (
-          <div key={office}>
+        {groups.map(({ office, races: groupRaces }, gi) => (
+          <div key={`${office}-${gi}`}>
             <div style={{ padding: "4px 10px 2px", fontFamily: "var(--font-body)", fontSize: "10px", fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", color: "var(--muted2)", borderTop: "1px solid var(--border)", marginTop: 2 }}>{office}</div>
             {groupRaces.map(r => {
               const liveData = raceCache[r.id];
@@ -1709,11 +1710,11 @@ function RacePickerPanel({ races, raceCache, selectedId, onSelect, lockedCalls, 
             <span className="res-note" style={{ color: "var(--muted2)" }}>NO RACES FOUND</span>
           </div>
         )}
-        {groups.map(([office, groupRaces]) => {
+        {groups.map(([office, groupRaces], gi) => {
           const isArchiveGroup = groupRaces[0]?.archived;
           const isFirstArchiveGroup = isArchiveGroup && groups.find(([, gr]) => gr[0]?.archived)?.[0] === office;
           return (
-          <div key={office} style={{ marginBottom: 2 }}>
+          <div key={`${office}-${gi}`} style={{ marginBottom: 2 }}>
             {/* Archive section divider — only before the first archived group */}
             {isFirstArchiveGroup && (
               <div style={{ margin: "10px 10px 6px", display: "flex", alignItems: "center", gap: 8 }}>
@@ -1884,13 +1885,13 @@ function RacePickerPanel({ races, raceCache, selectedId, onSelect, lockedCalls, 
 
 // ─── MAIN PAGE ───────────────────────────────────────────────────────────────
 export default function March3FeaturedClient() {
-  const [pageTab, setPageTab] = useState<"all" | "spotlight">("all");
+  const [pageTab, setPageTab] = useState<"all" | "spotlight">("spotlight");
   const [showArchived, setShowArchived] = useState(false);
   const [archiveDropdownOpen, setArchiveDropdownOpen] = useState(false);
   const [archiveDate, setArchiveDate] = useState<string | null>(null);
   const archiveDropdownRef = useRef<HTMLDivElement>(null);
   const [activeState, setActiveState] = useState<"CA" | "IA" | "ME" | "MT" | "ND" | "NJ" | "NM" | "NV" | "SC" | "SD" | "TX">("SC")
-  const [selectedId, setSelectedId] = useState<number>(82664);
+  const [selectedId, setSelectedId] = useState<number>(82596);
   const LA_MAYOR_ID = 79938; // Los Angeles Mayor Open Primary — June 2 spotlight
   const CA_GOV_ID = 79777;  // California Governor Open Primary — June 2 spotlight
   const IA_GOV_ID = 79945;  // Iowa Governor Republican Primary — June 2 spotlight
@@ -1901,16 +1902,6 @@ export default function March3FeaturedClient() {
   const ME_GOV_D_ID = 82693;   // ME Governor Democratic Primary — June 9 spotlight
   const ALL_SPOTLIGHT_META = [
     {
-      id: SC_SENATE_R_ID,
-      shortLabel: "SC Senate",
-      stateLabel: "S. CAROLINA",
-      state: "SC" as const,
-      title: "SC US Senate Republican Primary",
-      subtitle: "South Carolina · June 9, 2026",
-      electionDate: "JUNE 9, 2026",
-      about: "South Carolina Republicans will choose a nominee for U.S. Senate as four-term incumbent Lindsey Graham, backed by President Trump, faces a crowded field led by MAGA challenger Mark Lynch, who consolidated anti-Graham support following Paul Dans' withdrawal. TPSI's Meridian CV model (June 3–4) shows Graham at 51% with Lynch surging to 26%. If no candidate clears 50%, the top two advance to a June 23 runoff.",
-    },
-    {
       id: SC_GOV_R_ID,
       shortLabel: "SC Governor",
       stateLabel: "S. CAROLINA",
@@ -1919,6 +1910,16 @@ export default function March3FeaturedClient() {
       subtitle: "South Carolina · June 9, 2026",
       electionDate: "JUNE 9, 2026",
       about: "South Carolina Republicans will select a nominee for governor in one of the most competitive open-seat primaries in the South, with Lt. Gov. Pamela Evette, Attorney General Alan Wilson, Rep. Nancy Mace, Rep. Ralph Norman, and businessman Rom Reddy all in contention. TPSI's Meridian CV model (June 3–4) showed Mace leading at 30% ahead of Trump's late endorsement of Evette, which has since moved prediction markets heavily in her favor. A June 23 runoff between the top two finishers is expected.",
+    },
+    {
+      id: SC_SENATE_R_ID,
+      shortLabel: "SC Senate",
+      stateLabel: "S. CAROLINA",
+      state: "SC" as const,
+      title: "SC US Senate Republican Primary",
+      subtitle: "South Carolina · June 9, 2026",
+      electionDate: "JUNE 9, 2026",
+      about: "South Carolina Republicans will choose a nominee for U.S. Senate as four-term incumbent Lindsey Graham, backed by President Trump, faces a crowded field led by MAGA challenger Mark Lynch, who consolidated anti-Graham support following Paul Dans' withdrawal. TPSI's Meridian CV model (June 3–4) shows Graham at 51% with Lynch surging to 26%. If no candidate clears 50%, the top two advance to a June 23 runoff.",
     },
     {
       id: ME_SENATE_D_ID,
@@ -1983,7 +1984,7 @@ export default function March3FeaturedClient() {
   ] as const;
   // Only active (non-archived) races appear as spotlight tabs
   const SPOTLIGHT_RACES = ALL_SPOTLIGHT_META.filter(s => !FEATURED.find(r => r.id === s.id)?.archived);
-  const [spotlightTab, setSpotlightTab] = useState<number>(SC_SENATE_R_ID);
+  const [spotlightTab, setSpotlightTab] = useState<number>(SC_GOV_R_ID);
   const [error, setError] = useState<string | null>(null);
   const [loadingMap, setLoadingMap] = useState(false);
   const [raceCache, setRaceCache] = useState<Record<number, RaceDetail | undefined>>({});
@@ -2842,8 +2843,8 @@ export default function March3FeaturedClient() {
               if (last && last.office === r.office) { last.races.push(r); }
               else { groups.push({ office: r.office, races: [r] }); }
               return groups;
-            }, []).map(({ office, races }: { office: string; races: FeaturedRace[] }) => (
-              <optgroup key={office} label={`── ${office.toUpperCase()} ──`}>
+            }, []).map(({ office, races }: { office: string; races: FeaturedRace[] }, gi: number) => (
+              <optgroup key={`${office}-${gi}`} label={`── ${office.toUpperCase()} ──`}>
                 {races.map(r => {
                   const liveData = patchedRaceCache[r.id];
                   const winner = liveData?.candidates?.find(c => c.winner);
