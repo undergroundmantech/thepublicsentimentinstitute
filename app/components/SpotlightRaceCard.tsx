@@ -114,7 +114,7 @@ export default function ElectionResultsCard() {
   // Derive leader name + probability for ticker
   const leaderKey = fc?.leader;
   const leaderIdx = leaderKey === "Candidate1" ? 0 : leaderKey === "Candidate2" ? 1 : leaderKey === "Candidate3" ? 2 : -1;
-  const leaderFullName = leaderIdx >= 0 ? (fc?.candidate_names?.[leaderIdx] ?? null) : null;
+  const leaderFullName = leaderIdx >= 0 ? ((fc?.candidate_names as string[] | undefined)?.[leaderIdx] ?? null) : null;
   const leaderLast = leaderFullName ? leaderFullName.split(" ").pop()! : null;
   const isMajority = race.raceRule === "MAJORITY";
   const prob = fc && leaderKey
