@@ -2215,6 +2215,11 @@ export default function March3FeaturedClient() {
   }, [liveForecastCalled, selectedId]);
   const manualWinner = RACE_FORECAST_DEFAULTS[selectedId]?.manualCall ?? null;
   const forecastCalled = lockedCalls[selectedId] ?? liveForecastCalled;
+  // If a MAJORITY race has a single outright winner (>50%), override any locked runoff call
+  const _singleOfficialWinner = selectedRace?.candidates?.find(c => c.winner);
+  const _outright = selectedRaceIsMajority && _singleOfficialWinner && !isRunoffConfirmed;
+  const effectiveForecastCalled = _outright ? (_singleOfficialWinner?.name ?? forecastCalled) : forecastCalled;
+  const effectiveForecastCalledType = _outright ? "WIN" : (lockedCallTypes[selectedId] ?? forecastProj?.projectionType ?? "WIN");
 
   const timeStr = nowMs > 0
     ? new Date(nowMs).toLocaleTimeString("en-US", { hour12: false, hour: "2-digit", minute: "2-digit", second: "2-digit" })
@@ -3177,10 +3182,10 @@ export default function March3FeaturedClient() {
                     }
 
                     // ── STATE 3 — Forecast Call, single winner ────────────────────
-                    if (forecastCalled && !_isRunoffProjected) return (
+                    if (effectiveForecastCalled && !_isRunoffProjected) return (
                       <>
                         {headerRow("FORECAST CALL", "var(--win)")}
-                        {nameRow(<>{checkSvg}<span style={_ns}>{_last(forecastCalled)}</span></>)}
+                        {nameRow(<>{checkSvg}<span style={_ns}>{_last(effectiveForecastCalled)}</span></>)}
                       </>
                     );
 
@@ -3268,12 +3273,12 @@ export default function March3FeaturedClient() {
                     <div style={{ marginTop: 4 }}>
                       <div className="res-note" style={{ marginBottom: 8 }}>VOTE SHARE</div>
                       {vsTop.map((c) => {
-                        const vsCalledNames = forecastCalled ? (() => {
-                          if (forecastProj?.raceId === selectedId && forecastProj.projectionType === "RUNOFF" && forecastProj.runoffProbs) {
+                        const vsCalledNames = effectiveForecastCalled ? (() => {
+                          if (!_outright && forecastProj?.raceId === selectedId && forecastProj.projectionType === "RUNOFF" && forecastProj.runoffProbs) {
                             // Use per-candidate threshold — don't fall back if nobody qualifies yet
                             return Object.entries(forecastProj.runoffProbs).filter(([, p]) => p > 0.9973).map(([n]) => n);
                           }
-                          return forecastCalled.split(" vs. ");
+                          return effectiveForecastCalled.split(" vs. ");
                         })() : null;
                         const vsIsCalled = c.winner || !!(vsCalledNames?.some(n => c.name.toLowerCase().includes(n.toLowerCase())));
                         return (
@@ -3357,12 +3362,14 @@ export default function March3FeaturedClient() {
               <div className="res-topline-body" style={{ overflowY: "auto", flex: 1, minHeight: 0, scrollbarGutter: "stable", padding: "6px 6px 6px 12px" }}>
                 {selectedRace?.candidates
                   ? <CandidateList candidates={selectedRace.candidates} reporting={effectiveReporting} raceId={selectedId} isMajorityRunoff={isRunoffConfirmed} isTopTwo={selectedRaceIsTopTwo} calledNames={(() => {
-                      if (!forecastCalled) return undefined;
-                      if (forecastProj?.raceId === selectedId && forecastProj.projectionType === "RUNOFF" && forecastProj.runoffProbs) {
-                        // Use per-candidate threshold — don't fall back if nobody qualifies yet
+                      if (!effectiveForecastCalled) return undefined;
+                      if (!_outright && forecastProj?.raceId === selectedId && forecastProj.projectionType === "RUNOFF" && forecastProj.runoffProbs) {
+                        // Only show runoff-advancing checkmarks when a runoff is actually confirmed
+                        // (i.e. no single candidate has crossed 50% in a MAJORITY race)
+                        if (selectedRaceIsMajority && !isRunoffConfirmed) return undefined;
                         return Object.entries(forecastProj.runoffProbs).filter(([, p]) => p > 0.9973).map(([n]) => n);
                       }
-                      return forecastCalled.split(" vs. ");
+                      return effectiveForecastCalled.split(" vs. ");
                     })()} />
                   : <div style={{ padding: "32px 0", textAlign: "center" }} className="res-note">LOADING…</div>
                 }
