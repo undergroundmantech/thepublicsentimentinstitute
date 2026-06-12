@@ -5,6 +5,7 @@ import {
   ResponsiveContainer,
   ComposedChart,
   Line,
+  Area,
   Scatter,
   XAxis,
   YAxis,
@@ -201,11 +202,39 @@ export default function MultiCandidateChart({ daily, polls, series, unit = "%", 
     return [Math.max(0, Math.floor(lo - pad)), Math.ceil(hi + pad)];
   }, [fDaily, fPolls]);
 
-  // recharts-friendly keyed data (c0,c1,…) — avoids function dataKey pitfalls
-  const chartData = useMemo(
-    () => fDaily.map((d) => { const o: Record<string, number> = { t: d.t }; series.forEach((_, i) => { o[`c${i}`] = d.v[i]; }); return o; }),
-    [fDaily, series]
-  );
+  // recharts-friendly keyed data (c0,c1,…) — avoids function dataKey pitfalls.
+  // Each series also carries a 95% band (b0,b1,…): 1.96·sd/√n of poll residuals
+  // inside a ±45-day window, floored at half a point, gap-filled from neighbors.
+  const chartData = useMemo(() => {
+    const WIN = 45 * DAY;
+    const ps = [...fPolls].sort((x, y) => x.t - y.t);
+    const cis: (number | null)[][] = fDaily.map((d) => series.map((_, i) => {
+      let n = 0, s = 0, s2 = 0;
+      for (const p of ps) {
+        if (p.t < d.t - WIN) continue;
+        if (p.t > d.t + WIN) break;
+        const v = p.v[i];
+        if (!Number.isFinite(v) || !Number.isFinite(d.v[i])) continue;
+        const r = v - d.v[i];
+        n++; s += r; s2 += r * r;
+      }
+      if (n < 3) return null;
+      const mean = s / n;
+      const sd = Math.sqrt(Math.max(0, s2 / n - mean * mean));
+      return Math.min(8, Math.max(0.5, (1.96 * sd) / Math.sqrt(n)));
+    }));
+    for (let i = 1; i < cis.length; i++) for (let k = 0; k < series.length; k++) cis[i][k] = cis[i][k] ?? cis[i - 1][k];
+    for (let i = cis.length - 2; i >= 0; i--) for (let k = 0; k < series.length; k++) cis[i][k] = cis[i][k] ?? cis[i + 1][k];
+    return fDaily.map((d, di) => {
+      const o: Record<string, number | [number, number]> = { t: d.t };
+      series.forEach((_, i) => {
+        o[`c${i}`] = d.v[i];
+        const ci = cis[di][i];
+        if (ci != null && Number.isFinite(d.v[i])) o[`b${i}`] = [d.v[i] - ci, d.v[i] + ci];
+      });
+      return o;
+    });
+  }, [fDaily, fPolls, series]);
 
   const xDomain = useMemo<[number, number]>(() => (fDaily.length ? [fDaily[0].t, fDaily[fDaily.length - 1].t] : [0, 1]), [fDaily]);
   const ticks = useMemo(() => monthTicks(xDomain[0], xDomain[1]), [xDomain]);
@@ -253,7 +282,10 @@ export default function MultiCandidateChart({ daily, polls, series, unit = "%", 
                 tick={{ fontFamily: "var(--font-body),monospace", fontSize: 11, fill: "rgba(255,255,255,0.4)" }} />
               {showPolls && <Scatter data={dots} dataKey="y" shape={renderDot} isAnimationActive={false} />}
               {series.map((s, i) => (
-                <Line key={s.key} type="monotone" dataKey={`c${i}`} name={s.label} stroke={s.color} strokeWidth={2.25} dot={false} activeDot={false} connectNulls isAnimationActive={LINE_ANIM} animationDuration={850} animationBegin={i * 90} />
+                <Area key={`b-${s.key}`} type="monotone" dataKey={`b${i}`} stroke="none" fill={s.color} fillOpacity={0.08} isAnimationActive={false} activeDot={false} connectNulls />
+              ))}
+              {series.map((s, i) => (
+                <Line key={`c-${s.key}`} type="monotone" dataKey={`c${i}`} name={s.label} stroke={s.color} strokeWidth={2.25} dot={false} activeDot={false} connectNulls isAnimationActive={LINE_ANIM} animationDuration={850} animationBegin={i * 90} />
               ))}
               {!narrow && <EndLabels series={series} last={last} domain={yDomain} />}
               <PlotAreaReporter onChange={setPlot} />

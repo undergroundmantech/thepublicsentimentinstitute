@@ -1,9 +1,14 @@
 // app/contact/page.tsx
 "use client";
 
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
+import { Manrope } from "next/font/google";
+import DarkNav from "@/app/components/DarkNav";
+
+const manrope = Manrope({ subsets: ["latin"], weight: ["300", "400", "500", "600", "700"], variable: "--font-mp", display: "swap" });
 
 const CONTACT_EMAIL = "tpsinstitutecontact@gmail.com";
+const LIME = "#b7ff00";
 
 type FormState = {
   name: string;
@@ -37,10 +42,145 @@ const TOPICS = [
   "Other",
 ];
 
+const TAKES = [
+  { t: "Custom polls", n: "A race, a district, an issue — fielded, weighted, and delivered with the crosstabs." },
+  { t: "Recurring tracks", n: "Weekly or monthly waves on the questions you need answered all cycle long." },
+  { t: "Partner research", n: "Co-branded studies with campaigns, media desks, and research organizations." },
+  { t: "Media & data requests", n: "Methodology questions, interview requests, and raw series access." },
+];
+
+/* ── SignalField — the contact page's own light.
+   Same LED-lattice grammar as the homepage DotField, different physics:
+   slow interference wavefronts in the footer strata hues (rose crown,
+   violet mid, cobalt floor) wash across a dot grid, and every few
+   seconds a thin lime ring — the ping — emanates from the mail line.
+   Distances are precomputed per dot; per frame it's just sines. ── */
+function SignalField() {
+  const ref = useRef<HTMLCanvasElement | null>(null);
+
+  useEffect(() => {
+    const cv = ref.current;
+    if (!cv) return;
+    const ctx = cv.getContext("2d");
+    if (!ctx) return;
+
+    const reduced = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;
+    const DPR = Math.min(window.devicePixelRatio || 1, 2);
+    let raf = 0;
+    let running = true;
+    let t = reduced ? 4.2 : 0;
+
+    // wave sources in normalized space + strata anchor colors
+    const SRC = [
+      { x: 1.04, y: -0.10, lam: 0.34, v: 0.055, amp: 1.0 },  // rose crown — top right
+      { x: 0.78, y: 0.66,  lam: 0.52, v: -0.042, amp: 0.78 }, // violet mid
+      { x: -0.12, y: 1.08, lam: 0.72, v: 0.034, amp: 0.6 },   // cobalt floor — lower left
+    ];
+    const PING = { x: 0.16, y: 0.78, period: 6.5, width: 0.05 }; // emanates from the mail line
+    const ROSE = [244, 125, 140], VIOLET = [136, 88, 244], COBALT = [86, 110, 230];
+
+    let W = 0, H = 0, pitch = 16;
+    let dots: { x: number; y: number; d0: number; d1: number; d2: number; dp: number; m: number }[] = [];
+
+    const build = () => {
+      const r = cv.getBoundingClientRect();
+      W = Math.max(1, r.width); H = Math.max(1, r.height);
+      cv.width = Math.round(W * DPR); cv.height = Math.round(H * DPR);
+      ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+      pitch = W < 700 ? 13 : 16;
+      const aspect = W / H;
+      dots = [];
+      for (let y = pitch / 2; y < H; y += pitch) {
+        for (let x = pitch / 2; x < W; x += pitch) {
+          const nx = x / W, ny = y / H;
+          const dist = (sx: number, sy: number) => Math.hypot((nx - sx) * aspect, ny - sy);
+          dots.push({
+            x, y,
+            d0: dist(SRC[0].x, SRC[0].y),
+            d1: dist(SRC[1].x, SRC[1].y),
+            d2: dist(SRC[2].x, SRC[2].y),
+            dp: dist(PING.x, PING.y),
+            // hue mix runs on the strata diagonal: rose top-right → cobalt low-left
+            m: Math.max(0, Math.min(1, 0.15 + nx * 0.55 + (1 - ny) * 0.45)),
+          });
+        }
+      }
+    };
+    build();
+    const ro = new ResizeObserver(build);
+    ro.observe(cv);
+
+    const TAU = Math.PI * 2;
+    const frame = () => {
+      if (!running) return;
+      ctx.clearRect(0, 0, W, H);
+      t += 0.016;
+
+      const ph0 = t * SRC[0].v * TAU, ph1 = t * SRC[1].v * TAU, ph2 = t * SRC[2].v * TAU;
+      // the ping — a thin expanding ring, fading as it travels
+      const pp = (t % PING.period) / PING.period;
+      const pingR = pp * 1.5;
+      const pingA = Math.max(0, 1 - pp * 1.25);
+
+      for (let i = 0; i < dots.length; i++) {
+        const d = dots[i];
+        let b =
+          SRC[0].amp * (0.5 + 0.5 * Math.sin((d.d0 / SRC[0].lam) * TAU - ph0)) * Math.max(0, 1 - d.d0 / 1.5) +
+          SRC[1].amp * (0.5 + 0.5 * Math.sin((d.d1 / SRC[1].lam) * TAU - ph1)) * Math.max(0, 1 - d.d1 / 1.45) +
+          SRC[2].amp * (0.5 + 0.5 * Math.sin((d.d2 / SRC[2].lam) * TAU - ph2)) * Math.max(0, 1 - d.d2 / 1.5);
+        b = Math.min(1, b * 0.85);
+        b = b * b * (3 - 2 * b); // smoothstep contrast
+        const a = 0.06 + b * 0.82;
+
+        // strata hue blend by diagonal position, brightened by the crest
+        const m = d.m;
+        const r = m < 0.5 ? COBALT[0] + (VIOLET[0] - COBALT[0]) * (m * 2) : VIOLET[0] + (ROSE[0] - VIOLET[0]) * ((m - 0.5) * 2);
+        const g = m < 0.5 ? COBALT[1] + (VIOLET[1] - COBALT[1]) * (m * 2) : VIOLET[1] + (ROSE[1] - VIOLET[1]) * ((m - 0.5) * 2);
+        const bl = m < 0.5 ? COBALT[2] + (VIOLET[2] - COBALT[2]) * (m * 2) : VIOLET[2] + (ROSE[2] - VIOLET[2]) * ((m - 0.5) * 2);
+
+        const sz = 1.2 + b * 2.4;
+        ctx.fillStyle = `rgba(${r | 0},${g | 0},${bl | 0},${a.toFixed(3)})`;
+        ctx.fillRect(d.x - sz / 2, d.y - sz / 2, sz, sz);
+
+        // lime only where it means something: the ping crest passing through
+        const ringDelta = Math.abs(d.dp - pingR);
+        if (ringDelta < PING.width && pingA > 0.02) {
+          const la = (1 - ringDelta / PING.width) * pingA * 0.9;
+          const ls = 1.4 + la * 2.2;
+          ctx.fillStyle = `rgba(183,255,0,${(la * 0.85).toFixed(3)})`;
+          ctx.fillRect(d.x - ls / 2, d.y - ls / 2, ls, ls);
+        }
+      }
+
+      if (!reduced) raf = requestAnimationFrame(frame);
+    };
+
+    // run only while on screen
+    const io = new IntersectionObserver(([e]) => {
+      if (e.isIntersecting) {
+        if (!running) { running = true; raf = requestAnimationFrame(frame); }
+        else { raf = requestAnimationFrame(frame); running = true; }
+      } else {
+        running = false;
+        cancelAnimationFrame(raf);
+      }
+    }, { threshold: 0.04 });
+    io.observe(cv);
+
+    return () => {
+      running = false;
+      cancelAnimationFrame(raf);
+      io.disconnect();
+      ro.disconnect();
+    };
+  }, []);
+
+  return <canvas ref={ref} className="ct-field-cv" aria-hidden="true" />;
+}
+
 export default function ContactPage() {
   const [form, setForm] = useState<FormState>(EMPTY_FORM);
   const [status, setStatus] = useState<Status>({ type: "idle" });
-  const [focused, setFocused] = useState<string | null>(null);
 
   const onChange =
     (key: keyof FormState) =>
@@ -87,662 +227,278 @@ export default function ContactPage() {
     }
   };
 
-  const fieldClass = (name: string) =>
-    `ct-input${focused === name ? " ct-input--focused" : ""}`;
-
   return (
-    <>
+    <div className={`ct-page ${manrope.variable}`}>
       <style>{CSS}</style>
-      <div className="ct-root">
+      <div className="ct-grain" aria-hidden="true" />
 
-        {/* ── HERO ── */}
-        <div className="ct-hero">
-          <div className="ct-hero-left">
-            <div className="ct-hero-tag">
-              <span className="ct-tag-sep">—</span>
-              <span>Public Sentiment Institute</span>
-              <span className="ct-tag-sep">·</span>
-              <span style={{ color: "#9d5cf0" }}>Intake</span>
-            </div>
+      {/* ── hero — a full-viewport signal field with one ask ── */}
+      <section className="ct-hero">
+        <SignalField />
+        <div className="ct-hero-veil" aria-hidden="true" />
 
-            <h1 className="ct-hero-headline">
-              Partner<br />
-              <span className="ct-headline-gold">With Us.</span>
-            </h1>
-
-            <p className="ct-hero-desc">
-              Request a poll, propose a partnership, or discuss recurring fielding.
-              All inquiries route directly to our research team at{" "}
-              <span style={{ color: "rgba(255,255,255,0.6)" }}>{CONTACT_EMAIL}</span>.
-            </p>
-
-            <div className="ct-badge-row">
-              <span className="ct-badge ct-badge-live">
-                <span className="ct-live-dot" />
-                Same-Day Response
-              </span>
-              <span className="ct-badge">Custom Fielding Available</span>
-              <span className="ct-badge">National · State · District</span>
-            </div>
-
-            <div className="ct-hero-meta">
-              Direct line: <span>{CONTACT_EMAIL}</span>
+        <div className="ct-shell ct-hero-in">
+          <div className="ct-hero-top">
+            <DarkNav />
+            <div className="ct-folio">
+              <span>TPSI Intake</span>
+              <span>partnerships · custom fielding · media</span>
             </div>
           </div>
 
-          {/* Right panel — quick stats */}
-          <div className="ct-hero-right">
-            {[
-              { label: "Response Time", val: "Same Day" },
-              { label: "Contact Team",  val: "Research" },
-              { label: "Fielding",      val: "Custom" },
-            ].map(({ label, val }) => (
-              <div key={label} className="ct-hero-metric">
-                <div className="ct-metric-eyebrow">{label}</div>
-                <div className="ct-metric-num">{val}</div>
+          <div className="ct-hero-main">
+            <h1 className="ct-title">
+              <span className="ct-title-line">partner</span>
+              <span className="ct-title-line">with the desk<em>.</em></span>
+            </h1>
+            <p className="ct-lede">
+              Custom surveys, recurring tracks, and partner research — scoped,
+              fielded, and delivered with the crosstabs. Inquiries go directly
+              to the research team.
+            </p>
+          </div>
+
+          <div className="ct-hero-foot">
+            <a className="ct-mail" href={`mailto:${CONTACT_EMAIL}`}>
+              <span className="ct-mail-label">write to</span>
+              <span className="ct-mail-addr">{CONTACT_EMAIL}</span>
+              <span className="ct-mail-arw" aria-hidden="true">→</span>
+            </a>
+            <div className="ct-meta">
+              <span><i aria-hidden="true" />replies in 24–48 hours</span>
+              <em>·</em><span>fielded under the meridian coalition voter model</span>
+              <em>·</em><span>crosstabs included</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div className="ct-shell">
+        {/* ── the takes — one horizontal editorial band ── */}
+        <section className="ct-band">
+          <span className="ct-eyebrow">What the desk takes on</span>
+          <div className="ct-band-grid">
+            {TAKES.map((x, i) => (
+              <div className="ct-take" key={x.t}>
+                <span className="ct-take-idx">{String(i + 1).padStart(2, "0")}</span>
+                <h3>{x.t}</h3>
+                <p>{x.n}</p>
               </div>
             ))}
           </div>
-        </div>
+        </section>
 
-        {/* ── MAIN LAYOUT ── */}
-        <div className="ct-layout">
+        {/* ── the intake form ── */}
+        <section className="ct-intake">
+          <div className="ct-intake-rail">
+            <span className="ct-eyebrow">Or start it here</span>
+            <h2 className="ct-intake-h">the brief takes<br /><span>two minutes.</span></h2>
+            <p className="ct-intake-p">
+              Name, email, and a few sentences are enough. The rest helps us
+              scope the work faster.
+            </p>
+            <div className="ct-note">
+              Prefer email? Everything the form asks fits in one message to{" "}
+              <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
+            </div>
+          </div>
 
-          {/* ── FORM ── */}
-          <form onSubmit={onSubmit} className="ct-form-panel">
-            <div className="ct-panel-header">
-              <div>
-                <div className="ct-panel-title">Project Request</div>
-                <div className="ct-panel-sub">Fields marked * are required</div>
-              </div>
-              <StatusPill status={status} />
+          <form className="ct-form" onSubmit={onSubmit} aria-label="Project intake form">
+            <div className="ct-grid">
+              <label className="ct-field">
+                <span>Name<i>*</i></span>
+                <input value={form.name} onChange={onChange("name")} autoComplete="name" placeholder="Who are we talking to?" />
+              </label>
+              <label className="ct-field">
+                <span>Email<i>*</i></span>
+                <input value={form.email} onChange={onChange("email")} type="email" autoComplete="email" placeholder="you@organization.com" />
+              </label>
+              <label className="ct-field">
+                <span>Organization</span>
+                <input value={form.org} onChange={onChange("org")} placeholder="Campaign, outlet, org — optional" />
+              </label>
+              <label className="ct-field">
+                <span>Topic</span>
+                <select value={form.topic} onChange={onChange("topic")}>
+                  <option value="">Pick the closest fit</option>
+                  {TOPICS.map((t) => <option key={t} value={t}>{t}</option>)}
+                </select>
+              </label>
+              <label className="ct-field">
+                <span>Geography</span>
+                <input value={form.geography} onChange={onChange("geography")} placeholder="National, a state, a district…" />
+              </label>
+              <label className="ct-field">
+                <span>Timeline</span>
+                <input value={form.timeline} onChange={onChange("timeline")} placeholder="When do you need it in the field?" />
+              </label>
+              <label className="ct-field ct-field-wide">
+                <span>Audience</span>
+                <input value={form.audience} onChange={onChange("audience")} placeholder="Likely voters? Registered? A custom universe?" />
+              </label>
+              <label className="ct-field ct-field-wide">
+                <span>The brief<i>*</i></span>
+                <textarea value={form.message} onChange={onChange("message")} rows={5} placeholder="What do you need to learn, and why now?" />
+              </label>
             </div>
 
-            <div className="ct-form-body">
-              {/* Row 1: Name + Email */}
-              <div className="ct-row-2">
-                <div className="ct-field">
-                  <label className="ct-label">Name *</label>
-                  <input
-                    className={fieldClass("name")}
-                    value={form.name}
-                    onChange={onChange("name")}
-                    onFocus={() => setFocused("name")}
-                    onBlur={() => setFocused(null)}
-                    placeholder="Your full name"
-                    autoComplete="name"
-                    required
-                  />
-                </div>
-                <div className="ct-field">
-                  <label className="ct-label">Email *</label>
-                  <input
-                    type="email"
-                    className={fieldClass("email")}
-                    value={form.email}
-                    onChange={onChange("email")}
-                    onFocus={() => setFocused("email")}
-                    onBlur={() => setFocused(null)}
-                    placeholder="you@organization.com"
-                    autoComplete="email"
-                    required
-                  />
-                </div>
-              </div>
-
-              {/* Org */}
-              <div className="ct-field">
-                <label className="ct-label">Organization</label>
-                <input
-                  className={fieldClass("org")}
-                  value={form.org}
-                  onChange={onChange("org")}
-                  onFocus={() => setFocused("org")}
-                  onBlur={() => setFocused(null)}
-                  placeholder="Campaign, firm, nonprofit, media outlet…"
-                  autoComplete="organization"
-                />
-              </div>
-
-              {/* Topic + Geography */}
-              <div className="ct-row-2">
-                <div className="ct-field">
-                  <label className="ct-label">Topic / Issue Area</label>
-                  <select
-                    className={`ct-select${focused === "topic" ? " ct-input--focused" : ""}`}
-                    value={form.topic}
-                    onChange={onChange("topic")}
-                    onFocus={() => setFocused("topic")}
-                    onBlur={() => setFocused(null)}
-                  >
-                    <option value="">Select a topic…</option>
-                    {TOPICS.map((t) => (
-                      <option key={t} value={t}>{t}</option>
-                    ))}
-                  </select>
-                </div>
-                <div className="ct-field">
-                  <label className="ct-label">Geography</label>
-                  <input
-                    className={fieldClass("geography")}
-                    value={form.geography}
-                    onChange={onChange("geography")}
-                    onFocus={() => setFocused("geography")}
-                    onBlur={() => setFocused(null)}
-                    placeholder="National, state, district…"
-                  />
-                </div>
-              </div>
-
-              {/* Audience + Timeline */}
-              <div className="ct-row-2">
-                <div className="ct-field">
-                  <label className="ct-label">Target Audience</label>
-                  <input
-                    className={fieldClass("audience")}
-                    value={form.audience}
-                    onChange={onChange("audience")}
-                    onFocus={() => setFocused("audience")}
-                    onBlur={() => setFocused(null)}
-                    placeholder="Adults 18+, RV, LV, primary voters…"
-                  />
-                </div>
-                <div className="ct-field">
-                  <label className="ct-label">Timeline</label>
-                  <input
-                    className={fieldClass("timeline")}
-                    value={form.timeline}
-                    onChange={onChange("timeline")}
-                    onFocus={() => setFocused("timeline")}
-                    onBlur={() => setFocused(null)}
-                    placeholder="Dates, urgency, recurring cadence…"
-                  />
-                </div>
-              </div>
-
-              {/* Message */}
-              <div className="ct-field">
-                <label className="ct-label">Message *</label>
-                <textarea
-                  className={`ct-textarea${focused === "message" ? " ct-input--focused" : ""}`}
-                  value={form.message}
-                  onChange={onChange("message")}
-                  onFocus={() => setFocused("message")}
-                  onBlur={() => setFocused(null)}
-                  placeholder="What do you want to measure? Required demographics? Sample size? Outputs (tabs, memo, toplines)?"
-                  required
-                />
-              </div>
-
-              {/* Actions */}
-              <div className="ct-actions">
-                <button
-                  type="submit"
-                  disabled={!canSubmit || status.type === "sending"}
-                  className="ct-btn-primary"
-                >
-                  {status.type === "sending" ? "Transmitting…" : "Send Request →"}
-                </button>
-                <button
-                  type="button"
-                  className="ct-btn-outline"
-                  onClick={() => { setForm(EMPTY_FORM); setStatus({ type: "idle" }); }}
-                >
-                  Clear
-                </button>
-                {status.type === "sent" && (
-                  <span className="ct-sent-note">
-                    ✓ Submitted — if no server is configured your email client will open.
-                  </span>
-                )}
-              </div>
-
-              <div className="ct-disclaimer">
-                Direct send target: {CONTACT_EMAIL} · Please avoid sensitive personal information
-              </div>
+            <div className="ct-actions">
+              <button type="submit" className="ct-send" disabled={!canSubmit || status.type === "sending"}>
+                {status.type === "sending" ? "Sending…" : "Send it to the desk"}
+                <i aria-hidden="true">→</i>
+              </button>
+              {status.type === "sent" && <span className="ct-status is-ok">Received — we’ll reply within two days.</span>}
+              {status.type === "error" && <span className="ct-status is-err">{status.message}</span>}
+              {status.type === "idle" && !canSubmit && <span className="ct-status">name, email, and a brief are required</span>}
             </div>
           </form>
+        </section>
 
-          {/* ── SIDEBAR ── */}
-          <aside className="ct-sidebar">
-
-            {/* What to include */}
-            <div className="ct-sidebar-card">
-              <div className="ct-panel-header">
-                <div className="ct-panel-title">What to Include</div>
-              </div>
-              <div className="ct-sidebar-body">
-                <div className="ct-sidebar-sub">Fastest replies come with full context</div>
-                <ul className="ct-checklist">
-                  {[
-                    { color: "#5b8fd4", text: "Target geography + audience (A18+, RV, LV)" },
-                    { color: "#9d5cf0", text: "Field dates / cadence (one-time vs recurring)" },
-                    { color: "#d45b5b", text: "Required outputs (tabs, memo, toplines, trend)" },
-                    { color: "#5b8fd4", text: "Demographics, oversamples, or special targets" },
-                    { color: "#9d5cf0", text: "Budget range or sample size target" },
-                  ].map(({ color, text }) => (
-                    <li key={text} className="ct-checklist-item">
-                      <span className="ct-checklist-dot" style={{ background: color }} />
-                      <span>{text}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-
-            {/* Response time */}
-            <div className="ct-sidebar-card">
-              <div className="ct-panel-header">
-                <div className="ct-panel-title">Response Time</div>
-              </div>
-              <div className="ct-sidebar-body">
-                {[
-                  { type: "Simple request",  time: "Same day",  color: "#5b8fd4" },
-                  { type: "Custom project",  time: "24–48 hrs", color: "#9d5cf0" },
-                  { type: "Urgent (noted)",  time: "Priority",  color: "#d45b5b" },
-                ].map(({ type, time, color }) => (
-                  <div key={type} className="ct-response-row">
-                    <div className="ct-response-type">
-                      <span className="ct-response-dot" style={{ background: color }} />
-                      {type}
-                    </div>
-                    <div className="ct-response-time" style={{ color }}>{time}</div>
-                  </div>
-                ))}
-                <p className="ct-sidebar-note">
-                  Include "URGENT" in your timeline field for expedited routing.
-                  Mark media inquiries clearly.
-                </p>
-              </div>
-            </div>
-
-            {/* Direct email */}
-            <div className="ct-email-card">
-              <div className="ct-email-label">Direct Email</div>
-              <a href={`mailto:${CONTACT_EMAIL}`} className="ct-email-addr">
-                {CONTACT_EMAIL}
-              </a>
-              <div className="ct-email-note">
-                Form submission routes here automatically.
-              </div>
-            </div>
-
-          </aside>
+        <div className="ct-foot">
+          <span>The Public Sentiment Institute</span>
+          <span>independent polling &amp; election analysis</span>
         </div>
       </div>
-    </>
-  );
-}
-
-function StatusPill({ status }: { status: Status }) {
-  if (status.type === "idle") return null;
-  const configs = {
-    sending: { color: "#9d5cf0", text: "Transmitting…" },
-    sent:    { color: "#5b8fd4", text: "Submitted" },
-    error:   { color: "#d45b5b", text: status.type === "error" ? (status as any).message : "Error" },
-  };
-  const cfg = configs[status.type] ?? configs.error;
-  return (
-    <div style={{
-      display: "inline-flex", alignItems: "center", gap: 7,
-      padding: "3px 10px",
-      border: `1px solid rgba(15,16,32,0.10)`,
-      background: "rgba(255,255,255,0.03)",
-      fontFamily: "var(--font-body), monospace",
-      fontSize: 9, letterSpacing: "0.18em", textTransform: "uppercase",
-      color: cfg.color,
-    }}>
-      <span style={{
-        display: "inline-block", width: 6, height: 6, borderRadius: "50%",
-        background: cfg.color, flexShrink: 0,
-      }} />
-      {cfg.text}
     </div>
   );
 }
 
 const CSS = `
-  .ct-root {
-    max-width: 1280px;
-    margin: 0 auto;
-    padding: 32px 32px 80px;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    position: relative;
-    z-index: 1;
-  }
-  @media (max-width: 768px) { .ct-root { padding: 20px 16px 60px; } }
+html, body { background: #050505 !important; }
+body header, body footer { display: none !important; }
+body main > div { max-width: none !important; padding-left: 0 !important; padding-right: 0 !important; }
+body main > div > div { padding-top: 0 !important; padding-bottom: 0 !important; }
 
-  /* ── HERO ── */
-  .ct-hero {
-    display: grid;
-    grid-template-columns: 1fr 260px;
-    border: 1px solid var(--border);
-    background: var(--panel);
-    overflow: hidden;
-    border-radius: var(--r-xl);
-    box-shadow: var(--shadow-md);
-  }
-  @media (max-width: 900px) { .ct-hero { grid-template-columns: 1fr; } }
+.ct-page { position: relative; min-height: 100svh; color: #f4f4ef; overflow-x: clip; background: #050505;
+  font-family: var(--font-mp), "Manrope", "Helvetica Neue", Arial, sans-serif; font-size: 15px; letter-spacing: -0.01em;
+  width: 100vw; margin-left: calc(50% - 50vw); }
+.ct-shell { position: relative; z-index: 2; max-width: 1180px; margin: 0 auto; padding: 0 clamp(20px, 4vw, 44px); }
+.ct-page a { color: inherit; }
+.ct-page h1, .ct-page h2, .ct-page h3 { text-transform: none; }
 
-  .ct-hero-left {
-    padding: 48px 48px 40px;
-    border-right: 1px solid var(--border);
-    position: relative;
-    overflow: hidden;
-  }
-  @media (max-width: 768px) { .ct-hero-left { padding: 28px 20px; border-right: none; border-bottom: 1px solid var(--border); } }
+.ct-grain { position: fixed; inset: -40px; z-index: 3; pointer-events: none; opacity: 0.05; mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='0.6'/%3E%3C/svg%3E"); }
 
-  .ct-hero-left::before {
-    content: '';
-    position: absolute; top: -60px; right: -60px;
-    width: 300px; height: 300px;
-    background: radial-gradient(circle, rgba(124,58,237,0.07) 0%, transparent 70%);
-    pointer-events: none;
-  }
+/* ── hero — the signal field ── */
+.ct-hero { position: relative; min-height: 100svh; display: flex; overflow: hidden; }
+.ct-field-cv { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0;
+  -webkit-mask-image: radial-gradient(135% 110% at 72% 18%, #000 36%, transparent 82%);
+  mask-image: radial-gradient(135% 110% at 72% 18%, #000 36%, transparent 82%);
+  animation: ct-cv-in 1.6s ease 0.1s both; }
+@keyframes ct-cv-in { from { opacity: 0; } to { opacity: 1; } }
+.ct-hero-veil { position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  background:
+    linear-gradient(180deg, rgba(5,5,5,0.42), transparent 22%),
+    linear-gradient(180deg, transparent 58%, rgba(5,5,5,0.62) 88%, #050505 100%),
+    radial-gradient(70% 58% at 28% 62%, rgba(5,5,5,0.55) 0%, rgba(5,5,5,0.22) 52%, transparent 78%); }
 
-  .ct-hero-tag {
-    display: inline-flex; align-items: center; gap: 6px;
-    font-family: var(--font-body), monospace;
-    font-size: 10px; letter-spacing: 0.10em; text-transform: uppercase;
-    color: var(--muted2);
-    margin-bottom: 20px;
-  }
-  .ct-tag-sep { color: var(--border3); }
+.ct-hero-in { display: flex; flex-direction: column; width: 100%; min-height: 100svh; }
+.ct-hero-top { flex: 0 0 auto; }
+.ct-hero-main { flex: 1 1 auto; display: flex; flex-direction: column; justify-content: center; padding: clamp(28px, 5vh, 56px) 0; }
+.ct-hero-foot { flex: 0 0 auto; padding-bottom: clamp(30px, 5vh, 56px); }
 
-  .ct-hero-headline {
-    font-family: var(--font-display), sans-serif;
-    font-size: clamp(52px, 7vw, 88px);
-    letter-spacing: -0.02em; line-height: 0.95; text-transform: uppercase;
-    color: var(--foreground); margin: 0 0 20px;
-    position: relative; z-index: 1;
-  }
-  .ct-headline-gold { color: var(--purple2); }
+.ct-folio { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; padding: 13px 0; margin-top: 2px;
+  border-top: 1px solid rgba(255,255,255,0.14); border-bottom: 1px solid rgba(255,255,255,0.08);
+  font-size: 10.5px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(244,244,239,0.4); }
+.ct-folio span:first-child { color: #f4f4ef; }
 
-  .ct-hero-desc {
-    font-family: var(--font-body), monospace;
-    font-size: 14px; color: var(--muted);
-    line-height: 1.65; max-width: 480px;
-    margin-bottom: 24px;
-    position: relative; z-index: 1;
-  }
+.ct-title { margin: 0; color: #f4f4ef; font-weight: 460; text-transform: lowercase; letter-spacing: -0.035em; line-height: 0.88;
+  font-size: clamp(58px, 11vw, 150px); animation: ct-rise 0.8s cubic-bezier(.16,1,.3,1) 0.12s both; }
+.ct-title-line { display: block; }
+.ct-title em { font-style: normal; color: ${LIME}; }
+.ct-lede { margin: clamp(26px, 4vh, 42px) 0 0; max-width: 50ch; font-size: clamp(16px, 1.5vw, 19px); line-height: 1.6;
+  color: rgba(244,244,239,0.6); animation: ct-rise 0.8s cubic-bezier(.16,1,.3,1) 0.24s both; }
+@keyframes ct-rise { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
 
-  .ct-badge-row {
-    display: flex; flex-wrap: wrap; gap: 8px;
-    position: relative; z-index: 1;
-    margin-bottom: 24px;
-  }
-  .ct-badge {
-    display: inline-flex; align-items: center; gap: 5px;
-    padding: 4px 10px;
-    border: 1px solid var(--border2);
-    background: var(--panel2);
-    font-family: var(--font-body), monospace;
-    font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase;
-    color: var(--muted); border-radius: var(--r-pill);
-  }
-  .ct-badge-live {
-    border-color: rgba(124,58,237,0.3);
-    background: rgba(124,58,237,0.08);
-    color: var(--purple2);
-  }
-  .ct-live-dot {
-    display: inline-block; width: 6px; height: 6px;
-    border-radius: 50%; background: var(--purple);
-    animation: ct-pulse 1.8s ease-in-out infinite;
-    flex-shrink: 0;
-  }
-  @keyframes ct-pulse { 0%,100%{opacity:1} 50%{opacity:0.25} }
+.ct-mail { display: inline-flex; align-items: baseline; gap: 18px; text-decoration: none; max-width: 100%;
+  animation: ct-rise 0.8s cubic-bezier(.16,1,.3,1) 0.36s both; }
+.ct-mail-label { font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(244,244,239,0.38); white-space: nowrap; }
+.ct-mail-addr { font-size: clamp(19px, 3vw, 36px); font-weight: 520; letter-spacing: -0.02em; color: #f4f4ef;
+  border-bottom: 1px solid rgba(244,244,239,0.25); padding-bottom: 6px; transition: border-color 220ms ease, color 220ms ease; min-width: 0; overflow-wrap: anywhere; }
+.ct-mail-arw { font-size: clamp(18px, 2.4vw, 26px); color: rgba(244,244,239,0.4); transition: transform 220ms ease, color 220ms ease; }
+.ct-mail:hover .ct-mail-addr { border-color: ${LIME}; }
+.ct-mail:hover .ct-mail-arw { transform: translateX(8px); color: ${LIME}; }
 
-  .ct-hero-meta {
-    padding-top: 20px;
-    border-top: 1px solid var(--border);
-    font-family: var(--font-body), monospace;
-    font-size: 11px; color: var(--muted2);
-    letter-spacing: 0.06em; text-transform: uppercase;
-    position: relative; z-index: 1;
-  }
-  .ct-hero-meta span { color: var(--foreground); font-weight: 600; }
+.ct-meta { display: flex; align-items: baseline; flex-wrap: wrap; gap: 10px 14px; margin-top: clamp(22px, 3.4vh, 34px);
+  font-size: 11px; font-weight: 650; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(244,244,239,0.38); }
+.ct-meta em { font-style: normal; color: rgba(244,244,239,0.18); }
+.ct-meta i { display: inline-block; width: 6px; height: 6px; border-radius: 99px; background: ${LIME};
+  box-shadow: 0 0 9px rgba(183,255,0,0.6); margin-right: 8px; vertical-align: 1px; animation: ct-pulse 2s ease-in-out infinite; }
+@keyframes ct-pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.45; } }
 
-  /* Hero right panel */
-  .ct-hero-right {
-    padding: 32px 24px;
-    display: flex; flex-direction: column;
-    background: var(--panel2);
-  }
+/* ── the takes — one editorial band ── */
+.ct-band { padding: clamp(64px, 11vh, 130px) 0 clamp(56px, 9vh, 110px); }
+.ct-eyebrow { display: block; font-size: 11.5px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(244,244,239,0.42); }
+.ct-band-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(28px, 4vw, 56px); margin-top: clamp(34px, 5vh, 54px); }
+.ct-take { position: relative; padding-top: 18px; border-top: 1px solid rgba(255,255,255,0.13); }
+.ct-take::before { content: ''; position: absolute; top: -1px; left: 0; width: 26px; height: 1.5px; background: ${LIME};
+  transform: scaleX(0); transform-origin: left center; transition: transform 320ms cubic-bezier(.2,.8,.2,1); }
+.ct-take:hover::before { transform: scaleX(1); }
+.ct-take-idx { font-size: 11px; font-weight: 600; color: rgba(244,244,239,0.28); font-variant-numeric: tabular-nums; }
+.ct-take h3 { margin: 12px 0 0; color: #f4f4ef; font-size: clamp(18px, 1.7vw, 22px); font-weight: 600; letter-spacing: -0.02em; line-height: 1.15; }
+.ct-take p { margin: 12px 0 0; font-size: 13.5px; line-height: 1.6; color: rgba(244,244,239,0.5); }
 
-  .ct-hero-metric {
-    padding: 20px 0;
-    border-bottom: 1px solid var(--border);
-    flex: 1;
-    display: flex; flex-direction: column; justify-content: center;
-  }
-  .ct-hero-metric:last-child { border-bottom: none; }
+/* ── intake ── */
+.ct-intake { display: grid; grid-template-columns: minmax(280px, 5fr) minmax(0, 7fr); gap: clamp(48px, 7vw, 110px);
+  padding: clamp(56px, 9vh, 110px) 0 clamp(64px, 10vh, 120px); border-top: 1px solid rgba(255,255,255,0.12); }
+.ct-intake-rail { display: flex; flex-direction: column; align-items: flex-start; }
+.ct-intake-h { margin: clamp(20px, 3vh, 30px) 0 0; color: #f4f4ef; font-weight: 460; text-transform: lowercase;
+  letter-spacing: -0.03em; line-height: 0.96; font-size: clamp(34px, 4.2vw, 56px); }
+.ct-intake-h span { color: rgba(244,244,239,0.42); }
+.ct-intake-p { margin: clamp(18px, 3vh, 28px) 0 0; font-size: 15px; line-height: 1.6; color: rgba(244,244,239,0.55); max-width: 36ch; }
+.ct-note { margin-top: clamp(28px, 5vh, 44px); padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.09);
+  font-size: 13.5px; line-height: 1.6; color: rgba(244,244,239,0.45); max-width: 40ch; }
+.ct-note a { color: rgba(244,244,239,0.8); text-decoration: underline; text-underline-offset: 4px; text-decoration-color: rgba(244,244,239,0.3); transition: text-decoration-color 200ms ease; }
+.ct-note a:hover { text-decoration-color: ${LIME}; }
 
-  .ct-metric-eyebrow {
-    font-family: var(--font-body), monospace;
-    font-size: 10px; letter-spacing: 0.10em; text-transform: uppercase;
-    color: var(--muted2); margin-bottom: 6px;
-  }
-  .ct-metric-num {
-    font-family: var(--font-display), sans-serif;
-    font-size: 32px; letter-spacing: -0.02em; text-transform: uppercase;
-    line-height: 1; color: var(--purple2);
-  }
+/* the form — hairlines, not boxes */
+.ct-form { display: flex; flex-direction: column; gap: 30px; min-width: 0; }
+.ct-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(26px, 3.6vh, 38px) clamp(24px, 3vw, 44px); }
+.ct-field { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.ct-field-wide { grid-column: 1 / -1; }
+.ct-field > span { font-size: 10.5px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(244,244,239,0.42); transition: color 200ms ease; }
+.ct-field > span i { font-style: normal; color: ${LIME}; margin-left: 3px; }
+.ct-field:focus-within > span { color: rgba(244,244,239,0.85); }
+.ct-field input, .ct-field select, .ct-field textarea {
+  appearance: none; background: transparent; border: 0; border-bottom: 1px solid rgba(244,244,239,0.16); border-radius: 0;
+  padding: 4px 0 11px; font: inherit; font-size: 15.5px; font-weight: 480; color: #f4f4ef; letter-spacing: -0.01em;
+  transition: border-color 240ms ease; outline: none; width: 100%; }
+.ct-field textarea { resize: vertical; min-height: 96px; line-height: 1.55; }
+.ct-field input::placeholder, .ct-field textarea::placeholder { color: rgba(244,244,239,0.26); }
+.ct-field select { color: #f4f4ef; cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23f4f4ef' stroke-opacity='0.45' fill='none'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 2px center; padding-right: 20px; }
+.ct-field select option { background: #0b0b0d; color: #f4f4ef; }
+.ct-field select:invalid, .ct-field select:has(option[value=""]:checked) { color: rgba(244,244,239,0.26); }
+.ct-field input:focus, .ct-field select:focus, .ct-field textarea:focus { border-color: ${LIME}; }
 
-  /* ── LAYOUT ── */
-  .ct-layout {
-    display: grid;
-    grid-template-columns: 1fr 300px;
-    gap: 20px;
-    align-items: start;
-  }
-  @media (max-width: 900px) { .ct-layout { grid-template-columns: 1fr; } }
+.ct-actions { display: flex; align-items: center; gap: 22px; flex-wrap: wrap; margin-top: 4px; }
+.ct-send { display: inline-flex; align-items: center; gap: 10px; padding: 15px 30px; border: 0; border-radius: 999px; cursor: pointer;
+  background: ${LIME}; color: #050505; font: inherit; font-size: 15px; font-weight: 680; letter-spacing: -0.01em;
+  transition: transform 220ms cubic-bezier(0.2,0.8,0.2,1), box-shadow 220ms ease, opacity 200ms ease; }
+.ct-send i { font-style: normal; transition: transform 220ms ease; }
+.ct-send:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 18px 44px rgba(183,255,0,0.22); }
+.ct-send:hover:not(:disabled) i { transform: translateX(4px); }
+.ct-send:disabled { opacity: 0.34; cursor: default; }
+.ct-status { font-size: 12px; font-weight: 600; letter-spacing: 0.06em; color: rgba(244,244,239,0.36); }
+.ct-status.is-ok { color: ${LIME}; }
+.ct-status.is-err { color: #ef8b94; }
 
-  /* ── SHARED PANEL HEADER ── */
-  .ct-panel-header {
-    padding: 14px 20px 12px;
-    border-bottom: 1px solid var(--border);
-    display: flex; align-items: center;
-    justify-content: space-between; gap: 10px;
-    background: var(--panel2);
-    border-radius: var(--r-lg) var(--r-lg) 0 0;
-  }
-  .ct-panel-title {
-    font-family: var(--font-body), monospace;
-    font-size: 11px; font-weight: 600;
-    letter-spacing: 0.10em; text-transform: uppercase;
-    color: var(--foreground);
-  }
-  .ct-panel-sub {
-    font-family: var(--font-body), monospace;
-    font-size: 11px; color: var(--muted2);
-    margin-top: 2px;
-  }
+.ct-foot { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; padding: 22px 0 46px;
+  border-top: 1px solid rgba(255,255,255,0.09); font-size: 10.5px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(244,244,239,0.32); }
 
-  /* ── FORM PANEL ── */
-  .ct-form-panel {
-    border: 1px solid var(--border);
-    background: var(--panel);
-    overflow: hidden;
-    border-radius: var(--r-lg);
-    box-shadow: var(--shadow-sm);
-  }
-
-  .ct-form-body {
-    padding: 22px 22px 20px;
-    display: flex; flex-direction: column; gap: 16px;
-  }
-
-  /* FIELDS */
-  .ct-field { display: flex; flex-direction: column; gap: 0; }
-  .ct-label {
-    font-family: var(--font-body), monospace;
-    font-size: 10px; font-weight: 600;
-    letter-spacing: 0.10em; text-transform: uppercase;
-    color: var(--muted);
-    margin-bottom: 6px;
-  }
-  .ct-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-  @media (max-width: 560px) { .ct-row-2 { grid-template-columns: 1fr; } }
-
-  .ct-input, .ct-select, .ct-textarea {
-    background: var(--panel2);
-    border: 1px solid var(--border2);
-    color: var(--foreground);
-    font-family: var(--font-body), monospace;
-    font-size: 13px; letter-spacing: 0.02em;
-    padding: 10px 14px;
-    outline: none;
-    transition: border-color var(--dur-1) var(--ease-out), background var(--dur-1) var(--ease-out);
-    width: 100%; box-sizing: border-box;
-    border-radius: var(--r-sm); appearance: none; -webkit-appearance: none;
-  }
-  .ct-input::placeholder, .ct-textarea::placeholder {
-    color: var(--muted2);
-    font-size: 12px;
-  }
-  .ct-input:hover, .ct-select:hover, .ct-textarea:hover {
-    border-color: var(--border3);
-  }
-  .ct-input--focused {
-    border-color: rgba(124,58,237,0.45) !important;
-    background: rgba(124,58,237,0.04) !important;
-  }
-  .ct-select {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='rgba(124,58,237,0.6)'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 12px center;
-    padding-right: 32px; cursor: pointer;
-  }
-  .ct-textarea { min-height: 160px; resize: vertical; line-height: 1.65; }
-
-  /* ACTIONS */
-  .ct-actions {
-    display: flex; flex-wrap: wrap; align-items: center; gap: 10px;
-    margin-top: 4px;
-  }
-  .ct-btn-primary {
-    display: inline-flex; align-items: center;
-    padding: 11px 22px;
-    background: var(--gradient-purple);
-    color: #fff;
-    font-family: var(--font-numeric), monospace;
-    font-size: 13px; font-weight: 700;
-    letter-spacing: 0.02em;
-    border: 1px solid var(--purple); cursor: pointer;
-    border-radius: var(--r-pill);
-    box-shadow: var(--shadow-purple);
-    transition: background var(--dur-1) var(--ease-out), transform var(--dur-1) var(--ease-out), box-shadow var(--dur-1) var(--ease-out);
-  }
-  .ct-btn-primary:hover:not(:disabled) { background: var(--gradient-purple-soft); transform: translateY(-1px); box-shadow: 0 8px 22px rgba(124,58,237,0.32); }
-  .ct-btn-primary:disabled { opacity: 0.4; cursor: not-allowed; }
-
-  .ct-btn-outline {
-    display: inline-flex; align-items: center;
-    padding: 10px 18px;
-    background: var(--panel2);
-    color: var(--muted);
-    font-family: var(--font-body), monospace;
-    font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase;
-    border: 1px solid var(--border2); cursor: pointer;
-    border-radius: var(--r-pill);
-    transition: border-color var(--dur-1) var(--ease-out), color var(--dur-1) var(--ease-out), background var(--dur-1) var(--ease-out);
-  }
-  .ct-btn-outline:hover { background: var(--panel); border-color: var(--border3); color: var(--foreground); }
-
-  .ct-sent-note {
-    font-family: var(--font-body), monospace;
-    font-size: 11px; letter-spacing: 0.06em;
-    color: var(--blue2);
-  }
-  .ct-disclaimer {
-    font-family: var(--font-body), monospace;
-    font-size: 11px; letter-spacing: 0.04em;
-    color: var(--muted2);
-    padding-top: 8px;
-    border-top: 1px solid var(--border);
-  }
-
-  /* ── SIDEBAR ── */
-  .ct-sidebar { display: flex; flex-direction: column; gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: var(--r-lg); overflow: hidden; box-shadow: var(--shadow-sm); }
-
-  .ct-sidebar-card {
-    background: var(--panel);
-    display: flex; flex-direction: column;
-  }
-
-  .ct-sidebar-body {
-    padding: 16px 18px;
-    display: flex; flex-direction: column; gap: 12px;
-  }
-
-  .ct-sidebar-sub {
-    font-family: var(--font-body), monospace;
-    font-size: 11px; color: var(--muted2);
-    letter-spacing: 0.04em;
-  }
-
-  .ct-checklist { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; }
-  .ct-checklist-item {
-    display: flex; align-items: flex-start; gap: 10px;
-    font-family: var(--font-body), monospace;
-    font-size: 12px; letter-spacing: 0.02em; line-height: 1.65;
-    color: var(--muted);
-  }
-  .ct-checklist-dot {
-    display: inline-block; width: 6px; height: 6px;
-    border-radius: 50%; margin-top: 5px; flex-shrink: 0;
-  }
-
-  .ct-response-row {
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 8px 0;
-    border-bottom: 1px solid var(--border);
-  }
-  .ct-response-row:last-of-type { border-bottom: none; }
-  .ct-response-type {
-    display: flex; align-items: center; gap: 8px;
-    font-family: var(--font-body), monospace;
-    font-size: 11px; letter-spacing: 0.04em;
-    color: var(--muted);
-  }
-  .ct-response-dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
-  .ct-response-time {
-    font-family: var(--font-display), sans-serif;
-    font-size: 18px; letter-spacing: -0.01em; text-transform: uppercase;
-    color: var(--foreground);
-  }
-  .ct-sidebar-note {
-    font-family: var(--font-body), monospace;
-    font-size: 11px; letter-spacing: 0.02em; line-height: 1.65;
-    color: var(--muted2); margin: 0;
-  }
-
-  /* EMAIL CARD */
-  .ct-email-card {
-    background: var(--purple-dim);
-    border-top: 1px solid rgba(124,58,237,0.18);
-    padding: 18px 18px;
-    display: flex; flex-direction: column; gap: 6px;
-  }
-  .ct-email-label {
-    font-family: var(--font-body), monospace;
-    font-size: 10px; font-weight: 600;
-    letter-spacing: 0.10em; text-transform: uppercase;
-    color: var(--purple);
-  }
-  .ct-email-addr {
-    font-family: var(--font-body), monospace;
-    font-size: 13px; font-weight: 600; letter-spacing: 0.02em;
-    color: var(--purple2); text-decoration: none; word-break: break-all;
-    transition: color var(--dur-1) var(--ease-out);
-  }
-  .ct-email-addr:hover { color: var(--purple); }
-  .ct-email-note {
-    font-family: var(--font-body), monospace;
-    font-size: 11px; letter-spacing: 0.02em; line-height: 1.65;
-    color: var(--muted2);
-  }
+@media (max-width: 980px) {
+  .ct-band-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 900px) {
+  .ct-intake { grid-template-columns: 1fr; gap: 56px; }
+  .ct-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 600px) {
+  .ct-band-grid { grid-template-columns: 1fr; }
+  .ct-hero-main { justify-content: flex-start; padding-top: clamp(40px, 8vh, 72px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ct-title, .ct-lede, .ct-mail, .ct-field-cv { animation: none !important; }
+}
 `;

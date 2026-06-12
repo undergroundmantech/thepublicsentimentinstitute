@@ -219,6 +219,41 @@ export default function AggregatePollChart({ daily, polls, seriesA, seriesB, fmt
   const fDaily = useMemo(() => daily.filter((d) => d.t >= cutoff), [daily, cutoff]);
   const fPolls = useMemo(() => polls.filter((p) => p.t >= cutoff), [polls, cutoff]);
 
+  // 95% confidence band — per day, the dispersion of poll residuals around the
+  // average inside a ±45-day window: ci = 1.96 · sd/√n, floored at half a point.
+  // Sparse stretches inherit the nearest computed band so the ribbon never gaps.
+  const banded = useMemo(() => {
+    type BandRow = AggDaily & { aBand?: [number, number]; bBand?: [number, number]; netBand?: [number, number] };
+    if (!fDaily.length) return fDaily as BandRow[];
+    const WIN = 45 * DAY;
+    const ps = [...fPolls].sort((x, y) => x.t - y.t);
+    const cis = fDaily.map((d) => {
+      let n = 0, sa = 0, sa2 = 0, sb = 0, sb2 = 0, sn = 0, sn2 = 0;
+      for (const p of ps) {
+        if (p.t < d.t - WIN) continue;
+        if (p.t > d.t + WIN) break;
+        const ra = p.a - d.a, rb = p.b - d.b, rn = p.margin - d.net;
+        n++; sa += ra; sa2 += ra * ra; sb += rb; sb2 += rb * rb; sn += rn; sn2 += rn * rn;
+      }
+      const ci = (s: number, s2: number) => {
+        if (n < 3) return null;
+        const mean = s / n;
+        const sd = Math.sqrt(Math.max(0, s2 / n - mean * mean));
+        return Math.min(8, Math.max(0.5, (1.96 * sd) / Math.sqrt(n)));
+      };
+      return { a: ci(sa, sa2), b: ci(sb, sb2), net: ci(sn, sn2) };
+    });
+    // forward-fill then back-fill so thin weeks inherit a neighbor's band
+    for (let i = 1; i < cis.length; i++) { cis[i].a = cis[i].a ?? cis[i - 1].a; cis[i].b = cis[i].b ?? cis[i - 1].b; cis[i].net = cis[i].net ?? cis[i - 1].net; }
+    for (let i = cis.length - 2; i >= 0; i--) { cis[i].a = cis[i].a ?? cis[i + 1].a; cis[i].b = cis[i].b ?? cis[i + 1].b; cis[i].net = cis[i].net ?? cis[i + 1].net; }
+    return fDaily.map((d, i): BandRow => ({
+      ...d,
+      aBand: cis[i].a != null ? [d.a - cis[i].a!, d.a + cis[i].a!] : undefined,
+      bBand: cis[i].b != null ? [d.b - cis[i].b!, d.b + cis[i].b!] : undefined,
+      netBand: cis[i].net != null ? [d.net - cis[i].net!, d.net + cis[i].net!] : undefined,
+    }));
+  }, [fDaily, fPolls]);
+
   const dots = useMemo(() => {
     if (view === "share") {
       return fPolls.flatMap((p) => [
@@ -232,12 +267,12 @@ export default function AggregatePollChart({ daily, polls, seriesA, seriesB, fmt
   const yDomain = useMemo<[number, number]>(() => {
     let lo = Infinity, hi = -Infinity;
     const push = (v: number) => { if (Number.isFinite(v)) { lo = Math.min(lo, v); hi = Math.max(hi, v); } };
-    if (view === "share") { fDaily.forEach((d) => { push(d.a); push(d.b); }); fPolls.forEach((p) => { push(p.a); push(p.b); }); }
-    else { fDaily.forEach((d) => push(d.net)); fPolls.forEach((p) => push(p.margin)); push(0); }
+    if (view === "share") { banded.forEach((d) => { push(d.a); push(d.b); if (d.aBand) { push(d.aBand[0]); push(d.aBand[1]); } if (d.bBand) { push(d.bBand[0]); push(d.bBand[1]); } }); fPolls.forEach((p) => { push(p.a); push(p.b); }); }
+    else { banded.forEach((d) => { push(d.net); if (d.netBand) { push(d.netBand[0]); push(d.netBand[1]); } }); fPolls.forEach((p) => push(p.margin)); push(0); }
     if (!Number.isFinite(lo)) return view === "share" ? [35, 55] : [-10, 15];
     const pad = Math.max(1.5, (hi - lo) * 0.12);
     return [Math.floor(lo - pad), Math.ceil(hi + pad)];
-  }, [fDaily, fPolls, view]);
+  }, [banded, fPolls, view]);
 
   const spreadDomain = useMemo<[number, number]>(() => {
     let lo = Infinity, hi = -Infinity;
@@ -303,7 +338,7 @@ export default function AggregatePollChart({ daily, polls, seriesA, seriesB, fmt
         </div>
         <div className="apc-plot-svg">
         <ResponsiveContainer width="100%" height="100%">
-          <ComposedChart key={animKey} data={fDaily} margin={{ top: 22, right: rightMargin, left: 4, bottom: 2 }}>
+          <ComposedChart key={animKey} data={banded} margin={{ top: 22, right: rightMargin, left: 4, bottom: 2 }}>
             <CartesianGrid stroke="rgba(255,255,255,0.045)" vertical={false} />
             <XAxis dataKey="t" type="number" scale="time" domain={xDomain} ticks={ticks} tick={false} tickLine={false} axisLine={{ stroke: "rgba(255,255,255,0.08)" }} height={6} />
             <YAxis domain={yDomain} tickLine={false} axisLine={false} width={44} tickMargin={6}
@@ -313,11 +348,16 @@ export default function AggregatePollChart({ daily, polls, seriesA, seriesB, fmt
             {showPolls && <Scatter data={dots} dataKey="y" shape={renderDot} isAnimationActive={false} />}
             {view === "share" ? (
               <>
+                <Area type="monotone" dataKey="aBand" stroke="none" fill={seriesA.color} fillOpacity={0.09} isAnimationActive={false} activeDot={false} connectNulls />
+                <Area type="monotone" dataKey="bBand" stroke="none" fill={seriesB.color} fillOpacity={0.09} isAnimationActive={false} activeDot={false} connectNulls />
                 <Line type="monotone" dataKey="a" stroke={seriesA.color} strokeWidth={2.5} dot={false} activeDot={false} isAnimationActive={LINE_ANIM} animationDuration={850} />
                 <Line type="monotone" dataKey="b" stroke={seriesB.color} strokeWidth={2.5} dot={false} activeDot={false} isAnimationActive={LINE_ANIM} animationDuration={850} animationBegin={120} />
               </>
             ) : (
-              <Line type="monotone" dataKey="net" stroke="rgba(255,255,255,0.92)" strokeWidth={2.5} dot={false} activeDot={false} isAnimationActive={LINE_ANIM} animationDuration={850} />
+              <>
+                <Area type="monotone" dataKey="netBand" stroke="none" fill="#ffffff" fillOpacity={0.06} isAnimationActive={false} activeDot={false} connectNulls />
+                <Line type="monotone" dataKey="net" stroke="rgba(255,255,255,0.92)" strokeWidth={2.5} dot={false} activeDot={false} isAnimationActive={LINE_ANIM} animationDuration={850} />
+              </>
             )}
             {!narrow && <EndLabels items={endItems} domain={yDomain} />}
             <PlotAreaReporter onChange={setPlot} />
