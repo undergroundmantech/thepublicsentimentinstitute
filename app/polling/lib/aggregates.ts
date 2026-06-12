@@ -7,7 +7,7 @@ import {
 } from "./buildDailyModel";
 
 import { RAW_POLLS as GENERIC, GOLD_STANDARD_NAMES as GENERIC_GOLD } from "../genericballot/data";
-import { RAW_POLLS as TRUMP, GOLD_STANDARD_NAMES as TRUMP_GOLD } from "../donaldtrumpapproval/page";
+import { RAW_POLLS as TRUMP, GOLD_STANDARD_NAMES as TRUMP_GOLD } from "../donaldtrumpapproval/data";
 import { RAW_POLLS as VANCE, GOLD_STANDARD_NAMES as VANCE_GOLD } from "../jdvanceapproval/page";
 import { RAW_POLLS as TRACK, GOLD_STANDARD_NAMES as TRACK_GOLD } from "../rightorwrongtrack/page";
 import { RAW_POLLS as P2028, GOLD_STANDARD_NAMES as P2028_GOLD } from "../2028polling/page";

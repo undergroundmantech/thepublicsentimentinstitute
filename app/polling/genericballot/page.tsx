@@ -1,13 +1,17 @@
 "use client";
 
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import AggregatePollChart from "@/app/components/AggregatePollChart";
+import DarkNav from "@/app/components/DarkNav";
 import MultiCandidateChart from "@/app/components/MultiCandidateChart";
 import {
   AGGREGATES, MULTI_AGGREGATES, buildAggregate, buildMulti,
   type BuiltAggregate, type BuiltMulti, type AggregateDef, type MultiAggregateDef,
 } from "@/app/polling/lib/aggregates";
 import { getPollsterEntry } from "@/app/polling/lib/buildDailyModel";
+import { Manrope } from "next/font/google";
+
+const manrope = Manrope({ subsets: ["latin"], weight: ["400", "500", "600", "700", "800"], variable: "--font-mp", display: "swap" });
 
 const round0 = (n: number) => Math.round(n);
 const round1 = (n: number) => Math.round(n * 10) / 10;
@@ -69,20 +73,57 @@ function Sparkline({ data, color, h = 28 }: { data: number[]; color: string; h?:
   );
 }
 
+// mounts heavy children only when the window scrolls near the viewport —
+// the full board stacks ~40 charts, so each one renders on approach.
+function LazyMount({ children, height = 300, skeleton = false }: { children: React.ReactNode; height?: number; skeleton?: boolean }) {
+  const ref = useRef<HTMLDivElement | null>(null);
+  const [on, setOn] = useState(false);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const io = new IntersectionObserver(([e]) => { if (e.isIntersecting) { setOn(true); io.disconnect(); } }, { rootMargin: "800px 0px" });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+  return <div ref={ref} className="pb-chartslot">{on && !skeleton ? children : <div className="pb-chart-skel" style={{ height }} aria-hidden />}</div>;
+}
+
 export default function PollingAveragesPage() {
   const [id, setId] = useState(CATALOG[0].id);
   const [group, setGroup] = useState(CATALOG[0].group);
   const [query, setQuery] = useState("");
   const [sort, setSort] = useState<{ key: string; dir: "asc" | "desc" }>({ key: "date", dir: "desc" });
   const [sampleFilter, setSampleFilter] = useState<SampleFilter>("all");
+  // view: "focus" = one aggregate; "board" = every average on one page
+  const [view, setView] = useState<"focus" | "board">("focus");
+  const [fullIds, setFullIds] = useState<Record<string, boolean>>({});
+  const [showAllPolls, setShowAllPolls] = useState(false);
+  const booted = useRef(false);
 
-  // deep-link support: /polling/genericballot?race=<id> selects that aggregate
+  // deep-link support: ?race=<id> selects an aggregate, ?view=board opens the full board
   useEffect(() => {
-    const r = new URLSearchParams(window.location.search).get("race");
-    if (!r) return;
-    const it = CATALOG.find((c) => c.id === r);
-    if (it) { setId(it.id); setGroup(it.group); }
+    const sp = new URLSearchParams(window.location.search);
+    const r = sp.get("race");
+    const v = sp.get("view");
+    const it = r ? CATALOG.find((c) => c.id === r) : null;
+    const raf = requestAnimationFrame(() => {
+      if (it) { setId(it.id); setGroup(it.group); }
+      if (v === "board" && !it) setView("board");
+      booted.current = true;
+    });
+    return () => cancelAnimationFrame(raf);
   }, []);
+
+  // keep the URL shareable as the view changes
+  useEffect(() => {
+    if (!booted.current) return;
+    const sp = new URLSearchParams(window.location.search);
+    if (view === "board") { sp.set("view", "board"); sp.delete("race"); }
+    else { sp.delete("view"); sp.set("race", id); }
+    window.history.replaceState(null, "", `${window.location.pathname}?${sp.toString()}`);
+  }, [view, id]);
+
+  useEffect(() => { setShowAllPolls(false); }, [id, sampleFilter]);
 
   const item = useMemo(() => CATALOG.find((c) => c.id === id) ?? CATALOG[0], [id]);
   const isMulti = item.kind === "multi";
@@ -117,7 +158,10 @@ export default function PollingAveragesPage() {
 
   // if the chosen sample type has no polls in the newly selected aggregate, fall back to All
   useEffect(() => {
-    if (sampleFilter !== "all" && (typeCounts[sampleFilter] ?? 0) === 0) setSampleFilter("all");
+    if (sampleFilter !== "all" && (typeCounts[sampleFilter] ?? 0) === 0) {
+      const raf = requestAnimationFrame(() => setSampleFilter("all"));
+      return () => cancelAnimationFrame(raf);
+    }
   }, [typeCounts, sampleFilter]);
 
   // the displayed builds: the full set for "all", otherwise rebuilt from just the chosen sample type
@@ -171,6 +215,9 @@ export default function PollingAveragesPage() {
   const multiPolls = builtMulti?.polls ?? [];
   const visH2H = applySort(h2hPolls.filter((p) => !qx || p.pollster.toLowerCase().includes(qx)));
   const visMulti = applySort(multiPolls.filter((p) => !qx || p.pollster.toLowerCase().includes(qx)));
+  const POLL_FOLD = 12;
+  const rowsH2H = showAllPolls ? visH2H : visH2H.slice(0, POLL_FOLD);
+  const rowsMulti = showAllPolls ? visMulti : visMulti.slice(0, POLL_FOLD);
 
   const sortHead = (k: string, label: string, cls = "r") => (
     <th key={k} className={cls}>
@@ -187,6 +234,7 @@ export default function PollingAveragesPage() {
   const updated = dailyArr.length ? dailyArr[dailyArr.length - 1].date : null;
 
   function pickGroup(g: string) { setGroup(g); const first = CATALOG.find((c) => c.group === g); if (first) { setId(first.id); setQuery(""); } }
+  function openFocus(it: Item) { setView("focus"); setGroup(it.group); setId(it.id); setQuery(""); window.scrollTo({ top: 0, behavior: "smooth" }); }
   function pickAgg(aid: string) { setId(aid); setQuery(""); }
 
   function downloadCSV() {
@@ -211,7 +259,17 @@ export default function PollingAveragesPage() {
   return (
     <>
       <style>{CSS}</style>
-      <div className="pa">
+      <div className={`pa ${manrope.variable}`}>
+        <DarkNav />
+
+        {/* ── view toggle: one race / the full board ── */}
+        <div className="pa-viewbar" role="tablist" aria-label="Page view">
+          <button role="tab" aria-selected={view === "focus"} className={`pa-view${view === "focus" ? " is-on" : ""}`} onClick={() => setView("focus")}>one race</button>
+          <span className="pa-view-sep" aria-hidden>/</span>
+          <button role="tab" aria-selected={view === "board"} className={`pa-view${view === "board" ? " is-on" : ""}`} onClick={() => setView("board")}>the full board</button>
+        </div>
+
+        {view === "focus" && (<>
         {/* ── top selector ── */}
         <div className="pa-select">
           <div className="pa-cats">
@@ -241,11 +299,11 @@ export default function PollingAveragesPage() {
         </div>
 
         {/* ── header ── */}
-        <header className="pa-head">
+        <div className="pa-head">
           <div className="pa-eyebrow">{isMulti ? "2026 Primary" : (h2hDef?.category ?? "")}<span className="pa-live"><span className="pa-live-dot" /> Live</span></div>
           <h1 className="pa-title">{isMulti ? multiDef?.title : h2hDef?.title}</h1>
           <p className="pa-sub">{isMulti ? multiDef?.subtitle : h2hDef?.subtitle} <span className="pa-sub-dim">{totalPolls} polls{updated ? ` · updated ${new Date(updated + "T00:00:00").toLocaleDateString(undefined, { month: "short", day: "numeric" })}` : ""}</span></p>
-        </header>
+        </div>
 
         {/* ── sample-type filter — governs the average, chart & table below ── */}
         <div className="pa-filter">
@@ -376,7 +434,7 @@ export default function PollingAveragesPage() {
                     </tr>
                   </thead>
                   <tbody>
-                    {visMulti.map((p, i) => {
+                    {rowsMulti.map((p, i) => {
                       const entry = getPollsterEntry(p.pollster);
                       const mi = leaderIdx(p.v);
                       return (
@@ -406,7 +464,7 @@ export default function PollingAveragesPage() {
                     </tr>
                   </thead>
                   <tbody>
-                    {visH2H.map((p, i) => {
+                    {rowsH2H.map((p, i) => {
                       const entry = getPollsterEntry(p.pollster);
                       const pct = Math.min(50, (Math.abs(p.margin) / maxAbsMargin) * 50);
                       const mColor = p.margin > 0 ? h2hDef.seriesA.color : p.margin < 0 ? h2hDef.seriesB.color : "rgba(255,255,255,0.5)";
@@ -430,20 +488,162 @@ export default function PollingAveragesPage() {
               ) : null}
             </div>
           </div>
+          {visCount > POLL_FOLD && (
+            <div className="pa-fold">
+              <button className="pa-fold-btn" onClick={() => setShowAllPolls((s) => !s)}>
+                {showAllPolls ? "collapse to the latest twelve" : `show all ${visCount} polls`}
+                <span aria-hidden>{showAllPolls ? "↑" : "↓"}</span>
+              </button>
+            </div>
+          )}
         </section>
+        </>)}
+
+        {/* ── the full board — every aggregate as its own window ── */}
+        {view === "board" && (
+          <div className="pb">
+            <div className="pa-head">
+              <div className="pa-eyebrow">Polling averages<span className="pa-live"><span className="pa-live-dot" /> Live</span></div>
+              <h1 className="pa-title">The full board</h1>
+              <p className="pa-sub">Every TPSI average on one page — the chart, the latest polls, the whole desk. <span className="pa-sub-dim">{CATALOG.length} aggregates</span></p>
+            </div>
+
+            {GROUPS.map((g) => (
+              <section className="pb-group" key={g}>
+                <h2 className="pb-group-h">{g}</h2>
+                {CATALOG.filter((c) => c.group === g).map((it, gi) => {
+                  const full = !!fullIds[it.id];
+                  const bH = it.kind === "h2h" ? allBuilt[it.id] : null;
+                  const bM = it.kind === "multi" ? allMulti[it.id] : null;
+                  const dH = it.kind === "h2h" ? H2H_BY_ID[it.id] : null;
+                  const dM = it.kind === "multi" ? MULTI_BY_ID[it.id] : null;
+                  const built = bH ?? bM;
+                  const lastDate = built?.daily.length ? built.daily[built.daily.length - 1].date : null;
+
+                  let color = "rgba(255,255,255,0.4)";
+                  let readout: React.ReactNode = <span className="pb-skel" aria-hidden />;
+                  if (bH?.latest && dH) {
+                    color = bH.latest.net >= 0 ? dH.seriesA.color : dH.seriesB.color;
+                    readout = (
+                      <>
+                        <span style={{ color: dH.seriesA.color }}>{bH.latest.a.toFixed(1)}</span>
+                        <i>·</i>
+                        <span style={{ color: dH.seriesB.color }}>{bH.latest.b.toFixed(1)}</span>
+                        <b style={{ color }}>{dH.fmtMargin(bH.latest.net)}</b>
+                      </>
+                    );
+                  } else if (bM?.latest && dM) {
+                    const li = leaderIdx(bM.latest);
+                    color = dM.series[li].color;
+                    readout = (
+                      <>
+                        <span style={{ color }}>{dM.series[li].label}</span>
+                        <b style={{ color }}>{bM.latest[li].toFixed(1)}</b>
+                      </>
+                    );
+                  }
+
+                  const recent = (built?.polls ?? []).slice().sort((a: { t: number }, z: { t: number }) => z.t - a.t);
+                  const shown = full ? recent : recent.slice(0, 5);
+
+                  return (
+                    <article className="pb-win" key={it.id}>
+                      <div className="pb-win-head">
+                        <span className="pb-ord">{String(gi + 1).padStart(2, "0")}</span>
+                        <h3 className="pb-win-name">{it.label}</h3>
+                        <span className="pb-read">{readout}</span>
+                        <span className="pb-count">
+                          {recent.length ? `${recent.length} polls` : ""}
+                          {lastDate ? ` · ${new Date(lastDate + "T00:00:00").toLocaleDateString(undefined, { month: "short", day: "numeric" })}` : ""}
+                        </span>
+                        <button className="pb-open" onClick={() => openFocus(it)}>open the full view →</button>
+                      </div>
+
+                      <LazyMount height={300} skeleton={!built}>
+                        {bH && dH ? (
+                          <AggregatePollChart animKey={`pb-${dH.id}`} daily={bH.daily} polls={bH.polls} seriesA={dH.seriesA} seriesB={dH.seriesB} fmtMargin={dH.fmtMargin} marginLabel={dH.marginLabel} unit={dH.unit} />
+                        ) : bM && dM ? (
+                          <MultiCandidateChart animKey={`pb-${dM.id}`} daily={bM.daily} polls={bM.polls} series={dM.series} unit={dM.unit} />
+                        ) : null}
+                      </LazyMount>
+
+                      {recent.length > 0 && (
+                        <div className="pb-body">
+                          <div className="pa-table-wrap"><div className="pa-table-min">
+                            {bH && dH ? (
+                              <table className="pa-table pb-table">
+                                <thead><tr><th>Pollster</th><th className="r">Date</th><th className="r">Sample</th><th className="r">{dH.seriesA.label}</th><th className="r">{dH.seriesB.label}</th><th className="r">{dH.marginLabel}</th></tr></thead>
+                                <tbody>
+                                  {(shown as typeof bH.polls).map((p, i) => {
+                                    const entry = getPollsterEntry(p.pollster);
+                                    const mColor = p.margin > 0 ? dH.seriesA.color : p.margin < 0 ? dH.seriesB.color : "rgba(255,255,255,0.5)";
+                                    return (
+                                      <tr key={`${p.pollster}-${p.date}-${i}`}>
+                                        <td><span className="pa-pollster">{p.pollster}</span><span className={`pa-grade ${gradeIsHigh(entry.grade) ? "hi" : ""}`}>{entry.grade}</span></td>
+                                        <td className="r">{new Date(p.t).toLocaleDateString(undefined, { month: "short", day: "numeric", year: "2-digit" })}</td>
+                                        <td className="r">{p.sampleSize > 0 ? p.sampleSize.toLocaleString() : "—"}<span className="pa-type">{p.sampleType}</span></td>
+                                        <td className="r" style={{ color: dH.seriesA.color }}>{round0(p.a)}</td>
+                                        <td className="r" style={{ color: dH.seriesB.color }}>{round0(p.b)}</td>
+                                        <td className="r" style={{ color: mColor, fontWeight: 600 }}>{dH.fmtMargin(round1(p.margin))}</td>
+                                      </tr>
+                                    );
+                                  })}
+                                </tbody>
+                              </table>
+                            ) : bM && dM ? (
+                              <table className="pa-table pb-table">
+                                <thead><tr><th>Pollster</th><th className="r">Date</th><th className="r">Sample</th>{dM.series.map((s) => <th className="r" key={s.key}>{s.label}</th>)}</tr></thead>
+                                <tbody>
+                                  {(shown as typeof bM.polls).map((p, i) => {
+                                    const entry = getPollsterEntry(p.pollster);
+                                    const mi = leaderIdx(p.v);
+                                    return (
+                                      <tr key={`${p.pollster}-${p.date}-${i}`}>
+                                        <td><span className="pa-pollster">{p.pollster}</span><span className={`pa-grade ${gradeIsHigh(entry.grade) ? "hi" : ""}`}>{entry.grade}</span></td>
+                                        <td className="r">{new Date(p.t).toLocaleDateString(undefined, { month: "short", day: "numeric", year: "2-digit" })}</td>
+                                        <td className="r">{p.sampleSize > 0 ? p.sampleSize.toLocaleString() : "—"}<span className="pa-type">{p.sampleType}</span></td>
+                                        {dM.series.map((s, ci) => (
+                                          <td key={s.key} className="r" style={ci === mi ? { color: s.color, fontWeight: 600 } : undefined}>{Number.isFinite(p.v[ci]) ? round0(p.v[ci]) : "—"}</td>
+                                        ))}
+                                      </tr>
+                                    );
+                                  })}
+                                </tbody>
+                              </table>
+                            ) : null}
+                          </div></div>
+                          {recent.length > 5 && (
+                            <div className="pb-foot">
+                              <button className="pb-more" onClick={() => setFullIds((m) => ({ ...m, [it.id]: !full }))}>
+                                {full ? "collapse to the latest five" : `show all ${recent.length} polls`}
+                              </button>
+                            </div>
+                          )}
+                        </div>
+                      )}
+                    </article>
+                  );
+                })}
+              </section>
+            ))}
+          </div>
+        )}
       </div>
     </>
   );
 }
 
 const CSS = `
-  html, body { background: #000 !important; }
+  html, body { background: #050505 !important; }
+  body header, body footer { display: none !important; }
 
   .pa {
-    --line: rgba(255,255,255,0.08); --line2: rgba(255,255,255,0.05);
-    --ink: #ededed; --muted: rgba(255,255,255,0.56); --muted2: rgba(255,255,255,0.4); --faint: rgba(255,255,255,0.26);
-    --panel: rgba(255,255,255,0.018);
-    color: var(--ink); display: flex; flex-direction: column;
+    --font-body: var(--font-mp), "Manrope", "Helvetica Neue", Arial, sans-serif;
+    --lime: #b7ff00;
+    --line: rgba(255,255,255,0.10); --line2: rgba(255,255,255,0.06);
+    --ink: #f4f4ef; --muted: rgba(244,244,239,0.60); --muted2: rgba(244,244,239,0.40); --faint: rgba(244,244,239,0.26);
+    --panel: rgba(255,255,255,0.03);
+    color: var(--ink); display: flex; flex-direction: column; letter-spacing: -0.01em;
   }
   .pa * { box-sizing: border-box; }
   @keyframes pa-in { from { opacity:0; transform: translateY(8px); } to { opacity:1; transform:none; } }
@@ -451,9 +651,9 @@ const CSS = `
   /* ── top selector ── */
   .pa-select { border-bottom: 1px solid var(--line); padding-bottom: 18px; margin-bottom: 30px; }
   .pa-cats { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 16px; }
-  .pa-cat { appearance: none; cursor: pointer; background: transparent; border: 0; border-radius: 8px; padding: 7px 12px; line-height: 1; font-family: var(--font-body), monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted2); transition: color 140ms ease, background 140ms ease; }
-  .pa-cat:hover { color: #fff; background: rgba(255,255,255,0.04); }
-  .pa-cat.is-active { color: #000; background: #fafafa; }
+  .pa-cat { appearance: none; cursor: pointer; background: rgba(255,255,255,0.04); border: 1px solid var(--line); border-radius: 999px; padding: 8px 15px; line-height: 1; font-family: var(--font-body), monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted2); transition: color 160ms ease, background 160ms ease, border-color 160ms ease; }
+  .pa-cat:hover { color: var(--ink); border-color: rgba(255,255,255,0.22); }
+  .pa-cat.is-active { color: #050505; background: var(--lime); border-color: var(--lime); }
 
   /* one cohesive "aggregate index" strip — cells flex to fill width, hairline-divided */
   .pa-tiles { display: flex; flex-wrap: nowrap; gap: 0; overflow-x: auto; overflow-y: hidden; border: 1px solid var(--line); border-radius: 12px; background: rgba(255,255,255,0.012); scrollbar-width: thin; }
@@ -480,8 +680,8 @@ const CSS = `
   .pa-head { padding: 0; animation: pa-in 480ms cubic-bezier(0.16,1,0.3,1) both; }
   .pa-eyebrow { display: inline-flex; align-items: center; gap: 12px; font-family: var(--font-body), monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted2); margin-bottom: 14px; }
   .pa-live { display: inline-flex; align-items: center; gap: 6px; color: var(--muted); }
-  .pa-live-dot { width: 5px; height: 5px; border-radius: 50%; background: #3fb27f; opacity: 0.9; }
-  .pa-title { font-family: var(--font-body), "Geist Mono", monospace; font-weight: 600; letter-spacing: -0.02em; line-height: 1.08; font-size: clamp(25px, 3.2vw, 37px); color: #fff; margin: 0 0 13px; text-transform: none; }
+  .pa-live-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--lime); opacity: 0.95; box-shadow: 0 0 8px rgba(183,255,0,0.6); }
+  .pa-title { font-family: var(--font-body), "Geist Mono", monospace; font-weight: 500; letter-spacing: -0.03em; line-height: 1.03; font-size: clamp(29px, 3.7vw, 47px); color: var(--ink); margin: 0 0 14px; text-transform: none; }
   .pa-sub { font-family: var(--font-body), monospace; font-size: 13px; line-height: 1.65; color: var(--muted); max-width: 74ch; margin: 0; }
   .pa-sub-dim { color: var(--faint); }
 
@@ -492,11 +692,11 @@ const CSS = `
   .pa-seg-btn { appearance: none; cursor: pointer; background: transparent; border: 0; border-right: 1px solid var(--line); padding: 7px 13px; line-height: 1; font-family: var(--font-body), monospace; font-size: 11.5px; font-weight: 600; letter-spacing: 0.04em; color: var(--muted); display: inline-flex; align-items: center; gap: 7px; transition: color 140ms ease, background 140ms ease; }
   .pa-seg-btn:last-child { border-right: 0; }
   .pa-seg-btn:hover:not(:disabled):not(.is-active) { color: #fff; background: rgba(255,255,255,0.04); }
-  .pa-seg-btn.is-active { background: #fafafa; color: #000; }
+  .pa-seg-btn.is-active { background: var(--lime); color: #050505; }
   .pa-seg-btn:disabled { color: var(--faint); cursor: not-allowed; opacity: 0.5; }
   .pa-seg-n { font-size: 10px; font-weight: 600; font-variant-numeric: tabular-nums; color: var(--faint); }
   .pa-seg-btn:hover:not(:disabled):not(.is-active) .pa-seg-n { color: var(--muted); }
-  .pa-seg-btn.is-active .pa-seg-n { color: rgba(0,0,0,0.5); }
+  .pa-seg-btn.is-active .pa-seg-n { color: rgba(5,5,5,0.55); }
   .pa-filter-note { font-family: var(--font-body), monospace; font-size: 10.5px; font-weight: 600; letter-spacing: 0.04em; color: var(--muted2); }
   .pa-chart-empty { padding: 64px 16px; text-align: center; color: var(--faint); font-family: var(--font-body), monospace; font-size: 13px; }
 
@@ -537,7 +737,7 @@ const CSS = `
   .pa-rank-val small { font-size: 0.5em; color: var(--faint); margin-left: 1px; }
 
   /* ── chart panel ── */
-  .pa-panel { margin-top: 40px; border: 1px solid var(--line); border-radius: 14px; background: #000; padding: 20px 20px 18px; }
+  .pa-panel { margin-top: 40px; border: 1px solid var(--line); border-radius: 16px; background: #050505; padding: 20px 20px 18px; }
   .pa-panel-head { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
   .pa-panel-title { font-family: var(--font-body), monospace; font-weight: 600; font-size: 13px; letter-spacing: 0.04em; text-transform: uppercase; color: #f3f3f5; margin: 0; }
   .pa-panel-meta { font-family: var(--font-body), monospace; font-size: 11px; color: var(--faint); }
@@ -555,7 +755,7 @@ const CSS = `
   .pa-csv:hover { color: #fff; border-color: rgba(255,255,255,0.22); background: rgba(255,255,255,0.04); }
 
   .pa-table { width: 100%; border-collapse: collapse; }
-  .pa-table thead th { position: sticky; top: 0; z-index: 1; text-align: left; background: #000; font-family: var(--font-body), monospace; font-size: 10px; font-weight: 600; letter-spacing: 0.13em; text-transform: uppercase; color: var(--faint); padding: 0 16px 12px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+  .pa-table thead th { position: sticky; top: 0; z-index: 1; text-align: left; background: #050505; font-family: var(--font-body), monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.13em; text-transform: uppercase; color: var(--faint); padding: 0 16px 12px; border-bottom: 1px solid var(--line); white-space: nowrap; }
   .pa-table thead th.r { text-align: right; }
   .pa-table thead th.pa-mhead { text-align: left; padding-left: 26px; }
   .pa-sort { appearance: none; background: transparent; border: 0; cursor: pointer; font: inherit; color: inherit; letter-spacing: inherit; text-transform: inherit; padding: 0; display: inline-flex; align-items: center; gap: 4px; transition: color 140ms ease; }
@@ -568,7 +768,7 @@ const CSS = `
   .pa-table tbody tr:hover td { background: rgba(255,255,255,0.022); }
   .pa-pollster { color: #e7e7ea; font-weight: 500; }
   .pa-grade { display: inline-block; margin-left: 9px; padding: 1.5px 6px; border: 1px solid var(--line); border-radius: 5px; font-size: 9.5px; font-weight: 600; letter-spacing: 0.05em; color: var(--muted2); }
-  .pa-grade.hi { border-color: rgba(91,140,240,0.4); color: #9cc0ff; }
+  .pa-grade.hi { border-color: rgba(183,255,0,0.4); color: var(--lime); }
   .pa-type { color: var(--faint); margin-left: 6px; }
   .pa-mcell { display: flex; align-items: center; gap: 14px; }
   .pa-mbar { position: relative; width: 72px; height: 6px; border-radius: 3px; background: rgba(255,255,255,0.05); flex-shrink: 0; }
@@ -579,5 +779,49 @@ const CSS = `
   .pa-table-min { min-width: 660px; }
   .pa-empty { padding: 40px 16px; text-align: center; color: var(--faint); font-family: var(--font-body), monospace; font-size: 13px; }
 
-  @media (prefers-reduced-motion: reduce) { .pa-head { animation: none !important; } .pa-live-dot { animation: none !important; } }
+  /* ── view toggle ── */
+  .pa-viewbar { display: flex; align-items: baseline; gap: 12px; padding: 4px 0 18px; border-bottom: 1px solid var(--line2); }
+  .pa-view { background: none; border: 0; padding: 0 0 3px; cursor: pointer; font-family: var(--font-body); font-size: 14px; font-weight: 560; letter-spacing: -0.01em; color: var(--muted2); border-bottom: 1.5px solid transparent; transition: color 180ms ease, border-color 180ms ease; }
+  .pa-view:hover { color: var(--ink); }
+  .pa-view.is-on { color: var(--ink); border-bottom-color: var(--lime); }
+  .pa-view-sep { color: rgba(244,244,239,0.18); font-size: 13px; }
+
+  /* ── the full board ── */
+  .pb { display: flex; flex-direction: column; }
+  .pb-group { margin-top: clamp(34px, 5vh, 54px); }
+  .pb-group-h { margin: 0 0 6px; padding-bottom: 12px; border-bottom: 1px solid var(--line); font-family: var(--font-body); font-size: clamp(20px, 2.2vw, 27px); font-weight: 500; letter-spacing: -0.025em; text-transform: lowercase; color: var(--ink); }
+  .pb-win { padding: clamp(26px, 4vh, 40px) 0 clamp(30px, 4.5vh, 46px); border-bottom: 1px solid var(--line2); }
+  .pb-win:last-child { border-bottom: 0; }
+  .pb-win-head { display: flex; align-items: baseline; flex-wrap: wrap; gap: 10px 16px; margin-bottom: 18px; }
+  .pb-ord { font-size: 11px; font-weight: 600; color: var(--faint); font-variant-numeric: tabular-nums; }
+  .pb-win-name { margin: 0; font-family: var(--font-body); font-size: clamp(17px, 1.8vw, 22px); font-weight: 600; letter-spacing: -0.018em; color: var(--ink); text-transform: none; }
+  .pb-read { display: inline-flex; align-items: baseline; gap: 9px; font-size: 13.5px; font-weight: 600; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .pb-read i { font-style: normal; color: rgba(244,244,239,0.2); }
+  .pb-read b { font-size: 15px; font-weight: 700; margin-left: 4px; }
+  .pb-count { font-size: 10px; font-weight: 650; letter-spacing: 0.1em; text-transform: uppercase; color: var(--faint); white-space: nowrap; }
+  .pb-skel { display: inline-block; width: 72px; height: 11px; border-radius: 3px; background: rgba(255,255,255,0.06); }
+  .pb-chartslot { min-width: 0; }
+  .pb-chart-skel { border-radius: 10px; background: linear-gradient(100deg, rgba(255,255,255,0.025) 30%, rgba(255,255,255,0.055) 50%, rgba(255,255,255,0.025) 70%); background-size: 220% 100%; animation: pb-shimmer 1.6s linear infinite; }
+  @keyframes pb-shimmer { from { background-position: 130% 0; } to { background-position: -90% 0; } }
+  .pb-body { padding-top: 14px; }
+  .pb-table { font-size: 13px; }
+  .pb-foot { display: flex; align-items: baseline; gap: 26px; margin-top: 14px; }
+  .pb-more, .pb-open { background: none; border: 0; padding: 0 0 3px; cursor: pointer; font-family: var(--font-body); font-size: 12.5px; font-weight: 600; letter-spacing: -0.005em; border-bottom: 1px solid rgba(244,244,239,0.2); color: var(--muted); transition: color 160ms ease, border-color 160ms ease; }
+  .pb-more:hover, .pb-open:hover { color: var(--ink); border-color: var(--ink); }
+  .pb-open { margin-left: auto; color: var(--lime); border-color: rgba(183,255,0,0.4); }
+  .pb-open:hover { color: var(--lime); border-color: var(--lime); }
+
+  /* focus-mode table fold */
+  .pa-fold { display: flex; justify-content: center; padding: 18px 0 4px; border-top: 1px solid var(--line2); margin-top: -1px; }
+  .pa-fold-btn { display: inline-flex; align-items: baseline; gap: 8px; background: none; border: 0; padding: 0 0 3px; cursor: pointer; font-family: var(--font-body); font-size: 13px; font-weight: 600; color: var(--muted); border-bottom: 1px solid rgba(244,244,239,0.2); transition: color 160ms ease, border-color 160ms ease; }
+  .pa-fold-btn:hover { color: var(--ink); border-color: var(--ink); }
+  .pa-fold-btn span { font-size: 11px; color: var(--muted2); }
+
+  @media (max-width: 860px) {
+    .pb-win-head { gap: 8px 12px; }
+    .pb-count { display: none; }
+    .pb-open { margin-left: 0; }
+  }
+
+  @media (prefers-reduced-motion: reduce) { .pa-head { animation: none !important; } .pa-live-dot { animation: none !important; } .pb-body { animation: none !important; } }
 `;

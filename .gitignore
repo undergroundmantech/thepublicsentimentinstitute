@@ -39,3 +39,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# the elections iOS app (Capacitor) — separate project, 500MB+ of node_modules/ios; never ship with the site
+/mobile/

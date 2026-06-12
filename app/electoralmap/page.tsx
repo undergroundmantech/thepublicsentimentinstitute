@@ -1,22 +1,25 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
+import { Manrope } from "next/font/google";
+import DarkNav from "@/app/components/DarkNav";
+import { SENATE_MODEL } from "@/app/components/senateModel";
+
+const manrope = Manrope({ subsets: ["latin"], weight: ["400", "500", "600", "700", "800"], variable: "--font-mp", display: "swap" });
 
 // ─── types ────────────────────────────────────────────────────────────────────
+type MapMode  = "pres" | "senate" | "redist" | "house";
 type PartyBrush = "D" | "R" | "T";
 type Rating     = "SAFE" | "LIKELY" | "LEAN" | "TILT";
 type Pick       = "T" | `D_${Rating}` | `R_${Rating}`;
 
 interface TooltipState {
-  visible: boolean;
-  x: number; y: number;
-  abbr: string; name: string; ev: number; isAtLarge: boolean;
-  pick: Pick; hint: string;
+  visible: boolean; x: number; y: number;
+  abbr: string; name: string; ev: number; pick: Pick;
 }
 
 // ─── data ─────────────────────────────────────────────────────────────────────
-const RATINGS: Rating[] = ["SAFE", "LIKELY", "LEAN", "TILT"];
-
 const EV_BY_STATE: Record<string, number> = {
   AL:9,  AK:3,  AZ:11, AR:6,  CA:54, CO:10, CT:7,  DE:3,  DC:3,
   FL:30, GA:16, HI:4,  ID:4,  IL:19, IN:11, IA:6,  KS:6,  KY:8,
@@ -25,12 +28,10 @@ const EV_BY_STATE: Record<string, number> = {
   PA:19, RI:4,  SC:9,  SD:3,  TN:11, TX:40, UT:6,  VT:3,  VA:13,
   WA:12, WV:4,  WI:10, WY:3,
 };
-
 const EV_SPLIT: Record<string, number> = {
   "ME-AL":2,"ME-01":1,"ME-02":1,
   "NE-AL":2,"NE-01":1,"NE-02":1,"NE-03":1,
 };
-
 const STATE_NAMES: Record<string, string> = {
   AL:"Alabama",AK:"Alaska",AZ:"Arizona",AR:"Arkansas",CA:"California",
   CO:"Colorado",CT:"Connecticut",DE:"Delaware",DC:"D.C.",FL:"Florida",
@@ -43,8 +44,9 @@ const STATE_NAMES: Record<string, string> = {
   RI:"Rhode Island",SC:"South Carolina",SD:"South Dakota",TN:"Tennessee",
   TX:"Texas",UT:"Utah",VT:"Vermont",VA:"Virginia",WA:"Washington",
   WV:"West Virginia",WI:"Wisconsin",WY:"Wyoming",
+  "ME-AL":"Maine · at-large","ME-01":"Maine · 1st","ME-02":"Maine · 2nd",
+  "NE-AL":"Nebraska · at-large","NE-01":"Nebraska · 1st","NE-02":"Nebraska · 2nd","NE-03":"Nebraska · 3rd",
 };
-
 const FIPS: Record<string, string> = {
   "01":"AL","02":"AK","04":"AZ","05":"AR","06":"CA","08":"CO","09":"CT",
   "10":"DE","11":"DC","12":"FL","13":"GA","15":"HI","16":"ID","17":"IL",
@@ -55,612 +57,938 @@ const FIPS: Record<string, string> = {
   "47":"TN","48":"TX","49":"UT","50":"VT","51":"VA","53":"WA","54":"WV",
   "55":"WI","56":"WY",
 };
-
-const SIDE_TILES = [
-  {key:"DC",    label:"DC",    ev:3  },
-  {key:"DE",    label:"DE",    ev:3  },
-  {key:"RI",    label:"RI",    ev:4  },
-  {key:"CT",    label:"CT",    ev:7  },
-  {key:"NJ",    label:"NJ",    ev:14 },
-  {key:"MD",    label:"MD",    ev:10 },
-  {key:"MA",    label:"MA",    ev:11 },
-  {key:"VT",    label:"VT",    ev:3  },
-  {key:"NH",    label:"NH",    ev:4  },
-  {key:"ME-AL", label:"ME-AL", ev:2  },
-  {key:"ME-01", label:"ME-01", ev:1  },
-  {key:"ME-02", label:"ME-02", ev:1  },
-  {key:"NE-AL", label:"NE-AL", ev:2  },
-  {key:"NE-01", label:"NE-01", ev:1  },
-  {key:"NE-02", label:"NE-02", ev:1  },
-  {key:"NE-03", label:"NE-03", ev:1  },
+// States too small to label on-map (+ the ME/NE split districts) → inset tiles.
+const TILES = [
+  { key:"NH", ev:4 }, { key:"VT", ev:3 }, { key:"MA", ev:11 }, { key:"RI", ev:4 },
+  { key:"CT", ev:7 }, { key:"NJ", ev:14 }, { key:"DE", ev:3 }, { key:"MD", ev:10 }, { key:"DC", ev:3 },
+  { key:"ME-AL", ev:2 }, { key:"ME-01", ev:1 }, { key:"ME-02", ev:1 },
+  { key:"NE-AL", ev:2 }, { key:"NE-01", ev:1 }, { key:"NE-02", ev:1 }, { key:"NE-03", ev:1 },
 ];
+const TILE_SET = new Set(["NH","VT","MA","RI","CT","NJ","DE","MD","DC"]);
+const SMALL_TILES = TILES.filter(t => !t.key.includes("-"));
 
-const STORAGE_KEY = "psi-electoral-map-picks-v2";
-const TOTAL_EV    = 538;
+// ── 2026 Senate ────────────────────────────────────────────────────────────────
+// Seats on the ballot come from the shared model (positive = R margin).
+const SENATE_UP = new Map(SENATE_MODEL.map(r => [r.st, r.m]));
+const D_HOLDOVERS = 34;  // Democratic seats not on the 2026 ballot
+const R_HOLDOVERS = 31;  // Republican seats not on the 2026 ballot
+const SENATE_TOTAL = 100;
 
-// ─── helpers ──────────────────────────────────────────────────────────────────
-const RATINGS_LIST: Rating[] = ["SAFE", "LIKELY", "LEAN", "TILT"];
+function senateModelPicks(): Record<string, Pick> {
+  const out: Record<string, Pick> = {};
+  for (const r of SENATE_MODEL) {
+    const a = Math.abs(r.m);
+    if (a < 0.05) { out[r.st] = "T"; continue; }
+    const tier: Rating = a >= 12 ? "SAFE" : a >= 6 ? "LIKELY" : a >= 2 ? "LEAN" : "TILT";
+    out[r.st] = `${r.m < 0 ? "D" : "R"}_${tier}` as Pick;
+  }
+  return out;
+}
 
-// High-contrast palette — blues vs reds, clearly distinguishable at each tier
-const DEM_FILLS: Record<Rating, string> = {
-  SAFE:   "#0033a0",   // deep royal blue
-  LIKELY: "#1a5fd4",   // vivid blue
-  LEAN:   "#4a9dff",   // bright sky blue
-  TILT:   "#8dc8ff",   // pale blue
+// ── 2026 House redistricting (statuses as of June 2026 — they evolve) ─────────
+type RedistStatus = "ENACTED_R" | "ENACTED_D" | "COURT" | "MOTION_R" | "MOTION_D";
+const REDIST: Record<string, { s: RedistStatus; net: number; note: string }> = {
+  TX: { s: "ENACTED_R", net: +5, note: "Mid-decade map signed Aug 2025" },
+  MO: { s: "ENACTED_R", net: +1, note: "New map enacted Sep 2025" },
+  NC: { s: "ENACTED_R", net: +1, note: "Redraw enacted Oct 2025" },
+  OH: { s: "ENACTED_R", net: +2, note: "Required redraw enacted Oct 2025" },
+  CA: { s: "ENACTED_D", net: -5, note: "Prop 50 approved Nov 2025" },
+  UT: { s: "COURT",     net: -1, note: "Court-ordered remedial map" },
+  FL: { s: "MOTION_R",  net: 0,  note: "Redraw under consideration" },
+  IN: { s: "MOTION_R",  net: 0,  note: "Redraw push — not enacted" },
+  KS: { s: "MOTION_R",  net: 0,  note: "Redraw push in legislature" },
+  MD: { s: "MOTION_D",  net: 0,  note: "Response map under consideration" },
+  VA: { s: "MOTION_D",  net: 0,  note: "Amendment process under way" },
+  IL: { s: "MOTION_D",  net: 0,  note: "Response map floated" },
 };
-const REP_FILLS: Record<Rating, string> = {
-  SAFE:   "#9b0000",   // deep crimson
-  LIKELY: "#d42020",   // vivid red
-  LEAN:   "#ff6040",   // orange-red
-  TILT:   "#ffaa88",   // peach
+const REDIST_COLOR: Record<RedistStatus, string> = {
+  ENACTED_R: "#e84450", MOTION_R: "#ff8791",
+  ENACTED_D: "#3568e6", MOTION_D: "#84a8ff",
+  COURT: "#b98cff",
+};
+const REDIST_WORD: Record<RedistStatus, string> = {
+  ENACTED_R: "Enacted · R gain", MOTION_R: "In motion · R",
+  ENACTED_D: "Enacted · D gain", MOTION_D: "In motion · D",
+  COURT: "Court-ordered",
 };
 
-const DEM_FILLS_LIGHT: Record<Rating, string> = {
-  SAFE:   "#0033a0",
-  LIKELY: "#1a5fd4",
-  LEAN:   "#3a88f0",
-  TILT:   "#70b0f8",
+const STORAGE_PRES = "psi-electoral-map-v3";
+const STORAGE_SEN  = "psi-senate-map-v1";
+const STORAGE_HOUSE = "psi-house-map-v1";
+const HOUSE_TOTAL = 435;
+const ORDINAL = (n: number) => {
+  const v = n % 100;
+  if (v >= 11 && v <= 13) return n + "th";
+  return n + (["th", "st", "nd", "rd"][Math.min(n % 10, 4)] ?? "th");
 };
-const REP_FILLS_LIGHT: Record<Rating, string> = {
-  SAFE:   "#8b0000",
-  LIKELY: "#c41c1c",
-  LEAN:   "#e84020",
-  TILT:   "#f08060",
-};
+const TOTAL_EV = 538;
+const RATINGS: Rating[] = ["SAFE", "LIKELY", "LEAN", "TILT"];
 
-function fillFor(p: Pick | undefined, dark: boolean): string {
-  if (!p || p === "T") return dark ? "#2a2a2a" : "#d4d4d4";
-  const [party, rating] = p.split("_") as ["D"|"R", Rating];
-  const table = dark
-    ? (party === "D" ? DEM_FILLS : REP_FILLS)
-    : (party === "D" ? DEM_FILLS_LIGHT : REP_FILLS_LIGHT);
-  return table[rating];
+// ─── palette (matches the forecast page — editorial, not crayon) ────────────────
+const DEM: Record<Rating, string> = { SAFE:"#3568e6", LIKELY:"#5b8cff", LEAN:"#84a8ff", TILT:"#b3caff" };
+const REP: Record<Rating, string> = { SAFE:"#e84450", LIKELY:"#ff5d6c", LEAN:"#ff8791", TILT:"#ffb3b9" };
+const DEM_MID = "#5b8cff", REP_MID = "#ff5d6c";
+
+function fillFor(p: Pick | undefined): string {
+  if (!p || p === "T") return "var(--em-toss)";
+  const [party, rating] = p.split("_") as ["D" | "R", Rating];
+  return (party === "D" ? DEM : REP)[rating];
 }
-function strokeFor(p: Pick | undefined, dark: boolean): string {
-  if (!p || p === "T") return dark ? "#444" : "#aaa";
-  return p.startsWith("D_") ? "#1a5fd4" : "#d42020";
+function labelInk(p: Pick | undefined): { fill: string; opacity: number } {
+  if (!p || p === "T") return { fill: "var(--foreground)", opacity: 0.45 };
+  const rating = p.split("_")[1] as Rating;
+  return rating === "TILT" ? { fill: "#0b0d1c", opacity: 1 } : { fill: "#ffffff", opacity: 1 };
 }
-function labelFor(p: Pick | undefined): string {
-  if (!p || p === "T") return "TOSSUP";
-  const [party, rating] = p.split("_") as ["D"|"R", Rating];
-  return `${party === "D" ? "DEM" : "GOP"} · ${rating}`;
+const RATING_WORD: Record<Rating, string> = { SAFE:"Safe", LIKELY:"Likely", LEAN:"Lean", TILT:"Tilt" };
+function pickLabel(p: Pick | undefined): string {
+  if (!p || p === "T") return "Toss-up";
+  const [party, rating] = p.split("_") as ["D" | "R", Rating];
+  return `${RATING_WORD[rating]} ${party}`;
 }
-function labelColorFor(p: Pick | undefined, dark: boolean): string {
-  if (!p || p === "T") return dark ? "rgba(255,255,255,.45)" : "rgba(0,0,0,.45)";
-  return p.startsWith("D_") ? (dark ? "rgba(147,197,253,.9)" : "#1a3a8f") : (dark ? "rgba(252,165,165,.9)" : "#7f1d1d");
+function pickColor(p: Pick | undefined): string {
+  if (!p || p === "T") return "var(--muted)";
+  const [party, rating] = p.split("_") as ["D" | "R", Rating];
+  return (party === "D" ? DEM : REP)[rating === "TILT" ? "LEAN" : rating]; // readable as text
 }
-function nextRating(cur: Rating): Rating {
-  return RATINGS_LIST[(RATINGS_LIST.indexOf(cur) + 1) % RATINGS_LIST.length];
-}
-function stateKey(abbr: string) {
-  return abbr === "ME" ? "ME-AL" : abbr === "NE" ? "NE-AL" : abbr;
-}
+function nextRating(cur: Rating): Rating { return RATINGS[(RATINGS.indexOf(cur) + 1) % RATINGS.length]; }
+function stateKey(abbr: string) { return abbr === "ME" ? "ME-AL" : abbr === "NE" ? "NE-AL" : abbr; }
 function sumEV(picks: Record<string, Pick>) {
   let d = 0, r = 0, t = 0;
-  for (const [st, ev] of Object.entries(EV_BY_STATE)) {
-    const p = picks[st] ?? "T";
-    if (p === "T") t += ev; else if (p.startsWith("D_")) d += ev; else r += ev;
-  }
-  for (const [k, ev] of Object.entries(EV_SPLIT)) {
-    const p = picks[k] ?? "T";
-    if (p === "T") t += ev; else if (p.startsWith("D_")) d += ev; else r += ev;
+  const add = (p: Pick | undefined, ev: number) => { if (!p || p === "T") t += ev; else if (p[0] === "D") d += ev; else r += ev; };
+  for (const [st, ev] of Object.entries(EV_BY_STATE)) add(picks[st], ev);
+  for (const [k, ev] of Object.entries(EV_SPLIT)) add(picks[k], ev);
+  return { d, r, t };
+}
+function sumSeats(picks: Record<string, Pick>) {
+  let d = D_HOLDOVERS, r = R_HOLDOVERS, t = 0;
+  for (const st of SENATE_UP.keys()) {
+    const p = picks[st];
+    if (!p || p === "T") t += 1;
+    else if (p[0] === "D") d += 1;
+    else r += 1;
   }
   return { d, r, t };
 }
 function applyBrush(picks: Record<string, Pick>, key: string, brush: PartyBrush): Record<string, Pick> {
   const next = { ...picks };
   if (brush === "T") { next[key] = "T"; return next; }
-  const cur       = picks[key];
-  const curParty  = cur && cur !== "T" ? cur[0] as "D"|"R" : null;
-  const curRating = cur && cur !== "T" ? cur.split("_")[1] as Rating : null;
-  next[key] = curParty === brush && curRating
-    ? `${brush}_${nextRating(curRating)}` as Pick
-    : `${brush}_SAFE` as Pick;
+  const cur = picks[key];
+  const curParty = cur && cur !== "T" ? (cur[0] as "D" | "R") : null;
+  const curRating = cur && cur !== "T" ? (cur.split("_")[1] as Rating) : null;
+  next[key] = curParty === brush && curRating ? (`${brush}_${nextRating(curRating)}` as Pick) : (`${brush}_SAFE` as Pick);
   return next;
 }
 
+const MODE_META: Record<MapMode, { folio: string; scope: string; deck: string }> = {
+  pres: {
+    folio: "2028 Presidential", scope: "538 electoral votes",
+    deck: "Assign each state and the count updates as you go — 270 wins. Repeated clicks step a call from safe down to tilt. Maps save locally and share by link.",
+  },
+  senate: {
+    folio: "2026 Senate", scope: "35 seats on the ballot · 100 total",
+    deck: "The 35 seats on the 2026 ballot; the 65 holdovers are locked. Fifty-one wins the chamber. Starts from the desk's model — repaint from there.",
+  },
+  redist: {
+    folio: "2026 House", scope: "the mid-decade redraw",
+    deck: "The mid-decade redistricting fight, state by state — maps enacted, ordered by courts, and still in motion. The net enacted shift updates as the lines change.",
+  },
+  house: {
+    folio: "2026 House", scope: "435 districts · 218 to control",
+    deck: "All 435 districts, rated seat by seat — 218 wins the chamber. Boundaries are the 118th-Congress lines, so mid-decade redraws render approximately.",
+  },
+};
 
 // ─── page ─────────────────────────────────────────────────────────────────────
 export default function ElectoralMapPage() {
-  const [brush,      setBrush]      = useState<PartyBrush>("T");
-  const [picks,      setPicks]      = useState<Record<string, Pick>>({});
-  const [shareLabel, setShareLabel] = useState("↗ Share");
-  const [isFullscreen, setIsFullscreen] = useState(false);
-  const [darkMode,   setDarkMode]   = useState(true);
-  const [tooltip,    setTooltip]    = useState<TooltipState>({
-    visible:false, x:0, y:0, abbr:"", name:"", ev:0, isAtLarge:false, pick:"T", hint:"",
-  });
+  const [mode, setMode] = useState<MapMode>("pres");
+  const [brush, setBrush] = useState<PartyBrush>("D");
+  const [presPicks, setPresPicks] = useState<Record<string, Pick>>({});
+  const [senPicks, setSenPicks] = useState<Record<string, Pick>>(senateModelPicks);
+  const [housePicks, setHousePicks] = useState<Record<string, Pick>>({});
+  const [shareLabel, setShareLabel] = useState("Share map");
+  const [tip, setTip] = useState<TooltipState>({ visible:false, x:0, y:0, abbr:"", name:"", ev:0, pick:"T" });
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
 
-  const svgRef        = useRef<SVGSVGElement>(null);
-  const containerRef  = useRef<HTMLDivElement>(null);
-  const brushRef      = useRef<PartyBrush>("T");
-  const darkRef       = useRef<boolean>(true);
-  brushRef.current    = brush;
-  darkRef.current     = darkMode;
+  const svgRef = useRef<SVGSVGElement>(null);
+  const brushRef = useRef<PartyBrush>("D");
+  const modeRef = useRef<MapMode>("pres");
+  brushRef.current = brush;
+  modeRef.current = mode;
 
-  // localStorage
+  const picks = mode === "senate" ? senPicks : mode === "house" ? housePicks : presPicks;
+
+  // load picks + mode (URL ?picks= wins, else localStorage)
   useEffect(() => {
-    try { const r = localStorage.getItem(STORAGE_KEY); if (r) setPicks(JSON.parse(r)); } catch {}
+    try {
+      const url = new URL(window.location.href);
+      const m = url.searchParams.get("mode");
+      if (m === "senate" || m === "redist" || m === "house") setMode(m);
+      const q = url.searchParams.get("picks");
+      if (q) {
+        const parsed = JSON.parse(decodeURIComponent(q));
+        if (m === "senate") setSenPicks(parsed); else if (m === "house") setHousePicks(parsed); else setPresPicks(parsed);
+        return;
+      }
+      const rp = localStorage.getItem(STORAGE_PRES); if (rp) setPresPicks(JSON.parse(rp));
+      const rs = localStorage.getItem(STORAGE_SEN); if (rs) setSenPicks(JSON.parse(rs));
+      const rh = localStorage.getItem(STORAGE_HOUSE); if (rh) setHousePicks(JSON.parse(rh));
+    } catch {}
   }, []);
-  useEffect(() => {
-    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(picks)); } catch {}
-  }, [picks]);
-
-  // fullscreen
-  useEffect(() => {
-    const handler = () => setIsFullscreen(!!document.fullscreenElement);
-    document.addEventListener("fullscreenchange", handler);
-    return () => document.removeEventListener("fullscreenchange", handler);
-  }, []);
-
-  const toggleFullscreen = useCallback(() => {
-    if (!document.fullscreenElement) containerRef.current?.requestFullscreen();
-    else document.exitFullscreen();
-  }, []);
+  useEffect(() => { try { localStorage.setItem(STORAGE_PRES, JSON.stringify(presPicks)); } catch {} }, [presPicks]);
+  useEffect(() => { try { localStorage.setItem(STORAGE_SEN, JSON.stringify(senPicks)); } catch {} }, [senPicks]);
+  useEffect(() => { try { localStorage.setItem(STORAGE_HOUSE, JSON.stringify(housePicks)); } catch {} }, [housePicks]);
 
   const applyPick = useCallback((key: string) => {
-    setPicks(prev => applyBrush(prev, key, brushRef.current));
+    const m = modeRef.current;
+    if (m === "redist") return;
+    if (m === "senate") {
+      if (!SENATE_UP.has(key)) return;
+      setSenPicks(prev => applyBrush(prev, key, brushRef.current));
+      return;
+    }
+    if (m === "house") {
+      setHousePicks(prev => applyBrush(prev, key, brushRef.current));
+      return;
+    }
+    setPresPicks(prev => applyBrush(prev, key, brushRef.current));
   }, []);
 
-  // draw map once + labels
+  // draw the map once
   useEffect(() => {
     let dead = false;
     (async () => {
       try {
         const [{ geoAlbersUsa, geoPath }, { feature, mesh }, topo] = await Promise.all([
-          import("d3-geo"),
-          import("topojson-client"),
+          import("d3-geo"), import("topojson-client"),
           fetch("https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json").then(r => r.json()),
         ]);
         if (dead || !svgRef.current) return;
-        const svg  = svgRef.current;
+        const svg = svgRef.current;
+        const NS = "http://www.w3.org/2000/svg";
         const proj = geoAlbersUsa().scale(1280).translate([480, 300]);
         const path = geoPath().projection(proj);
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const states = feature(topo as any, (topo as any).objects.states) as any;
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const border = mesh(topo as any, (topo as any).objects.states, (a:any, b:any) => a !== b);
-        while (svg.firstChild) svg.removeChild(svg.firstChild);
+        svg.querySelectorAll('[data-layer="states"]').forEach(g => g.remove());
+        const gStates = document.createElementNS(NS, "g");
+        gStates.setAttribute("data-layer", "states");
+        svg.appendChild(gStates);
 
+        // shapes
         for (const f of states.features) {
-          const fips = String(f.id).padStart(2, "0");
-          const abbr = FIPS[fips];
+          const abbr = FIPS[String(f.id).padStart(2, "0")];
           if (!abbr) continue;
-          const key       = stateKey(abbr);
-          const clickable = abbr === "ME" || abbr === "NE" || EV_BY_STATE[abbr] != null;
-          const evCount   = EV_BY_STATE[abbr] ?? 0;
-
-          const el = document.createElementNS("http://www.w3.org/2000/svg", "path");
+          const key = stateKey(abbr);
+          const el = document.createElementNS(NS, "path");
           el.setAttribute("d", path(f) ?? "");
           el.setAttribute("data-key", key);
           el.setAttribute("data-abbr", abbr);
-          el.style.cssText = `fill:${fillFor("T", darkRef.current)};stroke:#111;stroke-width:0.8;cursor:${clickable?"pointer":"default"};transition:filter 160ms ease;`;
-
-          if (clickable) {
-            el.addEventListener("click", () => applyPick(key));
-            el.addEventListener("mouseover",  () => { el.style.filter = "brightness(1.25) saturate(1.3)"; });
-            el.addEventListener("mouseout",   () => { el.style.filter = ""; });
-          }
-          el.addEventListener("mousemove", (ev: MouseEvent) => {
-            const evC = abbr === "ME" || abbr === "NE" ? (EV_SPLIT[key] ?? 0) : (EV_BY_STATE[abbr] ?? 0);
-            setPicks(cur => {
-              const p    = (cur[key] ?? "T") as Pick;
-              const hint = brushRef.current === "T"
-                ? "Click to set TOSSUP"
-                : `Click: ${brushRef.current === "D" ? "DEM" : "GOP"} · cycles rating`;
-              setTooltip({ visible:true, x:ev.clientX, y:ev.clientY, abbr, name:STATE_NAMES[abbr]??abbr, ev:evC, isAtLarge:abbr==="ME"||abbr==="NE", pick:p, hint });
+          el.style.cssText = `fill:var(--em-toss);stroke:var(--background);stroke-width:1.2;transition:filter 140ms ease;`;
+          el.addEventListener("click", () => applyPick(key));
+          el.addEventListener("mouseover", () => {
+            const m = modeRef.current;
+            const interactive = m === "pres" ? (EV_BY_STATE[abbr] != null && abbr !== "ME" && abbr !== "NE")
+              : m === "senate" ? SENATE_UP.has(abbr)
+              : REDIST[abbr] != null;
+            if (!interactive) return;
+            el.style.filter = "brightness(1.12) saturate(1.16)"; el.style.stroke = "var(--foreground)"; el.style.strokeWidth = "2";
+          });
+          el.addEventListener("mouseout",  () => { el.style.filter = ""; el.style.stroke = "var(--background)"; el.style.strokeWidth = "1.2"; });
+          el.addEventListener("mousemove", (e: MouseEvent) => {
+            const setCur = modeRef.current === "senate" ? setSenPicks : setPresPicks;
+            setCur(cur => {
+              setTip({ visible:true, x:e.clientX, y:e.clientY, abbr, name:STATE_NAMES[abbr] ?? abbr, ev:EV_BY_STATE[abbr] ?? 0, pick:(cur[key] ?? "T") as Pick });
               return cur;
             });
           });
-          el.addEventListener("mouseleave", () => setTooltip(t => ({ ...t, visible:false })));
-          svg.appendChild(el);
+          el.addEventListener("mouseleave", () => setTip(t => ({ ...t, visible:false })));
+          gStates.appendChild(el);
         }
-
-        const be = document.createElementNS("http://www.w3.org/2000/svg", "path");
+        // borders
+        const be = document.createElementNS(NS, "path");
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         be.setAttribute("d", path(border as any) ?? "");
-        be.style.cssText = "fill:none;stroke:#111;stroke-width:0.8;pointer-events:none;";
-        svg.appendChild(be);
-      } catch { /* network unavailable */ }
+        be.style.cssText = "fill:none;stroke:var(--background);stroke-width:1;pointer-events:none;";
+        gStates.appendChild(be);
+        // labels (skip tile states + ME/NE + anything too small)
+        for (const f of states.features) {
+          const abbr = FIPS[String(f.id).padStart(2, "0")];
+          if (!abbr || EV_BY_STATE[abbr] == null || TILE_SET.has(abbr) || abbr === "ME" || abbr === "NE") continue;
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          const [[x0, y0], [x1, y1]] = (path as any).bounds(f);
+          if (x1 - x0 < 26 || y1 - y0 < 17) continue;
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          const [cx, cy] = (path as any).centroid(f);
+          const t = document.createElementNS(NS, "text");
+          t.setAttribute("x", String(cx)); t.setAttribute("y", String(cy));
+          t.setAttribute("text-anchor", "middle"); t.setAttribute("dominant-baseline", "central");
+          t.setAttribute("data-lab", abbr); t.setAttribute("class", "em-lab");
+          t.textContent = abbr;
+          gStates.appendChild(t);
+        }
+        gStates.style.display = modeRef.current === "house" ? "none" : "";
+      } catch { /* offline */ }
     })();
     return () => { dead = true; };
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // sync colors to picks + dark mode
+  // build the 435-district layer on first entry into house mode
   useEffect(() => {
-    svgRef.current?.querySelectorAll<SVGPathElement>("[data-key]").forEach(el => {
-      const p = (picks[el.getAttribute("data-key")!] ?? "T") as Pick;
-      el.style.fill   = fillFor(p, darkMode);
-      el.style.stroke = darkMode ? "#111" : "#888";
-    });
-    // Update border stroke
-    svgRef.current?.querySelectorAll<SVGPathElement>("path:not([data-key])").forEach(el => {
-      if (el.style.fill === "none") el.style.stroke = darkMode ? "#111" : "#999";
-    });
-  }, [picks, darkMode]);
+    if (mode !== "house") return;
+    if (svgRef.current?.querySelector('[data-layer="house"]')) return;
+    let dead = false;
+    (async () => {
+      try {
+        const [{ geoAlbersUsa, geoPath }, { feature, mesh }, topo] = await Promise.all([
+          import("d3-geo"), import("topojson-client"),
+          fetch("/cd118.json").then(r => r.json()),
+        ]);
+        if (dead || !svgRef.current) return;
+        if (svgRef.current.querySelector('[data-layer="house"]')) return;
+        const svg = svgRef.current;
+        const NS = "http://www.w3.org/2000/svg";
+        const proj = geoAlbersUsa().scale(1280).translate([480, 300]);
+        const path = geoPath().projection(proj);
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const cds = feature(topo as any, (topo as any).objects.cd) as any;
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const border = mesh(topo as any, (topo as any).objects.cd, (a: any, b: any) => a !== b);
+        const gHouse = document.createElementNS(NS, "g");
+        gHouse.setAttribute("data-layer", "house");
+        gHouse.style.display = modeRef.current === "house" ? "" : "none";
+        for (const f of cds.features) {
+          const abbr = FIPS[String(f.properties.STATEFP).padStart(2, "0")];
+          if (!abbr) continue;
+          const num = parseInt(f.properties.CD118FP, 10);
+          const key = `${abbr}-${Number.isFinite(num) && num > 0 ? num : "AL"}`;
+          const name = `${STATE_NAMES[abbr] ?? abbr} · ${Number.isFinite(num) && num > 0 ? ORDINAL(num) : "at-large"}`;
+          const el = document.createElementNS(NS, "path");
+          el.setAttribute("d", path(f) ?? "");
+          el.setAttribute("data-cd", key);
+          el.style.cssText = "fill:var(--em-toss);stroke:var(--background);stroke-width:0.55;cursor:pointer;transition:filter 120ms ease;";
+          el.addEventListener("click", () => applyPick(key));
+          el.addEventListener("mouseover", () => { el.style.filter = "brightness(1.18) saturate(1.16)"; el.style.stroke = "var(--foreground)"; el.style.strokeWidth = "1.4"; });
+          el.addEventListener("mouseout",  () => { el.style.filter = ""; el.style.stroke = "var(--background)"; el.style.strokeWidth = "0.55"; });
+          el.addEventListener("mousemove", (e: MouseEvent) => {
+            setHousePicks(cur => {
+              setTip({ visible: true, x: e.clientX, y: e.clientY, abbr: key, name, ev: 1, pick: (cur[key] ?? "T") as Pick });
+              return cur;
+            });
+          });
+          el.addEventListener("mouseleave", () => setTip(t => ({ ...t, visible: false })));
+          gHouse.appendChild(el);
+        }
+        const be = document.createElementNS(NS, "path");
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        be.setAttribute("d", path(border as any) ?? "");
+        be.style.cssText = "fill:none;stroke:var(--background);stroke-width:0.5;pointer-events:none;";
+        gHouse.appendChild(be);
+        svg.appendChild(gHouse);
+        // paint current picks immediately
+        gHouse.querySelectorAll<SVGPathElement>("[data-cd]").forEach(el => {
+          el.style.fill = fillFor((housePicks[el.getAttribute("data-cd")!] ?? "T") as Pick);
+        });
+      } catch { /* offline */ }
+    })();
+    return () => { dead = true; };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [mode]);
 
-  const { d, r, t } = sumEV(picks);
-  const pct = (n: number) => `${((n / TOTAL_EV) * 100).toFixed(2)}%`;
+  // layer visibility per mode
+  useEffect(() => {
+    const svg = svgRef.current; if (!svg) return;
+    const gStates = svg.querySelector<SVGGElement>('[data-layer="states"]');
+    const gHouse = svg.querySelector<SVGGElement>('[data-layer="house"]');
+    if (gStates) gStates.style.display = mode === "house" ? "none" : "";
+    if (gHouse) gHouse.style.display = mode === "house" ? "" : "none";
+  }, [mode]);
+
+  // recolor shapes + labels for the active mode
+  useEffect(() => {
+    const svg = svgRef.current; if (!svg) return;
+    svg.querySelectorAll<SVGPathElement>("[data-key]").forEach(el => {
+      const key = el.getAttribute("data-key")!;
+      const abbr = el.getAttribute("data-abbr")!;
+      if (mode === "redist") {
+        const st = REDIST[abbr];
+        el.style.fill = st ? REDIST_COLOR[st.s] : "var(--em-out)";
+        el.style.cursor = "default";
+      } else if (mode === "senate") {
+        const up = SENATE_UP.has(abbr);
+        el.style.fill = up ? fillFor((senPicks[abbr] ?? "T") as Pick) : "var(--em-out)";
+        el.style.cursor = up ? "pointer" : "default";
+      } else {
+        const clickable = EV_BY_STATE[abbr] != null && abbr !== "ME" && abbr !== "NE";
+        el.style.fill = fillFor((presPicks[key] ?? "T") as Pick);
+        el.style.cursor = clickable ? "pointer" : "default";
+      }
+    });
+    svg.querySelectorAll<SVGPathElement>("[data-cd]").forEach(el => {
+      el.style.fill = fillFor((housePicks[el.getAttribute("data-cd")!] ?? "T") as Pick);
+    });
+    svg.querySelectorAll<SVGTextElement>("[data-lab]").forEach(el => {
+      const abbr = el.getAttribute("data-lab")!;
+      if (mode === "redist") {
+        const st = REDIST[abbr];
+        el.style.fill = st ? (st.s === "MOTION_D" || st.s === "COURT" ? "#0b0d1c" : "#ffffff") : "var(--foreground)";
+        el.style.opacity = st ? "1" : "0.3";
+      } else if (mode === "senate") {
+        if (!SENATE_UP.has(abbr)) { el.style.fill = "var(--foreground)"; el.style.opacity = "0.22"; return; }
+        const ink = labelInk((senPicks[abbr] ?? "T") as Pick);
+        el.style.fill = ink.fill; el.style.opacity = String(ink.opacity);
+      } else {
+        const ink = labelInk((presPicks[abbr] ?? "T") as Pick);
+        el.style.fill = ink.fill; el.style.opacity = String(ink.opacity);
+      }
+    });
+  }, [picks, presPicks, senPicks, housePicks, mode]);
+
+  const meta = MODE_META[mode];
+  const ev = sumEV(presPicks);
+  const seats = sumSeats(senPicks);
+  const redistEnacted = Object.values(REDIST).filter(x => x.s === "ENACTED_R" || x.s === "ENACTED_D" || x.s === "COURT");
+  const rGain = redistEnacted.filter(x => x.net > 0).reduce((s, x) => s + x.net, 0);
+  const dGain = -redistEnacted.filter(x => x.net < 0).reduce((s, x) => s + x.net, 0);
+  const inMotion = Object.values(REDIST).filter(x => x.s === "MOTION_R" || x.s === "MOTION_D").length;
+
+  const house = (() => {
+    let d = 0, r = 0, t = 0;
+    for (const p of Object.values(housePicks)) { if (!p || p === "T") continue; if (p[0] === "D") d += 1; else r += 1; }
+    t = HOUSE_TOTAL - d - r;
+    return { d, r, t };
+  })();
+
+  // composition of the board by rating — the beam shows HOW each side gets
+  // its number, not just the totals. Locked = senate holdovers not on the ballot.
+  const composition = (() => {
+    const RATINGS: Rating[] = ["SAFE", "LIKELY", "LEAN", "TILT"];
+    const z = () => ({ SAFE: 0, LIKELY: 0, LEAN: 0, TILT: 0 } as Record<Rating, number>);
+    const D = z(), R = z();
+    let dLock = 0, rLock = 0, t = 0;
+    const add = (p: Pick | undefined, w: number) => {
+      if (!p || p === "T") { t += w; return; }
+      const side = p[0] === "D" ? D : R;
+      side[p.slice(2) as Rating] += w;
+    };
+    if (mode === "senate") {
+      dLock = D_HOLDOVERS; rLock = R_HOLDOVERS;
+      for (const st of SENATE_UP.keys()) add(senPicks[st], 1);
+    } else if (mode === "house") {
+      const seen = new Set<string>();
+      for (const [k, p] of Object.entries(housePicks)) { seen.add(k); add(p, 1); }
+      t += HOUSE_TOTAL - Object.keys(housePicks).length;
+    } else {
+      for (const [st, w] of Object.entries(EV_BY_STATE)) add(presPicks[st], w);
+      for (const [k, w] of Object.entries(EV_SPLIT)) add(presPicks[k], w);
+    }
+    const segs: { w: number; c: string; k: string }[] = [];
+    if (dLock) segs.push({ w: dLock, c: DEM.SAFE, k: "d-lock" });
+    for (const rt of RATINGS) if (D[rt]) segs.push({ w: D[rt], c: DEM[rt], k: `d-${rt}` });
+    if (t) segs.push({ w: t, c: "var(--em-toss)", k: "toss" });
+    for (const rt of [...RATINGS].reverse()) if (R[rt]) segs.push({ w: R[rt], c: REP[rt], k: `r-${rt}` });
+    if (rLock) segs.push({ w: rLock, c: REP.SAFE, k: "r-lock" });
+    return segs;
+  })();
+  const board = mode === "senate"
+    ? { d: seats.d, r: seats.r, t: seats.t, total: SENATE_TOTAL, win: 51, unit: "seats" }
+    : mode === "house"
+    ? { d: house.d, r: house.r, t: house.t, total: HOUSE_TOTAL, win: 218, unit: "seats" }
+    : { d: ev.d, r: ev.r, t: ev.t, total: TOTAL_EV, win: 270, unit: "EV" };
+  const dWins = board.d >= board.win, rWins = board.r >= board.win;
+  const lead = board.d === board.r ? null : board.d > board.r ? "D" : "R";
+  const need = (n: number) => Math.max(0, board.win - n);
 
   const handleShare = () => {
-    const url = window.location.href.split("?")[0] + "?picks=" + encodeURIComponent(JSON.stringify(picks));
+    const base = window.location.href.split("?")[0];
+    const url = mode === "redist"
+      ? `${base}?mode=redist`
+      : `${base}?mode=${mode}&picks=${encodeURIComponent(JSON.stringify(picks))}`;
     navigator.clipboard?.writeText(url).catch(() => {});
-    setShareLabel("✓ Copied!");
-    setTimeout(() => setShareLabel("↗ Share"), 2000);
+    setShareLabel("Copied ✓");
+    setTimeout(() => setShareLabel("Share map"), 1800);
   };
-
-  const setAllTossup = () => {
+  const resetMap = () => {
+    if (mode === "house") { setHousePicks({}); return; }
+    if (mode === "senate") { setSenPicks(senateModelPicks()); return; }
     const next: Record<string, Pick> = {};
     Object.keys(EV_BY_STATE).forEach(k => { next[k] = "T"; });
-    Object.keys(EV_SPLIT).forEach(k   => { next[k] = "T"; });
-    setPicks(next);
+    Object.keys(EV_SPLIT).forEach(k => { next[k] = "T"; });
+    setPresPicks(next);
+  };
+  const clearMap = () => {
+    if (mode === "house") { setHousePicks({}); return; }
+    if (mode === "senate") {
+      const next: Record<string, Pick> = {};
+      for (const st of SENATE_UP.keys()) next[st] = "T";
+      setSenPicks(next);
+      return;
+    }
+    setPresPicks({});
   };
 
-  const dWins = d >= 270;
-  const rWins = r >= 270;
+  const brushHint = mode === "redist"
+    ? "An informational map — hover any highlighted state for its status. Statuses as of June 2026."
+    : brush === "D" ? "Click a state → Safe D. Click again to cycle Safe → Likely → Lean → Tilt."
+    : brush === "R" ? "Click a state → Safe R. Click again to cycle Safe → Likely → Lean → Tilt."
+    : "Click any state to reset it to toss-up.";
 
-  const dm = darkMode;
+  const tiles = mode === "pres" ? TILES : SMALL_TILES;
 
   return (
-    <>
-      <style>{buildCSS(dm)}</style>
-      <div ref={containerRef} className={`em-root${isFullscreen ? " em-fs" : ""}${dm ? " em-dark" : " em-light"}`}>
+    <div className={`em-page ${manrope.variable}`}>
+      <style>{CSS}</style>
 
-        {/* ── TOP BAR ── */}
-        <div className="em-top">
-          <div className="em-top-brand">
-            <span className="em-logo">PSI</span>
-            <div className="em-brand-text">
-              <span className="em-brand-main">Electoral Forecaster</span>
-              <span className="em-brand-sub">2028 Presidential · Interactive Map</span>
-            </div>
-          </div>
+      <DarkNav />
 
-          {/* EV bar – center */}
-          <div className="em-ev-center">
-            <div className="em-ev-side" style={{ color: dm ? "#4a9dff" : "#0033a0" }}>
-              <span className="em-ev-label">DEM</span>
-              <span className="em-ev-num">{d}</span>
-            </div>
-            <div className="em-ev-middle">
-              <div className="em-ev-bar">
-                <div style={{ width:pct(d), background: dm ? "#1a5fd4" : "#0033a0", height:"100%", transition:"width .5s" }} />
-                <div style={{ width:pct(t), background: dm ? "#333" : "#bbb",       height:"100%", transition:"width .5s" }} />
-                <div style={{ flex:1,       background: dm ? "#d42020" : "#9b0000", height:"100%" }} />
-              </div>
-              <span className="em-270-txt">270 TO WIN</span>
-            </div>
-            <div className="em-ev-side" style={{ color: dm ? "#ff6040" : "#9b0000" }}>
-              <span className="em-ev-label">GOP</span>
-              <span className="em-ev-num">{r}</span>
-            </div>
-          </div>
-
-          {/* Actions – right */}
-          <div className="em-top-actions">
-            <button className="em-btn" onClick={() => setDarkMode(v => !v)}>
-              {dm ? "☀ Light" : "☾ Dark"}
-            </button>
-            <button className="em-btn" onClick={setAllTossup}>Reset</button>
-            <button className="em-btn" onClick={() => setPicks({})}>Clear</button>
-            <button className="em-btn" onClick={handleShare}>{shareLabel}</button>
-            <button className="em-btn em-btn-gold" onClick={toggleFullscreen}>
-              {isFullscreen ? (
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3"/></svg>
-              ) : (
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
-              )}
-              {isFullscreen ? "Exit" : "Fullscreen"}
-            </button>
-          </div>
-        </div>
-
-        {/* ── WIN BANNER ── */}
-        {(dWins || rWins) && (
-          <div className="em-win" style={{
-            background: dWins
-              ? (dm ? "rgba(0,51,160,0.18)" : "rgba(0,51,160,0.08)")
-              : (dm ? "rgba(155,0,0,0.18)" : "rgba(155,0,0,0.08)"),
-            borderColor: dWins ? "#1a5fd4" : "#d42020"
-          }}>
-            <span style={{ color: dWins ? (dm ? "#4a9dff" : "#0033a0") : (dm ? "#ff6040" : "#9b0000") }}>
-              ★ {dWins ? "DEMOCRAT" : "REPUBLICAN"} WINS WITH {dWins ? d : r} ELECTORAL VOTES
-            </span>
-          </div>
-        )}
-
-        {/* ── BRUSH BAR ── */}
-        <div className="em-brush-bar">
-          <span className="em-brush-label">PAINT:</span>
-          <div className="em-brush-group">
-            {(["D","R","T"] as PartyBrush[]).map(b => (
-              <button key={b}
-                className={`em-brush-btn${brush === b ? " active" : ""}`}
-                style={brush === b ? {
-                  background: b === "D" ? (dm ? "#1a5fd4" : "#0033a0")
-                            : b === "R" ? (dm ? "#d42020" : "#9b0000")
-                            : (dm ? "#444" : "#888"),
-                  borderColor: b === "D" ? (dm ? "#4a9dff" : "#1a5fd4")
-                             : b === "R" ? (dm ? "#ff6040" : "#d42020")
-                             : (dm ? "#888" : "#666"),
-                  color: "#fff",
-                } : {}}
-                onClick={() => setBrush(b)}
-              >
-                {b === "D" ? "◀ Democrat" : b === "R" ? "Republican ▶" : "○ Tossup"}
-              </button>
-            ))}
-          </div>
-          <span className="em-brush-hint">
-            {brush === "D" ? "Click → DEM, click again to cycle SAFE→LIKELY→LEAN→TILT" :
-             brush === "R" ? "Click → GOP, click again to cycle SAFE→LIKELY→LEAN→TILT" :
-             "Click states to reset to TOSSUP"}
-          </span>
-          <span className="em-tossup-chip">{t} TOSSUP</span>
-        </div>
-
-        {/* ── MAIN BODY ── */}
-        <div className="em-body">
-
-          {/* MAP */}
-          <div className="em-map-area">
-            <svg ref={svgRef} viewBox="0 0 960 600" className="em-svg" preserveAspectRatio="xMidYMid meet" />
-            {/* Small-state tiles */}
-            <div className="em-tiles">
-              {SIDE_TILES.map(tile => {
-                const p = (picks[tile.key] ?? "T") as Pick;
-                return (
-                  <button key={tile.key} className="em-tile"
-                    onClick={() => applyPick(tile.key)}
-                    style={{
-                      background: fillFor(p, dm),
-                      borderColor: strokeFor(p, dm),
-                      color: labelColorFor(p, dm),
-                    }}
-                  >
-                    <span className="em-tile-lbl">{tile.label}</span>
-                    <span className="em-tile-ev">{tile.ev}</span>
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-
-          {/* SIDEBAR */}
-          <div className="em-sidebar">
-
-            {/* Legend */}
-            <div className="em-panel">
-              <div className="em-panel-title">LEGEND</div>
-              <div className="em-legend">
-                {[
-                  { l:"Safe D",   f: dm ? "#0033a0" : "#0033a0", tc: "rgba(255,255,255,.9)" },
-                  { l:"Likely D", f: dm ? "#1a5fd4" : "#1a5fd4", tc: "rgba(255,255,255,.9)" },
-                  { l:"Lean D",   f: dm ? "#4a9dff" : "#3a88f0", tc: "rgba(255,255,255,.9)" },
-                  { l:"Tilt D",   f: dm ? "#8dc8ff" : "#70b0f8", tc: dm ? "rgba(0,0,0,.7)" : "rgba(0,0,0,.75)" },
-                  { l:"Tossup",   f: dm ? "#2a2a2a" : "#d4d4d4", tc: dm ? "rgba(255,255,255,.45)" : "rgba(0,0,0,.55)" },
-                  { l:"Tilt R",   f: dm ? "#ffaa88" : "#f08060", tc: dm ? "rgba(0,0,0,.7)" : "rgba(0,0,0,.75)" },
-                  { l:"Lean R",   f: dm ? "#ff6040" : "#e84020", tc: "rgba(255,255,255,.9)" },
-                  { l:"Likely R", f: dm ? "#d42020" : "#c41c1c", tc: "rgba(255,255,255,.9)" },
-                  { l:"Safe R",   f: dm ? "#9b0000" : "#8b0000", tc: "rgba(255,255,255,.9)" },
-                ].map(({ l, f, tc }) => (
-                  <div key={l} className="em-chip" style={{ background:f, color:tc }}>{l}</div>
-                ))}
-              </div>
-            </div>
-
-            {/* Scoreboard */}
-            <div className="em-panel">
-              <div className="em-panel-title">SCOREBOARD</div>
-              <div className="em-score-card">
-                <div className="em-score-party">DEMOCRAT</div>
-                <div className="em-score-num" style={{ color: dm ? "#4a9dff" : "#0033a0" }}>{d}</div>
-                <div className="em-score-track">
-                  <div style={{ width:`${Math.min((d/270)*100, 100)}%`, background: dm ? "#1a5fd4" : "#0033a0", height:"100%", transition:"width .5s cubic-bezier(.22,1,.36,1)" }} />
-                </div>
-                <div className="em-score-need" style={{ color:d>=270?"#22c55e": dm ? "rgba(255,255,255,.3)" : "rgba(0,0,0,.3)" }}>
-                  {d >= 270 ? "★ WINNER" : `Needs ${270-d} more`}
-                </div>
-              </div>
-              <div className="em-score-tossup">{t} EV TOSSUP</div>
-              <div className="em-score-card">
-                <div className="em-score-party">REPUBLICAN</div>
-                <div className="em-score-num" style={{ color: dm ? "#ff6040" : "#9b0000" }}>{r}</div>
-                <div className="em-score-track">
-                  <div style={{ width:`${Math.min((r/270)*100, 100)}%`, background: dm ? "#d42020" : "#9b0000", height:"100%", transition:"width .5s cubic-bezier(.22,1,.36,1)" }} />
-                </div>
-                <div className="em-score-need" style={{ color:r>=270?"#22c55e": dm ? "rgba(255,255,255,.3)" : "rgba(0,0,0,.3)" }}>
-                  {r >= 270 ? "★ WINNER" : `Needs ${270-r} more`}
-                </div>
-              </div>
-            </div>
-
-            {/* How to use */}
-            <div className="em-panel em-how">
-              <div className="em-panel-title">HOW TO USE</div>
-              <p className="em-how-text">Select a <strong>brush</strong> above, then click any state. Click again to cycle ratings: SAFE → LIKELY → LEAN → TILT. Use <strong>Tossup</strong> brush to reset. Picks auto-save locally.</p>
-            </div>
-
-          </div>
-        </div>
-
-        {/* ── BOTTOM BAR ── */}
-        <div className="em-bottom">
-          <span>PSI · Electoral Forecaster · 538 Total EV · 270 to Win</span>
-          <span className="em-bottom-sub">Picks saved locally · Share via URL</span>
-        </div>
-
+      {/* ── Masthead ── */}
+      <div className="em-mast">
+        <div className="em-folio"><span>TPSI Interactive</span><span>{meta.folio}</span><span>{meta.scope}</span></div>
+        <h1 className="em-title">Electoral Map</h1>
+        <p className="em-deck">{meta.deck}</p>
       </div>
 
-      {/* TOOLTIP */}
-      {tooltip.visible && (
-        <div className={`em-tooltip${dm ? "" : " em-tooltip-light"}`} style={{ left:tooltip.x+16, top:tooltip.y+16 }}>
-          <div className="em-tt-name">{tooltip.name} <span className="em-tt-abbr">({tooltip.abbr})</span></div>
-          <div className="em-tt-ev">{tooltip.ev} Electoral Vote{tooltip.ev !== 1 ? "s" : ""}</div>
-          <div className="em-tt-div" />
-          <div className="em-tt-pick" style={{ color:labelColorFor(tooltip.pick, dm) }}>{labelFor(tooltip.pick)}</div>
-          <div className="em-tt-hint">{tooltip.hint}</div>
+      {/* ── Scoreboard (sticky) ── */}
+      {mode !== "redist" ? (
+        <div className="em-board">
+          <div className={`em-board-side${dWins ? " is-win" : ""}`}>
+            <span className="em-board-party" style={{ color: DEM_MID }}>Democrat</span>
+            <span className="em-board-ev" style={{ color: DEM_MID }}>{board.d}</span>
+            <span className="em-board-need">{dWins ? <b style={{ color: DEM_MID }}>majority</b> : <><b>{need(board.d)}</b> to {board.win}</>}</span>
+          </div>
+          <div className="em-board-mid">
+            <div className="em-beam">
+              {composition.map((s) => (
+                <i key={s.k} style={{ width: `${(s.w / board.total) * 100}%`, background: s.c }} title={`${s.w} ${board.unit}`} />
+              ))}
+              <span className="em-beam-needle" style={{ left: `${(board.win / board.total) * 100}%` }}>
+                <b>{board.win}</b>
+              </span>
+            </div>
+            <div className="em-board-meta">
+              <span className="em-board-lead">
+                {lead
+                  ? <span style={{ color: lead === "D" ? DEM_MID : REP_MID }}>{lead === "D" ? "Democrats" : "Republicans"} +{Math.abs(board.d - board.r)}</span>
+                  : <span>dead even</span>}
+              </span>
+              <span className="em-board-toss">{board.t} {board.unit} toss-up{mode === "senate" ? ` · ${D_HOLDOVERS + R_HOLDOVERS} holdovers locked` : ""}</span>
+            </div>
+          </div>
+          <div className={`em-board-side em-r${rWins ? " is-win" : ""}`}>
+            <span className="em-board-party" style={{ color: REP_MID }}>Republican</span>
+            <span className="em-board-ev" style={{ color: REP_MID }}>{board.r}</span>
+            <span className="em-board-need">{rWins ? <b style={{ color: REP_MID }}>majority</b> : <><b>{need(board.r)}</b> to {board.win}</>}</span>
+          </div>
+        </div>
+      ) : (
+        <div className="em-board">
+          <div className="em-board-side">
+            <span className="em-board-party" style={{ color: DEM_MID }}>Dem gains</span>
+            <span className="em-board-ev" style={{ color: DEM_MID }}>+{dGain}</span>
+            <span className="em-board-need">enacted &amp; court-ordered</span>
+          </div>
+          <div className="em-board-mid">
+            <div className="em-board-bar">
+              <i style={{ width: `${(dGain / (dGain + rGain)) * 100}%`, background: `linear-gradient(90deg, ${DEM.SAFE}, ${DEM.LEAN})` }} />
+              <i style={{ flex: 1, background: `linear-gradient(90deg, ${REP.LEAN}, ${REP.SAFE})` }} />
+            </div>
+            <div className="em-board-meta">
+              <span style={{ color: rGain > dGain ? REP_MID : DEM_MID }}>Net {rGain === dGain ? "even" : rGain > dGain ? `R +${rGain - dGain}` : `D +${dGain - rGain}`} enacted</span>
+              <span className="em-board-toss">{inMotion} states in motion</span>
+            </div>
+          </div>
+          <div className="em-board-side em-r">
+            <span className="em-board-party" style={{ color: REP_MID }}>Rep gains</span>
+            <span className="em-board-ev" style={{ color: REP_MID }}>+{rGain}</span>
+            <span className="em-board-need">enacted maps</span>
+          </div>
         </div>
       )}
-    </>
+
+      {/* ── The ink tray — the rating ramps ARE the brush selector ── */}
+      <div className="em-controls">
+        {mode !== "redist" ? (
+          <div className="em-tray" role="radiogroup" aria-label="Paint brush">
+            <button
+              className={`em-ink${brush === "D" ? " is-on" : ""}`}
+              role="radio" aria-checked={brush === "D"}
+              onClick={() => setBrush("D")}
+            >
+              <span className="em-ink-ramp">
+                {(["SAFE","LIKELY","LEAN","TILT"] as Rating[]).map(r => (
+                  <i key={r} style={{ background: DEM[r] }} />
+                ))}
+              </span>
+              <span className="em-ink-lab" style={brush === "D" ? { color: DEM_MID } : undefined}>Democrat</span>
+            </button>
+
+            <button
+              className={`em-ink em-ink-t${brush === "T" ? " is-on" : ""}`}
+              role="radio" aria-checked={brush === "T"}
+              onClick={() => setBrush("T")}
+              title="Eraser — set a state back to toss-up"
+            >
+              <span className="em-ink-ramp"><i style={{ background: "var(--em-toss)" }} /></span>
+              <span className="em-ink-lab">Toss-up</span>
+            </button>
+
+            <button
+              className={`em-ink em-ink-r${brush === "R" ? " is-on" : ""}`}
+              role="radio" aria-checked={brush === "R"}
+              onClick={() => setBrush("R")}
+            >
+              <span className="em-ink-ramp">
+                {(["TILT","LEAN","LIKELY","SAFE"] as Rating[]).map(r => (
+                  <i key={r} style={{ background: REP[r] }} />
+                ))}
+              </span>
+              <span className="em-ink-lab" style={brush === "R" ? { color: REP_MID } : undefined}>Republican</span>
+            </button>
+          </div>
+        ) : <span className="em-cap em-cap-loose">Status map · informational</span>}
+        <div className="em-actions">
+          {mode !== "redist" && mode !== "house" && <button className="em-act" onClick={resetMap}>{mode === "senate" ? "Model map" : "Reset"}</button>}
+          {mode !== "redist" && <button className="em-act" onClick={clearMap}>{mode === "senate" ? "All toss-up" : "Clear"}</button>}
+          <button className="em-share" onClick={handleShare}>{shareLabel}</button>
+        </div>
+      </div>
+
+      {/* ── Cycle legend — the click grammar, drawn instead of described ── */}
+      {mode !== "redist" ? (
+        <div className="em-cycle" aria-label={brushHint}>
+          {brush === "T" ? (
+            <span className="em-cycle-note">click any painted state to erase it back to toss-up</span>
+          ) : (
+            <>
+              <span className="em-cycle-word">click</span>
+              {(["SAFE","LIKELY","LEAN","TILT"] as Rating[]).map((r, i) => (
+                <span className="em-cycle-step" key={r}>
+                  {i > 0 && <span className="em-cycle-arrow" aria-hidden>→</span>}
+                  <i style={{ background: (brush === "R" ? REP : DEM)[r] }} />
+                  <em>{r.toLowerCase()}</em>
+                </span>
+              ))}
+              <span className="em-cycle-word em-cycle-loop" aria-hidden>↺</span>
+            </>
+          )}
+        </div>
+      ) : (
+        <p className="em-hint">{brushHint}</p>
+      )}
+
+      {/* ── Map ── */}
+      <div className="em-map">
+        <svg ref={svgRef} viewBox="0 0 960 600" className="em-svg" preserveAspectRatio="xMidYMid meet" />
+      </div>
+
+      {/* ── Inset tiles (small states + split districts) ── */}
+      {mode !== "house" && (
+      <div className="em-tiles-row">
+        <span className="em-cap">{mode === "pres" ? "Northeast & split districts" : "Northeast"}</span>
+        <div className="em-tiles">
+          {tiles.map(tile => {
+            const senUp = SENATE_UP.has(tile.key);
+            const interactive = mode === "pres" ? true : mode === "senate" ? senUp : false;
+            const fill = mode === "redist"
+              ? (REDIST[tile.key] ? REDIST_COLOR[REDIST[tile.key].s] : "var(--em-out)")
+              : mode === "senate"
+                ? (senUp ? fillFor((senPicks[tile.key] ?? "T") as Pick) : "var(--em-out)")
+                : fillFor((presPicks[tile.key] ?? "T") as Pick);
+            const p = mode === "senate" ? ((senPicks[tile.key] ?? "T") as Pick) : ((presPicks[tile.key] ?? "T") as Pick);
+            const ink = mode === "redist"
+              ? { fill: REDIST[tile.key] ? "#ffffff" : "var(--foreground)", opacity: REDIST[tile.key] ? 1 : 0.3 }
+              : (mode === "senate" && !senUp) ? { fill: "var(--foreground)", opacity: 0.3 } : labelInk(p);
+            return (
+              <button key={tile.key} className={`em-tile${interactive ? "" : " is-out"}`} style={{ background: fill }}
+                onClick={() => interactive && applyPick(tile.key)}
+                onMouseMove={(e) => setTip({ visible:true, x:e.clientX, y:e.clientY, abbr:tile.key, name:STATE_NAMES[tile.key] ?? tile.key, ev:tile.ev, pick:p })}
+                onMouseLeave={() => setTip(t => ({ ...t, visible:false }))}>
+                <span className="em-tile-ab" style={{ color: ink.fill, opacity: ink.opacity }}>{tile.key.replace("-AL", "")}</span>
+                {mode === "pres" && <span className="em-tile-ev" style={{ color: ink.fill, opacity: ink.opacity * 0.7 }}>{tile.ev}</span>}
+              </button>
+            );
+          })}
+        </div>
+      </div>
+      )}
+
+      {/* ── Legend ── */}
+      <div className="em-legend">
+        <span className="em-cap">{mode === "redist" ? "Status" : "Ratings"}</span>
+        {mode === "redist" ? (
+          <div className="em-leg-row">
+            {(Object.keys(REDIST_COLOR) as RedistStatus[]).map(st => (
+              <span key={st} className="em-leg"><i style={{ background: REDIST_COLOR[st] }} />{REDIST_WORD[st]}</span>
+            ))}
+            <span className="em-leg"><i style={{ background: "var(--em-out)" }} />No change</span>
+            <span className="em-leg em-leg-note">as of june 2026 — statuses evolve</span>
+          </div>
+        ) : (
+          <div className="em-leg-row">
+            {(["SAFE","LIKELY","LEAN","TILT"] as Rating[]).map(rt => <span key={"d"+rt} className="em-leg"><i style={{ background: DEM[rt] }} />{rt[0] + rt.slice(1).toLowerCase()} D</span>)}
+            <span className="em-leg"><i style={{ background: "var(--em-toss)" }} />Toss-up</span>
+            {mode === "senate" && <span className="em-leg"><i style={{ background: "var(--em-out)" }} />Not up in 2026</span>}
+            {(["TILT","LEAN","LIKELY","SAFE"] as Rating[]).map(rt => <span key={"r"+rt} className="em-leg"><i style={{ background: REP[rt] }} />{rt[0] + rt.slice(1).toLowerCase()} R</span>)}
+          </div>
+        )}
+      </div>
+
+      {mounted && createPortal(
+        <div className="em-dock" role="tablist" aria-label="Map mode" style={{ fontFamily: manrope.style.fontFamily }}>
+          {([["pres","2028 presidential"],["senate","2026 senate"],["house","2026 house"],["redist","redistricting"]] as [MapMode, string][]).map(([m, label]) => (
+            <button key={m} role="tab" aria-selected={mode === m}
+              className={`em-dock-btn${mode === m ? " is-on" : ""}`}
+              onClick={() => { setMode(m); setTip(t => ({ ...t, visible: false })); }}>
+              {label}
+            </button>
+          ))}
+        </div>,
+        document.body
+      )}
+
+      {tip.visible && typeof document !== "undefined" && createPortal((() => {
+        // Portaled to <body> so position:fixed tracks the viewport (the page's
+        // animate-in wrapper carries a transform, which would otherwise capture
+        // fixed positioning and shove the tooltip away from the cursor).
+        const W = 220, H = 100;
+        const abbr = tip.abbr;
+        const redistInfo = REDIST[abbr];
+        const senUp = SENATE_UP.has(abbr);
+        const left = (tip.x + 16 + W > window.innerWidth) ? tip.x - W - 16 : tip.x + 16;
+        const top  = (tip.y + 16 + H > window.innerHeight) ? tip.y - H - 16 : tip.y + 16;
+
+        let statusEl: React.ReactNode;
+        let hintEl: React.ReactNode;
+        let spineColor = pickColor(tip.pick);
+        let evEl: React.ReactNode = <span className="em-tip-ev">{tip.ev}<i>EV</i></span>;
+
+        if (mode === "redist") {
+          spineColor = redistInfo ? REDIST_COLOR[redistInfo.s] : "var(--em-toss)";
+          statusEl = <span className="em-tip-pick"><b style={{ background: spineColor }} />{redistInfo ? REDIST_WORD[redistInfo.s] : "No change"}</span>;
+          hintEl = <span className="em-tip-hint">{redistInfo ? redistInfo.note : "current map stands"}</span>;
+          evEl = redistInfo && redistInfo.net !== 0
+            ? <span className="em-tip-ev">{redistInfo.net > 0 ? `R+${redistInfo.net}` : `D+${-redistInfo.net}`}<i>seats</i></span>
+            : <span className="em-tip-ev">—</span>;
+        } else if (mode === "house") {
+          evEl = <span className="em-tip-ev">1<i>seat</i></span>;
+          statusEl = <span className="em-tip-pick"><b style={{ background: pickColor(tip.pick) }} />{pickLabel(tip.pick)}</span>;
+          const cur = tip.pick;
+          hintEl = <span className="em-tip-hint">{brush === "T" ? "Click → toss-up" : (cur && cur !== "T" && cur[0] === brush) ? `Click → ${RATING_WORD[nextRating(cur.split("_")[1] as Rating)]} ${brush}` : `Click → Safe ${brush}`}</span>;
+        } else if (mode === "senate") {
+          evEl = <span className="em-tip-ev">{senUp ? "2026" : "—"}<i>{senUp ? "race" : "not up"}</i></span>;
+          if (!senUp) {
+            spineColor = "var(--em-out)";
+            statusEl = <span className="em-tip-pick"><b style={{ background: "var(--em-out)" }} />Holdover seat</span>;
+            hintEl = <span className="em-tip-hint">not on the 2026 ballot</span>;
+          } else {
+            statusEl = <span className="em-tip-pick"><b style={{ background: pickColor(tip.pick) }} />{pickLabel(tip.pick)}</span>;
+            const cur = tip.pick;
+            hintEl = <span className="em-tip-hint">{brush === "T" ? "Click → toss-up" : (cur && cur !== "T" && cur[0] === brush) ? `Click → ${RATING_WORD[nextRating(cur.split("_")[1] as Rating)]} ${brush}` : `Click → Safe ${brush}`}</span>;
+          }
+        } else {
+          statusEl = <span className="em-tip-pick"><b style={{ background: pickColor(tip.pick) }} />{pickLabel(tip.pick)}</span>;
+          const cur = tip.pick;
+          hintEl = <span className="em-tip-hint">{brush === "T" ? "Click → toss-up" : (cur && cur !== "T" && cur[0] === brush) ? `Click → ${RATING_WORD[nextRating(cur.split("_")[1] as Rating)]} ${brush}` : `Click → Safe ${brush}`}</span>;
+        }
+
+        return (
+          <div className={`em-tip ${manrope.className}`} style={{ left, top, borderLeftColor: spineColor }}>
+            <div className="em-tip-top">
+              <span className="em-tip-state">{tip.name}</span>
+              {evEl}
+            </div>
+            <div className="em-tip-row">
+              {statusEl}
+              {hintEl}
+            </div>
+          </div>
+        );
+      })(), document.body)}
+    </div>
   );
 }
 
-// ─── CSS factory ──────────────────────────────────────────────────────────────
-function buildCSS(_dm: boolean): string {
-  return `
-  html, body {
-    margin: 0; padding: 0; height: 100%; overflow: hidden;
-  }
+// ─── styles ──────────────────────────────────────────────────────────────────
+const CSS = `
+html, body { background: #050505 !important; }
+body header, body footer { display: none !important; }
 
-  .em-root {
-    display: flex; flex-direction: column; height: 100vh; max-height: 100vh;
-    overflow: hidden; background: var(--background); color: var(--foreground);
-    font-family: var(--font-body), monospace;
-    position: relative; transition: background 0.2s, color 0.2s;
-  }
-  .em-root.em-fs { position: fixed; inset: 0; z-index: 9999; }
-
-  .em-top {
-    flex-shrink: 0; display: flex; align-items: center;
-    justify-content: space-between; padding: 0 18px; height: 52px;
-    background: var(--panel2); border-bottom: 1px solid var(--border); gap: 12px;
-  }
-  .em-top-brand { display:flex; align-items:center; gap:10px; flex-shrink:0; }
-  .em-logo {
-    font-size: 10px; font-weight: 700; letter-spacing: 0.14em; color: var(--purple);
-    border: 1px solid rgba(124,58,237,0.3); padding: 3px 7px; flex-shrink: 0;
-    border-radius: var(--r-sm);
-  }
-  .em-brand-text { display:flex; flex-direction:column; gap:1px; }
-  .em-brand-main { font-size:12px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--foreground); }
-  .em-brand-sub  { font-size:10px; letter-spacing:0.10em; text-transform:uppercase; color:var(--muted2); }
-
-  .em-ev-center {
-    display: flex; align-items: center; gap: 14px; flex: 1;
-    max-width: 420px; justify-content: center;
-  }
-  .em-ev-side { display:flex; flex-direction:column; align-items:center; gap:1px; flex-shrink:0; }
-  .em-ev-label { font-size:10px; letter-spacing:0.10em; text-transform:uppercase; color:var(--muted2); }
-  .em-ev-num   { font-size:28px; font-weight:900; line-height:1; letter-spacing:-0.02em; font-variant-numeric:tabular-nums; }
-  .em-ev-middle { flex:1; display:flex; flex-direction:column; gap:3px; align-items:center; }
-  .em-ev-bar {
-    width: 100%; height: 5px; background: var(--border2); display: flex;
-    overflow: hidden; border: 1px solid var(--border);
-    border-radius: var(--r-pill);
-  }
-  .em-270-txt { font-size:10px; letter-spacing:0.10em; text-transform:uppercase; color:var(--muted); }
-
-  .em-top-actions { display:flex; align-items:center; gap:6px; flex-shrink:0; }
-  .em-btn {
-    font-family: var(--font-body), monospace;
-    font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
-    border: 1px solid var(--border2); background: var(--panel2); color: var(--muted);
-    padding: 5px 10px; cursor: pointer; transition: all 100ms;
-    border-radius: var(--r-pill);
-  }
-  .em-btn:hover { border-color: var(--border3); color: var(--foreground); background: var(--panel); }
-  .em-btn-gold { border-color:rgba(124,58,237,0.3); color:var(--purple); display:flex; align-items:center; gap:5px; }
-  .em-btn-gold:hover { border-color:var(--purple); background:rgba(124,58,237,.08); color:var(--purple2); }
-
-  .em-win {
-    flex-shrink: 0; padding: 5px 18px; border-bottom: 1px solid var(--border);
-    text-align: center; font-weight: 700; font-size: 12px; letter-spacing: 0.12em;
-  }
-
-  .em-brush-bar {
-    flex-shrink: 0; display: flex; align-items: center; padding: 0 18px;
-    height: 36px; background: var(--panel2); border-bottom: 1px solid var(--border); gap: 10px; overflow: hidden;
-  }
-  .em-brush-label { font-size:10px; letter-spacing:0.10em; text-transform:uppercase; color:var(--muted2); flex-shrink:0; }
-  .em-brush-group { display:flex; border:1px solid var(--border2); overflow:hidden; flex-shrink:0; border-radius:var(--r-sm); }
-  .em-brush-btn {
-    font-family: var(--font-body), monospace;
-    font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
-    border: none; border-right: 1px solid var(--border2); background: var(--panel);
-    color: var(--muted2); padding: 6px 12px; cursor: pointer;
-    transition: all 100ms; height: 26px;
-  }
-  .em-brush-btn:last-child { border-right:none; }
-  .em-brush-btn:hover:not(.active) { background:var(--panel2); color:var(--foreground); }
-  .em-brush-hint { font-size:11px; letter-spacing:0.04em; color:var(--muted); text-transform:uppercase; flex:1; min-width:0; overflow:hidden; white-space:nowrap; text-overflow:ellipsis; }
-  .em-tossup-chip {
-    display: inline-flex; align-items:center; padding: 3px 8px;
-    border:1px solid var(--border2); background:var(--panel);
-    font-size:10px; font-weight:700; letter-spacing:0.10em; text-transform:uppercase; color:var(--muted); flex-shrink:0;
-    border-radius:var(--r-pill);
-  }
-
-  .em-body {
-    flex: 1; min-height: 0; display: grid;
-    grid-template-columns: 1fr 210px; overflow: hidden;
-  }
-  @media(max-width: 860px) { .em-body { grid-template-columns: 1fr; } }
-
-  .em-map-area {
-    position: relative; display: flex; align-items: center; justify-content: center;
-    background: var(--background); border-right: 1px solid var(--border); overflow: hidden; min-height: 0;
-  }
-  .em-svg { width: 100%; height: 100%; display: block; }
-
-  .em-tiles {
-    position: absolute; top: 8px; right: 8px;
-    display: grid; grid-template-columns: repeat(2, 52px); gap: 2px;
-  }
-  .em-tile {
-    display: flex; flex-direction:column; align-items:center; justify-content:center;
-    padding: 3px 2px; border: 1px solid; cursor: pointer;
-    font-family: var(--font-body), monospace;
-    font-size: 10px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase;
-    transition: filter 120ms; line-height:1.2;
-    border-radius: var(--r-sm);
-  }
-  .em-tile:hover { filter:brightness(1.2) saturate(1.2); }
-  .em-tile-lbl { font-size:10px; }
-  .em-tile-ev  { font-size:10px; opacity:0.65; }
-
-  .em-sidebar {
-    background: var(--panel2); display: flex; flex-direction: column;
-    overflow-y: auto; overflow-x: hidden; min-height: 0;
-  }
-  .em-panel { padding:12px 14px; border-bottom:1px solid var(--border); }
-  .em-panel-title { font-size:10px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:var(--muted2); margin-bottom:9px; }
-
-  .em-legend { display:grid; grid-template-columns:1fr 1fr; gap:2px; }
-  .em-chip { padding:3px 5px; font-size:10px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; text-align:center; border-radius:var(--r-sm); }
-
-  .em-score-card { padding:10px; border:1px solid var(--border); background:var(--panel); margin-bottom:3px; border-radius:var(--r-sm); }
-  .em-score-party { font-size:10px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:var(--muted2); margin-bottom:3px; }
-  .em-score-num   { font-size:34px; font-weight:900; line-height:1; letter-spacing:-0.02em; font-variant-numeric:tabular-nums; }
-  .em-score-track { height:3px; background:var(--border2); margin-top:7px; overflow:hidden; border-radius:var(--r-pill); }
-  .em-score-need  { font-size:11px; letter-spacing:0.06em; text-transform:uppercase; margin-top:4px; color:var(--muted); }
-  .em-score-tossup { text-align:center; padding:5px; font-size:11px; letter-spacing:0.10em; text-transform:uppercase; color:var(--muted2); }
-
-  .em-how-text { font-size:12px; line-height:1.75; letter-spacing:0.04em; color:var(--muted); margin:0; }
-  .em-how-text strong { color:var(--foreground); font-weight:700; }
-
-  .em-bottom {
-    flex-shrink: 0; display: flex; align-items: center; justify-content: space-between;
-    padding: 0 18px; height: 28px; background: var(--panel2); border-top: 1px solid var(--border);
-    font-size: 10px; letter-spacing: 0.10em; text-transform: uppercase; color: var(--muted2);
-  }
-
-  .em-tooltip {
-    position: fixed; pointer-events: none; z-index: 99999; width: 196px;
-    background: var(--panel); border: 1px solid var(--border2); padding: 11px 13px;
-    box-shadow: var(--shadow-md); border-radius: var(--r-md);
-  }
-  .em-tt-name { font-size:13px; font-weight:700; letter-spacing:0.04em; text-transform:uppercase; color:var(--foreground); }
-  .em-tt-abbr { font-size:11px; color:var(--muted2); }
-  .em-tt-ev { font-size:10px; letter-spacing:0.10em; margin-top:3px; text-transform:uppercase; color:var(--muted); }
-  .em-tt-div { height:1px; margin:7px 0; background:var(--border); }
-  .em-tt-pick { font-size:11px; font-weight:700; letter-spacing:0.10em; text-transform:uppercase; }
-  .em-tt-hint { font-size:10px; letter-spacing:0.06em; margin-top:4px; text-transform:uppercase; color:var(--muted2); }
-
-  @media(prefers-reduced-motion:reduce) {
-    .em-score-track div { transition:none !important; }
-  }
-`;
+.em-page { padding-bottom: 86px;
+  --disp: var(--font-mp), "Manrope", "Helvetica Neue", Arial, sans-serif;
+  --serif: var(--font-mp), "Manrope", "Helvetica Neue", Arial, sans-serif;
+  --data: var(--font-mp), "Manrope", "Helvetica Neue", Arial, sans-serif;
+  --lab: var(--font-mp), "Manrope", "Helvetica Neue", Arial, sans-serif;
+  --background: #050505; --foreground: #f4f4ef; --foreground2: rgba(244,244,239,0.74);
+  --muted: rgba(244,244,239,0.58); --muted2: rgba(244,244,239,0.40); --muted3: rgba(244,244,239,0.26);
+  --border: rgba(255,255,255,0.10); --border2: rgba(255,255,255,0.16); --border3: rgba(255,255,255,0.24);
+  --panel: rgba(255,255,255,0.03); --panel2: rgba(255,255,255,0.05);
+  --em-toss: #33394a;
+  --em-out: #191c24;
+  max-width: 1120px; margin: 0 auto; padding: 0 2px 64px;
+  position: relative; z-index: 1; color: var(--foreground);
+  font-family: var(--lab); font-size: 14px; letter-spacing: -0.01em;
 }
 
+/* masthead */
+.em-folio { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; padding: 14px 0; border-top: 1px solid var(--border2); border-bottom: 1px solid var(--border); font-family: var(--lab); font-size: 10.5px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted2); }
+.em-folio span:first-child { color: var(--foreground); }
+.em-title { font-family: var(--disp); font-weight: 500; text-transform: lowercase; letter-spacing: -0.03em; line-height: 0.92; font-size: clamp(44px, 8.5vw, 96px); margin: 18px 0 0; color: var(--foreground); }
+.em-deck { font-family: var(--serif); font-size: clamp(15px, 1.6vw, 19px); line-height: 1.55; color: var(--foreground2); max-width: 62ch; margin: 16px 0 0; }
+
+/* mode tabs — hairline editorial, not chips */
+/* the floating mode dock — fixed to the real viewport via body portal */
+.em-dock {
+  position: fixed; left: 50%; bottom: 18px; transform: translateX(-50%); z-index: 240;
+  display: inline-flex; align-items: center; gap: 3px; padding: 5px;
+  border-radius: 999px; border: 1px solid rgba(255,255,255,0.13);
+  background: rgba(9,9,12,0.62);
+  -webkit-backdrop-filter: blur(18px) saturate(150%); backdrop-filter: blur(18px) saturate(150%);
+  box-shadow: 0 18px 50px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.07);
+  max-width: calc(100vw - 24px); overflow-x: auto; scrollbar-width: none;
+}
+.em-dock::-webkit-scrollbar { display: none; }
+.em-dock-btn {
+  flex-shrink: 0; padding: 9px 16px; border: 0; border-radius: 999px; background: transparent;
+  font-size: 12px; font-weight: 650; letter-spacing: 0.02em; text-transform: lowercase;
+  color: rgba(244,244,239,0.6); cursor: pointer; white-space: nowrap;
+  transition: color 180ms ease, background 220ms cubic-bezier(.2,.8,.2,1);
+}
+.em-dock-btn:hover { color: #f4f4ef; }
+.em-dock-btn.is-on { background: #f4f4ef; color: #050505; }
+@media (max-width: 560px) { .em-dock { bottom: 12px; } .em-dock-btn { padding: 8px 12px; font-size: 11px; } }
+
+.em-modes { display: flex; gap: 26px; margin-top: 20px; border-bottom: 1px solid var(--border); }
+.em-mode { position: relative; font-family: var(--lab); font-size: 12px; font-weight: 650; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted2); background: none; border: 0; padding: 0 1px 11px; cursor: pointer; transition: color 180ms ease; }
+.em-mode:hover { color: var(--foreground2); }
+.em-mode:after { content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 1.5px; background: var(--foreground); transform: scaleX(0); transform-origin: left center; transition: transform 280ms cubic-bezier(.2,.8,.2,1); }
+.em-mode.is-on { color: var(--foreground); }
+.em-mode.is-on:after { transform: scaleX(1); }
+
+/* scoreboard (sticky) */
+.em-board { position: sticky; top: 0; z-index: 40; display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: clamp(16px, 4vw, 48px); margin-top: 26px; padding: 16px 4px; background: var(--background); border-top: 1px solid var(--border); border-bottom: 1px solid var(--foreground); }
+.em-board-side { display: flex; flex-direction: column; align-items: flex-start; line-height: 1; }
+.em-board-side.em-r { align-items: flex-end; text-align: right; }
+.em-board-party { font-family: var(--lab); font-size: 10px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; }
+.em-board-ev { font-family: var(--disp); font-weight: 700; font-size: clamp(46px, 7.5vw, 78px); line-height: 0.82; letter-spacing: -0.04em; margin: 6px 0 5px; font-variant-numeric: tabular-nums; transition: text-shadow 240ms ease; }
+.em-board-side.is-win .em-board-ev { text-shadow: 0 0 22px currentColor; }
+.em-board-need { font-family: var(--data); font-size: 10.5px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--muted2); }
+.em-board-mid { min-width: 0; padding-top: 10px; }
+.em-board-need b { font-family: var(--data); font-weight: 800; color: var(--foreground2); font-variant-numeric: tabular-nums; }
+
+.em-board-bar { position: relative; display: flex; gap: 2px; height: 14px; }
+.em-board-bar > i { display: block; height: 100%; border-radius: 3px; transition: width 360ms cubic-bezier(.2,.8,.2,1); }
+
+/* the beam — composition by rating, not just totals */
+.em-beam { position: relative; display: flex; gap: 2px; height: 18px; }
+.em-beam > i {
+  display: block; height: 100%; min-width: 0; border-radius: 2px;
+  transition: width 420ms cubic-bezier(.2,.8,.2,1);
+}
+.em-beam > i:first-child { border-radius: 9px 2px 2px 9px; }
+.em-beam > i:last-child { border-radius: 2px 9px 9px 2px; }
+.em-beam-needle {
+  position: absolute; top: -9px; bottom: -9px; width: 0; z-index: 2;
+  border-left: 1.5px solid var(--foreground);
+}
+.em-beam-needle::after { content: ''; position: absolute; left: -3.25px; bottom: -2px; width: 5px; height: 5px; transform: rotate(45deg); background: var(--foreground); }
+.em-beam-needle b {
+  position: absolute; top: -16px; left: 50%; transform: translateX(-50%);
+  font-family: var(--data); font-size: 10px; font-weight: 800; letter-spacing: 0.06em;
+  color: var(--foreground); background: var(--background); padding: 0 4px;
+}
+.em-board-meta { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-top: 16px; }
+.em-board-lead { font-family: var(--data); font-size: 12px; font-weight: 750; letter-spacing: 0.02em; font-variant-numeric: tabular-nums; }
+.em-board-toss { font-family: var(--lab); font-weight: 600; font-size: 9.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted2); }
+
+/* controls — the ink tray */
+.em-controls { display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 18px 28px; margin-top: 30px; }
+.em-cap { font-family: var(--lab); font-size: 9.5px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted2); flex-shrink: 0; }
+.em-cap-loose { letter-spacing: 0.12em; }
+
+.em-tray { display: flex; align-items: flex-end; gap: 26px; }
+.em-ink { position: relative; display: flex; flex-direction: column; gap: 9px; background: none; border: 0; padding: 0; cursor: pointer; }
+.em-ink-ramp { display: flex; gap: 3px; }
+.em-ink-ramp i {
+  display: block; width: 30px; height: 14px; border-radius: 3px;
+  transform-origin: bottom center;
+  transition: transform 240ms cubic-bezier(.2,.9,.25,1.25), box-shadow 240ms ease, opacity 200ms ease;
+  opacity: 0.45;
+}
+.em-ink-t .em-ink-ramp i { width: 30px; }
+.em-ink:hover .em-ink-ramp i { opacity: 0.8; }
+.em-ink.is-on .em-ink-ramp i { opacity: 1; transform: scaleY(1.55); }
+.em-ink.is-on .em-ink-ramp i:nth-child(1) { box-shadow: 0 6px 22px -4px currentColor; }
+.em-ink-lab { font-family: var(--lab); font-size: 10px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted2); text-align: left; transition: color 180ms ease; }
+.em-ink:hover .em-ink-lab { color: var(--foreground); }
+.em-ink.is-on .em-ink-lab { color: var(--foreground); }
+.em-ink.is-on::after { content: ''; position: absolute; left: 0; right: auto; bottom: -8px; width: 18px; height: 1.5px; background: var(--foreground); }
+.em-ink.em-ink-r .em-ink-lab { text-align: left; }
+
+.em-actions { display: flex; align-items: center; gap: 20px; padding-bottom: 2px; }
+.em-act { font-family: var(--lab); font-size: 12px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted); background: none; border: 0; border-bottom: 1px solid var(--border3); padding: 0 0 3px; cursor: pointer; transition: color 160ms ease, border-color 160ms ease; }
+.em-act:hover { color: var(--foreground); border-color: var(--foreground); }
+.em-share {
+  font-family: var(--lab); font-size: 12px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase;
+  color: #050505; background: #b7ff00; border: 0; border-radius: 999px; padding: 9px 18px; cursor: pointer;
+  transition: transform 200ms cubic-bezier(.16,1,.3,1), box-shadow 200ms ease;
+}
+.em-share:hover { transform: translateY(-1.5px); box-shadow: 0 12px 30px rgba(183,255,0,0.22); }
+
+/* cycle legend — the click grammar drawn as chips */
+.em-cycle { display: flex; align-items: center; flex-wrap: wrap; gap: 7px 10px; margin: 18px 0 20px; min-height: 18px; }
+.em-cycle-word { font-family: var(--serif); font-size: 13.5px; font-style: italic; color: var(--muted); margin-right: 2px; }
+.em-cycle-loop { font-style: normal; font-size: 14px; color: var(--muted2); margin-left: 2px; }
+.em-cycle-step { display: inline-flex; align-items: center; gap: 7px; }
+.em-cycle-step i { display: block; width: 13px; height: 13px; border-radius: 3px; }
+.em-cycle-step em { font-style: normal; font-family: var(--lab); font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+.em-cycle-arrow { font-size: 11px; color: var(--muted2); margin-right: 3px; }
+.em-cycle-note { font-family: var(--serif); font-size: 13.5px; font-style: italic; color: var(--muted); }
+.em-hint { font-family: var(--serif); font-size: 13.5px; line-height: 1.5; color: var(--muted); margin: 18px 0 20px; max-width: 70ch; }
+
+/* map */
+.em-map { width: 100%; }
+.em-svg { width: 100%; display: block; }
+.em-lab { font-family: var(--data); font-size: 12px; font-weight: 800; letter-spacing: 0.01em; pointer-events: none; }
+
+/* inset tiles */
+.em-tiles-row { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin-top: 6px; padding-top: 16px; border-top: 1px solid var(--border); }
+.em-tiles { display: flex; flex-wrap: wrap; gap: 4px; }
+.em-tile { display: inline-flex; flex-direction: column; align-items: center; justify-content: center; min-width: 50px; height: 42px; padding: 4px 6px; border: 0; cursor: pointer; line-height: 1.1; transition: filter 140ms ease; }
+.em-tile:hover { filter: brightness(1.12) saturate(1.15); }
+.em-tile.is-out { cursor: default; }
+.em-tile.is-out:hover { filter: none; }
+.em-tile-ab { font-family: var(--disp); font-size: 13px; letter-spacing: 0.02em; }
+.em-tile-ev { font-family: var(--data); font-size: 9px; font-weight: 700; margin-top: 1px; }
+
+/* legend */
+.em-legend { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin-top: 22px; padding-top: 16px; border-top: 1px solid var(--border); }
+.em-leg-row { display: flex; flex-wrap: wrap; gap: 4px 14px; }
+.em-leg { display: inline-flex; align-items: center; gap: 7px; font-family: var(--lab); font-size: 10px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--muted); }
+.em-leg i { width: 12px; height: 12px; border-radius: 3px; flex-shrink: 0; }
+.em-leg-note { color: var(--muted3); letter-spacing: 0.08em; }
+
+/* tooltip — portaled to <body>, so it uses GLOBAL font vars (page-scoped --disp
+   etc. don't resolve outside .em-page). */
+.em-tip { position: fixed; z-index: 99999; pointer-events: none; width: 210px; background: rgba(14,14,16,0.97); border: 1px solid rgba(255,255,255,0.12); border-left: 3px solid var(--em-toss); border-radius: 12px; box-shadow: 0 24px 60px rgba(0,0,0,0.6); overflow: hidden; -webkit-backdrop-filter: blur(18px); backdrop-filter: blur(18px); }
+.em-tip-top { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; padding: 11px 14px 9px; }
+.em-tip-state { font-family: inherit; font-weight: 700; font-size: 15px; letter-spacing: -0.02em; line-height: 1; color: #f4f4ef; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.em-tip-ev { font-family: inherit; font-size: 17px; font-weight: 800; line-height: 1; letter-spacing: -0.02em; color: #f4f4ef; white-space: nowrap; }
+.em-tip-ev i { font-style: normal; font-size: 9px; font-weight: 700; letter-spacing: 0.08em; margin-left: 3px; color: rgba(244,244,239,0.4); }
+.em-tip-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 9px 14px 11px; border-top: 1px solid rgba(255,255,255,0.08); }
+.em-tip-pick { display: inline-flex; align-items: center; gap: 7px; font-family: inherit; font-size: 11px; font-weight: 700; letter-spacing: 0.02em; color: #f4f4ef; }
+.em-tip-pick b { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.em-tip-hint { font-family: inherit; font-size: 9.5px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: rgba(244,244,239,0.42); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+/* responsive */
+@media (max-width: 720px) {
+  .em-board { grid-template-columns: 1fr; gap: 14px; }
+  .em-board-side, .em-board-side.em-r { flex-direction: row; align-items: baseline; gap: 10px; text-align: left; }
+  .em-board-ev { font-size: 40px; margin: 0; }
+  .em-board-need { margin-left: auto; }
+  .em-controls { flex-direction: column; align-items: flex-start; }
+  .em-modes { gap: 18px; overflow-x: auto; }
+}
+`;

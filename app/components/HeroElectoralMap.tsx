@@ -30,10 +30,10 @@ const WIN_2024: Record<string, "R" | "D"> = {
   WV: "R", WI: "R", WY: "R",
 };
 
-const PURPLE       = "#7c3aed";
-const PURPLE_SOFT  = "#c2adf8";
-const RED_STROKE   = "#ff5d6c";
-const BLUE_STROKE  = "#5b8def";
+const PURPLE       = "#8d7fd6";
+const PURPLE_SOFT  = "#b9aee6";
+const RED_STROKE   = "#d9707a";
+const BLUE_STROKE  = "#8aa3f2";
 
 const SWING = new Set(["AZ", "GA", "MI", "NV", "NC", "PA", "WI"]);
 
