@@ -48,14 +48,16 @@ export function civicToForecastInput(
   prior?: CivicRace,
   race_rule: RaceRule = "PLURALITY",
   expected_turnout?: number,
-  poll_avg?: Record<string, number>
+  poll_avg?: Record<string, number>,
+  turnout_blend_k?: number,
+  preSortedTop3?: CivicCandidate[]  // ← caller-sorted top3; eliminates dual-sort divergence
 ): ForecastInput {
   const pct = Math.min(1, (current.percent_reporting ?? 0) / 100);
   const totalReported = current.candidates.reduce((s, c) => s + c.votes, 0);
 
-  const topCandidates = poll_avg
+  const topCandidates = preSortedTop3 ?? (poll_avg
     ? sortByPollAvg(current.candidates, poll_avg).slice(0, 3)
-    : [...current.candidates].sort((a, b) => b.votes - a.votes).slice(0, 3);
+    : [...current.candidates].sort((a, b) => b.votes - a.votes).slice(0, 3));
 
   const reported_share: Shares3 = {
     Candidate1: totalReported > 0 ? (topCandidates[0]?.votes ?? 0) / totalReported : 0,
@@ -70,11 +72,97 @@ export function civicToForecastInput(
     if (pct < 0.05) {
       expected_share = pollShares;
     } else {
-      const pollWeight = Math.max(0, 1 - (pct / 0.5));
+      // ── Factor 1: Poll prior, calibrated against live results ───────────────
+      // As votes come in, measure poll-vs-actual divergence and bend the poll
+      // prior toward the observed reality. β grows from 0→0.65 as reporting
+      // goes from 10%→100%, so polls are fully trusted early and progressively
+      // corrected late. This handles races where polls were systematically off.
+      const pollWeight = Math.max(0, 1 - (pct / 0.97));
+
+      let f1: Shares3 = pollShares;
+      if (pct >= 0.10) {
+        const β = Math.min(0.65, (pct - 0.10) / 1.35);
+        const adj = [
+          pollShares.Candidate1 > 0.005
+            ? pollShares.Candidate1 * Math.pow(safeDiv(reported_share.Candidate1, pollShares.Candidate1), β)
+            : reported_share.Candidate1,
+          pollShares.Candidate2 > 0.005
+            ? pollShares.Candidate2 * Math.pow(safeDiv(reported_share.Candidate2, pollShares.Candidate2), β)
+            : reported_share.Candidate2,
+          pollShares.Candidate3 > 0.005
+            ? pollShares.Candidate3 * Math.pow(safeDiv(reported_share.Candidate3, pollShares.Candidate3), β)
+            : reported_share.Candidate3,
+        ].map(v => Math.max(0, v));
+        const adjSum = adj[0] + adj[1] + adj[2];
+        if (adjSum > 0.01) {
+          f1 = { Candidate1: adj[0] / adjSum, Candidate2: adj[1] / adjSum, Candidate3: adj[2] / adjSum };
+        }
+      }
+
+      // ── Factor 2: Current reported results ──────────────────────────────────
+      const f2: Shares3 = reported_share;
+
+      // ── Factor 3: Trend signal from prior snapshot ───────────────────────────
+      // Weak signal — vote dumps are typically cohesive geographic or method
+      // blocks (mail-in, one county), so the trend may not represent remaining
+      // voters. A large dump penalty discounts trend when a big chunk arrived
+      // at once. Weight is capped at 0.18 and fades above 85% reporting.
+      let f3: Shares3 | null = null;
+      let trendWeight = 0;
+
+      if (prior && pct >= 0.10) {
+        const priorPct = Math.min(1, (prior.percent_reporting ?? 0) / 100);
+        const priorTotal = prior.candidates.reduce((s, c) => s + c.votes, 0);
+
+        if (priorTotal > 0 && priorPct < pct) {
+          // Match prior candidates to current top3 by name (fuzzy last-name match)
+          const priorShareOf = (target: CivicCandidate): number => {
+            const targetLast = target.name.trim().split(/\s+/).pop()?.toLowerCase() ?? "";
+            const match = prior!.candidates.find(pc => {
+              const pcLast = pc.name.trim().split(/\s+/).pop()?.toLowerCase() ?? "";
+              return pc.name === target.name || pcLast === targetLast;
+            });
+            return match ? safeDiv(match.votes, priorTotal) : 0;
+          };
+
+          const priorShares: Shares3 = {
+            Candidate1: priorShareOf(topCandidates[0]!),
+            Candidate2: priorShareOf(topCandidates[1]!),
+            Candidate3: priorShareOf(topCandidates[2]!),
+          };
+
+          const Δ1 = reported_share.Candidate1 - priorShares.Candidate1;
+          const Δ2 = reported_share.Candidate2 - priorShares.Candidate2;
+          const Δ3 = reported_share.Candidate3 - priorShares.Candidate3;
+
+          // Large single dump → trend is a cohesive block, less predictive of remainder
+          const pctDelta = pct - priorPct;
+          const dumpConfidence = Math.max(0, 1 - pctDelta / 0.15); // degrades >15% chunk
+
+          // Trend weight peaks near 40% reporting, fades above 85%
+          const trendPeak = pct < 0.40 ? pct / 0.40 : Math.max(0, (0.97 - pct) / 0.57);
+          trendWeight = 0.18 * dumpConfidence * trendPeak;
+
+          // Momentum: nudge remaining share in direction of recent trend (α=0.4 cap)
+          const raw = [
+            Math.max(0.001, reported_share.Candidate1 + 0.4 * Δ1),
+            Math.max(0.001, reported_share.Candidate2 + 0.4 * Δ2),
+            Math.max(0.001, reported_share.Candidate3 + 0.4 * Δ3),
+          ];
+          const tSum = raw[0] + raw[1] + raw[2];
+          f3 = { Candidate1: raw[0] / tSum, Candidate2: raw[1] / tSum, Candidate3: raw[2] / tSum };
+        }
+      }
+
+      // ── Combine all three factors ───────────────────────────────────────────
+      const w1 = pollWeight;
+      const w3 = f3 ? trendWeight : 0;
+      const w2 = Math.max(0, 1 - w1 - w3);
+
       expected_share = {
-        Candidate1: pollWeight * pollShares.Candidate1 + (1 - pollWeight) * reported_share.Candidate1,
-        Candidate2: pollWeight * pollShares.Candidate2 + (1 - pollWeight) * reported_share.Candidate2,
-        Candidate3: pollWeight * pollShares.Candidate3 + (1 - pollWeight) * reported_share.Candidate3,
+        Candidate1: w1 * f1.Candidate1 + w2 * f2.Candidate1 + w3 * (f3?.Candidate1 ?? f2.Candidate1),
+        Candidate2: w1 * f1.Candidate2 + w2 * f2.Candidate2 + w3 * (f3?.Candidate2 ?? f2.Candidate2),
+        Candidate3: w1 * f1.Candidate3 + w2 * f2.Candidate3 + w3 * (f3?.Candidate3 ?? f2.Candidate3),
       };
     }
   } else if (prior) {
@@ -113,6 +201,13 @@ export function civicToForecastInput(
     est_turnout = 100_000;
   }
 
+  // Pre-compute raw poll prior shares (not pct^k-weighted) for use in step 3
+  // of forecastRace when poll_avg is present. These are the poll values ÷ 100,
+  // matching the same name-lookup used by buildPollAvgShares.
+  const poll_avg_shares: Shares3 | undefined = (poll_avg && Object.keys(poll_avg).length > 0)
+    ? buildPollAvgShares(topCandidates, poll_avg)
+    : undefined;
+
   return {
     race_rule,
     percent_reporting: pct,
@@ -120,6 +215,8 @@ export function civicToForecastInput(
     reported_share,
     expected_turnout: est_turnout,
     expected_share,
+    turnout_blend_k,
+    poll_avg_shares,
   };
 }
 
@@ -179,6 +276,23 @@ export interface ForecastInput {
   reported_share: Shares3;
   expected_turnout: number;
   expected_share: Shares3;
+  /** Controls how quickly the blended turnout shifts from the pre-election
+   *  prior toward the live extrapolation as votes come in.
+   *  liveWeight = pct_reporting ^ k
+   *  k=1 (default): linear — 50% in → 50% live weight
+   *  k=2: quadratic — 50% in → 25% live weight (slower shift)
+   *  k=3: cubic   — 50% in → 12.5% live weight (much slower shift)
+   */
+  turnout_blend_k?: number;
+  /**
+   * Raw poll-average prior shares for top 3 (each divided by 100, NOT
+   * normalised to sum-to-1). When present, step 3 of forecastRace computes
+   * modeled_votes as blendedShare * total instead of live + remaining *
+   * expected_share, where blendedShare = liveShare * pct^k + pollPrior *
+   * (1-pct^k). This eliminates the live-vote head-start distortion when the
+   * remaining ballot pool is compositionally inverse to the live trend.
+   */
+  poll_avg_shares?: Shares3;
 }
 
 export interface ForecastOutput {
@@ -344,18 +458,21 @@ export function forecastRace(
   const percent_reporting = clamp(input.percent_reporting, 0, 1);
   const reported_vote_total = Math.max(0, input.reported_vote_total);
   const expected_turnout = Math.max(0, input.expected_turnout);
+  const blend_k = Math.max(0.5, input.turnout_blend_k ?? 1);
 
   const reported_share4 = addOthersShare(input.reported_share);
   const expected_share4 = addOthersShare(input.expected_share);
   const reported_votes = votesFromShare(reported_share4, reported_vote_total);
 
   // Step 1: Model total vote
+  // liveWeight = pct^k — higher k = trust the extrapolated total more slowly
   let modeled_total_vote: number;
   if (percent_reporting === 0) {
     modeled_total_vote = expected_turnout;
   } else {
     const implied_total = safeDiv(reported_vote_total, percent_reporting);
-    const blended_total = (1 - percent_reporting) * expected_turnout + percent_reporting * implied_total;
+    const liveWeight = Math.pow(percent_reporting, blend_k);
+    const blended_total = (1 - liveWeight) * expected_turnout + liveWeight * implied_total;
     modeled_total_vote = Math.max(reported_vote_total, blended_total);
   }
 
@@ -375,25 +492,51 @@ export function forecastRace(
     expected_turnout / getPreElectionDivisor(expected_turnout)
   );
 
+  // For runoff-style races (where margins matter), drop the floor so sd_race can
+  // collapse naturally as votes come in. Plurality/general races keep the 0.1 floor.
+  const isRunoffStyle = race_rule !== "PLURALITY";
   let sd_race: number;
   if (percent_reporting < 0.05) {
     sd_race = sd_pre_election;
   } else {
     const implied_total = safeDiv(reported_vote_total, percent_reporting);
     const scale = safeDiv(modeled_vote_remaining, implied_total);
-    sd_race = sd_pre_election * Math.max(0.1, Math.min(1, scale));
+    sd_race = sd_pre_election * (isRunoffStyle ? Math.min(1, scale) : Math.max(0.1, Math.min(1, scale)));
   }
   if (modeled_vote_remaining > 100_000) {
     sd_race = Math.max(sd_race, modeled_vote_remaining / 20);
   }
 
   // Step 3: Projected votes
-  const modeled_votes: Votes4 = {
-    Candidate1: reported_votes.Candidate1 + modeled_vote_remaining * expected_share4.Candidate1,
-    Candidate2: reported_votes.Candidate2 + modeled_vote_remaining * expected_share4.Candidate2,
-    Candidate3: reported_votes.Candidate3 + modeled_vote_remaining * expected_share4.Candidate3,
-    Others: 0,
-  };
+  // When a poll_avg_shares prior is available, compute modeled_votes as
+  //   blendedShare * modeled_total_vote
+  // where blendedShare = liveShare * pct^k + pollPrior * (1-pct^k).
+  // This prevents a live-vote head-start from overriding the prior when
+  // the remaining ballot pool is compositionally different from the live trend
+  // (e.g. late unreturned VBM in the LA Mayor race).
+  // Without poll_avg_shares, fall back to the standard formula.
+  let modeled_votes: Votes4;
+  if (input.poll_avg_shares && percent_reporting > 0) {
+    const liveWt = Math.pow(percent_reporting, blend_k);
+    const priorWt = 1 - liveWt;
+    const keys: Array<keyof Shares3> = ["Candidate1", "Candidate2", "Candidate3"];
+    const blended = keys.map((k) =>
+      Math.max(0, reported_share4[k] * liveWt + input.poll_avg_shares![k] * priorWt)
+    );
+    modeled_votes = {
+      Candidate1: blended[0] * modeled_total_vote,
+      Candidate2: blended[1] * modeled_total_vote,
+      Candidate3: blended[2] * modeled_total_vote,
+      Others: 0,
+    };
+  } else {
+    modeled_votes = {
+      Candidate1: reported_votes.Candidate1 + modeled_vote_remaining * expected_share4.Candidate1,
+      Candidate2: reported_votes.Candidate2 + modeled_vote_remaining * expected_share4.Candidate2,
+      Candidate3: reported_votes.Candidate3 + modeled_vote_remaining * expected_share4.Candidate3,
+      Others: 0,
+    };
+  }
   const tmpC1 = safeDiv(modeled_votes.Candidate1, modeled_total_vote);
   const tmpC2 = safeDiv(modeled_votes.Candidate2, modeled_total_vote);
   const tmpC3 = safeDiv(modeled_votes.Candidate3, modeled_total_vote);

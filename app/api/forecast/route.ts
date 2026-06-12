@@ -79,14 +79,19 @@ function runForecastFromCivicRace(
   prior: CivicRace | undefined,
   race_rule: RaceRule,
   expected_turnout: number | undefined,
-  poll_avg: Record<string, number> | undefined
+  poll_avg: Record<string, number> | undefined,
+  turnout_blend_k?: number
 ) {
   const sorted = sortCandidatesByPollAvg(race.candidates, poll_avg);
   const top3 = sorted.slice(0, 3);
   const names = top3.map((c) => c.name);
   const colors = top3.map((c) => vibrateColor(c.color));
 
-  const input = civicToForecastInput(race, prior, race_rule, expected_turnout, poll_avg);
+  // Pass pre-sorted top3 into civicToForecastInput so it uses the identical
+  // candidate ordering as `names` — eliminates dual-sort divergence where two
+  // independent sort calls on the same data could produce different orderings.
+  const input = civicToForecastInput(race, prior, race_rule, expected_turnout, poll_avg, turnout_blend_k, top3);
+
   const result = forecastRace(input, names, colors);
   return NextResponse.json({ forecast: result, race });
 }
@@ -108,26 +113,26 @@ export async function POST(req: Request) {
     }
 
     if (body.type === "civic_raw") {
-      const { raceData, race_rule = "PLURALITY", expected_turnout, poll_avg } = body;
+      const { raceData, race_rule = "PLURALITY", expected_turnout, poll_avg, turnout_blend_k } = body;
       if (!raceData) {
         return NextResponse.json({ error: "raceData is required for type civic_raw" }, { status: 400 });
       }
-      return runForecastFromCivicRace(raceData as CivicRace, undefined, race_rule, expected_turnout, poll_avg);
+      return runForecastFromCivicRace(raceData as CivicRace, undefined, race_rule, expected_turnout, poll_avg, turnout_blend_k);
     }
 
     if (body.type === "civic") {
-      const { raceId, race_rule = "PLURALITY", expected_turnout, poll_avg } = body;
+      const { raceId, race_rule = "PLURALITY", expected_turnout, poll_avg, turnout_blend_k } = body;
       const race = await fetchCivicRace(raceId);
-      return runForecastFromCivicRace(race, undefined, race_rule, expected_turnout, poll_avg);
+      return runForecastFromCivicRace(race, undefined, race_rule, expected_turnout, poll_avg, turnout_blend_k);
     }
 
     if (body.type === "civic_history") {
-      const { raceId, timestamp, priorTimestamp, race_rule = "PLURALITY", expected_turnout, poll_avg } = body;
+      const { raceId, timestamp, priorTimestamp, race_rule = "PLURALITY", expected_turnout, poll_avg, turnout_blend_k } = body;
       const [current, prior] = await Promise.all([
         fetchCivicRaceHistory(raceId, timestamp),
         priorTimestamp ? fetchCivicRaceHistory(raceId, priorTimestamp) : Promise.resolve(undefined),
       ]);
-      return runForecastFromCivicRace(current, prior, race_rule, expected_turnout, poll_avg);
+      return runForecastFromCivicRace(current, prior, race_rule, expected_turnout, poll_avg, turnout_blend_k);
     }
 
     return NextResponse.json({ error: "Unknown request type" }, { status: 400 });

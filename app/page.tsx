@@ -1,9 +1,18 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
+import dynamic from "next/dynamic";
 import Image from "next/image";
 import Link from "next/link";
 import { Manrope } from "next/font/google";
+import HeroElectoralMap from "@/app/components/HeroElectoralMap";
+import DarkNav from "@/app/components/DarkNav";
+import PublishDeck from "@/app/components/PublishDeck";
+import { SENATE_MODEL, senateBalance } from "@/app/components/senateModel";
+import { getHomeStats, type HomeStats, type HomeSeriesPoint, type HomePollPoint } from "@/app/polling/lib/homeStats";
+
+const SentimentGlobe = dynamic(() => import("@/app/components/SentimentGlobe"), { ssr: false });
+const DotField = dynamic(() => import("@/app/components/DotField"), { ssr: false });
 
 const manrope = Manrope({
   subsets: ["latin"],
@@ -11,49 +20,10 @@ const manrope = Manrope({
   variable: "--font-manrope",
 });
 
-type GalleryItem = {
-  title: string;
-  href: string;
-  src: string;
-  alt: string;
-  kind: "polling" | "ratings" | "results" | "map";
-};
-
-type TrackItem = {
-  title: string;
-  body: string;
-  mark: "bars" | "leaf" | "target" | "square";
-};
-
 type ProcessItem = {
   title: string;
   body: string;
-  mark: "dots" | "weight" | "model" | "publish" | "target";
 };
-
-const gallery: GalleryItem[] = [
-  {
-    title: "Polling Averages",
-    href: "/polling/donaldtrumpapproval",
-    src: "/landing-thumbnails/polling-averages.png",
-    alt: "Polling averages thumbnail with approval chart artwork",
-    kind: "polling",
-  },
-  {
-    title: "Forecast",
-    href: "/forecastratings",
-    src: "/landing-thumbnails/forecast.png",
-    alt: "Forecast thumbnail with diverging election model particles",
-    kind: "ratings",
-  },
-  {
-    title: "Live Results",
-    href: "/results",
-    src: "/landing-thumbnails/live-results.png",
-    alt: "Live results thumbnail with election map data points",
-    kind: "results",
-  },
-];
 
 const proofText =
   "A polling product should show its work, not hide it behind a dashboard skin.";
@@ -61,80 +31,26 @@ const proofText =
 const narrativeStatement =
   "We believe that every voice carries a signal. Most research misses those voices. The Public Sentiment Institute is built to find it — in the data beneath the data, in the areas others overlook, asking the tough questions other researchers won’t.";
 
-const proofTargets = {
-  approval: 585,
-  generic: 221,
-  states: 50,
-};
-
-const tracks: TrackItem[] = [
-  {
-    title: "Polling averages",
-    body: "Weighted daily trendlines for approval, generic ballot, and direction of country.",
-    mark: "bars",
-  },
-  {
-    title: "Forecast ratings",
-    body: "Race ratings, modeled margins, and state-level electoral movement.",
-    mark: "leaf",
-  },
-  {
-    title: "Live results",
-    body: "Candidate rows, county maps, reporting progress, and projection context.",
-    mark: "square",
-  },
-  {
-    title: "Research fielding",
-    body: "Issue polling, survey recruitment, and partner intake for custom tracks.",
-    mark: "target",
-  },
-];
-
-const services = [
-  { label: "Polling Averages", href: "/polling/donaldtrumpapproval" },
-  { label: "Forecast Ratings", href: "/forecastratings" },
-  { label: "Live Results", href: "/results" },
-  { label: "Electoral Map", href: "/electoralmap" },
-  { label: "Generic Ballot", href: "/polling/genericballot" },
-  { label: "Gold Standard Pollsters", href: "/goldstandard" },
-  { label: "Partner Research", href: "/contact" },
-];
-
-const coverage = [
-  { label: "National", href: "/polling" },
-  { label: "Senate", href: "/forecastratings" },
-  { label: "Governor", href: "/forecastratings" },
-  { label: "House", href: "/forecastratings" },
-  { label: "Primaries", href: "/polling" },
-  { label: "Issue polls", href: "/tpsipoll" },
-  { label: "Custom research", href: "/contact" },
-];
-
 const process: ProcessItem[] = [
   {
     title: "Collect",
     body: "Polls and live race data are normalized into consistent candidate, sample, and date fields.",
-    mark: "dots",
   },
   {
     title: "Weight",
     body: "Gold-standard pollsters, recency, sample size, and voter universe shape the daily average.",
-    mark: "weight",
   },
   {
     title: "Model",
     body: "Forecast inputs blend polling priors, reporting progress, and expected turnout.",
-    mark: "model",
   },
   {
     title: "Publish",
     body: "Charts, race ratings, maps, and result pages stay readable for real voters and campaigns.",
-    mark: "publish",
   },
   {
     title: "Explain",
     body: "Every public surface keeps the assumptions, data lineage, and election-night context close to the result.",
-    mark: "target",
   },
 ];
 
@@ -161,117 +77,580 @@ const faqs = [
   },
 ];
 
-function AbstractMark({ type, className = "" }: { type: TrackItem["mark"] | ProcessItem["mark"]; className?: string }) {
-  return <span className={`lp-mark lp-mark-${type} ${className}`} aria-hidden="true" />;
-}
+function ApproachTheater() {
+  const wrapRef = useRef<HTMLDivElement | null>(null);
 
-function TrackIcon({ mark }: { mark: TrackItem["mark"] }) {
-  const common = {
-    className: "lp-track-icon",
-    viewBox: "0 0 40 40",
-    fill: "none",
-    stroke: "currentColor",
-    strokeWidth: 2.4,
-    strokeLinecap: "round" as const,
-    strokeLinejoin: "round" as const,
-    "aria-hidden": true,
-  };
+  useEffect(() => {
+    const wrap = wrapRef.current;
+    if (!wrap) return;
+    const rows = Array.from(wrap.querySelectorAll<HTMLElement>(".ap-row"));
+    const reduced = prefersReduced();
+    const update = () => {
+      const vh = Math.max(window.innerHeight, 1);
+      for (const row of rows) {
+        const r = row.getBoundingClientRect();
+        // arrival: 0 as the row enters from below → 1 once it sits mid-frame
+        const p = reduced ? 1 : Math.max(0, Math.min(1, (vh * 0.94 - r.top) / (vh * 0.66)));
+        // departure: grows as the row passes upward — the glow disperses
+        const dep = reduced ? 0.5 : Math.max(0, Math.min(1, (vh * 0.42 - r.top) / (vh * 0.9)));
+        const ease = 1 - Math.pow(1 - p, 3);
+        row.style.setProperty("--wx", (1 - ease).toFixed(4));
+        row.style.setProperty("--wo", Math.min(1, p * 1.6).toFixed(4));
+        row.style.setProperty("--co", Math.max(0, Math.min(1, (p - 0.35) * 2)).toFixed(4));
+        row.style.setProperty("--go", (Math.min(1, p * 1.8) * (1 - dep * 0.75) * 0.95).toFixed(4));
+        row.style.setProperty("--gs", (1 + dep * 0.6).toFixed(4));
+      }
+    };
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
+    return () => { window.removeEventListener("scroll", update); window.removeEventListener("resize", update); };
+  }, []);
 
-  if (mark === "bars") {
-    // Polling averages — weighted trendline
-    return (
-      <svg {...common}>
-        <polyline points="4 28 13 18 21 23 36 7" />
-        <circle cx="36" cy="7" r="2.6" fill="currentColor" stroke="none" />
-        <line x1="4" y1="34" x2="36" y2="34" opacity="0.4" />
-      </svg>
-    );
-  }
-
-  if (mark === "leaf") {
-    // Forecast ratings — diverging probability fan
-    return (
-      <svg {...common}>
-        <path d="M7 20 L33 8" />
-        <path d="M7 20 L34 20" />
-        <path d="M7 20 L33 32" />
-        <circle cx="7" cy="20" r="2.8" fill="currentColor" stroke="none" />
-      </svg>
-    );
-  }
-
-  if (mark === "square") {
-    // Live results — candidate rows
-    return (
-      <svg {...common}>
-        <line x1="6" y1="12" x2="28" y2="12" />
-        <line x1="6" y1="20" x2="36" y2="20" />
-        <line x1="6" y1="28" x2="20" y2="28" />
-      </svg>
-    );
-  }
-
-  // target → Research fielding — survey form
+  const hues: [string, string][] = [
+    ["186,150,255", "138,163,242"],   // collect — violet / periwinkle
+    ["138,163,242", "124,187,159"],   // weight — periwinkle / sage
+    ["124,187,159", "186,150,255"],   // model — sage / violet
+    ["238,108,170", "255,170,140"],   // publish — rose / peach
+    ["255,180,150", "186,150,255"],   // explain — peach / violet
+  ];
   return (
-    <svg {...common}>
-      <rect x="9" y="6" width="22" height="28" rx="3" />
-      <line x1="14" y1="15" x2="26" y2="15" />
-      <line x1="14" y1="21" x2="26" y2="21" />
-      <line x1="14" y1="27" x2="21" y2="27" />
-    </svg>
-  );
-}
-
-function ThumbnailPreview({ item }: { item: GalleryItem }) {
-  return (
-    <div className="lp-art lp-art-thumbnail">
-      <Image src={item.src} alt={item.alt} width={1672} height={941} sizes="(max-width: 680px) 86vw, 770px" priority={item.kind === "polling"} />
+    <div className="ap" ref={wrapRef}>
+      <div className="ap-eyebrow"><span aria-hidden="true" />The approach</div>
+      {process.map((item, i) => (
+        <div key={item.title} className={`ap-row ${i % 2 === 0 ? "ap-right" : "ap-left"}`}
+          style={{ "--ga": hues[i][0], "--gb": hues[i][1] } as React.CSSProperties}>
+          <span className="ap-glow" aria-hidden="true" />
+          <div className="ap-copy">
+            <span className="ap-idx">{String(i + 1).padStart(2, "0")}</span>
+            <p>{item.body}</p>
+          </div>
+          <h3 className="ap-word">{item.title}</h3>
+        </div>
+      ))}
     </div>
   );
 }
 
-function GalleryCard({ item }: { item: GalleryItem }) {
+// ─── "State of the play" data band + "Inside the desk" stage ─────────────────
+function prefersReduced() {
+  return typeof window !== "undefined" && window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+}
+function useCountUp(target: number, armed: boolean, decimals = 0, duration = 950) {
+  const [val, setVal] = useState(0);
+  useEffect(() => {
+    if (!armed) return;
+    if (prefersReduced()) { const r = requestAnimationFrame(() => setVal(target)); return () => cancelAnimationFrame(r); }
+    let raf = 0; const start = performance.now();
+    const tick = (now: number) => {
+      const t = Math.min(1, (now - start) / duration);
+      setVal(target * (1 - Math.pow(1 - t, 3)));
+      if (t < 1) raf = requestAnimationFrame(tick); else setVal(target);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [armed, target, decimals, duration]);
+  return val.toFixed(decimals);
+}
+function useArmed(threshold = 0.3) {
+  const ref = useRef<HTMLDivElement | null>(null);
+  const [armed, setArmed] = useState(false);
+  useEffect(() => {
+    const n = ref.current;
+    if (!n || typeof IntersectionObserver === "undefined") { const r = requestAnimationFrame(() => setArmed(true)); return () => cancelAnimationFrame(r); }
+    const o = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { setArmed(true); o.disconnect(); } }), { threshold });
+    o.observe(n);
+    return () => o.disconnect();
+  }, [threshold]);
+  return { ref, armed };
+}
+/* Product colors — lifted verbatim from the destination pages. */
+const PG_BLUE = "#8aa3f2";    // Democrats, muted
+const PG_RED = "#ef8b94";     // Republicans, muted
+const PG_GREEN = "#7cbb9f";   // Approve, muted
+const PG_MAGENTA = "#c08fd6"; // Disapprove, muted
+const FC_BLUE = "#8aa3f2";    // forecast D, muted
+const FC_RED = "#ef8b94";     // forecast R, muted
+
+// forecast page rating tiers
+function ratingTone(m: number): string {
+  if (m >= 12) return "#d9707a";
+  if (m >= 6) return "#ef8b94";
+  if (m >= 2) return "#f4b0b6";
+  if (m > 0) return "#f8cdd1";
+  if (m > -2) return "#ccd6f8";
+  if (m > -6) return "#aabcf5";
+  if (m > -12) return "#8aa3f2";
+  return "#6f86d9";
+}
+
+const BALLOT: { name: string; pct: number }[] = [
+  { name: "Bass", pct: 39.9 }, { name: "Pratt", pct: 21.1 }, { name: "Raman", pct: 12.2 },
+  { name: "Other", pct: 12.1 }, { name: "Huang", pct: 7.8 }, { name: "Miller", pct: 6.9 },
+];
+// 2022 Iowa Governor, certified result — replayed through the live-results UI.
+const RESULTS = { rows: [{ name: "Kim Reynolds", party: "R" as const, pct: 58.0, color: FC_RED }, { name: "Deidre DeJear", party: "D" as const, pct: 39.5, color: FC_BLUE }] };
+// 2024 base map with the seven battlegrounds left open (93 EV among them).
+const EV = { d: 226, t: 93, r: 219 };
+
+type PreviewProps = { stats: HomeStats | null };
+
+/* The tracker pages' chart language at marketing scale: poll dots + two
+   weighted daily lines, value pills riding the line ends. */
+function DualChart({ daily, polls, colA, colB, yPad = 3, strokeW = 2.6, ends = "pill", endA, endB }: {
+  daily: HomeSeriesPoint[]; polls?: HomePollPoint[];
+  colA: string; colB: string; yPad?: number; strokeW?: number;
+  ends?: "pill" | "text" | "none"; endA?: string; endB?: string;
+}) {
+  const W = 640, H = 260, padL = 10, padR = 64, padT = 16, padB = 10;
+  if (!daily.length) return <svg viewBox={`0 0 ${W} ${H}`} className="pvb-svg" />;
+  const t1 = daily[daily.length - 1].t;
+  const t0 = t1 - 120 * 86400000;
+  const win = daily.filter((p) => p.t >= t0);
+  const pwin = (polls ?? []).filter((p) => p.t >= t0);
+  const vals = [...win.flatMap((p) => [p.a, p.b]), ...pwin.flatMap((p) => [p.a, p.b])];
+  const lo = Math.min(...vals) - yPad;
+  const hi = Math.max(...vals) + yPad;
+  const mx = (t: number) => padL + ((t - t0) / Math.max(t1 - t0, 1)) * (W - padL - padR);
+  const my = (v: number) => padT + (1 - (v - lo) / Math.max(hi - lo, 1)) * (H - padT - padB);
+  const path = (key: "a" | "b") => `M${win.map((p) => `${mx(p.t).toFixed(1)},${my(p[key]).toFixed(1)}`).join(" L")}`;
+  const last = win[win.length - 1];
+  const tag = (v: number, col: string, lab?: string) => {
+    if (ends === "none") return null;
+    if (ends === "text") {
+      return (
+        <g transform={`translate(${mx(last.t) + 12}, ${my(v)})`}>
+          <text y="-3" className="ex-endlab" fill={col}>{lab}</text>
+          <text y="13" className="ex-endval" fill={col}>{v.toFixed(1)}</text>
+        </g>
+      );
+    }
+    return (
+      <g transform={`translate(${mx(last.t) + 10}, ${my(v) - 10})`}>
+        <rect width="48" height="20" rx="10" fill={col} />
+        <text x="24" y="14" textAnchor="middle" className="pvb-tagtext">{v.toFixed(1)}</text>
+      </g>
+    );
+  };
   return (
-    <Link href={item.href} className={`lp-gallery-card lp-gallery-${item.kind}`} aria-label={item.title}>
-      <ThumbnailPreview item={item} />
+    <svg viewBox={`0 0 ${W} ${H}`} className="pvb-svg" preserveAspectRatio="none">
+      {pwin.map((p, i) => (
+        <g key={i} opacity={0.08 + ((p.t - t0) / Math.max(t1 - t0, 1)) * 0.24}>
+          <circle cx={mx(p.t)} cy={my(p.a)} r="2.8" fill={colA} />
+          <circle cx={mx(p.t)} cy={my(p.b)} r="2.8" fill={colB} />
+        </g>
+      ))}
+      <path d={path("b")} fill="none" stroke={colB} strokeWidth={strokeW} strokeLinejoin="round" strokeLinecap="round" />
+      <path d={path("a")} fill="none" stroke={colA} strokeWidth={strokeW} strokeLinejoin="round" strokeLinecap="round" />
+      <circle cx={mx(last.t)} cy={my(last.a)} r="4" fill={colA} stroke="#0b0b0d" strokeWidth="1.6" />
+      <circle cx={mx(last.t)} cy={my(last.b)} r="4" fill={colB} stroke="#0b0b0d" strokeWidth="1.6" />
+      {tag(last.a, colA, endA)}
+      {tag(last.b, colB, endB)}
+    </svg>
+  );
+}
+
+// ─── The evidence — three columns of light rising with the scroll ────────────
+function EvidenceBars({ stats }: { stats: HomeStats | null }) {
+  const ref = useRef<HTMLDivElement | null>(null);
+  const [p, setP] = useState(0);
+
+  useEffect(() => {
+    const update = () => {
+      const n = ref.current; if (!n) return;
+      const rect = n.getBoundingClientRect();
+      const vh = Math.max(window.innerHeight, 1);
+      const scrollable = Math.max(n.offsetHeight - vh, 1);
+      const np = prefersReduced() ? 1 : Math.max(0, Math.min(1, -rect.top / scrollable));
+      setP((prev) => (Math.abs(prev - np) > 0.003 ? np : prev));
+    };
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
+    return () => { window.removeEventListener("scroll", update); window.removeEventListener("resize", update); };
+  }, []);
+
+  const bars = [
+    { v: stats?.approval.count ?? 585, label: "approval polls in the model", note: "every public job-approval poll", color: "246,244,240" },
+    { v: stats?.generic.count ?? 221, label: "generic-ballot polls", note: "gold-standard weighted, daily", color: "246,244,240" },
+    { v: 50, label: "states in the forecast map", note: "the complete forecast map", color: "246,244,240" },
+  ];
+  const maxSqrt = Math.sqrt(Math.max(...bars.map((b) => b.v)));
+
+  return (
+    <div className="ev" ref={ref} aria-label="What feeds the model">
+      <div className="ev-sticky">
+        <div className="ev-eyebrow"><span aria-hidden="true" />The evidence</div>
+        <div className="ev-row">
+          {bars.map((b, i) => {
+            const start = i * 0.16;
+            const k = Math.max(0, Math.min(1, (p * 1.45 - start) / 0.62));
+            const g = 1 - Math.pow(1 - k, 3);
+            const hRel = Math.sqrt(b.v) / maxSqrt;
+            const hPct = Math.max(g * hRel * 100, 0.001);
+            return (
+              <div className="ev-col" key={b.label} style={{ "--c": `rgb(${b.color})`, "--ca": b.color, "--g": g.toFixed(3) } as React.CSSProperties}>
+                <div className="ev-fill" style={{ height: `${hPct.toFixed(2)}%` }}>
+                  <span className="ev-crest" aria-hidden="true" />
+                </div>
+                <div className="ev-num" style={{ bottom: `calc(${hPct.toFixed(2)}% + 22px)` }}>
+                  {Math.round(b.v * g)}
+                </div>
+                <div className="ev-lab">{b.label}<i>{b.note}</i></div>
+              </div>
+            );
+          })}
+          <span className="ev-base" aria-hidden="true" />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ─── The desk — an editorial exhibit wall. No containers: each tracker is a
+   large borderless exhibit floating on the page, its data feathered into the
+   dark at the edges, separated by hairline rules and index typography. ─── */
+
+function ExhibitFrame({ idx, title, sub, href, cta, depth, children }: {
+  idx: string; title: string; sub?: string; href: string; cta: string;
+  depth: number; children: React.ReactNode;
+}) {
+  return (
+    <Link href={href} className="ex" style={{ "--depth": depth } as React.CSSProperties}>
+      <span className="ex-rule" aria-hidden="true" />
+      <span className="ex-meta">
+        <span className="ex-idx">{idx}</span>
+        <span className="ex-title">{title}</span>
+        {sub && <span className="ex-sub">{sub}</span>}
+        <span className="ex-cta">{cta}<i aria-hidden="true">→</i></span>
+      </span>
+      <span className="ex-body">{children}</span>
     </Link>
   );
 }
 
-function TrackColumn({ item }: { item: TrackItem }) {
+/* 01 — generic ballot: the dual-line chart floats free, edges feathered,
+   today's margin as a huge numeral riding the right edge. */
+function BallotExhibit({ stats }: PreviewProps) {
+  const g = stats?.generic;
+  const fmt = !g ? "" : g.net > 0 ? `D+${g.net.toFixed(1)}` : g.net < 0 ? `R+${Math.abs(g.net).toFixed(1)}` : "Even";
   return (
-    <article className="lp-track">
-      <TrackIcon mark={item.mark} />
-      <h3>{item.title}</h3>
-      <p>{item.body}</p>
-    </article>
+    <span className="ex-stage ex-stage-tall">
+      <span className="ex-wash" style={{ background: "radial-gradient(56% 70% at 38% 55%, rgba(138,163,242,0.06), transparent 70%)" }} />
+      <span className="ex-chart ex-fade">
+        {g && <DualChart daily={g.daily} polls={g.polls} colA={PG_BLUE} colB={PG_RED} ends="text" endA="Dem" endB="Rep" />}
+      </span>
+      <span className="ex-big" style={{ color: PG_BLUE }}>{fmt}<i>today’s weighted margin</i></span>
+    </span>
   );
 }
 
-function ProcessCard({ item }: { item: ProcessItem }) {
+/* 02 — senate ratings: the beeswarm at scale with an annotated callout and
+   the projected balance as paired numerals. */
+function SenateExhibit() {
+  const W = 980, H = 270, pad = 40, R = 13, stepY = 29, gap = 3, cap = 42;
+  const mx = (m: number) => pad + ((Math.max(-cap, Math.min(cap, m)) + cap) / (cap * 2)) * (W - 2 * pad);
+  const sorted = [...SENATE_MODEL].sort((a, b) => a.m - b.m);
+  const placed: { st: string; m: number; open?: boolean; x: number; row: number }[] = [];
+  for (const s of sorted) { const x = mx(s.m); let row = 0; while (placed.some((p) => p.row === row && Math.abs(p.x - x) < R * 2 + gap)) row++; placed.push({ ...s, x, row }); }
+  const baseY = H - 26;
+  const { d, r } = senateBalance();
+  const ia = placed.find((p) => p.st === "IA");
   return (
-    <article className="lp-process-card">
-      <AbstractMark type={item.mark} />
-      <h3>{item.title}</h3>
-      <p>{item.body}</p>
-    </article>
+    <span className="ex-stage ex-stage-swarm">
+      <span className="ex-wash" style={{ background: "radial-gradient(40% 80% at 30% 70%, rgba(111,134,217,0.055), transparent 70%), radial-gradient(40% 80% at 70% 70%, rgba(217,112,122,0.05), transparent 70%)" }} />
+      <span className="ex-chart ex-fade-x">
+        <svg viewBox={`0 0 ${W} ${H}`} className="ex-svg" preserveAspectRatio="xMidYMax meet">
+          {[-40, -20, 0, 20, 40].map((g) => (
+            <g key={g}>
+              <line x1={mx(g)} y1={g === 0 ? 14 : 56} x2={mx(g)} y2={baseY + 4} stroke={g === 0 ? "rgba(244,244,239,0.2)" : "rgba(244,244,239,0.07)"} strokeWidth="1" strokeDasharray={g === 0 ? "3 5" : "0"} />
+              <text x={mx(g)} y={baseY + 21} textAnchor="middle" className="ex-axis">{g === 0 ? "EVEN" : g > 0 ? `R+${g}` : `D+${-g}`}</text>
+            </g>
+          ))}
+          {placed.map((p) => {
+            const cy = baseY - 10 - p.row * stepY, c = ratingTone(p.m);
+            return p.open
+              ? <circle key={p.st} cx={p.x} cy={cy} r={R - 1.2} fill="#050505" stroke={c} strokeWidth="2.2" />
+              : <circle key={p.st} cx={p.x} cy={cy} r={R} fill={c} />;
+          })}
+        </svg>
+      </span>
+      {ia && (
+        <span className="ex-ann" style={{ left: `${(ia.x / W) * 100}%` }}>
+          <span className="ex-ann-text"><b>Iowa</b> — open seat, R+0.7 · the tightest seat on the board</span>
+          <span className="ex-ann-line" />
+        </span>
+      )}
+      <span className="ex-big ex-big-pair"><b style={{ color: FC_BLUE }}>{d}</b><span>–</span><b style={{ color: FC_RED }}>{r}</b><i>projected balance</i></span>
+    </span>
   );
 }
+
+/* 03 — approval: a huge net numeral over the diverging lines. */
+function ApprovalExhibit({ stats }: PreviewProps) {
+  const a = stats?.approval;
+  return (
+    <span className="ex-stage ex-stage-cell">
+      <span className="ex-cellbig" style={{ color: PG_MAGENTA }}>{a ? (a.net > 0 ? "+" : "−") + Math.abs(a.net).toFixed(0) : ""}</span>
+      <span className="ex-cellsub">{a ? `${a.approve.toFixed(0)} approve · ${a.disapprove.toFixed(0)} disapprove` : ""}</span>
+      <span className="ex-chart ex-chart-mini ex-fade-x">
+        {a && <DualChart daily={a.daily} colA={PG_GREEN} colB={PG_MAGENTA} yPad={2} strokeW={2.2} ends="text" endA="App" endB="Dis" />}
+      </span>
+    </span>
+  );
+}
+
+/* 04 — live results: the Iowa replay as quiet editorial rows. */
+function ResultsExhibit() {
+  return (
+    <span className="ex-stage ex-stage-cell">
+      <span className="ex-cellhead">Iowa Governor<i>’22 replay · 100% in</i></span>
+      <span className="ex-rows">
+        {RESULTS.rows.map((row, i) => (
+          <span className="ex-row" key={row.name}>
+            <span className="ex-row-name">{row.name}{i === 0 && <em>✓</em>}</span>
+            <span className="ex-row-bar ex-fade-r"><i style={{ width: `${row.pct}%`, background: row.color, opacity: i === 0 ? 0.95 : 0.5 }} /></span>
+            <b className="ex-row-pct" style={{ opacity: i === 0 ? 1 : 0.55 }}>{row.pct.toFixed(1)}</b>
+          </span>
+        ))}
+      </span>
+      <span className="ex-cellsub">certified result · 1,989 of 1,989 precincts</span>
+    </span>
+  );
+}
+
+/* 05 — electoral map: geography feathered into the dark, the 270 line below. */
+function MapExhibit() {
+  const tot = EV.d + EV.t + EV.r;
+  return (
+    <span className="ex-stage ex-stage-cell">
+      <span className="ex-wash" style={{ background: "radial-gradient(60% 70% at 50% 40%, rgba(141,127,214,0.055), transparent 72%)" }} />
+      <span className="ex-map ex-fade">{<HeroElectoralMap />}</span>
+      <span className="ex-evwrap">
+        <span className="ex-evtick" style={{ left: `${(270 / tot) * 100}%` }}><i />270</span>
+        <span className="ex-evbar">
+          <i style={{ width: `${(EV.d / tot) * 100}%`, background: FC_BLUE }} />
+          <i style={{ width: `${(EV.t / tot) * 100}%`, background: "rgba(244,244,239,0.14)" }} />
+          <i style={{ width: `${(EV.r / tot) * 100}%`, background: FC_RED }} />
+        </span>
+        <span className="ex-evcaps"><b style={{ color: FC_BLUE }}>{EV.d}</b><span>{EV.t} open</span><b style={{ color: FC_RED }}>{EV.r}</b></span>
+      </span>
+    </span>
+  );
+}
+
+/* 06 — tpsi field poll: the LA mayor ballot, bars feathering rightward. */
+function TpsiExhibit() {
+  const max = BALLOT[0].pct;
+  return (
+    <span className="ex-stage ex-stage-cell">
+      <span className="ex-cellbig" style={{ color: PG_BLUE, fontSize: "clamp(40px, 3.4vw, 58px)" }}>B+18.8</span>
+      <span className="ex-cellsub">Los Angeles Mayor · likely voters, leaners allocated</span>
+      <span className="ex-rows ex-rows-tight">
+        {BALLOT.slice(0, 4).map((b, i) => (
+          <span className="ex-row" key={b.name}>
+            <span className="ex-row-name">{b.name}</span>
+            <span className="ex-row-bar ex-fade-r"><i style={{ width: `${(b.pct / max) * 100}%`, background: i === 0 ? PG_BLUE : i === 1 ? PG_RED : i === 2 ? "#b98cff" : "rgba(244,244,239,0.22)", opacity: i === 0 ? 0.95 : 0.65 }} /></span>
+            <b className="ex-row-pct" style={{ opacity: i === 0 ? 1 : 0.55 }}>{b.pct.toFixed(1)}</b>
+          </span>
+        ))}
+      </span>
+    </span>
+  );
+}
+
+function DeskWall({ stats }: { stats: HomeStats | null }) {
+  const { ref, armed } = useArmed(0.06);
+  const wallRef = useRef<HTMLDivElement | null>(null);
+  const [days, setDays] = useState(150);
+
+  useEffect(() => {
+    const r = requestAnimationFrame(() => setDays(Math.max(0, Math.round((Date.parse("2026-11-03T00:00:00") - Date.now()) / 86400000))));
+    return () => cancelAnimationFrame(r);
+  }, []);
+
+  // one scroll-driven progress var; exhibits drift at their own depths
+  useEffect(() => {
+    const wall = wallRef.current;
+    if (!wall) return;
+    const update = () => {
+      const rect = wall.getBoundingClientRect();
+      const vh = Math.max(window.innerHeight, 1);
+      const p = Math.max(0, Math.min(1, (vh - rect.top) / (vh + rect.height)));
+      wall.style.setProperty("--p", p.toFixed(4));
+    };
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
+    return () => { window.removeEventListener("scroll", update); window.removeEventListener("resize", update); };
+  }, []);
+
+  const dv = useCountUp(days, armed, 0);
+
+  return (
+    <section className={`dk${armed ? " is-in" : ""}`} aria-label="The state of the play">
+      <div className="dk-shell" ref={ref}>
+        <div className="dk-headrow">
+          <div>
+            <div className="dk-eyebrow"><span aria-hidden="true" />Inside the desk</div>
+            <h2 className="dk-title">The state of the play.</h2>
+          </div>
+          <div className="dk-live"><i aria-hidden="true" />updated daily · <b>{dv}</b> days to the midterms</div>
+        </div>
+
+        <div className="xw" ref={wallRef}>
+          <ExhibitFrame idx="01" title="Polling averages" sub={`national generic ballot · ${stats?.generic.count ?? "—"} polls`} href="/polling/genericballot" cta="Open the tracker" depth={-8}>
+            <BallotExhibit stats={stats} />
+          </ExhibitFrame>
+
+          <ExhibitFrame idx="02" title="Race ratings" sub="2026 senate · all 35 seats, modeled nightly" href="/forecastratings" cta="See the ratings" depth={10}>
+            <SenateExhibit />
+          </ExhibitFrame>
+
+          <div className="xw-duo">
+            <ExhibitFrame idx="03" title="Trump approval" sub="every public poll" href="/polling/donaldtrumpapproval" cta="Open" depth={-6}>
+              <ApprovalExhibit stats={stats} />
+            </ExhibitFrame>
+            <span className="xw-div" aria-hidden="true" />
+            <ExhibitFrame idx="04" title="Live results" sub="election night, replayed" href="/results" cta="Open" depth={8}>
+              <ResultsExhibit />
+            </ExhibitFrame>
+          </div>
+
+          <div className="xw-duo">
+            <ExhibitFrame idx="05" title="Electoral map" sub="2024 base · 7 battlegrounds open" href="/electoralmap" cta="Open" depth={9}>
+              <MapExhibit />
+            </ExhibitFrame>
+            <span className="xw-div" aria-hidden="true" />
+            <ExhibitFrame idx="06" title="TPSI poll" sub="our own field research" href="/tpsipoll" cta="Read" depth={-7}>
+              <TpsiExhibit />
+            </ExhibitFrame>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+
+// ─── Horizon footer — curved gradient wave + rotating wordmark ───────────────
+const FOOT_WORDS: (string | string[])[] = [
+  ["THE PUBLIC", "SENTIMENT", "INSTITUTE"],
+  "POLLING",
+  "FORECASTING",
+  "ELECTIONS",
+  "INSIGHT",
+];
+
+function FooterWord({ word, mode }: { word: string | string[]; mode: "in" | "out" }) {
+  const lines = Array.isArray(word) ? word : [word];
+  return (
+    <span className={`ft-word is-${mode}${lines.length > 1 ? " is-stack" : ""}`} aria-hidden="true">
+      {lines.map((ln, i) => (
+        <b key={ln} style={{ animationDelay: mode === "in" ? `${420 + i * 110}ms` : `${i * 50}ms` }}>{ln}</b>
+      ))}
+    </span>
+  );
+}
+
+function HorizonFooter() {
+  const ref = useRef<HTMLDivElement | null>(null);
+  const [armed, setArmed] = useState(false);
+  const [idx, setIdx] = useState(0);
+  const [prev, setPrev] = useState<number | null>(null);
+
+  useEffect(() => {
+    const node = ref.current;
+    if (!node || typeof IntersectionObserver === "undefined") {
+      const r = requestAnimationFrame(() => setArmed(true));
+      return () => cancelAnimationFrame(r);
+    }
+    const o = new IntersectionObserver(
+      (es) => es.forEach((e) => { if (e.isIntersecting) { setArmed(true); o.disconnect(); } }),
+      { threshold: 0.55 },
+    );
+    o.observe(node);
+    return () => o.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!armed || prefersReduced()) return;
+    const hold = idx === 0 ? 3800 : 2500;
+    const t = setTimeout(() => {
+      setPrev(idx);
+      setIdx((i) => (i + 1) % FOOT_WORDS.length);
+    }, hold);
+    return () => clearTimeout(t);
+  }, [armed, idx]);
+
+  return (
+    <section className={`ft${armed ? " is-on" : ""}`} ref={ref} aria-label="Work with PSI">
+      <div className="ft-wave" aria-hidden="true" />
+      <div className="ft-wave-core" aria-hidden="true" />
+      <div className="ft-grain" aria-hidden="true" />
+
+      <div className="ft-stage">
+        <div className="ft-words">
+          <span className="ft-sr">The Public Sentiment Institute — polling, forecasting, elections, insight.</span>
+          {prev !== null && <FooterWord key={`out-${prev}-${idx}`} word={FOOT_WORDS[prev]} mode="out" />}
+          {armed && <FooterWord key={`in-${idx}`} word={FOOT_WORDS[idx]} mode="in" />}
+        </div>
+        <p className="ft-line">Work with public sentiment &mdash; partner with the desk.</p>
+        <a className="ft-mail" href="mailto:tpsinstitutecontact@gmail.com">
+          tpsinstitutecontact@gmail.com<i aria-hidden="true">&rarr;</i>
+        </a>
+      </div>
+
+      <div className="ft-links">
+        <span>&copy; 2026 The Public Sentiment Institute</span>
+        <nav aria-label="Footer">
+          <Link href="/polling">Polling</Link>
+          <Link href="/forecastratings">Forecasts</Link>
+          <Link href="/results">Results</Link>
+          <Link href="/contact">Contact</Link>
+        </nav>
+      </div>
+    </section>
+  );
+}
+
+// ─── Narrative camera — the statement as a filmed typographic stage ──────────
+const CAM_END = 0.62;   // pan word-by-word — ~7vh of scroll per word
+const ZOOM_END = 0.72;  // pull back to the full statement
+const NARR_PHRASES = [
+  "We believe that every voice carries a signal.",
+  "Most research misses those voices.",
+  "The Public Sentiment Institute is built to find it —",
+  "in the data beneath the data,",
+  "in the areas others overlook,",
+  "asking the tough questions other researchers won’t.",
+];
+const NARR_WORDS_PER = NARR_PHRASES.map((p) => p.split(" ").length);
+const NARR_TOTAL_WORDS = NARR_WORDS_PER.reduce((a, b) => a + b, 0);
+const NARR_OFFSETS = NARR_WORDS_PER.map((_, i) => NARR_WORDS_PER.slice(0, i).reduce((a, b) => a + b, 0));
 
 export default function HomePage() {
   const [openFaq, setOpenFaq] = useState(0);
-  const [menuOpen, setMenuOpen] = useState(false);
+  const [stats, setStats] = useState<HomeStats | null>(null);
+
+  // Run the weighted model off the critical path; everything that quotes a
+  // number reads from this one computation.
+  useEffect(() => {
+    const w = window as Window & { requestIdleCallback?: (cb: () => void) => number };
+    const run = () => setStats(getHomeStats());
+    if (w.requestIdleCallback) w.requestIdleCallback(run);
+    else window.setTimeout(run, 1);
+  }, []);
+
   const proofRef = useRef<HTMLDivElement | null>(null);
-  const countStartedRef = useRef(false);
   const [proofProgress, setProofProgress] = useState(0);
-  const [proofArmed, setProofArmed] = useState(false);
-  const [proofCounts, setProofCounts] = useState({ approval: 0, generic: 0, states: 0 });
   const [narrativeProgress, setNarrativeProgress] = useState(0);
-  const [navOnLight, setNavOnLight] = useState(false);
-  const [processInView, setProcessInView] = useState(false);
   const narrativeRef = useRef<HTMLDivElement | null>(null);
-  const processRef = useRef<HTMLDivElement | null>(null);
-  const galleryLoop = [...gallery, ...gallery];
+  const camStageRef = useRef<HTMLDivElement | null>(null);
+  const camVpRef = useRef<HTMLDivElement | null>(null);
+  const camAnchorsRef = useRef<{ x: number; y: number }[]>([]);
+  const camSizeRef = useRef({ w: 1, h: 1 });
+  const camNpRef = useRef(0);
   const clamp01 = (value: number) => Math.max(0, Math.min(1, value));
   const proofLetterProgress = clamp01(proofProgress / 0.72);
   const proofSettle = clamp01((proofProgress - 0.72) / 0.2);
@@ -283,17 +662,82 @@ export default function HomePage() {
     opacity: 1 - proofFade,
   } as React.CSSProperties;
 
+  const applyCam = (npNow: number) => {
+    const stage = camStageRef.current;
+    const vp = camVpRef.current;
+    if (!stage || !vp) return;
+    const desktop = window.innerWidth > 980 && !prefersReduced();
+    if (!desktop) {
+      stage.style.transform = "none";
+      vp.style.setProperty("--vg", "0");
+      return;
+    }
+    const A = camAnchorsRef.current;
+    if (!A.length) return;
+    const { w: sw, h: sh } = camSizeRef.current;
+    const vw = window.innerWidth, vh = window.innerHeight;
+    const fit = Math.min((vw - 150) / sw, (vh - 220) / sh, 1);
+    const ss = (t: number) => t * t * (3 - 2 * t);
+    let x: number, y: number, sc: number, vg: number;
+    if (npNow <= CAM_END) {
+      const t = (npNow / CAM_END) * (A.length - 1);
+      const i = Math.max(0, Math.min(A.length - 2, Math.floor(t)));
+      const f = ss(Math.max(0, Math.min(1, t - i)));
+      x = A[i].x + (A[i + 1].x - A[i].x) * f;
+      y = A[i].y + (A[i + 1].y - A[i].y) * f;
+      sc = 3.05 - 0.3 * (npNow / CAM_END);
+      vg = 1;
+    } else if (npNow <= ZOOM_END) {
+      const u = ss((npNow - CAM_END) / (ZOOM_END - CAM_END));
+      const last = A[A.length - 1];
+      x = last.x + (sw / 2 - last.x) * u;
+      y = last.y + (sh / 2 - last.y) * u;
+      sc = 2.75 + (fit - 2.75) * u;
+      vg = 1 - u;
+    } else {
+      x = sw / 2; y = sh / 2; sc = fit; vg = 0;
+    }
+    stage.style.transform = `translate3d(${(vw / 2 - x * sc).toFixed(2)}px, ${(vh / 2 - y * sc).toFixed(2)}px, 0) scale(${sc.toFixed(4)})`;
+    vp.style.setProperty("--vg", vg.toFixed(3));
+  };
+  const applyCamRef = useRef(applyCam);
+  useEffect(() => { applyCamRef.current = applyCam; });
+
+  useEffect(() => {
+    const measure = () => {
+      const stage = camStageRef.current;
+      if (!stage) return;
+      const prev = stage.style.transform;
+      stage.style.transform = "none";
+      const stageRect = stage.getBoundingClientRect();
+      camSizeRef.current = { w: stage.offsetWidth, h: stage.offsetHeight };
+      camAnchorsRef.current = Array.from(stage.querySelectorAll<HTMLElement>(".cam-w")).map((el) => {
+        const r = el.getBoundingClientRect();
+        return { x: r.left - stageRect.left + r.width / 2, y: r.top - stageRect.top + r.height / 2 };
+      });
+      stage.style.transform = prev;
+      applyCamRef.current(camNpRef.current);
+    };
+    measure();
+    if (typeof document !== "undefined" && "fonts" in document) {
+      (document as Document & { fonts: { ready: Promise<unknown> } }).fonts.ready.then(() => measure());
+    }
+    window.addEventListener("resize", measure);
+    return () => window.removeEventListener("resize", measure);
+  }, []);
+
   // Cinematic narrative beats — all driven by scroll position so scroll-up rewinds.
   const np = narrativeProgress;
-  const narr2In = clamp01((np - 0.03) / 0.07);
-  const narr2Out = clamp01((np - 0.46) / 0.08);
+  const narr2In = clamp01(np / 0.025);
+  const narr2Out = clamp01((np - 0.765) / 0.05);
   const narr2Opacity = Math.max(0, narr2In - narr2Out);
-  const narr2Y = (1 - narr2In) * 22 + narr2Out * -22;
-  const narr2Highlight = clamp01((np - 0.1) / 0.3);
-  const narr3In = clamp01((np - 0.56) / 0.1);
+  const camWp = clamp01(np / CAM_END) * (NARR_TOTAL_WORDS - 1);
+  const camNowIdx = Math.floor(camWp);
+  const camRevealed = np > CAM_END + 0.015;
+  const narr3In = clamp01((np - 0.81) / 0.07);
   const narr3Opacity = narr3In;
   const narr3Y = (1 - narr3In) * 24;
-  const whiteT = clamp01((np - 0.7) / 0.16);
+  const whiteT = clamp01((np - 0.88) / 0.1);
   const mixChannel = (from: number, to: number) => Math.round(from + (to - from) * whiteT);
   const narrativeBg = `rgb(${mixChannel(5, 244)}, ${mixChannel(5, 244)}, ${mixChannel(5, 239)})`;
   const narr3Color = `rgb(${mixChannel(244, 10)}, ${mixChannel(244, 10)}, ${mixChannel(239, 10)})`;
@@ -312,25 +756,17 @@ export default function HomePage() {
         Math.abs(current - nextProgress) > 0.006 ? nextProgress : current,
       );
 
-      if (nextProgress > 0.78) {
-        setProofArmed(true);
-      }
-
       const narrativeNode = narrativeRef.current;
       if (narrativeNode) {
         const narrativeRect = narrativeNode.getBoundingClientRect();
         const narrativeScrollable = Math.max(narrativeNode.offsetHeight - viewportHeight, 1);
         const narrativeNext = Math.max(0, Math.min(1, -narrativeRect.top / narrativeScrollable));
+        camNpRef.current = narrativeNext;
+        applyCamRef.current(narrativeNext);
         setNarrativeProgress((current) =>
           Math.abs(current - narrativeNext) > 0.004 ? narrativeNext : current,
         );
 
-        // Flip the transparent desktop nav dark only while the white finale
-        // actually covers the top of the viewport (not after we scroll past it).
-        const whiteAmount = Math.max(0, Math.min(1, (narrativeNext - 0.72) / 0.18));
-        const coversTop = narrativeRect.bottom > viewportHeight * 0.5;
-        const nextNavLight = whiteAmount > 0.5 && coversTop;
-        setNavOnLight((current) => (current !== nextNavLight ? nextNavLight : current));
       }
     };
 
@@ -344,84 +780,6 @@ export default function HomePage() {
     };
   }, []);
 
-  useEffect(() => {
-    if (!proofArmed || countStartedRef.current) return;
-
-    countStartedRef.current = true;
-    let frame = 0;
-
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      frame = requestAnimationFrame(() => setProofCounts(proofTargets));
-      return () => cancelAnimationFrame(frame);
-    }
-
-    const duration = 950;
-    const startedAt = performance.now();
-
-    const tick = (now: number) => {
-      const elapsed = Math.min(1, (now - startedAt) / duration);
-      const eased = 1 - Math.pow(1 - elapsed, 3);
-
-      setProofCounts({
-        approval: Math.round(proofTargets.approval * eased),
-        generic: Math.round(proofTargets.generic * eased),
-        states: Math.round(proofTargets.states * eased),
-      });
-
-      if (elapsed < 1) {
-        frame = requestAnimationFrame(tick);
-      }
-    };
-
-    frame = requestAnimationFrame(tick);
-
-    return () => cancelAnimationFrame(frame);
-  }, [proofArmed]);
-
-  useEffect(() => {
-    const node = processRef.current;
-    if (!node) return;
-    if (typeof IntersectionObserver === "undefined") {
-      const frame = requestAnimationFrame(() => setProcessInView(true));
-      return () => cancelAnimationFrame(frame);
-    }
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setProcessInView(true);
-            observer.disconnect();
-          }
-        });
-      },
-      { threshold: 0.16 },
-    );
-    observer.observe(node);
-    return () => observer.disconnect();
-  }, []);
-
-  useEffect(() => {
-    if (!menuOpen) return;
-
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setMenuOpen(false);
-    };
-    const onResize = () => {
-      setMenuOpen(false);
-    };
-
-    window.addEventListener("keydown", onKeyDown);
-    window.addEventListener("resize", onResize);
-
-    return () => {
-      document.body.style.overflow = previousOverflow;
-      window.removeEventListener("keydown", onKeyDown);
-      window.removeEventListener("resize", onResize);
-    };
-  }, [menuOpen]);
 
   return (
     <>
@@ -486,14 +844,135 @@ export default function HomePage() {
           margin: 0 auto;
         }
 
+        /* ── Hero — full-viewport Game-of-Life shader stage ── */
         .lp-hero {
-          min-height: auto;
-          padding: 104px 0 24px;
           position: relative;
+          min-height: 100vh;
+          min-height: 100svh;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          padding: 110px 0 120px;
+          overflow: hidden;
+          /* fallback grade if WebGL2 is unavailable */
+          background:
+            radial-gradient(110% 90% at 30% 40%, #150b2e 0%, #0a0618 48%, #050505 100%);
         }
 
         .lp-hero:before {
           content: none;
+        }
+
+        .lp-hero-glass {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          display: block;
+          z-index: 0;
+          animation: lp-life-in 1.4s ease 0.15s both;
+        }
+
+        @keyframes lp-life-in {
+          from { opacity: 0; }
+          to { opacity: 1; }
+        }
+
+        .lp-hero-veil {
+          position: absolute;
+          inset: 0;
+          z-index: 1;
+          pointer-events: none;
+          background:
+            linear-gradient(180deg, rgba(5, 5, 5, 0.45), transparent 18%),
+            linear-gradient(180deg, transparent 62%, rgba(5, 5, 5, 0.5) 88%, #050505 100%),
+            radial-gradient(86% 64% at 50% 54%, rgba(5, 4, 9, 0.62) 0%, rgba(5, 4, 9, 0.34) 46%, rgba(5, 4, 9, 0.04) 74%, transparent 88%);
+        }
+
+        .lp-hero-inner {
+          position: relative;
+          z-index: 2;
+          width: min(1240px, calc(100vw - 120px));
+        }
+
+        .lp-hero-nav {
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          z-index: 6;
+          padding-top: 10px;
+          background: linear-gradient(180deg, rgba(5, 5, 5, 0.46), transparent);
+        }
+
+        .lp-hero-nav-in {
+          width: min(1240px, calc(100vw - 120px));
+          margin: 0 auto;
+        }
+
+        .lp-hero-logo {
+          display: block;
+          width: clamp(250px, 25vw, 350px);
+          aspect-ratio: 397 / 101;
+          margin: 0 auto 42px;
+          background: #f4f4ef;
+          -webkit-mask: url(/full_logo_clean.png) center / contain no-repeat;
+          mask: url(/full_logo_clean.png) center / contain no-repeat;
+          filter:
+            drop-shadow(0 0 26px rgba(167, 139, 250, 0.38))
+            drop-shadow(0 2px 8px rgba(5, 4, 9, 0.7));
+        }
+
+        .lp-hero-foot {
+          position: absolute;
+          left: 0;
+          right: 0;
+          bottom: 26px;
+          z-index: 2;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          width: min(1100px, calc(100vw - 160px));
+          margin: 0 auto;
+          font-size: 11px;
+          font-weight: 650;
+          letter-spacing: 1.6px;
+          text-transform: uppercase;
+          color: rgba(244, 244, 239, 0.4);
+        }
+
+        .lp-hero-scroll {
+          display: inline-flex;
+          align-items: center;
+          gap: 12px;
+        }
+
+        .lp-hero-scroll i {
+          position: relative;
+          width: 1px;
+          height: 34px;
+          background: rgba(244, 244, 239, 0.18);
+          overflow: hidden;
+        }
+
+        .lp-hero-scroll i:after {
+          content: "";
+          position: absolute;
+          left: 0;
+          top: -50%;
+          width: 100%;
+          height: 50%;
+          background: #a78bfa;
+          animation: lp-scroll-drip 2.2s cubic-bezier(.65,0,.35,1) infinite;
+        }
+
+        @keyframes lp-scroll-drip {
+          to { top: 100%; }
+        }
+
+        .lp-hero-sim b {
+          color: rgba(196, 181, 253, 0.85);
+          font-weight: 650;
         }
 
         .lp-nav {
@@ -708,7 +1187,7 @@ export default function HomePage() {
           to { opacity: 1; transform: translateY(0); }
         }
 
-        /* ---- Desktop floating nav + glossy dropdown ---- */
+        /* ---- Desktop nav — free elements over a progressive-blur top edge ---- */
         .lp-desktop-nav {
           position: fixed;
           top: 0;
@@ -717,13 +1196,27 @@ export default function HomePage() {
           z-index: 70;
           display: flex;
           align-items: center;
-          justify-content: space-between;
-          padding: 24px clamp(28px, 4vw, 64px);
+          gap: 18px;
+          padding: 22px clamp(28px, 4vw, 60px) 18px;
           pointer-events: none;
         }
 
         .lp-desktop-nav > * {
           pointer-events: auto;
+        }
+
+        /* the frosted edge — content blurs as it slides under the nav, no box */
+        .lp-desktop-nav:before {
+          content: "";
+          position: absolute;
+          inset: 0 0 -34px 0;
+          z-index: -1;
+          pointer-events: none;
+          -webkit-backdrop-filter: blur(16px) saturate(1.3);
+          backdrop-filter: blur(16px) saturate(1.3);
+          -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 46%, transparent 100%);
+          mask-image: linear-gradient(180deg, #000 0%, #000 46%, transparent 100%);
+          background: linear-gradient(180deg, rgba(5, 5, 5, 0.42), rgba(5, 5, 5, 0.05) 70%, transparent);
         }
 
         .lp-desktop-brand {
@@ -734,40 +1227,70 @@ export default function HomePage() {
 
         .lp-brand-logo {
           display: block;
-          width: 142px;
-          height: 30px;
+          width: 116px;
+          height: 25px;
           background: #f4f4ef;
           -webkit-mask: url(/full_logo_clean.png) left center / contain no-repeat;
           mask: url(/full_logo_clean.png) left center / contain no-repeat;
-          transition: opacity 200ms ease, transform 200ms ease, background 260ms ease;
+          transition: opacity 200ms ease, background 280ms ease;
         }
 
         .lp-desktop-brand:hover .lp-brand-logo {
-          opacity: 0.85;
+          opacity: 0.8;
+        }
+
+        /* live reading — free element, no casing */
+        .lp-nav-live {
+          display: inline-flex;
+          align-items: center;
+          gap: 7px;
+          font-size: 12.5px;
+          font-weight: 650;
+          letter-spacing: 0.2px;
+          font-variant-numeric: tabular-nums;
+          color: rgba(138, 163, 242, 0.95);
+          text-decoration: none;
+          transition: color 200ms ease;
+        }
+
+        .lp-nav-live i {
+          width: 5px;
+          height: 5px;
+          border-radius: 999px;
+          background: #b7ff00;
+          animation: lp-dot-pulse 2.4s ease-in-out infinite;
+        }
+
+        .lp-nav-live:hover {
+          color: #aabcf5;
+        }
+
+        .lp-nav-sep {
+          display: none;
         }
 
         .lp-desktop-links {
           display: flex;
           align-items: center;
-          gap: clamp(22px, 2.4vw, 40px);
+          gap: clamp(26px, 2.6vw, 40px);
+          margin-left: auto;
         }
 
         .lp-desknav-item {
           position: relative;
           display: inline-flex;
           align-items: center;
-          padding: 6px 1px;
+          padding: 6px 0;
           background: none;
           border: 0;
           font: inherit;
-          font-size: 16px;
-          font-weight: 560;
-          letter-spacing: -0.01em;
-          color: #f4f4ef;
+          font-size: 14px;
+          font-weight: 580;
+          letter-spacing: -0.005em;
+          color: rgba(244, 244, 239, 0.72);
           text-decoration: none;
           cursor: pointer;
-          text-shadow: 0 1px 14px rgba(0, 0, 0, 0.4);
-          transition: color 180ms ease;
+          transition: color 200ms ease;
         }
 
         .lp-desknav-item:after {
@@ -775,166 +1298,157 @@ export default function HomePage() {
           position: absolute;
           left: 0;
           right: 0;
-          bottom: -2px;
-          height: 1.5px;
-          background: #b7ff00;
+          bottom: 0;
+          height: 1px;
+          background: rgba(244, 244, 239, 0.85);
           transform: scaleX(0);
           transform-origin: left center;
-          transition: transform 280ms cubic-bezier(.2,.8,.2,1);
+          transition: transform 300ms cubic-bezier(.2, .8, .2, 1);
         }
 
-        .lp-desknav-item:hover,
+        .lp-desknav-item:hover {
+          color: #f4f4ef;
+        }
+
         .lp-desknav-item.is-open {
-          color: #b7ff00;
+          color: #f4f4ef;
         }
 
-        .lp-desknav-item:hover:after,
         .lp-desknav-item.is-open:after {
           transform: scaleX(1);
         }
 
-        .lp-desktop-menu {
+        /* The strip — a full-width glass band sliding from under the nav */
+        .lp-navstrip {
           position: fixed;
           top: 0;
           left: 0;
           right: 0;
-          z-index: 60;
-          max-height: 100vh;
-          overflow-y: auto;
-          border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-          background:
-            linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0) 26%),
-            rgba(8, 8, 10, 0.95);
-          -webkit-backdrop-filter: blur(30px) saturate(1.4);
-          backdrop-filter: blur(30px) saturate(1.4);
-          box-shadow: 0 50px 110px rgba(0, 0, 0, 0.6);
+          z-index: 69;
+          padding: 70px 0 0;
           transform: translateY(-101%);
           visibility: hidden;
           pointer-events: none;
-          transition: transform 520ms cubic-bezier(.16, 1, .3, 1), visibility 0ms linear 520ms;
+          transition: transform 360ms cubic-bezier(.2, .8, .2, 1), visibility 0ms linear 360ms;
         }
 
-        .lp-desktop-menu.is-open {
+        .lp-navstrip.is-open {
           transform: translateY(0);
           visibility: visible;
           pointer-events: auto;
-          transition: transform 600ms cubic-bezier(.16, 1, .3, 1), visibility 0ms;
+          transition: transform 420ms cubic-bezier(.16, 1, .3, 1), visibility 0ms;
         }
 
-        .lp-desktop-menu-inner {
-          width: min(1100px, calc(100vw - 160px));
+        .lp-navstrip-band {
+          border-top: 1px solid rgba(244, 244, 239, 0.07);
+          border-bottom: 1px solid rgba(244, 244, 239, 0.09);
+          background: rgba(8, 8, 11, 0.58);
+          -webkit-backdrop-filter: blur(26px) saturate(1.5);
+          backdrop-filter: blur(26px) saturate(1.5);
+          box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05), 0 24px 60px rgba(0, 0, 0, 0.4);
+        }
+
+        .lp-navstrip-row {
+          display: flex;
+          align-items: stretch;
+          width: min(1240px, calc(100vw - 96px));
           margin: 0 auto;
-          padding: 118px 0 64px;
-          display: grid;
-          grid-template-columns: 1.15fr 1fr 1fr;
-          gap: clamp(40px, 5vw, 88px);
-          align-items: start;
-          opacity: 0;
-          transform: translateY(14px);
-          transition: opacity 360ms ease, transform 440ms cubic-bezier(.2, .8, .2, 1);
         }
 
-        .lp-desktop-menu.is-open .lp-desktop-menu-inner {
-          opacity: 1;
-          transform: translateY(0);
-          transition-delay: 150ms;
-        }
-
-        .lp-panel-lead {
+        .lp-navstrip-item {
+          flex: 1;
           display: flex;
           flex-direction: column;
-          align-items: flex-start;
-        }
-
-        .lp-panel-eyebrow {
-          font-size: 11px;
-          font-weight: 700;
-          letter-spacing: 1.8px;
-          text-transform: uppercase;
-          color: rgba(244, 244, 239, 0.42);
-          margin-bottom: 24px;
-        }
-
-        .lp-panel-statement {
-          margin: 0 0 34px;
-          font-size: clamp(23px, 2vw, 32px);
-          line-height: 1.12;
-          letter-spacing: -0.03em;
-          font-weight: 500;
+          justify-content: center;
+          gap: 6px;
+          min-width: 0;
+          padding: 18px 22px;
           color: #f4f4ef;
-          max-width: 340px;
+          text-decoration: none;
+          transition: background 180ms ease;
         }
 
-        .lp-panel-cta {
+        .lp-navstrip-item + .lp-navstrip-item {
+          border-left: 1px solid rgba(244, 244, 239, 0.07);
+        }
+
+        .lp-navstrip-item:hover {
+          background: rgba(244, 244, 239, 0.05);
+        }
+
+        .lp-navstrip-idx {
+          font-size: 10px;
+          font-weight: 650;
+          letter-spacing: 1px;
+          color: rgba(244, 244, 239, 0.32);
+          font-variant-numeric: tabular-nums;
+        }
+
+        .lp-navstrip-label {
+          font-size: 13.5px;
+          font-weight: 600;
+          letter-spacing: -0.005em;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+
+        .lp-navstrip-item b {
           display: inline-flex;
           align-items: center;
-          gap: 9px;
-          padding: 13px 24px;
+          gap: 6px;
+          font-size: 12px;
+          font-weight: 650;
+          font-variant-numeric: tabular-nums;
+          letter-spacing: 0.2px;
+        }
+
+        .lp-navstrip-dot {
+          width: 5px;
+          height: 5px;
           border-radius: 999px;
           background: #b7ff00;
-          color: #050505;
-          text-decoration: none;
-          font-size: 15px;
-          font-weight: 650;
-          letter-spacing: -0.01em;
-          transition: transform 200ms cubic-bezier(.2, .8, .2, 1), box-shadow 200ms ease;
+          animation: lp-dot-pulse 2s infinite;
         }
 
-        .lp-panel-cta:hover {
-          transform: translateY(-2px);
-          box-shadow: 0 16px 40px rgba(183, 255, 0, 0.22);
-        }
-
-        .lp-menu-col {
-          display: flex;
-          flex-direction: column;
-          min-width: 0;
-        }
-
-        .lp-menu-col-label {
-          font-size: 11px;
-          font-weight: 700;
-          letter-spacing: 1.8px;
-          text-transform: uppercase;
-          color: rgba(244, 244, 239, 0.42);
-          padding-bottom: 16px;
-          margin-bottom: 2px;
-          border-bottom: 1px solid rgba(255, 255, 255, 0.12);
-        }
-
-        .lp-menu-col a {
+        .lp-navstrip-cell {
+          flex: 1;
           display: flex;
           align-items: center;
-          justify-content: space-between;
-          gap: 12px;
-          padding: 15px 0;
-          color: #f4f4ef;
+          justify-content: center;
+          padding: 21px 16px;
+          color: rgba(244, 244, 239, 0.75);
           text-decoration: none;
-          font-size: 19px;
-          font-weight: 540;
-          letter-spacing: -0.015em;
-          border-bottom: 1px solid rgba(255, 255, 255, 0.07);
-          transition: color 180ms ease, padding-left 240ms cubic-bezier(.2, .8, .2, 1);
+          font-size: 13px;
+          font-weight: 580;
+          white-space: nowrap;
+          transition: background 180ms ease, color 180ms ease;
         }
 
-        .lp-menu-col a .a {
-          color: #b7ff00;
-          font-size: 16px;
-          font-weight: 700;
-          opacity: 0;
-          transform: translateX(-6px);
-          transition: opacity 180ms ease, transform 220ms cubic-bezier(.2, .8, .2, 1);
+        .lp-navstrip-cell + .lp-navstrip-cell {
+          border-left: 1px solid rgba(244, 244, 239, 0.07);
         }
 
-        .lp-menu-col a:hover {
-          color: #b7ff00;
-          padding-left: 10px;
+        .lp-navstrip-cell:hover {
+          background: rgba(244, 244, 239, 0.05);
+          color: #f4f4ef;
         }
 
-        .lp-menu-col a:hover .a {
-          opacity: 1;
-          transform: translateX(0);
+        .lp-navstrip.is-light .lp-navstrip-band {
+          background: rgba(244, 244, 239, 0.72);
+          border-color: rgba(10, 10, 10, 0.08);
         }
+
+        .lp-navstrip.is-light .lp-navstrip-item,
+        .lp-navstrip.is-light .lp-navstrip-cell {
+          color: rgba(10, 10, 10, 0.85);
+        }
+
+        .lp-navstrip.is-light .lp-navstrip-item:hover,
+        .lp-navstrip.is-light .lp-navstrip-cell:hover {
+          background: rgba(10, 10, 10, 0.05);
+        }
+
 
         .lp-wordmark {
           display: inline-flex;
@@ -982,116 +1496,122 @@ export default function HomePage() {
 
         .lp-hero-copy {
           position: relative;
-          max-width: 1220px;
+          max-width: 1040px;
+          margin: 0 auto;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
           animation: lp-rise 720ms cubic-bezier(.2,.8,.2,1) both;
-        }
-
-        .lp-hero-mark {
-          display: block;
-          position: relative;
-          width: 44px;
-          height: 42px;
-          margin: 0 0 106px 7px;
-        }
-
-        .lp-hero-mark:before,
-        .lp-hero-mark:after {
-          content: "";
-          position: absolute;
-          background: #f4f4ef;
-        }
-
-        .lp-hero-mark:before {
-          width: 33px;
-          height: 12px;
-          border-radius: 999px;
-          left: 1px;
-          top: 7px;
-          transform: rotate(7deg);
-        }
-
-        .lp-hero-mark:after {
-          width: 24px;
-          height: 12px;
-          border-radius: 999px;
-          left: 10px;
-          top: 23px;
-          transform: rotate(7deg);
         }
 
         .lp-hero h1 {
           margin: 0;
-          max-width: 1190px;
-          font-size: 86px;
-          line-height: 0.99;
-          letter-spacing: 0;
-          font-weight: 430;
+          max-width: 100%;
+          font-size: clamp(54px, 6.6vw, 100px);
+          line-height: 1.0;
+          letter-spacing: -0.028em;
+          font-weight: 470;
           color: #f4f4ef;
+          text-shadow: 0 2px 60px rgba(5, 4, 9, 0.6);
+          text-wrap: balance;
         }
 
         .lp-hero p {
-          margin: 24px 0 0;
-          max-width: 760px;
-          font-size: 26px;
-          line-height: 1.2;
+          margin: 26px auto 0;
+          max-width: 54ch;
+          font-size: clamp(18px, 1.6vw, 23px);
+          line-height: 1.34;
           letter-spacing: 0;
-          color: rgba(244, 244, 239, 0.58);
+          color: rgba(244, 244, 239, 0.68);
           font-weight: 420;
+          text-shadow: 0 1px 30px rgba(5, 4, 9, 0.65);
+          text-wrap: balance;
         }
 
         .lp-actions {
           display: flex;
           align-items: center;
-          gap: 12px;
-          margin-top: 30px;
+          justify-content: center;
+          gap: 14px;
+          margin-top: 38px;
         }
 
+        /* Buttons — layered like real product UI, not flat fills */
         .lp-pill {
+          position: relative;
           display: inline-flex;
           align-items: center;
           justify-content: center;
-          min-height: 50px;
-          padding: 0 30px;
+          gap: 10px;
+          min-height: 52px;
+          padding: 0 28px;
           border-radius: 999px;
-          border: 1px solid transparent;
-          background: #f4f4ef;
-          color: #0a0a0a;
+          border: 0;
+          background: linear-gradient(180deg, #ffffff 0%, #ece8f5 100%);
+          color: #0b0a14;
           text-decoration: none;
-          font-size: 16px;
-          font-weight: 600;
+          font-size: 15.5px;
+          font-weight: 640;
           letter-spacing: -0.01em;
-          box-shadow: 0 12px 34px rgba(0, 0, 0, 0.42);
-          transition: transform 240ms cubic-bezier(.2,.8,.2,1), background 220ms ease, border-color 220ms ease, box-shadow 240ms ease;
+          box-shadow:
+            inset 0 1px 0 rgba(255, 255, 255, 0.95),
+            inset 0 -10px 18px rgba(124, 58, 237, 0.10),
+            0 1px 2px rgba(0, 0, 0, 0.45),
+            0 10px 24px rgba(0, 0, 0, 0.38),
+            0 26px 60px rgba(124, 58, 237, 0.20);
+          transition: transform 240ms cubic-bezier(.2,.8,.2,1), box-shadow 260ms ease, background 220ms ease;
         }
 
-        .lp-pill:after {
-          content: none;
+        .lp-pill i {
+          font-style: normal;
+          font-weight: 600;
+          transition: transform 240ms cubic-bezier(.2,.8,.2,1);
         }
 
         .lp-pill:hover {
           transform: translateY(-2px);
-          background: #ffffff;
-          box-shadow: 0 20px 46px rgba(0, 0, 0, 0.5);
+          background: linear-gradient(180deg, #ffffff 0%, #f3f0fa 100%);
+          box-shadow:
+            inset 0 1px 0 rgba(255, 255, 255, 1),
+            inset 0 -10px 18px rgba(124, 58, 237, 0.12),
+            0 2px 3px rgba(0, 0, 0, 0.4),
+            0 14px 32px rgba(0, 0, 0, 0.42),
+            0 34px 80px rgba(124, 58, 237, 0.30);
           text-decoration: none;
         }
 
-        .lp-pill:hover:after {
-          content: none;
+        .lp-pill:hover i {
+          transform: translateX(3px);
+        }
+
+        .lp-pill:active {
+          transform: translateY(0) scale(0.985);
+        }
+
+        .lp-pill:focus-visible {
+          outline: 2px solid #a78bfa;
+          outline-offset: 3px;
         }
 
         .lp-pill-dark {
-          background: rgba(255, 255, 255, 0.04);
+          background: rgba(18, 14, 32, 0.40);
           color: #f4f4ef;
-          border-color: rgba(255, 255, 255, 0.22);
-          -webkit-backdrop-filter: blur(16px) saturate(1.3);
-          backdrop-filter: blur(16px) saturate(1.3);
-          box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+          -webkit-backdrop-filter: blur(18px) saturate(1.5);
+          backdrop-filter: blur(18px) saturate(1.5);
+          box-shadow:
+            inset 0 0 0 1px rgba(244, 244, 239, 0.16),
+            inset 0 1px 0 rgba(255, 255, 255, 0.10),
+            0 10px 28px rgba(0, 0, 0, 0.40);
         }
 
         .lp-pill-dark:hover {
-          background: rgba(255, 255, 255, 0.1);
-          border-color: rgba(255, 255, 255, 0.36);
-          box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18), 0 18px 44px rgba(0, 0, 0, 0.34);
+          background: rgba(30, 24, 52, 0.55);
+          box-shadow:
+            inset 0 0 0 1px rgba(244, 244, 239, 0.30),
+            inset 0 1px 0 rgba(255, 255, 255, 0.14),
+            0 14px 36px rgba(0, 0, 0, 0.45),
+            0 0 40px rgba(124, 58, 237, 0.14);
         }
 
         .lp-dot {
@@ -2001,204 +2521,6 @@ export default function HomePage() {
           flex: 0 0 auto;
         }
 
-        .lp-track-grid {
-          display: grid;
-          grid-template-columns: repeat(4, 1fr);
-          gap: clamp(22px, 3vw, 44px);
-          padding-bottom: 70px;
-          border-bottom: 0;
-        }
-
-        .lp-track {
-          position: relative;
-          padding-top: 26px;
-          border-top: 1px solid rgba(244, 244, 239, 0.16);
-          transition: border-color 260ms ease, transform 280ms cubic-bezier(.2,.8,.2,1);
-        }
-
-        .lp-track:hover {
-          transform: translateY(-4px);
-          border-color: rgba(183, 255, 0, 0.55);
-        }
-
-        .lp-track-icon {
-          display: block;
-          width: 38px;
-          height: 38px;
-          color: #f4f4ef;
-          margin-bottom: 58px;
-          transition: color 260ms ease, transform 320ms cubic-bezier(.2,.8,.2,1);
-        }
-
-        .lp-track:hover .lp-track-icon {
-          color: #b7ff00;
-          transform: translateY(-3px) rotate(-4deg);
-        }
-
-        .lp-track h3,
-        .lp-process-card h3 {
-          margin: 24px 0 15px;
-          font-size: 23px;
-          line-height: 1.02;
-          letter-spacing: 0;
-          font-weight: 650;
-        }
-
-        .lp-track p,
-        .lp-process-card p {
-          margin: 0;
-          color: rgba(244, 244, 239, 0.58);
-          font-size: 17px;
-          line-height: 1.26;
-          letter-spacing: 0;
-        }
-
-        .lp-track h3 {
-          margin: 0 0 13px;
-          font-size: clamp(20px, 1.5vw, 24px);
-          line-height: 1.06;
-          letter-spacing: -0.02em;
-          font-weight: 600;
-        }
-
-        .lp-track p {
-          font-size: 16px;
-          line-height: 1.5;
-          letter-spacing: -0.005em;
-          color: rgba(244, 244, 239, 0.56);
-          max-width: 300px;
-        }
-
-        .lp-mark {
-          display: inline-block;
-          position: relative;
-          width: 34px;
-          height: 34px;
-          transition: transform 260ms cubic-bezier(.2,.8,.2,1);
-        }
-
-        .lp-track:hover .lp-mark,
-        .lp-process-card:hover .lp-mark {
-          transform: rotate(-8deg) scale(1.08);
-        }
-
-        .lp-mark-bars:before,
-        .lp-mark-bars:after,
-        .lp-mark-leaf:before,
-        .lp-mark-target:before,
-        .lp-mark-target:after,
-        .lp-mark-square:before,
-        .lp-mark-dots:before,
-        .lp-mark-weight:before,
-        .lp-mark-model:before,
-        .lp-mark-publish:before {
-          content: "";
-          position: absolute;
-          background: #f4f4ef;
-        }
-
-        .lp-mark-bars:before,
-        .lp-mark-bars:after {
-          width: 28px;
-          height: 11px;
-          border-radius: 99px;
-          left: 2px;
-          transform: rotate(8deg);
-        }
-
-        .lp-mark-bars:before { top: 5px; }
-        .lp-mark-bars:after { top: 18px; width: 23px; }
-
-        .lp-mark-leaf:before {
-          width: 22px;
-          height: 22px;
-          border-radius: 0 100% 100% 100%;
-          left: 8px;
-          top: 8px;
-          transform: rotate(42deg);
-        }
-
-        .lp-mark-leaf:after,
-        .lp-mark-model:after {
-          content: "";
-          position: absolute;
-          width: 8px;
-          height: 8px;
-          border-radius: 999px;
-          background: #f4f4ef;
-          left: 0;
-          top: 0;
-        }
-
-        .lp-mark-target:before {
-          width: 30px;
-          height: 30px;
-          border-radius: 999px;
-          left: 2px;
-          top: 2px;
-        }
-
-        .lp-mark-target:after {
-          width: 12px;
-          height: 12px;
-          border-radius: 4px;
-          background: #050505;
-          left: 11px;
-          top: 11px;
-        }
-
-        .lp-mark-square:before {
-          width: 28px;
-          height: 28px;
-          border-radius: 8px;
-          left: 3px;
-          top: 3px;
-        }
-
-        .lp-mark-square:after {
-          content: "";
-          position: absolute;
-          width: 10px;
-          height: 10px;
-          border-radius: 4px;
-          background: #050505;
-          left: 12px;
-          top: 12px;
-        }
-
-        .lp-mark-dots:before {
-          width: 12px;
-          height: 12px;
-          border-radius: 999px;
-          top: 5px;
-          left: 2px;
-          box-shadow: 16px 13px 0 #f4f4ef;
-        }
-
-        .lp-mark-weight:before {
-          width: 26px;
-          height: 18px;
-          top: 8px;
-          left: 3px;
-          clip-path: polygon(0 0, 100% 0, 100% 70%, 56% 70%, 56% 100%, 0 100%);
-        }
-
-        .lp-mark-model:before {
-          width: 13px;
-          height: 13px;
-          transform: rotate(-18deg);
-          top: 12px;
-          left: 4px;
-          box-shadow: 16px -8px 0 #f4f4ef;
-        }
-
-        .lp-mark-publish:before {
-          width: 27px;
-          height: 27px;
-          top: 4px;
-          left: 4px;
-          clip-path: polygon(0 0, 45% 0, 45% 100%, 0 100%, 0 0, 100% 0, 100% 100%, 58% 100%, 58% 0);
-        }
 
         .lp-proof {
           --proof-lift: 0px;
@@ -2256,58 +2578,153 @@ export default function HomePage() {
           color: #f4f4ef;
         }
 
-        .lp-proof-grid {
+        /* ===== The evidence — columns of light ===== */
+        .ev {
+          position: relative;
+          width: 100vw;
+          margin: 0 calc(50% - 50vw);
+          height: 230vh;
+          background: #050505;
+          z-index: 3;
+        }
+        .ev-sticky {
+          position: sticky;
+          top: 0;
+          height: 100vh;
+          height: 100svh;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          gap: clamp(36px, 6vh, 64px);
+          overflow: hidden;
+        }
+
+        .ev-sticky:before {
+          content: "";
           position: absolute;
           left: 50%;
-          top: calc(50% + 104px);
-          display: grid;
-          grid-template-columns: repeat(3, 1fr);
-          width: min(940px, calc(100vw - 160px));
-          opacity: 0;
+          bottom: -28vh;
+          transform: translateX(-50%);
+          width: 130vw;
+          height: 70vh;
           pointer-events: none;
-          transform: translate(-50%, var(--proof-grid-y));
-          transition: opacity 420ms ease;
-          will-change: transform, opacity;
+          background: radial-gradient(50% 55% at 50% 64%, rgba(150, 96, 232, 0.075), rgba(72, 96, 235, 0.04) 50%, transparent 76%);
+          filter: blur(20px);
         }
-
-        .lp-proof.is-counting .lp-proof-grid {
-          opacity: 1;
-          pointer-events: auto;
+        .ev-eyebrow {
+          display: flex;
+          align-items: center;
+          gap: 14px;
+          font-size: 11.5px;
+          font-weight: 650;
+          letter-spacing: 1.8px;
+          text-transform: uppercase;
+          color: rgba(244,244,239,0.42);
         }
-
-        .lp-proof-stat {
-          padding-right: 54px;
-          margin-right: 54px;
-          border-right: 1px solid rgba(255, 255, 255, 0.14);
+        .ev-eyebrow span { width: 40px; height: 1px; background: rgba(244,244,239,0.25); }
+        .ev-row {
+          position: relative;
+          display: flex;
+          align-items: flex-end;
+          gap: clamp(18px, 2.6vw, 42px);
+          height: min(66vh, 720px);
+          width: calc(100vw - clamp(48px, 9vw, 150px));
+          max-width: 1560px;
         }
-
-        .lp-proof-stat:last-child {
-          border-right: 0;
-          margin-right: 0;
-          padding-right: 0;
+        .ev-col { position: relative; flex: 1; height: 100%; min-width: 0; }
+        .ev-col:after {
+          content: "";
+          position: absolute;
+          left: -20%;
+          right: -20%;
+          bottom: -12vh;
+          height: 24vh;
+          background: radial-gradient(50% 58% at 50% 38%, rgba(var(--ca), 0.16), transparent 72%);
+          filter: blur(22px);
+          opacity: var(--g, 0);
+          pointer-events: none;
         }
-
-        .lp-proof-stat b {
-          display: block;
-          font-size: 108px;
-          line-height: 0.88;
-          letter-spacing: 0;
-          font-weight: 510;
+        .ev-fill {
+          position: absolute;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: linear-gradient(180deg,
+            rgba(var(--ca), 0.85) 0%,
+            rgba(var(--ca), 0.42) 24%,
+            rgba(var(--ca), 0.18) 54%,
+            rgba(var(--ca), 0.08) 82%,
+            rgba(var(--ca), 0.04) 100%);
+          -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+          mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+          box-shadow: inset 0 1px 0 rgba(255,255,255,0.25);
+        }
+        .ev-crest {
+          position: absolute;
+          top: 0;
+          left: 4%;
+          right: 4%;
+          height: 2.5px;
+          border-radius: 99px;
+          background: linear-gradient(90deg, transparent, var(--c) 12%, var(--c) 88%, transparent);
+          box-shadow: 0 0 20px rgba(var(--ca), 0.95), 0 0 64px rgba(var(--ca), 0.5), 0 0 130px rgba(var(--ca), 0.25);
+        }
+        .ev-num {
+          position: absolute;
+          left: -10%;
+          right: -10%;
+          text-align: center;
+          font-size: clamp(64px, 7.4vw, 124px);
+          line-height: 1;
+          font-weight: 470;
+          letter-spacing: -0.035em;
           font-variant-numeric: tabular-nums;
+          color: var(--c);
+          will-change: bottom;
         }
-
-        .lp-proof-stat span {
+        .ev-lab {
+          position: absolute;
+          top: calc(100% + 20px);
+          left: -16%;
+          right: -16%;
+          text-align: center;
+          font-size: 13px;
+          font-weight: 650;
+          letter-spacing: 1.5px;
+          text-transform: uppercase;
+          color: rgba(244,244,239,0.55);
+          opacity: var(--g, 0);
+        }
+        .ev-lab i {
           display: block;
-          margin-top: 14px;
-          color: rgba(244, 244, 239, 0.58);
-          font-size: 17px;
-          letter-spacing: 0;
+          margin-top: 7px;
+          font-style: normal;
+          font-size: 11.5px;
+          font-weight: 550;
+          letter-spacing: 0.4px;
+          text-transform: none;
+          color: rgba(244,244,239,0.32);
+        }
+        .ev-base {
+          position: absolute;
+          left: -6%;
+          right: -6%;
+          bottom: 0;
+          height: 1px;
+          background: linear-gradient(90deg, transparent, rgba(244,244,239,0.22) 18%, rgba(244,244,239,0.22) 82%, transparent);
+        }
+        @media (max-width: 680px) {
+          .ev { height: 200vh; }
+          .ev-row { gap: 22px; width: calc(100vw - 40px); height: 44vh; }
+          .ev-num { font-size: clamp(28px, 9vw, 44px); }
+          .ev-lab { font-size: 9.5px; letter-spacing: 0.9px; left: -8%; right: -8%; }
         }
 
         /* ---- Cinematic narrative beats ---- */
         .lp-narrative {
           width: 100vw;
-          min-height: 320vh;
+          min-height: 560vh;
           margin: 0 calc(50% - 50vw) 0;
           position: relative;
           z-index: 3;
@@ -2335,6 +2752,81 @@ export default function HomePage() {
           will-change: opacity, transform;
         }
 
+        .cam-viewport {
+          position: absolute;
+          inset: 0;
+          overflow: hidden;
+          will-change: opacity;
+        }
+
+        .cam-stage {
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 1320px;
+          text-align: center;
+          font-size: 64px;
+          line-height: 1.16;
+          letter-spacing: -0.025em;
+          font-weight: 500;
+          color: #f4f4ef;
+          transform-origin: 0 0;
+          will-change: transform;
+        }
+
+        .cam-stage .cam-w {
+          display: inline-block;
+          color: rgba(244, 244, 239, 0.12);
+          transition: color 140ms linear, text-shadow 140ms linear, transform 220ms cubic-bezier(.2,.8,.2,1);
+        }
+
+        .cam-stage .cam-w.is-past {
+          color: rgba(244, 244, 239, 0.46);
+        }
+
+        .cam-stage .cam-w.is-now {
+          color: #ffffff;
+          text-shadow: 0 0 30px rgba(244, 244, 239, 0.45), 0 0 80px rgba(244, 244, 239, 0.18);
+          transform: translateY(-0.015em);
+        }
+
+        .cam-stage.is-revealed .cam-w {
+          color: #f4f4ef;
+          text-shadow: none;
+        }
+
+        .cam-vignette {
+          position: absolute;
+          inset: -2%;
+          pointer-events: none;
+          opacity: var(--vg, 0);
+          background: radial-gradient(70% 62% at 50% 50%, transparent 44%, rgba(5, 5, 5, 0.72) 84%, rgba(5, 5, 5, 0.95) 100%);
+          transition: opacity 220ms linear;
+        }
+
+        @media (max-width: 980px) {
+          .lp-narrative { min-height: 300vh; }
+          .cam-viewport {
+            position: relative;
+            inset: auto;
+            grid-area: 1 / 1;
+            display: grid;
+            place-items: center;
+            overflow: visible;
+            width: 100%;
+          }
+          .cam-stage {
+            position: static;
+            width: min(1040px, 100%);
+            font-size: clamp(25px, 3.2vw, 47px);
+            line-height: 1.2;
+            letter-spacing: -0.02em;
+            transform: none !important;
+            padding: 0 8px;
+          }
+          .cam-vignette { display: none; }
+        }
+
         .lp-narr-2 {
           font-size: clamp(25px, 3.2vw, 47px);
           line-height: 1.2;
@@ -2353,6 +2845,8 @@ export default function HomePage() {
         }
 
         .lp-narr-3 {
+          position: relative;
+          z-index: 2;
           font-size: clamp(50px, 7.4vw, 116px);
           line-height: 0.96;
           letter-spacing: -0.035em;
@@ -2382,19 +2876,30 @@ export default function HomePage() {
           padding-top: 30px;
         }
 
-        /* Desktop nav flips dark while over the white finale */
+        /* Over the white finale the free elements flip to ink */
+        .lp-desktop-nav.is-light:before {
+          background: linear-gradient(180deg, rgba(244, 244, 239, 0.5), rgba(244, 244, 239, 0.08) 70%, transparent);
+        }
+
         .lp-desktop-nav.is-light .lp-brand-logo {
           background: #0a0a0a;
         }
 
+        .lp-desktop-nav.is-light .lp-nav-live {
+          color: rgba(46, 70, 160, 0.9);
+        }
+
         .lp-desktop-nav.is-light .lp-desknav-item {
-          color: #0a0a0a;
-          text-shadow: none;
+          color: rgba(10, 10, 10, 0.72);
         }
 
         .lp-desktop-nav.is-light .lp-desknav-item:hover,
         .lp-desktop-nav.is-light .lp-desknav-item.is-open {
-          color: #1c6b00;
+          color: #0a0a0a;
+        }
+
+        .lp-desktop-nav.is-light .lp-desknav-item:after {
+          background: rgba(10, 10, 10, 0.85);
         }
 
         .lp-services {
@@ -2596,61 +3101,107 @@ export default function HomePage() {
           padding: clamp(108px, 12vw, 178px) 0;
         }
 
-        .lp-process-grid {
-          display: grid;
-          grid-template-columns: repeat(3, 1fr);
-          gap: 7px;
-          padding: 0;
-          margin-top: 58px;
-          border-radius: 8px;
-          background: #050505;
-          box-shadow: none;
-        }
-
-        .lp-process-card {
-          min-height: 236px;
-          padding: 36px 34px;
-          border-radius: 6px;
-          background: #151515;
-          border: 1px solid rgba(255, 255, 255, 0.08);
-          opacity: 0;
-          transition: background 200ms ease, box-shadow 200ms ease, border-color 200ms ease;
-        }
-
-        .lp-process-grid.is-in .lp-process-card {
-          animation: lp-card-rise 700ms cubic-bezier(.2, .8, .2, 1) both;
-        }
-
-        .lp-process-grid.is-in .lp-process-card:nth-child(1) { animation-delay: 50ms; }
-        .lp-process-grid.is-in .lp-process-card:nth-child(2) { animation-delay: 125ms; }
-        .lp-process-grid.is-in .lp-process-card:nth-child(3) { animation-delay: 200ms; }
-        .lp-process-grid.is-in .lp-process-card:nth-child(4) { animation-delay: 275ms; }
-        .lp-process-grid.is-in .lp-process-card:nth-child(5) { animation-delay: 350ms; }
-
         @keyframes lp-card-rise {
           from { opacity: 0; transform: translateY(32px); }
           to { opacity: 1; transform: translateY(0); }
         }
 
-        .lp-process-card:hover {
-          background: #1d1d1b;
-          border-color: rgba(183, 255, 0, 0.25);
-          box-shadow: 0 28px 80px rgba(0, 0, 0, 0.38);
+        /* Approach — a scroll theater. Each step's word arrives from its own
+           side with a glow that blooms at that edge and disperses past it. */
+        .ap { display: flex; flex-direction: column; margin-top: 10px; }
+        .ap-eyebrow {
+          display: flex;
+          align-items: center;
+          gap: 14px;
+          font-size: 11.5px;
+          font-weight: 650;
+          letter-spacing: 1.8px;
+          text-transform: uppercase;
+          color: rgba(244,244,239,0.42);
+        }
+        .ap-eyebrow span { width: 40px; height: 1px; background: rgba(244,244,239,0.25); }
+
+        .ap-row {
+          position: relative;
+          min-height: clamp(300px, 46vh, 480px);
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: clamp(28px, 5vw, 80px);
+        }
+        .ap-row.ap-left { flex-direction: row-reverse; }
+
+        .ap-glow {
+          position: absolute;
+          top: 50%;
+          width: 64vw;
+          height: 160%;
+          transform: translateY(-50%) scaleX(var(--gs, 1));
+          opacity: var(--go, 0);
+          filter: blur(34px);
+          pointer-events: none;
+        }
+        .ap-right .ap-glow { right: max(-26vw, calc((100vw - 1100px) / -2 - 8vw)); transform-origin: right center; --gx: 80%; }
+        .ap-left .ap-glow { left: max(-26vw, calc((100vw - 1100px) / -2 - 8vw)); transform-origin: left center; --gx: 20%; }
+
+        /* two layers of slow, contained smoke in the row's own hues */
+        .ap-glow:before,
+        .ap-glow:after {
+          content: "";
+          position: absolute;
+          inset: -8%;
+          will-change: transform;
+        }
+        .ap-glow:before {
+          background: radial-gradient(40% 44% at var(--gx, 80%) 48%, rgba(var(--ga), 0.4), transparent 72%);
+          animation: ap-smoke-a 17s ease-in-out infinite alternate;
+        }
+        .ap-glow:after {
+          background: radial-gradient(32% 38% at calc(var(--gx, 80%) + (var(--dir, 1) * -7%)) 58%, rgba(var(--gb), 0.26), transparent 70%);
+          animation: ap-smoke-b 12s ease-in-out infinite alternate;
+        }
+        @keyframes ap-smoke-a {
+          from { transform: translate3d(0, 0, 0) scale(1); }
+          to { transform: translate3d(calc(var(--dir, 1) * -2.5%), -5%, 0) scale(1.13); }
+        }
+        @keyframes ap-smoke-b {
+          from { transform: translate3d(0, 3%, 0) scale(0.95); }
+          to { transform: translate3d(calc(var(--dir, 1) * 3.5%), -4%, 0) scale(1.1); }
         }
 
-        .lp-process-card:nth-child(5) {
-          grid-column: span 2;
+        .ap-word {
+          position: relative;
+          margin: 0;
+          font-size: clamp(64px, 10.5vw, 158px);
+          line-height: 0.92;
+          font-weight: 560;
+          letter-spacing: -0.025em;
+          text-transform: uppercase;
+          color: #f6f4f0;
+          white-space: nowrap;
+          transform: translateX(calc(var(--wx, 1) * var(--dir, 1) * 44vw));
+          opacity: var(--wo, 0);
+          will-change: transform, opacity;
         }
+        .ap-right { --dir: 1; }
+        .ap-left { --dir: -1; }
 
-        .lp-process-card h3 {
-          margin-top: 30px;
-          font-size: 25px;
+        .ap-copy {
+          position: relative;
+          display: flex;
+          flex-direction: column;
+          gap: 14px;
+          max-width: 34ch;
+          opacity: var(--co, 0);
+          transform: translateY(calc((1 - var(--co, 0)) * 16px));
         }
+        .ap-idx { font-size: 12.5px; font-weight: 600; color: rgba(244,244,239,0.35); font-variant-numeric: tabular-nums; }
+        .ap-copy p { margin: 0; font-size: clamp(15px, 1.3vw, 18px); line-height: 1.52; color: rgba(244,244,239,0.55); }
 
-        .lp-process-card p {
-          max-width: 620px;
-          font-size: 18px;
-          line-height: 1.3;
+        @media (max-width: 980px) {
+          .ap-row, .ap-row.ap-left { flex-direction: column; justify-content: center; align-items: flex-start; gap: 22px; min-height: 320px; }
+          .ap-right .ap-word { align-self: flex-end; }
+          .ap-word { font-size: clamp(48px, 13vw, 96px); }
         }
 
         .lp-faq {
@@ -2674,91 +3225,80 @@ export default function HomePage() {
           letter-spacing: 0;
         }
 
+        /* FAQ — ruled editorial rows on the page itself, no card chrome */
         .lp-faq-list {
-          display: grid;
-          gap: 8px;
           width: 100%;
           max-width: 900px;
           margin: 0 auto;
         }
 
         .lp-faq-row {
-          position: relative;
-          border: 1px solid rgba(124, 58, 237, 0.26);
-          border-radius: 16px;
-          background:
-            linear-gradient(180deg, rgba(124, 58, 237, 0.16), rgba(124, 58, 237, 0.05)),
-            #130b22;
-          box-shadow: 0 18px 44px rgba(0, 0, 0, 0.32);
-          overflow: hidden;
-          transition: transform 220ms ease, background 220ms ease, box-shadow 220ms ease, border-color 220ms ease;
+          border-top: 1px solid rgba(244, 244, 239, 0.14);
+          transition: border-color 240ms ease;
         }
 
-        .lp-faq-row:before {
-          content: "";
-          position: absolute;
-          left: 0;
-          top: 14px;
-          bottom: 14px;
-          width: 3px;
-          border-radius: 0 999px 999px 0;
-          background: #7c3aed;
-          opacity: 0;
-          transform: scaleY(0.4);
-          transform-origin: center;
-          transition: opacity 240ms ease, transform 340ms cubic-bezier(.2, .8, .2, 1);
+        .lp-faq-row:last-child {
+          border-bottom: 1px solid rgba(244, 244, 239, 0.14);
         }
 
-        .lp-faq-row:hover {
-          transform: translateY(-2px);
-          border-color: rgba(124, 58, 237, 0.44);
-          background:
-            linear-gradient(180deg, rgba(124, 58, 237, 0.22), rgba(124, 58, 237, 0.07)),
-            #160c28;
-          box-shadow: 0 26px 64px rgba(58, 20, 118, 0.4);
-        }
-
+        .lp-faq-row:hover,
         .lp-faq-row.is-open {
-          border-color: rgba(124, 58, 237, 0.5);
-          background:
-            linear-gradient(180deg, rgba(124, 58, 237, 0.26), rgba(124, 58, 237, 0.08)),
-            #170d2a;
-        }
-
-        .lp-faq-row.is-open:before {
-          opacity: 1;
-          transform: scaleY(1);
+          border-top-color: rgba(183, 255, 0, 0.5);
         }
 
         .lp-faq-button {
           width: 100%;
           border: 0;
           background: transparent;
-          display: flex;
+          display: grid;
+          grid-template-columns: 52px minmax(0, 1fr) auto;
           align-items: center;
-          justify-content: space-between;
-          gap: 24px;
-          padding: 22px 26px;
+          gap: 20px;
+          padding: 24px 2px;
           cursor: pointer;
           text-align: left;
           color: #f4f4ef;
           font: inherit;
-          font-size: 21px;
-          letter-spacing: -0.01em;
+          font-size: clamp(19px, 1.8vw, 24px);
+          letter-spacing: -0.015em;
+          font-weight: 540;
+          transition: color 200ms ease, padding-left 280ms cubic-bezier(.2, .8, .2, 1);
+        }
+
+        .lp-faq-button:before {
+          content: attr(data-index);
+          font-size: 14px;
           font-weight: 600;
+          color: rgba(244, 244, 239, 0.36);
+          font-variant-numeric: tabular-nums;
+          transition: color 200ms ease;
+        }
+
+        .lp-faq-button:hover {
+          color: #b7ff00;
+          padding-left: 10px;
+        }
+
+        .lp-faq-button:hover:before {
+          color: #b7ff00;
         }
 
         .lp-faq-button span:last-child {
-          font-size: 28px;
+          font-size: 26px;
           line-height: 0.8;
           font-weight: 400;
-          color: #b794f6;
+          color: #b7ff00;
+          transition: transform 320ms cubic-bezier(.2, .8, .2, 1);
+        }
+
+        .lp-faq-row.is-open .lp-faq-button span:last-child {
+          transform: rotate(45deg);
         }
 
         .lp-faq-answer {
           display: grid;
           grid-template-rows: 0fr;
-          transition: grid-template-rows 240ms ease, opacity 240ms ease;
+          transition: grid-template-rows 300ms cubic-bezier(.2, .8, .2, 1), opacity 260ms ease;
           opacity: 0;
         }
 
@@ -2773,93 +3313,479 @@ export default function HomePage() {
 
         .lp-faq-answer p {
           margin: 0;
-          padding: 0 26px 28px;
+          padding: 0 0 30px 72px;
           color: rgba(244, 244, 239, 0.62);
-          font-size: 19px;
-          line-height: 1.34;
+          font-size: 18px;
+          line-height: 1.42;
           letter-spacing: -0.005em;
-          max-width: 760px;
+          max-width: 700px;
         }
 
-        .lp-footer {
+        /* ===== Horizon footer — the page's closing shot ===== */
+        .ft {
+          position: relative;
+          min-height: max(680px, 100svh);
+          display: flex;
+          flex-direction: column;
+          overflow: hidden;
           background: #050505;
-          color: #f4f4ef;
-          border-top: 1px solid rgba(255, 255, 255, 0.1);
-          min-height: 420px;
+        }
+
+        /* The wave — Lovable anatomy: continuous full-width strata (ink →
+           indigo → cobalt → violet → magenta → warm rose), gently undulated
+           by very wide low-alpha swells. No lobes, no seams, no dark notches —
+           the bands run edge to edge and melt into each other. */
+        .ft-wave {
+          position: absolute;
+          inset: -6% -8%;
+          background:
+            radial-gradient(80% 24% at 50% 48%, rgba(40, 60, 190, 0.3), transparent 74%),
+            radial-gradient(52% 28% at 26% 66%, rgba(96, 70, 230, 0.36), transparent 70%),
+            radial-gradient(52% 28% at 74% 66%, rgba(96, 70, 230, 0.34), transparent 70%),
+            radial-gradient(46% 46% at 26% 70%, rgba(168, 78, 190, 0.46), transparent 66%),
+            radial-gradient(46% 46% at 74% 71%, rgba(160, 74, 186, 0.44), transparent 66%),
+            radial-gradient(46% 54% at 25% 76%, rgba(240, 94, 160, 0.62), transparent 64%),
+            radial-gradient(46% 54% at 75% 78%, rgba(244, 86, 142, 0.58), transparent 64%),
+            radial-gradient(100% 24% at 50% 104%, rgba(255, 124, 132, 0.34), transparent 76%),
+            linear-gradient(180deg,
+              #050505 0%,
+              #060618 22%,
+              #0a0d33 38%,
+              #14206b 52%,
+              #2e2a96 63%,
+              #5c39ae 73%,
+              #8f4699 82%,
+              #ba5292 90%,
+              #d9648e 96%,
+              #ef798c 100%);
+          filter: blur(38px) saturate(1.12);
+          opacity: 0;
+        }
+
+        .ft.is-on .ft-wave {
+          animation:
+            ft-wake 2.3s cubic-bezier(.16, 1, .3, 1) 0.18s both,
+            ft-hue 18s ease-in-out 2.6s infinite alternate;
+        }
+
+        @keyframes ft-wake {
+          from { opacity: 0; transform: translateY(9%) scale(1.05); filter: blur(44px) saturate(0.75) brightness(0.5); }
+          55% { opacity: 1; }
+          70% { filter: blur(38px) saturate(1.2) brightness(1.12); }
+          to { opacity: 1; transform: translateY(0) scale(1); filter: blur(38px) saturate(1.12) brightness(1); }
+        }
+
+        .ft-wave-core {
+          position: absolute;
+          inset: -6% -8%;
+          background:
+            radial-gradient(36% 42% at 26% 80%, rgba(255, 142, 178, 0.55), transparent 66%),
+            radial-gradient(36% 42% at 74% 82%, rgba(255, 120, 152, 0.5), transparent 66%),
+            radial-gradient(70% 20% at 50% 105%, rgba(255, 116, 132, 0.3), transparent 72%);
+          filter: blur(26px) saturate(1.2);
+          pointer-events: none;
+          opacity: 0;
+        }
+
+        .ft.is-on .ft-wave-core {
+          animation: ft-ignite 1.7s cubic-bezier(.2, .85, .3, 1) both;
+        }
+
+        @keyframes ft-ignite {
+          from { opacity: 0; filter: blur(34px) saturate(0.75) brightness(0.45); transform: translateY(7%) scale(0.94); }
+          66% { opacity: 1; filter: blur(26px) saturate(1.35) brightness(1.28); }
+          to { opacity: 1; filter: blur(26px) saturate(1.2) brightness(1); transform: translateY(0) scale(1); }
+        }
+
+        .ft-grain {
+          position: absolute;
+          inset: 0;
+          background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='0.6'/%3E%3C/svg%3E");
+          background-size: 160px 160px;
+          opacity: 0;
+          mix-blend-mode: overlay;
+          pointer-events: none;
+        }
+
+        .ft.is-on .ft-grain {
+          animation: ft-grain-in 900ms ease 1.15s both;
+        }
+
+        @keyframes ft-grain-in {
+          from { opacity: 0; }
+          to { opacity: 0.06; }
+        }
+
+        @keyframes ft-hue {
+          from { filter: blur(42px) saturate(1.18) hue-rotate(-6deg); }
+          to { filter: blur(42px) saturate(1.18) hue-rotate(9deg); }
+        }
+
+        .ft-stage {
+          position: relative;
+          z-index: 2;
+          flex: 1;
           display: flex;
           flex-direction: column;
           align-items: center;
           justify-content: center;
-          gap: 48px;
-          padding: 72px 0 52px;
-          overflow: hidden;
+          gap: clamp(22px, 3.4vh, 38px);
+          padding: clamp(90px, 12vh, 150px) 24px clamp(150px, 24vh, 250px);
+          text-align: center;
         }
 
-        .lp-footer-mark {
-          display: flex;
-          align-items: center;
-          gap: 12px;
-          font-size: 48px;
-          line-height: 1;
-          font-weight: 820;
-          letter-spacing: 0;
-          color: #b7ff00;
-        }
-
-        .lp-footer-mark span {
-          font-size: 16px;
-          letter-spacing: 0;
-          line-height: 0.96;
-          font-weight: 760;
-        }
-
-        .lp-marquee {
+        .ft-words {
+          position: relative;
+          display: grid;
+          place-items: center;
+          min-height: clamp(150px, 21vw, 300px);
           width: 100%;
-          display: flex;
+        }
+
+        .ft-sr {
+          position: absolute;
+          width: 1px;
+          height: 1px;
+          overflow: hidden;
+          clip-path: inset(50%);
           white-space: nowrap;
-          font-size: 118px;
-          line-height: 0.9;
-          letter-spacing: 0;
-          font-weight: 430;
-          color: #b7ff00;
         }
 
-        .lp-marquee span {
-          display: inline-block;
-          padding-right: 38px;
-          animation: lp-marquee 18s linear infinite;
+        .ft-word {
+          grid-area: 1 / 1;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          font-size: clamp(58px, 11.5vw, 172px);
+          line-height: 1;
+          font-weight: 560;
+          letter-spacing: -0.022em;
+          white-space: nowrap;
+          -webkit-font-smoothing: antialiased;
+          text-rendering: optimizeLegibility;
         }
 
-        .lp-footer-email {
+        .ft-word.is-stack {
+          font-size: clamp(34px, 6.4vw, 92px);
+          line-height: 1.07;
+          font-weight: 580;
+          letter-spacing: 0.008em;
+        }
+
+        .ft-word b {
+          display: block;
+          font-weight: inherit;
+          color: #f7f5f1;
+          text-shadow: 0 2px 28px rgba(5, 5, 8, 0.4);
+          will-change: filter, transform, opacity;
+        }
+
+        .ft-word.is-in b { opacity: 0; animation: ft-focusin 980ms cubic-bezier(.22, .8, .24, 1) both; }
+        .ft-word.is-out b { animation: ft-focusout 620ms cubic-bezier(.5, 0, .7, .4) both; }
+
+        @keyframes ft-focusin {
+          from { opacity: 0; filter: blur(16px); transform: translateY(14px) scale(1.015); }
+          60% { opacity: 1; }
+          to { opacity: 1; filter: blur(0); transform: translateY(0) scale(1); }
+        }
+
+        @keyframes ft-focusout {
+          from { opacity: 1; filter: blur(0); transform: translateY(0) scale(1); }
+          to { opacity: 0; filter: blur(16px); transform: translateY(-12px) scale(0.99); }
+        }
+
+        .ft-line {
+          margin: 0;
+          font-size: clamp(15px, 1.4vw, 18px);
+          font-weight: 480;
+          letter-spacing: 0.1px;
+          color: rgba(255, 244, 248, 0.7);
+          text-shadow: 0 1px 18px rgba(20, 8, 28, 0.45);
+          opacity: 0;
+          transform: translateY(14px);
+          transition: opacity 700ms ease 1150ms, transform 900ms cubic-bezier(.2,.8,.2,1) 1150ms;
+        }
+
+        .ft-mail {
+          display: inline-flex;
+          align-items: baseline;
+          gap: 12px;
+          font-size: clamp(22px, 3.2vw, 44px);
+          font-weight: 560;
+          letter-spacing: -0.02em;
           color: #f4f4ef;
-          font-size: 58px;
-          font-weight: 760;
-          letter-spacing: 0;
-          text-decoration: underline;
-          text-underline-offset: 6px;
-          text-decoration-thickness: 4px;
+          text-decoration: none;
+          border-bottom: 1px solid rgba(244, 244, 239, 0.28);
+          padding-bottom: 6px;
+          opacity: 0;
+          transform: translateY(16px);
+          transition: opacity 700ms ease 1340ms, transform 900ms cubic-bezier(.2,.8,.2,1) 1340ms,
+            color 240ms ease, border-color 240ms ease;
         }
 
-        .lp-footer-links {
+        .ft-mail i {
+          font-style: normal;
+          font-size: 0.62em;
+          transition: transform 260ms cubic-bezier(.2,.8,.2,1);
+        }
+
+        .ft.is-on .ft-line,
+        .ft.is-on .ft-mail {
+          opacity: 1;
+          transform: translateY(0);
+        }
+
+        .ft-mail:hover {
+          color: #ffe2ee;
+          border-color: rgba(255, 214, 232, 0.75);
+        }
+
+        .ft-mail:hover i { transform: translateX(5px); }
+
+        .ft-links {
+          position: relative;
+          z-index: 2;
           display: flex;
           align-items: center;
-          justify-content: center;
-          gap: 34px;
-          flex-wrap: wrap;
-          font-size: 15px;
-          font-weight: 560;
-          color: rgba(244, 244, 239, 0.68);
+          justify-content: space-between;
+          gap: 18px;
+          width: min(1240px, calc(100vw - 96px));
+          margin: 0 auto;
+          padding: 0 0 26px;
+          font-size: 12.5px;
+          font-weight: 570;
+          color: rgba(255, 242, 246, 0.66);
+          text-shadow: 0 1px 14px rgba(20, 6, 24, 0.5);
         }
 
-        .lp-footer-links a {
-          color: inherit;
+        .ft-links nav { display: flex; gap: 26px; }
+        .ft-links a { color: inherit; text-decoration: none; transition: color 200ms ease; }
+        .ft-links a:hover { color: #f4f4ef; }
+
+        @media (max-width: 680px) {
+          .ft-word { font-size: clamp(42px, 13vw, 72px); }
+          .ft-word.is-stack { font-size: clamp(24px, 8vw, 40px); }
+          .ft-words { min-height: 150px; }
+          .ft-mail { font-size: 19px; }
+          .ft-links { flex-direction: column; gap: 12px; width: calc(100vw - 32px); padding-bottom: 20px; }
+          .ft-stage { padding-bottom: 190px; }
+        }
+
+
+        /* ===== The desk — calm bento. One material, one accent. ===== */
+        .dk {
+          position: relative;
+          width: 100vw;
+          margin: 0 calc(50% - 50vw);
+          padding: clamp(96px, 11vw, 170px) 0 clamp(90px, 10vw, 150px);
+          background: #050505;
+        }
+        .dk-shell { position: relative; width: min(1240px, calc(100vw - 96px)); margin: 0 auto; }
+        .dk-headrow {
+          display: flex;
+          align-items: flex-end;
+          justify-content: space-between;
+          gap: 24px;
+          margin-bottom: clamp(36px, 4vw, 56px);
+        }
+        .dk-eyebrow {
+          display: flex;
+          align-items: center;
+          gap: 14px;
+          margin-bottom: 18px;
+          font-size: 11.5px;
+          font-weight: 650;
+          letter-spacing: 1.8px;
+          text-transform: uppercase;
+          color: rgba(244,244,239,0.42);
+        }
+        .dk-eyebrow span { width: 40px; height: 1px; background: rgba(244,244,239,0.25); }
+        .dk-title {
+          margin: 0;
+          font-size: clamp(42px, 4.8vw, 72px);
+          line-height: 0.98;
+          letter-spacing: -0.03em;
+          font-weight: 510;
+        }
+        .dk-live {
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          padding-bottom: 8px;
+          font-size: 11px;
+          font-weight: 650;
+          letter-spacing: 1.4px;
+          text-transform: uppercase;
+          color: rgba(244,244,239,0.38);
+          white-space: nowrap;
+        }
+        .dk-live i { width: 5px; height: 5px; border-radius: 999px; background: #b7ff00; animation: lp-dot-pulse 2.6s ease-in-out infinite; }
+
+        /* ===== The exhibit wall — no containers, hairlines and feathered data ===== */
+        .xw { display: flex; flex-direction: column; }
+        .xw-duo { display: grid; grid-template-columns: 1fr 1px 1fr; gap: 0 clamp(32px, 4vw, 64px); align-items: stretch; }
+        .xw-div { width: 1px; margin: 30px 0 44px; background: linear-gradient(180deg, rgba(244,244,239,0.13), rgba(244,244,239,0.03)); }
+
+        .ex {
+          position: relative;
+          display: block;
+          min-width: 0;
           text-decoration: none;
+          color: #f4f4ef;
+          padding: 24px 0 52px;
+          transform: translate3d(0, calc((var(--p, 0.5) - 0.5) * var(--depth) * 1.5px), 0);
+          opacity: 0;
+        }
+        .dk.is-in .ex { animation: lp-card-rise 800ms cubic-bezier(.2,.8,.2,1) both; }
+        .dk.is-in .ex:nth-of-type(1) { animation-delay: 60ms; }
+        .dk.is-in .ex:nth-of-type(2) { animation-delay: 140ms; }
+        .dk.is-in .xw-duo .ex:first-child { animation-delay: 220ms; }
+        .dk.is-in .xw-duo .ex:last-child { animation-delay: 300ms; }
+
+        .ex-rule {
+          position: absolute;
+          top: 0; left: 0; right: 0; height: 1px;
+          background: linear-gradient(90deg, rgba(244,244,239,0.16), rgba(244,244,239,0.05) 62%, transparent);
         }
 
-        .lp-footer-links a:hover,
-        .lp-footer-email:hover {
-          color: #b7ff00;
-          text-decoration: underline;
+        .ex-meta {
+          display: flex;
+          align-items: baseline;
+          gap: 16px;
+          min-width: 0;
+        }
+        .ex-idx { font-size: 12px; font-weight: 600; color: rgba(244,244,239,0.32); font-variant-numeric: tabular-nums; }
+        .ex-title { font-size: 12.5px; font-weight: 700; letter-spacing: 1.6px; text-transform: uppercase; color: rgba(244,244,239,0.62); white-space: nowrap; }
+        .ex-sub { font-size: 12.5px; font-weight: 550; color: rgba(244,244,239,0.34); font-variant-numeric: tabular-nums; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+        .ex-cta { margin-left: auto; display: inline-flex; align-items: center; gap: 7px; font-size: 12.5px; font-weight: 600; color: rgba(244,244,239,0.36); white-space: nowrap; transition: color 240ms ease; }
+        .ex-cta i { font-style: normal; transition: transform 240ms cubic-bezier(.2,.8,.2,1); }
+        .ex:hover .ex-cta { color: #f4f4ef; }
+        .ex:hover .ex-cta i { transform: translateX(4px); }
+
+        .ex-body { display: block; position: relative; margin-top: 22px; }
+        .ex-stage { display: block; position: relative; }
+        .ex-stage-tall { height: clamp(280px, 30vw, 400px); }
+        .ex-stage-swarm { height: clamp(240px, 24vw, 320px); }
+        .ex-stage-cell { display: flex; flex-direction: column; gap: 14px; min-height: 250px; }
+
+        .ex-wash { position: absolute; inset: -10% -4%; filter: blur(28px); pointer-events: none; }
+        .ex-chart { display: block; position: relative; width: 100%; height: 100%; }
+        .ex-svg { width: 100%; height: 100%; display: block; overflow: visible; }
+        .ex-chart-mini { height: 150px; margin-top: auto; }
+        /* svgs must FILL the chart box — left to their viewBox aspect they
+           render taller than the 150px mini slot and the lower line spills
+           past the cell (the approval-line clip). */
+        .ex-chart svg { width: 100%; height: 100%; display: block; }
+
+        /* the feathered edges — data dissolves into the page */
+        .ex-fade {
+          -webkit-mask-image: radial-gradient(ellipse 94% 88% at 50% 50%, #000 52%, transparent 99%);
+          mask-image: radial-gradient(ellipse 94% 88% at 50% 50%, #000 52%, transparent 99%);
+        }
+        .ex-fade-x {
+          -webkit-mask-image: linear-gradient(90deg, transparent, #000 9%, #000 91%, transparent);
+          mask-image: linear-gradient(90deg, transparent, #000 9%, #000 91%, transparent);
+        }
+        .ex-fade-r {
+          -webkit-mask-image: linear-gradient(90deg, #000 72%, transparent 100%);
+          mask-image: linear-gradient(90deg, #000 72%, transparent 100%);
+        }
+
+        .ex-axis { font-size: 11px; font-weight: 650; letter-spacing: 0.9px; fill: rgba(244,244,239,0.3); font-family: inherit; }
+        .ex-endlab { font-size: 11px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; font-family: inherit; opacity: 0.7; }
+        .ex-endval { font-size: 15px; font-weight: 700; font-family: inherit; font-variant-numeric: tabular-nums; }
+
+        /* the huge editorial numeral riding an exhibit */
+        .ex-big {
+          position: absolute;
+          top: -8px;
+          right: 0;
+          text-align: right;
+          font-size: clamp(54px, 5.2vw, 92px);
+          line-height: 0.9;
+          font-weight: 470;
+          letter-spacing: -0.03em;
+          font-variant-numeric: tabular-nums;
+        }
+        .ex-big i {
+          display: block;
+          margin-top: 10px;
+          font-style: normal;
+          font-size: 11.5px;
+          font-weight: 650;
+          letter-spacing: 1.2px;
+          text-transform: uppercase;
+          color: rgba(244,244,239,0.38);
+        }
+        .ex-big-pair b { font-weight: 470; }
+        .ex-big-pair span { margin: 0 6px; color: rgba(244,244,239,0.3); }
+
+        /* annotation callout with a leader line */
+        .ex-ann {
+          position: absolute;
+          top: -4px;
+          transform: translateX(-50%);
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 6px;
+          pointer-events: none;
+        }
+        .ex-ann-text { font-size: 12.5px; font-weight: 550; color: rgba(244,244,239,0.55); white-space: nowrap; }
+        .ex-ann-text b { font-weight: 700; color: #f4f4ef; }
+        .ex-ann-line { width: 1px; height: 34px; background: linear-gradient(180deg, rgba(244,244,239,0.35), transparent); }
+
+        /* cell exhibits */
+        .ex-cellbig {
+          font-size: clamp(56px, 5vw, 84px);
+          line-height: 0.9;
+          font-weight: 470;
+          letter-spacing: -0.035em;
+          font-variant-numeric: tabular-nums;
+        }
+        .ex-cellsub { font-size: 12.5px; font-weight: 560; color: rgba(244,244,239,0.4); font-variant-numeric: tabular-nums; }
+        .ex-cellhead { font-size: clamp(19px, 1.7vw, 24px); font-weight: 640; letter-spacing: -0.015em; }
+        .ex-cellhead i { font-style: normal; margin-left: 10px; font-size: 12px; font-weight: 600; color: rgba(244,244,239,0.38); letter-spacing: 0; }
+
+        .ex-rows { display: flex; flex-direction: column; gap: 16px; margin-top: 6px; }
+        .ex-rows-tight { gap: 12px; }
+        .ex-row { display: grid; grid-template-columns: 110px 1fr 48px; align-items: center; gap: 14px; }
+        .ex-row-name { font-size: 14px; font-weight: 620; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .ex-row-name em { font-style: normal; font-size: 12px; color: #b7ff00; margin-left: 8px; }
+        .ex-row-bar { height: 8px; overflow: hidden; }
+        .ex-row-bar i { display: block; height: 100%; border-radius: 99px; transform-origin: left; animation: lp-desk-grow 0.9s cubic-bezier(.16,1,.3,1) both; }
+        .ex-row-pct { font-size: 15px; font-weight: 700; text-align: right; font-variant-numeric: tabular-nums; }
+
+        /* electoral map exhibit */
+        .ex-map { display: block; flex: 1; min-height: 0; }
+        .ex-map svg { width: 100%; height: 100%; max-height: 230px; }
+        .ex-evwrap { position: relative; display: block; padding-top: 16px; }
+        .ex-evtick { position: absolute; top: 0; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 2px; font-size: 9.5px; font-weight: 700; letter-spacing: 0.7px; color: rgba(244,244,239,0.48); }
+        .ex-evtick i { display: block; width: 1px; height: 5px; background: rgba(244,244,239,0.4); }
+        .ex-evbar { display: flex; gap: 2px; height: 5px; border-radius: 99px; overflow: hidden; }
+        .ex-evbar i { display: block; height: 100%; }
+        .ex-evcaps { display: flex; justify-content: space-between; margin-top: 9px; font-size: 12px; font-weight: 650; font-variant-numeric: tabular-nums; color: rgba(244,244,239,0.38); }
+
+        .pvb-tagtext { font-size: 11px; font-weight: 750; fill: #0b0b0d; font-family: inherit; font-variant-numeric: tabular-nums; }
+
+        @keyframes lp-desk-grow { from { transform: scaleX(0); opacity: 0; } to { transform: scaleX(1); opacity: 1; } }
+
+        @media (max-width: 1080px) {
+          .xw-duo { grid-template-columns: 1fr; gap: 0; }
+          .xw-div { display: none; }
+          .ex-big { font-size: clamp(44px, 7vw, 64px); }
+        }
+        @media (max-width: 680px) {
+          .dk-shell { width: calc(100vw - 32px); }
+          .dk-headrow { flex-direction: column; align-items: flex-start; gap: 14px; }
+          .ex { padding: 20px 0 40px; }
+          .ex-meta { flex-wrap: wrap; row-gap: 4px; }
+          .ex-sub { display: none; }
+          .ex-stage-tall { height: 240px; }
+          .ex-stage-swarm { height: 210px; }
+          .ex-big { position: static; text-align: left; margin-top: 14px; }
+          .ex-ann { display: none; }
+          .ex-row { grid-template-columns: 92px 1fr 44px; gap: 10px; }
         }
 
         @keyframes lp-rise {
@@ -2875,11 +3801,6 @@ export default function HomePage() {
         @keyframes lp-gallery-slide {
           from { transform: translateX(0); }
           to { transform: translateX(calc(-50% - 11px)); }
-        }
-
-        @keyframes lp-marquee {
-          from { transform: translateX(0); }
-          to { transform: translateX(-100%); }
         }
 
         @media (prefers-reduced-motion: reduce) {
@@ -2899,15 +3820,7 @@ export default function HomePage() {
           }
 
           .lp-hero {
-            min-height: auto;
-            padding: 58px 0 34px;
-          }
-
-          .lp-hero:before {
-            right: 44px;
-            top: 152px;
-            width: 190px;
-            height: 310px;
+            padding: 96px 0 104px;
           }
 
           .lp-nav {
@@ -2920,19 +3833,9 @@ export default function HomePage() {
             display: none;
           }
 
-          .lp-process-grid,
           .lp-services,
           .lp-faq-inner {
             grid-template-columns: 1fr;
-          }
-
-          .lp-track-grid {
-            grid-template-columns: repeat(2, 1fr);
-            gap: 30px 26px;
-          }
-
-          .lp-track-icon {
-            margin-bottom: 38px;
           }
 
           .lp-services {
@@ -2941,10 +3844,6 @@ export default function HomePage() {
 
           .lp-services:before {
             display: none;
-          }
-
-          .lp-process-card:nth-child(5) {
-            grid-column: auto;
           }
 
           .lp-hero h1 {
@@ -2966,39 +3865,9 @@ export default function HomePage() {
             max-width: min(780px, calc(100vw - 96px));
           }
 
-          .lp-proof-stat b {
-            font-size: 92px;
-          }
-
           .lp-service-list,
           .lp-coverage h2 {
             font-size: 44px;
-          }
-
-          .lp-marquee {
-            font-size: 88px;
-          }
-
-          .lp-footer-email {
-            font-size: 44px;
-          }
-
-          .lp-proof-grid {
-            grid-template-columns: 1fr;
-            gap: 26px;
-            top: calc(50% + 96px);
-            width: min(620px, calc(100vw - 96px));
-          }
-
-          .lp-proof-stat {
-            border-right: 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.12);
-            margin-right: 0;
-            padding: 0 0 26px;
-          }
-
-          .lp-proof-stat:last-child {
-            border-bottom: 0;
           }
 
           .lp-coverage {
@@ -3015,7 +3884,7 @@ export default function HomePage() {
           }
 
           .lp-desktop-nav,
-          .lp-desktop-menu {
+          .lp-navstrip {
             display: none;
           }
 
@@ -3023,8 +3892,16 @@ export default function HomePage() {
             display: none;
           }
 
+          .lp-hero-nav-in {
+            width: min(100% - 48px, 1280px);
+          }
+
           .lp-hero {
-            padding-top: 76px;
+            padding-top: 88px;
+          }
+
+          .lp-hero-foot {
+            width: min(100% - 96px, 1280px);
           }
         }
 
@@ -3039,11 +3916,23 @@ export default function HomePage() {
           }
 
           .lp-hero {
-            min-height: auto;
-            padding-top: 70px;
+            padding: 84px 0 96px;
           }
 
-          .lp-hero:before {
+          .lp-hero-nav-in {
+            width: min(100% - 28px, 1240px);
+          }
+
+          .lp-hero-veil {
+            background:
+              linear-gradient(180deg, rgba(5, 5, 5, 0.55), rgba(5, 4, 9, 0.3) 26%, rgba(5, 4, 9, 0.34) 58%, rgba(5, 5, 5, 0.62) 86%, #050505 100%);
+          }
+
+          .lp-hero-foot {
+            width: calc(100vw - 28px);
+          }
+
+          .lp-hero-sim {
             display: none;
           }
 
@@ -3105,21 +3994,9 @@ export default function HomePage() {
             display: none;
           }
 
-          .lp-hero-mark {
-            width: 32px;
-            height: 28px;
-            margin-bottom: 34px;
-          }
-
-          .lp-hero-mark:before {
-            width: 25px;
-            height: 10px;
-          }
-
-          .lp-hero-mark:after {
-            width: 18px;
-            height: 10px;
-            top: 17px;
+          .lp-hero-logo {
+            width: min(72vw, 280px);
+            margin-bottom: 30px;
           }
 
           .lp-hero h1 {
@@ -3215,10 +4092,6 @@ export default function HomePage() {
           .lp-card-head {
             align-items: flex-start;
             flex-direction: column;
-          }
-
-          .lp-section-title {
-            gap: 18px;
           }
 
           .lp-services {
@@ -3346,32 +4219,27 @@ export default function HomePage() {
             opacity: 1;
           }
 
-          .lp-process-card {
-            min-height: 184px;
-            padding: 28px;
+          .lp-process-row {
+            grid-template-columns: 36px minmax(0, 1fr);
+            row-gap: 10px;
+            padding: 22px 0;
           }
 
-          .lp-process-card h3 {
-            font-size: 20px;
-            margin-top: 20px;
-          }
-
-          .lp-process-card p {
-            font-size: 14px;
-            line-height: 1.32;
+          .lp-process-row p {
+            grid-column: 2;
+            font-size: 15px;
+            line-height: 1.38;
           }
 
           .lp-faq-button {
-            font-size: 19px;
+            font-size: 18px;
+            grid-template-columns: 32px minmax(0, 1fr) auto;
+            gap: 12px;
           }
 
-          .lp-footer-email {
-            max-width: calc(100vw - 28px);
-            font-size: 24px;
-            text-align: center;
-            overflow-wrap: anywhere;
-            text-decoration-thickness: 2px;
-            text-underline-offset: 4px;
+          .lp-faq-answer p {
+            padding-left: 44px;
+            font-size: 15.5px;
           }
 
           .lp-section-title h2,
@@ -3384,10 +4252,6 @@ export default function HomePage() {
             font-size: 46px;
             max-width: min(360px, calc(100vw - 28px));
             line-height: 1;
-          }
-
-          .lp-proof-stat b {
-            font-size: 58px;
           }
 
           .lp-proof {
@@ -3409,214 +4273,47 @@ export default function HomePage() {
             min-height: 100svh;
           }
 
-          .lp-proof-grid {
-            top: calc(50% + 76px);
-            width: min(360px, calc(100vw - 28px));
-            gap: 15px;
-          }
-
-          .lp-proof-stat {
-            padding-bottom: 15px;
-            text-align: center;
-          }
-
-          .lp-proof-stat span {
-            margin-top: 7px;
-            font-size: 13px;
-          }
-
-          .lp-marquee {
-            font-size: 58px;
-          }
         }
       `}</style>
 
       <div className={`lp-root ${manrope.variable}`}>
-        <div className="lp-topbar">
-          <Link
-            href="/"
-            className="lp-topbar-brand"
-            aria-label="Public Sentiment Institute home"
-            onClick={() => setMenuOpen(false)}
-          >
-            <span className="lp-brand-logo" aria-hidden="true" />
-          </Link>
-          <button
-            type="button"
-            className={`lp-burger${menuOpen ? " is-open" : ""}`}
-            aria-label={menuOpen ? "Close menu" : "Open menu"}
-            aria-expanded={menuOpen}
-            aria-controls="lp-mobile-menu"
-            onClick={() => setMenuOpen((open) => !open)}
-          >
-            <span />
-          </button>
-        </div>
-
-        <div
-          className={`lp-menu-scrim${menuOpen ? " is-open" : ""}`}
-          aria-hidden="true"
-          onClick={() => setMenuOpen(false)}
-        />
-
-        <div
-          id="lp-mobile-menu"
-          className={`lp-mobile-menu${menuOpen ? " is-open" : ""}`}
-          aria-hidden={!menuOpen}
-        >
-          <nav className="lp-mobile-menu-list" aria-label="Mobile navigation">
-            {services.map((service, index) => (
-              <Link
-                href={service.href}
-                key={service.label}
-                onClick={() => setMenuOpen(false)}
-                style={{ animationDelay: `${index * 45 + 60}ms` } as React.CSSProperties}
-              >
-                <span className="idx">{String(index + 1).padStart(2, "0")}</span>
-                <span>{service.label}</span>
-                <span className="arw" aria-hidden="true">&rarr;</span>
-              </Link>
-            ))}
-          </nav>
-          <div className="lp-mobile-menu-foot">
-            <Link href="/contact" onClick={() => setMenuOpen(false)}>
-              Contact the desk &rarr;
-            </Link>
-          </div>
-        </div>
-
-        <div className={`lp-desktop-nav${navOnLight ? " is-light" : ""}`}>
-          <Link
-            href="/"
-            className="lp-desktop-brand"
-            aria-label="Public Sentiment Institute home"
-            onClick={() => setMenuOpen(false)}
-          >
-            <span className="lp-brand-logo" aria-hidden="true" />
-          </Link>
-          <nav className="lp-desktop-links" aria-label="Primary">
-            <button
-              type="button"
-              className={`lp-desknav-item${menuOpen ? " is-open" : ""}`}
-              aria-expanded={menuOpen}
-              aria-controls="lp-desktop-menu"
-              onClick={() => setMenuOpen((open) => !open)}
-            >
-              Trackers
-            </button>
-            <button
-              type="button"
-              className={`lp-desknav-item${menuOpen ? " is-open" : ""}`}
-              aria-expanded={menuOpen}
-              aria-controls="lp-desktop-menu"
-              onClick={() => setMenuOpen((open) => !open)}
-            >
-              Coverage
-            </button>
-            <Link href="/contact" className="lp-desknav-item" onClick={() => setMenuOpen(false)}>
-              Contact
-            </Link>
-          </nav>
-        </div>
-
-        <div
-          id="lp-desktop-menu"
-          className={`lp-desktop-menu${menuOpen ? " is-open" : ""}`}
-          aria-hidden={!menuOpen}
-        >
-          <div className="lp-desktop-menu-inner">
-            <div className="lp-panel-lead">
-              <span className="lp-panel-eyebrow">Navigate</span>
-              <p className="lp-panel-statement">
-                Polling, forecasts, and live election results &mdash; from one transparent data desk.
-              </p>
-              <Link href="/contact" className="lp-panel-cta" onClick={() => setMenuOpen(false)}>
-                Work with PSI &rarr;
-              </Link>
-            </div>
-            <div className="lp-menu-col">
-              <span className="lp-menu-col-label">Trackers</span>
-              {services.map((service) => (
-                <Link href={service.href} key={service.label} onClick={() => setMenuOpen(false)}>
-                  {service.label}
-                  <span className="a" aria-hidden="true">&rarr;</span>
-                </Link>
-              ))}
-            </div>
-            <div className="lp-menu-col">
-              <span className="lp-menu-col-label">Coverage</span>
-              {coverage.map((item) => (
-                <Link href={item.href} key={item.label} onClick={() => setMenuOpen(false)}>
-                  {item.label}
-                  <span className="a" aria-hidden="true">&rarr;</span>
-                </Link>
-              ))}
-            </div>
-          </div>
-        </div>
-
         <section className="lp-hero">
-          <div className="lp-shell">
-            <nav className="lp-nav" aria-label="Landing page">
-              <Link href="/" className="lp-wordmark" aria-label="Public Sentiment Institute home">
-                PSI
-                <span>Public Sentiment Institute</span>
-              </Link>
-              <div className="lp-nav-links">
-                <Link href="/polling">Polling</Link>
-                <Link href="/forecastratings">Forecasts</Link>
-                <Link href="/results">Results</Link>
-                <Link href="/contact">Contact</Link>
-              </div>
-            </nav>
+          <DotField className="lp-hero-glass" />
+          <div className="lp-hero-veil" aria-hidden="true" />
 
+          <div className="lp-hero-nav">
+            <div className="lp-hero-nav-in">
+              <DarkNav />
+            </div>
+          </div>
+
+          <div className="lp-shell lp-hero-inner">
             <div className="lp-hero-copy">
-              <span className="lp-hero-mark" aria-hidden="true" />
-              <h1>
-                Polling averages and forecasts{" "}
-                <br />
-                for live election results.
-              </h1>
+              <span className="lp-hero-logo" role="img" aria-label="The Public Sentiment Institute" />
+              <h1>Polling averages and forecasts for live election results.</h1>
               <p>Track voter sentiment, race ratings, and election-night returns from one transparent data desk.</p>
               <div className="lp-actions">
-                <Link href="/polling" className="lp-pill">Polling</Link>
-                <Link href="/forecastratings" className="lp-pill lp-pill-dark">Forecasts</Link>
-                <span className="lp-dot" aria-hidden="true" />
+                <Link href="/polling" className="lp-pill"><span>Explore the polling</span><i aria-hidden="true">&rarr;</i></Link>
+                <Link href="/forecastratings" className="lp-pill lp-pill-dark"><span>See the forecast</span><i aria-hidden="true">&rarr;</i></Link>
               </div>
             </div>
           </div>
-        </section>
 
-        <section className="lp-gallery-band" aria-label="TPSI product gallery">
-          <div className="lp-gallery-window">
-            <div className="lp-gallery-track">
-              {galleryLoop.map((item, index) => (
-                <GalleryCard key={`${item.title}-${index}`} item={item} />
-              ))}
-            </div>
+          <div className="lp-hero-foot" aria-hidden="true">
+            <span className="lp-hero-scroll"><i />scroll</span>
+            <span className="lp-hero-sim">field simulation · <b>move your cursor</b></span>
           </div>
         </section>
+
+        <DeskWall stats={stats} />
 
         <section className="lp-section lp-section--lead">
           <div className="lp-shell">
-            <div className="lp-section-title">
-              <span className="lp-section-dot" aria-hidden="true" />
-              <h2>What the institute tracks</h2>
-            </div>
-
-            <div className="lp-track-grid">
-              {tracks.map((item) => (
-                <TrackColumn key={item.title} item={item} />
-              ))}
-            </div>
-
             <div
               ref={proofRef}
               style={proofStyle}
               className={`lp-proof${proofProgress > 0.02 ? " is-visible" : ""}${
                 proofProgress > 0.72 ? " is-settling" : ""
-              }${
-                proofArmed || proofProgress > 0.78 ? " is-counting" : ""
               }`}
             >
               <div className="lp-proof-stage">
@@ -3634,34 +4331,41 @@ export default function HomePage() {
                     );
                   })}
                 </h2>
-                <div className="lp-proof-grid">
-                  <div className="lp-proof-stat"><b>{proofCounts.approval}</b><span>approval polls in model</span></div>
-                  <div className="lp-proof-stat"><b>{proofCounts.generic}</b><span>generic ballot polls</span></div>
-                  <div className="lp-proof-stat"><b>{proofCounts.states}</b><span>states in forecast map</span></div>
-                </div>
               </div>
             </div>
 
+            <EvidenceBars stats={stats} />
+
             <div ref={narrativeRef} className="lp-narrative" style={{ background: narrativeBg }}>
               <div className="lp-narrative-stage">
-                <p
-                  className="lp-narr-line lp-narr-2"
-                  style={{ opacity: narr2Opacity, transform: `translateY(${narr2Y}px)` }}
+                <div
+                  ref={camVpRef}
+                  className="cam-viewport"
+                  style={{ opacity: narr2Opacity }}
+                  role="text"
                   aria-label={narrativeStatement}
                 >
-                  {narrativeStatement.split(" ").map((word, index, words) => {
-                    const ratio = index / Math.max(words.length - 1, 1);
-                    return (
-                      <span
-                        key={`${word}-${index}`}
-                        aria-hidden="true"
-                        className={ratio <= narr2Highlight ? "is-lit" : undefined}
-                      >
-                        {index < words.length - 1 ? `${word} ` : word}
-                      </span>
-                    );
-                  })}
-                </p>
+                  <div ref={camStageRef} className={`cam-stage${camRevealed ? " is-revealed" : ""}`}>
+                    {NARR_PHRASES.map((phrase, pi) => {
+                      const words = phrase.split(" ");
+                      return (
+                        <span className="cam-phrase" key={pi}>
+                          {words.map((word, wi) => {
+                            const gi = NARR_OFFSETS[pi] + wi;
+                            const cls = gi < camNowIdx ? "cam-w is-past" : gi === camNowIdx ? "cam-w is-now" : "cam-w";
+                            return (
+                              <React.Fragment key={`${word}-${wi}`}>
+                                <span aria-hidden="true" className={cls}>{word}</span>
+                                <span aria-hidden="true" className="cam-sp">{" "}</span>
+                              </React.Fragment>
+                            );
+                          })}
+                        </span>
+                      );
+                    })}
+                  </div>
+                  <span className="cam-vignette" aria-hidden="true" />
+                </div>
                 <p
                   className="lp-narr-line lp-narr-3"
                   style={{ opacity: narr3Opacity, transform: `translateY(${narr3Y}px)`, color: narr3Color }}
@@ -3675,46 +4379,13 @@ export default function HomePage() {
         </section>
 
         <div className="lp-aftermath">
-          <section className="lp-section lp-section--after">
-            <div className="lp-shell">
-            <div className="lp-services">
-              <div className="lp-services-main">
-                <span className="lp-services-eyebrow">What we publish</span>
-                <div className="lp-service-list" aria-label="TPSI feature list">
-                  {services.map((service, index) => (
-                    <Link href={service.href} key={service.label} data-index={String(index + 1).padStart(2, "0")}>
-                      <span className="lp-service-label">{service.label}</span>
-                      <span className="lp-service-arrow" aria-hidden="true">&rarr;</span>
-                    </Link>
-                  ))}
-                </div>
-              </div>
+          <SentimentGlobe />
 
-              <aside className="lp-coverage" aria-label="Coverage areas">
-                <h2>Coverage</h2>
-                <ul>
-                  {coverage.map((item) => (
-                    <li key={item.label}>
-                      <Link href={item.href}>{item.label}</Link>
-                    </li>
-                  ))}
-                </ul>
-              </aside>
-            </div>
-          </div>
-        </section>
+          <PublishDeck stats={stats} />
 
         <section className="lp-work">
           <div className="lp-shell">
-            <h2>Approach</h2>
-            <div
-              ref={processRef}
-              className={`lp-process-grid${processInView ? " is-in" : ""}`}
-            >
-              {process.map((item) => (
-                <ProcessCard key={item.title} item={item} />
-              ))}
-            </div>
+            <ApproachTheater />
           </div>
         </section>
 
@@ -3732,11 +4403,12 @@ export default function HomePage() {
                     <button
                       type="button"
                       className="lp-faq-button"
+                      data-index={String(index + 1).padStart(2, "0")}
                       aria-expanded={open}
                       onClick={() => setOpenFaq(open ? -1 : index)}
                     >
                       <span>{faq.question}</span>
-                      <span aria-hidden="true">{open ? "-" : "+"}</span>
+                      <span aria-hidden="true">+</span>
                     </button>
                     <div className="lp-faq-answer">
                       <div className="lp-faq-answer-inner">
@@ -3750,24 +4422,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        <section className="lp-footer" aria-label="Work with PSI">
-          <div className="lp-footer-mark">
-            PSI
-            <span>Public<br />Sentiment<br />Institute</span>
-          </div>
-          <div className="lp-marquee" aria-hidden="true">
-            <span>Work with public sentiment * Work with public sentiment *</span>
-            <span>Work with public sentiment * Work with public sentiment *</span>
-          </div>
-          <Link href="mailto:tpsinstitutecontact@gmail.com" className="lp-footer-email">tpsinstitutecontact@gmail.com</Link>
-          <div className="lp-footer-links">
-            <span>Public Sentiment Institute</span>
-            <Link href="/polling">Polling</Link>
-            <Link href="/forecastratings">Forecasts</Link>
-            <Link href="/results">Results</Link>
-            <Link href="/contact">Contact</Link>
-          </div>
-        </section>
+        <HorizonFooter />
         </div>
       </div>
     </>
