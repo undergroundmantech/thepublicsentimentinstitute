@@ -146,10 +146,6 @@
   background: rgba(22, 24, 39, 0.72);
 }
 
-:root[data-theme="dark"] .nb-root {
-  background: rgba(10, 11, 20, 0.78);
-}
-
 :root[data-theme="dark"] .nb-link.nb-active {
   background: var(--panel);
 }
