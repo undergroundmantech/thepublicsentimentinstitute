@@ -34,6 +34,18 @@ const RACE_REDIRECTS: Record<string, string> = {
 };
 
 const nextConfig: NextConfig = {
+  async rewrites() {
+    return [
+      // Guard: /results/race/<id> is a real dynamic route — a self-rewrite stops
+      // the slug pattern below from swallowing it (rewrites run before dynamic routes).
+      { source: "/results/race/:id", destination: "/results/race/:id" },
+      // Active race slug URLs: /results/2026-06-09/south-carolina-us-senate-republican-primary
+      { source: "/results/:date/:slug", destination: "/results" },
+      // Archived race slug URLs: /results/archive/2026-06-09/south-carolina-...
+      // Note: /results/archive (no trailing segments) is a real page — only match with date+slug
+      { source: "/results/archive/:date/:slug", destination: "/results" },
+    ];
+  },
   async redirects() {
     return [
       // the old polling hub/index ("All averages →", "View All Polls →") → unified page

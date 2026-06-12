@@ -62,10 +62,18 @@ export default function Navbar() {
           position: sticky;
           top: 0;
           z-index: 200;
-          background: rgba(255, 255, 255, 0.78);
+          background: color-mix(in srgb, var(--panel) 82%, transparent);
           backdrop-filter: saturate(140%) blur(18px);
           -webkit-backdrop-filter: saturate(140%) blur(18px);
-          border-bottom: 1px solid var(--border);
+        }
+        .nb-root::after {
+          content: '';
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          height: 2px;
+          background: linear-gradient(90deg, #e63946 33%, #7c3aed 66%, #2563eb 100%);
         }
 
         .nb-bar {
@@ -147,16 +155,16 @@ export default function Navbar() {
         }
         .nb-link:hover {
           color: var(--foreground);
-          background: rgba(15, 16, 32, 0.04);
+          background: var(--panel2);
           text-decoration: none;
         }
         .nb-link.nb-active {
           color: var(--foreground);
-          background: #ffffff;
+          background: var(--panel);
           font-weight: 600;
           box-shadow: var(--shadow-sm);
         }
-        .nb-link.nb-active:hover { background: #ffffff; color: var(--foreground); }
+        .nb-link.nb-active:hover { background: var(--panel); color: var(--foreground); }
 
         .nb-caret {
           margin-left: 5px;
@@ -186,15 +194,15 @@ export default function Navbar() {
         }
         .nb-link.nb-emphasize:hover {
           color: var(--purple);
-          background: rgba(15, 16, 32, 0.04);
+          background: var(--panel2);
         }
         .nb-link.nb-emphasize.nb-active {
-          background: #ffffff;
+          background: var(--panel);
           color: var(--purple);
           box-shadow: var(--shadow-sm);
         }
         .nb-link.nb-emphasize.nb-active:hover {
-          background: #ffffff;
+          background: var(--panel);
           color: var(--purple);
         }
 
@@ -207,7 +215,7 @@ export default function Navbar() {
           transform: translateX(-50%) translateY(-4px);
           min-width: 260px;
           padding: 8px;
-          background: rgba(255, 255, 255, 0.98);
+          background: var(--panel);
           backdrop-filter: blur(18px);
           -webkit-backdrop-filter: blur(18px);
           border: 1px solid var(--border);
@@ -301,14 +309,14 @@ export default function Navbar() {
           display: none;
           flex-direction: column;
           gap: 4px;
-          padding: 12px 16px 18px;
-          background: rgba(255,255,255,0.96);
+          padding: 0 16px;
+          background: var(--panel);
           border-top: 1px solid var(--border);
           max-height: 0;
           overflow: hidden;
-          transition: max-height 260ms ease;
+          transition: max-height 260ms ease, padding-top 260ms ease, padding-bottom 260ms ease;
         }
-        .nb-mobile.open { max-height: 820px; }
+        .nb-mobile.open { max-height: 820px; padding-top: 12px; padding-bottom: 18px; }
 
         .nb-mob-link {
           display: flex;
@@ -365,6 +373,14 @@ export default function Navbar() {
           .nb-ham { display: flex; }
           .nb-mobile { display: flex; }
           .nb-bar { padding: 12px 16px; }
+        }
+
+        :root[data-theme="dark"] .nb-root {
+          background: rgba(10, 11, 20, 0.85);
+        }
+        :root[data-theme="dark"] .nb-links {
+          background: var(--panel2);
+          border-color: var(--border);
         }
       `}</style>
 
