@@ -3,21 +3,22 @@ import "./globals.css";
 import type { Metadata } from "next";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
-import { Quantico, Geist_Mono, Fraunces, JetBrains_Mono } from "next/font/google";
+import { DM_Mono, JetBrains_Mono, Fraunces } from "next/font/google";
 
 /* -----------------------------
    FONTS
 ------------------------------ */
 
-const display = Quantico({
+const display = JetBrains_Mono({
   subsets: ["latin"],
-  weight: ["400", "700"],           // Quantico only has 400 and 700
+  weight: ["400", "500", "700", "800"],
   variable: "--font-display",
   display: "swap",
 });
 
-const mono = Geist_Mono({
+const dmMono = DM_Mono({
   subsets: ["latin"],
+  weight: ["300", "400", "500"],
   variable: "--font-body",
   display: "swap",
 });
@@ -57,7 +58,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${display.variable} ${mono.variable} ${serif.variable} ${numeric.variable}`}
+      className={`${display.variable} ${dmMono.variable} ${serif.variable} ${numeric.variable}`}
       suppressHydrationWarning
     >
       <head>
@@ -71,7 +72,7 @@ export default function RootLayout({
         <body
         suppressHydrationWarning
         className={[
-          mono.className,
+          dmMono.className,
           "min-h-screen antialiased overflow-x-hidden",
         ].join(" ")}
       >

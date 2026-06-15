@@ -5,7 +5,7 @@ import ElectionResults from "./ElectionResults.jsx";
 import { ThemeProvider } from "./lib/theme.jsx";
 
 const OPA_GLOBAL_CSS = `
-  @import url("https://fonts.googleapis.com/css2?family=Anton&family=Barlow+Condensed:wght@600;700;800;900&family=Inter:wght@400;500;600;700;800&family=Instrument+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&family=Oswald:wght@500;600;700&display=swap");
+  @import url("https://fonts.googleapis.com/css2?family=Anton&family=JetBrains+Mono:wght@400;500;700;800&family=DM+Mono:wght@300;400;500&display=swap");
 
   :root {
     --page: #0a0b0d; --page-elev: #15171c; --page-sunken: #070708;
@@ -109,7 +109,7 @@ export default function OpaResultsPage() {
           zIndex: 9999,
           background: "var(--page)",
           color: "var(--ink)",
-          fontFamily: '"Instrument Sans", system-ui, sans-serif',
+          fontFamily: '"DM Mono", ui-monospace, monospace',
           WebkitFontSmoothing: "antialiased",
           overflow: "hidden",
           isolation: "isolate",

@@ -21,8 +21,8 @@ import { useTheme } from '../lib/theme.jsx'
 // state, candidate, party, date — not just the title) and Enter jumps straight
 // into that race. Matching + the season-wide index live in lib/electionIndex.js.
 
-const DISPLAY = '"Instrument Sans", system-ui, sans-serif'
-const OSWALD = '"Oswald", system-ui, sans-serif'
+const DISPLAY = '"DM Mono", ui-monospace, monospace'
+const OSWALD = '"JetBrains Mono", ui-monospace, monospace'
 const MONO = '"JetBrains Mono", ui-monospace, monospace'
 
 export function SearchIcon({ size = 18, color = 'currentColor', sw = 2 }) {

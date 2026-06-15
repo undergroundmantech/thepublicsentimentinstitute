@@ -4,8 +4,8 @@ import React from 'react'
 // tokens + name/title helpers. Used by the grid card, the detail
 // summary panel, and the per-county hover tooltip so all three are 1:1.
 
-export const DISPLAY = '"Instrument Sans", system-ui, sans-serif'
-export const POSTER = '"Anton", "Oswald", system-ui, sans-serif' // heavy condensed display
+export const DISPLAY = '"DM Mono", ui-monospace, monospace'
+export const POSTER = '"Anton", "JetBrains Mono", ui-monospace, monospace' // heavy condensed display
 // CARD_BG stays a real hex — it's an input to mix() blends (which parse hex).
 // For a theme-correct card surface in math, read P.card from useTheme().
 export const CARD_BG = '#0d1117'

@@ -12,6 +12,7 @@ import {
   DISPLAY, POSTER, CARD_BG, CARD_BD, TXT, TXT_DIM, GOLD,
   mix, fmtInt, yearOf, titleOf, Row,
 } from './resultRow.jsx'
+import { getRaceTier, TIER_LABELS, TIER_ORDER } from './raceConfig.js'
 
 const API = 'https://civicapi.org/api/v2/race/search'
 // Rollout cadence — the whole page + each race auto-refreshes every
@@ -743,6 +744,108 @@ function deepLinkRaceId() {
   return m ? decodeURIComponent(m[1]) : null
 }
 
+// ─── Tiered Race Grid ───────────────────────────────────────────────────────
+function TieredRaceGrid({ tieredRaces, cols, GAP, CARD_H, onOpen, totalForDay, mapsOnly, onShowAll }) {
+  const [showOther, setShowOther] = React.useState(false)
+
+  const tierGridStyle = {
+    display: 'grid',
+    gridTemplateColumns: `repeat(${cols}, 1fr)`,
+    gap: GAP,
+    marginBottom: 32,
+  }
+
+  function TierSection({ tier, label, accent, races, collapsible, expanded, onToggle }) {
+    if (!races || races.length === 0) return null
+    const isSpotlight = tier === 'spotlight'
+    return (
+      <div style={{ marginBottom: isSpotlight ? 40 : 32 }}>
+        <div style={{
+          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+          marginBottom: isSpotlight ? 16 : 12,
+        }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+            {isSpotlight && (
+              <span style={{
+                background: accent || 'var(--accent)',
+                color: '#fff',
+                fontFamily: '"JetBrains Mono", ui-monospace, monospace',
+                fontWeight: 800,
+                fontSize: 10,
+                letterSpacing: '0.12em',
+                textTransform: 'uppercase',
+                padding: '3px 8px',
+                borderRadius: 3,
+              }}>
+                ★ SPOTLIGHT
+              </span>
+            )}
+            <span style={{
+              fontFamily: '"JetBrains Mono", ui-monospace, monospace',
+              fontWeight: isSpotlight ? 700 : 600,
+              fontSize: isSpotlight ? 18 : 13,
+              color: isSpotlight ? 'var(--ink)' : 'var(--ink-dim)',
+              letterSpacing: isSpotlight ? '-0.02em' : '0.08em',
+              textTransform: isSpotlight ? 'none' : 'uppercase',
+            }}>
+              {isSpotlight ? label : label}
+            </span>
+            <span style={{
+              fontFamily: '"DM Mono", ui-monospace, monospace',
+              fontSize: 12,
+              color: 'var(--ink-dim)',
+              opacity: 0.7,
+            }}>
+              {races.length} race{races.length !== 1 ? 's' : ''}
+            </span>
+          </div>
+          {collapsible && (
+            <button
+              onClick={onToggle}
+              style={{
+                background: 'none', border: '1px solid var(--border)',
+                color: 'var(--ink-dim)', cursor: 'pointer', borderRadius: 4,
+                padding: '4px 10px',
+                fontFamily: '"JetBrains Mono", ui-monospace, monospace',
+                fontSize: 11, letterSpacing: '0.06em', textTransform: 'uppercase',
+              }}
+            >
+              {expanded ? 'Hide' : 'Show all'} {races.length}
+            </button>
+          )}
+        </div>
+        {(!collapsible || expanded) && (
+          <div style={{ ...tierGridStyle, gridTemplateColumns: `repeat(${isSpotlight && cols === 2 ? 1 : cols}, 1fr)` }}>
+            {races.map(race => (
+              <ResultCard key={race.id} race={race} onOpen={onOpen} compact={cols === 1} />
+            ))}
+          </div>
+        )}
+      </div>
+    )
+  }
+
+  const hasTiered = tieredRaces.spotlight.length + tieredRaces.forecast.length + tieredRaces.featured.length > 0
+
+  return (
+    <div>
+      <TierSection tier="spotlight" label={TIER_LABELS.spotlight} accent="var(--accent)" races={tieredRaces.spotlight} />
+      <TierSection tier="forecast" label={TIER_LABELS.forecast} races={tieredRaces.forecast} />
+      <TierSection tier="featured" label={TIER_LABELS.featured} races={tieredRaces.featured} />
+      {tieredRaces.other.length > 0 && (
+        <TierSection
+          tier="other"
+          label={hasTiered ? TIER_LABELS.other : 'All Races'}
+          races={tieredRaces.other}
+          collapsible={hasTiered}
+          expanded={showOther}
+          onToggle={() => setShowOther(s => !s)}
+        />
+      )}
+    </div>
+  )
+}
+
 export default function ElectionResults() {
   // The "no `?date=`" case shows a date-picker menu first (May 19 LIVE +
   // May 16); picking a date sets the URL and loads that day's grid.
@@ -798,6 +901,8 @@ export default function ElectionResults() {
   })
   // Smart-search command palette (⌘K / "/" / the masthead trigger).
   const [searchOpen, setSearchOpen] = useState(false)
+  // Tiered grid — "other" races start collapsed
+  const [showOther, setShowOther] = useState(false)
   const deepRef = useRef(false)
   const scrollRef = useRef(null)
   const wrapRef = useRef(null)
@@ -963,6 +1068,16 @@ export default function ElectionResults() {
         (!mapsOnly || raceHasMap(r))
     )
   }, [races, stateF, officeF, mapsOnly])
+
+  // Split filtered races into tiers: spotlight → forecast → featured → other
+  const tieredRaces = useMemo(() => {
+    const tiers = { spotlight: [], forecast: [], featured: [], other: [] }
+    for (const r of filtered) {
+      const t = getRaceTier(r.id)
+      ;(tiers[t] || tiers.other).push(r)
+    }
+    return tiers
+  }, [filtered])
   // How many races exist on this day before the "maps only" cut — so the UI can
   // say "168 of 5,992" and offer to reveal the rest.
   const totalForDay = races
@@ -1263,7 +1378,7 @@ export default function ElectionResults() {
 
         <div style={{ height: 26 }} />
 
-        {/* grid */}
+        {/* tiered race grid */}
         {err && races == null ? (
           <div style={{ padding: '80px 0', textAlign: 'center', fontFamily: DISPLAY, color: 'var(--ink-dim)' }}>
             Couldn’t reach civicAPI.{' '}
@@ -1299,22 +1414,16 @@ export default function ElectionResults() {
             )}
           </div>
         ) : (
-          <div style={{ position: 'relative', height: totalH }}>
-            {visible.map(({ i, r, c, race }) => (
-              <div
-                key={race.id ?? i}
-                style={{
-                  position: 'absolute',
-                  top: r * ROW,
-                  left: `calc(${c} * (${colW} + ${GAP}px))`,
-                  width: colW,
-                  height: CARD_H,
-                }}
-              >
-                <ResultCard race={race} onOpen={setOpenRace} compact={cols === 1} />
-              </div>
-            ))}
-          </div>
+          <TieredRaceGrid
+            tieredRaces={tieredRaces}
+            cols={cols}
+            GAP={GAP}
+            CARD_H={CARD_H}
+            onOpen={setOpenRace}
+            totalForDay={totalForDay}
+            mapsOnly={mapsOnly}
+            onShowAll={() => setMapsOnly(false)}
+          />
         )}
       </div>
       {openRace ? <RaceDetail race={openRace} onClose={() => setOpenRace(null)} /> : null}

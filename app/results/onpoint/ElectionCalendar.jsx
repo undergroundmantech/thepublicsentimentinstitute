@@ -1,19 +1,9 @@
 import React, { useEffect, useMemo, useState } from 'react'
-import { Manrope } from 'next/font/google'
 import { fmtInt } from './resultRow.jsx'
 import { useTheme } from './lib/theme.jsx'
 
-const manrope = Manrope({ subsets: ['latin'], weight: ['400', '500', '600', '700'], display: 'swap' })
-
-// ── The Month ───────────────────────────────────────────────────────────
-// The site's design language applied to an almanac page: Manrope throughout,
-// a hairline-ruled month grid on the bare field, quiet small-caps labels, and
-// color only where it carries data — candidate tones in the muted family, a
-// single lime mark for today (lime = "now" everywhere on this site). Clicking
-// a day opens the cinematic Day view (see DayView.jsx).
-
 // Legacy exports — DayView still composes with these.
-export const OSWALD = '"Oswald", system-ui, sans-serif'
+export const OSWALD = '"JetBrains Mono", ui-monospace, monospace'
 export const MONO = '"JetBrains Mono", ui-monospace, monospace'
 export const C = {
   ink: 'var(--ink)',
@@ -108,14 +98,14 @@ export default function ElectionCalendar({ dates, loading, error, onPick }) {
   const step = (dir) => setCursor((prev) => { const [cy, cm] = prev || [vy, vm]; let r = ymRank(cy, cm) + dir; if (minYM) r = Math.max(r, ymRank(minYM[0], minYM[1])); if (maxYM) r = Math.min(r, ymRank(maxYM[0], maxYM[1])); return [Math.floor(r / 12), r % 12] })
 
   return (
-    <div className={manrope.className} style={{ width: '100%', letterSpacing: '-0.01em' }}>
+    <div style={{ width: '100%', letterSpacing: '-0.01em', fontFamily: '"DM Mono", ui-monospace, monospace' }}>
       <Style />
 
       {/* month header — editorial: light large month, quiet meta, ghost nav */}
       <div className="opa-cal-head" style={head}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
           <span style={{ fontSize: 11, fontWeight: 650, letterSpacing: '0.16em', textTransform: 'uppercase', color: C.dim }}>The calendar</span>
-          <h2 className="opa-cal-month" style={{ margin: 0, fontFamily: manrope.style.fontFamily, fontWeight: 510, fontSize: 'clamp(32px, 3.6vw, 52px)', letterSpacing: '-0.03em', color: C.ink, lineHeight: 0.94, whiteSpace: 'nowrap' }}>
+          <h2 className="opa-cal-month" style={{ margin: 0, fontFamily: '"JetBrains Mono", ui-monospace, monospace', fontWeight: 700, fontSize: 'clamp(32px, 3.6vw, 52px)', letterSpacing: '-0.03em', color: C.ink, lineHeight: 0.94, whiteSpace: 'nowrap' }}>
             {MONTHS[vm]} <span style={{ color: C.dim, fontWeight: 480 }}>{vy}</span>
           </h2>
         </div>

@@ -51,6 +51,109 @@ function syncIframeTheme(iframe, next) {
   } catch {}
 }
 
+// ── Inline vote results — shown when the precinct map isn't reachable ──────
+// Renders the race's live candidate data directly so users always see results
+// instead of a blank or "map unavailable" error screen.
+function InlineRaceResults({ race, onRetry, mapSrc }) {
+  const { P } = useTheme()
+  const cands = [...(race.candidates || [])].sort((a, b) => (b.votes || 0) - (a.votes || 0))
+  const reporting = Number(race.percent_reporting) || 0
+  const anyVotes = cands.some((c) => (c.votes || 0) > 0)
+  const started = reporting > 0 || anyVotes
+  const winner = cands.find((c) => c.winner)
+  const totalVotes = cands.reduce((s, c) => s + (Number(c.votes) || 0), 0)
+  const MONO = '"JetBrains Mono", ui-monospace, monospace'
+  const DM = '"DM Mono", ui-monospace, monospace'
+
+  const fmtN = (n) => Number.isFinite(n) && n > 0 ? n.toLocaleString('en-US') : '—'
+  const fmtP = (n) => Number.isFinite(n) ? `${Number(n).toFixed(1)}%` : '—'
+
+  return (
+    <div style={{
+      position: 'absolute', inset: 0, zIndex: 1, overflowY: 'auto',
+      background: 'var(--page)', fontFamily: DM,
+    }}>
+      <div style={{ maxWidth: 680, margin: '0 auto', padding: '72px 24px 80px' }}>
+        {/* Header */}
+        <div style={{ marginBottom: 28 }}>
+          <div style={{ fontFamily: MONO, fontSize: 10.5, fontWeight: 500, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'var(--ink-dim)', marginBottom: 10 }}>
+            {race.election_date ? new Date(race.election_date + 'T12:00:00').toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) : ''}
+            {race.province ? ` · ${race.province}` : ''}
+          </div>
+          <h1 style={{ margin: '0 0 12px', fontFamily: MONO, fontSize: 'clamp(22px, 3.5vw, 36px)', fontWeight: 800, lineHeight: 1.1, color: 'var(--ink)', letterSpacing: '-0.01em' }}>
+            {race.election_name || 'Race Results'}
+          </h1>
+          {/* Reporting bar */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 4 }}>
+            <div style={{ flex: 1, height: 4, borderRadius: 99, background: 'var(--rule)', overflow: 'hidden' }}>
+              <div style={{ width: `${Math.min(reporting, 100)}%`, height: '100%', background: reporting >= 99 ? '#16a34a' : '#d4a73b', borderRadius: 99, transition: 'width 600ms ease' }} />
+            </div>
+            <span style={{ fontFamily: MONO, fontSize: 11, fontWeight: 600, color: 'var(--ink-mute)', whiteSpace: 'nowrap' }}>
+              {started ? `${fmtP(reporting)} reporting` : 'Awaiting results'}
+            </span>
+          </div>
+          {winner && started && (
+            <div style={{ marginTop: 8, display: 'inline-flex', alignItems: 'center', gap: 7, padding: '5px 12px', borderRadius: 99, background: 'rgba(22,163,74,0.14)', border: '1px solid rgba(22,163,74,0.28)' }}>
+              <span style={{ fontSize: 11, color: '#16a34a' }}>✓</span>
+              <span style={{ fontFamily: MONO, fontSize: 12, fontWeight: 700, color: '#16a34a', letterSpacing: '0.05em' }}>{winner.name} projected to win</span>
+            </div>
+          )}
+        </div>
+
+        {/* Candidate rows */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+          {cands.slice(0, 8).map((c, i) => {
+            const pct = Number(c.percent) || 0
+            const isWinner = !!c.winner && started
+            const color = c.color || (String(c.party || '').toUpperCase() === 'D' ? '#2563eb' : String(c.party || '').toUpperCase() === 'R' ? '#e63946' : '#9d5cf0')
+            return (
+              <div key={c.name + i} style={{ padding: '14px 18px', borderRadius: 12, background: isWinner ? `${color}14` : 'var(--page-elev)', border: `1px solid ${isWinner ? `${color}38` : 'var(--rule)'}` }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 8 }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                    {isWinner && <span style={{ fontSize: 13, color: '#16a34a' }}>✓</span>}
+                    <span style={{ fontFamily: DM, fontWeight: 600, fontSize: 15, color: 'var(--ink)' }}>{c.name}</span>
+                    {c.party && <span style={{ fontFamily: MONO, fontSize: 10, fontWeight: 600, padding: '2px 7px', borderRadius: 5, background: `${color}20`, color, letterSpacing: '0.08em', textTransform: 'uppercase' }}>{c.party}</span>}
+                  </div>
+                  <div style={{ display: 'flex', gap: 18, alignItems: 'baseline' }}>
+                    <span style={{ fontFamily: MONO, fontSize: 22, fontWeight: 800, color, fontVariantNumeric: 'tabular-nums', letterSpacing: '-0.02em' }}>{fmtP(pct)}</span>
+                    {anyVotes && <span style={{ fontFamily: MONO, fontSize: 11, color: 'var(--ink-dim)', fontVariantNumeric: 'tabular-nums' }}>{fmtN(c.votes)}</span>}
+                  </div>
+                </div>
+                <div style={{ height: 6, borderRadius: 99, background: 'var(--rule)', overflow: 'hidden' }}>
+                  <div style={{ width: `${Math.min(pct, 100)}%`, height: '100%', background: color, borderRadius: 99, transition: 'width 600ms ease' }} />
+                </div>
+              </div>
+            )
+          })}
+        </div>
+
+        {/* Total votes */}
+        {anyVotes && (
+          <div style={{ marginTop: 20, fontFamily: MONO, fontSize: 11, color: 'var(--ink-dim)', letterSpacing: '0.1em', textTransform: 'uppercase', textAlign: 'right' }}>
+            {fmtN(totalVotes)} total votes counted
+          </div>
+        )}
+
+        {/* Retry for map */}
+        <div style={{ marginTop: 40, padding: '18px 20px', borderRadius: 12, background: 'var(--page-elev)', border: '1px solid var(--rule)' }}>
+          <div style={{ fontFamily: MONO, fontSize: 10.5, fontWeight: 600, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--ink-dim)', marginBottom: 6 }}>Precinct Map</div>
+          <p style={{ margin: '0 0 14px', fontSize: 13, lineHeight: 1.6, color: 'var(--ink-mute)', fontFamily: DM }}>
+            The precinct-level map is not reachable right now. You can retry or open the map directly.
+          </p>
+          <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
+            <button onClick={onRetry} style={{ fontFamily: DM, fontSize: 13, fontWeight: 600, color: 'var(--ink)', background: 'var(--ink)', border: 0, borderRadius: 99, padding: '9px 18px', cursor: 'pointer', color: 'var(--page)' }}>
+              Retry Map
+            </button>
+            <a href={mapSrc} target="_blank" rel="noreferrer" style={{ fontFamily: DM, fontSize: 13, fontWeight: 500, color: 'var(--ink-mute)', background: 'transparent', border: '1px solid var(--rule)', borderRadius: 99, padding: '9px 16px', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 5 }}>
+              Open directly ↗
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 export default function RaceDetail({ race, onClose }) {
   const { theme, toggle } = useTheme()
   const pushedRef = useRef(false)
@@ -309,49 +412,7 @@ export default function RaceDetail({ race, onClose }) {
       </div>
 
       {reachable === false ? (
-        <div
-          style={{
-            position: 'absolute', inset: 0, zIndex: 1, display: 'grid', placeItems: 'center',
-            padding: 24, background: 'var(--page)', textAlign: 'center',
-            fontFamily: '"Instrument Sans", system-ui, sans-serif',
-          }}
-        >
-          <div style={{ maxWidth: 460 }}>
-            <div style={{ fontFamily: '"Oswald", system-ui, sans-serif', textTransform: 'uppercase', letterSpacing: '0.12em', fontSize: 12, fontWeight: 700, color: 'var(--ink-dim)' }}>
-              Precinct map unavailable
-            </div>
-            <h2 style={{ margin: '12px 0 8px', fontFamily: '"Oswald", system-ui, sans-serif', fontSize: 24, lineHeight: 1.1, color: 'var(--ink)' }}>
-              This race&apos;s map isn&apos;t responding
-            </h2>
-            <p style={{ margin: '0 0 20px', fontSize: 14, lineHeight: 1.65, color: 'var(--ink-mute)' }}>
-              The detail map loads from{' '}
-              <code style={{ fontFamily: '"JetBrains Mono", ui-monospace, monospace', fontSize: 12.5, padding: '1px 6px', borderRadius: 5, background: 'var(--wash)', color: 'var(--ink)' }}>{base}</code>.{' '}
-              {isLocalHost()
-                ? 'Start the precinct map app on port 3210, then retry.'
-                : 'The precinct map service may be offline.'}
-            </p>
-            <div style={{ display: 'inline-flex', gap: 10, flexWrap: 'wrap', justifyContent: 'center' }}>
-              <button
-                onClick={() => setRetry((n) => n + 1)}
-                style={{ fontFamily: 'inherit', fontSize: 13, fontWeight: 650, color: '#0a0b0d', background: 'var(--ink)', border: 0, borderRadius: 99, padding: '10px 20px', cursor: 'pointer' }}
-              >
-                Retry
-              </button>
-              <a
-                href={src} target="_blank" rel="noreferrer"
-                style={{ fontFamily: 'inherit', fontSize: 13, fontWeight: 600, color: 'var(--ink)', background: 'transparent', border: '1px solid var(--card-bd)', borderRadius: 99, padding: '10px 18px', textDecoration: 'none' }}
-              >
-                Open directly ↗
-              </a>
-              <button
-                onClick={() => setReachable(true)}
-                style={{ fontFamily: 'inherit', fontSize: 13, fontWeight: 600, color: 'var(--ink-mute)', background: 'transparent', border: '1px solid var(--card-bd)', borderRadius: 99, padding: '10px 18px', cursor: 'pointer' }}
-              >
-                Dismiss
-              </button>
-            </div>
-          </div>
-        </div>
+        <InlineRaceResults race={race} onRetry={() => setRetry((n) => n + 1)} mapSrc={src} />
       ) : null}
     </div>,
     document.body
