@@ -1,0 +1,452 @@
+{
+  "state": "Rhode Island",
+  "state_abbr": "RI",
+  "state_fips": "44",
+  "as_of_date": "2026-06-01",
+  "source_name": "Rhode Island Department of State (Secretary of State Gregg M. Amore), Registered Voter dashboard",
+  "source_url": "https://datahub.sos.ri.gov/RegisteredVoter.aspx",
+  "registers_by_party": true,
+  "statewide_total_registered": 793063,
+  "statewide_by_party": {
+    "Democratic": 272957,
+    "Republican": 113805,
+    "Unaffiliated": 406301,
+    "Other": 0
+  },
+  "county_unit_label": "municipality",
+  "county_level_available": false,
+  "counties": [
+    {
+      "name": "Barrington",
+      "fips": null,
+      "total_registered": 14302,
+      "by_party": {
+        "Democratic": 5555,
+        "Republican": 1724,
+        "Unaffiliated": 7023,
+        "Other": 0
+      }
+    },
+    {
+      "name": "Bristol",
+      "fips": null,
+      "total_registered": 16150,
+      "by_party": {
+        "Democratic": 4909,
+        "Republican": 2293,
+        "Unaffiliated": 8948,
+        "Other": 0
+      }
+    },
+    {
+      "name": "Burrillville",
+      "fips": null,
+      "total_registered": 13010,
+      "by_party": {
+        "Democratic": 2376,
+        "Republican": 3128,
+        "Unaffiliated": 7506,
+        "Other": 0
+      }
+    },
+    {
+      "name": "Central Falls",
+      "fips": null,
+      "total_registered": 8582,
+      "by_party": {
+        "Democratic": 4244,
+        "Republican": 782,
+        "Unaffiliated": 3556,
+        "Other": 0
+      }
+    },
+    {
+      "name": "Charlestown",
+      "fips": null,
+      "total_registered": 7219,
+      "by_party": {
+        "Democratic": 1863,
+        "Republican": 1382,
+        "Unaffiliated": 3974,
+        "Other": 0
+      }
+    },
+    {
+      "name": "Coventry",
+      "fips": null,
+      "total_registered": 28914,
+      "by_party": {
+        "Democratic": 5844,
+        "Republican": 5745,
+        "Unaffiliated": 17325,
+        "Other": 0
+      }
+    },
+    {
+      "name": "Cranston",
+      "fips": null,
+      "total_registered": 60066,
+      "by_party": {
+        "Democratic": 18688,
+        "Republican": 9157,
+        "Unaffiliated": 32221,
+        "Other": 0
+      }
+    },
+    {
+      "name": "Cumberland",
+      "fips": null,
+      "total_registered": 27939,
+      "by_party": {
+        "Democratic": 8542,
+        "Republican": 4202,
+        "Unaffiliated": 15195,
+        "Other": 0
+      }
+    },
+    {
+      "name": "East Greenwich",
+      "fips": null,
+      "total_registered": 11657,
+      "by_party": {
+        "Democratic": 3497,
+        "Republican": 1883,
+        "Unaffiliated": 6277,
+        "Other": 0
+      }
+    },
+    {
+      "name": "East Providence",
+      "fips": null,
+      "total_registered": 36466,
+      "by_party": {
+        "Democratic": 14244,
+        "Republican": 4364,
+        "Unaffiliated": 17858,
+        "Other": 0
+      }
+    },
+    {
+      "name": "Exeter",
+      "fips": null,
+      "total_registered": 5617,
+      "by_party": {
+        "Democratic": 1139,
+        "Republican": 1102,
+        "Unaffiliated": 3376,
+        "Other": 0
+      }
+    },
+    {
+      "name": "Foster",
+      "fips": null,
+      "total_registered": 4099,
+      "by_party": {
+        "Democratic": 661,
+        "Republican": 1018,
+        "Unaffiliated": 2420,
+        "Other": 0
+      }
+    },
+    {
+      "name": "Glocester",
+      "fips": null,
+      "total_registered": 8948,
+      "by_party": {
+        "Democratic": 1537,
+        "Republican": 2017,
+        "Unaffiliated": 5394,
+        "Other": 0
+      }
+    },
+    {
+      "name": "Hopkinton",
+      "fips": null,
+      "total_registered": 7126,
+      "by_party": {
+        "Democratic": 1499,
+        "Republican": 1589,
+        "Unaffiliated": 4038,
+        "Other": 0
+      }
+    },
+    {
+      "name": "Jamestown",
+      "fips": null,
+      "total_registered": 5074,
+      "by_party": {
+        "Democratic": 1877,
+        "Republican": 625,
+        "Unaffiliated": 2572,
+        "Other": 0
+      }
+    },
+    {
+      "name": "Johnston",
+      "fips": null,
+      "total_registered": 24086,
+      "by_party": {
+        "Democratic": 7891,
+        "Republican": 4055,
+        "Unaffiliated": 12140,
+        "Other": 0
+      }
+    },
+    {
+      "name": "Lincoln",
+      "fips": null,
+      "total_registered": 18138,
+      "by_party": {
+        "Democratic": 4872,
+        "Republican": 2927,
+        "Unaffiliated": 10339,
+        "Other": 0
+      }
+    },
+    {
+      "name": "Little Compton",
+      "fips": null,
+      "total_registered": 3300,
+      "by_party": {
+        "Democratic": 989,
+        "Republican": 574,
+        "Unaffiliated": 1737,
+        "Other": 0
+      }
+    },
+    {
+      "name": "Middletown",
+      "fips": null,
+      "total_registered": 11589,
+      "by_party": {
+        "Democratic": 3888,
+        "Republican": 1698,
+        "Unaffiliated": 6003,
+        "Other": 0
+      }
+    },
+    {
+      "name": "Narragansett",
+      "fips": null,
+      "total_registered": 12329,
+      "by_party": {
+        "Democratic": 3469,
+        "Republican": 1875,
+        "Unaffiliated": 6985,
+        "Other": 0
+      }
+    },
+    {
+      "name": "New Shoreham",
+      "fips": null,
+      "total_registered": 1145,
+      "by_party": {
+        "Democratic": 471,
+        "Republican": 146,
+        "Unaffiliated": 528,
+        "Other": 0
+      }
+    },
+    {
+      "name": "Newport",
+      "fips": null,
+      "total_registered": 15015,
+      "by_party": {
+        "Democratic": 6208,
+        "Republican": 1839,
+        "Unaffiliated": 6968,
+        "Other": 0
+      }
+    },
+    {
+      "name": "North Kingstown",
+      "fips": null,
+      "total_registered": 23557,
+      "by_party": {
+        "Democratic": 6552,
+        "Republican": 3528,
+        "Unaffiliated": 13477,
+        "Other": 0
+      }
+    },
+    {
+      "name": "North Providence",
+      "fips": null,
+      "total_registered": 25870,
+      "by_party": {
+        "Democratic": 10610,
+        "Republican": 3068,
+        "Unaffiliated": 12192,
+        "Other": 0
+      }
+    },
+    {
+      "name": "North Smithfield",
+      "fips": null,
+      "total_registered": 10251,
+      "by_party": {
+        "Democratic": 2390,
+        "Republican": 2041,
+        "Unaffiliated": 5820,
+        "Other": 0
+      }
+    },
+    {
+      "name": "Pawtucket",
+      "fips": null,
+      "total_registered": 47867,
+      "by_party": {
+        "Democratic": 21956,
+        "Republican": 4441,
+        "Unaffiliated": 21470,
+        "Other": 0
+      }
+    },
+    {
+      "name": "Portsmouth",
+      "fips": null,
+      "total_registered": 14716,
+      "by_party": {
+        "Democratic": 4326,
+        "Republican": 2514,
+        "Unaffiliated": 7876,
+        "Other": 0
+      }
+    },
+    {
+      "name": "Providence",
+      "fips": null,
+      "total_registered": 112399,
+      "by_party": {
+        "Democratic": 61862,
+        "Republican": 7816,
+        "Unaffiliated": 42721,
+        "Other": 0
+      }
+    },
+    {
+      "name": "Richmond",
+      "fips": null,
+      "total_registered": 6950,
+      "by_party": {
+        "Democratic": 1444,
+        "Republican": 1442,
+        "Unaffiliated": 4064,
+        "Other": 0
+      }
+    },
+    {
+      "name": "Scituate",
+      "fips": null,
+      "total_registered": 9066,
+      "by_party": {
+        "Democratic": 1528,
+        "Republican": 2130,
+        "Unaffiliated": 5408,
+        "Other": 0
+      }
+    },
+    {
+      "name": "Smithfield",
+      "fips": null,
+      "total_registered": 16037,
+      "by_party": {
+        "Democratic": 3930,
+        "Republican": 2918,
+        "Unaffiliated": 9189,
+        "Other": 0
+      }
+    },
+    {
+      "name": "South Kingstown",
+      "fips": null,
+      "total_registered": 22369,
+      "by_party": {
+        "Democratic": 7624,
+        "Republican": 2822,
+        "Unaffiliated": 11923,
+        "Other": 0
+      }
+    },
+    {
+      "name": "Tiverton",
+      "fips": null,
+      "total_registered": 13603,
+      "by_party": {
+        "Democratic": 3729,
+        "Republican": 2480,
+        "Unaffiliated": 7394,
+        "Other": 0
+      }
+    },
+    {
+      "name": "Warren",
+      "fips": null,
+      "total_registered": 8816,
+      "by_party": {
+        "Democratic": 2766,
+        "Republican": 1200,
+        "Unaffiliated": 4850,
+        "Other": 0
+      }
+    },
+    {
+      "name": "Warwick",
+      "fips": null,
+      "total_registered": 67391,
+      "by_party": {
+        "Democratic": 19246,
+        "Republican": 10446,
+        "Unaffiliated": 37699,
+        "Other": 0
+      }
+    },
+    {
+      "name": "West Greenwich",
+      "fips": null,
+      "total_registered": 5465,
+      "by_party": {
+        "Democratic": 944,
+        "Republican": 1272,
+        "Unaffiliated": 3249,
+        "Other": 0
+      }
+    },
+    {
+      "name": "West Warwick",
+      "fips": null,
+      "total_registered": 22771,
+      "by_party": {
+        "Democratic": 6247,
+        "Republican": 3920,
+        "Unaffiliated": 12604,
+        "Other": 0
+      }
+    },
+    {
+      "name": "Westerly",
+      "fips": null,
+      "total_registered": 19168,
+      "by_party": {
+        "Democratic": 5365,
+        "Republican": 3683,
+        "Unaffiliated": 10120,
+        "Other": 0
+      }
+    },
+    {
+      "name": "Woonsocket",
+      "fips": null,
+      "total_registered": 25996,
+      "by_party": {
+        "Democratic": 8175,
+        "Republican": 3959,
+        "Unaffiliated": 13862,
+        "Other": 0
+      }
+    }
+  ],
+  "as_of_notes": "Snapshot dated 2026-06-01 ('Most Recent Month' in the source dashboard). RI Dept. of State publishes registered-voter counts on the 1st of each month. Counts include all registration statuses (Active 704,636 + Inactive 84,263 + Pending 4,164 = 793,063). Active-status-only total is 704,636. Figures retrieved directly from the dashboard's Power BI dataset (modelId 594856) via the public querydata API.",
+  "data_quality": "high; official RI Dept. of State data; statewide-by-party, statewide-by-status, and municipality-by-party totals all reconcile exactly to 793,063.",
+  "notes": "Granularity: municipality (all 39 RI cities/towns). RI has no county governments; voter registration is administered by 39 cities/towns. No party other than Democrat/Republican/Unaffiliated has registrants in this snapshot (Moderate and No Labels parties return zero), so Other=0. by_party uses all-status totals; party breakdown by status also available (e.g., Active: Dem 239,464 / Rep 102,126 / Unaff 363,046)."
+}

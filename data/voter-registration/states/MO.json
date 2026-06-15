@@ -1,0 +1,714 @@
+{
+  "state": "Missouri",
+  "state_abbr": "MO",
+  "state_fips": "29",
+  "as_of_date": "2024-12-05",
+  "source_name": "Missouri Secretary of State - Official Voter Turnout Report, 2024 General Election (November 5, 2024)",
+  "source_url": "https://www.sos.mo.gov/CMSImages/ElectionResultsStatistics/Nov2024OfficialVoterTurnout.pdf",
+  "registers_by_party": false,
+  "statewide_total_registered": 4433383,
+  "statewide_by_party": null,
+  "county_unit_label": "county",
+  "county_level_available": true,
+  "counties": [
+    {
+      "name": "St. Louis City",
+      "fips": "29510",
+      "total_registered": 219641,
+      "by_party": null
+    },
+    {
+      "name": "Adair",
+      "fips": "29001",
+      "total_registered": 15304,
+      "by_party": null
+    },
+    {
+      "name": "Andrew",
+      "fips": "29003",
+      "total_registered": 13125,
+      "by_party": null
+    },
+    {
+      "name": "Atchison",
+      "fips": "29005",
+      "total_registered": 3838,
+      "by_party": null
+    },
+    {
+      "name": "Audrain",
+      "fips": "29007",
+      "total_registered": 15471,
+      "by_party": null
+    },
+    {
+      "name": "Barry",
+      "fips": "29009",
+      "total_registered": 23692,
+      "by_party": null
+    },
+    {
+      "name": "Barton",
+      "fips": "29011",
+      "total_registered": 8966,
+      "by_party": null
+    },
+    {
+      "name": "Bates",
+      "fips": "29013",
+      "total_registered": 12017,
+      "by_party": null
+    },
+    {
+      "name": "Benton",
+      "fips": "29015",
+      "total_registered": 15622,
+      "by_party": null
+    },
+    {
+      "name": "Bollinger",
+      "fips": "29017",
+      "total_registered": 8676,
+      "by_party": null
+    },
+    {
+      "name": "Boone",
+      "fips": "29019",
+      "total_registered": 130901,
+      "by_party": null
+    },
+    {
+      "name": "Buchanan",
+      "fips": "29021",
+      "total_registered": 53700,
+      "by_party": null
+    },
+    {
+      "name": "Butler",
+      "fips": "29023",
+      "total_registered": 28926,
+      "by_party": null
+    },
+    {
+      "name": "Caldwell",
+      "fips": "29025",
+      "total_registered": 6540,
+      "by_party": null
+    },
+    {
+      "name": "Callaway",
+      "fips": "29027",
+      "total_registered": 30375,
+      "by_party": null
+    },
+    {
+      "name": "Camden",
+      "fips": "29029",
+      "total_registered": 34900,
+      "by_party": null
+    },
+    {
+      "name": "Cape Girardeau",
+      "fips": "29031",
+      "total_registered": 56047,
+      "by_party": null
+    },
+    {
+      "name": "Carroll",
+      "fips": "29033",
+      "total_registered": 6299,
+      "by_party": null
+    },
+    {
+      "name": "Carter",
+      "fips": "29035",
+      "total_registered": 3988,
+      "by_party": null
+    },
+    {
+      "name": "Cass",
+      "fips": "29037",
+      "total_registered": 84464,
+      "by_party": null
+    },
+    {
+      "name": "Cedar",
+      "fips": "29039",
+      "total_registered": 10202,
+      "by_party": null
+    },
+    {
+      "name": "Chariton",
+      "fips": "29041",
+      "total_registered": 5404,
+      "by_party": null
+    },
+    {
+      "name": "Christian",
+      "fips": "29043",
+      "total_registered": 69309,
+      "by_party": null
+    },
+    {
+      "name": "Clark",
+      "fips": "29045",
+      "total_registered": 5163,
+      "by_party": null
+    },
+    {
+      "name": "Clay",
+      "fips": "29047",
+      "total_registered": 186903,
+      "by_party": null
+    },
+    {
+      "name": "Clinton",
+      "fips": "29049",
+      "total_registered": 15923,
+      "by_party": null
+    },
+    {
+      "name": "Cole",
+      "fips": "29051",
+      "total_registered": 55572,
+      "by_party": null
+    },
+    {
+      "name": "Cooper",
+      "fips": "29053",
+      "total_registered": 12215,
+      "by_party": null
+    },
+    {
+      "name": "Crawford",
+      "fips": "29055",
+      "total_registered": 16878,
+      "by_party": null
+    },
+    {
+      "name": "Dade",
+      "fips": "29057",
+      "total_registered": 5909,
+      "by_party": null
+    },
+    {
+      "name": "Dallas",
+      "fips": "29059",
+      "total_registered": 11986,
+      "by_party": null
+    },
+    {
+      "name": "Daviess",
+      "fips": "29061",
+      "total_registered": 5545,
+      "by_party": null
+    },
+    {
+      "name": "De Kalb",
+      "fips": "29063",
+      "total_registered": 6701,
+      "by_party": null
+    },
+    {
+      "name": "Dent",
+      "fips": "29065",
+      "total_registered": 10226,
+      "by_party": null
+    },
+    {
+      "name": "Douglas",
+      "fips": "29067",
+      "total_registered": 10286,
+      "by_party": null
+    },
+    {
+      "name": "Dunklin",
+      "fips": "29069",
+      "total_registered": 18892,
+      "by_party": null
+    },
+    {
+      "name": "Franklin",
+      "fips": "29071",
+      "total_registered": 77817,
+      "by_party": null
+    },
+    {
+      "name": "Gasconade",
+      "fips": "29073",
+      "total_registered": 10869,
+      "by_party": null
+    },
+    {
+      "name": "Gentry",
+      "fips": "29075",
+      "total_registered": 4778,
+      "by_party": null
+    },
+    {
+      "name": "Greene",
+      "fips": "29077",
+      "total_registered": 214710,
+      "by_party": null
+    },
+    {
+      "name": "Grundy",
+      "fips": "29079",
+      "total_registered": 6279,
+      "by_party": null
+    },
+    {
+      "name": "Harrison",
+      "fips": "29081",
+      "total_registered": 5400,
+      "by_party": null
+    },
+    {
+      "name": "Henry",
+      "fips": "29083",
+      "total_registered": 16184,
+      "by_party": null
+    },
+    {
+      "name": "Hickory",
+      "fips": "29085",
+      "total_registered": 7226,
+      "by_party": null
+    },
+    {
+      "name": "Holt",
+      "fips": "29087",
+      "total_registered": 3244,
+      "by_party": null
+    },
+    {
+      "name": "Howard",
+      "fips": "29089",
+      "total_registered": 6819,
+      "by_party": null
+    },
+    {
+      "name": "Howell",
+      "fips": "29091",
+      "total_registered": 28059,
+      "by_party": null
+    },
+    {
+      "name": "Iron",
+      "fips": "29093",
+      "total_registered": 7002,
+      "by_party": null
+    },
+    {
+      "name": "Jackson",
+      "fips": "29095",
+      "total_registered": 277889,
+      "by_party": null
+    },
+    {
+      "name": "Jasper",
+      "fips": "29097",
+      "total_registered": 84774,
+      "by_party": null
+    },
+    {
+      "name": "Jefferson",
+      "fips": "29099",
+      "total_registered": 166339,
+      "by_party": null
+    },
+    {
+      "name": "Johnson",
+      "fips": "29101",
+      "total_registered": 35113,
+      "by_party": null
+    },
+    {
+      "name": "Kansas City",
+      "fips": null,
+      "total_registered": 229293,
+      "by_party": null
+    },
+    {
+      "name": "Knox",
+      "fips": "29103",
+      "total_registered": 2524,
+      "by_party": null
+    },
+    {
+      "name": "Laclede",
+      "fips": "29105",
+      "total_registered": 24874,
+      "by_party": null
+    },
+    {
+      "name": "Lafayette",
+      "fips": "29107",
+      "total_registered": 23494,
+      "by_party": null
+    },
+    {
+      "name": "Lawrence",
+      "fips": "29109",
+      "total_registered": 26490,
+      "by_party": null
+    },
+    {
+      "name": "Lewis",
+      "fips": "29111",
+      "total_registered": 5956,
+      "by_party": null
+    },
+    {
+      "name": "Lincoln",
+      "fips": "29113",
+      "total_registered": 44792,
+      "by_party": null
+    },
+    {
+      "name": "Linn",
+      "fips": "29115",
+      "total_registered": 8391,
+      "by_party": null
+    },
+    {
+      "name": "Livingston",
+      "fips": "29117",
+      "total_registered": 9648,
+      "by_party": null
+    },
+    {
+      "name": "Macon",
+      "fips": "29121",
+      "total_registered": 10986,
+      "by_party": null
+    },
+    {
+      "name": "Madison",
+      "fips": "29123",
+      "total_registered": 8567,
+      "by_party": null
+    },
+    {
+      "name": "Maries",
+      "fips": "29125",
+      "total_registered": 6440,
+      "by_party": null
+    },
+    {
+      "name": "Marion",
+      "fips": "29127",
+      "total_registered": 19777,
+      "by_party": null
+    },
+    {
+      "name": "McDonald",
+      "fips": "29119",
+      "total_registered": 15679,
+      "by_party": null
+    },
+    {
+      "name": "Mercer",
+      "fips": "29129",
+      "total_registered": 2517,
+      "by_party": null
+    },
+    {
+      "name": "Miller",
+      "fips": "29131",
+      "total_registered": 18834,
+      "by_party": null
+    },
+    {
+      "name": "Mississippi",
+      "fips": "29133",
+      "total_registered": 8056,
+      "by_party": null
+    },
+    {
+      "name": "Moniteau",
+      "fips": "29135",
+      "total_registered": 9824,
+      "by_party": null
+    },
+    {
+      "name": "Monroe",
+      "fips": "29137",
+      "total_registered": 6254,
+      "by_party": null
+    },
+    {
+      "name": "Montgomery",
+      "fips": "29139",
+      "total_registered": 8479,
+      "by_party": null
+    },
+    {
+      "name": "Morgan",
+      "fips": "29141",
+      "total_registered": 13734,
+      "by_party": null
+    },
+    {
+      "name": "New Madrid",
+      "fips": "29143",
+      "total_registered": 11532,
+      "by_party": null
+    },
+    {
+      "name": "Newton",
+      "fips": "29145",
+      "total_registered": 42687,
+      "by_party": null
+    },
+    {
+      "name": "Nodaway",
+      "fips": "29147",
+      "total_registered": 13613,
+      "by_party": null
+    },
+    {
+      "name": "Oregon",
+      "fips": "29149",
+      "total_registered": 7412,
+      "by_party": null
+    },
+    {
+      "name": "Osage",
+      "fips": "29151",
+      "total_registered": 10180,
+      "by_party": null
+    },
+    {
+      "name": "Ozark",
+      "fips": "29153",
+      "total_registered": 7621,
+      "by_party": null
+    },
+    {
+      "name": "Pemiscot",
+      "fips": "29155",
+      "total_registered": 10518,
+      "by_party": null
+    },
+    {
+      "name": "Perry",
+      "fips": "29157",
+      "total_registered": 13541,
+      "by_party": null
+    },
+    {
+      "name": "Pettis",
+      "fips": "29159",
+      "total_registered": 27189,
+      "by_party": null
+    },
+    {
+      "name": "Phelps",
+      "fips": "29161",
+      "total_registered": 29854,
+      "by_party": null
+    },
+    {
+      "name": "Pike",
+      "fips": "29163",
+      "total_registered": 11076,
+      "by_party": null
+    },
+    {
+      "name": "Platte",
+      "fips": "29165",
+      "total_registered": 81708,
+      "by_party": null
+    },
+    {
+      "name": "Polk",
+      "fips": "29167",
+      "total_registered": 21779,
+      "by_party": null
+    },
+    {
+      "name": "Pulaski",
+      "fips": "29169",
+      "total_registered": 27793,
+      "by_party": null
+    },
+    {
+      "name": "Putnam",
+      "fips": "29171",
+      "total_registered": 3492,
+      "by_party": null
+    },
+    {
+      "name": "Ralls",
+      "fips": "29173",
+      "total_registered": 7928,
+      "by_party": null
+    },
+    {
+      "name": "Randolph",
+      "fips": "29175",
+      "total_registered": 16308,
+      "by_party": null
+    },
+    {
+      "name": "Ray",
+      "fips": "29177",
+      "total_registered": 17188,
+      "by_party": null
+    },
+    {
+      "name": "Reynolds",
+      "fips": "29179",
+      "total_registered": 4524,
+      "by_party": null
+    },
+    {
+      "name": "Ripley",
+      "fips": "29181",
+      "total_registered": 9305,
+      "by_party": null
+    },
+    {
+      "name": "Saline",
+      "fips": "29195",
+      "total_registered": 13833,
+      "by_party": null
+    },
+    {
+      "name": "Schuyler",
+      "fips": "29197",
+      "total_registered": 2684,
+      "by_party": null
+    },
+    {
+      "name": "Scotland",
+      "fips": "29199",
+      "total_registered": 2709,
+      "by_party": null
+    },
+    {
+      "name": "Scott",
+      "fips": "29201",
+      "total_registered": 25888,
+      "by_party": null
+    },
+    {
+      "name": "Shannon",
+      "fips": "29203",
+      "total_registered": 5885,
+      "by_party": null
+    },
+    {
+      "name": "Shelby",
+      "fips": "29205",
+      "total_registered": 4316,
+      "by_party": null
+    },
+    {
+      "name": "St. Charles",
+      "fips": "29183",
+      "total_registered": 301134,
+      "by_party": null
+    },
+    {
+      "name": "St. Clair",
+      "fips": "29185",
+      "total_registered": 6942,
+      "by_party": null
+    },
+    {
+      "name": "St. Francois",
+      "fips": "29187",
+      "total_registered": 42940,
+      "by_party": null
+    },
+    {
+      "name": "St. Louis",
+      "fips": "29189",
+      "total_registered": 745425,
+      "by_party": null
+    },
+    {
+      "name": "Ste. Genevieve",
+      "fips": "29186",
+      "total_registered": 13659,
+      "by_party": null
+    },
+    {
+      "name": "Stoddard",
+      "fips": "29207",
+      "total_registered": 20077,
+      "by_party": null
+    },
+    {
+      "name": "Stone",
+      "fips": "29209",
+      "total_registered": 26245,
+      "by_party": null
+    },
+    {
+      "name": "Sullivan",
+      "fips": "29211",
+      "total_registered": 3898,
+      "by_party": null
+    },
+    {
+      "name": "Taney",
+      "fips": "29213",
+      "total_registered": 41006,
+      "by_party": null
+    },
+    {
+      "name": "Texas",
+      "fips": "29215",
+      "total_registered": 17256,
+      "by_party": null
+    },
+    {
+      "name": "Vernon",
+      "fips": "29217",
+      "total_registered": 13030,
+      "by_party": null
+    },
+    {
+      "name": "Warren",
+      "fips": "29219",
+      "total_registered": 28114,
+      "by_party": null
+    },
+    {
+      "name": "Washington",
+      "fips": "29221",
+      "total_registered": 15567,
+      "by_party": null
+    },
+    {
+      "name": "Wayne",
+      "fips": "29223",
+      "total_registered": 9183,
+      "by_party": null
+    },
+    {
+      "name": "Webster",
+      "fips": "29225",
+      "total_registered": 26647,
+      "by_party": null
+    },
+    {
+      "name": "Worth",
+      "fips": "29227",
+      "total_registered": 1497,
+      "by_party": null
+    },
+    {
+      "name": "Wright",
+      "fips": "29229",
+      "total_registered": 13483,
+      "by_party": null
+    }
+  ],
+  "as_of_notes": "Registered-voter counts are 'as of 12/05/2024 10:16 AM' per the report footer, reflecting the Missouri Centralized Voter Registration list at certification of the November 5, 2024 General Election. The report's 'Registered Voters' column = Active + Inactive voters. Statewide total 4,433,383 is the sum of all listed jurisdictions and matches the report's printed total exactly.",
+  "data_quality": "high",
+  "notes": "Source is the latest official statewide registration breakdown published by the Missouri SOS (the dedicated 'Registered Voters in Missouri' archive at sos.mo.gov/elections/registeredvoters only extends through 2022; the Nov 2024 Official Voter Turnout Report is the most recent official by-jurisdiction registration data). Missouri does NOT register voters by party, so by_party fields are null. The report lists 116 election jurisdictions: 114 counties + the City of St. Louis (an independent city, FIPS 29510) + Kansas City. Kansas City is reported as a SEPARATE election authority (it has its own Board of Election Commissioners) whose registrants reside within Jackson, Clay, Platte and Cass counties; it has no county FIPS so fips is null for that unit. All 116 units are retained so the sum reconciles to the official statewide total of 4,433,383; dropping Kansas City (229,293 registered) would understate the total. The 115 standard county-level units requested (114 counties + St. Louis City) are all present and individually FIPS-coded. St. Louis City (29510) is distinct from St. Louis County (29189: 745,425 registered)."
+}

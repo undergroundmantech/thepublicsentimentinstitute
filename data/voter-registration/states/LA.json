@@ -1,0 +1,662 @@
+{
+  "state": "Louisiana",
+  "state_abbr": "LA",
+  "state_fips": "22",
+  "as_of_date": "2026-06-01",
+  "source_name": "Louisiana Secretary of State - Statewide Report of Registered Voters by Party and Race",
+  "source_url": "https://electionstatistics.sos.la.gov/Data/Registration_Statistics/statewide/2026_0601_sta_comb.pdf",
+  "registers_by_party": true,
+  "statewide_total_registered": 2970410,
+  "statewide_by_party": {
+    "Democratic": 1063592,
+    "Republican": 1062890,
+    "Other": 843928
+  },
+  "county_unit_label": "parish",
+  "county_level_available": true,
+  "counties": [
+    {
+      "name": "Acadia",
+      "fips": "22001",
+      "total_registered": 37935,
+      "by_party": {
+        "Democratic": 10905,
+        "Republican": 17632,
+        "Other": 9398
+      }
+    },
+    {
+      "name": "Allen",
+      "fips": "22003",
+      "total_registered": 12308,
+      "by_party": {
+        "Democratic": 3773,
+        "Republican": 5625,
+        "Other": 2910
+      }
+    },
+    {
+      "name": "Ascension",
+      "fips": "22005",
+      "total_registered": 84661,
+      "by_party": {
+        "Democratic": 25145,
+        "Republican": 34954,
+        "Other": 24562
+      }
+    },
+    {
+      "name": "Assumption",
+      "fips": "22007",
+      "total_registered": 13920,
+      "by_party": {
+        "Democratic": 6242,
+        "Republican": 4677,
+        "Other": 3001
+      }
+    },
+    {
+      "name": "Avoyelles",
+      "fips": "22009",
+      "total_registered": 23024,
+      "by_party": {
+        "Democratic": 8805,
+        "Republican": 8589,
+        "Other": 5630
+      }
+    },
+    {
+      "name": "Beauregard",
+      "fips": "22011",
+      "total_registered": 23358,
+      "by_party": {
+        "Democratic": 4144,
+        "Republican": 12142,
+        "Other": 7072
+      }
+    },
+    {
+      "name": "Bienville",
+      "fips": "22013",
+      "total_registered": 8723,
+      "by_party": {
+        "Democratic": 3810,
+        "Republican": 3094,
+        "Other": 1819
+      }
+    },
+    {
+      "name": "Bossier",
+      "fips": "22015",
+      "total_registered": 76276,
+      "by_party": {
+        "Democratic": 17747,
+        "Republican": 35890,
+        "Other": 22639
+      }
+    },
+    {
+      "name": "Caddo",
+      "fips": "22017",
+      "total_registered": 151469,
+      "by_party": {
+        "Democratic": 66912,
+        "Republican": 43442,
+        "Other": 41115
+      }
+    },
+    {
+      "name": "Calcasieu",
+      "fips": "22019",
+      "total_registered": 123860,
+      "by_party": {
+        "Democratic": 37000,
+        "Republican": 49629,
+        "Other": 37231
+      }
+    },
+    {
+      "name": "Caldwell",
+      "fips": "22021",
+      "total_registered": 5933,
+      "by_party": {
+        "Democratic": 1304,
+        "Republican": 3182,
+        "Other": 1447
+      }
+    },
+    {
+      "name": "Cameron",
+      "fips": "22023",
+      "total_registered": 4349,
+      "by_party": {
+        "Democratic": 906,
+        "Republican": 2313,
+        "Other": 1130
+      }
+    },
+    {
+      "name": "Catahoula",
+      "fips": "22025",
+      "total_registered": 6057,
+      "by_party": {
+        "Democratic": 2150,
+        "Republican": 2586,
+        "Other": 1321
+      }
+    },
+    {
+      "name": "Claiborne",
+      "fips": "22027",
+      "total_registered": 8353,
+      "by_party": {
+        "Democratic": 3262,
+        "Republican": 3042,
+        "Other": 2049
+      }
+    },
+    {
+      "name": "Concordia",
+      "fips": "22029",
+      "total_registered": 12038,
+      "by_party": {
+        "Democratic": 4978,
+        "Republican": 4346,
+        "Other": 2714
+      }
+    },
+    {
+      "name": "De Soto",
+      "fips": "22031",
+      "total_registered": 19729,
+      "by_party": {
+        "Democratic": 7012,
+        "Republican": 8101,
+        "Other": 4616
+      }
+    },
+    {
+      "name": "East Baton Rouge",
+      "fips": "22033",
+      "total_registered": 288263,
+      "by_party": {
+        "Democratic": 126784,
+        "Republican": 79703,
+        "Other": 81776
+      }
+    },
+    {
+      "name": "East Carroll",
+      "fips": "22035",
+      "total_registered": 4650,
+      "by_party": {
+        "Democratic": 2905,
+        "Republican": 807,
+        "Other": 938
+      }
+    },
+    {
+      "name": "East Feliciana",
+      "fips": "22037",
+      "total_registered": 13503,
+      "by_party": {
+        "Democratic": 5335,
+        "Republican": 5058,
+        "Other": 3110
+      }
+    },
+    {
+      "name": "Evangeline",
+      "fips": "22039",
+      "total_registered": 20697,
+      "by_party": {
+        "Democratic": 8040,
+        "Republican": 8163,
+        "Other": 4494
+      }
+    },
+    {
+      "name": "Franklin",
+      "fips": "22041",
+      "total_registered": 13246,
+      "by_party": {
+        "Democratic": 4443,
+        "Republican": 6014,
+        "Other": 2789
+      }
+    },
+    {
+      "name": "Grant",
+      "fips": "22043",
+      "total_registered": 12935,
+      "by_party": {
+        "Democratic": 2529,
+        "Republican": 6888,
+        "Other": 3518
+      }
+    },
+    {
+      "name": "Iberia",
+      "fips": "22045",
+      "total_registered": 43276,
+      "by_party": {
+        "Democratic": 14759,
+        "Republican": 16576,
+        "Other": 11941
+      }
+    },
+    {
+      "name": "Iberville",
+      "fips": "22047",
+      "total_registered": 20290,
+      "by_party": {
+        "Democratic": 10898,
+        "Republican": 4915,
+        "Other": 4477
+      }
+    },
+    {
+      "name": "Jackson",
+      "fips": "22049",
+      "total_registered": 9671,
+      "by_party": {
+        "Democratic": 2994,
+        "Republican": 4532,
+        "Other": 2145
+      }
+    },
+    {
+      "name": "Jefferson",
+      "fips": "22051",
+      "total_registered": 266949,
+      "by_party": {
+        "Democratic": 94160,
+        "Republican": 85717,
+        "Other": 87072
+      }
+    },
+    {
+      "name": "Jefferson Davis",
+      "fips": "22053",
+      "total_registered": 20743,
+      "by_party": {
+        "Democratic": 5525,
+        "Republican": 9363,
+        "Other": 5855
+      }
+    },
+    {
+      "name": "Lafayette",
+      "fips": "22055",
+      "total_registered": 162087,
+      "by_party": {
+        "Democratic": 45410,
+        "Republican": 67574,
+        "Other": 49103
+      }
+    },
+    {
+      "name": "Lafourche",
+      "fips": "22057",
+      "total_registered": 57848,
+      "by_party": {
+        "Democratic": 14582,
+        "Republican": 26411,
+        "Other": 16855
+      }
+    },
+    {
+      "name": "LaSalle",
+      "fips": "22059",
+      "total_registered": 8637,
+      "by_party": {
+        "Democratic": 1488,
+        "Republican": 5279,
+        "Other": 1870
+      }
+    },
+    {
+      "name": "Lincoln",
+      "fips": "22061",
+      "total_registered": 27339,
+      "by_party": {
+        "Democratic": 9076,
+        "Republican": 10732,
+        "Other": 7531
+      }
+    },
+    {
+      "name": "Livingston",
+      "fips": "22063",
+      "total_registered": 87978,
+      "by_party": {
+        "Democratic": 14813,
+        "Republican": 47671,
+        "Other": 25494
+      }
+    },
+    {
+      "name": "Madison",
+      "fips": "22065",
+      "total_registered": 7203,
+      "by_party": {
+        "Democratic": 3924,
+        "Republican": 1596,
+        "Other": 1683
+      }
+    },
+    {
+      "name": "Morehouse",
+      "fips": "22067",
+      "total_registered": 16716,
+      "by_party": {
+        "Democratic": 7161,
+        "Republican": 5539,
+        "Other": 4016
+      }
+    },
+    {
+      "name": "Natchitoches",
+      "fips": "22069",
+      "total_registered": 23005,
+      "by_party": {
+        "Democratic": 9124,
+        "Republican": 7673,
+        "Other": 6208
+      }
+    },
+    {
+      "name": "Orleans",
+      "fips": "22071",
+      "total_registered": 264785,
+      "by_party": {
+        "Democratic": 162909,
+        "Republican": 25022,
+        "Other": 76854
+      }
+    },
+    {
+      "name": "Ouachita",
+      "fips": "22073",
+      "total_registered": 102205,
+      "by_party": {
+        "Democratic": 34938,
+        "Republican": 40344,
+        "Other": 26923
+      }
+    },
+    {
+      "name": "Plaquemines",
+      "fips": "22075",
+      "total_registered": 14053,
+      "by_party": {
+        "Democratic": 4529,
+        "Republican": 5554,
+        "Other": 3970
+      }
+    },
+    {
+      "name": "Pointe Coupee",
+      "fips": "22077",
+      "total_registered": 14685,
+      "by_party": {
+        "Democratic": 6419,
+        "Republican": 4820,
+        "Other": 3446
+      }
+    },
+    {
+      "name": "Rapides",
+      "fips": "22079",
+      "total_registered": 80671,
+      "by_party": {
+        "Democratic": 25821,
+        "Republican": 32605,
+        "Other": 22245
+      }
+    },
+    {
+      "name": "Red River",
+      "fips": "22081",
+      "total_registered": 5456,
+      "by_party": {
+        "Democratic": 2462,
+        "Republican": 1910,
+        "Other": 1084
+      }
+    },
+    {
+      "name": "Richland",
+      "fips": "22083",
+      "total_registered": 13731,
+      "by_party": {
+        "Democratic": 4595,
+        "Republican": 5794,
+        "Other": 3342
+      }
+    },
+    {
+      "name": "Sabine",
+      "fips": "22085",
+      "total_registered": 13569,
+      "by_party": {
+        "Democratic": 3297,
+        "Republican": 7023,
+        "Other": 3249
+      }
+    },
+    {
+      "name": "St. Bernard",
+      "fips": "22087",
+      "total_registered": 27236,
+      "by_party": {
+        "Democratic": 9768,
+        "Republican": 7747,
+        "Other": 9721
+      }
+    },
+    {
+      "name": "St. Charles",
+      "fips": "22089",
+      "total_registered": 35383,
+      "by_party": {
+        "Democratic": 11104,
+        "Republican": 14226,
+        "Other": 10053
+      }
+    },
+    {
+      "name": "St. Helena",
+      "fips": "22091",
+      "total_registered": 8530,
+      "by_party": {
+        "Democratic": 4708,
+        "Republican": 2200,
+        "Other": 1622
+      }
+    },
+    {
+      "name": "St. James",
+      "fips": "22093",
+      "total_registered": 14862,
+      "by_party": {
+        "Democratic": 8418,
+        "Republican": 3775,
+        "Other": 2669
+      }
+    },
+    {
+      "name": "St. John the Baptist",
+      "fips": "22095",
+      "total_registered": 28490,
+      "by_party": {
+        "Democratic": 16537,
+        "Republican": 4772,
+        "Other": 7181
+      }
+    },
+    {
+      "name": "St. Landry",
+      "fips": "22097",
+      "total_registered": 55129,
+      "by_party": {
+        "Democratic": 24749,
+        "Republican": 17065,
+        "Other": 13315
+      }
+    },
+    {
+      "name": "St. Martin",
+      "fips": "22099",
+      "total_registered": 35284,
+      "by_party": {
+        "Democratic": 12457,
+        "Republican": 13916,
+        "Other": 8911
+      }
+    },
+    {
+      "name": "St. Mary",
+      "fips": "22101",
+      "total_registered": 30402,
+      "by_party": {
+        "Democratic": 10521,
+        "Republican": 10813,
+        "Other": 9068
+      }
+    },
+    {
+      "name": "St. Tammany",
+      "fips": "22103",
+      "total_registered": 194968,
+      "by_party": {
+        "Democratic": 39730,
+        "Republican": 92806,
+        "Other": 62432
+      }
+    },
+    {
+      "name": "Tangipahoa",
+      "fips": "22105",
+      "total_registered": 80327,
+      "by_party": {
+        "Democratic": 24332,
+        "Republican": 32396,
+        "Other": 23599
+      }
+    },
+    {
+      "name": "Tensas",
+      "fips": "22107",
+      "total_registered": 3164,
+      "by_party": {
+        "Democratic": 1771,
+        "Republican": 867,
+        "Other": 526
+      }
+    },
+    {
+      "name": "Terrebonne",
+      "fips": "22109",
+      "total_registered": 59864,
+      "by_party": {
+        "Democratic": 14982,
+        "Republican": 26437,
+        "Other": 18445
+      }
+    },
+    {
+      "name": "Union",
+      "fips": "22111",
+      "total_registered": 15283,
+      "by_party": {
+        "Democratic": 4252,
+        "Republican": 7453,
+        "Other": 3578
+      }
+    },
+    {
+      "name": "Vermilion",
+      "fips": "22113",
+      "total_registered": 38078,
+      "by_party": {
+        "Democratic": 10345,
+        "Republican": 17077,
+        "Other": 10656
+      }
+    },
+    {
+      "name": "Vernon",
+      "fips": "22115",
+      "total_registered": 25519,
+      "by_party": {
+        "Democratic": 5199,
+        "Republican": 12321,
+        "Other": 7999
+      }
+    },
+    {
+      "name": "Washington",
+      "fips": "22117",
+      "total_registered": 28248,
+      "by_party": {
+        "Democratic": 9830,
+        "Republican": 11010,
+        "Other": 7408
+      }
+    },
+    {
+      "name": "Webster",
+      "fips": "22119",
+      "total_registered": 22605,
+      "by_party": {
+        "Democratic": 7484,
+        "Republican": 9427,
+        "Other": 5694
+      }
+    },
+    {
+      "name": "West Baton Rouge",
+      "fips": "22121",
+      "total_registered": 17796,
+      "by_party": {
+        "Democratic": 7725,
+        "Republican": 5482,
+        "Other": 4589
+      }
+    },
+    {
+      "name": "West Carroll",
+      "fips": "22123",
+      "total_registered": 6977,
+      "by_party": {
+        "Democratic": 1561,
+        "Republican": 3708,
+        "Other": 1708
+      }
+    },
+    {
+      "name": "West Feliciana",
+      "fips": "22125",
+      "total_registered": 7844,
+      "by_party": {
+        "Democratic": 2583,
+        "Republican": 3397,
+        "Other": 1864
+      }
+    },
+    {
+      "name": "Winn",
+      "fips": "22127",
+      "total_registered": 8237,
+      "by_party": {
+        "Democratic": 2521,
+        "Republican": 3468,
+        "Other": 2248
+      }
+    }
+  ],
+  "as_of_notes": "Data 'For Registrations From 1/1/1900 To 6/1/2026 AND Status Both'; report Print Date 6/1/2026 3:10:05 AM. Monthly snapshot as of the first of the month.",
+  "data_quality": "high",
+  "notes": "Official Louisiana SOS monthly 'Statewide Report of Registered Voters by Party and Race'. LA reports four affiliation categories: Democrat, Republican, No Party, and Other Parties. The 'Other' field here combines 'No Party' (819175) and 'Other Parties' (24753). All 64 parishes included; parish party sums verified to equal statewide totals exactly."
+}

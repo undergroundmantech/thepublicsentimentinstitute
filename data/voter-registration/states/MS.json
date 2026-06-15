@@ -1,0 +1,510 @@
+{
+  "state": "Mississippi",
+  "state_abbr": "MS",
+  "state_fips": "28",
+  "as_of_date": "2026-05-04",
+  "source_name": "Mississippi Secretary of State - Active Voter Count Reports (May 2026)",
+  "source_url": "https://www.sos.ms.gov/sites/default/files/active-voter-count-reports/2026May%20Voter%20Count%20Red.pdf",
+  "registers_by_party": false,
+  "statewide_total_registered": 1873828,
+  "statewide_by_party": null,
+  "county_unit_label": "county",
+  "county_level_available": true,
+  "counties": [
+    {
+      "name": "Adams",
+      "fips": "28001",
+      "total_registered": 16740,
+      "by_party": null
+    },
+    {
+      "name": "Alcorn",
+      "fips": "28003",
+      "total_registered": 23951,
+      "by_party": null
+    },
+    {
+      "name": "Amite",
+      "fips": "28005",
+      "total_registered": 8811,
+      "by_party": null
+    },
+    {
+      "name": "Attala",
+      "fips": "28007",
+      "total_registered": 10366,
+      "by_party": null
+    },
+    {
+      "name": "Benton",
+      "fips": "28009",
+      "total_registered": 5861,
+      "by_party": null
+    },
+    {
+      "name": "Bolivar",
+      "fips": "28011",
+      "total_registered": 17778,
+      "by_party": null
+    },
+    {
+      "name": "Calhoun",
+      "fips": "28013",
+      "total_registered": 9023,
+      "by_party": null
+    },
+    {
+      "name": "Carroll",
+      "fips": "28015",
+      "total_registered": 7044,
+      "by_party": null
+    },
+    {
+      "name": "Chickasaw",
+      "fips": "28017",
+      "total_registered": 10800,
+      "by_party": null
+    },
+    {
+      "name": "Choctaw",
+      "fips": "28019",
+      "total_registered": 4972,
+      "by_party": null
+    },
+    {
+      "name": "Claiborne",
+      "fips": "28021",
+      "total_registered": 5968,
+      "by_party": null
+    },
+    {
+      "name": "Clarke",
+      "fips": "28023",
+      "total_registered": 10877,
+      "by_party": null
+    },
+    {
+      "name": "Clay",
+      "fips": "28025",
+      "total_registered": 12946,
+      "by_party": null
+    },
+    {
+      "name": "Coahoma",
+      "fips": "28027",
+      "total_registered": 12966,
+      "by_party": null
+    },
+    {
+      "name": "Copiah",
+      "fips": "28029",
+      "total_registered": 17451,
+      "by_party": null
+    },
+    {
+      "name": "Covington",
+      "fips": "28031",
+      "total_registered": 12666,
+      "by_party": null
+    },
+    {
+      "name": "DeSoto",
+      "fips": "28033",
+      "total_registered": 120184,
+      "by_party": null
+    },
+    {
+      "name": "Forrest",
+      "fips": "28035",
+      "total_registered": 43865,
+      "by_party": null
+    },
+    {
+      "name": "Franklin",
+      "fips": "28037",
+      "total_registered": 5299,
+      "by_party": null
+    },
+    {
+      "name": "George",
+      "fips": "28039",
+      "total_registered": 15593,
+      "by_party": null
+    },
+    {
+      "name": "Greene",
+      "fips": "28041",
+      "total_registered": 7388,
+      "by_party": null
+    },
+    {
+      "name": "Grenada",
+      "fips": "28043",
+      "total_registered": 12707,
+      "by_party": null
+    },
+    {
+      "name": "Hancock",
+      "fips": "28045",
+      "total_registered": 37439,
+      "by_party": null
+    },
+    {
+      "name": "Harrison",
+      "fips": "28047",
+      "total_registered": 133846,
+      "by_party": null
+    },
+    {
+      "name": "Hinds",
+      "fips": "28049",
+      "total_registered": 163901,
+      "by_party": null
+    },
+    {
+      "name": "Holmes",
+      "fips": "28051",
+      "total_registered": 12173,
+      "by_party": null
+    },
+    {
+      "name": "Humphreys",
+      "fips": "28053",
+      "total_registered": 6367,
+      "by_party": null
+    },
+    {
+      "name": "Issaquena",
+      "fips": "28055",
+      "total_registered": 772,
+      "by_party": null
+    },
+    {
+      "name": "Itawamba",
+      "fips": "28057",
+      "total_registered": 14031,
+      "by_party": null
+    },
+    {
+      "name": "Jackson",
+      "fips": "28059",
+      "total_registered": 86129,
+      "by_party": null
+    },
+    {
+      "name": "Jasper",
+      "fips": "28061",
+      "total_registered": 10623,
+      "by_party": null
+    },
+    {
+      "name": "Jefferson",
+      "fips": "28063",
+      "total_registered": 5225,
+      "by_party": null
+    },
+    {
+      "name": "Jefferson Davis",
+      "fips": "28065",
+      "total_registered": 7769,
+      "by_party": null
+    },
+    {
+      "name": "Jones",
+      "fips": "28067",
+      "total_registered": 43431,
+      "by_party": null
+    },
+    {
+      "name": "Kemper",
+      "fips": "28069",
+      "total_registered": 6124,
+      "by_party": null
+    },
+    {
+      "name": "Lafayette",
+      "fips": "28071",
+      "total_registered": 32748,
+      "by_party": null
+    },
+    {
+      "name": "Lamar",
+      "fips": "28073",
+      "total_registered": 40052,
+      "by_party": null
+    },
+    {
+      "name": "Lauderdale",
+      "fips": "28075",
+      "total_registered": 38331,
+      "by_party": null
+    },
+    {
+      "name": "Lawrence",
+      "fips": "28077",
+      "total_registered": 7666,
+      "by_party": null
+    },
+    {
+      "name": "Leake",
+      "fips": "28079",
+      "total_registered": 11958,
+      "by_party": null
+    },
+    {
+      "name": "Lee",
+      "fips": "28081",
+      "total_registered": 49393,
+      "by_party": null
+    },
+    {
+      "name": "Leflore",
+      "fips": "28083",
+      "total_registered": 18883,
+      "by_party": null
+    },
+    {
+      "name": "Lincoln",
+      "fips": "28085",
+      "total_registered": 20964,
+      "by_party": null
+    },
+    {
+      "name": "Lowndes",
+      "fips": "28087",
+      "total_registered": 36638,
+      "by_party": null
+    },
+    {
+      "name": "Madison",
+      "fips": "28089",
+      "total_registered": 76535,
+      "by_party": null
+    },
+    {
+      "name": "Marion",
+      "fips": "28091",
+      "total_registered": 15709,
+      "by_party": null
+    },
+    {
+      "name": "Marshall",
+      "fips": "28093",
+      "total_registered": 24067,
+      "by_party": null
+    },
+    {
+      "name": "Monroe",
+      "fips": "28095",
+      "total_registered": 23271,
+      "by_party": null
+    },
+    {
+      "name": "Montgomery",
+      "fips": "28097",
+      "total_registered": 6094,
+      "by_party": null
+    },
+    {
+      "name": "Neshoba",
+      "fips": "28099",
+      "total_registered": 15999,
+      "by_party": null
+    },
+    {
+      "name": "Newton",
+      "fips": "28101",
+      "total_registered": 12579,
+      "by_party": null
+    },
+    {
+      "name": "Noxubee",
+      "fips": "28103",
+      "total_registered": 7049,
+      "by_party": null
+    },
+    {
+      "name": "Oktibbeha",
+      "fips": "28105",
+      "total_registered": 25962,
+      "by_party": null
+    },
+    {
+      "name": "Panola",
+      "fips": "28107",
+      "total_registered": 22393,
+      "by_party": null
+    },
+    {
+      "name": "Pearl River",
+      "fips": "28109",
+      "total_registered": 35888,
+      "by_party": null
+    },
+    {
+      "name": "Perry",
+      "fips": "28111",
+      "total_registered": 7948,
+      "by_party": null
+    },
+    {
+      "name": "Pike",
+      "fips": "28113",
+      "total_registered": 24134,
+      "by_party": null
+    },
+    {
+      "name": "Pontotoc",
+      "fips": "28115",
+      "total_registered": 20310,
+      "by_party": null
+    },
+    {
+      "name": "Prentiss",
+      "fips": "28117",
+      "total_registered": 13839,
+      "by_party": null
+    },
+    {
+      "name": "Quitman",
+      "fips": "28119",
+      "total_registered": 4441,
+      "by_party": null
+    },
+    {
+      "name": "Rankin",
+      "fips": "28121",
+      "total_registered": 98778,
+      "by_party": null
+    },
+    {
+      "name": "Scott",
+      "fips": "28123",
+      "total_registered": 13480,
+      "by_party": null
+    },
+    {
+      "name": "Sharkey",
+      "fips": "28125",
+      "total_registered": 2929,
+      "by_party": null
+    },
+    {
+      "name": "Simpson",
+      "fips": "28127",
+      "total_registered": 16134,
+      "by_party": null
+    },
+    {
+      "name": "Smith",
+      "fips": "28129",
+      "total_registered": 11035,
+      "by_party": null
+    },
+    {
+      "name": "Stone",
+      "fips": "28131",
+      "total_registered": 10891,
+      "by_party": null
+    },
+    {
+      "name": "Sunflower",
+      "fips": "28133",
+      "total_registered": 10368,
+      "by_party": null
+    },
+    {
+      "name": "Tallahatchie",
+      "fips": "28135",
+      "total_registered": 9503,
+      "by_party": null
+    },
+    {
+      "name": "Tate",
+      "fips": "28137",
+      "total_registered": 18542,
+      "by_party": null
+    },
+    {
+      "name": "Tippah",
+      "fips": "28139",
+      "total_registered": 13385,
+      "by_party": null
+    },
+    {
+      "name": "Tishomingo",
+      "fips": "28141",
+      "total_registered": 12402,
+      "by_party": null
+    },
+    {
+      "name": "Tunica",
+      "fips": "28143",
+      "total_registered": 5487,
+      "by_party": null
+    },
+    {
+      "name": "Union",
+      "fips": "28145",
+      "total_registered": 16917,
+      "by_party": null
+    },
+    {
+      "name": "Walthall",
+      "fips": "28147",
+      "total_registered": 9767,
+      "by_party": null
+    },
+    {
+      "name": "Warren",
+      "fips": "28149",
+      "total_registered": 23746,
+      "by_party": null
+    },
+    {
+      "name": "Washington",
+      "fips": "28151",
+      "total_registered": 24054,
+      "by_party": null
+    },
+    {
+      "name": "Wayne",
+      "fips": "28153",
+      "total_registered": 12759,
+      "by_party": null
+    },
+    {
+      "name": "Webster",
+      "fips": "28155",
+      "total_registered": 6339,
+      "by_party": null
+    },
+    {
+      "name": "Wilkinson",
+      "fips": "28157",
+      "total_registered": 5014,
+      "by_party": null
+    },
+    {
+      "name": "Winston",
+      "fips": "28159",
+      "total_registered": 11656,
+      "by_party": null
+    },
+    {
+      "name": "Yalobusha",
+      "fips": "28161",
+      "total_registered": 7986,
+      "by_party": null
+    },
+    {
+      "name": "Yazoo",
+      "fips": "28163",
+      "total_registered": 18719,
+      "by_party": null
+    }
+  ],
+  "as_of_notes": "Active voter counts as reported in the Statewide Election Management System (SEMS) maintained by county election officials. The MS SOS Elections Division pulls the ACTIVE voter count on the first Monday of every month; for the May 2026 report the first Monday was 2026-05-04. The report does not print an explicit 'as of' date on the document itself.",
+  "data_quality": "high",
+  "notes": "Source: Mississippi Secretary of State 'Active Voter Count Reports' page (https://www.sos.ms.gov/elections-voting/active-voter-count-reports), May 2026 PDF report. Figures are ACTIVE registered voters per SEMS (Mississippi does not report inactive voters or registration by party in this report; MS does not register voters by party). Statewide total (1,873,828) is the sum of all 82 county active voter counts; the PDF itself lists only per-county figures (county, CVAP estimate, active voters, percentage) and does not print a statewide total or a date on the document. County FIPS codes added from standard Census codes. 'Jefferson Davis' is listed as 'Jeff Davis' in the source."
+}

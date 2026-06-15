@@ -1,0 +1,42 @@
+{
+  "state": "Hawaii",
+  "state_abbr": "HI",
+  "state_fips": "15",
+  "as_of_date": "2024-11-05",
+  "source_name": "Hawaii Office of Elections — Registration and Turnout Statistics (2024 General Election)",
+  "source_url": "https://elections.hawaii.gov/resources/registration-voter-turnout-statistics/",
+  "registers_by_party": false,
+  "statewide_total_registered": 860868,
+  "statewide_by_party": null,
+  "county_unit_label": "county",
+  "county_level_available": true,
+  "counties": [
+    {
+      "name": "Honolulu",
+      "fips": "15003",
+      "total_registered": 562606,
+      "by_party": null
+    },
+    {
+      "name": "Hawaii",
+      "fips": "15001",
+      "total_registered": 135077,
+      "by_party": null
+    },
+    {
+      "name": "Maui",
+      "fips": "15009",
+      "total_registered": 115009,
+      "by_party": null
+    },
+    {
+      "name": "Kauai",
+      "fips": "15007",
+      "total_registered": 48176,
+      "by_party": null
+    }
+  ],
+  "as_of_notes": "Figures reflect registered voters for the 2024 General Election (election date November 5, 2024), as published on the Hawaii Office of Elections 'Registration and Turnout Statistics' page (page last updated December 10, 2024). This is the most recent official statewide registration count by county.",
+  "data_quality": "high",
+  "notes": "Hawaii does not register voters by political party, so registers_by_party=false and all by_party fields are null. Hawaii uses 4 counties for elections: Honolulu (City & County), Hawaii, Maui, and Kauai. Kalawao is administered within Maui County and is included in the Maui total. County figures sum exactly to the statewide total (562,606 + 135,077 + 115,009 + 48,176 = 860,868). Source: Hawaii Office of Elections, https://elections.hawaii.gov/resources/registration-voter-turnout-statistics/"
+}

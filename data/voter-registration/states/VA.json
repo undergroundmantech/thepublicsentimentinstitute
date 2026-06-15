@@ -1,0 +1,816 @@
+{
+  "state": "Virginia",
+  "state_abbr": "VA",
+  "state_fips": "51",
+  "as_of_date": "2026-06-01",
+  "source_name": "Virginia Department of Elections \u2014 Monthly Registrant Count By Locality (Active/Inactive/Total Registered Voters by Locality)",
+  "source_url": "https://www.elections.virginia.gov/media/registration-statistics/2026/05/csv/Daily_Registrant_Count_By_Locality_2026_06_01_054141.csv",
+  "registers_by_party": false,
+  "statewide_total_registered": 6419107,
+  "statewide_by_party": null,
+  "county_unit_label": "locality",
+  "county_level_available": true,
+  "counties": [
+    {
+      "name": "Accomack County",
+      "fips": "51001",
+      "total_registered": 26117,
+      "by_party": null
+    },
+    {
+      "name": "Albemarle County",
+      "fips": "51003",
+      "total_registered": 90401,
+      "by_party": null
+    },
+    {
+      "name": "Alleghany County",
+      "fips": "51005",
+      "total_registered": 11280,
+      "by_party": null
+    },
+    {
+      "name": "Amelia County",
+      "fips": "51007",
+      "total_registered": 10672,
+      "by_party": null
+    },
+    {
+      "name": "Amherst County",
+      "fips": "51009",
+      "total_registered": 23940,
+      "by_party": null
+    },
+    {
+      "name": "Appomattox County",
+      "fips": "51011",
+      "total_registered": 13028,
+      "by_party": null
+    },
+    {
+      "name": "Arlington County",
+      "fips": "51013",
+      "total_registered": 184359,
+      "by_party": null
+    },
+    {
+      "name": "Augusta County",
+      "fips": "51015",
+      "total_registered": 58500,
+      "by_party": null
+    },
+    {
+      "name": "Bath County",
+      "fips": "51017",
+      "total_registered": 3429,
+      "by_party": null
+    },
+    {
+      "name": "Bedford County",
+      "fips": "51019",
+      "total_registered": 66312,
+      "by_party": null
+    },
+    {
+      "name": "Bland County",
+      "fips": "51021",
+      "total_registered": 4620,
+      "by_party": null
+    },
+    {
+      "name": "Botetourt County",
+      "fips": "51023",
+      "total_registered": 27665,
+      "by_party": null
+    },
+    {
+      "name": "Brunswick County",
+      "fips": "51025",
+      "total_registered": 11380,
+      "by_party": null
+    },
+    {
+      "name": "Buchanan County",
+      "fips": "51027",
+      "total_registered": 14349,
+      "by_party": null
+    },
+    {
+      "name": "Buckingham County",
+      "fips": "51029",
+      "total_registered": 11597,
+      "by_party": null
+    },
+    {
+      "name": "Campbell County",
+      "fips": "51031",
+      "total_registered": 43254,
+      "by_party": null
+    },
+    {
+      "name": "Caroline County",
+      "fips": "51033",
+      "total_registered": 25480,
+      "by_party": null
+    },
+    {
+      "name": "Carroll County",
+      "fips": "51035",
+      "total_registered": 22416,
+      "by_party": null
+    },
+    {
+      "name": "Charles City County",
+      "fips": "51036",
+      "total_registered": 5913,
+      "by_party": null
+    },
+    {
+      "name": "Charlotte County",
+      "fips": "51037",
+      "total_registered": 8592,
+      "by_party": null
+    },
+    {
+      "name": "Chesterfield County",
+      "fips": "51041",
+      "total_registered": 287234,
+      "by_party": null
+    },
+    {
+      "name": "Clarke County",
+      "fips": "51043",
+      "total_registered": 12792,
+      "by_party": null
+    },
+    {
+      "name": "Craig County",
+      "fips": "51045",
+      "total_registered": 3991,
+      "by_party": null
+    },
+    {
+      "name": "Culpeper County",
+      "fips": "51047",
+      "total_registered": 39889,
+      "by_party": null
+    },
+    {
+      "name": "Cumberland County",
+      "fips": "51049",
+      "total_registered": 7909,
+      "by_party": null
+    },
+    {
+      "name": "Dickenson County",
+      "fips": "51051",
+      "total_registered": 9950,
+      "by_party": null
+    },
+    {
+      "name": "Dinwiddie County",
+      "fips": "51053",
+      "total_registered": 22044,
+      "by_party": null
+    },
+    {
+      "name": "Essex County",
+      "fips": "51057",
+      "total_registered": 8614,
+      "by_party": null
+    },
+    {
+      "name": "Fairfax County",
+      "fips": "51059",
+      "total_registered": 815692,
+      "by_party": null
+    },
+    {
+      "name": "Fauquier County",
+      "fips": "51061",
+      "total_registered": 58361,
+      "by_party": null
+    },
+    {
+      "name": "Floyd County",
+      "fips": "51063",
+      "total_registered": 12260,
+      "by_party": null
+    },
+    {
+      "name": "Fluvanna County",
+      "fips": "51065",
+      "total_registered": 22166,
+      "by_party": null
+    },
+    {
+      "name": "Franklin County",
+      "fips": "51067",
+      "total_registered": 41672,
+      "by_party": null
+    },
+    {
+      "name": "Frederick County",
+      "fips": "51069",
+      "total_registered": 74351,
+      "by_party": null
+    },
+    {
+      "name": "Giles County",
+      "fips": "51071",
+      "total_registered": 12544,
+      "by_party": null
+    },
+    {
+      "name": "Gloucester County",
+      "fips": "51073",
+      "total_registered": 31483,
+      "by_party": null
+    },
+    {
+      "name": "Goochland County",
+      "fips": "51075",
+      "total_registered": 24725,
+      "by_party": null
+    },
+    {
+      "name": "Grayson County",
+      "fips": "51077",
+      "total_registered": 11094,
+      "by_party": null
+    },
+    {
+      "name": "Greene County",
+      "fips": "51079",
+      "total_registered": 16461,
+      "by_party": null
+    },
+    {
+      "name": "Greensville County",
+      "fips": "51081",
+      "total_registered": 6510,
+      "by_party": null
+    },
+    {
+      "name": "Halifax County",
+      "fips": "51083",
+      "total_registered": 25740,
+      "by_party": null
+    },
+    {
+      "name": "Hanover County",
+      "fips": "51085",
+      "total_registered": 90324,
+      "by_party": null
+    },
+    {
+      "name": "Henrico County",
+      "fips": "51087",
+      "total_registered": 252996,
+      "by_party": null
+    },
+    {
+      "name": "Henry County",
+      "fips": "51089",
+      "total_registered": 37291,
+      "by_party": null
+    },
+    {
+      "name": "Highland County",
+      "fips": "51091",
+      "total_registered": 1851,
+      "by_party": null
+    },
+    {
+      "name": "Isle of Wight County",
+      "fips": "51093",
+      "total_registered": 33255,
+      "by_party": null
+    },
+    {
+      "name": "James City County",
+      "fips": "51095",
+      "total_registered": 66575,
+      "by_party": null
+    },
+    {
+      "name": "King & Queen County",
+      "fips": "51097",
+      "total_registered": 5627,
+      "by_party": null
+    },
+    {
+      "name": "King George County",
+      "fips": "51099",
+      "total_registered": 21694,
+      "by_party": null
+    },
+    {
+      "name": "King William County",
+      "fips": "51101",
+      "total_registered": 15276,
+      "by_party": null
+    },
+    {
+      "name": "Lancaster County",
+      "fips": "51103",
+      "total_registered": 9633,
+      "by_party": null
+    },
+    {
+      "name": "Lee County",
+      "fips": "51105",
+      "total_registered": 15858,
+      "by_party": null
+    },
+    {
+      "name": "Loudoun County",
+      "fips": "51107",
+      "total_registered": 311346,
+      "by_party": null
+    },
+    {
+      "name": "Louisa County",
+      "fips": "51109",
+      "total_registered": 32645,
+      "by_party": null
+    },
+    {
+      "name": "Lunenburg County",
+      "fips": "51111",
+      "total_registered": 8277,
+      "by_party": null
+    },
+    {
+      "name": "Madison County",
+      "fips": "51113",
+      "total_registered": 10834,
+      "by_party": null
+    },
+    {
+      "name": "Mathews County",
+      "fips": "51115",
+      "total_registered": 7551,
+      "by_party": null
+    },
+    {
+      "name": "Mecklenburg County",
+      "fips": "51117",
+      "total_registered": 23735,
+      "by_party": null
+    },
+    {
+      "name": "Middlesex County",
+      "fips": "51119",
+      "total_registered": 9060,
+      "by_party": null
+    },
+    {
+      "name": "Montgomery County",
+      "fips": "51121",
+      "total_registered": 68227,
+      "by_party": null
+    },
+    {
+      "name": "Nelson County",
+      "fips": "51125",
+      "total_registered": 12082,
+      "by_party": null
+    },
+    {
+      "name": "New Kent County",
+      "fips": "51127",
+      "total_registered": 21662,
+      "by_party": null
+    },
+    {
+      "name": "Northampton County",
+      "fips": "51131",
+      "total_registered": 10027,
+      "by_party": null
+    },
+    {
+      "name": "Northumberland County",
+      "fips": "51133",
+      "total_registered": 10802,
+      "by_party": null
+    },
+    {
+      "name": "Nottoway County",
+      "fips": "51135",
+      "total_registered": 10055,
+      "by_party": null
+    },
+    {
+      "name": "Orange County",
+      "fips": "51137",
+      "total_registered": 30757,
+      "by_party": null
+    },
+    {
+      "name": "Page County",
+      "fips": "51139",
+      "total_registered": 18129,
+      "by_party": null
+    },
+    {
+      "name": "Patrick County",
+      "fips": "51141",
+      "total_registered": 13468,
+      "by_party": null
+    },
+    {
+      "name": "Pittsylvania County",
+      "fips": "51143",
+      "total_registered": 46357,
+      "by_party": null
+    },
+    {
+      "name": "Powhatan County",
+      "fips": "51145",
+      "total_registered": 25526,
+      "by_party": null
+    },
+    {
+      "name": "Prince Edward County",
+      "fips": "51147",
+      "total_registered": 14241,
+      "by_party": null
+    },
+    {
+      "name": "Prince George County",
+      "fips": "51149",
+      "total_registered": 26021,
+      "by_party": null
+    },
+    {
+      "name": "Prince William County",
+      "fips": "51153",
+      "total_registered": 333460,
+      "by_party": null
+    },
+    {
+      "name": "Pulaski County",
+      "fips": "51155",
+      "total_registered": 24507,
+      "by_party": null
+    },
+    {
+      "name": "Rappahannock County",
+      "fips": "51157",
+      "total_registered": 6460,
+      "by_party": null
+    },
+    {
+      "name": "Richmond County",
+      "fips": "51159",
+      "total_registered": 5823,
+      "by_party": null
+    },
+    {
+      "name": "Roanoke County",
+      "fips": "51161",
+      "total_registered": 75106,
+      "by_party": null
+    },
+    {
+      "name": "Rockbridge County",
+      "fips": "51163",
+      "total_registered": 17290,
+      "by_party": null
+    },
+    {
+      "name": "Rockingham County",
+      "fips": "51165",
+      "total_registered": 61287,
+      "by_party": null
+    },
+    {
+      "name": "Russell County",
+      "fips": "51167",
+      "total_registered": 19321,
+      "by_party": null
+    },
+    {
+      "name": "Scott County",
+      "fips": "51169",
+      "total_registered": 16174,
+      "by_party": null
+    },
+    {
+      "name": "Shenandoah County",
+      "fips": "51171",
+      "total_registered": 34074,
+      "by_party": null
+    },
+    {
+      "name": "Smyth County",
+      "fips": "51173",
+      "total_registered": 21033,
+      "by_party": null
+    },
+    {
+      "name": "Southampton County",
+      "fips": "51175",
+      "total_registered": 13515,
+      "by_party": null
+    },
+    {
+      "name": "Spotsylvania County",
+      "fips": "51177",
+      "total_registered": 114044,
+      "by_party": null
+    },
+    {
+      "name": "Stafford County",
+      "fips": "51179",
+      "total_registered": 119400,
+      "by_party": null
+    },
+    {
+      "name": "Surry County",
+      "fips": "51181",
+      "total_registered": 5807,
+      "by_party": null
+    },
+    {
+      "name": "Sussex County",
+      "fips": "51183",
+      "total_registered": 7301,
+      "by_party": null
+    },
+    {
+      "name": "Tazewell County",
+      "fips": "51185",
+      "total_registered": 28217,
+      "by_party": null
+    },
+    {
+      "name": "Warren County",
+      "fips": "51187",
+      "total_registered": 32206,
+      "by_party": null
+    },
+    {
+      "name": "Washington County",
+      "fips": "51191",
+      "total_registered": 40997,
+      "by_party": null
+    },
+    {
+      "name": "Westmoreland County",
+      "fips": "51193",
+      "total_registered": 15439,
+      "by_party": null
+    },
+    {
+      "name": "Wise County",
+      "fips": "51195",
+      "total_registered": 25512,
+      "by_party": null
+    },
+    {
+      "name": "Wythe County",
+      "fips": "51197",
+      "total_registered": 21790,
+      "by_party": null
+    },
+    {
+      "name": "York County",
+      "fips": "51199",
+      "total_registered": 54007,
+      "by_party": null
+    },
+    {
+      "name": "Alexandria City",
+      "fips": "51510",
+      "total_registered": 116859,
+      "by_party": null
+    },
+    {
+      "name": "Bristol City",
+      "fips": "51520",
+      "total_registered": 12080,
+      "by_party": null
+    },
+    {
+      "name": "Buena Vista City",
+      "fips": "51530",
+      "total_registered": 4572,
+      "by_party": null
+    },
+    {
+      "name": "Charlottesville City",
+      "fips": "51540",
+      "total_registered": 36186,
+      "by_party": null
+    },
+    {
+      "name": "Chesapeake City",
+      "fips": "51550",
+      "total_registered": 187059,
+      "by_party": null
+    },
+    {
+      "name": "Colonial Heights City",
+      "fips": "51570",
+      "total_registered": 13284,
+      "by_party": null
+    },
+    {
+      "name": "Covington City",
+      "fips": "51580",
+      "total_registered": 3888,
+      "by_party": null
+    },
+    {
+      "name": "Danville City",
+      "fips": "51590",
+      "total_registered": 29044,
+      "by_party": null
+    },
+    {
+      "name": "Emporia City",
+      "fips": "51595",
+      "total_registered": 4058,
+      "by_party": null
+    },
+    {
+      "name": "Fairfax City",
+      "fips": "51600",
+      "total_registered": 18915,
+      "by_party": null
+    },
+    {
+      "name": "Falls Church City",
+      "fips": "51610",
+      "total_registered": 12271,
+      "by_party": null
+    },
+    {
+      "name": "Franklin City",
+      "fips": "51620",
+      "total_registered": 6213,
+      "by_party": null
+    },
+    {
+      "name": "Fredericksburg City",
+      "fips": "51630",
+      "total_registered": 20926,
+      "by_party": null
+    },
+    {
+      "name": "Galax City",
+      "fips": "51640",
+      "total_registered": 4219,
+      "by_party": null
+    },
+    {
+      "name": "Hampton City",
+      "fips": "51650",
+      "total_registered": 103247,
+      "by_party": null
+    },
+    {
+      "name": "Harrisonburg City",
+      "fips": "51660",
+      "total_registered": 27686,
+      "by_party": null
+    },
+    {
+      "name": "Hopewell City",
+      "fips": "51670",
+      "total_registered": 16429,
+      "by_party": null
+    },
+    {
+      "name": "Lexington City",
+      "fips": "51678",
+      "total_registered": 4289,
+      "by_party": null
+    },
+    {
+      "name": "Lynchburg City",
+      "fips": "51680",
+      "total_registered": 59863,
+      "by_party": null
+    },
+    {
+      "name": "Manassas City",
+      "fips": "51683",
+      "total_registered": 24664,
+      "by_party": null
+    },
+    {
+      "name": "Manassas Park City",
+      "fips": "51685",
+      "total_registered": 9890,
+      "by_party": null
+    },
+    {
+      "name": "Martinsville City",
+      "fips": "51690",
+      "total_registered": 9145,
+      "by_party": null
+    },
+    {
+      "name": "Newport News City",
+      "fips": "51700",
+      "total_registered": 126917,
+      "by_party": null
+    },
+    {
+      "name": "Norfolk City",
+      "fips": "51710",
+      "total_registered": 147542,
+      "by_party": null
+    },
+    {
+      "name": "Norton City",
+      "fips": "51720",
+      "total_registered": 2616,
+      "by_party": null
+    },
+    {
+      "name": "Petersburg City",
+      "fips": "51730",
+      "total_registered": 24851,
+      "by_party": null
+    },
+    {
+      "name": "Poquoson City",
+      "fips": "51735",
+      "total_registered": 10362,
+      "by_party": null
+    },
+    {
+      "name": "Portsmouth City",
+      "fips": "51740",
+      "total_registered": 70893,
+      "by_party": null
+    },
+    {
+      "name": "Radford City",
+      "fips": "51750",
+      "total_registered": 9840,
+      "by_party": null
+    },
+    {
+      "name": "Richmond City",
+      "fips": "51760",
+      "total_registered": 166227,
+      "by_party": null
+    },
+    {
+      "name": "Roanoke City",
+      "fips": "51770",
+      "total_registered": 67874,
+      "by_party": null
+    },
+    {
+      "name": "Salem City",
+      "fips": "51775",
+      "total_registered": 18113,
+      "by_party": null
+    },
+    {
+      "name": "Staunton City",
+      "fips": "51790",
+      "total_registered": 19448,
+      "by_party": null
+    },
+    {
+      "name": "Suffolk City",
+      "fips": "51800",
+      "total_registered": 78174,
+      "by_party": null
+    },
+    {
+      "name": "Virginia Beach City",
+      "fips": "51810",
+      "total_registered": 340367,
+      "by_party": null
+    },
+    {
+      "name": "Waynesboro City",
+      "fips": "51820",
+      "total_registered": 16909,
+      "by_party": null
+    },
+    {
+      "name": "Williamsburg City",
+      "fips": "51830",
+      "total_registered": 12309,
+      "by_party": null
+    },
+    {
+      "name": "Winchester City",
+      "fips": "51840",
+      "total_registered": 19140,
+      "by_party": null
+    }
+  ],
+  "as_of_notes": "Report 'as of' 6/1/2026 (May 2026 monthly statistics), the latest available. File generated 2026-06-01 by the Virginia Department of Elections.",
+  "data_quality": "complete",
+  "notes": "total_registered uses TOTAL (All) registered voters per locality = active + inactive + overseas/military as reported in the 'All Voters' column; statewide total 6,419,107 (active 5,995,313; inactive 423,794). Sum of all 133 locality totals exactly equals the statewide total (verified). Virginia does not register voters by party, so all by_party fields are null. Virginia's 133 localities = 95 counties + 38 independent cities; independent cities have distinct FIPS from like-named counties (e.g., Richmond City 51760 vs Richmond County 51159; Fairfax City 51600 vs Fairfax County 51059; Franklin City 51620 vs Franklin County 51067; Roanoke City 51770 vs Roanoke County 51161). Bedford reverted to a county (no Bedford City). FIPS 51515 (Bedford City) and 51780 (South Boston) are not present as they no longer exist as independent cities."
+}

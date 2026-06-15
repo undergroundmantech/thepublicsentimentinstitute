@@ -1,0 +1,372 @@
+{
+  "state": "Utah",
+  "state_abbr": "UT",
+  "state_fips": "49",
+  "as_of_date": "2026-06-08",
+  "source_name": "Utah Lieutenant Governor's Office / Elections \u2014 Active Voters by County and Party",
+  "source_url": "https://vote.utah.gov/wp-content/uploads/2026/06/06.08.2026-Active-Voters-by-County-and-Party.pdf",
+  "registers_by_party": true,
+  "statewide_total_registered": 1775519,
+  "statewide_by_party": {
+    "Republican": 922547,
+    "Democratic": 248070,
+    "Unaffiliated": 500300,
+    "Libertarian": 18526,
+    "Other": 86076
+  },
+  "county_unit_label": "county",
+  "county_level_available": true,
+  "counties": [
+    {
+      "name": "Beaver",
+      "fips": "49001",
+      "total_registered": 3833,
+      "by_party": {
+        "Republican": 2858,
+        "Democratic": 173,
+        "Unaffiliated": 611,
+        "Libertarian": 25,
+        "Other": 166
+      }
+    },
+    {
+      "name": "Box Elder",
+      "fips": "49003",
+      "total_registered": 34012,
+      "by_party": {
+        "Republican": 22077,
+        "Democratic": 1681,
+        "Unaffiliated": 8535,
+        "Libertarian": 303,
+        "Other": 1416
+      }
+    },
+    {
+      "name": "Cache",
+      "fips": "49005",
+      "total_registered": 70826,
+      "by_party": {
+        "Republican": 40842,
+        "Democratic": 6693,
+        "Unaffiliated": 20171,
+        "Libertarian": 707,
+        "Other": 2413
+      }
+    },
+    {
+      "name": "Carbon",
+      "fips": "49007",
+      "total_registered": 10974,
+      "by_party": {
+        "Republican": 5867,
+        "Democratic": 1481,
+        "Unaffiliated": 2950,
+        "Libertarian": 86,
+        "Other": 590
+      }
+    },
+    {
+      "name": "Daggett",
+      "fips": "49009",
+      "total_registered": 675,
+      "by_party": {
+        "Republican": 493,
+        "Democratic": 54,
+        "Unaffiliated": 88,
+        "Libertarian": 4,
+        "Other": 36
+      }
+    },
+    {
+      "name": "Davis",
+      "fips": "49011",
+      "total_registered": 201440,
+      "by_party": {
+        "Republican": 110475,
+        "Democratic": 21124,
+        "Unaffiliated": 58866,
+        "Libertarian": 2077,
+        "Other": 8898
+      }
+    },
+    {
+      "name": "Duchesne",
+      "fips": "49013",
+      "total_registered": 10637,
+      "by_party": {
+        "Republican": 7971,
+        "Democratic": 487,
+        "Unaffiliated": 1659,
+        "Libertarian": 86,
+        "Other": 434
+      }
+    },
+    {
+      "name": "Emery",
+      "fips": "49015",
+      "total_registered": 5823,
+      "by_party": {
+        "Republican": 4062,
+        "Democratic": 234,
+        "Unaffiliated": 1288,
+        "Libertarian": 27,
+        "Other": 212
+      }
+    },
+    {
+      "name": "Garfield",
+      "fips": "49017",
+      "total_registered": 3280,
+      "by_party": {
+        "Republican": 2416,
+        "Democratic": 200,
+        "Unaffiliated": 526,
+        "Libertarian": 15,
+        "Other": 123
+      }
+    },
+    {
+      "name": "Grand",
+      "fips": "49019",
+      "total_registered": 5841,
+      "by_party": {
+        "Republican": 2153,
+        "Democratic": 1237,
+        "Unaffiliated": 2157,
+        "Libertarian": 49,
+        "Other": 245
+      }
+    },
+    {
+      "name": "Iron",
+      "fips": "49021",
+      "total_registered": 33074,
+      "by_party": {
+        "Republican": 21637,
+        "Democratic": 2283,
+        "Unaffiliated": 6939,
+        "Libertarian": 405,
+        "Other": 1810
+      }
+    },
+    {
+      "name": "Juab",
+      "fips": "49023",
+      "total_registered": 7645,
+      "by_party": {
+        "Republican": 5454,
+        "Democratic": 287,
+        "Unaffiliated": 1597,
+        "Libertarian": 50,
+        "Other": 257
+      }
+    },
+    {
+      "name": "Kane",
+      "fips": "49025",
+      "total_registered": 5193,
+      "by_party": {
+        "Republican": 3473,
+        "Democratic": 485,
+        "Unaffiliated": 922,
+        "Libertarian": 43,
+        "Other": 270
+      }
+    },
+    {
+      "name": "Millard",
+      "fips": "49027",
+      "total_registered": 7565,
+      "by_party": {
+        "Republican": 5680,
+        "Democratic": 269,
+        "Unaffiliated": 1346,
+        "Libertarian": 44,
+        "Other": 226
+      }
+    },
+    {
+      "name": "Morgan",
+      "fips": "49029",
+      "total_registered": 8483,
+      "by_party": {
+        "Republican": 5845,
+        "Democratic": 385,
+        "Unaffiliated": 1875,
+        "Libertarian": 69,
+        "Other": 309
+      }
+    },
+    {
+      "name": "Piute",
+      "fips": "49031",
+      "total_registered": 1103,
+      "by_party": {
+        "Republican": 901,
+        "Democratic": 32,
+        "Unaffiliated": 139,
+        "Libertarian": 3,
+        "Other": 28
+      }
+    },
+    {
+      "name": "Rich",
+      "fips": "49033",
+      "total_registered": 1583,
+      "by_party": {
+        "Republican": 1245,
+        "Democratic": 65,
+        "Unaffiliated": 233,
+        "Libertarian": 9,
+        "Other": 31
+      }
+    },
+    {
+      "name": "Salt Lake",
+      "fips": "49035",
+      "total_registered": 595261,
+      "by_party": {
+        "Republican": 237693,
+        "Democratic": 134569,
+        "Unaffiliated": 187655,
+        "Libertarian": 5933,
+        "Other": 29411
+      }
+    },
+    {
+      "name": "San Juan",
+      "fips": "49037",
+      "total_registered": 7097,
+      "by_party": {
+        "Republican": 3240,
+        "Democratic": 1737,
+        "Unaffiliated": 1867,
+        "Libertarian": 31,
+        "Other": 222
+      }
+    },
+    {
+      "name": "Sanpete",
+      "fips": "49039",
+      "total_registered": 15673,
+      "by_party": {
+        "Republican": 10840,
+        "Democratic": 679,
+        "Unaffiliated": 3309,
+        "Libertarian": 112,
+        "Other": 733
+      }
+    },
+    {
+      "name": "Sevier",
+      "fips": "49041",
+      "total_registered": 12566,
+      "by_party": {
+        "Republican": 9261,
+        "Democratic": 419,
+        "Unaffiliated": 2355,
+        "Libertarian": 77,
+        "Other": 454
+      }
+    },
+    {
+      "name": "Summit",
+      "fips": "49043",
+      "total_registered": 29491,
+      "by_party": {
+        "Republican": 11113,
+        "Democratic": 7215,
+        "Unaffiliated": 9196,
+        "Libertarian": 280,
+        "Other": 1687
+      }
+    },
+    {
+      "name": "Tooele",
+      "fips": "49045",
+      "total_registered": 41821,
+      "by_party": {
+        "Republican": 21229,
+        "Democratic": 4103,
+        "Unaffiliated": 13638,
+        "Libertarian": 458,
+        "Other": 2393
+      }
+    },
+    {
+      "name": "Uintah",
+      "fips": "49047",
+      "total_registered": 18212,
+      "by_party": {
+        "Republican": 13275,
+        "Democratic": 861,
+        "Unaffiliated": 3112,
+        "Libertarian": 161,
+        "Other": 803
+      }
+    },
+    {
+      "name": "Utah",
+      "fips": "49049",
+      "total_registered": 371306,
+      "by_party": {
+        "Republican": 220798,
+        "Democratic": 29811,
+        "Unaffiliated": 98461,
+        "Libertarian": 4480,
+        "Other": 17756
+      }
+    },
+    {
+      "name": "Wasatch",
+      "fips": "49051",
+      "total_registered": 22445,
+      "by_party": {
+        "Republican": 12242,
+        "Democratic": 2787,
+        "Unaffiliated": 5831,
+        "Libertarian": 256,
+        "Other": 1329
+      }
+    },
+    {
+      "name": "Washington",
+      "fips": "49053",
+      "total_registered": 113176,
+      "by_party": {
+        "Republican": 72058,
+        "Democratic": 9477,
+        "Unaffiliated": 23716,
+        "Libertarian": 1267,
+        "Other": 6658
+      }
+    },
+    {
+      "name": "Wayne",
+      "fips": "49055",
+      "total_registered": 1832,
+      "by_party": {
+        "Republican": 1306,
+        "Democratic": 135,
+        "Unaffiliated": 313,
+        "Libertarian": 7,
+        "Other": 71
+      }
+    },
+    {
+      "name": "Weber",
+      "fips": "49057",
+      "total_registered": 134652,
+      "by_party": {
+        "Republican": 66043,
+        "Democratic": 19107,
+        "Unaffiliated": 40945,
+        "Libertarian": 1462,
+        "Other": 7095
+      }
+    }
+  ],
+  "as_of_notes": "Report dated 06/08/2026 ('Voters by County and Party'), published on Utah's official voter information site (vote.utah.gov, Current Voter Registration Statistics page, last updated June 8, 2026). County-level figures are ACTIVE registered voters only.",
+  "data_quality": "high",
+  "notes": "County-level breakdown is from the official 'Active Voters by County and Party' PDF (06/08/2026) and reflects ACTIVE voters only; party counts sum exactly to each county total and to the statewide active total of 1,775,519 (verified). Original PDF parties: Republican, Democratic, Unaffiliated, Libertarian, Independent American, Constitution, Green, Forward. 'Other' here aggregates Independent American (76,143), Constitution (6,636), Green (1,054), and Forward (2,243). NOTE: The vote.utah.gov statewide summary page reports a larger total of 2,083,525 because it includes INACTIVE voters in addition to active (e.g., Republican 1,033,712; Democratic 295,737; Unaffiliated 621,928 active+inactive). No county-level active+inactive breakdown is published; this file uses the active-only county source for internal consistency."
+}

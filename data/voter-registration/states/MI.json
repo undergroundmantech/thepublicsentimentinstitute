@@ -1,0 +1,599 @@
+{
+  "state": "Michigan",
+  "state_abbr": "MI",
+  "state_fips": "26",
+  "as_of_date": "2025-11-01",
+  "source_name": "Michigan Department of State, Bureau of Elections \u2014 2025 Voter Registration Totals (from the Qualified Voter File)",
+  "source_url": "https://www.michigan.gov/sos/-/media/Project/Websites/sos/Election-Results-and-Statistics/Registered-Voter-Count/2025-Registered-Voter-Count.pdf",
+  "registers_by_party": false,
+  "statewide_total_registered": 8260991,
+  "statewide_by_party": null,
+  "county_unit_label": "county",
+  "county_level_available": true,
+  "counties": [
+    {
+      "name": "Alcona",
+      "fips": "26001",
+      "total_registered": 10493,
+      "active_registered": 9347,
+      "by_party": null
+    },
+    {
+      "name": "Alger",
+      "fips": "26003",
+      "total_registered": 7493,
+      "active_registered": 6632,
+      "by_party": null
+    },
+    {
+      "name": "Allegan",
+      "fips": "26005",
+      "total_registered": 100803,
+      "active_registered": 91996,
+      "by_party": null
+    },
+    {
+      "name": "Alpena",
+      "fips": "26007",
+      "total_registered": 24427,
+      "active_registered": 21985,
+      "by_party": null
+    },
+    {
+      "name": "Antrim",
+      "fips": "26009",
+      "total_registered": 22987,
+      "active_registered": 20796,
+      "by_party": null
+    },
+    {
+      "name": "Arenac",
+      "fips": "26011",
+      "total_registered": 13328,
+      "active_registered": 11977,
+      "by_party": null
+    },
+    {
+      "name": "Baraga",
+      "fips": "26013",
+      "total_registered": 6812,
+      "active_registered": 5752,
+      "by_party": null
+    },
+    {
+      "name": "Barry",
+      "fips": "26015",
+      "total_registered": 52696,
+      "active_registered": 48257,
+      "by_party": null
+    },
+    {
+      "name": "Bay",
+      "fips": "26017",
+      "total_registered": 86748,
+      "active_registered": 79226,
+      "by_party": null
+    },
+    {
+      "name": "Benzie",
+      "fips": "26019",
+      "total_registered": 16973,
+      "active_registered": 15621,
+      "by_party": null
+    },
+    {
+      "name": "Berrien",
+      "fips": "26021",
+      "total_registered": 132602,
+      "active_registered": 113152,
+      "by_party": null
+    },
+    {
+      "name": "Branch",
+      "fips": "26023",
+      "total_registered": 34647,
+      "active_registered": 29498,
+      "by_party": null
+    },
+    {
+      "name": "Calhoun",
+      "fips": "26025",
+      "total_registered": 111094,
+      "active_registered": 97647,
+      "by_party": null
+    },
+    {
+      "name": "Cass",
+      "fips": "26027",
+      "total_registered": 45316,
+      "active_registered": 38031,
+      "by_party": null
+    },
+    {
+      "name": "Charlevoix",
+      "fips": "26029",
+      "total_registered": 23799,
+      "active_registered": 21646,
+      "by_party": null
+    },
+    {
+      "name": "Cheboygan",
+      "fips": "26031",
+      "total_registered": 23491,
+      "active_registered": 21191,
+      "by_party": null
+    },
+    {
+      "name": "Chippewa",
+      "fips": "26033",
+      "total_registered": 27957,
+      "active_registered": 24992,
+      "by_party": null
+    },
+    {
+      "name": "Clare",
+      "fips": "26035",
+      "total_registered": 26817,
+      "active_registered": 23991,
+      "by_party": null
+    },
+    {
+      "name": "Clinton",
+      "fips": "26037",
+      "total_registered": 64275,
+      "active_registered": 59842,
+      "by_party": null
+    },
+    {
+      "name": "Crawford",
+      "fips": "26039",
+      "total_registered": 12747,
+      "active_registered": 11246,
+      "by_party": null
+    },
+    {
+      "name": "Delta",
+      "fips": "26041",
+      "total_registered": 32421,
+      "active_registered": 28743,
+      "by_party": null
+    },
+    {
+      "name": "Dickinson",
+      "fips": "26043",
+      "total_registered": 22651,
+      "active_registered": 19832,
+      "by_party": null
+    },
+    {
+      "name": "Eaton",
+      "fips": "26045",
+      "total_registered": 88976,
+      "active_registered": 81555,
+      "by_party": null
+    },
+    {
+      "name": "Emmet",
+      "fips": "26047",
+      "total_registered": 30823,
+      "active_registered": 28089,
+      "by_party": null
+    },
+    {
+      "name": "Genesee",
+      "fips": "26049",
+      "total_registered": 346341,
+      "active_registered": 303328,
+      "by_party": null
+    },
+    {
+      "name": "Gladwin",
+      "fips": "26051",
+      "total_registered": 22691,
+      "active_registered": 20120,
+      "by_party": null
+    },
+    {
+      "name": "Gogebic",
+      "fips": "26053",
+      "total_registered": 13287,
+      "active_registered": 10825,
+      "by_party": null
+    },
+    {
+      "name": "Grand Traverse",
+      "fips": "26055",
+      "total_registered": 83155,
+      "active_registered": 76496,
+      "by_party": null
+    },
+    {
+      "name": "Gratiot",
+      "fips": "26057",
+      "total_registered": 29807,
+      "active_registered": 26937,
+      "by_party": null
+    },
+    {
+      "name": "Hillsdale",
+      "fips": "26059",
+      "total_registered": 37427,
+      "active_registered": 32965,
+      "by_party": null
+    },
+    {
+      "name": "Houghton",
+      "fips": "26061",
+      "total_registered": 27082,
+      "active_registered": 24161,
+      "by_party": null
+    },
+    {
+      "name": "Huron",
+      "fips": "26063",
+      "total_registered": 26214,
+      "active_registered": 23554,
+      "by_party": null
+    },
+    {
+      "name": "Ingham",
+      "fips": "26065",
+      "total_registered": 212800,
+      "active_registered": 190374,
+      "by_party": null
+    },
+    {
+      "name": "Ionia",
+      "fips": "26067",
+      "total_registered": 49698,
+      "active_registered": 44992,
+      "by_party": null
+    },
+    {
+      "name": "Iosco",
+      "fips": "26069",
+      "total_registered": 23111,
+      "active_registered": 20598,
+      "by_party": null
+    },
+    {
+      "name": "Iron",
+      "fips": "26071",
+      "total_registered": 10849,
+      "active_registered": 9357,
+      "by_party": null
+    },
+    {
+      "name": "Isabella",
+      "fips": "26073",
+      "total_registered": 47437,
+      "active_registered": 42181,
+      "by_party": null
+    },
+    {
+      "name": "Jackson",
+      "fips": "26075",
+      "total_registered": 126608,
+      "active_registered": 114341,
+      "by_party": null
+    },
+    {
+      "name": "Kalamazoo",
+      "fips": "26077",
+      "total_registered": 209504,
+      "active_registered": 186718,
+      "by_party": null
+    },
+    {
+      "name": "Kalkaska",
+      "fips": "26079",
+      "total_registered": 17388,
+      "active_registered": 15291,
+      "by_party": null
+    },
+    {
+      "name": "Kent",
+      "fips": "26081",
+      "total_registered": 519101,
+      "active_registered": 465230,
+      "by_party": null
+    },
+    {
+      "name": "Keweenaw",
+      "fips": "26083",
+      "total_registered": 2118,
+      "active_registered": 1957,
+      "by_party": null
+    },
+    {
+      "name": "Lake",
+      "fips": "26085",
+      "total_registered": 11048,
+      "active_registered": 9635,
+      "by_party": null
+    },
+    {
+      "name": "Lapeer",
+      "fips": "26087",
+      "total_registered": 74985,
+      "active_registered": 68490,
+      "by_party": null
+    },
+    {
+      "name": "Leelanau",
+      "fips": "26089",
+      "total_registered": 21771,
+      "active_registered": 20146,
+      "by_party": null
+    },
+    {
+      "name": "Lenawee",
+      "fips": "26091",
+      "total_registered": 79740,
+      "active_registered": 70990,
+      "by_party": null
+    },
+    {
+      "name": "Livingston",
+      "fips": "26093",
+      "total_registered": 166678,
+      "active_registered": 155361,
+      "by_party": null
+    },
+    {
+      "name": "Luce",
+      "fips": "26095",
+      "total_registered": 4640,
+      "active_registered": 4104,
+      "by_party": null
+    },
+    {
+      "name": "Mackinac",
+      "fips": "26097",
+      "total_registered": 10501,
+      "active_registered": 9245,
+      "by_party": null
+    },
+    {
+      "name": "Macomb",
+      "fips": "26099",
+      "total_registered": 721723,
+      "active_registered": 655578,
+      "by_party": null
+    },
+    {
+      "name": "Manistee",
+      "fips": "26101",
+      "total_registered": 21699,
+      "active_registered": 19451,
+      "by_party": null
+    },
+    {
+      "name": "Marquette",
+      "fips": "26103",
+      "total_registered": 54993,
+      "active_registered": 48838,
+      "by_party": null
+    },
+    {
+      "name": "Mason",
+      "fips": "26105",
+      "total_registered": 25477,
+      "active_registered": 23075,
+      "by_party": null
+    },
+    {
+      "name": "Mecosta",
+      "fips": "26107",
+      "total_registered": 32414,
+      "active_registered": 29398,
+      "by_party": null
+    },
+    {
+      "name": "Menominee",
+      "fips": "26109",
+      "total_registered": 20918,
+      "active_registered": 17467,
+      "by_party": null
+    },
+    {
+      "name": "Midland",
+      "fips": "26111",
+      "total_registered": 69699,
+      "active_registered": 63076,
+      "by_party": null
+    },
+    {
+      "name": "Missaukee",
+      "fips": "26113",
+      "total_registered": 12947,
+      "active_registered": 11828,
+      "by_party": null
+    },
+    {
+      "name": "Monroe",
+      "fips": "26115",
+      "total_registered": 132767,
+      "active_registered": 117712,
+      "by_party": null
+    },
+    {
+      "name": "Montcalm",
+      "fips": "26117",
+      "total_registered": 52071,
+      "active_registered": 46916,
+      "by_party": null
+    },
+    {
+      "name": "Montmorency",
+      "fips": "26119",
+      "total_registered": 9242,
+      "active_registered": 8246,
+      "by_party": null
+    },
+    {
+      "name": "Muskegon",
+      "fips": "26121",
+      "total_registered": 146266,
+      "active_registered": 130870,
+      "by_party": null
+    },
+    {
+      "name": "Newaygo",
+      "fips": "26123",
+      "total_registered": 42852,
+      "active_registered": 38452,
+      "by_party": null
+    },
+    {
+      "name": "Oakland",
+      "fips": "26125",
+      "total_registered": 1036370,
+      "active_registered": 932760,
+      "by_party": null
+    },
+    {
+      "name": "Oceana",
+      "fips": "26127",
+      "total_registered": 22466,
+      "active_registered": 20108,
+      "by_party": null
+    },
+    {
+      "name": "Ogemaw",
+      "fips": "26129",
+      "total_registered": 18893,
+      "active_registered": 17084,
+      "by_party": null
+    },
+    {
+      "name": "Ontonagon",
+      "fips": "26131",
+      "total_registered": 5592,
+      "active_registered": 4795,
+      "by_party": null
+    },
+    {
+      "name": "Osceola",
+      "fips": "26133",
+      "total_registered": 19381,
+      "active_registered": 17550,
+      "by_party": null
+    },
+    {
+      "name": "Oscoda",
+      "fips": "26135",
+      "total_registered": 7833,
+      "active_registered": 6952,
+      "by_party": null
+    },
+    {
+      "name": "Otsego",
+      "fips": "26137",
+      "total_registered": 23238,
+      "active_registered": 20693,
+      "by_party": null
+    },
+    {
+      "name": "Ottawa",
+      "fips": "26139",
+      "total_registered": 235154,
+      "active_registered": 218008,
+      "by_party": null
+    },
+    {
+      "name": "Presque Isle",
+      "fips": "26141",
+      "total_registered": 12131,
+      "active_registered": 10967,
+      "by_party": null
+    },
+    {
+      "name": "Roscommon",
+      "fips": "26143",
+      "total_registered": 23178,
+      "active_registered": 20609,
+      "by_party": null
+    },
+    {
+      "name": "Saginaw",
+      "fips": "26145",
+      "total_registered": 155960,
+      "active_registered": 137931,
+      "by_party": null
+    },
+    {
+      "name": "St Clair",
+      "fips": "26147",
+      "total_registered": 137410,
+      "active_registered": 124713,
+      "by_party": null
+    },
+    {
+      "name": "St Joseph",
+      "fips": "26149",
+      "total_registered": 48433,
+      "active_registered": 41170,
+      "by_party": null
+    },
+    {
+      "name": "Sanilac",
+      "fips": "26151",
+      "total_registered": 32442,
+      "active_registered": 29672,
+      "by_party": null
+    },
+    {
+      "name": "Schoolcraft",
+      "fips": "26153",
+      "total_registered": 7563,
+      "active_registered": 6598,
+      "by_party": null
+    },
+    {
+      "name": "Shiawassee",
+      "fips": "26155",
+      "total_registered": 57377,
+      "active_registered": 52193,
+      "by_party": null
+    },
+    {
+      "name": "Tuscola",
+      "fips": "26157",
+      "total_registered": 43211,
+      "active_registered": 38973,
+      "by_party": null
+    },
+    {
+      "name": "Van Buren",
+      "fips": "26159",
+      "total_registered": 62816,
+      "active_registered": 55568,
+      "by_party": null
+    },
+    {
+      "name": "Washtenaw",
+      "fips": "26161",
+      "total_registered": 301899,
+      "active_registered": 263437,
+      "by_party": null
+    },
+    {
+      "name": "Wayne",
+      "fips": "26163",
+      "total_registered": 1443156,
+      "active_registered": 1224060,
+      "by_party": null
+    },
+    {
+      "name": "Wexford",
+      "fips": "26165",
+      "total_registered": 29063,
+      "active_registered": 26095,
+      "by_party": null
+    }
+  ],
+  "as_of_notes": "Most recent official Michigan DOS 'Registered Voter Count' report (2025 Voter Registration Totals). The report provides three point-in-time snapshots per year (May, August, November); the most recent column, November 2025, is used here and dated 2025-11-01 per Michigan's first-of-reporting-month convention. statewide_total_registered uses the November 'all registered voters' column (8,260,991), which includes both active and inactive registrations. The November 'active registered voters' total is 7,339,283; per the report footnote, the Active Voter Count excludes voters who have not voted in at least six years or have been sent a Notice Pursuant to MCL 168.509aa. Each county object also carries an 'active_registered' field with the November active count.",
+  "data_quality": "high",
+  "notes": "Source: official PDF from the Michigan Department of State / Bureau of Elections, derived from the Qualified Voter File (QVF). All 83 counties present. County-level 'all registered' sums to 8,260,991 and 'active' sums to 7,339,283, both matching the report's printed statewide totals exactly. Michigan does not register voters by party, so registers_by_party=false and all by_party fields are null. A newer 2026 report was probed (2026-Registered-Voter-Count.pdf) and returned HTTP 404, confirming the 2025 report is the latest. The live MVIC voter-count page (mvic.sos.state.mi.us/VoterCount) is behind a Cloudflare JS challenge and could not be machine-read; the published PDF is the authoritative, citable source."
+}

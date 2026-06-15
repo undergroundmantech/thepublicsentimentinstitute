@@ -1,0 +1,252 @@
+{
+  "state": "Washington",
+  "state_abbr": "WA",
+  "state_fips": "53",
+  "as_of_date": "2026-06-01",
+  "source_name": "Washington Secretary of State - Elections Division, Voter Demographics (monthly VRDB statistics)",
+  "source_url": "https://www.sos.wa.gov/elections/data-research/reports-data-and-statistics/voter-demographics",
+  "registers_by_party": false,
+  "statewide_total_registered": 5117470,
+  "statewide_by_party": null,
+  "county_unit_label": "county",
+  "county_level_available": true,
+  "counties": [
+    {
+      "name": "Adams",
+      "fips": "53001",
+      "total_registered": 8715,
+      "by_party": null
+    },
+    {
+      "name": "Asotin",
+      "fips": "53003",
+      "total_registered": 15096,
+      "by_party": null
+    },
+    {
+      "name": "Benton",
+      "fips": "53005",
+      "total_registered": 137692,
+      "by_party": null
+    },
+    {
+      "name": "Chelan",
+      "fips": "53007",
+      "total_registered": 54605,
+      "by_party": null
+    },
+    {
+      "name": "Clallam",
+      "fips": "53009",
+      "total_registered": 59458,
+      "by_party": null
+    },
+    {
+      "name": "Clark",
+      "fips": "53011",
+      "total_registered": 358533,
+      "by_party": null
+    },
+    {
+      "name": "Columbia",
+      "fips": "53013",
+      "total_registered": 3012,
+      "by_party": null
+    },
+    {
+      "name": "Cowlitz",
+      "fips": "53015",
+      "total_registered": 78072,
+      "by_party": null
+    },
+    {
+      "name": "Douglas",
+      "fips": "53017",
+      "total_registered": 28520,
+      "by_party": null
+    },
+    {
+      "name": "Ferry",
+      "fips": "53019",
+      "total_registered": 5373,
+      "by_party": null
+    },
+    {
+      "name": "Franklin",
+      "fips": "53021",
+      "total_registered": 49263,
+      "by_party": null
+    },
+    {
+      "name": "Garfield",
+      "fips": "53023",
+      "total_registered": 1675,
+      "by_party": null
+    },
+    {
+      "name": "Grant",
+      "fips": "53025",
+      "total_registered": 52609,
+      "by_party": null
+    },
+    {
+      "name": "Grays Harbor",
+      "fips": "53027",
+      "total_registered": 51962,
+      "by_party": null
+    },
+    {
+      "name": "Island",
+      "fips": "53029",
+      "total_registered": 65641,
+      "by_party": null
+    },
+    {
+      "name": "Jefferson",
+      "fips": "53031",
+      "total_registered": 28782,
+      "by_party": null
+    },
+    {
+      "name": "King",
+      "fips": "53033",
+      "total_registered": 1445774,
+      "by_party": null
+    },
+    {
+      "name": "Kitsap",
+      "fips": "53035",
+      "total_registered": 202032,
+      "by_party": null
+    },
+    {
+      "name": "Kittitas",
+      "fips": "53037",
+      "total_registered": 32182,
+      "by_party": null
+    },
+    {
+      "name": "Klickitat",
+      "fips": "53039",
+      "total_registered": 16400,
+      "by_party": null
+    },
+    {
+      "name": "Lewis",
+      "fips": "53041",
+      "total_registered": 59513,
+      "by_party": null
+    },
+    {
+      "name": "Lincoln",
+      "fips": "53043",
+      "total_registered": 8855,
+      "by_party": null
+    },
+    {
+      "name": "Mason",
+      "fips": "53045",
+      "total_registered": 48146,
+      "by_party": null
+    },
+    {
+      "name": "Okanogan",
+      "fips": "53047",
+      "total_registered": 27085,
+      "by_party": null
+    },
+    {
+      "name": "Pacific",
+      "fips": "53049",
+      "total_registered": 17910,
+      "by_party": null
+    },
+    {
+      "name": "Pend Oreille",
+      "fips": "53051",
+      "total_registered": 11056,
+      "by_party": null
+    },
+    {
+      "name": "Pierce",
+      "fips": "53053",
+      "total_registered": 592967,
+      "by_party": null
+    },
+    {
+      "name": "San Juan",
+      "fips": "53055",
+      "total_registered": 15063,
+      "by_party": null
+    },
+    {
+      "name": "Skagit",
+      "fips": "53057",
+      "total_registered": 90782,
+      "by_party": null
+    },
+    {
+      "name": "Skamania",
+      "fips": "53059",
+      "total_registered": 9446,
+      "by_party": null
+    },
+    {
+      "name": "Snohomish",
+      "fips": "53061",
+      "total_registered": 542362,
+      "by_party": null
+    },
+    {
+      "name": "Spokane",
+      "fips": "53063",
+      "total_registered": 376283,
+      "by_party": null
+    },
+    {
+      "name": "Stevens",
+      "fips": "53065",
+      "total_registered": 36674,
+      "by_party": null
+    },
+    {
+      "name": "Thurston",
+      "fips": "53067",
+      "total_registered": 213852,
+      "by_party": null
+    },
+    {
+      "name": "Wahkiakum",
+      "fips": "53069",
+      "total_registered": 3708,
+      "by_party": null
+    },
+    {
+      "name": "Walla Walla",
+      "fips": "53071",
+      "total_registered": 38867,
+      "by_party": null
+    },
+    {
+      "name": "Whatcom",
+      "fips": "53073",
+      "total_registered": 169104,
+      "by_party": null
+    },
+    {
+      "name": "Whitman",
+      "fips": "53075",
+      "total_registered": 24445,
+      "by_party": null
+    },
+    {
+      "name": "Yakima",
+      "fips": "53077",
+      "total_registered": 135956,
+      "by_party": null
+    }
+  ],
+  "as_of_notes": "Counts reflect ACTIVE registered voters from the Washington Voter Registration Database (VRDB) monthly snapshot as of June 1, 2026. Source spreadsheet '2026-05 Voter Demographics Tables.xlsx' was published/last-modified 2026-06-01; the statewide Active total of 5,117,470 matches the figure published on the WA SOS site as of June 1, 2026. (Inactive registrations are tracked separately: 419,393 statewide; Active+Inactive = 5,536,863.)",
+  "data_quality": "high",
+  "notes": "Washington does NOT register voters by party; all by_party fields are null. 'total_registered' uses the ACTIVE registrant count, which is Washington's standard 'registered voters' measure. All 39 counties present; county Active counts sum exactly to the statewide Active total (5,117,470), independently cross-validated against the County-and-Gender and County-and-Age-Group tables in the same workbook. FIPS codes are standard 5-digit state(53)+county codes. Latest available monthly file at time of retrieval; no June-dated file (2026-06) was published yet. Source: 'Voter Demographics Tables (XLSX)' at https://www.sos.wa.gov/sites/default/files/2026-05/2026-05%20Voter%20Demographics%20Tables.xlsx"
+}

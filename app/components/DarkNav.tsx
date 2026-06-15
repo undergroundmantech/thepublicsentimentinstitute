@@ -20,6 +20,7 @@ const NAV: Item[] = [
     label: "Maps & Ratings",
     children: [
       { href: "/electoralmap", label: "Electoral Map" },
+      { href: "/voterregistration", label: "Voter Registration" },
       { href: "/forecastratings", label: "2026 Ratings" },
     ],
   },

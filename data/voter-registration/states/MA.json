@@ -1,0 +1,107 @@
+{
+  "state": "Massachusetts",
+  "state_abbr": "MA",
+  "state_fips": "25",
+  "as_of_date": "2025-02-01",
+  "source_name": "Massachusetts Secretary of the Commonwealth, Elections Division - Registration Statistics, Enrollment Breakdown as of 02/01/2025",
+  "source_url": "https://www.sec.state.ma.us/divisions/elections/research-and-statistics/accessible-table/enrollment-breakdown-2025.htm",
+  "registers_by_party": true,
+  "statewide_total_registered": 5025826,
+  "statewide_by_party": {
+    "Democratic": 1298603,
+    "Republican": 423387,
+    "Unenrolled": 3254435,
+    "Other": 49401
+  },
+  "county_unit_label": "county",
+  "county_level_available": true,
+  "counties": [
+    {
+      "name": "Barnstable",
+      "fips": "25001",
+      "total_registered": 196566,
+      "by_party": { "Democratic": 42512, "Republican": 23181, "Unenrolled": 129067, "Other": 1806 }
+    },
+    {
+      "name": "Berkshire",
+      "fips": "25003",
+      "total_registered": 98423,
+      "by_party": { "Democratic": 27402, "Republican": 6886, "Unenrolled": 63122, "Other": 1013 }
+    },
+    {
+      "name": "Bristol",
+      "fips": "25005",
+      "total_registered": 427089,
+      "by_party": { "Democratic": 91386, "Republican": 40504, "Unenrolled": 289947, "Other": 5252 }
+    },
+    {
+      "name": "Dukes",
+      "fips": "25007",
+      "total_registered": 16795,
+      "by_party": { "Democratic": 5637, "Republican": 1106, "Unenrolled": 9949, "Other": 103 }
+    },
+    {
+      "name": "Essex",
+      "fips": "25009",
+      "total_registered": 588217,
+      "by_party": { "Democratic": 142448, "Republican": 52346, "Unenrolled": 387530, "Other": 5893 }
+    },
+    {
+      "name": "Franklin",
+      "fips": "25011",
+      "total_registered": 58097,
+      "by_party": { "Democratic": 14554, "Republican": 4022, "Unenrolled": 38850, "Other": 671 }
+    },
+    {
+      "name": "Hampden",
+      "fips": "25013",
+      "total_registered": 360363,
+      "by_party": { "Democratic": 89003, "Republican": 36604, "Unenrolled": 230496, "Other": 4260 }
+    },
+    {
+      "name": "Hampshire",
+      "fips": "25015",
+      "total_registered": 111861,
+      "by_party": { "Democratic": 35290, "Republican": 7876, "Unenrolled": 67523, "Other": 1172 }
+    },
+    {
+      "name": "Middlesex",
+      "fips": "25017",
+      "total_registered": 1112320,
+      "by_party": { "Democratic": 318277, "Republican": 77573, "Unenrolled": 707203, "Other": 9267 }
+    },
+    {
+      "name": "Nantucket",
+      "fips": "25019",
+      "total_registered": 10007,
+      "by_party": { "Democratic": 2462, "Republican": 997, "Unenrolled": 6448, "Other": 100 }
+    },
+    {
+      "name": "Norfolk",
+      "fips": "25021",
+      "total_registered": 534568,
+      "by_party": { "Democratic": 142374, "Republican": 43908, "Unenrolled": 343893, "Other": 4393 }
+    },
+    {
+      "name": "Plymouth",
+      "fips": "25023",
+      "total_registered": 416276,
+      "by_party": { "Democratic": 87941, "Republican": 44937, "Unenrolled": 278782, "Other": 4616 }
+    },
+    {
+      "name": "Suffolk",
+      "fips": "25025",
+      "total_registered": 485472,
+      "by_party": { "Democratic": 183302, "Republican": 21669, "Unenrolled": 276417, "Other": 4084 }
+    },
+    {
+      "name": "Worcester",
+      "fips": "25027",
+      "total_registered": 609772,
+      "by_party": { "Democratic": 116015, "Republican": 61778, "Unenrolled": 425208, "Other": 6771 }
+    }
+  ],
+  "as_of_notes": "Official enrollment as of February 1, 2025, published by the MA Secretary of the Commonwealth, Elections Division. This is the most recent enrollment breakdown available; it supersedes the 2024 State Election (Nov 5, 2024) report. 'Other' = Political Designations (Massachusetts recognizes 2 official parties - Democratic and Republican - plus 32 political designations and 'unenrolled' independents).",
+  "data_quality": "high - official state source; county totals and per-party columns sum exactly to the published statewide totals (Total 5,025,826; Dem 1,298,603; Rep 423,387; Unenrolled 3,254,435; Political Designations 49,401); all 14 counties present",
+  "notes": "County-level granularity used. The Secretary publishes a county rollup within the same report (counties subtotaled, then broken down into the 351 cities/towns). County rollup rows extracted here. FIPS are standard MA county FIPS codes."
+}

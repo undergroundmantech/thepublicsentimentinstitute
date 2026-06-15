@@ -1,0 +1,1222 @@
+{
+  "state": "Kentucky",
+  "state_abbr": "KY",
+  "state_fips": "21",
+  "as_of_date": "2026-06-01",
+  "source_name": "Kentucky State Board of Elections \u2014 Voter Registration Statistics Report (County), May 2026",
+  "source_url": "https://elect.ky.gov/Resources/Documents/voterstatscounty-May%202026.pdf",
+  "registers_by_party": true,
+  "statewide_total_registered": 3365548,
+  "statewide_by_party": {
+    "Democratic": 1371232,
+    "Republican": 1614657,
+    "Other": 379659
+  },
+  "county_unit_label": "county",
+  "county_level_available": true,
+  "counties": [
+    {
+      "name": "Adair",
+      "fips": "21001",
+      "total_registered": 13820,
+      "by_party": {
+        "Democratic": 2606,
+        "Republican": 10091,
+        "Other": 1123
+      }
+    },
+    {
+      "name": "Allen",
+      "fips": "21003",
+      "total_registered": 15151,
+      "by_party": {
+        "Democratic": 3303,
+        "Republican": 10399,
+        "Other": 1449
+      }
+    },
+    {
+      "name": "Anderson",
+      "fips": "21005",
+      "total_registered": 18576,
+      "by_party": {
+        "Democratic": 6635,
+        "Republican": 10279,
+        "Other": 1662
+      }
+    },
+    {
+      "name": "Ballard",
+      "fips": "21007",
+      "total_registered": 5981,
+      "by_party": {
+        "Democratic": 2744,
+        "Republican": 2792,
+        "Other": 445
+      }
+    },
+    {
+      "name": "Barren",
+      "fips": "21009",
+      "total_registered": 31635,
+      "by_party": {
+        "Democratic": 11616,
+        "Republican": 17127,
+        "Other": 2892
+      }
+    },
+    {
+      "name": "Bath",
+      "fips": "21011",
+      "total_registered": 9279,
+      "by_party": {
+        "Democratic": 5168,
+        "Republican": 3432,
+        "Other": 679
+      }
+    },
+    {
+      "name": "Bell",
+      "fips": "21013",
+      "total_registered": 18329,
+      "by_party": {
+        "Democratic": 5397,
+        "Republican": 11657,
+        "Other": 1275
+      }
+    },
+    {
+      "name": "Boone",
+      "fips": "21015",
+      "total_registered": 104815,
+      "by_party": {
+        "Democratic": 28649,
+        "Republican": 58737,
+        "Other": 17429
+      }
+    },
+    {
+      "name": "Bourbon",
+      "fips": "21017",
+      "total_registered": 14447,
+      "by_party": {
+        "Democratic": 6318,
+        "Republican": 6658,
+        "Other": 1471
+      }
+    },
+    {
+      "name": "Boyd",
+      "fips": "21019",
+      "total_registered": 34994,
+      "by_party": {
+        "Democratic": 14217,
+        "Republican": 16557,
+        "Other": 4220
+      }
+    },
+    {
+      "name": "Boyle",
+      "fips": "21021",
+      "total_registered": 22124,
+      "by_party": {
+        "Democratic": 9012,
+        "Republican": 10769,
+        "Other": 2343
+      }
+    },
+    {
+      "name": "Bracken",
+      "fips": "21023",
+      "total_registered": 6454,
+      "by_party": {
+        "Democratic": 2865,
+        "Republican": 3111,
+        "Other": 478
+      }
+    },
+    {
+      "name": "Breathitt",
+      "fips": "21025",
+      "total_registered": 9729,
+      "by_party": {
+        "Democratic": 7479,
+        "Republican": 1830,
+        "Other": 420
+      }
+    },
+    {
+      "name": "Breckinridge",
+      "fips": "21027",
+      "total_registered": 15496,
+      "by_party": {
+        "Democratic": 4776,
+        "Republican": 9512,
+        "Other": 1208
+      }
+    },
+    {
+      "name": "Bullitt",
+      "fips": "21029",
+      "total_registered": 64685,
+      "by_party": {
+        "Democratic": 21307,
+        "Republican": 35703,
+        "Other": 7675
+      }
+    },
+    {
+      "name": "Butler",
+      "fips": "21031",
+      "total_registered": 9032,
+      "by_party": {
+        "Democratic": 1501,
+        "Republican": 6924,
+        "Other": 607
+      }
+    },
+    {
+      "name": "Caldwell",
+      "fips": "21033",
+      "total_registered": 9420,
+      "by_party": {
+        "Democratic": 3900,
+        "Republican": 4752,
+        "Other": 768
+      }
+    },
+    {
+      "name": "Calloway",
+      "fips": "21035",
+      "total_registered": 27847,
+      "by_party": {
+        "Democratic": 11625,
+        "Republican": 12646,
+        "Other": 3576
+      }
+    },
+    {
+      "name": "Campbell",
+      "fips": "21037",
+      "total_registered": 72580,
+      "by_party": {
+        "Democratic": 26170,
+        "Republican": 34882,
+        "Other": 11528
+      }
+    },
+    {
+      "name": "Carlisle",
+      "fips": "21039",
+      "total_registered": 3665,
+      "by_party": {
+        "Democratic": 1585,
+        "Republican": 1858,
+        "Other": 222
+      }
+    },
+    {
+      "name": "Carroll",
+      "fips": "21041",
+      "total_registered": 7658,
+      "by_party": {
+        "Democratic": 3803,
+        "Republican": 3160,
+        "Other": 695
+      }
+    },
+    {
+      "name": "Carter",
+      "fips": "21043",
+      "total_registered": 18736,
+      "by_party": {
+        "Democratic": 7531,
+        "Republican": 9558,
+        "Other": 1647
+      }
+    },
+    {
+      "name": "Casey",
+      "fips": "21045",
+      "total_registered": 10889,
+      "by_party": {
+        "Democratic": 1405,
+        "Republican": 8842,
+        "Other": 642
+      }
+    },
+    {
+      "name": "Christian",
+      "fips": "21047",
+      "total_registered": 45795,
+      "by_party": {
+        "Democratic": 19728,
+        "Republican": 19677,
+        "Other": 6390
+      }
+    },
+    {
+      "name": "Clark",
+      "fips": "21049",
+      "total_registered": 29011,
+      "by_party": {
+        "Democratic": 11664,
+        "Republican": 13837,
+        "Other": 3510
+      }
+    },
+    {
+      "name": "Clay",
+      "fips": "21051",
+      "total_registered": 13578,
+      "by_party": {
+        "Democratic": 1522,
+        "Republican": 11442,
+        "Other": 614
+      }
+    },
+    {
+      "name": "Clinton",
+      "fips": "21053",
+      "total_registered": 7370,
+      "by_party": {
+        "Democratic": 761,
+        "Republican": 6322,
+        "Other": 287
+      }
+    },
+    {
+      "name": "Crittenden",
+      "fips": "21055",
+      "total_registered": 6408,
+      "by_party": {
+        "Democratic": 1690,
+        "Republican": 4097,
+        "Other": 621
+      }
+    },
+    {
+      "name": "Cumberland",
+      "fips": "21057",
+      "total_registered": 5287,
+      "by_party": {
+        "Democratic": 579,
+        "Republican": 4386,
+        "Other": 322
+      }
+    },
+    {
+      "name": "Daviess",
+      "fips": "21059",
+      "total_registered": 75456,
+      "by_party": {
+        "Democratic": 32223,
+        "Republican": 35260,
+        "Other": 7973
+      }
+    },
+    {
+      "name": "Edmonson",
+      "fips": "21061",
+      "total_registered": 9831,
+      "by_party": {
+        "Democratic": 2169,
+        "Republican": 6839,
+        "Other": 823
+      }
+    },
+    {
+      "name": "Elliott",
+      "fips": "21063",
+      "total_registered": 4726,
+      "by_party": {
+        "Democratic": 3136,
+        "Republican": 1266,
+        "Other": 324
+      }
+    },
+    {
+      "name": "Estill",
+      "fips": "21065",
+      "total_registered": 10386,
+      "by_party": {
+        "Democratic": 3008,
+        "Republican": 6475,
+        "Other": 903
+      }
+    },
+    {
+      "name": "Fayette",
+      "fips": "21067",
+      "total_registered": 224626,
+      "by_party": {
+        "Democratic": 116549,
+        "Republican": 75987,
+        "Other": 32090
+      }
+    },
+    {
+      "name": "Fleming",
+      "fips": "21069",
+      "total_registered": 10890,
+      "by_party": {
+        "Democratic": 4099,
+        "Republican": 5939,
+        "Other": 852
+      }
+    },
+    {
+      "name": "Floyd",
+      "fips": "21071",
+      "total_registered": 26670,
+      "by_party": {
+        "Democratic": 16745,
+        "Republican": 8193,
+        "Other": 1732
+      }
+    },
+    {
+      "name": "Franklin",
+      "fips": "21073",
+      "total_registered": 38914,
+      "by_party": {
+        "Democratic": 21573,
+        "Republican": 13300,
+        "Other": 4041
+      }
+    },
+    {
+      "name": "Fulton",
+      "fips": "21075",
+      "total_registered": 4907,
+      "by_party": {
+        "Democratic": 2811,
+        "Republican": 1583,
+        "Other": 513
+      }
+    },
+    {
+      "name": "Gallatin",
+      "fips": "21077",
+      "total_registered": 6336,
+      "by_party": {
+        "Democratic": 2393,
+        "Republican": 3222,
+        "Other": 721
+      }
+    },
+    {
+      "name": "Garrard",
+      "fips": "21079",
+      "total_registered": 13487,
+      "by_party": {
+        "Democratic": 3132,
+        "Republican": 9007,
+        "Other": 1348
+      }
+    },
+    {
+      "name": "Grant",
+      "fips": "21081",
+      "total_registered": 18030,
+      "by_party": {
+        "Democratic": 5049,
+        "Republican": 10740,
+        "Other": 2241
+      }
+    },
+    {
+      "name": "Graves",
+      "fips": "21083",
+      "total_registered": 26724,
+      "by_party": {
+        "Democratic": 11034,
+        "Republican": 13404,
+        "Other": 2286
+      }
+    },
+    {
+      "name": "Grayson",
+      "fips": "21085",
+      "total_registered": 19157,
+      "by_party": {
+        "Democratic": 4355,
+        "Republican": 13288,
+        "Other": 1514
+      }
+    },
+    {
+      "name": "Green",
+      "fips": "21087",
+      "total_registered": 8503,
+      "by_party": {
+        "Democratic": 1842,
+        "Republican": 6049,
+        "Other": 612
+      }
+    },
+    {
+      "name": "Greenup",
+      "fips": "21089",
+      "total_registered": 28050,
+      "by_party": {
+        "Democratic": 10223,
+        "Republican": 14920,
+        "Other": 2907
+      }
+    },
+    {
+      "name": "Hancock",
+      "fips": "21091",
+      "total_registered": 6787,
+      "by_party": {
+        "Democratic": 2569,
+        "Republican": 3676,
+        "Other": 542
+      }
+    },
+    {
+      "name": "Hardin",
+      "fips": "21093",
+      "total_registered": 82164,
+      "by_party": {
+        "Democratic": 31902,
+        "Republican": 38404,
+        "Other": 11858
+      }
+    },
+    {
+      "name": "Harlan",
+      "fips": "21095",
+      "total_registered": 18179,
+      "by_party": {
+        "Democratic": 6177,
+        "Republican": 11068,
+        "Other": 934
+      }
+    },
+    {
+      "name": "Harrison",
+      "fips": "21097",
+      "total_registered": 14181,
+      "by_party": {
+        "Democratic": 6095,
+        "Republican": 6976,
+        "Other": 1110
+      }
+    },
+    {
+      "name": "Hart",
+      "fips": "21099",
+      "total_registered": 13520,
+      "by_party": {
+        "Democratic": 5143,
+        "Republican": 7278,
+        "Other": 1099
+      }
+    },
+    {
+      "name": "Henderson",
+      "fips": "21101",
+      "total_registered": 33425,
+      "by_party": {
+        "Democratic": 17188,
+        "Republican": 12900,
+        "Other": 3337
+      }
+    },
+    {
+      "name": "Henry",
+      "fips": "21103",
+      "total_registered": 12319,
+      "by_party": {
+        "Democratic": 4707,
+        "Republican": 6532,
+        "Other": 1080
+      }
+    },
+    {
+      "name": "Hickman",
+      "fips": "21105",
+      "total_registered": 3268,
+      "by_party": {
+        "Democratic": 1394,
+        "Republican": 1635,
+        "Other": 239
+      }
+    },
+    {
+      "name": "Hopkins",
+      "fips": "21107",
+      "total_registered": 32751,
+      "by_party": {
+        "Democratic": 14076,
+        "Republican": 15480,
+        "Other": 3195
+      }
+    },
+    {
+      "name": "Jackson",
+      "fips": "21109",
+      "total_registered": 9927,
+      "by_party": {
+        "Democratic": 1038,
+        "Republican": 8267,
+        "Other": 622
+      }
+    },
+    {
+      "name": "Jefferson",
+      "fips": "21111",
+      "total_registered": 584215,
+      "by_party": {
+        "Democratic": 324809,
+        "Republican": 185584,
+        "Other": 73822
+      }
+    },
+    {
+      "name": "Jessamine",
+      "fips": "21113",
+      "total_registered": 40630,
+      "by_party": {
+        "Democratic": 13593,
+        "Republican": 21938,
+        "Other": 5099
+      }
+    },
+    {
+      "name": "Johnson",
+      "fips": "21115",
+      "total_registered": 16769,
+      "by_party": {
+        "Democratic": 4438,
+        "Republican": 11218,
+        "Other": 1113
+      }
+    },
+    {
+      "name": "Kenton",
+      "fips": "21117",
+      "total_registered": 148897,
+      "by_party": {
+        "Democratic": 53428,
+        "Republican": 69901,
+        "Other": 25568
+      }
+    },
+    {
+      "name": "Knott",
+      "fips": "21119",
+      "total_registered": 10184,
+      "by_party": {
+        "Democratic": 6872,
+        "Republican": 2826,
+        "Other": 486
+      }
+    },
+    {
+      "name": "Knox",
+      "fips": "21121",
+      "total_registered": 23082,
+      "by_party": {
+        "Democratic": 4539,
+        "Republican": 17104,
+        "Other": 1439
+      }
+    },
+    {
+      "name": "LaRue",
+      "fips": "21123",
+      "total_registered": 11685,
+      "by_party": {
+        "Democratic": 4145,
+        "Republican": 6457,
+        "Other": 1083
+      }
+    },
+    {
+      "name": "Laurel",
+      "fips": "21125",
+      "total_registered": 47044,
+      "by_party": {
+        "Democratic": 8466,
+        "Republican": 35033,
+        "Other": 3545
+      }
+    },
+    {
+      "name": "Lawrence",
+      "fips": "21127",
+      "total_registered": 11494,
+      "by_party": {
+        "Democratic": 3539,
+        "Republican": 6920,
+        "Other": 1035
+      }
+    },
+    {
+      "name": "Lee",
+      "fips": "21129",
+      "total_registered": 4806,
+      "by_party": {
+        "Democratic": 1175,
+        "Republican": 3339,
+        "Other": 292
+      }
+    },
+    {
+      "name": "Leslie",
+      "fips": "21131",
+      "total_registered": 7236,
+      "by_party": {
+        "Democratic": 675,
+        "Republican": 6239,
+        "Other": 322
+      }
+    },
+    {
+      "name": "Letcher",
+      "fips": "21133",
+      "total_registered": 14746,
+      "by_party": {
+        "Democratic": 7555,
+        "Republican": 6408,
+        "Other": 783
+      }
+    },
+    {
+      "name": "Lewis",
+      "fips": "21135",
+      "total_registered": 9845,
+      "by_party": {
+        "Democratic": 1639,
+        "Republican": 7573,
+        "Other": 633
+      }
+    },
+    {
+      "name": "Lincoln",
+      "fips": "21137",
+      "total_registered": 18188,
+      "by_party": {
+        "Democratic": 5509,
+        "Republican": 10824,
+        "Other": 1855
+      }
+    },
+    {
+      "name": "Livingston",
+      "fips": "21139",
+      "total_registered": 7352,
+      "by_party": {
+        "Democratic": 2641,
+        "Republican": 4118,
+        "Other": 593
+      }
+    },
+    {
+      "name": "Logan",
+      "fips": "21141",
+      "total_registered": 19489,
+      "by_party": {
+        "Democratic": 7827,
+        "Republican": 9663,
+        "Other": 1999
+      }
+    },
+    {
+      "name": "Lyon",
+      "fips": "21143",
+      "total_registered": 6332,
+      "by_party": {
+        "Democratic": 2585,
+        "Republican": 3159,
+        "Other": 588
+      }
+    },
+    {
+      "name": "McCracken",
+      "fips": "21145",
+      "total_registered": 59823,
+      "by_party": {
+        "Democratic": 25181,
+        "Republican": 27441,
+        "Other": 7201
+      }
+    },
+    {
+      "name": "McCreary",
+      "fips": "21147",
+      "total_registered": 10621,
+      "by_party": {
+        "Democratic": 1673,
+        "Republican": 8140,
+        "Other": 808
+      }
+    },
+    {
+      "name": "McLean",
+      "fips": "21149",
+      "total_registered": 6633,
+      "by_party": {
+        "Democratic": 2808,
+        "Republican": 3309,
+        "Other": 516
+      }
+    },
+    {
+      "name": "Madison",
+      "fips": "21151",
+      "total_registered": 71514,
+      "by_party": {
+        "Democratic": 26449,
+        "Republican": 35897,
+        "Other": 9168
+      }
+    },
+    {
+      "name": "Magoffin",
+      "fips": "21153",
+      "total_registered": 9067,
+      "by_party": {
+        "Democratic": 4537,
+        "Republican": 4241,
+        "Other": 289
+      }
+    },
+    {
+      "name": "Marion",
+      "fips": "21155",
+      "total_registered": 13534,
+      "by_party": {
+        "Democratic": 7462,
+        "Republican": 5166,
+        "Other": 906
+      }
+    },
+    {
+      "name": "Marshall",
+      "fips": "21157",
+      "total_registered": 24950,
+      "by_party": {
+        "Democratic": 9858,
+        "Republican": 12934,
+        "Other": 2158
+      }
+    },
+    {
+      "name": "Martin",
+      "fips": "21159",
+      "total_registered": 7029,
+      "by_party": {
+        "Democratic": 1075,
+        "Republican": 5633,
+        "Other": 321
+      }
+    },
+    {
+      "name": "Mason",
+      "fips": "21161",
+      "total_registered": 12553,
+      "by_party": {
+        "Democratic": 5347,
+        "Republican": 5834,
+        "Other": 1372
+      }
+    },
+    {
+      "name": "Meade",
+      "fips": "21163",
+      "total_registered": 22314,
+      "by_party": {
+        "Democratic": 7767,
+        "Republican": 11968,
+        "Other": 2579
+      }
+    },
+    {
+      "name": "Menifee",
+      "fips": "21165",
+      "total_registered": 5184,
+      "by_party": {
+        "Democratic": 2512,
+        "Republican": 2221,
+        "Other": 451
+      }
+    },
+    {
+      "name": "Mercer",
+      "fips": "21167",
+      "total_registered": 18293,
+      "by_party": {
+        "Democratic": 6894,
+        "Republican": 9569,
+        "Other": 1830
+      }
+    },
+    {
+      "name": "Metcalfe",
+      "fips": "21169",
+      "total_registered": 7966,
+      "by_party": {
+        "Democratic": 2756,
+        "Republican": 4503,
+        "Other": 707
+      }
+    },
+    {
+      "name": "Monroe",
+      "fips": "21171",
+      "total_registered": 8034,
+      "by_party": {
+        "Democratic": 841,
+        "Republican": 6794,
+        "Other": 399
+      }
+    },
+    {
+      "name": "Montgomery",
+      "fips": "21173",
+      "total_registered": 20433,
+      "by_party": {
+        "Democratic": 8983,
+        "Republican": 9636,
+        "Other": 1814
+      }
+    },
+    {
+      "name": "Morgan",
+      "fips": "21175",
+      "total_registered": 8671,
+      "by_party": {
+        "Democratic": 5048,
+        "Republican": 3086,
+        "Other": 537
+      }
+    },
+    {
+      "name": "Muhlenberg",
+      "fips": "21177",
+      "total_registered": 21648,
+      "by_party": {
+        "Democratic": 10601,
+        "Republican": 9368,
+        "Other": 1679
+      }
+    },
+    {
+      "name": "Nelson",
+      "fips": "21179",
+      "total_registered": 35669,
+      "by_party": {
+        "Democratic": 14689,
+        "Republican": 17208,
+        "Other": 3772
+      }
+    },
+    {
+      "name": "Nicholas",
+      "fips": "21181",
+      "total_registered": 5403,
+      "by_party": {
+        "Democratic": 3045,
+        "Republican": 1965,
+        "Other": 393
+      }
+    },
+    {
+      "name": "Ohio",
+      "fips": "21183",
+      "total_registered": 16855,
+      "by_party": {
+        "Democratic": 4826,
+        "Republican": 10570,
+        "Other": 1459
+      }
+    },
+    {
+      "name": "Oldham",
+      "fips": "21185",
+      "total_registered": 54072,
+      "by_party": {
+        "Democratic": 17055,
+        "Republican": 29836,
+        "Other": 7181
+      }
+    },
+    {
+      "name": "Owen",
+      "fips": "21187",
+      "total_registered": 8332,
+      "by_party": {
+        "Democratic": 2990,
+        "Republican": 4655,
+        "Other": 687
+      }
+    },
+    {
+      "name": "Owsley",
+      "fips": "21189",
+      "total_registered": 3315,
+      "by_party": {
+        "Democratic": 625,
+        "Republican": 2535,
+        "Other": 155
+      }
+    },
+    {
+      "name": "Pendleton",
+      "fips": "21191",
+      "total_registered": 10923,
+      "by_party": {
+        "Democratic": 3283,
+        "Republican": 6529,
+        "Other": 1111
+      }
+    },
+    {
+      "name": "Perry",
+      "fips": "21193",
+      "total_registered": 18355,
+      "by_party": {
+        "Democratic": 10288,
+        "Republican": 7052,
+        "Other": 1015
+      }
+    },
+    {
+      "name": "Pike",
+      "fips": "21195",
+      "total_registered": 42203,
+      "by_party": {
+        "Democratic": 19426,
+        "Republican": 19480,
+        "Other": 3297
+      }
+    },
+    {
+      "name": "Powell",
+      "fips": "21197",
+      "total_registered": 9524,
+      "by_party": {
+        "Democratic": 4192,
+        "Republican": 4611,
+        "Other": 721
+      }
+    },
+    {
+      "name": "Pulaski",
+      "fips": "21199",
+      "total_registered": 50961,
+      "by_party": {
+        "Democratic": 9487,
+        "Republican": 36477,
+        "Other": 4997
+      }
+    },
+    {
+      "name": "Robertson",
+      "fips": "21201",
+      "total_registered": 1734,
+      "by_party": {
+        "Democratic": 968,
+        "Republican": 671,
+        "Other": 95
+      }
+    },
+    {
+      "name": "Rockcastle",
+      "fips": "21203",
+      "total_registered": 12356,
+      "by_party": {
+        "Democratic": 1729,
+        "Republican": 9754,
+        "Other": 873
+      }
+    },
+    {
+      "name": "Rowan",
+      "fips": "21205",
+      "total_registered": 17807,
+      "by_party": {
+        "Democratic": 8690,
+        "Republican": 7131,
+        "Other": 1986
+      }
+    },
+    {
+      "name": "Russell",
+      "fips": "21207",
+      "total_registered": 13929,
+      "by_party": {
+        "Democratic": 2091,
+        "Republican": 10872,
+        "Other": 966
+      }
+    },
+    {
+      "name": "Scott",
+      "fips": "21209",
+      "total_registered": 45150,
+      "by_party": {
+        "Democratic": 17085,
+        "Republican": 22883,
+        "Other": 5182
+      }
+    },
+    {
+      "name": "Shelby",
+      "fips": "21211",
+      "total_registered": 38696,
+      "by_party": {
+        "Democratic": 13912,
+        "Republican": 20409,
+        "Other": 4375
+      }
+    },
+    {
+      "name": "Simpson",
+      "fips": "21213",
+      "total_registered": 14634,
+      "by_party": {
+        "Democratic": 5322,
+        "Republican": 7512,
+        "Other": 1800
+      }
+    },
+    {
+      "name": "Spencer",
+      "fips": "21215",
+      "total_registered": 16607,
+      "by_party": {
+        "Democratic": 4891,
+        "Republican": 10123,
+        "Other": 1593
+      }
+    },
+    {
+      "name": "Taylor",
+      "fips": "21217",
+      "total_registered": 18707,
+      "by_party": {
+        "Democratic": 5678,
+        "Republican": 11370,
+        "Other": 1659
+      }
+    },
+    {
+      "name": "Todd",
+      "fips": "21219",
+      "total_registered": 8188,
+      "by_party": {
+        "Democratic": 3772,
+        "Republican": 3680,
+        "Other": 736
+      }
+    },
+    {
+      "name": "Trigg",
+      "fips": "21221",
+      "total_registered": 11368,
+      "by_party": {
+        "Democratic": 3852,
+        "Republican": 6431,
+        "Other": 1085
+      }
+    },
+    {
+      "name": "Trimble",
+      "fips": "21223",
+      "total_registered": 6974,
+      "by_party": {
+        "Democratic": 3133,
+        "Republican": 3228,
+        "Other": 613
+      }
+    },
+    {
+      "name": "Union",
+      "fips": "21225",
+      "total_registered": 9829,
+      "by_party": {
+        "Democratic": 4737,
+        "Republican": 4399,
+        "Other": 693
+      }
+    },
+    {
+      "name": "Warren",
+      "fips": "21227",
+      "total_registered": 92300,
+      "by_party": {
+        "Democratic": 37125,
+        "Republican": 43077,
+        "Other": 12098
+      }
+    },
+    {
+      "name": "Washington",
+      "fips": "21229",
+      "total_registered": 9399,
+      "by_party": {
+        "Democratic": 3812,
+        "Republican": 4871,
+        "Other": 716
+      }
+    },
+    {
+      "name": "Wayne",
+      "fips": "21231",
+      "total_registered": 14413,
+      "by_party": {
+        "Democratic": 3206,
+        "Republican": 10159,
+        "Other": 1048
+      }
+    },
+    {
+      "name": "Webster",
+      "fips": "21233",
+      "total_registered": 8715,
+      "by_party": {
+        "Democratic": 4096,
+        "Republican": 3969,
+        "Other": 650
+      }
+    },
+    {
+      "name": "Whitley",
+      "fips": "21235",
+      "total_registered": 25923,
+      "by_party": {
+        "Democratic": 4468,
+        "Republican": 19508,
+        "Other": 1947
+      }
+    },
+    {
+      "name": "Wolfe",
+      "fips": "21237",
+      "total_registered": 5193,
+      "by_party": {
+        "Democratic": 3727,
+        "Republican": 1184,
+        "Other": 282
+      }
+    },
+    {
+      "name": "Woodford",
+      "fips": "21239",
+      "total_registered": 21748,
+      "by_party": {
+        "Democratic": 9619,
+        "Republican": 9739,
+        "Other": 2390
+      }
+    }
+  ],
+  "as_of_notes": "Report labeled 'May, 2026' by the KY State Board of Elections. Per the agency's published schedule, statistic files are run for the preceding month on the first day of the following month, so the May 2026 file reflects data as of approximately 2026-06-01. This is the most recent monthly Voter Registration Statistics Report available (a separate 'May Primary 2026' snapshot also exists but the regular monthly May 2026 file is the latest standard report).",
+  "data_quality": "high \u2014 extracted directly from the official KY State Board of Elections county-level PDF; all 120 counties present; per-county party sums (Dem+Rep+Other) equal each county's total; county sums equal the PDF's statewide totals line exactly (Dem 1,371,232 + Rep 1,614,657 + Other 379,659 = 3,365,548).",
+  "notes": "Kentucky registers by party. 'Other' here aggregates all non-major-party registrations from the source columns: Other, Independent, Libertarian, Green, Constitution, Reform, Socialist Workers, and Kentucky Party. County FIPS computed from KY's alphabetical county numbering (state FIPS 21 + odd county code 2N-1). Source PDF also breaks out Male/Female and precinct counts, not included here."
+}

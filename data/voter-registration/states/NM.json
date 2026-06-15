@@ -1,0 +1,420 @@
+{
+  "state": "New Mexico",
+  "state_abbr": "NM",
+  "state_fips": "35",
+  "as_of_date": "2026-05-31",
+  "source_name": "New Mexico Secretary of State, Voter Registration Statistics \u2014 Statewide by County (May 2026)",
+  "source_url": "https://www.sos.nm.gov/voting-and-elections/data-and-maps/voter-registration-statistics/2026-voter-registration-data/",
+  "registers_by_party": true,
+  "statewide_total_registered": 1423734,
+  "statewide_by_party": {
+    "Democratic": 573161,
+    "Republican": 442802,
+    "DeclineToState": 380276,
+    "Libertarian": null,
+    "Other": 27495
+  },
+  "county_unit_label": "county",
+  "county_level_available": true,
+  "counties": [
+    {
+      "name": "Bernalillo",
+      "fips": "35001",
+      "total_registered": 447967,
+      "by_party": {
+        "Democratic": 197332,
+        "Republican": 120569,
+        "DeclineToState": 121396,
+        "Libertarian": null,
+        "Other": 8670
+      }
+    },
+    {
+      "name": "Catron",
+      "fips": "35003",
+      "total_registered": 3313,
+      "by_party": {
+        "Democratic": 526,
+        "Republican": 2058,
+        "DeclineToState": 677,
+        "Libertarian": null,
+        "Other": 52
+      }
+    },
+    {
+      "name": "Chaves",
+      "fips": "35005",
+      "total_registered": 37547,
+      "by_party": {
+        "Democratic": 8455,
+        "Republican": 18362,
+        "DeclineToState": 9877,
+        "Libertarian": null,
+        "Other": 853
+      }
+    },
+    {
+      "name": "Cibola",
+      "fips": "35006",
+      "total_registered": 16623,
+      "by_party": {
+        "Democratic": 7905,
+        "Republican": 4156,
+        "DeclineToState": 4209,
+        "Libertarian": null,
+        "Other": 353
+      }
+    },
+    {
+      "name": "Colfax",
+      "fips": "35007",
+      "total_registered": 8539,
+      "by_party": {
+        "Democratic": 3114,
+        "Republican": 3145,
+        "DeclineToState": 2123,
+        "Libertarian": null,
+        "Other": 157
+      }
+    },
+    {
+      "name": "Curry",
+      "fips": "35009",
+      "total_registered": 26456,
+      "by_party": {
+        "Democratic": 5792,
+        "Republican": 12419,
+        "DeclineToState": 7679,
+        "Libertarian": null,
+        "Other": 566
+      }
+    },
+    {
+      "name": "De Baca",
+      "fips": "35011",
+      "total_registered": 1318,
+      "by_party": {
+        "Democratic": 376,
+        "Republican": 687,
+        "DeclineToState": 236,
+        "Libertarian": null,
+        "Other": 19
+      }
+    },
+    {
+      "name": "Dona Ana",
+      "fips": "35013",
+      "total_registered": 146761,
+      "by_party": {
+        "Democratic": 59144,
+        "Republican": 38562,
+        "DeclineToState": 46193,
+        "Libertarian": null,
+        "Other": 2862
+      }
+    },
+    {
+      "name": "Eddy",
+      "fips": "35015",
+      "total_registered": 37625,
+      "by_party": {
+        "Democratic": 7782,
+        "Republican": 20296,
+        "DeclineToState": 8851,
+        "Libertarian": null,
+        "Other": 696
+      }
+    },
+    {
+      "name": "Grant",
+      "fips": "35017",
+      "total_registered": 21652,
+      "by_party": {
+        "Democratic": 9795,
+        "Republican": 6333,
+        "DeclineToState": 5116,
+        "Libertarian": null,
+        "Other": 408
+      }
+    },
+    {
+      "name": "Guadalupe",
+      "fips": "35019",
+      "total_registered": 3051,
+      "by_party": {
+        "Democratic": 1971,
+        "Republican": 627,
+        "DeclineToState": 423,
+        "Libertarian": null,
+        "Other": 30
+      }
+    },
+    {
+      "name": "Harding",
+      "fips": "35021",
+      "total_registered": 570,
+      "by_party": {
+        "Democratic": 136,
+        "Republican": 365,
+        "DeclineToState": 66,
+        "Libertarian": null,
+        "Other": 3
+      }
+    },
+    {
+      "name": "Hidalgo",
+      "fips": "35023",
+      "total_registered": 2988,
+      "by_party": {
+        "Democratic": 1357,
+        "Republican": 1126,
+        "DeclineToState": 458,
+        "Libertarian": null,
+        "Other": 47
+      }
+    },
+    {
+      "name": "Lea",
+      "fips": "35025",
+      "total_registered": 39231,
+      "by_party": {
+        "Democratic": 6866,
+        "Republican": 20366,
+        "DeclineToState": 11255,
+        "Libertarian": null,
+        "Other": 744
+      }
+    },
+    {
+      "name": "Lincoln",
+      "fips": "35027",
+      "total_registered": 14693,
+      "by_party": {
+        "Democratic": 2816,
+        "Republican": 8219,
+        "DeclineToState": 3390,
+        "Libertarian": null,
+        "Other": 268
+      }
+    },
+    {
+      "name": "Los Alamos",
+      "fips": "35028",
+      "total_registered": 16374,
+      "by_party": {
+        "Democratic": 6583,
+        "Republican": 4386,
+        "DeclineToState": 5075,
+        "Libertarian": null,
+        "Other": 330
+      }
+    },
+    {
+      "name": "Luna",
+      "fips": "35029",
+      "total_registered": 14258,
+      "by_party": {
+        "Democratic": 4897,
+        "Republican": 4826,
+        "DeclineToState": 4244,
+        "Libertarian": null,
+        "Other": 291
+      }
+    },
+    {
+      "name": "McKinley",
+      "fips": "35031",
+      "total_registered": 46954,
+      "by_party": {
+        "Democratic": 25219,
+        "Republican": 8236,
+        "DeclineToState": 12504,
+        "Libertarian": null,
+        "Other": 995
+      }
+    },
+    {
+      "name": "Mora",
+      "fips": "35033",
+      "total_registered": 3873,
+      "by_party": {
+        "Democratic": 2568,
+        "Republican": 809,
+        "DeclineToState": 449,
+        "Libertarian": null,
+        "Other": 47
+      }
+    },
+    {
+      "name": "Otero",
+      "fips": "35035",
+      "total_registered": 41835,
+      "by_party": {
+        "Democratic": 10024,
+        "Republican": 17994,
+        "DeclineToState": 12881,
+        "Libertarian": null,
+        "Other": 936
+      }
+    },
+    {
+      "name": "Quay",
+      "fips": "35037",
+      "total_registered": 5967,
+      "by_party": {
+        "Democratic": 1595,
+        "Republican": 2906,
+        "DeclineToState": 1383,
+        "Libertarian": null,
+        "Other": 83
+      }
+    },
+    {
+      "name": "Rio Arriba",
+      "fips": "35039",
+      "total_registered": 26851,
+      "by_party": {
+        "Democratic": 16544,
+        "Republican": 4652,
+        "DeclineToState": 5225,
+        "Libertarian": null,
+        "Other": 430
+      }
+    },
+    {
+      "name": "Roosevelt",
+      "fips": "35041",
+      "total_registered": 11673,
+      "by_party": {
+        "Democratic": 2338,
+        "Republican": 5923,
+        "DeclineToState": 3138,
+        "Libertarian": null,
+        "Other": 274
+      }
+    },
+    {
+      "name": "San Juan",
+      "fips": "35045",
+      "total_registered": 84598,
+      "by_party": {
+        "Democratic": 20892,
+        "Republican": 37646,
+        "DeclineToState": 24231,
+        "Libertarian": null,
+        "Other": 1829
+      }
+    },
+    {
+      "name": "San Miguel",
+      "fips": "35047",
+      "total_registered": 18116,
+      "by_party": {
+        "Democratic": 11008,
+        "Republican": 3323,
+        "DeclineToState": 3495,
+        "Libertarian": null,
+        "Other": 290
+      }
+    },
+    {
+      "name": "Sandoval",
+      "fips": "35043",
+      "total_registered": 116985,
+      "by_party": {
+        "Democratic": 45336,
+        "Republican": 38660,
+        "DeclineToState": 30884,
+        "Libertarian": null,
+        "Other": 2105
+      }
+    },
+    {
+      "name": "Santa Fe",
+      "fips": "35049",
+      "total_registered": 116391,
+      "by_party": {
+        "Democratic": 68516,
+        "Republican": 18162,
+        "DeclineToState": 27874,
+        "Libertarian": null,
+        "Other": 1839
+      }
+    },
+    {
+      "name": "Sierra",
+      "fips": "35051",
+      "total_registered": 8612,
+      "by_party": {
+        "Democratic": 2301,
+        "Republican": 3881,
+        "DeclineToState": 2255,
+        "Libertarian": null,
+        "Other": 175
+      }
+    },
+    {
+      "name": "Socorro",
+      "fips": "35053",
+      "total_registered": 11237,
+      "by_party": {
+        "Democratic": 4724,
+        "Republican": 3759,
+        "DeclineToState": 2545,
+        "Libertarian": null,
+        "Other": 209
+      }
+    },
+    {
+      "name": "Taos",
+      "fips": "35055",
+      "total_registered": 26641,
+      "by_party": {
+        "Democratic": 16609,
+        "Republican": 3849,
+        "DeclineToState": 5690,
+        "Libertarian": null,
+        "Other": 493
+      }
+    },
+    {
+      "name": "Torrance",
+      "fips": "35057",
+      "total_registered": 11316,
+      "by_party": {
+        "Democratic": 2760,
+        "Republican": 5477,
+        "DeclineToState": 2795,
+        "Libertarian": null,
+        "Other": 284
+      }
+    },
+    {
+      "name": "Union",
+      "fips": "35059",
+      "total_registered": 2532,
+      "by_party": {
+        "Democratic": 632,
+        "Republican": 1413,
+        "DeclineToState": 450,
+        "Libertarian": null,
+        "Other": 37
+      }
+    },
+    {
+      "name": "Valencia",
+      "fips": "35061",
+      "total_registered": 51187,
+      "by_party": {
+        "Democratic": 17248,
+        "Republican": 19610,
+        "DeclineToState": 13209,
+        "Libertarian": null,
+        "Other": 1120
+      }
+    }
+  ],
+  "as_of_notes": "Official monthly report 'New Mexico Voter Registration Statistics \u2014 Statewide by County', as of May 31, 2026 (most recent available; June 2026 not yet posted as of retrieval). Source PDF 'Statewide 05-31-2026.pdf' published in the SOS 2026 Voter Registration Data section (RealFile widget; direct file: https://klvg4oyd4j.execute-api.us-west-2.amazonaws.com/prod/PublicFiles/ee3072ab0d43456cb15a51f7d82c77a2/ac289a49-50f1-4a68-b380-971e62cecd05/Statewide%2005-31-2026.pdf ).",
+  "data_quality": "high",
+  "notes": "All 33 New Mexico counties included. Party categories follow the official SOS report: Democratic, Republican, 'No Party/Declined to Select' (mapped to DeclineToState / DTS), and 'Other'. The SOS report does NOT break out Libertarian separately \u2014 Libertarian and all minor parties are aggregated into 'Other', so Libertarian is null. Sums verified: each county's party columns sum to its total, and county totals sum to the statewide total of 1,423,734 (DEM 573,161; REP 442,802; DTS 380,276; Other 27,495), matching the report's printed TOTAL line exactly. FIPS codes assigned per ANSI/Census NM county codes."
+}

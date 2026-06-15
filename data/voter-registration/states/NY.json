@@ -1,0 +1,831 @@
+{
+  "state": "New York",
+  "state_abbr": "NY",
+  "state_fips": "36",
+  "as_of_date": "2026-02-20",
+  "source_name": "New York State Board of Elections \u2014 NYSVoter Enrollment by County, Party Affiliation and Status (Active voters)",
+  "source_url": "https://elections.ny.gov/system/files/documents/2026/02/county_feb26.xlsx",
+  "registers_by_party": true,
+  "statewide_total_registered": 12547142,
+  "statewide_by_party": {
+    "Democratic": 6002006,
+    "Republican": 2835976,
+    "Conservative": 160464,
+    "WorkingFamilies": 59617,
+    "Other": 301469,
+    "Blank": 3187610
+  },
+  "county_unit_label": "county",
+  "county_level_available": true,
+  "counties": [
+    {
+      "name": "Albany",
+      "fips": "36001",
+      "total_registered": 207487,
+      "by_party": {
+        "Democratic": 99814,
+        "Republican": 36791,
+        "Conservative": 3894,
+        "WorkingFamilies": 1229,
+        "Blank": 59166,
+        "Other": 6593
+      }
+    },
+    {
+      "name": "Allegany",
+      "fips": "36003",
+      "total_registered": 26905,
+      "by_party": {
+        "Democratic": 5076,
+        "Republican": 14010,
+        "Conservative": 545,
+        "WorkingFamilies": 135,
+        "Blank": 6147,
+        "Other": 992
+      }
+    },
+    {
+      "name": "Bronx",
+      "fips": "36005",
+      "total_registered": 738409,
+      "by_party": {
+        "Democratic": 519206,
+        "Republican": 55254,
+        "Conservative": 3514,
+        "WorkingFamilies": 3860,
+        "Blank": 146520,
+        "Other": 10055
+      }
+    },
+    {
+      "name": "Broome",
+      "fips": "36007",
+      "total_registered": 126984,
+      "by_party": {
+        "Democratic": 43398,
+        "Republican": 42562,
+        "Conservative": 1824,
+        "WorkingFamilies": 840,
+        "Blank": 33314,
+        "Other": 5046
+      }
+    },
+    {
+      "name": "Cattaraugus",
+      "fips": "36009",
+      "total_registered": 48099,
+      "by_party": {
+        "Democratic": 12039,
+        "Republican": 20617,
+        "Conservative": 1267,
+        "WorkingFamilies": 250,
+        "Blank": 12095,
+        "Other": 1831
+      }
+    },
+    {
+      "name": "Cayuga",
+      "fips": "36011",
+      "total_registered": 48464,
+      "by_party": {
+        "Democratic": 13873,
+        "Republican": 18058,
+        "Conservative": 1414,
+        "WorkingFamilies": 319,
+        "Blank": 13121,
+        "Other": 1679
+      }
+    },
+    {
+      "name": "Chautauqua",
+      "fips": "36013",
+      "total_registered": 79724,
+      "by_party": {
+        "Democratic": 22485,
+        "Republican": 28924,
+        "Conservative": 2095,
+        "WorkingFamilies": 493,
+        "Blank": 22205,
+        "Other": 3522
+      }
+    },
+    {
+      "name": "Chemung",
+      "fips": "36015",
+      "total_registered": 51918,
+      "by_party": {
+        "Democratic": 14233,
+        "Republican": 21202,
+        "Conservative": 911,
+        "WorkingFamilies": 259,
+        "Blank": 13175,
+        "Other": 2138
+      }
+    },
+    {
+      "name": "Chenango",
+      "fips": "36017",
+      "total_registered": 30547,
+      "by_party": {
+        "Democratic": 6572,
+        "Republican": 13746,
+        "Conservative": 562,
+        "WorkingFamilies": 160,
+        "Blank": 8189,
+        "Other": 1318
+      }
+    },
+    {
+      "name": "Clinton",
+      "fips": "36019",
+      "total_registered": 50297,
+      "by_party": {
+        "Democratic": 16566,
+        "Republican": 16051,
+        "Conservative": 643,
+        "WorkingFamilies": 292,
+        "Blank": 14240,
+        "Other": 2505
+      }
+    },
+    {
+      "name": "Columbia",
+      "fips": "36021",
+      "total_registered": 46649,
+      "by_party": {
+        "Democratic": 18476,
+        "Republican": 12191,
+        "Conservative": 1025,
+        "WorkingFamilies": 323,
+        "Blank": 12893,
+        "Other": 1741
+      }
+    },
+    {
+      "name": "Cortland",
+      "fips": "36023",
+      "total_registered": 28713,
+      "by_party": {
+        "Democratic": 8394,
+        "Republican": 10647,
+        "Conservative": 500,
+        "WorkingFamilies": 129,
+        "Blank": 7844,
+        "Other": 1199
+      }
+    },
+    {
+      "name": "Delaware",
+      "fips": "36025",
+      "total_registered": 30272,
+      "by_party": {
+        "Democratic": 8214,
+        "Republican": 12873,
+        "Conservative": 539,
+        "WorkingFamilies": 133,
+        "Blank": 7285,
+        "Other": 1228
+      }
+    },
+    {
+      "name": "Dutchess",
+      "fips": "36027",
+      "total_registered": 204858,
+      "by_party": {
+        "Democratic": 74714,
+        "Republican": 56019,
+        "Conservative": 3952,
+        "WorkingFamilies": 1113,
+        "Blank": 60876,
+        "Other": 8184
+      }
+    },
+    {
+      "name": "Erie",
+      "fips": "36029",
+      "total_registered": 621485,
+      "by_party": {
+        "Democratic": 273054,
+        "Republican": 160016,
+        "Conservative": 15270,
+        "WorkingFamilies": 3958,
+        "Blank": 151832,
+        "Other": 17355
+      }
+    },
+    {
+      "name": "Essex",
+      "fips": "36031",
+      "total_registered": 25930,
+      "by_party": {
+        "Democratic": 7561,
+        "Republican": 10606,
+        "Conservative": 302,
+        "WorkingFamilies": 115,
+        "Blank": 6150,
+        "Other": 1196
+      }
+    },
+    {
+      "name": "Franklin",
+      "fips": "36033",
+      "total_registered": 27365,
+      "by_party": {
+        "Democratic": 9235,
+        "Republican": 9729,
+        "Conservative": 418,
+        "WorkingFamilies": 135,
+        "Blank": 6622,
+        "Other": 1226
+      }
+    },
+    {
+      "name": "Fulton",
+      "fips": "36035",
+      "total_registered": 34300,
+      "by_party": {
+        "Democratic": 6841,
+        "Republican": 16830,
+        "Conservative": 721,
+        "WorkingFamilies": 150,
+        "Blank": 8444,
+        "Other": 1314
+      }
+    },
+    {
+      "name": "Genesee",
+      "fips": "36037",
+      "total_registered": 38932,
+      "by_party": {
+        "Democratic": 8264,
+        "Republican": 17621,
+        "Conservative": 1102,
+        "WorkingFamilies": 188,
+        "Blank": 10268,
+        "Other": 1489
+      }
+    },
+    {
+      "name": "Greene",
+      "fips": "36039",
+      "total_registered": 32975,
+      "by_party": {
+        "Democratic": 8877,
+        "Republican": 12363,
+        "Conservative": 811,
+        "WorkingFamilies": 198,
+        "Blank": 9423,
+        "Other": 1303
+      }
+    },
+    {
+      "name": "Hamilton",
+      "fips": "36041",
+      "total_registered": 4182,
+      "by_party": {
+        "Democratic": 802,
+        "Republican": 2355,
+        "Conservative": 80,
+        "WorkingFamilies": 10,
+        "Blank": 931,
+        "Other": 4
+      }
+    },
+    {
+      "name": "Herkimer",
+      "fips": "36043",
+      "total_registered": 39875,
+      "by_party": {
+        "Democratic": 8571,
+        "Republican": 19271,
+        "Conservative": 810,
+        "WorkingFamilies": 145,
+        "Blank": 9186,
+        "Other": 1892
+      }
+    },
+    {
+      "name": "Jefferson",
+      "fips": "36045",
+      "total_registered": 62247,
+      "by_party": {
+        "Democratic": 14665,
+        "Republican": 26877,
+        "Conservative": 1100,
+        "WorkingFamilies": 260,
+        "Blank": 17314,
+        "Other": 2031
+      }
+    },
+    {
+      "name": "Kings",
+      "fips": "36047",
+      "total_registered": 1565595,
+      "by_party": {
+        "Democratic": 1086640,
+        "Republican": 143398,
+        "Conservative": 4978,
+        "WorkingFamilies": 8707,
+        "Blank": 301704,
+        "Other": 20168
+      }
+    },
+    {
+      "name": "Lewis",
+      "fips": "36049",
+      "total_registered": 17631,
+      "by_party": {
+        "Democratic": 3327,
+        "Republican": 9719,
+        "Conservative": 355,
+        "WorkingFamilies": 49,
+        "Blank": 3550,
+        "Other": 631
+      }
+    },
+    {
+      "name": "Livingston",
+      "fips": "36051",
+      "total_registered": 40661,
+      "by_party": {
+        "Democratic": 9755,
+        "Republican": 17895,
+        "Conservative": 958,
+        "WorkingFamilies": 145,
+        "Blank": 10369,
+        "Other": 1539
+      }
+    },
+    {
+      "name": "Madison",
+      "fips": "36053",
+      "total_registered": 44228,
+      "by_party": {
+        "Democratic": 11268,
+        "Republican": 17276,
+        "Conservative": 925,
+        "WorkingFamilies": 237,
+        "Blank": 12338,
+        "Other": 2184
+      }
+    },
+    {
+      "name": "Monroe",
+      "fips": "36055",
+      "total_registered": 494974,
+      "by_party": {
+        "Democratic": 201731,
+        "Republican": 125214,
+        "Conservative": 8497,
+        "WorkingFamilies": 2409,
+        "Blank": 157058,
+        "Other": 65
+      }
+    },
+    {
+      "name": "Montgomery",
+      "fips": "36057",
+      "total_registered": 29966,
+      "by_party": {
+        "Democratic": 8231,
+        "Republican": 11138,
+        "Conservative": 841,
+        "WorkingFamilies": 153,
+        "Blank": 8339,
+        "Other": 1264
+      }
+    },
+    {
+      "name": "Nassau",
+      "fips": "36059",
+      "total_registered": 1002784,
+      "by_party": {
+        "Democratic": 375694,
+        "Republican": 305580,
+        "Conservative": 9656,
+        "WorkingFamilies": 2466,
+        "Blank": 284686,
+        "Other": 24702
+      }
+    },
+    {
+      "name": "New York",
+      "fips": "36061",
+      "total_registered": 1054808,
+      "by_party": {
+        "Democratic": 743371,
+        "Republican": 79775,
+        "Conservative": 2180,
+        "WorkingFamilies": 3624,
+        "Blank": 211545,
+        "Other": 14313
+      }
+    },
+    {
+      "name": "Niagara",
+      "fips": "36063",
+      "total_registered": 142821,
+      "by_party": {
+        "Democratic": 48210,
+        "Republican": 49723,
+        "Conservative": 3920,
+        "WorkingFamilies": 1392,
+        "Blank": 34108,
+        "Other": 5468
+      }
+    },
+    {
+      "name": "Oneida",
+      "fips": "36065",
+      "total_registered": 136887,
+      "by_party": {
+        "Democratic": 40654,
+        "Republican": 53112,
+        "Conservative": 2350,
+        "WorkingFamilies": 593,
+        "Blank": 33798,
+        "Other": 6380
+      }
+    },
+    {
+      "name": "Onondaga",
+      "fips": "36067",
+      "total_registered": 308109,
+      "by_party": {
+        "Democratic": 113865,
+        "Republican": 82895,
+        "Conservative": 5170,
+        "WorkingFamilies": 1575,
+        "Blank": 93278,
+        "Other": 11326
+      }
+    },
+    {
+      "name": "Ontario",
+      "fips": "36069",
+      "total_registered": 78746,
+      "by_party": {
+        "Democratic": 22803,
+        "Republican": 28939,
+        "Conservative": 1611,
+        "WorkingFamilies": 246,
+        "Blank": 22217,
+        "Other": 2930
+      }
+    },
+    {
+      "name": "Orange",
+      "fips": "36071",
+      "total_registered": 251095,
+      "by_party": {
+        "Democratic": 91174,
+        "Republican": 75383,
+        "Conservative": 5232,
+        "WorkingFamilies": 1651,
+        "Blank": 68687,
+        "Other": 8968
+      }
+    },
+    {
+      "name": "Orleans",
+      "fips": "36073",
+      "total_registered": 25697,
+      "by_party": {
+        "Democratic": 5049,
+        "Republican": 12417,
+        "Conservative": 661,
+        "WorkingFamilies": 144,
+        "Blank": 6594,
+        "Other": 832
+      }
+    },
+    {
+      "name": "Oswego",
+      "fips": "36075",
+      "total_registered": 75179,
+      "by_party": {
+        "Democratic": 16279,
+        "Republican": 34610,
+        "Conservative": 1848,
+        "WorkingFamilies": 349,
+        "Blank": 19330,
+        "Other": 2763
+      }
+    },
+    {
+      "name": "Otsego",
+      "fips": "36077",
+      "total_registered": 37388,
+      "by_party": {
+        "Democratic": 10970,
+        "Republican": 14250,
+        "Conservative": 614,
+        "WorkingFamilies": 175,
+        "Blank": 9872,
+        "Other": 1507
+      }
+    },
+    {
+      "name": "Putnam",
+      "fips": "36079",
+      "total_registered": 72796,
+      "by_party": {
+        "Democratic": 22080,
+        "Republican": 24723,
+        "Conservative": 1689,
+        "WorkingFamilies": 292,
+        "Blank": 21235,
+        "Other": 2777
+      }
+    },
+    {
+      "name": "Queens",
+      "fips": "36081",
+      "total_registered": 1283255,
+      "by_party": {
+        "Democratic": 778274,
+        "Republican": 156217,
+        "Conservative": 5794,
+        "WorkingFamilies": 5058,
+        "Blank": 317276,
+        "Other": 20636
+      }
+    },
+    {
+      "name": "Rensselaer",
+      "fips": "36083",
+      "total_registered": 108733,
+      "by_party": {
+        "Democratic": 33747,
+        "Republican": 27324,
+        "Conservative": 4535,
+        "WorkingFamilies": 1946,
+        "Blank": 35880,
+        "Other": 5301
+      }
+    },
+    {
+      "name": "Richmond",
+      "fips": "36085",
+      "total_registered": 318166,
+      "by_party": {
+        "Democratic": 122091,
+        "Republican": 102166,
+        "Conservative": 4107,
+        "WorkingFamilies": 1194,
+        "Blank": 81193,
+        "Other": 7415
+      }
+    },
+    {
+      "name": "Rockland",
+      "fips": "36087",
+      "total_registered": 211600,
+      "by_party": {
+        "Democratic": 92123,
+        "Republican": 52960,
+        "Conservative": 4433,
+        "WorkingFamilies": 1139,
+        "Blank": 55250,
+        "Other": 5695
+      }
+    },
+    {
+      "name": "St. Lawrence",
+      "fips": "36089",
+      "total_registered": 62377,
+      "by_party": {
+        "Democratic": 19050,
+        "Republican": 23513,
+        "Conservative": 1154,
+        "WorkingFamilies": 275,
+        "Blank": 15461,
+        "Other": 2924
+      }
+    },
+    {
+      "name": "Saratoga",
+      "fips": "36091",
+      "total_registered": 180683,
+      "by_party": {
+        "Democratic": 52452,
+        "Republican": 63440,
+        "Conservative": 3372,
+        "WorkingFamilies": 631,
+        "Blank": 53858,
+        "Other": 6930
+      }
+    },
+    {
+      "name": "Schenectady",
+      "fips": "36093",
+      "total_registered": 101600,
+      "by_party": {
+        "Democratic": 39279,
+        "Republican": 23523,
+        "Conservative": 3298,
+        "WorkingFamilies": 876,
+        "Blank": 31168,
+        "Other": 3456
+      }
+    },
+    {
+      "name": "Schoharie",
+      "fips": "36095",
+      "total_registered": 21003,
+      "by_party": {
+        "Democratic": 4933,
+        "Republican": 8640,
+        "Conservative": 585,
+        "WorkingFamilies": 119,
+        "Blank": 5785,
+        "Other": 941
+      }
+    },
+    {
+      "name": "Schuyler",
+      "fips": "36097",
+      "total_registered": 12705,
+      "by_party": {
+        "Democratic": 3256,
+        "Republican": 5400,
+        "Conservative": 256,
+        "WorkingFamilies": 64,
+        "Blank": 3214,
+        "Other": 515
+      }
+    },
+    {
+      "name": "Seneca",
+      "fips": "36099",
+      "total_registered": 20650,
+      "by_party": {
+        "Democratic": 5749,
+        "Republican": 8151,
+        "Conservative": 447,
+        "WorkingFamilies": 112,
+        "Blank": 5407,
+        "Other": 784
+      }
+    },
+    {
+      "name": "Steuben",
+      "fips": "36101",
+      "total_registered": 62026,
+      "by_party": {
+        "Democratic": 13491,
+        "Republican": 30590,
+        "Conservative": 1185,
+        "WorkingFamilies": 279,
+        "Blank": 14490,
+        "Other": 1991
+      }
+    },
+    {
+      "name": "Suffolk",
+      "fips": "36103",
+      "total_registered": 1077633,
+      "by_party": {
+        "Democratic": 352756,
+        "Republican": 338534,
+        "Conservative": 20558,
+        "WorkingFamilies": 4243,
+        "Blank": 332281,
+        "Other": 29261
+      }
+    },
+    {
+      "name": "Sullivan",
+      "fips": "36105",
+      "total_registered": 51587,
+      "by_party": {
+        "Democratic": 17340,
+        "Republican": 17267,
+        "Conservative": 1245,
+        "WorkingFamilies": 294,
+        "Blank": 13875,
+        "Other": 1566
+      }
+    },
+    {
+      "name": "Tioga",
+      "fips": "36107",
+      "total_registered": 32805,
+      "by_party": {
+        "Democratic": 7906,
+        "Republican": 14691,
+        "Conservative": 583,
+        "WorkingFamilies": 125,
+        "Blank": 8080,
+        "Other": 1420
+      }
+    },
+    {
+      "name": "Tompkins",
+      "fips": "36109",
+      "total_registered": 59839,
+      "by_party": {
+        "Democratic": 32107,
+        "Republican": 10269,
+        "Conservative": 430,
+        "WorkingFamilies": 459,
+        "Blank": 14898,
+        "Other": 1676
+      }
+    },
+    {
+      "name": "Ulster",
+      "fips": "36111",
+      "total_registered": 128819,
+      "by_party": {
+        "Democratic": 53774,
+        "Republican": 29005,
+        "Conservative": 2513,
+        "WorkingFamilies": 1020,
+        "Blank": 38375,
+        "Other": 4132
+      }
+    },
+    {
+      "name": "Warren",
+      "fips": "36113",
+      "total_registered": 47218,
+      "by_party": {
+        "Democratic": 12671,
+        "Republican": 19311,
+        "Conservative": 823,
+        "WorkingFamilies": 166,
+        "Blank": 12204,
+        "Other": 2043
+      }
+    },
+    {
+      "name": "Washington",
+      "fips": "36115",
+      "total_registered": 39334,
+      "by_party": {
+        "Democratic": 9098,
+        "Republican": 16420,
+        "Conservative": 813,
+        "WorkingFamilies": 201,
+        "Blank": 11073,
+        "Other": 1729
+      }
+    },
+    {
+      "name": "Wayne",
+      "fips": "36117",
+      "total_registered": 60148,
+      "by_party": {
+        "Democratic": 13620,
+        "Republican": 24841,
+        "Conservative": 1690,
+        "WorkingFamilies": 294,
+        "Blank": 17538,
+        "Other": 2165
+      }
+    },
+    {
+      "name": "Westchester",
+      "fips": "36119",
+      "total_registered": 641819,
+      "by_party": {
+        "Democratic": 318479,
+        "Republican": 123917,
+        "Conservative": 6946,
+        "WorkingFamilies": 2070,
+        "Blank": 174517,
+        "Other": 15890
+      }
+    },
+    {
+      "name": "Wyoming",
+      "fips": "36121",
+      "total_registered": 24949,
+      "by_party": {
+        "Democratic": 4554,
+        "Republican": 12563,
+        "Conservative": 634,
+        "WorkingFamilies": 94,
+        "Blank": 6347,
+        "Other": 757
+      }
+    },
+    {
+      "name": "Yates",
+      "fips": "36123",
+      "total_registered": 14211,
+      "by_party": {
+        "Democratic": 3225,
+        "Republican": 6574,
+        "Conservative": 279,
+        "WorkingFamilies": 57,
+        "Blank": 3492,
+        "Other": 584
+      }
+    }
+  ],
+  "as_of_notes": "Official NYS Board of Elections enrollment snapshot 'Voters Registered as of February 20, 2026'. Figures reported here are ACTIVE registered voters. The report also lists Inactive and Total (Active+Inactive); statewide Total incl. inactive = 13,408,058 (Active = 12,547,142).",
+  "data_quality": "high",
+  "notes": "Numbers are ACTIVE voters only (per by-party Active rows). NYC's five boroughs are reported as counties: Bronx, Kings (Brooklyn), New York (Manhattan), Queens, Richmond (Staten Island). All 62 counties present. County active totals sum exactly to statewide active total; each county's party columns sum exactly to its active total. Party columns: DEM=Democratic, REP=Republican, CON=Conservative, WOR=Working Families, BLANK=blank/no party, OTH=Other/minor parties. Statewide TOTAL (incl. inactive): DEM 6,445,605; REP 2,994,839; CON 169,313; WOR 63,467; OTH 324,546; BLANK 3,410,288; total 13,408,058. Primary source elections.ny.gov was WAF-blocked to automated fetch; identical official file retrieved from NYC Board of Elections mirror (https://www.vote.nyc/sites/default/files/pdf/vote/2026/county_feb26.xlsx)."
+}
