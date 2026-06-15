@@ -1,0 +1,666 @@
+{
+  "state": "Illinois",
+  "state_abbr": "IL",
+  "state_fips": "17",
+  "as_of_date": "2024-11-05",
+  "source_name": "Illinois State Board of Elections (statewide certified total) and U.S. Election Assistance Commission 2024 EAVS (per-jurisdiction active registrations, ISBE-submitted data)",
+  "source_url": "https://www.elections.il.gov/electionoperations/ElectionVoteTotals.aspx",
+  "registers_by_party": false,
+  "statewide_total_registered": 8101424,
+  "statewide_by_party": null,
+  "county_unit_label": "election jurisdiction",
+  "county_level_available": true,
+  "counties": [
+    {
+      "name": "Adams",
+      "fips": "17001",
+      "total_registered": 44627,
+      "by_party": null
+    },
+    {
+      "name": "Alexander",
+      "fips": "17003",
+      "total_registered": 3806,
+      "by_party": null
+    },
+    {
+      "name": "Bloomington (city election board)",
+      "fips": "17113",
+      "total_registered": 52219,
+      "by_party": null
+    },
+    {
+      "name": "Bond",
+      "fips": "17005",
+      "total_registered": 10297,
+      "by_party": null
+    },
+    {
+      "name": "Boone",
+      "fips": "17007",
+      "total_registered": 34153,
+      "by_party": null
+    },
+    {
+      "name": "Brown",
+      "fips": "17009",
+      "total_registered": 3097,
+      "by_party": null
+    },
+    {
+      "name": "Bureau",
+      "fips": "17011",
+      "total_registered": 22738,
+      "by_party": null
+    },
+    {
+      "name": "Calhoun",
+      "fips": "17013",
+      "total_registered": 3284,
+      "by_party": null
+    },
+    {
+      "name": "Carroll",
+      "fips": "17015",
+      "total_registered": 10405,
+      "by_party": null
+    },
+    {
+      "name": "Cass",
+      "fips": "17017",
+      "total_registered": 7769,
+      "by_party": null
+    },
+    {
+      "name": "Champaign",
+      "fips": "17019",
+      "total_registered": 122822,
+      "by_party": null
+    },
+    {
+      "name": "Chicago (City Board of Election Commissioners)",
+      "fips": "17031",
+      "total_registered": 1498909,
+      "by_party": null
+    },
+    {
+      "name": "Christian",
+      "fips": "17021",
+      "total_registered": 10767,
+      "by_party": null
+    },
+    {
+      "name": "Clark",
+      "fips": "17023",
+      "total_registered": 10993,
+      "by_party": null
+    },
+    {
+      "name": "Clay",
+      "fips": "17025",
+      "total_registered": 9398,
+      "by_party": null
+    },
+    {
+      "name": "Clinton",
+      "fips": "17027",
+      "total_registered": 25960,
+      "by_party": null
+    },
+    {
+      "name": "Coles",
+      "fips": "17029",
+      "total_registered": 29069,
+      "by_party": null
+    },
+    {
+      "name": "Cook (suburban)",
+      "fips": "17031",
+      "total_registered": 1665034,
+      "by_party": null
+    },
+    {
+      "name": "Crawford",
+      "fips": "17033",
+      "total_registered": 12616,
+      "by_party": null
+    },
+    {
+      "name": "Cumberland",
+      "fips": "17035",
+      "total_registered": 7625,
+      "by_party": null
+    },
+    {
+      "name": "Danville (city election board)",
+      "fips": "17183",
+      "total_registered": 15834,
+      "by_party": null
+    },
+    {
+      "name": "DeKalb",
+      "fips": "17037",
+      "total_registered": 65805,
+      "by_party": null
+    },
+    {
+      "name": "DeWitt",
+      "fips": "17039",
+      "total_registered": 10239,
+      "by_party": null
+    },
+    {
+      "name": "Douglas",
+      "fips": "17041",
+      "total_registered": 11617,
+      "by_party": null
+    },
+    {
+      "name": "DuPage",
+      "fips": "17043",
+      "total_registered": 631995,
+      "by_party": null
+    },
+    {
+      "name": "East St. Louis (city election board)",
+      "fips": "17163",
+      "total_registered": 14671,
+      "by_party": null
+    },
+    {
+      "name": "Edgar",
+      "fips": "17045",
+      "total_registered": 11835,
+      "by_party": null
+    },
+    {
+      "name": "Edwards",
+      "fips": "17047",
+      "total_registered": 4238,
+      "by_party": null
+    },
+    {
+      "name": "Effingham",
+      "fips": "17049",
+      "total_registered": 24465,
+      "by_party": null
+    },
+    {
+      "name": "Fayette",
+      "fips": "17051",
+      "total_registered": 13592,
+      "by_party": null
+    },
+    {
+      "name": "Ford",
+      "fips": "17053",
+      "total_registered": 9294,
+      "by_party": null
+    },
+    {
+      "name": "Franklin",
+      "fips": "17055",
+      "total_registered": 29055,
+      "by_party": null
+    },
+    {
+      "name": "Fulton",
+      "fips": "17057",
+      "total_registered": 24741,
+      "by_party": null
+    },
+    {
+      "name": "Galesburg (city election board)",
+      "fips": "17095",
+      "total_registered": 17394,
+      "by_party": null
+    },
+    {
+      "name": "Gallatin",
+      "fips": "17059",
+      "total_registered": 3520,
+      "by_party": null
+    },
+    {
+      "name": "Greene",
+      "fips": "17061",
+      "total_registered": 9286,
+      "by_party": null
+    },
+    {
+      "name": "Grundy",
+      "fips": "17063",
+      "total_registered": 35856,
+      "by_party": null
+    },
+    {
+      "name": "Hamilton",
+      "fips": "17065",
+      "total_registered": 5692,
+      "by_party": null
+    },
+    {
+      "name": "Hancock",
+      "fips": "17067",
+      "total_registered": 11921,
+      "by_party": null
+    },
+    {
+      "name": "Hardin",
+      "fips": "17069",
+      "total_registered": 2997,
+      "by_party": null
+    },
+    {
+      "name": "Henderson",
+      "fips": "17071",
+      "total_registered": 4441,
+      "by_party": null
+    },
+    {
+      "name": "Henry",
+      "fips": "17073",
+      "total_registered": 36350,
+      "by_party": null
+    },
+    {
+      "name": "Iroquois",
+      "fips": "17075",
+      "total_registered": 18217,
+      "by_party": null
+    },
+    {
+      "name": "Jackson",
+      "fips": "17077",
+      "total_registered": 32515,
+      "by_party": null
+    },
+    {
+      "name": "Jasper",
+      "fips": "17079",
+      "total_registered": 6812,
+      "by_party": null
+    },
+    {
+      "name": "Jefferson",
+      "fips": "17081",
+      "total_registered": 24022,
+      "by_party": null
+    },
+    {
+      "name": "Jersey",
+      "fips": "17083",
+      "total_registered": 15442,
+      "by_party": null
+    },
+    {
+      "name": "Jo Daviess",
+      "fips": "17085",
+      "total_registered": 16262,
+      "by_party": null
+    },
+    {
+      "name": "Johnson",
+      "fips": "17087",
+      "total_registered": 7797,
+      "by_party": null
+    },
+    {
+      "name": "Kane",
+      "fips": "17089",
+      "total_registered": 308025,
+      "by_party": null
+    },
+    {
+      "name": "Kankakee",
+      "fips": "17091",
+      "total_registered": 68517,
+      "by_party": null
+    },
+    {
+      "name": "Kendall",
+      "fips": "17093",
+      "total_registered": 91622,
+      "by_party": null
+    },
+    {
+      "name": "Knox",
+      "fips": "17095",
+      "total_registered": 14656,
+      "by_party": null
+    },
+    {
+      "name": "LaSalle",
+      "fips": "17099",
+      "total_registered": 74752,
+      "by_party": null
+    },
+    {
+      "name": "Lake",
+      "fips": "17097",
+      "total_registered": 464526,
+      "by_party": null
+    },
+    {
+      "name": "Lawrence",
+      "fips": "17101",
+      "total_registered": 8927,
+      "by_party": null
+    },
+    {
+      "name": "Lee",
+      "fips": "17103",
+      "total_registered": 21415,
+      "by_party": null
+    },
+    {
+      "name": "Livingston",
+      "fips": "17105",
+      "total_registered": 20758,
+      "by_party": null
+    },
+    {
+      "name": "Logan",
+      "fips": "17107",
+      "total_registered": 9981,
+      "by_party": null
+    },
+    {
+      "name": "Macon",
+      "fips": "17115",
+      "total_registered": 67218,
+      "by_party": null
+    },
+    {
+      "name": "Macoupin",
+      "fips": "17117",
+      "total_registered": 30760,
+      "by_party": null
+    },
+    {
+      "name": "Madison",
+      "fips": "17119",
+      "total_registered": 184284,
+      "by_party": null
+    },
+    {
+      "name": "Marion",
+      "fips": "17121",
+      "total_registered": 25229,
+      "by_party": null
+    },
+    {
+      "name": "Marshall",
+      "fips": "17123",
+      "total_registered": 8435,
+      "by_party": null
+    },
+    {
+      "name": "Mason",
+      "fips": "17125",
+      "total_registered": 9102,
+      "by_party": null
+    },
+    {
+      "name": "Massac",
+      "fips": "17127",
+      "total_registered": 10828,
+      "by_party": null
+    },
+    {
+      "name": "McDonough",
+      "fips": "17109",
+      "total_registered": 16618,
+      "by_party": null
+    },
+    {
+      "name": "McHenry",
+      "fips": "17111",
+      "total_registered": 210472,
+      "by_party": null
+    },
+    {
+      "name": "McLean",
+      "fips": "17113",
+      "total_registered": 67406,
+      "by_party": null
+    },
+    {
+      "name": "Menard",
+      "fips": "17129",
+      "total_registered": 8968,
+      "by_party": null
+    },
+    {
+      "name": "Mercer",
+      "fips": "17131",
+      "total_registered": 12926,
+      "by_party": null
+    },
+    {
+      "name": "Monroe",
+      "fips": "17133",
+      "total_registered": 26339,
+      "by_party": null
+    },
+    {
+      "name": "Montgomery",
+      "fips": "17135",
+      "total_registered": 16956,
+      "by_party": null
+    },
+    {
+      "name": "Morgan",
+      "fips": "17137",
+      "total_registered": 22336,
+      "by_party": null
+    },
+    {
+      "name": "Moultrie",
+      "fips": "17139",
+      "total_registered": 8800,
+      "by_party": null
+    },
+    {
+      "name": "Ogle",
+      "fips": "17141",
+      "total_registered": 34483,
+      "by_party": null
+    },
+    {
+      "name": "Peoria",
+      "fips": "17143",
+      "total_registered": 117790,
+      "by_party": null
+    },
+    {
+      "name": "Perry",
+      "fips": "17145",
+      "total_registered": 15151,
+      "by_party": null
+    },
+    {
+      "name": "Piatt",
+      "fips": "17147",
+      "total_registered": 12142,
+      "by_party": null
+    },
+    {
+      "name": "Pike",
+      "fips": "17149",
+      "total_registered": 10122,
+      "by_party": null
+    },
+    {
+      "name": "Pope",
+      "fips": "17151",
+      "total_registered": 2823,
+      "by_party": null
+    },
+    {
+      "name": "Pulaski",
+      "fips": "17153",
+      "total_registered": 4341,
+      "by_party": null
+    },
+    {
+      "name": "Putnam",
+      "fips": "17155",
+      "total_registered": 4081,
+      "by_party": null
+    },
+    {
+      "name": "Randolph",
+      "fips": "17157",
+      "total_registered": 20290,
+      "by_party": null
+    },
+    {
+      "name": "Richland",
+      "fips": "17159",
+      "total_registered": 9506,
+      "by_party": null
+    },
+    {
+      "name": "Rock Island",
+      "fips": "17161",
+      "total_registered": 86205,
+      "by_party": null
+    },
+    {
+      "name": "Rockford (city election board)",
+      "fips": "17201",
+      "total_registered": 93970,
+      "by_party": null
+    },
+    {
+      "name": "Saline",
+      "fips": "17165",
+      "total_registered": 15631,
+      "by_party": null
+    },
+    {
+      "name": "Sangamon",
+      "fips": "17167",
+      "total_registered": 139246,
+      "by_party": null
+    },
+    {
+      "name": "Schuyler",
+      "fips": "17169",
+      "total_registered": 4979,
+      "by_party": null
+    },
+    {
+      "name": "Scott",
+      "fips": "17171",
+      "total_registered": 3469,
+      "by_party": null
+    },
+    {
+      "name": "Shelby",
+      "fips": "17173",
+      "total_registered": 14893,
+      "by_party": null
+    },
+    {
+      "name": "St. Clair",
+      "fips": "17163",
+      "total_registered": 168619,
+      "by_party": null
+    },
+    {
+      "name": "Stark",
+      "fips": "17175",
+      "total_registered": 3623,
+      "by_party": null
+    },
+    {
+      "name": "Stephenson",
+      "fips": "17177",
+      "total_registered": 26895,
+      "by_party": null
+    },
+    {
+      "name": "Tazewell",
+      "fips": "17179",
+      "total_registered": 91651,
+      "by_party": null
+    },
+    {
+      "name": "Union",
+      "fips": "17181",
+      "total_registered": 12335,
+      "by_party": null
+    },
+    {
+      "name": "Vermilion",
+      "fips": "17183",
+      "total_registered": 27333,
+      "by_party": null
+    },
+    {
+      "name": "Wabash",
+      "fips": "17185",
+      "total_registered": 7669,
+      "by_party": null
+    },
+    {
+      "name": "Warren",
+      "fips": "17187",
+      "total_registered": 9951,
+      "by_party": null
+    },
+    {
+      "name": "Washington",
+      "fips": "17189",
+      "total_registered": 9896,
+      "by_party": null
+    },
+    {
+      "name": "Wayne",
+      "fips": "17191",
+      "total_registered": 11106,
+      "by_party": null
+    },
+    {
+      "name": "White",
+      "fips": "17193",
+      "total_registered": 9702,
+      "by_party": null
+    },
+    {
+      "name": "Whiteside",
+      "fips": "17195",
+      "total_registered": 36572,
+      "by_party": null
+    },
+    {
+      "name": "Will",
+      "fips": "17197",
+      "total_registered": 428909,
+      "by_party": null
+    },
+    {
+      "name": "Williamson",
+      "fips": "17199",
+      "total_registered": 48182,
+      "by_party": null
+    },
+    {
+      "name": "Winnebago",
+      "fips": "17201",
+      "total_registered": 94896,
+      "by_party": null
+    },
+    {
+      "name": "Woodford",
+      "fips": "17203",
+      "total_registered": 27442,
+      "by_party": null
+    }
+  ],
+  "as_of_notes": "Statewide total of 8,101,424 registered voters is the official figure certified by the Illinois State Board of Elections for the November 5, 2024 General Election (certified December 2, 2024; 5,705,246 ballots cast / 70.42% turnout). Per-jurisdiction figures are active registrations as of the November 5, 2024 General Election, taken from the EAC 2024 EAVS public dataset (Version 2.0, errata corrections released 2026-02-12), which is built from data submitted by Illinois's 108 election jurisdictions to ISBE.",
+  "data_quality": "high — statewide total is official ISBE-certified; per-jurisdiction breakdown is ISBE-sourced data via EAVS active registrations. Sum of the 108 per-jurisdiction active registrations = 8,115,252, which reconciles to the ISBE certified statewide total (8,101,424) within ~0.2%. Minor differences arise because EAVS 'active' counts differ slightly from the ISBE certification snapshot, and Christian County's active count was missing in EAVS (-99) so its total-registration figure (10,767) was substituted.",
+  "notes": "Jurisdiction-level (NOT collapsed to county). Illinois reports via 108 election jurisdictions = 102 county election authorities + 6 independent city/municipal boards of election commissioners. All 108 are listed individually and none were dropped. The 6 city boards are: Chicago (City Board of Election Commissioners, separate from suburban Cook County), Bloomington (within McLean Co.), Danville (within Vermilion Co.), East St. Louis (within St. Clair Co.), Galesburg (within Knox Co.), and Rockford (within Winnebago Co.). FIPS codes are 5-digit county FIPS; city-board rows carry their parent county's FIPS (Chicago=17031 Cook, Bloomington=17113 McLean, Danville=17183 Vermilion, East St. Louis=17163 St. Clair, Galesburg=17095 Knox, Rockford=17201 Winnebago), so a county FIPS may appear twice (county-remainder row + city-board row). The 'Cook (suburban)' row covers Cook County outside the City of Chicago. Illinois does not register voters by party. Per-jurisdiction values are EAVS active registrations (field A1b); Christian County uses total registrations (A1a) as active was unavailable."
+}

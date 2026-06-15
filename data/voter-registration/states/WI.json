@@ -1,0 +1,450 @@
+{
+  "state": "Wisconsin",
+  "state_abbr": "WI",
+  "state_fips": "55",
+  "as_of_date": "2026-06-01",
+  "source_name": "Wisconsin Elections Commission (WEC) - Voter Registration Statistics (WisVote), Voter Counts by County",
+  "source_url": "https://elections.wi.gov/resources/statistics/june-1-2026-voter-registration-statistics",
+  "registers_by_party": false,
+  "statewide_total_registered": 3607058,
+  "statewide_by_party": null,
+  "county_unit_label": "county",
+  "county_level_available": true,
+  "counties": [
+    {
+      "name": "Adams",
+      "fips": "55001",
+      "total_registered": 13611,
+      "by_party": null
+    },
+    {
+      "name": "Ashland",
+      "fips": "55003",
+      "total_registered": 9516,
+      "by_party": null
+    },
+    {
+      "name": "Barron",
+      "fips": "55005",
+      "total_registered": 28305,
+      "by_party": null
+    },
+    {
+      "name": "Bayfield",
+      "fips": "55007",
+      "total_registered": 12083,
+      "by_party": null
+    },
+    {
+      "name": "Brown",
+      "fips": "55009",
+      "total_registered": 155232,
+      "by_party": null
+    },
+    {
+      "name": "Buffalo",
+      "fips": "55011",
+      "total_registered": 8481,
+      "by_party": null
+    },
+    {
+      "name": "Burnett",
+      "fips": "55013",
+      "total_registered": 11532,
+      "by_party": null
+    },
+    {
+      "name": "Calumet",
+      "fips": "55015",
+      "total_registered": 34143,
+      "by_party": null
+    },
+    {
+      "name": "Chippewa",
+      "fips": "55017",
+      "total_registered": 40606,
+      "by_party": null
+    },
+    {
+      "name": "Clark",
+      "fips": "55019",
+      "total_registered": 16119,
+      "by_party": null
+    },
+    {
+      "name": "Columbia",
+      "fips": "55021",
+      "total_registered": 36612,
+      "by_party": null
+    },
+    {
+      "name": "Crawford",
+      "fips": "55023",
+      "total_registered": 9552,
+      "by_party": null
+    },
+    {
+      "name": "Dane",
+      "fips": "55025",
+      "total_registered": 393341,
+      "by_party": null
+    },
+    {
+      "name": "Dodge",
+      "fips": "55027",
+      "total_registered": 52400,
+      "by_party": null
+    },
+    {
+      "name": "Door",
+      "fips": "55029",
+      "total_registered": 21892,
+      "by_party": null
+    },
+    {
+      "name": "Douglas",
+      "fips": "55031",
+      "total_registered": 26636,
+      "by_party": null
+    },
+    {
+      "name": "Dunn",
+      "fips": "55033",
+      "total_registered": 27356,
+      "by_party": null
+    },
+    {
+      "name": "Eau Claire",
+      "fips": "55035",
+      "total_registered": 65692,
+      "by_party": null
+    },
+    {
+      "name": "Florence",
+      "fips": "55037",
+      "total_registered": 3292,
+      "by_party": null
+    },
+    {
+      "name": "Fond du Lac",
+      "fips": "55039",
+      "total_registered": 59984,
+      "by_party": null
+    },
+    {
+      "name": "Forest",
+      "fips": "55041",
+      "total_registered": 5840,
+      "by_party": null
+    },
+    {
+      "name": "Grant",
+      "fips": "55043",
+      "total_registered": 28460,
+      "by_party": null
+    },
+    {
+      "name": "Green",
+      "fips": "55045",
+      "total_registered": 23237,
+      "by_party": null
+    },
+    {
+      "name": "Green Lake",
+      "fips": "55047",
+      "total_registered": 11568,
+      "by_party": null
+    },
+    {
+      "name": "Iowa",
+      "fips": "55049",
+      "total_registered": 15390,
+      "by_party": null
+    },
+    {
+      "name": "Iron",
+      "fips": "55051",
+      "total_registered": 4278,
+      "by_party": null
+    },
+    {
+      "name": "Jackson",
+      "fips": "55053",
+      "total_registered": 11162,
+      "by_party": null
+    },
+    {
+      "name": "Jefferson",
+      "fips": "55055",
+      "total_registered": 52323,
+      "by_party": null
+    },
+    {
+      "name": "Juneau",
+      "fips": "55057",
+      "total_registered": 15402,
+      "by_party": null
+    },
+    {
+      "name": "Kenosha",
+      "fips": "55059",
+      "total_registered": 93966,
+      "by_party": null
+    },
+    {
+      "name": "Kewaunee",
+      "fips": "55061",
+      "total_registered": 12881,
+      "by_party": null
+    },
+    {
+      "name": "La Crosse",
+      "fips": "55063",
+      "total_registered": 74282,
+      "by_party": null
+    },
+    {
+      "name": "Lafayette",
+      "fips": "55065",
+      "total_registered": 9314,
+      "by_party": null
+    },
+    {
+      "name": "Langlade",
+      "fips": "55067",
+      "total_registered": 12221,
+      "by_party": null
+    },
+    {
+      "name": "Lincoln",
+      "fips": "55069",
+      "total_registered": 17816,
+      "by_party": null
+    },
+    {
+      "name": "Manitowoc",
+      "fips": "55071",
+      "total_registered": 48349,
+      "by_party": null
+    },
+    {
+      "name": "Marathon",
+      "fips": "55073",
+      "total_registered": 82467,
+      "by_party": null
+    },
+    {
+      "name": "Marinette",
+      "fips": "55075",
+      "total_registered": 25852,
+      "by_party": null
+    },
+    {
+      "name": "Marquette",
+      "fips": "55077",
+      "total_registered": 9932,
+      "by_party": null
+    },
+    {
+      "name": "Menominee",
+      "fips": "55078",
+      "total_registered": 1941,
+      "by_party": null
+    },
+    {
+      "name": "Milwaukee",
+      "fips": "55079",
+      "total_registered": 501579,
+      "by_party": null
+    },
+    {
+      "name": "Monroe",
+      "fips": "55081",
+      "total_registered": 24550,
+      "by_party": null
+    },
+    {
+      "name": "Oconto",
+      "fips": "55083",
+      "total_registered": 26118,
+      "by_party": null
+    },
+    {
+      "name": "Oneida",
+      "fips": "55085",
+      "total_registered": 26144,
+      "by_party": null
+    },
+    {
+      "name": "Outagamie",
+      "fips": "55087",
+      "total_registered": 116885,
+      "by_party": null
+    },
+    {
+      "name": "Ozaukee",
+      "fips": "55089",
+      "total_registered": 65828,
+      "by_party": null
+    },
+    {
+      "name": "Pepin",
+      "fips": "55091",
+      "total_registered": 4592,
+      "by_party": null
+    },
+    {
+      "name": "Pierce",
+      "fips": "55093",
+      "total_registered": 26577,
+      "by_party": null
+    },
+    {
+      "name": "Polk",
+      "fips": "55095",
+      "total_registered": 29608,
+      "by_party": null
+    },
+    {
+      "name": "Portage",
+      "fips": "55097",
+      "total_registered": 45089,
+      "by_party": null
+    },
+    {
+      "name": "Price",
+      "fips": "55099",
+      "total_registered": 9361,
+      "by_party": null
+    },
+    {
+      "name": "Racine",
+      "fips": "55101",
+      "total_registered": 113277,
+      "by_party": null
+    },
+    {
+      "name": "Richland",
+      "fips": "55103",
+      "total_registered": 9972,
+      "by_party": null
+    },
+    {
+      "name": "Rock",
+      "fips": "55105",
+      "total_registered": 93220,
+      "by_party": null
+    },
+    {
+      "name": "Rusk",
+      "fips": "55107",
+      "total_registered": 8639,
+      "by_party": null
+    },
+    {
+      "name": "St. Croix",
+      "fips": "55109",
+      "total_registered": 63479,
+      "by_party": null
+    },
+    {
+      "name": "Sauk",
+      "fips": "55111",
+      "total_registered": 39746,
+      "by_party": null
+    },
+    {
+      "name": "Sawyer",
+      "fips": "55113",
+      "total_registered": 11851,
+      "by_party": null
+    },
+    {
+      "name": "Shawano",
+      "fips": "55115",
+      "total_registered": 24724,
+      "by_party": null
+    },
+    {
+      "name": "Sheboygan",
+      "fips": "55117",
+      "total_registered": 70638,
+      "by_party": null
+    },
+    {
+      "name": "Taylor",
+      "fips": "55119",
+      "total_registered": 11807,
+      "by_party": null
+    },
+    {
+      "name": "Trempealeau",
+      "fips": "55121",
+      "total_registered": 16957,
+      "by_party": null
+    },
+    {
+      "name": "Vernon",
+      "fips": "55123",
+      "total_registered": 17327,
+      "by_party": null
+    },
+    {
+      "name": "Vilas",
+      "fips": "55125",
+      "total_registered": 16893,
+      "by_party": null
+    },
+    {
+      "name": "Walworth",
+      "fips": "55127",
+      "total_registered": 64328,
+      "by_party": null
+    },
+    {
+      "name": "Washburn",
+      "fips": "55129",
+      "total_registered": 11689,
+      "by_party": null
+    },
+    {
+      "name": "Washington",
+      "fips": "55131",
+      "total_registered": 93897,
+      "by_party": null
+    },
+    {
+      "name": "Waukesha",
+      "fips": "55133",
+      "total_registered": 288077,
+      "by_party": null
+    },
+    {
+      "name": "Waupaca",
+      "fips": "55135",
+      "total_registered": 31926,
+      "by_party": null
+    },
+    {
+      "name": "Waushara",
+      "fips": "55137",
+      "total_registered": 15008,
+      "by_party": null
+    },
+    {
+      "name": "Winnebago",
+      "fips": "55139",
+      "total_registered": 100847,
+      "by_party": null
+    },
+    {
+      "name": "Wood",
+      "fips": "55141",
+      "total_registered": 43359,
+      "by_party": null
+    }
+  ],
+  "as_of_notes": "Statistics are as of June 1, 2026 (the WEC publishes monthly snapshots on the 1st of each month). The official 'VoterCountsByCounty' data file for this report was generated/exported by WEC on 2026-06-03. Counts are 'active registered voters' as recorded in the statewide WisVote system. The WEC report page states: 'The State of Wisconsin had 3,607,058 active registered voters on June 1, 2026.'",
+  "data_quality": "high",
+  "notes": "County-level data taken directly from the WEC official 'VoterCountsByCounty.xlsx' export attached to the June 1, 2026 Voter Registration Statistics report (live file: https://elections.wi.gov/sites/default/files/documents/VoterCountsByCounty_35.xlsx). All 72 counties present; the sum of county totals equals the published statewide total of 3,607,058 exactly (verified). Wisconsin does NOT register voters by political party (it does not collect party, gender, or race), so registers_by_party=false and all by_party fields are null. WisVote reports primarily at the municipality/ward level; WEC also publishes this county rollup directly, which is used here. County FIPS codes are the standard U.S. Census codes for Wisconsin counties. Note: WEC's separate 'by age group' file slightly understates totals because pre-2005 registrants may lack a DOB; that caveat does NOT apply to this county count file. The WEC site is behind a Cloudflare challenge for HTML pages; the underlying official .xlsx data files were retrieved directly from elections.wi.gov and the file-to-month mapping was confirmed via each file's internal creation timestamp (this June file created 2026-06-03) and by matching the March (3,599,716) and April (3,593,369) totals to the published report figures."
+}

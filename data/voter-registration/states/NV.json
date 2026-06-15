@@ -1,0 +1,246 @@
+{
+  "state": "Nevada",
+  "state_abbr": "NV",
+  "state_fips": "32",
+  "as_of_date": "2026-06-01",
+  "source_name": "Nevada Secretary of State - Voter Registration Statistics, 2026 Statistics: All Voters by County & Party (06/01/2026)",
+  "source_url": "https://www.nvsos.gov/sos/elections/voters/voter-registration-statistics/2026-statistics",
+  "registers_by_party": true,
+  "statewide_total_registered": 2455381,
+  "statewide_by_party": {
+    "Democratic": 669779,
+    "Republican": 658601,
+    "Nonpartisan": 964572,
+    "IndependentAmerican": 103402,
+    "Libertarian": 18180,
+    "Other": 40847
+  },
+  "county_unit_label": "county",
+  "county_level_available": true,
+  "counties": [
+    {
+      "name": "Carson City",
+      "fips": "32510",
+      "total_registered": 47885,
+      "by_party": {
+        "Democratic": 10853,
+        "Republican": 16893,
+        "Nonpartisan": 16744,
+        "IndependentAmerican": 2312,
+        "Libertarian": 515,
+        "Other": 568
+      }
+    },
+    {
+      "name": "Churchill",
+      "fips": "32001",
+      "total_registered": 21014,
+      "by_party": {
+        "Democratic": 2375,
+        "Republican": 9961,
+        "Nonpartisan": 7352,
+        "IndependentAmerican": 910,
+        "Libertarian": 191,
+        "Other": 225
+      }
+    },
+    {
+      "name": "Clark",
+      "fips": "32003",
+      "total_registered": 1769381,
+      "by_party": {
+        "Democratic": 516893,
+        "Republican": 412142,
+        "Nonpartisan": 726290,
+        "IndependentAmerican": 71361,
+        "Libertarian": 11493,
+        "Other": 31202
+      }
+    },
+    {
+      "name": "Douglas",
+      "fips": "32005",
+      "total_registered": 47486,
+      "by_party": {
+        "Democratic": 8135,
+        "Republican": 23128,
+        "Nonpartisan": 13563,
+        "IndependentAmerican": 2116,
+        "Libertarian": 427,
+        "Other": 117
+      }
+    },
+    {
+      "name": "Elko",
+      "fips": "32007",
+      "total_registered": 36844,
+      "by_party": {
+        "Democratic": 3901,
+        "Republican": 17417,
+        "Nonpartisan": 13239,
+        "IndependentAmerican": 1600,
+        "Libertarian": 369,
+        "Other": 318
+      }
+    },
+    {
+      "name": "Esmeralda",
+      "fips": "32009",
+      "total_registered": 712,
+      "by_party": {
+        "Democratic": 52,
+        "Republican": 383,
+        "Nonpartisan": 223,
+        "IndependentAmerican": 33,
+        "Libertarian": 12,
+        "Other": 9
+      }
+    },
+    {
+      "name": "Eureka",
+      "fips": "32011",
+      "total_registered": 1280,
+      "by_party": {
+        "Democratic": 67,
+        "Republican": 806,
+        "Nonpartisan": 329,
+        "IndependentAmerican": 63,
+        "Libertarian": 7,
+        "Other": 8
+      }
+    },
+    {
+      "name": "Humboldt",
+      "fips": "32013",
+      "total_registered": 12604,
+      "by_party": {
+        "Democratic": 1398,
+        "Republican": 6208,
+        "Nonpartisan": 4268,
+        "IndependentAmerican": 516,
+        "Libertarian": 109,
+        "Other": 105
+      }
+    },
+    {
+      "name": "Lander",
+      "fips": "32015",
+      "total_registered": 4192,
+      "by_party": {
+        "Democratic": 409,
+        "Republican": 2335,
+        "Nonpartisan": 1236,
+        "IndependentAmerican": 153,
+        "Libertarian": 39,
+        "Other": 20
+      }
+    },
+    {
+      "name": "Lincoln",
+      "fips": "32017",
+      "total_registered": 3303,
+      "by_party": {
+        "Democratic": 282,
+        "Republican": 2042,
+        "Nonpartisan": 775,
+        "IndependentAmerican": 159,
+        "Libertarian": 20,
+        "Other": 25
+      }
+    },
+    {
+      "name": "Lyon",
+      "fips": "32019",
+      "total_registered": 56229,
+      "by_party": {
+        "Democratic": 7632,
+        "Republican": 23592,
+        "Nonpartisan": 21150,
+        "IndependentAmerican": 2725,
+        "Libertarian": 607,
+        "Other": 523
+      }
+    },
+    {
+      "name": "Mineral",
+      "fips": "32021",
+      "total_registered": 3273,
+      "by_party": {
+        "Democratic": 598,
+        "Republican": 1196,
+        "Nonpartisan": 1287,
+        "IndependentAmerican": 163,
+        "Libertarian": 20,
+        "Other": 9
+      }
+    },
+    {
+      "name": "Nye",
+      "fips": "32023",
+      "total_registered": 47131,
+      "by_party": {
+        "Democratic": 6699,
+        "Republican": 18670,
+        "Nonpartisan": 18435,
+        "IndependentAmerican": 2501,
+        "Libertarian": 394,
+        "Other": 432
+      }
+    },
+    {
+      "name": "Pershing",
+      "fips": "32027",
+      "total_registered": 3841,
+      "by_party": {
+        "Democratic": 502,
+        "Republican": 1861,
+        "Nonpartisan": 1261,
+        "IndependentAmerican": 168,
+        "Libertarian": 22,
+        "Other": 27
+      }
+    },
+    {
+      "name": "Storey",
+      "fips": "32029",
+      "total_registered": 4255,
+      "by_party": {
+        "Democratic": 661,
+        "Republican": 1941,
+        "Nonpartisan": 1354,
+        "IndependentAmerican": 213,
+        "Libertarian": 52,
+        "Other": 34
+      }
+    },
+    {
+      "name": "Washoe",
+      "fips": "32031",
+      "total_registered": 389709,
+      "by_party": {
+        "Democratic": 108615,
+        "Republican": 116905,
+        "Nonpartisan": 135082,
+        "IndependentAmerican": 18073,
+        "Libertarian": 3861,
+        "Other": 7173
+      }
+    },
+    {
+      "name": "White Pine",
+      "fips": "32033",
+      "total_registered": 6242,
+      "by_party": {
+        "Democratic": 707,
+        "Republican": 3121,
+        "Nonpartisan": 1984,
+        "IndependentAmerican": 336,
+        "Libertarian": 42,
+        "Other": 52
+      }
+    }
+  ],
+  "as_of_notes": "Report dated 06/01/2026 ('All Voters by County & Party'), the latest monthly Nevada SOS report as of 2026-06-14. Nevada compiles registration statistics on the first business day of each month from the Statewide Voter Registration Database; this is the report covering through end of May 2026. 'Total Voter Registration' here reflects ALL registered voters eligible to vote by the next federal election, including active, inactive, and P-17 (pre-registered 17-year-old) statuses.",
+  "data_quality": "high - official Nevada Secretary of State PDF; all 17 county-unit rows captured; every county row sum and all six party column sums independently verified to equal the reported statewide totals (Dem 669,779 + Rep 658,601 + Nonpartisan 964,572 + IndependentAmerican 103,402 + Libertarian 18,180 + Other 40,847 = 2,455,381).",
+  "notes": "Nevada has 16 counties plus the independent city of Carson City (FIPS 32510), for 17 county-level units total - all included. Party categories follow the official report columns: Democratic, Republican, Independent American Party, Libertarian, Non-partisan, and Other (a compilation of minor parties). 'Nonpartisan' is Nevada's term for unaffiliated/no-party voters and is the plurality. statewide_total_registered (2,455,381) is ALL registered voters from the 'All Voters by County & Party' sheet. For reference, the same 06/01/2026 reporting cycle lists 2,071,514 ACTIVE registered voters statewide (active by party: Democratic 574,128; Republican 577,737; Independent American 85,682; Libertarian 14,099; Non-Partisan 787,873; Other 31,995), matching the SOS May 2026 news release. The county/party breakdown above is the all-statuses total count. Source page returns HTTP 403 to automated clients; data was retrieved from the official SOS PDFs (document IDs 19369 'All Voters by County & Party' and 19373 'Active Voters by Age & Party', both dated 06/01/2026) via the Internet Archive capture of nvsos.gov. Direct doc URL: https://www.nvsos.gov/home/showpublisheddocument/19369"
+}

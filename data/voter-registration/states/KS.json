@@ -1,0 +1,1390 @@
+{
+  "state": "Kansas",
+  "state_abbr": "KS",
+  "state_fips": "20",
+  "as_of_date": "2025-11-01",
+  "source_name": "Kansas Secretary of State - Voter Registration Numbers by County (November 2025)",
+  "source_url": "https://www.sos.ks.gov/elections/25elec/2025-11-01-Voter-Registration-Numbers-by-County.pdf",
+  "registers_by_party": true,
+  "statewide_total_registered": 1999608,
+  "statewide_by_party": {
+    "Republican": 897243,
+    "Democratic": 495691,
+    "Unaffiliated": 575983,
+    "Libertarian": 23772,
+    "No Labels Kansas": 5955,
+    "United Kansas": 964
+  },
+  "county_unit_label": "county",
+  "county_level_available": true,
+  "counties": [
+    {
+      "name": "Allen",
+      "fips": "20001",
+      "total_registered": 8980,
+      "by_party": {
+        "Republican": 4836,
+        "Democratic": 1303,
+        "Unaffiliated": 2725,
+        "Libertarian": 100,
+        "No Labels Kansas": 13,
+        "United Kansas": 3
+      }
+    },
+    {
+      "name": "Anderson",
+      "fips": "20003",
+      "total_registered": 5830,
+      "by_party": {
+        "Republican": 3272,
+        "Democratic": 866,
+        "Unaffiliated": 1614,
+        "Libertarian": 68,
+        "No Labels Kansas": 9,
+        "United Kansas": 1
+      }
+    },
+    {
+      "name": "Atchison",
+      "fips": "20005",
+      "total_registered": 11037,
+      "by_party": {
+        "Republican": 4969,
+        "Democratic": 2252,
+        "Unaffiliated": 3731,
+        "Libertarian": 69,
+        "No Labels Kansas": 13,
+        "United Kansas": 3
+      }
+    },
+    {
+      "name": "Barber",
+      "fips": "20007",
+      "total_registered": 2837,
+      "by_party": {
+        "Republican": 2222,
+        "Democratic": 261,
+        "Unaffiliated": 331,
+        "Libertarian": 23,
+        "No Labels Kansas": 0,
+        "United Kansas": 0
+      }
+    },
+    {
+      "name": "Barton",
+      "fips": "20009",
+      "total_registered": 17065,
+      "by_party": {
+        "Republican": 10305,
+        "Democratic": 2181,
+        "Unaffiliated": 4350,
+        "Libertarian": 133,
+        "No Labels Kansas": 83,
+        "United Kansas": 13
+      }
+    },
+    {
+      "name": "Bourbon",
+      "fips": "20011",
+      "total_registered": 12791,
+      "by_party": {
+        "Republican": 6420,
+        "Democratic": 2189,
+        "Unaffiliated": 4050,
+        "Libertarian": 111,
+        "No Labels Kansas": 19,
+        "United Kansas": 2
+      }
+    },
+    {
+      "name": "Brown",
+      "fips": "20013",
+      "total_registered": 6666,
+      "by_party": {
+        "Republican": 3893,
+        "Democratic": 962,
+        "Unaffiliated": 1718,
+        "Libertarian": 70,
+        "No Labels Kansas": 21,
+        "United Kansas": 2
+      }
+    },
+    {
+      "name": "Butler",
+      "fips": "20015",
+      "total_registered": 49765,
+      "by_party": {
+        "Republican": 27024,
+        "Democratic": 7488,
+        "Unaffiliated": 14426,
+        "Libertarian": 697,
+        "No Labels Kansas": 112,
+        "United Kansas": 18
+      }
+    },
+    {
+      "name": "Chase",
+      "fips": "20017",
+      "total_registered": 1877,
+      "by_party": {
+        "Republican": 1344,
+        "Democratic": 253,
+        "Unaffiliated": 261,
+        "Libertarian": 16,
+        "No Labels Kansas": 3,
+        "United Kansas": 0
+      }
+    },
+    {
+      "name": "Chautauqua",
+      "fips": "20019",
+      "total_registered": 2321,
+      "by_party": {
+        "Republican": 1699,
+        "Democratic": 193,
+        "Unaffiliated": 410,
+        "Libertarian": 16,
+        "No Labels Kansas": 3,
+        "United Kansas": 0
+      }
+    },
+    {
+      "name": "Cherokee",
+      "fips": "20021",
+      "total_registered": 15617,
+      "by_party": {
+        "Republican": 7717,
+        "Democratic": 2807,
+        "Unaffiliated": 4917,
+        "Libertarian": 152,
+        "No Labels Kansas": 20,
+        "United Kansas": 4
+      }
+    },
+    {
+      "name": "Cheyenne",
+      "fips": "20023",
+      "total_registered": 2028,
+      "by_party": {
+        "Republican": 1486,
+        "Democratic": 159,
+        "Unaffiliated": 366,
+        "Libertarian": 15,
+        "No Labels Kansas": 1,
+        "United Kansas": 1
+      }
+    },
+    {
+      "name": "Clark",
+      "fips": "20025",
+      "total_registered": 1482,
+      "by_party": {
+        "Republican": 1079,
+        "Democratic": 160,
+        "Unaffiliated": 230,
+        "Libertarian": 11,
+        "No Labels Kansas": 1,
+        "United Kansas": 1
+      }
+    },
+    {
+      "name": "Clay",
+      "fips": "20027",
+      "total_registered": 6042,
+      "by_party": {
+        "Republican": 4169,
+        "Democratic": 628,
+        "Unaffiliated": 1166,
+        "Libertarian": 59,
+        "No Labels Kansas": 20,
+        "United Kansas": 0
+      }
+    },
+    {
+      "name": "Cloud",
+      "fips": "20029",
+      "total_registered": 5756,
+      "by_party": {
+        "Republican": 3821,
+        "Democratic": 690,
+        "Unaffiliated": 1163,
+        "Libertarian": 56,
+        "No Labels Kansas": 23,
+        "United Kansas": 3
+      }
+    },
+    {
+      "name": "Coffey",
+      "fips": "20031",
+      "total_registered": 6190,
+      "by_party": {
+        "Republican": 4064,
+        "Democratic": 758,
+        "Unaffiliated": 1269,
+        "Libertarian": 75,
+        "No Labels Kansas": 22,
+        "United Kansas": 2
+      }
+    },
+    {
+      "name": "Comanche",
+      "fips": "20033",
+      "total_registered": 1130,
+      "by_party": {
+        "Republican": 874,
+        "Democratic": 104,
+        "Unaffiliated": 134,
+        "Libertarian": 14,
+        "No Labels Kansas": 4,
+        "United Kansas": 0
+      }
+    },
+    {
+      "name": "Cowley",
+      "fips": "20035",
+      "total_registered": 20573,
+      "by_party": {
+        "Republican": 10607,
+        "Democratic": 3793,
+        "Unaffiliated": 5882,
+        "Libertarian": 220,
+        "No Labels Kansas": 67,
+        "United Kansas": 4
+      }
+    },
+    {
+      "name": "Crawford",
+      "fips": "20037",
+      "total_registered": 27742,
+      "by_party": {
+        "Republican": 10388,
+        "Democratic": 6807,
+        "Unaffiliated": 10206,
+        "Libertarian": 292,
+        "No Labels Kansas": 38,
+        "United Kansas": 11
+      }
+    },
+    {
+      "name": "Decatur",
+      "fips": "20039",
+      "total_registered": 2024,
+      "by_party": {
+        "Republican": 1452,
+        "Democratic": 191,
+        "Unaffiliated": 353,
+        "Libertarian": 21,
+        "No Labels Kansas": 7,
+        "United Kansas": 0
+      }
+    },
+    {
+      "name": "Dickinson",
+      "fips": "20041",
+      "total_registered": 13855,
+      "by_party": {
+        "Republican": 8600,
+        "Democratic": 1667,
+        "Unaffiliated": 3400,
+        "Libertarian": 141,
+        "No Labels Kansas": 43,
+        "United Kansas": 4
+      }
+    },
+    {
+      "name": "Doniphan",
+      "fips": "20043",
+      "total_registered": 5032,
+      "by_party": {
+        "Republican": 3212,
+        "Democratic": 531,
+        "Unaffiliated": 1261,
+        "Libertarian": 22,
+        "No Labels Kansas": 6,
+        "United Kansas": 0
+      }
+    },
+    {
+      "name": "Douglas",
+      "fips": "20045",
+      "total_registered": 80376,
+      "by_party": {
+        "Republican": 20326,
+        "Democratic": 36107,
+        "Unaffiliated": 22637,
+        "Libertarian": 989,
+        "No Labels Kansas": 285,
+        "United Kansas": 32
+      }
+    },
+    {
+      "name": "Edwards",
+      "fips": "20047",
+      "total_registered": 1829,
+      "by_party": {
+        "Republican": 1248,
+        "Democratic": 227,
+        "Unaffiliated": 338,
+        "Libertarian": 9,
+        "No Labels Kansas": 7,
+        "United Kansas": 0
+      }
+    },
+    {
+      "name": "Elk",
+      "fips": "20049",
+      "total_registered": 1877,
+      "by_party": {
+        "Republican": 1348,
+        "Democratic": 178,
+        "Unaffiliated": 329,
+        "Libertarian": 18,
+        "No Labels Kansas": 4,
+        "United Kansas": 0
+      }
+    },
+    {
+      "name": "Ellis",
+      "fips": "20051",
+      "total_registered": 20515,
+      "by_party": {
+        "Republican": 10987,
+        "Democratic": 3572,
+        "Unaffiliated": 5689,
+        "Libertarian": 232,
+        "No Labels Kansas": 26,
+        "United Kansas": 9
+      }
+    },
+    {
+      "name": "Ellsworth",
+      "fips": "20053",
+      "total_registered": 3853,
+      "by_party": {
+        "Republican": 2391,
+        "Democratic": 596,
+        "Unaffiliated": 831,
+        "Libertarian": 25,
+        "No Labels Kansas": 8,
+        "United Kansas": 2
+      }
+    },
+    {
+      "name": "Finney",
+      "fips": "20055",
+      "total_registered": 20811,
+      "by_party": {
+        "Republican": 8875,
+        "Democratic": 4468,
+        "Unaffiliated": 7146,
+        "Libertarian": 245,
+        "No Labels Kansas": 57,
+        "United Kansas": 20
+      }
+    },
+    {
+      "name": "Ford",
+      "fips": "20057",
+      "total_registered": 16796,
+      "by_party": {
+        "Republican": 6987,
+        "Democratic": 3756,
+        "Unaffiliated": 5729,
+        "Libertarian": 214,
+        "No Labels Kansas": 98,
+        "United Kansas": 12
+      }
+    },
+    {
+      "name": "Franklin",
+      "fips": "20059",
+      "total_registered": 19187,
+      "by_party": {
+        "Republican": 10481,
+        "Democratic": 3226,
+        "Unaffiliated": 5178,
+        "Libertarian": 242,
+        "No Labels Kansas": 56,
+        "United Kansas": 4
+      }
+    },
+    {
+      "name": "Geary",
+      "fips": "20061",
+      "total_registered": 18492,
+      "by_party": {
+        "Republican": 7185,
+        "Democratic": 4086,
+        "Unaffiliated": 6840,
+        "Libertarian": 299,
+        "No Labels Kansas": 71,
+        "United Kansas": 11
+      }
+    },
+    {
+      "name": "Gove",
+      "fips": "20063",
+      "total_registered": 1893,
+      "by_party": {
+        "Republican": 1384,
+        "Democratic": 155,
+        "Unaffiliated": 349,
+        "Libertarian": 5,
+        "No Labels Kansas": 0,
+        "United Kansas": 0
+      }
+    },
+    {
+      "name": "Graham",
+      "fips": "20065",
+      "total_registered": 1821,
+      "by_party": {
+        "Republican": 1389,
+        "Democratic": 174,
+        "Unaffiliated": 246,
+        "Libertarian": 11,
+        "No Labels Kansas": 0,
+        "United Kansas": 1
+      }
+    },
+    {
+      "name": "Grant",
+      "fips": "20067",
+      "total_registered": 3775,
+      "by_party": {
+        "Republican": 2383,
+        "Democratic": 453,
+        "Unaffiliated": 890,
+        "Libertarian": 39,
+        "No Labels Kansas": 5,
+        "United Kansas": 5
+      }
+    },
+    {
+      "name": "Gray",
+      "fips": "20069",
+      "total_registered": 3395,
+      "by_party": {
+        "Republican": 2252,
+        "Democratic": 383,
+        "Unaffiliated": 713,
+        "Libertarian": 38,
+        "No Labels Kansas": 9,
+        "United Kansas": 0
+      }
+    },
+    {
+      "name": "Greeley",
+      "fips": "20071",
+      "total_registered": 860,
+      "by_party": {
+        "Republican": 701,
+        "Democratic": 42,
+        "Unaffiliated": 113,
+        "Libertarian": 2,
+        "No Labels Kansas": 2,
+        "United Kansas": 0
+      }
+    },
+    {
+      "name": "Greenwood",
+      "fips": "20073",
+      "total_registered": 4638,
+      "by_party": {
+        "Republican": 2846,
+        "Democratic": 483,
+        "Unaffiliated": 1259,
+        "Libertarian": 36,
+        "No Labels Kansas": 12,
+        "United Kansas": 2
+      }
+    },
+    {
+      "name": "Hamilton",
+      "fips": "20075",
+      "total_registered": 1352,
+      "by_party": {
+        "Republican": 925,
+        "Democratic": 133,
+        "Unaffiliated": 279,
+        "Libertarian": 12,
+        "No Labels Kansas": 3,
+        "United Kansas": 0
+      }
+    },
+    {
+      "name": "Harper",
+      "fips": "20077",
+      "total_registered": 3879,
+      "by_party": {
+        "Republican": 2574,
+        "Democratic": 475,
+        "Unaffiliated": 786,
+        "Libertarian": 36,
+        "No Labels Kansas": 5,
+        "United Kansas": 3
+      }
+    },
+    {
+      "name": "Harvey",
+      "fips": "20079",
+      "total_registered": 22948,
+      "by_party": {
+        "Republican": 11610,
+        "Democratic": 5304,
+        "Unaffiliated": 5728,
+        "Libertarian": 231,
+        "No Labels Kansas": 63,
+        "United Kansas": 12
+      }
+    },
+    {
+      "name": "Haskell",
+      "fips": "20081",
+      "total_registered": 2221,
+      "by_party": {
+        "Republican": 1497,
+        "Democratic": 213,
+        "Unaffiliated": 493,
+        "Libertarian": 12,
+        "No Labels Kansas": 5,
+        "United Kansas": 1
+      }
+    },
+    {
+      "name": "Hodgeman",
+      "fips": "20083",
+      "total_registered": 1281,
+      "by_party": {
+        "Republican": 947,
+        "Democratic": 121,
+        "Unaffiliated": 208,
+        "Libertarian": 4,
+        "No Labels Kansas": 1,
+        "United Kansas": 0
+      }
+    },
+    {
+      "name": "Jackson",
+      "fips": "20085",
+      "total_registered": 9158,
+      "by_party": {
+        "Republican": 5039,
+        "Democratic": 1587,
+        "Unaffiliated": 2439,
+        "Libertarian": 73,
+        "No Labels Kansas": 16,
+        "United Kansas": 4
+      }
+    },
+    {
+      "name": "Jefferson",
+      "fips": "20087",
+      "total_registered": 14009,
+      "by_party": {
+        "Republican": 7220,
+        "Democratic": 2494,
+        "Unaffiliated": 4059,
+        "Libertarian": 179,
+        "No Labels Kansas": 53,
+        "United Kansas": 4
+      }
+    },
+    {
+      "name": "Jewell",
+      "fips": "20089",
+      "total_registered": 2212,
+      "by_party": {
+        "Republican": 1614,
+        "Democratic": 171,
+        "Unaffiliated": 399,
+        "Libertarian": 25,
+        "No Labels Kansas": 3,
+        "United Kansas": 0
+      }
+    },
+    {
+      "name": "Johnson",
+      "fips": "20091",
+      "total_registered": 464235,
+      "by_party": {
+        "Republican": 186804,
+        "Democratic": 147020,
+        "Unaffiliated": 123324,
+        "Libertarian": 5512,
+        "No Labels Kansas": 1405,
+        "United Kansas": 170
+      }
+    },
+    {
+      "name": "Kearny",
+      "fips": "20093",
+      "total_registered": 2214,
+      "by_party": {
+        "Republican": 1423,
+        "Democratic": 252,
+        "Unaffiliated": 517,
+        "Libertarian": 15,
+        "No Labels Kansas": 3,
+        "United Kansas": 4
+      }
+    },
+    {
+      "name": "Kingman",
+      "fips": "20095",
+      "total_registered": 5615,
+      "by_party": {
+        "Republican": 3698,
+        "Democratic": 645,
+        "Unaffiliated": 1214,
+        "Libertarian": 50,
+        "No Labels Kansas": 8,
+        "United Kansas": 0
+      }
+    },
+    {
+      "name": "Kiowa",
+      "fips": "20097",
+      "total_registered": 1521,
+      "by_party": {
+        "Republican": 1172,
+        "Democratic": 127,
+        "Unaffiliated": 206,
+        "Libertarian": 14,
+        "No Labels Kansas": 2,
+        "United Kansas": 0
+      }
+    },
+    {
+      "name": "Labette",
+      "fips": "20099",
+      "total_registered": 13709,
+      "by_party": {
+        "Republican": 6361,
+        "Democratic": 2654,
+        "Unaffiliated": 4545,
+        "Libertarian": 119,
+        "No Labels Kansas": 26,
+        "United Kansas": 4
+      }
+    },
+    {
+      "name": "Lane",
+      "fips": "20101",
+      "total_registered": 1127,
+      "by_party": {
+        "Republican": 869,
+        "Democratic": 81,
+        "Unaffiliated": 167,
+        "Libertarian": 8,
+        "No Labels Kansas": 2,
+        "United Kansas": 0
+      }
+    },
+    {
+      "name": "Leavenworth",
+      "fips": "20103",
+      "total_registered": 57317,
+      "by_party": {
+        "Republican": 24886,
+        "Democratic": 13052,
+        "Unaffiliated": 18439,
+        "Libertarian": 736,
+        "No Labels Kansas": 171,
+        "United Kansas": 33
+      }
+    },
+    {
+      "name": "Lincoln",
+      "fips": "20105",
+      "total_registered": 2113,
+      "by_party": {
+        "Republican": 1519,
+        "Democratic": 215,
+        "Unaffiliated": 337,
+        "Libertarian": 38,
+        "No Labels Kansas": 3,
+        "United Kansas": 1
+      }
+    },
+    {
+      "name": "Linn",
+      "fips": "20107",
+      "total_registered": 7771,
+      "by_party": {
+        "Republican": 4831,
+        "Democratic": 942,
+        "Unaffiliated": 1915,
+        "Libertarian": 62,
+        "No Labels Kansas": 17,
+        "United Kansas": 4
+      }
+    },
+    {
+      "name": "Logan",
+      "fips": "20109",
+      "total_registered": 1894,
+      "by_party": {
+        "Republican": 1402,
+        "Democratic": 128,
+        "Unaffiliated": 350,
+        "Libertarian": 10,
+        "No Labels Kansas": 3,
+        "United Kansas": 1
+      }
+    },
+    {
+      "name": "Lyon",
+      "fips": "20111",
+      "total_registered": 20561,
+      "by_party": {
+        "Republican": 8393,
+        "Democratic": 4803,
+        "Unaffiliated": 7009,
+        "Libertarian": 215,
+        "No Labels Kansas": 127,
+        "United Kansas": 14
+      }
+    },
+    {
+      "name": "Marion",
+      "fips": "20113",
+      "total_registered": 8254,
+      "by_party": {
+        "Republican": 5316,
+        "Democratic": 1015,
+        "Unaffiliated": 1831,
+        "Libertarian": 74,
+        "No Labels Kansas": 15,
+        "United Kansas": 3
+      }
+    },
+    {
+      "name": "Marshall",
+      "fips": "20115",
+      "total_registered": 7298,
+      "by_party": {
+        "Republican": 4120,
+        "Democratic": 1211,
+        "Unaffiliated": 1890,
+        "Libertarian": 46,
+        "No Labels Kansas": 28,
+        "United Kansas": 3
+      }
+    },
+    {
+      "name": "McPherson",
+      "fips": "20117",
+      "total_registered": 19355,
+      "by_party": {
+        "Republican": 11486,
+        "Democratic": 2772,
+        "Unaffiliated": 4775,
+        "Libertarian": 232,
+        "No Labels Kansas": 82,
+        "United Kansas": 8
+      }
+    },
+    {
+      "name": "Meade",
+      "fips": "20119",
+      "total_registered": 3247,
+      "by_party": {
+        "Republican": 2187,
+        "Democratic": 291,
+        "Unaffiliated": 743,
+        "Libertarian": 23,
+        "No Labels Kansas": 2,
+        "United Kansas": 1
+      }
+    },
+    {
+      "name": "Miami",
+      "fips": "20121",
+      "total_registered": 26029,
+      "by_party": {
+        "Republican": 14147,
+        "Democratic": 4396,
+        "Unaffiliated": 7047,
+        "Libertarian": 319,
+        "No Labels Kansas": 113,
+        "United Kansas": 7
+      }
+    },
+    {
+      "name": "Mitchell",
+      "fips": "20123",
+      "total_registered": 4200,
+      "by_party": {
+        "Republican": 3044,
+        "Democratic": 422,
+        "Unaffiliated": 703,
+        "Libertarian": 23,
+        "No Labels Kansas": 7,
+        "United Kansas": 1
+      }
+    },
+    {
+      "name": "Montgomery",
+      "fips": "20125",
+      "total_registered": 21319,
+      "by_party": {
+        "Republican": 12064,
+        "Democratic": 3720,
+        "Unaffiliated": 5240,
+        "Libertarian": 237,
+        "No Labels Kansas": 56,
+        "United Kansas": 2
+      }
+    },
+    {
+      "name": "Morris",
+      "fips": "20127",
+      "total_registered": 4019,
+      "by_party": {
+        "Republican": 2514,
+        "Democratic": 549,
+        "Unaffiliated": 903,
+        "Libertarian": 37,
+        "No Labels Kansas": 13,
+        "United Kansas": 3
+      }
+    },
+    {
+      "name": "Morton",
+      "fips": "20129",
+      "total_registered": 2039,
+      "by_party": {
+        "Republican": 1422,
+        "Democratic": 200,
+        "Unaffiliated": 397,
+        "Libertarian": 12,
+        "No Labels Kansas": 7,
+        "United Kansas": 1
+      }
+    },
+    {
+      "name": "Nemaha",
+      "fips": "20131",
+      "total_registered": 7403,
+      "by_party": {
+        "Republican": 4937,
+        "Democratic": 928,
+        "Unaffiliated": 1468,
+        "Libertarian": 50,
+        "No Labels Kansas": 16,
+        "United Kansas": 4
+      }
+    },
+    {
+      "name": "Neosho",
+      "fips": "20133",
+      "total_registered": 11097,
+      "by_party": {
+        "Republican": 5817,
+        "Democratic": 1730,
+        "Unaffiliated": 3393,
+        "Libertarian": 130,
+        "No Labels Kansas": 23,
+        "United Kansas": 4
+      }
+    },
+    {
+      "name": "Ness",
+      "fips": "20135",
+      "total_registered": 1961,
+      "by_party": {
+        "Republican": 1452,
+        "Democratic": 177,
+        "Unaffiliated": 319,
+        "Libertarian": 9,
+        "No Labels Kansas": 4,
+        "United Kansas": 0
+      }
+    },
+    {
+      "name": "Norton",
+      "fips": "20137",
+      "total_registered": 3449,
+      "by_party": {
+        "Republican": 2429,
+        "Democratic": 300,
+        "Unaffiliated": 689,
+        "Libertarian": 26,
+        "No Labels Kansas": 3,
+        "United Kansas": 2
+      }
+    },
+    {
+      "name": "Osage",
+      "fips": "20139",
+      "total_registered": 12255,
+      "by_party": {
+        "Republican": 6724,
+        "Democratic": 1837,
+        "Unaffiliated": 3533,
+        "Libertarian": 135,
+        "No Labels Kansas": 26,
+        "United Kansas": 0
+      }
+    },
+    {
+      "name": "Osborne",
+      "fips": "20141",
+      "total_registered": 2601,
+      "by_party": {
+        "Republican": 1702,
+        "Democratic": 292,
+        "Unaffiliated": 582,
+        "Libertarian": 21,
+        "No Labels Kansas": 3,
+        "United Kansas": 1
+      }
+    },
+    {
+      "name": "Ottawa",
+      "fips": "20143",
+      "total_registered": 3902,
+      "by_party": {
+        "Republican": 2834,
+        "Democratic": 352,
+        "Unaffiliated": 670,
+        "Libertarian": 35,
+        "No Labels Kansas": 8,
+        "United Kansas": 3
+      }
+    },
+    {
+      "name": "Pawnee",
+      "fips": "20145",
+      "total_registered": 3669,
+      "by_party": {
+        "Republican": 2396,
+        "Democratic": 472,
+        "Unaffiliated": 756,
+        "Libertarian": 31,
+        "No Labels Kansas": 10,
+        "United Kansas": 4
+      }
+    },
+    {
+      "name": "Phillips",
+      "fips": "20147",
+      "total_registered": 3995,
+      "by_party": {
+        "Republican": 2982,
+        "Democratic": 259,
+        "Unaffiliated": 727,
+        "Libertarian": 24,
+        "No Labels Kansas": 3,
+        "United Kansas": 0
+      }
+    },
+    {
+      "name": "Pottawatomie",
+      "fips": "20149",
+      "total_registered": 18798,
+      "by_party": {
+        "Republican": 11968,
+        "Democratic": 2523,
+        "Unaffiliated": 4031,
+        "Libertarian": 209,
+        "No Labels Kansas": 57,
+        "United Kansas": 10
+      }
+    },
+    {
+      "name": "Pratt",
+      "fips": "20151",
+      "total_registered": 5702,
+      "by_party": {
+        "Republican": 3904,
+        "Democratic": 720,
+        "Unaffiliated": 1009,
+        "Libertarian": 59,
+        "No Labels Kansas": 7,
+        "United Kansas": 3
+      }
+    },
+    {
+      "name": "Rawlins",
+      "fips": "20153",
+      "total_registered": 1988,
+      "by_party": {
+        "Republican": 1473,
+        "Democratic": 155,
+        "Unaffiliated": 339,
+        "Libertarian": 18,
+        "No Labels Kansas": 3,
+        "United Kansas": 0
+      }
+    },
+    {
+      "name": "Reno",
+      "fips": "20155",
+      "total_registered": 43118,
+      "by_party": {
+        "Republican": 22174,
+        "Democratic": 7813,
+        "Unaffiliated": 12368,
+        "Libertarian": 516,
+        "No Labels Kansas": 212,
+        "United Kansas": 35
+      }
+    },
+    {
+      "name": "Republic",
+      "fips": "20157",
+      "total_registered": 3543,
+      "by_party": {
+        "Republican": 2515,
+        "Democratic": 360,
+        "Unaffiliated": 629,
+        "Libertarian": 30,
+        "No Labels Kansas": 8,
+        "United Kansas": 1
+      }
+    },
+    {
+      "name": "Rice",
+      "fips": "20159",
+      "total_registered": 6685,
+      "by_party": {
+        "Republican": 4054,
+        "Democratic": 846,
+        "Unaffiliated": 1645,
+        "Libertarian": 119,
+        "No Labels Kansas": 20,
+        "United Kansas": 1
+      }
+    },
+    {
+      "name": "Riley",
+      "fips": "20161",
+      "total_registered": 39653,
+      "by_party": {
+        "Republican": 15864,
+        "Democratic": 10628,
+        "Unaffiliated": 12207,
+        "Libertarian": 746,
+        "No Labels Kansas": 186,
+        "United Kansas": 22
+      }
+    },
+    {
+      "name": "Rooks",
+      "fips": "20163",
+      "total_registered": 3596,
+      "by_party": {
+        "Republican": 2649,
+        "Democratic": 302,
+        "Unaffiliated": 615,
+        "Libertarian": 25,
+        "No Labels Kansas": 3,
+        "United Kansas": 2
+      }
+    },
+    {
+      "name": "Rush",
+      "fips": "20165",
+      "total_registered": 2176,
+      "by_party": {
+        "Republican": 1523,
+        "Democratic": 203,
+        "Unaffiliated": 431,
+        "Libertarian": 16,
+        "No Labels Kansas": 3,
+        "United Kansas": 0
+      }
+    },
+    {
+      "name": "Russell",
+      "fips": "20167",
+      "total_registered": 4591,
+      "by_party": {
+        "Republican": 3135,
+        "Democratic": 488,
+        "Unaffiliated": 919,
+        "Libertarian": 39,
+        "No Labels Kansas": 10,
+        "United Kansas": 0
+      }
+    },
+    {
+      "name": "Saline",
+      "fips": "20169",
+      "total_registered": 37719,
+      "by_party": {
+        "Republican": 18146,
+        "Democratic": 6971,
+        "Unaffiliated": 11872,
+        "Libertarian": 553,
+        "No Labels Kansas": 153,
+        "United Kansas": 24
+      }
+    },
+    {
+      "name": "Scott",
+      "fips": "20171",
+      "total_registered": 3491,
+      "by_party": {
+        "Republican": 2398,
+        "Democratic": 253,
+        "Unaffiliated": 811,
+        "Libertarian": 26,
+        "No Labels Kansas": 3,
+        "United Kansas": 0
+      }
+    },
+    {
+      "name": "Sedgwick",
+      "fips": "20173",
+      "total_registered": 343902,
+      "by_party": {
+        "Republican": 138208,
+        "Democratic": 84792,
+        "Unaffiliated": 114761,
+        "Libertarian": 4862,
+        "No Labels Kansas": 1043,
+        "United Kansas": 236
+      }
+    },
+    {
+      "name": "Seward",
+      "fips": "20175",
+      "total_registered": 11267,
+      "by_party": {
+        "Republican": 4533,
+        "Democratic": 2434,
+        "Unaffiliated": 4086,
+        "Libertarian": 166,
+        "No Labels Kansas": 32,
+        "United Kansas": 16
+      }
+    },
+    {
+      "name": "Shawnee",
+      "fips": "20177",
+      "total_registered": 115978,
+      "by_party": {
+        "Republican": 43643,
+        "Democratic": 34331,
+        "Unaffiliated": 36348,
+        "Libertarian": 1303,
+        "No Labels Kansas": 301,
+        "United Kansas": 52
+      }
+    },
+    {
+      "name": "Sheridan",
+      "fips": "20179",
+      "total_registered": 1857,
+      "by_party": {
+        "Republican": 1404,
+        "Democratic": 143,
+        "Unaffiliated": 303,
+        "Libertarian": 4,
+        "No Labels Kansas": 3,
+        "United Kansas": 0
+      }
+    },
+    {
+      "name": "Sherman",
+      "fips": "20181",
+      "total_registered": 3621,
+      "by_party": {
+        "Republican": 2581,
+        "Democratic": 312,
+        "Unaffiliated": 687,
+        "Libertarian": 34,
+        "No Labels Kansas": 4,
+        "United Kansas": 3
+      }
+    },
+    {
+      "name": "Smith",
+      "fips": "20183",
+      "total_registered": 2835,
+      "by_party": {
+        "Republican": 2105,
+        "Democratic": 267,
+        "Unaffiliated": 450,
+        "Libertarian": 12,
+        "No Labels Kansas": 1,
+        "United Kansas": 0
+      }
+    },
+    {
+      "name": "Stafford",
+      "fips": "20185",
+      "total_registered": 2667,
+      "by_party": {
+        "Republican": 1884,
+        "Democratic": 261,
+        "Unaffiliated": 493,
+        "Libertarian": 20,
+        "No Labels Kansas": 5,
+        "United Kansas": 4
+      }
+    },
+    {
+      "name": "Stanton",
+      "fips": "20187",
+      "total_registered": 1028,
+      "by_party": {
+        "Republican": 732,
+        "Democratic": 123,
+        "Unaffiliated": 159,
+        "Libertarian": 12,
+        "No Labels Kansas": 2,
+        "United Kansas": 0
+      }
+    },
+    {
+      "name": "Stevens",
+      "fips": "20189",
+      "total_registered": 3327,
+      "by_party": {
+        "Republican": 2409,
+        "Democratic": 289,
+        "Unaffiliated": 588,
+        "Libertarian": 35,
+        "No Labels Kansas": 4,
+        "United Kansas": 2
+      }
+    },
+    {
+      "name": "Sumner",
+      "fips": "20191",
+      "total_registered": 15566,
+      "by_party": {
+        "Republican": 8869,
+        "Democratic": 2476,
+        "Unaffiliated": 4016,
+        "Libertarian": 174,
+        "No Labels Kansas": 30,
+        "United Kansas": 1
+      }
+    },
+    {
+      "name": "Thomas",
+      "fips": "20193",
+      "total_registered": 5476,
+      "by_party": {
+        "Republican": 3719,
+        "Democratic": 512,
+        "Unaffiliated": 1200,
+        "Libertarian": 35,
+        "No Labels Kansas": 9,
+        "United Kansas": 1
+      }
+    },
+    {
+      "name": "Trego",
+      "fips": "20195",
+      "total_registered": 2048,
+      "by_party": {
+        "Republican": 1410,
+        "Democratic": 252,
+        "Unaffiliated": 374,
+        "Libertarian": 12,
+        "No Labels Kansas": 0,
+        "United Kansas": 0
+      }
+    },
+    {
+      "name": "Wabaunsee",
+      "fips": "20197",
+      "total_registered": 5362,
+      "by_party": {
+        "Republican": 3408,
+        "Democratic": 730,
+        "Unaffiliated": 1168,
+        "Libertarian": 52,
+        "No Labels Kansas": 3,
+        "United Kansas": 1
+      }
+    },
+    {
+      "name": "Wallace",
+      "fips": "20199",
+      "total_registered": 1159,
+      "by_party": {
+        "Republican": 914,
+        "Democratic": 53,
+        "Unaffiliated": 187,
+        "Libertarian": 5,
+        "No Labels Kansas": 0,
+        "United Kansas": 0
+      }
+    },
+    {
+      "name": "Washington",
+      "fips": "20201",
+      "total_registered": 3606,
+      "by_party": {
+        "Republican": 2893,
+        "Democratic": 269,
+        "Unaffiliated": 415,
+        "Libertarian": 24,
+        "No Labels Kansas": 4,
+        "United Kansas": 1
+      }
+    },
+    {
+      "name": "Wichita",
+      "fips": "20203",
+      "total_registered": 1239,
+      "by_party": {
+        "Republican": 864,
+        "Democratic": 111,
+        "Unaffiliated": 254,
+        "Libertarian": 8,
+        "No Labels Kansas": 1,
+        "United Kansas": 1
+      }
+    },
+    {
+      "name": "Wilson",
+      "fips": "20205",
+      "total_registered": 5073,
+      "by_party": {
+        "Republican": 3474,
+        "Democratic": 519,
+        "Unaffiliated": 1017,
+        "Libertarian": 50,
+        "No Labels Kansas": 11,
+        "United Kansas": 2
+      }
+    },
+    {
+      "name": "Woodson",
+      "fips": "20207",
+      "total_registered": 2252,
+      "by_party": {
+        "Republican": 1500,
+        "Democratic": 219,
+        "Unaffiliated": 501,
+        "Libertarian": 27,
+        "No Labels Kansas": 5,
+        "United Kansas": 0
+      }
+    },
+    {
+      "name": "Wyandotte",
+      "fips": "20209",
+      "total_registered": 92298,
+      "by_party": {
+        "Republican": 18297,
+        "Democratic": 40847,
+        "Unaffiliated": 31770,
+        "Libertarian": 981,
+        "No Labels Kansas": 329,
+        "United Kansas": 74
+      }
+    }
+  ],
+  "as_of_notes": "Report dated November 1, 2025 (filename 2025-11-01). PDF metadata: Processed 11/06/2025 11:10 AM, Printed 11/06/2025 1:07 PM. 'VR Statistics Count Report - Party Count Report For Jurisdictions' including registrants with status of Active and Inactive. This is the single most recent monthly 'Voter Registration Numbers by County' report published by the Kansas Secretary of State as of the research date (June 2026); no December 2025 or 2026 monthly PDFs were available at the official URL pattern (all returned the site's Page Not Found page).",
+  "data_quality": "high - all 105 counties extracted via PDF text positional parsing; every county's party components sum exactly to its county total, and the aggregated statewide party totals and grand total match the report's printed Grand Total line exactly (Dem 495691, Lib 23772, No Labels Kansas 5955, Rep 897243, United Kansas 964, Unaffiliated 575983, Grand Total 1999608).",
+  "notes": "Kansas recognizes six parties/affiliations on this report: Democratic, Libertarian, No Labels Kansas, Republican, United Kansas, and Unaffiliated. statewide_by_party and each county's by_party include all six. Counts include both Active and Inactive registrants. Per the Secretary of State's standard disclaimer, figures exclude registrations not yet processed by county election officials and are subject to ongoing changes. County FIPS are standard 5-digit codes (state 20 + county). Statewide total 1,999,608 differs from third-party trackers citing later May 2026 figures (e.g., IVP ~1,862,727) because this is the latest OFFICIAL KSOS county-breakdown report (Nov 1, 2025)."
+}

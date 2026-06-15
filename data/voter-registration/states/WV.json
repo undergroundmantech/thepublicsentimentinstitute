@@ -1,0 +1,740 @@
+{
+  "state": "West Virginia",
+  "state_abbr": "WV",
+  "state_fips": "54",
+  "as_of_date": "2026-05-31",
+  "source_name": "West Virginia Secretary of State - West Virginia Voter Registration Totals (Registration Totals May 2026)",
+  "source_url": "https://sos.wv.gov/elections/election-data/west-virginia-voter-registration-totals",
+  "registers_by_party": true,
+  "statewide_total_registered": 1199505,
+  "statewide_by_party": {
+    "Democratic": 326834,
+    "Republican": 521418,
+    "NoParty": 302227,
+    "Libertarian": 10755,
+    "Mountain": 2730,
+    "Other": 35541
+  },
+  "county_unit_label": "county",
+  "county_level_available": true,
+  "counties": [
+    {
+      "name": "Barbour",
+      "fips": "54001",
+      "total_registered": 9542,
+      "by_party": {
+        "Democratic": 2109,
+        "Republican": 4778,
+        "NoParty": 2185,
+        "Libertarian": 71,
+        "Mountain": 19,
+        "Other": 380
+      }
+    },
+    {
+      "name": "Berkeley",
+      "fips": "54003",
+      "total_registered": 101674,
+      "by_party": {
+        "Democratic": 22437,
+        "Republican": 43770,
+        "NoParty": 32859,
+        "Libertarian": 1393,
+        "Mountain": 221,
+        "Other": 994
+      }
+    },
+    {
+      "name": "Boone",
+      "fips": "54005",
+      "total_registered": 13588,
+      "by_party": {
+        "Democratic": 4895,
+        "Republican": 4880,
+        "NoParty": 2776,
+        "Libertarian": 86,
+        "Mountain": 27,
+        "Other": 924
+      }
+    },
+    {
+      "name": "Braxton",
+      "fips": "54007",
+      "total_registered": 7810,
+      "by_party": {
+        "Democratic": 2679,
+        "Republican": 3156,
+        "NoParty": 1719,
+        "Libertarian": 47,
+        "Mountain": 17,
+        "Other": 192
+      }
+    },
+    {
+      "name": "Brooke",
+      "fips": "54009",
+      "total_registered": 15146,
+      "by_party": {
+        "Democratic": 4897,
+        "Republican": 6179,
+        "NoParty": 3422,
+        "Libertarian": 141,
+        "Mountain": 23,
+        "Other": 484
+      }
+    },
+    {
+      "name": "Cabell",
+      "fips": "54011",
+      "total_registered": 55712,
+      "by_party": {
+        "Democratic": 17737,
+        "Republican": 22486,
+        "NoParty": 13610,
+        "Libertarian": 595,
+        "Mountain": 149,
+        "Other": 1135
+      }
+    },
+    {
+      "name": "Calhoun",
+      "fips": "54013",
+      "total_registered": 4550,
+      "by_party": {
+        "Democratic": 1261,
+        "Republican": 1846,
+        "NoParty": 1012,
+        "Libertarian": 32,
+        "Mountain": 6,
+        "Other": 393
+      }
+    },
+    {
+      "name": "Clay",
+      "fips": "54015",
+      "total_registered": 5109,
+      "by_party": {
+        "Democratic": 1592,
+        "Republican": 2094,
+        "NoParty": 893,
+        "Libertarian": 31,
+        "Mountain": 16,
+        "Other": 483
+      }
+    },
+    {
+      "name": "Doddridge",
+      "fips": "54017",
+      "total_registered": 4222,
+      "by_party": {
+        "Democratic": 436,
+        "Republican": 2801,
+        "NoParty": 844,
+        "Libertarian": 29,
+        "Mountain": 13,
+        "Other": 99
+      }
+    },
+    {
+      "name": "Fayette",
+      "fips": "54019",
+      "total_registered": 25829,
+      "by_party": {
+        "Democratic": 8344,
+        "Republican": 10138,
+        "NoParty": 6665,
+        "Libertarian": 171,
+        "Mountain": 89,
+        "Other": 422
+      }
+    },
+    {
+      "name": "Gilmer",
+      "fips": "54021",
+      "total_registered": 3823,
+      "by_party": {
+        "Democratic": 1267,
+        "Republican": 1459,
+        "NoParty": 789,
+        "Libertarian": 24,
+        "Mountain": 10,
+        "Other": 274
+      }
+    },
+    {
+      "name": "Grant",
+      "fips": "54023",
+      "total_registered": 7482,
+      "by_party": {
+        "Democratic": 562,
+        "Republican": 5336,
+        "NoParty": 1478,
+        "Libertarian": 34,
+        "Mountain": 8,
+        "Other": 64
+      }
+    },
+    {
+      "name": "Greenbrier",
+      "fips": "54025",
+      "total_registered": 23760,
+      "by_party": {
+        "Democratic": 6265,
+        "Republican": 10783,
+        "NoParty": 5707,
+        "Libertarian": 199,
+        "Mountain": 55,
+        "Other": 751
+      }
+    },
+    {
+      "name": "Hampshire",
+      "fips": "54027",
+      "total_registered": 15232,
+      "by_party": {
+        "Democratic": 2516,
+        "Republican": 8386,
+        "NoParty": 3852,
+        "Libertarian": 144,
+        "Mountain": 49,
+        "Other": 285
+      }
+    },
+    {
+      "name": "Hancock",
+      "fips": "54029",
+      "total_registered": 18725,
+      "by_party": {
+        "Democratic": 5457,
+        "Republican": 8553,
+        "NoParty": 4135,
+        "Libertarian": 156,
+        "Mountain": 26,
+        "Other": 398
+      }
+    },
+    {
+      "name": "Hardy",
+      "fips": "54031",
+      "total_registered": 9170,
+      "by_party": {
+        "Democratic": 2333,
+        "Republican": 4199,
+        "NoParty": 2451,
+        "Libertarian": 58,
+        "Mountain": 22,
+        "Other": 107
+      }
+    },
+    {
+      "name": "Harrison",
+      "fips": "54033",
+      "total_registered": 43376,
+      "by_party": {
+        "Democratic": 12145,
+        "Republican": 18438,
+        "NoParty": 11918,
+        "Libertarian": 366,
+        "Mountain": 103,
+        "Other": 406
+      }
+    },
+    {
+      "name": "Jackson",
+      "fips": "54035",
+      "total_registered": 18480,
+      "by_party": {
+        "Democratic": 3788,
+        "Republican": 9803,
+        "NoParty": 4483,
+        "Libertarian": 149,
+        "Mountain": 39,
+        "Other": 218
+      }
+    },
+    {
+      "name": "Jefferson",
+      "fips": "54037",
+      "total_registered": 48288,
+      "by_party": {
+        "Democratic": 12203,
+        "Republican": 17986,
+        "NoParty": 16472,
+        "Libertarian": 642,
+        "Mountain": 149,
+        "Other": 836
+      }
+    },
+    {
+      "name": "Kanawha",
+      "fips": "54039",
+      "total_registered": 120101,
+      "by_party": {
+        "Democratic": 40236,
+        "Republican": 44732,
+        "NoParty": 31554,
+        "Libertarian": 1097,
+        "Mountain": 350,
+        "Other": 2132
+      }
+    },
+    {
+      "name": "Lewis",
+      "fips": "54041",
+      "total_registered": 10307,
+      "by_party": {
+        "Democratic": 2273,
+        "Republican": 5188,
+        "NoParty": 2562,
+        "Libertarian": 75,
+        "Mountain": 15,
+        "Other": 194
+      }
+    },
+    {
+      "name": "Lincoln",
+      "fips": "54043",
+      "total_registered": 11774,
+      "by_party": {
+        "Democratic": 3162,
+        "Republican": 5023,
+        "NoParty": 3028,
+        "Libertarian": 83,
+        "Mountain": 20,
+        "Other": 458
+      }
+    },
+    {
+      "name": "Logan",
+      "fips": "54045",
+      "total_registered": 21634,
+      "by_party": {
+        "Democratic": 7841,
+        "Republican": 7637,
+        "NoParty": 3768,
+        "Libertarian": 88,
+        "Mountain": 21,
+        "Other": 2279
+      }
+    },
+    {
+      "name": "Marion",
+      "fips": "54049",
+      "total_registered": 37412,
+      "by_party": {
+        "Democratic": 12373,
+        "Republican": 13435,
+        "NoParty": 9004,
+        "Libertarian": 380,
+        "Mountain": 69,
+        "Other": 2151
+      }
+    },
+    {
+      "name": "Marshall",
+      "fips": "54051",
+      "total_registered": 19883,
+      "by_party": {
+        "Democratic": 5454,
+        "Republican": 8960,
+        "NoParty": 4761,
+        "Libertarian": 144,
+        "Mountain": 40,
+        "Other": 524
+      }
+    },
+    {
+      "name": "Mason",
+      "fips": "54053",
+      "total_registered": 15547,
+      "by_party": {
+        "Democratic": 4046,
+        "Republican": 7977,
+        "NoParty": 2660,
+        "Libertarian": 129,
+        "Mountain": 28,
+        "Other": 707
+      }
+    },
+    {
+      "name": "McDowell",
+      "fips": "54047",
+      "total_registered": 11791,
+      "by_party": {
+        "Democratic": 4924,
+        "Republican": 3247,
+        "NoParty": 2400,
+        "Libertarian": 46,
+        "Mountain": 15,
+        "Other": 1159
+      }
+    },
+    {
+      "name": "Mercer",
+      "fips": "54055",
+      "total_registered": 38688,
+      "by_party": {
+        "Democratic": 9298,
+        "Republican": 17430,
+        "NoParty": 10486,
+        "Libertarian": 294,
+        "Mountain": 85,
+        "Other": 1095
+      }
+    },
+    {
+      "name": "Mineral",
+      "fips": "54057",
+      "total_registered": 19476,
+      "by_party": {
+        "Democratic": 3458,
+        "Republican": 11132,
+        "NoParty": 4512,
+        "Libertarian": 178,
+        "Mountain": 32,
+        "Other": 164
+      }
+    },
+    {
+      "name": "Mingo",
+      "fips": "54059",
+      "total_registered": 17143,
+      "by_party": {
+        "Democratic": 6362,
+        "Republican": 6168,
+        "NoParty": 2504,
+        "Libertarian": 60,
+        "Mountain": 30,
+        "Other": 2019
+      }
+    },
+    {
+      "name": "Monongalia",
+      "fips": "54061",
+      "total_registered": 66048,
+      "by_party": {
+        "Democratic": 22659,
+        "Republican": 22600,
+        "NoParty": 19087,
+        "Libertarian": 770,
+        "Mountain": 183,
+        "Other": 749
+      }
+    },
+    {
+      "name": "Monroe",
+      "fips": "54063",
+      "total_registered": 9782,
+      "by_party": {
+        "Democratic": 2081,
+        "Republican": 5156,
+        "NoParty": 2365,
+        "Libertarian": 58,
+        "Mountain": 20,
+        "Other": 102
+      }
+    },
+    {
+      "name": "Morgan",
+      "fips": "54065",
+      "total_registered": 14093,
+      "by_party": {
+        "Democratic": 1923,
+        "Republican": 7601,
+        "NoParty": 4176,
+        "Libertarian": 139,
+        "Mountain": 54,
+        "Other": 200
+      }
+    },
+    {
+      "name": "Nicholas",
+      "fips": "54067",
+      "total_registered": 15427,
+      "by_party": {
+        "Democratic": 3681,
+        "Republican": 7265,
+        "NoParty": 3592,
+        "Libertarian": 78,
+        "Mountain": 39,
+        "Other": 772
+      }
+    },
+    {
+      "name": "Ohio",
+      "fips": "54069",
+      "total_registered": 27198,
+      "by_party": {
+        "Democratic": 8413,
+        "Republican": 10941,
+        "NoParty": 6276,
+        "Libertarian": 241,
+        "Mountain": 51,
+        "Other": 1276
+      }
+    },
+    {
+      "name": "Pendleton",
+      "fips": "54071",
+      "total_registered": 4871,
+      "by_party": {
+        "Democratic": 1294,
+        "Republican": 2233,
+        "NoParty": 1084,
+        "Libertarian": 18,
+        "Mountain": 7,
+        "Other": 235
+      }
+    },
+    {
+      "name": "Pleasants",
+      "fips": "54073",
+      "total_registered": 4773,
+      "by_party": {
+        "Democratic": 1055,
+        "Republican": 2294,
+        "NoParty": 1069,
+        "Libertarian": 31,
+        "Mountain": 11,
+        "Other": 313
+      }
+    },
+    {
+      "name": "Pocahontas",
+      "fips": "54075",
+      "total_registered": 5527,
+      "by_party": {
+        "Democratic": 1288,
+        "Republican": 2582,
+        "NoParty": 1560,
+        "Libertarian": 46,
+        "Mountain": 19,
+        "Other": 32
+      }
+    },
+    {
+      "name": "Preston",
+      "fips": "54077",
+      "total_registered": 19826,
+      "by_party": {
+        "Democratic": 3748,
+        "Republican": 11162,
+        "NoParty": 4095,
+        "Libertarian": 181,
+        "Mountain": 61,
+        "Other": 579
+      }
+    },
+    {
+      "name": "Putnam",
+      "fips": "54079",
+      "total_registered": 38810,
+      "by_party": {
+        "Democratic": 8586,
+        "Republican": 20422,
+        "NoParty": 8332,
+        "Libertarian": 384,
+        "Mountain": 60,
+        "Other": 1026
+      }
+    },
+    {
+      "name": "Raleigh",
+      "fips": "54081",
+      "total_registered": 49880,
+      "by_party": {
+        "Democratic": 12328,
+        "Republican": 23163,
+        "NoParty": 13049,
+        "Libertarian": 375,
+        "Mountain": 107,
+        "Other": 858
+      }
+    },
+    {
+      "name": "Randolph",
+      "fips": "54083",
+      "total_registered": 17351,
+      "by_party": {
+        "Democratic": 5298,
+        "Republican": 7208,
+        "NoParty": 3691,
+        "Libertarian": 118,
+        "Mountain": 30,
+        "Other": 1006
+      }
+    },
+    {
+      "name": "Ritchie",
+      "fips": "54085",
+      "total_registered": 5802,
+      "by_party": {
+        "Democratic": 698,
+        "Republican": 3649,
+        "NoParty": 1250,
+        "Libertarian": 31,
+        "Mountain": 9,
+        "Other": 165
+      }
+    },
+    {
+      "name": "Roane",
+      "fips": "54087",
+      "total_registered": 8493,
+      "by_party": {
+        "Democratic": 1840,
+        "Republican": 4204,
+        "NoParty": 2243,
+        "Libertarian": 53,
+        "Mountain": 19,
+        "Other": 134
+      }
+    },
+    {
+      "name": "Summers",
+      "fips": "54089",
+      "total_registered": 8091,
+      "by_party": {
+        "Democratic": 2423,
+        "Republican": 3301,
+        "NoParty": 2116,
+        "Libertarian": 50,
+        "Mountain": 24,
+        "Other": 177
+      }
+    },
+    {
+      "name": "Taylor",
+      "fips": "54091",
+      "total_registered": 10537,
+      "by_party": {
+        "Democratic": 2366,
+        "Republican": 5194,
+        "NoParty": 2293,
+        "Libertarian": 82,
+        "Mountain": 20,
+        "Other": 582
+      }
+    },
+    {
+      "name": "Tucker",
+      "fips": "54093",
+      "total_registered": 5133,
+      "by_party": {
+        "Democratic": 1365,
+        "Republican": 2035,
+        "NoParty": 1090,
+        "Libertarian": 40,
+        "Mountain": 12,
+        "Other": 591
+      }
+    },
+    {
+      "name": "Tyler",
+      "fips": "54095",
+      "total_registered": 5603,
+      "by_party": {
+        "Democratic": 963,
+        "Republican": 3239,
+        "NoParty": 1236,
+        "Libertarian": 49,
+        "Mountain": 9,
+        "Other": 107
+      }
+    },
+    {
+      "name": "Upshur",
+      "fips": "54097",
+      "total_registered": 14360,
+      "by_party": {
+        "Democratic": 2356,
+        "Republican": 8159,
+        "NoParty": 3540,
+        "Libertarian": 108,
+        "Mountain": 31,
+        "Other": 166
+      }
+    },
+    {
+      "name": "Wayne",
+      "fips": "54099",
+      "total_registered": 26108,
+      "by_party": {
+        "Democratic": 8763,
+        "Republican": 11280,
+        "NoParty": 4748,
+        "Libertarian": 197,
+        "Mountain": 50,
+        "Other": 1070
+      }
+    },
+    {
+      "name": "Webster",
+      "fips": "54101",
+      "total_registered": 5112,
+      "by_party": {
+        "Democratic": 1609,
+        "Republican": 1922,
+        "NoParty": 600,
+        "Libertarian": 24,
+        "Mountain": 14,
+        "Other": 943
+      }
+    },
+    {
+      "name": "Wetzel",
+      "fips": "54103",
+      "total_registered": 9914,
+      "by_party": {
+        "Democratic": 3174,
+        "Republican": 4095,
+        "NoParty": 1957,
+        "Libertarian": 71,
+        "Mountain": 20,
+        "Other": 597
+      }
+    },
+    {
+      "name": "Wirt",
+      "fips": "54105",
+      "total_registered": 3440,
+      "by_party": {
+        "Democratic": 755,
+        "Republican": 1854,
+        "NoParty": 725,
+        "Libertarian": 27,
+        "Mountain": 10,
+        "Other": 69
+      }
+    },
+    {
+      "name": "Wood",
+      "fips": "54107",
+      "total_registered": 55503,
+      "by_party": {
+        "Democratic": 12161,
+        "Republican": 26453,
+        "NoParty": 15483,
+        "Libertarian": 578,
+        "Mountain": 110,
+        "Other": 718
+      }
+    },
+    {
+      "name": "Wyoming",
+      "fips": "54109",
+      "total_registered": 12549,
+      "by_party": {
+        "Democratic": 3657,
+        "Republican": 5406,
+        "NoParty": 2061,
+        "Libertarian": 64,
+        "Mountain": 14,
+        "Other": 1347
+      }
+    }
+  ],
+  "as_of_notes": "Report titled 'West Virginia Voter Registration as of May 31. 2026' (latest monthly report on the WV SOS Voter Registration Totals page; PDF at https://sos.wv.gov/media/706/download?inline=). Source breaks registrations into Democrat, Republican, Mountain, Libertarian, Constitution, No Party, and Other. To fit this schema's party fields, the 'Constitution' party count was folded into 'Other' (statewide Constitution=171; Other-as-reported=35,370, so combined Other=35,541). 'NoParty' maps to the source 'No Party' column.",
+  "data_quality": "high - official monthly statewide report; all 55 counties present; every county row total equals the sum of its party columns; each party column sums exactly to the published statewide total; sum of county totals (1,199,505) equals published grand total.",
+  "notes": "Statewide totals as published: Democrat 326,834; Republican 521,418; Mountain 2,730; Libertarian 10,755; Constitution 171; No Party 302,227; Other 35,370; Total 1,199,505. Published party percentages: Dem 27.25%, Rep 43.47%, Mtn 0.23%, Lib 0.90%, Constitution 0.01%, No Party 25.20%, Other 2.95%. Stable per-state PDF index page used as source_url; direct PDF for this month: https://sos.wv.gov/media/706/download?inline=."
+}

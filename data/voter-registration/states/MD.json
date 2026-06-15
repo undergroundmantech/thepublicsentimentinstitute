@@ -1,0 +1,337 @@
+{
+  "state": "Maryland",
+  "state_abbr": "MD",
+  "state_fips": "24",
+  "as_of_date": "2026-05-31",
+  "source_name": "Maryland State Board of Elections — Monthly Voter Registration Activity Report (MSR), May 2026",
+  "source_url": "https://elections.maryland.gov/pdf/vrar/2026/MSR-2026_05.pdf",
+  "registers_by_party": true,
+  "statewide_total_registered": 4323311,
+  "statewide_by_party": {
+    "Democratic": 2217757,
+    "Republican": 1019362,
+    "Unaffiliated": 1004613,
+    "Green": 6171,
+    "Libertarian": 0,
+    "Other": 75408
+  },
+  "county_unit_label": "county",
+  "county_level_available": true,
+  "counties": [
+    {
+      "name": "Baltimore City",
+      "fips": "24510",
+      "total_registered": 408560,
+      "by_party": {
+        "Democratic": 298085,
+        "Republican": 29870,
+        "Unaffiliated": 72102,
+        "Green": 860,
+        "Libertarian": 0,
+        "Other": 7643
+      }
+    },
+    {
+      "name": "Allegany",
+      "fips": "24001",
+      "total_registered": 45162,
+      "by_party": {
+        "Democratic": 10809,
+        "Republican": 23751,
+        "Unaffiliated": 9700,
+        "Green": 67,
+        "Libertarian": 0,
+        "Other": 835
+      }
+    },
+    {
+      "name": "Anne Arundel",
+      "fips": "24003",
+      "total_registered": 422807,
+      "by_party": {
+        "Democratic": 173555,
+        "Republican": 129229,
+        "Unaffiliated": 112375,
+        "Green": 550,
+        "Libertarian": 0,
+        "Other": 7098
+      }
+    },
+    {
+      "name": "Baltimore",
+      "fips": "24005",
+      "total_registered": 586389,
+      "by_party": {
+        "Democratic": 306119,
+        "Republican": 139736,
+        "Unaffiliated": 129045,
+        "Green": 845,
+        "Libertarian": 0,
+        "Other": 10644
+      }
+    },
+    {
+      "name": "Calvert",
+      "fips": "24009",
+      "total_registered": 70874,
+      "by_party": {
+        "Democratic": 23195,
+        "Republican": 28938,
+        "Unaffiliated": 17497,
+        "Green": 68,
+        "Libertarian": 0,
+        "Other": 1176
+      }
+    },
+    {
+      "name": "Caroline",
+      "fips": "24011",
+      "total_registered": 23040,
+      "by_party": {
+        "Democratic": 5894,
+        "Republican": 11406,
+        "Unaffiliated": 5302,
+        "Green": 32,
+        "Libertarian": 0,
+        "Other": 406
+      }
+    },
+    {
+      "name": "Carroll",
+      "fips": "24013",
+      "total_registered": 131771,
+      "by_party": {
+        "Democratic": 32961,
+        "Republican": 64305,
+        "Unaffiliated": 32233,
+        "Green": 160,
+        "Libertarian": 0,
+        "Other": 2112
+      }
+    },
+    {
+      "name": "Cecil",
+      "fips": "24015",
+      "total_registered": 74494,
+      "by_party": {
+        "Democratic": 18741,
+        "Republican": 36054,
+        "Unaffiliated": 18214,
+        "Green": 86,
+        "Libertarian": 0,
+        "Other": 1399
+      }
+    },
+    {
+      "name": "Charles",
+      "fips": "24017",
+      "total_registered": 131057,
+      "by_party": {
+        "Democratic": 77701,
+        "Republican": 23433,
+        "Unaffiliated": 27965,
+        "Green": 153,
+        "Libertarian": 0,
+        "Other": 1805
+      }
+    },
+    {
+      "name": "Dorchester",
+      "fips": "24019",
+      "total_registered": 24388,
+      "by_party": {
+        "Democratic": 9400,
+        "Republican": 9823,
+        "Unaffiliated": 4708,
+        "Green": 21,
+        "Libertarian": 0,
+        "Other": 436
+      }
+    },
+    {
+      "name": "Frederick",
+      "fips": "24021",
+      "total_registered": 208827,
+      "by_party": {
+        "Democratic": 79077,
+        "Republican": 68632,
+        "Unaffiliated": 57850,
+        "Green": 292,
+        "Libertarian": 0,
+        "Other": 2976
+      }
+    },
+    {
+      "name": "Garrett",
+      "fips": "24023",
+      "total_registered": 21192,
+      "by_party": {
+        "Democratic": 3387,
+        "Republican": 14106,
+        "Unaffiliated": 3368,
+        "Green": 23,
+        "Libertarian": 0,
+        "Other": 308
+      }
+    },
+    {
+      "name": "Harford",
+      "fips": "24025",
+      "total_registered": 199708,
+      "by_party": {
+        "Democratic": 64508,
+        "Republican": 83059,
+        "Unaffiliated": 48351,
+        "Green": 211,
+        "Libertarian": 0,
+        "Other": 3579
+      }
+    },
+    {
+      "name": "Howard",
+      "fips": "24027",
+      "total_registered": 243063,
+      "by_party": {
+        "Democratic": 123948,
+        "Republican": 47427,
+        "Unaffiliated": 67823,
+        "Green": 352,
+        "Libertarian": 0,
+        "Other": 3513
+      }
+    },
+    {
+      "name": "Kent",
+      "fips": "24029",
+      "total_registered": 14428,
+      "by_party": {
+        "Democratic": 5584,
+        "Republican": 5584,
+        "Unaffiliated": 3019,
+        "Green": 17,
+        "Libertarian": 0,
+        "Other": 224
+      }
+    },
+    {
+      "name": "Montgomery",
+      "fips": "24031",
+      "total_registered": 707669,
+      "by_party": {
+        "Democratic": 407126,
+        "Republican": 99579,
+        "Unaffiliated": 189856,
+        "Green": 1092,
+        "Libertarian": 0,
+        "Other": 10016
+      }
+    },
+    {
+      "name": "Prince George's",
+      "fips": "24033",
+      "total_registered": 628129,
+      "by_party": {
+        "Democratic": 456041,
+        "Republican": 41678,
+        "Unaffiliated": 114847,
+        "Green": 878,
+        "Libertarian": 0,
+        "Other": 14685
+      }
+    },
+    {
+      "name": "Queen Anne's",
+      "fips": "24035",
+      "total_registered": 42295,
+      "by_party": {
+        "Democratic": 11219,
+        "Republican": 20900,
+        "Unaffiliated": 9500,
+        "Green": 48,
+        "Libertarian": 0,
+        "Other": 628
+      }
+    },
+    {
+      "name": "Somerset",
+      "fips": "24039",
+      "total_registered": 14787,
+      "by_party": {
+        "Democratic": 5294,
+        "Republican": 6401,
+        "Unaffiliated": 2817,
+        "Green": 25,
+        "Libertarian": 0,
+        "Other": 250
+      }
+    },
+    {
+      "name": "St. Mary's",
+      "fips": "24037",
+      "total_registered": 79421,
+      "by_party": {
+        "Democratic": 25080,
+        "Republican": 33612,
+        "Unaffiliated": 19376,
+        "Green": 78,
+        "Libertarian": 0,
+        "Other": 1275
+      }
+    },
+    {
+      "name": "Talbot",
+      "fips": "24041",
+      "total_registered": 29010,
+      "by_party": {
+        "Democratic": 10424,
+        "Republican": 11738,
+        "Unaffiliated": 6381,
+        "Green": 22,
+        "Libertarian": 0,
+        "Other": 445
+      }
+    },
+    {
+      "name": "Washington",
+      "fips": "24043",
+      "total_registered": 103915,
+      "by_party": {
+        "Democratic": 30552,
+        "Republican": 45111,
+        "Unaffiliated": 26306,
+        "Green": 152,
+        "Libertarian": 0,
+        "Other": 1794
+      }
+    },
+    {
+      "name": "Wicomico",
+      "fips": "24045",
+      "total_registered": 67863,
+      "by_party": {
+        "Democratic": 25699,
+        "Republican": 24481,
+        "Unaffiliated": 16230,
+        "Green": 91,
+        "Libertarian": 0,
+        "Other": 1362
+      }
+    },
+    {
+      "name": "Worcester",
+      "fips": "24047",
+      "total_registered": 44462,
+      "by_party": {
+        "Democratic": 13358,
+        "Republican": 20509,
+        "Unaffiliated": 9748,
+        "Green": 48,
+        "Libertarian": 0,
+        "Other": 799
+      }
+    }
+  ],
+  "as_of_notes": "Figures are TOTAL ACTIVE REGISTRATION (active voters only) from the Maryland Board of Elections Voter Registration Activity Report for May 2026, an end-of-month snapshot dated as of 2026-05-31. The report's TOTAL row also lists 249,712 statewide INACTIVE voters (not included here). Counts are unofficial/preliminary per MD SBE convention until certified. 24 jurisdictions = 23 counties + Baltimore City (independent city, FIPS 24510). Baltimore County is FIPS 24005 and is distinct.",
+  "data_quality": "high",
+  "notes": "Source is the official Maryland State Board of Elections monthly PDF; latest available is May 2026. All 24 jurisdiction rows and all party columns independently re-summed and reconcile exactly to the printed TOTAL row (active total 4,323,311). Maryland's recognized parties in this report are Democratic (DEM), Republican (REP), Green (GRN), and Working Class Party (WCP); there is NO Libertarian party column. To fit the requested schema, 'Green' maps to GRN; 'Libertarian' is set to 0 because Maryland does not separately report Libertarian (Libertarian registrants are subsumed within the state's 'Other' category); 'Other' here = OTH (70,534 statewide) + WCP/Working Class Party (4,874 statewide) so that by_party sums equal each total. 'Unaffiliated' maps to UNA. Statewide active by original MD columns: DEM 2,217,757; REP 1,019,362; GRN 6,171; WCP 4,874; UNA 1,004,613; OTH 70,534; TOTAL 4,323,311."
+}

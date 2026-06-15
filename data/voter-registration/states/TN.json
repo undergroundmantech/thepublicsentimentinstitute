@@ -1,0 +1,588 @@
+{
+  "state": "Tennessee",
+  "state_abbr": "TN",
+  "state_fips": "47",
+  "as_of_date": "2025-06-01",
+  "source_name": "Tennessee Secretary of State, Division of Elections \u2014 June 1, 2025 Six Month Summary Report",
+  "source_url": "https://sos-prod.tnsosgovfiles.com/s3fs-public/document/RptSixMonthSumJune2025.pdf",
+  "registers_by_party": false,
+  "statewide_total_registered": 4687819,
+  "statewide_by_party": null,
+  "county_unit_label": "county",
+  "county_level_available": true,
+  "counties": [
+    {
+      "name": "Anderson",
+      "fips": "47001",
+      "total_registered": 53290,
+      "by_party": null
+    },
+    {
+      "name": "Bedford",
+      "fips": "47003",
+      "total_registered": 30603,
+      "by_party": null
+    },
+    {
+      "name": "Benton",
+      "fips": "47005",
+      "total_registered": 11317,
+      "by_party": null
+    },
+    {
+      "name": "Bledsoe",
+      "fips": "47007",
+      "total_registered": 9200,
+      "by_party": null
+    },
+    {
+      "name": "Blount",
+      "fips": "47009",
+      "total_registered": 99255,
+      "by_party": null
+    },
+    {
+      "name": "Bradley",
+      "fips": "47011",
+      "total_registered": 80578,
+      "by_party": null
+    },
+    {
+      "name": "Campbell",
+      "fips": "47013",
+      "total_registered": 23772,
+      "by_party": null
+    },
+    {
+      "name": "Cannon",
+      "fips": "47015",
+      "total_registered": 10130,
+      "by_party": null
+    },
+    {
+      "name": "Carroll",
+      "fips": "47017",
+      "total_registered": 17700,
+      "by_party": null
+    },
+    {
+      "name": "Carter",
+      "fips": "47019",
+      "total_registered": 36358,
+      "by_party": null
+    },
+    {
+      "name": "Cheatham",
+      "fips": "47021",
+      "total_registered": 29388,
+      "by_party": null
+    },
+    {
+      "name": "Chester",
+      "fips": "47023",
+      "total_registered": 11132,
+      "by_party": null
+    },
+    {
+      "name": "Claiborne",
+      "fips": "47025",
+      "total_registered": 21571,
+      "by_party": null
+    },
+    {
+      "name": "Clay",
+      "fips": "47027",
+      "total_registered": 5527,
+      "by_party": null
+    },
+    {
+      "name": "Cocke",
+      "fips": "47029",
+      "total_registered": 25431,
+      "by_party": null
+    },
+    {
+      "name": "Coffee",
+      "fips": "47031",
+      "total_registered": 38042,
+      "by_party": null
+    },
+    {
+      "name": "Crockett",
+      "fips": "47033",
+      "total_registered": 8740,
+      "by_party": null
+    },
+    {
+      "name": "Cumberland",
+      "fips": "47035",
+      "total_registered": 48981,
+      "by_party": null
+    },
+    {
+      "name": "Davidson",
+      "fips": "47037",
+      "total_registered": 460986,
+      "by_party": null
+    },
+    {
+      "name": "DeKalb",
+      "fips": "47041",
+      "total_registered": 14024,
+      "by_party": null
+    },
+    {
+      "name": "Decatur",
+      "fips": "47039",
+      "total_registered": 7178,
+      "by_party": null
+    },
+    {
+      "name": "Dickson",
+      "fips": "47043",
+      "total_registered": 37276,
+      "by_party": null
+    },
+    {
+      "name": "Dyer",
+      "fips": "47045",
+      "total_registered": 22567,
+      "by_party": null
+    },
+    {
+      "name": "Fayette",
+      "fips": "47047",
+      "total_registered": 32362,
+      "by_party": null
+    },
+    {
+      "name": "Fentress",
+      "fips": "47049",
+      "total_registered": 14640,
+      "by_party": null
+    },
+    {
+      "name": "Franklin",
+      "fips": "47051",
+      "total_registered": 29328,
+      "by_party": null
+    },
+    {
+      "name": "Gibson",
+      "fips": "47053",
+      "total_registered": 31957,
+      "by_party": null
+    },
+    {
+      "name": "Giles",
+      "fips": "47055",
+      "total_registered": 20912,
+      "by_party": null
+    },
+    {
+      "name": "Grainger",
+      "fips": "47057",
+      "total_registered": 16513,
+      "by_party": null
+    },
+    {
+      "name": "Greene",
+      "fips": "47059",
+      "total_registered": 46995,
+      "by_party": null
+    },
+    {
+      "name": "Grundy",
+      "fips": "47061",
+      "total_registered": 8792,
+      "by_party": null
+    },
+    {
+      "name": "Hamblen",
+      "fips": "47063",
+      "total_registered": 39419,
+      "by_party": null
+    },
+    {
+      "name": "Hamilton",
+      "fips": "47065",
+      "total_registered": 267977,
+      "by_party": null
+    },
+    {
+      "name": "Hancock",
+      "fips": "47067",
+      "total_registered": 4433,
+      "by_party": null
+    },
+    {
+      "name": "Hardeman",
+      "fips": "47069",
+      "total_registered": 14990,
+      "by_party": null
+    },
+    {
+      "name": "Hardin",
+      "fips": "47071",
+      "total_registered": 17965,
+      "by_party": null
+    },
+    {
+      "name": "Hawkins",
+      "fips": "47073",
+      "total_registered": 38714,
+      "by_party": null
+    },
+    {
+      "name": "Haywood",
+      "fips": "47075",
+      "total_registered": 10693,
+      "by_party": null
+    },
+    {
+      "name": "Henderson",
+      "fips": "47077",
+      "total_registered": 18082,
+      "by_party": null
+    },
+    {
+      "name": "Henry",
+      "fips": "47079",
+      "total_registered": 21570,
+      "by_party": null
+    },
+    {
+      "name": "Hickman",
+      "fips": "47081",
+      "total_registered": 15946,
+      "by_party": null
+    },
+    {
+      "name": "Houston",
+      "fips": "47083",
+      "total_registered": 5719,
+      "by_party": null
+    },
+    {
+      "name": "Humphreys",
+      "fips": "47085",
+      "total_registered": 12735,
+      "by_party": null
+    },
+    {
+      "name": "Jackson",
+      "fips": "47087",
+      "total_registered": 8897,
+      "by_party": null
+    },
+    {
+      "name": "Jefferson",
+      "fips": "47089",
+      "total_registered": 37901,
+      "by_party": null
+    },
+    {
+      "name": "Johnson",
+      "fips": "47091",
+      "total_registered": 11852,
+      "by_party": null
+    },
+    {
+      "name": "Knox",
+      "fips": "47093",
+      "total_registered": 330463,
+      "by_party": null
+    },
+    {
+      "name": "Lake",
+      "fips": "47095",
+      "total_registered": 3380,
+      "by_party": null
+    },
+    {
+      "name": "Lauderdale",
+      "fips": "47097",
+      "total_registered": 12993,
+      "by_party": null
+    },
+    {
+      "name": "Lawrence",
+      "fips": "47099",
+      "total_registered": 27958,
+      "by_party": null
+    },
+    {
+      "name": "Lewis",
+      "fips": "47101",
+      "total_registered": 8951,
+      "by_party": null
+    },
+    {
+      "name": "Lincoln",
+      "fips": "47103",
+      "total_registered": 23873,
+      "by_party": null
+    },
+    {
+      "name": "Loudon",
+      "fips": "47105",
+      "total_registered": 44706,
+      "by_party": null
+    },
+    {
+      "name": "Macon",
+      "fips": "47111",
+      "total_registered": 16035,
+      "by_party": null
+    },
+    {
+      "name": "Madison",
+      "fips": "47113",
+      "total_registered": 61746,
+      "by_party": null
+    },
+    {
+      "name": "Marion",
+      "fips": "47115",
+      "total_registered": 21058,
+      "by_party": null
+    },
+    {
+      "name": "Marshall",
+      "fips": "47117",
+      "total_registered": 23012,
+      "by_party": null
+    },
+    {
+      "name": "Maury",
+      "fips": "47119",
+      "total_registered": 74264,
+      "by_party": null
+    },
+    {
+      "name": "McMinn",
+      "fips": "47107",
+      "total_registered": 35207,
+      "by_party": null
+    },
+    {
+      "name": "McNairy",
+      "fips": "47109",
+      "total_registered": 16305,
+      "by_party": null
+    },
+    {
+      "name": "Meigs",
+      "fips": "47121",
+      "total_registered": 9092,
+      "by_party": null
+    },
+    {
+      "name": "Monroe",
+      "fips": "47123",
+      "total_registered": 34351,
+      "by_party": null
+    },
+    {
+      "name": "Montgomery",
+      "fips": "47125",
+      "total_registered": 151479,
+      "by_party": null
+    },
+    {
+      "name": "Moore",
+      "fips": "47127",
+      "total_registered": 5579,
+      "by_party": null
+    },
+    {
+      "name": "Morgan",
+      "fips": "47129",
+      "total_registered": 12339,
+      "by_party": null
+    },
+    {
+      "name": "Obion",
+      "fips": "47131",
+      "total_registered": 19231,
+      "by_party": null
+    },
+    {
+      "name": "Overton",
+      "fips": "47133",
+      "total_registered": 16223,
+      "by_party": null
+    },
+    {
+      "name": "Perry",
+      "fips": "47135",
+      "total_registered": 5732,
+      "by_party": null
+    },
+    {
+      "name": "Pickett",
+      "fips": "47137",
+      "total_registered": 4218,
+      "by_party": null
+    },
+    {
+      "name": "Polk",
+      "fips": "47139",
+      "total_registered": 14103,
+      "by_party": null
+    },
+    {
+      "name": "Putnam",
+      "fips": "47141",
+      "total_registered": 51537,
+      "by_party": null
+    },
+    {
+      "name": "Rhea",
+      "fips": "47143",
+      "total_registered": 22648,
+      "by_party": null
+    },
+    {
+      "name": "Roane",
+      "fips": "47145",
+      "total_registered": 39101,
+      "by_party": null
+    },
+    {
+      "name": "Robertson",
+      "fips": "47147",
+      "total_registered": 50670,
+      "by_party": null
+    },
+    {
+      "name": "Rutherford",
+      "fips": "47149",
+      "total_registered": 214446,
+      "by_party": null
+    },
+    {
+      "name": "Scott",
+      "fips": "47151",
+      "total_registered": 13466,
+      "by_party": null
+    },
+    {
+      "name": "Sequatchie",
+      "fips": "47153",
+      "total_registered": 11436,
+      "by_party": null
+    },
+    {
+      "name": "Sevier",
+      "fips": "47155",
+      "total_registered": 72067,
+      "by_party": null
+    },
+    {
+      "name": "Shelby",
+      "fips": "47157",
+      "total_registered": 588711,
+      "by_party": null
+    },
+    {
+      "name": "Smith",
+      "fips": "47159",
+      "total_registered": 13512,
+      "by_party": null
+    },
+    {
+      "name": "Stewart",
+      "fips": "47161",
+      "total_registered": 10218,
+      "by_party": null
+    },
+    {
+      "name": "Sullivan",
+      "fips": "47163",
+      "total_registered": 116522,
+      "by_party": null
+    },
+    {
+      "name": "Sumner",
+      "fips": "47165",
+      "total_registered": 139197,
+      "by_party": null
+    },
+    {
+      "name": "Tipton",
+      "fips": "47167",
+      "total_registered": 40681,
+      "by_party": null
+    },
+    {
+      "name": "Trousdale",
+      "fips": "47169",
+      "total_registered": 6601,
+      "by_party": null
+    },
+    {
+      "name": "Unicoi",
+      "fips": "47171",
+      "total_registered": 11945,
+      "by_party": null
+    },
+    {
+      "name": "Union",
+      "fips": "47173",
+      "total_registered": 12553,
+      "by_party": null
+    },
+    {
+      "name": "Van Buren",
+      "fips": "47175",
+      "total_registered": 4677,
+      "by_party": null
+    },
+    {
+      "name": "Warren",
+      "fips": "47177",
+      "total_registered": 25459,
+      "by_party": null
+    },
+    {
+      "name": "Washington",
+      "fips": "47179",
+      "total_registered": 91531,
+      "by_party": null
+    },
+    {
+      "name": "Wayne",
+      "fips": "47181",
+      "total_registered": 10210,
+      "by_party": null
+    },
+    {
+      "name": "Weakley",
+      "fips": "47183",
+      "total_registered": 18650,
+      "by_party": null
+    },
+    {
+      "name": "White",
+      "fips": "47185",
+      "total_registered": 18734,
+      "by_party": null
+    },
+    {
+      "name": "Williamson",
+      "fips": "47187",
+      "total_registered": 190438,
+      "by_party": null
+    },
+    {
+      "name": "Wilson",
+      "fips": "47189",
+      "total_registered": 109073,
+      "by_party": null
+    }
+  ],
+  "as_of_notes": "Data 'as of' June 1, 2025 (report titled 'June 1, 2025 Six Month Summary Report'; report generated/dated 03-Sep-2025). This is the most recent voter registration report published on the TN SOS Elections Statistics page (sos.tn.gov/elections/statistics) as of June 2026; no December 2025 report had been posted yet (probe of RptSixMonthSumDec2025.pdf returned 403). Total registered per county = ENDING ACTIVE + ENDING INACTIVE, per the report's footnote 'ENDING ACTIVE PLUS ENDING INACTIVE EQUALS TOTAL REGISTRATION'.",
+  "data_quality": "high",
+  "notes": "Tennessee does not register voters by party; party fields are null. Per-county total_registered = ending active + ending inactive registrations. Statewide total 4,687,819 = ending active 4,340,096 + ending inactive 347,723; both column sums verified against the report's Grand Total line and the per-county sums match exactly. All 95 counties included. Integers only."
+}

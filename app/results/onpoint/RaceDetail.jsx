@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { useTheme, tripToggleTheme } from './lib/theme.jsx'
 
@@ -13,10 +13,20 @@ import { useTheme, tripToggleTheme } from './lib/theme.jsx'
 // local previews straight at that precinct server; production keeps the public
 // /demographics mount.
 function precinctBase() {
+  // A deploy can point the race-detail map at a hosted precinct app by setting
+  // NEXT_PUBLIC_PRECINCT_BASE (e.g. https://precinct.example.com). Otherwise we
+  // fall back to the local precinct dev server, then the production
+  // /demographics mount.
+  const envBase = process.env.NEXT_PUBLIC_PRECINCT_BASE
+  if (envBase) return envBase.replace(/\/+$/, '')
   if (typeof window !== 'undefined' && /^(localhost|127\.0\.0\.1)$/.test(window.location.hostname)) {
     return 'http://localhost:3210'
   }
   return '/demographics'
+}
+
+function isLocalHost() {
+  return typeof window !== 'undefined' && /^(localhost|127\.0\.0\.1)$/.test(window.location.hostname)
 }
 
 // Sync the iframe to the new theme. Same-origin (dev + prod-with-proxy)
@@ -56,6 +66,12 @@ export default function RaceDetail({ race, onClose }) {
   // carried via camRef), so the map recolors smoothly in lockstep with the
   // hub's view-transition wipe — exactly like every other surface on the site.
   const initialThemeRef = useRef(theme)
+
+  // Reachability of the precinct map. null = checking, true = up, false = the
+  // iframe origin isn't answering (e.g. the precinct app isn't running). When
+  // it's down we show a clear, retryable panel instead of a silent blank.
+  const [reachable, setReachable] = useState(null)
+  const [retry, setRetry] = useState(0)
 
   // Tracks whether THIS component instance pushed a history entry. If
   // the URL was already /results/race/<id> when we mounted (a direct
@@ -129,6 +145,21 @@ export default function RaceDetail({ race, onClose }) {
   const src = `${base}${base.endsWith('/') ? '' : '/'}?d=CIVIC&race=${encodeURIComponent(
     race.id
   )}&warp=1&theme=${initialThemeRef.current}`
+
+  // Probe the precinct origin so a missing/offline map surfaces as a helpful
+  // panel rather than a blank page. `no-cors` only tells us reachable-or-not
+  // (which is all we need); a 6 s abort treats a hang as down. Re-runs on retry.
+  useEffect(() => {
+    let alive = true
+    setReachable(null)
+    const ac = new AbortController()
+    const timer = setTimeout(() => ac.abort(), 6000)
+    fetch(base, { mode: 'no-cors', signal: ac.signal })
+      .then(() => { if (alive) setReachable(true) })
+      .catch(() => { if (alive) setReachable(false) })
+      .finally(() => clearTimeout(timer))
+    return () => { alive = false; clearTimeout(timer); ac.abort() }
+  }, [base, retry])
 
   // Unified chrome cluster. A single rounded glass pill at top-left that
   // holds Back + Theme as two segments separated by a 1px hairline. Both
@@ -211,7 +242,7 @@ export default function RaceDetail({ race, onClose }) {
           losing zoom/selection; theme now flips in place via syncIframeTheme
           while the iframe instance stays mounted. */}
       <iframe
-        key={race.id}
+        key={`${race.id}-${retry}`}
         ref={iframeRef}
         title={race.election_name || 'Race detail'}
         src={src}
@@ -276,6 +307,52 @@ export default function RaceDetail({ race, onClose }) {
           )}
         </button>
       </div>
+
+      {reachable === false ? (
+        <div
+          style={{
+            position: 'absolute', inset: 0, zIndex: 1, display: 'grid', placeItems: 'center',
+            padding: 24, background: 'var(--page)', textAlign: 'center',
+            fontFamily: '"Instrument Sans", system-ui, sans-serif',
+          }}
+        >
+          <div style={{ maxWidth: 460 }}>
+            <div style={{ fontFamily: '"Oswald", system-ui, sans-serif', textTransform: 'uppercase', letterSpacing: '0.12em', fontSize: 12, fontWeight: 700, color: 'var(--ink-dim)' }}>
+              Precinct map unavailable
+            </div>
+            <h2 style={{ margin: '12px 0 8px', fontFamily: '"Oswald", system-ui, sans-serif', fontSize: 24, lineHeight: 1.1, color: 'var(--ink)' }}>
+              This race&apos;s map isn&apos;t responding
+            </h2>
+            <p style={{ margin: '0 0 20px', fontSize: 14, lineHeight: 1.65, color: 'var(--ink-mute)' }}>
+              The detail map loads from{' '}
+              <code style={{ fontFamily: '"JetBrains Mono", ui-monospace, monospace', fontSize: 12.5, padding: '1px 6px', borderRadius: 5, background: 'var(--wash)', color: 'var(--ink)' }}>{base}</code>.{' '}
+              {isLocalHost()
+                ? 'Start the precinct map app on port 3210, then retry.'
+                : 'The precinct map service may be offline.'}
+            </p>
+            <div style={{ display: 'inline-flex', gap: 10, flexWrap: 'wrap', justifyContent: 'center' }}>
+              <button
+                onClick={() => setRetry((n) => n + 1)}
+                style={{ fontFamily: 'inherit', fontSize: 13, fontWeight: 650, color: '#0a0b0d', background: 'var(--ink)', border: 0, borderRadius: 99, padding: '10px 20px', cursor: 'pointer' }}
+              >
+                Retry
+              </button>
+              <a
+                href={src} target="_blank" rel="noreferrer"
+                style={{ fontFamily: 'inherit', fontSize: 13, fontWeight: 600, color: 'var(--ink)', background: 'transparent', border: '1px solid var(--card-bd)', borderRadius: 99, padding: '10px 18px', textDecoration: 'none' }}
+              >
+                Open directly ↗
+              </a>
+              <button
+                onClick={() => setReachable(true)}
+                style={{ fontFamily: 'inherit', fontSize: 13, fontWeight: 600, color: 'var(--ink-mute)', background: 'transparent', border: '1px solid var(--card-bd)', borderRadius: 99, padding: '10px 18px', cursor: 'pointer' }}
+              >
+                Dismiss
+              </button>
+            </div>
+          </div>
+        </div>
+      ) : null}
     </div>,
     document.body
   )

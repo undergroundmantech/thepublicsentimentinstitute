@@ -1,0 +1,2695 @@
+{
+  "state": "New Hampshire",
+  "state_abbr": "NH",
+  "state_fips": "33",
+  "as_of_date": "2026-05-04",
+  "source_name": "New Hampshire Secretary of State \u2014 Party Registration History 1970-2026 / Summary of Active Voters (May 4, 2026)",
+  "source_url": "https://www.sos.nh.gov/party-registration-history-1970-2026",
+  "registers_by_party": true,
+  "statewide_total_registered": 956346,
+  "statewide_by_party": {
+    "Undeclared": 377158,
+    "Republican": 314005,
+    "Democratic": 265183
+  },
+  "county_unit_label": "town",
+  "county_level_available": true,
+  "counties": [
+    {
+      "name": "Acworth",
+      "fips": null,
+      "total_registered": 705,
+      "by_party": {
+        "Undeclared": 294,
+        "Republican": 238,
+        "Democratic": 173
+      },
+      "county": "Sullivan"
+    },
+    {
+      "name": "Albany",
+      "fips": null,
+      "total_registered": 552,
+      "by_party": {
+        "Undeclared": 199,
+        "Republican": 173,
+        "Democratic": 180
+      },
+      "county": "Carroll"
+    },
+    {
+      "name": "Alexandria",
+      "fips": null,
+      "total_registered": 1296,
+      "by_party": {
+        "Undeclared": 546,
+        "Republican": 522,
+        "Democratic": 228
+      },
+      "county": "Grafton"
+    },
+    {
+      "name": "Allenstown",
+      "fips": null,
+      "total_registered": 3055,
+      "by_party": {
+        "Undeclared": 1074,
+        "Republican": 1182,
+        "Democratic": 799
+      },
+      "county": "Merrimack"
+    },
+    {
+      "name": "Alstead",
+      "fips": null,
+      "total_registered": 1393,
+      "by_party": {
+        "Undeclared": 646,
+        "Republican": 382,
+        "Democratic": 365
+      },
+      "county": "Cheshire"
+    },
+    {
+      "name": "Alton",
+      "fips": null,
+      "total_registered": 4774,
+      "by_party": {
+        "Undeclared": 1699,
+        "Republican": 2260,
+        "Democratic": 815
+      },
+      "county": "Belknap"
+    },
+    {
+      "name": "Amherst",
+      "fips": null,
+      "total_registered": 8921,
+      "by_party": {
+        "Undeclared": 3459,
+        "Republican": 2885,
+        "Democratic": 2577
+      },
+      "county": "Hillsborough"
+    },
+    {
+      "name": "Andover",
+      "fips": null,
+      "total_registered": 1919,
+      "by_party": {
+        "Undeclared": 713,
+        "Republican": 604,
+        "Democratic": 602
+      },
+      "county": "Merrimack"
+    },
+    {
+      "name": "Antrim",
+      "fips": null,
+      "total_registered": 1968,
+      "by_party": {
+        "Undeclared": 835,
+        "Republican": 668,
+        "Democratic": 465
+      },
+      "county": "Hillsborough"
+    },
+    {
+      "name": "Ashland",
+      "fips": null,
+      "total_registered": 1485,
+      "by_party": {
+        "Undeclared": 726,
+        "Republican": 422,
+        "Democratic": 337
+      },
+      "county": "Grafton"
+    },
+    {
+      "name": "Atkinson",
+      "fips": null,
+      "total_registered": 5822,
+      "by_party": {
+        "Undeclared": 2207,
+        "Republican": 2457,
+        "Democratic": 1158
+      },
+      "county": "Rockingham"
+    },
+    {
+      "name": "Auburn",
+      "fips": null,
+      "total_registered": 4560,
+      "by_party": {
+        "Undeclared": 1628,
+        "Republican": 2020,
+        "Democratic": 912
+      },
+      "county": "Rockingham"
+    },
+    {
+      "name": "Barnstead",
+      "fips": null,
+      "total_registered": 3558,
+      "by_party": {
+        "Undeclared": 1258,
+        "Republican": 1559,
+        "Democratic": 741
+      },
+      "county": "Belknap"
+    },
+    {
+      "name": "Barrington",
+      "fips": null,
+      "total_registered": 7196,
+      "by_party": {
+        "Undeclared": 2846,
+        "Republican": 2329,
+        "Democratic": 2021
+      },
+      "county": "Strafford"
+    },
+    {
+      "name": "Bartlett",
+      "fips": null,
+      "total_registered": 2754,
+      "by_party": {
+        "Undeclared": 1227,
+        "Republican": 691,
+        "Democratic": 836
+      },
+      "county": "Carroll"
+    },
+    {
+      "name": "Bath",
+      "fips": null,
+      "total_registered": 775,
+      "by_party": {
+        "Undeclared": 336,
+        "Republican": 314,
+        "Democratic": 125
+      },
+      "county": "Grafton"
+    },
+    {
+      "name": "Bedford",
+      "fips": null,
+      "total_registered": 16891,
+      "by_party": {
+        "Undeclared": 6471,
+        "Republican": 6328,
+        "Democratic": 4092
+      },
+      "county": "Hillsborough"
+    },
+    {
+      "name": "Belmont",
+      "fips": null,
+      "total_registered": 4938,
+      "by_party": {
+        "Undeclared": 1529,
+        "Republican": 2329,
+        "Democratic": 1080
+      },
+      "county": "Belknap"
+    },
+    {
+      "name": "Bennington",
+      "fips": null,
+      "total_registered": 1030,
+      "by_party": {
+        "Undeclared": 405,
+        "Republican": 377,
+        "Democratic": 248
+      },
+      "county": "Hillsborough"
+    },
+    {
+      "name": "Benton",
+      "fips": null,
+      "total_registered": 259,
+      "by_party": {
+        "Undeclared": 101,
+        "Republican": 116,
+        "Democratic": 42
+      },
+      "county": "Grafton"
+    },
+    {
+      "name": "Berlin",
+      "fips": null,
+      "total_registered": 4712,
+      "by_party": {
+        "Undeclared": 1864,
+        "Republican": 1397,
+        "Democratic": 1451
+      },
+      "county": "Coos"
+    },
+    {
+      "name": "Bethlehem",
+      "fips": null,
+      "total_registered": 2044,
+      "by_party": {
+        "Undeclared": 838,
+        "Republican": 542,
+        "Democratic": 664
+      },
+      "county": "Grafton"
+    },
+    {
+      "name": "Boscawen",
+      "fips": null,
+      "total_registered": 2451,
+      "by_party": {
+        "Undeclared": 943,
+        "Republican": 901,
+        "Democratic": 607
+      },
+      "county": "Merrimack"
+    },
+    {
+      "name": "Bow",
+      "fips": null,
+      "total_registered": 6247,
+      "by_party": {
+        "Undeclared": 2382,
+        "Republican": 2014,
+        "Democratic": 1851
+      },
+      "county": "Merrimack"
+    },
+    {
+      "name": "Bradford",
+      "fips": null,
+      "total_registered": 1246,
+      "by_party": {
+        "Undeclared": 518,
+        "Republican": 406,
+        "Democratic": 322
+      },
+      "county": "Merrimack"
+    },
+    {
+      "name": "Brentwood",
+      "fips": null,
+      "total_registered": 3437,
+      "by_party": {
+        "Undeclared": 1432,
+        "Republican": 1136,
+        "Democratic": 869
+      },
+      "county": "Rockingham"
+    },
+    {
+      "name": "Bridgewater",
+      "fips": null,
+      "total_registered": 1029,
+      "by_party": {
+        "Undeclared": 399,
+        "Republican": 430,
+        "Democratic": 200
+      },
+      "county": "Grafton"
+    },
+    {
+      "name": "Bristol",
+      "fips": null,
+      "total_registered": 2297,
+      "by_party": {
+        "Undeclared": 913,
+        "Republican": 884,
+        "Democratic": 500
+      },
+      "county": "Grafton"
+    },
+    {
+      "name": "Brookfield",
+      "fips": null,
+      "total_registered": 614,
+      "by_party": {
+        "Undeclared": 273,
+        "Republican": 235,
+        "Democratic": 106
+      },
+      "county": "Carroll"
+    },
+    {
+      "name": "Brookline",
+      "fips": null,
+      "total_registered": 4086,
+      "by_party": {
+        "Undeclared": 1812,
+        "Republican": 1358,
+        "Democratic": 916
+      },
+      "county": "Hillsborough"
+    },
+    {
+      "name": "Cambridge",
+      "fips": null,
+      "total_registered": 8,
+      "by_party": {
+        "Undeclared": 2,
+        "Republican": 6,
+        "Democratic": 0
+      },
+      "county": "Coos"
+    },
+    {
+      "name": "Campton",
+      "fips": null,
+      "total_registered": 2551,
+      "by_party": {
+        "Undeclared": 880,
+        "Republican": 934,
+        "Democratic": 737
+      },
+      "county": "Grafton"
+    },
+    {
+      "name": "Canaan",
+      "fips": null,
+      "total_registered": 2591,
+      "by_party": {
+        "Undeclared": 1151,
+        "Republican": 724,
+        "Democratic": 716
+      },
+      "county": "Grafton"
+    },
+    {
+      "name": "Candia",
+      "fips": null,
+      "total_registered": 3319,
+      "by_party": {
+        "Undeclared": 1165,
+        "Republican": 1536,
+        "Democratic": 618
+      },
+      "county": "Rockingham"
+    },
+    {
+      "name": "Canterbury",
+      "fips": null,
+      "total_registered": 1945,
+      "by_party": {
+        "Undeclared": 949,
+        "Republican": 532,
+        "Democratic": 464
+      },
+      "county": "Merrimack"
+    },
+    {
+      "name": "Carroll",
+      "fips": null,
+      "total_registered": 620,
+      "by_party": {
+        "Undeclared": 214,
+        "Republican": 233,
+        "Democratic": 173
+      },
+      "county": "Coos"
+    },
+    {
+      "name": "Center Harbor",
+      "fips": null,
+      "total_registered": 874,
+      "by_party": {
+        "Undeclared": 334,
+        "Republican": 340,
+        "Democratic": 200
+      },
+      "county": "Belknap"
+    },
+    {
+      "name": "Charlestown",
+      "fips": null,
+      "total_registered": 3036,
+      "by_party": {
+        "Undeclared": 1250,
+        "Republican": 1013,
+        "Democratic": 773
+      },
+      "county": "Sullivan"
+    },
+    {
+      "name": "Chatham",
+      "fips": null,
+      "total_registered": 268,
+      "by_party": {
+        "Undeclared": 116,
+        "Republican": 96,
+        "Democratic": 56
+      },
+      "county": "Carroll"
+    },
+    {
+      "name": "Chester",
+      "fips": null,
+      "total_registered": 4014,
+      "by_party": {
+        "Undeclared": 1583,
+        "Republican": 1684,
+        "Democratic": 747
+      },
+      "county": "Rockingham"
+    },
+    {
+      "name": "Chesterfield",
+      "fips": null,
+      "total_registered": 2812,
+      "by_party": {
+        "Undeclared": 1200,
+        "Republican": 770,
+        "Democratic": 842
+      },
+      "county": "Cheshire"
+    },
+    {
+      "name": "Chichester",
+      "fips": null,
+      "total_registered": 2054,
+      "by_party": {
+        "Undeclared": 801,
+        "Republican": 870,
+        "Democratic": 383
+      },
+      "county": "Merrimack"
+    },
+    {
+      "name": "Claremont",
+      "fips": null,
+      "total_registered": 6750,
+      "by_party": {
+        "Undeclared": 2362,
+        "Republican": 2299,
+        "Democratic": 2089
+      },
+      "county": "Sullivan"
+    },
+    {
+      "name": "Clarksville",
+      "fips": null,
+      "total_registered": 216,
+      "by_party": {
+        "Undeclared": 90,
+        "Republican": 95,
+        "Democratic": 31
+      },
+      "county": "Coos"
+    },
+    {
+      "name": "Colebrook",
+      "fips": null,
+      "total_registered": 1388,
+      "by_party": {
+        "Undeclared": 604,
+        "Republican": 589,
+        "Democratic": 195
+      },
+      "county": "Coos"
+    },
+    {
+      "name": "Columbia",
+      "fips": null,
+      "total_registered": 454,
+      "by_party": {
+        "Undeclared": 213,
+        "Republican": 180,
+        "Democratic": 61
+      },
+      "county": "Coos"
+    },
+    {
+      "name": "Concord",
+      "fips": null,
+      "total_registered": 28045,
+      "by_party": {
+        "Undeclared": 10565,
+        "Republican": 6848,
+        "Democratic": 10632
+      },
+      "county": "Merrimack"
+    },
+    {
+      "name": "Conway",
+      "fips": null,
+      "total_registered": 7418,
+      "by_party": {
+        "Undeclared": 3047,
+        "Republican": 2179,
+        "Democratic": 2192
+      },
+      "county": "Carroll"
+    },
+    {
+      "name": "Cornish",
+      "fips": null,
+      "total_registered": 1196,
+      "by_party": {
+        "Undeclared": 489,
+        "Republican": 313,
+        "Democratic": 394
+      },
+      "county": "Sullivan"
+    },
+    {
+      "name": "Croydon",
+      "fips": null,
+      "total_registered": 644,
+      "by_party": {
+        "Undeclared": 333,
+        "Republican": 242,
+        "Democratic": 69
+      },
+      "county": "Sullivan"
+    },
+    {
+      "name": "Dalton",
+      "fips": null,
+      "total_registered": 721,
+      "by_party": {
+        "Undeclared": 373,
+        "Republican": 237,
+        "Democratic": 111
+      },
+      "county": "Coos"
+    },
+    {
+      "name": "Danbury",
+      "fips": null,
+      "total_registered": 956,
+      "by_party": {
+        "Undeclared": 427,
+        "Republican": 373,
+        "Democratic": 156
+      },
+      "county": "Merrimack"
+    },
+    {
+      "name": "Danville",
+      "fips": null,
+      "total_registered": 3271,
+      "by_party": {
+        "Undeclared": 1191,
+        "Republican": 1479,
+        "Democratic": 601
+      },
+      "county": "Rockingham"
+    },
+    {
+      "name": "Deerfield",
+      "fips": null,
+      "total_registered": 3714,
+      "by_party": {
+        "Undeclared": 1329,
+        "Republican": 1623,
+        "Democratic": 762
+      },
+      "county": "Rockingham"
+    },
+    {
+      "name": "Deering",
+      "fips": null,
+      "total_registered": 1334,
+      "by_party": {
+        "Undeclared": 533,
+        "Republican": 543,
+        "Democratic": 258
+      },
+      "county": "Hillsborough"
+    },
+    {
+      "name": "Derry",
+      "fips": null,
+      "total_registered": 20493,
+      "by_party": {
+        "Undeclared": 7749,
+        "Republican": 7854,
+        "Democratic": 4890
+      },
+      "county": "Rockingham"
+    },
+    {
+      "name": "Dixville",
+      "fips": null,
+      "total_registered": 6,
+      "by_party": {
+        "Undeclared": 2,
+        "Republican": 4,
+        "Democratic": 0
+      },
+      "county": "Coos"
+    },
+    {
+      "name": "Dorchester",
+      "fips": null,
+      "total_registered": 279,
+      "by_party": {
+        "Undeclared": 102,
+        "Republican": 119,
+        "Democratic": 58
+      },
+      "county": "Grafton"
+    },
+    {
+      "name": "Dover",
+      "fips": null,
+      "total_registered": 21958,
+      "by_party": {
+        "Undeclared": 8212,
+        "Republican": 5090,
+        "Democratic": 8656
+      },
+      "county": "Strafford"
+    },
+    {
+      "name": "Dublin",
+      "fips": null,
+      "total_registered": 1280,
+      "by_party": {
+        "Undeclared": 505,
+        "Republican": 359,
+        "Democratic": 416
+      },
+      "county": "Cheshire"
+    },
+    {
+      "name": "Dummer",
+      "fips": null,
+      "total_registered": 223,
+      "by_party": {
+        "Undeclared": 113,
+        "Republican": 84,
+        "Democratic": 26
+      },
+      "county": "Coos"
+    },
+    {
+      "name": "Dunbarton",
+      "fips": null,
+      "total_registered": 2312,
+      "by_party": {
+        "Undeclared": 934,
+        "Republican": 932,
+        "Democratic": 446
+      },
+      "county": "Merrimack"
+    },
+    {
+      "name": "Durham",
+      "fips": null,
+      "total_registered": 12588,
+      "by_party": {
+        "Undeclared": 5284,
+        "Republican": 1845,
+        "Democratic": 5459
+      },
+      "county": "Strafford"
+    },
+    {
+      "name": "East Kingston",
+      "fips": null,
+      "total_registered": 1841,
+      "by_party": {
+        "Undeclared": 687,
+        "Republican": 739,
+        "Democratic": 415
+      },
+      "county": "Rockingham"
+    },
+    {
+      "name": "Easton",
+      "fips": null,
+      "total_registered": 272,
+      "by_party": {
+        "Undeclared": 129,
+        "Republican": 53,
+        "Democratic": 90
+      },
+      "county": "Grafton"
+    },
+    {
+      "name": "Eaton",
+      "fips": null,
+      "total_registered": 377,
+      "by_party": {
+        "Undeclared": 158,
+        "Republican": 106,
+        "Democratic": 113
+      },
+      "county": "Carroll"
+    },
+    {
+      "name": "Effingham",
+      "fips": null,
+      "total_registered": 1164,
+      "by_party": {
+        "Undeclared": 561,
+        "Republican": 416,
+        "Democratic": 187
+      },
+      "county": "Carroll"
+    },
+    {
+      "name": "Ellsworth",
+      "fips": null,
+      "total_registered": 78,
+      "by_party": {
+        "Undeclared": 54,
+        "Republican": 17,
+        "Democratic": 7
+      },
+      "county": "Grafton"
+    },
+    {
+      "name": "Enfield",
+      "fips": null,
+      "total_registered": 3277,
+      "by_party": {
+        "Undeclared": 1185,
+        "Republican": 872,
+        "Democratic": 1220
+      },
+      "county": "Grafton"
+    },
+    {
+      "name": "Epping",
+      "fips": null,
+      "total_registered": 5782,
+      "by_party": {
+        "Undeclared": 2493,
+        "Republican": 2065,
+        "Democratic": 1224
+      },
+      "county": "Rockingham"
+    },
+    {
+      "name": "Epsom",
+      "fips": null,
+      "total_registered": 3490,
+      "by_party": {
+        "Undeclared": 1312,
+        "Republican": 1514,
+        "Democratic": 664
+      },
+      "county": "Merrimack"
+    },
+    {
+      "name": "Errol",
+      "fips": null,
+      "total_registered": 291,
+      "by_party": {
+        "Undeclared": 127,
+        "Republican": 131,
+        "Democratic": 33
+      },
+      "county": "Coos"
+    },
+    {
+      "name": "Exeter",
+      "fips": null,
+      "total_registered": 12487,
+      "by_party": {
+        "Undeclared": 4413,
+        "Republican": 3136,
+        "Democratic": 4938
+      },
+      "county": "Rockingham"
+    },
+    {
+      "name": "Farmington",
+      "fips": null,
+      "total_registered": 4176,
+      "by_party": {
+        "Undeclared": 1454,
+        "Republican": 1760,
+        "Democratic": 962
+      },
+      "county": "Strafford"
+    },
+    {
+      "name": "Fitzwilliam",
+      "fips": null,
+      "total_registered": 1706,
+      "by_party": {
+        "Undeclared": 657,
+        "Republican": 620,
+        "Democratic": 429
+      },
+      "county": "Cheshire"
+    },
+    {
+      "name": "Francestown",
+      "fips": null,
+      "total_registered": 1361,
+      "by_party": {
+        "Undeclared": 536,
+        "Republican": 472,
+        "Democratic": 353
+      },
+      "county": "Hillsborough"
+    },
+    {
+      "name": "Franconia",
+      "fips": null,
+      "total_registered": 973,
+      "by_party": {
+        "Undeclared": 426,
+        "Republican": 212,
+        "Democratic": 335
+      },
+      "county": "Grafton"
+    },
+    {
+      "name": "Franklin",
+      "fips": null,
+      "total_registered": 5125,
+      "by_party": {
+        "Undeclared": 2021,
+        "Republican": 1950,
+        "Democratic": 1154
+      },
+      "county": "Merrimack"
+    },
+    {
+      "name": "Freedom",
+      "fips": null,
+      "total_registered": 1322,
+      "by_party": {
+        "Undeclared": 606,
+        "Republican": 467,
+        "Democratic": 249
+      },
+      "county": "Carroll"
+    },
+    {
+      "name": "Fremont",
+      "fips": null,
+      "total_registered": 3528,
+      "by_party": {
+        "Undeclared": 1491,
+        "Republican": 1416,
+        "Democratic": 621
+      },
+      "county": "Rockingham"
+    },
+    {
+      "name": "Gilford",
+      "fips": null,
+      "total_registered": 6222,
+      "by_party": {
+        "Undeclared": 2519,
+        "Republican": 2440,
+        "Democratic": 1263
+      },
+      "county": "Belknap"
+    },
+    {
+      "name": "Gilmanton",
+      "fips": null,
+      "total_registered": 3041,
+      "by_party": {
+        "Undeclared": 1112,
+        "Republican": 1335,
+        "Democratic": 594
+      },
+      "county": "Belknap"
+    },
+    {
+      "name": "Gilsum",
+      "fips": null,
+      "total_registered": 614,
+      "by_party": {
+        "Undeclared": 286,
+        "Republican": 184,
+        "Democratic": 144
+      },
+      "county": "Cheshire"
+    },
+    {
+      "name": "Goffstown",
+      "fips": null,
+      "total_registered": 12036,
+      "by_party": {
+        "Undeclared": 4859,
+        "Republican": 4208,
+        "Democratic": 2969
+      },
+      "county": "Hillsborough"
+    },
+    {
+      "name": "Gorham",
+      "fips": null,
+      "total_registered": 1957,
+      "by_party": {
+        "Undeclared": 717,
+        "Republican": 617,
+        "Democratic": 623
+      },
+      "county": "Coos"
+    },
+    {
+      "name": "Goshen",
+      "fips": null,
+      "total_registered": 566,
+      "by_party": {
+        "Undeclared": 253,
+        "Republican": 222,
+        "Democratic": 91
+      },
+      "county": "Sullivan"
+    },
+    {
+      "name": "Grafton",
+      "fips": null,
+      "total_registered": 943,
+      "by_party": {
+        "Undeclared": 435,
+        "Republican": 347,
+        "Democratic": 161
+      },
+      "county": "Grafton"
+    },
+    {
+      "name": "Grantham",
+      "fips": null,
+      "total_registered": 2955,
+      "by_party": {
+        "Undeclared": 1147,
+        "Republican": 675,
+        "Democratic": 1133
+      },
+      "county": "Sullivan"
+    },
+    {
+      "name": "Green's Grant",
+      "fips": null,
+      "total_registered": 1,
+      "by_party": {
+        "Undeclared": 1,
+        "Republican": 0,
+        "Democratic": 0
+      },
+      "county": "Coos"
+    },
+    {
+      "name": "Greenfield",
+      "fips": null,
+      "total_registered": 1161,
+      "by_party": {
+        "Undeclared": 510,
+        "Republican": 399,
+        "Democratic": 252
+      },
+      "county": "Hillsborough"
+    },
+    {
+      "name": "Greenland",
+      "fips": null,
+      "total_registered": 3216,
+      "by_party": {
+        "Undeclared": 1201,
+        "Republican": 1050,
+        "Democratic": 965
+      },
+      "county": "Rockingham"
+    },
+    {
+      "name": "Greenville",
+      "fips": null,
+      "total_registered": 1213,
+      "by_party": {
+        "Undeclared": 538,
+        "Republican": 400,
+        "Democratic": 275
+      },
+      "county": "Hillsborough"
+    },
+    {
+      "name": "Groton",
+      "fips": null,
+      "total_registered": 438,
+      "by_party": {
+        "Undeclared": 230,
+        "Republican": 157,
+        "Democratic": 51
+      },
+      "county": "Grafton"
+    },
+    {
+      "name": "Hale's Location",
+      "fips": null,
+      "total_registered": 153,
+      "by_party": {
+        "Undeclared": 45,
+        "Republican": 82,
+        "Democratic": 26
+      },
+      "county": "Carroll"
+    },
+    {
+      "name": "Hampstead",
+      "fips": null,
+      "total_registered": 6625,
+      "by_party": {
+        "Undeclared": 2473,
+        "Republican": 2814,
+        "Democratic": 1338
+      },
+      "county": "Rockingham"
+    },
+    {
+      "name": "Hampton",
+      "fips": null,
+      "total_registered": 13203,
+      "by_party": {
+        "Undeclared": 4567,
+        "Republican": 4691,
+        "Democratic": 3945
+      },
+      "county": "Rockingham"
+    },
+    {
+      "name": "Hampton Falls",
+      "fips": null,
+      "total_registered": 1786,
+      "by_party": {
+        "Undeclared": 597,
+        "Republican": 772,
+        "Democratic": 417
+      },
+      "county": "Rockingham"
+    },
+    {
+      "name": "Hancock",
+      "fips": null,
+      "total_registered": 1426,
+      "by_party": {
+        "Undeclared": 574,
+        "Republican": 297,
+        "Democratic": 555
+      },
+      "county": "Hillsborough"
+    },
+    {
+      "name": "Hanover",
+      "fips": null,
+      "total_registered": 8005,
+      "by_party": {
+        "Undeclared": 3450,
+        "Republican": 617,
+        "Democratic": 3938
+      },
+      "county": "Grafton"
+    },
+    {
+      "name": "Harrisville",
+      "fips": null,
+      "total_registered": 845,
+      "by_party": {
+        "Undeclared": 362,
+        "Republican": 121,
+        "Democratic": 362
+      },
+      "county": "Cheshire"
+    },
+    {
+      "name": "Hart's Location",
+      "fips": null,
+      "total_registered": 49,
+      "by_party": {
+        "Undeclared": 19,
+        "Republican": 16,
+        "Democratic": 14
+      },
+      "county": "Carroll"
+    },
+    {
+      "name": "Haverhill",
+      "fips": null,
+      "total_registered": 2880,
+      "by_party": {
+        "Undeclared": 1122,
+        "Republican": 1178,
+        "Democratic": 580
+      },
+      "county": "Grafton"
+    },
+    {
+      "name": "Hebron",
+      "fips": null,
+      "total_registered": 601,
+      "by_party": {
+        "Undeclared": 316,
+        "Republican": 196,
+        "Democratic": 89
+      },
+      "county": "Grafton"
+    },
+    {
+      "name": "Henniker",
+      "fips": null,
+      "total_registered": 3557,
+      "by_party": {
+        "Undeclared": 1272,
+        "Republican": 1164,
+        "Democratic": 1121
+      },
+      "county": "Merrimack"
+    },
+    {
+      "name": "Hill",
+      "fips": null,
+      "total_registered": 746,
+      "by_party": {
+        "Undeclared": 316,
+        "Republican": 319,
+        "Democratic": 111
+      },
+      "county": "Merrimack"
+    },
+    {
+      "name": "Hillsborough",
+      "fips": null,
+      "total_registered": 3947,
+      "by_party": {
+        "Undeclared": 1597,
+        "Republican": 1463,
+        "Democratic": 887
+      },
+      "county": "Hillsborough"
+    },
+    {
+      "name": "Hinsdale",
+      "fips": null,
+      "total_registered": 2257,
+      "by_party": {
+        "Undeclared": 1110,
+        "Republican": 535,
+        "Democratic": 612
+      },
+      "county": "Cheshire"
+    },
+    {
+      "name": "Holderness",
+      "fips": null,
+      "total_registered": 1680,
+      "by_party": {
+        "Undeclared": 692,
+        "Republican": 461,
+        "Democratic": 527
+      },
+      "county": "Grafton"
+    },
+    {
+      "name": "Hollis",
+      "fips": null,
+      "total_registered": 6351,
+      "by_party": {
+        "Undeclared": 2810,
+        "Republican": 1996,
+        "Democratic": 1545
+      },
+      "county": "Hillsborough"
+    },
+    {
+      "name": "Hooksett",
+      "fips": null,
+      "total_registered": 10300,
+      "by_party": {
+        "Undeclared": 3745,
+        "Republican": 3920,
+        "Democratic": 2635
+      },
+      "county": "Merrimack"
+    },
+    {
+      "name": "Hopkinton",
+      "fips": null,
+      "total_registered": 4778,
+      "by_party": {
+        "Undeclared": 1595,
+        "Republican": 1334,
+        "Democratic": 1849
+      },
+      "county": "Merrimack"
+    },
+    {
+      "name": "Hudson",
+      "fips": null,
+      "total_registered": 17376,
+      "by_party": {
+        "Undeclared": 6613,
+        "Republican": 6465,
+        "Democratic": 4298
+      },
+      "county": "Hillsborough"
+    },
+    {
+      "name": "Jackson",
+      "fips": null,
+      "total_registered": 912,
+      "by_party": {
+        "Undeclared": 436,
+        "Republican": 167,
+        "Democratic": 309
+      },
+      "county": "Carroll"
+    },
+    {
+      "name": "Jaffrey",
+      "fips": null,
+      "total_registered": 3730,
+      "by_party": {
+        "Undeclared": 1248,
+        "Republican": 1408,
+        "Democratic": 1074
+      },
+      "county": "Cheshire"
+    },
+    {
+      "name": "Jefferson",
+      "fips": null,
+      "total_registered": 753,
+      "by_party": {
+        "Undeclared": 359,
+        "Republican": 316,
+        "Democratic": 78
+      },
+      "county": "Coos"
+    },
+    {
+      "name": "Keene",
+      "fips": null,
+      "total_registered": 16183,
+      "by_party": {
+        "Undeclared": 6461,
+        "Republican": 3057,
+        "Democratic": 6665
+      },
+      "county": "Cheshire"
+    },
+    {
+      "name": "Kensington",
+      "fips": null,
+      "total_registered": 1734,
+      "by_party": {
+        "Undeclared": 764,
+        "Republican": 558,
+        "Democratic": 412
+      },
+      "county": "Rockingham"
+    },
+    {
+      "name": "Kingston",
+      "fips": null,
+      "total_registered": 4670,
+      "by_party": {
+        "Undeclared": 1739,
+        "Republican": 1961,
+        "Democratic": 970
+      },
+      "county": "Rockingham"
+    },
+    {
+      "name": "Laconia",
+      "fips": null,
+      "total_registered": 10970,
+      "by_party": {
+        "Undeclared": 4203,
+        "Republican": 4266,
+        "Democratic": 2501
+      },
+      "county": "Belknap"
+    },
+    {
+      "name": "Lancaster",
+      "fips": null,
+      "total_registered": 2057,
+      "by_party": {
+        "Undeclared": 738,
+        "Republican": 824,
+        "Democratic": 495
+      },
+      "county": "Coos"
+    },
+    {
+      "name": "Landaff",
+      "fips": null,
+      "total_registered": 328,
+      "by_party": {
+        "Undeclared": 136,
+        "Republican": 128,
+        "Democratic": 64
+      },
+      "county": "Grafton"
+    },
+    {
+      "name": "Langdon",
+      "fips": null,
+      "total_registered": 496,
+      "by_party": {
+        "Undeclared": 171,
+        "Republican": 202,
+        "Democratic": 123
+      },
+      "county": "Sullivan"
+    },
+    {
+      "name": "Lebanon",
+      "fips": null,
+      "total_registered": 10118,
+      "by_party": {
+        "Undeclared": 3734,
+        "Republican": 1702,
+        "Democratic": 4682
+      },
+      "county": "Grafton"
+    },
+    {
+      "name": "Lee",
+      "fips": null,
+      "total_registered": 3354,
+      "by_party": {
+        "Undeclared": 1362,
+        "Republican": 751,
+        "Democratic": 1241
+      },
+      "county": "Strafford"
+    },
+    {
+      "name": "Lempster",
+      "fips": null,
+      "total_registered": 906,
+      "by_party": {
+        "Undeclared": 420,
+        "Republican": 317,
+        "Democratic": 169
+      },
+      "county": "Sullivan"
+    },
+    {
+      "name": "Lincoln",
+      "fips": null,
+      "total_registered": 1217,
+      "by_party": {
+        "Undeclared": 637,
+        "Republican": 327,
+        "Democratic": 253
+      },
+      "county": "Grafton"
+    },
+    {
+      "name": "Lisbon",
+      "fips": null,
+      "total_registered": 999,
+      "by_party": {
+        "Undeclared": 401,
+        "Republican": 378,
+        "Democratic": 220
+      },
+      "county": "Grafton"
+    },
+    {
+      "name": "Litchfield",
+      "fips": null,
+      "total_registered": 6288,
+      "by_party": {
+        "Undeclared": 2476,
+        "Republican": 2480,
+        "Democratic": 1332
+      },
+      "county": "Hillsborough"
+    },
+    {
+      "name": "Littleton",
+      "fips": null,
+      "total_registered": 3885,
+      "by_party": {
+        "Undeclared": 1369,
+        "Republican": 1471,
+        "Democratic": 1045
+      },
+      "county": "Grafton"
+    },
+    {
+      "name": "Londonderry",
+      "fips": null,
+      "total_registered": 18402,
+      "by_party": {
+        "Undeclared": 6639,
+        "Republican": 7276,
+        "Democratic": 4487
+      },
+      "county": "Rockingham"
+    },
+    {
+      "name": "Loudon",
+      "fips": null,
+      "total_registered": 4139,
+      "by_party": {
+        "Undeclared": 1525,
+        "Republican": 1901,
+        "Democratic": 713
+      },
+      "county": "Merrimack"
+    },
+    {
+      "name": "Lyman",
+      "fips": null,
+      "total_registered": 415,
+      "by_party": {
+        "Undeclared": 185,
+        "Republican": 157,
+        "Democratic": 73
+      },
+      "county": "Grafton"
+    },
+    {
+      "name": "Lyme",
+      "fips": null,
+      "total_registered": 1452,
+      "by_party": {
+        "Undeclared": 612,
+        "Republican": 139,
+        "Democratic": 701
+      },
+      "county": "Grafton"
+    },
+    {
+      "name": "Lyndeborough",
+      "fips": null,
+      "total_registered": 1271,
+      "by_party": {
+        "Undeclared": 579,
+        "Republican": 431,
+        "Democratic": 261
+      },
+      "county": "Hillsborough"
+    },
+    {
+      "name": "Madbury",
+      "fips": null,
+      "total_registered": 1492,
+      "by_party": {
+        "Undeclared": 630,
+        "Republican": 347,
+        "Democratic": 515
+      },
+      "county": "Strafford"
+    },
+    {
+      "name": "Madison",
+      "fips": null,
+      "total_registered": 2104,
+      "by_party": {
+        "Undeclared": 1015,
+        "Republican": 611,
+        "Democratic": 478
+      },
+      "county": "Carroll"
+    },
+    {
+      "name": "Manchester",
+      "fips": null,
+      "total_registered": 62344,
+      "by_party": {
+        "Undeclared": 25690,
+        "Republican": 17258,
+        "Democratic": 19396
+      },
+      "county": "Hillsborough"
+    },
+    {
+      "name": "Marlborough",
+      "fips": null,
+      "total_registered": 1584,
+      "by_party": {
+        "Undeclared": 602,
+        "Republican": 387,
+        "Democratic": 595
+      },
+      "county": "Cheshire"
+    },
+    {
+      "name": "Marlow",
+      "fips": null,
+      "total_registered": 531,
+      "by_party": {
+        "Undeclared": 268,
+        "Republican": 135,
+        "Democratic": 128
+      },
+      "county": "Cheshire"
+    },
+    {
+      "name": "Martin's Location",
+      "fips": null,
+      "total_registered": 2,
+      "by_party": {
+        "Undeclared": 2,
+        "Republican": 0,
+        "Democratic": 0
+      },
+      "county": "Coos"
+    },
+    {
+      "name": "Mason",
+      "fips": null,
+      "total_registered": 1060,
+      "by_party": {
+        "Undeclared": 431,
+        "Republican": 438,
+        "Democratic": 191
+      },
+      "county": "Hillsborough"
+    },
+    {
+      "name": "Meredith",
+      "fips": null,
+      "total_registered": 5531,
+      "by_party": {
+        "Undeclared": 2323,
+        "Republican": 2051,
+        "Democratic": 1157
+      },
+      "county": "Belknap"
+    },
+    {
+      "name": "Merrimack",
+      "fips": null,
+      "total_registered": 19720,
+      "by_party": {
+        "Undeclared": 8041,
+        "Republican": 6838,
+        "Democratic": 4841
+      },
+      "county": "Hillsborough"
+    },
+    {
+      "name": "Middleton",
+      "fips": null,
+      "total_registered": 1347,
+      "by_party": {
+        "Undeclared": 474,
+        "Republican": 644,
+        "Democratic": 229
+      },
+      "county": "Strafford"
+    },
+    {
+      "name": "Milan",
+      "fips": null,
+      "total_registered": 892,
+      "by_party": {
+        "Undeclared": 301,
+        "Republican": 372,
+        "Democratic": 219
+      },
+      "county": "Coos"
+    },
+    {
+      "name": "Milford",
+      "fips": null,
+      "total_registered": 10736,
+      "by_party": {
+        "Undeclared": 4540,
+        "Republican": 3451,
+        "Democratic": 2745
+      },
+      "county": "Hillsborough"
+    },
+    {
+      "name": "Millsfield",
+      "fips": null,
+      "total_registered": 21,
+      "by_party": {
+        "Undeclared": 7,
+        "Republican": 12,
+        "Democratic": 2
+      },
+      "county": "Coos"
+    },
+    {
+      "name": "Milton",
+      "fips": null,
+      "total_registered": 3243,
+      "by_party": {
+        "Undeclared": 1172,
+        "Republican": 1411,
+        "Democratic": 660
+      },
+      "county": "Strafford"
+    },
+    {
+      "name": "Monroe",
+      "fips": null,
+      "total_registered": 647,
+      "by_party": {
+        "Undeclared": 231,
+        "Republican": 288,
+        "Democratic": 128
+      },
+      "county": "Grafton"
+    },
+    {
+      "name": "Mont Vernon",
+      "fips": null,
+      "total_registered": 2095,
+      "by_party": {
+        "Undeclared": 893,
+        "Republican": 653,
+        "Democratic": 549
+      },
+      "county": "Hillsborough"
+    },
+    {
+      "name": "Moultonborough",
+      "fips": null,
+      "total_registered": 4570,
+      "by_party": {
+        "Undeclared": 1780,
+        "Republican": 1943,
+        "Democratic": 847
+      },
+      "county": "Carroll"
+    },
+    {
+      "name": "Nashua",
+      "fips": null,
+      "total_registered": 52751,
+      "by_party": {
+        "Undeclared": 22341,
+        "Republican": 13785,
+        "Democratic": 16625
+      },
+      "county": "Hillsborough"
+    },
+    {
+      "name": "Nelson",
+      "fips": null,
+      "total_registered": 484,
+      "by_party": {
+        "Undeclared": 197,
+        "Republican": 125,
+        "Democratic": 162
+      },
+      "county": "Cheshire"
+    },
+    {
+      "name": "New Boston",
+      "fips": null,
+      "total_registered": 4603,
+      "by_party": {
+        "Undeclared": 1612,
+        "Republican": 1868,
+        "Democratic": 1123
+      },
+      "county": "Hillsborough"
+    },
+    {
+      "name": "New Castle",
+      "fips": null,
+      "total_registered": 1027,
+      "by_party": {
+        "Undeclared": 474,
+        "Republican": 215,
+        "Democratic": 338
+      },
+      "county": "Rockingham"
+    },
+    {
+      "name": "New Durham",
+      "fips": null,
+      "total_registered": 2234,
+      "by_party": {
+        "Undeclared": 903,
+        "Republican": 920,
+        "Democratic": 411
+      },
+      "county": "Strafford"
+    },
+    {
+      "name": "New Hampton",
+      "fips": null,
+      "total_registered": 1871,
+      "by_party": {
+        "Undeclared": 704,
+        "Republican": 713,
+        "Democratic": 454
+      },
+      "county": "Belknap"
+    },
+    {
+      "name": "New Ipswich",
+      "fips": null,
+      "total_registered": 3806,
+      "by_party": {
+        "Undeclared": 1316,
+        "Republican": 1975,
+        "Democratic": 515
+      },
+      "county": "Hillsborough"
+    },
+    {
+      "name": "New London",
+      "fips": null,
+      "total_registered": 3701,
+      "by_party": {
+        "Undeclared": 1429,
+        "Republican": 977,
+        "Democratic": 1295
+      },
+      "county": "Merrimack"
+    },
+    {
+      "name": "Newbury",
+      "fips": null,
+      "total_registered": 1913,
+      "by_party": {
+        "Undeclared": 910,
+        "Republican": 584,
+        "Democratic": 419
+      },
+      "county": "Merrimack"
+    },
+    {
+      "name": "Newfields",
+      "fips": null,
+      "total_registered": 1334,
+      "by_party": {
+        "Undeclared": 563,
+        "Republican": 395,
+        "Democratic": 376
+      },
+      "county": "Rockingham"
+    },
+    {
+      "name": "Newington",
+      "fips": null,
+      "total_registered": 702,
+      "by_party": {
+        "Undeclared": 249,
+        "Republican": 262,
+        "Democratic": 191
+      },
+      "county": "Rockingham"
+    },
+    {
+      "name": "Newmarket",
+      "fips": null,
+      "total_registered": 6967,
+      "by_party": {
+        "Undeclared": 2740,
+        "Republican": 1513,
+        "Democratic": 2714
+      },
+      "county": "Rockingham"
+    },
+    {
+      "name": "Newport",
+      "fips": null,
+      "total_registered": 3935,
+      "by_party": {
+        "Undeclared": 1537,
+        "Republican": 1531,
+        "Democratic": 867
+      },
+      "county": "Sullivan"
+    },
+    {
+      "name": "Newton",
+      "fips": null,
+      "total_registered": 3471,
+      "by_party": {
+        "Undeclared": 1392,
+        "Republican": 1318,
+        "Democratic": 761
+      },
+      "county": "Rockingham"
+    },
+    {
+      "name": "North Hampton",
+      "fips": null,
+      "total_registered": 3836,
+      "by_party": {
+        "Undeclared": 1462,
+        "Republican": 1255,
+        "Democratic": 1119
+      },
+      "county": "Rockingham"
+    },
+    {
+      "name": "Northfield",
+      "fips": null,
+      "total_registered": 3182,
+      "by_party": {
+        "Undeclared": 1345,
+        "Republican": 1217,
+        "Democratic": 620
+      },
+      "county": "Merrimack"
+    },
+    {
+      "name": "Northumberland",
+      "fips": null,
+      "total_registered": 1324,
+      "by_party": {
+        "Undeclared": 546,
+        "Republican": 512,
+        "Democratic": 266
+      },
+      "county": "Coos"
+    },
+    {
+      "name": "Northwood",
+      "fips": null,
+      "total_registered": 3472,
+      "by_party": {
+        "Undeclared": 1608,
+        "Republican": 1141,
+        "Democratic": 723
+      },
+      "county": "Rockingham"
+    },
+    {
+      "name": "Nottingham",
+      "fips": null,
+      "total_registered": 4096,
+      "by_party": {
+        "Undeclared": 1651,
+        "Republican": 1451,
+        "Democratic": 994
+      },
+      "county": "Rockingham"
+    },
+    {
+      "name": "Orange",
+      "fips": null,
+      "total_registered": 220,
+      "by_party": {
+        "Undeclared": 114,
+        "Republican": 57,
+        "Democratic": 49
+      },
+      "county": "Grafton"
+    },
+    {
+      "name": "Orford",
+      "fips": null,
+      "total_registered": 906,
+      "by_party": {
+        "Undeclared": 419,
+        "Republican": 222,
+        "Democratic": 265
+      },
+      "county": "Grafton"
+    },
+    {
+      "name": "Ossipee",
+      "fips": null,
+      "total_registered": 3293,
+      "by_party": {
+        "Undeclared": 1213,
+        "Republican": 1458,
+        "Democratic": 622
+      },
+      "county": "Carroll"
+    },
+    {
+      "name": "Pelham",
+      "fips": null,
+      "total_registered": 10292,
+      "by_party": {
+        "Undeclared": 4232,
+        "Republican": 4144,
+        "Democratic": 1916
+      },
+      "county": "Hillsborough"
+    },
+    {
+      "name": "Pembroke",
+      "fips": null,
+      "total_registered": 4893,
+      "by_party": {
+        "Undeclared": 1881,
+        "Republican": 1748,
+        "Democratic": 1264
+      },
+      "county": "Merrimack"
+    },
+    {
+      "name": "Peterborough",
+      "fips": null,
+      "total_registered": 5189,
+      "by_party": {
+        "Undeclared": 1812,
+        "Republican": 1116,
+        "Democratic": 2261
+      },
+      "county": "Hillsborough"
+    },
+    {
+      "name": "Piermont",
+      "fips": null,
+      "total_registered": 519,
+      "by_party": {
+        "Undeclared": 211,
+        "Republican": 181,
+        "Democratic": 127
+      },
+      "county": "Grafton"
+    },
+    {
+      "name": "Pinkham's Grant",
+      "fips": null,
+      "total_registered": 10,
+      "by_party": {
+        "Undeclared": 6,
+        "Republican": 0,
+        "Democratic": 4
+      },
+      "county": "Coos"
+    },
+    {
+      "name": "Pittsburg",
+      "fips": null,
+      "total_registered": 708,
+      "by_party": {
+        "Undeclared": 250,
+        "Republican": 384,
+        "Democratic": 74
+      },
+      "county": "Coos"
+    },
+    {
+      "name": "Pittsfield",
+      "fips": null,
+      "total_registered": 2760,
+      "by_party": {
+        "Undeclared": 1115,
+        "Republican": 1132,
+        "Democratic": 513
+      },
+      "county": "Merrimack"
+    },
+    {
+      "name": "Plainfield",
+      "fips": null,
+      "total_registered": 1790,
+      "by_party": {
+        "Undeclared": 796,
+        "Republican": 359,
+        "Democratic": 635
+      },
+      "county": "Sullivan"
+    },
+    {
+      "name": "Plaistow",
+      "fips": null,
+      "total_registered": 5329,
+      "by_party": {
+        "Undeclared": 2028,
+        "Republican": 2088,
+        "Democratic": 1213
+      },
+      "county": "Rockingham"
+    },
+    {
+      "name": "Plymouth",
+      "fips": null,
+      "total_registered": 5023,
+      "by_party": {
+        "Undeclared": 2387,
+        "Republican": 1036,
+        "Democratic": 1600
+      },
+      "county": "Grafton"
+    },
+    {
+      "name": "Portsmouth",
+      "fips": null,
+      "total_registered": 17173,
+      "by_party": {
+        "Undeclared": 6147,
+        "Republican": 3264,
+        "Democratic": 7762
+      },
+      "county": "Rockingham"
+    },
+    {
+      "name": "Randolph",
+      "fips": null,
+      "total_registered": 290,
+      "by_party": {
+        "Undeclared": 122,
+        "Republican": 51,
+        "Democratic": 117
+      },
+      "county": "Coos"
+    },
+    {
+      "name": "Raymond",
+      "fips": null,
+      "total_registered": 7293,
+      "by_party": {
+        "Undeclared": 2753,
+        "Republican": 3144,
+        "Democratic": 1396
+      },
+      "county": "Rockingham"
+    },
+    {
+      "name": "Richmond",
+      "fips": null,
+      "total_registered": 819,
+      "by_party": {
+        "Undeclared": 415,
+        "Republican": 280,
+        "Democratic": 124
+      },
+      "county": "Cheshire"
+    },
+    {
+      "name": "Rindge",
+      "fips": null,
+      "total_registered": 4722,
+      "by_party": {
+        "Undeclared": 1544,
+        "Republican": 2169,
+        "Democratic": 1009
+      },
+      "county": "Cheshire"
+    },
+    {
+      "name": "Rochester",
+      "fips": null,
+      "total_registered": 20061,
+      "by_party": {
+        "Undeclared": 7729,
+        "Republican": 6935,
+        "Democratic": 5397
+      },
+      "county": "Strafford"
+    },
+    {
+      "name": "Rollinsford",
+      "fips": null,
+      "total_registered": 2073,
+      "by_party": {
+        "Undeclared": 853,
+        "Republican": 526,
+        "Democratic": 694
+      },
+      "county": "Strafford"
+    },
+    {
+      "name": "Roxbury",
+      "fips": null,
+      "total_registered": 185,
+      "by_party": {
+        "Undeclared": 86,
+        "Republican": 46,
+        "Democratic": 53
+      },
+      "county": "Cheshire"
+    },
+    {
+      "name": "Rumney",
+      "fips": null,
+      "total_registered": 1160,
+      "by_party": {
+        "Undeclared": 477,
+        "Republican": 452,
+        "Democratic": 231
+      },
+      "county": "Grafton"
+    },
+    {
+      "name": "Rye",
+      "fips": null,
+      "total_registered": 5163,
+      "by_party": {
+        "Undeclared": 1743,
+        "Republican": 1736,
+        "Democratic": 1684
+      },
+      "county": "Rockingham"
+    },
+    {
+      "name": "Salem",
+      "fips": null,
+      "total_registered": 21062,
+      "by_party": {
+        "Undeclared": 7756,
+        "Republican": 8474,
+        "Democratic": 4832
+      },
+      "county": "Rockingham"
+    },
+    {
+      "name": "Salisbury",
+      "fips": null,
+      "total_registered": 1146,
+      "by_party": {
+        "Undeclared": 548,
+        "Republican": 421,
+        "Democratic": 177
+      },
+      "county": "Merrimack"
+    },
+    {
+      "name": "Sanbornton",
+      "fips": null,
+      "total_registered": 2427,
+      "by_party": {
+        "Undeclared": 853,
+        "Republican": 1016,
+        "Democratic": 558
+      },
+      "county": "Belknap"
+    },
+    {
+      "name": "Sandown",
+      "fips": null,
+      "total_registered": 4755,
+      "by_party": {
+        "Undeclared": 1879,
+        "Republican": 2050,
+        "Democratic": 826
+      },
+      "county": "Rockingham"
+    },
+    {
+      "name": "Sandwich",
+      "fips": null,
+      "total_registered": 1285,
+      "by_party": {
+        "Undeclared": 457,
+        "Republican": 354,
+        "Democratic": 474
+      },
+      "county": "Carroll"
+    },
+    {
+      "name": "Seabrook",
+      "fips": null,
+      "total_registered": 6246,
+      "by_party": {
+        "Undeclared": 2498,
+        "Republican": 2484,
+        "Democratic": 1264
+      },
+      "county": "Rockingham"
+    },
+    {
+      "name": "Sharon",
+      "fips": null,
+      "total_registered": 326,
+      "by_party": {
+        "Undeclared": 150,
+        "Republican": 91,
+        "Democratic": 85
+      },
+      "county": "Hillsborough"
+    },
+    {
+      "name": "Shelburne",
+      "fips": null,
+      "total_registered": 326,
+      "by_party": {
+        "Undeclared": 161,
+        "Republican": 98,
+        "Democratic": 67
+      },
+      "county": "Coos"
+    },
+    {
+      "name": "Somersworth",
+      "fips": null,
+      "total_registered": 7492,
+      "by_party": {
+        "Undeclared": 3089,
+        "Republican": 1986,
+        "Democratic": 2417
+      },
+      "county": "Strafford"
+    },
+    {
+      "name": "South Hampton",
+      "fips": null,
+      "total_registered": 679,
+      "by_party": {
+        "Undeclared": 263,
+        "Republican": 234,
+        "Democratic": 182
+      },
+      "county": "Rockingham"
+    },
+    {
+      "name": "Springfield",
+      "fips": null,
+      "total_registered": 1066,
+      "by_party": {
+        "Undeclared": 444,
+        "Republican": 367,
+        "Democratic": 255
+      },
+      "county": "Sullivan"
+    },
+    {
+      "name": "Stark",
+      "fips": null,
+      "total_registered": 393,
+      "by_party": {
+        "Undeclared": 174,
+        "Republican": 151,
+        "Democratic": 68
+      },
+      "county": "Coos"
+    },
+    {
+      "name": "Stewartstown",
+      "fips": null,
+      "total_registered": 525,
+      "by_party": {
+        "Undeclared": 196,
+        "Republican": 264,
+        "Democratic": 65
+      },
+      "county": "Coos"
+    },
+    {
+      "name": "Stoddard",
+      "fips": null,
+      "total_registered": 1088,
+      "by_party": {
+        "Undeclared": 505,
+        "Republican": 372,
+        "Democratic": 211
+      },
+      "county": "Cheshire"
+    },
+    {
+      "name": "Strafford",
+      "fips": null,
+      "total_registered": 3413,
+      "by_party": {
+        "Undeclared": 1472,
+        "Republican": 1152,
+        "Democratic": 789
+      },
+      "county": "Strafford"
+    },
+    {
+      "name": "Stratford",
+      "fips": null,
+      "total_registered": 406,
+      "by_party": {
+        "Undeclared": 194,
+        "Republican": 138,
+        "Democratic": 74
+      },
+      "county": "Coos"
+    },
+    {
+      "name": "Stratham",
+      "fips": null,
+      "total_registered": 6183,
+      "by_party": {
+        "Undeclared": 2222,
+        "Republican": 1926,
+        "Democratic": 2035
+      },
+      "county": "Rockingham"
+    },
+    {
+      "name": "Success",
+      "fips": null,
+      "total_registered": 2,
+      "by_party": {
+        "Undeclared": 2,
+        "Republican": 0,
+        "Democratic": 0
+      },
+      "county": "Coos"
+    },
+    {
+      "name": "Sugar Hill",
+      "fips": null,
+      "total_registered": 544,
+      "by_party": {
+        "Undeclared": 261,
+        "Republican": 104,
+        "Democratic": 179
+      },
+      "county": "Grafton"
+    },
+    {
+      "name": "Sullivan",
+      "fips": null,
+      "total_registered": 460,
+      "by_party": {
+        "Undeclared": 235,
+        "Republican": 131,
+        "Democratic": 94
+      },
+      "county": "Cheshire"
+    },
+    {
+      "name": "Sunapee",
+      "fips": null,
+      "total_registered": 3091,
+      "by_party": {
+        "Undeclared": 1440,
+        "Republican": 958,
+        "Democratic": 693
+      },
+      "county": "Sullivan"
+    },
+    {
+      "name": "Surry",
+      "fips": null,
+      "total_registered": 652,
+      "by_party": {
+        "Undeclared": 254,
+        "Republican": 206,
+        "Democratic": 192
+      },
+      "county": "Cheshire"
+    },
+    {
+      "name": "Sutton",
+      "fips": null,
+      "total_registered": 1682,
+      "by_party": {
+        "Undeclared": 733,
+        "Republican": 468,
+        "Democratic": 481
+      },
+      "county": "Merrimack"
+    },
+    {
+      "name": "Swanzey",
+      "fips": null,
+      "total_registered": 4774,
+      "by_party": {
+        "Undeclared": 1955,
+        "Republican": 1563,
+        "Democratic": 1256
+      },
+      "county": "Cheshire"
+    },
+    {
+      "name": "Tamworth",
+      "fips": null,
+      "total_registered": 2151,
+      "by_party": {
+        "Undeclared": 922,
+        "Republican": 640,
+        "Democratic": 589
+      },
+      "county": "Carroll"
+    },
+    {
+      "name": "Temple",
+      "fips": null,
+      "total_registered": 1069,
+      "by_party": {
+        "Undeclared": 451,
+        "Republican": 343,
+        "Democratic": 275
+      },
+      "county": "Hillsborough"
+    },
+    {
+      "name": "Thornton",
+      "fips": null,
+      "total_registered": 2255,
+      "by_party": {
+        "Undeclared": 972,
+        "Republican": 664,
+        "Democratic": 619
+      },
+      "county": "Grafton"
+    },
+    {
+      "name": "Tilton",
+      "fips": null,
+      "total_registered": 2673,
+      "by_party": {
+        "Undeclared": 1027,
+        "Republican": 1009,
+        "Democratic": 637
+      },
+      "county": "Belknap"
+    },
+    {
+      "name": "Troy",
+      "fips": null,
+      "total_registered": 1483,
+      "by_party": {
+        "Undeclared": 687,
+        "Republican": 487,
+        "Democratic": 309
+      },
+      "county": "Cheshire"
+    },
+    {
+      "name": "Tuftonboro",
+      "fips": null,
+      "total_registered": 2214,
+      "by_party": {
+        "Undeclared": 803,
+        "Republican": 1003,
+        "Democratic": 408
+      },
+      "county": "Carroll"
+    },
+    {
+      "name": "Unity",
+      "fips": null,
+      "total_registered": 1024,
+      "by_party": {
+        "Undeclared": 397,
+        "Republican": 425,
+        "Democratic": 202
+      },
+      "county": "Sullivan"
+    },
+    {
+      "name": "Wakefield",
+      "fips": null,
+      "total_registered": 4125,
+      "by_party": {
+        "Undeclared": 1704,
+        "Republican": 1750,
+        "Democratic": 671
+      },
+      "county": "Carroll"
+    },
+    {
+      "name": "Walpole",
+      "fips": null,
+      "total_registered": 2705,
+      "by_party": {
+        "Undeclared": 1268,
+        "Republican": 598,
+        "Democratic": 839
+      },
+      "county": "Cheshire"
+    },
+    {
+      "name": "Warner",
+      "fips": null,
+      "total_registered": 2162,
+      "by_party": {
+        "Undeclared": 901,
+        "Republican": 650,
+        "Democratic": 611
+      },
+      "county": "Merrimack"
+    },
+    {
+      "name": "Warren",
+      "fips": null,
+      "total_registered": 601,
+      "by_party": {
+        "Undeclared": 269,
+        "Republican": 239,
+        "Democratic": 93
+      },
+      "county": "Grafton"
+    },
+    {
+      "name": "Washington",
+      "fips": null,
+      "total_registered": 1022,
+      "by_party": {
+        "Undeclared": 522,
+        "Republican": 353,
+        "Democratic": 147
+      },
+      "county": "Sullivan"
+    },
+    {
+      "name": "Waterville Valley",
+      "fips": null,
+      "total_registered": 428,
+      "by_party": {
+        "Undeclared": 265,
+        "Republican": 82,
+        "Democratic": 81
+      },
+      "county": "Grafton"
+    },
+    {
+      "name": "Weare",
+      "fips": null,
+      "total_registered": 6443,
+      "by_party": {
+        "Undeclared": 2460,
+        "Republican": 2819,
+        "Democratic": 1164
+      },
+      "county": "Hillsborough"
+    },
+    {
+      "name": "Webster",
+      "fips": null,
+      "total_registered": 1429,
+      "by_party": {
+        "Undeclared": 697,
+        "Republican": 471,
+        "Democratic": 261
+      },
+      "county": "Merrimack"
+    },
+    {
+      "name": "Wentworth",
+      "fips": null,
+      "total_registered": 731,
+      "by_party": {
+        "Undeclared": 322,
+        "Republican": 302,
+        "Democratic": 107
+      },
+      "county": "Grafton"
+    },
+    {
+      "name": "Wentworth's Location",
+      "fips": null,
+      "total_registered": 25,
+      "by_party": {
+        "Undeclared": 11,
+        "Republican": 13,
+        "Democratic": 1
+      },
+      "county": "Coos"
+    },
+    {
+      "name": "Westmoreland",
+      "fips": null,
+      "total_registered": 1222,
+      "by_party": {
+        "Undeclared": 629,
+        "Republican": 273,
+        "Democratic": 320
+      },
+      "county": "Cheshire"
+    },
+    {
+      "name": "Whitefield",
+      "fips": null,
+      "total_registered": 1664,
+      "by_party": {
+        "Undeclared": 719,
+        "Republican": 548,
+        "Democratic": 397
+      },
+      "county": "Coos"
+    },
+    {
+      "name": "Wilmot",
+      "fips": null,
+      "total_registered": 1078,
+      "by_party": {
+        "Undeclared": 511,
+        "Republican": 254,
+        "Democratic": 313
+      },
+      "county": "Merrimack"
+    },
+    {
+      "name": "Wilton",
+      "fips": null,
+      "total_registered": 2900,
+      "by_party": {
+        "Undeclared": 1180,
+        "Republican": 919,
+        "Democratic": 801
+      },
+      "county": "Hillsborough"
+    },
+    {
+      "name": "Winchester",
+      "fips": null,
+      "total_registered": 2563,
+      "by_party": {
+        "Undeclared": 881,
+        "Republican": 913,
+        "Democratic": 769
+      },
+      "county": "Cheshire"
+    },
+    {
+      "name": "Windham",
+      "fips": null,
+      "total_registered": 11199,
+      "by_party": {
+        "Undeclared": 4220,
+        "Republican": 4725,
+        "Democratic": 2254
+      },
+      "county": "Rockingham"
+    },
+    {
+      "name": "Windsor",
+      "fips": null,
+      "total_registered": 156,
+      "by_party": {
+        "Undeclared": 68,
+        "Republican": 80,
+        "Democratic": 8
+      },
+      "county": "Hillsborough"
+    },
+    {
+      "name": "Wolfeboro",
+      "fips": null,
+      "total_registered": 5718,
+      "by_party": {
+        "Undeclared": 2031,
+        "Republican": 2245,
+        "Democratic": 1442
+      },
+      "county": "Carroll"
+    },
+    {
+      "name": "Woodstock",
+      "fips": null,
+      "total_registered": 975,
+      "by_party": {
+        "Undeclared": 526,
+        "Republican": 246,
+        "Democratic": 203
+      },
+      "county": "Grafton"
+    }
+  ],
+  "as_of_notes": "Official NH SoS 'Summary of Active Voters' as of 4-May-26, downloaded from the Party Registration History 1970-2026 page (XLSX: 2026-05-may-party-registration-history-1970-2026-may-4-2026.xlsx). NH administers registration by town/city; the report lists 243 reporting units (towns, cities, and unincorporated places) each tagged with its county and broken down by Democratic/Republican/Undeclared. NH has no Libertarian registrations in this report. Statewide grand total in the report: DEM 265183, REP 314005, UND 377158, Total 956346 \u2014 matches the sum of all 243 units exactly. A 10-county rollup derived from the town-level county tags (all sums verified to the statewide total): Belknap: total 46879 (UND 17561, REP 19318, DEM 10000), Carroll: total 41043 (UND 16612, REP 14632, DEM 9799), Cheshire: total 54092 (UND 22001, REP 15121, DEM 16970), Coos: total 19995 (UND 8108, REP 7256, DEM 4631), Grafton: total 66176 (UND 27559, REP 17292, DEM 21325), Hillsborough: total 270150 (UND 109824, REP 86548, DEM 73778), Merrimack: total 106311 (UND 41162, REP 34686, DEM 30463), Rockingham: total 231891 (UND 86996, REP 83942, DEM 60953), Strafford: total 90627 (UND 35480, REP 25696, DEM 29451), Sullivan: total 29182 (UND 11855, REP 9514, DEM 7813).",
+  "data_quality": "high \u2014 official NH Secretary of State report; all 243 town/city units retained; every unit's party figures sum to its town total; sum of all units matches the statewide grand total (956,346) exactly; 10-county rollup also reconciles to the statewide total.",
+  "notes": "Granularity used: town/city (NH's official reporting unit; ~243 units including towns, cities, and unincorporated places). Each unit carries a 'county' field; a fully reconciled 10-county rollup is provided in as_of_notes. county_unit_label set to 'town' because NH SoS publishes data by town/city, not as a standalone county table."
+}

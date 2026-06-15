@@ -1,0 +1,948 @@
+{
+  "state": "South Dakota",
+  "state_abbr": "SD",
+  "state_fips": "46",
+  "as_of_date": "2026-06-02",
+  "source_name": "South Dakota Secretary of State - Statewide Report by County (Monthly Voter Registration Totals by County)",
+  "source_url": "https://sdsos.gov/elections-voting/upcoming-elections/assets/2026 Voter Registration/StatewideVotersByCounty_6.2.2026.pdf",
+  "registers_by_party": true,
+  "statewide_total_registered": 676142,
+  "statewide_by_party": {
+    "Republican": 321574,
+    "Democratic": 136755,
+    "Independent/NPA": 157081,
+    "Libertarian": 2806,
+    "Other": 1015
+  },
+  "county_unit_label": "county",
+  "county_level_available": true,
+  "counties": [
+    {
+      "name": "Aurora",
+      "fips": "46003",
+      "total_registered": 1877,
+      "by_party": {
+        "Republican": 1008,
+        "Democratic": 462,
+        "Independent/NPA": 329,
+        "Libertarian": 2,
+        "Other": 3
+      },
+      "active_registered": 1804,
+      "inactive_registered": 73
+    },
+    {
+      "name": "Beadle",
+      "fips": "46005",
+      "total_registered": 10906,
+      "by_party": {
+        "Republican": 5312,
+        "Democratic": 2282,
+        "Independent/NPA": 2540,
+        "Libertarian": 30,
+        "Other": 44
+      },
+      "active_registered": 10208,
+      "inactive_registered": 698
+    },
+    {
+      "name": "Bennett",
+      "fips": "46007",
+      "total_registered": 1918,
+      "by_party": {
+        "Republican": 722,
+        "Democratic": 657,
+        "Independent/NPA": 402,
+        "Libertarian": 7,
+        "Other": 2
+      },
+      "active_registered": 1790,
+      "inactive_registered": 128
+    },
+    {
+      "name": "Bon Homme",
+      "fips": "46009",
+      "total_registered": 4200,
+      "by_party": {
+        "Republican": 2425,
+        "Democratic": 802,
+        "Independent/NPA": 709,
+        "Libertarian": 10,
+        "Other": 0
+      },
+      "active_registered": 3946,
+      "inactive_registered": 254
+    },
+    {
+      "name": "Brookings",
+      "fips": "46011",
+      "total_registered": 23127,
+      "by_party": {
+        "Republican": 10347,
+        "Democratic": 4954,
+        "Independent/NPA": 6414,
+        "Libertarian": 96,
+        "Other": 22
+      },
+      "active_registered": 21833,
+      "inactive_registered": 1294
+    },
+    {
+      "name": "Brown",
+      "fips": "46013",
+      "total_registered": 26524,
+      "by_party": {
+        "Republican": 12698,
+        "Democratic": 6005,
+        "Independent/NPA": 4937,
+        "Libertarian": 85,
+        "Other": 8
+      },
+      "active_registered": 23733,
+      "inactive_registered": 2791
+    },
+    {
+      "name": "Brule",
+      "fips": "46015",
+      "total_registered": 3453,
+      "by_party": {
+        "Republican": 1784,
+        "Democratic": 821,
+        "Independent/NPA": 649,
+        "Libertarian": 12,
+        "Other": 2
+      },
+      "active_registered": 3268,
+      "inactive_registered": 185
+    },
+    {
+      "name": "Buffalo",
+      "fips": "46017",
+      "total_registered": 936,
+      "by_party": {
+        "Republican": 159,
+        "Democratic": 523,
+        "Independent/NPA": 192,
+        "Libertarian": 4,
+        "Other": 4
+      },
+      "active_registered": 882,
+      "inactive_registered": 54
+    },
+    {
+      "name": "Butte",
+      "fips": "46019",
+      "total_registered": 7977,
+      "by_party": {
+        "Republican": 4662,
+        "Democratic": 724,
+        "Independent/NPA": 1521,
+        "Libertarian": 55,
+        "Other": 24
+      },
+      "active_registered": 6986,
+      "inactive_registered": 991
+    },
+    {
+      "name": "Campbell",
+      "fips": "46021",
+      "total_registered": 1180,
+      "by_party": {
+        "Republican": 897,
+        "Democratic": 92,
+        "Independent/NPA": 111,
+        "Libertarian": 2,
+        "Other": 0
+      },
+      "active_registered": 1102,
+      "inactive_registered": 78
+    },
+    {
+      "name": "Charles Mix",
+      "fips": "46023",
+      "total_registered": 5739,
+      "by_party": {
+        "Republican": 2785,
+        "Democratic": 1697,
+        "Independent/NPA": 960,
+        "Libertarian": 7,
+        "Other": 0
+      },
+      "active_registered": 5449,
+      "inactive_registered": 290
+    },
+    {
+      "name": "Clark",
+      "fips": "46025",
+      "total_registered": 2784,
+      "by_party": {
+        "Republican": 1734,
+        "Democratic": 460,
+        "Independent/NPA": 433,
+        "Libertarian": 4,
+        "Other": 0
+      },
+      "active_registered": 2631,
+      "inactive_registered": 153
+    },
+    {
+      "name": "Clay",
+      "fips": "46027",
+      "total_registered": 9370,
+      "by_party": {
+        "Republican": 3027,
+        "Democratic": 2734,
+        "Independent/NPA": 2474,
+        "Libertarian": 38,
+        "Other": 21
+      },
+      "active_registered": 8294,
+      "inactive_registered": 1076
+    },
+    {
+      "name": "Codington",
+      "fips": "46029",
+      "total_registered": 20572,
+      "by_party": {
+        "Republican": 10624,
+        "Democratic": 3571,
+        "Independent/NPA": 4690,
+        "Libertarian": 57,
+        "Other": 21
+      },
+      "active_registered": 18963,
+      "inactive_registered": 1609
+    },
+    {
+      "name": "Corson",
+      "fips": "46031",
+      "total_registered": 2456,
+      "by_party": {
+        "Republican": 756,
+        "Democratic": 911,
+        "Independent/NPA": 570,
+        "Libertarian": 4,
+        "Other": 3
+      },
+      "active_registered": 2244,
+      "inactive_registered": 212
+    },
+    {
+      "name": "Custer",
+      "fips": "46033",
+      "total_registered": 8818,
+      "by_party": {
+        "Republican": 5240,
+        "Democratic": 999,
+        "Independent/NPA": 1807,
+        "Libertarian": 40,
+        "Other": 26
+      },
+      "active_registered": 8112,
+      "inactive_registered": 706
+    },
+    {
+      "name": "Davison",
+      "fips": "46035",
+      "total_registered": 13962,
+      "by_party": {
+        "Republican": 7090,
+        "Democratic": 2653,
+        "Independent/NPA": 3416,
+        "Libertarian": 33,
+        "Other": 34
+      },
+      "active_registered": 13226,
+      "inactive_registered": 736
+    },
+    {
+      "name": "Day",
+      "fips": "46037",
+      "total_registered": 4094,
+      "by_party": {
+        "Republican": 2029,
+        "Democratic": 1149,
+        "Independent/NPA": 736,
+        "Libertarian": 11,
+        "Other": 3
+      },
+      "active_registered": 3928,
+      "inactive_registered": 166
+    },
+    {
+      "name": "Deuel",
+      "fips": "46039",
+      "total_registered": 3241,
+      "by_party": {
+        "Republican": 1835,
+        "Democratic": 537,
+        "Independent/NPA": 787,
+        "Libertarian": 8,
+        "Other": 1
+      },
+      "active_registered": 3168,
+      "inactive_registered": 73
+    },
+    {
+      "name": "Dewey",
+      "fips": "46041",
+      "total_registered": 3608,
+      "by_party": {
+        "Republican": 800,
+        "Democratic": 1757,
+        "Independent/NPA": 875,
+        "Libertarian": 5,
+        "Other": 3
+      },
+      "active_registered": 3440,
+      "inactive_registered": 168
+    },
+    {
+      "name": "Douglas",
+      "fips": "46043",
+      "total_registered": 2185,
+      "by_party": {
+        "Republican": 1682,
+        "Democratic": 183,
+        "Independent/NPA": 225,
+        "Libertarian": 2,
+        "Other": 0
+      },
+      "active_registered": 2092,
+      "inactive_registered": 93
+    },
+    {
+      "name": "Edmunds",
+      "fips": "46045",
+      "total_registered": 2822,
+      "by_party": {
+        "Republican": 1815,
+        "Democratic": 443,
+        "Independent/NPA": 421,
+        "Libertarian": 6,
+        "Other": 2
+      },
+      "active_registered": 2687,
+      "inactive_registered": 135
+    },
+    {
+      "name": "Fall River",
+      "fips": "46047",
+      "total_registered": 7059,
+      "by_party": {
+        "Republican": 3915,
+        "Democratic": 772,
+        "Independent/NPA": 1442,
+        "Libertarian": 32,
+        "Other": 3
+      },
+      "active_registered": 6164,
+      "inactive_registered": 895
+    },
+    {
+      "name": "Faulk",
+      "fips": "46049",
+      "total_registered": 1620,
+      "by_party": {
+        "Republican": 1146,
+        "Democratic": 152,
+        "Independent/NPA": 236,
+        "Libertarian": 0,
+        "Other": 0
+      },
+      "active_registered": 1534,
+      "inactive_registered": 86
+    },
+    {
+      "name": "Grant",
+      "fips": "46051",
+      "total_registered": 5070,
+      "by_party": {
+        "Republican": 2739,
+        "Democratic": 947,
+        "Independent/NPA": 1060,
+        "Libertarian": 19,
+        "Other": 9
+      },
+      "active_registered": 4774,
+      "inactive_registered": 296
+    },
+    {
+      "name": "Gregory",
+      "fips": "46053",
+      "total_registered": 3038,
+      "by_party": {
+        "Republican": 1910,
+        "Democratic": 553,
+        "Independent/NPA": 413,
+        "Libertarian": 4,
+        "Other": 0
+      },
+      "active_registered": 2880,
+      "inactive_registered": 158
+    },
+    {
+      "name": "Haakon",
+      "fips": "46055",
+      "total_registered": 1431,
+      "by_party": {
+        "Republican": 1142,
+        "Democratic": 101,
+        "Independent/NPA": 129,
+        "Libertarian": 3,
+        "Other": 4
+      },
+      "active_registered": 1379,
+      "inactive_registered": 52
+    },
+    {
+      "name": "Hamlin",
+      "fips": "46057",
+      "total_registered": 4488,
+      "by_party": {
+        "Republican": 3105,
+        "Democratic": 502,
+        "Independent/NPA": 660,
+        "Libertarian": 8,
+        "Other": 1
+      },
+      "active_registered": 4276,
+      "inactive_registered": 212
+    },
+    {
+      "name": "Hand",
+      "fips": "46059",
+      "total_registered": 2297,
+      "by_party": {
+        "Republican": 1653,
+        "Democratic": 341,
+        "Independent/NPA": 233,
+        "Libertarian": 10,
+        "Other": 3
+      },
+      "active_registered": 2240,
+      "inactive_registered": 57
+    },
+    {
+      "name": "Hanson",
+      "fips": "46061",
+      "total_registered": 3560,
+      "by_party": {
+        "Republican": 1785,
+        "Democratic": 488,
+        "Independent/NPA": 789,
+        "Libertarian": 4,
+        "Other": 8
+      },
+      "active_registered": 3074,
+      "inactive_registered": 486
+    },
+    {
+      "name": "Harding",
+      "fips": "46063",
+      "total_registered": 1040,
+      "by_party": {
+        "Republican": 825,
+        "Democratic": 57,
+        "Independent/NPA": 119,
+        "Libertarian": 4,
+        "Other": 3
+      },
+      "active_registered": 1008,
+      "inactive_registered": 32
+    },
+    {
+      "name": "Hughes",
+      "fips": "46065",
+      "total_registered": 12714,
+      "by_party": {
+        "Republican": 7282,
+        "Democratic": 1987,
+        "Independent/NPA": 2411,
+        "Libertarian": 50,
+        "Other": 17
+      },
+      "active_registered": 11747,
+      "inactive_registered": 967
+    },
+    {
+      "name": "Hutchinson",
+      "fips": "46067",
+      "total_registered": 5146,
+      "by_party": {
+        "Republican": 3432,
+        "Democratic": 668,
+        "Independent/NPA": 854,
+        "Libertarian": 15,
+        "Other": 7
+      },
+      "active_registered": 4976,
+      "inactive_registered": 170
+    },
+    {
+      "name": "Hyde",
+      "fips": "46069",
+      "total_registered": 968,
+      "by_party": {
+        "Republican": 652,
+        "Democratic": 137,
+        "Independent/NPA": 128,
+        "Libertarian": 3,
+        "Other": 0
+      },
+      "active_registered": 920,
+      "inactive_registered": 48
+    },
+    {
+      "name": "Jackson",
+      "fips": "46071",
+      "total_registered": 1947,
+      "by_party": {
+        "Republican": 927,
+        "Democratic": 554,
+        "Independent/NPA": 342,
+        "Libertarian": 7,
+        "Other": 1
+      },
+      "active_registered": 1831,
+      "inactive_registered": 116
+    },
+    {
+      "name": "Jerauld",
+      "fips": "46073",
+      "total_registered": 1323,
+      "by_party": {
+        "Republican": 760,
+        "Democratic": 307,
+        "Independent/NPA": 216,
+        "Libertarian": 6,
+        "Other": 1
+      },
+      "active_registered": 1290,
+      "inactive_registered": 33
+    },
+    {
+      "name": "Jones",
+      "fips": "46075",
+      "total_registered": 698,
+      "by_party": {
+        "Republican": 501,
+        "Democratic": 51,
+        "Independent/NPA": 81,
+        "Libertarian": 1,
+        "Other": 0
+      },
+      "active_registered": 634,
+      "inactive_registered": 64
+    },
+    {
+      "name": "Kingsbury",
+      "fips": "46077",
+      "total_registered": 3863,
+      "by_party": {
+        "Republican": 2324,
+        "Democratic": 581,
+        "Independent/NPA": 694,
+        "Libertarian": 9,
+        "Other": 3
+      },
+      "active_registered": 3611,
+      "inactive_registered": 252
+    },
+    {
+      "name": "Lake",
+      "fips": "46079",
+      "total_registered": 9182,
+      "by_party": {
+        "Republican": 4362,
+        "Democratic": 1752,
+        "Independent/NPA": 1556,
+        "Libertarian": 25,
+        "Other": 6
+      },
+      "active_registered": 7701,
+      "inactive_registered": 1481
+    },
+    {
+      "name": "Lawrence",
+      "fips": "46081",
+      "total_registered": 24707,
+      "by_party": {
+        "Republican": 12521,
+        "Democratic": 3796,
+        "Independent/NPA": 6230,
+        "Libertarian": 164,
+        "Other": 52
+      },
+      "active_registered": 22763,
+      "inactive_registered": 1944
+    },
+    {
+      "name": "Lincoln",
+      "fips": "46083",
+      "total_registered": 54424,
+      "by_party": {
+        "Republican": 26628,
+        "Democratic": 10026,
+        "Independent/NPA": 13433,
+        "Libertarian": 213,
+        "Other": 95
+      },
+      "active_registered": 50395,
+      "inactive_registered": 4029
+    },
+    {
+      "name": "Lyman",
+      "fips": "46085",
+      "total_registered": 2268,
+      "by_party": {
+        "Republican": 1173,
+        "Democratic": 624,
+        "Independent/NPA": 413,
+        "Libertarian": 4,
+        "Other": 1
+      },
+      "active_registered": 2215,
+      "inactive_registered": 53
+    },
+    {
+      "name": "Marshall",
+      "fips": "46091",
+      "total_registered": 2923,
+      "by_party": {
+        "Republican": 1361,
+        "Democratic": 874,
+        "Independent/NPA": 547,
+        "Libertarian": 2,
+        "Other": 2
+      },
+      "active_registered": 2786,
+      "inactive_registered": 137
+    },
+    {
+      "name": "McCook",
+      "fips": "46087",
+      "total_registered": 4112,
+      "by_party": {
+        "Republican": 2446,
+        "Democratic": 723,
+        "Independent/NPA": 758,
+        "Libertarian": 10,
+        "Other": 4
+      },
+      "active_registered": 3941,
+      "inactive_registered": 171
+    },
+    {
+      "name": "McPherson",
+      "fips": "46089",
+      "total_registered": 1737,
+      "by_party": {
+        "Republican": 1315,
+        "Democratic": 165,
+        "Independent/NPA": 183,
+        "Libertarian": 7,
+        "Other": 1
+      },
+      "active_registered": 1671,
+      "inactive_registered": 66
+    },
+    {
+      "name": "Meade",
+      "fips": "46093",
+      "total_registered": 22211,
+      "by_party": {
+        "Republican": 13043,
+        "Democratic": 2594,
+        "Independent/NPA": 4929,
+        "Libertarian": 144,
+        "Other": 28
+      },
+      "active_registered": 20738,
+      "inactive_registered": 1473
+    },
+    {
+      "name": "Mellette",
+      "fips": "46095",
+      "total_registered": 1245,
+      "by_party": {
+        "Republican": 508,
+        "Democratic": 389,
+        "Independent/NPA": 284,
+        "Libertarian": 0,
+        "Other": 0
+      },
+      "active_registered": 1181,
+      "inactive_registered": 64
+    },
+    {
+      "name": "Miner",
+      "fips": "46097",
+      "total_registered": 1654,
+      "by_party": {
+        "Republican": 871,
+        "Democratic": 392,
+        "Independent/NPA": 323,
+        "Libertarian": 4,
+        "Other": 1
+      },
+      "active_registered": 1591,
+      "inactive_registered": 63
+    },
+    {
+      "name": "Minnehaha",
+      "fips": "46099",
+      "total_registered": 150169,
+      "by_party": {
+        "Republican": 59726,
+        "Democratic": 34725,
+        "Independent/NPA": 41158,
+        "Libertarian": 687,
+        "Other": 217
+      },
+      "active_registered": 136513,
+      "inactive_registered": 13656
+    },
+    {
+      "name": "Moody",
+      "fips": "46101",
+      "total_registered": 4541,
+      "by_party": {
+        "Republican": 2050,
+        "Democratic": 1238,
+        "Independent/NPA": 1120,
+        "Libertarian": 15,
+        "Other": 4
+      },
+      "active_registered": 4427,
+      "inactive_registered": 114
+    },
+    {
+      "name": "Oglala Lakota",
+      "fips": "46102",
+      "total_registered": 8560,
+      "by_party": {
+        "Republican": 589,
+        "Democratic": 5038,
+        "Independent/NPA": 2151,
+        "Libertarian": 17,
+        "Other": 1
+      },
+      "active_registered": 7796,
+      "inactive_registered": 764
+    },
+    {
+      "name": "Pennington",
+      "fips": "46103",
+      "total_registered": 99287,
+      "by_party": {
+        "Republican": 45967,
+        "Democratic": 16806,
+        "Independent/NPA": 24231,
+        "Libertarian": 629,
+        "Other": 236
+      },
+      "active_registered": 87869,
+      "inactive_registered": 11418
+    },
+    {
+      "name": "Perkins",
+      "fips": "46105",
+      "total_registered": 2318,
+      "by_party": {
+        "Republican": 1575,
+        "Democratic": 233,
+        "Independent/NPA": 331,
+        "Libertarian": 4,
+        "Other": 5
+      },
+      "active_registered": 2148,
+      "inactive_registered": 170
+    },
+    {
+      "name": "Potter",
+      "fips": "46107",
+      "total_registered": 1795,
+      "by_party": {
+        "Republican": 1364,
+        "Democratic": 166,
+        "Independent/NPA": 167,
+        "Libertarian": 0,
+        "Other": 5
+      },
+      "active_registered": 1702,
+      "inactive_registered": 93
+    },
+    {
+      "name": "Roberts",
+      "fips": "46109",
+      "total_registered": 6556,
+      "by_party": {
+        "Republican": 2315,
+        "Democratic": 2214,
+        "Independent/NPA": 1564,
+        "Libertarian": 9,
+        "Other": 15
+      },
+      "active_registered": 6117,
+      "inactive_registered": 439
+    },
+    {
+      "name": "Sanborn",
+      "fips": "46111",
+      "total_registered": 1702,
+      "by_party": {
+        "Republican": 1005,
+        "Democratic": 337,
+        "Independent/NPA": 281,
+        "Libertarian": 7,
+        "Other": 1
+      },
+      "active_registered": 1631,
+      "inactive_registered": 71
+    },
+    {
+      "name": "Spink",
+      "fips": "46115",
+      "total_registered": 4369,
+      "by_party": {
+        "Republican": 2584,
+        "Democratic": 888,
+        "Independent/NPA": 689,
+        "Libertarian": 10,
+        "Other": 4
+      },
+      "active_registered": 4175,
+      "inactive_registered": 194
+    },
+    {
+      "name": "Stanley",
+      "fips": "46117",
+      "total_registered": 2421,
+      "by_party": {
+        "Republican": 1615,
+        "Democratic": 311,
+        "Independent/NPA": 318,
+        "Libertarian": 8,
+        "Other": 0
+      },
+      "active_registered": 2252,
+      "inactive_registered": 169
+    },
+    {
+      "name": "Sully",
+      "fips": "46119",
+      "total_registered": 1209,
+      "by_party": {
+        "Republican": 843,
+        "Democratic": 146,
+        "Independent/NPA": 149,
+        "Libertarian": 4,
+        "Other": 2
+      },
+      "active_registered": 1144,
+      "inactive_registered": 65
+    },
+    {
+      "name": "Todd",
+      "fips": "46121",
+      "total_registered": 5105,
+      "by_party": {
+        "Republican": 651,
+        "Democratic": 2612,
+        "Independent/NPA": 1163,
+        "Libertarian": 6,
+        "Other": 3
+      },
+      "active_registered": 4435,
+      "inactive_registered": 670
+    },
+    {
+      "name": "Tripp",
+      "fips": "46123",
+      "total_registered": 3804,
+      "by_party": {
+        "Republican": 2463,
+        "Democratic": 503,
+        "Independent/NPA": 524,
+        "Libertarian": 5,
+        "Other": 5
+      },
+      "active_registered": 3500,
+      "inactive_registered": 304
+    },
+    {
+      "name": "Turner",
+      "fips": "46125",
+      "total_registered": 6277,
+      "by_party": {
+        "Republican": 3733,
+        "Democratic": 1069,
+        "Independent/NPA": 1249,
+        "Libertarian": 19,
+        "Other": 1
+      },
+      "active_registered": 6071,
+      "inactive_registered": 206
+    },
+    {
+      "name": "Union",
+      "fips": "46127",
+      "total_registered": 13981,
+      "by_party": {
+        "Republican": 6729,
+        "Democratic": 2145,
+        "Independent/NPA": 3581,
+        "Libertarian": 50,
+        "Other": 12
+      },
+      "active_registered": 12517,
+      "inactive_registered": 1464
+    },
+    {
+      "name": "Walworth",
+      "fips": "46129",
+      "total_registered": 3970,
+      "by_party": {
+        "Republican": 2448,
+        "Democratic": 527,
+        "Independent/NPA": 610,
+        "Libertarian": 10,
+        "Other": 9
+      },
+      "active_registered": 3604,
+      "inactive_registered": 366
+    },
+    {
+      "name": "Yankton",
+      "fips": "46135",
+      "total_registered": 15931,
+      "by_party": {
+        "Republican": 7728,
+        "Democratic": 3143,
+        "Independent/NPA": 3686,
+        "Libertarian": 56,
+        "Other": 21
+      },
+      "active_registered": 14634,
+      "inactive_registered": 1297
+    },
+    {
+      "name": "Ziebach",
+      "fips": "46137",
+      "total_registered": 1673,
+      "by_party": {
+        "Republican": 432,
+        "Democratic": 705,
+        "Independent/NPA": 448,
+        "Libertarian": 4,
+        "Other": 1
+      },
+      "active_registered": 1590,
+      "inactive_registered": 83
+    }
+  ],
+  "as_of_notes": "Latest official monthly county report from the SD Secretary of State, titled 'Statewide Report by County - June 2, 2026' (filename StatewideVotersByCounty_6.2.2026.pdf). This is the June 2026 monthly report, dated the day of the June 2, 2026 primary election. The report breaks out party affiliation for ACTIVE voters only.",
+  "data_quality": "high - parsed directly from the official SD SOS PDF; all 66 county active-voter party rows verified to sum to each county's printed Total Active, and statewide party column sums exactly match the report's printed totals row (Dem 136,755; Lib 2,806; Rep 321,574; Ind 87,754; OTH 1,015; No Party Affiliation 69,327; Inactive 56,911; Total Active 619,231).",
+  "notes": "South Dakota's report separates ACTIVE voters (with party breakdown) from INACTIVE voters (count only, no party). statewide_total_registered = active (619,231) + inactive (56,911) = 676,142 total registrations. statewide_by_party sums to the ACTIVE total of 619,231 only, because party affiliation is reported solely for active voters; therefore by-party totals will NOT sum to statewide_total_registered (the 56,911 inactive registrants are not assigned a party in this report). 'Independent/NPA' combines the report's two distinct categories: 'Independent' (registered Independent, 87,754) and 'No Party Affiliation' (left blank, 69,327). 'Other' (OTH) = voters who wrote in an unrecognized party (1,015). The Libertarian Party is a recognized SD party. Each county object also carries active_registered and inactive_registered for transparency; county total_registered = active + inactive. SD has 66 counties; Oglala Lakota County (FIPS 46102) was formerly Shannon County; Shannon's old FIPS 46113 is retired. The SOS comparison table reports near-identical June 1, 2026 figures with a separately tracked 'No Labels' party (619) folded into Independent in the county PDF."
+}
