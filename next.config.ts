@@ -36,14 +36,14 @@ const RACE_REDIRECTS: Record<string, string> = {
 const nextConfig: NextConfig = {
   async rewrites() {
     return [
-      // Guard: /results/race/<id> is a real dynamic route — a self-rewrite stops
-      // the slug pattern below from swallowing it (rewrites run before dynamic routes).
-      { source: "/results/race/:id", destination: "/results/race/:id" },
       // Active race slug URLs: /results/2026-06-09/south-carolina-us-senate-republican-primary
-      { source: "/results/:date/:slug", destination: "/results" },
+      // The first segment is constrained to an ISO date so this rewrite can NEVER
+      // swallow real routes such as /results/race/<id> (which 404'd in production
+      // when the segment was unconstrained) or /results/archive.
+      { source: "/results/:date(\\d{4}-\\d{2}-\\d{2})/:slug", destination: "/results" },
       // Archived race slug URLs: /results/archive/2026-06-09/south-carolina-...
-      // Note: /results/archive (no trailing segments) is a real page — only match with date+slug
-      { source: "/results/archive/:date/:slug", destination: "/results" },
+      // /results/archive (no trailing date+slug) stays a real page.
+      { source: "/results/archive/:date(\\d{4}-\\d{2}-\\d{2})/:slug", destination: "/results" },
     ];
   },
   async redirects() {

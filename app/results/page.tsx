@@ -8,18 +8,23 @@ import dynamic from "next/dynamic";
 const OpaResultsPage = dynamic(() => import("./onpoint/OpaResultsPage"), {
   ssr: false,
   loading: () => (
-    <div
-      aria-hidden
-      style={{
-        position: "fixed",
-        inset: 0,
-        zIndex: 200,
-        background:
-          typeof window !== "undefined" && (() => { try { return localStorage.getItem("opa-theme") === "light"; } catch { return false; } })()
-            ? "#ffffff"
-            : "#0a0b0d",
-      }}
-    />
+    <>
+      {/* Hide the global light chrome during the loading window — otherwise the
+          old nav/background flashes for a beat before the OPA shell mounts. */}
+      <style>{`body header, body footer { display: none !important; }`}</style>
+      <div
+        aria-hidden
+        style={{
+          position: "fixed",
+          inset: 0,
+          zIndex: 200,
+          background:
+            typeof window !== "undefined" && (() => { try { return localStorage.getItem("opa-theme") === "light"; } catch { return false; } })()
+              ? "#ffffff"
+              : "#0a0b0d",
+        }}
+      />
+    </>
   ),
 });
 
