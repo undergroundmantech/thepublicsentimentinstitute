@@ -21,8 +21,8 @@ export const RACE_REGISTRY: RaceRegistryEntry[] = [
   { id: 79755, date: "2026-05-26", slug: "texas-us-house-18-democratic-primary-runoff",          label: "Texas US House 18 Democratic Primary Runoff",          archived: true },
 
   // ── June 2, 2026 — CA active; IA/MT/NJ/NM/SD archived ────────────────────
-  { id: 79777, date: "2026-06-02", slug: "california-governor-open-primary",                     label: "California Governor Open Primary" },
-  { id: 79938, date: "2026-06-02", slug: "los-angeles-mayor-open-primary",                       label: "Los Angeles Mayor Open Primary" },
+  { id: 79777, date: "2026-06-02", slug: "california-governor-open-primary",                     label: "California Governor Open Primary",             archived: true },
+  { id: 79938, date: "2026-06-02", slug: "los-angeles-mayor-open-primary",                       label: "Los Angeles Mayor Open Primary",               archived: true },
   { id: 79893, date: "2026-06-02", slug: "california-us-house-1-open-primary",                   label: "California US House 1 Open Primary" },
   { id: 79932, date: "2026-06-02", slug: "california-us-house-7-open-primary",                   label: "California US House 7 Open Primary" },
   { id: 79884, date: "2026-06-02", slug: "california-us-house-11-open-primary",                  label: "California US House 11 Open Primary" },
