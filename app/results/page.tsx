@@ -165,9 +165,9 @@ const RACE_FORECAST_DEFAULTS: Partial<Record<number, { raceRule: RaceRule; expec
   83314: { raceRule: "PLURALITY", expectedTurnout: 55_000  }, // GA US House 1 D Runoff
   83315: { raceRule: "PLURALITY", expectedTurnout: 65_000  }, // GA US House 7 D Runoff
 
-  // ── WASHINGTON DC — PLURALITY primaries — June 16 ────────────────────────
+  // ── WASHINGTON DC — June 16 ────────────────────────────────────────────────
   83478: { raceRule: "PLURALITY", expectedTurnout: 85_000 },   // DC US House Delegate D Primary
-  83479: { raceRule: "PLURALITY", expectedTurnout: 87_500, pollAvg: { "George": 43.0, "McDuffie": 38.0, "Johnson": 19.0 } },  // DC Mayor D Primary
+  83479: { raceRule: "RANKED_CHOICE", expectedTurnout: 87_500, pollsCloseIso: "2026-06-16T20:00:00-04:00", pollAvg: { "George": 43.0, "McDuffie": 38.0, "Johnson": 19.0 } },  // DC Mayor D Primary — RCV
 
   // ── ALABAMA — PLURALITY runoffs — June 16 ────────────────────────────────
   83428: { raceRule: "PLURALITY", expectedTurnout: 280_000, pollAvg: { "Moore": 51.0, "Hudson": 49.0 } }, // AL US Senate R Runoff
@@ -334,6 +334,8 @@ async function fetchRaceMapBlankSvg(id: number): Promise<string | null> {
 
 function fmtPct(x?: number) { if (typeof x !== "number") return "—"; return `${x.toFixed(1)}%`; }
 function getRaceReportingPct(race?: RaceDetail) { const v = race?.percent_reporting; return typeof v === "number" && Number.isFinite(v) ? Math.max(0, Math.min(100, v)) : null; }
+/** Returns "RCV NEXT ROUND" for ranked-choice races, "RUNOFF NEEDED" otherwise. */
+function rcvTerm(rule?: RaceRule | null) { return rule === "RANKED_CHOICE" ? "RCV NEXT ROUND" : "RUNOFF NEEDED"; }
 function getRaceProjectionAlways(race?: RaceDetail): { leaderName: string; prob: number } | null {
   if (!race?.candidates?.length) return null;
   const reporting = typeof race.percent_reporting === "number" ? race.percent_reporting : 0;
@@ -1409,6 +1411,16 @@ function ForecastPanel({ raceId, refreshTick, raceData, onForecastUpdate }: { ra
     return { ...normalizeWinProbabilitiesByCandidateCount(f.plurality_odds_to_win, activeCandidateCount), runoffNeeded: 0 };
   }, [forecast, raceRule, activeCandidateCount]);
 
+  // ── SPLASH: hide forecast until 10% reporting (unless user forces it open) ──
+  const SPLASH_THRESHOLD = 10; // percent
+  const [forceShowForecast, setForceShowForecast] = useState(false);
+  const effectiveReporting = (() => {
+    const ov = defaults?.overrideReporting;
+    if (typeof ov === "number" && ov > 0) return ov;
+    return raceData?.percent_reporting ?? 0;
+  })();
+  const showForecastBody = forceShowForecast || effectiveReporting >= SPLASH_THRESHOLD;
+
   return (
     <div className="res-panel" style={{ padding: 0 }}>
       <div className="res-panel-header" style={{ flexDirection: "column", alignItems: "flex-start", gap: 6 }}>
@@ -1430,25 +1442,66 @@ function ForecastPanel({ raceId, refreshTick, raceData, onForecastUpdate }: { ra
       </div>
       {showOptions && (
         <div style={{ padding: "12px 14px", borderBottom: "1px solid var(--border)", background: "var(--background2)", display: "flex", flexDirection: "column", gap: 10 }}>
-          <div><div className="res-note" style={{ marginBottom: 5 }}>RACE RULE</div><select value={raceRule} onChange={(e) => setRaceRule(e.target.value as RaceRule)} className="res-select" style={{ width: "100%" }}>              <option value="PLURALITY">Plurality (highest vote-getter wins)</option><option value="TOP_TWO">Top Two (CA open primary)</option><option value="MAJORITY">Majority ≥50% / Runoff</option><option value="MAJORITY_RUNOFF">Majority ≥50% / Municipal Runoff (LA Mayor)</option><option value="THRESHOLD_35_CONVENTION">35% Threshold / Convention (Iowa)</option><option value="THRESHOLD_35_RUNOFF">35% Threshold / Runoff (S. Dakota)</option></select></div>
+          <div><div className="res-note" style={{ marginBottom: 5 }}>RACE RULE</div><select value={raceRule} onChange={(e) => setRaceRule(e.target.value as RaceRule)} className="res-select" style={{ width: "100%" }}>              <option value="PLURALITY">Plurality (highest vote-getter wins)</option><option value="TOP_TWO">Top Two (CA open primary)</option><option value="MAJORITY">Majority ≥50% / Runoff</option><option value="MAJORITY_RUNOFF">Majority ≥50% / Municipal Runoff (LA Mayor)</option><option value="RANKED_CHOICE">Ranked Choice (RCV — majority threshold)</option><option value="THRESHOLD_35_CONVENTION">35% Threshold / Convention (Iowa)</option><option value="THRESHOLD_35_RUNOFF">35% Threshold / Runoff (S. Dakota)</option></select></div>
           <div><div className="res-note" style={{ marginBottom: 5 }}>EXPECTED TURNOUT (OPTIONAL)</div><input type="number" placeholder="e.g. 5000000" value={expectedTurnoutOverride} onChange={(e) => setExpectedTurnoutOverride(e.target.value)} className="res-input" /></div>
           <button className="res-btn-primary" style={{ width: "100%", justifyContent: "center" }} disabled={isLoading} onClick={() => { runForecastLive(raceIdRef.current); /* HISTORY DISABLED */ }}>{isLoading ? "RUNNING…" : "RERUN FORECAST"}</button>
         </div>
       )}
       <div className="res-forecast-body" style={{ padding: "10px 14px" }}>
         {error && <div style={{ border: "1px solid rgba(230,57,70,0.25)", background: "rgba(230,57,70,0.06)", color: "rgba(255,77,90,0.90)", padding: "8px 10px", fontFamily: "var(--font-body)", fontSize: "9.5px", letterSpacing: "0.10em", marginBottom: 12 }}>⚠ {error}</div>}
-        {isLoading && (
+        {!showForecastBody && (
+          <div style={{ padding: "20px 14px", display: "flex", flexDirection: "column", gap: 14 }}>
+            <div style={{ padding: "12px 14px", background: "rgba(124,58,237,0.06)", border: "1px solid rgba(124,58,237,0.22)", borderRadius: "var(--r-sm)", display: "flex", alignItems: "center", gap: 14 }}>
+              {/* Equalizer bars */}
+              <div style={{ flexShrink: 0, width: 36, height: 44, display: "flex", alignItems: "flex-end", gap: 5 }}>
+                <div style={{ width: 9, borderRadius: 3, background: "rgba(239,68,68,0.70)", height: 28, animation: "fcst-eq-1 1.8s ease-in-out infinite" }} />
+                <div style={{ width: 9, borderRadius: 3, background: "rgba(59,130,246,0.70)", height: 16, animation: "fcst-eq-2 2.2s ease-in-out infinite" }} />
+                <div style={{ width: 9, borderRadius: 3, background: "rgba(34,197,94,0.60)", height: 38, animation: "fcst-eq-3 1.5s ease-in-out infinite" }} />
+              </div>
+              <div>
+                <div style={{ fontFamily: "var(--font-body)", fontSize: "10px", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--purple-soft)", marginBottom: 4 }}>FORECAST RUNNING</div>
+                <div style={{ fontFamily: "var(--font-body)", fontSize: "11px", color: "var(--muted)", lineHeight: 1.5 }}>
+                  Waiting for early returns — results display at <strong style={{ color: "var(--foreground)" }}>{SPLASH_THRESHOLD}%</strong> reporting. Projections become more reliable as more precincts check in.
+                </div>
+                <div style={{ fontFamily: "var(--font-numeric)", fontSize: "12px", fontWeight: 800, color: "var(--purple-soft)", marginTop: 6 }}>
+                  {effectiveReporting.toFixed(1)}% in so far
+                </div>
+              </div>
+            </div>
+            <button className="res-btn-ghost" style={{ padding: "5px 14px", fontSize: "10px", alignSelf: "center" }} onClick={() => setForceShowForecast(true)}>
+              SHOW FORECAST ANYWAY
+            </button>
+          </div>
+        )}
+        {showForecastBody && isLoading && (
           <div style={{ padding: "36px 0", textAlign: "center" }}>
             <div className="res-note" style={{ color: "var(--purple-soft)", marginBottom: 10 }}>RUNNING FORECAST MODEL…</div>
             <div className="res-bar-track" style={{ width: "80%", margin: "0 auto" }}><div className="res-bar-fill" style={{ width: "60%", background: "linear-gradient(90deg,var(--purple),var(--blue2))", animation: "res-loading-pulse 1.4s ease-in-out infinite" }} /></div>
           </div>
         )}
-        {!isLoading && forecast && (
+        {showForecastBody && !isLoading && forecast && (
           /* ── NARROW LAYOUT ── */
           <div style={{ width: "100%" }}>
+            {/* ── EARLY DATA DISCLAIMER ── */}
+            {forceShowForecast && effectiveReporting < SPLASH_THRESHOLD && (
+              <div style={{ marginBottom: 14, padding: "12px 14px", background: "rgba(245,158,11,0.06)", border: "1px solid rgba(245,158,11,0.22)", borderRadius: "var(--r-sm)", display: "flex", alignItems: "center", gap: 14 }}>
+                {/* Equalizer bars — amber tint */}
+                <div style={{ flexShrink: 0, width: 36, height: 44, display: "flex", alignItems: "flex-end", gap: 5 }}>
+                  <div style={{ width: 9, borderRadius: 3, background: "rgba(239,68,68,0.70)", height: 28, animation: "fcst-eq-1 1.8s ease-in-out infinite" }} />
+                  <div style={{ width: 9, borderRadius: 3, background: "rgba(59,130,246,0.70)", height: 16, animation: "fcst-eq-2 2.2s ease-in-out infinite" }} />
+                  <div style={{ width: 9, borderRadius: 3, background: "rgba(34,197,94,0.60)", height: 38, animation: "fcst-eq-3 1.5s ease-in-out infinite" }} />
+                </div>
+                <div>
+                  <div style={{ fontFamily: "var(--font-body)", fontSize: "10px", fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "rgba(245,158,11,0.9)", marginBottom: 4 }}>EARLY ESTIMATE</div>
+                  <div style={{ fontFamily: "var(--font-body)", fontSize: "11px", color: "var(--muted)", lineHeight: 1.5 }}>
+                    Based on <strong style={{ color: "var(--foreground)" }}>{effectiveReporting.toFixed(1)}%</strong> reporting. This estimate will sharpen significantly as more precincts check in — treat early projections as directional, not definitive.
+                  </div>
+                </div>
+              </div>
+            )}
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 14 }}>
               <span className="res-note" style={{ color: "var(--muted2)" }}>{forecast.race.percent_reporting > 99 ? ">99" : forecast.race.percent_reporting.toFixed(1)}% REPORTING</span>
-              <span className="res-badge res-badge-red">{raceRule === "PLURALITY" ? "PLURALITY" : raceRule === "TOP_TWO" ? "TOP TWO" : raceRule === "MAJORITY" || raceRule === "MAJORITY_RUNOFF" ? "MAJORITY" : raceRule === "THRESHOLD_35_CONVENTION" ? "THRESHOLD 35%" : "THRESHOLD 35%"}</span>
+              <span className="res-badge res-badge-red">{raceRule === "PLURALITY" ? "PLURALITY" : raceRule === "TOP_TWO" ? "TOP TWO" : raceRule === "RANKED_CHOICE" ? "RANKED CHOICE" : raceRule === "MAJORITY" || raceRule === "MAJORITY_RUNOFF" ? "MAJORITY" : "THRESHOLD 35%"}</span>
             </div>
             {raceRule === "TOP_TWO" ? (
               <div style={{ marginBottom: 12, padding: "12px 12px", background: "var(--panel2)", border: "1px solid var(--border)", borderRadius: "var(--r-sm)" }}>
@@ -1481,7 +1534,7 @@ function ForecastPanel({ raceId, refreshTick, raceData, onForecastUpdate }: { ra
               </div>
             ) : (
               <div style={{ marginBottom: 12, padding: "12px 12px", background: "var(--panel2)", border: "1px solid var(--border)", borderRadius: "var(--r-sm)" }}>
-                <div style={{ fontFamily: "var(--font-body)", fontSize: "10px", fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--muted2)", marginBottom: 10 }}>{`WIN PROBABILITY · ${raceRule === "PLURALITY" ? "MOST VOTES" : (raceRule === "THRESHOLD_35_CONVENTION" || raceRule === "THRESHOLD_35_RUNOFF") ? "THRESHOLD ≥35%" : "MAJORITY ≥50%"}`}</div>
+                <div style={{ fontFamily: "var(--font-body)", fontSize: "10px", fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--muted2)", marginBottom: 10 }}>{`WIN PROBABILITY · ${raceRule === "PLURALITY" ? "MOST VOTES" : (raceRule === "THRESHOLD_35_CONVENTION" || raceRule === "THRESHOLD_35_RUNOFF") ? "THRESHOLD ≥35%" : raceRule === "RANKED_CHOICE" ? "RCV ≥50%" : "MAJORITY ≥50%"}`}</div>
                 <SwingOMeter candidates={forecast.forecast.candidate_names ?? ["C1", "C2", "C3", "Others"]} colors={forecast.forecast.candidate_colors ?? ["#3b82f6", "#ef4444", "#22c55e", "#94a3b8"]} probabilities={swingoProbs} raceRule={raceRule} reportingPct={forecast.race.percent_reporting} candidateCount={activeCandidateCount} />
               </div>
             )}
@@ -1545,8 +1598,8 @@ function ForecastPanel({ raceId, refreshTick, raceData, onForecastUpdate }: { ra
             })()}
             {(raceRule !== "PLURALITY" && raceRule !== "TOP_TWO") && (
               <div style={{ marginBottom: 12, padding: "9px 12px", background: "rgba(59,130,246,0.05)", border: "1px solid rgba(59,130,246,0.18)", borderRadius: "var(--r-sm)" }}>
-              <div style={{ fontFamily: "var(--font-body)", fontSize: "11px", fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", color: "rgba(96,165,250,0.90)", marginBottom: 9 }}>{raceRule === "THRESHOLD_35_CONVENTION" ? "CONVENTION PROBABILITY" : "RUNOFF PROBABILITY"}</div>
-                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 4 }}><span style={{ fontFamily: "var(--font-body)", fontSize: "11px", letterSpacing: "0.08em", textTransform: "uppercase", color: "var(--muted)" }}>RUNOFF NEEDED</span><span style={{ fontFamily: "var(--font-numeric)", fontSize: "13px", fontWeight: 800, color: "rgba(96,165,250,0.90)" }}>{fcastPct(forecast.forecast.runoff_needed_prob)}</span></div>
+              <div style={{ fontFamily: "var(--font-body)", fontSize: "11px", fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", color: "rgba(96,165,250,0.90)", marginBottom: 9 }}>{raceRule === "THRESHOLD_35_CONVENTION" ? "CONVENTION PROBABILITY" : raceRule === "RANKED_CHOICE" ? "RCV PROBABILITY" : "RUNOFF PROBABILITY"}</div>
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 4 }}><span style={{ fontFamily: "var(--font-body)", fontSize: "11px", letterSpacing: "0.08em", textTransform: "uppercase", color: "var(--muted)" }}>{rcvTerm(raceRule)}</span><span style={{ fontFamily: "var(--font-numeric)", fontSize: "13px", fontWeight: 800, color: "rgba(96,165,250,0.90)" }}>{fcastPct(forecast.forecast.runoff_needed_prob)}</span></div>
                 <div style={{ height: 3, background: "var(--border2)", overflow: "hidden", marginBottom: 8, borderRadius: 99 }}><div style={{ height: "100%", width: fcastPct(Math.min(forecast.forecast.runoff_needed_prob, 1)), background: "rgba(96,165,250,0.75)", transition: "width 600ms ease" }} /></div>
                 {FORECAST_CANDIDATE_KEYS.map(k => forecast.forecast.runoff_prob[k] > 0.005 ? (
                   <div key={k} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 3 }}>
@@ -1634,7 +1687,7 @@ function RaceScrollWindow({ races, raceCache, selectedId, onSelect, search, onSe
                   const frags = (lockedCalls?.[r.id] ?? "").split(" vs. ");
                   const rp = lockedRunoffProbs[r.id];
                   const allOk = frags.length >= 2 && frags.every(frag => Object.entries(rp).some(([n, p]) => n.toLowerCase().includes(frag.toLowerCase()) && p > 0.9973));
-                  return allOk ? "✓ CALLED" : "✓ RUNOFF NEEDED";
+                  return allOk ? "✓ CALLED" : `✓ ${rcvTerm(RACE_FORECAST_DEFAULTS[r.id]?.raceRule)}`;
                 }
                 return "✓ CALLED";
               })();
@@ -1881,7 +1934,7 @@ function RacePickerPanel({ races, raceCache, selectedId, onSelect, lockedCalls, 
                   const frags = (lockedCalls?.[r.id] ?? "").split(" vs. ");
                   const rp = lockedRunoffProbs[r.id];
                   const allOk = frags.length >= 2 && frags.every(frag => Object.entries(rp).some(([n, p]) => n.toLowerCase().includes(frag.toLowerCase()) && p > 0.9973));
-                  return allOk ? "✓ CALLED" : "✓ RUNOFF NEEDED";
+                  return allOk ? "✓ CALLED" : `✓ ${rcvTerm(RACE_FORECAST_DEFAULTS[r.id]?.raceRule)}`;
                 }
                 return "✓ CALLED";
               })();
@@ -2401,6 +2454,11 @@ export default function March3FeaturedClient() {
         @keyframes res-pulse { 0%,100% { opacity:1; transform:scale(1); } 50% { opacity:0.35; transform:scale(0.82); } }
         @keyframes county-pop { 0% { filter:brightness(1); } 40% { filter:brightness(2.2) saturate(1.4); } 100% { filter:brightness(1); } }
         @keyframes res-loading-pulse { 0%,100% { opacity:0.4; } 50% { opacity:1; } }
+        @keyframes fcst-pie-think { 0%,100% { transform: rotate(-12deg); } 50% { transform: rotate(12deg); } }
+        @keyframes fcst-pie-ring { 0%,100% { opacity: 0.5; } 50% { opacity: 1; } }
+        @keyframes fcst-eq-1 { 0%,100% { height: 28px; } 50% { height: 10px; } }
+        @keyframes fcst-eq-2 { 0%,100% { height: 16px; } 50% { height: 38px; } }
+        @keyframes fcst-eq-3 { 0%,100% { height: 38px; } 33% { height: 12px; } 66% { height: 30px; } }
         .county-pop { animation: county-pop 520ms ease-out; }
         @keyframes county-updated { 0% { filter:brightness(1) saturate(1); } 12% { filter:brightness(3.2) saturate(2.0); } 35% { filter:brightness(2.0) saturate(1.4); } 100% { filter:brightness(1) saturate(1); } }
         .county-updated { animation: county-updated 1200ms cubic-bezier(0.22,1,0.36,1); }
@@ -3078,7 +3136,7 @@ export default function March3FeaturedClient() {
                       const frags = (lockedCalls[r.id] ?? "").split(" vs. ");
                       const rp = lockedRunoffProbs[r.id];
                       const allOk = frags.length >= 2 && frags.every(frag => Object.entries(rp).some(([n, p]) => n.toLowerCase().includes(frag.toLowerCase()) && p > 0.9973));
-                      return allOk ? "✓ CALLED" : "✓ RUNOFF NEEDED";
+                      return allOk ? "✓ CALLED" : `✓ ${rcvTerm(RACE_FORECAST_DEFAULTS[r.id]?.raceRule)}`;
                     }
                     return "✓ CALLED";
                   })();
@@ -3109,7 +3167,7 @@ export default function March3FeaturedClient() {
                 const frags = (lockedCalls[selectedId] ?? "").split(" vs. ");
                 const rp = lockedRunoffProbs[selectedId];
                 const allOk = frags.length >= 2 && frags.every(frag => Object.entries(rp).some(([n, p]) => n.toLowerCase().includes(frag.toLowerCase()) && p > 0.9973));
-                return allOk ? "✓ CALLED" : "✓ RUNOFF NEEDED";
+                return allOk ? "✓ CALLED" : `✓ ${rcvTerm(RACE_FORECAST_DEFAULTS[selectedId]?.raceRule)}`;
               }
               return "✓ CALLED";
             })();
@@ -3408,9 +3466,9 @@ export default function March3FeaturedClient() {
                       const [e1, e2] = _top2Entries;
                       return (
                         <>
-                          {headerRow("RUNOFF SET", "var(--win)")}
+                          {headerRow(RACE_FORECAST_DEFAULTS[selectedId]?.raceRule === "RANKED_CHOICE" ? "RCV ROUND 2" : "RUNOFF SET", "var(--win)")}
                           {nameRow(<>{checkSvg}<span style={_ns}>{_last(e1[0])} vs. {_last(e2[0])}</span></>)}
-                          {gradientBar(100, "RUNOFF PROB")}
+                          {gradientBar(100, RACE_FORECAST_DEFAULTS[selectedId]?.raceRule === "RANKED_CHOICE" ? "RCV ADV. PROB" : "RUNOFF PROB")}
                         </>
                       );
                     }
@@ -3421,7 +3479,7 @@ export default function March3FeaturedClient() {
                       const [[n1, p1], [n2]] = sorted;
                       return (
                         <>
-                          {headerRow("TOP 2 ADVANCE TO RUNOFF", "var(--purple-soft)", "9px")}
+                          {headerRow(RACE_FORECAST_DEFAULTS[selectedId]?.raceRule === "RANKED_CHOICE" ? "TOP 2 ADVANCE TO NEXT ROUND" : "TOP 2 ADVANCE TO RUNOFF", "var(--purple-soft)", "9px")}
                           {nameRow(<>
                             {p1 > 0.9973 && checkSvg}
                             <span style={_ns}>
@@ -3429,7 +3487,7 @@ export default function March3FeaturedClient() {
                               <span style={{ color: "var(--muted2)", fontWeight: 400, opacity: 0.7 }}>{" vs. "}{_last(n2)}</span>
                             </span>
                           </>)}
-                          {gradientBar(_combinedProb, "RUNOFF PROB")}
+                          {gradientBar(_combinedProb, RACE_FORECAST_DEFAULTS[selectedId]?.raceRule === "RANKED_CHOICE" ? "RCV ADV. PROB" : "RUNOFF PROB")}
                         </>
                       );
                     }
@@ -3439,9 +3497,9 @@ export default function March3FeaturedClient() {
                       const [e1, e2] = _top2Entries;
                       return (
                         <>
-                          {headerRow("TOP 2 ADVANCE TO RUNOFF", "var(--purple-soft)", "9px")}
+                          {headerRow(RACE_FORECAST_DEFAULTS[selectedId]?.raceRule === "RANKED_CHOICE" ? "TOP 2 ADVANCE TO NEXT ROUND" : "TOP 2 ADVANCE TO RUNOFF", "var(--purple-soft)", "9px")}
                           {nameRow(<span style={_ns}>{_last(e1[0])} vs. {_last(e2[0])}</span>)}
-                          {gradientBar(_combinedProb, "RUNOFF PROB")}
+                          {gradientBar(_combinedProb, RACE_FORECAST_DEFAULTS[selectedId]?.raceRule === "RANKED_CHOICE" ? "RCV ADV. PROB" : "RUNOFF PROB")}
                         </>
                       );
                     }

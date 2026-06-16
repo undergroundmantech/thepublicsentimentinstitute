@@ -3,6 +3,7 @@
 export type RaceRule =
   | "PLURALITY"           // highest vote-getter wins
   | "MAJORITY"            // 50%+ to win; otherwise runoff (TX-style)
+  | "RANKED_CHOICE"       // RCV: elimination rounds until 50%+ (same math as MAJORITY, different UX labels)
   | "TOP_TWO"             // CA open primary: top 2 advance regardless of share
   | "MAJORITY_RUNOFF"     // 50%+ wins outright; otherwise top-2 municipal runoff (LA Mayor)
   | "THRESHOLD_35_CONVENTION" // IA: leader must clear 35% or party convention decides
