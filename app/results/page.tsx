@@ -49,7 +49,7 @@ function getRaceTypeShort(raceType: RaceType): string {
 const RACE_FORECAST_DEFAULTS: Partial<Record<number, { raceRule: RaceRule; expectedTurnout?: number; pollAvg?: Record<string, number>; overrideReporting?: number; pollsCloseIso?: string; turnoutBlendK?: number; colorOverrides?: Record<string, string>; manualCall?: string; }>> = {
 
   // ── CA TOP-TWO OPEN PRIMARY (June 2) ──────────────────────────────────────
-  79777: { raceRule: "TOP_TWO", expectedTurnout: 9_500_000, pollAvg: { "Becerra": 29.0, "Steyer": 22.0, "Hilton": 25.0, "Bianco": 10.0 }, overrideReporting: 90.9, turnoutBlendK: 2 }, // CA Governor
+  79777: { raceRule: "TOP_TWO", expectedTurnout: 9_500_000, pollAvg: { "Becerra": 29.0, "Steyer": 22.0, "Hilton": 25.0, "Bianco": 10.0 }, overrideReporting: 99.5, turnoutBlendK: 2 }, // CA Governor
 // ONE-OFF DSMeridian late-VBM correction — LA Mayor June 2, 2026
 // DO NOT replicate. See full rationale below.
 //
@@ -84,7 +84,7 @@ const RACE_FORECAST_DEFAULTS: Partial<Record<number, { raceRule: RaceRule; expec
     "Huang":   1.3,
   },
   turnoutBlendK: 0.5,
-  overrideReporting: 0,
+  overrideReporting: 99.5,
 },
   79893: { raceRule: "TOP_TWO", overrideReporting: 0 },        // CA US House 1
   79932: { raceRule: "TOP_TWO", overrideReporting: 0 },        // CA US House 7
@@ -164,8 +164,8 @@ const FEATURED: FeaturedRace[] = [
   { id: 79739, state: "TX", office: "Railroad Commissioner", raceType: "Republican Primary", label: "Texas Railroad Commissioner Republican Primary Runoff", archived: true },
   { id: 79755, state: "TX", office: "US House 18", raceType: "Democratic Primary", label: "Texas US House 18 Democratic Primary Runoff", archived: true },
   // ── CALIFORNIA (JUNE 2) ──
-  { id: 79777, state: "CA", office: "Governor", raceType: "Open Primary", label: "California Governor Open Primary" },
-  { id: 79938, state: "CA", office: "Los Angeles Mayor", raceType: "Open Primary", label: "Los Angeles Mayor Open Primary" },
+  { id: 79777, state: "CA", office: "Governor", raceType: "Open Primary", label: "California Governor Open Primary", archived: true },
+  { id: 79938, state: "CA", office: "Los Angeles Mayor", raceType: "Open Primary", label: "Los Angeles Mayor Open Primary", archived: true },
   { id: 79893, state: "CA", office: "US House 1", raceType: "Open Primary", label: "California US House 1 Open Primary" },
   { id: 79932, state: "CA", office: "US House 7", raceType: "Open Primary", label: "California US House 7 Open Primary" },
   { id: 79884, state: "CA", office: "US House 11", raceType: "Open Primary", label: "California US House 11 Open Primary" },
