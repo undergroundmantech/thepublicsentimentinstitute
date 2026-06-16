@@ -14,7 +14,7 @@ type RaceConfig = {
   label: string;
   location: string;
   dateShort: string;
-  raceRule: "MAJORITY" | "PLURALITY";
+  raceRule: "MAJORITY" | "PLURALITY" | "RANKED_CHOICE";
   expectedTurnout?: number;
   pollAvg?: Record<string, number>;
 };
@@ -23,7 +23,7 @@ const RACES: RaceConfig[] = [
   { id: 83316, label: "GA US Senate Republican Runoff",        location: "Georgia",            dateShort: "06/16/26", raceRule: "MAJORITY",  expectedTurnout: 420_000, pollAvg: { "Collins": 58.0, "Dooley": 42.0 } },
   { id: 83428, label: "AL US Senate Republican Runoff",        location: "Alabama",            dateShort: "06/16/26", raceRule: "MAJORITY",  expectedTurnout: 280_000, pollAvg: { "Moore": 51.0, "Hudson": 49.0 } },
   { id: 83476, label: "OK State Question 832 · $15 Min Wage",  location: "Oklahoma",           dateShort: "06/16/26", raceRule: "PLURALITY", expectedTurnout: 220_000, pollAvg: { "Yes": 54.0, "No": 46.0 } },
-  { id: 83479, label: "DC Mayoral Democratic Primary",         location: "District of Columbia", dateShort: "06/16/26", raceRule: "PLURALITY", expectedTurnout: 87_500,  pollAvg: { "J. Lewis George": 43.0, "Kenyan McDuffie": 38.0, "Others (inc. E. Johnson)": 19.0 } },
+  { id: 83479, label: "DC Mayoral Democratic Primary",         location: "District of Columbia", dateShort: "06/16/26", raceRule: "RANKED_CHOICE", expectedTurnout: 87_500,  pollAvg: { "J. Lewis George": 43.0, "Kenyan McDuffie": 38.0, "Others (inc. E. Johnson)": 19.0 } },
 ];
 
 type RaceData = { percent_reporting?: number; polls_open?: string | null; polls_close?: string | null; };
@@ -115,14 +115,14 @@ export default function ElectionResultsCard() {
   const leaderIdx = leaderKey === "Candidate1" ? 0 : leaderKey === "Candidate2" ? 1 : leaderKey === "Candidate3" ? 2 : -1;
   const leaderFullName = leaderIdx >= 0 ? ((fc?.candidate_names as string[] | undefined)?.[leaderIdx] ?? null) : null;
   const leaderLast = leaderFullName ? leaderFullName.split(" ").pop()! : null;
-  const isMajority = race.raceRule === "MAJORITY";
+  const isMajority = race.raceRule === "MAJORITY" || race.raceRule === "RANKED_CHOICE";
   const prob = fc && leaderKey
     ? isMajority
       ? fc.runoff_needed_prob
       : (fc.plurality_odds_to_win[leaderKey] ?? null)
     : null;
   const probPct = prob !== null ? Math.round(prob * 100) : null;
-  const probLabel = isMajority ? "runoff" : "win";
+  const probLabel = race.raceRule === "RANKED_CHOICE" ? "rcv" : isMajority ? "runoff" : "win";
 
   return (
     <>
