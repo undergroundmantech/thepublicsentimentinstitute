@@ -166,11 +166,11 @@ const FEATURED: FeaturedRace[] = [
   // ── CALIFORNIA (JUNE 2) ──
   { id: 79777, state: "CA", office: "Governor", raceType: "Open Primary", label: "California Governor Open Primary", archived: true },
   { id: 79938, state: "CA", office: "Los Angeles Mayor", raceType: "Open Primary", label: "Los Angeles Mayor Open Primary", archived: true },
-  { id: 79893, state: "CA", office: "US House 1", raceType: "Open Primary", label: "California US House 1 Open Primary" },
-  { id: 79932, state: "CA", office: "US House 7", raceType: "Open Primary", label: "California US House 7 Open Primary" },
-  { id: 79884, state: "CA", office: "US House 11", raceType: "Open Primary", label: "California US House 11 Open Primary" },
-  { id: 79916, state: "CA", office: "US House 40", raceType: "Open Primary", label: "California US House 40 Open Primary" },
-  { id: 79924, state: "CA", office: "US House 48", raceType: "Open Primary", label: "California US House 48 Open Primary" },
+  { id: 79893, state: "CA", office: "US House 1", raceType: "Open Primary", label: "California US House 1 Open Primary", archived: true },
+  { id: 79932, state: "CA", office: "US House 7", raceType: "Open Primary", label: "California US House 7 Open Primary", archived: true },
+  { id: 79884, state: "CA", office: "US House 11", raceType: "Open Primary", label: "California US House 11 Open Primary", archived: true },
+  { id: 79916, state: "CA", office: "US House 40", raceType: "Open Primary", label: "California US House 40 Open Primary", archived: true },
+  { id: 79924, state: "CA", office: "US House 48", raceType: "Open Primary", label: "California US House 48 Open Primary", archived: true },
   // ── IOWA (JUNE 2 — ARCHIVED) ──
   { id: 79945, state: "IA", office: "Governor", raceType: "Republican Primary", label: "Iowa Governor Republican Primary", archived: true },
   { id: 80210, state: "IA", office: "US Senate", raceType: "Democratic Primary", label: "Iowa US Senate Democratic Primary", archived: true },
@@ -200,34 +200,34 @@ const FEATURED: FeaturedRace[] = [
   { id: 80511, state: "SD", office: "US House At-Large", raceType: "Republican Primary", label: "South Dakota US House At-Large Republican Primary", archived: true },
   { id: 80512, state: "SD", office: "US Senate", raceType: "Republican Primary", label: "South Dakota US Senate Republican Primary", archived: true },
   // ── SOUTH CAROLINA (JUNE 9) ──
-  { id: 82664, state: "SC", office: "US Senate", raceType: "Republican Primary", label: "South Carolina US Senate Republican Primary" },
-  { id: 82596, state: "SC", office: "Governor", raceType: "Republican Primary", label: "South Carolina Governor Republican Primary" },
-  { id: 82663, state: "SC", office: "US Senate", raceType: "Democratic Primary", label: "South Carolina US Senate Democratic Primary" },
-  { id: 82595, state: "SC", office: "Governor", raceType: "Democratic Primary", label: "South Carolina Governor Democratic Primary" },
-  { id: 82594, state: "SC", office: "Comptroller General", raceType: "Democratic Primary", label: "South Carolina Comptroller General Democratic Primary" },
-  { id: 82597, state: "SC", office: "Secretary of State", raceType: "Democratic Primary", label: "South Carolina Secretary of State Democratic Primary" },
-  { id: 82592, state: "SC", office: "Attorney General", raceType: "Republican Primary", label: "South Carolina Attorney General Republican Primary" },
-  { id: 82654, state: "SC", office: "US House 1", raceType: "Democratic Primary", label: "South Carolina US House 1 Democratic Primary" },
-  { id: 82655, state: "SC", office: "US House 1", raceType: "Republican Primary", label: "South Carolina US House 1 Republican Primary" },
-  { id: 82657, state: "SC", office: "US House 2", raceType: "Republican Primary", label: "South Carolina US House 2 Republican Primary" },
-  { id: 82662, state: "SC", office: "US House 6", raceType: "Republican Primary", label: "South Carolina US House 6 Republican Primary" },
+  { id: 82664, state: "SC", office: "US Senate", raceType: "Republican Primary", label: "South Carolina US Senate Republican Primary", archived: true },
+  { id: 82596, state: "SC", office: "Governor", raceType: "Republican Primary", label: "South Carolina Governor Republican Primary", archived: true },
+  { id: 82663, state: "SC", office: "US Senate", raceType: "Democratic Primary", label: "South Carolina US Senate Democratic Primary", archived: true },
+  { id: 82595, state: "SC", office: "Governor", raceType: "Democratic Primary", label: "South Carolina Governor Democratic Primary", archived: true },
+  { id: 82594, state: "SC", office: "Comptroller General", raceType: "Democratic Primary", label: "South Carolina Comptroller General Democratic Primary", archived: true },
+  { id: 82597, state: "SC", office: "Secretary of State", raceType: "Democratic Primary", label: "South Carolina Secretary of State Democratic Primary", archived: true },
+  { id: 82592, state: "SC", office: "Attorney General", raceType: "Republican Primary", label: "South Carolina Attorney General Republican Primary", archived: true },
+  { id: 82654, state: "SC", office: "US House 1", raceType: "Democratic Primary", label: "South Carolina US House 1 Democratic Primary", archived: true },
+  { id: 82655, state: "SC", office: "US House 1", raceType: "Republican Primary", label: "South Carolina US House 1 Republican Primary", archived: true },
+  { id: 82657, state: "SC", office: "US House 2", raceType: "Republican Primary", label: "South Carolina US House 2 Republican Primary", archived: true },
+  { id: 82662, state: "SC", office: "US House 6", raceType: "Republican Primary", label: "South Carolina US House 6 Republican Primary", archived: true },
   // ── MAINE (JUNE 9) ──
-  { id: 83063, state: "ME", office: "US Senate", raceType: "Democratic Primary", label: "Maine US Senate Democratic Primary" },
-  { id: 82693, state: "ME", office: "Governor", raceType: "Democratic Primary", label: "Maine Governor Democratic Primary" },
-  { id: 82694, state: "ME", office: "Governor", raceType: "Republican Primary", label: "Maine Governor Republican Primary" },
-  { id: 83061, state: "ME", office: "US House 2", raceType: "Democratic Primary", label: "Maine US House 2 Democratic Primary" },
+  { id: 83063, state: "ME", office: "US Senate", raceType: "Democratic Primary", label: "Maine US Senate Democratic Primary", archived: true },
+  { id: 82693, state: "ME", office: "Governor", raceType: "Democratic Primary", label: "Maine Governor Democratic Primary", archived: true },
+  { id: 82694, state: "ME", office: "Governor", raceType: "Republican Primary", label: "Maine Governor Republican Primary", archived: true },
+  { id: 83061, state: "ME", office: "US House 2", raceType: "Democratic Primary", label: "Maine US House 2 Democratic Primary", archived: true },
   // ── NEVADA (JUNE 9) ──
-  { id: 83111, state: "NV", office: "Governor", raceType: "Republican Primary", label: "Nevada Governor Republican Primary" },
-  { id: 83110, state: "NV", office: "Governor", raceType: "Democratic Primary", label: "Nevada Governor Democratic Primary" },
-  { id: 83081, state: "NV", office: "Attorney General", raceType: "Republican Primary", label: "Nevada Attorney General Republican Primary" },
-  { id: 83080, state: "NV", office: "Attorney General", raceType: "Democratic Primary", label: "Nevada Attorney General Democratic Primary" },
-  { id: 83112, state: "NV", office: "Lieutenant Governor", raceType: "Democratic Primary", label: "Nevada Lieutenant Governor Democratic Primary" },
-  { id: 83113, state: "NV", office: "Secretary of State", raceType: "Republican Primary", label: "Nevada Secretary of State Republican Primary" },
-  { id: 83150, state: "NV", office: "US House 1", raceType: "Republican Primary", label: "Nevada US House 1 Republican Primary" },
-  { id: 83149, state: "NV", office: "US House 1", raceType: "Democratic Primary", label: "Nevada US House 1 Democratic Primary" },
+  { id: 83111, state: "NV", office: "Governor", raceType: "Republican Primary", label: "Nevada Governor Republican Primary", archived: true },
+  { id: 83110, state: "NV", office: "Governor", raceType: "Democratic Primary", label: "Nevada Governor Democratic Primary", archived: true },
+  { id: 83081, state: "NV", office: "Attorney General", raceType: "Republican Primary", label: "Nevada Attorney General Republican Primary", archived: true },
+  { id: 83080, state: "NV", office: "Attorney General", raceType: "Democratic Primary", label: "Nevada Attorney General Democratic Primary", archived: true },
+  { id: 83112, state: "NV", office: "Lieutenant Governor", raceType: "Democratic Primary", label: "Nevada Lieutenant Governor Democratic Primary", archived: true },
+  { id: 83113, state: "NV", office: "Secretary of State", raceType: "Republican Primary", label: "Nevada Secretary of State Republican Primary", archived: true },
+  { id: 83150, state: "NV", office: "US House 1", raceType: "Republican Primary", label: "Nevada US House 1 Republican Primary", archived: true },
+  { id: 83149, state: "NV", office: "US House 1", raceType: "Democratic Primary", label: "Nevada US House 1 Democratic Primary", archived: true },
   // ── NORTH DAKOTA (JUNE 9) ──
-  { id: 82403, state: "ND", office: "US House At-Large", raceType: "Republican Primary", label: "North Dakota US House At-Large Republican Primary" },
-  { id: 82384, state: "ND", office: "Public Service Commissioner", raceType: "Republican Primary", label: "North Dakota Public Service Commissioner Republican Primary" },
+  { id: 82403, state: "ND", office: "US House At-Large", raceType: "Republican Primary", label: "North Dakota US House At-Large Republican Primary", archived: true },
+  { id: 82384, state: "ND", office: "Public Service Commissioner", raceType: "Republican Primary", label: "North Dakota Public Service Commissioner Republican Primary", archived: true },
 ];
 
 async function fetchRaceById(id: number): Promise<RaceDetail> {
@@ -1984,7 +1984,7 @@ export default function March3FeaturedClient() {
   ] as const;
   // Only active (non-archived) races appear as spotlight tabs
   const SPOTLIGHT_RACES = ALL_SPOTLIGHT_META.filter(s => !FEATURED.find(r => r.id === s.id)?.archived);
-  const [spotlightTab, setSpotlightTab] = useState<number>(SC_GOV_R_ID);
+  const [spotlightTab, setSpotlightTab] = useState<number>(SPOTLIGHT_RACES[0]?.id ?? SC_GOV_R_ID);
   const [error, setError] = useState<string | null>(null);
   const [loadingMap, setLoadingMap] = useState(false);
   const [raceCache, setRaceCache] = useState<Record<number, RaceDetail | undefined>>({});
