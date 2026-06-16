@@ -315,13 +315,13 @@ export function fetchRace(id, signal) {
 // confusing "Unexpected token '<'" downstream.
 //
 // Path: the 6 MB national geojson lives in the PRECINCT deploy (already
-// shipped + CDN-cached at /demographics/civic/us-national.geojson) so we
+// shipped + CDN-cached at /geo/us-counties.geojson) so we
 // don't have to bloat the hub repo with a duplicate. Hub's own /public is
 // .gitignored for *.geojson, which is why fetching '/us-national.geojson'
 // off the hub origin returned the SPA index.html and silently broke every
 // thumbnail in the elections list.
 let geoP = null;
-const GEO_URL = '/demographics/civic/us-national.geojson';
+const GEO_URL = '/geo/us-counties.geojson';
 export function loadGeo() {
   if (!geoP)
     geoP = fetch(GEO_URL, { credentials: 'omit' })

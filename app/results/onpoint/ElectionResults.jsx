@@ -767,7 +767,7 @@ export default function ElectionResults() {
   // the detail instantly instead of waiting 1-2 s.
   useEffect(() => {
     try {
-      fetch('/demographics/civic/us-national.geojson', { credentials: 'omit' })
+      fetch('/geo/us-counties.geojson', { credentials: 'omit' })
         .catch(() => {})
     } catch {}
   }, [])
