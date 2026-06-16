@@ -27,15 +27,19 @@ type RaceCandidate = { name: string; party: string; votes: number; percent: numb
 type RegionCandidate = { name: string; party: string; votes: string | number; percent: string | number; winner: boolean; color: string; incumbent?: boolean; major_candidate?: boolean; };
 type RegionResult = { region: { name: string; type: string; fill?: string; percent_reporting?: number; }; candidates: RegionCandidate[]; };
 type RaceDetail = { election_name: string; election_type: string; election_scope: string; election_date: string; country: string; province: string | null; district: string | null; municipality: string | null; polls_open: string | null; polls_close: string | null; last_updated: string | null; percent_reporting?: number; candidates: RaceCandidate[]; region_results?: RegionResult[] | Record<string, RegionResult>; };
-type RaceType = "Democratic Primary" | "Republican Primary" | "Special Election" | "General Election" | "Open Primary";
-type FeaturedRace = { id: number; state: "CA" | "IA" | "ME" | "MT" | "ND" | "NJ" | "NM" | "NV" | "SC" | "SD" | "TX"; office: string; raceType: RaceType; label: string; archived?: boolean; };
+type RaceType = "Democratic Primary" | "Republican Primary" | "Democratic Primary Runoff" | "Republican Primary Runoff" | "Special Election" | "General Election" | "Open Primary" | "Ballot Measure";
+type FeaturedRace = { id: number; state: "AL" | "CA" | "DC" | "GA" | "IA" | "ME" | "MT" | "ND" | "NJ" | "NM" | "NV" | "OK" | "SC" | "SD" | "TX"; office: string; raceType: RaceType; label: string; archived?: boolean; };
 
 function getRaceTypeColor(raceType: RaceType): string {
   if (raceType === "Republican Primary") return "var(--rep)";
   if (raceType === "Democratic Primary") return "var(--dem)";
   if (raceType === "General Election") return "var(--purple-soft)";
   if (raceType === "Open Primary") return "var(--purple)";
-  return "rgba(255,255,255,0.4)";
+  // Runoff / other variants — derive from party substring
+  const rt = raceType as string;
+  if (rt.includes("Republican")) return "var(--rep)";
+  if (rt.includes("Democratic")) return "var(--dem)";
+  return "var(--purple)";
 }
 
 function getRaceTypeShort(raceType: RaceType): string {
@@ -44,6 +48,11 @@ function getRaceTypeShort(raceType: RaceType): string {
   if (raceType === "General Election") return "G";
   if (raceType === "Open Primary") return "O";
   return "S";
+}
+function getRaceTypeLabel(raceType: RaceType): string {
+  const rt = raceType as string;
+  if (!rt.includes("Runoff")) return rt;
+  return rt.replace("Republican", "Rep").replace("Democratic", "Dem");
 }
 
 const RACE_FORECAST_DEFAULTS: Partial<Record<number, { raceRule: RaceRule; expectedTurnout?: number; pollAvg?: Record<string, number>; overrideReporting?: number; pollsCloseIso?: string; turnoutBlendK?: number; colorOverrides?: Record<string, string>; manualCall?: string; }>> = {
@@ -143,7 +152,63 @@ const RACE_FORECAST_DEFAULTS: Partial<Record<number, { raceRule: RaceRule; expec
   // ── NORTH DAKOTA — PLURALITY — June 9 ───────────────────────────────────
   82403: { raceRule: "PLURALITY", expectedTurnout: 120_000 }, // ND US House At-Large R
   82384: { raceRule: "PLURALITY", expectedTurnout: 100_000 }, // ND Public Service Commissioner R
+
+  // ── GEORGIA — PLURALITY runoffs (simple majority, no runoff threshold) — June 16 ──
+  83316: { raceRule: "PLURALITY", expectedTurnout: 420_000, pollAvg: { "Collins": 58.0, "Dooley": 42.0 } }, // GA US Senate R Runoff
+  83266: { raceRule: "PLURALITY", expectedTurnout: 380_000 }, // GA Governor R Runoff
+  83277: { raceRule: "PLURALITY", expectedTurnout: 340_000 }, // GA Lt Governor R Runoff
+  83276: { raceRule: "PLURALITY", expectedTurnout: 200_000 }, // GA Lt Governor D Runoff
+  83289: { raceRule: "PLURALITY", expectedTurnout: 320_000 }, // GA Secretary of State R Runoff
+  83288: { raceRule: "PLURALITY", expectedTurnout: 190_000 }, // GA Secretary of State D Runoff
+  83312: { raceRule: "PLURALITY", expectedTurnout: 80_000  }, // GA US House 11 R Runoff
+  83313: { raceRule: "PLURALITY", expectedTurnout: 60_000  }, // GA US House 12 D Runoff
+  83314: { raceRule: "PLURALITY", expectedTurnout: 55_000  }, // GA US House 1 D Runoff
+  83315: { raceRule: "PLURALITY", expectedTurnout: 65_000  }, // GA US House 7 D Runoff
+
+  // ── WASHINGTON DC — PLURALITY primaries — June 16 ────────────────────────
+  83478: { raceRule: "PLURALITY", expectedTurnout: 85_000 },   // DC US House Delegate D Primary
+  83479: { raceRule: "PLURALITY", expectedTurnout: 120_000 },  // DC Mayor D Primary
+
+  // ── ALABAMA — PLURALITY runoffs — June 16 ────────────────────────────────
+  83428: { raceRule: "PLURALITY", expectedTurnout: 280_000, pollAvg: { "Moore": 51.0, "Hudson": 49.0 } }, // AL US Senate R Runoff
+  83427: { raceRule: "PLURALITY", expectedTurnout: 130_000 }, // AL US Senate D Runoff
+  83430: { raceRule: "PLURALITY", expectedTurnout: 260_000 }, // AL Lt Governor R Runoff
+  83431: { raceRule: "PLURALITY", expectedTurnout: 260_000 }, // AL Attorney General R Runoff
+
+  // ── OKLAHOMA — PLURALITY primaries + ballot measure — June 16 ────────────
+  83476: { raceRule: "PLURALITY", expectedTurnout: 220_000, pollAvg: { "Yes": 54.0, "No": 46.0 } }, // OK State Question 832
+  83424: { raceRule: "PLURALITY", expectedTurnout: 280_000 }, // OK US Senate R
+  83423: { raceRule: "PLURALITY", expectedTurnout: 130_000 }, // OK US Senate D
+  83344: { raceRule: "PLURALITY", expectedTurnout: 320_000 }, // OK Governor R
+  83343: { raceRule: "PLURALITY", expectedTurnout: 150_000 }, // OK Governor D
+  83415: { raceRule: "PLURALITY", expectedTurnout: 70_000  }, // OK US House 1 R
 };
+
+// ─── STATE-LEVEL POLL CLOSE OVERRIDES ────────────────────────────────────────
+// When the API lacks or misreports a close time, set it here at the state level.
+// Race-level pollsCloseIso in RACE_FORECAST_DEFAULTS takes precedence over this.
+// Format: ISO 8601 with UTC offset. EDT = -04:00, CDT = -05:00.
+const STATE_POLLS_CLOSE: Partial<Record<string, string>> = {
+  GA: "2026-06-16T19:00:00-04:00", // 7:00 PM ET
+  AL: "2026-06-16T20:00:00-04:00", // 8:00 PM ET
+  OK: "2026-06-16T20:00:00-05:00", // 8:00 PM CT
+};
+
+/** Returns the effective polls-close ISO string for a race, preferring:
+ *  1. Race-level override (RACE_FORECAST_DEFAULTS[id].pollsCloseIso)
+ *  2. State-level override (STATE_POLLS_CLOSE[state])
+ *  3. API value (apiPollsClose)
+ */
+function getEffectivePollsCloseIso(
+  raceId: number,
+  state: string | null | undefined,
+  apiPollsClose: string | null | undefined,
+): string | null {
+  return RACE_FORECAST_DEFAULTS[raceId]?.pollsCloseIso
+    ?? (state ? STATE_POLLS_CLOSE[state] ?? null : null)
+    ?? apiPollsClose
+    ?? null;
+}
 
 function sortCandidatesByPollData(candidates: RaceCandidate[], pollAvg?: Record<string, number>): RaceCandidate[] {
   if (!pollAvg || Object.keys(pollAvg).length === 0) return [...candidates].sort((a, b) => (b.percent ?? 0) - (a.percent ?? 0));
@@ -166,11 +231,11 @@ const FEATURED: FeaturedRace[] = [
   // ── CALIFORNIA (JUNE 2) ──
   { id: 79777, state: "CA", office: "Governor", raceType: "Open Primary", label: "California Governor Open Primary", archived: true },
   { id: 79938, state: "CA", office: "Los Angeles Mayor", raceType: "Open Primary", label: "Los Angeles Mayor Open Primary", archived: true },
-  { id: 79893, state: "CA", office: "US House 1", raceType: "Open Primary", label: "California US House 1 Open Primary" },
-  { id: 79932, state: "CA", office: "US House 7", raceType: "Open Primary", label: "California US House 7 Open Primary" },
-  { id: 79884, state: "CA", office: "US House 11", raceType: "Open Primary", label: "California US House 11 Open Primary" },
-  { id: 79916, state: "CA", office: "US House 40", raceType: "Open Primary", label: "California US House 40 Open Primary" },
-  { id: 79924, state: "CA", office: "US House 48", raceType: "Open Primary", label: "California US House 48 Open Primary" },
+  { id: 79893, state: "CA", office: "US House 1", raceType: "Open Primary", label: "California US House 1 Open Primary", archived: true },
+  { id: 79932, state: "CA", office: "US House 7", raceType: "Open Primary", label: "California US House 7 Open Primary", archived: true },
+  { id: 79884, state: "CA", office: "US House 11", raceType: "Open Primary", label: "California US House 11 Open Primary", archived: true },
+  { id: 79916, state: "CA", office: "US House 40", raceType: "Open Primary", label: "California US House 40 Open Primary", archived: true },
+  { id: 79924, state: "CA", office: "US House 48", raceType: "Open Primary", label: "California US House 48 Open Primary", archived: true },
   // ── IOWA (JUNE 2 — ARCHIVED) ──
   { id: 79945, state: "IA", office: "Governor", raceType: "Republican Primary", label: "Iowa Governor Republican Primary", archived: true },
   { id: 80210, state: "IA", office: "US Senate", raceType: "Democratic Primary", label: "Iowa US Senate Democratic Primary", archived: true },
@@ -200,34 +265,60 @@ const FEATURED: FeaturedRace[] = [
   { id: 80511, state: "SD", office: "US House At-Large", raceType: "Republican Primary", label: "South Dakota US House At-Large Republican Primary", archived: true },
   { id: 80512, state: "SD", office: "US Senate", raceType: "Republican Primary", label: "South Dakota US Senate Republican Primary", archived: true },
   // ── SOUTH CAROLINA (JUNE 9) ──
-  { id: 82664, state: "SC", office: "US Senate", raceType: "Republican Primary", label: "South Carolina US Senate Republican Primary" },
-  { id: 82596, state: "SC", office: "Governor", raceType: "Republican Primary", label: "South Carolina Governor Republican Primary" },
-  { id: 82663, state: "SC", office: "US Senate", raceType: "Democratic Primary", label: "South Carolina US Senate Democratic Primary" },
-  { id: 82595, state: "SC", office: "Governor", raceType: "Democratic Primary", label: "South Carolina Governor Democratic Primary" },
-  { id: 82594, state: "SC", office: "Comptroller General", raceType: "Democratic Primary", label: "South Carolina Comptroller General Democratic Primary" },
-  { id: 82597, state: "SC", office: "Secretary of State", raceType: "Democratic Primary", label: "South Carolina Secretary of State Democratic Primary" },
-  { id: 82592, state: "SC", office: "Attorney General", raceType: "Republican Primary", label: "South Carolina Attorney General Republican Primary" },
-  { id: 82654, state: "SC", office: "US House 1", raceType: "Democratic Primary", label: "South Carolina US House 1 Democratic Primary" },
-  { id: 82655, state: "SC", office: "US House 1", raceType: "Republican Primary", label: "South Carolina US House 1 Republican Primary" },
-  { id: 82657, state: "SC", office: "US House 2", raceType: "Republican Primary", label: "South Carolina US House 2 Republican Primary" },
-  { id: 82662, state: "SC", office: "US House 6", raceType: "Republican Primary", label: "South Carolina US House 6 Republican Primary" },
+  { id: 82664, state: "SC", office: "US Senate", raceType: "Republican Primary", label: "South Carolina US Senate Republican Primary", archived: true },
+  { id: 82596, state: "SC", office: "Governor", raceType: "Republican Primary", label: "South Carolina Governor Republican Primary", archived: true },
+  { id: 82663, state: "SC", office: "US Senate", raceType: "Democratic Primary", label: "South Carolina US Senate Democratic Primary", archived: true },
+  { id: 82595, state: "SC", office: "Governor", raceType: "Democratic Primary", label: "South Carolina Governor Democratic Primary", archived: true },
+  { id: 82594, state: "SC", office: "Comptroller General", raceType: "Democratic Primary", label: "South Carolina Comptroller General Democratic Primary", archived: true },
+  { id: 82597, state: "SC", office: "Secretary of State", raceType: "Democratic Primary", label: "South Carolina Secretary of State Democratic Primary", archived: true },
+  { id: 82592, state: "SC", office: "Attorney General", raceType: "Republican Primary", label: "South Carolina Attorney General Republican Primary", archived: true },
+  { id: 82654, state: "SC", office: "US House 1", raceType: "Democratic Primary", label: "South Carolina US House 1 Democratic Primary", archived: true },
+  { id: 82655, state: "SC", office: "US House 1", raceType: "Republican Primary", label: "South Carolina US House 1 Republican Primary", archived: true },
+  { id: 82657, state: "SC", office: "US House 2", raceType: "Republican Primary", label: "South Carolina US House 2 Republican Primary", archived: true },
+  { id: 82662, state: "SC", office: "US House 6", raceType: "Republican Primary", label: "South Carolina US House 6 Republican Primary", archived: true },
   // ── MAINE (JUNE 9) ──
-  { id: 83063, state: "ME", office: "US Senate", raceType: "Democratic Primary", label: "Maine US Senate Democratic Primary" },
-  { id: 82693, state: "ME", office: "Governor", raceType: "Democratic Primary", label: "Maine Governor Democratic Primary" },
-  { id: 82694, state: "ME", office: "Governor", raceType: "Republican Primary", label: "Maine Governor Republican Primary" },
-  { id: 83061, state: "ME", office: "US House 2", raceType: "Democratic Primary", label: "Maine US House 2 Democratic Primary" },
+  { id: 83063, state: "ME", office: "US Senate", raceType: "Democratic Primary", label: "Maine US Senate Democratic Primary", archived: true },
+  { id: 82693, state: "ME", office: "Governor", raceType: "Democratic Primary", label: "Maine Governor Democratic Primary", archived: true },
+  { id: 82694, state: "ME", office: "Governor", raceType: "Republican Primary", label: "Maine Governor Republican Primary", archived: true },
+  { id: 83061, state: "ME", office: "US House 2", raceType: "Democratic Primary", label: "Maine US House 2 Democratic Primary", archived: true },
   // ── NEVADA (JUNE 9) ──
-  { id: 83111, state: "NV", office: "Governor", raceType: "Republican Primary", label: "Nevada Governor Republican Primary" },
-  { id: 83110, state: "NV", office: "Governor", raceType: "Democratic Primary", label: "Nevada Governor Democratic Primary" },
-  { id: 83081, state: "NV", office: "Attorney General", raceType: "Republican Primary", label: "Nevada Attorney General Republican Primary" },
-  { id: 83080, state: "NV", office: "Attorney General", raceType: "Democratic Primary", label: "Nevada Attorney General Democratic Primary" },
-  { id: 83112, state: "NV", office: "Lieutenant Governor", raceType: "Democratic Primary", label: "Nevada Lieutenant Governor Democratic Primary" },
-  { id: 83113, state: "NV", office: "Secretary of State", raceType: "Republican Primary", label: "Nevada Secretary of State Republican Primary" },
-  { id: 83150, state: "NV", office: "US House 1", raceType: "Republican Primary", label: "Nevada US House 1 Republican Primary" },
-  { id: 83149, state: "NV", office: "US House 1", raceType: "Democratic Primary", label: "Nevada US House 1 Democratic Primary" },
+  { id: 83111, state: "NV", office: "Governor", raceType: "Republican Primary", label: "Nevada Governor Republican Primary", archived: true },
+  { id: 83110, state: "NV", office: "Governor", raceType: "Democratic Primary", label: "Nevada Governor Democratic Primary", archived: true },
+  { id: 83081, state: "NV", office: "Attorney General", raceType: "Republican Primary", label: "Nevada Attorney General Republican Primary", archived: true },
+  { id: 83080, state: "NV", office: "Attorney General", raceType: "Democratic Primary", label: "Nevada Attorney General Democratic Primary", archived: true },
+  { id: 83112, state: "NV", office: "Lieutenant Governor", raceType: "Democratic Primary", label: "Nevada Lieutenant Governor Democratic Primary", archived: true },
+  { id: 83113, state: "NV", office: "Secretary of State", raceType: "Republican Primary", label: "Nevada Secretary of State Republican Primary", archived: true },
+  { id: 83150, state: "NV", office: "US House 1", raceType: "Republican Primary", label: "Nevada US House 1 Republican Primary", archived: true },
+  { id: 83149, state: "NV", office: "US House 1", raceType: "Democratic Primary", label: "Nevada US House 1 Democratic Primary", archived: true },
   // ── NORTH DAKOTA (JUNE 9) ──
-  { id: 82403, state: "ND", office: "US House At-Large", raceType: "Republican Primary", label: "North Dakota US House At-Large Republican Primary" },
-  { id: 82384, state: "ND", office: "Public Service Commissioner", raceType: "Republican Primary", label: "North Dakota Public Service Commissioner Republican Primary" },
+  { id: 82403, state: "ND", office: "US House At-Large", raceType: "Republican Primary", label: "North Dakota US House At-Large Republican Primary", archived: true },
+  { id: 82384, state: "ND", office: "Public Service Commissioner", raceType: "Republican Primary", label: "North Dakota Public Service Commissioner Republican Primary", archived: true },
+  // ── GEORGIA (JUNE 16) ──
+  { id: 83316, state: "GA", office: "US Senate", raceType: "Republican Primary Runoff", label: "Georgia US Senate Republican Primary Runoff" },
+  { id: 83266, state: "GA", office: "Governor", raceType: "Republican Primary Runoff", label: "Georgia Governor Republican Primary Runoff" },
+  { id: 83277, state: "GA", office: "Lieutenant Governor", raceType: "Republican Primary Runoff", label: "Georgia Lieutenant Governor Republican Primary Runoff" },
+  { id: 83276, state: "GA", office: "Lieutenant Governor", raceType: "Democratic Primary Runoff", label: "Georgia Lieutenant Governor Democratic Primary Runoff" },
+  { id: 83289, state: "GA", office: "Secretary of State", raceType: "Republican Primary Runoff", label: "Georgia Secretary of State Republican Primary Runoff" },
+  { id: 83288, state: "GA", office: "Secretary of State", raceType: "Democratic Primary Runoff", label: "Georgia Secretary of State Democratic Primary Runoff" },
+  { id: 83312, state: "GA", office: "US House 11", raceType: "Republican Primary Runoff", label: "Georgia US House 11 Republican Primary Runoff" },
+  { id: 83313, state: "GA", office: "US House 12", raceType: "Democratic Primary Runoff", label: "Georgia US House 12 Democratic Primary Runoff" },
+  { id: 83314, state: "GA", office: "US House 1", raceType: "Democratic Primary Runoff", label: "Georgia US House 1 Democratic Primary Runoff" },
+  { id: 83315, state: "GA", office: "US House 7", raceType: "Democratic Primary Runoff", label: "Georgia US House 7 Democratic Primary Runoff" },
+  // ── ALABAMA (JUNE 16) ──
+  { id: 83428, state: "AL", office: "US Senate", raceType: "Republican Primary Runoff", label: "Alabama US Senate Republican Primary Runoff" },
+  { id: 83427, state: "AL", office: "US Senate", raceType: "Democratic Primary Runoff", label: "Alabama US Senate Democratic Primary Runoff" },
+  { id: 83430, state: "AL", office: "Lieutenant Governor", raceType: "Republican Primary Runoff", label: "Alabama Lieutenant Governor Republican Primary Runoff" },
+  { id: 83431, state: "AL", office: "Attorney General", raceType: "Republican Primary Runoff", label: "Alabama Attorney General Republican Primary Runoff" },
+  // ── OKLAHOMA (JUNE 16) ──
+  { id: 83476, state: "OK", office: "State Question 832", raceType: "Ballot Measure", label: "Oklahoma State Question 832 — $15 Minimum Wage" },
+  { id: 83424, state: "OK", office: "US Senate", raceType: "Republican Primary", label: "Oklahoma US Senate Republican Primary" },
+  { id: 83423, state: "OK", office: "US Senate", raceType: "Democratic Primary", label: "Oklahoma US Senate Democratic Primary" },
+  { id: 83344, state: "OK", office: "Governor", raceType: "Republican Primary", label: "Oklahoma Governor Republican Primary" },
+  { id: 83343, state: "OK", office: "Governor", raceType: "Democratic Primary", label: "Oklahoma Governor Democratic Primary" },
+  { id: 83415, state: "OK", office: "US House 1", raceType: "Republican Primary", label: "Oklahoma US House 1 Republican Primary" },
+  // ── WASHINGTON DC (JUNE 16) ──
+  { id: 83478, state: "DC", office: "US House Delegate", raceType: "Democratic Primary", label: "DC US House Delegate Democratic Primary" },
+  { id: 83479, state: "DC", office: "Mayor", raceType: "Democratic Primary", label: "DC Mayor Democratic Primary" },
 ];
 
 async function fetchRaceById(id: number): Promise<RaceDetail> {
@@ -1580,7 +1671,7 @@ function RaceScrollWindow({ races, raceCache, selectedId, onSelect, search, onSe
   );
 }
 
-function RacePickerPanel({ races, raceCache, selectedId, onSelect, lockedCalls, lockedCallTypes, lockedRunoffProbs, showArchived, onToggleArchive, activeState }: {
+function RacePickerPanel({ races, raceCache, selectedId, onSelect, lockedCalls, lockedCallTypes, lockedRunoffProbs, showArchived, onToggleArchive, activeState, spotlightRaceIds }: {
   races: FeaturedRace[];
   raceCache: Record<number, RaceDetail | undefined>;
   selectedId: number;
@@ -1591,6 +1682,7 @@ function RacePickerPanel({ races, raceCache, selectedId, onSelect, lockedCalls, 
   showArchived?: boolean;
   onToggleArchive?: () => void;
   activeState?: string;
+  spotlightRaceIds?: number[];
 }) {
   const [search, setSearch] = useState("");
   const searchRef = useRef<HTMLInputElement>(null);
@@ -1600,31 +1692,47 @@ function RacePickerPanel({ races, raceCache, selectedId, onSelect, lockedCalls, 
   // Group by office
   const groups = useMemo(() => {
     const q = search.trim().toLowerCase();
-    const filtered = q
+    let filtered = q
       ? races.filter(r => r.office.toLowerCase().includes(q) || r.raceType.toLowerCase().includes(q) || r.label.toLowerCase().includes(q))
       : races.filter(r => r.archived ? !!showArchived : (!activeState || r.state === activeState));
-
     // Active races: group by office
     // Archived races: group by "STATE · DATE" section header
     const stateArchiveLabel: Record<string, string> = {
       TX: "TEXAS · MAY 26, 2026",
+      CA: "CALIFORNIA · JUNE 2, 2026",
       IA: "IOWA · JUNE 2, 2026",
       MT: "MONTANA · JUNE 2, 2026",
       NJ: "NEW JERSEY · JUNE 2, 2026",
       NM: "NEW MEXICO · JUNE 2, 2026",
       SD: "SOUTH DAKOTA · JUNE 2, 2026",
+      SC: "S. CAROLINA · JUNE 9, 2026",
+      ME: "MAINE · JUNE 9, 2026",
+      NV: "NEVADA · JUNE 9, 2026",
+      ND: "N. DAKOTA · JUNE 9, 2026",
     };
     // State display order for archive
-    const archiveStateOrder = ["TX", "IA", "MT", "NJ", "NM", "SD"];
+    const archiveStateOrder = ["TX", "CA", "IA", "MT", "NJ", "NM", "SD", "SC", "ME", "NV", "ND"];
 
     const activeRaces = filtered.filter(r => !r.archived);
     const archivedRaces = filtered.filter(r => r.archived);
 
+    const activeStateOrder = ["GA", "AL", "DC", "OK"];
+
     const map = new Map<string, FeaturedRace[]>();
-    for (const r of activeRaces) {
-      const g = map.get(r.office) ?? [];
-      g.push(r);
-      map.set(r.office, g);
+    if (!activeState && !q) {
+      // All-races mode: group by state with state headers
+      for (const st of activeStateOrder) {
+        const stRaces = activeRaces.filter(r => r.state === st);
+        if (stRaces.length > 0) {
+          map.set(`__activeState:${st}`, stRaces);
+        }
+      }
+    } else {
+      for (const r of activeRaces) {
+        const g = map.get(r.office) ?? [];
+        g.push(r);
+        map.set(r.office, g);
+      }
     }
     // Add archived grouped by state, in date order
     if (archivedRaces.length > 0) {
@@ -1637,7 +1745,14 @@ function RacePickerPanel({ races, raceCache, selectedId, onSelect, lockedCalls, 
       }
     }
     return Array.from(map.entries());
-  }, [races, search, showArchived, activeState]);
+  }, [races, search, showArchived, activeState, spotlightRaceIds]);
+
+  const stateActiveLabel: Record<string, string> = {
+    GA: "GEORGIA · JUNE 16, 2026",
+    AL: "ALABAMA · JUNE 16, 2026",
+    DC: "WASH. DC · JUNE 16, 2026",
+    OK: "OKLAHOMA · JUNE 16, 2026",
+  };
 
   // Keyboard shortcut to focus search
   useEffect(() => {
@@ -1659,6 +1774,7 @@ function RacePickerPanel({ races, raceCache, selectedId, onSelect, lockedCalls, 
       <div style={{ padding: "12px 14px", borderBottom: "1px solid var(--border)", background: "var(--panel)", flexShrink: 0, borderRadius: "var(--r-lg) var(--r-lg) 0 0" }}>
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 8 }}>
           <div className="res-panel-tag">ALL RACES</div>
+          <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
           {hasArchivedRaces && (
             <button
               onClick={() => onToggleArchive?.()}
@@ -1683,6 +1799,7 @@ function RacePickerPanel({ races, raceCache, selectedId, onSelect, lockedCalls, 
               {showArchived ? "HIDE ARCHIVE" : "ARCHIVE"}
             </button>
           )}
+          </div>
         </div>
         {/* Search input */}
         <div style={{ display: "flex", alignItems: "center", gap: 8, background: "var(--panel2)", border: "1px solid var(--border2)", padding: "7px 12px", borderRadius: "var(--r-sm)" }}>
@@ -1713,6 +1830,8 @@ function RacePickerPanel({ races, raceCache, selectedId, onSelect, lockedCalls, 
         {groups.map(([office, groupRaces], gi) => {
           const isArchiveGroup = groupRaces[0]?.archived;
           const isFirstArchiveGroup = isArchiveGroup && groups.find(([, gr]) => gr[0]?.archived)?.[0] === office;
+          const isActiveStateGroup = office.startsWith("__activeState:");
+          const activeStateName = isActiveStateGroup ? stateActiveLabel[office.replace("__activeState:", "")] ?? office.replace("__activeState:", "") : null;
           return (
           <div key={`${office}-${gi}`} style={{ marginBottom: 2 }}>
             {/* Archive section divider — only before the first archived group */}
@@ -1729,20 +1848,27 @@ function RacePickerPanel({ races, raceCache, selectedId, onSelect, lockedCalls, 
                 <div style={{ flex: 1, height: 1, background: "linear-gradient(90deg, transparent 0%, rgba(180,180,220,0.25) 100%)" }} />
               </div>
             )}
-            {/* Office / state group header */}
-            <div style={{
+            {/* State header — active races all-state view */}
+            {isActiveStateGroup && (
+              <div style={{ margin: gi === 0 ? "6px 10px 4px" : "10px 10px 4px", display: "flex", alignItems: "center", gap: 8 }}>
+                <div style={{ flex: 1, height: 1, background: "linear-gradient(90deg, rgba(124,58,237,0.35) 0%, transparent 100%)" }} />
+                <span style={{ fontFamily: "var(--font-body)", fontSize: "9px", fontWeight: 700, letterSpacing: "0.18em", color: "var(--purple-soft)", textTransform: "uppercase", whiteSpace: "nowrap" }}>{activeStateName}</span>
+                <div style={{ flex: 1, height: 1, background: "linear-gradient(90deg, transparent 0%, rgba(124,58,237,0.35) 100%)" }} />
+              </div>
+            )}
+            {/* Office / state group header — archive only */}
+            {isArchiveGroup && <div style={{
               padding: "5px 14px 3px",
               fontFamily: "var(--font-body)",
               fontSize: "9.5px",
               fontWeight: 700,
               letterSpacing: "0.16em",
               textTransform: "uppercase",
-              color: isArchiveGroup ? "rgba(180,180,220,0.4)" : "var(--muted2)",
-              borderTop: isArchiveGroup ? "none" : "1px solid var(--border)",
-              marginTop: isArchiveGroup ? 2 : 4,
+              color: "var(--muted2)",
+              marginTop: 2,
             }}>
-              {isArchiveGroup ? office : office}
-            </div>
+              {office}
+            </div>}
             {/* Race buttons */}
             {groupRaces.map(r => {
               const liveData = raceCache[r.id];
@@ -1778,7 +1904,7 @@ function RacePickerPanel({ races, raceCache, selectedId, onSelect, lockedCalls, 
                     margin: "1px 4px",
                     gap: 0,
                     padding: "7px 10px",
-                    background: isSelected ? `rgba(124,58,237,0.10)` : isArchiveGroup ? "rgba(100,100,140,0.05)" : "transparent",
+                    background: isSelected ? `rgba(124,58,237,0.10)` : "transparent",
                     border: "1px solid",
                     borderColor: isSelected ? "rgba(124,58,237,0.35)" : "transparent",
                     borderRadius: "var(--r-sm)",
@@ -1786,7 +1912,7 @@ function RacePickerPanel({ races, raceCache, selectedId, onSelect, lockedCalls, 
                     textAlign: "left",
                     transition: "background 100ms ease, border-color 100ms ease",
                     position: "relative",
-                    opacity: isArchiveGroup ? 0.55 : 1,
+                    opacity: 1,
                   }}
                   onMouseEnter={e => { if (!isSelected) (e.currentTarget as HTMLButtonElement).style.background = "var(--panel2)"; }}
                   onMouseLeave={e => { if (!isSelected) (e.currentTarget as HTMLButtonElement).style.background = "transparent"; }}
@@ -1798,14 +1924,15 @@ function RacePickerPanel({ races, raceCache, selectedId, onSelect, lockedCalls, 
                     height: 7,
                     borderRadius: "50%",
                     background: raceTypeColor,
-                    boxShadow: isArchiveGroup ? "none" : `0 0 7px ${raceTypeColor}bb`,
-                    animation: isArchiveGroup ? "none" : "res-pulse 1.8s ease-in-out infinite",
-                    opacity: isArchiveGroup ? 0.4 : 1,
+                    boxShadow: `0 0 7px ${raceTypeColor}bb`,
+                    animation: "res-pulse 1.8s ease-in-out infinite",
+                    opacity: 1,
                     marginRight: 12,
                   }} />
 
                   {/* Main content */}
                   <div style={{ flex: 1, minWidth: 0 }}>
+                    {/* Office name */}
                     <div style={{
                       fontFamily: "var(--font-body)",
                       fontSize: "12px",
@@ -1815,42 +1942,29 @@ function RacePickerPanel({ races, raceCache, selectedId, onSelect, lockedCalls, 
                       whiteSpace: "nowrap",
                       overflow: "hidden",
                       textOverflow: "ellipsis",
-                      marginBottom: isArchiveGroup ? 2 : 4,
+                      marginBottom: 3,
                     }}>
-                      {isArchiveGroup ? r.office : r.raceType}
+                      {r.office}
                     </div>
-                    {/* Archive: race type label below office */}
-                    {isArchiveGroup && (
-                      <div style={{ display: "flex", alignItems: "center", gap: 5 }}>
-                        <span style={{ fontFamily: "var(--font-body)", fontSize: "9px", fontWeight: 600, letterSpacing: "0.08em", color: "var(--muted2)", opacity: 0.6, textTransform: "uppercase" }}>
-                          {r.raceType}
-                        </span>
-                        {isCalled && (
-                          <svg width="9" height="9" viewBox="0 0 14 14" fill="none" style={{ flexShrink: 0 }}>
-                            <circle cx="7" cy="7" r="6.5" fill="var(--win)" opacity="0.18"/>
-                            <circle cx="7" cy="7" r="6.5" stroke="var(--win)" strokeWidth="1.2"/>
-                            <path d="M4 7l2 2 4-4" stroke="var(--win)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                          </svg>
-                        )}
-                      </div>
-                    )}
-                    {/* Reporting bar — live races only */}
-                    {!isArchiveGroup && <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                      <div style={{ flex: 1, height: 2, background: "var(--border2)", overflow: "hidden", maxWidth: 60 }}>
-                        <div style={{ height: "100%", width: `${reporting ?? 0}%`, background: isCalled ? "var(--win)" : raceTypeColor, opacity: 0.8, transition: "width 800ms ease" }} />
+                    {/* Race type */}
+                    <div style={{ fontFamily: "var(--font-body)", fontSize: "9px", fontWeight: 600, letterSpacing: "0.08em", color: "var(--muted2)", textTransform: "uppercase", marginBottom: 4 }}>
+                      {getRaceTypeLabel(r.raceType)}
+                    </div>
+                    {/* Progress bar + percent */}
+                    <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                      <div style={{ width: 80, flexShrink: 0, height: 2, background: "var(--border2)", borderRadius: 99, overflow: "hidden" }}>
+                        <div style={{ height: "100%", width: `${reporting ?? 0}%`, background: isCalled ? "var(--win)" : raceTypeColor, borderRadius: 99, transition: "width 800ms ease" }} />
                       </div>
                       {isCalled ? (
-                        <span style={{ fontFamily: "var(--font-body)", fontSize: "9px", fontWeight: 700, color: "var(--win)", letterSpacing: "0.08em" }}>{_callLabel2}</span>
-                      ) : leader && (reporting ?? 0) > 0 ? (
-                        <span style={{ fontFamily: "var(--font-body)", fontSize: "9px", fontWeight: 600, color: "var(--muted2)", letterSpacing: "0.04em" }}>
-                          {leader.name.split(" ").pop()} {fmtPct(leader.percent)}
-                        </span>
+                        <svg width="9" height="9" viewBox="0 0 14 14" fill="none" style={{ flexShrink: 0 }}>
+                          <circle cx="7" cy="7" r="6.5" fill="var(--win)" opacity="0.18"/>
+                          <circle cx="7" cy="7" r="6.5" stroke="var(--win)" strokeWidth="1.2"/>
+                          <path d="M4 7l2 2 4-4" stroke="var(--win)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                        </svg>
                       ) : (
-                        <span style={{ fontFamily: "var(--font-body)", fontSize: "9px", fontWeight: 600, color: "var(--muted2)", letterSpacing: "0.04em" }}>
-                          {reporting !== null ? `${reporting.toFixed(0)}% IN` : "PENDING"}
-                        </span>
+                        <span style={{ flexShrink: 0, fontFamily: "var(--font-body)", fontSize: "9px", fontWeight: 700, color: "var(--muted2)", letterSpacing: "0.06em" }}>{reporting !== null ? `${reporting.toFixed(0)}% IN` : "0% IN"}</span>
                       )}
-                    </div>}
+                    </div>
                   </div>
 
                   {/* Forecast badge */}
@@ -1886,12 +2000,13 @@ function RacePickerPanel({ races, raceCache, selectedId, onSelect, lockedCalls, 
 // ─── MAIN PAGE ───────────────────────────────────────────────────────────────
 export default function March3FeaturedClient() {
   const [pageTab, setPageTab] = useState<"all" | "spotlight">("spotlight");
+  const [allRacesStateFilter, setAllRacesStateFilter] = useState<string | null>(null);
   const [showArchived, setShowArchived] = useState(false);
   const [archiveDropdownOpen, setArchiveDropdownOpen] = useState(false);
   const [archiveDate, setArchiveDate] = useState<string | null>(null);
   const archiveDropdownRef = useRef<HTMLDivElement>(null);
-  const [activeState, setActiveState] = useState<"CA" | "IA" | "ME" | "MT" | "ND" | "NJ" | "NM" | "NV" | "SC" | "SD" | "TX">("SC")
-  const [selectedId, setSelectedId] = useState<number>(82596);
+  const [activeState, setActiveState] = useState<"AL" | "CA" | "DC" | "GA" | "IA" | "ME" | "MT" | "ND" | "NJ" | "NM" | "NV" | "OK" | "SC" | "SD" | "TX">("GA")
+  const [selectedId, setSelectedId] = useState<number>(83316);
   const LA_MAYOR_ID = 79938; // Los Angeles Mayor Open Primary — June 2 spotlight
   const CA_GOV_ID = 79777;  // California Governor Open Primary — June 2 spotlight
   const IA_GOV_ID = 79945;  // Iowa Governor Republican Primary — June 2 spotlight
@@ -1900,6 +2015,9 @@ export default function March3FeaturedClient() {
   const SC_GOV_R_ID = 82596;   // SC Governor Republican Primary — June 9 spotlight
   const ME_SENATE_D_ID = 83063; // ME US Senate Democratic Primary — June 9 spotlight
   const ME_GOV_D_ID = 82693;   // ME Governor Democratic Primary — June 9 spotlight
+  const GA_SENATE_R_ID = 83316; // GA US Senate Republican Primary Runoff — June 16 spotlight
+  const AL_SENATE_R_ID = 83428; // AL US Senate Republican Primary Runoff — June 16 spotlight
+  const OK_SQ832_ID   = 83476; // Oklahoma State Question 832 — June 16 spotlight
   const ALL_SPOTLIGHT_META = [
     {
       id: SC_GOV_R_ID,
@@ -1981,10 +2099,41 @@ export default function March3FeaturedClient() {
       electionDate: "JUNE 2, 2026",
       about: "Iowa Republicans will choose their nominee for governor in a primary shaped by an open-seat contest and competing claims to the party's conservative base. State rules require the winner to receive at least 35 percent of the vote, or the nomination could be decided at convention.",
     },
+    // ── JUNE 16, 2026 ──
+    {
+      id: GA_SENATE_R_ID,
+      shortLabel: "GA Senate · Runoff",
+      stateLabel: "GEORGIA",
+      state: "GA" as const,
+      title: "GA US Senate Republican Primary Runoff",
+      subtitle: "Georgia · June 16, 2026",
+      electionDate: "JUNE 16, 2026",
+      about: "Incumbent Rep. Mike Collins enters the runoff as the clear frontrunner after leading the initial primary, but challenger Derek Dooley — son of legendary Georgia football coach Vince Dooley — has energized a grassroots coalition in a race that could reshape the GOP's direction heading into the general.",
+    },
+    {
+      id: AL_SENATE_R_ID,
+      shortLabel: "AL Senate · Runoff",
+      stateLabel: "ALABAMA",
+      state: "AL" as const,
+      title: "AL US Senate Republican Primary Runoff",
+      subtitle: "Alabama · June 16, 2026",
+      electionDate: "JUNE 16, 2026",
+      about: "A razor-thin race between two conservative stalwarts. Rep. Barry Moore and challenger Jared Hudson are neck-and-neck in what has become one of the most competitive Republican primaries in Alabama in years — with the winner likely headed to Washington in a deep-red state.",
+    },
+    {
+      id: OK_SQ832_ID,
+      shortLabel: "OK SQ 832 · $15 Min Wage",
+      stateLabel: "OKLAHOMA",
+      state: "OK" as const,
+      title: "Oklahoma State Question 832 — $15 Minimum Wage",
+      subtitle: "Oklahoma · June 16, 2026",
+      electionDate: "JUNE 16, 2026",
+      about: "Oklahoma voters are deciding whether to raise the state minimum wage to $15 an hour in a ballot measure that has drawn fierce debate between labor advocates and small business groups. A yes vote would make Oklahoma one of the more surprising states to adopt a $15 floor, cutting against its traditionally business-friendly political grain.",
+    },
   ] as const;
   // Only active (non-archived) races appear as spotlight tabs
   const SPOTLIGHT_RACES = ALL_SPOTLIGHT_META.filter(s => !FEATURED.find(r => r.id === s.id)?.archived);
-  const [spotlightTab, setSpotlightTab] = useState<number>(SC_GOV_R_ID);
+  const [spotlightTab, setSpotlightTab] = useState<number>(SPOTLIGHT_RACES[0]?.id ?? GA_SENATE_R_ID);
   const [error, setError] = useState<string | null>(null);
   const [loadingMap, setLoadingMap] = useState(false);
   const [raceCache, setRaceCache] = useState<Record<number, RaceDetail | undefined>>({});
@@ -2001,7 +2150,10 @@ export default function March3FeaturedClient() {
   const lastProjectedKeyRef = useRef<string>("");
 
   const featuredByState = useMemo(() => ({
+  AL: FEATURED.filter((r) => r.state === "AL"),
   CA: FEATURED.filter((r) => r.state === "CA"),
+  DC: FEATURED.filter((r) => r.state === "DC"),
+  GA: FEATURED.filter((r) => r.state === "GA"),
   IA: FEATURED.filter((r) => r.state === "IA"),
   ME: FEATURED.filter((r) => r.state === "ME"),
   MT: FEATURED.filter((r) => r.state === "MT"),
@@ -2009,6 +2161,7 @@ export default function March3FeaturedClient() {
   NJ: FEATURED.filter((r) => r.state === "NJ"),
   NM: FEATURED.filter((r) => r.state === "NM"),
   NV: FEATURED.filter((r) => r.state === "NV"),
+  OK: FEATURED.filter((r) => r.state === "OK"),
   SC: FEATURED.filter((r) => r.state === "SC"),
   SD: FEATURED.filter((r) => r.state === "SD"),
   TX: FEATURED.filter((r) => r.state === "TX"),
@@ -2125,15 +2278,15 @@ export default function March3FeaturedClient() {
   //   return () => clearTimeout(t);
   // }, [selectedRace, selectedId]);
 
-  const stateLabels: Record<string, string> = { CA: "CALIFORNIA", IA: "IOWA", ME: "MAINE", MT: "MONTANA", ND: "N. DAKOTA", NJ: "NEW JERSEY", NM: "NEW MEXICO", NV: "NEVADA", SC: "S. CAROLINA", SD: "S. DAKOTA", TX: "TEXAS" };
-  const activeStates = (["SC", "ME", "NV", "ND", "CA", "IA", "MT", "NJ", "NM", "SD", "TX"] as const).filter(
+  const stateLabels: Record<string, string> = { AL: "ALABAMA", CA: "CALIFORNIA", DC: "WASH. DC", GA: "GEORGIA", IA: "IOWA", ME: "MAINE", MT: "MONTANA", ND: "N. DAKOTA", NJ: "NEW JERSEY", NM: "NEW MEXICO", NV: "NEVADA", OK: "OKLAHOMA", SC: "S. CAROLINA", SD: "S. DAKOTA", TX: "TEXAS" };
+  const activeStates = (["GA", "AL", "DC", "OK", "SC", "ME", "NV", "ND", "CA", "IA", "MT", "NJ", "NM", "SD", "TX"] as const).filter(
     st => FEATURED.some(r => r.state === st && !r.archived)
   );
 
   // Archive date → states mapping
   const ARCHIVE_DATES: { label: string; date: string; states: string[] }[] = [
     { label: "MAY 26, 2026", date: "2026-05-26", states: ["TX"] },
-    { label: "JUNE 2, 2026", date: "2026-06-02", states: ["IA", "MT", "NJ", "NM", "SD"] },
+    { label: "JUNE 2, 2026", date: "2026-06-02", states: ["CA", "IA", "MT", "NJ", "NM", "SD"] },
     { label: "JUNE 9, 2026", date: "2026-06-09", states: ["SC", "ME", "NV", "ND"] },
   ];
   const archiveDateStates = ARCHIVE_DATES.find(d => d.date === archiveDate)?.states ?? [];
@@ -2158,7 +2311,9 @@ export default function March3FeaturedClient() {
     }
   }, [pageTab, spotlightTab]);
 
-  const racesForState = featuredByState[activeState as keyof typeof featuredByState] ?? [];
+  const racesForState = pageTab === "all"
+    ? (allRacesStateFilter ? (featuredByState[allRacesStateFilter as keyof typeof featuredByState] ?? []) : FEATURED)
+    : (featuredByState[activeState as keyof typeof featuredByState] ?? []);
 
   const selectedReporting = selectedRace?.percent_reporting ?? 0;
   const selectedCloseDate = parseIsoDate(selectedRace?.polls_close ?? null);
@@ -2186,10 +2341,10 @@ export default function March3FeaturedClient() {
   const [lockedRunoffProbs, setLockedRunoffProbs] = useState<Record<number, Record<string, number>>>({});
   const showProjectionDebug = process.env.NODE_ENV !== "production";
   // Spotlight meta for the currently selected race (null when not a spotlight race)
-  const spotlightMeta = ALL_SPOTLIGHT_META.find(s => s.id === selectedId) ?? null;
-  const selectedStatusInfo = getRaceStatusInfo(nowMs, selectedRace?.polls_open, selectedRace?.polls_close, spotlightMeta?.electionDate ?? "");
-  // Close time: prefer code override, then API
-  const _closeIsoOverride = RACE_FORECAST_DEFAULTS[selectedId]?.pollsCloseIso;
+  const spotlightMeta = SPOTLIGHT_RACES.find(s => s.id === selectedId) ?? null;
+  const selectedStatusInfo = getRaceStatusInfo(nowMs, selectedRace?.polls_open, getEffectivePollsCloseIso(selectedId, selectedRace?.province, selectedRace?.polls_close), spotlightMeta?.electionDate ?? "");
+  // Close time: prefer race-level override → state-level override → API
+  const _closeIsoOverride = getEffectivePollsCloseIso(selectedId, selectedRace?.province, selectedRace?.polls_close);
   const effectiveCloseDate = _closeIsoOverride ? parseIsoDate(_closeIsoOverride) : selectedCloseDate;
   const effectiveCloseLocal = effectiveCloseDate ? formatLocalCloseTime(effectiveCloseDate) : selectedCloseLocal;
   const effectiveMsLeft = effectiveCloseDate ? effectiveCloseDate.getTime() - nowMs : selectedMsLeft;
@@ -2655,7 +2810,11 @@ export default function March3FeaturedClient() {
         .res-page-tab { display:flex; align-items:center; gap:7px; padding:8px 14px; background:transparent; border:1px solid transparent; border-radius:var(--r-sm); color:var(--muted); font-family:var(--font-body); font-size:12px; font-weight:700; letter-spacing:0.10em; text-transform:uppercase; cursor:pointer; transition:color 140ms ease,background 140ms ease,border-color 140ms ease; white-space:nowrap; margin:6px 0; }
         .res-page-tab:hover { color:var(--foreground); background:var(--panel2); }
         .res-page-tab.active { color:var(--foreground); background:var(--panel); border-color:var(--border2); box-shadow:var(--shadow-sm); }
-        .res-page-tab.ky04-tab.active { background:rgba(124,58,237,0.08); border-color:rgba(124,58,237,0.30); color:var(--purple); }
+        .res-all-tab { color:var(--foreground); border-color:var(--border2); background:var(--panel); }
+        .res-all-tab:hover { border-color:var(--purple); background:var(--panel2); }
+        .res-all-tab.active { background:rgba(124,58,237,0.08); border-color:var(--purple); color:var(--purple); box-shadow:var(--shadow-sm); }
+        .res-page-tab.ky04-tab.active { background:rgba(124,58,237,0.08); border-color:rgba(124,58,237,0.30); color:var(--purple); flex:1; }
+        .res-page-tab.ky04-tab:not(.active) { flex-shrink:0; }
         .res-page-tab .tab-dot { width:6px; height:6px; border-radius:50%; background:var(--rep); flex-shrink:0; animation:res-pulse 1.8s ease-in-out infinite; }
         .res-page-tab.ky04-tab .tab-dot { background:var(--purple); }
         @keyframes spotlight-flash { 0%,100%{box-shadow:0 0 0 rgba(124,58,237,0);} 50%{box-shadow:0 0 18px rgba(124,58,237,0.30);} }
@@ -2689,7 +2848,7 @@ export default function March3FeaturedClient() {
             <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
               {/* Row 1: title */}
               <div>
-                <div className="res-page-sub">JUNE 9TH PRIMARY ELECTIONS · 2026</div>
+                <div className="res-page-sub">JUNE 16TH PRIMARY RUNOFFS · 2026</div>
                 <h1 className="res-page-title">Election <em>Night</em></h1>
               </div>
               {/* Row 2: archive + badges + state buttons */}
@@ -2792,14 +2951,26 @@ export default function March3FeaturedClient() {
                 {activeStates.length > 0 && (
                   <>
                     <span style={{ width: 1, height: 16, background: "var(--border2)", margin: "0 2px", flexShrink: 0 }} />
-                    <div className="res-state-btns" style={{ display: "flex", gap: "5px" }}>
+                    <div className="res-state-btns" style={{ display: "flex", gap: "5px", alignItems: "center" }}>
+                      {/* ALL chip */}
+                      <button
+                        className={`res-btn-state res-all-tab ${pageTab === "all" && !allRacesStateFilter ? "active" : ""}`}
+                        onClick={() => { setPageTab("all"); setAllRacesStateFilter(null); }}
+                      >ALL</button>
                       {activeStates.map((st) => (
-                        <button key={st} className={`res-btn-state ${activeState === st ? "active" : ""}`} onClick={() => {
-                          setActiveState(st);
-                          const firstSpotlight = SPOTLIGHT_RACES.find(s => s.state === st);
-                          if (firstSpotlight) { setSpotlightTab(firstSpotlight.id); if (pageTab === "spotlight") setSelectedId(firstSpotlight.id); }
+                        <button key={st} className={`res-btn-state ${
+                          pageTab === "all" ? (allRacesStateFilter === st ? "active" : "") : (activeState === st ? "active" : "")
+                        }`} onClick={() => {
+                          if (pageTab === "all") {
+                            setAllRacesStateFilter(prev => prev === st ? null : st);
+                          } else {
+                            setActiveState(st);
+                            const firstSpotlight = SPOTLIGHT_RACES.find(s => s.state === st);
+                            if (firstSpotlight) { setSpotlightTab(firstSpotlight.id); setSelectedId(firstSpotlight.id); }
+                          }
                         }}>{stateLabels[st]}</button>
                       ))}
+
                     </div>
                   </>
                 )}
@@ -2808,27 +2979,60 @@ export default function March3FeaturedClient() {
           </div>
         </div>
 
-        {/* PAGE TABS */}
+        {/* PAGE TABS — spotlight race tabs only; All Races is in the state chip strip */}
+        {SPOTLIGHT_RACES.length > 0 && (
         <div className="res-page-tabs-wrap">
           <div className="res-page-tabs">
-          <button
-            className={`res-page-tab ${pageTab === "all" ? "active" : ""}`}
-            onClick={() => setPageTab("all")}
-          >
-            All Races
-          </button>
-          {SPOTLIGHT_RACES.map((s) => (
+          <span style={{
+            display: "inline-flex", alignItems: "center", gap: 5,
+            padding: "4px 10px",
+            background: "linear-gradient(135deg, rgba(124,58,237,0.18) 0%, rgba(99,102,241,0.10) 100%)",
+            border: "1px solid rgba(124,58,237,0.50)",
+            borderRadius: "var(--r-pill)",
+            boxShadow: "0 0 12px rgba(124,58,237,0.35), 0 0 3px rgba(124,58,237,0.20)",
+            fontFamily: "var(--font-body)", fontSize: "8px", fontWeight: 900,
+            letterSpacing: "0.22em", color: "var(--purple-soft)", textTransform: "uppercase",
+            flexShrink: 0, marginRight: 6, whiteSpace: "nowrap",
+          }}>
+            <span style={{ fontSize: "10px", lineHeight: 1, animation: "res-pulse 2s ease-in-out infinite" }}>&#9733;</span>
+            SPOTLIGHT
+          </span>
+          {SPOTLIGHT_RACES.map((s) => {
+            const isActive = pageTab === "spotlight" && spotlightTab === s.id;
+            const tabLive = patchedRaceCache[s.id];
+            const tabOv = RACE_FORECAST_DEFAULTS[s.id]?.overrideReporting;
+            const tabRep = typeof tabOv === "number" && tabOv > 0 ? tabOv : (tabLive?.percent_reporting ?? 0);
+            const tabWinner = tabLive?.candidates?.find(c => c.winner);
+            const tabLeader = tabWinner ?? [...(tabLive?.candidates ?? [])].sort((a, b) => (b.percent ?? 0) - (a.percent ?? 0))[0];
+            const tabManualCall = RACE_FORECAST_DEFAULTS[s.id]?.manualCall;
+            const tabCalled = tabManualCall || tabWinner?.name;
+            const tabLeaderName = tabCalled ?? (tabLeader ? tabLeader.name.split(" ").slice(-1)[0] : null);
+            return (
             <button
               key={s.id}
-              className={`res-page-tab ky04-tab ${pageTab === "spotlight" && spotlightTab === s.id ? "active" : ""}`}
+              className={`res-page-tab ky04-tab ${isActive ? "active" : ""}`}
               onClick={() => { setPageTab("spotlight"); setSpotlightTab(s.id); setActiveState(s.state); setSelectedId(s.id); }}
             >
               <span className="tab-dot" />
               {s.shortLabel}
+              {isActive && tabLeaderName && tabRep > 0 && (
+                <span style={{ display: "inline-flex", alignItems: "center", gap: 5, marginLeft: 6, opacity: 0.8 }}>
+                  <span style={{ width: 1, height: 10, background: "rgba(124,58,237,0.35)", display: "inline-block", flexShrink: 0 }} />
+                  <span style={{ fontFamily: "var(--font-numeric)", fontWeight: 700, fontSize: "10px", letterSpacing: "0.04em", color: tabCalled ? "var(--win)" : "var(--purple-soft)" }}>
+                    {tabLeaderName}
+                  </span>
+                  <span style={{ color: "rgba(124,58,237,0.45)", fontSize: 8 }}>·</span>
+                  <span style={{ fontFamily: "var(--font-numeric)", fontWeight: 600, fontSize: "10px", color: "var(--muted)", letterSpacing: "0.04em" }}>
+                    {tabRep.toFixed(1)}% in
+                  </span>
+                </span>
+              )}
             </button>
-          ))}
+            );
+          })}
           </div>
         </div>
+        )}
 
         {/* ── ALL RACES + SPOTLIGHT TABS ── */}
         {(pageTab === "all" || pageTab === "spotlight") && <>
@@ -2969,7 +3173,8 @@ export default function March3FeaturedClient() {
                 lockedRunoffProbs={lockedRunoffProbs}
                 showArchived={showArchived}
                 onToggleArchive={() => setShowArchived(v => !v)}
-                activeState={activeState}
+                activeState={pageTab === "all" ? (allRacesStateFilter ?? undefined) : activeState}
+                spotlightRaceIds={SPOTLIGHT_RACES.map(s => s.id)}
               />
             </div>
 
