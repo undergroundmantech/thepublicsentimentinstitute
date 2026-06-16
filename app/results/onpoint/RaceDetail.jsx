@@ -3,30 +3,24 @@ import { createPortal } from 'react-dom'
 import { useTheme, tripToggleTheme } from './lib/theme.jsx'
 
 // The race detail map IS the precinct app (same as the NYC/VA projects):
-// a full-screen iframe of /demographics?d=CIVIC&race=<id> — its real
+// a full-screen iframe of the precinct build at ?d=CIVIC&race=<id> — its real
 // HoverPanel tooltip, satellite/3D/scope/border controls, search, legend.
 // Zero reinvented chrome. ?warp=1 skips the precinct loader so it paints
 // clean. Lives in the Elections tab; deep-links + browser-back work.
 
-// In the original OPA hub, local Vite proxied /demographics to the separate
-// precinct-map Next app on port 3210. TPSI runs as its own Next app, so point
-// local previews straight at that precinct server; production keeps the public
-// /demographics mount.
+// The precinct app is its own deployment, so we embed it cross-origin in an
+// iframe (exactly how the original OPA hub embedded it). PRECINCT_BASE points
+// at that public, embeddable deployment, so the map works identically in local
+// dev and on the live site — no second dev server to babysit.
+const PRECINCT_BASE = 'https://web-conservativepollings-projects.vercel.app/demographics'
+
 function precinctBase() {
-  // A deploy can point the race-detail map at a hosted precinct app by setting
-  // NEXT_PUBLIC_PRECINCT_BASE (e.g. https://precinct.example.com). Otherwise we
-  // fall back to the local precinct dev server, then the production
-  // /demographics mount.
+  // To iterate on the precinct app itself, run it locally and set
+  // NEXT_PUBLIC_PRECINCT_BASE=http://localhost:3210 — that override wins.
+  // Otherwise everything (local + prod) uses the hosted precinct deployment.
   const envBase = process.env.NEXT_PUBLIC_PRECINCT_BASE
   if (envBase) return envBase.replace(/\/+$/, '')
-  if (typeof window !== 'undefined' && /^(localhost|127\.0\.0\.1)$/.test(window.location.hostname)) {
-    return 'http://localhost:3210'
-  }
-  return '/demographics'
-}
-
-function isLocalHost() {
-  return typeof window !== 'undefined' && /^(localhost|127\.0\.0\.1)$/.test(window.location.hostname)
+  return PRECINCT_BASE
 }
 
 // Sync the iframe to the new theme. Same-origin (dev + prod-with-proxy)
@@ -326,9 +320,7 @@ export default function RaceDetail({ race, onClose }) {
             <p style={{ margin: '0 0 20px', fontSize: 14, lineHeight: 1.65, color: 'var(--ink-mute)' }}>
               The detail map loads from{' '}
               <code style={{ fontFamily: '"JetBrains Mono", ui-monospace, monospace', fontSize: 12.5, padding: '1px 6px', borderRadius: 5, background: 'var(--wash)', color: 'var(--ink)' }}>{base}</code>.{' '}
-              {isLocalHost()
-                ? 'Start the precinct map app on port 3210, then retry.'
-                : 'The precinct map service may be offline.'}
+              The precinct map service may be momentarily offline — retry below, or open it directly.
             </p>
             <div style={{ display: 'inline-flex', gap: 10, flexWrap: 'wrap', justifyContent: 'center' }}>
               <button
