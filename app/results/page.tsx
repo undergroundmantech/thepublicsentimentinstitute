@@ -167,7 +167,7 @@ const RACE_FORECAST_DEFAULTS: Partial<Record<number, { raceRule: RaceRule; expec
 
   // ── WASHINGTON DC — PLURALITY primaries — June 16 ────────────────────────
   83478: { raceRule: "PLURALITY", expectedTurnout: 85_000 },   // DC US House Delegate D Primary
-  83479: { raceRule: "PLURALITY", expectedTurnout: 120_000 },  // DC Mayor D Primary
+  83479: { raceRule: "PLURALITY", expectedTurnout: 87_500, pollAvg: { "George": 43.0, "McDuffie": 38.0, "Johnson": 19.0 } },  // DC Mayor D Primary
 
   // ── ALABAMA — PLURALITY runoffs — June 16 ────────────────────────────────
   83428: { raceRule: "PLURALITY", expectedTurnout: 280_000, pollAvg: { "Moore": 51.0, "Hudson": 49.0 } }, // AL US Senate R Runoff
@@ -2130,6 +2130,16 @@ export default function March3FeaturedClient() {
       electionDate: "JUNE 16, 2026",
       about: "Oklahoma voters are deciding whether to raise the state minimum wage to $15 an hour in a ballot measure that has drawn fierce debate between labor advocates and small business groups. A yes vote would make Oklahoma one of the more surprising states to adopt a $15 floor, cutting against its traditionally business-friendly political grain.",
     },
+    {
+      id: 83479,
+      shortLabel: "DC Mayor",
+      stateLabel: "WASH. DC",
+      state: "DC" as const,
+      title: "DC Mayoral Democratic Primary",
+      subtitle: "District of Columbia · June 16, 2026",
+      electionDate: "JUNE 16, 2026",
+      about: "D.C.'s mayoral race is a wide-open contest with no incumbent on the ballot, drawing a crowded field of Democrats vying to lead the nation's capital. J. Lewis George and Kenyan McDuffie have emerged as the frontrunners in a race defined by debates over public safety, housing, and the city's post-pandemic identity.",
+    },
   ] as const;
   // Only active (non-archived) races appear as spotlight tabs
   const SPOTLIGHT_RACES = ALL_SPOTLIGHT_META.filter(s => !FEATURED.find(r => r.id === s.id)?.archived);
@@ -2813,8 +2823,7 @@ export default function March3FeaturedClient() {
         .res-all-tab { color:var(--foreground); border-color:var(--border2); background:var(--panel); }
         .res-all-tab:hover { border-color:var(--purple); background:var(--panel2); }
         .res-all-tab.active { background:rgba(124,58,237,0.08); border-color:var(--purple); color:var(--purple); box-shadow:var(--shadow-sm); }
-        .res-page-tab.ky04-tab.active { background:rgba(124,58,237,0.08); border-color:rgba(124,58,237,0.30); color:var(--purple); flex:1; }
-        .res-page-tab.ky04-tab:not(.active) { flex-shrink:0; }
+        .res-page-tab.ky04-tab.active { background:rgba(124,58,237,0.08); border-color:rgba(124,58,237,0.30); color:var(--purple); }
         .res-page-tab .tab-dot { width:6px; height:6px; border-radius:50%; background:var(--rep); flex-shrink:0; animation:res-pulse 1.8s ease-in-out infinite; }
         .res-page-tab.ky04-tab .tab-dot { background:var(--purple); }
         @keyframes spotlight-flash { 0%,100%{box-shadow:0 0 0 rgba(124,58,237,0);} 50%{box-shadow:0 0 18px rgba(124,58,237,0.30);} }
