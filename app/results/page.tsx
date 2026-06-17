@@ -154,13 +154,13 @@ const RACE_FORECAST_DEFAULTS: Partial<Record<number, { raceRule: RaceRule; expec
   82384: { raceRule: "PLURALITY", expectedTurnout: 100_000 }, // ND Public Service Commissioner R
 
   // ── GEORGIA — PLURALITY runoffs (simple majority, no runoff threshold) — June 16 ──
-  83316: { raceRule: "PLURALITY", expectedTurnout: 420_000, pollAvg: { "Collins": 58.0, "Dooley": 42.0 } }, // GA US Senate R Runoff
-  83266: { raceRule: "PLURALITY", expectedTurnout: 380_000 }, // GA Governor R Runoff
-  83277: { raceRule: "PLURALITY", expectedTurnout: 340_000 }, // GA Lt Governor R Runoff
-  83276: { raceRule: "PLURALITY", expectedTurnout: 200_000 }, // GA Lt Governor D Runoff
-  83289: { raceRule: "PLURALITY", expectedTurnout: 320_000 }, // GA Secretary of State R Runoff
-  83288: { raceRule: "PLURALITY", expectedTurnout: 190_000 }, // GA Secretary of State D Runoff
-  83312: { raceRule: "PLURALITY", expectedTurnout: 80_000  }, // GA US House 11 R Runoff
+  83316: { raceRule: "PLURALITY", expectedTurnout: 3_220_000, pollAvg: { "Collins": 58.0, "Dooley": 42.0 } }, // GA US Senate R Runoff
+  83266: { raceRule: "PLURALITY", expectedTurnout: 3_080_000 }, // GA Governor R Runoff
+  83277: { raceRule: "PLURALITY", expectedTurnout: 3_040_000 }, // GA Lt Governor R Runoff
+  83276: { raceRule: "PLURALITY", expectedTurnout: 3_000_000 }, // GA Lt Governor D Runoff
+  83289: { raceRule: "PLURALITY", expectedTurnout: 3_020_000 }, // GA Secretary of State R Runoff
+  83288: { raceRule: "PLURALITY", expectedTurnout: 3_090_000 }, // GA Secretary of State D Runoff
+  83312: { raceRule: "PLURALITY", expectedTurnout: 90_000  }, // GA US House 11 R Runoff
   83313: { raceRule: "PLURALITY", expectedTurnout: 60_000  }, // GA US House 12 D Runoff
   83314: { raceRule: "PLURALITY", expectedTurnout: 55_000  }, // GA US House 1 D Runoff
   83315: { raceRule: "PLURALITY", expectedTurnout: 65_000  }, // GA US House 7 D Runoff
