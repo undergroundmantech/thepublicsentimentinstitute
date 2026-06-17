@@ -85,6 +85,34 @@ export const RACE_TIERS = {
   83149: 'featured',   // NV US House 1 D
   82403: 'spotlight',  // ND US House At-Large R
   82384: 'featured',   // ND Public Service Commissioner R
+
+  // ── JUNE 16, 2026 ─────────────────────────────────────────────────────────
+  // Georgia
+  83316: 'spotlight',  // GA US Senate R Runoff
+  83266: 'spotlight',  // GA Governor R Runoff
+  83277: 'featured',   // GA Lt Gov R Runoff
+  83276: 'featured',   // GA Lt Gov D Runoff
+  83289: 'featured',   // GA Secretary of State R Runoff
+  83288: 'featured',   // GA Secretary of State D Runoff
+  83312: 'featured',   // GA US House 11 R Runoff
+  83313: 'featured',   // GA US House 12 D Runoff
+  83314: 'featured',   // GA US House 1 D Runoff
+  83315: 'featured',   // GA US House 7 D Runoff
+  // Alabama
+  83428: 'spotlight',  // AL US Senate R Runoff
+  83427: 'forecast',   // AL US Senate D Runoff
+  83430: 'featured',   // AL Lt Gov R Runoff
+  83431: 'featured',   // AL AG R Runoff
+  // Oklahoma
+  83476: 'spotlight',  // OK State Question 832 — $15 Minimum Wage
+  83424: 'forecast',   // OK US Senate R
+  83423: 'forecast',   // OK US Senate D
+  83344: 'forecast',   // OK Governor R
+  83343: 'forecast',   // OK Governor D
+  83415: 'featured',   // OK US House 1 R
+  // Washington DC
+  83478: 'featured',   // DC US House Delegate D
+  83479: 'spotlight',  // DC Mayor D
 }
 
 // ── Forecast defaults ─────────────────────────────────────────────────────────
@@ -155,6 +183,36 @@ export const RACE_FORECAST_DEFAULTS = {
   // ── NORTH DAKOTA (JUNE 9) ─────────────────────────────────────────────────
   82403: { raceRule: 'PLURALITY', expectedTurnout: 120_000 },  // ND US House At-Large R
   82384: { raceRule: 'PLURALITY', expectedTurnout: 100_000 },  // ND Public Service Commissioner R
+
+  // ── GEORGIA (JUNE 16) — runoffs use PLURALITY (top-2, winner-take-all) ────
+  83316: { raceRule: 'PLURALITY', expectedTurnout: 400_000, pollAvg: { 'Collins': 58.0, 'Dooley': 42.0 }, pollsCloseIso: '2026-06-16T19:00:00-04:00', turnoutBlendK: 2 }, // GA US Senate R Runoff
+  83266: { raceRule: 'PLURALITY', expectedTurnout: 380_000, pollsCloseIso: '2026-06-16T19:00:00-04:00' }, // GA Governor R Runoff
+  83277: { raceRule: 'PLURALITY', expectedTurnout: 350_000, pollsCloseIso: '2026-06-16T19:00:00-04:00' }, // GA Lt Gov R Runoff
+  83276: { raceRule: 'PLURALITY', expectedTurnout: 120_000, pollsCloseIso: '2026-06-16T19:00:00-04:00' }, // GA Lt Gov D Runoff
+  83289: { raceRule: 'PLURALITY', expectedTurnout: 350_000, pollsCloseIso: '2026-06-16T19:00:00-04:00' }, // GA SoS R Runoff
+  83288: { raceRule: 'PLURALITY', expectedTurnout: 120_000, pollsCloseIso: '2026-06-16T19:00:00-04:00' }, // GA SoS D Runoff
+  83312: { raceRule: 'PLURALITY', expectedTurnout: 65_000,  pollsCloseIso: '2026-06-16T19:00:00-04:00' }, // GA US House 11 R Runoff
+  83313: { raceRule: 'PLURALITY', expectedTurnout: 40_000,  pollsCloseIso: '2026-06-16T19:00:00-04:00' }, // GA US House 12 D Runoff
+  83314: { raceRule: 'PLURALITY', expectedTurnout: 35_000,  pollsCloseIso: '2026-06-16T19:00:00-04:00' }, // GA US House 1 D Runoff
+  83315: { raceRule: 'PLURALITY', expectedTurnout: 45_000,  pollsCloseIso: '2026-06-16T19:00:00-04:00' }, // GA US House 7 D Runoff
+
+  // ── ALABAMA (JUNE 16) ────────────────────────────────────────────────────
+  83428: { raceRule: 'PLURALITY', expectedTurnout: 400_000, pollAvg: { 'Moore': 51.0, 'Hudson': 49.0 }, pollsCloseIso: '2026-06-16T20:00:00-04:00', turnoutBlendK: 2 }, // AL US Senate R Runoff
+  83427: { raceRule: 'PLURALITY', expectedTurnout: 100_000, pollsCloseIso: '2026-06-16T20:00:00-04:00' }, // AL US Senate D Runoff
+  83430: { raceRule: 'PLURALITY', expectedTurnout: 350_000, pollsCloseIso: '2026-06-16T20:00:00-04:00' }, // AL Lt Gov R Runoff
+  83431: { raceRule: 'PLURALITY', expectedTurnout: 350_000, pollsCloseIso: '2026-06-16T20:00:00-04:00' }, // AL AG R Runoff
+
+  // ── OKLAHOMA (JUNE 16) ───────────────────────────────────────────────────
+  83476: { raceRule: 'PLURALITY', expectedTurnout: 225_000, pollAvg: { 'Yes': 54.0, 'No': 46.0 }, pollsCloseIso: '2026-06-16T20:00:00-04:00', turnoutBlendK: 2 }, // OK SQ 832
+  83424: { raceRule: 'PLURALITY', expectedTurnout: 280_000, pollsCloseIso: '2026-06-16T20:00:00-04:00' }, // OK US Senate R
+  83423: { raceRule: 'PLURALITY', expectedTurnout: 85_000,  pollsCloseIso: '2026-06-16T20:00:00-04:00' }, // OK US Senate D
+  83344: { raceRule: 'PLURALITY', expectedTurnout: 280_000, pollsCloseIso: '2026-06-16T20:00:00-04:00' }, // OK Governor R
+  83343: { raceRule: 'PLURALITY', expectedTurnout: 85_000,  pollsCloseIso: '2026-06-16T20:00:00-04:00' }, // OK Governor D
+  83415: { raceRule: 'PLURALITY', expectedTurnout: 65_000,  pollsCloseIso: '2026-06-16T20:00:00-04:00' }, // OK US House 1 R
+
+  // ── WASHINGTON DC (JUNE 16) ──────────────────────────────────────────────
+  83479: { raceRule: 'PLURALITY', expectedTurnout: 87_500, pollAvg: { 'George': 43.0, 'McDuffie': 38.0 }, pollsCloseIso: '2026-06-16T20:00:00-04:00', turnoutBlendK: 2 }, // DC Mayor D
+  83478: { raceRule: 'PLURALITY', expectedTurnout: 75_000,  pollsCloseIso: '2026-06-16T20:00:00-04:00' }, // DC US House Delegate D
 }
 
 // ── Helper: get tier for a race by CivicAPI race id ──────────────────────────

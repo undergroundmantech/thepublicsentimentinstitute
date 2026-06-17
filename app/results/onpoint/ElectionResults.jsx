@@ -748,21 +748,38 @@ function deepLinkRaceId() {
 function TieredRaceGrid({ tieredRaces, cols, GAP, CARD_H, onOpen, totalForDay, mapsOnly, onShowAll }) {
   const [showOther, setShowOther] = React.useState(false)
 
-  const tierGridStyle = {
+  const gridStyle = (overrideCols) => ({
     display: 'grid',
-    gridTemplateColumns: `repeat(${cols}, 1fr)`,
+    gridTemplateColumns: `repeat(${overrideCols ?? cols}, 1fr)`,
     gap: GAP,
-    marginBottom: 32,
+  })
+
+  // Group an array of races by province (state), sorted alphabetically.
+  function groupByState(races) {
+    const groups = {}
+    for (const r of races) {
+      const s = r.province || 'Other'
+      if (!groups[s]) groups[s] = []
+      groups[s].push(r)
+    }
+    return Object.entries(groups).sort(([a], [b]) => a.localeCompare(b))
   }
 
   function TierSection({ tier, label, accent, races, collapsible, expanded, onToggle }) {
     if (!races || races.length === 0) return null
     const isSpotlight = tier === 'spotlight'
+    const gridCols = isSpotlight && cols === 2 ? 1 : cols
+    const stateGroups = groupByState(races)
+    const multiState = stateGroups.length > 1
+
     return (
-      <div style={{ marginBottom: isSpotlight ? 40 : 32 }}>
+      <div style={{ marginBottom: isSpotlight ? 48 : 36 }}>
+        {/* ── tier header ── */}
         <div style={{
           display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-          marginBottom: isSpotlight ? 16 : 12,
+          marginBottom: isSpotlight ? 20 : 14,
+          paddingBottom: isSpotlight ? 14 : 10,
+          borderBottom: `2px solid ${isSpotlight ? (accent || 'var(--accent)') : 'var(--rule)'}`,
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
             {isSpotlight && (
@@ -788,7 +805,7 @@ function TieredRaceGrid({ tieredRaces, cols, GAP, CARD_H, onOpen, totalForDay, m
               letterSpacing: isSpotlight ? '-0.02em' : '0.08em',
               textTransform: isSpotlight ? 'none' : 'uppercase',
             }}>
-              {isSpotlight ? label : label}
+              {label}
             </span>
             <span style={{
               fontFamily: '"DM Mono", ui-monospace, monospace',
@@ -803,7 +820,7 @@ function TieredRaceGrid({ tieredRaces, cols, GAP, CARD_H, onOpen, totalForDay, m
             <button
               onClick={onToggle}
               style={{
-                background: 'none', border: '1px solid var(--border)',
+                background: 'none', border: '1px solid var(--rule)',
                 color: 'var(--ink-dim)', cursor: 'pointer', borderRadius: 4,
                 padding: '4px 10px',
                 fontFamily: '"JetBrains Mono", ui-monospace, monospace',
@@ -814,10 +831,50 @@ function TieredRaceGrid({ tieredRaces, cols, GAP, CARD_H, onOpen, totalForDay, m
             </button>
           )}
         </div>
+
+        {/* ── races body — grouped by state ── */}
         {(!collapsible || expanded) && (
-          <div style={{ ...tierGridStyle, gridTemplateColumns: `repeat(${isSpotlight && cols === 2 ? 1 : cols}, 1fr)` }}>
-            {races.map(race => (
-              <ResultCard key={race.id} race={race} onOpen={onOpen} compact={cols === 1} />
+          <div style={{ display: 'flex', flexDirection: 'column', gap: multiState ? 28 : 0 }}>
+            {stateGroups.map(([state, stateRaces]) => (
+              <div key={state}>
+                {multiState && (
+                  <div style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 10,
+                    marginBottom: 12,
+                  }}>
+                    <span style={{
+                      fontFamily: '"JetBrains Mono", ui-monospace, monospace',
+                      fontSize: 10,
+                      fontWeight: 700,
+                      letterSpacing: '0.18em',
+                      textTransform: 'uppercase',
+                      color: 'var(--ink-dim)',
+                    }}>
+                      {state}
+                    </span>
+                    <span style={{
+                      flex: 1,
+                      height: 1,
+                      background: 'var(--rule)',
+                    }} />
+                    <span style={{
+                      fontFamily: '"DM Mono", ui-monospace, monospace',
+                      fontSize: 10,
+                      color: 'var(--ink-dim)',
+                      opacity: 0.6,
+                    }}>
+                      {stateRaces.length} race{stateRaces.length !== 1 ? 's' : ''}
+                    </span>
+                  </div>
+                )}
+                <div style={gridStyle(gridCols)}>
+                  {stateRaces.map(race => (
+                    <ResultCard key={race.id} race={race} onOpen={onOpen} compact={cols === 1} />
+                  ))}
+                </div>
+              </div>
             ))}
           </div>
         )}

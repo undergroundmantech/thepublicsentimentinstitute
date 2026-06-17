@@ -78,6 +78,34 @@ export const RACE_REGISTRY: RaceRegistryEntry[] = [
   { id: 83149, date: "2026-06-09", slug: "nevada-us-house-1-democratic-primary",                 label: "Nevada US House 1 Democratic Primary" },
   { id: 82403, date: "2026-06-09", slug: "north-dakota-us-house-at-large-republican-primary",    label: "North Dakota US House At-Large Republican Primary" },
   { id: 82384, date: "2026-06-09", slug: "north-dakota-public-service-commissioner-republican-primary", label: "North Dakota Public Service Commissioner Republican Primary" },
+
+  // ── June 16, 2026 — GA / AL / OK / DC ────────────────────────────────────
+  // Georgia
+  { id: 83316, date: "2026-06-16", slug: "georgia-us-senate-republican-primary-runoff",                   label: "Georgia US Senate Republican Primary Runoff" },
+  { id: 83266, date: "2026-06-16", slug: "georgia-governor-republican-primary-runoff",                    label: "Georgia Governor Republican Primary Runoff" },
+  { id: 83277, date: "2026-06-16", slug: "georgia-lieutenant-governor-republican-primary-runoff",         label: "Georgia Lieutenant Governor Republican Primary Runoff" },
+  { id: 83276, date: "2026-06-16", slug: "georgia-lieutenant-governor-democratic-primary-runoff",         label: "Georgia Lieutenant Governor Democratic Primary Runoff" },
+  { id: 83289, date: "2026-06-16", slug: "georgia-secretary-of-state-republican-primary-runoff",          label: "Georgia Secretary of State Republican Primary Runoff" },
+  { id: 83288, date: "2026-06-16", slug: "georgia-secretary-of-state-democratic-primary-runoff",          label: "Georgia Secretary of State Democratic Primary Runoff" },
+  { id: 83312, date: "2026-06-16", slug: "georgia-us-house-11-republican-primary-runoff",                 label: "Georgia US House 11 Republican Primary Runoff" },
+  { id: 83313, date: "2026-06-16", slug: "georgia-us-house-12-democratic-primary-runoff",                 label: "Georgia US House 12 Democratic Primary Runoff" },
+  { id: 83314, date: "2026-06-16", slug: "georgia-us-house-1-democratic-primary-runoff",                  label: "Georgia US House 1 Democratic Primary Runoff" },
+  { id: 83315, date: "2026-06-16", slug: "georgia-us-house-7-democratic-primary-runoff",                  label: "Georgia US House 7 Democratic Primary Runoff" },
+  // Alabama
+  { id: 83428, date: "2026-06-16", slug: "alabama-us-senate-republican-primary-runoff",                   label: "Alabama US Senate Republican Primary Runoff" },
+  { id: 83427, date: "2026-06-16", slug: "alabama-us-senate-democratic-primary-runoff",                   label: "Alabama US Senate Democratic Primary Runoff" },
+  { id: 83430, date: "2026-06-16", slug: "alabama-lieutenant-governor-republican-primary-runoff",         label: "Alabama Lieutenant Governor Republican Primary Runoff" },
+  { id: 83431, date: "2026-06-16", slug: "alabama-attorney-general-republican-primary-runoff",            label: "Alabama Attorney General Republican Primary Runoff" },
+  // Oklahoma
+  { id: 83476, date: "2026-06-16", slug: "oklahoma-state-question-832-minimum-wage",                     label: "Oklahoma State Question 832 — \$15 Minimum Wage" },
+  { id: 83424, date: "2026-06-16", slug: "oklahoma-us-senate-republican-primary",                        label: "Oklahoma US Senate Republican Primary" },
+  { id: 83423, date: "2026-06-16", slug: "oklahoma-us-senate-democratic-primary",                        label: "Oklahoma US Senate Democratic Primary" },
+  { id: 83344, date: "2026-06-16", slug: "oklahoma-governor-republican-primary",                         label: "Oklahoma Governor Republican Primary" },
+  { id: 83343, date: "2026-06-16", slug: "oklahoma-governor-democratic-primary",                         label: "Oklahoma Governor Democratic Primary" },
+  { id: 83415, date: "2026-06-16", slug: "oklahoma-us-house-1-republican-primary",                       label: "Oklahoma US House 1 Republican Primary" },
+  // Washington DC
+  { id: 83478, date: "2026-06-16", slug: "dc-us-house-delegate-democratic-primary",                      label: "DC US House Delegate Democratic Primary" },
+  { id: 83479, date: "2026-06-16", slug: "dc-mayor-democratic-primary",                                  label: "DC Mayor Democratic Primary" },
 ];
 
 // Lookup helpers
