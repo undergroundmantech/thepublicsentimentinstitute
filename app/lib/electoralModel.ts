@@ -3,6 +3,7 @@
 export type RaceRule =
   | "PLURALITY"           // highest vote-getter wins
   | "MAJORITY"            // 50%+ to win; otherwise runoff (TX-style)
+  | "RANKED_CHOICE"       // RCV: elimination rounds until 50%+ (same math as MAJORITY, different UX labels)
   | "TOP_TWO"             // CA open primary: top 2 advance regardless of share
   | "MAJORITY_RUNOFF"     // 50%+ wins outright; otherwise top-2 municipal runoff (LA Mayor)
   | "THRESHOLD_35_CONVENTION" // IA: leader must clear 35% or party convention decides
@@ -470,7 +471,13 @@ export function forecastRace(
   if (percent_reporting === 0) {
     modeled_total_vote = expected_turnout;
   } else {
-    const implied_total = safeDiv(reported_vote_total, percent_reporting);
+    const raw_implied = safeDiv(reported_vote_total, percent_reporting);
+    // Guard: cap implied_total at 10× expected_turnout to prevent API data
+    // blips (wrong vote counts during a precinct update) from producing
+    // astronomically large projections (e.g. 425M total for a 720K-turnout race).
+    const implied_total = expected_turnout > 0
+      ? Math.min(raw_implied, 10 * expected_turnout)
+      : raw_implied;
     const liveWeight = Math.pow(percent_reporting, blend_k);
     const blended_total = (1 - liveWeight) * expected_turnout + liveWeight * implied_total;
     modeled_total_vote = Math.max(reported_vote_total, blended_total);
