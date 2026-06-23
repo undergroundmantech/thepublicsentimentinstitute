@@ -23,7 +23,7 @@ const RACES: RaceConfig[] = [
   { id: 84105, label: "SC Governor Republican Runoff",         location: "South Carolina",     dateShort: "06/23/26", raceRule: "PLURALITY", expectedTurnout: 380_000 },
   { id: 84104, label: "SC Attorney General Republican Runoff", location: "South Carolina",     dateShort: "06/23/26", raceRule: "PLURALITY", expectedTurnout: 310_000 },
   { id: 83700, label: "MD Governor Republican Primary",        location: "Maryland",           dateShort: "06/23/26", raceRule: "PLURALITY", expectedTurnout: 380_000 },
-  { id: 83925, label: "MD US House 6 Democratic Primary",      location: "Maryland",           dateShort: "06/23/26", raceRule: "PLURALITY", expectedTurnout: 110_000 },
+  { id: 83925, label: "MD US House 6 Democratic Primary",      location: "Maryland",           dateShort: "06/23/26", raceRule: "PLURALITY", expectedTurnout: 110_000, pollAvg: { "Trone": 56.0, "McClain Delaney": 40.0 } },
   { id: 84117, label: "NY US House 17 Democratic Primary",     location: "New York",           dateShort: "06/23/26", raceRule: "PLURALITY", expectedTurnout: 50_000  },
 ];
 
