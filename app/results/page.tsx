@@ -186,7 +186,7 @@ const RACE_FORECAST_DEFAULTS: Partial<Record<number, { raceRule: RaceRule; expec
   // ── SOUTH CAROLINA — PLURALITY runoffs (June 23 — from June 9 primary) ────
   84103: { raceRule: "PLURALITY", expectedTurnout: 270_000 }, // SC Agriculture Commissioner R Runoff
   84104: { raceRule: "PLURALITY", expectedTurnout: 310_000, pollsCloseIso: "2026-06-23T19:00:00-04:00" }, // SC Attorney General R Runoff
-  84105: { raceRule: "PLURALITY", expectedTurnout: 310_000, pollsCloseIso: "2026-06-23T19:00:00-04:00", pollAvg: { "Evette": 52.0, "Wilson": 48.0 } }, // SC Governor R Runoff
+  84105: { raceRule: "PLURALITY", expectedTurnout: 310_000, pollsCloseIso: "2026-06-23T19:00:00-04:00", pollAvg: { "Evette": 45.0, "Wilson": 55.0 } }, // SC Governor R Runoff
   84106: { raceRule: "PLURALITY", expectedTurnout: 85_000  }, // SC US House 1 R Runoff
   84110: { raceRule: "PLURALITY", expectedTurnout: 35_000  }, // SC US House 1 D Runoff
   84111: { raceRule: "PLURALITY", expectedTurnout: 40_000  }, // SC US House 2 D Runoff
@@ -497,7 +497,6 @@ function ProjectedWinnerOverlay({ show, candidate, prob, color, reporting, onDis
     <div className="fixed inset-0 z-[80] flex items-center justify-center">
       <div className="absolute inset-0 bg-black/85 backdrop-blur-sm" onClick={onDismiss} />
       <div className="res-overlay-card relative w-[min(680px,92vw)] overflow-hidden">
-        <div className="res-tri-stripe" />
         <div className="p-7 md:p-8">
           <div className="flex items-start justify-between gap-4">
             <div>
@@ -2564,7 +2563,7 @@ export default function March3FeaturedClient() {
         .county-pop { animation: county-pop 520ms ease-out; }
         @keyframes county-updated { 0% { filter:brightness(1) saturate(1); } 12% { filter:brightness(3.2) saturate(2.0); } 35% { filter:brightness(2.0) saturate(1.4); } 100% { filter:brightness(1) saturate(1); } }
         .county-updated { animation: county-updated 1200ms cubic-bezier(0.22,1,0.36,1); }
-        .res-tri-stripe { height:3px; width:100%; background:linear-gradient(90deg,var(--red) 0%,var(--purple) 50%,var(--blue) 100%); flex-shrink:0; box-shadow:0 4px 18px -2px rgba(124,58,237,0.28); }
+
         .res-live-dot { display:inline-block; width:6px; height:6px; border-radius:50%; background:var(--rep); box-shadow:0 0 8px rgba(230,57,70,0.7); animation:res-pulse 1.8s ease-in-out infinite; flex-shrink:0; }
         .res-eyebrow { display:flex; align-items:center; gap:7px; font-family:var(--font-body); font-size:10px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:var(--muted); }
         .res-note { font-family:var(--font-body); font-size:11px; letter-spacing:0.12em; text-transform:uppercase; color:var(--muted2); }
@@ -2584,7 +2583,6 @@ export default function March3FeaturedClient() {
         .res-bar-track { width:100%; height:3px; background:var(--border2); position:relative; overflow:hidden; }
         .res-bar-fill { position:absolute; top:0; left:0; bottom:0; background:var(--purple); transition:width 600ms cubic-bezier(0.22,1,0.36,1); }
         .res-panel { background:var(--panel); border:1px solid var(--border); overflow:hidden; animation:res-fade-up 0.5s cubic-bezier(0.22,1,0.36,1) both; border-radius:var(--r-lg); box-shadow:var(--shadow-sm); position:relative; }
-        .res-panel::before { content:''; position:absolute; top:0; left:0; right:0; height:22px; background:linear-gradient(90deg,var(--red) 0%,var(--purple) 50%,var(--blue) 100%); border-radius:var(--r-lg) var(--r-lg) 0 0; -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0); -webkit-mask-composite:xor; mask-composite:exclude; padding:2.5px 2.5px 0 2.5px; pointer-events:none; z-index:2; }
         .res-panel-header { display:flex; align-items:center; justify-content:space-between; padding:10px 14px; border-bottom:1px solid var(--border); background:var(--panel2); border-radius:var(--r-lg) var(--r-lg) 0 0; }
         .res-panel-tag { font-family:var(--font-body); font-size:10px; font-weight:700; letter-spacing:0.20em; text-transform:uppercase; color:var(--purple-soft); }
         .res-stat-block { background:var(--panel2); border:1px solid var(--border); padding:10px 12px; border-radius:var(--r-sm); }
@@ -2914,7 +2912,6 @@ export default function March3FeaturedClient() {
           .res-race-status-panel { flex: none !important; overflow: visible !important; }
           /* Center: map + county wrapped as one card, clearly separated from sections above */
           .res-center-split { order: 4 !important; height: auto !important; min-height: unset !important; width: 100%; box-sizing: border-box; margin-top: 6px; border: 1px solid var(--border); border-radius: var(--r-lg); box-shadow: var(--shadow-sm); overflow: hidden; display: flex; flex-direction: column; position: relative; }
-          .res-center-split::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 22px; background: linear-gradient(90deg,var(--red) 0%,var(--purple) 50%,var(--blue) 100%); border-radius: var(--r-lg) var(--r-lg) 0 0; -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude; padding: 2.5px 2.5px 0 2.5px; pointer-events: none; z-index: 2; }
           .res-center-split > .res-map-panel { height: auto !important; min-height: unset !important; max-height: unset !important; overflow: hidden; width: 100%; box-sizing: border-box; border: none !important; border-radius: 0 !important; box-shadow: none !important; }
           .res-center-split > .res-map-panel .res-map-body { flex: none; padding: 6px 10px !important; }
           .res-center-split > .res-map-panel::before { content: none !important; }
@@ -3364,7 +3361,6 @@ export default function March3FeaturedClient() {
 
             {/* MAP PANEL */}
             <div className="res-panel res-map-panel">
-              <div className="res-tri-stripe" />
               <div className="res-panel-header" style={{ flexWrap: "wrap", gap: "8px" }}>
                 <div style={{ minWidth: 0 }}>
                   <div className="res-panel-tag">{selectedMeta?.label ?? "—"}</div>

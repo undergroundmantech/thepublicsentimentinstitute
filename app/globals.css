@@ -67,10 +67,10 @@
   --gradient-purple-soft: linear-gradient(135deg, #9333ea 0%, #6d28d9 50%, #4c1d95 100%);
 
   /* Radii — rounded box UI */
-  --r-sm: 10px;
-  --r-md: 16px;
-  --r-lg: 22px;
-  --r-xl: 28px;
+  --r-sm: 5px;
+  --r-md: 8px;
+  --r-lg: 11px;
+  --r-xl: 14px;
   --r-pill: 9999px;
 
   /* Fonts (set via next/font) */
@@ -299,22 +299,6 @@ li { margin: 0.35em 0; }
     border-color var(--dur-2) var(--ease-out),
     box-shadow   var(--dur-2) var(--ease-out);
 }
-.psi-card::before {
-  content: "";
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 16px;
-  background: linear-gradient(90deg, var(--red) 0%, var(--purple) 50%, var(--blue) 100%);
-  border-radius: var(--r-lg) var(--r-lg) 0 0;
-  -webkit-mask:
-    linear-gradient(#000 0 0) content-box,
-    linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  padding: 1.5px 0 0 0;
-  pointer-events: none;
-  z-index: 2;
-}
 .psi-card:hover {
   transform: translateY(-2px);
   border-color: var(--border2);
@@ -336,45 +320,12 @@ li { margin: 0.35em 0; }
   -webkit-backdrop-filter: blur(18px);
   box-shadow: var(--shadow-md);
 }
-.psi-glass::before {
-  content: "";
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 16px;
-  background: linear-gradient(90deg, var(--red) 0%, var(--purple) 50%, var(--blue) 100%);
-  border-radius: var(--r-lg) var(--r-lg) 0 0;
-  -webkit-mask:
-    linear-gradient(#000 0 0) content-box,
-    linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  padding: 1.5px 0 0 0;
-  pointer-events: none;
-  z-index: 2;
-}
-
 .psi-inset {
   position: relative;
   overflow: hidden;
   background: var(--panel2);
   border: 1px solid var(--border);
   border-radius: var(--r-md);
-}
-.psi-inset::before {
-  content: "";
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 14px;
-  background: linear-gradient(90deg, var(--red) 0%, var(--purple) 50%, var(--blue) 100%);
-  border-radius: var(--r-md) var(--r-md) 0 0;
-  -webkit-mask:
-    linear-gradient(#000 0 0) content-box,
-    linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  padding: 1.5px 0 0 0;
-  pointer-events: none;
-  z-index: 2;
 }
 
 /* -------------------------------------------
