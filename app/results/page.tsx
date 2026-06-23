@@ -194,7 +194,7 @@ const RACE_FORECAST_DEFAULTS: Partial<Record<number, { raceRule: RaceRule; expec
   // ── MARYLAND — PLURALITY primaries — June 23 ─────────────────────────────
   83700: { raceRule: "PLURALITY", expectedTurnout: 380_000 }, // MD Governor R
   83920: { raceRule: "PLURALITY", expectedTurnout: 78_000, pollAvg: { "Elfreth": 62.0, "Cross": 15.0, "Dyches": 11.0 } }, // MD US House 3 D
-  83925: { raceRule: "PLURALITY", expectedTurnout: 71_000, pollAvg: { "McClain Delaney": 54.0, "Trone": 46.0 } }, // MD US House 6 D
+  83925: { raceRule: "PLURALITY", expectedTurnout: 71_000, pollAvg: { "Trone": 56.0, "McClain Delaney": 40.0 } }, // MD US House 6 D — TPSI poll (n=154 LV, undec allocated +10 Delaney +5 Trone)
   83926: { raceRule: "PLURALITY", expectedTurnout: 100_000 }, // MD US House 6 R
 
   // ── NEW YORK — PLURALITY primaries — June 23 ─────────────────────────────
@@ -1883,8 +1883,6 @@ function RacePickerPanel({ races, raceCache, selectedId, onSelect, lockedCalls, 
 
   return (
     <div style={{ display: "flex", flexDirection: "column", height: "100%", minHeight: 0, background: "var(--panel)", border: "1px solid var(--border)", overflow: "hidden", borderRadius: "var(--r-lg)", boxShadow: "var(--shadow-sm)", position: "relative" }}>
-      {/* Gradient border stripe */}
-      <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 22, background: "linear-gradient(90deg,var(--red) 0%,var(--purple) 50%,var(--blue) 100%)", borderRadius: "var(--r-lg) var(--r-lg) 0 0", WebkitMask: "linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0)", WebkitMaskComposite: "xor", maskComposite: "exclude", padding: "2.5px 2.5px 0 2.5px", pointerEvents: "none", zIndex: 2 }} />
       {/* Header */}
       <div style={{ padding: "12px 14px", borderBottom: "1px solid var(--border)", background: "var(--panel)", flexShrink: 0, borderRadius: "var(--r-lg) var(--r-lg) 0 0" }}>
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 8 }}>
@@ -2148,7 +2146,7 @@ export default function March3FeaturedClient() {
       title: "SC Governor Republican Runoff",
       subtitle: "South Carolina · June 23, 2026",
       electionDate: "JUNE 23, 2026",
-      about: "South Carolina's Republican gubernatorial runoff pits Lt. Gov. Pamela Evette against state Attorney General Alan Wilson. Evette entered the runoff as the frontrunner after a late-primary endorsement from Donald Trump helped propel her to the top of the initial June 9th primary results. However, the race remains highly unpredictable as Trump issued a dual co-endorsement for both candidates ahead of tonight's vote, and several eliminated primary rivals threw their backing behind Wilson. The winner will become the heavy favorite as the Republican nominee for governor in the fall.",
+      about: "Lt. Gov. Pamela Evette enters as the frontrunner after topping the June 9 primary on a late Trump endorsement. The race tightened when Trump issued a rare dual co-endorsement for both Evette and AG Alan Wilson ahead of tonight's vote. The winner becomes the heavy favorite for governor in November.",
     },
     {
       id: MD_HOUSE6_D_ID,
@@ -2158,7 +2156,7 @@ export default function March3FeaturedClient() {
       title: "MD US House 6 Democratic Primary",
       subtitle: "Maryland · June 23, 2026",
       electionDate: "JUNE 23, 2026",
-      about: "The Democratic primary for Maryland's 6th District has devolved into an incredibly expensive, fierce battle between incumbent Rep. April McClain Delaney and her predecessor, former Rep. David Trone. Both wealthy candidates have poured millions of dollars of their own fortunes into the primary campaign, resulting in a flood of sharp attack ads and public allegations regarding special interest money and reproductive rights. While McClain Delaney has maintained a consistent lead in late-stage polling, Trone's massive self-funding engine and established regional name recognition keep the final math highly competitive.",
+      about: "Incumbent Rep. April McClain Delaney faces former Rep. David Trone in a costly fight for Maryland's 6th. Both wealthy candidates have poured millions in self-funding into a race marked by sharp attacks over special interest money and reproductive rights. McClain Delaney leads in late polling, but Trone's resources keep it close.",
     },
     {
       id: NY_HOUSE10_D_ID,
@@ -2168,7 +2166,7 @@ export default function March3FeaturedClient() {
       title: "NY US House 10 Democratic Primary",
       subtitle: "New York · June 23, 2026",
       electionDate: "JUNE 23, 2026",
-      about: "New York's 10th Congressional District features an intense, highly watched showdown between incumbent Rep. Dan Goldman and progressive challenger Brad Lander, the city's former comptroller. Goldman is leaning heavily on his legislative track record and high-profile institutional backing from leaders like Gov. Kathy Hochul, while Lander has successfully galvanized the party's progressive left wing with powerful endorsements from figures like Sen. Bernie Sanders. The high-stakes race has largely transformed into an ideological referendum on the district's political identity, with both candidates sharply clashing over economic platforms and corporate influence.",
+      about: "Incumbent Rep. Dan Goldman faces progressive challenger Brad Lander, the city's former comptroller, in an ideological battle for New York's 10th. Goldman draws support from Gov. Hochul and institutional Democrats; Lander is backed by Sen. Sanders and the progressive left. Late polls favor Lander in a race seen as a referendum on the district's direction.",
     },
     // ── JUNE 16, 2026 (archived) ────────────────────────────────────────────────
     {
