@@ -20,10 +20,11 @@ type RaceConfig = {
 };
 
 const RACES: RaceConfig[] = [
-  { id: 83316, label: "GA US Senate Republican Runoff",        location: "Georgia",            dateShort: "06/16/26", raceRule: "MAJORITY",  expectedTurnout: 420_000, pollAvg: { "Collins": 58.0, "Dooley": 42.0 } },
-  { id: 83428, label: "AL US Senate Republican Runoff",        location: "Alabama",            dateShort: "06/16/26", raceRule: "MAJORITY",  expectedTurnout: 280_000, pollAvg: { "Moore": 51.0, "Hudson": 49.0 } },
-  { id: 83476, label: "OK State Question 832 · $15 Min Wage",  location: "Oklahoma",           dateShort: "06/16/26", raceRule: "PLURALITY", expectedTurnout: 220_000, pollAvg: { "Yes": 54.0, "No": 46.0 } },
-  { id: 83479, label: "DC Mayoral Democratic Primary",         location: "District of Columbia", dateShort: "06/16/26", raceRule: "RANKED_CHOICE", expectedTurnout: 87_500,  pollAvg: { "J. Lewis George": 43.0, "Kenyan McDuffie": 38.0, "Others (inc. E. Johnson)": 19.0 } },
+  { id: 84105, label: "SC Governor Republican Runoff",         location: "South Carolina",     dateShort: "06/23/26", raceRule: "PLURALITY", expectedTurnout: 380_000 },
+  { id: 84104, label: "SC Attorney General Republican Runoff", location: "South Carolina",     dateShort: "06/23/26", raceRule: "PLURALITY", expectedTurnout: 310_000 },
+  { id: 83700, label: "MD Governor Republican Primary",        location: "Maryland",           dateShort: "06/23/26", raceRule: "PLURALITY", expectedTurnout: 380_000 },
+  { id: 83925, label: "MD US House 6 Democratic Primary",      location: "Maryland",           dateShort: "06/23/26", raceRule: "PLURALITY", expectedTurnout: 110_000 },
+  { id: 84117, label: "NY US House 17 Democratic Primary",     location: "New York",           dateShort: "06/23/26", raceRule: "PLURALITY", expectedTurnout: 50_000  },
 ];
 
 type RaceData = { percent_reporting?: number; polls_open?: string | null; polls_close?: string | null; };
