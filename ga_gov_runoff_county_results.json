@@ -1,0 +1,230 @@
+{
+  "topline": {},
+  "counties": [
+    {
+      "col_0": "Rick Jackson\nGOP",
+      "col_1": "321,896",
+      "col_2": "53.0%",
+      "col_3": "",
+      "timestamp": "2026-06-17T01:24:47.893321"
+    },
+    {
+      "col_0": "Burt Jones\nGOP",
+      "col_1": "285,014",
+      "col_2": "47.0%",
+      "col_3": "",
+      "timestamp": "2026-06-17T01:24:48.053654"
+    },
+    {
+      "col_0": "",
+      "col_1": "",
+      "col_2": "",
+      "col_3": "",
+      "timestamp": "2026-06-17T01:24:48.071778"
+    },
+    {
+      "col_0": "",
+      "col_1": "",
+      "col_2": "",
+      "col_3": "",
+      "timestamp": "2026-06-17T01:24:48.090615"
+    },
+    {
+      "col_0": "",
+      "col_1": "",
+      "col_2": "",
+      "col_3": "",
+      "timestamp": "2026-06-17T01:24:48.109768"
+    },
+    {
+      "col_0": "",
+      "col_1": "",
+      "col_2": "",
+      "col_3": "",
+      "timestamp": "2026-06-17T01:24:48.129929"
+    },
+    {
+      "col_0": "",
+      "col_1": "",
+      "col_2": "",
+      "col_3": "",
+      "timestamp": "2026-06-17T01:24:48.147357"
+    },
+    {
+      "col_0": "",
+      "col_1": "",
+      "col_2": "",
+      "col_3": "",
+      "timestamp": "2026-06-17T01:24:48.165545"
+    },
+    {
+      "col_0": "COUNTY",
+      "col_1": "LEADER",
+      "col_2": "TOTAL VOTES",
+      "col_3": "EST. VOTES COUNTED",
+      "timestamp": "2026-06-17T01:24:48.198812"
+    },
+    {
+      "col_0": "Appling County",
+      "col_1": "Jones +5.4",
+      "col_2": "1,988",
+      "col_3": "99%",
+      "timestamp": "2026-06-17T01:24:48.226705"
+    },
+    {
+      "col_0": "Atkinson County",
+      "col_1": "Jones +29.6",
+      "col_2": "517",
+      "col_3": "95%",
+      "timestamp": "2026-06-17T01:24:48.254702"
+    },
+    {
+      "col_0": "Bacon County",
+      "col_1": "Jones +13.5",
+      "col_2": "888",
+      "col_3": "99%",
+      "timestamp": "2026-06-17T01:24:48.281620"
+    },
+    {
+      "col_0": "Baker County",
+      "col_1": "-",
+      "col_2": "0",
+      "col_3": "-",
+      "timestamp": "2026-06-17T01:24:48.310489"
+    },
+    {
+      "col_0": "Baldwin County",
+      "col_1": "Jones +20.1",
+      "col_2": "3,120",
+      "col_3": "99%",
+      "timestamp": "2026-06-17T01:24:48.337685"
+    },
+    {
+      "col_0": "Banks County",
+      "col_1": "Jackson +11.5",
+      "col_2": "2,224",
+      "col_3": "99%",
+      "timestamp": "2026-06-17T01:24:48.368383"
+    },
+    {
+      "col_0": "Barrow County",
+      "col_1": "Jackson +12.1",
+      "col_2": "6,803",
+      "col_3": "97%",
+      "timestamp": "2026-06-17T01:24:48.394768"
+    },
+    {
+      "col_0": "Bartow County",
+      "col_1": "Jackson +9.2",
+      "col_2": "9,594",
+      "col_3": "66%",
+      "timestamp": "2026-06-17T01:24:48.421989"
+    },
+    {
+      "col_0": "Ben Hill County",
+      "col_1": "Jackson +4.1",
+      "col_2": "1,070",
+      "col_3": "99%",
+      "timestamp": "2026-06-17T01:24:48.451010"
+    },
+    {
+      "col_0": "Berrien County",
+      "col_1": "Jackson +7",
+      "col_2": "2,218",
+      "col_3": "99%",
+      "timestamp": "2026-06-17T01:24:48.483329"
+    },
+    {
+      "col_0": "Bibb County",
+      "col_1": "Jones +7",
+      "col_2": "5,707",
+      "col_3": "61%",
+      "timestamp": "2026-06-17T01:24:48.521435"
+    },
+    {
+      "col_0": "Bleckley County",
+      "col_1": "Jackson +<1",
+      "col_2": "1,478",
+      "col_3": "99%",
+      "timestamp": "2026-06-17T01:24:48.563430"
+    },
+    {
+      "col_0": "Brantley County",
+      "col_1": "Jones +19.3",
+      "col_2": "2,132",
+      "col_3": "99%",
+      "timestamp": "2026-06-17T01:24:48.594453"
+    },
+    {
+      "col_0": "Brooks County",
+      "col_1": "Jones +32.1",
+      "col_2": "1,099",
+      "col_3": "99%",
+      "timestamp": "2026-06-17T01:24:48.620786"
+    },
+    {
+      "col_0": "Bryan County",
+      "col_1": "Jackson +5.3",
+      "col_2": "3,294",
+      "col_3": "99%",
+      "timestamp": "2026-06-17T01:24:48.646407"
+    },
+    {
+      "col_0": "",
+      "col_1": "SHARE OF GEORGIA'S VOTING AGE POPULATION\n18 YEARS AND OLDER",
+      "col_2": "5-YEAR SHIFT\nPERCENTAGE POINTS",
+      "col_3": "",
+      "timestamp": "2026-06-17T01:24:48.666030"
+    },
+    {
+      "col_0": "White",
+      "col_1": "U.S. overall 65.5%\n55.7%",
+      "col_2": "-3.2",
+      "col_3": "",
+      "timestamp": "2026-06-17T01:24:48.682971"
+    },
+    {
+      "col_0": "Hispanic or Latino",
+      "col_1": "14.0%\n6.3%",
+      "col_2": "+1.6",
+      "col_3": "",
+      "timestamp": "2026-06-17T01:24:48.699681"
+    },
+    {
+      "col_0": "Black or African American",
+      "col_1": "12.3%\n32.1%",
+      "col_2": "0",
+      "col_3": "",
+      "timestamp": "2026-06-17T01:24:48.719540"
+    },
+    {
+      "col_0": "Asian",
+      "col_1": "4.8%\n3.3%",
+      "col_2": "+0.6",
+      "col_3": "",
+      "timestamp": "2026-06-17T01:24:48.746903"
+    },
+    {
+      "col_0": "Two or more races",
+      "col_1": "2.5%\n2.4%",
+      "col_2": "+1.1",
+      "col_3": "",
+      "timestamp": "2026-06-17T01:24:48.763681"
+    },
+    {
+      "col_0": "American Indian or Alaska Native",
+      "col_1": "0.5%\n0.1%",
+      "col_2": "\u2014",
+      "col_3": "",
+      "timestamp": "2026-06-17T01:24:48.781512"
+    },
+    {
+      "col_0": "Native Hawaiian or Other Pacific Islander",
+      "col_1": "0.2%\n0.05%",
+      "col_2": "\u2014",
+      "col_3": "",
+      "timestamp": "2026-06-17T01:24:48.802438"
+    }
+  ],
+  "updated": "2026-06-17T01:24:49.384834"
+}

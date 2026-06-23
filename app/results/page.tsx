@@ -28,7 +28,7 @@ type RegionCandidate = { name: string; party: string; votes: string | number; pe
 type RegionResult = { region: { name: string; type: string; fill?: string; percent_reporting?: number; }; candidates: RegionCandidate[]; };
 type RaceDetail = { election_name: string; election_type: string; election_scope: string; election_date: string; country: string; province: string | null; district: string | null; municipality: string | null; polls_open: string | null; polls_close: string | null; last_updated: string | null; percent_reporting?: number; candidates: RaceCandidate[]; region_results?: RegionResult[] | Record<string, RegionResult>; };
 type RaceType = "Democratic Primary" | "Republican Primary" | "Democratic Primary Runoff" | "Republican Primary Runoff" | "Special Election" | "General Election" | "Open Primary" | "Ballot Measure";
-type FeaturedRace = { id: number; state: "AL" | "CA" | "DC" | "GA" | "IA" | "ME" | "MT" | "ND" | "NJ" | "NM" | "NV" | "OK" | "SC" | "SD" | "TX"; office: string; raceType: RaceType; label: string; archived?: boolean; };
+type FeaturedRace = { id: number; state: "AL" | "CA" | "DC" | "GA" | "IA" | "MD" | "ME" | "MT" | "ND" | "NJ" | "NM" | "NV" | "NY" | "OK" | "SC" | "SD" | "TX" | "UT"; office: string; raceType: RaceType; label: string; archived?: boolean; };
 
 function getRaceTypeColor(raceType: RaceType): string {
   if (raceType === "Republican Primary") return "var(--rep)";
@@ -182,6 +182,34 @@ const RACE_FORECAST_DEFAULTS: Partial<Record<number, { raceRule: RaceRule; expec
   83344: { raceRule: "PLURALITY", expectedTurnout: 320_000 }, // OK Governor R
   83343: { raceRule: "PLURALITY", expectedTurnout: 150_000 }, // OK Governor D
   83415: { raceRule: "PLURALITY", expectedTurnout: 70_000  }, // OK US House 1 R
+
+  // ── SOUTH CAROLINA — PLURALITY runoffs (June 23 — from June 9 primary) ────
+  84103: { raceRule: "PLURALITY", expectedTurnout: 270_000 }, // SC Agriculture Commissioner R Runoff
+  84104: { raceRule: "PLURALITY", expectedTurnout: 310_000, pollsCloseIso: "2026-06-23T19:00:00-04:00" }, // SC Attorney General R Runoff
+  84105: { raceRule: "PLURALITY", expectedTurnout: 310_000, pollsCloseIso: "2026-06-23T19:00:00-04:00", pollAvg: { "Evette": 52.0, "Wilson": 48.0 } }, // SC Governor R Runoff
+  84106: { raceRule: "PLURALITY", expectedTurnout: 85_000  }, // SC US House 1 R Runoff
+  84110: { raceRule: "PLURALITY", expectedTurnout: 35_000  }, // SC US House 1 D Runoff
+  84111: { raceRule: "PLURALITY", expectedTurnout: 40_000  }, // SC US House 2 D Runoff
+
+  // ── MARYLAND — PLURALITY primaries — June 23 ─────────────────────────────
+  83700: { raceRule: "PLURALITY", expectedTurnout: 380_000 }, // MD Governor R
+  83920: { raceRule: "PLURALITY", expectedTurnout: 78_000, pollAvg: { "Elfreth": 62.0, "Cross": 15.0, "Dyches": 11.0 } }, // MD US House 3 D
+  83925: { raceRule: "PLURALITY", expectedTurnout: 71_000, pollAvg: { "McClain Delaney": 54.0, "Trone": 46.0 } }, // MD US House 6 D
+  83926: { raceRule: "PLURALITY", expectedTurnout: 100_000 }, // MD US House 6 R
+
+  // ── NEW YORK — PLURALITY primaries — June 23 ─────────────────────────────
+  84040: { raceRule: "PLURALITY", expectedTurnout: 64_000, pollAvg: { "Lander": 57.0, "Goldman": 43.0 } }, // NY US House 10 D
+  84042: { raceRule: "PLURALITY", expectedTurnout: 68_000, pollAvg: { "Lasher": 46.0, "Bores": 31.0, "Conway": 13.0, "Schlossberg": 10.0 } }, // NY US House 12 D
+  84043: { raceRule: "PLURALITY", expectedTurnout: 40_000 }, // NY US House 13 D
+  84045: { raceRule: "PLURALITY", expectedTurnout: 35_000 }, // NY US House 15 D
+  84117: { raceRule: "PLURALITY", expectedTurnout: 50_000 }, // NY US House 17 D
+
+  // ── UTAH — PLURALITY primaries — June 23 ─────────────────────────────────
+  // Utah: all-mail state — initial returns are large final mail tranches, not partial precincts.
+  // turnoutBlendK: 0.5 trusts live data more quickly so the model converges on real results faster.
+  84100: { raceRule: "PLURALITY", expectedTurnout: 38_000,  pollAvg: { "McAdams": 41.0, "Blouin": 38.0, "Farrell": 12.0, "Mohamed": 9.0 }, turnoutBlendK: 0.5 }, // UT US House 1 D
+  84101: { raceRule: "PLURALITY", expectedTurnout: 150_000, turnoutBlendK: 0.5 }, // UT US House 2 R
+  84102: { raceRule: "PLURALITY", expectedTurnout: 58_000,  pollAvg: { "Maloy": 55.0, "Lyman": 45.0 }, turnoutBlendK: 0.5 }, // UT US House 3 R
 };
 
 // ─── STATE-LEVEL POLL CLOSE OVERRIDES ────────────────────────────────────────
@@ -192,6 +220,10 @@ const STATE_POLLS_CLOSE: Partial<Record<string, string>> = {
   GA: "2026-06-16T19:00:00-04:00", // 7:00 PM ET
   AL: "2026-06-16T20:00:00-04:00", // 8:00 PM ET
   OK: "2026-06-16T20:00:00-05:00", // 8:00 PM CT
+  SC: "2026-06-23T19:00:00-04:00", // 7:00 PM ET
+  MD: "2026-06-23T20:00:00-04:00", // 8:00 PM ET
+  NY: "2026-06-23T21:00:00-04:00", // 9:00 PM ET
+  UT: "2026-06-23T20:00:00-06:00", // 8:00 PM MT (10:00 PM ET)
 };
 
 /** Returns the effective polls-close ISO string for a race, preferring:
@@ -293,32 +325,54 @@ const FEATURED: FeaturedRace[] = [
   // ── NORTH DAKOTA (JUNE 9) ──
   { id: 82403, state: "ND", office: "US House At-Large", raceType: "Republican Primary", label: "North Dakota US House At-Large Republican Primary", archived: true },
   { id: 82384, state: "ND", office: "Public Service Commissioner", raceType: "Republican Primary", label: "North Dakota Public Service Commissioner Republican Primary", archived: true },
-  // ── GEORGIA (JUNE 16) ──
-  { id: 83316, state: "GA", office: "US Senate", raceType: "Republican Primary Runoff", label: "Georgia US Senate Republican Primary Runoff" },
-  { id: 83266, state: "GA", office: "Governor", raceType: "Republican Primary Runoff", label: "Georgia Governor Republican Primary Runoff" },
-  { id: 83277, state: "GA", office: "Lieutenant Governor", raceType: "Republican Primary Runoff", label: "Georgia Lieutenant Governor Republican Primary Runoff" },
-  { id: 83276, state: "GA", office: "Lieutenant Governor", raceType: "Democratic Primary Runoff", label: "Georgia Lieutenant Governor Democratic Primary Runoff" },
-  { id: 83289, state: "GA", office: "Secretary of State", raceType: "Republican Primary Runoff", label: "Georgia Secretary of State Republican Primary Runoff" },
-  { id: 83288, state: "GA", office: "Secretary of State", raceType: "Democratic Primary Runoff", label: "Georgia Secretary of State Democratic Primary Runoff" },
-  { id: 83312, state: "GA", office: "US House 11", raceType: "Republican Primary Runoff", label: "Georgia US House 11 Republican Primary Runoff" },
-  { id: 83313, state: "GA", office: "US House 12", raceType: "Democratic Primary Runoff", label: "Georgia US House 12 Democratic Primary Runoff" },
-  { id: 83314, state: "GA", office: "US House 1", raceType: "Democratic Primary Runoff", label: "Georgia US House 1 Democratic Primary Runoff" },
-  { id: 83315, state: "GA", office: "US House 7", raceType: "Democratic Primary Runoff", label: "Georgia US House 7 Democratic Primary Runoff" },
-  // ── ALABAMA (JUNE 16) ──
-  { id: 83428, state: "AL", office: "US Senate", raceType: "Republican Primary Runoff", label: "Alabama US Senate Republican Primary Runoff" },
-  { id: 83427, state: "AL", office: "US Senate", raceType: "Democratic Primary Runoff", label: "Alabama US Senate Democratic Primary Runoff" },
-  { id: 83430, state: "AL", office: "Lieutenant Governor", raceType: "Republican Primary Runoff", label: "Alabama Lieutenant Governor Republican Primary Runoff" },
-  { id: 83431, state: "AL", office: "Attorney General", raceType: "Republican Primary Runoff", label: "Alabama Attorney General Republican Primary Runoff" },
-  // ── OKLAHOMA (JUNE 16) ──
-  { id: 83476, state: "OK", office: "State Question 832", raceType: "Ballot Measure", label: "Oklahoma State Question 832 — $15 Minimum Wage" },
-  { id: 83424, state: "OK", office: "US Senate", raceType: "Republican Primary", label: "Oklahoma US Senate Republican Primary" },
-  { id: 83423, state: "OK", office: "US Senate", raceType: "Democratic Primary", label: "Oklahoma US Senate Democratic Primary" },
-  { id: 83344, state: "OK", office: "Governor", raceType: "Republican Primary", label: "Oklahoma Governor Republican Primary" },
-  { id: 83343, state: "OK", office: "Governor", raceType: "Democratic Primary", label: "Oklahoma Governor Democratic Primary" },
-  { id: 83415, state: "OK", office: "US House 1", raceType: "Republican Primary", label: "Oklahoma US House 1 Republican Primary" },
-  // ── WASHINGTON DC (JUNE 16) ──
-  { id: 83478, state: "DC", office: "US House Delegate", raceType: "Democratic Primary", label: "DC US House Delegate Democratic Primary" },
-  { id: 83479, state: "DC", office: "Mayor", raceType: "Democratic Primary", label: "DC Mayor Democratic Primary" },
+  // ── GEORGIA (JUNE 16 — ARCHIVED) ──
+  { id: 83316, state: "GA", office: "US Senate", raceType: "Republican Primary Runoff", label: "Georgia US Senate Republican Primary Runoff", archived: true },
+  { id: 83266, state: "GA", office: "Governor", raceType: "Republican Primary Runoff", label: "Georgia Governor Republican Primary Runoff", archived: true },
+  { id: 83277, state: "GA", office: "Lieutenant Governor", raceType: "Republican Primary Runoff", label: "Georgia Lieutenant Governor Republican Primary Runoff", archived: true },
+  { id: 83276, state: "GA", office: "Lieutenant Governor", raceType: "Democratic Primary Runoff", label: "Georgia Lieutenant Governor Democratic Primary Runoff", archived: true },
+  { id: 83289, state: "GA", office: "Secretary of State", raceType: "Republican Primary Runoff", label: "Georgia Secretary of State Republican Primary Runoff", archived: true },
+  { id: 83288, state: "GA", office: "Secretary of State", raceType: "Democratic Primary Runoff", label: "Georgia Secretary of State Democratic Primary Runoff", archived: true },
+  { id: 83312, state: "GA", office: "US House 11", raceType: "Republican Primary Runoff", label: "Georgia US House 11 Republican Primary Runoff", archived: true },
+  { id: 83313, state: "GA", office: "US House 12", raceType: "Democratic Primary Runoff", label: "Georgia US House 12 Democratic Primary Runoff", archived: true },
+  { id: 83314, state: "GA", office: "US House 1", raceType: "Democratic Primary Runoff", label: "Georgia US House 1 Democratic Primary Runoff", archived: true },
+  { id: 83315, state: "GA", office: "US House 7", raceType: "Democratic Primary Runoff", label: "Georgia US House 7 Democratic Primary Runoff", archived: true },
+  // ── ALABAMA (JUNE 16 — ARCHIVED) ──
+  { id: 83428, state: "AL", office: "US Senate", raceType: "Republican Primary Runoff", label: "Alabama US Senate Republican Primary Runoff", archived: true },
+  { id: 83427, state: "AL", office: "US Senate", raceType: "Democratic Primary Runoff", label: "Alabama US Senate Democratic Primary Runoff", archived: true },
+  { id: 83430, state: "AL", office: "Lieutenant Governor", raceType: "Republican Primary Runoff", label: "Alabama Lieutenant Governor Republican Primary Runoff", archived: true },
+  { id: 83431, state: "AL", office: "Attorney General", raceType: "Republican Primary Runoff", label: "Alabama Attorney General Republican Primary Runoff", archived: true },
+  // ── OKLAHOMA (JUNE 16 — ARCHIVED) ──
+  { id: 83476, state: "OK", office: "State Question 832", raceType: "Ballot Measure", label: "Oklahoma State Question 832 — $15 Minimum Wage", archived: true },
+  { id: 83424, state: "OK", office: "US Senate", raceType: "Republican Primary", label: "Oklahoma US Senate Republican Primary", archived: true },
+  { id: 83423, state: "OK", office: "US Senate", raceType: "Democratic Primary", label: "Oklahoma US Senate Democratic Primary", archived: true },
+  { id: 83344, state: "OK", office: "Governor", raceType: "Republican Primary", label: "Oklahoma Governor Republican Primary", archived: true },
+  { id: 83343, state: "OK", office: "Governor", raceType: "Democratic Primary", label: "Oklahoma Governor Democratic Primary", archived: true },
+  { id: 83415, state: "OK", office: "US House 1", raceType: "Republican Primary", label: "Oklahoma US House 1 Republican Primary", archived: true },
+  // ── WASHINGTON DC (JUNE 16 — ARCHIVED) ──
+  { id: 83478, state: "DC", office: "US House Delegate", raceType: "Democratic Primary", label: "DC US House Delegate Democratic Primary", archived: true },
+  { id: 83479, state: "DC", office: "Mayor", raceType: "Democratic Primary", label: "DC Mayor Democratic Primary", archived: true },
+  // ── SOUTH CAROLINA (JUNE 23 — runoffs from June 9) ──
+  { id: 84103, state: "SC", office: "Agriculture Commissioner", raceType: "Republican Primary Runoff", label: "South Carolina Agriculture Commissioner Republican Runoff" },
+  { id: 84104, state: "SC", office: "Attorney General", raceType: "Republican Primary Runoff", label: "South Carolina Attorney General Republican Runoff" },
+  { id: 84105, state: "SC", office: "Governor", raceType: "Republican Primary Runoff", label: "South Carolina Governor Republican Runoff" },
+  { id: 84106, state: "SC", office: "US House 1", raceType: "Republican Primary Runoff", label: "South Carolina US House 1 Republican Runoff" },
+  { id: 84110, state: "SC", office: "US House 1", raceType: "Democratic Primary Runoff", label: "South Carolina US House 1 Democratic Runoff" },
+  { id: 84111, state: "SC", office: "US House 2", raceType: "Democratic Primary Runoff", label: "South Carolina US House 2 Democratic Runoff" },
+  // ── MARYLAND (JUNE 23) ──
+  { id: 83700, state: "MD", office: "Governor", raceType: "Republican Primary", label: "Maryland Governor Republican Primary" },
+  { id: 83920, state: "MD", office: "US House 3", raceType: "Democratic Primary", label: "Maryland US House 3 Democratic Primary" },
+  { id: 83925, state: "MD", office: "US House 6", raceType: "Democratic Primary", label: "Maryland US House 6 Democratic Primary" },
+  { id: 83926, state: "MD", office: "US House 6", raceType: "Republican Primary", label: "Maryland US House 6 Republican Primary" },
+  // ── NEW YORK (JUNE 23) ──
+  { id: 84040, state: "NY", office: "US House 10", raceType: "Democratic Primary", label: "New York US House 10 Democratic Primary" },
+  { id: 84042, state: "NY", office: "US House 12", raceType: "Democratic Primary", label: "New York US House 12 Democratic Primary" },
+  { id: 84043, state: "NY", office: "US House 13", raceType: "Democratic Primary", label: "New York US House 13 Democratic Primary" },
+  { id: 84045, state: "NY", office: "US House 15", raceType: "Democratic Primary", label: "New York US House 15 Democratic Primary" },
+  { id: 84117, state: "NY", office: "US House 17", raceType: "Democratic Primary", label: "New York US House 17 Democratic Primary" },
+  // ── UTAH (JUNE 23) ──
+  { id: 84100, state: "UT", office: "US House 1", raceType: "Democratic Primary", label: "Utah US House 1 Democratic Primary" },
+  { id: 84101, state: "UT", office: "US House 2", raceType: "Republican Primary", label: "Utah US House 2 Republican Primary" },
+  { id: 84102, state: "UT", office: "US House 3", raceType: "Republican Primary", label: "Utah US House 3 Republican Primary" },
 ];
 
 async function fetchRaceById(id: number): Promise<RaceDetail> {
@@ -1762,14 +1816,18 @@ function RacePickerPanel({ races, raceCache, selectedId, onSelect, lockedCalls, 
       ME: "MAINE · JUNE 9, 2026",
       NV: "NEVADA · JUNE 9, 2026",
       ND: "N. DAKOTA · JUNE 9, 2026",
+      GA: "GEORGIA · JUNE 16, 2026",
+      AL: "ALABAMA · JUNE 16, 2026",
+      DC: "WASH. DC · JUNE 16, 2026",
+      OK: "OKLAHOMA · JUNE 16, 2026",
     };
     // State display order for archive
-    const archiveStateOrder = ["TX", "CA", "IA", "MT", "NJ", "NM", "SD", "SC", "ME", "NV", "ND"];
+    const archiveStateOrder = ["TX", "CA", "IA", "MT", "NJ", "NM", "SD", "SC", "ME", "NV", "ND", "GA", "AL", "DC", "OK"];
 
     const activeRaces = filtered.filter(r => !r.archived);
     const archivedRaces = filtered.filter(r => r.archived);
 
-    const activeStateOrder = ["GA", "AL", "DC", "OK"];
+    const activeStateOrder = ["SC", "MD", "NY", "UT"];
 
     const map = new Map<string, FeaturedRace[]>();
     if (!activeState && !q) {
@@ -1801,6 +1859,10 @@ function RacePickerPanel({ races, raceCache, selectedId, onSelect, lockedCalls, 
   }, [races, search, showArchived, activeState, spotlightRaceIds]);
 
   const stateActiveLabel: Record<string, string> = {
+    SC: "S. CAROLINA · JUNE 23, 2026",
+    MD: "MARYLAND · JUNE 23, 2026",
+    NY: "NEW YORK · JUNE 23, 2026",
+    UT: "UTAH · JUNE 23, 2026",
     GA: "GEORGIA · JUNE 16, 2026",
     AL: "ALABAMA · JUNE 16, 2026",
     DC: "WASH. DC · JUNE 16, 2026",
@@ -2058,101 +2120,57 @@ export default function March3FeaturedClient() {
   const [archiveDropdownOpen, setArchiveDropdownOpen] = useState(false);
   const [archiveDate, setArchiveDate] = useState<string | null>(null);
   const archiveDropdownRef = useRef<HTMLDivElement>(null);
-  const [activeState, setActiveState] = useState<"AL" | "CA" | "DC" | "GA" | "IA" | "ME" | "MT" | "ND" | "NJ" | "NM" | "NV" | "OK" | "SC" | "SD" | "TX">("GA")
-  const [selectedId, setSelectedId] = useState<number>(83316);
-  const LA_MAYOR_ID = 79938; // Los Angeles Mayor Open Primary — June 2 spotlight
-  const CA_GOV_ID = 79777;  // California Governor Open Primary — June 2 spotlight
-  const IA_GOV_ID = 79945;  // Iowa Governor Republican Primary — June 2 spotlight
-  const SD_GOV_ID = 80461; // SD Governor Republican Primary — June 2 spotlight
-  const SC_SENATE_R_ID = 82664; // SC US Senate Republican Primary — June 9 spotlight
-  const SC_GOV_R_ID = 82596;   // SC Governor Republican Primary — June 9 spotlight
-  const ME_SENATE_D_ID = 83063; // ME US Senate Democratic Primary — June 9 spotlight
-  const ME_GOV_D_ID = 82693;   // ME Governor Democratic Primary — June 9 spotlight
-  const GA_SENATE_R_ID = 83316; // GA US Senate Republican Primary Runoff — June 16 spotlight
-  const AL_SENATE_R_ID = 83428; // AL US Senate Republican Primary Runoff — June 16 spotlight
-  const OK_SQ832_ID   = 83476; // Oklahoma State Question 832 — June 16 spotlight
+  const [activeState, setActiveState] = useState<"AL" | "CA" | "DC" | "GA" | "IA" | "MD" | "ME" | "MT" | "ND" | "NJ" | "NM" | "NV" | "NY" | "OK" | "SC" | "SD" | "TX" | "UT">("SC")
+  const [selectedId, setSelectedId] = useState<number>(84105);
+  const LA_MAYOR_ID     = 79938; // Los Angeles Mayor Open Primary — June 2 spotlight
+  const CA_GOV_ID       = 79777; // California Governor Open Primary — June 2 spotlight
+  const IA_GOV_ID       = 79945; // Iowa Governor Republican Primary — June 2 spotlight
+  const SD_GOV_ID       = 80461; // SD Governor Republican Primary — June 2 spotlight
+  const SC_SENATE_R_ID  = 82664; // SC US Senate Republican Primary — June 9 spotlight
+  const SC_GOV_R_ID     = 82596; // SC Governor Republican Primary — June 9 spotlight
+  const ME_SENATE_D_ID  = 83063; // ME US Senate Democratic Primary — June 9 spotlight
+  const ME_GOV_D_ID     = 82693; // ME Governor Democratic Primary — June 9 spotlight
+  const GA_SENATE_R_ID  = 83316; // GA US Senate Republican Primary Runoff — June 16 spotlight
+  const AL_SENATE_R_ID  = 83428; // AL US Senate Republican Primary Runoff — June 16 spotlight
+  const OK_SQ832_ID     = 83476; // Oklahoma State Question 832 — June 16 spotlight
+  // June 23 spotlight constants
+  const SC_GOV_R_RUNOFF_ID = 84105; // SC Governor R Runoff — June 23 spotlight
+  const SC_AG_R_RUNOFF_ID  = 84104; // SC Attorney General R Runoff — June 23 spotlight
+  const MD_GOV_R_ID        = 83700; // MD Governor R — June 23 spotlight
+  const MD_HOUSE6_D_ID     = 83925; // MD US House 6 D — June 23 spotlight
+  const NY_HOUSE10_D_ID    = 84040; // NY US House 10 D — June 23 spotlight
   const ALL_SPOTLIGHT_META = [
     {
-      id: SC_GOV_R_ID,
-      shortLabel: "SC Governor",
+      id: SC_GOV_R_RUNOFF_ID,
+      shortLabel: "SC Gov · Runoff",
       stateLabel: "S. CAROLINA",
       state: "SC" as const,
-      title: "SC Governor Republican Primary",
-      subtitle: "South Carolina · June 9, 2026",
-      electionDate: "JUNE 9, 2026",
-      about: "South Carolina Republicans will select a nominee for governor in one of the most competitive open-seat primaries in the South, with Lt. Gov. Pamela Evette, Attorney General Alan Wilson, Rep. Nancy Mace, Rep. Ralph Norman, and businessman Rom Reddy all in contention. TPSI's Meridian CV model (June 3–4) showed Mace leading at 30% ahead of Trump's late endorsement of Evette, which has since moved prediction markets heavily in her favor. A June 23 runoff between the top two finishers is expected.",
+      title: "SC Governor Republican Runoff",
+      subtitle: "South Carolina · June 23, 2026",
+      electionDate: "JUNE 23, 2026",
+      about: "South Carolina's Republican gubernatorial runoff pits Lt. Gov. Pamela Evette against state Attorney General Alan Wilson. Evette entered the runoff as the frontrunner after a late-primary endorsement from Donald Trump helped propel her to the top of the initial June 9th primary results. However, the race remains highly unpredictable as Trump issued a dual co-endorsement for both candidates ahead of tonight's vote, and several eliminated primary rivals threw their backing behind Wilson. The winner will become the heavy favorite as the Republican nominee for governor in the fall.",
     },
     {
-      id: SC_SENATE_R_ID,
-      shortLabel: "SC Senate",
-      stateLabel: "S. CAROLINA",
-      state: "SC" as const,
-      title: "SC US Senate Republican Primary",
-      subtitle: "South Carolina · June 9, 2026",
-      electionDate: "JUNE 9, 2026",
-      about: "South Carolina Republicans will choose a nominee for U.S. Senate as four-term incumbent Lindsey Graham, backed by President Trump, faces a crowded field led by MAGA challenger Mark Lynch, who consolidated anti-Graham support following Paul Dans' withdrawal. TPSI's Meridian CV model (June 3–4) shows Graham at 51% with Lynch surging to 26%. If no candidate clears 50%, the top two advance to a June 23 runoff.",
+      id: MD_HOUSE6_D_ID,
+      shortLabel: "MD House 6 D",
+      stateLabel: "MARYLAND",
+      state: "MD" as const,
+      title: "MD US House 6 Democratic Primary",
+      subtitle: "Maryland · June 23, 2026",
+      electionDate: "JUNE 23, 2026",
+      about: "The Democratic primary for Maryland's 6th District has devolved into an incredibly expensive, fierce battle between incumbent Rep. April McClain Delaney and her predecessor, former Rep. David Trone. Both wealthy candidates have poured millions of dollars of their own fortunes into the primary campaign, resulting in a flood of sharp attack ads and public allegations regarding special interest money and reproductive rights. While McClain Delaney has maintained a consistent lead in late-stage polling, Trone's massive self-funding engine and established regional name recognition keep the final math highly competitive.",
     },
     {
-      id: ME_SENATE_D_ID,
-      shortLabel: "ME Senate",
-      stateLabel: "MAINE",
-      state: "ME" as const,
-      title: "ME US Senate Democratic Primary",
-      subtitle: "Maine · June 9, 2026",
-      electionDate: "JUNE 9, 2026",
-      about: "Maine Democrats will choose a nominee to challenge incumbent Republican Susan Collins in November, with Chloe Platner holding a commanding lead in the field over challengers including Sara Gideon-aligned candidates and former officials. Platner has polled at 76% in the most recent public survey. TPSI fresh polling from today's fieldwork will update the forecast ahead of the general election matchup.",
+      id: NY_HOUSE10_D_ID,
+      shortLabel: "NY House 10 D",
+      stateLabel: "NEW YORK",
+      state: "NY" as const,
+      title: "NY US House 10 Democratic Primary",
+      subtitle: "New York · June 23, 2026",
+      electionDate: "JUNE 23, 2026",
+      about: "New York's 10th Congressional District features an intense, highly watched showdown between incumbent Rep. Dan Goldman and progressive challenger Brad Lander, the city's former comptroller. Goldman is leaning heavily on his legislative track record and high-profile institutional backing from leaders like Gov. Kathy Hochul, while Lander has successfully galvanized the party's progressive left wing with powerful endorsements from figures like Sen. Bernie Sanders. The high-stakes race has largely transformed into an ideological referendum on the district's political identity, with both candidates sharply clashing over economic platforms and corporate influence.",
     },
-    {
-      id: ME_GOV_D_ID,
-      shortLabel: "ME Governor",
-      stateLabel: "MAINE",
-      state: "ME" as const,
-      title: "ME Governor Democratic Primary",
-      subtitle: "Maine · June 9, 2026",
-      electionDate: "JUNE 9, 2026",
-      about: "Maine Democrats will select a nominee for governor in a wide-open ranked-choice primary, with former Maine CDC Director Nirav Shah, former Senate President Troy Jackson, former House Speaker Hannah Pingree, renewable energy entrepreneur Angus King III, and Secretary of State Shenna Bellows all competing. Pingree, Jackson, and Bellows have formed a cross-endorsement alliance, with RCV simulations showing Pingree narrowly leading the final round 52–48 over Shah. First-choice totals will be reported election night; full RCV tabulation will follow in the days after June 9.",
-    },
-    {
-      id: LA_MAYOR_ID,
-      shortLabel: "LA Mayor",
-      stateLabel: "CALIFORNIA",
-      state: "CA" as const,
-      title: "Los Angeles Mayor Open Primary",
-      subtitle: "Los Angeles · June 2, 2026",
-      electionDate: "JUNE 2, 2026",
-      about: "Los Angeles voters will choose from a crowded field in the city's mayoral open primary, with incumbent Karen Bass seeking to hold off several competitive challengers, including Nithya Raman and Spencer Pratt. If no candidate wins a majority, the top two finishers will advance to a runoff.",
-    },
-    {
-      id: SD_GOV_ID,
-      shortLabel: "SD Governor",
-      stateLabel: "SOUTH DAKOTA",
-      state: "SD" as const,
-      title: "SD Governor Republican Primary",
-      subtitle: "South Dakota Governor · June 2, 2026",
-      electionDate: "JUNE 2, 2026",
-      about: "South Dakota Republicans will vote in a closely watched governor's primary that could test the balance of power inside the state's conservative electorate. With multiple major candidates in the race, the contest could head to a runoff if no candidate clears the state's 35 percent threshold.",
-    },
-    {
-      id: CA_GOV_ID,
-      shortLabel: "CA Governor",
-      stateLabel: "CALIFORNIA",
-      state: "CA" as const,
-      title: "California Governor Open Primary",
-      subtitle: "California Governor · June 2, 2026",
-      electionDate: "JUNE 2, 2026",
-      about: "California's open primary for governor features a large and ideologically diverse field competing for two spots in the November election. Under the state's top-two primary system, the race is less about winning outright than securing a place in the general election.",
-    },
-    {
-      id: IA_GOV_ID,
-      shortLabel: "IA Governor",
-      stateLabel: "IOWA",
-      state: "IA" as const,
-      title: "Iowa Governor Republican Primary",
-      subtitle: "Iowa Governor · June 2, 2026",
-      electionDate: "JUNE 2, 2026",
-      about: "Iowa Republicans will choose their nominee for governor in a primary shaped by an open-seat contest and competing claims to the party's conservative base. State rules require the winner to receive at least 35 percent of the vote, or the nomination could be decided at convention.",
-    },
-    // ── JUNE 16, 2026 ──
+    // ── JUNE 16, 2026 (archived) ────────────────────────────────────────────────
     {
       id: GA_SENATE_R_ID,
       shortLabel: "GA Senate · Runoff",
@@ -2181,7 +2199,7 @@ export default function March3FeaturedClient() {
       title: "Oklahoma State Question 832 — $15 Minimum Wage",
       subtitle: "Oklahoma · June 16, 2026",
       electionDate: "JUNE 16, 2026",
-      about: "Oklahoma voters are deciding whether to raise the state minimum wage to $15 an hour in a ballot measure that has drawn fierce debate between labor advocates and small business groups. A yes vote would make Oklahoma one of the more surprising states to adopt a $15 floor, cutting against its traditionally business-friendly political grain.",
+      about: "Oklahoma voters decided whether to raise the state minimum wage to $15 an hour. The yes vote passed, making Oklahoma one of the more surprising states to adopt a $15 floor.",
     },
     {
       id: 83479,
@@ -2191,12 +2209,94 @@ export default function March3FeaturedClient() {
       title: "DC Mayoral Democratic Primary",
       subtitle: "District of Columbia · June 16, 2026",
       electionDate: "JUNE 16, 2026",
-      about: "D.C.'s mayoral race is a wide-open contest with no incumbent on the ballot, drawing a crowded field of Democrats vying to lead the nation's capital. J. Lewis George and Kenyan McDuffie have emerged as the frontrunners in a race defined by debates over public safety, housing, and the city's post-pandemic identity.",
+      about: "D.C.'s mayoral race was a wide-open contest with no incumbent on the ballot, drawing a crowded field of Democrats vying to lead the nation's capital. J. Lewis George and Kenyan McDuffie emerged as the frontrunners in a race defined by debates over public safety, housing, and the city's post-pandemic identity.",
+    },
+    // ── JUNE 9, 2026 (archived) ────────────────────────────────────────────────
+    {
+      id: SC_GOV_R_ID,
+      shortLabel: "SC Governor",
+      stateLabel: "S. CAROLINA",
+      state: "SC" as const,
+      title: "SC Governor Republican Primary",
+      subtitle: "South Carolina · June 9, 2026",
+      electionDate: "JUNE 9, 2026",
+      about: "South Carolina Republicans selected a nominee for governor in one of the most competitive open-seat primaries in the South, with Lt. Gov. Pamela Evette, Attorney General Alan Wilson, Rep. Nancy Mace, Rep. Ralph Norman, and businessman Rom Reddy all in contention. TPSI's Meridian CV model (June 3–4) showed Mace leading at 30% ahead of Trump's late endorsement of Evette, which moved prediction markets heavily in her favor. A June 23 runoff was triggered.",
+    },
+    {
+      id: SC_SENATE_R_ID,
+      shortLabel: "SC Senate",
+      stateLabel: "S. CAROLINA",
+      state: "SC" as const,
+      title: "SC US Senate Republican Primary",
+      subtitle: "South Carolina · June 9, 2026",
+      electionDate: "JUNE 9, 2026",
+      about: "South Carolina Republicans chose a nominee for U.S. Senate as four-term incumbent Lindsey Graham, backed by President Trump, faced a crowded field led by MAGA challenger Mark Lynch. Graham cleared 50% and avoided a runoff.",
+    },
+    {
+      id: ME_SENATE_D_ID,
+      shortLabel: "ME Senate",
+      stateLabel: "MAINE",
+      state: "ME" as const,
+      title: "ME US Senate Democratic Primary",
+      subtitle: "Maine · June 9, 2026",
+      electionDate: "JUNE 9, 2026",
+      about: "Maine Democrats chose a nominee to challenge incumbent Republican Susan Collins in November, with Chloe Platner winning a commanding victory over the field.",
+    },
+    {
+      id: ME_GOV_D_ID,
+      shortLabel: "ME Governor",
+      stateLabel: "MAINE",
+      state: "ME" as const,
+      title: "ME Governor Democratic Primary",
+      subtitle: "Maine · June 9, 2026",
+      electionDate: "JUNE 9, 2026",
+      about: "Maine Democrats selected a nominee for governor in a wide-open ranked-choice primary, with former Maine CDC Director Nirav Shah, former Senate President Troy Jackson, former House Speaker Hannah Pingree, and others competing. RCV tabulation followed the June 9 first-choice count.",
+    },
+    // ── JUNE 2, 2026 (archived) ────────────────────────────────────────────────
+    {
+      id: LA_MAYOR_ID,
+      shortLabel: "LA Mayor",
+      stateLabel: "CALIFORNIA",
+      state: "CA" as const,
+      title: "Los Angeles Mayor Open Primary",
+      subtitle: "Los Angeles · June 2, 2026",
+      electionDate: "JUNE 2, 2026",
+      about: "Los Angeles voters chose from a crowded field in the city's mayoral open primary, with incumbent Karen Bass seeking to hold off several competitive challengers, including Nithya Raman and Spencer Pratt. If no candidate wins a majority, the top two finishers will advance to a runoff.",
+    },
+    {
+      id: SD_GOV_ID,
+      shortLabel: "SD Governor",
+      stateLabel: "SOUTH DAKOTA",
+      state: "SD" as const,
+      title: "SD Governor Republican Primary",
+      subtitle: "South Dakota Governor · June 2, 2026",
+      electionDate: "JUNE 2, 2026",
+      about: "South Dakota Republicans voted in a closely watched governor's primary that tested the balance of power inside the state's conservative electorate.",
+    },
+    {
+      id: CA_GOV_ID,
+      shortLabel: "CA Governor",
+      stateLabel: "CALIFORNIA",
+      state: "CA" as const,
+      title: "California Governor Open Primary",
+      subtitle: "California Governor · June 2, 2026",
+      electionDate: "JUNE 2, 2026",
+      about: "California's open primary for governor featured a large and ideologically diverse field competing for two spots in the November election under the state's top-two primary system.",
+    },
+    {
+      id: IA_GOV_ID,
+      shortLabel: "IA Governor",
+      stateLabel: "IOWA",
+      state: "IA" as const,
+      title: "Iowa Governor Republican Primary",
+      subtitle: "Iowa Governor · June 2, 2026",
+      electionDate: "JUNE 2, 2026",
+      about: "Iowa Republicans chose their nominee for governor in a primary shaped by an open-seat contest and competing claims to the party's conservative base. State rules require the winner to receive at least 35 percent of the vote, or the nomination could be decided at convention.",
     },
   ] as const;
   // Only active (non-archived) races appear as spotlight tabs
   const SPOTLIGHT_RACES = ALL_SPOTLIGHT_META.filter(s => !FEATURED.find(r => r.id === s.id)?.archived);
-  const [spotlightTab, setSpotlightTab] = useState<number>(SPOTLIGHT_RACES[0]?.id ?? GA_SENATE_R_ID);
+  const [spotlightTab, setSpotlightTab] = useState<number>(SPOTLIGHT_RACES[0]?.id ?? SC_GOV_R_RUNOFF_ID);
   const [error, setError] = useState<string | null>(null);
   const [loadingMap, setLoadingMap] = useState(false);
   const [raceCache, setRaceCache] = useState<Record<number, RaceDetail | undefined>>({});
@@ -2218,16 +2318,19 @@ export default function March3FeaturedClient() {
   DC: FEATURED.filter((r) => r.state === "DC"),
   GA: FEATURED.filter((r) => r.state === "GA"),
   IA: FEATURED.filter((r) => r.state === "IA"),
+  MD: FEATURED.filter((r) => r.state === "MD"),
   ME: FEATURED.filter((r) => r.state === "ME"),
   MT: FEATURED.filter((r) => r.state === "MT"),
   ND: FEATURED.filter((r) => r.state === "ND"),
   NJ: FEATURED.filter((r) => r.state === "NJ"),
   NM: FEATURED.filter((r) => r.state === "NM"),
   NV: FEATURED.filter((r) => r.state === "NV"),
+  NY: FEATURED.filter((r) => r.state === "NY"),
   OK: FEATURED.filter((r) => r.state === "OK"),
   SC: FEATURED.filter((r) => r.state === "SC"),
   SD: FEATURED.filter((r) => r.state === "SD"),
   TX: FEATURED.filter((r) => r.state === "TX"),
+  UT: FEATURED.filter((r) => r.state === "UT"),
   }), []);
 
   const selectedRace = patchedRaceCache[selectedId];
@@ -2341,8 +2444,8 @@ export default function March3FeaturedClient() {
   //   return () => clearTimeout(t);
   // }, [selectedRace, selectedId]);
 
-  const stateLabels: Record<string, string> = { AL: "ALABAMA", CA: "CALIFORNIA", DC: "WASH. DC", GA: "GEORGIA", IA: "IOWA", ME: "MAINE", MT: "MONTANA", ND: "N. DAKOTA", NJ: "NEW JERSEY", NM: "NEW MEXICO", NV: "NEVADA", OK: "OKLAHOMA", SC: "S. CAROLINA", SD: "S. DAKOTA", TX: "TEXAS" };
-  const activeStates = (["GA", "AL", "DC", "OK", "SC", "ME", "NV", "ND", "CA", "IA", "MT", "NJ", "NM", "SD", "TX"] as const).filter(
+  const stateLabels: Record<string, string> = { AL: "ALABAMA", CA: "CALIFORNIA", DC: "WASH. DC", GA: "GEORGIA", IA: "IOWA", MD: "MARYLAND", ME: "MAINE", MT: "MONTANA", ND: "N. DAKOTA", NJ: "NEW JERSEY", NM: "NEW MEXICO", NV: "NEVADA", NY: "NEW YORK", OK: "OKLAHOMA", SC: "S. CAROLINA", SD: "S. DAKOTA", TX: "TEXAS", UT: "UTAH" };
+  const activeStates = (["SC", "MD", "NY", "UT", "GA", "AL", "DC", "OK", "ME", "NV", "ND", "CA", "IA", "MT", "NJ", "NM", "SD", "TX"] as const).filter(
     st => FEATURED.some(r => r.state === st && !r.archived)
   );
 
@@ -2351,6 +2454,7 @@ export default function March3FeaturedClient() {
     { label: "MAY 26, 2026", date: "2026-05-26", states: ["TX"] },
     { label: "JUNE 2, 2026", date: "2026-06-02", states: ["CA", "IA", "MT", "NJ", "NM", "SD"] },
     { label: "JUNE 9, 2026", date: "2026-06-09", states: ["SC", "ME", "NV", "ND"] },
+    { label: "JUNE 16, 2026", date: "2026-06-16", states: ["GA", "AL", "DC", "OK"] },
   ];
   const archiveDateStates = ARCHIVE_DATES.find(d => d.date === archiveDate)?.states ?? [];
 
@@ -2915,7 +3019,7 @@ export default function March3FeaturedClient() {
             <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
               {/* Row 1: title */}
               <div>
-                <div className="res-page-sub">JUNE 16TH PRIMARY RUNOFFS · 2026</div>
+                <div className="res-page-sub">JUNE 23RD PRIMARIES · 2026</div>
                 <h1 className="res-page-title">Election <em>Night</em></h1>
               </div>
               {/* Row 2: archive + badges + state buttons */}
