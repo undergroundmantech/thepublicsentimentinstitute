@@ -186,7 +186,7 @@ const RACE_FORECAST_DEFAULTS: Partial<Record<number, { raceRule: RaceRule; expec
   // ── SOUTH CAROLINA — PLURALITY runoffs (June 23 — from June 9 primary) ────
   84103: { raceRule: "PLURALITY", expectedTurnout: 270_000 }, // SC Agriculture Commissioner R Runoff
   84104: { raceRule: "PLURALITY", expectedTurnout: 310_000, pollsCloseIso: "2026-06-23T19:00:00-04:00" }, // SC Attorney General R Runoff
-  84105: { raceRule: "PLURALITY", expectedTurnout: 310_000, pollsCloseIso: "2026-06-23T19:00:00-04:00", pollAvg: { "Evette": 45.0, "Wilson": 55.0 } }, // SC Governor R Runoff
+  84105: { raceRule: "PLURALITY", expectedTurnout: 310_000, pollsCloseIso: "2026-06-23T19:00:00-04:00", pollAvg: { "Wilson": 65.0, "Evette": 35.0 } }, // SC Governor R Runoff — updated to live result
   84106: { raceRule: "PLURALITY", expectedTurnout: 85_000  }, // SC US House 1 R Runoff
   84110: { raceRule: "PLURALITY", expectedTurnout: 35_000  }, // SC US House 1 D Runoff
   84111: { raceRule: "PLURALITY", expectedTurnout: 40_000  }, // SC US House 2 D Runoff
@@ -194,7 +194,7 @@ const RACE_FORECAST_DEFAULTS: Partial<Record<number, { raceRule: RaceRule; expec
   // ── MARYLAND — PLURALITY primaries — June 23 ─────────────────────────────
   83700: { raceRule: "PLURALITY", expectedTurnout: 380_000 }, // MD Governor R
   83920: { raceRule: "PLURALITY", expectedTurnout: 78_000, pollAvg: { "Elfreth": 62.0, "Cross": 15.0, "Dyches": 11.0 } }, // MD US House 3 D
-  83925: { raceRule: "PLURALITY", expectedTurnout: 71_000, pollAvg: { "Trone": 56.0, "McClain Delaney": 40.0 } }, // MD US House 6 D — TPSI poll (n=154 LV, undec allocated +10 Delaney +5 Trone)
+  83925: { raceRule: "PLURALITY", expectedTurnout: 71_000, pollAvg: { "Trone": 56.0, "McClain Delaney": 44.0 }, turnoutBlendK: 0.5 }, // MD US House 6 D
   83926: { raceRule: "PLURALITY", expectedTurnout: 100_000 }, // MD US House 6 R
 
   // ── NEW YORK — PLURALITY primaries — June 23 ─────────────────────────────
@@ -3471,13 +3471,19 @@ export default function March3FeaturedClient() {
                       _top2Entries.every(([, p]) => p > 0.9973);
 
                     const _localDisplayProb = (() => {
+                      // Non-forecast races: no probability shown in PROJECTION panel
+                      if (!hasForecastForSelected) return null;
+                      // Forecast races: prefer the model's own probability
+                      if (forecastProj?.raceId === selectedId && forecastProj.prob != null) {
+                        return forecastProj.prob;
+                      }
+                      // Forecast race but model hasn't produced output yet — fall back to raw vote math
                       if (!selectedRace?.candidates?.length) return null;
                       const ordered = [...selectedRace.candidates]
                         .sort((a, b) => (b.percent ?? 0) - (a.percent ?? 0));
                       const leader = ordered[0];
                       const runnerUp = ordered[1];
                       if (!leader || !runnerUp) return null;
-                      // Use votes if available, otherwise synthesise from percent
                       const lv = (leader.votes > 0 || runnerUp.votes > 0) ? leader.votes : Math.round((leader.percent ?? 0) * 10000 / 100);
                       const rv = (leader.votes > 0 || runnerUp.votes > 0) ? runnerUp.votes : Math.round((runnerUp.percent ?? 0) * 10000 / 100);
                       if (lv === 0 && rv === 0) return null;
@@ -3621,21 +3627,41 @@ export default function March3FeaturedClient() {
                       );
                     }
 
-                    // ── STATE 7a — Live data (reporting ≥ 5%) → TOO CLOSE TO CALL ─
-                    if (_localDisplayProb !== null && effectiveReporting >= 5) return (
-                      <>
-                        {headerRow("TOO CLOSE TO CALL", "var(--muted2)", "9px")}
-                        {nameRow(
-                          <span style={_ns}>
-                            <span style={{ color: "var(--muted)", opacity: 1 }}>{_localLeaderLastName ?? "—"}</span>
-                            {_localRunnerUpLastName && (
-                              <span style={{ color: "var(--muted2)", opacity: 0.5 }}>{" vs. "}{_localRunnerUpLastName}</span>
-                            )}
-                          </span>
-                        )}
-                        {gradientBar(_localDisplayProb, "PROB")}
-                      </>
-                    );
+                    // ── STATE 7a — Live data (reporting ≥ 5%) → tiered confidence label ─
+                    if (_localDisplayProb !== null && effectiveReporting >= 5) {
+                      const _prob7 = _localDisplayProb;
+                      const _rule7 = RACE_FORECAST_DEFAULTS[selectedId]?.raceRule;
+                      // Use forecast model's projected leader name when available; fall back to live vote leader
+                      const _forecastLeader = (forecastProj?.raceId === selectedId && forecastProj.leader)
+                        ? forecastProj.leader
+                        : null;
+                      const _displayLeaderName = (() => {
+                        const raw = _forecastLeader ?? _localLeaderLastName ?? "—";
+                        const parts = raw.trim().split(/\s+/);
+                        return parts.length > 2 ? `${parts[0]} ${parts[parts.length - 1]}` : raw;
+                      })();
+                      // Only show "vs." in races where a runoff/threshold outcome is possible
+                      const _runoffPossible = _rule7 === "MAJORITY" || _rule7 === "THRESHOLD_35_RUNOFF" || _rule7 === "THRESHOLD_35_CONVENTION" || _rule7 === "RANKED_CHOICE";
+                      const _lbl7 = _prob7 >= 95 ? ["PROJECTED WINNER", "var(--win)", "9px"] as const
+                                  : _prob7 >= 75 ? ["LEADING",           "var(--purple-soft)", "9px"] as const
+                                  : _prob7 >= 60 ? ["COMPETITIVE",       "var(--muted2)", "9px"] as const
+                                  :                ["TOO CLOSE TO CALL", "var(--muted2)", "9px"] as const;
+                      return (
+                        <>
+                          {headerRow(_lbl7[0], _lbl7[1], _lbl7[2])}
+                          {nameRow(
+                            <span style={_ns}>
+                              {_prob7 >= 95 && checkSvg}
+                              <span style={{ color: "var(--muted)", opacity: 1 }}>{_displayLeaderName}</span>
+                              {_runoffPossible && _localRunnerUpLastName && (
+                                <span style={{ color: "var(--muted2)", opacity: 0.5 }}>{" vs. "}{_localRunnerUpLastName}</span>
+                              )}
+                            </span>
+                          )}
+                          {gradientBar(_prob7, "PROB")}
+                        </>
+                      );
+                    }
 
                     // ── STATE 7b — Too early to call ─────────────────────────────
                     const _pendingName = (!_localLeaderLastName || effectiveReporting < 0.1)
