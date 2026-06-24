@@ -951,124 +951,122 @@ function CandidateList({ candidates, reporting, raceId, isMajorityRunoff, called
 
 // ─── COUNTY TABLE ────────────────────────────────────────────────────────────
 function CountyTotalsTable({ regionResults, collapsed, onToggle, maxHeight }: { regionResults: RegionResult[] | Record<string, RegionResult>; collapsed: boolean; onToggle: () => void; maxHeight?: string }) {
-  const [expandedRows, setExpandedRows] = React.useState<Set<number>>(new Set());
-  const toggleRow = (i: number) => setExpandedRows(prev => { const n = new Set(prev); n.has(i) ? n.delete(i) : n.add(i); return n; });
   const data = useMemo(() => {
     return coerceRegionResults(regionResults).map((rr) => {
       const candidates = buildTooltipLines(rr);
-      const { absMargin } = computeCountyMargin(rr);
+      const sorted = [...candidates].sort((a, b) => {
+        const av = a.votes ?? 0, bv = b.votes ?? 0;
+        if (bv !== av) return bv - av;
+        return (b.pct ?? 0) - (a.pct ?? 0);
+      });
+      const ctyTotal = candidates.reduce((s, c) => s + (c.votes ?? 0), 0);
+      const m1 = sorted[0]?.pct ?? (sorted[0]?.votes != null && ctyTotal > 0 ? sorted[0].votes / ctyTotal * 100 : null);
+      const m2 = sorted[1]?.pct ?? (sorted[1]?.votes != null && ctyTotal > 0 ? sorted[1].votes / ctyTotal * 100 : null);
+      const absMargin = m1 !== null && m2 !== null ? Math.abs(m1 - m2) : null;
       const rawName = (rr as any)?.region?.name || (rr as any)?.name || "Unknown";
       return { name: titleCaseKey(rawName), reporting: rr?.region?.percent_reporting ?? (rr as any)?.percent_reporting ?? 0, candidates, margin: absMargin };
-    }).sort((a, b) => a.name.localeCompare(b.name));
+    }).sort((a, b) => {
+      if (a.reporting > 0 && b.reporting === 0) return -1;
+      if (a.reporting === 0 && b.reporting > 0) return 1;
+      return a.name.localeCompare(b.name);
+    });
   }, [regionResults]);
+
+  // Derive top 3 candidates by total votes across all counties
+  const topCands = useMemo(() => {
+    const totals: Record<string, { votes: number; color: string }> = {};
+    for (const row of data) {
+      for (const c of row.candidates) {
+        if (!c.name) continue;
+        if (!totals[c.name]) totals[c.name] = { votes: 0, color: c.color || "var(--muted2)" };
+        totals[c.name].votes += c.votes ?? 0;
+      }
+    }
+    return Object.entries(totals)
+      .sort((a, b) => b[1].votes - a[1].votes)
+      .slice(0, 3)
+      .map(([name, { color }]) => ({ name, short: name.split(/\s+/).pop()!, color }));
+  }, [data]);
 
   const reportedCount = data.filter(d => d.reporting > 0).length;
 
   return (
     <div className="res-panel" style={{ overflow: "hidden" }}>
-      {/* Clickable header with toggle */}
-      <button
-        onClick={onToggle}
-        style={{
-          width: "100%",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          padding: "10px 14px",
-          background: "var(--panel)",
-          border: "none",
-          borderBottom: collapsed ? "none" : "1px solid var(--border)",
-          cursor: "pointer",
-          transition: "background 140ms ease",
-        }}
-      >
+      <button onClick={onToggle} style={{ width: "100%", display: "flex", alignItems: "center", justifyContent: "space-between", padding: "10px 14px", background: "var(--panel)", border: "none", borderBottom: collapsed ? "none" : "1px solid var(--border)", cursor: "pointer" }}>
         <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
           <span className="res-panel-tag">COUNTY BREAKDOWN</span>
-          {data.length > 0 && (
-            <span className="res-badge">
-              {reportedCount}/{data.length} REPORTING
-            </span>
-          )}
+          {data.length > 0 && <span className="res-badge">{reportedCount}/{data.length} REPORTING</span>}
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-          <span className="res-note">
-            {collapsed ? "SHOW TABLE" : "HIDE TABLE"}
-          </span>
-          {/* Chevron icon */}
-          <svg
-            width="12" height="12" viewBox="0 0 12 12" fill="none"
-            style={{
-              transform: collapsed ? "rotate(0deg)" : "rotate(180deg)",
-              transition: "transform 240ms cubic-bezier(0.22,1,0.36,1)",
-              flexShrink: 0,
-            }}
-          >
+          <span className="res-note">{collapsed ? "SHOW TABLE" : "HIDE TABLE"}</span>
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" style={{ transform: collapsed ? "rotate(0deg)" : "rotate(180deg)", transition: "transform 240ms cubic-bezier(0.22,1,0.36,1)", flexShrink: 0 }}>
             <path d="M2 4L6 8L10 4" stroke="var(--muted2)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         </div>
       </button>
 
-      {/* Collapsible content */}
-      <div style={{
-        overflow: collapsed ? "hidden" : "auto",
-        maxHeight: collapsed ? "0px" : (maxHeight ?? "340px"),
-        transition: "max-height 400ms cubic-bezier(0.22,1,0.36,1)",
-      }}>
+      <div style={{ overflow: collapsed ? "hidden" : "auto", maxHeight: collapsed ? "0px" : (maxHeight ?? "380px"), transition: "max-height 400ms cubic-bezier(0.22,1,0.36,1)" }}>
         {data.length === 0 ? (
-          <div style={{ padding: "20px", textAlign: "center" }}>
-            <span className="res-note">NO COUNTY DATA</span>
-          </div>
+          <div style={{ padding: "20px", textAlign: "center" }}><span className="res-note">NO COUNTY DATA</span></div>
         ) : (
-          <div style={{ overflowY: "auto" }}>
-            <table className="w-full border-collapse">
-              <thead className="res-thead">
-                <tr>{["COUNTY / RPT", "CANDIDATES", "MARGIN"].map((h, i) => (<th key={h} className={`res-th px-4 py-2.5 ${i === 2 ? "text-right" : "text-left"}`}>{h}</th>))}</tr>
-              </thead>
-              <tbody>
-                {data.map((row, i) => (
-                  <tr key={i} className="res-table-row">
-                    <td className="px-4 py-3 align-top" style={{ width: "160px" }}>
-                      <div className="res-cand-name-lg">{row.name}</div>
-                      <div className="res-bar-track mt-2" style={{ width: "80px", height: "2px" }}><div className="res-bar-fill" style={{ width: `${row.reporting}%`, background: "var(--purple)", height: "2px" }} /></div>
-                      <div className="res-note mt-1">{row.reporting.toFixed(1)}% RPT</div>
+          <div style={{ overflowX: "auto" }}>
+          <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "11px", tableLayout: "auto" }}>
+            <thead>
+              <tr style={{ background: "var(--panel2)", borderBottom: "1px solid var(--border)", position: "sticky", top: 0, zIndex: 1 }}>
+                <th style={{ padding: "7px 8px 7px 12px", textAlign: "left", fontFamily: "var(--font-body)", fontSize: "9px", fontWeight: 700, letterSpacing: "0.14em", color: "var(--muted)", textTransform: "uppercase", whiteSpace: "nowrap" }}>County</th>
+                <th style={{ padding: "7px 10px", textAlign: "right", fontFamily: "var(--font-body)", fontSize: "9px", fontWeight: 700, letterSpacing: "0.14em", color: "var(--muted)", textTransform: "uppercase", whiteSpace: "nowrap" }}>Rpt</th>
+                {topCands.map((c) => (
+                  <th key={c.name} style={{ padding: "7px 10px", textAlign: "right", fontFamily: "var(--font-body)", fontSize: "9px", fontWeight: 700, letterSpacing: "0.10em", color: c.color, textTransform: "uppercase", whiteSpace: "nowrap" }}>
+                    <span style={{ display: "inline-flex", alignItems: "center", justifyContent: "flex-end", gap: 4 }}>
+                      <span style={{ width: 5, height: 5, borderRadius: "50%", background: c.color, flexShrink: 0, display: "inline-block" }} />{c.short}
+                    </span>
+                  </th>
+                ))}
+                <th style={{ padding: "7px 10px", textAlign: "right", fontFamily: "var(--font-body)", fontSize: "9px", fontWeight: 700, letterSpacing: "0.14em", color: "var(--muted)", textTransform: "uppercase", whiteSpace: "nowrap" }}>Margin</th>
+                <th style={{ padding: "7px 12px 7px 10px", textAlign: "right", fontFamily: "var(--font-body)", fontSize: "9px", fontWeight: 700, letterSpacing: "0.14em", color: "var(--muted)", textTransform: "uppercase", whiteSpace: "nowrap" }}>Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              {data.map((row, i) => {
+                const candMap = Object.fromEntries(row.candidates.map(c => [c.name, c]));
+                const isReported = row.reporting > 0;
+                const totalVotes = row.candidates.reduce((s, c) => s + (c.votes ?? 0), 0);
+                return (
+                  <tr key={i} style={{ borderBottom: "1px solid var(--border)", background: i % 2 === 0 ? "transparent" : "rgba(0,0,0,0.012)", opacity: isReported ? 1 : 0.45 }}>
+                    <td style={{ padding: "5px 8px 5px 12px", fontFamily: "var(--font-body)", fontSize: "13px", fontWeight: 700, color: "var(--foreground)", whiteSpace: "nowrap" }}>{row.name}</td>
+                    <td style={{ padding: "5px 10px", textAlign: "right", whiteSpace: "nowrap" }}>
+                      {isReported
+                        ? <span style={{ fontFamily: "var(--font-numeric)", fontSize: "10px", fontWeight: 700, color: "var(--muted)" }}>{row.reporting >= 100 ? ">99%" : `${row.reporting.toFixed(0)}%`}</span>
+                        : <span style={{ fontSize: "9px", color: "var(--muted2)" }}>—</span>}
                     </td>
-                    <td className="px-4 py-3 align-top">
-                      {row.candidates.length > 0 ? (() => {
-                        const isExp = expandedRows.has(i);
-                        const visible = isExp ? row.candidates.slice(0, 5) : row.candidates.slice(0, 2);
-                        const rest = isExp ? row.candidates.slice(5) : row.candidates.slice(2);
-                        const othersVotes = rest.reduce((s, c) => s + (c.votes ?? 0), 0);
-                        const othersPct = rest.reduce((s, c) => s + (c.pct ?? 0), 0);
-                        return (
-                          <div className="grid grid-cols-1 gap-1">
-                            {visible.map((cand, idx) => (
-                              <div key={idx} className="flex items-center justify-between gap-2 py-1 border-b" style={{ borderColor: "var(--border)" }}>
-                                <div className="flex items-center gap-2 min-w-0"><span className="h-1.5 w-1.5 rounded-full flex-shrink-0" style={{ background: cand.color || "var(--muted2)" }} /><span className="res-cand-name truncate">{cand.name}</span></div>
-                                <span className="res-cand-name shrink-0" style={{ fontWeight: 700 }}>{cand.pct !== null ? `${cand.pct.toFixed(1)}%` : "—"}</span>
-                              </div>
-                            ))}
-                            {(isExp && rest.length > 0) && (
-                              <div className="flex items-center justify-between gap-2 py-1" style={{ opacity: 0.5 }}>
-                                <div className="flex items-center gap-2 min-w-0"><span className="h-1.5 w-1.5 rounded-full flex-shrink-0" style={{ background: "var(--muted2)" }} /><span className="res-note truncate">Others ({rest.length})</span></div>
-                                <span className="res-cand-name shrink-0">{othersPct > 0 ? `${othersPct.toFixed(1)}%` : othersVotes > 0 ? othersVotes.toLocaleString() : "—"}</span>
-                              </div>
-                            )}
-                            {row.candidates.length > 2 && (
-                              <button onClick={() => toggleRow(i)} style={{ marginTop: 2, background: "none", border: "none", cursor: "pointer", padding: 0, textAlign: "left" }}>
-                                <span style={{ fontFamily: "var(--font-body)", fontSize: "9px", fontWeight: 500, letterSpacing: "0.08em", color: "var(--muted2)", textTransform: "uppercase" }}>{isExp ? "▲ less" : `▼ +${row.candidates.length - 2} more`}</span>
-                              </button>
-                            )}
-                          </div>
-                        );
-                      })() : <span className="res-note italic">Awaiting…</span>}
+                    {topCands.map((tc) => {
+                      const c = candMap[tc.name];
+                      return (
+                        <td key={tc.name} style={{ padding: "4px 10px", textAlign: "right", verticalAlign: "middle", whiteSpace: "nowrap" }}>
+                          {c && isReported ? (
+                            <div>
+                              <div style={{ fontFamily: "var(--font-numeric)", fontSize: "12px", fontWeight: 800, color: tc.color, lineHeight: 1.2 }}>{c.pct !== null ? `${c.pct.toFixed(1)}%` : "—"}</div>
+                              <div className="cty-votes" style={{ fontFamily: "var(--font-numeric)", fontSize: "9px", color: "var(--muted2)", lineHeight: 1.3 }}>{c.votes !== null ? c.votes.toLocaleString() : ""}</div>
+                            </div>
+                          ) : <span style={{ color: "var(--muted2)", fontSize: "9px" }}>—</span>}
+                        </td>
+                      );
+                    })}
+                    <td style={{ padding: "5px 10px", textAlign: "right", whiteSpace: "nowrap" }}>
+                      {row.margin !== null && isReported
+                        ? <span style={{ fontFamily: "var(--font-numeric)", fontSize: "11px", fontWeight: 700, color: "var(--foreground)" }}>+{row.margin.toFixed(1)}%</span>
+                        : <span style={{ color: "var(--muted2)", fontSize: "9px" }}>—</span>}
                     </td>
-                    <td className="px-4 py-3 align-top text-right">
-                      {row.margin !== null ? (<><div className="res-pct-xl">{row.margin >= 0 ? "+" : ""}{row.margin.toFixed(1)}%</div><div className="res-note">SPREAD</div></>) : <span className="res-note">—</span>}
+                    <td style={{ padding: "5px 12px 5px 10px", textAlign: "right", whiteSpace: "nowrap" }}>
+                      {isReported && totalVotes > 0
+                        ? <span style={{ fontFamily: "var(--font-numeric)", fontSize: "10px", fontWeight: 600, color: "var(--muted)" }}>{totalVotes.toLocaleString()}</span>
+                        : <span style={{ color: "var(--muted2)", fontSize: "9px" }}>—</span>}
                     </td>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                );
+              })}
+            </tbody>
+          </table>
           </div>
         )}
       </div>
@@ -2735,6 +2733,8 @@ export default function March3FeaturedClient() {
           overflow: hidden;
         }
         .res-inline-county .res-county-table-wrap { max-height: none !important; }
+        /* Hide vote counts on mobile/tablet — percentages only */
+        @media (max-width: 1023px) { .cty-votes { display: none !important; } }
         .res-center-split > .res-map-panel { border-bottom-left-radius: 0 !important; border-bottom-right-radius: 0 !important; }
         .res-inline-county > .res-panel { height: 100% !important; display: flex !important; flex-direction: column; overflow: hidden; border-top: none; border-radius: 0 0 var(--r-lg) var(--r-lg); }
         .res-inline-county > .res-panel::before { content: none; }

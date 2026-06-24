@@ -226,7 +226,11 @@ export default function ElectionResultsCard() {
         .erc-body { padding: 0 0 20px; display: flex; flex-direction: column; flex: 1; gap: 0; }
         .erc-header {
           padding: 18px 22px 16px;
-          background: linear-gradient(160deg, rgba(124,58,237,0.06) 0%, rgba(230,57,70,0.03) 100%);
+          background:
+            radial-gradient(ellipse 80% 60% at 0% 0%,   rgba(230,57,70,0.28)  0%, transparent 65%),
+            radial-gradient(ellipse 60% 50% at 100% 0%, rgba(37,99,235,0.22)  0%, transparent 65%),
+            radial-gradient(ellipse 50% 40% at 50% 100%,rgba(124,58,237,0.20) 0%, transparent 60%),
+            linear-gradient(160deg, rgba(124,58,237,0.12) 0%, rgba(15,15,30,0) 100%);
           border-bottom: 1px solid var(--border);
           margin-bottom: 16px;
           position: relative;
