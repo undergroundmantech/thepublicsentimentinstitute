@@ -390,14 +390,27 @@ function fmtPct(x?: number) { if (typeof x !== "number") return "—"; return `$
 function getRaceReportingPct(race?: RaceDetail) { const v = race?.percent_reporting; return typeof v === "number" && Number.isFinite(v) ? Math.max(0, Math.min(100, v)) : null; }
 /** Returns "RCV NEXT ROUND" for ranked-choice races, "RUNOFF NEEDED" otherwise. */
 function rcvTerm(rule?: RaceRule | null) { return rule === "RANKED_CHOICE" ? "RCV NEXT ROUND" : "RUNOFF NEEDED"; }
-function getRaceProjectionAlways(race?: RaceDetail): { leaderName: string; prob: number } | null {
+function getRaceProjectionAlways(race?: RaceDetail, raceId?: number): { leaderName: string; prob: number } | null {
   if (!race?.candidates?.length) return null;
   const reporting = typeof race.percent_reporting === "number" ? race.percent_reporting : 0;
   const officialWinner = race.candidates.find((c) => c.winner);
-  if (officialWinner) return { leaderName: officialWinner.name, prob: 100 };
   const ordered = [...race.candidates].sort((a, b) => (b.percent ?? 0) - (a.percent ?? 0));
   const leader = ordered[0], runnerUp = ordered[1];
-  if (!leader || !runnerUp) return { leaderName: leader?.name ?? "—", prob: 50 };
+  if (!leader) return null;
+
+  if (officialWinner) {
+    // If this race has a forecast (pollAvg), only accept the official call once the
+    // vote-based model is ≥95% confident — prevents a premature AP call from
+    // overriding an active forecast before the result is statistically clear.
+    const hasForecast = raceId !== undefined && !!RACE_FORECAST_DEFAULTS[raceId]?.pollAvg;
+    if (hasForecast && runnerUp) {
+      const modelProb = calculateWinProbability(leader.votes, runnerUp.votes, reporting);
+      if (modelProb < 95) return { leaderName: leader.name, prob: modelProb };
+    }
+    return { leaderName: officialWinner.name, prob: 100 };
+  }
+
+  if (!runnerUp) return { leaderName: leader.name, prob: 50 };
   const prob = calculateWinProbability(leader.votes, runnerUp.votes, reporting);
   return { leaderName: leader.name, prob };
 }
@@ -2487,7 +2500,7 @@ export default function March3FeaturedClient() {
     if (!selectedRace) return null;
     const reporting = selectedRace.percent_reporting ?? 0;
     if (reporting < 5) return null;
-    return getRaceProjectionAlways(selectedRace);
+    return getRaceProjectionAlways(selectedRace, selectedId);
   }, [selectedRace]);
   const selectedWinner = selectedRace?.candidates?.find((c) => c.winner);
   const selectedRaceIsMajority = (RACE_FORECAST_DEFAULTS[selectedId]?.raceRule !== undefined &&
@@ -3532,7 +3545,13 @@ export default function March3FeaturedClient() {
                     );
 
                     // ── STATE 1 — API Official or manual override, single winner ──
-                    const _officialWinnerName = selectedWinner?.name ?? manualWinner ?? null;
+                    // If this race has a poll-avg forecast, suppress the API "official" call
+                    // until the model is ≥95% confident — prevents a premature call from
+                    // overriding an active forecast.
+                    const _hasForecastGuard = !!RACE_FORECAST_DEFAULTS[selectedId]?.pollAvg;
+                    const _modelConfident = !_hasForecastGuard || ((forecastProj?.prob ?? 0) >= 95);
+                    const _guardedWinner = _modelConfident ? selectedWinner : undefined;
+                    const _officialWinnerName = _guardedWinner?.name ?? manualWinner ?? null;
                     if (_officialWinnerName && !isRunoffConfirmed && !_isRunoffProjected) return (
                       <>
                         {headerRow("OFFICIAL", "var(--win)")}
