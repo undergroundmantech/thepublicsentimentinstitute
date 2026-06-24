@@ -507,3 +507,8 @@ button.psi-btn:active { transform: translateY(0); opacity: 0.95; }
   .psi-card,
   .psi-btn { transition: none !important; }
 }
+
+/* County table: hide vote-count sub-rows on mobile */
+@media (max-width: 640px) {
+  .cty-votes-row { display: none !important; }
+}
