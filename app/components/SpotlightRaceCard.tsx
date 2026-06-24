@@ -144,21 +144,6 @@ export default function ElectionResultsCard() {
           overflow: hidden;
           position: relative;
         }
-        /* gradient border that hugs the top rounded corners */
-        .erc-root::before {
-          content: '';
-          position: absolute;
-          top: 0; left: 0; right: 0;
-          height: 28px;
-          background: linear-gradient(90deg, var(--red) 0%, var(--purple) 50%, var(--blue) 100%);
-          border-radius: var(--r-xl) var(--r-xl) 0 0;
-          -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-          -webkit-mask-composite: xor;
-          mask-composite: exclude;
-          padding: 2.5px 2.5px 0 2.5px;
-          pointer-events: none;
-          z-index: 2;
-        }
         /* live spotlight ticker */
         .erc-ticker {
           background: linear-gradient(100deg, rgba(232,75,106,0.06) 0%, rgba(139,92,246,0.08) 100%);
