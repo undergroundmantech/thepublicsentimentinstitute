@@ -1855,7 +1855,7 @@ function RacePickerPanel({ races, raceCache, selectedId, onSelect, lockedCalls, 
     const activeRaces = filtered.filter(r => !r.archived);
     const archivedRaces = filtered.filter(r => r.archived);
 
-    const activeStateOrder = ["SC", "MD", "NY", "UT"];
+    const activeStateOrder = ["CO"];
 
     const map = new Map<string, FeaturedRace[]>();
     if (!activeState && !q) {
@@ -1887,6 +1887,7 @@ function RacePickerPanel({ races, raceCache, selectedId, onSelect, lockedCalls, 
   }, [races, search, showArchived, activeState, spotlightRaceIds]);
 
   const stateActiveLabel: Record<string, string> = {
+    CO: "COLORADO · JUNE 30, 2026",
     SC: "S. CAROLINA · JUNE 23, 2026",
     MD: "MARYLAND · JUNE 23, 2026",
     NY: "NEW YORK · JUNE 23, 2026",
@@ -2146,8 +2147,8 @@ export default function March3FeaturedClient() {
   const [archiveDropdownOpen, setArchiveDropdownOpen] = useState(false);
   const [archiveDate, setArchiveDate] = useState<string | null>(null);
   const archiveDropdownRef = useRef<HTMLDivElement>(null);
-  const [activeState, setActiveState] = useState<"AL" | "CA" | "DC" | "GA" | "IA" | "MD" | "ME" | "MT" | "ND" | "NJ" | "NM" | "NV" | "NY" | "OK" | "SC" | "SD" | "TX" | "UT">("SC")
-  const [selectedId, setSelectedId] = useState<number>(84105);
+  const [activeState, setActiveState] = useState<"AL" | "CA" | "CO" | "DC" | "GA" | "IA" | "MD" | "ME" | "MT" | "ND" | "NJ" | "NM" | "NV" | "NY" | "OK" | "SC" | "SD" | "TX" | "UT">("CO")
+  const [selectedId, setSelectedId] = useState<number>(84322);
   const LA_MAYOR_ID     = 79938; // Los Angeles Mayor Open Primary — June 2 spotlight
   const CA_GOV_ID       = 79777; // California Governor Open Primary — June 2 spotlight
   const IA_GOV_ID       = 79945; // Iowa Governor Republican Primary — June 2 spotlight
@@ -2165,7 +2166,43 @@ export default function March3FeaturedClient() {
   const MD_GOV_R_ID        = 83700; // MD Governor R — June 23 spotlight
   const MD_HOUSE6_D_ID     = 83925; // MD US House 6 D — June 23 spotlight
   const NY_HOUSE10_D_ID    = 84040; // NY US House 10 D — June 23 spotlight
+  // June 30 spotlight constants
+  const CO_SENATE_D_ID     = 84322; // CO US Senate D — June 30 spotlight
+  const CO_GOV_D_ID        = 84286; // CO Governor D — June 30 spotlight
+  const CO_GOV_R_ID        = 84287; // CO Governor R — June 30 spotlight
   const ALL_SPOTLIGHT_META = [
+    // ── JUNE 30, 2026 ──────────────────────────────────────────────────────────
+    {
+      id: CO_SENATE_D_ID,
+      shortLabel: "CO Senate D",
+      stateLabel: "COLORADO",
+      state: "CO" as const,
+      title: "CO US Senate Democratic Primary",
+      subtitle: "Colorado · June 30, 2026",
+      electionDate: "JUNE 30, 2026",
+      about: "Sen. John Hickenlooper, the well-known former governor and incumbent senator, enters as a commanding frontrunner backed by strong establishment support and statewide name recognition. He faces a challenge from state Sen. Julie Gonzales, who is running to his left. Colorado's universal mail-in voting model is expected to produce a large initial vote drop shortly after polls close at 9 PM EDT.",
+    },
+    {
+      id: CO_GOV_D_ID,
+      shortLabel: "CO Governor D",
+      stateLabel: "COLORADO",
+      state: "CO" as const,
+      title: "CO Governor Democratic Primary",
+      subtitle: "Colorado · June 30, 2026",
+      electionDate: "JUNE 30, 2026",
+      about: "Former Sen. Michael Bennet and Attorney General Phil Weiser face off in Colorado's Democratic gubernatorial primary, competing to succeed term-limited Gov. Jared Polis.",
+    },
+    {
+      id: CO_GOV_R_ID,
+      shortLabel: "CO Governor R",
+      stateLabel: "COLORADO",
+      state: "CO" as const,
+      title: "CO Governor Republican Primary",
+      subtitle: "Colorado · June 30, 2026",
+      electionDate: "JUNE 30, 2026",
+      about: "State Sen. Barb Kirkmeyer leads a Republican field seeking the party's gubernatorial nomination in Colorado. The winner will face the Democratic nominee in a general election race.",
+    },
+    // ── JUNE 23, 2026 (archived) ────────────────────────────────────────────────
     {
       id: SC_GOV_R_RUNOFF_ID,
       shortLabel: "SC Gov · Runoff",
@@ -2322,7 +2359,7 @@ export default function March3FeaturedClient() {
   ] as const;
   // Only active (non-archived) races appear as spotlight tabs
   const SPOTLIGHT_RACES = ALL_SPOTLIGHT_META.filter(s => !FEATURED.find(r => r.id === s.id)?.archived);
-  const [spotlightTab, setSpotlightTab] = useState<number>(SPOTLIGHT_RACES[0]?.id ?? SC_GOV_R_RUNOFF_ID);
+  const [spotlightTab, setSpotlightTab] = useState<number>(SPOTLIGHT_RACES[0]?.id ?? CO_SENATE_D_ID);
   const [error, setError] = useState<string | null>(null);
   const [loadingMap, setLoadingMap] = useState(false);
   const [raceCache, setRaceCache] = useState<Record<number, RaceDetail | undefined>>({});
@@ -2341,6 +2378,7 @@ export default function March3FeaturedClient() {
   const featuredByState = useMemo(() => ({
   AL: FEATURED.filter((r) => r.state === "AL"),
   CA: FEATURED.filter((r) => r.state === "CA"),
+  CO: FEATURED.filter((r) => r.state === "CO"),
   DC: FEATURED.filter((r) => r.state === "DC"),
   GA: FEATURED.filter((r) => r.state === "GA"),
   IA: FEATURED.filter((r) => r.state === "IA"),
@@ -2470,8 +2508,8 @@ export default function March3FeaturedClient() {
   //   return () => clearTimeout(t);
   // }, [selectedRace, selectedId]);
 
-  const stateLabels: Record<string, string> = { AL: "ALABAMA", CA: "CALIFORNIA", DC: "WASH. DC", GA: "GEORGIA", IA: "IOWA", MD: "MARYLAND", ME: "MAINE", MT: "MONTANA", ND: "N. DAKOTA", NJ: "NEW JERSEY", NM: "NEW MEXICO", NV: "NEVADA", NY: "NEW YORK", OK: "OKLAHOMA", SC: "S. CAROLINA", SD: "S. DAKOTA", TX: "TEXAS", UT: "UTAH" };
-  const activeStates = (["SC", "MD", "NY", "UT", "GA", "AL", "DC", "OK", "ME", "NV", "ND", "CA", "IA", "MT", "NJ", "NM", "SD", "TX"] as const).filter(
+  const stateLabels: Record<string, string> = { AL: "ALABAMA", CA: "CALIFORNIA", CO: "COLORADO", DC: "WASH. DC", GA: "GEORGIA", IA: "IOWA", MD: "MARYLAND", ME: "MAINE", MT: "MONTANA", ND: "N. DAKOTA", NJ: "NEW JERSEY", NM: "NEW MEXICO", NV: "NEVADA", NY: "NEW YORK", OK: "OKLAHOMA", SC: "S. CAROLINA", SD: "S. DAKOTA", TX: "TEXAS", UT: "UTAH" };
+  const activeStates = (["CO", "SC", "MD", "NY", "UT", "GA", "AL", "DC", "OK", "ME", "NV", "ND", "CA", "IA", "MT", "NJ", "NM", "SD", "TX"] as const).filter(
     st => FEATURED.some(r => r.state === st && !r.archived)
   );
 
@@ -3045,7 +3083,7 @@ export default function March3FeaturedClient() {
             <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
               {/* Row 1: title */}
               <div>
-                <div className="res-page-sub">JUNE 23RD PRIMARIES · 2026</div>
+                <div className="res-page-sub">JUNE 30TH PRIMARIES · 2026</div>
                 <h1 className="res-page-title">Election <em>Night</em></h1>
               </div>
               {/* Row 2: archive + badges + state buttons */}
