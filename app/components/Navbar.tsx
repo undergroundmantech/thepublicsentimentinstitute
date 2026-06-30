@@ -23,8 +23,9 @@ const NAV: NavItem[] = [
   {
     label: "Maps & Ratings",
     children: [
-      { href: "/electoralmap",    label: "Electoral Map",    desc: "Interactive state map" },
-      { href: "/forecastratings", label: "2026 Ratings",     desc: "Race ratings & competitiveness" },
+      { href: "/electoralmap",    label: "Electoral Map",     desc: "Interactive state map" },
+      { href: "/forecastratings", label: "2026 Ratings",      desc: "Race ratings & competitiveness" },
+      { href: "/partymap",        label: "Party Registration", desc: "Party of the rolls · state & county" },
     ],
   },
   { href: "/contact",  label: "Contact" },
