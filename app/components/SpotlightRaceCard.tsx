@@ -20,11 +20,9 @@ type RaceConfig = {
 };
 
 const RACES: RaceConfig[] = [
-  { id: 84105, label: "SC Governor Republican Runoff",         location: "South Carolina",     dateShort: "06/23/26", raceRule: "PLURALITY", expectedTurnout: 380_000 },
-  { id: 84104, label: "SC Attorney General Republican Runoff", location: "South Carolina",     dateShort: "06/23/26", raceRule: "PLURALITY", expectedTurnout: 310_000 },
-  { id: 83700, label: "MD Governor Republican Primary",        location: "Maryland",           dateShort: "06/23/26", raceRule: "PLURALITY", expectedTurnout: 380_000 },
-  { id: 83925, label: "MD US House 6 Democratic Primary",      location: "Maryland",           dateShort: "06/23/26", raceRule: "PLURALITY", expectedTurnout: 110_000, pollAvg: { "Trone": 56.0, "McClain Delaney": 40.0 } },
-  { id: 84117, label: "NY US House 17 Democratic Primary",     location: "New York",           dateShort: "06/23/26", raceRule: "PLURALITY", expectedTurnout: 50_000  },
+  { id: 84322, label: "CO US Senate Democratic Primary",   location: "Colorado", dateShort: "06/30/26", raceRule: "PLURALITY", expectedTurnout: 950_000, pollAvg: { "Hickenlooper": 58.5, "Gonzales": 41.5 } },
+  { id: 84286, label: "CO Governor Democratic Primary",    location: "Colorado", dateShort: "06/30/26", raceRule: "PLURALITY", expectedTurnout: 950_000 },
+  { id: 84287, label: "CO Governor Republican Primary",    location: "Colorado", dateShort: "06/30/26", raceRule: "PLURALITY", expectedTurnout: 750_000 },
 ];
 
 type RaceData = { percent_reporting?: number; polls_open?: string | null; polls_close?: string | null; };
