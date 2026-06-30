@@ -28,7 +28,7 @@ type RegionCandidate = { name: string; party: string; votes: string | number; pe
 type RegionResult = { region: { name: string; type: string; fill?: string; percent_reporting?: number; }; candidates: RegionCandidate[]; };
 type RaceDetail = { election_name: string; election_type: string; election_scope: string; election_date: string; country: string; province: string | null; district: string | null; municipality: string | null; polls_open: string | null; polls_close: string | null; last_updated: string | null; percent_reporting?: number; candidates: RaceCandidate[]; region_results?: RegionResult[] | Record<string, RegionResult>; };
 type RaceType = "Democratic Primary" | "Republican Primary" | "Democratic Primary Runoff" | "Republican Primary Runoff" | "Special Election" | "General Election" | "Open Primary" | "Ballot Measure";
-type FeaturedRace = { id: number; state: "AL" | "CA" | "DC" | "GA" | "IA" | "MD" | "ME" | "MT" | "ND" | "NJ" | "NM" | "NV" | "NY" | "OK" | "SC" | "SD" | "TX" | "UT"; office: string; raceType: RaceType; label: string; archived?: boolean; };
+type FeaturedRace = { id: number; state: "AL" | "CA" | "CO" | "DC" | "GA" | "IA" | "MD" | "ME" | "MT" | "ND" | "NJ" | "NM" | "NV" | "NY" | "OK" | "SC" | "SD" | "TX" | "UT"; office: string; raceType: RaceType; label: string; archived?: boolean; };
 
 function getRaceTypeColor(raceType: RaceType): string {
   if (raceType === "Republican Primary") return "var(--rep)";
@@ -210,6 +210,16 @@ const RACE_FORECAST_DEFAULTS: Partial<Record<number, { raceRule: RaceRule; expec
   84100: { raceRule: "PLURALITY", expectedTurnout: 38_000,  pollAvg: { "McAdams": 41.0, "Blouin": 38.0, "Farrell": 12.0, "Mohamed": 9.0 }, turnoutBlendK: 0.5 }, // UT US House 1 D
   84101: { raceRule: "PLURALITY", expectedTurnout: 150_000, turnoutBlendK: 0.5 }, // UT US House 2 R
   84102: { raceRule: "PLURALITY", expectedTurnout: 58_000,  pollAvg: { "Maloy": 55.0, "Lyman": 45.0 }, turnoutBlendK: 0.5 }, // UT US House 3 R
+
+  // ── COLORADO — PLURALITY primaries — June 30 ─────────────────────────────
+  // Colorado: all-mail state — large initial drop expected shortly after polls close at 9 PM EDT (7 PM MDT).
+  // turnoutBlendK: 0.5 trusts live data faster given mail ballot pre-processing.
+  84322: { raceRule: "PLURALITY", expectedTurnout: 950_000, pollAvg: { "Hickenlooper": 58.5, "Gonzales": 41.5 }, pollsCloseIso: "2026-07-01T01:00:00Z", turnoutBlendK: 0.5 }, // CO US Senate D
+  84315: { raceRule: "PLURALITY", expectedTurnout: 85_000,  pollsCloseIso: "2026-07-01T01:00:00Z", turnoutBlendK: 0.5 }, // CO US House 1 D
+  84321: { raceRule: "PLURALITY", expectedTurnout: 70_000,  pollsCloseIso: "2026-07-01T01:00:00Z", turnoutBlendK: 0.5 }, // CO US House 8 D
+  84286: { raceRule: "PLURALITY", expectedTurnout: 950_000, pollsCloseIso: "2026-07-01T01:00:00Z", turnoutBlendK: 0.5 }, // CO Governor D
+  84287: { raceRule: "PLURALITY", expectedTurnout: 750_000, pollsCloseIso: "2026-07-01T01:00:00Z", turnoutBlendK: 0.5 }, // CO Governor R
+  84285: { raceRule: "PLURALITY", expectedTurnout: 700_000, pollsCloseIso: "2026-07-01T01:00:00Z", turnoutBlendK: 0.5 }, // CO Attorney General R
 };
 
 // ─── STATE-LEVEL POLL CLOSE OVERRIDES ────────────────────────────────────────
@@ -224,6 +234,7 @@ const STATE_POLLS_CLOSE: Partial<Record<string, string>> = {
   MD: "2026-06-23T20:00:00-04:00", // 8:00 PM ET
   NY: "2026-06-23T21:00:00-04:00", // 9:00 PM ET
   UT: "2026-06-23T20:00:00-06:00", // 8:00 PM MT (10:00 PM ET)
+  CO: "2026-07-01T01:00:00Z",      // 7:00 PM MDT (9:00 PM ET)
 };
 
 /** Returns the effective polls-close ISO string for a race, preferring:
@@ -352,27 +363,34 @@ const FEATURED: FeaturedRace[] = [
   { id: 83478, state: "DC", office: "US House Delegate", raceType: "Democratic Primary", label: "DC US House Delegate Democratic Primary", archived: true },
   { id: 83479, state: "DC", office: "Mayor", raceType: "Democratic Primary", label: "DC Mayor Democratic Primary", archived: true },
   // ── SOUTH CAROLINA (JUNE 23 — runoffs from June 9) ──
-  { id: 84103, state: "SC", office: "Agriculture Commissioner", raceType: "Republican Primary Runoff", label: "South Carolina Agriculture Commissioner Republican Runoff" },
-  { id: 84104, state: "SC", office: "Attorney General", raceType: "Republican Primary Runoff", label: "South Carolina Attorney General Republican Runoff" },
-  { id: 84105, state: "SC", office: "Governor", raceType: "Republican Primary Runoff", label: "South Carolina Governor Republican Runoff" },
-  { id: 84106, state: "SC", office: "US House 1", raceType: "Republican Primary Runoff", label: "South Carolina US House 1 Republican Runoff" },
-  { id: 84110, state: "SC", office: "US House 1", raceType: "Democratic Primary Runoff", label: "South Carolina US House 1 Democratic Runoff" },
-  { id: 84111, state: "SC", office: "US House 2", raceType: "Democratic Primary Runoff", label: "South Carolina US House 2 Democratic Runoff" },
-  // ── MARYLAND (JUNE 23) ──
-  { id: 83700, state: "MD", office: "Governor", raceType: "Republican Primary", label: "Maryland Governor Republican Primary" },
-  { id: 83920, state: "MD", office: "US House 3", raceType: "Democratic Primary", label: "Maryland US House 3 Democratic Primary" },
-  { id: 83925, state: "MD", office: "US House 6", raceType: "Democratic Primary", label: "Maryland US House 6 Democratic Primary" },
-  { id: 83926, state: "MD", office: "US House 6", raceType: "Republican Primary", label: "Maryland US House 6 Republican Primary" },
-  // ── NEW YORK (JUNE 23) ──
-  { id: 84040, state: "NY", office: "US House 10", raceType: "Democratic Primary", label: "New York US House 10 Democratic Primary" },
-  { id: 84042, state: "NY", office: "US House 12", raceType: "Democratic Primary", label: "New York US House 12 Democratic Primary" },
-  { id: 84043, state: "NY", office: "US House 13", raceType: "Democratic Primary", label: "New York US House 13 Democratic Primary" },
-  { id: 84045, state: "NY", office: "US House 15", raceType: "Democratic Primary", label: "New York US House 15 Democratic Primary" },
-  { id: 84117, state: "NY", office: "US House 17", raceType: "Democratic Primary", label: "New York US House 17 Democratic Primary" },
-  // ── UTAH (JUNE 23) ──
-  { id: 84100, state: "UT", office: "US House 1", raceType: "Democratic Primary", label: "Utah US House 1 Democratic Primary" },
-  { id: 84101, state: "UT", office: "US House 2", raceType: "Republican Primary", label: "Utah US House 2 Republican Primary" },
-  { id: 84102, state: "UT", office: "US House 3", raceType: "Republican Primary", label: "Utah US House 3 Republican Primary" },
+  { id: 84103, state: "SC", office: "Agriculture Commissioner", raceType: "Republican Primary Runoff", label: "South Carolina Agriculture Commissioner Republican Runoff", archived: true },
+  { id: 84104, state: "SC", office: "Attorney General", raceType: "Republican Primary Runoff", label: "South Carolina Attorney General Republican Runoff", archived: true },
+  { id: 84105, state: "SC", office: "Governor", raceType: "Republican Primary Runoff", label: "South Carolina Governor Republican Runoff", archived: true },
+  { id: 84106, state: "SC", office: "US House 1", raceType: "Republican Primary Runoff", label: "South Carolina US House 1 Republican Runoff", archived: true },
+  { id: 84110, state: "SC", office: "US House 1", raceType: "Democratic Primary Runoff", label: "South Carolina US House 1 Democratic Runoff", archived: true },
+  { id: 84111, state: "SC", office: "US House 2", raceType: "Democratic Primary Runoff", label: "South Carolina US House 2 Democratic Runoff", archived: true },
+  // ── MARYLAND (JUNE 23 — ARCHIVED) ──
+  { id: 83700, state: "MD", office: "Governor", raceType: "Republican Primary", label: "Maryland Governor Republican Primary", archived: true },
+  { id: 83920, state: "MD", office: "US House 3", raceType: "Democratic Primary", label: "Maryland US House 3 Democratic Primary", archived: true },
+  { id: 83925, state: "MD", office: "US House 6", raceType: "Democratic Primary", label: "Maryland US House 6 Democratic Primary", archived: true },
+  { id: 83926, state: "MD", office: "US House 6", raceType: "Republican Primary", label: "Maryland US House 6 Republican Primary", archived: true },
+  // ── NEW YORK (JUNE 23 — ARCHIVED) ──
+  { id: 84040, state: "NY", office: "US House 10", raceType: "Democratic Primary", label: "New York US House 10 Democratic Primary", archived: true },
+  { id: 84042, state: "NY", office: "US House 12", raceType: "Democratic Primary", label: "New York US House 12 Democratic Primary", archived: true },
+  { id: 84043, state: "NY", office: "US House 13", raceType: "Democratic Primary", label: "New York US House 13 Democratic Primary", archived: true },
+  { id: 84045, state: "NY", office: "US House 15", raceType: "Democratic Primary", label: "New York US House 15 Democratic Primary", archived: true },
+  { id: 84117, state: "NY", office: "US House 17", raceType: "Democratic Primary", label: "New York US House 17 Democratic Primary", archived: true },
+  // ── UTAH (JUNE 23 — ARCHIVED) ──
+  { id: 84100, state: "UT", office: "US House 1", raceType: "Democratic Primary", label: "Utah US House 1 Democratic Primary", archived: true },
+  { id: 84101, state: "UT", office: "US House 2", raceType: "Republican Primary", label: "Utah US House 2 Republican Primary", archived: true },
+  { id: 84102, state: "UT", office: "US House 3", raceType: "Republican Primary", label: "Utah US House 3 Republican Primary", archived: true },
+  // ── COLORADO (JUNE 30) ──
+  { id: 84322, state: "CO", office: "US Senate", raceType: "Democratic Primary", label: "Colorado US Senate Democratic Primary" },
+  { id: 84315, state: "CO", office: "US House 1", raceType: "Democratic Primary", label: "Colorado US House 1 Democratic Primary" },
+  { id: 84321, state: "CO", office: "US House 8", raceType: "Democratic Primary", label: "Colorado US House 8 Democratic Primary" },
+  { id: 84286, state: "CO", office: "Governor", raceType: "Democratic Primary", label: "Colorado Governor Democratic Primary" },
+  { id: 84287, state: "CO", office: "Governor", raceType: "Republican Primary", label: "Colorado Governor Republican Primary" },
+  { id: 84285, state: "CO", office: "Attorney General", raceType: "Republican Primary", label: "Colorado Attorney General Republican Primary" },
 ];
 
 async function fetchRaceById(id: number): Promise<RaceDetail> {
