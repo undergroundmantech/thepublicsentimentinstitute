@@ -14,8 +14,10 @@ const MONO = '"JetBrains Mono", ui-monospace, monospace';
 const INK = "#f4f4ef";
 const PAGE = "#050505";
 
-function marginToAngle(marginPp: number): number {
-  return -90 * Math.tanh(marginPp / 15);
+// odds → angle: the needle position IS the leader's win probability,
+// exactly like the site forecast gauge. 50% = dead center, 100% = pinned.
+function oddsToAngle(pLeader: number): number {
+  return -90 * Math.max(-1, Math.min(1, 2 * pLeader - 1));
 }
 function arcPath(cx: number, cy: number, r: number, a0: number, a1: number): string {
   const t0 = ((a0 - 90) * Math.PI) / 180;
@@ -103,23 +105,25 @@ export default function SwingOMeter({
   const tipOverhang = 10;
   const centerTicLen = 14;
 
-  const aLeadTossup = marginToAngle(3);
-  const aLeadLean = marginToAngle(10);
-  const aLeadLikely = marginToAngle(25);
+  const aLean = oddsToAngle(0.65);   // toss-up ends
+  const aLikely = oddsToAngle(0.8);  // lean ends
+  const aSafe = oddsToAngle(0.95);   // likely ends
   const leadZones = [
-    { from: -90, to: aLeadLikely, alpha: 0.85 },
-    { from: aLeadLikely, to: aLeadLean, alpha: 0.48 },
-    { from: aLeadLean, to: aLeadTossup, alpha: 0.18 },
+    { from: -90, to: aSafe, alpha: 0.85 },
+    { from: aSafe, to: aLikely, alpha: 0.48 },
+    { from: aLikely, to: aLean, alpha: 0.3 },
+    { from: aLean, to: 0, alpha: 0.14 },
   ];
   const runZones = [
-    { from: -aLeadTossup, to: -aLeadLean, alpha: 0.18 },
-    { from: -aLeadLean, to: -aLeadLikely, alpha: 0.48 },
-    { from: -aLeadLikely, to: 90, alpha: 0.85 },
+    { from: 0, to: -aLean, alpha: 0.14 },
+    { from: -aLean, to: -aLikely, alpha: 0.3 },
+    { from: -aLikely, to: -aSafe, alpha: 0.48 },
+    { from: -aSafe, to: 90, alpha: 0.85 },
   ];
 
   const jitterAmp = live ? Math.min(1.4, (100 - reportingPct) * 0.03) : 0;
   const jitter = jitterAmp * (0.7 * Math.sin(jitterPhase * 1.7) + 0.3 * Math.sin(jitterPhase * 0.9 + 1.1));
-  const angle = Math.max(-90, Math.min(90, marginToAngle(M) + jitter));
+  const angle = Math.max(-90, Math.min(90, oddsToAngle(pLeader) + jitter));
 
   const tipLen = rOuter + tipOverhang;
   const baseHalf = 4.4;
