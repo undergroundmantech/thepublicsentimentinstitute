@@ -188,7 +188,7 @@ function Desk() {
   const params = useParams();
   const router = useRouter();
   const raceId = String((params as any)?.id ?? "");
-  const { index, error } = useElectionIndex(true);
+  const { index, error } = useElectionIndex(true) as { index: any; error: boolean };
   const [mapRace, setMapRace] = useState<any>(null);
 
   const doc = useMemo(() => {

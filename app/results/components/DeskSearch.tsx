@@ -134,7 +134,7 @@ export default function DeskSearch({
   inputRef?: React.RefObject<HTMLInputElement | null>;
   variant?: "hero" | "pill";
 }) {
-  const { index, error } = useElectionIndex(active);
+  const { index, error } = useElectionIndex(active) as { index: any; error: boolean };
   const [query, setQuery] = useState("");
   const [open, setOpen] = useState(false);
   const [cursor, setCursor] = useState(0);

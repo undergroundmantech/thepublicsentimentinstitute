@@ -63,7 +63,7 @@ export default function RaceMapHover({ race }: { race: any }) {
         const out: Shape[] = stateFeats.map((f: any) => {
           const id = String(f.properties?.county_id || "");
           const nm = id.slice(id.indexOf("-") + 1).replace(/_/g, " ");
-          const region = byKey[regionKey(race.province, nm)] || null;
+          const region = byKey[regionKey(race.province, nm) || ""] || null;
           const pretty = region?.name || nm.toLowerCase().replace(/\b\w/g, (m: string) => m.toUpperCase());
           return {
             d: geomToPath(f.geometry, proj.project),

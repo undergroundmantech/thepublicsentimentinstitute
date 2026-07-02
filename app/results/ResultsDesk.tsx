@@ -115,7 +115,7 @@ export default function ResultsDesk() {
 
 function Desk() {
   const router = useRouter();
-  const { index } = useElectionIndex(true);
+  const { index } = useElectionIndex(true) as { index: any };
   const heroSearchRef = useRef<HTMLInputElement | null>(null);
   const [showPill, setShowPill] = useState(false);
   const [mounted, setMounted] = useState(false);
@@ -263,7 +263,7 @@ function Desk() {
     };
     if (index.docs.some((d: any) => d.date === DESK_TODAY)) return nightOf(DESK_TODAY, "tonight");
     // no races today → the LATEST night that actually happened
-    const past = [...new Set(index.docs.map((d: any) => String(d.date || "")).filter((dt: string) => dt && dt < DESK_TODAY))].sort();
+    const past = ([...new Set(index.docs.map((d: any) => String(d.date || "")))] as string[]).filter((dt) => dt && dt < DESK_TODAY).sort();
     const latest = past[past.length - 1];
     if (latest) return nightOf(latest, "latest");
     return { mode: "done" as const, date: "", n: 0, feats: [] as any[] };
