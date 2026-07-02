@@ -16,15 +16,23 @@ import { leaderOf } from '../electionLib.js'
 // ─────────────────────────────────────────────────────────────────────────
 
 const API = 'https://civicapi.org/api/v2/race/search'
+// The FULL season, February through December — the desk must never go stale
+// mid-year (empty months come back instantly, so the extra ranges are cheap).
 const RANGES = [
+  ['2026-12-01', '2026-12-31'],
+  ['2026-11-01', '2026-11-30'],
+  ['2026-10-01', '2026-10-31'],
+  ['2026-09-01', '2026-09-30'],
+  ['2026-08-01', '2026-08-31'],
+  ['2026-07-01', '2026-07-31'],
   ['2026-06-01', '2026-06-30'],
-      ['2026-05-01', '2026-05-31'],
+  ['2026-05-01', '2026-05-31'],
   ['2026-04-01', '2026-04-30'],
   ['2026-03-01', '2026-03-31'],
   ['2026-02-01', '2026-02-28'],
 ]
-// "Now" for recency tie-breaking — keep in step with the app's currentDate.
-const TODAY_TS = Date.parse('2026-05-25')
+// "Now" for recency tie-breaking — the real clock, so the desk stays current.
+const TODAY_TS = Date.now()
 
 const MONTHS_LONG = [
   'january', 'february', 'march', 'april', 'may', 'june',
