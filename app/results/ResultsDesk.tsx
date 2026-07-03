@@ -18,7 +18,7 @@ import PrecinctShowcase from "./components/PrecinctShowcase";
 
 // The desk's own backdrop — the REAL national county map, counties reporting
 // in red/blue/purple across the night. Canvas 2D over the shared geometry.
-const DeskMapField = dynamic(() => import("./components/DeskMapField"), { ssr: false });
+const DeskSphere = dynamic(() => import("./components/DeskSphere"), { ssr: false });
 
 const manrope = Manrope({ subsets: ["latin"], weight: ["300", "400", "500", "600", "700", "800"], variable: "--font-mp", display: "swap" });
 
@@ -90,7 +90,6 @@ function FilmMedia({ children, wide }: { children: React.ReactNode; wide?: boole
       const p = Math.min(1, Math.abs(r.top + r.height / 2 - vh / 2) / (vh * 0.66));
       const ease = 1 - p * p;
       el.style.transform = `scale(${(0.93 + 0.07 * ease).toFixed(4)})`;
-      el.style.setProperty("--film-halo", ease.toFixed(3));
     };
     const kick = () => { if (!raf) raf = requestAnimationFrame(tick); };
     tick();
@@ -104,7 +103,6 @@ function FilmMedia({ children, wide }: { children: React.ReactNode; wide?: boole
   }, []);
   return (
     <div ref={ref} className={`desk-film-media ${wide ? "wide" : ""}`}>
-      <span className="desk-film-halo" aria-hidden />
       <figure className="desk-film-frame">{children}</figure>
     </div>
   );
@@ -116,12 +114,30 @@ function FilmVideo() {
   useEffect(() => {
     const v = ref.current;
     if (!v) return;
-    const io = new IntersectionObserver(
-      ([e]) => { if (e.isIntersecting) v.play().catch(() => {}); else v.pause(); },
-      { threshold: 0.3 }
-    );
-    io.observe(v);
-    return () => io.disconnect();
+    // React doesn't reliably reflect the `muted` prop to the DOM on first
+    // render — set it directly or autoplay policy blocks play()
+    v.muted = true;
+    v.defaultMuted = true;
+    // plain rect check on scroll — IntersectionObserver can starve in
+    // occluded tabs, and a paused hero video looks broken
+    let raf = 0;
+    const sync = () => {
+      raf = 0;
+      const r = v.getBoundingClientRect();
+      const vh = window.innerHeight || 1;
+      const visible = Math.max(0, Math.min(r.bottom, vh) - Math.max(r.top, 0)) / Math.max(1, r.height);
+      if (visible > 0.3) { if (v.paused) v.play().catch(() => {}); }
+      else if (!v.paused) v.pause();
+    };
+    const kick = () => { if (!raf) raf = requestAnimationFrame(sync); };
+    sync();
+    window.addEventListener("scroll", kick, { passive: true });
+    window.addEventListener("resize", kick);
+    return () => {
+      window.removeEventListener("scroll", kick);
+      window.removeEventListener("resize", kick);
+      if (raf) cancelAnimationFrame(raf);
+    };
   }, []);
   return (
     <video
@@ -307,6 +323,41 @@ function Desk() {
     return [...seen];
   }, [index]);
 
+  // the orb's wall of boards — big statewide contests MIXED with locality
+  // races (county/township/city), at most 3 per state per pool, hash-shuffled
+  // so neighboring tiles differ in state AND scope
+  const sphereDocs = useMemo(() => {
+    if (!index) return [] as any[];
+    const hash = (s: string) => { let h = 5381; for (let i = 0; i < s.length; i++) h = ((h << 5) + h + s.charCodeAt(i)) >>> 0; return h; };
+    const LOCAL = /county|township|city of|village|borough|parish|school|district court|circuit|municipal/i;
+    const base = index.docs.filter((d: any) => d.hasResult && d.leader?.cand && d.province && raceHasMap(d.race));
+    const take = (list: any[], cap: number, per: number) => {
+      const perState = new Map<string, number>();
+      const out: any[] = [];
+      for (const d of list) {
+        const st = String(d.province).toUpperCase();
+        const n = perState.get(st) || 0;
+        if (n >= per) continue;
+        perState.set(st, n + 1);
+        out.push(d);
+        if (out.length >= cap) break;
+      }
+      return out;
+    };
+    const big = take(
+      base.filter((d: any) => !LOCAL.test(`${d.contest || ""} ${d.office || ""}`)).sort((a: any, b: any) => (b.totalVotes || 0) - (a.totalVotes || 0)),
+      56, 3
+    );
+    const seen = new Set(big.map((d: any) => d.id));
+    const local = take(
+      base.filter((d: any) => !seen.has(d.id) && LOCAL.test(`${d.contest || ""} ${d.office || ""}`)).sort((a: any, b: any) => (b.totalVotes || 0) - (a.totalVotes || 0)),
+      34, 3
+    );
+    const out = [...big, ...local];
+    out.sort((a: any, b: any) => hash(String(a.id)) - hash(String(b.id)));
+    return out;
+  }, [index]);
+
   // tonight on the desk — today's contests, or the edge case: point at the
   // next election night (or close the season) so the section is never stale
   const tonight = useMemo(() => {
@@ -463,55 +514,52 @@ function Desk() {
         </div>
       </div>
 
-      {/* 1 · hero — big-type, search-first, over a live WebGL flow field */}
-      <section className="desk-hero">
-        <DeskMapField className="desk-shader" states={bgStates} />
-        <div className="desk-shader-fade" aria-hidden />
-        <div className="desk-shell">
-          <DarkNav />
-          <div className="desk-hero-main">
+      {/* 1 · the orb — the desk opens INSIDE a sphere of live boards; drag to
+          look around, click a board to dive into that race, scroll to leave */}
+      <section className="desk-orb-wrap">
+        <div className="desk-orb-sticky">
+          <DeskSphere docs={sphereDocs} onOpen={(d: any) => openRace(d.race)} />
+          <div className="desk-shell desk-orb-nav">
+            <DarkNav />
+          </div>
+          {/* the statement — small, centered, phantom-register; never blocks the wall */}
+          <div className="desk-orb-state">
             <span className="desk-mark" data-rise aria-hidden />
-            <h1 className="desk-title" data-rise style={{ animationDelay: "0.08s" }}>
+            <h1 className="desk-orb-title" data-rise style={{ animationDelay: "0.1s" }}>
               election desk<em>.</em>
             </h1>
-            <p className="desk-lede" data-rise style={{ animationDelay: "0.16s" }}>Live returns, county maps, and forecasts for every contest of the 2026 season.</p>
-            <div className="desk-hero-search" data-rise style={{ animationDelay: "0.24s" }}><DeskSearch active onPick={onPick} inputRef={heroSearchRef} /></div>
-            <div className="desk-hero-stats" data-rise style={{ animationDelay: "0.34s" }} aria-hidden>
-              <span><b>{count ? fmtInt(count) : "—"}</b> contests</span>
-              <em>·</em>
-              <button
-                type="button"
-                className="desk-hero-nightlink"
-                onClick={() => document.querySelector(".desk-nights")?.scrollIntoView({ behavior: "smooth", block: "start" })}
-              >
-                <b>{seasonStats ? seasonStats.nights : "—"}</b> election nights
-              </button>
-              <em>·</em>
-              <span className="live"><i />{liveNow ? `${fmtInt(liveNow)} counting now` : "awaiting returns"}</span>
-            </div>
+            <p className="desk-orb-lede" data-rise style={{ animationDelay: "0.18s" }}>
+              {count ? `${fmtInt(count)} contests` : "every contest"} · live returns, county maps &amp; forecasts · 2026 season
+            </p>
           </div>
-        </div>
 
-        {/* chyron — real contests streaming across the hero's base */}
-        {tickerItems.length ? (
-          <div className="desk-ticker">
-            <div className="desk-ticker-track">
-              {[0, 1].map((rep) => (
-                <div className="desk-ticker-row" key={rep} aria-hidden={rep === 1}>
-                  {tickerItems.map((d: any) => (
-                    <button key={`${rep}-${d.id}`} type="button" className="desk-tick" onClick={() => openRace(d.race)} tabIndex={rep === 1 ? -1 : 0}>
-                      <i className="desk-tick-dot" style={{ background: candColor(d.leader.cand) }} />
-                      <span className="desk-tick-st">{d.province}</span>
-                      <span className="desk-tick-name">{shortContest(d.contest)}</span>
-                      <b style={{ color: candColor(d.leader.cand) }}>{surname(d.leader.cand.name)} {tickMargin(d)}</b>
-                      <span className="desk-tick-rep">{Math.round(d.reporting || 0)}% in</span>
-                    </button>
-                  ))}
-                </div>
-              ))}
-            </div>
+          {/* the dock — search floats at the base of the sphere */}
+          <div className="desk-orb-dock" data-rise style={{ animationDelay: "0.3s" }}>
+            <div className="desk-orb-search"><DeskSearch active onPick={onPick} inputRef={heroSearchRef} variant="pill" /></div>
+            <span className="desk-orb-hint" aria-hidden>drag to explore · click any board{liveNow ? ` · ${fmtInt(liveNow)} counting now` : ""}</span>
           </div>
-        ) : null}
+
+          {/* chyron — real contests streaming across the orb's base */}
+          {tickerItems.length ? (
+            <div className="desk-ticker">
+              <div className="desk-ticker-track">
+                {[0, 1].map((rep) => (
+                  <div className="desk-ticker-row" key={rep} aria-hidden={rep === 1}>
+                    {tickerItems.map((d: any) => (
+                      <button key={`${rep}-${d.id}`} type="button" className="desk-tick" onClick={() => openRace(d.race)} tabIndex={rep === 1 ? -1 : 0}>
+                        <i className="desk-tick-dot" style={{ background: candColor(d.leader.cand) }} />
+                        <span className="desk-tick-st">{d.province}</span>
+                        <span className="desk-tick-name">{shortContest(d.contest)}</span>
+                        <b style={{ color: candColor(d.leader.cand) }}>{surname(d.leader.cand.name)} {tickMargin(d)}</b>
+                        <span className="desk-tick-rep">{Math.round(d.reporting || 0)}% in</span>
+                      </button>
+                    ))}
+                  </div>
+                ))}
+              </div>
+            </div>
+          ) : null}
+        </div>
       </section>
 
       {/* 1.25 · on the ballot — tonight's races, or the next night's, as a
@@ -685,6 +733,16 @@ function Desk() {
         </div>
 
         <div className="desk-film-rows">
+          <div className="desk-film-row center">
+            <FilmMedia wide>
+              <FilmVideo />
+            </FilmMedia>
+            <div className="desk-film-cap">
+              <Eyebrow live>in motion</Eyebrow>
+              <p className="desk-film-p">Recorded straight off the live map — pan the state, hover a county, the tally follows the cursor.</p>
+            </div>
+          </div>
+
           <div className="desk-film-row">
             <div className="desk-film-copy">
               <Eyebrow>the race page</Eyebrow>
@@ -694,16 +752,6 @@ function Desk() {
             <FilmMedia>
               <img src="/desk/film-race.jpg" alt="A race page: the tally board, the win-probability needle, and the Georgia county map" loading="lazy" />
             </FilmMedia>
-          </div>
-
-          <div className="desk-film-row center">
-            <FilmMedia wide>
-              <FilmVideo />
-            </FilmMedia>
-            <div className="desk-film-cap">
-              <Eyebrow live>in motion</Eyebrow>
-              <p className="desk-film-p">Recorded straight off the live map — pan the state, hover a county, the tally follows the cursor.</p>
-            </div>
           </div>
 
           <div className="desk-film-row rev">
@@ -857,6 +905,34 @@ body main > div > div { padding-top: 0 !important; padding-bottom: 0 !important;
 
 /* 1 · hero — z-index above the following sections so the search panel can
    never be painted under them */
+/* 1 · the orb — sticky sphere viewport; scrolling through the wrapper is the exit */
+.desk-orb-wrap { position: relative; height: 172svh; z-index: 5; }
+.desk-orb-sticky { position: sticky; top: 0; height: 100svh; overflow: hidden; background: #050505; isolation: isolate; }
+.desk-orb-nav { position: relative; z-index: 7; }
+/* the statement — compact, top-center, over a soft top scrim */
+.desk-orb-state { position: absolute; left: 50%; top: clamp(86px, 13vh, 128px); transform: translateX(-50%); z-index: 5; width: min(560px, 92vw); text-align: center; pointer-events: none; }
+.desk-orb-state::before { content: ''; position: absolute; inset: -60% -40%; z-index: -1; pointer-events: none;
+  background: radial-gradient(52% 68% at 50% 42%, rgba(4,4,6,0.72), rgba(4,4,6,0.26) 62%, transparent 80%); filter: blur(10px); }
+.desk-orb-state .desk-mark { width: 118px; height: 27px; margin: 0 auto 12px; }
+.desk-orb-title { font-family: var(--font-mp), "Manrope", sans-serif; font-size: clamp(24px, 2.6vw, 32px); font-weight: 600; letter-spacing: -0.03em; line-height: 1; text-transform: lowercase; color: #f4f4ef; }
+.desk-orb-title em { font-style: normal; color: #b7ff00; }
+.desk-orb-lede { margin-top: 9px; font-family: var(--font-mp), "Manrope", sans-serif; font-size: 12.5px; font-weight: 500; color: rgba(244,244,239,0.55); }
+/* the dock — search pill floating at the sphere's base */
+.desk-orb-dock { position: absolute; left: 50%; bottom: 92px; transform: translateX(-50%); z-index: 6; display: flex; flex-direction: column; align-items: center; gap: 10px; pointer-events: none; }
+.desk-orb-search { pointer-events: auto; width: min(380px, 86vw); filter: drop-shadow(0 18px 40px rgba(0,0,0,0.6)); }
+.desk-orb-search .desk-search-field { background: rgba(10,11,14,0.78); -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px); border-color: rgba(255,255,255,0.14); }
+.desk-orb-search .desk-search-pop { top: auto; bottom: calc(100% + 10px); }
+.desk-orb-hint { pointer-events: none; font-family: var(--font-mp), "Manrope", sans-serif; font-size: 11.5px; font-weight: 500; color: rgba(244,244,239,0.4); white-space: nowrap; }
+.desk-orb-sticky .desk-ticker { position: absolute; left: 0; right: 0; bottom: 0; z-index: 6; margin-top: 0; }
+/* the reference's edge nuances: soft blur falloff + vignette */
+.desk-orb-blur { position: absolute; inset: 0; z-index: 3; pointer-events: none;
+  -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
+  -webkit-mask: radial-gradient(112% 112% at 50% 50%, transparent 50%, rgba(0,0,0,0.55) 74%, #000 92%);
+  mask: radial-gradient(112% 112% at 50% 50%, transparent 50%, rgba(0,0,0,0.55) 74%, #000 92%); }
+.desk-orb-vig { position: absolute; inset: 0; z-index: 3; pointer-events: none;
+  background: radial-gradient(115% 115% at 50% 50%, transparent 44%, rgba(3,3,4,0.42) 72%, rgba(3,3,4,0.8) 92%, rgba(3,3,4,0.94) 100%); }
+.desk-orb-veil { position: absolute; inset: 0; z-index: 8; pointer-events: none; opacity: 0; background: #050505; }
+
 .desk-hero { position: relative; z-index: 5; padding-bottom: clamp(50px, 11vh, 120px); isolation: isolate;
   background:
     radial-gradient(38% 52% at 15% 4%, rgba(29,78,216,0.26), transparent 60%),
@@ -1001,14 +1077,13 @@ body main > div > div { padding-top: 0 !important; padding-bottom: 0 !important;
 .desk-film-h { margin-top: 14px; font-family: var(--font-mp), "Manrope", sans-serif; font-size: clamp(22px, 2.4vw, 31px); font-weight: 500; letter-spacing: -0.03em; line-height: 1.12; text-transform: lowercase; color: #f4f4ef; }
 .desk-film-p { margin-top: 12px; max-width: 44ch; font-size: 15px; line-height: 1.62; color: rgba(244,244,239,0.58); }
 .desk-film-media { position: relative; will-change: transform; }
-.desk-film-halo { position: absolute; inset: -14% -10%; z-index: 0; border-radius: 40px; background: radial-gradient(60% 60% at 50% 46%, rgba(124,58,237,0.26), transparent 70%); filter: blur(36px); opacity: var(--film-halo, 0.35); pointer-events: none; }
-.desk-film-frame { position: relative; z-index: 1; margin: 0; border-radius: 10px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1); background: #08080a; box-shadow: 0 40px 110px rgba(0,0,0,0.6), 0 6px 24px rgba(0,0,0,0.45); }
+/* the screenshots carry their own framing — no chrome, no glow, just depth */
+.desk-film-frame { position: relative; z-index: 1; margin: 0; border-radius: 14px; overflow: hidden; box-shadow: 0 40px 110px rgba(0,0,0,0.55), 0 6px 24px rgba(0,0,0,0.4); }
 .desk-film-frame img, .desk-film-frame video { display: block; width: 100%; height: auto; }
 /* the centered video row — the section's featured plate, wider than the shell */
 .desk-film-row.center { display: block; width: 100vw; margin-left: calc(50% - 50vw); padding: 0 clamp(16px, 3vw, 40px); }
 .desk-film-row.center .desk-film-media { max-width: min(1320px, 100%); margin: 0 auto; }
-.desk-film-row.center .desk-film-frame { border-radius: 12px; }
-.desk-film-row.center .desk-film-halo { background: radial-gradient(58% 58% at 50% 46%, rgba(37,99,235,0.28), transparent 70%); }
+.desk-film-row.center .desk-film-frame { border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); background: #08080a; }
 .desk-film-cap { margin-top: 28px; display: flex; flex-direction: column; align-items: center; text-align: center; }
 .desk-film-cap .desk-film-p { margin-top: 10px; max-width: 54ch; }
 
@@ -1295,7 +1370,6 @@ body main > div > div { padding-top: 0 !important; padding-bottom: 0 !important;
   .desk-plate-swap, .desk-plate-cap, .desk-stage-swap { animation: none !important; }
   .desk-pip, .desk-eyebrow-pip, .desk-ph { animation: none !important; }
   .desk-film-media { transform: none !important; }
-  .desk-film-halo { opacity: 0.35 !important; }
 }
 
 @media (max-width: 900px) {
