@@ -3,6 +3,7 @@ import "./globals.css";
 import type { Metadata } from "next";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import SiteIntro from "./components/SiteIntro";
 import { Quantico, Geist_Mono, Fraunces, JetBrains_Mono } from "next/font/google";
 
 /* -----------------------------
@@ -112,6 +113,9 @@ export default function RootLayout({
             }}
           />
         </div>
+
+        {/* First-visit announcement — shows once, remembered per browser */}
+        <SiteIntro />
 
         {/* --------------------------------
            PAGE STRUCTURE
