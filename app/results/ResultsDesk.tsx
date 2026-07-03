@@ -469,26 +469,14 @@ function Desk() {
         <div className="desk-shader-fade" aria-hidden />
         <div className="desk-shell">
           <DarkNav />
-          <div className="desk-folio">
-            <span>TPSI · Election Results</span>
-            <span>live returns · county maps · forecasts</span>
-          </div>
           <div className="desk-hero-main">
-            <h1 className="desk-title" aria-label="pull any race.">
-              {["pull", "any", "race"].map((w, i) => (
-                <span className="desk-tw" key={w}>
-                  <span style={{ animationDelay: `${0.1 + i * 0.1}s` }}>{w}{i === 2 ? <em>.</em> : null}</span>
-                </span>
-              ))}
+            <span className="desk-mark" data-rise aria-hidden />
+            <h1 className="desk-title" data-rise style={{ animationDelay: "0.08s" }}>
+              election desk<em>.</em>
             </h1>
-            <p className="desk-lede" data-rise>Every contest of the 2026 season — live returns, county maps, and forecasts. Type a state, an office, or a candidate.</p>
-            <div className="desk-hero-search" data-rise style={{ animationDelay: "0.15s" }}><DeskSearch active onPick={onPick} inputRef={heroSearchRef} /></div>
-            <div className="desk-chips" data-rise style={{ animationDelay: "0.25s" }} aria-hidden>
-              {["georgia governor", "AG primary", "ME senate", "prop 1"].map((c) => (
-                <button key={c} className="desk-chip" onClick={focusSearch}>{c}</button>
-              ))}
-            </div>
-            <div className="desk-hero-stats" data-rise style={{ animationDelay: "0.35s" }} aria-hidden>
+            <p className="desk-lede" data-rise style={{ animationDelay: "0.16s" }}>Live returns, county maps, and forecasts for every contest of the 2026 season.</p>
+            <div className="desk-hero-search" data-rise style={{ animationDelay: "0.24s" }}><DeskSearch active onPick={onPick} inputRef={heroSearchRef} /></div>
+            <div className="desk-hero-stats" data-rise style={{ animationDelay: "0.34s" }} aria-hidden>
               <span><b>{count ? fmtInt(count) : "—"}</b> contests</span>
               <em>·</em>
               <button
@@ -496,7 +484,7 @@ function Desk() {
                 className="desk-hero-nightlink"
                 onClick={() => document.querySelector(".desk-nights")?.scrollIntoView({ behavior: "smooth", block: "start" })}
               >
-                <b>{seasonStats ? seasonStats.nights : "—"}</b> election nights — browse them ↓
+                <b>{seasonStats ? seasonStats.nights : "—"}</b> election nights
               </button>
               <em>·</em>
               <span className="live"><i />{liveNow ? `${fmtInt(liveNow)} counting now` : "awaiting returns"}</span>
@@ -558,20 +546,45 @@ function Desk() {
             <div className="desk-tn-rail" role="list">
               {tnCards.map((d: any) => {
                 const tone = d.leader?.cand ? candColor(d.leader.cand) : "#8a93a6";
+                const cands = Array.isArray(d.race?.candidates) ? [...d.race.candidates].sort((a: any, b: any) => (b.votes || 0) - (a.votes || 0)) : [];
+                const total = cands.reduce((s: number, c: any) => s + (c.votes || 0), 0);
+                const duel = total > 0 ? cands.slice(0, 2).map((c: any) => ({
+                  name: surname(c.name), pct: (100 * (c.votes || 0)) / total, col: candColor(c), won: !!c.winner,
+                })) : [];
+                const called = cands.some((c: any) => c.winner);
                 return (
                   <button key={d.id} type="button" role="listitem" className="desk-tn-card" style={{ ["--t" as any]: tone }} onClick={() => openRace(d.race)}>
                     <span className="desk-tn-top">
-                      <b>{d.province}</b>
-                      <i className={d.hasResult ? "on" : ""} aria-hidden />
+                      <b>{d.stateName || d.province}</b>
+                      <span className={`desk-tn-status ${called ? "called" : d.hasResult ? "live" : ""}`}>
+                        {called ? "✓ Called" : d.hasResult ? `${Math.round(d.reporting || 0)}% in` : "Not started"}
+                      </span>
                     </span>
                     <span className="desk-tn-name">{d.contest}</span>
-                    <span className="desk-tn-meta">{[d.office, d.hasResult ? `${Math.round(d.reporting || 0)}% in` : "awaiting returns"].filter(Boolean).join(" · ")}</span>
+                    {duel.length ? (
+                      <span className="desk-tn-duel">
+                        {duel.map((c: any, i: number) => (
+                          <span className="desk-tn-cand" key={i}>
+                            <i style={{ background: c.col }} aria-hidden />
+                            <em>{c.name}{c.won ? " ✓" : ""}</em>
+                            <b>{c.pct >= 99.95 ? "100" : c.pct.toFixed(1)}%</b>
+                          </span>
+                        ))}
+                        <span className="desk-tn-bar" aria-hidden>
+                          {duel.map((c: any, i: number) => (
+                            <i key={i} style={{ width: `${Math.max(2, c.pct)}%`, background: c.col, opacity: i === 0 ? 1 : 0.55 }} />
+                          ))}
+                        </span>
+                      </span>
+                    ) : (
+                      <span className="desk-tn-duel empty">
+                        <span className="desk-tn-await">Polls open — no returns yet</span>
+                        <span className="desk-tn-bar" aria-hidden><i style={{ width: "100%", background: "rgba(255,255,255,0.07)" }} /></span>
+                      </span>
+                    )}
                     <span className="desk-tn-lead">
-                      {d.leader?.cand ? (
-                        <><b style={{ color: tone }}>{surname(d.leader.cand.name)} {tickMargin(d)}</b><span aria-hidden>→</span></>
-                      ) : (
-                        <><b className="dim">no returns yet</b><span aria-hidden>→</span></>
-                      )}
+                      <span className="desk-tn-office">{d.office || " "}</span>
+                      {d.leader?.cand ? <b style={{ color: tone }}>{tickMargin(d)}</b> : <span aria-hidden>→</span>}
                     </span>
                   </button>
                 );
@@ -866,7 +879,9 @@ body main > div > div { padding-top: 0 !important; padding-bottom: 0 !important;
 .desk-folio { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; padding: 14px 0; margin-top: 6px; border-top: 1px solid rgba(255,255,255,0.10); border-bottom: 1px solid rgba(255,255,255,0.07); font-size: 10.5px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(244,244,239,0.4); }
 .desk-folio span:first-child { color: #f4f4ef; }
 .desk-hero-main { padding-top: clamp(40px, 11vh, 110px); max-width: 940px; margin: 0 auto; text-align: center; }
-.desk-title { font-family: var(--font-mp), "Manrope", "Helvetica Neue", Arial, sans-serif; font-weight: 500; text-transform: lowercase; letter-spacing: -0.045em; line-height: 0.9; font-size: clamp(56px, 11vw, 140px); color: #f4f4ef; }
+.desk-mark { display: block; width: clamp(148px, 16vw, 210px); height: clamp(34px, 3.8vw, 48px); margin: 0 auto clamp(18px, 3vh, 30px); background: #f4f4ef;
+  -webkit-mask: url(/full_logo_clean.png) center / contain no-repeat; mask: url(/full_logo_clean.png) center / contain no-repeat; }
+.desk-title { font-family: var(--font-mp), "Manrope", "Helvetica Neue", Arial, sans-serif; font-weight: 500; text-transform: lowercase; letter-spacing: -0.04em; line-height: 0.95; font-size: clamp(48px, 8.4vw, 104px); color: #f4f4ef; }
 .desk-title em { font-style: normal; color: #b7ff00; }
 /* kinetic title — each word rises out of its own clip */
 .desk-tw { display: inline-block; overflow: hidden; vertical-align: bottom; margin-right: 0.2em; }
@@ -874,14 +889,14 @@ body main > div > div { padding-top: 0 !important; padding-bottom: 0 !important;
 .desk-tw > span { display: inline-block; transform: translateY(112%); animation: deskWordUp 0.9s cubic-bezier(.16,1,.3,1) forwards; }
 @keyframes deskWordUp { to { transform: none; } }
 /* live readout under the search */
-.desk-hero-stats { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 12px; margin-top: clamp(20px, 3.4vh, 32px); font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 10.5px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(244,244,239,0.42); }
-.desk-hero-stats b { font-weight: 700; color: #f4f4ef; }
-.desk-hero-stats em { font-style: normal; color: rgba(183,255,0,0.5); }
-.desk-hero-stats .live { display: inline-flex; align-items: center; gap: 7px; color: rgba(183,255,0,0.85); }
-.desk-hero-nightlink { background: none; border: 0; padding: 0; cursor: pointer; font: inherit; color: inherit; letter-spacing: inherit; text-transform: inherit; border-bottom: 1px solid rgba(183,255,0,0.35); padding-bottom: 1px; transition: color .15s ease, border-color .15s ease; }
-.desk-hero-nightlink:hover { color: #f4f4ef; border-color: #b7ff00; }
-.desk-hero-nightlink b { font-weight: 700; color: #f4f4ef; }
-.desk-hero-stats .live i { width: 6px; height: 6px; border-radius: 99px; background: #b7ff00; box-shadow: 0 0 9px rgba(183,255,0,0.7); animation: desk-pip 1.8s ease-in-out infinite; }
+.desk-hero-stats { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 12px; margin-top: clamp(20px, 3.4vh, 32px); font-family: var(--font-mp), "Manrope", sans-serif; font-size: 13px; font-weight: 500; color: rgba(244,244,239,0.48); }
+.desk-hero-stats b { font-weight: 700; color: rgba(244,244,239,0.9); font-variant-numeric: tabular-nums; }
+.desk-hero-stats em { font-style: normal; color: rgba(244,244,239,0.22); }
+.desk-hero-stats .live { display: inline-flex; align-items: center; gap: 7px; color: rgba(244,244,239,0.62); }
+.desk-hero-nightlink { background: none; border: 0; padding: 0 0 1px; cursor: pointer; font: inherit; color: inherit; border-bottom: 1px solid rgba(244,244,239,0.25); transition: color .15s ease, border-color .15s ease; }
+.desk-hero-nightlink:hover { color: #f4f4ef; border-color: rgba(244,244,239,0.6); }
+.desk-hero-nightlink b { font-weight: 700; color: rgba(244,244,239,0.9); }
+.desk-hero-stats .live i { width: 6px; height: 6px; border-radius: 99px; background: #b7ff00; box-shadow: 0 0 9px rgba(183,255,0,0.55); animation: desk-pip 1.8s ease-in-out infinite; }
 /* chyron ticker — real contests streaming across the hero's base */
 .desk-ticker { position: relative; z-index: 1; margin-top: clamp(44px, 9vh, 92px); border-top: 1px solid rgba(255,255,255,0.09); border-bottom: 1px solid rgba(255,255,255,0.09); background: rgba(5,5,5,0.55); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); overflow: hidden;
   -webkit-mask: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent); mask: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent); }
@@ -902,9 +917,6 @@ body main > div > div { padding-top: 0 !important; padding-bottom: 0 !important;
 /* z-index lifts the open panel above the chip/stat rows below (their reveal
    transforms create stacking contexts that would otherwise paint over it) */
 .desk-hero-search { position: relative; z-index: 30; margin: clamp(22px, 4vh, 38px) auto 0; max-width: 760px; }
-.desk-chips { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: 16px; }
-.desk-chip { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 11.5px; color: rgba(244,244,239,0.55); background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 999px; padding: 7px 13px; cursor: pointer; transition: color .16s ease, border-color .16s ease, background .16s ease; }
-.desk-chip:hover { color: #f4f4ef; border-color: rgba(183,255,0,0.4); background: rgba(183,255,0,0.06); }
 
 /* the inline search field (DeskSearch) */
 .desk-search-field { position: relative; display: flex; align-items: center; gap: 12px; padding: 0 16px; height: 60px; border-radius: 16px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.12); transition: border-color .18s ease, background .18s ease, box-shadow .2s ease; }
@@ -919,28 +931,23 @@ body main > div > div { padding-top: 0 !important; padding-bottom: 0 !important;
 .desk-search.hero .desk-search-field:focus-within { border-color: rgba(183,255,0,0.55); box-shadow: 0 0 0 1px rgba(183,255,0,0.3), 0 0 52px -10px rgba(183,255,0,0.22), 0 26px 64px -30px rgba(0,0,0,0.9); }
 .desk-search-kbd { flex-shrink: 0; font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 10px; color: rgba(244,244,239,0.4); border: 1px solid rgba(255,255,255,0.12); border-radius: 6px; padding: 3px 7px; background: rgba(255,255,255,0.03); }
 /* the response panel — a query ledger, not an autocomplete blob */
-.desk-search-pop { position: absolute; top: calc(100% + 10px); left: 0; right: 0; z-index: 50; border-radius: 16px; border: 1px solid rgba(255,255,255,0.13); background: rgba(7,8,11,0.98); -webkit-backdrop-filter: blur(24px) saturate(1.2); backdrop-filter: blur(24px) saturate(1.2); box-shadow: 0 34px 90px -18px rgba(0,0,0,0.92), inset 0 1px 0 rgba(255,255,255,0.05); overflow: hidden; animation: deskPop .18s cubic-bezier(.2,.8,.2,1); }
+.desk-search-pop { position: absolute; top: calc(100% + 10px); left: 0; right: 0; z-index: 50; padding: 6px; border-radius: 14px; border: 1px solid rgba(255,255,255,0.12); background: rgba(13,14,17,0.98); -webkit-backdrop-filter: blur(24px) saturate(1.2); backdrop-filter: blur(24px) saturate(1.2); box-shadow: 0 34px 90px -18px rgba(0,0,0,0.92), inset 0 1px 0 rgba(255,255,255,0.05); overflow: hidden; animation: deskPop .18s cubic-bezier(.2,.8,.2,1); }
 @keyframes deskPop { from { opacity: 0; transform: translateY(-6px); } }
-.desk-spop-h { display: flex; justify-content: space-between; gap: 12px; padding: 10px 16px; font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 9px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(244,244,239,0.38); border-bottom: 1px solid rgba(255,255,255,0.08); }
-.desk-spop-h span:last-child { color: rgba(183,255,0,0.55); }
-.desk-srow { position: relative; display: grid; grid-template-columns: 3px 42px minmax(0,1fr) auto; align-items: center; gap: 13px; width: 100%; text-align: left; border: 0; cursor: pointer; padding: 12px 16px; background: transparent; transition: background .12s ease; }
-.desk-srow + .desk-srow { border-top: 1px solid rgba(255,255,255,0.05); }
-.desk-srow[data-active="1"] { background: rgba(183,255,0,0.045); }
-.desk-srow[data-active="1"]::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 2px; background: #b7ff00; box-shadow: 0 0 12px rgba(183,255,0,0.55); }
-.desk-srow-tick { width: 3px; height: 26px; border-radius: 2px; }
-.desk-srow-st { font-family: var(--font-mp), "Manrope", sans-serif; font-size: 13px; font-weight: 800; letter-spacing: 0.03em; color: #f4f4ef; }
+.desk-spop-label { padding: 10px 12px 5px; font-family: var(--font-mp), "Manrope", sans-serif; font-size: 11.5px; font-weight: 600; color: rgba(244,244,239,0.42); }
+.desk-srow { position: relative; display: grid; grid-template-columns: 38px minmax(0,1fr) auto; align-items: center; gap: 12px; width: 100%; text-align: left; border: 0; border-radius: 10px; cursor: pointer; padding: 10px 12px; margin: 0; background: transparent; transition: background .12s ease; font-family: var(--font-mp), "Manrope", sans-serif; }
+.desk-srow[data-active="1"] { background: rgba(255,255,255,0.055); }
+.desk-srow-tick { display: none; }
+.desk-srow-st { display: inline-flex; align-items: center; justify-content: center; width: 100%; height: 24px; border-radius: 7px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.08); font-size: 11px; font-weight: 700; letter-spacing: 0.03em; color: rgba(244,244,239,0.8); }
 .desk-srow-main { min-width: 0; display: flex; flex-direction: column; gap: 2px; }
-.desk-srow-title { font-family: var(--font-mp), "Manrope", sans-serif; font-size: 13.5px; font-weight: 600; color: #f4f4ef; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.desk-hl { background: none; color: #b7ff00; }
-.desk-srow-meta { font-size: 10.5px; color: rgba(244,244,239,0.4); text-transform: lowercase; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.desk-srow-right { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; }
-.desk-srow-right b { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 11px; font-weight: 700; white-space: nowrap; }
-.desk-srow-right > span { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 9px; color: rgba(244,244,239,0.35); }
-.desk-srow-await { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 9.5px; color: rgba(244,244,239,0.32); text-transform: uppercase; letter-spacing: 0.08em; }
-.desk-search-empty { padding: 20px 16px; color: rgba(244,244,239,0.5); font-size: 13px; }
-.desk-search-empty b { color: #b7ff00; font-weight: 600; }
-.desk-search-foot { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 9px 16px; border-top: 1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.02); font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 9.5px; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(244,244,239,0.35); }
-.desk-search-keys { color: rgba(244,244,239,0.45); }
+.desk-srow-title { font-size: 13.5px; font-weight: 600; color: rgba(244,244,239,0.92); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.desk-hl { background: none; color: #fff; font-weight: 700; }
+.desk-srow-meta { font-size: 11px; color: rgba(244,244,239,0.42); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.desk-srow-right { display: flex; flex-direction: column; align-items: flex-end; gap: 1px; }
+.desk-srow-right b { font-size: 12px; font-weight: 700; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.desk-srow-right > span { font-size: 10.5px; color: rgba(244,244,239,0.38); font-variant-numeric: tabular-nums; }
+.desk-srow-await { font-size: 11px; color: rgba(244,244,239,0.35); }
+.desk-search-empty { padding: 18px; color: rgba(244,244,239,0.55); font-size: 13px; font-family: var(--font-mp), "Manrope", sans-serif; }
+.desk-search-empty b { color: #f4f4ef; font-weight: 600; }
 
 /* ── editorial section signage: heading block + ghost numeral ── */
 .desk-sechead { position: relative; z-index: 1; max-width: 1280px; margin: 0 auto; padding: 0 clamp(20px,4vw,44px); display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; opacity: 0; transform: translateY(18px); transition: opacity .6s ease, transform .6s cubic-bezier(.16,1,.3,1); }
@@ -1083,22 +1090,31 @@ body main > div > div { padding-top: 0 !important; padding-bottom: 0 !important;
 .desk-tn-rail { display: flex; gap: 14px; margin-top: clamp(20px, 3.4vh, 30px); padding: 6px clamp(20px,4vw,44px) 10px; overflow-x: auto; scrollbar-width: none; scroll-snap-type: x proximity;
   -webkit-mask: linear-gradient(90deg, transparent, #000 3.5%, #000 96.5%, transparent); mask: linear-gradient(90deg, transparent, #000 3.5%, #000 96.5%, transparent); }
 .desk-tn-rail::-webkit-scrollbar { display: none; }
-.desk-tn-card { scroll-snap-align: start; flex: 0 0 258px; display: flex; flex-direction: column; align-items: flex-start; gap: 7px; padding: 16px 16px 14px; text-align: left; cursor: pointer; border-radius: 16px;
+.desk-tn-card { scroll-snap-align: start; flex: 0 0 288px; display: flex; flex-direction: column; align-items: flex-start; gap: 9px; padding: 16px 16px 14px; text-align: left; cursor: pointer; border-radius: 12px;
   background: linear-gradient(180deg, rgba(255,255,255,0.045), rgba(255,255,255,0.012)); border: 1px solid rgba(255,255,255,0.1);
+  font-family: var(--font-mp), "Manrope", sans-serif;
   transition: transform .3s cubic-bezier(.16,1,.3,1), border-color .2s ease, box-shadow .3s ease; }
 .desk-tn-card:hover { transform: translateY(-4px); border-color: color-mix(in srgb, var(--t,#9ab) 45%, rgba(255,255,255,0.14)); box-shadow: 0 22px 44px -24px rgba(0,0,0,0.8); }
 .desk-tn-card:focus-visible { outline: 2px solid #b7ff00; outline-offset: 3px; }
-.desk-tn-top { display: flex; align-items: center; justify-content: space-between; width: 100%; }
-.desk-tn-top b { font-family: var(--font-mp), "Manrope", sans-serif; font-size: 13px; font-weight: 800; letter-spacing: 0.04em; color: #f4f4ef; }
-.desk-tn-top i { width: 7px; height: 7px; border-radius: 99px; background: rgba(244,244,239,0.2); }
-.desk-tn-top i.on { background: var(--t, #b7ff00); box-shadow: 0 0 8px color-mix(in srgb, var(--t,#b7ff00) 60%, transparent); }
-.desk-tn-name { font-family: var(--font-mp), "Manrope", sans-serif; font-size: 13.5px; font-weight: 600; line-height: 1.3; color: #f4f4ef; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; min-height: 2.6em; }
-.desk-tn-meta { font-size: 10.5px; color: rgba(244,244,239,0.42); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
-.desk-tn-lead { display: flex; align-items: center; justify-content: space-between; width: 100%; margin-top: 3px; padding-top: 9px; border-top: 1px solid rgba(255,255,255,0.07); }
-.desk-tn-lead b { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 11.5px; font-weight: 700; white-space: nowrap; }
-.desk-tn-lead b.dim { color: rgba(244,244,239,0.35); font-weight: 500; }
-.desk-tn-lead span { font-size: 12px; color: rgba(244,244,239,0.3); transition: transform .2s ease, color .2s ease; }
-.desk-tn-card:hover .desk-tn-lead span { transform: translateX(3px); color: #b7ff00; }
+.desk-tn-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; width: 100%; }
+.desk-tn-top b { font-size: 12px; font-weight: 700; color: rgba(244,244,239,0.85); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.desk-tn-status { flex-shrink: 0; font-size: 10.5px; font-weight: 600; color: rgba(244,244,239,0.45); font-variant-numeric: tabular-nums; }
+.desk-tn-status.live { color: rgba(244,244,239,0.62); }
+.desk-tn-status.called { color: var(--t, #b7ff00); }
+.desk-tn-name { font-size: 13.5px; font-weight: 600; line-height: 1.3; color: #f4f4ef; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; min-height: 2.6em; }
+.desk-tn-duel { display: flex; flex-direction: column; gap: 5px; width: 100%; margin-top: 1px; }
+.desk-tn-cand { display: flex; align-items: center; gap: 8px; width: 100%; }
+.desk-tn-cand i { width: 7px; height: 7px; border-radius: 3px; flex-shrink: 0; }
+.desk-tn-cand em { font-style: normal; font-size: 12.5px; font-weight: 600; color: rgba(244,244,239,0.85); min-width: 0; flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.desk-tn-cand b { font-size: 12.5px; font-weight: 700; color: #f4f4ef; font-variant-numeric: tabular-nums; }
+.desk-tn-bar { display: flex; gap: 2px; width: 100%; height: 4px; margin-top: 3px; border-radius: 99px; overflow: hidden; }
+.desk-tn-bar i { height: 100%; border-radius: 99px; min-width: 3px; }
+.desk-tn-await { font-size: 12px; color: rgba(244,244,239,0.42); }
+.desk-tn-duel.empty { gap: 8px; }
+.desk-tn-lead { display: flex; align-items: center; justify-content: space-between; gap: 10px; width: 100%; margin-top: 2px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.07); }
+.desk-tn-office { font-size: 11px; color: rgba(244,244,239,0.42); min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.desk-tn-lead b { font-size: 12px; font-weight: 700; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.desk-tn-lead > span[aria-hidden] { font-size: 12px; color: rgba(244,244,239,0.3); }
 .desk-tn-none { max-width: 1180px; margin: 22px auto 0; padding: 0 clamp(20px,4vw,44px); font-size: 13.5px; color: rgba(244,244,239,0.5); }
 
 /* browse by night — day toggle strip (no calendar) */
