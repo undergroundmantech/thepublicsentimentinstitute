@@ -219,7 +219,7 @@ export default function DeskSearch({
           }}
           onFocus={() => setOpen(true)}
           onKeyDown={onKeyDown}
-          placeholder={variant === "pill" ? "Search any race…" : "Search any race — a state, an office, a candidate…"}
+          placeholder={variant === "pill" ? "Search any race…" : "Search races, states, or candidates"}
           aria-label="Search any race"
           autoComplete="off"
           spellCheck={false}
@@ -233,32 +233,27 @@ export default function DeskSearch({
 
       {showList ? (
         <div className="desk-search-pop" role="listbox">
-          <div className="desk-spop-h" aria-hidden>
-            <span>{dq.trim() ? `${results.length} match${results.length === 1 ? "" : "es"}` : "latest boards"}</span>
-            <span>{index ? `${index.count.toLocaleString("en-US")} contests` : "loading the season…"}</span>
-          </div>
           {results.length === 0 ? (
             <div className="desk-search-empty">
-              {error ? "couldn’t load the season index — retry in a moment." : (
-                <>no matches on <b>“{dq.trim()}”</b> — try a state, an office, or a candidate.</>
+              {error ? "Couldn’t load the season — retry in a moment." : (
+                <>No matches for <b>“{dq.trim()}”</b>. Try a state, an office, or a candidate.</>
               )}
             </div>
           ) : (
-            results.map((doc, i) => (
-              <Row
-                key={doc.id ?? i}
-                doc={doc}
-                query={dq}
-                active={i === cursor}
-                onPick={() => choose(doc)}
-                onHover={() => setCursor(i)}
-              />
-            ))
+            <>
+              {!dq.trim() ? <div className="desk-spop-label">Latest boards</div> : null}
+              {results.map((doc, i) => (
+                <Row
+                  key={doc.id ?? i}
+                  doc={doc}
+                  query={dq}
+                  active={i === cursor}
+                  onPick={() => choose(doc)}
+                  onHover={() => setCursor(i)}
+                />
+              ))}
+            </>
           )}
-          <div className="desk-search-foot">
-            <span>{dq.trim() ? "every contest of the 2026 season" : "tonight’s boards"}</span>
-            <span className="desk-search-keys" aria-hidden>↑↓ move · ↵ open</span>
-          </div>
         </div>
       ) : null}
     </div>
