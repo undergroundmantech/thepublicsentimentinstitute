@@ -73,6 +73,69 @@ function Placeholder({ tall }: { tall?: boolean }) {
   return <div className="desk-ph" style={{ height: tall ? 340 : 230 }} aria-hidden />;
 }
 
+// ── the walkthrough's film frames: each frame eases toward full size as it
+// crosses the viewport center — transform-only, one rAF per scroll tick ──────
+function FilmMedia({ children, wide }: { children: React.ReactNode; wide?: boolean }) {
+  const ref = useRef<HTMLDivElement | null>(null);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    if (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) return;
+    let raf = 0;
+    const tick = () => {
+      raf = 0;
+      const r = el.getBoundingClientRect();
+      const vh = window.innerHeight || 1;
+      if (r.bottom < -120 || r.top > vh + 120) return;
+      const p = Math.min(1, Math.abs(r.top + r.height / 2 - vh / 2) / (vh * 0.66));
+      const ease = 1 - p * p;
+      el.style.transform = `scale(${(0.93 + 0.07 * ease).toFixed(4)})`;
+      el.style.setProperty("--film-halo", ease.toFixed(3));
+    };
+    const kick = () => { if (!raf) raf = requestAnimationFrame(tick); };
+    tick();
+    window.addEventListener("scroll", kick, { passive: true });
+    window.addEventListener("resize", kick);
+    return () => {
+      window.removeEventListener("scroll", kick);
+      window.removeEventListener("resize", kick);
+      if (raf) cancelAnimationFrame(raf);
+    };
+  }, []);
+  return (
+    <div ref={ref} className={`desk-film-media ${wide ? "wide" : ""}`}>
+      <span className="desk-film-halo" aria-hidden />
+      <figure className="desk-film-frame">{children}</figure>
+    </div>
+  );
+}
+
+// plays only while on screen; muted loop, streams progressively
+function FilmVideo() {
+  const ref = useRef<HTMLVideoElement | null>(null);
+  useEffect(() => {
+    const v = ref.current;
+    if (!v) return;
+    const io = new IntersectionObserver(
+      ([e]) => { if (e.isIntersecting) v.play().catch(() => {}); else v.pause(); },
+      { threshold: 0.3 }
+    );
+    io.observe(v);
+    return () => io.disconnect();
+  }, []);
+  return (
+    <video
+      ref={ref}
+      src="/desk/desk-tour.mp4"
+      muted
+      loop
+      playsInline
+      preload="metadata"
+      aria-label="A live pass over the precinct map — panning the state, hovering counties"
+    />
+  );
+}
+
 // Day toggle — the election nights of the season as a scrollable strip (no
 // calendar). Each opens that day's full results grid at /results?date=YYYY-MM-DD.
 function DayStrip({ index, onPick }: { index: any; onPick: (date: string) => void }) {
@@ -315,6 +378,7 @@ function Desk() {
 
   const [callRef, callIn] = useInView();
   const [mapRef, mapIn] = useInView();
+  const [filmRef, filmIn] = useInView();
   const [fcRef, fcIn] = useInView();
   const [scaleRef, scaleIn] = useInView();
 
@@ -595,6 +659,53 @@ function Desk() {
         <PrecinctShowcase lead={precinctLead} pool={cyclePool} onOpen={openRace} />
       </section>
 
+      {/* 3.5 · the walkthrough — one Georgia race followed through three depths,
+          as alternating film frames that scale up toward the viewport center */}
+      <section className="desk-film" ref={filmRef as any}>
+        <div className={`desk-sechead ${filmIn ? "is-in" : ""}`}>
+          <div className="desk-sechead-l">
+            <Eyebrow>one race, all the way down</Eyebrow>
+            <h2 className="desk-h2">the same race, three depths<em>.</em></h2>
+            <p className="desk-body">Georgia&rsquo;s Supreme Court seat at 99% reporting — followed from its race page into the live precinct map.</p>
+          </div>
+          <span className="desk-ghost" aria-hidden>03</span>
+        </div>
+
+        <div className="desk-film-rows">
+          <div className="desk-film-row">
+            <div className="desk-film-copy">
+              <Eyebrow>the race page</Eyebrow>
+              <h3 className="desk-film-h">tallies, the needle, the county map — one page.</h3>
+              <p className="desk-film-p">Every candidate with full vote counts, live reporting, and win probability underneath. The state map sits beside the board, shaded county by county as returns land.</p>
+            </div>
+            <FilmMedia>
+              <img src="/desk/film-race.jpg" alt="A race page: the tally board, the win-probability needle, and the Georgia county map" loading="lazy" />
+            </FilmMedia>
+          </div>
+
+          <div className="desk-film-row center">
+            <FilmMedia wide>
+              <FilmVideo />
+            </FilmMedia>
+            <div className="desk-film-cap">
+              <Eyebrow live>in motion</Eyebrow>
+              <p className="desk-film-p">Recorded straight off the live map — pan the state, hover a county, the tally follows the cursor.</p>
+            </div>
+          </div>
+
+          <div className="desk-film-row rev">
+            <div className="desk-film-copy">
+              <Eyebrow>the precinct map</Eyebrow>
+              <h3 className="desk-film-h">then step into the full map.</h3>
+              <p className="desk-film-p">Every plate and race page hands off to the live application: county shading by margin, the race rail on the left, tallies on hover, zoom down to the block.</p>
+            </div>
+            <FilmMedia>
+              <img src="/desk/film-map.jpg" alt="The live precinct map: Georgia counties shaded by margin, the race rail, and the hover tally" loading="lazy" />
+            </FilmMedia>
+          </div>
+        </div>
+      </section>
+
       {/* 4 · the forecast — the needle swings race to race through the tightest
           contests on the board */}
       <section className="desk-fc" ref={fcRef as any}>
@@ -872,6 +983,28 @@ body main > div > div { padding-top: 0 !important; padding-bottom: 0 !important;
 /* each board slides onto the stage */
 .desk-stage-swap { position: relative; animation: stageIn .6s cubic-bezier(.2,.8,.2,1) both; }
 @keyframes stageIn { from { opacity: 0; transform: translateX(28px) scale(0.985); } to { opacity: 1; transform: none; } }
+/* 3.5 · the walkthrough — alternating film frames */
+.desk-film { position: relative; padding: clamp(70px, 13vh, 150px) 0 clamp(50px, 9vh, 110px); }
+.desk-film .desk-h2 em { font-style: normal; color: #b7ff00; }
+.desk-film-rows { max-width: 1280px; margin: clamp(44px, 7vh, 84px) auto 0; padding: 0 clamp(20px, 4vw, 44px); display: grid; gap: clamp(84px, 13vh, 170px); }
+.desk-film-row { display: grid; grid-template-columns: minmax(280px, 5fr) minmax(0, 7fr); gap: clamp(30px, 5vw, 76px); align-items: center; }
+.desk-film-row.rev { grid-template-columns: minmax(0, 7fr) minmax(280px, 5fr); }
+.desk-film-row.rev .desk-film-copy { order: 2; }
+.desk-film-row.rev .desk-film-media { order: 1; }
+.desk-film-h { margin-top: 14px; font-family: var(--font-mp), "Manrope", sans-serif; font-size: clamp(22px, 2.4vw, 31px); font-weight: 500; letter-spacing: -0.03em; line-height: 1.12; text-transform: lowercase; color: #f4f4ef; }
+.desk-film-p { margin-top: 12px; max-width: 44ch; font-size: 15px; line-height: 1.62; color: rgba(244,244,239,0.58); }
+.desk-film-media { position: relative; will-change: transform; }
+.desk-film-halo { position: absolute; inset: -14% -10%; z-index: 0; border-radius: 40px; background: radial-gradient(60% 60% at 50% 46%, rgba(124,58,237,0.26), transparent 70%); filter: blur(36px); opacity: var(--film-halo, 0.35); pointer-events: none; }
+.desk-film-frame { position: relative; z-index: 1; margin: 0; border-radius: 10px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1); background: #08080a; box-shadow: 0 40px 110px rgba(0,0,0,0.6), 0 6px 24px rgba(0,0,0,0.45); }
+.desk-film-frame img, .desk-film-frame video { display: block; width: 100%; height: auto; }
+/* the centered video row — the section's featured plate, wider than the shell */
+.desk-film-row.center { display: block; width: 100vw; margin-left: calc(50% - 50vw); padding: 0 clamp(16px, 3vw, 40px); }
+.desk-film-row.center .desk-film-media { max-width: min(1320px, 100%); margin: 0 auto; }
+.desk-film-row.center .desk-film-frame { border-radius: 12px; }
+.desk-film-row.center .desk-film-halo { background: radial-gradient(58% 58% at 50% 46%, rgba(37,99,235,0.28), transparent 70%); }
+.desk-film-cap { margin-top: 28px; display: flex; flex-direction: column; align-items: center; text-align: center; }
+.desk-film-cap .desk-film-p { margin-top: 10px; max-width: 54ch; }
+
 /* the forecast's cycling race line + progress dots */
 .desk-fc-race { margin: 18px auto 4px; text-align: center; font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 10.5px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(244,244,239,0.55); max-width: 70ch; animation: capIn .5s ease both; }
 .desk-fc-dots { display: flex; justify-content: center; gap: 5px; margin-top: 18px; }
@@ -1145,6 +1278,8 @@ body main > div > div { padding-top: 0 !important; padding-bottom: 0 !important;
   .desk-hero-stats .live i { animation: none !important; }
   .desk-plate-swap, .desk-plate-cap, .desk-stage-swap { animation: none !important; }
   .desk-pip, .desk-eyebrow-pip, .desk-ph { animation: none !important; }
+  .desk-film-media { transform: none !important; }
+  .desk-film-halo { opacity: 0.35 !important; }
 }
 
 @media (max-width: 900px) {
@@ -1164,5 +1299,9 @@ body main > div > div { padding-top: 0 !important; padding-bottom: 0 !important;
   .pp-lead { min-height: clamp(300px, 50vh, 460px); }
   .desk-precinct-row .pp { min-height: 260px; }
   .desk-status-r { display: none; }
+  .desk-film-row, .desk-film-row.rev { grid-template-columns: 1fr; gap: 22px; }
+  .desk-film-row.rev .desk-film-copy { order: 1; }
+  .desk-film-row.rev .desk-film-media { order: 2; }
+  .desk-film-rows { gap: clamp(56px, 9vh, 90px); }
 }
 `;
