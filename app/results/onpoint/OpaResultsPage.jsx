@@ -4,7 +4,7 @@ import React from "react";
 import ElectionResults from "./ElectionResults.jsx";
 import { ThemeProvider } from "./lib/theme.jsx";
 
-const OPA_GLOBAL_CSS = `
+export const OPA_GLOBAL_CSS = `
   @import url("https://fonts.googleapis.com/css2?family=Anton&family=Barlow+Condensed:wght@600;700;800;900&family=Inter:wght@400;500;600;700;800&family=Instrument+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&family=Oswald:wght@500;600;700&display=swap");
 
   :root {
@@ -94,7 +94,7 @@ const OPA_GLOBAL_CSS = `
   }
 `;
 
-export default function OpaResultsPage() {
+export default function OpaResultsPage({ dateParam = null }) {
   return (
     <ThemeProvider>
       <style>{OPA_GLOBAL_CSS}</style>
@@ -115,7 +115,7 @@ export default function OpaResultsPage() {
           isolation: "isolate",
         }}
       >
-        <ElectionResults />
+        <ElectionResults dateParam={dateParam} />
       </div>
     </ThemeProvider>
   );

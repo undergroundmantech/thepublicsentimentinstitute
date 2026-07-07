@@ -2,29 +2,25 @@
 
 import dynamic from "next/dynamic";
 
-// Hold the paint on the hub's dark field — and hide the global light chrome —
-// while the heavy client-only results chunk downloads. Without this the global
-// layout (light nav + background) flashes through before the OPA shell mounts.
-function ResultsLoader() {
-  const light =
-    typeof window !== "undefined" &&
-    (() => { try { return localStorage.getItem("opa-theme") === "light"; } catch { return false; } })();
+// Hold the paint on the desk's dark field — and hide the global light chrome —
+// while the client-only race page chunk downloads.
+function RaceLoader() {
   return (
     <>
       <style>{`body header, body footer { display: none !important; }`}</style>
-      <div
-        aria-hidden
-        style={{ position: "fixed", inset: 0, zIndex: 200, background: light ? "#ffffff" : "#0a0b0d" }}
-      />
+      <div aria-hidden style={{ position: "fixed", inset: 0, zIndex: 200, background: "#050505" }} />
     </>
   );
 }
 
-const OpaResultsPage = dynamic(() => import("../../onpoint/OpaResultsPage"), {
+// The race desk — NYT-style single-race page: tallies + county map + the
+// needle, with every party's contest for the office on one page. The precinct
+// map (the full ESRI build) opens from here.
+const RaceDesk = dynamic(() => import("./RaceDesk"), {
   ssr: false,
-  loading: () => <ResultsLoader />,
+  loading: () => <RaceLoader />,
 });
 
 export default function ResultsRacePage() {
-  return <OpaResultsPage />;
+  return <RaceDesk />;
 }

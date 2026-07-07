@@ -67,7 +67,7 @@ function topRaces(races, n = 4) {
 // ── one race card — 1:1 ballotline.com: a bordered "casing" holding a
 // solid colour-headed result block (left) and the cropped flat map
 // (right) with a → affordance. ──
-function ResultCard({ race, onOpen, compact = false }) {
+export function ResultCard({ race, onOpen, compact = false, mapDelay }) {
   const { P } = useTheme()
   const cands = [...(race.candidates || [])].sort((a, b) => (b.votes || 0) - (a.votes || 0))
   const winner = cands.find((c) => c.winner)
@@ -347,7 +347,7 @@ function ResultCard({ race, onOpen, compact = false }) {
         }
       >
         {race.has_map ? (
-          <ResultMap race={race} inView fit="contain" delayMs={compact ? 3200 : 0} />
+          <ResultMap race={race} inView fit="contain" delayMs={mapDelay != null ? mapDelay : (compact ? 3200 : 0)} />
         ) : (
           <div className="opa-er-map" style={{ display: 'grid', placeItems: 'center', background: 'transparent' }}>
             <span style={{ fontFamily: DISPLAY, fontSize: 10, color: TXT_DIM, letterSpacing: '0.12em' }}>NO MAP</span>
@@ -743,14 +743,29 @@ function deepLinkRaceId() {
   return m ? decodeURIComponent(m[1]) : null
 }
 
-export default function ElectionResults() {
-  // The "no `?date=`" case shows a date-picker menu first (May 19 LIVE +
-  // May 16); picking a date sets the URL and loads that day's grid.
+export default function ElectionResults({ dateParam = null }) {
+  // The date comes from the ROUTER (via props) — reading window.location here
+  // races Next's client navigation (the URL updates after render), which used
+  // to strand day-clicks on the picker. The window read is only a fallback
+  // for legacy pushState entries.
   const [selectedDate, setSelectedDate] = useState(() => {
+    if (dateParam && /^\d{4}-\d{2}-\d{2}$/.test(dateParam)) return dateParam
     if (typeof window === 'undefined') return null
     const q = new URLSearchParams(window.location.search).get('date')
     return q && /^\d{4}-\d{2}-\d{2}$/.test(q) ? q : null
   })
+  useEffect(() => {
+    if (dateParam && /^\d{4}-\d{2}-\d{2}$/.test(dateParam)) setSelectedDate(dateParam)
+  }, [dateParam])
+  // The desk (at /results) replaced the calendar entirely. If the hub ever
+  // finds itself mounted WITHOUT a date — a stale history entry, an internal
+  // popstate — bounce to the desk rather than showing a picker. Delayed a
+  // beat so a normal Next unmount wins without a full reload.
+  useEffect(() => {
+    if (selectedDate) return
+    const t = setTimeout(() => { try { window.location.replace('/results') } catch {} }, 120)
+    return () => clearTimeout(t)
+  }, [selectedDate])
   // Browser back/forward syncs the URL → picker/grid.
   useEffect(() => {
     const onPop = () => {
@@ -854,7 +869,7 @@ export default function ElectionResults() {
   // February–June 2026, with race counts. Fetched once when the picker is
   // shown; gzip keeps the month ranges ~1 MB on the wire.
   useEffect(() => {
-    if (date) return // only the picker needs this
+    return // picker retired — the desk landing owns date discovery now
     let alive = true
     setPickerDates(null)
     setPickerErr(false)
@@ -1009,23 +1024,23 @@ export default function ElectionResults() {
   }
 
   const openCalendar = () => {
-    try { history.pushState(null, '', '/results') } catch {}
-    setSelectedDate(null)
-    setOpenRace(null)
+    // The calendar landing was replaced by the Query Desk landing page; a full
+    // navigation re-renders /results → ResultsDesk (page.tsx route gate).
+    try { window.location.assign('/results') } catch {
+      setSelectedDate(null)
+      setOpenRace(null)
+    }
   }
 
-  // A search result → jump straight into that race. RaceDetail keys off the
-  // race object, so the detail opens immediately; setting the date loads that
-  // day's grid behind it (so closing the detail lands you on the right day).
+  // Any race selection → its dedicated race page (tallies + county map + the
+  // needle), where the precinct map is one click deeper. One formula everywhere.
+  const goRacePage = (race) => {
+    if (!race || race.id == null) return
+    try { window.location.assign(`/results/race/${race.id}`) } catch {}
+  }
   const onPickSearch = (race) => {
     setSearchOpen(false)
-    if (!race) return
-    const d = String(race.election_date || '').slice(0, 10)
-    if (/^\d{4}-\d{2}-\d{2}$/.test(d) && d !== selectedDate) {
-      try { history.pushState(null, '', `/results?date=${d}`) } catch {}
-      setSelectedDate(d)
-    }
-    setOpenRace(race)
+    goRacePage(race)
   }
 
   // One palette element reused across every render branch (it portals to
@@ -1045,50 +1060,17 @@ export default function ElectionResults() {
       <>
         {searchPortal}
         <div style={{ position: 'absolute', inset: 0, background: 'var(--page)', zIndex: 20 }} />
-        <RaceDetail race={openRace} onClose={() => setOpenRace(null)} />
+        {/* Closing a deep-linked race returns to the Query Desk landing (a full
+            nav so page.tsx renders ResultsDesk, never the retired calendar). */}
+        <RaceDetail race={openRace} onClose={() => { try { window.location.assign('/results') } catch { setOpenRace(null) } }} />
       </>
     )
   }
 
-  // ── Calendar picker: shown when no `?date=` param is set. The full
-  //    civicAPI calendar (Feb–May 2026) rendered as a month grid; pick a
-  //    day that held a contest to open that day's results.
+  // ── No date: the desk owns this state now — hold dark while the redirect
+  //    effect above bounces to /results. The calendar is gone for good.
   if (!date) {
-    const totalRaces = (pickerDates || []).reduce((s, d) => s + d.count, 0)
-    const loadingCal = pickerDates == null && !pickerErr
-    return (
-      <div style={{ position: 'absolute', inset: 0, background: 'var(--page)', zIndex: 20, overflow: 'auto', animation: 'opa-fade 420ms ease' }}>
-        {searchPortal}
-        <div className="opa-er-bg" aria-hidden />
-        <div style={{ position: 'relative', zIndex: 1, maxWidth: 960, margin: '0 auto', padding: '28px 30px 100px' }}>
-          <style>{GLASS_CSS}</style>
-          <ResultsTopNav selectedDate={null} onCalendar={openCalendar} onSearch={() => setSearchOpen(true)} />
-          {/* masthead */}
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12, marginBottom: 18 }}>
-            <span style={{ display: 'inline-flex', alignItems: 'center', gap: 9, fontFamily: '"JetBrains Mono", ui-monospace, monospace', fontSize: 11, fontWeight: 500, letterSpacing: '0.22em', textTransform: 'uppercase', color: TXT_DIM }}>
-              <span style={{ width: 7, height: 7, borderRadius: 99, background: '#8A9BBF' }} />
-              Election Calendar · 2026
-            </span>
-          </div>
-          <h1 style={{ margin: 0, fontFamily: POSTER, fontSize: 'clamp(44px, 7.6vw, 104px)', lineHeight: 0.88, letterSpacing: '0.5px', textTransform: 'uppercase', color: 'var(--ink)' }}>
-            Election Results
-          </h1>
-          <p style={{ marginTop: 16, marginBottom: 0, maxWidth: 600, fontFamily: DISPLAY, fontSize: 15.5, lineHeight: 1.65, color: 'var(--ink-mute)' }}>
-            Every contest civicAPI has called this season, February through June
-            {loadingCal || !pickerDates ? '.' : ` — ${fmtInt(totalRaces)} races across ${pickerDates.length} election days.`} Pick a day to open its returns.
-          </p>
-
-          <div style={{ marginTop: 42 }}>
-            <ElectionCalendar
-              dates={pickerDates}
-              loading={loadingCal}
-              error={pickerErr}
-              onPick={pickDate}
-            />
-          </div>
-        </div>
-      </div>
-    )
+    return <div style={{ position: 'absolute', inset: 0, background: 'var(--page)', zIndex: 20 }} aria-hidden />
   }
 
   return (
@@ -1311,7 +1293,7 @@ export default function ElectionResults() {
                   height: CARD_H,
                 }}
               >
-                <ResultCard race={race} onOpen={setOpenRace} compact={cols === 1} />
+                <ResultCard race={race} onOpen={goRacePage} compact={cols === 1} />
               </div>
             ))}
           </div>
