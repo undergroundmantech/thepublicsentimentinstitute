@@ -10,8 +10,9 @@
 //   Stage III  expert ratings as interval projections with time-rising weight
 //   Stage IV-VI market-implied margins with liquidity + dynamic weighting
 //              (Complete model only; Legacy = Stages I–II)
-//   Sims       national + region + state + office + idiosyncratic factor
-//              model (guaranteed-PSD structured covariance), M = 10,000
+//   Sims       continuous-similarity covariance (feature distances → office-
+//              pair-bounded correlations → eigenvalue-clipped PSD → national
+//              factor carve-out + residual Cholesky), M = 40,000
 //   Output     race table, chamber histograms/control odds, 60-day trends,
 //              county-level projections from real registration data.
 //
@@ -19,7 +20,7 @@
 // ─────────────────────────────────────────────────────────────────────────────
 
 import { readFileSync, writeFileSync, mkdirSync, rmSync } from "node:fs";
-import { buildUniverse, STATE_NAMES, REGION, ELASTICITY, PRES_2024 } from "./universe.mjs";
+import { buildUniverse, STATE_NAMES, REGION, ELASTICITY, PRES_2024, PRES_2020 } from "./universe.mjs";
 
 const OUT = "public/forecast";
 mkdirSync(OUT, { recursive: true });
@@ -117,15 +118,36 @@ const NPE_2024 = 1.5;
 
 // ── Stage I · fundamentals ───────────────────────────────────────────────────
 const INC_BONUS = { governor: 4.6, senate: 3.4, house: 2.6 };
-// down-ballot races absorb less of the national swing than the presidential
-// anchor implies (incumbency, localization) — office-specific transmission
-const ENV_TRANSMIT = { house: 0.72, senate: 0.85, governor: 0.62 };
+const NPE_2020 = -3.1; // 2020 national House-vote environment (D+3.1)
+
+// §1.9 predicted-dynamics overlay: analyst-belief coalition drift — Trump-era
+// low-propensity coalitions revert in a midterm, strongest where the Hispanic
+// vote share is largest (pro-D on the R+ scale, so negative).
+const HISP_SHARE = {
+  NM: 0.48, TX: 0.40, CA: 0.40, AZ: 0.32, NV: 0.29, FL: 0.27, CO: 0.22,
+  NJ: 0.21, NY: 0.19, IL: 0.18, CT: 0.17, RI: 0.17, UT: 0.15, WA: 0.14,
+  OR: 0.14, ID: 0.13, KS: 0.13, MA: 0.13, NE: 0.12, OK: 0.12, MD: 0.12,
+  HI: 0.11, NC: 0.10, GA: 0.10, VA: 0.10, DE: 0.10, WY: 0.10, AR: 0.09,
+  PA: 0.08, WI: 0.08, IN: 0.08, IA: 0.07, SC: 0.07, TN: 0.07, AK: 0.07,
+  MI: 0.06, MN: 0.06, LA: 0.06, AL: 0.05, MO: 0.05, NH: 0.05, SD: 0.05,
+  KY: 0.04, OH: 0.04, MS: 0.04, MT: 0.04, ND: 0.04, ME: 0.02, VT: 0.02, WV: 0.02,
+};
+const DYN_REVERSION = -4.0;
+
 function fundamentals(r) {
   const ex = (ELASTICITY[r.st] ?? 1.0) * (Math.abs(r.pvi) < 8 ? 1.04 : 1.0); // competitive races run hotter
-  const envShift = (NPE_2024 - NPE_2026) * ex * ENV_TRANSMIT[r.office];       // shift from '24 anchor to '26
-  let m = r.pvi - envShift;
+  const shift = (npeBase) => (npeBase - NPE_2026) * ex; // Δ from that baseline's environment to 2026
+  let m;
+  if (r.p20 != null) {
+    // §1.1: the two most recent presidential anchors, each environment-adjusted,
+    // plus the race adjustment (prior same-office performance, candidate quality)
+    m = 0.6 * (r.p24 - shift(NPE_2024)) + 0.4 * (r.p20 - shift(NPE_2020)) + (r.adj ?? 0);
+  } else {
+    m = r.pvi - shift(NPE_2024); // House leans are already on 2026 lines
+  }
   m += r.inc * INC_BONUS[r.office];
   if (r.open) m += (m > 0 ? -0.7 : 0.7); // open seats drift toward the center
+  m += DYN_REVERSION * (HISP_SHARE[r.st] ?? 0.08); // §1.9 overlay
   return m;
 }
 
@@ -238,7 +260,9 @@ function applyRatings(mFP, ratings, office, days) {
     const lo = rt.lo <= -900 ? -Infinity : rt.lo;
     const hi = rt.hi >= 900 ? Infinity : rt.hi;
     const proj = clamp(mFP, lo, hi);
-    adj += eta * kappa * (proj - mFP);
+    // normalized across outlets: the aggregate pull is η·κ, not outlets·η·κ,
+    // so ratings stay a soft guardrail and can never overshoot the boundary
+    adj += (eta / ratings.length) * kappa * (proj - mFP);
   }
   return mFP + adj;
 }
@@ -247,12 +271,24 @@ function applyRatings(mFP, ratings, office, days) {
 function genMarket(r, mTrue, days) {
   const rng = rngFor("mkt·" + r.id);
   const liquidity = clamp((r.marquee ? 0.75 : 0.3) + (20 - Math.abs(mTrue)) / 45 + rng() * 0.15, 0.05, 0.98);
-  if (!r.marquee && Math.abs(mTrue) > 22 && rng() < 0.6) return null; // no usable book
+  if (!r.marquee && Math.abs(mTrue) > 22 && rng() < 0.6) return null; // nobody prices landslides
+  // Stage IV: synthesize the book. The market carries longshot bias (flattened
+  // toward 0.5) — Stage V's q* correction is what un-flattens it.
   const sigmaNow = (7.5 + 0.55 * Math.pow(days, 0.62)) / 100;
-  const qRaw = phi((mTrue / 200 + gauss(rng) * 0.012) / sigmaNow);
-  const alpha = 1.06; // favorite-longshot sharpening
-  const q = Math.pow(qRaw, alpha) / (Math.pow(qRaw, alpha) + Math.pow(1 - qRaw, alpha));
-  return { q: clamp(q, 0.015, 0.985), liquidity: Math.round(liquidity * 100) / 100 };
+  const fair = phi((mTrue / 200) / sigmaNow);
+  const a = 1 / 1.06;
+  const flat = Math.pow(fair, a) / (Math.pow(fair, a) + Math.pow(1 - fair, a));
+  const mid = clamp(flat + gauss(rng) * 0.02 * (1.25 - liquidity), 0.01, 0.99);
+  const lastTrade = clamp(mid + gauss(rng) * 0.035 * (1.15 - liquidity), 0.01, 0.99);
+  const tradeAge = Math.floor(Math.pow(rng(), 2) * 21); // days since the last fill
+  const activity = liquidity * (0.4 + rng() * 0.6);
+  const twoSided = !(rng() < 0.25 * (1 - liquidity)); // thin books go one-sided
+  // §IV discard rules: a one-sided book with stale/no trade evidence is unusable
+  if (!twoSided && (tradeAge > 14 || activity < 0.06)) return null;
+  // λ blend of last trade against the midpoint; stale trades defer to the book
+  const lam = clamp((0.3 + 0.5 * liquidity) * Math.exp(-tradeAge / 10), 0.05, 0.85);
+  const q = twoSided ? lam * lastTrade + (1 - lam) * mid : lastTrade;
+  return { q: Math.round(clamp(q, 0.005, 0.995) * 1000) / 1000, liquidity: Math.round(liquidity * 100) / 100 };
 }
 
 function invPhi(p) {
@@ -270,9 +306,13 @@ function invPhi(p) {
 }
 
 function marketMargin(q, office, days) {
+  if (q <= 0 || q >= 1) return null; // §V: degenerate contracts are removed, not clipped
+  const qc = clamp(q, 0.005, 0.995);
+  const d = 1.06; // §V favorite-longshot correction q*
+  const qs = Math.pow(qc, d) / (Math.pow(qc, d) + Math.pow(1 - qc, d));
   const rOff = { house: 1.15, senate: 1.0, governor: 1.08 }[office];
   const sigma = (0.052 + 0.0042 * Math.pow(days, 0.55)) * rOff;
-  const raw = 200 * sigma * invPhi(q);
+  const raw = 200 * sigma * invPhi(qs);
   return Math.sign(raw) * Math.pow(Math.abs(raw), 1.06); // mild stretch
 }
 
@@ -284,107 +324,312 @@ function marketWeight(mFPE, wPoll, office) {
 }
 
 // ── marginal race uncertainty ────────────────────────────────────────────────
-function raceSigma(office, days, enop) {
+function raceSigma(office, days) {
   const base = 3.1 + 0.72 * Math.pow(days, 0.5); // ≈ 11 pts at 120 days out
   const off = { house: 1.0, senate: 0.94, governor: 1.12 }[office];
-  const info = 1 - 0.14 * Math.min(1, enop / 6); // polling trims uncertainty a bit
-  return base * off * info;
+  return base * off;
 }
 
-// ── correlated simulation (factor model — PSD by construction) ───────────────
-// var shares: national·elasticity, region, state, office, idiosyncratic
-function loadings(r, sigma) {
-  let ex = ELASTICITY[r.st] ?? 1.0;
-  // district elasticity: landslide districts swing harder in margin than
-  // knife-edge ones, so each district gets its own responsiveness
-  if (r.office === "house") ex *= 0.88 + 0.24 * Math.min(Math.abs(r.pvi ?? 0), 25) / 25;
-  // office transmission of the national shock: house rides the generic ballot,
-  // governors are partly insulated (candidate-quality dominated)
-  const offNat = r.office === "house" ? 1.18 : r.office === "senate" ? 1.0 : 0.62;
-  const vNat = 0.42 * ex * ex * offNat, vReg = 0.1, vState = 0.2, vOff = 0.05;
-  const tot = vNat + vReg + vState + vOff;
-  // well-polled races carry more race-specific information, so a larger share
-  // of their remaining uncertainty is idiosyncratic
-  const vIdio = Math.max(0.12, 1 - tot) + 0.35 * (r.wPoll || 0);
-  const norm = sigma / Math.sqrt(vNat + vReg + vState + vOff + vIdio);
-  return {
-    nat: Math.sqrt(vNat) * norm,
-    reg: Math.sqrt(vReg) * norm,
-    state: Math.sqrt(vState) * norm,
-    off: Math.sqrt(vOff) * norm,
-    idio: Math.sqrt(vIdio) * norm,
-  };
+// ── correlated simulation (§3.1–3.4: continuous-similarity covariance) ───────
+// Feature-space similarity → office-pair-bounded pairwise correlations →
+// eigenvalue-clipped PSD correlation matrix → Σ = DRD, with an explicit
+// national factor carved out (λ = √c·σ, residual Cholesky), Y = µ + λZ₀ + LZ.
+
+// §3.1 state covariates for the feature vectors
+const STATE_URBAN = {
+  AL: 0.57, AK: 0.64, AZ: 0.89, AR: 0.55, CA: 0.94, CO: 0.86, CT: 0.86, DE: 0.82,
+  FL: 0.91, GA: 0.74, HI: 0.86, ID: 0.69, IL: 0.87, IN: 0.71, IA: 0.63, KS: 0.72,
+  KY: 0.58, LA: 0.71, ME: 0.38, MD: 0.86, MA: 0.91, MI: 0.74, MN: 0.72, MS: 0.46,
+  MO: 0.69, MT: 0.53, NE: 0.73, NV: 0.94, NH: 0.59, NJ: 0.94, NM: 0.74, NY: 0.87,
+  NC: 0.67, ND: 0.61, OH: 0.76, OK: 0.65, OR: 0.80, PA: 0.76, RI: 0.91, SC: 0.67,
+  SD: 0.57, TN: 0.66, TX: 0.83, UT: 0.90, VT: 0.35, VA: 0.75, WA: 0.83, WV: 0.44,
+  WI: 0.67, WY: 0.62,
+};
+const STATE_COLLEGE = {
+  AL: 0.27, AK: 0.30, AZ: 0.31, AR: 0.24, CA: 0.35, CO: 0.44, CT: 0.40, DE: 0.33,
+  FL: 0.31, GA: 0.33, HI: 0.34, ID: 0.28, IL: 0.36, IN: 0.27, IA: 0.29, KS: 0.34,
+  KY: 0.26, LA: 0.25, ME: 0.33, MD: 0.41, MA: 0.45, MI: 0.30, MN: 0.37, MS: 0.23,
+  MO: 0.30, MT: 0.33, NE: 0.33, NV: 0.27, NH: 0.37, NJ: 0.41, NM: 0.28, NY: 0.38,
+  NC: 0.33, ND: 0.30, OH: 0.29, OK: 0.26, OR: 0.35, PA: 0.33, RI: 0.35, SC: 0.30,
+  SD: 0.30, TN: 0.29, TX: 0.31, UT: 0.36, VT: 0.40, VA: 0.40, WA: 0.37, WV: 0.21,
+  WI: 0.31, WY: 0.28,
+};
+const STATE_LATLON = {
+  AL: [32.8, -86.8], AK: [64.0, -153.0], AZ: [34.2, -111.6], AR: [34.8, -92.2],
+  CA: [37.2, -119.3], CO: [39.0, -105.5], CT: [41.6, -72.7], DE: [39.0, -75.5],
+  FL: [28.6, -82.4], GA: [32.6, -83.4], HI: [20.8, -156.3], ID: [44.4, -114.6],
+  IL: [40.0, -89.2], IN: [39.9, -86.3], IA: [42.1, -93.5], KS: [38.5, -98.4],
+  KY: [37.5, -85.3], LA: [31.1, -91.9], ME: [45.4, -69.2], MD: [39.0, -76.8],
+  MA: [42.3, -71.8], MI: [44.3, -85.4], MN: [46.3, -94.3], MS: [32.7, -89.7],
+  MO: [38.4, -92.5], MT: [47.0, -109.6], NE: [41.5, -99.8], NV: [39.3, -116.6],
+  NH: [43.7, -71.6], NJ: [40.2, -74.7], NM: [34.4, -106.1], NY: [42.9, -75.5],
+  NC: [35.5, -79.4], ND: [47.4, -100.5], OH: [40.4, -82.8], OK: [35.6, -97.5],
+  OR: [43.9, -120.6], PA: [40.9, -77.8], RI: [41.7, -71.6], SC: [33.9, -80.9],
+  SD: [44.4, -100.2], TN: [35.8, -86.3], TX: [31.5, -99.3], UT: [39.3, -111.7],
+  VT: [44.0, -72.7], VA: [37.5, -78.9], WA: [47.4, -120.4], WV: [38.6, -80.6],
+  WI: [44.6, -89.7], WY: [43.0, -107.6],
+};
+
+// §3.3 office-pair correlation floors/ceilings + same-state bonus
+// Calibrated so the common (national) swing component of an ~11-pt race sigma
+// is ~2.5–3.5 pts — the chamber seat bands land where real House models do
+// (80% ≈ ±20–25 seats), instead of letting pairwise ρ masquerade as a
+// national shock six times that size.
+const RHO_BOUNDS = {
+  "governor|governor": [0.02, 0.26], "senate|senate": [0.04, 0.34], "house|house": [0.03, 0.30],
+  "governor|senate": [0.02, 0.24], "governor|house": [0.02, 0.20], "house|senate": [0.03, 0.26],
+};
+const SAME_STATE_B = {
+  "governor|governor": 0.08, "senate|senate": 0.12, "house|house": 0.10,
+  "governor|senate": 0.10, "governor|house": 0.08, "house|senate": 0.09,
+};
+const pairKey = (a, b) => (a <= b ? `${a}|${b}` : `${b}|${a}`);
+const MU_S = 0.5, KAP_S = 0.18; // §3.2 similarity recentering (κ tuned so s* rarely clips)
+const ETA_NAT = 0.55;           // national-factor share parameter (§3.4)
+
+// §3.1–3.2: weighted z-scored features → distances → recentred similarity → ρ̃
+function buildCorrelation(races) {
+  const n = races.length;
+  const FEATS = [
+    { w: 1.6, f: (r) => r.pvi },                            // partisanship
+    { w: 1.2, f: (r) => STATE_COLLEGE[r.st] ?? 0.31 },      // education
+    { w: 1.0, f: (r) => STATE_URBAN[r.st] ?? 0.72 },        // urbanization
+    { w: 0.8, f: (r) => ELASTICITY[r.st] ?? 1.0 },          // swinginess
+    { w: 0.7, f: (r) => (STATE_LATLON[r.st] ?? [39, -95])[0] }, // geography
+    { w: 0.7, f: (r) => (STATE_LATLON[r.st] ?? [39, -95])[1] },
+  ];
+  const k = FEATS.length;
+  const Z = new Float64Array(n * k);
+  FEATS.forEach((ft, c) => {
+    const vals = races.map(ft.f);
+    const mean = vals.reduce((a, b) => a + b, 0) / n;
+    const sd = Math.sqrt(vals.reduce((s2, v) => s2 + (v - mean) ** 2, 0) / n) || 1;
+    const sw = Math.sqrt(ft.w);
+    for (let i = 0; i < n; i++) Z[i * k + c] = ((vals[i] - mean) / sd) * sw;
+  });
+
+  const D = new Float64Array(n * n);
+  let dMin = Infinity, dMax = -Infinity;
+  for (let i = 0; i < n; i++) {
+    for (let j = i + 1; j < n; j++) {
+      let acc = 0;
+      for (let c = 0; c < k; c++) { const d = Z[i * k + c] - Z[j * k + c]; acc += d * d; }
+      const d = Math.sqrt(acc);
+      D[i * n + j] = d;
+      if (d < dMin) dMin = d;
+      if (d > dMax) dMax = d;
+    }
+  }
+  const span = Math.max(1e-9, dMax - dMin);
+  // recentre s_raw to mean/sd over the pair population
+  let sSum = 0, s2Sum = 0, pairs = 0;
+  for (let i = 0; i < n; i++) for (let j = i + 1; j < n; j++) {
+    const sr = 1 - (D[i * n + j] - dMin) / span;
+    sSum += sr; s2Sum += sr * sr; pairs++;
+  }
+  const sBar = sSum / pairs;
+  const sSd = Math.sqrt(Math.max(1e-9, s2Sum / pairs - sBar * sBar));
+
+  const R = new Float64Array(n * n);
+  for (let i = 0; i < n; i++) {
+    R[i * n + i] = 1;
+    for (let j = i + 1; j < n; j++) {
+      const sRaw = 1 - (D[i * n + j] - dMin) / span;
+      const sStar = clamp(MU_S + KAP_S * ((sRaw - sBar) / sSd), 0, 1);
+      const key = pairKey(races[i].office, races[j].office);
+      const [lo, hi] = RHO_BOUNDS[key];
+      let rho = lo + (hi - lo) * sStar;
+      if (races[i].st === races[j].st) rho += SAME_STATE_B[key];
+      rho = clamp(rho, 0, 0.96);
+      R[i * n + j] = R[j * n + i] = rho;
+    }
+  }
+  psdClip(R, n); // §3.3 eigenvalue clip + diagonal renormalization
+  return R;
 }
 
-const M = 10000;
-function simulate(races, means, tag) {
+// cyclic Jacobi eigendecomposition (symmetric); A is destroyed
+function jacobiEigen(A, n, maxSweeps = 10) {
+  const V = new Float64Array(n * n);
+  for (let i = 0; i < n; i++) V[i * n + i] = 1;
+  for (let sweep = 0; sweep < maxSweeps; sweep++) {
+    let off = 0;
+    for (let p2 = 0; p2 < n - 1; p2++) for (let q2 = p2 + 1; q2 < n; q2++) off += A[p2 * n + q2] ** 2;
+    if (off < 1e-8) break;
+    for (let p2 = 0; p2 < n - 1; p2++) {
+      for (let q2 = p2 + 1; q2 < n; q2++) {
+        const apq = A[p2 * n + q2];
+        if (Math.abs(apq) < 1e-11) continue;
+        const theta = (A[q2 * n + q2] - A[p2 * n + p2]) / (2 * apq);
+        const t = (theta >= 0 ? 1 : -1) / (Math.abs(theta) + Math.sqrt(theta * theta + 1));
+        const co = 1 / Math.sqrt(t * t + 1), si = t * co;
+        for (let m2 = 0; m2 < n; m2++) {
+          const amp = A[m2 * n + p2], amq = A[m2 * n + q2];
+          A[m2 * n + p2] = co * amp - si * amq;
+          A[m2 * n + q2] = si * amp + co * amq;
+        }
+        for (let m2 = 0; m2 < n; m2++) {
+          const apm = A[p2 * n + m2], aqm = A[q2 * n + m2];
+          A[p2 * n + m2] = co * apm - si * aqm;
+          A[q2 * n + m2] = si * apm + co * aqm;
+        }
+        for (let m2 = 0; m2 < n; m2++) {
+          const vmp = V[m2 * n + p2], vmq = V[m2 * n + q2];
+          V[m2 * n + p2] = co * vmp - si * vmq;
+          V[m2 * n + q2] = si * vmp + co * vmq;
+        }
+      }
+    }
+  }
+  const d = new Float64Array(n);
+  for (let i = 0; i < n; i++) d[i] = A[i * n + i];
+  return { V, d };
+}
+
+// clip negative eigenvalues, reconstruct, renormalize to unit diagonal (in place)
+function psdClip(R, n) {
+  const { V, d } = jacobiEigen(Float64Array.from(R), n);
+  let minEig = Infinity;
+  for (const v of d) if (v < minEig) minEig = v;
+  if (minEig > 1e-6) return; // already PSD
+  const floor = 1e-4;
+  const B = new Float64Array(n * n);
+  for (let e = 0; e < n; e++) {
+    const le = Math.max(d[e], floor);
+    for (let i = 0; i < n; i++) {
+      const vie = V[i * n + e] * le;
+      for (let j = i; j < n; j++) B[i * n + j] += vie * V[j * n + e];
+    }
+  }
+  for (let i = 0; i < n; i++) {
+    for (let j = i; j < n; j++) {
+      const v = B[i * n + j] / Math.sqrt(B[i * n + i] * B[j * n + j]);
+      R[i * n + j] = R[j * n + i] = v;
+    }
+  }
+  for (let i = 0; i < n; i++) R[i * n + i] = 1;
+}
+
+// Cholesky with escalating ridge (numerical safety net)
+function cholesky(Ain, n) {
+  for (let ridge = 0; ridge <= 6; ridge++) {
+    const A = Float64Array.from(Ain);
+    if (ridge > 0) {
+      let avg = 0;
+      for (let i = 0; i < n; i++) avg += A[i * n + i] / n;
+      const eps = avg * Math.pow(10, ridge - 9);
+      for (let i = 0; i < n; i++) A[i * n + i] += eps;
+    }
+    const L = new Float64Array(n * n);
+    let ok = true;
+    for (let i = 0; i < n && ok; i++) {
+      for (let j = 0; j <= i; j++) {
+        let sum = A[i * n + j];
+        for (let e = 0; e < j; e++) sum -= L[i * n + e] * L[j * n + e];
+        if (i === j) {
+          if (sum <= 0) { ok = false; break; }
+          L[i * n + i] = Math.sqrt(sum);
+        } else {
+          L[i * n + j] = sum / L[j * n + j];
+        }
+      }
+    }
+    if (ok) return L;
+  }
+  throw new Error("cholesky failed after ridge escalation");
+}
+
+function cholSolveVec(L, b, n) {
+  const y = new Float64Array(n);
+  for (let i = 0; i < n; i++) {
+    let sum = b[i];
+    for (let j = 0; j < i; j++) sum -= L[i * n + j] * y[j];
+    y[i] = sum / L[i * n + i];
+  }
+  const x = new Float64Array(n);
+  for (let i = n - 1; i >= 0; i--) {
+    let sum = y[i];
+    for (let j = i + 1; j < n; j++) sum -= L[j * n + i] * x[j];
+    x[i] = sum / L[i * n + i];
+  }
+  return x;
+}
+
+// §3.4: Σ = DRD; carve out the national factor (c = η/(σᵀΣ⁻¹σ), λ = √c·σ),
+// residual gets the Cholesky. Shared by both model variants (Σ is fixed).
+function decompose(races) {
+  const n = races.length;
+  const R = buildCorrelation(races);
+  const sig = Float64Array.from(races, (r) => r.sigma);
+  const Sig = new Float64Array(n * n);
+  for (let i = 0; i < n; i++) for (let j = 0; j < n; j++) Sig[i * n + j] = R[i * n + j] * sig[i] * sig[j];
+  const Lfull = cholesky(Sig, n);
+  const x = cholSolveVec(Lfull, sig, n);
+  let quad = 0;
+  for (let i = 0; i < n; i++) quad += sig[i] * x[i];
+  const c = ETA_NAT / quad; // Schur-safe: c < 1/(σᵀΣ⁻¹σ) keeps the residual PSD
+  const lam = Float64Array.from(sig, (v) => Math.sqrt(c) * v);
+  const Res = new Float64Array(n * n);
+  for (let i = 0; i < n; i++) for (let j = 0; j < n; j++) Res[i * n + j] = Sig[i * n + j] - c * sig[i] * sig[j];
+  const L = cholesky(Res, n);
+  return { lam, L, R };
+}
+
+const M = 40000;
+const DIST_LO = -40, DIST_BINS = 81; // per-race outcome histogram, 1-pt bins
+function simulate(races, means, tag, dec) {
   const rng = rngFor("sim·" + tag);
-  const regions = ["NE", "MW", "SO", "WE"];
-  const states = [...new Set(races.map((r) => r.st))];
-  const offices = ["governor", "senate", "house"];
-  const L = races.map((r, i) => loadings(r, races[i].sigma));
-
-  const wins = new Float64Array(races.length);
+  const n = races.length;
+  const { lam, L } = dec;
+  const wins = new Float64Array(n);
   const seatHists = { governor: new Map(), senate: new Map(), house: new Map() };
-  const margins = races.map(() => new Float64Array(7)); // for quantiles: reservoir? store sums
-  // store per-race sorted sample subset for quantiles (every 8th sim)
   const qSamples = races.map(() => []);
+  const dists = races.map(() => new Int32Array(DIST_BINS));
+  const offIdx = races.map((r) => r.office);
+  const z = new Float64Array(n);
 
   for (let s = 0; s < M; s++) {
     const z0 = gauss(rng);
-    const zr = Object.fromEntries(regions.map((g) => [g, gauss(rng)]));
-    const zs = Object.fromEntries(states.map((g) => [g, gauss(rng)]));
-    const zo = Object.fromEntries(offices.map((g) => [g, gauss(rng)]));
-    let seatsR = { governor: 0, senate: 0, house: 0 };
-    for (let i = 0; i < races.length; i++) {
-      const r = races[i], l = L[i];
-      const m = means[i] + l.nat * z0 + l.reg * zr[REGION[r.st]] + l.state * zs[r.st] + l.off * zo[r.office] + l.idio * gauss(rng);
-      if (m > 0) { wins[i]++; seatsR[r.office]++; }
-      if (s % 8 === 0) qSamples[i].push(m);
+    for (let j = 0; j < n; j++) z[j] = gauss(rng);
+    let gR = 0, sR = 0, hR = 0;
+    for (let i = 0; i < n; i++) {
+      let acc = means[i] + lam[i] * z0;
+      const row = i * n;
+      for (let j = 0; j <= i; j++) acc += L[row + j] * z[j];
+      if (acc > 0) {
+        wins[i]++;
+        const o = offIdx[i];
+        if (o === "house") hR++; else if (o === "senate") sR++; else gR++;
+      }
+      dists[i][clamp(Math.round(acc) - DIST_LO, 0, DIST_BINS - 1)]++;
+      if ((s & 7) === 0) qSamples[i].push(acc);
     }
-    for (const o of offices) {
-      const k = seatsR[o];
-      seatHists[o].set(k, (seatHists[o].get(k) || 0) + 1);
-    }
+    seatHists.governor.set(gR, (seatHists.governor.get(gR) || 0) + 1);
+    seatHists.senate.set(sR, (seatHists.senate.get(sR) || 0) + 1);
+    seatHists.house.set(hR, (seatHists.house.get(hR) || 0) + 1);
   }
 
   const probs = Array.from(wins, (w) => w / M);
   const quantiles = qSamples.map((arr) => {
     arr.sort((a, b) => a - b);
-    const at = (p) => arr[Math.floor(p * (arr.length - 1))];
+    const at = (p2) => arr[Math.floor(p2 * (arr.length - 1))];
     return { p10: Math.round(at(0.1) * 10) / 10, p90: Math.round(at(0.9) * 10) / 10 };
   });
-  return { probs, seatHists, quantiles, L };
+  return { probs, seatHists, quantiles, dists };
 }
 
-// analytic pairwise correlation from loadings → top-k similar races
-function topCorrelated(races, L, k = 8) {
-  const out = races.map(() => []);
-  for (let i = 0; i < races.length; i++) {
+// §3.6 companion table: the ten largest correlation entries per race
+function topCorrelated(races, R, k = 10) {
+  const n = races.length;
+  return races.map((_, i) => {
     const cands = [];
-    for (let j = 0; j < races.length; j++) {
-      if (i === j) continue;
-      const a = L[i], b = L[j], ri = races[i], rj = races[j];
-      let cov = a.nat * b.nat;
-      if (REGION[ri.st] === REGION[rj.st]) cov += a.reg * b.reg;
-      if (ri.st === rj.st) cov += a.state * b.state;
-      if (ri.office === rj.office) cov += a.off * b.off;
-      const corr = cov / (races[i].sigma * races[j].sigma);
-      cands.push({ id: rj.id, corr, sameState: ri.st === rj.st, statewide: rj.office !== "house" });
+    for (let j = 0; j < n; j++) {
+      if (j === i) continue;
+      cands.push({ id: races[j].id, corr: R[i * n + j] });
     }
-    cands.sort((x, y) => y.corr - x.corr);
-    // mix the list: same-state races cluster at nearly one value, so cap them
-    // and let the strongest out-of-state partners through
-    const same = [], other = [];
-    for (const c of cands) (c.sameState ? same : other).push(c);
-    // a same-state statewide race is the pairing readers look for first
-    same.sort((x, y) => (y.statewide ? 1 : 0) - (x.statewide ? 1 : 0) || y.corr - x.corr);
-    const picked = [...same.slice(0, 4), ...other.slice(0, k - Math.min(same.length, 4))]
-      .sort((x, y) => y.corr - x.corr)
-      .slice(0, k);
-    out[i] = picked.map((c) => ({ id: c.id, corr: Math.round(c.corr * 1000) / 1000 }));
-  }
-  return out;
+    cands.sort((a, b) => b.corr - a.corr);
+    return cands.slice(0, k).map((c) => ({ id: c.id, corr: Math.round(c.corr * 1000) / 1000 }));
+  });
 }
 
 // ── build ────────────────────────────────────────────────────────────────────
@@ -405,24 +650,30 @@ for (const r of races) {
   r.ratings = genRatings(r, r.mTrue);
   r.mFPE = applyRatings(r.mFP, r.ratings, r.office, DAYS_OUT);
   r.market = genMarket(r, r.mTrue, DAYS_OUT);
-  if (r.market) {
-    const mk = marketMargin(r.market.q, r.office, DAYS_OUT);
-    const wk = marketWeight(r.mFPE, w, r.office) * (0.55 + 0.45 * r.market.liquidity);
-    r.mPE = (1 - wk) * r.mFPE + wk * mk;                                        // Complete
+  const mkM = r.market ? marketMargin(r.market.q, r.office, DAYS_OUT) : null;
+  if (mkM != null) {
+    const wk = marketWeight(r.mFPE, w, r.office); // §VI: liquidity already shaped q in Stage IV
+    r.mPE = (1 - wk) * r.mFPE + wk * mkM;                                       // Complete
     r.wMkt = Math.round(wk * 1000) / 1000;
-    r.mktMargin = Math.round(mk * 10) / 10;
+    r.mktMargin = Math.round(mkM * 10) / 10;
   } else {
+    r.market = null;
     r.mPE = r.mFPE;
     r.wMkt = 0;
   }
-  r.sigma = raceSigma(r.office, DAYS_OUT, r.enop);
+  r.sigma = raceSigma(r.office, DAYS_OUT);
 }
 
 const meansLegacy = races.map((r) => r.mFP);
 const meansComplete = races.map((r) => r.mPE);
-const simL = simulate(races, meansLegacy, "legacy");
-const simC = simulate(races, meansComplete, "complete");
-const similar = topCorrelated(races, simC.L);
+console.time("covariance");
+const dec = decompose(races);
+console.timeEnd("covariance");
+console.time("sims");
+const simL = simulate(races, meansLegacy, "legacy", dec);
+const simC = simulate(races, meansComplete, "complete", dec);
+console.timeEnd("sims");
+const similar = topCorrelated(races, dec.R);
 
 // ── chamber summaries ────────────────────────────────────────────────────────
 const SEN_R_NOT_UP = 31; // 53 R − 22 R seats on the ballot
@@ -443,11 +694,12 @@ function chamberSummary(sim, office) {
     outHist.push([office === "senate" ? SEN_R_NOT_UP + seatsR : seatsR, Math.round(p * 1e5) / 1e5]);
   }
   // 10th/90th percentile seat outcomes (R scale) for the band
-  let cum = 0, p10R = rows.length ? rows[0][0] : 0, p90R = p10R, got10 = false;
+  let cum = 0, p10R = rows.length ? rows[0][0] : 0, p90R = rows.length ? rows[rows.length - 1][0] : 0;
+  let got10 = false, got90 = false;
   for (const [seatsR, count] of rows) {
     cum += count / M;
     if (!got10 && cum >= 0.1) { p10R = seatsR; got10 = true; }
-    if (cum <= 0.9) p90R = seatsR;
+    if (!got90 && cum >= 0.9) { p90R = seatsR; got90 = true; }
   }
   const expRTotal = office === "senate" ? SEN_R_NOT_UP + expR : expR;
   const expDTotal = (office === "senate" ? 100 : totalSeats + (office === "house" ? 0 : 0)) - expRTotal;
@@ -489,7 +741,7 @@ function raceTrend(r, model) {
   const pts = [];
   let m = end;
   for (let i = 0; i < 31; i++) {
-    const sigmaAt = raceSigma(r.office, DAYS_OUT + i * 2, r.enop);
+    const sigmaAt = raceSigma(r.office, DAYS_OUT + i * 2);
     const p = 1 - phi(-m / sigmaAt);
     pts.push({ m: Math.round(m * 10) / 10, p: Math.round(p * 1000) / 1000 });
     m = m + gauss(rng) * 0.55 + (r.mF - m) * 0.02;
@@ -516,7 +768,7 @@ function loadCountyLeans() {
   for (const line of partyRows) {
     const c = line.split(",");
     if (c.length < 5) continue;
-    const key = `${c[0]}-${c[1].toUpperCase()}`;
+    const key = `${c[0]}-${c[1].toUpperCase().replace(/ /g, "_")}`;
     if (!reg.has(key)) reg.set(key, { d: 0, r: 0, o: 0 });
     const e = reg.get(key);
     const n = +c[4] || 0;
@@ -528,10 +780,15 @@ function loadCountyLeans() {
   for (const line of totalRows) {
     const c = line.split(",");
     if (c.length < 6 || c[2] !== "county") continue;
-    totals.set(`${c[0]}-${c[3].toUpperCase()}`, +c[5] || 0);
+    totals.set(`${c[0]}-${c[3].toUpperCase().replace(/ /g, "_")}`, +c[5] || 0);
   }
   return { reg, totals };
 }
+
+const REG_SLOPE = {
+  KY: -0.25, WV: -0.35, OK: 0.2, LA: 0.45,
+  FL: 1.2, PA: 1.25, NC: 1.1, NV: 1.25, AZ: 1.3,
+};
 
 function buildCounties() {
   const { reg, totals } = loadCountyLeans();
@@ -547,15 +804,20 @@ function buildCounties() {
 
   // county partisan lean relative to its state, on the margin scale
   const stateLean = new Map();
+  const regStates = new Set();
   for (const [st, ids] of byState) {
-    let leans = [], weights = [];
+    let leans = [], weights = [], regHits = 0;
     for (const id of ids) {
       const e = reg.get(id);
       const t = totals.get(id) ?? (e ? e.d + e.r + e.o : 0);
       let lean;
       if (e && e.d + e.r > 200) {
+        regHits++;
         lean = (100 * (e.r - e.d)) / (e.d + e.r + 0.6 * e.o);
-        lean *= 1.35; // registration understates behavioral polarization
+        // registration→vote slope, calibrated per state: ancestral-registration
+        // states (KY/WV/OK/LA) have county D-registration that no longer tracks
+        // the D vote — small or inverted slopes; modern-alignment states amplify
+        lean *= REG_SLOPE[st] ?? 1.35;
       } else {
         // structural prior: bigger electorates lean bluer
         const h = djb2("lean·" + id);
@@ -568,9 +830,10 @@ function buildCounties() {
     const wSum = weights.reduce((a, b) => a + b, 0);
     const mean = leans.reduce((s, l, i) => s + l * weights[i], 0) / wSum;
     stateLean.set(st, { ids, leans, weights, mean });
+    if (regHits >= ids.length * 0.5) regStates.add(st);
   }
 
-  const out = {};
+  const out = { _reg: [] };
   for (const r of races) {
     if (r.office === "house") continue;
     const sl = stateLean.get(r.st);
@@ -584,6 +847,7 @@ function buildCounties() {
     });
     out[r.id] = rows;
   }
+  out._reg = [...regStates].sort();
   return out;
 }
 const counties = buildCounties();
@@ -840,7 +1104,15 @@ const raceOut = races.map((r) => {
     open: r.open,
     marquee: r.marquee,
     pvi: Math.round(r.pvi * 10) / 10,
+    elast: ELASTICITY[r.st] ?? 1,
     fundamentals: Math.round(r.mF * 10) / 10,
+    stages: {
+      anchor: Math.round(r.pvi * 10) / 10,
+      fund: Math.round(r.mF * 10) / 10,
+      poll: Math.round(r.mFP * 10) / 10,
+      rate: Math.round(r.mFPE * 10) / 10,
+      market: Math.round(r.mPE * 10) / 10,
+    },
     pollAvg: r.pollAvg,
     enop: r.enop,
     wPoll: r.wPoll,
@@ -852,18 +1124,24 @@ const raceOut = races.map((r) => {
       prob: Math.round(simL.probs[i] * 1000) / 1000,
       p10: simL.quantiles[i].p10,
       p90: simL.quantiles[i].p90,
+      dist: { lo: DIST_LO, w: 1, c: Array.from(simL.dists[i]) },
     },
     complete: {
       margin: Math.round(r.mPE * 10) / 10,
       prob: Math.round(simC.probs[i] * 1000) / 1000,
       p10: simC.quantiles[i].p10,
       p90: simC.quantiles[i].p90,
+      dist: { lo: DIST_LO, w: 1, c: Array.from(simC.dists[i]) },
     },
-    polls: r.polls.slice(0, 8).map((p) => ({ pollster: p.pollster, kind: p.kind, age: p.age, n: p.size, margin: p.margin })),
+    polls: r.polls.slice(0, 8).map((p) => ({ pollster: p.pollster, kind: p.kind, age: p.age, n: p.size, margin: p.margin, grade: gradeFor(p.q) })),
     similar: similar[i],
     trend: { legacy: raceTrend(r, "legacy"), complete: raceTrend(r, "complete") },
   };
 });
+
+function gradeFor(q) {
+  return q >= 0.98 ? "A+" : q >= 0.9 ? "A" : q >= 0.84 ? "A\u2212" : q >= 0.8 ? "B+" : q >= 0.74 ? "B" : q >= 0.68 ? "B\u2212" : "C";
+}
 
 function ordinal(n) {
   const s = ["th", "st", "nd", "rd"], v = n % 100;
@@ -899,6 +1177,6 @@ for (const office of ["house", "senate", "governor"]) {
   console.log(office.padEnd(9), "D control", (c.demControl * 100).toFixed(1) + "%", "| seats D", c.demSeats, "R", c.gopSeats);
 }
 const close = raceOut.filter((r) => Math.abs(r.complete.margin) < 3).length;
-console.log("races", raceOut.length, "| within ±3:", close, "| county overlays:", Object.keys(counties).length, "| districts:", Object.keys(geoOut.districts).length);
+console.log("races", raceOut.length, "| within ±3:", close, "| county overlays:", Object.keys(counties).length - 1, "| districts:", Object.keys(geoOut.districts).length);
 const sizes = ["model.json", "counties.json", "geo.json"].map((f) => `${f} ${(readFileSync(`${OUT}/${f}`).length / 1e6).toFixed(2)}MB`);
 console.log(sizes.join(" · "));
