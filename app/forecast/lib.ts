@@ -9,6 +9,7 @@ export interface RaceSide {
   prob: number;   // GOP win probability
   p10: number;
   p90: number;
+  dist?: { lo: number; w: number; c: number[] }; // simulated margin histogram: first bin at lo, bin width w
 }
 
 export interface Race {
@@ -24,7 +25,9 @@ export interface Race {
   open: boolean;
   marquee: boolean;
   pvi: number;
+  elast: number;
   fundamentals: number;
+  stages: { anchor: number; fund: number; poll: number; rate: number; market: number };
   pollAvg: number | null;
   enop: number;
   wPoll: number;
@@ -33,7 +36,7 @@ export interface Race {
   ratings: { outlet: string; cat: string }[];
   legacy: RaceSide;
   complete: RaceSide;
-  polls: { pollster: string; kind: string; age: number; n: number; margin: number }[];
+  polls: { pollster: string; kind: string; age: number; n: number; margin: number; grade?: string }[];
   similar: { id: string; corr: number }[];
   trend: { legacy: { m: number; p: number }[]; complete: { m: number; p: number }[] };
 }

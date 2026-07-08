@@ -52,6 +52,7 @@ export default function SwingOMeter({
   c2Prob,
   reportingPct,
   marginPp,
+  fixedOrientation,
 }: {
   c1Name: string;
   c2Name: string;
@@ -62,17 +63,24 @@ export default function SwingOMeter({
   reportingPct: number;
   /** Leader-over-runner margin in points; estimated from probability if absent. */
   marginPp?: number;
+  /** Keep c1 on the left regardless of who leads (forecast pages pin D left). */
+  fixedOrientation?: boolean;
 }) {
-  // leader on the LEFT, always
-  const flipped = c2Prob > c1Prob;
+  // leader on the LEFT, always — unless the caller pins the orientation, in
+  // which case c1 stays left and only the header follows the true leader
+  const flipped = fixedOrientation ? false : c2Prob > c1Prob;
   const leaderName = lastName(flipped ? c2Name : c1Name);
   const runnerName = lastName(flipped ? c1Name : c2Name);
   const leaderColor = flipped ? c2Color : c1Color;
   const runnerColor = flipped ? c1Color : c2Color;
-  const pLeader = Math.max(flipped ? c2Prob : c1Prob, 0.5);
-  const M = Math.abs(marginPp != null ? marginPp : Math.atanh(Math.min(0.999, Math.max(0, pLeader * 2 - 1))) * 12);
+  const pLeft = flipped ? c2Prob : c1Prob;          // left candidate (drives the needle)
+  const c1Leads = c1Prob >= c2Prob;                 // true leader (drives the header)
+  const headName = lastName(c1Leads ? c1Name : c2Name);
+  const headColor = c1Leads ? c1Color : c2Color;
+  const pHead = Math.max(c1Prob, c2Prob, 0.5);
+  const M = Math.abs(marginPp != null ? marginPp : Math.atanh(Math.min(0.999, Math.max(0, pHead * 2 - 1))) * 12);
 
-  const band = pLeader < 0.65 ? "Toss-up" : pLeader < 0.8 ? "Lean" : pLeader < 0.95 ? "Likely" : "Safe";
+  const band = pHead < 0.65 ? "Toss-up" : pHead < 0.8 ? "Lean" : pHead < 0.95 ? "Likely" : "Safe";
   const live = reportingPct > 0 && reportingPct < 99.5;
   const called = reportingPct >= 99.5;
 
@@ -123,7 +131,7 @@ export default function SwingOMeter({
 
   const jitterAmp = live ? Math.min(1.4, (100 - reportingPct) * 0.03) : 0;
   const jitter = jitterAmp * (0.7 * Math.sin(jitterPhase * 1.7) + 0.3 * Math.sin(jitterPhase * 0.9 + 1.1));
-  const angle = Math.max(-90, Math.min(90, oddsToAngle(pLeader) + jitter));
+  const angle = Math.max(-90, Math.min(90, oddsToAngle(Math.min(0.999, Math.max(0.001, pLeft))) + jitter));
 
   const tipLen = rOuter + tipOverhang;
   const baseHalf = 4.4;
@@ -146,11 +154,11 @@ export default function SwingOMeter({
           aria-hidden
           style={{
             width: 5, height: 5, borderRadius: 99,
-            background: called ? leaderColor : "#dc2626",
+            background: called ? headColor : "#dc2626",
             animation: live && !reducedRef.current ? "smLivePulse 1.8s ease-in-out infinite" : "none",
           }}
         />
-        <span style={{ fontFamily: OSWALD, fontWeight: 700, fontSize: 9, letterSpacing: "0.22em", textTransform: "uppercase", color: called ? leaderColor : "rgba(244,244,239,0.55)" }}>
+        <span style={{ fontFamily: OSWALD, fontWeight: 700, fontSize: 9, letterSpacing: "0.22em", textTransform: "uppercase", color: called ? headColor : "rgba(244,244,239,0.55)" }}>
           {called ? "Called" : live ? `Live · ${reportingPct.toFixed(reportingPct >= 10 ? 0 : 1)}%` : "Forecast"}
         </span>
       </div>
@@ -158,23 +166,23 @@ export default function SwingOMeter({
       {/* headline: LEADER +M pts · P% to win · BAND */}
       <div style={{ display: "flex", alignItems: "baseline", flexWrap: "wrap", gap: 8, marginBottom: 4 }}>
         <span style={{ fontFamily: OSWALD, fontWeight: 700, fontSize: 24, letterSpacing: "0.01em", textTransform: "uppercase", color: INK, lineHeight: 1 }}>
-          {leaderName}
+          {headName}
         </span>
-        <span style={{ fontFamily: MONO, fontSize: 25, fontWeight: 700, color: leaderColor, letterSpacing: "-0.02em", lineHeight: 1, fontVariantNumeric: "tabular-nums" }}>
+        <span style={{ fontFamily: MONO, fontSize: 25, fontWeight: 700, color: headColor, letterSpacing: "-0.02em", lineHeight: 1, fontVariantNumeric: "tabular-nums" }}>
           +{M.toFixed(1)}
         </span>
         <span style={{ fontFamily: MONO, fontSize: 11, color: "rgba(244,244,239,0.4)", marginLeft: -3 }}>pts</span>
         <span style={{ color: "rgba(244,244,239,0.3)", fontSize: 13 }}>·</span>
-        <span style={{ fontFamily: MONO, fontSize: 15, fontWeight: 600, color: leaderColor, fontVariantNumeric: "tabular-nums" }}>
-          {(pLeader * 100).toFixed(0)}%
+        <span style={{ fontFamily: MONO, fontSize: 15, fontWeight: 600, color: headColor, fontVariantNumeric: "tabular-nums" }}>
+          {(pHead * 100).toFixed(0)}%
         </span>
         <span style={{ fontSize: 12, color: "rgba(244,244,239,0.55)", fontWeight: 500 }}>to win</span>
         <span
           style={{
             fontFamily: OSWALD, fontSize: 9, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase",
-            color: leaderColor, padding: "4px 8px", marginLeft: 2,
-            background: `color-mix(in oklab, ${leaderColor} 18%, transparent)`,
-            border: `1px solid color-mix(in oklab, ${leaderColor} 50%, transparent)`,
+            color: headColor, padding: "4px 8px", marginLeft: 2,
+            background: `color-mix(in oklab, ${headColor} 18%, transparent)`,
+            border: `1px solid color-mix(in oklab, ${headColor} 50%, transparent)`,
           }}
         >
           {band}
