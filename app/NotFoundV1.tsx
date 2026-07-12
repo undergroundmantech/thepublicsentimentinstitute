@@ -6,13 +6,6 @@ import Dot404 from "@/app/components/Dot404";
 export default function NotFoundV1() {
   return (
     <main className="nf1">
-      {/* for the devtools crowd probing addresses */}
-      <span
-        hidden
-        dangerouslySetInnerHTML={{
-          __html: "<!-- this one isn't behind a flag. it just doesn't exist. -->",
-        }}
-      />
       <style>{`
         .nf1 {
           min-height: 62vh;
