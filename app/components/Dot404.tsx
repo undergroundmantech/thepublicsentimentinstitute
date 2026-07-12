@@ -58,18 +58,18 @@ export default function Dot404({ fg, dim }: { fg: string; dim: string }) {
           />,
         );
       } else {
-        // feather the field toward its boundary so the halftone dissolves
-        // into the page instead of ending in a hard rectangle
+        // feather only the outer rim — interior stays fully visible, the
+        // boundary dissolves instead of ending in a hard rectangle
         const dx = (c - (COLS - 1) / 2) / ((COLS - 1) / 2);
         const dy = (r - (ROWS - 1) / 2) / ((ROWS - 1) / 2);
-        const fade = Math.max(0, Math.min(1, 1.45 - 1.15 * Math.hypot(dx, dy)));
-        if (fade <= 0.02) continue;
+        const fade = Math.max(0, Math.min(1, 2.2 * (1.25 - Math.hypot(dx, dy))));
+        if (fade <= 0.05) continue;
         dots.push(
           <circle
             key={`${c}-${r}`}
             cx={cx}
             cy={cy}
-            r={2.6}
+            r={3}
             fill={dim}
             opacity={Math.round(fade * 100) / 100}
           />,

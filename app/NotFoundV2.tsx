@@ -40,7 +40,7 @@ export default function NotFoundV2() {
       <DarkNav />
       <div className="nf2-center">
         <div className="nf2-wrap">
-          <Dot404 fg="#f6f4f0" dim="rgba(246, 244, 240, 0.09)" />
+          <Dot404 fg="#f6f4f0" dim="rgba(246, 244, 240, 0.17)" />
           <p className="nf2-caption">Page not found</p>
           <Link className="nf2-back" href="/">
             Back to the desk →
