@@ -18,7 +18,7 @@ export default function NotFoundV2() {
           display: grid; place-items: center;
           padding: 120px 24px 90px;
         }
-        .nf2-wrap { width: min(560px, 100%); text-align: center; }
+        .nf2-wrap { width: min(720px, 100%); text-align: center; }
         .nf2-caption {
           margin: 34px 0 0;
           font-size: 10px; font-weight: 700;
