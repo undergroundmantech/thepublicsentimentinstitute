@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import { SITE_V2 } from "./lib/flags";
+import RolloutGate from "./components/RolloutGate";
 import { Quantico, Geist_Mono, Fraunces, JetBrains_Mono } from "next/font/google";
 
 /* -----------------------------
@@ -50,18 +51,11 @@ export const metadata: Metadata = {
    ROOT LAYOUT
 ------------------------------ */
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  // First-visit announcement for the redesign — v2 only. Inline env check +
-  // dynamic import keep it out of the v1 client bundle (see app/lib/flags.ts).
-  let intro: React.ReactNode = null;
-  if (process.env.NEXT_PUBLIC_SITE_V2 === "on") {
-    const { default: SiteIntro } = await import("./components/SiteIntro");
-    intro = <SiteIntro />;
-  }
   return (
     <html
       lang="en"
@@ -76,14 +70,6 @@ export default async function RootLayout({
             __html: `(function(){try{var s=localStorage.getItem('psi-theme');var m=window.matchMedia('(prefers-color-scheme: dark)').matches;var t=s||(m?'dark':'light');document.documentElement.setAttribute('data-theme',t);}catch(e){}})();`,
           }}
         />
-        {/* Console line for the devtools crowd — guard: head scripts can run twice across hydration */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: SITE_V2
-              ? `if(!window.__tpsiHello){window.__tpsiHello=1;console.log("%c TPSI %c site v2 — you're on the new desk.","background:#c9f24f;color:#050505;font-weight:700;padding:2px 6px","color:#c9f24f;font-weight:600");}`
-              : `if(!window.__tpsiHello){window.__tpsiHello=1;console.log("%c TPSI %c there is a second site compiled out of this build. soon.","background:#c9f24f;color:#050505;font-weight:700;padding:2px 6px","color:#8b8b92;font-weight:600");}`,
-          }}
-        />
       </head>
         <body
         suppressHydrationWarning
@@ -92,30 +78,8 @@ export default async function RootLayout({
           "min-h-screen antialiased overflow-x-hidden",
         ].join(" ")}
       >
-        {/* The flag, in the DOM on purpose — inspect element is a feature. */}
-        <div
-          aria-hidden="true"
-          style={{ display: "none" }}
-          dangerouslySetInnerHTML={{
-            __html: SITE_V2
-              ? "<!-- TPSI · NEXT_PUBLIC_SITE_V2=on — you're on the new desk. -->"
-              : [
-                  "<!--",
-                  "",
-                  "  ▚▚▚ TPSI",
-                  "",
-                  "  You found the flag.",
-                  "",
-                  "  A second site is compiled out of this build — the whole",
-                  "  redesign ships dark behind NEXT_PUBLIC_SITE_V2. New home,",
-                  "  new polling averages, a live election desk, the forecast.",
-                  "",
-                  "  It exists. Soon.",
-                  "",
-                  "-->",
-                ].join("\n"),
-          }}
-        />
+        {/* Runtime rollout — bootstraps /api/flags, mounts what the stage enables */}
+        <RolloutGate />
 
         {/* --------------------------------
            Ambient tri-color glow background
@@ -154,9 +118,6 @@ export default async function RootLayout({
             }}
           />
         </div>
-
-        {/* First-visit announcement for the redesign — v2 only */}
-        {intro}
 
         {/* --------------------------------
            PAGE STRUCTURE
