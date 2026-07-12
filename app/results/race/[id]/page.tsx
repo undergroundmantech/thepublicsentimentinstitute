@@ -1,6 +1,8 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import { notFound } from "next/navigation";
+import { SITE_V2 } from "@/app/lib/flags";
 
 // Hold the paint on the desk's dark field — and hide the global light chrome —
 // while the client-only race page chunk downloads.
@@ -22,5 +24,7 @@ const RaceDesk = dynamic(() => import("./RaceDesk"), {
 });
 
 export default function ResultsRacePage() {
+  // v2-only route — v1 race URLs rewrite to /results (see next.config.ts)
+  if (!SITE_V2) notFound();
   return <RaceDesk />;
 }

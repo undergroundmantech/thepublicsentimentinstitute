@@ -1,5 +1,9 @@
 import type { NextConfig } from "next";
 
+// Site-v2 gate — same check as SITE_V2 in app/lib/flags.ts (next.config
+// can't import app code). `npm run dev` defaults the env var to "on".
+const SITE_V2 = process.env.NEXT_PUBLIC_SITE_V2 === "on";
+
 // Old per-race poll pages now live as selectable aggregates on the unified
 // Polling Averages page (/polling/genericballot?race=<id>). These redirects make
 // every existing link across the site land on the updated experience.
@@ -34,6 +38,12 @@ const RACE_REDIRECTS: Record<string, string> = {
 };
 
 const nextConfig: NextConfig = {
+  // Force the flag into the bundler's define map even when the env var is
+  // unset — an undefined NEXT_PUBLIC_* is not statically replaced, which
+  // would keep both site versions in every client bundle.
+  env: {
+    NEXT_PUBLIC_SITE_V2: process.env.NEXT_PUBLIC_SITE_V2 ?? "off",
+  },
   async rewrites() {
     return [
       // Active race slug URLs: /results/2026-06-09/south-carolina-us-senate-republican-primary
@@ -47,6 +57,8 @@ const nextConfig: NextConfig = {
     ];
   },
   async redirects() {
+    // v1 serves the original per-race pages directly — no redirects.
+    if (!SITE_V2) return [];
     return [
       // the old polling hub/index ("All averages →", "View All Polls →") → unified page
       { source: "/polling", destination: "/polling/genericballot", permanent: false },
