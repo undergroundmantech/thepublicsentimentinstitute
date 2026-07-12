@@ -3,7 +3,6 @@ import "./globals.css";
 import type { Metadata } from "next";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
-import SiteIntro from "./components/SiteIntro";
 import { Quantico, Geist_Mono, Fraunces, JetBrains_Mono } from "next/font/google";
 
 /* -----------------------------
@@ -50,11 +49,18 @@ export const metadata: Metadata = {
    ROOT LAYOUT
 ------------------------------ */
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  // First-visit announcement for the redesign — v2 only. Inline env check +
+  // dynamic import keep it out of the v1 client bundle (see app/lib/flags.ts).
+  let intro: React.ReactNode = null;
+  if (process.env.NEXT_PUBLIC_SITE_V2 === "on") {
+    const { default: SiteIntro } = await import("./components/SiteIntro");
+    intro = <SiteIntro />;
+  }
   return (
     <html
       lang="en"
@@ -114,8 +120,8 @@ export default function RootLayout({
           />
         </div>
 
-        {/* First-visit announcement — shows once, remembered per browser */}
-        <SiteIntro />
+        {/* First-visit announcement for the redesign — v2 only */}
+        {intro}
 
         {/* --------------------------------
            PAGE STRUCTURE

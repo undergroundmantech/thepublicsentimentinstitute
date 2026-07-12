@@ -2,8 +2,10 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
+import { notFound } from "next/navigation";
 import { Manrope } from "next/font/google";
 import DarkNav from "@/app/components/DarkNav";
+import { SITE_V2 } from "@/app/lib/flags";
 
 const manrope = Manrope({ subsets: ["latin"], weight: ["400", "500", "600", "700", "800"], variable: "--font-mp", display: "swap" });
 
@@ -76,6 +78,8 @@ const PAD = (f: string | number) => String(f).padStart(2, "0");
 
 // ─── page ─────────────────────────────────────────────────────────────────────
 export default function VoterRegistrationPage() {
+  // v2-only route — the v1 site's registration map lives at /partymap
+  if (!SITE_V2) notFound();
   const [scope, setScope] = useState<Scope>("states");
   const [lens, setLens] = useState<Lens>("reg");
   const [isoAbbr, setIsoAbbr] = useState<string | null>(null);
