@@ -45,8 +45,8 @@ export default function Dot404({ fg, dim }: { fg: string; dim: string }) {
       const on = lit.has(`${c},${r}`);
       const cx = c * CELL + CELL / 2;
       const cy = r * CELL + CELL / 2;
-      dots.push(
-        on ? (
+      if (on) {
+        dots.push(
           <circle
             key={`${c}-${r}`}
             className="d404-lit"
@@ -54,12 +54,27 @@ export default function Dot404({ fg, dim }: { fg: string; dim: string }) {
             cy={cy}
             r={7}
             fill={fg}
-            style={{ animationDelay: `${((c * 37 + r * 17) % 12) * 28}ms` }}
-          />
-        ) : (
-          <circle key={`${c}-${r}`} cx={cx} cy={cy} r={2.6} fill={dim} />
-        ),
-      );
+            style={{ animationDelay: `${((c * 37 + r * 17) % 8) * 22}ms` }}
+          />,
+        );
+      } else {
+        // feather the field toward its boundary so the halftone dissolves
+        // into the page instead of ending in a hard rectangle
+        const dx = (c - (COLS - 1) / 2) / ((COLS - 1) / 2);
+        const dy = (r - (ROWS - 1) / 2) / ((ROWS - 1) / 2);
+        const fade = Math.max(0, Math.min(1, 1.45 - 1.15 * Math.hypot(dx, dy)));
+        if (fade <= 0.02) continue;
+        dots.push(
+          <circle
+            key={`${c}-${r}`}
+            cx={cx}
+            cy={cy}
+            r={2.6}
+            fill={dim}
+            opacity={Math.round(fade * 100) / 100}
+          />,
+        );
+      }
     }
   }
 

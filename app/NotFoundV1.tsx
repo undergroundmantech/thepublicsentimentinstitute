@@ -13,7 +13,7 @@ export default function NotFoundV1() {
           padding: 96px 24px;
           font-family: var(--font-body), ui-monospace, monospace;
         }
-        .nf1-wrap { width: min(560px, 100%); text-align: center; }
+        .nf1-wrap { width: min(720px, 100%); text-align: center; }
         .nf1-caption {
           margin: 32px 0 0;
           font-size: 10px; font-weight: 700;
