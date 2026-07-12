@@ -7,6 +7,12 @@
 export const SHOW_SITUATION_ROOM =
   process.env.NEXT_PUBLIC_SITUATION_ROOM === "on" || process.env.NODE_ENV !== "production";
 
+// The Forecast desk (/forecast) is still in progress: visible in dev, hidden
+// in production even once site-v2 is live. Launch it later by setting
+// NEXT_PUBLIC_FORECAST=on (Vercel env) — no code change needed.
+export const SHOW_FORECAST =
+  process.env.NEXT_PUBLIC_FORECAST === "on" || process.env.NODE_ENV !== "production";
+
 // The whole site-v2 redesign behind one gate. Every forked route's page.tsx
 // switches between its *V1 (the live production site) and *V2 (redesign)
 // body; v2-only routes (/forecast, /voterregistration, /results/race/[id])
