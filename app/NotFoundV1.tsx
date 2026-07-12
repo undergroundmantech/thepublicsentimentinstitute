@@ -33,7 +33,7 @@ export default function NotFoundV1() {
       `}</style>
 
       <div className="nf1-wrap">
-        <Dot404 fg="var(--foreground)" dim="var(--border2)" />
+        <Dot404 fg="var(--foreground)" dim="var(--border3)" />
         <p className="nf1-caption">Page not found</p>
         <Link className="nf1-back" href="/">
           Back to the homepage
