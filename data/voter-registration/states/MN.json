@@ -1,0 +1,627 @@
+{
+  "state": "Minnesota",
+  "state_abbr": "MN",
+  "state_fips": "27",
+  "as_of_date": "2026-04-01",
+  "source_name": "Minnesota Secretary of State - Voter Registration Counts (Voter Counts by County)",
+  "source_url": "https://www.sos.mn.gov/election-administration-campaigns/data-maps/voter-registration-counts/",
+  "registers_by_party": false,
+  "statewide_total_registered": 3827205,
+  "statewide_by_party": null,
+  "county_unit_label": "county",
+  "county_level_available": true,
+  "counties": [
+    {
+      "name": "Aitkin",
+      "fips": "27001",
+      "total_registered": 12187,
+      "by_party": null,
+      "pre_registered": 218
+    },
+    {
+      "name": "Anoka",
+      "fips": "27003",
+      "total_registered": 249286,
+      "by_party": null,
+      "pre_registered": 6295
+    },
+    {
+      "name": "Becker",
+      "fips": "27005",
+      "total_registered": 23275,
+      "by_party": null,
+      "pre_registered": 621
+    },
+    {
+      "name": "Beltrami",
+      "fips": "27007",
+      "total_registered": 29334,
+      "by_party": null,
+      "pre_registered": 681
+    },
+    {
+      "name": "Benton",
+      "fips": "27009",
+      "total_registered": 27364,
+      "by_party": null,
+      "pre_registered": 783
+    },
+    {
+      "name": "Big Stone",
+      "fips": "27011",
+      "total_registered": 3326,
+      "by_party": null,
+      "pre_registered": 84
+    },
+    {
+      "name": "Blue Earth",
+      "fips": "27013",
+      "total_registered": 41898,
+      "by_party": null,
+      "pre_registered": 1039
+    },
+    {
+      "name": "Brown",
+      "fips": "27015",
+      "total_registered": 17220,
+      "by_party": null,
+      "pre_registered": 442
+    },
+    {
+      "name": "Carlton",
+      "fips": "27017",
+      "total_registered": 24338,
+      "by_party": null,
+      "pre_registered": 632
+    },
+    {
+      "name": "Carver",
+      "fips": "27019",
+      "total_registered": 79583,
+      "by_party": null,
+      "pre_registered": 2473
+    },
+    {
+      "name": "Cass",
+      "fips": "27021",
+      "total_registered": 22483,
+      "by_party": null,
+      "pre_registered": 387
+    },
+    {
+      "name": "Chippewa",
+      "fips": "27023",
+      "total_registered": 7411,
+      "by_party": null,
+      "pre_registered": 197
+    },
+    {
+      "name": "Chisago",
+      "fips": "27025",
+      "total_registered": 41316,
+      "by_party": null,
+      "pre_registered": 1021
+    },
+    {
+      "name": "Clay",
+      "fips": "27027",
+      "total_registered": 39929,
+      "by_party": null,
+      "pre_registered": 1097
+    },
+    {
+      "name": "Clearwater",
+      "fips": "27029",
+      "total_registered": 5673,
+      "by_party": null,
+      "pre_registered": 138
+    },
+    {
+      "name": "Cook",
+      "fips": "27031",
+      "total_registered": 4030,
+      "by_party": null,
+      "pre_registered": 44
+    },
+    {
+      "name": "Cottonwood",
+      "fips": "27033",
+      "total_registered": 7141,
+      "by_party": null,
+      "pre_registered": 206
+    },
+    {
+      "name": "Crow Wing",
+      "fips": "27035",
+      "total_registered": 49016,
+      "by_party": null,
+      "pre_registered": 1057
+    },
+    {
+      "name": "Dakota",
+      "fips": "27037",
+      "total_registered": 305206,
+      "by_party": null,
+      "pre_registered": 7577
+    },
+    {
+      "name": "Dodge",
+      "fips": "27039",
+      "total_registered": 14420,
+      "by_party": null,
+      "pre_registered": 464
+    },
+    {
+      "name": "Douglas",
+      "fips": "27041",
+      "total_registered": 29128,
+      "by_party": null,
+      "pre_registered": 716
+    },
+    {
+      "name": "Faribault",
+      "fips": "27043",
+      "total_registered": 9159,
+      "by_party": null,
+      "pre_registered": 216
+    },
+    {
+      "name": "Fillmore",
+      "fips": "27045",
+      "total_registered": 14430,
+      "by_party": null,
+      "pre_registered": 384
+    },
+    {
+      "name": "Freeborn",
+      "fips": "27047",
+      "total_registered": 19785,
+      "by_party": null,
+      "pre_registered": 482
+    },
+    {
+      "name": "Goodhue",
+      "fips": "27049",
+      "total_registered": 33152,
+      "by_party": null,
+      "pre_registered": 863
+    },
+    {
+      "name": "Grant",
+      "fips": "27051",
+      "total_registered": 4121,
+      "by_party": null,
+      "pre_registered": 109
+    },
+    {
+      "name": "Hennepin",
+      "fips": "27053",
+      "total_registered": 842333,
+      "by_party": null,
+      "pre_registered": 15930
+    },
+    {
+      "name": "Houston",
+      "fips": "27055",
+      "total_registered": 13121,
+      "by_party": null,
+      "pre_registered": 321
+    },
+    {
+      "name": "Hubbard",
+      "fips": "27057",
+      "total_registered": 15812,
+      "by_party": null,
+      "pre_registered": 365
+    },
+    {
+      "name": "Isanti",
+      "fips": "27059",
+      "total_registered": 30588,
+      "by_party": null,
+      "pre_registered": 798
+    },
+    {
+      "name": "Itasca",
+      "fips": "27061",
+      "total_registered": 31617,
+      "by_party": null,
+      "pre_registered": 710
+    },
+    {
+      "name": "Jackson",
+      "fips": "27063",
+      "total_registered": 6644,
+      "by_party": null,
+      "pre_registered": 169
+    },
+    {
+      "name": "Kanabec",
+      "fips": "27065",
+      "total_registered": 11304,
+      "by_party": null,
+      "pre_registered": 236
+    },
+    {
+      "name": "Kandiyohi",
+      "fips": "27067",
+      "total_registered": 27471,
+      "by_party": null,
+      "pre_registered": 708
+    },
+    {
+      "name": "Kittson",
+      "fips": "27069",
+      "total_registered": 2857,
+      "by_party": null,
+      "pre_registered": 66
+    },
+    {
+      "name": "Koochiching",
+      "fips": "27071",
+      "total_registered": 7862,
+      "by_party": null,
+      "pre_registered": 158
+    },
+    {
+      "name": "Lac Qui Parle",
+      "fips": "27073",
+      "total_registered": 4609,
+      "by_party": null,
+      "pre_registered": 121
+    },
+    {
+      "name": "Lake",
+      "fips": "27075",
+      "total_registered": 7818,
+      "by_party": null,
+      "pre_registered": 156
+    },
+    {
+      "name": "Lake Of The Woods",
+      "fips": "27077",
+      "total_registered": 2778,
+      "by_party": null,
+      "pre_registered": 35
+    },
+    {
+      "name": "Le Sueur",
+      "fips": "27079",
+      "total_registered": 20283,
+      "by_party": null,
+      "pre_registered": 570
+    },
+    {
+      "name": "Lincoln",
+      "fips": "27081",
+      "total_registered": 3787,
+      "by_party": null,
+      "pre_registered": 106
+    },
+    {
+      "name": "Lyon",
+      "fips": "27083",
+      "total_registered": 15699,
+      "by_party": null,
+      "pre_registered": 500
+    },
+    {
+      "name": "McLeod",
+      "fips": "27085",
+      "total_registered": 25046,
+      "by_party": null,
+      "pre_registered": 615
+    },
+    {
+      "name": "Mahnomen",
+      "fips": "27087",
+      "total_registered": 2931,
+      "by_party": null,
+      "pre_registered": 82
+    },
+    {
+      "name": "Marshall",
+      "fips": "27089",
+      "total_registered": 5966,
+      "by_party": null,
+      "pre_registered": 153
+    },
+    {
+      "name": "Martin",
+      "fips": "27091",
+      "total_registered": 12871,
+      "by_party": null,
+      "pre_registered": 311
+    },
+    {
+      "name": "Meeker",
+      "fips": "27093",
+      "total_registered": 15989,
+      "by_party": null,
+      "pre_registered": 490
+    },
+    {
+      "name": "Mille Lacs",
+      "fips": "27095",
+      "total_registered": 18131,
+      "by_party": null,
+      "pre_registered": 456
+    },
+    {
+      "name": "Morrison",
+      "fips": "27097",
+      "total_registered": 23627,
+      "by_party": null,
+      "pre_registered": 728
+    },
+    {
+      "name": "Mower",
+      "fips": "27099",
+      "total_registered": 23444,
+      "by_party": null,
+      "pre_registered": 635
+    },
+    {
+      "name": "Murray",
+      "fips": "27101",
+      "total_registered": 5387,
+      "by_party": null,
+      "pre_registered": 111
+    },
+    {
+      "name": "Nicollet",
+      "fips": "27103",
+      "total_registered": 22385,
+      "by_party": null,
+      "pre_registered": 612
+    },
+    {
+      "name": "Nobles",
+      "fips": "27105",
+      "total_registered": 10377,
+      "by_party": null,
+      "pre_registered": 314
+    },
+    {
+      "name": "Norman",
+      "fips": "27107",
+      "total_registered": 4064,
+      "by_party": null,
+      "pre_registered": 102
+    },
+    {
+      "name": "Olmsted",
+      "fips": "27109",
+      "total_registered": 108416,
+      "by_party": null,
+      "pre_registered": 2607
+    },
+    {
+      "name": "Otter Tail",
+      "fips": "27111",
+      "total_registered": 42528,
+      "by_party": null,
+      "pre_registered": 1111
+    },
+    {
+      "name": "Pennington",
+      "fips": "27113",
+      "total_registered": 8876,
+      "by_party": null,
+      "pre_registered": 218
+    },
+    {
+      "name": "Pine",
+      "fips": "27115",
+      "total_registered": 19989,
+      "by_party": null,
+      "pre_registered": 447
+    },
+    {
+      "name": "Pipestone",
+      "fips": "27117",
+      "total_registered": 5674,
+      "by_party": null,
+      "pre_registered": 167
+    },
+    {
+      "name": "Polk",
+      "fips": "27119",
+      "total_registered": 18868,
+      "by_party": null,
+      "pre_registered": 556
+    },
+    {
+      "name": "Pope",
+      "fips": "27121",
+      "total_registered": 8322,
+      "by_party": null,
+      "pre_registered": 235
+    },
+    {
+      "name": "Ramsey",
+      "fips": "27123",
+      "total_registered": 337148,
+      "by_party": null,
+      "pre_registered": 5888
+    },
+    {
+      "name": "Red Lake",
+      "fips": "27125",
+      "total_registered": 2567,
+      "by_party": null,
+      "pre_registered": 80
+    },
+    {
+      "name": "Redwood",
+      "fips": "27127",
+      "total_registered": 9848,
+      "by_party": null,
+      "pre_registered": 284
+    },
+    {
+      "name": "Renville",
+      "fips": "27129",
+      "total_registered": 9416,
+      "by_party": null,
+      "pre_registered": 246
+    },
+    {
+      "name": "Rice",
+      "fips": "27131",
+      "total_registered": 41812,
+      "by_party": null,
+      "pre_registered": 1085
+    },
+    {
+      "name": "Rock",
+      "fips": "27133",
+      "total_registered": 5907,
+      "by_party": null,
+      "pre_registered": 207
+    },
+    {
+      "name": "Roseau",
+      "fips": "27135",
+      "total_registered": 10052,
+      "by_party": null,
+      "pre_registered": 283
+    },
+    {
+      "name": "St. Louis",
+      "fips": "27137",
+      "total_registered": 136423,
+      "by_party": null,
+      "pre_registered": 2582
+    },
+    {
+      "name": "Scott",
+      "fips": "27139",
+      "total_registered": 106926,
+      "by_party": null,
+      "pre_registered": 3169
+    },
+    {
+      "name": "Sherburne",
+      "fips": "27141",
+      "total_registered": 68346,
+      "by_party": null,
+      "pre_registered": 2029
+    },
+    {
+      "name": "Sibley",
+      "fips": "27143",
+      "total_registered": 10038,
+      "by_party": null,
+      "pre_registered": 281
+    },
+    {
+      "name": "Stearns",
+      "fips": "27145",
+      "total_registered": 103316,
+      "by_party": null,
+      "pre_registered": 2635
+    },
+    {
+      "name": "Steele",
+      "fips": "27147",
+      "total_registered": 24654,
+      "by_party": null,
+      "pre_registered": 713
+    },
+    {
+      "name": "Stevens",
+      "fips": "27149",
+      "total_registered": 5775,
+      "by_party": null,
+      "pre_registered": 165
+    },
+    {
+      "name": "Swift",
+      "fips": "27151",
+      "total_registered": 6025,
+      "by_party": null,
+      "pre_registered": 145
+    },
+    {
+      "name": "Todd",
+      "fips": "27153",
+      "total_registered": 16037,
+      "by_party": null,
+      "pre_registered": 469
+    },
+    {
+      "name": "Traverse",
+      "fips": "27155",
+      "total_registered": 2097,
+      "by_party": null,
+      "pre_registered": 45
+    },
+    {
+      "name": "Wabasha",
+      "fips": "27157",
+      "total_registered": 15519,
+      "by_party": null,
+      "pre_registered": 376
+    },
+    {
+      "name": "Wadena",
+      "fips": "27159",
+      "total_registered": 9353,
+      "by_party": null,
+      "pre_registered": 274
+    },
+    {
+      "name": "Waseca",
+      "fips": "27161",
+      "total_registered": 12096,
+      "by_party": null,
+      "pre_registered": 326
+    },
+    {
+      "name": "Washington",
+      "fips": "27163",
+      "total_registered": 199435,
+      "by_party": null,
+      "pre_registered": 5295
+    },
+    {
+      "name": "Watonwan",
+      "fips": "27165",
+      "total_registered": 5978,
+      "by_party": null,
+      "pre_registered": 201
+    },
+    {
+      "name": "Wilkin",
+      "fips": "27167",
+      "total_registered": 4083,
+      "by_party": null,
+      "pre_registered": 116
+    },
+    {
+      "name": "Winona",
+      "fips": "27169",
+      "total_registered": 31307,
+      "by_party": null,
+      "pre_registered": 696
+    },
+    {
+      "name": "Wright",
+      "fips": "27171",
+      "total_registered": 105045,
+      "by_party": null,
+      "pre_registered": 3240
+    },
+    {
+      "name": "Yellow Medicine",
+      "fips": "27173",
+      "total_registered": 6317,
+      "by_party": null,
+      "pre_registered": 174
+    }
+  ],
+  "as_of_notes": "Counts represent registered (pre-registered shown separately) voters as of April 1, 2026, per the MN SOS 'Voter Counts by County' table on the Voter Registration Counts page. Pre-registered voters are 16-17 year olds who have applied and will become registered at 18; they are NOT included in 'total_registered'. Statewide total 3,827,205 registered; 90,129 pre-registered. Minnesota has same-day/Election-Day registration, so totals change daily; this is a point-in-time snapshot. Captured via Internet Archive snapshot dated 2026-04-13 of the SOS page because sos.mn.gov is behind a bot-mitigation (Radware) gateway that blocks direct automated fetches.",
+  "data_quality": "high",
+  "notes": "Minnesota does not register voters by political party (open primaries), so registers_by_party=false and all by_party fields are null. All 87 counties present. County registered-voter figures sum exactly to the SOS-stated statewide TOTAL of 3,827,205 (verified). FIPS codes assigned from standard Census MN county FIPS (state 27). 'pre_registered' included as an extra informational field per county; not part of total_registered. More recent precinct-level spreadsheets on the SOS page are dated May 1, 2025 and June 1, 2025; the April 1, 2026 county table is newer and is the latest official statewide-by-county count published."
+}

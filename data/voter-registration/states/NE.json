@@ -1,0 +1,1140 @@
+{
+  "state": "Nebraska",
+  "state_abbr": "NE",
+  "state_fips": "31",
+  "as_of_date": "2026-05-01",
+  "source_name": "Nebraska Secretary of State - Voter Registration Statistics (VR Statistics Count Report, Statewide by County)",
+  "source_url": "https://sos.nebraska.gov/sites/default/files/doc/elections/vrstats/2026VR/Statewide-May-2026.pdf",
+  "registers_by_party": true,
+  "statewide_total_registered": 1257308,
+  "statewide_by_party": {
+    "Republican": 620689,
+    "Democratic": 327605,
+    "Nonpartisan": 280919,
+    "Libertarian": 17645,
+    "Other": 10450
+  },
+  "county_unit_label": "county",
+  "county_level_available": true,
+  "counties": [
+    {
+      "name": "Adams",
+      "fips": "31001",
+      "total_registered": 19210,
+      "by_party": {
+        "Republican": 11582,
+        "Democratic": 3580,
+        "Nonpartisan": 3668,
+        "Libertarian": 242,
+        "Other": 138
+      }
+    },
+    {
+      "name": "Antelope",
+      "fips": "31003",
+      "total_registered": 4329,
+      "by_party": {
+        "Republican": 3294,
+        "Democratic": 467,
+        "Nonpartisan": 525,
+        "Libertarian": 28,
+        "Other": 15
+      }
+    },
+    {
+      "name": "Arthur",
+      "fips": "31005",
+      "total_registered": 328,
+      "by_party": {
+        "Republican": 291,
+        "Democratic": 16,
+        "Nonpartisan": 19,
+        "Libertarian": 2,
+        "Other": 0
+      }
+    },
+    {
+      "name": "Banner",
+      "fips": "31007",
+      "total_registered": 523,
+      "by_party": {
+        "Republican": 434,
+        "Democratic": 21,
+        "Nonpartisan": 60,
+        "Libertarian": 8,
+        "Other": 0
+      }
+    },
+    {
+      "name": "Blaine",
+      "fips": "31009",
+      "total_registered": 354,
+      "by_party": {
+        "Republican": 300,
+        "Democratic": 21,
+        "Nonpartisan": 29,
+        "Libertarian": 4,
+        "Other": 0
+      }
+    },
+    {
+      "name": "Boone",
+      "fips": "31011",
+      "total_registered": 3612,
+      "by_party": {
+        "Republican": 2694,
+        "Democratic": 489,
+        "Nonpartisan": 392,
+        "Libertarian": 26,
+        "Other": 11
+      }
+    },
+    {
+      "name": "Box Butte",
+      "fips": "31013",
+      "total_registered": 6815,
+      "by_party": {
+        "Republican": 4357,
+        "Democratic": 1012,
+        "Nonpartisan": 1317,
+        "Libertarian": 86,
+        "Other": 43
+      }
+    },
+    {
+      "name": "Boyd",
+      "fips": "31015",
+      "total_registered": 1247,
+      "by_party": {
+        "Republican": 983,
+        "Democratic": 125,
+        "Nonpartisan": 132,
+        "Libertarian": 5,
+        "Other": 2
+      }
+    },
+    {
+      "name": "Brown",
+      "fips": "31017",
+      "total_registered": 2053,
+      "by_party": {
+        "Republican": 1723,
+        "Democratic": 130,
+        "Nonpartisan": 181,
+        "Libertarian": 9,
+        "Other": 10
+      }
+    },
+    {
+      "name": "Buffalo",
+      "fips": "31019",
+      "total_registered": 31070,
+      "by_party": {
+        "Republican": 19317,
+        "Democratic": 5205,
+        "Nonpartisan": 5868,
+        "Libertarian": 482,
+        "Other": 198
+      }
+    },
+    {
+      "name": "Burt",
+      "fips": "31021",
+      "total_registered": 4818,
+      "by_party": {
+        "Republican": 2886,
+        "Democratic": 952,
+        "Nonpartisan": 895,
+        "Libertarian": 57,
+        "Other": 28
+      }
+    },
+    {
+      "name": "Butler",
+      "fips": "31023",
+      "total_registered": 5762,
+      "by_party": {
+        "Republican": 3910,
+        "Democratic": 913,
+        "Nonpartisan": 879,
+        "Libertarian": 44,
+        "Other": 16
+      }
+    },
+    {
+      "name": "Cass",
+      "fips": "31025",
+      "total_registered": 19616,
+      "by_party": {
+        "Republican": 10683,
+        "Democratic": 3690,
+        "Nonpartisan": 4769,
+        "Libertarian": 342,
+        "Other": 132
+      }
+    },
+    {
+      "name": "Cedar",
+      "fips": "31027",
+      "total_registered": 5758,
+      "by_party": {
+        "Republican": 4102,
+        "Democratic": 833,
+        "Nonpartisan": 758,
+        "Libertarian": 43,
+        "Other": 22
+      }
+    },
+    {
+      "name": "Chase",
+      "fips": "31029",
+      "total_registered": 2384,
+      "by_party": {
+        "Republican": 1885,
+        "Democratic": 200,
+        "Nonpartisan": 272,
+        "Libertarian": 19,
+        "Other": 8
+      }
+    },
+    {
+      "name": "Cherry",
+      "fips": "31031",
+      "total_registered": 3656,
+      "by_party": {
+        "Republican": 2961,
+        "Democratic": 287,
+        "Nonpartisan": 365,
+        "Libertarian": 28,
+        "Other": 15
+      }
+    },
+    {
+      "name": "Cheyenne",
+      "fips": "31033",
+      "total_registered": 6268,
+      "by_party": {
+        "Republican": 4215,
+        "Democratic": 708,
+        "Nonpartisan": 1218,
+        "Libertarian": 89,
+        "Other": 38
+      }
+    },
+    {
+      "name": "Clay",
+      "fips": "31035",
+      "total_registered": 4106,
+      "by_party": {
+        "Republican": 2973,
+        "Democratic": 521,
+        "Nonpartisan": 553,
+        "Libertarian": 42,
+        "Other": 17
+      }
+    },
+    {
+      "name": "Colfax",
+      "fips": "31037",
+      "total_registered": 5121,
+      "by_party": {
+        "Republican": 2856,
+        "Democratic": 1403,
+        "Nonpartisan": 778,
+        "Libertarian": 59,
+        "Other": 25
+      }
+    },
+    {
+      "name": "Cuming",
+      "fips": "31039",
+      "total_registered": 5782,
+      "by_party": {
+        "Republican": 3960,
+        "Democratic": 816,
+        "Nonpartisan": 943,
+        "Libertarian": 43,
+        "Other": 20
+      }
+    },
+    {
+      "name": "Custer",
+      "fips": "31041",
+      "total_registered": 7672,
+      "by_party": {
+        "Republican": 5799,
+        "Democratic": 754,
+        "Nonpartisan": 1022,
+        "Libertarian": 75,
+        "Other": 22
+      }
+    },
+    {
+      "name": "Dakota",
+      "fips": "31043",
+      "total_registered": 10434,
+      "by_party": {
+        "Republican": 4033,
+        "Democratic": 3536,
+        "Nonpartisan": 2660,
+        "Libertarian": 137,
+        "Other": 68
+      }
+    },
+    {
+      "name": "Dawes",
+      "fips": "31045",
+      "total_registered": 4971,
+      "by_party": {
+        "Republican": 3128,
+        "Democratic": 798,
+        "Nonpartisan": 950,
+        "Libertarian": 68,
+        "Other": 27
+      }
+    },
+    {
+      "name": "Dawson",
+      "fips": "31047",
+      "total_registered": 12854,
+      "by_party": {
+        "Republican": 7611,
+        "Democratic": 2757,
+        "Nonpartisan": 2260,
+        "Libertarian": 139,
+        "Other": 87
+      }
+    },
+    {
+      "name": "Deuel",
+      "fips": "31049",
+      "total_registered": 1405,
+      "by_party": {
+        "Republican": 1036,
+        "Democratic": 123,
+        "Nonpartisan": 228,
+        "Libertarian": 13,
+        "Other": 5
+      }
+    },
+    {
+      "name": "Dixon",
+      "fips": "31051",
+      "total_registered": 3508,
+      "by_party": {
+        "Republican": 2340,
+        "Democratic": 584,
+        "Nonpartisan": 534,
+        "Libertarian": 34,
+        "Other": 16
+      }
+    },
+    {
+      "name": "Dodge",
+      "fips": "31053",
+      "total_registered": 22219,
+      "by_party": {
+        "Republican": 11906,
+        "Democratic": 4943,
+        "Nonpartisan": 4800,
+        "Libertarian": 352,
+        "Other": 218
+      }
+    },
+    {
+      "name": "Douglas",
+      "fips": "31055",
+      "total_registered": 367828,
+      "by_party": {
+        "Republican": 129314,
+        "Democratic": 133019,
+        "Nonpartisan": 95627,
+        "Libertarian": 5559,
+        "Other": 4309
+      }
+    },
+    {
+      "name": "Dundy",
+      "fips": "31057",
+      "total_registered": 1194,
+      "by_party": {
+        "Republican": 937,
+        "Democratic": 87,
+        "Nonpartisan": 156,
+        "Libertarian": 11,
+        "Other": 3
+      }
+    },
+    {
+      "name": "Fillmore",
+      "fips": "31059",
+      "total_registered": 3932,
+      "by_party": {
+        "Republican": 2680,
+        "Democratic": 594,
+        "Nonpartisan": 594,
+        "Libertarian": 49,
+        "Other": 15
+      }
+    },
+    {
+      "name": "Franklin",
+      "fips": "31061",
+      "total_registered": 2070,
+      "by_party": {
+        "Republican": 1515,
+        "Democratic": 221,
+        "Nonpartisan": 305,
+        "Libertarian": 22,
+        "Other": 7
+      }
+    },
+    {
+      "name": "Frontier",
+      "fips": "31063",
+      "total_registered": 1781,
+      "by_party": {
+        "Republican": 1383,
+        "Democratic": 162,
+        "Nonpartisan": 214,
+        "Libertarian": 13,
+        "Other": 9
+      }
+    },
+    {
+      "name": "Furnas",
+      "fips": "31065",
+      "total_registered": 3312,
+      "by_party": {
+        "Republican": 2404,
+        "Democratic": 347,
+        "Nonpartisan": 510,
+        "Libertarian": 37,
+        "Other": 14
+      }
+    },
+    {
+      "name": "Gage",
+      "fips": "31067",
+      "total_registered": 14528,
+      "by_party": {
+        "Republican": 8347,
+        "Democratic": 2787,
+        "Nonpartisan": 3107,
+        "Libertarian": 165,
+        "Other": 122
+      }
+    },
+    {
+      "name": "Garden",
+      "fips": "31069",
+      "total_registered": 1299,
+      "by_party": {
+        "Republican": 1014,
+        "Democratic": 109,
+        "Nonpartisan": 159,
+        "Libertarian": 14,
+        "Other": 3
+      }
+    },
+    {
+      "name": "Garfield",
+      "fips": "31071",
+      "total_registered": 1284,
+      "by_party": {
+        "Republican": 1071,
+        "Democratic": 97,
+        "Nonpartisan": 103,
+        "Libertarian": 9,
+        "Other": 4
+      }
+    },
+    {
+      "name": "Gosper",
+      "fips": "31073",
+      "total_registered": 1403,
+      "by_party": {
+        "Republican": 1072,
+        "Democratic": 127,
+        "Nonpartisan": 191,
+        "Libertarian": 9,
+        "Other": 4
+      }
+    },
+    {
+      "name": "Grant",
+      "fips": "31075",
+      "total_registered": 433,
+      "by_party": {
+        "Republican": 385,
+        "Democratic": 20,
+        "Nonpartisan": 27,
+        "Libertarian": 1,
+        "Other": 0
+      }
+    },
+    {
+      "name": "Greeley",
+      "fips": "31077",
+      "total_registered": 1552,
+      "by_party": {
+        "Republican": 1077,
+        "Democratic": 318,
+        "Nonpartisan": 146,
+        "Libertarian": 7,
+        "Other": 4
+      }
+    },
+    {
+      "name": "Hall",
+      "fips": "31079",
+      "total_registered": 32799,
+      "by_party": {
+        "Republican": 17700,
+        "Democratic": 7177,
+        "Nonpartisan": 7226,
+        "Libertarian": 455,
+        "Other": 241
+      }
+    },
+    {
+      "name": "Hamilton",
+      "fips": "31081",
+      "total_registered": 6870,
+      "by_party": {
+        "Republican": 4896,
+        "Democratic": 843,
+        "Nonpartisan": 1029,
+        "Libertarian": 71,
+        "Other": 31
+      }
+    },
+    {
+      "name": "Harlan",
+      "fips": "31083",
+      "total_registered": 2318,
+      "by_party": {
+        "Republican": 1688,
+        "Democratic": 284,
+        "Nonpartisan": 325,
+        "Libertarian": 14,
+        "Other": 7
+      }
+    },
+    {
+      "name": "Hayes",
+      "fips": "31085",
+      "total_registered": 611,
+      "by_party": {
+        "Republican": 524,
+        "Democratic": 22,
+        "Nonpartisan": 57,
+        "Libertarian": 6,
+        "Other": 2
+      }
+    },
+    {
+      "name": "Hitchcock",
+      "fips": "31087",
+      "total_registered": 1852,
+      "by_party": {
+        "Republican": 1385,
+        "Democratic": 163,
+        "Nonpartisan": 279,
+        "Libertarian": 22,
+        "Other": 3
+      }
+    },
+    {
+      "name": "Holt",
+      "fips": "31089",
+      "total_registered": 6986,
+      "by_party": {
+        "Republican": 5503,
+        "Democratic": 696,
+        "Nonpartisan": 722,
+        "Libertarian": 40,
+        "Other": 25
+      }
+    },
+    {
+      "name": "Hooker",
+      "fips": "31091",
+      "total_registered": 534,
+      "by_party": {
+        "Republican": 433,
+        "Democratic": 49,
+        "Nonpartisan": 50,
+        "Libertarian": 2,
+        "Other": 0
+      }
+    },
+    {
+      "name": "Howard",
+      "fips": "31093",
+      "total_registered": 4660,
+      "by_party": {
+        "Republican": 3221,
+        "Democratic": 732,
+        "Nonpartisan": 638,
+        "Libertarian": 58,
+        "Other": 11
+      }
+    },
+    {
+      "name": "Jefferson",
+      "fips": "31095",
+      "total_registered": 4687,
+      "by_party": {
+        "Republican": 2955,
+        "Democratic": 808,
+        "Nonpartisan": 830,
+        "Libertarian": 54,
+        "Other": 40
+      }
+    },
+    {
+      "name": "Johnson",
+      "fips": "31097",
+      "total_registered": 2775,
+      "by_party": {
+        "Republican": 1688,
+        "Democratic": 556,
+        "Nonpartisan": 486,
+        "Libertarian": 35,
+        "Other": 10
+      }
+    },
+    {
+      "name": "Kearney",
+      "fips": "31099",
+      "total_registered": 4648,
+      "by_party": {
+        "Republican": 3292,
+        "Democratic": 609,
+        "Nonpartisan": 662,
+        "Libertarian": 69,
+        "Other": 16
+      }
+    },
+    {
+      "name": "Keith",
+      "fips": "31101",
+      "total_registered": 5714,
+      "by_party": {
+        "Republican": 3923,
+        "Democratic": 655,
+        "Nonpartisan": 1055,
+        "Libertarian": 58,
+        "Other": 23
+      }
+    },
+    {
+      "name": "Keya Paha",
+      "fips": "31103",
+      "total_registered": 618,
+      "by_party": {
+        "Republican": 560,
+        "Democratic": 35,
+        "Nonpartisan": 21,
+        "Libertarian": 2,
+        "Other": 0
+      }
+    },
+    {
+      "name": "Kimball",
+      "fips": "31105",
+      "total_registered": 2552,
+      "by_party": {
+        "Republican": 1828,
+        "Democratic": 285,
+        "Nonpartisan": 399,
+        "Libertarian": 30,
+        "Other": 10
+      }
+    },
+    {
+      "name": "Knox",
+      "fips": "31107",
+      "total_registered": 5478,
+      "by_party": {
+        "Republican": 3779,
+        "Democratic": 915,
+        "Nonpartisan": 715,
+        "Libertarian": 40,
+        "Other": 29
+      }
+    },
+    {
+      "name": "Lancaster",
+      "fips": "31109",
+      "total_registered": 207598,
+      "by_party": {
+        "Republican": 83155,
+        "Democratic": 68325,
+        "Nonpartisan": 51015,
+        "Libertarian": 3222,
+        "Other": 1881
+      }
+    },
+    {
+      "name": "Lincoln",
+      "fips": "31111",
+      "total_registered": 23102,
+      "by_party": {
+        "Republican": 14560,
+        "Democratic": 3756,
+        "Nonpartisan": 4283,
+        "Libertarian": 330,
+        "Other": 173
+      }
+    },
+    {
+      "name": "Logan",
+      "fips": "31113",
+      "total_registered": 546,
+      "by_party": {
+        "Republican": 443,
+        "Democratic": 36,
+        "Nonpartisan": 61,
+        "Libertarian": 6,
+        "Other": 0
+      }
+    },
+    {
+      "name": "Loup",
+      "fips": "31115",
+      "total_registered": 508,
+      "by_party": {
+        "Republican": 412,
+        "Democratic": 60,
+        "Nonpartisan": 33,
+        "Libertarian": 2,
+        "Other": 1
+      }
+    },
+    {
+      "name": "Madison",
+      "fips": "31119",
+      "total_registered": 21091,
+      "by_party": {
+        "Republican": 13543,
+        "Democratic": 3310,
+        "Nonpartisan": 3829,
+        "Libertarian": 246,
+        "Other": 163
+      }
+    },
+    {
+      "name": "McPherson",
+      "fips": "31117",
+      "total_registered": 329,
+      "by_party": {
+        "Republican": 290,
+        "Democratic": 18,
+        "Nonpartisan": 16,
+        "Libertarian": 5,
+        "Other": 0
+      }
+    },
+    {
+      "name": "Merrick",
+      "fips": "31121",
+      "total_registered": 5338,
+      "by_party": {
+        "Republican": 3925,
+        "Democratic": 610,
+        "Nonpartisan": 738,
+        "Libertarian": 45,
+        "Other": 20
+      }
+    },
+    {
+      "name": "Morrill",
+      "fips": "31123",
+      "total_registered": 2983,
+      "by_party": {
+        "Republican": 2241,
+        "Democratic": 309,
+        "Nonpartisan": 395,
+        "Libertarian": 26,
+        "Other": 12
+      }
+    },
+    {
+      "name": "Nance",
+      "fips": "31125",
+      "total_registered": 2398,
+      "by_party": {
+        "Republican": 1634,
+        "Democratic": 436,
+        "Nonpartisan": 293,
+        "Libertarian": 24,
+        "Other": 11
+      }
+    },
+    {
+      "name": "Nemaha",
+      "fips": "31127",
+      "total_registered": 4472,
+      "by_party": {
+        "Republican": 2675,
+        "Democratic": 786,
+        "Nonpartisan": 917,
+        "Libertarian": 70,
+        "Other": 24
+      }
+    },
+    {
+      "name": "Nuckolls",
+      "fips": "31129",
+      "total_registered": 3041,
+      "by_party": {
+        "Republican": 2105,
+        "Democratic": 448,
+        "Nonpartisan": 445,
+        "Libertarian": 23,
+        "Other": 20
+      }
+    },
+    {
+      "name": "Otoe",
+      "fips": "31131",
+      "total_registered": 10751,
+      "by_party": {
+        "Republican": 6243,
+        "Democratic": 2017,
+        "Nonpartisan": 2293,
+        "Libertarian": 140,
+        "Other": 58
+      }
+    },
+    {
+      "name": "Pawnee",
+      "fips": "31133",
+      "total_registered": 1766,
+      "by_party": {
+        "Republican": 1184,
+        "Democratic": 296,
+        "Nonpartisan": 256,
+        "Libertarian": 19,
+        "Other": 11
+      }
+    },
+    {
+      "name": "Perkins",
+      "fips": "31135",
+      "total_registered": 1848,
+      "by_party": {
+        "Republican": 1405,
+        "Democratic": 184,
+        "Nonpartisan": 237,
+        "Libertarian": 16,
+        "Other": 6
+      }
+    },
+    {
+      "name": "Phelps",
+      "fips": "31137",
+      "total_registered": 6130,
+      "by_party": {
+        "Republican": 4559,
+        "Democratic": 653,
+        "Nonpartisan": 813,
+        "Libertarian": 75,
+        "Other": 30
+      }
+    },
+    {
+      "name": "Pierce",
+      "fips": "31139",
+      "total_registered": 5007,
+      "by_party": {
+        "Republican": 3807,
+        "Democratic": 427,
+        "Nonpartisan": 706,
+        "Libertarian": 46,
+        "Other": 21
+      }
+    },
+    {
+      "name": "Platte",
+      "fips": "31141",
+      "total_registered": 20449,
+      "by_party": {
+        "Republican": 13453,
+        "Democratic": 3386,
+        "Nonpartisan": 3271,
+        "Libertarian": 214,
+        "Other": 125
+      }
+    },
+    {
+      "name": "Polk",
+      "fips": "31143",
+      "total_registered": 3615,
+      "by_party": {
+        "Republican": 2595,
+        "Democratic": 469,
+        "Nonpartisan": 498,
+        "Libertarian": 42,
+        "Other": 11
+      }
+    },
+    {
+      "name": "Red Willow",
+      "fips": "31145",
+      "total_registered": 7005,
+      "by_party": {
+        "Republican": 4969,
+        "Democratic": 767,
+        "Nonpartisan": 1158,
+        "Libertarian": 78,
+        "Other": 33
+      }
+    },
+    {
+      "name": "Richardson",
+      "fips": "31147",
+      "total_registered": 5172,
+      "by_party": {
+        "Republican": 3243,
+        "Democratic": 1005,
+        "Nonpartisan": 852,
+        "Libertarian": 36,
+        "Other": 36
+      }
+    },
+    {
+      "name": "Rock",
+      "fips": "31149",
+      "total_registered": 1056,
+      "by_party": {
+        "Republican": 923,
+        "Democratic": 65,
+        "Nonpartisan": 61,
+        "Libertarian": 6,
+        "Other": 1
+      }
+    },
+    {
+      "name": "Saline",
+      "fips": "31151",
+      "total_registered": 7669,
+      "by_party": {
+        "Republican": 3859,
+        "Democratic": 2155,
+        "Nonpartisan": 1514,
+        "Libertarian": 100,
+        "Other": 41
+      }
+    },
+    {
+      "name": "Sarpy",
+      "fips": "31153",
+      "total_registered": 131399,
+      "by_party": {
+        "Republican": 58017,
+        "Democratic": 33528,
+        "Nonpartisan": 36517,
+        "Libertarian": 2273,
+        "Other": 1064
+      }
+    },
+    {
+      "name": "Saunders",
+      "fips": "31155",
+      "total_registered": 16811,
+      "by_party": {
+        "Republican": 10642,
+        "Democratic": 2827,
+        "Nonpartisan": 3056,
+        "Libertarian": 206,
+        "Other": 80
+      }
+    },
+    {
+      "name": "Scotts Bluff",
+      "fips": "31157",
+      "total_registered": 22485,
+      "by_party": {
+        "Republican": 12917,
+        "Democratic": 4212,
+        "Nonpartisan": 4869,
+        "Libertarian": 308,
+        "Other": 179
+      }
+    },
+    {
+      "name": "Seward",
+      "fips": "31159",
+      "total_registered": 11591,
+      "by_party": {
+        "Republican": 7237,
+        "Democratic": 1930,
+        "Nonpartisan": 2235,
+        "Libertarian": 149,
+        "Other": 40
+      }
+    },
+    {
+      "name": "Sheridan",
+      "fips": "31161",
+      "total_registered": 3310,
+      "by_party": {
+        "Republican": 2476,
+        "Democratic": 343,
+        "Nonpartisan": 450,
+        "Libertarian": 25,
+        "Other": 16
+      }
+    },
+    {
+      "name": "Sherman",
+      "fips": "31163",
+      "total_registered": 2077,
+      "by_party": {
+        "Republican": 1391,
+        "Democratic": 447,
+        "Nonpartisan": 215,
+        "Libertarian": 17,
+        "Other": 7
+      }
+    },
+    {
+      "name": "Sioux",
+      "fips": "31165",
+      "total_registered": 840,
+      "by_party": {
+        "Republican": 685,
+        "Democratic": 59,
+        "Nonpartisan": 88,
+        "Libertarian": 6,
+        "Other": 2
+      }
+    },
+    {
+      "name": "Stanton",
+      "fips": "31167",
+      "total_registered": 3773,
+      "by_party": {
+        "Republican": 2822,
+        "Democratic": 438,
+        "Nonpartisan": 459,
+        "Libertarian": 37,
+        "Other": 17
+      }
+    },
+    {
+      "name": "Thayer",
+      "fips": "31169",
+      "total_registered": 3522,
+      "by_party": {
+        "Republican": 2455,
+        "Democratic": 509,
+        "Nonpartisan": 513,
+        "Libertarian": 31,
+        "Other": 14
+      }
+    },
+    {
+      "name": "Thomas",
+      "fips": "31171",
+      "total_registered": 488,
+      "by_party": {
+        "Republican": 392,
+        "Democratic": 30,
+        "Nonpartisan": 60,
+        "Libertarian": 1,
+        "Other": 5
+      }
+    },
+    {
+      "name": "Thurston",
+      "fips": "31173",
+      "total_registered": 3769,
+      "by_party": {
+        "Republican": 1326,
+        "Democratic": 1708,
+        "Nonpartisan": 651,
+        "Libertarian": 32,
+        "Other": 52
+      }
+    },
+    {
+      "name": "Valley",
+      "fips": "31175",
+      "total_registered": 2976,
+      "by_party": {
+        "Republican": 2215,
+        "Democratic": 395,
+        "Nonpartisan": 342,
+        "Libertarian": 16,
+        "Other": 8
+      }
+    },
+    {
+      "name": "Washington",
+      "fips": "31177",
+      "total_registered": 15459,
+      "by_party": {
+        "Republican": 9300,
+        "Democratic": 2590,
+        "Nonpartisan": 3263,
+        "Libertarian": 218,
+        "Other": 88
+      }
+    },
+    {
+      "name": "Wayne",
+      "fips": "31179",
+      "total_registered": 5226,
+      "by_party": {
+        "Republican": 3421,
+        "Democratic": 840,
+        "Nonpartisan": 856,
+        "Libertarian": 87,
+        "Other": 22
+      }
+    },
+    {
+      "name": "Webster",
+      "fips": "31181",
+      "total_registered": 2268,
+      "by_party": {
+        "Republican": 1626,
+        "Democratic": 278,
+        "Nonpartisan": 330,
+        "Libertarian": 31,
+        "Other": 3
+      }
+    },
+    {
+      "name": "Wheeler",
+      "fips": "31183",
+      "total_registered": 568,
+      "by_party": {
+        "Republican": 454,
+        "Democratic": 65,
+        "Nonpartisan": 43,
+        "Libertarian": 6,
+        "Other": 0
+      }
+    },
+    {
+      "name": "York",
+      "fips": "31185",
+      "total_registered": 9279,
+      "by_party": {
+        "Republican": 6257,
+        "Democratic": 1287,
+        "Nonpartisan": 1580,
+        "Libertarian": 103,
+        "Other": 52
+      }
+    }
+  ],
+  "as_of_notes": "Report header states 'Count of Voters Eligible to Vote' Processed 05/01/2026 2:00 AM, Printed 05/01/2026 8:15 AM. This is the May 2026 monthly statewide report, the most recent available (June 2026 not yet published as of retrieval on 2026-06-14). 'as_of_date' set to 2026-05-01 (processed date).",
+  "data_quality": "complete; all 93 counties present; every county party breakdown sums to its county total and the sum of all counties matches the report's printed Grand Total exactly (Republican 620689, Democratic 327605, Libertarian 17645, Legal Marijuana NOW 10450, Nonpartisan 280919, Total 1257308).",
+  "notes": "Nebraska registers voters by party. Parties reported: Republican, Democratic, Libertarian, Legal Marijuana NOW, and Nonpartisan. The 'Other' field in by_party holds the Legal Marijuana NOW count (the only minor party besides Libertarian; Nonpartisan is reported as its own category, not folded into Other). Nine small counties (Arthur, Banner, Blaine, Grant, Hooker, Keya Paha, Logan, McPherson, Wheeler) have 0 Legal Marijuana NOW registrants. County FIPS codes are standard 5-digit state(31)+county codes."
+}

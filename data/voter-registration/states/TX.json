@@ -1,0 +1,1542 @@
+{
+  "state": "Texas",
+  "state_abbr": "TX",
+  "state_fips": "48",
+  "as_of_date": "2026-02-02",
+  "source_name": "Texas Secretary of State - March 2026 Voter Registration Figures (Registered Voters by County)",
+  "source_url": "https://www.sos.texas.gov/elections/historical/mar2026.shtml",
+  "registers_by_party": false,
+  "statewide_total_registered": 18657918,
+  "statewide_by_party": null,
+  "county_unit_label": "county",
+  "county_level_available": true,
+  "counties": [
+    {
+      "name": "Anderson",
+      "fips": "48001",
+      "total_registered": 30678,
+      "by_party": null
+    },
+    {
+      "name": "Andrews",
+      "fips": "48003",
+      "total_registered": 10637,
+      "by_party": null
+    },
+    {
+      "name": "Angelina",
+      "fips": "48005",
+      "total_registered": 55445,
+      "by_party": null
+    },
+    {
+      "name": "Aransas",
+      "fips": "48007",
+      "total_registered": 19411,
+      "by_party": null
+    },
+    {
+      "name": "Archer",
+      "fips": "48009",
+      "total_registered": 7005,
+      "by_party": null
+    },
+    {
+      "name": "Armstrong",
+      "fips": "48011",
+      "total_registered": 1441,
+      "by_party": null
+    },
+    {
+      "name": "Atascosa",
+      "fips": "48013",
+      "total_registered": 32209,
+      "by_party": null
+    },
+    {
+      "name": "Austin",
+      "fips": "48015",
+      "total_registered": 22371,
+      "by_party": null
+    },
+    {
+      "name": "Bailey",
+      "fips": "48017",
+      "total_registered": 3102,
+      "by_party": null
+    },
+    {
+      "name": "Bandera",
+      "fips": "48019",
+      "total_registered": 19234,
+      "by_party": null
+    },
+    {
+      "name": "Bastrop",
+      "fips": "48021",
+      "total_registered": 62653,
+      "by_party": null
+    },
+    {
+      "name": "Baylor",
+      "fips": "48023",
+      "total_registered": 2410,
+      "by_party": null
+    },
+    {
+      "name": "Bee",
+      "fips": "48025",
+      "total_registered": 15491,
+      "by_party": null
+    },
+    {
+      "name": "Bell",
+      "fips": "48027",
+      "total_registered": 234576,
+      "by_party": null
+    },
+    {
+      "name": "Bexar",
+      "fips": "48029",
+      "total_registered": 1293128,
+      "by_party": null
+    },
+    {
+      "name": "Blanco",
+      "fips": "48031",
+      "total_registered": 11110,
+      "by_party": null
+    },
+    {
+      "name": "Borden",
+      "fips": "48033",
+      "total_registered": 468,
+      "by_party": null
+    },
+    {
+      "name": "Bosque",
+      "fips": "48035",
+      "total_registered": 13504,
+      "by_party": null
+    },
+    {
+      "name": "Bowie",
+      "fips": "48037",
+      "total_registered": 60472,
+      "by_party": null
+    },
+    {
+      "name": "Brazoria",
+      "fips": "48039",
+      "total_registered": 254533,
+      "by_party": null
+    },
+    {
+      "name": "Brazos",
+      "fips": "48041",
+      "total_registered": 138990,
+      "by_party": null
+    },
+    {
+      "name": "Brewster",
+      "fips": "48043",
+      "total_registered": 7018,
+      "by_party": null
+    },
+    {
+      "name": "Briscoe",
+      "fips": "48045",
+      "total_registered": 1000,
+      "by_party": null
+    },
+    {
+      "name": "Brooks",
+      "fips": "48047",
+      "total_registered": 4730,
+      "by_party": null
+    },
+    {
+      "name": "Brown",
+      "fips": "48049",
+      "total_registered": 25461,
+      "by_party": null
+    },
+    {
+      "name": "Burleson",
+      "fips": "48051",
+      "total_registered": 13967,
+      "by_party": null
+    },
+    {
+      "name": "Burnet",
+      "fips": "48053",
+      "total_registered": 39586,
+      "by_party": null
+    },
+    {
+      "name": "Caldwell",
+      "fips": "48055",
+      "total_registered": 27268,
+      "by_party": null
+    },
+    {
+      "name": "Calhoun",
+      "fips": "48057",
+      "total_registered": 12841,
+      "by_party": null
+    },
+    {
+      "name": "Callahan",
+      "fips": "48059",
+      "total_registered": 10371,
+      "by_party": null
+    },
+    {
+      "name": "Cameron",
+      "fips": "48061",
+      "total_registered": 238192,
+      "by_party": null
+    },
+    {
+      "name": "Camp",
+      "fips": "48063",
+      "total_registered": 8424,
+      "by_party": null
+    },
+    {
+      "name": "Carson",
+      "fips": "48065",
+      "total_registered": 4214,
+      "by_party": null
+    },
+    {
+      "name": "Cass",
+      "fips": "48067",
+      "total_registered": 21620,
+      "by_party": null
+    },
+    {
+      "name": "Castro",
+      "fips": "48069",
+      "total_registered": 3488,
+      "by_party": null
+    },
+    {
+      "name": "Chambers",
+      "fips": "48071",
+      "total_registered": 38164,
+      "by_party": null
+    },
+    {
+      "name": "Cherokee",
+      "fips": "48073",
+      "total_registered": 32215,
+      "by_party": null
+    },
+    {
+      "name": "Childress",
+      "fips": "48075",
+      "total_registered": 3668,
+      "by_party": null
+    },
+    {
+      "name": "Clay",
+      "fips": "48077",
+      "total_registered": 8220,
+      "by_party": null
+    },
+    {
+      "name": "Cochran",
+      "fips": "48079",
+      "total_registered": 1477,
+      "by_party": null
+    },
+    {
+      "name": "Coke",
+      "fips": "48081",
+      "total_registered": 2508,
+      "by_party": null
+    },
+    {
+      "name": "Coleman",
+      "fips": "48083",
+      "total_registered": 6105,
+      "by_party": null
+    },
+    {
+      "name": "Collin",
+      "fips": "48085",
+      "total_registered": 752502,
+      "by_party": null
+    },
+    {
+      "name": "Collingsworth",
+      "fips": "48087",
+      "total_registered": 1936,
+      "by_party": null
+    },
+    {
+      "name": "Colorado",
+      "fips": "48089",
+      "total_registered": 14523,
+      "by_party": null
+    },
+    {
+      "name": "Comal",
+      "fips": "48091",
+      "total_registered": 147503,
+      "by_party": null
+    },
+    {
+      "name": "Comanche",
+      "fips": "48093",
+      "total_registered": 10226,
+      "by_party": null
+    },
+    {
+      "name": "Concho",
+      "fips": "48095",
+      "total_registered": 1748,
+      "by_party": null
+    },
+    {
+      "name": "Cooke",
+      "fips": "48097",
+      "total_registered": 30493,
+      "by_party": null
+    },
+    {
+      "name": "Coryell",
+      "fips": "48099",
+      "total_registered": 45909,
+      "by_party": null
+    },
+    {
+      "name": "Cottle",
+      "fips": "48101",
+      "total_registered": 965,
+      "by_party": null
+    },
+    {
+      "name": "Crane",
+      "fips": "48103",
+      "total_registered": 2732,
+      "by_party": null
+    },
+    {
+      "name": "Crockett",
+      "fips": "48105",
+      "total_registered": 2236,
+      "by_party": null
+    },
+    {
+      "name": "Crosby",
+      "fips": "48107",
+      "total_registered": 3586,
+      "by_party": null
+    },
+    {
+      "name": "Culberson",
+      "fips": "48109",
+      "total_registered": 1703,
+      "by_party": null
+    },
+    {
+      "name": "Dallam",
+      "fips": "48111",
+      "total_registered": 2774,
+      "by_party": null
+    },
+    {
+      "name": "Dallas",
+      "fips": "48113",
+      "total_registered": 1463708,
+      "by_party": null
+    },
+    {
+      "name": "Dawson",
+      "fips": "48115",
+      "total_registered": 6432,
+      "by_party": null
+    },
+    {
+      "name": "Deaf Smith",
+      "fips": "48117",
+      "total_registered": 8722,
+      "by_party": null
+    },
+    {
+      "name": "Delta",
+      "fips": "48119",
+      "total_registered": 4080,
+      "by_party": null
+    },
+    {
+      "name": "Denton",
+      "fips": "48121",
+      "total_registered": 644341,
+      "by_party": null
+    },
+    {
+      "name": "DeWitt",
+      "fips": "48123",
+      "total_registered": 11480,
+      "by_party": null
+    },
+    {
+      "name": "Dickens",
+      "fips": "48125",
+      "total_registered": 1363,
+      "by_party": null
+    },
+    {
+      "name": "Dimmit",
+      "fips": "48127",
+      "total_registered": 6550,
+      "by_party": null
+    },
+    {
+      "name": "Donley",
+      "fips": "48129",
+      "total_registered": 2453,
+      "by_party": null
+    },
+    {
+      "name": "Duval",
+      "fips": "48131",
+      "total_registered": 7839,
+      "by_party": null
+    },
+    {
+      "name": "Eastland",
+      "fips": "48133",
+      "total_registered": 12510,
+      "by_party": null
+    },
+    {
+      "name": "Ector",
+      "fips": "48135",
+      "total_registered": 85664,
+      "by_party": null
+    },
+    {
+      "name": "Edwards",
+      "fips": "48137",
+      "total_registered": 1467,
+      "by_party": null
+    },
+    {
+      "name": "El Paso",
+      "fips": "48141",
+      "total_registered": 152671,
+      "by_party": null
+    },
+    {
+      "name": "Ellis",
+      "fips": "48139",
+      "total_registered": 518817,
+      "by_party": null
+    },
+    {
+      "name": "Erath",
+      "fips": "48143",
+      "total_registered": 26306,
+      "by_party": null
+    },
+    {
+      "name": "Falls",
+      "fips": "48145",
+      "total_registered": 10665,
+      "by_party": null
+    },
+    {
+      "name": "Fannin",
+      "fips": "48147",
+      "total_registered": 24815,
+      "by_party": null
+    },
+    {
+      "name": "Fayette",
+      "fips": "48149",
+      "total_registered": 18167,
+      "by_party": null
+    },
+    {
+      "name": "Fisher",
+      "fips": "48151",
+      "total_registered": 2741,
+      "by_party": null
+    },
+    {
+      "name": "Floyd",
+      "fips": "48153",
+      "total_registered": 3578,
+      "by_party": null
+    },
+    {
+      "name": "Foard",
+      "fips": "48155",
+      "total_registered": 788,
+      "by_party": null
+    },
+    {
+      "name": "Fort Bend",
+      "fips": "48157",
+      "total_registered": 567664,
+      "by_party": null
+    },
+    {
+      "name": "Franklin",
+      "fips": "48159",
+      "total_registered": 7697,
+      "by_party": null
+    },
+    {
+      "name": "Freestone",
+      "fips": "48161",
+      "total_registered": 13398,
+      "by_party": null
+    },
+    {
+      "name": "Frio",
+      "fips": "48163",
+      "total_registered": 9584,
+      "by_party": null
+    },
+    {
+      "name": "Gaines",
+      "fips": "48165",
+      "total_registered": 10574,
+      "by_party": null
+    },
+    {
+      "name": "Galveston",
+      "fips": "48167",
+      "total_registered": 246657,
+      "by_party": null
+    },
+    {
+      "name": "Garza",
+      "fips": "48169",
+      "total_registered": 2493,
+      "by_party": null
+    },
+    {
+      "name": "Gillespie",
+      "fips": "48171",
+      "total_registered": 21928,
+      "by_party": null
+    },
+    {
+      "name": "Glasscock",
+      "fips": "48173",
+      "total_registered": 842,
+      "by_party": null
+    },
+    {
+      "name": "Goliad",
+      "fips": "48175",
+      "total_registered": 5684,
+      "by_party": null
+    },
+    {
+      "name": "Gonzales",
+      "fips": "48177",
+      "total_registered": 13160,
+      "by_party": null
+    },
+    {
+      "name": "Gray",
+      "fips": "48179",
+      "total_registered": 12112,
+      "by_party": null
+    },
+    {
+      "name": "Grayson",
+      "fips": "48181",
+      "total_registered": 100887,
+      "by_party": null
+    },
+    {
+      "name": "Gregg",
+      "fips": "48183",
+      "total_registered": 73217,
+      "by_party": null
+    },
+    {
+      "name": "Grimes",
+      "fips": "48185",
+      "total_registered": 21519,
+      "by_party": null
+    },
+    {
+      "name": "Guadalupe",
+      "fips": "48187",
+      "total_registered": 128124,
+      "by_party": null
+    },
+    {
+      "name": "Hale",
+      "fips": "48189",
+      "total_registered": 18103,
+      "by_party": null
+    },
+    {
+      "name": "Hall",
+      "fips": "48191",
+      "total_registered": 1835,
+      "by_party": null
+    },
+    {
+      "name": "Hamilton",
+      "fips": "48193",
+      "total_registered": 6181,
+      "by_party": null
+    },
+    {
+      "name": "Hansford",
+      "fips": "48195",
+      "total_registered": 2952,
+      "by_party": null
+    },
+    {
+      "name": "Hardeman",
+      "fips": "48197",
+      "total_registered": 2269,
+      "by_party": null
+    },
+    {
+      "name": "Hardin",
+      "fips": "48199",
+      "total_registered": 43555,
+      "by_party": null
+    },
+    {
+      "name": "Harris",
+      "fips": "48201",
+      "total_registered": 2702952,
+      "by_party": null
+    },
+    {
+      "name": "Harrison",
+      "fips": "48203",
+      "total_registered": 47042,
+      "by_party": null
+    },
+    {
+      "name": "Hartley",
+      "fips": "48205",
+      "total_registered": 2768,
+      "by_party": null
+    },
+    {
+      "name": "Haskell",
+      "fips": "48207",
+      "total_registered": 3405,
+      "by_party": null
+    },
+    {
+      "name": "Hays",
+      "fips": "48209",
+      "total_registered": 193013,
+      "by_party": null
+    },
+    {
+      "name": "Hemphill",
+      "fips": "48211",
+      "total_registered": 2272,
+      "by_party": null
+    },
+    {
+      "name": "Henderson",
+      "fips": "48213",
+      "total_registered": 60148,
+      "by_party": null
+    },
+    {
+      "name": "Hidalgo",
+      "fips": "48215",
+      "total_registered": 451612,
+      "by_party": null
+    },
+    {
+      "name": "Hill",
+      "fips": "48217",
+      "total_registered": 27498,
+      "by_party": null
+    },
+    {
+      "name": "Hockley",
+      "fips": "48219",
+      "total_registered": 14077,
+      "by_party": null
+    },
+    {
+      "name": "Hood",
+      "fips": "48221",
+      "total_registered": 52728,
+      "by_party": null
+    },
+    {
+      "name": "Hopkins",
+      "fips": "48223",
+      "total_registered": 25317,
+      "by_party": null
+    },
+    {
+      "name": "Houston",
+      "fips": "48225",
+      "total_registered": 13691,
+      "by_party": null
+    },
+    {
+      "name": "Howard",
+      "fips": "48227",
+      "total_registered": 16618,
+      "by_party": null
+    },
+    {
+      "name": "Hudspeth",
+      "fips": "48229",
+      "total_registered": 2121,
+      "by_party": null
+    },
+    {
+      "name": "Hunt",
+      "fips": "48231",
+      "total_registered": 74838,
+      "by_party": null
+    },
+    {
+      "name": "Hutchinson",
+      "fips": "48233",
+      "total_registered": 13169,
+      "by_party": null
+    },
+    {
+      "name": "Irion",
+      "fips": "48235",
+      "total_registered": 1205,
+      "by_party": null
+    },
+    {
+      "name": "Jack",
+      "fips": "48237",
+      "total_registered": 5811,
+      "by_party": null
+    },
+    {
+      "name": "Jackson",
+      "fips": "48239",
+      "total_registered": 9914,
+      "by_party": null
+    },
+    {
+      "name": "Jasper",
+      "fips": "48241",
+      "total_registered": 24411,
+      "by_party": null
+    },
+    {
+      "name": "Jeff Davis",
+      "fips": "48243",
+      "total_registered": 1546,
+      "by_party": null
+    },
+    {
+      "name": "Jefferson",
+      "fips": "48245",
+      "total_registered": 146331,
+      "by_party": null
+    },
+    {
+      "name": "Jim Hogg",
+      "fips": "48247",
+      "total_registered": 3410,
+      "by_party": null
+    },
+    {
+      "name": "Jim Wells",
+      "fips": "48249",
+      "total_registered": 25864,
+      "by_party": null
+    },
+    {
+      "name": "Johnson",
+      "fips": "48251",
+      "total_registered": 132109,
+      "by_party": null
+    },
+    {
+      "name": "Jones",
+      "fips": "48253",
+      "total_registered": 10967,
+      "by_party": null
+    },
+    {
+      "name": "Karnes",
+      "fips": "48255",
+      "total_registered": 8210,
+      "by_party": null
+    },
+    {
+      "name": "Kaufman",
+      "fips": "48257",
+      "total_registered": 113504,
+      "by_party": null
+    },
+    {
+      "name": "Kendall",
+      "fips": "48259",
+      "total_registered": 39850,
+      "by_party": null
+    },
+    {
+      "name": "Kenedy",
+      "fips": "48261",
+      "total_registered": 268,
+      "by_party": null
+    },
+    {
+      "name": "Kent",
+      "fips": "48263",
+      "total_registered": 601,
+      "by_party": null
+    },
+    {
+      "name": "Kerr",
+      "fips": "48265",
+      "total_registered": 39293,
+      "by_party": null
+    },
+    {
+      "name": "Kimble",
+      "fips": "48267",
+      "total_registered": 3312,
+      "by_party": null
+    },
+    {
+      "name": "King",
+      "fips": "48269",
+      "total_registered": 180,
+      "by_party": null
+    },
+    {
+      "name": "Kinney",
+      "fips": "48271",
+      "total_registered": 2197,
+      "by_party": null
+    },
+    {
+      "name": "Kleberg",
+      "fips": "48273",
+      "total_registered": 17784,
+      "by_party": null
+    },
+    {
+      "name": "Knox",
+      "fips": "48275",
+      "total_registered": 2244,
+      "by_party": null
+    },
+    {
+      "name": "Lamar",
+      "fips": "48277",
+      "total_registered": 33012,
+      "by_party": null
+    },
+    {
+      "name": "Lamb",
+      "fips": "48279",
+      "total_registered": 7676,
+      "by_party": null
+    },
+    {
+      "name": "Lampasas",
+      "fips": "48281",
+      "total_registered": 17188,
+      "by_party": null
+    },
+    {
+      "name": "La Salle",
+      "fips": "48283",
+      "total_registered": 4044,
+      "by_party": null
+    },
+    {
+      "name": "Lavaca",
+      "fips": "48285",
+      "total_registered": 14399,
+      "by_party": null
+    },
+    {
+      "name": "Lee",
+      "fips": "48287",
+      "total_registered": 12068,
+      "by_party": null
+    },
+    {
+      "name": "Leon",
+      "fips": "48289",
+      "total_registered": 12551,
+      "by_party": null
+    },
+    {
+      "name": "Liberty",
+      "fips": "48291",
+      "total_registered": 57715,
+      "by_party": null
+    },
+    {
+      "name": "Limestone",
+      "fips": "48293",
+      "total_registered": 14376,
+      "by_party": null
+    },
+    {
+      "name": "Lipscomb",
+      "fips": "48295",
+      "total_registered": 1871,
+      "by_party": null
+    },
+    {
+      "name": "Live Oak",
+      "fips": "48297",
+      "total_registered": 7663,
+      "by_party": null
+    },
+    {
+      "name": "Llano",
+      "fips": "48299",
+      "total_registered": 18267,
+      "by_party": null
+    },
+    {
+      "name": "Loving",
+      "fips": "48301",
+      "total_registered": 149,
+      "by_party": null
+    },
+    {
+      "name": "Lubbock",
+      "fips": "48303",
+      "total_registered": 199184,
+      "by_party": null
+    },
+    {
+      "name": "Lynn",
+      "fips": "48305",
+      "total_registered": 4444,
+      "by_party": null
+    },
+    {
+      "name": "Madison",
+      "fips": "48313",
+      "total_registered": 8436,
+      "by_party": null
+    },
+    {
+      "name": "Marion",
+      "fips": "48315",
+      "total_registered": 7759,
+      "by_party": null
+    },
+    {
+      "name": "Martin",
+      "fips": "48317",
+      "total_registered": 3572,
+      "by_party": null
+    },
+    {
+      "name": "Mason",
+      "fips": "48319",
+      "total_registered": 3266,
+      "by_party": null
+    },
+    {
+      "name": "Matagorda",
+      "fips": "48321",
+      "total_registered": 22085,
+      "by_party": null
+    },
+    {
+      "name": "Maverick",
+      "fips": "48323",
+      "total_registered": 36539,
+      "by_party": null
+    },
+    {
+      "name": "McCulloch",
+      "fips": "48307",
+      "total_registered": 5346,
+      "by_party": null
+    },
+    {
+      "name": "McLennan",
+      "fips": "48309",
+      "total_registered": 158055,
+      "by_party": null
+    },
+    {
+      "name": "McMullen",
+      "fips": "48311",
+      "total_registered": 657,
+      "by_party": null
+    },
+    {
+      "name": "Medina",
+      "fips": "48325",
+      "total_registered": 39520,
+      "by_party": null
+    },
+    {
+      "name": "Menard",
+      "fips": "48327",
+      "total_registered": 1473,
+      "by_party": null
+    },
+    {
+      "name": "Midland",
+      "fips": "48329",
+      "total_registered": 97651,
+      "by_party": null
+    },
+    {
+      "name": "Milam",
+      "fips": "48331",
+      "total_registered": 17179,
+      "by_party": null
+    },
+    {
+      "name": "Mills",
+      "fips": "48333",
+      "total_registered": 3596,
+      "by_party": null
+    },
+    {
+      "name": "Mitchell",
+      "fips": "48335",
+      "total_registered": 4457,
+      "by_party": null
+    },
+    {
+      "name": "Montague",
+      "fips": "48337",
+      "total_registered": 15522,
+      "by_party": null
+    },
+    {
+      "name": "Montgomery",
+      "fips": "48339",
+      "total_registered": 469174,
+      "by_party": null
+    },
+    {
+      "name": "Moore",
+      "fips": "48341",
+      "total_registered": 10080,
+      "by_party": null
+    },
+    {
+      "name": "Morris",
+      "fips": "48343",
+      "total_registered": 8731,
+      "by_party": null
+    },
+    {
+      "name": "Motley",
+      "fips": "48345",
+      "total_registered": 838,
+      "by_party": null
+    },
+    {
+      "name": "Nacogdoches",
+      "fips": "48347",
+      "total_registered": 39731,
+      "by_party": null
+    },
+    {
+      "name": "Navarro",
+      "fips": "48349",
+      "total_registered": 33638,
+      "by_party": null
+    },
+    {
+      "name": "Newton",
+      "fips": "48351",
+      "total_registered": 9447,
+      "by_party": null
+    },
+    {
+      "name": "Nolan",
+      "fips": "48353",
+      "total_registered": 8746,
+      "by_party": null
+    },
+    {
+      "name": "Nueces",
+      "fips": "48355",
+      "total_registered": 216123,
+      "by_party": null
+    },
+    {
+      "name": "Ochiltree",
+      "fips": "48357",
+      "total_registered": 5129,
+      "by_party": null
+    },
+    {
+      "name": "Oldham",
+      "fips": "48359",
+      "total_registered": 1370,
+      "by_party": null
+    },
+    {
+      "name": "Orange",
+      "fips": "48361",
+      "total_registered": 56206,
+      "by_party": null
+    },
+    {
+      "name": "Palo Pinto",
+      "fips": "48363",
+      "total_registered": 20521,
+      "by_party": null
+    },
+    {
+      "name": "Panola",
+      "fips": "48365",
+      "total_registered": 17755,
+      "by_party": null
+    },
+    {
+      "name": "Parker",
+      "fips": "48367",
+      "total_registered": 129537,
+      "by_party": null
+    },
+    {
+      "name": "Parmer",
+      "fips": "48369",
+      "total_registered": 4523,
+      "by_party": null
+    },
+    {
+      "name": "Pecos",
+      "fips": "48371",
+      "total_registered": 8319,
+      "by_party": null
+    },
+    {
+      "name": "Polk",
+      "fips": "48373",
+      "total_registered": 43352,
+      "by_party": null
+    },
+    {
+      "name": "Potter",
+      "fips": "48375",
+      "total_registered": 57952,
+      "by_party": null
+    },
+    {
+      "name": "Presidio",
+      "fips": "48377",
+      "total_registered": 4395,
+      "by_party": null
+    },
+    {
+      "name": "Rains",
+      "fips": "48379",
+      "total_registered": 9549,
+      "by_party": null
+    },
+    {
+      "name": "Randall",
+      "fips": "48381",
+      "total_registered": 100698,
+      "by_party": null
+    },
+    {
+      "name": "Reagan",
+      "fips": "48383",
+      "total_registered": 1792,
+      "by_party": null
+    },
+    {
+      "name": "Real",
+      "fips": "48385",
+      "total_registered": 2670,
+      "by_party": null
+    },
+    {
+      "name": "Red River",
+      "fips": "48387",
+      "total_registered": 8547,
+      "by_party": null
+    },
+    {
+      "name": "Reeves",
+      "fips": "48389",
+      "total_registered": 7880,
+      "by_party": null
+    },
+    {
+      "name": "Refugio",
+      "fips": "48391",
+      "total_registered": 4895,
+      "by_party": null
+    },
+    {
+      "name": "Roberts",
+      "fips": "48393",
+      "total_registered": 718,
+      "by_party": null
+    },
+    {
+      "name": "Robertson",
+      "fips": "48395",
+      "total_registered": 12589,
+      "by_party": null
+    },
+    {
+      "name": "Rockwall",
+      "fips": "48397",
+      "total_registered": 90726,
+      "by_party": null
+    },
+    {
+      "name": "Runnels",
+      "fips": "48399",
+      "total_registered": 6748,
+      "by_party": null
+    },
+    {
+      "name": "Rusk",
+      "fips": "48401",
+      "total_registered": 34313,
+      "by_party": null
+    },
+    {
+      "name": "Sabine",
+      "fips": "48403",
+      "total_registered": 8332,
+      "by_party": null
+    },
+    {
+      "name": "San Augustine",
+      "fips": "48405",
+      "total_registered": 5988,
+      "by_party": null
+    },
+    {
+      "name": "San Jacinto",
+      "fips": "48407",
+      "total_registered": 20745,
+      "by_party": null
+    },
+    {
+      "name": "San Patricio",
+      "fips": "48409",
+      "total_registered": 45066,
+      "by_party": null
+    },
+    {
+      "name": "San Saba",
+      "fips": "48411",
+      "total_registered": 3758,
+      "by_party": null
+    },
+    {
+      "name": "Schleicher",
+      "fips": "48413",
+      "total_registered": 1749,
+      "by_party": null
+    },
+    {
+      "name": "Scurry",
+      "fips": "48415",
+      "total_registered": 9226,
+      "by_party": null
+    },
+    {
+      "name": "Shackelford",
+      "fips": "48417",
+      "total_registered": 2459,
+      "by_party": null
+    },
+    {
+      "name": "Shelby",
+      "fips": "48419",
+      "total_registered": 16329,
+      "by_party": null
+    },
+    {
+      "name": "Sherman",
+      "fips": "48421",
+      "total_registered": 1333,
+      "by_party": null
+    },
+    {
+      "name": "Smith",
+      "fips": "48423",
+      "total_registered": 160066,
+      "by_party": null
+    },
+    {
+      "name": "Somervell",
+      "fips": "48425",
+      "total_registered": 7561,
+      "by_party": null
+    },
+    {
+      "name": "Starr",
+      "fips": "48427",
+      "total_registered": 36051,
+      "by_party": null
+    },
+    {
+      "name": "Stephens",
+      "fips": "48429",
+      "total_registered": 5834,
+      "by_party": null
+    },
+    {
+      "name": "Sterling",
+      "fips": "48431",
+      "total_registered": 903,
+      "by_party": null
+    },
+    {
+      "name": "Stonewall",
+      "fips": "48433",
+      "total_registered": 978,
+      "by_party": null
+    },
+    {
+      "name": "Sutton",
+      "fips": "48435",
+      "total_registered": 2282,
+      "by_party": null
+    },
+    {
+      "name": "Swisher",
+      "fips": "48437",
+      "total_registered": 3834,
+      "by_party": null
+    },
+    {
+      "name": "Tarrant",
+      "fips": "48439",
+      "total_registered": 1306427,
+      "by_party": null
+    },
+    {
+      "name": "Taylor",
+      "fips": "48441",
+      "total_registered": 85075,
+      "by_party": null
+    },
+    {
+      "name": "Terrell",
+      "fips": "48443",
+      "total_registered": 614,
+      "by_party": null
+    },
+    {
+      "name": "Terry",
+      "fips": "48445",
+      "total_registered": 6420,
+      "by_party": null
+    },
+    {
+      "name": "Throckmorton",
+      "fips": "48447",
+      "total_registered": 1181,
+      "by_party": null
+    },
+    {
+      "name": "Titus",
+      "fips": "48449",
+      "total_registered": 17979,
+      "by_party": null
+    },
+    {
+      "name": "Tom Green",
+      "fips": "48451",
+      "total_registered": 72329,
+      "by_party": null
+    },
+    {
+      "name": "Travis",
+      "fips": "48453",
+      "total_registered": 920645,
+      "by_party": null
+    },
+    {
+      "name": "Trinity",
+      "fips": "48455",
+      "total_registered": 12255,
+      "by_party": null
+    },
+    {
+      "name": "Tyler",
+      "fips": "48457",
+      "total_registered": 14814,
+      "by_party": null
+    },
+    {
+      "name": "Upshur",
+      "fips": "48459",
+      "total_registered": 30686,
+      "by_party": null
+    },
+    {
+      "name": "Upton",
+      "fips": "48461",
+      "total_registered": 2079,
+      "by_party": null
+    },
+    {
+      "name": "Uvalde",
+      "fips": "48463",
+      "total_registered": 17599,
+      "by_party": null
+    },
+    {
+      "name": "Val Verde",
+      "fips": "48465",
+      "total_registered": 30490,
+      "by_party": null
+    },
+    {
+      "name": "Van Zandt",
+      "fips": "48467",
+      "total_registered": 42052,
+      "by_party": null
+    },
+    {
+      "name": "Victoria",
+      "fips": "48469",
+      "total_registered": 57085,
+      "by_party": null
+    },
+    {
+      "name": "Walker",
+      "fips": "48471",
+      "total_registered": 38969,
+      "by_party": null
+    },
+    {
+      "name": "Waller",
+      "fips": "48473",
+      "total_registered": 44615,
+      "by_party": null
+    },
+    {
+      "name": "Ward",
+      "fips": "48475",
+      "total_registered": 6946,
+      "by_party": null
+    },
+    {
+      "name": "Washington",
+      "fips": "48477",
+      "total_registered": 25667,
+      "by_party": null
+    },
+    {
+      "name": "Webb",
+      "fips": "48479",
+      "total_registered": 146897,
+      "by_party": null
+    },
+    {
+      "name": "Wharton",
+      "fips": "48481",
+      "total_registered": 26568,
+      "by_party": null
+    },
+    {
+      "name": "Wheeler",
+      "fips": "48483",
+      "total_registered": 3348,
+      "by_party": null
+    },
+    {
+      "name": "Wichita",
+      "fips": "48485",
+      "total_registered": 77505,
+      "by_party": null
+    },
+    {
+      "name": "Wilbarger",
+      "fips": "48487",
+      "total_registered": 8192,
+      "by_party": null
+    },
+    {
+      "name": "Willacy",
+      "fips": "48489",
+      "total_registered": 11567,
+      "by_party": null
+    },
+    {
+      "name": "Williamson",
+      "fips": "48491",
+      "total_registered": 455181,
+      "by_party": null
+    },
+    {
+      "name": "Wilson",
+      "fips": "48493",
+      "total_registered": 39755,
+      "by_party": null
+    },
+    {
+      "name": "Winkler",
+      "fips": "48495",
+      "total_registered": 4130,
+      "by_party": null
+    },
+    {
+      "name": "Wise",
+      "fips": "48497",
+      "total_registered": 57826,
+      "by_party": null
+    },
+    {
+      "name": "Wood",
+      "fips": "48499",
+      "total_registered": 35376,
+      "by_party": null
+    },
+    {
+      "name": "Yoakum",
+      "fips": "48501",
+      "total_registered": 4323,
+      "by_party": null
+    },
+    {
+      "name": "Young",
+      "fips": "48503",
+      "total_registered": 12672,
+      "by_party": null
+    },
+    {
+      "name": "Zapata",
+      "fips": "48505",
+      "total_registered": 8119,
+      "by_party": null
+    },
+    {
+      "name": "Zavala",
+      "fips": "48507",
+      "total_registered": 7513,
+      "by_party": null
+    }
+  ],
+  "as_of_notes": "Figures tie to the March 3, 2026 Primary Election. The voter registration deadline for the March 3, 2026 primary was February 2, 2026; the Secretary of State publicly announced the 18,657,918 statewide total on February 17, 2026 (start of early voting). The SOS report is titled 'March 2026 Voter Registration Figures' and reflects registrations effective for that primary.",
+  "data_quality": "high - all 254 counties present; county totals sum exactly to the official statewide total of 18,657,918",
+  "notes": "Texas does not register voters by political party, so registers_by_party=false and all by_party fields are null. County FIPS codes are the standard US Census/ANSI codes. County names rendered in Census title-case (e.g., DeWitt, La Salle, McLennan). Source: Texas Secretary of State, March 2026 Voter Registration Figures."
+}

@@ -1,0 +1,254 @@
+{
+  "state": "New Jersey",
+  "state_abbr": "NJ",
+  "state_fips": "34",
+  "as_of_date": "2026-06-01",
+  "source_name": "New Jersey Department of State, Division of Elections - Statewide Voter Registration Summary (Voter Registration by County)",
+  "source_url": "https://www.nj.gov/state/elections/assets/pdf/svrs-reports/2026/2026-06-voter-registration-by-county.pdf",
+  "registers_by_party": true,
+  "statewide_total_registered": 6688363,
+  "statewide_by_party": {
+    "Democratic": 2543355,
+    "Republican": 1678469,
+    "Unaffiliated": 2392538,
+    "Other": 74001
+  },
+  "county_unit_label": "county",
+  "county_level_available": true,
+  "counties": [
+    {
+      "name": "Atlantic",
+      "fips": "34001",
+      "total_registered": 205628,
+      "by_party": {
+        "Democratic": 69345,
+        "Republican": 61621,
+        "Unaffiliated": 72073,
+        "Other": 2589
+      }
+    },
+    {
+      "name": "Bergen",
+      "fips": "34003",
+      "total_registered": 681746,
+      "by_party": {
+        "Democratic": 252735,
+        "Republican": 163436,
+        "Unaffiliated": 259396,
+        "Other": 6179
+      }
+    },
+    {
+      "name": "Burlington",
+      "fips": "34005",
+      "total_registered": 373487,
+      "by_party": {
+        "Democratic": 144458,
+        "Republican": 98985,
+        "Unaffiliated": 125997,
+        "Other": 4047
+      }
+    },
+    {
+      "name": "Camden",
+      "fips": "34007",
+      "total_registered": 393043,
+      "by_party": {
+        "Democratic": 182783,
+        "Republican": 71582,
+        "Unaffiliated": 133683,
+        "Other": 4995
+      }
+    },
+    {
+      "name": "Cape May",
+      "fips": "34009",
+      "total_registered": 76928,
+      "by_party": {
+        "Democratic": 18671,
+        "Republican": 34122,
+        "Unaffiliated": 23278,
+        "Other": 857
+      }
+    },
+    {
+      "name": "Cumberland",
+      "fips": "34011",
+      "total_registered": 97350,
+      "by_party": {
+        "Democratic": 31670,
+        "Republican": 25639,
+        "Unaffiliated": 38400,
+        "Other": 1641
+      }
+    },
+    {
+      "name": "Essex",
+      "fips": "34013",
+      "total_registered": 573602,
+      "by_party": {
+        "Democratic": 297225,
+        "Republican": 65875,
+        "Unaffiliated": 205262,
+        "Other": 5240
+      }
+    },
+    {
+      "name": "Gloucester",
+      "fips": "34015",
+      "total_registered": 231858,
+      "by_party": {
+        "Democratic": 85817,
+        "Republican": 67716,
+        "Unaffiliated": 75546,
+        "Other": 2779
+      }
+    },
+    {
+      "name": "Hudson",
+      "fips": "34017",
+      "total_registered": 434278,
+      "by_party": {
+        "Democratic": 225141,
+        "Republican": 54998,
+        "Unaffiliated": 148734,
+        "Other": 5405
+      }
+    },
+    {
+      "name": "Hunterdon",
+      "fips": "34019",
+      "total_registered": 107877,
+      "by_party": {
+        "Democratic": 31973,
+        "Republican": 44238,
+        "Unaffiliated": 30797,
+        "Other": 869
+      }
+    },
+    {
+      "name": "Mercer",
+      "fips": "34021",
+      "total_registered": 271475,
+      "by_party": {
+        "Democratic": 120589,
+        "Republican": 43769,
+        "Unaffiliated": 103692,
+        "Other": 3425
+      }
+    },
+    {
+      "name": "Middlesex",
+      "fips": "34023",
+      "total_registered": 592094,
+      "by_party": {
+        "Democratic": 240617,
+        "Republican": 112241,
+        "Unaffiliated": 232597,
+        "Other": 6639
+      }
+    },
+    {
+      "name": "Monmouth",
+      "fips": "34025",
+      "total_registered": 508653,
+      "by_party": {
+        "Democratic": 142288,
+        "Republican": 169401,
+        "Unaffiliated": 191808,
+        "Other": 5156
+      }
+    },
+    {
+      "name": "Morris",
+      "fips": "34027",
+      "total_registered": 393141,
+      "by_party": {
+        "Democratic": 121178,
+        "Republican": 137944,
+        "Unaffiliated": 130434,
+        "Other": 3585
+      }
+    },
+    {
+      "name": "Ocean",
+      "fips": "34029",
+      "total_registered": 482549,
+      "by_party": {
+        "Democratic": 103197,
+        "Republican": 202316,
+        "Unaffiliated": 171658,
+        "Other": 5378
+      }
+    },
+    {
+      "name": "Passaic",
+      "fips": "34031",
+      "total_registered": 343350,
+      "by_party": {
+        "Democratic": 135448,
+        "Republican": 81507,
+        "Unaffiliated": 121836,
+        "Other": 4559
+      }
+    },
+    {
+      "name": "Salem",
+      "fips": "34033",
+      "total_registered": 50399,
+      "by_party": {
+        "Democratic": 14495,
+        "Republican": 16672,
+        "Unaffiliated": 18459,
+        "Other": 773
+      }
+    },
+    {
+      "name": "Somerset",
+      "fips": "34035",
+      "total_registered": 261705,
+      "by_party": {
+        "Democratic": 92873,
+        "Republican": 66055,
+        "Unaffiliated": 100282,
+        "Other": 2495
+      }
+    },
+    {
+      "name": "Sussex",
+      "fips": "34037",
+      "total_registered": 121965,
+      "by_party": {
+        "Democratic": 27598,
+        "Republican": 52523,
+        "Unaffiliated": 40133,
+        "Other": 1711
+      }
+    },
+    {
+      "name": "Union",
+      "fips": "34039",
+      "total_registered": 395597,
+      "by_party": {
+        "Democratic": 180148,
+        "Republican": 69127,
+        "Unaffiliated": 142206,
+        "Other": 4116
+      }
+    },
+    {
+      "name": "Warren",
+      "fips": "34041",
+      "total_registered": 91638,
+      "by_party": {
+        "Democratic": 25106,
+        "Republican": 38702,
+        "Unaffiliated": 26267,
+        "Other": 1563
+      }
+    }
+  ],
+  "as_of_notes": "Report header reads '6/1/26 Statewide Voter Registration Summary'. Figures reflect active registered voters as of June 1, 2026.",
+  "data_quality": "high - official NJ Division of Elections monthly PDF; all 21 county rows internally consistent (party columns sum to county totals) and all column totals match the printed statewide TOTAL row exactly (grand total 6,688,363).",
+  "notes": "'Other' aggregates all minor/third parties reported in the source: Conservative (CNV)=13204, Constitution/Constitutional (CON)=11275, Green (GRE)=11448, Libertarian (LIB)=24132, Natural Law (NAT)=5201, Reform Party (RFP)=1341, Socialist (SSP)=7400; total Other=74001. Source column header abbreviations: UNA=Unaffiliated, DEM=Democratic, REP=Republican. 'Unaffiliated' is NJ's term for voters with no party affiliation. All values are integers exactly as printed in the source PDF."
+}

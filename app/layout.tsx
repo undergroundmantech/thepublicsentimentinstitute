@@ -3,7 +3,8 @@ import "./globals.css";
 import type { Metadata } from "next";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
-import { Quantico, Geist_Mono, JetBrains_Mono } from "next/font/google";
+import { SITE_V2 } from "./lib/flags";
+import { Quantico, Geist_Mono, Fraunces, JetBrains_Mono } from "next/font/google";
 
 /* -----------------------------
    FONTS
@@ -19,6 +20,13 @@ const display = Quantico({
 const mono = Geist_Mono({
   subsets: ["latin"],
   variable: "--font-body",
+  display: "swap",
+});
+
+// Editorial serif — used for the redesigned polling section (data-journalism feel).
+const serif = Fraunces({
+  subsets: ["latin"],
+  variable: "--font-serif",
   display: "swap",
 });
 
@@ -42,15 +50,23 @@ export const metadata: Metadata = {
    ROOT LAYOUT
 ------------------------------ */
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  // First-visit announcement for the redesign — v2 only. Inline env check +
+  // dynamic import keep it out of the v1 client bundle (see app/lib/flags.ts).
+  let intro: React.ReactNode = null;
+  if (process.env.NEXT_PUBLIC_SITE_V2 === "on") {
+    const { default: SiteIntro } = await import("./components/SiteIntro");
+    intro = <SiteIntro />;
+  }
   return (
     <html
       lang="en"
-      className={`${display.variable} ${mono.variable} ${numeric.variable}`}
+      data-site={SITE_V2 ? "v2" : "v1"}
+      className={`${display.variable} ${mono.variable} ${serif.variable} ${numeric.variable}`}
       suppressHydrationWarning
     >
       <head>
@@ -58,6 +74,14 @@ export default function RootLayout({
         <script
           dangerouslySetInnerHTML={{
             __html: `(function(){try{var s=localStorage.getItem('psi-theme');var m=window.matchMedia('(prefers-color-scheme: dark)').matches;var t=s||(m?'dark':'light');document.documentElement.setAttribute('data-theme',t);}catch(e){}})();`,
+          }}
+        />
+        {/* Console line for the devtools crowd — guard: head scripts can run twice across hydration */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: SITE_V2
+              ? `if(!window.__tpsiHello){window.__tpsiHello=1;console.log("%c TPSI %c site v2 — you're on the new desk.","background:#c9f24f;color:#050505;font-weight:700;padding:2px 6px","color:#c9f24f;font-weight:600");}`
+              : `if(!window.__tpsiHello){window.__tpsiHello=1;console.log("%c TPSI %c there is a second site compiled out of this build. soon.","background:#c9f24f;color:#050505;font-weight:700;padding:2px 6px","color:#8b8b92;font-weight:600");}`,
           }}
         />
       </head>
@@ -68,6 +92,31 @@ export default function RootLayout({
           "min-h-screen antialiased overflow-x-hidden",
         ].join(" ")}
       >
+        {/* The flag, in the DOM on purpose — inspect element is a feature. */}
+        <div
+          aria-hidden="true"
+          style={{ display: "none" }}
+          dangerouslySetInnerHTML={{
+            __html: SITE_V2
+              ? "<!-- TPSI · NEXT_PUBLIC_SITE_V2=on — you're on the new desk. -->"
+              : [
+                  "<!--",
+                  "",
+                  "  ▚▚▚ TPSI",
+                  "",
+                  "  You found the flag.",
+                  "",
+                  "  A second site is compiled out of this build — the whole",
+                  "  redesign ships dark behind NEXT_PUBLIC_SITE_V2. New home,",
+                  "  new polling averages, a live election desk, the forecast.",
+                  "",
+                  "  It exists. Soon.",
+                  "",
+                  "-->",
+                ].join("\n"),
+          }}
+        />
+
         {/* --------------------------------
            Ambient tri-color glow background
         -------------------------------- */}
@@ -105,6 +154,9 @@ export default function RootLayout({
             }}
           />
         </div>
+
+        {/* First-visit announcement for the redesign — v2 only */}
+        {intro}
 
         {/* --------------------------------
            PAGE STRUCTURE

@@ -1,0 +1,138 @@
+{
+"state": "Vermont",
+"state_abbr": "VT",
+"state_fips": "50",
+"as_of_date": "2025-04-01",
+"source_name": "Vermont Secretary of State \u2014 statewide checklist total; EAC EAVS 2024 (county breakdown, towns aggregated)",
+"source_url": "https://sos.vermont.gov/elections/voters/registration/vermont-voter-registration-data-2008-present",
+"registers_by_party": false,
+"statewide_total_registered": 499383,
+"statewide_by_party": null,
+"county_unit_label": "county",
+"county_level_available": true,
+"counties": [
+{
+"name": "Addison",
+"fips": "50001",
+"total_registered": 34662,
+"by_party": null,
+"towns": 23,
+"towns_missing_data": 0
+},
+{
+"name": "Bennington",
+"fips": "50003",
+"total_registered": 34069,
+"by_party": null,
+"towns": 16,
+"towns_missing_data": 0
+},
+{
+"name": "Caledonia",
+"fips": "50005",
+"total_registered": 24158,
+"by_party": null,
+"towns": 17,
+"towns_missing_data": 0
+},
+{
+"name": "Chittenden",
+"fips": "50007",
+"total_registered": 113251,
+"by_party": null,
+"towns": 18,
+"towns_missing_data": 0
+},
+{
+"name": "Essex",
+"fips": "50009",
+"total_registered": 5104,
+"by_party": null,
+"towns": 13,
+"towns_missing_data": 0
+},
+{
+"name": "Franklin",
+"fips": "50011",
+"total_registered": 47926,
+"by_party": null,
+"towns": 15,
+"towns_missing_data": 0
+},
+{
+"name": "Grand Isle",
+"fips": "50013",
+"total_registered": 6326,
+"by_party": null,
+"towns": 5,
+"towns_missing_data": 0
+},
+{
+"name": "Lamoille",
+"fips": "50015",
+"total_registered": 20036,
+"by_party": null,
+"towns": 10,
+"towns_missing_data": 0
+},
+{
+"name": "Orange",
+"fips": "50017",
+"total_registered": 23538,
+"by_party": null,
+"towns": 17,
+"towns_missing_data": 0
+},
+{
+"name": "Orleans",
+"fips": "50019",
+"total_registered": 21300,
+"by_party": null,
+"towns": 19,
+"towns_missing_data": 0
+},
+{
+"name": "Rutland",
+"fips": "50021",
+"total_registered": 45856,
+"by_party": null,
+"towns": 28,
+"towns_missing_data": 0
+},
+{
+"name": "Washington",
+"fips": "50023",
+"total_registered": 47277,
+"by_party": null,
+"towns": 20,
+"towns_missing_data": 0
+},
+{
+"name": "Windham",
+"fips": "50025",
+"total_registered": 36002,
+"by_party": null,
+"towns": 22,
+"towns_missing_data": 0
+},
+{
+"name": "Windsor",
+"fips": "50027",
+"total_registered": 41481,
+"by_party": null,
+"towns": 24,
+"towns_missing_data": 0
+}
+],
+"county_breakdown_source": "EAC EAVS 2024 Public Release v2.0, A1a, town-level aggregated to the 14 VT counties via FIPS, as of 2024-11-05",
+"county_breakdown_as_of": "2024-11-05",
+"county_breakdown_total": 500986,
+"sos_statewide_crossref": {
+"value": 499383,
+"as_of": "2025-04-01",
+"note": "Latest official VT SOS monthly statewide checklist total"
+},
+"as_of_notes": "Vermont publishes NO official sub-state registration breakdown; SOS gives only a statewide monthly total (499,383 as of 2025-04-01, the latest verifiable). The 14-county breakdown is derived by aggregating EAC EAVS 2024 town-level registration (A1a, as of Nov 5, 2024) to counties; EAVS town-aggregated total = 500986. Dates differ between headline and county breakdown.",
+"data_quality": "partial",
+"notes": "Vermont does NOT register by party. County figures are EAVS 2024 (Nov 2024), older than the 2025 statewide headline. Each county object includes town count and towns_missing_data (towns where EAVS A1a was not reported)."
+}

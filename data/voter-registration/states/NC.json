@@ -1,0 +1,1325 @@
+{
+  "state": "North Carolina",
+  "state_abbr": "NC",
+  "state_fips": "37",
+  "as_of_date": "2026-06-13",
+  "source_name": "North Carolina State Board of Elections (NCSBE) \u2014 Voter Registration Statistics",
+  "source_url": "https://vt.ncsbe.gov/RegStat/Results?date=2026-06-13",
+  "registers_by_party": true,
+  "statewide_total_registered": 7784873,
+  "statewide_by_party": {
+    "Democratic": 2314915,
+    "Republican": 2325667,
+    "Unaffiliated": 3093240,
+    "Libertarian": 46404,
+    "Green": 4647,
+    "NoLabels": 0
+  },
+  "county_unit_label": "county",
+  "county_level_available": true,
+  "counties": [
+    {
+      "name": "Alamance",
+      "fips": "37001",
+      "total_registered": 120424,
+      "by_party": {
+        "Democratic": 36490,
+        "Republican": 38225,
+        "Unaffiliated": 45043,
+        "Libertarian": 619,
+        "Green": 47,
+        "NoLabels": 0
+      }
+    },
+    {
+      "name": "Alexander",
+      "fips": "37003",
+      "total_registered": 25755,
+      "by_party": {
+        "Democratic": 3594,
+        "Republican": 12719,
+        "Unaffiliated": 9324,
+        "Libertarian": 113,
+        "Green": 5,
+        "NoLabels": 0
+      }
+    },
+    {
+      "name": "Alleghany",
+      "fips": "37005",
+      "total_registered": 8217,
+      "by_party": {
+        "Democratic": 1487,
+        "Republican": 3626,
+        "Unaffiliated": 3070,
+        "Libertarian": 32,
+        "Green": 2,
+        "NoLabels": 0
+      }
+    },
+    {
+      "name": "Anson",
+      "fips": "37007",
+      "total_registered": 15994,
+      "by_party": {
+        "Democratic": 7636,
+        "Republican": 3424,
+        "Unaffiliated": 4870,
+        "Libertarian": 58,
+        "Green": 6,
+        "NoLabels": 0
+      }
+    },
+    {
+      "name": "Ashe",
+      "fips": "37009",
+      "total_registered": 20745,
+      "by_party": {
+        "Democratic": 3313,
+        "Republican": 9627,
+        "Unaffiliated": 7700,
+        "Libertarian": 100,
+        "Green": 5,
+        "NoLabels": 0
+      }
+    },
+    {
+      "name": "Avery",
+      "fips": "37011",
+      "total_registered": 12471,
+      "by_party": {
+        "Democratic": 1119,
+        "Republican": 7109,
+        "Unaffiliated": 4172,
+        "Libertarian": 66,
+        "Green": 5,
+        "NoLabels": 0
+      }
+    },
+    {
+      "name": "Beaufort",
+      "fips": "37013",
+      "total_registered": 33898,
+      "by_party": {
+        "Democratic": 8796,
+        "Republican": 13322,
+        "Unaffiliated": 11644,
+        "Libertarian": 123,
+        "Green": 13,
+        "NoLabels": 0
+      }
+    },
+    {
+      "name": "Bertie",
+      "fips": "37015",
+      "total_registered": 12711,
+      "by_party": {
+        "Democratic": 6964,
+        "Republican": 1801,
+        "Unaffiliated": 3903,
+        "Libertarian": 41,
+        "Green": 2,
+        "NoLabels": 0
+      }
+    },
+    {
+      "name": "Bladen",
+      "fips": "37017",
+      "total_registered": 22932,
+      "by_party": {
+        "Democratic": 7977,
+        "Republican": 6028,
+        "Unaffiliated": 8846,
+        "Libertarian": 70,
+        "Green": 11,
+        "NoLabels": 0
+      }
+    },
+    {
+      "name": "Brunswick",
+      "fips": "37019",
+      "total_registered": 147519,
+      "by_party": {
+        "Democratic": 27629,
+        "Republican": 60353,
+        "Unaffiliated": 58751,
+        "Libertarian": 732,
+        "Green": 54,
+        "NoLabels": 0
+      }
+    },
+    {
+      "name": "Buncombe",
+      "fips": "37021",
+      "total_registered": 217020,
+      "by_party": {
+        "Democratic": 71347,
+        "Republican": 44873,
+        "Unaffiliated": 99000,
+        "Libertarian": 1537,
+        "Green": 263,
+        "NoLabels": 0
+      }
+    },
+    {
+      "name": "Burke",
+      "fips": "37023",
+      "total_registered": 60543,
+      "by_party": {
+        "Democratic": 11197,
+        "Republican": 25198,
+        "Unaffiliated": 23760,
+        "Libertarian": 360,
+        "Green": 28,
+        "NoLabels": 0
+      }
+    },
+    {
+      "name": "Cabarrus",
+      "fips": "37025",
+      "total_registered": 162429,
+      "by_party": {
+        "Democratic": 43609,
+        "Republican": 52075,
+        "Unaffiliated": 65548,
+        "Libertarian": 1066,
+        "Green": 131,
+        "NoLabels": 0
+      }
+    },
+    {
+      "name": "Caldwell",
+      "fips": "37027",
+      "total_registered": 56022,
+      "by_party": {
+        "Democratic": 8560,
+        "Republican": 27900,
+        "Unaffiliated": 19201,
+        "Libertarian": 343,
+        "Green": 18,
+        "NoLabels": 0
+      }
+    },
+    {
+      "name": "Camden",
+      "fips": "37029",
+      "total_registered": 8626,
+      "by_party": {
+        "Democratic": 1191,
+        "Republican": 3458,
+        "Unaffiliated": 3905,
+        "Libertarian": 65,
+        "Green": 7,
+        "NoLabels": 0
+      }
+    },
+    {
+      "name": "Carteret",
+      "fips": "37031",
+      "total_registered": 57643,
+      "by_party": {
+        "Democratic": 8268,
+        "Republican": 26825,
+        "Unaffiliated": 22192,
+        "Libertarian": 334,
+        "Green": 24,
+        "NoLabels": 0
+      }
+    },
+    {
+      "name": "Caswell",
+      "fips": "37033",
+      "total_registered": 15632,
+      "by_party": {
+        "Democratic": 5401,
+        "Republican": 4834,
+        "Unaffiliated": 5336,
+        "Libertarian": 58,
+        "Green": 3,
+        "NoLabels": 0
+      }
+    },
+    {
+      "name": "Catawba",
+      "fips": "37035",
+      "total_registered": 118525,
+      "by_party": {
+        "Democratic": 19606,
+        "Republican": 51420,
+        "Unaffiliated": 46772,
+        "Libertarian": 671,
+        "Green": 56,
+        "NoLabels": 0
+      }
+    },
+    {
+      "name": "Chatham",
+      "fips": "37037",
+      "total_registered": 64243,
+      "by_party": {
+        "Democratic": 20949,
+        "Republican": 14983,
+        "Unaffiliated": 27981,
+        "Libertarian": 300,
+        "Green": 30,
+        "NoLabels": 0
+      }
+    },
+    {
+      "name": "Cherokee",
+      "fips": "37039",
+      "total_registered": 24878,
+      "by_party": {
+        "Democratic": 2961,
+        "Republican": 13289,
+        "Unaffiliated": 8467,
+        "Libertarian": 152,
+        "Green": 9,
+        "NoLabels": 0
+      }
+    },
+    {
+      "name": "Chowan",
+      "fips": "37041",
+      "total_registered": 10226,
+      "by_party": {
+        "Democratic": 3126,
+        "Republican": 3283,
+        "Unaffiliated": 3767,
+        "Libertarian": 48,
+        "Green": 2,
+        "NoLabels": 0
+      }
+    },
+    {
+      "name": "Clay",
+      "fips": "37043",
+      "total_registered": 10217,
+      "by_party": {
+        "Democratic": 1267,
+        "Republican": 5145,
+        "Unaffiliated": 3749,
+        "Libertarian": 54,
+        "Green": 2,
+        "NoLabels": 0
+      }
+    },
+    {
+      "name": "Cleveland",
+      "fips": "37045",
+      "total_registered": 69555,
+      "by_party": {
+        "Democratic": 17985,
+        "Republican": 27746,
+        "Unaffiliated": 23407,
+        "Libertarian": 397,
+        "Green": 20,
+        "NoLabels": 0
+      }
+    },
+    {
+      "name": "Columbus",
+      "fips": "37047",
+      "total_registered": 37296,
+      "by_party": {
+        "Democratic": 11616,
+        "Republican": 11929,
+        "Unaffiliated": 13614,
+        "Libertarian": 127,
+        "Green": 10,
+        "NoLabels": 0
+      }
+    },
+    {
+      "name": "Craven",
+      "fips": "37049",
+      "total_registered": 77215,
+      "by_party": {
+        "Democratic": 18512,
+        "Republican": 29056,
+        "Unaffiliated": 29045,
+        "Libertarian": 551,
+        "Green": 51,
+        "NoLabels": 0
+      }
+    },
+    {
+      "name": "Cumberland",
+      "fips": "37051",
+      "total_registered": 223836,
+      "by_party": {
+        "Democratic": 82975,
+        "Republican": 50942,
+        "Unaffiliated": 87970,
+        "Libertarian": 1772,
+        "Green": 177,
+        "NoLabels": 0
+      }
+    },
+    {
+      "name": "Currituck",
+      "fips": "37053",
+      "total_registered": 24740,
+      "by_party": {
+        "Democratic": 3020,
+        "Republican": 10711,
+        "Unaffiliated": 10797,
+        "Libertarian": 205,
+        "Green": 7,
+        "NoLabels": 0
+      }
+    },
+    {
+      "name": "Dare",
+      "fips": "37055",
+      "total_registered": 32765,
+      "by_party": {
+        "Democratic": 6113,
+        "Republican": 11491,
+        "Unaffiliated": 14928,
+        "Libertarian": 215,
+        "Green": 18,
+        "NoLabels": 0
+      }
+    },
+    {
+      "name": "Davidson",
+      "fips": "37057",
+      "total_registered": 122703,
+      "by_party": {
+        "Democratic": 20715,
+        "Republican": 59200,
+        "Unaffiliated": 42074,
+        "Libertarian": 673,
+        "Green": 41,
+        "NoLabels": 0
+      }
+    },
+    {
+      "name": "Davie",
+      "fips": "37059",
+      "total_registered": 33753,
+      "by_party": {
+        "Democratic": 4439,
+        "Republican": 17149,
+        "Unaffiliated": 11993,
+        "Libertarian": 157,
+        "Green": 15,
+        "NoLabels": 0
+      }
+    },
+    {
+      "name": "Duplin",
+      "fips": "37061",
+      "total_registered": 32352,
+      "by_party": {
+        "Democratic": 9601,
+        "Republican": 10704,
+        "Unaffiliated": 11909,
+        "Libertarian": 127,
+        "Green": 11,
+        "NoLabels": 0
+      }
+    },
+    {
+      "name": "Durham",
+      "fips": "37063",
+      "total_registered": 247119,
+      "by_party": {
+        "Democratic": 122564,
+        "Republican": 22531,
+        "Unaffiliated": 100790,
+        "Libertarian": 1014,
+        "Green": 220,
+        "NoLabels": 0
+      }
+    },
+    {
+      "name": "Edgecombe",
+      "fips": "37065",
+      "total_registered": 35885,
+      "by_party": {
+        "Democratic": 18767,
+        "Republican": 6907,
+        "Unaffiliated": 10077,
+        "Libertarian": 117,
+        "Green": 17,
+        "NoLabels": 0
+      }
+    },
+    {
+      "name": "Forsyth",
+      "fips": "37067",
+      "total_registered": 273751,
+      "by_party": {
+        "Democratic": 94634,
+        "Republican": 71178,
+        "Unaffiliated": 106142,
+        "Libertarian": 1600,
+        "Green": 197,
+        "NoLabels": 0
+      }
+    },
+    {
+      "name": "Franklin",
+      "fips": "37069",
+      "total_registered": 56753,
+      "by_party": {
+        "Democratic": 16530,
+        "Republican": 17831,
+        "Unaffiliated": 22000,
+        "Libertarian": 372,
+        "Green": 20,
+        "NoLabels": 0
+      }
+    },
+    {
+      "name": "Gaston",
+      "fips": "37071",
+      "total_registered": 164024,
+      "by_party": {
+        "Democratic": 40280,
+        "Republican": 62758,
+        "Unaffiliated": 59742,
+        "Libertarian": 1167,
+        "Green": 77,
+        "NoLabels": 0
+      }
+    },
+    {
+      "name": "Gates",
+      "fips": "37073",
+      "total_registered": 8272,
+      "by_party": {
+        "Democratic": 2931,
+        "Republican": 2363,
+        "Unaffiliated": 2942,
+        "Libertarian": 33,
+        "Green": 3,
+        "NoLabels": 0
+      }
+    },
+    {
+      "name": "Graham",
+      "fips": "37075",
+      "total_registered": 6253,
+      "by_party": {
+        "Democratic": 902,
+        "Republican": 3271,
+        "Unaffiliated": 2053,
+        "Libertarian": 27,
+        "Green": 0,
+        "NoLabels": 0
+      }
+    },
+    {
+      "name": "Granville",
+      "fips": "37077",
+      "total_registered": 41826,
+      "by_party": {
+        "Democratic": 14684,
+        "Republican": 11722,
+        "Unaffiliated": 15185,
+        "Libertarian": 225,
+        "Green": 10,
+        "NoLabels": 0
+      }
+    },
+    {
+      "name": "Greene",
+      "fips": "37079",
+      "total_registered": 11011,
+      "by_party": {
+        "Democratic": 4254,
+        "Republican": 2746,
+        "Unaffiliated": 3976,
+        "Libertarian": 29,
+        "Green": 6,
+        "NoLabels": 0
+      }
+    },
+    {
+      "name": "Guilford",
+      "fips": "37081",
+      "total_registered": 392700,
+      "by_party": {
+        "Democratic": 152238,
+        "Republican": 88631,
+        "Unaffiliated": 149606,
+        "Libertarian": 1978,
+        "Green": 247,
+        "NoLabels": 0
+      }
+    },
+    {
+      "name": "Halifax",
+      "fips": "37083",
+      "total_registered": 34644,
+      "by_party": {
+        "Democratic": 18264,
+        "Republican": 4848,
+        "Unaffiliated": 11429,
+        "Libertarian": 95,
+        "Green": 8,
+        "NoLabels": 0
+      }
+    },
+    {
+      "name": "Harnett",
+      "fips": "37085",
+      "total_registered": 95744,
+      "by_party": {
+        "Democratic": 24205,
+        "Republican": 34654,
+        "Unaffiliated": 36004,
+        "Libertarian": 802,
+        "Green": 79,
+        "NoLabels": 0
+      }
+    },
+    {
+      "name": "Haywood",
+      "fips": "37087",
+      "total_registered": 48239,
+      "by_party": {
+        "Democratic": 10811,
+        "Republican": 17347,
+        "Unaffiliated": 19738,
+        "Libertarian": 311,
+        "Green": 32,
+        "NoLabels": 0
+      }
+    },
+    {
+      "name": "Henderson",
+      "fips": "37089",
+      "total_registered": 92127,
+      "by_party": {
+        "Democratic": 16945,
+        "Republican": 32537,
+        "Unaffiliated": 41958,
+        "Libertarian": 623,
+        "Green": 64,
+        "NoLabels": 0
+      }
+    },
+    {
+      "name": "Hertford",
+      "fips": "37091",
+      "total_registered": 13646,
+      "by_party": {
+        "Democratic": 7919,
+        "Republican": 1717,
+        "Unaffiliated": 3964,
+        "Libertarian": 41,
+        "Green": 5,
+        "NoLabels": 0
+      }
+    },
+    {
+      "name": "Hoke",
+      "fips": "37093",
+      "total_registered": 36948,
+      "by_party": {
+        "Democratic": 12949,
+        "Republican": 8121,
+        "Unaffiliated": 15543,
+        "Libertarian": 308,
+        "Green": 27,
+        "NoLabels": 0
+      }
+    },
+    {
+      "name": "Hyde",
+      "fips": "37095",
+      "total_registered": 3039,
+      "by_party": {
+        "Democratic": 1138,
+        "Republican": 741,
+        "Unaffiliated": 1147,
+        "Libertarian": 13,
+        "Green": 0,
+        "NoLabels": 0
+      }
+    },
+    {
+      "name": "Iredell",
+      "fips": "37097",
+      "total_registered": 149590,
+      "by_party": {
+        "Democratic": 27551,
+        "Republican": 61634,
+        "Unaffiliated": 59443,
+        "Libertarian": 910,
+        "Green": 52,
+        "NoLabels": 0
+      }
+    },
+    {
+      "name": "Jackson",
+      "fips": "37099",
+      "total_registered": 30754,
+      "by_party": {
+        "Democratic": 7596,
+        "Republican": 8868,
+        "Unaffiliated": 14035,
+        "Libertarian": 227,
+        "Green": 28,
+        "NoLabels": 0
+      }
+    },
+    {
+      "name": "Johnston",
+      "fips": "37101",
+      "total_registered": 170337,
+      "by_party": {
+        "Democratic": 41020,
+        "Republican": 61653,
+        "Unaffiliated": 66382,
+        "Libertarian": 1189,
+        "Green": 93,
+        "NoLabels": 0
+      }
+    },
+    {
+      "name": "Jones",
+      "fips": "37103",
+      "total_registered": 7055,
+      "by_party": {
+        "Democratic": 2116,
+        "Republican": 2417,
+        "Unaffiliated": 2492,
+        "Libertarian": 30,
+        "Green": 0,
+        "NoLabels": 0
+      }
+    },
+    {
+      "name": "Lee",
+      "fips": "37105",
+      "total_registered": 41586,
+      "by_party": {
+        "Democratic": 11939,
+        "Republican": 12985,
+        "Unaffiliated": 16322,
+        "Libertarian": 316,
+        "Green": 24,
+        "NoLabels": 0
+      }
+    },
+    {
+      "name": "Lenoir",
+      "fips": "37107",
+      "total_registered": 38059,
+      "by_party": {
+        "Democratic": 14607,
+        "Republican": 10706,
+        "Unaffiliated": 12593,
+        "Libertarian": 133,
+        "Green": 20,
+        "NoLabels": 0
+      }
+    },
+    {
+      "name": "Lincoln",
+      "fips": "37109",
+      "total_registered": 70484,
+      "by_party": {
+        "Democratic": 11069,
+        "Republican": 33979,
+        "Unaffiliated": 25001,
+        "Libertarian": 414,
+        "Green": 21,
+        "NoLabels": 0
+      }
+    },
+    {
+      "name": "Macon",
+      "fips": "37111",
+      "total_registered": 29601,
+      "by_party": {
+        "Democratic": 4480,
+        "Republican": 12755,
+        "Unaffiliated": 12171,
+        "Libertarian": 183,
+        "Green": 12,
+        "NoLabels": 0
+      }
+    },
+    {
+      "name": "Madison",
+      "fips": "37113",
+      "total_registered": 17679,
+      "by_party": {
+        "Democratic": 4490,
+        "Republican": 5124,
+        "Unaffiliated": 7931,
+        "Libertarian": 119,
+        "Green": 15,
+        "NoLabels": 0
+      }
+    },
+    {
+      "name": "Martin",
+      "fips": "37115",
+      "total_registered": 16482,
+      "by_party": {
+        "Democratic": 6821,
+        "Republican": 3679,
+        "Unaffiliated": 5913,
+        "Libertarian": 62,
+        "Green": 7,
+        "NoLabels": 0
+      }
+    },
+    {
+      "name": "McDowell",
+      "fips": "37117",
+      "total_registered": 31137,
+      "by_party": {
+        "Democratic": 4842,
+        "Republican": 13961,
+        "Unaffiliated": 12139,
+        "Libertarian": 183,
+        "Green": 12,
+        "NoLabels": 0
+      }
+    },
+    {
+      "name": "Mecklenburg",
+      "fips": "37119",
+      "total_registered": 835413,
+      "by_party": {
+        "Democratic": 322076,
+        "Republican": 157300,
+        "Unaffiliated": 350045,
+        "Libertarian": 5408,
+        "Green": 584,
+        "NoLabels": 0
+      }
+    },
+    {
+      "name": "Mitchell",
+      "fips": "37121",
+      "total_registered": 11218,
+      "by_party": {
+        "Democratic": 922,
+        "Republican": 6389,
+        "Unaffiliated": 3850,
+        "Libertarian": 53,
+        "Green": 4,
+        "NoLabels": 0
+      }
+    },
+    {
+      "name": "Montgomery",
+      "fips": "37123",
+      "total_registered": 17281,
+      "by_party": {
+        "Democratic": 4352,
+        "Republican": 6748,
+        "Unaffiliated": 6101,
+        "Libertarian": 73,
+        "Green": 7,
+        "NoLabels": 0
+      }
+    },
+    {
+      "name": "Moore",
+      "fips": "37125",
+      "total_registered": 81158,
+      "by_party": {
+        "Democratic": 14711,
+        "Republican": 33686,
+        "Unaffiliated": 32133,
+        "Libertarian": 602,
+        "Green": 26,
+        "NoLabels": 0
+      }
+    },
+    {
+      "name": "Nash",
+      "fips": "37127",
+      "total_registered": 71212,
+      "by_party": {
+        "Democratic": 25149,
+        "Republican": 19939,
+        "Unaffiliated": 25835,
+        "Libertarian": 266,
+        "Green": 23,
+        "NoLabels": 0
+      }
+    },
+    {
+      "name": "New Hanover",
+      "fips": "37129",
+      "total_registered": 187938,
+      "by_party": {
+        "Democratic": 49155,
+        "Republican": 54826,
+        "Unaffiliated": 82472,
+        "Libertarian": 1348,
+        "Green": 137,
+        "NoLabels": 0
+      }
+    },
+    {
+      "name": "Northampton",
+      "fips": "37131",
+      "total_registered": 12782,
+      "by_party": {
+        "Democratic": 6994,
+        "Republican": 1649,
+        "Unaffiliated": 4105,
+        "Libertarian": 32,
+        "Green": 2,
+        "NoLabels": 0
+      }
+    },
+    {
+      "name": "Onslow",
+      "fips": "37133",
+      "total_registered": 134215,
+      "by_party": {
+        "Democratic": 21718,
+        "Republican": 51280,
+        "Unaffiliated": 59472,
+        "Libertarian": 1667,
+        "Green": 78,
+        "NoLabels": 0
+      }
+    },
+    {
+      "name": "Orange",
+      "fips": "37135",
+      "total_registered": 111846,
+      "by_party": {
+        "Democratic": 49281,
+        "Republican": 13122,
+        "Unaffiliated": 48898,
+        "Libertarian": 461,
+        "Green": 84,
+        "NoLabels": 0
+      }
+    },
+    {
+      "name": "Pamlico",
+      "fips": "37137",
+      "total_registered": 10296,
+      "by_party": {
+        "Democratic": 2440,
+        "Republican": 4329,
+        "Unaffiliated": 3471,
+        "Libertarian": 51,
+        "Green": 5,
+        "NoLabels": 0
+      }
+    },
+    {
+      "name": "Pasquotank",
+      "fips": "37139",
+      "total_registered": 31078,
+      "by_party": {
+        "Democratic": 9559,
+        "Republican": 8116,
+        "Unaffiliated": 13188,
+        "Libertarian": 196,
+        "Green": 19,
+        "NoLabels": 0
+      }
+    },
+    {
+      "name": "Pender",
+      "fips": "37141",
+      "total_registered": 54198,
+      "by_party": {
+        "Democratic": 10058,
+        "Republican": 22322,
+        "Unaffiliated": 21399,
+        "Libertarian": 402,
+        "Green": 17,
+        "NoLabels": 0
+      }
+    },
+    {
+      "name": "Perquimans",
+      "fips": "37143",
+      "total_registered": 10648,
+      "by_party": {
+        "Democratic": 2446,
+        "Republican": 3910,
+        "Unaffiliated": 4237,
+        "Libertarian": 52,
+        "Green": 3,
+        "NoLabels": 0
+      }
+    },
+    {
+      "name": "Person",
+      "fips": "37145",
+      "total_registered": 28300,
+      "by_party": {
+        "Democratic": 8712,
+        "Republican": 8801,
+        "Unaffiliated": 10649,
+        "Libertarian": 129,
+        "Green": 9,
+        "NoLabels": 0
+      }
+    },
+    {
+      "name": "Pitt",
+      "fips": "37147",
+      "total_registered": 126258,
+      "by_party": {
+        "Democratic": 45249,
+        "Republican": 31189,
+        "Unaffiliated": 49067,
+        "Libertarian": 676,
+        "Green": 77,
+        "NoLabels": 0
+      }
+    },
+    {
+      "name": "Polk",
+      "fips": "37149",
+      "total_registered": 17280,
+      "by_party": {
+        "Democratic": 3386,
+        "Republican": 6669,
+        "Unaffiliated": 7117,
+        "Libertarian": 105,
+        "Green": 3,
+        "NoLabels": 0
+      }
+    },
+    {
+      "name": "Randolph",
+      "fips": "37151",
+      "total_registered": 99263,
+      "by_party": {
+        "Democratic": 13822,
+        "Republican": 51808,
+        "Unaffiliated": 33075,
+        "Libertarian": 531,
+        "Green": 27,
+        "NoLabels": 0
+      }
+    },
+    {
+      "name": "Richmond",
+      "fips": "37153",
+      "total_registered": 28455,
+      "by_party": {
+        "Democratic": 10370,
+        "Republican": 8212,
+        "Unaffiliated": 9750,
+        "Libertarian": 108,
+        "Green": 15,
+        "NoLabels": 0
+      }
+    },
+    {
+      "name": "Robeson",
+      "fips": "37155",
+      "total_registered": 77115,
+      "by_party": {
+        "Democratic": 29602,
+        "Republican": 16267,
+        "Unaffiliated": 30990,
+        "Libertarian": 226,
+        "Green": 30,
+        "NoLabels": 0
+      }
+    },
+    {
+      "name": "Rockingham",
+      "fips": "37157",
+      "total_registered": 64026,
+      "by_party": {
+        "Democratic": 15816,
+        "Republican": 26332,
+        "Unaffiliated": 21525,
+        "Libertarian": 325,
+        "Green": 28,
+        "NoLabels": 0
+      }
+    },
+    {
+      "name": "Rowan",
+      "fips": "37159",
+      "total_registered": 101498,
+      "by_party": {
+        "Democratic": 21474,
+        "Republican": 43768,
+        "Unaffiliated": 35583,
+        "Libertarian": 624,
+        "Green": 49,
+        "NoLabels": 0
+      }
+    },
+    {
+      "name": "Rutherford",
+      "fips": "37161",
+      "total_registered": 47248,
+      "by_party": {
+        "Democratic": 8449,
+        "Republican": 21236,
+        "Unaffiliated": 17305,
+        "Libertarian": 237,
+        "Green": 21,
+        "NoLabels": 0
+      }
+    },
+    {
+      "name": "Sampson",
+      "fips": "37163",
+      "total_registered": 38707,
+      "by_party": {
+        "Democratic": 11478,
+        "Republican": 16007,
+        "Unaffiliated": 11027,
+        "Libertarian": 175,
+        "Green": 20,
+        "NoLabels": 0
+      }
+    },
+    {
+      "name": "Scotland",
+      "fips": "37165",
+      "total_registered": 21891,
+      "by_party": {
+        "Democratic": 8356,
+        "Republican": 5090,
+        "Unaffiliated": 8356,
+        "Libertarian": 77,
+        "Green": 12,
+        "NoLabels": 0
+      }
+    },
+    {
+      "name": "Stanly",
+      "fips": "37167",
+      "total_registered": 47169,
+      "by_party": {
+        "Democratic": 7901,
+        "Republican": 22841,
+        "Unaffiliated": 16155,
+        "Libertarian": 236,
+        "Green": 36,
+        "NoLabels": 0
+      }
+    },
+    {
+      "name": "Stokes",
+      "fips": "37169",
+      "total_registered": 33767,
+      "by_party": {
+        "Democratic": 4609,
+        "Republican": 18146,
+        "Unaffiliated": 10795,
+        "Libertarian": 198,
+        "Green": 19,
+        "NoLabels": 0
+      }
+    },
+    {
+      "name": "Surry",
+      "fips": "37171",
+      "total_registered": 48759,
+      "by_party": {
+        "Democratic": 7908,
+        "Republican": 23632,
+        "Unaffiliated": 16986,
+        "Libertarian": 215,
+        "Green": 18,
+        "NoLabels": 0
+      }
+    },
+    {
+      "name": "Swain",
+      "fips": "37173",
+      "total_registered": 10060,
+      "by_party": {
+        "Democratic": 2430,
+        "Republican": 3376,
+        "Unaffiliated": 4163,
+        "Libertarian": 78,
+        "Green": 13,
+        "NoLabels": 0
+      }
+    },
+    {
+      "name": "Transylvania",
+      "fips": "37175",
+      "total_registered": 26754,
+      "by_party": {
+        "Democratic": 5385,
+        "Republican": 8641,
+        "Unaffiliated": 12565,
+        "Libertarian": 153,
+        "Green": 10,
+        "NoLabels": 0
+      }
+    },
+    {
+      "name": "Tyrrell",
+      "fips": "37177",
+      "total_registered": 2358,
+      "by_party": {
+        "Democratic": 923,
+        "Republican": 505,
+        "Unaffiliated": 917,
+        "Libertarian": 12,
+        "Green": 1,
+        "NoLabels": 0
+      }
+    },
+    {
+      "name": "Union",
+      "fips": "37179",
+      "total_registered": 184267,
+      "by_party": {
+        "Democratic": 38437,
+        "Republican": 72273,
+        "Unaffiliated": 72354,
+        "Libertarian": 1117,
+        "Green": 86,
+        "NoLabels": 0
+      }
+    },
+    {
+      "name": "Vance",
+      "fips": "37181",
+      "total_registered": 28083,
+      "by_party": {
+        "Democratic": 14493,
+        "Republican": 5335,
+        "Unaffiliated": 8134,
+        "Libertarian": 110,
+        "Green": 11,
+        "NoLabels": 0
+      }
+    },
+    {
+      "name": "Wake",
+      "fips": "37183",
+      "total_registered": 855468,
+      "by_party": {
+        "Democratic": 281833,
+        "Republican": 173052,
+        "Unaffiliated": 394576,
+        "Libertarian": 5357,
+        "Green": 650,
+        "NoLabels": 0
+      }
+    },
+    {
+      "name": "Warren",
+      "fips": "37185",
+      "total_registered": 13482,
+      "by_party": {
+        "Democratic": 7302,
+        "Republican": 2554,
+        "Unaffiliated": 3580,
+        "Libertarian": 43,
+        "Green": 3,
+        "NoLabels": 0
+      }
+    },
+    {
+      "name": "Washington",
+      "fips": "37187",
+      "total_registered": 8236,
+      "by_party": {
+        "Democratic": 4141,
+        "Republican": 1552,
+        "Unaffiliated": 2518,
+        "Libertarian": 23,
+        "Green": 2,
+        "NoLabels": 0
+      }
+    },
+    {
+      "name": "Watauga",
+      "fips": "37189",
+      "total_registered": 44251,
+      "by_party": {
+        "Democratic": 10453,
+        "Republican": 12291,
+        "Unaffiliated": 21145,
+        "Libertarian": 301,
+        "Green": 61,
+        "NoLabels": 0
+      }
+    },
+    {
+      "name": "Wayne",
+      "fips": "37191",
+      "total_registered": 76898,
+      "by_party": {
+        "Democratic": 25230,
+        "Republican": 26789,
+        "Unaffiliated": 24413,
+        "Libertarian": 430,
+        "Green": 36,
+        "NoLabels": 0
+      }
+    },
+    {
+      "name": "Wilkes",
+      "fips": "37193",
+      "total_registered": 45311,
+      "by_party": {
+        "Democratic": 5862,
+        "Republican": 25215,
+        "Unaffiliated": 14037,
+        "Libertarian": 187,
+        "Green": 10,
+        "NoLabels": 0
+      }
+    },
+    {
+      "name": "Wilson",
+      "fips": "37195",
+      "total_registered": 54919,
+      "by_party": {
+        "Democratic": 22447,
+        "Republican": 14111,
+        "Unaffiliated": 18101,
+        "Libertarian": 232,
+        "Green": 28,
+        "NoLabels": 0
+      }
+    },
+    {
+      "name": "Yadkin",
+      "fips": "37197",
+      "total_registered": 25667,
+      "by_party": {
+        "Democratic": 2669,
+        "Republican": 14721,
+        "Unaffiliated": 8152,
+        "Libertarian": 120,
+        "Green": 5,
+        "NoLabels": 0
+      }
+    },
+    {
+      "name": "Yancey",
+      "fips": "37199",
+      "total_registered": 14470,
+      "by_party": {
+        "Democratic": 3308,
+        "Republican": 5529,
+        "Unaffiliated": 5543,
+        "Libertarian": 81,
+        "Green": 9,
+        "NoLabels": 0
+      }
+    }
+  ],
+  "as_of_notes": "Latest weekly NCSBE Voter Registration Statistics snapshot, current as of 2026-06-13 (NCSBE updates weekly on Saturday mornings). Retrieved from the official RegStat tool; the page's most recent available date option was 06/13/2026.",
+  "data_quality": "verified",
+  "notes": "Counts are active+inactive registered voters by party as reported by NCSBE. The 100 county totals sum exactly to the official statewide Totals row (7,784,873) and party columns sum exactly to the statewide total. NoLabels statewide = 0 as of this date. NCSBE also tracks three recognized/historical minor parties (Constitution, Justice for All, We the People), all of which are 0 statewide on this date and are not included in statewide_by_party. FIPS codes derived from standard NC alphabetical odd-number scheme (verified against Wake=37183, Mecklenburg=37119, etc.)."
+}

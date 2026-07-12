@@ -1,0 +1,354 @@
+{
+  "state": "Montana",
+  "state_abbr": "MT",
+  "state_fips": "30",
+  "as_of_date": "2026-06-14",
+  "source_name": "Montana Secretary of State - Registered Voters By County (Elections Division)",
+  "source_url": "https://sosmt.gov/elections/regvotercounty/",
+  "registers_by_party": false,
+  "statewide_total_registered": 791434,
+  "statewide_by_party": null,
+  "county_unit_label": "county",
+  "county_level_available": true,
+  "counties": [
+    {
+      "name": "Beaverhead",
+      "fips": "30001",
+      "total_registered": 7201,
+      "by_party": null
+    },
+    {
+      "name": "Big Horn",
+      "fips": "30003",
+      "total_registered": 7481,
+      "by_party": null
+    },
+    {
+      "name": "Blaine",
+      "fips": "30005",
+      "total_registered": 4047,
+      "by_party": null
+    },
+    {
+      "name": "Broadwater",
+      "fips": "30007",
+      "total_registered": 6211,
+      "by_party": null
+    },
+    {
+      "name": "Carbon",
+      "fips": "30009",
+      "total_registered": 9133,
+      "by_party": null
+    },
+    {
+      "name": "Carter",
+      "fips": "30011",
+      "total_registered": 1003,
+      "by_party": null
+    },
+    {
+      "name": "Cascade",
+      "fips": "30013",
+      "total_registered": 51615,
+      "by_party": null
+    },
+    {
+      "name": "Chouteau",
+      "fips": "30015",
+      "total_registered": 3669,
+      "by_party": null
+    },
+    {
+      "name": "Custer",
+      "fips": "30017",
+      "total_registered": 7412,
+      "by_party": null
+    },
+    {
+      "name": "Daniels",
+      "fips": "30019",
+      "total_registered": 1145,
+      "by_party": null
+    },
+    {
+      "name": "Dawson",
+      "fips": "30021",
+      "total_registered": 5646,
+      "by_party": null
+    },
+    {
+      "name": "Deer Lodge",
+      "fips": "30023",
+      "total_registered": 6179,
+      "by_party": null
+    },
+    {
+      "name": "Fallon",
+      "fips": "30025",
+      "total_registered": 1804,
+      "by_party": null
+    },
+    {
+      "name": "Fergus",
+      "fips": "30027",
+      "total_registered": 8108,
+      "by_party": null
+    },
+    {
+      "name": "Flathead",
+      "fips": "30029",
+      "total_registered": 85676,
+      "by_party": null
+    },
+    {
+      "name": "Gallatin",
+      "fips": "30031",
+      "total_registered": 96610,
+      "by_party": null
+    },
+    {
+      "name": "Garfield",
+      "fips": "30033",
+      "total_registered": 864,
+      "by_party": null
+    },
+    {
+      "name": "Glacier",
+      "fips": "30035",
+      "total_registered": 7792,
+      "by_party": null
+    },
+    {
+      "name": "Golden Valley",
+      "fips": "30037",
+      "total_registered": 606,
+      "by_party": null
+    },
+    {
+      "name": "Granite",
+      "fips": "30039",
+      "total_registered": 2751,
+      "by_party": null
+    },
+    {
+      "name": "Hill",
+      "fips": "30041",
+      "total_registered": 9241,
+      "by_party": null
+    },
+    {
+      "name": "Jefferson",
+      "fips": "30043",
+      "total_registered": 10132,
+      "by_party": null
+    },
+    {
+      "name": "Judith Basin",
+      "fips": "30045",
+      "total_registered": 1572,
+      "by_party": null
+    },
+    {
+      "name": "Lake",
+      "fips": "30047",
+      "total_registered": 22508,
+      "by_party": null
+    },
+    {
+      "name": "Lewis & Clark",
+      "fips": "30049",
+      "total_registered": 53024,
+      "by_party": null
+    },
+    {
+      "name": "Liberty",
+      "fips": "30051",
+      "total_registered": 1176,
+      "by_party": null
+    },
+    {
+      "name": "Lincoln",
+      "fips": "30053",
+      "total_registered": 14841,
+      "by_party": null
+    },
+    {
+      "name": "Madison",
+      "fips": "30057",
+      "total_registered": 7792,
+      "by_party": null
+    },
+    {
+      "name": "McCone",
+      "fips": "30055",
+      "total_registered": 1249,
+      "by_party": null
+    },
+    {
+      "name": "Meagher",
+      "fips": "30059",
+      "total_registered": 1437,
+      "by_party": null
+    },
+    {
+      "name": "Mineral",
+      "fips": "30061",
+      "total_registered": 4054,
+      "by_party": null
+    },
+    {
+      "name": "Missoula",
+      "fips": "30063",
+      "total_registered": 91603,
+      "by_party": null
+    },
+    {
+      "name": "Musselshell",
+      "fips": "30065",
+      "total_registered": 3832,
+      "by_party": null
+    },
+    {
+      "name": "Park",
+      "fips": "30067",
+      "total_registered": 14531,
+      "by_party": null
+    },
+    {
+      "name": "Petroleum",
+      "fips": "30069",
+      "total_registered": 368,
+      "by_party": null
+    },
+    {
+      "name": "Phillips",
+      "fips": "30071",
+      "total_registered": 2633,
+      "by_party": null
+    },
+    {
+      "name": "Pondera",
+      "fips": "30073",
+      "total_registered": 3785,
+      "by_party": null
+    },
+    {
+      "name": "Powder River",
+      "fips": "30075",
+      "total_registered": 1237,
+      "by_party": null
+    },
+    {
+      "name": "Powell",
+      "fips": "30077",
+      "total_registered": 4047,
+      "by_party": null
+    },
+    {
+      "name": "Prairie",
+      "fips": "30079",
+      "total_registered": 823,
+      "by_party": null
+    },
+    {
+      "name": "Ravalli",
+      "fips": "30081",
+      "total_registered": 36284,
+      "by_party": null
+    },
+    {
+      "name": "Richland",
+      "fips": "30083",
+      "total_registered": 7477,
+      "by_party": null
+    },
+    {
+      "name": "Roosevelt",
+      "fips": "30085",
+      "total_registered": 5952,
+      "by_party": null
+    },
+    {
+      "name": "Rosebud",
+      "fips": "30087",
+      "total_registered": 4981,
+      "by_party": null
+    },
+    {
+      "name": "Sanders",
+      "fips": "30089",
+      "total_registered": 10862,
+      "by_party": null
+    },
+    {
+      "name": "Sheridan",
+      "fips": "30091",
+      "total_registered": 2370,
+      "by_party": null
+    },
+    {
+      "name": "Silver Bow",
+      "fips": "30093",
+      "total_registered": 23767,
+      "by_party": null
+    },
+    {
+      "name": "Stillwater",
+      "fips": "30095",
+      "total_registered": 7209,
+      "by_party": null
+    },
+    {
+      "name": "Sweet Grass",
+      "fips": "30097",
+      "total_registered": 2901,
+      "by_party": null
+    },
+    {
+      "name": "Teton",
+      "fips": "30099",
+      "total_registered": 4315,
+      "by_party": null
+    },
+    {
+      "name": "Toole",
+      "fips": "30101",
+      "total_registered": 2602,
+      "by_party": null
+    },
+    {
+      "name": "Treasure",
+      "fips": "30103",
+      "total_registered": 528,
+      "by_party": null
+    },
+    {
+      "name": "Valley",
+      "fips": "30105",
+      "total_registered": 5238,
+      "by_party": null
+    },
+    {
+      "name": "Wheatland",
+      "fips": "30107",
+      "total_registered": 1475,
+      "by_party": null
+    },
+    {
+      "name": "Wibaux",
+      "fips": "30109",
+      "total_registered": 692,
+      "by_party": null
+    },
+    {
+      "name": "Yellowstone",
+      "fips": "30111",
+      "total_registered": 109943,
+      "by_party": null
+    }
+  ],
+  "as_of_notes": "Figures are 'All' voter-status totals (Active + Inactive + Provisional) per county from the official Montana SOS 'Registered Voters By County' live Tableau dashboard (tableau-ext.mt.gov view RegisteredVotersByCounty/RegVoterCounty), which reflects the statewide voter registration system. The dashboard does not publish a fixed snapshot label; data were retrieved live on 2026-06-14. The hosting SOS web page was last content-modified 2026-04-28.",
+  "data_quality": "high",
+  "notes": "All 56 Montana counties present. Sum of county 'All'-status totals (791,434) equals the dashboard's statewide 'All' total (791,434) exactly. Montana does not register voters by party, so registers_by_party=false and all by_party fields are null. Per-county totals retrieved via the SOS Tableau dashboard's official CSV data export. Status breakdown available in source: Active/Inactive/Provisional; this file uses the combined 'All' total registered per county."
+}

@@ -1,0 +1,549 @@
+{
+"state": "Ohio",
+"state_abbr": "OH",
+"state_fips": "39",
+"as_of_date": "2026-06-13",
+"source_name": "Ohio Secretary of State \u2014 Voter Registration (statewide total); EAC EAVS 2024 (county breakdown)",
+"source_url": "https://data.ohiosos.gov/portal/voter-registration",
+"registers_by_party": false,
+"statewide_total_registered": 7580955,
+"statewide_by_party": null,
+"county_unit_label": "county",
+"county_level_available": true,
+"counties": [
+{
+"name": "Adams",
+"fips": "39001",
+"total_registered": 17674,
+"by_party": null
+},
+{
+"name": "Allen",
+"fips": "39003",
+"total_registered": 66201,
+"by_party": null
+},
+{
+"name": "Ashland",
+"fips": "39005",
+"total_registered": 34756,
+"by_party": null
+},
+{
+"name": "Ashtabula",
+"fips": "39007",
+"total_registered": 61356,
+"by_party": null
+},
+{
+"name": "Athens",
+"fips": "39009",
+"total_registered": 32900,
+"by_party": null
+},
+{
+"name": "Auglaize",
+"fips": "39011",
+"total_registered": 32887,
+"by_party": null
+},
+{
+"name": "Belmont",
+"fips": "39013",
+"total_registered": 44628,
+"by_party": null
+},
+{
+"name": "Brown",
+"fips": "39015",
+"total_registered": 29541,
+"by_party": null
+},
+{
+"name": "Butler",
+"fips": "39017",
+"total_registered": 255570,
+"by_party": null
+},
+{
+"name": "Carroll",
+"fips": "39019",
+"total_registered": 18409,
+"by_party": null
+},
+{
+"name": "Champaign",
+"fips": "39021",
+"total_registered": 27055,
+"by_party": null
+},
+{
+"name": "Clark",
+"fips": "39023",
+"total_registered": 87957,
+"by_party": null
+},
+{
+"name": "Clermont",
+"fips": "39025",
+"total_registered": 151043,
+"by_party": null
+},
+{
+"name": "Clinton",
+"fips": "39027",
+"total_registered": 27898,
+"by_party": null
+},
+{
+"name": "Columbiana",
+"fips": "39029",
+"total_registered": 65979,
+"by_party": null
+},
+{
+"name": "Coshocton",
+"fips": "39031",
+"total_registered": 22494,
+"by_party": null
+},
+{
+"name": "Crawford",
+"fips": "39033",
+"total_registered": 28064,
+"by_party": null
+},
+{
+"name": "Cuyahoga",
+"fips": "39035",
+"total_registered": 893801,
+"by_party": null
+},
+{
+"name": "Darke",
+"fips": "39037",
+"total_registered": 35030,
+"by_party": null
+},
+{
+"name": "Defiance",
+"fips": "39039",
+"total_registered": 22248,
+"by_party": null
+},
+{
+"name": "Delaware",
+"fips": "39041",
+"total_registered": 165371,
+"by_party": null
+},
+{
+"name": "Erie",
+"fips": "39043",
+"total_registered": 54260,
+"by_party": null
+},
+{
+"name": "Fairfield",
+"fips": "39045",
+"total_registered": 112016,
+"by_party": null
+},
+{
+"name": "Fayette",
+"fips": "39047",
+"total_registered": 17449,
+"by_party": null
+},
+{
+"name": "Franklin",
+"fips": "39049",
+"total_registered": 903248,
+"by_party": null
+},
+{
+"name": "Fulton",
+"fips": "39051",
+"total_registered": 29566,
+"by_party": null
+},
+{
+"name": "Gallia",
+"fips": "39053",
+"total_registered": 19031,
+"by_party": null
+},
+{
+"name": "Geauga",
+"fips": "39055",
+"total_registered": 69032,
+"by_party": null
+},
+{
+"name": "Greene",
+"fips": "39057",
+"total_registered": 122193,
+"by_party": null
+},
+{
+"name": "Guernsey",
+"fips": "39059",
+"total_registered": 24501,
+"by_party": null
+},
+{
+"name": "Hamilton",
+"fips": "39061",
+"total_registered": 604199,
+"by_party": null
+},
+{
+"name": "Hancock",
+"fips": "39063",
+"total_registered": 51936,
+"by_party": null
+},
+{
+"name": "Hardin",
+"fips": "39065",
+"total_registered": 17922,
+"by_party": null
+},
+{
+"name": "Harrison",
+"fips": "39067",
+"total_registered": 9890,
+"by_party": null
+},
+{
+"name": "Henry",
+"fips": "39069",
+"total_registered": 19433,
+"by_party": null
+},
+{
+"name": "Highland",
+"fips": "39071",
+"total_registered": 27611,
+"by_party": null
+},
+{
+"name": "Hocking",
+"fips": "39073",
+"total_registered": 18430,
+"by_party": null
+},
+{
+"name": "Holmes",
+"fips": "39075",
+"total_registered": 18085,
+"by_party": null
+},
+{
+"name": "Huron",
+"fips": "39077",
+"total_registered": 36967,
+"by_party": null
+},
+{
+"name": "Jackson",
+"fips": "39079",
+"total_registered": 20694,
+"by_party": null
+},
+{
+"name": "Jefferson",
+"fips": "39081",
+"total_registered": 45726,
+"by_party": null
+},
+{
+"name": "Knox",
+"fips": "39083",
+"total_registered": 43806,
+"by_party": null
+},
+{
+"name": "Lake",
+"fips": "39085",
+"total_registered": 165578,
+"by_party": null
+},
+{
+"name": "Lawrence",
+"fips": "39087",
+"total_registered": 43020,
+"by_party": null
+},
+{
+"name": "Licking",
+"fips": "39089",
+"total_registered": 128657,
+"by_party": null
+},
+{
+"name": "Logan",
+"fips": "39091",
+"total_registered": 32330,
+"by_party": null
+},
+{
+"name": "Lorain",
+"fips": "39093",
+"total_registered": 221647,
+"by_party": null
+},
+{
+"name": "Lucas",
+"fips": "39095",
+"total_registered": 251632,
+"by_party": null
+},
+{
+"name": "Madison",
+"fips": "39097",
+"total_registered": 27191,
+"by_party": null
+},
+{
+"name": "Mahoning",
+"fips": "39099",
+"total_registered": 163093,
+"by_party": null
+},
+{
+"name": "Marion",
+"fips": "39101",
+"total_registered": 39576,
+"by_party": null
+},
+{
+"name": "Medina",
+"fips": "39103",
+"total_registered": 134574,
+"by_party": null
+},
+{
+"name": "Meigs",
+"fips": "39105",
+"total_registered": 14916,
+"by_party": null
+},
+{
+"name": "Mercer",
+"fips": "39107",
+"total_registered": 29691,
+"by_party": null
+},
+{
+"name": "Miami",
+"fips": "39109",
+"total_registered": 78731,
+"by_party": null
+},
+{
+"name": "Monroe",
+"fips": "39111",
+"total_registered": 9326,
+"by_party": null
+},
+{
+"name": "Montgomery",
+"fips": "39113",
+"total_registered": 373580,
+"by_party": null
+},
+{
+"name": "Morgan",
+"fips": "39115",
+"total_registered": 9188,
+"by_party": null
+},
+{
+"name": "Morrow",
+"fips": "39117",
+"total_registered": 24667,
+"by_party": null
+},
+{
+"name": "Muskingum",
+"fips": "39119",
+"total_registered": 54637,
+"by_party": null
+},
+{
+"name": "Noble",
+"fips": "39121",
+"total_registered": 8081,
+"by_party": null
+},
+{
+"name": "Ottawa",
+"fips": "39123",
+"total_registered": 30695,
+"by_party": null
+},
+{
+"name": "Paulding",
+"fips": "39125",
+"total_registered": 12665,
+"by_party": null
+},
+{
+"name": "Perry",
+"fips": "39127",
+"total_registered": 22901,
+"by_party": null
+},
+{
+"name": "Pickaway",
+"fips": "39129",
+"total_registered": 38574,
+"by_party": null
+},
+{
+"name": "Pike",
+"fips": "39131",
+"total_registered": 18011,
+"by_party": null
+},
+{
+"name": "Portage",
+"fips": "39133",
+"total_registered": 111135,
+"by_party": null
+},
+{
+"name": "Preble",
+"fips": "39135",
+"total_registered": 28920,
+"by_party": null
+},
+{
+"name": "Putnam",
+"fips": "39137",
+"total_registered": 24016,
+"by_party": null
+},
+{
+"name": "Richland",
+"fips": "39139",
+"total_registered": 80649,
+"by_party": null
+},
+{
+"name": "Ross",
+"fips": "39141",
+"total_registered": 39883,
+"by_party": null
+},
+{
+"name": "Sandusky",
+"fips": "39143",
+"total_registered": 40511,
+"by_party": null
+},
+{
+"name": "Scioto",
+"fips": "39145",
+"total_registered": 44713,
+"by_party": null
+},
+{
+"name": "Seneca",
+"fips": "39147",
+"total_registered": 34779,
+"by_party": null
+},
+{
+"name": "Shelby",
+"fips": "39149",
+"total_registered": 32947,
+"by_party": null
+},
+{
+"name": "Stark",
+"fips": "39151",
+"total_registered": 253599,
+"by_party": null
+},
+{
+"name": "Summit",
+"fips": "39153",
+"total_registered": 382722,
+"by_party": null
+},
+{
+"name": "Trumbull",
+"fips": "39155",
+"total_registered": 137685,
+"by_party": null
+},
+{
+"name": "Tuscarawas",
+"fips": "39157",
+"total_registered": 44321,
+"by_party": null
+},
+{
+"name": "Union",
+"fips": "39159",
+"total_registered": 47353,
+"by_party": null
+},
+{
+"name": "Van Wert",
+"fips": "39161",
+"total_registered": 20490,
+"by_party": null
+},
+{
+"name": "Vinton",
+"fips": "39163",
+"total_registered": 7812,
+"by_party": null
+},
+{
+"name": "Warren",
+"fips": "39165",
+"total_registered": 178612,
+"by_party": null
+},
+{
+"name": "Washington",
+"fips": "39167",
+"total_registered": 42814,
+"by_party": null
+},
+{
+"name": "Wayne",
+"fips": "39169",
+"total_registered": 70625,
+"by_party": null
+},
+{
+"name": "Williams",
+"fips": "39171",
+"total_registered": 25160,
+"by_party": null
+},
+{
+"name": "Wood",
+"fips": "39173",
+"total_registered": 90695,
+"by_party": null
+},
+{
+"name": "Wyandot",
+"fips": "39175",
+"total_registered": 14839,
+"by_party": null
+}
+],
+"county_breakdown_source": "EAC EAVS 2024 Public Release v2.0, question A1a (total registered & eligible), as of 2024-11-05",
+"county_breakdown_as_of": "2024-11-05",
+"county_breakdown_total": 8074098,
+"as_of_notes": "Statewide headline 7,580,955 is the CURRENT Ohio SOS figure as of 2026-06-13. The 88-county breakdown is from EAC EAVS 2024 (as of Nov 5, 2024) because the Ohio SOS web platform was in maintenance mode and publishes no static current county file; county sums (EAVS total = 8074098) therefore do NOT equal the current statewide headline.",
+"data_quality": "partial",
+"notes": "Ohio does NOT register by party. Statewide total and county breakdown are from DIFFERENT dates/sources (see county_breakdown_*). Refresh county figures from the Ohio SOS DATA Act dashboard (data.ohiosos.gov) when available for a same-date set."
+}

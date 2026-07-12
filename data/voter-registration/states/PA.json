@@ -1,0 +1,760 @@
+{
+  "state": "Pennsylvania",
+  "state_abbr": "PA",
+  "state_fips": "42",
+  "as_of_date": "2026-06-08",
+  "source_name": "Pennsylvania Department of State, Bureau of Election Services and Notaries - Voter Registration Statistics by County",
+  "source_url": "https://www.pa.gov/content/dam/copapwp-pagov/en/dos/resources/voting-and-elections/voting-and-election-statistics/currentvotestats.xlsx",
+  "registers_by_party": true,
+  "statewide_total_registered": 8956598,
+  "statewide_by_party": {
+    "Democratic": 3834280,
+    "Republican": 3641144,
+    "NoAffiliation": 1165555,
+    "Other": 315619
+  },
+  "county_unit_label": "county",
+  "county_level_available": true,
+  "counties": [
+    {
+      "name": "Adams",
+      "fips": "42001",
+      "total_registered": 76420,
+      "by_party": {
+        "Democratic": 19150,
+        "Republican": 44013,
+        "NoAffiliation": 10455,
+        "Other": 2802
+      }
+    },
+    {
+      "name": "Allegheny",
+      "fips": "42003",
+      "total_registered": 915136,
+      "by_party": {
+        "Democratic": 502318,
+        "Republican": 263762,
+        "NoAffiliation": 112023,
+        "Other": 37033
+      }
+    },
+    {
+      "name": "Armstrong",
+      "fips": "42005",
+      "total_registered": 43575,
+      "by_party": {
+        "Democratic": 10680,
+        "Republican": 27636,
+        "NoAffiliation": 3681,
+        "Other": 1578
+      }
+    },
+    {
+      "name": "Beaver",
+      "fips": "42007",
+      "total_registered": 114228,
+      "by_party": {
+        "Democratic": 45843,
+        "Republican": 51951,
+        "NoAffiliation": 11701,
+        "Other": 4733
+      }
+    },
+    {
+      "name": "Bedford",
+      "fips": "42009",
+      "total_registered": 33021,
+      "by_party": {
+        "Democratic": 5282,
+        "Republican": 24567,
+        "NoAffiliation": 2283,
+        "Other": 889
+      }
+    },
+    {
+      "name": "Berks",
+      "fips": "42011",
+      "total_registered": 273373,
+      "by_party": {
+        "Democratic": 104182,
+        "Republican": 118142,
+        "NoAffiliation": 40642,
+        "Other": 10407
+      }
+    },
+    {
+      "name": "Blair",
+      "fips": "42013",
+      "total_registered": 81571,
+      "by_party": {
+        "Democratic": 19769,
+        "Republican": 50711,
+        "NoAffiliation": 8375,
+        "Other": 2716
+      }
+    },
+    {
+      "name": "Bradford",
+      "fips": "42015",
+      "total_registered": 38817,
+      "by_party": {
+        "Democratic": 7813,
+        "Republican": 25646,
+        "NoAffiliation": 3827,
+        "Other": 1531
+      }
+    },
+    {
+      "name": "Bucks",
+      "fips": "42017",
+      "total_registered": 483876,
+      "by_party": {
+        "Democratic": 193804,
+        "Republican": 202396,
+        "NoAffiliation": 69187,
+        "Other": 18489
+      }
+    },
+    {
+      "name": "Butler",
+      "fips": "42019",
+      "total_registered": 143281,
+      "by_party": {
+        "Democratic": 39101,
+        "Republican": 82872,
+        "NoAffiliation": 16140,
+        "Other": 5168
+      }
+    },
+    {
+      "name": "Cambria",
+      "fips": "42021",
+      "total_registered": 85913,
+      "by_party": {
+        "Democratic": 29492,
+        "Republican": 46526,
+        "NoAffiliation": 7777,
+        "Other": 2118
+      }
+    },
+    {
+      "name": "Cameron",
+      "fips": "42023",
+      "total_registered": 2877,
+      "by_party": {
+        "Democratic": 665,
+        "Republican": 1838,
+        "NoAffiliation": 251,
+        "Other": 123
+      }
+    },
+    {
+      "name": "Carbon",
+      "fips": "42025",
+      "total_registered": 45553,
+      "by_party": {
+        "Democratic": 14064,
+        "Republican": 23851,
+        "NoAffiliation": 5716,
+        "Other": 1922
+      }
+    },
+    {
+      "name": "Centre",
+      "fips": "42027",
+      "total_registered": 102079,
+      "by_party": {
+        "Democratic": 41479,
+        "Republican": 41907,
+        "NoAffiliation": 15994,
+        "Other": 2699
+      }
+    },
+    {
+      "name": "Chester",
+      "fips": "42029",
+      "total_registered": 388677,
+      "by_party": {
+        "Democratic": 160419,
+        "Republican": 152138,
+        "NoAffiliation": 58109,
+        "Other": 18011
+      }
+    },
+    {
+      "name": "Clarion",
+      "fips": "42031",
+      "total_registered": 23350,
+      "by_party": {
+        "Democratic": 5066,
+        "Republican": 15566,
+        "NoAffiliation": 2072,
+        "Other": 646
+      }
+    },
+    {
+      "name": "Clearfield",
+      "fips": "42033",
+      "total_registered": 49551,
+      "by_party": {
+        "Democratic": 12053,
+        "Republican": 31432,
+        "NoAffiliation": 4281,
+        "Other": 1785
+      }
+    },
+    {
+      "name": "Clinton",
+      "fips": "42035",
+      "total_registered": 22524,
+      "by_party": {
+        "Democratic": 6064,
+        "Republican": 13319,
+        "NoAffiliation": 2397,
+        "Other": 744
+      }
+    },
+    {
+      "name": "Columbia",
+      "fips": "42037",
+      "total_registered": 40585,
+      "by_party": {
+        "Democratic": 11818,
+        "Republican": 22444,
+        "NoAffiliation": 4829,
+        "Other": 1494
+      }
+    },
+    {
+      "name": "Crawford",
+      "fips": "42039",
+      "total_registered": 53064,
+      "by_party": {
+        "Democratic": 14461,
+        "Republican": 31855,
+        "NoAffiliation": 4906,
+        "Other": 1842
+      }
+    },
+    {
+      "name": "Cumberland",
+      "fips": "42041",
+      "total_registered": 182769,
+      "by_party": {
+        "Democratic": 61214,
+        "Republican": 88446,
+        "NoAffiliation": 26607,
+        "Other": 6502
+      }
+    },
+    {
+      "name": "Dauphin",
+      "fips": "42043",
+      "total_registered": 199689,
+      "by_party": {
+        "Democratic": 85697,
+        "Republican": 76241,
+        "NoAffiliation": 30484,
+        "Other": 7267
+      }
+    },
+    {
+      "name": "Delaware",
+      "fips": "42045",
+      "total_registered": 409948,
+      "by_party": {
+        "Democratic": 202343,
+        "Republican": 143382,
+        "NoAffiliation": 48451,
+        "Other": 15772
+      }
+    },
+    {
+      "name": "Elk",
+      "fips": "42047",
+      "total_registered": 20497,
+      "by_party": {
+        "Democratic": 5810,
+        "Republican": 12137,
+        "NoAffiliation": 1764,
+        "Other": 786
+      }
+    },
+    {
+      "name": "Erie",
+      "fips": "42049",
+      "total_registered": 174743,
+      "by_party": {
+        "Democratic": 76489,
+        "Republican": 70944,
+        "NoAffiliation": 20640,
+        "Other": 6670
+      }
+    },
+    {
+      "name": "Fayette",
+      "fips": "42051",
+      "total_registered": 79573,
+      "by_party": {
+        "Democratic": 29616,
+        "Republican": 41286,
+        "NoAffiliation": 6601,
+        "Other": 2070
+      }
+    },
+    {
+      "name": "Forest",
+      "fips": "42053",
+      "total_registered": 3195,
+      "by_party": {
+        "Democratic": 773,
+        "Republican": 2032,
+        "NoAffiliation": 267,
+        "Other": 123
+      }
+    },
+    {
+      "name": "Franklin",
+      "fips": "42055",
+      "total_registered": 105084,
+      "by_party": {
+        "Democratic": 23465,
+        "Republican": 64415,
+        "NoAffiliation": 13786,
+        "Other": 3418
+      }
+    },
+    {
+      "name": "Fulton",
+      "fips": "42057",
+      "total_registered": 10107,
+      "by_party": {
+        "Democratic": 1475,
+        "Republican": 7478,
+        "NoAffiliation": 888,
+        "Other": 266
+      }
+    },
+    {
+      "name": "Greene",
+      "fips": "42059",
+      "total_registered": 21752,
+      "by_party": {
+        "Democratic": 7411,
+        "Republican": 12116,
+        "NoAffiliation": 1626,
+        "Other": 599
+      }
+    },
+    {
+      "name": "Huntingdon",
+      "fips": "42061",
+      "total_registered": 27924,
+      "by_party": {
+        "Democratic": 6038,
+        "Republican": 18935,
+        "NoAffiliation": 2359,
+        "Other": 592
+      }
+    },
+    {
+      "name": "Indiana",
+      "fips": "42063",
+      "total_registered": 49177,
+      "by_party": {
+        "Democratic": 13968,
+        "Republican": 28897,
+        "NoAffiliation": 4629,
+        "Other": 1683
+      }
+    },
+    {
+      "name": "Jefferson",
+      "fips": "42065",
+      "total_registered": 28096,
+      "by_party": {
+        "Democratic": 5432,
+        "Republican": 19457,
+        "NoAffiliation": 2279,
+        "Other": 928
+      }
+    },
+    {
+      "name": "Juniata",
+      "fips": "42067",
+      "total_registered": 14082,
+      "by_party": {
+        "Democratic": 2544,
+        "Republican": 10041,
+        "NoAffiliation": 1167,
+        "Other": 330
+      }
+    },
+    {
+      "name": "Lackawanna",
+      "fips": "42069",
+      "total_registered": 148988,
+      "by_party": {
+        "Democratic": 76272,
+        "Republican": 52281,
+        "NoAffiliation": 16985,
+        "Other": 3450
+      }
+    },
+    {
+      "name": "Lancaster",
+      "fips": "42071",
+      "total_registered": 363399,
+      "by_party": {
+        "Democratic": 112533,
+        "Republican": 183988,
+        "NoAffiliation": 50882,
+        "Other": 15996
+      }
+    },
+    {
+      "name": "Lawrence",
+      "fips": "42073",
+      "total_registered": 57420,
+      "by_party": {
+        "Democratic": 19734,
+        "Republican": 30195,
+        "NoAffiliation": 5590,
+        "Other": 1901
+      }
+    },
+    {
+      "name": "Lebanon",
+      "fips": "42075",
+      "total_registered": 93661,
+      "by_party": {
+        "Democratic": 25308,
+        "Republican": 52604,
+        "NoAffiliation": 12053,
+        "Other": 3696
+      }
+    },
+    {
+      "name": "Lehigh",
+      "fips": "42077",
+      "total_registered": 252995,
+      "by_party": {
+        "Democratic": 110930,
+        "Republican": 89728,
+        "NoAffiliation": 45007,
+        "Other": 7330
+      }
+    },
+    {
+      "name": "Luzerne",
+      "fips": "42079",
+      "total_registered": 206228,
+      "by_party": {
+        "Democratic": 84110,
+        "Republican": 91204,
+        "NoAffiliation": 25244,
+        "Other": 5670
+      }
+    },
+    {
+      "name": "Lycoming",
+      "fips": "42081",
+      "total_registered": 72578,
+      "by_party": {
+        "Democratic": 18170,
+        "Republican": 43862,
+        "NoAffiliation": 7820,
+        "Other": 2726
+      }
+    },
+    {
+      "name": "McKean",
+      "fips": "42083",
+      "total_registered": 25174,
+      "by_party": {
+        "Democratic": 5284,
+        "Republican": 16165,
+        "NoAffiliation": 2699,
+        "Other": 1026
+      }
+    },
+    {
+      "name": "Mercer",
+      "fips": "42085",
+      "total_registered": 71847,
+      "by_party": {
+        "Democratic": 23151,
+        "Republican": 38308,
+        "NoAffiliation": 8356,
+        "Other": 2032
+      }
+    },
+    {
+      "name": "Mifflin",
+      "fips": "42087",
+      "total_registered": 27125,
+      "by_party": {
+        "Democratic": 5365,
+        "Republican": 18641,
+        "NoAffiliation": 2499,
+        "Other": 620
+      }
+    },
+    {
+      "name": "Monroe",
+      "fips": "42089",
+      "total_registered": 117066,
+      "by_party": {
+        "Democratic": 48428,
+        "Republican": 43258,
+        "NoAffiliation": 20374,
+        "Other": 5006
+      }
+    },
+    {
+      "name": "Montgomery",
+      "fips": "42091",
+      "total_registered": 622031,
+      "by_party": {
+        "Democratic": 304603,
+        "Republican": 208099,
+        "NoAffiliation": 83123,
+        "Other": 26206
+      }
+    },
+    {
+      "name": "Montour",
+      "fips": "42093",
+      "total_registered": 12326,
+      "by_party": {
+        "Democratic": 3759,
+        "Republican": 6565,
+        "NoAffiliation": 1599,
+        "Other": 403
+      }
+    },
+    {
+      "name": "Northampton",
+      "fips": "42095",
+      "total_registered": 231226,
+      "by_party": {
+        "Democratic": 95601,
+        "Republican": 86925,
+        "NoAffiliation": 39092,
+        "Other": 9608
+      }
+    },
+    {
+      "name": "Northumberland",
+      "fips": "42097",
+      "total_registered": 55287,
+      "by_party": {
+        "Democratic": 15318,
+        "Republican": 31950,
+        "NoAffiliation": 5775,
+        "Other": 2244
+      }
+    },
+    {
+      "name": "Perry",
+      "fips": "42099",
+      "total_registered": 31201,
+      "by_party": {
+        "Democratic": 5991,
+        "Republican": 20995,
+        "NoAffiliation": 3364,
+        "Other": 851
+      }
+    },
+    {
+      "name": "Philadelphia",
+      "fips": "42101",
+      "total_registered": 1080655,
+      "by_party": {
+        "Democratic": 774360,
+        "Republican": 131427,
+        "NoAffiliation": 148494,
+        "Other": 26374
+      }
+    },
+    {
+      "name": "Pike",
+      "fips": "42103",
+      "total_registered": 47118,
+      "by_party": {
+        "Democratic": 13575,
+        "Republican": 22989,
+        "NoAffiliation": 8401,
+        "Other": 2153
+      }
+    },
+    {
+      "name": "Potter",
+      "fips": "42105",
+      "total_registered": 11036,
+      "by_party": {
+        "Democratic": 1743,
+        "Republican": 8029,
+        "NoAffiliation": 989,
+        "Other": 275
+      }
+    },
+    {
+      "name": "Schuylkill",
+      "fips": "42107",
+      "total_registered": 92194,
+      "by_party": {
+        "Democratic": 25334,
+        "Republican": 53144,
+        "NoAffiliation": 9934,
+        "Other": 3782
+      }
+    },
+    {
+      "name": "Snyder",
+      "fips": "42109",
+      "total_registered": 23847,
+      "by_party": {
+        "Democratic": 4886,
+        "Republican": 15956,
+        "NoAffiliation": 2340,
+        "Other": 665
+      }
+    },
+    {
+      "name": "Somerset",
+      "fips": "42111",
+      "total_registered": 48432,
+      "by_party": {
+        "Democratic": 10500,
+        "Republican": 32819,
+        "NoAffiliation": 4349,
+        "Other": 764
+      }
+    },
+    {
+      "name": "Sullivan",
+      "fips": "42113",
+      "total_registered": 4440,
+      "by_party": {
+        "Democratic": 1063,
+        "Republican": 2845,
+        "NoAffiliation": 371,
+        "Other": 161
+      }
+    },
+    {
+      "name": "Susquehanna",
+      "fips": "42115",
+      "total_registered": 27897,
+      "by_party": {
+        "Democratic": 6257,
+        "Republican": 17568,
+        "NoAffiliation": 2916,
+        "Other": 1156
+      }
+    },
+    {
+      "name": "Tioga",
+      "fips": "42117",
+      "total_registered": 26750,
+      "by_party": {
+        "Democratic": 4925,
+        "Republican": 18113,
+        "NoAffiliation": 2918,
+        "Other": 794
+      }
+    },
+    {
+      "name": "Union",
+      "fips": "42119",
+      "total_registered": 26349,
+      "by_party": {
+        "Democratic": 7760,
+        "Republican": 14407,
+        "NoAffiliation": 3202,
+        "Other": 980
+      }
+    },
+    {
+      "name": "Venango",
+      "fips": "42121",
+      "total_registered": 32810,
+      "by_party": {
+        "Democratic": 8052,
+        "Republican": 20174,
+        "NoAffiliation": 3367,
+        "Other": 1217
+      }
+    },
+    {
+      "name": "Warren",
+      "fips": "42123",
+      "total_registered": 25432,
+      "by_party": {
+        "Democratic": 6360,
+        "Republican": 15263,
+        "NoAffiliation": 2550,
+        "Other": 1259
+      }
+    },
+    {
+      "name": "Washington",
+      "fips": "42125",
+      "total_registered": 145472,
+      "by_party": {
+        "Democratic": 52883,
+        "Republican": 72956,
+        "NoAffiliation": 15832,
+        "Other": 3801
+      }
+    },
+    {
+      "name": "Wayne",
+      "fips": "42127",
+      "total_registered": 36554,
+      "by_party": {
+        "Democratic": 8676,
+        "Republican": 21717,
+        "NoAffiliation": 5105,
+        "Other": 1056
+      }
+    },
+    {
+      "name": "Westmoreland",
+      "fips": "42129",
+      "total_registered": 250639,
+      "by_party": {
+        "Democratic": 86901,
+        "Republican": 130919,
+        "NoAffiliation": 23589,
+        "Other": 9230
+      }
+    },
+    {
+      "name": "Wyoming",
+      "fips": "42131",
+      "total_registered": 18470,
+      "by_party": {
+        "Democratic": 4683,
+        "Republican": 11340,
+        "NoAffiliation": 1785,
+        "Other": 662
+      }
+    },
+    {
+      "name": "York",
+      "fips": "42133",
+      "total_registered": 325844,
+      "by_party": {
+        "Democratic": 95967,
+        "Republican": 168331,
+        "NoAffiliation": 52757,
+        "Other": 8789
+      }
+    }
+  ],
+  "as_of_notes": "Data 'Information as of 06/08/2026' per the 'Reg Voter' worksheet header in the PA DOS currentvotestats.xlsx file. PA DOS publishes updated voter registration statistics weekly (each Monday).",
+  "data_quality": "high; official PA Department of State weekly Excel report (currentvotestats.xlsx), 'Reg Voter' tab. All 67 counties present. Every county party breakdown (Dem+Rep+NoAff+Other) equals county total; statewide party sums equal statewide total (8,956,598) and match the file's own Totals row exactly.",
+  "notes": "Party categories from source: Dem=Democratic, Rep=Republican, No Aff=No Affiliation, Other=all other/minor parties combined. Per PA DOS note, the 'No Affiliation' column counts only voters with that exact designation. Counts include both active and inactive registered voters. Statewide totals: Democratic 3,834,280; Republican 3,641,144; No Affiliation 1,165,555; Other 315,619."
+}

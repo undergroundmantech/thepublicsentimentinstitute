@@ -1,0 +1,456 @@
+{
+  "state": "Oregon",
+  "state_abbr": "OR",
+  "state_fips": "41",
+  "as_of_date": "2026-06-03",
+  "source_name": "Oregon Secretary of State, Elections Division \u2014 Voter Registration by County (June 2026)",
+  "source_url": "https://sos.oregon.gov/elections/Documents/registration/2026-june.pdf",
+  "registers_by_party": true,
+  "statewide_total_registered": 3082760,
+  "statewide_by_party": {
+    "Democratic": 982422,
+    "Republican": 733255,
+    "Nonaffiliated": 1146985,
+    "IndependentParty": 153913,
+    "Other": 66185
+  },
+  "county_unit_label": "county",
+  "county_level_available": true,
+  "counties": [
+    {
+      "name": "Baker",
+      "fips": "41001",
+      "total_registered": 12950,
+      "by_party": {
+        "Democratic": 1721,
+        "Republican": 5842,
+        "Nonaffiliated": 4432,
+        "IndependentParty": 743,
+        "Other": 212
+      }
+    },
+    {
+      "name": "Benton",
+      "fips": "41003",
+      "total_registered": 61481,
+      "by_party": {
+        "Democratic": 24986,
+        "Republican": 12075,
+        "Nonaffiliated": 20238,
+        "IndependentParty": 2961,
+        "Other": 1221
+      }
+    },
+    {
+      "name": "Clackamas",
+      "fips": "41005",
+      "total_registered": 320115,
+      "by_party": {
+        "Democratic": 100642,
+        "Republican": 83796,
+        "Nonaffiliated": 111783,
+        "IndependentParty": 17548,
+        "Other": 6346
+      }
+    },
+    {
+      "name": "Clatsop",
+      "fips": "41007",
+      "total_registered": 31959,
+      "by_party": {
+        "Democratic": 9800,
+        "Republican": 7519,
+        "Nonaffiliated": 12069,
+        "IndependentParty": 1842,
+        "Other": 729
+      }
+    },
+    {
+      "name": "Columbia",
+      "fips": "41009",
+      "total_registered": 42260,
+      "by_party": {
+        "Democratic": 10910,
+        "Republican": 11901,
+        "Nonaffiliated": 16293,
+        "IndependentParty": 2128,
+        "Other": 1028
+      }
+    },
+    {
+      "name": "Coos",
+      "fips": "41011",
+      "total_registered": 50601,
+      "by_party": {
+        "Democratic": 10834,
+        "Republican": 15952,
+        "Nonaffiliated": 19880,
+        "IndependentParty": 2822,
+        "Other": 1113
+      }
+    },
+    {
+      "name": "Crook",
+      "fips": "41013",
+      "total_registered": 21493,
+      "by_party": {
+        "Democratic": 2944,
+        "Republican": 9705,
+        "Nonaffiliated": 7308,
+        "IndependentParty": 1138,
+        "Other": 398
+      }
+    },
+    {
+      "name": "Curry",
+      "fips": "41015",
+      "total_registered": 19111,
+      "by_party": {
+        "Democratic": 3929,
+        "Republican": 6188,
+        "Nonaffiliated": 7410,
+        "IndependentParty": 1202,
+        "Other": 382
+      }
+    },
+    {
+      "name": "Deschutes",
+      "fips": "41017",
+      "total_registered": 165975,
+      "by_party": {
+        "Democratic": 48971,
+        "Republican": 44897,
+        "Nonaffiliated": 58327,
+        "IndependentParty": 10511,
+        "Other": 3269
+      }
+    },
+    {
+      "name": "Douglas",
+      "fips": "41019",
+      "total_registered": 90542,
+      "by_party": {
+        "Democratic": 15103,
+        "Republican": 34876,
+        "Nonaffiliated": 33570,
+        "IndependentParty": 4987,
+        "Other": 2006
+      }
+    },
+    {
+      "name": "Gilliam",
+      "fips": "41021",
+      "total_registered": 1440,
+      "by_party": {
+        "Democratic": 218,
+        "Republican": 609,
+        "Nonaffiliated": 493,
+        "IndependentParty": 80,
+        "Other": 40
+      }
+    },
+    {
+      "name": "Grant",
+      "fips": "41023",
+      "total_registered": 5535,
+      "by_party": {
+        "Democratic": 676,
+        "Republican": 2797,
+        "Nonaffiliated": 1684,
+        "IndependentParty": 283,
+        "Other": 95
+      }
+    },
+    {
+      "name": "Harney",
+      "fips": "41025",
+      "total_registered": 5605,
+      "by_party": {
+        "Democratic": 665,
+        "Republican": 2769,
+        "Nonaffiliated": 1802,
+        "IndependentParty": 269,
+        "Other": 100
+      }
+    },
+    {
+      "name": "Hood River",
+      "fips": "41027",
+      "total_registered": 16845,
+      "by_party": {
+        "Democratic": 6427,
+        "Republican": 2983,
+        "Nonaffiliated": 6274,
+        "IndependentParty": 833,
+        "Other": 328
+      }
+    },
+    {
+      "name": "Jackson",
+      "fips": "41029",
+      "total_registered": 163974,
+      "by_party": {
+        "Democratic": 41946,
+        "Republican": 49234,
+        "Nonaffiliated": 59920,
+        "IndependentParty": 9209,
+        "Other": 3665
+      }
+    },
+    {
+      "name": "Jefferson",
+      "fips": "41031",
+      "total_registered": 17672,
+      "by_party": {
+        "Democratic": 3052,
+        "Republican": 5935,
+        "Nonaffiliated": 7376,
+        "IndependentParty": 916,
+        "Other": 393
+      }
+    },
+    {
+      "name": "Josephine",
+      "fips": "41033",
+      "total_registered": 69498,
+      "by_party": {
+        "Democratic": 12691,
+        "Republican": 24968,
+        "Nonaffiliated": 26290,
+        "IndependentParty": 3810,
+        "Other": 1739
+      }
+    },
+    {
+      "name": "Klamath",
+      "fips": "41035",
+      "total_registered": 51308,
+      "by_party": {
+        "Democratic": 7414,
+        "Republican": 19980,
+        "Nonaffiliated": 20120,
+        "IndependentParty": 2743,
+        "Other": 1051
+      }
+    },
+    {
+      "name": "Lake",
+      "fips": "41037",
+      "total_registered": 5657,
+      "by_party": {
+        "Democratic": 535,
+        "Republican": 2870,
+        "Nonaffiliated": 1892,
+        "IndependentParty": 265,
+        "Other": 95
+      }
+    },
+    {
+      "name": "Lane",
+      "fips": "41039",
+      "total_registered": 280673,
+      "by_party": {
+        "Democratic": 99084,
+        "Republican": 61089,
+        "Nonaffiliated": 99228,
+        "IndependentParty": 14620,
+        "Other": 6652
+      }
+    },
+    {
+      "name": "Lincoln",
+      "fips": "41041",
+      "total_registered": 40218,
+      "by_party": {
+        "Democratic": 12884,
+        "Republican": 8585,
+        "Nonaffiliated": 15468,
+        "IndependentParty": 2392,
+        "Other": 889
+      }
+    },
+    {
+      "name": "Linn",
+      "fips": "41043",
+      "total_registered": 101123,
+      "by_party": {
+        "Democratic": 21001,
+        "Republican": 34420,
+        "Nonaffiliated": 38020,
+        "IndependentParty": 5511,
+        "Other": 2171
+      }
+    },
+    {
+      "name": "Malheur",
+      "fips": "41045",
+      "total_registered": 18624,
+      "by_party": {
+        "Democratic": 2202,
+        "Republican": 6277,
+        "Nonaffiliated": 9191,
+        "IndependentParty": 635,
+        "Other": 319
+      }
+    },
+    {
+      "name": "Marion",
+      "fips": "41047",
+      "total_registered": 229976,
+      "by_party": {
+        "Democratic": 60003,
+        "Republican": 62461,
+        "Nonaffiliated": 92766,
+        "IndependentParty": 10779,
+        "Other": 3967
+      }
+    },
+    {
+      "name": "Morrow",
+      "fips": "41049",
+      "total_registered": 7244,
+      "by_party": {
+        "Democratic": 989,
+        "Republican": 2531,
+        "Nonaffiliated": 3261,
+        "IndependentParty": 298,
+        "Other": 165
+      }
+    },
+    {
+      "name": "Multnomah",
+      "fips": "41051",
+      "total_registered": 581159,
+      "by_party": {
+        "Democratic": 280429,
+        "Republican": 56425,
+        "Nonaffiliated": 206448,
+        "IndependentParty": 22364,
+        "Other": 15493
+      }
+    },
+    {
+      "name": "Polk",
+      "fips": "41053",
+      "total_registered": 64988,
+      "by_party": {
+        "Democratic": 17016,
+        "Republican": 19385,
+        "Nonaffiliated": 23855,
+        "IndependentParty": 3561,
+        "Other": 1171
+      }
+    },
+    {
+      "name": "Sherman",
+      "fips": "41055",
+      "total_registered": 1509,
+      "by_party": {
+        "Democratic": 196,
+        "Republican": 726,
+        "Nonaffiliated": 483,
+        "IndependentParty": 70,
+        "Other": 34
+      }
+    },
+    {
+      "name": "Tillamook",
+      "fips": "41057",
+      "total_registered": 21729,
+      "by_party": {
+        "Democratic": 5967,
+        "Republican": 6089,
+        "Nonaffiliated": 8153,
+        "IndependentParty": 1089,
+        "Other": 431
+      }
+    },
+    {
+      "name": "Umatilla",
+      "fips": "41059",
+      "total_registered": 51274,
+      "by_party": {
+        "Democratic": 7854,
+        "Republican": 16308,
+        "Nonaffiliated": 23719,
+        "IndependentParty": 2204,
+        "Other": 1189
+      }
+    },
+    {
+      "name": "Union",
+      "fips": "41061",
+      "total_registered": 19698,
+      "by_party": {
+        "Democratic": 3095,
+        "Republican": 8350,
+        "Nonaffiliated": 6860,
+        "IndependentParty": 1039,
+        "Other": 354
+      }
+    },
+    {
+      "name": "Wallowa",
+      "fips": "41063",
+      "total_registered": 6318,
+      "by_party": {
+        "Democratic": 1059,
+        "Republican": 2963,
+        "Nonaffiliated": 1880,
+        "IndependentParty": 317,
+        "Other": 99
+      }
+    },
+    {
+      "name": "Wasco",
+      "fips": "41065",
+      "total_registered": 19062,
+      "by_party": {
+        "Democratic": 4780,
+        "Republican": 5189,
+        "Nonaffiliated": 7687,
+        "IndependentParty": 942,
+        "Other": 464
+      }
+    },
+    {
+      "name": "Washington",
+      "fips": "41067",
+      "total_registered": 406279,
+      "by_party": {
+        "Democratic": 142507,
+        "Republican": 73610,
+        "Nonaffiliated": 163834,
+        "IndependentParty": 19454,
+        "Other": 6874
+      }
+    },
+    {
+      "name": "Wheeler",
+      "fips": "41069",
+      "total_registered": 1044,
+      "by_party": {
+        "Democratic": 166,
+        "Republican": 521,
+        "Nonaffiliated": 281,
+        "IndependentParty": 51,
+        "Other": 25
+      }
+    },
+    {
+      "name": "Yamhill",
+      "fips": "41071",
+      "total_registered": 77821,
+      "by_party": {
+        "Democratic": 19726,
+        "Republican": 23430,
+        "Nonaffiliated": 28690,
+        "IndependentParty": 4297,
+        "Other": 1678
+      }
+    }
+  ],
+  "as_of_notes": "Latest monthly report available as of the research date (June 14, 2026). PDF titled 'Voter Registration by County \u2014 June 2026', prepared by the Elections Division on 6/3/2026; that preparation date is used as the 'as of' date. A July 2026 report was not yet published (URL returned a 404/SharePoint page). The same PDF contains a 'Comparison by County' page (totals) and a full party-breakdown page used here.",
+  "data_quality": "high",
+  "notes": "Source reports 12 party/registration categories: Democrat, Republican, Non-Affiliated, Constitution, Independent (Independent Party of Oregon), Libertarian, No Labels, Pacific Green, Progressive, We the People, Working Families, and Other. For this schema: Democratic=Democrat, Republican=Republican, Nonaffiliated=Non-Affiliated, IndependentParty=Independent (Independent Party of Oregon), and Other=sum of the remaining minor parties (Constitution, Libertarian, No Labels, Pacific Green, Progressive, We the People, Working Families, Other). All 36 counties included. County-level party columns sum exactly to the official statewide totals row and the county totals sum to 3,082,760. Note: Oregon's 'Independent' column is the Independent Party of Oregon (a recognized minor party), distinct from 'Non-Affiliated' (no party / unaffiliated)."
+}

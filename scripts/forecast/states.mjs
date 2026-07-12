@@ -1,0 +1,61 @@
+// Shared state tables for the forecast pipeline.
+// pvi: statewide partisan lean (R+ positive, Cook-anchored, 2024-cycle vintage).
+// elast: geographic elasticity — responsiveness to national swings (1 = average).
+// region: for the correlated-simulation factor model.
+// seats: 118th-Congress House delegation size.
+
+export const STATES = {
+  AL: { fips: "01", name: "Alabama",        pvi: 15,  elast: 0.88, region: "south",     seats: 7 },
+  AK: { fips: "02", name: "Alaska",         pvi: 8,   elast: 1.05, region: "west",      seats: 1 },
+  AZ: { fips: "04", name: "Arizona",        pvi: 2,   elast: 0.98, region: "west",      seats: 9 },
+  AR: { fips: "05", name: "Arkansas",       pvi: 16,  elast: 0.9,  region: "south",     seats: 4 },
+  CA: { fips: "06", name: "California",     pvi: -13, elast: 0.95, region: "pacific",   seats: 52 },
+  CO: { fips: "08", name: "Colorado",       pvi: -4,  elast: 1.02, region: "mountain",  seats: 8 },
+  CT: { fips: "09", name: "Connecticut",    pvi: -7,  elast: 1.0,  region: "northeast", seats: 5 },
+  DE: { fips: "10", name: "Delaware",       pvi: -7,  elast: 0.95, region: "northeast", seats: 1 },
+  FL: { fips: "12", name: "Florida",        pvi: 6,   elast: 0.96, region: "south",     seats: 28 },
+  GA: { fips: "13", name: "Georgia",        pvi: 3,   elast: 0.9,  region: "south",     seats: 14 },
+  HI: { fips: "15", name: "Hawaii",         pvi: -14, elast: 0.92, region: "pacific",   seats: 2 },
+  ID: { fips: "16", name: "Idaho",          pvi: 18,  elast: 0.9,  region: "mountain",  seats: 2 },
+  IL: { fips: "17", name: "Illinois",       pvi: -7,  elast: 0.97, region: "midwest",   seats: 17 },
+  IN: { fips: "18", name: "Indiana",        pvi: 11,  elast: 0.98, region: "midwest",   seats: 9 },
+  IA: { fips: "19", name: "Iowa",           pvi: 6,   elast: 1.08, region: "midwest",   seats: 4 },
+  KS: { fips: "20", name: "Kansas",         pvi: 10,  elast: 1.0,  region: "plains",    seats: 4 },
+  KY: { fips: "21", name: "Kentucky",       pvi: 16,  elast: 0.92, region: "south",     seats: 6 },
+  LA: { fips: "22", name: "Louisiana",      pvi: 12,  elast: 0.88, region: "south",     seats: 6 },
+  ME: { fips: "23", name: "Maine",          pvi: -2,  elast: 1.12, region: "northeast", seats: 2 },
+  MD: { fips: "24", name: "Maryland",       pvi: -14, elast: 0.94, region: "northeast", seats: 8 },
+  MA: { fips: "25", name: "Massachusetts",  pvi: -15, elast: 0.98, region: "northeast", seats: 9 },
+  MI: { fips: "26", name: "Michigan",       pvi: -1,  elast: 1.05, region: "midwest",   seats: 13 },
+  MN: { fips: "27", name: "Minnesota",      pvi: -3,  elast: 1.04, region: "midwest",   seats: 8 },
+  MS: { fips: "28", name: "Mississippi",    pvi: 11,  elast: 0.85, region: "south",     seats: 4 },
+  MO: { fips: "29", name: "Missouri",       pvi: 10,  elast: 0.96, region: "midwest",   seats: 8 },
+  MT: { fips: "30", name: "Montana",        pvi: 11,  elast: 1.06, region: "mountain",  seats: 2 },
+  NE: { fips: "31", name: "Nebraska",       pvi: 13,  elast: 0.98, region: "plains",    seats: 3 },
+  NV: { fips: "32", name: "Nevada",         pvi: 1,   elast: 1.0,  region: "west",      seats: 4 },
+  NH: { fips: "33", name: "New Hampshire",  pvi: -1,  elast: 1.15, region: "northeast", seats: 2 },
+  NJ: { fips: "34", name: "New Jersey",     pvi: -6,  elast: 1.0,  region: "northeast", seats: 12 },
+  NM: { fips: "35", name: "New Mexico",     pvi: -3,  elast: 0.95, region: "mountain",  seats: 3 },
+  NY: { fips: "36", name: "New York",       pvi: -10, elast: 1.02, region: "northeast", seats: 26 },
+  NC: { fips: "37", name: "North Carolina", pvi: 3,   elast: 0.92, region: "south",     seats: 14 },
+  ND: { fips: "38", name: "North Dakota",   pvi: 20,  elast: 0.95, region: "plains",    seats: 1 },
+  OH: { fips: "39", name: "Ohio",           pvi: 6,   elast: 1.0,  region: "midwest",   seats: 15 },
+  OK: { fips: "40", name: "Oklahoma",       pvi: 17,  elast: 0.88, region: "south",     seats: 5 },
+  OR: { fips: "41", name: "Oregon",         pvi: -6,  elast: 1.0,  region: "pacific",   seats: 6 },
+  PA: { fips: "42", name: "Pennsylvania",   pvi: 0,   elast: 1.02, region: "northeast", seats: 17 },
+  RI: { fips: "44", name: "Rhode Island",   pvi: -8,  elast: 0.98, region: "northeast", seats: 2 },
+  SC: { fips: "45", name: "South Carolina", pvi: 8,   elast: 0.9,  region: "south",     seats: 7 },
+  SD: { fips: "46", name: "South Dakota",   pvi: 16,  elast: 0.95, region: "plains",    seats: 1 },
+  TN: { fips: "47", name: "Tennessee",      pvi: 14,  elast: 0.9,  region: "south",     seats: 9 },
+  TX: { fips: "48", name: "Texas",          pvi: 5,   elast: 0.94, region: "south",     seats: 38 },
+  UT: { fips: "49", name: "Utah",           pvi: 13,  elast: 0.96, region: "mountain",  seats: 4 },
+  VT: { fips: "50", name: "Vermont",        pvi: -16, elast: 1.1,  region: "northeast", seats: 1 },
+  VA: { fips: "51", name: "Virginia",       pvi: -3,  elast: 0.98, region: "south",     seats: 11 },
+  WA: { fips: "53", name: "Washington",     pvi: -8,  elast: 0.98, region: "pacific",   seats: 10 },
+  WV: { fips: "54", name: "West Virginia",  pvi: 22,  elast: 0.9,  region: "south",     seats: 2 },
+  WI: { fips: "55", name: "Wisconsin",      pvi: 1,   elast: 1.1,  region: "midwest",   seats: 8 },
+  WY: { fips: "56", name: "Wyoming",        pvi: 25,  elast: 0.88, region: "mountain",  seats: 1 },
+};
+
+export const FIPS_TO_ST = Object.fromEntries(Object.entries(STATES).map(([st, v]) => [v.fips, st]));
+export const ST_LIST = Object.keys(STATES);

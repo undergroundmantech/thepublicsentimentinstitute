@@ -1,0 +1,216 @@
+{
+  "state": "Maine",
+  "state_abbr": "ME",
+  "state_fips": "23",
+  "as_of_date": "2026-03-07",
+  "source_name": "Maine Secretary of State, Bureau of Corporations, Elections & Commissions, Elections Division \u2014 Statewide Registered and Enrolled Data File (Active Status)",
+  "source_url": "https://www.maine.gov/sos/elections-voting/voter-data",
+  "registers_by_party": true,
+  "statewide_total_registered": 897677,
+  "statewide_by_party": {
+    "Democratic": 305364,
+    "Republican": 273632,
+    "Unenrolled": 282314,
+    "GreenIndependent": 30687,
+    "Other": 5680
+  },
+  "county_unit_label": "county",
+  "county_level_available": true,
+  "counties": [
+    {
+      "name": "Androscoggin",
+      "fips": "23001",
+      "total_registered": 64194,
+      "by_party": {
+        "Democratic": 19163,
+        "Republican": 20661,
+        "Unenrolled": 20429,
+        "GreenIndependent": 2718,
+        "Other": 1223
+      }
+    },
+    {
+      "name": "Aroostook",
+      "fips": "23003",
+      "total_registered": 38909,
+      "by_party": {
+        "Democratic": 9907,
+        "Republican": 15630,
+        "Unenrolled": 11729,
+        "GreenIndependent": 1435,
+        "Other": 208
+      }
+    },
+    {
+      "name": "Cumberland",
+      "fips": "23005",
+      "total_registered": 210754,
+      "by_party": {
+        "Democratic": 94861,
+        "Republican": 45370,
+        "Unenrolled": 63137,
+        "GreenIndependent": 6392,
+        "Other": 994
+      }
+    },
+    {
+      "name": "Franklin",
+      "fips": "23007",
+      "total_registered": 19246,
+      "by_party": {
+        "Democratic": 5204,
+        "Republican": 7050,
+        "Unenrolled": 6177,
+        "GreenIndependent": 736,
+        "Other": 79
+      }
+    },
+    {
+      "name": "Hancock",
+      "fips": "23009",
+      "total_registered": 40006,
+      "by_party": {
+        "Democratic": 14143,
+        "Republican": 12270,
+        "Unenrolled": 12097,
+        "GreenIndependent": 1332,
+        "Other": 164
+      }
+    },
+    {
+      "name": "Kennebec",
+      "fips": "23011",
+      "total_registered": 78802,
+      "by_party": {
+        "Democratic": 23907,
+        "Republican": 27154,
+        "Unenrolled": 24266,
+        "GreenIndependent": 3004,
+        "Other": 471
+      }
+    },
+    {
+      "name": "Knox",
+      "fips": "23013",
+      "total_registered": 28567,
+      "by_party": {
+        "Democratic": 11070,
+        "Republican": 7643,
+        "Unenrolled": 8845,
+        "GreenIndependent": 888,
+        "Other": 121
+      }
+    },
+    {
+      "name": "Lincoln",
+      "fips": "23015",
+      "total_registered": 26330,
+      "by_party": {
+        "Democratic": 8998,
+        "Republican": 8064,
+        "Unenrolled": 8220,
+        "GreenIndependent": 941,
+        "Other": 107
+      }
+    },
+    {
+      "name": "Oxford",
+      "fips": "23017",
+      "total_registered": 37399,
+      "by_party": {
+        "Democratic": 9429,
+        "Republican": 12976,
+        "Unenrolled": 13183,
+        "GreenIndependent": 1624,
+        "Other": 187
+      }
+    },
+    {
+      "name": "Penobscot",
+      "fips": "23019",
+      "total_registered": 93240,
+      "by_party": {
+        "Democratic": 26009,
+        "Republican": 35089,
+        "Unenrolled": 28081,
+        "GreenIndependent": 3241,
+        "Other": 820
+      }
+    },
+    {
+      "name": "Piscataquis",
+      "fips": "23021",
+      "total_registered": 11088,
+      "by_party": {
+        "Democratic": 2251,
+        "Republican": 4805,
+        "Unenrolled": 3575,
+        "GreenIndependent": 401,
+        "Other": 56
+      }
+    },
+    {
+      "name": "Sagadahoc",
+      "fips": "23023",
+      "total_registered": 26456,
+      "by_party": {
+        "Democratic": 9785,
+        "Republican": 7163,
+        "Unenrolled": 8452,
+        "GreenIndependent": 921,
+        "Other": 135
+      }
+    },
+    {
+      "name": "Somerset",
+      "fips": "23025",
+      "total_registered": 30613,
+      "by_party": {
+        "Democratic": 6903,
+        "Republican": 12926,
+        "Unenrolled": 9495,
+        "GreenIndependent": 1126,
+        "Other": 163
+      }
+    },
+    {
+      "name": "Waldo",
+      "fips": "23027",
+      "total_registered": 27330,
+      "by_party": {
+        "Democratic": 8900,
+        "Republican": 8737,
+        "Unenrolled": 8439,
+        "GreenIndependent": 1123,
+        "Other": 131
+      }
+    },
+    {
+      "name": "Washington",
+      "fips": "23029",
+      "total_registered": 20057,
+      "by_party": {
+        "Democratic": 4843,
+        "Republican": 8153,
+        "Unenrolled": 6320,
+        "GreenIndependent": 638,
+        "Other": 103
+      }
+    },
+    {
+      "name": "York",
+      "fips": "23031",
+      "total_registered": 144686,
+      "by_party": {
+        "Democratic": 49991,
+        "Republican": 39941,
+        "Unenrolled": 49869,
+        "GreenIndependent": 4167,
+        "Other": 718
+      }
+    }
+  ],
+  "as_of_notes": "Figures are from the official 'Statewide Registered and Enrolled Data File (Active Status)' dated 3/7/2026 ('After Inactivation Process'). This is ACTIVE-status registrations only; inactive-status voters are published in a separate file. The published Excel file totals 897,677 active registered voters statewide and is internally consistent (county sums and party sums both reconcile exactly to the grand total).",
+  "data_quality": "high \u2014 official SoS Excel data file parsed directly; all 16 counties present; statewide party sum and county total sum both reconcile exactly to 897,677.",
+  "notes": "Source provides voting-district / municipality-level granularity; aggregated here to county level for all 16 counties. Maine registers by party (enrollment). Active-status party columns in the file: D=Democratic, R=Republican, U=Unenrolled, G=Green Independent, L=Libertarian. 'Other' in this schema = Libertarian (5,680). No 'No Labels' column appears in this snapshot (No Labels is not an active qualified party in this file). Inactive-status registrations are excluded (separate file). The SoS news page also cited ~1,038,603 active voters as of 1/1/2026 under a different/earlier compilation; this JSON uses the most recent published data file (3/7/2026 Active, after inactivation)."
+}

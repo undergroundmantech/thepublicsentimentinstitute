@@ -7,7 +7,7 @@ import {
 } from "./buildDailyModel";
 
 import { RAW_POLLS as GENERIC, GOLD_STANDARD_NAMES as GENERIC_GOLD } from "../genericballot/data";
-import { RAW_POLLS as TRUMP, GOLD_STANDARD_NAMES as TRUMP_GOLD } from "../donaldtrumpapproval/page";
+import { RAW_POLLS as TRUMP, GOLD_STANDARD_NAMES as TRUMP_GOLD } from "../donaldtrumpapproval/data";
 import { RAW_POLLS as VANCE, GOLD_STANDARD_NAMES as VANCE_GOLD } from "../jdvanceapproval/page";
 import { RAW_POLLS as TRACK, GOLD_STANDARD_NAMES as TRACK_GOLD } from "../rightorwrongtrack/page";
 import { RAW_POLLS as P2028, GOLD_STANDARD_NAMES as P2028_GOLD } from "../2028polling/page";
@@ -36,7 +36,7 @@ import { RAW_POLLS as FL_GOP } from "../floridarepublicanprimary/page";
 import { RAW_POLLS as TX_GOP } from "../texasrepublicanprimary/page";
 import { RAW_POLLS as TX_DEM } from "../texasdemocratprimary/page";
 import { RAW_POLLS as ME_DEM } from "../mainedemocratprimary/page";
-import { KY04_POLLS } from "../page";
+import { KY04_POLLS } from "./ky04Polls";
 
 // 2026 Senate matchups (state modules with RACES + STATE_POLLS keyed by raceId)
 import * as SEN_TX from "../senatepolling/texas";

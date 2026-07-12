@@ -1,0 +1,570 @@
+{
+  "state": "Indiana",
+  "state_abbr": "IN",
+  "state_fips": "18",
+  "as_of_date": "2024-11-05",
+  "source_name": "Indiana Secretary of State / Indiana Election Division - 2024 General Election Turnout and Registration Report",
+  "source_url": "https://www.in.gov/sos/elections/voter-information/files/2024-General-Election-Turnout-and-Registration-Report.pdf",
+  "registers_by_party": false,
+  "statewide_total_registered": 4837802,
+  "statewide_by_party": null,
+  "county_unit_label": "county",
+  "county_level_available": true,
+  "counties": [
+    {
+      "name": "Adams",
+      "fips": "18001",
+      "total_registered": 19935,
+      "by_party": null
+    },
+    {
+      "name": "Allen",
+      "fips": "18003",
+      "total_registered": 285127,
+      "by_party": null
+    },
+    {
+      "name": "Bartholomew",
+      "fips": "18005",
+      "total_registered": 54087,
+      "by_party": null
+    },
+    {
+      "name": "Benton",
+      "fips": "18007",
+      "total_registered": 6021,
+      "by_party": null
+    },
+    {
+      "name": "Blackford",
+      "fips": "18009",
+      "total_registered": 8556,
+      "by_party": null
+    },
+    {
+      "name": "Boone",
+      "fips": "18011",
+      "total_registered": 62062,
+      "by_party": null
+    },
+    {
+      "name": "Brown",
+      "fips": "18013",
+      "total_registered": 13545,
+      "by_party": null
+    },
+    {
+      "name": "Carroll",
+      "fips": "18015",
+      "total_registered": 14903,
+      "by_party": null
+    },
+    {
+      "name": "Cass",
+      "fips": "18017",
+      "total_registered": 22675,
+      "by_party": null
+    },
+    {
+      "name": "Clark",
+      "fips": "18019",
+      "total_registered": 96263,
+      "by_party": null
+    },
+    {
+      "name": "Clay",
+      "fips": "18021",
+      "total_registered": 18820,
+      "by_party": null
+    },
+    {
+      "name": "Clinton",
+      "fips": "18023",
+      "total_registered": 20350,
+      "by_party": null
+    },
+    {
+      "name": "Crawford",
+      "fips": "18025",
+      "total_registered": 7920,
+      "by_party": null
+    },
+    {
+      "name": "Daviess",
+      "fips": "18027",
+      "total_registered": 17559,
+      "by_party": null
+    },
+    {
+      "name": "Dearborn",
+      "fips": "18029",
+      "total_registered": 40526,
+      "by_party": null
+    },
+    {
+      "name": "Decatur",
+      "fips": "18031",
+      "total_registered": 17631,
+      "by_party": null
+    },
+    {
+      "name": "DeKalb",
+      "fips": "18033",
+      "total_registered": 29972,
+      "by_party": null
+    },
+    {
+      "name": "Delaware",
+      "fips": "18035",
+      "total_registered": 76488,
+      "by_party": null
+    },
+    {
+      "name": "Dubois",
+      "fips": "18037",
+      "total_registered": 30676,
+      "by_party": null
+    },
+    {
+      "name": "Elkhart",
+      "fips": "18039",
+      "total_registered": 126875,
+      "by_party": null
+    },
+    {
+      "name": "Fayette",
+      "fips": "18041",
+      "total_registered": 17159,
+      "by_party": null
+    },
+    {
+      "name": "Floyd",
+      "fips": "18043",
+      "total_registered": 62972,
+      "by_party": null
+    },
+    {
+      "name": "Fountain",
+      "fips": "18045",
+      "total_registered": 12418,
+      "by_party": null
+    },
+    {
+      "name": "Franklin",
+      "fips": "18047",
+      "total_registered": 17922,
+      "by_party": null
+    },
+    {
+      "name": "Fulton",
+      "fips": "18049",
+      "total_registered": 13238,
+      "by_party": null
+    },
+    {
+      "name": "Gibson",
+      "fips": "18051",
+      "total_registered": 23623,
+      "by_party": null
+    },
+    {
+      "name": "Grant",
+      "fips": "18053",
+      "total_registered": 43644,
+      "by_party": null
+    },
+    {
+      "name": "Greene",
+      "fips": "18055",
+      "total_registered": 22037,
+      "by_party": null
+    },
+    {
+      "name": "Hamilton",
+      "fips": "18057",
+      "total_registered": 283132,
+      "by_party": null
+    },
+    {
+      "name": "Hancock",
+      "fips": "18059",
+      "total_registered": 65292,
+      "by_party": null
+    },
+    {
+      "name": "Harrison",
+      "fips": "18061",
+      "total_registered": 30280,
+      "by_party": null
+    },
+    {
+      "name": "Hendricks",
+      "fips": "18063",
+      "total_registered": 131291,
+      "by_party": null
+    },
+    {
+      "name": "Henry",
+      "fips": "18065",
+      "total_registered": 31648,
+      "by_party": null
+    },
+    {
+      "name": "Howard",
+      "fips": "18067",
+      "total_registered": 61288,
+      "by_party": null
+    },
+    {
+      "name": "Huntington",
+      "fips": "18069",
+      "total_registered": 24999,
+      "by_party": null
+    },
+    {
+      "name": "Jackson",
+      "fips": "18071",
+      "total_registered": 26143,
+      "by_party": null
+    },
+    {
+      "name": "Jasper",
+      "fips": "18073",
+      "total_registered": 23624,
+      "by_party": null
+    },
+    {
+      "name": "Jay",
+      "fips": "18075",
+      "total_registered": 11998,
+      "by_party": null
+    },
+    {
+      "name": "Jefferson",
+      "fips": "18077",
+      "total_registered": 22105,
+      "by_party": null
+    },
+    {
+      "name": "Jennings",
+      "fips": "18079",
+      "total_registered": 18351,
+      "by_party": null
+    },
+    {
+      "name": "Johnson",
+      "fips": "18081",
+      "total_registered": 123364,
+      "by_party": null
+    },
+    {
+      "name": "Knox",
+      "fips": "18083",
+      "total_registered": 22880,
+      "by_party": null
+    },
+    {
+      "name": "Kosciusko",
+      "fips": "18085",
+      "total_registered": 54295,
+      "by_party": null
+    },
+    {
+      "name": "LaGrange",
+      "fips": "18087",
+      "total_registered": 16749,
+      "by_party": null
+    },
+    {
+      "name": "Lake",
+      "fips": "18089",
+      "total_registered": 371117,
+      "by_party": null
+    },
+    {
+      "name": "LaPorte",
+      "fips": "18091",
+      "total_registered": 78924,
+      "by_party": null
+    },
+    {
+      "name": "Lawrence",
+      "fips": "18093",
+      "total_registered": 34759,
+      "by_party": null
+    },
+    {
+      "name": "Madison",
+      "fips": "18095",
+      "total_registered": 91492,
+      "by_party": null
+    },
+    {
+      "name": "Marion",
+      "fips": "18097",
+      "total_registered": 650471,
+      "by_party": null
+    },
+    {
+      "name": "Marshall",
+      "fips": "18099",
+      "total_registered": 30017,
+      "by_party": null
+    },
+    {
+      "name": "Martin",
+      "fips": "18101",
+      "total_registered": 7775,
+      "by_party": null
+    },
+    {
+      "name": "Miami",
+      "fips": "18103",
+      "total_registered": 22249,
+      "by_party": null
+    },
+    {
+      "name": "Monroe",
+      "fips": "18105",
+      "total_registered": 93146,
+      "by_party": null
+    },
+    {
+      "name": "Montgomery",
+      "fips": "18107",
+      "total_registered": 25094,
+      "by_party": null
+    },
+    {
+      "name": "Morgan",
+      "fips": "18109",
+      "total_registered": 55229,
+      "by_party": null
+    },
+    {
+      "name": "Newton",
+      "fips": "18111",
+      "total_registered": 10207,
+      "by_party": null
+    },
+    {
+      "name": "Noble",
+      "fips": "18113",
+      "total_registered": 31769,
+      "by_party": null
+    },
+    {
+      "name": "Ohio",
+      "fips": "18115",
+      "total_registered": 5231,
+      "by_party": null
+    },
+    {
+      "name": "Orange",
+      "fips": "18117",
+      "total_registered": 13375,
+      "by_party": null
+    },
+    {
+      "name": "Owen",
+      "fips": "18119",
+      "total_registered": 15685,
+      "by_party": null
+    },
+    {
+      "name": "Parke",
+      "fips": "18121",
+      "total_registered": 9509,
+      "by_party": null
+    },
+    {
+      "name": "Perry",
+      "fips": "18123",
+      "total_registered": 13801,
+      "by_party": null
+    },
+    {
+      "name": "Pike",
+      "fips": "18125",
+      "total_registered": 9357,
+      "by_party": null
+    },
+    {
+      "name": "Porter",
+      "fips": "18127",
+      "total_registered": 139687,
+      "by_party": null
+    },
+    {
+      "name": "Posey",
+      "fips": "18129",
+      "total_registered": 18310,
+      "by_party": null
+    },
+    {
+      "name": "Pulaski",
+      "fips": "18131",
+      "total_registered": 9494,
+      "by_party": null
+    },
+    {
+      "name": "Putnam",
+      "fips": "18133",
+      "total_registered": 26012,
+      "by_party": null
+    },
+    {
+      "name": "Randolph",
+      "fips": "18135",
+      "total_registered": 17061,
+      "by_party": null
+    },
+    {
+      "name": "Ripley",
+      "fips": "18137",
+      "total_registered": 22603,
+      "by_party": null
+    },
+    {
+      "name": "Rush",
+      "fips": "18139",
+      "total_registered": 11826,
+      "by_party": null
+    },
+    {
+      "name": "Scott",
+      "fips": "18143",
+      "total_registered": 17390,
+      "by_party": null
+    },
+    {
+      "name": "Shelby",
+      "fips": "18145",
+      "total_registered": 32284,
+      "by_party": null
+    },
+    {
+      "name": "Spencer",
+      "fips": "18147",
+      "total_registered": 15618,
+      "by_party": null
+    },
+    {
+      "name": "St. Joseph",
+      "fips": "18141",
+      "total_registered": 205991,
+      "by_party": null
+    },
+    {
+      "name": "Starke",
+      "fips": "18149",
+      "total_registered": 18317,
+      "by_party": null
+    },
+    {
+      "name": "Steuben",
+      "fips": "18151",
+      "total_registered": 26853,
+      "by_party": null
+    },
+    {
+      "name": "Sullivan",
+      "fips": "18153",
+      "total_registered": 14588,
+      "by_party": null
+    },
+    {
+      "name": "Switzerland",
+      "fips": "18155",
+      "total_registered": 7683,
+      "by_party": null
+    },
+    {
+      "name": "Tippecanoe",
+      "fips": "18157",
+      "total_registered": 119087,
+      "by_party": null
+    },
+    {
+      "name": "Tipton",
+      "fips": "18159",
+      "total_registered": 12191,
+      "by_party": null
+    },
+    {
+      "name": "Union",
+      "fips": "18161",
+      "total_registered": 5041,
+      "by_party": null
+    },
+    {
+      "name": "Vanderburgh",
+      "fips": "18163",
+      "total_registered": 134388,
+      "by_party": null
+    },
+    {
+      "name": "Vermillion",
+      "fips": "18165",
+      "total_registered": 11176,
+      "by_party": null
+    },
+    {
+      "name": "Vigo",
+      "fips": "18167",
+      "total_registered": 70669,
+      "by_party": null
+    },
+    {
+      "name": "Wabash",
+      "fips": "18169",
+      "total_registered": 20832,
+      "by_party": null
+    },
+    {
+      "name": "Warren",
+      "fips": "18171",
+      "total_registered": 6213,
+      "by_party": null
+    },
+    {
+      "name": "Warrick",
+      "fips": "18173",
+      "total_registered": 48991,
+      "by_party": null
+    },
+    {
+      "name": "Washington",
+      "fips": "18175",
+      "total_registered": 19396,
+      "by_party": null
+    },
+    {
+      "name": "Wayne",
+      "fips": "18177",
+      "total_registered": 45179,
+      "by_party": null
+    },
+    {
+      "name": "Wells",
+      "fips": "18179",
+      "total_registered": 19603,
+      "by_party": null
+    },
+    {
+      "name": "White",
+      "fips": "18181",
+      "total_registered": 17036,
+      "by_party": null
+    },
+    {
+      "name": "Whitley",
+      "fips": "18183",
+      "total_registered": 24633,
+      "by_party": null
+    }
+  ],
+  "as_of_notes": "Registered-voter counts are as of the 2024 General Election held Tuesday, November 5, 2024. Report generated/published by the Indiana Election Division on February 7, 2025. This is the most recent statewide voter registration report published on the Indiana SOS voter registration and turnout statistics page.",
+  "data_quality": "high",
+  "notes": "Indiana does not register voters by party; party breakdowns are null. All 92 counties included. County 'Registered Voters' values transcribed directly from the official PDF. The sum of all 92 county registered-voter totals (4,837,802) exactly matches the report's printed statewide total of 4,837,802. St. Joseph county FIPS = 18141. Source: in.gov/sos/elections voter registration and turnout statistics."
+}

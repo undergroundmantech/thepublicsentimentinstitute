@@ -1,0 +1,552 @@
+{
+  "state": "Idaho",
+  "state_abbr": "ID",
+  "state_fips": "16",
+  "as_of_date": "2026-06-01",
+  "source_name": "Idaho Secretary of State / VoteIdaho.gov - Voter Registration Totals (Registration by County and Party)",
+  "source_url": "https://voteidaho.gov/data-and-dashboards/voter-registration-totals/",
+  "registers_by_party": true,
+  "statewide_total_registered": 1029200,
+  "statewide_by_party": {
+    "Republican": 647349,
+    "Democratic": 121486,
+    "Unaffiliated": 245453,
+    "Constitution": 4154,
+    "Libertarian": 10758
+  },
+  "county_unit_label": "county",
+  "county_level_available": true,
+  "counties": [
+    {
+      "name": "Ada",
+      "fips": "16001",
+      "total_registered": 301334,
+      "by_party": {
+        "Republican": 159349,
+        "Democratic": 52985,
+        "Unaffiliated": 84596,
+        "Constitution": 819,
+        "Libertarian": 3585
+      }
+    },
+    {
+      "name": "Adams",
+      "fips": "16003",
+      "total_registered": 3075,
+      "by_party": {
+        "Republican": 2305,
+        "Democratic": 212,
+        "Unaffiliated": 522,
+        "Constitution": 13,
+        "Libertarian": 23
+      }
+    },
+    {
+      "name": "Bannock",
+      "fips": "16005",
+      "total_registered": 45743,
+      "by_party": {
+        "Republican": 23952,
+        "Democratic": 5799,
+        "Unaffiliated": 15320,
+        "Constitution": 174,
+        "Libertarian": 498
+      }
+    },
+    {
+      "name": "Bear Lake",
+      "fips": "16007",
+      "total_registered": 3793,
+      "by_party": {
+        "Republican": 3139,
+        "Democratic": 145,
+        "Unaffiliated": 475,
+        "Constitution": 20,
+        "Libertarian": 14
+      }
+    },
+    {
+      "name": "Benewah",
+      "fips": "16009",
+      "total_registered": 6051,
+      "by_party": {
+        "Republican": 4234,
+        "Democratic": 473,
+        "Unaffiliated": 1258,
+        "Constitution": 52,
+        "Libertarian": 34
+      }
+    },
+    {
+      "name": "Bingham",
+      "fips": "16011",
+      "total_registered": 23486,
+      "by_party": {
+        "Republican": 16956,
+        "Democratic": 1614,
+        "Unaffiliated": 4639,
+        "Constitution": 111,
+        "Libertarian": 166
+      }
+    },
+    {
+      "name": "Blaine",
+      "fips": "16013",
+      "total_registered": 15055,
+      "by_party": {
+        "Republican": 4776,
+        "Democratic": 4492,
+        "Unaffiliated": 5621,
+        "Constitution": 21,
+        "Libertarian": 145
+      }
+    },
+    {
+      "name": "Boise",
+      "fips": "16015",
+      "total_registered": 5800,
+      "by_party": {
+        "Republican": 4216,
+        "Democratic": 372,
+        "Unaffiliated": 1117,
+        "Constitution": 37,
+        "Libertarian": 58
+      }
+    },
+    {
+      "name": "Bonner",
+      "fips": "16017",
+      "total_registered": 34161,
+      "by_party": {
+        "Republican": 25368,
+        "Democratic": 2661,
+        "Unaffiliated": 5492,
+        "Constitution": 244,
+        "Libertarian": 396
+      }
+    },
+    {
+      "name": "Bonneville",
+      "fips": "16019",
+      "total_registered": 64071,
+      "by_party": {
+        "Republican": 42146,
+        "Democratic": 5321,
+        "Unaffiliated": 15680,
+        "Constitution": 253,
+        "Libertarian": 671
+      }
+    },
+    {
+      "name": "Boundary",
+      "fips": "16021",
+      "total_registered": 8336,
+      "by_party": {
+        "Republican": 6667,
+        "Democratic": 375,
+        "Unaffiliated": 1171,
+        "Constitution": 49,
+        "Libertarian": 74
+      }
+    },
+    {
+      "name": "Butte",
+      "fips": "16023",
+      "total_registered": 1607,
+      "by_party": {
+        "Republican": 1276,
+        "Democratic": 69,
+        "Unaffiliated": 255,
+        "Constitution": 3,
+        "Libertarian": 4
+      }
+    },
+    {
+      "name": "Camas",
+      "fips": "16025",
+      "total_registered": 826,
+      "by_party": {
+        "Republican": 649,
+        "Democratic": 59,
+        "Unaffiliated": 109,
+        "Constitution": 3,
+        "Libertarian": 6
+      }
+    },
+    {
+      "name": "Canyon",
+      "fips": "16027",
+      "total_registered": 115442,
+      "by_party": {
+        "Republican": 74543,
+        "Democratic": 12286,
+        "Unaffiliated": 26831,
+        "Constitution": 519,
+        "Libertarian": 1263
+      }
+    },
+    {
+      "name": "Caribou",
+      "fips": "16029",
+      "total_registered": 3917,
+      "by_party": {
+        "Republican": 3194,
+        "Democratic": 128,
+        "Unaffiliated": 543,
+        "Constitution": 16,
+        "Libertarian": 36
+      }
+    },
+    {
+      "name": "Cassia",
+      "fips": "16031",
+      "total_registered": 10488,
+      "by_party": {
+        "Republican": 8157,
+        "Democratic": 578,
+        "Unaffiliated": 1665,
+        "Constitution": 29,
+        "Libertarian": 59
+      }
+    },
+    {
+      "name": "Clark",
+      "fips": "16033",
+      "total_registered": 373,
+      "by_party": {
+        "Republican": 296,
+        "Democratic": 22,
+        "Unaffiliated": 50,
+        "Constitution": 2,
+        "Libertarian": 3
+      }
+    },
+    {
+      "name": "Clearwater",
+      "fips": "16035",
+      "total_registered": 4903,
+      "by_party": {
+        "Republican": 3537,
+        "Democratic": 319,
+        "Unaffiliated": 986,
+        "Constitution": 23,
+        "Libertarian": 38
+      }
+    },
+    {
+      "name": "Custer",
+      "fips": "16037",
+      "total_registered": 3007,
+      "by_party": {
+        "Republican": 2393,
+        "Democratic": 144,
+        "Unaffiliated": 455,
+        "Constitution": 6,
+        "Libertarian": 9
+      }
+    },
+    {
+      "name": "Elmore",
+      "fips": "16039",
+      "total_registered": 12340,
+      "by_party": {
+        "Republican": 8108,
+        "Democratic": 1200,
+        "Unaffiliated": 2822,
+        "Constitution": 68,
+        "Libertarian": 142
+      }
+    },
+    {
+      "name": "Franklin",
+      "fips": "16041",
+      "total_registered": 7949,
+      "by_party": {
+        "Republican": 6549,
+        "Democratic": 217,
+        "Unaffiliated": 1081,
+        "Constitution": 52,
+        "Libertarian": 50
+      }
+    },
+    {
+      "name": "Fremont",
+      "fips": "16043",
+      "total_registered": 7681,
+      "by_party": {
+        "Republican": 6170,
+        "Democratic": 306,
+        "Unaffiliated": 1137,
+        "Constitution": 27,
+        "Libertarian": 41
+      }
+    },
+    {
+      "name": "Gem",
+      "fips": "16045",
+      "total_registered": 12235,
+      "by_party": {
+        "Republican": 9378,
+        "Democratic": 703,
+        "Unaffiliated": 1981,
+        "Constitution": 70,
+        "Libertarian": 103
+      }
+    },
+    {
+      "name": "Gooding",
+      "fips": "16047",
+      "total_registered": 6812,
+      "by_party": {
+        "Republican": 4994,
+        "Democratic": 515,
+        "Unaffiliated": 1209,
+        "Constitution": 36,
+        "Libertarian": 58
+      }
+    },
+    {
+      "name": "Idaho",
+      "fips": "16049",
+      "total_registered": 11193,
+      "by_party": {
+        "Republican": 8981,
+        "Democratic": 517,
+        "Unaffiliated": 1554,
+        "Constitution": 56,
+        "Libertarian": 85
+      }
+    },
+    {
+      "name": "Jefferson",
+      "fips": "16051",
+      "total_registered": 17473,
+      "by_party": {
+        "Republican": 13951,
+        "Democratic": 549,
+        "Unaffiliated": 2778,
+        "Constitution": 78,
+        "Libertarian": 117
+      }
+    },
+    {
+      "name": "Jerome",
+      "fips": "16053",
+      "total_registered": 9072,
+      "by_party": {
+        "Republican": 6078,
+        "Democratic": 836,
+        "Unaffiliated": 2033,
+        "Constitution": 54,
+        "Libertarian": 71
+      }
+    },
+    {
+      "name": "Kootenai",
+      "fips": "16055",
+      "total_registered": 111344,
+      "by_party": {
+        "Republican": 76417,
+        "Democratic": 9761,
+        "Unaffiliated": 23259,
+        "Constitution": 565,
+        "Libertarian": 1342
+      }
+    },
+    {
+      "name": "Latah",
+      "fips": "16057",
+      "total_registered": 23398,
+      "by_party": {
+        "Republican": 11495,
+        "Democratic": 4400,
+        "Unaffiliated": 7158,
+        "Constitution": 72,
+        "Libertarian": 273
+      }
+    },
+    {
+      "name": "Lemhi",
+      "fips": "16059",
+      "total_registered": 5425,
+      "by_party": {
+        "Republican": 4242,
+        "Democratic": 358,
+        "Unaffiliated": 779,
+        "Constitution": 11,
+        "Libertarian": 35
+      }
+    },
+    {
+      "name": "Lewis",
+      "fips": "16061",
+      "total_registered": 2222,
+      "by_party": {
+        "Republican": 1678,
+        "Democratic": 127,
+        "Unaffiliated": 385,
+        "Constitution": 16,
+        "Libertarian": 16
+      }
+    },
+    {
+      "name": "Lincoln",
+      "fips": "16063",
+      "total_registered": 2224,
+      "by_party": {
+        "Republican": 1649,
+        "Democratic": 156,
+        "Unaffiliated": 400,
+        "Constitution": 8,
+        "Libertarian": 11
+      }
+    },
+    {
+      "name": "Madison",
+      "fips": "16065",
+      "total_registered": 21120,
+      "by_party": {
+        "Republican": 15401,
+        "Democratic": 931,
+        "Unaffiliated": 4445,
+        "Constitution": 128,
+        "Libertarian": 215
+      }
+    },
+    {
+      "name": "Minidoka",
+      "fips": "16067",
+      "total_registered": 8569,
+      "by_party": {
+        "Republican": 6213,
+        "Democratic": 649,
+        "Unaffiliated": 1614,
+        "Constitution": 36,
+        "Libertarian": 57
+      }
+    },
+    {
+      "name": "Nez Perce",
+      "fips": "16069",
+      "total_registered": 22225,
+      "by_party": {
+        "Republican": 13095,
+        "Democratic": 2633,
+        "Unaffiliated": 6198,
+        "Constitution": 98,
+        "Libertarian": 201
+      }
+    },
+    {
+      "name": "Oneida",
+      "fips": "16071",
+      "total_registered": 2816,
+      "by_party": {
+        "Republican": 2332,
+        "Democratic": 96,
+        "Unaffiliated": 347,
+        "Constitution": 15,
+        "Libertarian": 26
+      }
+    },
+    {
+      "name": "Owyhee",
+      "fips": "16073",
+      "total_registered": 5639,
+      "by_party": {
+        "Republican": 4302,
+        "Democratic": 370,
+        "Unaffiliated": 883,
+        "Constitution": 39,
+        "Libertarian": 45
+      }
+    },
+    {
+      "name": "Payette",
+      "fips": "16075",
+      "total_registered": 13550,
+      "by_party": {
+        "Republican": 9773,
+        "Democratic": 960,
+        "Unaffiliated": 2609,
+        "Constitution": 84,
+        "Libertarian": 124
+      }
+    },
+    {
+      "name": "Power",
+      "fips": "16077",
+      "total_registered": 3481,
+      "by_party": {
+        "Republican": 2310,
+        "Democratic": 384,
+        "Unaffiliated": 752,
+        "Constitution": 10,
+        "Libertarian": 25
+      }
+    },
+    {
+      "name": "Shoshone",
+      "fips": "16079",
+      "total_registered": 7349,
+      "by_party": {
+        "Republican": 4649,
+        "Democratic": 1018,
+        "Unaffiliated": 1576,
+        "Constitution": 34,
+        "Libertarian": 72
+      }
+    },
+    {
+      "name": "Teton",
+      "fips": "16081",
+      "total_registered": 7691,
+      "by_party": {
+        "Republican": 3406,
+        "Democratic": 1750,
+        "Unaffiliated": 2431,
+        "Constitution": 19,
+        "Libertarian": 85
+      }
+    },
+    {
+      "name": "Twin Falls",
+      "fips": "16083",
+      "total_registered": 41210,
+      "by_party": {
+        "Republican": 28633,
+        "Democratic": 3481,
+        "Unaffiliated": 8590,
+        "Constitution": 147,
+        "Libertarian": 359
+      }
+    },
+    {
+      "name": "Valley",
+      "fips": "16085",
+      "total_registered": 8414,
+      "by_party": {
+        "Republican": 5424,
+        "Democratic": 1099,
+        "Unaffiliated": 1786,
+        "Constitution": 24,
+        "Libertarian": 81
+      }
+    },
+    {
+      "name": "Washington",
+      "fips": "16087",
+      "total_registered": 6300,
+      "by_party": {
+        "Republican": 4968,
+        "Democratic": 416,
+        "Unaffiliated": 861,
+        "Constitution": 13,
+        "Libertarian": 42
+      }
+    }
+  ],
+  "as_of_notes": "Idaho publishes monthly voter registration snapshots labeled by year-month; the file 202606_CountyTotals.csv represents totals as of June 1, 2026 (the start of the month). This is the most recent monthly dataset available as of the research date (2026-06-14); no July 2026 file exists yet. The VoteIdaho dashboard page text read 'Last updated May 1, 2026' at time of fetch, but the underlying archive already contained the June (202606) dataset, which is used here as the latest.",
+  "data_quality": "high",
+  "notes": "Source data: https://archive.voteidaho.gov/data/voter-registrations/202606_CountyTotals.csv (the CSV backing the official VoteIdaho.gov voter registration dashboard, formerly hosted on sos.idaho.gov). All 44 Idaho counties present. Verified: each county party breakdown sums to its county total; county totals sum to the statewide grand total (1,029,200); statewide figures also cross-check exactly against the official Congressional district rollup (202606_CongressionalTotals.csv). Party columns: Republican, Democratic, Unaffiliated, Constitution, Libertarian. All values are integers."
+}

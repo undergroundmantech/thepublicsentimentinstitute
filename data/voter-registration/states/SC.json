@@ -1,0 +1,294 @@
+{
+  "state": "South Carolina",
+  "state_abbr": "SC",
+  "state_fips": "45",
+  "as_of_date": "2026-06-04",
+  "source_name": "South Carolina State Election Commission \u2014 VR Totals by County / Race / Gender / Age",
+  "source_url": "https://scvotes.gov/wp-content/uploads/2026/06/VR-Totals-Race-County-Gender-Age-2026-6-4.xlsx",
+  "registers_by_party": false,
+  "statewide_total_registered": 3390866,
+  "statewide_by_party": null,
+  "county_unit_label": "county",
+  "county_level_available": true,
+  "counties": [
+    {
+      "name": "Abbeville",
+      "fips": "45001",
+      "total_registered": 15574,
+      "by_party": null
+    },
+    {
+      "name": "Aiken",
+      "fips": "45003",
+      "total_registered": 115449,
+      "by_party": null
+    },
+    {
+      "name": "Allendale",
+      "fips": "45005",
+      "total_registered": 4398,
+      "by_party": null
+    },
+    {
+      "name": "Anderson",
+      "fips": "45007",
+      "total_registered": 129251,
+      "by_party": null
+    },
+    {
+      "name": "Bamberg",
+      "fips": "45009",
+      "total_registered": 7730,
+      "by_party": null
+    },
+    {
+      "name": "Barnwell",
+      "fips": "45011",
+      "total_registered": 12838,
+      "by_party": null
+    },
+    {
+      "name": "Beaufort",
+      "fips": "45013",
+      "total_registered": 140748,
+      "by_party": null
+    },
+    {
+      "name": "Berkeley",
+      "fips": "45015",
+      "total_registered": 159143,
+      "by_party": null
+    },
+    {
+      "name": "Calhoun",
+      "fips": "45017",
+      "total_registered": 10037,
+      "by_party": null
+    },
+    {
+      "name": "Charleston",
+      "fips": "45019",
+      "total_registered": 275419,
+      "by_party": null
+    },
+    {
+      "name": "Cherokee",
+      "fips": "45021",
+      "total_registered": 33663,
+      "by_party": null
+    },
+    {
+      "name": "Chester",
+      "fips": "45023",
+      "total_registered": 20174,
+      "by_party": null
+    },
+    {
+      "name": "Chesterfield",
+      "fips": "45025",
+      "total_registered": 25902,
+      "by_party": null
+    },
+    {
+      "name": "Clarendon",
+      "fips": "45027",
+      "total_registered": 21313,
+      "by_party": null
+    },
+    {
+      "name": "Colleton",
+      "fips": "45029",
+      "total_registered": 24433,
+      "by_party": null
+    },
+    {
+      "name": "Darlington",
+      "fips": "45031",
+      "total_registered": 41165,
+      "by_party": null
+    },
+    {
+      "name": "Dillon",
+      "fips": "45033",
+      "total_registered": 16498,
+      "by_party": null
+    },
+    {
+      "name": "Dorchester",
+      "fips": "45035",
+      "total_registered": 106365,
+      "by_party": null
+    },
+    {
+      "name": "Edgefield",
+      "fips": "45037",
+      "total_registered": 17829,
+      "by_party": null
+    },
+    {
+      "name": "Fairfield",
+      "fips": "45039",
+      "total_registered": 15376,
+      "by_party": null
+    },
+    {
+      "name": "Florence",
+      "fips": "45041",
+      "total_registered": 81800,
+      "by_party": null
+    },
+    {
+      "name": "Georgetown",
+      "fips": "45043",
+      "total_registered": 46994,
+      "by_party": null
+    },
+    {
+      "name": "Greenville",
+      "fips": "45045",
+      "total_registered": 343749,
+      "by_party": null
+    },
+    {
+      "name": "Greenwood",
+      "fips": "45047",
+      "total_registered": 41207,
+      "by_party": null
+    },
+    {
+      "name": "Hampton",
+      "fips": "45049",
+      "total_registered": 10868,
+      "by_party": null
+    },
+    {
+      "name": "Horry",
+      "fips": "45051",
+      "total_registered": 280474,
+      "by_party": null
+    },
+    {
+      "name": "Jasper",
+      "fips": "45053",
+      "total_registered": 26001,
+      "by_party": null
+    },
+    {
+      "name": "Kershaw",
+      "fips": "45055",
+      "total_registered": 42039,
+      "by_party": null
+    },
+    {
+      "name": "Lancaster",
+      "fips": "45057",
+      "total_registered": 70223,
+      "by_party": null
+    },
+    {
+      "name": "Laurens",
+      "fips": "45059",
+      "total_registered": 41240,
+      "by_party": null
+    },
+    {
+      "name": "Lee",
+      "fips": "45061",
+      "total_registered": 9879,
+      "by_party": null
+    },
+    {
+      "name": "Lexington",
+      "fips": "45063",
+      "total_registered": 191545,
+      "by_party": null
+    },
+    {
+      "name": "Marion",
+      "fips": "45067",
+      "total_registered": 19561,
+      "by_party": null
+    },
+    {
+      "name": "Marlboro",
+      "fips": "45069",
+      "total_registered": 14155,
+      "by_party": null
+    },
+    {
+      "name": "McCormick",
+      "fips": "45065",
+      "total_registered": 7716,
+      "by_party": null
+    },
+    {
+      "name": "Newberry",
+      "fips": "45071",
+      "total_registered": 23349,
+      "by_party": null
+    },
+    {
+      "name": "Oconee",
+      "fips": "45073",
+      "total_registered": 54426,
+      "by_party": null
+    },
+    {
+      "name": "Orangeburg",
+      "fips": "45075",
+      "total_registered": 49204,
+      "by_party": null
+    },
+    {
+      "name": "Pickens",
+      "fips": "45077",
+      "total_registered": 77073,
+      "by_party": null
+    },
+    {
+      "name": "Richland",
+      "fips": "45079",
+      "total_registered": 254626,
+      "by_party": null
+    },
+    {
+      "name": "Saluda",
+      "fips": "45081",
+      "total_registered": 11843,
+      "by_party": null
+    },
+    {
+      "name": "Spartanburg",
+      "fips": "45083",
+      "total_registered": 213942,
+      "by_party": null
+    },
+    {
+      "name": "Sumter",
+      "fips": "45085",
+      "total_registered": 60269,
+      "by_party": null
+    },
+    {
+      "name": "Union",
+      "fips": "45087",
+      "total_registered": 16136,
+      "by_party": null
+    },
+    {
+      "name": "Williamsburg",
+      "fips": "45089",
+      "total_registered": 18627,
+      "by_party": null
+    },
+    {
+      "name": "York",
+      "fips": "45091",
+      "total_registered": 190615,
+      "by_party": null
+    }
+  ],
+  "as_of_notes": "Report dated 2026-06-04 (per source filename and the SCEC 'Voter Registration and Participation Statistics' page). The XLSX has no embedded run-date cell; the date is taken from the official file name (VR-Totals-Race-County-Gender-Age-2026-6-4) and the SCEC monthly report listing. This is the latest monthly county-level VR report published by SCEC.",
+  "data_quality": "high",
+  "notes": "Numbers taken from the official SCEC monthly Excel report, sheet 'Race: All', column 'All Total'. Statewide total 3,390,866 from the report's TOTAL row equals the exact sum of all 46 counties (verified). South Carolina does NOT register voters by party, so registers_by_party=false and all by_party fields are null. County FIPS assigned per standard SC alphabetical county FIPS codes (45001-45091). Note: the live VREMS dashboard at vrems.scvotes.sc.gov showed ~3,397,570 at retrieval time, which is a separate real-time snapshot; this file reflects the official 2026-06-04 monthly report, which is internally consistent."
+}

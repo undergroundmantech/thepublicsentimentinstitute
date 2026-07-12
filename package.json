@@ -3,13 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "NEXT_PUBLIC_SITE_V2=\"${NEXT_PUBLIC_SITE_V2:-on}\" next dev",
     "build": "next build",
     "start": "next start",
     "lint": "eslint"
   },
   "dependencies": {
     "@paypal/react-paypal-js": "^8.9.2",
+    "@types/three": "^0.184.1",
     "d3-geo": "^3.1.1",
     "framer-motion": "^12.34.0",
     "lucide-react": "^0.563.0",
@@ -19,6 +20,7 @@
     "react-dom": "19.2.3",
     "recharts": "^3.7.0",
     "stripe": "^20.3.1",
+    "three": "^0.184.0",
     "topojson-client": "^3.1.0"
   },
   "devDependencies": {
