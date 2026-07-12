@@ -7,9 +7,14 @@ export default function NotFoundV2() {
   return (
     <section className="nf2">
       <style>{`
+        /* full-bleed takeover, same as every v2 page: dark body, no global
+           chrome, break out of the layout container */
+        body { background: #050505 !important; }
         body header, body footer { display: none !important; }
         .nf2 {
           position: relative; z-index: 1;
+          width: 100vw;
+          margin-left: calc(50% - 50vw);
           background: #050505;
           font-family: ui-monospace, "SF Mono", Menlo, monospace;
         }
