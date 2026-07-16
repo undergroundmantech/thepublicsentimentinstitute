@@ -131,8 +131,8 @@ const CSS = `
   .dn-logo { display: inline-flex; align-items: center; flex-shrink: 0; text-decoration: none; }
   .dn-logo-img {
     display: block; width: 132px; height: 30px; background: #f4f4ef;
-    -webkit-mask: url(/full_logo_clean.png) left center / contain no-repeat;
-    mask: url(/full_logo_clean.png) left center / contain no-repeat;
+    -webkit-mask: url(/tpsi-logo.svg) left center / contain no-repeat;
+    mask: url(/tpsi-logo.svg) left center / contain no-repeat;
     transition: opacity .2s ease;
   }
   .dn-logo:hover .dn-logo-img { opacity: 0.82; }

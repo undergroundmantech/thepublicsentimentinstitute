@@ -5,32 +5,32 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import { SITE_V2 } from "./lib/flags";
 import RolloutGate from "./components/RolloutGate";
-import { Quantico, Geist_Mono, Fraunces, JetBrains_Mono } from "next/font/google";
+import { Geist, JetBrains_Mono } from "next/font/google";
 
 /* -----------------------------
-   FONTS
+   FONTS — Variant A system
 ------------------------------ */
 
-const display = Quantico({
+// Display / headers — JetBrains Mono, heavy weights only.
+// Mono width-tax rule: use --font-display for SHORT strings (race labels,
+// section headers, hero, kickers). For long-form titles (editorial blurb
+// headings, multi-line prose titles) use --font-body at 600 instead.
+const display = JetBrains_Mono({
   subsets: ["latin"],
-  weight: ["400", "700"],           // Quantico only has 400 and 700
+  weight: ["700", "800"],
   variable: "--font-display",
   display: "swap",
 });
 
-const mono = Geist_Mono({
+// UI / body / tables — Geist (variable).
+const body = Geist({
   subsets: ["latin"],
   variable: "--font-body",
   display: "swap",
 });
 
-// Editorial serif — used for the redesigned polling section (data-journalism feel).
-const serif = Fraunces({
-  subsets: ["latin"],
-  variable: "--font-serif",
-  display: "swap",
-});
-
+// Data numerals — JetBrains Mono. Shares the face with display by design
+// (the brand "speaks in the typography of its own data").
 const numeric = JetBrains_Mono({
   subsets: ["latin"],
   weight: ["500", "700", "800"],
@@ -60,7 +60,7 @@ export default function RootLayout({
     <html
       lang="en"
       data-site={SITE_V2 ? "v2" : "v1"}
-      className={`${display.variable} ${mono.variable} ${serif.variable} ${numeric.variable}`}
+      className={`${display.variable} ${body.variable} ${numeric.variable}`}
       suppressHydrationWarning
     >
       <head>
@@ -74,7 +74,7 @@ export default function RootLayout({
         <body
         suppressHydrationWarning
         className={[
-          mono.className,
+          body.className,
           "min-h-screen antialiased overflow-x-hidden",
         ].join(" ")}
       >
@@ -83,6 +83,7 @@ export default function RootLayout({
 
         {/* --------------------------------
            Ambient tri-color glow background
+           (newsroom palette — whisper opacity, party tokens only)
         -------------------------------- */}
         <div
           aria-hidden="true"
@@ -90,30 +91,30 @@ export default function RootLayout({
         >
           {/* Red bloom */}
           <div
-            className="absolute -top-32 -left-32 h-[480px] w-[480px] rounded-full opacity-[0.07]"
+            className="absolute -top-32 -left-32 h-[480px] w-[480px] rounded-full opacity-[0.02]"
             style={{
               background:
-                "radial-gradient(circle, #e63946 0%, transparent 70%)",
+                "radial-gradient(circle, var(--gop) 0%, transparent 70%)",
               filter: "blur(60px)",
             }}
           />
 
           {/* Blue bloom */}
           <div
-            className="absolute -bottom-32 -right-32 h-[520px] w-[520px] rounded-full opacity-[0.07]"
+            className="absolute -bottom-32 -right-32 h-[520px] w-[520px] rounded-full opacity-[0.02]"
             style={{
               background:
-                "radial-gradient(circle, #2563eb 0%, transparent 70%)",
+                "radial-gradient(circle, var(--dem) 0%, transparent 70%)",
               filter: "blur(60px)",
             }}
           />
 
           {/* Purple bloom */}
           <div
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[600px] w-[600px] rounded-full opacity-[0.05]"
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[600px] w-[600px] rounded-full opacity-[0.015]"
             style={{
               background:
-                "radial-gradient(circle, #7c3aed 0%, transparent 70%)",
+                "radial-gradient(circle, var(--purple) 0%, transparent 70%)",
               filter: "blur(80px)",
             }}
           />
@@ -131,8 +132,7 @@ export default function RootLayout({
             <div
               className="h-[2px] w-full"
               style={{
-                background:
-                  "linear-gradient(90deg,#e63946 0%,#e63946 33%,#7c3aed 33%,#7c3aed 66%,#2563eb 66%,#2563eb 100%)",
+                background: "var(--brand-grad)",
                 opacity: 0.55,
               }}
             />

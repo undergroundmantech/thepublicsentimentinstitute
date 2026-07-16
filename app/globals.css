@@ -9,137 +9,159 @@
    1) DESIGN TOKENS
 -------------------------------------------- */
 :root {
-  /* Core surfaces (light) */
-  --background:  #f6f7fb;
-  --background2: #eef0f6;
+  /* ---- Core surfaces (LIGHT — clean newsroom) ---- */
+  --canvas:      #f7f7f4;
+  --background:  #f7f7f4;   /* alias */
+  --background2: #f1f1ed;   /* alias */
   --panel:       #ffffff;
-  --panel2:      #fbfbfd;
+  --panel2:      #f1f1ed;
+  --panel3:      #e9e9e4;
 
-  /* Text */
-  --foreground: #0b0d1c;
-  --foreground2:#2b2f44;
-  --muted:      #6b7088;
-  --muted2:     #9aa0b4;
-  --muted3:     rgba(15, 16, 32, 0.22);
+  /* ---- Text ---- */
+  --ink:        #17171b;
+  --foreground: #17171b;    /* alias */
+  --foreground2:#3a3a3f;    /* alias */
+  --ink2:       #5d5d58;
+  --muted:      #5d5d58;    /* alias */
+  --ink3:       #9c9c93;
+  --muted2:     #9c9c93;    /* alias */
+  --muted3:     rgba(23, 23, 27, 0.20);
 
-  /* Borders */
-  --border:  rgba(15, 16, 32, 0.08);
-  --border2: rgba(15, 16, 32, 0.14);
-  --border3: rgba(15, 16, 32, 0.22);
+  /* ---- Borders / hairlines ---- */
+  --hairline:  #e8e8e2;
+  --hairline2: #d9d9d1;
+  --border:  #e8e8e2;       /* alias */
+  --border2: #d9d9d1;       /* alias */
+  --border3: #c4c4ba;       /* alias */
 
-  /* Primary accent — Electric Indigo / Purple */
-  --purple:      #7c3aed;
-  --purple2:     #9d5cf0;
-  --purple-soft: #6d28d9;
-  --purple-dim:  rgba(124, 58, 237, 0.10);
-  --purple-glow: rgba(124, 58, 237, 0.22);
+  /* ---- Party / candidate (DATA ONLY — never surface fill) ---- */
+  --dem:  #1d5fc4;
+  --gop:  #c22f3b;
+  --rep:  #c22f3b;          /* alias */
+  --c2:   #b5338f;          /* same-party primary: candidate B (magenta) */
+  --dem-dim: rgba(29, 95, 196, 0.10);
+  --gop-dim: rgba(194, 47, 59, 0.10);
 
-  /* Red */
-  --red:      #e63946;
-  --red2:     #ff4d5a;
-  --red-dim:  rgba(230, 57, 70, 0.10);
-  --red-glow: rgba(230, 57, 70, 0.22);
+  /* ---- Non-partisan signal lane ---- */
+  --live:   #0d9488;        /* live / auto-refresh */
+  --called: #15803d;        /* race called */
+  --win:    #15803d;        /* alias */
+  --gold:   #a16207;        /* target marker / meaningful-remaining highlight */
 
-  /* Blue */
-  --blue:      #2563eb;
-  --blue2:     #3b82f6;
-  --blue-dim:  rgba(37, 99, 235, 0.10);
-  --blue-glow: rgba(37, 99, 235, 0.22);
+  /* ---- Brand gradient (from tpsi-logo.svg) — TWO placements only ---- */
+  --brand-grad: linear-gradient(90deg,#d2494b 0%,#a44197 20%,#6d3ee9 51%,#3f60e8 100%);
 
-  /* Ink accent */
-  --white-accent: #0b0d1c;
+  /* ---- Legacy accent aliases (re-pointed; kept so token code survives) ---- */
+  --purple:      #6d3ee9;
+  --purple2:     #8a63ef;
+  --purple-soft: #5a2fd4;
+  --purple-dim:  rgba(109, 62, 233, 0.10);
+  --purple-glow: rgba(109, 62, 233, 0.20);
+  --red:      #c22f3b;
+  --red2:     #d64550;
+  --red-dim:  rgba(194, 47, 59, 0.10);
+  --red-glow: rgba(194, 47, 59, 0.20);
+  --blue:      #1d5fc4;
+  --blue2:     #3b7bde;
+  --blue-dim:  rgba(29, 95, 196, 0.10);
+  --blue-glow: rgba(29, 95, 196, 0.20);
+  --white-accent: #17171b;
 
-  /* Party aliases */
-  --dem: #2563eb;
-  --rep: #e63946;
-  --win: #16a34a;
+  /* ---- Shadows — soft for light ---- */
+  --shadow-sm: 0 1px 2px rgba(23,23,27,0.04), 0 2px 8px rgba(23,23,27,0.05);
+  --shadow-md: 0 4px 12px rgba(23,23,27,0.05), 0 12px 32px rgba(23,23,27,0.07);
+  --shadow-lg: 0 6px 16px rgba(23,23,27,0.05), 0 24px 64px rgba(23,23,27,0.10);
+  --shadow-purple: 0 12px 40px rgba(109,62,233,0.12);
+  --shadow-red:    0 12px 40px rgba(194,47,59,0.12);
+  --shadow-blue:   0 12px 40px rgba(29,95,196,0.12);
 
-  /* Shadows — soft for light mode */
-  --shadow-sm:     0 1px 2px rgba(15, 16, 32, 0.04), 0 2px 8px rgba(15, 16, 32, 0.05);
-  --shadow-md:     0 4px 12px rgba(15, 16, 32, 0.05), 0 12px 32px rgba(15, 16, 32, 0.07);
-  --shadow-lg:     0 6px 16px rgba(15, 16, 32, 0.05), 0 24px 64px rgba(15, 16, 32, 0.10);
-  --shadow-purple: 0 12px 40px rgba(124, 58, 237, 0.14);
-  --shadow-red:    0 12px 40px rgba(230, 57, 70, 0.14);
-  --shadow-blue:   0 12px 40px rgba(37, 99, 235, 0.14);
+  /* ---- Gradients (legacy names, re-pointed to brand) ---- */
+  --gradient-purple:      var(--brand-grad);
+  --gradient-purple-soft: var(--brand-grad);
 
-  /* Gradients */
-  --gradient-purple:      linear-gradient(135deg, #a855f7 0%, #7c3aed 50%, #5b21b6 100%);
-  --gradient-purple-soft: linear-gradient(135deg, #9333ea 0%, #6d28d9 50%, #4c1d95 100%);
+  /* ---- Radii ---- */
+  --r-sm: 5px; --r-md: 8px; --r-lg: 11px; --r-xl: 14px; --r-pill: 9999px;
 
-  /* Radii — rounded box UI */
-  --r-sm: 5px;
-  --r-md: 8px;
-  --r-lg: 11px;
-  --r-xl: 14px;
-  --r-pill: 9999px;
-
-  /* Fonts (set via next/font) */
+  /* ---- Fonts (set via next/font) ---- */
   --font-display: var(--font-display);
   --font-body:    var(--font-body);
+  --font-numeric: var(--font-numeric);
 
-  /* Tracking */
-  --trk-1: 0.04em;
-  --trk-2: 0.08em;
-  --trk-3: 0.14em;
+  /* ---- Tracking ---- */
+  --trk-1: 0.04em; --trk-2: 0.08em; --trk-3: 0.14em;
 
-  /* Motion */
+  /* ---- Motion ---- */
   --ease-out:  cubic-bezier(0.22, 1, 0.36, 1);
   --ease-soft: cubic-bezier(0.16, 1, 0.3, 1);
-  --dur-1: 140ms;
-  --dur-2: 220ms;
-  --dur-3: 420ms;
+  --dur-1: 140ms; --dur-2: 220ms; --dur-3: 420ms;
 }
 
 /* -------------------------------------------
-   1b) DARK THEME OVERRIDES
-   Activated by <html data-theme="dark">.
-   Accent hues (purple/red/blue) intentionally preserved.
+   1b) DARK THEME OVERRIDES — <html data-theme="dark">
+   Near-black canvas + warm off-white ink.
 -------------------------------------------- */
 :root[data-theme="dark"] {
-  /* Surfaces */
-  --background:  #0a0b14;
-  --background2: #11131f;
-  --panel:       #161827;
-  --panel2:      #1d2030;
+  --canvas:      #0a0a0c;
+  --background:  #0a0a0c;
+  --background2: #111114;
+  --panel:       #111114;
+  --panel2:      #16161a;
+  --panel3:      #1c1c21;
 
-  /* Text */
-  --foreground: #f4f5fb;
-  --foreground2:#c8cbdb;
-  --muted:      #aab0c6;
-  --muted2:     #8a90a8;
-  --muted3:     rgba(244, 245, 251, 0.22);
+  --ink:        #f2f2f0;
+  --foreground: #f2f2f0;
+  --foreground2:rgba(242,242,240,0.78);
+  --ink2:       rgba(242,242,240,0.62);
+  --muted:      rgba(242,242,240,0.62);
+  --ink3:       rgba(242,242,240,0.36);
+  --muted2:     rgba(242,242,240,0.36);
+  --muted3:     rgba(242,242,240,0.20);
 
-  /* Borders */
-  --border:  rgba(244, 245, 251, 0.08);
-  --border2: rgba(244, 245, 251, 0.14);
-  --border3: rgba(244, 245, 251, 0.22);
+  --hairline:  rgba(255,255,255,0.08);
+  --hairline2: rgba(255,255,255,0.15);
+  --border:  rgba(255,255,255,0.08);
+  --border2: rgba(255,255,255,0.15);
+  --border3: rgba(255,255,255,0.24);
 
-  /* Tinted dims (slightly stronger for contrast on dark) */
-  --purple:      hsl(271, 50%, 65%);
-  --purple2:     hsl(271, 50%, 74%);
-  --purple-soft: hsl(271, 45%, 58%);
-  --purple-glow: hsla(271, 50%, 65%, 0.35);
-  --purple-dim:  rgba(124, 58, 237, 0.18);
-  --red-dim:     rgba(230, 57, 70, 0.18);
-  --blue-dim:    rgba(37, 99, 235, 0.18);
+  /* Party — slightly lifted for contrast on dark; still DATA ONLY */
+  --dem:  #3b7bde;
+  --gop:  #d64550;
+  --rep:  #d64550;
+  --c2:   #c757a8;
+  --dem-dim: rgba(59,123,222,0.16);
+  --gop-dim: rgba(214,69,80,0.16);
 
-  /* Ink accent flips to white */
-  --white-accent: #f4f5fb;
+  /* Signal lane — brightened for dark */
+  --live:   #2dd4bf;
+  --called: #37b26c;
+  --win:    #37b26c;
+  --gold:   #e8b93c;
 
-  /* Shadows — deeper for dark surfaces */
-  --shadow-sm:     0 1px 2px rgba(0, 0, 0, 0.40), 0 2px 8px rgba(0, 0, 0, 0.30);
-  --shadow-md:     0 4px 12px rgba(0, 0, 0, 0.45), 0 12px 32px rgba(0, 0, 0, 0.40);
-  --shadow-lg:     0 6px 16px rgba(0, 0, 0, 0.50), 0 24px 64px rgba(0, 0, 0, 0.55);
-  --shadow-purple: 0 12px 40px rgba(124, 58, 237, 0.34);
-  --shadow-red:    0 12px 40px rgba(230, 57, 70, 0.30);
-  --shadow-blue:   0 12px 40px rgba(37, 99, 235, 0.30);
+  /* Legacy aliases re-pointed for dark */
+  --purple:  #8a63ef;
+  --purple2: #a486f3;
+  --red:     #d64550;
+  --red2:    #e4737c;
+  --blue:    #3b7bde;
+  --blue2:   #6ea3ee;
+  --white-accent: #f2f2f0;
+  --purple-dim: rgba(138,99,239,0.18);
+  --red-dim:    rgba(214,69,80,0.18);
+  --blue-dim:   rgba(59,123,222,0.18);
+
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.40), 0 2px 8px rgba(0,0,0,0.30);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.45), 0 12px 32px rgba(0,0,0,0.40);
+  --shadow-lg: 0 6px 16px rgba(0,0,0,0.50), 0 24px 64px rgba(0,0,0,0.55);
+  --shadow-purple: 0 12px 40px rgba(138,99,239,0.30);
+  --shadow-red:    0 12px 40px rgba(214,69,80,0.28);
+  --shadow-blue:   0 12px 40px rgba(59,123,222,0.28);
 }
 
 :root[data-theme="dark"] body::before {
   background:
-    radial-gradient(ellipse 70% 50% at 0% 0%,   rgba(124, 58, 237, 0.14) 0%, transparent 60%),
-    radial-gradient(ellipse 60% 40% at 100% 0%, rgba(37, 99, 235, 0.12)  0%, transparent 60%),
-    radial-gradient(ellipse 50% 35% at 50% 100%,rgba(230, 57, 70, 0.10)  0%, transparent 60%);
+    radial-gradient(ellipse 70% 50% at 0% 0%,   rgba(109, 62, 233, 0.06) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 40% at 100% 0%, rgba(29, 95, 196, 0.05)  0%, transparent 60%),
+    radial-gradient(ellipse 50% 35% at 50% 100%,rgba(194, 47, 59, 0.04)  0%, transparent 60%);
 }
 
 :root[data-theme="dark"] .psi-glass {
@@ -215,25 +237,46 @@ button, input, textarea, select { font: inherit; color: inherit; }
 -------------------------------------------- */
 h1, h2, h3, h4, h5, h6 {
   margin: 0 0 0.5em;
-  font-family: var(--font-display), sans-serif;
+  font-family: var(--font-display), ui-monospace, monospace;
   font-weight: 800;
   letter-spacing: -0.02em;
-  color: var(--foreground);
-  line-height: 1.08;
-  text-transform: uppercase;
+  color: var(--ink);
+  line-height: 1.06;
+  text-transform: none;          /* was: uppercase */
+  text-wrap: balance;
 }
 
-/* Quantico (display font) is always uppercase site-wide */
-[style*="--font-display"],
-[style*="font-display"],
-[class*="font-display"],
-.psi-gradient-text,
-.font-display,
-.hp-headline,
+/* Hero-scale display */
+h1 { font-size: clamp(30px, 5vw, 56px); letter-spacing: -0.028em; }
+
+/* Kicker / eyebrow / index utility — the ONLY place uppercase mono lives now */
+.psi-kicker,
 .hp-eyebrow,
-.hp-section-title,
-.hp-hero-side-head,
-.hp-cap-headline { text-transform: uppercase !important; }
+.hp-section-title {
+  font-family: var(--font-numeric), ui-monospace, monospace;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: var(--trk-3);
+  font-size: 0.72em;
+  color: var(--ink3);
+}
+
+/* Long-form title escape hatch (mono width-tax rule): apply this class to
+   multi-line editorial headings so they use Geist instead of wide mono. */
+.title-longform {
+  font-family: var(--font-body), system-ui, sans-serif;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  text-transform: none;
+}
+
+/* Tabular numerals everywhere numbers matter */
+.psi-num,
+[class*="-num"],
+td.num, .num {
+  font-family: var(--font-numeric), ui-monospace, monospace;
+  font-variant-numeric: tabular-nums;
+}
 h1 { line-height: 0.98; margin-bottom: 0.35em; }
 h2 { margin-bottom: 0.45em; }
 h3, h4, h5, h6 { margin-bottom: 0.5em; }

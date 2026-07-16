@@ -1,0 +1,170 @@
+/* ============================================================================
+   REPLACEMENT BLOCK for app/globals.css — TOKEN SECTION ONLY
+   ----------------------------------------------------------------------------
+   Replace the existing `:root { ... }` (light) block AND the
+   `:root[data-theme="dark"] { ... }` block with the two blocks below.
+   Do NOT touch anything after the dark block (component styles are unchanged
+   and inherit through these variables).
+
+   Design system: newsroom discipline.
+   • Neutral chrome. Party color appears ONLY in data (rails/chips/tinted
+     numerals/map fills), never as surface or block fill.
+   • Non-partisan signal lane: --live (mint), --called (green), --gold (target).
+   • Brand gradient (--brand-grad) from tpsi-logo.svg — used in exactly TWO
+     places sitewide: the 2px nav underrule and the active race-switcher tab.
+
+   BACKWARD-COMPAT ALIASES: the legacy variable names (--purple, --red, --blue,
+   --background, --foreground, etc.) are RETAINED and re-pointed to the new
+   palette so components that still reference them don't break. The Phase-2
+   find-and-replace then migrates hardcoded HEX literals; these aliases cover
+   token-referencing code automatically.
+============================================================================ */
+
+:root {
+  /* ---- Core surfaces (LIGHT — clean newsroom) ---- */
+  --canvas:      #f7f7f4;
+  --background:  #f7f7f4;   /* alias */
+  --background2: #f1f1ed;   /* alias */
+  --panel:       #ffffff;
+  --panel2:      #f1f1ed;
+  --panel3:      #e9e9e4;
+
+  /* ---- Text ---- */
+  --ink:        #17171b;
+  --foreground: #17171b;    /* alias */
+  --foreground2:#3a3a3f;    /* alias */
+  --ink2:       #5d5d58;
+  --muted:      #5d5d58;    /* alias */
+  --ink3:       #9c9c93;
+  --muted2:     #9c9c93;    /* alias */
+  --muted3:     rgba(23, 23, 27, 0.20);
+
+  /* ---- Borders / hairlines ---- */
+  --hairline:  #e8e8e2;
+  --hairline2: #d9d9d1;
+  --border:  #e8e8e2;       /* alias */
+  --border2: #d9d9d1;       /* alias */
+  --border3: #c4c4ba;       /* alias */
+
+  /* ---- Party / candidate (DATA ONLY — never surface fill) ---- */
+  --dem:  #1d5fc4;
+  --gop:  #c22f3b;
+  --rep:  #c22f3b;          /* alias */
+  --c2:   #b5338f;          /* same-party primary: candidate B (magenta) */
+  --dem-dim: rgba(29, 95, 196, 0.10);
+  --gop-dim: rgba(194, 47, 59, 0.10);
+
+  /* ---- Non-partisan signal lane ---- */
+  --live:   #0d9488;        /* live / auto-refresh */
+  --called: #15803d;        /* race called */
+  --win:    #15803d;        /* alias */
+  --gold:   #a16207;        /* target marker / meaningful-remaining highlight */
+
+  /* ---- Brand gradient (from tpsi-logo.svg) — TWO placements only ---- */
+  --brand-grad: linear-gradient(90deg,#d2494b 0%,#a44197 20%,#6d3ee9 51%,#3f60e8 100%);
+
+  /* ---- Legacy accent aliases (re-pointed; kept so token code survives) ---- */
+  --purple:      #6d3ee9;
+  --purple2:     #8a63ef;
+  --purple-soft: #5a2fd4;
+  --purple-dim:  rgba(109, 62, 233, 0.10);
+  --purple-glow: rgba(109, 62, 233, 0.20);
+  --red:      #c22f3b;
+  --red2:     #d64550;
+  --red-dim:  rgba(194, 47, 59, 0.10);
+  --red-glow: rgba(194, 47, 59, 0.20);
+  --blue:      #1d5fc4;
+  --blue2:     #3b7bde;
+  --blue-dim:  rgba(29, 95, 196, 0.10);
+  --blue-glow: rgba(29, 95, 196, 0.20);
+  --white-accent: #17171b;
+
+  /* ---- Shadows — soft for light ---- */
+  --shadow-sm: 0 1px 2px rgba(23,23,27,0.04), 0 2px 8px rgba(23,23,27,0.05);
+  --shadow-md: 0 4px 12px rgba(23,23,27,0.05), 0 12px 32px rgba(23,23,27,0.07);
+  --shadow-lg: 0 6px 16px rgba(23,23,27,0.05), 0 24px 64px rgba(23,23,27,0.10);
+  --shadow-purple: 0 12px 40px rgba(109,62,233,0.12);
+  --shadow-red:    0 12px 40px rgba(194,47,59,0.12);
+  --shadow-blue:   0 12px 40px rgba(29,95,196,0.12);
+
+  /* ---- Gradients (legacy names, re-pointed to brand) ---- */
+  --gradient-purple:      var(--brand-grad);
+  --gradient-purple-soft: var(--brand-grad);
+
+  /* ---- Radii ---- */
+  --r-sm: 5px; --r-md: 8px; --r-lg: 11px; --r-xl: 14px; --r-pill: 9999px;
+
+  /* ---- Fonts (set via next/font) ---- */
+  --font-display: var(--font-display);
+  --font-body:    var(--font-body);
+  --font-numeric: var(--font-numeric);
+
+  /* ---- Tracking ---- */
+  --trk-1: 0.04em; --trk-2: 0.08em; --trk-3: 0.14em;
+
+  /* ---- Motion ---- */
+  --ease-out:  cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-soft: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur-1: 140ms; --dur-2: 220ms; --dur-3: 420ms;
+}
+
+/* -------------------------------------------
+   DARK THEME OVERRIDES — <html data-theme="dark">
+   Near-black canvas + warm off-white ink.
+-------------------------------------------- */
+:root[data-theme="dark"] {
+  --canvas:      #0a0a0c;
+  --background:  #0a0a0c;
+  --background2: #111114;
+  --panel:       #111114;
+  --panel2:      #16161a;
+  --panel3:      #1c1c21;
+
+  --ink:        #f2f2f0;
+  --foreground: #f2f2f0;
+  --foreground2:rgba(242,242,240,0.78);
+  --ink2:       rgba(242,242,240,0.62);
+  --muted:      rgba(242,242,240,0.62);
+  --ink3:       rgba(242,242,240,0.36);
+  --muted2:     rgba(242,242,240,0.36);
+  --muted3:     rgba(242,242,240,0.20);
+
+  --hairline:  rgba(255,255,255,0.08);
+  --hairline2: rgba(255,255,255,0.15);
+  --border:  rgba(255,255,255,0.08);
+  --border2: rgba(255,255,255,0.15);
+  --border3: rgba(255,255,255,0.24);
+
+  /* Party — slightly lifted for contrast on dark; still DATA ONLY */
+  --dem:  #3b7bde;
+  --gop:  #d64550;
+  --rep:  #d64550;
+  --c2:   #c757a8;
+  --dem-dim: rgba(59,123,222,0.16);
+  --gop-dim: rgba(214,69,80,0.16);
+
+  /* Signal lane — brightened for dark */
+  --live:   #2dd4bf;
+  --called: #37b26c;
+  --win:    #37b26c;
+  --gold:   #e8b93c;
+
+  /* Legacy aliases re-pointed for dark */
+  --purple:  #8a63ef;
+  --purple2: #a486f3;
+  --red:     #d64550;
+  --red2:    #e4737c;
+  --blue:    #3b7bde;
+  --blue2:   #6ea3ee;
+  --white-accent: #f2f2f0;
+  --purple-dim: rgba(138,99,239,0.18);
+  --red-dim:    rgba(214,69,80,0.18);
+  --blue-dim:   rgba(59,123,222,0.18);
+
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.40), 0 2px 8px rgba(0,0,0,0.30);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.45), 0 12px 32px rgba(0,0,0,0.40);
+  --shadow-lg: 0 6px 16px rgba(0,0,0,0.50), 0 24px 64px rgba(0,0,0,0.55);
+  --shadow-purple: 0 12px 40px rgba(138,99,239,0.30);
+  --shadow-red:    0 12px 40px rgba(214,69,80,0.28);
+  --shadow-blue:   0 12px 40px rgba(59,123,222,0.28);
+}

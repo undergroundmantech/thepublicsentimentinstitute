@@ -1,0 +1,59 @@
+/* ============================================================================
+   PATCH for app/globals.css — TYPOGRAPHY SECTION (section "3) TYPOGRAPHY")
+   ----------------------------------------------------------------------------
+   The current heading rule forces UPPERCASE sitewide (a Quantico-era choice).
+   JetBrains Mono display wants MIXED CASE at large sizes; uppercase is reserved
+   for small kickers/labels/index type only.
+
+   Replace the existing `h1, h2, h3, h4, h5, h6 { ... }` rule with the block
+   below. Then find the selector list that begins
+   `[style*="--font-display"], ... { text-transform: uppercase; ... }`
+   (the "Quantico is always uppercase" group) and REMOVE the
+   `text-transform: uppercase;` declaration from it — or delete the rule if it
+   only sets that property. Replace with the `.psi-kicker` utility below for
+   the cases that genuinely want uppercase.
+============================================================================ */
+
+/* Headings — JetBrains Mono, heavy, mixed case, tight tracking */
+h1, h2, h3, h4, h5, h6 {
+  margin: 0 0 0.5em;
+  font-family: var(--font-display), ui-monospace, monospace;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  line-height: 1.06;
+  text-transform: none;          /* was: uppercase */
+  text-wrap: balance;
+}
+
+/* Hero-scale display */
+h1 { font-size: clamp(30px, 5vw, 56px); letter-spacing: -0.028em; }
+
+/* Kicker / eyebrow / index utility — the ONLY place uppercase mono lives now */
+.psi-kicker,
+.hp-eyebrow,
+.hp-section-title {
+  font-family: var(--font-numeric), ui-monospace, monospace;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: var(--trk-3);
+  font-size: 0.72em;
+  color: var(--ink3);
+}
+
+/* Long-form title escape hatch (mono width-tax rule): apply this class to
+   multi-line editorial headings so they use Geist instead of wide mono. */
+.title-longform {
+  font-family: var(--font-body), system-ui, sans-serif;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  text-transform: none;
+}
+
+/* Tabular numerals everywhere numbers matter */
+.psi-num,
+[class*="-num"],
+td.num, .num {
+  font-family: var(--font-numeric), ui-monospace, monospace;
+  font-variant-numeric: tabular-nums;
+}

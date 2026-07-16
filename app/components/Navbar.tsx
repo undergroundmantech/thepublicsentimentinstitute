@@ -74,7 +74,7 @@ export default function Navbar() {
           left: 0;
           right: 0;
           height: 2px;
-          background: linear-gradient(90deg, #e63946 33%, #7c3aed 66%, #2563eb 100%);
+          background: var(--brand-grad);
         }
 
         .nb-bar {
@@ -99,13 +99,12 @@ export default function Navbar() {
           height: 36px;
           width: 140px;
           flex-shrink: 0;
-          background:
-            linear-gradient(100deg, #e63946 0%, #7c3aed 50%, #2563eb 100%);
-          -webkit-mask-image: url(/full_logo_clean.png);
+          background: var(--brand-grad);
+          -webkit-mask-image: url(/tpsi-logo.svg);
           -webkit-mask-size: contain;
           -webkit-mask-repeat: no-repeat;
           -webkit-mask-position: left center;
-          mask-image: url(/full_logo_clean.png);
+          mask-image: url(/tpsi-logo.svg);
           mask-size: contain;
           mask-repeat: no-repeat;
           mask-position: left center;
