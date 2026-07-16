@@ -67,7 +67,7 @@ function StatPill({ label, value, tone = "neutral" }: { label: string; value: st
   );
 }
 
-function SplitBar({ a, b, aColor = "#2563eb", bColor = "#e63946" }: { a: number; b: number; aColor?: string; bColor?: string }) {
+function SplitBar({ a, b, aColor = "#1d5fc4", bColor = "#c22f3b" }: { a: number; b: number; aColor?: string; bColor?: string }) {
   const total = a + b || 1;
   const ap = (a / total) * 100;
   return (
@@ -162,19 +162,19 @@ export default function HomeV2() {
     <>
       <style jsx global>{`
         :root {
-          --v2-bg:       #f6f7fb;
+          --v2-bg:       #f7f7f4;
           --v2-bg-2:     #eef0f6;
           --v2-surface:  #ffffff;
           --v2-surface-2:#fbfbfd;
-          --v2-ink:      #0b0d1c;
+          --v2-ink:      #17171b;
           --v2-ink-2:    #2b2f44;
           --v2-muted:    #6b7088;
           --v2-muted-2:  #9aa0b4;
           --v2-border:   rgba(15, 16, 32, 0.08);
           --v2-border-2: rgba(15, 16, 32, 0.14);
-          --v2-red:      #e63946;
-          --v2-blue:     #2563eb;
-          --v2-purple:   #7c3aed;
+          --v2-red:      #c22f3b;
+          --v2-blue:     #1d5fc4;
+          --v2-purple:   #6d3ee9;
           --v2-green:    #16a34a;
           --v2-shadow-sm: 0 1px 2px rgba(15,16,32,0.04), 0 1px 4px rgba(15,16,32,0.04);
           --v2-shadow-md: 0 4px 12px rgba(15,16,32,0.05), 0 12px 32px rgba(15,16,32,0.07);
@@ -581,9 +581,9 @@ export default function HomeV2() {
               </div>
 
               {[
-                { label: "Trump Approval",        value: `${approve}%`, color: "#2563eb", a: approve, b: disapprove, la: `${approve}% App`, lb: `${disapprove}% Dis` },
-                { label: "Right / Wrong Track",   value: `${wt}%`,      color: "#e63946", a: rt, b: wt, la: `${rt}% Right`, lb: `${wt}% Wrong` },
-                { label: "Generic Ballot",        value: `${gbNet >= 0 ? "D+" : "R+"}${Math.abs(gbNet).toFixed(1)}`, color: gbNet >= 0 ? "#2563eb" : "#e63946", a: dem, b: rep, la: `D ${dem}%`, lb: `R ${rep}%` },
+                { label: "Trump Approval",        value: `${approve}%`, color: "#1d5fc4", a: approve, b: disapprove, la: `${approve}% App`, lb: `${disapprove}% Dis` },
+                { label: "Right / Wrong Track",   value: `${wt}%`,      color: "#c22f3b", a: rt, b: wt, la: `${rt}% Right`, lb: `${wt}% Wrong` },
+                { label: "Generic Ballot",        value: `${gbNet >= 0 ? "D+" : "R+"}${Math.abs(gbNet).toFixed(1)}`, color: gbNet >= 0 ? "#1d5fc4" : "#c22f3b", a: dem, b: rep, la: `D ${dem}%`, lb: `R ${rep}%` },
               ].map(m => (
                 <div key={m.label} className="v2-metric">
                   <div className="v2-metric-top">
@@ -592,8 +592,8 @@ export default function HomeV2() {
                   </div>
                   <SplitBar a={m.a} b={m.b} />
                   <div className="v2-metric-foot">
-                    <span style={{ color: "#2563eb" }}>{m.la}</span>
-                    <span style={{ color: "#e63946" }}>{m.lb}</span>
+                    <span style={{ color: "#1d5fc4" }}>{m.la}</span>
+                    <span style={{ color: "#c22f3b" }}>{m.lb}</span>
                   </div>
                 </div>
               ))}
@@ -615,56 +615,56 @@ export default function HomeV2() {
                 title="Presidential Approval" sub="weighted national average"
                 href="/polling/donaldtrumpapproval" data={trumpSeries}
                 lines={[
-                  { key: "a", name: "Approve",    color: "#e63946" },
-                  { key: "b", name: "Disapprove", color: "#2563eb" },
+                  { key: "a", name: "Approve",    color: "#c22f3b" },
+                  { key: "b", name: "Disapprove", color: "#1d5fc4" },
                 ]}
                 domain={[30, 65]} refY={50}
                 stats={[
-                  { label: "Approve",    val: `${approve}%`,    color: "#e63946" },
-                  { label: "Disapprove", val: `${disapprove}%`, color: "#2563eb" },
-                  { label: "Net",        val: `${(approve - disapprove).toFixed(1)}`, color: approve > disapprove ? "#e63946" : "#2563eb" },
+                  { label: "Approve",    val: `${approve}%`,    color: "#c22f3b" },
+                  { label: "Disapprove", val: `${disapprove}%`, color: "#1d5fc4" },
+                  { label: "Net",        val: `${(approve - disapprove).toFixed(1)}`, color: approve > disapprove ? "#c22f3b" : "#1d5fc4" },
                 ]}
               />
               <V2ChartCard
                 title="Right / Wrong Track" sub="national consumer sentiment"
                 href="/polling/rightorwrongtrack" data={rtSeries}
                 lines={[
-                  { key: "a", name: "Right Track", color: "#e63946" },
-                  { key: "b", name: "Wrong Track", color: "#2563eb" },
+                  { key: "a", name: "Right Track", color: "#c22f3b" },
+                  { key: "b", name: "Wrong Track", color: "#1d5fc4" },
                 ]}
                 domain={[20, 80]}
                 stats={[
-                  { label: "Right", val: `${rt}%`, color: "#e63946" },
-                  { label: "Wrong", val: `${wt}%`, color: "#2563eb" },
-                  { label: "Net",   val: `${(rt - wt).toFixed(1)}`, color: rt > wt ? "#e63946" : "#2563eb" },
+                  { label: "Right", val: `${rt}%`, color: "#c22f3b" },
+                  { label: "Wrong", val: `${wt}%`, color: "#1d5fc4" },
+                  { label: "Net",   val: `${(rt - wt).toFixed(1)}`, color: rt > wt ? "#c22f3b" : "#1d5fc4" },
                 ]}
               />
               <V2ChartCard
                 title="Generic Congressional Ballot" sub="who voters back for U.S. House"
                 href="/polling/genericballot" data={gbSeries}
                 lines={[
-                  { key: "a", name: "Democrat",   color: "#2563eb" },
-                  { key: "b", name: "Republican", color: "#e63946" },
+                  { key: "a", name: "Democrat",   color: "#1d5fc4" },
+                  { key: "b", name: "Republican", color: "#c22f3b" },
                 ]}
                 domain={[35, 58]} refY={50}
                 stats={[
-                  { label: "Democrat",   val: `${dem}%`, color: "#2563eb" },
-                  { label: "Republican", val: `${rep}%`, color: "#e63946" },
-                  { label: "Margin",     val: `${gbNet >= 0 ? "D+" : "R+"}${Math.abs(gbNet).toFixed(1)}`, color: gbNet >= 0 ? "#2563eb" : "#e63946" },
+                  { label: "Democrat",   val: `${dem}%`, color: "#1d5fc4" },
+                  { label: "Republican", val: `${rep}%`, color: "#c22f3b" },
+                  { label: "Margin",     val: `${gbNet >= 0 ? "D+" : "R+"}${Math.abs(gbNet).toFixed(1)}`, color: gbNet >= 0 ? "#1d5fc4" : "#c22f3b" },
                 ]}
               />
               <V2ChartCard
                 title="TX Senate GOP Runoff" sub="Paxton vs Cornyn · May 26"
                 href="/results" data={ky04Series}
                 lines={[
-                  { key: "a", name: "Paxton", color: "#e63946" },
-                  { key: "b", name: "Cornyn", color: "#7c3aed" },
+                  { key: "a", name: "Paxton", color: "#c22f3b" },
+                  { key: "b", name: "Cornyn", color: "#6d3ee9" },
                 ]}
                 domain={[35, 70]} refY={50}
                 stats={[
-                  { label: "Paxton", val: "58%", color: "#e63946" },
-                  { label: "Cornyn", val: "42%", color: "#7c3aed" },
-                  { label: "Margin", val: "R+16",  color: "#e63946" },
+                  { label: "Paxton", val: "58%", color: "#c22f3b" },
+                  { label: "Cornyn", val: "42%", color: "#6d3ee9" },
+                  { label: "Margin", val: "R+16",  color: "#c22f3b" },
                 ]}
               />
             </div>

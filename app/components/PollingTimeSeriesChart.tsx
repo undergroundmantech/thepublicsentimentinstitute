@@ -168,7 +168,7 @@ export default function PollingTimeSeriesChart({
 
         .psc-stripe {
           height: 3px;
-          background: linear-gradient(90deg, #e63946 33%, #7c3aed 66%, #2563eb 100%);
+          background: linear-gradient(90deg, #c22f3b 33%, #6d3ee9 66%, #1d5fc4 100%);
         }
 
         .psc-header {
@@ -229,12 +229,12 @@ export default function PollingTimeSeriesChart({
           align-items: center;
           gap: 5px;
           padding: 3px 10px;
-          border: 1px solid rgba(124,58,237,0.3);
-          background: rgba(124,58,237,0.1);
+          border: 1px solid rgba(109,62,233,0.3);
+          background: var(--purple-dim);
           border-radius: 100px;
           font-size: 11px;
           font-weight: 600;
-          color: #9d5cf0;
+          color: #8a63ef;
         }
 
         /* Recharts overrides inside chart */

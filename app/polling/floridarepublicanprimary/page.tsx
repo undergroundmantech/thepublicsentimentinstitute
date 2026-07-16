@@ -222,7 +222,7 @@ export default function FloridaGovRepublicanPrimaryPage() {
 // ─── CSS ───────────────────────────────────────────────────────────────────────
 const CSS = `
   .pap-root {
-    --bg: #f6f7fb;
+    --bg: #f7f7f4;
     --bg2: #ffffff;
     --panel: #ffffff;
     --border: rgba(15, 16, 32, 0.08);
@@ -318,7 +318,7 @@ const CSS = `
   @media (max-width: 640px) { .pap-hero-inner { grid-template-columns: 1fr; } }
 
   .pap-hero-title {
-    font-family: "Quantico", system-ui, -apple-system, BlinkMacOSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: var(--font-display), system-ui, -apple-system, BlinkMacOSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: clamp(22px,3.5vw,46px);
     font-weight: 900; text-transform: uppercase;
     letter-spacing: 0.02em; line-height: 0.92;

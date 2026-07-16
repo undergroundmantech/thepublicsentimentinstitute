@@ -604,7 +604,7 @@ export function forecastRace(
       "Others",
     ] as [string, string, string, string],
     candidate_colors: [
-      colors[0] ?? "#3b82f6",
+      colors[0] ?? "#3b7bde",
       colors[1] ?? "#ef4444",
       colors[2] ?? "#22c55e",
       "#94a3b8",

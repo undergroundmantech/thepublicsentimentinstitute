@@ -216,7 +216,7 @@ export default function Footer() {
           height: 56px;
           width: 220px;
           background:
-            linear-gradient(100deg, #e63946 0%, #7c3aed 50%, #2563eb 100%);
+            linear-gradient(100deg, #c22f3b 0%, #6d3ee9 50%, #1d5fc4 100%);
           -webkit-mask-image: url(/full_logo_clean.png);
           -webkit-mask-size: contain;
           -webkit-mask-repeat: no-repeat;

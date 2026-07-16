@@ -137,7 +137,7 @@ function fillFor(p: Pick | undefined): string {
 function labelInk(p: Pick | undefined): { fill: string; opacity: number } {
   if (!p || p === "T") return { fill: "var(--foreground)", opacity: 0.45 };
   const rating = p.split("_")[1] as Rating;
-  return rating === "TILT" ? { fill: "#0b0d1c", opacity: 1 } : { fill: "#ffffff", opacity: 1 };
+  return rating === "TILT" ? { fill: "#17171b", opacity: 1 } : { fill: "#ffffff", opacity: 1 };
 }
 const RATING_WORD: Record<Rating, string> = { SAFE:"Safe", LIKELY:"Likely", LEAN:"Lean", TILT:"Tilt" };
 function pickLabel(p: Pick | undefined): string {
@@ -454,7 +454,7 @@ export default function ElectoralMapPage() {
       const abbr = el.getAttribute("data-lab")!;
       if (mode === "redist") {
         const st = REDIST[abbr];
-        el.style.fill = st ? (st.s === "MOTION_D" || st.s === "COURT" ? "#0b0d1c" : "#ffffff") : "var(--foreground)";
+        el.style.fill = st ? (st.s === "MOTION_D" || st.s === "COURT" ? "#17171b" : "#ffffff") : "var(--foreground)";
         el.style.opacity = st ? "1" : "0.3";
       } else if (mode === "senate") {
         if (!SENATE_UP.has(abbr)) { el.style.fill = "var(--foreground)"; el.style.opacity = "0.22"; return; }

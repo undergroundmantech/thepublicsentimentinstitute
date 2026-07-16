@@ -238,7 +238,7 @@ function PartyBadge({ party }: { party: "D" | "R" | "I" }) {
   const cfg = {
     D: { bg: "#1a5fd422", c: "#4a9dff", b: "#1a5fd444", l: "Dem" },
     R: { bg: "#d4202022", c: "#ff6040", b: "#d4202044", l: "GOP" },
-    I: { bg: "#7c3aed22", c: "#9d5cf0", b: "#7c3aed44", l: "Ind" },
+    I: { bg: "#6d3ee922", c: "#8a63ef", b: "#6d3ee944", l: "Ind" },
   }[party];
   return (
     <span style={{
@@ -548,7 +548,7 @@ export default function ForecastRatingsPage() {
             </div>
             <h1 style={{ fontFamily: "var(--font-display),sans-serif", fontSize: "clamp(36px,5vw,64px)", letterSpacing: "-0.02em", lineHeight: 0.95, textTransform: "uppercase", color: "var(--foreground)", marginBottom: 18 }}>
               <span style={{ color: "#4a9dff" }}>Senate</span> &amp;{" "}
-              <span style={{ background: "linear-gradient(100deg,#ff4d5a,#a78bfa,#3b82f6)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
+              <span style={{ background: "linear-gradient(100deg,#d64550,#a78bfa,#3b7bde)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
                 Governor
               </span>
               <br />Forecast Ratings

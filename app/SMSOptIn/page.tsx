@@ -48,7 +48,7 @@ export default function SmsOptInPage() {
           text-decoration: none;
           transition: color 100ms;
         }
-        .sms-breadcrumb a:hover { color: #9d5cf0; }
+        .sms-breadcrumb a:hover { color: #8a63ef; }
         .sms-breadcrumb-sep { color: var(--muted2); }
 
         /* ── Layout ── */
@@ -89,13 +89,13 @@ export default function SmsOptInPage() {
           font-size: 9px;
           letter-spacing: 0.2em;
           text-transform: uppercase;
-          color: #9d5cf0;
+          color: #8a63ef;
           margin-bottom: 20px;
         }
         .sms-eyebrow-dot {
           width: 5px; height: 5px;
           border-radius: 50%;
-          background: #9d5cf0;
+          background: #8a63ef;
           animation: sms-pulse 1.8s ease-in-out infinite;
         }
         @keyframes sms-pulse { 0%,100%{opacity:1} 50%{opacity:0.2} }
@@ -111,7 +111,7 @@ export default function SmsOptInPage() {
           z-index: 1;
           text-transform: uppercase;
         }
-        .sms-headline .accent { color: #9d5cf0; }
+        .sms-headline .accent { color: #8a63ef; }
 
         .sms-desc {
           font-family: var(--font-body), monospace;
@@ -154,7 +154,7 @@ export default function SmsOptInPage() {
           justify-content: center;
           flex-shrink: 0;
           font-size: 12px;
-          color: #9d5cf0;
+          color: #8a63ef;
           background: rgba(124,58,237,0.05);
         }
 
@@ -244,7 +244,7 @@ export default function SmsOptInPage() {
           text-transform: uppercase;
           color: var(--muted);
         }
-        .sms-label .required { color: #9d5cf0; margin-left: 2px; }
+        .sms-label .required { color: #8a63ef; margin-left: 2px; }
 
         .sms-input {
           background: var(--panel2);
@@ -291,13 +291,13 @@ export default function SmsOptInPage() {
           cursor: pointer;
         }
         .sms-checkbox.checked {
-          border-color: #9d5cf0;
+          border-color: #8a63ef;
           background: rgba(124,58,237,0.15);
         }
         .sms-checkbox-mark {
           width: 6px;
           height: 6px;
-          background: #9d5cf0;
+          background: #8a63ef;
           display: none;
         }
         .sms-checkbox.checked .sms-checkbox-mark { display: block; }
@@ -310,7 +310,7 @@ export default function SmsOptInPage() {
           letter-spacing: 0.03em;
         }
         .sms-consent-text a {
-          color: #9d5cf0;
+          color: #8a63ef;
           text-decoration: none;
         }
         .sms-consent-text a:hover { text-decoration: underline; }
@@ -363,7 +363,7 @@ export default function SmsOptInPage() {
           color: var(--muted);
           text-decoration: none;
         }
-        .sms-form-footer a:hover { color: #9d5cf0; }
+        .sms-form-footer a:hover { color: #8a63ef; }
 
         /* ── Success state ── */
         .sms-success {
@@ -383,7 +383,7 @@ export default function SmsOptInPage() {
           align-items: center;
           justify-content: center;
           font-size: 20px;
-          color: #9d5cf0;
+          color: #8a63ef;
           margin-bottom: 8px;
         }
 
@@ -391,7 +391,7 @@ export default function SmsOptInPage() {
           font-family: var(--font-display), sans-serif;
           font-size: 32px;
           letter-spacing: 0.05em;
-          color: #9d5cf0;
+          color: #8a63ef;
           line-height: 1;
           text-transform: uppercase;
         }
@@ -437,7 +437,7 @@ export default function SmsOptInPage() {
           font-family: var(--font-display), sans-serif;
           font-size: 22px;
           letter-spacing: 0.04em;
-          color: #9d5cf0;
+          color: #8a63ef;
           line-height: 1;
           margin-bottom: 4px;
           text-transform: uppercase;

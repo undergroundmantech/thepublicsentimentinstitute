@@ -102,7 +102,7 @@ export default function ContactPage() {
               <span className="ct-tag-sep">—</span>
               <span>Public Sentiment Institute</span>
               <span className="ct-tag-sep">·</span>
-              <span style={{ color: "#9d5cf0" }}>Intake</span>
+              <span style={{ color: "#8a63ef" }}>Intake</span>
             </div>
 
             <h1 className="ct-hero-headline">
@@ -316,10 +316,10 @@ export default function ContactPage() {
                 <ul className="ct-checklist">
                   {[
                     { color: "#5b8fd4", text: "Target geography + audience (A18+, RV, LV)" },
-                    { color: "#9d5cf0", text: "Field dates / cadence (one-time vs recurring)" },
+                    { color: "#8a63ef", text: "Field dates / cadence (one-time vs recurring)" },
                     { color: "#d45b5b", text: "Required outputs (tabs, memo, toplines, trend)" },
                     { color: "#5b8fd4", text: "Demographics, oversamples, or special targets" },
-                    { color: "#9d5cf0", text: "Budget range or sample size target" },
+                    { color: "#8a63ef", text: "Budget range or sample size target" },
                   ].map(({ color, text }) => (
                     <li key={text} className="ct-checklist-item">
                       <span className="ct-checklist-dot" style={{ background: color }} />
@@ -338,7 +338,7 @@ export default function ContactPage() {
               <div className="ct-sidebar-body">
                 {[
                   { type: "Simple request",  time: "Same day",  color: "#5b8fd4" },
-                  { type: "Custom project",  time: "24–48 hrs", color: "#9d5cf0" },
+                  { type: "Custom project",  time: "24–48 hrs", color: "#8a63ef" },
                   { type: "Urgent (noted)",  time: "Priority",  color: "#d45b5b" },
                 ].map(({ type, time, color }) => (
                   <div key={type} className="ct-response-row">
@@ -377,7 +377,7 @@ export default function ContactPage() {
 function StatusPill({ status }: { status: Status }) {
   if (status.type === "idle") return null;
   const configs = {
-    sending: { color: "#9d5cf0", text: "Transmitting…" },
+    sending: { color: "#8a63ef", text: "Transmitting…" },
     sent:    { color: "#5b8fd4", text: "Submitted" },
     error:   { color: "#d45b5b", text: status.type === "error" ? (status as any).message : "Error" },
   };

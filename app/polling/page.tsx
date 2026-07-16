@@ -951,7 +951,7 @@ function LargeChartPanel({
   };
   return (
     <div className="lcp-wrap">
-      <div style={{height:3,background:"linear-gradient(90deg,#e63946 33%,#7c3aed 66%,#2563eb 100%)",flexShrink:0}} />
+      <div style={{height:3,background:"linear-gradient(90deg,#c22f3b 33%,#6d3ee9 66%,#1d5fc4 100%)",flexShrink:0}} />
       <div className="lcp-header">
         <div>
           <div className="lcp-eyebrow">{eyebrow}</div>
@@ -1176,9 +1176,9 @@ function SenateMultiMatchupPanel({
 function FLPrimaryChartPanel() {
   const lines = [
     { key: "Donalds",  name: "Donalds",  color: "#f5a623" },
-    { key: "Collins",  name: "Collins",  color: "#e63946" },
-    { key: "Fishback", name: "Fishback", color: "#7c3aed" },
-    { key: "Renner",   name: "Renner",   color: "#2563eb" },
+    { key: "Collins",  name: "Collins",  color: "#c22f3b" },
+    { key: "Fishback", name: "Fishback", color: "#6d3ee9" },
+    { key: "Renner",   name: "Renner",   color: "#1d5fc4" },
   ];
 
   const daily = buildAvg(FL_SENATE_POLLS, 2);
@@ -1254,8 +1254,8 @@ function FLPrimaryChartPanel() {
 
 function KY04ChartPanel() {
   const ky04Lines = [
-    { key: "Gallrein", name: "Gallrein", color: "#e63946" },
-    { key: "Massie",   name: "Massie",   color: "#7c3aed" },
+    { key: "Gallrein", name: "Gallrein", color: "#c22f3b" },
+    { key: "Massie",   name: "Massie",   color: "#6d3ee9" },
   ];
   const daily = buildAvg(KY04_POLLS, 2);
   const last  = daily[daily.length - 1] ?? {};
@@ -1263,7 +1263,7 @@ function KY04ChartPanel() {
   const massie   = round1(Number(last.Massie   ?? 0));
   const net      = round1(gallrein - massie);
   const netStr   = net === 0 ? "EVEN" : net > 0 ? `G+${Math.abs(net).toFixed(1)}` : `M+${Math.abs(net).toFixed(1)}`;
-  const netColor = net > 0 ? "#e63946" : net < 0 ? "#7c3aed" : "var(--muted2)";
+  const netColor = net > 0 ? "#c22f3b" : net < 0 ? "#6d3ee9" : "var(--muted2)";
 
   return (
     <div style={{ marginBottom: 28 }}>
@@ -1274,7 +1274,7 @@ function KY04ChartPanel() {
       }}>
         <div style={{
           fontSize: 7.5, fontWeight: 700, letterSpacing: "0.28em", textTransform: "uppercase",
-          color: "#e63946", whiteSpace: "nowrap",
+          color: "#c22f3b", whiteSpace: "nowrap",
         }}>
           KY-04 Republican Primary
         </div>
@@ -1288,8 +1288,8 @@ function KY04ChartPanel() {
         domain={[35, 65]}
         refY={50}
         stats={[
-          { label: "Gallrein", val: `${gallrein}%`, color: "#e63946" },
-          { label: "Massie",   val: `${massie}%`,   color: "#7c3aed" },
+          { label: "Gallrein", val: `${gallrein}%`, color: "#c22f3b" },
+          { label: "Massie",   val: `${massie}%`,   color: "#6d3ee9" },
           { label: "Margin",   val: netStr,          color: netColor },
           { label: "Polls",    val: `${KY04_POLLS.length}`, color: "var(--muted)" },
         ]}
@@ -1310,7 +1310,7 @@ function SenateSection() {
       }}>
         <div style={{
           fontSize: 7.5, fontWeight: 700, letterSpacing: "0.28em", textTransform: "uppercase",
-          color: "#9d5cf0", whiteSpace: "nowrap",
+          color: "#8a63ef", whiteSpace: "nowrap",
         }}>
           2026 U.S. Senate Races
         </div>
@@ -1326,8 +1326,8 @@ function SenateSection() {
             label: "Cornyn vs. Talarico",
             polls: TX_CORNYN_POLLS,
             lines: [
-              { key: "Republican", name: "Cornyn (R)", color: "#e63946" },
-              { key: "Democrat",   name: "Talarico (D)", color: "#2563eb" },
+              { key: "Republican", name: "Cornyn (R)", color: "#c22f3b" },
+              { key: "Democrat",   name: "Talarico (D)", color: "#1d5fc4" },
             ],
             domain: [30, 60],
           },
@@ -1335,8 +1335,8 @@ function SenateSection() {
             label: "Paxton vs. Talarico",
             polls: TX_PAXTON_POLLS,
             lines: [
-              { key: "Republican", name: "Paxton (R)",   color: "#e63946" },
-              { key: "Democrat",   name: "Talarico (D)", color: "#2563eb" },
+              { key: "Republican", name: "Paxton (R)",   color: "#c22f3b" },
+              { key: "Democrat",   name: "Talarico (D)", color: "#1d5fc4" },
             ],
             domain: [30, 60],
           },
@@ -1352,8 +1352,8 @@ function SenateSection() {
         raceLabel="Lindsey Graham (R) vs. Annie Andrews (D)"
         polls={SC_GRAHAM_POLLS}
         lines={[
-          { key: "Republican", name: "Graham (R)",   color: "#e63946" },
-          { key: "Democrat",   name: "Andrews (D)",  color: "#2563eb" },
+          { key: "Republican", name: "Graham (R)",   color: "#c22f3b" },
+          { key: "Democrat",   name: "Andrews (D)",  color: "#1d5fc4" },
         ]}
         domain={[30, 60]}
       />
@@ -1364,8 +1364,8 @@ function SenateSection() {
         raceLabel="Jon Husted (R) vs. Sherrod Brown (D)"
         polls={OH_SENATE_POLLS}
         lines={[
-          { key: "Republican", name: "Husted (R)", color: "#e63946" },
-          { key: "Democrat",   name: "Brown (D)",  color: "#2563eb" },
+          { key: "Republican", name: "Husted (R)", color: "#c22f3b" },
+          { key: "Democrat",   name: "Brown (D)",  color: "#1d5fc4" },
         ]}
         domain={[35, 60]}
       />
@@ -1376,7 +1376,7 @@ function SenateSection() {
         raceLabel="Pete Ricketts (R) vs. Dan Osborn (I)"
         polls={NE_OSBORN_POLLS}
         lines={[
-          { key: "Republican",  name: "Ricketts (R)", color: "#e63946" },
+          { key: "Republican",  name: "Ricketts (R)", color: "#c22f3b" },
           { key: "Independent", name: "Osborn (I)",   color: "#f5a623" },
         ]}
         domain={[35, 60]}
@@ -1391,8 +1391,8 @@ function SenateSection() {
             label: "Hinson vs. Turek",
             polls: NE_TUREK_POLLS,
             lines: [
-              { key: "Republican", name: "Hinson (R)", color: "#e63946" },
-              { key: "Democrat",   name: "Turek (D)",  color: "#2563eb" },
+              { key: "Republican", name: "Hinson (R)", color: "#c22f3b" },
+              { key: "Democrat",   name: "Turek (D)",  color: "#1d5fc4" },
             ],
             domain: [35, 60],
           },
@@ -1400,8 +1400,8 @@ function SenateSection() {
             label: "Hinson vs. Wahls",
             polls: NE_WAHLS_POLLS,
             lines: [
-              { key: "Republican", name: "Hinson (R)", color: "#e63946" },
-              { key: "Democrat",   name: "Wahls (D)",  color: "#2563eb" },
+              { key: "Republican", name: "Hinson (R)", color: "#c22f3b" },
+              { key: "Democrat",   name: "Wahls (D)",  color: "#1d5fc4" },
             ],
             domain: [35, 60],
           },
@@ -1442,16 +1442,16 @@ export default function PollingDashboardPage() {
   const latestPoll = [...TRUMP_POLLS].sort((a,b) => b.endDate.localeCompare(a.endDate))[0];
 
   const approvalKeys = [
-    { key: "Approve",    name: "Approve",    color: "#e63946" },
-    { key: "Disapprove", name: "Disapprove", color: "#2563eb" },
+    { key: "Approve",    name: "Approve",    color: "#c22f3b" },
+    { key: "Disapprove", name: "Disapprove", color: "#1d5fc4" },
   ];
   const gbKeys = [
-    { key: "Democrats",   name: "Democrats",   color: "#2563eb" },
-    { key: "Republicans", name: "Republicans", color: "#e63946" },
+    { key: "Democrats",   name: "Democrats",   color: "#1d5fc4" },
+    { key: "Republicans", name: "Republicans", color: "#c22f3b" },
   ];
   const rtKeys = [
-    { key: "RightTrack", name: "Right Track", color: "#e63946" },
-    { key: "WrongTrack", name: "Wrong Track", color: "#2563eb" },
+    { key: "RightTrack", name: "Right Track", color: "#c22f3b" },
+    { key: "WrongTrack", name: "Wrong Track", color: "#1d5fc4" },
   ];
 
   return (
@@ -1485,21 +1485,21 @@ export default function PollingDashboardPage() {
             <div className="pd-hero-metrics">
               {[
                 {
-                  label:"Trump Approval", primary:`${approve}%`, primaryColor:"#e63946",
-                  secondary:apNetStr, secondaryColor:approvalNet>=0?"#e63946":"#2563eb",
-                  secondaryLabel:"Net", a:approve, b:disapprove, colorA:"#e63946", colorB:"#2563eb",
+                  label:"Trump Approval", primary:`${approve}%`, primaryColor:"#c22f3b",
+                  secondary:apNetStr, secondaryColor:approvalNet>=0?"#c22f3b":"#1d5fc4",
+                  secondaryLabel:"Net", a:approve, b:disapprove, colorA:"#c22f3b", colorB:"#1d5fc4",
                   subLeft:`${approve}% App.`, subRight:`${disapprove}% Dis.`,
                 },
                 {
-                  label:"Generic Ballot", primary:gbNetStr, primaryColor:gbNet>=0?"#2563eb":"#e63946",
+                  label:"Generic Ballot", primary:gbNetStr, primaryColor:gbNet>=0?"#1d5fc4":"#c22f3b",
                   secondary:`D ${dem}% / R ${rep}%`, secondaryColor:"var(--muted2)",
-                  secondaryLabel:"Split", a:dem, b:rep, colorA:"#2563eb", colorB:"#e63946",
+                  secondaryLabel:"Split", a:dem, b:rep, colorA:"#1d5fc4", colorB:"#c22f3b",
                   subLeft:`D ${dem}%`, subRight:`R ${rep}%`,
                 },
                 {
-                  label:"Right / Wrong Track", primary:`${wt}%`, primaryColor:"#e63946",
-                  secondary:rtNetStr, secondaryColor:rtNet>=0?"#e63946":"#2563eb",
-                  secondaryLabel:"Spread", a:rt, b:wt, colorA:"#e63946", colorB:"#2563eb",
+                  label:"Right / Wrong Track", primary:`${wt}%`, primaryColor:"#c22f3b",
+                  secondary:rtNetStr, secondaryColor:rtNet>=0?"#c22f3b":"#1d5fc4",
+                  secondaryLabel:"Spread", a:rt, b:wt, colorA:"#c22f3b", colorB:"#1d5fc4",
                   subLeft:`${rt}% Right`, subRight:`${wt}% Wrong`,
                 },
               ].map(m => (
@@ -1528,9 +1528,9 @@ export default function PollingDashboardPage() {
           data={trumpDaily} lines={approvalKeys}
           domain={[30,65]} refY={50}
           stats={[
-            {label:"Approve",    val:`${approve}%`,    color:"#e63946"},
-            {label:"Disapprove", val:`${disapprove}%`, color:"#2563eb"},
-            {label:"Net",        val:apNetStr,          color:approvalNet>=0?"#e63946":"#2563eb"},
+            {label:"Approve",    val:`${approve}%`,    color:"#c22f3b"},
+            {label:"Disapprove", val:`${disapprove}%`, color:"#1d5fc4"},
+            {label:"Net",        val:apNetStr,          color:approvalNet>=0?"#c22f3b":"#1d5fc4"},
             {label:"Polls",      val:`${TRUMP_POLLS.length}`, color:"var(--muted)"},
           ]}
           pollCount={TRUMP_POLLS.length}
@@ -1544,9 +1544,9 @@ export default function PollingDashboardPage() {
           data={gbDaily} lines={gbKeys}
           domain={[35,58]} refY={50}
           stats={[
-            {label:"Democrat",   val:`${dem}%`, color:"#2563eb"},
-            {label:"Republican", val:`${rep}%`, color:"#e63946"},
-            {label:"Margin",     val:gbNetStr,  color:gbNet>=0?"#2563eb":"#e63946"},
+            {label:"Democrat",   val:`${dem}%`, color:"#1d5fc4"},
+            {label:"Republican", val:`${rep}%`, color:"#c22f3b"},
+            {label:"Margin",     val:gbNetStr,  color:gbNet>=0?"#1d5fc4":"#c22f3b"},
             {label:"Polls",      val:`${GB_POLLS.length}`, color:"var(--muted)"},
           ]}
           pollCount={GB_POLLS.length}
@@ -1560,9 +1560,9 @@ export default function PollingDashboardPage() {
           data={rtDaily} lines={rtKeys}
           domain={[20,75]}
           stats={[
-            {label:"Right",  val:`${rt}%`, color:"#e63946"},
-            {label:"Wrong",  val:`${wt}%`, color:"#2563eb"},
-            {label:"Spread", val:rtNetStr, color:rtNet>=0?"#e63946":"#2563eb"},
+            {label:"Right",  val:`${rt}%`, color:"#c22f3b"},
+            {label:"Wrong",  val:`${wt}%`, color:"#1d5fc4"},
+            {label:"Spread", val:rtNetStr, color:rtNet>=0?"#c22f3b":"#1d5fc4"},
             {label:"Polls",  val:`${RT_POLLS.length}`, color:"var(--muted)"},
           ]}
           pollCount={RT_POLLS.length}
@@ -1611,7 +1611,7 @@ const CSS = `
   }
   .pd-hero-stripe {
     height: 3px;
-    background: linear-gradient(90deg, #e63946 33%, #7c3aed 66%, #2563eb 100%);
+    background: linear-gradient(90deg, #c22f3b 33%, #6d3ee9 66%, #1d5fc4 100%);
   }
   .pd-hero-inner {
     display: grid;
@@ -1644,7 +1644,7 @@ const CSS = `
     letter-spacing: 0.03em; line-height: 0.92;
     color: var(--foreground); margin: 0 0 16px; text-transform: uppercase;
   }
-  .pd-hero-title em { font-style: normal; color: var(--purple2, #9d5cf0); }
+  .pd-hero-title em { font-style: normal; color: var(--purple2, #8a63ef); }
   .pd-hero-desc {
     font-size: 10px; letter-spacing: 0.08em; line-height: 1.85;
     color: var(--muted); max-width: 460px; margin-bottom: 22px;
@@ -1657,7 +1657,7 @@ const CSS = `
     font-size: 7.5px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase;
     color: var(--muted);
   }
-  .pd-badge-live { border-color: var(--purple-glow, rgba(124,58,237,.3)); background: var(--purple-dim, rgba(124,58,237,.07)); color: var(--purple2, #9d5cf0); }
+  .pd-badge-live { border-color: var(--purple-glow, rgba(124,58,237,.3)); background: var(--purple-dim, rgba(124,58,237,.07)); color: var(--purple2, #8a63ef); }
   .pd-live-dot-sm {
     width: 5px; height: 5px; border-radius: 50%; background: var(--purple);
     animation: pd-pulse 1.8s ease-in-out infinite; display: inline-block;
@@ -1714,7 +1714,7 @@ const CSS = `
   }
   .lcp-eyebrow {
     font-size: 7.5px; font-weight: 700; letter-spacing: 0.28em; text-transform: uppercase;
-    color: var(--purple2, #9d5cf0); margin-bottom: 6px;
+    color: var(--purple2, #8a63ef); margin-bottom: 6px;
   }
   .lcp-title {
     font-size: 13px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase;

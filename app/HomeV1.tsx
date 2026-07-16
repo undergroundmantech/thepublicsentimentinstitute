@@ -25,7 +25,7 @@ function ChartTip({ active, payload, label }: any) {
         fontSize: 12,
         fontFamily: "var(--font-body)",
         boxShadow: "0 12px 32px rgba(15,16,32,0.10)",
-        color: "#0b0d1c",
+        color: "#17171b",
       }}
     >
       <div
@@ -68,11 +68,11 @@ function SplitBar({ dem, rep, h = 6 }: { dem: number; rep: number; h?: number })
       <div
         style={{
           width: `${pct}%`,
-          background: "#2563eb",
+          background: "#1d5fc4",
           transition: "width 700ms cubic-bezier(0.22,1,0.36,1)",
         }}
       />
-      <div style={{ flex: 1, background: "#e63946" }} />
+      <div style={{ flex: 1, background: "#c22f3b" }} />
     </div>
   );
 }
@@ -80,7 +80,7 @@ function SplitBar({ dem, rep, h = 6 }: { dem: number; rep: number; h?: number })
 function SpreadBadge({ a, b }: { a: number; b: number }) {
   const diff = round1(Math.abs(a - b));
   const lead = a > b ? "D" : "R";
-  const color = a > b ? "#2563eb" : "#e63946";
+  const color = a > b ? "#1d5fc4" : "#c22f3b";
   const bg = a > b ? "rgba(37,99,235,0.10)" : "rgba(230,57,70,0.10)";
   const border = a > b ? "rgba(37,99,235,0.25)" : "rgba(230,57,70,0.25)";
   return (
@@ -245,8 +245,8 @@ const LIVE_CONFIG = {
       percentReporting: 0,
       pollsClose: "7:00 PM ET",
       candidates: [
-        { name: "Gallrein", pct: 50.8, votes: 0, color: "#e63946" },
-        { name: "Massie",   pct: 48.8, votes: 0, color: "#7c3aed" },
+        { name: "Gallrein", pct: 50.8, votes: 0, color: "#c22f3b" },
+        { name: "Massie",   pct: 48.8, votes: 0, color: "#6d3ee9" },
       ],
       winner: null as string | null,
       winProb: 72,
@@ -259,16 +259,16 @@ const LIVE_CONFIG = {
       percentReporting: 0,
       pollsClose: "8:00 PM CT",
       candidates: [
-        { name: "Britt",      pct: 0, votes: 0, color: "#e63946" },
-        { name: "Challenger", pct: 0, votes: 0, color: "#9d5cf0" },
+        { name: "Britt",      pct: 0, votes: 0, color: "#c22f3b" },
+        { name: "Challenger", pct: 0, votes: 0, color: "#8a63ef" },
       ],
       winner: null as string | null,
       winProb: null as number | null,
     },
   ],
   candidates: [
-    { name: "Gallrein", party: "R", color: "#e63946", pct: 50.8, votes: 0 },
-    { name: "Massie",   party: "R", color: "#7c3aed", pct: 48.8, votes: 0 },
+    { name: "Gallrein", party: "R", color: "#c22f3b", pct: 50.8, votes: 0 },
+    { name: "Massie",   party: "R", color: "#6d3ee9", pct: 48.8, votes: 0 },
   ],
   percentReporting: 0,
   lastUpdated: "Polls Closing Soon",
@@ -398,7 +398,7 @@ export default function HomePage() {
           name: seedMatch?.name ?? String(lc.name ?? ""),
           pct: Number(lc.percent) || 0,
           votes: Number(lc.votes) || 0,
-          color: seedMatch?.color ?? lc.color ?? (String(lc.party).toUpperCase() === "R" ? "#e63946" : String(lc.party).toUpperCase() === "D" ? "#2563eb" : "#9d5cf0"),
+          color: seedMatch?.color ?? lc.color ?? (String(lc.party).toUpperCase() === "R" ? "#c22f3b" : String(lc.party).toUpperCase() === "D" ? "#1d5fc4" : "#8a63ef"),
         };
       });
     const winnerCand = live.candidates.find((c) => c.winner);
@@ -935,26 +935,26 @@ export default function HomePage() {
               {
                 label: "Trump Approval",
                 num: `${approve}%`,
-                color: "#2563eb",
+                color: "#1d5fc4",
                 dem: approve, rep: disapprove,
-                left: { label: `${approve}% App.`, color: "#2563eb" },
-                right: { label: `${disapprove}% Dis.`, color: "#e63946" },
+                left: { label: `${approve}% App.`, color: "#1d5fc4" },
+                right: { label: `${disapprove}% Dis.`, color: "#c22f3b" },
               },
               {
                 label: "Right / Wrong Track",
                 num: `${wt}%`,
-                color: "#e63946",
+                color: "#c22f3b",
                 dem: rt, rep: wt,
-                left: { label: `${rt}% Right`, color: "#2563eb" },
-                right: { label: `${wt}% Wrong`, color: "#e63946" },
+                left: { label: `${rt}% Right`, color: "#1d5fc4" },
+                right: { label: `${wt}% Wrong`, color: "#c22f3b" },
               },
               {
                 label: "Generic Ballot",
                 num: gbNetStr,
-                color: gbNet >= 0 ? "#2563eb" : "#e63946",
+                color: gbNet >= 0 ? "#1d5fc4" : "#c22f3b",
                 dem, rep,
-                left: { label: `D ${dem}%`, color: "#2563eb" },
-                right: { label: `R ${rep}%`, color: "#e63946" },
+                left: { label: `D ${dem}%`, color: "#1d5fc4" },
+                right: { label: `R ${rep}%`, color: "#c22f3b" },
               },
             ].map((m) => (
               <div key={m.label} className="hp-metric">
@@ -989,60 +989,60 @@ export default function HomePage() {
             title="Presidential Approval" sub={`${trumpDef.polls.length} polls · weighted avg`}
             href="/polling/donaldtrumpapproval" data={trumpDaily}
             lines={[
-              { key: "Approve",    name: "Approve",    color: "#e63946" },
-              { key: "Disapprove", name: "Disapprove", color: "#2563eb" },
+              { key: "Approve",    name: "Approve",    color: "#c22f3b" },
+              { key: "Disapprove", name: "Disapprove", color: "#1d5fc4" },
             ]}
             domain={[30, 62]} refY={50}
             jitter={1.0} jitterSeed={7741}
             stats={[
-              { label: "Approve",    val: `${approve}%`,    color: "#e63946" },
-              { label: "Disapprove", val: `${disapprove}%`, color: "#2563eb" },
-              { label: "Net",        val: `${approve > disapprove ? "+" : ""}${round1(approve - disapprove).toFixed(1)}`, color: approve > disapprove ? "#e63946" : "#2563eb" },
+              { label: "Approve",    val: `${approve}%`,    color: "#c22f3b" },
+              { label: "Disapprove", val: `${disapprove}%`, color: "#1d5fc4" },
+              { label: "Net",        val: `${approve > disapprove ? "+" : ""}${round1(approve - disapprove).toFixed(1)}`, color: approve > disapprove ? "#c22f3b" : "#1d5fc4" },
             ]}
           />
           <ChartCard
             title="Right / Wrong Track" sub={`${rtDef.polls.length} polls · weighted avg`}
             href="/polling/rightorwrongtrack" data={rtDaily}
             lines={[
-              { key: "RightTrack", name: "Right Track", color: "#e63946" },
-              { key: "WrongTrack", name: "Wrong Track", color: "#2563eb" },
+              { key: "RightTrack", name: "Right Track", color: "#c22f3b" },
+              { key: "WrongTrack", name: "Wrong Track", color: "#1d5fc4" },
             ]}
             domain={[20, 75]}
             jitter={1.2} jitterSeed={4421}
             stats={[
-              { label: "Right",  val: `${rt}%`, color: "#e63946" },
-              { label: "Wrong",  val: `${wt}%`, color: "#2563eb" },
-              { label: "Net",    val: round1(rt - wt).toFixed(1), color: rt > wt ? "#e63946" : "#2563eb" },
+              { label: "Right",  val: `${rt}%`, color: "#c22f3b" },
+              { label: "Wrong",  val: `${wt}%`, color: "#1d5fc4" },
+              { label: "Net",    val: round1(rt - wt).toFixed(1), color: rt > wt ? "#c22f3b" : "#1d5fc4" },
             ]}
           />
           <ChartCard
             title="Generic Congressional Ballot" sub={`${gbDef.polls.length} polls · weighted avg`}
             href="/polling/genericballot" data={gbDaily}
             lines={[
-              { key: "Democrats",   name: "Democrat",   color: "#2563eb" },
-              { key: "Republicans", name: "Republican", color: "#e63946" },
+              { key: "Democrats",   name: "Democrat",   color: "#1d5fc4" },
+              { key: "Republicans", name: "Republican", color: "#c22f3b" },
             ]}
             domain={[35, 58]} refY={50}
             jitter={0.9} jitterSeed={9183}
             stats={[
-              { label: "Democrat",   val: `${dem}%`, color: "#2563eb" },
-              { label: "Republican", val: `${rep}%`, color: "#e63946" },
-              { label: "Margin",     val: gbNetStr,  color: gbNet >= 0 ? "#2563eb" : "#e63946" },
+              { label: "Democrat",   val: `${dem}%`, color: "#1d5fc4" },
+              { label: "Republican", val: `${rep}%`, color: "#c22f3b" },
+              { label: "Margin",     val: gbNetStr,  color: gbNet >= 0 ? "#1d5fc4" : "#c22f3b" },
             ]}
           />
           <ChartCard
             title="KY-04 GOP Primary" sub={`${ky04Def.polls.length} polls · Gallrein vs Massie`}
             href="/polling" data={ky04Daily}
             lines={[
-              { key: "Gallrein", name: "Gallrein", color: "#e63946" },
-              { key: "Massie",   name: "Massie",   color: "#7c3aed" },
+              { key: "Gallrein", name: "Gallrein", color: "#c22f3b" },
+              { key: "Massie",   name: "Massie",   color: "#6d3ee9" },
             ]}
             domain={[35, 65]} refY={50}
             jitter={1.0} jitterSeed={3307}
             stats={[
-              { label: "Gallrein", val: `${ky04Gallrein}%`, color: "#e63946" },
-              { label: "Massie",   val: `${ky04Massie}%`,   color: "#7c3aed" },
-              { label: "Margin",   val: ky04NetStr,         color: ky04Net > 0 ? "#e63946" : "#7c3aed" },
+              { label: "Gallrein", val: `${ky04Gallrein}%`, color: "#c22f3b" },
+              { label: "Massie",   val: `${ky04Massie}%`,   color: "#6d3ee9" },
+              { label: "Margin",   val: ky04NetStr,         color: ky04Net > 0 ? "#c22f3b" : "#6d3ee9" },
             ]}
           />
         </div>
@@ -1058,16 +1058,16 @@ export default function HomePage() {
             <div className="hp-issue-card">
               <div className="hp-issue-table-head">
                 <div className="hp-th">Issue</div>
-                <div className="hp-th" style={{ color: "#2563eb" }}>Dem</div>
-                <div className="hp-th" style={{ color: "#e63946" }}>Rep</div>
+                <div className="hp-th" style={{ color: "#1d5fc4" }}>Dem</div>
+                <div className="hp-th" style={{ color: "#c22f3b" }}>Rep</div>
                 <div className="hp-th">Bar</div>
                 <div className="hp-th" style={{ textAlign: "right" }}>Spread</div>
               </div>
               {issues.map(r => (
                 <div key={r.issue} className="hp-issue-row">
                   <div className="hp-issue-name">{r.issue}</div>
-                  <div className="hp-issue-pct" style={{ color: "#2563eb" }}>{r.dem}%</div>
-                  <div className="hp-issue-pct" style={{ color: "#e63946" }}>{r.rep}%</div>
+                  <div className="hp-issue-pct" style={{ color: "#1d5fc4" }}>{r.dem}%</div>
+                  <div className="hp-issue-pct" style={{ color: "#c22f3b" }}>{r.rep}%</div>
                   <SplitBar dem={r.dem} rep={r.rep} h={6} />
                   <div style={{ textAlign: "right" }}><SpreadBadge a={r.dem} b={r.rep} /></div>
                 </div>
@@ -1126,9 +1126,9 @@ export default function HomePage() {
         </div>
         <div className="hp-explore-grid">
           {[
-            { color: "#2563eb", label: "Analysis",    name: "Electoral Map",         desc: "State-by-state data with 2024 vs. 2026 comparison overlays.",        href: "/electoralmap",    cta: "Explore Map →" },
-            { color: "#7c3aed", label: "Projections", name: "Forecast Ratings",      desc: "PSI race ratings across Senate, House, and gubernatorial contests.", href: "/forecastratings", cta: "View Ratings →" },
-            { color: "#e63946", label: "Results",     name: "Live Election Results", desc: "Real-time vote totals and night-of projections for every major race.", href: "/results",         cta: "See Results →" },
+            { color: "#1d5fc4", label: "Analysis",    name: "Electoral Map",         desc: "State-by-state data with 2024 vs. 2026 comparison overlays.",        href: "/electoralmap",    cta: "Explore Map →" },
+            { color: "#6d3ee9", label: "Projections", name: "Forecast Ratings",      desc: "PSI race ratings across Senate, House, and gubernatorial contests.", href: "/forecastratings", cta: "View Ratings →" },
+            { color: "#c22f3b", label: "Results",     name: "Live Election Results", desc: "Real-time vote totals and night-of projections for every major race.", href: "/results",         cta: "See Results →" },
             { color: "#16a34a", label: "Methodology", name: "Gold Standard",         desc: "Curated aggregation of high-quality polls ranked by historical accuracy.", href: "/goldstandard", cta: "Browse Polls →" },
           ].map(c => (
             <Link key={c.name} href={c.href} className="hp-explore-card">

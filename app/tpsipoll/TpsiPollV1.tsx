@@ -4,10 +4,10 @@ import { useState, useEffect, useRef } from "react";
 
 // ─── Color tokens (match homepage vars) ───────────────────────────────────────
 const C = {
-  blue:      "#2563eb",
-  pink:      "#e63946",
-  purple:    "#7c3aed",
-  purpleLt:  "#9d5cf0",
+  blue:      "#1d5fc4",
+  pink:      "#c22f3b",
+  purple:    "#6d3ee9",
+  purpleLt:  "#8a63ef",
   cyan:      "#2fd8e4",
   green:     "#2fe4a0",
   orange:    "#f7a34f",
@@ -1827,8 +1827,8 @@ export default function TPSIPollDashboard() {
           letter-spacing: 0.14em; text-transform: uppercase; padding: 1px 6px;
           border-radius: var(--r-pill); margin-top: 2px;
         }
-        .tl-ballot-party.dem { background: rgba(37,99,235,0.12); color: #2563eb; border: 1px solid rgba(37,99,235,0.25); }
-        .tl-ballot-party.rep { background: rgba(230,57,70,0.10); color: #e63946; border: 1px solid rgba(230,57,70,0.22); }
+        .tl-ballot-party.dem { background: rgba(37,99,235,0.12); color: #1d5fc4; border: 1px solid rgba(37,99,235,0.25); }
+        .tl-ballot-party.rep { background: rgba(230,57,70,0.10); color: #c22f3b; border: 1px solid rgba(230,57,70,0.22); }
         .tl-ballot-center { text-align: center; padding: 0 4px; }
         .tl-ballot-net {
           font-family: var(--font-numeric); font-size: 20px; font-weight: 900;

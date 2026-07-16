@@ -129,7 +129,7 @@ function netToColor(net: number): string {
 
 // ─── Polls data ───────────────────────────────────────────────────────────────
 
-const COLORS: Record<string, string> = { Approve: "#2563eb", Disapprove: "#ff0040" };
+const COLORS: Record<string, string> = { Approve: "#1d5fc4", Disapprove: "#ff0040" };
 
 function round1(n: number) { return Math.round(n * 10) / 10; }
 
@@ -226,7 +226,7 @@ function StateMap({ tpsiNet, tpsiApprove, tpsiDisapprove }: {
               Trump Approval<br />
               <em style={{
                 fontStyle: "normal",
-                background: "linear-gradient(110deg,#e63946,#f87171)",
+                background: "linear-gradient(110deg,#c22f3b,#f87171)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
                 backgroundClip: "text",
@@ -587,7 +587,7 @@ export default function TrumpApprovalPage() {
         <div className="pap-section-label">CURRENT AVERAGES</div>
         <div className="pap-kpi-grid">
           {[
-            { label: "Approve", value: `${round1(latestApprove).toFixed(1)}%`, sub: "Daily weighted avg", color: "#2563eb", bar: latestApprove },
+            { label: "Approve", value: `${round1(latestApprove).toFixed(1)}%`, sub: "Daily weighted avg", color: "#1d5fc4", bar: latestApprove },
             { label: "Disapprove",  value: `${round1(latestDisapprove).toFixed(1)}%`, sub: "Daily weighted avg",   color: "rgba(255,0,64,0.75)",  bar: latestDisapprove },
             { label: "Net Approval",value: netText,                                    sub: "Approve − Disapprove", color: netColor,               bar: undefined },
             { label: "Polls",       value: `${RAW_POLLS.length}`,                     sub: "Included in model",    color: undefined,              bar: Math.min(100, RAW_POLLS.length / 3) },
@@ -696,7 +696,7 @@ export default function TrumpApprovalPage() {
 // ─── CSS — unified design system matching generic ballot page ─────────────────
 const CSS = `
   .pap-root {
-    --bg: #f6f7fb;
+    --bg: #f7f7f4;
     --bg2: #ffffff;
     --panel: #ffffff;
     --border: rgba(15, 16, 32, 0.08);
@@ -704,8 +704,8 @@ const CSS = `
     --muted: #6b7088;
     --muted2: #9aa0b4;
     --muted3: #b7bccc;
-    --purple:      #7c3aed;
-    --purple2:     #9d5cf0;
+    --purple:      #6d3ee9;
+    --purple2:     #8a63ef;
     --purple-soft: #a78bfa;
     --approve:     rgba(204, 0, 0, 0.85);     /* Republican Red */
     --disapprove:  rgba(0, 51, 160, 0.85);    /* Democratic Blue */
@@ -808,7 +808,7 @@ const CSS = `
   @media (max-width: 640px) { .pap-hero-inner { grid-template-columns: 1fr; } }
 
   .pap-hero-title {
-    font-family: "Quantico", system-ui, -apple-system, BlinkMacOSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: var(--font-display), system-ui, -apple-system, BlinkMacOSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: clamp(22px,3.5vw,46px);
     font-weight: 900;
     text-transform: uppercase;
@@ -819,7 +819,7 @@ const CSS = `
   }
   .pap-em-approve {
     font-style: normal;
-    background: linear-gradient(110deg,#e63946,#f87171);
+    background: linear-gradient(110deg,#c22f3b,#f87171);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;

@@ -196,7 +196,7 @@ function balance(races: RaceRow[]) {
 
 // ─── PartyTag (the only "badge" — a tiny inline letter, not a card) ─────────────
 function PartyTag({ party }: { party: "D" | "R" | "I" }) {
-  const c = party === "D" ? BLUE : party === "R" ? RED : "#7c3aed";
+  const c = party === "D" ? BLUE : party === "R" ? RED : "#6d3ee9";
   return <span className="x-party" style={{ color: c }}>{party === "I" ? "I" : party}</span>;
 }
 
@@ -286,7 +286,7 @@ function Beeswarm({ races, raceType }: { races: RaceRow[]; raceType: string }) {
           </radialGradient>
           {/* soft contact shadow so tokens sit ON the page, not in it */}
           <filter id="bfShadow" x="-60%" y="-60%" width="220%" height="220%">
-            <feDropShadow dx="0" dy="1.6" stdDeviation="2.2" floodColor="#0b0d1c" floodOpacity="0.22" />
+            <feDropShadow dx="0" dy="1.6" stdDeviation="2.2" floodColor="#17171b" floodOpacity="0.22" />
           </filter>
         </defs>
         {[-12, -6, 6, 12].map(t => <line key={t} x1={xFor(t)} x2={xFor(t)} y1={BTOP} y2={axisY} className="x-sw-grid" />)}
@@ -303,7 +303,7 @@ function Beeswarm({ races, raceType }: { races: RaceRow[]; raceType: string }) {
           const open = !p.r.incRunning;             // open seats render as hollow tokens
           const isH = hover === p.r.state;
           const rr = isH ? BR + 2 : BR;
-          const ink = open ? RATING_INK[p.r.rating] : LABEL_INK.has(p.r.rating) ? "#0b0d1c" : "#fff";
+          const ink = open ? RATING_INK[p.r.rating] : LABEL_INK.has(p.r.rating) ? "#17171b" : "#fff";
           return (
             <g key={p.r.state} style={{ cursor: "pointer" }}
               onMouseMove={(e) => { setHover(p.r.state); setTT({ visible:true, x:e.clientX, y:e.clientY, state:p.r.state, name:p.r.name, raceType, incRunning:p.r.incRunning, incParty:p.r.incParty, approval:p.r.approval, pollingAvg:p.r.pollingAvg, modeledResult:p.r.modeledResult, rating:p.r.rating }); }}
@@ -397,7 +397,7 @@ function RaceMap({ svgId, races, raceType }: { svgId: string; races: RaceRow[]; 
           t.setAttribute("dominant-baseline", "central");
           t.setAttribute("class", "x-geo-lab");
           const dark = LABEL_INK.has(race.rating);
-          t.style.cssText = `fill:${dark ? "#0b0d1c" : "#fff"};text-shadow:0 1px 1.5px ${dark ? "rgba(255,255,255,0.45)" : "rgba(11,13,28,0.4)"};pointer-events:none;`;
+          t.style.cssText = `fill:${dark ? "#17171b" : "#fff"};text-shadow:0 1px 1.5px ${dark ? "rgba(255,255,255,0.45)" : "rgba(11,13,28,0.4)"};pointer-events:none;`;
           t.textContent = abbr;
           svg.appendChild(t);
         }

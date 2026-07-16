@@ -51,7 +51,7 @@ const FIPS: Record<string, string> = {
   "55":"WI","56":"WY",
 };
 
-const PCOL: Record<"DEM" | "REP" | "UNA", string> = { DEM: "#1a5fd4", REP: "#d42020", UNA: "#7c3aed" };
+const PCOL: Record<"DEM" | "REP" | "UNA", string> = { DEM: "#1a5fd4", REP: "#d42020", UNA: "#6d3ee9" };
 const PWORD: Record<"DEM" | "REP" | "UNA", string> = { DEM: "Democratic", REP: "Republican", UNA: "Unaffiliated" };
 // per-party [light, deep] ramps — the light end is still a clearly-readable
 // party hue so even a razor-thin plurality reads as its color, not grey.
@@ -423,7 +423,7 @@ export default function PartyMapPage() {
             </div>
             <h1 style={{ fontFamily: "var(--font-display),sans-serif", fontSize: "clamp(34px,5vw,60px)", letterSpacing: "-0.02em", lineHeight: 0.95, textTransform: "uppercase", color: "var(--foreground)", marginBottom: 16 }}>
               Party{" "}
-              <span style={{ background: "linear-gradient(100deg,#ff4d5a,#a78bfa,#3b82f6)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>Registration</span>
+              <span style={{ background: "linear-gradient(100deg,#d64550,#a78bfa,#3b7bde)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>Registration</span>
             </h1>
             <p style={{ fontFamily: "var(--font-body),monospace", fontSize: 14, color: "var(--muted)", lineHeight: 1.6, maxWidth: 620, marginBottom: 20 }}>
               The U.S. voter rolls by registered party. Thirty-one states record each voter&apos;s party — blue where registered Democrats lead, red where Republicans do, indigo where the unaffiliated are the largest bloc. Toggle counties, or click a state to read it county by county.

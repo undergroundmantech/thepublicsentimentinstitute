@@ -112,7 +112,7 @@ export default function TermsPage() {
           text-decoration: none;
           transition: color 100ms;
         }
-        .tc-breadcrumb a:hover { color: #9d5cf0; }
+        .tc-breadcrumb a:hover { color: #8a63ef; }
         .tc-breadcrumb-sep { color: var(--muted2); }
 
         /* ── Hero ── */
@@ -257,8 +257,8 @@ export default function TermsPage() {
           line-height: 1.4;
         }
         .tc-toc-item:last-child { border-bottom: none; }
-        .tc-toc-item:hover { color: #9d5cf0; background: rgba(124,58,237,0.04); text-decoration: none; }
-        .tc-toc-item.active { color: #9d5cf0; border-left: 2px solid #9d5cf0; padding-left: 14px; background: rgba(124,58,237,0.04); }
+        .tc-toc-item:hover { color: #8a63ef; background: rgba(124,58,237,0.04); text-decoration: none; }
+        .tc-toc-item.active { color: #8a63ef; border-left: 2px solid #8a63ef; padding-left: 14px; background: rgba(124,58,237,0.04); }
 
         /* ── Accordion sections ── */
         .tc-sections {
@@ -317,7 +317,7 @@ export default function TermsPage() {
         }
         .tc-section-arrow.open {
           transform: rotate(90deg);
-          color: #9d5cf0;
+          color: #8a63ef;
         }
 
         .tc-section-body {
@@ -385,7 +385,7 @@ export default function TermsPage() {
         }
 
         .tc-contact-text a {
-          color: #9d5cf0;
+          color: #8a63ef;
           text-decoration: none;
         }
         .tc-contact-text a:hover { text-decoration: underline; }

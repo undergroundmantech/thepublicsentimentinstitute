@@ -105,8 +105,8 @@ function marginToColor(margin: number): string {
   } else {
     // Democrat
     if (abs >= 12) return "#1d4ed8";      // Safe D
-    if (abs >= 6) return "#2563eb";      // Likely D
-    if (abs >= 2)  return "#3b82f6";      // Lean D
+    if (abs >= 6) return "#1d5fc4";      // Likely D
+    if (abs >= 2)  return "#3b7bde";      // Lean D
     return "#93c5fd";                      // Toss-up D
   }
 }
@@ -134,7 +134,7 @@ const projByState = Object.fromEntries(
 // ─── CSS ──────────────────────────────────────────────────────────────────────
 const CSS = `
   .p28-root {
-    --bg: #f6f7fb;
+    --bg: #f7f7f4;
     --bg2: #ffffff;
     --panel: #ffffff;
     --border: rgba(15, 16, 32, 0.08);
@@ -142,8 +142,8 @@ const CSS = `
     --muted: #6b7088;
     --muted2: #9aa0b4;
     --muted3: #b7bccc;
-    --purple:      #7c3aed;
-    --purple2:     #9d5cf0;
+    --purple:      #6d3ee9;
+    --purple2:     #8a63ef;
     --purple-soft: #a78bfa;
     --rep:         #ff1717;
     --dem:         #184dfc;
@@ -285,7 +285,7 @@ const CSS = `
   @media (max-width:640px) { .p28-hero-inner { grid-template-columns:1fr; } }
 
   .p28-hero-title {
-    font-family: "Quantico", system-ui, -apple-system, BlinkMacOSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: var(--font-display), system-ui, -apple-system, BlinkMacOSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: clamp(22px,3.5vw,46px); font-weight: 900; text-transform: uppercase;
     letter-spacing: 0.02em; line-height: 0.92; color: #fff; margin: 0 0 14px;
   }
@@ -418,7 +418,7 @@ const CSS = `
     border: 1px solid var(--border); position: relative;
   }
   .p28-ev-bar-rep { height: 100%; background: #dc2626; transition: width 600ms ease; }
-  .p28-ev-bar-dem { height: 100%; background: #2563eb; transition: width 600ms ease; }
+  .p28-ev-bar-dem { height: 100%; background: #1d5fc4; transition: width 600ms ease; }
   .p28-ev-bar-toss { height: 100%; background: var(--border2); }
   .p28-ev-bar-line {
     position: absolute; top: 0; bottom: 0; width: 2px;

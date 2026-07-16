@@ -30,7 +30,7 @@ const WIN_2024: Record<string, "R" | "D"> = {
   WV: "R", WI: "R", WY: "R",
 };
 
-const PURPLE       = "#7c3aed";
+const PURPLE       = "#6d3ee9";
 const PURPLE_SOFT  = "#c2adf8";
 const RED_STROKE   = "#ff5d6c";
 const BLUE_STROKE  = "#5b8def";

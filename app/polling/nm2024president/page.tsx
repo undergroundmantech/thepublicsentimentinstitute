@@ -67,7 +67,7 @@ function round1(n: number) { return Math.round(n * 10) / 10; }
 // =============================================================================
 const CSS = `
   .pa24-root {
-    --bg: #f6f7fb;
+    --bg: #f7f7f4;
     --bg2: #ffffff;
     --panel: #ffffff;
     --border: rgba(15, 16, 32, 0.08);
@@ -75,7 +75,7 @@ const CSS = `
     --muted: #6b7088;
     --muted2: #9aa0b4;
     --muted3: #b7bccc;
-    --purple:      #7c3aed;
+    --purple:      #6d3ee9;
     --purple-soft: #a78bfa;
     --dem:         #4d7fd4;
     --rep:         #ff1717;
@@ -164,7 +164,7 @@ const CSS = `
   @media (max-width:640px) { .pa24-hero-inner { grid-template-columns:1fr; } }
 
   .pa24-hero-title {
-    font-family:"Quantico",system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif;
+    font-family:var(--font-display),system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif;
     font-size:clamp(22px,3.5vw,46px); font-weight:900; text-transform:uppercase;
     letter-spacing:0.02em; line-height:0.92; color:#fff; margin:0 0 14px;
   }

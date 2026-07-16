@@ -35,7 +35,7 @@ const ACTUAL: Record<string, number> = {
 };
 
 const COLORS: Record<string, string> = {
-  Crockett: "#3b82f6",
+  Crockett: "#3b7bde",
   Talarico: "#f59e0b",
   Hassan:   "#8b5cf6",
 };
@@ -362,7 +362,7 @@ export default function TexasDemPrimaryPage() {
 // ─── CSS ───────────────────────────────────────────────────────────────────────
 const CSS = `
   .pap-root {
-    --bg: #f6f7fb;
+    --bg: #f7f7f4;
     --bg2: #ffffff;
     --panel: #ffffff;
     --border: rgba(15, 16, 32, 0.08);
@@ -370,8 +370,8 @@ const CSS = `
     --muted: #6b7088;
     --muted2: #9aa0b4;
     --muted3: #b7bccc;
-    --purple:      #7c3aed;
-    --purple2:     #9d5cf0;
+    --purple:      #6d3ee9;
+    --purple2:     #8a63ef;
     --purple-soft: #a78bfa;
     --blue-soft:   #60a5fa;
   }
@@ -399,8 +399,8 @@ const CSS = `
     height: 3px;
     background: linear-gradient(90deg,
       #1d4ed8 0%, #1d4ed8 33.33%,
-      #2563eb 33.33%, #2563eb 66.66%,
-      #3b82f6 66.66%, #3b82f6 100%
+      #1d5fc4 33.33%, #1d5fc4 66.66%,
+      #3b7bde 66.66%, #3b7bde 100%
     );
   }
 
@@ -408,7 +408,7 @@ const CSS = `
     display: inline-block;
     width: 6px; height: 6px;
     border-radius: 50%;
-    background: #3b82f6;
+    background: #3b7bde;
     box-shadow: 0 0 8px rgba(59,130,246,0.7);
     animation: pap-pulse 1.8s ease-in-out infinite;
     flex-shrink: 0;
@@ -459,7 +459,7 @@ const CSS = `
   @media (max-width: 640px) { .pap-hero-inner { grid-template-columns: 1fr; } }
 
   .pap-hero-title {
-    font-family: "Quantico", system-ui, -apple-system, BlinkMacOSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: var(--font-display), system-ui, -apple-system, BlinkMacOSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: clamp(22px,3.5vw,46px);
     font-weight: 900; text-transform: uppercase;
     letter-spacing: 0.02em; line-height: 0.92;

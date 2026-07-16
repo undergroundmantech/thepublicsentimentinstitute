@@ -595,7 +595,7 @@ export default function VoterRegistrationPage() {
         const W = 234, H = 116;
         const left = (tip.x + 18 + W > window.innerWidth) ? tip.x - W - 18 : tip.x + 18;
         const top = (tip.y + 18 + H > window.innerHeight) ? tip.y - H - 18 : tip.y + 18;
-        const spine = tip.noReg ? DIM_NOREG : tip.plur ? PCOL[tip.plur] : "#7c3aed";
+        const spine = tip.noReg ? DIM_NOREG : tip.plur ? PCOL[tip.plur] : "#6d3ee9";
         const t = tip.party ? (tip.party.DEM + tip.party.REP + tip.party.UNA + tip.party.OTH) || 1 : 1;
         return (
           <div className={`vr-tip ${manrope.className}`} style={{ left, top, borderLeftColor: spine }}>
@@ -811,7 +811,7 @@ body header, body footer { display: none !important; }
 .vr-dock-btn.is-on { background:#f4f4ef; color:#050505; }
 
 /* tooltip */
-.vr-tip { position:fixed; z-index:99999; pointer-events:none; width:224px; background:rgba(14,14,16,0.97); border:1px solid rgba(255,255,255,0.12); border-left:3px solid #7c3aed; border-radius:13px; box-shadow:0 24px 60px rgba(0,0,0,0.62); overflow:hidden; -webkit-backdrop-filter:blur(18px); backdrop-filter:blur(18px); animation:vr-tip-in .16s cubic-bezier(.2,.9,.3,1.2) both; transform-origin:top left; }
+.vr-tip { position:fixed; z-index:99999; pointer-events:none; width:224px; background:rgba(14,14,16,0.97); border:1px solid rgba(255,255,255,0.12); border-left:3px solid #6d3ee9; border-radius:13px; box-shadow:0 24px 60px rgba(0,0,0,0.62); overflow:hidden; -webkit-backdrop-filter:blur(18px); backdrop-filter:blur(18px); animation:vr-tip-in .16s cubic-bezier(.2,.9,.3,1.2) both; transform-origin:top left; }
 @keyframes vr-tip-in { from { opacity:0; transform:scale(.94) translateY(5px) } to { opacity:1; transform:none } }
 .vr-tip-top { display:flex; align-items:baseline; justify-content:space-between; gap:10px; padding:11px 14px 4px; }
 .vr-tip-name { font-weight:700; font-size:14.5px; letter-spacing:-0.02em; line-height:1.1; color:#f4f4ef; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }

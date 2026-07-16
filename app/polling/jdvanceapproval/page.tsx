@@ -367,7 +367,7 @@ export default function JDVanceFavorabilityPage() {
 // ─── CSS — unified design system matching Trump approval page ─────────────────
 const CSS = `
   .pap-root {
-    --bg: #f6f7fb;
+    --bg: #f7f7f4;
     --bg2: #ffffff;
     --panel: #ffffff;
     --border: rgba(15, 16, 32, 0.08);
@@ -375,8 +375,8 @@ const CSS = `
     --muted: #6b7088;
     --muted2: #9aa0b4;
     --muted3: #b7bccc;
-    --purple:      #7c3aed;
-    --purple2:     #9d5cf0;
+    --purple:      #6d3ee9;
+    --purple2:     #8a63ef;
     --purple-soft: #a78bfa;
     --approve:     rgba(77,127,212,1);
     --disapprove:  rgba(255,0,64,0.85);
@@ -479,7 +479,7 @@ const CSS = `
   @media (max-width: 640px) { .pap-hero-inner { grid-template-columns: 1fr; } }
 
   .pap-hero-title {
-    font-family: "Quantico", system-ui, -apple-system, BlinkMacOSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: var(--font-display), system-ui, -apple-system, BlinkMacOSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: clamp(22px,3.5vw,46px);
     font-weight: 900;
     text-transform: uppercase;
@@ -490,7 +490,7 @@ const CSS = `
   }
   .pap-em-fav {
     font-style: normal;
-    background: linear-gradient(110deg,#7c3aed,#a78bfa);
+    background: linear-gradient(110deg,#6d3ee9,#a78bfa);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;

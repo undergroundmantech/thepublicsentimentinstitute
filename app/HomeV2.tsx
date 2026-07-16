@@ -1773,7 +1773,7 @@ export default function HomePage() {
         }
 
         .lp-card-head span {
-          color: #7c3aed;
+          color: #6d3ee9;
           font-size: 12px;
           font-weight: 700;
           letter-spacing: 0;
@@ -2007,8 +2007,8 @@ export default function HomePage() {
           transition: stroke-dashoffset 620ms cubic-bezier(.2,.8,.2,1), stroke-width 260ms ease;
         }
 
-        .lp-line-chart .red { stroke: #e63946; stroke-dashoffset: 16; }
-        .lp-line-chart .blue { stroke: #2563eb; stroke-dashoffset: 8; }
+        .lp-line-chart .red { stroke: #c22f3b; stroke-dashoffset: 16; }
+        .lp-line-chart .blue { stroke: #1d5fc4; stroke-dashoffset: 8; }
 
         .lp-gallery-card:hover .lp-line-chart .red,
         .lp-gallery-card:hover .lp-line-chart .blue {
@@ -2131,8 +2131,8 @@ export default function HomePage() {
           letter-spacing: 0;
         }
 
-        .red { color: #e63946 !important; }
-        .blue { color: #2563eb !important; }
+        .red { color: #c22f3b !important; }
+        .blue { color: #1d5fc4 !important; }
 
         .lp-state-grid {
           position: relative;
@@ -2168,9 +2168,9 @@ export default function HomePage() {
           box-shadow: 0 16px 30px rgba(10, 10, 10, 0.2);
         }
 
-        .lp-state-r { background: #e63946; }
-        .lp-state-d { background: #2563eb; }
-        .lp-state-t { background: #7c3aed; }
+        .lp-state-r { background: #c22f3b; }
+        .lp-state-d { background: #1d5fc4; }
+        .lp-state-t { background: #6d3ee9; }
 
         .lp-rating-key,
         .lp-ev-row {
@@ -2201,9 +2201,9 @@ export default function HomePage() {
           margin-right: 5px;
         }
 
-        .lp-rating-key .r { background: #e63946; }
-        .lp-rating-key .d { background: #2563eb; }
-        .lp-rating-key .t { background: #7c3aed; }
+        .lp-rating-key .r { background: #c22f3b; }
+        .lp-rating-key .d { background: #1d5fc4; }
+        .lp-rating-key .t { background: #6d3ee9; }
 
         .lp-result-head {
           display: flex;
@@ -2310,8 +2310,8 @@ export default function HomePage() {
           opacity: 1;
         }
 
-        .lp-result-county-strip .red { background: #e63946; }
-        .lp-result-county-strip .purple { background: #7c3aed; }
+        .lp-result-county-strip .red { background: #c22f3b; }
+        .lp-result-county-strip .purple { background: #6d3ee9; }
 
         .lp-result-row {
           position: relative;
@@ -2367,11 +2367,11 @@ export default function HomePage() {
           border-radius: inherit;
         }
 
-        .lp-result-row.red .lp-result-bar span { background: #e63946; }
-        .lp-result-row.purple .lp-result-bar span { background: #7c3aed; }
+        .lp-result-row.red .lp-result-bar span { background: #c22f3b; }
+        .lp-result-row.purple .lp-result-bar span { background: #6d3ee9; }
         .lp-result-row.gray .lp-result-bar span { background: #909090; }
-        .lp-result-row.red b { color: #e63946; }
-        .lp-result-row.purple b { color: #7c3aed; }
+        .lp-result-row.red b { color: #c22f3b; }
+        .lp-result-row.purple b { color: #6d3ee9; }
 
         .lp-us-map {
           position: relative;
@@ -2401,8 +2401,8 @@ export default function HomePage() {
           filter: saturate(1.15);
         }
 
-        .lp-us-map .r { background: #e63946; }
-        .lp-us-map .d { background: #2563eb; }
+        .lp-us-map .r { background: #c22f3b; }
+        .lp-us-map .d { background: #1d5fc4; }
         .lp-us-map .t { background: #d7d7d3; }
 
         .lp-ev-row b {
@@ -2486,8 +2486,8 @@ export default function HomePage() {
           color: #b7ff00;
         }
 
-        .lp-ev-bar .blue { background: #2563eb; }
-        .lp-ev-bar .red { background: #e63946; }
+        .lp-ev-bar .blue { background: #1d5fc4; }
+        .lp-ev-bar .red { background: #c22f3b; }
         .lp-ev-bar i { background: #0a0a0a; }
 
         .lp-section {

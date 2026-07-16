@@ -29,7 +29,7 @@ function effectiveSampleSize(pollster: string, n: number) {
 // ─── Polls data ───────────────────────────────────────────────────────────────
 
 const COLORS: Record<string, string> = {
-  RightTrack: "#2563eb",
+  RightTrack: "#1d5fc4",
   WrongTrack:  "#ff0040",
 };
 
@@ -119,7 +119,7 @@ export default function RightTrackWrongTrackPage() {
         <div className="pap-section-label">CURRENT AVERAGES</div>
         <div className="pap-kpi-grid">
           {[
-            { label: "Right Track", value: `${latestRT.toFixed(1)}%`, sub: "Daily weighted avg", color: "#2563eb",             bar: latestRT },
+            { label: "Right Track", value: `${latestRT.toFixed(1)}%`, sub: "Daily weighted avg", color: "#1d5fc4",             bar: latestRT },
             { label: "Wrong Track", value: `${latestWT.toFixed(1)}%`, sub: "Daily weighted avg", color: "rgba(255,0,64,0.75)", bar: latestWT },
             { label: "Spread",      value: spreadStr,                  sub: "Right − Wrong",      color: spreadColor,           bar: undefined },
             { label: "Polls",       value: `${RAW_POLLS.length}`,     sub: "Included in model",  color: undefined,             bar: Math.min(100, RAW_POLLS.length / 2.5) },
@@ -274,7 +274,7 @@ const CSS = `
   body { margin: 0; }
 
   .pap-root {
-    --bg: #f6f7fb;
+    --bg: #f7f7f4;
     --bg2: #ffffff;
     --panel: #ffffff;
     --border: rgba(15, 16, 32, 0.08);
@@ -282,8 +282,8 @@ const CSS = `
     --muted: #6b7088;
     --muted2: #9aa0b4;
     --muted3: #b7bccc;
-    --purple:      #7c3aed;
-    --purple2:     #9d5cf0;
+    --purple:      #6d3ee9;
+    --purple2:     #8a63ef;
     --purple-soft: #a78bfa;
   }
 
@@ -352,7 +352,7 @@ const CSS = `
   @media (max-width: 640px) { .pap-hero-inner { grid-template-columns: 1fr; } }
 
   .pap-hero-title {
-    font-family: "Quantico", system-ui, -apple-system, BlinkMacOSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: var(--font-display), system-ui, -apple-system, BlinkMacOSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: clamp(22px,3.5vw,46px); font-weight: 900; text-transform: uppercase;
     letter-spacing: 0.02em; line-height: 0.92; color: #fff; margin: 0 0 14px;
   }
