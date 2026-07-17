@@ -1,15 +1,11 @@
 import Link from "next/link";
-import { Manrope } from "next/font/google";
 import DarkNav from "@/app/components/DarkNav";
 import Dot404 from "@/app/components/Dot404";
-
-// DarkNav resolves its type from --font-mp — every v2 page provides it
-const manrope = Manrope({ subsets: ["latin"], weight: ["500", "600", "700"], variable: "--font-mp", display: "swap" });
 
 // v2 404 — the numerals in the desk's dot-matrix, a caption, a way back.
 export default function NotFoundV2() {
   return (
-    <section className={`nf2 ${manrope.variable}`}>
+    <section className="nf2">
       <style>{`
         /* full-bleed takeover — the exact recipe every v2 page uses: dark
            body, no global chrome, neutralize the layout wrapper's gutters,

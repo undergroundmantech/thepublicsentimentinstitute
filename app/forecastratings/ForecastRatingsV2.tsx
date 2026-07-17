@@ -3,10 +3,7 @@
 import React, { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import { createPortal } from "react-dom";
 import Link from "next/link";
-import { Manrope } from "next/font/google";
 import DarkNav from "@/app/components/DarkNav";
-
-const manrope = Manrope({ subsets: ["latin"], weight: ["400", "500", "600", "700", "800"], variable: "--font-mp", display: "swap" });
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 type RatingKey =
@@ -225,7 +222,7 @@ function Tooltip({ d }: { d: TT }) {
   const left = (d.x + OFF + W) > vw ? d.x - W - OFF : d.x + OFF;
   const top  = (d.y + OFF + H) > vh ? d.y - H - OFF : d.y + OFF;
   return createPortal(
-    <div className={`x-tip ${manrope.className}`} style={{ left, top }}>
+    <div className="x-tip" style={{ left, top }}>
       <span className="x-tip-spine" style={{ background: c }} />
       <div className="x-tip-in">
         <div className="x-tip-hd">
@@ -494,7 +491,7 @@ export default function ForecastRatingsPage() {
   const competitive = races.filter(r => ["Toss-up","Tilt D","Tilt R","Lean D","Lean R"].includes(r.rating)).length;
 
   return (
-    <div className={`x-page ${manrope.variable}`}>
+    <div className="x-page">
       <style>{CSS}</style>
 
       <DarkNav />
@@ -644,10 +641,10 @@ html, body { background: #050505 !important; }
 body header, body footer { display: none !important; }
 
 .x-page {
-  --disp: var(--font-mp), "Manrope", "Helvetica Neue", Arial, sans-serif;
-  --serif: var(--font-mp), "Manrope", "Helvetica Neue", Arial, sans-serif;
-  --data: var(--font-mp), "Manrope", "Helvetica Neue", Arial, sans-serif;
-  --lab: var(--font-mp), "Manrope", "Helvetica Neue", Arial, sans-serif;
+  --disp: var(--font-display);
+  --serif: var(--font-body);
+  --data: var(--font-numeric);
+  --lab: var(--font-numeric);
   --background: #050505; --foreground: #f4f4ef; --foreground2: rgba(244,244,239,0.74);
   --muted: rgba(244,244,239,0.58); --muted2: rgba(244,244,239,0.40); --muted3: rgba(244,244,239,0.26);
   --border: rgba(255,255,255,0.10); --border2: rgba(255,255,255,0.16); --border3: rgba(255,255,255,0.24);

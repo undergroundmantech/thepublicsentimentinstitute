@@ -2,11 +2,8 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import { Manrope } from "next/font/google";
 import DarkNav from "@/app/components/DarkNav";
 import { SENATE_MODEL } from "@/app/components/senateModel";
-
-const manrope = Manrope({ subsets: ["latin"], weight: ["400", "500", "600", "700", "800"], variable: "--font-mp", display: "swap" });
 
 // ─── types ────────────────────────────────────────────────────────────────────
 type MapMode  = "pres" | "senate" | "redist" | "house";
@@ -589,7 +586,7 @@ export default function ElectoralMapPage() {
   const tiles = mode === "pres" ? TILES : SMALL_TILES;
 
   return (
-    <div className={`em-page ${manrope.variable}`}>
+    <div className="em-page">
       <style>{CSS}</style>
 
       <DarkNav />
@@ -788,7 +785,7 @@ export default function ElectoralMapPage() {
       </div>
 
       {mounted && createPortal(
-        <div className="em-dock" role="tablist" aria-label="Map mode" style={{ fontFamily: manrope.style.fontFamily }}>
+        <div className="em-dock" role="tablist" aria-label="Map mode" style={{ fontFamily: "var(--font-numeric)" }}>
           {([["pres","2028 presidential"],["senate","2026 senate"],["house","2026 house"],["redist","redistricting"]] as [MapMode, string][]).map(([m, label]) => (
             <button key={m} role="tab" aria-selected={mode === m}
               className={`em-dock-btn${mode === m ? " is-on" : ""}`}
@@ -846,7 +843,7 @@ export default function ElectoralMapPage() {
         }
 
         return (
-          <div className={`em-tip ${manrope.className}`} style={{ left, top, borderLeftColor: spineColor }}>
+          <div className="em-tip" style={{ left, top, borderLeftColor: spineColor }}>
             <div className="em-tip-top">
               <span className="em-tip-state">{tip.name}</span>
               {evEl}
@@ -868,10 +865,10 @@ html, body { background: #050505 !important; }
 body header, body footer { display: none !important; }
 
 .em-page { padding-bottom: 86px; position: relative;
-  --disp: var(--font-mp), "Manrope", "Helvetica Neue", Arial, sans-serif;
-  --serif: var(--font-mp), "Manrope", "Helvetica Neue", Arial, sans-serif;
-  --data: var(--font-mp), "Manrope", "Helvetica Neue", Arial, sans-serif;
-  --lab: var(--font-mp), "Manrope", "Helvetica Neue", Arial, sans-serif;
+  --disp: var(--font-display);
+  --serif: var(--font-body);
+  --data: var(--font-numeric);
+  --lab: var(--font-numeric);
   --background: #050505; --foreground: #f4f4ef; --foreground2: rgba(244,244,239,0.74);
   --muted: rgba(244,244,239,0.58); --muted2: rgba(244,244,239,0.40); --muted3: rgba(244,244,239,0.26);
   --border: rgba(255,255,255,0.10); --border2: rgba(255,255,255,0.16); --border3: rgba(255,255,255,0.24);

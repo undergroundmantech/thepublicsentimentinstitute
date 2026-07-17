@@ -2,10 +2,7 @@
 "use client";
 
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { Manrope } from "next/font/google";
 import DarkNav from "@/app/components/DarkNav";
-
-const manrope = Manrope({ subsets: ["latin"], weight: ["300", "400", "500", "600", "700"], variable: "--font-mp", display: "swap" });
 
 const CONTACT_EMAIL = "tpsinstitutecontact@gmail.com";
 const LIME = "#b7ff00";
@@ -228,7 +225,7 @@ export default function ContactPage() {
   };
 
   return (
-    <div className={`ct-page ${manrope.variable}`}>
+    <div className="ct-page">
       <style>{CSS}</style>
       <div className="ct-grain" aria-hidden="true" />
 
@@ -370,7 +367,7 @@ body main > div { max-width: none !important; padding-left: 0 !important; paddin
 body main > div > div { padding-top: 0 !important; padding-bottom: 0 !important; }
 
 .ct-page { position: relative; min-height: 100svh; color: #f4f4ef; overflow-x: clip; background: #050505;
-  font-family: var(--font-mp), "Manrope", "Helvetica Neue", Arial, sans-serif; font-size: 15px; letter-spacing: -0.01em;
+  font-family: var(--font-body); font-size: 15px; letter-spacing: -0.01em;
   width: 100vw; margin-left: calc(50% - 50vw); }
 .ct-shell { position: relative; z-index: 2; max-width: 1180px; margin: 0 auto; padding: 0 clamp(20px, 4vw, 44px); }
 .ct-page a { color: inherit; }

@@ -1,10 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Manrope } from "next/font/google";
 import DarkNav from "@/app/components/DarkNav";
-
-const manrope = Manrope({ subsets: ["latin"], weight: ["400", "500", "600", "700", "800"], variable: "--font-mp", display: "swap" });
 
 // ─── Palette tuned for the #050505 canvas ─────────────────────────────────────
 const C = {
@@ -1493,7 +1490,7 @@ export default function TPSIPollDashboard() {
   }, [pollId, slide.id, poll.tab]);
 
   return (
-    <div className={`tps ${manrope.variable}`}>
+    <div className="tps">
       <style>{CSS}</style>
 
       <div className="shell"><DarkNav /></div>
@@ -1552,15 +1549,19 @@ const CSS = `
     --line: rgba(255,255,255,0.10); --line2: rgba(255,255,255,0.06); --surf: rgba(255,255,255,0.04);
     --ease: cubic-bezier(.16,1,.3,1);
     position: relative; min-height: 100vh; background: #050505; color: var(--ink); overflow-x: clip;
-    font-family: var(--font-mp), "Manrope", "Helvetica Neue", Arial, sans-serif; letter-spacing: -0.01em;
+    font-family: var(--font-body); letter-spacing: -0.01em;
     width: 100vw; margin-left: calc(50% - 50vw);
   }
   .tps::before { content: ''; position: absolute; top: -120px; left: 50%; transform: translateX(-50%); width: 900px; height: 600px; background: radial-gradient(closest-side, rgba(183,255,0,0.07), transparent 70%); pointer-events: none; }
-  .tps h1, .tps h2, .tps h3, .tps h4, .tps p, .tps a, .tps button, .tps span, .tps div {
-    font-family: var(--font-mp), "Manrope", "Helvetica Neue", Arial, sans-serif;
+  .tps h1, .tps h2, .tps h3, .tps h4 {
+    font-family: var(--font-display);
+    text-transform: none;
+    margin: 0;
+  }
+  .tps p, .tps a, .tps button, .tps span, .tps div {
+    font-family: var(--font-body);
     text-transform: none;
   }
-  .tps h1, .tps h2, .tps h3, .tps h4 { margin: 0; }
   .tps .cup { font-variant-numeric: tabular-nums; font-feature-settings: "tnum" 1; }
   .shell { width: min(1100px, calc(100vw - 120px)); margin: 0 auto; }
   .eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--m2); }

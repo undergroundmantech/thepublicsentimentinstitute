@@ -4,7 +4,6 @@ import React, { useEffect, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import Link from "next/link";
-import { Manrope } from "next/font/google";
 import HeroElectoralMap from "@/app/components/HeroElectoralMap";
 import DarkNav from "@/app/components/DarkNav";
 import PublishDeck from "@/app/components/PublishDeck";
@@ -13,12 +12,6 @@ import { getHomeStats, type HomeStats, type HomeSeriesPoint, type HomePollPoint 
 
 const SentimentGlobe = dynamic(() => import("@/app/components/SentimentGlobe"), { ssr: false });
 const DotField = dynamic(() => import("@/app/components/DotField"), { ssr: false });
-
-const manrope = Manrope({
-  subsets: ["latin"],
-  display: "swap",
-  variable: "--font-manrope",
-});
 
 type ProcessItem = {
   title: string;
@@ -812,18 +805,22 @@ export default function HomePage() {
           overflow-x: clip;
           background: #050505;
           color: #f4f4ef;
-          font-family: var(--font-manrope), "Manrope", "Helvetica Neue", Arial, sans-serif;
+          font-family: var(--font-body);
           letter-spacing: -0.01em;
         }
 
         .lp-root h1,
         .lp-root h2,
         .lp-root h3,
-        .lp-root h4,
+        .lp-root h4 {
+          font-family: var(--font-display);
+          text-transform: none;
+        }
+
         .lp-root p,
         .lp-root a,
         .lp-root button {
-          font-family: var(--font-manrope), "Manrope", "Helvetica Neue", Arial, sans-serif;
+          font-family: var(--font-body);
           text-transform: none;
         }
 
@@ -4276,7 +4273,7 @@ export default function HomePage() {
         }
       `}</style>
 
-      <div className={`lp-root ${manrope.variable}`}>
+      <div className="lp-root">
         <section className="lp-hero">
           <DotField className="lp-hero-glass" />
           <div className="lp-hero-veil" aria-hidden="true" />

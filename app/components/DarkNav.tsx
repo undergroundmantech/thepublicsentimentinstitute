@@ -125,7 +125,7 @@ const CSS = `
   .dn {
     --lime: #b7ff00;
     position: relative; display: flex; align-items: center; gap: 18px; padding: 22px 0 30px;
-    font-family: var(--font-mp), "Manrope", "Helvetica Neue", Arial, sans-serif; letter-spacing: -0.01em;
+    font-family: var(--font-body); letter-spacing: -0.01em;
   }
   .dn a, .dn button { font-family: inherit; }
   .dn-logo { display: inline-flex; align-items: center; flex-shrink: 0; text-decoration: none; }
@@ -185,7 +185,7 @@ const CSS = `
     padding: 18px clamp(20px, 6vw, 40px) clamp(22px, 5vh, 40px);
     background: rgba(5,5,5,0.97);
     -webkit-backdrop-filter: blur(20px); backdrop-filter: blur(20px);
-    font-family: "Manrope", "Helvetica Neue", Arial, sans-serif; letter-spacing: -0.01em;
+    font-family: var(--font-body); letter-spacing: -0.01em;
     opacity: 0; visibility: hidden; transition: opacity .32s ease, visibility 0s linear .32s;
   }
   .dnm.open { opacity: 1; visibility: visible; transition: opacity .32s ease; }
