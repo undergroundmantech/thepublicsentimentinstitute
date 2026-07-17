@@ -170,7 +170,7 @@ const CSS = `
     background:
       radial-gradient(ellipse 45% 100% at 0% 60%,   rgba(77,127,212,0.05) 0%, transparent 65%),
       radial-gradient(ellipse 45% 100% at 100% 60%,  rgba(255,23,23,0.06)  0%, transparent 65%),
-      radial-gradient(ellipse 30% 60%  at 50% 0%,    rgba(124,58,237,0.04) 0%, transparent 70%);
+      radial-gradient(ellipse 30% 60%  at 50% 0%,    rgba(109, 62, 233,0.04) 0%, transparent 70%);
     pointer-events:none;
   }
   .pa24-hero::after {
@@ -216,7 +216,7 @@ const CSS = `
   }
   .pa24-badge-archive { border-color:rgba(74,222,128,0.28); background:rgba(74,222,128,0.06); color:#4ade80; }
   .pa24-badge-gold    { border-color:rgba(245,158,11,0.30); background:rgba(245,158,11,0.06); color:var(--gold); }
-  .pa24-badge-purple  { border-color:rgba(124,58,237,0.35); background:rgba(124,58,237,0.07); color:var(--purple-soft); }
+  .pa24-badge-purple  { border-color:rgba(109, 62, 233,0.35); background:rgba(109, 62, 233,0.07); color:var(--purple-soft); }
 
   /* HERO READOUT */
   .pa24-hero-read { display:flex; flex-direction:column; gap:6px; min-width:200px; }

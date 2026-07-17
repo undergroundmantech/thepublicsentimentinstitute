@@ -189,7 +189,7 @@ export default function Navbar() {
           width: 7px; height: 7px;
           border-radius: 50%;
           background: var(--purple);
-          box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.22);
+          box-shadow: 0 0 0 3px rgba(109, 62, 233, 0.22);
           animation: psi-pulse 2s infinite;
         }
         .nb-link.nb-emphasize:hover {
@@ -281,7 +281,7 @@ export default function Navbar() {
           box-shadow: var(--shadow-purple);
           transition: transform var(--dur-1) var(--ease-out), background var(--dur-1) var(--ease-out), box-shadow var(--dur-1) var(--ease-out);
         }
-        .nb-cta:hover { background: var(--gradient-purple-soft); transform: translateY(-1px); text-decoration: none; color: #fff !important; box-shadow: 0 8px 22px rgba(124, 58, 237, 0.32); }
+        .nb-cta:hover { background: var(--gradient-purple-soft); transform: translateY(-1px); text-decoration: none; color: #fff !important; box-shadow: 0 8px 22px rgba(109, 62, 233, 0.32); }
 
         .nb-ham {
           display: none;

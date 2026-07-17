@@ -530,8 +530,8 @@ export default function ForecastRatingsPage() {
   return (
     <>
       <style>{`
-        .hp-tri-stripe { height: 3px; background: linear-gradient(90deg,var(--red) 0%,var(--purple) 50%,var(--blue) 100%); border-radius: 9999px 9999px 0 0; box-shadow: 0 4px 18px -2px rgba(124,58,237,0.28); }
-        .fr-row:hover td { background: rgba(124,58,237,0.04) !important; }
+        .hp-tri-stripe { height: 3px; background: linear-gradient(90deg,var(--red) 0%,var(--purple) 50%,var(--blue) 100%); border-radius: 9999px 9999px 0 0; box-shadow: 0 4px 18px -2px rgba(109, 62, 233,0.28); }
+        .fr-row:hover td { background: rgba(109, 62, 233,0.04) !important; }
         .fr-card { background: var(--panel); border: 1px solid var(--border); border-radius: var(--r-lg); padding: 20px 22px; }
         @media(max-width:900px) { .fr-mg { grid-template-columns: 1fr !important; } }
         @media(max-width:640px) { .fr-sum { grid-template-columns: repeat(4,1fr) !important; } }
@@ -676,7 +676,7 @@ export default function ForecastRatingsPage() {
                 </div>
               </div>
             </div>
-            <div style={{ background: "var(--blue-dim)", border: "1px solid rgba(37,99,235,0.20)", borderRadius: "var(--r-md)", padding: "14px 20px", fontFamily: "var(--font-body),monospace", fontSize: 12, color: "var(--muted)", lineHeight: 1.8 }}>
+            <div style={{ background: "var(--blue-dim)", border: "1px solid rgba(29, 95, 196,0.20)", borderRadius: "var(--r-md)", padding: "14px 20px", fontFamily: "var(--font-body),monospace", fontSize: 12, color: "var(--muted)", lineHeight: 1.8 }}>
               <span style={{ color: "#4a9dff", fontWeight: 500 }}>Note:</span> Toss-up is reserved for races where polling and structural signals are in direct conflict or unavailable. A "Tilt" has a measurable lean but remains within the margin of error. Modeled result convention: positive = R advantage, negative = D advantage.
             </div>
           </div>

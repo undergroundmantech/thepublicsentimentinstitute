@@ -225,10 +225,10 @@ export default function ElectionResultsCard() {
         .erc-header {
           padding: 18px 22px 16px;
           background:
-            radial-gradient(ellipse 80% 60% at 0% 0%,   rgba(230,57,70,0.28)  0%, transparent 65%),
-            radial-gradient(ellipse 60% 50% at 100% 0%, rgba(37,99,235,0.22)  0%, transparent 65%),
-            radial-gradient(ellipse 50% 40% at 50% 100%,rgba(124,58,237,0.20) 0%, transparent 60%),
-            linear-gradient(160deg, rgba(124,58,237,0.12) 0%, rgba(15,15,30,0) 100%);
+            radial-gradient(ellipse 80% 60% at 0% 0%,   rgba(194, 47, 59,0.28)  0%, transparent 65%),
+            radial-gradient(ellipse 60% 50% at 100% 0%, rgba(29, 95, 196,0.22)  0%, transparent 65%),
+            radial-gradient(ellipse 50% 40% at 50% 100%,rgba(109, 62, 233,0.20) 0%, transparent 60%),
+            linear-gradient(160deg, rgba(109, 62, 233,0.12) 0%, rgba(15,15,30,0) 100%);
           border-bottom: 1px solid var(--border);
           margin-bottom: 16px;
           position: relative;
@@ -245,7 +245,7 @@ export default function ElectionResultsCard() {
           display: inline-flex; align-items: center; gap: 6px;
           font-family: var(--font-body); font-size: 9.5px; font-weight: 700;
           letter-spacing: 0.16em; text-transform: uppercase; color: var(--purple);
-          background: rgba(124,58,237,0.10); border: 1px solid rgba(124,58,237,0.22);
+          background: rgba(109, 62, 233,0.10); border: 1px solid rgba(109, 62, 233,0.22);
           border-radius: 9999px; padding: 3px 9px;
           margin-bottom: 12px;
         }

@@ -1641,7 +1641,7 @@ export default function TPSIPollDashboard() {
           border-radius: var(--r-pill);
         }
         .tpsi-bdg-purple {
-          border-color: rgba(124,58,237,0.4); background: rgba(124,58,237,0.08); color: var(--purple2);
+          border-color: rgba(109, 62, 233,0.4); background: rgba(109, 62, 233,0.08); color: var(--purple2);
         }
 
         /* Layout */
@@ -1670,9 +1670,9 @@ export default function TPSIPollDashboard() {
           cursor: pointer; text-align: left; transition: background 100ms, color 100ms;
           border-left: 2px solid transparent;
         }
-        .tpsi-nav-item:hover { background: rgba(124,58,237,0.04); color: var(--foreground2); }
+        .tpsi-nav-item:hover { background: rgba(109, 62, 233,0.04); color: var(--foreground2); }
         .tpsi-nav-item.active {
-          background: rgba(124,58,237,0.08); border-left-color: var(--purple); color: var(--foreground);
+          background: rgba(109, 62, 233,0.08); border-left-color: var(--purple); color: var(--foreground);
         }
         .tpsi-nav-qnum {
           font-family: var(--font-numeric); font-size: 10px; font-weight: 800;
@@ -1773,8 +1773,8 @@ export default function TPSIPollDashboard() {
         .tpsi-rank-bdg {
           display: inline-block; font-family: var(--font-body); font-size: 8px; font-weight: 700;
           letter-spacing: 0.10em; text-transform: uppercase; padding: 2px 8px;
-          border-radius: var(--r-pill); background: rgba(37,99,235,0.06);
-          border: 1px solid rgba(37,99,235,0.15); color: var(--muted2);
+          border-radius: var(--r-pill); background: rgba(29, 95, 196,0.06);
+          border: 1px solid rgba(29, 95, 196,0.15); color: var(--muted2);
         }
         .tpsi-rank-bdg.top {
           background: rgba(247,217,79,0.10); border-color: rgba(247,217,79,0.30); color: #f7d94f;
@@ -1827,8 +1827,8 @@ export default function TPSIPollDashboard() {
           letter-spacing: 0.14em; text-transform: uppercase; padding: 1px 6px;
           border-radius: var(--r-pill); margin-top: 2px;
         }
-        .tl-ballot-party.dem { background: rgba(37,99,235,0.12); color: #1d5fc4; border: 1px solid rgba(37,99,235,0.25); }
-        .tl-ballot-party.rep { background: rgba(230,57,70,0.10); color: #c22f3b; border: 1px solid rgba(230,57,70,0.22); }
+        .tl-ballot-party.dem { background: rgba(29, 95, 196,0.12); color: #1d5fc4; border: 1px solid rgba(29, 95, 196,0.25); }
+        .tl-ballot-party.rep { background: rgba(194, 47, 59,0.10); color: #c22f3b; border: 1px solid rgba(194, 47, 59,0.22); }
         .tl-ballot-center { text-align: center; padding: 0 4px; }
         .tl-ballot-net {
           font-family: var(--font-numeric); font-size: 20px; font-weight: 900;
@@ -1895,8 +1895,8 @@ export default function TPSIPollDashboard() {
           transition: background 100ms, color 100ms;
         }
         .poll-tab:last-child { border-right: none; }
-        .poll-tab:hover { background: rgba(124,58,237,0.04); color: var(--foreground2); }
-        .poll-tab.active { background: rgba(124,58,237,0.10); color: var(--purple2); }
+        .poll-tab:hover { background: rgba(109, 62, 233,0.04); color: var(--foreground2); }
+        .poll-tab.active { background: rgba(109, 62, 233,0.10); color: var(--purple2); }
         .poll-tab-dot {
           width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0;
         }

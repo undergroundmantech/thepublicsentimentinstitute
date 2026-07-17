@@ -215,12 +215,12 @@ body::before {
   pointer-events: none;
   z-index: 0;
   background:
-    radial-gradient(ellipse 70% 50% at 0% 0%,   rgba(124, 58, 237, 0.06) 0%, transparent 60%),
-    radial-gradient(ellipse 60% 40% at 100% 0%, rgba(37, 99, 235, 0.06)  0%, transparent 60%),
-    radial-gradient(ellipse 50% 35% at 50% 100%,rgba(230, 57, 70, 0.04)  0%, transparent 60%);
+    radial-gradient(ellipse 70% 50% at 0% 0%,   rgba(109, 62, 233, 0.06) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 40% at 100% 0%, rgba(29, 95, 196, 0.06)  0%, transparent 60%),
+    radial-gradient(ellipse 50% 35% at 50% 100%,rgba(194, 47, 59, 0.04)  0%, transparent 60%);
 }
 
-::selection { background: rgba(124, 58, 237, 0.22); color: var(--foreground); }
+::selection { background: rgba(109, 62, 233, 0.22); color: var(--foreground); }
 
 a {
   color: var(--purple-soft);
@@ -325,7 +325,7 @@ li { margin: 0.35em 0; }
   width: 100%;
   background: linear-gradient(90deg, var(--red) 0%, var(--purple) 50%, var(--blue) 100%);
   border-radius: var(--r-pill);
-  box-shadow: 0 0 12px 1px rgba(124, 58, 237, 0.28);
+  box-shadow: 0 0 12px 1px rgba(109, 62, 233, 0.28);
 }
 
 /* -------------------------------------------
@@ -350,8 +350,8 @@ li { margin: 0.35em 0; }
 }
 
 .psi-card-active {
-  border-color: rgba(124, 58, 237, 0.45);
-  box-shadow: var(--shadow-md), 0 0 0 2px rgba(124, 58, 237, 0.16);
+  border-color: rgba(109, 62, 233, 0.45);
+  box-shadow: var(--shadow-md), 0 0 0 2px rgba(109, 62, 233, 0.16);
 }
 
 .psi-glass {
@@ -440,17 +440,17 @@ button.psi-btn:active { transform: translateY(0); opacity: 0.95; }
   background: var(--panel2);
   color: var(--muted);
 }
-.psi-badge-purple { border-color: rgba(124, 58, 237, 0.30); background: rgba(124, 58, 237, 0.10); color: var(--purple); }
-.psi-badge-red    { border-color: rgba(230, 57, 70, 0.25); background: rgba(230, 57, 70, 0.10); color: var(--red); }
-.psi-badge-blue   { border-color: rgba(37, 99, 235, 0.25); background: rgba(37, 99, 235, 0.10); color: var(--blue); }
-.psi-badge-live   { border-color: rgba(230, 57, 70, 0.30); background: rgba(230, 57, 70, 0.12); color: var(--red); }
+.psi-badge-purple { border-color: rgba(109, 62, 233, 0.30); background: rgba(109, 62, 233, 0.10); color: var(--purple); }
+.psi-badge-red    { border-color: rgba(194, 47, 59, 0.25); background: rgba(194, 47, 59, 0.10); color: var(--red); }
+.psi-badge-blue   { border-color: rgba(29, 95, 196, 0.25); background: rgba(29, 95, 196, 0.10); color: var(--blue); }
+.psi-badge-live   { border-color: rgba(194, 47, 59, 0.30); background: rgba(194, 47, 59, 0.12); color: var(--red); }
 
 .psi-live-dot {
   display: inline-block;
   width: 8px; height: 8px;
   border-radius: 50%;
   background: var(--rep);
-  box-shadow: 0 0 0 4px rgba(230, 57, 70, 0.18);
+  box-shadow: 0 0 0 4px rgba(194, 47, 59, 0.18);
   animation: psi-pulse 2s infinite;
 }
 @keyframes psi-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.40; } }
@@ -487,7 +487,7 @@ button.psi-btn:active { transform: translateY(0); opacity: 0.95; }
   font-size: 0.95rem;
   color: var(--foreground);
 }
-.psi-table tbody tr:hover td { background: rgba(124, 58, 237, 0.04); }
+.psi-table tbody tr:hover td { background: rgba(109, 62, 233, 0.04); }
 .psi-num { text-align: right; font-variant-numeric: tabular-nums; font-family: var(--font-body); }
 
 /* -------------------------------------------
@@ -500,7 +500,7 @@ button.psi-btn:active { transform: translateY(0); opacity: 0.95; }
 *::-webkit-scrollbar { width: 6px; height: 6px; }
 *::-webkit-scrollbar-track { background: transparent; }
 *::-webkit-scrollbar-thumb { background: rgba(15, 16, 32, 0.16); border-radius: var(--r-pill); }
-*::-webkit-scrollbar-thumb:hover { background: rgba(124, 58, 237, 0.55); }
+*::-webkit-scrollbar-thumb:hover { background: rgba(109, 62, 233, 0.55); }
 
 /* -------------------------------------------
    9) RECHARTS POLISH
@@ -532,9 +532,9 @@ button.psi-btn:active { transform: translateY(0); opacity: 0.95; }
 
 .county-pop { animation: countyPop 520ms ease-out; }
 @keyframes countyPop {
-  0%   { filter: drop-shadow(0 0 0px rgba(124, 58, 237, 0)); transform: scale(1); }
-  45%  { filter: drop-shadow(0 0 12px rgba(124, 58, 237, 0.40)); transform: scale(1.003); }
-  100% { filter: drop-shadow(0 0 6px rgba(124, 58, 237, 0.16)); transform: scale(1); }
+  0%   { filter: drop-shadow(0 0 0px rgba(109, 62, 233, 0)); transform: scale(1); }
+  45%  { filter: drop-shadow(0 0 12px rgba(109, 62, 233, 0.40)); transform: scale(1.003); }
+  100% { filter: drop-shadow(0 0 6px rgba(109, 62, 233, 0.16)); transform: scale(1); }
 }
 
 @keyframes county-ping {

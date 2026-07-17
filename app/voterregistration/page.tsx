@@ -49,7 +49,7 @@ const COUNTIES_URL = "https://cdn.jsdelivr.net/npm/us-atlas@3/counties-10m.json"
 
 const REG_STOPS: [number, [number, number, number]][] = [
   [0.00, [34, 38, 58]], [0.20, [47, 40, 104]], [0.42, [78, 42, 170]],
-  [0.66, [124, 58, 237]], [0.84, [168, 85, 247]], [1.00, [221, 190, 255]],
+  [0.66, [109, 62, 233]], [0.84, [168, 85, 247]], [1.00, [221, 190, 255]],
 ];
 function rampReg(t: number): string {
   t = Math.max(0, Math.min(1, t));
@@ -746,7 +746,7 @@ body header, body footer { display: none !important; }
 .vr-sugg { position:absolute; top:calc(100% + 6px); right:0; left:0; z-index:60; background:rgba(14,14,18,0.98); border:1px solid var(--border2); border-radius:14px; overflow:hidden; box-shadow:0 20px 50px rgba(0,0,0,0.6); -webkit-backdrop-filter:blur(16px); backdrop-filter:blur(16px); }
 .vr-sugg button { display:flex; align-items:center; justify-content:space-between; gap:10px; width:100%; padding:9px 14px; background:none; border:0; border-bottom:1px solid var(--border); color:var(--foreground2); font-size:13px; cursor:pointer; text-align:left; transition:background .14s ease, color .14s ease; }
 .vr-sugg button:last-child { border-bottom:0; }
-.vr-sugg button:hover { background:rgba(124,58,237,0.18); color:var(--foreground); }
+.vr-sugg button:hover { background:rgba(109, 62, 233,0.18); color:var(--foreground); }
 .vr-sugg em { font-style:normal; font-size:11px; font-variant-numeric:tabular-nums; color:var(--muted2); }
 
 /* stage */
@@ -791,7 +791,7 @@ body header, body footer { display: none !important; }
 .vr-rank-list { margin-top:6px; display:grid; grid-template-columns:1fr 1fr; gap:0 36px; }
 @media (max-width:680px){ .vr-rank-list { grid-template-columns:1fr; } }
 .vr-rank-row { display:grid; grid-template-columns:24px minmax(0,1.5fr) 1fr auto; align-items:center; gap:12px; width:100%; padding:9px 6px; background:none; border:0; border-bottom:1px solid var(--border); cursor:pointer; text-align:left; transition:background .14s ease; }
-.vr-rank-row:hover, .vr-rank-row.is-hot { background:rgba(124,58,237,0.10); }
+.vr-rank-row:hover, .vr-rank-row.is-hot { background:rgba(109, 62, 233,0.10); }
 .vr-rank-n { font-size:11px; font-variant-numeric:tabular-nums; color:var(--muted3); text-align:right; }
 .vr-rank-name { font-size:13px; color:var(--foreground2); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
 .vr-rank-name em { font-style:normal; font-size:10px; letter-spacing:0.04em; text-transform:uppercase; color:var(--muted3); margin-left:8px; }

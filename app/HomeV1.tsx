@@ -81,8 +81,8 @@ function SpreadBadge({ a, b }: { a: number; b: number }) {
   const diff = round1(Math.abs(a - b));
   const lead = a > b ? "D" : "R";
   const color = a > b ? "#1d5fc4" : "#c22f3b";
-  const bg = a > b ? "rgba(37,99,235,0.10)" : "rgba(230,57,70,0.10)";
-  const border = a > b ? "rgba(37,99,235,0.25)" : "rgba(230,57,70,0.25)";
+  const bg = a > b ? "rgba(29, 95, 196,0.10)" : "rgba(194, 47, 59,0.10)";
+  const border = a > b ? "rgba(29, 95, 196,0.25)" : "rgba(194, 47, 59,0.25)";
   return (
     <span
       style={{
@@ -468,9 +468,9 @@ export default function HomePage() {
 
         .hp-hero-left {
           background:
-            radial-gradient(ellipse 75% 80% at 0% 10%,   rgba(124,58,237,0.18) 0%, transparent 60%),
-            radial-gradient(ellipse 55% 50% at 5% 100%,  rgba(37,99,235,0.10)  0%, transparent 60%),
-            radial-gradient(ellipse 55% 50% at 25% 0%,   rgba(230,57,70,0.07)  0%, transparent 60%),
+            radial-gradient(ellipse 75% 80% at 0% 10%,   rgba(109, 62, 233,0.18) 0%, transparent 60%),
+            radial-gradient(ellipse 55% 50% at 5% 100%,  rgba(29, 95, 196,0.10)  0%, transparent 60%),
+            radial-gradient(ellipse 55% 50% at 25% 0%,   rgba(194, 47, 59,0.07)  0%, transparent 60%),
             var(--panel);
           padding: 36px;
         }
@@ -492,8 +492,8 @@ export default function HomePage() {
           gap: 8px;
           padding: 5px 12px;
           border-radius: 9999px;
-          background: rgba(124,58,237,0.10);
-          border: 1px solid rgba(124,58,237,0.25);
+          background: rgba(109, 62, 233,0.10);
+          border: 1px solid rgba(109, 62, 233,0.25);
           color: var(--purple);
           font-size: 11px;
           font-weight: 600;
@@ -815,7 +815,7 @@ export default function HomePage() {
 
         .hp-participate {
           background:
-            radial-gradient(ellipse 100% 100% at 0% 0%, rgba(124,58,237,0.10) 0%, transparent 70%),
+            radial-gradient(ellipse 100% 100% at 0% 0%, rgba(109, 62, 233,0.10) 0%, transparent 70%),
             var(--panel);
           border: 1px solid var(--border);
           border-radius: var(--r-lg);

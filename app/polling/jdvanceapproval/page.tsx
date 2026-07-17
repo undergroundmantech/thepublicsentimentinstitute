@@ -417,7 +417,7 @@ const CSS = `
     width: 6px; height: 6px;
     border-radius: 50%;
     background: var(--purple);
-    box-shadow: 0 0 8px rgba(124,58,237,0.7);
+    box-shadow: 0 0 8px rgba(109, 62, 233,0.7);
     animation: pap-pulse 1.8s ease-in-out infinite;
     flex-shrink: 0;
   }
@@ -456,7 +456,7 @@ const CSS = `
     background:
       radial-gradient(ellipse 45% 100% at 0% 60%,   rgba(255,0,64,0.05)    0%, transparent 65%),
       radial-gradient(ellipse 45% 100% at 100% 60%,  rgba(77,127,212,0.04) 0%, transparent 65%),
-      radial-gradient(ellipse 30% 60%  at 50% 0%,    rgba(124,58,237,0.04) 0%, transparent 70%);
+      radial-gradient(ellipse 30% 60%  at 50% 0%,    rgba(109, 62, 233,0.04) 0%, transparent 70%);
     pointer-events: none;
   }
   .pap-hero::after {
@@ -522,9 +522,9 @@ const CSS = `
     font-size: 7.5px; font-weight: 700; letter-spacing: 0.22em;
     text-transform: uppercase; color: var(--muted3);
   }
-  .pap-badge-live   { border-color:rgba(124,58,237,0.35); background:rgba(124,58,237,0.07); color:var(--purple-soft); }
-  .pap-badge-purple { border-color:rgba(124,58,237,0.35); background:rgba(124,58,237,0.07); color:var(--purple-soft); }
-  .pap-badge-gold   { border-color:rgba(167,139,250,0.30); background:rgba(124,58,237,0.07); color:var(--purple-soft); }
+  .pap-badge-live   { border-color:rgba(109, 62, 233,0.35); background:rgba(109, 62, 233,0.07); color:var(--purple-soft); }
+  .pap-badge-purple { border-color:rgba(109, 62, 233,0.35); background:rgba(109, 62, 233,0.07); color:var(--purple-soft); }
+  .pap-badge-gold   { border-color:rgba(167,139,250,0.30); background:rgba(109, 62, 233,0.07); color:var(--purple-soft); }
 
   /* HERO RIGHT */
   .pap-hero-read {
@@ -680,7 +680,7 @@ const CSS = `
     display: inline-flex; align-items: center;
     padding: 1px 6px;
     border: 1px solid rgba(167,139,250,0.28);
-    background: rgba(124,58,237,0.07);
+    background: rgba(109, 62, 233,0.07);
     font-family: var(--font-body), "Geist Mono", monospace;
     font-size: 7px; font-weight: 700;
     letter-spacing: 0.18em; text-transform: uppercase;

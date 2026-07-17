@@ -1556,10 +1556,10 @@ export default function HomePage() {
           letter-spacing: -0.01em;
           box-shadow:
             inset 0 1px 0 rgba(255, 255, 255, 0.95),
-            inset 0 -10px 18px rgba(124, 58, 237, 0.10),
+            inset 0 -10px 18px rgba(109, 62, 233, 0.10),
             0 1px 2px rgba(0, 0, 0, 0.45),
             0 10px 24px rgba(0, 0, 0, 0.38),
-            0 26px 60px rgba(124, 58, 237, 0.20);
+            0 26px 60px rgba(109, 62, 233, 0.20);
           transition: transform 240ms cubic-bezier(.2,.8,.2,1), box-shadow 260ms ease, background 220ms ease;
         }
 
@@ -1574,10 +1574,10 @@ export default function HomePage() {
           background: linear-gradient(180deg, #ffffff 0%, #f3f0fa 100%);
           box-shadow:
             inset 0 1px 0 rgba(255, 255, 255, 1),
-            inset 0 -10px 18px rgba(124, 58, 237, 0.12),
+            inset 0 -10px 18px rgba(109, 62, 233, 0.12),
             0 2px 3px rgba(0, 0, 0, 0.4),
             0 14px 32px rgba(0, 0, 0, 0.42),
-            0 34px 80px rgba(124, 58, 237, 0.30);
+            0 34px 80px rgba(109, 62, 233, 0.30);
           text-decoration: none;
         }
 
@@ -1611,7 +1611,7 @@ export default function HomePage() {
             inset 0 0 0 1px rgba(244, 244, 239, 0.30),
             inset 0 1px 0 rgba(255, 255, 255, 0.14),
             0 14px 36px rgba(0, 0, 0, 0.45),
-            0 0 40px rgba(124, 58, 237, 0.14);
+            0 0 40px rgba(109, 62, 233, 0.14);
         }
 
         .lp-dot {

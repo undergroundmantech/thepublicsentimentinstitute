@@ -59,8 +59,8 @@ export default function Footer() {
           align-items: center;
           gap: 28px;
           background:
-            radial-gradient(ellipse 70% 100% at 0% 100%, rgba(124,58,237,0.07) 0%, transparent 60%),
-            radial-gradient(ellipse 60% 100% at 100% 0%, rgba(37,99,235,0.05) 0%, transparent 60%),
+            radial-gradient(ellipse 70% 100% at 0% 100%, rgba(109, 62, 233,0.07) 0%, transparent 60%),
+            radial-gradient(ellipse 60% 100% at 100% 0%, rgba(29, 95, 196,0.05) 0%, transparent 60%),
             var(--panel);
           border-bottom: 1px solid var(--border);
         }
@@ -125,7 +125,7 @@ export default function Footer() {
           transform: translateY(-1px);
           text-decoration: none;
           color: #fff !important;
-          box-shadow: 0 8px 22px rgba(124, 58, 237, 0.32);
+          box-shadow: 0 8px 22px rgba(109, 62, 233, 0.32);
         }
         .ft-btn-ghost {
           background: var(--panel);

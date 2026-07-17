@@ -9,7 +9,7 @@ const keyMetrics = [
 const headlineFindings = [
   {
     accent: "var(--blue2)",
-    glow: "rgba(59,130,246,0.4)",
+    glow: "rgba(59, 123, 222,0.4)",
     tag: "MOTIVATION",
     title: "Voter Motivation (2026 Midterms)",
     sub: "Extremely motivated: 52% RV • 74% LV — high engagement expected among likely voters.",
@@ -17,7 +17,7 @@ const headlineFindings = [
   },
   {
     accent: "var(--purple-soft)",
-    glow: "rgba(124,58,237,0.35)",
+    glow: "rgba(109, 62, 233,0.35)",
     tag: "GENERIC BALLOT",
     title: "2026 Generic Congressional Ballot",
     sub: "Dem +8 RV (41%–33%), Dem +9 LV (50%–41%) including leaners.",
@@ -25,7 +25,7 @@ const headlineFindings = [
   },
   {
     accent: "var(--red2)",
-    glow: "rgba(230,57,70,0.35)",
+    glow: "rgba(194, 47, 59,0.35)",
     tag: "HYPOTHETICAL MATCHUP",
     title: "2028 Pres: Vance vs Newsom",
     sub: "Close race — Newsom +4 LV (47%–42%), undecideds still high.",
@@ -33,7 +33,7 @@ const headlineFindings = [
   },
   {
     accent: "var(--blue2)",
-    glow: "rgba(59,130,246,0.3)",
+    glow: "rgba(59, 123, 222,0.3)",
     tag: "TRUMP APPROVAL",
     title: "President Trump Approval",
     sub: "Strong disapproval dominant at 49% RV / 48% LV overall.",
@@ -44,8 +44,8 @@ const headlineFindings = [
 const callouts = [
   {
     color: "var(--blue2)",
-    bg: "rgba(37,99,235,0.06)",
-    border: "rgba(59,130,246,0.20)",
+    bg: "rgba(29, 95, 196,0.06)",
+    border: "rgba(59, 123, 222,0.20)",
     icon: "◈",
     label: "TAKE THE SURVEY",
     desc: "Contribute to the live national sentiment baseline.",
@@ -54,8 +54,8 @@ const callouts = [
   },
   {
     color: "var(--purple-soft)",
-    bg: "rgba(124,58,237,0.06)",
-    border: "rgba(124,58,237,0.22)",
+    bg: "rgba(109, 62, 233,0.06)",
+    border: "rgba(109, 62, 233,0.22)",
     icon: "◉",
     label: "PARTNER WITH US",
     desc: "Request custom cuts, crosstabs or recurring waves.",
@@ -64,8 +64,8 @@ const callouts = [
   },
   {
     color: "var(--red2)",
-    bg: "rgba(230,57,70,0.06)",
-    border: "rgba(230,57,70,0.20)",
+    bg: "rgba(194, 47, 59,0.06)",
+    border: "rgba(194, 47, 59,0.20)",
     icon: "◫",
     label: "METHODOLOGY",
     desc: "Weighted toplines, transparent disclosure — full details available.",

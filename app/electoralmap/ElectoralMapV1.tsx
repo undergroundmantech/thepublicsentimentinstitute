@@ -530,7 +530,7 @@ function buildCSS(_dm: boolean): string {
   .em-top-brand { display:flex; align-items:center; gap:10px; flex-shrink:0; }
   .em-logo {
     font-size: 10px; font-weight: 700; letter-spacing: 0.14em; color: var(--purple);
-    border: 1px solid rgba(124,58,237,0.3); padding: 3px 7px; flex-shrink: 0;
+    border: 1px solid rgba(109, 62, 233,0.3); padding: 3px 7px; flex-shrink: 0;
     border-radius: var(--r-sm);
   }
   .em-brand-text { display:flex; flex-direction:column; gap:1px; }
@@ -561,8 +561,8 @@ function buildCSS(_dm: boolean): string {
     border-radius: var(--r-pill);
   }
   .em-btn:hover { border-color: var(--border3); color: var(--foreground); background: var(--panel); }
-  .em-btn-gold { border-color:rgba(124,58,237,0.3); color:var(--purple); display:flex; align-items:center; gap:5px; }
-  .em-btn-gold:hover { border-color:var(--purple); background:rgba(124,58,237,.08); color:var(--purple2); }
+  .em-btn-gold { border-color:rgba(109, 62, 233,0.3); color:var(--purple); display:flex; align-items:center; gap:5px; }
+  .em-btn-gold:hover { border-color:var(--purple); background:rgba(109, 62, 233,.08); color:var(--purple2); }
 
   .em-win {
     flex-shrink: 0; padding: 5px 18px; border-bottom: 1px solid var(--border);

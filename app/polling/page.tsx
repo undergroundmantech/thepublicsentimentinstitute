@@ -1147,8 +1147,8 @@ function SenateMultiMatchupPanel({
               onClick={() => setSelected(i)}
               style={{
                 padding: "4px 10px",
-                background: selected === i ? "rgba(124,58,237,.15)" : "transparent",
-                border: selected === i ? "1px solid rgba(124,58,237,.4)" : "1px solid var(--border)",
+                background: selected === i ? "rgba(109, 62, 233,.15)" : "transparent",
+                border: selected === i ? "1px solid rgba(109, 62, 233,.4)" : "1px solid var(--border)",
                 color: selected === i ? "var(--purple2)" : "var(--muted)",
                 fontSize: 9, letterSpacing: "0.1em", cursor: "pointer",
                 fontFamily: "var(--font-body), ui-monospace, monospace",
@@ -1633,7 +1633,7 @@ const CSS = `
   }
   .pd-live-dot {
     width: 5px; height: 5px; border-radius: 50%; background: var(--purple); flex-shrink: 0;
-    box-shadow: 0 0 6px var(--purple-glow, rgba(124,58,237,.5));
+    box-shadow: 0 0 6px var(--purple-glow, rgba(109, 62, 233,.5));
     animation: pd-pulse 1.8s ease-in-out infinite;
   }
   @keyframes pd-pulse { 0%,100%{opacity:1} 50%{opacity:.3} }
@@ -1657,7 +1657,7 @@ const CSS = `
     font-size: 7.5px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase;
     color: var(--muted);
   }
-  .pd-badge-live { border-color: var(--purple-glow, rgba(124,58,237,.3)); background: var(--purple-dim, rgba(124,58,237,.07)); color: var(--purple2, #8a63ef); }
+  .pd-badge-live { border-color: var(--purple-glow, rgba(109, 62, 233,.3)); background: var(--purple-dim, rgba(109, 62, 233,.07)); color: var(--purple2, #8a63ef); }
   .pd-live-dot-sm {
     width: 5px; height: 5px; border-radius: 50%; background: var(--purple);
     animation: pd-pulse 1.8s ease-in-out infinite; display: inline-block;

@@ -188,8 +188,8 @@ export default function HomeV2() {
         .v2-page {
           min-height: 100vh;
           background:
-            radial-gradient(ellipse 70% 50% at 0% 0%, rgba(124,58,237,0.06) 0%, transparent 60%),
-            radial-gradient(ellipse 60% 40% at 100% 0%, rgba(37,99,235,0.06) 0%, transparent 60%),
+            radial-gradient(ellipse 70% 50% at 0% 0%, rgba(109, 62, 233,0.06) 0%, transparent 60%),
+            radial-gradient(ellipse 60% 40% at 100% 0%, rgba(29, 95, 196,0.06) 0%, transparent 60%),
             var(--v2-bg);
           color: var(--v2-ink);
           padding: 48px 24px 96px;
@@ -218,7 +218,7 @@ export default function HomeV2() {
         .v2-hero-left::before {
           content: "";
           position: absolute; inset: 0;
-          background: radial-gradient(ellipse 60% 80% at 100% 100%, rgba(124,58,237,0.06) 0%, transparent 60%);
+          background: radial-gradient(ellipse 60% 80% at 100% 100%, rgba(109, 62, 233,0.06) 0%, transparent 60%);
           pointer-events: none;
         }
 
@@ -226,13 +226,13 @@ export default function HomeV2() {
           display: inline-flex; align-items: center; gap: 8px;
           padding: 6px 12px;
           border-radius: 999px;
-          background: rgba(124,58,237,0.10);
+          background: rgba(109, 62, 233,0.10);
           color: var(--v2-purple);
           font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
         }
         .v2-hero-eyebrow .dot {
           width: 6px; height: 6px; border-radius: 50%; background: var(--v2-purple);
-          box-shadow: 0 0 0 4px rgba(124,58,237,0.18);
+          box-shadow: 0 0 0 4px rgba(109, 62, 233,0.18);
           animation: v2pulse 2.4s ease-in-out infinite;
         }
         @keyframes v2pulse { 0%,100% {opacity:1;} 50% {opacity:.45;} }
@@ -435,8 +435,8 @@ export default function HomeV2() {
           content: "";
           position: absolute; inset: 0;
           background:
-            radial-gradient(ellipse 80% 60% at 100% 0%, rgba(124,58,237,0.30) 0%, transparent 55%),
-            radial-gradient(ellipse 70% 50% at 0% 100%, rgba(37,99,235,0.18) 0%, transparent 60%);
+            radial-gradient(ellipse 80% 60% at 100% 0%, rgba(109, 62, 233,0.30) 0%, transparent 55%),
+            radial-gradient(ellipse 70% 50% at 0% 100%, rgba(29, 95, 196,0.18) 0%, transparent 60%);
           pointer-events: none;
         }
         .v2-cta-card > * { position: relative; }
@@ -693,7 +693,7 @@ export default function HomeV2() {
                   const lean = r.rep - r.dem;
                   const sign = lean >= 0 ? "R+" : "D+";
                   const color = lean >= 0 ? "var(--v2-red)" : "var(--v2-blue)";
-                  const bg    = lean >= 0 ? "rgba(230,57,70,0.10)" : "rgba(37,99,235,0.10)";
+                  const bg    = lean >= 0 ? "rgba(194, 47, 59,0.10)" : "rgba(29, 95, 196,0.10)";
                   return (
                     <div key={r.issue} className="v2-issue-row">
                       <div className="v2-issue-name">{r.issue}</div>
@@ -757,9 +757,9 @@ export default function HomeV2() {
                 { tag: "Methodology", name: "Gold-Standard Polls",     desc: "Curated aggregation ranked by historical accuracy.", href: "/goldstandard",  tone: "neutral"},
               ].map(c => {
                 const toneColors: Record<string, { text: string; bg: string }> = {
-                  blue:    { text: "var(--v2-blue)",    bg: "rgba(37,99,235,0.10)" },
-                  red:     { text: "var(--v2-red)",     bg: "rgba(230,57,70,0.10)" },
-                  purple:  { text: "var(--v2-purple)",  bg: "rgba(124,58,237,0.10)" },
+                  blue:    { text: "var(--v2-blue)",    bg: "rgba(29, 95, 196,0.10)" },
+                  red:     { text: "var(--v2-red)",     bg: "rgba(194, 47, 59,0.10)" },
+                  purple:  { text: "var(--v2-purple)",  bg: "rgba(109, 62, 233,0.10)" },
                   neutral: { text: "var(--v2-ink-2)",   bg: "rgba(15,16,32,0.06)"  },
                 };
                 const tc = toneColors[c.tone];

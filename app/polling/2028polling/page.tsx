@@ -176,7 +176,7 @@ const CSS = `
 
   .p28-live-dot {
     display: inline-block; width: 6px; height: 6px; border-radius: 50%;
-    background: var(--purple); box-shadow: 0 0 8px rgba(124,58,237,0.7);
+    background: var(--purple); box-shadow: 0 0 8px rgba(109, 62, 233,0.7);
     animation: p28-pulse 1.8s ease-in-out infinite; flex-shrink: 0;
   }
 
@@ -200,7 +200,7 @@ const CSS = `
     background:
       radial-gradient(ellipse 55% 100% at 0% 60%, rgba(255,23,23,0.08) 0%, transparent 65%),
       radial-gradient(ellipse 55% 100% at 100% 60%, rgba(24,77,252,0.09) 0%, transparent 65%),
-      radial-gradient(ellipse 30% 60% at 50% 0%, rgba(124,58,237,0.04) 0%, transparent 70%);
+      radial-gradient(ellipse 30% 60% at 50% 0%, rgba(109, 62, 233,0.04) 0%, transparent 70%);
     pointer-events: none;
   }
   .p28-hero::after {
@@ -220,8 +220,8 @@ const CSS = `
   .p28-portrait-strip::after {
     content: ''; position: absolute; top: 0; left: 50%;
     transform: translateX(-50%); width: 1px; height: 100%;
-    background: linear-gradient(180deg, transparent 0%, rgba(124,58,237,0.35) 15%,
-      rgba(124,58,237,0.35) 85%, transparent 100%);
+    background: linear-gradient(180deg, transparent 0%, rgba(109, 62, 233,0.35) 15%,
+      rgba(109, 62, 233,0.35) 85%, transparent 100%);
     pointer-events: none;
   }
 
@@ -311,9 +311,9 @@ const CSS = `
     font-family: var(--font-body), "Geist Mono", monospace; font-size: 7.5px; font-weight: 700;
     letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted3);
   }
-  .p28-badge-live   { border-color:rgba(124,58,237,0.35); background:rgba(124,58,237,0.07); color:var(--purple-soft); }
-  .p28-badge-purple { border-color:rgba(124,58,237,0.35); background:rgba(124,58,237,0.07); color:var(--purple-soft); }
-  .p28-badge-gold   { border-color:rgba(167,139,250,0.30); background:rgba(124,58,237,0.07); color:var(--purple-soft); }
+  .p28-badge-live   { border-color:rgba(109, 62, 233,0.35); background:rgba(109, 62, 233,0.07); color:var(--purple-soft); }
+  .p28-badge-purple { border-color:rgba(109, 62, 233,0.35); background:rgba(109, 62, 233,0.07); color:var(--purple-soft); }
+  .p28-badge-gold   { border-color:rgba(167,139,250,0.30); background:rgba(109, 62, 233,0.07); color:var(--purple-soft); }
 
   .p28-hero-read { display:flex; flex-direction:column; gap:6px; min-width:170px; }
   .p28-hero-read-row {
@@ -400,7 +400,7 @@ const CSS = `
   .p28-map-ev-needed {
     display: flex; flex-direction: column; align-items: center;
     justify-content: center; padding: 8px 16px; gap: 2px;
-    background: rgba(124,58,237,0.07);
+    background: rgba(109, 62, 233,0.07);
   }
   .p28-map-ev-needed-num {
     font-family: var(--font-body), "Geist Mono", monospace; font-size: 14px; font-weight: 900;
@@ -461,7 +461,7 @@ const CSS = `
   .p28-tt-ev {
     font-size: 8px; font-weight: 700; letter-spacing: 0.18em;
     color: var(--purple-soft); padding: 1px 6px;
-    border: 1px solid rgba(124,58,237,0.35); background: rgba(124,58,237,0.1);
+    border: 1px solid rgba(109, 62, 233,0.35); background: rgba(109, 62, 233,0.1);
   }
   .p28-tt-category {
     font-size: 7.5px; font-weight: 700; letter-spacing: 0.2em;
@@ -533,12 +533,12 @@ const CSS = `
     color: var(--muted); vertical-align: middle; font-variant-numeric: tabular-nums;
   }
   table.p28-table td.r { text-align:right; }
-  table.p28-table tbody tr:hover { background:rgba(124,58,237,0.04); }
+  table.p28-table tbody tr:hover { background:rgba(109, 62, 233,0.04); }
   table.p28-table tbody tr:last-child td { border-bottom:none; }
 
   .p28-gold-badge {
     display: inline-flex; align-items: center; padding: 1px 6px;
-    border: 1px solid rgba(167,139,250,0.28); background: rgba(124,58,237,0.07);
+    border: 1px solid rgba(167,139,250,0.28); background: rgba(109, 62, 233,0.07);
     font-family: var(--font-body), "Geist Mono", monospace; font-size: 7px; font-weight: 700;
     letter-spacing: 0.18em; text-transform: uppercase; color: var(--purple-soft);
   }

@@ -257,8 +257,8 @@ export default function TermsPage() {
           line-height: 1.4;
         }
         .tc-toc-item:last-child { border-bottom: none; }
-        .tc-toc-item:hover { color: #8a63ef; background: rgba(124,58,237,0.04); text-decoration: none; }
-        .tc-toc-item.active { color: #8a63ef; border-left: 2px solid #8a63ef; padding-left: 14px; background: rgba(124,58,237,0.04); }
+        .tc-toc-item:hover { color: #8a63ef; background: rgba(109, 62, 233,0.04); text-decoration: none; }
+        .tc-toc-item.active { color: #8a63ef; border-left: 2px solid #8a63ef; padding-left: 14px; background: rgba(109, 62, 233,0.04); }
 
         /* ── Accordion sections ── */
         .tc-sections {
@@ -288,7 +288,7 @@ export default function TermsPage() {
           gap: 16px;
           transition: background 80ms;
         }
-        .tc-section-trigger:hover { background: rgba(124,58,237,0.04); }
+        .tc-section-trigger:hover { background: rgba(109, 62, 233,0.04); }
 
         .tc-section-num {
           font-family: var(--font-body), monospace;

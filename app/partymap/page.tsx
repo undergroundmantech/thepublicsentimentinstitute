@@ -398,7 +398,7 @@ export default function PartyMapPage() {
       <style>{`
         .pm-root { --pm-grey: rgba(15,16,32,0.16); }
         [data-theme="dark"] .pm-root { --pm-grey: rgba(244,245,251,0.16); }
-        .pm-tri { height:3px; background:linear-gradient(90deg,var(--red) 0%,var(--purple) 50%,var(--blue) 100%); border-radius:9999px 9999px 0 0; box-shadow:0 4px 18px -2px rgba(124,58,237,0.28); }
+        .pm-tri { height:3px; background:linear-gradient(90deg,var(--red) 0%,var(--purple) 50%,var(--blue) 100%); border-radius:9999px 9999px 0 0; box-shadow:0 4px 18px -2px rgba(109, 62, 233,0.28); }
         .pm-state { stroke:#080810; stroke-width:0.9; cursor:pointer; transition:filter 110ms; }
         .pm-state:hover { filter:brightness(1.12) saturate(1.18); stroke-width:1.4; }
         .pm-county { stroke:#080810; stroke-width:0.28; cursor:pointer; transition:filter 110ms; }
@@ -547,7 +547,7 @@ export default function PartyMapPage() {
         </div>
 
         {/* ── Footnote ── */}
-        <div style={{ background: "var(--blue-dim)", border: "1px solid rgba(37,99,235,0.20)", borderRadius: "var(--r-md)", padding: "14px 20px", fontFamily: "var(--font-body),monospace", fontSize: 12, color: "var(--muted)", lineHeight: 1.8 }}>
+        <div style={{ background: "var(--blue-dim)", border: "1px solid rgba(29, 95, 196,0.20)", borderRadius: "var(--r-md)", padding: "14px 20px", fontFamily: "var(--font-body),monospace", fontSize: 12, color: "var(--muted)", lineHeight: 1.8 }}>
           <span style={{ color: "#4a9dff", fontWeight: 500 }}>Note:</span> Color reflects <em>registered</em> party — not how a place votes. States &amp; focused counties deepen with the plurality&apos;s margin; the national county view shows each county&apos;s largest registered party. Only 31 states record party at registration (the rest are grey); North Dakota (hatched) has no voter registration. Latest official rolls compiled from each state&apos;s election authority.
           {iso?.source_url && <> · <a href={iso.source_url} target="_blank" rel="noreferrer" style={{ color: "var(--foreground2)", borderBottom: "1px solid var(--border3)" }}>{iso.name} source ↗</a></>}{" "}
           <Link href="/forecastratings" style={{ color: "var(--foreground2)", borderBottom: "1px solid var(--border3)" }}>See 2026 race ratings →</Link>

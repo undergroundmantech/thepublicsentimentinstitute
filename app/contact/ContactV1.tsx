@@ -438,7 +438,7 @@ const CSS = `
     content: '';
     position: absolute; top: -60px; right: -60px;
     width: 300px; height: 300px;
-    background: radial-gradient(circle, rgba(124,58,237,0.07) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(109, 62, 233,0.07) 0%, transparent 70%);
     pointer-events: none;
   }
 
@@ -483,8 +483,8 @@ const CSS = `
     color: var(--muted); border-radius: var(--r-pill);
   }
   .ct-badge-live {
-    border-color: rgba(124,58,237,0.3);
-    background: rgba(124,58,237,0.08);
+    border-color: rgba(109, 62, 233,0.3);
+    background: rgba(109, 62, 233,0.08);
     color: var(--purple2);
   }
   .ct-live-dot {
@@ -607,11 +607,11 @@ const CSS = `
     border-color: var(--border3);
   }
   .ct-input--focused {
-    border-color: rgba(124,58,237,0.45) !important;
-    background: rgba(124,58,237,0.04) !important;
+    border-color: rgba(109, 62, 233,0.45) !important;
+    background: rgba(109, 62, 233,0.04) !important;
   }
   .ct-select {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='rgba(124,58,237,0.6)'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='rgba(109, 62, 233,0.6)'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
     background-position: right 12px center;
     padding-right: 32px; cursor: pointer;
@@ -636,7 +636,7 @@ const CSS = `
     box-shadow: var(--shadow-purple);
     transition: background var(--dur-1) var(--ease-out), transform var(--dur-1) var(--ease-out), box-shadow var(--dur-1) var(--ease-out);
   }
-  .ct-btn-primary:hover:not(:disabled) { background: var(--gradient-purple-soft); transform: translateY(-1px); box-shadow: 0 8px 22px rgba(124,58,237,0.32); }
+  .ct-btn-primary:hover:not(:disabled) { background: var(--gradient-purple-soft); transform: translateY(-1px); box-shadow: 0 8px 22px rgba(109, 62, 233,0.32); }
   .ct-btn-primary:disabled { opacity: 0.4; cursor: not-allowed; }
 
   .ct-btn-outline {
@@ -723,7 +723,7 @@ const CSS = `
   /* EMAIL CARD */
   .ct-email-card {
     background: var(--purple-dim);
-    border-top: 1px solid rgba(124,58,237,0.18);
+    border-top: 1px solid rgba(109, 62, 233,0.18);
     padding: 18px 18px;
     display: flex; flex-direction: column; gap: 6px;
   }

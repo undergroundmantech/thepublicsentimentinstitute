@@ -321,7 +321,7 @@ function Beeswarm({ races, raceType }: { races: RaceRow[]; raceType: string }) {
                   <circle cx={p.cx} cy={cy} r={rr} fill="url(#bfSheen)" stroke={isH ? "var(--foreground)" : "transparent"} strokeWidth={isH ? 1.6 : 0} pointerEvents="none" style={{ transition: "r 110ms" }} />
                 </>
               )}
-              <text x={p.cx} y={cy} textAnchor="middle" dominantBaseline="central" className="x-sw-bub" style={{ fill: ink, textShadow: open ? "none" : "0 1px 1.4px rgba(11,13,28,0.32)" }}>{p.r.state}</text>
+              <text x={p.cx} y={cy} textAnchor="middle" dominantBaseline="central" className="x-sw-bub" style={{ fill: ink, textShadow: open ? "none" : "0 1px 1.4px rgba(23, 23, 27,0.32)" }}>{p.r.state}</text>
             </g>
           );
         })}
@@ -397,7 +397,7 @@ function RaceMap({ svgId, races, raceType }: { svgId: string; races: RaceRow[]; 
           t.setAttribute("dominant-baseline", "central");
           t.setAttribute("class", "x-geo-lab");
           const dark = LABEL_INK.has(race.rating);
-          t.style.cssText = `fill:${dark ? "#17171b" : "#fff"};text-shadow:0 1px 1.5px ${dark ? "rgba(255,255,255,0.45)" : "rgba(11,13,28,0.4)"};pointer-events:none;`;
+          t.style.cssText = `fill:${dark ? "#17171b" : "#fff"};text-shadow:0 1px 1.5px ${dark ? "rgba(255,255,255,0.45)" : "rgba(23, 23, 27,0.4)"};pointer-events:none;`;
           t.textContent = abbr;
           svg.appendChild(t);
         }

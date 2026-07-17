@@ -77,7 +77,7 @@ export default function SmsOptInPage() {
           position: absolute;
           top: -80px; right: -80px;
           width: 320px; height: 320px;
-          background: radial-gradient(circle, rgba(124,58,237,0.07) 0%, transparent 70%);
+          background: radial-gradient(circle, rgba(109, 62, 233,0.07) 0%, transparent 70%);
           pointer-events: none;
         }
 
@@ -148,14 +148,14 @@ export default function SmsOptInPage() {
         .sms-benefit-icon {
           width: 28px;
           height: 28px;
-          border: 1px solid rgba(124,58,237,0.3);
+          border: 1px solid rgba(109, 62, 233,0.3);
           display: flex;
           align-items: center;
           justify-content: center;
           flex-shrink: 0;
           font-size: 12px;
           color: #8a63ef;
-          background: rgba(124,58,237,0.05);
+          background: rgba(109, 62, 233,0.05);
         }
 
         .sms-benefit-title {
@@ -262,7 +262,7 @@ export default function SmsOptInPage() {
           -webkit-appearance: none;
         }
         .sms-input::placeholder { color: var(--muted2); }
-        .sms-input:focus { border-color: rgba(124,58,237,0.5); background: var(--panel2); }
+        .sms-input:focus { border-color: rgba(109, 62, 233,0.5); background: var(--panel2); }
 
         /* ── Consent checkbox ── */
         .sms-consent {
@@ -275,7 +275,7 @@ export default function SmsOptInPage() {
           cursor: pointer;
           transition: background 100ms;
         }
-        .sms-consent:hover { background: rgba(124,58,237,0.04); }
+        .sms-consent:hover { background: rgba(109, 62, 233,0.04); }
 
         .sms-checkbox {
           width: 14px;
@@ -292,7 +292,7 @@ export default function SmsOptInPage() {
         }
         .sms-checkbox.checked {
           border-color: #8a63ef;
-          background: rgba(124,58,237,0.15);
+          background: rgba(109, 62, 233,0.15);
         }
         .sms-checkbox-mark {
           width: 6px;
@@ -346,7 +346,7 @@ export default function SmsOptInPage() {
           transition: background 120ms, transform 80ms, box-shadow 120ms;
           width: 100%;
         }
-        .sms-submit:hover { background: var(--gradient-purple-soft); transform: translateY(-1px); box-shadow: 0 8px 22px rgba(124,58,237,0.32); }
+        .sms-submit:hover { background: var(--gradient-purple-soft); transform: translateY(-1px); box-shadow: 0 8px 22px rgba(109, 62, 233,0.32); }
         .sms-submit:active { transform: translateY(0); }
 
         .sms-form-footer {
@@ -377,8 +377,8 @@ export default function SmsOptInPage() {
 
         .sms-success-icon {
           width: 48px; height: 48px;
-          border: 1px solid rgba(124,58,237,0.4);
-          background: rgba(124,58,237,0.08);
+          border: 1px solid rgba(109, 62, 233,0.4);
+          background: rgba(109, 62, 233,0.08);
           display: flex;
           align-items: center;
           justify-content: center;

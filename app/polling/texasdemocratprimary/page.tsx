@@ -409,7 +409,7 @@ const CSS = `
     width: 6px; height: 6px;
     border-radius: 50%;
     background: #3b7bde;
-    box-shadow: 0 0 8px rgba(59,130,246,0.7);
+    box-shadow: 0 0 8px rgba(59, 123, 222,0.7);
     animation: pap-pulse 1.8s ease-in-out infinite;
     flex-shrink: 0;
   }
@@ -436,8 +436,8 @@ const CSS = `
     content: '';
     position: absolute; inset: 0;
     background:
-      radial-gradient(ellipse 45% 100% at 0% 60%, rgba(59,130,246,0.06) 0%, transparent 65%),
-      radial-gradient(ellipse 30% 60% at 50% 0%, rgba(59,130,246,0.04) 0%, transparent 70%);
+      radial-gradient(ellipse 45% 100% at 0% 60%, rgba(59, 123, 222,0.06) 0%, transparent 65%),
+      radial-gradient(ellipse 30% 60% at 50% 0%, rgba(59, 123, 222,0.04) 0%, transparent 70%);
     pointer-events: none;
   }
   .pap-hero::after {
@@ -491,8 +491,8 @@ const CSS = `
     font-size: 7.5px; font-weight: 700; letter-spacing: 0.22em;
     text-transform: uppercase; color: var(--muted3);
   }
-  .pap-badge-live  { border-color:rgba(59,130,246,0.35); background:rgba(59,130,246,0.07); color:var(--blue-soft); }
-  .pap-badge-blue  { border-color:rgba(59,130,246,0.35); background:rgba(59,130,246,0.07); color:var(--blue-soft); }
+  .pap-badge-live  { border-color:rgba(59, 123, 222,0.35); background:rgba(59, 123, 222,0.07); color:var(--blue-soft); }
+  .pap-badge-blue  { border-color:rgba(59, 123, 222,0.35); background:rgba(59, 123, 222,0.07); color:var(--blue-soft); }
   .pap-badge-green { border-color:rgba(74,222,128,0.35); background:rgba(74,222,128,0.07); color:#4ade80; }
   .pap-badge-red   { border-color:rgba(239,68,68,0.35); background:rgba(239,68,68,0.07); color:#f87171; }
 

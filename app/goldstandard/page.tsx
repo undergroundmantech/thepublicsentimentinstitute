@@ -490,7 +490,7 @@ const CSS = `
     position: absolute; inset: 0;
     background:
       radial-gradient(ellipse 50% 120% at 0% 50%, rgba(245,158,11,0.05) 0%, transparent 60%),
-      radial-gradient(ellipse 40% 80% at 100% 50%, rgba(124,58,237,0.05) 0%, transparent 60%);
+      radial-gradient(ellipse 40% 80% at 100% 50%, rgba(109, 62, 233,0.05) 0%, transparent 60%);
     pointer-events: none;
   }
   .gs-hero-inner {
@@ -545,8 +545,8 @@ const CSS = `
     color: rgba(245,158,11,0.85);
   }
   .gs-badge-purple {
-    border-color: rgba(124,58,237,0.35);
-    background: rgba(124,58,237,0.07);
+    border-color: rgba(109, 62, 233,0.35);
+    background: rgba(109, 62, 233,0.07);
     color: var(--purple2);
   }
   .gs-badge-link {
