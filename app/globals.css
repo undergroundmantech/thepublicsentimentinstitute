@@ -75,9 +75,10 @@
   --shadow-red:    0 12px 40px rgba(194,47,59,0.12);
   --shadow-blue:   0 12px 40px rgba(29,95,196,0.12);
 
-  /* ---- Gradients (legacy names, re-pointed to brand) ---- */
-  --gradient-purple:      var(--brand-grad);
-  --gradient-purple-soft: var(--brand-grad);
+  /* ---- Gradients (legacy names — single-hue purple; brand-grad is reserved
+     for the nav underrule + active race-switcher tab only) ---- */
+  --gradient-purple:      linear-gradient(135deg, var(--purple2) 0%, var(--purple) 50%, var(--purple-soft) 100%);
+  --gradient-purple-soft: linear-gradient(135deg, var(--purple) 0%, var(--purple-soft) 100%);
 
   /* ---- Radii ---- */
   --r-sm: 5px; --r-md: 8px; --r-lg: 11px; --r-xl: 14px; --r-pill: 9999px;
