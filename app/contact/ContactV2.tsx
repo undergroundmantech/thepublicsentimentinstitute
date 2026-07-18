@@ -471,7 +471,7 @@ body main > div > div { padding-top: 0 !important; padding-bottom: 0 !important;
 
 .ct-actions { display: flex; align-items: center; gap: 22px; flex-wrap: wrap; margin-top: 4px; }
 .ct-send { display: inline-flex; align-items: center; gap: 10px; padding: 15px 30px; border: 0; border-radius: 999px; cursor: pointer;
-  background: var(--brand-grad); color: #050505; font: inherit; font-size: 15px; font-weight: 680; letter-spacing: -0.01em;
+  background: #f4f4ef; color: #050505; font: inherit; font-size: 15px; font-weight: 680; letter-spacing: -0.01em;
   transition: transform 220ms cubic-bezier(0.2,0.8,0.2,1), box-shadow 220ms ease, opacity 200ms ease; }
 .ct-send i { font-style: normal; transition: transform 220ms ease; }
 .ct-send:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 18px 44px rgba(109,62,233,0.32); }

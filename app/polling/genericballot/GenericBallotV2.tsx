@@ -649,7 +649,7 @@ const CSS = `
   .pa-cats { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 16px; }
   .pa-cat { appearance: none; cursor: pointer; background: rgba(255,255,255,0.04); border: 1px solid var(--line); border-radius: 999px; padding: 8px 15px; line-height: 1; font-family: var(--font-body), monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted2); transition: color 160ms ease, background 160ms ease, border-color 160ms ease; }
   .pa-cat:hover { color: var(--ink); border-color: rgba(255,255,255,0.22); }
-  .pa-cat.is-active { color: #050505; background: var(--brand-grad); border-color: transparent; }
+  .pa-cat.is-active { color: #050505; background: #f4f4ef; border-color: transparent; }
 
   /* one cohesive "aggregate index" strip — cells flex to fill width, hairline-divided */
   .pa-tiles { display: flex; flex-wrap: nowrap; gap: 0; overflow-x: auto; overflow-y: hidden; border: 1px solid var(--line); border-radius: 12px; background: rgba(255,255,255,0.012); scrollbar-width: thin; }
@@ -688,7 +688,7 @@ const CSS = `
   .pa-seg-btn { appearance: none; cursor: pointer; background: transparent; border: 0; border-right: 1px solid var(--line); padding: 7px 13px; line-height: 1; font-family: var(--font-body), monospace; font-size: 11.5px; font-weight: 600; letter-spacing: 0.04em; color: var(--muted); display: inline-flex; align-items: center; gap: 7px; transition: color 140ms ease, background 140ms ease; }
   .pa-seg-btn:last-child { border-right: 0; }
   .pa-seg-btn:hover:not(:disabled):not(.is-active) { color: #fff; background: rgba(255,255,255,0.04); }
-  .pa-seg-btn.is-active { background: var(--brand-grad); color: #050505; }
+  .pa-seg-btn.is-active { background: #f4f4ef; color: #050505; }
   .pa-seg-btn:disabled { color: var(--faint); cursor: not-allowed; opacity: 0.5; }
   .pa-seg-n { font-size: 10px; font-weight: 600; font-variant-numeric: tabular-nums; color: var(--faint); }
   .pa-seg-btn:hover:not(:disabled):not(.is-active) .pa-seg-n { color: var(--muted); }

@@ -1039,7 +1039,7 @@ body header, body footer { display: none !important; }
 .em-act:hover { color: var(--foreground); border-color: var(--foreground); }
 .em-share {
   font-family: var(--lab); font-size: 12px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase;
-  color: #050505; background: var(--brand-grad); border: 0; border-radius: 999px; padding: 9px 18px; cursor: pointer;
+  color: #050505; background: #f4f4ef; border: 0; border-radius: 999px; padding: 9px 18px; cursor: pointer;
   transition: transform 200ms cubic-bezier(.16,1,.3,1), box-shadow 200ms ease;
 }
 .em-share:hover { transform: translateY(-1.5px); box-shadow: 0 12px 30px rgba(109,62,233,0.32); }

@@ -1597,7 +1597,7 @@ const CSS = `
   .lens { display: flex; flex-wrap: wrap; gap: 7px; max-width: 540px; justify-content: flex-end; }
   .lens-pill { padding: 9px 15px; border-radius: 999px; border: 1px solid var(--line); background: var(--surf); color: var(--m1); font-family: inherit; font-size: 13px; font-weight: 600; letter-spacing: -0.01em; cursor: pointer; transition: all .18s var(--ease); }
   .lens-pill:hover { color: var(--ink); border-color: rgba(255,255,255,0.22); }
-  .lens-pill.on { background: var(--brand-grad); border-color: #6d3ee9; color: #050505; }
+  .lens-pill.on { background: #f4f4ef; border-color: #6d3ee9; color: #050505; }
 
   .elec-stage { animation: rise .5s var(--ease) both; }
   .elec-readout { margin-top: 46px; }

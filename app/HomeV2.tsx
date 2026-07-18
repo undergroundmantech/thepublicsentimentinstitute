@@ -888,7 +888,8 @@ export default function HomePage() {
           right: 0;
           z-index: 6;
           padding-top: 10px;
-          background: linear-gradient(180deg, rgba(5, 5, 5, 0.46), transparent);
+          padding-bottom: 26px;
+          background: linear-gradient(180deg, rgba(5, 5, 5, 0.86) 0%, rgba(5, 5, 5, 0.6) 60%, transparent 100%);
         }
 
         .lp-hero-nav-in {
@@ -924,25 +925,30 @@ export default function HomePage() {
 
         .lp-hero-scroll i {
           position: relative;
-          width: 1px;
-          height: 34px;
-          background: rgba(244, 244, 239, 0.18);
-          overflow: hidden;
+          width: 20px;
+          height: 32px;
+          border: 1.5px solid rgba(244, 244, 239, 0.32);
+          border-radius: 999px;
+          flex-shrink: 0;
         }
 
         .lp-hero-scroll i:after {
           content: "";
           position: absolute;
-          left: 0;
-          top: -50%;
-          width: 100%;
-          height: 50%;
-          background: rgba(244, 244, 239, 0.7);
+          left: 50%;
+          top: 6px;
+          width: 3px;
+          height: 7px;
+          border-radius: 999px;
+          background: rgba(244, 244, 239, 0.75);
+          transform: translateX(-50%);
           animation: lp-scroll-drip 2.2s cubic-bezier(.65,0,.35,1) infinite;
         }
 
         @keyframes lp-scroll-drip {
-          to { top: 100%; }
+          0% { opacity: 1; transform: translate(-50%, 0); }
+          65% { opacity: 0; transform: translate(-50%, 14px); }
+          100% { opacity: 0; transform: translate(-50%, 0); }
         }
 
         .lp-hero-sim {
@@ -951,6 +957,16 @@ export default function HomePage() {
         }
 
         .lp-hero-sim b {
+          color: rgba(244, 244, 239, 0.75);
+          font-weight: 650;
+        }
+
+        .lp-hero-cycle {
+          grid-column: 1;
+          justify-self: start;
+        }
+
+        .lp-hero-cycle b {
           color: rgba(244, 244, 239, 0.75);
           font-weight: 650;
         }
@@ -2429,7 +2445,7 @@ export default function HomePage() {
         }
 
         .lp-art-map {
-          background: var(--brand-grad);
+          background: #f4f4ef;
           color: #050505;
           display: flex;
           flex-direction: column;
@@ -3012,7 +3028,7 @@ export default function HomePage() {
         .lp-coverage {
           min-height: 0;
           border-radius: 20px;
-          background: var(--brand-grad);
+          background: #f4f4ef;
           padding: 32px 32px 36px;
           color: #050505;
           position: relative;
@@ -3931,6 +3947,10 @@ export default function HomePage() {
             display: none;
           }
 
+          .lp-hero-cycle {
+            display: none;
+          }
+
           .lp-nav {
             display: flex;
             align-items: center;
@@ -3981,7 +4001,7 @@ export default function HomePage() {
           .lp-nav-links a:hover,
           .lp-nav-links a:focus-visible {
             color: #050505;
-            background: var(--brand-grad);
+            background: #f4f4ef;
             transform: none;
           }
 
@@ -4284,6 +4304,7 @@ export default function HomePage() {
           </div>
 
           <div className="lp-hero-foot" aria-hidden="true">
+            <span className="lp-hero-cycle">150+ polls tracked · <b>updated daily</b></span>
             <span className="lp-hero-scroll"><i />scroll</span>
             <span className="lp-hero-sim">field simulation · <b>move your cursor</b></span>
           </div>

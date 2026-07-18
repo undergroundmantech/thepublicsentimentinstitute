@@ -354,7 +354,7 @@ export default function SentimentGlobe() {
           opacity: 0; transform: translateY(14px); transition: opacity 600ms ease 200ms, transform 800ms cubic-bezier(.16,1,.3,1) 200ms; }
         .gl-dock.is-in { opacity: 1; transform: translateY(0); }
         .gl-lime { font-style: normal; color: #6d3ee9; font-weight: 650; }
-        .gl-cta { display: inline-flex; align-items: center; gap: 9px; margin-top: 28px; padding: 13px 26px; border-radius: 999px; background: var(--brand-grad); color: #050505;
+        .gl-cta { display: inline-flex; align-items: center; gap: 9px; margin-top: 28px; padding: 13px 26px; border-radius: 999px; background: #f4f4ef; color: #050505;
           font-size: 15px; font-weight: 650; text-decoration: none; transition: transform 220ms cubic-bezier(.2,.8,.2,1), box-shadow 220ms ease; }
         .gl-cta:hover { transform: translateY(-2px); box-shadow: 0 18px 44px rgba(109,62,233,0.32); }
         .gl-readout { position: absolute; right: clamp(24px, 5vw, 80px); bottom: clamp(28px, 6vh, 64px); z-index: 3; text-align: right;

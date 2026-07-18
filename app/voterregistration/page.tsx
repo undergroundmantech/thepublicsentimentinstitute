@@ -734,7 +734,7 @@ body header, body footer { display: none !important; }
 .vr-lens-btn.is-on::after { content:''; position:absolute; left:0; bottom:0; width:18px; height:1.5px; background:var(--foreground); }
 
 .vr-tools { display:flex; align-items:center; gap:14px; padding-bottom:4px; }
-.vr-back { font-size:12px; font-weight:700; letter-spacing:0.04em; text-transform:uppercase; color:#050505; background:var(--brand-grad); border:0; border-radius:999px; padding:9px 18px; cursor:pointer; transition:transform .2s cubic-bezier(.16,1,.3,1), box-shadow .2s ease; }
+.vr-back { font-size:12px; font-weight:700; letter-spacing:0.04em; text-transform:uppercase; color:#050505; background:#f4f4ef; border:0; border-radius:999px; padding:9px 18px; cursor:pointer; transition:transform .2s cubic-bezier(.16,1,.3,1), box-shadow .2s ease; }
 .vr-back:hover { transform:translateY(-1.5px); box-shadow:0 12px 30px rgba(109,62,233,0.32); }
 .vr-search { position:relative; }
 .vr-search input { width:230px; max-width:46vw; background:var(--panel2); border:1px solid var(--border2); border-radius:999px; padding:9px 16px; color:var(--foreground); font-size:13px; letter-spacing:-0.01em; outline:none; transition:border-color .18s ease, background .18s ease; }
