@@ -902,9 +902,9 @@ export default function HomePage() {
           right: 0;
           bottom: 26px;
           z-index: 2;
-          display: flex;
+          display: grid;
+          grid-template-columns: 1fr auto 1fr;
           align-items: center;
-          justify-content: space-between;
           width: min(1100px, calc(100vw - 160px));
           margin: 0 auto;
           font-size: 11px;
@@ -915,6 +915,8 @@ export default function HomePage() {
         }
 
         .lp-hero-scroll {
+          grid-column: 2;
+          justify-self: center;
           display: inline-flex;
           align-items: center;
           gap: 12px;
@@ -941,6 +943,11 @@ export default function HomePage() {
 
         @keyframes lp-scroll-drip {
           to { top: 100%; }
+        }
+
+        .lp-hero-sim {
+          grid-column: 3;
+          justify-self: end;
         }
 
         .lp-hero-sim b {
