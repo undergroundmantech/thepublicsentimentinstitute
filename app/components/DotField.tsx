@@ -89,9 +89,12 @@ vec3 pal3(float x, vec3 a, vec3 b, vec3 c) {
 }
 
 vec3 regionColor(float x, float h) {
-  vec3 blue   = pal3(x, vec3(0.018, 0.034, 0.105), vec3(0.135, 0.270, 0.820), vec3(0.560, 0.760, 1.000));
-  vec3 violet = pal3(x, vec3(0.042, 0.024, 0.100), vec3(0.430, 0.240, 0.950), vec3(0.810, 0.730, 1.000));
-  vec3 pink   = pal3(x, vec3(0.095, 0.020, 0.075), vec3(0.840, 0.250, 0.620), vec3(1.000, 0.790, 0.900));
+  // brand hues, low saturation: cool violet/blue (#6d3ee9 / #3f60e8) through
+  // warm red/magenta (#d2494b / #a44197) — luminance held at/below the prior
+  // purple/gray palette so the type still wins.
+  vec3 blue   = pal3(x, vec3(0.014, 0.020, 0.058), vec3(0.180, 0.260, 0.760), vec3(0.560, 0.660, 0.960));
+  vec3 violet = pal3(x, vec3(0.036, 0.022, 0.078), vec3(0.360, 0.230, 0.780), vec3(0.760, 0.700, 0.980));
+  vec3 pink   = pal3(x, vec3(0.072, 0.018, 0.062), vec3(0.620, 0.240, 0.560), vec3(0.960, 0.660, 0.780));
   return h < 0.5
     ? mix(blue, violet, smoothstep(0.0, 1.0, h * 2.0))
     : mix(violet, pink, smoothstep(0.0, 1.0, h * 2.0 - 1.0));

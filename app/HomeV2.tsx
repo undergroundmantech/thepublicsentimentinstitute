@@ -875,6 +875,18 @@ export default function HomePage() {
           to { opacity: 1; }
         }
 
+        .lp-hero-blooms {
+          position: absolute;
+          inset: 0;
+          z-index: 1;
+          pointer-events: none;
+          mix-blend-mode: screen;
+          background:
+            radial-gradient(40% 50% at 82% 20%, rgba(63,96,232,.30), transparent 70%),
+            radial-gradient(36% 44% at 10% 40%, rgba(210,73,75,.20), transparent 70%),
+            radial-gradient(34% 40% at 60% 96%, rgba(109,62,233,.24), transparent 72%);
+        }
+
         .lp-hero-veil {
           position: absolute;
           inset: 0;
@@ -905,19 +917,6 @@ export default function HomePage() {
         .lp-hero-nav-in {
           width: min(1240px, calc(100vw - 120px));
           margin: 0 auto;
-        }
-
-        .lp-hero-logo {
-          display: block;
-          width: clamp(250px, 25vw, 350px);
-          aspect-ratio: 397 / 101;
-          margin: 0 auto 42px;
-          background: #f4f4ef;
-          -webkit-mask: url(/full_logo_clean.png) center / contain no-repeat;
-          mask: url(/full_logo_clean.png) center / contain no-repeat;
-          filter:
-            drop-shadow(0 0 26px rgba(167, 139, 250, 0.38))
-            drop-shadow(0 2px 8px rgba(5, 4, 9, 0.7));
         }
 
         .lp-hero-foot {
@@ -959,7 +958,7 @@ export default function HomePage() {
           top: -50%;
           width: 100%;
           height: 50%;
-          background: #a78bfa;
+          background: rgba(244, 244, 239, 0.7);
           animation: lp-scroll-drip 2.2s cubic-bezier(.65,0,.35,1) infinite;
         }
 
@@ -968,7 +967,7 @@ export default function HomePage() {
         }
 
         .lp-hero-sim b {
-          color: rgba(196, 181, 253, 0.85);
+          color: rgba(244, 244, 239, 0.75);
           font-weight: 650;
         }
 
@@ -1493,34 +1492,73 @@ export default function HomePage() {
 
         .lp-hero-copy {
           position: relative;
-          max-width: 1040px;
+          width: min(780px, 100%);
           margin: 0 auto;
           display: flex;
           flex-direction: column;
-          align-items: center;
-          text-align: center;
+          align-items: flex-start;
+          text-align: left;
           animation: lp-rise 720ms cubic-bezier(.2,.8,.2,1) both;
         }
 
+        .lp-hero-eyebrow {
+          display: flex;
+          align-items: center;
+          gap: 11px;
+          margin-bottom: 22px;
+          font-family: var(--font-numeric), ui-monospace, monospace;
+          font-size: 11px;
+          font-weight: 700;
+          letter-spacing: 0.24em;
+          text-transform: uppercase;
+          color: rgba(244, 244, 239, 0.4);
+        }
+
+        .lp-hero-eyebrow-live {
+          display: inline-flex;
+          align-items: center;
+          gap: 7px;
+          color: var(--live);
+        }
+
+        .lp-hero-eyebrow-live i {
+          width: 6px;
+          height: 6px;
+          border-radius: 999px;
+          background: var(--live);
+          box-shadow: 0 0 10px var(--live);
+          animation: lp-eyebrow-pulse 1.8s infinite;
+        }
+
+        @keyframes lp-eyebrow-pulse { 50% { opacity: 0.35; } }
+
         .lp-hero h1 {
           margin: 0;
-          max-width: 100%;
-          font-size: clamp(54px, 6.6vw, 100px);
-          line-height: 1.0;
-          letter-spacing: -0.028em;
-          font-weight: 470;
+          max-width: 17ch;
+          font-family: var(--font-display), system-ui, sans-serif;
+          font-size: clamp(38px, 6.4vw, 84px);
+          line-height: 0.98;
+          letter-spacing: -0.03em;
+          font-weight: 700;
           color: #f4f4ef;
-          text-shadow: 0 2px 60px rgba(5, 4, 9, 0.6);
+          text-shadow: 0 2px 50px rgba(0, 0, 0, 0.55);
           text-wrap: balance;
         }
 
+        .lp-hero h1 .g {
+          color: transparent;
+          background: var(--brand-grad);
+          -webkit-background-clip: text;
+          background-clip: text;
+        }
+
         .lp-hero p {
-          margin: 26px auto 0;
-          max-width: 54ch;
-          font-size: clamp(18px, 1.6vw, 23px);
-          line-height: 1.34;
+          margin: 22px 0 0;
+          max-width: 44ch;
+          font-size: clamp(15px, 1.7vw, 19px);
+          line-height: 1.5;
           letter-spacing: 0;
-          color: rgba(244, 244, 239, 0.68);
+          color: rgba(244, 244, 239, 0.64);
           font-weight: 420;
           text-shadow: 0 1px 30px rgba(5, 4, 9, 0.65);
           text-wrap: balance;
@@ -1529,9 +1567,10 @@ export default function HomePage() {
         .lp-actions {
           display: flex;
           align-items: center;
-          justify-content: center;
-          gap: 14px;
-          margin-top: 38px;
+          justify-content: flex-start;
+          gap: 20px;
+          margin-top: 32px;
+          flex-wrap: wrap;
         }
 
         /* Buttons — layered like real product UI, not flat fills */
@@ -1541,22 +1580,19 @@ export default function HomePage() {
           align-items: center;
           justify-content: center;
           gap: 10px;
-          min-height: 52px;
-          padding: 0 28px;
+          padding: 15px 28px;
           border-radius: 999px;
           border: 0;
-          background: linear-gradient(180deg, #ffffff 0%, #ece8f5 100%);
+          background: linear-gradient(180deg, #ffffff 0%, #ececE4 100%);
           color: #0b0a14;
           text-decoration: none;
           font-size: 15.5px;
           font-weight: 640;
           letter-spacing: -0.01em;
           box-shadow:
-            inset 0 1px 0 rgba(255, 255, 255, 0.95),
-            inset 0 -10px 18px rgba(109, 62, 233, 0.10),
-            0 1px 2px rgba(0, 0, 0, 0.45),
-            0 10px 24px rgba(0, 0, 0, 0.38),
-            0 26px 60px rgba(109, 62, 233, 0.20);
+            inset 0 1px 0 rgba(255, 255, 255, 0.6),
+            inset 0 -8px 20px rgba(109, 62, 233, 0.18),
+            0 14px 34px rgba(0, 0, 0, 0.4);
           transition: transform 240ms cubic-bezier(.2,.8,.2,1), box-shadow 260ms ease, background 220ms ease;
         }
 
@@ -1568,18 +1604,11 @@ export default function HomePage() {
 
         .lp-pill:hover {
           transform: translateY(-2px);
-          background: linear-gradient(180deg, #ffffff 0%, #f3f0fa 100%);
-          box-shadow:
-            inset 0 1px 0 rgba(255, 255, 255, 1),
-            inset 0 -10px 18px rgba(109, 62, 233, 0.12),
-            0 2px 3px rgba(0, 0, 0, 0.4),
-            0 14px 32px rgba(0, 0, 0, 0.42),
-            0 34px 80px rgba(109, 62, 233, 0.30);
           text-decoration: none;
         }
 
         .lp-pill:hover i {
-          transform: translateX(3px);
+          transform: translateX(4px);
         }
 
         .lp-pill:active {
@@ -1587,28 +1616,22 @@ export default function HomePage() {
         }
 
         .lp-pill:focus-visible {
-          outline: 2px solid #a78bfa;
+          outline: 2px solid #6d3ee9;
           outline-offset: 3px;
         }
 
         .lp-pill-dark {
-          background: rgba(18, 14, 32, 0.40);
+          background: rgba(255, 255, 255, 0.06);
           color: #f4f4ef;
-          -webkit-backdrop-filter: blur(18px) saturate(1.5);
-          backdrop-filter: blur(18px) saturate(1.5);
-          box-shadow:
-            inset 0 0 0 1px rgba(244, 244, 239, 0.16),
-            inset 0 1px 0 rgba(255, 255, 255, 0.10),
-            0 10px 28px rgba(0, 0, 0, 0.40);
+          border: 1px solid rgba(255, 255, 255, 0.16);
+          -webkit-backdrop-filter: blur(14px);
+          backdrop-filter: blur(14px);
+          box-shadow: none;
         }
 
         .lp-pill-dark:hover {
-          background: rgba(30, 24, 52, 0.55);
-          box-shadow:
-            inset 0 0 0 1px rgba(244, 244, 239, 0.30),
-            inset 0 1px 0 rgba(255, 255, 255, 0.14),
-            0 14px 36px rgba(0, 0, 0, 0.45),
-            0 0 40px rgba(109, 62, 233, 0.14);
+          background: rgba(255, 255, 255, 0.1);
+          box-shadow: none;
         }
 
         .lp-dot {
@@ -3844,14 +3867,6 @@ export default function HomePage() {
             display: none;
           }
 
-          .lp-hero h1 {
-            font-size: 66px;
-          }
-
-          .lp-hero p {
-            font-size: 25px;
-          }
-
           .lp-section-title h2,
           .lp-work h2,
           .lp-faq h2 {
@@ -3990,20 +4005,6 @@ export default function HomePage() {
 
           .lp-nav-links a:nth-child(4) {
             display: none;
-          }
-
-          .lp-hero-logo {
-            width: min(72vw, 280px);
-            margin-bottom: 30px;
-          }
-
-          .lp-hero h1 {
-            font-size: 43px;
-            line-height: 0.99;
-          }
-
-          .lp-hero p {
-            font-size: 20px;
           }
 
           .lp-actions {
@@ -4277,6 +4278,7 @@ export default function HomePage() {
       <div className="lp-root">
         <section className="lp-hero">
           <DotField className="lp-hero-glass" />
+          <div className="lp-hero-blooms" aria-hidden="true" />
           <div className="lp-hero-veil" aria-hidden="true" />
 
           <div className="lp-hero-nav">
@@ -4287,9 +4289,11 @@ export default function HomePage() {
 
           <div className="lp-shell lp-hero-inner">
             <div className="lp-hero-copy">
-              <span className="lp-hero-logo" role="img" aria-label="The Public Sentiment Institute" />
-              <h1>Polling averages and forecasts for live election results.</h1>
-              <p>Track voter sentiment, race ratings, and election-night returns from one transparent data desk.</p>
+              <div className="lp-hero-eyebrow">
+                <span className="lp-hero-eyebrow-live"><i aria-hidden="true" />LIVE DESK</span> &middot; THE PUBLIC SENTIMENT INSTITUTE
+              </div>
+              <h1>Polling averages and forecasts for <span className="g">live election results</span>.</h1>
+              <p>Track voter sentiment, race ratings, and election night returns from one transparent data desk.</p>
               <div className="lp-actions">
                 <Link href="/polling" className="lp-pill"><span>Explore the polling</span><i aria-hidden="true">&rarr;</i></Link>
                 <Link href="/forecastratings" className="lp-pill lp-pill-dark"><span>See the forecast</span><i aria-hidden="true">&rarr;</i></Link>
