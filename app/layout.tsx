@@ -11,13 +11,12 @@ import { Geist, JetBrains_Mono } from "next/font/google";
    FONTS — Variant A system
 ------------------------------ */
 
-// Display / headers — JetBrains Mono, heavy weights only.
-// Mono width-tax rule: use --font-display for SHORT strings (race labels,
-// section headers, hero, kickers). For long-form titles (editorial blurb
-// headings, multi-line prose titles) use --font-body at 600 instead.
-const display = JetBrains_Mono({
+// Display / headers — Geist, heavy weight (~700). Editorial display voice.
+// Mono width-tax rule is retired: display is now proportional (Geist), so
+// long-form titles no longer need the --font-body escape hatch, though it
+// remains harmless where still referenced.
+const display = Geist({
   subsets: ["latin"],
-  weight: ["700", "800"],
   variable: "--font-display",
   display: "swap",
 });

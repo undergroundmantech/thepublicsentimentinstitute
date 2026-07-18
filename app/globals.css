@@ -238,17 +238,17 @@ button, input, textarea, select { font: inherit; color: inherit; }
 -------------------------------------------- */
 h1, h2, h3, h4, h5, h6 {
   margin: 0 0 0.5em;
-  font-family: var(--font-display), ui-monospace, monospace;
-  font-weight: 800;
-  letter-spacing: -0.02em;
+  font-family: var(--font-display), system-ui, sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.03em;
   color: var(--ink);
-  line-height: 1.06;
+  line-height: 1.04;
   text-transform: none;          /* was: uppercase */
   text-wrap: balance;
 }
 
 /* Hero-scale display */
-h1 { font-size: clamp(30px, 5vw, 56px); letter-spacing: -0.028em; }
+h1 { font-size: clamp(34px, 5.6vw, 72px); letter-spacing: -0.032em; }
 
 /* Kicker / eyebrow / index utility — the ONLY place uppercase mono lives now */
 .psi-kicker,
