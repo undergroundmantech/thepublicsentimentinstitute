@@ -3,9 +3,10 @@
 import { useEffect, useRef, useState } from "react";
 
 /**
- * Decorative hero US map. Muted brand red/blue for non-swing states; the 7
- * battlegrounds glow purple. Renders bare — the surrounding card supplies the
- * brand gradient backdrop.
+ * Decorative hero US map. Muted brand red/blue fills for non-swing states;
+ * the 7 battlegrounds fill purple. A dark hairline stroke separates each
+ * state so shapes stay legible without any colored/glowing outline. Renders
+ * bare — the surrounding card supplies the brand gradient backdrop.
  */
 
 const FIPS_TO_ABBR: Record<string, string> = {
@@ -74,17 +75,13 @@ export default function HeroElectoralMap() {
           el.setAttribute("d", path(f) ?? "");
           if (isSwing) {
             el.setAttribute("fill", "url(#hp-grad-swing)");
-            el.setAttribute("stroke", PURPLE);
-            el.setAttribute("stroke-width", "1.2");
-            el.setAttribute("filter", "url(#hp-glow-swing)");
+            el.setAttribute("stroke", "#050505");
+            el.setAttribute("stroke-width", "1.8");
             swingG.appendChild(el);
           } else {
-            el.setAttribute("fill", "none");
-            el.setAttribute("stroke", winner === "D" ? BLUE_STROKE : RED_STROKE);
-            el.setAttribute("stroke-width", "1.6");
-            el.setAttribute("stroke-opacity", "0.85");
-            el.setAttribute("stroke-linejoin", "round");
-            el.setAttribute("stroke-linecap", "round");
+            el.setAttribute("fill", winner === "D" ? BLUE_STROKE : RED_STROKE);
+            el.setAttribute("stroke", "#050505");
+            el.setAttribute("stroke-width", "1.8");
             baseG.appendChild(el);
           }
         }
@@ -115,15 +112,6 @@ export default function HeroElectoralMap() {
             <stop offset="0%"   stopColor={PURPLE_SOFT} />
             <stop offset="100%" stopColor={PURPLE} />
           </linearGradient>
-          <filter id="hp-glow-swing" x="-40%" y="-40%" width="180%" height="180%">
-            <feGaussianBlur in="SourceAlpha" stdDeviation="4" result="blur" />
-            <feFlood floodColor={PURPLE} floodOpacity="0.65" />
-            <feComposite in2="blur" operator="in" result="glow" />
-            <feMerge>
-              <feMergeNode in="glow" />
-              <feMergeNode in="SourceGraphic" />
-            </feMerge>
-          </filter>
           <filter id="hp-map-shadow" x="-10%" y="-10%" width="120%" height="125%">
             <feGaussianBlur in="SourceAlpha" stdDeviation="2.5" />
             <feOffset dx="0" dy="2" result="off" />
