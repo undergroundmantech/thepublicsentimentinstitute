@@ -215,13 +215,12 @@ export default function Footer() {
           display: inline-block;
           height: 56px;
           width: 220px;
-          background:
-            linear-gradient(100deg, #c22f3b 0%, #6d3ee9 50%, #1d5fc4 100%);
-          -webkit-mask-image: url(/full_logo_clean.png);
+          background: var(--brand-grad);
+          -webkit-mask-image: url(/tpsi-logo.svg);
           -webkit-mask-size: contain;
           -webkit-mask-repeat: no-repeat;
           -webkit-mask-position: left center;
-          mask-image: url(/full_logo_clean.png);
+          mask-image: url(/tpsi-logo.svg);
           mask-size: contain;
           mask-repeat: no-repeat;
           mask-position: left center;

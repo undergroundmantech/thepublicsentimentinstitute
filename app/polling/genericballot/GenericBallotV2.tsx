@@ -9,9 +9,6 @@ import {
   type BuiltAggregate, type BuiltMulti, type AggregateDef, type MultiAggregateDef,
 } from "@/app/polling/lib/aggregates";
 import { getPollsterEntry } from "@/app/polling/lib/buildDailyModel";
-import { Manrope } from "next/font/google";
-
-const manrope = Manrope({ subsets: ["latin"], weight: ["400", "500", "600", "700", "800"], variable: "--font-mp", display: "swap" });
 
 const round0 = (n: number) => Math.round(n);
 const round1 = (n: number) => Math.round(n * 10) / 10;
@@ -259,7 +256,7 @@ export default function PollingAveragesPage() {
   return (
     <>
       <style>{CSS}</style>
-      <div className={`pa ${manrope.variable}`}>
+      <div className="pa">
         <DarkNav />
 
         {/* ── view toggle: one race / the full board ── */}
@@ -638,7 +635,6 @@ const CSS = `
   body header, body footer { display: none !important; }
 
   .pa {
-    --font-body: var(--font-mp), "Manrope", "Helvetica Neue", Arial, sans-serif;
     --lime: #b7ff00;
     --line: rgba(255,255,255,0.10); --line2: rgba(255,255,255,0.06);
     --ink: #f4f4ef; --muted: rgba(244,244,239,0.60); --muted2: rgba(244,244,239,0.40); --faint: rgba(244,244,239,0.26);

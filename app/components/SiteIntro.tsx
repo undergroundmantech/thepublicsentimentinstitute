@@ -1,11 +1,6 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Manrope } from "next/font/google";
-
-// the homepage hero's sans — keeps the dialog in the product register,
-// away from the site-wide mono body
-const manrope = Manrope({ subsets: ["latin"], weight: ["500", "600", "800"] });
 
 // First-visit announcement — shown once, then remembered. Two beats:
 //   1 · the reveal — artwork on top, a line of copy, Continue
@@ -100,6 +95,7 @@ export default function SiteIntro() {
         .psi-intro-panel {
           position: relative;
           width: min(500px, 100%);
+          font-family: var(--font-body);
           /* the glass: translucent gradient fill + heavy saturated blur */
           background: linear-gradient(165deg, rgba(30, 32, 44, 0.58), rgba(12, 13, 19, 0.66) 55%, rgba(10, 10, 15, 0.7));
           -webkit-backdrop-filter: blur(32px) saturate(1.75); backdrop-filter: blur(32px) saturate(1.75);
@@ -214,7 +210,7 @@ export default function SiteIntro() {
         }
       `}</style>
 
-      <div ref={panelRef} className={`psi-intro-panel ${manrope.className}`} data-step={step}>
+      <div ref={panelRef} className="psi-intro-panel" data-step={step}>
         {step === 0 ? (
           <div className="psi-intro-page" key="reveal">
             <div className="psi-intro-art" aria-hidden="true">

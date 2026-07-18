@@ -5,7 +5,6 @@ import { notFound } from "next/navigation";
 import { SHOW_SITUATION_ROOM } from "@/app/lib/flags";
 import { createPortal } from "react-dom";
 import Link from "next/link";
-import { Manrope } from "next/font/google";
 import DarkNav from "@/app/components/DarkNav";
 import WireGlobe from "@/app/components/WireGlobe";
 import { SENATE_MODEL, senateBalance } from "@/app/components/senateModel";
@@ -14,8 +13,6 @@ import { RAW_POLLS as GENERIC_POLLS, GOLD_STANDARD_NAMES as GENERIC_GOLD } from 
 import { RAW_POLLS as APPROVAL_POLLS, GOLD_STANDARD_NAMES as APPROVAL_GOLD } from "@/app/polling/donaldtrumpapproval/data";
 import { useElectionIndex } from "@/app/results/onpoint/lib/electionIndex.js";
 import { useUpcomingDays } from "./upcoming";
-
-const manrope = Manrope({ subsets: ["latin"], weight: ["300", "400", "500", "600", "700"], variable: "--font-mp", display: "swap" });
 
 // ─── the muted data family ────────────────────────────────────────────────────
 const D_SOFT = "#8aa3f2";
@@ -281,7 +278,7 @@ export default function SituationRoomPage() {
   ];
 
   return (
-    <div className={`sr-page ${manrope.variable}`}>
+    <div className="sr-page">
       <style>{CSS}</style>
       <div className="sr-air" aria-hidden="true" />
       <div className="sr-grain" aria-hidden="true" />
@@ -557,7 +554,7 @@ export default function SituationRoomPage() {
       {/* ── the desk clock — pill overlay, portaled past the layout's
              transformed wrapper (transforms hijack position:fixed) ── */}
       {mounted && createPortal(
-        <div className="sr-pill" role="status" aria-label="Live desk clock, eastern time" style={{ fontFamily: manrope.style.fontFamily }}>
+        <div className="sr-pill" role="status" aria-label="Live desk clock, eastern time" style={{ fontFamily: "var(--font-body)" }}>
           <i className="sr-pill-dot" aria-hidden="true" />
           <b>{clock || "––:––:––"}</b>
           <span className="sr-pill-sep" aria-hidden="true" />
@@ -582,7 +579,7 @@ body header, body footer { display: none !important; }
   --rule: rgba(255,255,255,0.10); --rule2: rgba(255,255,255,0.16);
   max-width: 1120px; margin: 0 auto; padding: 0 2px 150px;
   position: relative; z-index: 1; color: var(--foreground);
-  font-family: var(--font-mp), "Manrope", "Helvetica Neue", Arial, sans-serif;
+  font-family: var(--font-body);
   font-size: 14px; letter-spacing: -0.01em;
 }
 .sr-page a { color: inherit; text-decoration: none; }
@@ -609,7 +606,7 @@ body header, body footer { display: none !important; }
 .sr-folio span:first-child { color: var(--foreground); }
 .sr-mast { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) clamp(300px, 36vw, 470px); align-items: end; min-height: 270px; }
 .sr-mast-copy { padding: 40px 0 26px; position: relative; z-index: 1; }
-.sr-title { font-weight: 500; text-transform: lowercase; letter-spacing: -0.03em; line-height: 0.9; font-size: clamp(44px, 7.4vw, 88px); margin: 0; }
+.sr-title { font-family: var(--font-display); font-weight: 500; text-transform: lowercase; letter-spacing: -0.03em; line-height: 0.9; font-size: clamp(44px, 7.4vw, 88px); margin: 0; }
 .sr-status { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; margin: 22px 0 0; font-size: 11px; font-weight: 650; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted2); }
 .sr-status .hot { color: var(--foreground); }
 .sr-status em { font-style: normal; color: var(--muted3); }

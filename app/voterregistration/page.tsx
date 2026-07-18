@@ -3,13 +3,10 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { notFound } from "next/navigation";
-import { Manrope } from "next/font/google";
 import DarkNav from "@/app/components/DarkNav";
 import { SITE_V2 } from "@/app/lib/flags";
 
-const manrope = Manrope({ subsets: ["latin"], weight: ["400", "500", "600", "700", "800"], variable: "--font-mp", display: "swap" });
-
-// ─── types ──────────────────────────────────────────────────────────────────
+// ─── types ─────────────────────────────────────────────────────────────────────
 type Scope = "states" | "counties";
 type Lens = "reg" | "party";
 type Plur = "DEM" | "REP" | "UNA" | null;
@@ -395,7 +392,7 @@ export default function VoterRegistrationPage() {
   const dom = isoAbbr ? isoDomain : scope === "counties" ? countyDomain : stateDomain;
 
   return (
-    <div className={`vr-page ${manrope.variable}`}>
+    <div className="vr-page">
       <style>{CSS}</style>
       <DarkNav />
 
@@ -580,7 +577,7 @@ export default function VoterRegistrationPage() {
 
       {/* ── Dock (portaled) ── */}
       {mounted && createPortal(
-        <div className="vr-dock" role="tablist" aria-label="Map scope" style={{ fontFamily: manrope.style.fontFamily }}>
+        <div className="vr-dock" role="tablist" aria-label="Map scope" style={{ fontFamily: "var(--font-numeric)" }}>
           {([["states", "states"], ["counties", "counties"]] as [Scope, string][]).map(([sc, label]) => (
             <button key={sc} role="tab" aria-selected={scope === sc}
               className={`vr-dock-btn${scope === sc ? " is-on" : ""}`}
@@ -598,7 +595,7 @@ export default function VoterRegistrationPage() {
         const spine = tip.noReg ? DIM_NOREG : tip.plur ? PCOL[tip.plur] : "#6d3ee9";
         const t = tip.party ? (tip.party.DEM + tip.party.REP + tip.party.UNA + tip.party.OTH) || 1 : 1;
         return (
-          <div className={`vr-tip ${manrope.className}`} style={{ left, top, borderLeftColor: spine }}>
+          <div className="vr-tip" style={{ left, top, borderLeftColor: spine }}>
             <div className="vr-tip-top">
               <span className="vr-tip-name">{tip.title}</span>
               <span className="vr-tip-val">{tip.noReg ? "—" : compact(tip.value)}</span>
@@ -670,10 +667,10 @@ html, body { background: #050505 !important; }
 body header, body footer { display: none !important; }
 
 .vr-page {
-  --disp: var(--font-mp), "Manrope", "Helvetica Neue", Arial, sans-serif;
-  --lab: var(--font-mp), "Manrope", "Helvetica Neue", Arial, sans-serif;
-  --serif: var(--font-mp), "Manrope", "Helvetica Neue", Arial, sans-serif;
-  --data: var(--font-mp), "Manrope", "Helvetica Neue", Arial, sans-serif;
+  --disp: var(--font-display);
+  --lab: var(--font-numeric);
+  --serif: var(--font-body);
+  --data: var(--font-numeric);
   --background:#050505; --foreground:#f4f4ef; --foreground2:rgba(244,244,239,0.74);
   --muted:rgba(244,244,239,0.58); --muted2:rgba(244,244,239,0.40); --muted3:rgba(244,244,239,0.26);
   --border:rgba(255,255,255,0.10); --border2:rgba(255,255,255,0.16); --border3:rgba(255,255,255,0.24);
