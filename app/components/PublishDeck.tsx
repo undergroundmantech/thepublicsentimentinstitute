@@ -78,7 +78,7 @@ const ALL_PLATES: Plate[] = [
     src: "/landing-thumbnails/live-results.png",
     alt: "Live election results hub",
     note: "Election-night returns with reporting context — every contest on the wire, county by county, as it lands.",
-    live: () => ({ text: "live", tone: "#b7ff00", dot: true }),
+    live: () => ({ text: "live", tone: "#6d3ee9", dot: true }),
   },
   {
     key: "map",
@@ -96,7 +96,7 @@ const ALL_PLATES: Plate[] = [
     src: "/landing-thumbnails/situation-room.png",
     alt: "The TPSI situation room",
     note: "The whole desk on one wire — live contests, the freshest polls, the model board, and the watchlist, monitored in eastern time.",
-    live: () => ({ text: "on the wire", tone: "#b7ff00", dot: true }),
+    live: () => ({ text: "on the wire", tone: "#6d3ee9", dot: true }),
   },
 ];
 
@@ -312,7 +312,7 @@ const CSS = `
 .pd-more-links a:hover { color: #ffffff; }
 .pd-more-idx { font-size: 11px; font-weight: 650; color: rgba(244,244,239,0.28); font-variant-numeric: tabular-nums; }
 .pd-more-arw { font-size: 0.8em; color: rgba(244,244,239,0.4); transition: transform 200ms ease, color 200ms ease; }
-.pd-more-links a:hover .pd-more-arw { transform: translateX(5px); color: #b7ff00; }
+.pd-more-links a:hover .pd-more-arw { transform: translateX(5px); color: #6d3ee9; }
 .pd-cov { display: flex; flex-wrap: wrap; align-items: baseline; gap: 10px 18px; }
 .pd-cov-label { font-size: 11px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(244,244,239,0.34); margin-right: 8px; }
 .pd-cov-chip { font-size: 13px; font-weight: 580; color: rgba(244,244,239,0.55); }

@@ -649,14 +649,14 @@ body header, body footer { display: none !important; }
   --muted: rgba(244,244,239,0.58); --muted2: rgba(244,244,239,0.40); --muted3: rgba(244,244,239,0.26);
   --border: rgba(255,255,255,0.10); --border2: rgba(255,255,255,0.16); --border3: rgba(255,255,255,0.24);
   --panel: rgba(255,255,255,0.03); --panel2: rgba(255,255,255,0.05);
-  --purple: #b7ff00; --purple-dim: rgba(183,255,0,0.10);
+  --purple: #6d3ee9; --purple-dim: rgba(109,62,233,0.10);
   --x-nodata: #1b1d29;
   --rail-w: 178px; --gap: 56px;
   max-width: 1180px; margin: 0 auto; padding: 0 2px 64px;
   position: relative; z-index: 1; color: var(--foreground);
   font-family: var(--lab); font-size: 14px; letter-spacing: -0.01em;
 }
-.x-page ::selection { background: rgba(183,255,0,0.24); }
+.x-page ::selection { background: rgba(109,62,233,0.24); }
 
 /* ── Masthead ── */
 .x-folio { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; padding: 14px 0; border-top: 1px solid var(--border2); border-bottom: 1px solid var(--border); font-family: var(--lab); font-size: 10.5px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted2); }

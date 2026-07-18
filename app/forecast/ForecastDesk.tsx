@@ -1330,15 +1330,15 @@ body main > div > div { padding-top: 0 !important; padding-bottom: 0 !important;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='0.6'/%3E%3C/svg%3E"); }
 
 .fc-loading { display: flex; align-items: center; justify-content: center; gap: 12px; min-height: 70svh; color: rgba(244,244,239,0.55); font-size: 14px; }
-.fc-loading span, .fc-map-loading span { width: 8px; height: 8px; border-radius: 99px; background: #b7ff00; animation: fcPulse 1.4s ease-in-out infinite; }
+.fc-loading span, .fc-map-loading span { width: 8px; height: 8px; border-radius: 99px; background: var(--brand-grad); animation: fcPulse 1.4s ease-in-out infinite; }
 .fc-loading em, .fc-map-loading em { font-style: normal; }
 @keyframes fcPulse { 0%,100% { opacity: 1 } 50% { opacity: 0.25 } }
 
 .fc-eyebrow { display: inline-flex; align-items: center; gap: 9px; font-family: ${MONO}; font-size: 11.5px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(244,244,239,0.5); }
-.fc-eyebrow-mk { width: 7px; height: 7px; background: #b7ff00; border-radius: 1.5px; flex-shrink: 0; }
+.fc-eyebrow-mk { width: 7px; height: 7px; background: var(--brand-grad); border-radius: 1.5px; flex-shrink: 0; }
 .fc-eyebrow-pip { width: 6px; height: 6px; border-radius: 99px; background: #e23950; box-shadow: 0 0 0 3px rgba(226,57,80,0.16); animation: fcPulse 1.8s ease-in-out infinite; }
 .fc-h2 { font-size: clamp(26px, 3.4vw, 42px); font-weight: 500; letter-spacing: -0.03em; line-height: 1.06; text-transform: lowercase; color: #f4f4ef; margin-top: 14px; }
-.fc-h2 em, .fc-h1 em { font-style: normal; color: #b7ff00; }
+.fc-h2 em, .fc-h1 em { font-style: normal; color: #6d3ee9; }
 .fc-body { margin-top: 14px; max-width: 56ch; font-size: 15px; line-height: 1.6; color: rgba(244,244,239,0.58); }
 
 .fc-status { position: sticky; top: 0; z-index: 40; background: rgba(5,5,5,0.82); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,0.07); }
@@ -1372,7 +1372,7 @@ body main > div > div { padding-top: 0 !important; padding-bottom: 0 !important;
 .fc-seg button:hover { color: rgba(244,244,239,0.85); }
 .fc-seg button.on { background: #f4f4ef; color: #08080a; }
 .fc-seg.sm button { padding: 6px 12px; font-size: 12.5px; }
-.fc-seg button:focus-visible { outline: 2px solid #b7ff00; outline-offset: 2px; }
+.fc-seg button:focus-visible { outline: 2px solid #6d3ee9; outline-offset: 2px; }
 
 .fc-mapwrap { position: relative; margin-top: clamp(18px, 3vh, 30px); }
 .fc-map { display: block; width: min(1180px, 96vw); margin: 0 auto; overflow: visible; }
@@ -1413,7 +1413,7 @@ body main > div > div { padding-top: 0 !important; padding-bottom: 0 !important;
 
 .fc-back { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 20px; background: none; border: 1px solid rgba(255,255,255,0.14); border-radius: 99px; padding: 8px 16px; cursor: pointer;
   font-family: inherit; font-size: 13px; font-weight: 600; color: rgba(244,244,239,0.7); transition: border-color .15s ease, color .15s ease; }
-.fc-back:hover { color: #f4f4ef; border-color: rgba(183,255,0,0.5); }
+.fc-back:hover { color: #f4f4ef; border-color: rgba(109,62,233,0.5); }
 .fc-back span { transition: transform .15s ease; display: inline-block; }
 .fc-back:hover span { transform: translateX(-3px); }
 .fc-stage-year { font-family: ${MONO}; font-size: 10.5px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(244,244,239,0.4); }
@@ -1457,14 +1457,14 @@ body main > div > div { padding-top: 0 !important; padding-bottom: 0 !important;
 .fc-table-tools { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px; margin-top: 26px; }
 .fc-find { display: flex; align-items: center; gap: 10px; flex: 1; min-width: 260px; max-width: 460px; height: 44px; padding: 0 14px;
   border: 1px solid rgba(255,255,255,0.12); border-radius: 12px; background: rgba(255,255,255,0.03); color: rgba(244,244,239,0.4); transition: border-color .15s ease; }
-.fc-find:focus-within { border-color: rgba(183,255,0,0.5); }
+.fc-find:focus-within { border-color: rgba(109,62,233,0.5); }
 .fc-find input { flex: 1; background: none; border: 0; outline: none; color: #f4f4ef; font-family: inherit; font-size: 14px; }
 .fc-find input::placeholder { color: rgba(244,244,239,0.35); }
 .fc-sorts { display: inline-flex; gap: 4px; }
 .fc-sorts button { appearance: none; background: none; border: 1px solid transparent; border-radius: 99px; padding: 7px 13px; cursor: pointer;
   font-family: ${MONO}; font-size: 10.5px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(244,244,239,0.45); transition: color .15s ease, border-color .15s ease; }
 .fc-sorts button:hover { color: rgba(244,244,239,0.8); }
-.fc-sorts button.on { color: #b7ff00; border-color: rgba(183,255,0,0.35); }
+.fc-sorts button.on { color: #6d3ee9; border-color: rgba(109,62,233,0.35); }
 
 .fc-table { margin-top: 14px; }
 .fc-tr { display: grid; grid-template-columns: minmax(0, 2.1fr) minmax(0, 1.7fr) 74px minmax(90px, 1fr) 84px 100px 76px; align-items: center; gap: 16px;
@@ -1494,7 +1494,7 @@ body main > div > div { padding-top: 0 !important; padding-bottom: 0 !important;
 
 .fc-more { display: block; margin: 18px auto 0; background: none; border: 1px solid rgba(255,255,255,0.14); border-radius: 99px; padding: 10px 22px; cursor: pointer;
   font-family: inherit; font-size: 13px; font-weight: 600; color: rgba(244,244,239,0.7); transition: border-color .15s ease, color .15s ease; }
-.fc-more:hover { color: #f4f4ef; border-color: rgba(183,255,0,0.5); }
+.fc-more:hover { color: #f4f4ef; border-color: rgba(109,62,233,0.5); }
 
 .fc-odds { display: grid; grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); gap: clamp(28px, 4vw, 64px); align-items: center; margin-top: 30px; }
 .fc-score { padding-top: 6px; }
@@ -1523,7 +1523,7 @@ body main > div > div { padding-top: 0 !important; padding-bottom: 0 !important;
 .fc-outcome-note b { font-family: ${MONO}; font-size: 12.5px; font-weight: 700; }
 
 /* what carries the estimate */
-.fc-grade { font-style: normal; margin-left: 8px; padding: 2px 6px; border-radius: 5px; font-family: ${MONO}; font-size: 9px; font-weight: 700; letter-spacing: 0.08em; color: ${LIME}; border: 1px solid rgba(183,255,0,0.3); background: rgba(183,255,0,0.06); vertical-align: 2px; }
+.fc-grade { font-style: normal; margin-left: 8px; padding: 2px 6px; border-radius: 5px; font-family: ${MONO}; font-size: 9px; font-weight: 700; letter-spacing: 0.08em; color: ${LIME}; border: 1px solid rgba(109,62,233,0.3); background: rgba(109,62,233,0.06); vertical-align: 2px; }
 
 /* the environment chips */
 .fc-envchips { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
@@ -1538,12 +1538,12 @@ body main > div > div { padding-top: 0 !important; padding-bottom: 0 !important;
 .fc-flow-k.head { color: rgba(244,244,239,0.38); }
 .fc-flow-k.final { color: ${LIME}; }
 .fc-flow-num { font-style: normal; color: rgba(244,244,239,0.3); }
-.fc-flow-carry { font-style: normal; margin-left: 4px; padding: 3px 7px; border-radius: 5px; border: 1px solid rgba(183,255,0,0.28); color: ${LIME}; font-size: 9px; letter-spacing: 0.1em; }
+.fc-flow-carry { font-style: normal; margin-left: 4px; padding: 3px 7px; border-radius: 5px; border: 1px solid rgba(109,62,233,0.28); color: ${LIME}; font-size: 9px; letter-spacing: 0.1em; }
 .fc-flow-window { display: inline-flex; align-items: center; gap: 8px; font-family: ${MONO}; font-size: 10.5px; font-weight: 700; }
 .fc-flow-window i { width: 44px; height: 1px; background: rgba(244,244,239,0.2); }
 .fc-flow-row { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(20px, 3vw, 44px); align-items: center; padding: 17px 0; border-top: 1px solid rgba(255,255,255,0.06); }
 .fc-flow-row.off .fc-flow-k, .fc-flow-row.off .fc-flow-cap { opacity: 0.32; }
-.fc-flow-row.final { border-top: 1px solid rgba(255,255,255,0.14); background: linear-gradient(180deg, rgba(183,255,0,0.025), transparent); }
+.fc-flow-row.final { border-top: 1px solid rgba(255,255,255,0.14); background: linear-gradient(180deg, rgba(109,62,233,0.025), transparent); }
 .fc-flow-cap { margin: 6px 0 0; font-size: 13px; line-height: 1.55; color: rgba(244,244,239,0.55); }
 .fc-flow-cap b { font-family: ${MONO}; font-size: 12.5px; font-weight: 700; }
 .fc-flow-chips { display: inline-flex; flex-wrap: wrap; gap: 6px; margin-right: 8px; vertical-align: middle; }
@@ -1573,7 +1573,7 @@ body main > div > div { padding-top: 0 !important; padding-bottom: 0 !important;
 .fc-similar { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 26px; }
 .fc-simchip { display: inline-flex; align-items: baseline; gap: 10px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.12); border-radius: 99px; padding: 10px 16px; cursor: pointer;
   font-family: inherit; color: inherit; transition: border-color .15s ease, background .15s ease; }
-.fc-simchip:hover { border-color: rgba(183,255,0,0.4); background: rgba(183,255,0,0.05); }
+.fc-simchip:hover { border-color: rgba(109,62,233,0.4); background: rgba(109,62,233,0.05); }
 .fc-simchip b { font-size: 13px; font-weight: 600; }
 .fc-simchip span { font-family: ${MONO}; font-size: 11.5px; font-weight: 700; }
 .fc-simchip em { font-style: normal; font-family: ${MONO}; font-size: 10px; color: rgba(244,244,239,0.4); }

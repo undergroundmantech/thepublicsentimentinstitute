@@ -1156,7 +1156,7 @@ export default function HomePage() {
         }
 
         .lp-mobile-menu-list .arw {
-          color: #b7ff00;
+          color: #6d3ee9;
           font-size: 15px;
           font-weight: 700;
           transition: transform 200ms cubic-bezier(.2,.8,.2,1);
@@ -1254,7 +1254,7 @@ export default function HomePage() {
           width: 5px;
           height: 5px;
           border-radius: 999px;
-          background: #b7ff00;
+          background: var(--brand-grad);
           animation: lp-dot-pulse 2.4s ease-in-out infinite;
         }
 
@@ -1404,7 +1404,7 @@ export default function HomePage() {
           width: 5px;
           height: 5px;
           border-radius: 999px;
-          background: #b7ff00;
+          background: var(--brand-grad);
           animation: lp-dot-pulse 2s infinite;
         }
 
@@ -1784,7 +1784,7 @@ export default function HomePage() {
         }
 
         .lp-gallery-results .lp-card-head span {
-          color: #b7ff00;
+          color: #6d3ee9;
         }
 
         .lp-gallery-map .lp-card-head span {
@@ -2248,7 +2248,7 @@ export default function HomePage() {
           right: -84px;
           width: 260px;
           height: 100%;
-          background: #b7ff00;
+          background: var(--brand-grad);
           opacity: 0.1;
           transform: skewX(-15deg);
           pointer-events: none;
@@ -2269,7 +2269,7 @@ export default function HomePage() {
         }
 
         .lp-gallery-results:hover .lp-result-console {
-          border-color: rgba(183,255,0,0.28);
+          border-color: rgba(109,62,233,0.28);
           background: rgba(255,255,255,0.075);
           transform: translateX(4px);
         }
@@ -2422,7 +2422,7 @@ export default function HomePage() {
         }
 
         .lp-art-map {
-          background: #b7ff00;
+          background: var(--brand-grad);
           color: #050505;
           display: flex;
           flex-direction: column;
@@ -2480,7 +2480,7 @@ export default function HomePage() {
 
         .lp-map-controls .is-active {
           background: #050505;
-          color: #b7ff00;
+          color: #6d3ee9;
         }
 
         .lp-ev-bar .blue { background: #1d5fc4; }
@@ -2978,7 +2978,7 @@ export default function HomePage() {
         }
 
         .lp-service-arrow {
-          color: #b7ff00;
+          color: #6d3ee9;
           font-size: 0.46em;
           font-weight: 700;
           opacity: 0;
@@ -2987,13 +2987,13 @@ export default function HomePage() {
         }
 
         .lp-service-list a:hover {
-          color: #b7ff00;
+          color: #6d3ee9;
           padding-left: 14px;
         }
 
         .lp-service-list a:hover:before,
         .lp-service-list a:focus-visible:before {
-          color: #b7ff00;
+          color: #6d3ee9;
         }
 
         .lp-service-list a:hover .lp-service-arrow,
@@ -3005,19 +3005,19 @@ export default function HomePage() {
         .lp-coverage {
           min-height: 0;
           border-radius: 20px;
-          background: #b7ff00;
+          background: var(--brand-grad);
           padding: 32px 32px 36px;
           color: #050505;
           position: relative;
           top: auto;
           overflow: hidden;
-          box-shadow: 0 24px 60px rgba(117, 180, 0, 0.14);
+          box-shadow: 0 24px 60px rgba(109,62,233,0.14);
           transition: transform 260ms cubic-bezier(.2,.8,.2,1), box-shadow 260ms ease;
         }
 
         .lp-coverage:hover {
           transform: translateY(-5px);
-          box-shadow: 0 34px 84px rgba(183, 255, 0, 0.16);
+          box-shadow: 0 34px 84px rgba(109,62,233,0.16);
         }
 
         .lp-coverage:after {
@@ -3240,7 +3240,8 @@ export default function HomePage() {
 
         .lp-faq-row:hover,
         .lp-faq-row.is-open {
-          border-top-color: rgba(183, 255, 0, 0.5);
+          border-top-color: rgba(109,62,233,0.5);
+          border-image: var(--brand-grad) 1;
         }
 
         .lp-faq-button {
@@ -3272,19 +3273,19 @@ export default function HomePage() {
         }
 
         .lp-faq-button:hover {
-          color: #b7ff00;
+          color: #6d3ee9;
           padding-left: 10px;
         }
 
         .lp-faq-button:hover:before {
-          color: #b7ff00;
+          color: #6d3ee9;
         }
 
         .lp-faq-button span:last-child {
           font-size: 26px;
           line-height: 0.8;
           font-weight: 400;
-          color: #b7ff00;
+          color: #6d3ee9;
           transition: transform 320ms cubic-bezier(.2, .8, .2, 1);
         }
 
@@ -3616,7 +3617,7 @@ export default function HomePage() {
           color: rgba(244,244,239,0.38);
           white-space: nowrap;
         }
-        .dk-live i { width: 5px; height: 5px; border-radius: 999px; background: #b7ff00; animation: lp-dot-pulse 2.6s ease-in-out infinite; }
+        .dk-live i { width: 5px; height: 5px; border-radius: 999px; background: var(--brand-grad); animation: lp-dot-pulse 2.6s ease-in-out infinite; }
 
         /* ===== The exhibit wall — no containers, hairlines and feathered data ===== */
         .xw { display: flex; flex-direction: column; }
@@ -3748,7 +3749,7 @@ export default function HomePage() {
         .ex-rows-tight { gap: 12px; }
         .ex-row { display: grid; grid-template-columns: 110px 1fr 48px; align-items: center; gap: 14px; }
         .ex-row-name { font-size: 14px; font-weight: 620; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .ex-row-name em { font-style: normal; font-size: 12px; color: #b7ff00; margin-left: 8px; }
+        .ex-row-name em { font-style: normal; font-size: 12px; color: #6d3ee9; margin-left: 8px; }
         .ex-row-bar { height: 8px; overflow: hidden; }
         .ex-row-bar i { display: block; height: 100%; border-radius: 99px; transform-origin: left; animation: lp-desk-grow 0.9s cubic-bezier(.16,1,.3,1) both; }
         .ex-row-pct { font-size: 15px; font-weight: 700; text-align: right; font-variant-numeric: tabular-nums; }
@@ -3983,7 +3984,7 @@ export default function HomePage() {
           .lp-nav-links a:hover,
           .lp-nav-links a:focus-visible {
             color: #050505;
-            background: #b7ff00;
+            background: var(--brand-grad);
             transform: none;
           }
 
@@ -4146,7 +4147,7 @@ export default function HomePage() {
             margin-left: 0;
             opacity: 0.9;
             transform: none;
-            color: #b7ff00;
+            color: #6d3ee9;
             font-size: 19px;
             font-weight: 700;
             vertical-align: 0;
@@ -4156,10 +4157,10 @@ export default function HomePage() {
           .lp-service-list a:hover,
           .lp-service-list a:focus-visible,
           .lp-service-list a:active {
-            color: #b7ff00;
+            color: #6d3ee9;
             transform: none;
             background: none;
-            border-color: rgba(183, 255, 0, 0.4);
+            border-color: rgba(109,62,233,0.4);
           }
 
           .lp-service-list a:active .lp-service-arrow {
@@ -4170,7 +4171,7 @@ export default function HomePage() {
             min-height: 0;
             padding: 28px 24px;
             border-radius: 18px;
-            box-shadow: 0 26px 70px rgba(183, 255, 0, 0.14);
+            box-shadow: 0 26px 70px rgba(109,62,233,0.14);
           }
 
           .lp-coverage h2 {

@@ -32,10 +32,10 @@ export function senateBalance() {
   return { d, r };
 }
 
-// Same margin scale the rest of the site uses; lime = inside 1.5.
+// Same margin scale the rest of the site uses; brand purple = inside 1.5.
 export function marginColor(m: number): string {
   const a = Math.abs(m);
-  if (a < 1.5) return "#b7ff00";
+  if (a < 1.5) return "#6d3ee9";
   if (m < 0) return a >= 12 ? "#3568e6" : a >= 6 ? "#5b8cff" : "#84a8ff";
   return a >= 12 ? "#e84450" : a >= 6 ? "#ff5d6c" : "#ff8791";
 }

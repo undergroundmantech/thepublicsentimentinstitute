@@ -152,10 +152,10 @@ export default function WireGlobe() {
       })
       .catch(() => {});
 
-    // lime beacons on the toss-up senate states — the live layer
+    // brand-purple beacons on the toss-up senate states — the live layer
     const hot = SENATE_MODEL.filter((r) => Math.abs(r.m) < 1.5 && STATE_CENTROIDS[r.st]);
     const beaconMat = new THREE.PointsMaterial({
-      color: new THREE.Color("#b7ff00"), size: 0.052, map: sprite, transparent: true,
+      color: new THREE.Color("#6d3ee9"), size: 0.052, map: sprite, transparent: true,
       opacity: 0.95, depthWrite: false, sizeAttenuation: true,
     });
     {

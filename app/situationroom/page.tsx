@@ -19,7 +19,7 @@ const D_SOFT = "#8aa3f2";
 const R_SOFT = "#ef8b94";
 const PG_GREEN = "#7cbb9f";
 const PG_MAGENTA = "#c08fd6";
-const LIME = "#b7ff00";
+const LIME = "#6d3ee9";
 
 // Mirrors the REDIST const on /electoralmap (enacted house nets, June 2026) —
 // update both together when a map moves.
@@ -617,7 +617,7 @@ body header, body footer { display: none !important; }
   mask-image: radial-gradient(78% 84% at 52% 46%, #000 42%, transparent 76%); }
 .sr-globe-cap { position: absolute; right: 26px; bottom: 18px; display: inline-flex; align-items: center; gap: 7px;
   font-size: 9.5px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted3); }
-.sr-globe-cap i { width: 5px; height: 5px; border-radius: 99px; background: ${LIME}; box-shadow: 0 0 8px rgba(183,255,0,0.6); animation: sr-pulse 2s ease-in-out infinite; }
+.sr-globe-cap i { width: 5px; height: 5px; border-radius: 99px; background: var(--brand-grad); box-shadow: 0 0 8px rgba(109,62,233,0.6); animation: sr-pulse 2s ease-in-out infinite; }
 @keyframes sr-pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
 
 /* the big board — instruments typeset on a shared baseline, slash hairlines between */
@@ -671,7 +671,7 @@ body header, body footer { display: none !important; }
 .sr-w-stamp { font-size: 10.5px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted3); text-align: right; }
 .sr-w-node { position: relative; align-self: center; justify-self: center; width: 5px; height: 5px; border-radius: 999px; background: rgba(244,244,239,0.38); transition: background 200ms ease, box-shadow 200ms ease; }
 .sr-w-node.is-hollow { background: transparent; box-shadow: inset 0 0 0 1.2px rgba(244,244,239,0.45); width: 7px; height: 7px; }
-.sr-w-node.is-live { background: ${LIME}; box-shadow: 0 0 10px rgba(183,255,0,0.6); animation: sr-pulse 2s ease-in-out infinite; width: 6px; height: 6px; }
+.sr-w-node.is-live { background: var(--brand-grad); box-shadow: 0 0 10px rgba(109,62,233,0.6); animation: sr-pulse 2s ease-in-out infinite; width: 6px; height: 6px; }
 .sr-w-body { min-width: 0; display: flex; flex-direction: column; gap: 5px; }
 .sr-w-line { display: flex; align-items: baseline; gap: 14px; min-width: 0; }
 .sr-w-src { font-size: 16.5px; font-weight: 640; letter-spacing: -0.015em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: rgba(244,244,239,0.88); transition: color 180ms ease; }
@@ -693,7 +693,7 @@ body header, body footer { display: none !important; }
 .sr-w-note b { color: var(--foreground); font-weight: 640; }
 .sr-wirerow:not(.is-note):hover .sr-w-src { color: #ffffff; }
 .sr-wirerow:not(.is-note):hover .sr-w-node { background: rgba(244,244,239,0.85); box-shadow: 0 0 8px rgba(244,244,239,0.4); }
-.sr-wirerow.is-race:hover .sr-w-node { background: ${LIME}; }
+.sr-wirerow.is-race:hover .sr-w-node { background: var(--brand-grad); }
 .sr-skel { display: block; height: 12px; border-radius: 3px; background: rgba(255,255,255,0.05); animation: sr-pulse 1.4s ease-in-out infinite; }
 
 /* 02 — the calendar ahead */
@@ -758,8 +758,8 @@ body header, body footer { display: none !important; }
   -webkit-backdrop-filter: blur(18px) saturate(1.3); backdrop-filter: blur(18px) saturate(1.3);
   box-shadow: inset 0 1px 0 rgba(255,255,255,0.08), 0 14px 40px rgba(0,0,0,0.5);
   animation: sr-pill-in 800ms cubic-bezier(0.16,1,0.3,1) 500ms backwards; }
-.sr-pill-dot { width: 6px; height: 6px; border-radius: 999px; background: ${LIME}; align-self: center;
-  box-shadow: 0 0 10px rgba(183,255,0,0.7); animation: sr-pulse 2s ease-in-out infinite; }
+.sr-pill-dot { width: 6px; height: 6px; border-radius: 999px; background: var(--brand-grad); align-self: center;
+  box-shadow: 0 0 10px rgba(109,62,233,0.7); animation: sr-pulse 2s ease-in-out infinite; }
 .sr-pill b { font-size: 16px; font-weight: 560; letter-spacing: 0.02em; font-variant-numeric: tabular-nums; line-height: 1; }
 .sr-pill-sep { width: 1px; height: 13px; background: rgba(244,244,239,0.16); align-self: center; }
 .sr-pill-label, .sr-pill-stat { font-size: 10px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(244,244,239,0.40); white-space: nowrap; }

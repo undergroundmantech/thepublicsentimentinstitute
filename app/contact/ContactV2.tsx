@@ -5,7 +5,7 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import DarkNav from "@/app/components/DarkNav";
 
 const CONTACT_EMAIL = "tpsinstitutecontact@gmail.com";
-const LIME = "#b7ff00";
+const LIME = "#6d3ee9";
 
 type FormState = {
   name: string;
@@ -139,12 +139,12 @@ function SignalField() {
         ctx.fillStyle = `rgba(${r | 0},${g | 0},${bl | 0},${a.toFixed(3)})`;
         ctx.fillRect(d.x - sz / 2, d.y - sz / 2, sz, sz);
 
-        // lime only where it means something: the ping crest passing through
+        // brand accent only where it means something: the ping crest passing through
         const ringDelta = Math.abs(d.dp - pingR);
         if (ringDelta < PING.width && pingA > 0.02) {
           const la = (1 - ringDelta / PING.width) * pingA * 0.9;
           const ls = 1.4 + la * 2.2;
-          ctx.fillStyle = `rgba(183,255,0,${(la * 0.85).toFixed(3)})`;
+          ctx.fillStyle = `rgba(109,62,233,${(la * 0.85).toFixed(3)})`;
           ctx.fillRect(d.x - ls / 2, d.y - ls / 2, ls, ls);
         }
       }
@@ -419,8 +419,8 @@ body main > div > div { padding-top: 0 !important; padding-bottom: 0 !important;
 .ct-meta { display: flex; align-items: baseline; flex-wrap: wrap; gap: 10px 14px; margin-top: clamp(22px, 3.4vh, 34px);
   font-size: 11px; font-weight: 650; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(244,244,239,0.38); }
 .ct-meta em { font-style: normal; color: rgba(244,244,239,0.18); }
-.ct-meta i { display: inline-block; width: 6px; height: 6px; border-radius: 99px; background: ${LIME};
-  box-shadow: 0 0 9px rgba(183,255,0,0.6); margin-right: 8px; vertical-align: 1px; animation: ct-pulse 2s ease-in-out infinite; }
+.ct-meta i { display: inline-block; width: 6px; height: 6px; border-radius: 99px; background: var(--brand-grad);
+  box-shadow: 0 0 9px rgba(109,62,233,0.6); margin-right: 8px; vertical-align: 1px; animation: ct-pulse 2s ease-in-out infinite; }
 @keyframes ct-pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.45; } }
 
 /* ── the takes — one editorial band ── */
@@ -428,7 +428,7 @@ body main > div > div { padding-top: 0 !important; padding-bottom: 0 !important;
 .ct-eyebrow { display: block; font-size: 11.5px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(244,244,239,0.42); }
 .ct-band-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(28px, 4vw, 56px); margin-top: clamp(34px, 5vh, 54px); }
 .ct-take { position: relative; padding-top: 18px; border-top: 1px solid rgba(255,255,255,0.13); }
-.ct-take::before { content: ''; position: absolute; top: -1px; left: 0; width: 26px; height: 1.5px; background: ${LIME};
+.ct-take::before { content: ''; position: absolute; top: -1px; left: 0; width: 26px; height: 1.5px; background: var(--brand-grad);
   transform: scaleX(0); transform-origin: left center; transition: transform 320ms cubic-bezier(.2,.8,.2,1); }
 .ct-take:hover::before { transform: scaleX(1); }
 .ct-take-idx { font-size: 11px; font-weight: 600; color: rgba(244,244,239,0.28); font-variant-numeric: tabular-nums; }
@@ -471,10 +471,10 @@ body main > div > div { padding-top: 0 !important; padding-bottom: 0 !important;
 
 .ct-actions { display: flex; align-items: center; gap: 22px; flex-wrap: wrap; margin-top: 4px; }
 .ct-send { display: inline-flex; align-items: center; gap: 10px; padding: 15px 30px; border: 0; border-radius: 999px; cursor: pointer;
-  background: ${LIME}; color: #050505; font: inherit; font-size: 15px; font-weight: 680; letter-spacing: -0.01em;
+  background: var(--brand-grad); color: #050505; font: inherit; font-size: 15px; font-weight: 680; letter-spacing: -0.01em;
   transition: transform 220ms cubic-bezier(0.2,0.8,0.2,1), box-shadow 220ms ease, opacity 200ms ease; }
 .ct-send i { font-style: normal; transition: transform 220ms ease; }
-.ct-send:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 18px 44px rgba(183,255,0,0.22); }
+.ct-send:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 18px 44px rgba(109,62,233,0.32); }
 .ct-send:hover:not(:disabled) i { transform: translateX(4px); }
 .ct-send:disabled { opacity: 0.34; cursor: default; }
 .ct-status { font-size: 12px; font-weight: 600; letter-spacing: 0.06em; color: rgba(244,244,239,0.36); }

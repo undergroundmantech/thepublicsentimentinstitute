@@ -123,7 +123,6 @@ export default function DarkNav() {
 
 const CSS = `
   .dn {
-    --lime: #b7ff00;
     position: relative; display: flex; align-items: center; gap: 18px; padding: 22px 0 30px;
     font-family: var(--font-body); letter-spacing: -0.01em;
   }
@@ -147,12 +146,12 @@ const CSS = `
   }
   .dn-link:hover, .dn-link.on { color: #f4f4ef; }
   .dn-link::after {
-    content: ''; position: absolute; left: 0; right: 0; bottom: -2px; height: 1.5px; background: var(--lime);
+    content: ''; position: absolute; left: 0; right: 0; bottom: -2px; height: 1.5px; background: var(--brand-grad);
     transform: scaleX(0); transform-origin: left center; transition: transform .26s cubic-bezier(.2,.8,.2,1);
   }
   .dn-link:hover::after, .dn-link.on::after { transform: scaleX(1); }
   .dn-caret { font-size: 9px; opacity: 0.55; }
-  .dn-live { width: 6px; height: 6px; border-radius: 50%; background: var(--lime); box-shadow: 0 0 8px rgba(183,255,0,0.6); }
+  .dn-live { width: 6px; height: 6px; border-radius: 50%; background: var(--brand-grad); box-shadow: 0 0 8px rgba(109,62,233,0.6); }
 
   .dn-drop {
     position: absolute; top: calc(100% + 12px); left: -12px; min-width: 196px; padding: 8px;
@@ -167,11 +166,11 @@ const CSS = `
 
   .dn-right { margin-left: auto; display: flex; align-items: center; gap: 14px; }
   .dn-cta {
-    padding: 9px 17px; border-radius: 999px; background: var(--lime); color: #050505 !important;
+    padding: 9px 17px; border-radius: 999px; background: var(--brand-grad); color: #050505 !important;
     font-size: 14px; font-weight: 700; text-decoration: none; white-space: nowrap;
     transition: transform .2s cubic-bezier(.16,1,.3,1), box-shadow .2s ease;
   }
-  .dn-cta:hover { transform: translateY(-2px); box-shadow: 0 14px 36px rgba(183,255,0,0.22); }
+  .dn-cta:hover { transform: translateY(-2px); box-shadow: 0 14px 36px rgba(109,62,233,0.32); }
 
   .dn-burger { display: none; width: 44px; height: 44px; border: 1px solid rgba(255,255,255,0.28); border-radius: 999px; background: rgba(255,255,255,0.09); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); cursor: pointer; align-items: center; justify-content: center; flex-direction: column; gap: 4.5px; flex-shrink: 0; }
   .dn-burger span { display: block; width: 17px; height: 1.8px; border-radius: 2px; background: #f4f4ef; transition: transform .26s cubic-bezier(.2,.8,.2,1), opacity .2s ease; }
@@ -219,10 +218,10 @@ const CSS = `
     text-transform: lowercase; color: rgba(244,244,239,0.66); transition: color .18s ease;
   }
   .dnm-link:hover .dnm-word, .dnm-link.on .dnm-word { color: #f4f4ef; }
-  .dnm-link.on .dnm-idx { color: #b7ff00; }
-  .dnm-live { width: 8px; height: 8px; border-radius: 50%; background: #b7ff00; box-shadow: 0 0 10px rgba(183,255,0,0.6); align-self: center; animation: dnm-pulse 2s ease-in-out infinite; }
+  .dnm-link.on .dnm-idx { color: var(--purple); }
+  .dnm-live { width: 8px; height: 8px; border-radius: 50%; background: var(--brand-grad); box-shadow: 0 0 10px rgba(109,62,233,0.6); align-self: center; animation: dnm-pulse 2s ease-in-out infinite; }
   @keyframes dnm-pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
-  .dnm-here { font-size: 9.5px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(183,255,0,0.7); }
+  .dnm-here { font-size: 9.5px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--purple); }
   .dnm-foot {
     position: relative; display: flex; align-items: center; justify-content: space-between; gap: 14px; flex-wrap: wrap;
     padding-top: 18px; border-top: 1px solid rgba(255,255,255,0.1);
@@ -231,7 +230,7 @@ const CSS = `
   .dnm.open .dnm-foot { opacity: 1; transform: none; }
   .dnm-cta {
     display: inline-flex; align-items: center; gap: 10px; padding: 13px 22px; border-radius: 999px;
-    background: #b7ff00; color: #050505 !important; font-size: 15px; font-weight: 700; text-decoration: none;
+    background: var(--brand-grad); color: #050505 !important; font-size: 15px; font-weight: 700; text-decoration: none;
   }
   .dnm-meta { font-size: 10px; font-weight: 650; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(244,244,239,0.3); }
   @media (prefers-reduced-motion: reduce) { .dnm, .dnm-link, .dnm-foot { transition: none !important; } }

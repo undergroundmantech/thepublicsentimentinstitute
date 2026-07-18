@@ -86,7 +86,7 @@ export interface Model {
 }
 
 export const INK = "#f4f4ef";
-export const LIME = "#b7ff00";
+export const LIME = "#6d3ee9";
 export const DEM = "#3b6fde";
 export const GOP = "#e23950";
 export const TOSS = "#8b5cf6";

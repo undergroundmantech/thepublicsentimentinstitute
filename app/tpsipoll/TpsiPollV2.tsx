@@ -12,11 +12,11 @@ const C = {
   cyan:     "#5b8cff",
   green:    "#5fe3a3",   // approve / positive
   orange:   "rgba(244,244,239,0.40)",
-  gold:     "#b7ff00",   // signal / #1 highlight
+  gold:     "#6d3ee9",   // signal / #1 highlight
   muted:    "rgba(244,244,239,0.34)",
   neutral:  "rgba(244,244,239,0.34)",
 };
-const LIME = "#b7ff00";
+const LIME = "#6d3ee9";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 interface NetStat   { val: string; lbl: string; color: string }
@@ -1552,7 +1552,7 @@ const CSS = `
     font-family: var(--font-body); letter-spacing: -0.01em;
     width: 100vw; margin-left: calc(50% - 50vw);
   }
-  .tps::before { content: ''; position: absolute; top: -120px; left: 50%; transform: translateX(-50%); width: 900px; height: 600px; background: radial-gradient(closest-side, rgba(183,255,0,0.07), transparent 70%); pointer-events: none; }
+  .tps::before { content: ''; position: absolute; top: -120px; left: 50%; transform: translateX(-50%); width: 900px; height: 600px; background: radial-gradient(closest-side, rgba(109,62,233,0.07), transparent 70%); pointer-events: none; }
   .tps h1, .tps h2, .tps h3, .tps h4 {
     font-family: var(--font-display);
     text-transform: none;
@@ -1573,7 +1573,7 @@ const CSS = `
   /* Field-report switcher */
   .reports { display: flex; flex-wrap: wrap; gap: 0; border-top: 1px solid var(--line2); border-bottom: 1px solid var(--line2); }
   .rep { position: relative; display: flex; flex-direction: column; gap: 3px; align-items: flex-start; padding: 16px 26px 17px 0; margin-right: 26px; background: none; border: none; cursor: pointer; text-align: left; }
-  .rep::after { content: ''; position: absolute; left: 0; right: 26px; bottom: -1px; height: 1.5px; background: var(--lime); transform: scaleX(0); transform-origin: left center; transition: transform .3s var(--ease); }
+  .rep::after { content: ''; position: absolute; left: 0; right: 26px; bottom: -1px; height: 1.5px; background: var(--brand-grad); transform: scaleX(0); transform-origin: left center; transition: transform .3s var(--ease); }
   .rep.on::after { transform: scaleX(1); }
   .rep-no { font-size: 10px; font-weight: 700; letter-spacing: 0.16em; color: var(--m3); font-variant-numeric: tabular-nums; }
   .rep.on .rep-no { color: var(--lime); }
@@ -1597,7 +1597,7 @@ const CSS = `
   .lens { display: flex; flex-wrap: wrap; gap: 7px; max-width: 540px; justify-content: flex-end; }
   .lens-pill { padding: 9px 15px; border-radius: 999px; border: 1px solid var(--line); background: var(--surf); color: var(--m1); font-family: inherit; font-size: 13px; font-weight: 600; letter-spacing: -0.01em; cursor: pointer; transition: all .18s var(--ease); }
   .lens-pill:hover { color: var(--ink); border-color: rgba(255,255,255,0.22); }
-  .lens-pill.on { background: var(--lime); border-color: var(--lime); color: #050505; }
+  .lens-pill.on { background: var(--brand-grad); border-color: #6d3ee9; color: #050505; }
 
   .elec-stage { animation: rise .5s var(--ease) both; }
   .elec-readout { margin-top: 46px; }
