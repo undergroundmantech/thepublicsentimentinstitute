@@ -566,19 +566,19 @@ function HorizonFooter() {
               <a href="mailto:tpsinstitutecontact@gmail.com">tpsinstitutecontact@gmail.com</a>
             </div>
             <div className="ft-cta-note">Typical reply within<br />one business day</div>
-            <div className="ft-spacer" />
-            <div className="ft-rfoot">
-              <span className="ft-logo" aria-label="The Public Sentiment Institute" />
-              <nav className="ft-links2" aria-label="Footer">
-                <Link href="/polling">Polling</Link>
-                <Link href="/forecastratings">Forecasts</Link>
-                <Link href="/results">Results</Link>
-                <Link href="/contact">Contact</Link>
-              </nav>
-              <div className="ft-copy">&copy; 2026 The Public Sentiment Institute &middot; Florida</div>
-            </div>
           </div>
         </div>
+      </div>
+
+      <div className="ft-rfoot">
+        <span className="ft-logo" aria-label="The Public Sentiment Institute" />
+        <nav className="ft-links2" aria-label="Footer">
+          <Link href="/polling">Polling</Link>
+          <Link href="/forecastratings">Forecasts</Link>
+          <Link href="/results">Results</Link>
+          <Link href="/contact">Contact</Link>
+        </nav>
+        <div className="ft-copy">&copy; 2026 The Public Sentiment Institute &middot; Florida</div>
       </div>
     </section>
   );
@@ -3324,8 +3324,10 @@ export default function HomePage() {
           position: relative;
           min-height: 100svh;
           display: flex;
+          flex-direction: column;
           align-items: center;
           justify-content: center;
+          gap: clamp(28px, 4vh, 44px);
           overflow: hidden;
           padding: clamp(64px, 10vh, 120px) 24px;
           background: #0a0a0c;
@@ -3346,7 +3348,9 @@ export default function HomePage() {
           position: absolute;
           inset: 0;
           pointer-events: none;
-          background: radial-gradient(140% 120% at 50% 30%, transparent 40%, rgba(5, 5, 8, 0.55) 100%);
+          background:
+            linear-gradient(180deg, #050505 0%, rgba(5, 5, 5, 0) 14%),
+            radial-gradient(140% 120% at 50% 30%, transparent 40%, rgba(5, 5, 8, 0.55) 100%);
         }
 
         /* the glass pane */
@@ -3428,21 +3432,21 @@ export default function HomePage() {
 
         /* right \u2014 action */
         .ft-side-r {
-          padding: 52px 42px 40px;
+          padding: 48px 42px 40px;
           border-left: 1px solid rgba(255, 255, 255, 0.11);
           display: flex;
           flex-direction: column;
-          background: rgba(255, 255, 255, 0.02);
+          background: rgba(255, 255, 255, 0.03);
         }
 
         .ft-rlab {
-          margin-bottom: 16px;
+          margin-bottom: 18px;
           font-family: var(--font-numeric);
           font-size: 10.5px;
           font-weight: 700;
           letter-spacing: 0.2em;
           text-transform: uppercase;
-          color: rgba(244, 244, 239, 0.4);
+          color: rgba(244, 244, 239, 0.45);
         }
 
         .ft-cta {
@@ -3456,16 +3460,16 @@ export default function HomePage() {
           font-size: 16px;
           letter-spacing: -0.01em;
           color: #0a0a0c;
-          background: linear-gradient(180deg, #ffffff, #ececE4);
-          padding: 15px 20px;
+          background: #f4f4ef;
+          padding: 16px 20px;
           border-radius: 14px;
-          box-shadow: 0 1px 0 rgba(255,255,255,.6) inset, 0 -8px 20px rgba(109,62,233,.16) inset, 0 14px 34px rgba(0,0,0,.4), 0 0 0 1px rgba(255,255,255,.1);
+          box-shadow: 0 14px 34px rgba(0,0,0,.4), 0 0 0 1px rgba(255,255,255,.1);
           transition: transform 250ms cubic-bezier(.2,.8,.2,1), box-shadow 250ms ease;
         }
 
         .ft-cta:hover {
           transform: translateY(-2px);
-          box-shadow: 0 1px 0 rgba(255,255,255,.6) inset, 0 -8px 20px rgba(109,62,233,.28) inset, 0 20px 44px rgba(0,0,0,.46), 0 0 0 1px rgba(255,255,255,.14);
+          box-shadow: 0 20px 44px rgba(0,0,0,.46), 0 0 0 1px rgba(255,255,255,.14);
         }
 
         .ft-arw {
@@ -3477,11 +3481,11 @@ export default function HomePage() {
         .ft-cta:hover .ft-arw { transform: translateX(4px); }
 
         .ft-cta-addr {
-          margin-top: 12px;
+          margin-top: 16px;
           font-family: var(--font-numeric);
           font-size: 11.5px;
           letter-spacing: 0.02em;
-          color: rgba(244, 244, 239, 0.66);
+          color: rgba(244, 244, 239, 0.82);
           word-break: break-all;
         }
 
@@ -3489,7 +3493,7 @@ export default function HomePage() {
         .ft-cta-addr a:hover { color: #f4f4ef; }
 
         .ft-cta-note {
-          margin-top: 14px;
+          margin-top: 12px;
           font-family: var(--font-numeric);
           font-size: 10px;
           letter-spacing: 0.12em;
@@ -3498,20 +3502,29 @@ export default function HomePage() {
           color: rgba(244, 244, 239, 0.4);
         }
 
-        .ft-spacer { flex: 1; min-height: 24px; }
-
+        /* standalone bottom bar — outside the pane, like a standard site footer */
         .ft-rfoot {
-          padding-top: 20px;
-          border-top: 1px solid rgba(255, 255, 255, 0.1);
+          position: relative;
+          z-index: 2;
+          width: min(920px, 100%);
+          display: flex;
+          align-items: center;
+          flex-wrap: wrap;
+          gap: 14px 28px;
+          padding-top: 22px;
+          background-image: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.16) 18%, rgba(255, 255, 255, 0.16) 82%, transparent);
+          background-position: top;
+          background-size: 100% 1px;
+          background-repeat: no-repeat;
         }
 
         .ft-logo {
           display: block;
           height: 18px;
           width: 96px;
-          margin-bottom: 14px;
+          flex-shrink: 0;
           opacity: 0.9;
-          background: var(--brand-grad);
+          background: #f4f4ef;
           -webkit-mask: url(/tpsi-logo.svg) left center / contain no-repeat;
           mask: url(/tpsi-logo.svg) left center / contain no-repeat;
         }
@@ -3520,7 +3533,7 @@ export default function HomePage() {
           display: flex;
           flex-wrap: wrap;
           gap: 14px;
-          margin-bottom: 12px;
+          margin-right: auto;
         }
 
         .ft-links2 a {
@@ -3545,6 +3558,8 @@ export default function HomePage() {
         @media (max-width: 680px) {
           .ft-split { grid-template-columns: 1fr; }
           .ft-side-l { padding: 38px 30px 8px; }
+          .ft-rfoot { flex-direction: column; align-items: flex-start; gap: 12px; }
+          .ft-links2 { margin-right: 0; }
           .ft-side-r {
             border-left: none;
             border-top: 1px solid rgba(255, 255, 255, 0.11);
