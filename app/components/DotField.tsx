@@ -21,8 +21,8 @@ import React, { useEffect, useRef } from "react";
  *  · pointer — the cursor lifts both intensity and visibility, waking dead
  *    zones of the wall as it passes.
  *
- * Per-dot life: hashed breathing phases and rare scintillation pings, gated
- * to lit regions. Grade: filmic roll-off, vignette above the headline, grain.
+ * Per-dot life: hashed breathing phases, gated to lit regions. Grade: filmic
+ * roll-off, vignette above the headline, grain.
  */
 
 const VERT = `#version 300 es
@@ -142,12 +142,7 @@ void main() {
   float e = smoothstep(0.20, 1.05, intensity);
   float breathe = 1.0 + 0.07 * sin(t * (0.55 + h * 0.5) + h * 6.2831);
 
-  float tick = floor(t * 1.4);
-  float h2 = hash12(cell + tick * 7.13);
-  float ping = step(0.992, h2) * pow(1.0 - fract(t * 1.4), 2.4) * step(0.4, vis);
-  e = min(e + ping * 0.5, 1.1);
-
-  float r = mix(0.10, 0.45, pow(clamp(e, 0.0, 1.0), 1.3)) * breathe * vis + ping * 0.06;
+  float r = mix(0.10, 0.45, pow(clamp(e, 0.0, 1.0), 1.3)) * breathe * vis;
 
   float d = length(f);
   float aa = max(1.5 / u_cell, 0.02);
