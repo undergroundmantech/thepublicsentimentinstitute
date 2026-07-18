@@ -527,30 +527,9 @@ function DeskWall({ stats }: { stats: HomeStats | null }) {
 
 
 // ─── Horizon footer — curved gradient wave + rotating wordmark ───────────────
-const FOOT_WORDS: (string | string[])[] = [
-  ["THE PUBLIC", "SENTIMENT", "INSTITUTE"],
-  "POLLING",
-  "FORECASTING",
-  "ELECTIONS",
-  "INSIGHT",
-];
-
-function FooterWord({ word, mode }: { word: string | string[]; mode: "in" | "out" }) {
-  const lines = Array.isArray(word) ? word : [word];
-  return (
-    <span className={`ft-word is-${mode}${lines.length > 1 ? " is-stack" : ""}`} aria-hidden="true">
-      {lines.map((ln, i) => (
-        <b key={ln} style={{ animationDelay: mode === "in" ? `${420 + i * 110}ms` : `${i * 50}ms` }}>{ln}</b>
-      ))}
-    </span>
-  );
-}
-
 function HorizonFooter() {
   const ref = useRef<HTMLDivElement | null>(null);
   const [armed, setArmed] = useState(false);
-  const [idx, setIdx] = useState(0);
-  const [prev, setPrev] = useState<number | null>(null);
 
   useEffect(() => {
     const node = ref.current;
@@ -560,48 +539,46 @@ function HorizonFooter() {
     }
     const o = new IntersectionObserver(
       (es) => es.forEach((e) => { if (e.isIntersecting) { setArmed(true); o.disconnect(); } }),
-      { threshold: 0.55 },
+      { threshold: 0.4 },
     );
     o.observe(node);
     return () => o.disconnect();
   }, []);
 
-  useEffect(() => {
-    if (!armed || prefersReduced()) return;
-    const hold = idx === 0 ? 3800 : 2500;
-    const t = setTimeout(() => {
-      setPrev(idx);
-      setIdx((i) => (i + 1) % FOOT_WORDS.length);
-    }, hold);
-    return () => clearTimeout(t);
-  }, [armed, idx]);
-
   return (
-    <section className={`ft${armed ? " is-on" : ""}`} ref={ref} aria-label="Work with PSI">
-      <div className="ft-wave" aria-hidden="true" />
-      <div className="ft-wave-core" aria-hidden="true" />
-      <div className="ft-grain" aria-hidden="true" />
+    <section className={`ft${armed ? " is-on" : ""}`} ref={ref} aria-label="Work with the desk">
+      <div className="ft-backdrop" aria-hidden="true" />
+      <div className="ft-vignette" aria-hidden="true" />
 
-      <div className="ft-stage">
-        <div className="ft-words">
-          <span className="ft-sr">The Public Sentiment Institute — polling, forecasting, elections, insight.</span>
-          {prev !== null && <FooterWord key={`out-${prev}-${idx}`} word={FOOT_WORDS[prev]} mode="out" />}
-          {armed && <FooterWord key={`in-${idx}`} word={FOOT_WORDS[idx]} mode="in" />}
+      <div className="ft-pane">
+        <div className="ft-split">
+          <div className="ft-side-l">
+            <div className="ft-kicker"><span className="ft-dot" aria-hidden="true" />The Public Sentiment Institute</div>
+            <h2 className="ft-headline">Work with<br />the <span className="ft-cyc">desk</span>.</h2>
+            <p className="ft-sub">Polling, forecasts, and election night intelligence for teams that need the call right, not just first.</p>
+          </div>
+          <div className="ft-side-r">
+            <div className="ft-rlab">Start a conversation</div>
+            <a className="ft-cta" href="mailto:tpsinstitutecontact@gmail.com">
+              Email the desk <span className="ft-arw" aria-hidden="true">&rarr;</span>
+            </a>
+            <div className="ft-cta-addr">
+              <a href="mailto:tpsinstitutecontact@gmail.com">tpsinstitutecontact@gmail.com</a>
+            </div>
+            <div className="ft-cta-note">Typical reply within<br />one business day</div>
+            <div className="ft-spacer" />
+            <div className="ft-rfoot">
+              <span className="ft-logo" aria-label="The Public Sentiment Institute" />
+              <nav className="ft-links2" aria-label="Footer">
+                <Link href="/polling">Polling</Link>
+                <Link href="/forecastratings">Forecasts</Link>
+                <Link href="/results">Results</Link>
+                <Link href="/contact">Contact</Link>
+              </nav>
+              <div className="ft-copy">&copy; 2026 The Public Sentiment Institute &middot; Florida</div>
+            </div>
+          </div>
         </div>
-        <p className="ft-line">Work with public sentiment &mdash; partner with the desk.</p>
-        <a className="ft-mail" href="mailto:tpsinstitutecontact@gmail.com">
-          tpsinstitutecontact@gmail.com<i aria-hidden="true">&rarr;</i>
-        </a>
-      </div>
-
-      <div className="ft-links">
-        <span>&copy; 2026 The Public Sentiment Institute</span>
-        <nav aria-label="Footer">
-          <Link href="/polling">Polling</Link>
-          <Link href="/forecastratings">Forecasts</Link>
-          <Link href="/results">Results</Link>
-          <Link href="/contact">Contact</Link>
-        </nav>
       </div>
     </section>
   );
@@ -3345,251 +3322,234 @@ export default function HomePage() {
         /* ===== Horizon footer — the page's closing shot ===== */
         .ft {
           position: relative;
-          min-height: max(680px, 100svh);
+          min-height: 100svh;
           display: flex;
-          flex-direction: column;
-          overflow: hidden;
-          background: #050505;
-        }
-
-        /* The wave — Lovable anatomy: continuous full-width strata (ink →
-           indigo → cobalt → violet → magenta → warm rose), gently undulated
-           by very wide low-alpha swells. No lobes, no seams, no dark notches —
-           the bands run edge to edge and melt into each other. */
-        .ft-wave {
-          position: absolute;
-          inset: -6% -8%;
-          background:
-            radial-gradient(80% 24% at 50% 48%, rgba(40, 60, 190, 0.3), transparent 74%),
-            radial-gradient(52% 28% at 26% 66%, rgba(96, 70, 230, 0.36), transparent 70%),
-            radial-gradient(52% 28% at 74% 66%, rgba(96, 70, 230, 0.34), transparent 70%),
-            radial-gradient(46% 46% at 26% 70%, rgba(168, 78, 190, 0.46), transparent 66%),
-            radial-gradient(46% 46% at 74% 71%, rgba(160, 74, 186, 0.44), transparent 66%),
-            radial-gradient(46% 54% at 25% 76%, rgba(240, 94, 160, 0.62), transparent 64%),
-            radial-gradient(46% 54% at 75% 78%, rgba(244, 86, 142, 0.58), transparent 64%),
-            radial-gradient(100% 24% at 50% 104%, rgba(255, 124, 132, 0.34), transparent 76%),
-            linear-gradient(180deg,
-              #050505 0%,
-              #060618 22%,
-              #0a0d33 38%,
-              #14206b 52%,
-              #2e2a96 63%,
-              #5c39ae 73%,
-              #8f4699 82%,
-              #ba5292 90%,
-              #d9648e 96%,
-              #ef798c 100%);
-          filter: blur(38px) saturate(1.12);
-          opacity: 0;
-        }
-
-        .ft.is-on .ft-wave {
-          animation:
-            ft-wake 2.3s cubic-bezier(.16, 1, .3, 1) 0.18s both,
-            ft-hue 18s ease-in-out 2.6s infinite alternate;
-        }
-
-        @keyframes ft-wake {
-          from { opacity: 0; transform: translateY(9%) scale(1.05); filter: blur(44px) saturate(0.75) brightness(0.5); }
-          55% { opacity: 1; }
-          70% { filter: blur(38px) saturate(1.2) brightness(1.12); }
-          to { opacity: 1; transform: translateY(0) scale(1); filter: blur(38px) saturate(1.12) brightness(1); }
-        }
-
-        .ft-wave-core {
-          position: absolute;
-          inset: -6% -8%;
-          background:
-            radial-gradient(36% 42% at 26% 80%, rgba(255, 142, 178, 0.55), transparent 66%),
-            radial-gradient(36% 42% at 74% 82%, rgba(255, 120, 152, 0.5), transparent 66%),
-            radial-gradient(70% 20% at 50% 105%, rgba(255, 116, 132, 0.3), transparent 72%);
-          filter: blur(26px) saturate(1.2);
-          pointer-events: none;
-          opacity: 0;
-        }
-
-        .ft.is-on .ft-wave-core {
-          animation: ft-ignite 1.7s cubic-bezier(.2, .85, .3, 1) both;
-        }
-
-        @keyframes ft-ignite {
-          from { opacity: 0; filter: blur(34px) saturate(0.75) brightness(0.45); transform: translateY(7%) scale(0.94); }
-          66% { opacity: 1; filter: blur(26px) saturate(1.35) brightness(1.28); }
-          to { opacity: 1; filter: blur(26px) saturate(1.2) brightness(1); transform: translateY(0) scale(1); }
-        }
-
-        .ft-grain {
-          position: absolute;
-          inset: 0;
-          background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='0.6'/%3E%3C/svg%3E");
-          background-size: 160px 160px;
-          opacity: 0;
-          mix-blend-mode: overlay;
-          pointer-events: none;
-        }
-
-        .ft.is-on .ft-grain {
-          animation: ft-grain-in 900ms ease 1.15s both;
-        }
-
-        @keyframes ft-grain-in {
-          from { opacity: 0; }
-          to { opacity: 0.06; }
-        }
-
-        @keyframes ft-hue {
-          from { filter: blur(42px) saturate(1.18) hue-rotate(-6deg); }
-          to { filter: blur(42px) saturate(1.18) hue-rotate(9deg); }
-        }
-
-        .ft-stage {
-          position: relative;
-          z-index: 2;
-          flex: 1;
-          display: flex;
-          flex-direction: column;
           align-items: center;
           justify-content: center;
-          gap: clamp(22px, 3.4vh, 38px);
-          padding: clamp(90px, 12vh, 150px) 24px clamp(150px, 24vh, 250px);
-          text-align: center;
-        }
-
-        .ft-words {
-          position: relative;
-          display: grid;
-          place-items: center;
-          min-height: clamp(150px, 21vw, 300px);
-          width: 100%;
-        }
-
-        .ft-sr {
-          position: absolute;
-          width: 1px;
-          height: 1px;
           overflow: hidden;
-          clip-path: inset(50%);
-          white-space: nowrap;
+          padding: clamp(64px, 10vh, 120px) 24px;
+          background: #0a0a0c;
         }
 
-        .ft-word {
-          grid-area: 1 / 1;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          font-size: clamp(58px, 11.5vw, 172px);
-          line-height: 1;
-          font-weight: 560;
-          letter-spacing: -0.022em;
-          white-space: nowrap;
-          -webkit-font-smoothing: antialiased;
-          text-rendering: optimizeLegibility;
+        /* brand-recolored backdrop \u2014 layered radials + linear, per spec */
+        .ft-backdrop {
+          position: absolute;
+          inset: 0;
+          background:
+            radial-gradient(120% 90% at 78% 108%, #d2494b 0%, rgba(210, 73, 75, 0) 46%),
+            radial-gradient(120% 90% at 22% 100%, #a44197 0%, rgba(164, 65, 151, 0) 50%),
+            linear-gradient(200deg, #07070b 8%, #241a5e 42%, #6d3ee9 78%, #b5468f 100%);
+          opacity: 0.92;
         }
 
-        .ft-word.is-stack {
-          font-size: clamp(34px, 6.4vw, 92px);
-          line-height: 1.07;
-          font-weight: 580;
-          letter-spacing: 0.008em;
+        .ft-vignette {
+          position: absolute;
+          inset: 0;
+          pointer-events: none;
+          background: radial-gradient(140% 120% at 50% 30%, transparent 40%, rgba(5, 5, 8, 0.55) 100%);
         }
 
-        .ft-word b {
-          display: block;
-          font-weight: inherit;
-          color: #f7f5f1;
-          text-shadow: 0 2px 28px rgba(5, 5, 8, 0.4);
-          will-change: filter, transform, opacity;
-        }
-
-        .ft-word.is-in b { opacity: 0; animation: ft-focusin 980ms cubic-bezier(.22, .8, .24, 1) both; }
-        .ft-word.is-out b { animation: ft-focusout 620ms cubic-bezier(.5, 0, .7, .4) both; }
-
-        @keyframes ft-focusin {
-          from { opacity: 0; filter: blur(16px); transform: translateY(14px) scale(1.015); }
-          60% { opacity: 1; }
-          to { opacity: 1; filter: blur(0); transform: translateY(0) scale(1); }
-        }
-
-        @keyframes ft-focusout {
-          from { opacity: 1; filter: blur(0); transform: translateY(0) scale(1); }
-          to { opacity: 0; filter: blur(16px); transform: translateY(-12px) scale(0.99); }
-        }
-
-        .ft-line {
-          margin: 0;
-          font-size: clamp(15px, 1.4vw, 18px);
-          font-weight: 480;
-          letter-spacing: 0.1px;
-          color: rgba(255, 244, 248, 0.7);
-          text-shadow: 0 1px 18px rgba(20, 8, 28, 0.45);
+        /* the glass pane */
+        .ft-pane {
+          position: relative;
+          z-index: 2;
+          width: min(920px, 100%);
+          background: rgba(10, 10, 14, 0.52);
+          -webkit-backdrop-filter: blur(26px) saturate(1.35);
+          backdrop-filter: blur(26px) saturate(1.35);
+          border: 1px solid rgba(255, 255, 255, 0.14);
+          border-radius: 22px;
+          box-shadow: 0 30px 90px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.14);
+          overflow: hidden;
           opacity: 0;
-          transform: translateY(14px);
-          transition: opacity 700ms ease 1150ms, transform 900ms cubic-bezier(.2,.8,.2,1) 1150ms;
+          transform: translateY(18px);
+          transition: opacity 700ms ease, transform 800ms cubic-bezier(.2,.8,.2,1);
         }
 
-        .ft-mail {
-          display: inline-flex;
-          align-items: baseline;
-          gap: 12px;
-          font-size: clamp(22px, 3.2vw, 44px);
-          font-weight: 560;
-          letter-spacing: -0.02em;
-          color: #f4f4ef;
-          text-decoration: none;
-          border-bottom: 1px solid rgba(244, 244, 239, 0.28);
-          padding-bottom: 6px;
-          opacity: 0;
-          transform: translateY(16px);
-          transition: opacity 700ms ease 1340ms, transform 900ms cubic-bezier(.2,.8,.2,1) 1340ms,
-            color 240ms ease, border-color 240ms ease;
-        }
-
-        .ft-mail i {
-          font-style: normal;
-          font-size: 0.62em;
-          transition: transform 260ms cubic-bezier(.2,.8,.2,1);
-        }
-
-        .ft.is-on .ft-line,
-        .ft.is-on .ft-mail {
+        .ft.is-on .ft-pane {
           opacity: 1;
           transform: translateY(0);
         }
 
-        .ft-mail:hover {
-          color: #ffe2ee;
-          border-color: rgba(255, 214, 232, 0.75);
+        .ft-split {
+          display: grid;
+          grid-template-columns: 60fr 40fr;
         }
 
-        .ft-mail:hover i { transform: translateX(5px); }
+        /* left \u2014 identity */
+        .ft-side-l { padding: 52px 46px 46px; }
 
-        .ft-links {
-          position: relative;
-          z-index: 2;
+        .ft-kicker {
           display: flex;
           align-items: center;
-          justify-content: space-between;
-          gap: 18px;
-          width: min(1240px, calc(100vw - 96px));
-          margin: 0 auto;
-          padding: 0 0 26px;
-          font-size: 12.5px;
-          font-weight: 570;
-          color: rgba(255, 242, 246, 0.66);
-          text-shadow: 0 1px 14px rgba(20, 6, 24, 0.5);
+          gap: 12px;
+          margin-bottom: 26px;
+          font-family: var(--font-numeric);
+          font-size: 11px;
+          font-weight: 700;
+          letter-spacing: 0.24em;
+          text-transform: uppercase;
+          color: rgba(244, 244, 239, 0.4);
         }
 
-        .ft-links nav { display: flex; gap: 26px; }
-        .ft-links a { color: inherit; text-decoration: none; transition: color 200ms ease; }
-        .ft-links a:hover { color: #f4f4ef; }
+        .ft-dot {
+          width: 5px;
+          height: 5px;
+          border-radius: 50%;
+          background: var(--live);
+          box-shadow: 0 0 10px var(--live);
+        }
+
+        .ft-headline {
+          margin: 0;
+          font-family: var(--font-display);
+          font-weight: 700;
+          letter-spacing: -0.025em;
+          line-height: 0.98;
+          font-size: clamp(40px, 5.4vw, 64px);
+          color: #f4f4ef;
+          text-wrap: balance;
+        }
+
+        .ft-cyc {
+          color: transparent;
+          background: var(--brand-grad);
+          -webkit-background-clip: text;
+          background-clip: text;
+        }
+
+        .ft-sub {
+          margin: 20px 0 0;
+          font-size: clamp(14px, 1.5vw, 16px);
+          line-height: 1.5;
+          color: rgba(244, 244, 239, 0.66);
+          max-width: 34ch;
+        }
+
+        /* right \u2014 action */
+        .ft-side-r {
+          padding: 52px 42px 40px;
+          border-left: 1px solid rgba(255, 255, 255, 0.11);
+          display: flex;
+          flex-direction: column;
+          background: rgba(255, 255, 255, 0.02);
+        }
+
+        .ft-rlab {
+          margin-bottom: 16px;
+          font-family: var(--font-numeric);
+          font-size: 10.5px;
+          font-weight: 700;
+          letter-spacing: 0.2em;
+          text-transform: uppercase;
+          color: rgba(244, 244, 239, 0.4);
+        }
+
+        .ft-cta {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          width: 100%;
+          text-decoration: none;
+          font-family: var(--font-numeric);
+          font-weight: 700;
+          font-size: 16px;
+          letter-spacing: -0.01em;
+          color: #0a0a0c;
+          background: linear-gradient(180deg, #ffffff, #ececE4);
+          padding: 15px 20px;
+          border-radius: 14px;
+          box-shadow: 0 1px 0 rgba(255,255,255,.6) inset, 0 -8px 20px rgba(109,62,233,.16) inset, 0 14px 34px rgba(0,0,0,.4), 0 0 0 1px rgba(255,255,255,.1);
+          transition: transform 250ms cubic-bezier(.2,.8,.2,1), box-shadow 250ms ease;
+        }
+
+        .ft-cta:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 1px 0 rgba(255,255,255,.6) inset, 0 -8px 20px rgba(109,62,233,.28) inset, 0 20px 44px rgba(0,0,0,.46), 0 0 0 1px rgba(255,255,255,.14);
+        }
+
+        .ft-arw {
+          margin-left: auto;
+          font-size: 18px;
+          transition: transform 250ms cubic-bezier(.2,.8,.2,1);
+        }
+
+        .ft-cta:hover .ft-arw { transform: translateX(4px); }
+
+        .ft-cta-addr {
+          margin-top: 12px;
+          font-family: var(--font-numeric);
+          font-size: 11.5px;
+          letter-spacing: 0.02em;
+          color: rgba(244, 244, 239, 0.66);
+          word-break: break-all;
+        }
+
+        .ft-cta-addr a { color: inherit; text-decoration: none; }
+        .ft-cta-addr a:hover { color: #f4f4ef; }
+
+        .ft-cta-note {
+          margin-top: 14px;
+          font-family: var(--font-numeric);
+          font-size: 10px;
+          letter-spacing: 0.12em;
+          text-transform: uppercase;
+          line-height: 1.6;
+          color: rgba(244, 244, 239, 0.4);
+        }
+
+        .ft-spacer { flex: 1; min-height: 24px; }
+
+        .ft-rfoot {
+          padding-top: 20px;
+          border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .ft-logo {
+          display: block;
+          height: 18px;
+          width: 96px;
+          margin-bottom: 14px;
+          opacity: 0.9;
+          background: var(--brand-grad);
+          -webkit-mask: url(/tpsi-logo.svg) left center / contain no-repeat;
+          mask: url(/tpsi-logo.svg) left center / contain no-repeat;
+        }
+
+        .ft-links2 {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 14px;
+          margin-bottom: 12px;
+        }
+
+        .ft-links2 a {
+          font-family: var(--font-numeric);
+          font-size: 11px;
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
+          color: rgba(244, 244, 239, 0.66);
+          text-decoration: none;
+          transition: color 200ms ease;
+        }
+
+        .ft-links2 a:hover { color: #f4f4ef; }
+
+        .ft-copy {
+          font-family: var(--font-numeric);
+          font-size: 10px;
+          letter-spacing: 0.09em;
+          color: rgba(244, 244, 239, 0.4);
+        }
 
         @media (max-width: 680px) {
-          .ft-word { font-size: clamp(42px, 13vw, 72px); }
-          .ft-word.is-stack { font-size: clamp(24px, 8vw, 40px); }
-          .ft-words { min-height: 150px; }
-          .ft-mail { font-size: 19px; }
-          .ft-links { flex-direction: column; gap: 12px; width: calc(100vw - 32px); padding-bottom: 20px; }
-          .ft-stage { padding-bottom: 190px; }
+          .ft-split { grid-template-columns: 1fr; }
+          .ft-side-l { padding: 38px 30px 8px; }
+          .ft-side-r {
+            border-left: none;
+            border-top: 1px solid rgba(255, 255, 255, 0.11);
+            padding: 30px;
+          }
         }
 
 
