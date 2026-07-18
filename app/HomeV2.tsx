@@ -546,39 +546,39 @@ function HorizonFooter() {
   }, []);
 
   return (
-    <section className={`ft${armed ? " is-on" : ""}`} ref={ref} aria-label="Work with the desk">
-      <div className="ft-backdrop" aria-hidden="true" />
-      <div className="ft-vignette" aria-hidden="true" />
+    <section className={`hzn${armed ? " is-on" : ""}`} ref={ref} aria-label="Work with the desk">
+      <div className="hzn-backdrop" aria-hidden="true" />
+      <div className="hzn-vignette" aria-hidden="true" />
 
-      <div className="ft-pane">
-        <div className="ft-split">
-          <div className="ft-side-l">
-            <div className="ft-kicker"><span className="ft-dot" aria-hidden="true" />The Public Sentiment Institute</div>
-            <h2 className="ft-headline">Work with<br />the <span className="ft-cyc">desk</span>.</h2>
-            <p className="ft-sub">Polling, forecasts, and election night intelligence for teams that need the call right, not just first.</p>
+      <div className="hzn-pane">
+        <div className="hzn-split">
+          <div className="hzn-side-l">
+            <div className="hzn-kicker"><span className="hzn-dot" aria-hidden="true" />The Public Sentiment Institute</div>
+            <h2 className="hzn-headline">Work with<br />the <span className="hzn-cyc">desk</span>.</h2>
+            <p className="hzn-sub">Polling, forecasts, and election night intelligence for teams that need the call right, not just first.</p>
           </div>
-          <div className="ft-side-r">
-            <div className="ft-rlab">Start a conversation</div>
-            <a className="ft-cta" href="mailto:tpsinstitutecontact@gmail.com">
-              Email the desk <span className="ft-arw" aria-hidden="true">&rarr;</span>
+          <div className="hzn-side-r">
+            <div className="hzn-rlab">Start a conversation</div>
+            <a className="hzn-cta" href="mailto:tpsinstitutecontact@gmail.com">
+              Email the desk <span className="hzn-arw" aria-hidden="true">&rarr;</span>
             </a>
-            <div className="ft-cta-addr">
+            <div className="hzn-cta-addr">
               <a href="mailto:tpsinstitutecontact@gmail.com">tpsinstitutecontact@gmail.com</a>
             </div>
-            <div className="ft-cta-note">Typical reply within<br />one business day</div>
+            <div className="hzn-cta-note">Typical reply within<br />one business day</div>
           </div>
         </div>
       </div>
 
-      <div className="ft-rfoot">
-        <span className="ft-logo" aria-label="The Public Sentiment Institute" />
-        <nav className="ft-links2" aria-label="Footer">
+      <div className="hzn-foot">
+        <span className="hzn-logo" aria-label="The Public Sentiment Institute" />
+        <nav className="hzn-links" aria-label="Footer">
           <Link href="/polling">Polling</Link>
           <Link href="/forecastratings">Forecasts</Link>
           <Link href="/results">Results</Link>
           <Link href="/contact">Contact</Link>
         </nav>
-        <div className="ft-copy">&copy; 2026 The Public Sentiment Institute &middot; Florida</div>
+        <div className="hzn-copy">&copy; 2026 The Public Sentiment Institute &middot; Florida</div>
       </div>
     </section>
   );
@@ -3320,7 +3320,7 @@ export default function HomePage() {
         }
 
         /* ===== Horizon footer — the page's closing shot ===== */
-        .ft {
+        .hzn {
           position: relative;
           min-height: 100svh;
           display: flex;
@@ -3333,8 +3333,8 @@ export default function HomePage() {
           background: #0a0a0c;
         }
 
-        /* brand-recolored backdrop \u2014 layered radials + linear, per spec */
-        .ft-backdrop {
+        /* brand-recolored backdrop — layered radials + linear, per spec */
+        .hzn-backdrop {
           position: absolute;
           inset: 0;
           background:
@@ -3344,7 +3344,7 @@ export default function HomePage() {
           opacity: 0.92;
         }
 
-        .ft-vignette {
+        .hzn-vignette {
           position: absolute;
           inset: 0;
           pointer-events: none;
@@ -3354,7 +3354,7 @@ export default function HomePage() {
         }
 
         /* the glass pane */
-        .ft-pane {
+        .hzn-pane {
           position: relative;
           z-index: 2;
           width: min(920px, 100%);
@@ -3370,20 +3370,20 @@ export default function HomePage() {
           transition: opacity 700ms ease, transform 800ms cubic-bezier(.2,.8,.2,1);
         }
 
-        .ft.is-on .ft-pane {
+        .hzn.is-on .hzn-pane {
           opacity: 1;
           transform: translateY(0);
         }
 
-        .ft-split {
+        .hzn-split {
           display: grid;
           grid-template-columns: 60fr 40fr;
         }
 
-        /* left \u2014 identity */
-        .ft-side-l { padding: 52px 46px 46px; }
+        /* left — identity */
+        .hzn-side-l { padding: 52px 46px 46px; }
 
-        .ft-kicker {
+        .hzn-kicker {
           display: flex;
           align-items: center;
           gap: 12px;
@@ -3396,7 +3396,7 @@ export default function HomePage() {
           color: rgba(244, 244, 239, 0.4);
         }
 
-        .ft-dot {
+        .hzn-dot {
           width: 5px;
           height: 5px;
           border-radius: 50%;
@@ -3404,7 +3404,7 @@ export default function HomePage() {
           box-shadow: 0 0 10px var(--live);
         }
 
-        .ft-headline {
+        .hzn-headline {
           margin: 0;
           font-family: var(--font-display);
           font-weight: 700;
@@ -3415,14 +3415,14 @@ export default function HomePage() {
           text-wrap: balance;
         }
 
-        .ft-cyc {
+        .hzn-cyc {
           color: transparent;
           background: var(--brand-grad);
           -webkit-background-clip: text;
           background-clip: text;
         }
 
-        .ft-sub {
+        .hzn-sub {
           margin: 20px 0 0;
           font-size: clamp(14px, 1.5vw, 16px);
           line-height: 1.5;
@@ -3430,8 +3430,8 @@ export default function HomePage() {
           max-width: 34ch;
         }
 
-        /* right \u2014 action */
-        .ft-side-r {
+        /* right — action */
+        .hzn-side-r {
           padding: 48px 42px 40px;
           border-left: 1px solid rgba(255, 255, 255, 0.11);
           display: flex;
@@ -3439,7 +3439,7 @@ export default function HomePage() {
           background: rgba(255, 255, 255, 0.03);
         }
 
-        .ft-rlab {
+        .hzn-rlab {
           margin-bottom: 18px;
           font-family: var(--font-numeric);
           font-size: 10.5px;
@@ -3449,7 +3449,7 @@ export default function HomePage() {
           color: rgba(244, 244, 239, 0.45);
         }
 
-        .ft-cta {
+        .hzn-cta {
           display: flex;
           align-items: center;
           gap: 12px;
@@ -3467,20 +3467,20 @@ export default function HomePage() {
           transition: transform 250ms cubic-bezier(.2,.8,.2,1), box-shadow 250ms ease;
         }
 
-        .ft-cta:hover {
+        .hzn-cta:hover {
           transform: translateY(-2px);
           box-shadow: 0 20px 44px rgba(0,0,0,.46), 0 0 0 1px rgba(255,255,255,.14);
         }
 
-        .ft-arw {
+        .hzn-arw {
           margin-left: auto;
           font-size: 18px;
           transition: transform 250ms cubic-bezier(.2,.8,.2,1);
         }
 
-        .ft-cta:hover .ft-arw { transform: translateX(4px); }
+        .hzn-cta:hover .hzn-arw { transform: translateX(4px); }
 
-        .ft-cta-addr {
+        .hzn-cta-addr {
           margin-top: 16px;
           font-family: var(--font-numeric);
           font-size: 11.5px;
@@ -3489,10 +3489,10 @@ export default function HomePage() {
           word-break: break-all;
         }
 
-        .ft-cta-addr a { color: inherit; text-decoration: none; }
-        .ft-cta-addr a:hover { color: #f4f4ef; }
+        .hzn-cta-addr a { color: inherit; text-decoration: none; }
+        .hzn-cta-addr a:hover { color: #f4f4ef; }
 
-        .ft-cta-note {
+        .hzn-cta-note {
           margin-top: 12px;
           font-family: var(--font-numeric);
           font-size: 10px;
@@ -3503,7 +3503,7 @@ export default function HomePage() {
         }
 
         /* standalone bottom bar — outside the pane, like a standard site footer */
-        .ft-rfoot {
+        .hzn-foot {
           position: relative;
           z-index: 2;
           width: min(920px, 100%);
@@ -3518,7 +3518,7 @@ export default function HomePage() {
           background-repeat: no-repeat;
         }
 
-        .ft-logo {
+        .hzn-logo {
           display: block;
           height: 18px;
           width: 96px;
@@ -3529,14 +3529,14 @@ export default function HomePage() {
           mask: url(/tpsi-logo.svg) left center / contain no-repeat;
         }
 
-        .ft-links2 {
+        .hzn-links {
           display: flex;
           flex-wrap: wrap;
           gap: 14px;
           margin-right: auto;
         }
 
-        .ft-links2 a {
+        .hzn-links a {
           font-family: var(--font-numeric);
           font-size: 11px;
           letter-spacing: 0.1em;
@@ -3546,9 +3546,9 @@ export default function HomePage() {
           transition: color 200ms ease;
         }
 
-        .ft-links2 a:hover { color: #f4f4ef; }
+        .hzn-links a:hover { color: #f4f4ef; }
 
-        .ft-copy {
+        .hzn-copy {
           font-family: var(--font-numeric);
           font-size: 10px;
           letter-spacing: 0.09em;
@@ -3556,11 +3556,11 @@ export default function HomePage() {
         }
 
         @media (max-width: 680px) {
-          .ft-split { grid-template-columns: 1fr; }
-          .ft-side-l { padding: 38px 30px 8px; }
-          .ft-rfoot { flex-direction: column; align-items: flex-start; gap: 12px; }
-          .ft-links2 { margin-right: 0; }
-          .ft-side-r {
+          .hzn-split { grid-template-columns: 1fr; }
+          .hzn-side-l { padding: 38px 30px 8px; }
+          .hzn-foot { flex-direction: column; align-items: flex-start; gap: 12px; }
+          .hzn-links { margin-right: 0; }
+          .hzn-side-r {
             border-left: none;
             border-top: 1px solid rgba(255, 255, 255, 0.11);
             padding: 30px;
