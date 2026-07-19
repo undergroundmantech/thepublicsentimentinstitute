@@ -31,10 +31,12 @@ const WIN_2024: Record<string, "R" | "D"> = {
   WV: "R", WI: "R", WY: "R",
 };
 
-const PURPLE       = "#8d7fd6";
-const PURPLE_SOFT  = "#b9aee6";
-const RED_STROKE   = "#d9707a";
-const BLUE_STROKE  = "#8aa3f2";
+// Brand palette (must match the --red/--red2/--blue/--blue2/--purple/--purple2
+// tokens in app/globals.css).
+const PURPLE       = "#6d3ee9";
+const PURPLE_SOFT  = "#8a63ef";
+const RED_STROKE   = "#c22f3b";
+const BLUE_STROKE  = "#1d5fc4";
 
 const SWING = new Set(["AZ", "GA", "MI", "NV", "NC", "PA", "WI"]);
 
@@ -71,17 +73,18 @@ export default function HeroElectoralMap() {
           if (!abbr) continue;
           const isSwing = SWING.has(abbr);
           const winner = WIN_2024[abbr];
+          const noStroke = abbr === "AK" || abbr === "HI";
           const el = document.createElementNS("http://www.w3.org/2000/svg", "path");
           el.setAttribute("d", path(f) ?? "");
           if (isSwing) {
             el.setAttribute("fill", "url(#hp-grad-swing)");
-            el.setAttribute("stroke", "#050505");
-            el.setAttribute("stroke-width", "3");
+            el.setAttribute("stroke", noStroke ? "none" : "#050505");
+            el.setAttribute("stroke-width", noStroke ? "0" : "3");
             swingG.appendChild(el);
           } else {
             el.setAttribute("fill", winner === "D" ? BLUE_STROKE : RED_STROKE);
-            el.setAttribute("stroke", "#050505");
-            el.setAttribute("stroke-width", "3");
+            el.setAttribute("stroke", noStroke ? "none" : "#050505");
+            el.setAttribute("stroke-width", noStroke ? "0" : "3");
             baseG.appendChild(el);
           }
         }

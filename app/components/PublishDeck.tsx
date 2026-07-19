@@ -44,7 +44,7 @@ const ALL_PLATES: Plate[] = [
     note: "Daily weighted averages for presidential approval and the national mood — recency, sample size, voter universe, and pollster quality folded into one series.",
     live: (s) => ({
       text: s ? (s.approval.net > 0 ? `+${s.approval.net.toFixed(0)}` : `−${Math.abs(s.approval.net).toFixed(0)}`) : "—",
-      tone: "#c08fd6",
+      tone: "#c757a8",
     }),
   },
   {
@@ -56,7 +56,7 @@ const ALL_PLATES: Plate[] = [
     note: "The national congressional preference, polled and re-polled — every entry charted against the gold-standard weighted trend.",
     live: (s) => ({
       text: s ? (s.generic.net > 0 ? `D+${s.generic.net.toFixed(1)}` : `R+${Math.abs(s.generic.net).toFixed(1)}`) : "—",
-      tone: "#8aa3f2",
+      tone: "#3b7bde",
     }),
   },
   {
@@ -68,7 +68,7 @@ const ALL_PLATES: Plate[] = [
     note: "All 35 Senate seats modeled nightly — margins, rating tiers, and the projected balance of the chamber.",
     live: () => {
       const b = senateBalance();
-      return { text: `${Math.max(b.d, b.r)}–${Math.min(b.d, b.r)}`, tone: "#8aa3f2" };
+      return { text: `${Math.max(b.d, b.r)}–${Math.min(b.d, b.r)}`, tone: "#3b7bde" };
     },
   },
   {
@@ -78,7 +78,7 @@ const ALL_PLATES: Plate[] = [
     src: "/landing-thumbnails/live-results.png",
     alt: "Live election results hub",
     note: "Election-night returns with reporting context — every contest on the wire, county by county, as it lands.",
-    live: () => ({ text: "live", tone: "#6d3ee9", dot: true }),
+    live: () => ({ text: "live", tone: "#8a63ef", dot: true }),
   },
   {
     key: "map",
@@ -96,7 +96,7 @@ const ALL_PLATES: Plate[] = [
     src: "/landing-thumbnails/situation-room.png",
     alt: "The TPSI situation room",
     note: "The whole desk on one wire — live contests, the freshest polls, the model board, and the watchlist, monitored in eastern time.",
-    live: () => ({ text: "on the wire", tone: "#6d3ee9", dot: true }),
+    live: () => ({ text: "on the wire", tone: "#8a63ef", dot: true }),
   },
 ];
 

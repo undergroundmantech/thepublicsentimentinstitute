@@ -157,24 +157,27 @@ function useArmed(threshold = 0.3) {
   }, [threshold]);
   return { ref, armed };
 }
-/* Product colors — lifted verbatim from the destination pages. */
-const PG_BLUE = "#8aa3f2";    // Democrats, muted
-const PG_RED = "#ef8b94";     // Republicans, muted
-const PG_GREEN = "#7cbb9f";   // Approve, muted
-const PG_MAGENTA = "#c08fd6"; // Disapprove, muted
-const FC_BLUE = "#8aa3f2";    // forecast D, muted
-const FC_RED = "#ef8b94";     // forecast R, muted
+/* Product colors — aligned to the brand --dem/--gop/--live/--c2/--purple
+   tokens (dark-theme values from app/globals.css) instead of the old
+   off-palette pastels. */
+const PG_BLUE = "#3b7bde";    // Democrats (brand --dem, dark)
+const PG_RED = "#d64550";     // Republicans (brand --gop, dark)
+const PG_GREEN = "#2dd4bf";   // Approve (brand --live, dark)
+const PG_MAGENTA = "#c757a8"; // Disapprove (brand --c2, dark)
+const FC_BLUE = "#3b7bde";    // forecast D (brand --dem, dark)
+const FC_RED = "#d64550";     // forecast R (brand --gop, dark)
+const PG_PURPLE = "#a486f3";  // third-party / purple accent (brand --purple2, dark)
 
-// forecast page rating tiers
+// forecast page rating tiers — diverging scale built from brand red/blue tokens
 function ratingTone(m: number): string {
-  if (m >= 12) return "#d9707a";
-  if (m >= 6) return "#ef8b94";
-  if (m >= 2) return "#f4b0b6";
-  if (m > 0) return "#f8cdd1";
-  if (m > -2) return "#ccd6f8";
-  if (m > -6) return "#aabcf5";
-  if (m > -12) return "#8aa3f2";
-  return "#6f86d9";
+  if (m >= 12) return "#d64550";
+  if (m >= 6) return "#e4737c";
+  if (m >= 2) return "#f0b2b7";
+  if (m > 0) return "#f8dcde";
+  if (m > -2) return "#dbe8fb";
+  if (m > -6) return "#afccf6";
+  if (m > -12) return "#6ea3ee";
+  return "#3b7bde";
 }
 
 const BALLOT: { name: string; pct: number }[] = [
@@ -195,8 +198,25 @@ function DualChart({ daily, polls, colA, colB, yPad = 3, strokeW = 2.6, ends = "
   colA: string; colB: string; yPad?: number; strokeW?: number;
   ends?: "pill" | "text" | "none"; endA?: string; endB?: string;
 }) {
-  const W = 640, H = 260, padL = 10, padR = 64, padT = 16, padB = 10;
-  if (!daily.length) return <svg viewBox={`0 0 ${W} ${H}`} className="pvb-svg" />;
+  // viewBox tracks the box's *actual* rendered aspect ratio (measured live),
+  // not a fixed 640x260 guess — otherwise preserveAspectRatio="none" (needed
+  // so the chart fills whatever slot it's dropped into) stretches the plot
+  // non-uniformly whenever a caller's box aspect differs from 640:260, which
+  // flattens/elongates the lines (e.g. the narrow "mini" exhibit cells).
+  const wrapRef = useRef<HTMLDivElement | null>(null);
+  const [box, setBox] = useState({ w: 640, h: 260 });
+  useEffect(() => {
+    const el = wrapRef.current;
+    if (!el || typeof ResizeObserver === "undefined") return;
+    const ro = new ResizeObserver((entries) => {
+      const r = entries[0]?.contentRect;
+      if (r && r.width > 0 && r.height > 0) setBox({ w: r.width, h: r.height });
+    });
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
+  const W = box.w, H = box.h, padL = 10, padR = (64 / 640) * W, padT = 16, padB = 10;
+  if (!daily.length) return <div ref={wrapRef} className="pvb-svg" />;
   const t1 = daily[daily.length - 1].t;
   const t0 = t1 - 120 * 86400000;
   const win = daily.filter((p) => p.t >= t0);
@@ -226,20 +246,22 @@ function DualChart({ daily, polls, colA, colB, yPad = 3, strokeW = 2.6, ends = "
     );
   };
   return (
-    <svg viewBox={`0 0 ${W} ${H}`} className="pvb-svg" preserveAspectRatio="none">
-      {pwin.map((p, i) => (
-        <g key={i} opacity={0.08 + ((p.t - t0) / Math.max(t1 - t0, 1)) * 0.24}>
-          <circle cx={mx(p.t)} cy={my(p.a)} r="2.8" fill={colA} />
-          <circle cx={mx(p.t)} cy={my(p.b)} r="2.8" fill={colB} />
-        </g>
-      ))}
-      <path d={path("b")} fill="none" stroke={colB} strokeWidth={strokeW} strokeLinejoin="round" strokeLinecap="round" />
-      <path d={path("a")} fill="none" stroke={colA} strokeWidth={strokeW} strokeLinejoin="round" strokeLinecap="round" />
-      <circle cx={mx(last.t)} cy={my(last.a)} r="4" fill={colA} stroke="#0b0b0d" strokeWidth="1.6" />
-      <circle cx={mx(last.t)} cy={my(last.b)} r="4" fill={colB} stroke="#0b0b0d" strokeWidth="1.6" />
-      {tag(last.a, colA, endA)}
-      {tag(last.b, colB, endB)}
-    </svg>
+    <div ref={wrapRef} className="pvb-svg" style={{ width: "100%", height: "100%" }}>
+      <svg viewBox={`0 0 ${W} ${H}`} width="100%" height="100%" preserveAspectRatio="none" style={{ display: "block" }}>
+        {pwin.map((p, i) => (
+          <g key={i} opacity={0.08 + ((p.t - t0) / Math.max(t1 - t0, 1)) * 0.24}>
+            <circle cx={mx(p.t)} cy={my(p.a)} r="2.8" fill={colA} />
+            <circle cx={mx(p.t)} cy={my(p.b)} r="2.8" fill={colB} />
+          </g>
+        ))}
+        <path d={path("b")} fill="none" stroke={colB} strokeWidth={strokeW} strokeLinejoin="round" strokeLinecap="round" />
+        <path d={path("a")} fill="none" stroke={colA} strokeWidth={strokeW} strokeLinejoin="round" strokeLinecap="round" />
+        <circle cx={mx(last.t)} cy={my(last.a)} r="4" fill={colA} stroke="#0b0b0d" strokeWidth="1.6" />
+        <circle cx={mx(last.t)} cy={my(last.b)} r="4" fill={colB} stroke="#0b0b0d" strokeWidth="1.6" />
+        {tag(last.a, colA, endA)}
+        {tag(last.b, colB, endB)}
+      </svg>
+    </div>
   );
 }
 
@@ -443,7 +465,7 @@ function TpsiExhibit() {
         {BALLOT.slice(0, 4).map((b, i) => (
           <span className="ex-row" key={b.name}>
             <span className="ex-row-name">{b.name}</span>
-            <span className="ex-row-bar ex-fade-r"><i style={{ width: `${(b.pct / max) * 100}%`, background: i === 0 ? PG_BLUE : i === 1 ? PG_RED : i === 2 ? "#b98cff" : "rgba(244,244,239,0.22)", opacity: i === 0 ? 0.95 : 0.65 }} /></span>
+            <span className="ex-row-bar ex-fade-r"><i style={{ width: `${(b.pct / max) * 100}%`, background: i === 0 ? PG_BLUE : i === 1 ? PG_RED : i === 2 ? PG_PURPLE : "rgba(244,244,239,0.22)", opacity: i === 0 ? 0.95 : 0.65 }} /></span>
             <b className="ex-row-pct" style={{ opacity: i === 0 ? 1 : 0.55 }}>{b.pct.toFixed(1)}</b>
           </span>
         ))}
