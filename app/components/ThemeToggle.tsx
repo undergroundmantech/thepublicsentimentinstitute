@@ -1,25 +1,33 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { createPortal } from "react-dom";
+import { useEffect, useState } from "react";
 
 type Theme = "light" | "dark";
 
-// Flat canvas colors per theme (mirrors --background in globals.css). Used
-// only to color the flood-fill disc below -- not read from computed styles,
-// so this never depends on the CSS var actually being resolved yet.
-const THEME_BG: Record<Theme, string> = {
-  light: "#f7f7f4",
-  dark: "#0a0a0c",
-};
+// Wraps the theme flip in the View Transitions API so the page reveals the
+// new theme through a circle expanding from the toggle button itself. Falls
+// back to an instant swap on browsers without support (and respects
+// prefers-reduced-motion via the CSS in globals.css).
+function tripTheme(next: Theme, origin: { x: number; y: number }) {
+  const root = document.documentElement;
+  root.style.setProperty("--theme-trip-x", `${origin.x}px`);
+  root.style.setProperty("--theme-trip-y", `${origin.y}px`);
 
-type Ripple = { x: number; y: number; color: string; grown: boolean };
+  const apply = () => {
+    root.setAttribute("data-theme", next);
+    try { localStorage.setItem("psi-theme", next); } catch {}
+  };
+
+  if (typeof document.startViewTransition !== "function") {
+    apply();
+    return;
+  }
+  document.startViewTransition(apply);
+}
 
 export default function ThemeToggle() {
   const [theme, setTheme] = useState<Theme>("light");
   const [mounted, setMounted] = useState(false);
-  const [ripple, setRipple] = useState<Ripple | null>(null);
-  const timer = useRef<number | null>(null);
 
   useEffect(() => {
     const current = (document.documentElement.getAttribute("data-theme") as Theme) || "light";
@@ -27,38 +35,11 @@ export default function ThemeToggle() {
     setMounted(true);
   }, []);
 
-  useEffect(() => () => { if (timer.current) window.clearTimeout(timer.current); }, []);
-
   const toggle = (e: React.MouseEvent<HTMLButtonElement>) => {
-    const next: Theme = theme === "dark" ? "light" : "dark";
-
-    const apply = () => {
-      document.documentElement.setAttribute("data-theme", next);
-      try { localStorage.setItem("psi-theme", next); } catch {}
-      setTheme(next);
-    };
-
-    const reduced = typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduced) { apply(); return; }
-
-    // A flat disc in the TARGET theme's color floods out from the button. By
-    // the time it's grown enough to cover the viewport, the real theme swaps
-    // underneath (imperceptibly -- the colors match), then the disc is
-    // dropped. Reads as the new theme radiating outward from the toggle.
-    // Plain CSS clip-path transition -- no View Transitions API dependency,
-    // so it works the same in every browser.
+    const next = theme === "dark" ? "light" : "dark";
     const rect = e.currentTarget.getBoundingClientRect();
-    if (timer.current) window.clearTimeout(timer.current);
-    setRipple({ x: rect.left + rect.width / 2, y: rect.top + rect.height / 2, color: THEME_BG[next], grown: false });
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
-        setRipple((r) => (r ? { ...r, grown: true } : r));
-      });
-    });
-    timer.current = window.setTimeout(() => {
-      apply();
-      setRipple(null);
-    }, 620);
+    tripTheme(next, { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 });
+    setTheme(next);
   };
 
   return (
@@ -122,22 +103,7 @@ export default function ThemeToggle() {
           <path d="M20.2 14.7A8.6 8.6 0 1 1 9.3 3.8a7 7 0 0 0 10.9 10.9z" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" />
         </svg>
       </button>
-
-      {mounted && ripple && createPortal(
-        <div
-          aria-hidden="true"
-          style={{
-            position: "fixed",
-            inset: 0,
-            zIndex: 2147483647,
-            pointerEvents: "none",
-            background: ripple.color,
-            clipPath: `circle(${ripple.grown ? 150 : 0}% at ${ripple.x}px ${ripple.y}px)`,
-            transition: "clip-path 600ms cubic-bezier(0.22, 0.61, 0.36, 1)",
-          }}
-        />,
-        document.body
-      )}
     </>
   );
 }
+

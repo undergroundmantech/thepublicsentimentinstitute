@@ -10,7 +10,7 @@ export default function NotFoundV2() {
         /* full-bleed takeover — the exact recipe every v2 page uses: dark
            body, no global chrome, neutralize the layout wrapper's gutters,
            break out of the container */
-        body { background: #050505 !important; }
+        body { background: var(--background) !important; }
         body header, body footer { display: none !important; }
         body main > div { max-width: none !important; padding-left: 0 !important; padding-right: 0 !important; }
         body main > div > div { padding-top: 0 !important; padding-bottom: 0 !important; }
@@ -21,7 +21,7 @@ export default function NotFoundV2() {
           min-height: 100svh;
           display: flex; flex-direction: column;
           overflow-x: clip;
-          background: #050505;
+          background: var(--background);
           font-family: ui-monospace, "SF Mono", Menlo, monospace;
         }
         /* same content shell as the other desk pages — the nav aligns to it */
@@ -41,7 +41,7 @@ export default function NotFoundV2() {
           margin: 34px 0 0;
           font-size: 10px; font-weight: 700;
           letter-spacing: 0.42em; text-transform: uppercase;
-          color: rgba(246, 244, 240, 0.42);
+          color: var(--muted2);
         }
         .nf2-back {
           display: inline-block; margin-top: 22px;
@@ -60,7 +60,7 @@ export default function NotFoundV2() {
       </div>
       <div className="nf2-center">
         <div className="nf2-wrap">
-          <Dot404 fg="#f6f4f0" dim="rgba(246, 244, 240, 0.17)" />
+          <Dot404 fg="var(--foreground)" dim="var(--muted3)" />
           <p className="nf2-caption">Page not found</p>
           <Link className="nf2-back" href="/">
             Back to the desk →

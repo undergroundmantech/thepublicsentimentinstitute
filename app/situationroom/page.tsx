@@ -570,13 +570,11 @@ export default function SituationRoomPage() {
 
 // ─── styles ──────────────────────────────────────────────────────────────────
 const CSS = `
-html, body { background: #050505 !important; }
+html, body { background: var(--background) !important; }
 body header, body footer { display: none !important; }
 
 .sr-page {
-  --foreground: #f4f4ef;
-  --muted: rgba(244,244,239,0.58); --muted2: rgba(244,244,239,0.40); --muted3: rgba(244,244,239,0.25);
-  --rule: rgba(255,255,255,0.10); --rule2: rgba(255,255,255,0.16);
+  --rule: var(--border); --rule2: var(--border2);
   max-width: 1120px; margin: 0 auto; padding: 0 2px 150px;
   position: relative; z-index: 1; color: var(--foreground);
   font-family: var(--font-body);

@@ -637,7 +637,7 @@ export default function ForecastRatingsPage() {
 const CSS = `
 @import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
 
-html, body { background: #050505 !important; }
+html, body { background: var(--background) !important; }
 body header, body footer { display: none !important; }
 
 .x-page {
@@ -645,18 +645,13 @@ body header, body footer { display: none !important; }
   --serif: var(--font-body);
   --data: var(--font-numeric);
   --lab: var(--font-numeric);
-  --background: #050505; --foreground: #f4f4ef; --foreground2: rgba(244,244,239,0.74);
-  --muted: rgba(244,244,239,0.58); --muted2: rgba(244,244,239,0.40); --muted3: rgba(244,244,239,0.26);
-  --border: rgba(255,255,255,0.10); --border2: rgba(255,255,255,0.16); --border3: rgba(255,255,255,0.24);
-  --panel: rgba(255,255,255,0.03); --panel2: rgba(255,255,255,0.05);
-  --purple: #6d3ee9; --purple-dim: rgba(109,62,233,0.10);
   --x-nodata: #1b1d29;
   --rail-w: 178px; --gap: 56px;
   max-width: 1180px; margin: 0 auto; padding: 0 2px 64px;
   position: relative; z-index: 1; color: var(--foreground);
   font-family: var(--lab); font-size: 14px; letter-spacing: -0.01em;
 }
-.x-page ::selection { background: rgba(109,62,233,0.24); }
+.x-page ::selection { background: var(--purple-dim); }
 
 /* ── Masthead ── */
 .x-folio { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; padding: 14px 0; border-top: 1px solid var(--border2); border-bottom: 1px solid var(--border); font-family: var(--lab); font-size: 10.5px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted2); }

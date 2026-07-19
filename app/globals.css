@@ -23,9 +23,9 @@
   --foreground2:#3a3a3f;    /* alias */
   --ink2:       #5d5d58;
   --muted:      #5d5d58;    /* alias */
-  --ink3:       #6f6f68;
-  --muted2:     #6f6f68;    /* alias */
-  --muted3:     rgba(23, 23, 27, 0.58);
+  --ink3:       #9c9c93;
+  --muted2:     #9c9c93;    /* alias */
+  --muted3:     rgba(23, 23, 27, 0.20);
 
   /* ---- Borders / hairlines ---- */
   --hairline:  #e8e8e2;
@@ -179,6 +179,25 @@
 
 /* Smooth theme transitions */
 html { transition: background-color var(--dur-2) var(--ease-out), color var(--dur-2) var(--ease-out); }
+
+/* Theme toggle "trip" — the new theme reveals through a circle expanding
+   from the toggle button itself (ThemeToggle.tsx sets --theme-trip-x/y). */
+@keyframes theme-trip {
+  from { clip-path: circle(0% at var(--theme-trip-x, 100%) var(--theme-trip-y, 0%)); }
+  to   { clip-path: circle(140% at var(--theme-trip-x, 100%) var(--theme-trip-y, 0%)); }
+}
+::view-transition-old(root) {
+  animation: none;
+  z-index: 1;
+}
+::view-transition-new(root) {
+  animation: theme-trip 640ms cubic-bezier(0.22, 0.61, 0.36, 1);
+  z-index: 2;
+}
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) { animation: none !important; }
+}
 
 /* -------------------------------------------
    2) BASE / RESET
