@@ -11,7 +11,7 @@ import RaceDetail from "../../onpoint/RaceDetail.jsx";
 import { raceHasMap, candColor, shade } from "../../onpoint/electionLib.js";
 import { useElectionIndex } from "../../onpoint/lib/electionIndex.js";
 import { useTheme } from "../../onpoint/lib/theme.jsx";
-import SwingOMeter from "../../components/SwingOMeter";
+import { WinProbabilityWheel } from "./deck/Gauges";
 import DeskSearch from "../../components/DeskSearch";
 import { needleFromRace } from "../../components/needleModel";
 
@@ -59,6 +59,8 @@ const boardParty = (doc: any): string => {
   return "general";
 };
 const boardRank = (doc: any) => (/democratic/i.test(doc?.contest || "") ? 0 : /republican/i.test(doc?.contest || "") ? 1 : 2);
+
+const fmtProb = (p: number) => (p >= 0.995 ? ">99%" : p <= 0.005 ? "<1%" : `${Math.round(p * 100)}%`);
 
 function Tallies({ doc }: { doc: any }) {
   const { theme } = useTheme();
@@ -149,17 +151,30 @@ function Board({ doc, primary, onMap }: { doc: any; primary?: boolean; onMap: (r
           <Tallies doc={doc} />
           {needle ? (
             <div className="rd-needle">
-              <div className="rd-needle-h">the needle — win probability</div>
-              <SwingOMeter
-                c1Name={needle.leaderName}
-                c2Name={needle.runnerName}
-                c1Color={needle.leaderColor}
-                c2Color={needle.runnerColor}
-                c1Prob={needle.pLeader}
-                c2Prob={needle.pRunner}
-                reportingPct={needle.reporting}
-                marginPp={needle.marginPp}
-              />
+              <div className="rd-needle-h">win probability</div>
+              <div className="rd-wheel-row">
+                <WinProbabilityWheel
+                  probs={[needle.pLeader, needle.pRunner]}
+                  colors={[needle.leaderColor, needle.runnerColor]}
+                  trackColor="var(--rule)"
+                  size={148}
+                />
+                <div className="rd-wheel-legend">
+                  <div className="rd-wheel-leg-row">
+                    <i style={{ background: needle.leaderColor }} aria-hidden />
+                    <span>{needle.leaderName}</span>
+                    <b style={{ color: needle.leaderColor }}>{fmtProb(needle.pLeader)}</b>
+                  </div>
+                  <div className="rd-wheel-leg-row">
+                    <i style={{ background: needle.runnerColor }} aria-hidden />
+                    <span>{needle.runnerName}</span>
+                    <b>{fmtProb(needle.pRunner)}</b>
+                  </div>
+                </div>
+              </div>
+              <p className="rd-wheel-margin">
+                Projected margin: {needle.marginPp >= 0 ? "+" : ""}{needle.marginPp.toFixed(1)} pts · {Math.round(needle.reporting)}% reporting
+              </p>
             </div>
           ) : null}
         </div>
@@ -363,6 +378,13 @@ body main > div > div { padding-top: 0 !important; padding-bottom: 0 !important;
 
 .rd-needle { margin-top: clamp(22px, 4vh, 34px); max-width: 360px; }
 .rd-needle-h { font-family: "Oswald", "Barlow Condensed", system-ui, sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-dim, rgba(241,236,225,0.38)); margin-bottom: 12px; }
+.rd-wheel-row { display: flex; align-items: center; gap: 18px; }
+.rd-wheel-legend { display: flex; flex-direction: column; gap: 8px; flex: 1; min-width: 0; }
+.rd-wheel-leg-row { display: flex; align-items: center; gap: 8px; font-family: "Instrument Sans", system-ui, sans-serif; font-size: 13px; color: var(--ink); }
+.rd-wheel-leg-row i { width: 8px; height: 8px; border-radius: 2px; flex-shrink: 0; }
+.rd-wheel-leg-row span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.rd-wheel-leg-row b { margin-left: auto; font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 13px; font-weight: 700; color: var(--ink); }
+.rd-wheel-margin { margin-top: 14px; font-family: "Instrument Sans", system-ui, sans-serif; font-size: 12px; color: var(--ink-dim); }
 
 .rd-board-right { display: flex; flex-direction: column; align-items: center; }
 .rd-map { position: relative; height: clamp(400px, 56vh, 620px); width: 100%; }

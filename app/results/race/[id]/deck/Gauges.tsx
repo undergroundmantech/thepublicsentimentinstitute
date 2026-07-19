@@ -12,10 +12,15 @@ export function WinProbabilityWheel({
   probs,
   colors,
   size = 172,
+  trackColor = "var(--border)",
 }: {
   probs: number[]; // leader-first, 0-1, length 1-3
   colors: string[];
   size?: number;
+  /** Background arc color — pass the host page's own rule/border var (this
+   *  file was authored against the main-site TPSI tokens; onpoint pages
+   *  should pass "var(--rule)" instead since they don't define --border). */
+  trackColor?: string;
 }) {
   const cx = size / 2;
   const cy = size * 0.62;
@@ -41,7 +46,7 @@ export function WinProbabilityWheel({
       <path
         d={`M ${cx - r},${cy} A ${r},${r} 0 0 1 ${cx + r},${cy}`}
         fill="none"
-        stroke="var(--border)"
+        stroke={trackColor}
         strokeWidth={stroke}
         strokeLinecap="round"
       />
