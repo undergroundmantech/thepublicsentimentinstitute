@@ -254,7 +254,7 @@ One page under the results route (e.g. `/results/local?date=…`):
 
 ---
 
-## 8 · EXECUTION PLAN (branch `co04/election-desk`; commit + green build per phase)
+## 8 · EXECUTION PLAN (STAY ON THE CURRENT BRANCH — do NOT create, switch, or checkout any branch; commit + green build per phase)
 
 1. **Phase A — Registry & vocabulary:** extend race config with
    `RaceCapabilities`; implement state-machine + reporting-definition
@@ -273,8 +273,9 @@ One page under the results route (e.g. `/results/local?date=…`):
    new surface; mobile 360/768/1440; no legacy hexes
    (CO-01 grep set) in new code; race-state fixtures rendered for all five
    states; `countyModel` on/off and `telemetry` on/off fixtures rendered.
-8. PR `co04/election-desk` → current integration branch (owner names it at
-   execution time — do NOT assume `main`).
+8. All work remains on the CURRENT branch. Do NOT open a PR, do NOT merge,
+   do NOT create or switch branches at any point — the owner manages
+   branches and merges manually.
 
 ## 9 · ACCEPTANCE CHECKLIST (owner sign-off)
 
