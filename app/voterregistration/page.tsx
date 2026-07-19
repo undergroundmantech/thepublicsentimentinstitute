@@ -663,7 +663,7 @@ function inkOn(fill: string, lens: Lens): string {
 
 // ─── styles ──────────────────────────────────────────────────────────────────
 const CSS = `
-html, body { background: #050505 !important; }
+html, body { background: var(--background) !important; }
 body header, body footer { display: none !important; }
 
 .vr-page {
@@ -671,10 +671,6 @@ body header, body footer { display: none !important; }
   --lab: var(--font-numeric);
   --serif: var(--font-body);
   --data: var(--font-numeric);
-  --background:#050505; --foreground:#f4f4ef; --foreground2:rgba(244,244,239,0.74);
-  --muted:rgba(244,244,239,0.58); --muted2:rgba(244,244,239,0.40); --muted3:rgba(244,244,239,0.26);
-  --border:rgba(255,255,255,0.10); --border2:rgba(255,255,255,0.16); --border3:rgba(255,255,255,0.24);
-  --panel:rgba(255,255,255,0.03); --panel2:rgba(255,255,255,0.05);
   position: relative; z-index: 1; max-width: 1120px; margin: 0 auto; padding: 0 18px 120px;
   color: var(--foreground); font-family: var(--lab); font-size: 14px; letter-spacing: -0.01em;
 }
@@ -801,27 +797,27 @@ body header, body footer { display: none !important; }
 .vr-foot a { color:var(--foreground2); border-bottom:1px solid var(--border3); }
 
 /* dock */
-.vr-dock { position:fixed; left:50%; bottom:18px; transform:translateX(-50%); z-index:240; display:inline-flex; gap:3px; padding:5px; border-radius:999px; border:1px solid rgba(255,255,255,0.13); background:rgba(9,9,12,0.66); -webkit-backdrop-filter:blur(18px) saturate(150%); backdrop-filter:blur(18px) saturate(150%); box-shadow:0 18px 50px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.07); animation:vr-dock-in .7s cubic-bezier(.16,1,.3,1) .5s both; }
+.vr-dock { position:fixed; left:50%; bottom:18px; transform:translateX(-50%); z-index:240; display:inline-flex; gap:3px; padding:5px; border-radius:999px; border:1px solid var(--border2); background:color-mix(in srgb, var(--background) 66%, transparent); -webkit-backdrop-filter:blur(18px) saturate(150%); backdrop-filter:blur(18px) saturate(150%); box-shadow:0 18px 50px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.07); animation:vr-dock-in .7s cubic-bezier(.16,1,.3,1) .5s both; }
 @keyframes vr-dock-in { from { opacity:0; transform:translate(-50%,18px) } to { opacity:1; transform:translate(-50%,0) } }
-.vr-dock-btn { padding:9px 20px; border:0; border-radius:999px; background:transparent; font-size:12px; font-weight:650; letter-spacing:0.02em; text-transform:lowercase; color:rgba(244,244,239,0.6); cursor:pointer; transition:color .18s ease, background .22s cubic-bezier(.2,.8,.2,1); }
-.vr-dock-btn:hover { color:#f4f4ef; }
+.vr-dock-btn { padding:9px 20px; border:0; border-radius:999px; background:transparent; font-size:12px; font-weight:650; letter-spacing:0.02em; text-transform:lowercase; color:var(--muted); cursor:pointer; transition:color .18s ease, background .22s cubic-bezier(.2,.8,.2,1); }
+.vr-dock-btn:hover { color:var(--foreground); }
 .vr-dock-btn.is-on { background:#f4f4ef; color:#050505; }
 
 /* tooltip */
-.vr-tip { position:fixed; z-index:99999; pointer-events:none; width:224px; background:rgba(14,14,16,0.97); border:1px solid rgba(255,255,255,0.12); border-left:3px solid #6d3ee9; border-radius:13px; box-shadow:0 24px 60px rgba(0,0,0,0.62); overflow:hidden; -webkit-backdrop-filter:blur(18px); backdrop-filter:blur(18px); animation:vr-tip-in .16s cubic-bezier(.2,.9,.3,1.2) both; transform-origin:top left; }
+.vr-tip { position:fixed; z-index:99999; pointer-events:none; width:224px; background:color-mix(in srgb, var(--background) 97%, transparent); border:1px solid var(--border2); border-left:3px solid #6d3ee9; border-radius:13px; box-shadow:0 24px 60px rgba(0,0,0,0.42); overflow:hidden; -webkit-backdrop-filter:blur(18px); backdrop-filter:blur(18px); animation:vr-tip-in .16s cubic-bezier(.2,.9,.3,1.2) both; transform-origin:top left; }
 @keyframes vr-tip-in { from { opacity:0; transform:scale(.94) translateY(5px) } to { opacity:1; transform:none } }
 .vr-tip-top { display:flex; align-items:baseline; justify-content:space-between; gap:10px; padding:11px 14px 4px; }
-.vr-tip-name { font-weight:700; font-size:14.5px; letter-spacing:-0.02em; line-height:1.1; color:#f4f4ef; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-.vr-tip-val { font-size:17px; font-weight:800; letter-spacing:-0.02em; color:#f4f4ef; white-space:nowrap; }
-.vr-tip-sub { padding:0 14px 9px; font-size:9.5px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:rgba(244,244,239,0.42); }
+.vr-tip-name { font-weight:700; font-size:14.5px; letter-spacing:-0.02em; line-height:1.1; color:var(--foreground); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.vr-tip-val { font-size:17px; font-weight:800; letter-spacing:-0.02em; color:var(--foreground); white-space:nowrap; }
+.vr-tip-sub { padding:0 14px 9px; font-size:9.5px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:var(--muted2); }
 .vr-tip-bar { display:flex; gap:1.5px; height:6px; margin:0 14px 9px; }
 .vr-tip-bar i { display:block; height:100%; }
 .vr-tip-bar i:first-child{border-radius:3px 0 0 3px}.vr-tip-bar i:last-child{border-radius:0 3px 3px 0}
-.vr-tip-foot { display:flex; align-items:center; gap:9px; flex-wrap:wrap; padding:9px 14px 11px; border-top:1px solid rgba(255,255,255,0.08); }
-.vr-tip-pick { display:inline-flex; align-items:center; gap:6px; font-size:10.5px; font-weight:700; color:#f4f4ef; }
+.vr-tip-foot { display:flex; align-items:center; gap:9px; flex-wrap:wrap; padding:9px 14px 11px; border-top:1px solid var(--border); }
+.vr-tip-pick { display:inline-flex; align-items:center; gap:6px; font-size:10.5px; font-weight:700; color:var(--foreground); }
 .vr-tip-pick b { width:8px; height:8px; border-radius:50%; }
-.vr-tip-rank { font-size:9.5px; font-weight:700; letter-spacing:0.04em; text-transform:uppercase; color:rgba(244,244,239,0.5); }
-.vr-tip-hint { margin-left:auto; font-size:9px; font-weight:600; letter-spacing:0.05em; text-transform:uppercase; color:rgba(244,244,239,0.4); }
+.vr-tip-rank { font-size:9.5px; font-weight:700; letter-spacing:0.04em; text-transform:uppercase; color:var(--muted3); }
+.vr-tip-hint { margin-left:auto; font-size:9px; font-weight:600; letter-spacing:0.05em; text-transform:uppercase; color:var(--muted2); }
 
 @media (prefers-reduced-motion: reduce) {
   .vr-mast>*,.vr-board,.vr-controls,.vr-stage,.vr-legend,.vr-rank,.vr-beam>i,.vr-num,.vr-live,.vr-dock,.vr-rank-bar i { animation:none !important; }

@@ -1538,17 +1538,17 @@ export default function TPSIPollDashboard() {
 
 // ═══ STYLES ═══════════════════════════════════════════════════════════════════
 const CSS = `
-  body { background: #050505 !important; color: #f4f4ef; overflow-x: clip; }
+  body { background: var(--background) !important; color: var(--foreground); overflow-x: clip; }
   body header, body footer { display: none !important; }
   body main > div { max-width: none !important; padding-left: 0 !important; padding-right: 0 !important; }
   body main > div > div { padding-top: 0 !important; padding-bottom: 0 !important; }
 
   .tps {
-    --ink: #f4f4ef; --lime: ${LIME};
-    --m1: rgba(244,244,239,0.62); --m2: rgba(244,244,239,0.40); --m3: rgba(244,244,239,0.26);
-    --line: rgba(255,255,255,0.10); --line2: rgba(255,255,255,0.06); --surf: rgba(255,255,255,0.04);
+    --ink: var(--foreground); --lime: ${LIME};
+    --m1: var(--muted); --m2: var(--muted2); --m3: var(--muted3);
+    --line: var(--border); --line2: var(--border2); --surf: var(--panel);
     --ease: cubic-bezier(.16,1,.3,1);
-    position: relative; min-height: 100vh; background: #050505; color: var(--ink); overflow-x: clip;
+    position: relative; min-height: 100vh; background: var(--background); color: var(--ink); overflow-x: clip;
     font-family: var(--font-body); letter-spacing: -0.01em;
     width: 100vw; margin-left: calc(50% - 50vw);
   }
