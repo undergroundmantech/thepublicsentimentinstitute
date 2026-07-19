@@ -1,0 +1,83 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Compact local race board</title>
+<style>
+:root{--ink:#111827;--muted:#687184;--line:#dfe3ea;--soft:#f5f7fa;--blue:#1665d8;--red:#c94242;--purple:#7650c7;--green:#15866b}
+*{box-sizing:border-box}body{margin:0;background:#f3f5f8;color:var(--ink);font-family:Inter,Arial,sans-serif}
+.variant-ribbon{position:sticky;top:0;z-index:10;display:flex;justify-content:space-between;align-items:center;padding:10px 18px;background:rgba(255,255,255,.97);border-bottom:1px solid var(--line)}
+.variant-ribbon b{font-size:12px;letter-spacing:.08em;text-transform:uppercase}.variant-ribbon span{font-size:11px;color:var(--muted)}
+main{max-width:1180px;margin:0 auto;padding:34px 24px 56px}.eyebrow{font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--purple)}
+h1{font-size:31px;line-height:1.05;margin:8px 0 8px;letter-spacing:-.035em}.intro{max-width:680px;margin:0 0 24px;color:var(--muted);font-size:13px;line-height:1.55}
+.board{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.race{background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden;box-shadow:0 4px 14px rgba(16,24,40,.035)}
+.race-head{padding:14px 15px 11px;border-bottom:1px solid var(--line)}.race-kicker{display:flex;justify-content:space-between;gap:10px;font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:750}
+.race h2{font-size:15px;margin:7px 0 2px;letter-spacing:-.015em}.status{font-size:10px;color:var(--green);font-weight:750}.candidates{padding:7px 15px 10px}
+.candidate{display:grid;grid-template-columns:5px 1fr auto;gap:9px;align-items:center;padding:9px 0;border-bottom:1px solid #edf0f4}.candidate:last-child{border-bottom:0}
+.swatch{width:4px;height:29px;border-radius:4px}.blue{background:var(--blue)}.red{background:var(--red)}.purple{background:var(--purple)}
+.name strong{display:block;font-size:11px}.name small{font-size:9px;color:var(--muted)}.result{text-align:right}.result strong{display:block;font-size:15px;letter-spacing:-.03em}.result small{font-size:9px;color:var(--muted)}
+.race-foot{display:flex;justify-content:space-between;gap:10px;padding:9px 15px;background:var(--soft);font-size:9px;color:var(--muted)}.leader{color:var(--ink);font-weight:750}
+@media(max-width:950px){.board{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:560px){.board{grid-template-columns:1fr}main{padding:26px 14px}}
+</style></head><body><div class="variant-ribbon"><b>Level 5 · Compact local race board</b><span>Election coverage capability example</span></div><main>
+<div class="eyebrow">Local results desk</div><h1>Colorado local races</h1><p class="intro">A compact scan of reported results for contests that do not receive forecasting, county modeling, or expanded analytical coverage.</p>
+<section class="board">
+<article class="race">
+<header class="race-head"><div class="race-kicker"><span>Denver</span><span>92% reporting</span></div><h2>Mayor</h2><div class="status">Leader</div></header>
+<div class="candidates">
+<div class="candidate"><i class="swatch blue"></i><div class="name"><strong>Maya Rodriguez</strong><small>Nonpartisan</small></div><div class="result"><strong>53.8%</strong><small>184,221 votes</small></div></div>
+<div class="candidate"><i class="swatch red"></i><div class="name"><strong>Cole Bennett</strong><small>Nonpartisan</small></div><div class="result"><strong>46.2%</strong><small>158,206 votes</small></div></div>
+</div>
+<footer class="race-foot"><span class="leader">Rodriguez leads by 26,015</span><span>Updated 10:42 PM</span></footer>
+</article>
+<article class="race">
+<header class="race-head"><div class="race-kicker"><span>Jefferson County</span><span>88% reporting</span></div><h2>Sheriff</h2><div class="status">Leader</div></header>
+<div class="candidates">
+<div class="candidate"><i class="swatch red"></i><div class="name"><strong>Ryan Keller</strong><small>Republican</small></div><div class="result"><strong>51.6%</strong><small>112,984 votes</small></div></div>
+<div class="candidate"><i class="swatch blue"></i><div class="name"><strong>Tasha Green</strong><small>Democratic</small></div><div class="result"><strong>48.4%</strong><small>105,913 votes</small></div></div>
+</div>
+<footer class="race-foot"><span class="leader">Keller leads by 7,071</span><span>Updated 10:42 PM</span></footer>
+</article>
+<article class="race">
+<header class="race-head"><div class="race-kicker"><span>State House 18</span><span>95% reporting</span></div><h2>Representative</h2><div class="status">Winner projected</div></header>
+<div class="candidates">
+<div class="candidate"><i class="swatch blue"></i><div class="name"><strong>Elena Park</strong><small>Democratic</small></div><div class="result"><strong>57.1%</strong><small>31,407 votes</small></div></div>
+<div class="candidate"><i class="swatch red"></i><div class="name"><strong>Marcus Reed</strong><small>Republican</small></div><div class="result"><strong>42.9%</strong><small>23,596 votes</small></div></div>
+</div>
+<footer class="race-foot"><span class="leader">Park projected winner</span><span>Updated 10:42 PM</span></footer>
+</article>
+<article class="race">
+<header class="race-head"><div class="race-kicker"><span>Aurora</span><span>79% reporting</span></div><h2>City Council At-Large</h2><div class="status">Leader</div></header>
+<div class="candidates">
+<div class="candidate"><i class="swatch purple"></i><div class="name"><strong>Danielle Brooks</strong><small>Nonpartisan</small></div><div class="result"><strong>50.7%</strong><small>72,118 votes</small></div></div>
+<div class="candidate"><i class="swatch blue"></i><div class="name"><strong>Luis Romero</strong><small>Nonpartisan</small></div><div class="result"><strong>49.3%</strong><small>70,104 votes</small></div></div>
+</div>
+<footer class="race-foot"><span class="leader">Brooks leads by 2,014</span><span>Updated 10:42 PM</span></footer>
+</article>
+<article class="race">
+<header class="race-head"><div class="race-kicker"><span>Douglas County</span><span>91% reporting</span></div><h2>Commissioner District 2</h2><div class="status">Leader</div></header>
+<div class="candidates">
+<div class="candidate"><i class="swatch red"></i><div class="name"><strong>Amy Walsh</strong><small>Republican</small></div><div class="result"><strong>55.4%</strong><small>68,392 votes</small></div></div>
+<div class="candidate"><i class="swatch blue"></i><div class="name"><strong>Noah Kim</strong><small>Democratic</small></div><div class="result"><strong>44.6%</strong><small>55,071 votes</small></div></div>
+</div>
+<footer class="race-foot"><span class="leader">Walsh leads by 13,321</span><span>Updated 10:42 PM</span></footer>
+</article>
+<article class="race">
+<header class="race-head"><div class="race-kicker"><span>Boulder</span><span>97% reporting</span></div><h2>Ballot Measure 2A</h2><div class="status">Decision desk call</div></header>
+<div class="candidates">
+<div class="candidate"><i class="swatch blue"></i><div class="name"><strong>Yes</strong><small>—</small></div><div class="result"><strong>61.8%</strong><small>84,755 votes</small></div></div>
+<div class="candidate"><i class="swatch red"></i><div class="name"><strong>No</strong><small>—</small></div><div class="result"><strong>38.2%</strong><small>52,369 votes</small></div></div>
+</div>
+<footer class="race-foot"><span class="leader">Measure passes</span><span>Updated 10:42 PM</span></footer>
+</article>
+<article class="race">
+<header class="race-head"><div class="race-kicker"><span>School District 11</span><span>84% reporting</span></div><h2>Board Seat 3</h2><div class="status">Leader</div></header>
+<div class="candidates">
+<div class="candidate"><i class="swatch purple"></i><div class="name"><strong>Jordan Ellis</strong><small>Nonpartisan</small></div><div class="result"><strong>52.4%</strong><small>29,863 votes</small></div></div>
+<div class="candidate"><i class="swatch blue"></i><div class="name"><strong>Priya Shah</strong><small>Nonpartisan</small></div><div class="result"><strong>47.6%</strong><small>27,121 votes</small></div></div>
+</div>
+<footer class="race-foot"><span class="leader">Ellis leads by 2,742</span><span>Updated 10:42 PM</span></footer>
+</article>
+<article class="race">
+<header class="race-head"><div class="race-kicker"><span>Pueblo County</span><span>93% reporting</span></div><h2>Clerk and Recorder</h2><div class="status">Leader</div></header>
+<div class="candidates">
+<div class="candidate"><i class="swatch blue"></i><div class="name"><strong>Alicia Moreno</strong><small>Democratic</small></div><div class="result"><strong>50.9%</strong><small>41,201 votes</small></div></div>
+<div class="candidate"><i class="swatch red"></i><div class="name"><strong>Grant Foster</strong><small>Republican</small></div><div class="result"><strong>49.1%</strong><small>39,746 votes</small></div></div>
+</div>
+<footer class="race-foot"><span class="leader">Moreno leads by 1,455</span><span>Updated 10:42 PM</span></footer>
+</article></section></main></body></html>
