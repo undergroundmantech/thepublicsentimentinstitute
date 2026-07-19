@@ -52,7 +52,7 @@ export default function DarkNav() {
   );
 
   return (
-    <nav className="dn" aria-label="Primary">
+    <nav className={`dn${isHome ? " dn--home" : ""}`} aria-label="Primary">
       <style>{CSS}</style>
 
       <Link href="/" className="dn-logo" aria-label="The Public Sentiment Institute">
@@ -90,7 +90,7 @@ export default function DarkNav() {
       </div>
 
       {mounted && createPortal(
-        <div className={`dnm${mobile ? " open" : ""}`} aria-hidden={!mobile}>
+        <div className={`dnm${mobile ? " open" : ""}${isHome ? " dnm--home" : ""}`} aria-hidden={!mobile}>
           <div className="dnm-top">
             <span className="dnm-brand">the public sentiment institute</span>
             <button type="button" className="dnm-x" aria-label="Close menu" onClick={() => setMobile(false)}>
@@ -130,6 +130,16 @@ const CSS = `
     position: relative; display: flex; align-items: center; gap: 18px; padding: 22px 0 30px;
     font-family: var(--font-body); letter-spacing: -0.01em;
   }
+  /* the home page's own background is permanently dark, so its nav must render
+     dark chrome regardless of whichever theme the visitor last set on another
+     page — otherwise a persisted light theme makes the nav invisible on home. */
+  .dn--home {
+    --background: #0a0a0c; --foreground: #f2f2f0; --foreground2: rgba(242,242,240,0.78);
+    --muted: rgba(242,242,240,0.62); --muted2: rgba(242,242,240,0.36); --muted3: rgba(242,242,240,0.20);
+    --border: rgba(255,255,255,0.08); --border2: rgba(255,255,255,0.15); --border3: rgba(255,255,255,0.24);
+    --panel: #111114; --panel2: #16161a;
+    --purple: #8a63ef; --live: #2dd4bf;
+  }
   .dn a, .dn button { font-family: inherit; }
   .dn-logo { display: inline-flex; align-items: center; flex-shrink: 0; text-decoration: none; }
   .dn-logo-img {
@@ -138,6 +148,8 @@ const CSS = `
     mask: url(/tpsi-logo.svg) left center / contain no-repeat;
     transition: opacity .2s ease;
   }
+  /* light theme, non-home pages: gradient mark instead of a flat black fill */
+  :root:not([data-theme="dark"]) .dn:not(.dn--home) .dn-logo-img { background: var(--brand-grad); }
   .dn-logo:hover .dn-logo-img { opacity: 0.82; }
 
   .dn-links { display: flex; align-items: center; gap: 24px; margin-left: 12px; }
@@ -191,6 +203,13 @@ const CSS = `
     -webkit-backdrop-filter: blur(20px); backdrop-filter: blur(20px);
     font-family: var(--font-body); letter-spacing: -0.01em;
     opacity: 0; visibility: hidden; transition: opacity .32s ease, visibility 0s linear .32s;
+  }
+  .dnm--home {
+    --background: #0a0a0c; --foreground: #f2f2f0; --foreground2: rgba(242,242,240,0.78);
+    --muted: rgba(242,242,240,0.62); --muted2: rgba(242,242,240,0.36); --muted3: rgba(242,242,240,0.20);
+    --border: rgba(255,255,255,0.08); --border2: rgba(255,255,255,0.15); --border3: rgba(255,255,255,0.24);
+    --panel: #111114; --panel2: #16161a;
+    --purple: #8a63ef; --live: #2dd4bf;
   }
   .dnm.open { opacity: 1; visibility: visible; transition: opacity .32s ease; }
   .dnm::before {
