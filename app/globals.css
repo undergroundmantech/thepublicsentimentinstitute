@@ -23,9 +23,9 @@
   --foreground2:#3a3a3f;    /* alias */
   --ink2:       #5d5d58;
   --muted:      #5d5d58;    /* alias */
-  --ink3:       #9c9c93;
-  --muted2:     #9c9c93;    /* alias */
-  --muted3:     rgba(23, 23, 27, 0.20);
+  --ink3:       #6f6f68;
+  --muted2:     #6f6f68;    /* alias */
+  --muted3:     rgba(23, 23, 27, 0.58);
 
   /* ---- Borders / hairlines ---- */
   --hairline:  #e8e8e2;
