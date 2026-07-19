@@ -1571,6 +1571,7 @@ export default function HomePage() {
           color: transparent;
           background: var(--brand-grad);
           -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
           background-clip: text;
         }
 
@@ -3464,6 +3465,7 @@ export default function HomePage() {
           color: transparent;
           background: var(--brand-grad);
           -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
           background-clip: text;
         }
 
