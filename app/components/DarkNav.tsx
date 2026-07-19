@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { SHOW_SITUATION_ROOM } from "@/app/lib/flags";
+import ThemeToggle from "./ThemeToggle";
 
 // Mirror of the global Navbar's destinations, rendered for dark/full-bleed pages.
 const RESULTS_LIVE = true;
@@ -80,6 +81,7 @@ export default function DarkNav() {
       </div>
 
       <div className="dn-right">
+        <span className="dn-toggle-wrap"><ThemeToggle /></span>
         <Link href="/tpsipoll" className="dn-cta">Take the survey →</Link>
         <button type="button" className={`dn-burger${mobile ? " open" : ""}`} aria-label="Menu" aria-expanded={mobile} onClick={() => setMobile((m) => !m)}>
           <span /><span /><span />
@@ -112,6 +114,7 @@ export default function DarkNav() {
           </nav>
           <div className="dnm-foot" style={{ transitionDelay: mobile ? `${90 + flat.length * 45}ms` : "0ms" }}>
             <Link href="/tpsipoll" className="dnm-cta" onClick={() => setMobile(false)}>Take the survey <span aria-hidden>→</span></Link>
+            <ThemeToggle />
             <span className="dnm-meta">independent polling &amp; election analysis</span>
           </div>
         </div>,
@@ -129,7 +132,7 @@ const CSS = `
   .dn a, .dn button { font-family: inherit; }
   .dn-logo { display: inline-flex; align-items: center; flex-shrink: 0; text-decoration: none; }
   .dn-logo-img {
-    display: block; width: 132px; height: 30px; background: #f4f4ef;
+    display: block; width: 132px; height: 30px; background: var(--foreground);
     -webkit-mask: url(/tpsi-logo.svg) left center / contain no-repeat;
     mask: url(/tpsi-logo.svg) left center / contain no-repeat;
     transition: opacity .2s ease;
@@ -141,10 +144,10 @@ const CSS = `
   .dn-link {
     position: relative; display: inline-flex; align-items: center; gap: 6px; padding: 5px 0;
     background: none; border: 0; cursor: pointer; text-decoration: none;
-    font-size: 14.5px; font-weight: 560; letter-spacing: -0.01em; color: rgba(244,244,239,0.64);
+    font-size: 14.5px; font-weight: 560; letter-spacing: -0.01em; color: var(--muted);
     transition: color .18s ease; white-space: nowrap;
   }
-  .dn-link:hover, .dn-link.on { color: #f4f4ef; }
+  .dn-link:hover, .dn-link.on { color: var(--foreground); }
   .dn-link::after {
     content: ''; position: absolute; left: 0; right: 0; bottom: -2px; height: 1.5px; background: var(--live);
     transform: scaleX(0); transform-origin: left center; transition: transform .26s cubic-bezier(.2,.8,.2,1);
@@ -156,25 +159,25 @@ const CSS = `
 
   .dn-drop {
     position: absolute; top: calc(100% + 12px); left: -12px; min-width: 196px; padding: 8px;
-    border-radius: 14px; border: 1px solid rgba(255,255,255,0.10); background: rgba(12,12,13,0.97);
-    -webkit-backdrop-filter: blur(22px); backdrop-filter: blur(22px); box-shadow: 0 26px 64px rgba(0,0,0,0.62);
+    border-radius: 14px; border: 1px solid var(--border2); background: var(--panel);
+    -webkit-backdrop-filter: blur(22px); backdrop-filter: blur(22px); box-shadow: var(--shadow-lg);
     opacity: 0; visibility: hidden; transform: translateY(-6px); z-index: 90;
     transition: opacity .2s ease, transform .2s ease, visibility 0s linear .2s;
   }
   .dn-drop.open { opacity: 1; visibility: visible; transform: translateY(0); transition: opacity .2s ease, transform .2s ease; }
-  .dn-drop-link { display: block; padding: 10px 12px; border-radius: 9px; font-size: 14px; font-weight: 540; color: rgba(244,244,239,0.78); text-decoration: none; transition: background .15s ease, color .15s ease; }
-  .dn-drop-link:hover { background: rgba(255,255,255,0.06); color: #f4f4ef; }
+  .dn-drop-link { display: block; padding: 10px 12px; border-radius: 9px; font-size: 14px; font-weight: 540; color: var(--foreground2); text-decoration: none; transition: background .15s ease, color .15s ease; }
+  .dn-drop-link:hover { background: var(--panel2); color: var(--foreground); }
 
   .dn-right { margin-left: auto; display: flex; align-items: center; gap: 14px; }
   .dn-cta {
-    padding: 9px 16px; border-radius: 999px; background: #f4f4ef; color: #050505 !important;
+    padding: 9px 16px; border-radius: 999px; background: var(--foreground); color: var(--background) !important;
     font-family: var(--font-numeric); font-size: 12px; font-weight: 700; text-decoration: none; white-space: nowrap;
     transition: transform .2s cubic-bezier(.16,1,.3,1), box-shadow .2s ease;
   }
-  .dn-cta:hover { transform: translateY(-2px); box-shadow: 0 14px 36px rgba(0,0,0,0.32); }
+  .dn-cta:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
 
-  .dn-burger { display: none; width: 44px; height: 44px; border: 1px solid rgba(255,255,255,0.28); border-radius: 999px; background: rgba(255,255,255,0.09); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); cursor: pointer; align-items: center; justify-content: center; flex-direction: column; gap: 4.5px; flex-shrink: 0; }
-  .dn-burger span { display: block; width: 17px; height: 1.8px; border-radius: 2px; background: #f4f4ef; transition: transform .26s cubic-bezier(.2,.8,.2,1), opacity .2s ease; }
+  .dn-burger { display: none; width: 44px; height: 44px; border: 1px solid var(--border3); border-radius: 999px; background: var(--panel2); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); cursor: pointer; align-items: center; justify-content: center; flex-direction: column; gap: 4.5px; flex-shrink: 0; }
+  .dn-burger span { display: block; width: 17px; height: 1.8px; border-radius: 2px; background: var(--foreground); transition: transform .26s cubic-bezier(.2,.8,.2,1), opacity .2s ease; }
   .dn-burger.open span:nth-child(1) { transform: translateY(5.6px) rotate(45deg); }
   .dn-burger.open span:nth-child(2) { opacity: 0; }
   .dn-burger.open span:nth-child(3) { transform: translateY(-5.6px) rotate(-45deg); }
@@ -183,7 +186,7 @@ const CSS = `
   .dnm {
     position: fixed; inset: 0; z-index: 999; display: flex; flex-direction: column;
     padding: 18px clamp(20px, 6vw, 40px) clamp(22px, 5vh, 40px);
-    background: rgba(5,5,5,0.97);
+    background: var(--background);
     -webkit-backdrop-filter: blur(20px); backdrop-filter: blur(20px);
     font-family: var(--font-body); letter-spacing: -0.01em;
     opacity: 0; visibility: hidden; transition: opacity .32s ease, visibility 0s linear .32s;
@@ -191,19 +194,19 @@ const CSS = `
   .dnm.open { opacity: 1; visibility: visible; transition: opacity .32s ease; }
   .dnm::before {
     content: ''; position: absolute; inset: 0; pointer-events: none;
-    background: radial-gradient(70% 50% at 86% 8%, rgba(124,77,255,0.13), transparent 70%),
-                radial-gradient(60% 44% at 8% 96%, rgba(20,32,107,0.18), transparent 72%);
+    background: radial-gradient(70% 50% at 86% 8%, var(--purple-glow), transparent 70%),
+                radial-gradient(60% 44% at 8% 96%, var(--blue-glow), transparent 72%);
   }
   .dnm-top {
     position: relative; display: flex; align-items: center; justify-content: space-between; gap: 14px;
-    padding-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.1);
+    padding-bottom: 16px; border-bottom: 1px solid var(--border);
   }
-  .dnm-brand { font-size: 10.5px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(244,244,239,0.42); }
+  .dnm-brand { font-size: 10.5px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted2); }
   .dnm-x {
-    position: relative; width: 44px; height: 44px; flex-shrink: 0; border: 1px solid rgba(255,255,255,0.24);
-    border-radius: 999px; background: rgba(255,255,255,0.06); cursor: pointer;
+    position: relative; width: 44px; height: 44px; flex-shrink: 0; border: 1px solid var(--border3);
+    border-radius: 999px; background: var(--panel2); cursor: pointer;
   }
-  .dnm-x span { position: absolute; left: 50%; top: 50%; width: 17px; height: 1.8px; border-radius: 2px; background: #f4f4ef; }
+  .dnm-x span { position: absolute; left: 50%; top: 50%; width: 17px; height: 1.8px; border-radius: 2px; background: var(--foreground); }
   .dnm-x span:first-child { transform: translate(-50%, -50%) rotate(45deg); }
   .dnm-x span:last-child { transform: translate(-50%, -50%) rotate(-45deg); }
   .dnm-links { position: relative; flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 2px; min-height: 0; overflow-y: auto; padding: 18px 0; }
@@ -213,27 +216,27 @@ const CSS = `
     transition: opacity .4s ease, transform .5s cubic-bezier(.16,1,.3,1);
   }
   .dnm.open .dnm-link { opacity: 1; transform: none; }
-  .dnm-idx { font-size: 11px; font-weight: 700; letter-spacing: 0.14em; color: rgba(244,244,239,0.28); font-variant-numeric: tabular-nums; min-width: 22px; }
+  .dnm-idx { font-size: 11px; font-weight: 700; letter-spacing: 0.14em; color: var(--muted3); font-variant-numeric: tabular-nums; min-width: 22px; }
   .dnm-word {
     font-size: clamp(30px, 7.4vw, 44px); font-weight: 500; letter-spacing: -0.03em; line-height: 1.08;
-    text-transform: lowercase; color: rgba(244,244,239,0.66); transition: color .18s ease;
+    text-transform: lowercase; color: var(--muted); transition: color .18s ease;
   }
-  .dnm-link:hover .dnm-word, .dnm-link.on .dnm-word { color: #f4f4ef; }
+  .dnm-link:hover .dnm-word, .dnm-link.on .dnm-word { color: var(--foreground); }
   .dnm-link.on .dnm-idx { color: var(--purple); }
   .dnm-live { width: 8px; height: 8px; border-radius: 50%; background: var(--live); box-shadow: 0 0 10px rgba(13,148,136,0.6); align-self: center; animation: dnm-pulse 2s ease-in-out infinite; }
   @keyframes dnm-pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
   .dnm-here { font-size: 9.5px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--purple); }
   .dnm-foot {
     position: relative; display: flex; align-items: center; justify-content: space-between; gap: 14px; flex-wrap: wrap;
-    padding-top: 18px; border-top: 1px solid rgba(255,255,255,0.1);
+    padding-top: 18px; border-top: 1px solid var(--border);
     opacity: 0; transform: translateY(14px); transition: opacity .4s ease, transform .5s cubic-bezier(.16,1,.3,1);
   }
   .dnm.open .dnm-foot { opacity: 1; transform: none; }
   .dnm-cta {
     display: inline-flex; align-items: center; gap: 10px; padding: 13px 22px; border-radius: 999px;
-    background: #f4f4ef; color: #050505 !important; font-family: var(--font-numeric); font-size: 13px; font-weight: 700; text-decoration: none;
+    background: var(--foreground); color: var(--background) !important; font-family: var(--font-numeric); font-size: 13px; font-weight: 700; text-decoration: none;
   }
-  .dnm-meta { font-size: 10px; font-weight: 650; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(244,244,239,0.3); }
+  .dnm-meta { font-size: 10px; font-weight: 650; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted3); }
   @media (prefers-reduced-motion: reduce) { .dnm, .dnm-link, .dnm-foot { transition: none !important; } }
 
   @media (max-width: 1180px) {
@@ -249,6 +252,7 @@ const CSS = `
     .dn { padding: 16px 0 18px; }
     .dn-links { display: none; }
     .dn-burger { display: inline-flex; }
+    .dn-toggle-wrap { display: none; }
   }
   @media (max-width: 560px) { .dn-cta { display: none; } }
   @media (prefers-reduced-motion: reduce) { .dn * { transition: none !important; } }

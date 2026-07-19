@@ -4,6 +4,27 @@ import { useEffect, useState } from "react";
 
 type Theme = "light" | "dark";
 
+// Wraps the theme flip in the View Transitions API so the page reveals the
+// new theme through a circle expanding from the toggle button itself. Falls
+// back to an instant swap on browsers without support (and respects
+// prefers-reduced-motion via the CSS in globals.css).
+function tripTheme(next: Theme, origin: { x: number; y: number }) {
+  const root = document.documentElement;
+  root.style.setProperty("--theme-trip-x", `${origin.x}px`);
+  root.style.setProperty("--theme-trip-y", `${origin.y}px`);
+
+  const apply = () => {
+    root.setAttribute("data-theme", next);
+    try { localStorage.setItem("psi-theme", next); } catch {}
+  };
+
+  if (typeof document.startViewTransition !== "function") {
+    apply();
+    return;
+  }
+  document.startViewTransition(apply);
+}
+
 export default function ThemeToggle() {
   const [theme, setTheme] = useState<Theme>("light");
   const [mounted, setMounted] = useState(false);
@@ -14,85 +35,97 @@ export default function ThemeToggle() {
     setMounted(true);
   }, []);
 
-  const apply = (next: Theme) => {
+  const toggle = (e: React.MouseEvent<HTMLButtonElement>) => {
+    const next = theme === "dark" ? "light" : "dark";
+    const rect = e.currentTarget.getBoundingClientRect();
+    tripTheme(next, { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 });
     setTheme(next);
-    document.documentElement.setAttribute("data-theme", next);
-    try { localStorage.setItem("psi-theme", next); } catch {}
   };
-
-  const toggle = () => apply(theme === "dark" ? "light" : "dark");
 
   return (
     <>
+      {/* Plain (unprocessed) global style tag \u2014 the CSS bundler strips
+          ::view-transition-*() pseudo-elements when they go through the
+          normal .css pipeline, so this rides in as literal inline CSS,
+          same trick app/results/onpoint uses for its own theme trip. */}
+      <style>{`
+        @keyframes theme-trip {
+          from { clip-path: circle(0% at var(--theme-trip-x, 100%) var(--theme-trip-y, 0%)); }
+          to   { clip-path: circle(140% at var(--theme-trip-x, 100%) var(--theme-trip-y, 0%)); }
+        }
+        ::view-transition-old(root) {
+          animation: none;
+          z-index: 1;
+        }
+        ::view-transition-new(root) {
+          animation: theme-trip 640ms cubic-bezier(0.22, 0.61, 0.36, 1);
+          z-index: 2;
+        }
+        @media (prefers-reduced-motion: reduce) {
+          ::view-transition-old(root),
+          ::view-transition-new(root) { animation: none !important; }
+        }
+      `}</style>
       <style>{`
         .psi-theme-toggle {
-          display: inline-flex;
-          align-items: center;
-          gap: 6px;
-          padding: 4px;
-          border-radius: var(--r-pill);
-          background: var(--panel2);
-          border: 1px solid var(--border);
-          font-family: var(--font-body);
-        }
-        .psi-theme-seg {
+          position: relative;
           display: inline-flex;
           align-items: center;
           justify-content: center;
-          gap: 6px;
-          padding: 6px 12px;
-          border-radius: var(--r-pill);
-          border: none;
-          background: transparent;
-          color: var(--muted);
-          font-size: 11px;
-          font-weight: 600;
-          letter-spacing: 0.08em;
-          text-transform: uppercase;
-          cursor: pointer;
-          transition: color var(--dur-1) var(--ease-out), background var(--dur-1) var(--ease-out);
-        }
-        .psi-theme-seg:hover { color: var(--foreground); }
-        .psi-theme-seg.is-active {
-          background: var(--panel);
+          width: 34px;
+          height: 34px;
+          flex-shrink: 0;
+          border-radius: 50%;
+          border: 1px solid var(--border2);
+          background: var(--panel2);
           color: var(--foreground);
-          box-shadow: var(--shadow-sm);
+          cursor: pointer;
+          transition: border-color var(--dur-1) var(--ease-out), background var(--dur-1) var(--ease-out), transform var(--dur-1) var(--ease-out);
         }
-        .psi-theme-icon { width: 13px; height: 13px; display: block; }
+        .psi-theme-toggle:hover { border-color: var(--border3); transform: translateY(-1px); }
+        .psi-theme-icon {
+          position: absolute;
+          inset: 0;
+          margin: auto;
+          width: 16px;
+          height: 16px;
+          transition: opacity 260ms ease, transform 420ms cubic-bezier(.2,.8,.2,1);
+        }
+        .psi-theme-icon.sun {
+          opacity: 0;
+          transform: rotate(-90deg) scale(0.6);
+        }
+        .psi-theme-icon.moon {
+          opacity: 0;
+          transform: rotate(90deg) scale(0.6);
+        }
+        .psi-theme-toggle[data-mode="light"] .psi-theme-icon.sun {
+          opacity: 1;
+          transform: rotate(0deg) scale(1);
+        }
+        .psi-theme-toggle[data-mode="dark"] .psi-theme-icon.moon {
+          opacity: 1;
+          transform: rotate(0deg) scale(1);
+        }
       `}</style>
 
-      <div
+      <button
+        type="button"
         className="psi-theme-toggle"
-        role="group"
-        aria-label="Theme"
+        data-mode={mounted ? theme : "light"}
+        onClick={toggle}
+        aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} theme`}
         suppressHydrationWarning
       >
-        <button
-          type="button"
-          className={`psi-theme-seg${mounted && theme === "light" ? " is-active" : ""}`}
-          onClick={() => apply("light")}
-          aria-pressed={mounted && theme === "light"}
-          aria-label="Switch to light theme"
-        >
-          <svg className="psi-theme-icon" viewBox="0 0 24 24" fill="none" aria-hidden>
-            <circle cx="12" cy="12" r="4" stroke="currentColor" strokeWidth="1.8" />
-            <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
-          </svg>
-          Light
-        </button>
-        <button
-          type="button"
-          className={`psi-theme-seg${mounted && theme === "dark" ? " is-active" : ""}`}
-          onClick={() => apply("dark")}
-          aria-pressed={mounted && theme === "dark"}
-          aria-label="Switch to dark theme"
-        >
-          <svg className="psi-theme-icon" viewBox="0 0 24 24" fill="none" aria-hidden>
-            <path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" />
-          </svg>
-          Dark
-        </button>
-      </div>
+        <svg className="psi-theme-icon sun" viewBox="0 0 24 24" fill="none" aria-hidden>
+          <circle cx="12" cy="12" r="4.2" stroke="currentColor" strokeWidth="1.8" />
+          <path d="M12 2.5v2.4M12 19.1v2.4M4.2 4.2l1.7 1.7M18.1 18.1l1.7 1.7M2.5 12h2.4M19.1 12h2.4M4.2 19.8l1.7-1.7M18.1 5.9l1.7-1.7" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+        </svg>
+        <svg className="psi-theme-icon moon" viewBox="0 0 24 24" fill="none" aria-hidden>
+          <path d="M20.2 14.7A8.6 8.6 0 1 1 9.3 3.8a7 7 0 0 0 10.9 10.9z" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" />
+        </svg>
+      </button>
     </>
   );
 }
+

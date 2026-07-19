@@ -5,7 +5,7 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import DarkNav from "@/app/components/DarkNav";
 
 const CONTACT_EMAIL = "tpsinstitutecontact@gmail.com";
-const LIME = "#6d3ee9";
+const LIME = "var(--purple)";
 
 type FormState = {
   name: string;
@@ -361,12 +361,12 @@ export default function ContactPage() {
 }
 
 const CSS = `
-html, body { background: #050505 !important; }
+html, body { background: var(--background) !important; }
 body header, body footer { display: none !important; }
 body main > div { max-width: none !important; padding-left: 0 !important; padding-right: 0 !important; }
 body main > div > div { padding-top: 0 !important; padding-bottom: 0 !important; }
 
-.ct-page { position: relative; min-height: 100svh; color: #f4f4ef; overflow-x: clip; background: #050505;
+.ct-page { position: relative; min-height: 100svh; color: var(--foreground); overflow-x: clip; background: var(--background);
   font-family: var(--font-body); font-size: 15px; letter-spacing: -0.01em;
   width: 100vw; margin-left: calc(50% - 50vw); }
 .ct-shell { position: relative; z-index: 2; max-width: 1180px; margin: 0 auto; padding: 0 clamp(20px, 4vw, 44px); }
@@ -385,9 +385,9 @@ body main > div > div { padding-top: 0 !important; padding-bottom: 0 !important;
 @keyframes ct-cv-in { from { opacity: 0; } to { opacity: 1; } }
 .ct-hero-veil { position: absolute; inset: 0; z-index: 1; pointer-events: none;
   background:
-    linear-gradient(180deg, rgba(5,5,5,0.42), transparent 22%),
-    linear-gradient(180deg, transparent 58%, rgba(5,5,5,0.62) 88%, #050505 100%),
-    radial-gradient(70% 58% at 28% 62%, rgba(5,5,5,0.55) 0%, rgba(5,5,5,0.22) 52%, transparent 78%); }
+    linear-gradient(180deg, color-mix(in srgb, var(--background) 42%, transparent), transparent 22%),
+    linear-gradient(180deg, transparent 58%, color-mix(in srgb, var(--background) 62%, transparent) 88%, var(--background) 100%),
+    radial-gradient(70% 58% at 28% 62%, color-mix(in srgb, var(--background) 55%, transparent) 0%, color-mix(in srgb, var(--background) 22%, transparent) 52%, transparent 78%); }
 
 .ct-hero-in { display: flex; flex-direction: column; width: 100%; min-height: 100svh; }
 .ct-hero-top { flex: 0 0 auto; }
@@ -395,57 +395,57 @@ body main > div > div { padding-top: 0 !important; padding-bottom: 0 !important;
 .ct-hero-foot { flex: 0 0 auto; padding-bottom: clamp(30px, 5vh, 56px); }
 
 .ct-folio { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; padding: 13px 0; margin-top: 2px;
-  border-top: 1px solid rgba(255,255,255,0.14); border-bottom: 1px solid rgba(255,255,255,0.08);
-  font-size: 10.5px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(244,244,239,0.4); }
-.ct-folio span:first-child { color: #f4f4ef; }
+  border-top: 1px solid var(--border2); border-bottom: 1px solid var(--border);
+  font-size: 10.5px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted2); }
+.ct-folio span:first-child { color: var(--foreground); }
 
-.ct-title { margin: 0; color: #f4f4ef; font-weight: 460; text-transform: lowercase; letter-spacing: -0.035em; line-height: 0.88;
+.ct-title { margin: 0; color: var(--foreground); font-weight: 460; text-transform: lowercase; letter-spacing: -0.035em; line-height: 0.88;
   font-size: clamp(58px, 11vw, 150px); animation: ct-rise 0.8s cubic-bezier(.16,1,.3,1) 0.12s both; }
 .ct-title-line { display: block; }
 .ct-title em { font-style: normal; color: ${LIME}; }
 .ct-lede { margin: clamp(26px, 4vh, 42px) 0 0; max-width: 50ch; font-size: clamp(16px, 1.5vw, 19px); line-height: 1.6;
-  color: rgba(244,244,239,0.6); animation: ct-rise 0.8s cubic-bezier(.16,1,.3,1) 0.24s both; }
+  color: var(--muted); animation: ct-rise 0.8s cubic-bezier(.16,1,.3,1) 0.24s both; }
 @keyframes ct-rise { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
 
 .ct-mail { display: inline-flex; align-items: baseline; gap: 18px; text-decoration: none; max-width: 100%;
   animation: ct-rise 0.8s cubic-bezier(.16,1,.3,1) 0.36s both; }
-.ct-mail-label { font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(244,244,239,0.38); white-space: nowrap; }
-.ct-mail-addr { font-size: clamp(19px, 3vw, 36px); font-weight: 520; letter-spacing: -0.02em; color: #f4f4ef;
-  border-bottom: 1px solid rgba(244,244,239,0.25); padding-bottom: 6px; transition: border-color 220ms ease, color 220ms ease; min-width: 0; overflow-wrap: anywhere; }
-.ct-mail-arw { font-size: clamp(18px, 2.4vw, 26px); color: rgba(244,244,239,0.4); transition: transform 220ms ease, color 220ms ease; }
+.ct-mail-label { font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted2); white-space: nowrap; }
+.ct-mail-addr { font-size: clamp(19px, 3vw, 36px); font-weight: 520; letter-spacing: -0.02em; color: var(--foreground);
+  border-bottom: 1px solid var(--muted3); padding-bottom: 6px; transition: border-color 220ms ease, color 220ms ease; min-width: 0; overflow-wrap: anywhere; }
+.ct-mail-arw { font-size: clamp(18px, 2.4vw, 26px); color: var(--muted2); transition: transform 220ms ease, color 220ms ease; }
 .ct-mail:hover .ct-mail-addr { border-color: ${LIME}; }
 .ct-mail:hover .ct-mail-arw { transform: translateX(8px); color: ${LIME}; }
 
 .ct-meta { display: flex; align-items: baseline; flex-wrap: wrap; gap: 10px 14px; margin-top: clamp(22px, 3.4vh, 34px);
-  font-size: 11px; font-weight: 650; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(244,244,239,0.38); }
-.ct-meta em { font-style: normal; color: rgba(244,244,239,0.18); }
+  font-size: 11px; font-weight: 650; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted2); }
+.ct-meta em { font-style: normal; color: var(--muted3); }
 .ct-meta i { display: inline-block; width: 6px; height: 6px; border-radius: 99px; background: var(--brand-grad);
   box-shadow: 0 0 9px rgba(109,62,233,0.6); margin-right: 8px; vertical-align: 1px; animation: ct-pulse 2s ease-in-out infinite; }
 @keyframes ct-pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.45; } }
 
 /* ── the takes — one editorial band ── */
 .ct-band { padding: clamp(64px, 11vh, 130px) 0 clamp(56px, 9vh, 110px); }
-.ct-eyebrow { display: block; font-size: 11.5px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(244,244,239,0.42); }
+.ct-eyebrow { display: block; font-size: 11.5px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted2); }
 .ct-band-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(28px, 4vw, 56px); margin-top: clamp(34px, 5vh, 54px); }
-.ct-take { position: relative; padding-top: 18px; border-top: 1px solid rgba(255,255,255,0.13); }
+.ct-take { position: relative; padding-top: 18px; border-top: 1px solid var(--border2); }
 .ct-take::before { content: ''; position: absolute; top: -1px; left: 0; width: 26px; height: 1.5px; background: var(--brand-grad);
   transform: scaleX(0); transform-origin: left center; transition: transform 320ms cubic-bezier(.2,.8,.2,1); }
 .ct-take:hover::before { transform: scaleX(1); }
-.ct-take-idx { font-size: 11px; font-weight: 600; color: rgba(244,244,239,0.28); font-variant-numeric: tabular-nums; }
-.ct-take h3 { margin: 12px 0 0; color: #f4f4ef; font-size: clamp(18px, 1.7vw, 22px); font-weight: 600; letter-spacing: -0.02em; line-height: 1.15; }
-.ct-take p { margin: 12px 0 0; font-size: 13.5px; line-height: 1.6; color: rgba(244,244,239,0.5); }
+.ct-take-idx { font-size: 11px; font-weight: 600; color: var(--muted3); font-variant-numeric: tabular-nums; }
+.ct-take h3 { margin: 12px 0 0; color: var(--foreground); font-size: clamp(18px, 1.7vw, 22px); font-weight: 600; letter-spacing: -0.02em; line-height: 1.15; }
+.ct-take p { margin: 12px 0 0; font-size: 13.5px; line-height: 1.6; color: var(--muted); }
 
 /* ── intake ── */
 .ct-intake { display: grid; grid-template-columns: minmax(280px, 5fr) minmax(0, 7fr); gap: clamp(48px, 7vw, 110px);
-  padding: clamp(56px, 9vh, 110px) 0 clamp(64px, 10vh, 120px); border-top: 1px solid rgba(255,255,255,0.12); }
+  padding: clamp(56px, 9vh, 110px) 0 clamp(64px, 10vh, 120px); border-top: 1px solid var(--border2); }
 .ct-intake-rail { display: flex; flex-direction: column; align-items: flex-start; }
-.ct-intake-h { margin: clamp(20px, 3vh, 30px) 0 0; color: #f4f4ef; font-weight: 460; text-transform: lowercase;
+.ct-intake-h { margin: clamp(20px, 3vh, 30px) 0 0; color: var(--foreground); font-weight: 460; text-transform: lowercase;
   letter-spacing: -0.03em; line-height: 0.96; font-size: clamp(34px, 4.2vw, 56px); }
-.ct-intake-h span { color: rgba(244,244,239,0.42); }
-.ct-intake-p { margin: clamp(18px, 3vh, 28px) 0 0; font-size: 15px; line-height: 1.6; color: rgba(244,244,239,0.55); max-width: 36ch; }
-.ct-note { margin-top: clamp(28px, 5vh, 44px); padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.09);
-  font-size: 13.5px; line-height: 1.6; color: rgba(244,244,239,0.45); max-width: 40ch; }
-.ct-note a { color: rgba(244,244,239,0.8); text-decoration: underline; text-underline-offset: 4px; text-decoration-color: rgba(244,244,239,0.3); transition: text-decoration-color 200ms ease; }
+.ct-intake-h span { color: var(--muted2); }
+.ct-intake-p { margin: clamp(18px, 3vh, 28px) 0 0; font-size: 15px; line-height: 1.6; color: var(--muted); max-width: 36ch; }
+.ct-note { margin-top: clamp(28px, 5vh, 44px); padding-top: 24px; border-top: 1px solid var(--border);
+  font-size: 13.5px; line-height: 1.6; color: var(--muted); max-width: 40ch; }
+.ct-note a { color: var(--foreground2); text-decoration: underline; text-underline-offset: 4px; text-decoration-color: var(--muted3); transition: text-decoration-color 200ms ease; }
 .ct-note a:hover { text-decoration-color: ${LIME}; }
 
 /* the form — hairlines, not boxes */
@@ -453,36 +453,36 @@ body main > div > div { padding-top: 0 !important; padding-bottom: 0 !important;
 .ct-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(26px, 3.6vh, 38px) clamp(24px, 3vw, 44px); }
 .ct-field { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
 .ct-field-wide { grid-column: 1 / -1; }
-.ct-field > span { font-size: 10.5px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(244,244,239,0.42); transition: color 200ms ease; }
+.ct-field > span { font-size: 10.5px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted2); transition: color 200ms ease; }
 .ct-field > span i { font-style: normal; color: ${LIME}; margin-left: 3px; }
-.ct-field:focus-within > span { color: rgba(244,244,239,0.85); }
+.ct-field:focus-within > span { color: var(--foreground2); }
 .ct-field input, .ct-field select, .ct-field textarea {
-  appearance: none; background: transparent; border: 0; border-bottom: 1px solid rgba(244,244,239,0.16); border-radius: 0;
-  padding: 4px 0 11px; font: inherit; font-size: 15.5px; font-weight: 480; color: #f4f4ef; letter-spacing: -0.01em;
+  appearance: none; background: transparent; border: 0; border-bottom: 1px solid var(--border2); border-radius: 0;
+  padding: 4px 0 11px; font: inherit; font-size: 15.5px; font-weight: 480; color: var(--foreground); letter-spacing: -0.01em;
   transition: border-color 240ms ease; outline: none; width: 100%; }
 .ct-field textarea { resize: vertical; min-height: 96px; line-height: 1.55; }
-.ct-field input::placeholder, .ct-field textarea::placeholder { color: rgba(244,244,239,0.26); }
-.ct-field select { color: #f4f4ef; cursor: pointer;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23f4f4ef' stroke-opacity='0.45' fill='none'/%3E%3C/svg%3E");
+.ct-field input::placeholder, .ct-field textarea::placeholder { color: var(--muted3); }
+.ct-field select { color: var(--foreground); cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23888888' fill='none'/%3E%3C/svg%3E");
   background-repeat: no-repeat; background-position: right 2px center; padding-right: 20px; }
-.ct-field select option { background: #0b0b0d; color: #f4f4ef; }
-.ct-field select:invalid, .ct-field select:has(option[value=""]:checked) { color: rgba(244,244,239,0.26); }
+.ct-field select option { background: var(--panel); color: var(--foreground); }
+.ct-field select:invalid, .ct-field select:has(option[value=""]:checked) { color: var(--muted3); }
 .ct-field input:focus, .ct-field select:focus, .ct-field textarea:focus { border-color: ${LIME}; }
 
 .ct-actions { display: flex; align-items: center; gap: 22px; flex-wrap: wrap; margin-top: 4px; }
 .ct-send { display: inline-flex; align-items: center; gap: 10px; padding: 15px 30px; border: 0; border-radius: 999px; cursor: pointer;
-  background: #f4f4ef; color: #050505; font: inherit; font-size: 15px; font-weight: 680; letter-spacing: -0.01em;
+  background: var(--foreground); color: var(--background); font: inherit; font-size: 15px; font-weight: 680; letter-spacing: -0.01em;
   transition: transform 220ms cubic-bezier(0.2,0.8,0.2,1), box-shadow 220ms ease, opacity 200ms ease; }
 .ct-send i { font-style: normal; transition: transform 220ms ease; }
 .ct-send:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 18px 44px rgba(109,62,233,0.32); }
 .ct-send:hover:not(:disabled) i { transform: translateX(4px); }
 .ct-send:disabled { opacity: 0.34; cursor: default; }
-.ct-status { font-size: 12px; font-weight: 600; letter-spacing: 0.06em; color: rgba(244,244,239,0.36); }
+.ct-status { font-size: 12px; font-weight: 600; letter-spacing: 0.06em; color: var(--muted2); }
 .ct-status.is-ok { color: ${LIME}; }
-.ct-status.is-err { color: #ef8b94; }
+.ct-status.is-err { color: var(--red2); }
 
 .ct-foot { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; padding: 22px 0 46px;
-  border-top: 1px solid rgba(255,255,255,0.09); font-size: 10.5px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(244,244,239,0.32); }
+  border-top: 1px solid var(--border); font-size: 10.5px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted2); }
 
 @media (max-width: 980px) {
   .ct-band-grid { grid-template-columns: 1fr 1fr; }
