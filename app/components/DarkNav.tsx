@@ -30,6 +30,7 @@ const NAV: Item[] = [
 
 export default function DarkNav() {
   const pathname = usePathname();
+  const isHome = pathname === "/";
   const [drop, setDrop] = useState(false);
   const [mobile, setMobile] = useState(false);
   const [mounted, setMounted] = useState(false);
@@ -81,7 +82,7 @@ export default function DarkNav() {
       </div>
 
       <div className="dn-right">
-        <span className="dn-toggle-wrap"><ThemeToggle /></span>
+        {!isHome && <span className="dn-toggle-wrap"><ThemeToggle /></span>}
         <Link href="/tpsipoll" className="dn-cta">Take the survey →</Link>
         <button type="button" className={`dn-burger${mobile ? " open" : ""}`} aria-label="Menu" aria-expanded={mobile} onClick={() => setMobile((m) => !m)}>
           <span /><span /><span />
@@ -114,7 +115,7 @@ export default function DarkNav() {
           </nav>
           <div className="dnm-foot" style={{ transitionDelay: mobile ? `${90 + flat.length * 45}ms` : "0ms" }}>
             <Link href="/tpsipoll" className="dnm-cta" onClick={() => setMobile(false)}>Take the survey <span aria-hidden>→</span></Link>
-            <ThemeToggle />
+            {!isHome && <ThemeToggle />}
             <span className="dnm-meta">independent polling &amp; election analysis</span>
           </div>
         </div>,

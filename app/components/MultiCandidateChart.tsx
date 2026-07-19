@@ -93,7 +93,7 @@ function EndLabels({ series, last, domain }: { series: MultiSeries[]; last: numb
           <line x1={2} y1={0} x2={11} y2={0} stroke={it.color} strokeWidth={1.25} opacity={0.5} />
           <circle cx={14} cy={0} r={3} fill={it.color} />
           <text x={22} y={-1} dominantBaseline="middle" style={{ fontFamily: "var(--font-body),monospace", fontSize: 12.5, fontWeight: 700, fontVariantNumeric: "tabular-nums" }} fill={it.color}>{it.value.toFixed(1)}</text>
-          <text x={22} y={11} dominantBaseline="middle" style={{ fontFamily: "var(--font-body),monospace", fontSize: 8.5, fontWeight: 600, letterSpacing: "0.06em" }} fill="rgba(255,255,255,0.45)">{it.label.length > 11 ? it.label.slice(0, 10) + "…" : it.label}</text>
+          <text x={22} y={11} dominantBaseline="middle" style={{ fontFamily: "var(--font-body),monospace", fontSize: 8.5, fontWeight: 600, letterSpacing: "0.06em" }} fill="var(--muted2)">{it.label.length > 11 ? it.label.slice(0, 10) + "…" : it.label}</text>
         </g>
       ))}
     </g>
@@ -275,11 +275,11 @@ export default function MultiCandidateChart({ daily, polls, series, unit = "%", 
         <div className="mcc-plot-svg">
           <ResponsiveContainer width="100%" height="100%">
             <ComposedChart key={animKey} data={chartData} margin={{ top: 18, right: rightMargin, left: 4, bottom: 6 }}>
-              <CartesianGrid stroke="rgba(255,255,255,0.045)" vertical={false} />
-              <XAxis dataKey="t" type="number" scale="time" domain={xDomain} ticks={ticks} tickFormatter={fmtTick} tickLine={false} axisLine={{ stroke: "rgba(255,255,255,0.08)" }} tickMargin={12}
-                tick={{ fontFamily: "var(--font-body),monospace", fontSize: 11, fill: "rgba(255,255,255,0.4)" }} />
+              <CartesianGrid stroke="var(--border)" vertical={false} />
+              <XAxis dataKey="t" type="number" scale="time" domain={xDomain} ticks={ticks} tickFormatter={fmtTick} tickLine={false} axisLine={{ stroke: "var(--border)" }} tickMargin={12}
+                tick={{ fontFamily: "var(--font-body),monospace", fontSize: 11, fill: "var(--muted2)" }} />
               <YAxis domain={yDomain} tickLine={false} axisLine={false} width={40} tickMargin={6} tickFormatter={(v) => `${v}${unit}`}
-                tick={{ fontFamily: "var(--font-body),monospace", fontSize: 11, fill: "rgba(255,255,255,0.4)" }} />
+                tick={{ fontFamily: "var(--font-body),monospace", fontSize: 11, fill: "var(--muted2)" }} />
               {showPolls && <Scatter data={dots} dataKey="y" shape={renderDot} isAnimationActive={false} />}
               {series.map((s, i) => (
                 <Area key={`b-${s.key}`} type="monotone" dataKey={`b${i}`} stroke="none" fill={s.color} fillOpacity={0.08} isAnimationActive={false} activeDot={false} connectNulls />
@@ -302,16 +302,16 @@ const CSS = `
   .mcc { position: relative; }
   .mcc-controls { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-bottom: 18px; }
   .mcc-legend { display: flex; flex-wrap: wrap; gap: 7px 16px; }
-  .mcc-legend-item { display: inline-flex; align-items: center; gap: 7px; font-family: var(--font-body), monospace; font-size: 12px; color: rgba(255,255,255,0.62); }
+  .mcc-legend-item { display: inline-flex; align-items: center; gap: 7px; font-family: var(--font-body), monospace; font-size: 12px; color: var(--muted); }
   .mcc-legend-item b { font-variant-numeric: tabular-nums; margin-left: 1px; }
   .mcc-legend-dot { width: 8px; height: 8px; border-radius: 50%; }
   .mcc-controls-right { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
-  .mcc-seg { display: inline-flex; padding: 3px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.09); border-radius: 10px; }
-  .mcc-seg-btn { appearance: none; border: 0; background: transparent; cursor: pointer; font-family: var(--font-body), monospace; font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.5); padding: 6px 11px; border-radius: 7px; line-height: 1; transition: color 160ms ease, background 160ms ease; }
-  .mcc-seg-btn:hover { color: rgba(255,255,255,0.82); }
+  .mcc-seg { display: inline-flex; padding: 3px; background: var(--panel); border: 1px solid var(--border); border-radius: 10px; }
+  .mcc-seg-btn { appearance: none; border: 0; background: transparent; cursor: pointer; font-family: var(--font-body), monospace; font-size: 11px; font-weight: 600; color: var(--muted); padding: 6px 11px; border-radius: 7px; line-height: 1; transition: color 160ms ease, background 160ms ease; }
+  .mcc-seg-btn:hover { color: var(--foreground); }
   .mcc-seg-btn.is-active { color: #000; background: #fafafa; }
-  .mcc-toggle { display: inline-flex; align-items: center; gap: 8px; cursor: pointer; font-family: var(--font-body), monospace; font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.5); padding: 7px 13px; border-radius: 9px; line-height: 1; border: 1px solid rgba(255,255,255,0.09); background: transparent; transition: color 160ms ease, border-color 160ms ease, opacity 160ms ease; }
-  .mcc-toggle:hover { color: rgba(255,255,255,0.85); border-color: rgba(255,255,255,0.18); }
+  .mcc-toggle { display: inline-flex; align-items: center; gap: 8px; cursor: pointer; font-family: var(--font-body), monospace; font-size: 12px; font-weight: 600; color: var(--muted); padding: 7px 13px; border-radius: 9px; line-height: 1; border: 1px solid var(--border); background: transparent; transition: color 160ms ease, border-color 160ms ease, opacity 160ms ease; }
+  .mcc-toggle:hover { color: var(--foreground); border-color: var(--border2); }
   .mcc-toggle:not(.is-on) { opacity: 0.5; }
 
   .mcc-plot { width: 100%; position: relative; }
@@ -325,12 +325,12 @@ const CSS = `
 
   .mcc-hit { position: absolute; pointer-events: auto; cursor: crosshair; z-index: 3; touch-action: pan-y; }
   .mcc-hit > * { pointer-events: none; }
-  .mcc-dim { position: absolute; top: 0; bottom: 0; background: linear-gradient(90deg, rgba(0,0,0,0) 0, rgba(0,0,0,0.62) 30px); }
-  .mcc-slider { position: absolute; top: 0; bottom: 0; width: 1px; background: rgba(255,255,255,0.5); }
-  .mcc-date { position: absolute; top: -4px; transform: translate(-50%, -100%); font-family: var(--font-body), monospace; font-size: 10px; font-weight: 600; letter-spacing: 0.06em; color: rgba(255,255,255,0.6); white-space: nowrap; text-shadow: 0 0 5px #000, 0 0 8px #000; }
-  .mcc-adot { position: absolute; width: 11px; height: 11px; border-radius: 50%; border: 2.5px solid #000; transform: translate(-50%, -50%); box-shadow: 0 0 10px -1px currentColor; }
-  .mcc-chip { position: absolute; transform: translate(15px, -50%); display: inline-flex; align-items: baseline; gap: 7px; white-space: nowrap; text-shadow: 0 0 5px #000, 0 0 9px #000, 0 0 9px #000, 0 1px 2px #000; }
+  .mcc-dim { position: absolute; top: 0; bottom: 0; background: linear-gradient(90deg, transparent 0, color-mix(in srgb, var(--background) 62%, transparent) 30px); }
+  .mcc-slider { position: absolute; top: 0; bottom: 0; width: 1px; background: var(--muted); }
+  .mcc-date { position: absolute; top: -4px; transform: translate(-50%, -100%); font-family: var(--font-body), monospace; font-size: 10px; font-weight: 600; letter-spacing: 0.06em; color: var(--muted); white-space: nowrap; text-shadow: 0 0 5px var(--background), 0 0 8px var(--background); }
+  .mcc-adot { position: absolute; width: 11px; height: 11px; border-radius: 50%; border: 2.5px solid var(--background); transform: translate(-50%, -50%); box-shadow: 0 0 10px -1px currentColor; }
+  .mcc-chip { position: absolute; transform: translate(15px, -50%); display: inline-flex; align-items: baseline; gap: 7px; white-space: nowrap; text-shadow: 0 0 5px var(--background), 0 0 9px var(--background), 0 0 9px var(--background), 0 1px 2px var(--background); }
   .mcc-chip.is-left { transform: translate(calc(-100% - 15px), -50%); }
-  .mcc-chip-label { font-family: var(--font-body), monospace; font-size: 12px; font-weight: 600; color: #fff; }
+  .mcc-chip-label { font-family: var(--font-body), monospace; font-size: 12px; font-weight: 600; color: var(--foreground); }
   .mcc-chip-val { font-family: var(--font-body), monospace; font-size: 13.5px; font-weight: 700; font-variant-numeric: tabular-nums; }
 `;

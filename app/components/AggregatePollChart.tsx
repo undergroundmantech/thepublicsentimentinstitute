@@ -98,7 +98,7 @@ function EndLabels({ items, domain, small = false }: { items: { color: string; v
           <line x1={2} y1={0} x2={11} y2={0} stroke={it.color} strokeWidth={1.25} opacity={0.5} />
           <circle cx={14} cy={0} r={3} fill={it.color} />
           <text x={22} y={small ? 0 : -1} dominantBaseline="middle" style={{ fontFamily: "var(--font-body),monospace", fontSize: small ? 11.5 : 13, fontWeight: 700, fontVariantNumeric: "tabular-nums" }} fill={it.color}>{it.big}</text>
-          {!small && <text x={22} y={12} dominantBaseline="middle" style={{ fontFamily: "var(--font-body),monospace", fontSize: 8.5, fontWeight: 600, letterSpacing: "0.08em" }} fill="rgba(255,255,255,0.42)">{it.small}</text>}
+          {!small && <text x={22} y={12} dominantBaseline="middle" style={{ fontFamily: "var(--font-body),monospace", fontSize: 8.5, fontWeight: 600, letterSpacing: "0.08em" }} fill="var(--muted2)">{it.small}</text>}
         </g>
       ))}
     </g>
@@ -339,12 +339,12 @@ export default function AggregatePollChart({ daily, polls, seriesA, seriesB, fmt
         <div className="apc-plot-svg">
         <ResponsiveContainer width="100%" height="100%">
           <ComposedChart key={animKey} data={banded} margin={{ top: 22, right: rightMargin, left: 4, bottom: 2 }}>
-            <CartesianGrid stroke="rgba(255,255,255,0.045)" vertical={false} />
-            <XAxis dataKey="t" type="number" scale="time" domain={xDomain} ticks={ticks} tick={false} tickLine={false} axisLine={{ stroke: "rgba(255,255,255,0.08)" }} height={6} />
+            <CartesianGrid stroke="var(--border)" vertical={false} />
+            <XAxis dataKey="t" type="number" scale="time" domain={xDomain} ticks={ticks} tick={false} tickLine={false} axisLine={{ stroke: "var(--border)" }} height={6} />
             <YAxis domain={yDomain} tickLine={false} axisLine={false} width={44} tickMargin={6}
               tickFormatter={(v) => (view === "share" ? `${v}${unit}` : fmtMargin(Number(v)))}
-              tick={{ fontFamily: "var(--font-body),monospace", fontSize: 11, fill: "rgba(255,255,255,0.4)" }} />
-            {view === "margin" && <ReferenceLine y={0} stroke="rgba(255,255,255,0.22)" strokeDasharray="2 4" />}
+              tick={{ fontFamily: "var(--font-body),monospace", fontSize: 11, fill: "var(--muted2)" }} />
+            {view === "margin" && <ReferenceLine y={0} stroke="var(--border3)" strokeDasharray="2 4" />}
             {showPolls && <Scatter data={dots} dataKey="y" shape={renderDot} isAnimationActive={false} />}
             {view === "share" ? (
               <>
@@ -355,8 +355,8 @@ export default function AggregatePollChart({ daily, polls, seriesA, seriesB, fmt
               </>
             ) : (
               <>
-                <Area type="monotone" dataKey="netBand" stroke="none" fill="#ffffff" fillOpacity={0.06} isAnimationActive={false} activeDot={false} connectNulls />
-                <Line type="monotone" dataKey="net" stroke="rgba(255,255,255,0.92)" strokeWidth={2.5} dot={false} activeDot={false} isAnimationActive={LINE_ANIM} animationDuration={850} />
+                <Area type="monotone" dataKey="netBand" stroke="none" fill="var(--foreground)" fillOpacity={0.06} isAnimationActive={false} activeDot={false} connectNulls />
+                <Line type="monotone" dataKey="net" stroke="var(--foreground)" strokeWidth={2.5} dot={false} activeDot={false} isAnimationActive={LINE_ANIM} animationDuration={850} />
               </>
             )}
             {!narrow && <EndLabels items={endItems} domain={yDomain} />}
@@ -383,11 +383,11 @@ export default function AggregatePollChart({ daily, polls, seriesA, seriesB, fmt
                 <stop offset="100%" stopColor={seriesB.color} stopOpacity={0.55} />
               </linearGradient>
             </defs>
-            <XAxis dataKey="t" type="number" scale="time" domain={xDomain} ticks={ticks} tickFormatter={fmtTick} tickLine={false} axisLine={{ stroke: "rgba(255,255,255,0.08)" }} tickMargin={10}
-              tick={{ fontFamily: "var(--font-body),monospace", fontSize: 11, fill: "rgba(255,255,255,0.4)" }} />
+            <XAxis dataKey="t" type="number" scale="time" domain={xDomain} ticks={ticks} tickFormatter={fmtTick} tickLine={false} axisLine={{ stroke: "var(--border)" }} tickMargin={10}
+              tick={{ fontFamily: "var(--font-body),monospace", fontSize: 11, fill: "var(--muted2)" }} />
             <YAxis domain={spreadDomain} width={44} tick={false} tickLine={false} axisLine={false} />
-            <ReferenceLine y={0} stroke="rgba(255,255,255,0.28)" />
-            <Area type="monotone" dataKey="net" stroke="rgba(255,255,255,0.5)" strokeWidth={1.25} fill="url(#apc-spread-grad)" isAnimationActive={false} />
+            <ReferenceLine y={0} stroke="var(--border3)" />
+            <Area type="monotone" dataKey="net" stroke="var(--muted)" strokeWidth={1.25} fill="url(#apc-spread-grad)" isAnimationActive={false} />
             {!narrow && <EndLabels items={spreadEnd} domain={spreadDomain} small />}
           </ComposedChart>
         </ResponsiveContainer>
@@ -409,16 +409,16 @@ const CSS = `
   .apc-controls { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-bottom: 20px; }
   .apc-controls-right { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
 
-  .apc-seg { display: inline-flex; padding: 3px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.09); border-radius: 10px; }
-  .apc-seg-btn { appearance: none; border: 0; background: transparent; cursor: pointer; font-family: var(--font-body), monospace; font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.5); padding: 7px 16px; border-radius: 7px; line-height: 1; transition: color 160ms ease, background 160ms ease; }
+  .apc-seg { display: inline-flex; padding: 3px; background: var(--panel); border: 1px solid var(--border); border-radius: 10px; }
+  .apc-seg-btn { appearance: none; border: 0; background: transparent; cursor: pointer; font-family: var(--font-body), monospace; font-size: 12px; font-weight: 600; color: var(--muted); padding: 7px 16px; border-radius: 7px; line-height: 1; transition: color 160ms ease, background 160ms ease; }
   .apc-seg-sm .apc-seg-btn { padding: 6px 11px; font-size: 11px; }
-  .apc-seg-btn:hover { color: rgba(255,255,255,0.82); }
+  .apc-seg-btn:hover { color: var(--foreground); }
   .apc-seg-btn.is-active { color: #000; background: #fafafa; box-shadow: 0 1px 2px rgba(0,0,0,0.5); }
 
-  .apc-toggle { display: inline-flex; align-items: center; gap: 8px; cursor: pointer; font-family: var(--font-body), monospace; font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.5); padding: 7px 13px; border-radius: 9px; line-height: 1; border: 1px solid rgba(255,255,255,0.09); background: transparent; transition: color 160ms ease, border-color 160ms ease, opacity 160ms ease; }
-  .apc-toggle:hover { color: rgba(255,255,255,0.85); border-color: rgba(255,255,255,0.18); }
+  .apc-toggle { display: inline-flex; align-items: center; gap: 8px; cursor: pointer; font-family: var(--font-body), monospace; font-size: 12px; font-weight: 600; color: var(--muted); padding: 7px 13px; border-radius: 9px; line-height: 1; border: 1px solid var(--border); background: transparent; transition: color 160ms ease, border-color 160ms ease, opacity 160ms ease; }
+  .apc-toggle:hover { color: var(--foreground); border-color: var(--border2); }
   .apc-toggle:not(.is-on) { opacity: 0.5; }
-  .apc-toggle.is-on { color: rgba(255,255,255,0.85); }
+  .apc-toggle.is-on { color: var(--foreground); }
   .apc-toggle-dots { display: inline-flex; gap: 3px; }
   .apc-toggle-dots i { width: 7px; height: 7px; border-radius: 50%; display: block; }
 
@@ -437,29 +437,29 @@ const CSS = `
   /* hover overlay */
   .apc-hit { position: absolute; pointer-events: auto; cursor: crosshair; z-index: 3; touch-action: pan-y; }
   .apc-hit > * { pointer-events: none; }
-  .apc-dim { position: absolute; top: 0; bottom: 0; background: linear-gradient(90deg, rgba(0,0,0,0) 0, rgba(0,0,0,0.62) 30px); }
-  .apc-slider { position: absolute; top: 0; bottom: 0; width: 1px; background: rgba(255,255,255,0.5); }
-  /* borderless readout — text floats with a dark halo, no boxes */
-  .apc-net { position: absolute; top: -4px; transform: translate(-50%, -100%); display: flex; flex-direction: column; align-items: center; gap: 3px; white-space: nowrap; text-shadow: 0 0 5px #000, 0 0 8px #000, 0 1px 2px #000; }
-  .apc-net-date { font-family: var(--font-body), monospace; font-size: 9.5px; font-weight: 600; letter-spacing: 0.06em; color: rgba(255,255,255,0.55); }
+  .apc-dim { position: absolute; top: 0; bottom: 0; background: linear-gradient(90deg, transparent 0, color-mix(in srgb, var(--background) 62%, transparent) 30px); }
+  .apc-slider { position: absolute; top: 0; bottom: 0; width: 1px; background: var(--muted); }
+  /* borderless readout — text floats with a halo matched to the page background, no boxes */
+  .apc-net { position: absolute; top: -4px; transform: translate(-50%, -100%); display: flex; flex-direction: column; align-items: center; gap: 3px; white-space: nowrap; text-shadow: 0 0 5px var(--background), 0 0 8px var(--background), 0 1px 2px var(--background); }
+  .apc-net-date { font-family: var(--font-body), monospace; font-size: 9.5px; font-weight: 600; letter-spacing: 0.06em; color: var(--muted); }
   .apc-net-val { display: inline-flex; align-items: baseline; gap: 7px; }
-  .apc-net-k { font-family: var(--font-body), monospace; font-size: 8.5px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(255,255,255,0.5); }
+  .apc-net-k { font-family: var(--font-body), monospace; font-size: 8.5px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); }
   .apc-net-val b { font-family: var(--font-body), monospace; font-size: 16px; font-weight: 700; font-variant-numeric: tabular-nums; letter-spacing: -0.01em; }
 
-  .apc-adot { position: absolute; width: 11px; height: 11px; border-radius: 50%; border: 2.5px solid #000; transform: translate(-50%, -50%); box-shadow: 0 0 10px -1px currentColor; }
-  .apc-chip { position: absolute; transform: translate(15px, -50%); display: inline-flex; align-items: baseline; gap: 7px; white-space: nowrap; text-shadow: 0 0 5px #000, 0 0 9px #000, 0 0 9px #000, 0 1px 2px #000; }
+  .apc-adot { position: absolute; width: 11px; height: 11px; border-radius: 50%; border: 2.5px solid var(--background); transform: translate(-50%, -50%); box-shadow: 0 0 10px -1px currentColor; }
+  .apc-chip { position: absolute; transform: translate(15px, -50%); display: inline-flex; align-items: baseline; gap: 7px; white-space: nowrap; text-shadow: 0 0 5px var(--background), 0 0 9px var(--background), 0 0 9px var(--background), 0 1px 2px var(--background); }
   .apc-chip.is-left { transform: translate(calc(-100% - 15px), -50%); }
   .apc-chip-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; align-self: center; }
-  .apc-chip-label { font-family: var(--font-body), monospace; font-size: 12px; font-weight: 600; color: #fff; }
+  .apc-chip-label { font-family: var(--font-body), monospace; font-size: 12px; font-weight: 600; color: var(--foreground); }
   .apc-chip-val { font-family: var(--font-body), monospace; font-size: 13.5px; font-weight: 700; font-variant-numeric: tabular-nums; }
 
   .apc-spread-cap { display: flex; align-items: baseline; gap: 10px; margin: 14px 0 2px; padding-left: 4px; }
-  .apc-spread-cap > span:first-child { font-family: var(--font-body), monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.5); }
-  .apc-spread-sub { font-family: var(--font-body), monospace; font-size: 10px; color: rgba(255,255,255,0.3); letter-spacing: 0.04em; }
+  .apc-spread-cap > span:first-child { font-family: var(--font-body), monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); }
+  .apc-spread-sub { font-family: var(--font-body), monospace; font-size: 10px; color: var(--muted3); letter-spacing: 0.04em; }
   .apc-spread { width: 100%; }
 
   .apc-legend { display: flex; flex-wrap: wrap; gap: 8px 18px; padding: 12px 4px 2px; justify-content: center; }
-  .apc-legend-item { display: inline-flex; align-items: center; gap: 7px; font-family: var(--font-body), monospace; font-size: 12px; color: rgba(255,255,255,0.55); }
+  .apc-legend-item { display: inline-flex; align-items: center; gap: 7px; font-family: var(--font-body), monospace; font-size: 12px; color: var(--muted); }
   .apc-legend-item b { font-variant-numeric: tabular-nums; margin-left: 2px; }
   .apc-legend-dot { width: 8px; height: 8px; border-radius: 50%; }
 `;
