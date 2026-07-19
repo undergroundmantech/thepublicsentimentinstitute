@@ -18,7 +18,13 @@ import { needleFromRace } from "../../components/needleModel";
 const manrope = Manrope({ subsets: ["latin"], weight: ["300", "400", "500", "600", "700", "800"], variable: "--font-mp", display: "swap" });
 
 const fmtInt = (n: number) => (Number(n) || 0).toLocaleString("en-US");
-const surname = (n?: string) => (n ? n.trim().split(/\s+/).pop() : "");
+const initials = (n?: string) => {
+  if (!n) return "—";
+  const parts = n.trim().split(/\s+/).filter(Boolean);
+  const first = parts[0]?.[0] || "";
+  const last = parts.length > 1 ? parts[parts.length - 1][0] : "";
+  return (first + last).toUpperCase() || "—";
+};
 const partyTag = (cand: any) => {
   const p = String(cand?.party || "").toLowerCase();
   if (/democr/.test(p)) return "Dem";
@@ -94,13 +100,18 @@ function Tallies({ doc }: { doc: any }) {
         return (
           <div key={c.name || i} className={`rd-trow ${c.winner ? "won" : ""}`}>
             <span className="rd-trow-tick" aria-hidden style={{ background: col }} />
+            <span className="rd-avatar" aria-hidden style={{ background: `color-mix(in srgb, ${col} 16%, var(--page))`, color: col }}>
+              {initials(c.name)}
+            </span>
             <span className="rd-trow-name">
-              {c.winner ? <span className="rd-checkbox" aria-hidden>✓</span> : null}
-              <b>{c.name}</b>
-              <em>{partyTag(c)}</em>
+              <b>
+                {c.winner ? <span className="rd-checkbox" aria-hidden>✓</span> : null}
+                {c.name}
+              </b>
+              <small>{partyTag(c)}</small>
             </span>
             <span className="rd-trow-votes">{fmtInt(c.votes || 0)}</span>
-            <span className="rd-trow-pct">{pct.toFixed(1)}%</span>
+            <span className="rd-trow-pct" style={{ color: c.winner ? col : undefined }}>{pct.toFixed(1)}%</span>
           </div>
         );
       })}
@@ -330,13 +341,14 @@ body main > div > div { padding-top: 0 !important; padding-bottom: 0 !important;
 .rd-thead-yr { font-family: "Oswald", "Barlow Condensed", system-ui, sans-serif; font-size: 11.5px; font-weight: 600; letter-spacing: 0.06em; color: rgba(255,255,255,0.62); }
 .rd-thead-title { font-family: "Anton", "Oswald", "Barlow Condensed", system-ui, sans-serif; font-weight: 400; font-size: clamp(18px, 1.9vw, 24px); line-height: 1.06; letter-spacing: 0.015em; text-transform: uppercase; color: #ffffff; }
 .rd-banner { font-family: "Oswald", "Barlow Condensed", system-ui, sans-serif; font-weight: 600; font-size: 11.5px; letter-spacing: 0.09em; text-transform: uppercase; padding: 10px 16px; }
-.rd-trow { display: grid; grid-template-columns: 3px minmax(0, 1fr) auto auto; align-items: center; gap: clamp(10px, 1.3vw, 18px); padding: 12px 4px; border-bottom: 1px solid var(--hair, rgba(255,255,255,0.08)); font-family: "Instrument Sans", system-ui, sans-serif; }
+.rd-trow { display: grid; grid-template-columns: 3px 34px minmax(0, 1fr) auto auto; align-items: center; gap: clamp(9px, 1.1vw, 15px); padding: 12px 4px; border-bottom: 1px solid var(--hair, rgba(255,255,255,0.08)); font-family: "Instrument Sans", system-ui, sans-serif; }
 .rd-trow-tick { width: 3px; height: 22px; border-radius: 2px; }
-.rd-trow-name { min-width: 0; display: flex; align-items: center; gap: 10px; }
-.rd-trow-name b { font-size: 15.5px; font-weight: 700; letter-spacing: -0.01em; color: var(--ink, #f1ece1); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.rd-avatar { width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: "JetBrains Mono", ui-monospace, monospace; font-weight: 800; font-size: 12px; flex-shrink: 0; }
+.rd-trow-name { min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.rd-trow-name b { display: flex; align-items: center; gap: 7px; font-size: 15.5px; font-weight: 700; letter-spacing: -0.01em; color: var(--ink, #f1ece1); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.rd-trow-name small { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 9.5px; font-weight: 500; letter-spacing: 0.07em; text-transform: uppercase; color: var(--ink-dim, rgba(241,236,225,0.38)); }
 .rd-trow.won .rd-trow-name b { color: var(--ink-strong, #fff); }
-.rd-trow-name em { font-style: normal; font-family: "Instrument Sans", system-ui, sans-serif; font-size: 12px; font-weight: 500; color: var(--ink-dim, rgba(241,236,225,0.38)); }
-.rd-checkbox { display: inline-flex; align-items: center; justify-content: center; width: 17px; height: 17px; border-radius: 4.5px; background: #2e63e7; color: #fff; font-size: 11px; font-weight: 700; flex-shrink: 0; }
+.rd-checkbox { display: inline-flex; align-items: center; justify-content: center; width: 15px; height: 15px; border-radius: 4px; background: #2e63e7; color: #fff; font-size: 9.5px; font-weight: 700; flex-shrink: 0; }
 .rd-trow-votes { font-family: "Instrument Sans", system-ui, sans-serif; font-size: 13.5px; color: var(--ink-mute, rgba(241,236,225,0.6)); font-variant-numeric: tabular-nums; }
 .rd-trow-pct { font-family: "Instrument Sans", system-ui, sans-serif; font-size: 16px; font-weight: 700; color: var(--ink-strong, #fff); font-variant-numeric: tabular-nums; min-width: 56px; text-align: right; }
 .rd-slider { padding: 18px 2px 0; }
