@@ -47,12 +47,12 @@ export default function NotFoundV2() {
           display: inline-block; margin-top: 22px;
           font-size: 10.5px; font-weight: 700;
           letter-spacing: 0.22em; text-transform: uppercase;
-          color: #c9f24f; text-decoration: none;
-          border-bottom: 1px solid rgba(201, 242, 79, 0.35);
+          color: #6d3ee9; text-decoration: none;
+          border-bottom: 1px solid rgba(109, 62, 233, 0.35);
           padding-bottom: 4px;
         }
-        .nf2-back:hover { border-bottom-color: #c9f24f; }
-        .nf2-back:focus-visible { outline: 2px solid #c9f24f; outline-offset: 4px; }
+        .nf2-back:hover { border-bottom-color: #6d3ee9; }
+        .nf2-back:focus-visible { outline: 2px solid #6d3ee9; outline-offset: 4px; }
       `}</style>
 
       <div className="nf2-shell">

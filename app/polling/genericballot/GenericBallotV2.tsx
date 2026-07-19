@@ -663,7 +663,7 @@ const CSS = `
   .pa-tile-top { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; margin-bottom: 11px; }
   .pa-tile-name { font-family: var(--font-body), monospace; font-size: 12px; font-weight: 500; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .pa-tile:hover .pa-tile-name { color: var(--ink); }
-  .pa-tile.is-active .pa-tile-name { color: #fff; }
+  .pa-tile.is-active .pa-tile-name { color: var(--ink); }
   .pa-tile-val { font-family: var(--font-body), monospace; font-size: 12px; font-weight: 600; font-variant-numeric: tabular-nums; flex-shrink: 0; opacity: 0.85; }
   .pa-tile.is-active .pa-tile-val { opacity: 1; }
   .pa-tile-spark { height: 26px; opacity: 0.4; transition: opacity 150ms ease; }
@@ -686,7 +686,7 @@ const CSS = `
   .pa-seg { display: inline-flex; align-items: stretch; border: 1px solid var(--line); border-radius: 9px; overflow: hidden; background: rgba(255,255,255,0.012); }
   .pa-seg-btn { appearance: none; cursor: pointer; background: transparent; border: 0; border-right: 1px solid var(--line); padding: 7px 13px; line-height: 1; font-family: var(--font-body), monospace; font-size: 11.5px; font-weight: 600; letter-spacing: 0.04em; color: var(--muted); display: inline-flex; align-items: center; gap: 7px; transition: color 140ms ease, background 140ms ease; }
   .pa-seg-btn:last-child { border-right: 0; }
-  .pa-seg-btn:hover:not(:disabled):not(.is-active) { color: #fff; background: rgba(255,255,255,0.04); }
+  .pa-seg-btn:hover:not(:disabled):not(.is-active) { color: var(--ink); background: rgba(255,255,255,0.04); }
   .pa-seg-btn.is-active { background: #f4f4ef; color: #050505; }
   .pa-seg-btn:disabled { color: var(--faint); cursor: not-allowed; opacity: 0.5; }
   .pa-seg-n { font-size: 10px; font-weight: 600; font-variant-numeric: tabular-nums; color: var(--faint); }
@@ -761,7 +761,7 @@ const CSS = `
   .pa-table tbody td.r { text-align: right; }
   .pa-table tbody tr { transition: background 120ms ease; }
   .pa-table tbody tr:hover td { background: rgba(255,255,255,0.022); }
-  .pa-pollster { color: #e7e7ea; font-weight: 500; }
+  .pa-pollster { color: var(--ink); font-weight: 500; }
   .pa-grade { display: inline-block; margin-left: 9px; padding: 1.5px 6px; border: 1px solid var(--line); border-radius: 5px; font-size: 9.5px; font-weight: 600; letter-spacing: 0.05em; color: var(--muted2); }
   .pa-grade.hi { border-color: rgba(109,62,233,0.4); color: var(--lime); }
   .pa-type { color: var(--faint); margin-left: 6px; }

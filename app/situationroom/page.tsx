@@ -689,7 +689,7 @@ body header, body footer { display: none !important; }
 .sr-w-bar i { height: 100%; border-radius: 99px; }
 .sr-w-note { margin: 0; font-size: 18px; line-height: 1.5; font-weight: 460; color: var(--muted); letter-spacing: -0.012em; max-width: 62ch; }
 .sr-w-note b { color: var(--foreground); font-weight: 640; }
-.sr-wirerow:not(.is-note):hover .sr-w-src { color: #ffffff; }
+.sr-wirerow:not(.is-note):hover .sr-w-src { color: var(--foreground); }
 .sr-wirerow:not(.is-note):hover .sr-w-node { background: rgba(244,244,239,0.85); box-shadow: 0 0 8px rgba(244,244,239,0.4); }
 .sr-wirerow.is-race:hover .sr-w-node { background: var(--brand-grad); }
 .sr-skel { display: block; height: 12px; border-radius: 3px; background: rgba(255,255,255,0.05); animation: sr-pulse 1.4s ease-in-out infinite; }
@@ -703,7 +703,7 @@ body header, body footer { display: none !important; }
 .sr-cal-count { font-size: 14.5px; font-weight: 680; font-variant-numeric: tabular-nums; text-align: right; white-space: nowrap; }
 .sr-cal-count em { font-style: normal; font-weight: 550; color: var(--muted2); font-size: 11.5px; }
 .sr-cal-in { font-size: 11px; font-weight: 680; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted3); text-align: right; font-variant-numeric: tabular-nums; }
-.sr-calrow:hover .sr-cal-date { color: #ffffff; }
+.sr-calrow:hover .sr-cal-date { color: var(--foreground); }
 
 /* 03 — the board: exhibits, not cards */
 .sr-board { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: clamp(40px, 6vw, 84px); padding-top: 40px; align-items: start; }
@@ -746,22 +746,22 @@ body header, body footer { display: none !important; }
 .sr-watch-fill { position: absolute; top: calc(50% - 1.5px); height: 3px; border-radius: 99px; opacity: 0.85; transition: opacity 180ms ease; }
 .sr-watch-m { font-size: 13.5px; font-weight: 700; font-variant-numeric: tabular-nums; text-align: right; }
 .sr-watch-tag { font-size: 10px; font-weight: 680; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted3); text-align: right; }
-.sr-watchrow:hover .sr-watch-st { color: #ffffff; }
+.sr-watchrow:hover .sr-watch-st { color: var(--foreground); }
 .sr-watchrow:hover .sr-watch-fill { opacity: 1; }
 
 /* the desk clock pill — portaled to <body>, so no .sr-page vars in here */
 .sr-pill { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%); z-index: 60;
   display: inline-flex; align-items: baseline; gap: 12px; padding: 11px 20px 12px; border-radius: 999px;
-  color: #f4f4ef; background: rgba(9,9,12,0.58); border: 1px solid rgba(255,255,255,0.12);
+  color: var(--foreground); background: color-mix(in srgb, var(--background) 58%, transparent); border: 1px solid var(--border2);
   -webkit-backdrop-filter: blur(18px) saturate(1.3); backdrop-filter: blur(18px) saturate(1.3);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.08), 0 14px 40px rgba(0,0,0,0.5);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.08), 0 14px 40px rgba(0,0,0,0.3);
   animation: sr-pill-in 800ms cubic-bezier(0.16,1,0.3,1) 500ms backwards; }
 .sr-pill-dot { width: 6px; height: 6px; border-radius: 999px; background: var(--brand-grad); align-self: center;
   box-shadow: 0 0 10px rgba(109,62,233,0.7); animation: sr-pulse 2s ease-in-out infinite; }
 .sr-pill b { font-size: 16px; font-weight: 560; letter-spacing: 0.02em; font-variant-numeric: tabular-nums; line-height: 1; }
-.sr-pill-sep { width: 1px; height: 13px; background: rgba(244,244,239,0.16); align-self: center; }
-.sr-pill-label, .sr-pill-stat { font-size: 10px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(244,244,239,0.40); white-space: nowrap; }
-.sr-pill-stat { color: rgba(244,244,239,0.58); }
+.sr-pill-sep { width: 1px; height: 13px; background: var(--border2); align-self: center; }
+.sr-pill-label, .sr-pill-stat { font-size: 10px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted2); white-space: nowrap; }
+.sr-pill-stat { color: var(--muted); }
 @keyframes sr-pill-in { from { opacity: 0; transform: translate(-50%, 18px); } to { opacity: 1; transform: translate(-50%, 0); } }
 @media (prefers-reduced-motion: reduce) { .sr-pill { animation: none; } }
 

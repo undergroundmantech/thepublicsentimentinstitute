@@ -775,22 +775,22 @@ body header, body footer { display: none !important; }
 
 /* ── Tooltip (only surface) ── */
 /* portaled to <body> → use GLOBAL font vars ('Anton' is document-wide via @import) */
-.x-tip { position: fixed; z-index: 9999; pointer-events: none; width: 246px; display: flex; background: rgba(12,12,13,0.98); border: 1px solid rgba(255,255,255,0.14); box-shadow: 0 26px 64px rgba(0,0,0,0.62); border-radius: 12px; overflow: hidden; -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px); }
+.x-tip { position: fixed; z-index: 9999; pointer-events: none; width: 246px; display: flex; background: color-mix(in srgb, var(--background) 98%, transparent); border: 1px solid var(--border2); box-shadow: 0 26px 64px rgba(0,0,0,0.42); border-radius: 12px; overflow: hidden; -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px); }
 .x-tip-spine { width: 4px; flex-shrink: 0; }
 .x-tip-in { flex: 1; min-width: 0; padding: 11px 13px 12px; }
 .x-tip-hd { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; }
-.x-tip-state { font-family: inherit; font-weight: 700; font-size: 17px; text-transform: none; letter-spacing: -0.02em; color: #f4f4ef; line-height: 1; }
+.x-tip-state { font-family: inherit; font-weight: 700; font-size: 17px; text-transform: none; letter-spacing: -0.02em; color: var(--foreground); line-height: 1; }
 .x-tip-rate { font-family: inherit; font-size: 10px; font-weight: 800; letter-spacing: 0.07em; text-transform: uppercase; white-space: nowrap; }
-.x-tip-meta { font-family: inherit; font-size: 9.5px; letter-spacing: 0.05em; text-transform: uppercase; color: rgba(244,244,239,0.42); margin-top: 4px; }
-.x-tip-bar { position: relative; height: 6px; background: rgba(255,255,255,0.06); margin: 11px 0 10px; }
-.x-tip-bar-seam { position: absolute; left: 50%; top: -2px; bottom: -2px; width: 1px; background: #f4f4ef; opacity: 0.4; }
+.x-tip-meta { font-family: inherit; font-size: 9.5px; letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted2); margin-top: 4px; }
+.x-tip-bar { position: relative; height: 6px; background: var(--panel2); margin: 11px 0 10px; }
+.x-tip-bar-seam { position: absolute; left: 50%; top: -2px; bottom: -2px; width: 1px; background: var(--foreground); opacity: 0.4; }
 .x-tip-bar-fill { position: absolute; top: 0; bottom: 0; }
 .x-tip-cand { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; }
-.x-tip-name { font-size: 12px; font-weight: 600; color: #f4f4ef; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-family: inherit; }
+.x-tip-name { font-size: 12px; font-weight: 600; color: var(--foreground); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-family: inherit; }
 .x-tip-mod { font-family: inherit; font-size: 13px; font-weight: 800; white-space: nowrap; }
-.x-tip-stats { display: flex; gap: 20px; margin-top: 9px; padding-top: 9px; border-top: 1px solid rgba(255,255,255,0.10); }
+.x-tip-stats { display: flex; gap: 20px; margin-top: 9px; padding-top: 9px; border-top: 1px solid var(--border); }
 .x-tip-stats span { display: flex; flex-direction: column; gap: 2px; }
-.x-tip-stats i { font-style: normal; font-family: inherit; font-size: 8px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(244,244,239,0.42); }
+.x-tip-stats i { font-style: normal; font-family: inherit; font-size: 8px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted2); }
 .x-tip-stats b { font-family: inherit; font-size: 12.5px; font-weight: 700; }
 
 /* ── Responsive ── */
