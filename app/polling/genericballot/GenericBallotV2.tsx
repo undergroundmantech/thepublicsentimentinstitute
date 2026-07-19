@@ -631,14 +631,13 @@ export default function PollingAveragesPage() {
 }
 
 const CSS = `
-  html, body { background: #050505 !important; }
+  html, body { background: var(--background) !important; }
   body header, body footer { display: none !important; }
 
   .pa {
     --lime: #6d3ee9;
-    --line: rgba(255,255,255,0.10); --line2: rgba(255,255,255,0.06);
-    --ink: #f4f4ef; --muted: rgba(244,244,239,0.60); --muted2: rgba(244,244,239,0.40); --faint: rgba(244,244,239,0.26);
-    --panel: rgba(255,255,255,0.03);
+    --line: var(--border); --line2: var(--border2);
+    --ink: var(--foreground); --faint: var(--muted3);
     color: var(--ink); display: flex; flex-direction: column; letter-spacing: -0.01em;
   }
   .pa * { box-sizing: border-box; }
@@ -733,25 +732,25 @@ const CSS = `
   .pa-rank-val small { font-size: 0.5em; color: var(--faint); margin-left: 1px; }
 
   /* ── chart panel ── */
-  .pa-panel { margin-top: 40px; border: 1px solid var(--line); border-radius: 16px; background: #050505; padding: 20px 20px 18px; }
+  .pa-panel { margin-top: 40px; border: 1px solid var(--line); border-radius: 16px; background: var(--background); padding: 20px 20px 18px; }
   .pa-panel-head { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
-  .pa-panel-title { font-family: var(--font-body), monospace; font-weight: 600; font-size: 13px; letter-spacing: 0.04em; text-transform: uppercase; color: #f3f3f5; margin: 0; }
+  .pa-panel-title { font-family: var(--font-body), monospace; font-weight: 600; font-size: 13px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--ink); margin: 0; }
   .pa-panel-meta { font-family: var(--font-body), monospace; font-size: 11px; color: var(--faint); }
 
   /* ── polls ── */
   .pa-polls { margin-top: 48px; }
   .pa-polls-head { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px; margin-bottom: 16px; }
-  .pa-polls-h { font-family: var(--font-body), monospace; font-weight: 600; font-size: 14px; letter-spacing: 0.04em; text-transform: uppercase; color: #f3f3f5; margin: 0; display: flex; align-items: baseline; gap: 12px; }
+  .pa-polls-h { font-family: var(--font-body), monospace; font-weight: 600; font-size: 14px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--ink); margin: 0; display: flex; align-items: baseline; gap: 12px; }
   .pa-polls-h span { font-size: 11px; font-weight: 600; color: var(--faint); letter-spacing: 0.04em; }
   .pa-polls-actions { display: flex; align-items: center; gap: 8px; }
   .pa-search { appearance: none; background: var(--panel); border: 1px solid var(--line); border-radius: 9px; color: var(--ink); font-family: var(--font-body), monospace; font-size: 12.5px; padding: 9px 13px; width: 200px; max-width: 44vw; transition: border-color 160ms ease, background 160ms ease; }
   .pa-search::placeholder { color: var(--faint); }
   .pa-search:focus { outline: none; border-color: rgba(255,255,255,0.22); background: rgba(255,255,255,0.03); }
   .pa-csv { display: inline-flex; align-items: center; gap: 7px; cursor: pointer; appearance: none; background: var(--panel); border: 1px solid var(--line); border-radius: 9px; color: var(--muted); font-family: var(--font-body), monospace; font-size: 12px; font-weight: 600; letter-spacing: 0.04em; padding: 9px 13px; transition: color 150ms ease, border-color 150ms ease, background 150ms ease; }
-  .pa-csv:hover { color: #fff; border-color: rgba(255,255,255,0.22); background: rgba(255,255,255,0.04); }
+  .pa-csv:hover { color: var(--ink); border-color: rgba(255,255,255,0.22); background: rgba(255,255,255,0.04); }
 
   .pa-table { width: 100%; border-collapse: collapse; }
-  .pa-table thead th { position: sticky; top: 0; z-index: 1; text-align: left; background: #050505; font-family: var(--font-body), monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.13em; text-transform: uppercase; color: var(--faint); padding: 0 16px 12px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+  .pa-table thead th { position: sticky; top: 0; z-index: 1; text-align: left; background: var(--background); font-family: var(--font-body), monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.13em; text-transform: uppercase; color: var(--faint); padding: 0 16px 12px; border-bottom: 1px solid var(--line); white-space: nowrap; }
   .pa-table thead th.r { text-align: right; }
   .pa-table thead th.pa-mhead { text-align: left; padding-left: 26px; }
   .pa-sort { appearance: none; background: transparent; border: 0; cursor: pointer; font: inherit; color: inherit; letter-spacing: inherit; text-transform: inherit; padding: 0; display: inline-flex; align-items: center; gap: 4px; transition: color 140ms ease; }
@@ -780,7 +779,7 @@ const CSS = `
   .pa-view { background: none; border: 0; padding: 0 0 3px; cursor: pointer; font-family: var(--font-body); font-size: 14px; font-weight: 560; letter-spacing: -0.01em; color: var(--muted2); border-bottom: 1.5px solid transparent; transition: color 180ms ease, border-color 180ms ease; }
   .pa-view:hover { color: var(--ink); }
   .pa-view.is-on { color: var(--ink); border-bottom-color: rgba(109,62,233,0.9); border-image: var(--brand-grad) 1; }
-  .pa-view-sep { color: rgba(244,244,239,0.18); font-size: 13px; }
+  .pa-view-sep { color: var(--muted3); font-size: 13px; }
 
   /* ── the full board ── */
   .pb { display: flex; flex-direction: column; }
@@ -792,7 +791,7 @@ const CSS = `
   .pb-ord { font-size: 11px; font-weight: 600; color: var(--faint); font-variant-numeric: tabular-nums; }
   .pb-win-name { margin: 0; font-family: var(--font-body); font-size: clamp(17px, 1.8vw, 22px); font-weight: 600; letter-spacing: -0.018em; color: var(--ink); text-transform: none; }
   .pb-read { display: inline-flex; align-items: baseline; gap: 9px; font-size: 13.5px; font-weight: 600; font-variant-numeric: tabular-nums; white-space: nowrap; }
-  .pb-read i { font-style: normal; color: rgba(244,244,239,0.2); }
+  .pb-read i { font-style: normal; color: var(--muted3); }
   .pb-read b { font-size: 15px; font-weight: 700; margin-left: 4px; }
   .pb-count { font-size: 10px; font-weight: 650; letter-spacing: 0.1em; text-transform: uppercase; color: var(--faint); white-space: nowrap; }
   .pb-skel { display: inline-block; width: 72px; height: 11px; border-radius: 3px; background: rgba(255,255,255,0.06); }
@@ -802,14 +801,14 @@ const CSS = `
   .pb-body { padding-top: 14px; }
   .pb-table { font-size: 13px; }
   .pb-foot { display: flex; align-items: baseline; gap: 26px; margin-top: 14px; }
-  .pb-more, .pb-open { background: none; border: 0; padding: 0 0 3px; cursor: pointer; font-family: var(--font-body); font-size: 12.5px; font-weight: 600; letter-spacing: -0.005em; border-bottom: 1px solid rgba(244,244,239,0.2); color: var(--muted); transition: color 160ms ease, border-color 160ms ease; }
+  .pb-more, .pb-open { background: none; border: 0; padding: 0 0 3px; cursor: pointer; font-family: var(--font-body); font-size: 12.5px; font-weight: 600; letter-spacing: -0.005em; border-bottom: 1px solid var(--muted3); color: var(--muted); transition: color 160ms ease, border-color 160ms ease; }
   .pb-more:hover, .pb-open:hover { color: var(--ink); border-color: var(--ink); }
   .pb-open { margin-left: auto; color: var(--lime); border-color: rgba(109,62,233,0.4); }
   .pb-open:hover { color: var(--lime); border-color: var(--lime); }
 
   /* focus-mode table fold */
   .pa-fold { display: flex; justify-content: center; padding: 18px 0 4px; border-top: 1px solid var(--line2); margin-top: -1px; }
-  .pa-fold-btn { display: inline-flex; align-items: baseline; gap: 8px; background: none; border: 0; padding: 0 0 3px; cursor: pointer; font-family: var(--font-body); font-size: 13px; font-weight: 600; color: var(--muted); border-bottom: 1px solid rgba(244,244,239,0.2); transition: color 160ms ease, border-color 160ms ease; }
+  .pa-fold-btn { display: inline-flex; align-items: baseline; gap: 8px; background: none; border: 0; padding: 0 0 3px; cursor: pointer; font-family: var(--font-body); font-size: 13px; font-weight: 600; color: var(--muted); border-bottom: 1px solid var(--muted3); transition: color 160ms ease, border-color 160ms ease; }
   .pa-fold-btn:hover { color: var(--ink); border-color: var(--ink); }
   .pa-fold-btn span { font-size: 11px; color: var(--muted2); }
 

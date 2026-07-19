@@ -861,7 +861,7 @@ export default function ElectoralMapPage() {
 
 // ─── styles ──────────────────────────────────────────────────────────────────
 const CSS = `
-html, body { background: #050505 !important; }
+html, body { background: var(--background) !important; }
 body header, body footer { display: none !important; }
 
 .em-page { padding-bottom: 86px; position: relative;
@@ -869,10 +869,6 @@ body header, body footer { display: none !important; }
   --serif: var(--font-body);
   --data: var(--font-numeric);
   --lab: var(--font-numeric);
-  --background: #050505; --foreground: #f4f4ef; --foreground2: rgba(244,244,239,0.74);
-  --muted: rgba(244,244,239,0.58); --muted2: rgba(244,244,239,0.40); --muted3: rgba(244,244,239,0.26);
-  --border: rgba(255,255,255,0.10); --border2: rgba(255,255,255,0.16); --border3: rgba(255,255,255,0.24);
-  --panel: rgba(255,255,255,0.03); --panel2: rgba(255,255,255,0.05);
   --em-toss: #33394a;
   --em-out: #191c24;
   max-width: 1120px; margin: 0 auto; padding: 0 2px 64px;
@@ -949,20 +945,20 @@ body header, body footer { display: none !important; }
   position: fixed; left: 50%; bottom: 18px; transform: translateX(-50%); z-index: 240;
   animation: em-dock-in 0.7s cubic-bezier(.16,1,.3,1) 0.55s both;
   display: inline-flex; align-items: center; gap: 3px; padding: 5px;
-  border-radius: 999px; border: 1px solid rgba(255,255,255,0.13);
-  background: rgba(9,9,12,0.62);
+  border-radius: 999px; border: 1px solid var(--border2);
+  background: color-mix(in srgb, var(--background) 62%, transparent);
   -webkit-backdrop-filter: blur(18px) saturate(150%); backdrop-filter: blur(18px) saturate(150%);
-  box-shadow: 0 18px 50px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.07);
+  box-shadow: 0 18px 50px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.07);
   max-width: calc(100vw - 24px); overflow-x: auto; scrollbar-width: none;
 }
 .em-dock::-webkit-scrollbar { display: none; }
 .em-dock-btn {
   flex-shrink: 0; padding: 9px 16px; border: 0; border-radius: 999px; background: transparent;
   font-size: 12px; font-weight: 650; letter-spacing: 0.02em; text-transform: lowercase;
-  color: rgba(244,244,239,0.6); cursor: pointer; white-space: nowrap;
+  color: var(--muted); cursor: pointer; white-space: nowrap;
   transition: color 180ms ease, background 220ms cubic-bezier(.2,.8,.2,1);
 }
-.em-dock-btn:hover { color: #f4f4ef; }
+.em-dock-btn:hover { color: var(--foreground); }
 .em-dock-btn.is-on { background: #f4f4ef; color: #050505; }
 @keyframes em-dock-in { from { opacity: 0; transform: translate(-50%, 18px); } to { opacity: 1; transform: translate(-50%, 0); } }
 @media (max-width: 560px) { .em-dock { bottom: 12px; } .em-dock-btn { padding: 8px 12px; font-size: 11px; } }
@@ -1080,16 +1076,16 @@ body header, body footer { display: none !important; }
 
 /* tooltip — portaled to <body>, so it uses GLOBAL font vars (page-scoped --disp
    etc. don't resolve outside .em-page). */
-.em-tip { position: fixed; z-index: 99999; pointer-events: none; width: 210px; animation: em-tip-in 0.16s cubic-bezier(.2,.9,.3,1.2) both; transform-origin: top left; background: rgba(14,14,16,0.97); border: 1px solid rgba(255,255,255,0.12); border-left: 3px solid var(--em-toss); border-radius: 12px; box-shadow: 0 24px 60px rgba(0,0,0,0.6); overflow: hidden; -webkit-backdrop-filter: blur(18px); backdrop-filter: blur(18px); }
+.em-tip { position: fixed; z-index: 99999; pointer-events: none; width: 210px; animation: em-tip-in 0.16s cubic-bezier(.2,.9,.3,1.2) both; transform-origin: top left; background: color-mix(in srgb, var(--background) 97%, transparent); border: 1px solid var(--border2); border-left: 3px solid var(--em-toss); border-radius: 12px; box-shadow: 0 24px 60px rgba(0,0,0,0.6); overflow: hidden; -webkit-backdrop-filter: blur(18px); backdrop-filter: blur(18px); }
 @keyframes em-tip-in { from { opacity: 0; transform: scale(0.94) translateY(5px); } to { opacity: 1; transform: none; } }
 .em-tip-top { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; padding: 11px 14px 9px; }
-.em-tip-state { font-family: inherit; font-weight: 700; font-size: 15px; letter-spacing: -0.02em; line-height: 1; color: #f4f4ef; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.em-tip-ev { font-family: inherit; font-size: 17px; font-weight: 800; line-height: 1; letter-spacing: -0.02em; color: #f4f4ef; white-space: nowrap; }
-.em-tip-ev i { font-style: normal; font-size: 9px; font-weight: 700; letter-spacing: 0.08em; margin-left: 3px; color: rgba(244,244,239,0.4); }
-.em-tip-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 9px 14px 11px; border-top: 1px solid rgba(255,255,255,0.08); }
-.em-tip-pick { display: inline-flex; align-items: center; gap: 7px; font-family: inherit; font-size: 11px; font-weight: 700; letter-spacing: 0.02em; color: #f4f4ef; }
+.em-tip-state { font-family: inherit; font-weight: 700; font-size: 15px; letter-spacing: -0.02em; line-height: 1; color: var(--foreground); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.em-tip-ev { font-family: inherit; font-size: 17px; font-weight: 800; line-height: 1; letter-spacing: -0.02em; color: var(--foreground); white-space: nowrap; }
+.em-tip-ev i { font-style: normal; font-size: 9px; font-weight: 700; letter-spacing: 0.08em; margin-left: 3px; color: var(--muted2); }
+.em-tip-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 9px 14px 11px; border-top: 1px solid var(--border); }
+.em-tip-pick { display: inline-flex; align-items: center; gap: 7px; font-family: inherit; font-size: 11px; font-weight: 700; letter-spacing: 0.02em; color: var(--foreground); }
 .em-tip-pick b { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
-.em-tip-hint { font-family: inherit; font-size: 9.5px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: rgba(244,244,239,0.42); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.em-tip-hint { font-family: inherit; font-size: 9.5px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
 /* responsive */
 @media (max-width: 720px) {
