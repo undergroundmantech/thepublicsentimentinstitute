@@ -4,13 +4,14 @@ import dynamic from "next/dynamic";
 import { notFound } from "next/navigation";
 import { SITE_V2 } from "@/app/lib/flags";
 
-// Hold the paint on the desk's dark field — and hide the global light chrome —
-// while the client-only race page chunk downloads.
+// Hold the paint on the desk's field — and hide the global site chrome — while
+// the client-only race page chunk downloads. Light, matching the race page's
+// light-default (CO-04); the results hub's own loader stays dark separately.
 function RaceLoader() {
   return (
     <>
       <style>{`body header, body footer { display: none !important; }`}</style>
-      <div aria-hidden style={{ position: "fixed", inset: 0, zIndex: 200, background: "#050505" }} />
+      <div aria-hidden style={{ position: "fixed", inset: 0, zIndex: 200, background: "#f7f7f4" }} />
     </>
   );
 }
