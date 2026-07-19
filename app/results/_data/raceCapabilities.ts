@@ -83,3 +83,29 @@ export function getRaceCapabilities(
 export function isRecorderInScope(tier: RaceTier): boolean {
   return tier >= 3;
 }
+// --- Heuristic tier classification for hub-page ranking -------------------
+//
+// RACE_CAPABILITY_OVERRIDES above only covers a handful of hand-registered
+// races (Command Deck / Deep Dive feature flags). The results hub has to
+// rank ALL ~34k races that come back from CivicAPI on any given night, and
+// almost none of them have an override entry, so it needs a contest-text
+// heuristic instead: same RaceTier scale, driven by office keywords rather
+// than a per-id lookup. Used to make Senate/Governor (and President) races
+// take precedence over down-ballot/local contests when picking what's
+// "featured" on the hub — NOT used for Command Deck capability flags.
+const NATIONAL_RE = /\bpresident\b|u\.?s\.? senat/i;
+const SPOTLIGHT_RE = /governor|lieutenant governor|u\.?s\.? house|for congress|congressional district/i;
+const FORECAST_RE = /attorney general|secretary of state|state senate|supreme court|treasurer|controller|comptroller|auditor|superintendent|proposition|amendment|^question\b|^measure\b|referendum/i;
+
+/** Ranks a race for hub-page precedence by office type, from contest/office
+ *  text alone (no per-id registry needed). President/US Senate first,
+ *  Governor/US House next, other statewide/forecast-grade races next,
+ *  everything else (local, judicial, school board, ballot line items…)
+ *  falls to the same tier-2 default as an unregistered Command Deck race. */
+export function classifyRaceTier(contest?: string | null, office?: string | null): RaceTier {
+  const c = String(contest || "");
+  if (NATIONAL_RE.test(c)) return 5;
+  if (SPOTLIGHT_RE.test(c)) return 4;
+  if (FORECAST_RE.test(c)) return 3;
+  return 2;
+}

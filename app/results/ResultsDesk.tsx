@@ -15,6 +15,7 @@ import DeskSearch from "./components/DeskSearch";
 import SwingOMeter from "./components/SwingOMeter";
 import { needleFromRace } from "./components/needleModel";
 import PrecinctShowcase from "./components/PrecinctShowcase";
+import { classifyRaceTier } from "./_data/raceCapabilities";
 
 // The desk's own backdrop — the REAL national county map, counties reporting
 // in red/blue/purple across the night. Canvas 2D over the shared geometry.
@@ -38,6 +39,13 @@ const tickMargin = (d: any) => {
 // party-spectrum tints for the season dot field (dem · gop · purple · green · teal)
 const DOT_TINTS = ["29,78,216", "220,38,38", "124,77,255", "46,158,79", "24,182,166"];
 const surname = (n?: string) => (n ? n.trim().split(/\s+/).pop() : "");
+// Hub-wide precedence: Senate/Governor/President (and other statewide/
+// forecast-grade contests) rank ahead of down-ballot/local races before vote
+// count ever gets consulted — otherwise a high-turnout local contest can
+// outrank the marquee races on raw votes alone, which reads as "random" on
+// a night with ~34k races reporting.
+const tierOf = (d: any) => classifyRaceTier(d?.contest, d?.office);
+const byTierThenVotes = (a: any, b: any) => (tierOf(b) - tierOf(a)) || ((b.totalVotes || 0) - (a.totalVotes || 0));
 
 // ── reveal-on-scroll + lazy-in-view (one IO per element, once) ──────────────
 function useInView(rootMargin = "-12% 0px"): [React.RefObject<HTMLElement | null>, boolean] {
@@ -203,7 +211,7 @@ function Desk() {
   const featured = useMemo(() => {
     if (!index) return null;
     const withMap = index.docs.filter((d: any) => d.hasResult && raceHasMap(d.race));
-    withMap.sort((a: any, b: any) => (b.totalVotes || 0) - (a.totalVotes || 0));
+    withMap.sort(byTierThenVotes);
     return withMap[0] || index.docs.find((d: any) => d.hasResult) || index.docs[0] || null;
   }, [index]);
 
@@ -212,7 +220,7 @@ function Desk() {
   const precinctLead = useMemo(() => {
     if (!index) return null;
     const withMap = index.docs.filter((d: any) => d.hasResult && raceHasMap(d.race) && d.id !== featured?.race?.id);
-    withMap.sort((a: any, b: any) => (b.totalVotes || 0) - (a.totalVotes || 0));
+    withMap.sort(byTierThenVotes);
     return withMap[0] || null;
   }, [index, featured]);
 
@@ -270,7 +278,7 @@ function Desk() {
     if (!index) return [] as any[];
     const top = index.docs
       .filter((d: any) => d.hasResult && raceHasMap(d.race) && d.race?.has_map && d.id !== featured?.race?.id)
-      .sort((a: any, b: any) => (b.totalVotes || 0) - (a.totalVotes || 0));
+      .sort(byTierThenVotes);
     const out: any[] = [];
     const seen = new Set<string>([String(featured?.race?.province || "")]);
     for (const d of top) {
@@ -295,7 +303,7 @@ function Desk() {
     const out: any[] = [];
     const pool = index.docs
       .filter((d: any) => d.hasResult && d.leader?.cand && (d.totalVotes || 0) > 1000)
-      .sort((a: any, b: any) => (b.totalVotes || 0) - (a.totalVotes || 0));
+      .sort(byTierThenVotes);
     for (const d of pool) {
       const st = String(d.province || "");
       if (!st || seen.has(st)) continue;
