@@ -56,6 +56,13 @@ const TIER_DEFAULTS: Record<RaceTier, Omit<RaceCapabilities, "tier" | "raceRule"
  */
 export const RACE_CAPABILITY_OVERRIDES: Partial<Record<number, Partial<RaceCapabilities>>> = {
   83479: { tier: 4, raceRule: "RANKED_CHOICE" }, // DC Mayor Democratic Primary — RCV, spotlight example
+
+  // Command Deck test beds (2026-07-19): both already-called, real CivicAPI
+  // races used to exercise Spotlight-tier features end-to-end. Colorado is
+  // the literal reference race from changeorders/spec-command-deck.html's
+  // own mockup (Hickenlooper vs. Gonzales, 52.9%/47.1%).
+  84322: { tier: 4, raceRule: "PLURALITY" },      // Colorado US Senate Democratic Primary
+  84105: { tier: 4, raceRule: "PLURALITY" },      // South Carolina Governor Republican Runoff (2-candidate runoff round)
 };
 
 /** Resolves full capabilities for a race: explicit override > tier default > safe fallback (tier 2). */

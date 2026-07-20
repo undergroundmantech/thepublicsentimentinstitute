@@ -130,6 +130,9 @@ export const RACE_REGISTRY: RaceRegistryEntry[] = [
   { id: 84100, date: "2026-06-23", slug: "utah-us-house-1-democratic-primary",                    label: "Utah US House 1 Democratic Primary" },
   { id: 84101, date: "2026-06-23", slug: "utah-us-house-2-republican-primary",                    label: "Utah US House 2 Republican Primary" },
   { id: 84102, date: "2026-06-23", slug: "utah-us-house-3-republican-primary",                    label: "Utah US House 3 Republican Primary" },
+
+  // June 30 2026 — Colorado (Command Deck test bed — see raceCapabilities.ts)
+  { id: 84322, date: "2026-06-30", slug: "colorado-us-senate-democratic-primary",                 label: "Colorado US Senate Democratic Primary" },
 ];
 
 // Lookup helpers
