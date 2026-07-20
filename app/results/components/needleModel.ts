@@ -25,6 +25,12 @@ export interface NeedleProjection {
   marginPp: number;
   /** Raw current-reported margin (pp), for the "±N.N vs current" chip. */
   currentMarginPp: number;
+  /** PROJECTED FINAL SHARE (0-100), same scale as the reported bars. */
+  leaderProjSharePct: number;
+  runnerProjSharePct: number;
+  /** Current reported share (0-100), for the "±N.N vs current" delta chips. */
+  leaderCurrentSharePct: number;
+  runnerCurrentSharePct: number;
   reporting: number;
   /**
    * Share of the REMAINING (uncounted) vote the runner-up needs to catch the
@@ -83,6 +89,10 @@ export function needleFromRace(race: any): NeedleProjection | null {
       pRunner: 1 - pLeader,
       marginPp: Math.abs(out.projected_margin_pct) * 100,
       currentMarginPp: Math.abs((cr.candidates[li]?.percent ?? 0) - (cr.candidates[ri]?.percent ?? 0)),
+      leaderProjSharePct: (out.modeled_share[out.leader] ?? 0) * 100,
+      runnerProjSharePct: (out.modeled_share[out.runner_up] ?? 0) * 100,
+      leaderCurrentSharePct: Number(cr.candidates[li]?.percent) || 0,
+      runnerCurrentSharePct: Number(cr.candidates[ri]?.percent) || 0,
       reporting: pctReporting,
       flipThresholdPct: flipThreshold(cr.candidates[li]?.votes ?? 0, cr.candidates[ri]?.votes ?? 0, pctReporting),
     };

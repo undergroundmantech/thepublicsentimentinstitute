@@ -218,6 +218,28 @@ function Board({ doc, primary, onMap }: { doc: any; primary?: boolean; onMap: (r
               </p>
               <p className="rd-wheel-verdict">{verdictSentence(needle)}</p>
               {flipSentence(needle) ? <p className="rd-wheel-flip">{flipSentence(needle)}</p> : null}
+              <div className="rd-projshare">
+                <span className="rd-projshare-h">projected final share</span>
+                {[
+                  { name: needle.leaderName, color: needle.leaderColor, proj: needle.leaderProjSharePct, cur: needle.leaderCurrentSharePct },
+                  { name: needle.runnerName, color: needle.runnerColor, proj: needle.runnerProjSharePct, cur: needle.runnerCurrentSharePct },
+                ].map((c) => {
+                  const delta = c.proj - c.cur;
+                  return (
+                    <div key={c.name} className="rd-projshare-row">
+                      <span className="rd-projshare-name">{c.name}</span>
+                      <span className="rd-projshare-track" aria-hidden>
+                        <i style={{ width: `${Math.max(0, Math.min(100, c.proj))}%`, background: c.color }} />
+                      </span>
+                      <b className="rd-projshare-val">{c.proj.toFixed(1)}%</b>
+                      <span className="rd-projshare-delta">
+                        {delta >= 0 ? "+" : ""}
+                        {delta.toFixed(1)} vs current
+                      </span>
+                    </div>
+                  );
+                })}
+              </div>
             </div>
           ) : null}
         </div>
@@ -447,6 +469,18 @@ body main > div > div { padding-top: 0 !important; padding-bottom: 0 !important;
 .rd-wheel-margin { margin-top: 14px; font-family: "Instrument Sans", system-ui, sans-serif; font-size: 12px; color: var(--ink-dim); }
 .rd-wheel-verdict { margin-top: 10px; font-family: "Instrument Sans", system-ui, sans-serif; font-size: 14px; line-height: 1.5; color: var(--ink); }
 .rd-wheel-flip { margin-top: 6px; font-family: "Instrument Sans", system-ui, sans-serif; font-size: 12.5px; line-height: 1.5; color: var(--ink-dim); }
+
+/* PROJECTED FINAL SHARE — muted bars on the same 0-100 scale as the reported
+   tallies bars (rd-slider); dashed/desaturated per the data-semantics rule
+   (CO-04 §2: model outputs render muted, never mistaken for reported data). */
+.rd-projshare { margin-top: 18px; padding-top: 16px; border-top: 1px dashed var(--rule); }
+.rd-projshare-h { display: block; font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-dim); margin-bottom: 10px; }
+.rd-projshare-row { display: grid; grid-template-columns: minmax(0,1fr) minmax(60px,120px) 48px; align-items: center; gap: 10px; padding: 6px 0; }
+.rd-projshare-name { font-family: "Instrument Sans", system-ui, sans-serif; font-size: 12.5px; color: var(--ink-mute); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.rd-projshare-track { position: relative; height: 6px; border-radius: 99px; background: var(--rule); overflow: hidden; }
+.rd-projshare-track i { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 99px; opacity: 0.55; }
+.rd-projshare-val { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 12.5px; font-weight: 700; color: var(--ink); text-align: right; }
+.rd-projshare-delta { grid-column: 1 / -1; font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 10.5px; color: var(--ink-dim); text-align: right; margin-top: -2px; }
 
 .rd-board-right { display: flex; flex-direction: column; align-items: center; }
 .rd-map { position: relative; height: clamp(400px, 56vh, 620px); width: 100%; }
