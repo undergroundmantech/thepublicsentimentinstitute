@@ -11,10 +11,11 @@ import RaceDetail from "../../onpoint/RaceDetail.jsx";
 import { raceHasMap, candColor, shade } from "../../onpoint/electionLib.js";
 import { useElectionIndex } from "../../onpoint/lib/electionIndex.js";
 import { useTheme } from "../../onpoint/lib/theme.jsx";
-import { WinProbabilityWheel } from "./deck/Gauges";
+import { WinProbabilityWheel, RaceClockRing } from "./deck/Gauges";
 import DeskSearch from "../../components/DeskSearch";
 import { needleFromRace } from "../../components/needleModel";
 import { idToAbout } from "../../_data/raceRegistry";
+import { getRaceState, RACE_STATE_LABEL } from "../../_lib/raceState";
 
 const manrope = Manrope({ subsets: ["latin"], weight: ["300", "400", "500", "600", "700", "800"], variable: "--font-mp", display: "swap" });
 
@@ -142,12 +143,37 @@ function Board({ doc, primary, onMap }: { doc: any; primary?: boolean; onMap: (r
   // Dustin's forecast engine (app/lib/electoralModel) drives the needle
   const needle = useMemo(() => (race ? needleFromRace(race) : null), [race]);
   const called = Array.isArray(race?.candidates) && race.candidates.some((c: any) => c.winner);
+  const reporting = Math.max(0, Math.min(100, Number(race?.percent_reporting) || 0));
+  const totalVotes = Array.isArray(race?.candidates)
+    ? race.candidates.reduce((s: number, c: any) => s + (Number(c.votes) || 0), 0)
+    : 0;
+  // CO-04 §2 state machine — TPSI hasn't shipped an independent projection
+  // call yet (tpsiCalled stays false), so PROJECTED only ever comes from an
+  // official CivicAPI winner flag until that model lands.
+  const raceState = getRaceState({ percentReporting: reporting, hasOfficialCall: called, tpsiCalled: false });
   return (
     <section className={`rd-board ${primary ? "primary" : ""}`}>
       <header className="rd-board-h">
         <span className="rd-board-party"><i aria-hidden />{boardParty(doc)}</span>
         <span className={`rd-board-flag ${called ? "called" : ""}`}>{called ? "✓ call made" : "● counting"}</span>
       </header>
+      <div className="rd-meta">
+        <div className="rd-meta-item">
+          <span className="rd-meta-label">reported votes</span>
+          <span className="rd-meta-val">{fmtInt(totalVotes)}</span>
+        </div>
+        <div className="rd-meta-item">
+          <span className="rd-meta-label">est. reporting</span>
+          <span className="rd-meta-val">{Math.round(reporting)}%</span>
+        </div>
+        <div className="rd-meta-item status">
+          <span className="rd-meta-label">race status</span>
+          <span className="rd-meta-status">
+            <RaceClockRing size={28} fillFrac={reporting / 100} color="#b7ff00" state={raceState} />
+            {RACE_STATE_LABEL[raceState]}
+          </span>
+        </div>
+      </div>
       <div className={`rd-board-grid ${hasMap ? "" : "nomap"}`}>
         <div className="rd-board-left">
           <Tallies doc={doc} />
@@ -358,6 +384,17 @@ body main > div > div { padding-top: 0 !important; padding-bottom: 0 !important;
 .rd-board-party i { width: 7px; height: 7px; background: #b7ff00; border-radius: 1.5px; }
 .rd-board-flag { font-family: var(--font-mp), "Manrope", sans-serif; font-size: 12px; font-weight: 600; color: var(--ink-dim); white-space: nowrap; }
 .rd-board-flag.called { color: rgba(183,255,0,0.75); }
+
+/* Zone 1 meta stats: REPORTED VOTES / EST. REPORTING / RACE STATUS (CO-04 §2/§3) */
+.rd-meta { display: flex; flex-wrap: wrap; gap: clamp(20px, 3vw, 40px); padding: 14px 0 20px; border-bottom: 1px solid var(--rule-soft); }
+.rd-meta-item { display: flex; flex-direction: column; gap: 5px; }
+.rd-meta-label { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 9.5px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-dim); }
+.rd-meta-val { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 17px; font-weight: 700; color: var(--ink-strong); font-variant-numeric: tabular-nums; }
+.rd-meta-item.status { margin-left: auto; }
+.rd-meta-status { display: inline-flex; align-items: center; gap: 8px; font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 12.5px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: var(--ink-strong); }
+@media (max-width: 560px) {
+  .rd-meta-item.status { margin-left: 0; }
+}
 
 .rd-tallies { display: flex; flex-direction: column; }
 .rd-thead { display: flex; flex-direction: column; gap: 4px; padding: 14px 16px 15px; border-radius: 11px 11px 0 0; }
