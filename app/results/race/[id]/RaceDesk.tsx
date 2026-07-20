@@ -13,7 +13,7 @@ import { useElectionIndex } from "../../onpoint/lib/electionIndex.js";
 import { useTheme } from "../../onpoint/lib/theme.jsx";
 import { WinProbabilityWheel, RaceClockRing } from "./deck/Gauges";
 import DeskSearch from "../../components/DeskSearch";
-import { needleFromRace } from "../../components/needleModel";
+import { needleFromRace, type NeedleProjection } from "../../components/needleModel";
 import { idToAbout } from "../../_data/raceRegistry";
 import { getRaceState, RACE_STATE_LABEL } from "../../_lib/raceState";
 
@@ -63,6 +63,19 @@ const boardParty = (doc: any): string => {
 const boardRank = (doc: any) => (/democratic/i.test(doc?.contest || "") ? 0 : /republican/i.test(doc?.contest || "") ? 1 : 2);
 
 const fmtProb = (p: number) => (p >= 0.995 ? ">99%" : p <= 0.005 ? "<1%" : `${Math.round(p * 100)}%`);
+
+// CO-04 §3 Zone 2 "verdict + flip-threshold sentence" — the model-read copy
+// under the win-probability wheel. Kept to two short, plain-English lines.
+function verdictSentence(n: NeedleProjection): string {
+  if (n.pLeader >= 0.99) return `${n.leaderName} is a near-certain winner in the model.`;
+  if (n.pLeader >= 0.8) return `${n.leaderName} is the strong modeled favorite.`;
+  if (n.pLeader >= 0.6) return `${n.leaderName} is the modeled favorite, but it isn't locked up.`;
+  return `This one is close in the model — ${n.leaderName} ${fmtProb(n.pLeader)} to ${n.runnerName} ${fmtProb(n.pRunner)}.`;
+}
+function flipSentence(n: NeedleProjection): string | null {
+  if (n.flipThresholdPct == null) return null;
+  return `${n.runnerName} would need ${n.flipThresholdPct.toFixed(0)}% of the remaining vote to catch ${n.leaderName}.`;
+}
 
 function Tallies({ doc }: { doc: any }) {
   const { theme } = useTheme();
@@ -203,6 +216,8 @@ function Board({ doc, primary, onMap }: { doc: any; primary?: boolean; onMap: (r
               <p className="rd-wheel-margin">
                 Projected margin: {needle.marginPp >= 0 ? "+" : ""}{needle.marginPp.toFixed(1)} pts · {Math.round(needle.reporting)}% reporting
               </p>
+              <p className="rd-wheel-verdict">{verdictSentence(needle)}</p>
+              {flipSentence(needle) ? <p className="rd-wheel-flip">{flipSentence(needle)}</p> : null}
             </div>
           ) : null}
         </div>
@@ -430,6 +445,8 @@ body main > div > div { padding-top: 0 !important; padding-bottom: 0 !important;
 .rd-wheel-leg-row span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .rd-wheel-leg-row b { margin-left: auto; font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 13px; font-weight: 700; color: var(--ink); }
 .rd-wheel-margin { margin-top: 14px; font-family: "Instrument Sans", system-ui, sans-serif; font-size: 12px; color: var(--ink-dim); }
+.rd-wheel-verdict { margin-top: 10px; font-family: "Instrument Sans", system-ui, sans-serif; font-size: 14px; line-height: 1.5; color: var(--ink); }
+.rd-wheel-flip { margin-top: 6px; font-family: "Instrument Sans", system-ui, sans-serif; font-size: 12.5px; line-height: 1.5; color: var(--ink-dim); }
 
 .rd-board-right { display: flex; flex-direction: column; align-items: center; }
 .rd-map { position: relative; height: clamp(400px, 56vh, 620px); width: 100%; }

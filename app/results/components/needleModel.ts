@@ -23,7 +23,16 @@ export interface NeedleProjection {
   pRunner: number;
   /** PROJECTED margin (pp) from the engine — not the raw current margin. */
   marginPp: number;
+  /** Raw current-reported margin (pp), for the "±N.N vs current" chip. */
+  currentMarginPp: number;
   reporting: number;
+  /**
+   * Share of the REMAINING (uncounted) vote the runner-up needs to catch the
+   * leader, 0-100. null when reporting is ~complete (no remaining vote left
+   * to compute against) or when the runner-up cannot mathematically catch up
+   * even by winning 100% of what's left (leader has clinched).
+   */
+  flipThresholdPct: number | null;
 }
 
 export function needleFromRace(race: any): NeedleProjection | null {
@@ -73,9 +82,31 @@ export function needleFromRace(race: any): NeedleProjection | null {
       pLeader,
       pRunner: 1 - pLeader,
       marginPp: Math.abs(out.projected_margin_pct) * 100,
+      currentMarginPp: Math.abs((cr.candidates[li]?.percent ?? 0) - (cr.candidates[ri]?.percent ?? 0)),
       reporting: pctReporting,
+      flipThresholdPct: flipThreshold(cr.candidates[li]?.votes ?? 0, cr.candidates[ri]?.votes ?? 0, pctReporting),
     };
   } catch {
     return null;
   }
+}
+
+/**
+ * The share of the REMAINING vote a trailing candidate needs to tie the
+ * leader. Derived from: remaining = estimatedTotal - currentTotal (via the
+ * same percent-reporting extrapolation as calculateWinProbability in
+ * app/results/_lib/raceState.ts); solving leaderVotes + (1-f)*remaining ==
+ * runnerVotes + f*remaining for f gives f = 0.5 + gap / (2*remaining).
+ */
+function flipThreshold(leaderVotes: number, runnerVotes: number, percentReporting: number): number | null {
+  if (percentReporting >= 99 || percentReporting <= 0) return null;
+  const currentTotal = leaderVotes + runnerVotes;
+  if (currentTotal <= 0) return null;
+  const estimatedTotal = currentTotal / (percentReporting / 100);
+  const remaining = estimatedTotal - currentTotal;
+  if (remaining <= 0) return null;
+  const gap = leaderVotes - runnerVotes;
+  const f = 0.5 + gap / (2 * remaining);
+  if (f >= 1) return null; // leader has clinched — no path exists even at 100% of remainder
+  return Math.max(0, Math.min(100, f * 100));
 }
