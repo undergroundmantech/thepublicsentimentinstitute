@@ -10,6 +10,10 @@ export type RaceRegistryEntry = {
   date: string; // YYYY-MM-DD
   label: string;
   archived?: boolean;
+  // CO-04 §4d "About This Race" editorial copy (newsroom voice, tier 3+).
+  // Only populated where we have real, verified facts about the race —
+  // never fabricated. Absent entries simply don't render the section.
+  about?: string;
 };
 
 export const RACE_REGISTRY: RaceRegistryEntry[] = [
@@ -111,7 +115,8 @@ export const RACE_REGISTRY: RaceRegistryEntry[] = [
   // South Carolina (runoffs from June 9 primary)
   { id: 84103, date: "2026-06-23", slug: "south-carolina-agriculture-commissioner-republican-runoff", label: "South Carolina Agriculture Commissioner Republican Runoff" },
   { id: 84104, date: "2026-06-23", slug: "south-carolina-attorney-general-republican-runoff",          label: "South Carolina Attorney General Republican Runoff" },
-  { id: 84105, date: "2026-06-23", slug: "south-carolina-governor-republican-runoff",                  label: "South Carolina Governor Republican Runoff" },
+  { id: 84105, date: "2026-06-23", slug: "south-carolina-governor-republican-runoff",                  label: "South Carolina Governor Republican Runoff",
+    about: "This runoff settles the Republican nomination after no candidate cleared the majority threshold in the June 9 primary. Upstate counties (Greenville, Spartanburg) carry the largest share of the runoff electorate and have historically reported fastest on runoff night." },
   { id: 84106, date: "2026-06-23", slug: "south-carolina-us-house-1-republican-runoff",                label: "South Carolina US House 1 Republican Runoff" },
   { id: 84110, date: "2026-06-23", slug: "south-carolina-us-house-1-democratic-runoff",                label: "South Carolina US House 1 Democratic Runoff" },
   { id: 84111, date: "2026-06-23", slug: "south-carolina-us-house-2-democratic-runoff",                label: "South Carolina US House 2 Democratic Runoff" },
@@ -132,7 +137,8 @@ export const RACE_REGISTRY: RaceRegistryEntry[] = [
   { id: 84102, date: "2026-06-23", slug: "utah-us-house-3-republican-primary",                    label: "Utah US House 3 Republican Primary" },
 
   // June 30 2026 — Colorado (Command Deck test bed — see raceCapabilities.ts)
-  { id: 84322, date: "2026-06-30", slug: "colorado-us-senate-democratic-primary",                 label: "Colorado US Senate Democratic Primary" },
+  { id: 84322, date: "2026-06-30", slug: "colorado-us-senate-democratic-primary",                 label: "Colorado US Senate Democratic Primary",
+    about: "Colorado's open US Senate seat drew a crowded Democratic primary field after the incumbent's retirement. The Denver-Boulder corridor's turnout typically decides statewide primaries like this one, with rural Western Slope counties reporting slower and later in the night." },
 ];
 
 // Lookup helpers
@@ -141,6 +147,7 @@ export const idToSlug = Object.fromEntries(RACE_REGISTRY.map(r => [r.id, r.slug]
 export const idToDate = Object.fromEntries(RACE_REGISTRY.map(r => [r.id, r.date]));
 export const idToLabel = Object.fromEntries(RACE_REGISTRY.map(r => [r.id, r.label]));
 export const idToArchived = Object.fromEntries(RACE_REGISTRY.map(r => [r.id, !!r.archived]));
+export const idToAbout = Object.fromEntries(RACE_REGISTRY.map(r => [r.id, r.about]));
 
 /** Returns the canonical URL for a race — archived races go under /results/archive/ */
 export function getRaceUrl(id: number): string | null {

@@ -14,6 +14,7 @@ import { useTheme } from "../../onpoint/lib/theme.jsx";
 import { WinProbabilityWheel } from "./deck/Gauges";
 import DeskSearch from "../../components/DeskSearch";
 import { needleFromRace } from "../../components/needleModel";
+import { idToAbout } from "../../_data/raceRegistry";
 
 const manrope = Manrope({ subsets: ["latin"], weight: ["300", "400", "500", "600", "700", "800"], variable: "--font-mp", display: "swap" });
 
@@ -137,6 +138,7 @@ function Tallies({ doc }: { doc: any }) {
 function Board({ doc, primary, onMap }: { doc: any; primary?: boolean; onMap: (race: any) => void }) {
   const race = doc?.race;
   const hasMap = race ? raceHasMap(race) && race.has_map !== false : false;
+  const about = idToAbout[doc?.id];
   // Dustin's forecast engine (app/lib/electoralModel) drives the needle
   const needle = useMemo(() => (race ? needleFromRace(race) : null), [race]);
   const called = Array.isArray(race?.candidates) && race.candidates.some((c: any) => c.winner);
@@ -198,6 +200,12 @@ function Board({ doc, primary, onMap }: { doc: any; primary?: boolean; onMap: (r
           )}
         </div>
       </div>
+      {about ? (
+        <div className="rd-about">
+          <span className="rd-about-h">about this race</span>
+          <p>{about}</p>
+        </div>
+      ) : null}
     </section>
   );
 }
@@ -397,6 +405,10 @@ body main > div > div { padding-top: 0 !important; padding-bottom: 0 !important;
 .rd-map-cta span { color: #b7ff00; transition: transform .2s ease; }
 .rd-map-cta:hover span { transform: translateX(3px); }
 .rd-nomap { display: flex; flex-direction: column; align-items: center; gap: 14px; text-align: center; padding: clamp(30px, 6vh, 60px) 18px; border: 1px dashed var(--rule); border-radius: 18px; color: var(--ink-dim); font-size: 12.5px; line-height: 1.6; max-width: 340px; margin: 0 auto; }
+
+.rd-about { margin-top: clamp(26px, 4vh, 40px); padding-top: clamp(20px, 3vh, 30px); border-top: 1px solid var(--rule-soft); }
+.rd-about-h { display: block; font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-dim); margin-bottom: 10px; }
+.rd-about p { font-family: "Instrument Sans", system-ui, sans-serif; font-size: 15px; line-height: 1.65; color: var(--ink-mute); max-width: 68ch; }
 
 .rd-more { margin-top: clamp(50px, 9vh, 90px); border-top: 1px solid var(--rule); padding-top: 26px; max-width: 480px; }
 .rd-more-h { display: block; font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 9.5px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-dim); margin-bottom: 12px; }
