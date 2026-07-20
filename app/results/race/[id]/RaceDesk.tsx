@@ -65,6 +65,16 @@ const boardRank = (doc: any) => (/democratic/i.test(doc?.contest || "") ? 0 : /r
 
 const fmtProb = (p: number) => (p >= 0.995 ? ">99%" : p <= 0.005 ? "<1%" : `${Math.round(p * 100)}%`);
 
+const RACE_RULE_CHIP: Record<string, string> = {
+  PLURALITY: "plurality",
+  MAJORITY: "majority",
+  RANKED_CHOICE: "ranked choice",
+  TOP_TWO: "top two advance",
+  MAJORITY_RUNOFF: "majority runoff",
+  THRESHOLD_35_CONVENTION: "35% threshold",
+  THRESHOLD_35_RUNOFF: "35% threshold runoff",
+};
+
 // CO-04 §3 Zone 2 "verdict + flip-threshold sentence" — the model-read copy
 // under the win-probability wheel. Kept to two short, plain-English lines.
 function verdictSentence(n: NeedleProjection): string {
@@ -194,7 +204,10 @@ function Board({ doc, primary, onMap }: { doc: any; primary?: boolean; onMap: (r
           <Tallies doc={doc} />
           {needle ? (
             <div className="rd-needle">
-              <div className="rd-needle-h">win probability</div>
+              <div className="rd-needle-h">
+                win probability
+                <span className="rd-rule-chip">{RACE_RULE_CHIP[caps.raceRule] ?? caps.raceRule.toLowerCase()}</span>
+              </div>
               <div className="rd-wheel-row">
                 <WinProbabilityWheel
                   probs={[needle.pLeader, needle.pRunner]}
@@ -462,7 +475,8 @@ body main > div > div { padding-top: 0 !important; padding-bottom: 0 !important;
 .rd-foot-rep span { font-size: 11.5px; color: var(--ink-dim, rgba(241,236,225,0.38)); }
 
 .rd-needle { margin-top: clamp(22px, 4vh, 34px); max-width: 360px; }
-.rd-needle-h { font-family: "Oswald", "Barlow Condensed", system-ui, sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-dim, rgba(241,236,225,0.38)); margin-bottom: 12px; }
+.rd-needle-h { display: flex; align-items: center; gap: 10px; font-family: "Oswald", "Barlow Condensed", system-ui, sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-dim, rgba(241,236,225,0.38)); margin-bottom: 12px; }
+.rd-rule-chip { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.04em; text-transform: none; color: var(--ink-mute); background: var(--wash); border: 1px solid var(--rule); border-radius: 999px; padding: 3px 9px; }
 .rd-wheel-row { display: flex; align-items: center; gap: 18px; }
 .rd-wheel-legend { display: flex; flex-direction: column; gap: 8px; flex: 1; min-width: 0; }
 .rd-wheel-leg-row { display: flex; align-items: center; gap: 8px; font-family: "Instrument Sans", system-ui, sans-serif; font-size: 13px; color: var(--ink); }
