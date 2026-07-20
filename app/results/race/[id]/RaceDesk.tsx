@@ -15,7 +15,8 @@ import { WinProbabilityWheel, RaceClockRing } from "./deck/Gauges";
 import DeskSearch from "../../components/DeskSearch";
 import { needleFromRace, type NeedleProjection } from "../../components/needleModel";
 import { idToAbout } from "../../_data/raceRegistry";
-import { getRaceState, RACE_STATE_LABEL } from "../../_lib/raceState";
+import { getRaceState, RACE_STATE_LABEL, NO_HISTORY_LINE } from "../../_lib/raceState";
+import { getRaceCapabilities } from "../../_data/raceCapabilities";
 
 const manrope = Manrope({ subsets: ["latin"], weight: ["300", "400", "500", "600", "700", "800"], variable: "--font-mp", display: "swap" });
 
@@ -164,6 +165,7 @@ function Board({ doc, primary, onMap }: { doc: any; primary?: boolean; onMap: (r
   // call yet (tpsiCalled stays false), so PROJECTED only ever comes from an
   // official CivicAPI winner flag until that model lands.
   const raceState = getRaceState({ percentReporting: reporting, hasOfficialCall: called, tpsiCalled: false });
+  const caps = getRaceCapabilities(Number(doc?.id));
   return (
     <section className={`rd-board ${primary ? "primary" : ""}`}>
       <header className="rd-board-h">
@@ -240,6 +242,7 @@ function Board({ doc, primary, onMap }: { doc: any; primary?: boolean; onMap: (r
                   );
                 })}
               </div>
+              <p className="rd-wheel-semantics">{caps.telemetry ? "reported figures are solid; projected figures are muted and labeled." : NO_HISTORY_LINE.toLowerCase()}</p>
             </div>
           ) : null}
         </div>
@@ -481,6 +484,7 @@ body main > div > div { padding-top: 0 !important; padding-bottom: 0 !important;
 .rd-projshare-track i { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 99px; opacity: 0.55; }
 .rd-projshare-val { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 12.5px; font-weight: 700; color: var(--ink); text-align: right; }
 .rd-projshare-delta { grid-column: 1 / -1; font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 10.5px; color: var(--ink-dim); text-align: right; margin-top: -2px; }
+.rd-wheel-semantics { margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--rule-soft); font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 10px; letter-spacing: 0.03em; text-transform: uppercase; color: var(--ink-dim); }
 
 .rd-board-right { display: flex; flex-direction: column; align-items: center; }
 .rd-map { position: relative; height: clamp(400px, 56vh, 620px); width: 100%; }
