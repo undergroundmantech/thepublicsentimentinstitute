@@ -331,6 +331,7 @@ function Board({ doc, primary, onMap }: { doc: any; primary?: boolean; onMap: (r
           )}
         </div>
       </div>
+      {caps.forecast && needle ? <Turnout needle={needle} totalVotes={totalVotes} /> : null}
       {about ? (
         <div className="rd-about">
           <span className="rd-about-h">about this race</span>
@@ -338,6 +339,53 @@ function Board({ doc, primary, onMap }: { doc: any; primary?: boolean; onMap: (r
         </div>
       ) : null}
     </section>
+  );
+}
+
+/** CO-04 §4a Zone 4 — Projected Turnout & Remaining Vote (tier 3+, forecast
+ *  only). Three stat blocks fed by the same AUC turnout model that drives
+ *  the win-probability wheel, then per-candidate stacked tracks (solid
+ *  reported + dashed est. remaining) on one shared scale. */
+function Turnout({ needle, totalVotes }: { needle: NeedleProjection; totalVotes: number }) {
+  const leaderReported = Math.round((needle.leaderCurrentSharePct / 100) * totalVotes);
+  const runnerReported = Math.round((needle.runnerCurrentSharePct / 100) * totalVotes);
+  const leaderProjected = Math.round((needle.leaderProjSharePct / 100) * needle.modeledTotalVote);
+  const runnerProjected = Math.round((needle.runnerProjSharePct / 100) * needle.modeledTotalVote);
+  const scaleMax = Math.max(leaderProjected, runnerProjected, 1);
+  const leaderGain = Math.max(0, leaderProjected - leaderReported);
+  const runnerGain = Math.max(0, runnerProjected - runnerReported);
+  const projectedMarginVotes = Math.abs(leaderProjected - runnerProjected);
+  const currentMarginVotes = Math.abs(leaderReported - runnerReported);
+  const widening = projectedMarginVotes >= currentMarginVotes;
+  const tracks = [
+    { name: needle.leaderName, color: needle.leaderColor, reported: leaderReported, projected: leaderProjected },
+    { name: needle.runnerName, color: needle.runnerColor, reported: runnerReported, projected: runnerProjected },
+  ];
+  return (
+    <div className="rd-turnout">
+      <span className="rd-turnout-h">projected turnout &amp; remaining vote</span>
+      <div className="rd-turnout-stats">
+        <div className="rd-stat"><span>votes reported</span><b>{fmtInt(totalVotes)}</b></div>
+        <div className="rd-stat"><span>est. outstanding</span><b>{fmtInt(needle.modeledVoteRemaining)}</b></div>
+        <div className="rd-stat"><span>projected turnout</span><b>{fmtInt(needle.modeledTotalVote)}</b></div>
+      </div>
+      <div className="rd-turnout-tracks">
+        {tracks.map((t) => (
+          <div key={t.name} className="rd-turnout-track">
+            <span className="rd-turnout-track-name">{t.name}</span>
+            <div className="rd-turnout-bar">
+              <i style={{ width: `${(t.reported / scaleMax) * 100}%`, background: t.color }} />
+              <em style={{ left: `${(t.reported / scaleMax) * 100}%`, width: `${Math.max(0, (t.projected - t.reported) / scaleMax) * 100}%`, borderColor: t.color }} />
+            </div>
+            <span className="rd-turnout-track-total">~{fmtInt(t.projected)} <small>PROJECTED</small></span>
+          </div>
+        ))}
+      </div>
+      <p className="rd-turnout-read">
+        {needle.leaderName} is projected to receive about {fmtInt(leaderGain)} more outstanding votes
+        {runnerGain > 0 ? ` (vs. ~${fmtInt(runnerGain)} for ${needle.runnerName})` : ""}, {widening ? "expanding" : "narrowing"} the lead to ~{fmtInt(projectedMarginVotes)} votes.
+      </p>
+    </div>
   );
 }
 
@@ -580,6 +628,20 @@ body main > div > div { padding-top: 0 !important; padding-bottom: 0 !important;
 .rd-map-cta span { color: #b7ff00; transition: transform .2s ease; }
 .rd-map-cta:hover span { transform: translateX(3px); }
 .rd-nomap { display: flex; flex-direction: column; align-items: center; gap: 14px; text-align: center; padding: clamp(30px, 6vh, 60px) 18px; border: 1px dashed var(--rule); border-radius: 18px; color: var(--ink-dim); font-size: 12.5px; line-height: 1.6; max-width: 340px; margin: 0 auto; }
+
+/* Zone 4 — Projected Turnout & Remaining Vote (§4a) */
+.rd-turnout { margin-top: clamp(30px, 5vh, 46px); padding-top: clamp(22px, 3.5vh, 34px); border-top: 1px solid var(--rule-soft); }
+.rd-turnout-h { display: block; font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-dim); margin-bottom: 16px; }
+.rd-turnout-stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; padding-bottom: 20px; border-bottom: 1px solid var(--rule-soft); }
+.rd-turnout-tracks { display: flex; flex-direction: column; gap: 16px; margin-top: 20px; }
+.rd-turnout-track { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2.4fr) auto; align-items: center; gap: 14px; }
+.rd-turnout-track-name { font-family: var(--font-mp), "Manrope", sans-serif; font-size: 13.5px; font-weight: 600; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.rd-turnout-bar { position: relative; height: 8px; border-radius: 99px; background: var(--rule); overflow: visible; }
+.rd-turnout-bar i { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 99px; }
+.rd-turnout-bar em { position: absolute; top: -1px; bottom: -1px; border-radius: 99px; border: 1.5px dashed; background: none; font-style: normal; opacity: 0.55; }
+.rd-turnout-track-total { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 12px; color: var(--ink-mute); white-space: nowrap; }
+.rd-turnout-track-total small { font-size: 9px; letter-spacing: 0.06em; color: var(--ink-dim); }
+.rd-turnout-read { margin-top: 18px; font-family: "Instrument Sans", system-ui, sans-serif; font-size: 13.5px; line-height: 1.55; color: var(--ink-mute); max-width: 62ch; }
 
 .rd-about { margin-top: clamp(26px, 4vh, 40px); padding-top: clamp(20px, 3vh, 30px); border-top: 1px solid var(--rule-soft); }
 .rd-about-h { display: block; font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-dim); margin-bottom: 10px; }
