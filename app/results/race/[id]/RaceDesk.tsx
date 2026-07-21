@@ -89,6 +89,31 @@ function flipSentence(n: NeedleProjection): string | null {
   return `${n.runnerName} would need ${n.flipThresholdPct.toFixed(0)}% of the remaining vote to catch ${n.leaderName}.`;
 }
 
+// CO-04 §3 Zone 2 runoff module — mounts per raceRule for any rule where an
+// outright majority (or 35% threshold) isn't guaranteed by a plurality win.
+const RUNOFF_RULE_COPY: Record<string, string> = {
+  MAJORITY: "no runoff structure is published for this race; the model still tracks the majority threshold.",
+  RANKED_CHOICE: "ranked-choice elimination rounds continue until one candidate clears the threshold.",
+  MAJORITY_RUNOFF: "short of a majority, the top two candidates advance to a runoff.",
+  THRESHOLD_35_CONVENTION: "short of 35%, the party convention decides the nominee.",
+  THRESHOLD_35_RUNOFF: "short of 35%, the top two candidates meet in a runoff 8 weeks later.",
+};
+function RunoffModule({ needle, raceRule }: { needle: NeedleProjection; raceRule: string }) {
+  return (
+    <div className="rd-runoff">
+      <div className="rd-runoff-h">path to {needle.winThresholdPct}%</div>
+      <div className="rd-runoff-bar" aria-hidden>
+        <i style={{ width: `${Math.round(needle.probSomeoneMajority * 100)}%` }} />
+      </div>
+      <div className="rd-runoff-stats">
+        <span><b>{fmtProb(needle.probSomeoneMajority)}</b> outright win</span>
+        <span><b>{fmtProb(needle.runoffNeededProb)}</b> {raceRule === "RANKED_CHOICE" ? "extra rounds" : "runoff"}</span>
+      </div>
+      <p className="rd-runoff-note">{RUNOFF_RULE_COPY[raceRule] ?? RUNOFF_RULE_COPY.MAJORITY}</p>
+    </div>
+  );
+}
+
 function Tallies({ doc }: { doc: any }) {
   const { theme } = useTheme();
   const isLight = theme === "light";
@@ -165,8 +190,12 @@ function Board({ doc, primary, onMap }: { doc: any; primary?: boolean; onMap: (r
   const race = doc?.race;
   const hasMap = race ? raceHasMap(race) && race.has_map !== false : false;
   const about = idToAbout[doc?.id];
-  // Dustin's forecast engine (app/lib/electoralModel) drives the needle
-  const needle = useMemo(() => (race ? needleFromRace(race) : null), [race]);
+  const caps = getRaceCapabilities(Number(doc?.id));
+  // Dustin's forecast engine (app/lib/electoralModel) drives the needle —
+  // pass the race's real electoral rule so MAJORITY_RUNOFF/THRESHOLD_*
+  // races actually trigger runoff math instead of silently defaulting to
+  // plain PLURALITY.
+  const needle = useMemo(() => (race ? needleFromRace(race, caps.raceRule) : null), [race, caps.raceRule]);
   const called = Array.isArray(race?.candidates) && race.candidates.some((c: any) => c.winner);
   const [optionsOpen, setOptionsOpen] = useState(false);
   const reporting = Math.max(0, Math.min(100, Number(race?.percent_reporting) || 0));
@@ -177,7 +206,6 @@ function Board({ doc, primary, onMap }: { doc: any; primary?: boolean; onMap: (r
   // call yet (tpsiCalled stays false), so PROJECTED only ever comes from an
   // official CivicAPI winner flag until that model lands.
   const raceState = getRaceState({ percentReporting: reporting, hasOfficialCall: called, tpsiCalled: false });
-  const caps = getRaceCapabilities(Number(doc?.id));
   // CO-04 §3 Zone 3: RESULTS / MARGIN / REMAINING map toggles. REMAINING is
   // only offered where a forecast exists (caps.forecast) — otherwise there's
   // no modeled "how much is left to shift this" read to show.
@@ -261,6 +289,9 @@ function Board({ doc, primary, onMap }: { doc: any; primary?: boolean; onMap: (r
                   );
                 })}
               </div>
+              {caps.raceRule !== "PLURALITY" && caps.raceRule !== "TOP_TWO" ? (
+                <RunoffModule needle={needle} raceRule={caps.raceRule} />
+              ) : null}
               <button
                 type="button"
                 className="rd-options-toggle"
@@ -601,6 +632,14 @@ body main > div > div { padding-top: 0 !important; padding-bottom: 0 !important;
 .rd-projshare-val { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 12.5px; font-weight: 700; color: var(--ink); text-align: right; }
 .rd-projshare-delta { grid-column: 1 / -1; font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 10.5px; color: var(--ink-dim); text-align: right; margin-top: -2px; }
 .rd-wheel-semantics { margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--rule-soft); font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 10px; letter-spacing: 0.03em; text-transform: uppercase; color: var(--ink-dim); }
+
+.rd-runoff { margin-top: 16px; padding: 14px 16px; border-radius: 12px; background: var(--wash); border: 1px solid var(--rule); }
+.rd-runoff-h { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 10.5px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-dim); margin-bottom: 8px; }
+.rd-runoff-bar { position: relative; height: 6px; border-radius: 99px; background: var(--rule); overflow: hidden; }
+.rd-runoff-bar i { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 99px; background: #b7ff00; }
+.rd-runoff-stats { display: flex; gap: 18px; margin-top: 10px; font-family: "Instrument Sans", system-ui, sans-serif; font-size: 12.5px; color: var(--ink-mute); }
+.rd-runoff-stats b { font-family: "JetBrains Mono", ui-monospace, monospace; color: var(--ink); margin-right: 5px; }
+.rd-runoff-note { margin-top: 8px; font-family: "Instrument Sans", system-ui, sans-serif; font-size: 12px; line-height: 1.5; color: var(--ink-dim); }
 
 .rd-options-toggle { display: inline-flex; align-items: center; gap: 6px; margin-top: 14px; padding: 0; background: none; border: 0; cursor: pointer; font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-mute); transition: color .15s ease; }
 .rd-options-toggle:hover { color: var(--ink); }

@@ -8,7 +8,7 @@
 // civicToForecastInput + forecastRace, and read the two-way win odds +
 // projected margin off the output. No hand-rolled math.
 
-import { civicToForecastInput, forecastRace, type CivicRace } from "@/app/lib/electoralModel";
+import { civicToForecastInput, forecastRace, type CivicRace, type RaceRule } from "@/app/lib/electoralModel";
 import { tonePalette } from "../onpoint/electionLib.js";
 
 const KEY_IDX: Record<string, number> = { Candidate1: 0, Candidate2: 1, Candidate3: 2 };
@@ -53,9 +53,16 @@ export interface NeedleProjection {
   modeTrigger: "PLURALITY" | "MAJORITY" | "RUNOFF";
   /** Only meaningful for MAJORITY_RUNOFF / THRESHOLD_* race rules. */
   runoffNeededProb: number;
+  /** Vote-share threshold to win outright: 50% normally, 35% for the
+   *  THRESHOLD_35_* rules (CO-04 §3 Zone 2 runoff module). */
+  winThresholdPct: number;
+  /** P(some candidate clears winThresholdPct outright) — the complement
+   *  of runoffNeededProb, exposed separately for the runoff module's
+   *  "outright win" vs "runoff" framing. */
+  probSomeoneMajority: number;
 }
 
-export function needleFromRace(race: any): NeedleProjection | null {
+export function needleFromRace(race: any, raceRule: RaceRule = "PLURALITY"): NeedleProjection | null {
   if (!race || !Array.isArray(race.candidates)) return null;
   const cands = race.candidates.filter((c: any) => c && c.name);
   if (cands.length < 2) return null;
@@ -87,7 +94,7 @@ export function needleFromRace(race: any): NeedleProjection | null {
 
   try {
     const names = sorted.slice(0, 3).map((c: any) => String(c.name));
-    const out = forecastRace(civicToForecastInput(cr), names, colors.slice(0, 3));
+    const out = forecastRace(civicToForecastInput(cr, undefined, raceRule), names, colors.slice(0, 3));
     const li = KEY_IDX[out.leader] ?? 0;
     const ri = KEY_IDX[out.runner_up] ?? 1;
     const oddsL = out.plurality_odds_to_win[out.leader] ?? 0;
@@ -114,6 +121,8 @@ export function needleFromRace(race: any): NeedleProjection | null {
       marginSdPp: out.modeled_total_vote > 0 ? ((out.sd_race * Math.SQRT2) / out.modeled_total_vote) * 100 : 0,
       modeTrigger: out.mode_trigger,
       runoffNeededProb: out.runoff_needed_prob,
+      winThresholdPct: (raceRule === "THRESHOLD_35_CONVENTION" || raceRule === "THRESHOLD_35_RUNOFF") ? 35 : 50,
+      probSomeoneMajority: out.prob_someone_majority,
     };
   } catch {
     return null;
