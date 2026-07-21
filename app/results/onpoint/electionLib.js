@@ -7,21 +7,36 @@
 // when a candidate is genuinely unclassifiable do we fall back to the
 // color civicAPI handed us (the "hybrid" the user chose).
 // Vivid, flat, ballotline-matched (saturated solid fills, not shaded).
+const isLight = () =>
+  typeof document !== 'undefined' && document.documentElement.dataset.opaTheme === 'light';
+
 export const PARTY = {
   // Classic, saturated party colors — the ones you think of when you
-  // think "Democrat" / "Republican", not washed pastels.
-  dem: '#1d4ed8', // deep, classic blue
-  gop: '#dc2626', // pure fire-engine red
-  yes: '#2e9e4f', // approve — green
-  no: '#d6334a', // reject — red
-  ind: '#18b6a6', // independent / 3rd party — teal
-  other: '#3aa856', // generic / same-party runoff — green (ballotline)
+  // think "Democrat" / "Republican", not washed pastels. Theme-aware
+  // getters (TPSI Election Desk Design System §1 --dem/--gop/--c2/--called/
+  // --gop tokens) so a race card reads correctly in both light and dark.
+  get dem() {
+    return isLight() ? '#1d5fc4' : '#3b7bde';
+  },
+  get gop() {
+    return isLight() ? '#c22f3b' : '#d64550';
+  },
+  get yes() {
+    return isLight() ? '#15803d' : '#37b26c'; // approve — --called
+  },
+  get no() {
+    return isLight() ? '#c22f3b' : '#d64550'; // reject — --gop
+  },
+  get ind() {
+    return isLight() ? '#0d9488' : '#2dd4bf'; // independent / 3rd party — --live
+  },
+  get other() {
+    return isLight() ? '#b5338f' : '#c757a8'; // generic / same-party runoff — --c2
+  },
   // no data / not reporting — graphite on dark, light grey on white (a getter
   // so it tracks the theme; stays a hex so mix()/shade() can consume it).
   get none() {
-    return typeof document !== 'undefined' && document.documentElement.dataset.opaTheme === 'light'
-      ? '#dfe2e8'
-      : '#2b2e37';
+    return isLight() ? '#dfe2e8' : '#2b2e37';
   },
 };
 

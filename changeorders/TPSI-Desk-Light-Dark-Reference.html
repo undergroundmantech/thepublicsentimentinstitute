@@ -1,0 +1,287 @@
+<!DOCTYPE html><html><head><meta charset="utf-8">
+<title>TPSI Desk — Light / Dark Reference</title>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Geist',system-ui,sans-serif;background:#5b5b58;padding:24px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:1500px;margin:0 auto}
+@media(max-width:1100px){.grid{grid-template-columns:1fr}}
+.zone{padding:22px;border-radius:18px}
+.zone.light{--canvas:#f7f7f4;--panel:#fff;--panel2:#f1f1ed;--panel3:#e9e9e4;--hairline:#e8e8e2;--hairline2:#d9d9d1;--ink:#17171b;--ink2:#5d5d58;--ink3:#9c9c93;--dem:#1d5fc4;--gop:#c22f3b;--c2:#b5338f;--live:#0d9488;--called:#15803d;--gold:#a16207;--shadow:0 1px 3px rgba(0,0,0,.05);background:#f7f7f4}
+.zone.dark{--canvas:#0a0a0c;--panel:#111114;--panel2:#16161a;--panel3:#1c1c21;--hairline:rgba(255,255,255,.08);--hairline2:rgba(255,255,255,.15);--ink:#f2f2f0;--ink2:rgba(242,242,240,.62);--ink3:rgba(242,242,240,.36);--dem:#3b7bde;--gop:#d64550;--c2:#c757a8;--live:#2dd4bf;--called:#37b26c;--gold:#e8b93c;--shadow:none;background:#0a0a0c}
+.zone{--mono:'JetBrains Mono',monospace;--sans:'Geist',sans-serif;color:var(--ink)}
+.ztitle{font-family:var(--mono);font-weight:800;font-size:12px;letter-spacing:.16em;color:var(--ink3);margin-bottom:16px}
+.panel{background:var(--panel);border:1px solid var(--hairline);border-radius:14px;box-shadow:var(--shadow);margin-bottom:14px;overflow:hidden}
+.panel-head{display:flex;justify-content:space-between;align-items:center;padding:13px 16px;border-bottom:1px solid var(--hairline)}
+.panel-title{font-family:var(--mono);font-weight:700;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink2)}
+.badge{font-family:var(--mono);font-size:10px;letter-spacing:.1em;padding:4px 10px;border-radius:999px;border:1px solid var(--hairline2);color:var(--ink2);background:var(--panel)}
+.badge.live{color:var(--live);border-color:var(--live)}
+.badge.live i{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--live);margin-right:6px;animation:p 1.7s infinite}
+.badge.called{color:var(--called);border-color:var(--called)}
+@keyframes p{50%{opacity:.3}}
+.sw{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;padding:14px 16px}
+.sw div{height:38px;border-radius:6px;position:relative}
+.sw span{position:absolute;bottom:-15px;left:0;font-family:var(--mono);font-size:7.5px;color:var(--ink3)}
+.cands{padding:2px 16px}
+.cand{display:grid;grid-template-columns:3px 36px 1fr auto auto;gap:0 12px;align-items:center;padding:11px 0;border-bottom:1px solid var(--hairline)}
+.cand:last-child{border-bottom:none}
+.rail{width:3px;height:34px;border-radius:2px}
+.ava{width:36px;height:36px;border-radius:50%;background:var(--panel2);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-weight:800;font-size:12px;color:var(--ink2)}
+.nm{font-weight:700;font-size:15px}
+.nm small{display:block;font-family:var(--mono);font-weight:400;font-size:9px;letter-spacing:.07em;color:var(--ink3);margin-top:2px}
+.chk{display:inline-flex;width:15px;height:15px;border-radius:50%;background:var(--called);color:#fff;font-size:9px;font-weight:800;align-items:center;justify-content:center;margin-left:7px}
+.pd{font-family:var(--mono);font-size:8.5px;border-radius:4px;padding:1px 5px;margin-left:6px}
+.pd.pos{color:var(--called);background:rgba(21,128,61,.1)}
+.pd.neg{color:var(--gop);background:rgba(194,47,59,.1)}
+.votes{font-family:var(--mono);font-size:12px;color:var(--ink2);text-align:right}
+.pct{font-family:var(--mono);font-weight:800;font-size:23px;min-width:84px;text-align:right;font-variant-numeric:tabular-nums}
+.foot{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:11px 16px;border-top:1px solid var(--hairline)}
+.track{flex:1;height:6px;border-radius:99px;background:var(--panel3);overflow:hidden}
+.track b{display:block;height:100%;background:var(--called);border-radius:99px}
+.lab{font-family:var(--mono);font-size:9px;letter-spacing:.07em;color:var(--ink3)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.gwrap{display:flex;flex-direction:column;align-items:center;padding:14px}
+.wheel{width:150px;height:86px;position:relative}
+.wheel svg{width:100%;display:block}
+.wctr{position:absolute;left:0;right:0;bottom:0;text-align:center}
+.wctr .n{font-family:var(--mono);font-weight:800;font-size:22px}
+.wctr .l{font-family:var(--mono);font-size:8px;letter-spacing:.13em;color:var(--ink3)}
+.leg{display:flex;justify-content:space-between;width:100%;padding:6px 2px;border-top:1px solid var(--hairline);font-family:var(--mono);font-size:10px}
+.leg b{font-weight:700}
+.ring{width:120px;height:120px;position:relative;margin:8px auto}
+.ring svg{transform:rotate(-90deg)}
+.rctr{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.rctr .n{font-family:var(--mono);font-weight:800;font-size:22px;color:var(--called)}
+.rctr .t{font-family:var(--mono);font-weight:800;font-size:13px}
+.rctr .l{font-family:var(--mono);font-size:7.5px;letter-spacing:.12em;color:var(--ink3)}
+.verd{padding:12px 16px;border-bottom:1px solid var(--hairline)}
+.verd .big{font-family:var(--mono);font-weight:800;font-size:14px}
+.verd .flip{font-size:11px;color:var(--ink2);margin-top:4px}
+.verd .flip b{font-family:var(--mono);color:var(--ink)}
+.pcards{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:12px 16px}
+.pcard{border:1px solid var(--hairline);border-radius:10px;padding:10px 12px}
+.pcard.lead{border-color:var(--dem);background:rgba(29,95,196,.05)}
+.pcard .cn{font-family:var(--mono);font-size:9px;letter-spacing:.09em;font-weight:700;color:var(--ink2)}
+.pcard.lead .cn{color:var(--dem)}
+.pcard .pv{font-family:var(--mono);font-weight:800;font-size:21px;margin-top:2px}
+.mt{display:flex;height:9px;align-items:center;margin-top:8px}
+.ms{height:9px;border-radius:99px 0 0 99px}
+.md{height:9px;border:1.5px dashed;border-left:none;border-radius:0 99px 99px 0;opacity:.55}
+.tiny{font-family:var(--mono);font-size:8.5px;color:var(--ink3);margin-top:5px}
+.opt{font-family:var(--mono);font-size:9px;letter-spacing:.1em;color:var(--ink2);border:1px solid var(--hairline2);border-radius:999px;padding:4px 11px;background:var(--panel);cursor:pointer}
+.dnote{font-family:var(--mono);font-size:8.5px;font-style:italic;color:var(--ink3)}
+table{width:100%;border-collapse:collapse}
+th{font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3);background:var(--panel2);text-align:right;padding:10px 12px}
+th:first-child,td:first-child{text-align:left}
+td{padding:8px 12px;border-bottom:1px solid var(--hairline);text-align:right;font-size:12px}
+td.num{font-family:var(--mono);font-variant-numeric:tabular-nums;color:var(--ink2)}
+.pA{font-family:var(--mono);font-weight:700;color:var(--dem)}
+.pB{font-family:var(--mono);font-weight:700;color:var(--c2)}
+td small{display:block;font-family:var(--mono);font-size:9px;color:var(--ink3)}
+.mgn{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-weight:700;font-size:11.5px}
+.mgn .r{width:3px;height:14px;border-radius:2px}
+.mode{display:grid;grid-template-columns:110px 1fr 70px;gap:10px;align-items:center;padding:9px 16px;border-bottom:1px solid var(--hairline)}
+.mode .ml{font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.08em}
+.bar{height:8px;border-radius:99px;background:var(--panel3);overflow:hidden}
+.bar b{display:block;height:100%;background:var(--live)}
+.mr{font-family:var(--mono);font-size:11px;text-align:right;color:var(--gold);font-weight:700}
+.why{padding:11px 16px;font-size:11.5px;color:var(--ink2)}
+.bad{border:1px dashed var(--gop);border-radius:10px;padding:10px 12px;margin-top:8px}
+.bad .x{font-family:var(--mono);font-size:9px;color:var(--gop);letter-spacing:.1em}
+</style></head><body>
+<div class="grid">
+
+<!-- ========== LIGHT ========== -->
+<div class="zone light" id="L">
+  <div class="ztitle">◗ LIGHT — DESK DEFAULT</div>
+
+  <div class="panel">
+    <div class="panel-head"><span class="panel-title">Tokens</span></div>
+    <div class="sw">
+      <div style="background:var(--canvas);border:1px solid var(--hairline)"><span>canvas</span></div>
+      <div style="background:var(--panel);border:1px solid var(--hairline)"><span>panel</span></div>
+      <div style="background:var(--ink)"><span>ink</span></div>
+      <div style="background:var(--dem)"><span>dem</span></div>
+      <div style="background:var(--gop)"><span>gop</span></div>
+      <div style="background:var(--c2)"><span>c2</span></div>
+    </div>
+    <div class="sw" style="padding-top:20px">
+      <div style="background:var(--live)"><span>live</span></div>
+      <div style="background:var(--called)"><span>called</span></div>
+      <div style="background:var(--gold)"><span>gold</span></div>
+      <div style="background:var(--panel2)"><span>panel2</span></div>
+      <div style="background:var(--panel3)"><span>panel3</span></div>
+      <div style="background:linear-gradient(90deg,#d2494b,#a44197,#6d3ee9,#3f60e8)"><span>brand ×2 only</span></div>
+    </div>
+    <div style="height:14px"></div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-head"><span class="panel-title">Reported Results</span><span class="badge live"><i></i>LIVE · 30S</span></div>
+    <div class="cands">
+      <div class="cand"><span class="rail" style="background:var(--dem)"></span><span class="ava">JH</span>
+        <span class="nm">John Hickenlooper<span class="chk">✓</span><span class="pd neg">−5.6 VS POLL</span><small>DEMOCRATIC · INCUMBENT</small></span>
+        <span class="votes">469,564</span><span class="pct" style="color:var(--dem)">52.9%</span></div>
+      <div class="cand"><span class="rail" style="background:var(--c2)"></span><span class="ava">JG</span>
+        <span class="nm">Julie Gonzales<span class="pd pos">+5.6 VS POLL</span><small>DEMOCRATIC · STATE SEN.</small></span>
+        <span class="votes">418,066</span><span class="pct">47.1%</span></div>
+    </div>
+    <div class="foot"><span class="track"><b style="width:96%"></b></span><span class="lab">911.8K OF 950K EXPECTED · 96%</span></div>
+  </div>
+
+  <div class="two">
+    <div class="panel">
+      <div class="panel-head"><span class="panel-title">Win Probability</span><span class="badge">PLURALITY</span></div>
+      <div class="gwrap">
+        <div class="wheel"><svg viewBox="0 0 158 88"><path d="M13,84 A66,66 0 0 1 145,84" fill="none" stroke="var(--panel3)" stroke-width="15" stroke-linecap="round"/><path d="M13,84 A66,66 0 0 1 144.3,80.9" fill="none" stroke="var(--dem)" stroke-width="15" stroke-linecap="round"/></svg>
+          <div class="wctr"><div class="n" style="color:var(--dem)">&gt;99%</div><div class="l">HICKENLOOPER</div></div></div>
+        <div style="width:100%">
+          <div class="leg"><span>HICKENLOOPER</span><b style="color:var(--dem)">&gt;99%</b></div>
+          <div class="leg"><span>GONZALES</span><b style="color:var(--ink3)">&lt;1%</b></div>
+          <div class="leg"><span style="color:var(--ink3)">OTHER OUTCOMES</span><b style="color:var(--ink3)">&lt;1%</b></div>
+        </div>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="panel-head"><span class="panel-title">Race Clock</span></div>
+      <div class="ring"><svg viewBox="0 0 120 120" width="120" height="120"><circle cx="60" cy="60" r="52" fill="none" stroke="var(--panel3)" stroke-width="10"/><circle cx="60" cy="60" r="52" fill="none" stroke="var(--called)" stroke-width="10" stroke-linecap="round" stroke-dasharray="318 327"/></svg>
+        <div class="rctr"><div class="n">✓</div><div class="t">10:41 PM</div><div class="l">#DECISIONMADE</div></div></div>
+      <div style="text-align:center;padding-bottom:14px"><span class="badge called">OFFICIAL</span></div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-head"><span class="panel-title">Forecast Snapshot</span><span class="badge">FORECAST β</span></div>
+    <div class="verd"><div class="big">HICKENLOOPER WINS — <span style="color:var(--dem)">&gt;99%</span></div>
+      <div class="flip">Gonzales needs <b>81.6%</b> of the remaining vote · winning <b>52.8%</b> of late-counted ballots</div></div>
+    <div class="tiny" style="padding:10px 16px 0;color:var(--gold)">PROJECTED FINAL RESULT · ~24,000 VOTES REMAINING</div>
+    <div class="pcards">
+      <div class="pcard lead"><div class="cn">JOHN HICKENLOOPER</div><div class="pv" style="color:var(--dem)">53.0%</div>
+        <div class="mt"><span class="ms" style="width:74%;background:var(--dem)"></span><span class="md" style="width:4%;border-color:var(--dem)"></span></div>
+        <div class="tiny">483,034 · SOLID=COUNTED · DASHED=PROJECTED</div></div>
+      <div class="pcard"><div class="cn" style="color:var(--c2)">JULIE GONZALES</div><div class="pv">47.0%</div>
+        <div class="mt"><span class="ms" style="width:65%;background:var(--c2)"></span><span class="md" style="width:3.6%;border-color:var(--c2)"></span></div>
+        <div class="tiny">428,796</div></div>
+    </div>
+    <div class="foot"><button class="opt">OPTIONS ▾ BOX-PLOT · MODEL STATS</button><span class="dnote">NO HISTORY SNAPSHOTS — LIVE DATA ONLY</span></div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-head"><span class="panel-title">Results by County</span><span class="badge">SEARCH ⌕</span></div>
+    <table>
+      <tr><th>County</th><th>Rpt</th><th>Hickenlooper</th><th>Gonzales</th><th>Margin</th><th>Total</th></tr>
+      <tr><td>Denver</td><td class="num">96%</td><td class="pA">47.2%<small>98,113</small></td><td class="pB">52.8%<small>109,884</small></td>
+        <td><span class="mgn"><span class="r" style="background:var(--c2)"></span><span style="color:var(--c2)">G +5.6</span></span></td><td class="num">207,997</td></tr>
+      <tr><td>Boulder</td><td class="num">97%</td><td class="pA">51.3%<small>42,757</small></td><td class="pB">48.7%<small>40,559</small></td>
+        <td><span class="mgn"><span class="r" style="background:var(--dem)"></span><span style="color:var(--dem)">H +2.6</span></span></td><td class="num">83,316</td></tr>
+      <tr><td>Adams</td><td class="num">98%</td><td class="pA">50.0%<small>31,565</small></td><td class="pB">50.0%<small>31,558</small></td>
+        <td><span class="mgn"><span class="r" style="background:var(--ink3)"></span><span style="color:var(--ink2)">+0.0</span></span></td><td class="num">63,123</td></tr>
+    </table>
+  </div>
+
+  <div class="panel">
+    <div class="panel-head"><span class="panel-title">Remaining Ballot Landscape</span></div>
+    <div class="mode"><span class="ml">EARLY</span><span class="bar"><b style="width:92%"></b></span><span class="mr">4,100</span></div>
+    <div class="mode"><span class="ml">VBM</span><span class="bar"><b style="width:61%"></b></span><span class="mr">78,400</span></div>
+    <div class="mode"><span class="ml">ELECTION DAY</span><span class="bar"><b style="width:38%"></b></span><span class="mr">13,500</span></div>
+    <div class="why"><b>Why it matters:</b> Election-day ballots are further along, so the outstanding electorate leans more toward mail voters. Each mode projects on its own curve.</div>
+  </div>
+</div>
+
+<!-- ========== DARK ========== -->
+<div class="zone dark" id="D">
+  <div class="ztitle">◗ DARK — TOGGLE PARITY</div>
+  <div class="panel"><div class="panel-head"><span class="panel-title">Tokens</span></div>
+    <div class="sw">
+      <div style="background:var(--canvas);border:1px solid var(--hairline)"><span>canvas</span></div>
+      <div style="background:var(--panel);border:1px solid var(--hairline)"><span>panel</span></div>
+      <div style="background:var(--ink)"><span>ink</span></div>
+      <div style="background:var(--dem)"><span>dem</span></div>
+      <div style="background:var(--gop)"><span>gop</span></div>
+      <div style="background:var(--c2)"><span>c2</span></div>
+    </div>
+    <div class="sw" style="padding-top:20px">
+      <div style="background:var(--live)"><span>live</span></div>
+      <div style="background:var(--called)"><span>called</span></div>
+      <div style="background:var(--gold)"><span>gold</span></div>
+      <div style="background:var(--panel2)"><span>panel2</span></div>
+      <div style="background:var(--panel3)"><span>panel3</span></div>
+      <div style="background:linear-gradient(90deg,#d2494b,#a44197,#6d3ee9,#3f60e8)"><span>brand ×2 only</span></div>
+    </div><div style="height:14px"></div></div>
+
+  <div class="panel">
+    <div class="panel-head"><span class="panel-title">Reported Results</span><span class="badge live"><i></i>LIVE · 30S</span></div>
+    <div class="cands">
+      <div class="cand"><span class="rail" style="background:var(--dem)"></span><span class="ava">JH</span>
+        <span class="nm">John Hickenlooper<span class="chk">✓</span><span class="pd neg">−5.6 VS POLL</span><small>DEMOCRATIC · INCUMBENT</small></span>
+        <span class="votes">469,564</span><span class="pct" style="color:var(--dem)">52.9%</span></div>
+      <div class="cand"><span class="rail" style="background:var(--c2)"></span><span class="ava">JG</span>
+        <span class="nm">Julie Gonzales<span class="pd pos">+5.6 VS POLL</span><small>DEMOCRATIC · STATE SEN.</small></span>
+        <span class="votes">418,066</span><span class="pct">47.1%</span></div>
+    </div>
+    <div class="foot"><span class="track"><b style="width:96%"></b></span><span class="lab">911.8K OF 950K EXPECTED · 96%</span></div>
+  </div>
+
+  <div class="two">
+    <div class="panel">
+      <div class="panel-head"><span class="panel-title">Win Probability</span><span class="badge">PLURALITY</span></div>
+      <div class="gwrap">
+        <div class="wheel"><svg viewBox="0 0 158 88"><path d="M13,84 A66,66 0 0 1 145,84" fill="none" stroke="var(--panel3)" stroke-width="15" stroke-linecap="round"/><path d="M13,84 A66,66 0 0 1 144.3,80.9" fill="none" stroke="var(--dem)" stroke-width="15" stroke-linecap="round"/></svg>
+          <div class="wctr"><div class="n" style="color:var(--dem)">&gt;99%</div><div class="l">HICKENLOOPER</div></div></div>
+        <div style="width:100%">
+          <div class="leg"><span>HICKENLOOPER</span><b style="color:var(--dem)">&gt;99%</b></div>
+          <div class="leg"><span>GONZALES</span><b style="color:var(--ink3)">&lt;1%</b></div>
+        </div>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="panel-head"><span class="panel-title">Race Clock</span></div>
+      <div class="ring"><svg viewBox="0 0 120 120" width="120" height="120"><circle cx="60" cy="60" r="52" fill="none" stroke="var(--panel3)" stroke-width="10"/><circle cx="60" cy="60" r="52" fill="none" stroke="var(--live)" stroke-width="10" stroke-linecap="round" stroke-dasharray="318 327"/></svg>
+        <div class="rctr"><div class="n" style="color:var(--live)">97.4%</div><div class="l">EST. REPORTING</div></div></div>
+      <div style="text-align:center;padding-bottom:14px"><span class="badge live"><i></i>LIVE · FORECAST</span></div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-head"><span class="panel-title">Forecast Snapshot</span><span class="badge">FORECAST β</span></div>
+    <div class="verd"><div class="big">HICKENLOOPER WINS — <span style="color:var(--dem)">&gt;99%</span></div>
+      <div class="flip">Gonzales needs <b>81.6%</b> of the remaining vote · winning <b>52.8%</b> of late-counted ballots</div></div>
+    <div class="tiny" style="padding:10px 16px 0;color:var(--gold)">PROJECTED FINAL RESULT · ~24,000 VOTES REMAINING</div>
+    <div class="pcards">
+      <div class="pcard lead" style="border-color:var(--dem);background:rgba(59,123,222,.07)"><div class="cn" style="color:var(--dem)">JOHN HICKENLOOPER</div><div class="pv" style="color:var(--dem)">53.0%</div>
+        <div class="mt"><span class="ms" style="width:74%;background:var(--dem)"></span><span class="md" style="width:4%;border-color:var(--dem)"></span></div>
+        <div class="tiny">483,034 · SOLID=COUNTED · DASHED=PROJECTED</div></div>
+      <div class="pcard"><div class="cn" style="color:var(--c2)">JULIE GONZALES</div><div class="pv">47.0%</div>
+        <div class="mt"><span class="ms" style="width:65%;background:var(--c2)"></span><span class="md" style="width:3.6%;border-color:var(--c2)"></span></div>
+        <div class="tiny">428,796</div></div>
+    </div>
+    <div class="foot"><button class="opt">OPTIONS ▾ BOX-PLOT · MODEL STATS</button><span class="dnote">NO HISTORY SNAPSHOTS — LIVE DATA ONLY</span></div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-head"><span class="panel-title">Results by County</span><span class="badge">SEARCH ⌕</span></div>
+    <table>
+      <tr><th>County</th><th>Rpt</th><th>Hickenlooper</th><th>Gonzales</th><th>Margin</th><th>Total</th></tr>
+      <tr><td>Denver</td><td class="num">96%</td><td class="pA">47.2%<small>98,113</small></td><td class="pB">52.8%<small>109,884</small></td>
+        <td><span class="mgn"><span class="r" style="background:var(--c2)"></span><span style="color:var(--c2)">G +5.6</span></span></td><td class="num">207,997</td></tr>
+      <tr><td>Boulder</td><td class="num">97%</td><td class="pA">51.3%<small>42,757</small></td><td class="pB">48.7%<small>40,559</small></td>
+        <td><span class="mgn"><span class="r" style="background:var(--dem)"></span><span style="color:var(--dem)">H +2.6</span></span></td><td class="num">83,316</td></tr>
+      <tr><td>Adams</td><td class="num">98%</td><td class="pA">50.0%<small>31,565</small></td><td class="pB">50.0%<small>31,558</small></td>
+        <td><span class="mgn"><span class="r" style="background:var(--ink3)"></span><span style="color:var(--ink2)">+0.0</span></span></td><td class="num">63,123</td></tr>
+    </table>
+  </div>
+
+  <div class="panel">
+    <div class="panel-head"><span class="panel-title">Anti-Patterns</span></div>
+    <div style="padding:12px 16px">
+      <div class="bad"><div class="x">✗ PARTY COLOR AS BLOCK FILL</div>
+        <div style="background:var(--gop);color:#fff;padding:8px;border-radius:6px;margin-top:6px;font-family:var(--mono);font-size:11px">Jackson +5.2</div>
+        <div class="tiny" style="margin-top:6px">✓ Use a 3px rail + tinted mono text instead.</div></div>
+      <div class="bad"><div class="x">✗ SOLID BAR FOR A PROJECTION</div>
+        <div class="mt"><span class="ms" style="width:78%;background:var(--dem)"></span></div>
+        <div class="tiny" style="margin-top:6px">✓ Projected segments are dashed + labeled PROJECTED.</div></div>
+    </div>
+  </div>
+</div>
+</div>
+</body></html>

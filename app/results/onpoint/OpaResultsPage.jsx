@@ -8,39 +8,51 @@ export const OPA_GLOBAL_CSS = `
   @import url("https://fonts.googleapis.com/css2?family=Anton&family=Barlow+Condensed:wght@600;700;800;900&family=Inter:wght@400;500;600;700;800&family=Instrument+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&family=Oswald:wght@500;600;700&display=swap");
 
   :root {
-    --page: #0a0b0d; --page-elev: #15171c; --page-sunken: #070708;
-    --card: #0d1117; --card-2: rgba(255,255,255,0.02); --card-bd: #1c2230;
-    --ink: #f1ece1; --ink-strong: #ffffff;
-    --ink-mute: rgba(241,236,225,0.60); --ink-dim: rgba(241,236,225,0.38); --ink-dimmer: rgba(241,236,225,0.18);
-    --rule: rgba(255,255,255,0.08); --rule-soft: rgba(255,255,255,0.05); --rule-strong: rgba(255,255,255,0.14);
-    --wash: rgba(255,255,255,0.02); --hover: rgba(255,255,255,0.05); --hair: rgba(255,255,255,0.08);
-    --page-rgb: 10,11,13; --ink-rgb: 241,236,225;
-    --frost-bg: linear-gradient(180deg, rgba(24,23,20,0.70) 0%, rgba(14,13,11,0.76) 60%);
+    /* ── TPSI Election Desk Design System §1 — canonical tokens (dark) ── */
+    --page: #0a0a0c; --page-elev: #16161a; --page-sunken: #0a0a0c;
+    --card: #111114; --card-2: #16161a; --card-bd: rgba(255,255,255,0.08);
+    --ink: #f2f2f0; --ink-strong: #ffffff;
+    --ink-mute: rgba(242,242,240,0.62); --ink-dim: rgba(242,242,240,0.36); --ink-dimmer: rgba(242,242,240,0.20);
+    --rule: rgba(255,255,255,0.08); --rule-soft: rgba(255,255,255,0.05); --rule-strong: rgba(255,255,255,0.15);
+    --wash: #16161a; --hover: #1c1c21; --hair: rgba(255,255,255,0.08);
+    --page-rgb: 10,10,12; --ink-rgb: 242,242,240;
+    --frost-bg: linear-gradient(180deg, rgba(22,22,26,0.70) 0%, rgba(12,12,14,0.76) 60%);
     --frost-shadow: 0 18px 46px -16px rgba(0,0,0,0.66), inset 0 1px 0 rgba(255,255,255,0.08), 0 0 0 1px rgba(255,255,255,0.08);
     --shadow-card: 0 18px 46px -16px rgba(0,0,0,0.55);
     --shadow-pop: 0 30px 70px -18px rgba(0,0,0,0.8);
-    --accent: #d4a73b; --accent-soft: rgba(212,167,59,0.14); --accent-dim: rgba(212,167,59,0.55);
-    --approve: #34c4ad; --disapprove: #d4a73b; --dem: #1d4ed8; --gop: #dc2626;
-    --polls-a: #3DD68C; --polls-b: #D946C6; --polls-live: #FF4D8F;
+    /* party / candidate — DATA ONLY (§1) */
+    --dem: #3b7bde; --gop: #d64550; --c2: #c757a8;
+    --dem-tint: rgba(59,123,222,.14); --gop-tint: rgba(214,69,80,.14);
+    /* non-partisan signal lane (§1) */
+    --live: #2dd4bf; --called: #37b26c; --gold: #e8b93c;
+    --accent: #e8b93c; --accent-soft: rgba(232,185,60,0.14); --accent-dim: rgba(232,185,60,0.55);
+    --approve: #37b26c; --disapprove: #e8b93c;
+    --polls-a: #3b7bde; --polls-b: #c757a8; --polls-live: #2dd4bf;
     --neutral: #3c3f47;
     --chart-surface: #f8f6f1; --chart-bd: transparent;
     --scrollbar-thumb: #2a2a2a; --scrollbar-thumb-hover: #3a3a3a; --selection: rgba(255,255,255,0.12);
   }
   :root[data-opa-theme="light"] {
-    --page: #ffffff; --page-elev: #f4f5f7; --page-sunken: #eceef1;
-    --card: #ffffff; --card-2: #fafbfc; --card-bd: rgba(0,0,0,0.12);
-    --ink: #16181d; --ink-strong: #0a0b0d;
-    --ink-mute: rgba(22,24,29,0.64); --ink-dim: rgba(22,24,29,0.48); --ink-dimmer: rgba(22,24,29,0.28);
-    --rule: rgba(0,0,0,0.12); --rule-soft: rgba(0,0,0,0.07); --rule-strong: rgba(0,0,0,0.18);
-    --wash: rgba(0,0,0,0.025); --hover: rgba(0,0,0,0.05); --hair: rgba(0,0,0,0.12);
-    --page-rgb: 255,255,255; --ink-rgb: 22,24,29;
+    /* ── TPSI Election Desk Design System §1 — canonical tokens (light) ── */
+    --page: #f7f7f4; --page-elev: #f1f1ed; --page-sunken: #e9e9e4;
+    --card: #ffffff; --card-2: #f1f1ed; --card-bd: #e8e8e2;
+    --ink: #17171b; --ink-strong: #0a0a0c;
+    --ink-mute: #5d5d58; --ink-dim: #9c9c93; --ink-dimmer: rgba(23,23,27,0.28);
+    --rule: #e8e8e2; --rule-soft: #eeeeea; --rule-strong: #d9d9d1;
+    --wash: #f1f1ed; --hover: #e9e9e4; --hair: #e8e8e2;
+    --page-rgb: 247,247,244; --ink-rgb: 23,23,27;
     --frost-bg: linear-gradient(180deg, rgba(255,255,255,0.92) 0%, rgba(246,248,250,0.94) 60%);
     --frost-shadow: 0 18px 40px -18px rgba(15,23,42,0.18), inset 0 1px 0 rgba(255,255,255,0.9), 0 0 0 1px rgba(0,0,0,0.08);
     --shadow-card: 0 14px 34px -16px rgba(15,23,42,0.16);
     --shadow-pop: 0 24px 56px -18px rgba(15,23,42,0.22);
-    --accent: #a8791f; --accent-soft: rgba(168,121,31,0.12); --accent-dim: rgba(168,121,31,0.55);
-    --approve: #0f9b87; --disapprove: #b8860b; --dem: #1d4ed8; --gop: #c81e1e;
-    --polls-a: #1f9d5f; --polls-b: #b02ca0; --polls-live: #e11d6b;
+    /* party / candidate — DATA ONLY (§1) */
+    --dem: #1d5fc4; --gop: #c22f3b; --c2: #b5338f;
+    --dem-tint: rgba(29,95,196,.08); --gop-tint: rgba(194,47,59,.08);
+    /* non-partisan signal lane (§1) */
+    --live: #0d9488; --called: #15803d; --gold: #a16207;
+    --accent: #a16207; --accent-soft: rgba(161,98,7,0.12); --accent-dim: rgba(161,98,7,0.55);
+    --approve: #15803d; --disapprove: #a16207;
+    --polls-a: #1d5fc4; --polls-b: #b5338f; --polls-live: #0d9488;
     --neutral: #cdd1d8;
     --chart-surface: #ffffff; --chart-bd: rgba(0,0,0,0.10);
     --scrollbar-thumb: #c8ccd3; --scrollbar-thumb-hover: #aab0ba; --selection: rgba(0,0,0,0.12);

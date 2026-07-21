@@ -12,32 +12,32 @@ import React, { createContext, useContext, useState, useCallback, useEffect } fr
 
 export const PALETTES = {
   dark: {
-    page: '#0a0b0d', pageElev: '#15171c', card: '#0d1117', cardBd: '#1c2230',
-    ink: '#f1ece1', inkStrong: '#ffffff',
-    accent: '#d4a73b',
-    approve: '#34c4ad', disapprove: '#d4a73b', dem: '#1d4ed8', gop: '#dc2626',
-    yes: '#57a07b', no: '#cf6a64',
+    page: '#0a0a0c', pageElev: '#16161a', card: '#111114', cardBd: 'rgba(255,255,255,0.08)',
+    ink: '#f2f2f0', inkStrong: '#ffffff',
+    accent: '#e8b93c',
+    approve: '#37b26c', disapprove: '#e8b93c', dem: '#3b7bde', gop: '#d64550',
+    yes: '#37b26c', no: '#d64550',
     // electionLib shade(): low-margin counties mix toward this base
-    shadeBase: '#15171c',
+    shadeBase: '#16161a',
     faintFill: 'rgba(255,255,255,0.045)', faintStroke: 'rgba(255,255,255,0.10)',
     countyStroke: 'rgba(8,9,12,0.6)',
     // ResultCard strip foreground target (accent mixed toward this)
     stripFgTarget: '#ffffff',
     // calendar non-partisan cycle + same-party mute target
-    set: ['#a779ff', '#f0894a', '#5ab6c4', '#e5859c'],
+    set: ['#c757a8', '#e8b93c', '#2dd4bf', '#3b7bde'],
     mute: '#aeb4c0',
   },
   light: {
-    page: '#ffffff', pageElev: '#f4f5f7', card: '#ffffff', cardBd: 'rgba(0,0,0,0.12)',
-    ink: '#16181d', inkStrong: '#0a0b0d',
-    accent: '#a8791f',
-    approve: '#0f9b87', disapprove: '#b8860b', dem: '#1d4ed8', gop: '#c81e1e',
-    yes: '#2f7d54', no: '#c0453f',
-    shadeBase: '#eef1f4',
+    page: '#f7f7f4', pageElev: '#f1f1ed', card: '#ffffff', cardBd: '#e8e8e2',
+    ink: '#17171b', inkStrong: '#0a0a0c',
+    accent: '#a16207',
+    approve: '#15803d', disapprove: '#a16207', dem: '#1d5fc4', gop: '#c22f3b',
+    yes: '#15803d', no: '#c22f3b',
+    shadeBase: '#f1f1ed',
     faintFill: 'rgba(0,0,0,0.05)', faintStroke: 'rgba(0,0,0,0.14)',
     countyStroke: 'rgba(255,255,255,0.75)',
     stripFgTarget: '#0b0c0e',
-    set: ['#7a4fd0', '#c25f1e', '#2f8c9c', '#bd4f70'],
+    set: ['#b5338f', '#a16207', '#0d9488', '#1d5fc4'],
     mute: '#8a8f99',
   },
 }
