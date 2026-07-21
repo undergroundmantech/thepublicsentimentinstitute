@@ -39,6 +39,20 @@ export interface NeedleProjection {
    * even by winning 100% of what's left (leader has clinched).
    */
   flipThresholdPct: number | null;
+  /** Model statistics grid (CO-04 §3 Zone 2 OPTIONS drawer). */
+  modeledTotalVote: number;
+  modeledVoteRemaining: number;
+  /**
+   * Standard deviation of the PROJECTED MARGIN (leader minus runner-up),
+   * in percentage points. Derived from the engine's sd_race (a single
+   * candidate's vote-count sd): pBeats() in electoralModel.ts treats the
+   * margin as Normal(mean, (sd_race*sqrt(2))^2), so marginSd = sd_race*sqrt(2)
+   * converted from votes to a share of modeledTotalVote.
+   */
+  marginSdPp: number;
+  modeTrigger: "PLURALITY" | "MAJORITY" | "RUNOFF";
+  /** Only meaningful for MAJORITY_RUNOFF / THRESHOLD_* race rules. */
+  runoffNeededProb: number;
 }
 
 export function needleFromRace(race: any): NeedleProjection | null {
@@ -95,6 +109,11 @@ export function needleFromRace(race: any): NeedleProjection | null {
       runnerCurrentSharePct: Number(cr.candidates[ri]?.percent) || 0,
       reporting: pctReporting,
       flipThresholdPct: flipThreshold(cr.candidates[li]?.votes ?? 0, cr.candidates[ri]?.votes ?? 0, pctReporting),
+      modeledTotalVote: out.modeled_total_vote,
+      modeledVoteRemaining: out.modeled_vote_remaining,
+      marginSdPp: out.modeled_total_vote > 0 ? ((out.sd_race * Math.SQRT2) / out.modeled_total_vote) * 100 : 0,
+      modeTrigger: out.mode_trigger,
+      runoffNeededProb: out.runoff_needed_prob,
     };
   } catch {
     return null;

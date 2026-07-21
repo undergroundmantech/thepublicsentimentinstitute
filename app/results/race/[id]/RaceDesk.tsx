@@ -11,7 +11,7 @@ import RaceDetail from "../../onpoint/RaceDetail.jsx";
 import { raceHasMap, candColor, shade } from "../../onpoint/electionLib.js";
 import { useElectionIndex } from "../../onpoint/lib/electionIndex.js";
 import { useTheme } from "../../onpoint/lib/theme.jsx";
-import { WinProbabilityWheel, RaceClockRing } from "./deck/Gauges";
+import { WinProbabilityWheel, RaceClockRing, MarginWhisker } from "./deck/Gauges";
 import DeskSearch from "../../components/DeskSearch";
 import { needleFromRace, type NeedleProjection } from "../../components/needleModel";
 import { idToAbout } from "../../_data/raceRegistry";
@@ -167,6 +167,7 @@ function Board({ doc, primary, onMap }: { doc: any; primary?: boolean; onMap: (r
   // Dustin's forecast engine (app/lib/electoralModel) drives the needle
   const needle = useMemo(() => (race ? needleFromRace(race) : null), [race]);
   const called = Array.isArray(race?.candidates) && race.candidates.some((c: any) => c.winner);
+  const [optionsOpen, setOptionsOpen] = useState(false);
   const reporting = Math.max(0, Math.min(100, Number(race?.percent_reporting) || 0));
   const totalVotes = Array.isArray(race?.candidates)
     ? race.candidates.reduce((s: number, c: any) => s + (Number(c.votes) || 0), 0)
@@ -255,6 +256,33 @@ function Board({ doc, primary, onMap }: { doc: any; primary?: boolean; onMap: (r
                   );
                 })}
               </div>
+              <button
+                type="button"
+                className="rd-options-toggle"
+                aria-expanded={optionsOpen}
+                onClick={() => setOptionsOpen((v) => !v)}
+              >
+                {optionsOpen ? "hide options" : "options"}
+                <span className={`rd-options-chev ${optionsOpen ? "open" : ""}`} aria-hidden>⌄</span>
+              </button>
+              {optionsOpen ? (
+                <div className="rd-options">
+                  <div className="rd-options-h">projected margin range</div>
+                  <MarginWhisker meanPp={needle.marginPp} sdPp={needle.marginSdPp} leaderColor={needle.leaderColor} width={300} height={60} />
+                  <p className="rd-options-note">
+                    box = interquartile range · whiskers = ~95% interval · dashed line = tie
+                  </p>
+                  <div className="rd-stats-grid">
+                    <div className="rd-stat"><span>modeled total vote</span><b>{fmtInt(needle.modeledTotalVote)}</b></div>
+                    <div className="rd-stat"><span>modeled remaining</span><b>{fmtInt(needle.modeledVoteRemaining)}</b></div>
+                    <div className="rd-stat"><span>margin sd</span><b>±{needle.marginSdPp.toFixed(1)} pts</b></div>
+                    <div className="rd-stat"><span>mode</span><b>{needle.modeTrigger.toLowerCase()}</b></div>
+                    {needle.modeTrigger !== "PLURALITY" ? (
+                      <div className="rd-stat"><span>runoff needed</span><b>{fmtProb(needle.runoffNeededProb)}</b></div>
+                    ) : null}
+                  </div>
+                </div>
+              ) : null}
               <p className="rd-wheel-semantics">{caps.telemetry ? "reported figures are solid; projected figures are muted and labeled." : NO_HISTORY_LINE.toLowerCase()}</p>
             </div>
           ) : null}
@@ -499,6 +527,18 @@ body main > div > div { padding-top: 0 !important; padding-bottom: 0 !important;
 .rd-projshare-val { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 12.5px; font-weight: 700; color: var(--ink); text-align: right; }
 .rd-projshare-delta { grid-column: 1 / -1; font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 10.5px; color: var(--ink-dim); text-align: right; margin-top: -2px; }
 .rd-wheel-semantics { margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--rule-soft); font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 10px; letter-spacing: 0.03em; text-transform: uppercase; color: var(--ink-dim); }
+
+.rd-options-toggle { display: inline-flex; align-items: center; gap: 6px; margin-top: 14px; padding: 0; background: none; border: 0; cursor: pointer; font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-mute); transition: color .15s ease; }
+.rd-options-toggle:hover { color: var(--ink); }
+.rd-options-chev { display: inline-block; font-size: 13px; transition: transform .18s ease; }
+.rd-options-chev.open { transform: rotate(180deg); }
+.rd-options { margin-top: 12px; padding: 16px; border: 1px solid var(--rule); border-radius: 12px; background: var(--wash); }
+.rd-options-h { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 10.5px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-dim); margin-bottom: 8px; }
+.rd-options-note { margin-top: 6px; font-family: "Instrument Sans", system-ui, sans-serif; font-size: 10.5px; color: var(--ink-dim); }
+.rd-stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 18px; margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--rule-soft); }
+.rd-stat { display: flex; flex-direction: column; gap: 2px; }
+.rd-stat span { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 9.5px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-dim); }
+.rd-stat b { font-family: "Instrument Sans", system-ui, sans-serif; font-size: 14px; font-weight: 700; color: var(--ink); }
 
 .rd-board-right { display: flex; flex-direction: column; align-items: center; }
 .rd-map { position: relative; height: clamp(400px, 56vh, 620px); width: 100%; }

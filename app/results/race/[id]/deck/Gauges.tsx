@@ -105,3 +105,62 @@ export function RaceClockRing({
     </svg>
   );
 }
+
+/**
+ * Margin box-and-whisker (OPTIONS drawer) — where the PROJECTED MARGIN could
+ * land, modeled as Normal(meanPp, sdPp). Box = interquartile range
+ * (mean ± 0.6745*sd); whiskers = ~95% interval (mean ± 1.96*sd). Axis is
+ * centered on 0 (tie); values right of 0 favor the leader, left of 0 means
+ * the runner-up would actually be ahead in that scenario — that crossover
+ * region is shaded to read as "the flip zone" at a glance.
+ */
+export function MarginWhisker({
+  meanPp,
+  sdPp,
+  leaderColor,
+  width = 320,
+  height = 64,
+}: {
+  meanPp: number; // projected margin, leader-positive
+  sdPp: number;
+  leaderColor: string;
+  width?: number;
+  height?: number;
+}) {
+  const span = Math.max(meanPp + sdPp * 2.2, sdPp * 2.2, 5); // half-axis extent, pp
+  const cy = height * 0.5;
+  const x = (pp: number) => width / 2 + (pp / span) * (width / 2 - 10);
+
+  const lo95 = meanPp - sdPp * 1.96;
+  const hi95 = meanPp + sdPp * 1.96;
+  const loIqr = meanPp - sdPp * 0.6745;
+  const hiIqr = meanPp + sdPp * 0.6745;
+  const zeroX = x(0);
+  const boxH = height * 0.34;
+
+  return (
+    <svg width={width} height={height} viewBox={`0 0 ${width} ${height}`} role="img" aria-label="Projected margin range">
+      {/* flip zone: left of the tie line */}
+      <rect x={0} y={0} width={Math.max(0, zeroX)} height={height} fill="var(--wash)" opacity={0.6} />
+      <line x1={zeroX} y1={4} x2={zeroX} y2={height - 4} stroke="var(--rule-strong, var(--rule))" strokeWidth={1.5} strokeDasharray="2 3" />
+      {/* 95% whisker */}
+      <line x1={x(lo95)} y1={cy} x2={x(hi95)} y2={cy} stroke={leaderColor} strokeWidth={1.5} opacity={0.5} />
+      <line x1={x(lo95)} y1={cy - 6} x2={x(lo95)} y2={cy + 6} stroke={leaderColor} strokeWidth={1.5} opacity={0.5} />
+      <line x1={x(hi95)} y1={cy - 6} x2={x(hi95)} y2={cy + 6} stroke={leaderColor} strokeWidth={1.5} opacity={0.5} />
+      {/* IQR box */}
+      <rect
+        x={Math.min(x(loIqr), x(hiIqr))}
+        y={cy - boxH / 2}
+        width={Math.abs(x(hiIqr) - x(loIqr))}
+        height={boxH}
+        rx={3}
+        fill={leaderColor}
+        opacity={0.28}
+        stroke={leaderColor}
+        strokeWidth={1}
+      />
+      {/* median/mean tick */}
+      <line x1={x(meanPp)} y1={cy - boxH / 2 - 3} x2={x(meanPp)} y2={cy + boxH / 2 + 3} stroke={leaderColor} strokeWidth={2} />
+    </svg>
+  );
+}
