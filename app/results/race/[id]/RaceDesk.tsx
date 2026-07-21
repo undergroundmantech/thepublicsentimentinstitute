@@ -13,12 +13,33 @@ import { useElectionIndex } from "../../onpoint/lib/electionIndex.js";
 import { useTheme } from "../../onpoint/lib/theme.jsx";
 import { WinProbabilityWheel, RaceClockRing, MarginWhisker } from "./deck/Gauges";
 import CountyTable from "./deck/CountyTable";
+import LiveTimeline from "./deck/LiveTimeline";
 import DeskSearch from "../../components/DeskSearch";
 import { needleFromRace, type NeedleProjection } from "../../components/needleModel";
 import { idToAbout } from "../../_data/raceRegistry";
 import { getRaceState, RACE_STATE_LABEL, NO_HISTORY_LINE } from "../../_lib/raceState";
 import { getRaceCapabilities } from "../../_data/raceCapabilities";
 import { buildVoteModeRows, voteModeWhyItMatters } from "../../_lib/voteModeModel";
+import type { FlightRecorderSnapshot } from "../../_lib/flightRecorder";
+
+// CO-04 §4c Zone 6 — reads flight-recorder history for the race only when
+// caps.telemetry is true. TIMELINE_PUBLIC_FLAG (raceCapabilities.ts) keeps
+// telemetry false for every race until the Nov 3 general, so this fetch is
+// dormant in practice today — the hook exists so the section is fully wired
+// once the flag flips, with no further RaceDesk changes needed.
+function useFlightHistory(raceId: number, enabled: boolean): FlightRecorderSnapshot[] {
+  const [snapshots, setSnapshots] = useState<FlightRecorderSnapshot[]>([]);
+  useEffect(() => {
+    if (!enabled || !raceId) return;
+    let alive = true;
+    fetch(`/api/flightrecorder/${raceId}`, { cache: "no-store" })
+      .then((r) => (r.ok ? r.json() : []))
+      .then((d) => { if (alive) setSnapshots(Array.isArray(d) ? d : []); })
+      .catch(() => {});
+    return () => { alive = false; };
+  }, [raceId, enabled]);
+  return snapshots;
+}
 
 const manrope = Manrope({ subsets: ["latin"], weight: ["300", "400", "500", "600", "700", "800"], variable: "--font-mp", display: "swap" });
 
@@ -207,6 +228,9 @@ function Board({ doc, primary, onMap }: { doc: any; primary?: boolean; onMap: (r
   // call yet (tpsiCalled stays false), so PROJECTED only ever comes from an
   // official CivicAPI winner flag until that model lands.
   const raceState = getRaceState({ percentReporting: reporting, hasOfficialCall: called, tpsiCalled: false });
+  // CO-04 §4c Zone 6 — dormant fetch while TIMELINE_PUBLIC_FLAG is off (see
+  // useFlightHistory above); becomes live once caps.telemetry flips true.
+  const history = useFlightHistory(Number(doc?.id), caps.telemetry);
   // CO-04 §3 Zone 3: RESULTS / MARGIN / REMAINING map toggles. REMAINING is
   // only offered where a forecast exists (caps.forecast) — otherwise there's
   // no modeled "how much is left to shift this" read to show.
@@ -366,6 +390,7 @@ function Board({ doc, primary, onMap }: { doc: any; primary?: boolean; onMap: (r
       </div>
       {caps.forecast && needle ? <Turnout needle={needle} totalVotes={totalVotes} /> : null}
       {hasMap ? <CountyTable race={race} countyModel={caps.countyModel} needle={needle} /> : null}
+      {caps.telemetry && needle && history.length > 0 ? <LiveTimeline snapshots={history} needle={needle} /> : null}
       {caps.modeData && needle ? <BallotLandscape needle={needle} /> : null}
       {about ? (
         <div className="rd-about">
@@ -747,6 +772,18 @@ body main > div > div { padding-top: 0 !important; padding-bottom: 0 !important;
 .rd-county-leader b { margin-left: 4px; font-family: "JetBrains Mono", ui-monospace, monospace; font-weight: 700; }
 .rd-county-proj { color: var(--ink-mute); font-style: italic; }
 .rd-county-loading { text-align: center; padding: 26px 14px; color: var(--ink-dim); font-style: italic; }
+
+.rd-timeline { margin-top: clamp(30px, 5vh, 46px); padding-top: clamp(22px, 3.5vh, 34px); border-top: 1px solid var(--rule-soft); }
+.rd-timeline-h { display: block; font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-dim); margin-bottom: 16px; }
+.rd-timeline-charts { display: flex; flex-direction: column; gap: 14px; }
+.rd-timeline-axis { display: flex; justify-content: space-between; margin-top: 6px; font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 10px; color: var(--ink-dim); }
+.rd-tl-chart { border: 1px solid var(--rule-soft); border-radius: 10px; padding: 10px 12px; }
+.rd-tl-chart-h { display: flex; justify-content: space-between; align-items: center; font-family: var(--font-mp), "Manrope", sans-serif; font-size: 12px; font-weight: 600; color: var(--ink-mute); text-transform: lowercase; margin-bottom: 6px; }
+.rd-tl-expand { background: none; border: 1px solid var(--rule); border-radius: 99px; padding: 2px 10px; font: inherit; font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-dim); cursor: pointer; }
+.rd-tl-expand:hover { color: var(--ink); border-color: var(--ink-dim); }
+.rd-tl-svg { width: 100%; height: 84px; display: block; touch-action: none; }
+.rd-tl-chart.expanded .rd-tl-svg { height: 180px; }
+.rd-tl-tip { display: flex; gap: 14px; margin-top: 6px; font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 11px; font-weight: 700; }
 
 .rd-ballot { margin-top: clamp(30px, 5vh, 46px); padding-top: clamp(22px, 3.5vh, 34px); border-top: 1px solid var(--rule-soft); }
 .rd-ballot-h { display: block; font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-dim); margin-bottom: 6px; }
