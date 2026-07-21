@@ -302,6 +302,7 @@ function Board({ doc, primary, onMap }: { doc: any; primary?: boolean; onMap: (r
               <div className="rd-needle-h">
                 win probability
                 <span className="rd-rule-chip">{RACE_RULE_CHIP[caps.raceRule] ?? caps.raceRule.toLowerCase()}</span>
+                <span className="rd-forecast-beta">FORECAST β</span>
               </div>
               <div className="rd-wheel-row">
                 <WinProbabilityWheel
@@ -746,6 +747,7 @@ body main > div > div { padding-top: 0 !important; padding-bottom: 0 !important;
 .rd-needle { margin-top: clamp(22px, 4vh, 34px); max-width: 360px; }
 .rd-needle-h { display: flex; align-items: center; gap: 10px; font-family: "Oswald", "Barlow Condensed", system-ui, sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-dim, rgba(241,236,225,0.38)); margin-bottom: 12px; }
 .rd-rule-chip { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.04em; text-transform: none; color: var(--ink-mute); background: var(--wash); border: 1px solid var(--rule); border-radius: 999px; padding: 3px 9px; }
+.rd-forecast-beta { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 8px; font-weight: 700; letter-spacing: 0.08em; text-transform: none; color: #a78bfa; background: rgba(124,58,237,0.10); border: 1px solid rgba(124,58,237,0.45); border-radius: 999px; padding: 2px 6px; margin-left: auto; }
 .rd-wheel-row { display: flex; align-items: center; gap: 18px; }
 .rd-wheel-legend { display: flex; flex-direction: column; gap: 8px; flex: 1; min-width: 0; }
 .rd-wheel-leg-row { display: flex; align-items: center; gap: 8px; font-family: "Instrument Sans", system-ui, sans-serif; font-size: 13px; color: var(--ink); }
