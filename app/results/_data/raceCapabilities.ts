@@ -90,6 +90,17 @@ export function getRaceCapabilities(
 export function isRecorderInScope(tier: RaceTier): boolean {
   return tier >= 3;
 }
+
+/** Race ids the flight recorder (§6) should poll and capture: every registry
+ *  override whose resolved tier is 3+. Only covers hand-registered races (the
+ *  same small set Command Deck features are gated on) — the recorder has no
+ *  season-wide crawl, matching the scope guard's "never the local board"
+ *  intent. */
+export function getRecorderRaceIds(): number[] {
+  return Object.entries(RACE_CAPABILITY_OVERRIDES)
+    .filter(([, override]) => isRecorderInScope((override?.tier ?? 2) as RaceTier))
+    .map(([id]) => Number(id));
+}
 // --- Heuristic tier classification for hub-page ranking -------------------
 //
 // RACE_CAPABILITY_OVERRIDES above only covers a handful of hand-registered

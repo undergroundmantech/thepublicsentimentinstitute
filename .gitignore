@@ -43,3 +43,6 @@ next-env.d.ts
 # the elections iOS app (Capacitor) — separate project, 500MB+ of node_modules/ios; never ship with the site
 /mobile/
 scripts/forecast/raw/
+
+# flight recorder (CO-04 §6) — runtime snapshot blobs, not source
+data/flightrecorder/*.json
