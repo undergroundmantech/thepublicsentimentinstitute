@@ -17,8 +17,18 @@ import LiveTimeline from "./deck/LiveTimeline";
 import DeskSearch from "../../components/DeskSearch";
 import { needleFromRace, type NeedleProjection } from "../../components/needleModel";
 import { idToAbout } from "../../_data/raceRegistry";
-import { getRaceState, RACE_STATE_LABEL, NO_HISTORY_LINE } from "../../_lib/raceState";
+import {
+  getRaceState,
+  RACE_STATE_LABEL,
+  NO_HISTORY_LINE,
+  getEffectivePollsCloseIso,
+  getMsLeftToClose,
+  formatCountdown,
+} from "../../_lib/raceState";
 import { getRaceCapabilities } from "../../_data/raceCapabilities";
+
+const CIVIC_BASE = "https://civicapi.org";
+const RACE_REFRESH_MS = 30_000;
 import { buildVoteModeRows, voteModeWhyItMatters } from "../../_lib/voteModeModel";
 import type { FlightRecorderSnapshot } from "../../_lib/flightRecorder";
 
@@ -67,6 +77,22 @@ function fmtDate(iso?: string) {
   const d = new Date(iso + "T00:00:00");
   if (isNaN(d.getTime())) return iso;
   return d.toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric", year: "numeric" });
+}
+
+// CO-04 §7 parity: V1's poll-close countdown had a timestamp bug (rendered
+// implausible spans like "20635d ..." when the API's polls_close was
+// missing/placeholder). Ticks its own interval so the rest of the board
+// doesn't re-render every second; getMsLeftToClose() clamps anything over
+// MAX_SANE_COUNTDOWN_DAYS to null instead of rendering garbage.
+function PollCountdown({ closeIso }: { closeIso: string | null }) {
+  const [now, setNow] = useState(() => Date.now());
+  useEffect(() => {
+    if (!closeIso) return;
+    const t = setInterval(() => setNow(Date.now()), 1000);
+    return () => clearInterval(t);
+  }, [closeIso]);
+  const msLeft = getMsLeftToClose(closeIso, now);
+  return <span className="rd-meta-val rd-countdown">{formatCountdown(msLeft)}</span>;
 }
 
 
@@ -235,6 +261,10 @@ function Board({ doc, primary, onMap }: { doc: any; primary?: boolean; onMap: (r
   // only offered where a forecast exists (caps.forecast) — otherwise there's
   // no modeled "how much is left to shift this" read to show.
   const [mapMode, setMapMode] = useState<"results" | "margin" | "remaining">("margin");
+  // CO-04 §7 parity — poll-close countdown, API value only (no race/state
+  // override table maintained yet); getEffectivePollsCloseIso/getMsLeftToClose
+  // clamp implausible values instead of rendering them (the V1 timestamp bug).
+  const pollsCloseIso = getEffectivePollsCloseIso({ apiIso: race?.polls_close ?? null });
   return (
     <section className={`rd-board ${primary ? "primary" : ""}`}>
       <header className="rd-board-h">
@@ -257,6 +287,12 @@ function Board({ doc, primary, onMap }: { doc: any; primary?: boolean; onMap: (r
             {RACE_STATE_LABEL[raceState]}
           </span>
         </div>
+        {pollsCloseIso ? (
+          <div className="rd-meta-item">
+            <span className="rd-meta-label">polls close</span>
+            <PollCountdown closeIso={pollsCloseIso} />
+          </div>
+        ) : null}
       </div>
       <div className={`rd-board-grid ${hasMap ? "" : "nomap"}`}>
         <div className="rd-board-left">
@@ -537,6 +573,39 @@ function Desk() {
     return [doc, ...sibs].sort((a, b) => boardRank(a) - boardRank(b)).slice(0, 3);
   }, [doc, index]);
 
+  // CO-04 §7 parity — "AUTO-REFRESH 30s indicator": the season index is a
+  // static snapshot fetched once per page load, so without this the board(s)
+  // on this page would never update after the initial load. Direct CivicAPI
+  // passthrough, same pattern as the results hub / local board — no storage.
+  const [liveRaces, setLiveRaces] = useState<Record<string, any>>({});
+  const boardIds = boards.map((b: any) => b.id).join(",");
+  useEffect(() => {
+    if (!boardIds) return;
+    let alive = true;
+    async function fetchAll() {
+      await Promise.all(
+        boardIds.split(",").map(async (id) => {
+          try {
+            const res = await fetch(`${CIVIC_BASE}/api/v2/race/${id}`, { cache: "no-store" });
+            if (!res.ok) return;
+            const d = await res.json();
+            if (alive) setLiveRaces((prev) => ({ ...prev, [id]: d }));
+          } catch {}
+        })
+      );
+    }
+    fetchAll();
+    const t = setInterval(fetchAll, RACE_REFRESH_MS);
+    return () => {
+      alive = false;
+      clearInterval(t);
+    };
+  }, [boardIds]);
+  const liveBoards = useMemo(
+    () => boards.map((b: any) => (liveRaces[b.id] ? { ...b, race: liveRaces[b.id] } : b)),
+    [boards, liveRaces]
+  );
+
   const openMap = (race: any) => {
     try { history.pushState({}, "", `/results/race/${raceId}?map=1`); } catch {}
     setMapRace(race);
@@ -581,7 +650,7 @@ function Desk() {
               <p className="rd-meta">{meta}</p>
             </header>
 
-            {boards.map((b: any, i: number) => (
+            {liveBoards.map((b: any, i: number) => (
               <Board key={b.id} doc={b} primary={i === 0} onMap={openMap} />
             ))}
 
