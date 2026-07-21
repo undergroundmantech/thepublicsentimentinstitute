@@ -12,6 +12,8 @@ import {
   tonePalette,
   regionFill,
   shade,
+  nodataFill,
+  regionVotes,
 } from "../onpoint/electionLib.js";
 
 // The race page's county map with the precinct app's EXACT hover tooltip
@@ -29,7 +31,49 @@ const fmtInt = (n: number) => Math.round(Number(n) || 0).toLocaleString("en-US")
 
 type Shape = { d: string; fill: string; faint: boolean; name: string; region: any };
 
-export default function RaceMapHover({ race }: { race: any }) {
+/** CO-04 §3 Zone 3: RESULTS / MARGIN / REMAINING map toggles. RESULTS is a
+ *  flat leader-color read (who's ahead, no shading); MARGIN is the original
+ *  mapShade-graded fill (intensity = lead size, same as the hub thumbnail);
+ *  REMAINING (forecast-tier only) shades by how much vote is still
+ *  outstanding in that county (100 - percent_reporting). */
+export type CountyMapMode = "results" | "margin" | "remaining";
+
+const rgbOf = (h: string) => {
+  const x = h.replace("#", "");
+  return [0, 2, 4].map((i) => parseInt(x.slice(i, i + 2), 16));
+};
+const hexOf = (a: number[]) =>
+  "#" + a.map((v) => Math.max(0, Math.min(255, Math.round(v))).toString(16).padStart(2, "0")).join("");
+const mixHex = (a: string, b: string, t: number) => {
+  const A = rgbOf(a), B = rgbOf(b);
+  return hexOf(A.map((v, i) => v + (B[i] - v) * t));
+};
+const isLightTheme = () =>
+  typeof document !== "undefined" && document.documentElement.dataset.opaTheme === "light";
+
+/** REMAINING mode fill: neutral base -> amber accent as more vote is still outstanding. */
+function remainingFill(region: any): string {
+  if (!region) return nodataFill();
+  const reporting = Math.max(0, Math.min(100, Number(region.percent_reporting) || 0));
+  const outstanding = (100 - reporting) / 100;
+  const base = isLightTheme() ? "#eef0f4" : "#20222b";
+  return mixHex(base, "#f5b544", 0.12 + 0.7 * outstanding);
+}
+
+/** RESULTS mode fill: flat, fully-saturated leader color — "who's ahead"
+ *  at a glance, no margin-size shading (that's what MARGIN mode is for). */
+function flatLeaderFill(region: any, nameToColor: Record<string, string>): string {
+  const votes = regionVotes(region);
+  const reporting = Number(region?.percent_reporting) || 0;
+  if (votes <= 0 && reporting <= 0) return nodataFill();
+  const cs = [...(region.candidates || [])].sort((a: any, b: any) => (b.votes || 0) - (a.votes || 0));
+  const localWin = cs[0];
+  if (!localWin || (localWin.votes || 0) <= 0 || votes <= 0) return nodataFill();
+  const key = String(localWin.name || "").trim().toLowerCase();
+  return (nameToColor && nameToColor[key]) || candColor(localWin);
+}
+
+export default function RaceMapHover({ race, mode = "margin" }: { race: any; mode?: CountyMapMode }) {
   const [shapes, setShapes] = useState<Shape[] | null>(null);
   const [failed, setFailed] = useState(false);
   const [hover, setHover] = useState<{ i: number; x: number; y: number } | null>(null);
@@ -65,9 +109,16 @@ export default function RaceMapHover({ race }: { race: any }) {
           const nm = id.slice(id.indexOf("-") + 1).replace(/_/g, " ");
           const region = byKey[regionKey(race.province, nm) || ""] || null;
           const pretty = region?.name || nm.toLowerCase().replace(/\b\w/g, (m: string) => m.toUpperCase());
+          const fill = !region
+            ? "rgba(244,244,239,0.04)"
+            : mode === "remaining"
+            ? remainingFill(region)
+            : mode === "results"
+            ? flatLeaderFill(region, nameToColor)
+            : regionFill(region, nameToColor);
           return {
             d: geomToPath(f.geometry, proj.project),
-            fill: region ? regionFill(region, nameToColor) : "rgba(244,244,239,0.04)",
+            fill,
             faint: !region,
             name: pretty,
             region,
@@ -79,7 +130,7 @@ export default function RaceMapHover({ race }: { race: any }) {
       }
     })();
     return () => { alive = false; ac.abort(); };
-  }, [race?.id, race?.province]);
+  }, [race?.id, race?.province, mode]);
 
   const onMove = (i: number) => (e: React.MouseEvent) => {
     const wrap = wrapRef.current;

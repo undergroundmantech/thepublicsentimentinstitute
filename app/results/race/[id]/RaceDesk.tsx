@@ -177,6 +177,10 @@ function Board({ doc, primary, onMap }: { doc: any; primary?: boolean; onMap: (r
   // official CivicAPI winner flag until that model lands.
   const raceState = getRaceState({ percentReporting: reporting, hasOfficialCall: called, tpsiCalled: false });
   const caps = getRaceCapabilities(Number(doc?.id));
+  // CO-04 §3 Zone 3: RESULTS / MARGIN / REMAINING map toggles. REMAINING is
+  // only offered where a forecast exists (caps.forecast) — otherwise there's
+  // no modeled "how much is left to shift this" read to show.
+  const [mapMode, setMapMode] = useState<"results" | "margin" | "remaining">("margin");
   return (
     <section className={`rd-board ${primary ? "primary" : ""}`}>
       <header className="rd-board-h">
@@ -290,8 +294,28 @@ function Board({ doc, primary, onMap }: { doc: any; primary?: boolean; onMap: (r
         <div className="rd-board-right">
           {hasMap ? (
             <>
+              <div className="rd-map-toggles" role="group" aria-label="County map view">
+                <button type="button" className={mapMode === "results" ? "on" : ""} onClick={() => setMapMode("results")}>results</button>
+                <button type="button" className={mapMode === "margin" ? "on" : ""} onClick={() => setMapMode("margin")}>margin</button>
+                {caps.forecast ? (
+                  <button type="button" className={mapMode === "remaining" ? "on" : ""} onClick={() => setMapMode("remaining")}>remaining</button>
+                ) : null}
+              </div>
               <div className="rd-map">
-                <RaceMapHover race={race} />
+                <RaceMapHover race={race} mode={mapMode} />
+              </div>
+              <div className="rd-map-legend" aria-hidden>
+                {mapMode === "remaining" ? (
+                  <>
+                    <span className="rd-map-legend-sw" style={{ background: "linear-gradient(90deg, var(--wash), #f5b544)" }} />
+                    <span>more vote outstanding →</span>
+                  </>
+                ) : (
+                  <>
+                    <span className="rd-map-legend-sw" style={{ background: "linear-gradient(90deg, var(--wash), var(--ink-dim))" }} />
+                    <span>{mapMode === "margin" ? "closer → wider margin" : "county leader (flat)"}</span>
+                  </>
+                )}
               </div>
               <button type="button" className="rd-map-cta" onClick={() => onMap(race)}>
                 open the precinct map <span aria-hidden>→</span>
@@ -540,11 +564,16 @@ body main > div > div { padding-top: 0 !important; padding-bottom: 0 !important;
 .rd-stat span { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 9.5px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-dim); }
 .rd-stat b { font-family: "Instrument Sans", system-ui, sans-serif; font-size: 14px; font-weight: 700; color: var(--ink); }
 
-.rd-board-right { display: flex; flex-direction: column; align-items: center; }
+.rd-board-right { display: flex; flex-direction: column; align-items: center; width: 100%; }
+.rd-map-toggles { display: flex; align-self: flex-start; gap: 4px; margin-bottom: 10px; padding: 3px; border-radius: 999px; background: var(--wash); border: 1px solid var(--rule); }
+.rd-map-toggles button { padding: 5px 13px; border-radius: 999px; border: 0; background: none; cursor: pointer; font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 10.5px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-dim); transition: background .15s ease, color .15s ease; }
+.rd-map-toggles button.on { background: var(--ink); color: var(--page); }
 .rd-map { position: relative; height: clamp(400px, 56vh, 620px); width: 100%; }
 .rd-map::before { content: ''; position: absolute; inset: -8% -4%; border-radius: 40px; background: radial-gradient(58% 58% at 50% 46%, rgba(106,108,255,0.14), transparent 72%); filter: blur(28px); pointer-events: none; }
 .rd-map .opa-er-map { position: absolute; inset: 0; width: 100%; height: 100%; }
 .rd-map .opa-er-mapvig { display: none; }
+.rd-map-legend { display: flex; align-self: flex-start; align-items: center; gap: 8px; margin-top: 12px; font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 10px; letter-spacing: 0.04em; color: var(--ink-dim); }
+.rd-map-legend-sw { width: 46px; height: 5px; border-radius: 99px; flex-shrink: 0; }
 /* quiet editorial link — no pill, no mono shouting */
 .rd-map-cta { position: relative; z-index: 2; display: inline-flex; align-items: center; gap: 8px; margin-top: 18px; padding: 0 1px 3px; cursor: pointer; background: none; border: 0; border-bottom: 1px solid color-mix(in srgb, var(--ink) 22%, transparent); font-family: var(--font-mp), "Manrope", sans-serif; font-size: 14.5px; font-weight: 600; letter-spacing: -0.01em; color: var(--ink); transition: border-color .2s ease; }
 .rd-map-cta:hover { border-color: #b7ff00; }
