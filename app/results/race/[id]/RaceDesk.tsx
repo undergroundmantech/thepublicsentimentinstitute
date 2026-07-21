@@ -12,6 +12,7 @@ import { raceHasMap, candColor, shade } from "../../onpoint/electionLib.js";
 import { useElectionIndex } from "../../onpoint/lib/electionIndex.js";
 import { useTheme } from "../../onpoint/lib/theme.jsx";
 import { WinProbabilityWheel, RaceClockRing, MarginWhisker } from "./deck/Gauges";
+import CountyTable from "./deck/CountyTable";
 import DeskSearch from "../../components/DeskSearch";
 import { needleFromRace, type NeedleProjection } from "../../components/needleModel";
 import { idToAbout } from "../../_data/raceRegistry";
@@ -332,6 +333,7 @@ function Board({ doc, primary, onMap }: { doc: any; primary?: boolean; onMap: (r
         </div>
       </div>
       {caps.forecast && needle ? <Turnout needle={needle} totalVotes={totalVotes} /> : null}
+      {hasMap ? <CountyTable race={race} countyModel={caps.countyModel} needle={needle} /> : null}
       {about ? (
         <div className="rd-about">
           <span className="rd-about-h">about this race</span>
@@ -642,6 +644,28 @@ body main > div > div { padding-top: 0 !important; padding-bottom: 0 !important;
 .rd-turnout-track-total { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 12px; color: var(--ink-mute); white-space: nowrap; }
 .rd-turnout-track-total small { font-size: 9px; letter-spacing: 0.06em; color: var(--ink-dim); }
 .rd-turnout-read { margin-top: 18px; font-family: "Instrument Sans", system-ui, sans-serif; font-size: 13.5px; line-height: 1.55; color: var(--ink-mute); max-width: 62ch; }
+
+/* Zone 5 — Results by County (§3, two-variant PROJ. MARGIN rule §0.3) */
+.rd-county { margin-top: clamp(30px, 5vh, 46px); padding-top: clamp(22px, 3.5vh, 34px); border-top: 1px solid var(--rule-soft); }
+.rd-county-h { display: block; font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-dim); margin-bottom: 16px; }
+.rd-county-tools { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 14px; }
+.rd-county-search { display: flex; align-items: center; gap: 8px; padding: 8px 13px; border-radius: 10px; background: var(--wash); border: 1px solid var(--rule); color: var(--ink-dim); min-width: 200px; }
+.rd-county-search input { flex: 1; min-width: 0; background: none; border: 0; outline: none; color: var(--ink); font-family: "Instrument Sans", system-ui, sans-serif; font-size: 13px; }
+.rd-county-search input::placeholder { color: var(--ink-dim); }
+.rd-county-sorts { display: flex; gap: 4px; padding: 3px; border-radius: 999px; background: var(--wash); border: 1px solid var(--rule); }
+.rd-county-sorts button { padding: 5px 12px; border-radius: 999px; border: 0; background: none; cursor: pointer; font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-dim); transition: background .15s ease, color .15s ease; }
+.rd-county-sorts button.on { background: var(--ink); color: var(--page); }
+.rd-county-tablewrap { max-height: 480px; overflow: auto; border: 1px solid var(--rule-soft); border-radius: 12px; }
+.rd-county-table { width: 100%; border-collapse: collapse; font-family: "Instrument Sans", system-ui, sans-serif; font-size: 13px; }
+.rd-county-table thead th { position: sticky; top: 0; z-index: 1; background: var(--wash); backdrop-filter: blur(6px); text-align: left; padding: 10px 14px; font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 9.5px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-dim); border-bottom: 1px solid var(--rule); }
+.rd-county-table th.num, .rd-county-table td.num { text-align: right; font-variant-numeric: tabular-nums; }
+.rd-county-table td { padding: 10px 14px; border-bottom: 1px solid var(--rule-soft); color: var(--ink); white-space: nowrap; }
+.rd-county-table tbody tr:last-child td { border-bottom: 0; }
+.rd-county-leader { display: inline-flex; align-items: center; gap: 8px; }
+.rd-county-leader i { width: 8px; height: 8px; border-radius: 2px; flex-shrink: 0; }
+.rd-county-leader b { margin-left: 4px; font-family: "JetBrains Mono", ui-monospace, monospace; font-weight: 700; }
+.rd-county-proj { color: var(--ink-mute); font-style: italic; }
+.rd-county-loading { text-align: center; padding: 26px 14px; color: var(--ink-dim); font-style: italic; }
 
 .rd-about { margin-top: clamp(26px, 4vh, 40px); padding-top: clamp(20px, 3vh, 30px); border-top: 1px solid var(--rule-soft); }
 .rd-about-h { display: block; font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-dim); margin-bottom: 10px; }
