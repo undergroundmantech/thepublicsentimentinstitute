@@ -581,13 +581,30 @@ export default function DeskSphere({
 
     const tick = (now: number) => {
       if (!alive || !running) return;
+      try {
+        renderTick(now);
+      } catch (err) {
+        // a bad race/geometry must never permanently freeze the whole wall —
+        // log it, drop this frame, and keep the loop alive.
+        console.warn("DeskSphere: render tick error, skipping frame", err);
+      } finally {
+        if (alive && running) raf = requestAnimationFrame(tick);
+      }
+    };
 
+    const renderTick = (now: number) => {
       if (geoFeats && fontsReady) {
         let n = 0;
         while (paintCursor < cells.length && n < 2) {
           const cell = cells[paintCursor];
-          cell.mat.map = paintDoc(cell.doc);
-          cell.mat.needsUpdate = true;
+          try {
+            cell.mat.map = paintDoc(cell.doc);
+            cell.mat.needsUpdate = true;
+          } catch (err) {
+            // one malformed board's texture must never stop the rest of the
+            // wall from painting — skip it and move on.
+            console.warn("DeskSphere: skipped a board texture", cell.doc?.id, err);
+          }
           cell.painted = true;
           cell.bornAt = now + (paintCursor % COLS) * 22 + Math.floor(paintCursor / COLS) * 46;
           paintCursor++;
@@ -659,8 +676,6 @@ export default function DeskSphere({
       const k = 1 - exitP * 0.92;
       renderer.domElement.style.opacity = String(Math.max(0.06, k));
       renderer.domElement.style.transform = `scale(${1 - exitP * 0.045})`;
-
-      raf = requestAnimationFrame(tick);
     };
     raf = requestAnimationFrame(tick);
 

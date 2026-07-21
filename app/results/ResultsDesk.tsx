@@ -46,6 +46,13 @@ const surname = (n?: string) => (n ? n.trim().split(/\s+/).pop() : "");
 // a night with ~34k races reporting.
 const tierOf = (d: any) => classifyRaceTier(d?.contest, d?.office);
 const byTierThenVotes = (a: any, b: any) => (tierOf(b) - tierOf(a)) || ((b.totalVotes || 0) - (a.totalVotes || 0));
+// "races we actually cover" — excludes down-ballot/local noise (tier 2: county
+// clerk, school board, municipal, judicial…), which already has its own
+// dedicated page at /results/local (Phase D). Tier 3+ = President/US Senate/
+// Governor/US House/other statewide races — what TPSI's polling & forecast
+// desk actually tracks. Used throughout the hub so the hero wall, ticker,
+// docket and forecast rail only ever surface real coverage.
+const isCovered = (d: any) => tierOf(d) >= 3;
 
 // ── reveal-on-scroll + lazy-in-view (one IO per element, once) ──────────────
 function useInView(rootMargin = "-12% 0px"): [React.RefObject<HTMLElement | null>, boolean] {
@@ -219,16 +226,16 @@ function Desk() {
 
   const featured = useMemo(() => {
     if (!index) return null;
-    const withMap = index.docs.filter((d: any) => d.hasResult && raceHasMap(d.race));
+    const withMap = index.docs.filter((d: any) => d.hasResult && raceHasMap(d.race) && isCovered(d));
     withMap.sort(byTierThenVotes);
-    return withMap[0] || index.docs.find((d: any) => d.hasResult) || index.docs[0] || null;
+    return withMap[0] || index.docs.find((d: any) => d.hasResult && isCovered(d)) || index.docs.find((d: any) => d.hasResult) || index.docs[0] || null;
   }, [index]);
 
   // The lead precinct map (live ESRI tiles): the single richest geography we
   // have, so its partisan-lean basemap reads purple. Held static — the anchor.
   const precinctLead = useMemo(() => {
     if (!index) return null;
-    const withMap = index.docs.filter((d: any) => d.hasResult && raceHasMap(d.race) && d.id !== featured?.race?.id);
+    const withMap = index.docs.filter((d: any) => d.hasResult && raceHasMap(d.race) && d.id !== featured?.race?.id && isCovered(d));
     withMap.sort(byTierThenVotes);
     return withMap[0] || null;
   }, [index, featured]);
@@ -244,7 +251,7 @@ function Desk() {
     const isStatewide = (d: any) =>
       String(d.office || "").toLowerCase() === "statewide" ||
       (WIDE_RE.test(String(d.contest || "")) && !LOCAL_RE.test(String(d.contest || "")));
-    const eligible = index.docs.filter((d: any) => d.hasResult && raceHasMap(d.race) && d.leader?.cand && d.id !== leadId);
+    const eligible = index.docs.filter((d: any) => d.hasResult && raceHasMap(d.race) && d.leader?.cand && d.id !== leadId && isCovered(d));
     const tierPick = (docs: any[], max: number) => {
       const byState = new Map<string, any>();
       for (const d of docs) {
@@ -286,7 +293,7 @@ function Desk() {
   const deckBacks = useMemo(() => {
     if (!index) return [] as any[];
     const top = index.docs
-      .filter((d: any) => d.hasResult && raceHasMap(d.race) && d.race?.has_map && d.id !== featured?.race?.id)
+      .filter((d: any) => d.hasResult && raceHasMap(d.race) && d.race?.has_map && d.id !== featured?.race?.id && isCovered(d))
       .sort(byTierThenVotes);
     const out: any[] = [];
     const seen = new Set<string>([String(featured?.race?.province || "")]);
@@ -311,7 +318,7 @@ function Desk() {
     const seen = new Set<string>();
     const out: any[] = [];
     const pool = index.docs
-      .filter((d: any) => d.hasResult && d.leader?.cand && (d.totalVotes || 0) > 1000)
+      .filter((d: any) => d.hasResult && d.leader?.cand && (d.totalVotes || 0) > 1000 && isCovered(d))
       .sort(byTierThenVotes);
     for (const d of pool) {
       const st = String(d.province || "");
@@ -326,7 +333,7 @@ function Desk() {
   // races mid-count right now (0 < reporting < 100) — the "live" readout
   const liveNow = useMemo(() => {
     if (!index) return 0;
-    return index.docs.filter((d: any) => d.hasResult && (d.reporting || 0) > 0 && (d.reporting || 0) < 100).length;
+    return index.docs.filter((d: any) => d.hasResult && (d.reporting || 0) > 0 && (d.reporting || 0) < 100 && isCovered(d)).length;
   }, [index]);
 
   // states with real returns — the hero map only tours places we actually have
@@ -334,7 +341,7 @@ function Desk() {
     if (!index) return [] as string[];
     const seen = new Set<string>();
     for (const d of index.docs) {
-      if (d.hasResult && raceHasMap(d.race)) seen.add(String(d.province || "").toUpperCase());
+      if (d.hasResult && raceHasMap(d.race) && isCovered(d)) seen.add(String(d.province || "").toUpperCase());
     }
     seen.delete("");
     return [...seen];
@@ -346,31 +353,21 @@ function Desk() {
   const sphereDocs = useMemo(() => {
     if (!index) return [] as any[];
     const hash = (s: string) => { let h = 5381; for (let i = 0; i < s.length; i++) h = ((h << 5) + h + s.charCodeAt(i)) >>> 0; return h; };
-    const LOCAL = /county|township|city of|village|borough|parish|school|district court|circuit|municipal/i;
-    const base = index.docs.filter((d: any) => d.hasResult && d.leader?.cand && d.province && raceHasMap(d.race));
-    const take = (list: any[], cap: number, per: number) => {
-      const perState = new Map<string, number>();
-      const out: any[] = [];
-      for (const d of list) {
-        const st = String(d.province).toUpperCase();
-        const n = perState.get(st) || 0;
-        if (n >= per) continue;
-        perState.set(st, n + 1);
-        out.push(d);
-        if (out.length >= cap) break;
-      }
-      return out;
-    };
-    const big = take(
-      base.filter((d: any) => !LOCAL.test(`${d.contest || ""} ${d.office || ""}`)).sort((a: any, b: any) => (b.totalVotes || 0) - (a.totalVotes || 0)),
-      56, 3
-    );
-    const seen = new Set(big.map((d: any) => d.id));
-    const local = take(
-      base.filter((d: any) => !seen.has(d.id) && LOCAL.test(`${d.contest || ""} ${d.office || ""}`)).sort((a: any, b: any) => (b.totalVotes || 0) - (a.totalVotes || 0)),
-      34, 3
-    );
-    const out = [...big, ...local];
+    // races we actually cover (President/US Senate/Governor/US House/other
+    // statewide), capped 3-per-state so the wall reads as a real editorial
+    // cross-section instead of one state's down-ballot ballot line items.
+    // Local/county/school races have their own home at /results/local.
+    const base = index.docs.filter((d: any) => d.hasResult && d.leader?.cand && d.province && raceHasMap(d.race) && isCovered(d));
+    const perState = new Map<string, number>();
+    const out: any[] = [];
+    for (const d of [...base].sort(byTierThenVotes)) {
+      const st = String(d.province).toUpperCase();
+      const n = perState.get(st) || 0;
+      if (n >= 3) continue;
+      perState.set(st, n + 1);
+      out.push(d);
+      if (out.length >= 90) break;
+    }
     out.sort((a: any, b: any) => hash(String(a.id)) - hash(String(b.id)));
     return out;
   }, [index]);
@@ -380,7 +377,7 @@ function Desk() {
   const tonight = useMemo(() => {
     if (!index) return null;
     const nightOf = (date: string, mode: "tonight" | "latest") => {
-      const docs = index.docs.filter((d: any) => d.date === date);
+      const docs = index.docs.filter((d: any) => d.date === date && isCovered(d));
       // statewide/biggest first, one per state up front, then the rest
       const top = [...docs].sort((a: any, b: any) => (b.totalVotes || 0) - (a.totalVotes || 0));
       const seen = new Set<string>();
@@ -432,6 +429,9 @@ function Desk() {
   }, [index]);
 
   const count = index?.count || 0;
+  // hero headline count — races TPSI actually covers, not CivicAPI's full
+  // season firehose (which includes every county/township/school contest).
+  const coveredCount = useMemo(() => (index ? index.docs.filter(isCovered).length : 0), [index]);
 
   const openRace = (race: any) => { if (race?.id != null) router.push(`/results/race/${race.id}`); };
   const onPick = (doc: any) => openRace(doc.race);
@@ -471,7 +471,7 @@ function Desk() {
     if (!index) return [] as any[];
     const close = index.docs
       .filter((d: any) => {
-        if (!d.hasResult || !Array.isArray(d.race?.candidates) || d.race.candidates.length < 2) return false;
+        if (!d.hasResult || !isCovered(d) || !Array.isArray(d.race?.candidates) || d.race.candidates.length < 2) return false;
         const cs = [...d.race.candidates].sort((a: any, b: any) => (b.votes || 0) - (a.votes || 0));
         const lead = (cs[0]?.percent || 0) - (cs[1]?.percent || 0);
         return lead > 0.2 && lead < 15 && (d.totalVotes || 0) > 5000;
@@ -527,7 +527,7 @@ function Desk() {
       <div className="desk-status">
         <div className="desk-shell desk-status-in">
           <span className="desk-status-l"><span className="desk-pip" aria-hidden /> LIVE DESK <em>·</em> 2026 SEASON</span>
-          <span className="desk-status-r">{count ? `${fmtInt(count)} contests` : "loading the season"} <em>·</em> auto-refresh 14s</span>
+          <span className="desk-status-r">{coveredCount ? `${fmtInt(coveredCount)} contests` : "loading the season"} <em>·</em> auto-refresh 14s</span>
         </div>
       </div>
 
@@ -546,7 +546,7 @@ function Desk() {
               election desk<em>.</em>
             </h1>
             <p className="desk-orb-lede" data-rise style={{ animationDelay: "0.18s" }}>
-              {count ? `${fmtInt(count)} contests` : "every contest"} · live returns, county maps &amp; forecasts · 2026 season
+              {coveredCount ? `${fmtInt(coveredCount)} contests` : "every contest"} · live returns, county maps &amp; forecasts · 2026 season
             </p>
           </div>
 
