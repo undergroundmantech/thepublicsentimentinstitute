@@ -18,6 +18,7 @@ import { needleFromRace, type NeedleProjection } from "../../components/needleMo
 import { idToAbout } from "../../_data/raceRegistry";
 import { getRaceState, RACE_STATE_LABEL, NO_HISTORY_LINE } from "../../_lib/raceState";
 import { getRaceCapabilities } from "../../_data/raceCapabilities";
+import { buildVoteModeRows, voteModeWhyItMatters } from "../../_lib/voteModeModel";
 
 const manrope = Manrope({ subsets: ["latin"], weight: ["300", "400", "500", "600", "700", "800"], variable: "--font-mp", display: "swap" });
 
@@ -365,6 +366,7 @@ function Board({ doc, primary, onMap }: { doc: any; primary?: boolean; onMap: (r
       </div>
       {caps.forecast && needle ? <Turnout needle={needle} totalVotes={totalVotes} /> : null}
       {hasMap ? <CountyTable race={race} countyModel={caps.countyModel} needle={needle} /> : null}
+      {caps.modeData && needle ? <BallotLandscape needle={needle} /> : null}
       {about ? (
         <div className="rd-about">
           <span className="rd-about-h">about this race</span>
@@ -418,6 +420,46 @@ function Turnout({ needle, totalVotes }: { needle: NeedleProjection; totalVotes:
         {needle.leaderName} is projected to receive about {fmtInt(leaderGain)} more outstanding votes
         {runnerGain > 0 ? ` (vs. ~${fmtInt(runnerGain)} for ${needle.runnerName})` : ""}, {widening ? "expanding" : "narrowing"} the lead to ~{fmtInt(projectedMarginVotes)} votes.
       </p>
+    </div>
+  );
+}
+
+/** CO-04 §4b Zone 7 — Remaining Ballot Landscape (modeData:true only). Vote
+ *  mode splits are a MODELED PLACEHOLDER (app/results/_lib/voteModeModel.ts)
+ *  — CivicAPI publishes no Early/VBM/Election Day breakdown for any race
+ *  this app consumes. Ships now (owner decision 2026-07-21) so the section
+ *  is exercised ahead of Nov 3; swappable for a real feed later without
+ *  touching this component. */
+function BallotLandscape({ needle }: { needle: NeedleProjection }) {
+  const rows = useMemo(() => buildVoteModeRows(needle), [needle]);
+  return (
+    <div className="rd-ballot">
+      <span className="rd-ballot-h">remaining ballot landscape</span>
+      <p className="rd-ballot-sub">modeled split — not an official CivicAPI mode breakdown</p>
+      {rows.map((r) => (
+        <div key={r.mode} className="rd-ballot-row">
+          <span className="rd-ballot-mode">{r.mode}</span>
+          <div className="rd-ballot-meta">
+            <span>~{fmtInt(r.estRemaining)} remaining</span>
+            <span>{r.pctCounted}% counted</span>
+          </div>
+          <div className="rd-ballot-bar" aria-hidden>
+            <i style={{ width: `${Math.max(0, Math.min(100, r.leaderSharePct))}%`, background: needle.leaderColor }} />
+            <i
+              style={{
+                left: `${Math.max(0, Math.min(100, r.leaderSharePct))}%`,
+                width: `${Math.max(0, Math.min(100 - r.leaderSharePct, r.runnerSharePct))}%`,
+                background: needle.runnerColor,
+              }}
+            />
+          </div>
+          <div className="rd-ballot-split">
+            <span style={{ color: needle.leaderColor }}>{needle.leaderName} {r.leaderSharePct.toFixed(1)}%</span>
+            <span style={{ color: needle.runnerColor }}>{needle.runnerName} {r.runnerSharePct.toFixed(1)}%</span>
+          </div>
+        </div>
+      ))}
+      <p className="rd-ballot-note">{voteModeWhyItMatters(needle)}</p>
     </div>
   );
 }
@@ -705,6 +747,18 @@ body main > div > div { padding-top: 0 !important; padding-bottom: 0 !important;
 .rd-county-leader b { margin-left: 4px; font-family: "JetBrains Mono", ui-monospace, monospace; font-weight: 700; }
 .rd-county-proj { color: var(--ink-mute); font-style: italic; }
 .rd-county-loading { text-align: center; padding: 26px 14px; color: var(--ink-dim); font-style: italic; }
+
+.rd-ballot { margin-top: clamp(30px, 5vh, 46px); padding-top: clamp(22px, 3.5vh, 34px); border-top: 1px solid var(--rule-soft); }
+.rd-ballot-h { display: block; font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-dim); margin-bottom: 6px; }
+.rd-ballot-sub { margin: 0 0 16px; font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 10px; letter-spacing: 0.04em; color: var(--ink-dim); }
+.rd-ballot-row { display: grid; grid-template-columns: 110px minmax(0,1fr); grid-template-areas: "mode meta" "bar bar" "split split"; row-gap: 6px; align-items: center; padding: 14px 0; border-bottom: 1px dashed var(--rule); }
+.rd-ballot-row:last-of-type { border-bottom: none; }
+.rd-ballot-mode { grid-area: mode; font-family: var(--font-mp), "Manrope", sans-serif; font-size: 13.5px; font-weight: 600; color: var(--ink); }
+.rd-ballot-meta { grid-area: meta; display: flex; justify-content: flex-end; gap: 14px; font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 11px; color: var(--ink-mute); }
+.rd-ballot-bar { grid-area: bar; position: relative; height: 8px; border-radius: 99px; background: var(--rule); overflow: hidden; }
+.rd-ballot-bar i { position: absolute; top: 0; bottom: 0; opacity: 0.82; }
+.rd-ballot-split { grid-area: split; display: flex; justify-content: space-between; font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 11.5px; font-weight: 700; }
+.rd-ballot-note { margin-top: 16px; font-family: "Instrument Sans", system-ui, sans-serif; font-size: 12.5px; line-height: 1.55; color: var(--ink-dim); max-width: 68ch; }
 
 .rd-about { margin-top: clamp(26px, 4vh, 40px); padding-top: clamp(20px, 3vh, 30px); border-top: 1px solid var(--rule-soft); }
 .rd-about-h { display: block; font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-dim); margin-bottom: 10px; }
