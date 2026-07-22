@@ -14,10 +14,12 @@ defines these variables, REUSE them; only add what's missing.
 
 ---
 
-## 1 · TOKENS — drop-in CSS
+## 1 · TOKENS — drop-in CSS 
 
 ```css
 /* ============ TPSI DESK TOKENS — light default, dark via [data-theme] ======= */
+/* ============ TPSI DESK TOKENS — light default, dark via [data-theme] ======= */
+
 :root {
   /* surfaces */
   --canvas:#f7f7f4; --panel:#ffffff; --panel2:#f1f1ed; --panel3:#e9e9e4;
