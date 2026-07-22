@@ -1,11 +1,5 @@
 import type { Metadata } from "next";
-import ArizonaBoard from "./arizona/ArizonaBoard";
-
-// TEMPORARY: main results landing page is walled off while it's reworked.
-// The original implementation is preserved at ./_main-landing.WIP.tsx
-// (not a route — restore by moving it back to page.tsx).
-// The Arizona primary board stands in as the /results page for now.
-// It also remains reachable directly at /results/arizona.
+import ArizonaBoard from "./ArizonaBoard";
 
 export const metadata: Metadata = {
   title: "Arizona Primary Results · July 21, 2026 | TPSI Election Desk",
@@ -16,6 +10,6 @@ export const metadata: Metadata = {
 // Live board; never statically cached.
 export const dynamic = "force-dynamic";
 
-export default function Page() {
+export default function ArizonaPage() {
   return <ArizonaBoard />;
 }

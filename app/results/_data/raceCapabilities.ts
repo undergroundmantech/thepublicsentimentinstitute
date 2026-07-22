@@ -63,6 +63,23 @@ export const RACE_CAPABILITY_OVERRIDES: Partial<Record<number, Partial<RaceCapab
   // own mockup (Hickenlooper vs. Gonzales, 52.9%/47.1%).
   84322: { tier: 4, raceRule: "PLURALITY" },      // Colorado US Senate Democratic Primary
   84105: { tier: 4, raceRule: "PLURALITY" },      // South Carolina Governor Republican Runoff (2-candidate runoff round)
+
+  // ── Arizona statewide primary — July 21, 2026 (ids pulled live 2026-07-21) ──
+  // Marquee statewide + most-competitive US House. All plurality primaries.
+  // Spotlight (tier 4) for Governor; Forecast (tier 3) for other statewide and
+  // the competitive House seats. TPSI has published no AZ model, so forecast
+  // stays visual-only — these tiers drive placement/ranking, not projections.
+  84359: { tier: 4, raceRule: "PLURALITY" },      // AZ Governor Republican Primary
+  84356: { tier: 4, raceRule: "PLURALITY" },      // AZ Governor Democratic Primary
+  84329: { tier: 3, raceRule: "PLURALITY" },      // AZ Attorney General Republican Primary
+  84328: { tier: 3, raceRule: "PLURALITY" },      // AZ Attorney General Democratic Primary
+  84412: { tier: 3, raceRule: "PLURALITY" },      // AZ Secretary of State Republican Primary
+  84410: { tier: 3, raceRule: "PLURALITY" },      // AZ Secretary of State Democratic Primary
+  84539: { tier: 3, raceRule: "PLURALITY" },      // AZ-01 US House Republican Primary
+  84537: { tier: 3, raceRule: "PLURALITY" },      // AZ-01 US House Democratic Primary
+  84551: { tier: 3, raceRule: "PLURALITY" },      // AZ-05 US House Republican Primary
+  84550: { tier: 3, raceRule: "PLURALITY" },      // AZ-05 US House Democratic Primary
+  84547: { tier: 3, raceRule: "PLURALITY" },      // AZ-04 US House Democratic Primary
 };
 
 /** Resolves full capabilities for a race: explicit override > tier default > safe fallback (tier 2). */
