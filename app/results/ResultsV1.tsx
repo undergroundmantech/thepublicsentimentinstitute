@@ -2704,11 +2704,11 @@ export default function March3FeaturedClient() {
 
         /* ── STATUS BAR ── */
         .res-status-bar { background:transparent; padding:7px 0; }
-        .res-status-bar-inner { max-width:1240px; margin:0 auto; padding:0 10px; display:flex; align-items:center; justify-content:space-between; gap:12px; }
+        .res-status-bar-inner { max-width:1280px; margin:0 auto; padding:0 10px; display:flex; align-items:center; justify-content:space-between; gap:12px; }
 
         /* ── PAGE HEADER ── */
         .res-page-header { background:transparent; position:relative; }
-        .res-page-header-inner { max-width:1240px; margin:0 auto; padding:16px 10px; position:relative; }
+        .res-page-header-inner { max-width:1280px; margin:0 auto; padding:16px 10px; position:relative; }
         .res-page-title { font-family:var(--font-display); font-size:clamp(22px,2.8vw,44px); font-weight:900; text-transform:uppercase; letter-spacing:-0.01em; color:var(--foreground); line-height:0.92; margin:0; }
         .res-page-title em { font-style:normal; background:linear-gradient(100deg,var(--red2) 0%,var(--purple-soft) 50%,var(--blue2) 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
         .res-page-sub { font-family:var(--font-body); font-size:10px; font-weight:700; letter-spacing:0.22em; text-transform:uppercase; color:var(--purple-soft); margin-bottom:8px; }
@@ -2719,7 +2719,7 @@ export default function March3FeaturedClient() {
 
         /* ── MAIN BODY ── */
         .res-body {
-          max-width: 1240px;
+          max-width: 1280px;
           margin: 0 auto;
           display: grid;
           grid-template-columns: 300px minmax(0, 590px) 320px;
@@ -3040,7 +3040,7 @@ export default function March3FeaturedClient() {
         input[type=range] { height:4px; cursor:pointer; }
 
         /* ── PAGE TABS ── */
-        .res-page-tabs { display:flex; align-items:center; background:transparent; border-bottom:1px solid var(--border); padding:0 10px; gap:4px; max-width:1240px; margin:0 auto; width:100%; box-sizing:border-box; }
+        .res-page-tabs { display:flex; align-items:center; background:transparent; border-bottom:1px solid var(--border); padding:0 10px; gap:4px; max-width:1280px; margin:0 auto; width:100%; box-sizing:border-box; }
         .res-page-tabs-wrap { border-bottom:1px solid var(--border); }
         .res-page-tabs { border-bottom:none; }
         .res-page-tab { display:flex; align-items:center; gap:7px; padding:8px 14px; background:transparent; border:1px solid transparent; border-radius:var(--r-sm); color:var(--muted); font-family:var(--font-body); font-size:12px; font-weight:700; letter-spacing:0.10em; text-transform:uppercase; cursor:pointer; transition:color 140ms ease,background 140ms ease,border-color 140ms ease; white-space:nowrap; margin:6px 0; }
@@ -3056,7 +3056,7 @@ export default function March3FeaturedClient() {
         .ky04-tab.active { animation: spotlight-flash 2.8s ease-in-out infinite; }
 
         /* ── SPOTLIGHT ── */
-        .ky04-hero-strip { max-width:1240px; margin:0 auto; padding:0 10px 8px; display:flex; gap:8px; box-sizing:border-box; }
+        .ky04-hero-strip { max-width:1280px; margin:0 auto; padding:0 10px 8px; display:flex; gap:8px; box-sizing:border-box; }
         .ky04-hero-card { background:linear-gradient(135deg,var(--red) 0%,var(--purple) 55%,var(--blue) 100%); border-radius:var(--r-lg); border:none; flex-shrink:0; width:280px; padding:18px 16px 16px; position:relative; overflow:hidden; box-shadow:var(--shadow-md); }
         .ky04-hero-card::after { content:''; position:absolute; inset:0; background:radial-gradient(ellipse 80% 120% at 105% 50%,rgba(255,255,255,0.12) 0%,transparent 65%); pointer-events:none; }
         :root:not([data-theme="dark"]) .ky04-hero-card { opacity: 0.8; }

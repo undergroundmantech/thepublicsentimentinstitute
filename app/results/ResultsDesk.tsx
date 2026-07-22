@@ -896,7 +896,7 @@ body main > div > div { padding-top: 0 !important; padding-bottom: 0 !important;
   font-family: var(--font-mp), "Manrope", "Helvetica Neue", Arial, sans-serif; font-size: 15px; letter-spacing: -0.01em;
   width: 100vw; margin-left: calc(50% - 50vw); }
 .desk-page h1, .desk-page h2, .desk-page h3 { text-transform: none; margin: 0; }
-.desk-shell { position: relative; z-index: 2; max-width: 1180px; margin: 0 auto; padding: 0 clamp(20px, 4vw, 44px); }
+.desk-shell { position: relative; z-index: 2; max-width: 1280px; margin: 0 auto; padding: 0 clamp(20px, 4vw, 44px); }
 /* the hero (orb/sphere/video/ticker/status bar) stays hardcoded dark by
    design — everything below this line in the non-hero sections uses the
    onpoint theme vars so it can render both light and dark. */
@@ -1116,7 +1116,7 @@ body main > div > div { padding-top: 0 !important; padding-bottom: 0 !important;
 /* 3 · precinct gallery — the one sunken slab */
 .desk-precinct { position: relative; background: #08080a; border-top: 1px solid rgba(255,255,255,0.05); border-bottom: 1px solid rgba(255,255,255,0.05); padding: clamp(60px, 12vh, 130px) 0; overflow: hidden; }
 .desk-precinct::before { content: ''; position: absolute; inset: 0; pointer-events: none; background: radial-gradient(60% 50% at 78% 12%, rgba(124,77,255,0.10), transparent 64%); }
-.desk-precinct-head { position: relative; max-width: 1180px; margin: 0 auto; padding: 0 clamp(20px,4vw,44px); opacity: 0; transform: translateY(18px); transition: opacity .6s ease, transform .6s cubic-bezier(.16,1,.3,1); }
+.desk-precinct-head { position: relative; max-width: 1280px; margin: 0 auto; padding: 0 clamp(20px,4vw,44px); opacity: 0; transform: translateY(18px); transition: opacity .6s ease, transform .6s cubic-bezier(.16,1,.3,1); }
 .desk-precinct-head.is-in { opacity: 1; transform: none; }
 .desk-precinct-head .desk-body { margin-left: 0; }
 
@@ -1170,7 +1170,7 @@ body main > div > div { padding-top: 0 !important; padding-bottom: 0 !important;
 
 /* on the ballot — a horizontally scrolling rail of the night's races */
 .desk-tonight { position: relative; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule-soft); background: linear-gradient(180deg, rgba(45,212,191,0.04), transparent 70%); padding: clamp(30px, 5.5vh, 56px) 0 clamp(26px, 4.5vh, 44px); }
-.desk-tonight-head { max-width: 1180px; margin: 0 auto; padding: 0 clamp(20px,4vw,44px); display: flex; align-items: flex-end; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
+.desk-tonight-head { max-width: 1280px; margin: 0 auto; padding: 0 clamp(20px,4vw,44px); display: flex; align-items: flex-end; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
 .desk-tonight-h { font-family: var(--font-mp), "Manrope", sans-serif; font-weight: 500; text-transform: lowercase; letter-spacing: -0.03em; line-height: 1.05; font-size: clamp(24px, 3.2vw, 40px); color: var(--ink-strong); margin-top: 10px; }
 .desk-tonight-h em { font-style: normal; color: #2dd4bf; }
 .desk-tonight-tools { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
@@ -1210,14 +1210,14 @@ body main > div > div { padding-top: 0 !important; padding-bottom: 0 !important;
 .desk-tn-office { font-size: 11px; color: var(--ink-dim); min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .desk-tn-lead b { font-size: 12px; font-weight: 700; white-space: nowrap; font-variant-numeric: tabular-nums; }
 .desk-tn-lead > span[aria-hidden] { font-size: 12px; color: var(--ink-dimmer); }
-.desk-tn-none { max-width: 1180px; margin: 22px auto 0; padding: 0 clamp(20px,4vw,44px); font-size: 13.5px; color: var(--ink-mute); }
+.desk-tn-none { max-width: 1280px; margin: 22px auto 0; padding: 0 clamp(20px,4vw,44px); font-size: 13.5px; color: var(--ink-mute); }
 
 /* browse by night — day toggle strip (no calendar) */
 .desk-nights { position: relative; padding: clamp(40px, 8vh, 88px) 0; }
-.desk-nights-head { max-width: 1180px; margin: 0 auto 20px; padding: 0 clamp(20px,4vw,44px); }
+.desk-nights-head { max-width: 1280px; margin: 0 auto 20px; padding: 0 clamp(20px,4vw,44px); }
 .desk-nights-h { font-family: var(--font-mp), "Manrope", sans-serif; font-weight: 500; text-transform: lowercase; letter-spacing: -0.03em; font-size: clamp(26px, 4vw, 44px); color: #f4f4ef; line-height: 1; margin-top: 8px; }
 .desk-nights-h em { font-style: normal; color: #2dd4bf; }
-.desk-days { display: flex; gap: 12px; max-width: 1180px; margin: 0 auto; padding: 4px clamp(20px,4vw,44px) 16px; overflow-x: auto; scrollbar-width: none; scroll-snap-type: x proximity;
+.desk-days { display: flex; gap: 12px; max-width: 1280px; margin: 0 auto; padding: 4px clamp(20px,4vw,44px) 16px; overflow-x: auto; scrollbar-width: none; scroll-snap-type: x proximity;
   -webkit-mask: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent); mask: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent); }
 .desk-days::-webkit-scrollbar { display: none; }
 .desk-day { scroll-snap-align: start; flex: 0 0 auto; display: flex; flex-direction: column; align-items: flex-start; gap: 2px; min-width: 118px; padding: 14px 16px 13px; cursor: pointer; border-radius: 16px; text-align: left;
@@ -1234,7 +1234,7 @@ body main > div > div { padding-top: 0 !important; padding-bottom: 0 !important;
 .desk-day:hover .desk-day-bar i { background: #2dd4bf; }
 .desk-day-n { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 9.5px; color: rgba(244,244,239,0.42); white-space: nowrap; }
 .desk-day.big .desk-day-n { color: rgba(45,212,191,0.78); }
-.desk-precinct-gallery { position: relative; max-width: 1180px; margin: clamp(30px,5vh,54px) auto 0; padding: 0 clamp(20px,4vw,44px); display: flex; flex-direction: column; gap: clamp(16px,2vw,26px); }
+.desk-precinct-gallery { position: relative; max-width: 1280px; margin: clamp(30px,5vh,54px) auto 0; padding: 0 clamp(20px,4vw,44px); display: flex; flex-direction: column; gap: clamp(16px,2vw,26px); }
 .desk-precinct-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(16px,2vw,26px); }
 .desk-precinct-row .pp { min-height: clamp(230px, 28vh, 300px); }
 

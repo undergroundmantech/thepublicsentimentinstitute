@@ -573,7 +573,7 @@ body header, body footer { display: none !important; }
 
 .sr-page {
   --rule: var(--border); --rule2: var(--border2);
-  max-width: 1120px; margin: 0 auto; padding: 0 2px 150px;
+  max-width: 1280px; margin: 0 auto; padding: 0 2px 150px;
   position: relative; z-index: 1; color: var(--foreground);
   font-family: var(--font-body);
   font-size: 14px; letter-spacing: -0.01em;

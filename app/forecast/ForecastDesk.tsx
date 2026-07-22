@@ -1325,7 +1325,7 @@ body main > div > div { padding-top: 0 !important; padding-bottom: 0 !important;
   font-family: var(--font-body); font-size: 15px; letter-spacing: -0.01em;
   width: 100vw; margin-left: calc(50% - 50vw); }
 .fc-page h1, .fc-page h2, .fc-page h3 { text-transform: none; margin: 0; font-family: var(--font-display); font-weight: 500; letter-spacing: -0.02em; }
-.fc-shell { position: relative; z-index: 2; max-width: 1180px; margin: 0 auto; padding: 0 clamp(20px, 4vw, 44px); }
+.fc-shell { position: relative; z-index: 2; max-width: 1280px; margin: 0 auto; padding: 0 clamp(20px, 4vw, 44px); }
 .fc-grain { position: fixed; inset: -40px; z-index: 3; pointer-events: none; opacity: 0.045; mix-blend-mode: overlay;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='0.6'/%3E%3C/svg%3E"); }
 

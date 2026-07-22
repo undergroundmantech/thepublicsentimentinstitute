@@ -647,7 +647,7 @@ body header, body footer { display: none !important; }
   --lab: var(--font-numeric);
   --x-nodata: #1b1d29;
   --rail-w: 178px; --gap: 56px;
-  max-width: 1180px; margin: 0 auto; padding: 0 2px 64px;
+  max-width: 1280px; margin: 0 auto; padding: 0 2px 64px;
   position: relative; z-index: 1; color: var(--foreground);
   font-family: var(--lab); font-size: 14px; letter-spacing: -0.01em;
 }

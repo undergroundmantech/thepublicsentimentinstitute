@@ -677,7 +677,7 @@ body main > div { max-width: none !important; padding-left: 0 !important; paddin
 body main > div > div { padding-top: 0 !important; padding-bottom: 0 !important; }
 
 .rd-page { position: relative; width: 100vw; margin-left: calc(50% - 50vw); min-height: 100svh; background: var(--page); color: var(--ink); font-family: var(--font-mp), "Manrope", "Helvetica Neue", Arial, sans-serif; }
-.rd-shell { max-width: 1180px; margin: 0 auto; padding: 0 clamp(20px, 4vw, 44px) clamp(60px, 10vh, 110px); }
+.rd-shell { max-width: 1280px; margin: 0 auto; padding: 0 clamp(20px, 4vw, 44px) clamp(60px, 10vh, 110px); }
 .rd-folio { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; padding: 14px 0; margin-top: 6px; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule-soft); font-size: 10.5px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-dim); }
 .rd-back { background: none; border: 0; cursor: pointer; font: inherit; color: var(--ink); letter-spacing: 0.18em; transition: color .15s ease; }
 .rd-back:hover { color: #2dd4bf; }

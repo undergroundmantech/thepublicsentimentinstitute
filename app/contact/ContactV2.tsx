@@ -369,7 +369,7 @@ body main > div > div { padding-top: 0 !important; padding-bottom: 0 !important;
 .ct-page { position: relative; min-height: 100svh; color: var(--foreground); overflow-x: clip; background: var(--background);
   font-family: var(--font-body); font-size: 15px; letter-spacing: -0.01em;
   width: 100vw; margin-left: calc(50% - 50vw); }
-.ct-shell { position: relative; z-index: 2; max-width: 1180px; margin: 0 auto; padding: 0 clamp(20px, 4vw, 44px); }
+.ct-shell { position: relative; z-index: 2; max-width: 1280px; margin: 0 auto; padding: 0 clamp(20px, 4vw, 44px); }
 .ct-page a { color: inherit; }
 .ct-page h1, .ct-page h2, .ct-page h3 { text-transform: none; }
 
