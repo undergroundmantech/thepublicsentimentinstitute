@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en" data-opa-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CO-07 — Tonight's Board Mockup</title>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;600;700;800&family=JetBrains+Mono:wght@400;700;800&display=swap" rel="stylesheet">
+<style>
+/* ══════════════════════════════════════════════════════════════════════
+   MOCKUP ONLY. Fonts load from Google here because this is a standalone
+   file. THE PRODUCT MUST NOT — root next/font already provides
+   --font-body (Geist) and --font-numeric (JetBrains Mono).
+   Token values are copied from TPSI-Election-Desk-Design-System.md §1.
+   ══════════════════════════════════════════════════════════════════════ */
+.desk{
+  --canvas:#f7f7f4; --panel:#fff; --panel2:#f1f1ed; --panel3:#e9e9e4;
+  --hairline:#e8e8e2; --hairline2:#d9d9d1;
+  --ink:#17171b; --ink2:#5d5d58; --ink3:#9c9c93;
+  --dem:#1d5fc4; --gop:#c22f3b; --c2:#b5338f;
+  --dem-tint:rgba(29,95,196,.10); --c2-tint:rgba(181,51,143,.10);
+  --live:#0d9488; --called:#15803d; --gold:#a16207;
+  --brand-grad:linear-gradient(90deg,#d2494b 0%,#a44197 20%,#6d3ee9 51%,#3f60e8 100%);
+  --mono:'JetBrains Mono',ui-monospace,monospace;
+  --sans:'Geist',system-ui,sans-serif;
+  --r-panel:14px; --r-card:10px; --r-pill:999px;
+  --shadow:0 1px 3px rgba(0,0,0,.05);
+  background:var(--canvas);color:var(--ink);min-height:100vh;font-family:var(--sans);
+  -webkit-font-smoothing:antialiased;
+}
+html[data-opa-theme="dark"] .desk{
+  --canvas:#0a0a0c; --panel:#111114; --panel2:#16161a; --panel3:#1c1c21;
+  --hairline:rgba(255,255,255,.08); --hairline2:rgba(255,255,255,.15);
+  --ink:#f2f2f0; --ink2:rgba(242,242,240,.62); --ink3:rgba(242,242,240,.36);
+  --dem:#3b7bde; --gop:#d64550; --c2:#c757a8;
+  --dem-tint:rgba(59,123,222,.16); --c2-tint:rgba(199,87,168,.16);
+  --live:#2dd4bf; --called:#37b26c; --gold:#e8b93c;
+  --shadow:none;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#5b5b58}
+a{text-decoration:none;color:inherit}
+
+/* mockup chrome — not part of the product */
+.mockbar{position:sticky;top:0;z-index:99;display:flex;align-items:center;gap:14px;
+  padding:10px 18px;background:#20242b;color:#e7eaee;font-family:'JetBrains Mono',monospace;
+  font-size:10px;letter-spacing:.1em;flex-wrap:wrap}
+.mockbar b{font-weight:800}
+.mockbar .grp{display:flex;gap:4px;align-items:center;margin-left:auto}
+.mockbar button{font-family:inherit;font-size:9px;letter-spacing:.1em;font-weight:700;
+  padding:5px 11px;border-radius:999px;border:1px solid #4a5160;background:transparent;
+  color:#aab2c0;cursor:pointer}
+.mockbar button.on{background:#e7eaee;color:#20242b;border-color:#e7eaee}
+.mockbar span.note{color:#8d95a3;text-transform:none;letter-spacing:0;font-size:10px}
+
+/* type */
+.desk h1,.desk h2,.desk h3,.desk .projected-name,.desk .snapshot-heading strong{
+  font-family:var(--sans);font-weight:800;letter-spacing:-.028em}
+.desk .model-label,.desk .topline-status,.desk .topline-columns,.desk .race-kicker,
+.desk .l4-called{font-family:var(--mono);font-weight:700;font-size:8px;
+  letter-spacing:.11em;text-transform:uppercase;color:var(--ink3)}
+.desk .topline-votes,.desk .topline-pct,.desk .projected-bar-value,.desk .ring-center b,
+.desk .meta-block b,.desk .outcome-row b,.desk .l4-pct,.desk .projected-margin-wrap b,
+.desk .model-stats b{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.desk .prose{font-family:var(--sans);line-height:1.6}
+
+/* header */
+.site-header{position:relative;background:var(--panel);border-bottom:1px solid var(--hairline)}
+.brandrule{position:absolute;left:0;right:0;bottom:-1px;height:2px;background:var(--brand-grad)}
+.site-header-inner{max-width:1180px;margin:0 auto;padding:13px 22px;display:flex;
+  align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:11px}
+.brand-mark{font-family:var(--mono);font-weight:800;font-size:11px;letter-spacing:.1em;
+  padding:7px 9px;border-radius:7px;background:var(--panel2);border:1px solid var(--hairline)}
+.brand-copy strong{display:block;font-size:13px;font-weight:700;letter-spacing:-.01em}
+.brand-copy span{font-family:var(--mono);font-size:8.5px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--ink3)}
+.header-nav{display:flex;align-items:center;gap:16px}
+.header-nav a{font-size:12px;color:var(--ink2)}
+.utility-button{font-family:var(--mono);font-size:9px;font-weight:700;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--ink2);border:1px solid var(--hairline2);
+  border-radius:var(--r-pill);padding:5px 12px;background:var(--panel);cursor:pointer}
+
+.shell{max-width:1180px;margin:0 auto;padding:26px 22px 70px}
+
+/* race header */
+.race-header{padding-bottom:20px;border-bottom:1px solid var(--hairline)}
+.race-kicker{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.live-dot{width:7px;height:7px;border-radius:50%;background:var(--live);
+  animation:dpulse 1.7s infinite;flex:0 0 auto}
+.live-dot.sm{width:6px;height:6px;margin-top:4px}
+@keyframes dpulse{50%{opacity:.3}}
+.race-heading-row{display:flex;justify-content:space-between;gap:32px;align-items:flex-start;
+  margin-top:12px;flex-wrap:wrap}
+.race-header h1{font-size:clamp(22px,2.6vw,32px);line-height:1.14}
+.race-deck{font-size:14px;color:var(--ink2);max-width:560px;margin-top:9px;line-height:1.6}
+.race-meta{display:grid;grid-template-columns:repeat(2,minmax(120px,1fr));gap:14px 26px}
+.meta-block span{display:block;font-family:var(--mono);font-size:8px;font-weight:700;
+  letter-spacing:.11em;text-transform:uppercase;color:var(--ink3)}
+.meta-block b{display:block;font-size:17px;font-weight:800;letter-spacing:-.02em;margin-top:3px}
+.race-tabs{display:flex;gap:20px;margin-top:18px;flex-wrap:wrap}
+.race-tabs a{font-size:12px;color:var(--ink3);padding-bottom:4px;border-bottom:2px solid transparent}
+.race-tabs a[aria-current="page"]{color:var(--ink);border-bottom-color:var(--ink)}
+
+/* grid */
+.dashboard-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:14px;margin-top:20px}
+.card{background:var(--panel);border:1px solid var(--hairline);border-radius:var(--r-panel);
+  box-shadow:var(--shadow);overflow:hidden}
+.span-3{grid-column:span 3}
+@media(max-width:900px){.dashboard-grid{grid-template-columns:1fr}.span-3{grid-column:span 1}}
+
+/* reported results */
+.topline-shell{padding:16px 18px 18px}
+.topline-header{display:flex;justify-content:space-between;gap:14px;align-items:flex-start;flex-wrap:wrap}
+.topline-title h2{font-size:21px;line-height:1.12}
+.topline-title p{font-size:11.5px;color:var(--ink2);margin-top:5px}
+.topline-meta{text-align:right}
+.topline-status{display:block}
+.topline-updated{font-family:var(--mono);font-size:9px;color:var(--ink3);letter-spacing:.04em}
+.topline-columns{display:grid;grid-template-columns:1fr 90px 74px;gap:10px;margin-top:16px;
+  padding-bottom:7px;border-bottom:1px solid var(--hairline)}
+.topline-columns span:nth-child(n+2){text-align:right}
+.topline-row{padding:13px 0;border-bottom:1px solid var(--hairline)}
+.topline-row:last-child{border-bottom:none}
+.topline-row-top{display:grid;grid-template-columns:1fr 90px 74px;gap:10px;align-items:center}
+.topline-candidate{display:flex;gap:10px;align-items:flex-start;min-width:0}
+.topline-dot{width:9px;height:9px;border-radius:50%;margin-top:5px;flex:0 0 auto}
+.topline-copy strong{display:block;font-size:15px;font-weight:700;letter-spacing:-.01em}
+.topline-copy small{display:block;font-family:var(--mono);font-size:8.5px;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--ink3);margin-top:2px}
+.topline-lead{display:block;font-family:var(--mono);font-size:9px;color:var(--ink2);
+  margin-top:4px;letter-spacing:.03em}
+.topline-lead.won{color:var(--called);font-weight:700}
+.topline-votes{font-size:13px;color:var(--ink2);text-align:right}
+.topline-pct{font-size:22px;font-weight:800;letter-spacing:-.03em;text-align:right}
+.topline-bar{height:7px;border-radius:99px;background:var(--panel3);overflow:hidden;margin-top:9px}
+.topline-bar span{display:block;height:100%;border-radius:99px;transition:width 600ms cubic-bezier(.16,1,.3,1)}
+.empty-live{padding:22px 0 6px}
+.empty-live .prose{font-size:13px;color:var(--ink2);max-width:400px}
+
+/* forecast */
+.snapshot{padding:16px 18px 18px;border-bottom:1px solid var(--hairline)}
+.snapshot-heading{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
+.snapshot-heading strong{display:block;font-size:21px;line-height:1.12}
+.snapshot-heading small{display:block;font-size:11px;color:var(--ink2);margin-top:4px}
+.race-rule-pill{font-family:var(--mono);font-size:9px;font-weight:700;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--ink2);border:1px solid var(--hairline2);
+  border-radius:var(--r-pill);padding:4px 10px;white-space:nowrap}
+.forecast-model-layout{display:grid;grid-template-columns:auto 1fr;gap:22px;margin-top:18px;align-items:start}
+@media(max-width:560px){.forecast-model-layout{grid-template-columns:1fr}}
+.forecast-hero{text-align:center}
+.prob-ring,.rep-ring{--value:50;position:relative;width:126px;aspect-ratio:1;margin:10px auto 0;
+  border-radius:50%;background:conic-gradient(from -90deg,var(--dem) calc(var(--value)*1%),var(--panel3) 0)}
+.rep-ring{width:82px;background:conic-gradient(from -90deg,var(--live) calc(var(--value)*1%),var(--panel3) 0)}
+.prob-ring::before,.rep-ring::before{content:"";position:absolute;inset:15px;border-radius:50%;
+  background:var(--panel);box-shadow:inset 0 0 0 1px var(--hairline)}
+.rep-ring::before{inset:11px}
+.ring-center{position:absolute;inset:0;z-index:1;display:grid;place-content:center;text-align:center}
+.ring-center b{display:block;font-size:29px;font-weight:800;line-height:1;letter-spacing:-.05em}
+.ring-center span{display:block;font-family:var(--mono);font-size:8px;color:var(--ink3);
+  margin-top:5px;letter-spacing:.08em;text-transform:uppercase}
+.ring-center.sm b{font-size:17px}
+.ring-center.sm span{font-size:7px}
+.forecast-support{display:flex;flex-direction:column;gap:16px}
+.outcome-row{display:flex;align-items:center;gap:8px;padding:6px 0;
+  border-bottom:1px solid var(--hairline);font-size:12px}
+.outcome-row:last-child{border-bottom:none}
+.outcome-row i{width:8px;height:8px;border-radius:50%;flex:0 0 auto}
+.outcome-row span{flex:1}
+.outcome-row b{font-weight:800;font-size:13px}
+.outcome-row.muted span,.outcome-row.muted b{color:var(--ink3)}
+.reporting-module{display:flex;align-items:center;gap:14px;padding-top:13px;
+  border-top:1px solid var(--hairline)}
+.reporting-copy span{display:block;font-family:var(--mono);font-size:8px;letter-spacing:.11em;
+  text-transform:uppercase;color:var(--ink3)}
+.reporting-copy b{display:block;font-size:13px;font-weight:700;margin-top:3px}
+.gatebox{margin-top:16px;padding:14px;border:1px dashed var(--hairline2);border-radius:var(--r-card)}
+.gatebox .prose{font-size:12.5px;color:var(--ink2);margin-top:6px}
+
+/* projection zone */
+.projection-zone{padding:16px 18px 18px}
+.projected-top{display:flex;justify-content:space-between;gap:20px;align-items:flex-start;flex-wrap:wrap}
+.projected-intro{flex:1;min-width:220px}
+.projected-name{font-size:21px;margin-top:5px}
+.projection-headline{font-size:11.5px;color:var(--ink2);margin-top:7px;max-width:400px}
+.projected-margin-wrap{text-align:right}
+.projected-margin-wrap span{display:block;font-family:var(--mono);font-size:8px;
+  letter-spacing:.11em;text-transform:uppercase;color:var(--ink3)}
+.projected-margin-wrap b{display:block;font-size:28px;font-weight:800;letter-spacing:-.04em;
+  margin-top:3px;color:var(--dem)}
+.projected-margin-wrap small{display:block;font-size:9px;color:var(--ink3);margin-top:2px}
+.projection-head{display:flex;justify-content:space-between;gap:14px;align-items:flex-start;
+  margin-top:18px;padding-top:14px;border-top:1px solid var(--hairline)}
+.projection-head strong{display:block;font-size:14px;font-weight:800;letter-spacing:-.02em}
+.projection-head small{display:block;font-size:10px;color:var(--ink3);margin-top:4px;
+  line-height:1.45;max-width:400px}
+.projected-bars{margin-top:14px;display:flex;flex-direction:column;gap:11px}
+.projected-bar-row{display:grid;grid-template-columns:96px 1fr 52px 74px;gap:10px;align-items:center}
+.projected-bar-name{display:flex;align-items:center;gap:7px;font-size:12px;font-weight:600}
+.projected-bar-name i{width:8px;height:8px;border-radius:50%;flex:0 0 auto}
+.projected-bar-track{height:9px;border-radius:99px;background:var(--panel3);overflow:hidden}
+.projected-bar-fill{display:block;height:100%;border-radius:99px;border:1.5px dashed}
+.projected-bar-value{font-size:14px;font-weight:800;text-align:right}
+.projected-bar-delta{font-family:var(--mono);font-size:8.5px;color:var(--ink3);text-align:right;
+  letter-spacing:.03em}
+.model-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px;
+  margin-top:18px;padding-top:14px;border-top:1px solid var(--hairline)}
+.model-stats span{display:block;font-family:var(--mono);font-size:8px;letter-spacing:.11em;
+  text-transform:uppercase;color:var(--ink3)}
+.model-stats b{display:block;font-size:12.5px;font-weight:700;margin-top:3px}
+.no-history{font-family:var(--mono);font-size:8.5px;font-style:italic;color:var(--ink3);
+  margin-top:14px;padding-top:11px;border-top:1px solid var(--hairline)}
+
+.deferred{font-size:11.5px;color:var(--ink3);margin-top:14px;line-height:1.55}
+.inlink{color:var(--ink2);border-bottom:1px solid var(--hairline2)}
+
+/* board */
+.board{margin-top:38px}
+.board-head{display:flex;justify-content:space-between;gap:16px;align-items:flex-start;
+  padding-bottom:12px;border-bottom:1px solid var(--hairline2);flex-wrap:wrap}
+.board-head h2{font-size:21px}
+.board-head p{font-size:11.5px;color:var(--ink2);margin-top:4px}
+.grp{margin-top:22px}
+.grp-hd{display:flex;justify-content:space-between;gap:12px;align-items:baseline;
+  margin-bottom:10px;padding-bottom:5px;border-bottom:1px solid var(--hairline)}
+.grp-hd h3{font-size:14px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(268px,1fr));gap:10px}
+.l4{background:var(--panel);border:1px solid var(--hairline);border-radius:var(--r-card);
+  box-shadow:var(--shadow);padding:12px 13px;display:flex;flex-direction:column;gap:10px}
+.l4-hd{display:flex;gap:9px;align-items:flex-start}
+.l4-dot{width:8px;height:8px;border-radius:50%;margin-top:4px;flex:0 0 auto;background:var(--ink3)}
+.l4-dot.d{background:var(--dem)} .l4-dot.r{background:var(--gop)} .l4-dot.n{background:var(--c2)}
+.l4-title{flex:1;min-width:0}
+.l4-title strong{display:block;font-size:13px;font-weight:700;letter-spacing:-.01em}
+.l4-title small{display:block;font-family:var(--mono);font-size:8px;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--ink3);margin-top:2px}
+.l4-called{color:var(--called)}
+.l4-body{display:flex;flex-direction:column;gap:9px}
+.l4-row{display:grid;grid-template-columns:1fr auto;gap:4px 8px}
+.l4-nm{font-size:11.5px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.l4-pct{font-size:12px;font-weight:800}
+.l4-bar{grid-column:1/-1;height:4px;border-radius:99px;background:var(--panel3);overflow:hidden}
+.l4-bar span{display:block;height:100%;border-radius:99px}
+.l4-empty{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--ink3);padding:8px 0}
+.l4-foot{margin-top:auto;padding-top:8px;border-top:1px solid var(--hairline)}
+
+/* method */
+.method{margin-top:38px;padding-top:18px;border-top:1px solid var(--hairline)}
+.method h2{font-size:16px}
+.method .prose{font-size:12px;color:var(--ink2);margin-top:9px;max-width:840px}
+.method .prose.small{font-size:10.5px;color:var(--ink3)}
+.method-foot{display:flex;justify-content:space-between;gap:14px;margin-top:16px;flex-wrap:wrap}
+
+@media(max-width:640px){
+  .topline-columns,.topline-row-top{grid-template-columns:1fr 70px 58px}
+  .topline-pct{font-size:18px}
+  .projected-bar-row{grid-template-columns:74px 1fr 44px}
+  .projected-bar-delta{display:none}
+  .grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<div class="mockbar">
+  <b>CO-07 MOCKUP</b>
+  <span class="note">Level 2 statewide forecast · Michigan U.S. Senate D · no vote-method card</span>
+  <div class="grp">
+    <span class="note">State</span>
+    <button data-st="open" class="on">POLLS OPEN</button>
+    <button data-st="gated">GATED 4%</button>
+    <button data-st="counting">COUNTING 62%</button>
+    <button data-st="called">CALLED</button>
+    <span class="note" style="margin-left:10px">Theme</span>
+    <button data-th="light" class="on">LIGHT</button>
+    <button data-th="dark">DARK</button>
+  </div>
+</div>
+
+<div class="desk">
+
+<header class="site-header">
+  <span class="brandrule"></span>
+  <div class="site-header-inner">
+    <div class="brand">
+      <div class="brand-mark">TPSI</div>
+      <div class="brand-copy"><strong>Election Desk</strong><span>August 4, 2026 primaries</span></div>
+    </div>
+    <nav class="header-nav">
+      <a href="#overview">Overview</a>
+      <a href="#forecast">Forecast</a>
+      <a href="#board">All races</a>
+      <button class="utility-button" id="themeBtn">Dark</button>
+    </nav>
+  </div>
+</header>
+
+<main class="shell">
+
+  <section class="race-header" id="overview">
+    <div class="race-kicker">
+      <span class="live-dot" id="hdDot" style="display:none"></span>
+      <span>Michigan primary · August 4</span><span>•</span>
+      <span>Level 2 coverage · statewide forecast</span>
+    </div>
+    <div class="race-heading-row">
+      <div>
+        <h1>U.S. Senate Democratic Primary</h1>
+        <p class="race-deck">Abdul El-Sayed leads the TPSI model against Rep. Haley Stevens in an open seat contest, with the Upper Peninsula vote outstanding until the final polls close an hour after the rest of the state.</p>
+      </div>
+      <div class="race-meta">
+        <div class="meta-block"><span>Last updated</span><b id="mStamp">8:42 PM ET</b></div>
+        <div class="meta-block"><span>Reported votes</span><b id="mVotes">0</b></div>
+        <div class="meta-block"><span>Estimated reporting</span><b id="mRep">0%</b></div>
+        <div class="meta-block"><span>Race status</span><b id="mStatus">Polls open</b></div>
+      </div>
+    </div>
+    <nav class="race-tabs">
+      <a href="#overview" aria-current="page">Overview</a>
+      <a href="#forecast">Forecast</a>
+      <a href="#board">All races</a>
+      <a href="#method">Method</a>
+    </nav>
+  </section>
+
+  <div class="dashboard-grid">
+
+    <article class="card span-3">
+      <div class="topline-shell">
+        <header class="topline-header">
+          <div class="topline-title">
+            <h2>Reported results</h2>
+            <p>Actual reported votes. Forecast estimates appear separately.</p>
+          </div>
+          <div class="topline-meta">
+            <span class="topline-status" id="tStatus">Polls open</span>
+            <span class="topline-updated"><strong>Updated</strong> <span id="tStamp">8:42 PM ET</span></span>
+          </div>
+        </header>
+        <div class="topline-columns"><span>Candidate</span><span>Votes</span><span>Vote share</span></div>
+        <div id="toplineRows"></div>
+      </div>
+    </article>
+
+    <article class="card span-3" id="forecast">
+      <section class="snapshot">
+        <div class="snapshot-heading">
+          <div>
+            <strong>Forecast snapshot</strong>
+            <small>Model metrics update as new results arrive</small>
+          </div>
+          <span class="race-rule-pill">Plurality</span>
+        </div>
+        <div id="fcBody"></div>
+      </section>
+      <section class="projection-zone" id="projZone">
+        <div class="projected-top">
+          <div class="projected-intro">
+            <span class="model-label">Model projection · not actual results</span>
+            <div class="projected-name">El-Sayed projected ahead</div>
+            <p class="projection-headline prose">The model expects El-Sayed to carry Wayne and Washtenaw by enough to absorb Stevens' advantage in her Oakland County base. The projected margin is wide, but the sample is small, so the range around it stays broad.</p>
+          </div>
+          <div class="projected-margin-wrap">
+            <span>Projected margin</span><b>+9.6</b>
+            <small>El-Sayed, projected final points</small>
+          </div>
+        </div>
+        <div class="projection-head">
+          <div>
+            <strong>Projected final vote share</strong>
+            <small>Muted bars indicate a forecast, not certified results. They use the same 0 to 100% scale as the reported-results bars.</small>
+          </div>
+          <span class="model-label">Forecast only</span>
+        </div>
+        <div class="projected-bars" id="projBars"></div>
+        <div class="model-stats">
+          <div><span>Sample</span><b>n = 254</b></div>
+          <div><span>Margin of error</span><b>±6.9</b></div>
+          <div><span>90% range</span><b>−6.8 to +25.7</b></div>
+          <div><span>Model</span><b>DSMeridian 10 / 12</b></div>
+        </div>
+        <div class="no-history">No history snapshots · live data only</div>
+      </section>
+    </article>
+  </div>
+
+  <p class="deferred">
+    County map, results by county, and remaining ballot landscape are not carried on this board.
+    Michigan does not publish Early / VBM / Election Day splits, so the vote-method card is absent
+    by design, not deferred. <a class="inlink" href="#">Full race desk →</a>
+  </p>
+
+  <section class="board" id="board">
+    <div class="board-head">
+      <div>
+        <h2>All races tonight</h2>
+        <p>Level 4 coverage. Reported results only, no TPSI model.</p>
+      </div>
+      <div><span class="model-label">23 races · 5 states</span></div>
+    </div>
+    <div id="boardBody"></div>
+  </section>
+
+  <section class="method" id="method">
+    <h2>Method</h2>
+    <p class="prose">Reported vote is solid. Projected share is muted and dashed, on the same 0 to 100% scale. Estimated reporting is the share of expected vote, not precincts. Race calls come from AP through CivicAPI. TPSI projections are modeled estimates, labeled separately from calls, and appear only on the Michigan Senate primary.</p>
+    <p class="prose small">754 interviews collected across two modes; reported ballot-test estimates are based on 254 text-message interviews conducted against the Michigan voter file, modeled across a 19,999-record voter universe; a concurrent 500-interview online panel sample was excluded following mode-comparison review.</p>
+    <div class="method-foot">
+      <span class="model-label">© 2026 The Public Sentiment Institute</span>
+      <span class="model-label">Powered by CivicAPI</span>
+    </div>
+  </section>
+</main>
+</div>
+
+<script>
+const MODEL={a:{name:"Abdul El-Sayed",last:"El-Sayed",share:54.8,win:83.2},
+             b:{name:"Haley Stevens",last:"Stevens",share:45.2,win:16.8}};
+
+/* Four illustrative states. Numbers here are mockup only. */
+const STATES={
+  open:    {rep:0,   status:"Polls open",       cands:null},
+  gated:   {rep:4.1, status:"Too early to call",cands:[["Abdul El-Sayed",9841,51.2],["Haley Stevens",8402,43.7],["Mallory McMorrow",982,5.1]]},
+  counting:{rep:62.4,status:"Counting",         cands:[["Abdul El-Sayed",298114,53.9],["Haley Stevens",233907,42.3],["Mallory McMorrow",21012,3.8]]},
+  called:  {rep:97.1,status:"Race called",      cands:[["Abdul El-Sayed",471228,54.2],["Haley Stevens",364901,42.0],["Mallory McMorrow",33012,3.8]],won:0}
+};
+
+const BOARD=[
+ ["Virginia","Close 7:00 PM ET",[
+   ["U.S. House 2","Democratic primary","d"],["U.S. House 1","Democratic primary","d"],
+   ["U.S. House 5","Democratic primary","d"],["U.S. Senate","Republican primary","r"]]],
+ ["Michigan","Final close 9:00 PM ET",[
+   ["Governor","Democratic primary","d"],["Governor","Republican primary","r"],
+   ["U.S. House 13","Democratic primary","d"],["U.S. House 7","Democratic primary","d"],
+   ["U.S. House 11","Democratic primary","d"],["U.S. House 10","Democratic primary","d"],
+   ["U.S. House 10","Republican primary","r"],["U.S. House 8","Republican primary","r"]]],
+ ["Missouri","Close 8:00 PM ET",[
+   ["Amendment 4","Initiative petition threshold","n"],["U.S. House 1","Democratic primary","d"],
+   ["U.S. House 5","Republican primary","r"],["U.S. House 6","Republican primary","r"],
+   ["U.S. House 2","Democratic primary","d"]]],
+ ["Kansas","Final close 9:00 PM ET",[
+   ["Constitutional Amendment","Supreme Court selection","n"],["Governor","Republican primary","r"],
+   ["Governor","Democratic primary","d"],["U.S. Senate","Democratic primary","d"]]],
+ ["Washington","Close 11:00 PM ET",[
+   ["U.S. House 3","Top-two primary","n"],["U.S. House 4","Top-two primary","n"]]]
+];
+
+const SAMPLE=[["Leading candidate",52.4],["Second candidate",41.8]];
+const col=(i,p)=>i===0?(p==="r"?"var(--gop)":p==="d"?"var(--dem)":"var(--ink2)"):i===1?"var(--c2)":"var(--ink3)";
+const int=n=>Math.round(n).toLocaleString("en-US");
+
+function render(key){
+  const S=STATES[key], live=!!S.cands;
+  document.getElementById("hdDot").style.display=(live&&key!=="called")?"block":"none";
+  document.getElementById("mVotes").textContent=live?int(S.cands.reduce((a,c)=>a+c[1],0)):"0";
+  document.getElementById("mRep").textContent=S.rep.toFixed(1)+"%";
+  document.getElementById("mStatus").textContent=S.status;
+  document.getElementById("tStatus").textContent=S.status;
+
+  // topline
+  const T=document.getElementById("toplineRows");
+  if(!live){
+    T.innerHTML='<div class="empty-live"><p class="prose">No votes reported. Michigan\u2019s final polls close at 9:00 PM ET, in 2h 14m 08s. Results appear here automatically.</p></div>';
+  } else {
+    const gap=S.cands[0][1]-S.cands[1][1];
+    T.innerHTML=S.cands.map((c,i)=>{
+      const won=S.won===i;
+      const lead=i===0&&!won?`<span class="topline-lead">Leads by ${int(gap)} votes</span>`:"";
+      const wl=won?'<span class="topline-lead won">Race called</span>':"";
+      const wd=c[0].includes("McMorrow")?" · Withdrawn, on ballot":"";
+      return `<div class="topline-row"><div class="topline-row-top">
+        <div class="topline-candidate"><span class="topline-dot" style="background:${col(i,"d")}"></span>
+        <div class="topline-copy"><strong>${c[0]}</strong><small>Democrat${wd}</small>${lead}${wl}</div></div>
+        <div class="topline-votes">${int(c[1])}</div>
+        <div class="topline-pct">${c[2].toFixed(1)}%</div></div>
+        <div class="topline-bar"><span style="width:${c[2]}%;background:${col(i,"d")}"></span></div></div>`;
+    }).join("");
+  }
+
+  // forecast
+  const F=document.getElementById("fcBody"), P=document.getElementById("projZone");
+  if(key==="gated"){
+    F.innerHTML='<div class="gatebox"><div class="model-label">Forecast gated</div><p class="prose">Held back below 10% estimated reporting. Early returns skew toward whichever counties report first.</p></div>';
+    P.style.display="none";
+  } else {
+    P.style.display="block";
+    F.innerHTML=`<div class="forecast-model-layout">
+      <div class="forecast-hero"><div class="model-label">Win probability</div>
+        <div class="prob-ring" style="--value:${MODEL.a.win}">
+          <div class="ring-center"><b>${MODEL.a.win}%</b><span>${MODEL.a.last}</span></div></div></div>
+      <div class="forecast-support">
+        <div><div class="model-label">Top outcomes</div>
+          <div class="outcome-row"><i style="background:var(--dem)"></i><span>${MODEL.a.last} wins</span><b>${MODEL.a.win}%</b></div>
+          <div class="outcome-row"><i style="background:var(--c2)"></i><span>${MODEL.b.last} wins</span><b>${MODEL.b.win}%</b></div>
+          <div class="outcome-row muted"><i style="background:var(--ink3)"></i><span>Other outcomes</span><b>&lt;1%</b></div></div>
+        <div class="reporting-module">
+          <div class="reporting-copy"><span>Model-estimated</span><b>Percent reporting</b></div>
+          <div class="rep-ring" style="--value:${S.rep}">
+            <div class="ring-center sm"><b>${S.rep.toFixed(1)}%</b><span>reporting</span></div></div></div>
+      </div></div>`;
+
+    document.getElementById("projBars").innerHTML=[MODEL.a,MODEL.b].map((c,i)=>{
+      const cc=i===0?"var(--dem)":"var(--c2)", tint=i===0?"var(--dem-tint)":"var(--c2-tint)";
+      const actual=live?S.cands[i][2]:null;
+      const d=actual!=null?(c.share-actual):null;
+      const dl=d!=null?`${d>=0?"+":"\u2212"}${Math.abs(d).toFixed(1)} vs now`:"projected";
+      return `<div class="projected-bar-row">
+        <div class="projected-bar-name"><i style="background:${cc}"></i><span>${c.last}</span></div>
+        <div class="projected-bar-track"><span class="projected-bar-fill" style="width:${c.share}%;border-color:${cc};background:${tint}"></span></div>
+        <div class="projected-bar-value">${c.share}%</div>
+        <div class="projected-bar-delta">${dl}</div></div>`;
+    }).join("");
+  }
+
+  // board
+  document.getElementById("boardBody").innerHTML=BOARD.map(([st,close,rs])=>
+    `<div class="grp"><div class="grp-hd"><h3>${st}</h3><span class="model-label">${close}</span></div>
+     <div class="grid">${rs.map(([t,s,p])=>{
+       const body=live
+        ? `<div class="l4-body">${SAMPLE.map((c,i)=>
+            `<div class="l4-row"><span class="l4-nm">${c[0]}</span><span class="l4-pct">${c[1]}%</span>
+             <div class="l4-bar"><span style="width:${c[1]}%;background:${col(i,p)}"></span></div></div>`).join("")}
+           ${s.includes("Top-two")?'<span class="model-label">Top two advance</span>':""}</div>`
+        : `<div class="l4-empty">Awaiting returns</div>`;
+       const foot=live?`${S.rep.toFixed(1)}% est. reporting`:close;
+       return `<a class="l4"><div class="l4-hd"><span class="l4-dot ${p}"></span>
+         <div class="l4-title"><strong>${t}</strong><small>${s}</small></div>
+         ${live&&key!=="called"?'<span class="live-dot sm"></span>':""}
+         ${key==="called"?'<span class="l4-called">Called</span>':""}</div>
+         ${body}<div class="l4-foot"><span class="model-label">${foot}</span></div></a>`;
+     }).join("")}</div></div>`).join("");
+}
+
+document.querySelectorAll("[data-st]").forEach(b=>b.onclick=()=>{
+  document.querySelectorAll("[data-st]").forEach(x=>x.classList.remove("on"));
+  b.classList.add("on"); render(b.dataset.st);
+});
+function setTheme(t){
+  document.documentElement.dataset.opaTheme=t;
+  document.getElementById("themeBtn").textContent=t==="dark"?"Light":"Dark";
+  document.querySelectorAll("[data-th]").forEach(x=>x.classList.toggle("on",x.dataset.th===t));
+}
+document.querySelectorAll("[data-th]").forEach(b=>b.onclick=()=>setTheme(b.dataset.th));
+document.getElementById("themeBtn").onclick=()=>
+  setTheme(document.documentElement.dataset.opaTheme==="dark"?"light":"dark");
+
+render("open");
+</script>
+</body>
+</html>

@@ -871,7 +871,7 @@ body header, body footer { display: none !important; }
   --lab: var(--font-numeric);
   --em-toss: #33394a;
   --em-out: #191c24;
-  max-width: 1120px; margin: 0 auto; padding: 0 2px 64px;
+  max-width: 1280px; margin: 0 auto; padding: 0 2px 64px;
   position: relative; z-index: 1; color: var(--foreground);
   font-family: var(--lab); font-size: 14px; letter-spacing: -0.01em;
 }

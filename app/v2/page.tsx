@@ -195,7 +195,7 @@ export default function HomeV2() {
           padding: 48px 24px 96px;
           font-family: var(--font-body);
         }
-        .v2-wrap { max-width: 1240px; margin: 0 auto; display: flex; flex-direction: column; gap: 56px; }
+        .v2-wrap { max-width: 1280px; margin: 0 auto; display: flex; flex-direction: column; gap: 56px; }
 
         /* HERO */
         .v2-hero {

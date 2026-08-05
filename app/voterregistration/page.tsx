@@ -671,7 +671,7 @@ body header, body footer { display: none !important; }
   --lab: var(--font-numeric);
   --serif: var(--font-body);
   --data: var(--font-numeric);
-  position: relative; z-index: 1; max-width: 1120px; margin: 0 auto; padding: 0 18px 120px;
+  position: relative; z-index: 1; max-width: 1280px; margin: 0 auto; padding: 0 18px 120px;
   color: var(--foreground); font-family: var(--lab); font-size: 14px; letter-spacing: -0.01em;
 }
 .vr-page::before { content:''; position:absolute; inset:0; pointer-events:none; z-index:0;

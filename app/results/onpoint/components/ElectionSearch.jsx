@@ -213,6 +213,9 @@ function ResultRow({ doc, active, idx, onPick, onHover }) {
 
 export default function ElectionSearch({ open, onClose, onPick }) {
   const { theme } = useTheme()
+  // Search intentionally spans every race CivicAPI returns, not just the
+  // 24-race coverage gate (_data/coverage.2026-08-04) — this is the "find any
+  // election" utility, not a covered-races display surface.
   const { index, error } = useElectionIndex(open)
   const [query, setQuery] = useState('')
   const dq = useDeferredValue(query)

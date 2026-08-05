@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import ThemeToggle from "./ThemeToggle";
 
 // Flip to `true` on election night to light up Election Results with the purple glow.
 const RESULTS_LIVE = true;
@@ -449,6 +450,7 @@ export default function Navbar() {
           </nav>
 
           <div className="nb-right">
+            <ThemeToggle />
             <Link
               href="https://wss.pollfish.com/link/522d0e01-b70f-4955-8514-b42a7f10d4b6"
               className="nb-cta"

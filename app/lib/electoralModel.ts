@@ -223,7 +223,7 @@ export function civicToForecastInput(
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
 
-function sortByPollAvg(
+export function sortByPollAvg(
   candidates: CivicCandidate[],
   pollAvg: Record<string, number>
 ): CivicCandidate[] {
@@ -500,7 +500,10 @@ export function forecastRace(
   );
 
   // For runoff-style races (where margins matter), drop the floor so sd_race can
-  // collapse naturally as votes come in. Plurality/general races keep the 0.1 floor.
+  // collapse naturally as votes come in. Plurality/general races keep a floor,
+  // but one that releases in the last 10% — a fixed 0.1 froze the call threshold
+  // from 90% reporting onward and asserted more uncertainty than there were
+  // outstanding ballots (CO-07 addendum §4a).
   const isRunoffStyle = race_rule !== "PLURALITY";
   let sd_race: number;
   if (percent_reporting < 0.05) {
@@ -508,7 +511,8 @@ export function forecastRace(
   } else {
     const implied_total = safeDiv(reported_vote_total, percent_reporting);
     const scale = safeDiv(modeled_vote_remaining, implied_total);
-    sd_race = sd_pre_election * (isRunoffStyle ? Math.min(1, scale) : Math.max(0.1, Math.min(1, scale)));
+    const floor = Math.min(0.1, safeDiv(modeled_vote_remaining, implied_total));
+    sd_race = sd_pre_election * (isRunoffStyle ? Math.min(1, scale) : Math.max(floor, Math.min(1, scale)));
   }
   if (modeled_vote_remaining > 100_000) {
     sd_race = Math.max(sd_race, modeled_vote_remaining / 20);
@@ -564,7 +568,11 @@ export function forecastRace(
   const runoff_needed_prob = calcRunoffNeededProb(majority_win_prob);
 
   // Step 5: Leader & margin
-  const sorted = sortCandidatesByVotes(modeled_votes);
+  // Only real candidates can lead — "Others" is a residual bucket (all of it
+  // pre-election when there's no poll_avg/prior to seed expected_share, since
+  // reported_share is 0/0/0 for an uncounted race) and must never displace a
+  // named candidate into the runner-up slot.
+  const sorted = sortCandidatesByVotes(modeled_votes).filter((k) => k !== "Others");
   const leader = sorted[0];
   const runner_up = sorted[1];
   const projected_margin_votes = modeled_votes[leader] - modeled_votes[runner_up];

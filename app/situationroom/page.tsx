@@ -159,6 +159,9 @@ export default function SituationRoomPage() {
   const [clock, setClock] = useState<string>("");
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
+  // Situation Room reads the full season index, not the 24-race coverage
+  // gate (_data/coverage.2026-08-04) — it's a season-wide status view, not
+  // one of the /results desk's covered-races display surfaces.
   const { index, error: indexError } = useElectionIndex(true) as { index: { docs: Doc[] } | null; error: boolean };
   const today = isoToday();
   const upcoming = useUpcomingDays(today);
@@ -280,8 +283,6 @@ export default function SituationRoomPage() {
   return (
     <div className="sr-page">
       <style>{CSS}</style>
-      <div className="sr-air" aria-hidden="true" />
-      <div className="sr-grain" aria-hidden="true" />
       <DarkNav />
 
       {/* ── masthead ── */}
@@ -575,23 +576,12 @@ body header, body footer { display: none !important; }
 
 .sr-page {
   --rule: var(--border); --rule2: var(--border2);
-  max-width: 1120px; margin: 0 auto; padding: 0 2px 150px;
+  max-width: 1280px; margin: 0 auto; padding: 0 2px 150px;
   position: relative; z-index: 1; color: var(--foreground);
   font-family: var(--font-body);
   font-size: 14px; letter-spacing: -0.01em;
 }
 .sr-page a { color: inherit; text-decoration: none; }
-
-/* atmosphere — feathered light, no boxes */
-.sr-air { position: fixed; inset: 0; z-index: 0; pointer-events: none;
-  background:
-    radial-gradient(900px 600px at 12% -6%, rgba(138,163,242,0.055), transparent 68%),
-    radial-gradient(820px 640px at 94% 38%, rgba(239,139,148,0.04), transparent 70%),
-    radial-gradient(1100px 420px at 50% 0%, rgba(244,244,239,0.035), transparent 72%);
-}
-.sr-grain { position: fixed; inset: -40px; z-index: 2; pointer-events: none; opacity: 0.05; mix-blend-mode: overlay;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='0.6'/%3E%3C/svg%3E");
-}
 
 /* reveal */
 .sr-rv { opacity: 0; transform: translateY(14px);

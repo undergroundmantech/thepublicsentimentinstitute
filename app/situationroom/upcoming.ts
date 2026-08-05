@@ -5,6 +5,8 @@ import { useEffect, useState } from "react";
 // it can't answer "when is the next election?". This loader walks month
 // windows FORWARD from today against the same civicapi endpoint, stops once
 // it has a few distinct upcoming election days, and caches per session.
+// Intentionally unfiltered — every upcoming race, not just the 24-race
+// coverage gate (_data/coverage.2026-08-04), which only covers tonight.
 
 export type UpcomingDay = {
   date: string;        // ISO yyyy-mm-dd

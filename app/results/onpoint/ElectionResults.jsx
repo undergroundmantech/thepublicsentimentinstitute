@@ -7,6 +7,7 @@ import ElectionSearch, { SearchIcon } from './components/ElectionSearch.jsx'
 import { loadElectionIndex } from './lib/electionIndex.js'
 import { candColor, leaderOf, tonePalette, shade, raceHasMap } from './electionLib.js'
 import { useTheme, tripToggleTheme } from './lib/theme.jsx'
+import { isCoveredId } from '../_data/coverage.2026-08-04'
 import {
   DISPLAY, POSTER, CARD_BG, CARD_BD, TXT, TXT_DIM, GOLD,
   mix, fmtInt, yearOf, titleOf, Row,
@@ -838,11 +839,16 @@ export default function ElectionResults({ dateParam = null }) {
         .then((r) => (r.ok ? r.json() : Promise.reject(new Error('http ' + r.status))))
         .then((j) => {
           if (!alive) return
-          const arr = (j.races || []).slice().sort(
-            (a, b) =>
-              (a.province || 'ZZ').localeCompare(b.province || 'ZZ') ||
-              String(a.election_name).localeCompare(String(b.election_name))
-          )
+          // CO-06: this date grid only asserts the 24-race coverage gate
+          // tonight — every other race CivicAPI returns for the day is
+          // filtered out here, before state/office/search ever see it.
+          const arr = (j.races || [])
+            .filter((r) => isCoveredId(Number(r.id)))
+            .sort(
+              (a, b) =>
+                (a.province || 'ZZ').localeCompare(b.province || 'ZZ') ||
+                String(a.election_name).localeCompare(String(b.election_name))
+            )
           setRaces(arr)
           setErr(false)
         })

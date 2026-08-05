@@ -116,6 +116,8 @@ export default function LocalBoard() {
 
   const localDocs = useMemo(() => {
     if (!index) return [];
+    // Deliberately the complement of the 24-race coverage gate: this page's
+    // whole purpose is down-ballot/local races the desk (isCoveredId) excludes.
     return index.docs.filter((d: any) => classifyRaceTier(d.contest, d.office) <= 2);
   }, [index]);
 
@@ -228,7 +230,7 @@ export default function LocalBoard() {
 }
 
 const LB_CSS = `
-.lb-wrap{max-width:1180px;margin:0 auto;padding:34px 24px 56px;color:var(--ink);}
+.lb-wrap{max-width:1280px;margin:0 auto;padding:34px 24px 56px;color:var(--ink);}
 .lb-eyebrow{font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-mute);}
 .lb-header h1{font-size:31px;line-height:1.05;margin:8px 0 8px;letter-spacing:-.035em;}
 .lb-intro{max-width:680px;margin:0 0 20px;color:var(--ink-mute);font-size:13px;line-height:1.55;}

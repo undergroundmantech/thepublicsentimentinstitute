@@ -1,21 +1,10 @@
-import type { Metadata } from "next";
-import ArizonaBoard from "./arizona/ArizonaBoard";
-
-// TEMPORARY: main results landing page is walled off while it's reworked.
-// The original implementation is preserved at ./_main-landing.WIP.tsx
-// (not a route — restore by moving it back to page.tsx).
-// The Arizona primary board stands in as the /results page for now.
-// It also remains reachable directly at /results/arizona.
-
-export const metadata: Metadata = {
-  title: "Arizona Primary Results · July 21, 2026 | TPSI Election Desk",
-  description:
-    "Live Arizona primary results for July 21, 2026 — Governor, US Senate, and statewide offices, reported as counties close. The Public Sentiment Institute Election Desk.",
-};
-
-// Live board; never statically cached.
-export const dynamic = "force-dynamic";
-
-export default function Page() {
-  return <ArizonaBoard />;
+// Inline env check + dynamic import so the bundler drops the unrendered
+// site version from the client graph entirely — see app/lib/flags.ts.
+export default async function Page() {
+  if (process.env.NEXT_PUBLIC_SITE_V2 === "on") {
+    const { default: ResultsV2 } = await import("./ResultsV2");
+    return <ResultsV2 />;
+  }
+  const { default: ResultsV1 } = await import("./ResultsV1");
+  return <ResultsV1 />;
 }
