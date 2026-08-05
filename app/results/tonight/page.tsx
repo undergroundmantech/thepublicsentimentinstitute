@@ -46,7 +46,10 @@ import {
 } from "../_lib/raceState";
 import MichiganCountyMap from "./MichiganCountyMap";
 import MichiganCountyTable, { type LiveCounty } from "./MichiganCountyTable";
-import { TURNOUT_MODEL, FORECAST_META } from "../_data/miCountyForecast";
+import { projectCounties } from "./countyForecast";
+import { TURNOUT_MODEL, STATEWIDE_FORECAST } from "../_data/miCountyForecast";
+import { forecastRace, type Shares3 } from "../../lib/electoralModel";
+import { evaluateCall } from "../../lib/raceCall";
 import { fetchRace } from "../onpoint/electionLib.js";
 
 const MI_ID = 84778;
@@ -115,11 +118,9 @@ const MODEL = {
     "polls close an hour after the rest of the state.",
   close: MI_S,
   raceRule: "Plurality",
-  a: { name: "Abdul El-Sayed", last: "El-Sayed", share: 54.8, win: 83.2 },
-  b: { name: "Haley Stevens",  last: "Stevens",  share: 45.2, win: 16.8 },
+  a: { name: "Abdul El-Sayed", last: "El-Sayed" },
+  b: { name: "Haley Stevens",  last: "Stevens" },
   withdrawn: "McMorrow",
-  margin: 9.6,
-  lo: -6.8, hi: 25.7,
   n: 254, moe: "±6.9",
   field: "July 25 to 29, 2026",
   modelName: "TPSI DSMeridian 10",
@@ -127,6 +128,30 @@ const MODEL = {
     "The model expects El-Sayed to carry Wayne and Washtenaw by enough to absorb " +
     "Stevens' advantage in her Oakland County base. The projected margin is wide, " +
     "but the sample is small, so the range around it stays broad.",
+};
+
+/* ═════════════════════ ENGINE INPUTS ═════════════════════ */
+
+/** Substring that identifies each candidate in the CivicAPI feed. Order is
+ *  fixed to the prior below — never key off vote rank, which inverts on a lead
+ *  change (CO-07 addendum §3). */
+const CAND_MATCH: Record<"Candidate1" | "Candidate2" | "Candidate3", string> = {
+  Candidate1: "sayed",
+  Candidate2: "stevens",
+  Candidate3: "mcmorrow",
+};
+
+const CAND_NAMES = {
+  Candidate1: "El-Sayed",
+  Candidate2: "Stevens",
+  Candidate3: "McMorrow",
+} as const;
+
+/** The pre-election prior. The only place the poll numbers live. */
+const POLL_PRIOR: Shares3 = {
+  Candidate1: STATEWIDE_FORECAST.elSayed / 100,
+  Candidate2: STATEWIDE_FORECAST.stevens / 100,
+  Candidate3: STATEWIDE_FORECAST.mcmorrow / 100,
 };
 
 /* ═════════════════════ DATA ═════════════════════ */
@@ -326,11 +351,65 @@ export default function TonightBoard() {
   const leadGap =
     live && cands.length > 1 ? (cands[0].votes || 0) - (cands[1].votes || 0) : 0;
 
-  // Call status: a projection is only called at 3 SD (99.7% confidence), not on win probability alone.
-  const votesRemaining = Math.max(TURNOUT_MODEL.projected - (live ? counted(mi) : 0), 0);
-  const sdVotes = Math.round((FORECAST_META.totalSdPoints / 100) * TURNOUT_MODEL.projected);
-  const called997 = MODEL.a.win >= 99.7 ? MODEL.a.last : MODEL.b.win >= 99.7 ? MODEL.b.last : null;
-  const callStatus = called997 ? `Called — ${called997}` : "Not yet callable";
+  // The forecast engine runs on every refresh. With no returns in,
+  // percent_reporting is 0, so it reproduces the pre-election prior exactly.
+  const fc = useMemo(() => {
+    const all = sortC(mi);
+    const total = counted(mi);
+    const votesFor = (needle: string) =>
+      all
+        .filter((c) => String(c.name || "").toLowerCase().includes(needle))
+        .reduce((s, c) => s + (c.votes || 0), 0);
+
+    return forecastRace({
+      race_rule: "PLURALITY",
+      percent_reporting: clampPct(estRep(mi)) / 100,
+      reported_vote_total: total,
+      expected_turnout: TURNOUT_MODEL.projected,
+      reported_share: {
+        Candidate1: total ? votesFor(CAND_MATCH.Candidate1) / total : 0,
+        Candidate2: total ? votesFor(CAND_MATCH.Candidate2) / total : 0,
+        Candidate3: total ? votesFor(CAND_MATCH.Candidate3) / total : 0,
+      },
+      expected_share: POLL_PRIOR,
+      // Required. Without it the projection allocates every outstanding ballot
+      // at the poll share forever and never learns from the count.
+      poll_avg_shares: POLL_PRIOR,
+    });
+  }, [mi]);
+
+  const call = useMemo(() => evaluateCall(fc, CAND_NAMES), [fc]);
+
+  const counties = useMemo(
+    () => projectCounties(liveCounties, fc.modeled_total_vote),
+    [liveCounties, fc.modeled_total_vote]
+  );
+
+  const winA = fc.plurality_odds_to_win.Candidate1 * 100;
+  const winB = fc.plurality_odds_to_win.Candidate2 * 100;
+  const winOther = Math.max(0, 100 - winA - winB);
+  const shareA = fc.modeled_share.Candidate1 * 100;
+  const shareB = fc.modeled_share.Candidate2 * 100;
+  const marginPP = shareA - shareB;
+  const leaderLast = marginPP >= 0 ? MODEL.a.last : MODEL.b.last;
+  const modeledRep = fc.modeled_percent_reporting * 100;
+
+  const callStatus =
+    call.verdict === "CALLABLE"
+      ? `Called — ${CAND_NAMES[fc.leader as keyof typeof CAND_NAMES] ?? leaderLast}`
+      : call.verdict === "LEANING"
+        ? `Leaning — ${CAND_NAMES[fc.leader as keyof typeof CAND_NAMES] ?? leaderLast}`
+        : "Not yet callable";
+
+  // AP's call always wins the chip; a TPSI call is labelled as ours (§5.7).
+  const statusCopy =
+    rState === "OFFICIAL"
+      ? STATUS_COPY.OFFICIAL
+      : live && call.verdict === "CALLABLE"
+        ? `TPSI projection — ${CAND_NAMES[fc.leader as keyof typeof CAND_NAMES] ?? leaderLast}`
+        : live && call.verdict === "LEANING"
+          ? "Leaning"
+          : STATUS_COPY[rState];
 
   return (
     <div className="desk">
@@ -356,7 +435,7 @@ export default function TonightBoard() {
               <div className="meta-block"><span>Last updated</span><b>{stamp}</b></div>
               <div className="meta-block"><span>Reported votes</span><b>{live ? int(counted(mi)) : "0"}</b></div>
               <div className="meta-block"><span>Estimated reporting</span><b>{live ? `${pctLabel(rep)}%` : "0%"}</b></div>
-              <div className="meta-block"><span>Race status</span><b>{STATUS_COPY[rState]}</b></div>
+              <div className="meta-block"><span>Race status</span><b>{statusCopy}</b></div>
             </div>
           </div>
 
@@ -379,7 +458,7 @@ export default function TonightBoard() {
                   <p>Actual reported votes. Forecast estimates appear separately.</p>
                 </div>
                 <div className="topline-meta">
-                  <span className="topline-status">{STATUS_COPY[rState]}</span>
+                  <span className="topline-status">{statusCopy}</span>
                   <span className="topline-updated"><strong>Updated</strong> {stamp}</span>
                 </div>
               </header>
@@ -460,11 +539,11 @@ export default function TonightBoard() {
                   <div className="forecast-hero">
                     <div className="model-label">Win probability</div>
                     <div className="prob-ring"
-                         style={{ ["--value" as string]: MODEL.a.win } as React.CSSProperties}
+                         style={{ ["--value" as string]: winA } as React.CSSProperties}
                          role="img"
-                         aria-label={`Win probability: ${MODEL.a.last} ${MODEL.a.win} percent, ${MODEL.b.last} ${MODEL.b.win} percent`}>
+                         aria-label={`Win probability: ${MODEL.a.last} ${winA.toFixed(1)} percent, ${MODEL.b.last} ${winB.toFixed(1)} percent`}>
                       <div className="ring-center">
-                        <b>{MODEL.a.win}%</b>
+                        <b>{pctLabel(winA)}%</b>
                         <span>{MODEL.a.last}</span>
                       </div>
                     </div>
@@ -475,16 +554,16 @@ export default function TonightBoard() {
                       <div className="model-label">Top outcomes</div>
                       <div className="outcome-row">
                         <i style={{ background: "var(--dem)" }} aria-hidden />
-                        <span>{MODEL.a.last} wins</span><b>{MODEL.a.win}%</b>
+                        <span>{MODEL.a.last} wins</span><b>{pctLabel(winA)}%</b>
                       </div>
                       <div className="outcome-row">
                         <i style={{ background: "var(--c2)" }} aria-hidden />
-                        <span>{MODEL.b.last} wins</span><b>{MODEL.b.win}%</b>
+                        <span>{MODEL.b.last} wins</span><b>{pctLabel(winB)}%</b>
                       </div>
                       {/* §5.4 — residual normalizes, never a separate comeback number */}
                       <div className="outcome-row muted">
                         <i style={{ background: "var(--ink3)" }} aria-hidden />
-                        <span>Other outcomes</span><b>&lt;1%</b>
+                        <span>Other outcomes</span><b>{winOther < 0.05 ? "<1" : pctLabel(winOther)}%</b>
                       </div>
                     </div>
 
@@ -493,10 +572,10 @@ export default function TonightBoard() {
                         <span>Model-estimated</span><b>Percent reporting</b>
                       </div>
                       <div className="rep-ring"
-                           style={{ ["--value" as string]: live ? Math.min(rep, 100) : 0 } as React.CSSProperties}
-                           role="img" aria-label={`Model-estimated reporting ${pctLabel(rep)} percent`}>
+                           style={{ ["--value" as string]: Math.min(modeledRep, 100) } as React.CSSProperties}
+                           role="img" aria-label={`Model-estimated reporting ${pctLabel(modeledRep)} percent`}>
                         <div className="ring-center sm">
-                          <b>{live ? `${pctLabel(rep)}%` : "0%"}</b>
+                          <b>{pctLabel(modeledRep)}%</b>
                           <span>reporting</span>
                         </div>
                       </div>
@@ -511,13 +590,13 @@ export default function TonightBoard() {
                 <div className="projected-top">
                   <div className="projected-intro">
                     <span className="model-label">Model projection · not actual results</span>
-                    <div className="projected-name">{MODEL.a.last} projected ahead</div>
-                    <p className="projection-headline prose">{MODEL.headline}</p>
+                    <div className="projected-name">{leaderLast} projected ahead</div>
+                    <p className="projection-headline prose">{live ? call.line : MODEL.headline}</p>
                   </div>
                   <div className="projected-margin-wrap">
                     <span>Projected margin</span>
-                    <b>+{MODEL.margin}</b>
-                    <small>{MODEL.a.last}, projected final points</small>
+                    <b>{marginPP >= 0 ? "+" : "−"}{Math.abs(marginPP).toFixed(1)}</b>
+                    <small>{leaderLast}, projected final points</small>
                   </div>
                 </div>
 
@@ -533,10 +612,14 @@ export default function TonightBoard() {
                 </div>
 
                 <div className="projected-bars">
-                  {[MODEL.a, MODEL.b].map((c, i) => {
+                  {[{ ...MODEL.a, share: shareA }, { ...MODEL.b, share: shareB }].map((c, i) => {
                     const col = i === 0 ? "var(--dem)" : "var(--c2)";
                     const tint = i === 0 ? "var(--dem-tint)" : "var(--c2-tint)";
-                    const actual = live ? share(cands[i] || {}, cands) : null;
+                    const match = i === 0 ? CAND_MATCH.Candidate1 : CAND_MATCH.Candidate2;
+                    const liveCand = cands.find((x) =>
+                      String(x.name || "").toLowerCase().includes(match)
+                    );
+                    const actual = live && liveCand ? share(liveCand, cands) : null;
                     const delta = actual != null ? c.share - actual : null;
                     return (
                       <div className="projected-bar-row" key={c.name}>
@@ -549,7 +632,7 @@ export default function TonightBoard() {
                           <span className="projected-bar-fill"
                                 style={{ width: `${c.share}%`, borderColor: col, background: tint }} />
                         </div>
-                        <div className="projected-bar-value">{c.share}%</div>
+                        <div className="projected-bar-value">{c.share.toFixed(1)}%</div>
                         <div className="projected-bar-delta">
                           {delta != null
                             ? `${delta >= 0 ? "+" : "−"}${Math.abs(delta).toFixed(1)} vs now`
@@ -561,9 +644,9 @@ export default function TonightBoard() {
                 </div>
 
                 <div className="model-stats">
-                  <div><span>Expected turnout</span><b>{int(TURNOUT_MODEL.projected)}</b></div>
-                  <div><span>Votes remaining</span><b>{int(votesRemaining)}</b></div>
-                  <div><span>SD of votes</span><b>±{int(sdVotes)}</b></div>
+                  <div><span>Projected turnout</span><b>{int(fc.modeled_total_vote)}</b></div>
+                  <div><span>Votes remaining</span><b>{int(fc.modeled_vote_remaining)}</b></div>
+                  <div><span>SD of votes</span><b>±{int(fc.sd_race)}</b></div>
                   <div><span>Call status</span><b>{callStatus}</b></div>
                 </div>
 
@@ -593,7 +676,8 @@ export default function TonightBoard() {
           </div>
 
           <div className="rd-map">
-            <MichiganCountyMap view={countyView} mode={mapMode} liveCounties={liveCounties} />
+            <MichiganCountyMap view={countyView} mode={mapMode}
+                               counties={counties.byName} liveCounties={liveCounties} />
           </div>
 
           <div className="rd-map-legend" aria-hidden>
@@ -619,7 +703,8 @@ export default function TonightBoard() {
             <span className="rd-map-hint">scroll or pinch to zoom · drag to pan</span>
           </div>
 
-          <MichiganCountyTable view={countyView} liveCounties={liveCounties} />
+          <MichiganCountyTable view={countyView} counties={counties.list}
+                               statewide={counties.statewide} liveCounties={liveCounties} />
         </section>
 
 

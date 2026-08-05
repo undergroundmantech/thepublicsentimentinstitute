@@ -10,7 +10,7 @@
 
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { MI_COUNTY_PATHS, MI_MAP_VIEWBOX } from "../_data/miCountyGeo";
-import { COUNTY_FORECASTS, type CountyForecast } from "../_data/miCountyForecast";
+import type { CountyProjection } from "./countyForecast";
 
 export type MapView = "forecast" | "results";
 export type ForecastMode = "margin" | "turnout";
@@ -94,14 +94,16 @@ function useSiteTheme(): "light" | "dark" {
 interface Props {
   view: MapView;
   mode: ForecastMode;
+  /** Live-blended county projections keyed by UPPERCASE county name. */
+  counties: Record<string, CountyProjection>;
   /** Live county returns keyed by UPPERCASE county name, when CivicAPI has them. */
   liveCounties?: Record<string, { elSayedVotes: number; stevensVotes: number; reporting: number }>;
 }
 
-export default function MichiganCountyMap({ view, mode, liveCounties }: Props) {
+export default function MichiganCountyMap({ view, mode, counties, liveCounties }: Props) {
   // x/y are cursor coordinates relative to the map wrapper; w/h are its size.
   const [hover, setHover] = useState<
-    { c: CountyForecast; x: number; y: number; w: number; h: number } | null
+    { c: CountyProjection; x: number; y: number; w: number; h: number } | null
   >(null);
   const [t, setT] = useState<Transform>(IDENTITY);
   const [dragging, setDragging] = useState(false);
@@ -114,15 +116,9 @@ export default function MichiganCountyMap({ view, mode, liveCounties }: Props) {
   const mid = theme === "dark" ? MID_DARK : MID_LIGHT;
   const t1 = theme === "dark" ? T1_DARK : T1_LIGHT;
 
-  const byName = useMemo(() => {
-    const m: Record<string, CountyForecast> = {};
-    for (const c of COUNTY_FORECASTS) m[c.name.toUpperCase()] = c;
-    return m;
-  }, []);
-
   const vmax = useMemo(
-    () => COUNTY_FORECASTS.reduce((m, c) => Math.max(m, c.projectedTurnout), 1),
-    []
+    () => Object.values(counties).reduce((m, c) => Math.max(m, c.projectedTurnout), 1),
+    [counties]
   );
 
   // Client pixels → viewBox units, honouring the letterboxing that
@@ -231,7 +227,7 @@ export default function MichiganCountyMap({ view, mode, liveCounties }: Props) {
         </defs>
         <g transform={`translate(${t.x} ${t.y}) scale(${t.k})`}>
           {Object.entries(MI_COUNTY_PATHS).map(([key, d]) => {
-            const c = byName[key];
+            const c = counties[key];
             if (!c) return null;
 
             let fill: string;
@@ -333,7 +329,9 @@ export default function MichiganCountyMap({ view, mode, liveCounties }: Props) {
               </div>
               <div className="mi-tip-sub">
                 {fmtInt(hover.c.projectedTurnout)} projected votes ·{" "}
-                {hover.c.shareOfElectorate.toFixed(1)}% of electorate
+                {hover.c.reporting > 0
+                  ? `${hover.c.reporting.toFixed(0)}% reporting`
+                  : "no returns yet"}
               </div>
               {hover.c.tooCloseToCall && <div className="mi-tip-flag">Too close to call</div>}
             </>

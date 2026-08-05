@@ -6,10 +6,7 @@
 // columns sit at zero rather than being hidden.
 
 import React, { useMemo, useState } from "react";
-import {
-  COUNTY_FORECASTS,
-  STATEWIDE_FORECAST,
-} from "../_data/miCountyForecast";
+import type { CountyProjection } from "./countyForecast";
 
 const fmtInt = (n: number) => Math.round(Number(n) || 0).toLocaleString("en-US");
 
@@ -19,18 +16,21 @@ export type LiveCounty = { elSayedVotes: number; stevensVotes: number; reporting
 
 interface Props {
   view: "forecast" | "results";
+  /** Live-blended county projections from projectCounties(). */
+  counties: CountyProjection[];
+  statewide: CountyProjection;
   liveCounties?: Record<string, LiveCounty>;
 }
 
-export default function MichiganCountyTable({ view, liveCounties }: Props) {
+export default function MichiganCountyTable({ view, counties, statewide, liveCounties }: Props) {
   const [q, setQ] = useState("");
   const [sort, setSort] = useState<SortKey>("turnout");
 
   const rows = useMemo(() => {
     const query = q.trim().toLowerCase();
     const list = query
-      ? COUNTY_FORECASTS.filter((c) => c.name.toLowerCase().includes(query))
-      : COUNTY_FORECASTS;
+      ? counties.filter((c) => c.name.toLowerCase().includes(query))
+      : counties;
 
     return [...list]
       .map((c) => {
@@ -65,22 +65,22 @@ export default function MichiganCountyTable({ view, liveCounties }: Props) {
         if (sort === "stevens") return b.stPct - a.stPct;
         return b.turnout - a.turnout || a.c.name.localeCompare(b.c.name);
       });
-  }, [q, sort, view, liveCounties]);
+  }, [q, sort, view, counties, liveCounties]);
 
   const totals = useMemo(() => {
     if (view === "forecast") {
       return {
-        turnout: STATEWIDE_FORECAST.projectedTurnout,
-        elPct: STATEWIDE_FORECAST.elSayed,
-        stPct: STATEWIDE_FORECAST.stevens,
-        elVotes: STATEWIDE_FORECAST.elSayedVotes,
-        stVotes: STATEWIDE_FORECAST.stevensVotes,
-        margin: STATEWIDE_FORECAST.margin,
+        turnout: statewide.projectedTurnout,
+        elPct: statewide.elSayed,
+        stPct: statewide.stevens,
+        elVotes: statewide.elSayedVotes,
+        stVotes: statewide.stevensVotes,
+        margin: statewide.margin,
       };
     }
     let elVotes = 0;
     let stVotes = 0;
-    for (const c of COUNTY_FORECASTS) {
+    for (const c of counties) {
       const lc = liveCounties?.[c.name.toUpperCase()];
       elVotes += lc?.elSayedVotes ?? 0;
       stVotes += lc?.stevensVotes ?? 0;
@@ -94,7 +94,7 @@ export default function MichiganCountyTable({ view, liveCounties }: Props) {
       stVotes,
       margin: total > 0 ? ((elVotes - stVotes) / total) * 100 : 0,
     };
-  }, [view, liveCounties]);
+  }, [view, counties, statewide, liveCounties]);
 
   return (
     <div className="rd-county">
