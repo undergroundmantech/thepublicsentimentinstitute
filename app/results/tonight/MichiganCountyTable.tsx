@@ -96,6 +96,14 @@ export default function MichiganCountyTable({ view, counties, statewide, liveCou
     };
   }, [view, counties, statewide, liveCounties]);
 
+  // Turnout-weighted, so a finished Alcona doesn't outweigh a lagging Wayne.
+  const statewideReporting = useMemo(() => {
+    const w = counties.reduce((s, c) => s + c.projectedTurnout, 0);
+    return w > 0
+      ? counties.reduce((s, c) => s + c.reporting * c.projectedTurnout, 0) / w
+      : 0;
+  }, [counties]);
+
   return (
     <div className="rd-county">
       <div className="rd-county-tools">
@@ -134,15 +142,17 @@ export default function MichiganCountyTable({ view, counties, statewide, liveCou
       <div className="rd-county-tablewrap">
         <table className="rd-county-table">
           <colgroup>
-            <col style={{ width: "26%" }} />
-            <col style={{ width: "14%" }} />
             <col style={{ width: "22%" }} />
-            <col style={{ width: "22%" }} />
-            <col style={{ width: "16%" }} />
+            <col style={{ width: "12%" }} />
+            <col style={{ width: "13%" }} />
+            <col style={{ width: "20%" }} />
+            <col style={{ width: "20%" }} />
+            <col style={{ width: "13%" }} />
           </colgroup>
           <thead>
             <tr>
               <th>county</th>
+              <th className="num">reporting</th>
               <th className="num">{view === "results" ? "votes" : "turnout"}</th>
               <th className="num">el-sayed</th>
               <th className="num">stevens</th>
@@ -152,7 +162,7 @@ export default function MichiganCountyTable({ view, counties, statewide, liveCou
           <tbody>
             {rows.length === 0 ? (
               <tr>
-                <td colSpan={5} className="rd-county-loading">
+                <td colSpan={6} className="rd-county-loading">
                   no counties match “{q}”.
                 </td>
               </tr>
@@ -165,6 +175,7 @@ export default function MichiganCountyTable({ view, counties, statewide, liveCou
                       <i className="rd-cand-tcc" title="Too close to call" aria-hidden />
                     ) : null}
                   </td>
+                  <td className="num">{r.c.reporting.toFixed(0)}%</td>
                   <td className="num">{fmtInt(r.turnout)}</td>
                   <td className="num">
                     <span className="rd-cand-cell">
@@ -190,6 +201,7 @@ export default function MichiganCountyTable({ view, counties, statewide, liveCou
             <tfoot>
               <tr>
                 <td>statewide{view === "forecast" ? " (projected)" : ""}</td>
+                <td className="num">{statewideReporting.toFixed(0)}%</td>
                 <td className="num">{fmtInt(totals.turnout)}</td>
                 <td className="num">
                   <span className="rd-cand-cell">

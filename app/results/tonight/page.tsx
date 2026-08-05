@@ -154,6 +154,13 @@ const POLL_PRIOR: Shares3 = {
   Candidate3: STATEWIDE_FORECAST.mcmorrow / 100,
 };
 
+/** Editorial projection. A desk decision, not a model output. Set to null to
+ *  withdraw it. An AP call always supersedes it. */
+const DESK_CALL: { key: keyof typeof CAND_NAMES; at: string } | null = {
+  key: "Candidate1",
+  at: "2026-08-05T03:40:00-04:00",
+};
+
 /* ═════════════════════ DATA ═════════════════════ */
 
 const SEARCH =
@@ -305,7 +312,7 @@ const stateOf = (r?: Race): RaceState =>
   getRaceState({
     percentReporting: isLive(r) ? estRep(r) : 0,
     hasOfficialCall: officialCall(r),
-    tpsiCalled: false,
+    tpsiCalled: DESK_CALL !== null && isLive(r),
   });
 
 /** Sentence-case status, matching the prototype's race-meta block. */
@@ -350,6 +357,8 @@ export default function TonightBoard() {
 
   const leadGap =
     live && cands.length > 1 ? (cands[0].votes || 0) - (cands[1].votes || 0) : 0;
+  const leadMarginPP =
+    live && cands.length > 1 ? share(cands[0], cands) - share(cands[1], cands) : 0;
 
   // The forecast engine runs on every refresh. With no returns in,
   // percent_reporting is 0, so it reproduces the pre-election prior exactly.
@@ -403,12 +412,25 @@ export default function TonightBoard() {
   const marginHi = marginPP + 2 * marginSdPP;
   const signed = (n: number) => `${n >= 0 ? "+" : "−"}${Math.abs(n).toFixed(1)}`;
 
-  // AP's call always wins the chip; a TPSI call is labelled as ours (§5.7).
+  const deskCalled = DESK_CALL !== null && live;
+  const deskWinner = DESK_CALL ? CAND_NAMES[DESK_CALL.key] : null;
+  const deskWinnerMatch = DESK_CALL ? CAND_MATCH[DESK_CALL.key] : null;
+
+  const headline = deskCalled
+    ? `TPSI projects ${deskWinner} wins the Democratic nomination. He leads by ` +
+      `${int(leadGap)} votes with ${pctLabel(modeledRep)}% of the estimated vote counted, ` +
+      `and the projected margin of ${signed(marginPP)} sits outside the 95% interval ` +
+      `for a Stevens comeback.`
+    : live
+      ? call.line
+      : MODEL.headline;
+
+  // AP's call always wins the chip; ours is labelled as ours (§5.7).
   const statusCopy =
     rState === "OFFICIAL"
       ? STATUS_COPY.OFFICIAL
-      : live && call.verdict === "CALLABLE"
-        ? `TPSI projection — ${CAND_NAMES[fc.leader as keyof typeof CAND_NAMES] ?? leaderLast}`
+      : deskCalled
+        ? `TPSI projection — ${deskWinner}`
         : live && call.verdict === "LEANING"
           ? "Leaning"
           : STATUS_COPY[rState];
@@ -473,6 +495,11 @@ export default function TonightBoard() {
                 cands.map((c, i) => {
                   const p = share(c, cands);
                   const col = tone(i, c.party);
+                  const projectedWinner =
+                    !c.winner &&
+                    deskCalled &&
+                    !!deskWinnerMatch &&
+                    String(c.name || "").toLowerCase().includes(deskWinnerMatch);
                   return (
                     <div className="topline-row" key={c.name || i}>
                       <div className="topline-row-top">
@@ -484,8 +511,11 @@ export default function TonightBoard() {
                               {c.party || "Democrat"}
                               {String(c.name || "").includes(MODEL.withdrawn) && " · Withdrawn, on ballot"}
                             </small>
-                            {i === 0 && leadGap > 0 && !c.winner && (
+                            {i === 0 && leadGap > 0 && !c.winner && !projectedWinner && (
                               <span className="topline-lead">Leads by {int(leadGap)} votes</span>
+                            )}
+                            {projectedWinner && (
+                              <span className="topline-lead won">TPSI projected winner</span>
                             )}
                             {c.winner && <span className="topline-lead won">Race called</span>}
                           </div>
@@ -510,6 +540,11 @@ export default function TonightBoard() {
 
               <div className="topline-foot">
                 <span>{live ? `${int(counted(mi))} votes counted` : "No votes counted"}</span>
+                {live && cands.length > 1 && (
+                  <span className="topline-margin">
+                    <b>{signed(leadMarginPP)}</b> margin · {int(leadGap)} votes
+                  </span>
+                )}
                 <span className="topline-reporting">
                   <b>{live ? pctLabel(rep) : "0"}%</b> est. reporting
                 </span>
@@ -591,9 +626,13 @@ export default function TonightBoard() {
               <section className="projection-zone" aria-label="Forecasted final result">
                 <div className="projected-top">
                   <div className="projected-intro">
-                    <span className="model-label">Model projection · not actual results</span>
-                    <div className="projected-name">{leaderLast} projected ahead</div>
-                    <p className="projection-headline prose">{live ? call.line : MODEL.headline}</p>
+                    <span className="model-label">
+                      {deskCalled ? "TPSI projection" : "Model projection · not actual results"}
+                    </span>
+                    <div className="projected-name">
+                      {deskCalled ? `${deskWinner} wins` : `${leaderLast} projected ahead`}
+                    </div>
+                    <p className="projection-headline prose">{headline}</p>
                   </div>
                   <div className="projected-margin-wrap">
                     <span>Projected margin</span>
@@ -919,6 +958,8 @@ html[data-theme="dark"] .desk{
   font-family:var(--mono);font-size:9px;font-weight:700;letter-spacing:.11em;
   text-transform:uppercase;color:var(--ink3)}
 .topline-reporting b{font-size:13px;color:var(--ink);letter-spacing:-.01em;
+  font-variant-numeric:tabular-nums;margin-right:5px}
+.topline-margin b{font-size:13px;color:var(--ink);letter-spacing:-.01em;
   font-variant-numeric:tabular-nums;margin-right:5px}
 
 /* forecast snapshot */

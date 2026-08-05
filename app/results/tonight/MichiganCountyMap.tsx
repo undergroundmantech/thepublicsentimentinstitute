@@ -308,7 +308,16 @@ export default function MichiganCountyMap({ view, mode, counties, liveCounties }
                   <span style={{ color: "var(--c2)" }}>Stevens</span>
                   <b>{fmtInt(live.stevensVotes)}</b>
                 </div>
-                <div className="mi-tip-sub">{live.reporting.toFixed(0)}% reporting</div>
+                {(() => {
+                  const t = live.elSayedVotes + live.stevensVotes;
+                  const m = ((live.elSayedVotes - live.stevensVotes) / t) * 100;
+                  return (
+                    <div className="mi-tip-sub">
+                      {m >= 0 ? "+" : "−"}
+                      {Math.abs(m).toFixed(1)} margin · {live.reporting.toFixed(0)}% reporting
+                    </div>
+                  );
+                })()}
               </>
             ) : (
               <div className="mi-tip-sub">No votes reported</div>
