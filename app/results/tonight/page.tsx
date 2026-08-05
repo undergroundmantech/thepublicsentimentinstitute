@@ -394,12 +394,14 @@ export default function TonightBoard() {
   const leaderLast = marginPP >= 0 ? MODEL.a.last : MODEL.b.last;
   const modeledRep = fc.modeled_percent_reporting * 100;
 
-  const callStatus =
-    call.verdict === "CALLABLE"
-      ? `Called — ${CAND_NAMES[fc.leader as keyof typeof CAND_NAMES] ?? leaderLast}`
-      : call.verdict === "LEANING"
-        ? `Leaning — ${CAND_NAMES[fc.leader as keyof typeof CAND_NAMES] ?? leaderLast}`
-        : "Not yet callable";
+  // The margin is a difference of two vote totals, so its sd is sd_race·√2.
+  const marginSdPP =
+    fc.modeled_total_vote > 0
+      ? ((fc.sd_race * Math.SQRT2) / fc.modeled_total_vote) * 100
+      : 0;
+  const marginLo = marginPP - 2 * marginSdPP;
+  const marginHi = marginPP + 2 * marginSdPP;
+  const signed = (n: number) => `${n >= 0 ? "+" : "−"}${Math.abs(n).toFixed(1)}`;
 
   // AP's call always wins the chip; a TPSI call is labelled as ours (§5.7).
   const statusCopy =
@@ -595,7 +597,7 @@ export default function TonightBoard() {
                   </div>
                   <div className="projected-margin-wrap">
                     <span>Projected margin</span>
-                    <b>{marginPP >= 0 ? "+" : "−"}{Math.abs(marginPP).toFixed(1)}</b>
+                    <b>{signed(marginPP)}</b>
                     <small>{leaderLast}, projected final points</small>
                   </div>
                 </div>
@@ -647,7 +649,10 @@ export default function TonightBoard() {
                   <div><span>Projected turnout</span><b>{int(fc.modeled_total_vote)}</b></div>
                   <div><span>Votes remaining</span><b>{int(fc.modeled_vote_remaining)}</b></div>
                   <div><span>SD of votes</span><b>±{int(fc.sd_race)}</b></div>
-                  <div><span>Call status</span><b>{callStatus}</b></div>
+                  <div>
+                    <span>Margin range (95%)</span>
+                    <b>{signed(marginLo)} to {signed(marginHi)}</b>
+                  </div>
                 </div>
 
                 {/* §5.6 — telemetry flag off means exactly this line */}
