@@ -116,6 +116,8 @@ export default function LocalBoard() {
 
   const localDocs = useMemo(() => {
     if (!index) return [];
+    // Deliberately the complement of the 24-race coverage gate: this page's
+    // whole purpose is down-ballot/local races the desk (isCoveredId) excludes.
     return index.docs.filter((d: any) => classifyRaceTier(d.contest, d.office) <= 2);
   }, [index]);
 

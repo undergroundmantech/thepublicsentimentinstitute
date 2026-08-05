@@ -43,17 +43,7 @@ const TIER_DEFAULTS: Record<RaceTier, Omit<RaceCapabilities, "tier" | "raceRule"
   2: { forecast: false, countyModel: false, modeData: false, telemetry: false, spotlight: false },
 };
 
-/**
- * Per-race overrides, keyed by CivicAPI race id.
- *
- * NOTE (2026-07-19): the registry has no August 2026 entries yet — CivicAPI's
- * race-search endpoint returns zero races for the 2026-08-01..2026-08-31
- * window as of this writing (it appears to publish races only ~2-3 weeks
- * out). Real August primary tiers/flags must be added here once CivicAPI
- * publishes those race ids; do not fabricate ids. The one entry below is a
- * real, already-registered race included as a worked example of the
- * override shape.
- */
+/** Per-race overrides, keyed by CivicAPI race id. */
 export const RACE_CAPABILITY_OVERRIDES: Partial<Record<number, Partial<RaceCapabilities>>> = {
   83479: { tier: 4, raceRule: "RANKED_CHOICE" }, // DC Mayor Democratic Primary — RCV, spotlight example
 
@@ -63,6 +53,15 @@ export const RACE_CAPABILITY_OVERRIDES: Partial<Record<number, Partial<RaceCapab
   // own mockup (Hickenlooper vs. Gonzales, 52.9%/47.1%).
   84322: { tier: 4, raceRule: "PLURALITY" },      // Colorado US Senate Democratic Primary
   84105: { tier: 4, raceRule: "PLURALITY" },      // South Carolina Governor Republican Runoff (2-candidate runoff round)
+
+  // August 4, 2026 primary night coverage gate (CO-07). Only 84778 carries a
+  // TPSI model — statewide (n=254), no county estimates — so it stays tier 3
+  // Forecast, not tier 4 Spotlight; 84950/84951 are pinned to TOP_TWO for WA's
+  // blanket primary. See _data/coverage.2026-08-04.ts for the full editorial
+  // coverage list.
+  84778: { tier: 3, raceRule: "PLURALITY" }, // Michigan US Senate Democratic Primary — statewide forecast, no county model
+  84950: { tier: 2, raceRule: "TOP_TWO" },   // Washington US House 3 — top-two, no party primary
+  84951: { tier: 2, raceRule: "TOP_TWO" },   // Washington US House 4 — top-two, no party primary
 };
 
 /** Resolves full capabilities for a race: explicit override > tier default > safe fallback (tier 2). */

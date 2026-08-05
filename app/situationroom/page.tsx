@@ -159,6 +159,9 @@ export default function SituationRoomPage() {
   const [clock, setClock] = useState<string>("");
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
+  // Situation Room reads the full season index, not the 24-race coverage
+  // gate (_data/coverage.2026-08-04) — it's a season-wide status view, not
+  // one of the /results desk's covered-races display surfaces.
   const { index, error: indexError } = useElectionIndex(true) as { index: { docs: Doc[] } | null; error: boolean };
   const today = isoToday();
   const upcoming = useUpcomingDays(today);

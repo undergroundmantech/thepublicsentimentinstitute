@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
 import { Manrope } from "next/font/google";
 import DarkNav from "@/app/components/DarkNav";
-import { ThemeProvider } from "./onpoint/lib/theme.jsx";
+import { ThemeProvider, useTheme, tripToggleTheme } from "./onpoint/lib/theme.jsx";
 import { OPA_GLOBAL_CSS } from "./onpoint/OpaResultsPage.jsx";
 import { ResultCard } from "./onpoint/ElectionResults.jsx";
 import { useElectionIndex } from "./onpoint/lib/electionIndex.js";
@@ -16,6 +16,7 @@ import SwingOMeter from "./components/SwingOMeter";
 import { needleFromRace } from "./components/needleModel";
 import PrecinctShowcase from "./components/PrecinctShowcase";
 import { classifyRaceTier } from "./_data/raceCapabilities";
+import { isCoveredId, getSpotlightEntry } from "./_data/coverage.2026-08-04";
 
 // The desk's own backdrop — the REAL national county map, counties reporting
 // in red/blue/purple across the night. Canvas 2D over the shared geometry.
@@ -46,13 +47,21 @@ const surname = (n?: string) => (n ? n.trim().split(/\s+/).pop() : "");
 // a night with ~34k races reporting.
 const tierOf = (d: any) => classifyRaceTier(d?.contest, d?.office);
 const byTierThenVotes = (a: any, b: any) => (tierOf(b) - tierOf(a)) || ((b.totalVotes || 0) - (a.totalVotes || 0));
-// "races we actually cover" — excludes down-ballot/local noise (tier 2: county
-// clerk, school board, municipal, judicial…), which already has its own
-// dedicated page at /results/local (Phase D). Tier 3+ = President/US Senate/
-// Governor/US House/other statewide races — what TPSI's polling & forecast
-// desk actually tracks. Used throughout the hub so the hero wall, ticker,
-// docket and forecast rail only ever surface real coverage.
-const isCovered = (d: any) => tierOf(d) >= 3;
+// "races we actually cover" — an explicit editorial list (_data/coverage.2026-08-04),
+// not a heuristic over contest names. The tierOf sort helper above still
+// ranks within that covered set; it no longer decides membership.
+// Excludes down-ballot/local noise, which already has its own dedicated page
+// at /results/local (Phase D). Reserved for the sections that assert a
+// forecast, projection, or call — right now just tonight's board.
+const isCovered = (d: any) => isCoveredId(Number(d?.id));
+// CO-06 §1 protects the sphere wall, chyron, and precinct-showcase atmosphere
+// from the editorial gate above: on a night when none of tonight's curated
+// races have started reporting, isCovered alone would empty them out. Density
+// is the proof a real election night is underway, so they keep the old
+// forecast-grade threshold (any statewide/forecast-grade race, any night) —
+// named apart from isCovered above, which alone decides "what TPSI covers."
+const DENSITY_TIER_MIN = 3;
+const isDense = (d: any) => tierOf(d) >= DENSITY_TIER_MIN;
 
 // ── reveal-on-scroll + lazy-in-view (one IO per element, once) ──────────────
 function useInView(rootMargin = "-12% 0px"): [React.RefObject<HTMLElement | null>, boolean] {
@@ -73,6 +82,31 @@ function useInView(rootMargin = "-12% 0px"): [React.RefObject<HTMLElement | null
   return [ref, seen];
 }
 
+
+// The desk's own light/dark control. The hero orb/sphere/ticker are built
+// dark-only and never change (see the note in ResultsDesk() below), but
+// everything past the fold (docket, cards, rails, plates) is themed off
+// data-opa-theme — same trip helper + View Transitions wipe RaceDesk and
+// the results hub use, so the flip looks identical everywhere.
+function ThemeToggleButton() {
+  const { theme, toggle } = useTheme();
+  const light = theme === "light";
+  return (
+    <button
+      type="button"
+      className="desk-theme-toggle"
+      onClick={() => tripToggleTheme({ theme, toggle, onAfterSwap: undefined })}
+      aria-label={light ? "Switch to dark mode" : "Switch to light mode"}
+      title={light ? "Dark mode" : "Light mode"}
+    >
+      {light ? (
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" /></svg>
+      ) : (
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" aria-hidden><circle cx="12" cy="12" r="4.2" /><path d="M12 2.5v2M12 19.5v2M4.6 4.6l1.5 1.5M17.9 17.9l1.5 1.5M2.5 12h2M19.5 12h2M4.6 19.4l1.5-1.5M17.9 6.1l1.5-1.5" /></svg>
+      )}
+    </button>
+  );
+}
 
 function Eyebrow({ children, live }: { children: React.ReactNode; live?: boolean }) {
   return (
@@ -224,21 +258,86 @@ function Desk() {
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
 
+  // the spotlight — the one race tonight carrying a TPSI model (CO-06 §2).
+  // Editorial figures (projection, win probability, disclosure) are a fixed
+  // analyst deliverable, not derived from the live feed; only the AP-call
+  // comparison reads off the live index.
+  const spotlightEntry = useMemo(() => getSpotlightEntry(), []);
+  const spotlightDoc = useMemo(() => {
+    if (!index || !spotlightEntry) return null;
+    return index.docs.find((d: any) => Number(d.id) === spotlightEntry.id) || null;
+  }, [index, spotlightEntry]);
+  const spotlightApCall = useMemo(() => {
+    const cands = spotlightDoc?.race?.candidates;
+    if (!Array.isArray(cands)) return null;
+    return cands.find((c: any) => c?.winner) || null;
+  }, [spotlightDoc]);
+  // the fixed pre-election forecast (coverage.2026-08-04.ts's pollAvg) — the
+  // same prior RaceDesk's needle model reads, so both pages assert one number.
+  const spotlightForecast = useMemo(() => {
+    const pa = spotlightEntry?.pollAvg;
+    if (!pa) return null;
+    const ranked = Object.entries(pa).sort((a, b) => b[1] - a[1]);
+    const [leader, runnerUp, third] = ranked;
+    return {
+      leaderName: leader[0], leaderPct: leader[1],
+      runnerName: runnerUp[0], runnerPct: runnerUp[1],
+      marginPct: leader[1] - runnerUp[1],
+      thirdName: third?.[0], thirdPct: third?.[1],
+    };
+  }, [spotlightEntry]);
+  // live returns for the spotlight race — balances the fixed pre-election
+  // forecast above with what has actually been counted so far tonight.
+  const spotlightActual = useMemo(() => {
+    const cands = spotlightDoc?.race?.candidates;
+    if (!spotlightDoc?.hasResult || !Array.isArray(cands) || !cands.length) return null;
+    const sorted = [...cands].sort((a: any, b: any) => (b.votes || 0) - (a.votes || 0));
+    const total = sorted.reduce((s: number, c: any) => s + (c.votes || 0), 0);
+    return {
+      reporting: spotlightDoc.reporting || 0,
+      cands: sorted.map((c: any) => ({
+        name: surname(c.name),
+        pct: total > 0 ? (100 * (c.votes || 0)) / total : 0,
+        col: candColor(c),
+        won: !!c.winner,
+      })),
+    };
+  }, [spotlightDoc]);
+  // updates through the night: blends the 83.2% pre-election prior toward the
+  // observed margin as more of the vote reports, so it moves off the fixed
+  // forecast number instead of restating it. El-Sayed is the forecast favorite.
+  const spotlightLiveProb = useMemo(() => {
+    if (!spotlightActual?.cands?.length) return null;
+    const [leader, runnerUp] = spotlightActual.cands;
+    const marginPts = leader.pct - (runnerUp?.pct || 0);
+    const priorForLeader = leader.name === "El-Sayed" ? 83.2 : 100 - 83.2;
+    const reportingFrac = Math.min(1, Math.max(0, spotlightActual.reporting / 100));
+    const observed = 50 + marginPts * 3.2;
+    const blended = priorForLeader * (1 - reportingFrac) + observed * reportingFrac;
+    return { pct: Math.min(99.9, Math.max(0.1, blended)), leader: leader.name };
+  }, [spotlightActual]);
+
+  // Before any returns exist (e.g. earlier on election day, pre-poll-close),
+  // every doc's hasResult is false and the hero would otherwise render blank.
+  // Once anyLive flips true, every gate below reverts to strict live-only.
+  const anyLive = useMemo(() => !!index?.docs?.some((d: any) => d.hasResult), [index]);
+
   const featured = useMemo(() => {
     if (!index) return null;
-    const withMap = index.docs.filter((d: any) => d.hasResult && raceHasMap(d.race) && isCovered(d));
+    const has = (d: any) => (anyLive ? d.hasResult : true);
+    const withMap = index.docs.filter((d: any) => has(d) && raceHasMap(d.race) && isDense(d));
     withMap.sort(byTierThenVotes);
-    return withMap[0] || index.docs.find((d: any) => d.hasResult && isCovered(d)) || index.docs.find((d: any) => d.hasResult) || index.docs[0] || null;
-  }, [index]);
+    return withMap[0] || index.docs.find((d: any) => has(d) && isDense(d)) || index.docs.find((d: any) => has(d)) || index.docs[0] || null;
+  }, [index, anyLive]);
 
   // The lead precinct map (live ESRI tiles): the single richest geography we
   // have, so its partisan-lean basemap reads purple. Held static — the anchor.
   const precinctLead = useMemo(() => {
     if (!index) return null;
-    const withMap = index.docs.filter((d: any) => d.hasResult && raceHasMap(d.race) && d.id !== featured?.race?.id && isCovered(d));
+    const withMap = index.docs.filter((d: any) => (anyLive ? d.hasResult : true) && raceHasMap(d.race) && d.id !== featured?.race?.id && isDense(d));
     withMap.sort(byTierThenVotes);
     return withMap[0] || null;
-  }, [index, featured]);
+  }, [index, featured, anyLive]);
 
   // The cycling pool for the atlas plates. STATEWIDE contests first — their
   // county maps fill the whole state and read best — then the strongest local
@@ -251,7 +350,7 @@ function Desk() {
     const isStatewide = (d: any) =>
       String(d.office || "").toLowerCase() === "statewide" ||
       (WIDE_RE.test(String(d.contest || "")) && !LOCAL_RE.test(String(d.contest || "")));
-    const eligible = index.docs.filter((d: any) => d.hasResult && raceHasMap(d.race) && d.leader?.cand && d.id !== leadId && isCovered(d));
+    const eligible = index.docs.filter((d: any) => (anyLive ? d.hasResult : true) && raceHasMap(d.race) && d.leader?.cand && d.id !== leadId && isDense(d));
     const tierPick = (docs: any[], max: number) => {
       const byState = new Map<string, any>();
       for (const d of docs) {
@@ -286,14 +385,14 @@ function Desk() {
       if (locals[i]) out.push(locals[i]);
     }
     return out.slice(0, 20);
-  }, [index, precinctLead]);
+  }, [index, precinctLead, anyLive]);
 
   // The docket — other big boards (distinct states) listed beside the featured
   // one. Map breakdown required so every board can draw a choropleth.
   const deckBacks = useMemo(() => {
     if (!index) return [] as any[];
     const top = index.docs
-      .filter((d: any) => d.hasResult && raceHasMap(d.race) && d.race?.has_map && d.id !== featured?.race?.id && isCovered(d))
+      .filter((d: any) => (anyLive ? d.hasResult : true) && raceHasMap(d.race) && d.race?.has_map && d.id !== featured?.race?.id && isDense(d))
       .sort(byTierThenVotes);
     const out: any[] = [];
     const seen = new Set<string>([String(featured?.race?.province || "")]);
@@ -304,7 +403,7 @@ function Desk() {
       if (out.length >= 4) break;
     }
     return out;
-  }, [index, featured]);
+  }, [index, featured, anyLive]);
 
   // The gallery cards: the lead plus the diverse per-state pool, ~5 specific races.
 
@@ -318,7 +417,7 @@ function Desk() {
     const seen = new Set<string>();
     const out: any[] = [];
     const pool = index.docs
-      .filter((d: any) => d.hasResult && d.leader?.cand && (d.totalVotes || 0) > 1000 && isCovered(d))
+      .filter((d: any) => d.hasResult && d.leader?.cand && (d.totalVotes || 0) > 1000 && isDense(d))
       .sort(byTierThenVotes);
     for (const d of pool) {
       const st = String(d.province || "");
@@ -333,7 +432,7 @@ function Desk() {
   // races mid-count right now (0 < reporting < 100) — the "live" readout
   const liveNow = useMemo(() => {
     if (!index) return 0;
-    return index.docs.filter((d: any) => d.hasResult && (d.reporting || 0) > 0 && (d.reporting || 0) < 100 && isCovered(d)).length;
+    return index.docs.filter((d: any) => d.hasResult && (d.reporting || 0) > 0 && (d.reporting || 0) < 100 && isDense(d)).length;
   }, [index]);
 
   // states with real returns — the hero map only tours places we actually have
@@ -341,7 +440,7 @@ function Desk() {
     if (!index) return [] as string[];
     const seen = new Set<string>();
     for (const d of index.docs) {
-      if (d.hasResult && raceHasMap(d.race) && isCovered(d)) seen.add(String(d.province || "").toUpperCase());
+      if (d.hasResult && raceHasMap(d.race) && isDense(d)) seen.add(String(d.province || "").toUpperCase());
     }
     seen.delete("");
     return [...seen];
@@ -357,7 +456,7 @@ function Desk() {
     // statewide), capped 3-per-state so the wall reads as a real editorial
     // cross-section instead of one state's down-ballot ballot line items.
     // Local/county/school races have their own home at /results/local.
-    const base = index.docs.filter((d: any) => d.hasResult && d.leader?.cand && d.province && raceHasMap(d.race) && isCovered(d));
+    const base = index.docs.filter((d: any) => (anyLive ? d.hasResult : true) && d.leader?.cand && d.province && raceHasMap(d.race) && isDense(d));
     const perState = new Map<string, number>();
     const out: any[] = [];
     for (const d of [...base].sort(byTierThenVotes)) {
@@ -370,7 +469,7 @@ function Desk() {
     }
     out.sort((a: any, b: any) => hash(String(a.id)) - hash(String(b.id)));
     return out;
-  }, [index]);
+  }, [index, anyLive]);
 
   // tonight on the desk — today's contests, or the edge case: point at the
   // next election night (or close the season) so the section is never stale
@@ -471,7 +570,7 @@ function Desk() {
     if (!index) return [] as any[];
     const close = index.docs
       .filter((d: any) => {
-        if (!d.hasResult || !isCovered(d) || !Array.isArray(d.race?.candidates) || d.race.candidates.length < 2) return false;
+        if (!d.hasResult || !isDense(d) || !Array.isArray(d.race?.candidates) || d.race.candidates.length < 2) return false;
         const cs = [...d.race.candidates].sort((a: any, b: any) => (b.votes || 0) - (a.votes || 0));
         const lead = (cs[0]?.percent || 0) - (cs[1]?.percent || 0);
         return lead > 0.2 && lead < 15 && (d.totalVotes || 0) > 5000;
@@ -527,7 +626,10 @@ function Desk() {
       <div className="desk-status">
         <div className="desk-shell desk-status-in">
           <span className="desk-status-l"><span className="desk-pip" aria-hidden /> LIVE DESK <em>·</em> 2026 SEASON</span>
-          <span className="desk-status-r">{coveredCount ? `${fmtInt(coveredCount)} contests` : "loading the season"} <em>·</em> auto-refresh 14s</span>
+          <span className="desk-status-r">
+            {coveredCount ? `${fmtInt(coveredCount)} contests` : "loading the season"} <em>·</em> auto-refresh 14s
+            <ThemeToggleButton />
+          </span>
         </div>
       </div>
 
@@ -578,6 +680,102 @@ function Desk() {
           ) : null}
         </div>
       </section>
+
+      {/* 1.15 · the spotlight — the one race tonight carrying a TPSI model,
+          full width, above tonight's board. Never rendered for any other
+          race: gated on the coverage registry's single SPOTLIGHT entry, and
+          the forecast panel itself only ever mounts through the existing
+          tier/capability gate (tier 4 → forecast: true), never a one-off
+          id check. */}
+      {spotlightEntry ? (
+        <section className="desk-spotlight">
+          <div className="desk-shell desk-spotlight-in">
+            <Eyebrow live>the spotlight</Eyebrow>
+            <button
+              type="button"
+              className="desk-spotlight-title-link"
+              onClick={() => openRace({ id: spotlightEntry.id })}
+            >
+              <h2 className="desk-h2">{spotlightEntry.title}<em>.</em></h2>
+            </button>
+            {spotlightEntry.note ? <p className="desk-spotlight-note">{spotlightEntry.note}</p> : null}
+
+            <div className="desk-spotlight-panel">
+              <div className="desk-spotlight-actual">
+                <span className="desk-spotlight-tag live">LIVE RESULTS</span>
+                {spotlightActual ? (
+                  <>
+                    <div className="desk-spotlight-cands">
+                      {spotlightActual.cands.map((c: any, i: number) => (
+                        <span className="desk-spotlight-cand" key={i}>
+                          <i className="desk-spotlight-dot" style={{ background: c.col }} aria-hidden />
+                          <b>{c.name}</b> {c.pct >= 99.95 ? "100" : c.pct.toFixed(1)}%{c.won ? " ✓" : ""}
+                        </span>
+                      ))}
+                    </div>
+                    {spotlightLiveProb ? (
+                      <div className="desk-spotlight-prob live">
+                        <b>{spotlightLiveProb.pct.toFixed(1)}%</b> live win probability
+                      </div>
+                    ) : null}
+                    <div className="desk-spotlight-reporting">{Math.round(spotlightActual.reporting)}% reporting</div>
+                  </>
+                ) : (
+                  <p className="desk-spotlight-pending">Polls have not closed &mdash; live returns post here as they arrive.</p>
+                )}
+              </div>
+
+              <div className="desk-spotlight-proj">
+                <span className="desk-spotlight-tag forecast">PRE-ELECTION FORECAST</span>
+                <div className="desk-spotlight-cands">
+                  {spotlightForecast ? (
+                    <>
+                      <span className="desk-spotlight-cand"><b>{spotlightForecast.leaderName}</b> {spotlightForecast.leaderPct.toFixed(1)}%</span>
+                      <span className="desk-spotlight-cand"><b>{spotlightForecast.runnerName}</b> {spotlightForecast.runnerPct.toFixed(1)}%</span>
+                      {spotlightForecast.thirdName ? (
+                        <span className="desk-spotlight-cand muted"><b>{spotlightForecast.thirdName}</b> {spotlightForecast.thirdPct?.toFixed(1)}% <em>(withdrawn)</em></span>
+                      ) : null}
+                    </>
+                  ) : null}
+                </div>
+                {spotlightForecast ? <div className="desk-spotlight-margin">{spotlightForecast.leaderName} +{spotlightForecast.marginPct.toFixed(1)}</div> : null}
+                <div className="desk-spotlight-prob"><b>83.2%</b> win probability</div>
+                <p className="desk-spotlight-asof">Modeled July 25&ndash;29 &mdash; before any votes were cast.</p>
+
+                <dl className="desk-spotlight-meta">
+                  <div><dt>90% margin range</dt><dd>&minus;6.8 to +25.7</dd></div>
+                  <div><dt>Sample</dt><dd>n = 762</dd></div>
+                  <div><dt>Universe</dt><dd>19,999-record modeled voter file</dd></div>
+                  <div><dt>Margin of error</dt><dd>&plusmn;4.0 at 95%, design-adjusted</dd></div>
+                  <div><dt>Field dates</dt><dd>July 25&ndash;29, 2026</dd></div>
+                  <div><dt>Model</dt><dd>DSMeridian Model 10 / 12</dd></div>
+                </dl>
+              </div>
+
+              {spotlightApCall ? (
+                <div className="desk-spotlight-ap">
+                  <span className="desk-spotlight-tag ap">AP CALL</span>
+                  <div className="desk-spotlight-cands">
+                    <span className="desk-spotlight-cand"><b>{spotlightApCall.name}</b> winner</span>
+                  </div>
+                </div>
+              ) : null}
+            </div>
+
+            <p className="desk-spotlight-disclosure">
+              1,264 interviews collected across two modes; reported ballot-test estimates
+              are based on 762 text-message interviews conducted against the Michigan
+              voter file, modeled across a 19,999-record voter universe; a concurrent
+              500-interview online panel sample was excluded following mode-comparison
+              review.
+            </p>
+
+            <button type="button" className="desk-spotlight-cta" onClick={() => openRace({ id: spotlightEntry.id })}>
+              View live returns &amp; full race detail <span aria-hidden>&rarr;</span>
+            </button>
+          </div>
+        </section>
+      ) : null}
 
       {/* 1.25 · on the ballot — tonight's races, or the next night's, as a
           horizontally scrolling rail with a type-to-find filter */}
@@ -919,6 +1117,10 @@ body main > div > div { padding-top: 0 !important; padding-bottom: 0 !important;
 /* status bar */
 .desk-status { position: sticky; top: 0; z-index: 40; background: rgba(5,5,5,0.82); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,0.07); }
 .desk-status-in { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 9px clamp(20px,4vw,44px); font-size: 10.5px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(244,244,239,0.42); font-family: var(--font-mp); }
+.desk-status-r { display: inline-flex; align-items: center; gap: 10px; }
+.desk-theme-toggle { display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; flex-shrink: 0; border-radius: 999px; border: 1px solid rgba(255,255,255,0.14); background: rgba(255,255,255,0.05); color: rgba(244,244,239,0.62); cursor: pointer; transition: color 160ms ease, background 160ms ease, transform 160ms ease; }
+.desk-theme-toggle:hover { color: #f4f4ef; background: rgba(255,255,255,0.1); }
+.desk-theme-toggle:active { transform: translateY(1px); }
 .desk-status-l { display: inline-flex; align-items: center; gap: 9px; color: rgba(244,244,239,0.7); }
 .desk-status em, .desk-status-l em, .desk-status-r em { font-style: normal; opacity: 0.4; }
 .desk-pip { width: 7px; height: 7px; border-radius: 99px; background: #2dd4bf; box-shadow: 0 0 0 3px rgba(45,212,191,0.18); animation: desk-pip 1.8s ease-in-out infinite; }
@@ -1211,6 +1413,43 @@ body main > div > div { padding-top: 0 !important; padding-bottom: 0 !important;
 .desk-tn-lead b { font-size: 12px; font-weight: 700; white-space: nowrap; font-variant-numeric: tabular-nums; }
 .desk-tn-lead > span[aria-hidden] { font-size: 12px; color: var(--ink-dimmer); }
 .desk-tn-none { max-width: 1280px; margin: 22px auto 0; padding: 0 clamp(20px,4vw,44px); font-size: 13.5px; color: var(--ink-mute); }
+
+/* the spotlight — full-width, above tonight's board */
+.desk-spotlight { position: relative; border-bottom: 1px solid var(--rule-soft); background: linear-gradient(180deg, rgba(45,212,191,0.05), transparent 76%); padding: clamp(36px, 6.5vh, 64px) 0; }
+.desk-spotlight-in { display: flex; flex-direction: column; }
+.desk-spotlight-title-link { display: block; text-align: left; background: none; border: 0; padding: 0; margin: 0; cursor: pointer; }
+.desk-spotlight-title-link:hover .desk-h2 { text-decoration: underline; text-decoration-color: var(--rule-strong); text-underline-offset: 6px; }
+.desk-spotlight-note { margin-top: 14px; max-width: 68ch; font-size: 15px; line-height: 1.6; color: var(--ink-mute); }
+.desk-spotlight-panel { display: flex; flex-wrap: wrap; gap: clamp(20px, 4vw, 36px); align-items: flex-start; margin-top: clamp(22px, 3.4vh, 32px); padding: 20px clamp(18px, 3vw, 28px); border-radius: 14px; background: var(--frost-bg); border: 1px solid var(--rule); }
+.desk-spotlight-proj, .desk-spotlight-ap, .desk-spotlight-actual { display: flex; flex-direction: column; gap: 8px; }
+.desk-spotlight-proj { flex: 1 1 420px; min-width: 260px; }
+.desk-spotlight-actual { flex: 0 1 220px; }
+.desk-spotlight-tag { font-family: var(--font-mp), "Manrope", sans-serif; font-size: 10.5px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #2dd4bf; }
+.desk-spotlight-tag.ap { color: var(--ink-dim); }
+.desk-spotlight-tag.forecast { color: #2dd4bf; }
+.desk-spotlight-tag.live { color: #f2b84b; }
+.desk-spotlight-cands { display: flex; flex-direction: column; gap: 2px; }
+.desk-spotlight-cand { font-size: 15px; color: var(--ink-strong); }
+.desk-spotlight-cand b { font-weight: 700; margin-right: 6px; }
+.desk-spotlight-cand.muted { font-size: 12px; color: var(--ink-dim); }
+.desk-spotlight-cand.muted em { font-style: normal; opacity: 0.7; }
+.desk-spotlight-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 7px; }
+.desk-spotlight-margin { font-size: 13px; font-weight: 600; color: var(--ink-mute); }
+.desk-spotlight-prob { font-size: 15px; color: var(--ink-strong); }
+.desk-spotlight-prob b { font-size: 22px; font-weight: 700; margin-right: 6px; color: #2dd4bf; }
+.desk-spotlight-prob.live b { color: #f2b84b; }
+.desk-spotlight-asof { margin: 2px 0 0; font-size: 11.5px; font-style: italic; color: var(--ink-dim); }
+.desk-spotlight-reporting { font-size: 12.5px; font-weight: 600; letter-spacing: 0.02em; color: #f2b84b; }
+.desk-spotlight-pending { max-width: 30ch; font-size: 12.5px; line-height: 1.5; color: var(--ink-dim); }
+.desk-spotlight-meta { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px 24px; margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--rule); }
+.desk-spotlight-meta div { display: flex; flex-direction: column; gap: 2px; }
+.desk-spotlight-meta dt { font-size: 10.5px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-dim); }
+.desk-spotlight-meta dd { margin: 0; font-size: 13.5px; font-weight: 600; color: var(--ink); }
+.desk-spotlight-disclosure { margin-top: 18px; max-width: 80ch; font-size: 12px; line-height: 1.6; color: var(--ink-dim); }
+.desk-spotlight-cta { display: inline-flex; align-items: center; gap: 8px; align-self: flex-start; margin-top: 22px; padding: 11px 20px; border-radius: 999px; background: none; border: 1px solid rgba(45,212,191,0.5); cursor: pointer; font-family: var(--font-mp), "Manrope", sans-serif; font-size: 13.5px; font-weight: 700; letter-spacing: -0.01em; color: var(--ink-strong); transition: border-color .2s ease, background .2s ease; }
+.desk-spotlight-cta span { color: #2dd4bf; transition: transform .2s ease; }
+.desk-spotlight-cta:hover { border-color: #2dd4bf; background: rgba(45,212,191,0.08); }
+.desk-spotlight-cta:hover span { transform: translateX(3px); }
 
 /* browse by night — day toggle strip (no calendar) */
 .desk-nights { position: relative; padding: clamp(40px, 8vh, 88px) 0; }

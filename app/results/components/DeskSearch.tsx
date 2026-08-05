@@ -134,6 +134,9 @@ export default function DeskSearch({
   inputRef?: React.RefObject<HTMLInputElement | null>;
   variant?: "hero" | "pill";
 }) {
+  // Search intentionally spans every race CivicAPI returns, not just the
+  // 24-race coverage gate (_data/coverage.2026-08-04) — this is the "find any
+  // election" utility, not a covered-races display surface.
   const { index, error } = useElectionIndex(active) as { index: any; error: boolean };
   const [query, setQuery] = useState("");
   const [open, setOpen] = useState(false);

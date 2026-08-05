@@ -8,7 +8,7 @@
 // civicToForecastInput + forecastRace, and read the two-way win odds +
 // projected margin off the output. No hand-rolled math.
 
-import { civicToForecastInput, forecastRace, type CivicRace, type RaceRule } from "@/app/lib/electoralModel";
+import { civicToForecastInput, forecastRace, sortByPollAvg, type CivicRace, type RaceRule } from "@/app/lib/electoralModel";
 import { tonePalette } from "../onpoint/electionLib.js";
 
 const KEY_IDX: Record<string, number> = { Candidate1: 0, Candidate2: 1, Candidate3: 2 };
@@ -62,12 +62,16 @@ export interface NeedleProjection {
   probSomeoneMajority: number;
 }
 
-export function needleFromRace(race: any, raceRule: RaceRule = "PLURALITY"): NeedleProjection | null {
+export function needleFromRace(race: any, raceRule: RaceRule = "PLURALITY", pollAvg?: Record<string, number>, turnoutOverride?: number): NeedleProjection | null {
   if (!race || !Array.isArray(race.candidates)) return null;
   const cands = race.candidates.filter((c: any) => c && c.name);
   if (cands.length < 2) return null;
 
-  const sorted = [...cands].sort((a: any, b: any) => (Number(b.votes) || 0) - (Number(a.votes) || 0));
+  // Poll-sort when a TPSI prior exists (e.g. the spotlight race) so "leader"
+  // means the model's leader, not whoever CivicAPI lists first at 0 votes.
+  const sorted = pollAvg
+    ? sortByPollAvg(cands as any, pollAvg)
+    : [...cands].sort((a: any, b: any) => (Number(b.votes) || 0) - (Number(a.votes) || 0));
   const colors = tonePalette(sorted as any) as string[];
   const pctReporting = Number(race.percent_reporting) || 0;
 
@@ -94,13 +98,27 @@ export function needleFromRace(race: any, raceRule: RaceRule = "PLURALITY"): Nee
 
   try {
     const names = sorted.slice(0, 3).map((c: any) => String(c.name));
-    const out = forecastRace(civicToForecastInput(cr, undefined, raceRule), names, colors.slice(0, 3));
+    // Pass the already poll-sorted top3 straight through so civicToForecastInput
+    // doesn't re-sort and land on a different order ("dual-sort divergence").
+    const out = forecastRace(
+      civicToForecastInput(cr, undefined, raceRule, undefined, pollAvg, undefined, cr.candidates.slice(0, 3)),
+      names,
+      colors.slice(0, 3)
+    );
     const li = KEY_IDX[out.leader] ?? 0;
     const ri = KEY_IDX[out.runner_up] ?? 1;
     const oddsL = out.plurality_odds_to_win[out.leader] ?? 0;
     const oddsR = out.plurality_odds_to_win[out.runner_up] ?? 0;
     const twoWay = oddsL + oddsR;
     const pLeader = twoWay > 0 ? oddsL / twoWay : 0.5;
+    // A fixed turnout call overrides the engine's own AUC estimate (e.g. the
+    // spotlight race, where TPSI asserts a specific projected total instead
+    // of letting the generic model extrapolate from 0% reporting).
+    const modeledTotalVote = turnoutOverride ?? out.modeled_total_vote;
+    const reportedTotalVote = cr.candidates.reduce((s, c) => s + (c.votes || 0), 0);
+    const modeledVoteRemaining = turnoutOverride != null
+      ? Math.max(0, turnoutOverride - reportedTotalVote)
+      : out.modeled_vote_remaining;
     return {
       leaderName: String(cr.candidates[li]?.name || "Leader"),
       runnerName: String(cr.candidates[ri]?.name || "Runner-up"),
@@ -116,9 +134,9 @@ export function needleFromRace(race: any, raceRule: RaceRule = "PLURALITY"): Nee
       runnerCurrentSharePct: Number(cr.candidates[ri]?.percent) || 0,
       reporting: pctReporting,
       flipThresholdPct: flipThreshold(cr.candidates[li]?.votes ?? 0, cr.candidates[ri]?.votes ?? 0, pctReporting),
-      modeledTotalVote: out.modeled_total_vote,
-      modeledVoteRemaining: out.modeled_vote_remaining,
-      marginSdPp: out.modeled_total_vote > 0 ? ((out.sd_race * Math.SQRT2) / out.modeled_total_vote) * 100 : 0,
+      modeledTotalVote,
+      modeledVoteRemaining,
+      marginSdPp: modeledTotalVote > 0 ? ((out.sd_race * Math.SQRT2) / modeledTotalVote) * 100 : 0,
       modeTrigger: out.mode_trigger,
       runoffNeededProb: out.runoff_needed_prob,
       winThresholdPct: (raceRule === "THRESHOLD_35_CONVENTION" || raceRule === "THRESHOLD_35_RUNOFF") ? 35 : 50,

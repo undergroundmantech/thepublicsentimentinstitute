@@ -4,7 +4,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { Manrope } from "next/font/google";
 import DarkNav from "@/app/components/DarkNav";
-import { ThemeProvider } from "../../onpoint/lib/theme.jsx";
+import { ThemeProvider, tripToggleTheme } from "../../onpoint/lib/theme.jsx";
 import { OPA_GLOBAL_CSS } from "../../onpoint/OpaResultsPage.jsx";
 import RaceMapHover from "../../components/RaceMapHover";
 import RaceDetail from "../../onpoint/RaceDetail.jsx";
@@ -26,6 +26,7 @@ import {
   formatCountdown,
 } from "../../_lib/raceState";
 import { getRaceCapabilities } from "../../_data/raceCapabilities";
+import { getCoverage } from "../../_data/coverage.2026-08-04";
 
 const CIVIC_BASE = "https://civicapi.org";
 const RACE_REFRESH_MS = 30_000;
@@ -146,6 +147,29 @@ const RUNOFF_RULE_COPY: Record<string, string> = {
   THRESHOLD_35_CONVENTION: "short of 35%, the party convention decides the nominee.",
   THRESHOLD_35_RUNOFF: "short of 35%, the top two candidates meet in a runoff 8 weeks later.",
 };
+// The race page's own light/dark control (CO-04: light-default here, unlike
+// the results hub). Same tripToggleTheme helper the hub uses so the flip
+// looks identical everywhere.
+function ThemeToggleButton() {
+  const { theme, toggle } = useTheme();
+  const light = theme === "light";
+  return (
+    <button
+      type="button"
+      className="rd-theme-toggle"
+      onClick={() => tripToggleTheme({ theme, toggle, onAfterSwap: undefined })}
+      aria-label={light ? "Switch to dark mode" : "Switch to light mode"}
+      title={light ? "Dark mode" : "Light mode"}
+    >
+      {light ? (
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" /></svg>
+      ) : (
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" aria-hidden><circle cx="12" cy="12" r="4.2" /><path d="M12 2.5v2M12 19.5v2M4.6 4.6l1.5 1.5M17.9 17.9l1.5 1.5M2.5 12h2M19.5 12h2M4.6 19.4l1.5-1.5M17.9 6.1l1.5-1.5" /></svg>
+      )}
+    </button>
+  );
+}
+
 function RunoffModule({ needle, raceRule }: { needle: NeedleProjection; raceRule: string }) {
   return (
     <div className="rd-runoff">
@@ -242,8 +266,16 @@ function Board({ doc, primary, onMap }: { doc: any; primary?: boolean; onMap: (r
   // Dustin's forecast engine (app/lib/electoralModel) drives the needle —
   // pass the race's real electoral rule so MAJORITY_RUNOFF/THRESHOLD_*
   // races actually trigger runoff math instead of silently defaulting to
-  // plain PLURALITY.
-  const needle = useMemo(() => (race ? needleFromRace(race, caps.raceRule) : null), [race, caps.raceRule]);
+  // plain PLURALITY. The spotlight race also carries a TPSI poll prior
+  // (coverage.2026-08-04.ts) so the needle asserts the same forecast the
+  // results hub shows, instead of an unweighted tie at 0% reporting.
+  const coverageEntry = getCoverage(Number(doc?.id));
+  const pollAvg = coverageEntry?.pollAvg;
+  const turnoutOverride = coverageEntry?.projectedTurnout;
+  const needle = useMemo(
+    () => (race ? needleFromRace(race, caps.raceRule, pollAvg, turnoutOverride) : null),
+    [race, caps.raceRule, pollAvg, turnoutOverride]
+  );
   const called = Array.isArray(race?.candidates) && race.candidates.some((c: any) => c.winner);
   const [optionsOpen, setOptionsOpen] = useState(false);
   const reporting = Math.max(0, Math.min(100, Number(race?.percent_reporting) || 0));
@@ -283,7 +315,7 @@ function Board({ doc, primary, onMap }: { doc: any; primary?: boolean; onMap: (r
         <div className="rd-meta-item status">
           <span className="rd-meta-label">race status</span>
           <span className="rd-meta-status">
-            <RaceClockRing size={28} fillFrac={reporting / 100} color="#2dd4bf" state={raceState} />
+            <RaceClockRing size={28} fillFrac={reporting / 100} color="var(--live)" state={raceState} />
             {RACE_STATE_LABEL[raceState]}
           </span>
         </div>
@@ -628,7 +660,7 @@ function Desk() {
         <DarkNav />
         <div className="rd-folio">
           <button type="button" className="rd-back" onClick={() => router.push("/results")}>← the results desk</button>
-          <span>live returns · county maps · forecasts</span>
+          <span className="rd-folio-r">live returns · county maps · forecasts<ThemeToggleButton /></span>
         </div>
 
         {!index && !error ? (
@@ -676,22 +708,26 @@ body header, body footer { display: none !important; }
 body main > div { max-width: none !important; padding-left: 0 !important; padding-right: 0 !important; }
 body main > div > div { padding-top: 0 !important; padding-bottom: 0 !important; }
 
-.rd-page { position: relative; width: 100vw; margin-left: calc(50% - 50vw); min-height: 100svh; background: var(--page); color: var(--ink); font-family: var(--font-mp), "Manrope", "Helvetica Neue", Arial, sans-serif; }
+.rd-page { position: relative; width: 100vw; margin-left: calc(50% - 50vw); min-height: 100svh; background: var(--page); color: var(--ink); font-family: var(--font-body, 'Geist'), "Helvetica Neue", Arial, sans-serif; }
 .rd-shell { max-width: 1280px; margin: 0 auto; padding: 0 clamp(20px, 4vw, 44px) clamp(60px, 10vh, 110px); }
 .rd-folio { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; padding: 14px 0; margin-top: 6px; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule-soft); font-size: 10.5px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-dim); }
 .rd-back { background: none; border: 0; cursor: pointer; font: inherit; color: var(--ink); letter-spacing: 0.18em; transition: color .15s ease; }
-.rd-back:hover { color: #2dd4bf; }
+.rd-folio-r { display: inline-flex; align-items: center; gap: 10px; }
+.rd-theme-toggle { display: inline-flex; align-items: center; justify-content: center; width: 22px; height: 22px; flex-shrink: 0; border-radius: 999px; border: 1px solid var(--card-bd); background: var(--card); color: var(--ink-dim); cursor: pointer; transition: color 160ms ease, background 160ms ease, transform 160ms ease; }
+.rd-theme-toggle:hover { color: var(--ink); }
+.rd-theme-toggle:active { transform: translateY(1px); }
+.rd-back:hover { color: var(--live); }
 
 .rd-hold { display: flex; flex-direction: column; align-items: center; gap: 18px; padding: 18vh 0; color: var(--ink-mute); font-size: 14px; }
 .rd-hold-bar { width: 180px; height: 2px; border-radius: 99px; overflow: hidden; background: var(--rule); position: relative; }
-.rd-hold-bar::after { content: ''; position: absolute; inset: 0; width: 40%; border-radius: 99px; background: #2dd4bf; animation: rdHold 1.2s ease-in-out infinite alternate; }
+.rd-hold-bar::after { content: ''; position: absolute; inset: 0; width: 40%; border-radius: 99px; background: var(--live); animation: rdHold 1.2s ease-in-out infinite alternate; }
 @keyframes rdHold { from { transform: translateX(-30%); } to { transform: translateX(260%); } }
 
 .rd-head { padding: clamp(36px, 7vh, 72px) 0 clamp(10px, 2vh, 22px); }
 .rd-head-eb { display: inline-flex; align-items: center; gap: 9px; font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-mute); }
-.rd-head-eb i { width: 7px; height: 7px; background: #2dd4bf; border-radius: 1.5px; }
-.rd-title { font-family: var(--font-mp), "Manrope", sans-serif; font-weight: 500; text-transform: lowercase; letter-spacing: -0.04em; line-height: 0.96; font-size: clamp(38px, 6.4vw, 84px); color: var(--ink-strong); margin-top: 14px; max-width: 26ch; }
-.rd-title em { font-style: normal; color: #2dd4bf; }
+.rd-head-eb i { width: 7px; height: 7px; background: var(--live); border-radius: 1.5px; }
+.rd-title { font-family: var(--font-body, 'Geist'), sans-serif; font-weight: 500; text-transform: lowercase; letter-spacing: -0.04em; line-height: 0.96; font-size: clamp(38px, 6.4vw, 84px); color: var(--ink-strong); margin-top: 14px; max-width: 26ch; }
+.rd-title em { font-style: normal; color: var(--live); }
 .rd-meta { margin-top: 14px; font-size: 14px; color: var(--ink-mute); }
 
 .rd-board { margin-top: clamp(34px, 6vh, 56px); }
@@ -704,9 +740,9 @@ body main > div > div { padding-top: 0 !important; padding-bottom: 0 !important;
    the strips carry their own shape, nothing wraps the whole block */
 .rd-board-h { display: flex; justify-content: space-between; align-items: center; gap: 14px; margin-bottom: 14px; }
 .rd-board-party { display: inline-flex; align-items: center; gap: 9px; font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-mute); }
-.rd-board-party i { width: 7px; height: 7px; background: #2dd4bf; border-radius: 1.5px; }
-.rd-board-flag { font-family: var(--font-mp), "Manrope", sans-serif; font-size: 12px; font-weight: 600; color: var(--ink-dim); white-space: nowrap; }
-.rd-board-flag.called { color: rgba(45,212,191,0.75); }
+.rd-board-party i { width: 7px; height: 7px; background: var(--live); border-radius: 1.5px; }
+.rd-board-flag { font-family: var(--font-body, 'Geist'), sans-serif; font-size: 12px; font-weight: 600; color: var(--ink-dim); white-space: nowrap; }
+.rd-board-flag.called { color: color-mix(in srgb, var(--live) 75%, transparent); }
 
 /* Zone 1 meta stats: REPORTED VOTES / EST. REPORTING / RACE STATUS (CO-04 §2/§3) */
 .rd-meta { display: flex; flex-wrap: wrap; gap: clamp(20px, 3vw, 40px); padding: 14px 0 20px; border-bottom: 1px solid var(--rule-soft); }
@@ -774,7 +810,7 @@ body main > div > div { padding-top: 0 !important; padding-bottom: 0 !important;
 .rd-runoff { margin-top: 16px; padding: 14px 16px; border-radius: 12px; background: var(--wash); border: 1px solid var(--rule); }
 .rd-runoff-h { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 10.5px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-dim); margin-bottom: 8px; }
 .rd-runoff-bar { position: relative; height: 6px; border-radius: 99px; background: var(--rule); overflow: hidden; }
-.rd-runoff-bar i { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 99px; background: #2dd4bf; }
+.rd-runoff-bar i { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 99px; background: var(--live); }
 .rd-runoff-stats { display: flex; gap: 18px; margin-top: 10px; font-family: "Instrument Sans", system-ui, sans-serif; font-size: 12.5px; color: var(--ink-mute); }
 .rd-runoff-stats b { font-family: "JetBrains Mono", ui-monospace, monospace; color: var(--ink); margin-right: 5px; }
 .rd-runoff-note { margin-top: 8px; font-family: "Instrument Sans", system-ui, sans-serif; font-size: 12px; line-height: 1.5; color: var(--ink-dim); }
@@ -802,9 +838,9 @@ body main > div > div { padding-top: 0 !important; padding-bottom: 0 !important;
 .rd-map-legend { display: flex; align-self: flex-start; align-items: center; gap: 8px; margin-top: 12px; font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 10px; letter-spacing: 0.04em; color: var(--ink-dim); }
 .rd-map-legend-sw { width: 46px; height: 5px; border-radius: 99px; flex-shrink: 0; }
 /* quiet editorial link — no pill, no mono shouting */
-.rd-map-cta { position: relative; z-index: 2; display: inline-flex; align-items: center; gap: 8px; margin-top: 18px; padding: 0 1px 3px; cursor: pointer; background: none; border: 0; border-bottom: 1px solid color-mix(in srgb, var(--ink) 22%, transparent); font-family: var(--font-mp), "Manrope", sans-serif; font-size: 14.5px; font-weight: 600; letter-spacing: -0.01em; color: var(--ink); transition: border-color .2s ease; }
-.rd-map-cta:hover { border-color: #2dd4bf; }
-.rd-map-cta span { color: #2dd4bf; transition: transform .2s ease; }
+.rd-map-cta { position: relative; z-index: 2; display: inline-flex; align-items: center; gap: 8px; margin-top: 18px; padding: 0 1px 3px; cursor: pointer; background: none; border: 0; border-bottom: 1px solid color-mix(in srgb, var(--ink) 22%, transparent); font-family: var(--font-body, 'Geist'), sans-serif; font-size: 14.5px; font-weight: 600; letter-spacing: -0.01em; color: var(--ink); transition: border-color .2s ease; }
+.rd-map-cta:hover { border-color: var(--live); }
+.rd-map-cta span { color: var(--live); transition: transform .2s ease; }
 .rd-map-cta:hover span { transform: translateX(3px); }
 .rd-nomap { display: flex; flex-direction: column; align-items: center; gap: 14px; text-align: center; padding: clamp(30px, 6vh, 60px) 18px; border: 1px dashed var(--rule); border-radius: 18px; color: var(--ink-dim); font-size: 12.5px; line-height: 1.6; max-width: 340px; margin: 0 auto; }
 
@@ -814,7 +850,7 @@ body main > div > div { padding-top: 0 !important; padding-bottom: 0 !important;
 .rd-turnout-stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; padding-bottom: 20px; border-bottom: 1px solid var(--rule-soft); }
 .rd-turnout-tracks { display: flex; flex-direction: column; gap: 16px; margin-top: 20px; }
 .rd-turnout-track { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2.4fr) auto; align-items: center; gap: 14px; }
-.rd-turnout-track-name { font-family: var(--font-mp), "Manrope", sans-serif; font-size: 13.5px; font-weight: 600; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.rd-turnout-track-name { font-family: var(--font-body, 'Geist'), sans-serif; font-size: 13.5px; font-weight: 600; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .rd-turnout-bar { position: relative; height: 8px; border-radius: 99px; background: var(--rule); overflow: visible; }
 .rd-turnout-bar i { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 99px; }
 .rd-turnout-bar em { position: absolute; top: -1px; bottom: -1px; border-radius: 99px; border: 1.5px dashed; background: none; font-style: normal; opacity: 0.55; }
@@ -849,7 +885,7 @@ body main > div > div { padding-top: 0 !important; padding-bottom: 0 !important;
 .rd-timeline-charts { display: flex; flex-direction: column; gap: 14px; }
 .rd-timeline-axis { display: flex; justify-content: space-between; margin-top: 6px; font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 10px; color: var(--ink-dim); }
 .rd-tl-chart { border: 1px solid var(--rule-soft); border-radius: 10px; padding: 10px 12px; }
-.rd-tl-chart-h { display: flex; justify-content: space-between; align-items: center; font-family: var(--font-mp), "Manrope", sans-serif; font-size: 12px; font-weight: 600; color: var(--ink-mute); text-transform: lowercase; margin-bottom: 6px; }
+.rd-tl-chart-h { display: flex; justify-content: space-between; align-items: center; font-family: var(--font-body, 'Geist'), sans-serif; font-size: 12px; font-weight: 600; color: var(--ink-mute); text-transform: lowercase; margin-bottom: 6px; }
 .rd-tl-expand { background: none; border: 1px solid var(--rule); border-radius: 99px; padding: 2px 10px; font: inherit; font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-dim); cursor: pointer; }
 .rd-tl-expand:hover { color: var(--ink); border-color: var(--ink-dim); }
 .rd-tl-svg { width: 100%; height: 84px; display: block; touch-action: none; }
@@ -861,7 +897,7 @@ body main > div > div { padding-top: 0 !important; padding-bottom: 0 !important;
 .rd-ballot-sub { margin: 0 0 16px; font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 10px; letter-spacing: 0.04em; color: var(--ink-dim); }
 .rd-ballot-row { display: grid; grid-template-columns: 110px minmax(0,1fr); grid-template-areas: "mode meta" "bar bar" "split split"; row-gap: 6px; align-items: center; padding: 14px 0; border-bottom: 1px dashed var(--rule); }
 .rd-ballot-row:last-of-type { border-bottom: none; }
-.rd-ballot-mode { grid-area: mode; font-family: var(--font-mp), "Manrope", sans-serif; font-size: 13.5px; font-weight: 600; color: var(--ink); }
+.rd-ballot-mode { grid-area: mode; font-family: var(--font-body, 'Geist'), sans-serif; font-size: 13.5px; font-weight: 600; color: var(--ink); }
 .rd-ballot-meta { grid-area: meta; display: flex; justify-content: flex-end; gap: 14px; font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 11px; color: var(--ink-mute); }
 .rd-ballot-bar { grid-area: bar; position: relative; height: 8px; border-radius: 99px; background: var(--rule); overflow: hidden; }
 .rd-ballot-bar i { position: absolute; top: 0; bottom: 0; opacity: 0.82; }
@@ -887,31 +923,31 @@ body main > div > div { padding-top: 0 !important; padding-bottom: 0 !important;
 /* the shared search (pill variant) — same dialect as the landing */
 .desk-search-field { position: relative; display: flex; align-items: center; gap: 12px; padding: 0 16px; height: 60px; border-radius: 16px; background: var(--wash); border: 1px solid var(--rule); transition: border-color .18s ease, background .18s ease, box-shadow .2s ease; }
 .desk-search.pill .desk-search-field { height: 48px; border-radius: 999px; }
-.desk-search-field:focus-within { border-color: rgba(45,212,191,0.55); background: var(--hover); box-shadow: 0 0 0 4px rgba(45,212,191,0.08); }
+.desk-search-field:focus-within { border-color: color-mix(in srgb, var(--live) 55%, transparent); background: var(--hover); box-shadow: 0 0 0 4px color-mix(in srgb, var(--live) 8%, transparent); }
 .desk-search-icon { color: var(--ink-dim); flex-shrink: 0; }
-.desk-search-field input { flex: 1; min-width: 0; background: none; border: 0; outline: none; color: var(--ink); font-family: var(--font-mp), "Manrope", sans-serif; font-size: 14.5px; letter-spacing: -0.01em; }
+.desk-search-field input { flex: 1; min-width: 0; background: none; border: 0; outline: none; color: var(--ink); font-family: var(--font-body, 'Geist'), sans-serif; font-size: 14.5px; letter-spacing: -0.01em; }
 .desk-search-field input::placeholder { color: var(--ink-dim); }
 .desk-search-kbd { flex-shrink: 0; font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 10px; color: var(--ink-dim); border: 1px solid var(--rule); border-radius: 6px; padding: 3px 7px; background: var(--wash); }
 .desk-search-pop { position: absolute; top: calc(100% + 10px); left: 0; right: 0; z-index: 50; border-radius: 16px; border: 1px solid var(--card-bd); background: color-mix(in srgb, var(--card) 92%, transparent); -webkit-backdrop-filter: blur(24px) saturate(1.2); backdrop-filter: blur(24px) saturate(1.2); box-shadow: var(--shadow-pop); overflow: hidden; animation: deskPop .18s cubic-bezier(.2,.8,.2,1); }
 @keyframes deskPop { from { opacity: 0; transform: translateY(-6px); } }
 .desk-spop-h { display: flex; justify-content: space-between; gap: 12px; padding: 10px 16px; font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 9px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-dim); border-bottom: 1px solid var(--rule-soft); }
-.desk-spop-h span:last-child { color: rgba(45,212,191,0.55); }
+.desk-spop-h span:last-child { color: color-mix(in srgb, var(--live) 55%, transparent); }
 .desk-srow { position: relative; display: grid; grid-template-columns: 3px 42px minmax(0,1fr) auto; align-items: center; gap: 13px; width: 100%; text-align: left; border: 0; cursor: pointer; padding: 12px 16px; background: transparent; transition: background .12s ease; }
 .desk-srow + .desk-srow { border-top: 1px solid var(--rule-soft); }
-.desk-srow[data-active="1"] { background: rgba(45,212,191,0.045); }
-.desk-srow[data-active="1"]::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 2px; background: #2dd4bf; box-shadow: 0 0 12px rgba(45,212,191,0.55); }
+.desk-srow[data-active="1"] { background: color-mix(in srgb, var(--live) 4.5%, transparent); }
+.desk-srow[data-active="1"]::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 2px; background: var(--live); box-shadow: 0 0 12px color-mix(in srgb, var(--live) 55%, transparent); }
 .desk-srow-tick { width: 3px; height: 26px; border-radius: 2px; }
-.desk-srow-st { font-family: var(--font-mp), "Manrope", sans-serif; font-size: 13px; font-weight: 800; letter-spacing: 0.03em; color: var(--ink); }
+.desk-srow-st { font-family: var(--font-body, 'Geist'), sans-serif; font-size: 13px; font-weight: 800; letter-spacing: 0.03em; color: var(--ink); }
 .desk-srow-main { min-width: 0; display: flex; flex-direction: column; gap: 2px; }
-.desk-srow-title { font-family: var(--font-mp), "Manrope", sans-serif; font-size: 13.5px; font-weight: 600; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.desk-hl { background: none; color: #2dd4bf; }
+.desk-srow-title { font-family: var(--font-body, 'Geist'), sans-serif; font-size: 13.5px; font-weight: 600; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.desk-hl { background: none; color: var(--live); }
 .desk-srow-meta { font-size: 10.5px; color: var(--ink-dim); text-transform: lowercase; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .desk-srow-right { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; }
 .desk-srow-right b { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 11px; font-weight: 700; white-space: nowrap; }
 .desk-srow-right > span { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 9px; color: var(--ink-dim); }
 .desk-srow-await { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 9.5px; color: var(--ink-dim); text-transform: uppercase; letter-spacing: 0.08em; }
 .desk-search-empty { padding: 20px 16px; color: var(--ink-mute); font-size: 13px; }
-.desk-search-empty b { color: #2dd4bf; font-weight: 600; }
+.desk-search-empty b { color: var(--live); font-weight: 600; }
 .desk-search-foot { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 9px 16px; border-top: 1px solid var(--rule); background: var(--wash); font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 9.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-dim); }
 .desk-search-keys { color: var(--ink-dim); }
 `;

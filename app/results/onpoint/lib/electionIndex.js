@@ -287,6 +287,9 @@ export function getSuggestions(index, limit = 6) {
 }
 
 // ── loader (module-singleton; one fetch per page session) ───────────────────
+// This index is the FULL season, every race CivicAPI returns — the 24-race
+// coverage gate (_data/coverage.2026-08-04) is applied by individual
+// consumers (ResultsDesk, ElectionResults' date grid), not here.
 let _promise = null
 export function loadElectionIndex() {
   if (_promise) return _promise

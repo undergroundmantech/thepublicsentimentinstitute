@@ -26,9 +26,13 @@ export function WinProbabilityWheel({
   const cy = size * 0.62;
   const r = size * 0.42;
   const stroke = size * 0.115;
-  const total = Math.PI * r; // half-circumference
+  const arcPath = `M ${cx - r},${cy} A ${r},${r} 0 0 1 ${cx + r},${cy}`;
+  const arcLen = Math.PI * r; // half-circumference — same path as arcPath above
 
-  // Build stacked arc segments left→right along the half circle.
+  // Stack segments as dash-revealed windows of the SAME arc path (rather than
+  // computing per-segment arc sweep flags/endpoints), so a near-zero segment
+  // can never flip the large-arc-flag and eat into its neighbor.
+  const sum = probs.reduce((s, p) => s + Math.max(0, p), 0) || 1;
   let acc = 0;
   const segs = probs.map((p, i) => {
     const start = acc;
@@ -36,33 +40,29 @@ export function WinProbabilityWheel({
     return { start, end: acc, color: colors[i] ?? "var(--muted2)" };
   });
 
-  const pointOnArc = (frac: number) => {
-    const angle = Math.PI - frac * Math.PI; // PI (left) -> 0 (right)
-    return { x: cx + r * Math.cos(angle), y: cy - r * Math.sin(angle) };
-  };
-
   return (
     <svg width={size} height={size * 0.66} viewBox={`0 0 ${size} ${size * 0.66}`} role="img" aria-label="Win probability">
       <path
-        d={`M ${cx - r},${cy} A ${r},${r} 0 0 1 ${cx + r},${cy}`}
+        d={arcPath}
         fill="none"
         stroke={trackColor}
         strokeWidth={stroke}
         strokeLinecap="round"
       />
       {segs.map((s, i) => {
-        const p0 = pointOnArc(s.start / (acc || 1));
-        const p1 = pointOnArc(s.end / (acc || 1));
-        const large = s.end / (acc || 1) - s.start / (acc || 1) > 0.5 ? 1 : 0;
         if (s.end <= s.start) return null;
+        const segLen = ((s.end - s.start) / sum) * arcLen;
+        const offset = (s.start / sum) * arcLen;
         return (
           <path
             key={i}
-            d={`M ${p0.x},${p0.y} A ${r},${r} 0 ${large} 1 ${p1.x},${p1.y}`}
+            d={arcPath}
             fill="none"
             stroke={s.color}
             strokeWidth={stroke}
             strokeLinecap={i === 0 || i === segs.length - 1 ? "round" : "butt"}
+            strokeDasharray={`${segLen} ${arcLen * 2}`}
+            strokeDashoffset={-offset}
           />
         );
       })}
