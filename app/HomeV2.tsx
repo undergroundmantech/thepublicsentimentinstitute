@@ -4321,8 +4321,8 @@ export default function HomePage() {
               <h1>Polling averages and forecasts for <span className="g">live election results</span>.</h1>
               <p>Track voter sentiment, race ratings, and election night returns from one transparent data desk.</p>
               <div className="lp-actions">
-                <Link href="/polling" className="lp-pill"><span>Explore the polling</span><i aria-hidden="true">&rarr;</i></Link>
-                <Link href="/forecastratings" className="lp-pill lp-pill-dark"><span>See the forecast</span><i aria-hidden="true">&rarr;</i></Link>
+                <Link href="/results" className="lp-pill"><span>Election results</span><i aria-hidden="true">&rarr;</i></Link>
+                <Link href="/floridaprimary" className="lp-pill lp-pill-dark"><span>Florida governor interactive</span><i aria-hidden="true">&rarr;</i></Link>
               </div>
             </div>
           </div>

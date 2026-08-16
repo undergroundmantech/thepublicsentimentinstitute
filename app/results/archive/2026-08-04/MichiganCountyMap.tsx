@@ -9,7 +9,7 @@
 // statewide only, so those counties render as unreported until returns land.
 
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { MI_COUNTY_PATHS, MI_MAP_VIEWBOX } from "../_data/miCountyGeo";
+import { MI_COUNTY_PATHS, MI_MAP_VIEWBOX } from "../../_data/miCountyGeo";
 import type { CountyProjection } from "./countyForecast";
 
 export type MapView = "forecast" | "results";

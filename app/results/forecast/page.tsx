@@ -282,7 +282,7 @@ export default function ForecastEnginePage() {
         input[type=range] { height: 3px; cursor: pointer; accent-color: #7c3aed; }
       `}</style>
 
-      <div style={{ background: "#0a0a08", minHeight: "100vh", fontFamily: "'DM Mono', monospace" }}>
+      <div style={{ minHeight: "100vh", fontFamily: "'DM Mono', monospace" }}>
 
         {/* ── HERO HEADER ── */}
         <div style={{ background: "#0f0f0d", borderBottom: "1px solid rgba(15,16,32,0.08)" }}>

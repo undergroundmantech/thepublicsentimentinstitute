@@ -6,9 +6,9 @@ import { notFound } from "next/navigation";
 import { SITE_V2 } from "@/app/lib/flags";
 
 // The single-race desk (RaceDesk.tsx) is retired for primary night
-// (2026-08-04) — it proved too unstable to ship under time pressure, and
-// every race it would have shown (county map, county table included) now
-// lives directly on /results/tonight. Redirect rather than delete
+// (2026-08-04) — it proved too unstable to ship under time pressure. Race URLs
+// redirect to the elections landing page, which links out to the archived
+// August 4 board and to the current race coverage. Redirect rather than delete
 // RaceDesk.tsx, so this can be restored later by reverting this one file.
 export default function ResultsRacePage() {
   // v2-only route — v1 race URLs rewrite to /results (see next.config.ts)

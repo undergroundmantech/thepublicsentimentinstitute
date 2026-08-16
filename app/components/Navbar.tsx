@@ -25,6 +25,7 @@ const NAV: NavItem[] = [
     label: "Maps & Ratings",
     children: [
       { href: "/electoralmap",    label: "Electoral Map",     desc: "Interactive state map" },
+      { href: "/floridaprimary",  label: "Florida GOP Primary", desc: "Interactive scenario engine · all 67 counties" },
       { href: "/forecastratings", label: "2026 Ratings",      desc: "Race ratings & competitiveness" },
       { href: "/partymap",        label: "Party Registration", desc: "Party of the rolls · state & county" },
     ],

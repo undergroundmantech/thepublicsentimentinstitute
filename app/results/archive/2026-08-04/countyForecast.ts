@@ -8,8 +8,8 @@
  * static seed data, so nothing regresses before polls close.
  */
 
-import { COUNTY_FORECASTS } from "../_data/miCountyForecast";
-import type { Region } from "../_data/miCountyForecast";
+import { COUNTY_FORECASTS } from "../../_data/miCountyForecast";
+import type { Region } from "../../_data/miCountyForecast";
 
 export interface LiveCounty {
   elSayedVotes: number;

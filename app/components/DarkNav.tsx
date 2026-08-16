@@ -21,6 +21,7 @@ const NAV: Item[] = [
     label: "Maps & Ratings",
     children: [
       { href: "/electoralmap", label: "Electoral Map" },
+      { href: "/floridaprimary", label: "Florida GOP Primary" },
       { href: "/voterregistration", label: "Voter Registration" },
       { href: "/forecastratings", label: "2026 Ratings" },
     ],
