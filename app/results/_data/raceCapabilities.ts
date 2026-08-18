@@ -62,6 +62,20 @@ export const RACE_CAPABILITY_OVERRIDES: Partial<Record<number, Partial<RaceCapab
   84778: { tier: 3, raceRule: "PLURALITY" }, // Michigan US Senate Democratic Primary — statewide forecast, no county model
   84950: { tier: 2, raceRule: "TOP_TWO" },   // Washington US House 3 — top-two, no party primary
   84951: { tier: 2, raceRule: "TOP_TWO" },   // Washington US House 4 — top-two, no party primary
+
+  // August 18, 2026 primary night. The Florida Governor Republican primary is
+  // the marquee race and DOES have a county model, but it lives in its own
+  // board (app/results/2026-08-18/FloridaBoard.tsx) rather than in RaceDesk —
+  // countyModel here would mount a generic section with no Florida geometry
+  // behind it. Tier 3 is therefore the honest flag set: statewide forecast,
+  // recorder in scope, county work owned by the dedicated route.
+  86349: { tier: 3, raceRule: "PLURALITY" }, // Florida Governor Republican Primary
+  // Alaska runs a top-FOUR open primary. RaceRule has no such member and the
+  // difference only affects how many candidates advance, not how the winner of
+  // this round is determined, so PLURALITY is correct for the model; the board
+  // carries the display-side `topFour` flag.
+  86863: { tier: 2, raceRule: "PLURALITY" }, // Alaska US Senate Open Primary
+  86862: { tier: 2, raceRule: "PLURALITY" }, // Alaska US House At-Large Open Primary
 };
 
 /** Resolves full capabilities for a race: explicit override > tier default > safe fallback (tier 2). */

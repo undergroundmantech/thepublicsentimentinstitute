@@ -42,6 +42,15 @@ export const FLSE_CSS = `
 .flse .hint{font-size:11px;color:var(--ink4);line-height:1.5;margin-top:10px}
 .flse .row{display:grid;grid-template-columns:1fr 92px 46px;gap:10px;align-items:center;padding:7px 0}
 .flse .row+.row{border-top:1px solid var(--line2)}
+.flse .srow{padding:9px 0}
+.flse .row+.srow,.flse .srow+.row{border-top:1px solid var(--line2)}
+.flse .seg{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--line);border-radius:8px;
+ overflow:hidden;background:var(--pnl2);margin-top:8px}
+.flse .seg button{font-family:var(--f);font-size:11px;font-weight:600;padding:8px 6px;border:0;
+ background:transparent;color:var(--ink3);cursor:pointer;transition:all .12s;white-space:nowrap}
+.flse .seg button+button{border-left:1px solid var(--line)}
+.flse .seg button:hover:not(.on){background:var(--fill);color:var(--ink)}
+.flse .seg button.on{background:var(--ink);color:var(--pnl2)}
 .flse .rl{font-size:12.5px;font-weight:600;color:var(--ink)}
 .flse .rl i{display:block;font-style:normal;font-size:10.5px;color:var(--ink4);font-weight:400;margin-top:1px}
 .flse input[type=range]{width:100%;accent-color:var(--ink);height:3px}

@@ -139,6 +139,31 @@ export const RACE_REGISTRY: RaceRegistryEntry[] = [
   // June 30 2026 — Colorado (Command Deck test bed — see raceCapabilities.ts)
   { id: 84322, date: "2026-06-30", slug: "colorado-us-senate-democratic-primary",                 label: "Colorado US Senate Democratic Primary",
     about: "Colorado's open US Senate seat drew a crowded Democratic primary field after the incumbent's retirement. The Denver-Boulder corridor's turnout typically decides statewide primaries like this one, with rural Western Slope counties reporting slower and later in the night." },
+
+  // ── August 18, 2026 — Florida, Wyoming, Alaska — active ──────────────────
+  // Florida. The Governor Republican primary is the headline race and has its
+  // own route at /results/2026-08-18/florida-governor-republican-primary.
+  { id: 86349, date: "2026-08-18", slug: "florida-governor-republican-primary",                   label: "Florida Governor Republican Primary",
+    about: "A four-way Republican field with no runoff: whoever finishes first takes the nomination, however narrow the margin. The TPSI model separates Byron Donalds and James Fishback by less than its own margin of error, with Jay Collins and Paul Renner holding enough of the vote to decide which of them leads. Florida's Panhandle votes on Central time, so the state does not finish closing until 8:00 PM ET, and the large bank of vote-by-mail ballots released first is not a random sample of the electorate." },
+  { id: 86348, date: "2026-08-18", slug: "florida-governor-democratic-primary",                   label: "Florida Governor Democratic Primary" },
+  { id: 86440, date: "2026-08-18", slug: "florida-us-senate-republican-primary",                  label: "Florida US Senate Republican Primary" },
+  { id: 86439, date: "2026-08-18", slug: "florida-us-senate-democratic-primary",                  label: "Florida US Senate Democratic Primary" },
+  { id: 86417, date: "2026-08-18", slug: "florida-us-house-2-republican-primary",                 label: "Florida US House 2 Republican Primary" },
+  { id: 86437, date: "2026-08-18", slug: "florida-us-house-7-republican-primary",                 label: "Florida US House 7 Republican Primary" },
+  { id: 86409, date: "2026-08-18", slug: "florida-us-house-14-republican-primary",                label: "Florida US House 14 Republican Primary" },
+  { id: 86415, date: "2026-08-18", slug: "florida-us-house-19-republican-primary",                label: "Florida US House 19 Republican Primary" },
+  { id: 86418, date: "2026-08-18", slug: "florida-us-house-20-democratic-primary",                label: "Florida US House 20 Democratic Primary" },
+  { id: 86425, date: "2026-08-18", slug: "florida-us-house-24-democratic-primary",                label: "Florida US House 24 Democratic Primary" },
+  { id: 86427, date: "2026-08-18", slug: "florida-us-house-25-republican-primary",                label: "Florida US House 25 Republican Primary" },
+  // Wyoming
+  { id: 86810, date: "2026-08-18", slug: "wyoming-us-senate-republican-primary",                  label: "Wyoming US Senate Republican Primary" },
+  { id: 86809, date: "2026-08-18", slug: "wyoming-us-senate-democratic-primary",                  label: "Wyoming US Senate Democratic Primary" },
+  { id: 86808, date: "2026-08-18", slug: "wyoming-us-house-at-large-republican-primary",          label: "Wyoming US House At-Large Republican Primary" },
+  { id: 86807, date: "2026-08-18", slug: "wyoming-us-house-at-large-democratic-primary",          label: "Wyoming US House At-Large Democratic Primary" },
+  // Alaska runs one nonpartisan ballot and advances four to the November RCV general.
+  { id: 86863, date: "2026-08-18", slug: "alaska-us-senate-open-primary",                         label: "Alaska US Senate Open Primary",
+    about: "Alaska's nonpartisan primary puts every candidate on one ballot and advances the top four to a ranked-choice general election in November. There is no party nomination decided here and no single winner on the night — the question is only which four names appear on the November ballot." },
+  { id: 86862, date: "2026-08-18", slug: "alaska-us-house-at-large-open-primary",                 label: "Alaska US House At-Large Open Primary" },
 ];
 
 // Lookup helpers

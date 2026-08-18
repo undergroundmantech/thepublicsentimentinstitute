@@ -1,0 +1,1639 @@
+"use client";
+
+/**
+ * ELECTION NIGHT BOARD — August 18, 2026 · Florida, Wyoming, Alaska primaries.
+ *
+ * Rendered at two routes from one component:
+ *   variant="board" → /results/tonight, headline race plus the full slate
+ *   variant="race"  → /results/2026-08-18/florida-governor-republican-primary,
+ *                     the Governor primary alone, for search
+ *
+ * STRUCTURE AUTHORITY
+ *   The August 4 board (results/archive/2026-08-04). Layout, section order and
+ *   component anatomy are inherited unchanged; only the race, the candidate
+ *   count and the county engine differ.
+ *
+ * WHY THIS ISN'T THE MICHIGAN BOARD
+ *   Four candidates, not two, so the map paints the leader's colour at an
+ *   intensity set by their margin instead of a two-way divergent ramp.
+ *   And the county engine estimates one shrunk statewide swing rather than
+ *   blending each county in isolation — see countyForecast.ts.
+ *
+ * WHERE THE NUMBERS COME FROM
+ *   Statewide probability and the race call come from the statewide model, never
+ *   from aggregating the 67 county intervals. The county layer exists to say how
+ *   much vote is outstanding and where. That distinction is load-bearing; see
+ *   the header of _data/flCountyForecast.ts before changing any of it.
+ */
+
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import {
+  getRaceState,
+  GATE_THRESHOLD_PCT,
+  getMsLeftToClose,
+  formatCountdown,
+  type RaceState,
+} from "../_lib/raceState";
+import FloridaCountyMap, { CAND_CSS } from "./FloridaCountyMap";
+import FloridaCountyTable from "./FloridaCountyTable";
+import { projectCounties, type LiveCounty } from "./countyForecast";
+import {
+  CANDIDATE_ORDER,
+  ALL_CANDIDATE_KEYS,
+  CANDIDATE_LAST,
+  CANDIDATE_NAMES,
+  CANDIDATE_MATCH,
+  FORECAST_META,
+  STATEWIDE_FORECAST,
+  TURNOUT_MODEL,
+  type CandidateKey,
+} from "../_data/flCountyForecast";
+import { forecastRace, type Shares3 } from "../../lib/electoralModel";
+import { evaluateCall } from "../../lib/raceCall";
+import type { FreshtakePayload } from "../../api/freshtake/route";
+
+const FL_GOV_R = 86349;
+const REFRESH_MS = 30_000;
+export const RACE_SLUG = "florida-governor-republican-primary";
+
+/* ═════════════════════ SLATE ═════════════════════ */
+
+interface Entry {
+  id: number; state: string; title: string; sub?: string;
+  close: string; final: boolean; topFour?: boolean;
+}
+
+const STATE_NAME: Record<string, string> = {
+  FL: "Florida", WY: "Wyoming", AK: "Alaska",
+};
+const STATE_ORDER = ["FL", "WY", "AK"] as const;
+
+/** Peninsula polls close at 7 ET; the Central-time Panhandle an hour later, so
+ *  every statewide Florida race closes at 8 ET. */
+const FL_P = "2026-08-18T19:00:00-04:00";
+const FL_S = "2026-08-18T20:00:00-04:00";
+const WY_C = "2026-08-18T21:00:00-04:00";
+const AK_C = "2026-08-19T00:00:00-04:00";
+
+/**
+ * No projection may be published while any Florida poll is still open. The
+ * peninsula starts reporting at 7 ET, a full hour before the Panhandle finishes
+ * voting, so the count runs ahead of the embargo and the model can reach 3σ
+ * before it is allowed to say so. This is a hard floor on top of the 3σ test and
+ * the 35% reporting floor in raceCall — never lower it to chase a call. An
+ * official AP call is a report of someone else's decision, not ours, and is not
+ * embargoed.
+ */
+const CALL_EMBARGO_MS = new Date(FL_S).getTime();
+
+/** Reported results only, no model, no projection zone. */
+const SLATE: Entry[] = [
+  { id: 86348, state: "FL", title: "Governor",      sub: "Democratic primary", close: FL_S, final: true },
+  { id: 86440, state: "FL", title: "U.S. Senate",   sub: "Republican primary", close: FL_S, final: true },
+  { id: 86439, state: "FL", title: "U.S. Senate",   sub: "Democratic primary", close: FL_S, final: true },
+  { id: 86417, state: "FL", title: "U.S. House 2",  sub: "Republican primary", close: FL_S, final: true },
+  { id: 86437, state: "FL", title: "U.S. House 7",  sub: "Republican primary", close: FL_P, final: false },
+  { id: 86409, state: "FL", title: "U.S. House 14", sub: "Republican primary", close: FL_P, final: false },
+  { id: 86415, state: "FL", title: "U.S. House 19", sub: "Republican primary", close: FL_P, final: false },
+  { id: 86418, state: "FL", title: "U.S. House 20", sub: "Democratic primary", close: FL_P, final: false },
+  { id: 86425, state: "FL", title: "U.S. House 24", sub: "Democratic primary", close: FL_P, final: false },
+  { id: 86427, state: "FL", title: "U.S. House 25", sub: "Republican primary", close: FL_P, final: false },
+
+  { id: 86810, state: "WY", title: "U.S. Senate",         sub: "Republican primary", close: WY_C, final: true },
+  { id: 86809, state: "WY", title: "U.S. Senate",         sub: "Democratic primary", close: WY_C, final: true },
+  { id: 86808, state: "WY", title: "U.S. House At-Large", sub: "Republican primary", close: WY_C, final: true },
+  { id: 86807, state: "WY", title: "U.S. House At-Large", sub: "Democratic primary", close: WY_C, final: true },
+
+  // Alaska runs one nonpartisan ballot and advances four to the November RCV
+  // general, so there is no party split and no winner on the night.
+  { id: 86863, state: "AK", title: "U.S. Senate",         sub: "Open primary", close: AK_C, final: true, topFour: true },
+  { id: 86862, state: "AK", title: "U.S. House At-Large", sub: "Open primary", close: AK_C, final: true, topFour: true },
+];
+
+const ALL_IDS = new Set<number>([FL_GOV_R, ...SLATE.map((e) => e.id)]);
+
+/* ═════════════════════ MODEL ═════════════════════ */
+
+const MODEL = {
+  title: "Florida Governor Republican Primary",
+  state: "Florida",
+  close: FL_S,
+  raceRule: FORECAST_META.raceRule,
+  deck:
+    "Byron Donalds carries a narrow plurality over James Fishback in the TPSI " +
+    "model, with Jay Collins and Paul Renner holding enough of the vote to decide " +
+    "it. No runoff: whoever finishes first takes the nomination, however small the " +
+    "margin. The Panhandle votes on Central time, so the state does not finish " +
+    "closing until 8:00 PM ET.",
+  headline:
+    "The model has Donalds ahead by " +
+    `${STATEWIDE_FORECAST.margin.toFixed(1)} points, inside its own margin of error. ` +
+    "His Southwest Gulf base is the largest single block he carries, but Tampa Bay " +
+    "and the I-4 corridor together cast more than a third of the ballots and the " +
+    "model does not separate the field there.",
+};
+
+/** Fixed to the model prior below — never key off vote rank, which inverts on a
+ *  lead change. */
+const CAND_KEYS: Record<"Candidate1" | "Candidate2" | "Candidate3", CandidateKey> = {
+  Candidate1: "donalds",
+  Candidate2: "fishback",
+  Candidate3: "collins",
+};
+
+const CAND_NAMES = {
+  Candidate1: CANDIDATE_LAST.donalds,
+  Candidate2: CANDIDATE_LAST.fishback,
+  Candidate3: CANDIDATE_LAST.collins,
+} as const;
+
+/** Renner plus the seven minor candidates. Renner still gets his own column
+ *  everywhere it matters; the three-slot engine simply has nowhere to put him. */
+const POLL_PRIOR: Shares3 = {
+  Candidate1: STATEWIDE_FORECAST.donalds / 100,
+  Candidate2: STATEWIDE_FORECAST.fishback / 100,
+  Candidate3: STATEWIDE_FORECAST.collins / 100,
+};
+
+/**
+ * Editorial override. Null means the model calls the race on its own at 3σ.
+ * Set this to force or withhold a projection; an AP call always supersedes it.
+ */
+const DESK_CALL: { key: CandidateKey; at: string } | null = null;
+
+/* ═════════════════════ DATA ═════════════════════ */
+
+const SEARCH =
+  "https://civicapi.org/api/v2/race/search?startDate=2026-08-18&endDate=2026-08-18&limit=50000";
+
+type Cand = { name?: string; party?: string; votes?: number; percent?: number; winner?: boolean };
+type Race = { id: number; candidates?: Cand[]; percent_reporting?: number };
+
+function useSlate(enabled: boolean) {
+  const [races, setRaces] = useState<Record<number, Race>>({});
+  const [updated, setUpdated] = useState<Date | null>(null);
+  const [stale, setStale] = useState(false);
+  const alive = useRef(true);
+
+  const pull = useCallback(async () => {
+    try {
+      const r = await fetch(SEARCH, { cache: "no-store" });
+      if (!r.ok) throw new Error(String(r.status));
+      const j = await r.json();
+      if (!alive.current) return;
+      const next: Record<number, Race> = {};
+      for (const race of j.races || []) {
+        if (ALL_IDS.has(Number(race.id))) next[Number(race.id)] = race;
+      }
+      setRaces(next); setUpdated(new Date()); setStale(false);
+    } catch {
+      // A failed refresh never blanks the board. Keep the last good payload.
+      if (alive.current) setStale(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!enabled) return;
+    alive.current = true;
+    pull();
+    const t = setInterval(pull, REFRESH_MS);
+    return () => { alive.current = false; clearInterval(t); };
+  }, [pull, enabled]);
+
+  return { races, updated, stale, refresh: pull };
+}
+
+const EMPTY_VOTES = (): Record<CandidateKey, number> =>
+  ({ donalds: 0, fishback: 0, collins: 0, renner: 0, other: 0 });
+
+/** Florida county returns and the full candidate field from CivicAPI. The
+ *  search endpoint behind the slate returns only the top three candidates, and
+ *  electionLib's fetchRace caches a race forever, so neither is usable for the
+ *  headline race on a live night. This hits the detail endpoint uncached. */
+function useRaceDetail(raceId: number) {
+  const [counties, setCounties] = useState<Record<string, LiveCounty>>({});
+  const [detail, setDetail] = useState<Race | null>(null);
+
+  useEffect(() => {
+    let alive = true;
+    const ac = new AbortController();
+    const pull = async () => {
+      try {
+        const res = await fetch(`https://civicapi.org/api/v2/race/${raceId}`,
+                                { cache: "no-store", signal: ac.signal });
+        if (!res.ok) throw new Error(String(res.status));
+        const detail = await res.json();
+        if (!alive) return;
+        setDetail(detail?.candidates?.length ? (detail as Race) : null);
+        const rr = detail?.region_results || {};
+        const out: Record<string, LiveCounty> = {};
+        for (const key of Object.keys(rr)) {
+          const r = rr[key];
+          const name = String(r?.name || key).replace(/\s+county$/i, "").trim().toUpperCase();
+          if (!name) continue;
+          const votes = EMPTY_VOTES();
+          let total = 0;
+          for (const c of r?.candidates || []) {
+            const n = String(c?.name || "").toLowerCase();
+            const v = Number(c.votes) || 0;
+            const hit = CANDIDATE_ORDER.find((k) => n.includes(CANDIDATE_MATCH[k]));
+            votes[hit ?? "other"] += v;
+            total += v;
+          }
+          out[name] = { votes, total, reporting: Number(r?.percent_reporting) || 0 };
+        }
+        setCounties(out);
+      } catch {
+        // No county feed yet. The board renders the baseline, which is the truth.
+      }
+    };
+    pull();
+    const t = setInterval(pull, REFRESH_MS);
+    return () => { alive = false; ac.abort(); clearInterval(t); };
+  }, [raceId]);
+
+  return { counties, detail };
+}
+
+/** Banked pre-election ballots by county, via our own /api/freshtake proxy. */
+function useFreshtake(enabled: boolean) {
+  const [data, setData] = useState<FreshtakePayload | null>(null);
+
+  useEffect(() => {
+    if (!enabled) return;
+    let alive = true;
+    const ac = new AbortController();
+    const pull = async () => {
+      try {
+        const r = await fetch("/api/freshtake", { cache: "no-store", signal: ac.signal });
+        const j = (await r.json()) as FreshtakePayload;
+        if (alive) setData(j);
+      } catch {
+        // Keep the last good payload; the panel renders its own stale notice.
+      }
+    };
+    pull();
+    // Banked turnout moves in daily batches, not by the minute.
+    const t = setInterval(pull, 5 * 60_000);
+    return () => { alive = false; ac.abort(); clearInterval(t); };
+  }, [enabled]);
+
+  return data;
+}
+
+function useNow(ms = 1000) {
+  const [now, setNow] = useState(() => Date.now());
+  useEffect(() => {
+    const t = setInterval(() => setNow(Date.now()), ms);
+    return () => clearInterval(t);
+  }, [ms]);
+  return now;
+}
+
+/* ═════════════════════ HELPERS ═════════════════════ */
+
+const sortC = (r?: Race): Cand[] =>
+  [...(r?.candidates || [])].sort((a, b) => (b.votes || 0) - (a.votes || 0));
+
+const clampPct = (n: number) => Math.min(Math.max(n, 0), 100);
+
+const estRep = (r?: Race) => {
+  const p = Number(r?.percent_reporting);
+  if (!Number.isFinite(p)) return 0;
+  // CivicAPI reports 0–100, so 1 means one percent — never treat it as a fraction.
+  return clampPct(p);
+};
+
+const counted = (r?: Race) => sortC(r).reduce((s, c) => s + (c.votes || 0), 0);
+const isLive = (r?: Race) => counted(r) > 0;
+const officialCall = (r?: Race) => sortC(r).some((c) => c.winner === true);
+
+const share = (c: Cand, all: Cand[]) => {
+  if (Number.isFinite(c.percent)) return clampPct(Number(c.percent));
+  const t = all.reduce((s, x) => s + (x.votes || 0), 0);
+  return t > 0 ? ((c.votes || 0) / t) * 100 : 0;
+};
+
+const int = (n?: number) => Math.round(Number(n) || 0).toLocaleString("en-US");
+
+/** Design System §6 — >99 and <1 at the extremes. */
+const pctLabel = (p: number) =>
+  p >= 99.95 && p < 100 ? ">99" : p > 0 && p < 0.05 ? "<1" : p.toFixed(1);
+
+const partyOf = (p?: string) => {
+  const s = String(p || "").toLowerCase();
+  if (/democr/.test(s)) return "d";
+  if (/republic|gop/.test(s)) return "r";
+  return "n";
+};
+
+/**
+ * Color LAW: same-party primary uses the party hue for A and --c2 for B.
+ * Never the opposing party's color inside a one-party race.
+ */
+const tone = (i: number, party?: string) => {
+  if (i === 0) {
+    const p = partyOf(party);
+    return p === "r" ? "var(--gop)" : p === "d" ? "var(--dem)" : "var(--ink2)";
+  }
+  if (i === 1) return "var(--c2)";
+  if (i === 2) return "var(--k3)";
+  return "var(--ink3)";
+};
+
+/** Everyone in the headline race is a Republican, so party colour carries no
+ *  information. Colour the modelled four and grey out the rest of the field. */
+const govTone = (c: Cand) => {
+  const n = String(c.name || "").toLowerCase();
+  const k = CANDIDATE_ORDER.find((key) => n.includes(CANDIDATE_MATCH[key]));
+  return k ? CAND_CSS[k] : "var(--k5)";
+};
+
+const closeAt = (e: { close: string; final: boolean }) => {
+  const t = new Date(e.close).toLocaleTimeString("en-US", {
+    hour: "numeric", minute: "2-digit", timeZone: "America/New_York",
+  });
+  return `${e.final ? "Final close" : "Close"} ${t} ET`;
+};
+
+/** Sentence-case status, matching the prototype's race-meta block. */
+const STATUS_COPY: Record<RaceState, string> = {
+  SCHEDULED: "Polls open",
+  LIVE_GATED: "Too early to call",
+  LIVE_FORECAST: "Counting",
+  PROJECTED: "TPSI projection",
+  OFFICIAL: "Race called",
+};
+
+/* ═════════════════════ BOARD ═════════════════════ */
+
+export default function FloridaBoard({ variant = "board" }: { variant?: "board" | "race" | "portal" }) {
+  const full = variant === "board";
+  const portal = variant === "portal";
+  const { races, updated, stale, refresh } = useSlate(true);
+  const now = useNow();
+  const [mapMode, setMapMode] = useState<"margin" | "turnout">("margin");
+  const [countyView, setCountyView] = useState<"forecast" | "results">("forecast");
+  const { counties: liveCounties, detail: govDetail } = useRaceDetail(FL_GOV_R);
+  const banked = useFreshtake(true);
+
+  // Measured Republican ballots cast beats our registration-and-history prior:
+  // it is the actual size of the electorate this race is being decided by. The
+  // prior is only a fallback for when the turnout feed is down.
+  const bankedRep = banked?.ok ? banked.statewide?.rep ?? 0 : 0;
+  const turnoutBasis = bankedRep > 0 ? bankedRep : TURNOUT_MODEL.projected;
+  const turnoutMeasured = bankedRep > 0;
+
+  // The detail payload carries the whole field; the slate entry carries the
+  // registry fields the detail endpoint omits. Detail wins where they overlap.
+  const gov = useMemo(() => {
+    const base = races[FL_GOV_R];
+    if (!govDetail) return base;
+    return { ...(base ?? { id: FL_GOV_R }), ...govDetail } as Race;
+  }, [races, govDetail]);
+  const live = isLive(gov);
+  // Before any votes land every candidate is on zero, so the feed's own order is
+  // arbitrary. Rank the modelled four first, then the rest of the field.
+  const cands = useMemo(() => {
+    const all = sortC(gov);
+    if (live) return all;
+    const rank = (c: Cand) => {
+      const n = String(c.name || "").toLowerCase();
+      const i = CANDIDATE_ORDER.findIndex((k) => n.includes(CANDIDATE_MATCH[k]));
+      return i === -1 ? CANDIDATE_ORDER.length : i;
+    };
+    return [...all].sort((a, b) => rank(a) - rank(b) || String(a.name).localeCompare(String(b.name)));
+  }, [gov, live]);
+  const rep = estRep(gov);
+  const gated = live && rep < GATE_THRESHOLD_PCT;
+  const msLeft = getMsLeftToClose(MODEL.close, now);
+
+  const stamp = updated
+    ? updated.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" }) + " ET"
+    : "—";
+
+  const grouped = useMemo(
+    () =>
+      STATE_ORDER.map((st) => ({
+        key: st,
+        label: STATE_NAME[st],
+        races: SLATE.filter((e) => e.state === st),
+      })),
+    []
+  );
+
+  const leadGap =
+    live && cands.length > 1 ? (cands[0].votes || 0) - (cands[1].votes || 0) : 0;
+  const leadMarginPP =
+    live && cands.length > 1 ? share(cands[0], cands) - share(cands[1], cands) : 0;
+
+  // Statewide vote mechanics. With no returns in, percent_reporting is 0 and
+  // this reproduces the pre-election prior exactly.
+  const fc = useMemo(() => {
+    const all = sortC(gov);
+    const total = counted(gov);
+    const votesFor = (needle: string) =>
+      all
+        .filter((c) => String(c.name || "").toLowerCase().includes(needle))
+        .reduce((s, c) => s + (c.votes || 0), 0);
+
+    return forecastRace({
+      race_rule: "PLURALITY",
+      percent_reporting: clampPct(estRep(gov)) / 100,
+      reported_vote_total: total,
+      expected_turnout: turnoutBasis,
+      reported_share: {
+        Candidate1: total ? votesFor(CANDIDATE_MATCH.donalds) / total : 0,
+        Candidate2: total ? votesFor(CANDIDATE_MATCH.fishback) / total : 0,
+        Candidate3: total ? votesFor(CANDIDATE_MATCH.collins) / total : 0,
+      },
+      expected_share: POLL_PRIOR,
+      // Required. Without it the projection allocates every outstanding ballot
+      // at the poll share forever and never learns from the count.
+      poll_avg_shares: POLL_PRIOR,
+    });
+  }, [gov, turnoutBasis]);
+
+  const call = useMemo(() => evaluateCall(fc, CAND_NAMES), [fc]);
+
+  const counties = useMemo(
+    () => projectCounties(liveCounties, fc.modeled_total_vote),
+    [liveCounties, fc.modeled_total_vote]
+  );
+
+  // The four-way projected result is the county roll-up: it is the only place
+  // Renner exists as his own quantity, and it carries the shrunk swing.
+  const projected = counties.statewide;
+  const ranked = useMemo(
+    () =>
+      CANDIDATE_ORDER.map((k) => ({ k, share: projected.shares[k] })).sort(
+        (a, b) => b.share - a.share
+      ),
+    [projected]
+  );
+  const leaderKey = ranked[0].k;
+  const marginPP = ranked[0].share - ranked[1].share;
+  const modeledRep = fc.modeled_percent_reporting * 100;
+
+  // The margin is a difference of two vote totals, so its sd is sd_race·√2.
+  const marginSdPP =
+    fc.modeled_total_vote > 0
+      ? ((fc.sd_race * Math.SQRT2) / fc.modeled_total_vote) * 100
+      : STATEWIDE_FORECAST.marginSd;
+  const marginLo = marginPP - 2 * marginSdPP;
+  const marginHi = marginPP + 2 * marginSdPP;
+  const signed = (n: number) => `${n >= 0 ? "+" : "−"}${Math.abs(n).toFixed(1)}`;
+
+  const winProb = useMemo(() => {
+    const odds = fc.plurality_odds_to_win;
+    const byKey: Record<string, number> = {
+      donalds: odds.Candidate1 * 100,
+      fishback: odds.Candidate2 * 100,
+      collins: odds.Candidate3 * 100,
+    };
+    // Before any votes land the engine has nothing to add to the published
+    // simulation, so show the published simulation rather than a re-derivation.
+    if (!live) {
+      return {
+        donalds: STATEWIDE_FORECAST.winProbability.donalds,
+        fishback: STATEWIDE_FORECAST.winProbability.fishback,
+        collins: STATEWIDE_FORECAST.winProbability.collins,
+      } as Record<string, number>;
+    }
+    return byKey;
+  }, [fc, live]);
+
+  const embargoLifted = now >= CALL_EMBARGO_MS;
+  // Would call on the numbers alone, but the Panhandle is still voting.
+  const embargoed = live && !embargoLifted && call.verdict === "CALLABLE";
+
+  const deskCalled = DESK_CALL !== null && live && embargoLifted;
+  const modelCalled = live && embargoLifted && call.verdict === "CALLABLE";
+  const projectedKey: CandidateKey | null = deskCalled
+    ? DESK_CALL!.key
+    : modelCalled
+      ? CAND_KEYS[call.leader as keyof typeof CAND_KEYS] ?? leaderKey
+      : null;
+
+  const rState = getRaceState({
+    percentReporting: live ? rep : 0,
+    hasOfficialCall: officialCall(gov),
+    tpsiCalled: projectedKey !== null,
+  });
+
+  const headline = projectedKey
+    ? `TPSI projects ${CANDIDATE_NAMES[projectedKey]} wins the Republican nomination. ` +
+      `He leads by ${int(leadGap)} votes with ${pctLabel(modeledRep)}% of the estimated ` +
+      `vote counted, and the projected margin of ${signed(marginPP)} sits beyond what the ` +
+      `outstanding ballots can move.`
+    : embargoed
+      ? `${CAND_NAMES[call.leader as keyof typeof CAND_NAMES] ?? CANDIDATE_LAST[leaderKey]} ` +
+        `leads by ${int(leadGap)} votes, far enough ahead that the model would call it. ` +
+        `Panhandle polls do not close until 8:00 PM ET, in ${formatCountdown(msLeft)}, and ` +
+        `TPSI publishes no projection while any Florida voter is still in line.`
+      : live
+        ? call.line
+        : MODEL.headline;
+
+  // AP's call always wins the chip; ours is labelled as ours.
+  const statusCopy =
+    rState === "OFFICIAL"
+      ? STATUS_COPY.OFFICIAL
+      : projectedKey
+        ? `TPSI projection — ${CANDIDATE_LAST[projectedKey]}`
+        : embargoed
+          ? "Held — polls open"
+          : live && call.verdict === "LEANING"
+            ? "Leaning"
+            : STATUS_COPY[rState];
+
+  const swing = counties.swing;
+
+  // Ranked by projected Republican primary ballots, not by census population:
+  // the ten biggest counties in a closed GOP primary are not the ten biggest
+  // counties in Florida, and it is primary ballots that decide this race.
+  const topTen = useMemo(
+    () => [...counties.list].sort((a, b) => b.projectedTurnout - a.projectedTurnout).slice(0, 10),
+    [counties.list],
+  );
+
+  // Banked ballots keyed the same way the projection list is, so the two join.
+  const bankedByCounty = useMemo(() => {
+    const m = new Map<string, number>();
+    for (const c of banked?.counties ?? []) {
+      m.set(c.county.replace(/\s+county$/i, "").trim().toUpperCase(), c.rep);
+    }
+    return m;
+  }, [banked]);
+
+  return (
+    <div className="desk">
+      <style>{CSS}</style>
+
+      <main className="shell">
+
+        {/* ═══ RACE HEADER ═══ */}
+        <section className="race-header" id="overview" aria-labelledby="race-title">
+          {portal ? (
+            <div className="archive-banner portal-banner">
+              <span>Internal · not for publication</span>
+              <a href="/results/tonight">Public board →</a>
+            </div>
+          ) : !full && (
+            <div className="archive-banner">
+              <span>Live · August 18, 2026</span>
+              <a href="/results/tonight">Full election night board →</a>
+            </div>
+          )}
+          <div className="race-kicker">
+            {live && rState !== "OFFICIAL" && <span className="live-dot" aria-hidden />}
+            <span>{MODEL.state} primary · August 18</span>
+            <span>•</span>
+            <span>Statewide forecast · county projection</span>
+          </div>
+
+          <div className="race-heading-row">
+            <div>
+              <h1 id="race-title">{MODEL.title}</h1>
+              <p className="race-deck">{MODEL.deck}</p>
+            </div>
+            <div className="race-meta" aria-label="Race update summary">
+              <div className="meta-block"><span>Last updated</span><b>{stamp}</b></div>
+              <div className="meta-block"><span>Reported votes</span><b>{live ? int(counted(gov)) : "0"}</b></div>
+              <div className="meta-block"><span>Estimated reporting</span><b>{live ? `${pctLabel(rep)}%` : "0%"}</b></div>
+              <div className="meta-block"><span>Race status</span><b>{statusCopy}</b></div>
+            </div>
+          </div>
+
+          <nav className="race-tabs" aria-label="Race sections">
+            <a href="#overview" aria-current="page">Overview</a>
+            <a href="#forecast">Forecast</a>
+            <a href="#counties">Counties</a>
+            {portal && <a href="#tracker">Tracker</a>}
+            {full && <a href="#board">All races</a>}
+            <a href="#method">Method</a>
+          </nav>
+        </section>
+
+        <div className="dashboard-grid">
+
+          {/* ═══ REPORTED RESULTS ═══ */}
+          <article className="card span-3" aria-labelledby="results-title">
+            <div className="topline-shell">
+              <header className="topline-header">
+                <div className="topline-title">
+                  <h2 id="results-title">Reported results</h2>
+                  <p>Actual reported votes. Forecast estimates appear separately.</p>
+                </div>
+                <div className="topline-meta">
+                  <span className="topline-status">{statusCopy}</span>
+                  <span className="topline-updated"><strong>Updated</strong> {stamp}</span>
+                </div>
+              </header>
+
+              <div className="topline-columns" aria-hidden>
+                <span>Candidate</span><span>Votes</span><span>Vote share</span>
+              </div>
+
+              {cands.length > 0 ? (
+                <>
+                  {!live && (
+                    <p className="prose empty-note">
+                      Polls close at 7:00 PM ET in the peninsula and 8:00 PM ET in the
+                      Panhandle, in {formatCountdown(msLeft)}. The full field is listed
+                      below and fills in automatically as votes are counted.
+                    </p>
+                  )}
+                  {cands.map((c, i) => {
+                    const p = share(c, cands);
+                    const col = govTone(c);
+                    const isProjected =
+                      !c.winner &&
+                      projectedKey !== null &&
+                      String(c.name || "").toLowerCase().includes(CANDIDATE_MATCH[projectedKey as Exclude<CandidateKey, "other">] ?? "\u0000");
+                    return (
+                      <div className="topline-row" key={c.name || i}>
+                        <div className="topline-row-top">
+                          <div className="topline-candidate">
+                            <span className="topline-dot" style={{ background: col }} />
+                            <div className="topline-copy">
+                              <strong>{c.name}</strong>
+                              <small>{c.party || "Republican"}</small>
+                              {i === 0 && leadGap > 0 && !c.winner && !isProjected && (
+                                <span className="topline-lead">Leads by {int(leadGap)} votes</span>
+                              )}
+                              {isProjected && (
+                                <span className="topline-lead won">TPSI projected winner</span>
+                              )}
+                              {c.winner && <span className="topline-lead won">Race called</span>}
+                            </div>
+                          </div>
+                          <div className="topline-votes">{int(c.votes)}</div>
+                          <div className="topline-pct">{pctLabel(p)}%</div>
+                        </div>
+                        <div className="topline-bar">
+                          <span style={{ width: `${Math.max(p, 0)}%`, background: col }} />
+                        </div>
+                      </div>
+                    );
+                  })}
+                </>
+              ) : (
+                <div className="empty-live">
+                  <p className="prose">
+                    Waiting on the first candidate list from the feed. Florida&rsquo;s
+                    Panhandle counties vote on Central time, so the state finishes closing
+                    at 8:00 PM ET, in {formatCountdown(msLeft)}.
+                  </p>
+                </div>
+              )}
+
+              <div className="topline-foot">
+                <span>{live ? `${int(counted(gov))} votes counted` : "No votes counted"}</span>
+                {live && cands.length > 1 && (
+                  <span className="topline-margin">
+                    <b>{signed(leadMarginPP)}</b> margin · {int(leadGap)} votes
+                  </span>
+                )}
+                <span className="topline-reporting">
+                  <b>{live ? pctLabel(rep) : "0"}%</b> est. reporting
+                </span>
+              </div>
+            </div>
+          </article>
+
+          {/* ═══ FORECAST SNAPSHOT + PROJECTION ZONE ═══ */}
+          <article className="card span-3" id="forecast" aria-labelledby="snapshot-title">
+            <section className="snapshot" aria-labelledby="snapshot-title">
+              <div className="snapshot-heading">
+                <div>
+                  <strong id="snapshot-title">Forecast snapshot</strong>
+                  <small>Model metrics update as new results arrive</small>
+                </div>
+                <span className="race-rule-pill">{MODEL.raceRule}</span>
+              </div>
+
+              {gated ? (
+                <div className="gatebox">
+                  <div className="model-label">Forecast gated</div>
+                  <p className="prose">
+                    Held back below {GATE_THRESHOLD_PCT}% estimated reporting. Florida
+                    releases its {int(TURNOUT_MODEL.bankedBallots)} banked mail and early
+                    ballots first, and that pool is not a random sample of the electorate.
+                  </p>
+                </div>
+              ) : (
+                <div className="forecast-model-layout">
+                  <div className="forecast-hero">
+                    <div className="model-label">Win probability</div>
+                    <div className="prob-ring"
+                         style={{
+                           ["--value" as string]: winProb[leaderKey] ?? 0,
+                           ["--ring" as string]: CAND_CSS[leaderKey],
+                         } as React.CSSProperties}
+                         role="img"
+                         aria-label={`Win probability: ${CANDIDATE_LAST[leaderKey]} ${(winProb[leaderKey] ?? 0).toFixed(1)} percent`}>
+                      <div className="ring-center">
+                        <b>{pctLabel(winProb[leaderKey] ?? 0)}%</b>
+                        <span>{CANDIDATE_LAST[leaderKey]}</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="forecast-support">
+                    <div>
+                      <div className="model-label">Top outcomes</div>
+                      {(["donalds", "fishback", "collins"] as CandidateKey[]).map((k) => (
+                        <div className="outcome-row" key={k}>
+                          <i style={{ background: CAND_CSS[k] }} aria-hidden />
+                          <span>{CANDIDATE_LAST[k]} wins</span>
+                          <b>{pctLabel(winProb[k] ?? 0)}%</b>
+                        </div>
+                      ))}
+                      {/* Residual normalizes, never a separate comeback number */}
+                      <div className="outcome-row muted">
+                        <i style={{ background: "var(--ink3)" }} aria-hidden />
+                        <span>Other outcomes</span>
+                        <b>
+                          {(() => {
+                            const r = Math.max(
+                              0,
+                              100 - (winProb.donalds ?? 0) - (winProb.fishback ?? 0) - (winProb.collins ?? 0)
+                            );
+                            return r < 0.05 ? "<1" : pctLabel(r);
+                          })()}%
+                        </b>
+                      </div>
+                    </div>
+
+                    <div className="reporting-module">
+                      <div className="reporting-copy">
+                        <span>Model-estimated</span><b>Percent reporting</b>
+                      </div>
+                      <div className="rep-ring"
+                           style={{ ["--value" as string]: Math.min(modeledRep, 100) } as React.CSSProperties}
+                           role="img" aria-label={`Model-estimated reporting ${pctLabel(modeledRep)} percent`}>
+                        <div className="ring-center sm">
+                          <b>{pctLabel(modeledRep)}%</b>
+                          <span>reporting</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </section>
+
+            {!gated && (
+              <section className="projection-zone" aria-label="Forecasted final result">
+                <div className="projected-top">
+                  <div className="projected-intro">
+                    <span className="model-label">
+                      {projectedKey ? "TPSI projection" : "Model projection · not actual results"}
+                    </span>
+                    <div className="projected-name">
+                      {projectedKey
+                        ? `${CANDIDATE_LAST[projectedKey]} wins`
+                        : `${CANDIDATE_LAST[leaderKey]} projected ahead`}
+                    </div>
+                    <p className="projection-headline prose">{headline}</p>
+                  </div>
+                  <div className="projected-margin-wrap">
+                    <span>Projected margin</span>
+                    <b style={{ color: CAND_CSS[leaderKey] }}>{signed(marginPP)}</b>
+                    <small>{CANDIDATE_LAST[leaderKey]} over {CANDIDATE_LAST[ranked[1].k]}</small>
+                  </div>
+                </div>
+
+                <div className="projection-head">
+                  <div>
+                    <strong>Projected final vote share</strong>
+                    <small>
+                      Muted bars indicate a forecast, not certified results. They use
+                      the same 0 to 100% scale as the reported-results bars, and are
+                      the sum of all 67 county projections.
+                    </small>
+                  </div>
+                  <span className="model-label">Forecast only</span>
+                </div>
+
+                <div className="projected-bars">
+                  {ranked.map(({ k, share: s }) => {
+                    const liveCand = cands.find((x) =>
+                      String(x.name || "").toLowerCase().includes(CANDIDATE_MATCH[k as Exclude<CandidateKey, "other">])
+                    );
+                    const actual = live && liveCand ? share(liveCand, cands) : null;
+                    const delta = actual != null ? s - actual : null;
+                    return (
+                      <div className="projected-bar-row" key={k}>
+                        <div className="projected-bar-name">
+                          <i style={{ background: CAND_CSS[k] }} aria-hidden />
+                          <span>{CANDIDATE_LAST[k]}</span>
+                        </div>
+                        {/* Projected fill is muted and dashed, never solid */}
+                        <div className="projected-bar-track">
+                          <span className="projected-bar-fill"
+                                style={{ width: `${s}%`, borderColor: CAND_CSS[k] }} />
+                        </div>
+                        <div className="projected-bar-value">{s.toFixed(1)}%</div>
+                        <div className="projected-bar-delta">
+                          {delta != null
+                            ? `${delta >= 0 ? "+" : "−"}${Math.abs(delta).toFixed(1)} vs now`
+                            : "projected"}
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+
+                <div className="model-stats">
+                  <div><span>Projected turnout</span><b>{int(fc.modeled_total_vote)}</b></div>
+                  <div><span>Votes remaining</span><b>{int(fc.modeled_vote_remaining)}</b></div>
+                  <div><span>SD of votes</span><b>±{int(fc.sd_race)}</b></div>
+                  <div>
+                    <span>Margin range (95%)</span>
+                    <b>{signed(marginLo)} to {signed(marginHi)}</b>
+                  </div>
+                </div>
+
+                <div className="no-history">No history snapshots · live data only</div>
+              </section>
+            )}
+          </article>
+        </div>
+
+        {/* ═══ COUNTY BOARD ═══ */}
+        <section id="counties" className="county card"
+                 aria-label="Florida county map and county-by-county detail">
+          <div className="county-head">
+            <div className="rd-view-toggles" role="group" aria-label="County view">
+              <button type="button" className={countyView === "forecast" ? "on" : ""}
+                      onClick={() => setCountyView("forecast")}>forecast</button>
+              <button type="button" className={countyView === "results" ? "on" : ""}
+                      onClick={() => setCountyView("results")}>results</button>
+            </div>
+            {countyView === "forecast" && (
+              <div className="rd-map-toggles" role="group" aria-label="County map shading">
+                <button type="button" className={mapMode === "margin" ? "on" : ""}
+                        onClick={() => setMapMode("margin")}>margin</button>
+                <button type="button" className={mapMode === "turnout" ? "on" : ""}
+                        onClick={() => setMapMode("turnout")}>turnout</button>
+              </div>
+            )}
+          </div>
+
+          <div className="rd-map">
+            <FloridaCountyMap view={countyView} mode={mapMode}
+                              counties={counties.byName} liveCounties={liveCounties} />
+            {countyView === "results" && !live && (
+              // An all-grey map is the honest rendering of zero returns, but it reads
+              // as a broken map unless we say so.
+              <div className="map-empty">
+                <p>No county has reported yet.</p>
+                <p className="map-empty-sub">
+                  Counties fill in as their votes land. Until then, the forecast view is
+                  the one carrying information.
+                </p>
+              </div>
+            )}
+          </div>
+
+          <div className="rd-map-legend">
+            {countyView === "forecast" && mapMode === "turnout" ? (
+              <>
+                <span className="rd-map-legend-sw"
+                      style={{ background: "linear-gradient(90deg,var(--ramp-lo),rgb(15,95,85))" }} />
+                <span>lower → higher projected turnout</span>
+              </>
+            ) : (
+              <>
+                {CANDIDATE_ORDER.map((k) => (
+                  <span className="rd-key" key={k}>
+                    <i style={{ background: CAND_CSS[k] }} aria-hidden />
+                    {CANDIDATE_LAST[k]}
+                  </span>
+                ))}
+                <span className="rd-map-legend-note">
+                  fill = leader · depth = margin
+                  {countyView === "forecast" && " · hatched = too close to call"}
+                </span>
+              </>
+            )}
+            <span className="rd-map-hint">scroll or pinch to zoom · drag to pan</span>
+          </div>
+
+          <p className="county-caveat prose">
+            County projections are demographic estimates, not local polling:{" "}
+            {FORECAST_META.interviewsReported} interviews across 67 counties, a median of
+            three per county, and{" "}
+            {FORECAST_META.countiesTooCloseToCall} of 67 with a 90% interval that crosses
+            zero. We do not call counties. They are here to show where the outstanding
+            vote sits — projected turnout is drawn from registration and past primaries,
+            and is far more reliable than any county share.
+          </p>
+
+          {swing.countiesReporting > 0 && (
+            <div className="swing-box">
+              <div className="model-label">Statewide swing correction</div>
+              <div className="swing-grid">
+                <div>
+                  <span>Counties in estimate</span>
+                  <b>{swing.countiesReporting}</b>
+                </div>
+                <div>
+                  <span>Effective independent</span>
+                  <b>{swing.nEff.toFixed(1)}</b>
+                </div>
+                <div>
+                  <span>Weight applied</span>
+                  <b>{(swing.lambda * 100).toFixed(0)}%</b>
+                </div>
+                <div>
+                  <span>Applied swing</span>
+                  <b>
+                    {CANDIDATE_ORDER.map(
+                      (k) => `${CANDIDATE_LAST[k].slice(0, 3)} ${signed(swing.applied[k])}`
+                    ).join(" · ")}
+                  </b>
+                </div>
+              </div>
+              <p className="prose">
+                Reporting counties imply a raw swing of{" "}
+                {signed(swing.raw.donalds)} for Donalds. Because the county baselines are
+                over-smoothed, most of an early deviation is baseline error rather than
+                real movement, so only {(swing.lambda * 100).toFixed(0)}% of it is carried
+                to the counties still outstanding.
+              </p>
+            </div>
+          )}
+
+          <FloridaCountyTable view={countyView} counties={counties.list}
+                              statewide={counties.statewide} liveCounties={liveCounties} />
+        </section>
+
+        {/* ═══ PORTAL: BANKED VOTE + TOP TEN ═══ */}
+        {portal && (
+          <section id="tracker" className="portal-zone" aria-label="Expanded county tracker">
+
+            <div className="card portal-banked">
+              <div className="portal-head">
+                <div>
+                  <h2>Republican ballots cast</h2>
+                  <p className="prose">
+                    Turnout from Fresh Take Florida: vote-by-mail and early votes, plus
+                    election-day in-person once polls open. Florida primaries are closed,
+                    so the Republican column is the universe for this race. These are
+                    ballots cast, not results — no candidate preference is in this number.
+                  </p>
+                </div>
+                {banked?.ok && (
+                  <span className="model-label">
+                    {int(bankedRep)} R cast · {signed(bankedRep - TURNOUT_MODEL.projected)} vs
+                    prior
+                  </span>
+                )}
+              </div>
+
+              {banked === null ? (
+                <p className="prose portal-note">Loading turnout…</p>
+              ) : !banked.ok ? (
+                <p className="prose portal-note">
+                  Turnout feed unavailable ({banked.error}). The board falls back to its
+                  own registration-and-history turnout prior of{" "}
+                  {int(TURNOUT_MODEL.projected)}.
+                </p>
+              ) : (
+                <div className="portal-banked-grid">
+                  <div><span>R ballots cast</span><b>{int(banked.statewide!.rep)}</b></div>
+                  <div><span>D ballots cast</span><b>{int(banked.statewide!.dem)}</b></div>
+                  <div><span>Pre-election prior</span><b>{int(TURNOUT_MODEL.projected)}</b></div>
+                  <div>
+                    <span>Prior error</span>
+                    <b>{signed(bankedRep - TURNOUT_MODEL.projected)}</b>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            <div className="card portal-top10">
+              <div className="portal-head">
+                <div>
+                  <h2>Ten largest counties</h2>
+                  <p className="prose">
+                    Ranked by projected Republican primary ballots, not census population —
+                    in a closed primary those are different lists. Together these carry{" "}
+                    {pctLabel(
+                      (topTen.reduce((s, c) => s + c.projectedTurnout, 0) /
+                        Math.max(counties.statewide.projectedTurnout, 1)) * 100,
+                    )}
+                    % of the expected vote, so they decide the race and they are where a
+                    surprise would show up first.
+                  </p>
+                </div>
+              </div>
+
+              <div className="portal-top10-head" aria-hidden>
+                <span>County</span><span>Projected</span><span>R cast</span>
+                <span>Counted</span><span>Reporting</span><span>Projection</span>
+              </div>
+
+              {topTen.map((c) => {
+                const bank = bankedByCounty.get(c.name.toUpperCase());
+                const lead = CANDIDATE_LAST[c.leader];
+                return (
+                  <div className="portal-row" key={c.fips}>
+                    <div className="portal-row-name">
+                      <strong>{c.name}</strong>
+                      <small>{c.region}</small>
+                    </div>
+                    <div className="num">{int(c.projectedTurnout)}</div>
+                    <div className="num">{bank === undefined ? "—" : int(bank)}</div>
+                    <div className="num">{c.reportedVotes > 0 ? int(c.reportedVotes) : "—"}</div>
+                    <div className="num">{c.reporting > 0 ? `${pctLabel(c.reporting)}%` : "—"}</div>
+                    <div className="portal-row-proj">
+                      <span className="portal-chip" style={{ background: CAND_CSS[c.leader] }} />
+                      <span>
+                        {c.tooCloseToCall ? "Too close" : `${lead} +${c.margin.toFixed(1)}`}
+                      </span>
+                    </div>
+                    <div className="portal-bar" aria-hidden>
+                      {ALL_CANDIDATE_KEYS.map((k) => (
+                        <span key={k}
+                              style={{ width: `${c.shares[k]}%`, background: CAND_CSS[k] }} />
+                      ))}
+                    </div>
+                  </div>
+                );
+              })}
+
+              <p className="prose portal-note">
+                County projections carry almost no local sample and we never call a county.
+                The R cast column is measured turnout; the Projection column is modelled.
+                When they disagree, believe the measured column.
+              </p>
+            </div>
+          </section>
+        )}
+
+        {/* ═══ SCENARIO ENGINE ═══ */}
+        <section className="engine-cta card">
+          <div>
+            <h2>Run it yourself</h2>
+            <p className="prose">
+              The scenario engine behind this county baseline is public. Set candidate
+              performance by age and race, move turnout, and watch all 67 counties
+              recompute against the same model this board projects from.
+            </p>
+          </div>
+          <a className="utility-button lg" href="/floridaprimary">Open the scenario engine →</a>
+        </section>
+
+        {/* ═══ SLATE ═══ */}
+        {full && (
+          <section id="board" className="board">
+            <div className="board-head">
+              <div>
+                <h2>All races tonight</h2>
+                <p>Reported results only, no TPSI model.</p>
+              </div>
+              <div className="board-meta">
+                <span className="model-label">{SLATE.length} races · 3 states</span>
+                {stale && <button className="utility-button" onClick={refresh}>Feed stale · retry</button>}
+              </div>
+            </div>
+
+            {grouped.map((g) => (
+              <div className="grp" key={g.key}>
+                <div className="grp-hd">
+                  <h3>{g.label}</h3>
+                  <span className="model-label">{closeAt(g.races[0])}</span>
+                </div>
+                <div className="grid">
+                  {g.races.map((e) => <SlateCard key={e.id} entry={e} race={races[e.id]} />)}
+                </div>
+              </div>
+            ))}
+          </section>
+        )}
+
+        {/* ═══ METHOD ═══ */}
+        <section id="method" className="method">
+          <h2>Method</h2>
+          <p className="prose">
+            Reported vote is solid. Projected share is muted and dashed, on the same
+            0 to 100% scale, and is the sum of all 67 county projections. Estimated
+            reporting is the share of expected vote, not precincts. Race calls come from
+            AP through CivicAPI; TPSI projects independently once the leader&rsquo;s margin
+            clears three standard deviations of the outstanding vote and at least 35% is
+            counted, and those projections are labeled as ours.
+          </p>
+          <p className="prose">
+            The statewide probability is not built from the county intervals. County
+            errors share one dominant statewide swing — if the model has Donalds wrong,
+            it has him wrong in all 67 counties at once — so adding county variances
+            independently would understate the real spread by roughly an order of
+            magnitude. Probability comes from the statewide model, whose margin carries a
+            standard deviation of {STATEWIDE_FORECAST.marginSd} points against a projected
+            margin of {STATEWIDE_FORECAST.margin.toFixed(1)}. Field dates{" "}
+            {FORECAST_META.fieldDates}, n={FORECAST_META.interviewsReported}, ±
+            {FORECAST_META.marginOfError}.
+          </p>
+          <p className="prose">
+            <strong>All candidate estimates on this page are built from pre-election day
+            data.</strong> The survey closed before polls opened and has not been updated
+            since; nothing a voter did today is in the shares. Turnout is the one input we
+            replace with a measured figure —{" "}
+            {turnoutMeasured
+              ? `${int(turnoutBasis)} Republican ballots cast, from Fresh Take Florida`
+              : `a ${int(TURNOUT_MODEL.projected)} prior, in use because the turnout feed is unavailable`}
+            .
+          </p>
+          <p className="prose">
+            A turnout figure lower than a general election, or lower than a past primary,
+            is not a forecast that fewer people will vote. It defines <em>which</em>
+            {" "}electorate the shares describe: a closed Republican primary is a small,
+            self-selected slice of Florida, and every percentage here is a share of that
+            slice and of nothing wider. Read these numbers as a description of the people
+            who actually turned out, not as a prediction about the state.
+          </p>
+          <div className="method-foot">
+            <span className="model-label">© 2026 The Public Sentiment Institute</span>
+            <span className="model-label">Powered by CivicAPI</span>
+          </div>
+        </section>
+      </main>
+    </div>
+  );
+}
+
+/* ═════════════════════ SLATE CARD ═════════════════════ */
+
+function SlateCard({ entry, race }: { entry: Entry; race?: Race }) {
+  const all = sortC(race);
+  const show = all.slice(0, entry.topFour ? 4 : 2);
+  const live = isLive(race);
+  const st = getRaceState({
+    percentReporting: live ? estRep(race) : 0,
+    hasOfficialCall: officialCall(race),
+    tpsiCalled: false,
+  });
+
+  return (
+    <div className="l4">
+      <div className="l4-hd">
+        <span className={`l4-dot ${entry.topFour ? "n" : partyOf(show[0]?.party || entry.sub)}`} />
+        <div className="l4-title">
+          <strong>{entry.title}</strong>
+          {entry.sub && <small>{entry.sub}</small>}
+        </div>
+        {live && st !== "OFFICIAL" && <span className="live-dot sm" aria-hidden />}
+        {st === "OFFICIAL" && <span className="l4-called">Called</span>}
+      </div>
+
+      {live ? (
+        <div className="l4-body">
+          {show.map((c, i) => (
+            <div className="l4-row" key={c.name || i}>
+              <span className="l4-nm">{c.name}</span>
+              <span className="l4-pct">{pctLabel(share(c, all))}%</span>
+              <div className="l4-bar">
+                <span style={{ width: `${Math.max(share(c, all), 0)}%`, background: tone(i, c.party) }} />
+              </div>
+            </div>
+          ))}
+          {entry.topFour && <span className="model-label">Top four advance to November</span>}
+        </div>
+      ) : (
+        <div className="l4-empty">Awaiting returns</div>
+      )}
+
+      <div className="l4-foot">
+        <span className="model-label">
+          {live ? `${pctLabel(estRep(race))}% est. reporting` : closeAt(entry)}
+        </span>
+      </div>
+    </div>
+  );
+}
+
+/* ═════════════════════ STYLE ═════════════════════ */
+/* Inherited from the August 4 board. Surface, ink, party and signal tokens come
+   from globals.css so the desk flips with the site's data-theme; only desk-local
+   values are declared here. */
+
+const CSS = `
+.desk{
+  /* Four-candidate lane; the site tokens only define two. Values match the
+     scenario engine (changeorders/TPSI_FL_Scenario_Engine_v3.html) so the
+     sandbox and the board name each candidate in the same colour. */
+  --k1:#B23A2E; --k2:#1E6E86; --k3:#6D4B96; --k4:#A87516; --k5:#8A929C;
+  --map-stroke:rgba(10,10,10,.14); --map-stroke-hi:rgba(10,10,10,.55);
+  --map-hatch:rgba(10,10,10,.22); --map-blank:#dcdcd2;
+  --ramp-mid:rgb(232,232,226); --ramp-lo:rgb(237,237,231);
+  --tip-shadow:0 10px 30px rgba(23,23,27,.16);
+  --mono:var(--font-numeric,'JetBrains Mono'),ui-monospace,monospace;
+  --sans:var(--font-body,'Geist'),system-ui,sans-serif;
+  --r-panel:14px; --r-card:10px; --r-pill:999px;
+  --shadow:none;
+  color:var(--ink);min-height:100vh;font-family:var(--sans);
+  -webkit-font-smoothing:antialiased;
+}
+html[data-theme="dark"] .desk{
+  --k3:#8a63ef; --k4:#e8b93c;
+  --map-stroke:rgba(255,255,255,.10); --map-stroke-hi:rgba(255,255,255,.55);
+  --map-hatch:rgba(255,255,255,.28); --map-blank:#2e2e36;
+  --ramp-mid:rgb(58,58,66); --ramp-lo:rgb(30,30,36);
+  --tip-shadow:0 10px 30px rgba(0,0,0,.45);
+}
+
+.desk *{margin:0;padding:0;box-sizing:border-box}
+.desk a{text-decoration:none;color:inherit}
+
+.desk h1,.desk h2,.desk h3,.desk .projected-name,.desk .snapshot-heading strong{
+  font-family:var(--sans);font-weight:800;letter-spacing:-.028em}
+.desk .model-label,.desk .topline-status,.desk .topline-columns,.desk .race-kicker,
+.desk .l4-called{font-family:var(--mono);font-weight:700;font-size:8px;
+  letter-spacing:.11em;text-transform:uppercase;color:var(--ink3)}
+.desk .topline-votes,.desk .topline-pct,.desk .projected-bar-value,.desk .ring-center b,
+.desk .meta-block b,.desk .outcome-row b,.desk .l4-pct,.desk .projected-margin-wrap b,
+.desk .model-stats b,.desk .swing-grid b{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.desk .prose{font-family:var(--sans);line-height:1.6}
+
+.utility-button{font-family:var(--mono);font-size:9px;font-weight:700;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--ink2);border:1px solid var(--hairline2);
+  border-radius:var(--r-pill);padding:5px 12px;background:var(--panel);cursor:pointer}
+.utility-button:hover{color:var(--ink)}
+.utility-button.lg{padding:10px 18px;font-size:10px;white-space:nowrap}
+
+.shell{max-width:1180px;margin:0 auto;padding:26px 22px 70px}
+
+/* race header */
+.archive-banner{display:flex;justify-content:space-between;align-items:center;gap:12px;
+  flex-wrap:wrap;margin-bottom:16px;padding:9px 13px;border-radius:var(--r-card);
+  background:var(--panel2);border:1px solid var(--hairline2);
+  font-family:var(--mono);font-size:9px;font-weight:700;letter-spacing:.11em;
+  text-transform:uppercase;color:var(--ink3)}
+.archive-banner a{color:var(--ink2);border-bottom:1px solid var(--hairline2)}
+.archive-banner a:hover{color:var(--ink)}
+.race-header{padding-bottom:20px;border-bottom:1px solid var(--hairline)}
+.race-kicker{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.live-dot{width:7px;height:7px;border-radius:50%;background:var(--live);
+  animation:dpulse 1.7s infinite;flex:0 0 auto}
+.live-dot.sm{width:6px;height:6px;margin-top:4px}
+@keyframes dpulse{50%{opacity:.3}}
+.race-heading-row{display:flex;justify-content:space-between;gap:32px;
+  align-items:flex-start;margin-top:12px;flex-wrap:wrap}
+.race-header h1{font-size:clamp(22px,2.6vw,32px);line-height:1.14}
+.race-deck{font-size:14px;color:var(--ink2);max-width:560px;margin-top:9px;line-height:1.6}
+.race-meta{display:grid;grid-template-columns:repeat(2,minmax(120px,1fr));gap:14px 26px}
+.meta-block span{display:block;font-family:var(--mono);font-size:8px;font-weight:700;
+  letter-spacing:.11em;text-transform:uppercase;color:var(--ink3)}
+.meta-block b{display:block;font-size:17px;font-weight:800;letter-spacing:-.02em;margin-top:3px}
+.race-tabs{display:flex;gap:20px;margin-top:18px;flex-wrap:wrap}
+.race-tabs a{font-size:12px;color:var(--ink3);padding-bottom:4px;border-bottom:2px solid transparent}
+.race-tabs a[aria-current="page"]{color:var(--ink);border-bottom-color:var(--ink)}
+.race-tabs a:hover{color:var(--ink2)}
+
+/* dashboard grid */
+.dashboard-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:14px;margin-top:20px}
+.card{background:var(--panel);border:1px solid var(--hairline);border-radius:var(--r-panel);
+  box-shadow:var(--shadow);overflow:hidden}
+.span-3{grid-column:span 3}
+@media(max-width:900px){.dashboard-grid{grid-template-columns:1fr}.span-3{grid-column:span 1}}
+
+/* reported results */
+.topline-shell{padding:16px 18px 18px}
+.topline-header{display:flex;justify-content:space-between;gap:14px;align-items:flex-start;
+  flex-wrap:wrap}
+.topline-title h2{font-size:21px;line-height:1.12}
+.topline-title p{font-size:11.5px;color:var(--ink2);margin-top:5px}
+.topline-meta{text-align:right}
+.topline-status{display:block}
+.topline-updated{font-family:var(--mono);font-size:9px;color:var(--ink3);letter-spacing:.04em}
+.topline-columns{display:grid;grid-template-columns:1fr 90px 74px;gap:10px;margin-top:16px;
+  padding-bottom:7px;border-bottom:1px solid var(--hairline)}
+.topline-columns span:nth-child(n+2){text-align:right}
+.topline-row{padding:13px 0;border-bottom:1px solid var(--hairline)}
+.topline-row:last-child{border-bottom:none}
+.topline-row-top{display:grid;grid-template-columns:1fr 90px 74px;gap:10px;align-items:center}
+.topline-candidate{display:flex;gap:10px;align-items:flex-start;min-width:0}
+.topline-dot{width:9px;height:9px;border-radius:50%;margin-top:5px;flex:0 0 auto}
+.topline-copy{min-width:0}
+.topline-copy strong{display:block;font-size:15px;font-weight:700;letter-spacing:-.01em}
+.topline-copy small{display:block;font-family:var(--mono);font-size:8.5px;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--ink3);margin-top:2px}
+.topline-lead{display:block;font-family:var(--mono);font-size:9px;color:var(--ink2);
+  margin-top:4px;letter-spacing:.03em}
+.topline-lead.won{color:var(--called);font-weight:700}
+.topline-votes{font-size:13px;color:var(--ink2);text-align:right}
+.topline-pct{font-size:22px;font-weight:800;letter-spacing:-.03em;text-align:right}
+.topline-bar{height:7px;border-radius:99px;background:var(--panel3);overflow:hidden;margin-top:9px}
+.topline-bar span{display:block;height:100%;border-radius:99px;
+  transition:width 600ms cubic-bezier(.16,1,.3,1)}
+.portal-zone{display:grid;gap:18px;margin-top:22px}
+.portal-banner{background:var(--panel3);border-color:var(--gold)}
+.portal-head{display:flex;justify-content:space-between;align-items:flex-start;gap:18px;
+  flex-wrap:wrap;margin-bottom:16px}
+.portal-head .prose{font-size:12.5px;color:var(--ink2);margin-top:6px;max-width:640px}
+.portal-note{font-size:12px;color:var(--ink3);margin-top:14px;padding-top:12px;
+  border-top:1px solid var(--hairline);max-width:640px}
+.portal-banked-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px}
+.portal-banked-grid>div{display:flex;flex-direction:column;gap:4px;padding:12px 14px;
+  background:var(--panel2);border:1px solid var(--hairline);border-radius:var(--r-card)}
+.portal-banked-grid span{font-family:var(--mono);font-size:10px;letter-spacing:.05em;
+  text-transform:uppercase;color:var(--ink3)}
+.portal-banked-grid b{font-family:var(--mono);font-size:19px;font-variant-numeric:tabular-nums}
+.portal-top10-head,.portal-row{display:grid;
+  grid-template-columns:minmax(150px,1.6fr) repeat(4,minmax(72px,.8fr)) minmax(130px,1.1fr);
+  gap:12px;align-items:center}
+.portal-top10-head{font-family:var(--mono);font-size:10px;letter-spacing:.05em;
+  text-transform:uppercase;color:var(--ink3);padding-bottom:8px;
+  border-bottom:1px solid var(--hairline)}
+.portal-top10-head>span:not(:first-child){text-align:right}
+.portal-top10-head>span:last-child{text-align:left}
+.portal-row{padding:12px 0;border-bottom:1px solid var(--hairline)}
+.portal-row .num{font-family:var(--mono);font-size:13px;text-align:right;
+  font-variant-numeric:tabular-nums}
+.portal-row-name strong{display:block;font-size:14px}
+.portal-row-name small{font-family:var(--mono);font-size:10px;color:var(--ink3)}
+.portal-row-proj{display:flex;align-items:center;gap:7px;font-family:var(--mono);font-size:12px}
+.portal-chip{width:9px;height:9px;border-radius:2px;flex-shrink:0}
+.portal-bar{grid-column:1/-1;display:flex;height:4px;border-radius:99px;overflow:hidden;
+  margin-top:8px;background:var(--panel2)}
+.portal-bar span{display:block;height:100%}
+@media(max-width:720px){
+  .portal-top10-head{display:none}
+  .portal-row{grid-template-columns:1fr auto;row-gap:4px}
+  .portal-row .num{text-align:right}
+}
+.empty-live{padding:22px 0 6px}
+.empty-live .prose{font-size:13px;color:var(--ink2);max-width:420px}
+.empty-note{font-size:12px;color:var(--ink2);max-width:520px;margin:14px 0 4px;
+  padding-bottom:12px;border-bottom:1px solid var(--hairline)}
+.topline-foot{display:flex;justify-content:space-between;align-items:baseline;gap:12px;
+  margin-top:14px;padding-top:11px;border-top:1px solid var(--hairline);
+  font-family:var(--mono);font-size:9px;font-weight:700;letter-spacing:.11em;
+  text-transform:uppercase;color:var(--ink3)}
+.topline-reporting b,.topline-margin b{font-size:13px;color:var(--ink);letter-spacing:-.01em;
+  font-variant-numeric:tabular-nums;margin-right:5px}
+
+/* forecast snapshot */
+.snapshot{padding:16px 18px 18px;border-bottom:1px solid var(--hairline)}
+.snapshot-heading{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
+.snapshot-heading strong{display:block;font-size:21px;line-height:1.12}
+.snapshot-heading small{display:block;font-size:11px;color:var(--ink2);margin-top:4px}
+.race-rule-pill{font-family:var(--mono);font-size:9px;font-weight:700;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--ink2);border:1px solid var(--hairline2);
+  border-radius:var(--r-pill);padding:4px 10px;white-space:nowrap}
+.forecast-model-layout{display:grid;grid-template-columns:auto 1fr;gap:22px;margin-top:18px;
+  align-items:start}
+@media(max-width:560px){.forecast-model-layout{grid-template-columns:1fr}}
+.forecast-hero{text-align:center}
+.prob-ring,.rep-ring{--value:50;--ring:var(--k1);position:relative;width:126px;aspect-ratio:1;
+  margin:10px auto 0;border-radius:50%;
+  background:conic-gradient(from -90deg,var(--ring) calc(var(--value)*1%),var(--panel3) 0)}
+.rep-ring{width:82px;
+  background:conic-gradient(from -90deg,var(--live) calc(var(--value)*1%),var(--panel3) 0)}
+.prob-ring::before,.rep-ring::before{content:"";position:absolute;inset:15px;border-radius:50%;
+  background:var(--panel);box-shadow:inset 0 0 0 1px var(--hairline)}
+.rep-ring::before{inset:11px}
+.ring-center{position:absolute;inset:0;z-index:1;display:grid;place-content:center;text-align:center}
+.ring-center b{display:block;font-size:29px;font-weight:800;line-height:1;letter-spacing:-.05em}
+.ring-center span{display:block;font-family:var(--mono);font-size:8px;color:var(--ink3);
+  margin-top:5px;letter-spacing:.08em;text-transform:uppercase}
+.ring-center.sm b{font-size:17px}
+.ring-center.sm span{font-size:7px}
+.forecast-support{display:flex;flex-direction:column;gap:16px}
+.outcome-row{display:flex;align-items:center;gap:8px;padding:6px 0;
+  border-bottom:1px solid var(--hairline);font-size:12px}
+.outcome-row:last-child{border-bottom:none}
+.outcome-row i{width:8px;height:8px;border-radius:50%;flex:0 0 auto}
+.outcome-row span{flex:1}
+.outcome-row b{font-weight:800;font-size:13px}
+.outcome-row.muted span,.outcome-row.muted b{color:var(--ink3)}
+.reporting-module{display:flex;align-items:center;gap:14px;padding-top:13px;
+  border-top:1px solid var(--hairline)}
+.reporting-copy span{display:block;font-family:var(--mono);font-size:8px;letter-spacing:.11em;
+  text-transform:uppercase;color:var(--ink3)}
+.reporting-copy b{display:block;font-size:13px;font-weight:700;margin-top:3px}
+.gatebox{margin-top:16px;padding:14px;border:1px dashed var(--hairline2);border-radius:var(--r-card)}
+.gatebox .prose{font-size:12.5px;color:var(--ink2);margin-top:6px}
+
+/* projection zone */
+.projection-zone{padding:16px 18px 18px}
+.projected-top{display:flex;justify-content:space-between;gap:20px;align-items:flex-start;
+  flex-wrap:wrap}
+.projected-intro{flex:1;min-width:220px}
+.projected-name{font-size:21px;margin-top:5px}
+.projection-headline{font-size:11.5px;color:var(--ink2);margin-top:7px;max-width:400px}
+.projected-margin-wrap{text-align:right}
+.projected-margin-wrap span{display:block;font-family:var(--mono);font-size:8px;
+  letter-spacing:.11em;text-transform:uppercase;color:var(--ink3)}
+.projected-margin-wrap b{display:block;font-size:28px;font-weight:800;letter-spacing:-.04em;
+  margin-top:3px}
+.projected-margin-wrap small{display:block;font-size:9px;color:var(--ink3);margin-top:2px}
+.projection-head{display:flex;justify-content:space-between;gap:14px;align-items:flex-start;
+  margin-top:18px;padding-top:14px;border-top:1px solid var(--hairline)}
+.projection-head strong{display:block;font-size:14px;font-weight:800;letter-spacing:-.02em}
+.projection-head small{display:block;font-size:10px;color:var(--ink3);margin-top:4px;
+  line-height:1.45;max-width:400px}
+.projected-bars{margin-top:14px;display:flex;flex-direction:column;gap:11px}
+.projected-bar-row{display:grid;grid-template-columns:96px 1fr 52px 74px;gap:10px;align-items:center}
+.projected-bar-name{display:flex;align-items:center;gap:7px;font-size:12px;font-weight:600}
+.projected-bar-name i{width:8px;height:8px;border-radius:50%;flex:0 0 auto}
+.projected-bar-track{height:9px;border-radius:99px;background:var(--panel3);overflow:hidden}
+.projected-bar-fill{display:block;height:100%;border-radius:99px;border:1.5px dashed;
+  background:color-mix(in srgb, currentColor 0%, transparent)}
+.projected-bar-value{font-size:14px;font-weight:800;text-align:right}
+.projected-bar-delta{font-family:var(--mono);font-size:8.5px;color:var(--ink3);text-align:right;
+  letter-spacing:.03em}
+.model-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:12px;
+  margin-top:18px;padding-top:14px;border-top:1px solid var(--hairline)}
+.model-stats span{display:block;font-family:var(--mono);font-size:8px;letter-spacing:.11em;
+  text-transform:uppercase;color:var(--ink3)}
+.model-stats b{display:block;font-size:12.5px;font-weight:700;margin-top:3px}
+.no-history{font-family:var(--mono);font-size:8.5px;font-style:italic;color:var(--ink3);
+  margin-top:14px;padding-top:11px;border-top:1px solid var(--hairline)}
+
+/* county map + table */
+.county{margin-top:20px;padding:20px}
+.county-head{display:flex;justify-content:space-between;align-items:center;gap:14px;
+  flex-wrap:wrap;margin-bottom:14px}
+.rd-view-toggles,.rd-map-toggles{display:flex;gap:4px;padding:3px;border-radius:999px;
+  background:var(--panel2);border:1px solid var(--hairline)}
+.rd-view-toggles button{padding:6px 15px;border-radius:999px;border:0;background:none;cursor:pointer;
+  font-family:var(--mono);font-size:10.5px;font-weight:700;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--ink3);transition:background .15s ease,color .15s ease}
+.rd-view-toggles button.on{background:var(--gop);color:#fff}
+.rd-map-toggles button{padding:5px 13px;border-radius:999px;border:0;background:none;cursor:pointer;
+  font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--ink3);transition:background .15s ease,color .15s ease}
+.rd-map-toggles button.on{background:var(--ink);color:var(--panel)}
+.rd-map{position:relative;height:clamp(380px,54vh,580px);width:100%;border-radius:var(--r-panel);
+  overflow:hidden;background:var(--panel2);border:1px solid var(--hairline)}
+.rd-map-legend{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:12px;
+  font-family:var(--mono);font-size:10px;letter-spacing:.04em;color:var(--ink3)}
+.map-empty{position:absolute;inset:0;display:flex;flex-direction:column;gap:6px;
+  align-items:center;justify-content:center;text-align:center;padding:0 24px;
+  pointer-events:none;font-family:var(--mono);font-size:11px;letter-spacing:.05em;
+  text-transform:uppercase;color:var(--ink3)}
+.map-empty-sub{font-family:var(--sans);font-size:12px;letter-spacing:0;
+  text-transform:none;color:var(--ink3);max-width:300px;line-height:1.5}
+.rd-map-legend-sw{width:46px;height:5px;border-radius:99px;flex-shrink:0}
+.rd-key{display:inline-flex;align-items:center;gap:5px}
+.rd-key i{width:9px;height:9px;border-radius:2px;display:inline-block}
+.rd-map-legend-note{color:var(--ink3)}
+.rd-map-hint{margin-left:auto;color:var(--ink3);white-space:nowrap}
+@media(max-width:640px){.rd-map-hint{display:none}}
+.county-caveat{font-size:11.5px;color:var(--ink3);margin-top:14px;max-width:880px}
+
+.swing-box{margin-top:16px;padding:14px;border:1px solid var(--hairline2);
+  border-radius:var(--r-card);background:var(--panel2)}
+.swing-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;
+  margin-top:10px}
+.swing-grid span{display:block;font-family:var(--mono);font-size:8px;letter-spacing:.11em;
+  text-transform:uppercase;color:var(--ink3)}
+.swing-grid b{display:block;font-size:12.5px;font-weight:700;margin-top:3px}
+.swing-box .prose{font-size:11.5px;color:var(--ink2);margin-top:12px;padding-top:10px;
+  border-top:1px solid var(--hairline);max-width:820px}
+
+.rd-county{margin-top:22px}
+.rd-county-tools{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;
+  gap:12px;margin-bottom:14px}
+.rd-county-search{display:flex;align-items:center;gap:8px;padding:8px 13px;border-radius:10px;
+  background:var(--panel2);border:1px solid var(--hairline);color:var(--ink3);
+  flex:1 1 220px;max-width:340px}
+.rd-county-search input{flex:1;min-width:0;background:none;border:0;outline:none;
+  color:var(--ink);font-family:var(--sans);font-size:13px}
+.rd-county-search input::placeholder{color:var(--ink3)}
+.rd-county-sorts{display:flex;flex-wrap:wrap;gap:4px;padding:3px;border-radius:999px;
+  background:var(--panel2);border:1px solid var(--hairline)}
+.rd-county-sorts button{padding:5px 12px;border-radius:999px;border:0;background:none;cursor:pointer;
+  font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--ink3);transition:background .15s ease,color .15s ease}
+.rd-county-sorts button:hover{color:var(--ink2)}
+.rd-county-sorts button.on{background:var(--ink);color:var(--panel)}
+.rd-county-tablewrap{max-height:520px;overflow:auto;border:1px solid var(--hairline);
+  border-radius:12px;background:var(--panel)}
+.rd-county-table{width:100%;border-collapse:collapse;font-family:var(--sans);font-size:13px;
+  table-layout:fixed}
+.rd-county-table thead th{position:sticky;top:0;z-index:1;background:var(--panel2);
+  text-align:left;padding:10px 12px;font-family:var(--mono);font-size:9.5px;font-weight:700;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);
+  border-bottom:1px solid var(--hairline)}
+.rd-county-table th.num,.rd-county-table td.num{text-align:right;font-variant-numeric:tabular-nums}
+.rd-county-table td{padding:10px 12px;border-bottom:1px solid var(--hairline);color:var(--ink);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rd-county-table tbody tr:last-child td{border-bottom:0}
+.rd-county-table tbody tr:hover td{background:var(--panel2)}
+.rd-county-loading{text-align:center;padding:26px 14px;color:var(--ink3);font-style:italic}
+/* inline-flex, not flex: a display:flex <td> stops behaving as a table cell and
+   the columns collapse on top of each other. */
+.rd-cand-cell{display:inline-flex;align-items:baseline;justify-content:flex-end;gap:6px;
+  font-family:var(--mono)}
+.rd-cand-cell b{font-weight:700}
+.rd-cand-votes{color:var(--ink3);font-size:10.5px}
+.rd-cand-tcc{display:inline-block;width:6px;height:6px;border-radius:50%;margin-left:7px;
+  background:var(--gold);vertical-align:middle}
+.rd-county-table tfoot td{position:sticky;bottom:0;z-index:1;background:var(--panel3);
+  padding:12px;border-top:1px solid var(--hairline2);color:var(--ink);font-weight:400}
+.rd-statewide-label{display:flex;flex-direction:column;gap:1px;line-height:1.25}
+.rd-statewide-label strong{font-size:13px;font-weight:700}
+.rd-statewide-label small{font-family:var(--mono);font-size:9.5px;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--ink3)}
+.rd-county-table tfoot .rd-statewide-dim{color:var(--ink2);font-family:var(--mono);font-size:12px}
+.rd-county-table tfoot .rd-cand-cell b{font-size:13px}
+.rd-statewide-margin{font-family:var(--mono);font-size:12px;font-weight:700;white-space:nowrap}
+@media(max-width:900px){
+  .rd-cand-votes{display:none}
+  .fl-county-table{font-size:11.5px}
+  .fl-county-table td,.fl-county-table thead th,.fl-county-table tfoot td{padding:9px 7px}
+}
+
+/* florida choropleth */
+.fl-map-wrap{position:relative;width:100%;height:100%;overflow:hidden;
+  padding:20px 16px;touch-action:none;cursor:grab}
+.fl-map-wrap.dragging{cursor:grabbing}
+.fl-map{display:block;width:100%;height:100%}
+.fl-cty{stroke:var(--map-stroke);stroke-width:.6;cursor:pointer;transition:opacity .12s ease}
+.fl-cty:hover{opacity:.78;stroke:var(--map-stroke-hi);stroke-width:1.4}
+.fl-cty-hatch{pointer-events:none;stroke:none}
+.fl-hatch-line{stroke:var(--map-hatch)}
+.fl-zoom{position:absolute;right:10px;bottom:10px;display:flex;flex-direction:column;gap:1px;
+  border-radius:9px;overflow:hidden;border:1px solid var(--hairline2);background:var(--panel);
+  box-shadow:0 4px 14px rgba(0,0,0,.18)}
+.fl-zoom button{width:30px;height:28px;border:0;background:var(--panel);color:var(--ink2);
+  cursor:pointer;font-family:var(--mono);font-size:14px;line-height:1;font-weight:700;
+  display:grid;place-items:center;transition:background .12s ease,color .12s ease}
+.fl-zoom button+button{border-top:1px solid var(--hairline)}
+.fl-zoom button:hover:not(:disabled){background:var(--panel2);color:var(--ink)}
+.fl-zoom button:disabled{opacity:.4;cursor:default}
+.fl-zoom button.reset{font-size:8px;letter-spacing:.06em}
+.fl-tip{position:absolute;z-index:5;pointer-events:none;min-width:212px;max-width:250px;
+  padding:10px 12px;border-radius:var(--r-card);background:var(--panel);
+  border:1px solid var(--hairline2);box-shadow:var(--tip-shadow);
+  font-family:var(--sans);font-size:12px;color:var(--ink)}
+.fl-tip strong{display:block;font-size:13px;font-weight:800;margin-bottom:6px}
+.fl-tip-row{display:flex;justify-content:space-between;gap:16px;font-family:var(--mono);
+  font-size:11.5px;line-height:1.7}
+.fl-tip-row b{font-variant-numeric:tabular-nums}
+.fl-tip-sub{margin-top:5px;font-family:var(--mono);font-size:9.5px;letter-spacing:.04em;
+  color:var(--ink3)}
+.fl-tip-flag{margin-top:6px;font-family:var(--mono);font-size:8.5px;font-weight:700;
+  letter-spacing:.11em;text-transform:uppercase;color:var(--gold)}
+
+/* scenario engine cta */
+.engine-cta{margin-top:20px;padding:20px;display:flex;justify-content:space-between;
+  align-items:center;gap:24px;flex-wrap:wrap}
+.engine-cta h2{font-size:16px}
+.engine-cta .prose{font-size:12px;color:var(--ink2);margin-top:6px;max-width:620px}
+
+/* slate */
+.board{margin-top:38px}
+.board-head{display:flex;justify-content:space-between;gap:16px;align-items:flex-start;
+  padding-bottom:12px;border-bottom:1px solid var(--hairline2);flex-wrap:wrap}
+.board-head h2{font-size:21px}
+.board-head p{font-size:11.5px;color:var(--ink2);margin-top:4px}
+.board-meta{display:flex;align-items:center;gap:10px}
+.grp{margin-top:22px}
+.grp-hd{display:flex;justify-content:space-between;gap:12px;align-items:baseline;
+  margin-bottom:10px;padding-bottom:5px;border-bottom:1px solid var(--hairline)}
+.grp-hd h3{font-size:14px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(268px,1fr));gap:10px}
+.l4{background:var(--panel);border:1px solid var(--hairline);border-radius:var(--r-card);
+  box-shadow:var(--shadow);padding:12px 13px;display:flex;flex-direction:column;gap:10px;
+  transition:border-color 140ms ease}
+.l4:hover{border-color:var(--hairline2)}
+.l4-hd{display:flex;gap:9px;align-items:flex-start}
+.l4-dot{width:8px;height:8px;border-radius:50%;margin-top:4px;flex:0 0 auto;background:var(--ink3)}
+.l4-dot.d{background:var(--dem)} .l4-dot.r{background:var(--gop)} .l4-dot.n{background:var(--c2)}
+.l4-title{flex:1;min-width:0}
+.l4-title strong{display:block;font-size:13px;font-weight:700;letter-spacing:-.01em}
+.l4-title small{display:block;font-family:var(--mono);font-size:8px;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--ink3);margin-top:2px}
+.l4-called{color:var(--called)}
+.l4-body{display:flex;flex-direction:column;gap:9px}
+.l4-row{display:grid;grid-template-columns:1fr auto;gap:4px 8px}
+.l4-nm{font-size:11.5px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.l4-pct{font-size:12px;font-weight:800}
+.l4-bar{grid-column:1/-1;height:4px;border-radius:99px;background:var(--panel3);overflow:hidden}
+.l4-bar span{display:block;height:100%;border-radius:99px;
+  transition:width 600ms cubic-bezier(.16,1,.3,1)}
+.l4-empty{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--ink3);padding:8px 0}
+.l4-foot{margin-top:auto;padding-top:8px;border-top:1px solid var(--hairline)}
+
+/* method */
+.method{margin-top:38px;padding-top:18px;border-top:1px solid var(--hairline)}
+.method h2{font-size:16px}
+.method .prose{font-size:12px;color:var(--ink2);margin-top:9px;max-width:840px}
+.method-foot{display:flex;justify-content:space-between;gap:14px;margin-top:16px;flex-wrap:wrap}
+
+@media(max-width:640px){
+  .topline-columns,.topline-row-top{grid-template-columns:1fr 70px 58px}
+  .topline-pct{font-size:18px}
+  .projected-bar-row{grid-template-columns:74px 1fr 44px}
+  .projected-bar-delta{display:none}
+  .grid{grid-template-columns:1fr}
+}
+`;
