@@ -344,6 +344,7 @@ export default function Footer() {
               <ThemeToggle />
               <Link href="/contact" className="ft-bottom-link">Contact</Link>
               <Link href="/TermsAndConditions" className="ft-bottom-link">Terms &amp; Conditions</Link>
+              <Link href="/portal/florida-governor" className="ft-bottom-link" rel="nofollow">Portal</Link>
             </div>
           </div>
         </div>

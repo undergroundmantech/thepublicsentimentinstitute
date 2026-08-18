@@ -6,8 +6,8 @@ import { PORTAL_COOKIE, verifySession } from "@/app/lib/portalSession";
  *
  * Credentials live in PORTAL_USER / PORTAL_PASS and are never checked into the
  * repo — set them in .env.local locally and in the Vercel project settings for
- * production. If either is missing the portal refuses to serve rather than
- * falling back to a default, so a misconfigured deploy fails closed.
+ * production. If either is missing there is no fallback default, so a
+ * misconfigured deploy fails closed.
  *
  * Unauthenticated requests are redirected to an ordinary login page rather than
  * answered with a 401 challenge: a WWW-Authenticate response makes the browser
@@ -22,11 +22,18 @@ const HOME = "/portal/florida-governor";
 export async function middleware(req: NextRequest) {
   const { pathname, search } = req.nextUrl;
 
+  // A deploy with no credentials still fails closed — credentialsMatch and
+  // verifySession both refuse without them — but it sends browsers to the login
+  // page to say so, rather than answering a bare 503 that looks like an outage.
   if (!process.env.PORTAL_USER || !process.env.PORTAL_PASS) {
-    return new NextResponse("Portal is not configured.", {
-      status: 503,
-      headers: { "Cache-Control": "no-store" },
-    });
+    if (pathname.startsWith("/api/")) {
+      return NextResponse.json(
+        { ok: false, error: "not_configured" },
+        { status: 503, headers: { "Cache-Control": "no-store" } },
+      );
+    }
+    if (pathname === LOGIN) return NextResponse.next();
+    return NextResponse.redirect(new URL(LOGIN, req.url));
   }
 
   const authed = await verifySession(req.cookies.get(PORTAL_COOKIE)?.value);
