@@ -404,7 +404,14 @@ export default function FloridaBoard({ variant = "board" }: { variant?: "board" 
     };
     return [...all].sort((a, b) => rank(a) - rank(b) || String(a.name).localeCompare(String(b.name)));
   }, [gov, live]);
-  const rep = estRep(gov);
+  // Florida posts its banked mail and early ballots before precincts close out,
+  // so the feed's precinct percentage badly understates how much of the
+  // electorate is already counted — 1.7% of precincts with 460,000 votes in.
+  // EST. REPORTING leads (raceState §2) and is measured against the electorate;
+  // PRECINCTS stays visible next to it as its own labelled number.
+  const precinctRep = estRep(gov);
+  const voteRep = turnoutBasis > 0 ? clampPct((counted(gov) / turnoutBasis) * 100) : 0;
+  const rep = Math.max(precinctRep, voteRep);
   const gated = live && rep < GATE_THRESHOLD_PCT;
   const msLeft = getMsLeftToClose(MODEL.close, now);
 
@@ -439,7 +446,7 @@ export default function FloridaBoard({ variant = "board" }: { variant?: "board" 
 
     return forecastRace({
       race_rule: "PLURALITY",
-      percent_reporting: clampPct(estRep(gov)) / 100,
+      percent_reporting: clampPct(rep) / 100,
       reported_vote_total: total,
       expected_turnout: turnoutBasis,
       reported_share: {
@@ -452,7 +459,7 @@ export default function FloridaBoard({ variant = "board" }: { variant?: "board" 
       // at the poll share forever and never learns from the count.
       poll_avg_shares: POLL_PRIOR,
     });
-  }, [gov, turnoutBasis]);
+  }, [gov, turnoutBasis, rep]);
 
   const call = useMemo(() => evaluateCall(fc, CAND_NAMES), [fc]);
 
@@ -601,6 +608,7 @@ export default function FloridaBoard({ variant = "board" }: { variant?: "board" 
               <div className="meta-block"><span>Last updated</span><b>{stamp}</b></div>
               <div className="meta-block"><span>Reported votes</span><b>{live ? int(counted(gov)) : "0"}</b></div>
               <div className="meta-block"><span>Estimated reporting</span><b>{live ? `${pctLabel(rep)}%` : "0%"}</b></div>
+              <div className="meta-block"><span>Precincts</span><b>{live ? `${pctLabel(precinctRep)}%` : "0%"}</b></div>
               <div className="meta-block"><span>Race status</span><b>{statusCopy}</b></div>
             </div>
           </div>
@@ -932,7 +940,10 @@ export default function FloridaBoard({ variant = "board" }: { variant?: "board" 
             and is far more reliable than any county share.
           </p>
 
-          {swing.countiesReporting > 0 && (
+          {/* Below MIN_NEFF the correction is deliberately doing nothing, and a
+              public panel of zeros reads as a broken model rather than a working
+              one. The portal keeps it at all times — it is a diagnostic there. */}
+          {swing.countiesReporting > 0 && (portal || swing.lambda >= 0.005) && (
             <div className="swing-box">
               <div className="model-label">Statewide swing correction</div>
               <div className="swing-grid">
@@ -959,10 +970,22 @@ export default function FloridaBoard({ variant = "board" }: { variant?: "board" 
               </div>
               <p className="prose">
                 Reporting counties imply a raw swing of{" "}
-                {signed(swing.raw.donalds)} for Donalds. Because the county baselines are
-                over-smoothed, most of an early deviation is baseline error rather than
-                real movement, so only {(swing.lambda * 100).toFixed(0)}% of it is carried
-                to the counties still outstanding.
+                {signed(swing.raw.donalds)} for Donalds.{" "}
+                {swing.lambda < 0.005 ? (
+                  <>
+                    None of it is being carried to the counties still outstanding:{" "}
+                    {swing.countiesReporting === 1 ? "one county" : `${swing.nEff.toFixed(1)} effective counties`}{" "}
+                    is one observation of a statewide swing, which is no evidence of a
+                    statewide swing. The projection is still the pre-election baseline.
+                  </>
+                ) : (
+                  <>
+                    Because the county baselines are over-smoothed, most of an early
+                    deviation is baseline error rather than real movement, so only{" "}
+                    {(swing.lambda * 100).toFixed(0)}% of it is carried to the counties
+                    still outstanding.
+                  </>
+                )}
               </p>
             </div>
           )}
