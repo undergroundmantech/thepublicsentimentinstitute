@@ -554,8 +554,6 @@ export default function FloridaBoard({ variant = "board" }: { variant?: "board" 
             ? "Leaning"
             : STATUS_COPY[rState];
 
-  const swing = counties.swing;
-
   // Ranked by projected Republican primary ballots, not by census population:
   // the ten biggest counties in a closed GOP primary are not the ten biggest
   // counties in Florida, and it is primary ballots that decide this race.
@@ -940,52 +938,33 @@ export default function FloridaBoard({ variant = "board" }: { variant?: "board" 
             and is far more reliable than any county share.
           </p>
 
-          {/* Below MIN_NEFF the correction is deliberately doing nothing, and a
-              public panel of zeros reads as a broken model rather than a working
-              one. The portal keeps it at all times — it is a diagnostic there. */}
-          {swing.countiesReporting > 0 && (portal || swing.lambda >= 0.005) && (
-            <div className="swing-box">
-              <div className="model-label">Statewide swing correction</div>
+          {/* The projection zone carries these while the forecast is live; when it
+              is gated they are still the plainest description of the count. */}
+          {gated && (
+            <div className="mech-box">
+              <div className="model-label">Where the count stands</div>
               <div className="swing-grid">
                 <div>
-                  <span>Counties in estimate</span>
-                  <b>{swing.countiesReporting}</b>
+                  <span>Projected turnout</span>
+                  <b>{int(fc.modeled_total_vote)}</b>
                 </div>
                 <div>
-                  <span>Effective independent</span>
-                  <b>{swing.nEff.toFixed(1)}</b>
+                  <span>Votes counted</span>
+                  <b>{int(counted(gov))}</b>
                 </div>
                 <div>
-                  <span>Weight applied</span>
-                  <b>{(swing.lambda * 100).toFixed(0)}%</b>
+                  <span>Votes remaining</span>
+                  <b>{int(fc.modeled_vote_remaining)}</b>
                 </div>
                 <div>
-                  <span>Applied swing</span>
-                  <b>
-                    {CANDIDATE_ORDER.map(
-                      (k) => `${CANDIDATE_LAST[k].slice(0, 3)} ${signed(swing.applied[k])}`
-                    ).join(" · ")}
-                  </b>
+                  <span>SD of votes</span>
+                  <b>±{int(fc.sd_race)}</b>
                 </div>
               </div>
               <p className="prose">
-                Reporting counties imply a raw swing of{" "}
-                {signed(swing.raw.donalds)} for Donalds.{" "}
-                {swing.lambda < 0.005 ? (
-                  <>
-                    None of it is being carried to the counties still outstanding:{" "}
-                    {swing.countiesReporting === 1 ? "one county" : `${swing.nEff.toFixed(1)} effective counties`}{" "}
-                    is one observation of a statewide swing, which is no evidence of a
-                    statewide swing. The projection is still the pre-election baseline.
-                  </>
-                ) : (
-                  <>
-                    Because the county baselines are over-smoothed, most of an early
-                    deviation is baseline error rather than real movement, so only{" "}
-                    {(swing.lambda * 100).toFixed(0)}% of it is carried to the counties
-                    still outstanding.
-                  </>
-                )}
+                Turnout is projected from ballots already cast, not from precincts
+                closed — Florida reports its banked mail and early vote first, so the
+                precinct count runs far behind the count itself.
               </p>
             </div>
           )}
@@ -1510,14 +1489,14 @@ html[data-theme="dark"] .desk{
 @media(max-width:640px){.rd-map-hint{display:none}}
 .county-caveat{font-size:11.5px;color:var(--ink3);margin-top:14px;max-width:880px}
 
-.swing-box{margin-top:16px;padding:14px;border:1px solid var(--hairline2);
+.swing-box,.mech-box{margin-top:16px;padding:14px;border:1px solid var(--hairline2);
   border-radius:var(--r-card);background:var(--panel2)}
 .swing-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;
   margin-top:10px}
 .swing-grid span{display:block;font-family:var(--mono);font-size:8px;letter-spacing:.11em;
   text-transform:uppercase;color:var(--ink3)}
 .swing-grid b{display:block;font-size:12.5px;font-weight:700;margin-top:3px}
-.swing-box .prose{font-size:11.5px;color:var(--ink2);margin-top:12px;padding-top:10px;
+.swing-box .prose,.mech-box .prose{font-size:11.5px;color:var(--ink2);margin-top:12px;padding-top:10px;
   border-top:1px solid var(--hairline);max-width:820px}
 
 .rd-county{margin-top:22px}
