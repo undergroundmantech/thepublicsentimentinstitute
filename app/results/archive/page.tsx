@@ -15,6 +15,12 @@ export const metadata: Metadata = {
   alternates: { canonical: "https://thepublicsentimentinstitute.com/results/archive" },
 };
 
+/** Nights that have a whole-board archive route, not just per-race pages. */
+const NIGHT_BOARDS: Record<string, string> = {
+  "2026-08-18": "/results/archive/2026-08-18",
+  "2026-08-04": "/results/archive/2026-08-04",
+};
+
 export default function ResultsArchive() {
   return (
     <main style={{ maxWidth: 900, margin: "0 auto", padding: "40px 16px 80px", fontFamily: "var(--font-body)" }}>
@@ -48,8 +54,8 @@ export default function ResultsArchive() {
                   {formatElectionDate(date)}
                 </h2>
                 <div style={{ flex: 1, height: 1, background: "var(--border)" }} />
-                <Link href={getRaceUrl(races[0]?.id ?? 0) ?? `/results?race=${races[0]?.id ?? ""}`} style={{ fontSize: 10, fontWeight: 700, letterSpacing: "0.12em", color: "var(--purple-soft)", textTransform: "uppercase", textDecoration: "none" }}>
-                  Open Dashboard →
+                <Link href={NIGHT_BOARDS[date] ?? getRaceUrl(races[0]?.id ?? 0) ?? `/results?race=${races[0]?.id ?? ""}`} style={{ fontSize: 10, fontWeight: 700, letterSpacing: "0.12em", color: "var(--purple-soft)", textTransform: "uppercase", textDecoration: "none" }}>
+                  {NIGHT_BOARDS[date] ? "Open Night Board →" : "Open Dashboard →"}
                 </Link>
               </div>
               <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))", gap: 8 }}>

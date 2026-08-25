@@ -76,6 +76,21 @@ export const RACE_CAPABILITY_OVERRIDES: Partial<Record<number, Partial<RaceCapab
   // carries the display-side `topFour` flag.
   86863: { tier: 2, raceRule: "PLURALITY" }, // Alaska US Senate Open Primary
   86862: { tier: 2, raceRule: "PLURALITY" }, // Alaska US House At-Large Open Primary
+
+  // August 25, 2026 runoff night. Oklahoma Governor has a county model, but as
+  // with Florida it lives in its own board (app/results/2026-08-25) rather than
+  // RaceDesk, so tier 3 is again the honest flag set. Runoffs are two-candidate
+  // rounds where the winner is simply whoever leads, hence PLURALITY and not
+  // one of the MAJORITY_RUNOFF rules, which describe how a runoff is triggered.
+  87529: { tier: 3, raceRule: "PLURALITY" }, // Oklahoma Governor Republican Runoff
+  // South Carolina publishes a statewide win probability with no poll and no
+  // county model behind it. Tier 3 without countyModel is exactly that claim.
+  87534: { tier: 3, raceRule: "PLURALITY" }, // South Carolina US Senate Special Republican Runoff
+  87530: { tier: 2, raceRule: "PLURALITY" }, // Oklahoma Insurance Commissioner Republican Runoff
+  87531: { tier: 2, raceRule: "PLURALITY" }, // Oklahoma Commissioner of Labor Republican Runoff
+  87532: { tier: 2, raceRule: "PLURALITY" }, // Oklahoma Supt. of Public Instruction Republican Runoff
+  87533: { tier: 2, raceRule: "PLURALITY" }, // Oklahoma US Senate Democratic Runoff
+  87536: { tier: 2, raceRule: "PLURALITY" }, // Georgia US House 13 Runoff
 };
 
 /** Resolves full capabilities for a race: explicit override > tier default > safe fallback (tier 2). */

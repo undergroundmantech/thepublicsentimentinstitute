@@ -1,29 +1,35 @@
 "use client";
 
 /**
- * ELECTION NIGHT BOARD — August 18, 2026 · Florida, Wyoming, Alaska primaries.
+ * ELECTION NIGHT BOARD — August 25, 2026 · Oklahoma, South Carolina, Georgia runoffs.
  *
  * Rendered at two routes from one component:
- *   variant="board" → /results/archive/2026-08-18, headline race plus the full slate
- *   variant="race"  → /results/2026-08-18/florida-governor-republican-primary,
- *                     the Governor primary alone, for search
+ *   variant="board" → /results/tonight, headline race plus the full slate
+ *   variant="race"  → /results/2026-08-25/oklahoma-governor-republican-runoff,
+ *                     the Governor runoff alone, for search
  *
  * STRUCTURE AUTHORITY
- *   The August 4 board (results/archive/2026-08-04). Layout, section order and
- *   component anatomy are inherited unchanged; only the race, the candidate
- *   count and the county engine differ.
+ *   The August 18 Florida board (results/archive/2026-08-18). Layout, section
+ *   order and component anatomy are inherited unchanged.
  *
- * WHY THIS ISN'T THE MICHIGAN BOARD
- *   Four candidates, not two, so the map paints the leader's colour at an
- *   intensity set by their margin instead of a two-way divergent ramp.
- *   And the county engine estimates one shrunk statewide swing rather than
- *   blending each county in isolation — see countyForecast.ts.
+ * WHY THIS ISN'T THE FLORIDA BOARD
+ *   Two candidates, not four, so the county map is a true divergent ramp rather
+ *   than leader-colour-at-intensity. There is no banked-ballot feed for
+ *   Oklahoma, so turnout is a prior throughout. And a second race carries a
+ *   published forecast — South Carolina — with no county model behind it.
+ *
+ * TWO FORECASTS, TWO DIFFERENT THINGS
+ *   Oklahoma has a TPSI poll (n=460, August 21–23) decomposed to 77 counties.
+ *   South Carolina has no poll at all: its win probability is a desk judgement
+ *   and its margin is derived from it. Both are labelled as what they are, and
+ *   the South Carolina panel gets a results-only map because there is no county
+ *   model to draw. Do not paper over that difference.
  *
  * WHERE THE NUMBERS COME FROM
  *   Statewide probability and the race call come from the statewide model, never
- *   from aggregating the 67 county intervals. The county layer exists to say how
- *   much vote is outstanding and where. That distinction is load-bearing; see
- *   the header of _data/flCountyForecast.ts before changing any of it.
+ *   from aggregating the 77 county intervals. The county layer exists to say how
+ *   much vote is outstanding and where. See the header of
+ *   _data/okCountyForecast.ts before changing any of it.
  */
 
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
@@ -34,12 +40,12 @@ import {
   formatCountdown,
   type RaceState,
 } from "../_lib/raceState";
-import FloridaCountyMap, { CAND_CSS } from "./FloridaCountyMap";
-import FloridaCountyTable from "./FloridaCountyTable";
+import OklahomaCountyMap, { CAND_CSS } from "./OklahomaCountyMap";
+import OklahomaCountyTable from "./OklahomaCountyTable";
+import SouthCarolinaCountyMap, { SC_CAND_CSS, type ScLiveCounty } from "./SouthCarolinaCountyMap";
 import { projectCounties, type LiveCounty } from "./countyForecast";
 import {
   CANDIDATE_ORDER,
-  ALL_CANDIDATE_KEYS,
   CANDIDATE_LAST,
   CANDIDATE_NAMES,
   CANDIDATE_MATCH,
@@ -47,112 +53,101 @@ import {
   STATEWIDE_FORECAST,
   TURNOUT_MODEL,
   type CandidateKey,
-} from "../_data/flCountyForecast";
+} from "../_data/okCountyForecast";
+import {
+  SC_CANDIDATE_ORDER,
+  SC_CANDIDATE_LAST,
+  SC_CANDIDATE_MATCH,
+  SC_FORECAST,
+  SC_FORECAST_META,
+  SC_TURNOUT_MODEL,
+} from "../_data/scSenateForecast";
 import { forecastRace, type Shares3 } from "../../lib/electoralModel";
 import { evaluateCall } from "../../lib/raceCall";
-import type { FreshtakePayload } from "../../api/freshtake/route";
 
-const FL_GOV_R = 86349;
+const OK_GOV_R = 87529;
+const SC_SEN_R = 87534;
 const REFRESH_MS = 30_000;
-export const RACE_SLUG = "florida-governor-republican-primary";
+export const RACE_SLUG = "oklahoma-governor-republican-runoff";
 
 /* ═════════════════════ SLATE ═════════════════════ */
 
 interface Entry {
   id: number; state: string; title: string; sub?: string;
-  close: string; final: boolean; topFour?: boolean;
+  close: string; final: boolean;
 }
 
 const STATE_NAME: Record<string, string> = {
-  FL: "Florida", WY: "Wyoming", AK: "Alaska",
+  OK: "Oklahoma", SC: "South Carolina", GA: "Georgia",
 };
-const STATE_ORDER = ["FL", "WY", "AK"] as const;
+const STATE_ORDER = ["OK", "SC", "GA"] as const;
 
-/** Peninsula polls close at 7 ET; the Central-time Panhandle an hour later, so
- *  every statewide Florida race closes at 8 ET. */
-const FL_P = "2026-08-18T19:00:00-04:00";
-const FL_S = "2026-08-18T20:00:00-04:00";
-const WY_C = "2026-08-18T21:00:00-04:00";
-const AK_C = "2026-08-19T00:00:00-04:00";
+/** Oklahoma is entirely on Central time: 7:00 PM CT is 8:00 PM ET, statewide,
+ *  with no split like Florida's Panhandle. South Carolina and Georgia are
+ *  entirely Eastern and close at 7:00 PM ET. */
+const OK_C = "2026-08-25T20:00:00-04:00";
+const SC_C = "2026-08-25T19:00:00-04:00";
+const GA_C = "2026-08-25T19:00:00-04:00";
 
 /**
- * No projection may be published while any Florida poll is still open. The
- * peninsula starts reporting at 7 ET, a full hour before the Panhandle finishes
- * voting, so the count runs ahead of the embargo and the model can reach 3σ
- * before it is allowed to say so. This is a hard floor on top of the 3σ test and
- * the 35% reporting floor in raceCall — never lower it to chase a call. An
- * official AP call is a report of someone else's decision, not ours, and is not
- * embargoed.
+ * No projection may be published while an Oklahoma poll is still open. Unlike
+ * Florida there is no intra-state split, so this is simply the statewide close.
+ * A hard floor on top of the 3σ test and the 35% reporting floor in raceCall —
+ * never lower it to chase a call. An official AP call is a report of someone
+ * else's decision, not ours, and is not embargoed.
  */
-const CALL_EMBARGO_MS = new Date(FL_S).getTime();
+const CALL_EMBARGO_MS = new Date(OK_C).getTime();
 
 /** Reported results only, no model, no projection zone. */
 const SLATE: Entry[] = [
-  { id: 86348, state: "FL", title: "Governor",      sub: "Democratic primary", close: FL_S, final: true },
-  { id: 86440, state: "FL", title: "U.S. Senate",   sub: "Republican primary", close: FL_S, final: true },
-  { id: 86439, state: "FL", title: "U.S. Senate",   sub: "Democratic primary", close: FL_S, final: true },
-  { id: 86417, state: "FL", title: "U.S. House 2",  sub: "Republican primary", close: FL_S, final: true },
-  { id: 86437, state: "FL", title: "U.S. House 7",  sub: "Republican primary", close: FL_P, final: false },
-  { id: 86409, state: "FL", title: "U.S. House 14", sub: "Republican primary", close: FL_P, final: false },
-  { id: 86415, state: "FL", title: "U.S. House 19", sub: "Republican primary", close: FL_P, final: false },
-  { id: 86418, state: "FL", title: "U.S. House 20", sub: "Democratic primary", close: FL_P, final: false },
-  { id: 86425, state: "FL", title: "U.S. House 24", sub: "Democratic primary", close: FL_P, final: false },
-  { id: 86427, state: "FL", title: "U.S. House 25", sub: "Republican primary", close: FL_P, final: false },
+  { id: 87530, state: "OK", title: "Insurance Commissioner", sub: "Republican runoff", close: OK_C, final: true },
+  { id: 87531, state: "OK", title: "Commissioner of Labor", sub: "Republican runoff", close: OK_C, final: true },
+  { id: 87532, state: "OK", title: "Supt. of Public Instruction", sub: "Republican runoff", close: OK_C, final: true },
+  { id: 87533, state: "OK", title: "U.S. Senate", sub: "Democratic runoff", close: OK_C, final: true },
 
-  { id: 86810, state: "WY", title: "U.S. Senate",         sub: "Republican primary", close: WY_C, final: true },
-  { id: 86809, state: "WY", title: "U.S. Senate",         sub: "Democratic primary", close: WY_C, final: true },
-  { id: 86808, state: "WY", title: "U.S. House At-Large", sub: "Republican primary", close: WY_C, final: true },
-  { id: 86807, state: "WY", title: "U.S. House At-Large", sub: "Democratic primary", close: WY_C, final: true },
-
-  // Alaska runs one nonpartisan ballot and advances four to the November RCV
-  // general, so there is no party split and no winner on the night.
-  { id: 86863, state: "AK", title: "U.S. Senate",         sub: "Open primary", close: AK_C, final: true, topFour: true },
-  { id: 86862, state: "AK", title: "U.S. House At-Large", sub: "Open primary", close: AK_C, final: true, topFour: true },
+  { id: 87536, state: "GA", title: "U.S. House 13", sub: "Runoff", close: GA_C, final: true },
 ];
 
-const ALL_IDS = new Set<number>([FL_GOV_R, ...SLATE.map((e) => e.id)]);
+const ALL_IDS = new Set<number>([OK_GOV_R, SC_SEN_R, ...SLATE.map((e) => e.id)]);
 
 /* ═════════════════════ MODEL ═════════════════════ */
 
 const MODEL = {
-  title: "Florida Governor Republican Primary",
-  state: "Florida",
-  close: FL_S,
+  title: "Oklahoma Governor Republican Runoff",
+  state: "Oklahoma",
+  close: OK_C,
   raceRule: FORECAST_META.raceRule,
   deck:
-    "Byron Donalds carries a narrow plurality over James Fishback in the TPSI " +
-    "model, with Jay Collins and Paul Renner holding enough of the vote to decide " +
-    "it. No runoff: whoever finishes first takes the nomination, however small the " +
-    "margin. The Panhandle votes on Central time, so the state does not finish " +
-    "closing until 8:00 PM ET.",
+    "Gentner Drummond and Mike Mazzei finish a runoff neither led outright in June. " +
+    "The TPSI model separates them by less than a point and a half — inside its own " +
+    "margin of error — with Drummond ahead on the strength of rural and western " +
+    "Oklahoma and Mazzei holding the two metros. Whoever finishes first takes the " +
+    "nomination; there is nothing after this.",
   headline:
-    "The model has Donalds ahead by " +
-    `${STATEWIDE_FORECAST.margin.toFixed(1)} points, inside its own margin of error. ` +
-    "His Southwest Gulf base is the largest single block he carries, but Tampa Bay " +
-    "and the I-4 corridor together cast more than a third of the ballots and the " +
-    "model does not separate the field there.",
+    `The model has Drummond ahead by ${STATEWIDE_FORECAST.margin.toFixed(1)} points, ` +
+    "well inside its margin of error. Oklahoma County and Tulsa County together cast " +
+    "under a third of the expected vote and the model has Mazzei narrowly carrying " +
+    "both, which means this is decided in the seventy-five counties outside them.",
 };
 
 /** Fixed to the model prior below — never key off vote rank, which inverts on a
  *  lead change. */
-const CAND_KEYS: Record<"Candidate1" | "Candidate2" | "Candidate3", CandidateKey> = {
-  Candidate1: "donalds",
-  Candidate2: "fishback",
-  Candidate3: "collins",
+const CAND_KEYS: Record<"Candidate1" | "Candidate2", CandidateKey> = {
+  Candidate1: "drummond",
+  Candidate2: "mazzei",
 };
 
 const CAND_NAMES = {
-  Candidate1: CANDIDATE_LAST.donalds,
-  Candidate2: CANDIDATE_LAST.fishback,
-  Candidate3: CANDIDATE_LAST.collins,
+  Candidate1: CANDIDATE_LAST.drummond,
+  Candidate2: CANDIDATE_LAST.mazzei,
+  Candidate3: "—",
 } as const;
 
-/** Renner plus the seven minor candidates. Renner still gets his own column
- *  everywhere it matters; the three-slot engine simply has nowhere to put him. */
+/** A runoff has two names, so the engine's third slot is held at zero. */
 const POLL_PRIOR: Shares3 = {
-  Candidate1: STATEWIDE_FORECAST.donalds / 100,
-  Candidate2: STATEWIDE_FORECAST.fishback / 100,
-  Candidate3: STATEWIDE_FORECAST.collins / 100,
+  Candidate1: STATEWIDE_FORECAST.drummond / 100,
+  Candidate2: STATEWIDE_FORECAST.mazzei / 100,
+  Candidate3: 0,
 };
 
 /**
@@ -164,7 +159,7 @@ const DESK_CALL: { key: CandidateKey; at: string } | null = null;
 /* ═════════════════════ DATA ═════════════════════ */
 
 const SEARCH =
-  "https://civicapi.org/api/v2/race/search?startDate=2026-08-18&endDate=2026-08-18&limit=50000";
+  "https://civicapi.org/api/v2/race/search?startDate=2026-08-25&endDate=2026-08-25&limit=50000";
 
 type Cand = { name?: string; party?: string; votes?: number; percent?: number; winner?: boolean };
 type Race = { id: number; candidates?: Cand[]; percent_reporting?: number };
@@ -203,15 +198,31 @@ function useSlate(enabled: boolean) {
   return { races, updated, stale, refresh: pull };
 }
 
-const EMPTY_VOTES = (): Record<CandidateKey, number> =>
-  ({ donalds: 0, fishback: 0, collins: 0, renner: 0, other: 0 });
+/**
+ * The feed's spelling of a county does not always match the Census spelling our
+ * geometry and forecast are keyed on. Only one collision exists across the two
+ * states on this board, but an unmatched county fails silently — it simply
+ * never appears on the map or in the swing estimate — so it is worth pinning.
+ */
+const COUNTY_ALIASES: Record<string, string> = {
+  LEFLORE: "LE FLORE",   // Oklahoma; Census spells it as two words
+};
 
-/** Florida county returns and the full candidate field from CivicAPI. The
- *  search endpoint behind the slate returns only the top three candidates, and
- *  electionLib's fetchRace caches a race forever, so neither is usable for the
- *  headline race on a live night. This hits the detail endpoint uncached. */
-function useRaceDetail(raceId: number) {
-  const [counties, setCounties] = useState<Record<string, LiveCounty>>({});
+/**
+ * County returns and the full candidate field from CivicAPI. The search endpoint
+ * behind the slate truncates to the top three candidates, and electionLib's
+ * fetchRace memoises a race forever, so neither is usable for a race we are
+ * modelling live. This hits the detail endpoint uncached.
+ *
+ * @param keys   candidate keys to bucket county votes into
+ * @param match  substring identifying each candidate in the feed
+ */
+function useRaceDetail<K extends string>(
+  raceId: number,
+  keys: readonly K[],
+  match: Record<K, string>,
+) {
+  const [counties, setCounties] = useState<Record<string, { votes: Record<K, number>; total: number; reporting: number }>>({});
   const [detail, setDetail] = useState<Race | null>(null);
 
   useEffect(() => {
@@ -222,22 +233,25 @@ function useRaceDetail(raceId: number) {
         const res = await fetch(`https://civicapi.org/api/v2/race/${raceId}`,
                                 { cache: "no-store", signal: ac.signal });
         if (!res.ok) throw new Error(String(res.status));
-        const detail = await res.json();
+        const payload = await res.json();
         if (!alive) return;
-        setDetail(detail?.candidates?.length ? (detail as Race) : null);
-        const rr = detail?.region_results || {};
-        const out: Record<string, LiveCounty> = {};
-        for (const key of Object.keys(rr)) {
-          const r = rr[key];
-          const name = String(r?.name || key).replace(/\s+county$/i, "").trim().toUpperCase();
+        setDetail(payload?.candidates?.length ? (payload as Race) : null);
+        const rr = payload?.region_results || {};
+        const out: Record<string, { votes: Record<K, number>; total: number; reporting: number }> = {};
+        for (const regionKey of Object.keys(rr)) {
+          const r = rr[regionKey];
+          const raw = String(r?.name || regionKey).replace(/\s+county$/i, "").trim().toUpperCase();
+          const name = COUNTY_ALIASES[raw] || raw;
           if (!name) continue;
-          const votes = EMPTY_VOTES();
+          const votes = Object.fromEntries(keys.map((k) => [k, 0])) as Record<K, number>;
           let total = 0;
           for (const c of r?.candidates || []) {
             const n = String(c?.name || "").toLowerCase();
             const v = Number(c.votes) || 0;
-            const hit = CANDIDATE_ORDER.find((k) => n.includes(CANDIDATE_MATCH[k]));
-            votes[hit ?? "other"] += v;
+            const hit = keys.find((k) => n.includes(match[k]));
+            // Votes for anyone we don't recognise still count toward the total,
+            // so a stray write-in cannot inflate either candidate's share.
+            if (hit) votes[hit] += v;
             total += v;
           }
           out[name] = { votes, total, reporting: Number(r?.percent_reporting) || 0 };
@@ -250,35 +264,9 @@ function useRaceDetail(raceId: number) {
     pull();
     const t = setInterval(pull, REFRESH_MS);
     return () => { alive = false; ac.abort(); clearInterval(t); };
-  }, [raceId]);
+  }, [raceId, keys, match]);
 
   return { counties, detail };
-}
-
-/** Banked pre-election ballots by county, via our own /api/freshtake proxy. */
-function useFreshtake(enabled: boolean) {
-  const [data, setData] = useState<FreshtakePayload | null>(null);
-
-  useEffect(() => {
-    if (!enabled) return;
-    let alive = true;
-    const ac = new AbortController();
-    const pull = async () => {
-      try {
-        const r = await fetch("/api/freshtake", { cache: "no-store", signal: ac.signal });
-        const j = (await r.json()) as FreshtakePayload;
-        if (alive) setData(j);
-      } catch {
-        // Keep the last good payload; the panel renders its own stale notice.
-      }
-    };
-    pull();
-    // Banked turnout moves in daily batches, not by the minute.
-    const t = setInterval(pull, 5 * 60_000);
-    return () => { alive = false; ac.abort(); clearInterval(t); };
-  }, [enabled]);
-
-  return data;
 }
 
 function useNow(ms = 1000) {
@@ -320,6 +308,8 @@ const int = (n?: number) => Math.round(Number(n) || 0).toLocaleString("en-US");
 const pctLabel = (p: number) =>
   p >= 99.95 && p < 100 ? ">99" : p > 0 && p < 0.05 ? "<1" : p.toFixed(1);
 
+const signed = (n: number) => `${n >= 0 ? "+" : "−"}${Math.abs(n).toFixed(1)}`;
+
 const partyOf = (p?: string) => {
   const s = String(p || "").toLowerCase();
   if (/democr/.test(s)) return "d";
@@ -341,12 +331,18 @@ const tone = (i: number, party?: string) => {
   return "var(--ink3)";
 };
 
-/** Everyone in the headline race is a Republican, so party colour carries no
- *  information. Colour the modelled four and grey out the rest of the field. */
-const govTone = (c: Cand) => {
+/** Both runoff candidates are Republicans, so party colour carries no
+ *  information. Colour by identity, never by vote rank — rank inverts on a
+ *  lead change and would swap the colours out from under the map. */
+const identityTone = <K extends string>(
+  c: Cand,
+  keys: readonly K[],
+  match: Record<K, string>,
+  css: Record<K, string>,
+) => {
   const n = String(c.name || "").toLowerCase();
-  const k = CANDIDATE_ORDER.find((key) => n.includes(CANDIDATE_MATCH[key]));
-  return k ? CAND_CSS[k] : "var(--k5)";
+  const k = keys.find((key) => n.includes(match[key]));
+  return k ? css[k] : "var(--k5)";
 };
 
 const closeAt = (e: { close: string; final: boolean }) => {
@@ -355,6 +351,15 @@ const closeAt = (e: { close: string; final: boolean }) => {
   });
   return `${e.final ? "Final close" : "Close"} ${t} ET`;
 };
+
+/** Standard normal CDF, Abramowitz & Stegun 26.2.17. */
+function phi(z: number): number {
+  const t = 1 / (1 + 0.2316419 * Math.abs(z));
+  const d = 0.3989422804014327 * Math.exp(-(z * z) / 2);
+  const p = d * t * (0.319381530 + t * (-0.356563782 + t * (1.781477937 +
+            t * (-1.821255978 + t * 1.330274429))));
+  return z >= 0 ? 1 - p : p;
+}
 
 /** Sentence-case status, matching the prototype's race-meta block. */
 const STATUS_COPY: Record<RaceState, string> = {
@@ -367,33 +372,35 @@ const STATUS_COPY: Record<RaceState, string> = {
 
 /* ═════════════════════ BOARD ═════════════════════ */
 
-export default function FloridaBoard({ variant = "board" }: { variant?: "board" | "race" | "portal" }) {
+export default function OklahomaBoard({ variant = "board" }: { variant?: "board" | "race" }) {
   const full = variant === "board";
-  const portal = variant === "portal";
   const { races, updated, stale, refresh } = useSlate(true);
   const now = useNow();
   const [mapMode, setMapMode] = useState<"margin" | "turnout">("margin");
   const [countyView, setCountyView] = useState<"forecast" | "results">("forecast");
-  const { counties: liveCounties, detail: govDetail } = useRaceDetail(FL_GOV_R);
-  const banked = useFreshtake(true);
 
-  // Measured Republican ballots cast beats our registration-and-history prior:
-  // it is the actual size of the electorate this race is being decided by. The
-  // prior is only a fallback for when the turnout feed is down.
-  const bankedRep = banked?.ok ? banked.statewide?.rep ?? 0 : 0;
-  const turnoutBasis = bankedRep > 0 ? bankedRep : TURNOUT_MODEL.projected;
-  const turnoutMeasured = bankedRep > 0;
+  const { counties: liveCountiesRaw, detail: govDetail } =
+    useRaceDetail(OK_GOV_R, CANDIDATE_ORDER, CANDIDATE_MATCH);
+  const { counties: scCounties, detail: scDetail } =
+    useRaceDetail(SC_SEN_R, SC_CANDIDATE_ORDER, SC_CANDIDATE_MATCH);
+
+  const liveCounties = liveCountiesRaw as Record<string, LiveCounty>;
+
+  // No banked-ballot feed exists for Oklahoma the way Fresh Take covers Florida,
+  // so turnout stays a registration-and-history prior all night.
+  const turnoutBasis = TURNOUT_MODEL.projected;
 
   // The detail payload carries the whole field; the slate entry carries the
   // registry fields the detail endpoint omits. Detail wins where they overlap.
   const gov = useMemo(() => {
-    const base = races[FL_GOV_R];
+    const base = races[OK_GOV_R];
     if (!govDetail) return base;
-    return { ...(base ?? { id: FL_GOV_R }), ...govDetail } as Race;
+    return { ...(base ?? { id: OK_GOV_R }), ...govDetail } as Race;
   }, [races, govDetail]);
   const live = isLive(gov);
-  // Before any votes land every candidate is on zero, so the feed's own order is
-  // arbitrary. Rank the modelled four first, then the rest of the field.
+
+  // Before any votes land both candidates are on zero, so the feed's own order
+  // is arbitrary. Rank by the model prior instead.
   const cands = useMemo(() => {
     const all = sortC(gov);
     if (live) return all;
@@ -404,11 +411,11 @@ export default function FloridaBoard({ variant = "board" }: { variant?: "board" 
     };
     return [...all].sort((a, b) => rank(a) - rank(b) || String(a.name).localeCompare(String(b.name)));
   }, [gov, live]);
-  // Florida posts its banked mail and early ballots before precincts close out,
-  // so the feed's precinct percentage badly understates how much of the
-  // electorate is already counted — 1.7% of precincts with 460,000 votes in.
-  // EST. REPORTING leads (raceState §2) and is measured against the electorate;
-  // PRECINCTS stays visible next to it as its own labelled number.
+
+  // Oklahoma counts its absentee and early-voting boards before precincts close
+  // out, so the feed's precinct percentage understates how much of the
+  // electorate is already counted. EST. REPORTING leads (raceState §2) and is
+  // measured against the electorate; PRECINCTS stays visible as its own number.
   const precinctRep = estRep(gov);
   const voteRep = turnoutBasis > 0 ? clampPct((counted(gov) / turnoutBasis) * 100) : 0;
   const rep = Math.max(precinctRep, voteRep);
@@ -425,12 +432,11 @@ export default function FloridaBoard({ variant = "board" }: { variant?: "board" 
         key: st,
         label: STATE_NAME[st],
         races: SLATE.filter((e) => e.state === st),
-      })),
-    []
+      })).filter((g) => g.races.length > 0),
+    [],
   );
 
-  const leadGap =
-    live && cands.length > 1 ? (cands[0].votes || 0) - (cands[1].votes || 0) : 0;
+  const leadGap = live && cands.length > 1 ? (cands[0].votes || 0) - (cands[1].votes || 0) : 0;
   const leadMarginPP =
     live && cands.length > 1 ? share(cands[0], cands) - share(cands[1], cands) : 0;
 
@@ -450,9 +456,9 @@ export default function FloridaBoard({ variant = "board" }: { variant?: "board" 
       reported_vote_total: total,
       expected_turnout: turnoutBasis,
       reported_share: {
-        Candidate1: total ? votesFor(CANDIDATE_MATCH.donalds) / total : 0,
-        Candidate2: total ? votesFor(CANDIDATE_MATCH.fishback) / total : 0,
-        Candidate3: total ? votesFor(CANDIDATE_MATCH.collins) / total : 0,
+        Candidate1: total ? votesFor(CANDIDATE_MATCH.drummond) / total : 0,
+        Candidate2: total ? votesFor(CANDIDATE_MATCH.mazzei) / total : 0,
+        Candidate3: 0,
       },
       expected_share: POLL_PRIOR,
       // Required. Without it the projection allocates every outstanding ballot
@@ -465,53 +471,56 @@ export default function FloridaBoard({ variant = "board" }: { variant?: "board" 
 
   const counties = useMemo(
     () => projectCounties(liveCounties, fc.modeled_total_vote),
-    [liveCounties, fc.modeled_total_vote]
+    [liveCounties, fc.modeled_total_vote],
   );
 
-  // The four-way projected result is the county roll-up: it is the only place
-  // Renner exists as his own quantity, and it carries the shrunk swing.
+  // The projected result is the county roll-up: it carries the shrunk swing.
   const projected = counties.statewide;
   const ranked = useMemo(
     () =>
       CANDIDATE_ORDER.map((k) => ({ k, share: projected.shares[k] })).sort(
-        (a, b) => b.share - a.share
+        (a, b) => b.share - a.share,
       ),
-    [projected]
+    [projected],
   );
   const leaderKey = ranked[0].k;
   const marginPP = ranked[0].share - ranked[1].share;
   const modeledRep = fc.modeled_percent_reporting * 100;
 
-  // The margin is a difference of two vote totals, so its sd is sd_race·√2.
-  const marginSdPP =
-    fc.modeled_total_vote > 0
-      ? ((fc.sd_race * Math.SQRT2) / fc.modeled_total_vote) * 100
-      : STATEWIDE_FORECAST.marginSd;
+  /**
+   * Margin uncertainty contracts with the pool of outstanding vote, anchored to
+   * the published pre-election SD. The generic statewide engine carries an sd
+   * calibrated for multi-candidate primaries; in a two-way runoff it is roughly
+   * two and a half times too wide at the start, which would show a probability
+   * that jumps the moment the first vote lands. Scaling the published SD by
+   * √(1 − reported) is the same form the county intervals already use, so the
+   * board is internally consistent and continuous from prior to final count.
+   */
+  const marginSdPP = Math.max(
+    STATEWIDE_FORECAST.marginSd * Math.sqrt(Math.max(0, 1 - fc.modeled_percent_reporting)),
+    0.1,
+  );
   const marginLo = marginPP - 2 * marginSdPP;
   const marginHi = marginPP + 2 * marginSdPP;
-  const signed = (n: number) => `${n >= 0 ? "+" : "−"}${Math.abs(n).toFixed(1)}`;
 
   const winProb = useMemo(() => {
-    const odds = fc.plurality_odds_to_win;
-    const byKey: Record<string, number> = {
-      donalds: odds.Candidate1 * 100,
-      fishback: odds.Candidate2 * 100,
-      collins: odds.Candidate3 * 100,
-    };
     // Before any votes land the engine has nothing to add to the published
     // simulation, so show the published simulation rather than a re-derivation.
     if (!live) {
       return {
-        donalds: STATEWIDE_FORECAST.winProbability.donalds,
-        fishback: STATEWIDE_FORECAST.winProbability.fishback,
-        collins: STATEWIDE_FORECAST.winProbability.collins,
-      } as Record<string, number>;
+        drummond: STATEWIDE_FORECAST.winProbability.drummond,
+        mazzei: STATEWIDE_FORECAST.winProbability.mazzei,
+      } as Record<CandidateKey, number>;
     }
-    return byKey;
-  }, [fc, live]);
+    const pLeader = phi(marginPP / marginSdPP) * 100;
+    return {
+      [leaderKey]: pLeader,
+      [ranked[1].k]: 100 - pLeader,
+    } as Record<CandidateKey, number>;
+  }, [live, marginPP, marginSdPP, leaderKey, ranked]);
 
   const embargoLifted = now >= CALL_EMBARGO_MS;
-  // Would call on the numbers alone, but the Panhandle is still voting.
+  // Would call on the numbers alone, but Oklahoma is still voting.
   const embargoed = live && !embargoLifted && call.verdict === "CALLABLE";
 
   const deskCalled = DESK_CALL !== null && live && embargoLifted;
@@ -536,8 +545,8 @@ export default function FloridaBoard({ variant = "board" }: { variant?: "board" 
     : embargoed
       ? `${CAND_NAMES[call.leader as keyof typeof CAND_NAMES] ?? CANDIDATE_LAST[leaderKey]} ` +
         `leads by ${int(leadGap)} votes, far enough ahead that the model would call it. ` +
-        `Panhandle polls do not close until 8:00 PM ET, in ${formatCountdown(msLeft)}, and ` +
-        `TPSI publishes no projection while any Florida voter is still in line.`
+        `Oklahoma polls do not close until 8:00 PM ET, in ${formatCountdown(msLeft)}, and ` +
+        `TPSI publishes no projection while any Oklahoma voter is still in line.`
       : live
         ? call.line
         : MODEL.headline;
@@ -554,22 +563,36 @@ export default function FloridaBoard({ variant = "board" }: { variant?: "board" 
             ? "Leaning"
             : STATUS_COPY[rState];
 
-  // Ranked by projected Republican primary ballots, not by census population:
-  // the ten biggest counties in a closed GOP primary are not the ten biggest
-  // counties in Florida, and it is primary ballots that decide this race.
-  const topTen = useMemo(
-    () => [...counties.list].sort((a, b) => b.projectedTurnout - a.projectedTurnout).slice(0, 10),
-    [counties.list],
-  );
+  /* ── South Carolina ── */
 
-  // Banked ballots keyed the same way the projection list is, so the two join.
-  const bankedByCounty = useMemo(() => {
-    const m = new Map<string, number>();
-    for (const c of banked?.counties ?? []) {
-      m.set(c.county.replace(/\s+county$/i, "").trim().toUpperCase(), c.rep);
-    }
-    return m;
-  }, [banked]);
+  const sc = useMemo(() => {
+    const base = races[SC_SEN_R];
+    if (!scDetail) return base;
+    return { ...(base ?? { id: SC_SEN_R }), ...scDetail } as Race;
+  }, [races, scDetail]);
+  const scLive = isLive(sc);
+  const scCands = useMemo(() => {
+    const all = sortC(sc);
+    if (scLive) return all;
+    const rank = (c: Cand) => {
+      const n = String(c.name || "").toLowerCase();
+      const i = SC_CANDIDATE_ORDER.findIndex((k) => n.includes(SC_CANDIDATE_MATCH[k]));
+      return i === -1 ? SC_CANDIDATE_ORDER.length : i;
+    };
+    return [...all].sort((a, b) => rank(a) - rank(b) || String(a.name).localeCompare(String(b.name)));
+  }, [sc, scLive]);
+  const scCounted = counted(sc);
+  const scRep = Math.max(
+    estRep(sc),
+    SC_TURNOUT_MODEL.projected > 0
+      ? clampPct((scCounted / SC_TURNOUT_MODEL.projected) * 100)
+      : 0,
+  );
+  const scMsLeft = getMsLeftToClose(SC_C, now);
+  const scCountiesReporting = useMemo(
+    () => Object.values(scCounties).filter((c) => c.total > 0).length,
+    [scCounties],
+  );
 
   return (
     <div className="desk">
@@ -579,25 +602,15 @@ export default function FloridaBoard({ variant = "board" }: { variant?: "board" 
 
         {/* ═══ RACE HEADER ═══ */}
         <section className="race-header" id="overview" aria-labelledby="race-title">
-          {portal ? (
-            <div className="archive-banner portal-banner">
-              <span>Internal · not for publication</span>
-              <a href="/results/archive/2026-08-18">Public board →</a>
-            </div>
-          ) : full ? (
+          {!full && (
             <div className="archive-banner">
-              <span>Archived · August 18, 2026</span>
-              <a href="/results/tonight">Back to elections →</a>
-            </div>
-          ) : (
-            <div className="archive-banner">
-              <span>Archived · August 18, 2026</span>
-              <a href="/results/archive/2026-08-18">Full election night board →</a>
+              <span>August 25, 2026</span>
+              <a href="/results/tonight">Full election night board →</a>
             </div>
           )}
           <div className="race-kicker">
             {live && rState !== "OFFICIAL" && <span className="live-dot" aria-hidden />}
-            <span>{MODEL.state} primary · August 18</span>
+            <span>{MODEL.state} runoff · August 25</span>
             <span>•</span>
             <span>Statewide forecast · county projection</span>
           </div>
@@ -620,7 +633,7 @@ export default function FloridaBoard({ variant = "board" }: { variant?: "board" 
             <a href="#overview" aria-current="page">Overview</a>
             <a href="#forecast">Forecast</a>
             <a href="#counties">Counties</a>
-            {portal && <a href="#tracker">Tracker</a>}
+            <a href="#south-carolina">South Carolina</a>
             {full && <a href="#board">All races</a>}
             <a href="#method">Method</a>
           </nav>
@@ -650,18 +663,18 @@ export default function FloridaBoard({ variant = "board" }: { variant?: "board" 
                 <>
                   {!live && (
                     <p className="prose empty-note">
-                      Polls close at 7:00 PM ET in the peninsula and 8:00 PM ET in the
-                      Panhandle, in {formatCountdown(msLeft)}. The full field is listed
-                      below and fills in automatically as votes are counted.
+                      Oklahoma votes on Central time, so polls close statewide at 8:00 PM ET,
+                      in {formatCountdown(msLeft)}. Both candidates are listed below and
+                      fill in automatically as votes are counted.
                     </p>
                   )}
                   {cands.map((c, i) => {
                     const p = share(c, cands);
-                    const col = govTone(c);
+                    const col = identityTone(c, CANDIDATE_ORDER, CANDIDATE_MATCH, CAND_CSS);
                     const isProjected =
                       !c.winner &&
                       projectedKey !== null &&
-                      String(c.name || "").toLowerCase().includes(CANDIDATE_MATCH[projectedKey as Exclude<CandidateKey, "other">] ?? "\u0000");
+                      String(c.name || "").toLowerCase().includes(CANDIDATE_MATCH[projectedKey]);
                     return (
                       <div className="topline-row" key={c.name || i}>
                         <div className="topline-row-top">
@@ -692,9 +705,9 @@ export default function FloridaBoard({ variant = "board" }: { variant?: "board" 
               ) : (
                 <div className="empty-live">
                   <p className="prose">
-                    Waiting on the first candidate list from the feed. Florida&rsquo;s
-                    Panhandle counties vote on Central time, so the state finishes closing
-                    at 8:00 PM ET, in {formatCountdown(msLeft)}.
+                    Waiting on the first candidate list from the feed. Oklahoma votes on
+                    Central time, so the state closes at 8:00 PM ET, in{" "}
+                    {formatCountdown(msLeft)}.
                   </p>
                 </div>
               )}
@@ -728,9 +741,9 @@ export default function FloridaBoard({ variant = "board" }: { variant?: "board" 
                 <div className="gatebox">
                   <div className="model-label">Forecast gated</div>
                   <p className="prose">
-                    Held back below {GATE_THRESHOLD_PCT}% estimated reporting. Florida
-                    releases its {int(TURNOUT_MODEL.bankedBallots)} banked mail and early
-                    ballots first, and that pool is not a random sample of the electorate.
+                    Held back below {GATE_THRESHOLD_PCT}% estimated reporting. Oklahoma
+                    counties post their absentee and early-voting boards first, and that
+                    pool is not a random sample of the electorate.
                   </p>
                 </div>
               ) : (
@@ -754,26 +767,19 @@ export default function FloridaBoard({ variant = "board" }: { variant?: "board" 
                   <div className="forecast-support">
                     <div>
                       <div className="model-label">Top outcomes</div>
-                      {(["donalds", "fishback", "collins"] as CandidateKey[]).map((k) => (
+                      {CANDIDATE_ORDER.map((k) => (
                         <div className="outcome-row" key={k}>
                           <i style={{ background: CAND_CSS[k] }} aria-hidden />
                           <span>{CANDIDATE_LAST[k]} wins</span>
                           <b>{pctLabel(winProb[k] ?? 0)}%</b>
                         </div>
                       ))}
-                      {/* Residual normalizes, never a separate comeback number */}
+                      {/* A runoff has two names and no residual: the two
+                          probabilities are complementary by construction. */}
                       <div className="outcome-row muted">
                         <i style={{ background: "var(--ink3)" }} aria-hidden />
-                        <span>Other outcomes</span>
-                        <b>
-                          {(() => {
-                            const r = Math.max(
-                              0,
-                              100 - (winProb.donalds ?? 0) - (winProb.fishback ?? 0) - (winProb.collins ?? 0)
-                            );
-                            return r < 0.05 ? "<1" : pctLabel(r);
-                          })()}%
-                        </b>
+                        <span>No third option</span>
+                        <b>—</b>
                       </div>
                     </div>
 
@@ -822,7 +828,7 @@ export default function FloridaBoard({ variant = "board" }: { variant?: "board" 
                     <small>
                       Muted bars indicate a forecast, not certified results. They use
                       the same 0 to 100% scale as the reported-results bars, and are
-                      the sum of all 67 county projections.
+                      the sum of all 77 county projections.
                     </small>
                   </div>
                   <span className="model-label">Forecast only</span>
@@ -831,7 +837,7 @@ export default function FloridaBoard({ variant = "board" }: { variant?: "board" 
                 <div className="projected-bars">
                   {ranked.map(({ k, share: s }) => {
                     const liveCand = cands.find((x) =>
-                      String(x.name || "").toLowerCase().includes(CANDIDATE_MATCH[k as Exclude<CandidateKey, "other">])
+                      String(x.name || "").toLowerCase().includes(CANDIDATE_MATCH[k]),
                     );
                     const actual = live && liveCand ? share(liveCand, cands) : null;
                     const delta = actual != null ? s - actual : null;
@@ -860,7 +866,7 @@ export default function FloridaBoard({ variant = "board" }: { variant?: "board" 
                 <div className="model-stats">
                   <div><span>Projected turnout</span><b>{int(fc.modeled_total_vote)}</b></div>
                   <div><span>Votes remaining</span><b>{int(fc.modeled_vote_remaining)}</b></div>
-                  <div><span>SD of votes</span><b>±{int(fc.sd_race)}</b></div>
+                  <div><span>Margin SD</span><b>±{marginSdPP.toFixed(1)} pts</b></div>
                   <div>
                     <span>Margin range (95%)</span>
                     <b>{signed(marginLo)} to {signed(marginHi)}</b>
@@ -875,7 +881,7 @@ export default function FloridaBoard({ variant = "board" }: { variant?: "board" 
 
         {/* ═══ COUNTY BOARD ═══ */}
         <section id="counties" className="county card"
-                 aria-label="Florida county map and county-by-county detail">
+                 aria-label="Oklahoma county map and county-by-county detail">
           <div className="county-head">
             <div className="rd-view-toggles" role="group" aria-label="County view">
               <button type="button" className={countyView === "forecast" ? "on" : ""}
@@ -894,8 +900,8 @@ export default function FloridaBoard({ variant = "board" }: { variant?: "board" 
           </div>
 
           <div className="rd-map">
-            <FloridaCountyMap view={countyView} mode={mapMode}
-                              counties={counties.byName} liveCounties={liveCounties} />
+            <OklahomaCountyMap view={countyView} mode={mapMode}
+                               counties={counties.byName} liveCounties={liveCounties} />
             {countyView === "results" && !live && (
               // An all-grey map is the honest rendering of zero returns, but it reads
               // as a broken map unless we say so.
@@ -918,6 +924,8 @@ export default function FloridaBoard({ variant = "board" }: { variant?: "board" 
               </>
             ) : (
               <>
+                <span className="rd-map-legend-sw"
+                      style={{ background: "linear-gradient(90deg,#134453,var(--ramp-mid),#6e241d)" }} />
                 {CANDIDATE_ORDER.map((k) => (
                   <span className="rd-key" key={k}>
                     <i style={{ background: CAND_CSS[k] }} aria-hidden />
@@ -925,7 +933,7 @@ export default function FloridaBoard({ variant = "board" }: { variant?: "board" 
                   </span>
                 ))}
                 <span className="rd-map-legend-note">
-                  fill = leader · depth = margin
+                  depth = margin
                   {countyView === "forecast" && " · hatched = too close to call"}
                 </span>
               </>
@@ -935,12 +943,12 @@ export default function FloridaBoard({ variant = "board" }: { variant?: "board" 
 
           <p className="county-caveat prose">
             County projections are demographic estimates, not local polling:{" "}
-            {FORECAST_META.interviewsReported} interviews across 67 counties, a median of
-            three per county, and{" "}
-            {FORECAST_META.countiesTooCloseToCall} of 67 with a 90% interval that crosses
-            zero. We do not call counties. They are here to show where the outstanding
-            vote sits — projected turnout is drawn from registration and past primaries,
-            and is far more reliable than any county share.
+            {FORECAST_META.interviewsReported} interviews across {FORECAST_META.countyCount}{" "}
+            counties, a median of three per county, and{" "}
+            {FORECAST_META.countiesTooCloseToCall} of {FORECAST_META.countyCount} with a 90%
+            interval that crosses zero. We do not call counties. They are here to show where
+            the outstanding vote sits — projected turnout is drawn from registration and
+            past runoffs, and is far more reliable than any county share.
           </p>
 
           {/* The projection zone carries these while the forecast is live; when it
@@ -949,138 +957,158 @@ export default function FloridaBoard({ variant = "board" }: { variant?: "board" 
             <div className="mech-box">
               <div className="model-label">Where the count stands</div>
               <div className="swing-grid">
-                <div>
-                  <span>Projected turnout</span>
-                  <b>{int(fc.modeled_total_vote)}</b>
-                </div>
-                <div>
-                  <span>Votes counted</span>
-                  <b>{int(counted(gov))}</b>
-                </div>
-                <div>
-                  <span>Votes remaining</span>
-                  <b>{int(fc.modeled_vote_remaining)}</b>
-                </div>
-                <div>
-                  <span>SD of votes</span>
-                  <b>±{int(fc.sd_race)}</b>
-                </div>
+                <div><span>Projected turnout</span><b>{int(fc.modeled_total_vote)}</b></div>
+                <div><span>Votes counted</span><b>{int(counted(gov))}</b></div>
+                <div><span>Votes remaining</span><b>{int(fc.modeled_vote_remaining)}</b></div>
+                <div><span>Margin SD</span><b>±{marginSdPP.toFixed(1)} pts</b></div>
               </div>
               <p className="prose">
-                Turnout is projected from ballots already cast, not from precincts
-                closed — Florida reports its banked mail and early vote first, so the
-                precinct count runs far behind the count itself.
+                Turnout is projected from ballots already cast, not from precincts closed —
+                counties post their absentee and early-voting boards first, so the precinct
+                count runs behind the count itself.
               </p>
             </div>
           )}
 
-          <FloridaCountyTable view={countyView} counties={counties.list}
-                              statewide={counties.statewide} liveCounties={liveCounties} />
+          <OklahomaCountyTable view={countyView} counties={counties.list}
+                               statewide={counties.statewide} liveCounties={liveCounties} />
         </section>
 
-        {/* ═══ PORTAL: BANKED VOTE + TOP TEN ═══ */}
-        {portal && (
-          <section id="tracker" className="portal-zone" aria-label="Expanded county tracker">
-
-            <div className="card portal-banked">
-              <div className="portal-head">
-                <div>
-                  <h2>Republican ballots cast</h2>
-                  <p className="prose">
-                    Turnout from Fresh Take Florida: vote-by-mail and early votes, plus
-                    election-day in-person once polls open. Florida primaries are closed,
-                    so the Republican column is the universe for this race. These are
-                    ballots cast, not results — no candidate preference is in this number.
-                  </p>
-                </div>
-                {banked?.ok && (
-                  <span className="model-label">
-                    {int(bankedRep)} R cast · {signed(bankedRep - TURNOUT_MODEL.projected)} vs
-                    prior
-                  </span>
-                )}
+        {/* ═══ SOUTH CAROLINA ═══ */}
+        <section id="south-carolina" className="card sc-zone"
+                 aria-labelledby="sc-title">
+          <div className="sc-head">
+            <div>
+              <div className="race-kicker">
+                {scLive && <span className="live-dot" aria-hidden />}
+                <span>South Carolina · August 25</span>
+                <span>•</span>
+                <span>Statewide forecast · no county model</span>
               </div>
-
-              {banked === null ? (
-                <p className="prose portal-note">Loading turnout…</p>
-              ) : !banked.ok ? (
-                <p className="prose portal-note">
-                  Turnout feed unavailable ({banked.error}). The board falls back to its
-                  own registration-and-history turnout prior of{" "}
-                  {int(TURNOUT_MODEL.projected)}.
-                </p>
-              ) : (
-                <div className="portal-banked-grid">
-                  <div><span>R ballots cast</span><b>{int(banked.statewide!.rep)}</b></div>
-                  <div><span>D ballots cast</span><b>{int(banked.statewide!.dem)}</b></div>
-                  <div><span>Pre-election prior</span><b>{int(TURNOUT_MODEL.projected)}</b></div>
-                  <div>
-                    <span>Prior error</span>
-                    <b>{signed(bankedRep - TURNOUT_MODEL.projected)}</b>
-                  </div>
-                </div>
-              )}
-            </div>
-
-            <div className="card portal-top10">
-              <div className="portal-head">
-                <div>
-                  <h2>Ten largest counties</h2>
-                  <p className="prose">
-                    Ranked by projected Republican primary ballots, not census population —
-                    in a closed primary those are different lists. Together these carry{" "}
-                    {pctLabel(
-                      (topTen.reduce((s, c) => s + c.projectedTurnout, 0) /
-                        Math.max(counties.statewide.projectedTurnout, 1)) * 100,
-                    )}
-                    % of the expected vote, so they decide the race and they are where a
-                    surprise would show up first.
-                  </p>
-                </div>
-              </div>
-
-              <div className="portal-top10-head" aria-hidden>
-                <span>County</span><span>Projected</span><span>R cast</span>
-                <span>Counted</span><span>Reporting</span><span>Projection</span>
-              </div>
-
-              {topTen.map((c) => {
-                const bank = bankedByCounty.get(c.name.toUpperCase());
-                const lead = CANDIDATE_LAST[c.leader];
-                return (
-                  <div className="portal-row" key={c.fips}>
-                    <div className="portal-row-name">
-                      <strong>{c.name}</strong>
-                      <small>{c.region}</small>
-                    </div>
-                    <div className="num">{int(c.projectedTurnout)}</div>
-                    <div className="num">{bank === undefined ? "—" : int(bank)}</div>
-                    <div className="num">{c.reportedVotes > 0 ? int(c.reportedVotes) : "—"}</div>
-                    <div className="num">{c.reporting > 0 ? `${pctLabel(c.reporting)}%` : "—"}</div>
-                    <div className="portal-row-proj">
-                      <span className="portal-chip" style={{ background: CAND_CSS[c.leader] }} />
-                      <span>
-                        {c.tooCloseToCall ? "Too close" : `${lead} +${c.margin.toFixed(1)}`}
-                      </span>
-                    </div>
-                    <div className="portal-bar" aria-hidden>
-                      {ALL_CANDIDATE_KEYS.map((k) => (
-                        <span key={k}
-                              style={{ width: `${c.shares[k]}%`, background: CAND_CSS[k] }} />
-                      ))}
-                    </div>
-                  </div>
-                );
-              })}
-
-              <p className="prose portal-note">
-                County projections carry almost no local sample and we never call a county.
-                The R cast column is measured turnout; the Projection column is modelled.
-                When they disagree, believe the measured column.
+              <h2 id="sc-title">U.S. Senate Special Republican Runoff</h2>
+              <p className="prose sc-deck">
+                TPSI gives {SC_CANDIDATE_LAST.graham} a{" "}
+                {SC_FORECAST.winProbability.graham.toFixed(0)}% chance of winning the
+                nomination. <strong>There is no TPSI poll of this runoff.</strong> That
+                probability is a desk judgement from the first round, the endorsements
+                since, and how runoff electorates have behaved here before — not a survey.
+                The margin below is derived from the probability, not measured.
               </p>
             </div>
-          </section>
-        )}
+            <div className="sc-prob">
+              <div className="model-label">Win probability</div>
+              <div className="prob-ring sm"
+                   style={{
+                     ["--value" as string]: SC_FORECAST.winProbability.graham,
+                     ["--ring" as string]: SC_CAND_CSS.graham,
+                   } as React.CSSProperties}
+                   role="img"
+                   aria-label={`Win probability: ${SC_CANDIDATE_LAST.graham} ${SC_FORECAST.winProbability.graham} percent`}>
+                <div className="ring-center">
+                  <b>{SC_FORECAST.winProbability.graham.toFixed(0)}%</b>
+                  <span>{SC_CANDIDATE_LAST.graham}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="sc-grid">
+            <div className="sc-col">
+              <div className="model-label">Reported results</div>
+              {scCands.length > 0 ? (
+                scCands.map((c, i) => {
+                  const p = share(c, scCands);
+                  const col = identityTone(c, SC_CANDIDATE_ORDER, SC_CANDIDATE_MATCH, SC_CAND_CSS);
+                  return (
+                    <div className="topline-row" key={c.name || i}>
+                      <div className="topline-row-top">
+                        <div className="topline-candidate">
+                          <span className="topline-dot" style={{ background: col }} />
+                          <div className="topline-copy">
+                            <strong>{c.name}</strong>
+                            <small>{c.party || "Republican"}</small>
+                            {c.winner && <span className="topline-lead won">Race called</span>}
+                          </div>
+                        </div>
+                        <div className="topline-votes">{int(c.votes)}</div>
+                        <div className="topline-pct">{pctLabel(p)}%</div>
+                      </div>
+                      <div className="topline-bar">
+                        <span style={{ width: `${Math.max(p, 0)}%`, background: col }} />
+                      </div>
+                    </div>
+                  );
+                })
+              ) : (
+                <p className="prose sc-note">
+                  Polls close at 7:00 PM ET, in {formatCountdown(scMsLeft)}. Candidates
+                  appear as soon as the feed carries them.
+                </p>
+              )}
+
+              <div className="model-label sc-sub">Forecast</div>
+              <div className="projected-bars">
+                {SC_CANDIDATE_ORDER.map((k) => (
+                  <div className="projected-bar-row" key={k}>
+                    <div className="projected-bar-name">
+                      <i style={{ background: SC_CAND_CSS[k] }} aria-hidden />
+                      <span>{SC_CANDIDATE_LAST[k]}</span>
+                    </div>
+                    <div className="projected-bar-track">
+                      <span className="projected-bar-fill"
+                            style={{ width: `${SC_FORECAST[k]}%`, borderColor: SC_CAND_CSS[k] }} />
+                    </div>
+                    <div className="projected-bar-value">{SC_FORECAST[k].toFixed(1)}%</div>
+                    <div className="projected-bar-delta">projected</div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="model-stats">
+                <div><span>Projected turnout</span><b>{int(SC_TURNOUT_MODEL.projected)}</b></div>
+                <div><span>First round</span><b>{int(SC_TURNOUT_MODEL.firstRound)}</b></div>
+                <div><span>Votes counted</span><b>{scLive ? int(scCounted) : "0"}</b></div>
+                <div><span>Est. reporting</span><b>{scLive ? `${pctLabel(scRep)}%` : "0%"}</b></div>
+              </div>
+            </div>
+
+            <div className="sc-col">
+              <div className="model-label">
+                County results · {scCountiesReporting} of 46 reporting
+              </div>
+              <div className="sc-map-frame">
+                <SouthCarolinaCountyMap counties={scCounties as Record<string, ScLiveCounty>} />
+                {!scLive && (
+                  <div className="map-empty">
+                    <p>No county has reported yet.</p>
+                    <p className="map-empty-sub">
+                      This map shows reported votes only. There is no county forecast for
+                      South Carolina, because there is no poll to build one from.
+                    </p>
+                  </div>
+                )}
+              </div>
+              <div className="rd-map-legend">
+                <span className="rd-map-legend-sw"
+                      style={{ background: "linear-gradient(90deg,#134453,var(--ramp-mid),#6e241d)" }} />
+                {SC_CANDIDATE_ORDER.map((k) => (
+                  <span className="rd-key" key={k}>
+                    <i style={{ background: SC_CAND_CSS[k] }} aria-hidden />
+                    {SC_CANDIDATE_LAST[k]}
+                  </span>
+                ))}
+                <span className="rd-map-legend-note">reported votes only</span>
+              </div>
+              <p className="prose sc-note">
+                Turnout assumes {(SC_TURNOUT_MODEL.dropoffFactor * 100).toFixed(0)}% of the{" "}
+                {int(SC_TURNOUT_MODEL.firstRound)} ballots cast in the first round —
+                runoffs draw a fraction of the electorate that produced them. Everything
+                on this panel other than the reported votes rests on that assumption and
+                on the win probability. {SC_FORECAST_META.basis}
+              </p>
+            </div>
+          </div>
+        </section>
 
         {/* ═══ SCENARIO ENGINE ═══ */}
         <section className="engine-cta card">
@@ -1088,11 +1116,11 @@ export default function FloridaBoard({ variant = "board" }: { variant?: "board" 
             <h2>Run it yourself</h2>
             <p className="prose">
               The scenario engine behind this county baseline is public. Set candidate
-              performance by age and race, move turnout, and watch all 67 counties
-              recompute against the same model this board projects from.
+              performance by region and demographic, move turnout, and watch all 77
+              counties recompute against the same model this board projects from.
             </p>
           </div>
-          <a className="utility-button lg" href="/floridaprimary">Open the scenario engine →</a>
+          <a className="utility-button lg" href="/forecast">Open the forecast desk →</a>
         </section>
 
         {/* ═══ SLATE ═══ */}
@@ -1104,7 +1132,7 @@ export default function FloridaBoard({ variant = "board" }: { variant?: "board" 
                 <p>Reported results only, no TPSI model.</p>
               </div>
               <div className="board-meta">
-                <span className="model-label">{SLATE.length} races · 3 states</span>
+                <span className="model-label">{SLATE.length} races · 2 states</span>
                 {stale && <button className="utility-button" onClick={refresh}>Feed stale · retry</button>}
               </div>
             </div>
@@ -1128,7 +1156,7 @@ export default function FloridaBoard({ variant = "board" }: { variant?: "board" 
           <h2>Method</h2>
           <p className="prose">
             Reported vote is solid. Projected share is muted and dashed, on the same
-            0 to 100% scale, and is the sum of all 67 county projections. Estimated
+            0 to 100% scale, and is the sum of all 77 county projections. Estimated
             reporting is the share of expected vote, not precincts. Race calls come from
             AP through CivicAPI; TPSI projects independently once the leader&rsquo;s margin
             clears three standard deviations of the outstanding vote and at least 35% is
@@ -1136,32 +1164,41 @@ export default function FloridaBoard({ variant = "board" }: { variant?: "board" 
           </p>
           <p className="prose">
             The statewide probability is not built from the county intervals. County
-            errors share one dominant statewide swing — if the model has Donalds wrong,
-            it has him wrong in all 67 counties at once — so adding county variances
+            errors share one dominant statewide swing — if the model has Drummond wrong,
+            it has him wrong in all 77 counties at once — so adding county variances
             independently would understate the real spread by roughly an order of
             magnitude. Probability comes from the statewide model, whose margin carries a
             standard deviation of {STATEWIDE_FORECAST.marginSd} points against a projected
-            margin of {STATEWIDE_FORECAST.margin.toFixed(1)}. Field dates{" "}
+            margin of {STATEWIDE_FORECAST.margin.toFixed(1)}. That standard deviation
+            contracts with the outstanding vote as counties report. Field dates{" "}
             {FORECAST_META.fieldDates}, n={FORECAST_META.interviewsReported}, ±
             {FORECAST_META.marginOfError}.
           </p>
           <p className="prose">
-            <strong>All candidate estimates on this page are built from pre-election day
-            data.</strong> The survey closed before polls opened and has not been updated
-            since; nothing a voter did today is in the shares. Turnout is the one input we
-            replace with a measured figure —{" "}
-            {turnoutMeasured
-              ? `${int(turnoutBasis)} Republican ballots cast, from Fresh Take Florida`
-              : `a ${int(TURNOUT_MODEL.projected)} prior, in use because the turnout feed is unavailable`}
-            .
+            <strong>South Carolina is a different kind of number.</strong> No TPSI survey
+            of that runoff exists. Its {SC_FORECAST.winProbability.graham.toFixed(0)}%
+            {" "}figure is a desk judgement, and the {SC_FORECAST.margin.toFixed(1)}-point
+            margin shown is derived from it by assuming a {SC_FORECAST.marginSd}-point
+            standard deviation — wider than Oklahoma&rsquo;s precisely because there is no
+            poll underneath it. There is no South Carolina county forecast for the same
+            reason, and the map on that panel paints reported votes only.
           </p>
           <p className="prose">
-            A turnout figure lower than a general election, or lower than a past primary,
-            is not a forecast that fewer people will vote. It defines <em>which</em>
-            {" "}electorate the shares describe: a closed Republican primary is a small,
-            self-selected slice of Florida, and every percentage here is a share of that
-            slice and of nothing wider. Read these numbers as a description of the people
-            who actually turned out, not as a prediction about the state.
+            <strong>All candidate estimates on this page are built from pre-election day
+            data.</strong> The Oklahoma survey closed before polls opened and has not been
+            updated since; nothing a voter did today is in the shares. Turnout is a
+            registration-and-history prior of {int(TURNOUT_MODEL.projected)} ballots
+            against {int(TURNOUT_MODEL.firstRound)} cast in the June first round and{" "}
+            {int(TURNOUT_MODEL.registered)} registered Republicans.
+          </p>
+          <p className="prose">
+            A turnout figure lower than a general election, or lower than the primary that
+            produced this runoff, is not a forecast that fewer people will vote. It defines{" "}
+            <em>which</em> electorate the shares describe: a runoff is a small,
+            self-selected slice of a closed primary electorate, and every percentage here
+            is a share of that slice and of nothing wider. Read these numbers as a
+            description of the people who actually turned out, not as a prediction about
+            the state.
           </p>
           <div className="method-foot">
             <span className="model-label">© 2026 The Public Sentiment Institute</span>
@@ -1177,7 +1214,7 @@ export default function FloridaBoard({ variant = "board" }: { variant?: "board" 
 
 function SlateCard({ entry, race }: { entry: Entry; race?: Race }) {
   const all = sortC(race);
-  const show = all.slice(0, entry.topFour ? 4 : 2);
+  const show = all.slice(0, 2);
   const live = isLive(race);
   const st = getRaceState({
     percentReporting: live ? estRep(race) : 0,
@@ -1188,7 +1225,7 @@ function SlateCard({ entry, race }: { entry: Entry; race?: Race }) {
   return (
     <div className="l4">
       <div className="l4-hd">
-        <span className={`l4-dot ${entry.topFour ? "n" : partyOf(show[0]?.party || entry.sub)}`} />
+        <span className={`l4-dot ${partyOf(show[0]?.party || entry.sub)}`} />
         <div className="l4-title">
           <strong>{entry.title}</strong>
           {entry.sub && <small>{entry.sub}</small>}
@@ -1208,7 +1245,6 @@ function SlateCard({ entry, race }: { entry: Entry; race?: Race }) {
               </div>
             </div>
           ))}
-          {entry.topFour && <span className="model-label">Top four advance to November</span>}
         </div>
       ) : (
         <div className="l4-empty">Awaiting returns</div>
@@ -1224,15 +1260,14 @@ function SlateCard({ entry, race }: { entry: Entry; race?: Race }) {
 }
 
 /* ═════════════════════ STYLE ═════════════════════ */
-/* Inherited from the August 4 board. Surface, ink, party and signal tokens come
+/* Inherited from the August 18 board. Surface, ink, party and signal tokens come
    from globals.css so the desk flips with the site's data-theme; only desk-local
    values are declared here. */
 
 const CSS = `
 .desk{
-  /* Four-candidate lane; the site tokens only define two. Values match the
-     scenario engine (changeorders/TPSI_FL_Scenario_Engine_v3.html) so the
-     sandbox and the board name each candidate in the same colour. */
+  /* Candidate lane. Two names here, but the k3–k5 slots stay defined so the
+     shared component CSS below doesn't reference a missing variable. */
   --k1:#B23A2E; --k2:#1E6E86; --k3:#6D4B96; --k4:#A87516; --k5:#8A929C;
   --map-stroke:rgba(10,10,10,.14); --map-stroke-hi:rgba(10,10,10,.55);
   --map-hatch:rgba(10,10,10,.22); --map-blank:#dcdcd2;
@@ -1337,42 +1372,6 @@ html[data-theme="dark"] .desk{
 .topline-bar{height:7px;border-radius:99px;background:var(--panel3);overflow:hidden;margin-top:9px}
 .topline-bar span{display:block;height:100%;border-radius:99px;
   transition:width 600ms cubic-bezier(.16,1,.3,1)}
-.portal-zone{display:grid;gap:18px;margin-top:22px}
-.portal-banner{background:var(--panel3);border-color:var(--gold)}
-.portal-head{display:flex;justify-content:space-between;align-items:flex-start;gap:18px;
-  flex-wrap:wrap;margin-bottom:16px}
-.portal-head .prose{font-size:12.5px;color:var(--ink2);margin-top:6px;max-width:640px}
-.portal-note{font-size:12px;color:var(--ink3);margin-top:14px;padding-top:12px;
-  border-top:1px solid var(--hairline);max-width:640px}
-.portal-banked-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px}
-.portal-banked-grid>div{display:flex;flex-direction:column;gap:4px;padding:12px 14px;
-  background:var(--panel2);border:1px solid var(--hairline);border-radius:var(--r-card)}
-.portal-banked-grid span{font-family:var(--mono);font-size:10px;letter-spacing:.05em;
-  text-transform:uppercase;color:var(--ink3)}
-.portal-banked-grid b{font-family:var(--mono);font-size:19px;font-variant-numeric:tabular-nums}
-.portal-top10-head,.portal-row{display:grid;
-  grid-template-columns:minmax(150px,1.6fr) repeat(4,minmax(72px,.8fr)) minmax(130px,1.1fr);
-  gap:12px;align-items:center}
-.portal-top10-head{font-family:var(--mono);font-size:10px;letter-spacing:.05em;
-  text-transform:uppercase;color:var(--ink3);padding-bottom:8px;
-  border-bottom:1px solid var(--hairline)}
-.portal-top10-head>span:not(:first-child){text-align:right}
-.portal-top10-head>span:last-child{text-align:left}
-.portal-row{padding:12px 0;border-bottom:1px solid var(--hairline)}
-.portal-row .num{font-family:var(--mono);font-size:13px;text-align:right;
-  font-variant-numeric:tabular-nums}
-.portal-row-name strong{display:block;font-size:14px}
-.portal-row-name small{font-family:var(--mono);font-size:10px;color:var(--ink3)}
-.portal-row-proj{display:flex;align-items:center;gap:7px;font-family:var(--mono);font-size:12px}
-.portal-chip{width:9px;height:9px;border-radius:2px;flex-shrink:0}
-.portal-bar{grid-column:1/-1;display:flex;height:4px;border-radius:99px;overflow:hidden;
-  margin-top:8px;background:var(--panel2)}
-.portal-bar span{display:block;height:100%}
-@media(max-width:720px){
-  .portal-top10-head{display:none}
-  .portal-row{grid-template-columns:1fr auto;row-gap:4px}
-  .portal-row .num{text-align:right}
-}
 .empty-live{padding:22px 0 6px}
 .empty-live .prose{font-size:13px;color:var(--ink2);max-width:420px}
 .empty-note{font-size:12px;color:var(--ink2);max-width:520px;margin:14px 0 4px;
@@ -1399,15 +1398,18 @@ html[data-theme="dark"] .desk{
 .prob-ring,.rep-ring{--value:50;--ring:var(--k1);position:relative;width:126px;aspect-ratio:1;
   margin:10px auto 0;border-radius:50%;
   background:conic-gradient(from -90deg,var(--ring) calc(var(--value)*1%),var(--panel3) 0)}
+.prob-ring.sm{width:104px}
 .rep-ring{width:82px;
   background:conic-gradient(from -90deg,var(--live) calc(var(--value)*1%),var(--panel3) 0)}
 .prob-ring::before,.rep-ring::before{content:"";position:absolute;inset:15px;border-radius:50%;
   background:var(--panel);box-shadow:inset 0 0 0 1px var(--hairline)}
+.prob-ring.sm::before{inset:13px}
 .rep-ring::before{inset:11px}
 .ring-center{position:absolute;inset:0;z-index:1;display:grid;place-content:center;text-align:center}
 .ring-center b{display:block;font-size:29px;font-weight:800;line-height:1;letter-spacing:-.05em}
 .ring-center span{display:block;font-family:var(--mono);font-size:8px;color:var(--ink3);
   margin-top:5px;letter-spacing:.08em;text-transform:uppercase}
+.prob-ring.sm .ring-center b{font-size:24px}
 .ring-center.sm b{font-size:17px}
 .ring-center.sm span{font-size:7px}
 .forecast-support{display:flex;flex-direction:column;gap:16px}
@@ -1476,7 +1478,7 @@ html[data-theme="dark"] .desk{
   font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.08em;
   text-transform:uppercase;color:var(--ink3);transition:background .15s ease,color .15s ease}
 .rd-map-toggles button.on{background:var(--ink);color:var(--panel)}
-.rd-map{position:relative;height:clamp(380px,54vh,580px);width:100%;border-radius:var(--r-panel);
+.rd-map{position:relative;height:clamp(360px,48vh,520px);width:100%;border-radius:var(--r-panel);
   overflow:hidden;background:var(--panel2);border:1px solid var(--hairline)}
 .rd-map-legend{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:12px;
   font-family:var(--mono);font-size:10px;letter-spacing:.04em;color:var(--ink3)}
@@ -1494,14 +1496,14 @@ html[data-theme="dark"] .desk{
 @media(max-width:640px){.rd-map-hint{display:none}}
 .county-caveat{font-size:11.5px;color:var(--ink3);margin-top:14px;max-width:880px}
 
-.swing-box,.mech-box{margin-top:16px;padding:14px;border:1px solid var(--hairline2);
+.mech-box{margin-top:16px;padding:14px;border:1px solid var(--hairline2);
   border-radius:var(--r-card);background:var(--panel2)}
 .swing-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;
   margin-top:10px}
 .swing-grid span{display:block;font-family:var(--mono);font-size:8px;letter-spacing:.11em;
   text-transform:uppercase;color:var(--ink3)}
 .swing-grid b{display:block;font-size:12.5px;font-weight:700;margin-top:3px}
-.swing-box .prose,.mech-box .prose{font-size:11.5px;color:var(--ink2);margin-top:12px;padding-top:10px;
+.mech-box .prose{font-size:11.5px;color:var(--ink2);margin-top:12px;padding-top:10px;
   border-top:1px solid var(--hairline);max-width:820px}
 
 .rd-county{margin-top:22px}
@@ -1534,6 +1536,7 @@ html[data-theme="dark"] .desk{
 .rd-county-table tbody tr:last-child td{border-bottom:0}
 .rd-county-table tbody tr:hover td{background:var(--panel2)}
 .rd-county-loading{text-align:center;padding:26px 14px;color:var(--ink3);font-style:italic}
+.ok-region-cell{font-family:var(--mono);font-size:11px;color:var(--ink3)}
 /* inline-flex, not flex: a display:flex <td> stops behaving as a table cell and
    the columns collapse on top of each other. */
 .rd-cand-cell{display:inline-flex;align-items:baseline;justify-content:flex-end;gap:6px;
@@ -1553,41 +1556,62 @@ html[data-theme="dark"] .desk{
 .rd-statewide-margin{font-family:var(--mono);font-size:12px;font-weight:700;white-space:nowrap}
 @media(max-width:900px){
   .rd-cand-votes{display:none}
-  .fl-county-table{font-size:11.5px}
-  .fl-county-table td,.fl-county-table thead th,.fl-county-table tfoot td{padding:9px 7px}
+  .ok-county-table{font-size:11.5px}
+  .ok-county-table td,.ok-county-table thead th,.ok-county-table tfoot td{padding:9px 7px}
+  .ok-region-cell{display:none}
 }
 
-/* florida choropleth */
-.fl-map-wrap{position:relative;width:100%;height:100%;overflow:hidden;
-  padding:20px 16px;touch-action:none;cursor:grab}
-.fl-map-wrap.dragging{cursor:grabbing}
-.fl-map{display:block;width:100%;height:100%}
-.fl-cty{stroke:var(--map-stroke);stroke-width:.6;cursor:pointer;transition:opacity .12s ease}
-.fl-cty:hover{opacity:.78;stroke:var(--map-stroke-hi);stroke-width:1.4}
-.fl-cty-hatch{pointer-events:none;stroke:none}
-.fl-hatch-line{stroke:var(--map-hatch)}
-.fl-zoom{position:absolute;right:10px;bottom:10px;display:flex;flex-direction:column;gap:1px;
+/* oklahoma choropleth */
+.ok-map-wrap{position:relative;width:100%;height:100%;overflow:hidden;
+  padding:16px;touch-action:none;cursor:grab}
+.ok-map-wrap.dragging{cursor:grabbing}
+.ok-map{display:block;width:100%;height:100%}
+.ok-cty{stroke:var(--map-stroke);stroke-width:.6;cursor:pointer;transition:opacity .12s ease}
+.ok-cty:hover{opacity:.78;stroke:var(--map-stroke-hi);stroke-width:1.4}
+.ok-cty-hatch{pointer-events:none;stroke:none}
+.ok-hatch-line{stroke:var(--map-hatch)}
+.ok-zoom{position:absolute;right:10px;bottom:10px;display:flex;flex-direction:column;gap:1px;
   border-radius:9px;overflow:hidden;border:1px solid var(--hairline2);background:var(--panel);
   box-shadow:0 4px 14px rgba(0,0,0,.18)}
-.fl-zoom button{width:30px;height:28px;border:0;background:var(--panel);color:var(--ink2);
+.ok-zoom button{width:30px;height:28px;border:0;background:var(--panel);color:var(--ink2);
   cursor:pointer;font-family:var(--mono);font-size:14px;line-height:1;font-weight:700;
   display:grid;place-items:center;transition:background .12s ease,color .12s ease}
-.fl-zoom button+button{border-top:1px solid var(--hairline)}
-.fl-zoom button:hover:not(:disabled){background:var(--panel2);color:var(--ink)}
-.fl-zoom button:disabled{opacity:.4;cursor:default}
-.fl-zoom button.reset{font-size:8px;letter-spacing:.06em}
-.fl-tip{position:absolute;z-index:5;pointer-events:none;min-width:212px;max-width:250px;
+.ok-zoom button+button{border-top:1px solid var(--hairline)}
+.ok-zoom button:hover:not(:disabled){background:var(--panel2);color:var(--ink)}
+.ok-zoom button:disabled{opacity:.4;cursor:default}
+.ok-zoom button.reset{font-size:8px;letter-spacing:.06em}
+.ok-tip,.sc-tip{position:absolute;z-index:5;pointer-events:none;min-width:206px;max-width:250px;
   padding:10px 12px;border-radius:var(--r-card);background:var(--panel);
   border:1px solid var(--hairline2);box-shadow:var(--tip-shadow);
   font-family:var(--sans);font-size:12px;color:var(--ink)}
-.fl-tip strong{display:block;font-size:13px;font-weight:800;margin-bottom:6px}
-.fl-tip-row{display:flex;justify-content:space-between;gap:16px;font-family:var(--mono);
-  font-size:11.5px;line-height:1.7}
-.fl-tip-row b{font-variant-numeric:tabular-nums}
-.fl-tip-sub{margin-top:5px;font-family:var(--mono);font-size:9.5px;letter-spacing:.04em;
-  color:var(--ink3)}
-.fl-tip-flag{margin-top:6px;font-family:var(--mono);font-size:8.5px;font-weight:700;
+.ok-tip strong,.sc-tip strong{display:block;font-size:13px;font-weight:800;margin-bottom:6px}
+.ok-tip-row,.sc-tip-row{display:flex;justify-content:space-between;gap:16px;
+  font-family:var(--mono);font-size:11.5px;line-height:1.7}
+.ok-tip-row b,.sc-tip-row b{font-variant-numeric:tabular-nums}
+.ok-tip-sub,.sc-tip-sub{margin-top:5px;font-family:var(--mono);font-size:9.5px;
+  letter-spacing:.04em;color:var(--ink3)}
+.ok-tip-flag{margin-top:6px;font-family:var(--mono);font-size:8.5px;font-weight:700;
   letter-spacing:.11em;text-transform:uppercase;color:var(--gold)}
+
+/* south carolina panel */
+.sc-zone{margin-top:20px;padding:20px}
+.sc-head{display:flex;justify-content:space-between;gap:26px;align-items:flex-start;
+  flex-wrap:wrap;padding-bottom:16px;border-bottom:1px solid var(--hairline)}
+.sc-head h2{font-size:21px;line-height:1.14;margin-top:10px}
+.sc-deck{font-size:12.5px;color:var(--ink2);margin-top:9px;max-width:620px}
+.sc-prob{text-align:center;flex:0 0 auto}
+.sc-grid{display:grid;grid-template-columns:1fr 1fr;gap:26px;margin-top:18px}
+@media(max-width:860px){.sc-grid{grid-template-columns:1fr}}
+.sc-col{min-width:0}
+.sc-sub{margin-top:18px;padding-top:14px;border-top:1px solid var(--hairline)}
+.sc-note{font-size:11.5px;color:var(--ink3);margin-top:12px}
+.sc-map-frame{position:relative;margin-top:10px;height:clamp(240px,32vh,340px);
+  border-radius:var(--r-panel);overflow:hidden;background:var(--panel2);
+  border:1px solid var(--hairline)}
+.sc-map-wrap{position:relative;width:100%;height:100%;padding:12px}
+.sc-map{display:block;width:100%;height:100%}
+.sc-cty{stroke:var(--map-stroke);stroke-width:.6;cursor:pointer;transition:opacity .12s ease}
+.sc-cty:hover{opacity:.78;stroke:var(--map-stroke-hi);stroke-width:1.4}
 
 /* scenario engine cta */
 .engine-cta{margin-top:20px;padding:20px;display:flex;justify-content:space-between;

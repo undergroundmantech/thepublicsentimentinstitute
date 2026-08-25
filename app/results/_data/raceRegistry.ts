@@ -164,6 +164,21 @@ export const RACE_REGISTRY: RaceRegistryEntry[] = [
   { id: 86863, date: "2026-08-18", slug: "alaska-us-senate-open-primary",                         label: "Alaska US Senate Open Primary",
     about: "Alaska's nonpartisan primary puts every candidate on one ballot and advances the top four to a ranked-choice general election in November. There is no party nomination decided here and no single winner on the night — the question is only which four names appear on the November ballot." },
   { id: 86862, date: "2026-08-18", slug: "alaska-us-house-at-large-open-primary",                 label: "Alaska US House At-Large Open Primary" },
+
+  // ── August 25, 2026 — Oklahoma, South Carolina, Georgia runoffs — active ──
+  // Oklahoma. The Governor Republican runoff is the headline race and has its
+  // own route at /results/2026-08-25/oklahoma-governor-republican-runoff.
+  { id: 87529, date: "2026-08-25", slug: "oklahoma-governor-republican-runoff",                    label: "Oklahoma Governor Republican Runoff",
+    about: "Neither Gentner Drummond nor Mike Mazzei cleared 50% in June, so the nomination is settled here with no further round. The TPSI model separates them by less than a point and a half — inside its own margin of error — with Drummond ahead on rural and western Oklahoma and Mazzei narrowly carrying Oklahoma County and Tulsa County. Those two metros together cast under a third of the expected vote, so the race is decided in the seventy-five counties outside them. Oklahoma is entirely on Central time and closes statewide at 8:00 PM ET." },
+  { id: 87530, date: "2026-08-25", slug: "oklahoma-insurance-commissioner-republican-runoff",      label: "Oklahoma Insurance Commissioner Republican Runoff" },
+  { id: 87531, date: "2026-08-25", slug: "oklahoma-commissioner-of-labor-republican-runoff",       label: "Oklahoma Commissioner of Labor Republican Runoff" },
+  { id: 87532, date: "2026-08-25", slug: "oklahoma-superintendent-of-public-instruction-republican-runoff", label: "Oklahoma Superintendent of Public Instruction Republican Runoff" },
+  { id: 87533, date: "2026-08-25", slug: "oklahoma-us-senate-democratic-runoff",                   label: "Oklahoma US Senate Democratic Runoff" },
+  // South Carolina. Forecast published, but no TPSI poll and therefore no county model.
+  { id: 87534, date: "2026-08-25", slug: "south-carolina-us-senate-special-republican-runoff",     label: "South Carolina US Senate Special Republican Runoff",
+    about: "A special-election runoff to fill the seat outright. TPSI publishes a win probability for this race but did not field a survey of it: the number is a desk judgement from the first round, the endorsements since, and how South Carolina runoff electorates have behaved before. Turnout is assumed at 60% of the 465,076 ballots cast in the first round. There is no county-level forecast, because there is no poll to decompose." },
+  // Georgia
+  { id: 87536, date: "2026-08-25", slug: "georgia-us-house-13-runoff",                             label: "Georgia US House 13 Runoff" },
 ];
 
 // Lookup helpers

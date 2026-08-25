@@ -4322,7 +4322,7 @@ export default function HomePage() {
               <p>Track voter sentiment, race ratings, and election night returns from one transparent data desk.</p>
               <div className="lp-actions">
                 <Link href="/results" className="lp-pill"><span>Election results</span><i aria-hidden="true">&rarr;</i></Link>
-                <Link href="/floridaprimary" className="lp-pill lp-pill-dark"><span>Florida governor interactive</span><i aria-hidden="true">&rarr;</i></Link>
+                <Link href="/forecastratings" className="lp-pill lp-pill-dark"><span>2026 race ratings</span><i aria-hidden="true">&rarr;</i></Link>
               </div>
             </div>
           </div>

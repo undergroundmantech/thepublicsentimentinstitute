@@ -200,7 +200,7 @@ export default function PortalDashboard() {
               {stale && <em>feed stale</em>}
             </div>
             <div className="pd-top-links">
-              <Link href="/results/tonight">Public board</Link>
+              <Link href="/results/archive/2026-08-18">Public board</Link>
               <button type="button" onClick={signOut}>Sign out</button>
             </div>
           </div>

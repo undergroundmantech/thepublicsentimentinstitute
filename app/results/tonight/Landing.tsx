@@ -3,10 +3,11 @@
 /**
  * ELECTIONS LANDING — the standing /results/tonight surface.
  *
- * Replaces the August 4 primary-night board, which now lives (unchanged, still
- * viewable) at /results/archive/2026-08-04. This is a temporary landing page
- * built in that board's design language: same `.desk` shell, tokens, mono
- * chrome and card anatomy, so nothing about the visual system changes.
+ * Sits here between election nights. The primary-night boards it replaced stay
+ * live and unchanged at /results/archive/2026-08-04 (Michigan et al) and
+ * /results/archive/2026-08-18 (Florida, Wyoming, Alaska). Built in those
+ * boards' design language: same `.desk` shell, tokens, mono chrome and card
+ * anatomy, so nothing about the visual system changes.
  *
  * The hero advertises the next election on the calendar. When that night
  * arrives, point NEXT_ELECTION at its board and the countdown/CTA follow.
@@ -16,24 +17,30 @@ import React, { useEffect, useState } from "react";
 
 const NEXT_ELECTION = {
   kicker: "Next election",
-  state: "Florida",
-  date: "Tuesday, August 18, 2026",
-  iso: "2026-08-18T19:00:00-04:00",
-  title: "Florida Republican Gubernatorial Primary",
+  state: "Nationwide",
+  date: "Tuesday, November 3, 2026",
+  iso: "2026-11-03T19:00:00-05:00",
+  title: "2026 Midterm General Election",
   deck:
-    "A four-way Republican field with no clear majority in the TPSI model. Byron Donalds " +
-    "leads a narrow plurality over James Fishback, with Jay Collins and Paul Renner holding " +
-    "enough of the vote to decide it. Polls close at 7:00 PM ET, Panhandle counties an hour later.",
-  cta: { href: "/floridaprimary", label: "Open the scenario engine" },
+    "The whole House, a third of the Senate and 36 governorships. TPSI race ratings " +
+    "are live now; the forecast model and the election night board follow as the " +
+    "calendar closes in. First polls close at 7:00 PM ET.",
+  cta: { href: "/forecastratings", label: "See the 2026 race ratings" },
   stats: [
-    { k: "Projected ballots", v: "1,635,000" },
-    { k: "Counties", v: "67" },
-    { k: "Model margin", v: "Donalds +2.6" },
-    { k: "Polls close", v: "7:00 PM ET" },
+    { k: "House seats", v: "435" },
+    { k: "Senate seats", v: "35" },
+    { k: "Governorships", v: "36" },
+    { k: "First polls close", v: "7:00 PM ET" },
   ],
 };
 
 const ARCHIVE = [
+  {
+    href: "/results/archive/2026-08-18",
+    date: "August 18, 2026",
+    label: "Florida, Wyoming & Alaska primaries",
+    note: "Spotlight forecast · Florida Republican gubernatorial primary",
+  },
   {
     href: "/results/archive/2026-08-04",
     date: "August 4, 2026",
@@ -46,7 +53,7 @@ const ELSEWHERE = [
   { href: "/floridaprimary", label: "Florida GOP Primary", note: "Interactive scenario engine · all 67 counties" },
   { href: "/forecastratings", label: "2026 Race Ratings", note: "Senate & governor competitiveness" },
   { href: "/electoralmap", label: "Electoral Map", note: "Build your own map" },
-  { href: "/results?date=2026-08-04", label: "Results by date", note: "Browse every tracked night" },
+  { href: "/results/archive", label: "Results by date", note: "Browse every tracked night" },
 ];
 
 function useCountdown(iso: string) {
