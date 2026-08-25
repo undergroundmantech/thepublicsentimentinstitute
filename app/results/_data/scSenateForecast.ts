@@ -55,9 +55,11 @@ export const SC_TURNOUT_MODEL = {
 };
 
 export const SC_FORECAST = {
-  graham: 50.9,
-  norman: 49.1,
-  votes: { graham: 142_034, norman: 137_012 },
+  // Unrounded, so that graham − norman actually equals `margin`. Rounding these
+  // to one decimal for storage made the shares imply 1.8 while margin said 1.7.
+  graham: 50.86,
+  norman: 49.14,
+  votes: { graham: 141_923, norman: 137_123 },
   leader: "graham" as ScCandidateKey,
   runnerUp: "norman" as ScCandidateKey,
   /** Graham − Norman, percentage points. Derived from the win probability. */

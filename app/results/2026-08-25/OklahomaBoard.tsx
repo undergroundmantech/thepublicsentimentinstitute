@@ -61,6 +61,7 @@ import {
   SC_FORECAST,
   SC_FORECAST_META,
   SC_TURNOUT_MODEL,
+  type ScCandidateKey,
 } from "../_data/scSenateForecast";
 import { forecastRace, type Shares3 } from "../../lib/electoralModel";
 import { evaluateCall } from "../../lib/raceCall";
@@ -594,6 +595,56 @@ export default function OklahomaBoard({ variant = "board" }: { variant?: "board"
     [scCounties],
   );
 
+  /**
+   * South Carolina has no poll and no county model, but it does have a count,
+   * and a probability that ignores the count is just a number we typed. The
+   * prior migrates toward the returns in proportion to how much is counted, and
+   * the SD contracts by √(1 − reported) — the same form Oklahoma's margin and
+   * the county intervals already use, so the two panels behave alike.
+   *
+   * At zero reporting this reproduces the published 57.9% exactly; at a full
+   * count the prior has no weight left and the probability is the result.
+   */
+  const scModel = useMemo(() => {
+    const all = sortC(sc);
+    const total = counted(sc);
+    const votesFor = (needle: string) =>
+      all
+        .filter((c) => String(c.name || "").toLowerCase().includes(needle))
+        .reduce((s, c) => s + (c.votes || 0), 0);
+
+    const pct = clampPct(scLive ? scRep : 0) / 100;
+    const prior = { graham: SC_FORECAST.graham, norman: SC_FORECAST.norman };
+
+    const shares = { ...prior };
+    if (total > 0) {
+      for (const k of SC_CANDIDATE_ORDER) {
+        const obs = (votesFor(SC_CANDIDATE_MATCH[k]) / total) * 100;
+        shares[k] = obs * pct + prior[k] * (1 - pct);
+      }
+      const sum = shares.graham + shares.norman;
+      if (sum > 0) {
+        for (const k of SC_CANDIDATE_ORDER) shares[k] = (shares[k] / sum) * 100;
+      }
+    }
+
+    const margin = shares.graham - shares.norman;
+    const sd = Math.max(SC_FORECAST.marginSd * Math.sqrt(Math.max(0, 1 - pct)), 0.1);
+    const pGraham = phi(margin / sd) * 100;
+
+    const leader: ScCandidateKey = margin >= 0 ? "graham" : "norman";
+    return {
+      shares,
+      margin,
+      sd,
+      leader,
+      runnerUp: (leader === "graham" ? "norman" : "graham") as ScCandidateKey,
+      winProbability: { graham: pGraham, norman: 100 - pGraham },
+    };
+  }, [sc, scLive, scRep]);
+
+  const scLeaderProb = scModel.winProbability[scModel.leader];
+
   return (
     <div className="desk">
       <style>{CSS}</style>
@@ -987,26 +1038,28 @@ export default function OklahomaBoard({ variant = "board" }: { variant?: "board"
               </div>
               <h2 id="sc-title">U.S. Senate Special Republican Runoff</h2>
               <p className="prose sc-deck">
-                TPSI gives {SC_CANDIDATE_LAST.graham} a{" "}
-                {SC_FORECAST.winProbability.graham.toFixed(0)}% chance of winning the
-                nomination. <strong>There is no TPSI poll of this runoff.</strong> That
-                probability is a desk judgement from the first round, the endorsements
+                TPSI gives {SC_CANDIDATE_LAST[scModel.leader]} a{" "}
+                {scLeaderProb.toFixed(0)}% chance of winning the nomination.{" "}
+                <strong>There is no TPSI poll of this runoff.</strong> The starting
+                probability was a desk judgement from the first round, the endorsements
                 since, and how runoff electorates have behaved here before — not a survey.
-                The margin below is derived from the probability, not measured.
+                {scLive
+                  ? " It now moves with the count, and the counted vote carries more of it as more comes in."
+                  : " The margin below is derived from the probability, not measured."}
               </p>
             </div>
             <div className="sc-prob">
               <div className="model-label">Win probability</div>
               <div className="prob-ring sm"
                    style={{
-                     ["--value" as string]: SC_FORECAST.winProbability.graham,
-                     ["--ring" as string]: SC_CAND_CSS.graham,
+                     ["--value" as string]: scLeaderProb,
+                     ["--ring" as string]: SC_CAND_CSS[scModel.leader],
                    } as React.CSSProperties}
                    role="img"
-                   aria-label={`Win probability: ${SC_CANDIDATE_LAST.graham} ${SC_FORECAST.winProbability.graham} percent`}>
+                   aria-label={`Win probability: ${SC_CANDIDATE_LAST[scModel.leader]} ${scLeaderProb.toFixed(0)} percent`}>
                 <div className="ring-center">
-                  <b>{SC_FORECAST.winProbability.graham.toFixed(0)}%</b>
-                  <span>{SC_CANDIDATE_LAST.graham}</span>
+                  <b>{scLeaderProb.toFixed(0)}%</b>
+                  <span>{SC_CANDIDATE_LAST[scModel.leader]}</span>
                 </div>
               </div>
             </div>
@@ -1048,20 +1101,31 @@ export default function OklahomaBoard({ variant = "board" }: { variant?: "board"
 
               <div className="model-label sc-sub">Forecast</div>
               <div className="projected-bars">
-                {SC_CANDIDATE_ORDER.map((k) => (
-                  <div className="projected-bar-row" key={k}>
-                    <div className="projected-bar-name">
-                      <i style={{ background: SC_CAND_CSS[k] }} aria-hidden />
-                      <span>{SC_CANDIDATE_LAST[k]}</span>
+                {SC_CANDIDATE_ORDER.map((k) => {
+                  const liveCand = scCands.find((x) =>
+                    String(x.name || "").toLowerCase().includes(SC_CANDIDATE_MATCH[k]),
+                  );
+                  const actual = scLive && liveCand ? share(liveCand, scCands) : null;
+                  const delta = actual != null ? scModel.shares[k] - actual : null;
+                  return (
+                    <div className="projected-bar-row" key={k}>
+                      <div className="projected-bar-name">
+                        <i style={{ background: SC_CAND_CSS[k] }} aria-hidden />
+                        <span>{SC_CANDIDATE_LAST[k]}</span>
+                      </div>
+                      <div className="projected-bar-track">
+                        <span className="projected-bar-fill"
+                              style={{ width: `${scModel.shares[k]}%`, borderColor: SC_CAND_CSS[k] }} />
+                      </div>
+                      <div className="projected-bar-value">{scModel.shares[k].toFixed(1)}%</div>
+                      <div className="projected-bar-delta">
+                        {delta != null
+                          ? `${delta >= 0 ? "+" : "−"}${Math.abs(delta).toFixed(1)} vs now`
+                          : "projected"}
+                      </div>
                     </div>
-                    <div className="projected-bar-track">
-                      <span className="projected-bar-fill"
-                            style={{ width: `${SC_FORECAST[k]}%`, borderColor: SC_CAND_CSS[k] }} />
-                    </div>
-                    <div className="projected-bar-value">{SC_FORECAST[k].toFixed(1)}%</div>
-                    <div className="projected-bar-delta">projected</div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
 
               <div className="model-stats">
@@ -1069,6 +1133,13 @@ export default function OklahomaBoard({ variant = "board" }: { variant?: "board"
                 <div><span>First round</span><b>{int(SC_TURNOUT_MODEL.firstRound)}</b></div>
                 <div><span>Votes counted</span><b>{scLive ? int(scCounted) : "0"}</b></div>
                 <div><span>Est. reporting</span><b>{scLive ? `${pctLabel(scRep)}%` : "0%"}</b></div>
+                <div>
+                  <span>Projected margin</span>
+                  <b style={{ color: SC_CAND_CSS[scModel.leader] }}>
+                    {SC_CANDIDATE_LAST[scModel.leader]} {signed(Math.abs(scModel.margin))}
+                  </b>
+                </div>
+                <div><span>Margin SD</span><b>±{scModel.sd.toFixed(1)}</b></div>
               </div>
             </div>
 
@@ -1176,12 +1247,16 @@ export default function OklahomaBoard({ variant = "board" }: { variant?: "board"
           </p>
           <p className="prose">
             <strong>South Carolina is a different kind of number.</strong> No TPSI survey
-            of that runoff exists. Its {SC_FORECAST.winProbability.graham.toFixed(0)}%
-            {" "}figure is a desk judgement, and the {SC_FORECAST.margin.toFixed(1)}-point
-            margin shown is derived from it by assuming a {SC_FORECAST.marginSd}-point
-            standard deviation — wider than Oklahoma&rsquo;s precisely because there is no
-            poll underneath it. There is no South Carolina county forecast for the same
-            reason, and the map on that panel paints reported votes only.
+            of that runoff exists. Its starting{" "}
+            {SC_FORECAST.winProbability.graham.toFixed(0)}% figure was a desk judgement,
+            and the {SC_FORECAST.margin.toFixed(1)}-point opening margin was derived from
+            it by assuming a {SC_FORECAST.marginSd}-point standard deviation — wider than
+            Oklahoma&rsquo;s precisely because there is no poll underneath it. As votes are
+            counted that prior gives way to the returns in proportion to how much has
+            reported, so the probability shown is now{" "}
+            {scLive ? "mostly a reading of the count" : "still entirely the prior"}. There
+            is no South Carolina county forecast, and the map on that panel paints reported
+            votes only.
           </p>
           <p className="prose">
             <strong>All candidate estimates on this page are built from pre-election day
