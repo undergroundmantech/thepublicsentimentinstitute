@@ -397,6 +397,14 @@ function phi(z: number): number {
   return z >= 0 ? 1 - p : p;
 }
 
+/** House rule: a winner is marked with a filled check, never a colour dot. */
+const CandDot = ({ won, color }: { won: boolean; color: string }) =>
+  won ? (
+    <span className="topline-dot won" aria-hidden>✓</span>
+  ) : (
+    <span className="topline-dot" style={{ background: color }} />
+  );
+
 /** Sentence-case status, matching the prototype's race-meta block. */
 const STATUS_COPY: Record<RaceState, string> = {
   SCHEDULED: "Polls open",
@@ -871,11 +879,7 @@ export default function OklahomaBoard({ variant = "board" }: { variant?: "board"
                       <div className="topline-row" key={c.name || i}>
                         <div className="topline-row-top">
                           <div className="topline-candidate">
-                            {c.winner || isProjected ? (
-                              <span className="topline-dot won" aria-hidden>✓</span>
-                            ) : (
-                              <span className="topline-dot" style={{ background: col }} />
-                            )}
+                            <CandDot won={c.winner === true || isProjected} color={col} />
                             <div className="topline-copy">
                               <strong>{c.name}</strong>
                               <small>{c.party || "Republican"}</small>
@@ -1191,7 +1195,7 @@ export default function OklahomaBoard({ variant = "board" }: { variant?: "board"
                     <div className="topline-row" key={c.name || i}>
                       <div className="topline-row-top">
                         <div className="topline-candidate">
-                          <span className="topline-dot" style={{ background: col }} />
+                          <CandDot won={c.winner === true} color={col} />
                           <div className="topline-copy">
                             <strong>{c.name}</strong>
                             <small>{c.party || "Republican"}</small>
@@ -1428,7 +1432,10 @@ function SlateCard({ entry, race }: { entry: Entry; race?: Race }) {
         <div className="l4-body">
           {show.map((c, i) => (
             <div className="l4-row" key={c.name || i}>
-              <span className="l4-nm">{c.name}</span>
+              <span className="l4-nm">
+                {c.winner && <i className="l4-check" aria-hidden>✓</i>}
+                {c.name}
+              </span>
               <span className="l4-pct">{pctLabel(share(c, all))}%</span>
               <div className="l4-bar">
                 <span style={{ width: `${Math.max(share(c, all), 0)}%`, background: tone(i, c.party) }} />
@@ -1845,6 +1852,9 @@ html[data-theme="dark"] .desk{
 .l4-body{display:flex;flex-direction:column;gap:9px}
 .l4-row{display:grid;grid-template-columns:1fr auto;gap:4px 8px}
 .l4-nm{font-size:11.5px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.l4-check{display:inline-grid;place-content:center;width:13px;height:13px;border-radius:50%;
+  margin-right:5px;vertical-align:-2px;font-size:8px;font-weight:800;font-style:normal;
+  color:var(--panel);background:var(--called)}
 .l4-pct{font-size:12px;font-weight:800}
 .l4-bar{grid-column:1/-1;height:4px;border-radius:99px;background:var(--panel3);overflow:hidden}
 .l4-bar span{display:block;height:100%;border-radius:99px;
