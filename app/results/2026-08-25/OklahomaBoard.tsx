@@ -209,18 +209,16 @@ const COUNTY_ALIASES: Record<string, string> = {
 };
 
 /**
- * Counties the desk still has counting. The feed and the state board agree on
- * every vote total but not on precinct counts, so the feed leaves counties open
- * that have in fact finished. Anything absent from this map is done.
+ * The only counties with vote still to come. Everything else is finished, no
+ * matter what precinct number the feed carries for it — a feed reading of 99%
+ * this late means rounding, not outstanding ballots.
  *
  * These are a floor, never a pin: where the feed reports higher it wins, so a
  * county here still closes itself out and nothing can freeze below the count.
  */
 const COUNTY_STILL_COUNTING: Record<string, number> = {
-  STEPHENS: 78,
   TULSA: 81,
   OKLAHOMA: 81,
-  KAY: 82,
 };
 
 /**
@@ -471,6 +469,26 @@ export default function OklahomaBoard({ variant = "board" }: { variant?: "board"
   // electorate is already counted. EST. REPORTING leads (raceState §2) and is
   // measured against the electorate; PRECINCTS stays visible as its own number.
   const precinctRep = estRep(gov);
+
+  /**
+   * What is actually left to count, taken county by county rather than from the
+   * statewide precinct figure. A closed county contributes nothing outstanding;
+   * an open one contributes the vote its own count implies it is still missing.
+   * Null until the county feed lands, which is when the statewide number leads.
+   */
+  const outstanding = useMemo(() => {
+    const list = Object.values(liveCounties).filter((c) => c.total > 0);
+    if (list.length === 0) return null;
+    let countedVotes = 0;
+    let remaining = 0;
+    for (const c of list) {
+      countedVotes += c.total;
+      if (c.reporting >= COUNTY_COMPLETE_PCT) continue;
+      const implied = Math.min(c.total / (c.reporting / 100), c.total * IMPLIED_CAP);
+      remaining += Math.max(0, implied - c.total);
+    }
+    return { countedVotes, remaining, total: countedVotes + remaining };
+  }, [liveCounties]);
   const msLeft = getMsLeftToClose(MODEL.close, now);
 
   const stamp = updated
@@ -501,12 +519,19 @@ export default function OklahomaBoard({ variant = "board" }: { variant?: "board"
         .filter((c) => String(c.name || "").toLowerCase().includes(needle))
         .reduce((s, c) => s + (c.votes || 0), 0);
 
+    // Passing the county-derived total as both the prior and the denominator
+    // makes the engine's blend an identity, so modeled_vote_remaining is exactly
+    // the vote outstanding in the counties still counting and nothing else.
+    const basis =
+      outstanding && outstanding.total > 0
+        ? { pct: total / outstanding.total, turnout: outstanding.total }
+        : { pct: clampPct(precinctRep) / 100, turnout: turnoutBasis };
+
     return forecastRace({
       race_rule: "PLURALITY",
-      // Precincts, not our own vote-share estimate — see projectTurnout.
-      percent_reporting: clampPct(precinctRep) / 100,
+      percent_reporting: basis.pct,
       reported_vote_total: total,
-      expected_turnout: turnoutBasis,
+      expected_turnout: basis.turnout,
       reported_share: {
         Candidate1: total ? votesFor(CANDIDATE_MATCH.drummond) / total : 0,
         Candidate2: total ? votesFor(CANDIDATE_MATCH.mazzei) / total : 0,
@@ -517,7 +542,7 @@ export default function OklahomaBoard({ variant = "board" }: { variant?: "board"
       // at the poll share forever and never learns from the count.
       poll_avg_shares: POLL_PRIOR,
     });
-  }, [gov, turnoutBasis, precinctRep]);
+  }, [gov, turnoutBasis, precinctRep, outstanding]);
 
   // Share of the projected electorate counted, which runs ahead of precincts
   // while the early-vote boards are being reported.
@@ -562,7 +587,17 @@ export default function OklahomaBoard({ variant = "board" }: { variant?: "board"
    * board is internally consistent and continuous from prior to final count.
    */
   const marginSdPP = Math.max(
-    STATEWIDE_FORECAST.marginSd * Math.sqrt(Math.max(0, 1 - fc.modeled_percent_reporting)),
+    Math.min(
+      STATEWIDE_FORECAST.marginSd * Math.sqrt(Math.max(0, 1 - fc.modeled_percent_reporting)),
+      // Uncertainty at the end of a count is bounded by the ballots left to
+      // create it. The √(1−reported) form is poll error, which decays far too
+      // slowly to notice that only a few thousand votes are outstanding, and it
+      // was still showing a coin-flip-ish number while the engine had enough to
+      // call. Whichever measure is tighter is the honest one.
+      fc.modeled_total_vote > 0
+        ? ((fc.sd_race * Math.SQRT2) / fc.modeled_total_vote) * 100
+        : Infinity,
+    ),
     0.1,
   );
   const marginLo = marginPP - 2 * marginSdPP;
@@ -588,13 +623,24 @@ export default function OklahomaBoard({ variant = "board" }: { variant?: "board"
   // Would call on the numbers alone, but Oklahoma is still voting.
   const embargoed = live && !embargoLifted && call.verdict === "CALLABLE";
 
+  // sd_race decays linearly with the outstanding vote, so z sails past three
+  // while the trailer can still catch up on what is left: at 99% of precincts a
+  // 2,060 margin with 3,750 ballots out scored 2.8 and one more tick took it to
+  // 5.6. A projection has to be arithmetic, not a z-score, so the margin must
+  // exceed everything still uncounted.
+  const noPathLeft = call.marginVotes > fc.modeled_vote_remaining;
+
   const deskCalled = DESK_CALL !== null && live && embargoLifted;
-  const modelCalled = live && embargoLifted && call.verdict === "CALLABLE";
-  const projectedKey: CandidateKey | null = deskCalled
-    ? DESK_CALL!.key
-    : modelCalled
-      ? CAND_KEYS[call.leader as keyof typeof CAND_KEYS] ?? leaderKey
-      : null;
+  const modelCalled = live && embargoLifted && call.verdict === "CALLABLE" && noPathLeft;
+
+  // A projection is a promise. Precinct counts get revised down and turnout
+  // estimates move, either of which would otherwise pull a call back off air.
+  const [latchedCall, setLatchedCall] = useState<CandidateKey | null>(null);
+  if (modelCalled && latchedCall === null) {
+    setLatchedCall(CAND_KEYS[call.leader as keyof typeof CAND_KEYS] ?? leaderKey);
+  }
+
+  const projectedKey: CandidateKey | null = deskCalled ? DESK_CALL!.key : latchedCall;
 
   const rState = getRaceState({
     percentReporting: live ? rep : 0,
@@ -863,7 +909,7 @@ export default function OklahomaBoard({ variant = "board" }: { variant?: "board"
                          ["--ring" as string]: CAND_CSS[leaderKey],
                        } as React.CSSProperties}
                        role="img"
-                       aria-label={`Win probability: ${CANDIDATE_LAST[leaderKey]} ${(winProb[leaderKey] ?? 0).toFixed(1)} percent`}>
+                       aria-label={`Win probability: ${CANDIDATE_LAST[leaderKey]} ${pctLabel(winProb[leaderKey] ?? 0)} percent`}>
                     <div className="ring-center">
                       <b>{pctLabel(winProb[leaderKey] ?? 0)}%</b>
                       <span>{CANDIDATE_LAST[leaderKey]}</span>
