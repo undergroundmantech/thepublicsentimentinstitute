@@ -796,7 +796,7 @@ export default function OklahomaBoard({ variant = "board" }: { variant?: "board"
           {!full && (
             <div className="archive-banner">
               <span>August 25, 2026</span>
-              <a href="/results/tonight">Full election night board →</a>
+              <a href="/results/archive/2026-08-25">Full election night board →</a>
             </div>
           )}
           <div className="race-kicker">

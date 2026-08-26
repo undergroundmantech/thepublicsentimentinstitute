@@ -4,10 +4,11 @@
  * ELECTIONS LANDING — the standing /results/tonight surface.
  *
  * Sits here between election nights. The primary-night boards it replaced stay
- * live and unchanged at /results/archive/2026-08-04 (Michigan et al) and
- * /results/archive/2026-08-18 (Florida, Wyoming, Alaska). Built in those
- * boards' design language: same `.desk` shell, tokens, mono chrome and card
- * anatomy, so nothing about the visual system changes.
+ * live and unchanged at /results/archive/2026-08-04 (Michigan et al),
+ * /results/archive/2026-08-18 (Florida, Wyoming, Alaska) and
+ * /results/archive/2026-08-25 (Oklahoma, South Carolina, Georgia runoffs).
+ * Built in those boards' design language: same `.desk` shell, tokens, mono
+ * chrome and card anatomy, so nothing about the visual system changes.
  *
  * The hero advertises the next election on the calendar. When that night
  * arrives, point NEXT_ELECTION at its board and the countdown/CTA follow.
@@ -35,6 +36,12 @@ const NEXT_ELECTION = {
 };
 
 const ARCHIVE = [
+  {
+    href: "/results/archive/2026-08-25",
+    date: "August 25, 2026",
+    label: "Oklahoma, South Carolina & Georgia runoffs",
+    note: "County forecast · Oklahoma governor Republican runoff, called for Mazzei by 2,047",
+  },
   {
     href: "/results/archive/2026-08-18",
     date: "August 18, 2026",

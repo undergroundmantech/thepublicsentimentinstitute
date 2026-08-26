@@ -17,6 +17,7 @@ export const metadata: Metadata = {
 
 /** Nights that have a whole-board archive route, not just per-race pages. */
 const NIGHT_BOARDS: Record<string, string> = {
+  "2026-08-25": "/results/archive/2026-08-25",
   "2026-08-18": "/results/archive/2026-08-18",
   "2026-08-04": "/results/archive/2026-08-04",
 };
