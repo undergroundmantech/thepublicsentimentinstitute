@@ -603,6 +603,13 @@ export default function OklahomaBoard({ variant = "board" }: { variant?: "board"
   const marginLo = marginPP - 2 * marginSdPP;
   const marginHi = marginPP + 2 * marginSdPP;
 
+  // Provisionals and cured absentees keep landing until the state certifies, so
+  // the board never claims the count is finished to the vote. Turnout rounds up
+  // to the next thousand and the outstanding figure holds a floor beneath it.
+  const projectedTurnoutLabel = Math.ceil(fc.modeled_total_vote / 1000) * 1000;
+  const remainingLabel =
+    fc.modeled_vote_remaining >= 1000 ? int(fc.modeled_vote_remaining) : ">1,000";
+
   const winProb = useMemo(() => {
     // Before any votes land the engine has nothing to add to the published
     // simulation, so show the published simulation rather than a re-derivation.
@@ -641,6 +648,15 @@ export default function OklahomaBoard({ variant = "board" }: { variant?: "board"
   }
 
   const projectedKey: CandidateKey | null = deskCalled ? DESK_CALL!.key : latchedCall;
+
+  // An AP call outranks our own projection, so the band names whoever the feed
+  // marks as the winner and falls back to the model only when the feed is silent.
+  const calledCand = cands.find((c) => c.winner === true);
+  const winnerKey: CandidateKey | null = calledCand
+    ? CANDIDATE_ORDER.find((k) =>
+        String(calledCand.name || "").toLowerCase().includes(CANDIDATE_MATCH[k]),
+      ) ?? projectedKey
+    : projectedKey;
 
   const rState = getRaceState({
     percentReporting: live ? rep : 0,
@@ -807,6 +823,20 @@ export default function OklahomaBoard({ variant = "board" }: { variant?: "board"
           {/* ═══ REPORTED RESULTS ═══ */}
           <article className="card span-3" aria-labelledby="results-title">
             <div className="topline-shell">
+              {winnerKey && (
+                <div className="winner-band"
+                     style={{ ["--winner" as string]: CAND_CSS[winnerKey] } as React.CSSProperties}>
+                  <span className="winner-badge" aria-hidden>✓</span>
+                  <div className="winner-copy">
+                    <span>Winner · {calledCand ? "race called" : "TPSI projection"}</span>
+                    <strong>{CANDIDATE_NAMES[winnerKey]} wins the Republican runoff</strong>
+                    <small>
+                      {signed(leadMarginPP)} margin · {int(leadGap)} votes · {pctLabel(rep)}% of the
+                      estimated vote counted
+                    </small>
+                  </div>
+                </div>
+              )}
               <header className="topline-header">
                 <div className="topline-title">
                   <h2 id="results-title">Reported results</h2>
@@ -906,7 +936,9 @@ export default function OklahomaBoard({ variant = "board" }: { variant?: "board"
                   <div className="prob-ring"
                        style={{
                          ["--value" as string]: winProb[leaderKey] ?? 0,
-                         ["--ring" as string]: CAND_CSS[leaderKey],
+                         ["--ring" as string]: projectedKey
+                           ? "var(--called)"
+                           : CAND_CSS[leaderKey],
                        } as React.CSSProperties}
                        role="img"
                        aria-label={`Win probability: ${CANDIDATE_LAST[leaderKey]} ${pctLabel(winProb[leaderKey] ?? 0)} percent`}>
@@ -1015,8 +1047,8 @@ export default function OklahomaBoard({ variant = "board" }: { variant?: "board"
               </div>
 
               <div className="model-stats">
-                <div><span>Projected turnout</span><b>{int(fc.modeled_total_vote)}</b></div>
-                <div><span>Votes remaining</span><b>{int(fc.modeled_vote_remaining)}</b></div>
+                <div><span>Projected turnout</span><b>~{int(projectedTurnoutLabel)}</b></div>
+                <div><span>Votes remaining</span><b>{remainingLabel}</b></div>
                 <div><span>Margin SD</span><b>±{marginSdPP.toFixed(1)} pts</b></div>
                 <div>
                   <span>Margin range (95%)</span>
@@ -1500,6 +1532,18 @@ html[data-theme="dark"] .desk{
 
 /* reported results */
 .topline-shell{padding:16px 18px 18px}
+.winner-band{display:flex;align-items:center;gap:13px;margin:-16px -18px 16px;padding:14px 18px;
+  border-bottom:1px solid var(--hairline);
+  border-left:3px solid var(--winner);
+  background:linear-gradient(90deg,color-mix(in srgb,var(--called) 16%,transparent),transparent 62%)}
+.winner-badge{flex:0 0 auto;width:26px;height:26px;border-radius:50%;display:grid;
+  place-content:center;font-size:14px;font-weight:800;color:var(--panel);
+  background:var(--called)}
+.winner-copy{min-width:0}
+.winner-copy span{display:block;font-family:var(--mono);font-size:8px;letter-spacing:.11em;
+  text-transform:uppercase;color:var(--called);font-weight:700}
+.winner-copy strong{display:block;font-size:18px;letter-spacing:-.02em;margin-top:3px}
+.winner-copy small{display:block;font-size:10.5px;color:var(--ink3);margin-top:3px}
 .topline-header{display:flex;justify-content:space-between;gap:14px;align-items:flex-start;
   flex-wrap:wrap}
 .topline-title h2{font-size:21px;line-height:1.12}
