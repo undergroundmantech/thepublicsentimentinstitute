@@ -35,7 +35,6 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   getRaceState,
-  GATE_THRESHOLD_PCT,
   getMsLeftToClose,
   formatCountdown,
   type RaceState,
@@ -401,7 +400,8 @@ export default function OklahomaBoard({ variant = "board" }: { variant?: "board"
   const { races, updated, stale, refresh } = useSlate(true);
   const now = useNow();
   const [mapMode, setMapMode] = useState<"margin" | "turnout">("margin");
-  const [countyView, setCountyView] = useState<"forecast" | "results">("forecast");
+  // Null means follow the count. An explicit pick sticks.
+  const [countyChoice, setCountyChoice] = useState<"forecast" | "results" | null>(null);
 
   const { counties: liveCountiesRaw, detail: govDetail } =
     useRaceDetail(OK_GOV_R, CANDIDATE_ORDER, CANDIDATE_MATCH);
@@ -494,8 +494,6 @@ export default function OklahomaBoard({ variant = "board" }: { variant?: "board"
   // Share of the projected electorate counted, which runs ahead of precincts
   // while the early-vote boards are being reported.
   const rep = live ? clampPct(fc.modeled_percent_reporting * 100) : 0;
-  const gated = live && rep < GATE_THRESHOLD_PCT;
-
 
   const call = useMemo(() => evaluateCall(fc, CAND_NAMES), [fc]);
 
@@ -503,6 +501,15 @@ export default function OklahomaBoard({ variant = "board" }: { variant?: "board"
     () => projectCounties(liveCounties, fc.modeled_total_vote),
     [liveCounties, fc.modeled_total_vote],
   );
+
+  const countiesReporting = useMemo(
+    () => Object.values(liveCounties).filter((c) => (c?.total ?? 0) > 0).length,
+    [liveCounties],
+  );
+
+  // The forecast view is the one carrying information until counties land; after
+  // that the actual returns lead.
+  const countyView = countyChoice ?? (countiesReporting > 0 ? "results" : "forecast");
 
   // The projected result is the county roll-up: it carries the shrunk swing.
   const projected = counties.statewide;
@@ -819,145 +826,132 @@ export default function OklahomaBoard({ variant = "board" }: { variant?: "board"
                 <span className="race-rule-pill">{MODEL.raceRule}</span>
               </div>
 
-              {gated ? (
-                <div className="gatebox">
-                  <div className="model-label">Forecast gated</div>
-                  <p className="prose">
-                    Held back below {GATE_THRESHOLD_PCT}% estimated reporting. Oklahoma
-                    counties post their absentee and early-voting boards first, and that
-                    pool is not a random sample of the electorate.
-                  </p>
+              <div className="forecast-model-layout">
+                <div className="forecast-hero">
+                  <div className="model-label">Win probability</div>
+                  <div className="prob-ring"
+                       style={{
+                         ["--value" as string]: winProb[leaderKey] ?? 0,
+                         ["--ring" as string]: CAND_CSS[leaderKey],
+                       } as React.CSSProperties}
+                       role="img"
+                       aria-label={`Win probability: ${CANDIDATE_LAST[leaderKey]} ${(winProb[leaderKey] ?? 0).toFixed(1)} percent`}>
+                    <div className="ring-center">
+                      <b>{pctLabel(winProb[leaderKey] ?? 0)}%</b>
+                      <span>{CANDIDATE_LAST[leaderKey]}</span>
+                    </div>
+                  </div>
                 </div>
-              ) : (
-                <div className="forecast-model-layout">
-                  <div className="forecast-hero">
-                    <div className="model-label">Win probability</div>
-                    <div className="prob-ring"
-                         style={{
-                           ["--value" as string]: winProb[leaderKey] ?? 0,
-                           ["--ring" as string]: CAND_CSS[leaderKey],
-                         } as React.CSSProperties}
-                         role="img"
-                         aria-label={`Win probability: ${CANDIDATE_LAST[leaderKey]} ${(winProb[leaderKey] ?? 0).toFixed(1)} percent`}>
-                      <div className="ring-center">
-                        <b>{pctLabel(winProb[leaderKey] ?? 0)}%</b>
-                        <span>{CANDIDATE_LAST[leaderKey]}</span>
+
+                <div className="forecast-support">
+                  <div>
+                    <div className="model-label">Top outcomes</div>
+                    {CANDIDATE_ORDER.map((k) => (
+                      <div className="outcome-row" key={k}>
+                        <i style={{ background: CAND_CSS[k] }} aria-hidden />
+                        <span>{CANDIDATE_LAST[k]} wins</span>
+                        <b>{pctLabel(winProb[k] ?? 0)}%</b>
                       </div>
+                    ))}
+                    {/* A runoff has two names and no residual: the two
+                        probabilities are complementary by construction. */}
+                    <div className="outcome-row muted">
+                      <i style={{ background: "var(--ink3)" }} aria-hidden />
+                      <span>No third option</span>
+                      <b>—</b>
                     </div>
                   </div>
 
-                  <div className="forecast-support">
-                    <div>
-                      <div className="model-label">Top outcomes</div>
-                      {CANDIDATE_ORDER.map((k) => (
-                        <div className="outcome-row" key={k}>
-                          <i style={{ background: CAND_CSS[k] }} aria-hidden />
-                          <span>{CANDIDATE_LAST[k]} wins</span>
-                          <b>{pctLabel(winProb[k] ?? 0)}%</b>
-                        </div>
-                      ))}
-                      {/* A runoff has two names and no residual: the two
-                          probabilities are complementary by construction. */}
-                      <div className="outcome-row muted">
-                        <i style={{ background: "var(--ink3)" }} aria-hidden />
-                        <span>No third option</span>
-                        <b>—</b>
-                      </div>
+                  <div className="reporting-module">
+                    <div className="reporting-copy">
+                      <span>Model-estimated</span><b>Percent reporting</b>
                     </div>
-
-                    <div className="reporting-module">
-                      <div className="reporting-copy">
-                        <span>Model-estimated</span><b>Percent reporting</b>
-                      </div>
-                      <div className="rep-ring"
-                           style={{ ["--value" as string]: Math.min(modeledRep, 100) } as React.CSSProperties}
-                           role="img" aria-label={`Model-estimated reporting ${pctLabel(modeledRep)} percent`}>
-                        <div className="ring-center sm">
-                          <b>{pctLabel(modeledRep)}%</b>
-                          <span>reporting</span>
-                        </div>
+                    <div className="rep-ring"
+                         style={{ ["--value" as string]: Math.min(modeledRep, 100) } as React.CSSProperties}
+                         role="img" aria-label={`Model-estimated reporting ${pctLabel(modeledRep)} percent`}>
+                      <div className="ring-center sm">
+                        <b>{pctLabel(modeledRep)}%</b>
+                        <span>reporting</span>
                       </div>
                     </div>
                   </div>
                 </div>
-              )}
+              </div>
             </section>
 
-            {!gated && (
-              <section className="projection-zone" aria-label="Forecasted final result">
-                <div className="projected-top">
-                  <div className="projected-intro">
-                    <span className="model-label">
-                      {projectedKey ? "TPSI projection" : "Model projection · not actual results"}
-                    </span>
-                    <div className="projected-name">
-                      {projectedKey
-                        ? `${CANDIDATE_LAST[projectedKey]} wins`
-                        : `${CANDIDATE_LAST[leaderKey]} projected ahead`}
-                    </div>
-                    <p className="projection-headline prose">{headline}</p>
+            <section className="projection-zone" aria-label="Forecasted final result">
+              <div className="projected-top">
+                <div className="projected-intro">
+                  <span className="model-label">
+                    {projectedKey ? "TPSI projection" : "Model projection · not actual results"}
+                  </span>
+                  <div className="projected-name">
+                    {projectedKey
+                      ? `${CANDIDATE_LAST[projectedKey]} wins`
+                      : `${CANDIDATE_LAST[leaderKey]} projected ahead`}
                   </div>
-                  <div className="projected-margin-wrap">
-                    <span>Projected margin</span>
-                    <b style={{ color: CAND_CSS[leaderKey] }}>{signed(marginPP)}</b>
-                    <small>{CANDIDATE_LAST[leaderKey]} over {CANDIDATE_LAST[ranked[1].k]}</small>
-                  </div>
+                  <p className="projection-headline prose">{headline}</p>
                 </div>
-
-                <div className="projection-head">
-                  <div>
-                    <strong>Projected final vote share</strong>
-                    <small>
-                      Muted bars indicate a forecast, not certified results. They use
-                      the same 0 to 100% scale as the reported-results bars, and are
-                      the sum of all 77 county projections.
-                    </small>
-                  </div>
-                  <span className="model-label">Forecast only</span>
+                <div className="projected-margin-wrap">
+                  <span>Projected margin</span>
+                  <b style={{ color: CAND_CSS[leaderKey] }}>{signed(marginPP)}</b>
+                  <small>{CANDIDATE_LAST[leaderKey]} over {CANDIDATE_LAST[ranked[1].k]}</small>
                 </div>
+              </div>
 
-                <div className="projected-bars">
-                  {ranked.map(({ k, share: s }) => {
-                    const liveCand = cands.find((x) =>
-                      String(x.name || "").toLowerCase().includes(CANDIDATE_MATCH[k]),
-                    );
-                    const actual = live && liveCand ? share(liveCand, cands) : null;
-                    const delta = actual != null ? s - actual : null;
-                    return (
-                      <div className="projected-bar-row" key={k}>
-                        <div className="projected-bar-name">
-                          <i style={{ background: CAND_CSS[k] }} aria-hidden />
-                          <span>{CANDIDATE_LAST[k]}</span>
-                        </div>
-                        {/* Projected fill is muted and dashed, never solid */}
-                        <div className="projected-bar-track">
-                          <span className="projected-bar-fill"
-                                style={{ width: `${s}%`, borderColor: CAND_CSS[k] }} />
-                        </div>
-                        <div className="projected-bar-value">{s.toFixed(1)}%</div>
-                        <div className="projected-bar-delta">
-                          {delta != null
-                            ? `${delta >= 0 ? "+" : "−"}${Math.abs(delta).toFixed(1)} vs now`
-                            : "projected"}
-                        </div>
+              <div className="projection-head">
+                <div>
+                  <strong>Projected final vote share</strong>
+                  <small>
+                    Muted bars indicate a forecast, not certified results. They use
+                    the same 0 to 100% scale as the reported-results bars, and are
+                    the sum of all 77 county projections.
+                  </small>
+                </div>
+                <span className="model-label">Forecast only</span>
+              </div>
+
+              <div className="projected-bars">
+                {ranked.map(({ k, share: s }) => {
+                  const liveCand = cands.find((x) =>
+                    String(x.name || "").toLowerCase().includes(CANDIDATE_MATCH[k]),
+                  );
+                  const actual = live && liveCand ? share(liveCand, cands) : null;
+                  const delta = actual != null ? s - actual : null;
+                  return (
+                    <div className="projected-bar-row" key={k}>
+                      <div className="projected-bar-name">
+                        <i style={{ background: CAND_CSS[k] }} aria-hidden />
+                        <span>{CANDIDATE_LAST[k]}</span>
                       </div>
-                    );
-                  })}
-                </div>
+                      {/* Projected fill is muted and dashed, never solid */}
+                      <div className="projected-bar-track">
+                        <span className="projected-bar-fill"
+                              style={{ width: `${s}%`, borderColor: CAND_CSS[k] }} />
+                      </div>
+                      <div className="projected-bar-value">{s.toFixed(1)}%</div>
+                      <div className="projected-bar-delta">
+                        {delta != null
+                          ? `${delta >= 0 ? "+" : "−"}${Math.abs(delta).toFixed(1)} vs now`
+                          : "projected"}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
 
-                <div className="model-stats">
-                  <div><span>Projected turnout</span><b>{int(fc.modeled_total_vote)}</b></div>
-                  <div><span>Votes remaining</span><b>{int(fc.modeled_vote_remaining)}</b></div>
-                  <div><span>Margin SD</span><b>±{marginSdPP.toFixed(1)} pts</b></div>
-                  <div>
-                    <span>Margin range (95%)</span>
-                    <b>{signed(marginLo)} to {signed(marginHi)}</b>
-                  </div>
+              <div className="model-stats">
+                <div><span>Projected turnout</span><b>{int(fc.modeled_total_vote)}</b></div>
+                <div><span>Votes remaining</span><b>{int(fc.modeled_vote_remaining)}</b></div>
+                <div><span>Margin SD</span><b>±{marginSdPP.toFixed(1)} pts</b></div>
+                <div>
+                  <span>Margin range (95%)</span>
+                  <b>{signed(marginLo)} to {signed(marginHi)}</b>
                 </div>
+              </div>
 
-                <div className="no-history">No history snapshots · live data only</div>
-              </section>
-            )}
+              <div className="no-history">No history snapshots · live data only</div>
+            </section>
           </article>
         </div>
 
@@ -967,9 +961,9 @@ export default function OklahomaBoard({ variant = "board" }: { variant?: "board"
           <div className="county-head">
             <div className="rd-view-toggles" role="group" aria-label="County view">
               <button type="button" className={countyView === "forecast" ? "on" : ""}
-                      onClick={() => setCountyView("forecast")}>forecast</button>
+                      onClick={() => setCountyChoice("forecast")}>forecast</button>
               <button type="button" className={countyView === "results" ? "on" : ""}
-                      onClick={() => setCountyView("results")}>results</button>
+                      onClick={() => setCountyChoice("results")}>results</button>
             </div>
             {countyView === "forecast" && (
               <div className="rd-map-toggles" role="group" aria-label="County map shading">
@@ -1032,25 +1026,6 @@ export default function OklahomaBoard({ variant = "board" }: { variant?: "board"
             the outstanding vote sits — projected turnout is drawn from registration and
             past runoffs, and is far more reliable than any county share.
           </p>
-
-          {/* The projection zone carries these while the forecast is live; when it
-              is gated they are still the plainest description of the count. */}
-          {gated && (
-            <div className="mech-box">
-              <div className="model-label">Where the count stands</div>
-              <div className="swing-grid">
-                <div><span>Projected turnout</span><b>{int(fc.modeled_total_vote)}</b></div>
-                <div><span>Votes counted</span><b>{int(counted(gov))}</b></div>
-                <div><span>Votes remaining</span><b>{int(fc.modeled_vote_remaining)}</b></div>
-                <div><span>Margin SD</span><b>±{marginSdPP.toFixed(1)} pts</b></div>
-              </div>
-              <p className="prose">
-                Turnout is projected from ballots already cast, not from precincts closed —
-                counties post their absentee and early-voting boards first, so the precinct
-                count runs behind the count itself.
-              </p>
-            </div>
-          )}
 
           <OklahomaCountyTable view={countyView} counties={counties.list}
                                statewide={counties.statewide} liveCounties={liveCounties} />
