@@ -2093,9 +2093,9 @@ export const TURNOUT_MODEL = {
   /** Ballots cast in the June first round. */
   firstRound: 403099,
   /** Median projected runoff turnout. */
-  projected: 290000,
+  projected: 375000,
   /** Projected turnout as a share of registered Republicans. */
-  pctOfRegistered: 22.7,
+  pctOfRegistered: 29.2,
 };
 
 export const FORECAST_META = {
