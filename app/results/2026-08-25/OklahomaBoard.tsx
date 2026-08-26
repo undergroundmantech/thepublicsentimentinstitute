@@ -311,6 +311,29 @@ const pctLabel = (p: number) =>
 
 const signed = (n: number) => `${n >= 0 ? "+" : "−"}${Math.abs(n).toFixed(1)}`;
 
+/** Guard against a bad precinct update implying an absurd statewide total. */
+const IMPLIED_CAP = 10;
+
+/**
+ * Projects total ballots cast from the count so far.
+ *
+ * Completeness has to come from precincts. Feeding in a reporting figure that
+ * was itself derived from the turnout prior makes the implied total equal that
+ * prior by construction — counted / (counted / prior) is just prior — so the
+ * projection can never move off its own assumption no matter how the night
+ * goes. Precincts are the only signal that says how much of the count is done
+ * without reference to how big we guessed the electorate would be.
+ *
+ * With no precincts in there is genuinely no information about turnout, so this
+ * returns the prior. Mirrors the blend in electoralModel step 1 at blend_k = 1.
+ */
+function projectTurnout(countedVotes: number, precinctPct: number, prior: number) {
+  const pct = clampPct(precinctPct) / 100;
+  if (pct <= 0) return Math.max(prior, countedVotes);
+  const implied = Math.min(countedVotes / pct, prior * IMPLIED_CAP);
+  return Math.max((1 - pct) * prior + pct * implied, countedVotes);
+}
+
 const partyOf = (p?: string) => {
   const s = String(p || "").toLowerCase();
   if (/democr/.test(s)) return "d";
@@ -387,8 +410,10 @@ export default function OklahomaBoard({ variant = "board" }: { variant?: "board"
 
   const liveCounties = liveCountiesRaw as Record<string, LiveCounty>;
 
-  // No banked-ballot feed exists for Oklahoma the way Fresh Take covers Florida,
-  // so turnout stays a registration-and-history prior all night.
+  // No banked-ballot feed exists for Oklahoma the way Fresh Take covers
+  // Florida, so registration and history set the opening turnout prior. The
+  // count then moves it: forecastRace blends this against the total implied by
+  // precincts reporting, so the projection tightens as the night goes on.
   const turnoutBasis = TURNOUT_MODEL.projected;
 
   // The detail payload carries the whole field; the slate entry carries the
@@ -418,9 +443,6 @@ export default function OklahomaBoard({ variant = "board" }: { variant?: "board"
   // electorate is already counted. EST. REPORTING leads (raceState §2) and is
   // measured against the electorate; PRECINCTS stays visible as its own number.
   const precinctRep = estRep(gov);
-  const voteRep = turnoutBasis > 0 ? clampPct((counted(gov) / turnoutBasis) * 100) : 0;
-  const rep = Math.max(precinctRep, voteRep);
-  const gated = live && rep < GATE_THRESHOLD_PCT;
   const msLeft = getMsLeftToClose(MODEL.close, now);
 
   const stamp = updated
@@ -453,7 +475,8 @@ export default function OklahomaBoard({ variant = "board" }: { variant?: "board"
 
     return forecastRace({
       race_rule: "PLURALITY",
-      percent_reporting: clampPct(rep) / 100,
+      // Precincts, not our own vote-share estimate — see projectTurnout.
+      percent_reporting: clampPct(precinctRep) / 100,
       reported_vote_total: total,
       expected_turnout: turnoutBasis,
       reported_share: {
@@ -466,7 +489,13 @@ export default function OklahomaBoard({ variant = "board" }: { variant?: "board"
       // at the poll share forever and never learns from the count.
       poll_avg_shares: POLL_PRIOR,
     });
-  }, [gov, turnoutBasis, rep]);
+  }, [gov, turnoutBasis, precinctRep]);
+
+  // Share of the projected electorate counted, which runs ahead of precincts
+  // while the early-vote boards are being reported.
+  const rep = live ? clampPct(fc.modeled_percent_reporting * 100) : 0;
+  const gated = live && rep < GATE_THRESHOLD_PCT;
+
 
   const call = useMemo(() => evaluateCall(fc, CAND_NAMES), [fc]);
 
@@ -583,12 +612,14 @@ export default function OklahomaBoard({ variant = "board" }: { variant?: "board"
     return [...all].sort((a, b) => rank(a) - rank(b) || String(a.name).localeCompare(String(b.name)));
   }, [sc, scLive]);
   const scCounted = counted(sc);
-  const scRep = Math.max(
-    estRep(sc),
-    SC_TURNOUT_MODEL.projected > 0
-      ? clampPct((scCounted / SC_TURNOUT_MODEL.projected) * 100)
-      : 0,
+  const scPrecinct = estRep(sc);
+  const scProjectedTurnout = projectTurnout(
+    scCounted,
+    scPrecinct,
+    SC_TURNOUT_MODEL.projected,
   );
+  const scRep =
+    scProjectedTurnout > 0 ? clampPct((scCounted / scProjectedTurnout) * 100) : 0;
   const scMsLeft = getMsLeftToClose(SC_C, now);
   const scCountiesReporting = useMemo(
     () => Object.values(scCounties).filter((c) => c.total > 0).length,
@@ -1129,7 +1160,7 @@ export default function OklahomaBoard({ variant = "board" }: { variant?: "board"
               </div>
 
               <div className="model-stats">
-                <div><span>Projected turnout</span><b>{int(SC_TURNOUT_MODEL.projected)}</b></div>
+                <div><span>Projected turnout</span><b>{int(scLive ? scProjectedTurnout : SC_TURNOUT_MODEL.projected)}</b></div>
                 <div><span>First round</span><b>{int(SC_TURNOUT_MODEL.firstRound)}</b></div>
                 <div><span>Votes counted</span><b>{scLive ? int(scCounted) : "0"}</b></div>
                 <div><span>Est. reporting</span><b>{scLive ? `${pctLabel(scRep)}%` : "0%"}</b></div>
