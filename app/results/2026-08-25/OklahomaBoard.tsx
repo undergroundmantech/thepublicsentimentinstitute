@@ -397,13 +397,17 @@ function phi(z: number): number {
   return z >= 0 ? 1 - p : p;
 }
 
-/** House rule: a winner is marked with a filled check, never a colour dot. */
-const CandDot = ({ won, color }: { won: boolean; color: string }) =>
-  won ? (
-    <span className="topline-dot won" aria-hidden>✓</span>
-  ) : (
-    <span className="topline-dot" style={{ background: color }} />
-  );
+/** House rule: a winner is marked with a filled check, never a colour dot. The
+ *  slot is a fixed size either way so names stay aligned down the column. */
+const CandDot = ({ won, color }: { won: boolean; color: string }) => (
+  <span className="topline-mark" aria-hidden>
+    {won ? (
+      <i className="topline-check">✓</i>
+    ) : (
+      <i className="topline-dot" style={{ background: color }} />
+    )}
+  </span>
+);
 
 /** Sentence-case status, matching the prototype's race-meta block. */
 const STATUS_COPY: Record<RaceState, string> = {
@@ -1410,6 +1414,7 @@ function SlateCard({ entry, race }: { entry: Entry; race?: Race }) {
   const all = sortC(race);
   const show = all.slice(0, 2);
   const live = isLive(race);
+  const marked = all.some((c) => c.winner === true);
   const st = getRaceState({
     percentReporting: live ? estRep(race) : 0,
     hasOfficialCall: officialCall(race),
@@ -1433,8 +1438,10 @@ function SlateCard({ entry, race }: { entry: Entry; race?: Race }) {
           {show.map((c, i) => (
             <div className="l4-row" key={c.name || i}>
               <span className="l4-nm">
-                {c.winner && <i className="l4-check" aria-hidden>✓</i>}
-                {c.name}
+                {marked && (
+                  <i className={c.winner ? "l4-check" : "l4-check ghost"} aria-hidden>✓</i>
+                )}
+                <span>{c.name}</span>
               </span>
               <span className="l4-pct">{pctLabel(share(c, all))}%</span>
               <div className="l4-bar">
@@ -1567,10 +1574,10 @@ html[data-theme="dark"] .desk{
 .topline-row:last-child{border-bottom:none}
 .topline-row-top{display:grid;grid-template-columns:1fr 90px 74px;gap:10px;align-items:center}
 .topline-candidate{display:flex;gap:10px;align-items:flex-start;min-width:0}
-.topline-dot{width:9px;height:9px;border-radius:50%;margin-top:5px;flex:0 0 auto}
-.topline-dot.won{width:17px;height:17px;margin-top:1px;margin-left:-4px;display:grid;
-  place-content:center;font-size:10px;font-weight:800;color:var(--panel);
-  background:var(--called)}
+.topline-mark{flex:0 0 18px;height:18px;display:grid;place-content:center;margin-top:1px}
+.topline-dot{width:9px;height:9px;border-radius:50%}
+.topline-check{width:17px;height:17px;border-radius:50%;display:grid;place-content:center;
+  font-size:10px;font-weight:800;font-style:normal;color:var(--panel);background:var(--called)}
 .topline-copy{min-width:0}
 .topline-copy strong{display:block;font-size:15px;font-weight:700;letter-spacing:-.01em}
 .topline-copy small{display:block;font-family:var(--mono);font-size:8.5px;letter-spacing:.08em;
@@ -1851,10 +1858,12 @@ html[data-theme="dark"] .desk{
 .l4-called{color:var(--called)}
 .l4-body{display:flex;flex-direction:column;gap:9px}
 .l4-row{display:grid;grid-template-columns:1fr auto;gap:4px 8px}
-.l4-nm{font-size:11.5px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.l4-check{display:inline-grid;place-content:center;width:13px;height:13px;border-radius:50%;
-  margin-right:5px;vertical-align:-2px;font-size:8px;font-weight:800;font-style:normal;
+.l4-nm{display:flex;align-items:center;gap:5px;min-width:0;font-size:11.5px;font-weight:600}
+.l4-nm span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.l4-check{flex:0 0 13px;display:inline-grid;place-content:center;width:13px;height:13px;
+  border-radius:50%;font-size:8px;font-weight:800;font-style:normal;
   color:var(--panel);background:var(--called)}
+.l4-check.ghost{visibility:hidden}
 .l4-pct{font-size:12px;font-weight:800}
 .l4-bar{grid-column:1/-1;height:4px;border-radius:99px;background:var(--panel3);overflow:hidden}
 .l4-bar span{display:block;height:100%;border-radius:99px;
