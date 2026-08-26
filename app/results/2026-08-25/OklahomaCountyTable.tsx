@@ -13,7 +13,7 @@ import { fmtReporting } from "./countyForecast";
 
 const fmtInt = (n: number) => Math.round(Number(n) || 0).toLocaleString("en-US");
 
-type SortKey = "turnout" | "az" | "region" | "margin" | CandidateKey;
+type SortKey = "turnout" | "az" | "region" | "margin" | "reporting" | CandidateKey;
 
 interface Props {
   view: "forecast" | "results";
@@ -81,6 +81,8 @@ export default function OklahomaCountyTable({ view, counties, liveCounties }: Pr
         if (sort === "region")
           return a.c.region.localeCompare(b.c.region) || b.turnout - a.turnout;
         if (sort === "margin") return b.margin - a.margin;
+        // Least complete first, so whatever is still outstanding leads.
+        if (sort === "reporting") return a.c.reporting - b.c.reporting || b.turnout - a.turnout;
         if (sort === "turnout") return b.turnout - a.turnout || a.c.name.localeCompare(b.c.name);
         return b.shares[sort] - a.shares[sort];
       });
@@ -116,6 +118,7 @@ export default function OklahomaCountyTable({ view, counties, liveCounties }: Pr
               ["turnout", view === "results" ? "votes" : "turnout"],
               ["az", "a–z"],
               ["region", "region"],
+              ["reporting", "reporting"],
               ["margin", "margin"],
               ...CANDIDATE_ORDER.map((k) => [k, CANDIDATE_LAST[k].toLowerCase()]),
             ] as [SortKey, string][]

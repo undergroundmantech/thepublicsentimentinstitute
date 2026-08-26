@@ -304,9 +304,9 @@ const share = (c: Cand, all: Cand[]) => {
 
 const int = (n?: number) => Math.round(Number(n) || 0).toLocaleString("en-US");
 
-/** Design System §6 — >99 and <1 at the extremes. */
+/** Design System §6 — >99 and <1 at the extremes; nothing prints a flat 100. */
 const pctLabel = (p: number) =>
-  p >= 99.95 && p < 100 ? ">99" : p > 0 && p < 0.05 ? "<1" : p.toFixed(1);
+  p >= 99.95 ? ">99" : p > 0 && p < 0.05 ? "<1" : p.toFixed(1);
 
 const signed = (n: number) => `${n >= 0 ? "+" : "−"}${Math.abs(n).toFixed(1)}`;
 
