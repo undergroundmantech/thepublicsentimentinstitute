@@ -15,6 +15,7 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { OK_COUNTY_PATHS, OK_VIEWBOX } from "../_data/okCountyGeo";
 import { CANDIDATE_ORDER, CANDIDATE_LAST, type CandidateKey } from "../_data/okCountyForecast";
 import type { CountyProjection, LiveCounty } from "./countyForecast";
+import { fmtReporting } from "./countyForecast";
 
 export type MapView = "forecast" | "results";
 export type ForecastMode = "margin" | "turnout";
@@ -354,7 +355,7 @@ export default function OklahomaCountyMap({ view, mode, counties, liveCounties }
                   </div>
                 ))}
                 <div className="ok-tip-sub">
-                  {fmtInt(live.total)} counted · {live.reporting.toFixed(0)}% reporting
+                  {fmtInt(live.total)} counted · {fmtReporting(live.reporting)}% reporting
                 </div>
               </>
             ) : (
@@ -375,7 +376,7 @@ export default function OklahomaCountyMap({ view, mode, counties, liveCounties }
               <div className="ok-tip-sub">
                 {fmtInt(hover.c.projectedTurnout)} projected ballots ·{" "}
                 {hover.c.reporting > 0
-                  ? `${hover.c.reporting.toFixed(0)}% reporting`
+                  ? `${fmtReporting(hover.c.reporting)}% reporting`
                   : "no returns yet"}
               </div>
               {hover.c.tooCloseToCall && <div className="ok-tip-flag">Too close to call</div>}

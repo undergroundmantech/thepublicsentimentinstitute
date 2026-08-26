@@ -44,6 +44,18 @@ export type LiveCounty = {
   reporting: number;
 };
 
+/**
+ * At or above this, a county is treated as fully counted. What is left at 95%
+ * is provisionals and cured absentees that trickle in over the following days,
+ * not election-night vote — leaving those precincts open makes the model hold
+ * back outstanding ballots that are never going to arrive.
+ */
+export const COUNTY_COMPLETE_PCT = 95;
+
+/** Nothing reads as a flat 100% on air before certification. */
+export const fmtReporting = (pct: number) =>
+  pct >= COUNTY_COMPLETE_PCT ? ">99" : pct.toFixed(0);
+
 export interface CountyProjection {
   key: string;
   name: string;

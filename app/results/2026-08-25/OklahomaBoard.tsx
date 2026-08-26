@@ -42,7 +42,7 @@ import {
 import OklahomaCountyMap, { CAND_CSS } from "./OklahomaCountyMap";
 import OklahomaCountyTable from "./OklahomaCountyTable";
 import SouthCarolinaCountyMap, { SC_CAND_CSS, type ScLiveCounty } from "./SouthCarolinaCountyMap";
-import { projectCounties, type LiveCounty } from "./countyForecast";
+import { projectCounties, COUNTY_COMPLETE_PCT, type LiveCounty } from "./countyForecast";
 import {
   CANDIDATE_ORDER,
   CANDIDATE_LAST,
@@ -408,7 +408,14 @@ export default function OklahomaBoard({ variant = "board" }: { variant?: "board"
   const { counties: scCounties, detail: scDetail } =
     useRaceDetail(SC_SEN_R, SC_CANDIDATE_ORDER, SC_CANDIDATE_MATCH);
 
-  const liveCounties = liveCountiesRaw as Record<string, LiveCounty>;
+  const liveCounties = useMemo(() => {
+    const raw = liveCountiesRaw as Record<string, LiveCounty>;
+    const out: Record<string, LiveCounty> = {};
+    for (const [name, c] of Object.entries(raw)) {
+      out[name] = c.reporting >= COUNTY_COMPLETE_PCT ? { ...c, reporting: 100 } : c;
+    }
+    return out;
+  }, [liveCountiesRaw]);
 
   // No banked-ballot feed exists for Oklahoma the way Fresh Take covers
   // Florida, so registration and history set the opening turnout prior. The

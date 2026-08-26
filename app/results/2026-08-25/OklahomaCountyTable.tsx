@@ -9,6 +9,7 @@ import React, { useMemo, useState } from "react";
 import { CANDIDATE_ORDER, CANDIDATE_LAST, type CandidateKey } from "../_data/okCountyForecast";
 import { CAND_CSS } from "./OklahomaCountyMap";
 import type { CountyProjection, LiveCounty } from "./countyForecast";
+import { fmtReporting } from "./countyForecast";
 
 const fmtInt = (n: number) => Math.round(Number(n) || 0).toLocaleString("en-US");
 
@@ -173,7 +174,7 @@ export default function OklahomaCountyTable({ view, counties, liveCounties }: Pr
                     ) : null}
                   </td>
                   <td className="ok-region-cell">{r.c.region}</td>
-                  <td className="num">{r.c.reporting.toFixed(0)}%</td>
+                  <td className="num">{fmtReporting(r.c.reporting)}%</td>
                   <td className="num">{fmtInt(r.turnout)}</td>
                   {CANDIDATE_ORDER.map((k) => cell(r, k))}
                   <td className="num">
