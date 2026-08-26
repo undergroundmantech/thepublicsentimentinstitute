@@ -1028,7 +1028,7 @@ export default function OklahomaBoard({ variant = "board" }: { variant?: "board"
           </p>
 
           <OklahomaCountyTable view={countyView} counties={counties.list}
-                               statewide={counties.statewide} liveCounties={liveCounties} />
+                               liveCounties={liveCounties} />
         </section>
 
         {/* ═══ SOUTH CAROLINA ═══ */}
@@ -1626,15 +1626,6 @@ html[data-theme="dark"] .desk{
 .rd-cand-votes{color:var(--ink3);font-size:10.5px}
 .rd-cand-tcc{display:inline-block;width:6px;height:6px;border-radius:50%;margin-left:7px;
   background:var(--gold);vertical-align:middle}
-.rd-county-table tfoot td{position:sticky;bottom:0;z-index:1;background:var(--panel3);
-  padding:12px;border-top:1px solid var(--hairline2);color:var(--ink);font-weight:400}
-.rd-statewide-label{display:flex;flex-direction:column;gap:1px;line-height:1.25}
-.rd-statewide-label strong{font-size:13px;font-weight:700}
-.rd-statewide-label small{font-family:var(--mono);font-size:9.5px;letter-spacing:.06em;
-  text-transform:uppercase;color:var(--ink3)}
-.rd-county-table tfoot .rd-statewide-dim{color:var(--ink2);font-family:var(--mono);font-size:12px}
-.rd-county-table tfoot .rd-cand-cell b{font-size:13px}
-.rd-statewide-margin{font-family:var(--mono);font-size:12px;font-weight:700;white-space:nowrap}
 @media(max-width:900px){
   .rd-cand-votes{display:none}
   .ok-county-table{font-size:11.5px}

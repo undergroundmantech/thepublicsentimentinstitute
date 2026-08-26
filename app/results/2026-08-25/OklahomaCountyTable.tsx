@@ -17,7 +17,6 @@ type SortKey = "turnout" | "az" | "region" | "margin" | CandidateKey;
 interface Props {
   view: "forecast" | "results";
   counties: CountyProjection[];
-  statewide: CountyProjection;
   liveCounties?: Record<string, LiveCounty>;
 }
 
@@ -32,7 +31,7 @@ type Row = {
 
 const emptyTally = (): Record<CandidateKey, number> => ({ drummond: 0, mazzei: 0 });
 
-export default function OklahomaCountyTable({ view, counties, statewide, liveCounties }: Props) {
+export default function OklahomaCountyTable({ view, counties, liveCounties }: Props) {
   const [q, setQ] = useState("");
   const [sort, setSort] = useState<SortKey>("turnout");
 
@@ -85,49 +84,6 @@ export default function OklahomaCountyTable({ view, counties, statewide, liveCou
         return b.shares[sort] - a.shares[sort];
       });
   }, [q, sort, view, counties, liveCounties]);
-
-  const totals = useMemo<Row>(() => {
-    if (view === "forecast") {
-      return {
-        c: statewide,
-        turnout: statewide.projectedTurnout,
-        shares: statewide.shares,
-        votes: statewide.votes,
-        leader: statewide.leader,
-        margin: statewide.margin,
-      };
-    }
-    const votes = emptyTally();
-    let total = 0;
-    for (const c of counties) {
-      const lc = liveCounties?.[c.name.toUpperCase()];
-      if (!lc) continue;
-      total += lc.total;
-      for (const k of CANDIDATE_ORDER) votes[k] += lc.votes[k] ?? 0;
-    }
-    const shares = (
-      total
-        ? Object.fromEntries(CANDIDATE_ORDER.map((k) => [k, (votes[k] / total) * 100]))
-        : emptyTally()
-    ) as Record<CandidateKey, number>;
-    const ordered = CANDIDATE_ORDER.map((k) => [k, shares[k]] as [CandidateKey, number]).sort(
-      (a, b) => b[1] - a[1],
-    );
-    return {
-      c: statewide,
-      turnout: total,
-      shares,
-      votes,
-      leader: ordered[0][0],
-      margin: total ? ordered[0][1] - ordered[1][1] : 0,
-    };
-  }, [view, counties, statewide, liveCounties]);
-
-  // Turnout-weighted, so a finished Cimarron doesn't outweigh a lagging Oklahoma County.
-  const statewideReporting = useMemo(() => {
-    const w = counties.reduce((s, c) => s + c.projectedTurnout, 0);
-    return w > 0 ? counties.reduce((s, c) => s + c.reporting * c.projectedTurnout, 0) / w : 0;
-  }, [counties]);
 
   const cell = (r: Row, k: CandidateKey) => (
     <td className="num" key={k}>
@@ -231,29 +187,6 @@ export default function OklahomaCountyTable({ view, counties, statewide, liveCou
               ))
             )}
           </tbody>
-          {rows.length > 0 ? (
-            <tfoot>
-              <tr>
-                <td className="rd-statewide-label">
-                  <strong>Statewide</strong>
-                  <small>{view === "forecast" ? "projected" : "counted"}</small>
-                </td>
-                <td />
-                <td className="num rd-statewide-dim">{statewideReporting.toFixed(0)}%</td>
-                <td className="num rd-statewide-dim">{fmtInt(totals.turnout)}</td>
-                {CANDIDATE_ORDER.map((k) => cell(totals, k))}
-                <td className="num">
-                  {totals.turnout > 0 ? (
-                    <span className="rd-statewide-margin" style={{ color: CAND_CSS[totals.leader] }}>
-                      {CANDIDATE_LAST[totals.leader]} +{totals.margin.toFixed(1)}
-                    </span>
-                  ) : (
-                    "—"
-                  )}
-                </td>
-              </tr>
-            </tfoot>
-          ) : null}
         </table>
       </div>
     </div>
