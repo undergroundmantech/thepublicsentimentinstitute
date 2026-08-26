@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ELECTION_DATES, getRacesByDate, formatElectionDate, getRaceUrl } from "../_data/raceRegistry";
+import { SITE_V2 } from "../../lib/flags";
 
 export const metadata: Metadata = {
   title: "Election Results Archive · TPSI",
@@ -22,6 +23,17 @@ const NIGHT_BOARDS: Record<string, string> = {
   "2026-08-04": "/results/archive/2026-08-04",
 };
 
+/**
+ * The only races with a page of their own. Every other /results/<date>/<slug>
+ * URL rewrites to /results, and v2 answers that with the elections landing page
+ * unless a ?date= comes with it — so the rest of the archive has to point at a
+ * night board or at the hub for its date, never at a bare slug.
+ */
+const RACE_PAGES = new Set([
+  "oklahoma-governor-republican-runoff",
+  "florida-governor-republican-primary",
+]);
+
 export default function ResultsArchive() {
   return (
     <main style={{ maxWidth: 900, margin: "0 auto", padding: "40px 16px 80px", fontFamily: "var(--font-body)" }}>
@@ -40,6 +52,12 @@ export default function ResultsArchive() {
       <div style={{ display: "flex", flexDirection: "column", gap: 32 }}>
         {ELECTION_DATES.map(date => {
           const races = getRacesByDate(date);
+          const dayHref =
+            NIGHT_BOARDS[date] ??
+            (SITE_V2 ? `/results?date=${date}` : getRaceUrl(races[0]?.id ?? 0) ?? "/results");
+          // v1 serves every slug URL directly, so only v2 needs the fallback.
+          const hrefFor = (r: { id: number; slug: string }) =>
+            !SITE_V2 || RACE_PAGES.has(r.slug) ? getRaceUrl(r.id) ?? dayHref : dayHref;
           // Group by state
           const byState: Record<string, typeof races> = {};
           races.forEach(r => {
@@ -55,13 +73,13 @@ export default function ResultsArchive() {
                   {formatElectionDate(date)}
                 </h2>
                 <div style={{ flex: 1, height: 1, background: "var(--border)" }} />
-                <Link href={NIGHT_BOARDS[date] ?? getRaceUrl(races[0]?.id ?? 0) ?? `/results?race=${races[0]?.id ?? ""}`} style={{ fontSize: 10, fontWeight: 700, letterSpacing: "0.12em", color: "var(--purple-soft)", textTransform: "uppercase", textDecoration: "none" }}>
+                <Link href={dayHref} style={{ fontSize: 10, fontWeight: 700, letterSpacing: "0.12em", color: "var(--purple-soft)", textTransform: "uppercase", textDecoration: "none" }}>
                   {NIGHT_BOARDS[date] ? "Open Night Board →" : "Open Dashboard →"}
                 </Link>
               </div>
               <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))", gap: 8 }}>
                 {races.map(race => {
-                  const href = getRaceUrl(race.id) ?? `/results?race=${race.id}`;
+                  const href = hrefFor(race);
                   const isRepublican = race.label.includes("Republican");
                   const isDemocratic = race.label.includes("Democratic");
                   const dotColor = isRepublican ? "var(--rep)" : isDemocratic ? "var(--dem)" : "var(--purple)";
