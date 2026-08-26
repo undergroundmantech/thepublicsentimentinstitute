@@ -824,8 +824,7 @@ export default function OklahomaBoard({ variant = "board" }: { variant?: "board"
           <article className="card span-3" aria-labelledby="results-title">
             <div className="topline-shell">
               {winnerKey && (
-                <div className="winner-band"
-                     style={{ ["--winner" as string]: CAND_CSS[winnerKey] } as React.CSSProperties}>
+                <div className="winner-band">
                   <span className="winner-badge" aria-hidden>✓</span>
                   <div className="winner-copy">
                     <span>Winner · {calledCand ? "race called" : "TPSI projection"}</span>
@@ -872,7 +871,11 @@ export default function OklahomaBoard({ variant = "board" }: { variant?: "board"
                       <div className="topline-row" key={c.name || i}>
                         <div className="topline-row-top">
                           <div className="topline-candidate">
-                            <span className="topline-dot" style={{ background: col }} />
+                            {c.winner || isProjected ? (
+                              <span className="topline-dot won" aria-hidden>✓</span>
+                            ) : (
+                              <span className="topline-dot" style={{ background: col }} />
+                            )}
                             <div className="topline-copy">
                               <strong>{c.name}</strong>
                               <small>{c.party || "Republican"}</small>
@@ -1534,7 +1537,6 @@ html[data-theme="dark"] .desk{
 .topline-shell{padding:16px 18px 18px}
 .winner-band{display:flex;align-items:center;gap:13px;margin:-16px -18px 16px;padding:14px 18px;
   border-bottom:1px solid var(--hairline);
-  border-left:3px solid var(--winner);
   background:linear-gradient(90deg,color-mix(in srgb,var(--called) 16%,transparent),transparent 62%)}
 .winner-badge{flex:0 0 auto;width:26px;height:26px;border-radius:50%;display:grid;
   place-content:center;font-size:14px;font-weight:800;color:var(--panel);
@@ -1559,13 +1561,20 @@ html[data-theme="dark"] .desk{
 .topline-row-top{display:grid;grid-template-columns:1fr 90px 74px;gap:10px;align-items:center}
 .topline-candidate{display:flex;gap:10px;align-items:flex-start;min-width:0}
 .topline-dot{width:9px;height:9px;border-radius:50%;margin-top:5px;flex:0 0 auto}
+.topline-dot.won{width:17px;height:17px;margin-top:1px;margin-left:-4px;display:grid;
+  place-content:center;font-size:10px;font-weight:800;color:var(--panel);
+  background:var(--called)}
 .topline-copy{min-width:0}
 .topline-copy strong{display:block;font-size:15px;font-weight:700;letter-spacing:-.01em}
 .topline-copy small{display:block;font-family:var(--mono);font-size:8.5px;letter-spacing:.08em;
   text-transform:uppercase;color:var(--ink3);margin-top:2px}
 .topline-lead{display:block;font-family:var(--mono);font-size:9px;color:var(--ink2);
   margin-top:4px;letter-spacing:.03em}
-.topline-lead.won{color:var(--called);font-weight:700}
+.topline-lead.won{display:inline-block;color:var(--called);font-weight:700;
+  letter-spacing:.08em;text-transform:uppercase;font-size:8px;padding:3px 8px;
+  border:1px solid color-mix(in srgb,var(--called) 45%,transparent);
+  border-radius:var(--r-pill);
+  background:color-mix(in srgb,var(--called) 12%,transparent)}
 .topline-votes{font-size:13px;color:var(--ink2);text-align:right}
 .topline-pct{font-size:22px;font-weight:800;letter-spacing:-.03em;text-align:right}
 .topline-bar{height:7px;border-radius:99px;background:var(--panel3);overflow:hidden;margin-top:9px}
