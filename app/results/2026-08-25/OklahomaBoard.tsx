@@ -209,6 +209,21 @@ const COUNTY_ALIASES: Record<string, string> = {
 };
 
 /**
+ * Counties the desk still has counting. The feed and the state board agree on
+ * every vote total but not on precinct counts, so the feed leaves counties open
+ * that have in fact finished. Anything absent from this map is done.
+ *
+ * These are a floor, never a pin: where the feed reports higher it wins, so a
+ * county here still closes itself out and nothing can freeze below the count.
+ */
+const COUNTY_STILL_COUNTING: Record<string, number> = {
+  STEPHENS: 78,
+  TULSA: 81,
+  OKLAHOMA: 81,
+  KAY: 82,
+};
+
+/**
  * County returns and the full candidate field from CivicAPI. The search endpoint
  * behind the slate truncates to the top three candidates, and electionLib's
  * fetchRace memoises a race forever, so neither is usable for a race we are
@@ -412,7 +427,13 @@ export default function OklahomaBoard({ variant = "board" }: { variant?: "board"
     const raw = liveCountiesRaw as Record<string, LiveCounty>;
     const out: Record<string, LiveCounty> = {};
     for (const [name, c] of Object.entries(raw)) {
-      out[name] = c.reporting >= COUNTY_COMPLETE_PCT ? { ...c, reporting: 100 } : c;
+      // A county with nothing in is not finished, it just has not started.
+      if (c.total <= 0) {
+        out[name] = c;
+        continue;
+      }
+      const reporting = Math.max(c.reporting, COUNTY_STILL_COUNTING[name] ?? 100);
+      out[name] = { ...c, reporting: reporting >= COUNTY_COMPLETE_PCT ? 100 : reporting };
     }
     return out;
   }, [liveCountiesRaw]);
