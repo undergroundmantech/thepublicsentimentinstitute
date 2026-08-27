@@ -45,15 +45,20 @@ const nextConfig: NextConfig = {
     NEXT_PUBLIC_SITE_V2: process.env.NEXT_PUBLIC_SITE_V2 ?? "off",
   },
   async rewrites() {
+    // Race slug URLs: /results/2026-06-09/south-carolina-us-senate-republican-primary
+    // and the /results/archive/<date>/<slug> form. The first segment is
+    // constrained to an ISO date so these can NEVER swallow real routes such as
+    // /results/race/<id> (which 404'd in production when the segment was
+    // unconstrained) or /results/archive itself. Slugs that own a page win
+    // anyway: rewrites are checked after the filesystem.
+    //
+    // v1 reads the slug off the pathname and renders the race, so it wants
+    // /results. v2 has no per-race surface — the night board for that date is
+    // where the race is read.
+    const destination = SITE_V2 ? "/results/archive/:date" : "/results";
     return [
-      // Active race slug URLs: /results/2026-06-09/south-carolina-us-senate-republican-primary
-      // The first segment is constrained to an ISO date so this rewrite can NEVER
-      // swallow real routes such as /results/race/<id> (which 404'd in production
-      // when the segment was unconstrained) or /results/archive.
-      { source: "/results/:date(\\d{4}-\\d{2}-\\d{2})/:slug", destination: "/results" },
-      // Archived race slug URLs: /results/archive/2026-06-09/south-carolina-...
-      // /results/archive (no trailing date+slug) stays a real page.
-      { source: "/results/archive/:date(\\d{4}-\\d{2}-\\d{2})/:slug", destination: "/results" },
+      { source: "/results/:date(\\d{4}-\\d{2}-\\d{2})/:slug", destination },
+      { source: "/results/archive/:date(\\d{4}-\\d{2}-\\d{2})/:slug", destination },
     ];
   },
   async redirects() {

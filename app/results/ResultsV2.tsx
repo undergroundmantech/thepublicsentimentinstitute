@@ -1,8 +1,8 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { Suspense } from "react";
-import { useSearchParams } from "next/navigation";
+import { Suspense, useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 
 // Dark hold while the (heavy, client-only) chunk downloads — without this the
 // global light layout flashes through for a beat on every navigation in.
@@ -24,13 +24,6 @@ function DarkHold() {
   );
 }
 
-// The hub (date grid + race detail). Mounted only when a ?date= is present or a
-// deep-linked race is open.
-const OpaResultsPage = dynamic(() => import("./onpoint/OpaResultsPage"), {
-  ssr: false,
-  loading: () => <DarkHold />,
-});
-
 // The standing elections landing page (CO-07), currently the default /results
 // surface. ResultsDesk ("The Query Desk") is untouched underneath and returns as
 // the default once this landing is retired; this is a router swap only, not a
@@ -43,8 +36,14 @@ const TonightBoard = dynamic(() => import("./tonight/page"), {
 
 function ResultsRouter() {
   const sp = useSearchParams();
-  const hasDate = !!sp.get("date");
-  return hasDate ? <OpaResultsPage /> : <TonightBoard />;
+  const router = useRouter();
+  const date = sp.get("date");
+  // Every night now has a board of its own in the archive, so a dated /results
+  // link is a legacy address rather than a surface.
+  useEffect(() => {
+    if (date) router.replace(`/results/archive/${date}`);
+  }, [date, router]);
+  return date ? <DarkHold /> : <TonightBoard />;
 }
 
 export default function ResultsPage() {
