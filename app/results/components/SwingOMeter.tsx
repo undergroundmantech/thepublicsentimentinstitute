@@ -11,8 +11,10 @@ import React, { useEffect, useRef, useState } from "react";
 
 const OSWALD = '"Oswald", "Barlow Condensed", system-ui, sans-serif';
 const MONO = '"JetBrains Mono", ui-monospace, monospace';
-const INK = "#f4f4ef";
-const PAGE = "#050505";
+// Resolved from the host page when it defines them, otherwise the dark
+// values this component has always used.
+const INK = "var(--fc-ink, var(--ink))";
+const PAGE = "var(--fc-bg, var(--canvas))";
 
 // odds → angle: the needle position IS the leader's win probability,
 // exactly like the site forecast gauge. 50% = dead center, 100% = pinned.
@@ -158,7 +160,7 @@ export default function SwingOMeter({
             animation: live && !reducedRef.current ? "smLivePulse 1.8s ease-in-out infinite" : "none",
           }}
         />
-        <span style={{ fontFamily: OSWALD, fontWeight: 700, fontSize: 9, letterSpacing: "0.22em", textTransform: "uppercase", color: called ? headColor : "rgba(244,244,239,0.55)" }}>
+        <span style={{ fontFamily: OSWALD, fontWeight: 700, fontSize: 9, letterSpacing: "0.22em", textTransform: "uppercase", color: called ? headColor : "rgba(var(--fc-ink-rgb, 244,244,239),calc(0.55 * var(--fc-mute, 1) + var(--fc-floor, 0)))" }}>
           {called ? "Called" : live ? `Live · ${reportingPct.toFixed(reportingPct >= 10 ? 0 : 1)}%` : "Forecast"}
         </span>
       </div>
@@ -171,18 +173,18 @@ export default function SwingOMeter({
         <span style={{ fontFamily: MONO, fontSize: 25, fontWeight: 700, color: headColor, letterSpacing: "-0.02em", lineHeight: 1, fontVariantNumeric: "tabular-nums" }}>
           +{M.toFixed(1)}
         </span>
-        <span style={{ fontFamily: MONO, fontSize: 11, color: "rgba(244,244,239,0.4)", marginLeft: -3 }}>pts</span>
-        <span style={{ color: "rgba(244,244,239,0.3)", fontSize: 13 }}>·</span>
+        <span style={{ fontFamily: MONO, fontSize: 11, color: "rgba(var(--fc-ink-rgb, 244,244,239),calc(0.4 * var(--fc-mute, 1) + var(--fc-floor, 0)))", marginLeft: -3 }}>pts</span>
+        <span style={{ color: "rgba(var(--fc-ink-rgb, 244,244,239),calc(0.5 * var(--fc-mute, 1) + var(--fc-floor, 0)))", fontSize: 13 }}>·</span>
         <span style={{ fontFamily: MONO, fontSize: 15, fontWeight: 600, color: headColor, fontVariantNumeric: "tabular-nums" }}>
           {(pHead * 100).toFixed(0)}%
         </span>
-        <span style={{ fontSize: 12, color: "rgba(244,244,239,0.55)", fontWeight: 500 }}>to win</span>
+        <span style={{ fontSize: 12, color: "rgba(var(--fc-ink-rgb, 244,244,239),calc(0.55 * var(--fc-mute, 1) + var(--fc-floor, 0)))", fontWeight: 500 }}>to win</span>
         <span
           style={{
             fontFamily: OSWALD, fontSize: 9, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase",
             color: headColor, padding: "4px 8px", marginLeft: 2,
-            background: `color-mix(in oklab, ${headColor} 18%, transparent)`,
-            border: `1px solid color-mix(in oklab, ${headColor} 50%, transparent)`,
+            background: `color-mix(in oklab, ${headColor} 10%, transparent)`,
+            border: `1px solid color-mix(in oklab, ${headColor} 62%, transparent)`,
           }}
         >
           {band}
@@ -208,16 +210,16 @@ export default function SwingOMeter({
             <path key={`rz${i}`} d={wedgePath(cx, cy, rOuter, z.from, z.to)} fill={runnerColor} fillOpacity={z.alpha} />
           ))}
         </g>
-        <path d={wedgePath(cx, cy, rInner, -90, 90)} fill={PAGE} />
-        <path d={arcPath(cx, cy, rOuter, -90, 90)} fill="none" stroke={INK} strokeWidth="2.4" strokeLinecap="round" />
-        <path d={arcPath(cx, cy, rInner, -90, 90)} fill="none" stroke={INK} strokeWidth="2.4" strokeLinecap="round" />
-        <line x1={cx - rOuter - baseExtend} y1={cy} x2={cx + rOuter + baseExtend} y2={cy} stroke={INK} strokeWidth="2.4" strokeLinecap="round" />
-        <line x1={cx} y1={cy - rOuter - centerTicLen} x2={cx} y2={cy - rOuter + 1} stroke={INK} strokeWidth="2.4" strokeLinecap="round" />
+        <path d={wedgePath(cx, cy, rInner, -90, 90)} style={{ fill: PAGE }} />
+        <path d={arcPath(cx, cy, rOuter, -90, 90)} fill="none" style={{ stroke: INK }} strokeWidth="2.4" strokeLinecap="round" />
+        <path d={arcPath(cx, cy, rInner, -90, 90)} fill="none" style={{ stroke: INK }} strokeWidth="2.4" strokeLinecap="round" />
+        <line x1={cx - rOuter - baseExtend} y1={cy} x2={cx + rOuter + baseExtend} y2={cy} style={{ stroke: INK }} strokeWidth="2.4" strokeLinecap="round" />
+        <line x1={cx} y1={cy - rOuter - centerTicLen} x2={cx} y2={cy - rOuter + 1} style={{ stroke: INK }} strokeWidth="2.4" strokeLinecap="round" />
         <g transform={`translate(${cx} ${cy}) rotate(${angle.toFixed(3)})`} style={{ transition: reducedRef.current ? "none" : "transform 520ms cubic-bezier(0.4, 0, 0.2, 1)" }}>
-          <polygon points={needlePoints} fill={INK} />
+          <polygon points={needlePoints} style={{ fill: INK }} />
         </g>
-        <circle cx={cx} cy={cy} r="14" fill={INK} />
-        <circle cx={cx - 0.8} cy={cy - 0.8} r="3.6" fill="rgba(5,5,5,0.35)" />
+        <circle cx={cx} cy={cy} r="14" style={{ fill: INK }} />
+        <circle cx={cx - 0.8} cy={cy - 0.8} r="3.6" style={{ fill: "var(--fc-bg, var(--canvas))", opacity: 0.35 }} />
         <text x={cx - rOuter - baseExtend} y={cy + 16} textAnchor="start" style={{ fontFamily: OSWALD, fontSize: 11, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase", fill: leaderColor }}>
           {leaderName}
         </text>

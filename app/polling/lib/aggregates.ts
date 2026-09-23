@@ -39,14 +39,81 @@ import { RAW_POLLS as ME_DEM } from "../mainedemocratprimary/page";
 import { KY04_POLLS } from "./ky04Polls";
 
 // 2026 Senate matchups (state modules with RACES + STATE_POLLS keyed by raceId)
-import * as SEN_TX from "../senatepolling/texas";
-import * as SEN_OH from "../senatepolling/ohio";
-import * as SEN_SC from "../senatepolling/southcarolina";
-import * as SEN_NE from "../senatepolling/nebraska";
-import * as SEN_ME from "../senatepolling/maine";
-import * as SEN_NH from "../senatepolling/newhampshire";
-import * as SEN_FL from "../senatepolling/florida";
-import * as SEN_AK from "../senatepolling/alaska";
+// Every 2026 Senate and governor race the forecast carries polls for. These
+// files are generated from the forecast's own poll feed, so the averages on
+// this page and the margins on the forecast desk read the same polls.
+import * as SEN_ALABAMA from "../senatepolling/alabama";
+import * as SEN_ALASKA from "../senatepolling/alaska";
+import * as SEN_ARKANSAS from "../senatepolling/arkansas";
+import * as SEN_COLORADO from "../senatepolling/colorado";
+import * as SEN_DELAWARE from "../senatepolling/delaware";
+import * as SEN_FLORIDA from "../senatepolling/florida";
+import * as SEN_GEORGIA from "../senatepolling/georgia";
+import * as SEN_IDAHO from "../senatepolling/idaho";
+import * as SEN_ILLINOIS from "../senatepolling/illinois";
+import * as SEN_IOWA from "../senatepolling/iowa";
+import * as SEN_KANSAS from "../senatepolling/kansas";
+import * as SEN_KENTUCKY from "../senatepolling/kentucky";
+import * as SEN_LOUISIANA from "../senatepolling/louisiana";
+import * as SEN_MAINE from "../senatepolling/maine";
+import * as SEN_MASSACHUSETTS from "../senatepolling/massachusetts";
+import * as SEN_MICHIGAN from "../senatepolling/michigan";
+import * as SEN_MINNESOTA from "../senatepolling/minnesota";
+import * as SEN_MISSISSIPPI from "../senatepolling/mississippi";
+import * as SEN_MONTANA from "../senatepolling/montana";
+import * as SEN_NEBRASKA from "../senatepolling/nebraska";
+import * as SEN_NEWHAMPSHIRE from "../senatepolling/newhampshire";
+import * as SEN_NEWJERSEY from "../senatepolling/newjersey";
+import * as SEN_NEWMEXICO from "../senatepolling/newmexico";
+import * as SEN_NORTHCAROLINA from "../senatepolling/northcarolina";
+import * as SEN_OHIO from "../senatepolling/ohio";
+import * as SEN_OKLAHOMA from "../senatepolling/oklahoma";
+import * as SEN_OREGON from "../senatepolling/oregon";
+import * as SEN_RHODEISLAND from "../senatepolling/rhodeisland";
+import * as SEN_SOUTHCAROLINA from "../senatepolling/southcarolina";
+import * as SEN_SOUTHDAKOTA from "../senatepolling/southdakota";
+import * as SEN_TENNESSEE from "../senatepolling/tennessee";
+import * as SEN_TEXAS from "../senatepolling/texas";
+import * as SEN_VIRGINIA from "../senatepolling/virginia";
+import * as SEN_WESTVIRGINIA from "../senatepolling/westvirginia";
+import * as SEN_WYOMING from "../senatepolling/wyoming";
+import * as GOV_ALABAMA from "../governorpolling/alabama";
+import * as GOV_ALASKA from "../governorpolling/alaska";
+import * as GOV_ARIZONA from "../governorpolling/arizona";
+import * as GOV_ARKANSAS from "../governorpolling/arkansas";
+import * as GOV_CALIFORNIA from "../governorpolling/california";
+import * as GOV_COLORADO from "../governorpolling/colorado";
+import * as GOV_CONNECTICUT from "../governorpolling/connecticut";
+import * as GOV_FLORIDA from "../governorpolling/florida";
+import * as GOV_GEORGIA from "../governorpolling/georgia";
+import * as GOV_HAWAII from "../governorpolling/hawaii";
+import * as GOV_IDAHO from "../governorpolling/idaho";
+import * as GOV_ILLINOIS from "../governorpolling/illinois";
+import * as GOV_IOWA from "../governorpolling/iowa";
+import * as GOV_KANSAS from "../governorpolling/kansas";
+import * as GOV_MAINE from "../governorpolling/maine";
+import * as GOV_MARYLAND from "../governorpolling/maryland";
+import * as GOV_MASSACHUSETTS from "../governorpolling/massachusetts";
+import * as GOV_MICHIGAN from "../governorpolling/michigan";
+import * as GOV_MINNESOTA from "../governorpolling/minnesota";
+import * as GOV_NEBRASKA from "../governorpolling/nebraska";
+import * as GOV_NEVADA from "../governorpolling/nevada";
+import * as GOV_NEWHAMPSHIRE from "../governorpolling/newhampshire";
+import * as GOV_NEWMEXICO from "../governorpolling/newmexico";
+import * as GOV_NEWYORK from "../governorpolling/newyork";
+import * as GOV_OHIO from "../governorpolling/ohio";
+import * as GOV_OKLAHOMA from "../governorpolling/oklahoma";
+import * as GOV_OREGON from "../governorpolling/oregon";
+import * as GOV_PENNSYLVANIA from "../governorpolling/pennsylvania";
+import * as GOV_RHODEISLAND from "../governorpolling/rhodeisland";
+import * as GOV_SOUTHCAROLINA from "../governorpolling/southcarolina";
+import * as GOV_SOUTHDAKOTA from "../governorpolling/southdakota";
+import * as GOV_TENNESSEE from "../governorpolling/tennessee";
+import * as GOV_TEXAS from "../governorpolling/texas";
+import * as GOV_VERMONT from "../governorpolling/vermont";
+import * as GOV_WISCONSIN from "../governorpolling/wisconsin";
+import * as GOV_WYOMING from "../governorpolling/wyoming";
+
 // authoritative featured matchups (generic Republican/Democrat keys) from the polling index
 import { TX_CORNYN_POLLS, TX_PAXTON_POLLS } from "../page";
 
@@ -89,11 +156,11 @@ export type AggPollPoint = {
   grade: string;
 };
 
-const BLUE = "#5b8cf0";
-const RED = "#e5484d";
-const GREEN = "#3fb27f";
+const BLUE = "var(--dem)";
+const RED = "var(--gop)";
+const GREEN = "var(--approve)";
 const AMBER = "#e0a23b";
-const MAGENTA = "#c64ad6";
+const MAGENTA = "var(--disapprove)";
 
 function round1(n: number) { return Math.round(n * 10) / 10; }
 const netPM = (n: number) => (Math.abs(n) < 0.05 ? "Even" : n > 0 ? `+${n.toFixed(1)}` : `−${Math.abs(n).toFixed(1)}`);
@@ -183,13 +250,48 @@ function senateAggs(mod: SenateModule): AggregateDef[] {
   return out;
 }
 
-const SENATE_MODULES = [SEN_TX, SEN_OH, SEN_SC, SEN_NE, SEN_FL, SEN_AK, SEN_ME, SEN_NH] as unknown as SenateModule[];
+function governorAggs(mod: SenateModule): AggregateDef[] {
+  const abbr = mod.STATE.abbr, name = mod.STATE.name;
+  const allPolls = (mod.STATE_POLLS[abbr] ?? Object.values(mod.STATE_POLLS).flat()) as unknown as Poll[];
+  const out: AggregateDef[] = [];
+  for (const race of mod.RACES) {
+    const aLabel = race.candidates[0], bLabel = race.candidates[1];
+    if (!aLabel || !bLabel) continue;
+    const polls = allPolls.filter((p) => (p as Poll & { raceId?: string }).raceId === race.raceId);
+    if (polls.length === 0) continue;
+    const aShort = lastName(aLabel), bShort = lastName(bLabel);
+    out.push({
+      id: race.raceId.toLowerCase(),
+      label: `${abbr} · ${aShort}–${bShort}`,
+      category: "2026 Governor",
+      title: `${name} · governor — ${aShort} vs. ${bShort}`,
+      subtitle: "Daily PSI-weighted average of every public poll of this 2026 governor's race.",
+      unit: "%",
+      keyA: aLabel, keyB: bLabel,
+      seriesA: { label: aShort, color: partyColor(aLabel) },
+      seriesB: { label: bShort, color: partyColor(bLabel) },
+      marginLabel: "Margin",
+      fmtMargin: (n) => (Math.abs(n) < 0.05 ? "Even" : n > 0 ? `${aShort}+${n.toFixed(1)}` : `${bShort}+${Math.abs(n).toFixed(1)}`),
+      polls, gold: [], goldMult: 1,
+    });
+  }
+  return out;
+}
+
+const SENATE_MODULES = [
+  SEN_ALABAMA, SEN_ALASKA, SEN_ARKANSAS, SEN_COLORADO, SEN_DELAWARE, SEN_FLORIDA, SEN_GEORGIA, SEN_IDAHO, SEN_ILLINOIS, SEN_IOWA, SEN_KANSAS, SEN_KENTUCKY, SEN_LOUISIANA, SEN_MAINE, SEN_MASSACHUSETTS, SEN_MICHIGAN, SEN_MINNESOTA, SEN_MISSISSIPPI, SEN_MONTANA, SEN_NEBRASKA, SEN_NEWHAMPSHIRE, SEN_NEWJERSEY, SEN_NEWMEXICO, SEN_NORTHCAROLINA, SEN_OHIO, SEN_OKLAHOMA, SEN_OREGON, SEN_RHODEISLAND, SEN_SOUTHCAROLINA, SEN_SOUTHDAKOTA, SEN_TENNESSEE, SEN_TEXAS, SEN_VIRGINIA, SEN_WESTVIRGINIA, SEN_WYOMING,
+] as unknown as SenateModule[];
+const GOVERNOR_MODULES = [
+  GOV_ALABAMA, GOV_ALASKA, GOV_ARIZONA, GOV_ARKANSAS, GOV_CALIFORNIA, GOV_COLORADO, GOV_CONNECTICUT, GOV_FLORIDA, GOV_GEORGIA, GOV_HAWAII, GOV_IDAHO, GOV_ILLINOIS, GOV_IOWA, GOV_KANSAS, GOV_MAINE, GOV_MARYLAND, GOV_MASSACHUSETTS, GOV_MICHIGAN, GOV_MINNESOTA, GOV_NEBRASKA, GOV_NEVADA, GOV_NEWHAMPSHIRE, GOV_NEWMEXICO, GOV_NEWYORK, GOV_OHIO, GOV_OKLAHOMA, GOV_OREGON, GOV_PENNSYLVANIA, GOV_RHODEISLAND, GOV_SOUTHCAROLINA, GOV_SOUTHDAKOTA, GOV_TENNESSEE, GOV_TEXAS, GOV_VERMONT, GOV_WISCONSIN, GOV_WYOMING,
+] as unknown as SenateModule[];
 const SENATE_AGGS: AggregateDef[] = [
   // featured TX general matchups (the live Talarico races) from the polling index
   rdSenate("tx-sen-cornyn-talarico", "TX", "Texas", "Cornyn", "Talarico", TX_CORNYN_POLLS as unknown as Poll[]),
   rdSenate("tx-sen-paxton-talarico", "TX", "Texas", "Paxton", "Talarico", TX_PAXTON_POLLS as unknown as Poll[]),
   ...SENATE_MODULES.flatMap(senateAggs),
 ];
+
+const GOVERNOR_AGGS: AggregateDef[] = GOVERNOR_MODULES.flatMap(governorAggs);
 
 export const AGGREGATES: AggregateDef[] = [
   {
@@ -269,6 +371,7 @@ export const AGGREGATES: AggregateDef[] = [
   },
   ...EXTRA,
   ...SENATE_AGGS,
+  ...GOVERNOR_AGGS,
 ];
 
 /* ----------------------------- builder ----------------------------- */
@@ -369,13 +472,9 @@ function multiDef(id: string, label: string, title: string, subtitle: string, po
   return { id, label, group: "Primaries", title, subtitle, unit: "%", series, polls, gold: [], goldMult: 1 };
 }
 
-export const MULTI_AGGREGATES: MultiAggregateDef[] = [
-  multiDef("fl-gop-gov", "FL Gov · R", "Florida · Republican governor primary", "Daily PSI-weighted average of the 2026 Florida GOP gubernatorial primary.", FL_GOP),
-  multiDef("tx-gop-sen", "TX Senate · R", "Texas · Republican Senate primary", "Daily PSI-weighted average of the 2026 Texas GOP Senate primary.", TX_GOP),
-  multiDef("tx-dem-sen", "TX Senate · D", "Texas · Democratic Senate primary", "Daily PSI-weighted average of the 2026 Texas Democratic Senate primary.", TX_DEM),
-  multiDef("me-dem-gov", "ME Gov · D", "Maine · Democratic governor primary", "Daily PSI-weighted average of the 2026 Maine Democratic gubernatorial primary.", ME_DEM),
-  multiDef("ky04-gop", "KY-04 · R", "Kentucky 04 · Republican primary — Gallrein vs. Massie", "Daily PSI-weighted average of the 2026 KY-04 GOP primary (Aaron Gallrein vs. Thomas Massie).", KY04_POLLS),
-];
+// The Primaries category was retired from the polling desk. The primary poll
+// files stay on disk, but nothing registers them, so no Primaries tab renders.
+export const MULTI_AGGREGATES: MultiAggregateDef[] = [];
 
 export function buildMulti(def: MultiAggregateDef): BuiltMulti {
   const adjusted = def.polls.map((p) => ({ ...p, sampleSize: effSample(p.pollster, p.sampleSize, def.gold, def.goldMult) }));

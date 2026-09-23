@@ -1,21 +1,20 @@
 // app/polling/senatepolling/texas.ts
-// Texas (TX) — 2026 Senate
-// Source snippet provided by user (Emerson, Change Research, UH/TSU, Ragnar, UT Tyler)
-//
-// ✅ Default race is set to: Cornyn vs. Crockett
+// Texas — 2026 U.S. Senate: James Talarico (D) vs. Ken Paxton (R)
+// Generated from the TPSI forecast poll feed (run of 2026-09-22), merged with
+// the polls this file already carried. Polls of matchups that are not on the
+// ballot were dropped. Newest poll: 2026-09-19.
 
 export type SampleType = "LV" | "RV" | "A";
 
 export type Poll = {
-  raceId: string; // e.g. "TX-SEN-2026-CORNYN-v-CROCKETT"
+  raceId: string;
   pollster: string;
-  sponsor?: string;
   startDate: string; // YYYY-MM-DD
-  endDate: string; // YYYY-MM-DD
+  endDate: string;   // YYYY-MM-DD
   sampleSize: number;
   sampleType: SampleType;
-  moe?: number; // margin of error (percentage points), if known
-  results: Record<string, number>; // candidate label -> %
+  moe?: number;
+  results: Record<string, number>;
   notes?: string;
 };
 
@@ -24,118 +23,44 @@ export const STATE = {
   name: "Texas",
 };
 
-// ✅ Default race for leaderboard/map coloring
-export const DEFAULT_RACE_ID = "TX-SEN-2026-CORNYN-v-CROCKETT";
+export const DEFAULT_RACE_ID = "TX-SEN-2026";
 
 export const RACES = [
   {
-    raceId: "TX-SEN-2026-CORNYN-v-CROCKETT",
+    raceId: "TX-SEN-2026",
     office: "U.S. Senate",
     year: 2026,
-    candidates: ["John Cornyn (R)", "Jasmine Crockett (D)"],
-    default: true,
-  },
-  {
-    raceId: "TX-SEN-2026-PAXTON-v-CROCKETT",
-    office: "U.S. Senate",
-    year: 2026,
-    candidates: ["Ken Paxton (R)", "Jasmine Crockett (D)"],
-  },
-  {
-    raceId: "TX-SEN-2026-HUNT-v-CROCKETT",
-    office: "U.S. Senate",
-    year: 2026,
-    candidates: ["Wesley Hunt (R)", "Jasmine Crockett (D)"],
-  },
-  {
-    raceId: "TX-SEN-2026-CORNYN-v-TALARICO",
-    office: "U.S. Senate",
-    year: 2026,
-    candidates: ["John Cornyn (R)", "James Talarico (D)"],
-  },
-  {
-    raceId: "TX-SEN-2026-PAXTON-v-TALARICO",
-    office: "U.S. Senate",
-    year: 2026,
-    candidates: ["Ken Paxton (R)", "James Talarico (D)"],
-  },
-  {
-    raceId: "TX-SEN-2026-HUNT-v-TALARICO",
-    office: "U.S. Senate",
-    year: 2026,
-    candidates: ["Wesley Hunt (R)", "James Talarico (D)"],
+    candidates: ["James Talarico (D)", "Ken Paxton (R)"],
   },
 ] as const;
 
-/**
- * Polls keyed by state abbr so your Senate leaderboard can do:
- *   STATE_POLLS["TX"]
- *
- * IMPORTANT:
- * - Keep candidate labels exactly with "(R)/(D)" for map coloring.
- * - This file contains multiple matchups; the leaderboard should filter to DEFAULT_RACE_ID
- *   (recommended) OR accept that other matchups may influence totals if not filtered.
- *
- * If your Senate page currently doesn’t filter by raceId, add a simple filter:
- *   polls.filter(p => p.raceId === (DEFAULT_RACE_ID or chosen race))
- */
 export const STATE_POLLS: Record<string, Poll[]> = {
   TX: [
-    // =========================
-    // ✅ Default: Cornyn vs. Crockett
-    // =========================
-    {
-      raceId: "TX-SEN-2026-CORNYN-v-CROCKETT",
-      pollster: "Emerson College",
-      startDate: "2026-01-10",
-      endDate: "2026-01-12",
-      sampleSize: 1165,
-      sampleType: "RV",
-      moe: 2.8,
-      results: {
-        "John Cornyn (R)": 48,
-        "Jasmine Crockett (D)": 43,
-        Undecided: 9,
-      },
-      notes: "Other not reported in table; undecided 9%.",
-    },
-    {
-      raceId: "TX-SEN-2026-CORNYN-v-CROCKETT",
-      pollster: "Change Research",
-      sponsor: "(D)",
-      startDate: "2025-11-21",
-      endDate: "2025-11-26",
-      sampleSize: 1189,
-      sampleType: "RV", // table shows (V); mapping to RV for your weighting
-      moe: 3.1,
-      results: {
-        "John Cornyn (R)": 49,
-        "Jasmine Crockett (D)": 41,
-        Undecided: 10,
-      },
-      notes: "Sample type listed as (V) in table; mapped to RV. Other not reported; undecided 10%.",
-    },
-    {
-      raceId: "TX-SEN-2026-CORNYN-v-CROCKETT",
-      pollster: "University of Houston / Texas Southern University",
-      startDate: "2025-09-19",
-      endDate: "2025-10-01",
-      sampleSize: 1650,
-      sampleType: "RV",
-      moe: 2.41,
-      results: {
-        "John Cornyn (R)": 50,
-        "Jasmine Crockett (D)": 44,
-        Undecided: 6,
-      },
-      notes: "Other not reported in table; undecided 6%.",
-    },
+    {"raceId": "TX-SEN-2026", "pollster": "Texas Public Opinion Research (D)", "startDate": "2026-05-27", "endDate": "2026-05-28", "sampleSize": 1670, "sampleType": "LV", "results": {"James Talarico (D)": 47.0, "Ken Paxton (R)": 44.0, "Other": 3.0, "Undecided": 7.0}},
+    {"raceId": "TX-SEN-2026", "pollster": "Quantus Insights", "startDate": "2026-06-03", "endDate": "2026-06-04", "sampleSize": 800, "sampleType": "LV", "results": {"James Talarico (D)": 43.0, "Ken Paxton (R)": 45.0, "Other": 4.0, "Undecided": 7.0}},
+    {"raceId": "TX-SEN-2026", "pollster": "Texas A&M University/ReconMR/Siena University", "startDate": "2026-06-01", "endDate": "2026-06-04", "sampleSize": 807, "sampleType": "LV", "results": {"James Talarico (D)": 46.0, "Ken Paxton (R)": 46.0, "Other": 4.0, "Undecided": 5.0}},
+    {"raceId": "TX-SEN-2026", "pollster": "University of Texas/Texas Politics Project", "startDate": "2026-06-05", "endDate": "2026-06-12", "sampleSize": 1200, "sampleType": "RV", "results": {"James Talarico (D)": 42.0, "Ken Paxton (R)": 43.0, "Other": 6.0, "Undecided": 10.0}},
+    {"raceId": "TX-SEN-2026", "pollster": "SoCal Strategies (R)", "startDate": "2026-06-21", "endDate": "2026-06-21", "sampleSize": 800, "sampleType": "LV", "results": {"James Talarico (D)": 47.0, "Ken Paxton (R)": 49.0, "Undecided": 4.0}},
+    {"raceId": "TX-SEN-2026", "pollster": "New York Times/Siena University", "startDate": "2026-06-19", "endDate": "2026-06-27", "sampleSize": 656, "sampleType": "LV", "results": {"James Talarico (D)": 47.0, "Ken Paxton (R)": 47.0, "Undecided": 6.0}},
+    {"raceId": "TX-SEN-2026", "pollster": "A2 Insights", "startDate": "2026-06-23", "endDate": "2026-06-28", "sampleSize": 618, "sampleType": "LV", "results": {"James Talarico (D)": 48.0, "Ken Paxton (R)": 46.0, "Other": 3.0, "Undecided": 3.0}},
+    {"raceId": "TX-SEN-2026", "pollster": "Texas Public Opinion Research (D)", "startDate": "2026-07-15", "endDate": "2026-07-17", "sampleSize": 1048, "sampleType": "LV", "results": {"James Talarico (D)": 45.0, "Ken Paxton (R)": 40.0, "Other": 1.0, "Undecided": 14.0}},
+    {"raceId": "TX-SEN-2026", "pollster": "Beacon Research (D)/ Shaw & Co. Research (R)", "startDate": "2026-07-23", "endDate": "2026-07-27", "sampleSize": 1005, "sampleType": "RV", "results": {"James Talarico (D)": 51.0, "Ken Paxton (R)": 48.0, "Undecided": 3.0}},
+    {"raceId": "TX-SEN-2026", "pollster": "Texas A&M University/ReconMR/Siena University", "startDate": "2026-07-27", "endDate": "2026-07-30", "sampleSize": 619, "sampleType": "LV", "results": {"James Talarico (D)": 47.0, "Ken Paxton (R)": 43.0, "Other": 4.0, "Undecided": 6.0}},
+    {"raceId": "TX-SEN-2026", "pollster": "Texas Southern University", "startDate": "2026-07-27", "endDate": "2026-07-30", "sampleSize": 1200, "sampleType": "LV", "results": {"James Talarico (D)": 47.0, "Ken Paxton (R)": 45.0, "Other": 2.0, "Undecided": 6.0}},
+    {"raceId": "TX-SEN-2026", "pollster": "Wedgewood Polls", "startDate": "2026-07-30", "endDate": "2026-07-31", "sampleSize": 800, "sampleType": "LV", "results": {"James Talarico (D)": 48.0, "Ken Paxton (R)": 46.0, "Undecided": 6.0}},
+    {"raceId": "TX-SEN-2026", "pollster": "YouGov Blue (D)", "startDate": "2026-07-15", "endDate": "2026-07-31", "sampleSize": 1001, "sampleType": "RV", "results": {"James Talarico (D)": 48.0, "Ken Paxton (R)": 45.0, "Undecided": 6.0}},
+    {"raceId": "TX-SEN-2026", "pollster": "Emerson College", "startDate": "2026-08-09", "endDate": "2026-08-10", "sampleSize": 1000, "sampleType": "LV", "results": {"James Talarico (D)": 46.0, "Ken Paxton (R)": 47.0, "Other": 2.0, "Undecided": 5.0}},
+    {"raceId": "TX-SEN-2026", "pollster": "University of Texas/Texas Politics Project", "startDate": "2026-08-05", "endDate": "2026-08-13", "sampleSize": 1200, "sampleType": "RV", "results": {"James Talarico (D)": 42.0, "Ken Paxton (R)": 39.0, "Other": 4.0, "Undecided": 14.0}},
+    {"raceId": "TX-SEN-2026", "pollster": "Texas Public Opinion Research (D)", "startDate": "2026-08-21", "endDate": "2026-08-24", "sampleSize": 1000, "sampleType": "LV", "results": {"James Talarico (D)": 48.0, "Ken Paxton (R)": 42.0, "Other": 2.0, "Undecided": 7.0}},
+    {"raceId": "TX-SEN-2026", "pollster": "Overton Insights (R)", "startDate": "2026-08-24", "endDate": "2026-08-26", "sampleSize": 1167, "sampleType": "LV", "results": {"James Talarico (D)": 47.0, "Ken Paxton (R)": 46.5, "Undecided": 6.5}},
+    {"raceId": "TX-SEN-2026", "pollster": "Fabrizio Ward (R)/ Impact Research (D)", "startDate": "2026-08-30", "endDate": "2026-09-01", "sampleSize": 895, "sampleType": "LV", "results": {"James Talarico (D)": 48.0, "Ken Paxton (R)": 44.0, "Undecided": 8.0}},
+    {"raceId": "TX-SEN-2026", "pollster": "Univision/YouGov", "startDate": "2026-08-27", "endDate": "2026-09-04", "sampleSize": 1000, "sampleType": "RV", "results": {"James Talarico (D)": 48.0, "Ken Paxton (R)": 43.0, "Other": 1.0, "Undecided": 7.0}},
+    {"raceId": "TX-SEN-2026", "pollster": "InsiderAdvantage", "startDate": "2026-09-08", "endDate": "2026-09-09", "sampleSize": 1200, "sampleType": "LV", "results": {"James Talarico (D)": 47.0, "Ken Paxton (R)": 46.0, "Other": 2.0, "Undecided": 5.0}},
+    {"raceId": "TX-SEN-2026", "pollster": "Mason-Dixon Polling & Strategy", "startDate": "2026-09-08", "endDate": "2026-09-10", "sampleSize": 625, "sampleType": "LV", "results": {"James Talarico (D)": 46.0, "Ken Paxton (R)": 43.0, "Other": 3.0, "Undecided": 8.0}},
+    {"raceId": "TX-SEN-2026", "pollster": "ReconMR/Siena University", "startDate": "2026-09-08", "endDate": "2026-09-11", "sampleSize": 614, "sampleType": "LV", "results": {"James Talarico (D)": 49.0, "Ken Paxton (R)": 43.0, "Other": 4.0, "Undecided": 4.0}},
+    {"raceId": "TX-SEN-2026", "pollster": "SoCal Strategies", "startDate": "2026-09-12", "endDate": "2026-09-13", "sampleSize": 649, "sampleType": "LV", "results": {"James Talarico (D)": 50.0, "Ken Paxton (R)": 45.0, "Undecided": 5.0}},
+    {"raceId": "TX-SEN-2026", "pollster": "Emerson College", "startDate": "2026-09-12", "endDate": "2026-09-14", "sampleSize": 1000, "sampleType": "LV", "results": {"James Talarico (D)": 47.0, "Ken Paxton (R)": 46.0, "Other": 2.0, "Undecided": 4.0}},
+    {"raceId": "TX-SEN-2026", "pollster": "Trafalgar Group (R)", "startDate": "2026-09-15", "endDate": "2026-09-17", "sampleSize": 1079, "sampleType": "LV", "results": {"James Talarico (D)": 46.0, "Ken Paxton (R)": 45.0, "Other": 3.0, "Undecided": 6.0}},
+    {"raceId": "TX-SEN-2026", "pollster": "Texas Southern University", "startDate": "2026-09-15", "endDate": "2026-09-19", "sampleSize": 1800, "sampleType": "LV", "results": {"James Talarico (D)": 47.0, "Ken Paxton (R)": 46.0, "Other": 3.0, "Undecided": 4.0}}
   ],
 };
-
-/**
- * Optional helper if you later want per-race polls.
- */
-export function getPollsForRace(raceId: string): Poll[] {
-  return (STATE_POLLS.TX ?? []).filter((p) => p.raceId === "TX-SEN-2026-CORNYN-v-CROCKETT");
-}

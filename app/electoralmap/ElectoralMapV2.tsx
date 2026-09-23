@@ -2,7 +2,6 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import DarkNav from "@/app/components/DarkNav";
 import { SENATE_MODEL } from "@/app/components/senateModel";
 
 // ─── types ────────────────────────────────────────────────────────────────────
@@ -134,7 +133,7 @@ function fillFor(p: Pick | undefined): string {
 function labelInk(p: Pick | undefined): { fill: string; opacity: number } {
   if (!p || p === "T") return { fill: "var(--foreground)", opacity: 0.45 };
   const rating = p.split("_")[1] as Rating;
-  return rating === "TILT" ? { fill: "#17171b", opacity: 1 } : { fill: "#ffffff", opacity: 1 };
+  return rating === "TILT" ? { fill: "var(--ink)", opacity: 1 } : { fill: "#ffffff", opacity: 1 };
 }
 const RATING_WORD: Record<Rating, string> = { SAFE:"Safe", LIKELY:"Likely", LEAN:"Lean", TILT:"Tilt" };
 function pickLabel(p: Pick | undefined): string {
@@ -221,7 +220,7 @@ export default function ElectoralMapPage() {
     const s = document.createElement("span");
     s.className = "em-ripple";
     const b = brushRef.current;
-    s.style.borderColor = b === "D" ? DEM_MID : b === "R" ? REP_MID : "rgba(244,244,239,0.65)";
+    s.style.borderColor = b === "D" ? DEM_MID : b === "R" ? REP_MID : "rgba(var(--ink-rgb),calc(0.65 * var(--mute) + var(--floor)))";
     s.style.left = `${e.clientX - r.left}px`;
     s.style.top = `${e.clientY - r.top}px`;
     host.appendChild(s);
@@ -451,7 +450,7 @@ export default function ElectoralMapPage() {
       const abbr = el.getAttribute("data-lab")!;
       if (mode === "redist") {
         const st = REDIST[abbr];
-        el.style.fill = st ? (st.s === "MOTION_D" || st.s === "COURT" ? "#17171b" : "#ffffff") : "var(--foreground)";
+        el.style.fill = st ? (st.s === "MOTION_D" || st.s === "COURT" ? "var(--ink)" : "#ffffff") : "var(--foreground)";
         el.style.opacity = st ? "1" : "0.3";
       } else if (mode === "senate") {
         if (!SENATE_UP.has(abbr)) { el.style.fill = "var(--foreground)"; el.style.opacity = "0.22"; return; }
@@ -589,7 +588,6 @@ export default function ElectoralMapPage() {
     <div className="em-page">
       <style>{CSS}</style>
 
-      <DarkNav />
 
       {/* ── Masthead ── */}
       <div className="em-mast">
@@ -862,7 +860,6 @@ export default function ElectoralMapPage() {
 // ─── styles ──────────────────────────────────────────────────────────────────
 const CSS = `
 html, body { background: var(--background) !important; }
-body header, body footer { display: none !important; }
 
 .em-page { padding-bottom: 86px; position: relative;
   --disp: var(--font-display);
@@ -907,7 +904,7 @@ body header, body footer { display: none !important; }
 /* click choreography */
 .em-ripple {
   position: absolute; width: 16px; height: 16px; margin: -8px 0 0 -8px; z-index: 6;
-  border-radius: 999px; border: 1.5px solid rgba(244,244,239,0.65); pointer-events: none;
+  border-radius: 999px; border: 1.5px solid rgba(var(--ink-rgb),calc(0.65 * var(--mute) + var(--floor))); pointer-events: none;
   animation: em-ripple 560ms cubic-bezier(.2,.8,.4,1) both;
 }
 @keyframes em-ripple { from { opacity: 0.9; transform: scale(0.4); } to { opacity: 0; transform: scale(5.2); } }
@@ -948,7 +945,7 @@ body header, body footer { display: none !important; }
   border-radius: 999px; border: 1px solid var(--border2);
   background: color-mix(in srgb, var(--background) 62%, transparent);
   -webkit-backdrop-filter: blur(18px) saturate(150%); backdrop-filter: blur(18px) saturate(150%);
-  box-shadow: 0 18px 50px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.07);
+  box-shadow: 0 18px 50px rgba(var(--line-rgb),0.35), inset 0 1px 0 rgba(var(--line-rgb),0.07);
   max-width: calc(100vw - 24px); overflow-x: auto; scrollbar-width: none;
 }
 .em-dock::-webkit-scrollbar { display: none; }
@@ -959,7 +956,7 @@ body header, body footer { display: none !important; }
   transition: color 180ms ease, background 220ms cubic-bezier(.2,.8,.2,1);
 }
 .em-dock-btn:hover { color: var(--foreground); }
-.em-dock-btn.is-on { background: #f4f4ef; color: #050505; }
+.em-dock-btn.is-on { background: var(--ink); color: var(--canvas); }
 @keyframes em-dock-in { from { opacity: 0; transform: translate(-50%, 18px); } to { opacity: 1; transform: translate(-50%, 0); } }
 @media (max-width: 560px) { .em-dock { bottom: 12px; } .em-dock-btn { padding: 8px 12px; font-size: 11px; } }
 
@@ -1035,7 +1032,7 @@ body header, body footer { display: none !important; }
 .em-act:hover { color: var(--foreground); border-color: var(--foreground); }
 .em-share {
   font-family: var(--lab); font-size: 12px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase;
-  color: #050505; background: #f4f4ef; border: 0; border-radius: 999px; padding: 9px 18px; cursor: pointer;
+  color: var(--canvas); background: var(--canvas); border: 0; border-radius: 999px; padding: 9px 18px; cursor: pointer;
   transition: transform 200ms cubic-bezier(.16,1,.3,1), box-shadow 200ms ease;
 }
 .em-share:hover { transform: translateY(-1.5px); box-shadow: 0 12px 30px rgba(109,62,233,0.32); }
@@ -1060,7 +1057,7 @@ body header, body footer { display: none !important; }
 .em-tiles-row { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin-top: 6px; padding-top: 16px; border-top: 1px solid var(--border); }
 .em-tiles { display: flex; flex-wrap: wrap; gap: 4px; }
 .em-tile { display: inline-flex; flex-direction: column; align-items: center; justify-content: center; min-width: 50px; height: 42px; padding: 4px 6px; border: 0; border-radius: 7px; cursor: pointer; line-height: 1.1; transition: filter 160ms ease, transform 260ms cubic-bezier(.2,.9,.3,1.45), background 380ms cubic-bezier(.2,.8,.2,1), box-shadow 240ms ease; }
-.em-tile:not(.is-out):hover { transform: translateY(-3px) scale(1.05); box-shadow: 0 10px 26px rgba(0,0,0,0.45); }
+.em-tile:not(.is-out):hover { transform: translateY(-3px) scale(1.05); box-shadow: 0 10px 26px rgba(var(--line-rgb),0.45); }
 .em-tile:hover { filter: brightness(1.12) saturate(1.15); }
 .em-tile.is-out { cursor: default; }
 .em-tile.is-out:hover { filter: none; }
@@ -1076,7 +1073,7 @@ body header, body footer { display: none !important; }
 
 /* tooltip — portaled to <body>, so it uses GLOBAL font vars (page-scoped --disp
    etc. don't resolve outside .em-page). */
-.em-tip { position: fixed; z-index: 99999; pointer-events: none; width: 210px; animation: em-tip-in 0.16s cubic-bezier(.2,.9,.3,1.2) both; transform-origin: top left; background: color-mix(in srgb, var(--background) 97%, transparent); border: 1px solid var(--border2); border-left: 3px solid var(--em-toss); border-radius: 12px; box-shadow: 0 24px 60px rgba(0,0,0,0.6); overflow: hidden; -webkit-backdrop-filter: blur(18px); backdrop-filter: blur(18px); }
+.em-tip { position: fixed; z-index: 99999; pointer-events: none; width: 210px; animation: em-tip-in 0.16s cubic-bezier(.2,.9,.3,1.2) both; transform-origin: top left; background: color-mix(in srgb, var(--background) 97%, transparent); border: 1px solid var(--border2); border-left: 3px solid var(--em-toss); border-radius: 12px; box-shadow: 0 24px 60px rgba(var(--line-rgb),0.6); overflow: hidden; -webkit-backdrop-filter: blur(18px); backdrop-filter: blur(18px); }
 @keyframes em-tip-in { from { opacity: 0; transform: scale(0.94) translateY(5px); } to { opacity: 1; transform: none; } }
 .em-tip-top { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; padding: 11px 14px 9px; }
 .em-tip-state { font-family: inherit; font-weight: 700; font-size: 15px; letter-spacing: -0.02em; line-height: 1; color: var(--foreground); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }

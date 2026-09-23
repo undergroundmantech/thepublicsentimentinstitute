@@ -413,7 +413,7 @@ const CSS = `
   .apc-seg-btn { appearance: none; border: 0; background: transparent; cursor: pointer; font-family: var(--font-body), monospace; font-size: 12px; font-weight: 600; color: var(--muted); padding: 7px 16px; border-radius: 7px; line-height: 1; transition: color 160ms ease, background 160ms ease; }
   .apc-seg-sm .apc-seg-btn { padding: 6px 11px; font-size: 11px; }
   .apc-seg-btn:hover { color: var(--foreground); }
-  .apc-seg-btn.is-active { color: #000; background: #fafafa; box-shadow: 0 1px 2px rgba(0,0,0,0.5); }
+  .apc-seg-btn.is-active { color: #000; background: #fafafa; box-shadow: 0 1px 2px rgba(var(--line-rgb),0.5); }
 
   .apc-toggle { display: inline-flex; align-items: center; gap: 8px; cursor: pointer; font-family: var(--font-body), monospace; font-size: 12px; font-weight: 600; color: var(--muted); padding: 7px 13px; border-radius: 9px; line-height: 1; border: 1px solid var(--border); background: transparent; transition: color 160ms ease, border-color 160ms ease, opacity 160ms ease; }
   .apc-toggle:hover { color: var(--foreground); border-color: var(--border2); }
@@ -430,9 +430,9 @@ const CSS = `
   .apc-flag { position: absolute; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; border-radius: 8px; }
   .apc-flag-stripes { position: absolute; inset: 0; background: repeating-linear-gradient(180deg,
     rgba(229,72,77,0.038) 0, rgba(229,72,77,0.038) 7.6923%,
-    rgba(255,255,255,0.015) 7.6923%, rgba(255,255,255,0.015) 15.3846%); }
+    rgba(var(--line-rgb),0.015) 7.6923%, rgba(var(--line-rgb),0.015) 15.3846%); }
   .apc-flag-canton { position: absolute; left: 0; top: 0; width: 38%; height: 53.84%; background: rgba(70,116,206,0.055); }
-  .apc-flag-stars { position: absolute; inset: 0; background-image: radial-gradient(rgba(255,255,255,0.11) 0.6px, transparent 0.7px); background-size: 9.5% 18%; background-position: 4% 9%; }
+  .apc-flag-stars { position: absolute; inset: 0; background-image: radial-gradient(rgba(var(--line-rgb),0.11) 0.6px, transparent 0.7px); background-size: 9.5% 18%; background-position: 4% 9%; }
 
   /* hover overlay */
   .apc-hit { position: absolute; pointer-events: auto; cursor: crosshair; z-index: 3; touch-action: pan-y; }

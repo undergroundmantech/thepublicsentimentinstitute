@@ -92,7 +92,7 @@ function EndLabels({ series, last, domain }: { series: MultiSeries[]; last: numb
           <line x1={2} y1={0} x2={11} y2={0} stroke={it.color} strokeWidth={1.25} opacity={0.5} />
           <circle cx={14} cy={0} r={3} fill={it.color} />
           <text x={22} y={-1} dominantBaseline="middle" style={{ fontFamily: "var(--font-body),monospace", fontSize: 12.5, fontWeight: 700, fontVariantNumeric: "tabular-nums" }} fill={it.color}>{it.value.toFixed(1)}</text>
-          <text x={22} y={11} dominantBaseline="middle" style={{ fontFamily: "var(--font-body),monospace", fontSize: 8.5, fontWeight: 600, letterSpacing: "0.06em" }} fill="rgba(255,255,255,0.45)">{it.label.length > 11 ? it.label.slice(0, 10) + "…" : it.label}</text>
+          <text x={22} y={11} dominantBaseline="middle" style={{ fontFamily: "var(--font-body),monospace", fontSize: 8.5, fontWeight: 600, letterSpacing: "0.06em" }} fill="rgba(var(--line-rgb),0.45)">{it.label.length > 11 ? it.label.slice(0, 10) + "…" : it.label}</text>
         </g>
       ))}
     </g>
@@ -246,11 +246,11 @@ export default function MultiCandidateChart({ daily, polls, series, unit = "%", 
         <div className="mcc-plot-svg">
           <ResponsiveContainer width="100%" height="100%">
             <ComposedChart key={animKey} data={chartData} margin={{ top: 18, right: rightMargin, left: 4, bottom: 6 }}>
-              <CartesianGrid stroke="rgba(255,255,255,0.045)" vertical={false} />
-              <XAxis dataKey="t" type="number" scale="time" domain={xDomain} ticks={ticks} tickFormatter={fmtTick} tickLine={false} axisLine={{ stroke: "rgba(255,255,255,0.08)" }} tickMargin={12}
-                tick={{ fontFamily: "var(--font-body),monospace", fontSize: 11, fill: "rgba(255,255,255,0.4)" }} />
+              <CartesianGrid stroke="rgba(var(--line-rgb),0.045)" vertical={false} />
+              <XAxis dataKey="t" type="number" scale="time" domain={xDomain} ticks={ticks} tickFormatter={fmtTick} tickLine={false} axisLine={{ stroke: "rgba(var(--line-rgb),0.08)" }} tickMargin={12}
+                tick={{ fontFamily: "var(--font-body),monospace", fontSize: 11, fill: "rgba(var(--line-rgb),0.4)" }} />
               <YAxis domain={yDomain} tickLine={false} axisLine={false} width={40} tickMargin={6} tickFormatter={(v) => `${v}${unit}`}
-                tick={{ fontFamily: "var(--font-body),monospace", fontSize: 11, fill: "rgba(255,255,255,0.4)" }} />
+                tick={{ fontFamily: "var(--font-body),monospace", fontSize: 11, fill: "rgba(var(--line-rgb),0.4)" }} />
               {showPolls && <Scatter data={dots} dataKey="y" shape={renderDot} isAnimationActive={false} />}
               {series.map((s, i) => (
                 <Line key={s.key} type="monotone" dataKey={`c${i}`} name={s.label} stroke={s.color} strokeWidth={2.25} dot={false} activeDot={false} connectNulls isAnimationActive={LINE_ANIM} animationDuration={850} animationBegin={i * 90} />
@@ -270,16 +270,16 @@ const CSS = `
   .mcc { position: relative; }
   .mcc-controls { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-bottom: 18px; }
   .mcc-legend { display: flex; flex-wrap: wrap; gap: 7px 16px; }
-  .mcc-legend-item { display: inline-flex; align-items: center; gap: 7px; font-family: var(--font-body), monospace; font-size: 12px; color: rgba(255,255,255,0.62); }
+  .mcc-legend-item { display: inline-flex; align-items: center; gap: 7px; font-family: var(--font-body), monospace; font-size: 12px; color: rgba(var(--ink-rgb),calc(0.62 * var(--mute) + var(--floor))); }
   .mcc-legend-item b { font-variant-numeric: tabular-nums; margin-left: 1px; }
   .mcc-legend-dot { width: 8px; height: 8px; border-radius: 50%; }
   .mcc-controls-right { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
-  .mcc-seg { display: inline-flex; padding: 3px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.09); border-radius: 10px; }
-  .mcc-seg-btn { appearance: none; border: 0; background: transparent; cursor: pointer; font-family: var(--font-body), monospace; font-size: 11px; font-weight: 600; color: rgba(255,255,255,0.5); padding: 6px 11px; border-radius: 7px; line-height: 1; transition: color 160ms ease, background 160ms ease; }
-  .mcc-seg-btn:hover { color: rgba(255,255,255,0.82); }
+  .mcc-seg { display: inline-flex; padding: 3px; background: rgba(var(--line-rgb),0.04); border: 1px solid rgba(var(--line-rgb),0.09); border-radius: 10px; }
+  .mcc-seg-btn { appearance: none; border: 0; background: transparent; cursor: pointer; font-family: var(--font-body), monospace; font-size: 11px; font-weight: 600; color: rgba(var(--ink-rgb),calc(0.5 * var(--mute) + var(--floor))); padding: 6px 11px; border-radius: 7px; line-height: 1; transition: color 160ms ease, background 160ms ease; }
+  .mcc-seg-btn:hover { color: rgba(var(--ink-rgb),calc(0.82 * var(--mute) + var(--floor))); }
   .mcc-seg-btn.is-active { color: #000; background: #fafafa; }
-  .mcc-toggle { display: inline-flex; align-items: center; gap: 8px; cursor: pointer; font-family: var(--font-body), monospace; font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.5); padding: 7px 13px; border-radius: 9px; line-height: 1; border: 1px solid rgba(255,255,255,0.09); background: transparent; transition: color 160ms ease, border-color 160ms ease, opacity 160ms ease; }
-  .mcc-toggle:hover { color: rgba(255,255,255,0.85); border-color: rgba(255,255,255,0.18); }
+  .mcc-toggle { display: inline-flex; align-items: center; gap: 8px; cursor: pointer; font-family: var(--font-body), monospace; font-size: 12px; font-weight: 600; color: rgba(var(--ink-rgb),calc(0.5 * var(--mute) + var(--floor))); padding: 7px 13px; border-radius: 9px; line-height: 1; border: 1px solid rgba(var(--line-rgb),0.09); background: transparent; transition: color 160ms ease, border-color 160ms ease, opacity 160ms ease; }
+  .mcc-toggle:hover { color: rgba(var(--ink-rgb),calc(0.85 * var(--mute) + var(--floor))); border-color: rgba(var(--ink-rgb),calc(0.18 * var(--struct))); }
   .mcc-toggle:not(.is-on) { opacity: 0.5; }
 
   .mcc-plot { width: 100%; position: relative; }
@@ -287,15 +287,15 @@ const CSS = `
   .mcc .recharts-surface { overflow: visible; }
 
   .mcc-flag { position: absolute; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; border-radius: 8px; }
-  .mcc-flag-stripes { position: absolute; inset: 0; background: repeating-linear-gradient(180deg, rgba(229,72,77,0.038) 0, rgba(229,72,77,0.038) 7.6923%, rgba(255,255,255,0.015) 7.6923%, rgba(255,255,255,0.015) 15.3846%); }
+  .mcc-flag-stripes { position: absolute; inset: 0; background: repeating-linear-gradient(180deg, rgba(229,72,77,0.038) 0, rgba(229,72,77,0.038) 7.6923%, rgba(var(--line-rgb),0.015) 7.6923%, rgba(var(--line-rgb),0.015) 15.3846%); }
   .mcc-flag-canton { position: absolute; left: 0; top: 0; width: 38%; height: 53.84%; background: rgba(70,116,206,0.055); }
-  .mcc-flag-stars { position: absolute; inset: 0; background-image: radial-gradient(rgba(255,255,255,0.11) 0.6px, transparent 0.7px); background-size: 9.5% 18%; background-position: 4% 9%; }
+  .mcc-flag-stars { position: absolute; inset: 0; background-image: radial-gradient(rgba(var(--line-rgb),0.11) 0.6px, transparent 0.7px); background-size: 9.5% 18%; background-position: 4% 9%; }
 
   .mcc-hit { position: absolute; pointer-events: auto; cursor: crosshair; z-index: 3; touch-action: pan-y; }
   .mcc-hit > * { pointer-events: none; }
-  .mcc-dim { position: absolute; top: 0; bottom: 0; background: linear-gradient(90deg, rgba(0,0,0,0) 0, rgba(0,0,0,0.62) 30px); }
-  .mcc-slider { position: absolute; top: 0; bottom: 0; width: 1px; background: rgba(255,255,255,0.5); }
-  .mcc-date { position: absolute; top: -4px; transform: translate(-50%, -100%); font-family: var(--font-body), monospace; font-size: 10px; font-weight: 600; letter-spacing: 0.06em; color: rgba(255,255,255,0.6); white-space: nowrap; text-shadow: 0 0 5px #000, 0 0 8px #000; }
+  .mcc-dim { position: absolute; top: 0; bottom: 0; background: linear-gradient(90deg, rgba(var(--line-rgb),0) 0, rgba(var(--line-rgb),0.62) 30px); }
+  .mcc-slider { position: absolute; top: 0; bottom: 0; width: 1px; background: rgba(var(--line-rgb),0.5); }
+  .mcc-date { position: absolute; top: -4px; transform: translate(-50%, -100%); font-family: var(--font-body), monospace; font-size: 10px; font-weight: 600; letter-spacing: 0.06em; color: rgba(var(--ink-rgb),calc(0.6 * var(--mute) + var(--floor))); white-space: nowrap; text-shadow: 0 0 5px #000, 0 0 8px #000; }
   .mcc-adot { position: absolute; width: 11px; height: 11px; border-radius: 50%; border: 2.5px solid #000; transform: translate(-50%, -50%); box-shadow: 0 0 10px -1px currentColor; }
   .mcc-chip { position: absolute; transform: translate(15px, -50%); display: inline-flex; align-items: baseline; gap: 7px; white-space: nowrap; text-shadow: 0 0 5px #000, 0 0 9px #000, 0 0 9px #000, 0 1px 2px #000; }
   .mcc-chip.is-left { transform: translate(calc(-100% - 15px), -50%); }

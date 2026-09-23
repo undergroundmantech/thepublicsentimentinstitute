@@ -3,6 +3,7 @@
 import React, { useEffect, useRef } from "react";
 import * as THREE from "three";
 import { loadGeo, makeProjector, geomToPath, candColor } from "../onpoint/electionLib.js";
+import { cssColor } from "@/app/lib/cssColor";
 
 // DeskSphere — the desk opens INSIDE a sphere of election boards.
 //
@@ -299,7 +300,7 @@ export default function DeskSphere({
       // the wall + the continuous grid line
       ctx.fillStyle = "#050506";
       ctx.fillRect(0, 0, TEX_W, TEX_H);
-      ctx.strokeStyle = "rgba(244,244,239,0.09)";
+      ctx.strokeStyle = cssColor("rgba(var(--ink-rgb),calc(0.09 * var(--struct)))");
       ctx.lineWidth = 1.3;
       ctx.strokeRect(0, 0, TEX_W, TEX_H);
 
@@ -328,18 +329,18 @@ export default function DeskSphere({
 
       // board face — a whisper of depth, edge shadow into the wall
       ctx.save();
-      ctx.shadowColor = "rgba(0,0,0,0.7)";
+      ctx.shadowColor = cssColor("rgba(var(--line-rgb),0.7)");
       ctx.shadowBlur = 22;
       ctx.shadowOffsetY = 6;
       ctx.fillStyle = "#0b0c11";
       ctx.fillRect(bx, by, bw, bh);
       ctx.restore();
       const sheen = ctx.createLinearGradient(0, by, 0, by + bh);
-      sheen.addColorStop(0, "rgba(255,255,255,0.05)");
-      sheen.addColorStop(0.3, "rgba(255,255,255,0)");
+      sheen.addColorStop(0, cssColor("rgba(var(--line-rgb),0.05)"));
+      sheen.addColorStop(0.3, cssColor("rgba(var(--line-rgb),0)"));
       ctx.fillStyle = sheen;
       ctx.fillRect(bx, by, bw, bh);
-      ctx.strokeStyle = "rgba(244,244,239,0.14)";
+      ctx.strokeStyle = cssColor("rgba(var(--ink-rgb),calc(0.14 * var(--struct)))");
       ctx.lineWidth = 1;
       ctx.strokeRect(bx + 0.5, by + 0.5, bw - 1, bh - 1);
 
@@ -367,7 +368,7 @@ export default function DeskSphere({
               const p = new Path2D(geomToPath(f.geometry, proj.project));
               mc.fillStyle = "#111318";
               mc.fill(p);
-              mc.strokeStyle = "rgba(244,244,239,0.1)";
+              mc.strokeStyle = cssColor("rgba(var(--ink-rgb),calc(0.1 * var(--struct)))");
               mc.lineWidth = 0.8;
               mc.stroke(p);
             }
@@ -377,7 +378,7 @@ export default function DeskSphere({
             g2.addColorStop(1, shade(tone, 1));
             mc.fillStyle = g2;
             mc.fill(p);
-            mc.strokeStyle = "rgba(244,244,239,0.55)";
+            mc.strokeStyle = cssColor("rgba(var(--ink-rgb),calc(0.55 * var(--mute) + var(--floor)))");
             mc.lineWidth = 1.6;
             mc.stroke(p);
           }
@@ -391,14 +392,14 @@ export default function DeskSphere({
               mc.fillStyle = shade(leaderSide ? tone : tone2, (ch >>> 6) % 4);
               const p = new Path2D(geomToPath(f.geometry, proj.project));
               mc.fill(p);
-              mc.strokeStyle = "rgba(4,4,6,0.6)";
+              mc.strokeStyle = cssColor("rgba(var(--canvas-rgb),0.6)");
               mc.lineWidth = 0.75;
               mc.stroke(p);
             }
           }
         }
         ctx.save();
-        ctx.shadowColor = "rgba(0,0,0,0.5)";
+        ctx.shadowColor = cssColor("rgba(var(--line-rgb),0.5)");
         ctx.shadowBlur = 12;
         ctx.drawImage(map, bx + 10, by + 8);
         ctx.restore();
@@ -407,7 +408,7 @@ export default function DeskSphere({
       // the board's lower third — name · share · status on a hairline
       if (lead) {
         const yLine = by + bh - footH;
-        ctx.strokeStyle = "rgba(244,244,239,0.1)";
+        ctx.strokeStyle = cssColor("rgba(var(--ink-rgb),calc(0.1 * var(--struct)))");
         ctx.lineWidth = 1;
         ctx.beginPath();
         ctx.moveTo(bx + 10, yLine);
@@ -415,7 +416,7 @@ export default function DeskSphere({
         ctx.stroke();
         const yTx = by + bh - 14;
         ctx.textBaseline = "alphabetic";
-        ctx.fillStyle = "#f4f4ef";
+        ctx.fillStyle = cssColor("var(--ink)");
         ctx.font = `800 18px ${fam}`;
         const nm = surname(lead.name);
         ctx.fillText(nm, bx + 10, yTx, bw * 0.48);
@@ -424,7 +425,7 @@ export default function DeskSphere({
         ctx.fillStyle = tone;
         ctx.fillText(`${lpct.toFixed(1)}%`, bx + 10 + nw + 8, yTx);
         ctx.font = `600 10.5px ${fam}`;
-        ctx.fillStyle = called ? tone : "rgba(244,244,239,0.52)";
+        ctx.fillStyle = cssColor(called ? tone : "rgba(var(--ink-rgb),calc(0.52 * var(--mute) + var(--floor)))");
         ctx.textAlign = "right";
         ctx.fillText(called ? "✓ called" : `${Math.round(d.reporting || 0)}% in`, bx + bw - 10, yTx);
         ctx.textAlign = "left";
@@ -435,13 +436,13 @@ export default function DeskSphere({
       // wall labels hug the board's corners — the grid typography
       const ty = by - 9, byy = by + bh + 19;
       ctx.font = `600 10.5px ${mono}`;
-      ctx.fillStyle = "rgba(244,244,239,0.68)";
+      ctx.fillStyle = cssColor("rgba(var(--ink-rgb),calc(0.68 * var(--mute) + var(--floor)))");
       const place = local
         ? String(local.properties.county_id).slice(d.province.length + 1).toUpperCase()
         : (d.stateName || d.province || "").toUpperCase();
       ctx.fillText(place.slice(0, 22), bx, ty);
       ctx.textAlign = "right";
-      ctx.fillStyle = "rgba(244,244,239,0.34)";
+      ctx.fillStyle = cssColor("rgba(var(--ink-rgb),calc(0.34 * var(--mute) + var(--floor)))");
       const yr = d.date ? String(new Date(d.date + "T00:00:00").getFullYear()) : "2026";
       ctx.fillText(yr, bx + bw, ty);
       ctx.textAlign = "left";
@@ -449,12 +450,12 @@ export default function DeskSphere({
       ctx.font = `600 9.5px ${mono}`;
       const tw = ctx.measureText(tag).width;
       const ph = 19;
-      ctx.strokeStyle = "rgba(244,244,239,0.2)";
+      ctx.strokeStyle = cssColor("rgba(var(--ink-rgb),calc(0.2 * var(--struct)))");
       ctx.lineWidth = 1;
       ctx.beginPath();
       (ctx as any).roundRect(bx, byy - ph + 6, tw + 14, ph, 9.5);
       ctx.stroke();
-      ctx.fillStyle = "rgba(244,244,239,0.55)";
+      ctx.fillStyle = cssColor("rgba(var(--ink-rgb),calc(0.55 * var(--mute) + var(--floor)))");
       ctx.fillText(tag, bx + 7, byy);
 
       const tex = new THREE.CanvasTexture(cv);

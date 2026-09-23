@@ -113,7 +113,7 @@ export default function ContactPage() {
             <p className="ct-hero-desc">
               Request a poll, propose a partnership, or discuss recurring fielding.
               All inquiries route directly to our research team at{" "}
-              <span style={{ color: "rgba(255,255,255,0.6)" }}>{CONTACT_EMAIL}</span>.
+              <span style={{ color: "rgba(var(--ink-rgb),calc(0.6 * var(--mute) + var(--floor)))" }}>{CONTACT_EMAIL}</span>.
             </p>
 
             <div className="ct-badge-row">
@@ -386,8 +386,8 @@ function StatusPill({ status }: { status: Status }) {
     <div style={{
       display: "inline-flex", alignItems: "center", gap: 7,
       padding: "3px 10px",
-      border: `1px solid rgba(15,16,32,0.10)`,
-      background: "rgba(255,255,255,0.03)",
+      border: `1px solid rgba(var(--ink-rgb),calc(0.1 * var(--struct)))`,
+      background: "rgba(var(--line-rgb),0.03)",
       fontFamily: "var(--font-body), monospace",
       fontSize: 9, letterSpacing: "0.18em", textTransform: "uppercase",
       color: cfg.color,

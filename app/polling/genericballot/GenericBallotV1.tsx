@@ -489,7 +489,7 @@ const CSS = `
   .pa-seg-btn:disabled { color: var(--muted2); cursor: not-allowed; opacity: 0.5; }
   .pa-seg-n { font-size: 10px; font-weight: 600; font-variant-numeric: tabular-nums; color: var(--muted2); }
   .pa-seg-btn:hover:not(:disabled):not(.is-active) .pa-seg-n { color: var(--muted); }
-  .pa-seg-btn.is-active .pa-seg-n { color: rgba(255,255,255,0.7); }
+  .pa-seg-btn.is-active .pa-seg-n { color: rgba(var(--ink-rgb),calc(0.7 * var(--mute) + var(--floor))); }
   .pa-filter-note { font-family: var(--font-body), monospace; font-size: 10.5px; font-weight: 600; letter-spacing: 0.04em; color: var(--muted2); }
   .pa-chart-empty { padding: 64px 16px; text-align: center; color: var(--muted2); font-family: var(--font-body), monospace; font-size: 13px; }
 

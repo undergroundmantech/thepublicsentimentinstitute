@@ -1,7 +1,6 @@
 // Shared types + scales for the forecast desk.
 
 export type Office = "governor" | "senate" | "house";
-export type ModelKey = "legacy" | "complete";
 export type ViewMode = "margin" | "odds" | "rating";
 
 export interface RaceSide {
@@ -34,11 +33,15 @@ export interface Race {
   wMkt: number;
   market: { q: number; liquidity: number } | null;
   ratings: { outlet: string; cat: string }[];
-  legacy: RaceSide;
-  complete: RaceSide;
+  // one estimate per race: the complete model, all six stages
+  est: RaceSide;
+  // projected vote for the race as a whole, so a tooltip can show counts, not just shares
+  votes?: { dem: number; rep: number; other: number; total: number };
+  // ranked choice races carry their final round as well as their first choice
+  rcv?: { dem: number; rep: number; demPct: number; repPct: number; exhausted: number; firstChoice: number } | null;
   polls: { pollster: string; kind: string; age: number; n: number; margin: number; grade?: string }[];
   similar: { id: string; corr: number }[];
-  trend: { legacy: { m: number; p: number }[]; complete: { m: number; p: number }[] };
+  trend: { m: number; p: number }[];
 }
 
 export interface Chamber {
@@ -46,11 +49,18 @@ export interface Chamber {
   seatsTotal: number;
   gopControl: number;
   demControl: number;
-  gopSeats: number;
-  demSeats: number;
+  gopSeats: number;   // simulation average
+  demSeats: number;   // simulation average
+  // the seat by seat call: every race given to its projected winner, which is
+  // what the OnPoint pages print and is not the same as the average above
+  projD: number;
+  projR: number;
   hist: [number, number][];
   demP10: number;
   demP90: number;
+  // the median of the published OnPoint run, stamped by the build so the desk
+  // prints the same figure the artifact pages do rather than re-deriving it
+  median?: number;
   trend: { t: number; dem: number; demSeats: number }[];
 }
 
@@ -73,6 +83,22 @@ export interface Geo {
   hexStatesR: number;
 }
 
+// counties.json: fips -> [GOP-positive margin, Democratic votes, Republican votes, total votes].
+// County names sit once under _n; a state's House counties sit under house-<ST>,
+// shared by every district in that state.
+export type CountyRow = [number, number, number, number];
+export interface CountiesPayload {
+  _n?: Record<string, string>;
+  _reg?: string[];
+  [key: string]: Record<string, CountyRow> | Record<string, string> | string[] | undefined;
+}
+
+// The estimated exit poll each statewide page carries, read off the simulated
+// voter file rather than asked of anyone: [category, group, share of projected
+// voters, Democrat, Republican, everyone else], all percentages. Keyed by race id.
+export type CrosstabRow = [string, string, number, number, number, number];
+export type Crosstabs = Record<string, CrosstabRow[]>;
+
 export interface StateDetail {
   st: string;
   counties: { id: string; d: string }[];
@@ -80,37 +106,81 @@ export interface StateDetail {
 }
 
 export interface Model {
-  meta: { updated: string; election: string; daysOut: number; npe: number; genericBallot: GenericBallot; sims: number; senNotUpR: number; senNotUpD: number };
-  chambers: Record<Office, Record<ModelKey, Chamber>>;
+  meta: {
+    updated: string; election: string; daysOut: number; npe: number; genericBallot: GenericBallot; sims: number;
+    senNotUpR: number; senNotUpD: number;
+    // governorships not on the 2026 ballot, counted into the chamber like the Senate's
+    govNotUpR: number; govNotUpD: number; govOnBallot: number;
+  };
+  chambers: Record<Office, Chamber>;
   races: Race[];
 }
 
 export const INK = "#f4f4ef";
+
+// Relative luminance, sRGB, per WCAG.
+function relLum(hex: string) {
+  const n = parseInt(hex.slice(1), 16);
+  const c = [(n >> 16) & 255, (n >> 8) & 255, n & 255].map((v) => {
+    const s = v / 255;
+    return s <= 0.03928 ? s / 12.92 : Math.pow((s + 0.055) / 1.055, 2.4);
+  });
+  return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2];
+}
+const LIGHT_CANVAS = relLum("#f7f7f4");
+
+// A band or outlet colour used as TEXT on the light canvas. The pale end of the
+// rating scale — Tilt and Lean — has almost no contrast on white, so darken the
+// colour along its own hue until it clears WCAG AA. Dark mode never calls this:
+// those same colours already read against near-black.
+export function onLight(hex: string) {
+  let [r, g, b] = [(parseInt(hex.slice(1), 16) >> 16) & 255,
+                   (parseInt(hex.slice(1), 16) >> 8) & 255,
+                    parseInt(hex.slice(1), 16) & 255];
+  for (let i = 0; i < 24; i++) {
+    const h = "#" + [r, g, b].map((v) => Math.round(v).toString(16).padStart(2, "0")).join("");
+    if ((LIGHT_CANVAS + 0.05) / (relLum(h) + 0.05) >= 6.0) return h;
+    r *= 0.92; g *= 0.92; b *= 0.92;
+  }
+  return "#101014";
+}
 export const LIME = "#6d3ee9";
 export const DEM = "#3b6fde";
 export const GOP = "#e23950";
-export const TOSS = "#8b5cf6";
 
 // ── rating bands (identical to the build) ───────────────────────────────────
+// TPSI's own cut points, the ones the House page and the ratings board use:
+// under 2 Tilt, 2 to 6 Lean, 6 to 12 Likely, 12 or more Safe. There is no
+// toss-up category. A race inside two points still leans somewhere, and naming
+// the side it leans is worth more than a purple square that names nobody, so
+// the closest band is Tilt and it takes a party like every other band.
+// Margins are GOP-positive throughout.
 export const RATING_BANDS = [
-  { cat: "Safe R", lo: 15, hi: 999, color: "#8f1f2b" },
-  { cat: "Likely R", lo: 6.5, hi: 15, color: "#c22e3c" },
-  { cat: "Lean R", lo: 2.5, hi: 6.5, color: "#e56471" },
-  { cat: "Toss-up", lo: -2.5, hi: 2.5, color: TOSS },
-  { cat: "Lean D", lo: -6.5, hi: -2.5, color: "#6f92e8" },
-  { cat: "Likely D", lo: -15, hi: -6.5, color: "#2f5bc4" },
-  { cat: "Safe D", lo: -999, hi: -15, color: "#1d3a85" },
+  { cat: "Safe R", lo: 12, hi: 999, color: "#8f1f2b" },
+  { cat: "Likely R", lo: 6, hi: 12, color: "#c22e3c" },
+  { cat: "Lean R", lo: 2, hi: 6, color: "#e05c6a" },
+  { cat: "Tilt R", lo: 0, hi: 2, color: "#efa3aa" },
+  { cat: "Tilt D", lo: -2, hi: 0, color: "#9db4ec" },
+  { cat: "Lean D", lo: -6, hi: -2, color: "#6f92e8" },
+  { cat: "Likely D", lo: -12, hi: -6, color: "#2f5bc4" },
+  { cat: "Safe D", lo: -999, hi: -12, color: "#1d3a85" },
 ] as const;
+const TILT_R = 3, TILT_D = 4;
 
 export function ratingFor(margin: number) {
-  return RATING_BANDS.find((b) => margin >= b.lo && margin < b.hi) ?? RATING_BANDS[3];
+  const m = Number.isFinite(margin) ? margin : 0;
+  return RATING_BANDS.find((b) => m >= b.lo && m < b.hi) ?? RATING_BANDS[m > 0 ? TILT_R : TILT_D];
 }
 
 // ── margin scale: banded diverging, desk tones ──────────────────────────────
+// The ramp turns on the same 2 / 6 / 12 points the bands do, and it changes
+// party at zero rather than passing through a neutral colour: the palest blue
+// and the palest red sit either side of the midline, so a one-point seat still
+// reads as a side.
 const MARGIN_STOPS: [number, string][] = [
-  [-30, "#16306f"], [-20, "#1d3f96"], [-10, "#2c56c4"], [-5, "#3b6fde"],
-  [-2, "#7b8fe0"], [0, "#8b5cf6"], [2, "#e08a94"], [5, "#e23950"],
-  [10, "#c22638"], [20, "#98182a"], [30, "#701020"],
+  [-30, "#16306f"], [-20, "#1d3f96"], [-12, "#2c56c4"], [-6, "#3b6fde"],
+  [-2, "#7b8fe0"], [-0.01, "#b9c9f2"], [0, "#f2bfc4"], [2, "#e08a94"],
+  [6, "#e23950"], [12, "#c22638"], [20, "#98182a"], [30, "#701020"],
 ];
 function hexLerp(a: string, b: string, t: number) {
   const pa = [1, 3, 5].map((i) => parseInt(a.slice(i, i + 2), 16));
@@ -128,14 +198,27 @@ export function marginColor(m: number) {
 }
 
 // ── odds scale: certainty of the favorite ────────────────────────────────────
+export const TILT_D_TONE = "#b9c9f2";
+export const TILT_R_TONE = "#f2bfc4";
 export function oddsColor(gopProb: number) {
   const p = Math.max(0.001, Math.min(0.999, gopProb));
-  if (p > 0.5) return hexLerp("#9b8bd4", "#a01426", Math.min(1, (p - 0.5) / 0.48));
-  return hexLerp("#9b8bd4", "#183685", Math.min(1, (0.5 - p) / 0.48));
+  if (p > 0.5) return hexLerp(TILT_R_TONE, "#a01426", Math.min(1, (p - 0.5) / 0.48));
+  return hexLerp(TILT_D_TONE, "#183685", Math.min(1, (0.5 - p) / 0.48));
 }
 
-export function raceColor(r: Race, model: ModelKey, view: ViewMode) {
-  const side = r[model];
+// Text laid on one of these fills has to flip with the fill: the tilt and lean
+// shades are pale enough that white on them is unreadable.
+export function inkOn(hex: string) {
+  const c = hex.trim().replace("#", "");
+  if (c.length < 6) return "#f4f4ef";
+  const lin = (v: number) => (v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4));
+  const [r, g, b] = [0, 2, 4].map((i) => lin(parseInt(c.slice(i, i + 2), 16) / 255));
+  const L = 0.2126 * r + 0.7152 * g + 0.0722 * b;
+  return (L + 0.05) / 0.05 >= 1.05 / (L + 0.05) ? "#121212" : "#f4f4ef";
+}
+
+export function raceColor(r: Race, view: ViewMode) {
+  const side = r.est;
   if (view === "margin") return marginColor(side.margin);
   if (view === "odds") return oddsColor(side.prob);
   return ratingFor(side.margin).color;
@@ -151,7 +234,19 @@ export const fmtPct = (p: number, dp = 0) => {
 };
 export const fmtMargin = (m: number) =>
   Math.abs(m) < 0.05 ? "Even" : m > 0 ? `R+${Math.abs(m).toFixed(1)}` : `D+${Math.abs(m).toFixed(1)}`;
-export const surname = (n: string) => n.trim().split(/\s+/).pop() || n;
+// Last name for the compact labels. A generational suffix is not a surname, and
+// neither is the tail of a particle name, so "Ashley Moody Jr." reads Moody and
+// "Sandra Van Scotter" reads Van Scotter.
+const SUFFIX = /^(jr|sr|ii|iii|iv|v)\.?$/i;
+const PARTICLE = /^(van|von|de|del|della|di|da|du|la|le|st|st\.|saint|mac|el|al|bin|ibn)$/i;
+export const surname = (n: string) => {
+  const parts = n.trim().split(/\s+/).filter(Boolean);
+  while (parts.length > 1 && SUFFIX.test(parts[parts.length - 1])) parts.pop();
+  if (!parts.length) return n;
+  let i = parts.length - 1;
+  while (i > 0 && PARTICLE.test(parts[i - 1])) i--;
+  return parts.slice(i).join(" ");
+};
 export const favParty = (m: number) => (m > 0 ? "gop" : "dem");
 
 export const OFFICE_LABEL: Record<Office, string> = {

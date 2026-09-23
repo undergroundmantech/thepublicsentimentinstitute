@@ -18,18 +18,16 @@ type NavItem = {
 
 const NAV: NavItem[] = [
   { href: "/",         label: "Home" },
-  { href: "/results",  label: "Election Results", emphasize: RESULTS_LIVE },
   { href: "/polling/genericballot", label: "Polling Averages" },
-  { href: "/tpsipoll", label: "TPSI Poll" },
   {
     label: "Maps & Ratings",
     children: [
-      { href: "/electoralmap",    label: "Electoral Map",     desc: "Interactive state map" },
-      { href: "/floridaprimary",  label: "Florida GOP Primary", desc: "Interactive scenario engine · all 67 counties" },
-      { href: "/forecastratings", label: "2026 Ratings",      desc: "Race ratings & competitiveness" },
+      { href: "/electoralmap",    label: "Electoral Map",     desc: "Flip the board — governor, House and Senate" },
+      { href: "/forecast",        label: "2026 Forecast & Ratings", desc: "Ratings, county maps and crosstabs" },
       { href: "/partymap",        label: "Party Registration", desc: "Party of the rolls · state & county" },
     ],
   },
+  { href: "/earlyvote", label: "Early Vote" },
   { href: "/contact",  label: "Contact" },
 ];
 

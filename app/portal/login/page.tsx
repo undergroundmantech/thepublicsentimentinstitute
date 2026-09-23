@@ -21,7 +21,7 @@ const CSS = `
   border:1px solid var(--hairline);border-radius:8px}
 .pl-field input:focus{outline:2px solid var(--ink);outline-offset:1px}
 .pl-btn{width:100%;padding:11px 14px;margin-top:6px;font-family:inherit;font-size:14px;
-  font-weight:600;color:var(--panel);background:var(--ink);border:none;border-radius:8px;
+  font-weight:600;color:var(--panel);background: var(--ink);border:none;border-radius:8px;
   cursor:pointer}
 .pl-btn:disabled{opacity:.55;cursor:default}
 .pl-error{margin-top:14px;font-size:12.5px;color:var(--gop);line-height:1.5}

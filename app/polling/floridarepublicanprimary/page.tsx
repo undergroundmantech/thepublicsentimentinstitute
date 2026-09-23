@@ -176,7 +176,7 @@ export default function FloridaGovRepublicanPrimaryPage() {
                     const displayName = p.pollster.replace(/\*\*/g, "");
                     return (
                       <tr key={`${p.pollster}-${p.endDate}-${i}`}>
-                        <td style={{ color: "rgba(15,16,32,0.85)" }}>
+                        <td style={{ color: "rgba(var(--ink-rgb),calc(0.85 * var(--mute) + var(--floor)))" }}>
                           <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                             <span>{displayName}</span>
                             {isPartisan && <span className="pap-partisan-badge">INTERNAL</span>}
@@ -206,7 +206,7 @@ export default function FloridaGovRepublicanPrimaryPage() {
             <div style={{ fontFamily: "ui-monospace,monospace", fontSize: 7, fontWeight: 700, letterSpacing: "0.28em", textTransform: "uppercase", color: "var(--red-soft)", marginBottom: 6 }}>
               METHODOLOGY
             </div>
-            <p style={{ fontFamily: "ui-monospace,monospace", fontSize: 8.5, lineHeight: 1.75, letterSpacing: "0.08em", color: "rgba(240,240,245,0.22)", margin: 0 }}>
+            <p style={{ fontFamily: "ui-monospace,monospace", fontSize: 8.5, lineHeight: 1.75, letterSpacing: "0.08em", color: "rgba(var(--ink-rgb),calc(0.22 * var(--struct)))", margin: 0 }}>
               Polling averages are computed using a daily weighted model incorporating recency decay,
               square-root sample size adjustment, and screen type (LV/RV/A) weighting. Polls marked
               ** are internal or partisan and may carry reduced weight. All candidates with 0% in a
@@ -222,14 +222,13 @@ export default function FloridaGovRepublicanPrimaryPage() {
 // ─── CSS ───────────────────────────────────────────────────────────────────────
 const CSS = `
   .pap-root {
-    --bg: #f7f7f4;
+    --bg: var(--canvas);
     --bg2: #ffffff;
     --panel: #ffffff;
-    --border: rgba(15, 16, 32, 0.08);
-    --border2: rgba(15, 16, 32, 0.14);
+    --border: rgba(var(--ink-rgb),calc(0.08 * var(--struct)));
+    --border2: rgba(var(--ink-rgb),calc(0.14 * var(--struct)));
     --muted: #6b7088;
     --muted2: #9aa0b4;
-    --muted3: #b7bccc;
     --red:         #ef4444;
     --red2:        #f87171;
     --red-soft:    #fca5a5;
@@ -304,7 +303,7 @@ const CSS = `
     position: absolute; inset: 0;
     background-image: repeating-linear-gradient(
       0deg, transparent, transparent 3px,
-      rgba(255,255,255,0.006) 3px, rgba(255,255,255,0.006) 4px
+      rgba(var(--line-rgb),0.006) 3px, rgba(var(--line-rgb),0.006) 4px
     );
     pointer-events: none;
   }
@@ -345,7 +344,7 @@ const CSS = `
     display: inline-flex; align-items: center; gap: 5px;
     padding: 3px 8px;
     border: 1px solid var(--border);
-    background: rgba(255,255,255,0.03);
+    background: rgba(var(--line-rgb),0.03);
     font-family: var(--font-body), "Geist Mono", monospace;
     font-size: 7.5px; font-weight: 700; letter-spacing: 0.22em;
     text-transform: uppercase; color: var(--muted3);
@@ -360,7 +359,7 @@ const CSS = `
     display: flex; align-items: center; justify-content: space-between;
     gap: 12px; padding: 10px 14px;
     border: 1px solid var(--border);
-    background: rgba(255,255,255,0.03);
+    background: rgba(var(--line-rgb),0.03);
     position: relative; overflow: hidden;
   }
   .pap-hero-read-label {
@@ -418,7 +417,7 @@ const CSS = `
     font-size: 8px; letter-spacing: 0.16em;
     text-transform: uppercase; color: var(--muted3); margin-top: 6px;
   }
-  .pap-kpi-bar { height: 2px; margin-top: 10px; background: rgba(15,16,32,0.08); }
+  .pap-kpi-bar { height: 2px; margin-top: 10px; background: rgba(var(--ink-rgb),calc(0.08 * var(--struct))); }
   .pap-kpi-bar-fill {
     height: 100%;
     animation: pap-bar-in 800ms cubic-bezier(0.22,1,0.36,1) both;
@@ -466,12 +465,12 @@ const CSS = `
     font-family: var(--font-body), "Geist Mono", monospace;
     font-size: 10.5px;
     padding: 10px 16px;
-    border-bottom: 1px solid rgba(15,16,32,0.05);
+    border-bottom: 1px solid rgba(var(--ink-rgb),calc(0.05 * var(--struct)));
     color: var(--muted); vertical-align: middle;
     font-variant-numeric: tabular-nums;
   }
   table.pap-table td.r { text-align: right; }
-  table.pap-table tbody tr:hover { background: rgba(255,255,255,0.014); }
+  table.pap-table tbody tr:hover { background: rgba(var(--line-rgb),0.014); }
   table.pap-table tbody tr:last-child td { border-bottom: none; }
 
   .pap-partisan-badge {

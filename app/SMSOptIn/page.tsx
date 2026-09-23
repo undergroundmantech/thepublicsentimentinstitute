@@ -351,7 +351,7 @@ export default function SmsOptInPage() {
 
         .sms-form-footer {
           padding: 14px 28px 18px;
-          border-top: 1px solid rgba(15,16,32,0.06);
+          border-top: 1px solid rgba(var(--ink-rgb),calc(0.06 * var(--struct)));
           font-family: var(--font-body), monospace;
           font-size: 8px;
           color: var(--muted2);
@@ -532,7 +532,7 @@ export default function SmsOptInPage() {
                   Thanks for signing up. Watch for a confirmation text. You'll receive polling
                   invitations and data updates from the Public Sentiment Institute.
                 </p>
-                <p className="sms-success-text" style={{ color: "rgba(15,16,32,0.40)", fontSize: 9 }}>
+                <p className="sms-success-text" style={{ color: "rgba(var(--ink-rgb),calc(0.4 * var(--mute) + var(--floor)))", fontSize: 9 }}>
                   Reply STOP at any time to unsubscribe.
                 </p>
               </div>

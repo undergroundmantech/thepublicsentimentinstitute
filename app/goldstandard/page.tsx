@@ -950,7 +950,7 @@ const CSS = `
     display: flex; flex-direction: column;
   }
   .gs-pollster-row {
-    border-bottom: 1px solid rgba(15,16,32,0.05);
+    border-bottom: 1px solid rgba(var(--ink-rgb),calc(0.05 * var(--struct)));
     cursor: pointer;
     transition: background 100ms;
   }
@@ -990,7 +990,7 @@ const CSS = `
   .gs-pollster-name {
     font-family: ui-monospace,monospace;
     font-size: 11.5px; font-weight: 700;
-    color: rgba(255,255,255,0.88);
+    color: rgba(var(--ink-rgb),calc(0.88 * var(--mute) + var(--floor)));
     display: flex; align-items: center; gap: 10px;
   }
   .gs-gold-badge {
@@ -1023,7 +1023,7 @@ const CSS = `
     display: inline-block; width: 8px; height: 8px; border-radius: 50%;
   }
   .gs-disc-dot--on  { background: rgba(34,197,94,0.85); box-shadow: 0 0 4px rgba(34,197,94,0.4); }
-  .gs-disc-dot--off { background: rgba(15,16,32,0.14); }
+  .gs-disc-dot--off { background: rgba(var(--ink-rgb),calc(0.14 * var(--struct))); }
   .gs-pollster-chevron {
     font-family: ui-monospace,monospace;
     font-size: 8px; color: var(--muted3);
@@ -1079,7 +1079,7 @@ const CSS = `
     flex-shrink: 0;
   }
   .gs-disc-status--yes { color: rgba(34,197,94,0.85); }
-  .gs-disc-status--no  { color: rgba(255,255,255,0.2); }
+  .gs-disc-status--no  { color: rgba(var(--ink-rgb),calc(0.2 * var(--struct))); }
   .gs-disc-item-label {
     font-family: ui-monospace,monospace;
     font-size: 9px; letter-spacing: 0.12em;
@@ -1141,7 +1141,7 @@ const CSS = `
   .gs-cta-title {
     font-family: ui-monospace,monospace;
     font-size: 11px; font-weight: 900; letter-spacing: 0.22em;
-    text-transform: uppercase; color: rgba(255,255,255,0.88);
+    text-transform: uppercase; color: rgba(var(--ink-rgb),calc(0.88 * var(--mute) + var(--floor)));
     margin-bottom: 8px;
   }
   .gs-cta-body {

@@ -1,19 +1,20 @@
 // app/polling/senatepolling/maine.ts
-// Maine (ME) — 2026 Senate
-// Source snippet provided by user (Pan Atlantic Research, MPRC, Zenith Research)
+// Maine — 2026 U.S. Senate: Troy Jackson (D) vs. Susan Collins (R)
+// Generated from the TPSI forecast poll feed (run of 2026-09-22), merged with
+// the polls this file already carried. Polls of matchups that are not on the
+// ballot were dropped. Newest poll: 2026-09-15.
 
 export type SampleType = "LV" | "RV" | "A";
 
 export type Poll = {
-  raceId: string; // e.g. "ME-SEN-2026-COLLINS-v-MILLS"
+  raceId: string;
   pollster: string;
-  sponsor?: string;
   startDate: string; // YYYY-MM-DD
-  endDate: string; // YYYY-MM-DD
+  endDate: string;   // YYYY-MM-DD
   sampleSize: number;
   sampleType: SampleType;
-  moe?: number; // margin of error (percentage points), if known
-  results: Record<string, number>; // candidate label -> %
+  moe?: number;
+  results: Record<string, number>;
   notes?: string;
 };
 
@@ -22,142 +23,29 @@ export const STATE = {
   name: "Maine",
 };
 
+export const DEFAULT_RACE_ID = "ME-SEN-2026";
+
 export const RACES = [
   {
-    raceId: "ME-SEN-2026-COLLINS-v-MILLS",
+    raceId: "ME-SEN-2026",
     office: "U.S. Senate",
     year: 2026,
-    candidates: ["Susan Collins (R)", "Janet Mills (D)"],
-  },
-  {
-    raceId: "ME-SEN-2026-COLLINS-v-PLATNER",
-    office: "U.S. Senate",
-    year: 2026,
-    candidates: ["Susan Collins (R)", "Graham Platner (D)"],
+    candidates: ["Troy Jackson (D)", "Susan Collins (R)"],
   },
 ] as const;
 
-/**
- * Polls keyed by state abbr so your Senate leaderboard can do:
- *   STATE_POLLS["ME"]
- * and compute the weighted leader.
- *
- * IMPORTANT: We keep candidate labels exactly as displayed, including "(R)/(D)"
- * so your map coloring logic works.
- */
 export const STATE_POLLS: Record<string, Poll[]> = {
   ME: [
-    // =========================
-    // Collins vs. Mills
-    // =========================
-    {
-      raceId: "ME-SEN-2026-COLLINS-v-MILLS",
-      pollster: "Pan Atlantic Research",
-      startDate: "2025-11-29",
-      endDate: "2025-12-07",
-      sampleSize: 820,
-      sampleType: "LV",
-      moe: 3.7,
-      results: {
-        "Susan Collins (R)": 43,
-        "Janet Mills (D)": 43,
-        // (Other not reported)
-        Undecided: 14,
-      },
-      notes: "Other not reported in table; undecided 14%.",
-    },
-    {
-      raceId: "ME-SEN-2026-COLLINS-v-MILLS",
-      pollster: "Maine People's Resource Center",
-      startDate: "2025-10-26",
-      endDate: "2025-10-29",
-      sampleSize: 783,
-      sampleType: "LV",
-      moe: 3.5,
-      results: {
-        "Susan Collins (R)": 46,
-        "Janet Mills (D)": 42,
-        // (Other not reported)
-        Undecided: 14,
-      },
-      notes: "Other not reported in table; undecided 14%.",
-    },
-    {
-      raceId: "ME-SEN-2026-COLLINS-v-MILLS",
-      pollster: "Zenith Research",
-      sponsor: "(D)",
-      startDate: "2025-10-07",
-      endDate: "2025-10-10",
-      sampleSize: 501,
-      sampleType: "LV",
-      moe: 4.4,
-      results: {
-        "Susan Collins (R)": 37,
-        "Janet Mills (D)": 42,
-        Other: 10,
-        Undecided: 12,
-      },
-      notes: "Other listed as 10% in table.",
-    },
-
-    // =========================
-    // Collins vs. Platner
-    // =========================
-    {
-      raceId: "ME-SEN-2026-COLLINS-v-PLATNER",
-      pollster: "Pan Atlantic Research",
-      startDate: "2025-11-29",
-      endDate: "2025-12-07",
-      sampleSize: 820,
-      sampleType: "LV",
-      moe: 3.7,
-      results: {
-        "Susan Collins (R)": 42,
-        "Graham Platner (D)": 43,
-        // (Other not reported)
-        Undecided: 15,
-      },
-      notes: "Other not reported in table; undecided 15%.",
-    },
-    {
-      raceId: "ME-SEN-2026-COLLINS-v-PLATNER",
-      pollster: "Maine People's Resource Center",
-      startDate: "2025-10-26",
-      endDate: "2025-10-29",
-      sampleSize: 783,
-      sampleType: "LV",
-      moe: 3.5,
-      results: {
-        "Susan Collins (R)": 41,
-        "Graham Platner (D)": 45,
-        // (Other not reported)
-        Undecided: 14,
-      },
-      notes: "Other not reported in table; undecided 14%.",
-    },
-    {
-      raceId: "ME-SEN-2026-COLLINS-v-PLATNER",
-      pollster: "Zenith Research",
-      sponsor: "(D)",
-      startDate: "2025-10-07",
-      endDate: "2025-10-10",
-      sampleSize: 501,
-      sampleType: "LV",
-      moe: 4.4,
-      results: {
-        "Susan Collins (R)": 38,
-        "Graham Platner (D)": 38,
-        Other: 10,
-        Undecided: 15,
-      },
-      notes: "Other listed as 10% in table.",
-    },
+    {"raceId": "ME-SEN-2026", "pollster": "Wedgewood Polls (D)", "startDate": "2026-07-04", "endDate": "2026-07-06", "sampleSize": 405, "sampleType": "LV", "results": {"Troy Jackson (D)": 48.0, "Susan Collins (R)": 43.0, "Undecided": 9.0}},
+    {"raceId": "ME-SEN-2026", "pollster": "Public Policy Polling (D)", "startDate": "2026-07-07", "endDate": "2026-07-07", "sampleSize": 785, "sampleType": "LV", "results": {"Troy Jackson (D)": 49.0, "Susan Collins (R)": 44.0, "Undecided": 7.0}},
+    {"raceId": "ME-SEN-2026", "pollster": "Z to A Research (D)", "startDate": "2026-07-07", "endDate": "2026-07-08", "sampleSize": 988, "sampleType": "LV", "results": {"Troy Jackson (D)": 47.0, "Susan Collins (R)": 48.0, "Undecided": 5.0}},
+    {"raceId": "ME-SEN-2026", "pollster": "University of New Hampshire", "startDate": "2026-07-15", "endDate": "2026-07-20", "sampleSize": 1178, "sampleType": "LV", "results": {"Troy Jackson (D)": 49.0, "Susan Collins (R)": 46.0, "Other": 2.0, "Undecided": 3.0}},
+    {"raceId": "ME-SEN-2026", "pollster": "Hart Research (D)", "startDate": "2026-07-27", "endDate": "2026-08-01", "sampleSize": 802, "sampleType": "LV", "results": {"Troy Jackson (D)": 49.0, "Susan Collins (R)": 45.0, "Undecided": 6.0}},
+    {"raceId": "ME-SEN-2026", "pollster": "Beacon Research (D)/Shaw & Co. Research (R)", "startDate": "2026-08-06", "endDate": "2026-08-10", "sampleSize": 1000, "sampleType": "RV", "results": {"Troy Jackson (D)": 48.0, "Susan Collins (R)": 46.0, "Other": 1.0, "Undecided": 5.0}},
+    {"raceId": "ME-SEN-2026", "pollster": "Abacus Data", "startDate": "2026-08-26", "endDate": "2026-08-28", "sampleSize": 327, "sampleType": "LV", "results": {"Troy Jackson (D)": 52.0, "Susan Collins (R)": 43.0, "Other": 4.0}},
+    {"raceId": "ME-SEN-2026", "pollster": "SSRS", "startDate": "2026-08-31", "endDate": "2026-09-06", "sampleSize": 880, "sampleType": "LV", "results": {"Troy Jackson (D)": 48.0, "Susan Collins (R)": 45.0, "Other": 7.0}},
+    {"raceId": "ME-SEN-2026", "pollster": "YouGov", "startDate": "2026-09-02", "endDate": "2026-09-08", "sampleSize": 1335, "sampleType": "LV", "results": {"Troy Jackson (D)": 48.0, "Susan Collins (R)": 44.0, "Other": 1.0, "Undecided": 6.0}},
+    {"raceId": "ME-SEN-2026", "pollster": "Rasmussen Reports (R)", "startDate": "2026-09-08", "endDate": "2026-09-10", "sampleSize": 1033, "sampleType": "LV", "results": {"Troy Jackson (D)": 46.0, "Susan Collins (R)": 45.0, "Undecided": 9.0}},
+    {"raceId": "ME-SEN-2026", "pollster": "Quantus Insights (R)", "startDate": "2026-09-14", "endDate": "2026-09-15", "sampleSize": 621, "sampleType": "LV", "results": {"Troy Jackson (D)": 46.5, "Susan Collins (R)": 47.5, "Other": 2.0, "Undecided": 4.5}}
   ],
 };
-
-/**
- * Optional helper if you later want per-race summaries.
- */
-export function getPollsForRace(raceId: string): Poll[] {
-  return (STATE_POLLS.ME ?? []).filter((p) => p.raceId === raceId);
-}

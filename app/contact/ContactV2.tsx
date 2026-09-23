@@ -2,7 +2,6 @@
 "use client";
 
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import DarkNav from "@/app/components/DarkNav";
 
 const CONTACT_EMAIL = "tpsinstitutecontact@gmail.com";
 const LIME = "var(--purple)";
@@ -236,7 +235,6 @@ export default function ContactPage() {
 
         <div className="ct-shell ct-hero-in">
           <div className="ct-hero-top">
-            <DarkNav />
             <div className="ct-folio">
               <span>TPSI Intake</span>
               <span>partnerships · custom fielding · media</span>
@@ -362,7 +360,6 @@ export default function ContactPage() {
 
 const CSS = `
 html, body { background: var(--background) !important; }
-body header, body footer { display: none !important; }
 body main > div { max-width: none !important; padding-left: 0 !important; padding-right: 0 !important; }
 body main > div > div { padding-top: 0 !important; padding-bottom: 0 !important; }
 

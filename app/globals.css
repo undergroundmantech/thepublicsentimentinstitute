@@ -23,9 +23,9 @@
   --foreground2:#3a3a3f;    /* alias */
   --ink2:       #5d5d58;
   --muted:      #5d5d58;    /* alias */
-  --ink3:       #6f6f68;
-  --muted2:     #6f6f68;    /* alias */
-  --muted3:     rgba(23, 23, 27, 0.58);
+  --ink3:       #62625b;
+  --muted2:     #62625b;    /* alias */
+  --muted3:     rgba(23, 23, 27, 0.68);
 
   /* ---- Borders / hairlines ---- */
   --hairline:  #e8e8e2;
@@ -92,6 +92,24 @@
   --trk-1: 0.04em; --trk-2: 0.08em; --trk-3: 0.14em;
 
   /* ---- Motion ---- */
+  /* ── theme-following neutrals ───────────────────────────────────────────
+     Pages across the site painted their own greys as literal rgba(), which is
+     why several read as one theme's text on the other theme's ground. These
+     give every page one base to draw from. Only the base moves between
+     themes; each rule keeps its own alpha.
+
+     mute/floor exist because the same alpha separates far less over a light
+     ground than over black: rgba(ink,0.38) is comfortable on near-black and
+     faint on white. Muted text is lifted in light only. struct is the gentler
+     curve for hairlines and gridlines, which must not turn heavy. */
+  --accent-link: #5a2fd4;
+  --approve:    #2c7a5b;   /* approval series, legible on the light ground */
+  --disapprove: #9c3aa8;
+  --ink-rgb:    23, 23, 27;
+  --canvas-rgb: 247, 247, 244;
+  --line-rgb:   23, 23, 27;
+  --mute: 1.05; --floor: 0.24; --struct: 1.5;
+
   --ease-out:  cubic-bezier(0.22, 1, 0.36, 1);
   --ease-soft: cubic-bezier(0.16, 1, 0.3, 1);
   --dur-1: 140ms; --dur-2: 220ms; --dur-3: 420ms;
@@ -102,6 +120,14 @@
    Near-black canvas + warm off-white ink.
 -------------------------------------------- */
 :root[data-theme="dark"] {
+  --accent-link: #8a63ef;
+  --approve:    #4fd39a;
+  --disapprove: #d67ae0;
+  --ink-rgb:    242, 242, 240;
+  --canvas-rgb: 10, 10, 12;
+  --line-rgb:   255, 255, 255;
+  --mute: 1; --floor: 0.13; --struct: 1.25;
+
   --canvas:      #0a0a0c;
   --background:  #0a0a0c;
   --background2: #111114;
@@ -114,9 +140,9 @@
   --foreground2:rgba(242,242,240,0.78);
   --ink2:       rgba(242,242,240,0.62);
   --muted:      rgba(242,242,240,0.62);
-  --ink3:       rgba(242,242,240,0.36);
-  --muted2:     rgba(242,242,240,0.36);
-  --muted3:     rgba(242,242,240,0.20);
+  --ink3:       rgba(242,242,240,0.50);
+  --muted2:     rgba(242,242,240,0.50);
+  --muted3:     rgba(242,242,240,0.52);
 
   --hairline:  rgba(255,255,255,0.08);
   --hairline2: rgba(255,255,255,0.15);

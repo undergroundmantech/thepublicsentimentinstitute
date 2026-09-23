@@ -83,7 +83,7 @@ function ink(fill: string): string {
   const m = fill.match(/\d+/g);
   if (!m || m.length < 3) return "var(--foreground2)";
   const [r, g, b] = m.map(Number);
-  return (0.299 * r + 0.587 * g + 0.114 * b) / 255 > 0.6 ? "rgba(10,11,20,0.92)" : "rgba(255,255,255,0.95)";
+  return (0.299 * r + 0.587 * g + 0.114 * b) / 255 > 0.6 ? "rgba(10,11,20,0.92)" : "rgba(var(--line-rgb),0.95)";
 }
 function fmt(n: number | null | undefined): string { return n == null ? "—" : n.toLocaleString("en-US"); }
 function compact(n: number | null | undefined): string {
@@ -129,7 +129,7 @@ function Tooltip({ d }: { d: Tip }) {
     <div style={{
       position: "fixed", left, top, width: W,
       background: "var(--panel)", border: `1px solid ${spine}55`, borderLeft: `3px solid ${spine}`,
-      borderRadius: "var(--r-md)", boxShadow: `0 0 0 1px ${spine}22, 0 14px 44px rgba(15,16,32,0.28)`,
+      borderRadius: "var(--r-md)", boxShadow: `0 0 0 1px ${spine}22, 0 14px 44px rgba(var(--ink-rgb),calc(0.28 * var(--struct)))`,
       padding: "13px 15px", zIndex: 99999, pointerEvents: "none",
       backdropFilter: "blur(8px)", WebkitBackdropFilter: "blur(8px)",
     }}>
@@ -396,7 +396,7 @@ export default function PartyMapPage() {
   return (
     <div style={{ maxWidth: 1280, margin: "0 auto", padding: "32px 32px 80px", position: "relative", zIndex: 1, color: "var(--foreground)" }}>
       <style>{`
-        .pm-root { --pm-grey: rgba(15,16,32,0.16); }
+        .pm-root { --pm-grey: rgba(var(--ink-rgb),calc(0.16 * var(--struct))); }
         [data-theme="dark"] .pm-root { --pm-grey: rgba(244,245,251,0.16); }
         .pm-tri { height:3px; background:linear-gradient(90deg,var(--red) 0%,var(--purple) 50%,var(--blue) 100%); border-radius:9999px 9999px 0 0; box-shadow:0 4px 18px -2px rgba(109, 62, 233,0.28); }
         .pm-state { stroke:#080810; stroke-width:0.9; cursor:pointer; transition:filter 110ms; }
@@ -550,7 +550,7 @@ export default function PartyMapPage() {
         <div style={{ background: "var(--blue-dim)", border: "1px solid rgba(29, 95, 196,0.20)", borderRadius: "var(--r-md)", padding: "14px 20px", fontFamily: "var(--font-body),monospace", fontSize: 12, color: "var(--muted)", lineHeight: 1.8 }}>
           <span style={{ color: "#4a9dff", fontWeight: 500 }}>Note:</span> Color reflects <em>registered</em> party — not how a place votes. States &amp; focused counties deepen with the plurality&apos;s margin; the national county view shows each county&apos;s largest registered party. Only 31 states record party at registration (the rest are grey); North Dakota (hatched) has no voter registration. Latest official rolls compiled from each state&apos;s election authority.
           {iso?.source_url && <> · <a href={iso.source_url} target="_blank" rel="noreferrer" style={{ color: "var(--foreground2)", borderBottom: "1px solid var(--border3)" }}>{iso.name} source ↗</a></>}{" "}
-          <Link href="/forecastratings" style={{ color: "var(--foreground2)", borderBottom: "1px solid var(--border3)" }}>See 2026 race ratings →</Link>
+          <Link href="/forecast" style={{ color: "var(--foreground2)", borderBottom: "1px solid var(--border3)" }}>See 2026 race ratings →</Link>
         </div>
       </div>
 

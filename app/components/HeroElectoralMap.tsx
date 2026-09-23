@@ -78,12 +78,12 @@ export default function HeroElectoralMap() {
           el.setAttribute("d", path(f) ?? "");
           if (isSwing) {
             el.setAttribute("fill", "url(#hp-grad-swing)");
-            el.setAttribute("stroke", noStroke ? "none" : "#050505");
+            el.setAttribute("stroke", noStroke ? "none" : "var(--canvas)");
             el.setAttribute("stroke-width", noStroke ? "0" : "3");
             swingG.appendChild(el);
           } else {
             el.setAttribute("fill", winner === "D" ? BLUE_STROKE : RED_STROKE);
-            el.setAttribute("stroke", noStroke ? "none" : "#050505");
+            el.setAttribute("stroke", noStroke ? "none" : "var(--canvas)");
             el.setAttribute("stroke-width", noStroke ? "0" : "3");
             baseG.appendChild(el);
           }

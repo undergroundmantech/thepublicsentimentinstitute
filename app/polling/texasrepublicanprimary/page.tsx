@@ -179,7 +179,7 @@ export default function TexasRepPrimaryPage() {
           <div className="pap-accuracy-header">
             <div className="pap-accuracy-header-left">
               <span className="pap-table-head-title">POLLING AVG vs. ACTUAL VOTE</span>
-              <span style={{ fontFamily: "ui-monospace,monospace", fontSize: 8, letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(240,240,245,0.3)", marginLeft: 12 }}>
+              <span style={{ fontFamily: "ui-monospace,monospace", fontSize: 8, letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(var(--ink-rgb),calc(0.3 * var(--mute) + var(--floor)))", marginLeft: 12 }}>
                 &gt;95% REPORTING · MAR 3, 2026
               </span>
             </div>
@@ -210,7 +210,7 @@ export default function TexasRepPrimaryPage() {
                   return (
                     <tr key={name}>
                       <td style={{ color: color, fontWeight: 700 }}>{name}</td>
-                      <td className="r" style={{ color: "rgba(240,240,245,0.7)" }}>{avg.toFixed(1)}%</td>
+                      <td className="r" style={{ color: "rgba(var(--ink-rgb),calc(0.7 * var(--mute) + var(--floor)))" }}>{avg.toFixed(1)}%</td>
                       <td className="r" style={{ color: "#fff", fontWeight: 700 }}>{actual.toFixed(2)}%</td>
                       <td className="r">
                         <span style={{
@@ -221,7 +221,7 @@ export default function TexasRepPrimaryPage() {
                         </span>
                       </td>
                       <td style={{ padding: "10px 16px" }}>
-                        <div style={{ position: "relative", height: 6, background: "rgba(15,16,32,0.08)", borderRadius: 2 }}>
+                        <div style={{ position: "relative", height: 6, background: "rgba(var(--ink-rgb),calc(0.08 * var(--struct)))", borderRadius: 2 }}>
                           {/* actual bar */}
                           <div style={{
                             position: "absolute", left: 0, top: 0, bottom: 0,
@@ -237,10 +237,10 @@ export default function TexasRepPrimaryPage() {
                           }} />
                         </div>
                         <div style={{ display: "flex", justifyContent: "space-between", marginTop: 4 }}>
-                          <span style={{ fontFamily: "ui-monospace,monospace", fontSize: 7, color: "rgba(240,240,245,0.25)", letterSpacing: "0.1em" }}>
+                          <span style={{ fontFamily: "ui-monospace,monospace", fontSize: 7, color: "rgba(var(--ink-rgb),calc(0.25 * var(--struct)))", letterSpacing: "0.1em" }}>
                             AVG {avg.toFixed(1)}%
                           </span>
-                          <span style={{ fontFamily: "ui-monospace,monospace", fontSize: 7, color: "rgba(240,240,245,0.5)", letterSpacing: "0.1em" }}>
+                          <span style={{ fontFamily: "ui-monospace,monospace", fontSize: 7, color: "rgba(var(--ink-rgb),calc(0.5 * var(--mute) + var(--floor)))", letterSpacing: "0.1em" }}>
                             ACTUAL {actual.toFixed(2)}%
                           </span>
                         </div>
@@ -271,7 +271,7 @@ export default function TexasRepPrimaryPage() {
               <div className="pap-accuracy-stat-label">Actual Cornyn Margin</div>
             </div>
             <div className="pap-accuracy-stat">
-              <div className="pap-accuracy-stat-val" style={{ color: "rgba(240,240,245,0.5)" }}>
+              <div className="pap-accuracy-stat-val" style={{ color: "rgba(var(--ink-rgb),calc(0.5 * var(--mute) + var(--floor)))" }}>
                 {round1((latestValues["Cornyn"] ?? 0) - (latestValues["Paxton"] ?? 0)).toFixed(1)}
               </div>
               <div className="pap-accuracy-stat-label">Avg Projected Margin</div>
@@ -319,7 +319,7 @@ export default function TexasRepPrimaryPage() {
                     const displayName = p.pollster.replace(/\*\*/g, "");
                     return (
                       <tr key={`${p.pollster}-${p.endDate}-${i}`}>
-                        <td style={{ color: "rgba(15,16,32,0.85)" }}>
+                        <td style={{ color: "rgba(var(--ink-rgb),calc(0.85 * var(--mute) + var(--floor)))" }}>
                           <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                             <span>{displayName}</span>
                             {isPartisan && <span className="pap-partisan-badge">INTERNAL</span>}
@@ -338,7 +338,7 @@ export default function TexasRepPrimaryPage() {
                     );
                   })}
                 {/* ── ACTUAL RESULTS ROW ── */}
-                <tr style={{ background: "rgba(15,16,32,0.05)", borderTop: "1px solid rgba(255,255,255,0.15)" }}>
+                <tr style={{ background: "rgba(var(--ink-rgb),calc(0.05 * var(--struct)))", borderTop: "1px solid rgba(var(--line-rgb),0.15)" }}>
                   <td style={{ color: "#fff", fontWeight: 700 }}>
                     <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                       <span>ACTUAL RESULT</span>
@@ -356,9 +356,9 @@ export default function TexasRepPrimaryPage() {
                       </span>
                     </div>
                   </td>
-                  <td className="r" style={{ color: "rgba(240,240,245,0.4)" }}>2026-03-03</td>
-                  <td className="r" style={{ color: "rgba(240,240,245,0.4)" }}>2,142,151</td>
-                  <td className="r" style={{ color: "rgba(240,240,245,0.4)" }}>—</td>
+                  <td className="r" style={{ color: "rgba(var(--ink-rgb),calc(0.4 * var(--mute) + var(--floor)))" }}>2026-03-03</td>
+                  <td className="r" style={{ color: "rgba(var(--ink-rgb),calc(0.4 * var(--mute) + var(--floor)))" }}>2,142,151</td>
+                  <td className="r" style={{ color: "rgba(var(--ink-rgb),calc(0.4 * var(--mute) + var(--floor)))" }}>—</td>
                   <td className="r" style={{ color: COLORS.Paxton, fontWeight: 700 }}>{ACTUAL.Paxton.toFixed(2)}%</td>
                   <td className="r" style={{ color: COLORS.Cornyn, fontWeight: 700 }}>{ACTUAL.Cornyn.toFixed(2)}%</td>
                   <td className="r" style={{ color: COLORS.Hunt, fontWeight: 700 }}>{ACTUAL.Hunt.toFixed(2)}%</td>
@@ -377,7 +377,7 @@ export default function TexasRepPrimaryPage() {
             <div style={{ fontFamily: "ui-monospace,monospace", fontSize: 7, fontWeight: 700, letterSpacing: "0.28em", textTransform: "uppercase", color: "rgba(239,68,68,0.6)", marginBottom: 6 }}>
               METHODOLOGY
             </div>
-            <p style={{ fontFamily: "ui-monospace,monospace", fontSize: 8.5, lineHeight: 1.75, letterSpacing: "0.08em", color: "rgba(240,240,245,0.22)", margin: 0 }}>
+            <p style={{ fontFamily: "ui-monospace,monospace", fontSize: 8.5, lineHeight: 1.75, letterSpacing: "0.08em", color: "rgba(var(--ink-rgb),calc(0.22 * var(--struct)))", margin: 0 }}>
               Polling averages are computed using a daily weighted model incorporating recency decay,
               square-root sample size adjustment, and screen type (LV/RV/A) weighting. Polls marked
               ** are internal or partisan and may carry reduced weight. Candidates not listed in a
@@ -394,14 +394,13 @@ export default function TexasRepPrimaryPage() {
 // ─── CSS ───────────────────────────────────────────────────────────────────────
 const CSS = `
   .pap-root {
-    --bg: #f7f7f4;
+    --bg: var(--canvas);
     --bg2: #ffffff;
     --panel: #ffffff;
-    --border: rgba(15, 16, 32, 0.08);
-    --border2: rgba(15, 16, 32, 0.14);
+    --border: rgba(var(--ink-rgb),calc(0.08 * var(--struct)));
+    --border2: rgba(var(--ink-rgb),calc(0.14 * var(--struct)));
     --muted: #6b7088;
     --muted2: #9aa0b4;
-    --muted3: #b7bccc;
     --purple:      #6d3ee9;
     --purple-soft: #a78bfa;
     --red-soft:    #f87171;
@@ -474,7 +473,7 @@ const CSS = `
     position: absolute; inset: 0;
     background-image: repeating-linear-gradient(
       0deg, transparent, transparent 3px,
-      rgba(255,255,255,0.006) 3px, rgba(255,255,255,0.006) 4px
+      rgba(var(--line-rgb),0.006) 3px, rgba(var(--line-rgb),0.006) 4px
     );
     pointer-events: none;
   }
@@ -515,7 +514,7 @@ const CSS = `
     display: inline-flex; align-items: center; gap: 5px;
     padding: 3px 8px;
     border: 1px solid var(--border);
-    background: rgba(255,255,255,0.03);
+    background: rgba(var(--line-rgb),0.03);
     font-family: var(--font-body), "Geist Mono", monospace;
     font-size: 7.5px; font-weight: 700; letter-spacing: 0.22em;
     text-transform: uppercase; color: var(--muted3);
@@ -531,7 +530,7 @@ const CSS = `
     display: flex; align-items: center; justify-content: space-between;
     gap: 12px; padding: 10px 14px;
     border: 1px solid var(--border);
-    background: rgba(255,255,255,0.03);
+    background: rgba(var(--line-rgb),0.03);
     position: relative; overflow: hidden;
   }
   .pap-hero-read-label {
@@ -587,7 +586,7 @@ const CSS = `
     font-size: 8px; letter-spacing: 0.16em;
     text-transform: uppercase; color: var(--muted3); margin-top: 6px;
   }
-  .pap-kpi-bar { height: 2px; margin-top: 10px; background: rgba(15,16,32,0.08); }
+  .pap-kpi-bar { height: 2px; margin-top: 10px; background: rgba(var(--ink-rgb),calc(0.08 * var(--struct))); }
   .pap-kpi-bar-fill {
     height: 100%;
     animation: pap-bar-in 800ms cubic-bezier(0.22,1,0.36,1) both;
@@ -674,12 +673,12 @@ const CSS = `
     font-family: var(--font-body), "Geist Mono", monospace;
     font-size: 10.5px;
     padding: 10px 16px;
-    border-bottom: 1px solid rgba(15,16,32,0.05);
+    border-bottom: 1px solid rgba(var(--ink-rgb),calc(0.05 * var(--struct)));
     color: var(--muted); vertical-align: middle;
     font-variant-numeric: tabular-nums;
   }
   table.pap-table td.r { text-align: right; }
-  table.pap-table tbody tr:hover { background: rgba(255,255,255,0.014); }
+  table.pap-table tbody tr:hover { background: rgba(var(--line-rgb),0.014); }
   table.pap-table tbody tr:last-child td { border-bottom: none; }
 
   .pap-partisan-badge {

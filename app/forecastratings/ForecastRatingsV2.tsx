@@ -3,7 +3,6 @@
 import React, { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import { createPortal } from "react-dom";
 import Link from "next/link";
-import DarkNav from "@/app/components/DarkNav";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 type RatingKey =
@@ -95,79 +94,79 @@ const RED  = "#ff5d6c";
 
 // ─── Data ──────────────────────────────────────────────────────────────────────
 const SENATE_RAW = [
-  { state:"AL", name:"Tommy Tuberville",     incRunning:false, incParty:"R" as const, approval:   19, pollingAvg:    15, modeledResult:  12.6 },
-  { state:"AK", name:"Dan Sullivan",         incRunning:true , incParty:"R" as const, approval:   -8, pollingAvg:  -2.8, modeledResult:  -1.3 },
-  { state:"AR", name:"Tom Cotton",           incRunning:true , incParty:"R" as const, approval:   15, pollingAvg:  15.8, modeledResult:  17.8 },
-  { state:"CO", name:"John Hickenlooper",    incRunning:true , incParty:"D" as const, approval:  -22, pollingAvg: -13.2, modeledResult: -17.4 },
-  { state:"DE", name:"Chris Coons",          incRunning:true , incParty:"D" as const, approval:  -20, pollingAvg: -26.2, modeledResult: -25.5 },
-  { state:"FL", name:"Ashley Moody",         incRunning:true , incParty:"R" as const, approval:   17, pollingAvg:     9, modeledResult:   9.3 },
-  { state:"GA", name:"Jon Ossoff",           incRunning:true , incParty:"D" as const, approval:  -18, pollingAvg:    -8, modeledResult: -10.8 },
-  { state:"ID", name:"Jim Risch",            incRunning:true , incParty:"R" as const, approval:   22, pollingAvg:    25, modeledResult:  22.3 },
-  { state:"IL", name:"Dick Durbin",          incRunning:false, incParty:"D" as const, approval:  -12, pollingAvg: -20.2, modeledResult: -23.1 },
-  { state:"IA", name:"Joni Ernst",           incRunning:false, incParty:"R" as const, approval:   -5, pollingAvg:   3.6, modeledResult:  -1.5 },
-  { state:"KS", name:"Roger Marshall",       incRunning:true , incParty:"R" as const, approval:    6, pollingAvg:   5.9, modeledResult:   4.4 },
-  { state:"KY", name:"Mitch McConnell",      incRunning:false, incParty:"R" as const, approval:  -36, pollingAvg:     9, modeledResult:     7 },
-  { state:"LA", name:"Bill Cassidy",         incRunning:true , incParty:"R" as const, approval:    9, pollingAvg:  14.8, modeledResult:  10.4 },
-  { state:"ME", name:"Susan Collins",        incRunning:true , incParty:"R" as const, approval:  -13, pollingAvg:     0, modeledResult:  -5.2 },
-  { state:"MA", name:"Ed Markey",            incRunning:true , incParty:"D" as const, approval:  -15, pollingAvg: -22.3, modeledResult: -24.4 },
-  { state:"MI", name:"Gary Peters",          incRunning:false, incParty:"D" as const, approval:  -17, pollingAvg:  -0.6, modeledResult:  -6.7 },
-  { state:"MN", name:"Tina Smith",           incRunning:false, incParty:"D" as const, approval:  -16, pollingAvg:  -4.7, modeledResult: -12.3 },
-  { state:"MS", name:"Cindy Hyde-Smith",     incRunning:true , incParty:"R" as const, approval:    9, pollingAvg:     9, modeledResult:    11 },
-  { state:"MT", name:"Steve Daines",         incRunning:false, incParty:"R" as const, approval:   13, pollingAvg:  17.5, modeledResult:  10.5 },
-  { state:"NE", name:"Pete Ricketts",        incRunning:true , incParty:"R" as const, approval:    1, pollingAvg:   4.7, modeledResult:   1.7 },
-  { state:"NH", name:"Jeanne Shaheen",       incRunning:false, incParty:"D" as const, approval:   12, pollingAvg:  -5.8, modeledResult: -13.7 },
-  { state:"NJ", name:"Cory Booker",          incRunning:true , incParty:"D" as const, approval:  -19, pollingAvg: -20.2, modeledResult: -19.1 },
-  { state:"NM", name:"Ben Ray Luján",        incRunning:true , incParty:"D" as const, approval:  -20, pollingAvg:  null, modeledResult: -46.3 },
-  { state:"NC", name:"Thom Tillis",          incRunning:false, incParty:"R" as const, approval:    4, pollingAvg:  -5.5, modeledResult:    -7 },
-  { state:"OH", name:"Jon Husted",           incRunning:true , incParty:"R" as const, approval:   15, pollingAvg:   1.8, modeledResult:   0.3 },
-  { state:"OK", name:"James Lankford",       incRunning:true , incParty:"R" as const, approval:   17, pollingAvg:    20, modeledResult:  18.5 },
-  { state:"OR", name:"Jeff Merkley",         incRunning:true , incParty:"D" as const, approval:  -21, pollingAvg: -22.2, modeledResult: -23.9 },
-  { state:"RI", name:"Jack Reed",            incRunning:true , incParty:"D" as const, approval:  -28, pollingAvg: -37.2, modeledResult: -30.9 },
-  { state:"SC", name:"Lindsey Graham",       incRunning:false, incParty:"R" as const, approval:   -2, pollingAvg:     1, modeledResult:  -1.1 },
-  { state:"SD", name:"Mike Rounds",          incRunning:true , incParty:"R" as const, approval:   23, pollingAvg:    25, modeledResult:    21 },
-  { state:"TN", name:"Bill Hagerty",         incRunning:true , incParty:"R" as const, approval:   27, pollingAvg:  22.8, modeledResult:  20.8 },
-  { state:"TX", name:"John Cornyn",          incRunning:false, incParty:"R" as const, approval:    6, pollingAvg:   1.3, modeledResult:  -2.2 },
-  { state:"VA", name:"Mark Warner",          incRunning:true , incParty:"D" as const, approval:  -25, pollingAvg: -19.9, modeledResult: -19.1 },
-  { state:"WV", name:"Shelley Moore Capito", incRunning:true , incParty:"R" as const, approval:   19, pollingAvg:  38.8, modeledResult:  30.3 },
-  { state:"WY", name:"Cynthia Lummis",       incRunning:false, incParty:"R" as const, approval:   26, pollingAvg:  40.8, modeledResult:  34.6 },
+  { state:"AL", name:"Tommy Tuberville",    incRunning:false, incParty:"R" as const, approval:19,  pollingAvg:19.0,  modeledResult:21.2  },
+  { state:"AK", name:"Dan Sullivan",         incRunning:true,  incParty:"R" as const, approval:-8,  pollingAvg:3.0,  modeledResult:-1.4  },
+  { state:"AR", name:"Tom Cotton",           incRunning:true,  incParty:"R" as const, approval:15,  pollingAvg:10.2,  modeledResult:14.4  },
+  { state:"CO", name:"John Hickenlooper",    incRunning:true,  incParty:"D" as const, approval:-22, pollingAvg:-11.5, modeledResult:-23.2 },
+  { state:"DE", name:"Chris Coons",          incRunning:true,  incParty:"D" as const, approval:-20, pollingAvg:-24.5, modeledResult:-28.7 },
+  { state:"FL", name:"Ashley Moody",         incRunning:true,  incParty:"R" as const, approval:17,  pollingAvg:6.9,   modeledResult:5.6   },
+  { state:"GA", name:"Jon Ossoff",           incRunning:true,  incParty:"D" as const, approval:-18, pollingAvg:-5.8,  modeledResult:-8.7 },
+  { state:"ID", name:"Jim Risch",            incRunning:true,  incParty:"R" as const, approval:22,  pollingAvg:0.4,  modeledResult:14.0  },
+  { state:"IL", name:"Dick Durbin",          incRunning:false, incParty:"D" as const, approval:-12, pollingAvg:-18.5, modeledResult:-25.6 },
+  { state:"IA", name:"Joni Ernst",           incRunning:false, incParty:"R" as const, approval:-5,  pollingAvg:0.1,   modeledResult:-0.8   },
+  { state:"KS", name:"Roger Marshall",       incRunning:true,  incParty:"R" as const, approval:6,   pollingAvg:1.0,   modeledResult:2.5   },
+  { state:"KY", name:"Mitch McConnell",      incRunning:false, incParty:"R" as const, approval:-36, pollingAvg:10.1,   modeledResult:16.8   },
+  { state:"LA", name:"Bill Cassidy",         incRunning:true,  incParty:"R" as const, approval:9,   pollingAvg:5.1,  modeledResult:9.7  },
+  { state:"ME", name:"Susan Collins",        incRunning:true,  incParty:"R" as const, approval:-13, pollingAvg:0.0,  modeledResult:-5.7 },
+  { state:"MA", name:"Ed Markey",            incRunning:true,  incParty:"D" as const, approval:-15, pollingAvg:-24.4, modeledResult:-28.3 },
+  { state:"MI", name:"Gary Peters",          incRunning:false, incParty:"D" as const, approval:-17, pollingAvg:-2.7,  modeledResult:-5.5  },
+  { state:"MN", name:"Tina Smith",           incRunning:false, incParty:"D" as const, approval:-16, pollingAvg:-3.7,  modeledResult:-11.1 },
+  { state:"MS", name:"Cindy Hyde-Smith",     incRunning:true,  incParty:"R" as const, approval:9,   pollingAvg:7.3,   modeledResult:8.6   },
+  { state:"MT", name:"Steve Daines",         incRunning:false, incParty:"R" as const, approval:13,  pollingAvg:-2.5,  modeledResult:18.6  },
+  { state:"NE", name:"Pete Ricketts",        incRunning:true,  incParty:"R" as const, approval:1,   pollingAvg:3.4,  modeledResult:0.6  },
+  { state:"NH", name:"Jeanne Shaheen",       incRunning:false, incParty:"D" as const, approval:12,  pollingAvg:-8.2,  modeledResult:-11.1 },
+  { state:"NJ", name:"Cory Booker",          incRunning:true,  incParty:"D" as const, approval:-19, pollingAvg:-18.5, modeledResult:-22.0 },
+  { state:"NM", name:"Ben Ray Luján",        incRunning:true,  incParty:"D" as const, approval:-20, pollingAvg:null,  modeledResult:-21.0 },
+  { state:"NC", name:"Thom Tillis",          incRunning:false, incParty:"R" as const, approval:4,   pollingAvg:-6.5, modeledResult:-8.4  },
+  { state:"OH", name:"Jon Husted",           incRunning:true,  incParty:"R" as const, approval:15,  pollingAvg:-5.8,  modeledResult:-5.3  },
+  { state:"OK", name:"James Lankford",       incRunning:true,  incParty:"R" as const, approval:17,  pollingAvg:32.4,  modeledResult:24.6  },
+  { state:"OR", name:"Jeff Merkley",         incRunning:true,  incParty:"D" as const, approval:-21, pollingAvg:-20.5, modeledResult:-27.5 },
+  { state:"RI", name:"Jack Reed",            incRunning:true,  incParty:"D" as const, approval:-28, pollingAvg:-24.4, modeledResult:-24.9 },
+  { state:"SC", name:"Lindsey Graham",       incRunning:true,  incParty:"R" as const, approval:-2,  pollingAvg:2.0,   modeledResult:1.9   },
+  { state:"SD", name:"Mike Rounds",          incRunning:true,  incParty:"R" as const, approval:23,  pollingAvg:1.2,  modeledResult:8.3  },
+  { state:"TN", name:"Bill Hagerty",         incRunning:true,  incParty:"R" as const, approval:27,  pollingAvg:24.4,  modeledResult:20.5  },
+  { state:"TX", name:"John Cornyn",          incRunning:true,  incParty:"R" as const, approval:6,   pollingAvg:-1.9,  modeledResult:-2.9  },
+  { state:"VA", name:"Mark Warner",          incRunning:true,  incParty:"D" as const, approval:-25, pollingAvg:-21.7, modeledResult:-20.2 },
+  { state:"WV", name:"Shelley Moore Capito", incRunning:true,  incParty:"R" as const, approval:19,  pollingAvg:40.6,  modeledResult:31.2  },
+  { state:"WY", name:"Cynthia Lummis",       incRunning:false, incParty:"R" as const, approval:26,  pollingAvg:42.6,  modeledResult:40.8  },
 ];
 const GOV_RAW = [
-  { state:"AL", name:"Kay Ivey",               incRunning:false, incParty:"R" as const, approval:   20, pollingAvg:    10, modeledResult:  12.1 },
-  { state:"AK", name:"Mike Dunleavy",          incRunning:true , incParty:"R" as const, approval:  -11, pollingAvg:    -2, modeledResult:  -2.8 },
-  { state:"AZ", name:"Katie Hobbs",            incRunning:true , incParty:"D" as const, approval:  -14, pollingAvg:  -6.7, modeledResult:  -8.7 },
-  { state:"AR", name:"Sarah Huckabee Sanders", incRunning:true , incParty:"R" as const, approval:   19, pollingAvg:     1, modeledResult:  11.8 },
-  { state:"CA", name:"Gavin Newsom",           incRunning:false, incParty:"D" as const, approval:  -26, pollingAvg: -17.9, modeledResult: -22.7 },
-  { state:"CO", name:"Jared Polis",            incRunning:false, incParty:"D" as const, approval:  -21, pollingAvg:   -19, modeledResult:   -21 },
-  { state:"CT", name:"Ned Lamont",             incRunning:true , incParty:"D" as const, approval:  -33, pollingAvg:   -19, modeledResult: -23.3 },
-  { state:"FL", name:"Ron DeSantis",           incRunning:false, incParty:"R" as const, approval:   15, pollingAvg:   3.9, modeledResult:   2.4 },
-  { state:"GA", name:"Brian Kemp",             incRunning:false, incParty:"R" as const, approval:   32, pollingAvg:  -5.3, modeledResult:  -8.1 },
-  { state:"HI", name:"Josh Green",             incRunning:true , incParty:"D" as const, approval:  -27, pollingAvg:   -26, modeledResult: -31.6 },
-  { state:"ID", name:"Brad Little",            incRunning:true , incParty:"R" as const, approval:   30, pollingAvg:    40, modeledResult:  32.2 },
-  { state:"IL", name:"J. B. Pritzker",         incRunning:true , incParty:"D" as const, approval:  -17, pollingAvg:   -20, modeledResult: -20.6 },
-  { state:"IA", name:"Kim Reynolds",           incRunning:false, incParty:"R" as const, approval:   -6, pollingAvg:  -4.7, modeledResult:  -4.1 },
-  { state:"KS", name:"Laura Kelly",            incRunning:false, incParty:"D" as const, approval:  -26, pollingAvg:    -2, modeledResult:    -1 },
-  { state:"ME", name:"Janet Mills",            incRunning:false, incParty:"D" as const, approval:   -8, pollingAvg:   -12, modeledResult: -18.5 },
-  { state:"MD", name:"Wes Moore",              incRunning:true , incParty:"D" as const, approval:  -33, pollingAvg:   -15, modeledResult: -30.6 },
-  { state:"MA", name:"Maura Healey",           incRunning:true , incParty:"D" as const, approval:  -33, pollingAvg: -21.9, modeledResult: -30.8 },
-  { state:"MI", name:"Gretchen Whitmer",       incRunning:false, incParty:"D" as const, approval:  -25, pollingAvg:  -6.5, modeledResult: -10.3 },
-  { state:"MN", name:"Tim Walz",               incRunning:false, incParty:"D" as const, approval:   -7, pollingAvg:  -8.8, modeledResult: -13.3 },
-  { state:"NE", name:"Jim Pillen",             incRunning:true , incParty:"R" as const, approval:    6, pollingAvg:   7.9, modeledResult:   9.4 },
-  { state:"NV", name:"Joe Lombardo",           incRunning:true , incParty:"R" as const, approval:   18, pollingAvg:   4.3, modeledResult:   0.2 },
-  { state:"NH", name:"Kelly Ayotte",           incRunning:true , incParty:"R" as const, approval:   23, pollingAvg:   8.4, modeledResult:   4.8 },
-  { state:"NM", name:"Michelle Lujan Grisham", incRunning:false, incParty:"D" as const, approval:  -16, pollingAvg:   -13, modeledResult: -15.1 },
-  { state:"NY", name:"Kathy Hochul",           incRunning:true , incParty:"D" as const, approval:  -19, pollingAvg: -11.2, modeledResult: -15.6 },
-  { state:"OH", name:"Mike DeWine",            incRunning:false, incParty:"R" as const, approval:   18, pollingAvg:   0.7, modeledResult:  -1.3 },
-  { state:"OK", name:"Kevin Stitt",            incRunning:false, incParty:"R" as const, approval:    6, pollingAvg:    14, modeledResult:  11.1 },
-  { state:"OR", name:"Tina Kotek",             incRunning:true , incParty:"D" as const, approval:   -6, pollingAvg:  -0.8, modeledResult:  -9.5 },
-  { state:"PA", name:"Josh Shapiro",           incRunning:true , incParty:"D" as const, approval:  -34, pollingAvg: -17.8, modeledResult: -20.9 },
-  { state:"RI", name:"Dan McKee",              incRunning:true , incParty:"D" as const, approval:  -12, pollingAvg:   -22, modeledResult:   -23 },
-  { state:"SC", name:"Henry McMaster",         incRunning:false, incParty:"R" as const, approval:   18, pollingAvg:    17, modeledResult:   6.8 },
-  { state:"SD", name:"Larry Rhoden",           incRunning:true , incParty:"R" as const, approval:   28, pollingAvg:    27, modeledResult:  20.8 },
-  { state:"TN", name:"Bill Lee",               incRunning:false, incParty:"R" as const, approval:   26, pollingAvg:    22, modeledResult:  16.3 },
-  { state:"TX", name:"Greg Abbott",            incRunning:true , incParty:"R" as const, approval:   12, pollingAvg:   5.5, modeledResult:   3.7 },
-  { state:"VT", name:"Phil Scott",             incRunning:true , incParty:"R" as const, approval:   55, pollingAvg:    12, modeledResult:    20 },
-  { state:"WI", name:"Tony Evers",             incRunning:false, incParty:"D" as const, approval:  -19, pollingAvg:  -0.4, modeledResult:  -6.6 },
-  { state:"WY", name:"Mark Gordon",            incRunning:true , incParty:"R" as const, approval:   42, pollingAvg:    58, modeledResult:  47.6 },
+  { state:"AL", name:"Kay Ivey",                  incRunning:false, incParty:"R" as const, approval:31,  pollingAvg:8.9, modeledResult:16.8  },
+  { state:"AK", name:"Mike Dunleavy",             incRunning:true,  incParty:"R" as const, approval:11,  pollingAvg:-2.45, modeledResult:-13.2  },
+  { state:"AZ", name:"Katie Hobbs",               incRunning:true,  incParty:"D" as const, approval:-14, pollingAvg:-5.8, modeledResult:-8.3 },
+  { state:"AR", name:"Sarah Huckabee Sanders",    incRunning:true,  incParty:"R" as const, approval:21,  pollingAvg:5.9, modeledResult:14.9  },
+  { state:"CA", name:"Gavin Newsom",              incRunning:false, incParty:"D" as const, approval:-12, pollingAvg:-22.3,modeledResult:-27.4 },
+  { state:"CO", name:"Jared Polis",               incRunning:false, incParty:"D" as const, approval:-21, pollingAvg:-21.45,modeledResult:-23.6 },
+  { state:"CT", name:"Ned Lamont",                incRunning:true,  incParty:"D" as const, approval:-32, pollingAvg:-18.2,modeledResult:-21.1 },
+  { state:"FL", name:"Ron DeSantis",              incRunning:false, incParty:"R" as const, approval:13,  pollingAvg:0.8,  modeledResult:3.0   },
+  { state:"GA", name:"Brian Kemp",                incRunning:false, incParty:"R" as const, approval:34,  pollingAvg:2.2,  modeledResult:-2.4  },
+  { state:"HI", name:"Josh Green",                incRunning:true,  incParty:"D" as const, approval:-33, pollingAvg:-28.45,modeledResult:-40.4 },
+  { state:"ID", name:"Brad Little",               incRunning:true,  incParty:"R" as const, approval:16,  pollingAvg:28.0, modeledResult:24.6  },
+  { state:"IL", name:"J.B. Pritzker",             incRunning:true,  incParty:"D" as const, approval:-17, pollingAvg:-22.7,modeledResult:-25.9 },
+  { state:"IA", name:"Kim Reynolds",              incRunning:false, incParty:"R" as const, approval:-5,  pollingAvg:-5.3, modeledResult:-6.7  },
+  { state:"KS", name:"Laura Kelly",               incRunning:false, incParty:"D" as const, approval:-30, pollingAvg:7.0, modeledResult:5.2   },
+  { state:"ME", name:"Janet Mills",               incRunning:false, incParty:"D" as const, approval:-7,  pollingAvg:-13.3,modeledResult:-16.1 },
+  { state:"MD", name:"Wes Moore",                 incRunning:true,  incParty:"D" as const, approval:-32, pollingAvg:-30.3,modeledResult:-35.8 },
+  { state:"MA", name:"Maura Healey",              incRunning:true,  incParty:"D" as const, approval:-29, pollingAvg:-27.6,modeledResult:-31.0 },
+  { state:"MI", name:"Gretchen Whitmer",          incRunning:false, incParty:"D" as const, approval:-21, pollingAvg:-9.4, modeledResult:-11.4  },
+  { state:"MN", name:"Tim Walz",                  incRunning:false, incParty:"D" as const, approval:-17, pollingAvg:-9.2,modeledResult:-15.4 },
+  { state:"NE", name:"Jim Pillen",                incRunning:true,  incParty:"R" as const, approval:15,  pollingAvg:15.5, modeledResult:9.3  },
+  { state:"NV", name:"Joe Lombardo",              incRunning:true,  incParty:"R" as const, approval:23,  pollingAvg:-0.7, modeledResult:-3.6   },
+  { state:"NH", name:"Kelly Ayotte",              incRunning:true,  incParty:"R" as const, approval:18,  pollingAvg:19.2, modeledResult:8.6   },
+  { state:"NM", name:"Michelle Lujan Grisham",    incRunning:false, incParty:"D" as const, approval:-17, pollingAvg:-8.3, modeledResult:-16.0 },
+  { state:"NY", name:"Kathy Hochul",              incRunning:true,  incParty:"D" as const, approval:-10, pollingAvg:-4.9,modeledResult:-13.8 },
+  { state:"OH", name:"Mike DeWine",               incRunning:false, incParty:"R" as const, approval:21,  pollingAvg:-1.8, modeledResult:-1.9  },
+  { state:"OK", name:"Kevin Stitt",               incRunning:false, incParty:"R" as const, approval:18,  pollingAvg:11.55, modeledResult:20.9  },
+  { state:"OR", name:"Tina Kotek",                incRunning:true,  incParty:"D" as const, approval:-4,  pollingAvg:2.3, modeledResult:-14.8 },
+  { state:"PA", name:"Josh Shapiro",              incRunning:true,  incParty:"D" as const, approval:-32, pollingAvg:-18.3,modeledResult:-16.6 },
+  { state:"RI", name:"Dan McKee",                 incRunning:true,  incParty:"D" as const, approval:-2,  pollingAvg:-43.0,modeledResult:-27.2 },
+  { state:"SC", name:"Henry McMaster",            incRunning:false, incParty:"R" as const, approval:22,  pollingAvg:8.7, modeledResult:8.8   },
+  { state:"SD", name:"Larry Rhoden",              incRunning:true,  incParty:"R" as const, approval:34,  pollingAvg:24.55, modeledResult:11.8  },
+  { state:"TN", name:"Bill Lee",                  incRunning:false, incParty:"R" as const, approval:27,  pollingAvg:16.5, modeledResult:17.1  },
+  { state:"TX", name:"Greg Abbott",               incRunning:true,  incParty:"R" as const, approval:10,  pollingAvg:5.8,  modeledResult:3.9   },
+  { state:"VT", name:"Phil Scott",                incRunning:true,  incParty:"R" as const, approval:58,  pollingAvg:14.8, modeledResult:2.2  },
+  { state:"WI", name:"Tony Evers",                incRunning:false, incParty:"D" as const, approval:-15, pollingAvg:-4.6, modeledResult:-7.6  },
+  { state:"WY", name:"Mark Gordon",               incRunning:true,  incParty:"R" as const, approval:34,  pollingAvg:55.55, modeledResult:38.2  },
 ];
 const SENATE_RACES: RaceRow[] = SENATE_RAW.map(r => ({ ...r, rating: deriveRating(r.modeledResult, r.pollingAvg) }));
 const GOV_RACES: RaceRow[]    = GOV_RAW.map(r => ({ ...r, rating: deriveRating(r.modeledResult, r.pollingAvg) }));
@@ -283,7 +282,7 @@ function Beeswarm({ races, raceType }: { races: RaceRow[]; raceType: string }) {
           </radialGradient>
           {/* soft contact shadow so tokens sit ON the page, not in it */}
           <filter id="bfShadow" x="-60%" y="-60%" width="220%" height="220%">
-            <feDropShadow dx="0" dy="1.6" stdDeviation="2.2" floodColor="#17171b" floodOpacity="0.22" />
+            <feDropShadow dx="0" dy="1.6" stdDeviation="2.2" floodColor="var(--ink)" floodOpacity="0.22" />
           </filter>
         </defs>
         {[-12, -6, 6, 12].map(t => <line key={t} x1={xFor(t)} x2={xFor(t)} y1={BTOP} y2={axisY} className="x-sw-grid" />)}
@@ -300,7 +299,7 @@ function Beeswarm({ races, raceType }: { races: RaceRow[]; raceType: string }) {
           const open = !p.r.incRunning;             // open seats render as hollow tokens
           const isH = hover === p.r.state;
           const rr = isH ? BR + 2 : BR;
-          const ink = open ? RATING_INK[p.r.rating] : LABEL_INK.has(p.r.rating) ? "#17171b" : "#fff";
+          const ink = open ? RATING_INK[p.r.rating] : LABEL_INK.has(p.r.rating) ? "var(--ink)" : "#fff";
           return (
             <g key={p.r.state} style={{ cursor: "pointer" }}
               onMouseMove={(e) => { setHover(p.r.state); setTT({ visible:true, x:e.clientX, y:e.clientY, state:p.r.state, name:p.r.name, raceType, incRunning:p.r.incRunning, incParty:p.r.incParty, approval:p.r.approval, pollingAvg:p.r.pollingAvg, modeledResult:p.r.modeledResult, rating:p.r.rating }); }}
@@ -318,7 +317,7 @@ function Beeswarm({ races, raceType }: { races: RaceRow[]; raceType: string }) {
                   <circle cx={p.cx} cy={cy} r={rr} fill="url(#bfSheen)" stroke={isH ? "var(--foreground)" : "transparent"} strokeWidth={isH ? 1.6 : 0} pointerEvents="none" style={{ transition: "r 110ms" }} />
                 </>
               )}
-              <text x={p.cx} y={cy} textAnchor="middle" dominantBaseline="central" className="x-sw-bub" style={{ fill: ink, textShadow: open ? "none" : "0 1px 1.4px rgba(23, 23, 27,0.32)" }}>{p.r.state}</text>
+              <text x={p.cx} y={cy} textAnchor="middle" dominantBaseline="central" className="x-sw-bub" style={{ fill: ink, textShadow: open ? "none" : "0 1px 1.4px rgba(var(--ink-rgb),calc(0.32 * var(--mute) + var(--floor)))" }}>{p.r.state}</text>
             </g>
           );
         })}
@@ -394,7 +393,7 @@ function RaceMap({ svgId, races, raceType }: { svgId: string; races: RaceRow[]; 
           t.setAttribute("dominant-baseline", "central");
           t.setAttribute("class", "x-geo-lab");
           const dark = LABEL_INK.has(race.rating);
-          t.style.cssText = `fill:${dark ? "#17171b" : "#fff"};text-shadow:0 1px 1.5px ${dark ? "rgba(255,255,255,0.45)" : "rgba(23, 23, 27,0.4)"};pointer-events:none;`;
+          t.style.cssText = `fill:${dark ? "var(--ink)" : "#fff"};text-shadow:0 1px 1.5px ${dark ? "rgba(var(--line-rgb),0.45)" : "rgba(var(--ink-rgb),calc(0.4 * var(--mute) + var(--floor)))"};pointer-events:none;`;
           t.textContent = abbr;
           svg.appendChild(t);
         }
@@ -494,12 +493,11 @@ export default function ForecastRatingsPage() {
     <div className="x-page">
       <style>{CSS}</style>
 
-      <DarkNav />
 
       {/* ══ MASTHEAD ══ */}
       <div className="x-mast">
         <div className="x-folio">
-          <span>TPSI Forecast</span><span>2026 General Election</span><span>Updated August 2026</span>
+          <span>TPSI Forecast</span><span>2026 General Election</span><span>Updated September 2026</span>
         </div>
         <h1 className="x-hero">Race Ratings</h1>
         <div className="x-mast-body">
@@ -635,15 +633,15 @@ export default function ForecastRatingsPage() {
 
 // ─── Styles ──────────────────────────────────────────────────────────────────
 const CSS = `
+@import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
+
 html, body { background: var(--background) !important; }
-body header, body footer { display: none !important; }
 
 .x-page {
-  /* Three faces, house roles: Geist for display and copy, JetBrains for figures. */
   --disp: var(--font-display);
   --serif: var(--font-body);
   --data: var(--font-numeric);
-  --lab: var(--font-body);
+  --lab: var(--font-numeric);
   --x-nodata: #1b1d29;
   --rail-w: 178px; --gap: 56px;
   max-width: 1280px; margin: 0 auto; padding: 0 2px 64px;
@@ -655,7 +653,7 @@ body header, body footer { display: none !important; }
 /* ── Masthead ── */
 .x-folio { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; padding: 14px 0; border-top: 1px solid var(--border2); border-bottom: 1px solid var(--border); font-family: var(--lab); font-size: 10.5px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted2); }
 .x-folio span:first-child { color: var(--foreground); }
-.x-hero { font-family: var(--disp); font-weight: 800; text-transform: uppercase; letter-spacing: -0.028em; line-height: 0.92; font-size: clamp(40px, 5.6vw, 76px); margin: 20px 0 0; color: var(--foreground); }
+.x-hero { font-family: var(--disp); font-weight: 500; text-transform: lowercase; letter-spacing: -0.035em; line-height: 0.9; font-size: clamp(48px, 10vw, 120px); margin: 20px 0 0; color: var(--foreground); }
 .x-mast-body { display: grid; grid-template-columns: 1.35fr 1fr; gap: var(--gap); align-items: end; margin-top: 26px; padding-bottom: 8px; }
 .x-deck { font-family: var(--serif); font-size: clamp(16px, 1.7vw, 21px); line-height: 1.55; color: var(--foreground2); max-width: 56ch; margin: 0; }
 .x-mast-links { display: flex; flex-wrap: wrap; gap: 22px; margin-top: 22px; }
@@ -666,11 +664,11 @@ body header, body footer { display: none !important; }
 .x-power:not(.is-active) { opacity: 0.55; }
 .x-power:not(.is-active):hover { opacity: 0.82; }
 .x-power-top { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 9px; }
-.x-power-label { font-family: var(--disp); font-weight: 800; text-transform: uppercase; font-size: 16px; letter-spacing: -0.01em; color: var(--foreground); }
+.x-power-label { font-family: var(--disp); text-transform: uppercase; font-size: 16px; letter-spacing: 0.03em; color: var(--foreground); }
 .x-power-lead { font-family: var(--data); font-size: 11px; font-weight: 800; letter-spacing: 0.02em; }
 .x-power-lead i { font-style: normal; font-family: var(--lab); font-weight: 600; font-size: 8px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted2); margin-left: 5px; }
 .x-power-bar { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 12px; }
-.x-power-n { font-family: var(--data); font-weight: 800; font-variant-numeric: tabular-nums; letter-spacing: -0.02em; font-size: 27px; line-height: 0.85; min-width: 24px; text-align: center; transition: opacity var(--dur-1); }
+.x-power-n { font-family: var(--disp); font-size: 27px; line-height: 0.85; min-width: 24px; text-align: center; transition: opacity var(--dur-1); }
 .x-power-track { position: relative; display: flex; height: 9px; background: var(--panel2); }
 .x-power-track i { display: block; height: 100%; }
 .x-power-track i:first-child { border-radius: 2px 0 0 2px; }
@@ -681,18 +679,18 @@ body header, body footer { display: none !important; }
 /* ── Office switch ── */
 .x-office { display: flex; align-items: baseline; justify-content: space-between; gap: 18px; flex-wrap: wrap; margin-top: 40px; padding-bottom: 4px; }
 .x-office-toggle { display: inline-flex; align-items: baseline; gap: 16px; }
-.x-office-toggle button { font-family: var(--disp); font-weight: 800; text-transform: uppercase; letter-spacing: -0.025em; font-size: clamp(28px, 4.4vw, 46px); line-height: 1; background: none; border: 0; padding: 0; cursor: pointer; color: var(--muted3); transition: color var(--dur-1) var(--ease-out); }
+.x-office-toggle button { font-family: var(--disp); text-transform: uppercase; letter-spacing: 0.01em; font-size: clamp(30px, 5vw, 52px); line-height: 1; background: none; border: 0; padding: 0; cursor: pointer; color: var(--muted3); transition: color var(--dur-1) var(--ease-out); }
 .x-office-toggle button.is-active { color: var(--foreground); }
 .x-office-toggle button:not(.is-active):hover { color: var(--muted); }
-.x-office-sep { font-family: var(--disp); font-weight: 300; font-size: clamp(28px, 4.4vw, 46px); color: var(--border3); line-height: 1; }
+.x-office-sep { font-family: var(--disp); font-size: clamp(30px, 5vw, 52px); color: var(--border3); line-height: 1; }
 .x-office-meta { font-family: var(--data); font-size: 12px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--muted2); }
 .x-office-meta span { margin: 0 8px; color: var(--muted3); }
 
 /* ── Section / marginalia grid ── */
 .x-sec { display: grid; grid-template-columns: var(--rail-w) 1fr; gap: var(--gap); margin-top: 22px; padding-top: 26px; border-top: 1px solid var(--border); }
 .x-rail { position: sticky; top: 18px; align-self: start; }
-.x-rail-num { font-family: var(--data); font-weight: 800; font-variant-numeric: tabular-nums; font-size: 30px; line-height: 1; color: transparent; -webkit-text-stroke: 1.2px var(--border3); letter-spacing: 0.02em; }
-.x-rail-title { font-family: var(--disp); font-weight: 800; text-transform: uppercase; letter-spacing: -0.02em; font-size: 22px; line-height: 0.95; margin: 10px 0 0; color: var(--foreground); }
+.x-rail-num { font-family: var(--disp); font-size: 30px; line-height: 1; color: transparent; -webkit-text-stroke: 1.2px var(--border3); letter-spacing: 0.03em; }
+.x-rail-title { font-family: var(--disp); text-transform: uppercase; letter-spacing: 0.01em; font-size: 22px; line-height: 0.95; margin: 10px 0 0; color: var(--foreground); }
 .x-rail-note { font-family: var(--serif); font-size: 13px; line-height: 1.5; color: var(--muted); margin: 10px 0 0; }
 .x-main { min-width: 0; }
 
@@ -703,7 +701,7 @@ body header, body footer { display: none !important; }
 .x-legend-key { display: flex; flex-wrap: wrap; gap: 8px 16px; margin-top: 12px; }
 .x-legend-key span { display: inline-flex; align-items: center; font-family: var(--lab); font-size: 10px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--muted); }
 .x-legend-key i { width: 11px; height: 11px; border-radius: 50%; margin-right: 6px; flex-shrink: 0; }
-.x-key-solid { background: var(--muted); box-shadow: inset 1.5px 1.5px 1.5px rgba(255,255,255,0.5); }
+.x-key-solid { background: var(--muted); box-shadow: inset 1.5px 1.5px 1.5px rgba(var(--line-rgb),0.5); }
 .x-key-open { background: transparent; border: 2px solid var(--muted); }
 .x-geo-key { display: flex; align-items: center; gap: 8px; margin-top: 16px; font-family: var(--lab); font-size: 9.5px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
 .x-geo-ramp { flex: 1; height: 6px; border-radius: 9999px; background: linear-gradient(90deg, ${RATING_COLORS["Safe D"]}, ${RATING_COLORS["Lean D"]}, ${RATING_COLORS["Toss-up"]}, ${RATING_COLORS["Lean R"]}, ${RATING_COLORS["Safe R"]}); }
@@ -722,7 +720,7 @@ body header, body footer { display: none !important; }
 .x-sw-bub { font-family: var(--data); font-size: 13px; font-weight: 800; pointer-events: none; }
 .x-edge { font-family: var(--lab); font-size: 12.5px; line-height: 1.9; color: var(--muted); margin: 18px 0 0; }
 .x-edge-cap { font-family: var(--lab); font-size: 9.5px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted2); margin-right: 14px; }
-.x-edge b { font-family: var(--disp); font-weight: 800; font-size: 14px; color: var(--foreground); letter-spacing: -0.01em; }
+.x-edge b { font-family: var(--disp); font-weight: 400; font-size: 14px; color: var(--foreground); letter-spacing: 0.03em; }
 .x-edge em { font-family: var(--data); font-style: normal; font-weight: 700; }
 .x-edge s { color: var(--muted3); text-decoration: none; }
 
@@ -735,7 +733,7 @@ body header, body footer { display: none !important; }
 .x-geo-chip { display: inline-flex; align-items: center; gap: 7px; padding: 5px 9px; background: none; border: 0; cursor: pointer; transition: background var(--dur-1); }
 .x-geo-chip:hover { background: var(--panel2); }
 .x-geo-chip-sw { width: 11px; height: 11px; border-radius: 2px; flex-shrink: 0; }
-.x-geo-chip-ab { font-family: var(--disp); font-weight: 700; font-size: 14px; color: var(--foreground); letter-spacing: -0.01em; }
+.x-geo-chip-ab { font-family: var(--disp); font-size: 14px; color: var(--foreground); letter-spacing: 0.02em; }
 .x-geo-chip em { font-style: normal; font-family: var(--data); font-size: 10.5px; font-weight: 700; }
 
 /* ── Ledger (no box; hairline rows + typographic tier heads) ── */
@@ -746,12 +744,12 @@ body header, body footer { display: none !important; }
 .x-mono { font-family: var(--data); font-variant-numeric: tabular-nums; }
 .x-led-tier { display: flex; align-items: center; gap: 9px; padding: 18px 0 8px; }
 .x-led-tier span { width: 9px; height: 9px; border-radius: 50%; }
-.x-led-tier b { font-family: var(--disp); font-weight: 800; text-transform: uppercase; font-size: 16px; letter-spacing: -0.01em; }
+.x-led-tier b { font-family: var(--disp); font-weight: 400; text-transform: uppercase; font-size: 16px; letter-spacing: 0.03em; }
 .x-led-tier em { font-style: normal; font-family: var(--data); font-size: 10.5px; color: var(--muted2); margin-left: 2px; }
 .x-led-row { padding: 10px 0; border-bottom: 1px solid var(--border); font-size: 13px; transition: background var(--dur-1); }
 .x-led-row:hover { background: linear-gradient(90deg, var(--purple-dim), transparent 70%); }
 .x-led-state { color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.x-led-state b { font-family: var(--disp); font-weight: 700; font-size: 15px; color: var(--foreground); letter-spacing: -0.01em; margin-right: 4px; }
+.x-led-state b { font-family: var(--disp); font-weight: 400; font-size: 15px; color: var(--foreground); letter-spacing: 0.03em; margin-right: 4px; }
 .x-led-name { color: var(--foreground); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .x-led-inc { font-size: 11px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--muted2); }
 .x-led-mod { font-weight: 800; }
@@ -773,12 +771,12 @@ body header, body footer { display: none !important; }
 .x-foot b { color: var(--foreground); font-weight: 600; font-family: var(--lab); }
 
 /* ── Tooltip (only surface) ── */
-/* portaled to <body>, so the .x-page aliases are out of scope — name the globals */
-.x-tip { position: fixed; z-index: 9999; pointer-events: none; width: 246px; display: flex; font-family: var(--font-body); background: color-mix(in srgb, var(--background) 98%, transparent); border: 1px solid var(--border2); box-shadow: 0 26px 64px rgba(0,0,0,0.42); border-radius: 12px; overflow: hidden; -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px); }
+/* portaled to <body> → use GLOBAL font vars ('Anton' is document-wide via @import) */
+.x-tip { position: fixed; z-index: 9999; pointer-events: none; width: 246px; display: flex; background: color-mix(in srgb, var(--background) 98%, transparent); border: 1px solid var(--border2); box-shadow: 0 26px 64px rgba(var(--line-rgb),0.42); border-radius: 12px; overflow: hidden; -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px); }
 .x-tip-spine { width: 4px; flex-shrink: 0; }
 .x-tip-in { flex: 1; min-width: 0; padding: 11px 13px 12px; }
 .x-tip-hd { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; }
-.x-tip-state { font-family: var(--font-display); font-weight: 800; font-size: 17px; text-transform: none; letter-spacing: -0.02em; color: var(--foreground); line-height: 1; }
+.x-tip-state { font-family: inherit; font-weight: 700; font-size: 17px; text-transform: none; letter-spacing: -0.02em; color: var(--foreground); line-height: 1; }
 .x-tip-rate { font-family: inherit; font-size: 10px; font-weight: 800; letter-spacing: 0.07em; text-transform: uppercase; white-space: nowrap; }
 .x-tip-meta { font-family: inherit; font-size: 9.5px; letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted2); margin-top: 4px; }
 .x-tip-bar { position: relative; height: 6px; background: var(--panel2); margin: 11px 0 10px; }
@@ -786,11 +784,11 @@ body header, body footer { display: none !important; }
 .x-tip-bar-fill { position: absolute; top: 0; bottom: 0; }
 .x-tip-cand { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; }
 .x-tip-name { font-size: 12px; font-weight: 600; color: var(--foreground); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-family: inherit; }
-.x-tip-mod { font-family: var(--font-numeric); font-variant-numeric: tabular-nums; font-size: 13px; font-weight: 800; white-space: nowrap; }
+.x-tip-mod { font-family: inherit; font-size: 13px; font-weight: 800; white-space: nowrap; }
 .x-tip-stats { display: flex; gap: 20px; margin-top: 9px; padding-top: 9px; border-top: 1px solid var(--border); }
 .x-tip-stats span { display: flex; flex-direction: column; gap: 2px; }
 .x-tip-stats i { font-style: normal; font-family: inherit; font-size: 8px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted2); }
-.x-tip-stats b { font-family: var(--font-numeric); font-variant-numeric: tabular-nums; font-size: 12.5px; font-weight: 700; }
+.x-tip-stats b { font-family: inherit; font-size: 12.5px; font-weight: 700; }
 
 /* ── Responsive ── */
 @media (max-width: 880px) {

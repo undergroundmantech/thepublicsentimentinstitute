@@ -7,25 +7,25 @@ import { createPortal } from "react-dom";
 import { SHOW_SITUATION_ROOM } from "@/app/lib/flags";
 import ThemeToggle from "./ThemeToggle";
 
-// Mirror of the global Navbar's destinations, rendered for dark/full-bleed pages.
+// The site header. One header for every page, so the top of the site does not
+// change as you move around it.
 const RESULTS_LIVE = true;
 type Child = { href: string; label: string };
 type Item = { href?: string; label: string; emphasize?: boolean; children?: Child[] };
 const NAV: Item[] = [
   { href: "/", label: "Home" },
   ...(SHOW_SITUATION_ROOM ? [{ href: "/situationroom", label: "Situation Room", emphasize: RESULTS_LIVE }] : []),
-  { href: "/results", label: "Election Results" },
   { href: "/polling/genericballot", label: "Polling Averages" },
-  { href: "/tpsipoll", label: "TPSI Poll" },
   {
     label: "Maps & Ratings",
     children: [
       { href: "/electoralmap", label: "Electoral Map" },
-      { href: "/floridaprimary", label: "Florida GOP Primary" },
+      { href: "/forecast", label: "2026 Forecast & Ratings" },
+      { href: "/partymap", label: "Party Registration" },
       { href: "/voterregistration", label: "Voter Registration" },
-      { href: "/forecastratings", label: "2026 Ratings" },
     ],
   },
+  { href: "/earlyvote", label: "Early Vote" },
   { href: "/contact", label: "Contact" },
 ];
 
@@ -53,8 +53,9 @@ export default function DarkNav() {
   );
 
   return (
-    <nav className={`dn${isHome ? " dn--home" : ""}`} aria-label="Primary">
+    <div className={`dn-root${isHome ? " dn-root--home" : ""}`}>
       <style>{CSS}</style>
+      <nav className={`dn${isHome ? " dn--home" : ""}`} aria-label="Primary">
 
       <Link href="/" className="dn-logo" aria-label="The Public Sentiment Institute">
         <span className="dn-logo-img" aria-hidden />
@@ -123,21 +124,35 @@ export default function DarkNav() {
         document.body
       )}
     </nav>
+    </div>
   );
 }
 
 const CSS = `
+  .dn-root {
+    position: sticky; top: 0; z-index: 200;
+    background: color-mix(in srgb, var(--canvas) 86%, transparent);
+    backdrop-filter: saturate(140%) blur(18px);
+    -webkit-backdrop-filter: saturate(140%) blur(18px);
+  }
+  .dn-root::after {
+    content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px;
+    background: var(--brand-grad); opacity: 0.55;
+  }
+  /* home paints its own permanently dark ground, so the header matches it */
+  .dn-root--home { background: color-mix(in srgb, #0a0a0c 86%, transparent); }
   .dn {
-    position: relative; display: flex; align-items: center; gap: 18px; padding: 22px 0 30px;
+    position: relative; display: flex; align-items: center; gap: 18px;
+    max-width: 1280px; margin: 0 auto; padding: 16px clamp(20px, 4vw, 44px);
     font-family: var(--font-body); letter-spacing: -0.01em;
   }
   /* the home page's own background is permanently dark, so its nav must render
      dark chrome regardless of whichever theme the visitor last set on another
      page — otherwise a persisted light theme makes the nav invisible on home. */
   .dn--home {
-    --background: #0a0a0c; --foreground: #f2f2f0; --foreground2: rgba(242,242,240,0.78);
-    --muted: rgba(242,242,240,0.62); --muted2: rgba(242,242,240,0.36); --muted3: rgba(242,242,240,0.20);
-    --border: rgba(255,255,255,0.08); --border2: rgba(255,255,255,0.15); --border3: rgba(255,255,255,0.24);
+    --background: var(--canvas); --foreground: var(--ink); --foreground2: rgba(var(--ink-rgb),calc(0.78 * var(--mute) + var(--floor)));
+    --muted: rgba(var(--ink-rgb),calc(0.70 * var(--mute) + var(--floor))); --muted2: rgba(var(--ink-rgb),calc(0.50 * var(--mute) + var(--floor))); --muted3: rgba(var(--ink-rgb),calc(0.52 * var(--mute) + var(--floor)));
+    --border: rgba(var(--line-rgb),0.08); --border2: rgba(var(--line-rgb),0.15); --border3: rgba(var(--line-rgb),0.24);
     --panel: #111114; --panel2: #16161a;
     --purple: #8a63ef; --live: #2dd4bf;
   }
@@ -206,9 +221,9 @@ const CSS = `
     opacity: 0; visibility: hidden; transition: opacity .32s ease, visibility 0s linear .32s;
   }
   .dnm--home {
-    --background: #0a0a0c; --foreground: #f2f2f0; --foreground2: rgba(242,242,240,0.78);
-    --muted: rgba(242,242,240,0.62); --muted2: rgba(242,242,240,0.36); --muted3: rgba(242,242,240,0.20);
-    --border: rgba(255,255,255,0.08); --border2: rgba(255,255,255,0.15); --border3: rgba(255,255,255,0.24);
+    --background: var(--canvas); --foreground: var(--ink); --foreground2: rgba(var(--ink-rgb),calc(0.78 * var(--mute) + var(--floor)));
+    --muted: rgba(var(--ink-rgb),calc(0.70 * var(--mute) + var(--floor))); --muted2: rgba(var(--ink-rgb),calc(0.50 * var(--mute) + var(--floor))); --muted3: rgba(var(--ink-rgb),calc(0.52 * var(--mute) + var(--floor)));
+    --border: rgba(var(--line-rgb),0.08); --border2: rgba(var(--line-rgb),0.15); --border3: rgba(var(--line-rgb),0.24);
     --panel: #111114; --panel2: #16161a;
     --purple: #8a63ef; --live: #2dd4bf;
   }
@@ -270,7 +285,7 @@ const CSS = `
     .dn-link { font-size: 12.8px; }
   }
   @media (max-width: 900px) {
-    .dn { padding: 16px 0 18px; }
+    .dn { padding: 12px clamp(16px, 4vw, 24px); }
     .dn-links { display: none; }
     .dn-burger { display: inline-flex; }
     .dn-toggle-wrap { display: none; }

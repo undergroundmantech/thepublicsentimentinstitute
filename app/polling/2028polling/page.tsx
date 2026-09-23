@@ -134,14 +134,13 @@ const projByState = Object.fromEntries(
 // ─── CSS ──────────────────────────────────────────────────────────────────────
 const CSS = `
   .p28-root {
-    --bg: #f7f7f4;
+    --bg: var(--canvas);
     --bg2: #ffffff;
     --panel: #ffffff;
-    --border: rgba(15, 16, 32, 0.08);
-    --border2: rgba(15, 16, 32, 0.14);
+    --border: rgba(var(--ink-rgb),calc(0.08 * var(--struct)));
+    --border2: rgba(var(--ink-rgb),calc(0.14 * var(--struct)));
     --muted: #6b7088;
     --muted2: #9aa0b4;
-    --muted3: #b7bccc;
     --purple:      #6d3ee9;
     --purple2:     #8a63ef;
     --purple-soft: #a78bfa;
@@ -207,7 +206,7 @@ const CSS = `
     content: ''; position: absolute; inset: 0;
     background-image: repeating-linear-gradient(
       0deg, transparent, transparent 3px,
-      rgba(255,255,255,0.006) 3px, rgba(255,255,255,0.006) 4px
+      rgba(var(--line-rgb),0.006) 3px, rgba(var(--line-rgb),0.006) 4px
     );
     pointer-events: none;
   }
@@ -236,10 +235,10 @@ const CSS = `
   }
   .p28-candidate-img:hover { transform: scale(1.025) translateY(-4px); }
   .p28-candidate-panel.left .p28-candidate-img {
-    filter: drop-shadow(-6px 0 22px rgba(255,23,23,0.28)) drop-shadow(0 8px 28px rgba(0,0,0,0.7));
+    filter: drop-shadow(-6px 0 22px rgba(255,23,23,0.28)) drop-shadow(0 8px 28px rgba(var(--line-rgb),0.7));
   }
   .p28-candidate-panel.right .p28-candidate-img {
-    filter: drop-shadow(6px 0 22px rgba(24,77,252,0.30)) drop-shadow(0 8px 28px rgba(0,0,0,0.7));
+    filter: drop-shadow(6px 0 22px rgba(24,77,252,0.30)) drop-shadow(0 8px 28px rgba(var(--line-rgb),0.7));
   }
 
   .p28-name-tag {
@@ -270,7 +269,7 @@ const CSS = `
     font-size: clamp(48px,6vw,72px); font-weight: 900; line-height: 1;
     background: linear-gradient(135deg, var(--rep) 0%, #fff 50%, var(--dem) 100%);
     -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-    background-clip: text; filter: drop-shadow(0 2px 10px rgba(255,255,255,0.6));
+    background-clip: text; filter: drop-shadow(0 2px 10px rgba(var(--line-rgb),0.6));
     text-transform: uppercase; letter-spacing: 0.02em;
   }
   .p28-vs-sub {
@@ -361,7 +360,7 @@ const CSS = `
     font-family: var(--font-body), "Geist Mono", monospace;
     text-transform: uppercase; color: var(--muted3); margin-top: 6px;
   }
-  .p28-kpi-bar { height:2px; margin-top:10px; background:rgba(15,16,32,0.08); }
+  .p28-kpi-bar { height:2px; margin-top:10px; background:rgba(var(--ink-rgb),calc(0.08 * var(--struct))); }
   .p28-kpi-bar-fill { height:100%; animation: p28-bar-in 800ms cubic-bezier(0.22,1,0.36,1) both; }
 
   /* ── ELECTORAL MAP ── */
@@ -467,7 +466,7 @@ const CSS = `
     font-size: 7.5px; font-weight: 700; letter-spacing: 0.2em;
     text-transform: uppercase; margin-bottom: 8px;
   }
-  .p28-tt-divider { height: 1px; background: rgba(15,16,32,0.10); margin: 6px 0; }
+  .p28-tt-divider { height: 1px; background: rgba(var(--ink-rgb),calc(0.1 * var(--struct))); margin: 6px 0; }
   .p28-tt-row {
     display: flex; justify-content: space-between; align-items: center;
     gap: 16px; margin-bottom: 3px;
@@ -479,7 +478,7 @@ const CSS = `
   .p28-tt-val { font-size: 11px; font-weight: 900; font-variant-numeric: tabular-nums; }
   .p28-tt-margin-row {
     display: flex; justify-content: space-between; align-items: center;
-    margin-top: 6px; padding-top: 6px; border-top: 1px solid rgba(15,16,32,0.10);
+    margin-top: 6px; padding-top: 6px; border-top: 1px solid rgba(var(--ink-rgb),calc(0.1 * var(--struct)));
   }
   .p28-tt-margin-label {
     font-size: 7.5px; font-weight: 700; letter-spacing: 0.2em;
@@ -488,7 +487,7 @@ const CSS = `
   .p28-tt-margin-val { font-size: 14px; font-weight: 900; font-variant-numeric: tabular-nums; }
   .p28-tt-votes {
     display: block; font-size: 8px; font-weight: 700; letter-spacing: 0.12em;
-    color: rgba(240,240,245,0.35); font-variant-numeric: tabular-nums; margin-top: 1px;
+    color: rgba(var(--ink-rgb),calc(0.35 * var(--mute) + var(--floor))); font-variant-numeric: tabular-nums; margin-top: 1px;
   }
 
   /* Legend */
@@ -529,7 +528,7 @@ const CSS = `
   table.p28-table th.r { text-align:right; }
   table.p28-table td {
     font-family: var(--font-body), "Geist Mono", monospace; font-size: 10.5px;
-    padding: 10px 16px; border-bottom: 1px solid rgba(15,16,32,0.05);
+    padding: 10px 16px; border-bottom: 1px solid rgba(var(--ink-rgb),calc(0.05 * var(--struct)));
     color: var(--muted); vertical-align: middle; font-variant-numeric: tabular-nums;
   }
   table.p28-table td.r { text-align:right; }
@@ -764,7 +763,7 @@ export default function Election2028Page() {
                     const effN = effectiveSampleSize(p.pollster, p.sampleSize);
                     return (
                       <tr key={`${p.pollster}-${p.endDate}-${idx}`}>
-                        <td style={{ color: "rgba(15,16,32,0.85)" }}>
+                        <td style={{ color: "rgba(var(--ink-rgb),calc(0.85 * var(--mute) + var(--floor)))" }}>
                           <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
                             <span>{p.pollster}</span>
                             {gold && <span className="p28-gold-badge">GOLD</span>}
@@ -780,7 +779,7 @@ export default function Election2028Page() {
                           )}
                         </td>
                         <td className="r">{p.sampleType}</td>
-                        <td className="r" style={{ color: "rgba(255,255,255,0.7)" }}>
+                        <td className="r" style={{ color: "rgba(var(--ink-rgb),calc(0.7 * var(--mute) + var(--floor)))" }}>
                           {gold ? `×${GOLD_STANDARD_MULTIPLIER}.00` : "×1.00"}
                         </td>
                         <td className="r p28-rep-col">{v.toFixed(1)}%</td>

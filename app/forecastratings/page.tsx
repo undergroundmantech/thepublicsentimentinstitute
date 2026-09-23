@@ -1,10 +1,9 @@
-// Inline env check + dynamic import so the bundler drops the unrendered
-// site version from the client graph entirely — see app/lib/flags.ts.
-export default async function Page() {
-  if (process.env.NEXT_PUBLIC_SITE_V2 === "on") {
-    const { default: ForecastRatingsV2 } = await import("./ForecastRatingsV2");
-    return <ForecastRatingsV2 />;
-  }
-  const { default: ForecastRatingsV1 } = await import("./ForecastRatingsV1");
-  return <ForecastRatingsV1 />;
+import { redirect } from "next/navigation";
+
+// The race ratings page was replaced by the forecast desk, which carries the
+// same ratings plus county and district detail. Existing links redirect rather
+// than 404: the old ForecastRatingsV1/V2 files stay on disk but nothing routes
+// to them any more.
+export default function ForecastRatingsPage() {
+  redirect("/forecast");
 }

@@ -9,6 +9,7 @@ import {
   getCandidateList,
   getDateRange,
   buildDailyWeightedSeries,
+  TRACKER_PROFILE,
 } from "@/app/polling/lib/buildDailyModel";
 
 const GOLD_STANDARD_MULTIPLIER = 3;
@@ -269,10 +270,10 @@ function StateMap({ tpsiNet, tpsiApprove, tpsiDisapprove }: {
         display: "flex", alignItems: "center", gap: 10,
         padding: "10px 16px",
         background: "var(--panel)",
-        border: "1px solid rgba(15,16,32,0.10)",
+        border: "1px solid rgba(var(--ink-rgb),calc(0.1 * var(--struct)))",
         borderTop: "none",
       }}>
-        <span style={{ fontFamily: "ui-monospace,monospace", fontSize: 7, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(15,16,32,0.45)", whiteSpace: "nowrap" }}>NET APPROVE</span>
+        <span style={{ fontFamily: "ui-monospace,monospace", fontSize: 7, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(var(--ink-rgb),calc(0.45 * var(--mute) + var(--floor)))", whiteSpace: "nowrap" }}>NET APPROVE</span>
         <div style={{ display: "flex", gap: 2, flex: 1 }}>
           {[
             { label: "+30", net: 35 }, { label: "+20", net: 22 }, { label: "+10", net: 12 },
@@ -285,13 +286,13 @@ function StateMap({ tpsiNet, tpsiApprove, tpsiDisapprove }: {
             </div>
           ))}
         </div>
-        <span style={{ fontFamily: "ui-monospace,monospace", fontSize: 7, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(15,16,32,0.45)", whiteSpace: "nowrap" }}>NET DISAPPROVE</span>
+        <span style={{ fontFamily: "ui-monospace,monospace", fontSize: 7, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(var(--ink-rgb),calc(0.45 * var(--mute) + var(--floor)))", whiteSpace: "nowrap" }}>NET DISAPPROVE</span>
       </div>
 
       {/* ── D3 Albers USA Map ── */}
       <div style={{
         background: "var(--panel2)",
-        border: "1px solid rgba(15,16,32,0.10)",
+        border: "1px solid rgba(var(--ink-rgb),calc(0.1 * var(--struct)))",
         borderTop: "none",
         padding: "10px",
         position: "relative",
@@ -300,7 +301,7 @@ function StateMap({ tpsiNet, tpsiApprove, tpsiDisapprove }: {
           <div style={{
             height: 400, display: "flex", alignItems: "center", justifyContent: "center",
             fontFamily: "ui-monospace,monospace", fontSize: 10, letterSpacing: "0.2em",
-            color: "rgba(15,16,32,0.45)", textTransform: "uppercase",
+            color: "rgba(var(--ink-rgb),calc(0.45 * var(--mute) + var(--floor)))", textTransform: "uppercase",
           }}>
             Loading map…
           </div>
@@ -314,7 +315,7 @@ function StateMap({ tpsiNet, tpsiApprove, tpsiDisapprove }: {
           >
             <defs>
               <pattern id="sm-grid" width="40" height="40" patternUnits="userSpaceOnUse">
-                <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255,255,255,0.018)" strokeWidth="0.5" />
+                <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(var(--line-rgb),0.018)" strokeWidth="0.5" />
               </pattern>
             </defs>
             <rect width={W} height={H} fill="url(#sm-grid)" />
@@ -368,7 +369,7 @@ function StateMap({ tpsiNet, tpsiApprove, tpsiDisapprove }: {
                       fontSize="9"
                       fontFamily="var(--font-body), 'Geist Mono', monospace"
                       fontWeight="700"
-                      fill="rgba(15,16,32,0.65)"
+                      fill="rgba(var(--ink-rgb),calc(0.65 * var(--mute) + var(--floor)))"
                       style={{ pointerEvents: "none", userSelect: "none" }}
                     >
                       {code}
@@ -402,22 +403,22 @@ function StateMap({ tpsiNet, tpsiApprove, tpsiDisapprove }: {
                   <text x={10} y={22} fontSize={11} fontWeight="900" fontFamily="ui-monospace,monospace" fill="#fff">
                     {ttName?.toUpperCase()}
                   </text>
-                  <text x={10} y={32} fontSize={7} fontFamily="ui-monospace,monospace" fill="rgba(255,255,255,0.3)" letterSpacing={2}>{tooltip.code}</text>
-                  <line x1={8} y1={38} x2={tooltipW - 8} y2={38} stroke="rgba(15,16,32,0.10)" strokeWidth={1} />
-                  <text x={10} y={52} fontSize={7} fontFamily="ui-monospace,monospace" fill="rgba(15,16,32,0.50)" letterSpacing={1.5}>APPROVE</text>
+                  <text x={10} y={32} fontSize={7} fontFamily="ui-monospace,monospace" fill="rgba(var(--line-rgb),0.3)" letterSpacing={2}>{tooltip.code}</text>
+                  <line x1={8} y1={38} x2={tooltipW - 8} y2={38} stroke="rgba(var(--ink-rgb),calc(0.1 * var(--struct)))" strokeWidth={1} />
+                  <text x={10} y={52} fontSize={7} fontFamily="ui-monospace,monospace" fill="rgba(var(--ink-rgb),calc(0.5 * var(--mute) + var(--floor)))" letterSpacing={1.5}>APPROVE</text>
                   <text x={tooltipW - 10} y={52} fontSize={11} fontFamily="ui-monospace,monospace" fontWeight="700" fill="rgba(77,127,212,1) " textAnchor="end">{ttData.approve.toFixed(1)}%</text>
-                  <text x={10} y={67} fontSize={7} fontFamily="ui-monospace,monospace" fill="rgba(15,16,32,0.50)" letterSpacing={1.5}>DISAPPROVE</text>
+                  <text x={10} y={67} fontSize={7} fontFamily="ui-monospace,monospace" fill="rgba(var(--ink-rgb),calc(0.5 * var(--mute) + var(--floor)))" letterSpacing={1.5}>DISAPPROVE</text>
                   <text x={tooltipW - 10} y={67} fontSize={11} fontFamily="ui-monospace,monospace" fontWeight="700" fill="rgba(255,0,64,0.9)" textAnchor="end">{ttData.disapprove.toFixed(1)}%</text>
-                  <text x={10} y={82} fontSize={7} fontFamily="ui-monospace,monospace" fill="rgba(15,16,32,0.50)" letterSpacing={1.5}>NET</text>
+                  <text x={10} y={82} fontSize={7} fontFamily="ui-monospace,monospace" fill="rgba(var(--ink-rgb),calc(0.5 * var(--mute) + var(--floor)))" letterSpacing={1.5}>NET</text>
                   <text x={tooltipW - 10} y={82} fontSize={11} fontFamily="ui-monospace,monospace" fontWeight="700" fill={netColor} textAnchor="end">{netStr}</text>
-                  <line x1={8} y1={90} x2={tooltipW - 8} y2={90} stroke="rgba(15,16,32,0.06)" strokeWidth={1} />
+                  <line x1={8} y1={90} x2={tooltipW - 8} y2={90} stroke="rgba(var(--ink-rgb),calc(0.06 * var(--struct)))" strokeWidth={1} />
                   <text x={10} y={102} fontSize={6.5} fontFamily="ui-monospace,monospace" fontWeight="700" fill="rgba(167,139,250,0.6)" letterSpacing={1.5}>RAW SOURCES</text>
-                  <text x={10} y={115} fontSize={7} fontFamily="ui-monospace,monospace" fill="rgba(15,16,32,0.50)">CIVIQS</text>
-                  <text x={tooltipW - 10} y={115} fontSize={9} fontFamily="ui-monospace,monospace" fill="rgba(255,255,255,0.5)" textAnchor="end">{ttData.civiqs >= 0 ? "+" : ""}{ttData.civiqs.toFixed(1)}</text>
-                  <text x={10} y={128} fontSize={7} fontFamily="ui-monospace,monospace" fill="rgba(15,16,32,0.50)">ECONOMIST</text>
-                  <text x={tooltipW - 10} y={128} fontSize={9} fontFamily="ui-monospace,monospace" fill="rgba(255,255,255,0.5)" textAnchor="end">{ttData.economist >= 0 ? "+" : ""}{ttData.economist.toFixed(1)}</text>
-                  <text x={10} y={141} fontSize={7} fontFamily="ui-monospace,monospace" fill="rgba(15,16,32,0.50)">MORNING CONSULT</text>
-                  <text x={tooltipW - 10} y={141} fontSize={9} fontFamily="ui-monospace,monospace" fill="rgba(255,255,255,0.5)" textAnchor="end">{ttData.mc >= 0 ? "+" : ""}{ttData.mc.toFixed(1)}</text>
+                  <text x={10} y={115} fontSize={7} fontFamily="ui-monospace,monospace" fill="rgba(var(--ink-rgb),calc(0.5 * var(--mute) + var(--floor)))">CIVIQS</text>
+                  <text x={tooltipW - 10} y={115} fontSize={9} fontFamily="ui-monospace,monospace" fill="rgba(var(--line-rgb),0.5)" textAnchor="end">{ttData.civiqs >= 0 ? "+" : ""}{ttData.civiqs.toFixed(1)}</text>
+                  <text x={10} y={128} fontSize={7} fontFamily="ui-monospace,monospace" fill="rgba(var(--ink-rgb),calc(0.5 * var(--mute) + var(--floor)))">ECONOMIST</text>
+                  <text x={tooltipW - 10} y={128} fontSize={9} fontFamily="ui-monospace,monospace" fill="rgba(var(--line-rgb),0.5)" textAnchor="end">{ttData.economist >= 0 ? "+" : ""}{ttData.economist.toFixed(1)}</text>
+                  <text x={10} y={141} fontSize={7} fontFamily="ui-monospace,monospace" fill="rgba(var(--ink-rgb),calc(0.5 * var(--mute) + var(--floor)))">MORNING CONSULT</text>
+                  <text x={tooltipW - 10} y={141} fontSize={9} fontFamily="ui-monospace,monospace" fill="rgba(var(--line-rgb),0.5)" textAnchor="end">{ttData.mc >= 0 ? "+" : ""}{ttData.mc.toFixed(1)}</text>
                 </g>
               );
             })()}
@@ -455,9 +456,9 @@ function StateMap({ tpsiNet, tpsiApprove, tpsiDisapprove }: {
                 const pos = net >= 0;
                 return (
                   <tr key={code}>
-                    <td style={{ color: "rgba(15,16,32,0.85)" }}>
+                    <td style={{ color: "rgba(var(--ink-rgb),calc(0.85 * var(--mute) + var(--floor)))" }}>
                       <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                        <div style={{ width: 10, height: 10, background: netToColor(net), border: "1px solid rgba(15,16,32,0.14)", flexShrink: 0 }} />
+                        <div style={{ width: 10, height: 10, background: netToColor(net), border: "1px solid rgba(var(--ink-rgb),calc(0.14 * var(--struct)))", flexShrink: 0 }} />
                         <span style={{ fontWeight: 600 }}>{STATE_NAMES[code] ?? code}</span>
                         <span style={{ color: "var(--muted2)", fontSize: 9 }}>{code}</span>
                       </div>
@@ -493,7 +494,7 @@ function StateMap({ tpsiNet, tpsiApprove, tpsiDisapprove }: {
           <div style={{ fontFamily: "ui-monospace,monospace", fontSize: 7, fontWeight: 700, letterSpacing: "0.28em", textTransform: "uppercase", color: "var(--purple-soft, #a78bfa)", marginBottom: 6 }}>
             METHODOLOGY
           </div>
-          <p style={{ fontFamily: "ui-monospace,monospace", fontSize: 8.5, lineHeight: 1.75, letterSpacing: "0.08em", color: "rgba(240,240,245,0.22)", margin: 0 }}>
+          <p style={{ fontFamily: "ui-monospace,monospace", fontSize: 8.5, lineHeight: 1.75, letterSpacing: "0.08em", color: "rgba(var(--ink-rgb),calc(0.22 * var(--struct)))", margin: 0 }}>
             State net approval figures are sourced from Civiqs, The Economist/YouGov, and Morning Consult
             tracking polls. The three-pollster simple average is corrected by an additive offset equal to the
             difference between the population-weighted implied national net from raw state data and the current
@@ -517,7 +518,7 @@ export default function TrumpApprovalPage() {
     }));
     const keys = getCandidateList(RAW_POLLS).sort((a, b) => a.localeCompare(b));
     const range = getDateRange(RAW_POLLS);
-    const dailyBase = buildDailyWeightedSeries(pollsAdj as any, keys, range.start, range.end);
+    const dailyBase = buildDailyWeightedSeries(pollsAdj as any, keys, range.start, range.end, TRACKER_PROFILE);
     const dailyWithNet = dailyBase.map((row) => {
       const a = Number((row as any).Approve ?? 0);
       const d = Number((row as any).Disapprove ?? 0);
@@ -559,13 +560,13 @@ export default function TrumpApprovalPage() {
               </h1>
               <p className="pap-hero-desc">
                 Daily weighted average across all included polls — recency decay,
-                √n sample adjustment, LV/RV/A screen, and PSI Gold Standard upweighting.
+                sigmoid sample curve, tracker LV/RV/A ladder, PSI Gold Standard upweighting, and a 15% cap on any single poll.
               </p>
               <div className="pap-hero-badge-row">
                 <span className="pap-badge pap-badge-live"><span className="pap-live-dot" />LIVE TRACKING</span>
                 <span className="pap-badge pap-badge-gold">★ GOLD STANDARD ×{GOLD_STANDARD_MULTIPLIER} WEIGHT</span>
                 <span className="pap-badge">{RAW_POLLS.length} POLLS IN MODEL</span>
-                <span className="pap-badge pap-badge-purple">RECENCY · √N · LV/RV/A</span>
+                <span className="pap-badge pap-badge-purple">RECENCY · SIGMOID N · 15% CAP</span>
               </div>
             </div>
             <div className="pap-hero-read">
@@ -659,7 +660,7 @@ export default function TrumpApprovalPage() {
                     const effN = effectiveSampleSize(p.pollster, p.sampleSize);
                     return (
                       <tr key={`${p.pollster}-${p.endDate}-${p.sampleSize}`}>
-                        <td style={{ color: "rgba(15,16,32,0.85)" }}>
+                        <td style={{ color: "rgba(var(--ink-rgb),calc(0.85 * var(--mute) + var(--floor)))" }}>
                           <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
                             <span>{p.pollster}</span>
                             {gold && <span className="pap-gold-badge">GOLD</span>}
@@ -696,14 +697,13 @@ export default function TrumpApprovalPage() {
 // ─── CSS — unified design system matching generic ballot page ─────────────────
 const CSS = `
   .pap-root {
-    --bg: #f7f7f4;
+    --bg: var(--canvas);
     --bg2: #ffffff;
     --panel: #ffffff;
-    --border: rgba(15, 16, 32, 0.08);
-    --border2: rgba(15, 16, 32, 0.14);
+    --border: rgba(var(--ink-rgb),calc(0.08 * var(--struct)));
+    --border2: rgba(var(--ink-rgb),calc(0.14 * var(--struct)));
     --muted: #6b7088;
     --muted2: #9aa0b4;
-    --muted3: #b7bccc;
     --purple:      #6d3ee9;
     --purple2:     #8a63ef;
     --purple-soft: #a78bfa;
@@ -793,7 +793,7 @@ const CSS = `
     position: absolute; inset: 0;
     background-image: repeating-linear-gradient(
       0deg, transparent, transparent 3px,
-      rgba(255,255,255,0.006) 3px, rgba(255,255,255,0.006) 4px
+      rgba(var(--line-rgb),0.006) 3px, rgba(var(--line-rgb),0.006) 4px
     );
     pointer-events: none;
   }
@@ -937,7 +937,7 @@ const CSS = `
     text-transform: uppercase; color: var(--muted3);
     margin-top: 6px;
   }
-  .pap-kpi-bar { height: 2px; margin-top: 10px; background: rgba(15,16,32,0.08); }
+  .pap-kpi-bar { height: 2px; margin-top: 10px; background: rgba(var(--ink-rgb),calc(0.08 * var(--struct))); }
   .pap-kpi-bar-fill {
     height: 100%;
     animation: pap-bar-in 800ms cubic-bezier(0.22,1,0.36,1) both;
@@ -997,7 +997,7 @@ const CSS = `
     font-family: ui-monospace,monospace;
     font-size: 10.5px;
     padding: 10px 16px;
-    border-bottom: 1px solid rgba(15,16,32,0.05);
+    border-bottom: 1px solid rgba(var(--ink-rgb),calc(0.05 * var(--struct)));
     color: var(--muted); vertical-align: middle;
     font-variant-numeric: tabular-nums;
   }

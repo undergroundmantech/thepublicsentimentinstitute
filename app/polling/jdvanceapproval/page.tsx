@@ -8,6 +8,7 @@ import {
   getCandidateList,
   getDateRange,
   buildDailyWeightedSeries,
+  TRACKER_PROFILE,
 } from "@/app/polling/lib/buildDailyModel";
 
 const GOLD_STANDARD_MULTIPLIER = 3;
@@ -179,7 +180,7 @@ export default function JDVanceFavorabilityPage() {
     }));
     const keys = getCandidateList(RAW_POLLS).sort((a, b) => a.localeCompare(b));
     const range = getDateRange(RAW_POLLS);
-    const dailyBase = buildDailyWeightedSeries(pollsAdj as any, keys, range.start, range.end);
+    const dailyBase = buildDailyWeightedSeries(pollsAdj as any, keys, range.start, range.end, TRACKER_PROFILE);
     const dailyWithNet = dailyBase.map((row) => {
       const f = Number((row as any).Favorable ?? 0);
       const u = Number((row as any).Unfavorable ?? 0);
@@ -221,13 +222,13 @@ export default function JDVanceFavorabilityPage() {
               </h1>
               <p className="pap-hero-desc">
                 Daily weighted average across all included polls — recency decay,
-                √n sample adjustment, LV/RV/A screen, and PSI Gold Standard upweighting.
+                sigmoid sample curve, tracker LV/RV/A ladder, PSI Gold Standard upweighting, and a 15% cap on any single poll.
               </p>
               <div className="pap-hero-badge-row">
                 <span className="pap-badge pap-badge-live"><span className="pap-live-dot" />LIVE TRACKING</span>
                 <span className="pap-badge pap-badge-gold">★ GOLD STANDARD ×{GOLD_STANDARD_MULTIPLIER} WEIGHT</span>
                 <span className="pap-badge">{RAW_POLLS.length} POLLS IN MODEL</span>
-                <span className="pap-badge pap-badge-purple">RECENCY · √N · LV/RV/A</span>
+                <span className="pap-badge pap-badge-purple">RECENCY · SIGMOID N · 15% CAP</span>
               </div>
             </div>
             <div className="pap-hero-read">
@@ -313,7 +314,7 @@ export default function JDVanceFavorabilityPage() {
                     const effN = effectiveSampleSize(p.pollster, p.sampleSize);
                     return (
                       <tr key={`${p.pollster}-${p.endDate}-${p.sampleSize}`}>
-                        <td style={{ color: "rgba(15,16,32,0.85)" }}>
+                        <td style={{ color: "rgba(var(--ink-rgb),calc(0.85 * var(--mute) + var(--floor)))" }}>
                           <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
                             <span>{p.pollster}</span>
                             {gold && <span className="pap-gold-badge">GOLD</span>}
@@ -329,7 +330,7 @@ export default function JDVanceFavorabilityPage() {
                           )}
                         </td>
                         <td className="r">{p.sampleType}</td>
-                        <td className="r" style={{ color: "rgba(255,255,255,0.7)" }}>
+                        <td className="r" style={{ color: "rgba(var(--ink-rgb),calc(0.7 * var(--mute) + var(--floor)))" }}>
                           {gold ? `×${GOLD_STANDARD_MULTIPLIER}.00` : "×1.00"}
                         </td>
                         <td className="r pap-approve-col">{f.toFixed(0)}%</td>
@@ -349,7 +350,7 @@ export default function JDVanceFavorabilityPage() {
             <div style={{ fontFamily: "ui-monospace,monospace", fontSize: 7, fontWeight: 700, letterSpacing: "0.28em", textTransform: "uppercase", color: "var(--purple-soft, #a78bfa)", marginBottom: 6 }}>
               METHODOLOGY
             </div>
-            <p style={{ fontFamily: "ui-monospace,monospace", fontSize: 8.5, lineHeight: 1.75, letterSpacing: "0.08em", color: "rgba(240,240,245,0.22)", margin: 0 }}>
+            <p style={{ fontFamily: "ui-monospace,monospace", fontSize: 8.5, lineHeight: 1.75, letterSpacing: "0.08em", color: "rgba(var(--ink-rgb),calc(0.22 * var(--struct)))", margin: 0 }}>
               Favorability figures are sourced from public national polls. Each poll is weighted by recency
               (exponential decay), square-root of sample size, and sample type (LV &gt; RV &gt; A). Gold Standard
               pollsters receive a ×{GOLD_STANDARD_MULTIPLIER} weight multiplier applied to their effective sample size
@@ -367,14 +368,13 @@ export default function JDVanceFavorabilityPage() {
 // ─── CSS — unified design system matching Trump approval page ─────────────────
 const CSS = `
   .pap-root {
-    --bg: #f7f7f4;
+    --bg: var(--canvas);
     --bg2: #ffffff;
     --panel: #ffffff;
-    --border: rgba(15, 16, 32, 0.08);
-    --border2: rgba(15, 16, 32, 0.14);
+    --border: rgba(var(--ink-rgb),calc(0.08 * var(--struct)));
+    --border2: rgba(var(--ink-rgb),calc(0.14 * var(--struct)));
     --muted: #6b7088;
     --muted2: #9aa0b4;
-    --muted3: #b7bccc;
     --purple:      #6d3ee9;
     --purple2:     #8a63ef;
     --purple-soft: #a78bfa;
@@ -464,7 +464,7 @@ const CSS = `
     position: absolute; inset: 0;
     background-image: repeating-linear-gradient(
       0deg, transparent, transparent 3px,
-      rgba(255,255,255,0.006) 3px, rgba(255,255,255,0.006) 4px
+      rgba(var(--line-rgb),0.006) 3px, rgba(var(--line-rgb),0.006) 4px
     );
     pointer-events: none;
   }
@@ -517,7 +517,7 @@ const CSS = `
     display: inline-flex; align-items: center; gap: 5px;
     padding: 3px 8px;
     border: 1px solid var(--border);
-    background: rgba(255,255,255,0.03);
+    background: rgba(var(--line-rgb),0.03);
     font-family: var(--font-body), "Geist Mono", monospace;
     font-size: 7.5px; font-weight: 700; letter-spacing: 0.22em;
     text-transform: uppercase; color: var(--muted3);
@@ -540,7 +540,7 @@ const CSS = `
     gap: 12px;
     padding: 10px 14px;
     border: 1px solid var(--border);
-    background: rgba(255,255,255,0.03);
+    background: rgba(var(--line-rgb),0.03);
     position: relative;
     overflow: hidden;
   }
@@ -608,7 +608,7 @@ const CSS = `
     text-transform: uppercase; color: var(--muted3);
     margin-top: 6px;
   }
-  .pap-kpi-bar { height: 2px; margin-top: 10px; background: rgba(15,16,32,0.08); }
+  .pap-kpi-bar { height: 2px; margin-top: 10px; background: rgba(var(--ink-rgb),calc(0.08 * var(--struct))); }
   .pap-kpi-bar-fill {
     height: 100%;
     animation: pap-bar-in 800ms cubic-bezier(0.22,1,0.36,1) both;
@@ -668,12 +668,12 @@ const CSS = `
     font-family: var(--font-body), "Geist Mono", monospace;
     font-size: 10.5px;
     padding: 10px 16px;
-    border-bottom: 1px solid rgba(15,16,32,0.05);
+    border-bottom: 1px solid rgba(var(--ink-rgb),calc(0.05 * var(--struct)));
     color: var(--muted); vertical-align: middle;
     font-variant-numeric: tabular-nums;
   }
   table.pap-table td.r { text-align: right; }
-  table.pap-table tbody tr:hover { background: rgba(255,255,255,0.014); }
+  table.pap-table tbody tr:hover { background: rgba(var(--line-rgb),0.014); }
   table.pap-table tbody tr:last-child td { border-bottom: none; }
 
   .pap-gold-badge {

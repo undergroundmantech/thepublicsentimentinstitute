@@ -19,8 +19,7 @@ export default function ResultsRacePage() {
   }, [router]);
   return (
     <>
-      <style>{`body header, body footer { display: none !important; }`}</style>
-      <div aria-hidden style={{ position: "fixed", inset: 0, zIndex: 200, background: "#f7f7f4" }} />
+      <div aria-hidden style={{ position: "fixed", inset: 0, zIndex: 200, background: "var(--ink)" }} />
     </>
   );
 }

@@ -126,7 +126,7 @@ function labelFor(p: Pick | undefined): string {
   return `${party === "D" ? "DEM" : "GOP"} · ${rating}`;
 }
 function labelColorFor(p: Pick | undefined, dark: boolean): string {
-  if (!p || p === "T") return dark ? "rgba(255,255,255,.45)" : "rgba(0,0,0,.45)";
+  if (!p || p === "T") return dark ? "rgba(var(--line-rgb),.45)" : "rgba(var(--line-rgb),.45)";
   return p.startsWith("D_") ? (dark ? "rgba(147,197,253,.9)" : "#1a3a8f") : (dark ? "rgba(252,165,165,.9)" : "#7f1d1d");
 }
 function nextRating(cur: Rating): Rating {
@@ -435,15 +435,15 @@ export default function ElectoralMapPage() {
               <div className="em-panel-title">LEGEND</div>
               <div className="em-legend">
                 {[
-                  { l:"Safe D",   f: dm ? "#0033a0" : "#0033a0", tc: "rgba(255,255,255,.9)" },
-                  { l:"Likely D", f: dm ? "#1a5fd4" : "#1a5fd4", tc: "rgba(255,255,255,.9)" },
-                  { l:"Lean D",   f: dm ? "#4a9dff" : "#3a88f0", tc: "rgba(255,255,255,.9)" },
-                  { l:"Tilt D",   f: dm ? "#8dc8ff" : "#70b0f8", tc: dm ? "rgba(0,0,0,.7)" : "rgba(0,0,0,.75)" },
-                  { l:"Tossup",   f: dm ? "#2a2a2a" : "#d4d4d4", tc: dm ? "rgba(255,255,255,.45)" : "rgba(0,0,0,.55)" },
-                  { l:"Tilt R",   f: dm ? "#ffaa88" : "#f08060", tc: dm ? "rgba(0,0,0,.7)" : "rgba(0,0,0,.75)" },
-                  { l:"Lean R",   f: dm ? "#ff6040" : "#e84020", tc: "rgba(255,255,255,.9)" },
-                  { l:"Likely R", f: dm ? "#d42020" : "#c41c1c", tc: "rgba(255,255,255,.9)" },
-                  { l:"Safe R",   f: dm ? "#9b0000" : "#8b0000", tc: "rgba(255,255,255,.9)" },
+                  { l:"Safe D",   f: dm ? "#0033a0" : "#0033a0", tc: "rgba(var(--line-rgb),.9)" },
+                  { l:"Likely D", f: dm ? "#1a5fd4" : "#1a5fd4", tc: "rgba(var(--line-rgb),.9)" },
+                  { l:"Lean D",   f: dm ? "#4a9dff" : "#3a88f0", tc: "rgba(var(--line-rgb),.9)" },
+                  { l:"Tilt D",   f: dm ? "#8dc8ff" : "#70b0f8", tc: dm ? "rgba(var(--line-rgb),.7)" : "rgba(var(--line-rgb),.75)" },
+                  { l:"Tossup",   f: dm ? "#2a2a2a" : "#d4d4d4", tc: dm ? "rgba(var(--line-rgb),.45)" : "rgba(var(--line-rgb),.55)" },
+                  { l:"Tilt R",   f: dm ? "#ffaa88" : "#f08060", tc: dm ? "rgba(var(--line-rgb),.7)" : "rgba(var(--line-rgb),.75)" },
+                  { l:"Lean R",   f: dm ? "#ff6040" : "#e84020", tc: "rgba(var(--line-rgb),.9)" },
+                  { l:"Likely R", f: dm ? "#d42020" : "#c41c1c", tc: "rgba(var(--line-rgb),.9)" },
+                  { l:"Safe R",   f: dm ? "#9b0000" : "#8b0000", tc: "rgba(var(--line-rgb),.9)" },
                 ].map(({ l, f, tc }) => (
                   <div key={l} className="em-chip" style={{ background:f, color:tc }}>{l}</div>
                 ))}
@@ -459,7 +459,7 @@ export default function ElectoralMapPage() {
                 <div className="em-score-track">
                   <div style={{ width:`${Math.min((d/270)*100, 100)}%`, background: dm ? "#1a5fd4" : "#0033a0", height:"100%", transition:"width .5s cubic-bezier(.22,1,.36,1)" }} />
                 </div>
-                <div className="em-score-need" style={{ color:d>=270?"#22c55e": dm ? "rgba(255,255,255,.3)" : "rgba(0,0,0,.3)" }}>
+                <div className="em-score-need" style={{ color:d>=270?"#22c55e": dm ? "rgba(var(--line-rgb),.3)" : "rgba(var(--line-rgb),.3)" }}>
                   {d >= 270 ? "★ WINNER" : `Needs ${270-d} more`}
                 </div>
               </div>
@@ -470,7 +470,7 @@ export default function ElectoralMapPage() {
                 <div className="em-score-track">
                   <div style={{ width:`${Math.min((r/270)*100, 100)}%`, background: dm ? "#d42020" : "#9b0000", height:"100%", transition:"width .5s cubic-bezier(.22,1,.36,1)" }} />
                 </div>
-                <div className="em-score-need" style={{ color:r>=270?"#22c55e": dm ? "rgba(255,255,255,.3)" : "rgba(0,0,0,.3)" }}>
+                <div className="em-score-need" style={{ color:r>=270?"#22c55e": dm ? "rgba(var(--line-rgb),.3)" : "rgba(var(--line-rgb),.3)" }}>
                   {r >= 270 ? "★ WINNER" : `Needs ${270-r} more`}
                 </div>
               </div>

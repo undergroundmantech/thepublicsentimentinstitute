@@ -80,14 +80,13 @@ function round1(n: number) { return Math.round(n * 10) / 10; }
 // =============================================================================
 const CSS = `
   .pa24-root {
-    --bg: #f7f7f4;
+    --bg: var(--canvas);
     --bg2: #ffffff;
     --panel: #ffffff;
-    --border: rgba(15, 16, 32, 0.08);
-    --border2: rgba(15, 16, 32, 0.14);
+    --border: rgba(var(--ink-rgb),calc(0.08 * var(--struct)));
+    --border2: rgba(var(--ink-rgb),calc(0.14 * var(--struct)));
     --muted: #6b7088;
     --muted2: #9aa0b4;
-    --muted3: #b7bccc;
     --purple:      #6d3ee9;
     --purple-soft: #a78bfa;
     --dem:         #4d7fd4;
@@ -166,7 +165,7 @@ const CSS = `
   .pa24-hero::after {
     content:''; position:absolute; inset:0;
     background-image:repeating-linear-gradient(
-      0deg,transparent,transparent 3px,rgba(255,255,255,0.005) 3px,rgba(255,255,255,0.005) 4px
+      0deg,transparent,transparent 3px,rgba(var(--line-rgb),0.005) 3px,rgba(var(--line-rgb),0.005) 4px
     );
     pointer-events:none;
   }
@@ -200,7 +199,7 @@ const CSS = `
   /* BADGES */
   .pa24-badge {
     display:inline-flex; align-items:center; gap:5px; padding:3px 8px;
-    border:1px solid var(--border); background:rgba(255,255,255,0.03);
+    border:1px solid var(--border); background:rgba(var(--line-rgb),0.03);
     font-family:ui-monospace,monospace; font-size:7.5px; font-weight:700;
     letter-spacing:0.22em; text-transform:uppercase; color:var(--muted3);
   }
@@ -212,7 +211,7 @@ const CSS = `
   .pa24-hero-read { display:flex; flex-direction:column; gap:6px; min-width:200px; }
   .pa24-hero-read-row {
     display:flex; align-items:center; justify-content:space-between; gap:12px;
-    padding:10px 14px; border:1px solid var(--border); background:rgba(255,255,255,0.03);
+    padding:10px 14px; border:1px solid var(--border); background:rgba(var(--line-rgb),0.03);
   }
   .pa24-hero-read-row.final { border-color:rgba(74,222,128,0.22); background:rgba(74,222,128,0.04); }
   .pa24-hero-read-label {
@@ -257,7 +256,7 @@ const CSS = `
     font-family:ui-monospace,monospace; font-size:8px; letter-spacing:0.16em;
     text-transform:uppercase; color:var(--muted3); margin-top:6px;
   }
-  .pa24-kpi-bar { height:2px; margin-top:10px; background:rgba(15,16,32,0.08); }
+  .pa24-kpi-bar { height:2px; margin-top:10px; background:rgba(var(--ink-rgb),calc(0.08 * var(--struct))); }
   .pa24-kpi-bar-fill { height:100%; animation:pa24-bar-in 800ms cubic-bezier(0.22,1,0.36,1) both; }
 
   /* ACCURACY PANEL */
@@ -277,7 +276,7 @@ const CSS = `
   }
   @media (max-width:640px) { .pa24-accuracy-inner { grid-template-columns:1fr; } }
   .pa24-acc-item {
-    border:1px solid var(--border); padding:14px 16px; background:rgba(255,255,255,0.02);
+    border:1px solid var(--border); padding:14px 16px; background:rgba(var(--line-rgb),0.02);
   }
   .pa24-acc-item-label {
     font-family:ui-monospace,monospace; font-size:7px; font-weight:700;
@@ -313,11 +312,11 @@ const CSS = `
   table.pa24-table th.r { text-align:right; }
   table.pa24-table td {
     font-family:ui-monospace,monospace; font-size:10.5px; padding:10px 16px;
-    border-bottom:1px solid rgba(15,16,32,0.05); color:var(--muted);
+    border-bottom:1px solid rgba(var(--ink-rgb),calc(0.05 * var(--struct))); color:var(--muted);
     vertical-align:middle; font-variant-numeric:tabular-nums;
   }
   table.pa24-table td.r { text-align:right; }
-  table.pa24-table tbody tr:hover { background:rgba(255,255,255,0.013); }
+  table.pa24-table tbody tr:hover { background:rgba(var(--line-rgb),0.013); }
   table.pa24-table tbody tr:last-child td { border-bottom:none; }
 
   .pa24-gold-badge {
@@ -592,7 +591,7 @@ export default function PA2024PresidentPage() {
                                  p.pollster.toLowerCase().includes("progress");
                     return (
                       <tr key={`${p.pollster}-${p.endDate}-${i}`}>
-                        <td style={{ color: "rgba(15,16,32,0.85)" }}>
+                        <td style={{ color: "rgba(var(--ink-rgb),calc(0.85 * var(--mute) + var(--floor)))" }}>
                           <div style={{ display:"flex", alignItems:"center", gap:"7px", flexWrap:"wrap" }}>
                             <span>{p.pollster.replace(/\s*\(D\)/gi,"").replace(/\*\*/g,"")}</span>
                             {gold && <span className="pa24-gold-badge">GOLD</span>}
@@ -602,7 +601,7 @@ export default function PA2024PresidentPage() {
                         <td className="r">{p.endDate}</td>
                         <td className="r">{p.sampleSize > 0 ? p.sampleSize.toLocaleString() : "—"}</td>
                         <td className="r">{p.sampleType}</td>
-                        <td className="r" style={{ color:"rgba(255,255,255,0.6)" }}>
+                        <td className="r" style={{ color:"rgba(var(--ink-rgb),calc(0.6 * var(--mute) + var(--floor)))" }}>
                           {gold ? "×2.00" : "×1.00"}
                         </td>
                         <td className="r pa24-dem-col">{h.toFixed(0)}%</td>

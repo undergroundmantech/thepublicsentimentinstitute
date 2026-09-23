@@ -21,7 +21,7 @@ export const FLSE_CSS = `
 .flse .pbtn{font-size:12px;font-weight:600;padding:8px 14px;border:1px solid var(--line);background:var(--pnl2);
  border-radius:99px;cursor:pointer;color:var(--ink2);transition:all .12s;white-space:nowrap}
 .flse .pbtn:hover{border-color:var(--ink3);color:var(--ink)}
-.flse .pbtn.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.flse .pbtn.on{background: var(--ink);color:var(--bg);border-color:var(--ink)}
 .flse .grid{display:grid;grid-template-columns:436px minmax(0,1fr) 296px;gap:16px;align-items:start}
 .flse .card{background:var(--pnl);border:1px solid var(--line);border-radius:var(--r);margin-bottom:14px;box-shadow:none}
 .flse .ch{display:flex;justify-content:space-between;align-items:center;padding:13px 16px;border-bottom:1px solid var(--line2)}
@@ -50,7 +50,7 @@ export const FLSE_CSS = `
  background:transparent;color:var(--ink3);cursor:pointer;transition:all .12s;white-space:nowrap}
 .flse .seg button+button{border-left:1px solid var(--line)}
 .flse .seg button:hover:not(.on){background:var(--fill);color:var(--ink)}
-.flse .seg button.on{background:var(--ink);color:var(--pnl2)}
+.flse .seg button.on{background:var(--canvas);color:var(--pnl2)}
 .flse .rl{font-size:12.5px;font-weight:600;color:var(--ink)}
 .flse .rl i{display:block;font-style:normal;font-size:10.5px;color:var(--ink4);font-weight:400;margin-top:1px}
 .flse input[type=range]{width:100%;accent-color:var(--ink);height:3px}
@@ -58,18 +58,18 @@ export const FLSE_CSS = `
 .flse .tgl{position:relative;width:40px;height:22px;border-radius:99px;background:var(--fill);cursor:pointer;
  transition:background .16s;border:none;padding:0;justify-self:end}
 .flse .tgl:after{content:'';position:absolute;top:2px;left:2px;width:18px;height:18px;border-radius:50%;
- background:var(--pnl2);box-shadow:0 1px 3px rgba(0,0,0,.3),0 0 0 1px var(--line2);transition:transform .16s}
-.flse .tgl.on{background:var(--ink)}
+ background:var(--pnl2);box-shadow:0 1px 3px rgba(var(--line-rgb),.3),0 0 0 1px var(--line2);transition:transform .16s}
+.flse .tgl.on{background:var(--canvas)}
 .flse .tgl.on:after{transform:translateX(18px)}
 .flse .cbtn{border:1px solid var(--line);background:var(--pnl2);border-radius:6px;width:22px;height:22px;
  cursor:pointer;color:var(--ink3);font-size:11px;line-height:1;padding:0;transition:all .12s;flex-shrink:0}
 .flse .cbtn:hover{border-color:var(--ink3);color:var(--ink)}
-.flse .cbtn.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.flse .cbtn.on{background: var(--ink);color:var(--bg);border-color:var(--ink)}
 .flse .cname{display:flex;align-items:center;gap:9px}
 .flse .xbtn{font-size:11px;font-weight:600;padding:5px 11px;border:1px solid var(--line);background:var(--pnl2);
  border-radius:99px;cursor:pointer;color:var(--ink2);transition:all .12s;white-space:nowrap}
 .flse .xbtn:hover{border-color:var(--ink3)}
-.flse .xbtn.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.flse .xbtn.on{background: var(--ink);color:var(--bg);border-color:var(--ink)}
 .flse .ctbl th{cursor:pointer;user-select:none}
 .flse .ctbl th:hover{color:var(--ink2)}
 .flse .ctbl th .ar{opacity:0;margin-left:3px;font-size:8px}
@@ -82,7 +82,7 @@ export const FLSE_CSS = `
 .flse .tab{font-size:11.5px;font-weight:600;padding:7px 13px;border:1px solid var(--line);background:var(--pnl2);
  border-radius:99px;cursor:pointer;color:var(--ink3);transition:all .12s}
 .flse .tab:hover{border-color:var(--ink3)}
-.flse .tab.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.flse .tab.on{background:var(--canvas);color:var(--bg);border-color:var(--ink)}
 .flse .mapwrap{background:var(--pnl2);border:1px solid var(--line);border-radius:var(--r);padding:12px}
 .flse svg#fl-map{width:100%;height:auto;display:block}
 .flse path.cty{stroke:var(--pnl);stroke-width:.7;cursor:pointer;transition:opacity .1s}
@@ -103,7 +103,7 @@ export const FLSE_CSS = `
 .flse .rvv{font-family:var(--m);font-size:10px;color:var(--ink4);margin-bottom:11px}
 .flse .stack{display:flex;height:22px;border-radius:6px;overflow:hidden;margin-bottom:14px}
 .flse .note{font-size:11.5px;color:var(--ink3);line-height:1.5;padding-top:11px;margin-top:2px;border-top:1px solid var(--line2)}
-.flse .btn{font-size:12px;font-weight:600;padding:10px;border:1px solid var(--ink);background:var(--ink);
+.flse .btn{font-size:12px;font-weight:600;padding:10px;border:1px solid var(--ink);background: var(--ink);
  color:var(--bg);border-radius:8px;cursor:pointer;width:100%}
 .flse .btn.alt{background:var(--pnl2);color:var(--ink)}
 .flse .btn:hover{opacity:.88}

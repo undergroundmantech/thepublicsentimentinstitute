@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef } from "react";
 import { loadGeo, makeProjector, geomToPath } from "../onpoint/electionLib.js";
+import { cssColor } from "@/app/lib/cssColor";
 
 // DeskMapField — the hero backdrop is a broadcast-style tour of the season:
 //   1 · the NATIONAL county map fills in red/blue/purple as returns land,
@@ -101,7 +102,7 @@ export default function DeskMapField({ className, states }: { className?: string
       // wireframe base
       sctx.clearRect(0, 0, scene.width, scene.height);
       sctx.lineWidth = Math.max(0.5, (stage === "nat" ? 0.6 : 0.9) * dpr);
-      sctx.strokeStyle = stage === "nat" ? "rgba(244,244,239,0.045)" : "rgba(244,244,239,0.08)";
+      sctx.strokeStyle = cssColor(stage === "nat" ? "rgba(var(--ink-rgb),calc(0.045 * var(--struct)))" : "rgba(var(--ink-rgb),calc(0.08 * var(--struct)))");
       for (const c of counties) sctx.stroke(c.path);
       return true;
     };
@@ -152,7 +153,7 @@ export default function DeskMapField({ className, states }: { className?: string
       }
       // corner label — quiet, mono, broadcast chyron
       ctx.font = `600 ${Math.round(10 * dpr)}px "JetBrains Mono", monospace`;
-      ctx.fillStyle = "rgba(244,244,239,0.30)";
+      ctx.fillStyle = cssColor("rgba(var(--ink-rgb),calc(0.3 * var(--mute) + var(--floor)))");
       ctx.fillText(label().toUpperCase().split("").join(" "), Math.round(24 * dpr), canvas.height - Math.round(22 * dpr));
     };
 
@@ -179,7 +180,7 @@ export default function DeskMapField({ className, states }: { className?: string
           if (t > lastElapsed && t <= elapsed) {
             sctx.fillStyle = colorFor(c.id, cycleSeed);
             sctx.fill(c.path);
-            sctx.strokeStyle = "rgba(5,5,5,0.5)";
+            sctx.strokeStyle = cssColor("rgba(var(--canvas-rgb),0.5)");
             sctx.stroke(c.path);
           }
         }

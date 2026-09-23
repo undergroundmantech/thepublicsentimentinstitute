@@ -1,5 +1,4 @@
 import Link from "next/link";
-import DarkNav from "@/app/components/DarkNav";
 import Dot404 from "@/app/components/Dot404";
 
 // v2 404 — the numerals in the desk's dot-matrix, a caption, a way back.
@@ -11,7 +10,6 @@ export default function NotFoundV2() {
            body, no global chrome, neutralize the layout wrapper's gutters,
            break out of the container */
         body { background: var(--background) !important; }
-        body header, body footer { display: none !important; }
         body main > div { max-width: none !important; padding-left: 0 !important; padding-right: 0 !important; }
         body main > div > div { padding-top: 0 !important; padding-bottom: 0 !important; }
         .nf2 {
@@ -56,7 +54,6 @@ export default function NotFoundV2() {
       `}</style>
 
       <div className="nf2-shell">
-        <DarkNav />
       </div>
       <div className="nf2-center">
         <div className="nf2-wrap">

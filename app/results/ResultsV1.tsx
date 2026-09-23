@@ -451,7 +451,7 @@ type RaceStatusInfo = { label: string; bg: string; border: string; };
 function getRaceStatusInfo(nowMs: number, pollsOpenIso: string | null | undefined, pollsCloseIso: string | null | undefined, electionDateLabel: string): RaceStatusInfo {
   const closeDate = parseIsoDate(pollsCloseIso);
   if (closeDate && nowMs >= closeDate.getTime()) {
-    return { label: "CLOSED", bg: "rgba(255,255,255,0.10)", border: "rgba(255,90,90,0.55)" };
+    return { label: "CLOSED", bg: "rgba(var(--line-rgb),0.10)", border: "rgba(255,90,90,0.55)" };
   }
   let openDate = parseIsoDate(pollsOpenIso);
   if (!openDate && closeDate) {
@@ -460,7 +460,7 @@ function getRaceStatusInfo(nowMs: number, pollsOpenIso: string | null | undefine
     openDate = d;
   }
   if (openDate && nowMs >= openDate.getTime()) {
-    return { label: "POLLS OPEN", bg: "rgba(255,255,255,0.10)", border: "rgba(255,215,70,0.60)" };
+    return { label: "POLLS OPEN", bg: "rgba(var(--line-rgb),0.10)", border: "rgba(255,215,70,0.60)" };
   }
   let dateStr = electionDateLabel;
   if (closeDate) {
@@ -469,7 +469,7 @@ function getRaceStatusInfo(nowMs: number, pollsOpenIso: string | null | undefine
     const y = String(closeDate.getFullYear()).slice(2);
     dateStr = `${m}/${day}/${y}`;
   }
-  return { label: `SCHEDULED · ${dateStr}`, bg: "rgba(255,255,255,0.10)", border: "rgba(255,255,255,0.28)" };
+  return { label: `SCHEDULED · ${dateStr}`, bg: "rgba(var(--line-rgb),0.10)", border: "rgba(var(--line-rgb),0.28)" };
 }
 function normalizeRegionName(s: string) { return s.toLowerCase().replace(/[_-]+/g, " ").replace(/[''"]/g, "").replace(/\./g, "").replace(/\s+county$/i, "").replace(/\s+parish$/i, "").replace(/\s+borough$/i, "").replace(/\s+/g, " ").trim(); }
 function titleCaseKey(key: string) { return key.replace(/[_-]+/g, " ").replace(/\s+/g, " ").trim().split(" ").filter(Boolean).map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(" "); }
@@ -726,7 +726,7 @@ function MapWithCountyTooltip({ svgText, regionResults }: { svgText: string; reg
       const onEnter = (ev: PointerEvent) => {
         if (isPanningRef.current) return;
         if (ev.pointerType === "touch") return; // touch handled by tap
-        shape.style.stroke = "rgba(255,255,255,0.9)"; shape.style.strokeWidth = "2.0"; shape.style.filter = "brightness(1.22) saturate(1.1)";
+        shape.style.stroke = "rgba(var(--line-rgb),0.9)"; shape.style.strokeWidth = "2.0"; shape.style.filter = "brightness(1.22) saturate(1.1)";
         onMove(ev);
       };
       const onLeave = (ev: PointerEvent) => {
@@ -765,7 +765,7 @@ function MapWithCountyTooltip({ svgText, regionResults }: { svgText: string; reg
           const lines = currentRR ? buildTooltipLines(currentRR) : [];
           const hasVotes = lines.some((l) => l.votes !== null && l.votes > 0);
           setTooltip({ show: true, x, y, title: currentRR?.region?.name ?? (currentRR?.name ? titleCaseKey(currentRR.name) : prettyKey), reporting: pct !== null ? `${pct.toFixed(1)}% REPORTING` : "0% REPORTING", reportingPct: pct ?? 0, lines: hasVotes ? lines : [] });
-          shape.style.stroke = "rgba(255,255,255,0.9)"; shape.style.strokeWidth = "2.0"; shape.style.filter = "brightness(1.22) saturate(1.1)";
+          shape.style.stroke = "rgba(var(--line-rgb),0.9)"; shape.style.strokeWidth = "2.0"; shape.style.filter = "brightness(1.22) saturate(1.1)";
         }
       };
       shape.addEventListener("pointerenter", onEnter); shape.addEventListener("pointermove", onMove); shape.addEventListener("pointerleave", onLeave); shape.addEventListener("pointerup", onTouchUp);
@@ -774,7 +774,7 @@ function MapWithCountyTooltip({ svgText, regionResults }: { svgText: string; reg
       const fill = currentRR ? countyFill(currentRR) : null;
       shape.style.opacity = "0";
       requestAnimationFrame(() => {
-        shape.style.fill = fill || "rgba(15,16,32,0.05)"; shape.style.opacity = "1";
+        shape.style.fill = fill || "rgba(var(--ink-rgb),calc(0.05 * var(--struct)))"; shape.style.opacity = "1";
         if (currentRR) {
           const fp = countyFingerprint(currentRR);
           const prevFp = countyFingerprintsRef.current.get(key);
@@ -859,7 +859,7 @@ function MapWithCountyTooltip({ svgText, regionResults }: { svgText: string; reg
                         {top5.map((c, i) => (
                           <div key={i} className="grid grid-cols-[1fr_36px_30px] items-center gap-0.5 py-0.5 border-b" style={{ borderColor: "var(--border)" }}>
                             <div className="flex items-center gap-1 min-w-0">
-                              <span className="h-1.5 w-1.5 rounded-full flex-shrink-0" style={{ background: c.color || "rgba(15,16,32,0.50)" }} />
+                              <span className="h-1.5 w-1.5 rounded-full flex-shrink-0" style={{ background: c.color || "rgba(var(--ink-rgb),calc(0.5 * var(--mute) + var(--floor)))" }} />
                               <div className="min-w-0"><div className="res-cand-name truncate">{c.name}{c.winner ? " ✓" : ""}</div><div className="res-cand-party">{c.party}</div></div>
                             </div>
                             <div className="text-right res-num">{c.votes?.toLocaleString() ?? "—"}</div>
@@ -923,10 +923,10 @@ function CandidateList({ candidates, reporting, raceId, isMajorityRunoff, called
           const isRunoffAdvancing = isForecastCalled && !c.winner;
           return (
             <div key={`${c.name}-${c.party}`} className="res-candidate-row">
-              <div className="res-cand-bar" style={{ background: c.color || "rgba(255,255,255,0.2)" }} />
+              <div className="res-cand-bar" style={{ background: c.color || "rgba(var(--line-rgb),0.2)" }} />
               <div className="flex items-center justify-between gap-3 flex-1 min-w-0">
                 <div className="flex items-center gap-3 min-w-0">
-              <span className="res-cand-dot" style={{ background: c.color || "rgba(15,16,32,0.50)", boxShadow: `0 0 10px ${c.color || "rgba(255,255,255,0.2)"}40` }} />
+              <span className="res-cand-dot" style={{ background: c.color || "rgba(var(--ink-rgb),calc(0.5 * var(--mute) + var(--floor)))", boxShadow: `0 0 10px ${c.color || "rgba(var(--line-rgb),0.2)"}40` }} />
                   <div className="min-w-0">
                     <div className="flex flex-wrap items-center gap-2 mb-0.5">
                       <span className="res-cand-name-lg">{c.name}</span>
@@ -1050,7 +1050,7 @@ function CountyTotalsTable({ regionResults, collapsed, onToggle, maxHeight }: { 
                 const isReported = row.reporting > 0;
                 const totalVotes = row.candidates.reduce((s, c) => s + (c.votes ?? 0), 0);
                 return (
-                  <tr key={i} style={{ borderBottom: "1px solid var(--border)", background: i % 2 === 0 ? "transparent" : "rgba(0,0,0,0.012)", opacity: isReported ? 1 : 0.45 }}>
+                  <tr key={i} style={{ borderBottom: "1px solid var(--border)", background: i % 2 === 0 ? "transparent" : "rgba(var(--line-rgb),0.012)", opacity: isReported ? 1 : 0.45 }}>
                     <td style={{ padding: "5px 8px 5px 12px", fontFamily: "var(--font-body)", fontSize: "13px", fontWeight: 700, color: "var(--foreground)", whiteSpace: "nowrap" }}>{row.name}</td>
                     <td style={{ padding: "5px 10px", textAlign: "right", whiteSpace: "nowrap" }}>
                       {isReported
@@ -2669,7 +2669,7 @@ export default function March3FeaturedClient() {
         .res-btn-state.active:active { transform:scale(0.97); }
         .res-close-btn { display:inline-flex; align-items:center; padding:7px 12px; background:var(--panel2); border:1px solid var(--border); color:var(--muted2); font-family:var(--font-body); font-size:10px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; cursor:pointer; flex-shrink:0; transition:all 120ms ease; border-radius:var(--r-sm); }
         .res-close-btn:hover { border-color:var(--border2); color:var(--foreground); }
-        .res-overlay-card { background:var(--panel); border:1px solid rgba(124,58,237,0.45); box-shadow:0 0 80px rgba(124,58,237,0.25),0 30px 80px rgba(0,0,0,0.8); }
+        .res-overlay-card { background:var(--panel); border:1px solid rgba(124,58,237,0.45); box-shadow:0 0 80px rgba(124,58,237,0.25),0 30px 80px rgba(var(--line-rgb),0.8); }
         .res-overlay-title { font-family:var(--font-body); font-size:clamp(32px,4vw,48px); font-weight:900; text-transform:uppercase; letter-spacing:0.02em; color:var(--foreground); line-height:0.92; }
         .res-overlay-name { font-family:var(--font-body); font-size:clamp(18px,2.5vw,26px); font-weight:700; text-transform:uppercase; letter-spacing:0.06em; }
         .res-map-tooltip { background:var(--panel); border:1px solid rgba(124,58,237,0.45); box-shadow:var(--shadow-md); border-radius:var(--r-md); }
@@ -2699,8 +2699,8 @@ export default function March3FeaturedClient() {
         .res-input::placeholder { color:var(--muted2); }
         .res-select { background:var(--panel2); border:1px solid var(--border); color:var(--muted2); padding:8px 12px; font-family:var(--font-body); font-size:11px; letter-spacing:0.08em; outline:none; border-radius:var(--r-sm); }
         .res-error { border:1px solid rgba(230,57,70,0.25); background:rgba(230,57,70,0.06); color:rgba(255,77,90,0.90); padding:12px 16px; font-family:var(--font-body); font-size:10.5px; letter-spacing:0.12em; }
-        .res-map-loading { display:flex; align-items:center; justify-content:center; aspect-ratio:4/3; background:rgba(255,255,255,0.30); border:1px solid var(--border); }
-        .res-map-wrap { background:rgba(0,0,0,0.20); border:1px solid var(--border); padding:6px; }
+        .res-map-loading { display:flex; align-items:center; justify-content:center; aspect-ratio:4/3; background:rgba(var(--line-rgb),0.30); border:1px solid var(--border); }
+        .res-map-wrap { background:rgba(var(--line-rgb),0.20); border:1px solid var(--border); padding:6px; }
 
         /* ── STATUS BAR ── */
         .res-status-bar { background:transparent; padding:7px 0; }
@@ -3025,16 +3025,16 @@ export default function March3FeaturedClient() {
           padding: 8px 32px 8px 12px; font-family: var(--font-body); font-size: 10px;
           font-weight: 700; letter-spacing: 0.06em; outline: none; cursor: pointer;
           transition: border-color 140ms ease; min-width: 0;
-          background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L5 5L9 1' stroke='rgba(15,16,32,0.50)' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+          background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L5 5L9 1' stroke='rgba(var(--ink-rgb),calc(0.5 * var(--mute) + var(--floor)))' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
           background-repeat: no-repeat; background-position: right 10px center;
         }
         .res-race-select:focus { border-color: rgba(124,58,237,0.5); }
         .res-race-select option { background: #ffffff; color: #0b0d1c; font-weight: 600; }
-        .res-race-select optgroup { color: rgba(15,16,32,0.50); font-size: 9px; }
+        .res-race-select optgroup { color: rgba(var(--ink-rgb),calc(0.5 * var(--mute) + var(--floor))); font-size: 9px; }
 
-        * { scrollbar-width:thin; scrollbar-color:rgba(15,16,32,0.12) transparent; }
+        * { scrollbar-width:thin; scrollbar-color:rgba(var(--ink-rgb),calc(0.12 * var(--struct))) transparent; }
         *::-webkit-scrollbar { width:3px; height:3px; }
-        *::-webkit-scrollbar-thumb { background:rgba(15,16,32,0.12); }
+        *::-webkit-scrollbar-thumb { background:rgba(var(--ink-rgb),calc(0.12 * var(--struct))); }
         *::-webkit-scrollbar-thumb:hover { background:rgba(124,58,237,0.4); }
         @media (prefers-reduced-motion:reduce) { .res-bar-fill,.res-btn-primary,.res-btn-ghost,.res-btn-state { transition:none !important; } .res-live-dot { animation:none !important; } }
         input[type=range] { height:4px; cursor:pointer; }
@@ -3058,7 +3058,7 @@ export default function March3FeaturedClient() {
         /* ── SPOTLIGHT ── */
         .ky04-hero-strip { max-width:1280px; margin:0 auto; padding:0 10px 8px; display:flex; gap:8px; box-sizing:border-box; }
         .ky04-hero-card { background:linear-gradient(135deg,var(--red) 0%,var(--purple) 55%,var(--blue) 100%); border-radius:var(--r-lg); border:none; flex-shrink:0; width:280px; padding:18px 16px 16px; position:relative; overflow:hidden; box-shadow:var(--shadow-md); }
-        .ky04-hero-card::after { content:''; position:absolute; inset:0; background:radial-gradient(ellipse 80% 120% at 105% 50%,rgba(255,255,255,0.12) 0%,transparent 65%); pointer-events:none; }
+        .ky04-hero-card::after { content:''; position:absolute; inset:0; background:radial-gradient(ellipse 80% 120% at 105% 50%,rgba(var(--line-rgb),0.12) 0%,transparent 65%); pointer-events:none; }
         :root:not([data-theme="dark"]) .ky04-hero-card { opacity: 0.8; }
         @media (max-width:900px) { .ky04-hero-strip { flex-direction:column; } .ky04-hero-card { width:100%; } }
       `}</style>
@@ -3131,7 +3131,7 @@ export default function March3FeaturedClient() {
                       position: "absolute", top: "calc(100% + 8px)", left: 0, zIndex: 100,
                       background: "var(--panel)", border: "1px solid var(--border2)",
                       borderRadius: "var(--r-lg)", padding: "12px 14px", minWidth: 220,
-                      boxShadow: "0 8px 32px rgba(0,0,0,0.45), 0 0 0 1px rgba(124,58,237,0.15)",
+                      boxShadow: "0 8px 32px rgba(var(--line-rgb),0.45), 0 0 0 1px rgba(124,58,237,0.15)",
                     }}>
                       <div style={{ fontFamily: "var(--font-body)", fontSize: "9px", fontWeight: 700, letterSpacing: "0.18em", color: "var(--muted2)", marginBottom: 8 }}>ELECTION DATE</div>
                       <div style={{ display: "flex", flexWrap: "wrap", gap: 4, marginBottom: 12 }}>
@@ -3326,7 +3326,7 @@ export default function March3FeaturedClient() {
             const _apiRpt = getRaceReportingPct(liveData);
             const _ovRpt = RACE_FORECAST_DEFAULTS[selectedId]?.overrideReporting;
             const reporting = (typeof _ovRpt === "number" && _ovRpt > 0) ? _ovRpt : _apiRpt;
-            const raceTypeColor = meta ? getRaceTypeColor(meta.raceType) : "rgba(255,255,255,0.4)";
+            const raceTypeColor = meta ? getRaceTypeColor(meta.raceType) : "rgba(var(--line-rgb),0.4)";
             const isMobileQuickCalled = !!(winner || lockedCalls[selectedId] || RACE_FORECAST_DEFAULTS[selectedId]?.manualCall);
             const _mqCallType = lockedCallTypes[selectedId] ?? (lockedCalls[selectedId]?.includes(" vs. ") ? "RUNOFF" : "WIN");
             const _mqCallLabel = (() => {
@@ -3368,20 +3368,20 @@ export default function March3FeaturedClient() {
               <>
                 <div className="ky04-hero-card res-spotlight-hero" style={{ width: "100%", boxSizing: "border-box", flexShrink: 0, background: "linear-gradient(135deg, var(--red) 0%, var(--purple) 55%, var(--blue) 100%)" }}>
                   <div style={{ marginBottom: 10 }}>
-                    <span style={{ display: "inline-flex", alignItems: "center", gap: 5, padding: "3px 9px", border: "1px solid rgba(255,255,255,0.30)", borderRadius: "var(--r-pill)", background: "rgba(255,255,255,0.15)", fontFamily: "var(--font-body)", fontSize: "7px", fontWeight: 700, letterSpacing: "0.20em", color: "#fff", textTransform: "uppercase" }}>
-                      <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#fff", boxShadow: "0 0 0 3px rgba(255,255,255,0.28)", display: "inline-block", flexShrink: 0 }} />
+                    <span style={{ display: "inline-flex", alignItems: "center", gap: 5, padding: "3px 9px", border: "1px solid rgba(var(--line-rgb),0.30)", borderRadius: "var(--r-pill)", background: "rgba(var(--line-rgb),0.15)", fontFamily: "var(--font-body)", fontSize: "7px", fontWeight: 700, letterSpacing: "0.20em", color: "#fff", textTransform: "uppercase" }}>
+                      <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#fff", boxShadow: "0 0 0 3px rgba(var(--line-rgb),0.28)", display: "inline-block", flexShrink: 0 }} />
                       SPOTLIGHT RACE · {spotlightMeta.stateLabel}
                     </span>
                   </div>
                   <div style={{ fontFamily: "var(--font-display)", fontSize: "clamp(12px,1.15vw,17px)", fontWeight: 900, color: "#fff", lineHeight: 1.0, marginBottom: 5, textTransform: "uppercase", letterSpacing: "0.01em" }}>
                     {spotlightMeta.title}
                   </div>
-                  <div style={{ fontFamily: "var(--font-body)", fontSize: "8px", fontWeight: 700, letterSpacing: "0.20em", textTransform: "uppercase", color: "rgba(255,255,255,0.60)", marginBottom: 16 }}>
+                  <div style={{ fontFamily: "var(--font-body)", fontSize: "8px", fontWeight: 700, letterSpacing: "0.20em", textTransform: "uppercase", color: "rgba(var(--ink-rgb),calc(0.6 * var(--mute) + var(--floor)))", marginBottom: 16 }}>
                     {spotlightMeta.subtitle}
                   </div>
                   <div style={{ display: "flex", alignItems: "flex-end", gap: 10, marginBottom: 12 }}>
                     <div>
-                      <div style={{ fontFamily: "var(--font-body)", fontSize: "7px", fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(255,255,255,0.55)", marginBottom: 2 }}>REPORTING</div>
+                      <div style={{ fontFamily: "var(--font-body)", fontSize: "7px", fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(var(--ink-rgb),calc(0.55 * var(--mute) + var(--floor)))", marginBottom: 2 }}>REPORTING</div>
                       <div style={{ fontFamily: "var(--font-numeric)", fontSize: "30px", fontWeight: 900, color: "#fff", lineHeight: 1 }}>{displayReportingStr}%</div>
                     </div>
                     <div style={{ marginBottom: 5 }}>
@@ -3390,9 +3390,9 @@ export default function March3FeaturedClient() {
                       </span>
                     </div>
                   </div>
-                  <div style={{ paddingTop: 10, borderTop: "1px solid rgba(255,255,255,0.18)", display: "flex", gap: 5, flexWrap: "wrap" }}>
-                    <span style={{ display: "inline-flex", alignItems: "center", padding: "3px 8px", border: "1px solid rgba(255,255,255,0.22)", borderRadius: "var(--r-pill)", background: "rgba(255,255,255,0.10)", fontFamily: "var(--font-body)", fontSize: "7px", fontWeight: 700, letterSpacing: "0.16em", color: "rgba(255,255,255,0.75)", textTransform: "uppercase" }}>AUTO-REFRESH / 30s</span>
-                    {selectedRace?.last_updated && <span style={{ display: "inline-flex", alignItems: "center", padding: "3px 8px", border: "1px solid rgba(255,255,255,0.16)", borderRadius: "var(--r-pill)", background: "rgba(255,255,255,0.07)", fontFamily: "var(--font-body)", fontSize: "7px", fontWeight: 700, letterSpacing: "0.16em", color: "rgba(255,255,255,0.50)", textTransform: "uppercase" }}>UPDATED {prettyTime(selectedRace.last_updated)}</span>}
+                  <div style={{ paddingTop: 10, borderTop: "1px solid rgba(var(--line-rgb),0.18)", display: "flex", gap: 5, flexWrap: "wrap" }}>
+                    <span style={{ display: "inline-flex", alignItems: "center", padding: "3px 8px", border: "1px solid rgba(var(--line-rgb),0.22)", borderRadius: "var(--r-pill)", background: "rgba(var(--line-rgb),0.10)", fontFamily: "var(--font-body)", fontSize: "7px", fontWeight: 700, letterSpacing: "0.16em", color: "rgba(var(--ink-rgb),calc(0.75 * var(--mute) + var(--floor)))", textTransform: "uppercase" }}>AUTO-REFRESH / 30s</span>
+                    {selectedRace?.last_updated && <span style={{ display: "inline-flex", alignItems: "center", padding: "3px 8px", border: "1px solid rgba(var(--line-rgb),0.16)", borderRadius: "var(--r-pill)", background: "rgba(var(--line-rgb),0.07)", fontFamily: "var(--font-body)", fontSize: "7px", fontWeight: 700, letterSpacing: "0.16em", color: "rgba(var(--ink-rgb),calc(0.5 * var(--mute) + var(--floor)))", textTransform: "uppercase" }}>UPDATED {prettyTime(selectedRace.last_updated)}</span>}
                   </div>
                 </div>
               </>

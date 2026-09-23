@@ -102,7 +102,7 @@ function Row({
       className="desk-srow"
       data-active={active ? "1" : undefined}
     >
-      <span className="desk-srow-tick" aria-hidden style={{ background: col || "rgba(244,244,239,0.16)" }} />
+      <span className="desk-srow-tick" aria-hidden style={{ background: col || "rgba(var(--ink-rgb),calc(0.16 * var(--struct)))" }} />
       <span className="desk-srow-st">{doc.province || "—"}</span>
       <span className="desk-srow-main">
         <span className="desk-srow-title">{highlight(doc.contest || doc.title || "", query)}</span>

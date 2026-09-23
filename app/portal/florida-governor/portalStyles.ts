@@ -8,7 +8,7 @@
 export const PORTAL_CSS = `
 .pd{
   --k1:#B23A2E; --k2:#1E6E86; --k3:#6D4B96; --k4:#A87516; --k5:#8A929C;
-  --map-stroke:rgba(10,10,10,.14); --map-blank:#dcdcd2; --ramp-lo:rgb(237,237,231);
+  --map-stroke:rgba(var(--canvas-rgb),.14); --map-blank:#dcdcd2; --ramp-lo:rgb(237,237,231);
   --mono:var(--font-numeric,'JetBrains Mono'),ui-monospace,monospace;
   --sans:var(--font-body,'Geist'),system-ui,sans-serif;
   --r-panel:14px; --r-card:10px;
@@ -17,7 +17,7 @@ export const PORTAL_CSS = `
 }
 html[data-theme="dark"] .pd{
   --k3:#8a63ef; --k4:#e8b93c;
-  --map-stroke:rgba(255,255,255,.10); --map-blank:#2e2e36; --ramp-lo:rgb(30,30,36);
+  --map-stroke:rgba(var(--line-rgb),.10); --map-blank:#2e2e36; --ramp-lo:rgb(30,30,36);
 }
 .pd *{margin:0;padding:0;box-sizing:border-box}
 .pd h1,.pd h2{font-weight:800;letter-spacing:-.028em}
@@ -139,7 +139,7 @@ html[data-theme="dark"] .pd{
 .pd-toggles button{font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.08em;
   text-transform:uppercase;color:var(--ink3);background:none;border:none;border-radius:999px;
   padding:6px 14px;cursor:pointer}
-.pd-toggles button.on{background:var(--panel);color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.08)}
+.pd-toggles button.on{background:var(--panel);color:var(--ink);box-shadow:0 1px 2px rgba(var(--line-rgb),.08)}
 .pd-toggles button:disabled{opacity:.4;cursor:not-allowed}
 
 /* map */

@@ -26,7 +26,7 @@ const NEXT_ELECTION = {
     "The whole House, a third of the Senate and 36 governorships. TPSI race ratings " +
     "are live now; the forecast model and the election night board follow as the " +
     "calendar closes in. First polls close at 7:00 PM ET.",
-  cta: { href: "/forecastratings", label: "See the 2026 race ratings" },
+  cta: { href: "/forecast", label: "See the 2026 race ratings" },
   stats: [
     { k: "House seats", v: "435" },
     { k: "Senate seats", v: "35" },
@@ -58,7 +58,7 @@ const ARCHIVE = [
 
 const ELSEWHERE = [
   { href: "/floridaprimary", label: "Florida GOP Primary", note: "Interactive scenario engine · all 67 counties" },
-  { href: "/forecastratings", label: "2026 Race Ratings", note: "Senate & governor competitiveness" },
+  { href: "/forecast", label: "2026 Race Ratings", note: "Senate & governor competitiveness" },
   { href: "/electoralmap", label: "Electoral Map", note: "Build your own map" },
   { href: "/results/archive", label: "Results by date", note: "Browse every tracked night" },
 ];
@@ -204,7 +204,7 @@ const CSS = `
 .hero .prose{font-size:14px;color:var(--ink2);max-width:620px;margin-top:11px}
 /* .desk a sets color:inherit at (0,1,1), so this needs the .desk prefix to win. */
 .desk .hero-cta{display:inline-block;margin-top:18px;padding:10px 18px;border-radius:var(--r-pill);
-  background:var(--ink);color:var(--canvas);font-size:12px;font-weight:700;
+  background: var(--ink);color:var(--canvas);font-size:12px;font-weight:700;
   letter-spacing:.02em;transition:opacity 140ms ease}
 .desk .hero-cta:hover{opacity:.86}
 .hero-clock{flex:0 0 auto;min-width:190px;padding:15px 17px;border-radius:var(--r-panel);

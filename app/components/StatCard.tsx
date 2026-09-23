@@ -6,7 +6,7 @@ type Props = {
 
 export default function StatCard({ label, value, note }: Props) {
   return (
-    <div className="relative overflow-hidden border border-white/10 bg-[#0a0a0a] p-5 transition hover:border-amber-500/40">
+    <div className="relative overflow-hidden border border-white/10 bg-[var(--canvas)] p-5 transition hover:border-amber-500/40">
       
       {/* top accent bar */}
       <div className="absolute left-0 top-0 h-[2px] w-full bg-amber-500/80" />

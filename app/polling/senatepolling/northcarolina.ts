@@ -1,198 +1,71 @@
-// northcarolina.ts
-// 2026 North Carolina (U.S. Senate) polling — Michael Whatley (R) vs Roy Cooper (D)
-// Source rows provided by user; includes polls with “Other” and “Undecided” when available.
+// app/polling/senatepolling/northcarolina.ts
+// North Carolina — 2026 U.S. Senate: Roy Cooper (D) vs. Michael Whatley (R)
+// Generated from the TPSI forecast poll feed (run of 2026-09-22), merged with
+// the polls this file already carried. Polls of matchups that are not on the
+// ballot were dropped. Newest poll: 2026-09-17.
 
-export type Population = "LV" | "RV" | "V";
+export type SampleType = "LV" | "RV" | "A";
 
-export type PollRow = {
+export type Poll = {
+  raceId: string;
   pollster: string;
-  start: string; // YYYY-MM-DD
-  end: string; // YYYY-MM-DD
+  startDate: string; // YYYY-MM-DD
+  endDate: string;   // YYYY-MM-DD
   sampleSize: number;
-  population: Population;
-  moe?: number; // percent (±)
-  results: Record<string, number>; // candidate -> %
-  other?: number; // optional “Other”
-  undecided?: number; // optional “Undecided”
-  note?: string;
+  sampleType: SampleType;
+  moe?: number;
+  results: Record<string, number>;
+  notes?: string;
 };
 
-export type Matchup = {
-  race: "NC-SEN-2026";
-  candidates: string[]; // ordered display
-  polls: PollRow[];
+export const STATE = {
+  abbr: "NC",
+  name: "North Carolina",
 };
 
-export const NC_SEN_2026_MATCHUPS: Matchup[] = [
+export const DEFAULT_RACE_ID = "NC-SEN-2026";
+
+export const RACES = [
   {
-    race: "NC-SEN-2026",
+    raceId: "NC-SEN-2026",
+    office: "U.S. Senate",
+    year: 2026,
     candidates: ["Roy Cooper (D)", "Michael Whatley (R)"],
-    polls: [
-      {
-        pollster: "TIPP Insights (R)",
-        start: "2026-01-12",
-        end: "2026-01-15",
-        sampleSize: 1512,
-        population: "RV",
-        moe: 2.7,
-        results: { "Michael Whatley (R)": 24, "Roy Cooper (D)": 48 },
-        undecided: 27,
-        note: "Other not reported in provided row",
-      },
-      {
-        pollster: "Change Research (D)",
-        start: "2026-01-05",
-        end: "2026-01-07",
-        sampleSize: 1105,
-        population: "LV",
-        moe: 3.5,
-        results: { "Michael Whatley (R)": 42, "Roy Cooper (D)": 47 },
-        other: 1,
-        undecided: 9,
-      },
-      {
-        pollster: "Harper Polling (R)",
-        start: "2025-11-09",
-        end: "2025-11-10",
-        sampleSize: 600,
-        population: "LV",
-        moe: 4.0,
-        results: { "Michael Whatley (R)": 39, "Roy Cooper (D)": 47 },
-        other: 4,
-        undecided: 10,
-      },
-      {
-        pollster: "Harper Polling (R)",
-        start: "2025-09-14",
-        end: "2025-09-15",
-        sampleSize: 600,
-        population: "RV",
-        moe: 4.0,
-        results: { "Michael Whatley (R)": 42, "Roy Cooper (D)": 46 },
-        other: 4,
-        undecided: 8,
-      },
-      {
-        pollster: "Change Research (D)",
-        start: "2025-09-02",
-        end: "2025-09-08",
-        sampleSize: 855,
-        population: "LV",
-        moe: 3.6,
-        results: { "Michael Whatley (R)": 41, "Roy Cooper (D)": 48 },
-        undecided: 11,
-        note: "Other not reported in provided row",
-      },
-      {
-        pollster: "Harper Polling (R)",
-        start: "2025-08-11",
-        end: "2025-08-12",
-        sampleSize: 600,
-        population: "RV",
-        moe: 4.0,
-        results: { "Michael Whatley (R)": 39, "Roy Cooper (D)": 47 },
-        other: 4,
-        undecided: 10,
-      },
-      {
-        pollster: "Emerson College",
-        start: "2025-07-28",
-        end: "2025-07-30",
-        sampleSize: 1000,
-        population: "RV",
-        moe: 3.0,
-        results: { "Michael Whatley (R)": 41, "Roy Cooper (D)": 47 },
-        undecided: 12,
-        note: "Other not reported in provided row",
-      },
-      {
-        pollster: "Victory Insights (R)",
-        start: "2025-07-28",
-        end: "2025-07-30",
-        sampleSize: 600,
-        population: "LV",
-        results: { "Michael Whatley (R)": 40, "Roy Cooper (D)": 43 },
-        undecided: 16,
-        note: "MOE not reported in provided row",
-      },
-    ],
   },
-];
+] as const;
 
-// Optional convenience export
-export const NC_SEN_2026_BY_MATCHUP = {
-  cooper_vs_whatley: NC_SEN_2026_MATCHUPS[0],
-} as const;
-
-/**
- * Optional: page helper compatibility
- * If your UI expects STATE_POLLS or getStateSummary, this lets it work immediately.
- */
-export const STATE_POLLS: Record<string, any[]> = {
-  NC: NC_SEN_2026_MATCHUPS[0].polls.map((p) => ({
-    pollster: p.pollster,
-    endDate: p.end,
-    sampleSize: p.sampleSize,
-    results: p.results,
-  })),
+export const STATE_POLLS: Record<string, Poll[]> = {
+  NC: [
+    {"raceId": "NC-SEN-2026", "pollster": "Emerson College", "startDate": "2025-07-30", "endDate": "2025-07-30", "sampleSize": 1000, "sampleType": "RV", "results": {"Michael Whatley (R)": 41, "Roy Cooper (D)": 47}},
+    {"raceId": "NC-SEN-2026", "pollster": "Victory Insights (R)", "startDate": "2025-07-30", "endDate": "2025-07-30", "sampleSize": 600, "sampleType": "RV", "results": {"Michael Whatley (R)": 40, "Roy Cooper (D)": 43}},
+    {"raceId": "NC-SEN-2026", "pollster": "Harper Polling (R)", "startDate": "2025-08-12", "endDate": "2025-08-12", "sampleSize": 600, "sampleType": "RV", "results": {"Michael Whatley (R)": 39, "Roy Cooper (D)": 47}},
+    {"raceId": "NC-SEN-2026", "pollster": "Change Research (D)", "startDate": "2025-09-08", "endDate": "2025-09-08", "sampleSize": 855, "sampleType": "RV", "results": {"Michael Whatley (R)": 41, "Roy Cooper (D)": 48}},
+    {"raceId": "NC-SEN-2026", "pollster": "Harper Polling (R)", "startDate": "2025-09-15", "endDate": "2025-09-15", "sampleSize": 600, "sampleType": "RV", "results": {"Michael Whatley (R)": 42, "Roy Cooper (D)": 46}},
+    {"raceId": "NC-SEN-2026", "pollster": "Harper Polling (R)", "startDate": "2025-11-10", "endDate": "2025-11-10", "sampleSize": 600, "sampleType": "RV", "results": {"Michael Whatley (R)": 39, "Roy Cooper (D)": 47}},
+    {"raceId": "NC-SEN-2026", "pollster": "Change Research (D)", "startDate": "2026-01-07", "endDate": "2026-01-07", "sampleSize": 1105, "sampleType": "RV", "results": {"Michael Whatley (R)": 42, "Roy Cooper (D)": 47}},
+    {"raceId": "NC-SEN-2026", "pollster": "TIPP Insights (R)", "startDate": "2026-01-15", "endDate": "2026-01-15", "sampleSize": 1512, "sampleType": "RV", "results": {"Michael Whatley (R)": 24, "Roy Cooper (D)": 48}},
+    {"raceId": "NC-SEN-2026", "pollster": "Nexus Strategies/Strategic Partners Solutions", "startDate": "2026-03-08", "endDate": "2026-03-09", "sampleSize": 800, "sampleType": "RV", "results": {"Roy Cooper (D)": 50.0, "Michael Whatley (R)": 32.0, "Other": 4.0, "Undecided": 14.0}},
+    {"raceId": "NC-SEN-2026", "pollster": "Public Policy Polling (D)", "startDate": "2026-03-13", "endDate": "2026-03-14", "sampleSize": 556, "sampleType": "RV", "results": {"Roy Cooper (D)": 47.0, "Michael Whatley (R)": 44.0, "Undecided": 9.0}},
+    {"raceId": "NC-SEN-2026", "pollster": "Catawba College/YouGov", "startDate": "2026-03-09", "endDate": "2026-03-18", "sampleSize": 1000, "sampleType": "LV", "results": {"Roy Cooper (D)": 48.0, "Michael Whatley (R)": 34.0, "Other": 4.0, "Undecided": 14.0}},
+    {"raceId": "NC-SEN-2026", "pollster": "Harper Polling (R)", "startDate": "2026-03-22", "endDate": "2026-03-23", "sampleSize": 600, "sampleType": "LV", "results": {"Roy Cooper (D)": 49.0, "Michael Whatley (R)": 41.0, "Other": 4.0, "Undecided": 6.0}},
+    {"raceId": "NC-SEN-2026", "pollster": "Quantus Insights (R)", "startDate": "2026-03-31", "endDate": "2026-04-01", "sampleSize": 987, "sampleType": "LV", "results": {"Roy Cooper (D)": 49.0, "Michael Whatley (R)": 44.0, "Other": 2.0, "Undecided": 6.0}},
+    {"raceId": "NC-SEN-2026", "pollster": "High Point University/YouGov", "startDate": "2026-03-26", "endDate": "2026-04-06", "sampleSize": 703, "sampleType": "LV", "results": {"Roy Cooper (D)": 50.0, "Michael Whatley (R)": 42.0, "Other": 2.0, "Undecided": 6.0}},
+    {"raceId": "NC-SEN-2026", "pollster": "Opinion Diagnostics (R)", "startDate": "2026-04-21", "endDate": "2026-04-24", "sampleSize": 830, "sampleType": "RV", "results": {"Roy Cooper (D)": 50.0, "Michael Whatley (R)": 41.0, "Undecided": 9.0}},
+    {"raceId": "NC-SEN-2026", "pollster": "Change Research (D)", "startDate": "2026-05-04", "endDate": "2026-05-08", "sampleSize": 957, "sampleType": "LV", "results": {"Roy Cooper (D)": 49.0, "Michael Whatley (R)": 42.0, "Undecided": 9.0}},
+    {"raceId": "NC-SEN-2026", "pollster": "Harper Polling (R)", "startDate": "2026-05-10", "endDate": "2026-05-11", "sampleSize": 600, "sampleType": "LV", "results": {"Roy Cooper (D)": 50.0, "Michael Whatley (R)": 39.0, "Undecided": 11.0}},
+    {"raceId": "NC-SEN-2026", "pollster": "Catawba College/YouGov", "startDate": "2026-06-01", "endDate": "2026-06-10", "sampleSize": 905, "sampleType": "LV", "results": {"Roy Cooper (D)": 48.0, "Michael Whatley (R)": 34.0, "Undecided": 18.0}},
+    {"raceId": "NC-SEN-2026", "pollster": "New York Times/Siena University", "startDate": "2026-06-15", "endDate": "2026-06-27", "sampleSize": 601, "sampleType": "LV", "results": {"Roy Cooper (D)": 50.0, "Michael Whatley (R)": 43.0, "Undecided": 6.0}},
+    {"raceId": "NC-SEN-2026", "pollster": "Public Policy Polling (D)", "startDate": "2026-07-10", "endDate": "2026-07-11", "sampleSize": 759, "sampleType": "LV", "results": {"Roy Cooper (D)": 48.0, "Michael Whatley (R)": 44.0, "Undecided": 8.0}},
+    {"raceId": "NC-SEN-2026", "pollster": "Beacon Research (D)/Shaw & Co. Research (R)", "startDate": "2026-07-23", "endDate": "2026-07-27", "sampleSize": 1005, "sampleType": "RV", "results": {"Roy Cooper (D)": 53.0, "Michael Whatley (R)": 44.0, "Undecided": 3.0}},
+    {"raceId": "NC-SEN-2026", "pollster": "Elon University/YouGov", "startDate": "2026-07-23", "endDate": "2026-07-31", "sampleSize": 466, "sampleType": "LV", "results": {"Roy Cooper (D)": 53.0, "Michael Whatley (R)": 42.0, "Other": 3.0, "Undecided": 2.0}},
+    {"raceId": "NC-SEN-2026", "pollster": "Change Research (D)", "startDate": "2026-07-29", "endDate": "2026-08-01", "sampleSize": 967, "sampleType": "RV", "results": {"Roy Cooper (D)": 50.0, "Michael Whatley (R)": 41.0, "Undecided": 9.0}},
+    {"raceId": "NC-SEN-2026", "pollster": "Change Research (D)", "startDate": "2026-08-03", "endDate": "2026-08-06", "sampleSize": 915, "sampleType": "LV", "results": {"Roy Cooper (D)": 50.0, "Michael Whatley (R)": 43.0, "Undecided": 7.0}},
+    {"raceId": "NC-SEN-2026", "pollster": "Harper Polling (R)", "startDate": "2026-08-09", "endDate": "2026-08-10", "sampleSize": 600, "sampleType": "LV", "results": {"Roy Cooper (D)": 52.0, "Michael Whatley (R)": 39.0, "Other": 5.0, "Undecided": 5.0}},
+    {"raceId": "NC-SEN-2026", "pollster": "High Point University/YouGov", "startDate": "2026-08-03", "endDate": "2026-08-12", "sampleSize": 660, "sampleType": "LV", "results": {"Roy Cooper (D)": 50.0, "Michael Whatley (R)": 45.0, "Other": 3.0, "Undecided": 3.0}},
+    {"raceId": "NC-SEN-2026", "pollster": "Elon University/YouGov", "startDate": "2026-08-21", "endDate": "2026-08-31", "sampleSize": 565, "sampleType": "LV", "results": {"Roy Cooper (D)": 49.0, "Michael Whatley (R)": 38.0, "Other": 4.0, "Undecided": 8.0}},
+    {"raceId": "NC-SEN-2026", "pollster": "East Carolina University", "startDate": "2026-08-31", "endDate": "2026-09-03", "sampleSize": 675, "sampleType": "LV", "results": {"Roy Cooper (D)": 49.0, "Michael Whatley (R)": 41.5, "Other": 4.0, "Undecided": 7.0}},
+    {"raceId": "NC-SEN-2026", "pollster": "The Trafalgar Group (R)", "startDate": "2026-09-08", "endDate": "2026-09-10", "sampleSize": 1084, "sampleType": "LV", "results": {"Roy Cooper (D)": 48.0, "Michael Whatley (R)": 42.0, "Other": 3.0, "Undecided": 7.0}},
+    {"raceId": "NC-SEN-2026", "pollster": "Harper Polling (R)", "startDate": "2026-09-13", "endDate": "2026-09-15", "sampleSize": 608, "sampleType": "LV", "results": {"Roy Cooper (D)": 49.0, "Michael Whatley (R)": 34.0, "Other": 5.0, "Undecided": 12.0}},
+    {"raceId": "NC-SEN-2026", "pollster": "InsiderAdvantage (R)", "startDate": "2026-09-16", "endDate": "2026-09-17", "sampleSize": 1200, "sampleType": "LV", "results": {"Roy Cooper (D)": 48.0, "Michael Whatley (R)": 43.0, "Other": 3.0, "Undecided": 6.0}}
+  ],
 };
-
-// If you want the page to use an official summary from this module:
-export function getStateSummary(abbr: string) {
-  if (abbr !== "NC") return null;
-
-  const polls = STATE_POLLS.NC;
-  if (!polls?.length) return null;
-
-  // quick leader computation (same idea as in your page)
-  const now = new Date();
-  const weights = polls.map((p) => {
-    const n = Number(p.sampleSize ?? 1000);
-    const iso = p.endDate ? new Date(p.endDate + "T00:00:00") : null;
-    const daysOld =
-      iso && !Number.isNaN(iso.getTime())
-        ? Math.max(0, Math.floor((now.getTime() - iso.getTime()) / (1000 * 60 * 60 * 24)))
-        : 30;
-    const recency = 1 / (1 + daysOld / 14);
-    return Math.max(1, n) * recency;
-  });
-
-  const wSum = weights.reduce((a, b) => a + b, 0) || 1;
-  const totals: Record<string, number> = {};
-
-  polls.forEach((p, i) => {
-    const w = weights[i] / wSum;
-    Object.entries(p.results || {}).forEach(([name, pct]) => {
-      const v = Number(pct);
-      if (!Number.isFinite(v)) return;
-      totals[name] = (totals[name] ?? 0) + v * w;
-    });
-  });
-
-  const ranked = Object.entries(totals)
-    .map(([name, pct]) => ({ name, pct: Math.round(pct * 10) / 10 }))
-    .sort((a, b) => b.pct - a.pct);
-
-  const leader = ranked[0];
-  const runner = ranked[1];
-
-  const lastDate =
-    polls
-      .map((p) => p.endDate)
-      .filter(Boolean)
-      .sort()
-      .slice(-1)[0] ?? "—";
-
-  const leaderPct = leader?.pct ?? 0;
-  const runnerPct = runner?.pct ?? 0;
-
-  return {
-    leaderName: leader?.name ?? "—",
-    leaderPct,
-    runnerUpName: runner?.name,
-    runnerUpPct: runner?.pct,
-    margin: Math.round((leaderPct - runnerPct) * 10) / 10,
-    lastDate,
-    pollsUsed: polls.length,
-  };
-}

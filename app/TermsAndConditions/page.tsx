@@ -133,7 +133,7 @@ export default function TermsPage() {
           position: absolute;
           top: -60px; right: -60px;
           width: 260px; height: 260px;
-          background: radial-gradient(circle, rgba(255,255,255,0.03) 0%, transparent 70%);
+          background: radial-gradient(circle, rgba(var(--line-rgb),0.03) 0%, transparent 70%);
           pointer-events: none;
         }
 

@@ -323,7 +323,7 @@ function Tooltip({ d }: { d: TT }) {
       pointerEvents: "none",
       minWidth: 230,
       maxWidth: 260,
-      boxShadow: `0 0 0 1px ${c}22, 0 12px 40px rgba(0,0,0,0.25)`,
+      boxShadow: `0 0 0 1px ${c}22, 0 12px 40px rgba(var(--line-rgb),0.25)`,
       borderRadius: "var(--r-md)",
     }}>
       {/* State name + race type */}
@@ -460,7 +460,7 @@ function RaceMap({ svgId, races, raceType }: { svgId: string; races: MapRace[]; 
     <>
       <div style={{ background: "var(--panel)", border: "1px solid var(--border)", overflow: "hidden", marginBottom: 20, borderRadius: "var(--r-lg)", boxShadow: "var(--shadow-sm)" }}>
         <div className="hp-tri-stripe" />
-        <div style={{ padding: "14px 20px 12px", borderBottom: "1px solid rgba(15,16,32,0.08)", display: "flex", alignItems: "flex-start", justifyContent: "space-between", flexWrap: "wrap", gap: 10 }}>
+        <div style={{ padding: "14px 20px 12px", borderBottom: "1px solid rgba(var(--ink-rgb),calc(0.08 * var(--struct)))", display: "flex", alignItems: "flex-start", justifyContent: "space-between", flexWrap: "wrap", gap: 10 }}>
           <div>
             <div style={{ fontFamily: "var(--font-body),monospace", fontSize: 11, fontWeight: 600, letterSpacing: "0.08em", textTransform: "uppercase", color: "var(--foreground)", marginBottom: 3 }}>
               {raceType} Race Map · November 2026
@@ -522,7 +522,7 @@ export default function ForecastRatingsPage() {
     borderBottom: "1px solid var(--border)", background: "var(--panel2)", whiteSpace: "nowrap",
   };
   const TD: React.CSSProperties = {
-    padding: "9px 14px", borderBottom: "1px solid rgba(15,16,32,0.05)",
+    padding: "9px 14px", borderBottom: "1px solid rgba(var(--ink-rgb),calc(0.05 * var(--struct)))",
     fontFamily: "var(--font-body),monospace", fontSize: 12, color: "var(--foreground)",
   };
 

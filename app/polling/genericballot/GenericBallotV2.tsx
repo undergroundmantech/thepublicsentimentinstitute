@@ -2,7 +2,6 @@
 
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import AggregatePollChart from "@/app/components/AggregatePollChart";
-import DarkNav from "@/app/components/DarkNav";
 import MultiCandidateChart from "@/app/components/MultiCandidateChart";
 import {
   AGGREGATES, MULTI_AGGREGATES, buildAggregate, buildMulti,
@@ -37,6 +36,7 @@ const GROUP_OF = (cat: string) =>
   cat === "2024 President" ? "2024 President"
   : cat === "2025 Governor" ? "2025 Races"
   : cat === "2026 Senate" ? "2026 Senate"
+  : cat === "2026 Governor" ? "2026 Governor"
   : "National";
 
 type Item = { id: string; label: string; group: string; kind: "h2h" | "multi" };
@@ -257,7 +257,6 @@ export default function PollingAveragesPage() {
     <>
       <style>{CSS}</style>
       <div className="pa">
-        <DarkNav />
 
         {/* ── view toggle: one race / the full board ── */}
         <div className="pa-viewbar" role="tablist" aria-label="Page view">
@@ -276,7 +275,7 @@ export default function PollingAveragesPage() {
           </div>
           <div className="pa-tiles">
             {tiles.map((it) => {
-              let color = "rgba(255,255,255,0.4)", valueText = "·", spark: number[] = [];
+              let color = "rgba(var(--line-rgb),0.4)", valueText = "·", spark: number[] = [];
               if (it.kind === "h2h") {
                 const b = allBuilt[it.id]; const d = H2H_BY_ID[it.id];
                 if (b?.latest) { color = b.latest.net >= 0 ? d.seriesA.color : d.seriesB.color; valueText = d.fmtMargin(b.latest.net); spark = b.daily.map((x) => x.net); }
@@ -464,7 +463,7 @@ export default function PollingAveragesPage() {
                     {rowsH2H.map((p, i) => {
                       const entry = getPollsterEntry(p.pollster);
                       const pct = Math.min(50, (Math.abs(p.margin) / maxAbsMargin) * 50);
-                      const mColor = p.margin > 0 ? h2hDef.seriesA.color : p.margin < 0 ? h2hDef.seriesB.color : "rgba(255,255,255,0.5)";
+                      const mColor = p.margin > 0 ? h2hDef.seriesA.color : p.margin < 0 ? h2hDef.seriesB.color : "rgba(var(--ink-rgb),calc(0.5 * var(--mute) + var(--floor)))";
                       return (
                         <tr key={`${p.pollster}-${p.date}-${i}`}>
                           <td><span className="pa-pollster">{p.pollster}</span><span className={`pa-grade ${gradeIsHigh(entry.grade) ? "hi" : ""}`}>{entry.grade}</span></td>
@@ -517,7 +516,7 @@ export default function PollingAveragesPage() {
                   const built = bH ?? bM;
                   const lastDate = built?.daily.length ? built.daily[built.daily.length - 1].date : null;
 
-                  let color = "rgba(255,255,255,0.4)";
+                  let color = "rgba(var(--line-rgb),0.4)";
                   let readout: React.ReactNode = <span className="pb-skel" aria-hidden />;
                   if (bH?.latest && dH) {
                     color = bH.latest.net >= 0 ? dH.seriesA.color : dH.seriesB.color;
@@ -573,7 +572,7 @@ export default function PollingAveragesPage() {
                                 <tbody>
                                   {(shown as typeof bH.polls).map((p, i) => {
                                     const entry = getPollsterEntry(p.pollster);
-                                    const mColor = p.margin > 0 ? dH.seriesA.color : p.margin < 0 ? dH.seriesB.color : "rgba(255,255,255,0.5)";
+                                    const mColor = p.margin > 0 ? dH.seriesA.color : p.margin < 0 ? dH.seriesB.color : "rgba(var(--ink-rgb),calc(0.5 * var(--mute) + var(--floor)))";
                                     return (
                                       <tr key={`${p.pollster}-${p.date}-${i}`}>
                                         <td><span className="pa-pollster">{p.pollster}</span><span className={`pa-grade ${gradeIsHigh(entry.grade) ? "hi" : ""}`}>{entry.grade}</span></td>
@@ -632,7 +631,6 @@ export default function PollingAveragesPage() {
 
 const CSS = `
   html, body { background: var(--background) !important; }
-  body header, body footer { display: none !important; }
 
   .pa {
     --lime: #6d3ee9;
@@ -646,17 +644,17 @@ const CSS = `
   /* ── top selector ── */
   .pa-select { border-bottom: 1px solid var(--line); padding-bottom: 18px; margin-bottom: 30px; }
   .pa-cats { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 16px; }
-  .pa-cat { appearance: none; cursor: pointer; background: rgba(255,255,255,0.04); border: 1px solid var(--line); border-radius: 999px; padding: 8px 15px; line-height: 1; font-family: var(--font-body), monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted2); transition: color 160ms ease, background 160ms ease, border-color 160ms ease; }
-  .pa-cat:hover { color: var(--ink); border-color: rgba(255,255,255,0.22); }
-  .pa-cat.is-active { color: #050505; background: #f4f4ef; border-color: transparent; }
+  .pa-cat { appearance: none; cursor: pointer; background: rgba(var(--line-rgb),0.04); border: 1px solid var(--line); border-radius: 999px; padding: 8px 15px; line-height: 1; font-family: var(--font-body), monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted2); transition: color 160ms ease, background 160ms ease, border-color 160ms ease; }
+  .pa-cat:hover { color: var(--ink); border-color: rgba(var(--ink-rgb),calc(0.22 * var(--struct))); }
+  .pa-cat.is-active { color: var(--canvas); background: var(--canvas); border-color: transparent; }
 
   /* one cohesive "aggregate index" strip — cells flex to fill width, hairline-divided */
-  .pa-tiles { display: flex; flex-wrap: nowrap; gap: 0; overflow-x: auto; overflow-y: hidden; border: 1px solid var(--line); border-radius: 12px; background: rgba(255,255,255,0.012); scrollbar-width: thin; }
+  .pa-tiles { display: flex; flex-wrap: nowrap; gap: 0; overflow-x: auto; overflow-y: hidden; border: 1px solid var(--line); border-radius: 12px; background: rgba(var(--line-rgb),0.012); scrollbar-width: thin; }
   .pa-tile { position: relative; flex: 1 1 0; min-width: 156px; text-align: left; cursor: pointer; appearance: none; background: transparent; border: 0; padding: 13px 16px 12px; overflow: hidden; transition: background 150ms ease; }
   .pa-tile::after { content: ""; position: absolute; right: 0; top: 24%; bottom: 24%; width: 1px; background: var(--line); }
   .pa-tile:last-child::after { display: none; }
-  .pa-tile:hover { background: rgba(255,255,255,0.035); }
-  .pa-tile.is-active { background: rgba(255,255,255,0.05); }
+  .pa-tile:hover { background: rgba(var(--line-rgb),0.035); }
+  .pa-tile.is-active { background: rgba(var(--line-rgb),0.05); }
   .pa-tile.is-active::after, .pa-tile.is-active + .pa-tile::after { display: none; }
   .pa-tile-bar { position: absolute; left: 0; right: 0; top: 0; height: 1.5px; opacity: 0; transition: opacity 150ms ease; }
   .pa-tile.is-active .pa-tile-bar { opacity: 0.85; }
@@ -664,12 +662,12 @@ const CSS = `
   .pa-tile-name { font-family: var(--font-body), monospace; font-size: 12px; font-weight: 500; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .pa-tile:hover .pa-tile-name { color: var(--ink); }
   .pa-tile.is-active .pa-tile-name { color: var(--ink); }
-  .pa-tile-val { font-family: var(--font-body), monospace; font-size: 12px; font-weight: 600; font-variant-numeric: tabular-nums; flex-shrink: 0; opacity: 0.85; }
+  .pa-tile-val { font-family: var(--font-body), monospace; font-size: 12px; font-weight: 600; font-variant-numeric: tabular-nums; flex-shrink: 0; }
   .pa-tile.is-active .pa-tile-val { opacity: 1; }
   .pa-tile-spark { height: 26px; opacity: 0.4; transition: opacity 150ms ease; }
   .pa-tile:hover .pa-tile-spark { opacity: 0.7; }
   .pa-tile.is-active .pa-tile-spark { opacity: 1; }
-  .pa-tile-skel { height: 28px; border-radius: 4px; background: linear-gradient(90deg, rgba(255,255,255,0.03), rgba(255,255,255,0.06), rgba(255,255,255,0.03)); }
+  .pa-tile-skel { height: 28px; border-radius: 4px; background: linear-gradient(90deg, rgba(var(--line-rgb),0.03), rgba(var(--line-rgb),0.06), rgba(var(--line-rgb),0.03)); }
 
   /* ── header ── */
   .pa-head { padding: 0; animation: pa-in 480ms cubic-bezier(0.16,1,0.3,1) both; }
@@ -683,15 +681,15 @@ const CSS = `
   /* ── sample-type filter ── */
   .pa-filter { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-top: 26px; }
   .pa-filter-label { font-family: var(--font-body), monospace; font-size: 10px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted2); }
-  .pa-seg { display: inline-flex; align-items: stretch; border: 1px solid var(--line); border-radius: 9px; overflow: hidden; background: rgba(255,255,255,0.012); }
+  .pa-seg { display: inline-flex; align-items: stretch; border: 1px solid var(--line); border-radius: 9px; overflow: hidden; background: rgba(var(--line-rgb),0.012); }
   .pa-seg-btn { appearance: none; cursor: pointer; background: transparent; border: 0; border-right: 1px solid var(--line); padding: 7px 13px; line-height: 1; font-family: var(--font-body), monospace; font-size: 11.5px; font-weight: 600; letter-spacing: 0.04em; color: var(--muted); display: inline-flex; align-items: center; gap: 7px; transition: color 140ms ease, background 140ms ease; }
   .pa-seg-btn:last-child { border-right: 0; }
-  .pa-seg-btn:hover:not(:disabled):not(.is-active) { color: var(--ink); background: rgba(255,255,255,0.04); }
-  .pa-seg-btn.is-active { background: #f4f4ef; color: #050505; }
+  .pa-seg-btn:hover:not(:disabled):not(.is-active) { color: var(--ink); background: rgba(var(--line-rgb),0.04); }
+  .pa-seg-btn.is-active { background: var(--ink); color: var(--canvas); }
   .pa-seg-btn:disabled { color: var(--faint); cursor: not-allowed; opacity: 0.5; }
   .pa-seg-n { font-size: 10px; font-weight: 600; font-variant-numeric: tabular-nums; color: var(--faint); }
   .pa-seg-btn:hover:not(:disabled):not(.is-active) .pa-seg-n { color: var(--muted); }
-  .pa-seg-btn.is-active .pa-seg-n { color: rgba(5,5,5,0.55); }
+  .pa-seg-btn.is-active .pa-seg-n { color: rgba(var(--canvas-rgb),0.7); }
   .pa-filter-note { font-family: var(--font-body), monospace; font-size: 10.5px; font-weight: 600; letter-spacing: 0.04em; color: var(--muted2); }
   .pa-chart-empty { padding: 64px 16px; text-align: center; color: var(--faint); font-family: var(--font-body), monospace; font-size: 13px; }
 
@@ -712,10 +710,10 @@ const CSS = `
   .pa-meter-eye { font-family: var(--font-body), monospace; font-size: 8px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--faint); }
   .pa-meter-caret { width: 0; height: 0; border-left: 5px solid transparent; border-right: 5px solid transparent; border-top: 6px solid; margin-top: 4px; }
   .pa-meter-beam { position: relative; height: 16px; }
-  .pa-meter-track { position: absolute; top: 50%; left: 0; right: 0; height: 3px; transform: translateY(-50%); background: rgba(255,255,255,0.08); border-radius: 2px; }
+  .pa-meter-track { position: absolute; top: 50%; left: 0; right: 0; height: 3px; transform: translateY(-50%); background: rgba(var(--line-rgb),0.08); border-radius: 2px; }
   .pa-meter-fill { position: absolute; top: 50%; height: 3px; transform: translateY(-50%); border-radius: 2px; transition: width 360ms cubic-bezier(0.16,1,0.3,1); }
-  .pa-meter-tick { position: absolute; top: 50%; width: 1px; height: 7px; transform: translate(-50%, -50%); background: rgba(255,255,255,0.16); }
-  .pa-meter-tie { position: absolute; left: 50%; top: 50%; width: 2px; height: 16px; transform: translate(-50%, -50%); background: rgba(255,255,255,0.32); border-radius: 1px; }
+  .pa-meter-tick { position: absolute; top: 50%; width: 1px; height: 7px; transform: translate(-50%, -50%); background: rgba(var(--line-rgb),0.16); }
+  .pa-meter-tie { position: absolute; left: 50%; top: 50%; width: 2px; height: 16px; transform: translate(-50%, -50%); background: rgba(var(--line-rgb),0.32); border-radius: 1px; }
   .pa-meter-knob { position: absolute; top: 50%; width: 13px; height: 13px; border-radius: 50%; transform: translate(-50%, -50%); box-shadow: 0 0 0 3.5px #000, 0 0 14px -2px currentColor; transition: left 360ms cubic-bezier(0.16,1,0.3,1); }
   .pa-meter-foot { display: flex; align-items: center; justify-content: space-between; margin-top: 11px; font-family: var(--font-body), monospace; font-size: 9px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; }
   .pa-meter-end { color: var(--faint); max-width: 16ch; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -726,7 +724,7 @@ const CSS = `
   .pa-rank-row { display: grid; grid-template-columns: 12px minmax(94px, 150px) 1fr auto; align-items: center; gap: 14px; }
   .pa-rank-dot { width: 9px; height: 9px; border-radius: 50%; }
   .pa-rank-name { font-family: var(--font-body), monospace; font-size: 13px; font-weight: 600; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .pa-rank-bar { position: relative; height: 8px; border-radius: 4px; background: rgba(255,255,255,0.05); overflow: hidden; }
+  .pa-rank-bar { position: relative; height: 8px; border-radius: 4px; background: rgba(var(--line-rgb),0.05); overflow: hidden; }
   .pa-rank-fill { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 4px; transition: width 380ms cubic-bezier(0.16,1,0.3,1); }
   .pa-rank-val { font-family: var(--font-body), monospace; font-size: 20px; font-weight: 600; font-variant-numeric: tabular-nums; letter-spacing: -0.02em; }
   .pa-rank-val small { font-size: 0.5em; color: var(--faint); margin-left: 1px; }
@@ -745,9 +743,9 @@ const CSS = `
   .pa-polls-actions { display: flex; align-items: center; gap: 8px; }
   .pa-search { appearance: none; background: var(--panel); border: 1px solid var(--line); border-radius: 9px; color: var(--ink); font-family: var(--font-body), monospace; font-size: 12.5px; padding: 9px 13px; width: 200px; max-width: 44vw; transition: border-color 160ms ease, background 160ms ease; }
   .pa-search::placeholder { color: var(--faint); }
-  .pa-search:focus { outline: none; border-color: rgba(255,255,255,0.22); background: rgba(255,255,255,0.03); }
+  .pa-search:focus { outline: none; border-color: rgba(var(--ink-rgb),calc(0.22 * var(--struct))); background: rgba(var(--line-rgb),0.03); }
   .pa-csv { display: inline-flex; align-items: center; gap: 7px; cursor: pointer; appearance: none; background: var(--panel); border: 1px solid var(--line); border-radius: 9px; color: var(--muted); font-family: var(--font-body), monospace; font-size: 12px; font-weight: 600; letter-spacing: 0.04em; padding: 9px 13px; transition: color 150ms ease, border-color 150ms ease, background 150ms ease; }
-  .pa-csv:hover { color: var(--ink); border-color: rgba(255,255,255,0.22); background: rgba(255,255,255,0.04); }
+  .pa-csv:hover { color: var(--ink); border-color: rgba(var(--ink-rgb),calc(0.22 * var(--struct))); background: rgba(var(--line-rgb),0.04); }
 
   .pa-table { width: 100%; border-collapse: collapse; }
   .pa-table thead th { position: sticky; top: 0; z-index: 1; text-align: left; background: var(--background); font-family: var(--font-body), monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.13em; text-transform: uppercase; color: var(--faint); padding: 0 16px 12px; border-bottom: 1px solid var(--line); white-space: nowrap; }
@@ -760,14 +758,14 @@ const CSS = `
   .pa-table tbody td { font-family: var(--font-body), monospace; font-size: 13px; padding: 12px 16px; border-bottom: 1px solid var(--line2); color: var(--muted); vertical-align: middle; font-variant-numeric: tabular-nums; white-space: nowrap; }
   .pa-table tbody td.r { text-align: right; }
   .pa-table tbody tr { transition: background 120ms ease; }
-  .pa-table tbody tr:hover td { background: rgba(255,255,255,0.022); }
+  .pa-table tbody tr:hover td { background: rgba(var(--line-rgb),0.022); }
   .pa-pollster { color: var(--ink); font-weight: 500; }
   .pa-grade { display: inline-block; margin-left: 9px; padding: 1.5px 6px; border: 1px solid var(--line); border-radius: 5px; font-size: 9.5px; font-weight: 600; letter-spacing: 0.05em; color: var(--muted2); }
-  .pa-grade.hi { border-color: rgba(109,62,233,0.4); color: var(--lime); }
+  .pa-grade.hi { border-color: rgba(109,62,233,0.4); color: var(--purple2); }
   .pa-type { color: var(--faint); margin-left: 6px; }
   .pa-mcell { display: flex; align-items: center; gap: 14px; }
-  .pa-mbar { position: relative; width: 72px; height: 6px; border-radius: 3px; background: rgba(255,255,255,0.05); flex-shrink: 0; }
-  .pa-mbar::before { content: ""; position: absolute; left: 50%; top: -2px; bottom: -2px; width: 1px; background: rgba(255,255,255,0.16); }
+  .pa-mbar { position: relative; width: 72px; height: 6px; border-radius: 3px; background: rgba(var(--line-rgb),0.05); flex-shrink: 0; }
+  .pa-mbar::before { content: ""; position: absolute; left: 50%; top: -2px; bottom: -2px; width: 1px; background: rgba(var(--line-rgb),0.16); }
   .pa-mbar-fill { position: absolute; top: 0; bottom: 0; border-radius: 3px; }
   .pa-mnum { font-weight: 600; min-width: 56px; }
   .pa-table-wrap { overflow-x: auto; }
@@ -794,9 +792,9 @@ const CSS = `
   .pb-read i { font-style: normal; color: var(--muted3); }
   .pb-read b { font-size: 15px; font-weight: 700; margin-left: 4px; }
   .pb-count { font-size: 10px; font-weight: 650; letter-spacing: 0.1em; text-transform: uppercase; color: var(--faint); white-space: nowrap; }
-  .pb-skel { display: inline-block; width: 72px; height: 11px; border-radius: 3px; background: rgba(255,255,255,0.06); }
+  .pb-skel { display: inline-block; width: 72px; height: 11px; border-radius: 3px; background: rgba(var(--line-rgb),0.06); }
   .pb-chartslot { min-width: 0; }
-  .pb-chart-skel { border-radius: 10px; background: linear-gradient(100deg, rgba(255,255,255,0.025) 30%, rgba(255,255,255,0.055) 50%, rgba(255,255,255,0.025) 70%); background-size: 220% 100%; animation: pb-shimmer 1.6s linear infinite; }
+  .pb-chart-skel { border-radius: 10px; background: linear-gradient(100deg, rgba(var(--line-rgb),0.025) 30%, rgba(var(--line-rgb),0.055) 50%, rgba(var(--line-rgb),0.025) 70%); background-size: 220% 100%; animation: pb-shimmer 1.6s linear infinite; }
   @keyframes pb-shimmer { from { background-position: 130% 0; } to { background-position: -90% 0; } }
   .pb-body { padding-top: 14px; }
   .pb-table { font-size: 13px; }

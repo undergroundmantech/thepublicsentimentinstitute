@@ -335,10 +335,67 @@ export function sampleSizeWeight(n: number): number {
 // LV=3× (likely voters, most predictive), RV=1× (baseline), A=0.1× (near-discard)
 // Adults polls are essentially useless for election forecasting.
 // =============================================================================
-export function sampleTypeWeight(type: SampleType): number {
+export function sampleTypeWeight(type: SampleType, opts?: ModelOptions): number {
+  const t = opts?.sampleTypeWeights;
+  if (t) return t[type];
   if (type === "LV") return 3;
   if (type === "RV") return 1;
   return 0.1; // Adults — near-discard
+}
+
+// =============================================================================
+// MODEL PROFILES
+//
+// The weights above were built for horse races, where a likely-voter screen is
+// the whole point and anyone still undecided is genuinely missing information.
+// A job-approval or direction-of-country tracker is not a horse race:
+//
+//   • Adults are the standard population for approval. Gallup, Pew, AP-NORC and
+//     Reuters/Ipsos all poll adults, and at 0.1x they were carrying 0.2% of the
+//     Trump approval average between them. The tracker ladder keeps a mild
+//     likely-voter preference instead of a 30-to-1 one.
+//   • "Undecided" on approval is a respondent saying no opinion, not a voter who
+//     has not made up their mind. At K = 3.0 a poll reporting 4% no opinion lost
+//     60% of its weight, which punished the pollsters who report it honestly.
+//
+// Both profiles cap how much of one day's average a single poll may carry. That
+// is what stops one survey from becoming the average: before the cap, a single
+// Quantus poll from Aug 28 carried 64% of the Trump approval number.
+// =============================================================================
+export type ModelOptions = {
+  sampleTypeWeights?: Record<SampleType, number>;
+  undecidedPenaltyK?: number;
+  maxPollShare?: number;          // 0 to 1; 0 or undefined disables the cap
+};
+
+export const ELECTION_PROFILE: ModelOptions = {
+  maxPollShare: 0.15,
+};
+
+export const TRACKER_PROFILE: ModelOptions = {
+  sampleTypeWeights: { LV: 1.15, RV: 1.0, A: 0.9 },
+  undecidedPenaltyK: 0.6,
+  maxPollShare: 0.15,
+};
+
+// A cap only means something when enough polls are in play to absorb the excess.
+// With a 15% cap that is seven polls; below that the cap would simply flatten
+// every poll to the same weight and throw away recency, so it is skipped.
+function capPollShares(weights: number[], maxShare?: number): number[] {
+  if (!maxShare || maxShare <= 0 || maxShare >= 1) return weights;
+  if (weights.length < Math.ceil(1 / maxShare)) return weights;
+  const w = [...weights];
+  for (let pass = 0; pass < 24; pass++) {
+    const total = w.reduce((a, b) => a + b, 0);
+    if (total <= 0) return w;
+    const cap = total * maxShare;
+    let changed = false;
+    for (let i = 0; i < w.length; i++) {
+      if (w[i] > cap * (1 + 1e-9)) { w[i] = cap; changed = true; }
+    }
+    if (!changed) break;
+  }
+  return w;
 }
 
 // =============================================================================
@@ -379,32 +436,37 @@ function pollsterRepetitionFactor(
 // =============================================================================
 const UNDECIDED_PENALTY_K = 3.0;
 
-export function undecidedPenalty(results: Record<string, number>): number {
-  const candidateSum = Object.entries(results)
-    .filter(([k]) => k !== "Undecided" && k !== "Other")
-    .reduce((sum, [, v]) => sum + v, 0);
+export function undecidedPenalty(results: Record<string, number>, opts?: ModelOptions): number {
+  const named = Object.entries(results).filter(([k]) => k !== "Undecided" && k !== "Other");
+  // A poll that published only one side of a tracker has no measurable
+  // uncommitted share; the gap is missing publication, not missing opinion, and
+  // penalising it would be measuring our own sourcing rather than the poll.
+  if (named.length < 2) return 1.0;
 
+  const candidateSum = named.reduce((sum, [, v]) => sum + v, 0);
   const explicit = (results["Undecided"] ?? 0) + (results["Other"] ?? 0);
   const uncommittedShare = Math.max(explicit, 100 - candidateSum) / 100;
 
-  return clamp(1 - UNDECIDED_PENALTY_K * Math.sqrt(Math.max(0, uncommittedShare)), 0.10, 1.00);
+  const k = opts?.undecidedPenaltyK ?? UNDECIDED_PENALTY_K;
+  return clamp(1 - k * Math.sqrt(Math.max(0, uncommittedShare)), 0.10, 1.00);
 }
 
 export function pollWeight(
   p: Poll,
   asOfDateISO: string,
   pollsterOccurrenceIndex = 1,
-  daysSinceNewestFromSameFirm = 0
+  daysSinceNewestFromSameFirm = 0,
+  opts?: ModelOptions
 ): number {
   const dAgo = clamp(daysBetween(p.endDate, asOfDateISO), 0, 3650);
   const effectiveN = Math.max(0, p.sampleSize);
   return (
     sampleSizeWeight(effectiveN) *              // ← sigmoid S-curve (replaces √n)
     recencyWeight(dAgo) *
-    sampleTypeWeight(p.sampleType) *
+    sampleTypeWeight(p.sampleType, opts) *
     pollsterRepetitionFactor(pollsterOccurrenceIndex, daysSinceNewestFromSameFirm) *
     getPollsterWeight(p.pollster) *
-    undecidedPenalty(p.results)
+    undecidedPenalty(p.results, opts)
   );
 }
 
@@ -453,7 +515,8 @@ export function buildDailyWeightedSeries(
   polls: Poll[],
   candidates: string[],
   startISO: string,
-  endISO: string
+  endISO: string,
+  opts: ModelOptions = ELECTION_PROFILE
 ): DailyRow[] {
   const start = parseISODate(startISO);
   const end   = parseISODate(endISO);
@@ -486,17 +549,18 @@ export function buildDailyWeightedSeries(
 
         entries.push({
           value: v,
-          weight: pollWeight(p, dayISO, occ, daysSinceNewest),
+          weight: pollWeight(p, dayISO, occ, daysSinceNewest, opts),
         });
       }
 
       const clipped = clipOutliers(entries.map((e) => e.value));
+      const weights = capPollShares(entries.map((e) => e.weight), opts.maxPollShare);
 
       let num = 0;
       let den = 0;
       for (let i = 0; i < entries.length; i++) {
-        num += clipped[i] * entries[i].weight;
-        den += entries[i].weight;
+        num += clipped[i] * weights[i];
+        den += weights[i];
       }
 
       row[c] = den > 0 ? round1(num / den) : 0;

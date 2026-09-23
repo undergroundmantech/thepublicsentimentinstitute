@@ -1,16 +1,16 @@
 // app/polling/senatepolling/southcarolina.ts
-// South Carolina (SC) — 2026 Senate
-// Matchups: Lindsey Graham (R) vs Annie Andrews (D); Lindsey Graham (R) vs Generic Democrat
-// Source snippet provided by user (PPP Nov 21–22, 2025)
+// South Carolina — 2026 U.S. Senate: Annie Andrews (D) vs. Darline Graham (R)
+// Generated from the TPSI forecast poll feed (run of 2026-09-22), merged with
+// the polls this file already carried. Polls of matchups that are not on the
+// ballot were dropped. Newest poll: 2026-09-09.
 
 export type SampleType = "LV" | "RV" | "A";
 
 export type Poll = {
-  raceId: string; // e.g. "SC-SEN-2026-GRAHAM-v-ANDREWS"
+  raceId: string;
   pollster: string;
-  sponsor?: string;
   startDate: string; // YYYY-MM-DD
-  endDate: string; // YYYY-MM-DD
+  endDate: string;   // YYYY-MM-DD
   sampleSize: number;
   sampleType: SampleType;
   moe?: number;
@@ -23,51 +23,21 @@ export const STATE = {
   name: "South Carolina",
 };
 
-export const DEFAULT_RACE_ID = "SC-SEN-2026-GRAHAM-v-ANDREWS";
+export const DEFAULT_RACE_ID = "SC-SEN-2026";
 
 export const RACES = [
   {
-    raceId: "SC-SEN-2026-GRAHAM-v-ANDREWS",
+    raceId: "SC-SEN-2026",
     office: "U.S. Senate",
     year: 2026,
-    candidates: ["Lindsey Graham (R)", "Annie Andrews (D)"],
-  },
-  {
-    raceId: "SC-SEN-2026-GRAHAM-v-GENERIC-D",
-    office: "U.S. Senate",
-    year: 2026,
-    candidates: ["Lindsey Graham (R)", "Generic Democrat (D)"],
+    candidates: ["Annie Andrews (D)", "Darline Graham (R)"],
   },
 ] as const;
 
-/**
- * Notes:
- * - PPP sample type shown as "V" (voters). We store as RV for your weighting model.
- * - "Other" not listed for SC tables; we only store Undecided.
- * - Keep (R)/(D) labels for map coloring.
- */
 export const STATE_POLLS: Record<string, Poll[]> = {
   SC: [
-    // Lindsey Graham vs Annie Andrews
-    {
-      raceId: "SC-SEN-2026-GRAHAM-v-ANDREWS",
-      pollster: "Public Policy Polling",
-      sponsor: "(D)",
-      startDate: "2025-11-21",
-      endDate: "2025-11-22",
-      sampleSize: 704,
-      sampleType: "RV",
-      moe: 3.7,
-      results: {
-        "Lindsey Graham (R)": 42,
-        "Annie Andrews (D)": 36,
-        Undecided: 22,
-      },
-      notes: 'Sample type listed as "V" in source; stored as RV.',
-    },
+    {"raceId": "SC-SEN-2026", "pollster": "Impact Research (D)", "startDate": "2026-08-14", "endDate": "2026-08-22", "sampleSize": 900, "sampleType": "LV", "results": {"Annie Andrews (D)": 42.0, "Darline Graham (R)": 39.0, "Other": 6.0, "Undecided": 13.0}},
+    {"raceId": "SC-SEN-2026", "pollster": "Impact Research (D)", "startDate": "2026-08-18", "endDate": "2026-08-24", "sampleSize": 700, "sampleType": "LV", "results": {"Annie Andrews (D)": 41.0, "Darline Graham (R)": 41.0, "Other": 5.0, "Undecided": 13.0}},
+    {"raceId": "SC-SEN-2026", "pollster": "InsiderAdvantage (R)", "startDate": "2026-09-08", "endDate": "2026-09-09", "sampleSize": 1200, "sampleType": "LV", "results": {"Annie Andrews (D)": 43.0, "Darline Graham (R)": 45.0, "Other": 3.0, "Undecided": 9.0}}
   ],
 };
-
-export function getPollsForRace(raceId: string): Poll[] {
-  return (STATE_POLLS.SC ?? []).filter((p) => p.raceId === raceId);
-}

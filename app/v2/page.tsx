@@ -125,14 +125,14 @@ function V2ChartCard({
             <XAxis dataKey="d" hide />
             <YAxis domain={domain ?? ["auto", "auto"]} tickLine={false} axisLine={false} width={36} tick={{ fill: "var(--v2-muted)", fontSize: 10 }} />
             {refY !== undefined && (
-              <ReferenceLine y={refY} stroke="rgba(15,16,32,0.10)" strokeDasharray="3 3" />
+              <ReferenceLine y={refY} stroke="rgba(var(--ink-rgb),calc(0.1 * var(--struct)))" strokeDasharray="3 3" />
             )}
             <Tooltip
               contentStyle={{
-                background: "rgba(255,255,255,0.98)",
+                background: "rgba(var(--line-rgb),0.98)",
                 border: "1px solid var(--v2-border)",
                 borderRadius: 12,
-                boxShadow: "0 10px 30px rgba(15,16,32,0.10)",
+                boxShadow: "0 10px 30px rgba(var(--ink-rgb),calc(0.1 * var(--struct)))",
                 fontSize: 12,
               }}
               labelStyle={{ display: "none" }}
@@ -161,6 +161,8 @@ export default function HomeV2() {
   return (
     <>
       <style jsx global>{`
+        /* v2 is a light-committed layout: white surfaces and a fixed slate
+           ink. It keeps its own palette rather than following the theme. */
         :root {
           --v2-bg:       #f7f7f4;
           --v2-bg-2:     #eef0f6;
@@ -449,7 +451,7 @@ export default function HomeV2() {
           text-transform: none;
           color: #fff;
         }
-        .v2-cta-text { color: rgba(255,255,255,0.72); font-size: 14px; line-height: 1.5; margin-bottom: 20px; }
+        .v2-cta-text { color: rgba(var(--ink-rgb),calc(0.72 * var(--mute) + var(--floor))); font-size: 14px; line-height: 1.5; margin-bottom: 20px; }
         .v2-cta-btn {
           display: inline-flex; align-items: center; gap: 8px;
           background: #fff; color: var(--v2-ink);
@@ -562,7 +564,7 @@ export default function HomeV2() {
                   Take the Survey →
                 </Link>
                 <Link href="/results" className="v2-btn v2-btn-secondary">Live Results</Link>
-                <Link href="/forecastratings" className="v2-btn v2-btn-secondary">Forecast Ratings</Link>
+                <Link href="/forecast" className="v2-btn v2-btn-secondary">Forecast Ratings</Link>
               </div>
               <div className="v2-hero-meta">
                 <span>Latest poll: <b>Emerson</b></span>
@@ -752,7 +754,7 @@ export default function HomeV2() {
             <div className="v2-explore">
               {[
                 { tag: "Analysis",    name: "Electoral Map",          desc: "State-by-state data with 2024 vs 2026 overlays.",  href: "/electoralmap",    tone: "blue"   },
-                { tag: "Projections", name: "Forecast Ratings",        desc: "Race ratings across Senate, House and governors.", href: "/forecastratings", tone: "purple" },
+                { tag: "Projections", name: "Forecast Ratings",        desc: "Race ratings across Senate, House and governors.", href: "/forecast", tone: "purple" },
                 { tag: "Results",     name: "Live Election Results",   desc: "Real-time vote totals and night-of projections.",  href: "/results",         tone: "red"    },
                 { tag: "Methodology", name: "Gold-Standard Polls",     desc: "Curated aggregation ranked by historical accuracy.", href: "/goldstandard",  tone: "neutral"},
               ].map(c => {
@@ -760,7 +762,7 @@ export default function HomeV2() {
                   blue:    { text: "var(--v2-blue)",    bg: "rgba(29, 95, 196,0.10)" },
                   red:     { text: "var(--v2-red)",     bg: "rgba(194, 47, 59,0.10)" },
                   purple:  { text: "var(--v2-purple)",  bg: "rgba(109, 62, 233,0.10)" },
-                  neutral: { text: "var(--v2-ink-2)",   bg: "rgba(15,16,32,0.06)"  },
+                  neutral: { text: "var(--v2-ink-2)",   bg: "rgba(var(--ink-rgb),calc(0.06 * var(--struct)))"  },
                 };
                 const tc = toneColors[c.tone];
                 return (

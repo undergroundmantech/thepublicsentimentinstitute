@@ -7,6 +7,7 @@ import {
   getCandidateList,
   getDateRange,
   buildDailyWeightedSeries,
+  TRACKER_PROFILE,
 } from "@/app/polling/lib/buildDailyModel";
 
 const GOLD_STANDARD_MULTIPLIER = 3;
@@ -43,7 +44,7 @@ export default function RightTrackWrongTrackPage() {
     }));
     const keys = ["RightTrack", "WrongTrack"];
     const range = getDateRange(RAW_POLLS);
-    const dailyBase = buildDailyWeightedSeries(pollsAdj as any, keys, range.start, range.end) as any[];
+    const dailyBase = buildDailyWeightedSeries(pollsAdj as any, keys, range.start, range.end, TRACKER_PROFILE) as any[];
     const dailyWithSpread = dailyBase.map((row) => ({
       ...row,
       Spread: round1(Number(row.RightTrack ?? 0) - Number(row.WrongTrack ?? 0)),
@@ -91,13 +92,13 @@ export default function RightTrackWrongTrackPage() {
               </h1>
               <p className="pap-hero-desc">
                 Daily weighted average across all included polls — recency decay,
-                √n sample adjustment, LV/RV/A screen, and PSI Gold Standard upweighting.
+                sigmoid sample curve, tracker LV/RV/A ladder, PSI Gold Standard upweighting, and a 15% cap on any single poll.
               </p>
               <div className="pap-hero-badge-row">
                 <span className="pap-badge pap-badge-live"><span className="pap-live-dot" />LIVE TRACKING</span>
                 <span className="pap-badge pap-badge-gold">★ GOLD STANDARD ×{GOLD_STANDARD_MULTIPLIER} WEIGHT</span>
                 <span className="pap-badge">{RAW_POLLS.length} POLLS IN MODEL</span>
-                <span className="pap-badge pap-badge-purple">RECENCY · √N · LV/RV/A</span>
+                <span className="pap-badge pap-badge-purple">RECENCY · SIGMOID N · 15% CAP</span>
               </div>
             </div>
             <div className="pap-hero-read">
@@ -141,7 +142,7 @@ export default function RightTrackWrongTrackPage() {
         {/* ── SENTIMENT CONTEXT ── */}
         <div className="pap-context-panel">
           <div style={{ display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap" }}>
-            <div style={{ fontFamily: "ui-monospace,monospace", fontSize: 7, fontWeight: 700, letterSpacing: "0.28em", textTransform: "uppercase", color: "rgba(240,240,245,0.3)", whiteSpace: "nowrap" }}>
+            <div style={{ fontFamily: "ui-monospace,monospace", fontSize: 7, fontWeight: 700, letterSpacing: "0.28em", textTransform: "uppercase", color: "rgba(var(--ink-rgb),calc(0.3 * var(--mute) + var(--floor)))", whiteSpace: "nowrap" }}>
               CURRENT READING
             </div>
             <span style={{
@@ -152,7 +153,7 @@ export default function RightTrackWrongTrackPage() {
             }}>
               {sentiment.label}
             </span>
-            <span style={{ fontFamily: "ui-monospace,monospace", fontSize: 8.5, letterSpacing: "0.1em", color: "rgba(240,240,245,0.35)", textTransform: "uppercase" }}>
+            <span style={{ fontFamily: "ui-monospace,monospace", fontSize: 8.5, letterSpacing: "0.1em", color: "rgba(var(--ink-rgb),calc(0.35 * var(--mute) + var(--floor)))", textTransform: "uppercase" }}>
               {sentiment.desc}
             </span>
           </div>
@@ -216,7 +217,7 @@ export default function RightTrackWrongTrackPage() {
                     const effN = effectiveSampleSize(p.pollster, p.sampleSize);
                     return (
                       <tr key={`${p.pollster}-${p.endDate}-${i}`}>
-                        <td style={{ color: "rgba(15,16,32,0.85)" }}>
+                        <td style={{ color: "rgba(var(--ink-rgb),calc(0.85 * var(--mute) + var(--floor)))" }}>
                           <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                             <span>{p.pollster}</span>
                             {gold && <span className="pap-gold-badge">GOLD</span>}
@@ -254,7 +255,7 @@ export default function RightTrackWrongTrackPage() {
             <div style={{ fontFamily: "var(--font-body),monospace", fontSize: 7, fontWeight: 700, letterSpacing: "0.28em", textTransform: "uppercase", color: "var(--purple-soft)", marginBottom: 6 }}>
               METHODOLOGY
             </div>
-            <p style={{ fontFamily: "var(--font-body),monospace", fontSize: 8.5, lineHeight: 1.75, letterSpacing: "0.08em", color: "rgba(240,240,245,0.22)", margin: 0 }}>
+            <p style={{ fontFamily: "var(--font-body),monospace", fontSize: 8.5, lineHeight: 1.75, letterSpacing: "0.08em", color: "rgba(var(--ink-rgb),calc(0.22 * var(--struct)))", margin: 0 }}>
               Right Track / Wrong Track averages are computed using a daily weighted model incorporating
               recency decay, square-root sample size adjustment, and screen type (LV/RV/A) weighting.
               Gold Standard pollsters ({GOLD_STANDARD_NAMES.join(", ")}) receive ×{GOLD_STANDARD_MULTIPLIER}²
@@ -274,14 +275,13 @@ const CSS = `
   body { margin: 0; }
 
   .pap-root {
-    --bg: #f7f7f4;
+    --bg: var(--canvas);
     --bg2: #ffffff;
     --panel: #ffffff;
-    --border: rgba(15, 16, 32, 0.08);
-    --border2: rgba(15, 16, 32, 0.14);
+    --border: rgba(var(--ink-rgb),calc(0.08 * var(--struct)));
+    --border2: rgba(var(--ink-rgb),calc(0.14 * var(--struct)));
     --muted: #6b7088;
     --muted2: #9aa0b4;
-    --muted3: #b7bccc;
     --purple:      #6d3ee9;
     --purple2:     #8a63ef;
     --purple-soft: #a78bfa;
@@ -342,7 +342,7 @@ const CSS = `
   }
   .pap-hero::after {
     content:''; position:absolute; inset:0;
-    background-image: repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(255,255,255,0.006) 3px, rgba(255,255,255,0.006) 4px);
+    background-image: repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(var(--line-rgb),0.006) 3px, rgba(var(--line-rgb),0.006) 4px);
     pointer-events: none;
   }
   .pap-hero-inner {
@@ -411,7 +411,7 @@ const CSS = `
   .pap-kpi-label { font-family: ui-monospace,monospace; font-size: 7.5px; font-weight: 700; letter-spacing: 0.28em; text-transform: uppercase; color: var(--muted3); margin-bottom: 8px; }
   .pap-kpi-val   { font-family: ui-monospace,monospace; font-size: clamp(22px,2.5vw,30px); font-weight: 900; color: #fff; line-height: 1; font-variant-numeric: tabular-nums; }
   .pap-kpi-sub   { font-family: ui-monospace,monospace; font-size: 8px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted3); margin-top: 6px; }
-  .pap-kpi-bar { height: 2px; margin-top: 10px; background: rgba(15,16,32,0.08); }
+  .pap-kpi-bar { height: 2px; margin-top: 10px; background: rgba(var(--ink-rgb),calc(0.08 * var(--struct))); }
   .pap-kpi-bar-fill { height: 100%; animation: pap-bar-in 800ms cubic-bezier(0.22,1,0.36,1) both; }
 
   .pap-context-panel {
@@ -446,7 +446,7 @@ const CSS = `
   table.pap-table th.r { text-align: right; }
   table.pap-table td {
     font-family: ui-monospace,monospace; font-size: 10.5px; padding: 10px 16px;
-    border-bottom: 1px solid rgba(15,16,32,0.05); color: var(--muted);
+    border-bottom: 1px solid rgba(var(--ink-rgb),calc(0.05 * var(--struct))); color: var(--muted);
     vertical-align: middle; font-variant-numeric: tabular-nums;
   }
   table.pap-table td.r { text-align: right; }

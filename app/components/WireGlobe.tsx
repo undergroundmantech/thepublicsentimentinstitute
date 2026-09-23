@@ -5,6 +5,7 @@ import * as THREE from "three";
 import { feature } from "topojson-client";
 import { geoContains } from "d3-geo";
 import { SENATE_MODEL } from "./senateModel";
+import { cssColor } from "@/app/lib/cssColor";
 
 /**
  * The desk's eye — a compact, always-on version of the homepage coverage
@@ -33,9 +34,9 @@ function makeCircleSprite(size = 64) {
   c.width = c.height = size;
   const g = c.getContext("2d")!;
   const grad = g.createRadialGradient(size / 2, size / 2, 0, size / 2, size / 2, size / 2);
-  grad.addColorStop(0, "rgba(255,255,255,1)");
-  grad.addColorStop(0.45, "rgba(255,255,255,0.9)");
-  grad.addColorStop(1, "rgba(255,255,255,0)");
+  grad.addColorStop(0, cssColor("rgba(var(--line-rgb),1)"));
+  grad.addColorStop(0.45, cssColor("rgba(var(--line-rgb),0.9)"));
+  grad.addColorStop(1, cssColor("rgba(var(--line-rgb),0)"));
   g.fillStyle = grad;
   g.fillRect(0, 0, size, size);
   const tex = new THREE.CanvasTexture(c);
@@ -118,7 +119,7 @@ export default function WireGlobe() {
       for (let lat = -75; lat <= 75; lat += 15)
         for (let lon = -180; lon < 180; lon += 2) pts.push(latLonToVec3(lat, lon, R), latLonToVec3(lat, lon + 2, R));
       const geo = new THREE.BufferGeometry().setFromPoints(pts);
-      globe.add(new THREE.LineSegments(geo, new THREE.LineBasicMaterial({ color: "#f4f4ef", transparent: true, opacity: 0.03 })));
+      globe.add(new THREE.LineSegments(geo, new THREE.LineBasicMaterial({ color: "var(--ink)", transparent: true, opacity: 0.03 })));
     }
 
     const sprite = makeCircleSprite();

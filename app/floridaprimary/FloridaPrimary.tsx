@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import DarkNav from "@/app/components/DarkNav";
 import { FLSE_CSS } from "./flseCss";
 
 /**
@@ -26,9 +25,6 @@ export default function FloridaPrimaryPage() {
   return (
     <div className="flse">
       <style>{FLSE_CSS}</style>
-      {/* DarkNav replaces the global chrome, per the convention in ElectoralMapV2 et al. */}
-      <style>{`body header, body footer { display: none !important; }`}</style>
-      <DarkNav />
 
       <div className="wrap">
         <div className="masthead">

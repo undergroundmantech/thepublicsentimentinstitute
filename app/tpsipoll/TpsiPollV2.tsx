@@ -1,9 +1,8 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
-import DarkNav from "@/app/components/DarkNav";
 
-// ─── Palette tuned for the #050505 canvas ─────────────────────────────────────
+// ─── Palette tuned for the var(--canvas) canvas ─────────────────────────────────────
 const C = {
   blue:     "#5b8cff",   // Democrat
   pink:     "#ff5d6c",   // Republican
@@ -11,10 +10,10 @@ const C = {
   purpleLt: "#b98cff",
   cyan:     "#5b8cff",
   green:    "#5fe3a3",   // approve / positive
-  orange:   "rgba(244,244,239,0.40)",
+  orange:   "rgba(var(--ink-rgb),calc(0.4 * var(--mute) + var(--floor)))",
   gold:     "#6d3ee9",   // signal / #1 highlight
-  muted:    "rgba(244,244,239,0.34)",
-  neutral:  "rgba(244,244,239,0.34)",
+  muted:    "rgba(var(--ink-rgb),calc(0.34 * var(--mute) + var(--floor)))",
+  neutral:  "rgba(var(--ink-rgb),calc(0.34 * var(--mute) + var(--floor)))",
 };
 const LIME = "#6d3ee9";
 
@@ -1095,23 +1094,23 @@ const LA_LENSES: Lens[] = [
   { id:"ballot", tab:"Mayoral ballot", question:"If the LA mayoral election were held today, with leaners allocated —",
     bins:[
       { label:"Bass", pct:39.9, color:C.blue }, { label:"Pratt", pct:21.1, color:C.pink },
-      { label:"Raman", pct:12.2, color:C.purple }, { label:"Other", pct:12.1, color:"rgba(244,244,239,0.46)" },
-      { label:"Huang", pct:7.8, color:"rgba(244,244,239,0.34)" }, { label:"Miller", pct:6.9, color:"rgba(244,244,239,0.24)" },
+      { label:"Raman", pct:12.2, color:C.purple }, { label:"Other", pct:12.1, color:"rgba(var(--ink-rgb),calc(0.46 * var(--mute) + var(--floor)))" },
+      { label:"Huang", pct:7.8, color:"rgba(var(--ink-rgb),calc(0.34 * var(--mute) + var(--floor)))" }, { label:"Miller", pct:6.9, color:"rgba(var(--ink-rgb),calc(0.24 * var(--struct)))" },
     ], big:"+18.8", lead:"Bass leads", sub:"the field with leaners allocated" },
   { id:"party", tab:"Party reg.", question:"Which party are these likely voters registered with?",
     bins:[ { label:"Democrat", pct:56.6, color:C.blue }, { label:"Independent", pct:27.3, color:C.purple }, { label:"Republican", pct:16.0, color:C.pink } ],
     big:"D+41", lead:"Democratic", sub:"registration advantage in the sample" },
   { id:"trump", tab:"Trump approval", question:"Do they approve or disapprove of President Trump?",
-    bins:[ { label:"Disapprove", pct:75.9, color:C.pink }, { label:"Approve", pct:21.4, color:C.green }, { label:"No opinion", pct:2.7, color:"rgba(244,244,239,0.30)" } ],
+    bins:[ { label:"Disapprove", pct:75.9, color:C.pink }, { label:"Approve", pct:21.4, color:C.green }, { label:"No opinion", pct:2.7, color:"rgba(var(--ink-rgb),calc(0.3 * var(--mute) + var(--floor)))" } ],
     big:"−54.5", lead:"Underwater", sub:"net Trump approval across Los Angeles" },
   { id:"cost", tab:"Cost of living", question:"How difficult has it been to pay monthly household expenses?",
-    bins:[ { label:"Difficulty", pct:56.9, color:C.pink }, { label:"Little / none", pct:41.9, color:C.green }, { label:"Not sure", pct:1.2, color:"rgba(244,244,239,0.30)" } ],
+    bins:[ { label:"Difficulty", pct:56.9, color:C.pink }, { label:"Little / none", pct:41.9, color:C.green }, { label:"Not sure", pct:1.2, color:"rgba(var(--ink-rgb),calc(0.3 * var(--mute) + var(--floor)))" } ],
     big:"57%", lead:"Squeezed", sub:"report difficulty covering the bills" },
   { id:"turnout", tab:"Turnout", question:"How locked-in is each voter for 2026?",
-    bins:[ { label:"Certain + motivated", pct:66.0, color:C.green }, { label:"Very likely", pct:16.0, color:C.blue }, { label:"Softer / unsure", pct:18.0, color:"rgba(244,244,239,0.36)" } ],
+    bins:[ { label:"Certain + motivated", pct:66.0, color:C.green }, { label:"Very likely", pct:16.0, color:C.blue }, { label:"Softer / unsure", pct:18.0, color:"rgba(var(--ink-rgb),calc(0.36 * var(--mute) + var(--floor)))" } ],
     big:"82%", lead:"Locked in", sub:"are certain or very likely to vote" },
   { id:"recall", tab:"2024 vote", question:"Who did they vote for in the 2024 presidential election?",
-    bins:[ { label:"Harris", pct:61.0, color:C.blue }, { label:"Trump", pct:25.0, color:C.pink }, { label:"Didn't vote", pct:10.0, color:"rgba(244,244,239,0.36)" }, { label:"Third party", pct:4.0, color:C.purple } ],
+    bins:[ { label:"Harris", pct:61.0, color:C.blue }, { label:"Trump", pct:25.0, color:C.pink }, { label:"Didn't vote", pct:10.0, color:"rgba(var(--ink-rgb),calc(0.36 * var(--mute) + var(--floor)))" }, { label:"Third party", pct:4.0, color:C.purple } ],
     big:"D+36", lead:"Harris country", sub:"2024 recall vote margin" },
 ];
 
@@ -1119,40 +1118,40 @@ const NATIONAL_LENSES: Lens[] = [
   { id:"ballot", tab:"Generic ballot", question:"If the 2026 midterms were held today, who would these voters choose for Congress?",
     bins:[
       { label:"Democrat", pct:46.8, color:C.blue }, { label:"Republican", pct:40.0, color:C.pink },
-      { label:"Undecided", pct:10.3, color:"rgba(244,244,239,0.34)" }, { label:"Third party", pct:2.9, color:C.purple },
+      { label:"Undecided", pct:10.3, color:"rgba(var(--ink-rgb),calc(0.34 * var(--mute) + var(--floor)))" }, { label:"Third party", pct:2.9, color:C.purple },
     ], big:"D+6.8", lead:"Democrats lead", sub:"the 2026 generic congressional ballot" },
   { id:"trump", tab:"Trump approval", question:"Do they approve or disapprove of President Trump?",
-    bins:[ { label:"Disapprove", pct:57.6, color:C.pink }, { label:"Approve", pct:41.6, color:C.green }, { label:"No opinion", pct:0.9, color:"rgba(244,244,239,0.30)" } ],
+    bins:[ { label:"Disapprove", pct:57.6, color:C.pink }, { label:"Approve", pct:41.6, color:C.green }, { label:"No opinion", pct:0.9, color:"rgba(var(--ink-rgb),calc(0.3 * var(--mute) + var(--floor)))" } ],
     big:"−16.0", lead:"Underwater", sub:"net Trump approval nationwide" },
   { id:"track", tab:"Direction", question:"Is the country on the right track or the wrong track?",
-    bins:[ { label:"Wrong track", pct:62.1, color:C.pink }, { label:"Right track", pct:30.2, color:C.green }, { label:"Not sure", pct:7.7, color:"rgba(244,244,239,0.30)" } ],
+    bins:[ { label:"Wrong track", pct:62.1, color:C.pink }, { label:"Right track", pct:30.2, color:C.green }, { label:"Not sure", pct:7.7, color:"rgba(var(--ink-rgb),calc(0.3 * var(--mute) + var(--floor)))" } ],
     big:"−31.9", lead:"Wrong track", sub:"net direction of the country" },
   { id:"party", tab:"Party ID", question:"Which party do these likely voters identify with?",
     bins:[ { label:"Democrat", pct:40.1, color:C.blue }, { label:"Republican", pct:37.5, color:C.pink }, { label:"Independent", pct:22.5, color:C.purple } ],
     big:"D+2.6", lead:"Narrow edge", sub:"in national party identification" },
   { id:"cost", tab:"Cost of living", question:"How difficult has it been to pay monthly household expenses?",
-    bins:[ { label:"Difficulty", pct:58.0, color:C.pink }, { label:"Little / none", pct:40.7, color:C.green }, { label:"Not sure", pct:1.3, color:"rgba(244,244,239,0.30)" } ],
+    bins:[ { label:"Difficulty", pct:58.0, color:C.pink }, { label:"Little / none", pct:40.7, color:C.green }, { label:"Not sure", pct:1.3, color:"rgba(var(--ink-rgb),calc(0.3 * var(--mute) + var(--floor)))" } ],
     big:"58%", lead:"Squeezed", sub:"report difficulty covering the bills" },
   { id:"recall", tab:"2024 vote", question:"Who did they vote for in the 2024 presidential election?",
-    bins:[ { label:"Harris", pct:44.3, color:C.blue }, { label:"Trump", pct:43.9, color:C.pink }, { label:"Didn't vote", pct:10.2, color:"rgba(244,244,239,0.36)" }, { label:"Third party", pct:1.5, color:C.purple } ],
+    bins:[ { label:"Harris", pct:44.3, color:C.blue }, { label:"Trump", pct:43.9, color:C.pink }, { label:"Didn't vote", pct:10.2, color:"rgba(var(--ink-rgb),calc(0.36 * var(--mute) + var(--floor)))" }, { label:"Third party", pct:1.5, color:C.purple } ],
     big:"+0.4", lead:"Dead even", sub:"Harris over Trump in the 2024 recall" },
 ];
 
 const SD_LENSES: Lens[] = [
   { id:"gov", tab:"Governor primary", question:"If the Republican primary for governor were held today —",
     bins:[
-      { label:"Rhoden", pct:32.4, color:C.pink }, { label:"Johnson", pct:27.2, color:"rgba(244,244,239,0.46)" },
+      { label:"Rhoden", pct:32.4, color:C.pink }, { label:"Johnson", pct:27.2, color:"rgba(var(--ink-rgb),calc(0.46 * var(--mute) + var(--floor)))" },
       { label:"Doeden", pct:24.0, color:C.gold }, { label:"Hansen", pct:13.2, color:C.purple },
-      { label:"Undecided", pct:3.3, color:"rgba(244,244,239,0.28)" },
+      { label:"Undecided", pct:3.3, color:"rgba(var(--ink-rgb),calc(0.28 * var(--struct)))" },
     ], big:"+5.2", lead:"Rhoden leads", sub:"a genuine three-way race for governor" },
   { id:"turnout", tab:"Turnout", question:"How locked-in is each primary voter?",
-    bins:[ { label:"Certain + motivated", pct:80.6, color:C.green }, { label:"Very likely", pct:11.2, color:C.blue }, { label:"Softer / unsure", pct:8.2, color:"rgba(244,244,239,0.36)" } ],
+    bins:[ { label:"Certain + motivated", pct:80.6, color:C.green }, { label:"Very likely", pct:11.2, color:C.blue }, { label:"Softer / unsure", pct:8.2, color:"rgba(var(--ink-rgb),calc(0.36 * var(--mute) + var(--floor)))" } ],
     big:"92%", lead:"Locked in", sub:"are certain or very likely to vote" },
   { id:"method", tab:"Ballot method", question:"How do they plan to cast their ballot?",
-    bins:[ { label:"Election Day", pct:53.7, color:C.blue }, { label:"Mail / absentee", pct:19.0, color:C.purple }, { label:"Early in person", pct:16.3, color:C.green }, { label:"Undecided / won't", pct:11.1, color:"rgba(244,244,239,0.32)" } ],
+    bins:[ { label:"Election Day", pct:53.7, color:C.blue }, { label:"Mail / absentee", pct:19.0, color:C.purple }, { label:"Early in person", pct:16.3, color:C.green }, { label:"Undecided / won't", pct:11.1, color:"rgba(var(--ink-rgb),calc(0.32 * var(--mute) + var(--floor)))" } ],
     big:"54%", lead:"Election Day", sub:"still vote in person on the day" },
   { id:"circle", tab:"Social circle", question:"How many of their closest 5–10 people do they expect to vote?",
-    bins:[ { label:"All / nearly all", pct:42.5, color:C.green }, { label:"Most", pct:31.0, color:C.blue }, { label:"About half", pct:16.2, color:C.gold }, { label:"Fewer", pct:10.3, color:"rgba(244,244,239,0.32)" } ],
+    bins:[ { label:"All / nearly all", pct:42.5, color:C.green }, { label:"Most", pct:31.0, color:C.blue }, { label:"About half", pct:16.2, color:C.gold }, { label:"Fewer", pct:10.3, color:"rgba(var(--ink-rgb),calc(0.32 * var(--mute) + var(--floor)))" } ],
     big:"74%", lead:"Networked", sub:"expect most or all of their circle to vote" },
 ];
 
@@ -1160,25 +1159,25 @@ const SC_LENSES: Lens[] = [
   { id:"senate", tab:"Senate primary", question:"If the Republican primary for U.S. Senate were held today —",
     bins:[
       { label:"Graham", pct:51.0, color:C.blue }, { label:"Lynch", pct:26.4, color:C.pink },
-      { label:"Others", pct:18.2, color:C.purple }, { label:"Undecided", pct:4.4, color:"rgba(244,244,239,0.28)" },
+      { label:"Others", pct:18.2, color:C.purple }, { label:"Undecided", pct:4.4, color:"rgba(var(--ink-rgb),calc(0.28 * var(--struct)))" },
     ], big:"+24.6", lead:"Graham leads", sub:"the Senate primary over Mark Lynch" },
   { id:"gov", tab:"Governor primary", question:"And the open Republican primary for governor —",
     bins:[
       { label:"Mace", pct:30.0, color:C.pink }, { label:"Evette", pct:24.9, color:C.blue },
-      { label:"Norman", pct:15.2, color:C.gold }, { label:"Reddy", pct:13.4, color:"rgba(244,244,239,0.44)" },
-      { label:"Wilson", pct:12.0, color:C.purple }, { label:"Und.", pct:4.6, color:"rgba(244,244,239,0.26)" },
+      { label:"Norman", pct:15.2, color:C.gold }, { label:"Reddy", pct:13.4, color:"rgba(var(--ink-rgb),calc(0.44 * var(--mute) + var(--floor)))" },
+      { label:"Wilson", pct:12.0, color:C.purple }, { label:"Und.", pct:4.6, color:"rgba(var(--ink-rgb),calc(0.26 * var(--struct)))" },
     ], big:"+5.1", lead:"Mace edges", sub:"a wide-open governor's primary" },
   { id:"trump", tab:"Trump approval", question:"Do they approve or disapprove of President Trump?",
-    bins:[ { label:"Approve", pct:54.1, color:C.green }, { label:"Disapprove", pct:43.9, color:C.pink }, { label:"Neutral", pct:1.9, color:"rgba(244,244,239,0.30)" } ],
+    bins:[ { label:"Approve", pct:54.1, color:C.green }, { label:"Disapprove", pct:43.9, color:C.pink }, { label:"Neutral", pct:1.9, color:"rgba(var(--ink-rgb),calc(0.3 * var(--mute) + var(--floor)))" } ],
     big:"+10.2", lead:"Trump country", sub:"net Trump approval in the primary electorate" },
   { id:"graham", tab:"Graham approval", question:"And Senator Lindsey Graham?",
-    bins:[ { label:"Approve", pct:51.1, color:C.blue }, { label:"Disapprove", pct:44.8, color:C.pink }, { label:"Neutral", pct:4.2, color:"rgba(244,244,239,0.30)" } ],
+    bins:[ { label:"Approve", pct:51.1, color:C.blue }, { label:"Disapprove", pct:44.8, color:C.pink }, { label:"Neutral", pct:4.2, color:"rgba(var(--ink-rgb),calc(0.3 * var(--mute) + var(--floor)))" } ],
     big:"+6.3", lead:"Softer ground", sub:"net Graham approval — gentler than Trump's" },
   { id:"coalition", tab:"Coalition", question:"How does the Meridian model segment this electorate?",
     bins:[ { label:"Graham base", pct:42.2, color:C.blue }, { label:"Crossover", pct:41.9, color:C.purple }, { label:"Anti-Graham", pct:15.6, color:C.pink } ],
     big:"42.2%", lead:"Two camps", sub:"Graham base against open-primary crossover" },
   { id:"turnout", tab:"Turnout", question:"How locked-in is each primary voter?",
-    bins:[ { label:"Certain + motivated", pct:78.6, color:C.green }, { label:"Very likely", pct:17.6, color:C.blue }, { label:"Softer", pct:3.9, color:"rgba(244,244,239,0.36)" } ],
+    bins:[ { label:"Certain + motivated", pct:78.6, color:C.green }, { label:"Very likely", pct:17.6, color:C.blue }, { label:"Softer", pct:3.9, color:"rgba(var(--ink-rgb),calc(0.36 * var(--mute) + var(--floor)))" } ],
     big:"96%", lead:"Maximal", sub:"are certain or very likely to vote" },
 ];
 
@@ -1493,7 +1492,8 @@ export default function TPSIPollDashboard() {
     <div className="tps">
       <style>{CSS}</style>
 
-      <div className="shell"><DarkNav /></div>
+      <div className="shell">
+</div>
 
       <div className="shell">
         <div className="reports" role="tablist" aria-label="Field reports">
@@ -1539,7 +1539,6 @@ export default function TPSIPollDashboard() {
 // ═══ STYLES ═══════════════════════════════════════════════════════════════════
 const CSS = `
   body { background: var(--background) !important; color: var(--foreground); overflow-x: clip; }
-  body header, body footer { display: none !important; }
   body main > div { max-width: none !important; padding-left: 0 !important; padding-right: 0 !important; }
   body main > div > div { padding-top: 0 !important; padding-bottom: 0 !important; }
 
@@ -1596,8 +1595,8 @@ const CSS = `
   .elec-intro { margin: 14px 0 0; max-width: 380px; font-size: 15px; line-height: 1.45; color: var(--m1); }
   .lens { display: flex; flex-wrap: wrap; gap: 7px; max-width: 540px; justify-content: flex-end; }
   .lens-pill { padding: 9px 15px; border-radius: 999px; border: 1px solid var(--line); background: var(--surf); color: var(--m1); font-family: inherit; font-size: 13px; font-weight: 600; letter-spacing: -0.01em; cursor: pointer; transition: all .18s var(--ease); }
-  .lens-pill:hover { color: var(--ink); border-color: rgba(255,255,255,0.22); }
-  .lens-pill.on { background: #f4f4ef; border-color: #6d3ee9; color: #050505; }
+  .lens-pill:hover { color: var(--ink); border-color: rgba(var(--ink-rgb),calc(0.22 * var(--struct))); }
+  .lens-pill.on { background: var(--ink); border-color: #6d3ee9; color: var(--canvas); }
 
   .elec-stage { animation: rise .5s var(--ease) both; }
   .elec-readout { margin-top: 46px; }

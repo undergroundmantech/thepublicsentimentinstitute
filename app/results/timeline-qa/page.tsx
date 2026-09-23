@@ -8,7 +8,6 @@
 // at /results/timeline-qa.
 
 import React, { useMemo } from "react";
-import DarkNav from "@/app/components/DarkNav";
 import { ThemeProvider } from "../onpoint/lib/theme.jsx";
 import { OPA_GLOBAL_CSS } from "../onpoint/OpaResultsPage.jsx";
 import LiveTimeline from "../race/[id]/deck/LiveTimeline";
@@ -64,7 +63,6 @@ export default function TimelineQAPage() {
       <div className="tlqa-page">
         <style>{OPA_GLOBAL_CSS}</style>
         <style>{TLQA_CSS}</style>
-        <DarkNav />
         <div className="tlqa-shell">
           <span className="tlqa-badge">QA fixture — not real data, not linked from any public nav</span>
           <h1>Zone 6 Live Timeline — storybook</h1>

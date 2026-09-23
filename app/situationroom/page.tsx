@@ -5,7 +5,6 @@ import { notFound } from "next/navigation";
 import { SHOW_SITUATION_ROOM } from "@/app/lib/flags";
 import { createPortal } from "react-dom";
 import Link from "next/link";
-import DarkNav from "@/app/components/DarkNav";
 import WireGlobe from "@/app/components/WireGlobe";
 import { SENATE_MODEL, senateBalance } from "@/app/components/senateModel";
 import { getHomeStats, type HomeStats, type HomeSeriesPoint } from "@/app/polling/lib/homeStats";
@@ -88,7 +87,7 @@ const partyTone = (party?: string) => {
   const p = String(party || "").toLowerCase();
   if (/democr/.test(p)) return D_SOFT;
   if (/republic/.test(p)) return R_SOFT;
-  return "rgba(244,244,239,0.6)";
+  return "rgba(var(--ink-rgb),calc(0.6 * var(--mute) + var(--floor)))";
 };
 
 const fmtNet = (n: number, pos = "D+", neg = "R+") =>
@@ -96,8 +95,8 @@ const fmtNet = (n: number, pos = "D+", neg = "R+") =>
 const appNet = (n: number) => (n > 0 ? `+${Math.abs(n).toFixed(0)}` : `−${Math.abs(n).toFixed(0)}`);
 const pollTone = (p: WirePoll) =>
   p.type === "Generic ballot"
-    ? (p.net === 0 ? "rgba(244,244,239,0.5)" : p.net > 0 ? D_SOFT : R_SOFT)
-    : (p.net === 0 ? "rgba(244,244,239,0.5)" : p.net > 0 ? PG_GREEN : PG_MAGENTA);
+    ? (p.net === 0 ? "rgba(var(--ink-rgb),calc(0.5 * var(--mute) + var(--floor)))" : p.net > 0 ? D_SOFT : R_SOFT)
+    : (p.net === 0 ? "rgba(var(--ink-rgb),calc(0.5 * var(--mute) + var(--floor)))" : p.net > 0 ? PG_GREEN : PG_MAGENTA);
 const pollFig = (p: WirePoll) => (p.type === "Generic ballot" ? fmtNet(p.net) : appNet(p.net));
 
 // ─── exhibits ─────────────────────────────────────────────────────────────────
@@ -119,7 +118,7 @@ function DualSpark({ daily, w = 640, h = 120, tones, labelDigits = 1 }: {
   if (Math.abs(ya - yb) < 15) { const mid = (ya + yb) / 2, s = ya <= yb ? 1 : -1; ya = mid - s * 7.5; yb = mid + s * 7.5; }
   return (
     <svg viewBox={`0 0 ${w} ${h}`} className="sr-spark" aria-hidden="true">
-      <line x1={2} x2={w - 54} y1={h - 5} y2={h - 5} stroke="rgba(244,244,239,0.13)" strokeWidth="1" />
+      <line x1={2} x2={w - 54} y1={h - 5} y2={h - 5} stroke="rgba(var(--ink-rgb),calc(0.13 * var(--struct)))" strokeWidth="1" />
       <path d={area("a")} fill={tones[0]} opacity="0.08" />
       <path d={area("b")} fill={tones[1]} opacity="0.07" />
       <path d={path("b")} stroke={tones[1]} strokeWidth="1.7" fill="none" opacity="0.8" />
@@ -218,7 +217,7 @@ export default function SituationRoomPage() {
       });
     }
     for (const u of (upcoming ?? []).slice(0, 3)) {
-      items.push({ stamp: fmtShort(u.date), src: u.sample[0] || "Election day", type: `${u.count} contest${u.count === 1 ? "" : "s"}`, fig: `in ${daysUntil(u.date)}d`, tone: "rgba(244,244,239,0.72)" });
+      items.push({ stamp: fmtShort(u.date), src: u.sample[0] || "Election day", type: `${u.count} contest${u.count === 1 ? "" : "s"}`, fig: `in ${daysUntil(u.date)}d`, tone: "rgba(var(--ink-rgb),calc(0.72 * var(--mute) + var(--floor)))" });
     }
     for (const p of wire.slice(0, 10)) items.push({ stamp: fmtShort(p.endDate), src: p.pollster, type: p.type, fig: pollFig(p), tone: pollTone(p), gold: p.gold });
     return items;
@@ -260,7 +259,7 @@ export default function SituationRoomPage() {
       fig: TPSI_HEADLINE.fig, tone: D_SOFT, sub: TPSI_HEADLINE.sub,
     },
     {
-      label: "projected senate", href: "/forecastratings",
+      label: "projected senate", href: "/forecast",
       fig: <><b style={{ color: D_SOFT }}>{Math.max(dSeats, rSeats)}</b><em>–</em><b style={{ color: R_SOFT }}>{Math.min(dSeats, rSeats)}</b></>,
       sub: "35 seats modeled nightly",
     },
@@ -283,7 +282,6 @@ export default function SituationRoomPage() {
   return (
     <div className="sr-page">
       <style>{CSS}</style>
-      <DarkNav />
 
       {/* ── masthead ── */}
       <div className="sr-folio">
@@ -512,7 +510,7 @@ export default function SituationRoomPage() {
               <span className="sr-fig-sub">{stats ? `${stats.track.right.toFixed(0)} right track · ${stats.track.wrong.toFixed(0)} wrong track · ${stats.track.count} polls` : ""}</span>
             </Link>
 
-            <Link href="/forecastratings" className="sr-fig sr-rv" style={{ "--rd": "240ms" } as React.CSSProperties}>
+            <Link href="/forecast" className="sr-fig sr-rv" style={{ "--rd": "240ms" } as React.CSSProperties}>
               <span className="sr-fig-label">projected senate</span>
               <span className="sr-fig-num"><b style={{ color: D_SOFT }}>{Math.max(dSeats, rSeats)}</b><em>–</em><b style={{ color: R_SOFT }}>{Math.min(dSeats, rSeats)}</b></span>
               <SeatStrip />
@@ -528,14 +526,14 @@ export default function SituationRoomPage() {
           <span className="sr-idx">04</span>
           <span className="sr-sec-title">The watchlist</span>
           <span className="sr-sec-meta">the five tightest senate races in the model</span>
-          <Link className="sr-sec-link" href="/forecastratings">All 35 ratings →</Link>
+          <Link className="sr-sec-link" href="/forecast">All 35 ratings →</Link>
         </div>
         <div className="sr-watch">
           {hotRaces.map((r, i) => {
             const dLead = r.m < 0;
             const w = Math.sqrt(Math.min(Math.abs(r.m), 3) / 3) * 47;
             return (
-              <Link key={r.st} href="/forecastratings" className="sr-watchrow sr-rv" style={{ "--rd": `${i * 70}ms` } as React.CSSProperties}>
+              <Link key={r.st} href="/forecast" className="sr-watchrow sr-rv" style={{ "--rd": `${i * 70}ms` } as React.CSSProperties}>
                 <span className="sr-watch-ord">{pad(i + 1)}</span>
                 <span className="sr-watch-st">{r.st}</span>
                 <span className="sr-watch-name">{STATE_NAMES[r.st] || ""}</span>
@@ -572,7 +570,6 @@ export default function SituationRoomPage() {
 // ─── styles ──────────────────────────────────────────────────────────────────
 const CSS = `
 html, body { background: var(--background) !important; }
-body header, body footer { display: none !important; }
 
 .sr-page {
   --rule: var(--border); --rule2: var(--border2);
@@ -613,7 +610,7 @@ body header, body footer { display: none !important; }
 .sr-ins { position: relative; display: flex; flex-direction: column; gap: 8px; padding: 0 clamp(16px, 2.4vw, 32px); min-width: 0; }
 .sr-ins:first-child { padding-left: 0; }
 .sr-ins:not(:first-child)::before { content: ''; position: absolute; left: 0; bottom: 2px; height: 74%; width: 1px;
-  background: linear-gradient(180deg, transparent, rgba(244,244,239,0.17) 28%, rgba(244,244,239,0.17) 72%, transparent);
+  background: linear-gradient(180deg, transparent, rgba(var(--ink-rgb),calc(0.17 * var(--struct))) 28%, rgba(var(--ink-rgb),calc(0.17 * var(--struct))) 72%, transparent);
   transform: rotate(13deg); transform-origin: bottom center; }
 .sr-ins-label { font-size: 10px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted2); transition: color 200ms ease; white-space: nowrap; }
 .sr-ins-fig { font-size: var(--fs, 42px); font-weight: 320; letter-spacing: -0.04em; line-height: 0.88; font-variant-numeric: tabular-nums; color: var(--foreground); white-space: nowrap; transition: filter 200ms ease; }
@@ -640,7 +637,7 @@ body header, body footer { display: none !important; }
 .sr-tick-item .tk-src i { font-style: normal; color: ${LIME}; font-size: 10px; }
 .sr-tick-item .tk-type { font-size: 11px; font-weight: 550; color: var(--muted3); }
 .sr-tick-item b { font-weight: 700; font-variant-numeric: tabular-nums; }
-.sr-tick-item .tk-sep { margin: 0 22px; color: rgba(244,244,239,0.14); font-weight: 300; }
+.sr-tick-item .tk-sep { margin: 0 22px; color: rgba(var(--ink-rgb),calc(0.14 * var(--struct))); font-weight: 300; }
 
 /* sections */
 .sr-sec { margin-top: clamp(56px, 7vw, 92px); }
@@ -654,15 +651,15 @@ body header, body footer { display: none !important; }
 /* 01 — the wire: a rail, not a table */
 .sr-wire { position: relative; padding-top: 26px; }
 .sr-wire::before { content: ''; position: absolute; left: 107px; top: 18px; bottom: 6px; width: 1px;
-  background: linear-gradient(180deg, rgba(244,244,239,0.22), rgba(244,244,239,0.07) 70%, transparent); }
+  background: linear-gradient(180deg, rgba(var(--ink-rgb),calc(0.22 * var(--struct))), rgba(var(--ink-rgb),calc(0.07 * var(--struct))) 70%, transparent); }
 .sr-wirerow { position: relative; display: grid; grid-template-columns: 88px 38px minmax(0, 1fr); align-items: baseline; padding: 11px 0; }
 .sr-w-stamp { font-size: 10.5px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted3); text-align: right; }
-.sr-w-node { position: relative; align-self: center; justify-self: center; width: 5px; height: 5px; border-radius: 999px; background: rgba(244,244,239,0.38); transition: background 200ms ease, box-shadow 200ms ease; }
-.sr-w-node.is-hollow { background: transparent; box-shadow: inset 0 0 0 1.2px rgba(244,244,239,0.45); width: 7px; height: 7px; }
+.sr-w-node { position: relative; align-self: center; justify-self: center; width: 5px; height: 5px; border-radius: 999px; background: rgba(var(--ink-rgb),calc(0.38 * var(--mute) + var(--floor))); transition: background 200ms ease, box-shadow 200ms ease; }
+.sr-w-node.is-hollow { background: transparent; box-shadow: inset 0 0 0 1.2px rgba(var(--ink-rgb),calc(0.45 * var(--mute) + var(--floor))); width: 7px; height: 7px; }
 .sr-w-node.is-live { background: var(--brand-grad); box-shadow: 0 0 10px rgba(109,62,233,0.6); animation: sr-pulse 2s ease-in-out infinite; width: 6px; height: 6px; }
 .sr-w-body { min-width: 0; display: flex; flex-direction: column; gap: 5px; }
 .sr-w-line { display: flex; align-items: baseline; gap: 14px; min-width: 0; }
-.sr-w-src { font-size: 16.5px; font-weight: 640; letter-spacing: -0.015em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: rgba(244,244,239,0.88); transition: color 180ms ease; }
+.sr-w-src { font-size: 16.5px; font-weight: 640; letter-spacing: -0.015em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: rgba(var(--ink-rgb),calc(0.88 * var(--mute) + var(--floor))); transition: color 180ms ease; }
 .sr-w-src i { font-style: normal; color: ${LIME}; font-size: 11px; letter-spacing: 0; }
 .sr-w-type { font-size: 10.5px; font-weight: 650; letter-spacing: 0.13em; text-transform: uppercase; color: var(--muted3); white-space: nowrap; }
 .sr-w-fig { margin-left: auto; font-size: 21px; font-weight: 650; font-variant-numeric: tabular-nums; letter-spacing: -0.01em; white-space: nowrap; }
@@ -674,20 +671,20 @@ body header, body footer { display: none !important; }
 .sr-w-n { color: var(--muted3); }
 .sr-w-cand { display: inline-flex; align-items: baseline; gap: 7px; font-size: 12.5px; color: var(--muted); font-weight: 580; }
 .sr-w-cand i { width: 5px; height: 5px; border-radius: 99px; align-self: center; }
-.sr-w-cand b { font-weight: 680; color: rgba(244,244,239,0.85); }
+.sr-w-cand b { font-weight: 680; color: rgba(var(--ink-rgb),calc(0.85 * var(--mute) + var(--floor))); }
 .sr-w-bar { display: inline-flex; width: 130px; height: 2px; gap: 2px; align-self: center; }
 .sr-w-bar i { height: 100%; border-radius: 99px; }
 .sr-w-note { margin: 0; font-size: 18px; line-height: 1.5; font-weight: 460; color: var(--muted); letter-spacing: -0.012em; max-width: 62ch; }
 .sr-w-note b { color: var(--foreground); font-weight: 640; }
 .sr-wirerow:not(.is-note):hover .sr-w-src { color: var(--foreground); }
-.sr-wirerow:not(.is-note):hover .sr-w-node { background: rgba(244,244,239,0.85); box-shadow: 0 0 8px rgba(244,244,239,0.4); }
+.sr-wirerow:not(.is-note):hover .sr-w-node { background: rgba(var(--ink-rgb),calc(0.85 * var(--mute) + var(--floor))); box-shadow: 0 0 8px rgba(var(--ink-rgb),calc(0.4 * var(--mute) + var(--floor))); }
 .sr-wirerow.is-race:hover .sr-w-node { background: var(--brand-grad); }
-.sr-skel { display: block; height: 12px; border-radius: 3px; background: rgba(255,255,255,0.05); animation: sr-pulse 1.4s ease-in-out infinite; }
+.sr-skel { display: block; height: 12px; border-radius: 3px; background: rgba(var(--line-rgb),0.05); animation: sr-pulse 1.4s ease-in-out infinite; }
 
 /* 02 — the calendar ahead */
 .sr-cal { display: flex; flex-direction: column; padding-top: 14px; }
 .sr-calrow { display: grid; grid-template-columns: 92px 110px minmax(120px, auto) minmax(24px, 1fr) 130px 64px; gap: 16px; align-items: baseline; padding: 16px 0; }
-.sr-cal-date { font-size: 23px; font-weight: 640; letter-spacing: -0.02em; line-height: 1; color: rgba(244,244,239,0.92); transition: color 180ms ease; white-space: nowrap; }
+.sr-cal-date { font-size: 23px; font-weight: 640; letter-spacing: -0.02em; line-height: 1; color: rgba(var(--ink-rgb),calc(0.92 * var(--mute) + var(--floor))); transition: color 180ms ease; white-space: nowrap; }
 .sr-cal-day { font-size: 11px; font-weight: 650; letter-spacing: 0.13em; text-transform: uppercase; color: var(--muted2); }
 .sr-cal-sample { font-size: 13px; font-weight: 550; color: var(--muted); min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .sr-cal-count { font-size: 14.5px; font-weight: 680; font-variant-numeric: tabular-nums; text-align: right; white-space: nowrap; }
@@ -718,21 +715,21 @@ body header, body footer { display: none !important; }
 /* the 100-seat strip */
 .sr-seats { position: relative; display: grid; grid-template-columns: repeat(100, 1fr); gap: 1.6px; height: 17px; margin-top: 6px; }
 .sr-seats i { border-radius: 0.5px; }
-.sr-seam { position: absolute; left: 50%; top: -4px; bottom: -4px; width: 1px; background: rgba(244,244,239,0.55); }
+.sr-seam { position: absolute; left: 50%; top: -4px; bottom: -4px; width: 1px; background: rgba(var(--ink-rgb),calc(0.55 * var(--mute) + var(--floor))); }
 .sr-seam span { position: absolute; top: calc(100% + 4px); left: 50%; transform: translateX(-50%); font-size: 9px; font-weight: 700; letter-spacing: 0.1em; color: var(--muted3); }
 
 /* 04 — the watchlist: dotted leaders + needles */
 .sr-watch { display: flex; flex-direction: column; padding-top: 18px; }
 .sr-watchrow { display: grid; grid-template-columns: 30px 58px minmax(80px, auto) minmax(24px, 1fr) 230px 72px 90px; gap: 16px; align-items: center; padding: 17px 0; }
 .sr-watch-ord { font-size: 10.5px; font-weight: 600; color: var(--muted3); font-variant-numeric: tabular-nums; }
-.sr-watch-st { font-size: 26px; font-weight: 680; letter-spacing: 0.04em; line-height: 1; transition: color 180ms ease; color: rgba(244,244,239,0.92); }
+.sr-watch-st { font-size: 26px; font-weight: 680; letter-spacing: 0.04em; line-height: 1; transition: color 180ms ease; color: rgba(var(--ink-rgb),calc(0.92 * var(--mute) + var(--floor))); }
 .sr-watch-name { font-size: 11px; font-weight: 650; letter-spacing: 0.13em; text-transform: uppercase; color: var(--muted2); white-space: nowrap; }
 .sr-watch-lead { height: 2px; align-self: center;
-  background-image: radial-gradient(circle, rgba(244,244,239,0.22) 0.8px, transparent 1.3px);
+  background-image: radial-gradient(circle, rgba(var(--ink-rgb),calc(0.22 * var(--struct))) 0.8px, transparent 1.3px);
   background-size: 8px 2px; background-repeat: repeat-x; background-position: 0 center; }
 .sr-watch-bar { position: relative; height: 12px; }
-.sr-watch-bar::before { content: ''; position: absolute; left: 0; right: 0; top: 50%; height: 1px; background: rgba(244,244,239,0.13); }
-.sr-watch-seam { position: absolute; left: 50%; top: 0; bottom: 0; width: 1px; background: rgba(244,244,239,0.4); }
+.sr-watch-bar::before { content: ''; position: absolute; left: 0; right: 0; top: 50%; height: 1px; background: rgba(var(--ink-rgb),calc(0.13 * var(--struct))); }
+.sr-watch-seam { position: absolute; left: 50%; top: 0; bottom: 0; width: 1px; background: rgba(var(--ink-rgb),calc(0.4 * var(--mute) + var(--floor))); }
 .sr-watch-fill { position: absolute; top: calc(50% - 1.5px); height: 3px; border-radius: 99px; opacity: 0.85; transition: opacity 180ms ease; }
 .sr-watch-m { font-size: 13.5px; font-weight: 700; font-variant-numeric: tabular-nums; text-align: right; }
 .sr-watch-tag { font-size: 10px; font-weight: 680; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted3); text-align: right; }
@@ -744,7 +741,7 @@ body header, body footer { display: none !important; }
   display: inline-flex; align-items: baseline; gap: 12px; padding: 11px 20px 12px; border-radius: 999px;
   color: var(--foreground); background: color-mix(in srgb, var(--background) 58%, transparent); border: 1px solid var(--border2);
   -webkit-backdrop-filter: blur(18px) saturate(1.3); backdrop-filter: blur(18px) saturate(1.3);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.08), 0 14px 40px rgba(0,0,0,0.3);
+  box-shadow: inset 0 1px 0 rgba(var(--line-rgb),0.08), 0 14px 40px rgba(var(--line-rgb),0.3);
   animation: sr-pill-in 800ms cubic-bezier(0.16,1,0.3,1) 500ms backwards; }
 .sr-pill-dot { width: 6px; height: 6px; border-radius: 999px; background: var(--brand-grad); align-self: center;
   box-shadow: 0 0 10px rgba(109,62,233,0.7); animation: sr-pulse 2s ease-in-out infinite; }

@@ -1234,10 +1234,10 @@ const CSS = `
      scenario engine (changeorders/TPSI_FL_Scenario_Engine_v3.html) so the
      sandbox and the board name each candidate in the same colour. */
   --k1:#B23A2E; --k2:#1E6E86; --k3:#6D4B96; --k4:#A87516; --k5:#8A929C;
-  --map-stroke:rgba(10,10,10,.14); --map-stroke-hi:rgba(10,10,10,.55);
-  --map-hatch:rgba(10,10,10,.22); --map-blank:#dcdcd2;
+  --map-stroke:rgba(var(--canvas-rgb),.14); --map-stroke-hi:rgba(var(--canvas-rgb),.55);
+  --map-hatch:rgba(var(--canvas-rgb),.22); --map-blank:#dcdcd2;
   --ramp-mid:rgb(232,232,226); --ramp-lo:rgb(237,237,231);
-  --tip-shadow:0 10px 30px rgba(23,23,27,.16);
+  --tip-shadow:0 10px 30px rgba(var(--ink-rgb),calc(0.16 * var(--struct)));
   --mono:var(--font-numeric,'JetBrains Mono'),ui-monospace,monospace;
   --sans:var(--font-body,'Geist'),system-ui,sans-serif;
   --r-panel:14px; --r-card:10px; --r-pill:999px;
@@ -1247,10 +1247,10 @@ const CSS = `
 }
 html[data-theme="dark"] .desk{
   --k3:#8a63ef; --k4:#e8b93c;
-  --map-stroke:rgba(255,255,255,.10); --map-stroke-hi:rgba(255,255,255,.55);
-  --map-hatch:rgba(255,255,255,.28); --map-blank:#2e2e36;
+  --map-stroke:rgba(var(--line-rgb),.10); --map-stroke-hi:rgba(var(--line-rgb),.55);
+  --map-hatch:rgba(var(--line-rgb),.28); --map-blank:#2e2e36;
   --ramp-mid:rgb(58,58,66); --ramp-lo:rgb(30,30,36);
-  --tip-shadow:0 10px 30px rgba(0,0,0,.45);
+  --tip-shadow:0 10px 30px rgba(var(--line-rgb),.45);
 }
 
 .desk *{margin:0;padding:0;box-sizing:border-box}
@@ -1475,7 +1475,7 @@ html[data-theme="dark"] .desk{
 .rd-map-toggles button{padding:5px 13px;border-radius:999px;border:0;background:none;cursor:pointer;
   font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.08em;
   text-transform:uppercase;color:var(--ink3);transition:background .15s ease,color .15s ease}
-.rd-map-toggles button.on{background:var(--ink);color:var(--panel)}
+.rd-map-toggles button.on{background:var(--canvas);color:var(--panel)}
 .rd-map{position:relative;height:clamp(380px,54vh,580px);width:100%;border-radius:var(--r-panel);
   overflow:hidden;background:var(--panel2);border:1px solid var(--hairline)}
 .rd-map-legend{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:12px;
@@ -1519,7 +1519,7 @@ html[data-theme="dark"] .desk{
   font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.06em;
   text-transform:uppercase;color:var(--ink3);transition:background .15s ease,color .15s ease}
 .rd-county-sorts button:hover{color:var(--ink2)}
-.rd-county-sorts button.on{background:var(--ink);color:var(--panel)}
+.rd-county-sorts button.on{background:var(--canvas);color:var(--panel)}
 .rd-county-tablewrap{max-height:520px;overflow:auto;border:1px solid var(--hairline);
   border-radius:12px;background:var(--panel)}
 .rd-county-table{width:100%;border-collapse:collapse;font-family:var(--sans);font-size:13px;
@@ -1568,7 +1568,7 @@ html[data-theme="dark"] .desk{
 .fl-hatch-line{stroke:var(--map-hatch)}
 .fl-zoom{position:absolute;right:10px;bottom:10px;display:flex;flex-direction:column;gap:1px;
   border-radius:9px;overflow:hidden;border:1px solid var(--hairline2);background:var(--panel);
-  box-shadow:0 4px 14px rgba(0,0,0,.18)}
+  box-shadow:0 4px 14px rgba(var(--line-rgb),.18)}
 .fl-zoom button{width:30px;height:28px;border:0;background:var(--panel);color:var(--ink2);
   cursor:pointer;font-family:var(--mono);font-size:14px;line-height:1;font-weight:700;
   display:grid;place-items:center;transition:background .12s ease,color .12s ease}

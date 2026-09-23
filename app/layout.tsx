@@ -1,7 +1,7 @@
 import "./globals.css";
 
 import type { Metadata } from "next";
-import Navbar from "./components/Navbar";
+import DarkNav from "./components/DarkNav";
 import Footer from "./components/Footer";
 import { SITE_V2 } from "./lib/flags";
 import RolloutGate from "./components/RolloutGate";
@@ -126,15 +126,8 @@ export default function RootLayout({
 
           {/* HEADER */}
           <header className="w-full min-w-0">
-            <Navbar />
+            <DarkNav />
 
-            <div
-              className="h-[2px] w-full"
-              style={{
-                background: "var(--brand-grad)",
-                opacity: 0.55,
-              }}
-            />
           </header>
 
           {/* MAIN */}

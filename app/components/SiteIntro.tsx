@@ -101,12 +101,12 @@ export default function SiteIntro() {
           -webkit-backdrop-filter: blur(32px) saturate(1.75); backdrop-filter: blur(32px) saturate(1.75);
           border-radius: 22px;
           /* edge light: bright bevel above, falloff below — not a flat border */
-          border: 1px solid rgba(255, 255, 255, 0.12);
+          border: 1px solid rgba(var(--line-rgb),0.12);
           box-shadow:
-            inset 0 1px 0 rgba(255, 255, 255, 0.18),
-            inset 0 -1px 0 rgba(255, 255, 255, 0.03),
-            0 40px 110px rgba(0, 0, 0, 0.58),
-            0 2px 12px rgba(0, 0, 0, 0.38);
+            inset 0 1px 0 rgba(var(--line-rgb),0.18),
+            inset 0 -1px 0 rgba(var(--line-rgb),0.03),
+            0 40px 110px rgba(var(--line-rgb),0.58),
+            0 2px 12px rgba(var(--line-rgb),0.38);
           overflow: hidden;
           transform: translateY(14px) scale(0.975);
           transition: transform 420ms cubic-bezier(0.22, 1, 0.36, 1), width 480ms cubic-bezier(0.22, 1, 0.36, 1);
@@ -115,8 +115,8 @@ export default function SiteIntro() {
         .psi-intro-panel::before {
           content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none;
           background:
-            radial-gradient(130% 55% at 16% -4%, rgba(255, 255, 255, 0.11), transparent 52%),
-            linear-gradient(115deg, transparent 42%, rgba(255, 255, 255, 0.045) 50%, transparent 58%);
+            radial-gradient(130% 55% at 16% -4%, rgba(var(--line-rgb),0.11), transparent 52%),
+            linear-gradient(115deg, transparent 42%, rgba(var(--line-rgb),0.045) 50%, transparent 58%);
         }
         /* fine grain so the glass doesn't band */
         .psi-intro-panel::after {
@@ -134,7 +134,7 @@ export default function SiteIntro() {
         .psi-intro-art {
           position: relative; aspect-ratio: 1954 / 1234;
           background: #060608;
-          border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+          border-bottom: 1px solid rgba(var(--line-rgb),0.07);
         }
         .psi-intro-art img {
           position: absolute; inset: 0; width: 100%; height: 100%;
@@ -146,28 +146,28 @@ export default function SiteIntro() {
         }
         .psi-intro-body { padding: 26px 28px 28px; text-align: center; }
         .psi-intro-body h2 {
-          margin: 0 0 10px; color: #f5f5f2;
+          margin: 0 0 10px; color: var(--ink);
           font-family: inherit;
           font-size: 21px; line-height: 1.3; font-weight: 800;
           letter-spacing: -0.01em; text-transform: none; text-wrap: balance;
         }
         .psi-intro-body p {
           margin: 0 auto 24px; max-width: 44ch;
-          color: rgba(245, 245, 242, 0.7);
+          color: rgba(var(--ink-rgb),calc(0.7 * var(--mute) + var(--floor)));
           font-size: 14px; line-height: 1.6; font-weight: 500;
         }
         .psi-intro-btn {
           display: block; width: 100%; padding: 13px 18px;
           border: 0; border-radius: 999px; cursor: pointer;
-          background: #f5f5f2; color: #0a0a0c;
+          background: var(--ink); color: var(--canvas);
           font-family: inherit; font-size: 14.5px; font-weight: 600;
           line-height: 1; letter-spacing: 0.01em;
           transition: transform 160ms ease, background 160ms ease;
-          box-shadow: 0 10px 26px rgba(0, 0, 0, 0.38), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+          box-shadow: 0 10px 26px rgba(var(--line-rgb),0.38), inset 0 1px 0 rgba(var(--line-rgb),0.9);
         }
         .psi-intro-btn:hover { background: #ffffff; }
         .psi-intro-btn:active { transform: scale(0.985); }
-        .psi-intro-btn:focus-visible { outline: 2px solid rgba(245,245,242,0.6); outline-offset: 3px; }
+        .psi-intro-btn:focus-visible { outline: 2px solid rgba(var(--ink-rgb),calc(0.6 * var(--mute) + var(--floor))); outline-offset: 3px; }
 
         /* beat 2 — the demo: video left, words right. The film's native
            2560:1618 ratio sets the row height so nothing gets cropped short */
@@ -175,7 +175,7 @@ export default function SiteIntro() {
         .psi-intro-film {
           position: relative; background: #060608;
           aspect-ratio: 2560 / 1618; height: auto;
-          border-right: 1px solid rgba(255, 255, 255, 0.07);
+          border-right: 1px solid rgba(var(--line-rgb),0.07);
         }
         .psi-intro-film video {
           position: absolute; inset: 0; width: 100%; height: 100%;
@@ -186,17 +186,17 @@ export default function SiteIntro() {
           padding: 36px 34px; text-align: left; min-height: 0;
         }
         .psi-intro-side h2 {
-          margin: 0 0 10px; color: #f5f5f2; font-family: inherit;
+          margin: 0 0 10px; color: var(--ink); font-family: inherit;
           font-size: 20px; line-height: 1.3; font-weight: 800; letter-spacing: -0.01em;
           text-transform: none;
         }
         .psi-intro-side p {
-          margin: 0 0 24px; color: rgba(245, 245, 242, 0.7);
+          margin: 0 0 24px; color: rgba(var(--ink-rgb),calc(0.7 * var(--mute) + var(--floor)));
           font-size: 13.5px; line-height: 1.65; font-weight: 500;
         }
         .psi-intro-dots { display: flex; gap: 5px; margin-bottom: 16px; }
-        .psi-intro-dots i { width: 5px; height: 5px; border-radius: 99px; background: rgba(245,245,242,0.22); }
-        .psi-intro-dots i.on { width: 16px; background: rgba(245,245,242,0.85); }
+        .psi-intro-dots i { width: 5px; height: 5px; border-radius: 99px; background: rgba(var(--ink-rgb),calc(0.22 * var(--struct))); }
+        .psi-intro-dots i.on { width: 16px; background: rgba(var(--ink-rgb),calc(0.85 * var(--mute) + var(--floor))); }
         @media (prefers-reduced-motion: reduce) {
           .psi-intro, .psi-intro-panel, .psi-intro-page { transition: none; transform: none; animation: none; }
         }
@@ -204,7 +204,7 @@ export default function SiteIntro() {
           .psi-intro { padding: 16px; }
           .psi-intro-body { padding: 22px 20px 22px; }
           .psi-intro-duo { grid-template-columns: 1fr; }
-          .psi-intro-film { aspect-ratio: 2560 / 1618; border-right: 0; border-bottom: 1px solid rgba(255,255,255,0.07); }
+          .psi-intro-film { aspect-ratio: 2560 / 1618; border-right: 0; border-bottom: 1px solid rgba(var(--line-rgb),0.07); }
           .psi-intro-film video { position: absolute; }
           .psi-intro-side { padding: 22px 20px; }
         }

@@ -1,10 +1,12 @@
-// Inline env check + dynamic import so the bundler drops the unrendered
-// site version from the client graph entirely — see app/lib/flags.ts.
-export default async function Page() {
-  if (process.env.NEXT_PUBLIC_SITE_V2 === "on") {
-    const { default: ElectoralMapV2 } = await import("./ElectoralMapV2");
-    return <ElectoralMapV2 />;
-  }
-  const { default: ElectoralMapV1 } = await import("./ElectoralMapV1");
-  return <ElectoralMapV1 />;
+import type { Metadata } from "next";
+import ElectoralBoard from "./ElectoralBoard";
+
+export const metadata: Metadata = {
+  title: "Electoral Map · TPSI",
+  description:
+    "Flip the 2026 board. Governor, Senate and House scenarios starting from the TPSI forecast, with a live seat count and a shareable link.",
+};
+
+export default function ElectoralMapPage() {
+  return <ElectoralBoard />;
 }

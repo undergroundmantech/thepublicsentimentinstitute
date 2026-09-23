@@ -1,16 +1,16 @@
 // app/polling/senatepolling/florida.ts
-// Florida (FL) — 2026 Senate (Special per your model)
-// Matchup: Ashley Moody (R) vs Jennifer Jenkins (D)
-// Source snippet provided by user (UNF Oct 15–25, 2025; Tyson Group Oct 1–3, 2025)
+// Florida — 2026 U.S. Senate: Angie Nixon (D) vs. Ashley Moody (R)
+// Generated from the TPSI forecast poll feed (run of 2026-09-22), merged with
+// the polls this file already carried. Polls of matchups that are not on the
+// ballot were dropped. Newest poll: 2026-09-21.
 
 export type SampleType = "LV" | "RV" | "A";
 
 export type Poll = {
-  raceId: string; // e.g. "FL-SEN-2026-MOODY-v-JENKINS"
+  raceId: string;
   pollster: string;
-  sponsor?: string;
   startDate: string; // YYYY-MM-DD
-  endDate: string; // YYYY-MM-DD
+  endDate: string;   // YYYY-MM-DD
   sampleSize: number;
   sampleType: SampleType;
   moe?: number;
@@ -23,82 +23,22 @@ export const STATE = {
   name: "Florida",
 };
 
-export const DEFAULT_RACE_ID = "FL-SEN-2026-MOODY-v-JENKINS";
+export const DEFAULT_RACE_ID = "FL-SEN-2026";
 
 export const RACES = [
   {
-    raceId: DEFAULT_RACE_ID,
+    raceId: "FL-SEN-2026",
     office: "U.S. Senate",
     year: 2026,
-    candidates: ["Ashley Moody (R)", "Jennifer Jenkins (D)"],
+    candidates: ["Angie Nixon (D)", "Ashley Moody (R)"],
   },
 ] as const;
 
-/**
- * Notes:
- * - UNF line appears to include two result lines (likely two ballot tests/frames).
- *   We store them as separate Poll entries with the same field dates.
- * - UNF reports "Other" = 3% and Undecided = 10% on first line.
- *   Second line: 47–37 with Other=3 and Undecided=13.
- * - Tyson Group reports no "Other"; only Undecided 19.
- */
 export const STATE_POLLS: Record<string, Poll[]> = {
   FL: [
-    // UNF (line 1)
-    {
-      raceId: DEFAULT_RACE_ID,
-      pollster: "University of North Florida",
-      startDate: "2025-10-15",
-      endDate: "2025-10-25",
-      sampleSize: 728,
-      sampleType: "LV",
-      moe: 4.3,
-      results: {
-        "Ashley Moody (R)": 49,
-        "Jennifer Jenkins (D)": 38,
-        Other: 3,
-        Undecided: 10,
-      },
-      notes: "UNF table line 1 (49–38, Other 3, Und 10).",
-    },
-
-    // UNF (line 2)
-    {
-      raceId: DEFAULT_RACE_ID,
-      pollster: "University of North Florida",
-      startDate: "2025-10-15",
-      endDate: "2025-10-25",
-      sampleSize: 728,
-      sampleType: "LV",
-      moe: 4.3,
-      results: {
-        "Ashley Moody (R)": 47,
-        "Jennifer Jenkins (D)": 37,
-        Other: 3,
-        Undecided: 13,
-      },
-      notes: "UNF table line 2 (47–37, Other 3, Und 13).",
-    },
-
-    // Tyson Group
-    {
-      raceId: DEFAULT_RACE_ID,
-      pollster: "The Tyson Group",
-      sponsor: "(R)",
-      startDate: "2025-10-01",
-      endDate: "2025-10-03",
-      sampleSize: 800,
-      sampleType: "LV",
-      results: {
-        "Ashley Moody (R)": 44,
-        "Jennifer Jenkins (D)": 37,
-        Undecided: 19,
-      },
-      notes: "Other not reported in table; undecided 19%.",
-    },
+    {"raceId": "FL-SEN-2026", "pollster": "Change Research (D)", "startDate": "2026-09-07", "endDate": "2026-09-09", "sampleSize": 1107, "sampleType": "LV", "results": {"Angie Nixon (D)": 47.0, "Ashley Moody (R)": 47.0, "Other": 1.0, "Undecided": 5.0}},
+    {"raceId": "FL-SEN-2026", "pollster": "Quantus Insights (R)", "startDate": "2026-09-08", "endDate": "2026-09-10", "sampleSize": 733, "sampleType": "LV", "results": {"Angie Nixon (D)": 43.0, "Ashley Moody (R)": 50.0, "Other": 3.0, "Undecided": 4.0}},
+    {"raceId": "FL-SEN-2026", "pollster": "St. Pete Polls", "startDate": "2026-09-15", "endDate": "2026-09-17", "sampleSize": 913, "sampleType": "LV", "results": {"Angie Nixon (D)": 45.0, "Ashley Moody (R)": 45.0, "Other": 3.0, "Undecided": 7.0}},
+    {"raceId": "FL-SEN-2026", "pollster": "InsiderAdvantage (R)", "startDate": "2026-09-20", "endDate": "2026-09-21", "sampleSize": 600, "sampleType": "LV", "results": {"Angie Nixon (D)": 42.0, "Ashley Moody (R)": 49.0, "Other": 2.0, "Undecided": 7.0}}
   ],
 };
-
-export function getPollsForRace(raceId: string): Poll[] {
-  return (STATE_POLLS.FL ?? []).filter((p) => p.raceId === raceId);
-}

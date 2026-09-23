@@ -319,9 +319,9 @@ const CSS = `
   .mcc .recharts-surface { overflow: visible; }
 
   .mcc-flag { position: absolute; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; border-radius: 8px; }
-  .mcc-flag-stripes { position: absolute; inset: 0; background: repeating-linear-gradient(180deg, rgba(229,72,77,0.038) 0, rgba(229,72,77,0.038) 7.6923%, rgba(255,255,255,0.015) 7.6923%, rgba(255,255,255,0.015) 15.3846%); }
+  .mcc-flag-stripes { position: absolute; inset: 0; background: repeating-linear-gradient(180deg, rgba(229,72,77,0.038) 0, rgba(229,72,77,0.038) 7.6923%, rgba(var(--line-rgb),0.015) 7.6923%, rgba(var(--line-rgb),0.015) 15.3846%); }
   .mcc-flag-canton { position: absolute; left: 0; top: 0; width: 38%; height: 53.84%; background: rgba(70,116,206,0.055); }
-  .mcc-flag-stars { position: absolute; inset: 0; background-image: radial-gradient(rgba(255,255,255,0.11) 0.6px, transparent 0.7px); background-size: 9.5% 18%; background-position: 4% 9%; }
+  .mcc-flag-stars { position: absolute; inset: 0; background-image: radial-gradient(rgba(var(--line-rgb),0.11) 0.6px, transparent 0.7px); background-size: 9.5% 18%; background-position: 4% 9%; }
 
   .mcc-hit { position: absolute; pointer-events: auto; cursor: crosshair; z-index: 3; touch-action: pan-y; }
   .mcc-hit > * { pointer-events: none; }

@@ -17,10 +17,11 @@ import { geoContains } from "d3-geo";
  */
 
 import { SENATE_MODEL, senateBalance } from "./senateModel";
+import { cssColor } from "@/app/lib/cssColor";
 
 
 
-const IVORY = "#f4f4ef";
+const IVORY = "var(--ink)";
 const cl01 = (v: number) => Math.max(0, Math.min(1, v));
 const easeOutCubic = (t: number) => 1 - Math.pow(1 - t, 3);
 
@@ -39,9 +40,9 @@ function makeCircleSprite(size = 64) {
   c.width = c.height = size;
   const g = c.getContext("2d")!;
   const grad = g.createRadialGradient(size / 2, size / 2, 0, size / 2, size / 2, size / 2);
-  grad.addColorStop(0, "rgba(255,255,255,1)");
-  grad.addColorStop(0.45, "rgba(255,255,255,0.9)");
-  grad.addColorStop(1, "rgba(255,255,255,0)");
+  grad.addColorStop(0, cssColor("rgba(var(--line-rgb),1)"));
+  grad.addColorStop(0.45, cssColor("rgba(var(--line-rgb),0.9)"));
+  grad.addColorStop(1, cssColor("rgba(var(--line-rgb),0)"));
   g.fillStyle = grad;
   g.fillRect(0, 0, size, size);
   const tex = new THREE.CanvasTexture(c);
@@ -284,7 +285,7 @@ export default function SentimentGlobe() {
         </div>
 
         <div className={`gl-dock${phase >= 1 ? " is-in" : ""}`}>
-          <Link href="/forecastratings" className="gl-cta">Open the forecast &rarr;</Link>
+          <Link href="/forecast" className="gl-cta">Open the forecast &rarr;</Link>
         </div>
 
         <div className={`gl-readout${phase >= 2 ? " is-in" : ""}`} aria-hidden={phase < 2}>
@@ -307,7 +308,7 @@ export default function SentimentGlobe() {
 
       <style>{`
         /* Top corners stay rounded so the panel reads as riding over the white finale */
-        .gl-wrap { position: relative; width: 100vw; margin: 0 calc(50% - 50vw); height: 320vh; background: #050505; border-radius: 36px 36px 0 0; }
+        .gl-wrap { position: relative; width: 100vw; margin: 0 calc(50% - 50vw); height: 320vh; background: var(--canvas); border-radius: 36px 36px 0 0; }
         .gl-sticky { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; border-radius: 36px 36px 0 0; }
         .gl-canvas, .gl-canvas canvas { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 2; }
         .gl-shine {
@@ -346,32 +347,32 @@ export default function SentimentGlobe() {
           display: flex; flex-direction: column; align-items: center; text-align: center;
           opacity: 0; transition: opacity 700ms ease, transform 900ms cubic-bezier(.16,1,.3,1); pointer-events: none; }
         .gl-copy.is-in { opacity: 1; transform: translate(-50%, 0); }
-        .gl-eyebrow { display: flex; align-items: center; gap: 14px; font-size: 12px; font-weight: 700; letter-spacing: 1.9px; text-transform: uppercase; color: rgba(244,244,239,0.46); }
-        .gl-rule { width: 40px; height: 1px; background: rgba(255,255,255,0.3); }
-        .gl-copy h2 { margin: 24px 0 0; font-size: clamp(46px, 6.2vw, 96px); line-height: 0.96; letter-spacing: -0.035em; font-weight: 540; color: #f4f4ef; text-wrap: balance; text-shadow: 0 2px 36px rgba(5, 5, 9, 0.55); }
-        .gl-copy p { margin: 20px auto 0; font-size: clamp(15px, 1.3vw, 18px); line-height: 1.45; color: rgba(244,244,239,0.55); max-width: 52ch; text-wrap: balance; }
+        .gl-eyebrow { display: flex; align-items: center; gap: 14px; font-size: 12px; font-weight: 700; letter-spacing: 1.9px; text-transform: uppercase; color: rgba(var(--ink-rgb),calc(0.46 * var(--mute) + var(--floor))); }
+        .gl-rule { width: 40px; height: 1px; background: rgba(var(--line-rgb),0.3); }
+        .gl-copy h2 { margin: 24px 0 0; font-size: clamp(46px, 6.2vw, 96px); line-height: 0.96; letter-spacing: -0.035em; font-weight: 540; color: var(--ink); text-wrap: balance; text-shadow: 0 2px 36px rgba(5, 5, 9, 0.55); }
+        .gl-copy p { margin: 20px auto 0; font-size: clamp(15px, 1.3vw, 18px); line-height: 1.45; color: rgba(var(--ink-rgb),calc(0.55 * var(--mute) + var(--floor))); max-width: 52ch; text-wrap: balance; }
         .gl-dock { position: absolute; left: clamp(24px, 5vw, 80px); bottom: clamp(28px, 6vh, 64px); z-index: 3;
           opacity: 0; transform: translateY(14px); transition: opacity 600ms ease 200ms, transform 800ms cubic-bezier(.16,1,.3,1) 200ms; }
         .gl-dock.is-in { opacity: 1; transform: translateY(0); }
         .gl-lime { font-style: normal; color: #6d3ee9; font-weight: 650; }
-        .gl-cta { display: inline-flex; align-items: center; gap: 9px; margin-top: 28px; padding: 13px 26px; border-radius: 999px; background: #f4f4ef; color: #050505;
+        .gl-cta { display: inline-flex; align-items: center; gap: 9px; margin-top: 28px; padding: 13px 26px; border-radius: 999px; background: var(--ink); color: var(--canvas);
           font-size: 15px; font-weight: 650; text-decoration: none; transition: transform 220ms cubic-bezier(.2,.8,.2,1), box-shadow 220ms ease; }
         .gl-cta:hover { transform: translateY(-2px); box-shadow: 0 18px 44px rgba(109,62,233,0.32); }
         .gl-readout { position: absolute; right: clamp(24px, 5vw, 80px); bottom: clamp(28px, 6vh, 64px); z-index: 3; text-align: right;
           opacity: 0; transform: translateY(16px); transition: opacity 600ms ease, transform 800ms cubic-bezier(.16,1,.3,1); }
         .gl-readout.is-in { opacity: 1; transform: translateY(0); }
-        .gl-readout-label { font-size: 11px; font-weight: 700; letter-spacing: 1.8px; text-transform: uppercase; color: rgba(244,244,239,0.42); }
+        .gl-readout-label { font-size: 11px; font-weight: 700; letter-spacing: 1.8px; text-transform: uppercase; color: rgba(var(--ink-rgb),calc(0.42 * var(--mute) + var(--floor))); }
         .gl-readout-num { display: flex; align-items: flex-start; justify-content: flex-end; gap: 18px; margin-top: 10px; }
         .gl-readout-side { display: flex; align-items: baseline; gap: 9px; }
         .gl-readout-side b { font-size: clamp(42px, 4.4vw, 60px); line-height: 0.9; font-weight: 470; letter-spacing: -0.025em; font-variant-numeric: tabular-nums; color: #f6f4f0; }
-        .gl-readout-side i { font-style: normal; font-size: 10.5px; font-weight: 700; letter-spacing: 1.6px; text-transform: uppercase; color: rgba(244,244,239,0.38); }
-        .gl-readout-rule { width: 1px; align-self: stretch; background: linear-gradient(180deg, rgba(244,244,239,0.3), rgba(244,244,239,0.05)); }
-        .gl-readout-hot { display: flex; justify-content: flex-end; flex-wrap: wrap; gap: 7px; margin-top: 16px; font-size: 11.5px; font-weight: 580; letter-spacing: 0.3px; color: rgba(244,244,239,0.48); font-variant-numeric: tabular-nums; }
-        .gl-readout-hot em { font-style: normal; margin-right: 7px; color: rgba(244,244,239,0.25); }
+        .gl-readout-side i { font-style: normal; font-size: 10.5px; font-weight: 700; letter-spacing: 1.6px; text-transform: uppercase; color: rgba(var(--ink-rgb),calc(0.38 * var(--mute) + var(--floor))); }
+        .gl-readout-rule { width: 1px; align-self: stretch; background: linear-gradient(180deg, rgba(var(--ink-rgb),calc(0.3 * var(--mute) + var(--floor))), rgba(var(--ink-rgb),calc(0.05 * var(--struct)))); }
+        .gl-readout-hot { display: flex; justify-content: flex-end; flex-wrap: wrap; gap: 7px; margin-top: 16px; font-size: 11.5px; font-weight: 580; letter-spacing: 0.3px; color: rgba(var(--ink-rgb),calc(0.48 * var(--mute) + var(--floor))); font-variant-numeric: tabular-nums; }
+        .gl-readout-hot em { font-style: normal; margin-right: 7px; color: rgba(var(--ink-rgb),calc(0.25 * var(--struct))); }
         @media (max-width: 980px) {
           .gl-wrap { height: 280vh; }
           .gl-sticky:after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 48vh; z-index: 2;
-            background: linear-gradient(180deg, transparent, rgba(5,5,5,0.82) 62%); pointer-events: none; }
+            background: linear-gradient(180deg, transparent, rgba(var(--canvas-rgb),0.82) 62%); pointer-events: none; }
           .gl-copy { top: clamp(70px, 10vh, 110px); }
           .gl-copy h2 { font-size: clamp(34px, 9.4vw, 52px); }
           .gl-readout { right: 18px; bottom: 100px; }

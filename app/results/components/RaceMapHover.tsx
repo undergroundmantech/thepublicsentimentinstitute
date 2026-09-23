@@ -110,7 +110,7 @@ export default function RaceMapHover({ race, mode = "margin" }: { race: any; mod
           const region = byKey[regionKey(race.province, nm) || ""] || null;
           const pretty = region?.name || nm.toLowerCase().replace(/\b\w/g, (m: string) => m.toUpperCase());
           const fill = !region
-            ? "rgba(244,244,239,0.04)"
+            ? "rgba(var(--ink-rgb),calc(0.04 * var(--struct)))"
             : mode === "remaining"
             ? remainingFill(region)
             : mode === "results"
@@ -170,7 +170,7 @@ export default function RaceMapHover({ race, mode = "margin" }: { race: any; mod
 
   if (failed) {
     return (
-      <div style={{ display: "grid", placeItems: "center", height: "100%", color: "rgba(244,244,239,0.35)", fontSize: 13 }}>
+      <div style={{ display: "grid", placeItems: "center", height: "100%", color: "rgba(var(--ink-rgb),calc(0.35 * var(--mute) + var(--floor)))", fontSize: 13 }}>
         map unavailable for this race
       </div>
     );
@@ -194,7 +194,7 @@ export default function RaceMapHover({ race, mode = "margin" }: { race: any; mod
                 key={i}
                 d={s.d}
                 fill={s.fill}
-                stroke={s.faint ? "rgba(244,244,239,0.07)" : "rgba(5,5,5,0.55)"}
+                stroke={s.faint ? "rgba(var(--ink-rgb),calc(0.07 * var(--struct)))" : "rgba(var(--canvas-rgb),0.55)"}
                 strokeWidth={0.7}
                 strokeLinejoin="round"
                 style={{ cursor: s.region ? "crosshair" : "default", transition: "filter .12s ease" }}
@@ -203,7 +203,7 @@ export default function RaceMapHover({ race, mode = "margin" }: { race: any; mod
               />
             ))}
             {hover && shapes[hover.i] ? (
-              <path d={shapes[hover.i].d} fill="none" stroke="#f4f4ef" strokeWidth={1.4} strokeLinejoin="round" pointerEvents="none" />
+              <path d={shapes[hover.i].d} fill="none" stroke="var(--ink)" strokeWidth={1.4} strokeLinejoin="round" pointerEvents="none" />
             ) : null}
           </g>
         ) : null}
@@ -217,28 +217,28 @@ export default function RaceMapHover({ race, mode = "margin" }: { race: any; mod
               borderRadius: 8, overflow: "hidden",
               background: "linear-gradient(180deg, rgba(28,30,37,0.72) 0%, rgba(17,18,23,0.78) 60%)",
               backdropFilter: "blur(22px) saturate(165%)", WebkitBackdropFilter: "blur(22px) saturate(165%)",
-              boxShadow: "0 18px 46px -16px rgba(0,0,0,0.66), inset 0 1px 0 rgba(255,255,255,0.08), 0 0 0 1px rgba(255,255,255,0.08)",
+              boxShadow: "0 18px 46px -16px rgba(var(--line-rgb),0.66), inset 0 1px 0 rgba(var(--line-rgb),0.08), 0 0 0 1px rgba(var(--line-rgb),0.08)",
             }}
           >
-            <div style={{ padding: "10px 16px", background: `linear-gradient(180deg, ${tip.lead} 0%, ${tip.lead}d9 100%)`, boxShadow: "inset 0 -1px 0 rgba(0,0,0,0.30)" }}>
+            <div style={{ padding: "10px 16px", background: `linear-gradient(180deg, ${tip.lead} 0%, ${tip.lead}d9 100%)`, boxShadow: "inset 0 -1px 0 rgba(var(--line-rgb),0.30)" }}>
               <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", gap: 12 }}>
                 <div style={{ fontSize: 15, fontWeight: 800, textTransform: "uppercase", letterSpacing: "-0.01em", color: "#fff", lineHeight: 1.06, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", fontFamily: '"Instrument Sans", system-ui, sans-serif' }}>
                   {tip.s.name}
                 </div>
-                <div style={{ fontSize: 9, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.18em", color: "rgba(255,255,255,0.7)", whiteSpace: "nowrap", fontFamily: '"Instrument Sans", system-ui, sans-serif' }}>
+                <div style={{ fontSize: 9, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.18em", color: "rgba(var(--ink-rgb),calc(0.7 * var(--mute) + var(--floor)))", whiteSpace: "nowrap", fontFamily: '"Instrument Sans", system-ui, sans-serif' }}>
                   {race.province} · {race.election_type || "Race"}
                 </div>
               </div>
             </div>
 
             {tip.banner ? (
-              <div style={{ padding: "6px 16px", fontSize: 10, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.18em", lineHeight: 1, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", background: tip.winner ? `${tip.lead}1c` : "rgba(255,255,255,0.025)", color: tip.winner ? tip.lead : "#9aa1ac", borderBottom: "1px solid rgba(255,255,255,0.05)", fontFamily: '"Instrument Sans", system-ui, sans-serif' }}>
+              <div style={{ padding: "6px 16px", fontSize: 10, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.18em", lineHeight: 1, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", background: tip.winner ? `${tip.lead}1c` : "rgba(var(--line-rgb),0.025)", color: tip.winner ? tip.lead : "#9aa1ac", borderBottom: "1px solid rgba(var(--line-rgb),0.05)", fontFamily: '"Instrument Sans", system-ui, sans-serif' }}>
                 {tip.banner}
               </div>
             ) : null}
 
             {!tip.has ? (
-              <div style={{ padding: "12px 16px", fontSize: 11.5, color: "rgba(241,236,225,0.6)", lineHeight: 1.45, fontFamily: '"Instrument Sans", system-ui, sans-serif' }}>
+              <div style={{ padding: "12px 16px", fontSize: 11.5, color: "rgba(var(--ink-rgb),calc(0.6 * var(--mute) + var(--floor)))", lineHeight: 1.45, fontFamily: '"Instrument Sans", system-ui, sans-serif' }}>
                 No votes reported here yet.
               </div>
             ) : (
@@ -251,7 +251,7 @@ export default function RaceMapHover({ race, mode = "margin" }: { race: any; mod
                       key={c.name || idx}
                       style={{
                         position: "relative", display: "flex", alignItems: "center", height: 34, paddingRight: 16,
-                        borderTop: idx ? "1px solid rgba(255,255,255,0.05)" : "none",
+                        borderTop: idx ? "1px solid rgba(var(--line-rgb),0.05)" : "none",
                         background: win ? `linear-gradient(90deg, ${col}26 0%, ${col}10 55%, transparent 100%)` : "transparent",
                         fontFamily: '"Instrument Sans", system-ui, sans-serif',
                       }}
@@ -265,16 +265,16 @@ export default function RaceMapHover({ race, mode = "margin" }: { race: any; mod
                           </svg>
                         ) : null}
                       </span>
-                      <span style={{ flex: 1, minWidth: 0, fontSize: 14, lineHeight: 1, letterSpacing: "-0.01em", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", fontWeight: win ? 800 : 700, color: win ? "#f6f1e6" : "rgba(241,236,225,0.92)" }}>
+                      <span style={{ flex: 1, minWidth: 0, fontSize: 14, lineHeight: 1, letterSpacing: "-0.01em", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", fontWeight: win ? 800 : 700, color: win ? "#f6f1e6" : "rgba(var(--ink-rgb),calc(0.92 * var(--mute) + var(--floor)))" }}>
                         {c.name}
                         {c.party && c.party !== "Nonpartisan" ? (
-                          <span style={{ color: "rgba(241,236,225,0.4)", fontWeight: 500, fontSize: 11 }}> {c.party}</span>
+                          <span style={{ color: "rgba(var(--ink-rgb),calc(0.4 * var(--mute) + var(--floor)))", fontWeight: 500, fontSize: 11 }}> {c.party}</span>
                         ) : null}
                       </span>
-                      <span style={{ fontFamily: '"JetBrains Mono", ui-monospace, monospace', fontSize: 12, color: "rgba(241,236,225,0.5)", fontVariantNumeric: "tabular-nums", marginRight: 16 }}>
+                      <span style={{ fontFamily: '"JetBrains Mono", ui-monospace, monospace', fontSize: 12, color: "rgba(var(--ink-rgb),calc(0.5 * var(--mute) + var(--floor)))", fontVariantNumeric: "tabular-nums", marginRight: 16 }}>
                         {fmtInt(c.votes || 0)}
                       </span>
-                      <span style={{ fontSize: 14, fontVariantNumeric: "tabular-nums", letterSpacing: "-0.02em", width: 58, textAlign: "right", fontWeight: win ? 800 : 700, color: win ? "#f6f1e6" : "rgba(241,236,225,0.75)" }}>
+                      <span style={{ fontSize: 14, fontVariantNumeric: "tabular-nums", letterSpacing: "-0.02em", width: 58, textAlign: "right", fontWeight: win ? 800 : 700, color: win ? "#f6f1e6" : "rgba(var(--ink-rgb),calc(0.75 * var(--mute) + var(--floor)))" }}>
                         {(Number(c.percent) || 0).toFixed(1)}%
                       </span>
                     </div>
@@ -283,8 +283,8 @@ export default function RaceMapHover({ race, mode = "margin" }: { race: any; mod
               </div>
             )}
 
-            <div style={{ padding: "8px 16px 10px", borderTop: "1px solid rgba(255,255,255,0.08)", fontFamily: '"Instrument Sans", system-ui, sans-serif' }}>
-              <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", gap: 8, fontSize: 9.5, color: "rgba(241,236,225,0.5)", lineHeight: 1 }}>
+            <div style={{ padding: "8px 16px 10px", borderTop: "1px solid rgba(var(--line-rgb),0.08)", fontFamily: '"Instrument Sans", system-ui, sans-serif' }}>
+              <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", gap: 8, fontSize: 9.5, color: "rgba(var(--ink-rgb),calc(0.5 * var(--mute) + var(--floor)))", lineHeight: 1 }}>
                 <span style={{ whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
                   {tip.has ? `${fmtInt(tip.tot)} votes · civicAPI` : "awaiting results · civicAPI"}
                 </span>
@@ -294,7 +294,7 @@ export default function RaceMapHover({ race, mode = "margin" }: { race: any; mod
                   </span>
                 ) : null}
               </div>
-              <div style={{ marginTop: 6, height: 3, width: "100%", borderRadius: 99, overflow: "hidden", background: "rgba(255,255,255,0.06)" }} aria-hidden>
+              <div style={{ marginTop: 6, height: 3, width: "100%", borderRadius: 99, overflow: "hidden", background: "rgba(var(--line-rgb),0.06)" }} aria-hidden>
                 <div style={{ height: "100%", width: `${tip.rep}%`, background: tip.lead, transition: "width 360ms ease" }} />
               </div>
             </div>

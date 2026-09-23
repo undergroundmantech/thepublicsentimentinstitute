@@ -4,7 +4,6 @@ export const GOLD_STANDARD_MULTIPLIER = 2;
 
 export const GOLD_STANDARD_NAMES = [
   "Big Data Poll",
-  "Rasmussen Reports",
   "AtlasIntel",
   "SoCalStrategies",
   "Emerson",
@@ -14,6 +13,31 @@ export const GOLD_STANDARD_NAMES = [
 ];
 
 export const RAW_POLLS: Poll[] = [
+  // ── broad-feed polls added Sep 23, 2026 ──
+  { pollster: "The Honest Poll", endDate: "2026-09-13", sampleSize: 1633, sampleType: "RV", results: { Democrats: 51, Republicans: 42 } },
+  { pollster: "ActiVote", endDate: "2026-09-10", sampleSize: 1000, sampleType: "LV", results: { Democrats: 52.3, Republicans: 47.7 } },
+  { pollster: "The Honest Poll", endDate: "2026-09-01", sampleSize: 812, sampleType: "LV", results: { Democrats: 53, Republicans: 43 } },
+  // ── RCP polls added through Sep 15, 2026 ──
+  { pollster: "Big Data Poll", endDate: "2026-09-15", sampleSize: 2633, sampleType: "LV", results: { Democrats: 51, Republicans: 39 } },
+  { pollster: "FOX News", endDate: "2026-09-14", sampleSize: 1211, sampleType: "RV", results: { Democrats: 51, Republicans: 44 } },
+  { pollster: "Economist/YouGov", endDate: "2026-09-14", sampleSize: 1051, sampleType: "LV", results: { Democrats: 51, Republicans: 39 } },
+  { pollster: "Reuters/Ipsos", endDate: "2026-09-14", sampleSize: 896, sampleType: "RV", results: { Democrats: 44, Republicans: 37 } },
+  { pollster: "NY Times/Siena", endDate: "2026-09-13", sampleSize: 1503, sampleType: "LV", results: { Democrats: 51, Republicans: 43 } },
+  // Sample size not supplied by RCP; 0 follows the existing unknown-size convention.
+  { pollster: "Morning Consult", endDate: "2026-09-13", sampleSize: 0, sampleType: "LV", results: { Democrats: 49, Republicans: 43 } },
+  { pollster: "CBS News", endDate: "2026-09-11", sampleSize: 1750, sampleType: "LV", results: { Democrats: 54, Republicans: 46 } },
+  { pollster: "Marquette", endDate: "2026-09-09", sampleSize: 581, sampleType: "LV", results: { Democrats: 54, Republicans: 41 } },
+  { pollster: "Economist/YouGov", endDate: "2026-09-08", sampleSize: 1015, sampleType: "LV", results: { Democrats: 49, Republicans: 38 } },
+  { pollster: "Quinnipiac", endDate: "2026-09-06", sampleSize: 970, sampleType: "RV", results: { Democrats: 49, Republicans: 38 } },
+  { pollster: "Morning Consult", endDate: "2026-09-06", sampleSize: 24000, sampleType: "RV", results: { Democrats: 46, Republicans: 42 } },
+  { pollster: "Cygnal", endDate: "2026-09-02", sampleSize: 1500, sampleType: "LV", results: { Democrats: 51, Republicans: 42 } },
+  { pollster: "Financial Times", endDate: "2026-09-02", sampleSize: 1837, sampleType: "LV", results: { Democrats: 52, Republicans: 45 } },
+  // ── RCP polls added through Aug 31, 2026 ──
+  { pollster: "Economist/YouGov", endDate: "2026-08-31", sampleSize: 1437, sampleType: "RV", results: { Democrats: 46, Republicans: 40 } },
+  { pollster: "Reuters/Ipsos", endDate: "2026-08-31", sampleSize: 924, sampleType: "RV", results: { Democrats: 43, Republicans: 38 } },
+  { pollster: "Harvard-Harris", endDate: "2026-08-30", sampleSize: 0, sampleType: "LV", results: { Democrats: 49, Republicans: 51 } },
+  { pollster: "Morning Consult", endDate: "2026-08-30", sampleSize: 2200, sampleType: "RV", results: { Democrats: 47, Republicans: 42 } },
+  { pollster: "Quantus Insights", endDate: "2026-08-28", sampleSize: 1200, sampleType: "LV", results: { Democrats: 50, Republicans: 43 } },
   // ── RCP polls added through Aug 17, 2026 ──
   { pollster: "Emerson", endDate: "2026-08-17", sampleSize: 1000, sampleType: "LV", results: { Democrats: 51, Republicans: 43 } },
   { pollster: "Economist/YouGov", endDate: "2026-08-17", sampleSize: 1450, sampleType: "RV", results: { Democrats: 46, Republicans: 39 } },
@@ -58,7 +82,6 @@ export const RAW_POLLS: Poll[] = [
   { pollster: "Big Data Poll", endDate: "2026-06-28", sampleSize: 2604, sampleType: "LV", results: { Democrats: 50, Republicans: 41 } },
   { pollster: "Morning Consult", endDate: "2026-06-28", sampleSize: 2202, sampleType: "RV", results: { Democrats: 46, Republicans: 42 } },
   { pollster: "Daily Mail", endDate: "2026-06-26", sampleSize: 625, sampleType: "LV", results: { Democrats: 50, Republicans: 42 } },
-  { pollster: "Rasmussen Reports", endDate: "2026-06-25", sampleSize: 2224, sampleType: "LV", results: { Democrats: 46, Republicans: 42 } },
   { pollster: "Economist/YouGov", endDate: "2026-06-22", sampleSize: 1517, sampleType: "RV", results: { Democrats: 45, Republicans: 43 } },
   { pollster: "Quinnipiac", endDate: "2026-06-22", sampleSize: 1165, sampleType: "RV", results: { Democrats: 49, Republicans: 42 } },
   { pollster: "Echelon Insights", endDate: "2026-06-22", sampleSize: 1003, sampleType: "LV", results: { Democrats: 51, Republicans: 45 } },
@@ -81,7 +104,6 @@ export const RAW_POLLS: Poll[] = [
   { pollster: "Emerson", endDate: "2026-05-25", sampleSize: 1000, sampleType: "LV", results: { Democrats: 50, Republicans: 41 } },
   { pollster: "Economist/YouGov", endDate: "2026-05-26", sampleSize: 1397, sampleType: "RV", results: { Democrats: 46, Republicans: 41 } },
   { pollster: "Morning Consult", endDate: "2026-05-17", sampleSize: 2203, sampleType: "RV", results: { Democrats: 47, Republicans: 41 } },
-  { pollster: "Rasmussen Reports", endDate: "2026-05-20", sampleSize: 2161, sampleType: "LV", results: { Democrats: 47, Republicans: 41 } },
   { pollster: "Data for Progress", endDate: "2026-05-18", sampleSize: 1149, sampleType: "LV", results: { Democrats: 51, Republicans: 43 } },
   { pollster: "Economist/YouGov", endDate: "2026-05-18", sampleSize: 1380, sampleType: "RV", results: { Democrats: 46, Republicans: 43 } },
   { pollster: "Reuters/Ipsos", endDate: "2026-05-18", sampleSize: 984, sampleType: "RV", results: { Democrats: 39, Republicans: 38 } },
@@ -173,7 +195,6 @@ export const RAW_POLLS: Poll[] = [
   { pollster: "NY Times/Siena", endDate: "2026-01-17", sampleSize: 1625, sampleType: "RV", results: { Democrats: 48, Republicans: 43 } },
   { pollster: "Reuters/Ipsos", endDate: "2026-01-13", sampleSize: 941, sampleType: "RV", results: { Democrats: 40, Republicans: 38 } },
   { pollster: "Wall Street Journal", endDate: "2026-01-13", sampleSize: 1500, sampleType: "RV", results: { Democrats: 47, Republicans: 43 } },
-  { pollster: "Rasmussen Reports", endDate: "2026-01-14", sampleSize: 2273, sampleType: "LV", results: { Democrats: 47, Republicans: 41 } },
   { pollster: "CNN", endDate: "2026-01-12", sampleSize: 968, sampleType: "RV", results: { Democrats: 46, Republicans: 41 } },
   { pollster: "Morning Consult", endDate: "2026-01-12", sampleSize: 2201, sampleType: "RV", results: { Democrats: 46, Republicans: 43 } },
   { pollster: "Economist/YouGov", endDate: "2026-01-12", sampleSize: 1437, sampleType: "RV", results: { Democrats: 44, Republicans: 40 } },
@@ -206,7 +227,6 @@ export const RAW_POLLS: Poll[] = [
   { pollster: "Economist/YouGov", endDate: "2025-11-24", sampleSize: 1511, sampleType: "RV", results: { Democrats: 44, Republicans: 39 } },
   { pollster: "Morning Consult", endDate: "2025-11-23", sampleSize: 2200, sampleType: "RV", results: { Democrats: 45, Republicans: 43 } },
   { pollster: "Daily Mail", endDate: "2025-11-25", sampleSize: 797, sampleType: "LV", results: { Democrats: 50, Republicans: 46 } },
-  { pollster: "Rasmussen Reports", endDate: "2025-11-23", sampleSize: 2410, sampleType: "LV", results: { Democrats: 45, Republicans: 42 } },
   { pollster: "Economist/YouGov", endDate: "2025-11-17", sampleSize: 1382, sampleType: "RV", results: { Democrats: 43, Republicans: 40 } },
   { pollster: "Morning Consult", endDate: "2025-11-16", sampleSize: 2201, sampleType: "RV", results: { Democrats: 46, Republicans: 44 } },
   { pollster: "NPR/PBS/Marist", endDate: "2025-11-13", sampleSize: 1291, sampleType: "RV", results: { Democrats: 55, Republicans: 41 } },
@@ -267,7 +287,6 @@ export const RAW_POLLS: Poll[] = [
   { pollster: "Emerson", endDate: "2025-07-22", sampleSize: 1400, sampleType: "RV", results: { Democrats: 44, Republicans: 42 } },
   { pollster: "Wall Street Journal", endDate: "2025-07-20", sampleSize: 1500, sampleType: "RV", results: { Democrats: 46, Republicans: 43 } },
   { pollster: "Atlas Intel", endDate: "2025-07-18", sampleSize: 1935, sampleType: "A", results: { Democrats: 51, Republicans: 43 } },
-  { pollster: "Rasmussen Reports", endDate: "2025-07-17", sampleSize: 2288, sampleType: "LV", results: { Democrats: 46, Republicans: 42 } },
   { pollster: "Quantus Insights", endDate: "2025-07-16", sampleSize: 1000, sampleType: "RV", results: { Democrats: 44, Republicans: 42 } },
   { pollster: "RMG Research**", endDate: "2025-07-16", sampleSize: 2000, sampleType: "RV", results: { Democrats: 45, Republicans: 49 } },
   { pollster: "Big Data Poll", endDate: "2025-07-14", sampleSize: 3022, sampleType: "RV", results: { Democrats: 42, Republicans: 41 } },
@@ -280,7 +299,6 @@ export const RAW_POLLS: Poll[] = [
   { pollster: "Economist/YouGov", endDate: "2025-06-02", sampleSize: 1436, sampleType: "RV", results: { Democrats: 44, Republicans: 42 } },
   { pollster: "Atlas Intel", endDate: "2025-05-27", sampleSize: 3469, sampleType: "A", results: { Democrats: 51, Republicans: 42 } },
   { pollster: "RMG Research**", endDate: "2025-05-21", sampleSize: 1000, sampleType: "RV", results: { Democrats: 48, Republicans: 45 } },
-  { pollster: "Rasmussen Reports", endDate: "2025-05-15", sampleSize: 1012, sampleType: "LV", results: { Democrats: 45, Republicans: 44 } },
   { pollster: "Quantus Insights", endDate: "2025-05-07", sampleSize: 1000, sampleType: "RV", results: { Democrats: 45, Republicans: 45 } },
   { pollster: "Big Data Poll", endDate: "2025-05-05", sampleSize: 3128, sampleType: "RV", results: { Democrats: 40, Republicans: 42 } },
   { pollster: "NewsNation", endDate: "2025-04-27", sampleSize: 1448, sampleType: "RV", results: { Democrats: 45, Republicans: 40 } },

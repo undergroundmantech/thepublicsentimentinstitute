@@ -18,14 +18,14 @@ function ChartTip({ active, payload, label }: any) {
   return (
     <div
       style={{
-        background: "rgba(255,255,255,0.98)",
-        border: "1px solid rgba(15,16,32,0.14)",
+        background: "rgba(var(--line-rgb),0.98)",
+        border: "1px solid rgba(var(--ink-rgb),calc(0.14 * var(--struct)))",
         borderRadius: 14,
         padding: "10px 14px",
         fontSize: 12,
         fontFamily: "var(--font-body)",
-        boxShadow: "0 12px 32px rgba(15,16,32,0.10)",
-        color: "#17171b",
+        boxShadow: "0 12px 32px rgba(var(--ink-rgb),calc(0.1 * var(--struct)))",
+        color: "var(--ink)",
       }}
     >
       <div
@@ -62,7 +62,7 @@ function SplitBar({ dem, rep, h = 6 }: { dem: number; rep: number; h?: number })
         height: h,
         borderRadius: 9999,
         overflow: "hidden",
-        background: "rgba(15,16,32,0.06)",
+        background: "rgba(var(--ink-rgb),calc(0.06 * var(--struct)))",
       }}
     >
       <div
@@ -192,7 +192,7 @@ function ChartCard({
             />
             <Tooltip content={<ChartTip />} />
             {refY !== undefined && (
-              <ReferenceLine y={refY} stroke="rgba(15,16,32,0.10)" strokeDasharray="3 3" />
+              <ReferenceLine y={refY} stroke="rgba(var(--ink-rgb),calc(0.1 * var(--struct)))" strokeDasharray="3 3" />
             )}
             {lines.map((l) => (
               <Line
@@ -1127,7 +1127,7 @@ export default function HomePage() {
         <div className="hp-explore-grid">
           {[
             { color: "#1d5fc4", label: "Analysis",    name: "Electoral Map",         desc: "State-by-state data with 2024 vs. 2026 comparison overlays.",        href: "/electoralmap",    cta: "Explore Map →" },
-            { color: "#6d3ee9", label: "Projections", name: "Forecast Ratings",      desc: "PSI race ratings across Senate, House, and gubernatorial contests.", href: "/forecastratings", cta: "View Ratings →" },
+            { color: "#6d3ee9", label: "Projections", name: "Forecast Ratings",      desc: "PSI race ratings across Senate, House, and gubernatorial contests.", href: "/forecast", cta: "View Ratings →" },
             { color: "#c22f3b", label: "Results",     name: "Live Election Results", desc: "Real-time vote totals and night-of projections for every major race.", href: "/results",         cta: "See Results →" },
             { color: "#16a34a", label: "Methodology", name: "Gold Standard",         desc: "Curated aggregation of high-quality polls ranked by historical accuracy.", href: "/goldstandard", cta: "Browse Polls →" },
           ].map(c => (
