@@ -2,7 +2,7 @@
 // California — 2026 Governor: Xavier Becerra (D) vs. Steve Hilton (R)
 // Generated from the TPSI forecast poll feed (run of 2026-09-22), merged with
 // the polls this file already carried. Polls of matchups that are not on the
-// ballot were dropped. Newest poll: 2026-09-10.
+// ballot were dropped. Newest poll: 2026-09-20.
 
 export type SampleType = "LV" | "RV" | "A";
 
@@ -41,6 +41,7 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "CA-GOV-2026", "pollster": "Kreate Strategies", "startDate": "2026-06-13", "endDate": "2026-06-17", "sampleSize": 900, "sampleType": "LV", "results": {"Xavier Becerra (D)": 58.0, "Steve Hilton (R)": 33.0, "Undecided": 8.0}},
     {"raceId": "CA-GOV-2026", "pollster": "PPIC", "startDate": "2026-06-29", "endDate": "2026-07-06", "sampleSize": 1003, "sampleType": "LV", "results": {"Xavier Becerra (D)": 61.0, "Steve Hilton (R)": 36.0, "Undecided": 2.0}},
     {"raceId": "CA-GOV-2026", "pollster": "Berkeley IGS", "startDate": "2026-08-03", "endDate": "2026-08-09", "sampleSize": 2310, "sampleType": "LV", "results": {"Xavier Becerra (D)": 55.0, "Steve Hilton (R)": 37.0, "Undecided": 8.0}},
-    {"raceId": "CA-GOV-2026", "pollster": "PPIC", "startDate": "2026-09-04", "endDate": "2026-09-10", "sampleSize": 1103, "sampleType": "LV", "results": {"Xavier Becerra (D)": 60.0, "Steve Hilton (R)": 38.0, "Other": 1.0, "Undecided": 1.0}}
+    {"raceId": "CA-GOV-2026", "pollster": "PPIC", "startDate": "2026-09-04", "endDate": "2026-09-10", "sampleSize": 1103, "sampleType": "LV", "results": {"Xavier Becerra (D)": 60.0, "Steve Hilton (R)": 38.0, "Other": 1.0, "Undecided": 1.0}},
+    {"raceId": "CA-GOV-2026", "pollster": "Berkeley IGS", "startDate": "2026-09-15", "endDate": "2026-09-20", "sampleSize": 4512, "sampleType": "RV", "results": {"Xavier Becerra (D)": 58.0, "Steve Hilton (R)": 33.0, "Undecided": 9.0}}
   ],
 };

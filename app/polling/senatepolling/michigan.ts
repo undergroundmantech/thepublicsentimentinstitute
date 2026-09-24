@@ -2,7 +2,7 @@
 // Michigan — 2026 U.S. Senate: Abdul El-Sayed (D) vs. Mike Rogers (R)
 // Generated from the TPSI forecast poll feed (run of 2026-09-22), merged with
 // the polls this file already carried. Polls of matchups that are not on the
-// ballot were dropped. Newest poll: 2026-09-20.
+// ballot were dropped. Newest poll: 2026-09-23.
 
 export type SampleType = "LV" | "RV" | "A";
 
@@ -55,6 +55,8 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "MI-SEN-2026", "pollster": "Emerson College", "startDate": "2026-09-12", "endDate": "2026-09-14", "sampleSize": 1000, "sampleType": "LV", "results": {"Abdul El-Sayed (D)": 48.0, "Mike Rogers (R)": 46.0, "Other": 2.0, "Undecided": 4.0}},
     {"raceId": "MI-SEN-2026", "pollster": "The Washington Post/SSPG", "startDate": "2026-09-10", "endDate": "2026-09-14", "sampleSize": 803, "sampleType": "LV", "results": {"Abdul El-Sayed (D)": 48.0, "Mike Rogers (R)": 45.0, "Other": 5.0, "Undecided": 2.0}},
     {"raceId": "MI-SEN-2026", "pollster": "InsiderAdvantage", "startDate": "2026-09-16", "endDate": "2026-09-17", "sampleSize": 1200, "sampleType": "LV", "results": {"Abdul El-Sayed (D)": 46.6, "Mike Rogers (R)": 44.7, "Other": 3.3, "Undecided": 5.4}},
-    {"raceId": "MI-SEN-2026", "pollster": "Suffolk University", "startDate": "2026-09-16", "endDate": "2026-09-20", "sampleSize": 500, "sampleType": "LV", "results": {"Abdul El-Sayed (D)": 47.0, "Mike Rogers (R)": 40.0, "Other": 3.0, "Undecided": 8.0}}
+    {"raceId": "MI-SEN-2026", "pollster": "Suffolk University", "startDate": "2026-09-16", "endDate": "2026-09-20", "sampleSize": 500, "sampleType": "LV", "results": {"Abdul El-Sayed (D)": 47.0, "Mike Rogers (R)": 40.0, "Other": 3.0, "Undecided": 8.0}},
+    {"raceId": "MI-SEN-2026", "pollster": "New York Times/Siena University", "startDate": "2026-09-15", "endDate": "2026-09-22", "sampleSize": 613, "sampleType": "LV", "results": {"Abdul El-Sayed (D)": 49.0, "Mike Rogers (R)": 44.0, "Undecided": 7.0}},
+    {"raceId": "MI-SEN-2026", "pollster": "co/efficient (R)", "startDate": "2026-09-21", "endDate": "2026-09-23", "sampleSize": 843, "sampleType": "LV", "results": {"Abdul El-Sayed (D)": 45.0, "Mike Rogers (R)": 45.0, "Other": 2.0, "Undecided": 8.0}}
   ],
 };
