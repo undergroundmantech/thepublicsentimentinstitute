@@ -562,7 +562,11 @@ STATES = {
     "AKG": dict(name="Alaska", office="governor", D="Jonathan Kreiss-Tomkins", R="Bernadette Wilson",
                 third=[("Dave Bronson", "R", 13.349), ("Treg Taylor", "R", 11.924)], rcv=True,
                 rcv_fc=(13349 + 11924) / (13349 + 11924 + 16456), rcv_transfers=AKG_RCV, trend_carry=0.0, base="AK",
-                no_polls=dict(third=0.0)),
+                # Sept 25 2026: the first two general election polls with the final field. The rcv_fc path reads the
+                # blend as the FIRST CHOICE split between Kreiss-Tomkins and the whole Republican bloc and runs the count
+                # forward itself, so each poll enters as that split: D is Kreiss-Tomkins, R is Wilson + Bronson + Taylor.
+                # Fabrizio Ward/Impact's own final round (55-45) is therefore not the number used; its first choice is.
+                polls_csv="polls_akg.csv"),
     "MEG": dict(name="Maine", office="governor", D="Hannah Pingree", R="Bobby Charles",
                 third=[("Rick Bennett", "I", 1.0)], polls_csv="polls_meg.csv"),
     "CTG": dict(name="Connecticut", office="governor", D="Ned Lamont", R="Ryan Fazio",
@@ -738,10 +742,6 @@ EXTRA_POLLS = {
            dict(source="Trafalgar Group (R)", dates="September 14-16, 2026", end="2026-09-16", n=1085, pop="LV", D=45, R=42, O=0, U=13)],
     "TX": [dict(source="NBC News/Marist", dates="September 17-20, 2026", end="2026-09-20", n=1139, pop="RV", D=50, R=44, O=0, U=6)],
     "SC": [dict(source="Rasmussen Reports", dates="September 14, 2026", end="2026-09-14", n=1006, pop="LV", D=43, R=48, O=0, U=9)],
-    # Alaska is ranked choice; this one was published as a head to head, so it enters as one
-    # rather than being run through the first-choice transfer assumption.
-    "AK": [dict(source="co/efficient (R)", dates="September 14-17, 2026", end="2026-09-17", n=799, pop="LV",
-                kind="head_to_head", D=46, R=48, O=0, U=6)],
 }
 
 def _add_extra(st, p):
@@ -765,7 +765,7 @@ def parse_polls(st):
             sp = cfg["split"]; p["D"] = p[sp["poll_col"]] + p[sp["other_col"]]
             p["split_share"] = p[sp["poll_col"]] / p["D"]
         p = _add_extra(st, p)
-        if cfg.get("rcv"):
+        if cfg.get("rcv") and not cfg.get("rcv_fc"):
             return _poll_avg_rcv(p)
         return _poll_avg(p)
     doc = docx.Document(f"{PKG[st]}/{cfg['docx']}")

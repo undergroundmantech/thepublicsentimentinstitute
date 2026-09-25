@@ -70,6 +70,8 @@ for f in glob.glob(f"{HOUSE_SIM}/win_*.npy"):
     ab = next((k for k, v in STATE_NAME.items() if v.lower().replace(" ", "_") == slug), None)
     if ab: house_win[ab] = np.load(f)
 
+RECENTER_MIN = 0.75   # points; every consistent race sits inside 0.35 of its own median
+
 def side_from_sims(m, margin_now, prob=None, recenter=False):
     """RaceSide from a D positive simulated margin vector, in the desk's GOP positive sign.
 
@@ -92,7 +94,11 @@ def side_from_sims(m, margin_now, prob=None, recenter=False):
     computed on the unshifted head to head and would otherwise disagree by construction.
     """
     g = -np.asarray(m, float)
-    if recenter:
+    # Only a real disagreement is corrected. When the run is consistent the headline is
+    # the simulated mean and sits a tenth or two off the median, and shifting on that
+    # would move the probability for no reason: Alaska Senate on the Sept 25 run would
+    # have printed 78.5 percent against the run's own 77.1.
+    if recenter and abs(-margin_now - float(np.median(g))) > RECENTER_MIN:
         g = g + (-margin_now - float(np.median(g)))
         prob = None                                     # must come from the shifted vector
     p10, p90 = float(np.percentile(g, 10)), float(np.percentile(g, 90))

@@ -440,3 +440,75 @@ repointing at the current House run.
 - Zero unshaded county polygons across all 506 races.
 - House: 0 districts differ from the published board; all three chamber blocks identical.
 - `npx tsc --noEmit` exits 0, no console errors in either theme.
+
+---
+
+# Alaska Senate and Governor re-run with the full Alaska poll table
+
+Only these two races were re-run. Every other race, and every House district, is unchanged.
+
+## What the model had been averaging
+
+The Alaska Senate model was running on **three** polls: Rasmussen, the August Alaska Survey
+Research head to head, and co/efficient. The site's own poll file carried ten. Alaska
+Governor was running on **none**, flagged `no_polls`, so its level came entirely from the
+fundamentals and 2024 legs.
+
+## How each poll entered
+
+One row per poll, in the form that fits how the model reads a ranked-choice race.
+
+**Senate.** Where a poll published a ranked-choice final round, the final round is used,
+because that is the count that decides the race and the model treats it as already final:
+Alaska Survey Research 52 to 48, Fabrizio Ward and Impact Research 53 to 47, Data for
+Progress 52 to 48. Two-way ballots enter as head to heads. Multi-candidate ballots with no
+final round enter as first choice and are run forward through the transfer assumption.
+Each poll that appeared both as a ranked-choice table and a first-past-the-post table was
+entered once. Fabrizio Ward and Impact Research is a bipartisan AARP poll and carries no
+partisan discount.
+
+**co/efficient was corrected.** It had been carried as 46 to 48, which is its first-choice
+ballot mislabelled as a head to head. Its actual head to head is Sullivan 49, Peltola 46.
+
+**Governor.** The governor model runs the count forward itself from the first-choice split
+between Kreiss-Tomkins and the whole Republican field, so both polls enter as that split:
+co/efficient 43 against 43, Fabrizio 40 against 41. Fabrizio's own final round of 55 to 45 is
+therefore not the number the model uses, but the model's result lands close to it.
+
+## Results
+
+| Race | was | now |
+|---|---|---|
+| Alaska Senate, final round | Sullivan +0.6, 45% | **Peltola +3.5, 77%** |
+| Alaska Senate, first choice | Peltola +2.5 | Peltola +6.5 |
+| Alaska Governor, final round | Kreiss-Tomkins +12.6 | Kreiss-Tomkins +12.5, >99% |
+
+The Senate move comes from the three published final rounds, which all have Peltola ahead
+by 4 to 6 points. The model had been getting its final round only from its transfer
+assumption applied to first choices, and that assumption sends Republican second choices
+to Sullivan more heavily than those polls' own final rounds show.
+
+## Chamber odds were stale on every run today
+
+The desk takes Senate and governor control from the published pages' `odds` block, and no
+script ever rewrote that block. It still carried the 24 September figures. The Senate re-run
+earlier today happened to agree to within rounding, 70.6 against 71, so nothing looked
+wrong. Alaska does not agree:
+
+| | was | now, from the simulations |
+|---|---|---|
+| Senate control, counting Osborn | 71% | **75%** |
+| Senate control, without Osborn | 70% | 74% |
+| Senate median seats | 52 | **53** |
+| Governors control | 85% | 86% |
+
+Both blocks are now computed from the 2,000 correlated runs.
+
+## Two small fixes found in checking
+
+- Recentring a ranked-choice simulation onto its headline now happens only when the two
+  disagree by more than 0.75 points. On a consistent run the headline is the simulated mean,
+  a tenth or two off the median, and recentring on that inflated Alaska Senate from the
+  run's 77.1% to 78.5%.
+- The probability formatter printed exactly 99.5% as "100%", the one number it exists to
+  keep off the page. It prints ">99%" now.

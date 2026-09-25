@@ -315,8 +315,10 @@ export function raceColor(r: Race, view: ViewMode) {
 // the tails are actually empty, so extremes are pinned to >99% / <1%.
 export const fmtPct = (p: number, dp = 0) => {
   const hi = 1 - 0.005 * 10 ** -dp;
-  if (p > hi) return ">99%";
-  if (p < 1 - hi) return "<1%";
+  // >= rather than >: 0.995 exactly otherwise printed as "100%", the one figure this
+  // guard exists to keep off the page (Alaska Governor, Sept 25).
+  if (p >= hi) return ">99%";
+  if (p <= 1 - hi) return "<1%";
   return `${(p * 100).toFixed(dp)}%`;
 };
 export const fmtMargin = (m: number) =>
