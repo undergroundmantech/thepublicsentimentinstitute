@@ -563,3 +563,21 @@ her ahead, and Texas Southern and Emerson, which have Abbott ahead by less than 
 Senate control rounds from 75 to **76%**; median stays 53. Governors unchanged at 86%.
 
 The site's polling-average page reads the same polls: Talarico +2.4, Abbott +3.3.
+
+---
+
+# Why the rest of the site was not updating
+
+Only `/forecast` reads `public/forecast/model.json`. Everything else that shows Senate
+numbers reads one of two hand-typed tables that were last edited on 23 September:
+
+- `app/components/senateModel.ts`, read by the home page swarm, both coverage globes, the
+  electoral map, the situation room and the publish deck.
+- `SENATE_RAW` and `GOV_RAW` inside both `/forecastratings` pages.
+
+So every re-run today reached one page. The home page still had Alaska at D+6.5, Maine
+at D+13.0, Nebraska on the Democratic side and Ohio at D+0.9.
+
+`scripts/forecast/sync_site_numbers.py` rewrites both tables from `model.json` and prints
+every value it changed: 175 on this run. `senateModel.ts` is now marked as generated.
+It has to be run after each forecast build.

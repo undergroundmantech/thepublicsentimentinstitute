@@ -42,3 +42,13 @@ python3 dynamic_mode.py IA MI OH TX GA NC SC AK KS NH ME FL SD ID MT VA MN MS LA
 to `/tmp/pvi/house_nogal`. That is an older House run than the published board, so a build
 that does not pin the House will rewind 415 districts and flip ME-02. Re-run the House or
 keep its section of `model.json` when only the Senate has moved.
+
+## After every forecast build: sync the rest of the site
+
+Only `/forecast` reads `public/forecast/model.json`. The home page swarm, the coverage
+globes, the electoral map, the situation room and `/forecastratings` read hand-typed
+tables that no forecast run ever touched. Run this after each build, from the repo root:
+
+```
+python3 scripts/forecast/sync_site_numbers.py
+```

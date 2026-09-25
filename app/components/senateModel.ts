@@ -1,23 +1,27 @@
-// The 2026 Senate model, shared by the landing-page swarm and the coverage
-// globe. Mirrors SENATE_RAW's modeledResult in /forecastratings — positive =
-// R margin, negative = D margin; open = no incumbent running. Update both
-// places together when the model moves.
+// The 2026 Senate model, shared by the landing-page swarm, the coverage globes,
+// the electoral map and the situation room. Positive = R margin, negative = D
+// margin; open = no incumbent running.
+//
+// GENERATED — do not hand edit. scripts/forecast/sync_site_numbers.py rewrites
+// this array, and the ratings tables in /forecastratings, from
+// public/forecast/model.json. Run it after every forecast build, or these pages
+// fall behind /forecast, which is what happened between Sept 23 and 25.
 
 export type SenateRace = { st: string; m: number; open?: boolean };
 
 export const SENATE_MODEL: SenateRace[] = [
-  { st: "AL", m: 16.1, open: true }, { st: "AK", m: -6.5 }, { st: "AR", m: 14.0 },
-  { st: "CO", m: -17.5 }, { st: "DE", m: -23.8 }, { st: "FL", m: 5.6 },
-  { st: "GA", m: -10.8 }, { st: "ID", m: 17.3 }, { st: "IL", m: -20.6, open: true },
-  { st: "IA", m: 0.7, open: true }, { st: "KS", m: 4.8 }, { st: "KY", m: 8.1, open: true },
-  { st: "LA", m: 10.7 }, { st: "ME", m: -13.0 }, { st: "MA", m: -27.0 },
-  { st: "MI", m: -5.6, open: true }, { st: "MN", m: -10.1, open: true }, { st: "MS", m: 6.5 },
-  { st: "MT", m: 12.1, open: true }, { st: "NE", m: -0.2 }, { st: "NH", m: -10.5, open: true },
-  { st: "NJ", m: -20.0 }, { st: "NM", m: -62.2 }, { st: "NC", m: -8.1, open: true },
-  { st: "OH", m: -0.9 }, { st: "OK", m: 20.1 }, { st: "OR", m: -23.2 },
-  { st: "RI", m: -33.2 }, { st: "SC", m: 0.5 }, { st: "SD", m: 15.1 },
-  { st: "TN", m: 21.1 }, { st: "TX", m: -1.7 }, { st: "VA", m: -18.5 },
-  { st: "WV", m: 28.6 }, { st: "WY", m: 36.2, open: true },
+  { st: "AK", m: -3.5 }, { st: "AL", m: 21.4, open: true }, { st: "AR", m: 14.1 },
+  { st: "CO", m: -21.7 }, { st: "DE", m: -27.4 }, { st: "FL", m: 6.1 },
+  { st: "GA", m: -9.1 }, { st: "IA", m: -0.6, open: true }, { st: "ID", m: 13.0 },
+  { st: "IL", m: -24.5, open: true }, { st: "KS", m: 2.4 }, { st: "KY", m: 16.0, open: true },
+  { st: "LA", m: 8.6, open: true }, { st: "MA", m: -28.4 }, { st: "ME", m: -4.5 },
+  { st: "MI", m: -4.1, open: true }, { st: "MN", m: -10.1, open: true }, { st: "MS", m: 8.3 },
+  { st: "MT", m: 18.5, open: true }, { st: "NC", m: -8.4, open: true }, { st: "NE", m: 1.1 },
+  { st: "NH", m: -10.4, open: true }, { st: "NJ", m: -21.3 }, { st: "NM", m: -19.9 },
+  { st: "OH", m: -4.9 }, { st: "OK", m: 25.8, open: true }, { st: "OR", m: -26.6 },
+  { st: "RI", m: -24.2 }, { st: "SC", m: 2.2 }, { st: "SD", m: 7.3 },
+  { st: "TN", m: 21.2 }, { st: "TX", m: -2.9 }, { st: "VA", m: -20.3 },
+  { st: "WV", m: 33.0 }, { st: "WY", m: 41.6, open: true },
 ];
 
 // Seats decided by the model's margins, plus holdovers not on the ballot:
