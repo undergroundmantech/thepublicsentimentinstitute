@@ -237,7 +237,7 @@ function PartyBadge({ party }: { party: "D" | "R" | "I" }) {
   const cfg = {
     D: { bg: "#1a5fd422", c: "#4a9dff", b: "#1a5fd444", l: "Dem" },
     R: { bg: "#d4202022", c: "#ff6040", b: "#d4202044", l: "GOP" },
-    I: { bg: "#6d3ee922", c: "#8a63ef", b: "#6d3ee944", l: "Ind" },
+    I: { bg: "#7a4bb022", c: "#8d5cc6", b: "#7a4bb044", l: "Independent" },
   }[party];
   return (
     <span style={{

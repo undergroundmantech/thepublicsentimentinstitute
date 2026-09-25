@@ -209,10 +209,17 @@ export const RATING_BANDS = [
 ] as const;
 const TILT_R = 3, TILT_D = 4;
 
-export function ratingFor(margin: number) {
+export function ratingFor(margin: number, ind = false) {
   const m = Number.isFinite(margin) ? margin : 0;
-  return RATING_BANDS.find((b) => m >= b.lo && m < b.hi) ?? RATING_BANDS[m > 0 ? TILT_R : TILT_D];
+  const band = RATING_BANDS.find((b) => m >= b.lo && m < b.hi) ?? RATING_BANDS[m > 0 ? TILT_R : TILT_D];
+  // Where the non-Republican side is an independent, a band that says "Lean D" names the
+  // wrong party. Same cut points, same strength word, independent colour and letter.
+  if (!ind || m >= 0) return band;
+  return { ...band, cat: band.cat.replace(/ D$/, " I"), color: IND_BAND[band.cat] ?? band.color };
 }
+const IND_BAND: Record<string, string> = {
+  "Tilt D": "#cdb9ea", "Lean D": "#a887d6", "Likely D": "#7a4bb0", "Safe D": "#40206b",
+};
 
 // ── margin scale: banded diverging, desk tones ──────────────────────────────
 // The ramp turns on the same 2 / 6 / 12 points the bands do, and it changes
@@ -259,11 +266,49 @@ export function inkOn(hex: string) {
   return (L + 0.05) / 0.05 >= 1.05 / (L + 0.05) ? "#121212" : "#f4f4ef";
 }
 
+// ── who is actually on each side of a race ──────────────────────────────────
+// The build puts whoever is not the Republican into the `dem` slot, so Dan Osborn,
+// Brian Bengs, Todd Achilles and Seth Bodnar were all drawn in Democratic blue and
+// labelled "Democrat". Read the party off the candidate list instead of trusting the
+// slot, and fall back to the slot only where a race carries no candidate list.
+const IND_CODES = new Set(["I", "IND", "IP", "NPA", "UC"]);
+
+export function sideParty(r: Race, side: "dem" | "gop"): string {
+  const nm = side === "dem" ? r.dem : r.gop;
+  const hit = r.cands?.find((c) => c.name === nm);
+  return hit ? (hit.party || "").toUpperCase() : side === "dem" ? "D" : "R";
+}
+/** True where the non-Republican side of the race is an independent, not a Democrat. */
+export const indSide = (r: Race) => IND_CODES.has(sideParty(r, "dem"));
+export const sideColor = (r: Race, side: "dem" | "gop") => partyColor(sideParty(r, side));
+export const sideLabel = (r: Race, side: "dem" | "gop") => partyLabel(sideParty(r, side));
+/** One letter for the margin string: D+4.1, R+2.0, I+1.3. */
+export const sideInitial = (r: Race, side: "dem" | "gop") =>
+  indSide(r) && side === "dem" ? "I" : side === "dem" ? "D" : "R";
+
+/** fmtMargin, but naming the side that is actually there. */
+export const fmtRaceMargin = (r: Race, m: number) =>
+  Math.abs(m) < 0.05 ? "Even"
+    : m > 0 ? `${sideInitial(r, "gop")}+${Math.abs(m).toFixed(1)}`
+            : `${sideInitial(r, "dem")}+${Math.abs(m).toFixed(1)}`;
+
+/** The margin ramp, with the left-hand end swung to the independent purple where the
+ *  left-hand candidate is an independent. The right-hand half is untouched. */
+export function raceMarginColor(r: Race, m: number) {
+  const base = marginColor(m);
+  if (!indSide(r) || m >= 0) return base;
+  // Depth of the blue end, 0 at the midline to 1 at 30 points, applied to purple.
+  const depth = Math.min(1, Math.abs(Math.max(-30, m)) / 30);
+  return hexLerp("#cdb9ea", "#40206b", depth);
+}
+
 export function raceColor(r: Race, view: ViewMode) {
   const side = r.est;
-  if (view === "margin") return marginColor(side.margin);
-  if (view === "odds") return oddsColor(side.prob);
-  return ratingFor(side.margin).color;
+  if (view === "margin") return raceMarginColor(r, side.margin);
+  if (view === "odds") return indSide(r) && side.prob < 0.5
+    ? hexLerp("#cdb9ea", "#40206b", Math.min(1, (0.5 - side.prob) / 0.48))
+    : oddsColor(side.prob);
+  return ratingFor(side.margin, indSide(r)).color;
 }
 
 // Never print certainty — a 10,000-sim forecast rounds to 100%/0% long before

@@ -108,7 +108,7 @@ export default function StateRaceMap({
         <span className="srm-title">{office} · click a state</span>
         <span className="srm-legend">
           <span className="srm-key"><i style={{ background: "var(--dem)" }} />D lead</span>
-          <span className="srm-key"><i style={{ background: "#e0a23b" }} />Ind. lead</span>
+          <span className="srm-key"><i style={{ background: "#7a4bb0" }} />Independent lead</span>
           <span className="srm-key"><i style={{ background: "var(--gop)" }} />R lead</span>
           <span className="srm-key"><i className="srm-none" />no public poll</span>
         </span>

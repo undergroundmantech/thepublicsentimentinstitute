@@ -191,9 +191,12 @@ function balance(races: RaceRow[]) {
 }
 
 // ─── PartyTag (the only "badge" — a tiny inline letter, not a card) ─────────────
+// One independent purple across the site, matching the forecast desk's IND tone. The
+// brand accent was being used here, which read as decoration rather than as a party.
+const IND_TONE = "#8d5cc6";
 function PartyTag({ party }: { party: "D" | "R" | "I" }) {
-  const c = party === "D" ? BLUE : party === "R" ? RED : "#6d3ee9";
-  return <span className="x-party" style={{ color: c }}>{party === "I" ? "I" : party}</span>;
+  const c = party === "D" ? BLUE : party === "R" ? RED : IND_TONE;
+  return <span className="x-party" style={{ color: c }} title={party === "I" ? "Independent" : undefined}>{party}</span>;
 }
 
 // ─── Tooltip (the lone popover surface) ─────────────────────────────────────────

@@ -4,11 +4,12 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import SwingOMeter from "../results/components/SwingOMeter";
 import {
-  DEM, GOP, INK, LIME, RATING_BANDS, TILT_D_TONE, TILT_R_TONE,
+  DEM, GOP, IND, INK, LIME, RATING_BANDS, TILT_D_TONE, TILT_R_TONE,
   type CountiesPayload, type CountyRow, type Crosstabs, type CrosstabRow, type Cand,
   partyColor, partyLabel,
   type Geo, type Model, type Office, type Race, type RaceSide, type StateDetail, type ViewMode,
   OFFICE_LABEL, fmtMargin, fmtPct, inkOn, marginColor, onLight, raceColor, ratingFor, surname,
+  indSide, sideColor, sideLabel, fmtRaceMargin, raceMarginColor,
   isUncontested,
   isPlaceholderName,
 } from "./lib";
@@ -490,7 +491,7 @@ function TipPortal({ children }: { children: React.ReactNode }) {
 function MapTip({ race, x, y }: { race: Race; x: number; y: number }) {
   const s = race.est;
   const fav = s.margin > 0 ? race.gop : race.dem;
-  const tone = s.margin > 0 ? GOP : DEM;
+  const tone = sideColor(race, s.margin > 0 ? "gop" : "dem");
   const p = s.margin > 0 ? s.prob : 1 - s.prob;
   const flip = typeof window !== "undefined" && x > window.innerWidth - 330;
   const yc = typeof window !== "undefined" ? Math.min(y, window.innerHeight - 130) : y;
@@ -501,7 +502,7 @@ function MapTip({ race, x, y }: { race: Race; x: number; y: number }) {
       <div className="fc-tip-row">
         <i style={{ background: tone }} />
         <b>{surname(fav)}</b>
-        <span style={{ color: tone }}>{fmtMargin(s.margin)}</span>
+        <span style={{ color: tone }}>{fmtRaceMargin(race, s.margin)}</span>
         <em>{fmtPct(p)} to win</em>
       </div>
       <div className="fc-tip-foot">{ratingFor(s.margin).cat} · click for the full race</div>
@@ -530,8 +531,8 @@ const shareOf = (v: number, t: number) => (t > 0 ? `${((v / t) * 100).toFixed(1)
 
 // One tooltip shape for both layers: who, how many votes, what share, and the margin
 // underneath. Counts are the point — a shade alone never told anyone the size of a place.
-function VoteTip({ title, sub, demName, gopName, dem, rep, total, margin, foot, x, y, cands }: {
-  title: string; sub?: string; demName: string; gopName: string;
+function VoteTip({ title, sub, demName, gopName, demColor = DEM, dem, rep, total, margin, foot, x, y, cands }: {
+  title: string; sub?: string; demName: string; gopName: string; demColor?: string;
   dem: number; rep: number; total: number; margin: number; foot?: string; x: number; y: number;
   // when the race runs more than two names, the county's whole ballot rather than
   // a Democrat, a Republican and an undifferentiated "other"
@@ -554,7 +555,7 @@ function VoteTip({ title, sub, demName, gopName, dem, rep, total, margin, foot, 
             </div>
           ); })
         : (<>
-            <div className="fc-tip-vote"><i style={{ background: DEM }} /><b>{demName}</b><span>{commas(dem)}</span><em>{shareOf(dem, total)}</em></div>
+            <div className="fc-tip-vote"><i style={{ background: demColor }} /><b>{demName}</b><span>{commas(dem)}</span><em>{shareOf(dem, total)}</em></div>
             <div className="fc-tip-vote"><i style={{ background: GOP }} /><b>{gopName}</b><span>{commas(rep)}</span><em>{shareOf(rep, total)}</em></div>
             {total > 0 && (total - dem - rep) / total >= 0.0005
               ? <div className="fc-tip-vote"><i style={{ background: "rgba(var(--fc-ink-rgb),calc(0.3 * var(--fc-mute) + var(--fc-floor)))" }} /><b>other candidates</b><span>{commas(total - dem - rep)}</span><em>{shareOf(total - dem - rep, total)}</em></div>
@@ -643,7 +644,7 @@ function RaceStage({ race, detail, counties, stateRaces, onPick, onBack }: {
     return (
       <path
         key={c.id} d={c.d}
-        fill={m == null ? undefined : marginColor(m)}
+        fill={m == null ? undefined : raceMarginColor(race, m)}
         fillOpacity={m == null ? 1 : faded ? 0.3 : 1}
         strokeWidth="0.8"
         style={{ stroke: "var(--fc-idle-line)", ...(m == null ? { fill: "var(--fc-idle)" } : null) }}
@@ -709,11 +710,12 @@ function RaceStage({ race, detail, counties, stateRaces, onPick, onBack }: {
           sub={`${race.state} · ${OFFICE_WORD[race.office]}`}
           demName={isHouse ? "Democratic" : surname(race.dem)}
           gopName={isHouse ? "Republican" : surname(race.gop)}
+          demColor={isHouse ? DEM : sideColor(race, "dem")}
           dem={dv} rep={rv} total={tv} margin={m}
           cands={shares && race.cands
             ? race.cands.map((c, i) => ({ name: c.name, party: c.party, pct: shares[i] ?? 0 }))
             : undefined}
-          foot={`${ratingFor(m).cat} · projected county vote`}
+          foot={`${ratingFor(m, indSide(race)).cat} · projected county vote`}
           x={tip.x} y={tip.y}
         />
       );
@@ -755,7 +757,7 @@ function RaceStage({ race, detail, counties, stateRaces, onPick, onBack }: {
           </div>
           {rv && rv.total > 0 && rv.dem + rv.rep > 0 ? (
             <div className="fc-stage-votes">
-              <span><i style={{ background: DEM }} />{surname(race.dem)} <b>{commas(rv.dem)}</b> <em>{shareOf(rv.dem, rv.total)}</em></span>
+              <span><i style={{ background: sideColor(race, "dem") }} />{surname(race.dem)} <b>{commas(rv.dem)}</b> <em>{shareOf(rv.dem, rv.total)}</em></span>
               <span><i style={{ background: GOP }} />{surname(race.gop)} <b>{commas(rv.rep)}</b> <em>{shareOf(rv.rep, rv.total)}</em></span>
               <span>projected turnout <b>{commas(rv.total)}</b></span>
             </div>
@@ -763,7 +765,7 @@ function RaceStage({ race, detail, counties, stateRaces, onPick, onBack }: {
           {race.rcv ? (
             <div className="fc-stage-votes rcv">
               <span>ranked choice final round</span>
-              <span><i style={{ background: DEM }} />{surname(race.dem)} <b>{commas(race.rcv.dem)}</b> <em>{race.rcv.demPct.toFixed(1)}%</em></span>
+              <span><i style={{ background: sideColor(race, "dem") }} />{surname(race.dem)} <b>{commas(race.rcv.dem)}</b> <em>{race.rcv.demPct.toFixed(1)}%</em></span>
               <span><i style={{ background: GOP }} />{surname(race.gop)} <b>{commas(race.rcv.rep)}</b> <em>{race.rcv.repPct.toFixed(1)}%</em></span>
               <span>exhausted <b>{commas(race.rcv.exhausted)}</b></span>
               <span>first choice <b>{fmtMargin(-race.rcv.firstChoice)}</b></span>
@@ -788,8 +790,8 @@ function RaceStage({ race, detail, counties, stateRaces, onPick, onBack }: {
               ? `all ${stateRaces.length} ${race.state} districts · hover for its projected vote · click to open another`
               : `${race.state} counties · the projected statewide House vote in each, shared by every district in the state`)
             : runnerUpMinor
-              ? `county-level projection · shaded by the Democrat against the Republican, but ${surname(runnerUpMinor.name)} is projected second here · hover a county for the whole ballot`
-              : "county-level projection · hover a county for its projected vote"}
+              ? `county-level projection · shaded by ${indSide(race) ? "the independent" : "the Democrat"} against the Republican, but ${surname(runnerUpMinor.name)} is projected second here · hover a county for the whole ballot`
+              : `county-level projection${indSide(race) ? ", the independent against the Republican" : ""} · hover a county for its projected vote`}
         </div>
       )}
       {tipNode}
@@ -1131,9 +1133,10 @@ function RaceTable({ rows, onPick }: { rows: Race[]; onPick: (id: string) => voi
       {rows.map((r) => {
         const s = r.est;
         const fav = s.margin > 0 ? "gop" : "dem";
-        const tone = fav === "gop" ? GOP : DEM;
+        const ind = indSide(r);
+        const tone = sideColor(r, fav);
         const favProb = fav === "gop" ? s.prob : 1 - s.prob;
-        const rt = ratingFor(s.margin);
+        const rt = ratingFor(s.margin, ind);
         return (
           <button key={r.id} className="fc-tr" role="row" onClick={() => onPick(r.id)}>
             <span role="cell" className="fc-td-name">
@@ -1141,10 +1144,10 @@ function RaceTable({ rows, onPick }: { rows: Race[]; onPick: (id: string) => voi
               <em>{r.marquee ? "marquee · " : ""}{r.open ? "open seat" : "incumbent running"}</em>
             </span>
             <span role="cell" className="fc-td-cands">
-              <span><i className="d">D</i>{r.dem}</span>
+              <span><i className={ind ? "i" : "d"}>{ind ? "I" : "D"}</i>{r.dem}</span>
               <span><i className="r">R</i>{r.gop}</span>
             </span>
-            <span role="cell" className="fc-td-margin num" style={{ color: s.margin > 0 ? "var(--fc-gop)" : "var(--fc-dem)" }}>{fmtMargin(s.margin)}</span>
+            <span role="cell" className="fc-td-margin num" style={{ color: s.margin > 0 ? "var(--fc-gop)" : ind ? IND : "var(--fc-dem)" }}>{fmtRaceMargin(r, s.margin)}</span>
             <span role="cell" className="fc-td-bar"><MarginBar m={s.margin} p10={s.p10} p90={s.p90} /></span>
             <span role="cell" className="fc-td-prob num">{fmtPct(favProb, 1)}</span>
             <span role="cell"><RatingChip color={rt.color} cat={rt.cat} /></span>
@@ -1228,7 +1231,7 @@ function OutcomeDist({ race, s, sims }: { race: Race; s: RaceSide; sims: number 
           {surname(fav)} +{Math.abs(s.margin).toFixed(1)}
         </span>
         {[s.p10, s.p90].map((v, i) => (
-          <span key={i} className="fc-outcome-tick" style={{ left: `${(xOf(v) / W) * 100}%`, color: v > 0 ? "var(--fc-gop)" : "var(--fc-dem)" }}>{fmtMargin(v)}</span>
+          <span key={i} className="fc-outcome-tick" style={{ left: `${(xOf(v) / W) * 100}%`, color: v > 0 ? "var(--fc-gop)" : "var(--fc-dem)" }}>{fmtRaceMargin(race, v)}</span>
         ))}
         <div className="fc-outcome-axis">
           {[-30, -15, 0, 15, 30].map((v) => (
@@ -1239,8 +1242,8 @@ function OutcomeDist({ race, s, sims }: { race: Race; s: RaceSide; sims: number 
         </div>
       </div>
       <div className="fc-outcome-note">
-        the ticks bracket the middle 80% of simulations — <b style={{ color: s.p10 > 0 ? "var(--fc-gop)" : "var(--fc-dem)" }}>{fmtMargin(s.p10)}</b> to{" "}
-        <b style={{ color: s.p90 > 0 ? "var(--fc-gop)" : "var(--fc-dem)" }}>{fmtMargin(s.p90)}</b>
+        the ticks bracket the middle 80% of simulations — <b style={{ color: s.p10 > 0 ? "var(--fc-gop)" : "var(--fc-dem)" }}>{fmtRaceMargin(race, s.p10)}</b> to{" "}
+        <b style={{ color: s.p90 > 0 ? "var(--fc-gop)" : "var(--fc-dem)" }}>{fmtRaceMargin(race, s.p90)}</b>
       </div>
     </div>
   );
@@ -1268,7 +1271,7 @@ function StageFlow({ race, env, sims }: {
   const rows: Row[] = [
     {
       k: "the anchor", v: st.anchor, on: true,
-      cap: <>presidential lean <b style={{ color: st.anchor > 0 ? "var(--fc-gop)" : "var(--fc-dem)" }}>{fmtMargin(st.anchor)}</b> — the last two presidential results, candidate record priced in</>,
+      cap: <>presidential lean <b style={{ color: st.anchor > 0 ? "var(--fc-gop)" : "var(--fc-dem)" }}>{fmtRaceMargin(race, st.anchor)}</b> — the last two presidential results, candidate record priced in</>,
     },
     {
       k: "the environment", v: st.fund, on: true, carry: `${fundShare}%`,
@@ -1278,7 +1281,7 @@ function StageFlow({ race, env, sims }: {
     {
       k: "the polls", v: st.poll, on: true, carry: `${pollShare}%`,
       cap: race.pollAvg != null
-        ? <>{race.enop.toFixed(1)} effective polls averaging <b style={{ color: race.pollAvg > 0 ? "var(--fc-gop)" : "var(--fc-dem)" }}>{fmtMargin(race.pollAvg)}</b> · weights decay with age and pollster record</>
+        ? <>{race.enop.toFixed(1)} effective polls averaging <b style={{ color: race.pollAvg > 0 ? "var(--fc-gop)" : "var(--fc-dem)" }}>{fmtRaceMargin(race, race.pollAvg)}</b> · weights decay with age and pollster record</>
         : <>no usable polling — the fundamentals carry through untouched</>,
     },
     {
@@ -1321,9 +1324,9 @@ function StageFlow({ race, env, sims }: {
       <div className="fc-flow-scalehead">
         <span className="fc-flow-k head">how the number gets made</span>
         <span className="fc-flow-window">
-          <b style={{ color: lo > 0 ? "var(--fc-gop)" : "var(--fc-dem)" }}>{fmtMargin(lo)}</b>
+          <b style={{ color: lo > 0 ? "var(--fc-gop)" : "var(--fc-dem)" }}>{fmtRaceMargin(race, lo)}</b>
           <i />
-          <b style={{ color: hi > 0 ? "var(--fc-gop)" : "var(--fc-dem)" }}>{fmtMargin(hi)}</b>
+          <b style={{ color: hi > 0 ? "var(--fc-gop)" : "var(--fc-dem)" }}>{fmtRaceMargin(race, hi)}</b>
         </span>
       </div>
 
@@ -1363,7 +1366,7 @@ function StageFlow({ race, env, sims }: {
                     left: `${x(row.v)}%`, color: row.v > 0 ? "var(--fc-gop)" : "var(--fc-dem)",
                     transform: labelLeft ? "translate(calc(-100% - 9px), -50%)" : "translate(9px, -50%)",
                   }}>
-                    {fmtMargin(row.v)}{moved ? <em> {row.v < from! ? "←" : "→"} {Math.abs(row.v - from!).toFixed(1)}</em> : null}
+                    {fmtRaceMargin(race, row.v)}{moved ? <em> {row.v < from! ? "←" : "→"} {Math.abs(row.v - from!).toFixed(1)}</em> : null}
                   </b>
                 </>
               ) : null}
@@ -1384,7 +1387,7 @@ function StageFlow({ race, env, sims }: {
             left: `${x(final)}%`, color: final > 0 ? "var(--fc-gop)" : "var(--fc-dem)",
             transform: x(final) > 70 ? "translate(calc(-100% - 11px), -50%)" : "translate(11px, -50%)",
           }}>
-            {fmtMargin(final)} <em>· {surname(fav)} {fmtPct(favProb)} to win</em>
+            {fmtRaceMargin(race, final)} <em>· {surname(fav)} {fmtPct(favProb)} to win</em>
           </b>
         </div>
       </div>
@@ -1446,7 +1449,7 @@ function SectionCrosstabs({ race }: { race: Race }) {
         <td className={lead === "d" ? "lead" : ""} style={{ color: "var(--fc-dem)" }}>{r[3].toFixed(1)}</td>
         <td className={lead === "r" ? "lead" : ""} style={{ color: "var(--fc-gop)" }}>{r[4].toFixed(1)}</td>
         {showO ? <td className="sh">{r[5].toFixed(1)}</td> : null}
-        <td className="mg"><i style={{ background: ratingFor(marg(r)).color, color: inkOn(ratingFor(marg(r)).color) }}>{fmtMargin(marg(r))}</i></td>
+        <td className="mg"><i style={{ background: ratingFor(marg(r)).color, color: inkOn(ratingFor(marg(r)).color) }}>{fmtRaceMargin(race, marg(r))}</i></td>
       </tr>
     );
   };
@@ -1487,7 +1490,7 @@ function SectionCrosstabs({ race }: { race: Race }) {
                   <span style={{ color: "var(--fc-dem)" }}>{dNm} <b>{total[3].toFixed(1)}</b></span>
                   <span style={{ color: "var(--fc-gop)" }}>{rNm} <b>{total[4].toFixed(1)}</b></span>
                   {showO ? <span>other <b>{total[5].toFixed(1)}</b></span> : null}
-                  <span className="mg" style={{ background: ratingFor(allMargin).color, color: inkOn(ratingFor(allMargin).color) }}>{fmtMargin(allMargin)}</span>
+                  <span className="mg" style={{ background: ratingFor(allMargin).color, color: inkOn(ratingFor(allMargin).color) }}>{fmtRaceMargin(race, allMargin)}</span>
                 </div>
               </div>
             ) : null}
@@ -1513,7 +1516,7 @@ function SectionCrosstabs({ race }: { race: Race }) {
                   <h3 className="fc-xt-ph">where the race is decided</h3>
                   <p className="fc-xt-pn">
                     Each group&rsquo;s share of projected voters times how far its margin sits from the
-                    statewide {fmtMargin(allMargin)}. Blocs at the top are the ones actually moving this
+                    statewide {fmtRaceMargin(race, allMargin)}. Blocs at the top are the ones actually moving this
                     result; a lopsided sliver of the electorate moves it very little. Pick any cut above
                     for its full table.
                   </p>
@@ -1528,7 +1531,7 @@ function SectionCrosstabs({ race }: { race: Race }) {
                           <td className="g"><span>{r[1]}</span></td>
                           <td className="sh">{cn}</td>
                           <td className="sh">{r[2].toFixed(1)}</td>
-                          <td className="mg"><i style={{ background: ratingFor(marg(r)).color, color: inkOn(ratingFor(marg(r)).color) }}>{fmtMargin(marg(r))}</i></td>
+                          <td className="mg"><i style={{ background: ratingFor(marg(r)).color, color: inkOn(ratingFor(marg(r)).color) }}>{fmtRaceMargin(race, marg(r))}</i></td>
                           <td className="mg pull" style={{ color: pull > 0 ? "var(--fc-gop)" : "var(--fc-dem)" }}>
                             {pull > 0 ? "R" : "D"}+{Math.abs(pull).toFixed(1)}
                           </td>
@@ -1597,8 +1600,11 @@ function SectionBallot({ race }: { race: Race }) {
             <i style={{ background: partyColor(c.party) }} />
             <div className="fc-ballot-id">
               <b>{c.name}</b>
+              {/* The incumbent tag belongs to one person, not to a party. Alaska runs
+                  three Republicans, so keying it off the party put "incumbent" on Dan J.
+                  Sullivan and Gerald Heikes as well as on the senator. Match the name. */}
               <em>{partyLabel(c.party)}
-                {!race.open && ((c.party === "D" && race.inc < 0) || (c.party === "R" && race.inc > 0)) ? " · incumbent" : ""}
+                {!race.open && ((race.inc < 0 && c.name === race.dem) || (race.inc > 0 && c.name === race.gop)) ? " · incumbent" : ""}
               </em>
             </div>
             <div className="fc-ballot-num">
@@ -1620,6 +1626,7 @@ function RaceSections({ race, byId, onPick, sims, updated, env }: {
   const light = useLightMode();
   const s = race.est;
   const demProb = 1 - s.prob;
+  const demTone = sideColor(race, "dem");
   const trend = race.trend;
   const W = 1080, H = 220;
   const demPts = trend.map((t) => (1 - t.p) * 100);
@@ -1641,14 +1648,14 @@ function RaceSections({ race, byId, onPick, sims, updated, env }: {
                 const dLab = dpp > 99 ? ">99%" : dpp < 1 ? "<1%" : `${dpp}%`;
                 const rLab = dpp > 99 ? "<1%" : dpp < 1 ? ">99%" : `${100 - dpp}%`;
                 return [
-                  { name: race.dem, party: "D", tone: DEM, prob: demProb, label: dLab, margin: -s.margin },
+                  { name: race.dem, party: "D", tone: sideColor(race, "dem"), prob: demProb, label: dLab, margin: -s.margin },
                   { name: race.gop, party: "R", tone: GOP, prob: s.prob, label: rLab, margin: s.margin },
                 ].sort((a, b) => b.prob - a.prob);
               })().map((c) => (
                 <div key={c.party} className="fc-score-row">
                   <div className="fc-score-id">
                     <b>{c.name}</b>
-                    <em>{c.party === "D" ? "Democrat" : "Republican"}
+                    <em>{sideLabel(race, c.party === "D" ? "dem" : "gop")}
                       {!race.open && ((c.party === "D" && race.inc < 0) || (c.party === "R" && race.inc > 0)) ? " · incumbent" : ""}
                       {" · "}{c.margin > 0 ? "+" : ""}{c.margin.toFixed(1)} expected</em>
                   </div>
@@ -1693,18 +1700,18 @@ function RaceSections({ race, byId, onPick, sims, updated, env }: {
           <div className="fc-chartwrap" onMouseMove={thover.onMove} onMouseLeave={thover.onLeave}>
             <svg viewBox={`0 0 ${W} ${H}`} className="fc-chart" role="img" aria-label="Race win-probability trend" preserveAspectRatio="none">
               <line x1="0" x2={W} y1={y(50)} y2={y(50)} stroke="currentColor" strokeOpacity={0.22} strokeDasharray="3 5" />
-              <path d={`${chartPath(demPts, W, H, 0, 100)}L${W},${H}L0,${H}Z`} fill={DEM} opacity="0.07" />
-              <path d={chartPath(demPts, W, H, 0, 100)} fill="none" stroke={DEM} strokeWidth="2.4" />
+              <path d={`${chartPath(demPts, W, H, 0, 100)}L${W},${H}L0,${H}Z`} fill={demTone} opacity="0.07" />
+              <path d={chartPath(demPts, W, H, 0, 100)} fill="none" stroke={demTone} strokeWidth="2.4" />
               <path d={chartPath(demPts.map((v) => 100 - v), W, H, 0, 100)} fill="none" stroke={GOP} strokeWidth="2.4" />
               {ti != null ? (
                 <g>
                   <line x1={(ti / (demPts.length - 1)) * W} x2={(ti / (demPts.length - 1)) * W} y1={0} y2={H} stroke="currentColor" strokeOpacity={0.28} />
-                  <circle cx={(ti / (demPts.length - 1)) * W} cy={y(demPts[ti])} r="4.5" fill={DEM} style={{ stroke: "var(--fc-bg)" }} strokeWidth="1.5" />
+                  <circle cx={(ti / (demPts.length - 1)) * W} cy={y(demPts[ti])} r="4.5" fill={demTone} style={{ stroke: "var(--fc-bg)" }} strokeWidth="1.5" />
                   <circle cx={(ti / (demPts.length - 1)) * W} cy={y(100 - demPts[ti])} r="4.5" fill={GOP} style={{ stroke: "var(--fc-bg)" }} strokeWidth="1.5" />
                 </g>
               ) : (
                 <g>
-                  <circle cx={W} cy={y(demPts[demPts.length - 1])} r="4" fill={DEM} />
+                  <circle cx={W} cy={y(demPts[demPts.length - 1])} r="4" fill={demTone} />
                   <circle cx={W} cy={y(100 - demPts[demPts.length - 1])} r="4" fill={GOP} />
                 </g>
               )}
@@ -1747,7 +1754,7 @@ function RaceSections({ race, byId, onPick, sims, updated, env }: {
                   <b>{p.pollster}{p.grade ? <i className="fc-grade">{p.grade}</i> : null}</b>
                   <i className={`fc-kind ${p.kind !== "public" ? "flag" : ""}`}>{p.kind}</i>
                   <span>{p.age}d ago · n={p.n}</span>
-                  <em style={{ color: p.margin > 0 ? "var(--fc-gop)" : "var(--fc-dem)" }}>{fmtMargin(p.margin)}</em>
+                  <em style={{ color: p.margin > 0 ? "var(--fc-gop)" : "var(--fc-dem)" }}>{fmtRaceMargin(race, p.margin)}</em>
                 </div>
               ))}
             </div>
@@ -1771,7 +1778,7 @@ function RaceSections({ race, byId, onPick, sims, updated, env }: {
               return (
                 <button key={sim.id} className="fc-simchip" onClick={() => onPick(sim.id)}>
                   <b>{other.name}</b>
-                  <span style={{ color: so.margin > 0 ? "var(--fc-gop)" : "var(--fc-dem)" }}>{fmtMargin(so.margin)}</span>
+                  <span style={{ color: so.margin > 0 ? "var(--fc-gop)" : indSide(other) ? IND : "var(--fc-dem)" }}>{fmtRaceMargin(other, so.margin)}</span>
                   <em>ρ {sim.corr.toFixed(2)}</em>
                 </button>
               );
@@ -2031,6 +2038,9 @@ body main > div > div { padding-top: 0 !important; padding-bottom: 0 !important;
 .fc-td-cands i { display: inline-flex; align-items: center; justify-content: center; width: 15px; height: 15px; margin-right: 7px; border-radius: 4px; font-style: normal; font-family: ${MONO}; font-size: 9px; font-weight: 700; }
 .fc-td-cands i.d { background: rgba(var(--fc-dem-rgb),0.07); color: var(--fc-dem); }
 .fc-td-cands i.r { background: rgba(var(--fc-gop-rgb),0.045); color: var(--fc-gop); }
+/* Independents take the same chip, in the independent purple. Osborn, Bengs, Achilles
+   and Bodnar sit in the build's Democratic slot and were reading as Democrats. */
+.fc-td-cands i.i { background: rgba(122,75,176,0.10); color: #8d5cc6; }
 .fc-td-margin, .fc-td-prob { font-family: ${MONO}; font-size: 13px; font-weight: 700; text-align: right; font-variant-numeric: tabular-nums; }
 .fc-rating { display: inline-flex; align-items: center; gap: 6px; font-style: normal; font-family: ${MONO}; font-size: 9.5px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
   padding: 4px 9px; border-radius: 6px; border: 1px solid rgba(var(--fc-line-rgb),0.16); white-space: nowrap; }

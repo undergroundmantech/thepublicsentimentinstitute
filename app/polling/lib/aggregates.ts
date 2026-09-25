@@ -123,7 +123,7 @@ import { TX_CORNYN_POLLS, TX_PAXTON_POLLS } from "../page";
    between them with one chart + table.
 ============================================================================= */
 
-export type Series = { label: string; color: string };
+export type Series = { label: string; color: string; party?: string };
 
 export type AggregateDef = {
   id: string;
@@ -163,6 +163,10 @@ const BLUE = "var(--dem)";
 const RED = "var(--gop)";
 const GREEN = "var(--approve)";
 const AMBER = "#e0a23b";
+// Independents take the desk's purple, not an amber that reads as a shade of red.
+// Osborn, Bengs, Achilles, Bodnar and Block are all running as independents, and on a
+// two-colour page an amber sat close enough to the Republican tone to be misread.
+const IND_PURPLE = "#7a4bb0";
 const MAGENTA = "var(--disapprove)";
 
 function round1(n: number) { return Math.round(n * 10) / 10; }
@@ -206,9 +210,18 @@ function lastName(label: string) {
 }
 function partyColor(label: string) {
   if (/\(R\)/.test(label)) return RED;
-  if (/\(D\)|\(I\/D\)/.test(label)) return BLUE;
-  if (/\(I\)/.test(label)) return AMBER;
+  if (/\(D\)/.test(label)) return BLUE;
+  if (/\(I(?:\/[A-Z]+)?\)/.test(label)) return IND_PURPLE;
   return "#9b8cff";
+}
+
+function partyWord(label: string) {
+  if (/\(R\)/.test(label)) return "Republican";
+  if (/\(D\)/.test(label)) return "Democrat";
+  if (/\(I(?:\/[A-Z]+)?\)/.test(label)) return "Independent";
+  if (/\(L\)/.test(label)) return "Libertarian";
+  if (/\(G\)/.test(label)) return "Green";
+  return "";
 }
 
 // featured matchups stored with generic Republican/Democrat keys
@@ -243,8 +256,8 @@ function senateAggs(mod: SenateModule): AggregateDef[] {
       subtitle: "Daily PSI-weighted average of every public poll of this 2026 U.S. Senate matchup.",
       unit: "%",
       keyA: aLabel, keyB: bLabel,
-      seriesA: { label: aShort, color: partyColor(aLabel) },
-      seriesB: { label: bShort, color: partyColor(bLabel) },
+      seriesA: { label: aShort, color: partyColor(aLabel), party: partyWord(aLabel) },
+      seriesB: { label: bShort, color: partyColor(bLabel), party: partyWord(bLabel) },
       marginLabel: "Margin",
       fmtMargin: (n) => (Math.abs(n) < 0.05 ? "Even" : n > 0 ? `${aShort}+${n.toFixed(1)}` : `${bShort}+${Math.abs(n).toFixed(1)}`),
       polls, gold: [], goldMult: 1, stateAbbr: abbr,
@@ -271,8 +284,8 @@ function governorAggs(mod: SenateModule): AggregateDef[] {
       subtitle: "Daily PSI-weighted average of every public poll of this 2026 governor's race.",
       unit: "%",
       keyA: aLabel, keyB: bLabel,
-      seriesA: { label: aShort, color: partyColor(aLabel) },
-      seriesB: { label: bShort, color: partyColor(bLabel) },
+      seriesA: { label: aShort, color: partyColor(aLabel), party: partyWord(aLabel) },
+      seriesB: { label: bShort, color: partyColor(bLabel), party: partyWord(bLabel) },
       marginLabel: "Margin",
       fmtMargin: (n) => (Math.abs(n) < 0.05 ? "Even" : n > 0 ? `${aShort}+${n.toFixed(1)}` : `${bShort}+${Math.abs(n).toFixed(1)}`),
       polls, gold: [], goldMult: 1, stateAbbr: abbr,

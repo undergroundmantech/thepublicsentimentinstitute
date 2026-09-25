@@ -217,3 +217,226 @@ tooltip. Fixing that needs district-level county output from the House model.
   map, no JavaScript errors. Before this change, three drew nothing.
 - Both uncontested shapes checked in light and dark.
 - `npx tsc --noEmit` exits 0.
+
+---
+
+# Alaska Senate: the headline and the odds named different winners
+
+The board was reading **Peltola +1.4** next to **Sullivan 57% to win**, which is not a
+close call rendered awkwardly. It is two numbers that disagree about who is ahead, printed
+side by side.
+
+## What was wrong
+
+Alaska is ranked choice, and the pipeline treats it specially. The head-to-head margin the
+model simulates is not the number that decides the race, so the build swaps the headline
+for the ranked-choice final round:
+
+```python
+margin = round(rcv["pct"][0] - rcv["pct"][1], 2) if rcv else mg
+side   = side_from_sims(sims, margin, prob=1 - prob_d)
+```
+
+The swap only reached the headline. `p10`, `p90` and the whole outcome curve were still
+read off the unshifted head-to-head vector, and `prob` still came from the run summary's
+`win_prob_dem_side`, which is computed on that same unshifted vector. So the page carried:
+
+| | value |
+|---|---|
+| headline margin, from the RCV final round | **D+1.36** |
+| median of its own 2,000 simulations | **R+0.57** |
+| win probability, from the unshifted run | **R 56.6%** |
+
+A 1.93-point gap that straddles zero, so the two halves of the page named different
+winners. For scale, every other race on the board agrees with its own simulation to about
+a quarter of a point, and the 90th percentile of that gap is 0.57. Alaska was more than
+three times the worst normal case, and the only one large enough to change the answer.
+
+The gap is the ranked-choice transfer effect: Peltola leads first choices by 2.4 but the
+head-to-head simulation sits slightly Republican, and the final-round tabulation puts her
+1.4 ahead. That effect belonged in the distribution and was never applied to it.
+
+## The fix
+
+`side_from_sims` takes a `recenter` flag, set wherever the caller replaces the headline
+with a figure the simulation does not itself produce — in practice, a ranked-choice race.
+It shifts the whole simulated vector so its median lands on the reported margin before
+anything is read off it, and then takes the probability from the shifted vector rather
+than from the run summary, which would otherwise disagree by construction.
+
+This assumes the transfer effect is constant across simulations. That assumption is
+already built into publishing a single final-round number, so it adds nothing new; it just
+applies it consistently instead of to one field out of four.
+
+The same correction was applied to the shipped `model.json` so the site is right now
+rather than after the next run:
+
+| | was | now |
+|---|---|---|
+| Alaska Senate, probability | R 56.6% | **D 60.4%** |
+| Alaska Senate, p10 / p90 | D+6.3 / R+7.7 | **D+8.5 / R+5.5** |
+| Alaska Governor, probability | D 98.9% | D 99.1% |
+
+Alaska Governor is the other ranked-choice race. Its gap was 0.61 and never crossed zero,
+so nothing visible changed there.
+
+Sanity check on the new number: a 1.36-point lead against a spread whose 10–90 band is
+about 14 points wide implies roughly a 60% win probability. It lands on 60.4.
+
+The board now reads the same way under all three colour-by views — margin, odds and
+rating all say Tilt D, Peltola, 60.4%.
+
+## Two smaller things found alongside it
+
+**Every Republican in the race was tagged "incumbent".** The projected-ballot row decided
+the tag by party rather than by person, so in a race running three Republicans it printed
+"incumbent" against Dan J. Sullivan and Gerald Heikes as well as against the senator. It
+now matches the candidate's name.
+
+**A residual coin-flip.** `house-FL-22` still shows margin R+0.15 against a 49.7%
+Republican probability. Both round to a dead heat from opposite sides of zero, which is
+rounding on a genuine toss-up rather than a contradiction; it is left alone.
+
+## What this does not fix
+
+The chamber numbers still come from the correlated run, which used Alaska's unshifted
+vector. Alaska moving from 43.4% to 60.4% Democratic adds about **0.17 expected Democratic
+Senate seats**. That will not move the median off 52, but the published 71% Senate control
+figure is now a fraction of a point stale and only a re-run will propagate it properly.
+Recomputing the correlated distribution here would mean simulating it without the vectors,
+which is guessing.
+
+---
+
+# Senate re-run and independents, 25 September 2026
+
+All 35 Senate races re-run through `dynamic_mode.py` at `AS_OF=2026-09-25`, and every
+independent on the board now reads as an independent rather than as a Democrat.
+
+## The re-run
+
+Five polls the site's own files carried had never reached the model: Bowling Green
+State/YouGov and Trafalgar in Ohio, co/efficient in Alaska, Rasmussen in South Carolina
+and NBC News/Marist in Texas. Ohio's two were missed because that race is the special
+election and its polling table lives on a different page. All five are in.
+
+**The first attempt used the wrong driver.** `senate_mode.py` produces the deterministic
+county forecast and nothing else — no simulations, no win probabilities, no ranges.
+`dynamic_mode.py` is the one that runs the 2,000 elections. Re-run on that.
+
+The board barely moves, which is the expected result for five polls across four states:
+
+| Race | was | now | |
+|---|---|---|---|
+| Texas | D+2.40 | **D+3.01** | NBC/Marist |
+| Ohio | D+5.51 | **D+4.91** | Trafalgar pulls it back toward Husted |
+| Idaho | R+13.45 | R+12.96 | |
+| South Carolina | R+1.84 | R+2.22 | Rasmussen |
+
+No leader changed. Every other race moved under 0.4, which is the as-of date advancing a
+day. Senate control stays at **71%**, median 52 seats. The governor and House boards were
+not re-run and are byte-for-byte unchanged.
+
+## Alaska, properly this time
+
+Earlier today I recentred Alaska's simulated distribution onto the page's ranked-choice
+margin of D+1.36, on the assumption the page was right and the simulation had drifted.
+**The page was the thing that was wrong.** The re-run settles it, and the answer is more
+interesting than either number:
+
+| | |
+|---|---|
+| First choices | **Peltola 44.0, Dan S. Sullivan 41.6** — Peltola +2.5 |
+| Ranked-choice final round | **Sullivan 50.3, Peltola 49.7** — Sullivan +0.6 |
+| Win probability | Sullivan 55% |
+
+Peltola leads the first count. She loses the final round because the transfer assumption
+sends 50.3% of the other two Republicans' second choices to Sullivan against 28.8% to her,
+with 20.9% exhausting. A 2.5-point first-choice lead becomes a 0.6-point deficit.
+
+The page now shows both, labelled, instead of one number that disagreed with the odds
+printed beside it. The recentring logic stays in — it is what keeps the margin, the
+probability and the curve describing the same quantity — but with a consistent run behind
+it the shift it applies is now negligible rather than 1.9 points.
+
+**Two pipeline bugs came out of this.** `update_pages.py` decided which races had moved by
+comparing the *final round* margin but then wrote the *first choice* margin to the page,
+and it never rewrote the `rcv` block at all, so that block kept whatever an older run left
+there. Alaska Senate went onto the page as +2.49 when the model's answer was −0.63, and
+Alaska Governor as +30.53 against a final round of +12.55. Both now write the final round
+and rebuild the `rcv` block from the run, with the first-choice margin carried in its own
+field so the page can still show it.
+
+## Independents
+
+Four Senate races run an independent against a Republican: **Nebraska (Osborn), South
+Dakota (Bengs), Idaho (Achilles), Montana (Bodnar)**. The build puts whoever is not the
+Republican into the `dem` slot, and the desk trusted the slot, so all four were drawn in
+Democratic blue and labelled "Democrat".
+
+The desk now reads the party off the candidate list instead:
+
+- The candidate chip is a purple **I**, not a blue D.
+- The party word under the odds says **Independent**.
+- The margin prints **I+1.3**, not D+1.3.
+- The rating band reads **Tilt I / Lean I / Likely I / Safe I** in independent purple.
+- The county map shades purple against red rather than blue against red, and the caption
+  says "the independent against the Republican".
+- The national map, the sixty-day tracker, the correlated-race chips and the crosstab
+  margins all take the same tone.
+
+Off the desk: the polling averages page, its state map legend and both ratings pages now
+use one independent purple. The polling page also names the party under each candidate's
+number, which it never did. An `(I/D)` independent — one who caucuses with a party — reads
+as an independent too, rather than being folded into blue.
+
+## Six races had the wrong incumbent
+
+Found while wiring the independent labels, because three of them put the "incumbent" tag on
+the challenger.
+
+| Race | was flagged | actually |
+|---|---|---|
+| Maine | Troy Jackson | **Susan Collins** |
+| Nebraska | Dan Osborn | **Pete Ricketts** |
+| South Dakota | Brian Bengs | **Mike Rounds** |
+| Idaho | Todd Achilles | **Jim Risch** |
+| Texas | Ken Paxton | nobody — Cornyn lost the primary |
+| South Carolina | Darline Graham | nobody |
+
+The builder looked for either candidate's surname anywhere in the seat note, and the seat
+note is free text about how the ballot came to look the way it does. "Democrat withdrew for
+independent Dan Osborn" made Osborn an incumbent. Maine's note names both candidates and
+the Democrat was checked first, so Collins lost her own incumbency to her challenger.
+
+Only three things in a seat note actually assert incumbency: an open seat, "<name> seeking
+a term", and "<name> appointed". A note that merely explains how a nominee got there
+asserts nothing, and 0 is the honest answer. Where a note says a party withdrew in favour
+of an independent and the seat is not open, the seat is held by the party that did not
+withdraw.
+
+**Ohio is still wrong and cannot be fixed here.** Its note is "Special election, Vance
+seat", which never says Husted was appointed, so he reads as no incumbent rather than as
+the incumbent. That needs the seat note itself edited.
+
+## A House regression caught before it shipped
+
+Rebuilding the site data also rebuilds the House from `/tmp/pvi/house_nogal`, which is an
+older House simulation than the one behind the published board. It silently rewound **415
+districts**, flipped ME-02 from D+2.0 back to R+1.8 — undoing yesterday's Maine change —
+and moved House control from 85.25 to 84.75. The House was not re-run and must not move, so
+it is pinned to the published values. Worth knowing before the next build: that path needs
+repointing at the current House run.
+
+## Verification
+
+- All 35 Senate races completed; the run summary carries simulations, win probabilities and
+  ranges for every one.
+- No race's headline margin and win probability name different winners any more, except
+  `house-FL-22` at R+0.1 against 55% Democratic, which is a genuine coin flip reported from
+  two model outputs that round either side of zero.
+- Largest gap between a headline margin and the median of its own simulations is now 0.33,
+  down from Alaska's 1.93. Median 0.10.
+- Zero unshaded county polygons across all 506 races.
+- House: 0 districts differ from the published board; all three chamber blocks identical.
+- `npx tsc --noEmit` exits 0, no console errors in either theme.

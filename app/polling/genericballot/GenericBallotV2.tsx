@@ -374,10 +374,12 @@ export default function PollingAveragesPage() {
               <div className="pa-stat">
                 <div className="pa-stat-label"><span className="pa-dot" style={{ background: h2hDef.seriesA.color }} />{h2hDef.seriesA.label}</div>
                 <div className="pa-stat-num" style={{ color: h2hDef.seriesA.color }}>{hLatest.a.toFixed(1)}<small>{h2hDef.unit}</small></div>
+                {h2hDef.seriesA.party ? <div className="pa-stat-party">{h2hDef.seriesA.party}</div> : null}
               </div>
               <div className="pa-stat">
                 <div className="pa-stat-label"><span className="pa-dot" style={{ background: h2hDef.seriesB.color }} />{h2hDef.seriesB.label}</div>
                 <div className="pa-stat-num" style={{ color: h2hDef.seriesB.color }}>{hLatest.b.toFixed(1)}<small>{h2hDef.unit}</small></div>
+                {h2hDef.seriesB.party ? <div className="pa-stat-party">{h2hDef.seriesB.party}</div> : null}
               </div>
             </div>
             <div className="pa-meter" aria-label={`${h2hDef.marginLabel} ${h2hDef.fmtMargin(hLatest.net)}`}>
@@ -687,6 +689,8 @@ const CSS = `
   .pa-cat { appearance: none; cursor: pointer; background: rgba(var(--line-rgb),0.04); border: 1px solid var(--line); border-radius: 999px; padding: 8px 15px; line-height: 1; font-family: var(--font-body), monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted2); transition: color 160ms ease, background 160ms ease, border-color 160ms ease; }
   .pa-cat:hover { color: var(--ink); border-color: rgba(var(--ink-rgb),calc(0.22 * var(--struct))); }
   .pa-cat.is-active { color: var(--canvas); background: var(--ink); border-color: transparent; }
+
+  .pa-stat-party { margin-top: 2px; font-family: var(--font-body), monospace; font-size: 10.5px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: var(--muted3); }
 
   /* ── clickable state map (2026 Senate / governor) ── */
   .srm { border: 1px solid var(--line); border-radius: 12px; background: rgba(var(--line-rgb),0.012); margin-bottom: 14px; overflow: hidden; }

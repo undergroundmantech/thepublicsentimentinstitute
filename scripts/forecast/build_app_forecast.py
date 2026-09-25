@@ -70,9 +70,31 @@ for f in glob.glob(f"{HOUSE_SIM}/win_*.npy"):
     ab = next((k for k, v in STATE_NAME.items() if v.lower().replace(" ", "_") == slug), None)
     if ab: house_win[ab] = np.load(f)
 
-def side_from_sims(m, margin_now, prob=None):
-    """RaceSide from a D positive simulated margin vector, in the desk's GOP positive sign"""
+def side_from_sims(m, margin_now, prob=None, recenter=False):
+    """RaceSide from a D positive simulated margin vector, in the desk's GOP positive sign.
+
+    recenter=True shifts the whole simulated vector so its median lands on margin_now
+    before anything is read off it. That is only ever wanted where the caller replaces
+    the headline margin with a figure the simulation does not itself produce, which in
+    practice means a ranked choice race: the final round decides it, the simulated vector
+    is a head to head margin, and the gap between them is the transfer effect.
+
+    Leaving them unaligned is what put Alaska on the board as Peltola +1.4 next to
+    Sullivan 57 percent to win. The simulated vector sat 1.9 points to the Republican of
+    the final round margin, so the headline and the odds straddled zero and named
+    different winners. Every other race agrees with its own simulation to about a quarter
+    of a point, which is histogram bin noise.
+
+    The shift assumes the transfer effect is constant across simulations. That is the
+    same assumption already built into publishing one final round number, so it adds no
+    new one; it just applies it consistently. When recentering, the probability is taken
+    from the shifted vector rather than from the run summary, whose win probability is
+    computed on the unshifted head to head and would otherwise disagree by construction.
+    """
     g = -np.asarray(m, float)
+    if recenter:
+        g = g + (-margin_now - float(np.median(g)))
+        prob = None                                     # must come from the shifted vector
     p10, p90 = float(np.percentile(g, 10)), float(np.percentile(g, 90))
     lo, hi = float(np.floor(g.min())), float(np.ceil(g.max()))
     nb = 40
@@ -81,6 +103,39 @@ def side_from_sims(m, margin_now, prob=None):
     return dict(margin=round(-margin_now, 2), prob=round(float((g > 0).mean()) if prob is None else prob, 4),
                 p10=round(p10, 2), p90=round(p90, 2),
                 dist=dict(lo=round(lo, 2), w=round(w, 3), c=[int(c) for c in counts]))
+
+def incumbency(seat, open_seat, dem, gop):
+    """Which side the sitting member is on, read from what the seat note actually says.
+
+    This used to look for either candidate's surname anywhere in the note, which is a
+    trap, because the note is free text about how the ballot came to look the way it
+    does, not a statement about incumbency. "Democrat withdrew for independent Dan
+    Osborn" made Osborn the incumbent; so did Bengs in South Dakota and Achilles in
+    Idaho, when in each case the sitting senator is the Republican they are running
+    against. Maine's "Collins seeking a sixth term - Jackson replaced Platner" names
+    both, and the Democrat was checked first, so Collins lost her own incumbency.
+    South Carolina's "Darline Graham nominated after Lindsey Graham's death" matched on
+    the surname and made the challenger an incumbent.
+
+    Only three things in a seat note actually assert incumbency: an open seat (nobody),
+    "<name> seeking / running for a term" and "<name> appointed". A note that merely
+    explains how a nominee got there asserts nothing, and 0 is the honest answer.
+    """
+    s = (seat or "").lower()
+    if open_seat: return 0
+    dl, gl = dem.split()[-1].lower(), gop.split()[-1].lower()
+    for pat in (r"([^\s,]+)\s+seeking\b", r"([^\s,]+)\s+running for a\b", r"([^\s,]+)\s+appointed\b"):
+        m = re.search(pat, s)
+        if m:
+            nm = m.group(1).strip(".,")
+            if nm == dl: return -1
+            if nm == gl: return 1
+    # "Democrat withdrew for independent X" in a seat that is not open: the party that
+    # did not withdraw is the one holding it, so its nominee is the incumbent.
+    m = re.search(r"(democrat|republican)\s+withdrew for independent", s)
+    if m:
+        return 1 if m.group(1) == "democrat" else -1
+    return 0
 
 def side_flat(margin_now, prob, p10, p90):
     return dict(margin=round(-margin_now, 2), prob=round(prob, 4), p10=round(-p90, 2), p90=round(-p10, 2))
@@ -155,16 +210,18 @@ def statewide(page, office, prefix):
         # final round; the race is decided by the final round, so that is the
         # margin the desk carries, taken from the page itself rather than from
         # the run summary, whose own rcv figure does not agree with it.
-        mg = r["margin"]                                   # D positive, first choice / leader
+        # race["margin"] is the final round for a ranked choice race, so the first choice
+        # margin has to come from the rcv block rather than from it.
+        mg = (r.get("rcv") or {}).get("first", r["margin"])   # D positive, first choice / leader
         rcv = r.get("rcv")
         margin = round(rcv["pct"][0] - rcv["pct"][1], 2) if rcv else mg
         sims = sim_margin.get(key)
         prob_d = v["simulation"]["win_prob_dem_side"] / 100
-        side = (side_from_sims(sims, margin, prob=1 - prob_d) if sims is not None
+        side = (side_from_sims(sims, margin, prob=1 - prob_d, recenter=rcv is not None) if sims is not None
                 else side_flat(margin, 1 - prob_d, v["simulation"]["margin_p10"], v["simulation"]["margin_p90"]))
         seat = r.get("seat", "")
         open_seat = "open seat" in seat.lower()
-        inc = 0 if open_seat else (-1 if dem.split()[-1].lower() in seat.lower() else 1 if gop.split()[-1].lower() in seat.lower() else 0)
+        inc = incumbency(seat, open_seat, dem, gop)
         pavg = v.get("poll_avg", {})
         pa = None if v["n_polls"] == 0 or pavg.get("D2") is None else round(100 - 200 * pavg["D2"], 2)
         fund = v.get("candidate", {}).get("fundamentals_d2")

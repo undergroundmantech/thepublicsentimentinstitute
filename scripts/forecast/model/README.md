@@ -19,3 +19,26 @@ checks the built data against the published pages; it currently reports one fail
 the Rhode Island crosstab rounding gap described in the changelog.
 
 See `docs/FORECAST_CHANGELOG_2026-09-25.md` for the full account.
+
+## 25 September 2026, Senate re-run
+
+| File | What changed |
+|---|---|
+| `senate_mode.py` | Five Senate polls added to `EXTRA_POLLS`: Bowling Green State/YouGov and Trafalgar (Ohio), co/efficient (Alaska), Rasmussen (South Carolina), NBC News/Marist (Texas) |
+| `dynamic_mode.py` | Added here for the first time. This is the driver that actually runs the 2,000 simulations; `senate_mode.py` alone produces the deterministic county forecast and nothing else |
+| `../update_pages.py` | Writes the ranked-choice final round margin rather than the first choice one, and rebuilds the `rcv` block from the run instead of leaving whatever an older run wrote |
+| `../build_app_forecast.py` | Incumbency read from what the seat note asserts rather than from any surname appearing in it; ranked-choice simulations recentred on the margin the page reports; first-choice margin read from the `rcv` block |
+
+Re-run command, for the record:
+
+```
+OUT_DYN=<out> AS_OF=2026-09-25 APPROVAL_SRC=combined HIST_COMP_CENTER=0.0452 \
+ELECTORATE=1 HISTORY=1 CANDIDATE=1 POLL_METHOD=daily \
+python3 dynamic_mode.py IA MI OH TX GA NC SC AK KS NH ME FL SD ID MT VA MN MS LA AR KY \
+  OR WY CO NM MA RI DE WV IL TN AL NJ OK NE
+```
+
+**Known trap:** `build_app_forecast.py` rebuilds the House from `HOUSE_SIM`, which defaults
+to `/tmp/pvi/house_nogal`. That is an older House run than the published board, so a build
+that does not pin the House will rewind 415 districts and flip ME-02. Re-run the House or
+keep its section of `model.json` when only the Senate has moved.

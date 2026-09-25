@@ -729,6 +729,19 @@ EXTRA_POLLS = {
     "LA": [dict(source="Hart Research (D)", dates="September 17-19, 2026", end="2026-09-19", n=500, pop="LV", D=44, R=48, O=0, U=8)],
     "CAG": [dict(source="Berkeley IGS", dates="September 15-20, 2026", end="2026-09-20", n=4512, pop="RV", D=58, R=33, O=0, U=9)],
     "MIG": [dict(source="co/efficient (R)", dates="September 21-23, 2026", end="2026-09-23", n=843, pop="LV", D=47, R=44, O=0, U=9)],
+    # Sept 25 2026 sync. Five Senate polls the site's poll files carried and the model had not
+    # seen. Every one was checked against a pollster release or a report giving the field dates
+    # and the sample, not against an aggregator's release-date listing.
+    # Ohio is the special election; Wikipedia moved the polling table to that page, which is why
+    # these two were missed.
+    "OH": [dict(source="Bowling Green State University/YouGov", dates="September 1-10, 2026", end="2026-09-10", n=1000, pop="LV", D=48, R=45, O=0, U=7),
+           dict(source="Trafalgar Group (R)", dates="September 14-16, 2026", end="2026-09-16", n=1085, pop="LV", D=45, R=42, O=0, U=13)],
+    "TX": [dict(source="NBC News/Marist", dates="September 17-20, 2026", end="2026-09-20", n=1139, pop="RV", D=50, R=44, O=0, U=6)],
+    "SC": [dict(source="Rasmussen Reports", dates="September 14, 2026", end="2026-09-14", n=1006, pop="LV", D=43, R=48, O=0, U=9)],
+    # Alaska is ranked choice; this one was published as a head to head, so it enters as one
+    # rather than being run through the first-choice transfer assumption.
+    "AK": [dict(source="co/efficient (R)", dates="September 14-17, 2026", end="2026-09-17", n=799, pop="LV",
+                kind="head_to_head", D=46, R=48, O=0, U=6)],
 }
 
 def _add_extra(st, p):
