@@ -46,3 +46,4 @@ scripts/forecast/raw/
 
 # flight recorder (CO-04 §6) — runtime snapshot blobs, not source
 data/flightrecorder/*.json
+tpsi-full-site.zip
