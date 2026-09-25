@@ -5,7 +5,8 @@ import { createPortal } from "react-dom";
 import SwingOMeter from "../results/components/SwingOMeter";
 import {
   DEM, GOP, INK, LIME, RATING_BANDS, TILT_D_TONE, TILT_R_TONE,
-  type CountiesPayload, type CountyRow, type Crosstabs, type CrosstabRow,
+  type CountiesPayload, type CountyRow, type Crosstabs, type CrosstabRow, type Cand,
+  partyColor, partyLabel,
   type Geo, type Model, type Office, type Race, type RaceSide, type StateDetail, type ViewMode,
   OFFICE_LABEL, fmtMargin, fmtPct, inkOn, marginColor, onLight, raceColor, ratingFor, surname,
 } from "./lib";
@@ -517,9 +518,12 @@ const shareOf = (v: number, t: number) => (t > 0 ? `${((v / t) * 100).toFixed(1)
 
 // One tooltip shape for both layers: who, how many votes, what share, and the margin
 // underneath. Counts are the point — a shade alone never told anyone the size of a place.
-function VoteTip({ title, sub, demName, gopName, dem, rep, total, margin, foot, x, y }: {
+function VoteTip({ title, sub, demName, gopName, dem, rep, total, margin, foot, x, y, cands }: {
   title: string; sub?: string; demName: string; gopName: string;
   dem: number; rep: number; total: number; margin: number; foot?: string; x: number; y: number;
+  // when the race runs more than two names, the county's whole ballot rather than
+  // a Democrat, a Republican and an undifferentiated "other"
+  cands?: { name: string; party: string; pct: number }[];
 }) {
   const flip = typeof window !== "undefined" && x > window.innerWidth - 350;
   const yc = typeof window !== "undefined" ? Math.min(y, window.innerHeight - 200) : y;
@@ -528,11 +532,22 @@ function VoteTip({ title, sub, demName, gopName, dem, rep, total, margin, foot, 
     <div className="fc-tip wide" style={{ left: x + (flip ? -320 : 18), top: yc - 14 }}>
       <div className="fc-tip-name">{title}</div>
       {sub ? <div className="fc-tip-sub">{sub}</div> : null}
-      <div className="fc-tip-vote"><i style={{ background: DEM }} /><b>{demName}</b><span>{commas(dem)}</span><em>{shareOf(dem, total)}</em></div>
-      <div className="fc-tip-vote"><i style={{ background: GOP }} /><b>{gopName}</b><span>{commas(rep)}</span><em>{shareOf(rep, total)}</em></div>
-      {total - dem - rep > 0
-        ? <div className="fc-tip-vote"><i style={{ background: "rgba(var(--fc-ink-rgb),calc(0.3 * var(--fc-mute) + var(--fc-floor)))" }} /><b>other</b><span>{commas(total - dem - rep)}</span><em>{shareOf(total - dem - rep, total)}</em></div>
-        : null}
+      {cands && cands.length > 2
+        ? cands.map((c, i) => (
+            <div key={`${c.name}-${i}`} className="fc-tip-vote">
+              <i style={{ background: partyColor(c.party) }} />
+              <b>{surname(c.name)}</b>
+              <span>{commas(Math.round(total * c.pct / 100))}</span>
+              <em>{c.pct.toFixed(1)}%</em>
+            </div>
+          ))
+        : (<>
+            <div className="fc-tip-vote"><i style={{ background: DEM }} /><b>{demName}</b><span>{commas(dem)}</span><em>{shareOf(dem, total)}</em></div>
+            <div className="fc-tip-vote"><i style={{ background: GOP }} /><b>{gopName}</b><span>{commas(rep)}</span><em>{shareOf(rep, total)}</em></div>
+            {total - dem - rep > 0
+              ? <div className="fc-tip-vote"><i style={{ background: "rgba(var(--fc-ink-rgb),calc(0.3 * var(--fc-mute) + var(--fc-floor)))" }} /><b>other</b><span>{commas(total - dem - rep)}</span><em>{shareOf(total - dem - rep, total)}</em></div>
+              : null}
+          </>)}
       <div className="fc-tip-vote total"><i /><b>total votes</b><span>{commas(total)}</span><em style={{ color: margin > 0 ? "var(--fc-gop)" : "var(--fc-dem)" }}>{fmtMargin(margin)}</em></div>
       {foot ? <div className="fc-tip-foot">{foot}</div> : null}
     </div>
@@ -592,6 +607,16 @@ function RaceStage({ race, detail, counties, stateRaces, onPick, onBack }: {
   const byDist = useMemo(() => new Map(stateRaces.map((r) => [r.id, r])), [stateRaces]);
 
   const [layer, setLayer] = useState<"district" | "county">("district");
+  // The county shading is a two party margin. Where a third candidate is projected
+  // to finish ahead of one of the majors, that shading is not the story of the race,
+  // so the caption says so rather than letting the colour speak for itself.
+  const runnerUpMinor = (() => {
+    const cs = race.cands;
+    if (!cs || cs.length < 3) return null;
+    const ranked = [...cs].sort((a, b) => b.pct - a.pct);
+    const second = ranked[1];
+    return second && second.party !== "D" && second.party !== "R" ? second : null;
+  })();
   const [tip, setTip] = useState<StageHover | null>(null);
   useEffect(() => { setTip(null); setLayer("district"); }, [race.id]);
 
@@ -657,7 +682,7 @@ function RaceStage({ race, detail, counties, stateRaces, onPick, onBack }: {
     if (tip.kind === "county") {
       const row = rows ? rows[tip.id] : undefined;
       if (!row) return null;
-      const [m, dv, rv, tv] = row;
+      const [m, dv, rv, tv, shares] = row;
       const nm = names[tip.id] || "County";
       return (
         <VoteTip
@@ -666,6 +691,9 @@ function RaceStage({ race, detail, counties, stateRaces, onPick, onBack }: {
           demName={isHouse ? "Democratic" : surname(race.dem)}
           gopName={isHouse ? "Republican" : surname(race.gop)}
           dem={dv} rep={rv} total={tv} margin={m}
+          cands={shares && race.cands
+            ? race.cands.map((c, i) => ({ name: c.name, party: c.party, pct: shares[i] ?? 0 }))
+            : undefined}
           foot={`${ratingFor(m).cat} · projected county vote`}
           x={tip.x} y={tip.y}
         />
@@ -734,7 +762,9 @@ function RaceStage({ race, detail, counties, stateRaces, onPick, onBack }: {
             ? (showDistricts
               ? `all ${stateRaces.length} ${race.state} districts · hover for its projected vote · click to open another`
               : `${race.state} counties · hover for the projected House vote in each`)
-            : "county-level projection · hover a county for its projected vote"}
+            : runnerUpMinor
+              ? `county-level projection · shaded by the Democrat against the Republican, but ${surname(runnerUpMinor.name)} is projected second here · hover a county for the whole ballot`
+              : "county-level projection · hover a county for its projected vote"}
         </div>
       )}
       {tipNode}
@@ -1511,6 +1541,53 @@ function SectionCrosstabs({ race }: { race: Race }) {
   );
 }
 
+// ── the projected ballot ──────────────────────────────────────
+// The odds block above is a two way question and stays that way: who wins. This
+// is the other question, what the ballot actually looks like, and it carries every
+// name the model prices. It only renders where there is more than a Democrat and a
+// Republican, so a straight two way race is not given a section that says nothing.
+function SectionBallot({ race }: { race: Race }) {
+  const cands = race.cands;
+  if (!cands || cands.length < 3) return null;
+  const ranked = [...cands].sort((a, b) => b.pct - a.pct);
+  const top = ranked[0]?.pct ?? 0;
+  const known = ranked.reduce((a, c) => a + c.pct, 0);
+  const rest = Math.max(0, 100 - known);
+  return (
+    <div className="fc-ballot">
+      <div className="fc-ballot-h">
+        <span>projected ballot</span>
+        <span>{race.votes ? `${commas(race.votes.total)} votes projected` : `${ranked.length} candidates`}</span>
+      </div>
+      <div className="fc-ballot-bar" role="img"
+        aria-label={ranked.map((c) => `${c.name} ${c.pct.toFixed(1)} percent`).join(", ")}>
+        {ranked.map((c, i) => (
+          <i key={`${c.name}-${i}`} style={{ width: `${c.pct}%`, background: partyColor(c.party) }} />
+        ))}
+        {rest > 0.05 ? <i style={{ width: `${rest}%`, background: "rgba(var(--fc-ink-rgb),calc(0.18 * var(--fc-mute) + var(--fc-floor)))" }} /> : null}
+      </div>
+      <div className="fc-ballot-list">
+        {ranked.map((c, i) => (
+          <div key={`${c.name}-${i}`} className="fc-ballot-row">
+            <i style={{ background: partyColor(c.party) }} />
+            <div className="fc-ballot-id">
+              <b>{c.name}</b>
+              <em>{partyLabel(c.party)}
+                {!race.open && ((c.party === "D" && race.inc < 0) || (c.party === "R" && race.inc > 0)) ? " · incumbent" : ""}
+              </em>
+            </div>
+            <div className="fc-ballot-num">
+              <b style={{ color: partyColor(c.party) }}>{c.pct.toFixed(1)}%</b>
+              <em>{commas(c.votes)}</em>
+            </div>
+            <div className="fc-ballot-track"><i style={{ width: `${top > 0 ? (c.pct / top) * 100 : 0}%`, background: partyColor(c.party) }} /></div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 function RaceSections({ race, byId, onPick, sims, updated, env }: {
   race: Race; byId: Map<string, Race>; onPick: (id: string) => void; sims: number; updated: string;
   env: { npe: number; gb: number; approval: number };
@@ -1570,6 +1647,7 @@ function RaceSections({ race, byId, onPick, sims, updated, env }: {
               />
             </div>
           </div>
+          <SectionBallot race={race} />
           <OutcomeDist race={race} s={s} sims={sims} />
         </div>
       </section>
@@ -1674,12 +1752,23 @@ function RaceSections({ race, byId, onPick, sims, updated, env }: {
 
 // ── styles ───────────────────────────────────────────────────────────────────
 const CSS = `
+/* @import must be the first rule in a sheet or the parser drops it. It was
+   sitting a hundred lines down, so Oswald never loaded and every heading fell
+   back to the system condensed face. */
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&display=swap');
+
 /* ── theme tokens ──────────────────────────────────────────────────────────
-   The desk is dark by default. Only the base colours move between themes;
-   every rule below keeps its own alpha, so the dark rendering is unchanged
-   and light is a true inversion rather than a second hand-tuned palette.
-   The site sets data-theme on <html> (see app/layout.tsx), and the toggle
-   already in the site header is what drives it — this page follows along. */
+   The desk is dark by default and the site sets data-theme on <html>, so the
+   base below is the dark rendering and the [data-theme="light"] block is the
+   inversion. Every rule downstream keeps its own alpha.
+
+   This used to be three near-identical copies of the same block, and the last
+   two set --fc-bg and --fc-ink to var(--fc-bg) and var(--fc-ink). A custom
+   property that references itself is a cycle, which is invalid at computed-value
+   time, so both resolved to nothing. Light mode still worked because the light
+   block assigns literals; dark mode had no background at all, fell through to
+   the site's light canvas, and then painted near-white ink on it. That is the
+   washed-out page. One block, literal values, no cycles. */
 :root {
   --fc-bg: #050505;
   --fc-bg-rgb: 5,5,5;
@@ -1707,6 +1796,9 @@ const CSS = `
   --fc-band: #f1f1ed;
   --fc-idle: #e4e4de;
   --fc-idle-line: rgba(23,23,27,0.28);
+  /* The raised surface has to be a light panel here. It was written as
+     rgba(var(--fc-line-rgb),0.97), and in light mode the line colour IS the ink,
+     so every tooltip came out a near-black card carrying near-black text. */
   --fc-elev: rgba(255,255,255,0.97);
   --fc-elev-shadow: 0 18px 44px rgba(23,23,27,0.16);
   /* the site's own light-theme party colours — the dark-lifted pair sits just
@@ -1719,9 +1811,7 @@ const CSS = `
   --fc-shadow: 0 1px 2px rgba(23,23,27,0.04), 0 2px 10px rgba(23,23,27,0.06);
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&display=swap');
-
-html, body { background: var(--fc-bg) !important; }
+html, body { background: var(--fc-bg, #050505) !important; }
 html { height: auto !important; overflow-y: auto !important; }
 body { height: auto !important; min-height: 100svh; overflow: visible !important; overflow-x: clip !important; }
 body main > div { max-width: none !important; padding-left: 0 !important; padding-right: 0 !important; }
@@ -1937,6 +2027,29 @@ body main > div > div { padding-top: 0 !important; padding-bottom: 0 !important;
 .fc-h2h-notch { position: absolute; left: 50%; top: -3px; bottom: -3px; width: 2px; background: var(--fc-bg); box-shadow: 0 0 0 1px rgba(var(--fc-ink-rgb),calc(0.35 * var(--fc-mute) + var(--fc-floor))); }
 .fc-h2h-x { display: flex; justify-content: space-between; margin-top: 9px; font-family: ${MONO}; font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; }
 .fc-odds-dial { max-width: 470px; }
+
+/* the projected ballot */
+.fc-ballot { margin-top: clamp(30px, 4vh, 44px); }
+.fc-ballot-h { display: flex; justify-content: space-between; gap: 12px; padding-bottom: 12px; border-bottom: 1px solid rgba(var(--fc-line-rgb),0.08); font-family: ${MONO}; font-size: 9.5px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(var(--fc-ink-rgb),calc(0.38 * var(--fc-mute) + var(--fc-floor))); }
+.fc-ballot-bar { display: flex; height: 10px; margin-top: 16px; border-radius: 99px; overflow: hidden; background: rgba(var(--fc-ink-rgb),calc(0.1 * var(--fc-mute) + var(--fc-floor))); }
+.fc-ballot-bar i { display: block; height: 100%; }
+.fc-ballot-bar i + i { box-shadow: inset 1px 0 0 var(--fc-bg); }
+.fc-ballot-list { margin-top: 6px; }
+.fc-ballot-row { display: grid; grid-template-columns: 10px minmax(0,1fr) auto; grid-template-areas: "dot id num" ". track track"; align-items: baseline; gap: 4px 12px; padding: 13px 0; }
+.fc-ballot-row + .fc-ballot-row { border-top: 1px solid rgba(var(--fc-line-rgb),0.08); }
+.fc-ballot-row > i { grid-area: dot; width: 10px; height: 10px; border-radius: 50%; align-self: center; }
+.fc-ballot-id { grid-area: id; min-width: 0; }
+.fc-ballot-id b { display: block; font-size: clamp(15px, 1.5vw, 18px); font-weight: 700; letter-spacing: -0.01em; }
+.fc-ballot-id em { display: block; margin-top: 3px; font-style: normal; font-family: ${MONO}; font-size: 10px; font-weight: 600; letter-spacing: 0.06em; color: rgba(var(--fc-ink-rgb),calc(0.45 * var(--fc-mute) + var(--fc-floor))); }
+.fc-ballot-num { grid-area: num; text-align: right; flex-shrink: 0; }
+.fc-ballot-num b { display: block; font-size: clamp(19px, 2vw, 24px); font-weight: 800; line-height: 1; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+.fc-ballot-num em { display: block; margin-top: 4px; font-style: normal; font-family: ${MONO}; font-size: 10px; font-weight: 600; letter-spacing: 0.04em; font-variant-numeric: tabular-nums; color: rgba(var(--fc-ink-rgb),calc(0.4 * var(--fc-mute) + var(--fc-floor))); }
+.fc-ballot-track { grid-area: track; height: 4px; margin-top: 6px; border-radius: 99px; background: rgba(var(--fc-ink-rgb),calc(0.08 * var(--fc-mute) + var(--fc-floor))); overflow: hidden; }
+.fc-ballot-track i { display: block; height: 100%; border-radius: 99px; }
+@media (max-width: 520px) {
+  .fc-ballot-row { gap: 4px 10px; }
+  .fc-ballot-num b { font-size: 18px; }
+}
 
 /* the outcome distribution */
 .fc-outcome { margin-top: clamp(36px, 5vh, 56px); }

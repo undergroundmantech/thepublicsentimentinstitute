@@ -38,6 +38,7 @@ export const STATE_POLLS: Record<string, Poll[]> = {
   RI: [
     {"raceId": "RI-SEN-2026", "pollster": "University of New Hampshire", "startDate": "2026-04-16", "endDate": "2026-04-20", "sampleSize": 556, "sampleType": "LV", "results": {"Jack Reed (D)": 52.0, "Raymond McKay (R)": 34.0, "Other": 2.0, "Undecided": 12.0}},
     {"raceId": "RI-SEN-2026", "pollster": "University of New Hampshire", "startDate": "2026-06-18", "endDate": "2026-06-23", "sampleSize": 664, "sampleType": "LV", "results": {"Jack Reed (D)": 52.0, "Raymond McKay (R)": 35.0, "Other": 1.0, "Undecided": 12.0}},
-    {"raceId": "RI-SEN-2026", "pollster": "University of New Hampshire", "startDate": "2026-08-20", "endDate": "2026-08-24", "sampleSize": 750, "sampleType": "LV", "results": {"Jack Reed (D)": 51.0, "Raymond McKay (R)": 31.0, "Other": 6.0, "Undecided": 13.0}}
+    {"raceId": "RI-SEN-2026", "pollster": "University of New Hampshire", "startDate": "2026-08-20", "endDate": "2026-08-24", "sampleSize": 750, "sampleType": "LV", "results": {"Jack Reed (D)": 51.0, "Raymond McKay (R)": 31.0, "Other": 6.0, "Undecided": 13.0}},
+    {"raceId": "RI-SEN-2026", "pollster": "University of New Hampshire", "startDate": "2026-09-17", "endDate": "2026-09-21", "sampleSize": 598, "sampleType": "LV", "moe": 4.0, "results": {"Jack Reed (D)": 53.0, "Raymond McKay (R)": 33.0, "Other": 6.0, "Undecided": 8.0}, "notes": "Other is Michael Bahry, independent, at 5 plus 1 other."}
   ],
 };

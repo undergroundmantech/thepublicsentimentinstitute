@@ -38,6 +38,7 @@ export const STATE_POLLS: Record<string, Poll[]> = {
   CT: [
     {"raceId": "CT-GOV-2026", "pollster": "University of New Hampshire", "startDate": "2026-06-18", "endDate": "2026-06-23", "sampleSize": 828, "sampleType": "LV", "results": {"Ned Lamont (D)": 49.0, "Ryan Fazio (R)": 36.0, "Other": 2.0, "Undecided": 12.0}},
     {"raceId": "CT-GOV-2026", "pollster": "Sacred Heart University / WFSB / CT Insider", "startDate": "2026-07-21", "endDate": "2026-07-26", "sampleSize": 1000, "sampleType": "RV", "results": {"Ned Lamont (D)": 50.0, "Ryan Fazio (R)": 30.0, "Other": 1.0, "Undecided": 20.0}},
-    {"raceId": "CT-GOV-2026", "pollster": "University of New Hampshire", "startDate": "2026-08-24", "endDate": "2026-08-24", "sampleSize": 809, "sampleType": "LV", "results": {"Ned Lamont (D)": 52.0, "Ryan Fazio (R)": 37.0, "Other": 3.0, "Undecided": 9.0}}
+    {"raceId": "CT-GOV-2026", "pollster": "University of New Hampshire", "startDate": "2026-08-24", "endDate": "2026-08-24", "sampleSize": 809, "sampleType": "LV", "results": {"Ned Lamont (D)": 52.0, "Ryan Fazio (R)": 37.0, "Other": 3.0, "Undecided": 9.0}},
+    {"raceId": "CT-GOV-2026", "pollster": "University of New Hampshire", "startDate": "2026-09-17", "endDate": "2026-09-21", "sampleSize": 540, "sampleType": "LV", "moe": 4.2, "results": {"Ned Lamont (D)": 55.0, "Ryan Fazio (R)": 38.0, "Other": 1.0, "Undecided": 6.0}}
   ],
 };

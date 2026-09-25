@@ -44,6 +44,7 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "MA-SEN-2026", "pollster": "Suffolk University", "startDate": "2026-06-08", "endDate": "2026-06-12", "sampleSize": 500, "sampleType": "LV", "results": {"Ed Markey (D)": 55.0, "John Deaton (R)": 30.0, "Other": 1.0, "Undecided": 14.0}},
     {"raceId": "MA-SEN-2026", "pollster": "University of New Hampshire", "startDate": "2026-06-18", "endDate": "2026-06-23", "sampleSize": 623, "sampleType": "LV", "results": {"Ed Markey (D)": 50.0, "John Deaton (R)": 34.0, "Undecided": 16.0}},
     {"raceId": "MA-SEN-2026", "pollster": "UMass Amherst/YouGov", "startDate": "2026-08-05", "endDate": "2026-08-12", "sampleSize": 800, "sampleType": "RV", "results": {"Ed Markey (D)": 51.0, "John Deaton (R)": 30.0, "Other": 3.0, "Undecided": 15.0}},
-    {"raceId": "MA-SEN-2026", "pollster": "University of New Hampshire", "startDate": "2026-08-20", "endDate": "2026-08-24", "sampleSize": 881, "sampleType": "LV", "results": {"Ed Markey (D)": 49.0, "John Deaton (R)": 30.0, "Other": 8.0, "Undecided": 12.0}}
+    {"raceId": "MA-SEN-2026", "pollster": "University of New Hampshire", "startDate": "2026-08-20", "endDate": "2026-08-24", "sampleSize": 881, "sampleType": "LV", "results": {"Ed Markey (D)": 49.0, "John Deaton (R)": 30.0, "Other": 8.0, "Undecided": 12.0}},
+    {"raceId": "MA-SEN-2026", "pollster": "University of New Hampshire", "startDate": "2026-09-17", "endDate": "2026-09-21", "sampleSize": 564, "sampleType": "LV", "moe": 4.1, "results": {"Ed Markey (D)": 53.0, "John Deaton (R)": 30.0, "Other": 9.0, "Undecided": 8.0}, "notes": "Other is Joe Tache, Party for Socialism and Liberation, at 9."}
   ],
 };

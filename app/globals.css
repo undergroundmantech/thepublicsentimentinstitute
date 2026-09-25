@@ -83,10 +83,13 @@
   /* ---- Radii ---- */
   --r-sm: 5px; --r-md: 8px; --r-lg: 11px; --r-xl: 14px; --r-pill: 9999px;
 
-  /* ---- Fonts (set via next/font) ---- */
-  --font-display: var(--font-display);
-  --font-body:    var(--font-body);
-  --font-numeric: var(--font-numeric);
+  /* ---- Fonts ----
+     next/font already declares --font-display, --font-body and --font-numeric on
+     <html> through the className in layout.tsx. Re-declaring them here as
+     var(--font-display) was a cycle: a custom property that references itself is
+     invalid at computed-value time, so whichever of the two rules won the cascade
+     could kill the font for the whole site. The next/font declarations are the
+     only ones, as they were meant to be. */
 
   /* ---- Tracking ---- */
   --trk-1: 0.04em; --trk-2: 0.08em; --trk-3: 0.14em;

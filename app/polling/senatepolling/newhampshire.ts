@@ -53,6 +53,7 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "NH-SEN-2026", "pollster": "Rasmussen Reports (R)", "startDate": "2026-09-08", "endDate": "2026-09-10", "sampleSize": 1000, "sampleType": "LV", "results": {"Chris Pappas (D)": 45.0, "John E. Sununu (R)": 34.0, "Other": 13.0, "Undecided": 9.0}},
     {"raceId": "NH-SEN-2026", "pollster": "co/efficient (R)", "startDate": "2026-09-09", "endDate": "2026-09-11", "sampleSize": 958, "sampleType": "LV", "results": {"Chris Pappas (D)": 46.0, "John E. Sununu (R)": 46.0, "Undecided": 9.0}},
     {"raceId": "NH-SEN-2026", "pollster": "InsiderAdvantage (R)", "startDate": "2026-09-16", "endDate": "2026-09-17", "sampleSize": 1200, "sampleType": "LV", "results": {"Chris Pappas (D)": 48.0, "John E. Sununu (R)": 40.0, "Other": 3.0, "Undecided": 9.0}},
+    {"raceId": "NH-SEN-2026", "pollster": "University of New Hampshire", "startDate": "2026-09-17", "endDate": "2026-09-21", "sampleSize": 1418, "sampleType": "LV", "moe": 2.6, "results": {"Chris Pappas (D)": 50.0, "John E. Sununu (R)": 42.0, "Other": 4.0, "Undecided": 4.0}},
     {"raceId": "NH-SEN-2026", "pollster": "New York Times/Siena University", "startDate": "2026-09-15", "endDate": "2026-09-22", "sampleSize": 613, "sampleType": "LV", "results": {"Chris Pappas (D)": 50.0, "John E. Sununu (R)": 45.0, "Undecided": 5.0}}
   ],
 };

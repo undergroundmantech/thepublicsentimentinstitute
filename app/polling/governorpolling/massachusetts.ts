@@ -39,6 +39,7 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "MA-GOV-2026", "pollster": "Suffolk University", "startDate": "2026-06-08", "endDate": "2026-06-12", "sampleSize": 500, "sampleType": "LV", "results": {"Maura Healey (D)": 56.0, "Michael Minogue (R)": 31.0, "Other": 1.0, "Undecided": 11.0}},
     {"raceId": "MA-GOV-2026", "pollster": "University of New Hampshire", "startDate": "2026-06-18", "endDate": "2026-06-23", "sampleSize": 623, "sampleType": "LV", "results": {"Maura Healey (D)": 51.0, "Michael Minogue (R)": 32.0, "Other": 1.0, "Undecided": 16.0}},
     {"raceId": "MA-GOV-2026", "pollster": "UMass Amherst / YouGov", "startDate": "2026-08-12", "endDate": "2026-08-12", "sampleSize": 800, "sampleType": "RV", "results": {"Maura Healey (D)": 53.0, "Michael Minogue (R)": 33.0, "Other": 2.0, "Undecided": 12.0}},
-    {"raceId": "MA-GOV-2026", "pollster": "University of New Hampshire", "startDate": "2026-08-24", "endDate": "2026-08-24", "sampleSize": 881, "sampleType": "LV", "results": {"Maura Healey (D)": 54.0, "Michael Minogue (R)": 30.0, "Other": 2.0, "Undecided": 14.0}}
+    {"raceId": "MA-GOV-2026", "pollster": "University of New Hampshire", "startDate": "2026-08-24", "endDate": "2026-08-24", "sampleSize": 881, "sampleType": "LV", "results": {"Maura Healey (D)": 54.0, "Michael Minogue (R)": 30.0, "Other": 2.0, "Undecided": 14.0}},
+    {"raceId": "MA-GOV-2026", "pollster": "University of New Hampshire", "startDate": "2026-09-17", "endDate": "2026-09-21", "sampleSize": 564, "sampleType": "LV", "moe": 4.1, "results": {"Maura Healey (D)": 54.0, "Michael Minogue (R)": 38.0, "Undecided": 8.0}}
   ],
 };

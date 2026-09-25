@@ -44,6 +44,7 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "NE-SEN-2026", "pollster": "Impact Research (D)", "startDate": "2026-02-02", "endDate": "2026-02-05", "sampleSize": 600, "sampleType": "LV", "results": {"Dan Osborn (I)": 47.0, "Pete Ricketts (R)": 48.0, "Undecided": 5.0}},
     {"raceId": "NE-SEN-2026", "pollster": "Tavern Research (D)", "startDate": "2026-05-08", "endDate": "2026-05-11", "sampleSize": 1165, "sampleType": "LV", "results": {"Dan Osborn (I)": 47.0, "Pete Ricketts (R)": 42.0, "Undecided": 12.0}},
     {"raceId": "NE-SEN-2026", "pollster": "Impact Research (D)", "startDate": "2026-08-09", "endDate": "2026-08-13", "sampleSize": 600, "sampleType": "LV", "results": {"Dan Osborn (I)": 47.0, "Pete Ricketts (R)": 47.0, "Undecided": 5.0}},
+    {"raceId": "NE-SEN-2026", "pollster": "GBAO", "startDate": "2026-09-03", "endDate": "2026-09-08", "sampleSize": 800, "sampleType": "LV", "moe": 3.5, "results": {"Dan Osborn (I)": 47.0, "Pete Ricketts (R)": 46.0, "Undecided": 7.0}, "notes": "Sponsored by Working Class Majority PAC, a pro Osborn group."},
     {"raceId": "NE-SEN-2026", "pollster": "SurveyUSA", "startDate": "2026-09-08", "endDate": "2026-09-13", "sampleSize": 503, "sampleType": "LV", "results": {"Dan Osborn (I)": 46.0, "Pete Ricketts (R)": 42.0, "Other": 4.0, "Undecided": 7.0}},
     {"raceId": "NE-SEN-2026", "pollster": "Wedgewood Polls", "startDate": "2026-09-14", "endDate": "2026-09-16", "sampleSize": 500, "sampleType": "LV", "results": {"Dan Osborn (I)": 48.0, "Pete Ricketts (R)": 52.0}}
   ],

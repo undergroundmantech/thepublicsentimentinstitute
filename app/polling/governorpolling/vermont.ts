@@ -37,6 +37,7 @@ export const RACES = [
 export const STATE_POLLS: Record<string, Poll[]> = {
   VT: [
     {"raceId": "VT-GOV-2026", "pollster": "University of New Hampshire", "startDate": "2026-06-18", "endDate": "2026-06-23", "sampleSize": 887, "sampleType": "LV", "results": {"Amanda Janoo (D)": 27.0, "Phil Scott (R)": 42.0, "Other": 5.0, "Undecided": 26.0}},
-    {"raceId": "VT-GOV-2026", "pollster": "University of New Hampshire", "startDate": "2026-07-15", "endDate": "2026-07-20", "sampleSize": 954, "sampleType": "LV", "results": {"Amanda Janoo (D)": 33.0, "Phil Scott (R)": 44.0, "Other": 6.0, "Undecided": 17.0}}
+    {"raceId": "VT-GOV-2026", "pollster": "University of New Hampshire", "startDate": "2026-07-15", "endDate": "2026-07-20", "sampleSize": 954, "sampleType": "LV", "results": {"Amanda Janoo (D)": 33.0, "Phil Scott (R)": 44.0, "Other": 6.0, "Undecided": 17.0}},
+    {"raceId": "VT-GOV-2026", "pollster": "University of New Hampshire", "startDate": "2026-09-17", "endDate": "2026-09-21", "sampleSize": 835, "sampleType": "LV", "moe": 3.4, "results": {"Amanda Janoo (D)": 49.0, "Phil Scott (R)": 43.0, "Other": 2.0, "Undecided": 6.0}, "notes": "Other is Brian Judd, independent, at 2."}
   ],
 };

@@ -44,6 +44,7 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "GA-GOV-2026", "pollster": "Fabrizio Ward and Impact Research bipartisan", "startDate": "2026-07-13", "endDate": "2026-07-16", "sampleSize": 1060, "sampleType": "LV", "results": {"Keisha Lance Bottoms (D)": 48.0, "Rick Jackson (R)": 46.0, "Undecided": 5.0}},
     {"raceId": "GA-GOV-2026", "pollster": "Quantus Insights (R)", "startDate": "2026-07-29", "endDate": "2026-08-01", "sampleSize": 815, "sampleType": "LV", "results": {"Keisha Lance Bottoms (D)": 46.0, "Rick Jackson (R)": 45.0, "Other": 1.0, "Undecided": 8.0}},
     {"raceId": "GA-GOV-2026", "pollster": "InsiderAdvantage (R)", "startDate": "2026-08-16", "endDate": "2026-08-17", "sampleSize": 800, "sampleType": "LV", "results": {"Keisha Lance Bottoms (D)": 46.0, "Rick Jackson (R)": 46.0, "Undecided": 8.0}},
-    {"raceId": "GA-GOV-2026", "pollster": "Rasmussen Reports (R)", "startDate": "2026-09-14", "endDate": "2026-09-14", "sampleSize": 1019, "sampleType": "LV", "results": {"Keisha Lance Bottoms (D)": 45.0, "Rick Jackson (R)": 48.0, "Undecided": 7.0}}
+    {"raceId": "GA-GOV-2026", "pollster": "Rasmussen Reports (R)", "startDate": "2026-09-14", "endDate": "2026-09-14", "sampleSize": 1019, "sampleType": "LV", "results": {"Keisha Lance Bottoms (D)": 45.0, "Rick Jackson (R)": 48.0, "Undecided": 7.0}},
+    {"raceId": "GA-GOV-2026", "pollster": "Big Data Poll", "startDate": "2026-09-21", "endDate": "2026-09-23", "sampleSize": 678, "sampleType": "LV", "moe": 4.0, "results": {"Keisha Lance Bottoms (D)": 46.7, "Rick Jackson (R)": 48.7, "Undecided": 4.6}, "notes": "Initial ballot. Leaned, the release has it 50.5 to 49.5 for Jackson."}
   ],
 };

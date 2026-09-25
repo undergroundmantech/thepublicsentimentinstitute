@@ -47,6 +47,7 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "GA-SEN-2026", "pollster": "InsiderAdvantage (R)", "startDate": "2026-08-16", "endDate": "2026-08-17", "sampleSize": 800, "sampleType": "LV", "results": {"Jon Ossoff (D)": 50.0, "Mike Collins (R)": 43.0, "Undecided": 7.0}},
     {"raceId": "GA-SEN-2026", "pollster": "Trafalgar Group (R)", "startDate": "2026-09-10", "endDate": "2026-09-12", "sampleSize": 1091, "sampleType": "LV", "results": {"Jon Ossoff (D)": 49.0, "Mike Collins (R)": 43.0, "Other": 1.0, "Undecided": 7.0}},
     {"raceId": "GA-SEN-2026", "pollster": "Rasmussen Reports", "startDate": "2026-09-14", "endDate": "2026-09-14", "sampleSize": 1019, "sampleType": "LV", "results": {"Jon Ossoff (D)": 51.0, "Mike Collins (R)": 42.0, "Undecided": 6.0}},
-    {"raceId": "GA-SEN-2026", "pollster": "Quantus Insights (R)", "startDate": "2026-09-14", "endDate": "2026-09-16", "sampleSize": 645, "sampleType": "LV", "results": {"Jon Ossoff (D)": 48.5, "Mike Collins (R)": 44.5, "Other": 1.0, "Undecided": 6.0}}
+    {"raceId": "GA-SEN-2026", "pollster": "Quantus Insights (R)", "startDate": "2026-09-14", "endDate": "2026-09-16", "sampleSize": 645, "sampleType": "LV", "results": {"Jon Ossoff (D)": 48.5, "Mike Collins (R)": 44.5, "Other": 1.0, "Undecided": 6.0}},
+    {"raceId": "GA-SEN-2026", "pollster": "Big Data Poll", "startDate": "2026-09-21", "endDate": "2026-09-23", "sampleSize": 678, "sampleType": "LV", "moe": 4.0, "results": {"Jon Ossoff (D)": 52.2, "Mike Collins (R)": 41.0, "Undecided": 6.8}, "notes": "Initial ballot. Leaned, the release has it 55.4 to 44.6. Sponsored by the Public Polling Project."}
   ],
 };

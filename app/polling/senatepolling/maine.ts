@@ -47,6 +47,7 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "ME-SEN-2026", "pollster": "YouGov", "startDate": "2026-09-02", "endDate": "2026-09-08", "sampleSize": 1335, "sampleType": "LV", "results": {"Troy Jackson (D)": 48.0, "Susan Collins (R)": 44.0, "Other": 1.0, "Undecided": 6.0}},
     {"raceId": "ME-SEN-2026", "pollster": "Rasmussen Reports (R)", "startDate": "2026-09-08", "endDate": "2026-09-10", "sampleSize": 1033, "sampleType": "LV", "results": {"Troy Jackson (D)": 46.0, "Susan Collins (R)": 45.0, "Undecided": 9.0}},
     {"raceId": "ME-SEN-2026", "pollster": "Quantus Insights (R)", "startDate": "2026-09-14", "endDate": "2026-09-15", "sampleSize": 621, "sampleType": "LV", "results": {"Troy Jackson (D)": 46.5, "Susan Collins (R)": 47.5, "Other": 2.0, "Undecided": 4.5}},
+    {"raceId": "ME-SEN-2026", "pollster": "University of New Hampshire", "startDate": "2026-09-17", "endDate": "2026-09-21", "sampleSize": 1312, "sampleType": "LV", "moe": 2.7, "results": {"Troy Jackson (D)": 51.0, "Susan Collins (R)": 47.0, "Undecided": 2.0}},
     {"raceId": "ME-SEN-2026", "pollster": "New York Times/Siena University", "startDate": "2026-09-15", "endDate": "2026-09-22", "sampleSize": 619, "sampleType": "LV", "results": {"Troy Jackson (D)": 46.0, "Susan Collins (R)": 49.0, "Undecided": 5.0}}
   ],
 };

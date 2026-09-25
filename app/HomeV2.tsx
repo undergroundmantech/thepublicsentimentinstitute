@@ -1449,7 +1449,7 @@ export default function HomePage() {
 
         .lp-navstrip.is-light .lp-navstrip-band {
           background: rgba(var(--ink-rgb),calc(0.72 * var(--mute) + var(--floor)));
-          border-color: rgba(var(--canvas-rgb),0.08);
+          border-color: rgba(var(--line-rgb),0.08);
         }
 
         .lp-navstrip.is-light .lp-navstrip-item,
@@ -1902,9 +1902,9 @@ export default function HomePage() {
           height: 220px;
           right: -74px;
           top: 74px;
-          border: 1px solid rgba(var(--canvas-rgb),0.13);
+          border: 1px solid rgba(var(--line-rgb),0.13);
           border-radius: 999px;
-          box-shadow: -92px 92px 0 -91px rgba(var(--canvas-rgb),0.38);
+          box-shadow: -92px 92px 0 -91px rgba(var(--line-rgb),0.38);
         }
 
         .lp-poll-chrome,
@@ -1966,16 +1966,16 @@ export default function HomePage() {
 
         .lp-poll-chart-card {
           border-radius: 12px;
-          background: #f8f8f5;
+          background: rgba(var(--line-rgb),0.05);
           padding: 16px;
-          border: 1px solid rgba(var(--canvas-rgb),0.07);
-          box-shadow: 0 14px 28px rgba(var(--canvas-rgb),0.045);
+          border: 1px solid rgba(var(--line-rgb),0.07);
+          box-shadow: 0 14px 28px rgba(var(--line-rgb),0.045);
           transition: transform 360ms cubic-bezier(.2,.8,.2,1), box-shadow 360ms ease;
         }
 
         .lp-gallery-card:hover .lp-poll-chart-card {
           transform: translateY(-4px);
-          box-shadow: 0 22px 40px rgba(var(--canvas-rgb),0.08);
+          box-shadow: 0 22px 40px rgba(var(--line-rgb),0.08);
         }
 
         .lp-poll-source-stack {
@@ -1988,10 +1988,10 @@ export default function HomePage() {
         .lp-poll-source-stack span {
           width: 130px;
           border-radius: 999px;
-          background: #f8f8f5;
-          border: 1px solid rgba(var(--canvas-rgb),0.08);
+          background: rgba(var(--line-rgb),0.06);
+          border: 1px solid rgba(var(--line-rgb),0.12);
           padding: 9px 12px;
-          color: #555;
+          color: var(--ink2);
           font-size: 11px;
           font-weight: 650;
           transform: translateX(var(--source-offset));
@@ -2000,7 +2000,7 @@ export default function HomePage() {
 
         .lp-gallery-card:hover .lp-poll-source-stack span {
           transform: translateX(calc(var(--source-offset) + 10px));
-          background: #ffffff;
+          background: rgba(var(--line-rgb),0.12);
         }
 
         .lp-tabs {
@@ -2012,15 +2012,15 @@ export default function HomePage() {
         .lp-tabs span {
           padding: 8px 12px;
           border-radius: 7px;
-          background: #e9e9e6;
-          color: #6b6b6b;
+          background: rgba(var(--line-rgb),0.07);
+          color: var(--ink2);
           font-size: 10px;
           font-weight: 650;
         }
 
         .lp-tabs .is-active {
-          background: var(--canvas);
-          color: #ffffff;
+          background: var(--ink);
+          color: var(--canvas);
         }
 
         .lp-line-chart {
@@ -2063,7 +2063,7 @@ export default function HomePage() {
           overflow: hidden;
           border-radius: 12px;
           background: rgba(var(--canvas-rgb),0.07);
-          box-shadow: 0 12px 24px rgba(var(--canvas-rgb),0.04);
+          box-shadow: 0 12px 24px rgba(var(--line-rgb),0.04);
         }
 
         .lp-mini-stats span {
@@ -2131,7 +2131,7 @@ export default function HomePage() {
           gap: 8px;
           align-self: start;
           justify-items: end;
-          color: rgba(var(--ink-rgb),calc(0.86 * var(--mute) + var(--floor)));
+          color: rgba(255,255,255,0.86);
           font-size: 13px;
           font-weight: 680;
         }
@@ -2159,11 +2159,11 @@ export default function HomePage() {
         }
 
         .lp-rating-tabs .is-active {
-          background: var(--canvas);
+          background: rgba(0,0,0,0.34);
         }
 
         .lp-mini-stats b {
-          color: var(--canvas);
+          color: #ffffff;
           font-size: 22px;
           line-height: 1;
           letter-spacing: 0;
@@ -2197,13 +2197,13 @@ export default function HomePage() {
           font-size: 11px;
           font-weight: 760;
           color: #ffffff;
-          box-shadow: 0 12px 24px rgba(var(--canvas-rgb),0.14);
+          box-shadow: 0 12px 24px rgba(var(--line-rgb),0.14);
           transition: transform 260ms ease, box-shadow 260ms ease;
         }
 
         .lp-gallery-ratings:hover .lp-state:nth-child(3n) {
           transform: translateY(-3px);
-          box-shadow: 0 16px 30px rgba(var(--canvas-rgb),0.2);
+          box-shadow: 0 16px 30px rgba(var(--line-rgb),0.2);
         }
 
         .lp-state-r { background: #c22f3b; }
@@ -2219,7 +2219,7 @@ export default function HomePage() {
           justify-content: space-between;
           gap: 10px;
           margin-top: 20px;
-          color: rgba(var(--canvas-rgb),0.58);
+          color: rgba(255,255,255,0.74);
           font-size: 11px;
         }
 
@@ -2360,13 +2360,13 @@ export default function HomePage() {
           align-items: center;
           padding: 18px;
           border-radius: 14px;
-          background: rgba(var(--line-rgb),0.95);
+          background: rgba(var(--line-rgb),0.05);
           transition: transform 320ms cubic-bezier(.2,.8,.2,1), background 320ms ease;
         }
 
         .lp-gallery-results:hover .lp-result-row {
           transform: translateX(-5px);
-          background: #ffffff;
+          background: rgba(var(--line-rgb),0.1);
         }
 
         .lp-result-row div:first-child {
@@ -2430,7 +2430,7 @@ export default function HomePage() {
           height: 22px;
           border-radius: 3px;
           transform: skew(-9deg);
-          box-shadow: 0 9px 18px rgba(var(--canvas-rgb),0.12);
+          box-shadow: 0 9px 18px rgba(var(--line-rgb),0.12);
           transition: transform 280ms ease, filter 280ms ease;
         }
 
@@ -2511,7 +2511,7 @@ export default function HomePage() {
 
         .lp-map-controls span {
           border-radius: 999px;
-          border: 1px solid rgba(var(--canvas-rgb),0.18);
+          border: 1px solid rgba(var(--line-rgb),0.18);
           padding: 7px 10px;
           color: var(--canvas);
           font-size: 11px;

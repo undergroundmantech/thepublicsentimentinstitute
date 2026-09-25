@@ -11,6 +11,16 @@ export interface RaceSide {
   dist?: { lo: number; w: number; c: number[] }; // simulated margin histogram: first bin at lo, bin width w
 }
 
+// Every candidate the model prices, not just the two major party names. 233 of the
+// 506 races run a third candidate, and in Rhode Island the independent is projected
+// ahead of the Republican, so a two name view of that race is simply wrong.
+export interface Cand {
+  name: string;
+  party: string;
+  pct: number;
+  votes: number;
+}
+
 export interface Race {
   id: string;
   office: Office;
@@ -20,6 +30,7 @@ export interface Race {
   name: string;
   dem: string;
   gop: string;
+  cands?: Cand[];
   inc: number;
   open: boolean;
   marquee: boolean;
@@ -86,7 +97,9 @@ export interface Geo {
 // counties.json: fips -> [GOP-positive margin, Democratic votes, Republican votes, total votes].
 // County names sit once under _n; a state's House counties sit under house-<ST>,
 // shared by every district in that state.
-export type CountyRow = [number, number, number, number];
+// A fifth slot appears only where a race runs more than two named candidates:
+// that county's share for each of them, in the same order as Race.cands.
+export type CountyRow = [number, number, number, number, number[]?];
 export interface CountiesPayload {
   _n?: Record<string, string>;
   _reg?: string[];
@@ -147,6 +160,35 @@ export function onLight(hex: string) {
 export const LIME = "#6d3ee9";
 export const DEM = "#3b6fde";
 export const GOP = "#e23950";
+// Minor party tones, deliberately outside the red/blue range so a strong independent
+// reads as its own thing and never as a weak version of one of the majors.
+export const IND = "#7a4bb0";
+export const LIB = "#c08a2a";
+export const GRN = "#2f8f5b";
+export const OTH = "#8b8a85";
+
+export function partyColor(p: string): string {
+  switch ((p || "").toUpperCase()) {
+    case "D": case "DFL": return DEM;
+    case "R": return GOP;
+    case "I": case "IP": case "NPA": case "UC": case "IND": return IND;
+    case "L": return LIB;
+    case "G": case "PG": return GRN;
+    default: return OTH;
+  }
+}
+
+const PARTY_NAMES: Record<string, string> = {
+  D: "Democrat", DFL: "Democratic-Farmer-Labor", R: "Republican", I: "Independent",
+  IND: "Independent", IP: "Independence", NPA: "No party affiliation", L: "Libertarian",
+  G: "Green", PG: "Pacific Green", C: "Constitution", UC: "United Citizens",
+  SWP: "Socialist Workers", WP: "Working Families", FWD: "Forward", AP: "Alliance",
+  NL: "No Labels", ACN: "Approval Voting", O: "Other",
+};
+export function partyLabel(p: string): string {
+  const k = (p || "").toUpperCase();
+  return PARTY_NAMES[k] || (k === "" ? "Other" : k);
+}
 
 // ── rating bands (identical to the build) ───────────────────────────────────
 // TPSI's own cut points, the ones the House page and the ratings board use:
