@@ -433,7 +433,10 @@ STATES = {
     "OH": dict(name="Ohio", D="Sherrod Brown", R="Jon Husted",
                third=[("Bill Redpath", "L", 1.8), ("Greg Levy", "I", 1.5)], docx="OHIO APPROVAL AND POLLS (1).docx"),
     "TX": dict(name="Texas", D="James Talarico", R="Ken Paxton",
-               third=[("Ted Brown", "L", 1.9), ("Other / write-in", "O", 0.8)], docx="TEXAS INSTRUCTIONS & POLLS.docx"),
+               # Sept 25 2026: polls now come from polls_tx.csv, the full Senate table, rather than the docx plus
+               # EXTRA_POLLS. EXTRA_POLLS had "TX" twice, and a dict literal keeps only the last copy, so adding the
+               # Marist poll silently deleted Texas Southern, Trafalgar, Emerson and ReconMR/Siena from the average.
+               third=[("Ted Brown", "L", 1.9), ("Other / write-in", "O", 0.8)], polls_csv="polls_tx.csv"),
     # Libertarian Party of Georgia failed to qualify for the 2026 statewide ballot; only write-ins remain
     "GA": dict(name="Georgia", D="Jon Ossoff", R="Mike Collins",
                third=[("Write-in", "O", 1.0)], third_floor=0.001, polls_csv="polls_ga.csv"),
@@ -717,10 +720,6 @@ EXTRA_POLLS = {
            dict(source="Suffolk University", dates="September 16-20, 2026", end="2026-09-20", n=500, pop="LV", D=47, R=40, O=3, U=8),
            dict(source="Emerson College", dates="September 12-14, 2026", end="2026-09-14", n=1000, pop="LV", D=48, R=46, O=2, U=4),
            dict(source="The Washington Post/SSPG", dates="September 10-14, 2026", end="2026-09-14", n=803, pop="LV", D=48, R=45, O=5, U=2)],
-    "TX": [dict(source="Texas Southern University", dates="September 15-19, 2026", end="2026-09-19", n=1800, pop="LV", D=47, R=46, O=3, U=4),
-           dict(source="Trafalgar Group (R)", dates="September 15-17, 2026", end="2026-09-17", n=1079, pop="LV", D=46, R=45, O=3, U=6),
-           dict(source="Emerson College", dates="September 12-14, 2026", end="2026-09-14", n=1000, pop="LV", D=47, R=46, O=2, U=4),
-           dict(source="ReconMR/Siena University", dates="September 8-11, 2026", end="2026-09-11", n=614, pop="LV", D=49, R=43, O=4, U=4)],
     # co/efficient reported two screens, as Overton did: the two are averaged, the file convention for this race
     "IA": [dict(source="Marist College", dates="September 17-20, 2026", end="2026-09-20", n=1050, pop="RV", D=50, R=42, O=2, U=5),
            dict(source="Trafalgar Group (R)", dates="September 16-18, 2026", end="2026-09-18", n=1089, pop="LV", D=42, R=44, O=3, U=10),
@@ -740,7 +739,6 @@ EXTRA_POLLS = {
     # these two were missed.
     "OH": [dict(source="Bowling Green State University/YouGov", dates="September 1-10, 2026", end="2026-09-10", n=1000, pop="LV", D=48, R=45, O=0, U=7),
            dict(source="Trafalgar Group (R)", dates="September 14-16, 2026", end="2026-09-16", n=1085, pop="LV", D=45, R=42, O=0, U=13)],
-    "TX": [dict(source="NBC News/Marist", dates="September 17-20, 2026", end="2026-09-20", n=1139, pop="RV", D=50, R=44, O=0, U=6)],
     "SC": [dict(source="Rasmussen Reports", dates="September 14, 2026", end="2026-09-14", n=1006, pop="LV", D=43, R=48, O=0, U=9)],
 }
 

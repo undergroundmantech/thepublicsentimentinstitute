@@ -2,7 +2,7 @@
 // Texas — 2026 U.S. Senate: James Talarico (D) vs. Ken Paxton (R)
 // Generated from the TPSI forecast poll feed (run of 2026-09-22), merged with
 // the polls this file already carried. Polls of matchups that are not on the
-// ballot were dropped. Newest poll: 2026-09-20.
+// ballot were dropped. Newest poll: 2026-09-22.
 
 export type SampleType = "LV" | "RV" | "A";
 
@@ -36,6 +36,17 @@ export const RACES = [
 
 export const STATE_POLLS: Record<string, Poll[]> = {
   TX: [
+    {"raceId": "TX-SEN-2026", "pollster": "UT Tyler", "startDate": "2025-09-17", "endDate": "2025-09-24", "sampleSize": 1032, "sampleType": "RV", "results": {"James Talarico (D)": 37.0, "Ken Paxton (R)": 38.0, "Other": 8.0, "Undecided": 17.0}},
+    {"raceId": "TX-SEN-2026", "pollster": "University of Houston/Texas Southern University", "startDate": "2025-09-19", "endDate": "2025-10-01", "sampleSize": 1650, "sampleType": "RV", "results": {"James Talarico (D)": 46.0, "Ken Paxton (R)": 49.0, "Undecided": 5.0}},
+    {"raceId": "TX-SEN-2026", "pollster": "Ragnar Research Partners (R)", "startDate": "2025-11-12", "endDate": "2025-11-17", "sampleSize": 1000, "sampleType": "LV", "results": {"James Talarico (D)": 44.0, "Ken Paxton (R)": 44.0, "Undecided": 12.0}},
+    {"raceId": "TX-SEN-2026", "pollster": "Emerson College", "startDate": "2026-01-10", "endDate": "2026-01-12", "sampleSize": 1165, "sampleType": "RV", "results": {"James Talarico (D)": 46.0, "Ken Paxton (R)": 46.0, "Undecided": 9.0}},
+    {"raceId": "TX-SEN-2026", "pollster": "University of Houston/YouGov", "startDate": "2026-01-20", "endDate": "2026-01-31", "sampleSize": 1502, "sampleType": "LV", "results": {"James Talarico (D)": 44.0, "Ken Paxton (R)": 46.0, "Other": 3.0, "Undecided": 7.0}},
+    {"raceId": "TX-SEN-2026", "pollster": "Public Policy Polling (D)", "startDate": "2026-03-04", "endDate": "2026-03-05", "sampleSize": 576, "sampleType": "RV", "results": {"James Talarico (D)": 47.0, "Ken Paxton (R)": 45.0, "Undecided": 8.0}},
+    {"raceId": "TX-SEN-2026", "pollster": "Impact Research (D)", "startDate": "2026-03-12", "endDate": "2026-03-17", "sampleSize": 900, "sampleType": "LV", "results": {"James Talarico (D)": 44.0, "Ken Paxton (R)": 43.0, "Other": 5.0, "Undecided": 7.0}},
+    {"raceId": "TX-SEN-2026", "pollster": "University of Texas/Texas Politics Project", "startDate": "2026-04-10", "endDate": "2026-04-20", "sampleSize": 1200, "sampleType": "RV", "results": {"James Talarico (D)": 42.0, "Ken Paxton (R)": 34.0, "Other": 5.0, "Undecided": 19.0}},
+    {"raceId": "TX-SEN-2026", "pollster": "Texas Public Opinion Research (D)", "startDate": "2026-04-17", "endDate": "2026-04-20", "sampleSize": 1018, "sampleType": "LV", "results": {"James Talarico (D)": 46.0, "Ken Paxton (R)": 41.0, "Undecided": 9.0}},
+    {"raceId": "TX-SEN-2026", "pollster": "Texas Southern University", "startDate": "2026-04-22", "endDate": "2026-05-06", "sampleSize": 1223, "sampleType": "LV", "results": {"James Talarico (D)": 45.0, "Ken Paxton (R)": 45.0, "Other": 2.0, "Undecided": 8.0}},
+    {"raceId": "TX-SEN-2026", "pollster": "Public Policy Polling (D)", "startDate": "2026-05-22", "endDate": "2026-05-23", "sampleSize": 643, "sampleType": "RV", "results": {"James Talarico (D)": 45.0, "Ken Paxton (R)": 38.0, "Other": 3.0, "Undecided": 14.0}},
     {"raceId": "TX-SEN-2026", "pollster": "Texas Public Opinion Research (D)", "startDate": "2026-05-27", "endDate": "2026-05-28", "sampleSize": 1670, "sampleType": "LV", "results": {"James Talarico (D)": 47.0, "Ken Paxton (R)": 44.0, "Other": 3.0, "Undecided": 7.0}},
     {"raceId": "TX-SEN-2026", "pollster": "Texas A&M University/ReconMR/Siena University", "startDate": "2026-06-01", "endDate": "2026-06-04", "sampleSize": 807, "sampleType": "LV", "results": {"James Talarico (D)": 46.0, "Ken Paxton (R)": 46.0, "Other": 4.0, "Undecided": 5.0}},
     {"raceId": "TX-SEN-2026", "pollster": "Quantus Insights", "startDate": "2026-06-03", "endDate": "2026-06-04", "sampleSize": 800, "sampleType": "LV", "results": {"James Talarico (D)": 43.0, "Ken Paxton (R)": 45.0, "Other": 4.0, "Undecided": 7.0}},
@@ -44,7 +55,7 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "TX-SEN-2026", "pollster": "New York Times/Siena University", "startDate": "2026-06-19", "endDate": "2026-06-27", "sampleSize": 656, "sampleType": "LV", "results": {"James Talarico (D)": 47.0, "Ken Paxton (R)": 47.0, "Undecided": 6.0}},
     {"raceId": "TX-SEN-2026", "pollster": "A2 Insights", "startDate": "2026-06-23", "endDate": "2026-06-28", "sampleSize": 618, "sampleType": "LV", "results": {"James Talarico (D)": 48.0, "Ken Paxton (R)": 46.0, "Other": 3.0, "Undecided": 3.0}},
     {"raceId": "TX-SEN-2026", "pollster": "Texas Public Opinion Research (D)", "startDate": "2026-07-15", "endDate": "2026-07-17", "sampleSize": 1048, "sampleType": "LV", "results": {"James Talarico (D)": 45.0, "Ken Paxton (R)": 40.0, "Other": 1.0, "Undecided": 14.0}},
-    {"raceId": "TX-SEN-2026", "pollster": "Beacon Research (D)/ Shaw & Co. Research (R)", "startDate": "2026-07-23", "endDate": "2026-07-27", "sampleSize": 1005, "sampleType": "RV", "results": {"James Talarico (D)": 51.0, "Ken Paxton (R)": 48.0, "Undecided": 3.0}},
+    {"raceId": "TX-SEN-2026", "pollster": "Beacon Research and Shaw & Co. Research bipartisan", "startDate": "2026-07-23", "endDate": "2026-07-27", "sampleSize": 1005, "sampleType": "RV", "results": {"James Talarico (D)": 51.0, "Ken Paxton (R)": 48.0, "Undecided": 3.0}},
     {"raceId": "TX-SEN-2026", "pollster": "Texas A&M University/ReconMR/Siena University", "startDate": "2026-07-27", "endDate": "2026-07-30", "sampleSize": 619, "sampleType": "LV", "results": {"James Talarico (D)": 47.0, "Ken Paxton (R)": 43.0, "Other": 4.0, "Undecided": 6.0}},
     {"raceId": "TX-SEN-2026", "pollster": "Texas Southern University", "startDate": "2026-07-27", "endDate": "2026-07-30", "sampleSize": 1200, "sampleType": "LV", "results": {"James Talarico (D)": 47.0, "Ken Paxton (R)": 45.0, "Other": 2.0, "Undecided": 6.0}},
     {"raceId": "TX-SEN-2026", "pollster": "YouGov Blue (D)", "startDate": "2026-07-15", "endDate": "2026-07-31", "sampleSize": 1001, "sampleType": "RV", "results": {"James Talarico (D)": 48.0, "Ken Paxton (R)": 45.0, "Undecided": 6.0}},
@@ -52,8 +63,8 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "TX-SEN-2026", "pollster": "Emerson College", "startDate": "2026-08-09", "endDate": "2026-08-10", "sampleSize": 1000, "sampleType": "LV", "results": {"James Talarico (D)": 46.0, "Ken Paxton (R)": 47.0, "Other": 2.0, "Undecided": 5.0}},
     {"raceId": "TX-SEN-2026", "pollster": "University of Texas/Texas Politics Project", "startDate": "2026-08-05", "endDate": "2026-08-13", "sampleSize": 1200, "sampleType": "RV", "results": {"James Talarico (D)": 42.0, "Ken Paxton (R)": 39.0, "Other": 4.0, "Undecided": 14.0}},
     {"raceId": "TX-SEN-2026", "pollster": "Texas Public Opinion Research (D)", "startDate": "2026-08-21", "endDate": "2026-08-24", "sampleSize": 1000, "sampleType": "LV", "results": {"James Talarico (D)": 48.0, "Ken Paxton (R)": 42.0, "Other": 2.0, "Undecided": 7.0}},
-    {"raceId": "TX-SEN-2026", "pollster": "Overton Insights (R)", "startDate": "2026-08-24", "endDate": "2026-08-26", "sampleSize": 1167, "sampleType": "LV", "results": {"James Talarico (D)": 47.0, "Ken Paxton (R)": 46.5, "Undecided": 6.5}},
-    {"raceId": "TX-SEN-2026", "pollster": "Fabrizio Ward (R)/ Impact Research (D)", "startDate": "2026-08-30", "endDate": "2026-09-01", "sampleSize": 895, "sampleType": "LV", "results": {"James Talarico (D)": 48.0, "Ken Paxton (R)": 44.0, "Undecided": 8.0}},
+    {"raceId": "TX-SEN-2026", "pollster": "Overton Insights (R)", "startDate": "2026-08-24", "endDate": "2026-08-26", "sampleSize": 1167, "sampleType": "LV", "results": {"James Talarico (D)": 47.0, "Ken Paxton (R)": 46.5, "Undecided": 6.5}, "notes": "Two published versions, leaned and unleaned, averaged as the model does."},
+    {"raceId": "TX-SEN-2026", "pollster": "Fabrizio Ward and Impact Research bipartisan", "startDate": "2026-08-30", "endDate": "2026-09-01", "sampleSize": 895, "sampleType": "LV", "results": {"James Talarico (D)": 48.0, "Ken Paxton (R)": 44.0, "Undecided": 8.0}},
     {"raceId": "TX-SEN-2026", "pollster": "Univision/YouGov", "startDate": "2026-08-27", "endDate": "2026-09-04", "sampleSize": 1000, "sampleType": "RV", "results": {"James Talarico (D)": 48.0, "Ken Paxton (R)": 43.0, "Other": 1.0, "Undecided": 7.0}},
     {"raceId": "TX-SEN-2026", "pollster": "InsiderAdvantage", "startDate": "2026-09-08", "endDate": "2026-09-09", "sampleSize": 1200, "sampleType": "LV", "results": {"James Talarico (D)": 47.0, "Ken Paxton (R)": 46.0, "Other": 2.0, "Undecided": 5.0}},
     {"raceId": "TX-SEN-2026", "pollster": "Mason-Dixon Polling & Strategy", "startDate": "2026-09-08", "endDate": "2026-09-10", "sampleSize": 625, "sampleType": "LV", "results": {"James Talarico (D)": 46.0, "Ken Paxton (R)": 43.0, "Other": 3.0, "Undecided": 8.0}},
@@ -62,6 +73,7 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "TX-SEN-2026", "pollster": "Emerson College", "startDate": "2026-09-12", "endDate": "2026-09-14", "sampleSize": 1000, "sampleType": "LV", "results": {"James Talarico (D)": 47.0, "Ken Paxton (R)": 46.0, "Other": 2.0, "Undecided": 4.0}},
     {"raceId": "TX-SEN-2026", "pollster": "Trafalgar Group (R)", "startDate": "2026-09-15", "endDate": "2026-09-17", "sampleSize": 1079, "sampleType": "LV", "results": {"James Talarico (D)": 46.0, "Ken Paxton (R)": 45.0, "Other": 3.0, "Undecided": 6.0}},
     {"raceId": "TX-SEN-2026", "pollster": "Texas Southern University", "startDate": "2026-09-15", "endDate": "2026-09-19", "sampleSize": 1800, "sampleType": "LV", "results": {"James Talarico (D)": 47.0, "Ken Paxton (R)": 46.0, "Other": 3.0, "Undecided": 4.0}},
-    {"raceId": "TX-SEN-2026", "pollster": "NBC News/Marist", "startDate": "2026-09-17", "endDate": "2026-09-20", "sampleSize": 1139, "sampleType": "RV", "results": {"James Talarico (D)": 50.0, "Ken Paxton (R)": 44.0}}
+    {"raceId": "TX-SEN-2026", "pollster": "Marist University", "startDate": "2026-09-17", "endDate": "2026-09-20", "sampleSize": 1139, "sampleType": "RV", "results": {"James Talarico (D)": 50.0, "Ken Paxton (R)": 44.0, "Other": 2.0, "Undecided": 4.0}},
+    {"raceId": "TX-SEN-2026", "pollster": "Texas Public Opinion Research (D)", "startDate": "2026-09-19", "endDate": "2026-09-22", "sampleSize": 1007, "sampleType": "LV", "results": {"James Talarico (D)": 49.0, "Ken Paxton (R)": 44.0, "Other": 4.0, "Undecided": 3.0}}
   ],
 };

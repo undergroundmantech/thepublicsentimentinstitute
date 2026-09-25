@@ -512,3 +512,54 @@ Both blocks are now computed from the 2,000 correlated runs.
   run's 77.1% to 78.5%.
 - The probability formatter printed exactly 99.5% as "100%", the one number it exists to
   keep off the page. It prints ">99%" now.
+
+---
+
+# Texas Senate and Governor re-run with the full Texas poll tables
+
+Only these two races were re-run. Every other race, and every House district, is unchanged.
+
+## A bug of mine, found by this request
+
+Earlier today I added the Marist poll to the Texas Senate race through `EXTRA_POLLS`. That
+dictionary already had a `"TX"` entry, and a Python dict literal keeps only the last copy
+of a repeated key, so the new entry silently replaced the old one. **Texas Southern,
+Trafalgar, Emerson and ReconMR/Siena, all September polls, dropped out of the Texas Senate
+average** and stayed out through the full Senate re-run. They are back, and there are no
+repeated keys left in `EXTRA_POLLS`.
+
+## What changed in the inputs
+
+Both races now read their polls from one file each, built from the full tables supplied,
+rather than from a docx plus scattered additions:
+
+| Race | polls in the model | was |
+|---|---|---|
+| Texas Senate | 39 | 23 |
+| Texas Governor | 35 | 25 |
+
+New to the Senate: Texas Public Opinion Research September 19 to 22, the four September polls
+above, and the spring and 2025 polls that had never been carried. New to the governor:
+Texas Public Opinion Research, Marist, Texas Southern, Emerson and ReconMR/Siena from
+September, plus the January and February polls.
+
+Two consistency changes: Fabrizio Ward and Impact Research, and Beacon and Shaw, are
+bipartisan teams and are now treated that way in the Senate race, as the governor race
+already treated them, rather than taking the partisan discount. Overton published a leaned
+and an unleaned ballot; both are carried and averaged, the existing convention for this race.
+
+## Results
+
+| Race | was | now |
+|---|---|---|
+| Texas Senate | Talarico +3.0, 69% | **Talarico +2.9, 70%**, Lean D |
+| Texas Governor | Abbott +5.2, 84% | **Abbott +3.8, 78%**, Lean R |
+
+The Senate barely moves: the four restored polls and the new Texas Public Opinion Research
+poll average out near where Marist had already put it. The governor moves 1.4 toward
+Hinojosa, because the model had been missing Marist and ReconMR/Siena, both of which have
+her ahead, and Texas Southern and Emerson, which have Abbott ahead by less than his average.
+
+Senate control rounds from 75 to **76%**; median stays 53. Governors unchanged at 86%.
+
+The site's polling-average page reads the same polls: Talarico +2.4, Abbott +3.3.
