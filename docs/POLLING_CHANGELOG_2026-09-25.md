@@ -581,3 +581,41 @@ at D+13.0, Nebraska on the Democratic side and Ohio at D+0.9.
 `scripts/forecast/sync_site_numbers.py` rewrites both tables from `model.json` and prints
 every value it changed: 175 on this run. `senateModel.ts` is now marked as generated.
 It has to be run after each forecast build.
+
+---
+
+# Iowa Senate re-run with the full Iowa poll table
+
+Only Iowa Senate was re-run. Every other race, and every House district, is unchanged.
+
+The race now reads its polls from `polls_ia.csv`, built from the full table, rather than
+the docx plus an `EXTRA_POLLS` entry, the same move made for Texas. 20 polls, up from 17;
+the three new ones are the pre-primary Echelon, GQR and Change Research polls. Polls
+published in two versions follow the existing conventions: YouGov and Abacus keep their
+likely voter version, and co/efficient's two ballots are averaged. Beacon and Shaw is
+treated as bipartisan, as in Texas.
+
+| | was | now |
+|---|---|---|
+| Iowa Senate | Turek +0.6, 54% | **Turek +0.5, 54%**, Tilt D |
+
+It barely moves because every poll the model was missing is from before the June primary
+and carries almost no weight on 25 September.
+
+## Worth a decision: how little Marist counts
+
+Marist is the newest Iowa poll and the only one with Turek clearly ahead, 50 to 42, and it
+carries **2.5%** of the average. Trafalgar carries 32%. Three things stack:
+
+- The TPSI scorecard grades Marist **C**, weight 0.25. Trafalgar is A-, weight 1.70.
+- It is a registered voter sample, weighted a third of a likely voter one.
+- 5% undecided takes it to 0.15 on the undecided penalty.
+
+The scorecard is a TPSI editorial choice, so it was left alone. But it is the single
+biggest reason this race sits at a coin flip rather than leaning Turek.
+
+**A matching gap in the same scorecard.** "New York Times/Siena University" matches no
+entry and falls through to unrated, weight 0.60, which is *higher* than the C+ 0.50 the
+scorecard assigns "siena/nyt". That name is how the Maine, New Hampshire and Michigan
+Senate files record their September Siena polls, so the gap favours those polls slightly
+in three live races. Not changed here, since only Iowa was asked for.

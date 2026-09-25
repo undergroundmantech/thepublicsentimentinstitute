@@ -426,7 +426,8 @@ AK_TOTALS = dict(p16=318_608, p20=359_530, p24=338_177, h24=140_026, t24=184_458
 
 STATES = {
     "IA": dict(name="Iowa", D="Josh Turek", R="Ashley Hinson",
-               third=[("Thomas Laehn", "L", 1.0)], docx="IOWA INSTRUCTIONS AND POLLS (1).docx"),
+               # Sept 25 2026: polls from polls_ia.csv, the full Senate table, rather than the docx plus EXTRA_POLLS.
+               third=[("Thomas Laehn", "L", 1.0)], polls_csv="polls_ia.csv"),
     "MI": dict(name="Michigan", D="Abdul El-Sayed", R="Mike Rogers",
                third=[("Lydia Christensen", "L", 2.1), ("Timothy Long", "UST", 1.2), ("Douglas P. Marsh", "G", 0.9)],
                docx="MICHIGAN INSTRUCTION AND POLLS.docx"),
@@ -720,11 +721,6 @@ EXTRA_POLLS = {
            dict(source="Suffolk University", dates="September 16-20, 2026", end="2026-09-20", n=500, pop="LV", D=47, R=40, O=3, U=8),
            dict(source="Emerson College", dates="September 12-14, 2026", end="2026-09-14", n=1000, pop="LV", D=48, R=46, O=2, U=4),
            dict(source="The Washington Post/SSPG", dates="September 10-14, 2026", end="2026-09-14", n=803, pop="LV", D=48, R=45, O=5, U=2)],
-    # co/efficient reported two screens, as Overton did: the two are averaged, the file convention for this race
-    "IA": [dict(source="Marist College", dates="September 17-20, 2026", end="2026-09-20", n=1050, pop="RV", D=50, R=42, O=2, U=5),
-           dict(source="Trafalgar Group (R)", dates="September 16-18, 2026", end="2026-09-18", n=1089, pop="LV", D=42, R=44, O=3, U=10),
-           dict(source="co/efficient (R)", dates="September 14-16, 2026", end="2026-09-16", n=831, pop="LV", D=42.5, R=47, O=1, U=9),
-           dict(source="Cygnal (R)", dates="September 9-11, 2026", end="2026-09-11", n=500, pop="LV", D=43, R=43, O=4, U=10)],
     "ME": [dict(source="University of New Hampshire", dates="September 17-21, 2026", end="2026-09-21", n=1312, pop="LV", D=51, R=47, O=0, U=2),
            dict(source="New York Times/Siena University", dates="September 15-22, 2026", end="2026-09-22", n=619, pop="LV", D=46, R=49, O=0, U=5)],
     "NH": [dict(source="University of New Hampshire", dates="September 17-21, 2026", end="2026-09-21", n=1418, pop="LV", D=50, R=42, O=4, U=4),

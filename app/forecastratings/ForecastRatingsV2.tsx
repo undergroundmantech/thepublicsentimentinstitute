@@ -103,7 +103,7 @@ const SENATE_RAW = [
   { state:"GA", name:"Jon Ossoff",           incRunning:true,  incParty:"D" as const, approval:-18, pollingAvg:-7.6,  modeledResult:-9.1 },
   { state:"ID", name:"Jim Risch",            incRunning:true,  incParty:"R" as const, approval:22,  pollingAvg:-0.7,  modeledResult:13.0  },
   { state:"IL", name:"Dick Durbin",          incRunning:false, incParty:"D" as const, approval:-12, pollingAvg:null, modeledResult:-24.5 },
-  { state:"IA", name:"Joni Ernst",           incRunning:false, incParty:"R" as const, approval:-5,  pollingAvg:0.2,   modeledResult:-0.6   },
+  { state:"IA", name:"Joni Ernst",           incRunning:false, incParty:"R" as const, approval:-5,  pollingAvg:0.2,   modeledResult:-0.5   },
   { state:"KS", name:"Roger Marshall",       incRunning:true,  incParty:"R" as const, approval:6,   pollingAvg:1.0,   modeledResult:2.4   },
   { state:"KY", name:"Mitch McConnell",      incRunning:false, incParty:"R" as const, approval:-36, pollingAvg:10.1,   modeledResult:16.0   },
   { state:"LA", name:"Bill Cassidy",         incRunning:true,  incParty:"R" as const, approval:9,   pollingAvg:4.3,  modeledResult:8.6  },
