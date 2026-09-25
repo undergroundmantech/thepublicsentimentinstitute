@@ -141,6 +141,9 @@ export type AggregateDef = {
   polls: Poll[];
   gold: string[];
   goldMult: number;
+  /** Two-letter postal code, set only on the 2026 Senate and governor races so the
+   *  Polling Averages page can place each one on a map. */
+  stateAbbr?: string;
 };
 
 export type AggDaily = { date: string; t: number; a: number; b: number; net: number };
@@ -218,7 +221,7 @@ function rdSenate(id: string, abbr: string, stateName: string, aShort: string, b
     seriesA: { label: aShort, color: RED }, seriesB: { label: bShort, color: BLUE },
     marginLabel: "Margin",
     fmtMargin: (n) => (Math.abs(n) < 0.05 ? "Even" : n > 0 ? `${aShort}+${n.toFixed(1)}` : `${bShort}+${Math.abs(n).toFixed(1)}`),
-    polls, gold: [], goldMult: 1,
+    polls, gold: [], goldMult: 1, stateAbbr: abbr,
   };
 }
 
@@ -244,7 +247,7 @@ function senateAggs(mod: SenateModule): AggregateDef[] {
       seriesB: { label: bShort, color: partyColor(bLabel) },
       marginLabel: "Margin",
       fmtMargin: (n) => (Math.abs(n) < 0.05 ? "Even" : n > 0 ? `${aShort}+${n.toFixed(1)}` : `${bShort}+${Math.abs(n).toFixed(1)}`),
-      polls, gold: [], goldMult: 1,
+      polls, gold: [], goldMult: 1, stateAbbr: abbr,
     });
   }
   return out;
@@ -272,7 +275,7 @@ function governorAggs(mod: SenateModule): AggregateDef[] {
       seriesB: { label: bShort, color: partyColor(bLabel) },
       marginLabel: "Margin",
       fmtMargin: (n) => (Math.abs(n) < 0.05 ? "Even" : n > 0 ? `${aShort}+${n.toFixed(1)}` : `${bShort}+${Math.abs(n).toFixed(1)}`),
-      polls, gold: [], goldMult: 1,
+      polls, gold: [], goldMult: 1, stateAbbr: abbr,
     });
   }
   return out;

@@ -2,7 +2,7 @@
 // Arkansas — 2026 Governor: Fredrick Love (D) vs. Sarah Huckabee Sanders (R)
 // Generated from the TPSI forecast poll feed (run of 2026-09-22), merged with
 // the polls this file already carried. Polls of matchups that are not on the
-// ballot were dropped. Newest poll: 2026-08-12.
+// ballot were dropped. Newest poll: 2026-08-18.
 
 export type SampleType = "LV" | "RV" | "A";
 
@@ -36,6 +36,7 @@ export const RACES = [
 
 export const STATE_POLLS: Record<string, Poll[]> = {
   AR: [
-    {"raceId": "AR-GOV-2026", "pollster": "Talk Business & Politics / Hendrix College", "startDate": "2026-08-12", "endDate": "2026-08-12", "sampleSize": 1217, "sampleType": "LV", "results": {"Fredrick Love (D)": 40.0, "Sarah Huckabee Sanders (R)": 45.0, "Other": 7.0, "Undecided": 8.0}}
+    {"raceId": "AR-GOV-2026", "pollster": "Talk Business & Politics / Hendrix College", "startDate": "2026-08-12", "endDate": "2026-08-12", "sampleSize": 1217, "sampleType": "LV", "results": {"Fredrick Love (D)": 40.0, "Sarah Huckabee Sanders (R)": 45.0, "Other": 7.0, "Undecided": 8.0}},
+    {"raceId": "AR-GOV-2026", "pollster": "J.L. Partners (R)", "startDate": "2026-08-14", "endDate": "2026-08-18", "sampleSize": 803, "sampleType": "LV", "results": {"Fredrick Love (D)": 40.0, "Sarah Huckabee Sanders (R)": 45.0}}
   ],
 };

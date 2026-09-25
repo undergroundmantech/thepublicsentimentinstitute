@@ -9,6 +9,8 @@ import {
   partyColor, partyLabel,
   type Geo, type Model, type Office, type Race, type RaceSide, type StateDetail, type ViewMode,
   OFFICE_LABEL, fmtMargin, fmtPct, inkOn, marginColor, onLight, raceColor, ratingFor, surname,
+  isUncontested,
+  isPlaceholderName,
 } from "./lib";
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -509,11 +511,21 @@ function MapTip({ race, x, y }: { race: Race; x: number; y: number }) {
 }
 
 // ── race stage — the map swaps in place ──────────────────────────
-const NO_DETAIL = new Set(["AK", "HI"]); // unified districts — no county file ships
-
 type StageHover = { kind: "county" | "district"; id: string; x: number; y: number };
 
 const commas = (n: number) => Math.round(n).toLocaleString("en-US");
+
+// Surnames alone are the right label right up until two people on the same ballot
+// share one. Alaska's Senate race runs Dan S. Sullivan against Dan J. Sullivan, and
+// Oregon's runs two Smiths; printing "Sullivan" twice in a county tooltip is worse
+// than printing nothing. Where a surname repeats, those candidates get their full
+// name and everyone else keeps the short one.
+function ballotLabels(cands: { name: string }[]): string[] {
+  const short = cands.map((c) => surname(c.name));
+  const seen = new Map<string, number>();
+  for (const s of short) seen.set(s, (seen.get(s) ?? 0) + 1);
+  return short.map((s, i) => ((seen.get(s) ?? 0) > 1 ? cands[i].name : s));
+}
 const shareOf = (v: number, t: number) => (t > 0 ? `${((v / t) * 100).toFixed(1)}%` : "\u2014");
 
 // One tooltip shape for both layers: who, how many votes, what share, and the margin
@@ -533,19 +545,19 @@ function VoteTip({ title, sub, demName, gopName, dem, rep, total, margin, foot, 
       <div className="fc-tip-name">{title}</div>
       {sub ? <div className="fc-tip-sub">{sub}</div> : null}
       {cands && cands.length > 2
-        ? cands.map((c, i) => (
+        ? ballotLabels(cands).map((label, i) => { const c = cands[i]; return (
             <div key={`${c.name}-${i}`} className="fc-tip-vote">
               <i style={{ background: partyColor(c.party) }} />
-              <b>{surname(c.name)}</b>
+              <b>{label}</b>
               <span>{commas(Math.round(total * c.pct / 100))}</span>
               <em>{c.pct.toFixed(1)}%</em>
             </div>
-          ))
+          ); })
         : (<>
             <div className="fc-tip-vote"><i style={{ background: DEM }} /><b>{demName}</b><span>{commas(dem)}</span><em>{shareOf(dem, total)}</em></div>
             <div className="fc-tip-vote"><i style={{ background: GOP }} /><b>{gopName}</b><span>{commas(rep)}</span><em>{shareOf(rep, total)}</em></div>
-            {total - dem - rep > 0
-              ? <div className="fc-tip-vote"><i style={{ background: "rgba(var(--fc-ink-rgb),calc(0.3 * var(--fc-mute) + var(--fc-floor)))" }} /><b>other</b><span>{commas(total - dem - rep)}</span><em>{shareOf(total - dem - rep, total)}</em></div>
+            {total > 0 && (total - dem - rep) / total >= 0.0005
+              ? <div className="fc-tip-vote"><i style={{ background: "rgba(var(--fc-ink-rgb),calc(0.3 * var(--fc-mute) + var(--fc-floor)))" }} /><b>other candidates</b><span>{commas(total - dem - rep)}</span><em>{shareOf(total - dem - rep, total)}</em></div>
               : null}
           </>)}
       <div className="fc-tip-vote total"><i /><b>total votes</b><span>{commas(total)}</span><em style={{ color: margin > 0 ? "var(--fc-gop)" : "var(--fc-dem)" }}>{fmtMargin(margin)}</em></div>
@@ -606,6 +618,9 @@ function RaceStage({ race, detail, counties, stateRaces, onPick, onBack }: {
   const names = (counties?._n ?? {}) as Record<string, string>;
   const byDist = useMemo(() => new Map(stateRaces.map((r) => [r.id, r])), [stateRaces]);
 
+  // A state with one at-large district has nothing to switch between, so it opens
+  // on its counties rather than on a district outline of the whole state.
+  const multiDist = stateRaces.length > 1;
   const [layer, setLayer] = useState<"district" | "county">("district");
   // The county shading is a two party margin. Where a third candidate is projected
   // to finish ahead of one of the majors, that shading is not the story of the race,
@@ -618,9 +633,9 @@ function RaceStage({ race, detail, counties, stateRaces, onPick, onBack }: {
     return second && second.party !== "D" && second.party !== "R" ? second : null;
   })();
   const [tip, setTip] = useState<StageHover | null>(null);
-  useEffect(() => { setTip(null); setLayer("district"); }, [race.id]);
+  useEffect(() => { setTip(null); setLayer(multiDist ? "district" : "county"); }, [race.id, multiDist]);
 
-  const showDistricts = isHouse && layer === "district";
+  const showDistricts = isHouse && multiDist && layer === "district";
 
   const countyPath = (c: { id: string; d: string }, faded: boolean) => {
     const row = rows ? rows[c.id] : undefined;
@@ -660,7 +675,11 @@ function RaceStage({ race, detail, counties, stateRaces, onPick, onBack }: {
   };
 
   let stage: React.ReactNode;
-  if (NO_DETAIL.has(race.st)) {
+  // Alaska and Hawaii were excluded here by hand on the assumption that no county
+  // file ships for a state with a single at-large district. Both do ship, and both
+  // carry a full forecast row for every borough and island county, so the only
+  // condition that should suppress the layer is an actually empty geometry file.
+  if (detail && detail.counties.length === 0) {
     stage = <div className="fc-map-loading static"><em>no county detail for {race.state} — the model prices this race statewide</em></div>;
   } else if (!detail) {
     stage = <div className="fc-map-loading"><span /><em>drawing {race.state}…</em></div>;
@@ -715,6 +734,8 @@ function RaceStage({ race, detail, counties, stateRaces, onPick, onBack }: {
   })();
 
   const rv = race.votes;
+  const unopposed = isUncontested(race);
+  const noFiler = isPlaceholderName(race.gop) || isPlaceholderName(race.dem);
 
   return (
     <div className="fc-stage">
@@ -726,9 +747,13 @@ function RaceStage({ race, detail, counties, stateRaces, onPick, onBack }: {
           <span className="fc-stage-year">2026 · {race.office}{race.marquee ? " · marquee" : ""}</span>
           <h2>{race.name}</h2>
           <div className="fc-stage-banner" style={{ color: s.margin > 0 ? "var(--fc-gop)" : "var(--fc-dem)" }}>
-            {surname(fav)} favored by {Math.abs(s.margin).toFixed(1)} · {fmtPct(s.margin > 0 ? s.prob : 1 - s.prob)} to win
+            {unopposed
+              ? (noFiler
+                ? `${surname(fav)} is unopposed \u2014 no major-party opponent filed`
+                : `${surname(race.dem)} against ${surname(race.gop)} \u2014 the model does not price this ballot`)
+              : <>{surname(fav)} favored by {Math.abs(s.margin).toFixed(1)} · {fmtPct(s.margin > 0 ? s.prob : 1 - s.prob)} to win</>}
           </div>
-          {rv && rv.total > 0 ? (
+          {rv && rv.total > 0 && rv.dem + rv.rep > 0 ? (
             <div className="fc-stage-votes">
               <span><i style={{ background: DEM }} />{surname(race.dem)} <b>{commas(rv.dem)}</b> <em>{shareOf(rv.dem, rv.total)}</em></span>
               <span><i style={{ background: GOP }} />{surname(race.gop)} <b>{commas(rv.rep)}</b> <em>{shareOf(rv.rep, rv.total)}</em></span>
@@ -749,19 +774,19 @@ function RaceStage({ race, detail, counties, stateRaces, onPick, onBack }: {
 
       <div className="fc-stage-map">{stage}</div>
 
-      {isHouse && detail && !NO_DETAIL.has(race.st) ? (
+      {isHouse && detail && detail.counties.length > 0 && multiDist ? (
         <div className="fc-stage-layer" role="group" aria-label="Map layer">
           <button className={layer === "district" ? "on" : ""} aria-pressed={layer === "district"} onClick={() => setLayer("district")}>districts</button>
           <button className={layer === "county" ? "on" : ""} aria-pressed={layer === "county"} onClick={() => setLayer("county")}>counties</button>
         </div>
       ) : null}
 
-      {NO_DETAIL.has(race.st) ? null : (
+      {detail && detail.counties.length === 0 ? null : (
         <div className="fc-stage-caption">
           {isHouse
             ? (showDistricts
               ? `all ${stateRaces.length} ${race.state} districts · hover for its projected vote · click to open another`
-              : `${race.state} counties · hover for the projected House vote in each`)
+              : `${race.state} counties · the projected statewide House vote in each, shared by every district in the state`)
             : runnerUpMinor
               ? `county-level projection · shaded by the Democrat against the Republican, but ${surname(runnerUpMinor.name)} is projected second here · hover a county for the whole ballot`
               : "county-level projection · hover a county for its projected vote"}
@@ -1648,7 +1673,15 @@ function RaceSections({ race, byId, onPick, sims, updated, env }: {
             </div>
           </div>
           <SectionBallot race={race} />
-          <OutcomeDist race={race} s={s} sims={sims} />
+          {isUncontested(race) ? (
+            <p className="fc-uncontested-note">
+              No distribution is drawn for this race. The build parks an unpriced ballot at a
+              flat 100 points, so a curve here would be a picture of that placeholder rather
+              than of 2,000 simulations.
+            </p>
+          ) : (
+            <OutcomeDist race={race} s={s} sims={sims} />
+          )}
         </div>
       </section>
 
@@ -2053,6 +2086,7 @@ body main > div > div { padding-top: 0 !important; padding-bottom: 0 !important;
 
 /* the outcome distribution */
 .fc-outcome { margin-top: clamp(36px, 5vh, 56px); }
+.fc-uncontested-note { margin: clamp(36px, 5vh, 56px) 0 0; padding: 16px 18px; border: 1px solid var(--fc-line); border-radius: 10px; background: rgba(var(--fc-ink-rgb),calc(0.03 * var(--fc-mute) + var(--fc-floor))); font-size: 13px; line-height: 1.6; color: var(--fc-ink-2); max-width: 70ch; }
 .fc-outcome-h { display: flex; justify-content: space-between; gap: 12px; padding-bottom: 12px; border-bottom: 1px solid rgba(var(--fc-line-rgb),0.08); font-family: ${MONO}; font-size: 9.5px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(var(--fc-ink-rgb),calc(0.38 * var(--fc-mute) + var(--fc-floor))); }
 .fc-outcome-chart { position: relative; margin-top: 18px; }
 .fc-outcome-chart .fc-chart { display: block; width: 100%; height: auto; }

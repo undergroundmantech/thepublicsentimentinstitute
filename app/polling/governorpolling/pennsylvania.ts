@@ -2,7 +2,7 @@
 // Pennsylvania — 2026 Governor: Josh Shapiro (D) vs. Stacy Garrity (R)
 // Generated from the TPSI forecast poll feed (run of 2026-09-22), merged with
 // the polls this file already carried. Polls of matchups that are not on the
-// ballot were dropped. Newest poll: 2026-08-23.
+// ballot were dropped. Newest poll: 2026-09-21.
 
 export type SampleType = "LV" | "RV" | "A";
 
@@ -45,6 +45,7 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "PA-GOV-2026", "pollster": "National Public Affairs (R)", "startDate": "2026-07-26", "endDate": "2026-07-30", "sampleSize": 600, "sampleType": "LV", "results": {"Josh Shapiro (D)": 50.0, "Stacy Garrity (R)": 43.0, "Undecided": 7.0}},
     {"raceId": "PA-GOV-2026", "pollster": "The New York Times/The Philadelphia Inquirer/Siena", "startDate": "2026-08-17", "endDate": "2026-08-21", "sampleSize": 760, "sampleType": "LV", "results": {"Josh Shapiro (D)": 55.0, "Stacy Garrity (R)": 39.0, "Undecided": 6.0}},
     {"raceId": "PA-GOV-2026", "pollster": "PennLive", "startDate": "2026-08-18", "endDate": "2026-08-22", "sampleSize": 711, "sampleType": "RV", "results": {"Josh Shapiro (D)": 56.0, "Stacy Garrity (R)": 25.0, "Undecided": 19.0}},
-    {"raceId": "PA-GOV-2026", "pollster": "Franklin & Marshall College", "startDate": "2026-08-17", "endDate": "2026-08-23", "sampleSize": 501, "sampleType": "RV", "results": {"Josh Shapiro (D)": 50.0, "Stacy Garrity (R)": 25.0, "Other": 7.0, "Undecided": 18.0}}
+    {"raceId": "PA-GOV-2026", "pollster": "Franklin & Marshall College", "startDate": "2026-08-17", "endDate": "2026-08-23", "sampleSize": 501, "sampleType": "RV", "results": {"Josh Shapiro (D)": 50.0, "Stacy Garrity (R)": 25.0, "Other": 7.0, "Undecided": 18.0}},
+    {"raceId": "PA-GOV-2026", "pollster": "The New York Times/The Philadelphia Inquirer/Siena", "startDate": "2026-09-15", "endDate": "2026-09-21", "sampleSize": 615, "sampleType": "LV", "results": {"Josh Shapiro (D)": 58.0, "Stacy Garrity (R)": 38.0}}
   ],
 };

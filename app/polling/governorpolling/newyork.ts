@@ -2,7 +2,7 @@
 // New York — 2026 Governor: Kathy Hochul (D) vs. Bruce Blakeman (R)
 // Generated from the TPSI forecast poll feed (run of 2026-09-22), merged with
 // the polls this file already carried. Polls of matchups that are not on the
-// ballot were dropped. Newest poll: 2026-08-31.
+// ballot were dropped. Newest poll: 2026-09-20.
 
 export type SampleType = "LV" | "RV" | "A";
 
@@ -48,6 +48,8 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "NY-GOV-2026", "pollster": "Red Oak Strategic (R)", "startDate": "2026-07-07", "endDate": "2026-07-12", "sampleSize": 2000, "sampleType": "RV", "results": {"Kathy Hochul (D)": 47.0, "Bruce Blakeman (R)": 43.0, "Undecided": 10.0}},
     {"raceId": "NY-GOV-2026", "pollster": "Siena College", "startDate": "2026-08-03", "endDate": "2026-08-06", "sampleSize": 811, "sampleType": "LV", "results": {"Kathy Hochul (D)": 49.0, "Bruce Blakeman (R)": 39.0, "Other": 1.0, "Undecided": 11.0}},
     {"raceId": "NY-GOV-2026", "pollster": "Concord Public Opinion Partners", "startDate": "2026-08-19", "endDate": "2026-08-21", "sampleSize": 505, "sampleType": "LV", "results": {"Kathy Hochul (D)": 50.0, "Bruce Blakeman (R)": 34.0, "Other": 5.0, "Undecided": 11.0}},
-    {"raceId": "NY-GOV-2026", "pollster": "McLaughlin & Associates (R)", "startDate": "2026-08-27", "endDate": "2026-08-31", "sampleSize": 800, "sampleType": "LV", "results": {"Kathy Hochul (D)": 50.0, "Bruce Blakeman (R)": 46.0, "Undecided": 5.0}}
+    {"raceId": "NY-GOV-2026", "pollster": "McLaughlin & Associates (R)", "startDate": "2026-08-27", "endDate": "2026-08-31", "sampleSize": 800, "sampleType": "LV", "results": {"Kathy Hochul (D)": 50.0, "Bruce Blakeman (R)": 46.0, "Undecided": 5.0}},
+    {"raceId": "NY-GOV-2026", "pollster": "Siena College", "startDate": "2026-09-11", "endDate": "2026-09-17", "sampleSize": 1144, "sampleType": "LV", "results": {"Kathy Hochul (D)": 50.0, "Bruce Blakeman (R)": 41.0}},
+    {"raceId": "NY-GOV-2026", "pollster": "Quinnipiac University", "startDate": "2026-09-17", "endDate": "2026-09-20", "sampleSize": 1026, "sampleType": "LV", "results": {"Kathy Hochul (D)": 58.0, "Bruce Blakeman (R)": 39.0}}
   ],
 };

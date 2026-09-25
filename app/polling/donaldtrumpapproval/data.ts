@@ -6,16 +6,32 @@ export const GOLD_STANDARD_NAMES = [
 ];
 
 export const RAW_POLLS: Poll[] = [
+  // ── RCP feed added Sep 25, 2026 (through the Sep 20–24 Rasmussen wave) ──
+  { pollster: "Rasmussen Reports", endDate: "2026-09-24", sampleSize: 1500, sampleType: "LV", results: { Approve: 44, Disapprove: 56 } },
+  { pollster: "Emerson", endDate: "2026-09-22", sampleSize: 1000, sampleType: "LV", results: { Approve: 39, Disapprove: 58 } },
+  { pollster: "Economist/YouGov", endDate: "2026-09-21", sampleSize: 982, sampleType: "LV", results: { Approve: 35, Disapprove: 63 } },
+  { pollster: "Echelon Insights", endDate: "2026-09-21", sampleSize: 1002, sampleType: "LV", results: { Approve: 36, Disapprove: 64 } },
+  { pollster: "Morning Consult", endDate: "2026-09-20", sampleSize: 2201, sampleType: "RV", results: { Approve: 41, Disapprove: 56 } },
+  { pollster: "Reuters/Ipsos", endDate: "2026-09-20", sampleSize: 979, sampleType: "RV", results: { Approve: 35, Disapprove: 65 } },
+  { pollster: "Quantus Insights", endDate: "2026-09-18", sampleSize: 1389, sampleType: "LV", results: { Approve: 40, Disapprove: 59 } },
+  { pollster: "CNN", endDate: "2026-09-17", sampleSize: 867, sampleType: "RV", results: { Approve: 33, Disapprove: 67 } },
+  { pollster: "NPR/PBS/Marist", endDate: "2026-09-15", sampleSize: 1280, sampleType: "RV", results: { Approve: 39, Disapprove: 59 } },
+  { pollster: "NBC News", endDate: "2026-09-15", sampleSize: 1000, sampleType: "RV", results: { Approve: 41, Disapprove: 56 } },
+  { pollster: "RMG Research*", endDate: "2026-09-15", sampleSize: 2000, sampleType: "RV", results: { Approve: 44, Disapprove: 54 } },
+  { pollster: "FOX News", endDate: "2026-09-14", sampleSize: 1211, sampleType: "RV", results: { Approve: 39, Disapprove: 61 } },
+  { pollster: "CBS News", endDate: "2026-09-11", sampleSize: 2460, sampleType: "A", results: { Approve: 39, Disapprove: 61 } },
+  { pollster: "RMG Research*", endDate: "2026-09-08", sampleSize: 3000, sampleType: "RV", results: { Approve: 44, Disapprove: 54 } },
+  { pollster: "Financial Times", endDate: "2026-09-02", sampleSize: 1837, sampleType: "LV", results: { Approve: 36, Disapprove: 59 } },
   // ── broad-feed polls added Sep 23, 2026 ──
   { pollster: "Reuters/Ipsos", endDate: "2026-09-21", sampleSize: 1277, sampleType: "A", results: { Approve: 32.0 } },   // four-day poll closed Sep 21; Reuters published approval only
-  { pollster: "Big Data Poll", endDate: "2026-09-15", sampleSize: 2633, sampleType: "LV", results: { Approve: 39, Disapprove: 59 } },
-  { pollster: "Economist/YouGov", endDate: "2026-09-14", sampleSize: 1055, sampleType: "LV", results: { Approve: 40, Disapprove: 58 } },
+  { pollster: "Big Data Poll", endDate: "2026-09-15", sampleSize: 2633, sampleType: "LV", results: { Approve: 40, Disapprove: 58 } },
+  { pollster: "Economist/YouGov", endDate: "2026-09-14", sampleSize: 1055, sampleType: "LV", results: { Approve: 40, Disapprove: 59 } },
   { pollster: "Reuters/Ipsos", endDate: "2026-09-14", sampleSize: 1143, sampleType: "A", results: { Approve: 35, Disapprove: 62 } },
   { pollster: "Morning Consult", endDate: "2026-09-13", sampleSize: 2203, sampleType: "RV", results: { Approve: 42, Disapprove: 56 } },
   { pollster: "NY Times/Siena", endDate: "2026-09-13", sampleSize: 1503, sampleType: "RV", results: { Approve: 37, Disapprove: 59 } },
   { pollster: "The Honest Poll", endDate: "2026-09-13", sampleSize: 1633, sampleType: "RV", results: { Approve: 36.9, Disapprove: 63.1 } },
   { pollster: "YouGov", endDate: "2026-09-11", sampleSize: 1750, sampleType: "LV", results: { Approve: 39, Disapprove: 61 } },
-  { pollster: "Marquette", endDate: "2026-09-09", sampleSize: 581, sampleType: "LV", results: { Approve: 41, Disapprove: 56 } },
+  { pollster: "Marquette", endDate: "2026-09-09", sampleSize: 581, sampleType: "LV", results: { Approve: 38, Disapprove: 62 } },
   { pollster: "Economist/YouGov", endDate: "2026-09-08", sampleSize: 1469, sampleType: "RV", results: { Approve: 31, Disapprove: 66 } },
   { pollster: "Morning Consult", endDate: "2026-09-06", sampleSize: 2201, sampleType: "RV", results: { Approve: 42, Disapprove: 55 } },
   { pollster: "Quinnipiac", endDate: "2026-09-06", sampleSize: 970, sampleType: "RV", results: { Approve: 33, Disapprove: 59 } },

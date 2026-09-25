@@ -8,6 +8,7 @@ import {
   type BuiltAggregate, type BuiltMulti, type AggregateDef, type MultiAggregateDef,
 } from "@/app/polling/lib/aggregates";
 import { getPollsterEntry } from "@/app/polling/lib/buildDailyModel";
+import StateRaceMap, { type MapRow } from "@/app/polling/lib/StateRaceMap";
 
 const round0 = (n: number) => Math.round(n);
 const round1 = (n: number) => Math.round(n * 10) / 10;
@@ -179,6 +180,38 @@ export default function PollingAveragesPage() {
 
   const tiles = useMemo(() => CATALOG.filter((c) => c.group === group), [group]);
 
+  // ── map rows for the 2026 Senate / governor groups ──────────────────────────
+  // One row per state that has at least one public poll of that office. The fill
+  // colour is the leading candidate's own series colour, so an independent leading
+  // reads as an independent rather than as a washed-out major party.
+  const mapOffice = group === "2026 Senate" ? "U.S. Senate" : group === "2026 Governor" ? "Governor" : null;
+  const mapRows = useMemo<MapRow[]>(() => {
+    if (!mapOffice) return [];
+    const best: Record<string, MapRow> = {};
+    for (const def of AGGREGATES) {
+      if (!def.stateAbbr || GROUP_OF(def.category) !== group) continue;
+      const b = allBuilt[def.id];
+      if (!b?.latest) continue;
+      const net = b.latest.net;
+      const lead = net >= 0 ? def.seriesA : def.seriesB;
+      const row: MapRow = {
+        abbr: def.stateAbbr,
+        id: def.id,
+        title: def.title,
+        leader: lead.label,
+        color: lead.color,
+        margin: Math.abs(net),
+        marginText: def.fmtMargin(net),
+        polls: b.polls.length,
+      };
+      // Texas carries two Senate matchups; the map shows the better-polled one,
+      // and both stay reachable from the tiles below.
+      const prev = best[def.stateAbbr];
+      if (!prev || row.polls > prev.polls) best[def.stateAbbr] = row;
+    }
+    return Object.values(best).sort((a, z) => a.abbr.localeCompare(z.abbr));
+  }, [mapOffice, group, allBuilt]);
+
   // head-to-head derived
   const hLatest = builtH2H?.latest ?? null;
   const leadColor = hLatest && h2hDef ? (hLatest.net >= 0 ? h2hDef.seriesA.color : h2hDef.seriesB.color) : "var(--muted)";
@@ -273,6 +306,13 @@ export default function PollingAveragesPage() {
               <button key={g} className={`pa-cat ${g === group ? "is-active" : ""}`} onClick={() => pickGroup(g)}>{g}</button>
             ))}
           </div>
+          {mapOffice && (
+            mapRows.length ? (
+              <StateRaceMap rows={mapRows} activeId={id} onPick={pickAgg} office={mapOffice} />
+            ) : (
+              <div className="srm srm-empty">Building state averages…</div>
+            )
+          )}
           <div className="pa-tiles">
             {tiles.map((it) => {
               let color = "rgba(var(--line-rgb),0.4)", valueText = "·", spark: number[] = [];
@@ -646,7 +686,49 @@ const CSS = `
   .pa-cats { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 16px; }
   .pa-cat { appearance: none; cursor: pointer; background: rgba(var(--line-rgb),0.04); border: 1px solid var(--line); border-radius: 999px; padding: 8px 15px; line-height: 1; font-family: var(--font-body), monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted2); transition: color 160ms ease, background 160ms ease, border-color 160ms ease; }
   .pa-cat:hover { color: var(--ink); border-color: rgba(var(--ink-rgb),calc(0.22 * var(--struct))); }
-  .pa-cat.is-active { color: var(--canvas); background: var(--canvas); border-color: transparent; }
+  .pa-cat.is-active { color: var(--canvas); background: var(--ink); border-color: transparent; }
+
+  /* ── clickable state map (2026 Senate / governor) ── */
+  .srm { border: 1px solid var(--line); border-radius: 12px; background: rgba(var(--line-rgb),0.012); margin-bottom: 14px; overflow: hidden; }
+  .srm-empty { padding: 28px 16px; text-align: center; font-family: var(--font-body), monospace; font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted2); }
+  .srm-bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; padding: 11px 16px; border-bottom: 1px solid var(--line); }
+  .srm-title { font-family: var(--font-body), monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted2); }
+  .srm-legend { display: flex; flex-wrap: wrap; gap: 12px; }
+  .srm-key { display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-body), monospace; font-size: 10px; letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted3); }
+  .srm-key i { width: 11px; height: 11px; border-radius: 3px; display: inline-block; opacity: 0.75; }
+  .srm-key i.srm-none { background: rgba(var(--line-rgb),0.09); border: 1px solid rgba(var(--line-rgb),0.2); opacity: 1; }
+
+  .srm-stage { position: relative; padding: 4px 8px 0; }
+  .srm-svg { display: block; width: 100%; height: auto; }
+  .srm-state { transition: fill-opacity 140ms ease, stroke-width 140ms ease; outline: none; }
+  .srm-state.is-live { cursor: pointer; }
+  .srm-state.is-live:hover { fill-opacity: 1; }
+  .srm-state.is-live:focus-visible { stroke: var(--ink); stroke-width: 2; }
+  .srm-chip { cursor: pointer; outline: none; }
+  .srm-chip:hover rect { fill-opacity: 1; }
+  .srm-chip:focus-visible rect { stroke: var(--ink); stroke-width: 2; }
+  .srm-chip-txt { font-family: var(--font-body), monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.04em; text-anchor: middle; fill: var(--canvas); pointer-events: none; }
+  .srm-chip-val { font-family: var(--font-body), monospace; font-size: 10px; letter-spacing: 0.03em; fill: var(--muted2); pointer-events: none; }
+  .srm-load { font-family: var(--font-body), monospace; font-size: 11px; letter-spacing: 0.06em; fill: var(--muted3); }
+
+  .srm-readout { display: flex; align-items: center; gap: 12px; padding: 10px 16px; border-top: 1px solid var(--line); background: rgba(var(--line-rgb),0.028); pointer-events: none; }
+  .srm-ro-abbr { font-family: var(--font-display), sans-serif; font-size: 20px; font-weight: 700; letter-spacing: -0.02em; color: var(--ink); }
+  .srm-ro-body { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+  .srm-ro-title { font-size: 12px; color: var(--ink); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .srm-ro-val { font-family: var(--font-numeric), monospace; font-size: 14px; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .srm-ro-n { font-family: var(--font-body), monospace; font-size: 10px; letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted3); }
+
+  .srm-foot { margin: 0; padding: 10px 16px 13px; border-top: 1px solid var(--line); font-size: 11.5px; line-height: 1.55; color: var(--muted3); }
+
+  .srm-ro-body { flex: 1 1 auto; }
+  .srm-ro-title { max-width: 100%; }
+
+  @media (max-width: 760px) {
+    .srm-bar { padding: 10px 12px; }
+    .srm-readout { padding: 10px 12px; }
+    .srm-foot { padding: 10px 12px 12px; }
+    .srm-stage { padding: 2px 4px 0; }
+  }
 
   /* one cohesive "aggregate index" strip — cells flex to fill width, hairline-divided */
   .pa-tiles { display: flex; flex-wrap: nowrap; gap: 0; overflow-x: auto; overflow-y: hidden; border: 1px solid var(--line); border-radius: 12px; background: rgba(var(--line-rgb),0.012); scrollbar-width: thin; }

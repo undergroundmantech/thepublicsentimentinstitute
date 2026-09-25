@@ -281,7 +281,19 @@ export const fmtMargin = (m: number) =>
 // "Sandra Van Scotter" reads Van Scotter.
 const SUFFIX = /^(jr|sr|ii|iii|iv|v)\.?$/i;
 const PARTICLE = /^(van|von|de|del|della|di|da|du|la|le|st|st\.|saint|mac|el|al|bin|ibn)$/i;
+/** Not a person: the build puts a sentence in the empty slot of an unopposed race.
+ *  Taking a "surname" off it produced an opponent called "ballot". */
+export const isPlaceholderName = (n: string) => /\bon the ballot\s*$/i.test(n.trim());
+
+/** A race the model never actually simulated: one slot is empty or both finalists
+ *  come from the same party, so the build parks it at a full 100-point margin with
+ *  no candidate list. It is a statement about the ballot, not a forecast, and the
+ *  desk must not dress it up as one. */
+export const isUncontested = (r: { cands?: { name: string }[]; est: { margin: number } }) =>
+  !r.cands?.length && Math.abs(r.est.margin) >= 100;
+
 export const surname = (n: string) => {
+  if (isPlaceholderName(n)) return n.trim();
   const parts = n.trim().split(/\s+/).filter(Boolean);
   while (parts.length > 1 && SUFFIX.test(parts[parts.length - 1])) parts.pop();
   if (!parts.length) return n;

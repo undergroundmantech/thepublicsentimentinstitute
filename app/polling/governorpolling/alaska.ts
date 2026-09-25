@@ -2,7 +2,7 @@
 // Alaska — 2026 Governor: Jonathan Kreiss-Tomkins (D) vs. Bernadette Wilson (R)
 // Generated from the TPSI forecast poll feed (run of 2026-09-22), merged with
 // the polls this file already carried. Polls of matchups that are not on the
-// ballot were dropped. Newest poll: -.
+// ballot were dropped. Newest poll: 2026-09-11.
 
 export type SampleType = "LV" | "RV" | "A";
 
@@ -36,6 +36,6 @@ export const RACES = [
 
 export const STATE_POLLS: Record<string, Poll[]> = {
   AK: [
-
+    {"raceId": "AK-GOV-2026", "pollster": "Fabrizio Ward/Impact Research for AARP", "startDate": "2026-09-08", "endDate": "2026-09-11", "sampleSize": 800, "sampleType": "LV", "results": {"Jonathan Kreiss-Tomkins (D)": 50.0, "Bernadette Wilson (R)": 40.0}, "notes": "Simulated ranked-choice final round between the top two finishers in a four-candidate field."}
   ],
 };

@@ -2,7 +2,7 @@
 // Alaska — 2026 U.S. Senate: Mary Peltola (D) vs. Dan S. Sullivan (R)
 // Generated from the TPSI forecast poll feed (run of 2026-09-22), merged with
 // the polls this file already carried. Polls of matchups that are not on the
-// ballot were dropped. Newest poll: 2026-09-14.
+// ballot were dropped. Newest poll: 2026-09-17.
 
 export type SampleType = "LV" | "RV" | "A";
 
@@ -44,6 +44,7 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "AK-SEN-2026", "pollster": "Alaska Survey Research", "startDate": "2026-01-08", "endDate": "2026-01-11", "sampleSize": 1988, "sampleType": "LV", "results": {"Dan S. Sullivan (R)": 46, "Mary Peltola (D)": 48, "Undecided": 6}, "moe": 2.2},
     {"raceId": "AK-SEN-2026", "pollster": "Public Policy Polling", "startDate": "2026-01-16", "endDate": "2026-01-17", "sampleSize": 611, "sampleType": "RV", "results": {"Dan S. Sullivan (R)": 47, "Mary Peltola (D)": 49, "Undecided": 4}, "notes": "Sample type listed as \"V\" in source; stored as RV."},
     {"raceId": "AK-SEN-2026", "pollster": "Alaska Survey Research", "startDate": "2026-08-20", "endDate": "2026-08-23", "sampleSize": 1495, "sampleType": "LV", "results": {"Mary Peltola (D)": 51.0, "Dan S. Sullivan (R)": 49.0}},
-    {"raceId": "AK-SEN-2026", "pollster": "Rasmussen Reports (R)", "startDate": "2026-09-13", "endDate": "2026-09-14", "sampleSize": 1188, "sampleType": "LV", "results": {"Mary Peltola (D)": 42.7, "Dan S. Sullivan (R)": 45.5, "Undecided": 9.0}}
+    {"raceId": "AK-SEN-2026", "pollster": "Rasmussen Reports (R)", "startDate": "2026-09-13", "endDate": "2026-09-14", "sampleSize": 1188, "sampleType": "LV", "results": {"Mary Peltola (D)": 42.7, "Dan S. Sullivan (R)": 45.5, "Undecided": 9.0}},
+    {"raceId": "AK-SEN-2026", "pollster": "co/efficient (R)", "startDate": "2026-09-14", "endDate": "2026-09-17", "sampleSize": 799, "sampleType": "LV", "results": {"Mary Peltola (D)": 46.0, "Dan S. Sullivan (R)": 48.0}}
   ],
 };
