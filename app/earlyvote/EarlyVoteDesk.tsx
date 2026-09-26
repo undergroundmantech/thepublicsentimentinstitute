@@ -2,8 +2,8 @@
 
 import React, { useEffect, useMemo, useState } from "react";
 import {
-  CATEGORIES, DIMENSIONS, commas, fillFor, getCapabilities, getCategory, getDemographics,
-  marginOf, matchCounty, pct, STATE_NAME, stateOfFips, sumRow, toneFor,
+  CATEGORIES, DIMENSIONS, commas, compact, fillFor, getCapabilities, getCategory, getDemographics,
+  marginOf, matchCounty, pct, STATE_NAME, stateOfFips, sumRow, toneFor, turnoutFill, volumeScale,
   type Capabilities, type Category, type CategoryPayload, type DemographicPayload,
   type Dimension, type Geo, type RegionRow, type StateGeo,
 } from "./lib";
@@ -96,6 +96,19 @@ export default function EarlyVoteDesk() {
     r.sort((a, b) => (sortDesc ? b.n - a.n : a.name.localeCompare(b.name)));
     return r;
   }, [data, sortDesc]);
+
+  // Places that report no party at all are shaded by raw ballot volume in
+  // green. The scale is built only from those places, so a state that mixes
+  // party counties and Unspecified counties keeps its party shading intact.
+  const noPartyRows = useMemo(() => rows.filter((r) => marginOf(r.row) === null), [rows]);
+  const vol = useMemo(() => volumeScale(noPartyRows.map((r) => r.n)), [noPartyRows]);
+  const allNoParty = rows.length > 0 && noPartyRows.length === rows.length;
+  const someNoParty = noPartyRows.length > 0;
+  const fillRow = (row: RegionRow) => {
+    const m = marginOf(row);
+    if (m !== null) return fillFor(m);
+    return vol ? turnoutFill(vol.t(sumRow(row))) : "var(--ev-nodata)";
+  };
 
   const national = scope === "US";
   const title = national ? "Early vote, nationwide" : `${STATE_NAME[scope] ?? scope} early vote`;
@@ -199,7 +212,7 @@ export default function EarlyVoteDesk() {
                     return (
                       <path key={abbr} d={d}
                         className={`ev-unit${row ? " live" : ""}`}
-                        fill={row ? fillFor(marginOf(row)) : "var(--ev-idle)"}
+                        fill={row ? fillRow(row) : "var(--ev-idle)"}
                         onClick={row ? () => setScope(abbr) : undefined}
                         onMouseMove={row ? (e) => setTip({ key: abbr, x: e.clientX, y: e.clientY }) : undefined}
                         onMouseLeave={() => setTip(null)} />
@@ -230,7 +243,7 @@ export default function EarlyVoteDesk() {
                           return (
                             <path key={c.id} d={c.d}
                               className={`ev-unit${row ? " live" : ""}`}
-                              fill={row ? fillFor(marginOf(row)) : "var(--ev-idle)"}
+                              fill={row ? fillRow(row) : "var(--ev-idle)"}
                               onMouseMove={row ? (e) => setTip({ key: name!, x: e.clientX, y: e.clientY }) : undefined}
                               onMouseLeave={() => setTip(null)} />
                           );
@@ -250,12 +263,42 @@ export default function EarlyVoteDesk() {
                 <div className="ev-maploading"><span /> drawing the map…</div>
               )}
 
-              <div className="ev-scale">
-                <span>More Democratic</span>
-                <i className="ramp" />
-                <span>More Republican</span>
-                <em><b className="sw nodata" /> no party reported</em>
-              </div>
+              {!allNoParty ? (
+                <div className="ev-scale">
+                  <span>More Democratic</span>
+                  <i className="ramp" />
+                  <span>More Republican</span>
+                </div>
+              ) : null}
+              {someNoParty && vol ? (
+                <div className="ev-scale turnout">
+                  {!allNoParty ? <em className="lab">no party reported</em> : null}
+                  <span>Fewer ballots</span>
+                  <span className="tramp-wrap">
+                    <i className="ramp tramp" />
+                    <span className="ticks">
+                      <b>{compact(vol.min)}</b>
+                      <b>{compact(Math.sqrt(vol.min * vol.max))}</b>
+                      <b>{compact(vol.max)}</b>
+                    </span>
+                  </span>
+                  <span>More ballots</span>
+                </div>
+              ) : null}
+              {allNoParty ? (
+                <p className="ev-mapnote">
+                  {national ? "None of the reporting states attach" : `${STATE_NAME[scope] ?? scope} does not attach`} a
+                  party to these ballots, so {national ? "states" : "counties"} are shaded by raw ballot count
+                  instead: the deeper the green, the more ballots, on a log scale.
+                </p>
+              ) : someNoParty ? (
+                <p className="ev-mapnote">
+                  {noPartyRows.length} {national
+                    ? (noPartyRows.length === 1 ? "state reports" : "states report")
+                    : (noPartyRows.length === 1 ? "county reports" : "counties report")} no party,
+                  so {noPartyRows.length === 1 ? "it is" : "they are"} shaded green by raw ballot count on a log scale.
+                </p>
+              ) : null}
             </section>
 
             {/* the table */}
@@ -273,7 +316,7 @@ export default function EarlyVoteDesk() {
                       <th>{national ? "State" : "County"}</th>
                       {groups.map((g) => <th key={g} className="num">{g}</th>)}
                       <th className="num">Total</th>
-                      <th className="split">Split</th>
+                      <th className="split">{allNoParty ? "Intensity" : "Split"}</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -288,7 +331,13 @@ export default function EarlyVoteDesk() {
                           <td key={g} className="num">{row[g]?.votes ? commas(row[g].votes) : "—"}</td>
                         ))}
                         <td className="num tot">{commas(n)}</td>
-                        <td className="split"><Bar row={row} groups={groups} total={n} /></td>
+                        <td className="split">
+                          {marginOf(row) === null && vol ? (
+                            <span className="ev-bar vol" aria-hidden>
+                              <i style={{ width: `${Math.max(4, vol.t(n) * 100)}%`, background: turnoutFill(vol.t(n)) }} />
+                            </span>
+                          ) : <Bar row={row} groups={groups} total={n} />}
+                        </td>
                       </tr>
                     ))}
                   </tbody>
@@ -322,6 +371,16 @@ export default function EarlyVoteDesk() {
               })}
               <div className="row tot"><i /><b>total</b><span>{commas(t)}</span>
                 <u>{m === null ? "—" : m > 0 ? `R+${m.toFixed(1)}` : `D+${Math.abs(m).toFixed(1)}`}</u></div>
+              {m === null ? (() => {
+                const share = total > 0 ? (t / total) * 100 : 0;
+                const rank = noPartyRows.findIndex((r) => r.name === tip.key);
+                const byVol = [...noPartyRows].sort((x, y) => y.n - x.n).findIndex((r) => r.name === tip.key) + 1;
+                return (
+                  <div className="row vol"><i style={{ background: vol ? turnoutFill(vol.t(t)) : "var(--ev-nodata)" }} />
+                    <b>{rank >= 0 ? `#${byVol} of ${noPartyRows.length} by ballots` : "ballot volume"}</b>
+                    <span>{share < 1 ? share.toFixed(2) : share.toFixed(1)}%</span><u>of {national ? "all" : "state"}</u></div>
+                );
+              })() : null}
               {national ? <div className="f">click to open counties</div> : null}
             </div>
           );
@@ -385,7 +444,7 @@ const CSS = `
 .ev-key b { font-family: ${MONO}; font-weight: 700; color: var(--ink); font-variant-numeric: tabular-nums; }
 .ev-key u { text-decoration: none; font-family: ${MONO}; font-size: 11.5px; color: var(--muted2); }
 
-.ev-page { --ev-idle: rgba(var(--line-rgb),0.07); --ev-nodata: rgba(var(--line-rgb),0.16); --ev-mid: var(--panel); }
+.ev-page { --ev-idle: rgba(var(--line-rgb),0.07); --ev-nodata: rgba(var(--line-rgb),0.16); --ev-mid: var(--panel); --ev-turnout: var(--win); }
 .ev-mapwrap { position: relative; margin-top: 30px; }
 .ev-map { display: block; width: 100%; height: auto; max-height: 66svh; margin: 0 auto; }
 .ev-unit { stroke: rgba(var(--line-rgb),0.22); stroke-width: 0.6; transition: filter .12s ease; }
@@ -402,6 +461,17 @@ const CSS = `
 .ev-scale em { font-style: normal; display: inline-flex; align-items: center; gap: 7px; }
 .ev-scale .sw { width: 12px; height: 12px; border-radius: 3px; display: inline-block; }
 .ev-scale .sw.nodata { background: var(--ev-nodata); }
+.ev-scale.turnout { margin-top: 10px; }
+.ev-scale .lab { color: var(--ink); }
+.ev-scale .tramp-wrap { display: inline-flex; flex-direction: column; gap: 5px; }
+.ev-scale .tramp { background: linear-gradient(90deg,
+  color-mix(in srgb, var(--ev-turnout) 14%, var(--ev-mid)),
+  color-mix(in srgb, var(--ev-turnout) 52%, var(--ev-mid)),
+  color-mix(in srgb, var(--ev-turnout) 90%, var(--ev-mid))); }
+.ev-scale .ticks { display: flex; justify-content: space-between; font-variant-numeric: tabular-nums; color: var(--muted); letter-spacing: 0.04em; }
+.ev-scale .ticks b { font-weight: 700; }
+.ev-tip .row.vol { margin-top: 5px; }
+.ev-tip .row.vol b { color: var(--muted2); font-family: ${MONO}; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; }
 
 .ev-tip { position: fixed; z-index: 70; pointer-events: none; width: 252px; padding: 12px 14px; border-radius: 12px;
   background: var(--panel); border: 1px solid var(--border2); box-shadow: var(--shadow-md); }

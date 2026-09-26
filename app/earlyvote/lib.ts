@@ -152,6 +152,42 @@ export function marginOf(row: RegionRow | undefined): number | null {
   return ((r - d) / (d + r)) * 100;
 }
 
+/**
+ * Turnout intensity, for places that report ballots with no party attached.
+ *
+ * Twelve states send every ballot as Unspecified, so the two-party margin has
+ * nothing to work with and the whole map used to go flat grey. Those places
+ * are shaded green by their raw ballot count instead. Counts inside one state
+ * run from a few dozen to tens of thousands, so the scale is logarithmic: on a
+ * linear scale the largest county would be the only dark shape on the map.
+ */
+export type VolumeScale = { min: number; max: number; t: (v: number) => number };
+
+export function volumeScale(values: number[]): VolumeScale | null {
+  const v = values.filter((x) => x > 0);
+  if (!v.length) return null;
+  const min = Math.min(...v), max = Math.max(...v);
+  const lo = Math.log10(min), hi = Math.log10(max);
+  const span = hi - lo;
+  return {
+    min, max,
+    t: (x: number) => (x <= 0 ? 0 : span <= 0 ? 1 : Math.max(0, Math.min(1, (Math.log10(x) - lo) / span))),
+  };
+}
+
+/** Green sequential fill, 14% to 90% of the turnout tone over the map ground. */
+export function turnoutFill(t: number): string {
+  const pct = (14 + t * 76).toFixed(0);
+  return `color-mix(in srgb, var(--ev-turnout) ${pct}%, var(--ev-mid))`;
+}
+
+/** 75205 reads as 75K, 1150 as 1.2K, 50 as 50. */
+export function compact(n: number): string {
+  if (n >= 1e6) return `${(n / 1e6).toFixed(n >= 1e7 ? 0 : 1)}M`;
+  if (n >= 1e3) return `${(n / 1e3).toFixed(n >= 1e4 ? 0 : 1)}K`;
+  return String(Math.round(n));
+}
+
 /** A diverging fill for that margin, drawn from the site's party tokens so it
  *  moves with the theme. Null margins get the neutral "no party data" tone. */
 export function fillFor(margin: number | null): string {
