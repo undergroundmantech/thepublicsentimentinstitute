@@ -619,3 +619,57 @@ entry and falls through to unrated, weight 0.60, which is *higher* than the C+ 0
 scorecard assigns "siena/nyt". That name is how the Maine, New Hampshire and Michigan
 Senate files record their September Siena polls, so the gap favours those polls slightly
 in three live races. Not changed here, since only Iowa was asked for.
+
+---
+
+# All three forecasts re-run on the Gallup D+10 anchor
+
+House, Senate and governor, every race, at `AS_OF=2026-09-25`, with `M2_ANCHOR=gallup`.
+
+## What the switch does
+
+The census leg, the TPSI respondent model on ACS composition, is anchored again to Gallup
+party identification of 49 D to 39 R, converted to a likely voter two party share. That is
+the original Senate Mode specification, and it is the setting that was removed on 22
+September when the census leg moved onto the TPSI Meridian ballot. The approval leg and the
+polling leg keep the Meridian anchor, as they had before the 22nd. The House imports the
+same module, so one switch sets all three.
+
+## Results
+
+| | before | with Gallup |
+|---|---|---|
+| House, Democratic majority | 85.25% | **89.45%** |
+| House, mean seats | 240.1 | **244.8** |
+| House, median seats | 237 | **242** |
+| Senate, control counting Osborn | 76% | **77%** |
+| Senate, mean seats | 52.7 | 53.1 |
+| Governors, control | 86% | **87%** |
+
+Races moved toward Democrats by 1.2 points on average in the House and 0.8 in the Senate
+and governor races. Two House seats change hands, Florida 22nd and Texas 23rd, both to the
+Democrat. No Senate or governor race changes leader. The closest ones moved most in
+probability: Nebraska from 41 to 46% Osborn, Kansas 33 to 38% Hamilton, South Carolina 34
+to 37% Andrews, Ohio governor 62 to 66% Acton, Georgia governor 65 to 69% Bottoms.
+
+## Pipeline fixes made along the way
+
+- **The House county layer was never refreshed.** `update_house3.py` rewrote districts but
+  not counties, so every House county map carried whatever the page was first built with.
+  It now rewrites all 3,141 counties from the run.
+- **The site's House was being built from a stale run.** `HOUSE_SIM` pointed at an older
+  House simulation and the House page data in the build source was an older extract than
+  the published page, which is why earlier builds today rewound the House and had to be
+  pinned. This build takes both from the new run, so nothing is pinned.
+- **The first attempt at the 71 Senate and governor races was killed after 15 races**, and
+  the run summary is only written at the end, so nothing was kept. They were re-run in two
+  lanes of six-race batches, each batch saving as it finishes, and merged; every race's
+  simulation file was checked as fresh.
+
+## Verification
+
+- 71 of 71 Senate and governor races and 435 of 435 House districts from the new runs.
+- No race's headline margin and win probability disagree any more, House included.
+- Zero unshaded county polygons. Independents, incumbency and the Alaska ranked choice
+  handling all carried through unchanged.
+- `sync_site_numbers.py` run: 174 values on the home page, globes, maps and ratings updated.

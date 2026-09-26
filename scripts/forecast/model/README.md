@@ -52,3 +52,9 @@ tables that no forecast run ever touched. Run this after each build, from the re
 ```
 python3 scripts/forecast/sync_site_numbers.py
 ```
+
+## 25 September, Gallup anchor
+
+Every run from this date uses `M2_ANCHOR=gallup`. Build the site with
+`HOUSE_SIM=<the current House run>` and with the House page data taken from the current
+House page, never from an older extract; both were stale before this run.
