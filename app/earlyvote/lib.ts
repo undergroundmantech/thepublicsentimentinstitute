@@ -260,7 +260,7 @@ const q = (a: number[], p: number) => {
 export function simulate(
   places: { key: string; parts: [number, number][]; votes: number }[],
   model: PartyModel, mode: "mail" | "early",
-): { byKey: Record<string, Estimate>; total: Estimate | null } {
+): { byKey: Record<string, Estimate>; total: Estimate | null; draws: { d: number[]; r: number[]; i: number[] } } {
   const nD = model.draws.length;
   const byKey: Record<string, Estimate> = {};
   const totD = new Array(nD).fill(0), totR = new Array(nD).fill(0), totI = new Array(nD).fill(0);
@@ -280,11 +280,86 @@ export function simulate(
     byKey[pl.key] = { d: sd / nD, r: sr / nD, i: si / nD, margin: ((sr - sd) / nD) * 100,
       lo: q(ms, 0.1), hi: q(ms, 0.9), votes: pl.votes };
   }
-  if (totV <= 0) return { byKey, total: null };
+  const draws = { d: totD, r: totR, i: totI };      // estimated ballots by party, per draw
+  if (totV <= 0) return { byKey, total: null, draws };
   const tm = totR.map((r, k) => ((r - totD[k]) / totV) * 100);
   const mean = (a: number[]) => a.reduce((s, x) => s + x, 0) / a.length / totV;
   return { byKey, total: { d: mean(totD), r: mean(totR), i: mean(totI),
-    margin: tm.reduce((s, x) => s + x, 0) / nD, lo: q(tm, 0.1), hi: q(tm, 0.9), votes: totV } };
+    margin: tm.reduce((s, x) => s + x, 0) / nD, lo: q(tm, 0.1), hi: q(tm, 0.9), votes: totV }, draws };
 }
 
 export const fmtMargin = (m: number) => (Math.abs(m) < 0.05 ? "EVEN" : m > 0 ? `R+${m.toFixed(1)}` : `D+${Math.abs(m).toFixed(1)}`);
+
+/* ── nationwide: reported party plus the TPSI estimate ──────────────────────
+ *
+ * One number per category for the whole country. Ballots a state reports with
+ * a party are counted as reported: Democratic, Republican, and every other
+ * label as Independent or other. Ballots reported as Unspecified are estimated.
+ * A state with no party at all is estimated from its own county counts when
+ * those have loaded, the same way the state page does, so the two agree; until
+ * then, and for the Unspecified remainder inside a party state, its counties
+ * are weighted by adults.
+ */
+
+export type Combined = {
+  total: number;
+  reported: { d: number; r: number; o: number; votes: number; states: number };
+  estimated: { votes: number; states: number; countyWeighted: number };
+  d: number; r: number; o: number;          // final ballots, reported plus mean estimate
+  margin: number; lo: number; hi: number;   // R minus D, points, 80% range from the estimate
+};
+
+export function combineNational(
+  us: CategoryPayload, counties: Record<string, CategoryPayload | null | undefined>,
+  model: PartyModel, countyNames: Record<string, string> | null, mode: "mail" | "early",
+): Combined | null {
+  const byState: Record<string, [number, number][]> = {};
+  for (const [f, [t, a]] of Object.entries(model.counties)) (byState[stateOfFips(f)] ??= []).push([t, a]);
+  const stateT = (st: string) => {
+    const p = byState[st] ?? []; const w = p.reduce((s, x) => s + x[1], 0);
+    return w > 0 ? p.reduce((s, x) => s + x[0] * x[1], 0) / w : 0.5;
+  };
+
+  let rd = 0, rr = 0, ro = 0, repStates = 0, estStates = 0, countyWeighted = 0;
+  const places: { key: string; parts: [number, number][]; votes: number }[] = [];
+  for (const [st, row] of Object.entries(us.regions)) {
+    let d = 0, r = 0, o = 0, u = 0;
+    for (const [g, b] of Object.entries(row)) {
+      const v = b?.votes ?? 0;
+      if (g === "Democratic") d += v; else if (g === "Republican") r += v;
+      else if (g === "Unspecified") u += v; else o += v;
+    }
+    if (d + r + o > 0) { rd += d; rr += r; ro += o; repStates++; }
+    if (u <= 0) continue;
+    estStates += d + r + o > 0 ? 0 : 1;
+    const cp = d + r + o > 0 ? null : counties[st];
+    if (cp && countyNames && Object.keys(cp.regions).length) {
+      const local: Record<string, string> = {};
+      for (const [f, nm] of Object.entries(countyNames)) if (stateOfFips(f) === st) local[nm] = f;
+      const parts: [number, number][] = [];
+      for (const [name, crow] of Object.entries(cp.regions)) {
+        const n = sumRow(crow); if (n <= 0) continue;
+        const f = matchCounty(name, local); const c = f ? model.counties[f] : undefined;
+        parts.push([c ? c[0] : stateT(st), n]);
+      }
+      if (parts.length) { places.push({ key: st, parts, votes: u }); countyWeighted++; continue; }
+    }
+    places.push({ key: st, parts: byState[st] ?? [], votes: u });
+  }
+
+  const sim = simulate(places, model, mode);
+  const estVotes = sim.total?.votes ?? 0;
+  const total = rd + rr + ro + estVotes;
+  if (total <= 0) return null;
+  const nD = model.draws.length;
+  const mg = sim.draws.d.map((ed, k) => ((rr + sim.draws.r[k] - rd - ed) / total) * 100);
+  const mean = (a: number[]) => a.reduce((s, x) => s + x, 0) / nD;
+  const ed = estVotes ? mean(sim.draws.d) : 0, er = estVotes ? mean(sim.draws.r) : 0, ei = estVotes ? mean(sim.draws.i) : 0;
+  return {
+    total,
+    reported: { d: rd, r: rr, o: ro, votes: rd + rr + ro, states: repStates },
+    estimated: { votes: estVotes, states: estStates, countyWeighted },
+    d: rd + ed, r: rr + er, o: ro + ei,
+    margin: mean(mg), lo: q(mg, 0.1), hi: q(mg, 0.9),
+  };
+}

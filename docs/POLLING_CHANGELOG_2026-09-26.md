@@ -93,3 +93,30 @@ own containing block, so the position was measured from that box instead of the 
 It is now rendered straight into the document body. It sits 14px beside the cursor,
 centred on it vertically, flips to the left of the cursor near the right edge and stays
 inside the window. The rank line is shortened so it no longer truncates.
+
+# Early vote: nationwide party breakdown, reported plus TPSI estimate
+
+The national early vote view now opens with one card each for Requested, Returned and
+In person. Each card gives the final estimated party breakdown for the whole country.
+
+- **Reported ballots are counted as reported.** Where a state publishes party, Democratic
+  and Republican ballots go straight in. Every other label, such as No Party Affiliation,
+  Other, Libertarian or Green, goes into Independent or other.
+- **Unspecified ballots are estimated with the TPSI model.** That covers the twelve states
+  with no party data, plus any Unspecified remainder inside a party state, such as
+  Kentucky's. Mail skew applies to requested and returned ballots, early in person skew to
+  in person ballots.
+- **A no-party state is estimated from its own county counts.** The page fetches those
+  counts, so the national figure matches what that state's page shows. Until they load, and
+  for the Unspecified remainder in party states, counties are weighted by adults.
+- **Each card shows:**
+  - the final margin, with an 80% range that comes only from the estimated share
+  - Democratic, Independent or other, and Republican ballots and shares, each with how
+    much was reported
+  - a bar with solid segments for reported ballots and hatched segments for estimated ones
+  - a count of reported and estimated ballots
+- Clicking a card switches the page to that category.
+
+Files: `combineNational` in `app/earlyvote/lib.ts`. `simulate` now also returns its
+per-draw totals, so reported and estimated ballots combine inside every draw.
+`NationalCombined` and `CombinedBar` are in `app/earlyvote/EarlyVoteDesk.tsx`.

@@ -5,8 +5,8 @@ import { createPortal } from "react-dom";
 import {
   CATEGORIES, DIMENSIONS, commas, compact, fillFor, getCapabilities, getCategory, getDemographics,
   marginOf, matchCounty, pct, STATE_NAME, stateOfFips, sumRow, toneFor, turnoutFill, volumeScale,
-  getPartyModel, modeOf, simulate, fmtMargin,
-  type Capabilities, type Estimate, type PartyModel, type Category, type CategoryPayload, type DemographicPayload,
+  getPartyModel, modeOf, simulate, fmtMargin, combineNational,
+  type Capabilities, type Combined, type Estimate, type PartyModel, type Category, type CategoryPayload, type DemographicPayload,
   type Dimension, type Geo, type RegionRow, type StateGeo,
 } from "./lib";
 
@@ -93,6 +93,81 @@ function EstBar({ e }: { e: Estimate }) {
       <i style={{ width: `${e.d * 100}%`, background: "var(--dem)" }} />
       <i style={{ width: `${e.i * 100}%`, background: "var(--muted2)" }} />
       <i style={{ width: `${e.r * 100}%`, background: "var(--gop)" }} />
+    </span>
+  );
+}
+
+/** Reported party where a state publishes it, the TPSI estimate where it does
+ *  not, summed for the whole country, one card per ballot category. */
+function NationalCombined({ combined, loaded, cat, setCat }: {
+  combined: Partial<Record<Category, Combined | null>>;
+  loaded: Partial<Record<Category, CategoryPayload | null>>;
+  cat: Category; setCat: (c: Category) => void;
+}) {
+  return (
+    <section className="ev-nat" aria-label="Nationwide party breakdown">
+      <div className="ev-nat-head">
+        <h2 className="ev-h2">Nationwide party breakdown</h2>
+        <p>
+          Reported party where a state publishes it, the TPSI estimate where it reports ballots as
+          Unspecified. Solid segments are reported, hatched segments are estimated.
+        </p>
+      </div>
+      <div className="ev-nat-grid">
+        {CATEGORIES.map((c) => {
+          const k = combined[c.key];
+          const isOn = c.key === cat;
+          const waiting = !(c.key in loaded);
+          return (
+            <button key={c.key} className={`ev-nat-card${isOn ? " on" : ""}`} onClick={() => setCat(c.key)}
+              aria-pressed={isOn}>
+              <span className="lab">{c.label}<em>{c.blurb}</em></span>
+              {k ? (
+                <>
+                  <span className="big">
+                    <b style={{ color: k.margin > 0 ? "var(--gop)" : "var(--dem)" }}>{fmtMargin(k.margin)}</b>
+                    <i>{commas(k.total)} ballots</i>
+                  </span>
+                  <span className="rng">
+                    {k.estimated.votes > 0 ? <>80% range {fmtRange(k.lo, k.hi)}</> : "all reported, no estimate needed"}
+                  </span>
+                  <CombinedBar k={k} />
+                  <span className="rows">
+                    {([["Democratic", k.d, k.reported.d, "var(--dem)"], ["Independent / other", k.o, k.reported.o, "var(--muted2)"],
+                       ["Republican", k.r, k.reported.r, "var(--gop)"]] as const).map(([g, v, rv, col]) => (
+                      <span key={g}><i style={{ background: col }} /><b>{g}</b>
+                        <span>{commas(v)}</span><u>{((v / k.total) * 100).toFixed(1)}%</u>
+                        <small>{rv > 0 ? `${commas(rv)} reported` : "all estimated"}</small></span>
+                    ))}
+                  </span>
+                  <span className="src">
+                    {commas(k.reported.votes)} reported with party in {k.reported.states} {k.reported.states === 1 ? "state" : "states"}
+                    {k.estimated.votes > 0
+                      ? <> · {commas(k.estimated.votes)} estimated{k.estimated.states ? ` across ${k.estimated.states} ${k.estimated.states === 1 ? "state" : "states"} with no party data` : ""}</>
+                      : null}
+                  </span>
+                </>
+              ) : (
+                <span className="none">{waiting ? "reading the feed…" : "Not published by any state yet."}</span>
+              )}
+            </button>
+          );
+        })}
+      </div>
+    </section>
+  );
+}
+
+function CombinedBar({ k }: { k: Combined }) {
+  const seg = (v: number) => `${(Math.max(0, v) / k.total) * 100}%`;
+  const parts = [
+    { w: k.reported.d, c: "var(--dem)", est: false }, { w: k.d - k.reported.d, c: "var(--dem)", est: true },
+    { w: k.reported.o, c: "var(--muted2)", est: false }, { w: k.o - k.reported.o, c: "var(--muted2)", est: true },
+    { w: k.r - k.reported.r, c: "var(--gop)", est: true }, { w: k.reported.r, c: "var(--gop)", est: false },
+  ];
+  return (
+    <span className="ev-bar comb" aria-hidden>
+      {parts.map((p, i) => p.w > 0 ? <i key={i} className={p.est ? "est" : undefined} style={{ width: seg(p.w), background: p.c }} /> : null)}
     </span>
   );
 }
@@ -209,6 +284,38 @@ export default function EarlyVoteDesk() {
   const [shade, setShade] = useState<"estimate" | "turnout">("estimate");
 
   useEffect(() => { getPartyModel().then(setModel); }, []);
+
+  // Nationwide combined breakdown: all three categories at once, plus the county
+  // counts of every state that reports no party, so each is estimated the same
+  // way its own state page estimates it.
+  const [natl, setNatl] = useState<Partial<Record<Category, CategoryPayload | null>>>({});
+  const [natlCounties, setNatlCounties] = useState<Partial<Record<Category, Record<string, CategoryPayload | null>>>>({});
+  useEffect(() => {
+    if (scope !== "US") return;
+    let live = true;
+    for (const c of CATEGORIES.map((x) => x.key)) {
+      getCategory("US", c).then(async (us) => {
+        if (!live) return;
+        setNatl((m) => ({ ...m, [c]: us }));
+        if (!us) return;
+        const noParty = Object.entries(us.regions)
+          .filter(([, row]) => Object.keys(row).every((g) => g === "Unspecified"))
+          .map(([st]) => st);
+        const got = await Promise.all(noParty.map((st) => getCategory(st, c).then((d) => [st, d] as const)));
+        if (live) setNatlCounties((m) => ({ ...m, [c]: Object.fromEntries(got) }));
+      });
+    }
+    return () => { live = false; };
+  }, [scope]);
+  const combined = useMemo(() => {
+    const out: Partial<Record<Category, Combined | null>> = {};
+    if (!model) return out;
+    for (const c of CATEGORIES.map((x) => x.key)) {
+      const us = natl[c];
+      out[c] = us ? combineNational(us, natlCounties[c] ?? {}, model, countyNames, modeOf(c)) : null;
+    }
+    return out;
+  }, [model, natl, natlCounties, countyNames]);
 
   // the national outline and the county name table load once
   useEffect(() => {
@@ -375,6 +482,10 @@ export default function EarlyVoteDesk() {
                 </div>
               </div>
             </section>
+
+            {national && model ? (
+              <NationalCombined combined={combined} loaded={natl} cat={cat} setCat={setCat} />
+            ) : null}
 
             {someNoParty && est?.total ? (
               <EstimatePanel e={est.total} sub={national
@@ -794,6 +905,34 @@ table.ev-table td.mg { font-style: normal; font-family: ${MONO}; font-weight: 70
   font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--purple2); }
 .ev-tip .row.tot u { min-width: 0; white-space: nowrap; }
 @media (max-width: 760px) { .ev-est-body { grid-template-columns: 1fr; } }
+
+.ev-nat { margin-top: 18px; }
+.ev-nat-head p { margin-top: 6px; max-width: 78ch; font-size: 13px; line-height: 1.55; color: var(--muted); }
+.ev-nat-grid { margin-top: 14px; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; }
+.ev-nat-card { appearance: none; text-align: left; font: inherit; color: inherit; cursor: pointer;
+  display: flex; flex-direction: column; gap: 10px; padding: 16px 18px; border-radius: 14px;
+  border: 1px solid var(--border); background: var(--panel); transition: border-color .15s ease, box-shadow .15s ease; }
+.ev-nat-card:hover { border-color: var(--border3, var(--border2)); }
+.ev-nat-card.on { border-color: var(--ink); box-shadow: var(--shadow-sm); }
+.ev-nat-card:focus-visible { outline: 2px solid var(--purple2); outline-offset: 2px; }
+.ev-nat-card .lab { display: flex; align-items: baseline; justify-content: space-between; gap: 10px;
+  font-family: ${MONO}; font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink); }
+.ev-nat-card .lab em { font-style: normal; font-weight: 600; letter-spacing: 0.06em; text-transform: none; color: var(--muted2); font-size: 11px; }
+.ev-nat-card .big { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
+.ev-nat-card .big b { font-family: ${MONO}; font-size: 30px; font-weight: 800; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
+.ev-nat-card .big i { font-style: normal; font-family: ${MONO}; font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.ev-nat-card .rng { margin-top: -6px; font-size: 12px; color: var(--muted2); }
+.ev-nat-card .rows { display: grid; gap: 6px; }
+.ev-nat-card .rows > span { display: grid; grid-template-columns: 10px 1fr auto 46px; column-gap: 8px; align-items: center; font-size: 12.5px; }
+.ev-nat-card .rows i { width: 10px; height: 10px; border-radius: 3px; }
+.ev-nat-card .rows b { font-weight: 600; color: var(--muted); }
+.ev-nat-card .rows span > span { font-family: ${MONO}; font-weight: 700; font-variant-numeric: tabular-nums; color: var(--ink); }
+.ev-nat-card .rows u { text-decoration: none; text-align: right; font-family: ${MONO}; font-size: 11px; color: var(--muted2); }
+.ev-nat-card .rows small { grid-column: 2 / -1; margin-top: -3px; font-size: 11px; color: var(--muted3); }
+.ev-nat-card .src { padding-top: 8px; border-top: 1px solid var(--border); font-size: 11.5px; line-height: 1.5; color: var(--muted2); }
+.ev-nat-card .none { font-size: 13px; color: var(--muted2); }
+.ev-bar.comb { height: 12px; }
+.ev-bar i.est { background-image: repeating-linear-gradient(45deg, transparent 0 3px, rgba(255,255,255,0.45) 3px 5px) !important; }
 
 .ev-note { margin-top: 30px; max-width: 78ch; font-size: 12.5px; line-height: 1.65; color: var(--muted2); }
 .ev-note a { color: var(--accent-link); }
