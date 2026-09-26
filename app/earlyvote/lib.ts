@@ -220,19 +220,22 @@ export type PartyModel = {
 export const getPartyModel = () =>
   fetch("/earlyvote-party-model.json").then((r) => (r.ok ? (r.json() as Promise<PartyModel>) : null)).catch(() => null);
 
-/** requested and returned are mail ballots; in person uses the early skew */
-export const modeOf = (c: Category): "mail" | "early" => (c === "inperson" ? "early" : "mail");
+/** requested ballots use the mail skew; returned ballots use it and then the
+ *  party return rates; in person uses the early skew */
+export type Mode = "mail" | "returned" | "early";
+export const modeOf = (c: Category): Mode => (c === "inperson" ? "early" : c === "returned" ? "returned" : "mail");
 
 /** Democratic, Republican and Independent shares for one county under one draw. */
-export function partyShares(t: number, v: number[], mode: "mail" | "early"): [number, number, number] {
+export function partyShares(t: number, v: number[], mode: Mode): [number, number, number] {
   const [swing, I, rD, rR, rI, mR, mRs, mI, mIs, eR, eRs, eI, eIs, xm] = v;
   // the early vote skew narrows as a county gets redder
   const x = Math.log(t / (1 - t)) - xm;
   const tt = Math.min(0.98, Math.max(0.02, t + swing));
   const R = Math.min(1 - I - 0.01, Math.max(0.01, (tt - rD * (1 - I) - rI * I) / (rR - rD)));
   const D = 1 - I - R;
-  const sR = mode === "mail" ? mR + mRs * x : eR + eRs * x;
-  const sI = mode === "mail" ? mI + mIs * x : eI + eIs * x;
+  const mailish = mode !== "early";
+  const sR = mailish ? mR + mRs * x : eR + eRs * x;
+  const sI = mailish ? mI + mIs * x : eI + eIs * x;
   const eRr = (R / D) * Math.exp(sR), eIi = (I / D) * Math.exp(sI);
   const z = 1 + eRr + eIi;
   return [1 / z, eRr / z, eIi / z];
@@ -257,9 +260,11 @@ const q = (a: number[], p: number) => {
  * on the national map is its counties weighted by adults, then scaled to the
  * state's reported ballots.
  */
+export type Part = [t: number, n: number, rho?: number];
+
 export function simulate(
-  places: { key: string; parts: [number, number][]; votes: number }[],
-  model: PartyModel, mode: "mail" | "early",
+  places: { key: string; parts: Part[]; votes: number }[],
+  model: PartyModel, mode: Mode, tilt?: ReturnTilt | null,
 ): { byKey: Record<string, Estimate>; total: Estimate | null; draws: { d: number[]; r: number[]; i: number[] } } {
   const nD = model.draws.length;
   const byKey: Record<string, Estimate> = {};
@@ -271,7 +276,11 @@ export function simulate(
     const ms: number[] = []; let sd = 0, sr = 0, si = 0;
     model.draws.forEach((v, k) => {
       let d = 0, r = 0, i = 0;
-      for (const [t, n] of pl.parts) { const s = partyShares(t, v, mode); d += s[0] * n; r += s[1] * n; i += s[2] * n; }
+      for (const [t, n, rho] of pl.parts) {
+        let s = partyShares(t, v, mode);
+        if (mode === "returned") s = returnedMix(s, rho, tilt ? tilt.draws[k] : [v[14] ?? 0, v[15] ?? 0]);
+        d += s[0] * n; r += s[1] * n; i += s[2] * n;
+      }
       d /= w; r /= w; i /= w;
       sd += d; sr += r; si += i; ms.push((r - d) * 100);
       totD[k] += d * pl.votes; totR[k] += r * pl.votes; totI[k] += i * pl.votes;
@@ -311,7 +320,10 @@ export type Combined = {
 
 export function combineNational(
   us: CategoryPayload, counties: Record<string, CategoryPayload | null | undefined>,
-  model: PartyModel, countyNames: Record<string, string> | null, mode: "mail" | "early",
+  model: PartyModel, countyNames: Record<string, string> | null, mode: Mode,
+  // for returned ballots: the same places' requests, and the party return offsets
+  req?: { us: CategoryPayload | null | undefined; counties: Record<string, CategoryPayload | null | undefined> },
+  tilt?: ReturnTilt | null,
 ): Combined | null {
   const byState: Record<string, [number, number][]> = {};
   for (const [f, [t, a]] of Object.entries(model.counties)) (byState[stateOfFips(f)] ??= []).push([t, a]);
@@ -321,7 +333,7 @@ export function combineNational(
   };
 
   let rd = 0, rr = 0, ro = 0, repStates = 0, estStates = 0, countyWeighted = 0;
-  const places: { key: string; parts: [number, number][]; votes: number }[] = [];
+  const places: { key: string; parts: Part[]; votes: number }[] = [];
   for (const [st, row] of Object.entries(us.regions)) {
     let d = 0, r = 0, o = 0, u = 0;
     for (const [g, b] of Object.entries(row)) {
@@ -333,21 +345,26 @@ export function combineNational(
     if (u <= 0) continue;
     estStates += d + r + o > 0 ? 0 : 1;
     const cp = d + r + o > 0 ? null : counties[st];
+    // a returned ballot's place return rate: its returns over its requests
+    const reqU = req ? splitRow(req.us?.regions[st]).u : 0;
+    const stateRho = mode === "returned" && reqU > 0 ? u / reqU : undefined;
     if (cp && countyNames && Object.keys(cp.regions).length) {
       const local: Record<string, string> = {};
       for (const [f, nm] of Object.entries(countyNames)) if (stateOfFips(f) === st) local[nm] = f;
-      const parts: [number, number][] = [];
+      const reqC = req?.counties[st]?.regions;
+      const parts: Part[] = [];
       for (const [name, crow] of Object.entries(cp.regions)) {
         const n = sumRow(crow); if (n <= 0) continue;
         const f = matchCounty(name, local); const c = f ? model.counties[f] : undefined;
-        parts.push([c ? c[0] : stateT(st), n]);
+        const q = reqC ? sumRow(reqC[name]) : 0;
+        parts.push([c ? c[0] : stateT(st), n, mode === "returned" ? (q > 0 ? n / q : stateRho) : undefined]);
       }
       if (parts.length) { places.push({ key: st, parts, votes: u }); countyWeighted++; continue; }
     }
-    places.push({ key: st, parts: byState[st] ?? [], votes: u });
+    places.push({ key: st, parts: (byState[st] ?? []).map(([t, a]) => [t, a, stateRho] as Part), votes: u });
   }
 
-  const sim = simulate(places, model, mode);
+  const sim = simulate(places, model, mode, tilt);
   const estVotes = sim.total?.votes ?? 0;
   const total = rd + rr + ro + estVotes;
   if (total <= 0) return null;
@@ -362,4 +379,136 @@ export function combineNational(
     d: rd + ed, r: rr + er, o: ro + ei,
     margin: mean(mg), lo: q(mg, 0.1), hi: q(mg, 0.9),
   };
+}
+
+/* ── returned ballots: party drop off ─────────────────────────────────────────
+ *
+ * Returned ballots are not a copy of requested ones. Parties send ballots back
+ * at different rates, and the gap is widest early, when only the keenest
+ * voters have returned. Each party's return probability is modelled in log
+ * odds as a place level plus a party offset:
+ *
+ *     P(return | party) = logistic(a + b_party),   b_Democratic = 0
+ *
+ * The offsets come from states that publish party for both requests and
+ * returns, measured live from the feed, so they move as returns come in. The
+ * level a is solved per county so the county's estimated requesters return
+ * exactly as many ballots as it reports. Early in the season, when a county
+ * has returned 1% of its requests, the offsets bite hard; as returns approach
+ * requests the returned mix converges back onto the requested mix.
+ */
+
+export type ReturnTilt = {
+  source: "live" | "prior";
+  states: string[];                 // party states the offsets were measured in
+  bR: number; bO: number;           // median offsets, Republican and Independent or other vs Democratic
+  draws: [number, number][];        // one pair per simulation draw, calibration included
+  returned: number;                 // party returned ballots behind the live figure
+  // States that publish party for returns but not for requests. Their returns
+  // are the one direct check on an estimated return mix, so the estimate is
+  // shifted toward what they show, shrunk by how many ballots they hold.
+  calib: { states: string[]; shift: number; returned: number;
+    before: { st: string; actual: number; model: number }[] } | null;
+};
+
+const logit = (p: number) => Math.log(p / (1 - p));
+const sigm = (x: number) => 1 / (1 + Math.exp(-x));
+
+/** Move a requested mix [d, r, i] onto returned ballots, given the place's
+ *  overall return rate rho and party offsets [bR, bI]. With no rho, the early
+ *  season limit applies: odds scale by exp(b). */
+export function returnedMix(m: [number, number, number], rho: number | undefined, b: [number, number]): [number, number, number] {
+  const off = [0, b[0], b[1]];
+  if (rho === undefined || !isFinite(rho)) {
+    const w = m.map((x, j) => x * Math.exp(off[j])); const z = w[0] + w[1] + w[2];
+    return [w[0] / z, w[1] / z, w[2] / z];
+  }
+  const target = Math.min(0.995, Math.max(0.0005, rho));
+  let lo = -20, hi = 20;
+  for (let it = 0; it < 48; it++) {
+    const a = (lo + hi) / 2;
+    const got = m[0] * sigm(a) + m[1] * sigm(a + off[1]) + m[2] * sigm(a + off[2]);
+    if (got > target) hi = a; else lo = a;
+  }
+  const a = (lo + hi) / 2;
+  const w = [m[0] * sigm(a), m[1] * sigm(a + off[1]), m[2] * sigm(a + off[2])]; const z = w[0] + w[1] + w[2];
+  return [w[0] / z, w[1] / z, w[2] / z];
+}
+
+const splitRow = (row: RegionRow | undefined) => {
+  let d = 0, r = 0, o = 0, u = 0;
+  for (const [g, b] of Object.entries(row ?? {})) {
+    const v = b?.votes ?? 0;
+    if (g === "Democratic") d += v; else if (g === "Republican") r += v; else if (g === "Unspecified") u += v; else o += v;
+  }
+  return { d, r, o, u };
+};
+
+/** Party return offsets measured today from the feed, one pair per draw from a
+ *  bootstrap over the reporting states. Falls back to the TPSI survey prior
+ *  when fewer than two states, or under 2,000 party ballots, have come back. */
+export function returnTilt(req: CategoryPayload | null | undefined, ret: CategoryPayload | null | undefined,
+  model: PartyModel): ReturnTilt {
+  const rows: { st: string; w: number; bR: number; bO: number; n: number }[] = [];
+  for (const [st, rrow] of Object.entries(ret?.regions ?? {})) {
+    const Q = splitRow(req?.regions[st]), T = splitRow(rrow);
+    if (Q.d <= 0 || Q.r <= 0 || T.d + T.r + T.o < 50) continue;
+    const rate = (x: number, y: number) => Math.min(0.995, Math.max(0.0005, (x + 0.5) / (y + 1)));
+    const rD = rate(T.d, Q.d), rR = rate(T.r, Q.r), rO = Q.o > 0 ? rate(T.o, Q.o) : NaN;
+    rows.push({ st, w: Q.d + Q.r + Q.o, bR: logit(rR) - logit(rD), bO: isFinite(rO) ? logit(rO) - logit(rD) : NaN,
+      n: T.d + T.r + T.o });
+  }
+  const n = rows.reduce((s, x) => s + x.n, 0);
+  let seed = 20261103;                     // deterministic, so every load shows the same numbers
+  const rnd = () => { seed = (seed * 1664525 + 1013904223) >>> 0; return seed / 4294967296; };
+  const med = (a: number[]) => { const s = a.filter(isFinite).sort((x, y) => x - y); return s.length ? s[Math.floor((s.length - 1) / 2)] + (s.length % 2 ? 0 : (s[s.length / 2] - s[(s.length - 1) >> 1]) / 2) : 0; };
+
+  let draws: [number, number][], source: "live" | "prior", bR: number, bO: number;
+  if (rows.length < 2 || n < 2000) {
+    draws = model.draws.map((v) => [v[14] ?? 0, v[15] ?? 0] as [number, number]);
+    source = "prior";
+    bR = draws.reduce((s, x) => s + x[0], 0) / draws.length; bO = draws.reduce((s, x) => s + x[1], 0) / draws.length;
+  } else {
+    // An unmeasured state's offset is treated as one more draw from the spread
+    // of measured states, each state counted once. Pooling by volume would let
+    // Pennsylvania, whose Republicans return far slower than anyone's, decide
+    // the answer for every other state.
+    const bOs = rows.map((x) => x.bO).filter(isFinite);
+    draws = model.draws.map(() => {
+      const a = rows[Math.floor(rnd() * rows.length)];
+      const o = isFinite(a.bO) ? a.bO : bOs.length ? bOs[Math.floor(rnd() * bOs.length)] : 0;
+      return [a.bR, o] as [number, number];
+    });
+    source = "live"; bR = med(rows.map((x) => x.bR)); bO = med(bOs);
+  }
+
+  // live calibration against states with party on returns but not requests
+  const byState: Record<string, [number, number][]> = {};
+  for (const [f, [tt, a]] of Object.entries(model.counties)) (byState[stateOfFips(f)] ??= []).push([tt, a]);
+  const cal: { st: string; ret: number; rho: number; actual: number }[] = [];
+  for (const [st, rrow] of Object.entries(ret?.regions ?? {})) {
+    const Q = splitRow(req?.regions[st]), T = splitRow(rrow);
+    if (Q.d + Q.r + Q.o > 0 || Q.u <= 0 || T.d <= 0 || T.r <= 0 || T.d + T.r < 200 || !byState[st]) continue;
+    cal.push({ st, ret: T.d + T.r + T.o, rho: (T.d + T.r + T.o + T.u) / Q.u, actual: T.r / (T.d + T.r) });
+  }
+  let calib: ReturnTilt["calib"] = null;
+  if (cal.length) {
+    const twoParty = (st: string, rho: number, v: number[], b: [number, number]) => {
+      let d = 0, r = 0;
+      for (const [tt, a] of byState[st]) { const s = returnedMix(partyShares(tt, v, "returned"), rho, b); d += s[0] * a; r += s[1] * a; }
+      return r / (d + r);
+    };
+    const N = cal.reduce((s, c) => s + c.ret, 0);
+    const shrink = N / (N + 2000);
+    const gaps = model.draws.map((v, k) => cal.map((c) => logit(c.actual) - logit(twoParty(c.st, c.rho, v, draws[k]))));
+    draws = draws.map((b, k) => {
+      const g = gaps[k]; const pick = cal.map(() => g[Math.floor(rnd() * g.length)]);
+      return [b[0] + shrink * (pick.reduce((s, x) => s + x, 0) / pick.length), b[1]] as [number, number];
+    });
+    const meanGap = gaps.reduce((s, g) => s + g.reduce((a, x) => a + x, 0) / g.length, 0) / gaps.length;
+    const p = model.point;
+    calib = { states: cal.map((c) => c.st).sort(), shift: shrink * meanGap, returned: N,
+      before: cal.map((c) => ({ st: c.st, actual: c.actual * 100, model: twoParty(c.st, c.rho, p, [bR, bO]) * 100 })) };
+  }
+  return { source, states: rows.map((x) => x.st).sort(), bR, bO, draws, returned: n, calib };
 }

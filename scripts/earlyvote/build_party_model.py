@@ -5,7 +5,7 @@ Twelve states send every early ballot as Unspecified. This script estimates what
 share of those ballots come from Democrats, Republicans and Independents, and the
 Early Vote page applies the estimate to the live county counts in the browser.
 
-The respondent file never leaves this machine. The page receives only fourteen
+The respondent file never leaves this machine. The page receives only sixteen
 numbers per simulation draw plus public county figures.
 
 How the estimate is built
@@ -131,13 +131,22 @@ def params(s):
         return lr(pm) - lr(pall), lr(pe) - lr(pall)
     (m0, e0), (m1, e1) = skew(0.0), skew(1.0)
     ms, es = m1 - m0, e1 - e0
+    # Return prior: how much less likely a Republican or Independent mail voter is
+    # to send the ballot back than a Democratic one, in log odds, from the mean
+    # turnout propensity of TPSI mail voters in each party. The page uses this
+    # only when too few party states have posted returns to measure it live.
+    lg = lambda v: np.log(v / (1 - v))
+    mp = p[mail == 1]
+    prop = {nm: np.clip(mp.turnout_propensity[mp.party_id == nm].mean(), 0.05, 0.99)
+            for nm in ("Democrat", "Republican", "Independent")}
+    retR, retI = lg(prop["Republican"]) - lg(prop["Democrat"]), lg(prop["Independent"]) - lg(prop["Democrat"])
     # order matches paramKeys in the output and partyShares in app/earlyvote/lib.ts
     return [swing, i_share, rate["rD"], rate["rR"], rate["rI"],
-            m0[0], ms[0], m0[1], ms[1], e0[0], es[0], e0[1], es[1], xm]
+            m0[0], ms[0], m0[1], ms[1], e0[0], es[0], e0[1], es[1], xm, retR, retI]
 
 
 def shares(t, v):
-    swing, I, rD, rR, rI, mR, mRs, mI, mIs, eR, eRs, eI, eIs, xm = v
+    swing, I, rD, rR, rI, mR, mRs, mI, mIs, eR, eRs, eI, eIs, xm = v[:14]
     x = np.log(t / (1 - t)) - xm
     mR, mI = mR + mRs * x, mI + mIs * x
     t = np.clip(t + swing, 0.02, 0.98)
@@ -174,7 +183,8 @@ out = {
         "respondents": int(n),
         "draws": DRAWS,
         "paramKeys": ["swing", "iShare", "rD", "rR", "rI", "mailR", "mailRslope", "mailI", "mailIslope",
-                      "earlyR", "earlyRslope", "earlyI", "earlyIslope", "leanCenter"],
+                      "earlyR", "earlyRslope", "earlyI", "earlyIslope", "leanCenter",
+                      "returnPriorR", "returnPriorI"],
         "check": check,
     },
     "point": [round(float(x), 5) for x in point],

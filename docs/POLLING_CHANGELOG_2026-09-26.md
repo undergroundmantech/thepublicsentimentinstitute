@@ -120,3 +120,64 @@ In person. Each card gives the final estimated party breakdown for the whole cou
 Files: `combineNational` in `app/earlyvote/lib.ts`. `simulate` now also returns its
 per-draw totals, so reported and estimated ballots combine inside every draw.
 `NationalCombined` and `CombinedBar` are in `app/earlyvote/EarlyVoteDesk.tsx`.
+
+# Early vote: returned ballots modelled with party drop off
+
+Returned ballots used to get the same estimated party mix as requested ones. They now get
+their own, because parties send ballots back at different rates.
+
+## The model
+
+Each requester's chance of having returned a ballot is logistic(a + b_party), with the
+Democratic offset fixed at 0.
+
+- **The level a is solved per county.** The county's estimated requesters then return
+  exactly the ballots it reports, so each county's own return rate is used. Early, when a
+  county has returned a few percent of its requests, the party gap bites hard. As returns
+  approach requests, the returned mix converges back onto the requested mix.
+- **The offsets b are measured live from the feed.** They come from every state that
+  publishes party for both requests and returns: Florida, Kentucky, North Carolina, New
+  Jersey, Oklahoma and Pennsylvania on the 25 September feed. The typical state has
+  Republican requesters returning at 0.74 times the Democratic odds.
+- **Each simulation takes one measured state's offsets.** A volume-weighted average would
+  let Pennsylvania decide the answer for every other state: its Republicans return at 0.40
+  times the Democratic odds, while everyone else sits near 0.75.
+- **Fallback.** When fewer than two states, or under 2,000 party ballots, have come back,
+  the TPSI survey stands in. The prior is built from mail voters' turnout propensity by
+  party and added to the model file.
+
+## Live calibration
+
+Idaho and Maryland publish party for returns but not for requests. They are the one direct
+check on an estimated return mix, and on 25 September the uncalibrated model was too
+Democratic in both:
+
+| State | Model, R share of two party returns | Reported |
+|---|---|---|
+| Idaho | 60.9% | 65.5% |
+| Maryland | 13.9% | 20.9% |
+
+Estimated returns everywhere are shifted by the average gap in log odds, shrunk by
+N / (N + 2,000), where N is those states' returned party ballots. Today that is 0.29
+toward Republicans. The calibration updates itself as those states post more returns, and
+any state that starts publishing party on returns only joins it automatically.
+
+Held-out test on the 25 September feed: calibrating on Maryland alone moved Idaho from
+59.9% to 66.9% Republican, against 65.5% reported. Calibrating on Idaho alone barely moved
+Maryland, because Idaho's 988 ballots are shrunk hard.
+
+## Where it shows
+
+- The state page for a no-party state, on Returned, now differs from Requested. In the test
+  data, Virginia requested reads D+11.6 and returned D+13.1.
+- The nationwide Returned card uses the same model and says where its return rates come from.
+- "How this is estimated" on Returned explains the drop off, names the states measured,
+  and prints the calibration gap.
+
+Files:
+
+- `returnTilt` and `returnedMix` in `app/earlyvote/lib.ts`
+- the `returned` mode in `simulate` and `combineNational`
+- `ReturnNote` in `app/earlyvote/EarlyVoteDesk.tsx`
+- the return prior in `scripts/earlyvote/build_party_model.py`, which rebuilds
+  `public/earlyvote-party-model.json`

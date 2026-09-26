@@ -5,8 +5,8 @@ import { createPortal } from "react-dom";
 import {
   CATEGORIES, DIMENSIONS, commas, compact, fillFor, getCapabilities, getCategory, getDemographics,
   marginOf, matchCounty, pct, STATE_NAME, stateOfFips, sumRow, toneFor, turnoutFill, volumeScale,
-  getPartyModel, modeOf, simulate, fmtMargin, combineNational,
-  type Capabilities, type Combined, type Estimate, type PartyModel, type Category, type CategoryPayload, type DemographicPayload,
+  getPartyModel, modeOf, simulate, fmtMargin, combineNational, returnTilt,
+  type Capabilities, type Combined, type Estimate, type Mode, type Part, type PartyModel, type ReturnTilt, type Category, type CategoryPayload, type DemographicPayload,
   type Dimension, type Geo, type RegionRow, type StateGeo,
 } from "./lib";
 
@@ -99,8 +99,8 @@ function EstBar({ e }: { e: Estimate }) {
 
 /** Reported party where a state publishes it, the TPSI estimate where it does
  *  not, summed for the whole country, one card per ballot category. */
-function NationalCombined({ combined, loaded, cat, setCat }: {
-  combined: Partial<Record<Category, Combined | null>>;
+function NationalCombined({ combined, loaded, cat, setCat, tilt }: {
+  combined: Partial<Record<Category, Combined | null>>; tilt: ReturnTilt | null;
   loaded: Partial<Record<Category, CategoryPayload | null>>;
   cat: Category; setCat: (c: Category) => void;
 }) {
@@ -140,6 +140,15 @@ function NationalCombined({ combined, loaded, cat, setCat }: {
                         <small>{rv > 0 ? `${commas(rv)} reported` : "all estimated"}</small></span>
                     ))}
                   </span>
+                  {c.key === "returned" && tilt && k.estimated.votes > 0 ? (
+                    <span className="src tilt">
+                      Estimated returns apply party return rates {tilt.source === "live"
+                        ? `measured today in ${tilt.states.length} party states`
+                        : "from the TPSI survey, until enough party states post returns"}
+                      {tilt.calib ? `, calibrated live against ${tilt.calib.states.map((s) => STATE_NAME[s] ?? s).join(" and ")}` : ""}, so they
+                      differ from the request mix.
+                    </span>
+                  ) : null}
                   <span className="src">
                     {commas(k.reported.votes)} reported with party in {k.reported.states} {k.reported.states === 1 ? "state" : "states"}
                     {k.estimated.votes > 0
@@ -172,8 +181,44 @@ function CombinedBar({ k }: { k: Combined }) {
   );
 }
 
-function EstimatePanel({ e, sub, mode, model, shade, setShade }: {
-  e: Estimate; sub: string; mode: "mail" | "early"; model: PartyModel;
+/** Plain words for the party return offsets behind the returned estimate. */
+function ReturnNote({ tilt }: { tilt: ReturnTilt }) {
+  const x = (b: number) => Math.exp(b).toFixed(2);
+  const join = (a: string[]) => { const n = a.map((s) => STATE_NAME[s] ?? s); return n.length > 1 ? `${n.slice(0, -1).join(", ")} and ${n[n.length - 1]}` : n[0]; };
+  return (
+    <>
+      <p>
+        Returned ballots are not a copy of requests, because parties send ballots back at different rates.
+        Each requester&apos;s chance of having returned a ballot is modelled per party, with the overall level set so
+        every county returns exactly the ballots it reports. The party gap is widest early in the season and fades
+        as returns catch up with requests.{" "}
+        {tilt.source === "live"
+          ? <>Party return rates are measured today in {join(tilt.states)}, from {commas(tilt.returned)} returned
+              ballots with party. The typical state has Republican requesters returning at {x(tilt.bR)} times the
+              Democratic odds, but states differ a lot, so each simulation takes one measured state&apos;s gap rather
+              than an average that the biggest state would dominate.</>
+          : <>Too few party states have posted returns to measure this live yet, so the TPSI survey stands in:
+              Republican mail voters complete at {x(tilt.bR)} times the Democratic odds, Independents at {x(tilt.bO)} times.</>}
+      </p>
+      {tilt.calib ? (
+        <p>
+          {join(tilt.calib.states)} {tilt.calib.states.length === 1 ? "publishes" : "publish"} party for returns
+          but not for requests, the one direct check on an estimated return mix. Before calibration the model read{" "}
+          {tilt.calib.before.map((b, i) => (
+            <span key={b.st}>{i ? "; " : ""}{STATE_NAME[b.st] ?? b.st} at {b.model.toFixed(1)}% Republican of the two party
+              returns against {b.actual.toFixed(1)}% reported</span>
+          ))}. Estimated returns everywhere are shifted {tilt.calib.shift >= 0 ? "toward Republicans" : "toward Democrats"} by{" "}
+          {Math.abs(tilt.calib.shift).toFixed(2)} in log odds to close that gap, scaled down by how few ballots those
+          states hold so far, {commas(tilt.calib.returned)}. In a held out test on the 25 September feed, calibrating on
+          Maryland alone moved Idaho from 59.9% to 66.9% Republican, against 65.5% reported.
+        </p>
+      ) : null}
+    </>
+  );
+}
+
+function EstimatePanel({ e, sub, mode, model, tilt, shade, setShade }: {
+  e: Estimate; sub: string; mode: Mode; model: PartyModel; tilt: ReturnTilt | null;
   shade: "estimate" | "turnout"; setShade: (s: "estimate" | "turnout") => void;
 }) {
   const [open, setOpen] = useState(false);
@@ -223,11 +268,12 @@ function EstimatePanel({ e, sub, mode, model, shade, setShade }: {
             measures inside its own sample from 2024 recall to the 2026 generic ballot. TPSI likely voters
             then set the mix: the Independent share, and how often Democrats, Republicans and Independents
             voted Trump, which together fix the Democratic and Republican share that reproduces the
-            county&apos;s lean. Last comes the {mode === "mail" ? "mail" : "early in person"} skew: at the same local lean,
-            TPSI respondents who plan to vote {mode === "mail" ? "by mail" : "early in person"} lean
-            {mode === "mail" ? " clearly" : " slightly"} more Democratic than the electorate as a whole, and
+            county&apos;s lean. Then comes the {mode !== "early" ? "mail" : "early in person"} skew: at the same local lean,
+            TPSI respondents who plan to vote {mode !== "early" ? "by mail" : "early in person"} lean
+            {mode !== "early" ? " clearly" : " slightly"} more Democratic than the electorate as a whole, and
             the gap is widest in Democratic counties and narrows as counties get redder.
           </p>
+          {mode === "returned" && tilt ? <ReturnNote tilt={tilt} /> : null}
           <p>
             All of that is refit on {model.meta.draws} bootstrap resamples of {commas(model.meta.respondents)} TPSI
             likely voters, and every resample is run against today&apos;s county counts. The range above is
@@ -290,32 +336,52 @@ export default function EarlyVoteDesk() {
   // way its own state page estimates it.
   const [natl, setNatl] = useState<Partial<Record<Category, CategoryPayload | null>>>({});
   const [natlCounties, setNatlCounties] = useState<Partial<Record<Category, Record<string, CategoryPayload | null>>>>({});
+  // The national payloads load once and on every view, because the returned
+  // estimate needs them everywhere: party return rates are measured from the
+  // states that publish party for both requests and returns.
+  useEffect(() => {
+    let live = true;
+    for (const c of CATEGORIES.map((x) => x.key)) getCategory("US", c).then((us) => { if (live) setNatl((m) => ({ ...m, [c]: us })); });
+    return () => { live = false; };
+  }, []);
+  // county counts of the no-party states, for the national cards only
   useEffect(() => {
     if (scope !== "US") return;
     let live = true;
     for (const c of CATEGORIES.map((x) => x.key)) {
-      getCategory("US", c).then(async (us) => {
-        if (!live) return;
-        setNatl((m) => ({ ...m, [c]: us }));
-        if (!us) return;
-        const noParty = Object.entries(us.regions)
-          .filter(([, row]) => Object.keys(row).every((g) => g === "Unspecified"))
-          .map(([st]) => st);
-        const got = await Promise.all(noParty.map((st) => getCategory(st, c).then((d) => [st, d] as const)));
-        if (live) setNatlCounties((m) => ({ ...m, [c]: Object.fromEntries(got) }));
-      });
+      const us = natl[c];
+      if (!us || natlCounties[c]) continue;
+      const noParty = Object.entries(us.regions)
+        .filter(([, row]) => Object.keys(row).every((g) => g === "Unspecified"))
+        .map(([st]) => st);
+      Promise.all(noParty.map((st) => getCategory(st, c).then((d) => [st, d] as const)))
+        .then((got) => { if (live) setNatlCounties((m) => ({ ...m, [c]: Object.fromEntries(got) })); });
     }
     return () => { live = false; };
-  }, [scope]);
+  }, [scope, natl, natlCounties]);
+  const tilt: ReturnTilt | null = useMemo(
+    () => (model ? returnTilt(natl.requested, natl.returned, model) : null), [model, natl]);
   const combined = useMemo(() => {
     const out: Partial<Record<Category, Combined | null>> = {};
     if (!model) return out;
     for (const c of CATEGORIES.map((x) => x.key)) {
       const us = natl[c];
-      out[c] = us ? combineNational(us, natlCounties[c] ?? {}, model, countyNames, modeOf(c)) : null;
+      out[c] = us ? combineNational(us, natlCounties[c] ?? {}, model, countyNames, modeOf(c),
+        c === "returned" ? { us: natl.requested, counties: natlCounties.requested ?? {} } : undefined, tilt) : null;
     }
     return out;
-  }, [model, natl, natlCounties, countyNames]);
+  }, [model, natl, natlCounties, countyNames, tilt]);
+
+  // an open state's own requests, so each county's returned ballots can be read
+  // against the ballots it sent out
+  const [reqState, setReqState] = useState<CategoryPayload | null>(null);
+  useEffect(() => {
+    setReqState(null);
+    if (scope === "US" || cat !== "returned") return;
+    let live = true;
+    getCategory(scope, "requested").then((d) => { if (live) setReqState(d); });
+    return () => { live = false; };
+  }, [scope, cat]);
 
   // the national outline and the county name table load once
   useEffect(() => {
@@ -392,14 +458,21 @@ export default function EarlyVoteDesk() {
     if (!model || !noPartyRows.length) return null;
     const byState: Record<string, [number, number][]> = {};
     for (const [f, [t, a]] of Object.entries(model.counties)) (byState[stateOfFips(f)] ??= []).push([t, a]);
+    const ret = cat === "returned";
+    // return rate of a place: its returned ballots over the ballots it sent out
+    const reqOf = (name: string) => (scope === "US" ? sumRow(natl.requested?.regions[name]) : sumRow(reqState?.regions[name]));
+    const reqAll = scope === "US" ? 0 : sumRow(reqState?.statewide_total);
+    const stateRho = ret && reqAll > 0 ? total / reqAll : undefined;
     const places = noPartyRows.map(({ name, n }) => {
-      if (scope === "US") return { key: name, parts: byState[name] ?? [], votes: n };
+      const q = ret ? reqOf(name) : 0;
+      const rho = ret ? (q > 0 ? n / q : stateRho) : undefined;
+      if (scope === "US") return { key: name, parts: (byState[name] ?? []).map(([t, a]) => [t, a, rho] as Part), votes: n };
       const f = fipsOf[name];
       const c = f ? model.counties[f] : undefined;
-      return { key: name, parts: c ? [[c[0], 1] as [number, number]] : (byState[scope] ?? []), votes: n };
+      return { key: name, parts: c ? [[c[0], 1, rho] as Part] : (byState[scope] ?? []).map(([t, a]) => [t, a, rho] as Part), votes: n };
     });
-    return simulate(places, model, modeOf(cat));
-  }, [model, noPartyRows, fipsOf, scope, cat]);
+    return simulate(places, model, modeOf(cat), tilt);
+  }, [model, noPartyRows, fipsOf, scope, cat, natl, reqState, total, tilt]);
   const showEst = shade === "estimate" && !!est?.total;
 
   const fillRow = (key: string, row: RegionRow) => {
@@ -484,7 +557,7 @@ export default function EarlyVoteDesk() {
             </section>
 
             {national && model ? (
-              <NationalCombined combined={combined} loaded={natl} cat={cat} setCat={setCat} />
+              <NationalCombined combined={combined} loaded={natl} cat={cat} setCat={setCat} tilt={tilt} />
             ) : null}
 
             {someNoParty && est?.total ? (
@@ -492,7 +565,7 @@ export default function EarlyVoteDesk() {
                 ? `Across the ${noPartyRows.length} ${noPartyRows.length === 1 ? "state that reports" : "states that report"} every ballot as Unspecified.`
                 : allNoParty ? `${STATE_NAME[scope] ?? scope} reports every ballot as Unspecified.`
                 : `Across the ${noPartyRows.length} ${noPartyRows.length === 1 ? "county that reports" : "counties that report"} every ballot as Unspecified.`}
-                mode={modeOf(cat)} model={model!} shade={shade} setShade={setShade} />
+                mode={modeOf(cat)} model={model!} tilt={tilt} shade={shade} setShade={setShade} />
             ) : null}
 
             {/* the chosen breakdown, when it is not the party columns already shown */}
@@ -930,6 +1003,7 @@ table.ev-table td.mg { font-style: normal; font-family: ${MONO}; font-weight: 70
 .ev-nat-card .rows u { text-decoration: none; text-align: right; font-family: ${MONO}; font-size: 11px; color: var(--muted2); }
 .ev-nat-card .rows small { grid-column: 2 / -1; margin-top: -3px; font-size: 11px; color: var(--muted3); }
 .ev-nat-card .src { padding-top: 8px; border-top: 1px solid var(--border); font-size: 11.5px; line-height: 1.5; color: var(--muted2); }
+.ev-nat-card .src.tilt { border-top: 0; padding-top: 0; margin-top: -4px; color: var(--muted); }
 .ev-nat-card .none { font-size: 13px; color: var(--muted2); }
 .ev-bar.comb { height: 12px; }
 .ev-bar i.est { background-image: repeating-linear-gradient(45deg, transparent 0 3px, rgba(255,255,255,0.45) 3px 5px) !important; }
