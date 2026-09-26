@@ -181,3 +181,41 @@ Files:
 - `ReturnNote` in `app/earlyvote/EarlyVoteDesk.tsx`
 - the return prior in `scripts/earlyvote/build_party_model.py`, which rebuilds
   `public/earlyvote-party-model.json`
+
+# Early vote: map rated like the electoral map
+
+The early vote map no longer shades on a continuous tint. Every county, and every state on
+the national view, gets a rating, the same way the electoral map does.
+
+- **Bands.** Early vote margins run far wider than race margins, so the cut points are
+  wider than the forecast's:
+
+  | Band | Margin |
+  |---|---|
+  | Toss-up | under 1 point |
+  | Tilt | 1 to 5 |
+  | Lean | 5 to 15 |
+  | Likely | 15 to 30 |
+  | Safe | 30 and up |
+
+  Reported party margins and TPSI estimates are rated the same way. Estimated places keep
+  their hatching.
+- **Colours.** They go dark to light, Safe deepest and Tilt palest, and stay the same in
+  both themes. Before, the dark theme ran the other way, with weak counties fading into the
+  background. Neighbouring bands are now well apart in lightness:
+  - Democratic: Safe #12348a, Likely #2f62d6, Lean #6f9bf0, Tilt #bdd1fa
+  - Republican: Safe #8c1424, Likely #d0364a, Lean #ef8089, Tilt #fac6cb
+  - Toss-up: #a4a9b5
+- **Electoral map look.**
+  - Shapes are outlined in the page colour, so each county reads as its own tile.
+  - Hover brightens the shape and outlines it in ink.
+  - The legend is the electoral map's row of rating chips, Safe D through Safe R.
+- **Rating board above the map.** Like the electoral map's seat bar, but sized by ballots.
+  It shows the share of ballots in Democratic and Republican rated places, a bar from Safe D
+  to Safe R, and a count of places in each band.
+- **Ratings in the tooltip and table.** The tooltip leads with the rating pill. The county
+  table has a Rating column, in italics where the rating comes from the TPSI estimate.
+- **Hatching.** It is now a light and a dark line together, so it shows on both deep and
+  pale fills in either theme.
+
+Turnout mode keeps its green volume shading.

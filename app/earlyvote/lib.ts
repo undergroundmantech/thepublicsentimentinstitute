@@ -188,15 +188,41 @@ export function compact(n: number): string {
   return String(Math.round(n));
 }
 
-/** A diverging fill for that margin, drawn from the site's party tokens so it
- *  moves with the theme. Null margins get the neutral "no party data" tone. */
+/* ── ratings ──────────────────────────────────────────────────────────────────
+ *
+ * The map reads like the electoral map: every place gets a rating band, not a
+ * continuous tint. Early vote margins run much wider than race margins, since a
+ * mail electorate in a blue county can be sixty points Democratic, so the cut
+ * points sit wider than the forecast's: Tilt under 5, Lean under 15, Likely
+ * under 30, Safe from 30. Under a point is a toss-up.
+ *
+ * The colours step dark to light, Safe deepest and Tilt palest, and hold in
+ * both themes, so a Safe county reads as the strongest shape whether the page
+ * is light or dark. Neighbouring bands are far apart in lightness so the four
+ * steps can be told apart at a glance.
+ */
+export type Rating = "SAFE" | "LIKELY" | "LEAN" | "TILT";
+export const RATINGS: Rating[] = ["SAFE", "LIKELY", "LEAN", "TILT"];
+export const RATING_WORD: Record<Rating, string> = { SAFE: "Safe", LIKELY: "Likely", LEAN: "Lean", TILT: "Tilt" };
+export const EV_DEM: Record<Rating, string> = { SAFE: "#12348a", LIKELY: "#2f62d6", LEAN: "#6f9bf0", TILT: "#bdd1fa" };
+export const EV_REP: Record<Rating, string> = { SAFE: "#8c1424", LIKELY: "#d0364a", LEAN: "#ef8089", TILT: "#fac6cb" };
+export const EV_TOSS = "#a4a9b5";
+export const EV_CUTS: [Rating, number][] = [["SAFE", 30], ["LIKELY", 15], ["LEAN", 5], ["TILT", 1]];
+
+export type RatingInfo = { side: "D" | "R" | "T"; rating: Rating | null; label: string; color: string };
+export function ratingOf(margin: number): RatingInfo {
+  const a = Math.abs(margin);
+  if (a < 1) return { side: "T", rating: null, label: "Toss-up", color: EV_TOSS };
+  const side = margin > 0 ? "R" : "D";
+  const rating = (EV_CUTS.find(([, lo]) => a >= lo) ?? EV_CUTS[3])[0];
+  return { side, rating, label: `${RATING_WORD[rating]} ${side}`, color: (side === "R" ? EV_REP : EV_DEM)[rating] };
+}
+
+/** The rating colour for a margin, Republican positive. Null margins get the
+ *  neutral "no party data" tone. */
 export function fillFor(margin: number | null): string {
   if (margin === null) return "var(--ev-nodata)";
-  const t = Math.min(1, Math.abs(margin) / 40);          // saturate at 40 points
-  const pct = (12 + t * 76).toFixed(0);                  // 12%..88% mix
-  return margin > 0
-    ? `color-mix(in srgb, var(--gop) ${pct}%, var(--ev-mid))`
-    : `color-mix(in srgb, var(--dem) ${pct}%, var(--ev-mid))`;
+  return ratingOf(margin).color;
 }
 
 /* ── TPSI party estimate for states that report no party ─────────────────────

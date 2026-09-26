@@ -6,6 +6,7 @@ import {
   CATEGORIES, DIMENSIONS, commas, compact, fillFor, getCapabilities, getCategory, getDemographics,
   marginOf, matchCounty, pct, STATE_NAME, stateOfFips, sumRow, toneFor, turnoutFill, volumeScale,
   getPartyModel, modeOf, simulate, fmtMargin, combineNational, returnTilt,
+  ratingOf, RATINGS, RATING_WORD, EV_DEM, EV_REP, EV_TOSS, type Rating,
   type Capabilities, type Combined, type Estimate, type Mode, type Part, type PartyModel, type ReturnTilt, type Category, type CategoryPayload, type DemographicPayload,
   type Dimension, type Geo, type RegionRow, type StateGeo,
 } from "./lib";
@@ -81,7 +82,8 @@ function HatchDefs() {
   return (
     <defs>
       <pattern id="ev-hatch" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
-        <line x1="0" y1="0" x2="0" y2="5" className="ev-hatch-line" />
+        <line x1="0.8" y1="0" x2="0.8" y2="5" className="ev-hatch-line" />
+        <line x1="2" y1="0" x2="2" y2="5" className="ev-hatch-line dark" />
       </pattern>
     </defs>
   );
@@ -99,6 +101,55 @@ function EstBar({ e }: { e: Estimate }) {
 
 /** Reported party where a state publishes it, the TPSI estimate where it does
  *  not, summed for the whole country, one card per ballot category. */
+/** The electoral map's seat bar, for ballots: every reporting place rated, and
+ *  the bar sized by the ballots each band holds, Safe D on the left edge to
+ *  Safe R on the right. */
+function RatingBoard({ places, unit }: { places: { m: number | null; n: number; est: boolean }[]; unit: string }) {
+  const bands: { k: string; label: string; color: string; n: number; c: number; side: "D" | "R" | "T" }[] = [
+    ...RATINGS.map((rt) => ({ k: "D" + rt, label: `${RATING_WORD[rt]} D`, color: EV_DEM[rt], n: 0, c: 0, side: "D" as const })),
+    { k: "T", label: "Toss-up", color: EV_TOSS, n: 0, c: 0, side: "T" as const },
+    ...[...RATINGS].reverse().map((rt) => ({ k: "R" + rt, label: `${RATING_WORD[rt]} R`, color: EV_REP[rt], n: 0, c: 0, side: "R" as const })),
+  ];
+  let rated = 0, estN = 0;
+  for (const p of places) {
+    if (p.m === null || p.n <= 0) continue;
+    const r = ratingOf(p.m);
+    const b = bands.find((x) => x.k === (r.side === "T" ? "T" : r.side + r.rating))!;
+    b.n += p.n; b.c += 1; rated += p.n; if (p.est) estN += 1;
+  }
+  if (rated <= 0) return null;
+  const side = (s: "D" | "R") => bands.filter((b) => b.side === s).reduce((a, b) => ({ n: a.n + b.n, c: a.c + b.c }), { n: 0, c: 0 });
+  const D = side("D"), R = side("R");
+  const plural = (c: number) => `${c} ${unit === "county" ? (c === 1 ? "county" : "counties") : (c === 1 ? "state" : "states")}`;
+  return (
+    <div className="ev-board">
+      <div className="ev-board-top">
+        <div className="ev-board-side">
+          <b style={{ color: EV_DEM.LIKELY }}>{((D.n / rated) * 100).toFixed(1)}%</b>
+          <span>of ballots in Democratic rated {unit === "county" ? "counties" : "states"} · {plural(D.c)}</span>
+        </div>
+        <div className="ev-board-side r">
+          <b style={{ color: EV_REP.LIKELY }}>{((R.n / rated) * 100).toFixed(1)}%</b>
+          <span>of ballots in Republican rated {unit === "county" ? "counties" : "states"} · {plural(R.c)}</span>
+        </div>
+      </div>
+      <div className="ev-board-bar" role="img" aria-label="Ballots by rating">
+        {bands.map((b) => b.n > 0 ? (
+          <i key={b.k} style={{ width: `${(b.n / rated) * 100}%`, background: b.color }}
+             title={`${b.label}: ${plural(b.c)}, ${commas(b.n)} ballots`} />
+        ) : null)}
+        <u aria-hidden />
+      </div>
+      <div className="ev-board-keys">
+        {bands.filter((b) => b.c > 0).map((b) => (
+          <span key={b.k}><i style={{ background: b.color }} />{b.label}<b>{b.c}</b></span>
+        ))}
+        {estN ? <span className="note">{estN} rated from the TPSI estimate</span> : null}
+      </div>
+    </div>
+  );
+}
+
 function NationalCombined({ combined, loaded, cat, setCat, tilt }: {
   combined: Partial<Record<Category, Combined | null>>; tilt: ReturnTilt | null;
   loaded: Partial<Record<Category, CategoryPayload | null>>;
@@ -482,6 +533,13 @@ export default function EarlyVoteDesk() {
     if (showEst && e) return fillFor(e.margin);
     return vol ? turnoutFill(vol.t(sumRow(row))) : "var(--ev-nodata)";
   };
+  /** the margin a place is rated on: reported party, else the TPSI estimate when it is shown */
+  const marginFor = (key: string, row: RegionRow): number | null => {
+    const m = marginOf(row);
+    if (m !== null) return m;
+    const e = est?.byKey[key];
+    return showEst && e ? e.margin : null;
+  };
   const hatched = (key: string, row: RegionRow) => showEst && marginOf(row) === null && !!est?.byKey[key];
 
   const national = scope === "US";
@@ -590,6 +648,8 @@ export default function EarlyVoteDesk() {
 
             {/* the map */}
             <section className="ev-mapwrap">
+              <RatingBoard places={rows.map(({ name, row, n }) => ({ m: marginFor(name, row), n, est: marginOf(row) === null }))}
+                unit={national ? "state" : "county"} />
               {national && geo ? (
                 <svg viewBox={`0 0 ${geo.frame[0]} ${geo.frame[1]}`} className="ev-map" role="img"
                      aria-label="Early vote by state">
@@ -655,11 +715,15 @@ export default function EarlyVoteDesk() {
               )}
 
               {!allNoParty || showEst ? (
-                <div className="ev-scale">
-                  <span>More Democratic</span>
-                  <i className="ramp" />
-                  <span>More Republican</span>
-                  {showEst ? <em><b className="sw hatch" /> TPSI estimate, not reported</em> : null}
+                <div className="ev-legend">
+                  <span className="ev-cap">Ratings</span>
+                  <div className="ev-leg-row">
+                    {RATINGS.map((rt) => <span key={"d" + rt} className="ev-leg"><i style={{ background: EV_DEM[rt] }} />{RATING_WORD[rt]} D</span>)}
+                    <span className="ev-leg"><i style={{ background: EV_TOSS }} />Toss-up</span>
+                    {[...RATINGS].reverse().map((rt) => <span key={"r" + rt} className="ev-leg"><i style={{ background: EV_REP[rt] }} />{RATING_WORD[rt]} R</span>)}
+                    {showEst ? <span className="ev-leg"><i className="hatch" />TPSI estimate</span> : null}
+                  </div>
+                  <span className="ev-leg-note">margin of the ballots cast · tilt &lt;5 · lean &lt;15 · likely &lt;30 · safe 30+</span>
                 </div>
               ) : null}
               {someNoParty && vol && !showEst ? (
@@ -720,6 +784,7 @@ export default function EarlyVoteDesk() {
                         <th className="num est">Est. Dem</th><th className="num est">Est. Rep</th>
                         <th className="num est">Est. Ind</th><th className="num est">Est. margin</th>
                       </> : null}
+                      {!allNoParty || showEst ? <th>Rating</th> : null}
                       <th className="split">{showEst ? "Split" : allNoParty ? "Intensity" : "Split"}</th>
                     </tr>
                   </thead>
@@ -744,6 +809,13 @@ export default function EarlyVoteDesk() {
                             <td className="num est">{commas(e.i * n)}</td>
                             <td className="num est mg" style={{ color: e.margin > 0 ? "var(--gop)" : "var(--dem)" }}>{fmtMargin(e.margin)}</td>
                           </>;
+                        })() : null}
+                        {!allNoParty || showEst ? (() => {
+                          const mm = marginFor(name, row);
+                          if (mm === null) return <td className="rt">—</td>;
+                          const r = ratingOf(mm);
+                          return <td className="rt"><span className={`ev-chip${marginOf(row) === null ? " est" : ""}`}>
+                            <i style={{ background: r.color }} />{r.label}</span></td>;
                         })() : null}
                         <td className="split">
                           {showEst && est?.byKey[name] && marginOf(row) === null ? (
@@ -771,7 +843,17 @@ export default function EarlyVoteDesk() {
           return (
             <TipBox x={tip.x} y={tip.y}>
               <div className="n">{label}</div>
-              <div className="s">{catMeta.blurb}</div>
+              {(() => {
+                const mm = marginFor(tip.key, row);
+                if (mm === null) return <div className="s">{catMeta.blurb}</div>;
+                const r = ratingOf(mm);
+                return (
+                  <div className="s rated">
+                    <span className="pill" style={{ background: r.color, color: r.rating === "SAFE" || r.rating === "LIKELY" ? "#fff" : "#111" }}>{r.label}</span>
+                    {m === null ? "TPSI estimate · " : ""}{catMeta.blurb}
+                  </div>
+                );
+              })()}
               {orderGroups(Object.keys(row)).map((g) => {
                 const v = row[g]?.votes ?? 0;
                 if (v <= 0) return null;
@@ -874,9 +956,42 @@ const CSS = `
 .ev-page { --ev-idle: rgba(var(--line-rgb),0.07); --ev-nodata: rgba(var(--line-rgb),0.16); --ev-mid: var(--panel); --ev-turnout: var(--win); }
 .ev-mapwrap { position: relative; margin-top: 30px; }
 .ev-map { display: block; width: 100%; height: auto; max-height: 66svh; margin: 0 auto; }
-.ev-unit { stroke: rgba(var(--line-rgb),0.22); stroke-width: 0.6; transition: filter .12s ease; }
+.ev-unit { stroke: var(--canvas); stroke-width: 0.7; stroke-linejoin: round; transition: filter .12s ease; }
 .ev-unit.live { cursor: pointer; }
-.ev-unit.live:hover { filter: brightness(1.25); stroke: var(--ink); stroke-width: 1.1; }
+.ev-unit.live:hover { filter: brightness(1.12) saturate(1.16); stroke: var(--ink); stroke-width: 1.4; }
+
+/* legend: the electoral map's chips */
+.ev-legend { display: flex; align-items: center; justify-content: center; gap: 10px 16px; flex-wrap: wrap; margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--border); }
+.ev-cap { font-family: ${MONO}; font-size: 10px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink); }
+.ev-leg-row { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 14px; }
+.ev-leg { display: inline-flex; align-items: center; gap: 7px; font-family: ${MONO}; font-size: 10px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--muted); }
+.ev-leg i { width: 12px; height: 12px; border-radius: 3px; flex-shrink: 0; }
+.ev-leg i.hatch { background: repeating-linear-gradient(45deg, var(--muted2) 0 2px, transparent 2px 5px); border: 1px solid var(--border2); }
+.ev-leg-note { width: 100%; text-align: center; font-family: ${MONO}; font-size: 9.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted3); }
+
+/* rating board: the electoral map's seat bar, sized by ballots */
+.ev-board { margin-bottom: 18px; }
+.ev-board-top { display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; }
+.ev-board-side { display: flex; flex-direction: column; gap: 2px; }
+.ev-board-side.r { text-align: right; align-items: flex-end; }
+.ev-board-side b { font-family: ${MONO}; font-size: clamp(24px, 3vw, 34px); font-weight: 800; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; line-height: 1; }
+.ev-board-side span { font-size: 12px; color: var(--muted2); max-width: 46ch; }
+.ev-board-bar { position: relative; display: flex; height: 22px; margin-top: 10px; border-radius: 6px; overflow: hidden; background: rgba(var(--line-rgb),0.08); }
+.ev-board-bar i { display: block; height: 100%; box-shadow: inset -1px 0 0 var(--canvas); }
+.ev-board-bar u { position: absolute; left: 50%; top: -3px; bottom: -3px; width: 2px; margin-left: -1px; background: var(--ink); opacity: 0.7; }
+.ev-board-keys { display: flex; flex-wrap: wrap; gap: 6px 14px; margin-top: 10px; font-family: ${MONO}; font-size: 10px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--muted); }
+.ev-board-keys span { display: inline-flex; align-items: center; gap: 6px; }
+.ev-board-keys i { width: 10px; height: 10px; border-radius: 3px; }
+.ev-board-keys b { color: var(--ink); font-weight: 700; }
+.ev-board-keys .note { color: var(--muted3); }
+
+/* rating chip in the table and pill in the tooltip */
+.ev-chip { display: inline-flex; align-items: center; gap: 6px; font-family: ${MONO}; font-size: 10.5px; font-weight: 700; letter-spacing: 0.03em; color: var(--ink); white-space: nowrap; }
+.ev-chip i { width: 10px; height: 10px; border-radius: 3px; }
+.ev-chip.est { font-style: italic; }
+table.ev-table td.rt { white-space: nowrap; }
+.ev-tip .s.rated { display: flex; align-items: center; gap: 7px; flex-wrap: wrap; margin-top: 5px; }
+.ev-tip .pill { display: inline-block; padding: 2px 7px; border-radius: 99px; font-size: 9.5px; font-weight: 800; letter-spacing: 0.06em; }
 .ev-maploading { padding: 70px 0; text-align: center; font-family: ${MONO}; font-size: 11px;
   letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted2); }
 .ev-maploading span { display: inline-block; width: 9px; height: 9px; margin-right: 10px; border-radius: 99px; background: var(--accent-link); }
@@ -948,7 +1063,8 @@ table.ev-table tr.clickable:focus-visible { outline: 2px solid var(--purple2); o
 table.ev-table td.split { min-width: 120px; }
 
 .ev-hatch { pointer-events: none; }
-.ev-hatch-line { stroke: var(--panel); stroke-width: 1.4; stroke-opacity: 0.55; }
+.ev-hatch-line { stroke: #ffffff; stroke-width: 1; stroke-opacity: 0.55; }
+.ev-hatch-line.dark { stroke: #000000; stroke-opacity: 0.22; }
 .ev-scale .sw.hatch { background: repeating-linear-gradient(45deg, var(--muted2) 0 2px, transparent 2px 5px); border: 1px solid var(--border2); }
 
 .ev-est { margin-top: 18px; padding: 20px 24px 18px; border: 1px dashed var(--border3, var(--border2)); border-radius: 16px;
