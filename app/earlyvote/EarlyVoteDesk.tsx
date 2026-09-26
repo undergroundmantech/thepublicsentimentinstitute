@@ -4,7 +4,8 @@ import React, { useEffect, useMemo, useState } from "react";
 import {
   CATEGORIES, DIMENSIONS, commas, compact, fillFor, getCapabilities, getCategory, getDemographics,
   marginOf, matchCounty, pct, STATE_NAME, stateOfFips, sumRow, toneFor, turnoutFill, volumeScale,
-  type Capabilities, type Category, type CategoryPayload, type DemographicPayload,
+  getPartyModel, modeOf, simulate, fmtMargin,
+  type Capabilities, type Estimate, type PartyModel, type Category, type CategoryPayload, type DemographicPayload,
   type Dimension, type Geo, type RegionRow, type StateGeo,
 } from "./lib";
 
@@ -32,6 +33,129 @@ function Bar({ row, groups, total }: { row: RegionRow; groups: string[]; total: 
   );
 }
 
+/** A margin range read from the closer edge out: D+10.3 to D+20.5, R+3 to R+9,
+ *  and D+2 to R+4 when it straddles even. Margins are Republican positive. */
+function fmtRange(lo: number, hi: number, sep = " to ") {
+  const [a, b] = lo < 0 && hi <= 0 ? [hi, lo] : [lo, hi];
+  return `${fmtMargin(a)}${sep}${fmtMargin(b)}`;
+}
+
+/** Thin diagonal lines laid over any shape filled from the TPSI estimate, so a
+ *  modelled county never reads as a reported one. */
+function HatchDefs() {
+  return (
+    <defs>
+      <pattern id="ev-hatch" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+        <line x1="0" y1="0" x2="0" y2="5" className="ev-hatch-line" />
+      </pattern>
+    </defs>
+  );
+}
+
+function EstBar({ e }: { e: Estimate }) {
+  return (
+    <span className="ev-bar est" aria-hidden>
+      <i style={{ width: `${e.d * 100}%`, background: "var(--dem)" }} />
+      <i style={{ width: `${e.i * 100}%`, background: "var(--muted2)" }} />
+      <i style={{ width: `${e.r * 100}%`, background: "var(--gop)" }} />
+    </span>
+  );
+}
+
+function EstimatePanel({ e, sub, mode, model, shade, setShade }: {
+  e: Estimate; sub: string; mode: "mail" | "early"; model: PartyModel;
+  shade: "estimate" | "turnout"; setShade: (s: "estimate" | "turnout") => void;
+}) {
+  const [open, setOpen] = useState(false);
+  const parts = [
+    { k: "Democratic", s: e.d, c: "var(--dem)" },
+    { k: "Independent", s: e.i, c: "var(--muted2)" },
+    { k: "Republican", s: e.r, c: "var(--gop)" },
+  ];
+  return (
+    <section className="ev-est" aria-label="TPSI party estimate">
+      <div className="ev-est-head">
+        <div>
+          <span className="ev-est-tag">TPSI estimate</span>
+          <h2 className="ev-h2">Simulated party of these ballots</h2>
+          <p className="ev-est-sub">{sub}</p>
+        </div>
+        <div className="ev-seg sm" role="tablist" aria-label="Shade places with no party data by">
+          <button role="tab" aria-selected={shade === "estimate"} className={shade === "estimate" ? "on" : ""}
+            onClick={() => setShade("estimate")}>Estimated party</button>
+          <button role="tab" aria-selected={shade === "turnout"} className={shade === "turnout" ? "on" : ""}
+            onClick={() => setShade("turnout")}>Turnout</button>
+        </div>
+      </div>
+
+      <div className="ev-est-body">
+        <div className="ev-est-margin">
+          <b style={{ color: e.margin > 0 ? "var(--gop)" : "var(--dem)" }}>{fmtMargin(e.margin)}</b>
+          <span>80% of simulations fall between {fmtRange(e.lo, e.hi, " and ")}</span>
+        </div>
+        <div className="ev-est-split">
+          <EstBar e={e} />
+          <div className="ev-key">
+            {parts.map((p) => (
+              <span key={p.k}><i style={{ background: p.c }} />{p.k}<b>{commas(p.s * e.votes)}</b><u>{(p.s * 100).toFixed(1)}%</u></span>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <button className="ev-link ev-est-more" onClick={() => setOpen((v) => !v)} aria-expanded={open}>
+        {open ? "Hide how this is estimated" : "How this is estimated"}
+      </button>
+      {open ? (
+        <div className="ev-est-method">
+          <p>
+            Each county starts from its 2024 Trump share of the two party vote, moved by the swing TPSI
+            measures inside its own sample from 2024 recall to the 2026 generic ballot. TPSI likely voters
+            then set the mix: the Independent share, and how often Democrats, Republicans and Independents
+            voted Trump, which together fix the Democratic and Republican share that reproduces the
+            county&apos;s lean. Last comes the {mode === "mail" ? "mail" : "early in person"} skew: at the same local lean,
+            TPSI respondents who plan to vote {mode === "mail" ? "by mail" : "early in person"} lean
+            {mode === "mail" ? " clearly" : " slightly"} more Democratic than the electorate as a whole, and
+            the gap is widest in Democratic counties and narrows as counties get redder.
+          </p>
+          <p>
+            All of that is refit on {model.meta.draws} bootstrap resamples of {commas(model.meta.respondents)} TPSI
+            likely voters, and every resample is run against today&apos;s county counts. The range above is
+            the middle 80% of those runs. This is party identification, not party registration, and it is
+            an estimate of who is voting early, not a result.
+          </p>
+          <div className="ev-est-check">
+            <em>Check against states that do report party, mail ballots requested</em>
+            <table>
+              <thead><tr><th>State</th><th className="num">TPSI estimate</th><th className="num">80% range</th><th className="num">Registration</th></tr></thead>
+              <tbody>
+                {model.meta.check.map((c) => {
+                  // meta margins are Democratic positive; the page prints R positive
+                  const m = -c.modelMargin, lo = -c.hi, hi = -c.lo, rep = -c.reportedMargin;
+                  return (
+                    <tr key={c.st}>
+                      <td>{STATE_NAME[c.st] ?? c.st}</td>
+                      <td className="num">{fmtMargin(m)}</td>
+                      <td className="num">{fmtRange(lo, hi)}</td>
+                      <td className="num">{fmtMargin(rep)}</td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+            <p>
+              Florida lands within a point, North Carolina and New Jersey within five. Pennsylvania mail voters are more
+              Democratic than the model expects. Kentucky and Oklahoma still carry large ancestral
+              Democratic registration that no party identification model should reproduce, and the
+              twelve states estimated here have no party registration at all.
+            </p>
+          </div>
+        </div>
+      ) : null}
+    </section>
+  );
+}
+
 export default function EarlyVoteDesk() {
   const [scope, setScope] = useState("US");           // "US" or a state abbreviation
   const [cat, setCat] = useState<Category>("requested");
@@ -45,6 +169,11 @@ export default function EarlyVoteDesk() {
   const [stateGeo, setStateGeo] = useState<StateGeo | null>(null);
   const [countyNames, setCountyNames] = useState<Record<string, string> | null>(null);
   const [tip, setTip] = useState<{ key: string; x: number; y: number } | null>(null);
+  const [model, setModel] = useState<PartyModel | null>(null);
+  // how places with no party data are shaded: the TPSI estimate or raw volume
+  const [shade, setShade] = useState<"estimate" | "turnout">("estimate");
+
+  useEffect(() => { getPartyModel().then(setModel); }, []);
 
   // the national outline and the county name table load once
   useEffect(() => {
@@ -104,11 +233,41 @@ export default function EarlyVoteDesk() {
   const vol = useMemo(() => volumeScale(noPartyRows.map((r) => r.n)), [noPartyRows]);
   const allNoParty = rows.length > 0 && noPartyRows.length === rows.length;
   const someNoParty = noPartyRows.length > 0;
-  const fillRow = (row: RegionRow) => {
+  // feed county name -> FIPS for the open state
+  const fipsOf = useMemo(() => {
+    const out: Record<string, string> = {};
+    if (scope === "US" || !countyNames || !data) return out;
+    const local: Record<string, string> = {};
+    for (const [fips, nm] of Object.entries(countyNames)) if (stateOfFips(fips) === scope) local[nm] = fips;
+    for (const name of Object.keys(data.regions)) { const f = matchCounty(name, local); if (f) out[name] = f; }
+    return out;
+  }, [scope, countyNames, data]);
+
+  // TPSI party estimate for every place that reports no party. A county is one
+  // part at its own 2024 lean. A state on the national map, or a county with no
+  // matching shape, is its counties weighted by adults.
+  const est = useMemo(() => {
+    if (!model || !noPartyRows.length) return null;
+    const byState: Record<string, [number, number][]> = {};
+    for (const [f, [t, a]] of Object.entries(model.counties)) (byState[stateOfFips(f)] ??= []).push([t, a]);
+    const places = noPartyRows.map(({ name, n }) => {
+      if (scope === "US") return { key: name, parts: byState[name] ?? [], votes: n };
+      const f = fipsOf[name];
+      const c = f ? model.counties[f] : undefined;
+      return { key: name, parts: c ? [[c[0], 1] as [number, number]] : (byState[scope] ?? []), votes: n };
+    });
+    return simulate(places, model, modeOf(cat));
+  }, [model, noPartyRows, fipsOf, scope, cat]);
+  const showEst = shade === "estimate" && !!est?.total;
+
+  const fillRow = (key: string, row: RegionRow) => {
     const m = marginOf(row);
     if (m !== null) return fillFor(m);
+    const e = est?.byKey[key];
+    if (showEst && e) return fillFor(e.margin);
     return vol ? turnoutFill(vol.t(sumRow(row))) : "var(--ev-nodata)";
   };
+  const hatched = (key: string, row: RegionRow) => showEst && marginOf(row) === null && !!est?.byKey[key];
 
   const national = scope === "US";
   const title = national ? "Early vote, nationwide" : `${STATE_NAME[scope] ?? scope} early vote`;
@@ -182,6 +341,14 @@ export default function EarlyVoteDesk() {
               </div>
             </section>
 
+            {someNoParty && est?.total ? (
+              <EstimatePanel e={est.total} sub={national
+                ? `Across the ${noPartyRows.length} ${noPartyRows.length === 1 ? "state that reports" : "states that report"} every ballot as Unspecified.`
+                : allNoParty ? `${STATE_NAME[scope] ?? scope} reports every ballot as Unspecified.`
+                : `Across the ${noPartyRows.length} ${noPartyRows.length === 1 ? "county that reports" : "counties that report"} every ballot as Unspecified.`}
+                mode={modeOf(cat)} model={model!} shade={shade} setShade={setShade} />
+            ) : null}
+
             {/* the chosen breakdown, when it is not the party columns already shown */}
             {demo && dim !== "party" ? (
               <section className="ev-demo">
@@ -207,46 +374,51 @@ export default function EarlyVoteDesk() {
               {national && geo ? (
                 <svg viewBox={`0 0 ${geo.frame[0]} ${geo.frame[1]}`} className="ev-map" role="img"
                      aria-label="Early vote by state">
+                  <HatchDefs />
                   {Object.entries(geo.states).map(([abbr, d]) => {
                     const row = data.regions[abbr];
                     return (
                       <path key={abbr} d={d}
                         className={`ev-unit${row ? " live" : ""}`}
-                        fill={row ? fillRow(row) : "var(--ev-idle)"}
+                        fill={row ? fillRow(abbr, row) : "var(--ev-idle)"}
                         onClick={row ? () => setScope(abbr) : undefined}
                         onMouseMove={row ? (e) => setTip({ key: abbr, x: e.clientX, y: e.clientY }) : undefined}
                         onMouseLeave={() => setTip(null)} />
                     );
                   })}
+                  {Object.entries(geo.states).map(([abbr, d]) => {
+                    const row = data.regions[abbr];
+                    return row && hatched(abbr, row)
+                      ? <path key={`h-${abbr}`} d={d} className="ev-hatch" fill="url(#ev-hatch)" /> : null;
+                  })}
                 </svg>
               ) : !national && stateGeo && countyNames ? (
                 (() => {
-                  // build name -> fips for this state once, then resolve each
-                  // county the feed reports onto a shape
-                  const local: Record<string, string> = {};
-                  for (const [fips, nm] of Object.entries(countyNames)) {
-                    if (stateOfFips(fips) === scope) local[nm] = fips;
-                  }
+                  // resolve each county the feed reports onto a shape
                   const byFips: Record<string, string> = {};
-                  for (const name of Object.keys(data.regions)) {
-                    const f = matchCounty(name, local);
-                    if (f) byFips[f] = name;
-                  }
+                  for (const [name, f] of Object.entries(fipsOf)) byFips[f] = name;
                   const matched = Object.keys(byFips).length;
                   return (
                     <>
                       <svg viewBox="0 0 900 620" className="ev-map" role="img"
                            aria-label={`Early vote by county in ${STATE_NAME[scope] ?? scope}`}>
+                        <HatchDefs />
                         {stateGeo.counties.map((c) => {
                           const name = byFips[c.id];
                           const row = name ? data.regions[name] : undefined;
                           return (
                             <path key={c.id} d={c.d}
                               className={`ev-unit${row ? " live" : ""}`}
-                              fill={row ? fillRow(row) : "var(--ev-idle)"}
+                              fill={row ? fillRow(name!, row) : "var(--ev-idle)"}
                               onMouseMove={row ? (e) => setTip({ key: name!, x: e.clientX, y: e.clientY }) : undefined}
                               onMouseLeave={() => setTip(null)} />
                           );
+                        })}
+                        {stateGeo.counties.map((c) => {
+                          const name = byFips[c.id];
+                          const row = name ? data.regions[name] : undefined;
+                          return row && hatched(name!, row)
+                            ? <path key={`h-${c.id}`} d={c.d} className="ev-hatch" fill="url(#ev-hatch)" /> : null;
                         })}
                       </svg>
                       {matched < Object.keys(data.regions).length ? (
@@ -263,14 +435,15 @@ export default function EarlyVoteDesk() {
                 <div className="ev-maploading"><span /> drawing the map…</div>
               )}
 
-              {!allNoParty ? (
+              {!allNoParty || showEst ? (
                 <div className="ev-scale">
                   <span>More Democratic</span>
                   <i className="ramp" />
                   <span>More Republican</span>
+                  {showEst ? <em><b className="sw hatch" /> TPSI estimate, not reported</em> : null}
                 </div>
               ) : null}
-              {someNoParty && vol ? (
+              {someNoParty && vol && !showEst ? (
                 <div className="ev-scale turnout">
                   {!allNoParty ? <em className="lab">no party reported</em> : null}
                   <span>Fewer ballots</span>
@@ -285,7 +458,15 @@ export default function EarlyVoteDesk() {
                   <span>More ballots</span>
                 </div>
               ) : null}
-              {allNoParty ? (
+              {showEst ? (
+                <p className="ev-mapnote">
+                  {allNoParty
+                    ? `${national ? "None of the reporting states attach" : `${STATE_NAME[scope] ?? scope} does not attach`} a party to these ballots. `
+                    : `${noPartyRows.length} ${national ? (noPartyRows.length === 1 ? "state reports" : "states report") : (noPartyRows.length === 1 ? "county reports" : "counties report")} no party. `}
+                  Hatched {national ? "states" : "counties"} are shaded by the TPSI party estimate, simulated from
+                  TPSI polling against each county&apos;s lean.
+                </p>
+              ) : allNoParty ? (
                 <p className="ev-mapnote">
                   {national ? "None of the reporting states attach" : `${STATE_NAME[scope] ?? scope} does not attach`} a
                   party to these ballots, so {national ? "states" : "counties"} are shaded by raw ballot count
@@ -316,7 +497,11 @@ export default function EarlyVoteDesk() {
                       <th>{national ? "State" : "County"}</th>
                       {groups.map((g) => <th key={g} className="num">{g}</th>)}
                       <th className="num">Total</th>
-                      <th className="split">{allNoParty ? "Intensity" : "Split"}</th>
+                      {showEst ? <>
+                        <th className="num est">Est. Dem</th><th className="num est">Est. Rep</th>
+                        <th className="num est">Est. Ind</th><th className="num est">Est. margin</th>
+                      </> : null}
+                      <th className="split">{showEst ? "Split" : allNoParty ? "Intensity" : "Split"}</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -331,8 +516,20 @@ export default function EarlyVoteDesk() {
                           <td key={g} className="num">{row[g]?.votes ? commas(row[g].votes) : "—"}</td>
                         ))}
                         <td className="num tot">{commas(n)}</td>
+                        {showEst ? (() => {
+                          const e = marginOf(row) === null ? est?.byKey[name] : undefined;
+                          if (!e) return <><td className="num">—</td><td className="num">—</td><td className="num">—</td><td className="num">—</td></>;
+                          return <>
+                            <td className="num est">{commas(e.d * n)}</td>
+                            <td className="num est">{commas(e.r * n)}</td>
+                            <td className="num est">{commas(e.i * n)}</td>
+                            <td className="num est mg" style={{ color: e.margin > 0 ? "var(--gop)" : "var(--dem)" }}>{fmtMargin(e.margin)}</td>
+                          </>;
+                        })() : null}
                         <td className="split">
-                          {marginOf(row) === null && vol ? (
+                          {showEst && est?.byKey[name] && marginOf(row) === null ? (
+                            <EstBar e={est.byKey[name]} />
+                          ) : marginOf(row) === null && vol ? (
                             <span className="ev-bar vol" aria-hidden>
                               <i style={{ width: `${Math.max(4, vol.t(n) * 100)}%`, background: turnoutFill(vol.t(n)) }} />
                             </span>
@@ -354,8 +551,8 @@ export default function EarlyVoteDesk() {
           const label = national ? (STATE_NAME[tip.key] ?? tip.key) : tip.key;
           return (
             <div className="ev-tip" style={{
-              left: Math.min(tip.x + 16, (typeof window !== "undefined" ? window.innerWidth : 1200) - 268),
-              top: Math.min(tip.y - 10, (typeof window !== "undefined" ? window.innerHeight : 800) - 190),
+              left: Math.min(tip.x + 16, (typeof window !== "undefined" ? window.innerWidth : 1200) - 300),
+              top: Math.min(tip.y - 10, (typeof window !== "undefined" ? window.innerHeight : 800) - 330),
             }}>
               <div className="n">{label}</div>
               <div className="s">{catMeta.blurb}</div>
@@ -371,6 +568,20 @@ export default function EarlyVoteDesk() {
               })}
               <div className="row tot"><i /><b>total</b><span>{commas(t)}</span>
                 <u>{m === null ? "—" : m > 0 ? `R+${m.toFixed(1)}` : `D+${Math.abs(m).toFixed(1)}`}</u></div>
+              {m === null && showEst && est?.byKey[tip.key] ? (() => {
+                const e = est.byKey[tip.key];
+                return (
+                  <>
+                    <div className="est-h">TPSI estimate</div>
+                    {([["Democratic", e.d, "var(--dem)"], ["Republican", e.r, "var(--gop)"], ["Independent", e.i, "var(--muted2)"]] as const).map(([g, s, c]) => (
+                      <div key={g} className="row"><i style={{ background: c }} /><b>{g}</b>
+                        <span>{commas(s * t)}</span><u>{(s * 100).toFixed(1)}%</u></div>
+                    ))}
+                    <div className="row tot"><i /><b>est. margin</b><span>{fmtMargin(e.margin)}</span>
+                      <u>{fmtRange(e.lo, e.hi)}</u></div>
+                  </>
+                );
+              })() : null}
               {m === null ? (() => {
                 const share = total > 0 ? (t / total) * 100 : 0;
                 const rank = noPartyRows.findIndex((r) => r.name === tip.key);
@@ -519,6 +730,37 @@ table.ev-table tr.clickable { cursor: pointer; }
 table.ev-table tr.clickable:hover td { background: rgba(var(--line-rgb),0.04); }
 table.ev-table tr.clickable:focus-visible { outline: 2px solid var(--purple2); outline-offset: -2px; }
 table.ev-table td.split { min-width: 120px; }
+
+.ev-hatch { pointer-events: none; }
+.ev-hatch-line { stroke: var(--panel); stroke-width: 1.4; stroke-opacity: 0.55; }
+.ev-scale .sw.hatch { background: repeating-linear-gradient(45deg, var(--muted2) 0 2px, transparent 2px 5px); border: 1px solid var(--border2); }
+
+.ev-est { margin-top: 18px; padding: 20px 24px 18px; border: 1px dashed var(--border3, var(--border2)); border-radius: 16px;
+  background: rgba(var(--line-rgb),0.025); }
+.ev-est-head { display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: 14px; }
+.ev-est-tag { display: inline-block; margin-bottom: 8px; padding: 3px 9px; border-radius: 99px; border: 1px solid var(--border2);
+  font-family: ${MONO}; font-size: 9.5px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--purple2); }
+.ev-est-sub { margin-top: 5px; font-size: 13px; color: var(--muted); }
+.ev-est-body { display: grid; grid-template-columns: minmax(180px, 0.8fr) 2fr; gap: 18px 28px; align-items: center; margin-top: 16px; }
+.ev-est-margin b { display: block; font-family: ${MONO}; font-size: clamp(28px,3.6vw,40px); font-weight: 800; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
+.ev-est-margin span { display: block; margin-top: 4px; font-size: 12.5px; line-height: 1.45; color: var(--muted2); max-width: 30ch; }
+.ev-est-more { margin-top: 14px; font-size: 13px; }
+.ev-est-method { margin-top: 12px; display: grid; gap: 10px; max-width: 80ch; font-size: 13px; line-height: 1.6; color: var(--muted); }
+.ev-est-check { margin-top: 6px; padding: 14px 16px; border: 1px solid var(--border); border-radius: 12px; background: var(--panel); overflow-x: auto; }
+.ev-est-check em { font-style: normal; font-family: ${MONO}; font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted2); }
+.ev-est-check table { margin-top: 8px; border-collapse: collapse; font-size: 12.5px; font-variant-numeric: tabular-nums; min-width: 420px; }
+.ev-est-check th { text-align: left; padding: 6px 12px 6px 0; font-family: ${MONO}; font-size: 9.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted2); font-weight: 700; }
+.ev-est-check td { padding: 5px 12px 5px 0; border-top: 1px solid var(--border); color: var(--ink); }
+.ev-est-check .num { text-align: right; }
+.ev-est-check p { margin-top: 10px; font-size: 12.5px; }
+table.ev-table th.est { color: var(--purple2); }
+table.ev-table td.est { font-style: italic; }
+table.ev-table td.mg { font-style: normal; font-family: ${MONO}; font-weight: 700; font-size: 12px; }
+.ev-tip { width: 284px; }
+.ev-tip .est-h { margin-top: 10px; padding-top: 8px; border-top: 1px dashed var(--border2); font-family: ${MONO}; font-size: 9.5px;
+  font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--purple2); }
+.ev-tip .row.tot u { min-width: 0; white-space: nowrap; }
+@media (max-width: 760px) { .ev-est-body { grid-template-columns: 1fr; } }
 
 .ev-note { margin-top: 30px; max-width: 78ch; font-size: 12.5px; line-height: 1.65; color: var(--muted2); }
 .ev-note a { color: var(--accent-link); }

@@ -198,3 +198,93 @@ export function fillFor(margin: number | null): string {
     ? `color-mix(in srgb, var(--gop) ${pct}%, var(--ev-mid))`
     : `color-mix(in srgb, var(--dem) ${pct}%, var(--ev-mid))`;
 }
+
+/* ── TPSI party estimate for states that report no party ─────────────────────
+ *
+ * Built by scripts/earlyvote/build_party_model.py from the TPSI national
+ * respondent database. Each draw is fourteen numbers refit on one bootstrap
+ * resample of TPSI likely voters; the page runs every draw against the live
+ * county counts, so the ranges below are simulation ranges, not decoration.
+ */
+
+export type PartyModel = {
+  meta: {
+    built: string; respondents: number; draws: number; paramKeys: string[];
+    check: { st: string; modelMargin: number; lo: number; hi: number; reportedMargin: number }[];
+  };
+  point: number[];
+  draws: number[][];
+  counties: Record<string, [number, number]>;   // fips: [2024 Trump two party share, adults]
+};
+
+export const getPartyModel = () =>
+  fetch("/earlyvote-party-model.json").then((r) => (r.ok ? (r.json() as Promise<PartyModel>) : null)).catch(() => null);
+
+/** requested and returned are mail ballots; in person uses the early skew */
+export const modeOf = (c: Category): "mail" | "early" => (c === "inperson" ? "early" : "mail");
+
+/** Democratic, Republican and Independent shares for one county under one draw. */
+export function partyShares(t: number, v: number[], mode: "mail" | "early"): [number, number, number] {
+  const [swing, I, rD, rR, rI, mR, mRs, mI, mIs, eR, eRs, eI, eIs, xm] = v;
+  // the early vote skew narrows as a county gets redder
+  const x = Math.log(t / (1 - t)) - xm;
+  const tt = Math.min(0.98, Math.max(0.02, t + swing));
+  const R = Math.min(1 - I - 0.01, Math.max(0.01, (tt - rD * (1 - I) - rI * I) / (rR - rD)));
+  const D = 1 - I - R;
+  const sR = mode === "mail" ? mR + mRs * x : eR + eRs * x;
+  const sI = mode === "mail" ? mI + mIs * x : eI + eIs * x;
+  const eRr = (R / D) * Math.exp(sR), eIi = (I / D) * Math.exp(sI);
+  const z = 1 + eRr + eIi;
+  return [1 / z, eRr / z, eIi / z];
+}
+
+export type Estimate = {
+  d: number; r: number; i: number;            // mean shares, 0..1
+  margin: number;                              // R minus D, points, Republican positive
+  lo: number; hi: number;                      // 80% range of that margin
+  votes: number;
+};
+
+const q = (a: number[], p: number) => {
+  const s = [...a].sort((x, y) => x - y);
+  const k = (s.length - 1) * p, f = Math.floor(k);
+  return s[f] + (s[Math.min(f + 1, s.length - 1)] - s[f]) * (k - f);
+};
+
+/**
+ * Simulate a set of places, each a list of [county share, ballots] parts, and
+ * return one estimate per place plus the total. A county is one part; a state
+ * on the national map is its counties weighted by adults, then scaled to the
+ * state's reported ballots.
+ */
+export function simulate(
+  places: { key: string; parts: [number, number][]; votes: number }[],
+  model: PartyModel, mode: "mail" | "early",
+): { byKey: Record<string, Estimate>; total: Estimate | null } {
+  const nD = model.draws.length;
+  const byKey: Record<string, Estimate> = {};
+  const totD = new Array(nD).fill(0), totR = new Array(nD).fill(0), totI = new Array(nD).fill(0);
+  let totV = 0;
+  for (const pl of places) {
+    const w = pl.parts.reduce((s, p) => s + p[1], 0);
+    if (w <= 0 || pl.votes <= 0) continue;
+    const ms: number[] = []; let sd = 0, sr = 0, si = 0;
+    model.draws.forEach((v, k) => {
+      let d = 0, r = 0, i = 0;
+      for (const [t, n] of pl.parts) { const s = partyShares(t, v, mode); d += s[0] * n; r += s[1] * n; i += s[2] * n; }
+      d /= w; r /= w; i /= w;
+      sd += d; sr += r; si += i; ms.push((r - d) * 100);
+      totD[k] += d * pl.votes; totR[k] += r * pl.votes; totI[k] += i * pl.votes;
+    });
+    totV += pl.votes;
+    byKey[pl.key] = { d: sd / nD, r: sr / nD, i: si / nD, margin: ((sr - sd) / nD) * 100,
+      lo: q(ms, 0.1), hi: q(ms, 0.9), votes: pl.votes };
+  }
+  if (totV <= 0) return { byKey, total: null };
+  const tm = totR.map((r, k) => ((r - totD[k]) / totV) * 100);
+  const mean = (a: number[]) => a.reduce((s, x) => s + x, 0) / a.length / totV;
+  return { byKey, total: { d: mean(totD), r: mean(totR), i: mean(totI),
+    margin: tm.reduce((s, x) => s + x, 0) / nD, lo: q(tm, 0.1), hi: q(tm, 0.9), votes: totV } };
+}
+
+export const fmtMargin = (m: number) => (Math.abs(m) < 0.05 ? "EVEN" : m > 0 ? `R+${m.toFixed(1)}` : `D+${Math.abs(m).toFixed(1)}`);
