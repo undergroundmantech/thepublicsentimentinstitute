@@ -84,3 +84,12 @@ Keep the TPSI CSVs out of the repository and pass their paths in:
     python3 scripts/earlyvote/build_party_model.py
 
 Re-run it after each new TPSI wave.
+
+# Early vote: tooltip follows the cursor
+
+The map tooltip was landing about 1,200 pixels above the cursor and off to the right. It
+was a `position: fixed` child of the page, but an element in the site shell creates its
+own containing block, so the position was measured from that box instead of the window.
+It is now rendered straight into the document body. It sits 14px beside the cursor,
+centred on it vertically, flips to the left of the cursor near the right edge and stays
+inside the window. The rank line is shortened so it no longer truncates.

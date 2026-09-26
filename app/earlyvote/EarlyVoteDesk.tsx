@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import {
   CATEGORIES, DIMENSIONS, commas, compact, fillFor, getCapabilities, getCategory, getDemographics,
   marginOf, matchCounty, pct, STATE_NAME, stateOfFips, sumRow, toneFor, turnoutFill, volumeScale,
@@ -30,6 +31,40 @@ function Bar({ row, groups, total }: { row: RegionRow; groups: string[]; total: 
         return <i key={g} style={{ width: `${(v / total) * 100}%`, background: toneFor(g, row[g]?.color) }} />;
       })}
     </span>
+  );
+}
+
+/**
+ * The map tooltip, rendered straight into document.body.
+ *
+ * It used to be a position: fixed child of the page, but an ancestor in the
+ * site shell creates its own containing block, so "fixed" was measured from
+ * that box instead of the window and the card landed far from the cursor.
+ * Portalled to body, clientX and clientY mean what they say. The card sits
+ * 14px beside the cursor, centred on it vertically, flips to the left near
+ * the right edge and is clamped inside the window using its measured size.
+ * The page's style block is global, so the .ev-tip rules still reach it.
+ */
+function TipBox({ x, y, children }: { x: number; y: number; children: React.ReactNode }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [pos, setPos] = useState<{ left: number; top: number } | null>(null);
+  useLayoutEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const w = el.offsetWidth, h = el.offsetHeight;
+    const vw = window.innerWidth, vh = window.innerHeight, gap = 14, pad = 8;
+    let left = x + gap;
+    if (left + w > vw - pad) left = x - gap - w;
+    left = Math.max(pad, Math.min(left, vw - w - pad));
+    const top = Math.max(pad, Math.min(y - h / 2, vh - h - pad));
+    setPos({ left, top });
+  }, [x, y, children]);
+  if (typeof document === "undefined") return null;
+  return createPortal(
+    <div ref={ref} className="ev-tip" style={{ left: pos?.left ?? x + 14, top: pos?.top ?? y, visibility: pos ? "visible" : "hidden" }}>
+      {children}
+    </div>,
+    document.body,
   );
 }
 
@@ -550,10 +585,7 @@ export default function EarlyVoteDesk() {
           const m = marginOf(row);
           const label = national ? (STATE_NAME[tip.key] ?? tip.key) : tip.key;
           return (
-            <div className="ev-tip" style={{
-              left: Math.min(tip.x + 16, (typeof window !== "undefined" ? window.innerWidth : 1200) - 300),
-              top: Math.min(tip.y - 10, (typeof window !== "undefined" ? window.innerHeight : 800) - 330),
-            }}>
+            <TipBox x={tip.x} y={tip.y}>
               <div className="n">{label}</div>
               <div className="s">{catMeta.blurb}</div>
               {orderGroups(Object.keys(row)).map((g) => {
@@ -588,12 +620,12 @@ export default function EarlyVoteDesk() {
                 const byVol = [...noPartyRows].sort((x, y) => y.n - x.n).findIndex((r) => r.name === tip.key) + 1;
                 return (
                   <div className="row vol"><i style={{ background: vol ? turnoutFill(vol.t(t)) : "var(--ev-nodata)" }} />
-                    <b>{rank >= 0 ? `#${byVol} of ${noPartyRows.length} by ballots` : "ballot volume"}</b>
+                    <b>{rank >= 0 ? `rank #${byVol} of ${noPartyRows.length}` : "ballot volume"}</b>
                     <span>{share < 1 ? share.toFixed(2) : share.toFixed(1)}%</span><u>of {national ? "all" : "state"}</u></div>
                 );
               })() : null}
               {national ? <div className="f">click to open counties</div> : null}
-            </div>
+            </TipBox>
           );
         })() : null}
 
@@ -756,7 +788,8 @@ table.ev-table td.split { min-width: 120px; }
 table.ev-table th.est { color: var(--purple2); }
 table.ev-table td.est { font-style: italic; }
 table.ev-table td.mg { font-style: normal; font-family: ${MONO}; font-weight: 700; font-size: 12px; }
-.ev-tip { width: 284px; }
+/* the tooltip is portalled to body, outside .ev-page, so it carries the map tokens its swatches use */
+.ev-tip { width: 284px; z-index: 90; --ev-nodata: rgba(var(--line-rgb),0.16); --ev-mid: var(--panel); --ev-turnout: var(--win); }
 .ev-tip .est-h { margin-top: 10px; padding-top: 8px; border-top: 1px dashed var(--border2); font-family: ${MONO}; font-size: 9.5px;
   font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--purple2); }
 .ev-tip .row.tot u { min-width: 0; white-space: nowrap; }
