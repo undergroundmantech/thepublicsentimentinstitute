@@ -58,3 +58,31 @@ python3 scripts/forecast/sync_site_numbers.py
 Every run from this date uses `M2_ANCHOR=gallup`. Build the site with
 `HOUSE_SIM=<the current House run>` and with the House page data taken from the current
 House page, never from an older extract; both were stale before this run.
+
+## 28 September 2026, LOWESS polling level and new polls
+
+| File | What changed |
+|---|---|
+| `lowess_trend.py` | New. Robust LOWESS matching the site's `app/polling/lib/lowessTrend.ts`, and the Election Day projection |
+| `poll_daily.py` | `POLL_LEVEL`, default `lowess`: a race with 8 or more polls takes its level from the LOWESS projection and keeps the PSI decided total. `POLL_LEVEL=psi` restores the old average |
+| `site_poll_sync.py` | New. 81 site polls in 17 races that the model was missing |
+| `senate_mode.py` | Merges `SITE_SYNC` into `EXTRA_POLLS`; GBAO Michigan added |
+| `texas/`, `iowa/`, `north_carolina/`, `south_carolina/`, `maine/`, `vermont/`, `georgia/`, `nevada/`, `arizona/` | Poll files with the new and backfilled polls |
+
+Re-run command, for the record:
+
+```
+OUT_DYN=<out> N_SIMS=2000 AS_OF=2026-09-28 APPROVAL_SRC=combined HIST_COMP_CENTER=0.0452 \
+ELECTORATE=1 HISTORY=1 CANDIDATE=1 POLL_METHOD=daily M2_ANCHOR=gallup POLL_LEVEL=lowess \
+python3 dynamic_mode.py <races>
+```
+
+Run at most three lanes at once on an 8 GB machine; four lanes ran out of memory at Nebraska.
+
+## 28 September 2026, governor depolarization
+
+| File | What changed |
+|---|---|
+| `senate_mode.py` | `GOV_DEPOL`, on by default, with `GOV_BETA=0.6` and `GOV_LAMBDA=0.6`. For governor races only, the approval and census legs keep their county pattern, but their statewide level counts the national environment at beta and the state's lean against the nation at lambda. The incumbent personal vote is measured against the same baseline. `GOV_DEPOL=0` restores the old model |
+| `dynamic_mode.py` | Governor races take `GOV_BETA` of the shared national vote shock and of the shared group vote shocks, and the rest becomes their own. Turnout shocks stay national |
+| `depolarization/` | The backtest behind the two settings |

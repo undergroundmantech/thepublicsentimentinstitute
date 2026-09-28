@@ -57,6 +57,7 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "MI-SEN-2026", "pollster": "InsiderAdvantage", "startDate": "2026-09-16", "endDate": "2026-09-17", "sampleSize": 1200, "sampleType": "LV", "results": {"Abdul El-Sayed (D)": 46.6, "Mike Rogers (R)": 44.7, "Other": 3.3, "Undecided": 5.4}},
     {"raceId": "MI-SEN-2026", "pollster": "Suffolk University", "startDate": "2026-09-16", "endDate": "2026-09-20", "sampleSize": 500, "sampleType": "LV", "results": {"Abdul El-Sayed (D)": 47.0, "Mike Rogers (R)": 40.0, "Other": 3.0, "Undecided": 8.0}},
     {"raceId": "MI-SEN-2026", "pollster": "New York Times/Siena University", "startDate": "2026-09-15", "endDate": "2026-09-22", "sampleSize": 613, "sampleType": "LV", "results": {"Abdul El-Sayed (D)": 49.0, "Mike Rogers (R)": 44.0, "Undecided": 7.0}},
-    {"raceId": "MI-SEN-2026", "pollster": "co/efficient (R)", "startDate": "2026-09-21", "endDate": "2026-09-23", "sampleSize": 843, "sampleType": "LV", "results": {"Abdul El-Sayed (D)": 45.0, "Mike Rogers (R)": 45.0, "Other": 2.0, "Undecided": 8.0}}
+    {"raceId": "MI-SEN-2026", "pollster": "co/efficient (R)", "startDate": "2026-09-21", "endDate": "2026-09-23", "sampleSize": 843, "sampleType": "LV", "results": {"Abdul El-Sayed (D)": 45.0, "Mike Rogers (R)": 45.0, "Other": 2.0, "Undecided": 8.0}},
+    {"raceId": "MI-SEN-2026", "pollster": "GBAO (D)", "startDate": "2026-09-19", "endDate": "2026-09-22", "sampleSize": 800, "sampleType": "LV", "results": {"Abdul El-Sayed (D)": 48.0, "Mike Rogers (R)": 44.0, "Undecided": 8.0}},
   ],
 };

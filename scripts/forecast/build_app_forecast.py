@@ -11,7 +11,7 @@ import numpy as np, pandas as pd
 SRC = os.environ.get("SRC_HTML", "/mnt/user-data/outputs/forecast_html")
 RUN = "/tmp/claude-0/-home-claude/2fe66b6b-24b4-5fab-b0f7-c44b6f59cc0e/scratchpad/rerun"
 HOUSE_SIM = os.environ.get("HOUSE_SIM", "/tmp/pvi/house_nogal")
-OUT = "/tmp/pvi/appwork/public/forecast"
+OUT = os.environ.get("OUT_FORECAST") or "/tmp/pvi/appwork/public/forecast"
 UPDATED = os.environ.get("UPDATED", "2026-09-22")
 ELECTION = "2026-11-03"
 # daysOut used to be the literal 42, written when UPDATED was 2026-09-22 and never touched
@@ -147,15 +147,23 @@ def side_flat(margin_now, prob, p10, p90):
     return dict(margin=round(-margin_now, 2), prob=round(prob, 4), p10=round(-p90, 2), p90=round(-p10, 2))
 
 # ── polls ───────────────────────────────────────────────────────────────────
+# Poll tables come from the run being published (RES_DIR), not from the model's own
+# output folder. Reading the model folder is what left the desk's poll lists and
+# trackers frozen at the Sept 22 run while every forecast after it moved on.
+def run_file(name):
+    for d in (os.environ.get("RES_DIR"), f"{RUN}/output"):
+        if d and os.path.exists(f"{d}/{name}"): return f"{d}/{name}"
+    return f"{RUN}/output/{name}"
+
 def poll_rows(key, office, state):
     nm = state.lower().replace(" ", "_")
-    f = f"{RUN}/output/{nm}{'_governor' if office == 'governor' else ''}_poll_average_inputs.csv"
+    f = run_file(f"{nm}{'_governor' if office == 'governor' else ''}_poll_average_inputs.csv")
     if not os.path.exists(f): return []
     d = pd.read_csv(f)
     out = []
     for r in d.itertuples():
         try:
-            days = int((pd.Timestamp("2026-09-22") - pd.Timestamp(r.end)).days)
+            days = int((pd.Timestamp(UPDATED) - pd.Timestamp(r.end)).days)
         except Exception:
             days = 0
         D = float(getattr(r, "D", np.nan)); R = float(getattr(r, "R", np.nan))
@@ -167,7 +175,7 @@ def poll_rows(key, office, state):
 
 def daily_series(key, office, state):
     nm = state.lower().replace(" ", "_")
-    f = f"{RUN}/output/{nm}{'_governor' if office == 'governor' else ''}_daily_poll_average.csv"
+    f = run_file(f"{nm}{'_governor' if office == 'governor' else ''}_daily_poll_average.csv")
     if not os.path.exists(f): return None
     d = pd.read_csv(f)
     dt = next((c for c in d.columns if c.lower() in ("date", "day", "t")), None)
@@ -230,6 +238,11 @@ def statewide(page, office, prefix):
         inc = incumbency(seat, open_seat, dem, gop)
         pavg = v.get("poll_avg", {})
         pa = None if v["n_polls"] == 0 or pavg.get("D2") is None else round(100 - 200 * pavg["D2"], 2)
+        # Since Sept 28 2026 the polling level is the LOWESS Election Day polling average wherever a race
+        # has 8 or more polls. The desk labels which one fed the race and keeps the PSI average beside it.
+        plevel = pavg.get("poll_level", "psi")
+        psi = pavg.get("psi", {}).get("D2")
+        psi_m = None if pa is None or psi is None else round(100 - 200 * psi, 2)
         fund = v.get("candidate", {}).get("fundamentals_d2")
         fundm = round(100 - 200 * fund, 2) if fund else round(-margin, 2)
         races.append(dict(
@@ -241,7 +254,8 @@ def statewide(page, office, prefix):
             fundamentals=fundm,
             stages=dict(anchor=round(-r.get("s24", 0), 2), fund=fundm,
                         poll=round(-margin, 2), rate=round(-margin, 2), market=round(-margin, 2)),
-            pollAvg=pa, enop=float(v["n_polls"]), wPoll=round(v["blend_weights"]["M3"], 3), wMkt=0.0, market=None,
+            pollAvg=pa, pollLevel=plevel if pa is not None else None, pollPsi=psi_m,
+            enop=float(v["n_polls"]), wPoll=round(v["blend_weights"]["M3"], 3), wMkt=0.0, market=None,
             ratings=[], est=side, votes=votes, cands=cand_rows,
             rcv=(dict(dem=int(rcv["votes"][0]), rep=int(rcv["votes"][1]),
                       demPct=rcv["pct"][0], repPct=rcv["pct"][1],

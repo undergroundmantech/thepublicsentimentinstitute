@@ -2,7 +2,7 @@
 // Georgia — 2026 Governor: Keisha Lance Bottoms (D) vs. Rick Jackson (R)
 // Generated from the TPSI forecast poll feed (run of 2026-09-22), merged with
 // the polls this file already carried. Polls of matchups that are not on the
-// ballot were dropped. Newest poll: 2026-09-14.
+// ballot were dropped. Newest poll: 2026-09-23.
 
 export type SampleType = "LV" | "RV" | "A";
 
@@ -45,6 +45,8 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "GA-GOV-2026", "pollster": "Quantus Insights (R)", "startDate": "2026-07-29", "endDate": "2026-08-01", "sampleSize": 815, "sampleType": "LV", "results": {"Keisha Lance Bottoms (D)": 46.0, "Rick Jackson (R)": 45.0, "Other": 1.0, "Undecided": 8.0}},
     {"raceId": "GA-GOV-2026", "pollster": "InsiderAdvantage (R)", "startDate": "2026-08-16", "endDate": "2026-08-17", "sampleSize": 800, "sampleType": "LV", "results": {"Keisha Lance Bottoms (D)": 46.0, "Rick Jackson (R)": 46.0, "Undecided": 8.0}},
     {"raceId": "GA-GOV-2026", "pollster": "Rasmussen Reports (R)", "startDate": "2026-09-14", "endDate": "2026-09-14", "sampleSize": 1019, "sampleType": "LV", "results": {"Keisha Lance Bottoms (D)": 45.0, "Rick Jackson (R)": 48.0, "Undecided": 7.0}},
-    {"raceId": "GA-GOV-2026", "pollster": "Big Data Poll", "startDate": "2026-09-21", "endDate": "2026-09-23", "sampleSize": 678, "sampleType": "LV", "moe": 4.0, "results": {"Keisha Lance Bottoms (D)": 46.7, "Rick Jackson (R)": 48.7, "Undecided": 4.6}, "notes": "Initial ballot. Leaned, the release has it 50.5 to 49.5 for Jackson."}
+    {"raceId": "GA-GOV-2026", "pollster": "YouGov", "startDate": "2026-09-15", "endDate": "2026-09-18", "sampleSize": 3299, "sampleType": "LV", "moe": 2.8, "results": {"Keisha Lance Bottoms (D)": 44.0, "Rick Jackson (R)": 46.0, "Other": 2.0, "Undecided": 8.0}, "notes": "First of two likely voter screens. Registered voters, 3,414: Jackson 45, Bottoms 44. The second likely voter screen, 3,069: Jackson 47, Bottoms 44."},
+    {"raceId": "GA-GOV-2026", "pollster": "Big Data Poll", "startDate": "2026-09-21", "endDate": "2026-09-23", "sampleSize": 678, "sampleType": "LV", "moe": 4.0, "results": {"Keisha Lance Bottoms (D)": 46.7, "Rick Jackson (R)": 48.7, "Undecided": 4.6}, "notes": "Initial ballot. Leaned, the release has it 50.5 to 49.5 for Jackson."},
+    {"raceId": "GA-GOV-2026", "pollster": "InsiderAdvantage (R)", "startDate": "2026-09-22", "endDate": "2026-09-23", "sampleSize": 1200, "sampleType": "LV", "moe": 4.0, "results": {"Keisha Lance Bottoms (D)": 46.0, "Rick Jackson (R)": 48.0, "Undecided": 6.0}}
   ],
 };

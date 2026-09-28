@@ -74,6 +74,8 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "TX-SEN-2026", "pollster": "Trafalgar Group (R)", "startDate": "2026-09-15", "endDate": "2026-09-17", "sampleSize": 1079, "sampleType": "LV", "results": {"James Talarico (D)": 46.0, "Ken Paxton (R)": 45.0, "Other": 3.0, "Undecided": 6.0}},
     {"raceId": "TX-SEN-2026", "pollster": "Texas Southern University", "startDate": "2026-09-15", "endDate": "2026-09-19", "sampleSize": 1800, "sampleType": "LV", "results": {"James Talarico (D)": 47.0, "Ken Paxton (R)": 46.0, "Other": 3.0, "Undecided": 4.0}},
     {"raceId": "TX-SEN-2026", "pollster": "Marist University", "startDate": "2026-09-17", "endDate": "2026-09-20", "sampleSize": 1139, "sampleType": "RV", "results": {"James Talarico (D)": 50.0, "Ken Paxton (R)": 44.0, "Other": 2.0, "Undecided": 4.0}},
-    {"raceId": "TX-SEN-2026", "pollster": "Texas Public Opinion Research (D)", "startDate": "2026-09-19", "endDate": "2026-09-22", "sampleSize": 1007, "sampleType": "LV", "results": {"James Talarico (D)": 49.0, "Ken Paxton (R)": 44.0, "Other": 4.0, "Undecided": 3.0}}
+    {"raceId": "TX-SEN-2026", "pollster": "Texas Public Opinion Research (D)", "startDate": "2026-09-19", "endDate": "2026-09-22", "sampleSize": 1007, "sampleType": "LV", "results": {"James Talarico (D)": 49.0, "Ken Paxton (R)": 44.0, "Other": 4.0, "Undecided": 3.0}},
+    {"raceId": "TX-SEN-2026", "pollster": "Stratus Intelligence (R)", "startDate": "2026-09-22", "endDate": "2026-09-24", "sampleSize": 0, "sampleType": "LV", "results": {"James Talarico (D)": 48.0, "Ken Paxton (R)": 48.0, "Undecided": 4}, "notes": "Sample size not published"},
+    {"raceId": "TX-SEN-2026", "pollster": "Big Data Poll", "startDate": "2026-09-24", "endDate": "2026-09-26", "sampleSize": 698, "sampleType": "LV", "results": {"James Talarico (D)": 46.8, "Ken Paxton (R)": 44.9, "Undecided": 8.3}},
   ],
 };

@@ -70,6 +70,8 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "TX-GOV-2026", "pollster": "Emerson College", "startDate": "2026-09-12", "endDate": "2026-09-14", "sampleSize": 1000, "sampleType": "LV", "results": {"Gina Hinojosa (D)": 46.0, "Greg Abbott (R)": 49.0, "Other": 2.0, "Undecided": 4.0}},
     {"raceId": "TX-GOV-2026", "pollster": "Texas Southern University", "startDate": "2026-09-15", "endDate": "2026-09-19", "sampleSize": 1800, "sampleType": "LV", "results": {"Gina Hinojosa (D)": 45.0, "Greg Abbott (R)": 49.0, "Other": 2.0, "Undecided": 4.0}},
     {"raceId": "TX-GOV-2026", "pollster": "Marist University", "startDate": "2026-09-17", "endDate": "2026-09-20", "sampleSize": 1139, "sampleType": "RV", "results": {"Gina Hinojosa (D)": 49.0, "Greg Abbott (R)": 46.0, "Other": 1.0, "Undecided": 3.0}},
-    {"raceId": "TX-GOV-2026", "pollster": "Texas Public Opinion Research", "startDate": "2026-09-19", "endDate": "2026-09-22", "sampleSize": 1007, "sampleType": "LV", "results": {"Gina Hinojosa (D)": 46.0, "Greg Abbott (R)": 50.0, "Other": 3.0, "Undecided": 2.0}}
+    {"raceId": "TX-GOV-2026", "pollster": "Texas Public Opinion Research", "startDate": "2026-09-19", "endDate": "2026-09-22", "sampleSize": 1007, "sampleType": "LV", "results": {"Gina Hinojosa (D)": 46.0, "Greg Abbott (R)": 50.0, "Other": 3.0, "Undecided": 2.0}},
+    {"raceId": "TX-GOV-2026", "pollster": "Stratus Intelligence (R)", "startDate": "2026-09-22", "endDate": "2026-09-24", "sampleSize": 0, "sampleType": "LV", "results": {"Gina Hinojosa (D)": 45.0, "Greg Abbott (R)": 50.0, "Undecided": 5}, "notes": "Sample size not published"},
+    {"raceId": "TX-GOV-2026", "pollster": "Big Data Poll", "startDate": "2026-09-24", "endDate": "2026-09-26", "sampleSize": 698, "sampleType": "LV", "results": {"Gina Hinojosa (D)": 44.4, "Greg Abbott (R)": 48.9, "Undecided": 6.7}},
   ],
 };

@@ -177,6 +177,17 @@ def _cycle_gap(a, b, pres_d2):
     if a not in NAT_HOUSE_D2 or b not in pres_d2: return 0.0
     return float(logit(NAT_HOUSE_D2[a]) - logit(pres_d2[b]))
 
+def _depol_gap(a, b, fl, PP, pres_d2):
+    """What the depolarized baseline adds back to a governor's measured gap in year a against
+    presidential year b: the part of the national environment and of the state's lean that a
+    governor race does not follow. Positive means the baseline already expected a better
+    Democratic showing than the fully partisan one, so the gap attributed to the person shrinks
+    for a Republican crossover and grows for a Democratic one."""
+    if a not in NAT_HOUSE_D2 or b not in pres_d2: return 0.0
+    p = PP[b].reindex(fl)
+    lean_b = float(logit(p.votes_dem.sum() / (p.votes_dem.sum() + p.votes_gop.sum())) - logit(pres_d2[b]))
+    return (1 - GOV_BETA) * float(logit(NAT_HOUSE_D2[a])) + (1 - GOV_LAMBDA) * lean_b
+
 INCUMBENT_GOV = {
     "ARG": dict(party="R", pairs=[(2022, 2020)]),                               # Sanders, elected 2022
     "AZG": dict(party="D", pairs=[(2022, 2020)]),                               # Hobbs, 2022
@@ -206,6 +217,31 @@ INCUMBENT_GOV = {
 # An incumbent who cleared their primary carries more of their past crossover
 # appeal, one who was held down carries less. The bounds stop the primary from
 # ever dominating the measured gap. Judgement, not a fitted value.
+# ---- governor depolarization, Sept 28 2026 ----------------------------------
+# Governor races are more local than Senate races. On the model's own certified results for the
+# 36 governor states in 2014, 2018 and 2022, 108 races, the statewide governor vote follows the
+# state's presidential lean at only about half strength and the national House environment at
+# about half strength, while Senate races follow the presidential lean one for one:
+#     logit gov D share = c + beta x national House env + lambda x state presidential lean + incumbency
+#     governors, fitted:   beta 0.45   lambda 0.43   (lambda 0.60 without the incumbency term)
+#     Senate, same data:   lambda 1.02
+# Leaving one cycle out at a time, with an incumbent party term fitted on the other two cycles:
+#     beta 1, lambda 1, the fully partisan baseline   RMSE 19.5 points of margin   winner right 82.1%
+#     beta 0.8, lambda 0.8                             RMSE 16.8                      83.0%
+#     beta 0.6, lambda 0.6                             RMSE 15.0                      84.9%
+#     beta 0.5, lambda 0.5                             RMSE 14.6                      84.9%
+# 0.6 is used, the conservative end of the range that helps, because the model also carries a
+# measured personal vote for incumbents and polls. The fundamentals legs, approval and census, keep
+# their county pattern; their statewide level is moved so the national environment counts at beta
+# and the state's lean against the nation at lambda. The incumbent personal vote is measured against
+# the same depolarized baseline, so the generic crossover a governor gets from compression is not
+# counted a second time as that governor's own vote. Senate races are untouched.
+GOV_DEPOL = os.environ.get("GOV_DEPOL", "1") == "1"
+GOV_BETA = float(os.environ.get("GOV_BETA", "0.6"))
+GOV_LAMBDA = float(os.environ.get("GOV_LAMBDA", "0.6"))
+NAT_PRES_D2 = {2016: 65_853_514 / (65_853_514 + 62_984_828), 2020: 81_283_501 / (81_283_501 + 74_223_975),
+               2024: 75_017_613 / (75_017_613 + 77_302_580)}
+_DEPOL_AUDIT = {}
 GOV_INC_PRIM_K = float(os.environ.get("GOV_INC_PRIM_K", "0.25"))
 GOV_INC_PRIM_LO, GOV_INC_PRIM_HI = 0.5, 1.3
 _INC_AUDIT = {}
@@ -715,6 +751,7 @@ EXTRA_POLLS = {
     # about 1 percent and 0.1 percent of the September read, so the level here is the September poll.
     "VTG": [dict(source="University of New Hampshire", dates="September 17-21, 2026", end="2026-09-21", n=835, pop="LV", D=49, R=43, O=2, U=6)],
     "MI": [dict(source="co/efficient (R)", dates="September 21-23, 2026", end="2026-09-23", n=843, pop="LV", D=45, R=45, O=2, U=8),
+           dict(source="GBAO (D)", dates="September 19-22, 2026", end="2026-09-22", n=800, pop="LV", D=48, R=44, O=0, U=8),   # Sept 28 2026
            dict(source="New York Times/Siena University", dates="September 15-22, 2026", end="2026-09-22", n=613, pop="LV", D=49, R=44, O=0, U=7),
            dict(source="InsiderAdvantage", dates="September 16-17, 2026", end="2026-09-17",
                 n=1200, pop="LV", D=46.6, R=44.7, O=3.3, U=5.4),
@@ -739,7 +776,9 @@ EXTRA_POLLS = {
 }
 
 def _add_extra(st, p):
-    rows = EXTRA_POLLS.get(st)
+    # Sept 28 2026: polls the site carried and the forecast did not (site_poll_sync.py) join EXTRA_POLLS
+    import site_poll_sync as _sps
+    rows = list(EXTRA_POLLS.get(st) or []) + list(_sps.SITE_SYNC.get(st) or [])
     if not rows: return p
     add = pd.DataFrame([{**r, "end": pd.Timestamp(r["end"])} for r in rows])
     have = set(p.source.str.strip() + "|" + p.dates.str.strip()) if len(p) else set()
@@ -2472,6 +2511,8 @@ def national_shift(model):
         t26 = _an.gallup_lv_d2(sys.modules[__name__], model)
     else:
         t26 = NAT_D2
+    global _T26
+    _T26 = float(t26)
     for target, use24 in [(t26, False), (NAT_2024_D2, True)]:
         lo, hi = -2.0, 2.0
         for _ in range(50):
@@ -2487,6 +2528,7 @@ def national_shift(model):
 _CAL = {}
 _M1K = {}
 _MODEL, _SHIFT = None, None
+_T26 = None
 # census leg anchor. Since Sept. 22, 2026 the default is "meridian": the Gallup party identification anchor is removed and
 # the census leg takes the same TPSI Meridian ballot as the other two legs; M2_ANCHOR=gallup restores Gallup.
 M2_ANCHOR = os.environ.get("M2_ANCHOR", "meridian")
@@ -2642,6 +2684,7 @@ def run_state(st, model, shift, nat_turn_rate):
             _raw = sum(logit(S[a].D / (S[a].D + S[a].R))
                        - logit(_PP[b].reindex(fl).votes_dem / (_PP[b].reindex(fl).votes_dem + _PP[b].reindex(fl).votes_gop))
                        - _cycle_gap(a, b, _pd2)
+                       + (_depol_gap(a, b, fl, _PP, _pd2) if GOV_DEPOL else 0.0)
                        for a, b in _pairs) / len(_pairs)
             _w = P24.reindex(fl).total_votes.values
             _sz = 100 * (inv(float((_raw.values * _w).sum() / _w.sum())) - 0.5) * 2
@@ -2685,6 +2728,25 @@ def run_state(st, model, shift, nat_turn_rate):
         if cand_prof is not None:
             _hinfo = _ev.HISTORY_INFO.get(st, {})
             m1 = inv(logit(m1) + pd.Series(_hinfo.get("candidate_county_shift", np.zeros(len(fl))), index=fl))
+    if GOV_DEPOL and cfg.get("office") == "governor":
+        # governor depolarization: the approval and census legs keep their county pattern, their statewide level
+        # follows the national environment at GOV_BETA and the state's lean against the nation at GOV_LAMBDA
+        _w = p24.total_votes.astype(float).values
+        _lvl = lambda z: float(logit(float((inv(np.asarray(z, float)) * _w).sum() / _w.sum())))
+        _E1 = float(logit(NAT_D2)); _E2 = float(logit(_T26 if _T26 is not None else NAT_D2))
+        _L1 = _lvl(base)
+        _m2p = logit(actual24) + demo_swing + (el_delta if ELECTORATE else 0.0)
+        _L2 = _lvl(_m2p)
+        _s1 = -(1 - GOV_BETA) * _E1 - (1 - GOV_LAMBDA) * (_L1 - _E1)
+        _s2 = -(1 - GOV_BETA) * _E2 - (1 - GOV_LAMBDA) * (_L2 - _E2)
+        _pre = (_lvl(logit(m1)), _lvl(logit(m2)))
+        m1 = inv(logit(m1) + _s1); m2 = inv(logit(m2) + _s2)
+        _pts = lambda L: round(100 * (2 * float(inv(L)) - 1), 2)
+        _DEPOL_AUDIT[st] = dict(beta=GOV_BETA, lam=GOV_LAMBDA,
+                                m1_partisan_margin=_pts(_L1), m1_nat_margin=_pts(_E1), m1_shift_logit=round(_s1, 4),
+                                m2_partisan_margin=_pts(_L2), m2_nat_margin=_pts(_E2), m2_shift_logit=round(_s2, 4),
+                                m1_before=_pts(_pre[0]), m1_after=_pts(_lvl(logit(m1))),
+                                m2_before=_pts(_pre[1]), m2_after=_pts(_lvl(logit(m2))))
     if cand_prof is not None:
         # candidate strength against the environment: polls against the model's own fundamentals
         _w = p24.total_votes.astype(float)
@@ -2907,6 +2969,7 @@ def run_state(st, model, shift, nat_turn_rate):
             summary["candidate"]["sides"] = {s_: {**{k_: v_ for k_, v_ in d_.items() if k_ not in ("dev", "mob", "geo")}, "home_ground_range": [float(np.min(d_["geo"])), float(np.max(d_["geo"]))] if len(d_.get("geo", [])) else None} for s_, d_ in cand_prof["sides"].items()}
     summary["finance"] = dict(shift_logit=float(fin_shift), status=fin_why)
     summary["incumbency"] = _INC_AUDIT.get(st)
+    if _DEPOL_AUDIT.get(st): summary["depolarization"] = _DEPOL_AUDIT[st]
     if cfg.get("rcv"):
         FD, FR = df.rcv_final_dem_votes.sum(), df.rcv_final_rep_votes.sum()
         summary["rcv_final"] = {cfg["D"]: FD / (FD + FR) * 100, cfg["R"]: FR / (FD + FR) * 100}

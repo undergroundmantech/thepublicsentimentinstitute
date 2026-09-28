@@ -9,6 +9,7 @@ import {
 } from "@/app/polling/lib/aggregates";
 import { getPollsterEntry } from "@/app/polling/lib/buildDailyModel";
 import StateRaceMap, { type MapRow } from "@/app/polling/lib/StateRaceMap";
+import TrendPanel from "@/app/polling/lib/TrendPanel";
 
 const round0 = (n: number) => Math.round(n);
 const round1 = (n: number) => Math.round(n * 10) / 10;
@@ -446,6 +447,18 @@ export default function PollingAveragesPage() {
             <AggregatePollChart animKey={`${h2hDef.id}:${sampleFilter}`} daily={builtH2H.daily} polls={builtH2H.polls} seriesA={h2hDef.seriesA} seriesB={h2hDef.seriesB} fmtMargin={h2hDef.fmtMargin} marginLabel={h2hDef.marginLabel} unit={h2hDef.unit} />
           ) : null}
         </div>
+
+        {/* PSI LOWESS trend lines and the Election Day polling average, head-to-heads only */}
+        {!isMulti && h2hDef ? (
+          <div className="pa-panel">
+            <div className="pa-panel-head">
+              <h2 className="pa-panel-title">Trend lines</h2>
+              <span className="pa-panel-meta">Robust LOWESS of every poll&apos;s margin · each poll counts once</span>
+            </div>
+            <TrendPanel key={`${h2hDef.id}:${sampleFilter}`} def={h2hDef}
+              polls={sampleFilter === "all" ? h2hDef.polls : h2hDef.polls.filter((p) => canonType(p.sampleType) === sampleFilter)} />
+          </div>
+        ) : null}
 
         {/* all polls */}
         <section className="pa-polls">

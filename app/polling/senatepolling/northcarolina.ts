@@ -66,6 +66,7 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "NC-SEN-2026", "pollster": "East Carolina University", "startDate": "2026-08-31", "endDate": "2026-09-03", "sampleSize": 675, "sampleType": "LV", "results": {"Roy Cooper (D)": 49.0, "Michael Whatley (R)": 41.5, "Other": 4.0, "Undecided": 7.0}},
     {"raceId": "NC-SEN-2026", "pollster": "The Trafalgar Group (R)", "startDate": "2026-09-08", "endDate": "2026-09-10", "sampleSize": 1084, "sampleType": "LV", "results": {"Roy Cooper (D)": 48.0, "Michael Whatley (R)": 42.0, "Other": 3.0, "Undecided": 7.0}},
     {"raceId": "NC-SEN-2026", "pollster": "Harper Polling (R)", "startDate": "2026-09-13", "endDate": "2026-09-15", "sampleSize": 608, "sampleType": "LV", "results": {"Roy Cooper (D)": 49.0, "Michael Whatley (R)": 34.0, "Other": 5.0, "Undecided": 12.0}},
-    {"raceId": "NC-SEN-2026", "pollster": "InsiderAdvantage (R)", "startDate": "2026-09-16", "endDate": "2026-09-17", "sampleSize": 1200, "sampleType": "LV", "results": {"Roy Cooper (D)": 48.0, "Michael Whatley (R)": 43.0, "Other": 3.0, "Undecided": 6.0}}
+    {"raceId": "NC-SEN-2026", "pollster": "InsiderAdvantage (R)", "startDate": "2026-09-16", "endDate": "2026-09-17", "sampleSize": 1200, "sampleType": "LV", "results": {"Roy Cooper (D)": 48.0, "Michael Whatley (R)": 43.0, "Other": 3.0, "Undecided": 6.0}},
+    {"raceId": "NC-SEN-2026", "pollster": "AARP (Fabrizio Ward/Impact Research)", "startDate": "2026-09-17", "endDate": "2026-09-20", "sampleSize": 0, "sampleType": "LV", "results": {"Roy Cooper (D)": 53.0, "Michael Whatley (R)": 42.0, "Undecided": 5}, "notes": "Sample size not published"},
   ],
 };

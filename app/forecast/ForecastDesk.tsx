@@ -1281,7 +1281,9 @@ function StageFlow({ race, env, sims }: {
     {
       k: "the polls", v: st.poll, on: true, carry: `${pollShare}%`,
       cap: race.pollAvg != null
-        ? <>{race.enop.toFixed(1)} effective polls averaging <b style={{ color: race.pollAvg > 0 ? "var(--fc-gop)" : "var(--fc-dem)" }}>{fmtRaceMargin(race, race.pollAvg)}</b> · weights decay with age and pollster record</>
+        ? race.pollLevel === "lowess"
+          ? <>{race.enop.toFixed(0)} polls project to an Election Day polling average of <b style={{ color: race.pollAvg > 0 ? "var(--fc-gop)" : "var(--fc-dem)" }}>{fmtRaceMargin(race, race.pollAvg)}</b> · LOWESS trend, every poll counted once{race.pollPsi != null ? <> · PSI weighted average {fmtRaceMargin(race, race.pollPsi)}</> : null}</>
+          : <>{race.enop.toFixed(1)} effective polls averaging <b style={{ color: race.pollAvg > 0 ? "var(--fc-gop)" : "var(--fc-dem)" }}>{fmtRaceMargin(race, race.pollAvg)}</b> · weights decay with age and pollster record</>
         : <>no usable polling — the fundamentals carry through untouched</>,
     },
     {
@@ -1802,6 +1804,29 @@ const CSS = `
   --fc-bg: #050505;
   --fc-bg-rgb: 5,5,5;
   --fc-ink: #f4f4ef;
+  --fc-ink-rgb: 244,244,239;
+  --fc-line-rgb: 255,255,255;        /* hairlines and panel fills, as overlays */
+  --fc-shadow: none;
+}
+:root[data-theme="light"] .fc-page {
+  --fc-bg: #f7f7f4;
+  --fc-bg-rgb: 247,247,244;
+  --fc-ink: #17171b;
+  --fc-ink-rgb: 23,23,27;
+  --fc-line-rgb: 23,23,27;
+  --fc-shadow: 0 1px 2px rgba(23,23,27,0.04), 0 2px 10px rgba(23,23,27,0.06);
+}
+
+/* ── theme tokens ──────────────────────────────────────────────────────────
+   The desk is dark by default. Only the base colours move between themes;
+   every rule below keeps its own alpha, so the dark rendering is unchanged
+   and light is a true inversion rather than a second hand-tuned palette.
+   The site sets data-theme on <html> (see app/layout.tsx), and the toggle
+   already in DarkNav is what drives it — this page just follows along. */
+.fc-page {
+  --fc-bg: var(--fc-bg);
+  --fc-bg-rgb: 5,5,5;
+  --fc-ink: var(--fc-ink);
   --fc-ink-rgb: 244,244,239;
   --fc-line-rgb: 255,255,255;        /* hairlines and panel fills, as overlays */
   --fc-shadow: none;

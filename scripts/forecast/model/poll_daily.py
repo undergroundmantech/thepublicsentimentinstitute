@@ -168,6 +168,28 @@ def poll_audit(polls, as_of=AS_OF_DAILY):
     if len(df): df["weight_share"] = df.weight / df.weight.sum()
     return df
 
+# ── LOWESS Election Day polling average, Sept 28 2026 ─────────────────────────
+# POLL_LEVEL=lowess, the default since Sept 28 2026: the race's polling level is the PSI LOWESS
+# Election Day polling average (lowess_trend.py) wherever a race has 8 or more polls. The PSI
+# weighted average still supplies the decided share, D + R, and the third party share, so only
+# the split of the decided vote moves. POLL_LEVEL=psi restores the weighted average everywhere.
+POLL_LEVEL = os.environ.get("POLL_LEVEL", "lowess")
+import lowess_trend as _lt
+
+def _apply_lowess(out, frame):
+    out["psi"] = dict(D=out["D"], R=out["R"], D2=out["D2"])
+    if POLL_LEVEL != "lowess":
+        out["poll_level"] = "psi"; return out
+    proj = _lt.projection(frame, AS_OF_DAILY)
+    if proj is None:
+        out["poll_level"] = "psi"; out["lowess"] = None; return out
+    T = out["D"] + out["R"]
+    m = max(-0.98 * T, min(0.98 * T, proj["eday_margin"]))
+    out["D"], out["R"] = (T + m) / 2, (T - m) / 2
+    out["D2"] = out["D"] / T
+    out["poll_level"] = "lowess"; out["lowess"] = proj
+    return out
+
 # ── install into the forecast ────────────────────────────────────────────────
 REGISTRY = {}      # race key -> dict(series=..., audit=..., avg=...)
 _CUR = {"st": None}
@@ -211,6 +233,7 @@ def install(sm):
             out["split_share"] = last["Bodnar"] / (last["Bodnar"] + last["Bankhead"])
         wmap = dict(zip(zip(aud.pollster, aud.end), aud.weight)) if len(aud) else {}
         p["w"] = [wmap.get((s, pd.Timestamp(e).date().isoformat()), 0.0) for s, e in zip(p.source, p.end)]
+        out = _apply_lowess(out, p)
         REGISTRY[st] = dict(series=ser, audit=aud, avg=out)
         return p, out
     def _poll_avg_rcv(p):
@@ -239,6 +262,9 @@ def install(sm):
         p["w"] = [wmap.get((s, pd.Timestamp(e).date().isoformat()), 0.0) for s, e in zip(p.source, p.end)]
         out = dict(D=D, R=R, O=0.0, D2=D / (D + R), third=O1 / (D1 + R1 + O1), first_choice=dict(D=D1, R=R1, **thirds),
                    first_choice_share={k: v / (D1 + R1 + O1) for k, v in thirds.items()}, method="daily")
+        # Alaska: the trend runs on each poll's final round margin, first choice polls converted with the
+        # published transfer rates exactly as the weighted average converts them
+        out = _apply_lowess(out, fin.drop_duplicates(subset=["key"]))
         REGISTRY[st] = dict(series=ser, audit=aud, avg=out)
         return p, out
     sm.parse_polls = parse_polls; sm._poll_avg = _poll_avg; sm._poll_avg_rcv = _poll_avg_rcv

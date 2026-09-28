@@ -39,6 +39,10 @@ export interface Race {
   fundamentals: number;
   stages: { anchor: number; fund: number; poll: number; rate: number; market: number };
   pollAvg: number | null;
+  /** "lowess": the LOWESS Election Day polling average fed the race; "psi": the PSI weighted average */
+  pollLevel?: "lowess" | "psi" | null;
+  /** the PSI weighted average, GOP positive, kept beside a LOWESS level */
+  pollPsi?: number | null;
   enop: number;
   wPoll: number;
   wMkt: number;

@@ -204,6 +204,15 @@ def simulate(st, df, summ, model, shift):
     s2 = el._PRIOR["sig2"](sm.P24.reindex(fl).total_votes.fillna(1000).values if not st.startswith("AK") else T)
     sig_cty = np.sqrt(s2 / 2)
     s_state = state_sigma(summ["n_polls"])
+    # Governor depolarization: a governor race follows the national vote environment at sm.GOV_BETA. The shared
+    # national vote shock and the shared demographic group vote shocks are scaled by it, and the variance taken out
+    # comes back as the race's own, so each race is as uncertain as before but less tied to the others. Turnout
+    # shocks stay fully national, since governors share the ballot and the electorate with the Senate.
+    gb = sm.GOV_BETA if (sm.GOV_DEPOL and cfg.get("office") == "governor") else 1.0
+    s_state = float(np.sqrt(s_state ** 2 + (1 - gb ** 2) * SIG_NAT ** 2))
+    if gb < 1.0 and demo_v is not None:
+        _own = rng.normal(0, SIG_DEMO_VOTE, NAT["demo_vote"].shape) @ demo_idx.T
+        demo_v = gb * demo_v + np.sqrt(1 - gb ** 2) * _own
     has_third = o.max() > 0
     lo_ = logit(np.clip(o, 1e-6, 1 - 1e-6))
     rcv = cfg.get("rcv"); RCV = cfg.get("rcv_transfers", sm.AK_RCV) if rcv else None
@@ -218,7 +227,7 @@ def simulate(st, df, summ, model, shift):
             PB = BATCH if C * K <= 120_000 else max(10, int(BATCH * 120_000 / (C * K)))
             for p0 in range(0, PN, PB):
                 Bp = min(PB, PN - p0); ps = slice(p0, p0 + Bp)
-                envp = NAT["env"][ps] + prng.normal(0, s_state, Bp)
+                envp = gb * NAT["env"][ps] + prng.normal(0, s_state, Bp)
                 if CANDIDATE and st in cq.PROFILES:
                     envp = envp + prng.normal(0, cq.PROFILES[st]["sigma"], Bp)
                 shp = (e[None, :] * envp[:, None] + prng.normal(0, 1, (Bp, C)) * sig_cty[None, :]) * hfac[None, :]
@@ -240,7 +249,7 @@ def simulate(st, df, summ, model, shift):
     BS = BATCH if C * K <= 120_000 else max(10, int(BATCH * 120_000 / (C * K)))
     for s0 in range(0, N, BS):
         B = min(BS, N - s0); sl = slice(s0, s0 + B)
-        env = NAT["env"][sl] + rng.normal(0, s_state, B)
+        env = gb * NAT["env"][sl] + rng.normal(0, s_state, B)
         if CANDIDATE and st in cq.PROFILES:
             env = env + rng.normal(0, cq.PROFILES[st]["sigma"], B)
         shock = (e[None, :] * env[:, None] + rng.normal(0, 1, (B, C)) * sig_cty[None, :]) * hfac[None, :]
