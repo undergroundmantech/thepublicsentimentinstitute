@@ -1794,52 +1794,6 @@ function RaceSections({ race, byId, onPick, sims, updated, env }: {
 
 // ── styles ───────────────────────────────────────────────────────────────────
 const CSS = `
-/* ── theme tokens ──────────────────────────────────────────────────────────
-   The desk is dark by default. Only the base colours move between themes;
-   every rule below keeps its own alpha, so the dark rendering is unchanged
-   and light is a true inversion rather than a second hand-tuned palette.
-   The site sets data-theme on <html> (see app/layout.tsx), and the toggle
-   already in DarkNav is what drives it — this page just follows along. */
-.fc-page {
-  --fc-bg: #050505;
-  --fc-bg-rgb: 5,5,5;
-  --fc-ink: #f4f4ef;
-  --fc-ink-rgb: 244,244,239;
-  --fc-line-rgb: 255,255,255;        /* hairlines and panel fills, as overlays */
-  --fc-shadow: none;
-}
-:root[data-theme="light"] .fc-page {
-  --fc-bg: #f7f7f4;
-  --fc-bg-rgb: 247,247,244;
-  --fc-ink: #17171b;
-  --fc-ink-rgb: 23,23,27;
-  --fc-line-rgb: 23,23,27;
-  --fc-shadow: 0 1px 2px rgba(23,23,27,0.04), 0 2px 10px rgba(23,23,27,0.06);
-}
-
-/* ── theme tokens ──────────────────────────────────────────────────────────
-   The desk is dark by default. Only the base colours move between themes;
-   every rule below keeps its own alpha, so the dark rendering is unchanged
-   and light is a true inversion rather than a second hand-tuned palette.
-   The site sets data-theme on <html> (see app/layout.tsx), and the toggle
-   already in DarkNav is what drives it — this page just follows along. */
-.fc-page {
-  --fc-bg: var(--fc-bg);
-  --fc-bg-rgb: 5,5,5;
-  --fc-ink: var(--fc-ink);
-  --fc-ink-rgb: 244,244,239;
-  --fc-line-rgb: 255,255,255;        /* hairlines and panel fills, as overlays */
-  --fc-shadow: none;
-}
-:root[data-theme="light"] .fc-page {
-  --fc-bg: #f7f7f4;
-  --fc-bg-rgb: 247,247,244;
-  --fc-ink: #17171b;
-  --fc-ink-rgb: 23,23,27;
-  --fc-line-rgb: 23,23,27;
-  --fc-shadow: 0 1px 2px rgba(23,23,27,0.04), 0 2px 10px rgba(23,23,27,0.06);
-}
-
 /* @import must be the first rule in a sheet or the parser drops it. It was
    sitting a hundred lines down, so Oswald never loaded and every heading fell
    back to the system condensed face. */
@@ -1858,9 +1812,9 @@ const CSS = `
    the site's light canvas, and then painted near-white ink on it. That is the
    washed-out page. One block, literal values, no cycles. */
 :root {
-  --fc-bg: var(--fc-bg);
+  --fc-bg: #050505;
   --fc-bg-rgb: 5,5,5;
-  --fc-ink: var(--fc-ink);
+  --fc-ink: #f4f4ef;
   --fc-ink-rgb: 244,244,239;
   --fc-line-rgb: 255,255,255;        /* hairlines and panel fills, as overlays */
   --fc-band: #08080a;                /* the lifted band behind the distribution */

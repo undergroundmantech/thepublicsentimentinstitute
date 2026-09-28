@@ -499,3 +499,11 @@ partisan lean had set the level:
 
 Settings: `GOV_DEPOL=1 GOV_BETA=0.6 GOV_LAMBDA=0.6`, the default. `GOV_DEPOL=0` gives the old model.
 The backtest is in `scripts/forecast/model/depolarization/`.
+
+# Dark and light theme fixes, Sept 28
+
+- **Forecast desk, dark mode.** The desk's theme tokens pointed at themselves: `--fc-bg: var(--fc-bg)`. A self reference is invalid, so dark mode had no background. The page fell through to the light canvas and painted near white text on it. The cause was a leftover one off script that rewrote the desk's CSS whenever Python ran from that working folder. It is removed. The desk now has one token block with literal values, and the Oswald `@import` is the first rule again. File: `app/forecast/ForecastDesk.tsx`.
+- **Home page, light mode.** Home is designed dark only and has no theme toggle, but its colors came from the site tokens. A visitor with a saved light theme got a grey veil over the dark hero, dark text on it and an unreadable header. Home now runs on the dark tokens while it is open, set before paint by the layout's no flash script. Leaving home restores the saved theme. Files: `app/HomeV2.tsx`, `app/layout.tsx`.
+- **Latest poll and stat cards, dark mode.** Cards painted with Tailwind's `bg-white` stayed white while their text turned light. In dark mode they now use the panel color. File: `app/globals.css`.
+
+Checked in both themes for text contrast: `/`, `/forecast`, `/forecastratings`, `/earlyvote`, `/polling`, `/polling/genericballot`, `/polling/donaldtrumpapproval`, `/electoralmap`, `/situationroom`, `/partymap`, `/results`, `/latestpoll`, `/contact`, `/goldstandard`.

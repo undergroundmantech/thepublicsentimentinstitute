@@ -604,3 +604,9 @@ button.psi-btn:active { transform: translateY(0); opacity: 0.95; }
 @media (max-width: 640px) {
   .cty-votes-row { display: none !important; }
 }
+
+/* Dark theme: the older pages (latest poll, stat cards) paint their cards with
+   Tailwind's bg-white while their text follows the theme, which left light text
+   on white cards in dark mode. The cards follow the panel token instead. */
+:root[data-theme="dark"] .bg-white { background-color: var(--panel); }
+:root[data-theme="dark"] .border-gray-200 { border-color: var(--hairline); }

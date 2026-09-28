@@ -624,6 +624,25 @@ export default function HomePage() {
   const [openFaq, setOpenFaq] = useState(0);
   const [stats, setStats] = useState<HomeStats | null>(null);
 
+  // The home page is designed dark only: its hero, veil and header are painted on a
+  // fixed dark ground and the page carries no theme toggle. Its colours still come
+  // from the site tokens, so a visitor whose saved theme is light used to get light
+  // tokens on the dark hero, near-black text on a grey veil and an unreadable header.
+  // Home now runs on the dark tokens while it is open. The layout's no-flash script
+  // does the same before paint, and leaving the page restores the saved theme.
+  useEffect(() => {
+    const root = document.documentElement;
+    const before = root.getAttribute("data-theme");
+    root.setAttribute("data-theme", "dark");
+    return () => {
+      let saved: string | null = null;
+      try { saved = localStorage.getItem("psi-theme"); } catch {}
+      const m = window.matchMedia ? window.matchMedia("(prefers-color-scheme: dark)").matches : false;
+      const next = saved || (before && before !== "dark" ? before : (m ? "dark" : "light"));
+      root.setAttribute("data-theme", next);
+    };
+  }, []);
+
   // Run the weighted model off the critical path; everything that quotes a
   // number reads from this one computation.
   useEffect(() => {
