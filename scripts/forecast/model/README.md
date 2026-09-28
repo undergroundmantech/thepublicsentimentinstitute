@@ -67,7 +67,7 @@ House page, never from an older extract; both were stale before this run.
 | `poll_daily.py` | `POLL_LEVEL`, default `lowess`: a race with 8 or more polls takes its level from the LOWESS projection and keeps the PSI decided total. `POLL_LEVEL=psi` restores the old average |
 | `site_poll_sync.py` | New. 81 site polls in 17 races that the model was missing |
 | `senate_mode.py` | Merges `SITE_SYNC` into `EXTRA_POLLS`; GBAO Michigan added |
-| `texas/`, `iowa/`, `north_carolina/`, `south_carolina/`, `maine/`, `vermont/`, `georgia/`, `nevada/`, `arizona/` | Poll files with the new and backfilled polls |
+| `texas/`, `iowa/`, `north_carolina/`, `south_carolina/`, `maine/`, `vermont/`, `georgia/`, `nevada/`, `arizona/`, `kansas/` | Poll files with the new and backfilled polls |
 
 Re-run command, for the record:
 

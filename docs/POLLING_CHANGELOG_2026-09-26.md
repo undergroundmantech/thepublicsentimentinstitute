@@ -507,3 +507,30 @@ The backtest is in `scripts/forecast/model/depolarization/`.
 - **Latest poll and stat cards, dark mode.** Cards painted with Tailwind's `bg-white` stayed white while their text turned light. In dark mode they now use the panel color. File: `app/globals.css`.
 
 Checked in both themes for text contrast: `/`, `/forecast`, `/forecastratings`, `/earlyvote`, `/polling`, `/polling/genericballot`, `/polling/donaldtrumpapproval`, `/electoralmap`, `/situationroom`, `/partymap`, `/results`, `/latestpoll`, `/contact`, `/goldstandard`.
+
+## Kansas Senate and governor re-run, Sept 28
+
+Only these two races were re-run. Every other race keeps its numbers.
+
+Senate, three polls added:
+
+| Pollster | Field dates | Sample | Marshall | Hamilton |
+|---|---|---|---|---|
+| Wedgewood Polls | Sept. 22 to 24 | 500 LV | 48 | 50 |
+| GBAO | July 8 to 13 | 600 LV | 47 | 43 |
+| Tavern Research | Jan. 26 to 28 | 1,013 LV | 54 | 46 |
+
+Governor, one poll added: Wedgewood Polls, Sept. 22 to 24, 500 LV, Masterson 52, Holscher 48.
+
+| | Before | Now |
+|---|---|---|
+| Kansas Senate margin | Marshall +1.6 | Marshall +0.5 |
+| Hamilton win chance | 37.9% | 46.3% |
+| Kansas governor margin | Masterson +5.1 | Masterson +4.4 |
+| Holscher win chance | 22.0% | 25.1% |
+| Senate, Democratic control with Osborn | 77.5% | 78.3% |
+| Senate, Democratic control without Osborn | 75.4% | 76.5% |
+| Governors, Democratic control | 84.0% | 83.8% |
+
+Kansas Senate has 7 polls and the governor race 4, so both still use the PSI weighted average.
+LOWESS needs 8.
