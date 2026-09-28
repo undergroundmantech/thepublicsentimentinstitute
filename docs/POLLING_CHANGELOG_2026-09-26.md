@@ -534,3 +534,28 @@ Governor, one poll added: Wedgewood Polls, Sept. 22 to 24, 500 LV, Masterson 52,
 
 Kansas Senate has 7 polls and the governor race 4, so both still use the PSI weighted average.
 LOWESS needs 8.
+
+# House re-run, Sept 28
+
+All 435 districts were re-run at 2,000 simulations with the day's settings: `AS_OF=2026-09-28`, the
+published House settings and the Sept 28 state enthusiasm and vote history inputs. The district
+poll gap centre stays pinned at the Sept 25 value, -0.1356, so the run can be split across three
+lanes and still match a single run.
+
+Most of today's changes do not reach the House. The LOWESS polling level, the new Senate and governor
+polls and the governor depolarization all work on statewide races. House districts use their own
+district poll table and fundamentals, and no district polls came in today. What changes is the date,
+which moves the weight on district polls, plus small shifts from the statewide electorate inputs.
+
+| | Before | Now |
+|---|---|---|
+| Democratic majority | 89.45% | 89.4% |
+| Average Democratic seats | 244.8 | 244.9 |
+| 80% range | 217 to 276 | 217 to 276 |
+| Seats called for projected winners | 237 D, 198 R | 237 D, 198 R |
+
+No district changed favourite. The largest move is under half a point of margin, in Missouri 3,
+New Jersey 1, Arizona 2 and New Jersey 9.
+
+The OnPoint House page was republished from this run. The live page had still been on an older
+run, 85.25% for Democrats, so its numbers now match the desk.
