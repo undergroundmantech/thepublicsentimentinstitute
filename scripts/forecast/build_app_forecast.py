@@ -171,7 +171,7 @@ def poll_rows(key, office, state):
         out.append(dict(pollster=str(r.source), kind=str(getattr(r, "pop", "LV")), age=days,
                         n=int(getattr(r, "n", 0) or 0), margin=round(R - D, 1)))
     out.sort(key=lambda p: p["age"])
-    return out[:14]
+    return out[:60]   # every poll the run used; the race page lists them all
 
 def daily_series(key, office, state):
     nm = state.lower().replace(" ", "_")

@@ -2,7 +2,7 @@
 // Ohio — 2026 Governor: Amy Acton (D) vs. Vivek Ramaswamy (R)
 // Generated from the TPSI forecast poll feed (run of 2026-09-22), merged with
 // the polls this file already carried. Polls of matchups that are not on the
-// ballot were dropped. Newest poll: 2026-09-10.
+// ballot were dropped. Newest poll: 2026-09-27.
 
 export type SampleType = "LV" | "RV" | "A";
 
@@ -51,6 +51,7 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "OH-GOV-2026", "pollster": "Tulchin Research (D)", "startDate": "2026-07-29", "endDate": "2026-08-04", "sampleSize": 600, "sampleType": "LV", "results": {"Amy Acton (D)": 46.0, "Vivek Ramaswamy (R)": 44.0, "Other": 5.0, "Undecided": 5.0}},
     {"raceId": "OH-GOV-2026", "pollster": "Beacon Research and Shaw & Co. Research bipartisan", "startDate": "2026-08-06", "endDate": "2026-08-10", "sampleSize": 1008, "sampleType": "RV", "results": {"Amy Acton (D)": 48.0, "Vivek Ramaswamy (R)": 50.0, "Undecided": 2.0}},
     {"raceId": "OH-GOV-2026", "pollster": "Wedgewood Polls", "startDate": "2026-08-11", "endDate": "2026-08-13", "sampleSize": 800, "sampleType": "LV", "results": {"Amy Acton (D)": 47.0, "Vivek Ramaswamy (R)": 46.0, "Undecided": 7.0}},
-    {"raceId": "OH-GOV-2026", "pollster": "Bowling Green State University/YouGov", "startDate": "2026-09-01", "endDate": "2026-09-10", "sampleSize": 1000, "sampleType": "LV", "results": {"Amy Acton (D)": 48.0, "Vivek Ramaswamy (R)": 45.0, "Other": 7.0}}
+    {"raceId": "OH-GOV-2026", "pollster": "Bowling Green State University/YouGov", "startDate": "2026-09-01", "endDate": "2026-09-10", "sampleSize": 1000, "sampleType": "LV", "results": {"Amy Acton (D)": 48.0, "Vivek Ramaswamy (R)": 45.0, "Other": 7.0}},
+    {"raceId": "OH-GOV-2026", "pollster": "NPR/Marist", "startDate": "2026-09-24", "endDate": "2026-09-27", "sampleSize": 1298, "sampleType": "RV", "moe": 3.8, "results": {"Amy Acton (D)": 50.0, "Vivek Ramaswamy (R)": 44.0, "Undecided": 6.0}}
   ],
 };

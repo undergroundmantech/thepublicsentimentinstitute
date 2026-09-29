@@ -2,7 +2,7 @@
 // Ohio — 2026 U.S. Senate: Sherrod Brown (D) vs. Jon Husted (R)
 // Generated from the TPSI forecast poll feed (run of 2026-09-22), merged with
 // the polls this file already carried. Polls of matchups that are not on the
-// ballot were dropped. Newest poll: 2026-09-16.
+// ballot were dropped. Newest poll: 2026-09-28.
 
 export type SampleType = "LV" | "RV" | "A";
 
@@ -52,6 +52,8 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "OH-SEN-2026", "pollster": "Abacus Data", "startDate": "2026-08-26", "endDate": "2026-08-28", "sampleSize": 306, "sampleType": "LV", "results": {"Sherrod Brown (D)": 52.0, "Jon Husted (R)": 46.0, "Other": 3.0}},
     {"raceId": "OH-SEN-2026", "pollster": "InsiderAdvantage (R)", "startDate": "2026-09-08", "endDate": "2026-09-09", "sampleSize": 1200, "sampleType": "LV", "results": {"Sherrod Brown (D)": 47.0, "Jon Husted (R)": 42.0, "Other": 3.0, "Undecided": 8.0}},
     {"raceId": "OH-SEN-2026", "pollster": "Bowling Green State University/YouGov", "startDate": "2026-09-01", "endDate": "2026-09-10", "sampleSize": 1000, "sampleType": "LV", "results": {"Sherrod Brown (D)": 48.0, "Jon Husted (R)": 45.0}},
-    {"raceId": "OH-SEN-2026", "pollster": "Trafalgar Group (R)", "startDate": "2026-09-14", "endDate": "2026-09-16", "sampleSize": 1085, "sampleType": "LV", "results": {"Sherrod Brown (D)": 45.0, "Jon Husted (R)": 42.0}}
+    {"raceId": "OH-SEN-2026", "pollster": "Trafalgar Group (R)", "startDate": "2026-09-14", "endDate": "2026-09-16", "sampleSize": 1085, "sampleType": "LV", "results": {"Sherrod Brown (D)": 45.0, "Jon Husted (R)": 42.0}},
+    {"raceId": "OH-SEN-2026", "pollster": "Big Data Poll", "startDate": "2026-09-28", "endDate": "2026-09-28", "sampleSize": 682, "sampleType": "LV", "results": {"Sherrod Brown (D)": 46.9, "Jon Husted (R)": 42.5, "Undecided": 10.6}, "notes": "Senate with leaners, 682 likely voters of 735. Field dates not released; logged Sept 28."},
+    {"raceId": "OH-SEN-2026", "pollster": "NPR/Marist", "startDate": "2026-09-24", "endDate": "2026-09-27", "sampleSize": 1298, "sampleType": "RV", "moe": 3.8, "results": {"Sherrod Brown (D)": 51.0, "Jon Husted (R)": 43.0, "Undecided": 6.0}}
   ],
 };
