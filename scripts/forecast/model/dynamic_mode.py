@@ -60,6 +60,11 @@ SIG_IRREG_NAT, SIG_IRREG_ST = 0.12, 0.06
 _rng_demo = np.random.default_rng(SEED + 17)
 NAT["demo_vote"] = _rng_demo.normal(0, SIG_DEMO_VOTE, (N, 7)); NAT["demo_turn"] = _rng_demo.normal(0, SIG_DEMO_TURN, (N, 7))
 NAT["irreg"] = _rng_demo.normal(0, SIG_IRREG_NAT, N)
+# Voter behavior layer, Sept 29 2026 (behavior.py): national shocks to the weight of each turnout motivation, shared
+# by every race in a run, so a cycle where commitment or approval intensity matters more hits every race at once
+import behavior as bh
+import bounds as bd
+NAT["mot"] = np.random.default_rng(SEED + 29).normal(0, bh.KAPPA_NAT, (N, len(bh.SHOCKS)))
 
 slug = lambda nm: re.sub(r"[^a-z]+", "_", nm.lower()).strip("_")
 
@@ -108,12 +113,49 @@ def simulate(st, df, summ, model, shift):
         REC = Lh["REC"]; popr = REC["pop"][_ix].copy(); ltr = REC["lt"][_ix].copy(); etar = REC["eta"][_ix].copy(); gg = REC["g"]
         _ad = popr.sum(1); popr = popr * np.maximum(1.0, T / np.maximum(0.8 * _ad, 1.0))[:, None]
         b = np.zeros(C); a = np.zeros(C)
+        # Sept 30 2026 group top out (bounds.py): each voter type's county offset stays inside its race by party band
+        BNDV = bd.ON
+        if BNDV:
+            _lo, _hi = bd.type_bands(sm, gg)
+            LOc = np.tile(_lo, (C, 1)); HIc = np.tile(_hi, (C, 1))
+            BZ = lambda z: bd.softclip(z[:, None], LOc, HIc)
+        else:
+            BZ = lambda z: z[:, None]
         for _ in range(4):
             Wr = popr * inv(ltr + b[:, None])
-            a = solve(lambda z: (Wr * inv(etar + z[:, None])).sum(1) / np.maximum(Wr.sum(1), 1e-9), q, C, -6, 6)
+            a = solve(lambda z: (Wr * inv(etar + BZ(z))).sum(1) / np.maximum(Wr.sum(1), 1e-9), q, C, -6, 6)
+            if BNDV:
+                _err = np.abs((Wr * inv(etar + BZ(a))).sum(1) / np.maximum(Wr.sum(1), 1e-9) - q)
+                for _w in range(6):
+                    bad = _err > 0.0005
+                    if not bad.any(): break
+                    LOc[bad] *= 1.5; HIc[bad] *= 1.5
+                    a = solve(lambda z: (Wr * inv(etar + BZ(z))).sum(1) / np.maximum(Wr.sum(1), 1e-9), q, C, -6, 6)
+                    _err = np.abs((Wr * inv(etar + BZ(a))).sum(1) / np.maximum(Wr.sum(1), 1e-9) - q)
             b = solve(lambda x: (popr * inv(ltr + x[:, None])).sum(1), T, C, -3, 3)
         pops = popr; popi = np.round(pops).astype(np.int64)
-        lt = ltr + b[:, None]; eta = etar + a[:, None]
+        lt = ltr + b[:, None]; eta = etar + BZ(a)
+        RACE_AUD = None
+        if BNDV:
+            # statewide floors and ceilings for Black, Hispanic and Asian and other voters (bounds.race_limits): a group
+            # outside its range gets one offset, and every county constant is solved again so county results hold
+            bd.race_limits(sm)
+            _ri = ((gg // 12) // 2) % 4; _rl = np.array(sm.RACE)[_ri]
+            _Wt0 = popr * inv(lt); _st = {}
+            def _shares(kap):
+                off = np.array([kap.get(x, 0.0) for x in sm.RACE])[_ri]
+                E = etar + off[None, :]
+                a_ = solve(lambda z: (Wr * inv(E + BZ(z))).sum(1) / np.maximum(Wr.sum(1), 1e-9), q, C, -6, 6)
+                P = inv(E + BZ(a_)); _st.update(E=E, a=a_)
+                return {x: float((_Wt0[:, _rl == x] * P[:, _rl == x]).sum() / max(_Wt0[:, _rl == x].sum(), 1e-9)) for x in sm.RACE}
+            _kap, RACE_AUD = bd.enforce_race(_rl, _shares)
+            if any(abs(v) > 0 for v in _kap.values()):
+                etar = _st["E"]; a = _st["a"]; eta = etar + BZ(a)
+        if BNDV:
+            _raw = a[:, None]; _Wt = popr * inv(lt)
+            BND_AUD = dict(voters_topped_out_pct=round(100 * float((_Wt * ((_raw > HIc) | (_raw < LOc))).sum() / _Wt.sum()), 2),
+                           counties_band_widened=int((HIc > np.tile(_hi, (C, 1)) + 1e-9).any(1).sum()),
+                           county_fit_error=float(np.max(np.abs((_Wt * inv(eta)).sum(1) / _Wt.sum(1) - q))))
         kk_, jj_, hh_ = gg // 12, (gg // 4) % 3, gg % 4
         party_sgn = np.array([1.0, -1.0, 0.0])[jj_][None, None, :]
         Mcell = hi.demo_matrix(Lh["meta"]); demo_idx = Mcell[kk_]
@@ -127,6 +169,9 @@ def simulate(st, df, summ, model, shift):
         hfac = 1.0 / np.clip(hvar, 0.05, 1.0)
         demo_v, demo_t = NAT["demo_vote"] @ demo_idx.T, NAT["demo_turn"] @ demo_idx.T
         lt0, eta0 = lt.copy(), eta.copy()
+        if bh.ON:
+            import voters as _vf
+            BL, blam, bside = bh.type_loadings(sm, Lh); bbeta = bh.fit(sm, _vf.prep(sm)); BM = bh.shock_matrix(BL, bside, bbeta)
         b = np.zeros(C); a = np.zeros(C)
     elif HISTORY:
         # 384 groups per county: 32 cells x 3 parties x 4 vote histories, from Vote History Mode. The party mix is solved
@@ -213,6 +258,15 @@ def simulate(st, df, summ, model, shift):
     if gb < 1.0 and demo_v is not None:
         _own = rng.normal(0, SIG_DEMO_VOTE, NAT["demo_vote"].shape) @ demo_idx.T
         demo_v = gb * demo_v + np.sqrt(1 - gb ** 2) * _own
+    BEH = VFR and bh.ON
+    BNDV_ = VFR and bd.ON
+    TLO, THI = logit(bd.T_TYPE_LO), logit(bd.T_TYPE_HI)
+    if BEH:
+        # the state's Senate and governor races share one state level shock in proportion to how partisan the
+        # electorate is; the rest is each race's own
+        _sw = float((W.sum(0) * bh._C["sw_types"]).sum() / W.sum())
+        rho = bh.state_rho(_sw)
+        z_common = np.random.default_rng(SEED + 1000 + sum(map(ord, st[:2])) * 31).normal(0, 1, N)
     has_third = o.max() > 0
     lo_ = logit(np.clip(o, 1e-6, 1 - 1e-6))
     rcv = cfg.get("rcv"); RCV = cfg.get("rcv_transfers", sm.AK_RCV) if rcv else None
@@ -236,7 +290,8 @@ def simulate(st, df, summ, model, shift):
                 gvp = demo_v[ps][:, None, :] * hfac[None, :, None]
                 gtp = demo_t[ps][:, None, :] + (NAT["irreg"][ps] + prng.normal(0, SIG_IRREG_ST, Bp))[:, None, None] * irreg[None, None, :]
                 pp = inv(eta[None] + shp[:, :, None] + gvp)
-                tq = inv(lt[None] + tsp[:, :, None] + gtp + enp[:, None, None] * party_sgn)
+                dmp = ((NAT["mot"][ps] + prng.normal(0, bh.KAPPA_ST, (Bp, len(bh.SHOCKS)))) @ BM.T)[:, None, :] if BEH else 0.0
+                tq = inv(bd.softclip(lt[None] + tsp[:, :, None] + gtp + enp[:, None, None] * party_sgn + dmp, TLO, THI, 0.1) if BNDV_ else lt[None] + tsp[:, :, None] + gtp + enp[:, None, None] * party_sgn + dmp)
                 nn = pops[None] * tq
                 ED += (nn * pp).sum((0, 2)); EN += nn.sum((0, 2))
             mD = ED / np.maximum(EN, 1e-9); mN = EN / PN
@@ -249,7 +304,8 @@ def simulate(st, df, summ, model, shift):
     BS = BATCH if C * K <= 120_000 else max(10, int(BATCH * 120_000 / (C * K)))
     for s0 in range(0, N, BS):
         B = min(BS, N - s0); sl = slice(s0, s0 + B)
-        env = gb * NAT["env"][sl] + rng.normal(0, s_state, B)
+        _own = rng.normal(0, s_state, B)
+        env = gb * NAT["env"][sl] + (np.sqrt(rho) * s_state * z_common[sl] + np.sqrt(1 - rho) * _own if BEH else _own)
         if CANDIDATE and st in cq.PROFILES:
             env = env + rng.normal(0, cq.PROFILES[st]["sigma"], B)
         shock = (e[None, :] * env[:, None] + rng.normal(0, 1, (B, C)) * sig_cty[None, :]) * hfac[None, :]
@@ -259,8 +315,12 @@ def simulate(st, df, summ, model, shift):
         if demo_v is not None:
             gv = demo_v[sl][:, None, :] * hfac[None, :, None]
             gt = demo_t[sl][:, None, :] + (NAT["irreg"][sl] + rng.normal(0, SIG_IRREG_ST, B))[:, None, None] * irreg[None, None, :]
+        # the group top out sets how each county's projection is shared among its voter types; the simulation shocks
+        # then move every type from there, so the state's uncertainty is not narrowed by the bands
         p = inv(eta[None] + a[None, :, None] + shock[:, :, None] + gv)
-        tp = inv(lt[None] + b[None, :, None] + tsh[:, :, None] + gt + enth[:, None, None] * (party_sgn if party_sgn is not None else (2 * p - 1)))
+        dmot = ((NAT["mot"][sl] + rng.normal(0, bh.KAPPA_ST, (B, len(bh.SHOCKS)))) @ BM.T)[:, None, :] if BEH else 0.0
+        _tl = lt[None] + b[None, :, None] + tsh[:, :, None] + gt + enth[:, None, None] * (party_sgn if party_sgn is not None else (2 * p - 1)) + dmot
+        tp = inv(bd.softclip(_tl, TLO, THI, 0.1) if BNDV_ else _tl)
         n = rng.binomial(popi[None], tp)
         if has_third:
             osim = inv(lo_[None, :] + rng.normal(0, SIG_THIRD_ST, B)[:, None] + rng.normal(0, SIG_THIRD_CTY, (B, C)))
@@ -352,10 +412,25 @@ def simulate(st, df, summ, model, shift):
         dside = [n1, n2] if split else [cfg["D"]]
         dshare = {nm: out[c].values / 100 for nm, c in zip(dside, dcols)}
         thirds = [(nm, pty, out[c].values / 100) for (nm, pty), c in zip(summ["third_parties"], tcols)]
-        xt = vf.crosstab(sm, Lh, _ix, (lt - ltr)[:, 0], dshare, cfg["R"], out.rep_pct.values / 100, thirds, out.projected_turnout.values)
-        s["crosstabs"] = xt
+        # the state's 10th and 90th percentile simulated two party swing, in log odds, for the crosstab ranges
+        _N, _D, _R = acc["N"].sum(), acc["D"].sum(), acc["R"].sum()
+        _o = 1 - (_D + _R) / max(_N, 1)
+        _q = lambda m: np.clip((1 - _o + m / 100) / (2 * max(1 - _o, 1e-6)), 1e-4, 1 - 1e-4)
+        _zb = (float(_q(np.percentile(st_margin, 10))), float(_q(np.percentile(st_margin, 90)))) if not rcv else None
+        xt = vf.crosstab(sm, Lh, _ix, (lt - ltr)[:, 0], dshare, cfg["R"], out.rep_pct.values / 100, thirds, out.projected_turnout.values, zband=_zb)
+        s["crosstabs"] = xt; s["crosstab_swing_band_logit"] = _zb
         s["voter_file"] = dict(voter_types_per_county=int(K), respondent_profiles_per_county=int((Lh["F"]["w"][_ix] > 0).sum((1, 2)).mean()),
                                electorate_trump_approval_two_way=Lh["info"]["voter_file"]["electorate_trump_approval_two_way"])
+    if BEH:
+        _ltf = lt + b[:, None]; _etf = eta + a[:, None]
+        try:
+            if BNDV_: s["bounds_groups"] = dict(BND_AUD, race_limits=RACE_AUD, bands=bd.AUDIT.get("group_bands"))
+            s["behavior"] = dict(bh.analyse(pops, _ltf, _etf, BL, blam, bside, bbeta, gg, q, None), state_shock_shared_with_other_race=round(rho, 3), electorate_switch_rate=round(_sw, 4),
+                                 **bh.audit_meta())
+        except Exception as _e:
+            s["behavior"] = dict(error=str(_e))
+        np.savez_compressed(f"{OUT}/behavior_types_{st}.npz", pops=pops.astype(np.float32), lt=_ltf.astype(np.float32), eta=_etf.astype(np.float32),
+                            lam=blam.astype(np.float32), side=bside.astype(np.int8), gg=gg.astype(np.int16), fips=np.array(fl))
     e_w = out.projected_turnout.values
     s["elasticity"] = dict(p10=float(np.percentile(e, 10)), median=float(np.median(e)), p90=float(np.percentile(e, 90)),
                            own_history_share=float(np.average(out.elasticity_own_history_share, weights=e_w)))

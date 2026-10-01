@@ -59,5 +59,7 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "MI-SEN-2026", "pollster": "New York Times/Siena University", "startDate": "2026-09-15", "endDate": "2026-09-22", "sampleSize": 613, "sampleType": "LV", "results": {"Abdul El-Sayed (D)": 49.0, "Mike Rogers (R)": 44.0, "Undecided": 7.0}},
     {"raceId": "MI-SEN-2026", "pollster": "co/efficient (R)", "startDate": "2026-09-21", "endDate": "2026-09-23", "sampleSize": 843, "sampleType": "LV", "results": {"Abdul El-Sayed (D)": 45.0, "Mike Rogers (R)": 45.0, "Other": 2.0, "Undecided": 8.0}},
     {"raceId": "MI-SEN-2026", "pollster": "GBAO (D)", "startDate": "2026-09-19", "endDate": "2026-09-22", "sampleSize": 800, "sampleType": "LV", "results": {"Abdul El-Sayed (D)": 48.0, "Mike Rogers (R)": 44.0, "Undecided": 8.0}},
+    {"raceId": "MI-SEN-2026", "pollster": "Cygnal (R)/Beacon Research (D)", "startDate": "2026-09-18", "endDate": "2026-09-21", "sampleSize": 600, "sampleType": "LV", "results": {"Abdul El-Sayed (D)": 45.0, "Mike Rogers (R)": 40.0, "Undecided": 15.0}, "notes": "For Michigan Enjoyer."},
+    {"raceId": "MI-SEN-2026", "pollster": "NPR/Marist", "startDate": "2026-09-24", "endDate": "2026-09-27", "sampleSize": 1200, "sampleType": "RV", "results": {"Abdul El-Sayed (D)": 51.0, "Mike Rogers (R)": 44.0, "Undecided": 5.0}, "notes": "Sample size not yet posted by Marist, entered as 1,200."}
   ],
 };

@@ -86,3 +86,39 @@ Run at most three lanes at once on an 8 GB machine; four lanes ran out of memory
 | `senate_mode.py` | `GOV_DEPOL`, on by default, with `GOV_BETA=0.6` and `GOV_LAMBDA=0.6`. For governor races only, the approval and census legs keep their county pattern, but their statewide level counts the national environment at beta and the state's lean against the nation at lambda. The incumbent personal vote is measured against the same baseline. `GOV_DEPOL=0` restores the old model |
 | `dynamic_mode.py` | Governor races take `GOV_BETA` of the shared national vote shock and of the shared group vote shocks, and the rest becomes their own. Turnout shocks stay national |
 | `depolarization/` | The backtest behind the two settings |
+
+## 29 September 2026, third parties and TPSI respondents
+
+| File | What changed |
+|---|---|
+| `senate_mode.py` | Third party level blends a ballot label prior, the state's past third party vote for the office and the polls that asked; respondent component version 2 hooks; `national_lv_d2` now reports the 2026 anchor |
+| `respondent_v2.py` | New. Unified respondent loader with one filter for every consumer, citizen adult cells, pooled state swing effects, the VAP to likely voter audit |
+| `voters.py`, `dynamic_mode.py` | 80 percent ranges on every estimated vote by group row |
+| `tpsi_national.py`, `meridian_all.py` | Read respondents through the same loader |
+| `respondent_v2/` | Methodology, validation and the worked example for Texas and Maine |
+
+The respondent file itself is not included here. It stays with the model.
+
+## 29 September 2026, voter behavior layer and new district polls
+
+| File | What changed |
+|---|---|
+| `behavior.py` | New. Six turnout motivations from TPSI respondents, their weights, each voter type's party looseness, simulation shock loadings and the race audit |
+| `ticket_split.py` | New. Split ticket voters for every state with both a Senate and a governor race |
+| `dynamic_mode.py`, `house_dyn.py` | Motivation shocks in every simulation; Senate and governor races in one state share part of the state shock |
+| `house_mode.py` | 36 district polls ending Aug 15 or later, 11 districts polled for the first time |
+| `senate_mode.py` | Big Data Poll Ohio governor ballot |
+| `behavior/` | Methodology and results |
+
+## 30 September 2026, county citizenship and realistic limits
+
+| File | What changed |
+|---|---|
+| `bounds.py` | New. County support envelope, county turnout limits, group bands from TPSI and statewide race group ranges from Pew validated vote |
+| `respondent_v2.py`, `census/cvap_county_2020_2024.csv` | County citizen rates by race group from the Census CVAP 2020 to 2024 tabulation |
+| `senate_mode.py`, `dynamic_mode.py`, `voters.py`, `crosstabs.py`, `house_dyn.py` | The limits applied in the projections, the voter types and both crosstab builders |
+| `bounds/` | Methodology and results |
+
+## 1 October 2026, national inputs
+
+The run uses `NAT_ANCHOR=generic GB_MARGIN=12 GB_DECIDED=100 M2_ANCHOR=meridian APPROVAL_RV_NET=-24`. The D+12 generic ballot is the two party national anchor for the approval and census legs, and `APPROVAL_RV_NET` turns a registered voter net approval into the likely voter level through the TPSI registered to likely voter gap. Each race's summary carries the conversion under `approval_input`.

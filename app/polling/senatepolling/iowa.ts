@@ -58,5 +58,6 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "IA-SEN-2026", "pollster": "Marist College", "startDate": "2026-09-17", "endDate": "2026-09-20", "sampleSize": 1050, "sampleType": "RV", "results": {"Josh Turek (D)": 50.0, "Ashley Hinson (R)": 42.0, "Other": 2.0, "Undecided": 5.0}},
     {"raceId": "IA-SEN-2026", "pollster": "Big Data Poll", "startDate": "2026-09-23", "endDate": "2026-09-23", "sampleSize": 650, "sampleType": "RV", "results": {"Josh Turek (D)": 46.5, "Ashley Hinson (R)": 42.2, "Other": 4.6, "Undecided": 6.7}, "notes": "Field dates not published; released Sept 23, 2026"},
     {"raceId": "IA-SEN-2026", "pollster": "InsiderAdvantage", "startDate": "2026-09-22", "endDate": "2026-09-23", "sampleSize": 1200, "sampleType": "LV", "results": {"Josh Turek (D)": 47.4, "Ashley Hinson (R)": 45.7, "Other": 1.6, "Undecided": 5.3}},
+    {"raceId": "IA-SEN-2026", "pollster": "Quantus Insights (R)", "startDate": "2026-09-28", "endDate": "2026-09-29", "sampleSize": 714, "sampleType": "LV", "moe": 3.8, "results": {"Josh Turek (D)": 46.6, "Ashley Hinson (R)": 48.5, "Thomas Laehn (L)": 1.7, "Undecided": 3.2}, "notes": "Including leaners. 738 respondents, 714 likely voters in the ballot."}
   ],
 };

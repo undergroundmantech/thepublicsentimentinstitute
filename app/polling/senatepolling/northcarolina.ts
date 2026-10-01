@@ -68,5 +68,6 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "NC-SEN-2026", "pollster": "Harper Polling (R)", "startDate": "2026-09-13", "endDate": "2026-09-15", "sampleSize": 608, "sampleType": "LV", "results": {"Roy Cooper (D)": 49.0, "Michael Whatley (R)": 34.0, "Other": 5.0, "Undecided": 12.0}},
     {"raceId": "NC-SEN-2026", "pollster": "InsiderAdvantage (R)", "startDate": "2026-09-16", "endDate": "2026-09-17", "sampleSize": 1200, "sampleType": "LV", "results": {"Roy Cooper (D)": 48.0, "Michael Whatley (R)": 43.0, "Other": 3.0, "Undecided": 6.0}},
     {"raceId": "NC-SEN-2026", "pollster": "AARP (Fabrizio Ward/Impact Research)", "startDate": "2026-09-17", "endDate": "2026-09-20", "sampleSize": 0, "sampleType": "LV", "results": {"Roy Cooper (D)": 53.0, "Michael Whatley (R)": 42.0, "Undecided": 5}, "notes": "Sample size not published"},
+    {"raceId": "NC-SEN-2026", "pollster": "Big Data Poll", "startDate": "2026-09-27", "endDate": "2026-09-29", "sampleSize": 642, "sampleType": "LV", "moe": 4.0, "results": {"Roy Cooper (D)": 50.8, "Michael Whatley (R)": 38.5, "Undecided": 10.7}, "notes": "Tar Heel State Poll, with leaners. 698 registered voters, 642 likely."}
   ],
 };

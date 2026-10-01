@@ -53,7 +53,7 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "OH-SEN-2026", "pollster": "InsiderAdvantage (R)", "startDate": "2026-09-08", "endDate": "2026-09-09", "sampleSize": 1200, "sampleType": "LV", "results": {"Sherrod Brown (D)": 47.0, "Jon Husted (R)": 42.0, "Other": 3.0, "Undecided": 8.0}},
     {"raceId": "OH-SEN-2026", "pollster": "Bowling Green State University/YouGov", "startDate": "2026-09-01", "endDate": "2026-09-10", "sampleSize": 1000, "sampleType": "LV", "results": {"Sherrod Brown (D)": 48.0, "Jon Husted (R)": 45.0}},
     {"raceId": "OH-SEN-2026", "pollster": "Trafalgar Group (R)", "startDate": "2026-09-14", "endDate": "2026-09-16", "sampleSize": 1085, "sampleType": "LV", "results": {"Sherrod Brown (D)": 45.0, "Jon Husted (R)": 42.0}},
-    {"raceId": "OH-SEN-2026", "pollster": "Big Data Poll", "startDate": "2026-09-28", "endDate": "2026-09-28", "sampleSize": 682, "sampleType": "LV", "results": {"Sherrod Brown (D)": 46.9, "Jon Husted (R)": 42.5, "Undecided": 10.6}, "notes": "Senate with leaners, 682 likely voters of 735. Field dates not released; logged Sept 28."},
+    {"raceId": "OH-SEN-2026", "pollster": "Big Data Poll", "startDate": "2026-09-26", "endDate": "2026-09-27", "sampleSize": 682, "sampleType": "LV", "moe": 4.0, "results": {"Sherrod Brown (D)": 46.9, "Jon Husted (R)": 42.5, "Undecided": 10.6}, "notes": "Buckeye State Poll by Richard Baris, Senate with leaners, 682 likely voters of 735."},
     {"raceId": "OH-SEN-2026", "pollster": "NPR/Marist", "startDate": "2026-09-24", "endDate": "2026-09-27", "sampleSize": 1298, "sampleType": "RV", "moe": 3.8, "results": {"Sherrod Brown (D)": 51.0, "Jon Husted (R)": 43.0, "Undecided": 6.0}}
   ],
 };

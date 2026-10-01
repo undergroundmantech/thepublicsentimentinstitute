@@ -40,6 +40,7 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "NE-GOV-2026", "pollster": "Lake Research Partners (D)", "startDate": "2026-04-25", "endDate": "2026-04-29", "sampleSize": 900, "sampleType": "LV", "results": {"Lynne Walz (D)": 45.0, "Jim Pillen (R)": 47.0, "Undecided": 5.0}},
     {"raceId": "NE-GOV-2026", "pollster": "Public Policy Polling (D)", "startDate": "2026-09-01", "endDate": "2026-09-02", "sampleSize": 559, "sampleType": "RV", "results": {"Lynne Walz (D)": 31.0, "Jim Pillen (R)": 32.0, "Other": 21.0, "Undecided": 17.0}},
     {"raceId": "NE-GOV-2026", "pollster": "SurveyUSA", "startDate": "2026-09-08", "endDate": "2026-09-13", "sampleSize": 503, "sampleType": "LV", "results": {"Lynne Walz (D)": 35.0, "Jim Pillen (R)": 43.0, "Other": 13.0, "Undecided": 9.0}},
+    {"raceId": "NE-GOV-2026", "pollster": "Lake Research Partners (D)", "startDate": "2026-09-08", "endDate": "2026-09-14", "sampleSize": 600, "sampleType": "RV", "results": {"Lynne Walz (D)": 40.0, "Jim Pillen (R)": 40.0, "Brett Lindstrom (AF)": 9.0, "Rick Beard (LMN)": 4.0, "Undecided": 7.0}, "notes": "Walz campaign internal. Sample size not published, entered as 600. 2024 recalled vote Trump 57, Harris 40."},
     {"raceId": "NE-GOV-2026", "pollster": "Wedgewood Polls", "startDate": "2026-09-14", "endDate": "2026-09-16", "sampleSize": 500, "sampleType": "LV", "results": {"Lynne Walz (D)": 36.0, "Jim Pillen (R)": 53.0, "Other": 11.0}}
   ],
 };
