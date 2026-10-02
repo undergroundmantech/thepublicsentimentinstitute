@@ -46,6 +46,7 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "PA-GOV-2026", "pollster": "The New York Times/The Philadelphia Inquirer/Siena", "startDate": "2026-08-17", "endDate": "2026-08-21", "sampleSize": 760, "sampleType": "LV", "results": {"Josh Shapiro (D)": 55.0, "Stacy Garrity (R)": 39.0, "Undecided": 6.0}},
     {"raceId": "PA-GOV-2026", "pollster": "PennLive", "startDate": "2026-08-18", "endDate": "2026-08-22", "sampleSize": 711, "sampleType": "RV", "results": {"Josh Shapiro (D)": 56.0, "Stacy Garrity (R)": 25.0, "Undecided": 19.0}},
     {"raceId": "PA-GOV-2026", "pollster": "Franklin & Marshall College", "startDate": "2026-08-17", "endDate": "2026-08-23", "sampleSize": 501, "sampleType": "RV", "results": {"Josh Shapiro (D)": 50.0, "Stacy Garrity (R)": 25.0, "Other": 7.0, "Undecided": 18.0}},
-    {"raceId": "PA-GOV-2026", "pollster": "The New York Times/The Philadelphia Inquirer/Siena", "startDate": "2026-09-15", "endDate": "2026-09-21", "sampleSize": 615, "sampleType": "LV", "results": {"Josh Shapiro (D)": 58.0, "Stacy Garrity (R)": 38.0}}
+    {"raceId": "PA-GOV-2026", "pollster": "The New York Times/The Philadelphia Inquirer/Siena", "startDate": "2026-09-15", "endDate": "2026-09-21", "sampleSize": 615, "sampleType": "LV", "results": {"Josh Shapiro (D)": 58.0, "Stacy Garrity (R)": 38.0}},
+    {"raceId": "PA-GOV-2026", "pollster": "Bravo Group/PennLive", "startDate": "2026-09-16", "endDate": "2026-09-22", "sampleSize": 624, "sampleType": "RV", "results": {"Josh Shapiro (D)": 55.0, "Stacy Garrity (R)": 28.0, "Undecided": 17.0}, "notes": "Undecided includes other."},
   ],
 };

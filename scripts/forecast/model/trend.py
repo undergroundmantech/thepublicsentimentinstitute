@@ -20,7 +20,11 @@ TREND_V2=0 restores the old behavior.
 import os
 import numpy as np, pandas as pd
 
-ON = os.environ.get("TREND_V2", "1") != "0"
+# Oct 2 2026: the midterm calibration (calib26.py) measured how much of a county's 2016 to 2020 presidential trend
+# carried into the 2022 midterm, net of demographics, and found none: the coefficient was slightly negative. With
+# CALIB26 on, this assumed carry is off and the measured trend term in calib26 takes its place.
+CALIB = os.environ.get("CALIB26", "1") != "0"
+ON = os.environ.get("TREND_V2", "1") != "0" and not CALIB
 PRES_CARRY = float(os.environ.get("PRES_CARRY", "0.35"))
 M3_PRES_SHARE = 0.5
 OFFICE_CARRY = 0.65

@@ -50,5 +50,8 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "ME-SEN-2026", "pollster": "University of New Hampshire", "startDate": "2026-09-17", "endDate": "2026-09-21", "sampleSize": 1312, "sampleType": "LV", "moe": 2.7, "results": {"Troy Jackson (D)": 51.0, "Susan Collins (R)": 47.0, "Undecided": 2.0}},
     {"raceId": "ME-SEN-2026", "pollster": "New York Times/Siena University", "startDate": "2026-09-15", "endDate": "2026-09-22", "sampleSize": 619, "sampleType": "LV", "results": {"Troy Jackson (D)": 46.0, "Susan Collins (R)": 49.0, "Undecided": 5.0}},
     {"raceId": "ME-SEN-2026", "pollster": "InsiderAdvantage", "startDate": "2026-09-22", "endDate": "2026-09-23", "sampleSize": 1200, "sampleType": "LV", "results": {"Troy Jackson (D)": 46.4, "Susan Collins (R)": 45.6, "Undecided": 8.0}},
+    {"raceId": "ME-SEN-2026", "pollster": "Fabrizio Ward and Impact Research for AARP", "startDate": "2026-09-20", "endDate": "2026-09-22", "sampleSize": 982, "sampleType": "LV", "moe": 3.1, "results": {"Troy Jackson (D)": 50.0, "Susan Collins (R)": 47.0, "Other": 1.0, "Undecided": 3.0}, "notes": "Bipartisan. 2024 recalled vote Harris 48, Trump 42."},
+    {"raceId": "ME-SEN-2026", "pollster": "co/efficient (R)", "startDate": "2026-09-28", "endDate": "2026-09-30", "sampleSize": 1240, "sampleType": "LV", "results": {"Troy Jackson (D)": 46.0, "Susan Collins (R)": 48.0, "Undecided": 6.0}},
+    {"raceId": "ME-SEN-2026", "pollster": "Wedgewood Polls", "startDate": "2026-09-27", "endDate": "2026-10-01", "sampleSize": 400, "sampleType": "LV", "results": {"Troy Jackson (D)": 52.0, "Susan Collins (R)": 48.0}, "notes": "Sponsor not stated."},
   ],
 };

@@ -2,7 +2,7 @@
 // Vermont — 2026 Governor: Amanda Janoo (D) vs. Phil Scott (R)
 // Generated from the TPSI forecast poll feed (run of 2026-09-22), merged with
 // the polls this file already carried. Polls of matchups that are not on the
-// ballot were dropped. Newest poll: 2026-09-21.
+// ballot were dropped. Newest poll: 2026-10-01.
 
 export type SampleType = "LV" | "RV" | "A";
 
@@ -39,6 +39,7 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "VT-GOV-2026", "pollster": "University of New Hampshire", "startDate": "2026-06-18", "endDate": "2026-06-23", "sampleSize": 887, "sampleType": "LV", "results": {"Amanda Janoo (D)": 27.0, "Phil Scott (R)": 42.0, "Other": 5.0, "Undecided": 26.0}},
     {"raceId": "VT-GOV-2026", "pollster": "University of New Hampshire", "startDate": "2026-07-15", "endDate": "2026-07-20", "sampleSize": 954, "sampleType": "LV", "results": {"Amanda Janoo (D)": 33.0, "Phil Scott (R)": 44.0, "Other": 6.0, "Undecided": 17.0}},
     {"raceId": "VT-GOV-2026", "pollster": "University of New Hampshire", "startDate": "2026-09-17", "endDate": "2026-09-21", "sampleSize": 835, "sampleType": "LV", "moe": 3.4, "results": {"Amanda Janoo (D)": 49.0, "Phil Scott (R)": 43.0, "Other": 2.0, "Undecided": 6.0}, "notes": "Other is Brian Judd, independent, at 2."},
-    {"raceId": "VT-GOV-2026", "pollster": "Braun Research", "startDate": "2026-09-10", "endDate": "2026-09-21", "sampleSize": 817, "sampleType": "LV", "moe": 3.4, "results": {"Amanda Janoo (D)": 34.0, "Phil Scott (R)": 44.0, "Undecided": 22.0}, "notes": "Undecided includes anyone not choosing Scott or Janoo."}
+    {"raceId": "VT-GOV-2026", "pollster": "Braun Research", "startDate": "2026-09-10", "endDate": "2026-09-21", "sampleSize": 817, "sampleType": "LV", "moe": 3.4, "results": {"Amanda Janoo (D)": 34.0, "Phil Scott (R)": 44.0, "Undecided": 22.0}, "notes": "Undecided includes anyone not choosing Scott or Janoo."},
+    {"raceId": "VT-GOV-2026", "pollster": "State Navigate", "startDate": "2026-09-29", "endDate": "2026-10-01", "sampleSize": 600, "sampleType": "LV", "results": {"Amanda Janoo (D)": 43.6, "Phil Scott (R)": 45.7, "Undecided": 10.7}, "notes": "Sample recalls Scott +61 in 2024. Field dates and sample size were not in the release text given, so these are placeholders."}
   ],
 };

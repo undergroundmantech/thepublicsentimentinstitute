@@ -733,6 +733,8 @@ APPROVAL = pd.concat([_ct_counties(APPROVAL, APPROVAL.f), _ctap], ignore_index=T
 sys.path.insert(0, BASE); import respondent_v2 as _rv2
 import bounds as _bd
 import trend as _trd
+import calib26 as _cb
+CALIB_AUDIT = {}
 TREND_AUDIT = {}
 RESP = _rv2.load(BASE)
 ACS = pd.read_csv(glob.glob(f"{PKG['MI']}/ACSST5Y2024.S1501_2026-09-11T174726/*Data.csv")[0], skiprows=[1], low_memory=False)
@@ -786,7 +788,13 @@ EXTRA_POLLS = {
            dict(source="Cygnal (R)/Beacon Research (D)", dates="September 18-21, 2026", end="2026-09-21", n=600, pop="LV", D=45, R=40, O=0, U=15),
            # NPR/Marist, Sept 24-27 2026, registered voters. The sample size was not yet posted; 1,200 is entered, close
            # to the 1,298 of the same week's Ohio survey.
-           dict(source="NPR/Marist", dates="September 24-27, 2026", end="2026-09-27", n=1200, pop="RV", D=51, R=44, O=0, U=5)],
+           dict(source="NPR/Marist", dates="September 24-27, 2026", end="2026-09-27", n=1200, pop="RV", D=51, R=44, O=0, U=5),
+           # Oct 2 2026 sweep: Fox News, Beacon Research and Shaw & Company, Sept 24-28 2026, 1,028 likely voters; other and
+           # undecided together 1. Registered voters, 1,203: El-Sayed 51, Rogers 48.
+           dict(source="Fox News/Beacon Research and Shaw & Company", dates="September 24-28, 2026", end="2026-09-28", n=1028, pop="LV", D=50, R=49, O=0, U=1),
+           # Oct 2 2026 morning sweep: Trafalgar Group, Sept 28-30 2026, 1,085 likely voters; other is Christensen 1.6, Long 0.9,
+           # Kristy 0.3 and Marsh 0.1. No governor question was published.
+           dict(source="Trafalgar Group (R)", dates="September 28-30, 2026", end="2026-09-30", n=1085, pop="LV", D=46.9, R=45.1, O=2.9, U=5.0)],
     "ME": [dict(source="University of New Hampshire", dates="September 17-21, 2026", end="2026-09-21", n=1312, pop="LV", D=51, R=47, O=0, U=2),
            dict(source="New York Times/Siena University", dates="September 15-22, 2026", end="2026-09-22", n=619, pop="LV", D=46, R=49, O=0, U=5)],
     "NH": [dict(source="University of New Hampshire", dates="September 17-21, 2026", end="2026-09-21", n=1418, pop="LV", D=50, R=42, O=4, U=4),
@@ -811,7 +819,12 @@ EXTRA_POLLS = {
            # Husted 42.5. The field dates come from the release, which was first logged as Sept 28.
            dict(source="Big Data Poll", dates="September 26-27, 2026", end="2026-09-27", n=682, pop="LV", D=46.9, R=42.5, O=0, U=10.6),
            # NPR/Marist, Sept 24-27 2026, 1,298 registered voters, MoE 3.8, phone, text and online
-           dict(source="NPR/Marist", dates="September 24-27, 2026", end="2026-09-27", n=1298, pop="RV", D=51, R=43, O=0, U=6)],
+           dict(source="NPR/Marist", dates="September 24-27, 2026", end="2026-09-27", n=1298, pop="RV", D=51, R=43, O=0, U=6),
+           # Oct 2 2026 sweep: Suffolk University for the USA TODAY Network, Sept 23-27 2026, 500 likely voters, Brown 47,
+           # Husted 44. The Senate crosstabs were embargoed, so other and undecided are carried together as 9.
+           dict(source="Suffolk University/USA TODAY Network", dates="September 23-27, 2026", end="2026-09-27", n=500, pop="LV", D=47, R=44, O=0, U=9),
+           # Oct 2 2026 morning sweep: InsiderAdvantage, Sept 28-29 2026, 1,200 likely voters, released Oct 1; other is Redpath 4 and Levy 2
+           dict(source="InsiderAdvantage", dates="September 28-29, 2026", end="2026-09-29", n=1200, pop="LV", D=44, R=43, O=6, U=7)],
     # the governor ballot from the same Big Data Poll survey: Ramaswamy 47.9, Acton 46.8
     "OHG": [dict(source="Big Data Poll", dates="September 26-27, 2026", end="2026-09-27", n=682, pop="LV", D=46.8, R=47.9, O=0, U=5.3)],
     "SC": [dict(source="Rasmussen Reports", dates="September 14, 2026", end="2026-09-14", n=1006, pop="LV", D=43, R=48, O=0, U=9)],
@@ -3002,6 +3015,18 @@ def run_state(st, model, shift, nat_turn_rate):
         m3 = inv(lean_base + (lo + hi) / 2)
 
     d2 = w_fund * m1 + w_census * m2 + w_hist * m3
+    # Oct 2 2026 midterm county calibration (calib26.py): each county is its 2024 presidential lean, plus the midterm
+    # pattern measured in 2018 and 2022, plus the candidate terms the model measures directly, plus the rest of the
+    # three legs' county pattern at no more than the state's measured midterm spread. The statewide share is kept.
+    if _cb.ON and _cb.load() and not st.startswith("AK") and not cfg.get("rcv"):
+        _ce = np.asarray(cand_effect.reindex(fl).fillna(0.0).values if isinstance(cand_effect, pd.Series) else np.zeros(len(fl)), float)
+        _ccs = np.zeros(len(fl))
+        if ELECTORATE and cand_prof is not None:
+            _ccs = np.asarray(_ev.HISTORY_INFO.get(st, {}).get("candidate_county_shift", np.zeros(len(fl))), float)
+        _cr = (w_fund + w_census) * _ce + w_fund * _ccs
+        _p20 = P20.reindex(fl); _s20 = (_p20.votes_dem / (_p20.votes_dem + _p20.votes_gop)).fillna(actual24).values
+        _d2n, CALIB_AUDIT[st] = _cb.apply(st, fl, np.asarray(d2, float), np.asarray(turnout, float), actual24.values, _s20, _cr)
+        d2 = pd.Series(_d2n, index=fl) if isinstance(d2, pd.Series) else _d2n
     # Sept 30 2026: a county tops out at the edge of its own historical lean relative to the state (bounds.py); the
     # statewide share the polls set is kept, so the votes a capped county cannot give move to counties with room
     _BND_S = None
@@ -3129,7 +3154,7 @@ def run_state(st, model, shift, nat_turn_rate):
                        components_statewide=dict(M1=float((m1 * turnout).sum() / V * 100), M2=float((m2 * turnout).sum() / V * 100),
                                                  M3=float((m3 * turnout).sum() / V * 100), final_d2=float((d2 * turnout).sum() / V * 100)),
                        poll_avg=pavg, n_polls=len(polls), primary_source=prim_note, history_years=years, history_counties_filled=fillnotes,
-                   blend_weights=dict(M1=round(w_fund, 4), M2=round(w_census, 4), M3=round(w_hist, 4)), history_level=HIST_AUDIT.get(st), third_party_level=THIRD_AUDIT.get(st), approval_input=APPROVAL_INPUT or None, county_trend=TREND_AUDIT.get(st), respondent_model=_rv2_race(st, fl), bounds=dict(county_support=_BND_S, county_turnout=_BND_T),
+                   blend_weights=dict(M1=round(w_fund, 4), M2=round(w_census, 4), M3=round(w_hist, 4)), history_level=HIST_AUDIT.get(st), third_party_level=THIRD_AUDIT.get(st), approval_input=APPROVAL_INPUT or None, county_trend=TREND_AUDIT.get(st), county_calibration=CALIB_AUDIT.get(st), respondent_model=_rv2_race(st, fl), bounds=dict(county_support=_BND_S, county_turnout=_BND_T),
                    poll_tier=poll_tier, poll_house_index=house_index, poll_houses_recent=n_houses, newest_poll_days=newest_days,
                        state_total_turnout=state_total, nat_ratio=nat_ratio, st_factor=st_factor, third_parties=[(nm, pty) for nm, pty, _ in tcols])
         summary["finance"] = dict(shift_logit=float(fin_shift), status=fin_why)
@@ -3153,7 +3178,7 @@ def run_state(st, model, shift, nat_turn_rate):
                        **(dict(first_choice_d2=float((d2_fc * turnout).sum() / V * 100)) if cfg.get("rcv_fc") else {})),
                    poll_avg=pavg, n_polls=len(polls), primary_source=prim_note, history_years=years,
                    history_counties_filled=fillnotes,
-                   blend_weights=dict(M1=round(w_fund, 4), M2=round(w_census, 4), M3=round(w_hist, 4)), history_level=HIST_AUDIT.get(st), third_party_level=THIRD_AUDIT.get(st), approval_input=APPROVAL_INPUT or None, county_trend=TREND_AUDIT.get(st), respondent_model=_rv2_race(st, fl), bounds=dict(county_support=_BND_S, county_turnout=_BND_T),
+                   blend_weights=dict(M1=round(w_fund, 4), M2=round(w_census, 4), M3=round(w_hist, 4)), history_level=HIST_AUDIT.get(st), third_party_level=THIRD_AUDIT.get(st), approval_input=APPROVAL_INPUT or None, county_trend=TREND_AUDIT.get(st), county_calibration=CALIB_AUDIT.get(st), respondent_model=_rv2_race(st, fl), bounds=dict(county_support=_BND_S, county_turnout=_BND_T),
                    poll_tier=poll_tier, poll_house_index=house_index, poll_houses_recent=n_houses, newest_poll_days=newest_days, state_total_turnout=state_total, nat_ratio=nat_ratio, st_factor=st_factor,
                    third_parties=[(nm, pty) for nm, pty, _ in tcols])
     if ELECTORATE:

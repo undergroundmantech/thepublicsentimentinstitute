@@ -37,6 +37,7 @@ export const RACES = [
 export const STATE_POLLS: Record<string, Poll[]> = {
   AK: [
     {"raceId": "AK-GOV-2026", "pollster": "Fabrizio Ward/Impact Research", "startDate": "2026-09-08", "endDate": "2026-09-11", "sampleSize": 800, "sampleType": "LV", "results": {"Jonathan Kreiss-Tomkins (D)": 55, "Bernadette Wilson (R)": 45}, "notes": "Published ranked-choice final round. Bipartisan, for AARP. First choice: Kreiss-Tomkins 40, Wilson 20, Bronson 14, Taylor 7, undecided 18."},
-    {"raceId": "AK-GOV-2026", "pollster": "co/efficient (R)", "startDate": "2026-09-14", "endDate": "2026-09-17", "sampleSize": 799, "sampleType": "LV", "results": {"Jonathan Kreiss-Tomkins (D)": 43, "Bernadette Wilson (R)": 20, "Dave Bronson (R)": 17, "Treg Taylor (R)": 6, "Undecided": 14}, "notes": "First-choice ballot; no final round published."}
+    {"raceId": "AK-GOV-2026", "pollster": "co/efficient (R)", "startDate": "2026-09-14", "endDate": "2026-09-17", "sampleSize": 799, "sampleType": "LV", "results": {"Jonathan Kreiss-Tomkins (D)": 43, "Bernadette Wilson (R)": 20, "Dave Bronson (R)": 17, "Treg Taylor (R)": 6, "Undecided": 14}, "notes": "First-choice ballot; no final round published."},
+    {"raceId": "AK-GOV-2026", "pollster": "Cygnal (R)", "startDate": "2026-09-24", "endDate": "2026-09-27", "sampleSize": 502, "sampleType": "LV", "results": {"Jonathan Kreiss-Tomkins (D)": 44.0, "Bernadette Wilson (R)": 24.0, "Other": 18.0, "Undecided": 15.0}, "notes": "Ranked choice first round. Other is Taylor 8, Bronson 8 and others."},
   ],
 };

@@ -73,5 +73,6 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "TX-GOV-2026", "pollster": "Texas Public Opinion Research", "startDate": "2026-09-19", "endDate": "2026-09-22", "sampleSize": 1007, "sampleType": "LV", "results": {"Gina Hinojosa (D)": 46.0, "Greg Abbott (R)": 50.0, "Other": 3.0, "Undecided": 2.0}},
     {"raceId": "TX-GOV-2026", "pollster": "Stratus Intelligence (R)", "startDate": "2026-09-22", "endDate": "2026-09-24", "sampleSize": 0, "sampleType": "LV", "results": {"Gina Hinojosa (D)": 45.0, "Greg Abbott (R)": 50.0, "Undecided": 5}, "notes": "Sample size not published"},
     {"raceId": "TX-GOV-2026", "pollster": "Big Data Poll", "startDate": "2026-09-24", "endDate": "2026-09-26", "sampleSize": 698, "sampleType": "LV", "results": {"Gina Hinojosa (D)": 44.4, "Greg Abbott (R)": 48.9, "Undecided": 6.7}},
+    {"raceId": "TX-GOV-2026", "pollster": "Fox News/Beacon Research and Shaw & Company", "startDate": "2026-09-24", "endDate": "2026-09-28", "sampleSize": 881, "sampleType": "LV", "results": {"Gina Hinojosa (D)": 47.0, "Greg Abbott (R)": 52.0}, "notes": "Likely voters."},
   ],
 };

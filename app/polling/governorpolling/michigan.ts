@@ -53,6 +53,7 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "MI-GOV-2026", "pollster": "SSRS", "startDate": "2026-08-31", "endDate": "2026-09-06", "sampleSize": 843, "sampleType": "LV", "results": {"Jocelyn Benson (D)": 50.0, "John James (R)": 41.0, "Other": 9.0}},
     {"raceId": "MI-GOV-2026", "pollster": "co/efficient (R)", "startDate": "2026-09-21", "endDate": "2026-09-23", "sampleSize": 843, "sampleType": "LV", "results": {"Jocelyn Benson (D)": 47.0, "John James (R)": 44.0, "Undecided": 9.0}},
     {"raceId": "MI-GOV-2026", "pollster": "Cygnal (R)/Beacon Research (D)", "startDate": "2026-09-18", "endDate": "2026-09-21", "sampleSize": 600, "sampleType": "LV", "results": {"Jocelyn Benson (D)": 45.0, "John James (R)": 38.0, "Other": 4.0, "Undecided": 13.0}, "notes": "For Michigan Enjoyer."},
-    {"raceId": "MI-GOV-2026", "pollster": "NPR/Marist", "startDate": "2026-09-24", "endDate": "2026-09-27", "sampleSize": 1200, "sampleType": "RV", "results": {"Jocelyn Benson (D)": 53.0, "John James (R)": 41.0, "Undecided": 6.0}, "notes": "Sample size not yet posted by Marist, entered as 1,200."}
+    {"raceId": "MI-GOV-2026", "pollster": "NPR/Marist", "startDate": "2026-09-24", "endDate": "2026-09-27", "sampleSize": 1200, "sampleType": "RV", "results": {"Jocelyn Benson (D)": 53.0, "John James (R)": 41.0, "Undecided": 6.0}, "notes": "Sample size not yet posted by Marist, entered as 1,200."},
+    {"raceId": "MI-GOV-2026", "pollster": "Fox News/Beacon Research and Shaw & Company", "startDate": "2026-09-24", "endDate": "2026-09-28", "sampleSize": 1028, "sampleType": "LV", "results": {"Jocelyn Benson (D)": 54.0, "John James (R)": 45.0, "Undecided": 1.0}, "notes": "Likely voters. Other and undecided 1 combined."},
   ],
 };

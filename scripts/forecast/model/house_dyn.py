@@ -190,7 +190,9 @@ def run(st, table, slug, name):
     # way as the counties, and centered on the state so the state level is untouched
     import trend as _trd
     df["trend_term"] = 0.0
-    if _trd.ON:
+    import calib26 as _cb
+    _CAL = _trd.CALIB and bool(_cb.load())
+    if _trd.ON or _CAL:
         _tr = []
         for d in df.district:
             row = _PVI_ROWS.get((st[:2], int(d)))
@@ -202,7 +204,12 @@ def run(st, table, slug, name):
         _tr = np.array(_tr)
         pt = df.prim_term.values.astype(float); sd = pt.std()
         agree = 1.0 + _trd.PRIM_RANGE * np.clip(np.sign(_tr) * pt / sd, -1, 1) if sd > 0 else np.ones(len(_tr))
-        tt = np.clip((0.25 + _trd.PRES_CARRY) * _tr * agree, -_trd.CAP, _trd.CAP)
+        if _CAL:
+            # Oct 2 2026: the spine's quarter step back to 2020 is still closed, and the trend beyond 2024 is the
+            # carry calib26 measured from 2022 against 2016 to 2020, not an assumed one
+            tt = np.clip((0.25 + _cb.load()["tau"]) * _tr, -_trd.CAP, _trd.CAP)
+        else:
+            tt = np.clip((0.25 + _trd.PRES_CARRY) * _tr * agree, -_trd.CAP, _trd.CAP)
         vv = df.projected_votes.values.astype(float) if "projected_votes" in df else np.ones(len(tt))
         tt = tt - (tt * vv).sum() / max(vv.sum(), 1)
         df["trend_term"] = tt
@@ -467,6 +474,11 @@ def county_projection(R, df):
     m2 = inv(logit(a24) + (logit(g26) - logit(g24)) - _mean + ec * _k2 + S["delta"])
     m3 = inv(logit(a24) + ec * an.m3_constant(sm, model, shift))
     d2 = sm.W_FUND * m1 + sm.W_CENSUS * m2 + sm.W_HIST * m3
+    import calib26 as _cb
+    if _cb.ON and _cb.load():
+        # the same midterm county calibration as the Senate and governor counties
+        _p20 = S["P20"]; _s20 = (_p20.votes_dem / (_p20.votes_dem + _p20.votes_gop)).fillna(0.5).values
+        d2, _ = _cb.apply(R["st"], fl, np.asarray(d2, float), np.asarray(V26, float), np.asarray(a24, float), _s20, None)
     dv, rv = df.dem_votes.fillna(0).sum(), df.rep_votes.fillna(0).sum()
     fx = df.fixed.astype(str) != ""
     two = (1 - df.third_share.values)

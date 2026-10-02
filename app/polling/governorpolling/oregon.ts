@@ -37,6 +37,7 @@ export const RACES = [
 export const STATE_POLLS: Record<string, Poll[]> = {
   OR: [
     {"raceId": "OR-GOV-2026", "pollster": "Public Opinion Strategies (R)", "startDate": "2026-06-22", "endDate": "2026-06-24", "sampleSize": 600, "sampleType": "RV", "results": {"Tina Kotek (D)": 44.0, "Christine Drazan (R)": 48.0, "Undecided": 8.0}},
-    {"raceId": "OR-GOV-2026", "pollster": "DHM Research", "startDate": "2026-09-03", "endDate": "2026-09-09", "sampleSize": 600, "sampleType": "LV", "results": {"Tina Kotek (D)": 43.0, "Christine Drazan (R)": 45.0, "Other": 4.0, "Undecided": 13.0}}
+    {"raceId": "OR-GOV-2026", "pollster": "DHM Research", "startDate": "2026-09-03", "endDate": "2026-09-09", "sampleSize": 600, "sampleType": "LV", "results": {"Tina Kotek (D)": 43.0, "Christine Drazan (R)": 45.0, "Other": 4.0, "Undecided": 13.0}},
+    {"raceId": "OR-GOV-2026", "pollster": "DHM Research/Oregon Public Broadcasting", "startDate": "2026-09-17", "endDate": "2026-09-27", "sampleSize": 915, "sampleType": "LV", "results": {"Tina Kotek (D)": 44.0, "Christine Drazan (R)": 46.0, "Other": 3.0, "Undecided": 8.0}, "notes": "Other is Smith. With leaners: Drazan 47, Kotek 46, Smith 3."},
   ],
 };

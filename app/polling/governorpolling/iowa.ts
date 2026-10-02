@@ -46,6 +46,7 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "IA-GOV-2026", "pollster": "YouGov", "startDate": "2026-09-03", "endDate": "2026-09-08", "sampleSize": 2041, "sampleType": "LV", "results": {"Rob Sand (D)": 51.0, "Zach Lahn (R)": 41.0, "Undecided": 8.0}},
     {"raceId": "IA-GOV-2026", "pollster": "Cygnal (R)", "startDate": "2026-09-09", "endDate": "2026-09-11", "sampleSize": 500, "sampleType": "LV", "results": {"Rob Sand (D)": 48.0, "Zach Lahn (R)": 44.0, "Undecided": 8.0}},
     {"raceId": "IA-GOV-2026", "pollster": "co/efficient (R)", "startDate": "2026-09-14", "endDate": "2026-09-16", "sampleSize": 831, "sampleType": "LV", "results": {"Rob Sand (D)": 46.0, "Zach Lahn (R)": 42.0, "Undecided": 12.0}},
-    {"raceId": "IA-GOV-2026", "pollster": "NPR/Marist", "startDate": "2026-09-17", "endDate": "2026-09-20", "sampleSize": 1050, "sampleType": "RV", "results": {"Rob Sand (D)": 54.0, "Zach Lahn (R)": 42.0}}
+    {"raceId": "IA-GOV-2026", "pollster": "NPR/Marist", "startDate": "2026-09-17", "endDate": "2026-09-20", "sampleSize": 1050, "sampleType": "RV", "results": {"Rob Sand (D)": 54.0, "Zach Lahn (R)": 42.0}},
+    {"raceId": "IA-GOV-2026", "pollster": "Fox News/Beacon Research and Shaw & Company", "startDate": "2026-09-24", "endDate": "2026-09-28", "sampleSize": 1008, "sampleType": "LV", "results": {"Rob Sand (D)": 53.0, "Zach Lahn (R)": 44.0}, "notes": "Likely voters."},
   ],
 };
