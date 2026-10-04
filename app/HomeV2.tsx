@@ -12,6 +12,11 @@ import { getHomeStats, type HomeStats, type HomeSeriesPoint, type HomePollPoint 
 const SentimentGlobe = dynamic(() => import("@/app/components/SentimentGlobe"), { ssr: false });
 const DotField = dynamic(() => import("@/app/components/DotField"), { ssr: false });
 
+// Lightweight home: the cursor dot field, the scroll driven proof and camera
+// narrative, the WebGL globe and the scroll lit approach rows are switched off to
+// cut main thread work and page length. Flip to true to bring them back as built.
+const CINEMATIC = false;
+
 type ProcessItem = {
   title: string;
   body: string;
@@ -4317,7 +4322,7 @@ export default function HomePage() {
 
       <div className="lp-root">
         <section className="lp-hero">
-          <DotField className="lp-hero-glass" />
+          {CINEMATIC && <DotField className="lp-hero-glass" />}
           <div className="lp-hero-blooms" aria-hidden="true" />
           <div className="lp-hero-veil" aria-hidden="true" />
 
@@ -4343,13 +4348,13 @@ export default function HomePage() {
           <div className="lp-hero-foot" aria-hidden="true">
             <span className="lp-hero-cycle">150+ polls tracked · <b>updated daily</b></span>
             <span className="lp-hero-scroll"><i />scroll</span>
-            <span className="lp-hero-sim">field simulation · <b>move your cursor</b></span>
+            {CINEMATIC && <span className="lp-hero-sim">field simulation · <b>move your cursor</b></span>}
           </div>
         </section>
 
         <DeskWall stats={stats} />
 
-        <section className="lp-section lp-section--lead">
+        {CINEMATIC && (<section className="lp-section lp-section--lead">
           <div className="lp-shell">
             <div
               ref={proofRef}
@@ -4418,18 +4423,19 @@ export default function HomePage() {
               </div>
             </div>
           </div>
-        </section>
+        </section>)}
 
         <div className="lp-aftermath">
-          <SentimentGlobe />
+          {CINEMATIC && <SentimentGlobe />}
 
           <PublishDeck stats={stats} />
 
+        {CINEMATIC && (
         <section className="lp-work">
           <div className="lp-shell">
             <ApproachTheater />
           </div>
-        </section>
+        </section>)}
 
         <section className="lp-faq">
           <div className="lp-faq-inner">

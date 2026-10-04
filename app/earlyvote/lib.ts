@@ -8,13 +8,17 @@
 // ST is a state abbreviation or "US", and on "US" the regions ARE the states,
 // which is what the national view reads.
 
-export type Category = "requested" | "returned" | "inperson";
+export type Category = "requested" | "returned" | "inperson" | "voted";
+/** the three categories the feed publishes; "voted" is built from two of them */
+export type FeedCategory = Exclude<Category, "voted">;
+export const FEED_CATEGORIES: FeedCategory[] = ["requested", "returned", "inperson"];
 export type Dimension = "party" | "gender" | "race" | "ethnicity" | "age";
 
 export const CATEGORIES: { key: Category; label: string; blurb: string }[] = [
   { key: "requested", label: "Requested", blurb: "mail ballots requested" },
   { key: "returned",  label: "Returned",  blurb: "mail ballots returned" },
   { key: "inperson",  label: "In person", blurb: "ballots cast in person" },
+  { key: "voted",     label: "Fully voted", blurb: "returned mail plus in person, every ballot already cast" },
 ];
 
 export const DIMENSIONS: { key: Dimension; label: string }[] = [
@@ -41,6 +45,8 @@ export type CategoryPayload = {
   snapshot_date: string;
   regions: Record<string, RegionRow>;
   statewide_total: RegionRow;
+  /** only on "voted": the two feed payloads it was summed from */
+  parts?: { returned: CategoryPayload | null; inperson: CategoryPayload | null };
 };
 
 export type DemographicPayload = {
@@ -65,10 +71,51 @@ async function get<T>(path: string): Promise<T | null> {
   }
 }
 
-export const getCapabilities = (st: string) => get<Capabilities>(`${st}/capabilities`);
-export const getCategory = (st: string, c: Category) => get<CategoryPayload>(`${st}/${c}`);
-export const getDemographics = (st: string, c: Category, by: Dimension) =>
-  get<DemographicPayload>(`${st}/${c}/demographics?by=${by}`);
+/* ── "voted": returned mail ballots plus ballots cast in person ─────────────
+ * Every ballot already cast. Built on the client by summing the two feed
+ * categories bucket by bucket, so no new endpoint is needed. */
+function addRow(into: RegionRow, row: RegionRow | undefined) {
+  for (const [g, b] of Object.entries(row ?? {})) {
+    const cur = into[g];
+    into[g] = { votes: (cur?.votes ?? 0) + (b?.votes ?? 0), color: cur?.color ?? b?.color };
+  }
+}
+export function mergeVoted(ret: CategoryPayload | null, inp: CategoryPayload | null): CategoryPayload | null {
+  const base = ret ?? inp;
+  if (!base) return null;
+  const regions: Record<string, RegionRow> = {};
+  for (const src of [ret, inp]) for (const [name, row] of Object.entries(src?.regions ?? {})) addRow(regions[name] ??= {}, row);
+  const statewide_total: RegionRow = {};
+  addRow(statewide_total, ret?.statewide_total); addRow(statewide_total, inp?.statewide_total);
+  const snap = [ret?.snapshot_date, inp?.snapshot_date].filter(Boolean).sort().at(-1) ?? base.snapshot_date;
+  return { ...base, category: "voted", snapshot_date: snap, regions, statewide_total, parts: { returned: ret, inperson: inp } };
+}
+
+export const getCapabilities = (st: string) => get<Capabilities>(`${st}/capabilities`).then((c) => {
+  if (!c?.categories) return c;
+  const r = c.categories.returned, i = c.categories.inperson;
+  if (r || i) {
+    const v = {} as Record<Dimension, boolean>;
+    // a breakdown of "voted" needs both halves, unless the state only publishes one
+    for (const d of DIMENSIONS.map((x) => x.key)) v[d] = r && i ? !!(r[d] && i[d]) : !!(r ?? i)?.[d];
+    c.categories.voted = v;
+  }
+  return c;
+});
+export const getCategory = (st: string, c: Category): Promise<CategoryPayload | null> =>
+  c === "voted"
+    ? Promise.all([getCategory(st, "returned"), getCategory(st, "inperson")]).then(([r, i]) => mergeVoted(r, i))
+    : get<CategoryPayload>(`${st}/${c}`);
+export const getDemographics = (st: string, c: Category, by: Dimension): Promise<DemographicPayload | null> => {
+  if (c !== "voted") return get<DemographicPayload>(`${st}/${c}/demographics?by=${by}`);
+  return Promise.all([getDemographics(st, "returned", by), getDemographics(st, "inperson", by)]).then(([r, i]) => {
+    if (!r || !i) return r ?? i;
+    const values: Record<string, number> = { ...r.values };
+    for (const [g, n] of Object.entries(i.values)) values[g] = (values[g] ?? 0) + n;
+    return { ...r, category: "voted", values, total: r.total + i.total,
+      snapshot_date: [r.snapshot_date, i.snapshot_date].sort().at(-1) ?? r.snapshot_date };
+  });
+};
 
 export const sumRow = (row: RegionRow | undefined) =>
   row ? Object.values(row).reduce((n, b) => n + (b?.votes ?? 0), 0) : 0;
@@ -266,7 +313,9 @@ export const getPartyModel = () =>
 /** requested ballots read the mailed out mix; returned ballots the mail mix and
  *  then the party return rates; in person ballots the early mix */
 export type Mode = "mail" | "returned" | "early";
-export const modeOf = (c: Category): Mode => (c === "inperson" ? "early" : c === "returned" ? "returned" : "mail");
+// "voted" is estimated as its two halves (see mergeSims, mergeCombined); where a
+// single mode is needed for display it reads as cast ballots, the early mix.
+export const modeOf = (c: Category): Mode => (c === "inperson" || c === "voted" ? "early" : c === "returned" ? "returned" : "mail");
 const MIX_INDEX: Record<Mode, number> = { mail: 2, returned: 0, early: 1 };
 
 export const regimeOf = (model: PartyModel, st: string): Regime => model.regime[st] ?? "request";
@@ -448,6 +497,7 @@ export type Combined = {
   estimated: { votes: number; states: number; countyWeighted: number };
   d: number; r: number; o: number;          // final ballots, reported plus mean estimate
   margin: number; lo: number; hi: number;   // R minus D, points, 80% range from the estimate
+  dk: number[]; rk: number[];               // Democratic and Republican ballots per draw, reported plus estimated
 };
 
 export function combineNational(
@@ -505,7 +555,47 @@ export function combineNational(
     estimated: { votes: estVotes, states: estStates, countyWeighted },
     d: rd + ed, r: rr + er, o: ro + ei,
     margin: mean(mg), lo: q(mg, 0.1), hi: q(mg, 0.9),
+    dk: sim.draws.d.map((x) => rd + (estVotes ? x : 0)), rk: sim.draws.r.map((x) => rr + (estVotes ? x : 0)),
   };
+}
+
+/** nationwide "voted": returned plus in person, summed draw by draw so the range stays exact */
+export function mergeCombined(a: Combined | null | undefined, b: Combined | null | undefined): Combined | null {
+  if (!a || !b) return a ?? b ?? null;
+  const total = a.total + b.total;
+  const mg = a.dk.map((d, k) => ((a.rk[k] + b.rk[k] - d - b.dk[k]) / total) * 100);
+  return {
+    total,
+    reported: { d: a.reported.d + b.reported.d, r: a.reported.r + b.reported.r, o: a.reported.o + b.reported.o,
+      votes: a.reported.votes + b.reported.votes, states: Math.max(a.reported.states, b.reported.states) },
+    estimated: { votes: a.estimated.votes + b.estimated.votes, states: Math.max(a.estimated.states, b.estimated.states),
+      countyWeighted: Math.max(a.estimated.countyWeighted, b.estimated.countyWeighted) },
+    d: a.d + b.d, r: a.r + b.r, o: a.o + b.o,
+    margin: mg.reduce((s, x) => s + x, 0) / mg.length, lo: q(mg, 0.1), hi: q(mg, 0.9),
+    dk: a.dk.map((d, k) => d + b.dk[k]), rk: a.rk.map((r, k) => r + b.rk[k]),
+  };
+}
+
+type Sim = ReturnType<typeof simulate>;
+/** a place's "voted" estimate: its returned and in person estimates, ballot weighted;
+ *  the total is summed draw by draw */
+export function mergeSims(a: Sim, b: Sim): Sim {
+  const byKey: Record<string, Estimate> = { ...a.byKey };
+  for (const [k, e] of Object.entries(b.byKey)) {
+    const o = byKey[k];
+    if (!o) { byKey[k] = e; continue; }
+    const v = o.votes + e.votes, w = (x: number, y: number) => (x * o.votes + y * e.votes) / v;
+    byKey[k] = { d: w(o.d, e.d), r: w(o.r, e.r), i: w(o.i, e.i), margin: w(o.margin, e.margin),
+      lo: w(o.lo, e.lo), hi: w(o.hi, e.hi), votes: v };
+  }
+  const draws = { d: a.draws.d.map((x, k) => x + b.draws.d[k]), r: a.draws.r.map((x, k) => x + b.draws.r[k]),
+    i: a.draws.i.map((x, k) => x + b.draws.i[k]) };
+  const totV = (a.total?.votes ?? 0) + (b.total?.votes ?? 0);
+  if (totV <= 0) return { byKey, total: null, draws };
+  const tm = draws.r.map((r, k) => ((r - draws.d[k]) / totV) * 100);
+  const mean = (x: number[]) => x.reduce((s, y) => s + y, 0) / x.length / totV;
+  return { byKey, total: { d: mean(draws.d), r: mean(draws.r), i: mean(draws.i),
+    margin: tm.reduce((s, x) => s + x, 0) / tm.length, lo: q(tm, 0.1), hi: q(tm, 0.9), votes: totV }, draws };
 }
 
 const _adults: Record<string, number> = {};

@@ -3,7 +3,7 @@
 import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import {
-  CATEGORIES, DIMENSIONS, commas, compact, fillFor, getCapabilities, getCategory, getDemographics,
+  CATEGORIES, FEED_CATEGORIES, mergeVoted, mergeCombined, mergeSims, DIMENSIONS, commas, compact, fillFor, getCapabilities, getCategory, getDemographics,
   marginOf, matchCounty, pct, STATE_NAME, stateOfFips, sumRow, toneFor, turnoutFill, volumeScale,
   getPartyModel, modeOf, simulate, fmtMargin, combineNational, returnTilt, demoAdjust, regimeOf, REGIME_WORD, stateParts,
   ratingOf, RATINGS, RATING_WORD, EV_DEM, EV_REP, EV_TOSS, type Rating,
@@ -409,14 +409,14 @@ export default function EarlyVoteDesk() {
   // states that publish party for both requests and returns.
   useEffect(() => {
     let live = true;
-    for (const c of CATEGORIES.map((x) => x.key)) getCategory("US", c).then((us) => { if (live) setNatl((m) => ({ ...m, [c]: us })); });
+    for (const c of FEED_CATEGORIES) getCategory("US", c).then((us) => { if (live) setNatl((m) => ({ ...m, [c]: us })); });
     return () => { live = false; };
   }, []);
   // county counts of the no-party states, for the national cards only
   useEffect(() => {
     if (scope !== "US") return;
     let live = true;
-    for (const c of CATEGORIES.map((x) => x.key)) {
+    for (const c of FEED_CATEGORIES) {
       const us = natl[c];
       if (!us || natlCounties[c]) continue;
       const noParty = Object.entries(us.regions)
@@ -427,29 +427,34 @@ export default function EarlyVoteDesk() {
     }
     return () => { live = false; };
   }, [scope, natl, natlCounties]);
+  const natlAll = useMemo(() => ("returned" in natl && "inperson" in natl
+    ? { ...natl, voted: mergeVoted(natl.returned ?? null, natl.inperson ?? null) } : natl), [natl]);
   const tilt: ReturnTilt | null = useMemo(
     () => (model ? returnTilt(natl.requested, natl.returned, model) : null), [model, natl]);
   const combined = useMemo(() => {
     const out: Partial<Record<Category, Combined | null>> = {};
     if (!model) return out;
-    for (const c of CATEGORIES.map((x) => x.key)) {
+    for (const c of FEED_CATEGORIES) {
       const us = natl[c];
       out[c] = us ? combineNational(us, natlCounties[c] ?? {}, model, countyNames, modeOf(c),
         c === "returned" ? { us: natl.requested, counties: natlCounties.requested ?? {} } : undefined, tilt) : null;
     }
+    // every ballot already cast: returned mail plus in person, summed draw by draw
+    if ("returned" in out && "inperson" in out) out.voted = mergeCombined(out.returned, out.inperson);
     return out;
   }, [model, natl, natlCounties, countyNames, tilt]);
 
   // an open state's own requests, so each county's returned ballots can be read
   // against the ballots it sent out
   const [reqState, setReqState] = useState<CategoryPayload | null>(null);
+  const needReq = cat === "returned" || cat === "voted";
   useEffect(() => {
     setReqState(null);
-    if (scope === "US" || cat !== "returned") return;
+    if (scope === "US" || !needReq) return;
     let live = true;
     getCategory(scope, "requested").then((d) => { if (live) setReqState(d); });
     return () => { live = false; };
-  }, [scope, cat]);
+  }, [scope, needReq]);
 
   // the national outline and the county name table load once
   useEffect(() => {
@@ -541,20 +546,33 @@ export default function EarlyVoteDesk() {
   // shape, is its counties weighted by adults.
   const est = useMemo(() => {
     if (!model || !noPartyRows.length) return null;
-    const ret = cat === "returned";
     // return rate of a place: its returned ballots over the ballots it sent out
     const reqOf = (name: string) => (scope === "US" ? sumRow(natl.requested?.regions[name]) : sumRow(reqState?.regions[name]));
     const reqAll = scope === "US" ? 0 : sumRow(reqState?.statewide_total);
-    const stateRho = ret && reqAll > 0 ? total / reqAll : undefined;
-    const places: Place[] = noPartyRows.map(({ name, n }) => {
-      const q = ret ? reqOf(name) : 0;
-      const rho = ret ? (q > 0 ? n / q : stateRho) : undefined;
-      if (scope === "US") return { key: name, st: name, parts: stateParts(model, name, rho), votes: n };
-      const f = fipsOf[name];
-      return { key: name, st: scope, parts: f && model.mix[f] ? [[f, 1, rho] as Part] : stateParts(model, scope, rho), votes: n };
-    });
-    return simulate(places, model, modeOf(cat), tilt, adj && scope !== "US" ? { [scope]: adj } : undefined);
-  }, [model, noPartyRows, fipsOf, scope, cat, natl, reqState, total, tilt, adj]);
+    const adjust = adj && scope !== "US" ? { [scope]: adj } : undefined;
+    // one category's places; votes of a place come from that category's own payload
+    const run = (c: Category, votesOf: (name: string) => number, catTotal: number) => {
+      const ret = c === "returned";
+      const stateRho = ret && reqAll > 0 ? catTotal / reqAll : undefined;
+      const places: Place[] = noPartyRows.map(({ name }) => {
+        const n = votesOf(name);
+        const q = ret ? reqOf(name) : 0;
+        const rho = ret ? (q > 0 ? n / q : stateRho) : undefined;
+        if (scope === "US") return { key: name, st: name, parts: stateParts(model, name, rho), votes: n };
+        const f = fipsOf[name];
+        return { key: name, st: scope, parts: f && model.mix[f] ? [[f, 1, rho] as Part] : stateParts(model, scope, rho), votes: n };
+      });
+      return simulate(places, model, modeOf(c), tilt, adjust);
+    };
+    if (cat === "voted" && data?.parts) {
+      // every ballot cast: estimate the mail half and the in person half each in its own mode
+      const { returned: r, inperson: i } = data.parts;
+      return mergeSims(run("returned", (nm) => sumRow(r?.regions[nm]), sumRow(r?.statewide_total)),
+                       run("inperson", (nm) => sumRow(i?.regions[nm]), 0));
+    }
+    const nOf: Record<string, number> = Object.fromEntries(noPartyRows.map((r) => [r.name, r.n]));
+    return run(cat, (nm) => nOf[nm] ?? 0, total);
+  }, [model, noPartyRows, fipsOf, scope, cat, data, natl, reqState, total, tilt, adj]);
   const showEst = shade === "estimate" && !!est?.total;
 
   const fillRow = (key: string, row: RegionRow) => {
@@ -646,7 +664,7 @@ export default function EarlyVoteDesk() {
             </section>
 
             {national && model ? (
-              <NationalCombined combined={combined} loaded={natl} cat={cat} setCat={setCat} tilt={tilt} />
+              <NationalCombined combined={combined} loaded={natlAll} cat={cat} setCat={setCat} tilt={tilt} />
             ) : null}
 
             {someNoParty && est?.total ? (

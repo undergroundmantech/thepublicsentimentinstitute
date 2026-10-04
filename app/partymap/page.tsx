@@ -394,7 +394,7 @@ export default function PartyMapPage() {
   const layer = isoGeo ? "iso" : scope === "counties" ? "counties" : "states";
 
   return (
-    <div style={{ maxWidth: 1280, margin: "0 auto", padding: "32px 32px 80px", position: "relative", zIndex: 1, color: "var(--foreground)" }}>
+    <div className="pm-shell" style={{ maxWidth: 1280, margin: "0 auto", padding: "32px 32px 80px", position: "relative", zIndex: 1, color: "var(--foreground)" }}>
       <style>{`
         .pm-root { --pm-grey: rgba(var(--ink-rgb),calc(0.16 * var(--struct))); }
         [data-theme="dark"] .pm-root { --pm-grey: rgba(244,245,251,0.16); }
@@ -421,7 +421,7 @@ export default function PartyMapPage() {
             <div style={{ fontFamily: "var(--font-body),monospace", fontSize: 11, letterSpacing: "0.10em", textTransform: "uppercase", color: "var(--muted2)", marginBottom: 12 }}>
               TPSI · Voter Registration · {national ? `${compact(national.total)} registered nationwide` : "loading…"}
             </div>
-            <h1 style={{ fontFamily: "var(--font-display),sans-serif", fontSize: "clamp(34px,5vw,60px)", letterSpacing: "-0.02em", lineHeight: 0.95, textTransform: "uppercase", color: "var(--foreground)", marginBottom: 16 }}>
+            <h1 className="pm-title" style={{ color: "var(--foreground)", marginBottom: 16 }}>
               Party{" "}
               <span style={{ background: "linear-gradient(100deg,#d64550,#a78bfa,#3b7bde)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>Registration</span>
             </h1>
