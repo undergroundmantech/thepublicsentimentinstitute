@@ -1,0 +1,19 @@
+cycle,race,office,state,dem_candidate,rep_candidate,dem_pct,rep_pct,incumbent_party,incumbent_ran,notes
+2018,ALG,governor,AL,Walt Maddox,Kay Ivey,40.39,59.46,R,yes,
+2018,AKG,governor,AK,Mark Begich,Mike Dunleavy,44.41,51.44,I,no,Incumbent Bill Walker (I) suspended campaign Oct 19 but stayed on ballot; polls use three way field with Walker in other
+2018,AZG,governor,AZ,David Garcia,Doug Ducey,41.84,56.00,R,yes,
+2018,ARG,governor,AR,Jared Henderson,Asa Hutchinson,31.77,65.33,R,yes,
+2018,CAG,governor,CA,Gavin Newsom,John Cox,61.95,38.05,D,no,Top two general; Brown term limited
+2018,COG,governor,CO,Jared Polis,Walker Stapleton,53.42,42.80,D,no,Hickenlooper term limited
+2018,CTG,governor,CT,Ned Lamont,Bob Stefanowski,49.37,46.21,D,no,Griebel (I) 3.89; Malloy did not seek third term
+2018,FLG,governor,FL,Andrew Gillum,Ron DeSantis,49.19,49.59,R,no,Scott term limited; page text truncated so no general polls collected
+2018,GAG,governor,GA,Stacey Abrams,Brian Kemp,48.83,50.22,R,no,Deal term limited
+2018,HIG,governor,HI,David Ige,Andria Tupola,62.67,33.70,D,yes,
+2018,IDG,governor,ID,Paulette Jordan,Brad Little,38.19,59.77,R,no,Otter did not run
+2018,ILG,governor,IL,JB Pritzker,Bruce Rauner,54.53,38.83,R,yes,
+2018,IAG,governor,IA,Fred Hubbell,Kim Reynolds,47.53,50.26,R,yes,Reynolds succeeded Branstad in 2017
+2018,KSG,governor,KS,Laura Kelly,Kris Kobach,48.01,42.98,R,no,Orman (I) 6.50; Colyer lost primary to Kobach
+2018,MEG,governor,ME,Janet Mills,Shawn Moody,50.89,43.18,R,no,Ranked choice voting race; LePage term limited
+2018,MDG,governor,MD,Ben Jealous,Larry Hogan,43.51,55.35,R,yes,
+2018,MAG,governor,MA,Jay Gonzalez,Charlie Baker,33.12,66.60,R,yes,
+2018,MIG,governor,MI,Gretchen Whitmer,Bill Schuette,53.31,43.75,R,no,Snyder term limited

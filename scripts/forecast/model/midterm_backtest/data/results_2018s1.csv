@@ -1,0 +1,18 @@
+cycle,race,office,state,dem_candidate,rep_candidate,dem_pct,rep_pct,incumbent_party,incumbent_ran,notes
+2018,AZS,senate,AZ,Kyrsten Sinema,Martha McSally,49.96,47.61,R,no,Open seat; Jeff Flake (R) retired
+2018,CTS,senate,CT,Chris Murphy,Matthew Corey,59.53,39.35,D,yes,Murphy also on Working Families line
+2018,DES,senate,DE,Tom Carper,Rob Arlett,59.95,37.81,D,yes,No polls in window
+2018,FLS,senate,FL,Bill Nelson,Rick Scott,49.93,50.05,D,yes,Incumbent lost; machine recount
+2018,HIS,senate,HI,Mazie Hirono,Ron Curtis,71.15,28.85,D,yes,No polling table on page
+2018,INS,senate,IN,Joe Donnelly,Mike Braun,44.84,50.73,D,yes,Libertarian Lucy Brenton 4.42
+2018,MES,senate,ME,Angus King,Eric Brakey,54.31,35.23,I,yes,dem column is independent King (main opponent of R); Democrat Zak Ringelstein got 10.45; ranked choice voting but King won first round majority
+2018,MDS,senate,MD,Ben Cardin,Tony Campbell,64.86,30.31,D,yes,Independent Neal Simon 3.74
+2018,MAS,senate,MA,Elizabeth Warren,Geoff Diehl,60.34,36.17,D,yes,Independent Shiva Ayyadurai 3.39
+2018,MIS,senate,MI,Debbie Stabenow,John James,52.26,45.76,D,yes,
+2018,MNS,senate,MN,Amy Klobuchar,Jim Newberger,60.31,36.21,D,yes,
+2018,MNS2,senate,MN,Tina Smith,Karin Housley,52.97,42.35,D,yes,Special election; Smith was appointed incumbent
+2018,MSS,senate,MS,David Baria,Roger Wicker,39.47,58.49,R,yes,
+2018,MSS2,senate,MS,Mike Espy,Cindy Hyde-Smith,40.9,41.25,R,yes,Special jungle election Nov 6 round shown (McDaniel R 16.38; Bartee D 1.47); Hyde-Smith appointed incumbent; Nov 27 runoff Hyde-Smith 53.63 Espy 46.37
+2018,MOS,senate,MO,Claire McCaskill,Josh Hawley,45.57,51.38,D,yes,Incumbent lost
+2018,MTS,senate,MT,Jon Tester,Matt Rosendale,50.33,46.78,D,yes,Libertarian Rick Breckenridge 2.88
+2018,NES,senate,NE,Jane Raybould,Deb Fischer,38.62,57.69,R,yes,Libertarian Jim Schultz 3.63

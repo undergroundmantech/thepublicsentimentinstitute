@@ -2,7 +2,7 @@
 // Michigan — 2026 U.S. Senate: Abdul El-Sayed (D) vs. Mike Rogers (R)
 // Generated from the TPSI forecast poll feed (run of 2026-09-22), merged with
 // the polls this file already carried. Polls of matchups that are not on the
-// ballot were dropped. Newest poll: 2026-09-23.
+// ballot were dropped. Newest poll: 2026-09-24.
 
 export type SampleType = "LV" | "RV" | "A";
 
@@ -63,5 +63,6 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "MI-SEN-2026", "pollster": "NPR/Marist", "startDate": "2026-09-24", "endDate": "2026-09-27", "sampleSize": 1200, "sampleType": "RV", "results": {"Abdul El-Sayed (D)": 51.0, "Mike Rogers (R)": 44.0, "Undecided": 5.0}, "notes": "Sample size not yet posted by Marist, entered as 1,200."},
     {"raceId": "MI-SEN-2026", "pollster": "Fox News/Beacon Research and Shaw & Company", "startDate": "2026-09-24", "endDate": "2026-09-28", "sampleSize": 1028, "sampleType": "LV", "results": {"Abdul El-Sayed (D)": 50.0, "Mike Rogers (R)": 49.0, "Undecided": 1.0}, "notes": "Likely voters. Registered voters, 1,203: El-Sayed 51, Rogers 48. Other and undecided 1 combined."},
     {"raceId": "MI-SEN-2026", "pollster": "Trafalgar Group (R)", "startDate": "2026-09-28", "endDate": "2026-09-30", "sampleSize": 1085, "sampleType": "LV", "results": {"Abdul El-Sayed (D)": 46.9, "Mike Rogers (R)": 45.1, "Other": 2.9, "Undecided": 5.0}},
+    {"raceId": "MI-SEN-2026", "pollster": "Big Data Poll", "startDate": "2026-09-22", "endDate": "2026-09-24", "sampleSize": 678, "sampleType": "LV", "results": {"Abdul El-Sayed (D)": 46.7, "Mike Rogers (R)": 42.1, "Undecided": 11.2}, "notes": "Likely voters with leaners."},
   ],
 };

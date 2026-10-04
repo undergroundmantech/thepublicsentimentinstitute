@@ -2,7 +2,7 @@
 // Iowa — 2026 Governor: Rob Sand (D) vs. Zach Lahn (R)
 // Generated from the TPSI forecast poll feed (run of 2026-09-22), merged with
 // the polls this file already carried. Polls of matchups that are not on the
-// ballot were dropped. Newest poll: 2026-09-20.
+// ballot were dropped. Newest poll: 2026-09-30.
 
 export type SampleType = "LV" | "RV" | "A";
 
@@ -48,5 +48,6 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "IA-GOV-2026", "pollster": "co/efficient (R)", "startDate": "2026-09-14", "endDate": "2026-09-16", "sampleSize": 831, "sampleType": "LV", "results": {"Rob Sand (D)": 46.0, "Zach Lahn (R)": 42.0, "Undecided": 12.0}},
     {"raceId": "IA-GOV-2026", "pollster": "NPR/Marist", "startDate": "2026-09-17", "endDate": "2026-09-20", "sampleSize": 1050, "sampleType": "RV", "results": {"Rob Sand (D)": 54.0, "Zach Lahn (R)": 42.0}},
     {"raceId": "IA-GOV-2026", "pollster": "Fox News/Beacon Research and Shaw & Company", "startDate": "2026-09-24", "endDate": "2026-09-28", "sampleSize": 1008, "sampleType": "LV", "results": {"Rob Sand (D)": 53.0, "Zach Lahn (R)": 44.0}, "notes": "Likely voters."},
+    {"raceId": "IA-GOV-2026", "pollster": "New York Times/Siena", "startDate": "2026-09-21", "endDate": "2026-09-30", "sampleSize": 600, "sampleType": "LV", "results": {"Rob Sand (D)": 52.0, "Zach Lahn (R)": 41.0, "Undecided": 7.0}, "notes": "Sample size was not yet published, so 600 is a placeholder."}
   ],
 };

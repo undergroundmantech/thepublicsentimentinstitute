@@ -2,7 +2,7 @@
 // Ohio — 2026 U.S. Senate: Sherrod Brown (D) vs. Jon Husted (R)
 // Generated from the TPSI forecast poll feed (run of 2026-09-22), merged with
 // the polls this file already carried. Polls of matchups that are not on the
-// ballot were dropped. Newest poll: 2026-09-28.
+// ballot were dropped. Newest poll: 2026-09-30.
 
 export type SampleType = "LV" | "RV" | "A";
 
@@ -57,5 +57,8 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "OH-SEN-2026", "pollster": "NPR/Marist", "startDate": "2026-09-24", "endDate": "2026-09-27", "sampleSize": 1298, "sampleType": "RV", "moe": 3.8, "results": {"Sherrod Brown (D)": 51.0, "Jon Husted (R)": 43.0, "Undecided": 6.0}},
     {"raceId": "OH-SEN-2026", "pollster": "Suffolk University/USA TODAY Network", "startDate": "2026-09-23", "endDate": "2026-09-27", "sampleSize": 500, "sampleType": "LV", "results": {"Sherrod Brown (D)": 47.0, "Jon Husted (R)": 44.0}, "notes": "Senate crosstabs embargoed; other and undecided not published."},
     {"raceId": "OH-SEN-2026", "pollster": "InsiderAdvantage", "startDate": "2026-09-28", "endDate": "2026-09-29", "sampleSize": 1200, "sampleType": "LV", "results": {"Sherrod Brown (D)": 44.0, "Jon Husted (R)": 43.0, "Other": 6.0, "Undecided": 7.0}, "notes": "Other is Redpath 4 and Levy 2."},
+    {"raceId": "OH-SEN-2026", "pollster": "New York Times/Siena", "startDate": "2026-09-21", "endDate": "2026-09-30", "sampleSize": 600, "sampleType": "LV", "results": {"Sherrod Brown (D)": 49.0, "Jon Husted (R)": 46.0, "Undecided": 5.0}, "notes": "Sample size was not yet published, so 600 is a placeholder."},
+    {"raceId": "OH-SEN-2026", "pollster": "Quantus Insights", "startDate": "2026-09-21", "endDate": "2026-09-23", "sampleSize": 695, "sampleType": "LV", "results": {"Sherrod Brown (D)": 47.3, "Jon Husted (R)": 46.8, "Other": 3.5, "Undecided": 2.4}, "notes": "Full ballot with leaners."},
+    {"raceId": "OH-SEN-2026", "pollster": "Rasmussen Reports", "startDate": "2026-09-22", "endDate": "2026-09-23", "sampleSize": 1115, "sampleType": "LV", "results": {"Sherrod Brown (D)": 46.0, "Jon Husted (R)": 43.0, "Other": 5.0, "Undecided": 7.0}}
   ],
 };

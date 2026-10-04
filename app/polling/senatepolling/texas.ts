@@ -2,7 +2,7 @@
 // Texas — 2026 U.S. Senate: James Talarico (D) vs. Ken Paxton (R)
 // Generated from the TPSI forecast poll feed (run of 2026-09-22), merged with
 // the polls this file already carried. Polls of matchups that are not on the
-// ballot were dropped. Newest poll: 2026-09-22.
+// ballot were dropped. Newest poll: 2026-09-30.
 
 export type SampleType = "LV" | "RV" | "A";
 
@@ -75,9 +75,11 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "TX-SEN-2026", "pollster": "Texas Southern University", "startDate": "2026-09-15", "endDate": "2026-09-19", "sampleSize": 1800, "sampleType": "LV", "results": {"James Talarico (D)": 47.0, "Ken Paxton (R)": 46.0, "Other": 3.0, "Undecided": 4.0}},
     {"raceId": "TX-SEN-2026", "pollster": "Marist University", "startDate": "2026-09-17", "endDate": "2026-09-20", "sampleSize": 1139, "sampleType": "RV", "results": {"James Talarico (D)": 50.0, "Ken Paxton (R)": 44.0, "Other": 2.0, "Undecided": 4.0}},
     {"raceId": "TX-SEN-2026", "pollster": "Texas Public Opinion Research (D)", "startDate": "2026-09-19", "endDate": "2026-09-22", "sampleSize": 1007, "sampleType": "LV", "results": {"James Talarico (D)": 49.0, "Ken Paxton (R)": 44.0, "Other": 4.0, "Undecided": 3.0}},
-    {"raceId": "TX-SEN-2026", "pollster": "Stratus Intelligence (R)", "startDate": "2026-09-22", "endDate": "2026-09-24", "sampleSize": 0, "sampleType": "LV", "results": {"James Talarico (D)": 48.0, "Ken Paxton (R)": 48.0, "Undecided": 4}, "notes": "Sample size not published"},
+    {"raceId": "TX-SEN-2026", "pollster": "Stratus Intelligence (R)", "startDate": "2026-09-22", "endDate": "2026-09-24", "sampleSize": 856, "sampleType": "LV", "results": {"James Talarico (D)": 48.0, "Ken Paxton (R)": 48.0, "Undecided": 4}},
     {"raceId": "TX-SEN-2026", "pollster": "Big Data Poll", "startDate": "2026-09-24", "endDate": "2026-09-26", "sampleSize": 698, "sampleType": "LV", "results": {"James Talarico (D)": 46.8, "Ken Paxton (R)": 44.9, "Undecided": 8.3}},
     {"raceId": "TX-SEN-2026", "pollster": "Fox News/Beacon Research and Shaw & Company", "startDate": "2026-09-24", "endDate": "2026-09-28", "sampleSize": 881, "sampleType": "LV", "results": {"James Talarico (D)": 51.0, "Ken Paxton (R)": 49.0}, "notes": "Likely voters. Registered voters, 1,203: Talarico leads by 7."},
     {"raceId": "TX-SEN-2026", "pollster": "Rasmussen Reports", "startDate": "2026-09-28", "endDate": "2026-09-29", "sampleSize": 1128, "sampleType": "LV", "results": {"James Talarico (D)": 46.0, "Ken Paxton (R)": 45.0, "Other": 4.0, "Undecided": 5.0}, "notes": "Other is Libertarian Ted Brown."},
+    {"raceId": "TX-SEN-2026", "pollster": "Pulse Decision Science (R)", "startDate": "2026-09-24", "endDate": "2026-09-27", "sampleSize": 800, "sampleType": "LV", "results": {"James Talarico (D)": 45.0, "Ken Paxton (R)": 48.0, "Undecided": 7.0}},
+    {"raceId": "TX-SEN-2026", "pollster": "New York Times/Siena", "startDate": "2026-09-21", "endDate": "2026-09-30", "sampleSize": 600, "sampleType": "LV", "results": {"James Talarico (D)": 51.0, "Ken Paxton (R)": 45.0, "Undecided": 4.0}, "notes": "Sample size was not yet published, so 600 is a placeholder."}
   ],
 };

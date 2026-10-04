@@ -1,0 +1,18 @@
+cycle,race,office,state,dem_candidate,rep_candidate,dem_pct,rep_pct,incumbent_party,incumbent_ran,notes
+2018,NVS,senate,NV,Jacky Rosen,Dean Heller,50.41,45.38,R,yes,Rosen won
+2018,NJS,senate,NJ,Bob Menendez,Bob Hugin,54.01,42.83,D,yes,
+2018,NMS,senate,NM,Martin Heinrich,Mick Rich,54.09,30.53,D,yes,Libertarian Gary Johnson 15.38
+2018,NYS,senate,NY,Kirsten Gillibrand,Chele Farley,66.96,32.98,D,yes,Totals across fusion party lines
+2018,NDS,senate,ND,Heidi Heitkamp,Kevin Cramer,44.27,55.11,D,yes,Write-in 0.63
+2018,OHS,senate,OH,Sherrod Brown,Jim Renacci,53.4,46.58,D,yes,
+2018,PAS,senate,PA,Bob Casey Jr.,Lou Barletta,55.74,42.62,D,yes,Libertarian Dale Kerns 1.02 and Green Neal Gale 0.62
+2018,RIS,senate,RI,Sheldon Whitehouse,Robert Flanders,61.44,38.33,D,yes,Write-in 0.22
+2018,TNS,senate,TN,Phil Bredesen,Marsha Blackburn,43.92,54.71,R,no,Open seat and Bob Corker retired
+2018,TXS,senate,TX,Beto O'Rourke,Ted Cruz,48.33,50.89,R,yes,Libertarian Neal Dikeman 0.78
+2018,UTS,senate,UT,Jenny Wilson,Mitt Romney,30.91,62.59,R,no,Open seat and Orrin Hatch retired
+2018,VTS,senate,VT,Bernie Sanders (I),Lawrence Zupan,67.44,27.47,I,yes,Dem column is independent Sanders and incumbent caucuses with Democrats
+2018,VAS,senate,VA,Tim Kaine,Corey Stewart,57.0,41.01,D,yes,Libertarian Matt Waters 1.84
+2018,WAS,senate,WA,Maria Cantwell,Susan Hutchison,58.43,41.57,D,yes,Top two general after jungle primary
+2018,WVS,senate,WV,Joe Manchin,Patrick Morrisey,49.57,46.26,D,yes,Libertarian Rusty Hollen 4.17
+2018,WIS,senate,WI,Tammy Baldwin,Leah Vukmir,55.36,44.53,D,yes,Write-in 0.11
+2018,WYS,senate,WY,Gary Trauner,John Barrasso,30.1,66.96,R,yes,Libertarian Joseph Porambo 2.78

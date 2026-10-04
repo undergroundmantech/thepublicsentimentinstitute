@@ -47,6 +47,14 @@ DAYS_OUT = max(int((ELECTION_DAY - AS_OF).days), 0)
 # Recency tilt, Sept 24 2026. The anchors below are each raised about two to three points of weight,
 # because M3's statewide level IS the polling average: raising M3 raises polling, not history.
 PROXIMITY = [(180.0, 0.48, 0.28), (60.0, 0.68, 0.36), (21.0, 0.83, 0.44)]
+# Election eve anchor, Oct 3 2026, the first anchor fitted rather than judged (scratchpad/mtbt, 2018 and 2022 Senate
+# and governor). Inside the last three weeks the thinly polled races were forecast best with more weight on their
+# polls: the floor rising from 0.44 at 21 days to 0.74 on election day cut the typical election eve miss in polled races
+# from 4.45 to 3.96 points, in both cycles. The fundamentals in that backtest were simpler than the live model's, so
+# the floor here rises only two thirds as far, to 0.64. The ceiling did not need to move, and nothing changes more
+# than 21 days out. EVE_FLOOR=0.44 restores the old flat end.
+EVE_FLOOR = float(os.environ.get("EVE_FLOOR", "0.64"))
+PROXIMITY.append((0.0, 0.83, EVE_FLOOR))
 if os.environ.get("NO_RECENCY"):    # restores the pre recency tilt anchors
     PROXIMITY = [(180.0, 0.45, 0.26), (60.0, 0.65, 0.34), (21.0, 0.80, 0.42)]
 
@@ -777,6 +785,7 @@ EXTRA_POLLS = {
     # about 1 percent and 0.1 percent of the September read, so the level here is the September poll.
     "VTG": [dict(source="University of New Hampshire", dates="September 17-21, 2026", end="2026-09-21", n=835, pop="LV", D=49, R=43, O=2, U=6)],
     "MI": [dict(source="co/efficient (R)", dates="September 21-23, 2026", end="2026-09-23", n=843, pop="LV", D=45, R=45, O=2, U=8),
+           dict(source="Big Data Poll", dates="September 22-24, 2026", end="2026-09-24", n=678, pop="LV", D=46.7, R=42.1, O=0, U=11.2),   # Oct 4 sweep, likely voters with leaners
            dict(source="GBAO (D)", dates="September 19-22, 2026", end="2026-09-22", n=800, pop="LV", D=48, R=44, O=0, U=8),   # Sept 28 2026
            dict(source="New York Times/Siena University", dates="September 15-22, 2026", end="2026-09-22", n=613, pop="LV", D=49, R=44, O=0, U=7),
            dict(source="InsiderAdvantage", dates="September 16-17, 2026", end="2026-09-17",
@@ -812,7 +821,10 @@ EXTRA_POLLS = {
     # and the sample, not against an aggregator's release-date listing.
     # Ohio is the special election; Wikipedia moved the polling table to that page, which is why
     # these two were missed.
-    "OH": [dict(source="Bowling Green State University/YouGov", dates="September 1-10, 2026", end="2026-09-10", n=1000, pop="LV", D=48, R=45, O=0, U=7),
+    "OH": [dict(source="New York Times/Siena", dates="September 22-October 1, 2026", end="2026-10-01", n=616, pop="LV", D=49, R=46, O=0, U=5),   # Oct 3 sweep; n and dates from the Oct 3 release
+           dict(source="Rasmussen Reports", dates="September 22-23, 2026", end="2026-09-23", n=1115, pop="LV", D=46, R=43, O=5, U=7),   # Oct 4 sweep
+           dict(source="Quantus Insights", dates="September 21-23, 2026", end="2026-09-23", n=695, pop="LV", D=47.3, R=46.8, O=3.5, U=2.4),   # Oct 4 sweep, full ballot with leaners
+           dict(source="Bowling Green State University/YouGov", dates="September 1-10, 2026", end="2026-09-10", n=1000, pop="LV", D=48, R=45, O=0, U=7),
            dict(source="Trafalgar Group (R)", dates="September 14-16, 2026", end="2026-09-16", n=1085, pop="LV", D=45, R=42, O=0, U=13),
            # Big Data Poll "Buckeye State Poll", Richard Baris, Sept 26-27 2026, 735 registered and about 680 likely voters,
            # MoE 4.0, 60 percent live phone from the L2 file and 40 percent online. Senate with leaners as shared: Brown 46.9,
@@ -2927,8 +2939,9 @@ def run_state(st, model, shift, nat_turn_rate):
         # candidate strength against the environment: polls against the model's own fundamentals
         _w = p24.total_votes.astype(float)
         _fund = float((((w_fund * m1 + w_census * m2) / max(w_fund + w_census, 1e-9)) * _w).sum() / _w.sum())
-        _ps, _gap = _cq.poll_strength(len(polls), pavg.get("D2"), _fund)
-        cand_prof.update(poll_strength=_ps, poll_gap=_gap, fundamentals_d2=_fund)
+        _nd = _cq.fav_netdiff(st)
+        _ps, _gap = _cq.poll_strength(len(polls), (pavg or {}).get("D2"), _fund, _nd)
+        cand_prof.update(poll_strength=_ps, poll_gap=_gap, fundamentals_d2=_fund, favorability_netdiff=_nd)
         if _ps:
             m1 = inv(logit(m1) + _ps); m2 = inv(logit(m2) + _ps)
 

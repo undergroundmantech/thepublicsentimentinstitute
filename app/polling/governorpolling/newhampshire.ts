@@ -2,7 +2,7 @@
 // New Hampshire — 2026 Governor: Cinde Warmington (D) vs. Kelly Ayotte (R)
 // Generated from the TPSI forecast poll feed (run of 2026-09-22), merged with
 // the polls this file already carried. Polls of matchups that are not on the
-// ballot were dropped. Newest poll: 2026-09-11.
+// ballot were dropped. Newest poll: 2026-09-22.
 
 export type SampleType = "LV" | "RV" | "A";
 
@@ -41,6 +41,7 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "NH-GOV-2026", "pollster": "Saint Anselm College", "startDate": "2026-08-17", "endDate": "2026-08-18", "sampleSize": 1411, "sampleType": "LV", "results": {"Cinde Warmington (D)": 38.0, "Kelly Ayotte (R)": 49.0, "Undecided": 13.0}},
     {"raceId": "NH-GOV-2026", "pollster": "University of New Hampshire", "startDate": "2026-08-20", "endDate": "2026-08-24", "sampleSize": 1878, "sampleType": "LV", "results": {"Cinde Warmington (D)": 39.0, "Kelly Ayotte (R)": 49.0, "Other": 3.0, "Undecided": 9.0}},
     {"raceId": "NH-GOV-2026", "pollster": "co/efficient (R)", "startDate": "2026-09-09", "endDate": "2026-09-11", "sampleSize": 958, "sampleType": "LV", "results": {"Cinde Warmington (D)": 34.0, "Kelly Ayotte (R)": 55.0, "Other": 3.0, "Undecided": 9.0}},
-    {"raceId": "NH-GOV-2026", "pollster": "University of New Hampshire", "startDate": "2026-09-17", "endDate": "2026-09-21", "sampleSize": 1418, "sampleType": "LV", "moe": 2.6, "results": {"Cinde Warmington (D)": 43.0, "Kelly Ayotte (R)": 47.0, "Other": 3.0, "Undecided": 7.0}}
+    {"raceId": "NH-GOV-2026", "pollster": "University of New Hampshire", "startDate": "2026-09-17", "endDate": "2026-09-21", "sampleSize": 1418, "sampleType": "LV", "moe": 2.6, "results": {"Cinde Warmington (D)": 43.0, "Kelly Ayotte (R)": 47.0, "Other": 3.0, "Undecided": 7.0}},
+    {"raceId": "NH-GOV-2026", "pollster": "New York Times/Siena University", "startDate": "2026-09-15", "endDate": "2026-09-22", "sampleSize": 613, "sampleType": "LV", "results": {"Cinde Warmington (D)": 41.0, "Kelly Ayotte (R)": 52.0, "Undecided": 7.0}, "notes": "Other and undecided combined."}
   ],
 };

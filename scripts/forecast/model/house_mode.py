@@ -578,13 +578,19 @@ DE = [
 # (Pulido 51, De La Cruz 45), Texas Southern Aug 18-22 (50, 45) and House Majority PAC late September (54, 41), whose
 # dates and sample were not given and are entered as ending Sept 28 with 500 likely voters.
 POLLS = {
+         # Oct 4 morning sweep: MT-01 American Pulse for NonStop Local Sept 19-24, 314 LV, Flint 45.9 Forstag 45.4, blended against the prior entry.
+         # Oct 3 evening sweep: OH-09 and WI-01 DCCC Analytics (D) Sept 22-23 and 21-23, 48-48 each; AK-AL NYT/Siena
+         # Sept 24-Oct 1, Begich 47, Hill 35, Hafner 8, McDermott 5, read as a final round 43 to 50; ME-02 Tulchin (D)
+         # for Dunlap Sept 27-30, Dunlap 50 LePage 48; each blended against the prior entry as a 500 sample poll two weeks
+         # old. UT-01 Lighthouse Research Aug 31-Sept 24, McAdams 63 Owen 21, taken outright; UT-02 to UT-04 dropped at
+         # 20 percent undecided or more.
          "FL": {},
          "TX": {15: dict(d=51.0, r=44.2), 28: dict(d=45.0, r=34.0), 34: dict(d=45.0, r=42.0), 35: dict(d=42.5, r=46.5)},
-         "NYG": {17: dict(d=48.0, r=46.5), 21: dict(d=41.3, r=48.5)},
-         "VA": {1: dict(d=48.3, r=46.8), 2: dict(d=45.5, r=48.5), 5: dict(d=44.2, r=50.2)},
+         "NYG": {17: dict(d=48.0, r=46.5), 21: dict(d=41.3, r=48.5), 23: dict(d=34.5, r=52.5)},
+         "VA": {1: dict(d=48.3, r=46.8), 2: dict(d=45.5, r=48.5), 5: dict(d=44.2, r=50.2), 6: dict(d=30.5, r=57.5)},
          "CAG": {},
          "PAG": {1: dict(d=43.2, r=49.8), 7: dict(d=45.0, r=40.0), 8: dict(d=45.0, r=46.5), 10: dict(d=47.0, r=44.0)},
-         "OH": {1: dict(d=47.0, r=43.0), 7: dict(d=46.1, r=40.3), 9: dict(d=44.5, r=45.5), 10: dict(d=40.1, r=50.1), 15: dict(d=36.6, r=44.0)},
+         "OH": {1: dict(d=47.0, r=43.0), 7: dict(d=46.1, r=40.3), 9: dict(d=45.3, r=47.2), 10: dict(d=40.1, r=50.1), 15: dict(d=36.6, r=44.0)},
          "NC": {1: dict(d=45.8, r=43.0), 3: dict(d=39.5, r=45.5), 7: dict(d=37.5, r=46.5), 9: dict(d=40.5, r=47.5), 10: dict(d=38.5, r=50.5), 11: dict(d=45.5, r=45.5)},
          "MI": {4: dict(d=45.9, r=46.5), 7: dict(d=44.5, r=46.5), 10: dict(d=42.5, r=43.5)},
          "GA": {},
@@ -597,17 +603,17 @@ POLLS = {
          "MO": {2: dict(d=39.5, r=45.5)},
          "MDG": {1: dict(d=37.5, r=53.5)},
          "MN": {1: dict(d=41.8, r=48.4)},
-         "WIG": {1: dict(d=46.1, r=50.3), 3: dict(d=48.4, r=47.7)},
+         "WIG": {1: dict(d=46.3, r=50.0), 3: dict(d=48.4, r=47.7)},
          "CO": {3: dict(d=41.1, r=45.9), 8: dict(d=47.5, r=46.5)},
          "IN": {5: dict(d=44.5, r=49.5)},
          "OR": {},
          "NVG": {2: dict(d=39.4, r=41.8)},
-         "UT": {},
-         "AK": {1: dict(d=41.7, r=54.2)},
+         "UT": {1: dict(d=63.0, r=21.0)},
+         "AK": {1: dict(d=42.4, r=51.9)},
          "HIG": {},
          "ID": {},
          "WY": {},
-         "MT": {1: dict(d=42.2, r=46.7)},
+         "MT": {1: dict(d=43.8, r=46.3)},
          "ND": {},
          "SD": {},
          "NE": {1: dict(d=39.8, r=46.5)},
@@ -619,8 +625,8 @@ POLLS = {
          "LA": {},
          "MS": {},
          "AL": {2: dict(d=45.1, r=48.2)},
-         "SC": {1: dict(d=42.3, r=46.8)},
-         "KY": {6: dict(d=43.2, r=45.9)},
+         "SC": {1: dict(d=41.8, r=45.3)},
+         "KY": {6: dict(d=43.9, r=45.1)},
          "WV": {},
          "CTG": {},
          "RI": {},
@@ -629,7 +635,7 @@ POLLS = {
          # UNH Sept 17-21 2026: ME-01 Pingree 57 Russell 35, ME-02 Dunlap 51 LePage 45. ME-02 blends
          # the new reading at 0.6 against the prior entry of unknown vintage, because it is both the
          # newest and from the largest sample; ME-01 had no entry, so it takes the poll outright.
-         "ME": {1: dict(d=57.0, r=35.0), 2: dict(d=48.2, r=48.6)},
+         "ME": {1: dict(d=57.0, r=35.0), 2: dict(d=48.3, r=49.0)},
          "DE": {}}
 UNCONTESTED = {"FL": {10: "D"}, "TX": {}, "NYG": {}, "VA": {}, "CAG": {}, "PAG": {},
                "OH": {}, "NC": {}, "MI": {}, "GA": {}, "IL": {}, "NJ": {}, "WA": {},

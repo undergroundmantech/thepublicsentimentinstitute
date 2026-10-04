@@ -233,7 +233,30 @@ def geo_shifts(prof, fl):
     t = np.column_stack([K_GEO_T * gD, K_GEO_T * gR, np.zeros(C)])
     return v, t
 
-def poll_strength(n_polls, poll_d2, fund_d2):
-    if not n_polls or poll_d2 is None: return 0.0, None
+# Oct 3 2026: candidate favorability. Each candidate's net favorable rating, or net job approval for officeholders at
+# 0.7 weight, from 2026 statewide polls (60 day half life, likely voters preferred) is in favorability/favorability_fit.json.
+# Across the 34 races with both candidates rated, the Democratic minus Republican net rating explains the candidate gap,
+# polls against the model's fundamentals net of the environment: correlation 0.54, and predicting each race's gap from the
+# others cut the typical miss from 0.148 to 0.113 in log odds. FAV_B is that slope with the two outlying races, Idaho
+# Senate and Rhode Island governor, left out: 0.0066 log odds per net point, about 3.3 points of margin per 10 net
+# points. It enters as the prior the poll gap is shrunk toward, in place of zero, so a race with many polls is still set
+# by its polls and a race with few or none leans on the candidates' ratings.
+FAV_B = float(os.environ.get("FAV_B", "0.0066"))
+FAV_ON = os.environ.get("FAVORABILITY", "1") != "0"
+_FAV = {}
+def fav_netdiff(key):
+    if not FAV_ON: return None
+    if "net" not in _FAV:
+        import json as _j
+        p = os.path.join(os.path.dirname(os.path.abspath(__file__)), "favorability", "favorability_fit.json")
+        _FAV["net"] = _j.load(open(p))["net"] if os.path.exists(p) else {}
+    v = _FAV["net"].get(key) or {}
+    return v.get("netdiff")
+
+def poll_strength(n_polls, poll_d2, fund_d2, netdiff=None):
+    prior = FAV_B * float(netdiff) if (netdiff is not None and FAV_ON) else 0.0
+    if not n_polls or poll_d2 is None:
+        return float(np.clip(K_POLL * prior, -POLL_CAP, POLL_CAP)), None
     gap = float(lg(poll_d2) - lg(fund_d2)) - POLL_CENTER
-    return float(np.clip(K_POLL * n_polls / (n_polls + POLL_N0) * gap, -POLL_CAP, POLL_CAP)), gap
+    a = n_polls / (n_polls + POLL_N0)
+    return float(np.clip(K_POLL * (a * gap + (1 - a) * prior), -POLL_CAP, POLL_CAP)), gap

@@ -78,6 +78,52 @@ def solve(fn, target, n, lo=-8.0, hi=8.0, it=60):
 def state_sigma(npolls):
     return SIG_STATE[4] if npolls >= 4 else SIG_STATE[1] if npolls >= 1 else SIG_STATE[0]
 
+# Spread calibration, Oct 3 2026 (scratchpad/mtbt, 2018 and 2022 Senate and governor, 205 polled race forecasts).
+# The live spread gave an honest 80 percent interval overall, but it barely depended on how well a race was polled:
+# races with many fresh polling houses missed by less than the spread said and thinly polled races by more. Each
+# race's total spread is now scaled by SPREAD_K, from 1.08 at two houses or fewer to 0.90 at eight or more, by moving
+# only the race's own state shock, so the national shock and every correlation between races are unchanged. The
+# misses also had fatter tails than a normal curve (a t curve with 5 degrees of freedom fit far better), so the own
+# state shock is drawn from that curve, scaled to keep the same 80 percent interval. SPREAD_CALIB=0 restores the
+# Oct 3 morning spread. Unpolled races keep their spread: the backtest's fundamentals were too simple to measure it.
+SPREAD_ON = os.environ.get("SPREAD_CALIB", "1") != "0"
+SPREAD_K_THIN, SPREAD_K_DEEP, SPREAD_X_THIN, SPREAD_X_DEEP = 1.08, 0.90, 2.0, 8.0
+SPREAD_REF = {"none": 0.145, "under_one": 0.12, "polled": 0.114}   # the Oct 3 run's measured totals, logit
+TAIL_DF = float(os.environ.get("TAIL_DF", "5"))
+_T_SCALE = 1.2815516 / 1.4758840   # a t(5) draw times this has the 80 percent interval of a unit normal
+# each race's measured spread in the Oct 3 morning run and the share of it that came from the national vote shocks
+_SREF = json.load(open(os.path.join(BASE, "spread_ref_v61.json")))["races"] if os.path.exists(os.path.join(BASE, "spread_ref_v61.json")) else {}
+def spread_k(summ):
+    if not summ.get("n_polls"):
+        return 1.0, SPREAD_REF["none"]
+    hx = float(summ.get("poll_house_index") or 0.0)
+    f = min(max((hx - SPREAD_X_THIN) / (SPREAD_X_DEEP - SPREAD_X_THIN), 0.0), 1.0)
+    return SPREAD_K_THIN + f * (SPREAD_K_DEEP - SPREAD_K_THIN), SPREAD_REF["under_one" if hx < 1 else "polled"]
+# Correlation calibration, Oct 3 2026 (scratchpad/mtbt/mt_corr.py). In 2018 and 2022 the Senate and governor misses
+# were close to independent: races in different regions shared no measurable miss (90 percent range up to about 1.1
+# points of margin), races in the same region shared about 1 point, and a state's Senate and governor misses were not
+# positively related. The live simulation had Senate races sharing about 4.5 points of national spread, a correlation
+# of 0.5 between Senate races. Two cycles is a short record and earlier midterms such as 2014 had larger shared misses,
+# so the shared part is cut to about 2.5 points, not to zero: the national vote shocks (the environment and the
+# national demographic group shocks) run at CORR_NAT_F of their old size, a regional shock of SIG_REG is added for the
+# nine regions, and the common state shock tying a state's Senate and governor races runs at RHO_SCALE. The spread
+# removed from the national shocks is given back to each race's own state shock, so every race is exactly as
+# uncertain as Fix 1 sets it; only how races move together changes. Turnout shocks stay fully national.
+CORR_NAT_F = float(os.environ.get("CORR_NAT_F", "0.5"))
+SIG_REG = float(os.environ.get("SIG_REG", "0.02"))
+RHO_SCALE = float(os.environ.get("RHO_SCALE", "0.5"))
+if not SPREAD_ON:
+    CORR_NAT_F, SIG_REG, RHO_SCALE = 1.0, 0.0, 1.0
+_REG_DRAW = {}
+def region_shock(name):
+    if name not in _REG_DRAW:
+        _REG_DRAW[name] = np.random.default_rng(SEED + 41 + sum(map(ord, name)) * 131).normal(0, 1, N) * SIG_REG
+    return _REG_DRAW[name]
+def own_draw(g, s, size):
+    if SPREAD_ON and TAIL_DF > 0:
+        return s * _T_SCALE * g.standard_t(TAIL_DF, size)
+    return g.normal(0, s, size)
+
 def simulate(st, df, summ, model, shift):
     cfg = sm.STATES[st]; rng = np.random.default_rng(SEED + sum(map(ord, st)) * 7919)
     fl = list(df.county_fips)
@@ -255,6 +301,20 @@ def simulate(st, df, summ, model, shift):
     # shocks stay fully national, since governors share the ballot and the electorate with the Senate.
     gb = sm.GOV_BETA if (sm.GOV_DEPOL and cfg.get("office") == "governor") else 1.0
     s_state = float(np.sqrt(s_state ** 2 + (1 - gb ** 2) * SIG_NAT ** 2))
+    SPREAD_AUD = None
+    if SPREAD_ON:
+        _k, _ref = spread_k(summ)
+        _sr = _SREF.get(st, {})
+        V = float(_sr.get("sd_logit", _ref)) ** 2; r2v = float(_sr.get("r2_vote", 0.33))
+        _s0 = s_state
+        own2 = s_state ** 2 + (_k * _k - 1.0) * V + (1.0 - CORR_NAT_F ** 2) * r2v * V - (gb * SIG_REG) ** 2
+        s_state = float(np.sqrt(max(own2, 0.03 ** 2)))
+        SPREAD_AUD = dict(k=round(_k, 4), ref_total=round(float(np.sqrt(V)), 4), national_vote_share_before=r2v, corr_nat_f=CORR_NAT_F,
+                          sig_region=SIG_REG, rho_scale=RHO_SCALE, own_before=round(_s0, 4), own_after=round(s_state, 4), tail_df=TAIL_DF)
+    if demo_v is not None and CORR_NAT_F != 1.0:
+        demo_v = CORR_NAT_F * demo_v
+    REG_SH = region_shock(reg) * gb if SIG_REG > 0 else np.zeros(N)
+    NAT_ENV = CORR_NAT_F * NAT["env"]
     if gb < 1.0 and demo_v is not None:
         _own = rng.normal(0, SIG_DEMO_VOTE, NAT["demo_vote"].shape) @ demo_idx.T
         demo_v = gb * demo_v + np.sqrt(1 - gb ** 2) * _own
@@ -265,7 +325,7 @@ def simulate(st, df, summ, model, shift):
         # the state's Senate and governor races share one state level shock in proportion to how partisan the
         # electorate is; the rest is each race's own
         _sw = float((W.sum(0) * bh._C["sw_types"]).sum() / W.sum())
-        rho = bh.state_rho(_sw)
+        rho = bh.state_rho(_sw) * RHO_SCALE
         z_common = np.random.default_rng(SEED + 1000 + sum(map(ord, st[:2])) * 31).normal(0, 1, N)
     has_third = o.max() > 0
     lo_ = logit(np.clip(o, 1e-6, 1 - 1e-6))
@@ -281,7 +341,7 @@ def simulate(st, df, summ, model, shift):
             PB = BATCH if C * K <= 120_000 else max(10, int(BATCH * 120_000 / (C * K)))
             for p0 in range(0, PN, PB):
                 Bp = min(PB, PN - p0); ps = slice(p0, p0 + Bp)
-                envp = gb * NAT["env"][ps] + prng.normal(0, s_state, Bp)
+                envp = gb * NAT_ENV[ps] + REG_SH[ps] + own_draw(prng, s_state, Bp)
                 if CANDIDATE and st in cq.PROFILES:
                     envp = envp + prng.normal(0, cq.PROFILES[st]["sigma"], Bp)
                 shp = (e[None, :] * envp[:, None] + prng.normal(0, 1, (Bp, C)) * sig_cty[None, :]) * hfac[None, :]
@@ -304,8 +364,8 @@ def simulate(st, df, summ, model, shift):
     BS = BATCH if C * K <= 120_000 else max(10, int(BATCH * 120_000 / (C * K)))
     for s0 in range(0, N, BS):
         B = min(BS, N - s0); sl = slice(s0, s0 + B)
-        _own = rng.normal(0, s_state, B)
-        env = gb * NAT["env"][sl] + (np.sqrt(rho) * s_state * z_common[sl] + np.sqrt(1 - rho) * _own if BEH else _own)
+        _own = own_draw(rng, s_state, B)
+        env = gb * NAT_ENV[sl] + REG_SH[sl] + (np.sqrt(rho) * s_state * z_common[sl] + np.sqrt(1 - rho) * _own if BEH else _own)
         if CANDIDATE and st in cq.PROFILES:
             env = env + rng.normal(0, cq.PROFILES[st]["sigma"], B)
         shock = (e[None, :] * env[:, None] + rng.normal(0, 1, (B, C)) * sig_cty[None, :]) * hfac[None, :]
@@ -404,7 +464,7 @@ def simulate(st, df, summ, model, shift):
                            margin_mean=float(st_margin.mean()), margin_median=float(np.median(st_margin)),
                            margin_p10=float(np.percentile(st_margin, 10)), margin_p90=float(np.percentile(st_margin, 90)),
                            turnout_p10=float(np.percentile(st_turn, 10)), turnout_p90=float(np.percentile(st_turn, 90)),
-                           state_sigma=s_state, national_sigma=SIG_NAT, voters_simulated_per_run=float(Nm.sum()),
+                           state_sigma=s_state, national_sigma=SIG_NAT, spread_calibration=SPREAD_AUD, voters_simulated_per_run=float(Nm.sum()),
                            groups_per_county=int(K), **(dict(calibration_share_error=s_el_err, calibration_turnout_error=s_t_err) if ELECTORATE else {}),
                            **(dict(pilot_recentering_error=pilot_err, electorate_history=s_hist, demographic_shocks=[g for g, _ in hi.DEMO], sig_demo_vote=SIG_DEMO_VOTE, sig_demo_turn=SIG_DEMO_TURN, sig_irregular=SIG_IRREG_NAT) if HISTORY else {}))
     if VFR:

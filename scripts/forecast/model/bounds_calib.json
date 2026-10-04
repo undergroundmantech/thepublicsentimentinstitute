@@ -1,0 +1,33 @@
+{
+ "K_TREND": 0.25,
+ "DELTA": 0.0883,
+ "table": {
+  "0.0": {
+   "delta": 0.1168,
+   "width": 0.3767,
+   "q99": 0.1818
+  },
+  "0.25": {
+   "delta": 0.0883,
+   "width": 0.3416,
+   "q99": 0.1634
+  },
+  "0.5": {
+   "delta": 0.0791,
+   "width": 0.3448,
+   "q99": 0.1547
+  },
+  "0.75": {
+   "delta": 0.079,
+   "width": 0.3665,
+   "q99": 0.1435
+  },
+  "1.0": {
+   "delta": 0.0691,
+   "width": 0.3685,
+   "q99": 0.1335
+  }
+ },
+ "coverage": 0.95,
+ "source": "certified 2022 Senate and governor county results, 35 races in 31 states, envelope from 2016 and 2020 presidential and 2018 same office"
+}

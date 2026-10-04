@@ -26,8 +26,17 @@ import numpy as np, pandas as pd
 
 ON = os.environ.get("BOUNDS", "1") != "0"
 TAU = 0.12                  # log odds a value may pass its limit
-DELTA = 0.15                # base room past the historical envelope of relative lean, log odds
-K_TREND, K_PRIM = 0.5, 0.25
+# Oct 3 2026: the room past a county's own envelope is no longer set by hand. bounds_calib.json measures it on certified
+# 2022 Senate and governor results: the narrowest room that held 95 percent of the 2022 vote inside each county's
+# 2016 and 2020 presidential and 2018 same office envelope, with K_TREND of the county's trend added toward its side.
+# The hand set values were DELTA 0.15 and K_TREND 0.5; the measured ones top out sooner.
+_CAL = os.path.join(os.path.dirname(os.path.abspath(__file__)), "bounds_calib.json")
+if os.path.exists(_CAL) and os.environ.get("BOUNDS_CALIB", "1") != "0":
+    import json as _json
+    _c = _json.load(open(_CAL)); DELTA, K_TREND = float(_c["DELTA"]), float(_c["K_TREND"])
+else:
+    DELTA, K_TREND = 0.15, 0.5
+K_PRIM = 0.25
 TURN_LO, TURN_HI_MID, TURN_HI_PRES, TURN_HI_CVAP = 0.70, 1.35, 1.02, 0.88
 T_TYPE_LO, T_TYPE_HI = 0.02, 0.97
 BAND_MARGIN, BAND_POOL = 0.45, 60.0
@@ -66,7 +75,8 @@ def county_support(st, fl, d2, turnout, S, years, P16, P20, P24, prim):
         return d2, dict(applied=False, reason="fewer than two past results")
     R_ = pd.concat(rel, axis=1)
     rmax, rmin = R_.max(axis=1), R_.min(axis=1)
-    trend = (R_.iloc[:, 2] - R_.iloc[:, 0]) if R_.shape[1] >= 3 else pd.Series(0.0, index=fl)   # 2016 to 2024 presidential drift
+    # the last presidential cycle's drift, 2020 to 2024, the same one cycle trend the 2022 calibration measured
+    trend = (R_.iloc[:, 2] - R_.iloc[:, 1]) if R_.shape[1] >= 3 else pd.Series(0.0, index=fl)
     up = DELTA + K_TREND * trend.clip(lower=0).fillna(0)
     dn = DELTA + K_TREND * (-trend).clip(lower=0).fillna(0)
     try:

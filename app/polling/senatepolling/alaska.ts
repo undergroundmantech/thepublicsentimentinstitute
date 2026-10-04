@@ -2,7 +2,7 @@
 // Alaska — 2026 U.S. Senate: Mary Peltola (D) vs. Dan S. Sullivan (R)
 // Generated from the TPSI forecast poll feed (run of 2026-09-22), merged with
 // the polls this file already carried. Polls of matchups that are not on the
-// ballot were dropped. Newest poll: 2026-09-17.
+// ballot were dropped. Newest poll: 2026-10-01.
 
 export type SampleType = "LV" | "RV" | "A";
 
@@ -54,6 +54,9 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "AK-SEN-2026", "pollster": "Fabrizio Ward/Impact Research", "startDate": "2026-09-08", "endDate": "2026-09-11", "sampleSize": 800, "sampleType": "LV", "results": {"Mary Peltola (D)": 53, "Dan S. Sullivan (R)": 47}, "notes": "Published ranked-choice final round. Bipartisan, for AARP. First choice: Peltola 46, Sullivan 41, Dan J. Sullivan 4, Heikes 3, undecided 7."},
     {"raceId": "AK-SEN-2026", "pollster": "Alaska Survey Research", "startDate": "2026-09-10", "endDate": "2026-09-12", "sampleSize": 1352, "sampleType": "LV", "results": {"Mary Peltola (D)": 52, "Dan S. Sullivan (R)": 48}, "notes": "Published ranked-choice final round. First choice: Peltola 48, Sullivan 44, Dan J. Sullivan 4, Heikes 4."},
     {"raceId": "AK-SEN-2026", "pollster": "Rasmussen Reports (R)", "startDate": "2026-09-13", "endDate": "2026-09-14", "sampleSize": 1188, "sampleType": "LV", "results": {"Mary Peltola (D)": 42.7, "Dan S. Sullivan (R)": 45.5, "Undecided": 9.0}},
-    {"raceId": "AK-SEN-2026", "pollster": "co/efficient (R)", "startDate": "2026-09-14", "endDate": "2026-09-17", "sampleSize": 799, "sampleType": "LV", "results": {"Mary Peltola (D)": 46, "Dan S. Sullivan (R)": 49, "Undecided": 5}, "notes": "Head-to-head version; the first-choice ballot had Sullivan 48, Peltola 46, Dan J. Sullivan 1, Heikes 1."}
+    {"raceId": "AK-SEN-2026", "pollster": "co/efficient (R)", "startDate": "2026-09-14", "endDate": "2026-09-17", "sampleSize": 799, "sampleType": "LV", "results": {"Mary Peltola (D)": 46, "Dan S. Sullivan (R)": 49, "Undecided": 5}, "notes": "Head-to-head version; the first-choice ballot had Sullivan 48, Peltola 46, Dan J. Sullivan 1, Heikes 1."},
+    {"raceId": "AK-SEN-2026", "pollster": "Quantus Insights", "startDate": "2026-09-28", "endDate": "2026-10-01", "sampleSize": 758, "sampleType": "LV", "results": {"Mary Peltola (D)": 45.5, "Dan S. Sullivan (R)": 46.1, "Undecided": 8.4}, "notes": "Released Oct. 2. Field dates were not published, so these dates are placeholders."},
+    {"raceId": "AK-SEN-2026", "pollster": "New York Times/Siena", "startDate": "2026-09-21", "endDate": "2026-09-30", "sampleSize": 600, "sampleType": "LV", "results": {"Mary Peltola (D)": 50.0, "Dan S. Sullivan (R)": 43.0, "Undecided": 7.0}, "notes": "Sample size was not yet published, so 600 is a placeholder."},
+    {"raceId": "AK-SEN-2026", "pollster": "Trafalgar Group (R)", "startDate": "2026-09-22", "endDate": "2026-09-24", "sampleSize": 1079, "sampleType": "LV", "results": {"Mary Peltola (D)": 45.5, "Dan S. Sullivan (R)": 46.8, "Other": 3.5, "Undecided": 4.1}, "notes": "Other is Daniel J. Sullivan Jr. 2.8 and Gerald Heikes 0.7."}
   ],
 };

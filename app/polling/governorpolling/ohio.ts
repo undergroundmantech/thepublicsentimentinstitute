@@ -2,7 +2,7 @@
 // Ohio — 2026 Governor: Amy Acton (D) vs. Vivek Ramaswamy (R)
 // Generated from the TPSI forecast poll feed (run of 2026-09-22), merged with
 // the polls this file already carried. Polls of matchups that are not on the
-// ballot were dropped. Newest poll: 2026-09-27.
+// ballot were dropped. Newest poll: 2026-09-30.
 
 export type SampleType = "LV" | "RV" | "A";
 
@@ -55,5 +55,6 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "OH-GOV-2026", "pollster": "NPR/Marist", "startDate": "2026-09-24", "endDate": "2026-09-27", "sampleSize": 1298, "sampleType": "RV", "moe": 3.8, "results": {"Amy Acton (D)": 50.0, "Vivek Ramaswamy (R)": 44.0, "Undecided": 6.0}},
     {"raceId": "OH-GOV-2026", "pollster": "Big Data Poll", "startDate": "2026-09-26", "endDate": "2026-09-27", "sampleSize": 682, "sampleType": "LV", "moe": 4.0, "results": {"Amy Acton (D)": 46.8, "Vivek Ramaswamy (R)": 47.9, "Undecided": 5.3}, "notes": "Buckeye State Poll by Richard Baris, 735 registered voters, about 680 likely."},
     {"raceId": "OH-GOV-2026", "pollster": "Suffolk University/USA TODAY Network", "startDate": "2026-09-23", "endDate": "2026-09-27", "sampleSize": 500, "sampleType": "LV", "results": {"Amy Acton (D)": 50.4, "Vivek Ramaswamy (R)": 41.4, "Other": 3.0, "Undecided": 4.8}, "notes": "Other is Libertarian Don Kissick 2.8 and write ins 0.2."},
+    {"raceId": "OH-GOV-2026", "pollster": "New York Times/Siena", "startDate": "2026-09-21", "endDate": "2026-09-30", "sampleSize": 600, "sampleType": "LV", "results": {"Amy Acton (D)": 49.0, "Vivek Ramaswamy (R)": 45.0, "Undecided": 6.0}, "notes": "Sample size was not yet published, so 600 is a placeholder."}
   ],
 };

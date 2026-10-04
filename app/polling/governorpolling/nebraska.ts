@@ -2,7 +2,7 @@
 // Nebraska — 2026 Governor: Lynne Walz (D) vs. Jim Pillen (R)
 // Generated from the TPSI forecast poll feed (run of 2026-09-22), merged with
 // the polls this file already carried. Polls of matchups that are not on the
-// ballot were dropped. Newest poll: 2026-09-16.
+// ballot were dropped. Newest poll: 2026-09-30.
 
 export type SampleType = "LV" | "RV" | "A";
 
@@ -41,6 +41,7 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "NE-GOV-2026", "pollster": "Public Policy Polling (D)", "startDate": "2026-09-01", "endDate": "2026-09-02", "sampleSize": 559, "sampleType": "RV", "results": {"Lynne Walz (D)": 31.0, "Jim Pillen (R)": 32.0, "Other": 21.0, "Undecided": 17.0}},
     {"raceId": "NE-GOV-2026", "pollster": "SurveyUSA", "startDate": "2026-09-08", "endDate": "2026-09-13", "sampleSize": 503, "sampleType": "LV", "results": {"Lynne Walz (D)": 35.0, "Jim Pillen (R)": 43.0, "Other": 13.0, "Undecided": 9.0}},
     {"raceId": "NE-GOV-2026", "pollster": "Lake Research Partners (D)", "startDate": "2026-09-08", "endDate": "2026-09-14", "sampleSize": 600, "sampleType": "RV", "results": {"Lynne Walz (D)": 40.0, "Jim Pillen (R)": 40.0, "Brett Lindstrom (AF)": 9.0, "Rick Beard (LMN)": 4.0, "Undecided": 7.0}, "notes": "Walz campaign internal. Sample size not published, entered as 600. 2024 recalled vote Trump 57, Harris 40."},
-    {"raceId": "NE-GOV-2026", "pollster": "Wedgewood Polls", "startDate": "2026-09-14", "endDate": "2026-09-16", "sampleSize": 500, "sampleType": "LV", "results": {"Lynne Walz (D)": 36.0, "Jim Pillen (R)": 53.0, "Other": 11.0}}
+    {"raceId": "NE-GOV-2026", "pollster": "Wedgewood Polls", "startDate": "2026-09-14", "endDate": "2026-09-16", "sampleSize": 500, "sampleType": "LV", "results": {"Lynne Walz (D)": 36.0, "Jim Pillen (R)": 53.0, "Other": 11.0}},
+    {"raceId": "NE-GOV-2026", "pollster": "co/efficient (R)", "startDate": "2026-09-28", "endDate": "2026-09-30", "sampleSize": 1113, "sampleType": "LV", "results": {"Lynne Walz (D)": 38.0, "Jim Pillen (R)": 43.0, "Other": 8.0, "Undecided": 11.0}, "notes": "Sample R57, D27."}
   ],
 };

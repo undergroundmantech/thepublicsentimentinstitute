@@ -216,10 +216,22 @@ def install(sm):
     def parse_polls(st):
         _CUR["st"] = st
         return orig_parse(st)
+    def _adjust(p, sp=None):
+        # Oct 3 2026: registered voter only polls take the measured likely voter gap (lv_gap.py), then every poll
+        # sheds its pollster's house effect (house_effects.py). Both hold D + R fixed. For Montana the Democratic
+        # side is two columns, scaled together.
+        import lv_gap, house_effects
+        D0 = p.D.astype(float).copy()
+        p = house_effects.apply(lv_gap.apply(p))
+        if sp is not None:
+            r = (p.D.astype(float) / D0.where(D0 > 0)).fillna(1.0)
+            p[sp["poll_col"]] = p[sp["poll_col"]] * r; p[sp["other_col"]] = p[sp["other_col"]] * r
+        return p
     def _poll_avg(p):
         st = _CUR["st"]; cfg = sm.STATES[st]
         p = _dedupe(p)
         sp = cfg.get("split")
+        p = _adjust(p, sp)
         cmap = {"Bodnar": sp["poll_col"], "Bankhead": sp["other_col"], "R": "R"} if sp else {"D": "D", "R": "R"}
         polls = frame_to_polls(p, cmap)
         ser, last = _final(polls, [k for k in cmap])
@@ -240,6 +252,7 @@ def install(sm):
         st = _CUR["st"]
         p = p.copy()
         for c in ["D", "R", "O", "U", "n"]: p[c] = p[c].astype(float)
+        p = _adjust(p)
         fc = p.kind == "first_choice"
         p["D1"], p["R1"], p["O1"] = p.D, p.R, p.O
         p.loc[fc, "D"] = p.D1 + sm.AK_RCV["to_D"] * p.O1
