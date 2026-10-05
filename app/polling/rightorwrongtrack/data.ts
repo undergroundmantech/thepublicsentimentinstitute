@@ -8,6 +8,18 @@ export const GOLD_STANDARD_NAMES = [
 ];
 
 export const RAW_POLLS: Poll[] = [
+  // ── Added Oct 5, 2026: June through September releases ──
+  { pollster: "Economist/YouGov", endDate: "2026-09-28", sampleSize: 1429, sampleType: "RV", results: { RightTrack: 27, WrongTrack: 66 } },
+  { pollster: "Harvard-Harris", endDate: "2026-09-28", sampleSize: 2200, sampleType: "RV", results: { RightTrack: 35, WrongTrack: 52 } },
+  { pollster: "Economist/YouGov", endDate: "2026-09-21", sampleSize: 1401, sampleType: "RV", results: { RightTrack: 27, WrongTrack: 65 } },
+  { pollster: "Wall Street Journal", endDate: "2026-09-21", sampleSize: 1500, sampleType: "RV", results: { RightTrack: 27, WrongTrack: 68 } },
+  { pollster: "Economist/YouGov", endDate: "2026-09-14", sampleSize: 1461, sampleType: "RV", results: { RightTrack: 29, WrongTrack: 64 } },
+  { pollster: "Economist/YouGov", endDate: "2026-09-08", sampleSize: 1469, sampleType: "RV", results: { RightTrack: 29, WrongTrack: 65 } },
+  { pollster: "Economist/YouGov", endDate: "2026-08-31", sampleSize: 0, sampleType: "RV", results: { RightTrack: 27, WrongTrack: 62 } },   // registered voter count not published
+  { pollster: "Harvard-Harris", endDate: "2026-08-30", sampleSize: 2100, sampleType: "RV", results: { RightTrack: 37, WrongTrack: 52 } },
+  { pollster: "Economist/YouGov", endDate: "2026-08-17", sampleSize: 1450, sampleType: "RV", results: { RightTrack: 31, WrongTrack: 63 } },
+  { pollster: "Economist/YouGov", endDate: "2026-08-03", sampleSize: 1473, sampleType: "RV", results: { RightTrack: 32, WrongTrack: 63 } },
+  { pollster: "Harvard-Harris", endDate: "2026-07-12", sampleSize: 1776, sampleType: "RV", results: { RightTrack: 35, WrongTrack: 52 } },
   // ── RCP polls added through May 2026 ──
   { pollster: "Big Data Poll", endDate: "2026-05-27", sampleSize: 2784, sampleType: "LV", results: { RightTrack: 31, WrongTrack: 60 } },
   { pollster: "Economist/YouGov", endDate: "2026-05-26", sampleSize: 1397, sampleType: "RV", results: { RightTrack: 31, WrongTrack: 63 } },

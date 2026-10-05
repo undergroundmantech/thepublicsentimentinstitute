@@ -13,6 +13,14 @@ export const GOLD_STANDARD_NAMES = [
 ];
 
 export const RAW_POLLS: Poll[] = [
+  // ── Added Oct 5, 2026: releases through the Sep 30 to Oct 2 CBS News poll ──
+  { pollster: "CBS News", endDate: "2026-10-02", sampleSize: 0, sampleType: "LV", results: { Democrats: 54, Republicans: 45 } },   // likely voter sample size not published
+  { pollster: "Economist/YouGov", endDate: "2026-09-28", sampleSize: 1003, sampleType: "LV", results: { Democrats: 53, Republicans: 38 } },
+  { pollster: "Harvard-Harris", endDate: "2026-09-28", sampleSize: 0, sampleType: "LV", results: { Democrats: 51, Republicans: 49 } },   // likely midterm voters; 2,200 registered voters split 50 to 50
+  { pollster: "Quinnipiac", endDate: "2026-09-27", sampleSize: 1032, sampleType: "RV", results: { Democrats: 51, Republicans: 39 } },
+  { pollster: "Rasmussen Reports", endDate: "2026-09-23", sampleSize: 1819, sampleType: "LV", results: { Democrats: 48, Republicans: 43 } },
+  { pollster: "Wall Street Journal", endDate: "2026-09-21", sampleSize: 1500, sampleType: "RV", results: { Democrats: 50, Republicans: 42 } },
+  { pollster: "ActiVote", endDate: "2026-09-21", sampleSize: 1000, sampleType: "LV", results: { Democrats: 52.8, Republicans: 47.2 } },
   // ── RCP feed added Sep 25, 2026 (through the Sep 21–22 Emerson wave) ──
   { pollster: "Emerson", endDate: "2026-09-22", sampleSize: 1000, sampleType: "LV", results: { Democrats: 53, Republicans: 42 } },
   { pollster: "Echelon Insights", endDate: "2026-09-21", sampleSize: 1002, sampleType: "LV", results: { Democrats: 51, Republicans: 43 } },

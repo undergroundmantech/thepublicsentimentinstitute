@@ -6,6 +6,13 @@ export const GOLD_STANDARD_NAMES = [
 ];
 
 export const RAW_POLLS: Poll[] = [
+  // ── Added Oct 5, 2026: releases through the Sep 30 to Oct 2 CBS News poll ──
+  { pollster: "CBS News", endDate: "2026-10-02", sampleSize: 2166, sampleType: "A", results: { Approve: 39, Disapprove: 61 } },
+  { pollster: "Rasmussen Reports", endDate: "2026-10-01", sampleSize: 1500, sampleType: "LV", results: { Approve: 42, Disapprove: 57 } },   // wave posted Oct 2; sample size per the series, not published with the wave
+  { pollster: "AP/NORC", endDate: "2026-09-28", sampleSize: 2140, sampleType: "A", results: { Approve: 31, Disapprove: 69 } },
+  { pollster: "Economist/YouGov", endDate: "2026-09-28", sampleSize: 1429, sampleType: "RV", results: { Approve: 36, Disapprove: 62 } },
+  { pollster: "Harvard-Harris", endDate: "2026-09-28", sampleSize: 2200, sampleType: "RV", results: { Approve: 42, Disapprove: 55 } },
+  { pollster: "Quinnipiac", endDate: "2026-09-27", sampleSize: 1032, sampleType: "RV", results: { Approve: 34, Disapprove: 61 } },
   // ── RCP feed added Sep 25, 2026 (through the Sep 20–24 Rasmussen wave) ──
   { pollster: "Rasmussen Reports", endDate: "2026-09-24", sampleSize: 1500, sampleType: "LV", results: { Approve: 44, Disapprove: 56 } },
   { pollster: "Emerson", endDate: "2026-09-22", sampleSize: 1000, sampleType: "LV", results: { Approve: 39, Disapprove: 58 } },
