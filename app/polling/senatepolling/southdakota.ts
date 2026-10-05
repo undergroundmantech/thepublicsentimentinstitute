@@ -2,7 +2,7 @@
 // South Dakota — 2026 U.S. Senate: Brian Bengs (I) vs. Mike Rounds (R)
 // Generated from the TPSI forecast poll feed (run of 2026-09-22), merged with
 // the polls this file already carried. Polls of matchups that are not on the
-// ballot were dropped. Newest poll: 2026-09-09.
+// ballot were dropped. Newest poll: 2026-09-28.
 // Bengs runs as an independent after the Democratic nominee withdrew. Two candidate
 // ballot, no third party line.
 
@@ -40,6 +40,7 @@ export const STATE_POLLS: Record<string, Poll[]> = {
   SD: [
     {"raceId": "SD-SEN-2026", "pollster": "Public Opinion Strategies (R)", "startDate": "2026-07-06", "endDate": "2026-07-09", "sampleSize": 500, "sampleType": "LV", "results": {"Brian Bengs (I)": 33.0, "Mike Rounds (R)": 56.0, "Undecided": 11.0}},
     {"raceId": "SD-SEN-2026", "pollster": "Impact Research (D)", "startDate": "2026-08-13", "endDate": "2026-08-17", "sampleSize": 500, "sampleType": "LV", "results": {"Brian Bengs (I)": 44.0, "Mike Rounds (R)": 44.0, "Undecided": 12.0}},
-    {"raceId": "SD-SEN-2026", "pollster": "Public Policy Polling (D)", "startDate": "2026-09-08", "endDate": "2026-09-09", "sampleSize": 629, "sampleType": "RV", "results": {"Brian Bengs (I)": 42.0, "Mike Rounds (R)": 45.0, "Undecided": 13.0}}
+    {"raceId": "SD-SEN-2026", "pollster": "Public Policy Polling (D)", "startDate": "2026-09-08", "endDate": "2026-09-09", "sampleSize": 629, "sampleType": "RV", "results": {"Brian Bengs (I)": 42.0, "Mike Rounds (R)": 45.0, "Undecided": 13.0}},
+    {"raceId": "SD-SEN-2026", "pollster": "Zenith Research for Bengs (I)", "startDate": "2026-09-28", "endDate": "2026-09-28", "sampleSize": 600, "sampleType": "RV", "results": {"Brian Bengs (I)": 38.0, "Mike Rounds (R)": 44.0, "Undecided": 18.0}, "notes": "Bengs campaign internal. Field dates and sample size not published; placeholders shown."}
   ],
 };
