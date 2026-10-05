@@ -578,6 +578,7 @@ DE = [
 # (Pulido 51, De La Cruz 45), Texas Southern Aug 18-22 (50, 45) and House Majority PAC late September (54, 41), whose
 # dates and sample were not given and are entered as ending Sept 28 with 500 likely voters.
 POLLS = {
+         # Oct 5 sweep: NY-17 Emerson for PIX11 Sept 27-29, 400 LV, Conley 48 Lawler 46, blended against the prior entry.
          # Oct 4 evening sweep: TX-09 PPP for Gutierrez (D), Mealer 45 Gutierrez 39, and TX-10 Change Research for Rourk (D),
          # Gober 48 Rourk 41, both released about Sept 30 with no dates or sample size, taken outright after the sponsor shift;
          # VA-05 Expedition Strategies for Perriello (D) Sept 21-24, McGuire 46 Perriello 45 Harvey 6, n not published, blended.
@@ -589,7 +590,7 @@ POLLS = {
          # 20 percent undecided or more.
          "FL": {},
          "TX": {9: dict(d=37.5, r=46.5), 10: dict(d=39.5, r=49.5), 15: dict(d=51.0, r=44.2), 28: dict(d=45.0, r=34.0), 34: dict(d=45.0, r=42.0), 35: dict(d=42.5, r=46.5)},
-         "NYG": {17: dict(d=48.0, r=46.5), 21: dict(d=41.3, r=48.5), 23: dict(d=34.5, r=52.5)},
+         "NYG": {17: dict(d=48.0, r=46.2), 21: dict(d=41.3, r=48.5), 23: dict(d=34.5, r=52.5)},
          "VA": {1: dict(d=48.3, r=46.8), 2: dict(d=45.5, r=48.5), 5: dict(d=43.9, r=49.1), 6: dict(d=30.5, r=57.5)},
          "CAG": {},
          "PAG": {1: dict(d=43.2, r=49.8), 7: dict(d=45.0, r=40.0), 8: dict(d=45.0, r=46.5), 10: dict(d=47.0, r=44.0)},

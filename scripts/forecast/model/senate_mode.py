@@ -122,9 +122,11 @@ def poll_weights(polls, pavg):
     return ramp_weights(x) + (tier, int(n_recent), newest, round(x, 2))
 # Scenario knobs for stress testing the two national anchors. Both default to the
 # published settings, so an unset environment reproduces the live forecast exactly.
-#   GALLUP_TIED=1   party identification even instead of 49 D to 39 R
+#   GALLUP_TIED=1   party identification even instead of 50 D to 39 R
 #   POLL_SHIFT=x    uniform logit shift applied to every race's polling average
-GALLUP_D, GALLUP_R = (44.0, 44.0) if os.environ.get("GALLUP_TIED") else (49.0, 39.0)
+# Oct 5 2026: Gallup party identification updated to 50 D to 39 R, and the census leg is anchored to it again
+# (M2_ANCHOR=gallup, converted to likely voters through the TPSI database in anchors.gallup_lv_d2).
+GALLUP_D, GALLUP_R = (44.5, 44.5) if os.environ.get("GALLUP_TIED") else (50.0, 39.0)
 POLL_SHIFT = float(os.environ.get("POLL_SHIFT", "0.0"))
 # National vote anchor. Party identification is not a vote, and Gallup's 49 D to 39 R counts adults, so it ran the
 # fundamentals about three points of margin more Democratic than likely voters. The anchor is now the public likely
@@ -2620,7 +2622,7 @@ _MODEL, _SHIFT = None, None
 _T26 = None
 # census leg anchor. Since Sept. 22, 2026 the default is "meridian": the Gallup party identification anchor is removed and
 # the census leg takes the same TPSI Meridian ballot as the other two legs; M2_ANCHOR=gallup restores Gallup.
-M2_ANCHOR = os.environ.get("M2_ANCHOR", "meridian")
+M2_ANCHOR = os.environ.get("M2_ANCHOR", "gallup")   # Oct 5 2026 default: Gallup 50 D 39 R; M2_ANCHOR=meridian restores the Sept 22 setting
 ELASTIC_ANCHORS = os.environ.get("ELASTIC_ANCHORS", "1") == "1"
 
 def m1_anchor(fl=None):

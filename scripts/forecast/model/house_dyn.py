@@ -326,8 +326,19 @@ def simulate(R):
     import behavior as bh
     BMh = bh.group_shock_matrix(sm, R["S"]["reg"]) if bh.ON else None
 
+    # Correlation calibration carried to the House, Oct 5 2026: the shared national vote environment runs at the same
+    # dm.CORR_NAT_F as the Senate and governor races, the district's region takes the same regional shock those races
+    # take, and the national spread removed is given back to the state shock, so each district is exactly as uncertain
+    # as before and districts in one state still move together; only how far states and regions move as one changes.
+    # HOUSE_CORR=0 restores the full national shock.
+    _hc = os.environ.get("HOUSE_CORR", "1") != "0" and dm.CORR_NAT_F != 1.0
+    _f = dm.CORR_NAT_F if _hc else 1.0
+    _REG = dm.region_shock(R["S"]["reg"]) if (_hc and dm.SIG_REG > 0) else np.zeros(N)
+    _sig_st = float(np.sqrt(max(SIG_STATE_H ** 2 + (1 - _f ** 2) * dm.SIG_NAT ** 2 - (dm.SIG_REG ** 2 if _hc else 0.0), SIG_STATE_H ** 2)))
+    R["corr_audit"] = dict(corr_nat_f=_f, sig_region=dm.SIG_REG if _hc else 0.0, sig_state_before=SIG_STATE_H, sig_state_after=round(_sig_st, 4))
+
     def draw(rg, sl, B, pops_, lt_, eta_, expected=False):
-        env = NAT["env"][sl] + rg.normal(0, SIG_STATE_H, B)
+        env = _f * NAT["env"][sl] + _REG[sl] + rg.normal(0, _sig_st, B)
         shock = (e[None, :] * env[:, None] + rg.normal(0, 1, (B, Dn)) * (SIG_DIST + 0 * sig_c)[None, :] + rg.normal(0, 1, (B, Dn)) * sig_c[None, :]) * hfac[None, :]
         tsh = NAT["turn"][sl][:, None] + rg.normal(0, SIG_TURN_ST, B)[:, None] + rg.normal(0, SIG_TURN_DIST, (B, Dn))
         en = NAT["enth"][sl] + rg.normal(0, dm.SIG_ENTH_ST, B)

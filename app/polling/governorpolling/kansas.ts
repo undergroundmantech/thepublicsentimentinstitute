@@ -39,6 +39,7 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "KS-GOV-2026", "pollster": "Global Strategy Group (D)", "startDate": "2026-08-13", "endDate": "2026-08-16", "sampleSize": 600, "sampleType": "LV", "results": {"Cindy Holscher (D)": 47.0, "Ty Masterson (R)": 46.0, "Undecided": 7.0}},
     {"raceId": "KS-GOV-2026", "pollster": "co/efficient (R)", "startDate": "2026-09-08", "endDate": "2026-09-10", "sampleSize": 915, "sampleType": "LV", "results": {"Cindy Holscher (D)": 43.0, "Ty Masterson (R)": 51.0, "Undecided": 6.0}},
     {"raceId": "KS-GOV-2026", "pollster": "Emerson College / Nexstar", "startDate": "2026-09-15", "endDate": "2026-09-16", "sampleSize": 750, "sampleType": "LV", "results": {"Cindy Holscher (D)": 44.0, "Ty Masterson (R)": 51.0, "Undecided": 6.0}},
-    {"raceId": "KS-GOV-2026", "pollster": "Wedgewood Polls", "startDate": "2026-09-22", "endDate": "2026-09-24", "sampleSize": 500, "sampleType": "LV", "moe": 4.4, "results": {"Cindy Holscher (D)": 48.0, "Ty Masterson (R)": 52.0}, "notes": "Leaners pushed, no undecided reported."}
+    {"raceId": "KS-GOV-2026", "pollster": "Wedgewood Polls", "startDate": "2026-09-22", "endDate": "2026-09-24", "sampleSize": 500, "sampleType": "LV", "moe": 4.4, "results": {"Cindy Holscher (D)": 48.0, "Ty Masterson (R)": 52.0}, "notes": "Leaners pushed, no undecided reported."},
+    {"raceId": "KS-GOV-2026", "pollster": "New York Times/Siena College", "startDate": "2026-09-22", "endDate": "2026-09-30", "sampleSize": 605, "sampleType": "LV", "results": {"Cindy Holscher (D)": 44.0, "Ty Masterson (R)": 49.0, "Undecided": 7.0}}
   ],
 };

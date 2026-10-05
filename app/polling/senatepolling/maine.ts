@@ -55,6 +55,7 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "ME-SEN-2026", "pollster": "Wedgewood Polls", "startDate": "2026-09-27", "endDate": "2026-10-01", "sampleSize": 400, "sampleType": "LV", "results": {"Troy Jackson (D)": 52.0, "Susan Collins (R)": 48.0}, "notes": "Sponsor not stated."},
     {"raceId": "ME-SEN-2026", "pollster": "CBS News/YouGov", "startDate": "2026-09-23", "endDate": "2026-10-01", "sampleSize": 1144, "sampleType": "LV", "results": {"Troy Jackson (D)": 50.0, "Susan Collins (R)": 50.0}, "notes": "1,144 registered voters; ballot among likely voters with leaners."},
     {"raceId": "ME-SEN-2026", "pollster": "Trafalgar Group (R)", "startDate": "2026-09-29", "endDate": "2026-10-01", "sampleSize": 1091, "sampleType": "LV", "results": {"Troy Jackson (D)": 46.2, "Susan Collins (R)": 45.9, "Undecided": 7.9}},
-    {"raceId": "ME-SEN-2026", "pollster": "UMass Lowell/YouGov", "startDate": "2026-08-28", "endDate": "2026-09-14", "sampleSize": 650, "sampleType": "LV", "results": {"Troy Jackson (D)": 48.0, "Susan Collins (R)": 43.0, "Other": 1.0, "Undecided": 6.0}}
+    {"raceId": "ME-SEN-2026", "pollster": "UMass Lowell/YouGov", "startDate": "2026-08-28", "endDate": "2026-09-14", "sampleSize": 650, "sampleType": "LV", "results": {"Troy Jackson (D)": 48.0, "Susan Collins (R)": 43.0, "Other": 1.0, "Undecided": 6.0}},
+    {"raceId": "ME-SEN-2026", "pollster": "Maine People's Resource Center (D)", "startDate": "2026-10-03", "endDate": "2026-10-03", "sampleSize": 684, "sampleType": "RV", "results": {"Troy Jackson (D)": 49.0, "Susan Collins (R)": 47.0, "Undecided": 4.0}, "notes": "Released Oct 5; field dates not published, so the dates shown are placeholders. Other and undecided combined 4%."}
   ],
 };
