@@ -736,10 +736,10 @@ export const RT_POLLS: Poll[] = [
 // ─── KY-04 Republican Primary Polls (Gallrein vs Massie) ──────────────────────
 export const KY04_POLLS: Poll[] = [
   { pollster: "Big Data Poll (R)",    endDate: "2026-04-07", sampleSize: 433, sampleType: "LV", results: { Gallrein: 48, Massie: 52 } },
-  { pollster: "Quantus Insights (R)", endDate: "2026-04-07", sampleSize: 438, sampleType: "LV", results: { Gallrein: 38, Massie: 47 } },
+  { pollster: "Quantus Insights", endDate: "2026-04-07", sampleSize: 438, sampleType: "LV", results: { Gallrein: 38, Massie: 47 } },
   { pollster: "Big Data Poll (R)",    endDate: "2026-05-14", sampleSize: 518, sampleType: "LV", results: { Gallrein: 49, Massie: 51 } },
   { pollster: "Neighborhood R&M (R)", endDate: "2026-05-15", sampleSize: 291, sampleType: "LV", results: { Gallrein: 50, Massie: 50 } },
-  { pollster: "Quantus Insights (R)", endDate: "2026-05-12", sampleSize: 908, sampleType: "LV", results: { Gallrein: 53, Massie: 45 } },
+  { pollster: "Quantus Insights", endDate: "2026-05-12", sampleSize: 908, sampleType: "LV", results: { Gallrein: 53, Massie: 45 } },
   { pollster: "SoCal Strategies (R)", endDate: "2026-05-16", sampleSize: 450, sampleType: "LV", results: { Gallrein: 54, Massie: 46 } },
 ];
 
@@ -809,7 +809,7 @@ const NE_WAHLS_POLLS: Poll[] = [
 
 // ── Ohio Senate ──────────────────────────────────────────────────────────────
 const OH_SENATE_POLLS: Poll[] = [
-  { pollster: "Quantus Insights (R)",             endDate: "2026-03-14", sampleSize: 784,  sampleType: "LV", results: { Republican: 46, Democrat: 44 } },
+  { pollster: "Quantus Insights",             endDate: "2026-03-14", sampleSize: 784,  sampleType: "LV", results: { Republican: 46, Democrat: 44 } },
   { pollster: "OnMessage Public Strategies (R)",  endDate: "2026-03-08", sampleSize: 600,  sampleType: "LV", results: { Republican: 45, Democrat: 47 } },
   { pollster: "EMC Research (D)",                 endDate: "2026-02-22", sampleSize: 1343, sampleType: "LV", results: { Republican: 47, Democrat: 51 } },
   { pollster: "Emerson College",                  endDate: "2025-12-08", sampleSize: 850,  sampleType: "RV", results: { Republican: 49, Democrat: 46 } },

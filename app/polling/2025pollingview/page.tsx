@@ -129,7 +129,7 @@ type RaceDef = {
 // -------------------------
 
 export const VA_GOV_POLLS: Poll[] = [
-  { pollster: "Quantus Insights (R)", endDate: "2025-11-03", sampleSize: 1201, sampleType: "LV", results: { "Winsome Earle-Sears (R)": 44, "Abigail Spanberger (D)": 53, Other: 1, Undecided: 2 } },
+  { pollster: "Quantus Insights", endDate: "2025-11-03", sampleSize: 1201, sampleType: "LV", results: { "Winsome Earle-Sears (R)": 44, "Abigail Spanberger (D)": 53, Other: 1, Undecided: 2 } },
   { pollster: "InsiderAdvantage (R)", endDate: "2025-11-03", sampleSize: 800, sampleType: "LV", results: { "Winsome Earle-Sears (R)": 40, "Abigail Spanberger (D)": 50, Other: 5, Undecided: 5 } },
   { pollster: "Research Co.", endDate: "2025-11-03", sampleSize: 423, sampleType: "LV", results: { "Winsome Earle-Sears (R)": 46, "Abigail Spanberger (D)": 54 } },
   { pollster: "Research Co.", endDate: "2025-11-03", sampleSize: 450, sampleType: "LV", results: { "Winsome Earle-Sears (R)": 43, "Abigail Spanberger (D)": 51, Undecided: 6 } },
@@ -151,7 +151,7 @@ export const VA_GOV_POLLS: Poll[] = [
   { pollster: "Christopher Newport University", endDate: "2025-10-23", sampleSize: 803, sampleType: "LV", results: { "Winsome Earle-Sears (R)": 43, "Abigail Spanberger (D)": 50, Undecided: 6 } },
   { pollster: "Suffolk University", endDate: "2025-10-21", sampleSize: 500, sampleType: "LV", results: { "Winsome Earle-Sears (R)": 43, "Abigail Spanberger (D)": 52, Other: 1, Undecided: 4 } },
 
-  { pollster: "Quantus Insights (R)", endDate: "2025-10-20", sampleSize: 1302, sampleType: "RV", results: { "Winsome Earle-Sears (R)": 46, "Abigail Spanberger (D)": 51, Other: 1, Undecided: 2 } },
+  { pollster: "Quantus Insights", endDate: "2025-10-20", sampleSize: 1302, sampleType: "RV", results: { "Winsome Earle-Sears (R)": 46, "Abigail Spanberger (D)": 51, Other: 1, Undecided: 2 } },
   { pollster: "State Navigate", endDate: "2025-10-20", sampleSize: 694, sampleType: "LV", results: { "Winsome Earle-Sears (R)": 42, "Abigail Spanberger (D)": 55, Undecided: 3 } },
 
   { pollster: "Washington Post/Schar School", endDate: "2025-10-20", sampleSize: 927, sampleType: "LV", results: { "Winsome Earle-Sears (R)": 42, "Abigail Spanberger (D)": 54, Other: 2, Undecided: 2 } },
@@ -218,7 +218,7 @@ export const VA_GOV_POLLS: Poll[] = [
 ];
 
 const VA_LTGOV_POLLS: Poll[] = [
-  { pollster: "Quantus Insights (R)", endDate: "2025-11-03", sampleSize: 1069, sampleType: "LV", results: { "John Reid (R)": 44, "Ghazala Hashmi (D)": 52, Other: 1, Undecided: 3 } },
+  { pollster: "Quantus Insights", endDate: "2025-11-03", sampleSize: 1069, sampleType: "LV", results: { "John Reid (R)": 44, "Ghazala Hashmi (D)": 52, Other: 1, Undecided: 3 } },
 
   { pollster: "The Trafalgar Group (R)", endDate: "2025-11-02", sampleSize: 1057, sampleType: "LV", results: { "John Reid (R)": 46, "Ghazala Hashmi (D)": 48, Undecided: 6 } },
 
@@ -243,7 +243,7 @@ const VA_LTGOV_POLLS: Poll[] = [
   { pollster: "The Washington Post/Schar School", endDate: "2025-10-20", sampleSize: 927, sampleType: "LV", results: { "John Reid (R)": 44, "Ghazala Hashmi (D)": 51, Other: 3, Undecided: 2 } },
   { pollster: "The Washington Post/Schar School", endDate: "2025-10-20", sampleSize: 927, sampleType: "RV", results: { "John Reid (R)": 42, "Ghazala Hashmi (D)": 48, Other: 8, Undecided: 2 } },
 
-  { pollster: "Quantus Insights (R)", endDate: "2025-10-20", sampleSize: 1302, sampleType: "RV", results: { "John Reid (R)": 45, "Ghazala Hashmi (D)": 49, Other: 1, Undecided: 5 } },
+  { pollster: "Quantus Insights", endDate: "2025-10-20", sampleSize: 1302, sampleType: "RV", results: { "John Reid (R)": 45, "Ghazala Hashmi (D)": 49, Other: 1, Undecided: 5 } },
 
   { pollster: "Kaplan Strategies (R)", endDate: "2025-10-18", sampleSize: 556, sampleType: "LV", results: { "John Reid (R)": 41, "Ghazala Hashmi (D)": 48, Undecided: 11 } },
 
@@ -285,7 +285,7 @@ const VA_LTGOV_POLLS: Poll[] = [
 ];
 
 const VA_AG_POLLS: Poll[] = [
-  { pollster: "Quantus Insights (R)", endDate: "2025-11-03", sampleSize: 1039, sampleType: "LV", results: { "Jason Miyares (R)": 47, "Jay Jones (D)": 47, Other: 1, Undecided: 5 } },
+  { pollster: "Quantus Insights", endDate: "2025-11-03", sampleSize: 1039, sampleType: "LV", results: { "Jason Miyares (R)": 47, "Jay Jones (D)": 47, Other: 1, Undecided: 5 } },
   { pollster: "InsiderAdvantage (R)", endDate: "2025-11-03", sampleSize: 800, sampleType: "LV", results: { "Jason Miyares (R)": 47, "Jay Jones (D)": 49, Undecided: 4 } },
 
   { pollster: "The Trafalgar Group (R)", endDate: "2025-11-02", sampleSize: 1057, sampleType: "LV", results: { "Jason Miyares (R)": 46, "Jay Jones (D)": 46, Undecided: 8 } },
@@ -303,7 +303,7 @@ const VA_AG_POLLS: Poll[] = [
   { pollster: "Christopher Newport University", endDate: "2025-10-23", sampleSize: 803, sampleType: "LV", results: { "Jason Miyares (R)": 46, "Jay Jones (D)": 45, Other: 1, Undecided: 8 } },
   { pollster: "Suffolk University", endDate: "2025-10-21", sampleSize: 500, sampleType: "LV", results: { "Jason Miyares (R)": 46, "Jay Jones (D)": 42, Other: 2, Undecided: 9 } },
 
-  { pollster: "Quantus Insights (R)", endDate: "2025-10-20", sampleSize: 1302, sampleType: "RV", results: { "Jason Miyares (R)": 49, "Jay Jones (D)": 42, Other: 2, Undecided: 7 } },
+  { pollster: "Quantus Insights", endDate: "2025-10-20", sampleSize: 1302, sampleType: "RV", results: { "Jason Miyares (R)": 49, "Jay Jones (D)": 42, Other: 2, Undecided: 7 } },
   { pollster: "State Navigate", endDate: "2025-10-20", sampleSize: 694, sampleType: "LV", results: { "Jason Miyares (R)": 45, "Jay Jones (D)": 50, Undecided: 5 } },
 
   { pollster: "The Washington Post/Schar School", endDate: "2025-10-20", sampleSize: 927, sampleType: "LV", results: { "Jason Miyares (R)": 46, "Jay Jones (D)": 46, Other: 5, Undecided: 3 } },
@@ -381,7 +381,7 @@ export const NJ_GOV_POLLS: Poll[] = [
   { pollster: "YouGov", endDate: "2025-10-28", sampleSize: 1153, sampleType: "LV", results: { "Mikie Sherrill (D)": 54, "Jack Ciattarelli (R)": 44, Other: 2 } },
   { pollster: "YouGov (2)", endDate: "2025-10-28", sampleSize: 1153, sampleType: "LV", results: { "Mikie Sherrill (D)": 51, "Jack Ciattarelli (R)": 42, Other: 1, Undecided: 6 } },
 
-  { pollster: "Quantus Insights (R)", endDate: "2025-10-27", sampleSize: 1380, sampleType: "LV", results: { "Mikie Sherrill (D)": 49, "Jack Ciattarelli (R)": 46, Undecided: 5 } },
+  { pollster: "Quantus Insights", endDate: "2025-10-27", sampleSize: 1380, sampleType: "LV", results: { "Mikie Sherrill (D)": 49, "Jack Ciattarelli (R)": 46, Undecided: 5 } },
   { pollster: "co/efficient (R)", endDate: "2025-10-27", sampleSize: 995, sampleType: "LV", results: { "Mikie Sherrill (D)": 48, "Jack Ciattarelli (R)": 47, Other: 1, Undecided: 5 } },
   { pollster: "A2 Insights", endDate: "2025-10-26", sampleSize: 812, sampleType: "LV", results: { "Mikie Sherrill (D)": 51, "Jack Ciattarelli (R)": 47, Undecided: 2 } },
 
@@ -408,7 +408,7 @@ export const NJ_GOV_POLLS: Poll[] = [
 
   { pollster: "Public Policy Polling (D)", endDate: "2025-10-03", sampleSize: 703, sampleType: "RV", results: { "Mikie Sherrill (D)": 49, "Jack Ciattarelli (R)": 43, Undecided: 8 } },
   { pollster: "John Zogby Strategies (D) (Sep 30–Oct 2)", endDate: "2025-10-02", sampleSize: 912, sampleType: "LV", results: { "Mikie Sherrill (D)": 50, "Jack Ciattarelli (R)": 42, Undecided: 8 } },
-  { pollster: "Quantus Insights (R) (Sep 29–30)", endDate: "2025-09-30", sampleSize: 900, sampleType: "LV", results: { "Mikie Sherrill (D)": 48, "Jack Ciattarelli (R)": 46, Undecided: 6 } },
+  { pollster: "Quantus Insights (Sep 29–30)", endDate: "2025-09-30", sampleSize: 900, sampleType: "LV", results: { "Mikie Sherrill (D)": 48, "Jack Ciattarelli (R)": 46, Undecided: 6 } },
 
   // Beacon/Shaw (Sep 25–28) LV + RV
   { pollster: "Beacon (D)/Shaw (R) (Sep 25–28 LV)", endDate: "2025-09-28", sampleSize: 822, sampleType: "LV", results: { "Mikie Sherrill (D)": 50, "Jack Ciattarelli (R)": 42, Undecided: 8 } },
@@ -428,8 +428,8 @@ export const NJ_GOV_POLLS: Poll[] = [
   { pollster: "National Research Inc. (R) (Sep 8–10)", endDate: "2025-09-10", sampleSize: 600, sampleType: "LV", results: { "Mikie Sherrill (D)": 47, "Jack Ciattarelli (R)": 45, Undecided: 8 } },
 
   // Quantus (Sep 2–4) 2 lines
-  { pollster: "Quantus Insights (R) (Sep 2–4)", endDate: "2025-09-04", sampleSize: 600, sampleType: "LV", results: { "Mikie Sherrill (D)": 47, "Jack Ciattarelli (R)": 37, Undecided: 16 } },
-  { pollster: "Quantus Insights (R) (Sep 2–4) (2)", endDate: "2025-09-04", sampleSize: 600, sampleType: "LV", results: { "Mikie Sherrill (D)": 49, "Jack Ciattarelli (R)": 39, Undecided: 12 } },
+  { pollster: "Quantus Insights (Sep 2–4)", endDate: "2025-09-04", sampleSize: 600, sampleType: "LV", results: { "Mikie Sherrill (D)": 47, "Jack Ciattarelli (R)": 37, Undecided: 16 } },
+  { pollster: "Quantus Insights (Sep 2–4) (2)", endDate: "2025-09-04", sampleSize: 600, sampleType: "LV", results: { "Mikie Sherrill (D)": 49, "Jack Ciattarelli (R)": 39, Undecided: 12 } },
 
   // TIPP (3 samples)
   { pollster: "TIPP Insights (R)", endDate: "2025-08-28", sampleSize: 1524, sampleType: "RV", results: { "Mikie Sherrill (D)": 37, "Jack Ciattarelli (R)": 36, Undecided: 27 } },

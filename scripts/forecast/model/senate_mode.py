@@ -805,7 +805,10 @@ EXTRA_POLLS = {
            dict(source="Fox News/Beacon Research and Shaw & Company", dates="September 24-28, 2026", end="2026-09-28", n=1028, pop="LV", D=50, R=49, O=0, U=1),
            # Oct 2 2026 morning sweep: Trafalgar Group, Sept 28-30 2026, 1,085 likely voters; other is Christensen 1.6, Long 0.9,
            # Kristy 0.3 and Marsh 0.1. No governor question was published.
-           dict(source="Trafalgar Group (R)", dates="September 28-30, 2026", end="2026-09-30", n=1085, pop="LV", D=46.9, R=45.1, O=2.9, U=5.0)],
+           dict(source="Trafalgar Group (R)", dates="September 28-30, 2026", end="2026-09-30", n=1085, pop="LV", D=46.9, R=45.1, O=2.9, U=5.0),
+           # Oct 5 2026 evening sweep: Mitchell Research for CBS Detroit, Oct 1 2026, likely voters, margin of error 3.8; the sample
+           # size was not published, 650 is a placeholder matching that margin. Other is Christensen 3, Kristy 2, Long 1, Marsh 1.
+           dict(source="Mitchell Research for CBS Detroit", dates="October 1, 2026", end="2026-10-01", n=650, pop="LV", D=45.6, R=41.4, O=7.0, U=6.0)],
     "ME": [dict(source="University of New Hampshire", dates="September 17-21, 2026", end="2026-09-21", n=1312, pop="LV", D=51, R=47, O=0, U=2),
            dict(source="New York Times/Siena University", dates="September 15-22, 2026", end="2026-09-22", n=619, pop="LV", D=46, R=49, O=0, U=5)],
     "NH": [dict(source="University of New Hampshire", dates="September 17-21, 2026", end="2026-09-21", n=1418, pop="LV", D=50, R=42, O=4, U=4),

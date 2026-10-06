@@ -57,14 +57,40 @@
    "n_sims": 10000,
    "chambers": {
     "senate": {
-     "d_control": 88.03,
+     "d_control": 88.22,
      "d_seats_median": 54.0,
      "p10": 50.0,
      "p90": 56.0,
-     "d_control_without_osborn": 84.89
+     "d_control_without_osborn": 85.02
     },
     "governors": {
-     "d_majority": 93.51,
+     "d_majority": 93.34,
+     "d_median": 28.0,
+     "p10": 26.0,
+     "p90": 31.0
+    },
+    "house": {
+     "d_majority": 95.99,
+     "d_seats_median": 248.0,
+     "p10": 224.0,
+     "p90": 279.0,
+     "n_sims": 10000
+    }
+   }
+  },
+  {
+   "date": "2026-10-06",
+   "n_sims": 10000,
+   "chambers": {
+    "senate": {
+     "d_control": 87.73,
+     "d_seats_median": 54.0,
+     "p10": 50.0,
+     "p90": 56.0,
+     "d_control_without_osborn": 84.61
+    },
+    "governors": {
+     "d_majority": 92.41,
      "d_median": 28.0,
      "p10": 26.0,
      "p90": 31.0

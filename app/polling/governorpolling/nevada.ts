@@ -47,6 +47,7 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "NV-GOV-2026", "pollster": "Wedgewood Polls (D)", "startDate": "2026-07-09", "endDate": "2026-07-12", "sampleSize": 700, "sampleType": "LV", "results": {"Aaron Ford (D)": 47.0, "Joe Lombardo (R)": 50.0, "Undecided": 3.0}},
     {"raceId": "NV-GOV-2026", "pollster": "Public Policy Polling (D)", "startDate": "2026-07-15", "endDate": "2026-07-16", "sampleSize": 558, "sampleType": "LV", "results": {"Aaron Ford (D)": 44.0, "Joe Lombardo (R)": 44.0, "Undecided": 12.0}},
     {"raceId": "NV-GOV-2026", "pollster": "Tarrance Group (R)", "startDate": "2026-07-25", "endDate": "2026-07-29", "sampleSize": 519, "sampleType": "LV", "results": {"Aaron Ford (D)": 43.0, "Joe Lombardo (R)": 50.0, "Undecided": 7.0}},
-    {"raceId": "NV-GOV-2026", "pollster": "Emerson College", "startDate": "2026-09-05", "endDate": "2026-09-08", "sampleSize": 680, "sampleType": "LV", "results": {"Aaron Ford (D)": 44.0, "Joe Lombardo (R)": 42.0, "Other": 2.0, "Undecided": 11.0}}
+    {"raceId": "NV-GOV-2026", "pollster": "Emerson College", "startDate": "2026-09-05", "endDate": "2026-09-08", "sampleSize": 680, "sampleType": "LV", "results": {"Aaron Ford (D)": 44.0, "Joe Lombardo (R)": 42.0, "Other": 2.0, "Undecided": 11.0}},
+    {"raceId": "NV-GOV-2026", "pollster": "Noble Predictive Insights", "startDate": "2026-10-02", "endDate": "2026-10-02", "sampleSize": 800, "sampleType": "RV", "results": {"Joe Lombardo (R)": 42.0, "Aaron Ford (D)": 40.0, "Undecided": 18.0}, "notes": "Released Oct 6; field dates and sample size were not published, so both are placeholders."}
   ],
 };
