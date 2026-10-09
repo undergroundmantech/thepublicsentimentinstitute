@@ -675,7 +675,7 @@ function inkOn(fill: string, lens: Lens): string {
 
 // ─── styles ──────────────────────────────────────────────────────────────────
 const CSS = `
-/* Dark only, on the OnPoint Politics tokens: glass cards, Sora, Manrope and
+/* Dark only, on the OnPoint Politics tokens: glass cards, Geist and
    JetBrains Mono. Motion is reader driven only: no entry choreography. */
 .vr-page { position: relative; color: var(--ink); font-family: var(--font-b); font-size: 14px; padding-bottom: 70px; }
 

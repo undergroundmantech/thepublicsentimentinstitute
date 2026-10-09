@@ -45,6 +45,7 @@ export const PALETTES = {
 
 const ThemeCtx = createContext({ theme: 'dark', toggle: () => {}, setTheme: () => {}, P: PALETTES.dark })
 
+// The hub follows the site-wide theme (<html data-theme>, set by the masthead toggle).
 function readInitial() {
   return getTheme()
 }
@@ -52,19 +53,14 @@ function readInitial() {
 export function ThemeProvider({ children }) {
   const [theme, setTheme] = useState(readInitial)
   useEffect(() => {
-    // Scope the flip to the election section's OWN attribute so it never
-    // touches the main site's <html data-theme>. color-scheme is handled via
-    // CSS on body:has(.opa-results-shell) (auto-reverts when you leave the
-    // results page) rather than on <html>, so it can't leak dark scrollbars /
-    // form controls onto the rest of the site.
-    document.documentElement.dataset.opaTheme = theme
-    try { localStorage.setItem('opa-theme', theme) } catch {}
-  }, [theme])
-  useEffect(() => {
-    const on = (e) => setTheme(e.detail === 'light' ? 'light' : 'dark')
-    window.addEventListener(THEME_EVENT, on)
-    return () => window.removeEventListener(THEME_EVENT, on)
+    const sync = () => setTheme(getTheme())
+    sync()
+    window.addEventListener(THEME_EVENT, sync)
+    return () => window.removeEventListener(THEME_EVENT, sync)
   }, [])
+  useEffect(() => {
+    document.documentElement.dataset.opaTheme = theme
+  }, [theme])
   const toggle = useCallback(() => { toggleTheme() }, [])
   const value = { theme, toggle, setTheme, P: PALETTES[theme] || PALETTES.dark }
   return <ThemeCtx.Provider value={value}>{children}</ThemeCtx.Provider>
@@ -81,17 +77,7 @@ export const useTheme = () => useContext(ThemeCtx)
 // by RaceDetail to mirror the new theme into its iframe before the new
 // snapshot is captured.
 export function tripToggleTheme({ theme, toggle, onAfterSwap }) {
-  if (typeof document === 'undefined' || typeof document.startViewTransition !== 'function') {
-    try { onAfterSwap && onAfterSwap(theme === 'dark' ? 'light' : 'dark') } catch {}
-    toggle()
-    return
-  }
   const next = theme === 'dark' ? 'light' : 'dark'
-  document.startViewTransition(() => {
-    // Apply the new theme up front so the post-callback snapshot has it.
-    document.documentElement.dataset.opaTheme = next
-    try { localStorage.setItem('opa-theme', next) } catch {}
-    try { onAfterSwap && onAfterSwap(next) } catch {}
-    toggle()
-  })
+  try { onAfterSwap && onAfterSwap(next) } catch {}
+  toggle()
 }

@@ -965,7 +965,7 @@ export default function EarlyVoteDesk() {
 }
 
 const CSS = `
-/* Dark only, on the OnPoint Politics tokens: glass cards, Sora, Manrope and
+/* Dark only, on the OnPoint Politics tokens: glass cards, Geist and
    JetBrains Mono, the brand rating ramp for party margins. */
 .ev-page { position: relative; color: var(--ink); }
 .ev-shell { padding-bottom: 40px; }
