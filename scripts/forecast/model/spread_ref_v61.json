@@ -1,0 +1,360 @@
+{
+ "source": "/tmp/fc_v61, Oct 3 2026 morning run, 2,000 simulations",
+ "races": {
+  "AK": {
+   "sd_logit": 0.10009,
+   "r2_vote": 0.528,
+   "sd_pts": 5.0
+  },
+  "AKG": {
+   "sd_logit": 0.10154,
+   "r2_vote": 0.089,
+   "sd_pts": 4.95
+  },
+  "AL": {
+   "sd_logit": 0.12681,
+   "r2_vote": 0.363,
+   "sd_pts": 6.04
+  },
+  "ALG": {
+   "sd_logit": 0.11403,
+   "r2_vote": 0.158,
+   "sd_pts": 5.59
+  },
+  "AR": {
+   "sd_logit": 0.10791,
+   "r2_vote": 0.572,
+   "sd_pts": 5.29
+  },
+  "ARG": {
+   "sd_logit": 0.11494,
+   "r2_vote": 0.169,
+   "sd_pts": 5.62
+  },
+  "AZG": {
+   "sd_logit": 0.1167,
+   "r2_vote": 0.214,
+   "sd_pts": 5.77
+  },
+  "CAG": {
+   "sd_logit": 0.11332,
+   "r2_vote": 0.148,
+   "sd_pts": 5.37
+  },
+  "CO": {
+   "sd_logit": 0.14079,
+   "r2_vote": 0.357,
+   "sd_pts": 6.67
+  },
+  "COG": {
+   "sd_logit": 0.14503,
+   "r2_vote": 0.115,
+   "sd_pts": 7.04
+  },
+  "CTG": {
+   "sd_logit": 0.11703,
+   "r2_vote": 0.199,
+   "sd_pts": 5.65
+  },
+  "DE": {
+   "sd_logit": 0.14387,
+   "r2_vote": 0.38,
+   "sd_pts": 6.56
+  },
+  "FL": {
+   "sd_logit": 0.11599,
+   "r2_vote": 0.539,
+   "sd_pts": 5.79
+  },
+  "FLG": {
+   "sd_logit": 0.12041,
+   "r2_vote": 0.177,
+   "sd_pts": 6.02
+  },
+  "GA": {
+   "sd_logit": 0.09763,
+   "r2_vote": 0.492,
+   "sd_pts": 4.83
+  },
+  "GAG": {
+   "sd_logit": 0.10237,
+   "r2_vote": 0.152,
+   "sd_pts": 5.12
+  },
+  "HIG": {
+   "sd_logit": 0.15932,
+   "r2_vote": 0.143,
+   "sd_pts": 6.99
+  },
+  "IA": {
+   "sd_logit": 0.12021,
+   "r2_vote": 0.608,
+   "sd_pts": 6.01
+  },
+  "IAG": {
+   "sd_logit": 0.12503,
+   "r2_vote": 0.197,
+   "sd_pts": 6.19
+  },
+  "ID": {
+   "sd_logit": 0.10884,
+   "r2_vote": 0.588,
+   "sd_pts": 5.36
+  },
+  "IDG": {
+   "sd_logit": 0.12287,
+   "r2_vote": 0.161,
+   "sd_pts": 5.76
+  },
+  "IL": {
+   "sd_logit": 0.14466,
+   "r2_vote": 0.295,
+   "sd_pts": 6.77
+  },
+  "ILG": {
+   "sd_logit": 0.11727,
+   "r2_vote": 0.164,
+   "sd_pts": 5.52
+  },
+  "KS": {
+   "sd_logit": 0.11862,
+   "r2_vote": 0.501,
+   "sd_pts": 5.93
+  },
+  "KSG": {
+   "sd_logit": 0.12384,
+   "r2_vote": 0.171,
+   "sd_pts": 6.19
+  },
+  "KY": {
+   "sd_logit": 0.12875,
+   "r2_vote": 0.453,
+   "sd_pts": 6.31
+  },
+  "LA": {
+   "sd_logit": 0.11918,
+   "r2_vote": 0.418,
+   "sd_pts": 5.92
+  },
+  "MA": {
+   "sd_logit": 0.10633,
+   "r2_vote": 0.578,
+   "sd_pts": 4.84
+  },
+  "MAG": {
+   "sd_logit": 0.11404,
+   "r2_vote": 0.221,
+   "sd_pts": 5.36
+  },
+  "MDG": {
+   "sd_logit": 0.10787,
+   "r2_vote": 0.171,
+   "sd_pts": 4.74
+  },
+  "ME": {
+   "sd_logit": 0.11648,
+   "r2_vote": 0.624,
+   "sd_pts": 5.82
+  },
+  "MEG": {
+   "sd_logit": 0.11501,
+   "r2_vote": 0.217,
+   "sd_pts": 5.65
+  },
+  "MI": {
+   "sd_logit": 0.11676,
+   "r2_vote": 0.576,
+   "sd_pts": 5.82
+  },
+  "MIG": {
+   "sd_logit": 0.12039,
+   "r2_vote": 0.217,
+   "sd_pts": 5.96
+  },
+  "MN": {
+   "sd_logit": 0.10987,
+   "r2_vote": 0.553,
+   "sd_pts": 5.46
+  },
+  "MNG": {
+   "sd_logit": 0.11,
+   "r2_vote": 0.199,
+   "sd_pts": 5.42
+  },
+  "MS": {
+   "sd_logit": 0.10644,
+   "r2_vote": 0.411,
+   "sd_pts": 5.3
+  },
+  "MT": {
+   "sd_logit": 0.10362,
+   "r2_vote": 0.564,
+   "sd_pts": 5.02
+  },
+  "NC": {
+   "sd_logit": 0.10595,
+   "r2_vote": 0.564,
+   "sd_pts": 5.21
+  },
+  "NE": {
+   "sd_logit": 0.11009,
+   "r2_vote": 0.587,
+   "sd_pts": 5.5
+  },
+  "NEG": {
+   "sd_logit": 0.10023,
+   "r2_vote": 0.21,
+   "sd_pts": 4.97
+  },
+  "NH": {
+   "sd_logit": 0.12306,
+   "r2_vote": 0.626,
+   "sd_pts": 6.06
+  },
+  "NHG": {
+   "sd_logit": 0.12459,
+   "r2_vote": 0.231,
+   "sd_pts": 6.17
+  },
+  "NJ": {
+   "sd_logit": 0.14942,
+   "r2_vote": 0.296,
+   "sd_pts": 7.06
+  },
+  "NM": {
+   "sd_logit": 0.12059,
+   "r2_vote": 0.444,
+   "sd_pts": 5.78
+  },
+  "NMG": {
+   "sd_logit": 0.11699,
+   "r2_vote": 0.161,
+   "sd_pts": 5.76
+  },
+  "NVG": {
+   "sd_logit": 0.11346,
+   "r2_vote": 0.224,
+   "sd_pts": 5.67
+  },
+  "NYG": {
+   "sd_logit": 0.10824,
+   "r2_vote": 0.193,
+   "sd_pts": 5.28
+  },
+  "OH": {
+   "sd_logit": 0.10843,
+   "r2_vote": 0.594,
+   "sd_pts": 5.41
+  },
+  "OHG": {
+   "sd_logit": 0.10789,
+   "r2_vote": 0.203,
+   "sd_pts": 5.38
+  },
+  "OK": {
+   "sd_logit": 0.11551,
+   "r2_vote": 0.431,
+   "sd_pts": 5.42
+  },
+  "OKG": {
+   "sd_logit": 0.14931,
+   "r2_vote": 0.117,
+   "sd_pts": 7.39
+  },
+  "OR": {
+   "sd_logit": 0.13779,
+   "r2_vote": 0.35,
+   "sd_pts": 6.28
+  },
+  "ORG": {
+   "sd_logit": 0.12191,
+   "r2_vote": 0.176,
+   "sd_pts": 6.04
+  },
+  "PAG": {
+   "sd_logit": 0.10624,
+   "r2_vote": 0.216,
+   "sd_pts": 4.94
+  },
+  "RI": {
+   "sd_logit": 0.11716,
+   "r2_vote": 0.568,
+   "sd_pts": 5.38
+  },
+  "RIG": {
+   "sd_logit": 0.09853,
+   "r2_vote": 0.162,
+   "sd_pts": 4.64
+  },
+  "SC": {
+   "sd_logit": 0.11501,
+   "r2_vote": 0.52,
+   "sd_pts": 5.75
+  },
+  "SCG": {
+   "sd_logit": 0.13259,
+   "r2_vote": 0.179,
+   "sd_pts": 6.61
+  },
+  "SD": {
+   "sd_logit": 0.1319,
+   "r2_vote": 0.509,
+   "sd_pts": 6.52
+  },
+  "SDG": {
+   "sd_logit": 0.14846,
+   "r2_vote": 0.128,
+   "sd_pts": 7.38
+  },
+  "TN": {
+   "sd_logit": 0.10968,
+   "r2_vote": 0.436,
+   "sd_pts": 5.27
+  },
+  "TNG": {
+   "sd_logit": 0.11265,
+   "r2_vote": 0.135,
+   "sd_pts": 5.56
+  },
+  "TX": {
+   "sd_logit": 0.11591,
+   "r2_vote": 0.408,
+   "sd_pts": 5.79
+  },
+  "TXG": {
+   "sd_logit": 0.10427,
+   "r2_vote": 0.178,
+   "sd_pts": 5.2
+  },
+  "VA": {
+   "sd_logit": 0.10942,
+   "r2_vote": 0.441,
+   "sd_pts": 5.23
+  },
+  "VTG": {
+   "sd_logit": 0.12092,
+   "r2_vote": 0.242,
+   "sd_pts": 5.98
+  },
+  "WIG": {
+   "sd_logit": 0.11527,
+   "r2_vote": 0.19,
+   "sd_pts": 5.75
+  },
+  "WV": {
+   "sd_logit": 0.15912,
+   "r2_vote": 0.348,
+   "sd_pts": 7.21
+  },
+  "WY": {
+   "sd_logit": 0.14123,
+   "r2_vote": 0.372,
+   "sd_pts": 5.93
+  },
+  "WYG": {
+   "sd_logit": 0.13178,
+   "r2_vote": 0.128,
+   "sd_pts": 6.05
+  }
+ }
+}

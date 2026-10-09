@@ -1,0 +1,282 @@
+{
+ "AK": {
+  "d2": 0.4884,
+  "open": false
+ },
+ "AR": {
+  "d2": 0.40462,
+  "open": false
+ },
+ "CO": {
+  "d2": 0.60929,
+  "open": false
+ },
+ "FL": {
+  "d2": 0.47577,
+  "open": false
+ },
+ "HIG": {
+  "d2": 0.70188,
+  "open": false
+ },
+ "IDG": {
+  "d2": 0.31505,
+  "open": false
+ },
+ "KSG": {
+  "d2": 0.53491,
+  "open": true
+ },
+ "MAG": {
+  "d2": 0.64679,
+  "open": false
+ },
+ "MI": {
+  "d2": 0.59258,
+  "open": true
+ },
+ "MS": {
+  "d2": 0.47719,
+  "open": false
+ },
+ "NEG": {
+  "d2": 0.40665,
+  "open": false
+ },
+ "NM": {
+  "d2": 0.59631,
+  "open": false
+ },
+ "OH": {
+  "d2": 0.54624,
+  "open": false
+ },
+ "OR": {
+  "d2": 0.66775,
+  "open": false
+ },
+ "RIG": {
+  "d2": 0.57957,
+  "open": true
+ },
+ "SDG": {
+  "d2": 0.4323,
+  "open": false
+ },
+ "TXG": {
+  "d2": 0.4782,
+  "open": false
+ },
+ "WV": {
+  "d2": 0.36634,
+  "open": false
+ },
+ "AKG": {
+  "d2": 0.5414,
+  "open": true
+ },
+ "ARG": {
+  "d2": 0.35642,
+  "open": false
+ },
+ "COG": {
+  "d2": 0.6,
+  "open": true
+ },
+ "FLG": {
+  "d2": 0.50305,
+  "open": true
+ },
+ "IA": {
+  "d2": 0.51939,
+  "open": true
+ },
+ "IL": {
+  "d2": 0.62236,
+  "open": true
+ },
+ "KY": {
+  "d2": 0.51051,
+  "open": true
+ },
+ "MDG": {
+  "d2": 0.70261,
+  "open": false
+ },
+ "MIG": {
+  "d2": 0.56129,
+  "open": true
+ },
+ "MT": {
+  "d2": 0.50411,
+  "open": true
+ },
+ "NH": {
+  "d2": 0.6233,
+  "open": true
+ },
+ "NMG": {
+  "d2": 0.5538,
+  "open": true
+ },
+ "OHG": {
+  "d2": 0.49312,
+  "open": true
+ },
+ "ORG": {
+  "d2": 0.61069,
+  "open": false
+ },
+ "SC": {
+  "d2": 0.45106,
+  "open": false
+ },
+ "TN": {
+  "d2": 0.40197,
+  "open": false
+ },
+ "VA": {
+  "d2": 0.60739,
+  "open": false
+ },
+ "WY": {
+  "d2": 0.30407,
+  "open": true
+ },
+ "AL": {
+  "d2": 0.43178,
+  "open": true
+ },
+ "AZG": {
+  "d2": 0.5944,
+  "open": false
+ },
+ "CTG": {
+  "d2": 0.61054,
+  "open": false
+ },
+ "GA": {
+  "d2": 0.53682,
+  "open": false
+ },
+ "IAG": {
+  "d2": 0.532,
+  "open": true
+ },
+ "ILG": {
+  "d2": 0.64685,
+  "open": false
+ },
+ "LA": {
+  "d2": 0.45342,
+  "open": true
+ },
+ "ME": {
+  "d2": 0.47985,
+  "open": false
+ },
+ "MN": {
+  "d2": 0.58186,
+  "open": true
+ },
+ "NC": {
+  "d2": 0.56426,
+  "open": true
+ },
+ "NHG": {
+  "d2": 0.45927,
+  "open": false
+ },
+ "NVG": {
+  "d2": 0.45166,
+  "open": false
+ },
+ "OK": {
+  "d2": 0.40078,
+  "open": true
+ },
+ "PAG": {
+  "d2": 0.65877,
+  "open": false
+ },
+ "SCG": {
+  "d2": 0.5255,
+  "open": true
+ },
+ "TNG": {
+  "d2": 0.42922,
+  "open": true
+ },
+ "VTG": {
+  "d2": 0.34849,
+  "open": false
+ },
+ "WYG": {
+  "d2": 0.27659,
+  "open": true
+ },
+ "NJ": {
+  "d2": 0.61052,
+  "open": false
+ },
+ "NYG": {
+  "d2": 0.59434,
+  "open": false
+ },
+ "OKG": {
+  "d2": 0.52159,
+  "open": true
+ },
+ "RI": {
+  "d2": 0.72399,
+  "open": false
+ },
+ "SD": {
+  "d2": 0.3536,
+  "open": false
+ },
+ "TX": {
+  "d2": 0.48071,
+  "open": false
+ },
+ "WIG": {
+  "d2": 0.5467,
+  "open": true
+ },
+ "ALG": {
+  "d2": 0.43129,
+  "open": true
+ },
+ "CAG": {
+  "d2": 0.59817,
+  "open": true
+ },
+ "DE": {
+  "d2": 0.66108,
+  "open": false
+ },
+ "GAG": {
+  "d2": 0.56003,
+  "open": true
+ },
+ "ID": {
+  "d2": 0.39888,
+  "open": false
+ },
+ "KS": {
+  "d2": 0.47926,
+  "open": false
+ },
+ "MA": {
+  "d2": 0.68989,
+  "open": false
+ },
+ "MEG": {
+  "d2": 0.57324,
+  "open": true
+ },
+ "MNG": {
+  "d2": 0.55975,
+  "open": true
+ }
+}

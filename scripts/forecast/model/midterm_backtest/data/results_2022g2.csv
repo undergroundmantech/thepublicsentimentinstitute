@@ -1,0 +1,19 @@
+cycle,race,office,state,dem_candidate,rep_candidate,dem_pct,rep_pct,incumbent_party,incumbent_ran,notes
+2022,MNG,governor,MN,Tim Walz,Scott Jensen,52.27,44.61,D,yes,
+2022,NEG,governor,NE,Carol Blood,Jim Pillen,35.98,59.22,R,no,Ricketts term-limited
+2022,NVG,governor,NV,Steve Sisolak,Joe Lombardo,47.3,48.81,D,yes,Incumbent lost
+2022,NHG,governor,NH,Tom Sherman,Chris Sununu,41.47,56.98,R,yes,
+2022,NMG,governor,NM,Michelle Lujan Grisham,Mark Ronchetti,51.97,45.59,D,yes,
+2022,NYG,governor,NY,Kathy Hochul,Lee Zeldin,53.12,46.73,D,yes,Hochul succeeded Cuomo in 2021; no general election polls retrievable from page
+2022,OHG,governor,OH,Nan Whaley,Mike DeWine,37.38,62.41,R,yes,
+2022,OKG,governor,OK,Joy Hofmeister,Kevin Stitt,41.79,55.45,R,yes,Hofmeister a former Republican who switched to Democratic
+2022,ORG,governor,OR,Tina Kotek,Christine Drazan,46.96,43.54,D,no,Brown term-limited; independent Betsy Johnson got 8.62
+2022,PAG,governor,PA,Josh Shapiro,Doug Mastriano,56.49,41.71,D,no,Wolf term-limited; no general election polls retrievable from page
+2022,RIG,governor,RI,Dan McKee,Ashley Kalus,57.92,38.86,D,yes,
+2022,SCG,governor,SC,Joe Cunningham,Henry McMaster,40.67,58.04,R,yes,No polls in window
+2022,SDG,governor,SD,Jamie Smith,Kristi Noem,35.17,61.98,R,yes,
+2022,TNG,governor,TN,Jason Martin,Bill Lee,32.92,64.91,R,yes,No polls in window
+2022,TXG,governor,TX,Beto ORourke,Greg Abbott,43.86,54.75,R,yes,
+2022,VTG,governor,VT,Brenda Siegel,Phil Scott,23.94,70.91,R,yes,Siegel ran as Democratic/Progressive
+2022,WIG,governor,WI,Tony Evers,Tim Michels,51.15,47.75,D,yes,Beglinger withdrawn but on ballot 1.02
+2022,WYG,governor,WY,Theresa Livingston,Mark Gordon,15.82,74.07,R,yes,No polls in window

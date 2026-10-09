@@ -1,0 +1,178 @@
+cycle,race,office,state,pollster,start,end,n,pop,dem,rep,other,undecided,partisan
+2022,ALG,governor,AL,Cygnal,2022-10-27,2022-10-29,616,LV,25,60,5,,R
+2022,AKG,governor,AK,Dittman Research,2022-10-21,2022-10-25,403,LV,25,47,27,,
+2022,AKG,governor,AK,Alaska Survey Research,2022-09-25,2022-09-27,1282,LV,28,43,28,,
+2022,AZG,governor,AZ,Trafalgar Group,2022-11-05,2022-11-07,1094,LV,47,51,,3,R
+2022,AZG,governor,AZ,Data Orbital,2022-11-04,2022-11-06,550,LV,47,50,2,2,R
+2022,AZG,governor,AZ,Research Co.,2022-11-04,2022-11-06,450,LV,47,49,,4,
+2022,AZG,governor,AZ,Data for Progress,2022-11-02,2022-11-06,1359,LV,48,52,,,D
+2022,AZG,governor,AZ,Targoz Market Research,2022-11-02,2022-11-06,560,LV,48,50,2,,
+2022,AZG,governor,AZ,KAConsulting,2022-11-02,2022-11-03,501,LV,45,49,1,6,R
+2022,AZG,governor,AZ,InsiderAdvantage,2022-11-02,2022-11-02,550,LV,48,51,,1,R
+2022,AZG,governor,AZ,HighGround Inc.,2022-11-01,2022-11-02,500,LV,45,47,2,6,
+2022,AZG,governor,AZ,Remington Research Group,2022-11-01,2022-11-02,1075,LV,46,49,,5,R
+2022,AZG,governor,AZ,Big Data Poll,2022-10-31,2022-11-02,1051,LV,47,51,,2,R
+2022,AZG,governor,AZ,Marist College,2022-10-31,2022-11-02,1157,RV,48,47,1,4,
+2022,AZG,governor,AZ,Marist College,2022-10-31,2022-11-02,1015,LV,49,48,1,2,
+2022,AZG,governor,AZ,Civiqs,2022-10-29,2022-11-02,852,LV,48,50,1,,
+2022,AZG,governor,AZ,Alloy Analytics,2022-10-30,2022-11-01,639,LV,46,50,,4,R
+2022,AZG,governor,AZ,Emerson College,2022-10-30,2022-11-01,1000,LV,47,49,2,2,
+2022,AZG,governor,AZ,Phillips Academy,2022-10-29,2022-10-30,985,LV,42,53,,4,
+2022,AZG,governor,AZ,Fox News,2022-10-26,2022-10-30,1003,RV,46,47,3,4,
+2022,AZG,governor,AZ,Wick Insights,2022-10-26,2022-10-30,1122,LV,47,49,2,2,R
+2022,AZG,governor,AZ,Fabrizio Lee & Associates,2022-10-24,2022-10-26,800,LV,47,50,,,R
+2022,AZG,governor,AZ,OH Predictive Insights,2022-10-24,2022-10-26,600,LV,47,49,,4,
+2022,AZG,governor,AZ,Siena College/NYT,2022-10-24,2022-10-26,604,LV,48,48,,4,
+2022,AZG,governor,AZ,BSP Research/Shaw & Co.,2022-10-19,2022-10-26,1000,RV,40,42,3,14,
+2022,AZG,governor,AZ,InsiderAdvantage,2022-10-24,2022-10-25,550,LV,43,54,,2,R
+2022,AZG,governor,AZ,co/efficient,2022-10-20,2022-10-21,1111,LV,45,49,,6,R
+2022,AZG,governor,AZ,Data Orbital,2022-10-17,2022-10-19,550,LV,44,47,3,6,R
+2022,AZG,governor,AZ,Susquehanna Polling & Research,2022-10-14,2022-10-18,600,LV,48,47,2,3,R
+2022,AZG,governor,AZ,Trafalgar Group,2022-10-16,2022-10-17,1078,LV,46,49,,4,R
+2022,AZG,governor,AZ,Data for Progress,2022-10-11,2022-10-17,893,LV,46,50,,4,D
+2022,AZG,governor,AZ,Wick Insights,2022-10-08,2022-10-14,1058,LV,47,47,2,3,R
+2022,AZG,governor,AZ,HighGround Inc.,2022-10-12,2022-10-13,500,LV,46,45,2,7,
+2022,AZG,governor,AZ,InsiderAdvantage,2022-10-11,2022-10-11,550,LV,46,49,,4,R
+2022,AZG,governor,AZ,Ascend Action,2022-10-08,2022-10-10,954,LV,45,46,5,5,R
+2022,AZG,governor,AZ,Big Data Poll,2022-10-02,2022-10-05,974,LV,46,49,1,6,R
+2022,AZG,governor,AZ,YouGov/CBS News,2022-09-30,2022-10-04,1164,RV,49,49,,1,
+2022,AZG,governor,AZ,CNN/SSRS,2022-09-26,2022-10-02,900,RV,49,44,7,,
+2022,AZG,governor,AZ,CNN/SSRS,2022-09-26,2022-10-02,795,LV,49,46,5,,
+2022,AZG,governor,AZ,Fox News,2022-09-22,2022-09-26,1008,RV,44,43,6,7,
+2022,AZG,governor,AZ,Suffolk University,2022-09-21,2022-09-25,500,LV,46,45,,8,
+2022,ARG,governor,AR,Hendrix College,2022-10-17,2022-10-18,835,LV,41,51,3,5,
+2022,ARG,governor,AR,University of Arkansas,2022-10-13,2022-10-31,557,LV,34,53,4,9,
+2022,CAG,governor,CA,Research Co.,2022-11-04,2022-11-06,450,LV,56,37,7,,
+2022,CAG,governor,CA,USC,2022-10-30,2022-11-02,802,RV,62,38,,,
+2022,CAG,governor,CA,UC Berkeley,2022-10-25,2022-10-31,5972,LV,58,37,,4,
+2022,CAG,governor,CA,ActiVote,2022-07-29,2022-10-27,200,LV,61,39,,,
+2022,CAG,governor,CA,Public Policy Institute of California,2022-10-14,2022-10-23,1060,LV,55,36,4,5,
+2022,CAG,governor,CA,SurveyUSA,2022-10-07,2022-10-10,1013,LV,57,35,,8,
+2022,CAG,governor,CA,UC Berkeley,2022-09-22,2022-09-27,6939,LV,53,32,2,13,
+2022,COG,governor,CO,co/efficient,2022-11-03,2022-11-07,856,LV,54,43,2,2,R
+2022,COG,governor,CO,Data for Progress,2022-11-02,2022-11-05,1983,LV,55,43,2,,D
+2022,COG,governor,CO,Trafalgar Group,2022-10-30,2022-11-01,1084,LV,50,43,5,3,R
+2022,COG,governor,CO,Emerson College,2022-10-26,2022-10-29,1000,LV,54,40,4,3,
+2022,COG,governor,CO,Trafalgar Group,2022-10-25,2022-10-27,1174,LV,50,42,6,3,R
+2022,COG,governor,CO,CU Boulder/YouGov,2022-10-11,2022-10-19,709,LV,57,41,2,,
+2022,COG,governor,CO,Civiqs,2022-10-15,2022-10-18,600,LV,55,40,2,3,
+2022,COG,governor,CO,Global Strategy Group,2022-10-06,2022-10-11,800,LV,52,34,6,8,D
+2022,COG,governor,CO,Marist College,2022-10-03,2022-10-06,1127,RV,54,36,2,7,
+2022,COG,governor,CO,Marist College,2022-10-03,2022-10-06,983,LV,54,39,3,5,
+2022,COG,governor,CO,Data for Progress,2022-10-03,2022-10-06,1005,LV,56,39,3,2,D
+2022,COG,governor,CO,Keating Research/Magellan Strategies,2022-09-18,2022-09-26,1060,LV,51,34,2,12,
+2022,COG,governor,CO,Trafalgar Group,2022-09-20,2022-09-24,1078,LV,49,41,4,6,R
+2022,CTG,governor,CT,Long Island University,2022-10-24,2022-10-26,1004,A,55,24,8,13,
+2022,CTG,governor,CT,McLaughlin & Associates,2022-10-23,2022-10-24,500,LV,49,43,4,4,R
+2022,CTG,governor,CT,Quinnipiac University,2022-10-19,2022-10-23,1879,LV,56,41,2,1,
+2022,CTG,governor,CT,Emerson College,2022-10-19,2022-10-21,1000,LV,52,41,2,5,
+2022,CTG,governor,CT,SurveyUSA,2022-10-15,2022-10-18,718,LV,52,34,4,10,
+2022,CTG,governor,CT,Fabrizio Lee & Associates,2022-10-10,2022-10-13,1200,LV,46,40,5,10,R
+2022,FLG,governor,FL,Research Co.,2022-11-04,2022-11-06,450,LV,41,54,2,3,
+2022,FLG,governor,FL,The Political Matrix/The Listener Group,2022-11-06,2022-11-07,722,LV,48,52,,,R
+2022,FLG,governor,FL,Data for Progress,2022-11-02,2022-11-06,1436,LV,42,57,2,,D
+2022,FLG,governor,FL,Amber Integrated,2022-11-01,2022-11-02,600,LV,40,53,4,4,R
+2022,FLG,governor,FL,InsiderAdvantage,2022-11-01,2022-11-01,550,LV,43,53,1,3,R
+2022,FLG,governor,FL,Civiqs,2022-10-29,2022-11-02,772,LV,45,54,1,1,
+2022,FLG,governor,FL,Victory Insights,2022-10-30,2022-11-01,500,LV,41,54,,5,
+2022,FLG,governor,FL,Siena College,2022-10-30,2022-11-01,659,LV,42,54,,3,
+2022,FLG,governor,FL,The Political Matrix/The Listener Group,2022-10-27,2022-10-28,633,LV,53,47,,,R
+2022,FLG,governor,FL,Florida State University/YouGov,2022-10-20,2022-10-31,1117,RV,43,53,,,
+2022,FLG,governor,FL,University of North Florida,2022-10-17,2022-10-24,622,LV,41,55,2,3,
+2022,FLG,governor,FL,Data for Progress,2022-10-19,2022-10-23,1251,LV,42,54,1,2,D
+2022,FLG,governor,FL,Cherry Communications,2022-10-13,2022-10-23,601,LV,42,53,,5,R
+2022,FLG,governor,FL,Stetson University,2022-10-16,2022-10-20,644,LV,45,53,,2,
+2022,FLG,governor,FL,Florida Atlantic University,2022-10-12,2022-10-16,719,LV,40,51,4,5,
+2022,FLG,governor,FL,YouGov,2022-10-11,2022-10-16,832,LV,43,53,4,,
+2022,FLG,governor,FL,Sachs Media,2022-10-15,2022-10-15,600,LV,42,52,,6,
+2022,FLG,governor,FL,RMG Research,2022-10-10,2022-10-13,685,LV,42,52,,6,R
+2022,FLG,governor,FL,African American Research Collaborative,2022-10-04,2022-10-11,1250,RV,41,46,,13,D
+2022,FLG,governor,FL,Mason-Dixon Polling & Strategy,2022-09-26,2022-09-28,800,LV,41,52,1,6,
+2022,FLG,governor,FL,Clarity Campaign Labs,2022-09-22,2022-09-27,2860,LV,46,47,,7,D
+2022,FLG,governor,FL,Siena College,2022-09-18,2022-09-25,669,LV,41,49,2,7,
+2022,GAG,governor,GA,Landmark Communications,2022-11-04,2022-11-07,1214,LV,46,52,2,1,
+2022,GAG,governor,GA,InsiderAdvantage,2022-11-06,2022-11-06,550,LV,45,50,1,4,R
+2022,GAG,governor,GA,Research Co.,2022-11-04,2022-11-06,450,LV,44,51,1,4,
+2022,GAG,governor,GA,Trafalgar Group,2022-11-04,2022-11-06,1103,LV,44,53,2,1,R
+2022,GAG,governor,GA,Data for Progress,2022-11-02,2022-11-06,1474,LV,45,54,2,,D
+2022,GAG,governor,GA,Targoz Market Research,2022-11-02,2022-11-06,579,LV,42,56,3,,
+2022,GAG,governor,GA,East Carolina University,2022-11-02,2022-11-05,1077,LV,46,53,1,1,
+2022,GAG,governor,GA,Amber Integrated,2022-11-01,2022-11-02,600,LV,43,52,1,3,R
+2022,GAG,governor,GA,Remington Research Group,2022-11-01,2022-11-02,1150,LV,41,55,1,3,R
+2022,GAG,governor,GA,Echelon Insights,2022-10-31,2022-11-02,550,LV,43,50,3,4,
+2022,GAG,governor,GA,Marist College,2022-10-31,2022-11-02,1168,RV,45,51,,4,
+2022,GAG,governor,GA,Marist College,2022-10-31,2022-11-02,1009,LV,45,53,,2,
+2022,GAG,governor,GA,SurveyUSA,2022-10-29,2022-11-02,1171,LV,45,52,1,2,
+2022,GAG,governor,GA,Patinkin Research Strategies,2022-10-30,2022-11-01,700,RV,47,49,2,2,D
+2022,GAG,governor,GA,Emerson College,2022-10-28,2022-10-31,1000,LV,46,52,2,1,
+2022,GAG,governor,GA,Seven Letter Insight,2022-10-24,2022-10-31,762,LV,44,49,4,4,
+2022,GAG,governor,GA,Fox News,2022-10-26,2022-10-30,1002,RV,43,49,3,5,
+2022,GAG,governor,GA,InsiderAdvantage,2022-10-27,2022-10-27,550,LV,43,52,1,5,R
+2022,GAG,governor,GA,Siena College/NYT,2022-10-24,2022-10-27,604,LV,45,50,1,4,
+2022,GAG,governor,GA,University of Georgia,2022-10-16,2022-10-27,1022,LV,44,51,2,3,
+2022,GAG,governor,GA,Rasmussen Reports,2022-10-23,2022-10-24,1053,LV,41,51,,,R
+2022,GAG,governor,GA,Trafalgar Group,2022-10-21,2022-10-23,1076,LV,45,52,3,,R
+2022,GAG,governor,GA,East Carolina University,2022-10-13,2022-10-18,905,LV,44,51,2,3,
+2022,GAG,governor,GA,Landmark Communications,2022-10-15,2022-10-17,500,LV,45,51,2,2,
+2022,GAG,governor,GA,Data for Progress,2022-10-13,2022-10-17,984,LV,43,53,1,4,D
+2022,GAG,governor,GA,InsiderAdvantage,2022-10-16,2022-10-16,550,LV,43,50,2,5,R
+2022,GAG,governor,GA,Wick Insights,2022-10-08,2022-10-14,1018,LV,43,52,2,3,
+2022,GAG,governor,GA,Civiqs,2022-10-08,2022-10-11,717,LV,46,51,1,1,
+2022,GAG,governor,GA,Trafalgar Group,2022-10-08,2022-10-11,1084,LV,44,53,2,2,R
+2022,GAG,governor,GA,Quinnipiac University,2022-10-07,2022-10-10,1157,LV,49,50,1,1,
+2022,GAG,governor,GA,Emerson College,2022-10-06,2022-10-07,1000,LV,46,51,1,2,
+2022,GAG,governor,GA,InsiderAdvantage,2022-10-04,2022-10-04,550,LV,45,50,2,3,R
+2022,GAG,governor,GA,SurveyUSA,2022-09-30,2022-10-04,1076,LV,45,47,3,5,
+2022,GAG,governor,GA,University of Georgia,2022-09-25,2022-10-04,1030,LV,41,51,2,6,
+2022,GAG,governor,GA,Fox News,2022-09-22,2022-09-26,1011,RV,43,50,4,4,
+2022,ILG,governor,IL,Victory Research,2022-11-05,2022-11-07,1208,LV,49,42,5,4,R
+2022,ILG,governor,IL,Research Co.,2022-11-04,2022-11-06,450,LV,56,37,2,5,
+2022,ILG,governor,IL,Civiqs,2022-10-22,2022-10-25,659,LV,56,39,3,1,
+2022,ILG,governor,IL,Emerson College,2022-10-20,2022-10-24,1000,LV,50,41,5,4,
+2022,ILG,governor,IL,University of Illinois Springfield,2022-10-17,2022-10-25,1000,LV,55,40,5,,
+2022,ILG,governor,IL,Osage Research,2022-10-13,2022-10-15,600,LV,44,42,4,10,R
+2022,ILG,governor,IL,Public Policy Polling,2022-10-10,2022-10-11,770,LV,49,34,8,9,D
+2022,ILG,governor,IL,Research America,2022-10-05,2022-10-11,1000,RV,50,28,10,13,
+2022,ILG,governor,IL,Fabrizio Lee & Associates,2022-09-25,2022-09-27,800,LV,50,45,,5,R
+2022,IAG,governor,IA,Selzer & Co.,2022-10-31,2022-11-03,801,LV,37,54,6,3,
+2022,IAG,governor,IA,Cygnal,2022-10-26,2022-10-27,600,LV,38,57,,5,R
+2022,IAG,governor,IA,Civiqs,2022-10-22,2022-10-25,623,LV,42,54,2,1,
+2022,IAG,governor,IA,Tarrance Group,2022-10-15,2022-10-19,600,LV,39,56,,5,R
+2022,IAG,governor,IA,Selzer & Co.,2022-10-09,2022-10-12,620,LV,35,52,8,4,
+2022,IAG,governor,IA,Emerson College,2022-10-02,2022-10-04,959,LV,36,53,3,9,
+2022,IAG,governor,IA,Cygnal,2022-10-02,2022-10-04,600,LV,38,59,,3,R
+2022,KSG,governor,KS,Emerson College,2022-10-27,2022-10-29,1000,LV,46,43,7,4,
+2022,KSG,governor,KS,Jayhawk Consulting,2022-10-10,2022-10-12,500,LV,38,37,7,18,D
+2022,MEG,governor,ME,University of New Hampshire,2022-11-02,2022-11-06,922,LV,52,44,2,2,
+2022,MEG,governor,ME,SurveyUSA,2022-10-28,2022-11-02,1116,LV,49,43,4,5,
+2022,MEG,governor,ME,Ascend Action,2022-10-26,2022-10-29,471,LV,55,40,1,4,
+2022,MEG,governor,ME,Pan Atlantic Research,2022-10-07,2022-10-15,400,LV,49,39,2,10,
+2022,MIG,governor,MI,Trafalgar Group,2022-11-05,2022-11-07,1097,LV,48,49,1,2,R
+2022,MIG,governor,MI,Cygnal,2022-11-01,2022-11-04,1603,LV,50,47,2,1,R
+2022,MIG,governor,MI,Mitchell Research,2022-11-03,2022-11-03,658,LV,50,48,1,2,
+2022,MIG,governor,MI,Cygnal,2022-10-31,2022-11-02,1754,LV,51,46,2,2,R
+2022,MIG,governor,MI,EPIC-MRA,2022-10-28,2022-11-01,600,LV,54,43,1,2,
+2022,MIG,governor,MI,Emerson College,2022-10-27,2022-10-31,1584,LV,50,45,3,3,
+2022,MIG,governor,MI,Cygnal,2022-10-27,2022-10-31,1584,LV,51,45,2,3,R
+2022,MIG,governor,MI,InsiderAdvantage,2022-10-30,2022-10-30,550,LV,45,45,5,5,R
+2022,MIG,governor,MI,Wick Insights,2022-10-26,2022-10-30,1137,LV,49,47,2,2,
+2022,MIG,governor,MI,KAConsulting,2022-10-27,2022-10-29,501,LV,48,41,5,7,R
+2022,MIG,governor,MI,Cygnal,2022-10-25,2022-10-29,1543,LV,51,44,2,3,R
+2022,MIG,governor,MI,The Glengariff Group,2022-10-26,2022-10-28,600,LV,52,43,3,2,
+2022,MIG,governor,MI,Cygnal,2022-10-23,2022-10-27,1822,LV,51,44,3,2,R
+2022,MIG,governor,MI,Cygnal,2022-10-21,2022-10-25,1378,LV,51,45,3,2,R
+2022,MIG,governor,MI,Cygnal,2022-10-19,2022-10-23,1459,LV,50,44,3,3,R
+2022,MIG,governor,MI,Trafalgar Group,2022-10-18,2022-10-21,1022,LV,48,48,2,2,R
+2022,MIG,governor,MI,Cygnal,2022-10-17,2022-10-21,1904,LV,50,44,3,4,R
+2022,MIG,governor,MI,Mitchell Research,2022-10-19,2022-10-19,541,LV,49,47,1,3,
+2022,MIG,governor,MI,Cygnal,2022-10-15,2022-10-19,1793,LV,49,44,3,4,R
+2022,MIG,governor,MI,CNN/SSRS,2022-10-13,2022-10-18,901,RV,55,41,4,1,
+2022,MIG,governor,MI,CNN/SSRS,2022-10-13,2022-10-18,651,LV,52,46,2,,
+2022,MIG,governor,MI,Emerson College,2022-10-12,2022-10-14,580,LV,49,44,3,4,
+2022,MIG,governor,MI,Cygnal,2022-10-12,2022-10-14,640,LV,49,44,4,4,R
+2022,MIG,governor,MI,Wick Insights,2022-10-08,2022-10-14,1136,LV,47,48,2,3,R
+2022,MIG,governor,MI,InsiderAdvantage,2022-10-12,2022-10-12,550,LV,44,44,6,7,R
+2022,MIG,governor,MI,EPIC-MRA,2022-10-06,2022-10-12,600,LV,49,38,4,9,
+2022,MIG,governor,MI,YouGov/CBS News,2022-10-03,2022-10-06,1285,RV,53,47,,,
+2022,MIG,governor,MI,The Glengariff Group,2022-09-26,2022-09-29,600,LV,50,32,9,9,
+2022,MIG,governor,MI,Trafalgar Group,2022-09-24,2022-09-28,1075,LV,51,45,4,1,R

@@ -569,59 +569,77 @@ DE = [
 # not verify at all, and FL-13, whose only survey sat at 20 percent undecided, the same bar that already excluded
 # SC-7 and the April poll of KY-6. NY-17, NY-21, PA-7 and PA-10 have no rows on the state pages and are carried
 # forward from Pollsmax unchanged.
+# Sept 29 2026 update: every general election district poll ending Aug 15 or later on the state pages and the
+# poll trackers, 36 polls in 29 districts, entered by the same rule, with the previous entry kept as one
+# nonpartisan 500 sample reading dated Aug 15 so the older record still counts. New districts: CO-8 McLaughlin (R),
+# NC-9, NC-11, NH-1, TN-5, TN-9, TX-15, TX-28, TX-34, TX-35 and VA-1. UT-2's two Crosby internals sit above 20
+# percent undecided and stay out. /tmp/hpolls/build.py holds the poll list.
+# Oct 1 2026: TX-15 rebuilt by the same rule from three polls: Normington Petts for House Majority PAC July 23-28
+# (Pulido 51, De La Cruz 45), Texas Southern Aug 18-22 (50, 45) and House Majority PAC late September (54, 41), whose
+# dates and sample were not given and are entered as ending Sept 28 with 500 likely voters.
 POLLS = {
+         # Oct 5 sweep: NY-17 Emerson for PIX11 Sept 27-29, 400 LV, Conley 48 Lawler 46, blended against the prior entry.
+         # Oct 4 evening sweep: TX-09 PPP for Gutierrez (D), Mealer 45 Gutierrez 39, and TX-10 Change Research for Rourk (D),
+         # Gober 48 Rourk 41, both released about Sept 30 with no dates or sample size, taken outright after the sponsor shift;
+         # VA-05 Expedition Strategies for Perriello (D) Sept 21-24, McGuire 46 Perriello 45 Harvey 6, n not published, blended.
+         # Oct 4 morning sweep: MT-01 American Pulse for NonStop Local Sept 19-24, 314 LV, Flint 45.9 Forstag 45.4, blended against the prior entry.
+         # Oct 3 evening sweep: OH-09 and WI-01 DCCC Analytics (D) Sept 22-23 and 21-23, 48-48 each; AK-AL NYT/Siena
+         # Sept 24-Oct 1, Begich 47, Hill 35, Hafner 8, McDermott 5, read as a final round 43 to 50; ME-02 Tulchin (D)
+         # for Dunlap Sept 27-30, Dunlap 50 LePage 48; each blended against the prior entry as a 500 sample poll two weeks
+         # old. UT-01 Lighthouse Research Aug 31-Sept 24, McAdams 63 Owen 21, taken outright; UT-02 to UT-04 dropped at
+         # 20 percent undecided or more.
          "FL": {},
-         "TX": {},
-         "NYG": {17: dict(d=48.0, r=47.5), 21: dict(d=41.5, r=46.0)},
-         "VA": {2: dict(d=45.5, r=48.5), 5: dict(d=42.5, r=48.5)},
+         "TX": {9: dict(d=37.5, r=46.5), 10: dict(d=39.5, r=49.5), 15: dict(d=51.0, r=44.2), 28: dict(d=45.0, r=34.0), 34: dict(d=45.0, r=42.0), 35: dict(d=42.5, r=46.5)},
+         "NYG": {17: dict(d=48.0, r=46.2), 21: dict(d=41.3, r=48.5), 23: dict(d=34.5, r=52.5)},
+         "VA": {1: dict(d=48.3, r=46.8), 2: dict(d=45.5, r=48.5), 5: dict(d=43.9, r=49.1), 6: dict(d=30.5, r=57.5)},
          "CAG": {},
-         "PAG": {1: dict(d=40.5, r=49.5), 7: dict(d=45.0, r=40.0), 8: dict(d=45.0, r=46.5), 10: dict(d=47.0, r=44.0)},
-         "OH": {1: dict(d=47.0, r=43.0), 7: dict(d=46.1, r=40.3), 9: dict(d=44.5, r=45.5), 10: dict(d=40.1, r=50.1), 15: dict(d=36.6, r=44.0)},
-         "NC": {1: dict(d=43.0, r=41.4), 3: dict(d=39.5, r=45.5), 7: dict(d=37.5, r=46.5), 10: dict(d=38.5, r=50.5)},
+         "PAG": {1: dict(d=43.2, r=49.8), 7: dict(d=45.0, r=40.0), 8: dict(d=45.0, r=46.5), 10: dict(d=47.0, r=44.0)},
+         "OH": {1: dict(d=47.0, r=43.0), 7: dict(d=46.1, r=40.3), 9: dict(d=45.3, r=47.2), 10: dict(d=40.1, r=50.1), 15: dict(d=36.6, r=44.0)},
+         "NC": {1: dict(d=45.8, r=43.0), 3: dict(d=39.5, r=45.5), 7: dict(d=37.5, r=46.5), 9: dict(d=40.5, r=47.5), 10: dict(d=38.5, r=50.5), 11: dict(d=45.5, r=45.5)},
          "MI": {4: dict(d=45.9, r=46.5), 7: dict(d=44.5, r=46.5), 10: dict(d=42.5, r=43.5)},
          "GA": {},
          "IL": {},
-         "NJ": {7: dict(d=45.5, r=44.5)},
-         "WA": {3: dict(d=40.4, r=42.1), 5: dict(d=45.5, r=54.5)},
-         "AZG": {2: dict(d=42.4, r=48.7), 6: dict(d=46.1, r=45.8)},
-         "TN": {},
+         "NJ": {7: dict(d=46.4, r=43.0)},
+         "WA": {3: dict(d=42.8, r=44.7), 5: dict(d=45.5, r=54.5)},
+         "AZG": {2: dict(d=42.7, r=49.1), 6: dict(d=46.1, r=45.8)},
+         "TN": {5: dict(d=38.5, r=49.5), 9: dict(d=42.5, r=49.5)},
          "MA": {},
          "MO": {2: dict(d=39.5, r=45.5)},
          "MDG": {1: dict(d=37.5, r=53.5)},
          "MN": {1: dict(d=41.8, r=48.4)},
-         "WIG": {1: dict(d=46.1, r=50.3), 3: dict(d=48.4, r=47.7)},
-         "CO": {3: dict(d=41.1, r=45.9)},
+         "WIG": {1: dict(d=46.3, r=50.0), 3: dict(d=48.4, r=47.7)},
+         "CO": {3: dict(d=41.1, r=45.9), 8: dict(d=47.5, r=46.5)},
          "IN": {5: dict(d=44.5, r=49.5)},
          "OR": {},
-         "NVG": {2: dict(d=41.3, r=41.5)},
-         "UT": {},
-         "AK": {1: dict(d=39.1, r=48.8)},
+         "NVG": {2: dict(d=39.4, r=41.8)},
+         "UT": {1: dict(d=63.0, r=21.0)},
+         "AK": {1: dict(d=42.4, r=51.9)},
          "HIG": {},
          "ID": {},
          "WY": {},
-         "MT": {1: dict(d=42.2, r=46.7)},
+         "MT": {1: dict(d=43.8, r=46.3)},
          "ND": {},
          "SD": {},
          "NE": {1: dict(d=39.8, r=46.5)},
          "KS": {},
          "OK": {5: dict(d=41.5, r=49.5)},
-         "NM": {2: dict(d=45.8, r=42.6)},
+         "NM": {2: dict(d=45.9, r=42.8)},
          "AR": {2: dict(d=47.6, r=44.1)},
          "IA": {1: dict(d=40.0, r=35.0), 2: dict(d=44.5, r=46.5), 3: dict(d=43.5, r=46.5)},
          "LA": {},
          "MS": {},
-         "AL": {2: dict(d=44.7, r=47.9)},
-         "SC": {1: dict(d=46.5, r=51.5)},
-         "KY": {6: dict(d=43.0, r=46.1)},
+         "AL": {2: dict(d=45.1, r=48.2)},
+         "SC": {1: dict(d=41.8, r=45.3)},
+         "KY": {6: dict(d=43.9, r=45.1)},
          "WV": {},
          "CTG": {},
          "RI": {},
          "VTG": {1: dict(d=60.7, r=25.4)},
-         "NH": {2: dict(d=50.0, r=37.3)},
+         "NH": {1: dict(d=46.0, r=42.0), 2: dict(d=52.9, r=35.5)},
          # UNH Sept 17-21 2026: ME-01 Pingree 57 Russell 35, ME-02 Dunlap 51 LePage 45. ME-02 blends
          # the new reading at 0.6 against the prior entry of unknown vintage, because it is both the
          # newest and from the largest sample; ME-01 had no entry, so it takes the poll outright.
-         "ME": {1: dict(d=57.0, r=35.0), 2: dict(d=49.0, r=46.6)},
+         "ME": {1: dict(d=57.0, r=35.0), 2: dict(d=48.3, r=49.0)},
          "DE": {}}
 UNCONTESTED = {"FL": {10: "D"}, "TX": {}, "NYG": {}, "VA": {}, "CAG": {}, "PAG": {},
                "OH": {}, "NC": {}, "MI": {}, "GA": {}, "IL": {}, "NJ": {}, "WA": {},

@@ -1,0 +1,19 @@
+cycle,race,office,state,dem_candidate,rep_candidate,dem_pct,rep_pct,incumbent_party,incumbent_ran,notes
+2018,MNG,governor,MN,Tim Walz,Jeff Johnson,53.84,42.43,D,no,Incumbent party DFL; Dayton retired
+2018,NEG,governor,NE,Bob Krist,Pete Ricketts,41.0,59.0,R,yes,No polls on Wikipedia page
+2018,NVG,governor,NV,Steve Sisolak,Adam Laxalt,49.39,45.31,R,no,Sandoval term-limited
+2018,NHG,governor,NH,Molly Kelly,Chris Sununu,45.74,52.78,R,yes,
+2018,NMG,governor,NM,Michelle Lujan Grisham,Steve Pearce,57.2,42.8,R,no,Martinez term-limited
+2018,NYG,governor,NY,Andrew Cuomo,Marc Molinaro,59.55,36.16,D,yes,Totals across all ballot lines; Democratic line alone 56.09 and Republican line alone 31.56
+2018,OHG,governor,OH,Richard Cordray,Mike DeWine,46.67,50.4,R,no,Kasich term-limited
+2018,OKG,governor,OK,Drew Edmondson,Kevin Stitt,42.23,54.33,R,no,Fallin term-limited; Libertarian Chris Powell 3.44
+2018,ORG,governor,OR,Kate Brown,Knute Buehler,50.05,43.65,D,yes,
+2018,PAG,governor,PA,Tom Wolf,Scott Wagner,57.74,40.67,D,yes,
+2018,RIG,governor,RI,Gina Raimondo,Allan Fung,52.64,37.18,D,yes,Joe Trillo independent also on ballot
+2018,SCG,governor,SC,James Smith,Henry McMaster,45.92,53.96,R,yes,
+2018,SDG,governor,SD,Billie Sutton,Kristi Noem,47.6,50.97,R,no,Daugaard term-limited
+2018,TNG,governor,TN,Karl Dean,Bill Lee,38.55,59.56,R,no,Haslam term-limited
+2018,TXG,governor,TX,Lupe Valdez,Greg Abbott,42.51,55.81,R,yes,Libertarian Mark Tippetts 1.69
+2018,VTG,governor,VT,Christine Hallquist,Phil Scott,40.25,55.19,R,yes,
+2018,WIG,governor,WI,Tony Evers,Scott Walker,49.54,48.44,R,yes,Incumbent defeated
+2018,WYG,governor,WY,Mary Throne,Mark Gordon,27.54,67.12,R,no,Mead term-limited

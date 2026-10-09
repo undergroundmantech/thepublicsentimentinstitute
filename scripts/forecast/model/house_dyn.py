@@ -43,6 +43,11 @@ THIRD_BY_PARTY = {"L": 0.018, "G": 0.011, "I": 0.022, "NPA": 0.022, "IP": 0.018,
                   "C": 0.010, "SWP": 0.006, "WP": 0.008, "FWD": 0.012, "AP": 0.008}
 THIRD_DEFAULT = 0.015
 OUT = os.environ.get("OUT_HOUSE_DYN", "/tmp/pvi/house_dyn"); os.makedirs(OUT, exist_ok=True)
+_PVI_ROWS = {}
+for _ln in open("/tmp/pvi/pvi.csv").read().strip().split("\n")[1:]:
+    _f = _ln.split(",")
+    try: _PVI_ROWS[(_f[1], int(_f[2]))] = dict(m24=float(_f[3]), m20=float(_f[4]) if _f[4] else float("nan"), imp=int(_f[5]))
+    except Exception: pass
 
 # House Mode tables and terms, without its run calls
 _src = open(f"{HERE}/house_mode.py").read()
@@ -55,6 +60,11 @@ RUNS = re.findall(r'^run\("([A-Z]+)", ([A-Z]+), "([a-z_]+)", "([A-Za-z ]+)"\)', 
 N = dm.N; NAT = dm.NAT; BATCH = 100; SEED = dm.SEED
 SIG_STATE_H, SIG_DIST, SIG_TURN_ST, SIG_TURN_DIST = 0.07, 0.05, 0.06, 0.04
 K_UNITY, UNITY_CAP, UNOPPOSED_SHARE = 0.025, 0.05, 0.75
+# Primary priority, Sept 29 2026: the same PRIMARY_BOOST as the statewide candidate model, on party unity in full and on
+# the district primary participation term at half strength. PRIMARY_BOOST=1 restores the Sept 28 settings.
+PRIMARY_BOOST = float(os.environ.get("PRIMARY_BOOST", "1.5"))
+K_UNITY, UNITY_CAP = K_UNITY * PRIMARY_BOOST, UNITY_CAP * PRIMARY_BOOST
+H["K_PRIMARY_PARTY"] = H["K_PRIMARY_PARTY"] * (1.0 + (PRIMARY_BOOST - 1.0) / 2.0)
 KERNEL = 0.25          # log odds width of the county analog kernel
 OWN_SWING_W = 0.25     # weight of a district's own 2020 to 2024 swing in its elasticity
 NOMS = json.load(open("/tmp/pvi/house_nominee_shares.json"))
@@ -174,6 +184,36 @@ def run(st, table, slug, name):
     df["ticket_term"] = [H["TICKET_TERM"].get("%s-%02d" % (st[:2], int(d)), 0.0) for d in df.district]
     df.loc[df.ticket_term != 0.0, "cand_pts"] = 0.0
     base = logit(df.d2_spine.values) + df.cand_pts.values / 200.0 * 4.0 + H["K_PRIMARY_PARTY"] * df.prim_term.values + df.ticket_term.values
+    # Oct 1 2026 district trend carry (trend.py): the 2020 to 2024 presidential trend on the current lines, relative to
+    # the nation. The PVI spine sits a quarter of the way back toward 2020, so the term carries it the rest of the way
+    # to 2024 and PRES_CARRY of a cycle beyond, weighed by the district's 2026 primary participation term in the same
+    # way as the counties, and centered on the state so the state level is untouched
+    import trend as _trd
+    df["trend_term"] = 0.0
+    import calib26 as _cb
+    _CAL = _trd.CALIB and bool(_cb.load())
+    if _trd.ON or _CAL:
+        _tr = []
+        for d in df.district:
+            row = _PVI_ROWS.get((st[:2], int(d)))
+            if not row or row["imp"] or not np.isfinite(row["m20"]): _tr.append(0.0); continue
+            # pvi.csv margins are Republican minus Democratic presidential margins in points
+            r24 = logit(np.clip(0.5 - row["m24"] / 200, 0.01, 0.99)) - logit(sm.NAT_2024_D2)
+            r20 = logit(np.clip(0.5 - row["m20"] / 200, 0.01, 0.99)) - logit(0.5229)
+            _tr.append(r24 - r20)
+        _tr = np.array(_tr)
+        pt = df.prim_term.values.astype(float); sd = pt.std()
+        agree = 1.0 + _trd.PRIM_RANGE * np.clip(np.sign(_tr) * pt / sd, -1, 1) if sd > 0 else np.ones(len(_tr))
+        if _CAL:
+            # Oct 2 2026: the spine's quarter step back to 2020 is still closed, and the trend beyond 2024 is the
+            # carry calib26 measured from 2022 against 2016 to 2020, not an assumed one
+            tt = np.clip((0.25 + _cb.load()["tau"]) * _tr, -_trd.CAP, _trd.CAP)
+        else:
+            tt = np.clip((0.25 + _trd.PRES_CARRY) * _tr * agree, -_trd.CAP, _trd.CAP)
+        vv = df.projected_votes.values.astype(float) if "projected_votes" in df else np.ones(len(tt))
+        tt = tt - (tt * vv).sum() / max(vv.sum(), 1)
+        df["trend_term"] = tt
+        base = base + tt
 
     # candidate quality: party unity behind each nominee
     uD, uR, kD, kR, sD, sR = [], [], [], [], [], []
@@ -282,16 +322,33 @@ def simulate(R):
            np.maximum(0, -np.array([unity(NOMS.get("%s-%02d" % (R["st"][:2], int(d)), {}).get("R"))[0] for d in df.district]))
     sig_c = np.minimum(0.07, 0.02 + 0.03 * divs + np.where(df.poll_d2.isna().values, 0.02, 0.0))
     fixed = np.array([(d in R["unc"]) or (d in R["same"]) for d in df.district])
+    # voter behavior layer (behavior.py): the same national turnout motivation shocks as the Senate and governor runs
+    import behavior as bh
+    BMh = bh.group_shock_matrix(sm, R["S"]["reg"]) if bh.ON else None
+
+    # Correlation calibration carried to the House, Oct 5 2026: the shared national vote environment runs at the same
+    # dm.CORR_NAT_F as the Senate and governor races, the district's region takes the same regional shock those races
+    # take, and the national spread removed is given back to the state shock, so each district is exactly as uncertain
+    # as before and districts in one state still move together; only how far states and regions move as one changes.
+    # HOUSE_CORR=0 restores the full national shock.
+    _hc = os.environ.get("HOUSE_CORR", "1") != "0" and dm.CORR_NAT_F != 1.0
+    _f = dm.CORR_NAT_F if _hc else 1.0
+    _REG = dm.region_shock(R["S"]["reg"]) if (_hc and dm.SIG_REG > 0) else np.zeros(N)
+    _sig_st = float(np.sqrt(max(SIG_STATE_H ** 2 + (1 - _f ** 2) * dm.SIG_NAT ** 2 - (dm.SIG_REG ** 2 if _hc else 0.0), SIG_STATE_H ** 2)))
+    R["corr_audit"] = dict(corr_nat_f=_f, sig_region=dm.SIG_REG if _hc else 0.0, sig_state_before=SIG_STATE_H, sig_state_after=round(_sig_st, 4))
 
     def draw(rg, sl, B, pops_, lt_, eta_, expected=False):
-        env = NAT["env"][sl] + rg.normal(0, SIG_STATE_H, B)
+        env = _f * NAT["env"][sl] + _REG[sl] + rg.normal(0, _sig_st, B)
         shock = (e[None, :] * env[:, None] + rg.normal(0, 1, (B, Dn)) * (SIG_DIST + 0 * sig_c)[None, :] + rg.normal(0, 1, (B, Dn)) * sig_c[None, :]) * hfac[None, :]
         tsh = NAT["turn"][sl][:, None] + rg.normal(0, SIG_TURN_ST, B)[:, None] + rg.normal(0, SIG_TURN_DIST, (B, Dn))
         en = NAT["enth"][sl] + rg.normal(0, dm.SIG_ENTH_ST, B)
         gv = demo_v[sl][:, None, :] * hfac[None, :, None]
         gt = demo_t[sl][:, None, :] + (NAT["irreg"][sl] + rg.normal(0, dm.SIG_IRREG_ST, B))[:, None, None] * irreg[None, None, :]
         p = inv(eta_[None] + shock[:, :, None] + gv)
-        tp = inv(lt_[None] + tsh[:, :, None] + gt + en[:, None, None] * psg[None, None, :])
+        dmo = ((NAT["mot"][sl] + rg.normal(0, bh.KAPPA_ST, (B, len(bh.SHOCKS)))) @ BMh.T)[:, None, :] if BMh is not None else 0.0
+        import bounds as _bd
+        _x = lt_[None] + tsh[:, :, None] + gt + en[:, None, None] * psg[None, None, :] + dmo
+        tp = inv(_bd.softclip(_x, logit(_bd.T_TYPE_LO), logit(_bd.T_TYPE_HI), 0.1) if _bd.ON else _x)
         if expected:
             nn = pops_[None] * tp
             return nn, nn * p
@@ -324,9 +381,23 @@ def simulate(R):
         if d in R["same"]:
             win[:, j] = R["same"][d] == "D"; marg[:, j] = 100 if R["same"][d] == "D" else -100
     Nm = acc["N"] / N
+    # behavior audit: each district's two party margin if turnout fell 15 percent, the drop falling on the least
+    # likely voters, and if low commitment voters stayed home at twice the simulation's national shock
+    Wv = pops * inv(lt); Pv = inv(eta)
+    m0 = 100 * (2 * (Wv * Pv).sum(1) / np.maximum(Wv.sum(1), 1e-9) - 1)
+    cdrop = solve(lambda x: (pops * inv(lt + x[:, None])).sum(1), 0.85 * Wv.sum(1), Dn, -4, 0)
+    Wd = pops * inv(lt + cdrop[:, None]); m_drop = 100 * (2 * (Wd * Pv).sum(1) / np.maximum(Wd.sum(1), 1e-9) - 1)
+    if BMh is not None:
+        Wc_ = pops * inv(lt + 2 * bh.KAPPA_NAT * BMh[:, 0][None, :]); m_com = 100 * (2 * (Wc_ * Pv).sum(1) / np.maximum(Wc_.sum(1), 1e-9) - 1)
+    else:
+        m_com = m0
     return dict(Nm=Nm, Dm=acc["D"] / N, Rm=acc["R"] / N, THm=acc["TH"] / N, win=win, marg=marg,
+                beh_drop=m_drop - m0, beh_commit=m_com - m0,
                 pilot_err=dict(share=float(np.max(np.abs(mD - q))), turnout=float(np.max(np.abs(mN / Tt - 1)))),
                 sig_c=sig_c, hfac=hfac)
+
+def fixed_mask(df, R):
+    return np.array([(d in R["unc"]) or (d in R["same"]) for d in df.district])
 
 def finish(R, Sm):
     df = R["df"]; st, slug, name = R["st"], R["slug"], R["name"]; unc, same = R["unc"], R["same"]
@@ -351,6 +422,9 @@ def finish(R, Sm):
     df["dem_win_prob"] = 100 * Sm["win"].mean(0)
     df["margin_p10"] = np.percentile(Sm["marg"], 10, axis=0); df["margin_p90"] = np.percentile(Sm["marg"], 90, axis=0)
     df["candidate_sigma"] = Sm["sig_c"]
+    # voter behavior layer: margin change if turnout fell 15 percent, and if low commitment voters stayed home
+    df["behavior_turnout_drop_shift"] = np.where(fixed_mask(df, R), np.nan, Sm["beh_drop"])
+    df["behavior_low_commitment_shift"] = np.where(fixed_mask(df, R), np.nan, Sm["beh_commit"])
     dseats = Sm["win"].sum(1)
     base, e_d, tshare, extra = R["base"], R["e_d"], R["tshare"], R["fin"] + R["cand"]
     ls = R["level_shift"]
@@ -411,6 +485,11 @@ def county_projection(R, df):
     m2 = inv(logit(a24) + (logit(g26) - logit(g24)) - _mean + ec * _k2 + S["delta"])
     m3 = inv(logit(a24) + ec * an.m3_constant(sm, model, shift))
     d2 = sm.W_FUND * m1 + sm.W_CENSUS * m2 + sm.W_HIST * m3
+    import calib26 as _cb
+    if _cb.ON and _cb.load():
+        # the same midterm county calibration as the Senate and governor counties
+        _p20 = S["P20"]; _s20 = (_p20.votes_dem / (_p20.votes_dem + _p20.votes_gop)).fillna(0.5).values
+        d2, _ = _cb.apply(R["st"], fl, np.asarray(d2, float), np.asarray(V26, float), np.asarray(a24, float), _s20, None)
     dv, rv = df.dem_votes.fillna(0).sum(), df.rep_votes.fillna(0).sum()
     fx = df.fixed.astype(str) != ""
     two = (1 - df.third_share.values)

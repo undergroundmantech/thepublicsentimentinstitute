@@ -1,0 +1,18 @@
+cycle,race,office,state,dem_candidate,rep_candidate,dem_pct,rep_pct,incumbent_party,incumbent_ran,notes
+2022,MOS,senate,MO,Trudy Busch Valentine,Eric Schmitt,42.18,55.43,R,no,Blunt retired; open seat
+2022,NVS,senate,NV,Catherine Cortez Masto,Adam Laxalt,48.81,48.04,D,yes,
+2022,NHS,senate,NH,Maggie Hassan,Don Bolduc,53.54,44.39,D,yes,
+2022,NYS,senate,NY,Chuck Schumer,Joe Pinion,56.74,42.73,D,yes,Fusion lines combined: Schumer D 51.65 + WFP 5.09; Pinion R 37.66 + Conservative 5.07
+2022,NCS,senate,NC,Cheri Beasley,Ted Budd,47.27,50.5,R,no,Burr retired; open seat
+2022,NDS,senate,ND,Katrina Christiansen,John Hoeven,24.98,56.41,R,yes,Independent Rick Becker got 18.49; no general polls on page
+2022,OHS,senate,OH,Tim Ryan,JD Vance,46.92,53.03,R,no,Portman retired; open seat; general polling table not retrievable (page truncated)
+2022,OKS,senate,OK,Madison Horn,James Lankford,32.1,64.3,R,yes,Regular election
+2022,OKS2,senate,OK,Kendra Horn,Markwayne Mullin,35.24,61.77,R,no,Special election; Inhofe announced early resignation
+2022,ORS,senate,OR,Ron Wyden,Jo Rae Perkins,55.83,40.92,D,yes,
+2022,PAS,senate,PA,John Fetterman,Mehmet Oz,51.17,46.27,R,no,Toomey retired; open seat; general polling table not retrievable (page truncated)
+2022,SCS,senate,SC,Krystle Matthews,Tim Scott,37.01,62.88,R,yes,No polls in window
+2022,SDS,senate,SD,Brian Bengs,John Thune,26.15,69.63,R,yes,Libertarian Tamara Lesnar 4.22
+2022,UTS,senate,UT,Evan McMullin,Mike Lee,42.74,53.15,R,yes,McMullin was an independent not a Democrat; dem columns hold McMullin
+2022,VTS,senate,VT,Peter Welch,Gerald Malloy,68.47,28.03,D,no,Leahy retired; open seat
+2022,WAS,senate,WA,Patty Murray,Tiffany Smiley,57.15,42.63,D,yes,
+2022,WIS,senate,WI,Mandela Barnes,Ron Johnson,49.41,50.41,R,yes,

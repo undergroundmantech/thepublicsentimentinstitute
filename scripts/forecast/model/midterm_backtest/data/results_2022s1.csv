@@ -1,0 +1,18 @@
+cycle,race,office,state,dem_candidate,rep_candidate,dem_pct,rep_pct,incumbent_party,incumbent_ran,notes
+2022,ALS,senate,AL,Will Boyd,Katie Britt,30.88,66.62,R,no,Open seat; Shelby (R) retired
+2022,AZS,senate,AZ,Mark Kelly,Blake Masters,51.39,46.51,D,yes,
+2022,ARS,senate,AR,Natalie James,John Boozman,31.09,65.73,R,yes,
+2022,CAS,senate,CA,Alex Padilla,Mark Meuser,61.06,38.94,D,yes,Regular full-term election; concurrent special election result was Padilla 60.89 Meuser 39.11
+2022,COS,senate,CO,Michael Bennet,Joe O'Dea,55.88,41.26,D,yes,
+2022,CTS,senate,CT,Richard Blumenthal,Leora Levy,57.45,42.54,D,yes,
+2022,FLS,senate,FL,Val Demings,Marco Rubio,41.27,57.68,R,yes,
+2022,GAS,senate,GA,Raphael Warnock,Herschel Walker,49.44,48.49,D,yes,Nov 8 general went to Dec 6 runoff; Warnock won runoff 51.40 to 48.60; percentages are Nov 8 results
+2022,HIS,senate,HI,Brian Schatz,Bob McDermott,71.21,26.04,D,yes,
+2022,IDS,senate,ID,David Roth,Mike Crapo,28.74,60.68,R,yes,
+2022,ILS,senate,IL,Tammy Duckworth,Kathy Salvi,56.82,41.50,D,yes,
+2022,INS,senate,IN,Thomas McDermott Jr.,Todd Young,37.87,58.62,R,yes,
+2022,IAS,senate,IA,Michael Franken,Chuck Grassley,43.84,56.01,R,yes,
+2022,KSS,senate,KS,Mark Holland,Jerry Moran,37.04,60.00,R,yes,
+2022,KYS,senate,KY,Charles Booker,Rand Paul,38.19,61.80,R,yes,
+2022,LAS,senate,LA,Gary Chambers,John Kennedy,17.85,61.56,R,yes,Jungle primary Nov 8; Kennedy won outright so no runoff; Chambers was top Democrat
+2022,MDS,senate,MD,Chris Van Hollen,Chris Chaffee,65.77,34.07,D,yes,

@@ -17,7 +17,7 @@ ELECTION = "2026-11-03"
 # daysOut used to be the literal 42, written when UPDATED was 2026-09-22 and never touched
 # again, so the site kept saying 42 days to go on every later run. It is derived now.
 DAYS_OUT = (date.fromisoformat(ELECTION) - date.fromisoformat(UPDATED)).days
-SIMS = 2000
+SIMS = int(os.environ.get("SIMS", "10000"))   # statewide runs, 10,000 since Oct 3 2026
 NAT24_D_MARGIN = -1.5          # 2024 national presidential margin, D positive
 SEN_NOT_UP_D, SEN_NOT_UP_R = 34, 31
 # The 14 governorships not on the 2026 ballot: DE, KY, NC, NJ, VA and WA are held by
@@ -171,7 +171,7 @@ def poll_rows(key, office, state):
         out.append(dict(pollster=str(r.source), kind=str(getattr(r, "pop", "LV")), age=days,
                         n=int(getattr(r, "n", 0) or 0), margin=round(R - D, 1)))
     out.sort(key=lambda p: p["age"])
-    return out[:14]
+    return out[:60]   # every poll the run used; the race page lists them all
 
 def daily_series(key, office, state):
     nm = state.lower().replace(" ", "_")

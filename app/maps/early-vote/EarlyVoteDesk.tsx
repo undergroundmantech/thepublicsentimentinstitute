@@ -4,11 +4,11 @@ import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from "re
 import { createPortal } from "react-dom";
 import Link from "next/link";
 import {
-  CATEGORIES, DIMENSIONS, commas, compact, fillFor, getCapabilities, getCategory, getDemographics,
+  CATEGORIES, FEED_CATEGORIES, mergeVoted, mergeCombined, mergeSims, DIMENSIONS, commas, compact, fillFor, getCapabilities, getCategory, getDemographics,
   marginOf, matchCounty, pct, STATE_NAME, stateOfFips, sumRow, toneFor, turnoutFill, volumeScale,
-  getPartyModel, modeOf, simulate, fmtMargin, combineNational, returnTilt,
+  getPartyModel, modeOf, simulate, fmtMargin, combineNational, returnTilt, demoAdjust, regimeOf, REGIME_WORD, stateParts,
   ratingOf, RATINGS, RATING_WORD, EV_DEM, EV_REP, EV_TOSS, type Rating,
-  type Capabilities, type Combined, type Estimate, type Mode, type Part, type PartyModel, type ReturnTilt, type Category, type CategoryPayload, type DemographicPayload,
+  type Capabilities, type Combined, type Estimate, type Mode, type Part, type Place, type DemoAdjust, type PartyModel, type ReturnTilt, type Category, type CategoryPayload, type DemographicPayload,
   type Dimension, type Geo, type RegionRow, type StateGeo,
 } from "./lib";
 
@@ -250,26 +250,35 @@ function ReturnNote({ tilt }: { tilt: ReturnTilt }) {
               than an average that the biggest state would dominate.</>
           : <>Too few party states have posted returns to measure this live yet, so the TPSI survey stands in:
               Republican mail voters complete at {x(tilt.bR)} times the Democratic odds, Independents at {x(tilt.bO)} times.</>}
+        {" "}In a state that mails every voter a ballot, a county&apos;s returns are read against the share of its
+        ballots that will ever come back, about the forecast&apos;s turnout, not against every ballot mailed.
+        {tilt.universal
+          ? <> Those states take their own return rates, measured in {join(tilt.universal.states)}, where the request
+              pool is the whole voter file: Republicans returning at {x(tilt.universal.bR)} times the Democratic odds.</>
+          : null}
       </p>
       {tilt.calib ? (
         <p>
           {join(tilt.calib.states)} {tilt.calib.states.length === 1 ? "publishes" : "publish"} party for returns
-          but not for requests, the one direct check on an estimated return mix. Before calibration the model read{" "}
+          but not for requests, the one direct check on an estimated return mix. Registration is not party
+          identification, so the check compares tilts: how far the reported returns run from the state&apos;s registered
+          voters, against how far the estimated returns run from the model&apos;s electorate.{" "}
           {tilt.calib.before.map((b, i) => (
-            <span key={b.st}>{i ? "; " : ""}{STATE_NAME[b.st] ?? b.st} at {b.model.toFixed(1)}% Republican of the two party
-              returns against {b.actual.toFixed(1)}% reported</span>
+            <span key={b.st}>{i ? "; " : ""}{STATE_NAME[b.st] ?? b.st}: returns {b.actual.toFixed(1)}% Republican of the two party
+              vote against {b.regShare !== null ? `${b.regShare.toFixed(1)}% of registered voters` : "no published file"}, the
+              model {b.model.toFixed(1)}% against {b.lvShare !== null ? `${b.lvShare.toFixed(1)}%` : "its electorate"}</span>
           ))}. Estimated returns everywhere are shifted {tilt.calib.shift >= 0 ? "toward Republicans" : "toward Democrats"} by{" "}
-          {Math.abs(tilt.calib.shift).toFixed(2)} in log odds to close that gap, scaled down by how few ballots those
-          states hold so far, {commas(tilt.calib.returned)}. In a held out test on the 25 September feed, calibrating on
-          Maryland alone moved Idaho from 59.9% to 66.9% Republican, against 65.5% reported.
+          {Math.abs(tilt.calib.shift).toFixed(2)} in log odds, the part of the gap the check states share, scaled down by how
+          much they disagree and by how few ballots they hold, {commas(tilt.calib.returned)}. On the October 1 feed the
+          two disagree: calibrating on Maryland alone would move Idaho further from its reported tilt, and the reverse.
         </p>
       ) : null}
     </>
   );
 }
 
-function EstimatePanel({ e, sub, mode, model, tilt, shade, setShade }: {
-  e: Estimate; sub: string; mode: Mode; model: PartyModel; tilt: ReturnTilt | null;
+function EstimatePanel({ e, sub, mode, model, tilt, shade, setShade, st, adj }: {
+  e: Estimate; sub: string; mode: Mode; model: PartyModel; tilt: ReturnTilt | null; st: string | null; adj: DemoAdjust;
   shade: "estimate" | "turnout"; setShade: (s: "estimate" | "turnout") => void;
 }) {
   const [open, setOpen] = useState(false);
@@ -315,46 +324,54 @@ function EstimatePanel({ e, sub, mode, model, tilt, shade, setShade }: {
       {open ? (
         <div className="ev-est-method">
           <p>
-            Each county starts from its 2024 Trump share of the two party vote, moved by the swing TPSI
-            measures inside its own sample from 2024 recall to the 2026 generic ballot. TPSI likely voters
-            then set the mix: the Independent share, and how often Democrats, Republicans and Independents
-            voted Trump, which together fix the Democratic and Republican share that reproduces the
-            county&apos;s lean. Then comes the {mode !== "early" ? "mail" : "early in person"} skew: at the same local lean,
-            TPSI respondents who plan to vote {mode !== "early" ? "by mail" : "early in person"} lean
-            {mode !== "early" ? " clearly" : " slightly"} more Democratic than the electorate as a whole, and
-            the gap is widest in Democratic counties and narrows as counties get redder.
+            Each county starts from the forecast&apos;s own 2026 electorate: the 1,152 voter types the model
+            simulates in every county, by age, race, college, party, vote history and Trump approval, each with its
+            chance of turning out in this year&apos;s D+12 environment. A model fitted on {commas(model.meta.respondents)} TPSI
+            likely voters then gives every type its chance of voting by mail, early in person or on Election Day, from
+            its party, age, race, college, vote history and local lean, under the state&apos;s own ballot rules.
+            {st ? <> In {STATE_NAME[st] ?? st}, {REGIME_WORD[regimeOf(model, st)]}.</> : null}
+            {st && regimeOf(model, st) === "universal" && mode === "mail"
+              ? <> So a ballot sent out is a registered voter, not a self selected mail voter, and the estimate is the
+                  voter file&apos;s party mix rather than a mail skew.</>
+              : <> A county&apos;s {mode === "early" ? "early in person voters" : "mail voters"} are its forecast voters
+                  times their {mode === "early" ? "early" : "mail"} chance, type by type.</>}
+          </p>
+          <p>
+            The mail skew is checked against Florida, North Carolina, Pennsylvania and New Jersey, which publish requests
+            and registration by party. Their requesters lean against their own registered voters by about what the model
+            predicts, a scale of {model.meta.mailSkewScale.toFixed(2)}, so the skew is kept almost as fitted.
+            {adj ? <> This estimate is also reweighted to the {adj.dims.join(" and ")} of the ballots {STATE_NAME[st ?? ""] ?? "the state"} reports: {adj.note}.</> : null}
           </p>
           {mode === "returned" && tilt ? <ReturnNote tilt={tilt} /> : null}
           <p>
-            All of that is refit on {model.meta.draws} bootstrap resamples of {commas(model.meta.respondents)} TPSI
-            likely voters, and every resample is run against today&apos;s county counts. The range above is
-            the middle 80% of those runs. This is party identification, not party registration, and it is
-            an estimate of who is voting early, not a result.
+            The mode model is refit on {model.meta.draws} bootstrap resamples of TPSI likely voters, the skew scale is
+            drawn from how far it moves when one check state is left out, and each state&apos;s electorate takes a party
+            shock of its own. Every run is applied to today&apos;s county counts, and the range above is the middle 80% of
+            those runs. This is party identification, not party registration, and it is an estimate of who is voting
+            early, not a result.
           </p>
           <div className="ev-est-check">
             <em>Check against states that do report party, mail ballots requested</em>
             <table>
-              <thead><tr><th>State</th><th className="num">TPSI estimate</th><th className="num">80% range</th><th className="num">Registration</th></tr></thead>
+              <thead><tr><th>State</th><th className="num">Requesters against all voters, TPSI</th><th className="num">Requesters against registered voters, reported</th></tr></thead>
               <tbody>
-                {model.meta.check.map((c) => {
-                  // meta margins are Democratic positive; the page prints R positive
-                  const m = -c.modelMargin, lo = -c.hi, hi = -c.lo, rep = -c.reportedMargin;
-                  return (
-                    <tr key={c.st}>
-                      <td>{STATE_NAME[c.st] ?? c.st}</td>
-                      <td className="num">{fmtMargin(m)}</td>
-                      <td className="num">{fmtRange(lo, hi)}</td>
-                      <td className="num">{fmtMargin(rep)}</td>
-                    </tr>
-                  );
-                })}
+                {model.meta.check.map((c) => (
+                  // the tilt is Democratic positive in the file; the page prints it the way margins read
+                  <tr key={c.st}>
+                    <td>{STATE_NAME[c.st] ?? c.st}</td>
+                    <td className="num">{fmtMargin(-c.modelTilt)}</td>
+                    <td className="num">{fmtMargin(-c.reportedTilt)}</td>
+                  </tr>
+                ))}
               </tbody>
             </table>
             <p>
-              Florida lands within a point, North Carolina and New Jersey within five. Pennsylvania mail voters are more
-              Democratic than the model expects. Kentucky and Oklahoma still carry large ancestral
-              Democratic registration that no party identification model should reproduce, and the
-              twelve states estimated here have no party registration at all.
+              Party identification is not registration, so the check compares tilts: how far each state&apos;s mail
+              requesters run from its whole electorate. North Carolina lands within two points and Florida within five;
+              New Jersey&apos;s permanent list makes its requesters less Democratic than the model expects, and
+              Pennsylvania&apos;s more. With any one state held out, the other three set the scale within 0.12 of the
+              full fit. A universal mail state needs no such check: Colorado and Nevada report requests that match their
+              voter files, and the model reads them the same way.
             </p>
           </div>
         </div>
@@ -392,14 +409,14 @@ export default function EarlyVoteDesk() {
   // states that publish party for both requests and returns.
   useEffect(() => {
     let live = true;
-    for (const c of CATEGORIES.map((x) => x.key)) getCategory("US", c).then((us) => { if (live) setNatl((m) => ({ ...m, [c]: us })); });
+    for (const c of FEED_CATEGORIES) getCategory("US", c).then((us) => { if (live) setNatl((m) => ({ ...m, [c]: us })); });
     return () => { live = false; };
   }, []);
   // county counts of the no-party states, for the national cards only
   useEffect(() => {
     if (scope !== "US") return;
     let live = true;
-    for (const c of CATEGORIES.map((x) => x.key)) {
+    for (const c of FEED_CATEGORIES) {
       const us = natl[c];
       if (!us || natlCounties[c]) continue;
       const noParty = Object.entries(us.regions)
@@ -410,29 +427,34 @@ export default function EarlyVoteDesk() {
     }
     return () => { live = false; };
   }, [scope, natl, natlCounties]);
+  const natlAll = useMemo(() => ("returned" in natl && "inperson" in natl
+    ? { ...natl, voted: mergeVoted(natl.returned ?? null, natl.inperson ?? null) } : natl), [natl]);
   const tilt: ReturnTilt | null = useMemo(
     () => (model ? returnTilt(natl.requested, natl.returned, model) : null), [model, natl]);
   const combined = useMemo(() => {
     const out: Partial<Record<Category, Combined | null>> = {};
     if (!model) return out;
-    for (const c of CATEGORIES.map((x) => x.key)) {
+    for (const c of FEED_CATEGORIES) {
       const us = natl[c];
       out[c] = us ? combineNational(us, natlCounties[c] ?? {}, model, countyNames, modeOf(c),
         c === "returned" ? { us: natl.requested, counties: natlCounties.requested ?? {} } : undefined, tilt) : null;
     }
+    // every ballot already cast: returned mail plus in person, summed draw by draw
+    if ("returned" in out && "inperson" in out) out.voted = mergeCombined(out.returned, out.inperson);
     return out;
   }, [model, natl, natlCounties, countyNames, tilt]);
 
   // an open state's own requests, so each county's returned ballots can be read
   // against the ballots it sent out
   const [reqState, setReqState] = useState<CategoryPayload | null>(null);
+  const needReq = cat === "returned" || cat === "voted";
   useEffect(() => {
     setReqState(null);
-    if (scope === "US" || cat !== "returned") return;
+    if (scope === "US" || !needReq) return;
     let live = true;
     getCategory(scope, "requested").then((d) => { if (live) setReqState(d); });
     return () => { live = false; };
-  }, [scope, cat]);
+  }, [scope, needReq]);
 
   // the national outline and the county name table load once
   useEffect(() => {
@@ -505,25 +527,52 @@ export default function EarlyVoteDesk() {
   // TPSI party estimate for every place that reports no party. A county is one
   // part at its own 2024 lean. A state on the national map, or a county with no
   // matching shape, is its counties weighted by adults.
+  // The feed's own age and race counts for an open state, when it publishes them,
+  // reweight the estimate to who is actually voting.
+  const [demoAdj, setDemoAdj] = useState<Partial<Record<"age" | "race", DemographicPayload | null>>>({});
+  useEffect(() => {
+    setDemoAdj({});
+    if (scope === "US") return;
+    const m = caps?.categories?.[cat]; if (!m) return;
+    let live = true;
+    for (const dd of ["age", "race"] as const) if (m[dd]) getDemographics(scope, cat, dd).then((p) => { if (live) setDemoAdj((x) => ({ ...x, [dd]: p })); });
+    return () => { live = false; };
+  }, [scope, cat, caps]);
+  const adj: DemoAdjust = useMemo(
+    () => (model && scope !== "US" ? demoAdjust(model, scope, modeOf(cat), demoAdj) : null), [model, scope, cat, demoAdj]);
+
+  // TPSI party estimate for every place that reports no party. A county is its own
+  // forecast electorate. A state on the national map, or a county with no matching
+  // shape, is its counties weighted by adults.
   const est = useMemo(() => {
     if (!model || !noPartyRows.length) return null;
-    const byState: Record<string, [number, number][]> = {};
-    for (const [f, [t, a]] of Object.entries(model.counties)) (byState[stateOfFips(f)] ??= []).push([t, a]);
-    const ret = cat === "returned";
     // return rate of a place: its returned ballots over the ballots it sent out
     const reqOf = (name: string) => (scope === "US" ? sumRow(natl.requested?.regions[name]) : sumRow(reqState?.regions[name]));
     const reqAll = scope === "US" ? 0 : sumRow(reqState?.statewide_total);
-    const stateRho = ret && reqAll > 0 ? total / reqAll : undefined;
-    const places = noPartyRows.map(({ name, n }) => {
-      const q = ret ? reqOf(name) : 0;
-      const rho = ret ? (q > 0 ? n / q : stateRho) : undefined;
-      if (scope === "US") return { key: name, parts: (byState[name] ?? []).map(([t, a]) => [t, a, rho] as Part), votes: n };
-      const f = fipsOf[name];
-      const c = f ? model.counties[f] : undefined;
-      return { key: name, parts: c ? [[c[0], 1, rho] as Part] : (byState[scope] ?? []).map(([t, a]) => [t, a, rho] as Part), votes: n };
-    });
-    return simulate(places, model, modeOf(cat), tilt);
-  }, [model, noPartyRows, fipsOf, scope, cat, natl, reqState, total, tilt]);
+    const adjust = adj && scope !== "US" ? { [scope]: adj } : undefined;
+    // one category's places; votes of a place come from that category's own payload
+    const run = (c: Category, votesOf: (name: string) => number, catTotal: number) => {
+      const ret = c === "returned";
+      const stateRho = ret && reqAll > 0 ? catTotal / reqAll : undefined;
+      const places: Place[] = noPartyRows.map(({ name }) => {
+        const n = votesOf(name);
+        const q = ret ? reqOf(name) : 0;
+        const rho = ret ? (q > 0 ? n / q : stateRho) : undefined;
+        if (scope === "US") return { key: name, st: name, parts: stateParts(model, name, rho), votes: n };
+        const f = fipsOf[name];
+        return { key: name, st: scope, parts: f && model.mix[f] ? [[f, 1, rho] as Part] : stateParts(model, scope, rho), votes: n };
+      });
+      return simulate(places, model, modeOf(c), tilt, adjust);
+    };
+    if (cat === "voted" && data?.parts) {
+      // every ballot cast: estimate the mail half and the in person half each in its own mode
+      const { returned: r, inperson: i } = data.parts;
+      return mergeSims(run("returned", (nm) => sumRow(r?.regions[nm]), sumRow(r?.statewide_total)),
+                       run("inperson", (nm) => sumRow(i?.regions[nm]), 0));
+    }
+    const nOf: Record<string, number> = Object.fromEntries(noPartyRows.map((r) => [r.name, r.n]));
+    return run(cat, (nm) => nOf[nm] ?? 0, total);
+  }, [model, noPartyRows, fipsOf, scope, cat, data, natl, reqState, total, tilt, adj]);
   const showEst = shade === "estimate" && !!est?.total;
 
   const fillRow = (key: string, row: RegionRow) => {
@@ -622,7 +671,7 @@ export default function EarlyVoteDesk() {
             </section>
 
             {national && model ? (
-              <NationalCombined combined={combined} loaded={natl} cat={cat} setCat={setCat} tilt={tilt} />
+              <NationalCombined combined={combined} loaded={natlAll} cat={cat} setCat={setCat} tilt={tilt} />
             ) : null}
 
             {someNoParty && est?.total ? (
@@ -630,7 +679,8 @@ export default function EarlyVoteDesk() {
                 ? `Across the ${noPartyRows.length} ${noPartyRows.length === 1 ? "state that reports" : "states that report"} every ballot as Unspecified.`
                 : allNoParty ? `${STATE_NAME[scope] ?? scope} reports every ballot as Unspecified.`
                 : `Across the ${noPartyRows.length} ${noPartyRows.length === 1 ? "county that reports" : "counties that report"} every ballot as Unspecified.`}
-                mode={modeOf(cat)} model={model!} tilt={tilt} shade={shade} setShade={setShade} />
+                mode={modeOf(cat)} model={model!} tilt={tilt} shade={shade} setShade={setShade}
+                st={national ? null : scope} adj={national ? null : adj} />
             ) : null}
 
             {/* the chosen breakdown, when it is not the party columns already shown */}
@@ -754,7 +804,7 @@ export default function EarlyVoteDesk() {
                     ? `${national ? "None of the reporting states attach" : `${STATE_NAME[scope] ?? scope} does not attach`} a party to these ballots. `
                     : `${noPartyRows.length} ${national ? (noPartyRows.length === 1 ? "state reports" : "states report") : (noPartyRows.length === 1 ? "county reports" : "counties report")} no party. `}
                   Hatched {national ? "states" : "counties"} are shaded by the TPSI party estimate, simulated from
-                  TPSI polling against each county&apos;s lean.
+                  the forecast&apos;s 2026 electorate and TPSI polling on how each kind of voter casts a ballot.
                 </p>
               ) : allNoParty ? (
                 <p className="ev-mapnote">

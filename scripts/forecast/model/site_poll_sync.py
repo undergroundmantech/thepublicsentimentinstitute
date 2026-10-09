@@ -29,7 +29,7 @@ SITE_SYNC = {
         {'source': 'Trafalgar Group (R)', 'dates': 'April 27, 2025', 'end': '2025-04-27', 'n': 1426, 'pop': 'RV', 'D': 48.0, 'R': 43.0, 'O': 0.0, 'U': 9.0},
         {'source': 'Cygnal (R)', 'dates': 'May 17, 2025', 'end': '2025-05-17', 'n': 800, 'pop': 'RV', 'D': 46.0, 'R': 43.0, 'O': 0.0, 'U': 11.0},
         {'source': 'TIPP Insights', 'dates': 'August 1, 2025', 'end': '2025-08-01', 'n': 2956, 'pop': 'RV', 'D': 45.0, 'R': 44.0, 'O': 0.0, 'U': 11.0},
-        {'source': 'Quantus Insights (R)', 'dates': 'September 12, 2025', 'end': '2025-09-12', 'n': 624, 'pop': 'RV', 'D': 38.0, 'R': 38.0, 'O': 0.0, 'U': 24.0},
+        {'source': 'Quantus Insights', 'dates': 'September 12, 2025', 'end': '2025-09-12', 'n': 624, 'pop': 'RV', 'D': 38.0, 'R': 38.0, 'O': 0.0, 'U': 24.0},
     ],
     "IAG": [
         {'source': 'NPR/Marist', 'dates': 'September 17-20, 2026', 'end': '2026-09-20', 'n': 1050, 'pop': 'RV', 'D': 54.0, 'R': 42.0, 'O': 0.0, 'U': 4.0},

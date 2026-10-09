@@ -47,6 +47,14 @@ DAYS_OUT = max(int((ELECTION_DAY - AS_OF).days), 0)
 # Recency tilt, Sept 24 2026. The anchors below are each raised about two to three points of weight,
 # because M3's statewide level IS the polling average: raising M3 raises polling, not history.
 PROXIMITY = [(180.0, 0.48, 0.28), (60.0, 0.68, 0.36), (21.0, 0.83, 0.44)]
+# Election eve anchor, Oct 3 2026, the first anchor fitted rather than judged (scratchpad/mtbt, 2018 and 2022 Senate
+# and governor). Inside the last three weeks the thinly polled races were forecast best with more weight on their
+# polls: the floor rising from 0.44 at 21 days to 0.74 on election day cut the typical election eve miss in polled races
+# from 4.45 to 3.96 points, in both cycles. The fundamentals in that backtest were simpler than the live model's, so
+# the floor here rises only two thirds as far, to 0.64. The ceiling did not need to move, and nothing changes more
+# than 21 days out. EVE_FLOOR=0.44 restores the old flat end.
+EVE_FLOOR = float(os.environ.get("EVE_FLOOR", "0.64"))
+PROXIMITY.append((0.0, 0.83, EVE_FLOOR))
 if os.environ.get("NO_RECENCY"):    # restores the pre recency tilt anchors
     PROXIMITY = [(180.0, 0.45, 0.26), (60.0, 0.65, 0.34), (21.0, 0.80, 0.42)]
 
@@ -66,6 +74,24 @@ RAMP_LO, RAMP_HI = 1.0, float(os.environ.get("RAMP_HI", "8.0"))
 M3_HI, M3_LO = _proximity(DAYS_OUT)
 if os.environ.get("NO_PROXIMITY"):            # restores the pre Sept 24 fixed ceiling
     RAMP_HI, M3_LO, M3_HI = 4.0, 0.30, 0.55
+# Fundamentals boost, Sept 29 2026. Both ends of the polling leg's range come down by FUND_BOOST, five points of
+# weight by default, and that weight moves to the fundamentals legs: M1, approval and the national environment, and M2,
+# whose statewide level is the certified 2024 result. Polls still gain weight with more houses and as election day nears;
+# they start from a slightly lower ceiling. FUND_BOOST=0 restores the Sept 24 anchors.
+FUND_BOOST = float(os.environ.get("FUND_BOOST", "0.05"))
+M3_HI, M3_LO = M3_HI - FUND_BOOST, M3_LO - FUND_BOOST
+# Office history level, Sept 29 2026. Each Senate and governor race's own last two results for that office, the most
+# recent weighted 0.65, are moved to 2026 by the change in the national House environment since that year (governors
+# at 0.6 of it, the depolarization pass through), by the change in the state's presidential lean, and for governors by
+# the change in incumbency. The table is recentered so its median matches the model, so it adds each state's own
+# office habit, not a second environment. It competes with the fundamentals legs, not the polls: the statewide level
+# moves toward it by HIST_H_SEN or HIST_H_GOV of its gap to the M1 and M2 fundamentals where
+# a race has no polls or one house, fading by three quarters as the house count reaches the ramp top, and at
+# HIST_H_OPEN of that for an open seat. Backtested on 2014 to 2022: see scripts/forecast/model/history_level/.
+HIST_LEVEL = json.load(open(os.path.join(BASE, "hist_level.json"))) if os.path.exists(os.path.join(BASE, "hist_level.json")) else {}
+HIST_ON = os.environ.get("HIST_LEVEL", "1") != "0"
+HIST_H_SEN, HIST_H_GOV, HIST_H_OPEN = float(os.environ.get("HIST_H_SEN", "0.20")), float(os.environ.get("HIST_H_GOV", "0.30")), float(os.environ.get("HIST_H_OPEN", "0.4"))
+HIST_AUDIT = {}
 # The remainder after M3 splits between M1 approval fundamentals and M2, whose statewide level is the
 # certified 2024 presidential result. Raising M1's share is what actually moves weight off history.
 M1_SHARE_LO, M1_SHARE_HI = 0.5700, 0.5900
@@ -96,9 +122,11 @@ def poll_weights(polls, pavg):
     return ramp_weights(x) + (tier, int(n_recent), newest, round(x, 2))
 # Scenario knobs for stress testing the two national anchors. Both default to the
 # published settings, so an unset environment reproduces the live forecast exactly.
-#   GALLUP_TIED=1   party identification even instead of 49 D to 39 R
+#   GALLUP_TIED=1   party identification even instead of 50 D to 39 R
 #   POLL_SHIFT=x    uniform logit shift applied to every race's polling average
-GALLUP_D, GALLUP_R = (44.0, 44.0) if os.environ.get("GALLUP_TIED") else (49.0, 39.0)
+# Oct 5 2026: Gallup party identification updated to 50 D to 39 R, and the census leg is anchored to it again
+# (M2_ANCHOR=gallup, converted to likely voters through the TPSI database in anchors.gallup_lv_d2).
+GALLUP_D, GALLUP_R = (44.5, 44.5) if os.environ.get("GALLUP_TIED") else (50.0, 39.0)
 POLL_SHIFT = float(os.environ.get("POLL_SHIFT", "0.0"))
 # National vote anchor. Party identification is not a vote, and Gallup's 49 D to 39 R counts adults, so it ran the
 # fundamentals about three points of margin more Democratic than likely voters. The anchor is now the public likely
@@ -710,7 +738,15 @@ _ctap["f"] = _ctap.county_fips
 APPROVAL = pd.concat([_ct_counties(APPROVAL, APPROVAL.f), _ctap], ignore_index=True).set_index("f")
 # September 2026 national database, the same six waves as the previous export with 99 more
 # respondents; every variable this model reads is identical on the 4,238 rows they share.
-RESP = pd.read_csv(f"{BASE}/tpsi_db/TPSI_National_Respondent_Database.csv", low_memory=False)
+# Sept 29 2026: respondent component version 2 (respondent_v2.py). The unified respondent dataset, one filter
+# for every consumer, confident imputations only, never an imputed vote. RESP_V2=0 restores the database above.
+sys.path.insert(0, BASE); import respondent_v2 as _rv2
+import bounds as _bd
+import trend as _trd
+import calib26 as _cb
+CALIB_AUDIT = {}
+TREND_AUDIT = {}
+RESP = _rv2.load(BASE)
 ACS = pd.read_csv(glob.glob(f"{PKG['MI']}/ACSST5Y2024.S1501_2026-09-11T174726/*Data.csv")[0], skiprows=[1], low_memory=False)
 ACS["f"] = ACS.GEO_ID.str[-5:]
 _ctacs = pd.read_csv(f"{BASE}/CTG/ct_county_acs.csv", low_memory=False)
@@ -751,27 +787,63 @@ EXTRA_POLLS = {
     # about 1 percent and 0.1 percent of the September read, so the level here is the September poll.
     "VTG": [dict(source="University of New Hampshire", dates="September 17-21, 2026", end="2026-09-21", n=835, pop="LV", D=49, R=43, O=2, U=6)],
     "MI": [dict(source="co/efficient (R)", dates="September 21-23, 2026", end="2026-09-23", n=843, pop="LV", D=45, R=45, O=2, U=8),
+           dict(source="Big Data Poll", dates="September 22-24, 2026", end="2026-09-24", n=678, pop="LV", D=46.7, R=42.1, O=0, U=11.2),   # Oct 4 sweep, likely voters with leaners
            dict(source="GBAO (D)", dates="September 19-22, 2026", end="2026-09-22", n=800, pop="LV", D=48, R=44, O=0, U=8),   # Sept 28 2026
            dict(source="New York Times/Siena University", dates="September 15-22, 2026", end="2026-09-22", n=613, pop="LV", D=49, R=44, O=0, U=7),
            dict(source="InsiderAdvantage", dates="September 16-17, 2026", end="2026-09-17",
                 n=1200, pop="LV", D=46.6, R=44.7, O=3.3, U=5.4),
            dict(source="Suffolk University", dates="September 16-20, 2026", end="2026-09-20", n=500, pop="LV", D=47, R=40, O=3, U=8),
            dict(source="Emerson College", dates="September 12-14, 2026", end="2026-09-14", n=1000, pop="LV", D=48, R=46, O=2, U=4),
-           dict(source="The Washington Post/SSPG", dates="September 10-14, 2026", end="2026-09-14", n=803, pop="LV", D=48, R=45, O=5, U=2)],
+           dict(source="The Washington Post/SSPG", dates="September 10-14, 2026", end="2026-09-14", n=803, pop="LV", D=48, R=45, O=5, U=2),
+           # Cygnal (R)/Beacon Research (D) for Michigan Enjoyer, Sept 18-21 2026, 600 likely voters
+           dict(source="Cygnal (R)/Beacon Research (D)", dates="September 18-21, 2026", end="2026-09-21", n=600, pop="LV", D=45, R=40, O=0, U=15),
+           # NPR/Marist, Sept 24-27 2026, registered voters. The sample size was not yet posted; 1,200 is entered, close
+           # to the 1,298 of the same week's Ohio survey.
+           dict(source="NPR/Marist", dates="September 24-27, 2026", end="2026-09-27", n=1200, pop="RV", D=51, R=44, O=0, U=5),
+           # Oct 2 2026 sweep: Fox News, Beacon Research and Shaw & Company, Sept 24-28 2026, 1,028 likely voters; other and
+           # undecided together 1. Registered voters, 1,203: El-Sayed 51, Rogers 48.
+           dict(source="Fox News/Beacon Research and Shaw & Company", dates="September 24-28, 2026", end="2026-09-28", n=1028, pop="LV", D=50, R=49, O=0, U=1),
+           # Oct 2 2026 morning sweep: Trafalgar Group, Sept 28-30 2026, 1,085 likely voters; other is Christensen 1.6, Long 0.9,
+           # Kristy 0.3 and Marsh 0.1. No governor question was published.
+           dict(source="Trafalgar Group (R)", dates="September 28-30, 2026", end="2026-09-30", n=1085, pop="LV", D=46.9, R=45.1, O=2.9, U=5.0),
+           # Oct 5 2026 evening sweep: Mitchell Research for CBS Detroit, Oct 1 2026, likely voters, margin of error 3.8; the sample
+           # size was not published, 650 is a placeholder matching that margin. Other is Christensen 3, Kristy 2, Long 1, Marsh 1.
+           dict(source="Mitchell Research for CBS Detroit", dates="October 1, 2026", end="2026-10-01", n=650, pop="LV", D=45.6, R=41.4, O=7.0, U=6.0)],
     "ME": [dict(source="University of New Hampshire", dates="September 17-21, 2026", end="2026-09-21", n=1312, pop="LV", D=51, R=47, O=0, U=2),
            dict(source="New York Times/Siena University", dates="September 15-22, 2026", end="2026-09-22", n=619, pop="LV", D=46, R=49, O=0, U=5)],
     "NH": [dict(source="University of New Hampshire", dates="September 17-21, 2026", end="2026-09-21", n=1418, pop="LV", D=50, R=42, O=4, U=4),
            dict(source="New York Times/Siena University", dates="September 15-22, 2026", end="2026-09-22", n=613, pop="LV", D=50, R=45, O=0, U=5)],
     "LA": [dict(source="Hart Research (D)", dates="September 17-19, 2026", end="2026-09-19", n=500, pop="LV", D=44, R=48, O=0, U=8)],
     "CAG": [dict(source="Berkeley IGS", dates="September 15-20, 2026", end="2026-09-20", n=4512, pop="RV", D=58, R=33, O=0, U=9)],
-    "MIG": [dict(source="co/efficient (R)", dates="September 21-23, 2026", end="2026-09-23", n=843, pop="LV", D=47, R=44, O=0, U=9)],
+    "MIG": [dict(source="co/efficient (R)", dates="September 21-23, 2026", end="2026-09-23", n=843, pop="LV", D=47, R=44, O=0, U=9),
+           # Cygnal (R)/Beacon Research (D) for Michigan Enjoyer, Sept 18-21 2026, 600 likely voters
+           dict(source="Cygnal (R)/Beacon Research (D)", dates="September 18-21, 2026", end="2026-09-21", n=600, pop="LV", D=45, R=38, O=4, U=13),
+           # NPR/Marist, Sept 24-27 2026, registered voters. The sample size was not yet posted; 1,200 is entered, close
+           # to the 1,298 of the same week's Ohio survey.
+           dict(source="NPR/Marist", dates="September 24-27, 2026", end="2026-09-27", n=1200, pop="RV", D=53, R=41, O=0, U=6)],
     # Sept 25 2026 sync. Five Senate polls the site's poll files carried and the model had not
     # seen. Every one was checked against a pollster release or a report giving the field dates
     # and the sample, not against an aggregator's release-date listing.
     # Ohio is the special election; Wikipedia moved the polling table to that page, which is why
     # these two were missed.
-    "OH": [dict(source="Bowling Green State University/YouGov", dates="September 1-10, 2026", end="2026-09-10", n=1000, pop="LV", D=48, R=45, O=0, U=7),
-           dict(source="Trafalgar Group (R)", dates="September 14-16, 2026", end="2026-09-16", n=1085, pop="LV", D=45, R=42, O=0, U=13)],
+    "OH": [dict(source="New York Times/Siena", dates="September 22-October 1, 2026", end="2026-10-01", n=616, pop="LV", D=49, R=46, O=0, U=5),   # Oct 3 sweep; n and dates from the Oct 3 release
+           dict(source="Rasmussen Reports", dates="September 22-23, 2026", end="2026-09-23", n=1115, pop="LV", D=46, R=43, O=5, U=7),   # Oct 4 sweep
+           dict(source="Quantus Insights", dates="September 21-23, 2026", end="2026-09-23", n=695, pop="LV", D=47.3, R=46.8, O=3.5, U=2.4),   # Oct 4 sweep, full ballot with leaners
+           dict(source="Bowling Green State University/YouGov", dates="September 1-10, 2026", end="2026-09-10", n=1000, pop="LV", D=48, R=45, O=0, U=7),
+           dict(source="Trafalgar Group (R)", dates="September 14-16, 2026", end="2026-09-16", n=1085, pop="LV", D=45, R=42, O=0, U=13),
+           # Big Data Poll "Buckeye State Poll", Richard Baris, Sept 26-27 2026, 735 registered and about 680 likely voters,
+           # MoE 4.0, 60 percent live phone from the L2 file and 40 percent online. Senate with leaners as shared: Brown 46.9,
+           # Husted 42.5. The field dates come from the release, which was first logged as Sept 28.
+           dict(source="Big Data Poll", dates="September 26-27, 2026", end="2026-09-27", n=682, pop="LV", D=46.9, R=42.5, O=0, U=10.6),
+           # NPR/Marist, Sept 24-27 2026, 1,298 registered voters, MoE 3.8, phone, text and online
+           dict(source="NPR/Marist", dates="September 24-27, 2026", end="2026-09-27", n=1298, pop="RV", D=51, R=43, O=0, U=6),
+           # Oct 2 2026 sweep: Suffolk University for the USA TODAY Network, Sept 23-27 2026, 500 likely voters, Brown 47,
+           # Husted 44. The Senate crosstabs were embargoed, so other and undecided are carried together as 9.
+           dict(source="Suffolk University/USA TODAY Network", dates="September 23-27, 2026", end="2026-09-27", n=500, pop="LV", D=47, R=44, O=0, U=9),
+           # Oct 2 2026 morning sweep: InsiderAdvantage, Sept 28-29 2026, 1,200 likely voters, released Oct 1; other is Redpath 4 and Levy 2
+           dict(source="InsiderAdvantage", dates="September 28-29, 2026", end="2026-09-29", n=1200, pop="LV", D=44, R=43, O=6, U=7)],
+    # the governor ballot from the same Big Data Poll survey: Ramaswamy 47.9, Acton 46.8
+    "OHG": [dict(source="Big Data Poll", dates="September 26-27, 2026", end="2026-09-27", n=682, pop="LV", D=46.8, R=47.9, O=0, U=5.3)],
     "SC": [dict(source="Rasmussen Reports", dates="September 14, 2026", end="2026-09-14", n=1006, pop="LV", D=43, R=48, O=0, U=9)],
 }
 
@@ -2453,7 +2525,11 @@ def fit_respondents():
     m24 = r.recall_2024.isin(["Harris", "Trump"]).values
     b24 = irls(X[m24], (r.recall_2024[m24] == "Harris").values.astype(float), np.ones(m24.sum()))
     state_region = r.groupby("state").region8.agg(lambda s: s.value_counts().index[0]).to_dict()
-    return dict(bvote=bvote, b24=b24, bturn=bturn, regions=regions, state_region=state_region)
+    model = dict(bvote=bvote, b24=b24, bturn=bturn, regions=regions, state_region=state_region)
+    # version 2: partially pooled state and state by race group swing effects, and registration for the universe audit
+    _rv2.fit_state_effects(None, r, X, model)
+    model["breg"] = _rv2.fit_registration(irls, r, X)
+    return model
 
 def county_cells(fips_list):
     a = ACS.reindex(fips_list)
@@ -2487,7 +2563,22 @@ def census_components(model, fips_list, region_of):
                         cache[key] = (x @ model["bvote"], inv(x @ model["bturn"]), x @ model["b24"])
                     eta[i, k], turn[i, k], eta24[i, k] = cache[key]
                     k += 1
+    if _rv2.ON:
+        # version 2: citizen adults, and the state's pooled 2026 swing effect by race group
+        _rl = [RACE[(k // 2) % 4] for k in range(32)]
+        pops = pops * _rv2.cvap_county(list(fips_list), _rl)
+        _ab = _ABBR_OF()
+        _off = {}
+        for i, f in enumerate(fips_list):
+            a_ = _ab.get(f)
+            if a_ not in _off: _off[a_] = _rv2.cell_offsets(a_, _rl)
+            eta[i] += _off[a_]
     return pops, eta, turn, adults, eta24
+
+_ABBR_CACHE = {}
+def _ABBR_OF():
+    if not _ABBR_CACHE: _ABBR_CACHE.update(APPROVAL.state_abbr.to_dict())
+    return _ABBR_CACHE
 
 def census_predict(model, fips_list, region_of, shift=0.0, comps=None, use24=False):
     pops, eta, turn, adults, eta24 = comps if comps is not None else census_components(model, fips_list, region_of)
@@ -2513,6 +2604,7 @@ def national_shift(model):
         t26 = NAT_D2
     global _T26
     _T26 = float(t26)
+    nats = []
     for target, use24 in [(t26, False), (NAT_2024_D2, True)]:
         lo, hi = -2.0, 2.0
         for _ in range(50):
@@ -2520,10 +2612,12 @@ def national_shift(model):
             d, t, a = census_predict(model, fl, region_of, mid, comps, use24)
             nat = (d * t * a).sum() / (t * a).sum()
             lo, hi = (mid, hi) if nat < target else (lo, mid)
-        out.append((lo + hi) / 2)
+        out.append((lo + hi) / 2); nats.append(nat)
     global _SHIFT
     _SHIFT = out
-    return out, nat, float((t * a).sum() / a.sum())
+    # Sept 29 2026: this returned the 2024 pass, so national_lv_d2 in the summary read 0.4925 (the 2024 result);
+    # it is now the 2026 likely voter anchor the census leg is calibrated to
+    return out, nats[0], float((t * a).sum() / a.sum())
 
 _CAL = {}
 _M1K = {}
@@ -2531,7 +2625,7 @@ _MODEL, _SHIFT = None, None
 _T26 = None
 # census leg anchor. Since Sept. 22, 2026 the default is "meridian": the Gallup party identification anchor is removed and
 # the census leg takes the same TPSI Meridian ballot as the other two legs; M2_ANCHOR=gallup restores Gallup.
-M2_ANCHOR = os.environ.get("M2_ANCHOR", "meridian")
+M2_ANCHOR = os.environ.get("M2_ANCHOR", "gallup")   # Oct 5 2026 default: Gallup 50 D 39 R; M2_ANCHOR=meridian restores the Sept 22 setting
 ELASTIC_ANCHORS = os.environ.get("ELASTIC_ANCHORS", "1") == "1"
 
 def m1_anchor(fl=None):
@@ -2576,6 +2670,8 @@ def m1_anchor_flat():
     _M1K.update(k=(lo + hi) / 2, before=float((inv(x) * vw).sum() / vw.sum()))
     return _M1K["k"]
 
+APPROVAL_INPUT = {}
+
 def calibrated_approval(fl):
     """County approval pattern from the published TPSI county file (TRUMP APPROVE / DISAPPROVE / no_opinion),
     shifted by one national logit constant so the 2024 vote weighted national two way approval equals the
@@ -2584,6 +2680,25 @@ def calibrated_approval(fl):
         r = RESP; w = r.turnout_propensity
         lv = pd.Series(w.values, index=r.trump_approve_2way).groupby(level=0).sum() / w.sum()
         tA, tD, tN = lv["Approve"], lv["Disapprove"], lv["Neutral"]
+        _rvnet = os.environ.get("APPROVAL_RV_NET")
+        if _rvnet is not None:
+            # Oct 1 2026: a stated registered voter net approval sets the level. TPSI supplies the two things the net
+            # alone does not: the registered voter no opinion share, and the gap between registered and likely voters,
+            # the turnout propensity weighted two way approval against the registered respondents' own, in log odds.
+            reg = (r.registered_to_vote == "Yes").astype(float).values
+            rv = pd.Series(reg, index=r.trump_approve_2way).groupby(level=0).sum() / reg.sum()
+            rvA, rvD, rvN = rv["Approve"], rv["Disapprove"], rv["Neutral"]
+            nrv = rvN / (rvA + rvD + rvN)
+            net = float(_rvnet) / 100
+            aR = (1 - nrv + net) / 2; dR = (1 - nrv - net) / 2
+            gap = logit(tA / (tA + tD)) - logit(rvA / (rvA + rvD))
+            two_lv = float(inv(logit(aR / (aR + dR)) + gap))
+            nlv = tN / (tA + tD + tN)
+            tA, tD, tN = (1 - nlv) * two_lv, (1 - nlv) * (1 - two_lv), nlv
+            APPROVAL_INPUT.update(rv_net=float(_rvnet), rv_approve=round(100 * aR, 1), rv_disapprove=round(100 * dR, 1), rv_no_opinion=round(100 * nrv, 1),
+                                  tpsi_rv_two_way=round(float(rvA / (rvA + rvD)), 4), tpsi_lv_two_way=round(float(lv["Approve"] / (lv["Approve"] + lv["Disapprove"])), 4),
+                                  rv_to_lv_gap_logit=round(float(gap), 4), lv_two_way_target=round(two_lv, 4),
+                                  lv_approve=round(100 * tA, 1), lv_disapprove=round(100 * tD, 1), lv_net=round(100 * (tA - tD), 1))
         a = APPROVAL
         vw = P24.reindex(a.index).total_votes.fillna(0)
         x = logit(a["TRUMP APPROVE"] / (a["TRUMP APPROVE"] + a["TRUMP DISAPPROVE"]))
@@ -2617,6 +2732,81 @@ def pres_frames(st):
     two = t24 * (AK_TOTALS["h24"] + AK_TOTALS["t24"]) / AK_TOTALS["p24"]
     p24 = pd.DataFrame(dict(votes_dem=d24 * two, votes_gop=(1 - d24) * two, total_votes=t24))
     return p16, p20, p24
+
+# ---- third party level, Sept 29 2026 -------------------------------------------
+# The third party share was the weighted poll "Other" figure alone. Most public polls print no Other
+# column, and a poll that does not ask is recorded as 0, so a race whose polls skip the question put a
+# ballot qualified Libertarian or independent at exactly 0.0 percent, and a race where a few polls ask
+# diluted the reported figure toward zero. The per race floors that patched this are discretionary and
+# UNIFORM mode drops them. The level now comes from three sources, the same rule for every race:
+#   structural prior   what a candidate of that ballot label draws in a midterm statewide race
+#   office history     the state's own past third party share for this office, from the history leg
+#   polls that ask     the weighted Other share among polls that report one, trusted in proportion to
+#                      the share of poll weight that asked
+# Structural = 0.6 x prior + 0.4 x history (history capped at 5 percent). The poll weight is
+# 0.95 x the square root of the asked share of poll weight, so one small poll that asked moves little
+# and a race where every poll asks is read almost entirely from the polls. The level never falls below
+# 0.6 x the prior, and each named candidate keeps at least half of their own prior.
+THIRD_ON = os.environ.get("THIRD_LEVEL", "1") != "0"
+THIRD_PRIOR = {"L": 0.015, "G": 0.008, "C": 0.005, "UST": 0.005, "I": 0.010, "NL": 0.006, "U": 0.005,
+               "ACN": 0.004, "UC": 0.005, "WC": 0.005, "F": 0.005, "PSL": 0.005, "SWP": 0.004, "AF": 0.010, "LMN": 0.008}
+THIRD_HIST_CAP, THIRD_W_PRIOR, THIRD_FLOOR_K, THIRD_CAND_FLOOR_K = 0.05, 0.6, 0.6, 0.5
+THIRD_AUDIT = {}
+
+def third_prior(nm, pty):
+    if pty in THIRD_PRIOR: return THIRD_PRIOR[pty]
+    n = nm.lower()
+    if "none of these" in n: return 0.015
+    if "independents" in n: return 0.012
+    if n.startswith("other") and "write" in n: return 0.006
+    if n.startswith("other"): return 0.008
+    if "write" in n: return 0.003
+    return 0.006
+
+def third_party_level(st, cfg, polls, pavg, o_hist, turnout):
+    tw = sum(x[2] for x in cfg["third"]) or 1.0
+    raw = {nm: wt / tw for nm, pty, wt in cfg["third"]}
+    old = pavg.get("third") if isinstance(pavg, dict) else None
+    old = float(old) if old is not None and np.isfinite(old) else 0.0
+    if not THIRD_ON or cfg.get("rcv") or not cfg["third"]:
+        return max(old, cfgget(cfg, 'third_floor', 0.0) or 0.0), raw, None
+    prior = {nm: third_prior(nm, pty) for nm, pty, wt in cfg["third"]}
+    P = sum(prior.values())
+    h = float((o_hist * turnout).sum() / turnout.sum()) if turnout.sum() > 0 else float("nan")
+    H = min(h, THIRD_HIST_CAP) if np.isfinite(h) and h > 0 else P
+    struct = THIRD_W_PRIOR * P + (1 - THIRD_W_PRIOR) * H
+    # polls that asked
+    rep, frac = float("nan"), 0.0
+    if cfg.get("no_polls"):
+        rep, frac = float(cfg["no_polls"].get("third") or 0.0), 0.6
+        if rep <= 0: frac = 0.0
+    elif polls is not None and len(polls) and {"O", "D", "R"} <= set(polls.columns):
+        q = polls.copy(); w = q["w"].astype(float) if "w" in q else pd.Series(1.0, index=q.index)
+        tot = (q.D + q.R + q.O).astype(float)
+        ok = (q.O.astype(float) > 0) & (tot > 0) & w.gt(0)
+        if ok.any() and w.sum() > 0:
+            rep = float((w[ok] * q.O[ok] / tot[ok]).sum() / w[ok].sum()); frac = float(w[ok].sum() / w.sum())
+    wp = 0.95 * np.sqrt(frac) if frac > 0 and np.isfinite(rep) else 0.0
+    T = wp * rep + (1 - wp) * struct if wp > 0 else struct
+    T = max(T, THIRD_FLOOR_K * P)
+    split = {nm: max(T * raw[nm], THIRD_CAND_FLOOR_K * prior[nm]) for nm in raw}
+    T2 = sum(split.values())
+    audit = dict(prior=round(P, 4), history=round(h, 4) if np.isfinite(h) else None, structural=round(struct, 4),
+                 polls_reporting_share=round(rep, 4) if np.isfinite(rep) else None, polls_asking_weight=round(frac, 3),
+                 poll_weight=round(wp, 3), before=round(old, 4), after=round(T2, 4),
+                 candidates={nm: round(v, 4) for nm, v in split.items()})
+    return T2, {nm: v / T2 for nm, v in split.items()}, audit
+
+def _rv2_race(st, fl):
+    """respondent_model audit block: source, pooled state effect, and the state's VAP to likely voter chain"""
+    try:
+        a = _rv2.race_audit(st[:2])
+        if _rv2.ON and _MODEL is not None:
+            a["universe"] = _rv2.universe(sys.modules[__name__], _MODEL, list(fl), st[:2],
+                                          lambda f: _MODEL["state_region"].get(_ABBR_OF().get(f), _MODEL["regions"][0]))
+        return a
+    except Exception as e:
+        return dict(error=str(e))
 
 def run_state(st, model, shift, nat_turn_rate):
     cfg = STATES[st]; fl = county_list(st)
@@ -2718,7 +2908,10 @@ def run_state(st, model, shift, nat_turn_rate):
         import anchors as _an
         _mean, _k2 = _an.m2_params(sys.modules[__name__], model, shift)
         demo_swing = demo_swing - _mean + pd.Series(_an.county_e(sys.modules[__name__], model, shift, fl) * _k2, index=fl)
-    m2 = inv(logit(actual24) + demo_swing + cand_effect + (party_term + cand_term if MOVE_A else 0.0))
+    # Oct 1 2026 county trend carry (trend.py): the 2016 to 2024 presidential trend, weighed by the 2026 primary
+    _TR, TREND_AUDIT[st] = _trd.county_trend(st, fl, P16, P20, P24, prim, P24.total_votes.reindex(fl).fillna(0).values)
+    _TR = _TR.reindex(fl).fillna(0.0)
+    m2 = inv(logit(actual24) + demo_swing + cand_effect + (party_term + cand_term if MOVE_A else 0.0) + _trd.PRES_CARRY * _TR.values * (1 if _trd.ON else 0))
     turn_idx = pd.Series(turn_idx, index=fl); adults = pd.Series(adults, index=fl)
     if ELECTORATE:
         # Electorate Mode: the census leg is anchored on 2024 presidential voters; move it to the estimated 2026 midterm electorate
@@ -2751,8 +2944,9 @@ def run_state(st, model, shift, nat_turn_rate):
         # candidate strength against the environment: polls against the model's own fundamentals
         _w = p24.total_votes.astype(float)
         _fund = float((((w_fund * m1 + w_census * m2) / max(w_fund + w_census, 1e-9)) * _w).sum() / _w.sum())
-        _ps, _gap = _cq.poll_strength(len(polls), pavg.get("D2"), _fund)
-        cand_prof.update(poll_strength=_ps, poll_gap=_gap, fundamentals_d2=_fund)
+        _nd = _cq.fav_netdiff(st)
+        _ps, _gap = _cq.poll_strength(len(polls), (pavg or {}).get("D2"), _fund, _nd)
+        cand_prof.update(poll_strength=_ps, poll_gap=_gap, fundamentals_d2=_fund, favorability_netdiff=_nd)
         if _ps:
             m1 = inv(logit(m1) + _ps); m2 = inv(logit(m2) + _ps)
 
@@ -2780,17 +2974,42 @@ def run_state(st, model, shift, nat_turn_rate):
         # Vote History Mode: 2026 turnout is the sum of every group's own 2026 turnout chance, not a share of an anchored total
         turnout = el_w26.astype(float)
         state_total = float(turnout.sum())
+    # Sept 30 2026: realistic county turnout floor and ceiling (bounds.py)
+    _BND_T = None
+    if _bd.ON:
+        _m22b, _ = midterm_totals(st)
+        _tv, _BND_T = _bd.county_turnout(fl, np.asarray(turnout, float), _m22b, P24, _rv2.cvap_total,
+                                         mid_mult=1.6 if st[:2] in ("DE", "MS", "MT", "NJ", "VA", "WV") else _bd.TURN_HI_MID)
+        turnout = pd.Series(_tv, index=turnout.index) if isinstance(turnout, pd.Series) else _tv
+        state_total = float(np.sum(_tv))
 
     # M3 history/polling: county lean from three Senate cycles with trend, level set to polling average
     lean = {y: logit(S[y].D / (S[y].D + S[y].R)) - logit(S[y].D.sum() / (S[y].D.sum() + S[y].R.sum())) for y in years}
     hw = cfgget(cfg, 'hist_w', HIST_W); tc = cfgget(cfg, 'trend_carry', TREND_CARRY)
+    if _trd.ON: tc = _trd.OFFICE_CARRY
     lean_base = sum(wt * lean[y] for wt, y in zip(hw, years)) + tc * (lean[years[0]] - lean[years[1]]) * 0.5
+    if _trd.ON:
+        lean_base = lean_base + _trd.PRES_CARRY * _trd.M3_PRES_SHARE * pd.Series(_TR.values, index=fl).reindex(lean_base.index).fillna(0.0)
     if pavg.get("D2") is None:
         # no polls: level M3 to the turnout weighted average of M1 and M2, so M3 contributes only the historical county pattern
         pavg["D2"] = float((((w_fund * m1 + w_census * m2) / (w_fund + w_census)) * turnout).sum() / turnout.sum())
     _target = pavg["D2"]
     if POLL_SHIFT:
         _target = inv(logit(_target) + POLL_SHIFT)
+    _hl = HIST_LEVEL.get(st) if HIST_ON else None
+    if _hl:
+        _h0 = HIST_H_GOV if cfg.get("office") == "governor" else HIST_H_SEN
+        if _hl.get("open"): _h0 *= HIST_H_OPEN
+        _f = 0.0 if poll_tier == "none" else min(max((float(house_index) - RAMP_LO) / (RAMP_HI - RAMP_LO), 0.0), 1.0)
+        _heff = _h0 * (1.0 - 0.75 * _f)
+        # the history competes with the fundamentals, not the polls: M3's level moves by the history's gap to the
+        # M1 and M2 fundamentals, scaled so the final statewide blend moves by _heff of that gap
+        _F = float((((w_fund * m1 + w_census * m2) / (w_fund + w_census)) * turnout).sum() / turnout.sum())
+        _a = _heff / max(w_hist, 1e-9)
+        _before = _target
+        _target = inv(logit(_target) + _a * (logit(_hl["d2"]) - logit(_F)))
+        HIST_AUDIT[st] = dict(history_d2=_hl["d2"], fundamentals_d2=round(_F, 5), open=_hl.get("open"), weight_statewide=round(_heff, 4), weight_in_leg=round(_a, 4),
+                              level_before=round(float(_before), 5), level_after=round(float(_target), 5))
     if DYNAMIC:
         # Dynamic Mode: the county history is moved from its own past level to the 2026 target by county elasticity,
         # not by one uniform logit swing, so responsive counties absorb more of the statewide move than anchored ones
@@ -2814,6 +3033,25 @@ def run_state(st, model, shift, nat_turn_rate):
         m3 = inv(lean_base + (lo + hi) / 2)
 
     d2 = w_fund * m1 + w_census * m2 + w_hist * m3
+    # Oct 2 2026 midterm county calibration (calib26.py): each county is its 2024 presidential lean, plus the midterm
+    # pattern measured in 2018 and 2022, plus the candidate terms the model measures directly, plus the rest of the
+    # three legs' county pattern at no more than the state's measured midterm spread. The statewide share is kept.
+    if _cb.ON and _cb.load() and not st.startswith("AK") and not cfg.get("rcv"):
+        _ce = np.asarray(cand_effect.reindex(fl).fillna(0.0).values if isinstance(cand_effect, pd.Series) else np.zeros(len(fl)), float)
+        _ccs = np.zeros(len(fl))
+        if ELECTORATE and cand_prof is not None:
+            _ccs = np.asarray(_ev.HISTORY_INFO.get(st, {}).get("candidate_county_shift", np.zeros(len(fl))), float)
+        _cr = (w_fund + w_census) * _ce + w_fund * _ccs
+        _p20 = P20.reindex(fl); _s20 = (_p20.votes_dem / (_p20.votes_dem + _p20.votes_gop)).fillna(actual24).values
+        _d2n, CALIB_AUDIT[st] = _cb.apply(st, fl, np.asarray(d2, float), np.asarray(turnout, float), actual24.values, _s20, _cr)
+        d2 = pd.Series(_d2n, index=fl) if isinstance(d2, pd.Series) else _d2n
+    # Sept 30 2026: a county tops out at the edge of its own historical lean relative to the state (bounds.py); the
+    # statewide share the polls set is kept, so the votes a capped county cannot give move to counties with room
+    _BND_S = None
+    if _bd.ON and not cfg.get("rcv"):
+        _d2s = d2 if isinstance(d2, pd.Series) else pd.Series(np.asarray(d2, float), index=fl)
+        _d2b, _BND_S = _bd.county_support(st, fl, _d2s, np.asarray(turnout, float), S, years, P16, P20, P24, prim)
+        d2 = _d2b if isinstance(d2, pd.Series) else _d2b.values
 
     # third parties: statewide share from poll Other, split by historic party weights, county pattern from history
     o_hist = sum(wt * (S[y].O / (S[y].D + S[y].R + S[y].O)) for wt, y in zip(hw, years)) / sum(hw[:len(years)])
@@ -2822,7 +3060,7 @@ def run_state(st, model, shift, nat_turn_rate):
         o_rel = pd.Series(1.0, index=o_rel.index)   # history carries no third party base here, so spread it evenly
     elif cfgget(cfg, 'third_uniform'):
         o_rel = pd.Series(1.0, index=o_rel.index)
-    third_total = max(pavg["third"], cfgget(cfg, 'third_floor', 0.0))
+    third_total, third_split, THIRD_AUDIT[st] = third_party_level(st, cfg, polls, pavg, o_hist, turnout)
     osh = (third_total * o_rel)
     osh = osh * third_total / ((osh * turnout).sum() / turnout.sum()) if third_total > 0 else osh * 0.0
     tw = sum(x[2] for x in cfg["third"])
@@ -2870,7 +3108,7 @@ def run_state(st, model, shift, nat_turn_rate):
         df["rep_pct"] = 100 * (1 - d2) * (1 - osh)
         for nm, pty, wt in cfg["third"]:
             col = re.sub(r"[^a-z]+", "_", nm.lower()).strip("_") + "_pct"
-            df[col] = 100 * osh * wt / tw; tcols.append((nm, pty, col))
+            df[col] = 100 * osh * third_split.get(nm, wt / tw); tcols.append((nm, pty, col))
     df["dem_margin"] = df.dem_pct - df.rep_pct
     df["winner"] = np.where(df.dem_margin > 0, cfg["D"] + " (D)", cfg["R"] + " (R)")
     if cfg.get("rcv"):
@@ -2934,7 +3172,7 @@ def run_state(st, model, shift, nat_turn_rate):
                        components_statewide=dict(M1=float((m1 * turnout).sum() / V * 100), M2=float((m2 * turnout).sum() / V * 100),
                                                  M3=float((m3 * turnout).sum() / V * 100), final_d2=float((d2 * turnout).sum() / V * 100)),
                        poll_avg=pavg, n_polls=len(polls), primary_source=prim_note, history_years=years, history_counties_filled=fillnotes,
-                   blend_weights=dict(M1=round(w_fund, 4), M2=round(w_census, 4), M3=round(w_hist, 4)),
+                   blend_weights=dict(M1=round(w_fund, 4), M2=round(w_census, 4), M3=round(w_hist, 4)), history_level=HIST_AUDIT.get(st), third_party_level=THIRD_AUDIT.get(st), approval_input=APPROVAL_INPUT or None, county_trend=TREND_AUDIT.get(st), county_calibration=CALIB_AUDIT.get(st), respondent_model=_rv2_race(st, fl), bounds=dict(county_support=_BND_S, county_turnout=_BND_T),
                    poll_tier=poll_tier, poll_house_index=house_index, poll_houses_recent=n_houses, newest_poll_days=newest_days,
                        state_total_turnout=state_total, nat_ratio=nat_ratio, st_factor=st_factor, third_parties=[(nm, pty) for nm, pty, _ in tcols])
         summary["finance"] = dict(shift_logit=float(fin_shift), status=fin_why)
@@ -2958,7 +3196,7 @@ def run_state(st, model, shift, nat_turn_rate):
                        **(dict(first_choice_d2=float((d2_fc * turnout).sum() / V * 100)) if cfg.get("rcv_fc") else {})),
                    poll_avg=pavg, n_polls=len(polls), primary_source=prim_note, history_years=years,
                    history_counties_filled=fillnotes,
-                   blend_weights=dict(M1=round(w_fund, 4), M2=round(w_census, 4), M3=round(w_hist, 4)),
+                   blend_weights=dict(M1=round(w_fund, 4), M2=round(w_census, 4), M3=round(w_hist, 4)), history_level=HIST_AUDIT.get(st), third_party_level=THIRD_AUDIT.get(st), approval_input=APPROVAL_INPUT or None, county_trend=TREND_AUDIT.get(st), county_calibration=CALIB_AUDIT.get(st), respondent_model=_rv2_race(st, fl), bounds=dict(county_support=_BND_S, county_turnout=_BND_T),
                    poll_tier=poll_tier, poll_house_index=house_index, poll_houses_recent=n_houses, newest_poll_days=newest_days, state_total_turnout=state_total, nat_ratio=nat_ratio, st_factor=st_factor,
                    third_parties=[(nm, pty) for nm, pty, _ in tcols])
     if ELECTORATE:
