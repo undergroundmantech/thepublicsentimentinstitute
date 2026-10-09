@@ -353,3 +353,29 @@ a.psi-btn:hover, button.psi-btn:hover { background: rgba(var(--line-rgb),.1); tr
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
 }
+
+/* Results boards (.desk) keep main's surface, ink and signal tokens so rings, tables and maps render as on main. */
+html[data-theme="light"] .desk {
+  --canvas:#f7f7f4; --background:#f7f7f4; --background2:#f1f1ed; --panel:#ffffff; --panel2:#f1f1ed; --panel3:#e9e9e4;
+  --ink:#17171b; --foreground:#17171b; --foreground2:#3a3a3f; --ink2:#5d5d58; --muted:#5d5d58; --ink3:#62625b; --muted2:#62625b; --muted3:rgba(23,23,27,.68);
+  --hairline:#e8e8e2; --hairline2:#d9d9d1; --border:#e8e8e2; --border2:#d9d9d1; --border3:#c4c4ba;
+  --dem:#1d5fc4; --gop:#c22f3b; --rep:#c22f3b; --c2:#b5338f; --dem-dim:rgba(29,95,196,.10); --gop-dim:rgba(194,47,59,.10);
+  --live:#0d9488; --called:#15803d; --win:#15803d; --gold:#a16207;
+  --purple:#6d3ee9; --purple2:#8a63ef; --red:#c22f3b; --red2:#d64550; --blue:#1d5fc4; --blue2:#3b7bde;
+  --purple-dim:rgba(109,62,233,.10); --red-dim:rgba(194,47,59,.10); --blue-dim:rgba(29,95,196,.10); --white-accent:#17171b;
+  --shadow-sm:0 1px 2px rgba(23,23,27,.04),0 2px 8px rgba(23,23,27,.05); --shadow-md:0 4px 12px rgba(23,23,27,.05),0 12px 32px rgba(23,23,27,.07); --shadow-lg:0 6px 16px rgba(23,23,27,.05),0 24px 64px rgba(23,23,27,.10);
+  --accent-link:#5a2fd4; --approve:#2c7a5b; --disapprove:#9c3aa8;
+  --ink-rgb:23,23,27; --canvas-rgb:247,247,244; --line-rgb:23,23,27; --mute:1.05; --floor:.24; --struct:1.5;
+}
+html[data-theme="dark"] .desk {
+  --canvas:#0a0a0c; --background:#0a0a0c; --background2:#111114; --panel:#111114; --panel2:#16161a; --panel3:#1c1c21;
+  --ink:#f2f2f0; --foreground:#f2f2f0; --foreground2:rgba(242,242,240,.78); --ink2:rgba(242,242,240,.62); --muted:rgba(242,242,240,.62); --ink3:rgba(242,242,240,.50); --muted2:rgba(242,242,240,.50); --muted3:rgba(242,242,240,.52);
+  --hairline:rgba(255,255,255,.08); --hairline2:rgba(255,255,255,.15); --border:rgba(255,255,255,.08); --border2:rgba(255,255,255,.15); --border3:rgba(255,255,255,.24);
+  --dem:#3b7bde; --gop:#d64550; --rep:#d64550; --c2:#c757a8; --dem-dim:rgba(59,123,222,.16); --gop-dim:rgba(214,69,80,.16);
+  --live:#2dd4bf; --called:#37b26c; --win:#37b26c; --gold:#e8b93c;
+  --purple:#8a63ef; --purple2:#a486f3; --red:#d64550; --red2:#e4737c; --blue:#3b7bde; --blue2:#6ea3ee;
+  --purple-dim:rgba(138,99,239,.18); --red-dim:rgba(214,69,80,.18); --blue-dim:rgba(59,123,222,.18); --white-accent:#f2f2f0;
+  --shadow-sm:0 1px 2px rgba(0,0,0,.40),0 2px 8px rgba(0,0,0,.30); --shadow-md:0 4px 12px rgba(0,0,0,.45),0 12px 32px rgba(0,0,0,.40); --shadow-lg:0 6px 16px rgba(0,0,0,.50),0 24px 64px rgba(0,0,0,.55);
+  --accent-link:#8a63ef; --approve:#4fd39a; --disapprove:#d67ae0;
+  --ink-rgb:242,242,240; --canvas-rgb:10,10,12; --line-rgb:255,255,255; --mute:1; --floor:.13; --struct:1.25;
+}

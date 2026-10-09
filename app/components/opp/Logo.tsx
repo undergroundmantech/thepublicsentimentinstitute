@@ -4,7 +4,7 @@
 // 30 40 460 120 so the mark and wordmark sit on one line without the padding.
 import type { CSSProperties } from "react";
 
-export function Lockup({ height = 44, className, style, title = "OnPoint Politics" }: { height?: number; className?: string; style?: CSSProperties; title?: string }) {
+function MonoLockup({ height = 44, className, style, title = "OnPoint Politics" }: { height?: number; className?: string; style?: CSSProperties; title?: string }) {
   return (
     <svg viewBox="30 40 460 120" height={height} className={className} style={{ width: "auto", display: "block", ...style }} role="img" aria-label={title}>
       <g>
@@ -38,6 +38,22 @@ export function Lockup({ height = 44, className, style, title = "OnPoint Politic
     </g>
   </g>
     </svg>
+  );
+}
+
+// Dark theme: the currentColor lockup. Light theme: the full-color SVG, cropped to the same box.
+// CSS (.lk-d / .lk-l in opp.css) picks one. Pass mono for surfaces that stay dark in both themes.
+export function Lockup({ height = 44, className, style, title = "OnPoint Politics", mono = false }: { height?: number; className?: string; style?: CSSProperties; title?: string; mono?: boolean }) {
+  if (mono) return <MonoLockup height={height} className={className} style={style} title={title} />;
+  const k = height / 120;
+  return (
+    <span className={["lk", className].filter(Boolean).join(" ")} style={{ display: "block", ...style }}>
+      <MonoLockup height={height} className="lk-d" title={title} />
+      <span className="lk-l" style={{ width: 460 * k, height, overflow: "hidden" }}>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src="/onpointlogo_color.svg" alt={title} style={{ display: "block", maxWidth: "none", height: 200 * k, width: 500 * k, marginLeft: -30 * k, marginTop: -40 * k }} />
+      </span>
+    </span>
   );
 }
 

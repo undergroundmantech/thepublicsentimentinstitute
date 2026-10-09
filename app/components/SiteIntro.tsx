@@ -121,7 +121,7 @@ export default function SiteIntro() {
 
       <div ref={panelRef} className="panel">
         <div className="art">
-          <Lockup height={52} />
+          <Lockup height={52} mono />
           <Icon size={220} className="wm" />
         </div>
         <div className="body">
