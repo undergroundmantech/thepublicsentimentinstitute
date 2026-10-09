@@ -11,7 +11,7 @@ const COLS = [
     ["/forecast/methodology", "Methodology"], ["/forecast/changelog", "Changelog"],
   ] },
   { h: "Results", links: [
-    ["/results/live", "Live desk"], ["/results/archive", "Archive"], ["/maps/electoral", "Electoral map"],
+    ["/results/tonight", "Live desk"], ["/results/archive", "Archive"], ["/maps/electoral", "Electoral map"],
     ["/maps/party-registration", "Party registration"], ["/maps/early-vote", "Early vote"],
   ] },
   { h: "TPSI", links: [

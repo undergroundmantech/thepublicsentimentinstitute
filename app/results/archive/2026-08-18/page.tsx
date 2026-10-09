@@ -4,7 +4,7 @@
  * ARCHIVED BOARD — August 18, 2026 primary night (Florida, Wyoming, Alaska).
  * Route: /results/archive/2026-08-18
  *
- * Retired from /results/live (formerly /results/tonight) after the August 18 primaries, exactly as
+ * Retired from /results/tonight after the August 18 primaries, exactly as
  * August 4 was retired before it; that route is the standing elections landing
  * page again. Live CivicAPI polling still runs, so the feed returns the
  * certified final numbers rather than a frozen snapshot — which is what an

@@ -4,12 +4,22 @@ import dynamic from "next/dynamic";
 import { Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 
-// Quiet hold while the (heavy, client only) chunk downloads.
+// Dark hold while the (heavy, client-only) chunk downloads — without this the
+// global light layout flashes through for a beat on every navigation in.
 function DarkHold() {
+  const light =
+    typeof window !== "undefined" &&
+    (() => {
+      try {
+        return localStorage.getItem("opa-theme") === "light";
+      } catch {
+        return false;
+      }
+    })();
   return (
-    <div className="opp" style={{ minHeight: "60vh" }}>
-      <div className="empty" role="status">Loading the results desk</div>
-    </div>
+    <>
+      <div aria-hidden style={{ position: "fixed", inset: 0, zIndex: 200, background: light ? "#ffffff" : "var(--canvas)" }} />
+    </>
   );
 }
 
@@ -25,7 +35,7 @@ const OpaResultsPage = dynamic(() => import("./onpoint/OpaResultsPage"), {
 // the default once this landing is retired; this is a router swap only, not a
 // replacement of that file. The August 4 primary board it replaced is archived
 // at /results/archive/2026-08-04.
-const TonightBoard = dynamic(() => import("./live/page"), {
+const TonightBoard = dynamic(() => import("./tonight/page"), {
   ssr: false,
   loading: () => <DarkHold />,
 });

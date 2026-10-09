@@ -170,7 +170,7 @@ export default function RaceMapHover({ race, mode = "margin" }: { race: any; mod
 
   if (failed) {
     return (
-      <div style={{ display: "grid", placeItems: "center", height: "100%", color: "rgba(var(--ink-rgb),calc(0.35 * var(--mute-k) + var(--floor)))", fontSize: 13 }}>
+      <div style={{ display: "grid", placeItems: "center", height: "100%", color: "rgba(var(--ink-rgb),calc(0.35 * var(--mute) + var(--floor)))", fontSize: 13 }}>
         map unavailable for this race
       </div>
     );
@@ -222,23 +222,23 @@ export default function RaceMapHover({ race, mode = "margin" }: { race: any; mod
           >
             <div style={{ padding: "10px 16px", background: `linear-gradient(180deg, ${tip.lead} 0%, ${tip.lead}d9 100%)`, boxShadow: "inset 0 -1px 0 rgba(var(--line-rgb),0.30)" }}>
               <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", gap: 12 }}>
-                <div style={{ fontSize: 15, fontWeight: 800, textTransform: "uppercase", letterSpacing: "-0.01em", color: "var(--hi)", lineHeight: 1.06, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", fontFamily: 'var(--font-b)' }}>
+                <div style={{ fontSize: 15, fontWeight: 800, textTransform: "uppercase", letterSpacing: "-0.01em", color: "#fff", lineHeight: 1.06, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", fontFamily: '"Instrument Sans", system-ui, sans-serif' }}>
                   {tip.s.name}
                 </div>
-                <div style={{ fontSize: 9, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.18em", color: "rgba(var(--ink-rgb),calc(0.7 * var(--mute-k) + var(--floor)))", whiteSpace: "nowrap", fontFamily: 'var(--font-b)' }}>
+                <div style={{ fontSize: 9, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.18em", color: "rgba(var(--ink-rgb),calc(0.7 * var(--mute) + var(--floor)))", whiteSpace: "nowrap", fontFamily: '"Instrument Sans", system-ui, sans-serif' }}>
                   {race.province} · {race.election_type || "Race"}
                 </div>
               </div>
             </div>
 
             {tip.banner ? (
-              <div style={{ padding: "6px 16px", fontSize: 10, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.18em", lineHeight: 1, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", background: tip.winner ? `${tip.lead}1c` : "rgba(var(--line-rgb),0.025)", color: tip.winner ? tip.lead : "#9aa1ac", borderBottom: "1px solid rgba(var(--line-rgb),0.05)", fontFamily: 'var(--font-b)' }}>
+              <div style={{ padding: "6px 16px", fontSize: 10, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.18em", lineHeight: 1, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", background: tip.winner ? `${tip.lead}1c` : "rgba(var(--line-rgb),0.025)", color: tip.winner ? tip.lead : "#9aa1ac", borderBottom: "1px solid rgba(var(--line-rgb),0.05)", fontFamily: '"Instrument Sans", system-ui, sans-serif' }}>
                 {tip.banner}
               </div>
             ) : null}
 
             {!tip.has ? (
-              <div style={{ padding: "12px 16px", fontSize: 11.5, color: "rgba(var(--ink-rgb),calc(0.6 * var(--mute-k) + var(--floor)))", lineHeight: 1.45, fontFamily: 'var(--font-b)' }}>
+              <div style={{ padding: "12px 16px", fontSize: 11.5, color: "rgba(var(--ink-rgb),calc(0.6 * var(--mute) + var(--floor)))", lineHeight: 1.45, fontFamily: '"Instrument Sans", system-ui, sans-serif' }}>
                 No votes reported here yet.
               </div>
             ) : (
@@ -253,7 +253,7 @@ export default function RaceMapHover({ race, mode = "margin" }: { race: any; mod
                         position: "relative", display: "flex", alignItems: "center", height: 34, paddingRight: 16,
                         borderTop: idx ? "1px solid rgba(var(--line-rgb),0.05)" : "none",
                         background: win ? `linear-gradient(90deg, ${col}26 0%, ${col}10 55%, transparent 100%)` : "transparent",
-                        fontFamily: 'var(--font-b)',
+                        fontFamily: '"Instrument Sans", system-ui, sans-serif',
                       }}
                     >
                       <span style={{ width: 4, alignSelf: "stretch", flexShrink: 0, background: col }} />
@@ -265,16 +265,16 @@ export default function RaceMapHover({ race, mode = "margin" }: { race: any; mod
                           </svg>
                         ) : null}
                       </span>
-                      <span style={{ flex: 1, minWidth: 0, fontSize: 14, lineHeight: 1, letterSpacing: "-0.01em", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", fontWeight: win ? 800 : 700, color: win ? "#f6f1e6" : "rgba(var(--ink-rgb),calc(0.92 * var(--mute-k) + var(--floor)))" }}>
+                      <span style={{ flex: 1, minWidth: 0, fontSize: 14, lineHeight: 1, letterSpacing: "-0.01em", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", fontWeight: win ? 800 : 700, color: win ? "#f6f1e6" : "rgba(var(--ink-rgb),calc(0.92 * var(--mute) + var(--floor)))" }}>
                         {c.name}
                         {c.party && c.party !== "Nonpartisan" ? (
-                          <span style={{ color: "rgba(var(--ink-rgb),calc(0.4 * var(--mute-k) + var(--floor)))", fontWeight: 500, fontSize: 11 }}> {c.party}</span>
+                          <span style={{ color: "rgba(var(--ink-rgb),calc(0.4 * var(--mute) + var(--floor)))", fontWeight: 500, fontSize: 11 }}> {c.party}</span>
                         ) : null}
                       </span>
-                      <span style={{ fontFamily: "var(--font-m)", fontSize: 12, color: "rgba(var(--ink-rgb),calc(0.5 * var(--mute-k) + var(--floor)))", fontVariantNumeric: "tabular-nums", marginRight: 16 }}>
+                      <span style={{ fontFamily: '"JetBrains Mono", ui-monospace, monospace', fontSize: 12, color: "rgba(var(--ink-rgb),calc(0.5 * var(--mute) + var(--floor)))", fontVariantNumeric: "tabular-nums", marginRight: 16 }}>
                         {fmtInt(c.votes || 0)}
                       </span>
-                      <span style={{ fontSize: 14, fontVariantNumeric: "tabular-nums", letterSpacing: "-0.02em", width: 58, textAlign: "right", fontWeight: win ? 800 : 700, color: win ? "#f6f1e6" : "rgba(var(--ink-rgb),calc(0.75 * var(--mute-k) + var(--floor)))" }}>
+                      <span style={{ fontSize: 14, fontVariantNumeric: "tabular-nums", letterSpacing: "-0.02em", width: 58, textAlign: "right", fontWeight: win ? 800 : 700, color: win ? "#f6f1e6" : "rgba(var(--ink-rgb),calc(0.75 * var(--mute) + var(--floor)))" }}>
                         {(Number(c.percent) || 0).toFixed(1)}%
                       </span>
                     </div>
@@ -283,8 +283,8 @@ export default function RaceMapHover({ race, mode = "margin" }: { race: any; mod
               </div>
             )}
 
-            <div style={{ padding: "8px 16px 10px", borderTop: "1px solid rgba(var(--line-rgb),0.08)", fontFamily: 'var(--font-b)' }}>
-              <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", gap: 8, fontSize: 9.5, color: "rgba(var(--ink-rgb),calc(0.5 * var(--mute-k) + var(--floor)))", lineHeight: 1 }}>
+            <div style={{ padding: "8px 16px 10px", borderTop: "1px solid rgba(var(--line-rgb),0.08)", fontFamily: '"Instrument Sans", system-ui, sans-serif' }}>
+              <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", gap: 8, fontSize: 9.5, color: "rgba(var(--ink-rgb),calc(0.5 * var(--mute) + var(--floor)))", lineHeight: 1 }}>
                 <span style={{ whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
                   {tip.has ? `${fmtInt(tip.tot)} votes · civicAPI` : "awaiting results · civicAPI"}
                 </span>

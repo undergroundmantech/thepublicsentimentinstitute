@@ -62,14 +62,12 @@ function LocalCard({ race }: { race: CivicRace }) {
   const measure = isBallotMeasure(cands);
   const jurisdiction = race.province || "";
 
-  const won = (c: CivicCandidate) => !!c.winner && (reporting > 0 || cands.some((x) => (x.votes || 0) > 0));
-
   return (
-    <article className="card lb-card">
+    <article className="lb-card">
       <header className="lb-head">
         <div className="lb-kicker">
           <span>{jurisdiction}</span>
-          <span>{reporting > 0 ? `${reporting.toFixed(0)}% reporting` : "Not yet reporting"}</span>
+          <span>{reporting > 0 ? `${reporting.toFixed(0)}% reporting` : "not yet reporting"}</span>
         </div>
         <h2>{race.election_name || race.election_type || "Race"}</h2>
         <div className="lb-status">{status}</div>
@@ -82,7 +80,7 @@ function LocalCard({ race }: { race: CivicRace }) {
             <div className="lb-cand" key={i}>
               <i className="lb-swatch" style={{ background: color }} />
               <div className="lb-name">
-                <strong>{c.name}{won(c) && <span className="lb-chk" aria-label="Winner">&#10003;</span>}</strong>
+                <strong>{c.name}</strong>
                 {tag ? <small>{tag}</small> : null}
               </div>
               <div className="lb-result">
@@ -101,7 +99,7 @@ function LocalCard({ race }: { race: CivicRace }) {
               )}`
             : leader
             ? `${String(leader.name || "").split(/\s+/).slice(-1)[0]} leading`
-            : "No votes yet"}
+            : "—"}
         </span>
         <span>Updated {updatedLabel()}</span>
       </footer>
@@ -110,7 +108,7 @@ function LocalCard({ race }: { race: CivicRace }) {
 }
 
 export default function LocalBoard() {
-  const { index, error } = useElectionIndex(true) as { index: any; error: boolean };
+  const { index } = useElectionIndex(true) as { index: any };
   const [q, setQ] = useState("");
   const [stateFilter, setStateFilter] = useState("");
   const [live, setLive] = useState<Record<number, CivicRace>>({});
@@ -182,62 +180,43 @@ export default function LocalBoard() {
   }, [filtered]);
 
   return (
-    <div className="opp lb-wrap">
+    <div className="lb-wrap">
       <style>{LB_CSS}</style>
-      <nav className="crumbs" aria-label="Breadcrumb">
-        <a href="/">Home</a><span className="sep">/</span>
-        <a href="/results">Results</a><span className="sep">/</span>
-        <span>Local races</span>
-      </nav>
-      <header className="ph">
-        <div className="eye g">OnPoint Politics results desk</div>
-        <h1>Local race <em>board</em></h1>
-        <p className="lede">
+      <div className="lb-header">
+        <div className="lb-eyebrow">Local results desk</div>
+        <h1>Local race board</h1>
+        <p className="lb-intro">
           A compact scan of reported results for contests that do not receive forecasting, county
           modeling, or expanded analytical coverage.
         </p>
-        <div className="pmeta">
-          <span><b className="mono">{index ? filtered.length : "--"}</b> races shown</span>
-          {date && <span>Election date <b className="mono">{date}</b></span>}
-          <span>Returns from AP through civicAPI, refreshed every 30 seconds</span>
+        <div className="lb-controls">
+          <input
+            className="lb-search"
+            placeholder="Search jurisdiction, office, or candidate…"
+            value={q}
+            onChange={(e) => setQ(e.target.value)}
+          />
+          <select className="lb-select" value={stateFilter} onChange={(e) => setStateFilter(e.target.value)}>
+            <option value="">All states</option>
+            {states.map((s) => (
+              <option key={s} value={s}>
+                {s}
+              </option>
+            ))}
+          </select>
+          <select className="lb-select" value={date} onChange={(e) => setDate(e.target.value)}>
+            {dates.map((d) => (
+              <option key={d} value={d}>
+                {d}
+              </option>
+            ))}
+          </select>
         </div>
-      </header>
-      <div className="lb-controls">
-        <input
-          className="lb-search"
-          placeholder="Search jurisdiction, office or candidate"
-          aria-label="Search local races"
-          value={q}
-          onChange={(e) => setQ(e.target.value)}
-        />
-        <select className="lb-select" aria-label="State" value={stateFilter} onChange={(e) => setStateFilter(e.target.value)}>
-          <option value="">All states</option>
-          {states.map((s) => (
-            <option key={s} value={s}>
-              {s}
-            </option>
-          ))}
-        </select>
-        <select className="lb-select" aria-label="Election date" value={date} onChange={(e) => setDate(e.target.value)}>
-          {dates.map((d) => (
-            <option key={d} value={d}>
-              {d}
-            </option>
-          ))}
-        </select>
       </div>
-      {error && !index ? (
-        <div className="rx-feed" role="status">
-          <span className="dot" aria-hidden />
-          <div>
-            <b>Results feed unavailable</b>
-            The local race index comes from AP through civicAPI, which is not answering right now. Try again in a few minutes.
-          </div>
-        </div>
-      ) : !index ? (
-        <div className="card"><div className="empty">Loading local races</div></div>
+      {!index ? (
+        <div className="lb-empty">Loading local races…</div>
       ) : filtered.length === 0 ? (
-        <div className="card"><div className="empty">No local races match this filter.</div></div>
+        <div className="lb-empty">No local races match this filter.</div>
       ) : (
         <section className="lb-board">
           {filtered.map((d: any) => {
@@ -251,30 +230,31 @@ export default function LocalBoard() {
 }
 
 const LB_CSS = `
-.opp.lb-wrap{color:var(--ink);}
-.opp .lb-controls{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px;}
-.opp .lb-search{flex:1;min-width:220px;padding:10px 16px;border:1px solid var(--line2);border-radius:999px;background:var(--glass2);color:var(--ink);font:500 13.5px var(--font-b);}
-.opp .lb-search::placeholder{color:var(--mute);}
-.opp .lb-select{padding:10px 14px;border:1px solid var(--line2);border-radius:999px;background:var(--glass2);color:var(--ink);font:600 13px var(--font-b);}
-.opp .lb-select option{background:#150f1f;color:var(--ink);}
-.opp .lb-board{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;}
-.opp .lb-card{overflow:hidden;display:flex;flex-direction:column;}
-.opp .lb-head{padding:14px 16px 12px;border-bottom:1px solid var(--line);}
-.opp .lb-kicker{display:flex;justify-content:space-between;gap:10px;font:700 10px var(--font-m);letter-spacing:.1em;text-transform:uppercase;color:var(--mute);}
-.opp .lb-head h2{font:800 15px/1.25 var(--font-d);margin:8px 0 4px;letter-spacing:-.02em;}
-.opp .lb-status{font-size:12px;color:var(--ink2);font-weight:700;}
-.opp .lb-cands{padding:6px 16px 10px;}
-.opp .lb-cand{display:grid;grid-template-columns:5px 1fr auto;gap:10px;align-items:center;padding:9px 0;border-bottom:1px solid var(--line);}
-.opp .lb-cand:last-child{border-bottom:0;}
-.opp .lb-swatch{width:4px;height:30px;border-radius:4px;}
-.opp .lb-name strong{display:block;font-size:13px;font-weight:700;}
-.opp .lb-name small{font-size:11px;color:var(--mute);}
-.opp .lb-chk{color:var(--win);font-weight:800;margin-left:6px;}
-.opp .lb-result{text-align:right;}
-.opp .lb-result strong{display:block;font:700 14px var(--font-m);font-variant-numeric:tabular-nums;}
-.opp .lb-result small{font:500 11px var(--font-m);color:var(--mute);font-variant-numeric:tabular-nums;}
-.opp .lb-foot{margin-top:auto;display:flex;justify-content:space-between;gap:10px;padding:10px 16px;border-top:1px solid var(--line);font:500 11px var(--font-m);color:var(--mute);}
-.opp .lb-leader{color:var(--ink);font-weight:700;}
-@media(max-width:950px){.opp .lb-board{grid-template-columns:repeat(2,minmax(0,1fr));}}
-@media(max-width:560px){.opp .lb-board{grid-template-columns:1fr;}}
+.lb-wrap{max-width:1280px;margin:0 auto;padding:34px 24px 56px;color:var(--ink);}
+.lb-eyebrow{font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-mute);}
+.lb-header h1{font-size:31px;line-height:1.05;margin:8px 0 8px;letter-spacing:-.035em;}
+.lb-intro{max-width:680px;margin:0 0 20px;color:var(--ink-mute);font-size:13px;line-height:1.55;}
+.lb-controls{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:22px;}
+.lb-search{flex:1;min-width:220px;padding:10px 12px;border:1px solid var(--rule);border-radius:8px;background:var(--wash);color:var(--ink);font-size:13px;}
+.lb-select{padding:10px 12px;border:1px solid var(--rule);border-radius:8px;background:var(--wash);color:var(--ink);font-size:13px;}
+.lb-empty{padding:40px 0;color:var(--ink-mute);font-size:13px;text-align:center;}
+.lb-board{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;}
+.lb-card{background:var(--page);border:1px solid var(--rule);border-radius:12px;overflow:hidden;}
+.lb-head{padding:14px 15px 11px;border-bottom:1px solid var(--rule);}
+.lb-kicker{display:flex;justify-content:space-between;gap:10px;font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-mute);font-weight:750;}
+.lb-head h2{font-size:15px;margin:7px 0 2px;letter-spacing:-.015em;}
+.lb-status{font-size:10px;color:#15866b;font-weight:750;}
+.lb-cands{padding:7px 15px 10px;}
+.lb-cand{display:grid;grid-template-columns:5px 1fr auto;gap:9px;align-items:center;padding:9px 0;border-bottom:1px solid var(--rule-soft);}
+.lb-cand:last-child{border-bottom:0;}
+.lb-swatch{width:4px;height:29px;border-radius:4px;}
+.lb-name strong{display:block;font-size:11px;}
+.lb-name small{font-size:9px;color:var(--ink-mute);}
+.lb-result{text-align:right;}
+.lb-result strong{display:block;font-size:15px;letter-spacing:-.03em;}
+.lb-result small{font-size:9px;color:var(--ink-mute);}
+.lb-foot{display:flex;justify-content:space-between;gap:10px;padding:9px 15px;background:var(--wash);font-size:9px;color:var(--ink-mute);}
+.lb-leader{color:var(--ink);font-weight:750;}
+@media(max-width:950px){.lb-board{grid-template-columns:repeat(2,minmax(0,1fr));}}
+@media(max-width:560px){.lb-board{grid-template-columns:1fr;}.lb-wrap{padding:26px 14px;}}
 `;

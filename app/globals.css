@@ -226,7 +226,7 @@ button, input, textarea, select { font: inherit; color: inherit; }
 h1, h2, h3, h4, h5, h6 {
   margin: 0 0 .5em;
   font-family: var(--font-d);
-  font-weight: 800;
+  font-weight: 700;
   letter-spacing: -.02em;
   line-height: 1.1;
   color: var(--ink);
@@ -255,7 +255,7 @@ li { margin: .35em 0; }
   font-family: var(--font-b); font-weight: 700; text-transform: uppercase;
   letter-spacing: .16em; font-size: 11px; color: var(--mute);
 }
-.title-longform { font-family: var(--font-d); font-weight: 800; letter-spacing: -.02em; }
+.title-longform { font-family: var(--font-d); font-weight: 700; letter-spacing: -.02em; }
 .psi-num, td.num, .num { font-family: var(--font-m); font-variant-numeric: tabular-nums; }
 .psi-label { font-family: var(--font-b); font-size: 11px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--mute); }
 .psi-label-purple { color: var(--ind); }

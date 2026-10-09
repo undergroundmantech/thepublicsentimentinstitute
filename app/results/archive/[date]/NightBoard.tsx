@@ -6,7 +6,7 @@
  * as the August boards, so the archive reads as one publication rather than a
  * grid of links into a different design.
  *
- * Reported vote only. No OnPoint model ran on these races, and this board must
+ * Reported vote only. No TPSI model ran on these races, and this board must
  * never imply one did.
  */
 
@@ -52,17 +52,16 @@ const partyOf = (p?: string) => {
   return "n";
 };
 
-/** Party colors only. The leader carries the party hue; a same party runner up
- *  takes the pale tint of that hue, never the other party's color. Nonpartisan
- *  contests use ink. */
-const tone = (i: number, party?: string, leadParty?: string) => {
-  const s = String(party || "").toLowerCase();
-  const p = partyOf(party);
-  const same = i > 0 && partyOf(leadParty) === p;
-  if (p === "d") return same ? "var(--dem3)" : "var(--dem)";
-  if (p === "r") return same ? "var(--gop3)" : "var(--gop)";
-  if (/independ/.test(s)) return "var(--ind)";
-  return i === 0 ? "var(--ink)" : "var(--mute)";
+/** Color LAW: the party hue for the leader, --c2 for the runner-up. Never the
+ *  opposing party's colour inside a one-party primary. */
+const tone = (i: number, party?: string) => {
+  if (i === 0) {
+    const p = partyOf(party);
+    return p === "r" ? "var(--gop)" : p === "d" ? "var(--dem)" : "var(--ink2)";
+  }
+  if (i === 1) return "var(--c2)";
+  if (i === 2) return "var(--k3)";
+  return "var(--ink3)";
 };
 
 /* ═════════════════════ DATA ═════════════════════ */
@@ -131,56 +130,69 @@ export default function NightBoard({ date }: { date: string }) {
   const heading = formatElectionDate(date);
 
   return (
-    <div className="opp desk">
+    <div className="desk">
       <style>{CSS}</style>
 
       <main className="shell">
-        <nav className="crumbs" aria-label="Breadcrumb">
-          <Link href="/">Home</Link><span className="sep">/</span>
-          <Link href="/results">Results</Link><span className="sep">/</span>
-          <Link href="/results/archive">Archive</Link><span className="sep">/</span>
-          <span>{heading}</span>
-        </nav>
-        <header className="ph">
-          <div className="eye g">Election night · reported results</div>
-          <h1>{heading} <em>results</em></h1>
-          <p className="lede">
-            Every race the OnPoint Politics results desk tracked on this date, as reported by AP
-            through civicAPI. Counted vote only: no forecast ran on these contests, and nothing on
-            this page is a projection.
-          </p>
-          <div className="pmeta">
-            <span><b className="mono">{entries.length}</b> races</span>
-            <span><b className="mono">{groups.length}</b> {groups.length === 1 ? "state" : "states"}</span>
-            <span>Called <b className="mono">{races ? totals.called : "--"}</b></span>
-            <span>Votes counted <b className="mono">{races ? int(totals.votes) : "--"}</b></span>
-            <Link className="btn sm" href="/results/archive">All election nights</Link>
+        <section className="race-header">
+          <div className="archive-banner">
+            <span>Archived · {heading}</span>
+            <Link href="/results/archive">All election nights →</Link>
           </div>
-        </header>
 
-        {failed && (
-          <div className="rx-feed" role="status" style={{ marginBottom: 16 }}>
-            <span className="dot" aria-hidden />
+          <div className="race-kicker">
+            <span>Election night</span>
+            <span>·</span>
+            <span>Reported results</span>
+            <span>·</span>
+            <span>No TPSI model</span>
+          </div>
+
+          <div className="race-heading-row">
             <div>
-              <b>Results feed unavailable</b>
-              The civicAPI returns for {heading} could not be loaded just now. The race list below is complete; vote shares fill in once the feed answers.
-              <div style={{ marginTop: 10 }}>
-                <button type="button" className="utility-button" onClick={retry}>Try again</button>
+              <h1>{heading}</h1>
+              <p className="race-deck">
+                Every race TPSI tracked on this date, as reported by AP through CivicAPI.
+                Counted vote only — no forecast ran on these contests, and nothing on this
+                page is a projection.
+              </p>
+            </div>
+            <div className="race-meta">
+              <div className="meta-block">
+                <span>Races</span>
+                <b>{entries.length}</b>
+              </div>
+              <div className="meta-block">
+                <span>{groups.length === 1 ? "State" : "States"}</span>
+                <b>{groups.length}</b>
+              </div>
+              <div className="meta-block">
+                <span>Called</span>
+                <b>{races ? totals.called : "—"}</b>
+              </div>
+              <div className="meta-block">
+                <span>Votes counted</span>
+                <b>{races ? int(totals.votes) : "—"}</b>
               </div>
             </div>
           </div>
-        )}
+        </section>
 
         <section className="board" id="board">
           <div className="board-head">
             <div>
               <h2>Every race on the ballot</h2>
-              <p>Reported results only, no OnPoint model.</p>
+              <p>Reported results only, no TPSI model.</p>
             </div>
             <div className="board-meta">
               <span className="model-label">
                 {entries.length} races · {groups.length} {groups.length === 1 ? "state" : "states"}
               </span>
+              {failed && (
+                <button type="button" className="utility-button" onClick={retry}>
+                  Feed unavailable · retry
+                </button>
+              )}
             </div>
           </div>
 
@@ -200,8 +212,7 @@ export default function NightBoard({ date }: { date: string }) {
                       key={e.id}
                       {...titleOf(rest)}
                       race={races?.[e.id]}
-                      pending={races === null && !failed}
-                      failed={failed}
+                      pending={races === null}
                     />
                   );
                 })}
@@ -213,15 +224,15 @@ export default function NightBoard({ date }: { date: string }) {
         <section className="method">
           <h2>Method</h2>
           <p className="prose">
-            These are reported vote totals carried from AP through civicAPI, shown as the
-            share of the vote counted in each race. OnPoint Politics published no survey, no
-            county model and no projection for the races on this page; where a race is marked
+            These are reported vote totals carried from AP through CivicAPI, shown as the
+            share of the vote counted in each race. TPSI published no survey, no county
+            model and no projection for the races on this page; where a race is marked
             called, that is AP&rsquo;s decision, not ours. Percentages are of the counted vote
             and can move until a state certifies.
           </p>
           <div className="method-foot">
-            <span className="model-label">OnPoint Politics results desk</span>
-            <span className="model-label">Returns via civicAPI</span>
+            <span className="model-label">© 2026 The Public Sentiment Institute</span>
+            <span className="model-label">Powered by CivicAPI</span>
           </div>
         </section>
       </main>
@@ -236,13 +247,11 @@ function SlateCard({
   sub,
   race,
   pending,
-  failed,
 }: {
   title: string;
   sub: string;
   race?: Race;
   pending: boolean;
-  failed?: boolean;
 }) {
   const all = sortC(race);
   const show = all.slice(0, 2);
@@ -272,18 +281,18 @@ function SlateCard({
               </span>
               <span className="l4-pct">{pctLabel(share(c, all))}%</span>
               <div className="l4-bar">
-                <span style={{ width: `${Math.max(share(c, all), 0)}%`, background: tone(i, c.party, show[0]?.party) }} />
+                <span style={{ width: `${Math.max(share(c, all), 0)}%`, background: tone(i, c.party) }} />
               </div>
             </div>
           ))}
         </div>
       ) : (
-        <div className="l4-empty">{pending ? "Loading returns" : failed ? "Feed unavailable" : "No returns reported"}</div>
+        <div className="l4-empty">{pending ? "Loading returns" : "No returns reported"}</div>
       )}
 
       <div className="l4-foot">
         <span className="model-label">
-          {live ? `${pctLabel(reporting(race))}% reporting` : pending ? "--" : failed ? "Awaiting feed" : "Feed carried no result"}
+          {live ? `${pctLabel(reporting(race))}% reporting` : pending ? "—" : "Feed carried no result"}
         </span>
       </div>
     </div>
@@ -291,18 +300,21 @@ function SlateCard({
 }
 
 /* ═════════════════════ STYLE ═════════════════════ */
-/* The August board's shell, trimmed to what an archive night uses. Tokens come
-   from globals.css; the glass overrides live in app/results/results.css. */
+/* The August board's shell, trimmed to what an archive night uses. Surface, ink,
+   party and signal tokens come from globals.css so this flips with the site's
+   data-theme; only desk-local values are declared here. */
 
 const CSS = `
 .desk{
-  --mono:var(--font-m);
-  --sans:var(--font-b);
+  --k3:#6D4B96; --k5:#8A929C;
+  --mono:var(--font-numeric,'JetBrains Mono'),ui-monospace,monospace;
+  --sans:var(--font-body,'Geist'),system-ui,sans-serif;
   --r-panel:14px; --r-card:10px; --r-pill:999px;
   --shadow:none;
   color:var(--ink);min-height:100vh;font-family:var(--sans);
   -webkit-font-smoothing:antialiased;
 }
+html[data-theme="dark"] .desk{--k3:#8a63ef}
 
 .desk *{margin:0;padding:0;box-sizing:border-box}
 .desk a{text-decoration:none;color:inherit}
@@ -368,7 +380,7 @@ const CSS = `
 .l4-nm span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .l4-check{flex:0 0 13px;display:inline-grid;place-content:center;width:13px;height:13px;
   border-radius:50%;font-size:8px;font-weight:800;font-style:normal;
-  color:var(--bg);background:var(--win)}
+  color:var(--panel);background:var(--called)}
 .l4-check.ghost{visibility:hidden}
 .l4-pct{font-size:12px;font-weight:800}
 .l4-bar{grid-column:1/-1;height:4px;border-radius:99px;background:var(--panel3);overflow:hidden}

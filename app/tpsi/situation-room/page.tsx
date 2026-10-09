@@ -286,7 +286,7 @@ export default function SituationRoomPage() {
             <div className="card-h">
               <h3>The wire</h3>
               <span className="eye">Today&rsquo;s contests and the latest polls</span>
-              <Link className="btn sm" href="/results/live" style={{ marginLeft: "auto" }}>Election results</Link>
+              <Link className="btn sm" href="/results/tonight" style={{ marginLeft: "auto" }}>Election results</Link>
             </div>
             <div className="sr-wire">
               {!index && !indexError && (
@@ -322,7 +322,7 @@ export default function SituationRoomPage() {
                   const cands = (d.race?.candidates ?? []).slice().sort((a, b) => (b.votes ?? 0) - (a.votes ?? 0)).slice(0, 2);
                   const tot = cands.reduce((s, c) => s + Number(c.percent ?? 0), 0);
                   return (
-                    <Link href="/results/live" className="sr-wirerow" key={`r-${d.id}`}>
+                    <Link href="/results/tonight" className="sr-wirerow" key={`r-${d.id}`}>
                       <span className="sr-w-stamp">{show ? <span className="pill live">{stamp}</span> : ""}</span>
                       <div className="sr-w-body">
                         <div className="sr-w-line">

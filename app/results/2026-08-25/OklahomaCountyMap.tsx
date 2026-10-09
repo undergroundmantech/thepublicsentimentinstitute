@@ -25,8 +25,8 @@ type RGB = [number, number, number];
 /** Light/dark pair per candidate, derived from --k1/--k2 so the fills, the
  *  legend, the topline and the table all stay the same colour. */
 const CAND_RGB: Record<CandidateKey, [RGB, RGB]> = {
-  drummond: [[255, 131, 153], [140, 10, 40]],  // --k1 red, the party hue
-  mazzei: [[225, 220, 234], [111, 104, 131]],   // --k2 ink
+  drummond: [[209, 137, 130], [110, 36, 29]], // #B23A2E
+  mazzei: [[120, 168, 182], [19, 68, 83]],    // #1E6E86
 };
 
 export const CAND_CSS: Record<CandidateKey, string> = {
@@ -34,10 +34,11 @@ export const CAND_CSS: Record<CandidateKey, string> = {
   mazzei: "var(--k2)",
 };
 
-const MID_DARK: RGB = [44, 38, 56];
-const T1_DARK: RGB = [26, 20, 36];
-/** Turnout is not a party number, so its ramp runs to ink, not a party hue. */
-const T2: RGB = [201, 194, 214];
+const MID_DARK: RGB = [58, 58, 66];
+const MID_LIGHT: RGB = [232, 232, 226];
+const T1_DARK: RGB = [30, 30, 36];
+const T1_LIGHT: RGB = [237, 237, 231];
+const T2: RGB = [15, 95, 85];
 
 /** Margin at which a county's fill reaches full saturation. The whole state
  *  models inside ±12, so a wider cap would render Oklahoma uniformly grey. */
@@ -99,6 +100,22 @@ function clampT(t: Transform): Transform {
   };
 }
 
+/** Follows the site's <html data-theme> so the ramps flip with everything else. */
+function useSiteTheme(): "light" | "dark" {
+  const [theme, setTheme] = useState<"light" | "dark">("light");
+  useEffect(() => {
+    const read = () =>
+      setTheme(
+        document.documentElement.getAttribute("data-theme") === "dark" ? "dark" : "light",
+      );
+    read();
+    const mo = new MutationObserver(read);
+    mo.observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+    return () => mo.disconnect();
+  }, []);
+  return theme;
+}
+
 interface Props {
   view: MapView;
   mode: ForecastMode;
@@ -119,8 +136,9 @@ export default function OklahomaCountyMap({ view, mode, counties, liveCounties }
   const svgRef = useRef<SVGSVGElement | null>(null);
   const drag = useRef<{ id: number; x: number; y: number; moved: boolean } | null>(null);
 
-  const mid = MID_DARK;
-  const t1 = T1_DARK;
+  const theme = useSiteTheme();
+  const mid = theme === "dark" ? MID_DARK : MID_LIGHT;
+  const t1 = theme === "dark" ? T1_DARK : T1_LIGHT;
 
   const vmax = useMemo(
     () => Object.values(counties).reduce((m, c) => Math.max(m, c.projectedTurnout), 1),

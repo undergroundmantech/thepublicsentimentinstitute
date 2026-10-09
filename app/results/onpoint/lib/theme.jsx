@@ -1,67 +1,97 @@
-import React, { createContext, useContext, useMemo, useSyncExternalStore } from 'react'
-import { THEME_EVENT, getTheme, toggleTheme, setTheme } from '../../../lib/theme'
+import React, { createContext, useContext, useState, useCallback, useEffect } from 'react'
+import { THEME_EVENT, getTheme, toggleTheme } from '../../../lib/theme'
 
 // ── Theme ────────────────────────────────────────────────────────────────
-// Follows the site theme (<html data-theme>, owned by app/lib/theme.ts and the
-// masthead toggle). This module only carries the hex values that color MATH
-// needs (mix()/shade()/choropleth fills parse hex and cannot read var(--x));
-// everything else uses the site tokens from app/globals.css.
+// The election section is dark-first; light mode is a first-class toggle.
+// Almost all styling flips automatically through CSS variables keyed on
+// <html data-opa-theme> — a SEPARATE attribute from the main site's
+// data-theme, so toggling here never changes the rest of the TPSI site (and
+// vice-versa). THIS file only carries the hex palettes that color MATH
+// needs — mix()/shade()/choropleth fills parse hex and can't read var(--x).
+// Components doing such math call useTheme() and read `P`; everything else just
+// uses the CSS vars and never needs this hook.
 
-const DARK = {
-  page: '#0a0711', pageElev: '#140e1d', card: '#120c1b', cardBd: 'rgba(255,255,255,0.09)',
-  ink: '#f3eff8', inkStrong: '#ffffff',
-  // UI accent is ink, never a party color and never gold
-  accent: '#f3eff8',
-  approve: '#3ddc97', disapprove: '#8e86a3', dem: '#3d7bff', gop: '#ff3b5c',
-  yes: '#3ddc97', no: '#8e86a3',
-  // electionLib shade(): low-margin counties mix toward this base
-  shadeBase: '#1c1626',
-  faintFill: 'rgba(255,255,255,0.045)', faintStroke: 'rgba(255,255,255,0.10)',
-  countyStroke: 'rgba(10,7,17,0.7)',
-  // ResultCard strip foreground target (accent mixed toward this)
-  stripFgTarget: '#ffffff',
-  // nonpartisan cycle: ink tones only, party hues stay reserved for parties
-  set: ['#f3eff8', '#c9c2d6', '#8e86a3', '#5f5873'],
-  mute: '#8e86a3',
+export const PALETTES = {
+  dark: {
+    page: '#0a0a0c', pageElev: '#16161a', card: '#111114', cardBd: 'rgba(255,255,255,0.08)',
+    ink: '#f2f2f0', inkStrong: '#ffffff',
+    accent: '#e8b93c',
+    approve: '#37b26c', disapprove: '#e8b93c', dem: '#3b7bde', gop: '#d64550',
+    yes: '#37b26c', no: '#d64550',
+    // electionLib shade(): low-margin counties mix toward this base
+    shadeBase: '#16161a',
+    faintFill: 'rgba(255,255,255,0.045)', faintStroke: 'rgba(255,255,255,0.10)',
+    countyStroke: 'rgba(8,9,12,0.6)',
+    // ResultCard strip foreground target (accent mixed toward this)
+    stripFgTarget: '#ffffff',
+    // calendar non-partisan cycle + same-party mute target
+    set: ['#c757a8', '#e8b93c', '#2dd4bf', '#3b7bde'],
+    mute: '#aeb4c0',
+  },
+  light: {
+    page: '#f7f7f4', pageElev: '#f1f1ed', card: '#ffffff', cardBd: '#e8e8e2',
+    ink: '#17171b', inkStrong: '#0a0a0c',
+    accent: '#a16207',
+    approve: '#15803d', disapprove: '#a16207', dem: '#1d5fc4', gop: '#c22f3b',
+    yes: '#15803d', no: '#c22f3b',
+    shadeBase: '#f1f1ed',
+    faintFill: 'rgba(0,0,0,0.05)', faintStroke: 'rgba(0,0,0,0.14)',
+    countyStroke: 'rgba(255,255,255,0.75)',
+    stripFgTarget: '#0b0c0e',
+    set: ['#b5338f', '#a16207', '#0d9488', '#1d5fc4'],
+    mute: '#8a8f99',
+  },
 }
 
-const LIGHT = {
-  page: '#f5f3fa', pageElev: '#ffffff', card: '#ffffff', cardBd: 'rgba(17,0,25,0.10)',
-  ink: '#16092a', inkStrong: '#110019',
-  accent: '#16092a',
-  approve: '#0f9d63', disapprove: '#6a6180', dem: '#2a63f0', gop: '#e8264b',
-  yes: '#0f9d63', no: '#6a6180',
-  shadeBase: '#e6e1f0',
-  faintFill: 'rgba(17,0,25,0.04)', faintStroke: 'rgba(17,0,25,0.10)',
-  countyStroke: 'rgba(245,243,250,0.8)',
-  stripFgTarget: '#110019',
-  set: ['#16092a', '#463d5a', '#6a6180', '#9b93ad'],
-  mute: '#6a6180',
-}
+const ThemeCtx = createContext({ theme: 'dark', toggle: () => {}, setTheme: () => {}, P: PALETTES.dark })
 
-export const PALETTES = { dark: DARK, light: LIGHT }
-
-const subscribe = (cb) => {
-  window.addEventListener(THEME_EVENT, cb)
-  return () => window.removeEventListener(THEME_EVENT, cb)
+function readInitial() {
+  return getTheme()
 }
-
-function makeValue(theme) {
-  return { theme, toggle: toggleTheme, setTheme, P: PALETTES[theme] }
-}
-const VALUES = { dark: makeValue('dark'), light: makeValue('light') }
-const ThemeCtx = createContext(VALUES.dark)
 
 export function ThemeProvider({ children }) {
-  const theme = useSyncExternalStore(subscribe, getTheme, () => 'dark')
-  const value = useMemo(() => VALUES[theme], [theme])
+  const [theme, setTheme] = useState(readInitial)
+  useEffect(() => {
+    // Scope the flip to the election section's OWN attribute so it never
+    // touches the main site's <html data-theme>. color-scheme is handled via
+    // CSS on body:has(.opa-results-shell) (auto-reverts when you leave the
+    // results page) rather than on <html>, so it can't leak dark scrollbars /
+    // form controls onto the rest of the site.
+    document.documentElement.dataset.opaTheme = theme
+    try { localStorage.setItem('opa-theme', theme) } catch {}
+  }, [theme])
+  useEffect(() => {
+    const on = (e) => setTheme(e.detail === 'light' ? 'light' : 'dark')
+    window.addEventListener(THEME_EVENT, on)
+    return () => window.removeEventListener(THEME_EVENT, on)
+  }, [])
+  const toggle = useCallback(() => { toggleTheme() }, [])
+  const value = { theme, toggle, setTheme, P: PALETTES[theme] || PALETTES.dark }
   return <ThemeCtx.Provider value={value}>{children}</ThemeCtx.Provider>
 }
 
 export const useTheme = () => useContext(ThemeCtx)
 
-// Flip the site theme, then run the optional callback with the new value.
-export function tripToggleTheme({ onAfterSwap } = {}) {
-  const next = toggleTheme()
-  try { onAfterSwap && onAfterSwap(next) } catch {}
+// ── Shared "trip" toggle helper ────────────────────────────────────────
+// Both the hub nav (ThemeToggle in ProjectsHub) and RaceDetail's chrome
+// flip the theme through this single helper so the diagonal sweep stays
+// identical no matter where the user taps. Pass the current theme + the
+// React `toggle()` callback. Optional `onAfterSwap` runs synchronously
+// inside the View Transitions callback AFTER the DOM is mutated — used
+// by RaceDetail to mirror the new theme into its iframe before the new
+// snapshot is captured.
+export function tripToggleTheme({ theme, toggle, onAfterSwap }) {
+  if (typeof document === 'undefined' || typeof document.startViewTransition !== 'function') {
+    try { onAfterSwap && onAfterSwap(theme === 'dark' ? 'light' : 'dark') } catch {}
+    toggle()
+    return
+  }
+  const next = theme === 'dark' ? 'light' : 'dark'
+  document.startViewTransition(() => {
+    // Apply the new theme up front so the post-callback snapshot has it.
+    document.documentElement.dataset.opaTheme = next
+    try { localStorage.setItem('opa-theme', next) } catch {}
+    try { onAfterSwap && onAfterSwap(next) } catch {}
+    toggle()
+  })
 }

@@ -99,7 +99,7 @@ function LoginForm() {
         </div>
         <p className="pl-foot">
           Looking for tonight&rsquo;s results? The public board is at{" "}
-          <Link href="/results/live">/results/live</Link>.
+          <Link href="/results/tonight">/results/tonight</Link>.
         </p>
       </div>
     </div>

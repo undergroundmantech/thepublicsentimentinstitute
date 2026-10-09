@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import OklahomaBoard from "../OklahomaBoard";
 
-const TITLE = "Oklahoma governor Republican runoff results 2026: county map and forecast";
+const TITLE = "Oklahoma Governor Republican Runoff Results 2026 — Live County Map & Forecast";
 const DESC =
-  "Live results and the OnPoint Politics county forecast for the August 25, 2026 Oklahoma " +
+  "Live results and TPSI county-level forecast for the August 25, 2026 Oklahoma " +
   "Republican gubernatorial runoff between Gentner Drummond and Mike Mazzei, with " +
   "all 77 counties, projected turnout and a statewide win probability updated as " +
   "votes are counted. Includes the South Carolina U.S. Senate special runoff.";
@@ -15,11 +15,11 @@ export const metadata: Metadata = {
   description: DESC,
   alternates: { canonical: CANONICAL },
   openGraph: {
-    title: `${TITLE} | OnPoint Politics`,
+    title: TITLE,
     description: DESC,
     url: CANONICAL,
     type: "article",
-    siteName: "OnPoint Politics",
+    siteName: "The Public Sentiment Institute",
   },
   twitter: { card: "summary_large_image", title: TITLE, description: DESC },
 };
@@ -50,7 +50,7 @@ export default function Page() {
             },
             publisher: {
               "@type": "Organization",
-              name: "OnPoint Politics",
+              name: "The Public Sentiment Institute",
             },
           }),
         }}

@@ -60,23 +60,16 @@ export default function TimelineQAPage() {
   const snapshots = useMemo(() => buildFixtureSnapshots(), []);
   return (
     <ThemeProvider>
-      <div className="opp tlqa-page">
+      <div className="tlqa-page">
         <style>{OPA_GLOBAL_CSS}</style>
         <style>{TLQA_CSS}</style>
         <div className="tlqa-shell">
-          <nav className="crumbs" aria-label="Breadcrumb">
-            <a href="/">Home</a><span className="sep">/</span>
-            <a href="/results">Results</a><span className="sep">/</span>
-            <span>Timeline QA</span>
-          </nav>
-          <header className="ph">
-            <div className="eye">QA fixture · not real data · not linked from any public nav</div>
-            <h1>Live timeline <em>storybook</em></h1>
-            <p className="lede">
-              Synthetic flight recorder snapshots exercising the hover synced charts, gate region shading
-              and projection marker while <code>TIMELINE_PUBLIC_FLAG</code> is off. See CHANGE-ORDER-04 §4c and §8 Phase C.
-            </p>
-          </header>
+          <span className="tlqa-badge">QA fixture — not real data, not linked from any public nav</span>
+          <h1>Zone 6 Live Timeline — storybook</h1>
+          <p>
+            Synthetic flight-recorder-shaped snapshots exercising the hover-synced charts, gate-region shading,
+            and TPSI-call marker while <code>TIMELINE_PUBLIC_FLAG</code> is off. See CHANGE-ORDER-04 §4c / §8 Phase C.
+          </p>
           <div className="tlqa-frame">
             <LiveTimeline snapshots={snapshots} needle={NEEDLE} />
           </div>
@@ -87,7 +80,11 @@ export default function TimelineQAPage() {
 }
 
 const TLQA_CSS = `
-.opp .tlqa-shell { max-width: 760px; }
-.opp .tlqa-shell code { font-family: var(--font-m); background: var(--glass2); padding: 1px 6px; border-radius: 4px; }
-.opp .tlqa-frame { margin-top: 24px; }
+.tlqa-page { min-height: 100svh; background: var(--page); color: var(--ink); }
+.tlqa-shell { max-width: 720px; margin: 0 auto; padding: 40px 24px 100px; font-family: "Instrument Sans", system-ui, sans-serif; }
+.tlqa-badge { display: inline-block; font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-dim); border: 1px solid var(--rule); border-radius: 99px; padding: 4px 12px; margin-bottom: 18px; }
+.tlqa-shell h1 { font-family: "Manrope", sans-serif; font-size: 28px; margin: 0 0 10px; color: var(--ink-strong); }
+.tlqa-shell p { color: var(--ink-mute); line-height: 1.6; font-size: 14px; max-width: 62ch; }
+.tlqa-shell code { font-family: "JetBrains Mono", ui-monospace, monospace; background: var(--wash); padding: 1px 6px; border-radius: 4px; }
+.tlqa-frame { margin-top: 30px; }
 `;

@@ -859,7 +859,7 @@ function MapWithCountyTooltip({ svgText, regionResults }: { svgText: string; reg
                         {top5.map((c, i) => (
                           <div key={i} className="grid grid-cols-[1fr_36px_30px] items-center gap-0.5 py-0.5 border-b" style={{ borderColor: "var(--border)" }}>
                             <div className="flex items-center gap-1 min-w-0">
-                              <span className="h-1.5 w-1.5 rounded-full flex-shrink-0" style={{ background: c.color || "rgba(var(--ink-rgb),calc(0.5 * var(--mute-k) + var(--floor)))" }} />
+                              <span className="h-1.5 w-1.5 rounded-full flex-shrink-0" style={{ background: c.color || "rgba(var(--ink-rgb),calc(0.5 * var(--mute) + var(--floor)))" }} />
                               <div className="min-w-0"><div className="res-cand-name truncate">{c.name}{c.winner ? " ✓" : ""}</div><div className="res-cand-party">{c.party}</div></div>
                             </div>
                             <div className="text-right res-num">{c.votes?.toLocaleString() ?? "—"}</div>
@@ -926,7 +926,7 @@ function CandidateList({ candidates, reporting, raceId, isMajorityRunoff, called
               <div className="res-cand-bar" style={{ background: c.color || "rgba(var(--line-rgb),0.2)" }} />
               <div className="flex items-center justify-between gap-3 flex-1 min-w-0">
                 <div className="flex items-center gap-3 min-w-0">
-              <span className="res-cand-dot" style={{ background: c.color || "rgba(var(--ink-rgb),calc(0.5 * var(--mute-k) + var(--floor)))", boxShadow: `0 0 10px ${c.color || "rgba(var(--line-rgb),0.2)"}40` }} />
+              <span className="res-cand-dot" style={{ background: c.color || "rgba(var(--ink-rgb),calc(0.5 * var(--mute) + var(--floor)))", boxShadow: `0 0 10px ${c.color || "rgba(var(--line-rgb),0.2)"}40` }} />
                   <div className="min-w-0">
                     <div className="flex flex-wrap items-center gap-2 mb-0.5">
                       <span className="res-cand-name-lg">{c.name}</span>
@@ -3025,12 +3025,12 @@ export default function March3FeaturedClient() {
           padding: 8px 32px 8px 12px; font-family: var(--font-body); font-size: 10px;
           font-weight: 700; letter-spacing: 0.06em; outline: none; cursor: pointer;
           transition: border-color 140ms ease; min-width: 0;
-          background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L5 5L9 1' stroke='rgba(var(--ink-rgb),calc(0.5 * var(--mute-k) + var(--floor)))' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+          background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L5 5L9 1' stroke='rgba(var(--ink-rgb),calc(0.5 * var(--mute) + var(--floor)))' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
           background-repeat: no-repeat; background-position: right 10px center;
         }
         .res-race-select:focus { border-color: rgba(124,58,237,0.5); }
         .res-race-select option { background: #ffffff; color: #0b0d1c; font-weight: 600; }
-        .res-race-select optgroup { color: rgba(var(--ink-rgb),calc(0.5 * var(--mute-k) + var(--floor))); font-size: 9px; }
+        .res-race-select optgroup { color: rgba(var(--ink-rgb),calc(0.5 * var(--mute) + var(--floor))); font-size: 9px; }
 
         * { scrollbar-width:thin; scrollbar-color:rgba(var(--ink-rgb),calc(0.12 * var(--struct))) transparent; }
         *::-webkit-scrollbar { width:3px; height:3px; }
@@ -3376,12 +3376,12 @@ export default function March3FeaturedClient() {
                   <div style={{ fontFamily: "var(--font-display)", fontSize: "clamp(12px,1.15vw,17px)", fontWeight: 900, color: "#fff", lineHeight: 1.0, marginBottom: 5, textTransform: "uppercase", letterSpacing: "0.01em" }}>
                     {spotlightMeta.title}
                   </div>
-                  <div style={{ fontFamily: "var(--font-body)", fontSize: "8px", fontWeight: 700, letterSpacing: "0.20em", textTransform: "uppercase", color: "rgba(var(--ink-rgb),calc(0.6 * var(--mute-k) + var(--floor)))", marginBottom: 16 }}>
+                  <div style={{ fontFamily: "var(--font-body)", fontSize: "8px", fontWeight: 700, letterSpacing: "0.20em", textTransform: "uppercase", color: "rgba(var(--ink-rgb),calc(0.6 * var(--mute) + var(--floor)))", marginBottom: 16 }}>
                     {spotlightMeta.subtitle}
                   </div>
                   <div style={{ display: "flex", alignItems: "flex-end", gap: 10, marginBottom: 12 }}>
                     <div>
-                      <div style={{ fontFamily: "var(--font-body)", fontSize: "7px", fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(var(--ink-rgb),calc(0.55 * var(--mute-k) + var(--floor)))", marginBottom: 2 }}>REPORTING</div>
+                      <div style={{ fontFamily: "var(--font-body)", fontSize: "7px", fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(var(--ink-rgb),calc(0.55 * var(--mute) + var(--floor)))", marginBottom: 2 }}>REPORTING</div>
                       <div style={{ fontFamily: "var(--font-numeric)", fontSize: "30px", fontWeight: 900, color: "#fff", lineHeight: 1 }}>{displayReportingStr}%</div>
                     </div>
                     <div style={{ marginBottom: 5 }}>
@@ -3391,8 +3391,8 @@ export default function March3FeaturedClient() {
                     </div>
                   </div>
                   <div style={{ paddingTop: 10, borderTop: "1px solid rgba(var(--line-rgb),0.18)", display: "flex", gap: 5, flexWrap: "wrap" }}>
-                    <span style={{ display: "inline-flex", alignItems: "center", padding: "3px 8px", border: "1px solid rgba(var(--line-rgb),0.22)", borderRadius: "var(--r-pill)", background: "rgba(var(--line-rgb),0.10)", fontFamily: "var(--font-body)", fontSize: "7px", fontWeight: 700, letterSpacing: "0.16em", color: "rgba(var(--ink-rgb),calc(0.75 * var(--mute-k) + var(--floor)))", textTransform: "uppercase" }}>AUTO-REFRESH / 30s</span>
-                    {selectedRace?.last_updated && <span style={{ display: "inline-flex", alignItems: "center", padding: "3px 8px", border: "1px solid rgba(var(--line-rgb),0.16)", borderRadius: "var(--r-pill)", background: "rgba(var(--line-rgb),0.07)", fontFamily: "var(--font-body)", fontSize: "7px", fontWeight: 700, letterSpacing: "0.16em", color: "rgba(var(--ink-rgb),calc(0.5 * var(--mute-k) + var(--floor)))", textTransform: "uppercase" }}>UPDATED {prettyTime(selectedRace.last_updated)}</span>}
+                    <span style={{ display: "inline-flex", alignItems: "center", padding: "3px 8px", border: "1px solid rgba(var(--line-rgb),0.22)", borderRadius: "var(--r-pill)", background: "rgba(var(--line-rgb),0.10)", fontFamily: "var(--font-body)", fontSize: "7px", fontWeight: 700, letterSpacing: "0.16em", color: "rgba(var(--ink-rgb),calc(0.75 * var(--mute) + var(--floor)))", textTransform: "uppercase" }}>AUTO-REFRESH / 30s</span>
+                    {selectedRace?.last_updated && <span style={{ display: "inline-flex", alignItems: "center", padding: "3px 8px", border: "1px solid rgba(var(--line-rgb),0.16)", borderRadius: "var(--r-pill)", background: "rgba(var(--line-rgb),0.07)", fontFamily: "var(--font-body)", fontSize: "7px", fontWeight: 700, letterSpacing: "0.16em", color: "rgba(var(--ink-rgb),calc(0.5 * var(--mute) + var(--floor)))", textTransform: "uppercase" }}>UPDATED {prettyTime(selectedRace.last_updated)}</span>}
                   </div>
                 </div>
               </>

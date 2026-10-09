@@ -2,21 +2,43 @@
 // civicAPI region→our-county-geometry joining, and a tiny dependency-free
 // GeoJSON→SVG projector. No deps; pure functions.
 
-// ── Palette ───────────────────────────────────────────────────────────
-// OnPoint Politics party colors, data only: blue Democrat, red Republican,
-// lavender independent. Everything that is not a party (ballot measures,
-// nonpartisan contests, write-ins, no data) is neutral ink, so no party hue
-// is ever borrowed for something that is not that party. Hex values (not CSS
-// vars) because mix()/shade() parse them. The desk is dark only.
+// ── Hybrid palette ────────────────────────────────────────────────────
+// Semantic, dark-tuned for #0a0b0d. We classify by party/outcome; only
+// when a candidate is genuinely unclassifiable do we fall back to the
+// color civicAPI handed us (the "hybrid" the user chose).
+// Vivid, flat, ballotline-matched (saturated solid fills, not shaded).
+const isLight = () =>
+  typeof document !== 'undefined' && document.documentElement.dataset.opaTheme === 'light';
+
 export const PARTY = {
-  dem: '#3d7bff',   // --dem
-  gop: '#ff3b5c',   // --gop
-  yes: '#3ddc97',   // ballot measure approve (--win)
-  no: '#8e86a3',    // ballot measure reject, neutral (--mute)
-  ind: '#b78cff',   // independent / third party (--ind)
-  other: '#c9c2d6', // nonpartisan / write-in / generic (--ink2)
-  none: '#1c1626',  // no data / not reporting
-}
+  // Classic, saturated party colors — the ones you think of when you
+  // think "Democrat" / "Republican", not washed pastels. Theme-aware
+  // getters (TPSI Election Desk Design System §1 --dem/--gop/--c2/--called/
+  // --gop tokens) so a race card reads correctly in both light and dark.
+  get dem() {
+    return isLight() ? '#1d5fc4' : '#3b7bde';
+  },
+  get gop() {
+    return isLight() ? '#c22f3b' : '#d64550';
+  },
+  get yes() {
+    return isLight() ? '#15803d' : '#37b26c'; // approve — --called
+  },
+  get no() {
+    return isLight() ? '#c22f3b' : '#d64550'; // reject — --gop
+  },
+  get ind() {
+    return isLight() ? '#0d9488' : '#2dd4bf'; // independent / 3rd party — --live
+  },
+  get other() {
+    return isLight() ? '#b5338f' : '#c757a8'; // generic / same-party runoff — --c2
+  },
+  // no data / not reporting — graphite on dark, light grey on white (a getter
+  // so it tracks the theme; stays a hex so mix()/shade() can consume it).
+  get none() {
+    return isLight() ? '#dfe2e8' : '#2b2e37';
+  },
+};
 
 const HEXRE = /^#?[0-9a-f]{6}$/i;
 const cleanHex = (c) =>
@@ -38,14 +60,15 @@ export function candColor(cand) {
   // partisan race reads at a glance, not whatever shade civicAPI picked.
   if (/democr/.test(pt)) return PARTY.dem;
   if (/republic|\bgop\b/.test(pt)) return PARTY.gop;
-  // Independent and minor parties share the independent lavender; civicAPI's
-  // own per-candidate colors are ignored so no off-palette hue reaches a page.
-  void cleanHex; void PLACEHOLDER;
+  // Third-party / independent / nonpartisan: prefer civicAPI's own
+  // per-candidate color, then party-family fallbacks.
+  const civ = cleanHex(cand.color);
+  if (civ && !PLACEHOLDER.has(civ)) return civ;
   if (/(independent|green|working famil|progress|libertarian|reform|constitution|peace|socialist|labor)/.test(pt))
-    return PARTY.ind;
+    return /libertarian|constitution|reform/.test(pt) ? PARTY.other : PARTY.ind;
   if (/(write|other|uncommitted|scatter|none of)/.test(nm)) return PARTY.other;
   if (/nonpartisan/.test(pt)) return PARTY.other;
-  return PARTY.other;
+  return PARTY.ind;
 }
 
 // hex → {r,g,b}
@@ -60,23 +83,32 @@ const mix = (a, b, t) => {
   return hex(A.map((v, i) => v + (B[i] - v) * t));
 };
 
-// HEADER intensity (card/scoreboard tint behind white text). A dead heat sits
-// quiet over the dark ground, a blowout deepens. `lead` = winner% - runnerup%.
+const _isLight = () =>
+  typeof document !== 'undefined' && document.documentElement.dataset.opaTheme === 'light';
+
+// HEADER intensity (card/scoreboard tint behind white text). Dark: a dead heat
+// sits quiet over the black canvas, a blowout deepens. Light: keep the hue
+// SATURATED so white text on the header still reads. `lead` = winner%−runnerup%.
 export function shade(base, lead) {
-  const t = Math.max(0, Math.min(1, (lead || 0) / 40));
-  return mix('#150f1f', base, 0.28 + 0.62 * t);
+  const t = Math.max(0, Math.min(1, (lead || 0) / 45));
+  if (_isLight()) return mix(base, '#0a0b10', 0.04 + 0.16 * t);
+  return mix('#15171c', base, 0.28 + 0.62 * t);
 }
 
-// MAP / choropleth intensity, per the OnPoint maps ramp: pale for close, deep
-// for solid. Party hues use the county margin ramp endpoints (--county-*-pale
-// to --county-*-deep, saturating at 40 points); any other base runs from a
-// pale tint of itself to a deep shade of itself.
+// MAP / choropleth intensity — MUST stay byte-for-byte identical to the precinct
+// map's shade() (precinct-map/web/lib/results/core.ts) so the in-hub SVG
+// thumbnail and the full MapLibre map paint each county exactly the same. Light:
+// a dead heat is a PALE tint of the party hue, a blowout is the deep saturated
+// hue (white-mixed, hue never changes — only intensity). Dark: quiet→deep.
+// NOTE: distinct from shade() above — headers need saturation for white text;
+// the map needs the wide pale→deep range to read margins on the white basemap.
 export function mapShade(base, lead) {
-  const t = Math.max(0, Math.min(1, (lead || 0) / 40));
-  const b = String(base || '').toLowerCase();
-  if (b === PARTY.dem) return mix('#d6e2ff', '#10288c', t);
-  if (b === PARTY.gop) return mix('#ffdce4', '#8c0a28', t);
-  return mix(mix(base, '#ffffff', 0.55), mix(base, '#0a0711', 0.45), t);
+  const t = Math.max(0, Math.min(1, (lead || 0) / 45));
+  if (_isLight()) {
+    const light = mix('#ffffff', base, 0.30 + 0.62 * t); // pale tint → full hue
+    return t > 0.78 ? mix(light, '#0b0c12', (t - 0.78) * 0.5) : light;
+  }
+  return mix('#15171c', base, 0.42 + 0.55 * t);
 }
 
 // Does this race render a map thumbnail? The ResultMap paints a county only
@@ -100,30 +132,26 @@ export function raceHasMap(race) {
   return US_STATES.has(String(race.province || '').toUpperCase())
 }
 
-// Same-party runners up get tones of their own party family (never another
-// party's hue); the vote leader keeps the full party color. Pale tint first,
-// matching the results rows (winner deep, runners up pale).
-const FAMILY = {
-  [PARTY.dem]: ['#b9ccff', '#1a3fb0', '#7fa6ff', '#10288c'],
-  [PARTY.gop]: ['#ffbfcb', '#b0163a', '#ff8399', '#8c0a28'],
-  [PARTY.ind]: ['#d9c6ff', '#7b5bc4', '#9d7ae6'],
-  [PARTY.other]: ['#8e86a3', '#5f5873', '#e6e1ee', '#6f6883'],
-  [PARTY.yes]: ['#9fedcb'],
-  [PARTY.no]: ['#5f5873'],
-};
+// Distinct HUES for same-party runners-up (not shades of the same color). The
+// vote leader keeps the party color so the party signal is preserved; others
+// cycle through distinct hues. Muted, editorial jewel tones only — no gold, no
+// electric neon, no green/red (those carry ballot-measure meaning elsewhere).
+const DISTINCT_HUES = [
+  '#8e6df0', '#5ab6c4', '#e5859c', '#7d8694', '#b07fc9', '#5b9e8f', '#c1c8d4',
+];
 export function tonePalette(cands) {
   const list = Array.isArray(cands) ? cands : [];
   const base = list.map((c) => candColor(c));
   const groups = {};
   base.forEach((c, i) => { (groups[c] ||= []).push(i); });
   const out = base.slice();
+  let altIdx = 0;
   for (const color of Object.keys(groups)) {
     const idxs = groups[color];
     if (idxs.length <= 1) continue;
     idxs.sort((a, b) => (list[b].votes || 0) - (list[a].votes || 0));
-    const fam = FAMILY[color] || FAMILY[PARTY.other];
     for (let j = 1; j < idxs.length; j++) {
-      out[idxs[j]] = fam[(j - 1) % fam.length];
+      out[idxs[j]] = DISTINCT_HUES[altIdx++ % DISTINCT_HUES.length];
     }
   }
   return out;
@@ -218,9 +246,14 @@ export function leaderOf(cands) {
   return { cand: win, lead: s.length > 1 ? lead : 100 };
 }
 
-// Neutral "no result yet" fill; stays a hex so mix()/shade() can consume it.
-export const nodataFill = () => PARTY.none;
-export const NODATA = PARTY.none; // legacy alias
+// Neutral "no result yet" fill — graphite on dark, light grey on white so
+// no-data counties don't read as dark blobs on the light basemap. Theme-aware
+// at call time; stays a hex so mix()/shade() can consume it.
+export const nodataFill = () =>
+  typeof document !== 'undefined' && document.documentElement.dataset.opaTheme === 'light'
+    ? '#dfe2e8'
+    : '#2b2e37';
+export const NODATA = '#2b2e37'; // legacy alias (dark)
 
 export function regionVotes(region) {
   const c = Array.isArray(region?.candidates) ? region.candidates : [];
@@ -248,8 +281,11 @@ export function regionFill(region, nameToColor) {
     const base = (nameToColor && nameToColor[key]) || candColor(localWin)
     return mapShade(base, lead)
   }
-  // civicAPI's own fill is off palette, so no-vote regions stay neutral.
-  return nodataFill();
+  const f =
+    typeof region.fill === 'string' && /^#?[0-9a-f]{6}$/i.test(region.fill.replace('#', ''))
+      ? '#' + region.fill.replace('#', '')
+      : null;
+  return f || nodataFill();
 }
 
 // One shared in-flight + cache fetch with a small concurrency gate so we

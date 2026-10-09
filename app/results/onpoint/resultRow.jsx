@@ -4,17 +4,16 @@ import React from 'react'
 // tokens + name/title helpers. Used by the grid card, the detail
 // summary panel, and the per-county hover tooltip so all three are 1:1.
 
-export const DISPLAY = 'var(--font-b)' // Manrope body
-export const POSTER = 'var(--font-d)'  // Sora headlines (set weight 800, sentence case)
-export const MONO = 'var(--font-m)'    // JetBrains Mono for every number
+export const DISPLAY = '"Instrument Sans", system-ui, sans-serif'
+export const POSTER = '"Anton", "Oswald", system-ui, sans-serif' // heavy condensed display
 // CARD_BG stays a real hex — it's an input to mix() blends (which parse hex).
 // For a theme-correct card surface in math, read P.card from useTheme().
-export const CARD_BG = '#120c1b'
+export const CARD_BG = '#0d1117'
 export const CARD_BD = 'var(--card-bd)'
 export const TXT = 'var(--ink)'
 export const TXT_DIM = 'var(--ink-mute)'
 export const TXT_VOTE = 'var(--ink-mute)'
-export const GOLD = 'var(--accent)' // the hub accent is ink, see OpaResultsPage
+export const GOLD = 'var(--accent)'
 
 export const fmtInt = (n) => (Number(n) || 0).toLocaleString('en-US')
 export const fmtPct = (n) => `${(Number(n) || 0).toFixed(1)}%`
@@ -80,15 +79,15 @@ export function Row({ c, accent, last, started = true, chip }) {
         display: 'flex',
         alignItems: 'center',
         padding: '9px 0',
-        borderTop: last ? 'none' : '1px solid var(--line)',
+        borderTop: last ? 'none' : '1px solid rgba(255,255,255,0.055)',
       }}
     >
       <span style={{ width: 3, alignSelf: 'stretch', minHeight: 18, flexShrink: 0, background: col, borderRadius: 2, marginRight: 11 }} />
       <span style={{ width: 20, flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         {won ? (
           <svg width="15" height="15" viewBox="0 0 16 16" aria-hidden>
-            <rect x="0.5" y="0.5" width="15" height="15" rx="7.5" fill="#3ddc97" />
-            <path d="M4 8.2 L6.8 11 L12 5.2" stroke="#0a0711" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+            <rect x="0.5" y="0.5" width="15" height="15" rx="3.5" fill={accent} />
+            <path d="M4 8.2 L6.8 11 L12 5.2" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none" />
           </svg>
         ) : null}
       </span>
@@ -124,8 +123,8 @@ export function Row({ c, accent, last, started = true, chip }) {
       <span
         style={{
           flexShrink: 0,
-          fontFamily: MONO,
-          fontSize: 12.5,
+          fontFamily: DISPLAY,
+          fontSize: 13.5,
           color: TXT_VOTE,
           fontVariantNumeric: 'tabular-nums',
           paddingLeft: 16,
@@ -138,9 +137,9 @@ export function Row({ c, accent, last, started = true, chip }) {
         style={{
           width: 66,
           textAlign: 'right',
-          fontFamily: MONO,
-          fontSize: 14,
-          fontWeight: 700,
+          fontFamily: DISPLAY,
+          fontSize: 15,
+          fontWeight: 800,
           color: TXT,
           fontVariantNumeric: 'tabular-nums',
         }}

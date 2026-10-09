@@ -1,11 +1,12 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react'
 import Link from 'next/link'
+import DarkNav from '@/app/components/DarkNav'
 import ResultMap from './ResultMap.jsx'
 import RaceDetail from './RaceDetail.jsx'
 import ElectionSearch, { SearchIcon } from './components/ElectionSearch.jsx'
 import { loadElectionIndex } from './lib/electionIndex.js'
 import { candColor, leaderOf, tonePalette, shade, raceHasMap } from './electionLib.js'
-import { useTheme } from './lib/theme.jsx'
+import { useTheme, tripToggleTheme } from './lib/theme.jsx'
 import { isCoveredId } from '../_data/coverage.2026-08-04'
 import {
   DISPLAY, POSTER, CARD_BG, CARD_BD, TXT, TXT_DIM, GOLD,
@@ -18,8 +19,8 @@ const API = 'https://civicapi.org/api/v2/race/search'
 const REFRESH_MS = 14000
 
 const MONTHS = [
-  'January','February','March','April','May','June',
-  'July','August','September','October','November','December',
+  'JANUARY','FEBRUARY','MARCH','APRIL','MAY','JUNE',
+  'JULY','AUGUST','SEPTEMBER','OCTOBER','NOVEMBER','DECEMBER',
 ]
 const fmtDateLabel = (iso) => {
   const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(iso || ''))
@@ -84,12 +85,12 @@ export function ResultCard({ race, onOpen, compact = false, mapDelay }) {
   // results land, like ballotline. Only the BANNER + ✓ are gated by
   // whether the race has actually started.
   const tint = projectedWinner || L?.cand || cands[0]
-  const accent = tint ? candColor(tint) : '#2a2336'
+  const accent = tint ? candColor(tint) : '#3a3d44'
   const colored = !!tint
   // Header tint is the leader's color SHADED by margin: dead-heat sits
   // quiet, blowout deepens. Reads as "by how much" at a glance.
   const marginPct = (cands[0]?.percent || 0) - (cands[1]?.percent || 0)
-  const headerBg = colored ? shade(accent, marginPct) : '#2a2336'
+  const headerBg = colored ? shade(accent, marginPct) : '#3a3d44'
   const projText = projectedWinner
     ? `${projectedWinner.name} is projected to win.`
     : started && L?.cand
@@ -97,7 +98,7 @@ export function ResultCard({ race, onOpen, compact = false, mapDelay }) {
     : started
     ? 'Too early to call'
     : 'Awaiting results'
-  const stripBg = colored ? mix(accent, P.card, 0.86) : 'var(--glass2)'
+  const stripBg = colored ? mix(accent, P.card, 0.82) : 'var(--page-elev)'
   const stripFg = colored ? mix(accent, P.stripFgTarget, 0.5) : TXT_DIM
   // Same-party multi-candidate races (Dem-vs-Dem, GOP-vs-GOP) get
   // distinct shades per candidate so they're visually separable.
@@ -119,27 +120,30 @@ export function ResultCard({ race, onOpen, compact = false, mapDelay }) {
         overflow: 'hidden',
         userSelect: 'none',
         cursor: 'pointer',
-        borderRadius: 'var(--r)',
-        // Glass card: the OnPoint surface, never a flat opaque slab.
-        background: 'var(--glass)',
-        border: '1px solid var(--line)',
+        borderRadius: 12,
+        // House frost language — pitch-black hub field; the cards are
+        // the glass material, glossy + tinted, never a flat opaque slab.
+        background: 'var(--frost-bg)',
+        backdropFilter: 'blur(22px) saturate(165%)',
+        WebkitBackdropFilter: 'blur(22px) saturate(165%)',
+        boxShadow: 'var(--frost-shadow)',
       }}
     >
       {/* left — solid colour-headed result block */}
       <div style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column' }}>
         <div style={{ padding: compact ? '10px 12px 11px' : '13px 18px 14px', background: headerBg }}>
-          <div style={{ fontFamily: DISPLAY, fontSize: 12, fontWeight: 600, color: 'rgba(var(--line-rgb),0.62)' }}>
+          <div style={{ fontFamily: DISPLAY, fontSize: 12, fontWeight: 600, color: 'rgba(255,255,255,0.62)' }}>
             {yearOf(race.election_date) || '2026'}
           </div>
           <div
             style={{
               marginTop: 4,
               fontFamily: POSTER,
-              fontWeight: 800,
-              fontSize: 'clamp(15px, 1.2vw, 18px)',
-              lineHeight: 1.18,
-              letterSpacing: '-0.02em',
-              color: 'var(--hi)',
+              fontSize: 'clamp(17px, 1.4vw, 22px)',
+              lineHeight: 1.06,
+              letterSpacing: '0.4px',
+              textTransform: 'uppercase',
+              color: '#fff',
               display: '-webkit-box',
               WebkitLineClamp: 2,
               WebkitBoxOrient: 'vertical',
@@ -161,11 +165,11 @@ export function ResultCard({ race, onOpen, compact = false, mapDelay }) {
             display: 'flex',
             alignItems: 'center',
             background: stripBg,
-            fontFamily: 'var(--font-m)',
-            fontSize: 11,
+            fontFamily: '"Oswald", system-ui, sans-serif',
+            fontSize: 12.5,
             fontWeight: 700,
             lineHeight: 1.4,
-            letterSpacing: '0.08em',
+            letterSpacing: '0.03em',
             textTransform: 'uppercase',
             color: stripFg,
             overflow: 'visible',
@@ -284,13 +288,12 @@ export function ResultCard({ race, onOpen, compact = false, mapDelay }) {
                 <div style={{ textAlign: 'right', flexShrink: 0 }}>
                   <div
                     style={{
-                      fontFamily: 'var(--font-m)',
-                      fontSize: 12,
+                      fontFamily: DISPLAY,
+                      fontSize: 12.5,
                       color: TXT,
                       lineHeight: 1.1,
                       whiteSpace: 'nowrap',
-                      fontWeight: 600,
-                      fontVariantNumeric: 'tabular-nums',
+                      fontWeight: 500,
                     }}
                   >
                     {reportingTxt}% reporting
@@ -299,7 +302,7 @@ export function ResultCard({ race, onOpen, compact = false, mapDelay }) {
                     <div
                       style={{
                         marginTop: 3,
-                        fontFamily: 'var(--font-m)',
+                        fontFamily: DISPLAY,
                         fontSize: 10.5,
                         color: TXT_DIM,
                         lineHeight: 1.1,
@@ -359,15 +362,15 @@ export function ResultCard({ race, onOpen, compact = false, mapDelay }) {
             width: 30,
             height: 30,
             borderRadius: 99,
-            border: '1px solid var(--line2)',
-            background: 'var(--glass2)',
+            border: `1px solid ${CARD_BD}`,
+            background: 'var(--wash)',
             color: 'var(--ink-dim)',
             display: 'grid',
             placeItems: 'center',
             fontSize: 15,
           }}
         >
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><path d="M9 6l6 6-6 6" /></svg>
+          →
         </div>
       </div>
     </div>
@@ -401,9 +404,11 @@ function SkeletonCard() {
 const selStyle = {
   appearance: 'none',
   WebkitAppearance: 'none',
-  background: 'var(--glass2)',
-  border: '1px solid var(--line2)',
-  borderRadius: 999,
+  background: 'var(--frost-bg)',
+  backdropFilter: 'blur(16px) saturate(180%)',
+  WebkitBackdropFilter: 'blur(16px) saturate(180%)',
+  border: '1px solid var(--card-bd)',
+  borderRadius: 13,
   color: 'var(--ink)',
   fontFamily: DISPLAY,
   fontSize: 14,
@@ -412,17 +417,23 @@ const selStyle = {
   cursor: 'pointer',
   minWidth: 210,
   width: '100%',
-  transition: 'border-color 180ms ease, background 220ms ease',
+  boxShadow: 'var(--shadow-card)',
+  transition: 'border-color 180ms ease, box-shadow 220ms ease, background 220ms ease, transform 180ms ease',
 }
 
 // the specular gloss laid over each control (top-left light, fading out)
-const glassSheen = { display: 'none' }
+const glassSheen = {
+  position: 'absolute', inset: 0, borderRadius: 13, pointerEvents: 'none',
+  background: 'linear-gradient(133deg, rgba(255,255,255,0.32) 0%, rgba(255,255,255,0.07) 13%, transparent 32%)',
+}
 
 const GLASS_CSS = `
-  .opa-glass:hover { border-color: rgba(var(--line-rgb),.3) !important; background: rgba(var(--line-rgb),.1) !important; }
-  .opa-glass:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+  .opa-glass:hover { border-color: var(--rule-strong) !important; transform: translateY(-1px);
+    box-shadow: var(--shadow-pop) !important; }
+  .opa-glass:focus { border-color: var(--accent) !important;
+    box-shadow: 0 0 0 3px var(--accent-soft), var(--shadow-card) !important; }
   .opa-glass::placeholder { color: var(--ink-dim); }
-  .opa-glass option { background: #150f1f; color: var(--ink); }
+  .opa-glass option { background: var(--card); color: var(--ink); }
   .opa-site-nav {
     display: flex;
     align-items: center;
@@ -454,7 +465,7 @@ const GLASS_CSS = `
     mask-position: left center;
   }
   .opa-site-kicker {
-    font-family: var(--font-m);
+    font-family: "JetBrains Mono", ui-monospace, monospace;
     font-size: 9px;
     font-weight: 600;
     letter-spacing: 0.18em;
@@ -616,6 +627,89 @@ const GLASS_CSS = `
   }
 `
 
+const SITE_LINKS = [
+  { href: '/', label: 'Home' },
+  { href: '/polling', label: 'Polling' },
+  { href: '/forecastratings', label: 'Forecasts' },
+  { href: '/results', label: 'Results' },
+  { href: '/contact', label: 'Contact' },
+]
+
+// Diagonal-sweep theme toggle for the masthead — same trip helper the race
+// detail chrome uses, so the dark/light flip is identical everywhere (and
+// runs through the View Transitions wipe). Lives in the nav so it's reachable
+// from both the calendar landing AND a day's results grid.
+function ThemeToggleButton() {
+  const { theme, toggle } = useTheme()
+  const light = theme === 'light'
+  return (
+    <button
+      type="button"
+      className="opa-site-toggle"
+      onClick={() => tripToggleTheme({ theme, toggle })}
+      aria-label={light ? 'Switch to dark mode' : 'Switch to light mode'}
+      title={light ? 'Dark mode' : 'Light mode'}
+    >
+      {light ? (
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" /></svg>
+      ) : (
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" aria-hidden><circle cx="12" cy="12" r="4.2" /><path d="M12 2.5v2M12 19.5v2M4.6 4.6l1.5 1.5M17.9 17.9l1.5 1.5M2.5 12h2M19.5 12h2M4.6 19.4l1.5-1.5M17.9 6.1l1.5-1.5" /></svg>
+      )}
+    </button>
+  )
+}
+
+function ResultsTopNav({ selectedDate, onCalendar, onSearch }) {
+  // The shared site nav (same as polling + the electoral map) on its own row,
+  // with the hub's theme toggle + contextual back-action in a slim strip below.
+  return (
+    <>
+      <style>{`
+        /* DarkNav is ivory-on-dark; flip it for the hub's light theme. */
+        [data-opa-theme="light"] .dn-logo-img { background: #0a0a0a; }
+        [data-opa-theme="light"] .dn-link { color: rgba(10,10,10,0.62); }
+        [data-opa-theme="light"] .dn-link:hover, [data-opa-theme="light"] .dn-link.on { color: #0a0a0a; }
+        [data-opa-theme="light"] .dn-drop { background: rgba(250,250,248,0.98); border-color: rgba(10,10,10,0.1); }
+        [data-opa-theme="light"] .dn-drop-link { color: rgba(10,10,10,0.75); }
+        [data-opa-theme="light"] .dn-drop-link:hover { background: rgba(10,10,10,0.05); color: #0a0a0a; }
+        [data-opa-theme="light"] .dn-burger { border-color: rgba(10,10,10,0.18); background: rgba(10,10,10,0.04); }
+        [data-opa-theme="light"] .dn-burger span { background: #0a0a0a; }
+        [data-opa-theme="light"] .dn-mobile { background: rgba(250,250,248,0.99); border-color: rgba(10,10,10,0.1); }
+        [data-opa-theme="light"] .dn-mob-link { color: rgba(10,10,10,0.8); }
+        [data-opa-theme="light"] .dn-mob-link:hover, [data-opa-theme="light"] .dn-mob-link.on { background: rgba(10,10,10,0.05); color: #0a0a0a; }
+        [data-opa-theme="light"] .dn-mob-idx { color: rgba(10,10,10,0.34); }
+        .opa-utility { display: flex; justify-content: flex-end; align-items: center; gap: 10px; margin: -16px 0 14px; }
+        .opa-search-util {
+          display: inline-flex; align-items: center; gap: 8px; height: 38px; padding: 0 14px;
+          border-radius: 99px; border: 1px solid var(--card-bd); background: var(--frost-bg);
+          backdrop-filter: blur(16px) saturate(180%); -webkit-backdrop-filter: blur(16px) saturate(180%);
+          color: var(--ink-mute); cursor: pointer; box-shadow: var(--shadow-card);
+          font-family: inherit; font-size: 12.5px; font-weight: 600; letter-spacing: 0.02em;
+          transition: border-color 180ms ease, color 180ms ease;
+        }
+        .opa-search-util:hover { color: var(--ink); border-color: var(--ink-mute); }
+      `}</style>
+      <DarkNav />
+      <div className="opa-utility">
+        {onSearch ? (
+          <button type="button" onClick={onSearch} className="opa-search-util" aria-label="Search elections" title="Search elections  ( / )">
+            <SearchIcon size={14} color="currentColor" />
+            <span>Search</span>
+            <span style={kbdCapStyle}>/</span>
+          </button>
+        ) : null}
+        <ThemeToggleButton />
+        {selectedDate ? (
+          <Link href="/results" onClick={onCalendar} className="opa-site-action" aria-label="Back to all elections">
+            <span aria-hidden style={{ fontSize: 15, lineHeight: 1 }}>←</span>
+            <span>All elections</span>
+          </Link>
+        ) : null}
+      </div>
+    </>
+  )
+}
+
 function ChevronDown() {
   return (
     <svg width="11" height="11" viewBox="0 0 24 24" fill="none" style={{ position: 'absolute', right: 14, top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none' }}>
@@ -629,7 +723,7 @@ const kbdCapStyle = {
   display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
   minWidth: 16, height: 16, padding: '0 3px', borderRadius: 4,
   border: '1px solid var(--rule)', background: 'var(--wash)',
-  fontFamily: 'var(--font-m)', fontSize: 10, lineHeight: 1,
+  fontFamily: '"JetBrains Mono", ui-monospace, monospace', fontSize: 10, lineHeight: 1,
   color: 'var(--ink-mute)',
 }
 // compact glassy magnifier button (calendar landing)
@@ -991,46 +1085,71 @@ export default function ElectionResults({ dateParam = null }) {
       style={{
         position: 'absolute',
         inset: 0,
+        background: 'var(--page)',
         zIndex: 20,
         overflow: 'auto',
+        animation: 'opa-fade 420ms ease',
       }}
     >
-      <div ref={wrapRef} style={{ position: 'relative', zIndex: 1, maxWidth: 1360, margin: '0 auto', padding: cols === 1 ? '0 0 48px' : '0 0 56px' }}>
+      <div className="opa-er-bg" aria-hidden />
+      <div ref={wrapRef} style={{ position: 'relative', zIndex: 1, maxWidth: 1360, margin: '0 auto', padding: cols === 1 ? '18px 14px 72px' : '24px 28px 80px' }}>
         <style>{GLASS_CSS}</style>
-        <div className="opp">
-          <nav className="crumbs" aria-label="Breadcrumb">
-            <Link href="/">Home</Link><span className="sep">/</span>
-            <Link href="/results">Results</Link><span className="sep">/</span>
-            <span>{fmtDateLabel(date)}</span>
-          </nav>
-          <header className="ph" style={{ marginBottom: 18 }}>
-            <div className="eye g">OnPoint Politics results desk</div>
-            <h1>{fmtDateLabel(date)} <em>results</em></h1>
-            <p className="lede">
-              Every race on the ballot for this date, as reported by AP through civicAPI. The board refreshes
-              every 14 seconds while the page is open.
-            </p>
-            <div className="pmeta">
-              {date === todayISO() || date === yesterdayISO() ? <span className="pill live">Live</span> : <span className="eye">Reported results</span>}
-              <span>
-                {races == null
-                  ? (err ? 'Feed unavailable' : 'Loading races')
-                  : <><b className="mono">{fmtInt(filtered.length)}</b> {mapsOnly ? 'mapped ' : ''}{filtered.length === 1 ? 'race' : 'races'}{mapsOnly && totalForDay > filtered.length ? <> of <b className="mono">{fmtInt(totalForDay)}</b></> : null}</>}
+        <ResultsTopNav selectedDate={date} onCalendar={openCalendar} />
+        {/* masthead — ballotline 1:1: giant Anton title left, the three
+            controls (STATE · OFFICE TYPE · SEARCH) top-right */}
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 36, flexWrap: 'wrap' }}>
+          <div style={{ minWidth: 0 }}>
+            <h1
+              style={{
+                margin: 0,
+                fontFamily: POSTER,
+                fontSize: 'clamp(44px, 8vw, 116px)',
+                lineHeight: 0.86,
+                letterSpacing: '0.5px',
+                textTransform: 'uppercase',
+                color: 'var(--ink)',
+              }}
+            >
+              Election Results
+            </h1>
+            <div style={{ marginTop: 10, fontFamily: DISPLAY, fontSize: 13, color: TXT_DIM, display: 'inline-flex', alignItems: 'center', gap: 10 }}>
+              <span style={{ fontFamily: POSTER, fontWeight: 700, letterSpacing: '0.16em', color: 'var(--ink)', fontSize: 12 }}>
+                {fmtDateLabel(date)}
               </span>
-              <span>Returns from AP through civicAPI</span>
-              <Link className="btn sm" href="/results/archive">All election nights</Link>
+              {date === todayISO() || date === yesterdayISO() ? (
+                <span
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: 5,
+                    padding: '2px 7px',
+                    borderRadius: 6,
+                    background: '#e23950',
+                    color: '#fff',
+                    fontFamily: DISPLAY,
+                    fontWeight: 800,
+                    fontSize: 9,
+                    letterSpacing: '0.18em',
+                  }}
+                >
+                  <span aria-hidden style={{ width: 5, height: 5, borderRadius: 99, background: '#fff', animation: 'opa-er-pulse 2s ease-in-out infinite' }} />
+                  LIVE
+                </span>
+              ) : null}
+              <span style={{ opacity: 0.6 }}>·</span>
+              {races == null
+                ? 'Loading…'
+                : `${fmtInt(filtered.length)} ${mapsOnly ? 'mapped ' : ''}${filtered.length === 1 ? 'race' : 'races'}${mapsOnly && totalForDay > filtered.length ? ` of ${fmtInt(totalForDay)}` : ''}`}
             </div>
-          </header>
-        </div>
-        <div style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'flex-end', gap: 16, flexWrap: 'wrap' }}>
-          <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap' }}>
+          </div>
+          <div style={{ display: 'flex', gap: 22, flexWrap: 'wrap' }}>
             {[
               {
                 lbl: 'State',
                 el: (
                   <span style={{ position: 'relative', display: 'block' }}>
                     <select value={stateF} onChange={(e) => setStateF(e.target.value)} style={selStyle} className="opa-glass" aria-label="State">
-                      <option value="">All states</option>
+                      <option value="">All States</option>
                       {provinces.map((p) => (
                         <option key={p} value={p}>{p}</option>
                       ))}
@@ -1056,7 +1175,7 @@ export default function ElectionResults({ dateParam = null }) {
                         {mapsOnly ? 'Maps only' : 'All races'}
                       </span>
                       <span aria-hidden style={{ position: 'relative', width: 34, height: 18, borderRadius: 99, flexShrink: 0, background: mapsOnly ? 'var(--accent)' : 'var(--rule-strong)', transition: 'background 200ms ease' }}>
-                        <span style={{ position: 'absolute', top: 2, left: mapsOnly ? 18 : 2, width: 14, height: 14, borderRadius: 99, background: 'var(--hi)', boxShadow: '0 1px 2px rgba(0,0,0,0.35)', transition: 'left 200ms cubic-bezier(.2,.8,.2,1)' }} />
+                        <span style={{ position: 'absolute', top: 2, left: mapsOnly ? 18 : 2, width: 14, height: 14, borderRadius: 99, background: '#fff', boxShadow: '0 1px 2px rgba(0,0,0,0.35)', transition: 'left 200ms cubic-bezier(.2,.8,.2,1)' }} />
                       </span>
                     </button>
                     <span aria-hidden style={glassSheen} />
@@ -1064,11 +1183,11 @@ export default function ElectionResults({ dateParam = null }) {
                 ),
               },
               {
-                lbl: 'Office type',
+                lbl: 'Office Type',
                 el: (
                   <span style={{ position: 'relative', display: 'block' }}>
                     <select value={officeF} onChange={(e) => setOfficeF(e.target.value)} style={selStyle} className="opa-glass" aria-label="Office type">
-                      <option value="">All office types</option>
+                      <option value="">All Office Types</option>
                       {offices.map((o) => (
                         <option key={o} value={o}>{o}</option>
                       ))}
@@ -1098,7 +1217,7 @@ export default function ElectionResults({ dateParam = null }) {
                       }}
                     >
                       <SearchIcon size={16} color="var(--ink-mute)" />
-                      <span style={{ flex: 1, fontFamily: DISPLAY, fontSize: 14 }}>Search elections</span>
+                      <span style={{ flex: 1, fontFamily: DISPLAY, fontSize: 14 }}>Search elections…</span>
                       <span style={{ display: 'inline-flex', gap: 3 }}>
                         <span style={kbdCapStyle}>⌘</span>
                         <span style={kbdCapStyle}>K</span>
@@ -1112,12 +1231,12 @@ export default function ElectionResults({ dateParam = null }) {
               <div key={f.lbl}>
                 <div
                   style={{
-                    fontFamily: 'var(--font-m)',
-                    fontSize: 10.5,
+                    fontFamily: DISPLAY,
+                    fontSize: 12,
                     fontWeight: 700,
-                    letterSpacing: '0.1em',
+                    letterSpacing: '0.12em',
                     textTransform: 'uppercase',
-                    color: 'var(--mute)',
+                    color: 'var(--ink-mute)',
                     marginBottom: 8,
                   }}
                 >
@@ -1133,17 +1252,14 @@ export default function ElectionResults({ dateParam = null }) {
 
         {/* grid */}
         {err && races == null ? (
-          <div className="opp">
-            <div className="rx-feed" role="status">
-              <span className="dot" aria-hidden />
-              <div>
-                <b>Results feed unavailable</b>
-                The returns for this date come from AP through civicAPI, which is not answering right now.
-                <div style={{ marginTop: 10 }}>
-                  <button type="button" className="btn sm" onClick={() => location.reload()}>Try again</button>
-                </div>
-              </div>
-            </div>
+          <div style={{ padding: '80px 0', textAlign: 'center', fontFamily: DISPLAY, color: 'var(--ink-dim)' }}>
+            Couldn’t reach civicAPI.{' '}
+            <button
+              onClick={() => location.reload()}
+              style={{ background: 'none', border: 0, color: 'var(--accent)', cursor: 'pointer', font: 'inherit', textDecoration: 'underline' }}
+            >
+              Retry
+            </button>
           </div>
         ) : races == null ? (
           <div style={{ display: 'grid', gridTemplateColumns: `repeat(${cols}, 1fr)`, gap: GAP }}>
@@ -1154,13 +1270,13 @@ export default function ElectionResults({ dateParam = null }) {
             ))}
           </div>
         ) : filtered.length === 0 ? (
-          <div className="opp"><div className="empty">
+          <div style={{ padding: '80px 0', textAlign: 'center', fontFamily: DISPLAY, fontSize: 15, color: 'var(--ink-dim)' }}>
             {mapsOnly && totalForDay > 0 ? (
               <>
                 No mapped races on this day.{' '}
                 <button
                   onClick={() => setMapsOnly(false)}
-                  style={{ background: 'none', border: 0, color: 'var(--hi)', cursor: 'pointer', font: 'inherit', textDecoration: 'underline' }}
+                  style={{ background: 'none', border: 0, color: 'var(--accent)', cursor: 'pointer', font: 'inherit', textDecoration: 'underline' }}
                 >
                   Show all {fmtInt(totalForDay)} races
                 </button>
@@ -1168,7 +1284,7 @@ export default function ElectionResults({ dateParam = null }) {
             ) : (
               'No races match these filters.'
             )}
-          </div></div>
+          </div>
         ) : (
           <div style={{ position: 'relative', height: totalH }}>
             {visible.map(({ i, r, c, race }) => (

@@ -10,7 +10,7 @@ export default function NotFound() {
         <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginTop: 22 }}>
           <Link className="btn g" href="/polls">Polling averages</Link>
           <Link className="btn" href="/forecast">Forecast</Link>
-          <Link className="btn" href="/results/live">Live results</Link>
+          <Link className="btn" href="/results/tonight">Live results</Link>
           <Link className="btn" href="/search">Search</Link>
         </div>
       </section>

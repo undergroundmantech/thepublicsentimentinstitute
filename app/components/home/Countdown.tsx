@@ -22,7 +22,7 @@ export default function Countdown() {
           <div><b className="mono">{p ? p.min : "·"}</b><span>min</span></div>
         </div>
         <div style={{ fontSize: 13, color: "var(--ink2)", marginTop: 12 }}>County maps, call log, live model updates and the stream from the TPSI situation room.</div>
-        <Link className="btn white" style={{ marginTop: 14 }} href="/results/live">Open the live desk</Link>
+        <Link className="btn white" style={{ marginTop: 14 }} href="/results/tonight">Open the live desk</Link>
       </div>
     </div>
   );

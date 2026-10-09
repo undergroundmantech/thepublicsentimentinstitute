@@ -21,9 +21,9 @@ import { useTheme } from '../lib/theme.jsx'
 // state, candidate, party, date — not just the title) and Enter jumps straight
 // into that race. Matching + the season-wide index live in lib/electionIndex.js.
 
-const DISPLAY = 'var(--font-b)'
-const OSWALD = 'var(--font-d)' // Sora (the old condensed face is retired)
-const MONO = 'var(--font-m)'
+const DISPLAY = '"Instrument Sans", system-ui, sans-serif'
+const OSWALD = '"Oswald", system-ui, sans-serif'
+const MONO = '"JetBrains Mono", ui-monospace, monospace'
 
 export function SearchIcon({ size = 18, color = 'currentColor', sw = 2 }) {
   return (
@@ -212,7 +212,7 @@ function ResultRow({ doc, active, idx, onPick, onHover }) {
 }
 
 export default function ElectionSearch({ open, onClose, onPick }) {
-  useTheme()
+  const { theme } = useTheme()
   // Search intentionally spans every race CivicAPI returns, not just the
   // 24-race coverage gate (_data/coverage.2026-08-04) — this is the "find any
   // election" utility, not a covered-races display surface.
@@ -275,7 +275,7 @@ export default function ElectionSearch({ open, onClose, onPick }) {
     }
   }
 
-  const scrim = 'rgba(var(--canvas-rgb),0.66)'
+  const scrim = theme === 'light' ? 'rgba(17,20,28,0.30)' : 'rgba(5,6,8,0.58)'
 
   return createPortal(
     <AnimatePresence>
@@ -322,11 +322,11 @@ export default function ElectionSearch({ open, onClose, onPick }) {
               display: 'flex',
               flexDirection: 'column',
               borderRadius: 16,
-              background: 'rgba(var(--bg2-rgb),0.94)',
-              backdropFilter: 'blur(18px) saturate(140%)',
-              WebkitBackdropFilter: 'blur(18px) saturate(140%)',
-              border: '1px solid var(--line2)',
-              boxShadow: 'var(--shadow-pop), inset 0 1px 0 rgba(var(--line-rgb),0.06)',
+              background: 'var(--frost-bg)',
+              backdropFilter: 'blur(28px) saturate(170%)',
+              WebkitBackdropFilter: 'blur(28px) saturate(170%)',
+              border: '1px solid var(--rule)',
+              boxShadow: 'var(--shadow-pop), inset 0 1px 0 rgba(255,255,255,0.06)',
               overflow: 'hidden',
             }}
           >

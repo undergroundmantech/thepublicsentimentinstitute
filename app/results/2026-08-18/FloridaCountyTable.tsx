@@ -152,7 +152,7 @@ export default function FloridaCountyTable({ view, counties, statewide, liveCoun
           </svg>
           <input
             type="text"
-            placeholder="Search counties"
+            placeholder="search counties…"
             value={q}
             onChange={(e) => setQ(e.target.value)}
           />
@@ -160,10 +160,10 @@ export default function FloridaCountyTable({ view, counties, statewide, liveCoun
         <div className="rd-county-sorts" role="group" aria-label="Sort counties">
           {(
             [
-              ["turnout", view === "results" ? "Votes" : "Turnout"],
-              ["az", "A to Z"],
-              ["margin", "Margin"],
-              ...CANDIDATE_ORDER.map((k) => [k, CANDIDATE_LAST[k]]),
+              ["turnout", view === "results" ? "votes" : "turnout"],
+              ["az", "a–z"],
+              ["margin", "margin"],
+              ...CANDIDATE_ORDER.map((k) => [k, CANDIDATE_LAST[k].toLowerCase()]),
             ] as [SortKey, string][]
           ).map(([key, label]) => (
             <button

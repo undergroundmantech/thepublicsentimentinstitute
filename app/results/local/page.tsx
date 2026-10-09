@@ -1,9 +1,9 @@
 import LocalBoard from "./LocalBoard";
 
 export const metadata = {
-  title: "Local race board",
+  title: "Local Race Board — The Public Sentiment Institute",
   description:
-    "A compact scan of reported results for local and down-ballot races from the OnPoint Politics results desk.",
+    "A compact, direct-passthrough scan of local and down-ballot race results — no forecasting, no per-race pages.",
 };
 
 export default function LocalPage() {

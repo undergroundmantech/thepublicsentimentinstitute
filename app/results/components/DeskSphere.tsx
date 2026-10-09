@@ -251,7 +251,7 @@ export default function DeskSphere({
       .catch(() => { geoFeats = []; });
 
     const fam = getComputedStyle(host).fontFamily || "Manrope, sans-serif";
-    const mono = getComputedStyle(document.documentElement).getPropertyValue("--font-jbm").trim() || "monospace";
+    const mono = '"JetBrains Mono", ui-monospace, monospace';
     const texCache = new Map<number, THREE.CanvasTexture>();
 
     // find the county a local contest lives in — locality beats state
@@ -378,7 +378,7 @@ export default function DeskSphere({
             g2.addColorStop(1, shade(tone, 1));
             mc.fillStyle = g2;
             mc.fill(p);
-            mc.strokeStyle = cssColor("rgba(var(--ink-rgb),calc(0.55 * var(--mute-k) + var(--floor)))");
+            mc.strokeStyle = cssColor("rgba(var(--ink-rgb),calc(0.55 * var(--mute) + var(--floor)))");
             mc.lineWidth = 1.6;
             mc.stroke(p);
           }
@@ -425,7 +425,7 @@ export default function DeskSphere({
         ctx.fillStyle = tone;
         ctx.fillText(`${lpct.toFixed(1)}%`, bx + 10 + nw + 8, yTx);
         ctx.font = `600 10.5px ${fam}`;
-        ctx.fillStyle = cssColor(called ? tone : "rgba(var(--ink-rgb),calc(0.52 * var(--mute-k) + var(--floor)))");
+        ctx.fillStyle = cssColor(called ? tone : "rgba(var(--ink-rgb),calc(0.52 * var(--mute) + var(--floor)))");
         ctx.textAlign = "right";
         ctx.fillText(called ? "✓ called" : `${Math.round(d.reporting || 0)}% in`, bx + bw - 10, yTx);
         ctx.textAlign = "left";
@@ -436,13 +436,13 @@ export default function DeskSphere({
       // wall labels hug the board's corners — the grid typography
       const ty = by - 9, byy = by + bh + 19;
       ctx.font = `600 10.5px ${mono}`;
-      ctx.fillStyle = cssColor("rgba(var(--ink-rgb),calc(0.68 * var(--mute-k) + var(--floor)))");
+      ctx.fillStyle = cssColor("rgba(var(--ink-rgb),calc(0.68 * var(--mute) + var(--floor)))");
       const place = local
         ? String(local.properties.county_id).slice(d.province.length + 1).toUpperCase()
         : (d.stateName || d.province || "").toUpperCase();
       ctx.fillText(place.slice(0, 22), bx, ty);
       ctx.textAlign = "right";
-      ctx.fillStyle = cssColor("rgba(var(--ink-rgb),calc(0.34 * var(--mute-k) + var(--floor)))");
+      ctx.fillStyle = cssColor("rgba(var(--ink-rgb),calc(0.34 * var(--mute) + var(--floor)))");
       const yr = d.date ? String(new Date(d.date + "T00:00:00").getFullYear()) : "2026";
       ctx.fillText(yr, bx + bw, ty);
       ctx.textAlign = "left";
@@ -455,7 +455,7 @@ export default function DeskSphere({
       ctx.beginPath();
       (ctx as any).roundRect(bx, byy - ph + 6, tw + 14, ph, 9.5);
       ctx.stroke();
-      ctx.fillStyle = cssColor("rgba(var(--ink-rgb),calc(0.55 * var(--mute-k) + var(--floor)))");
+      ctx.fillStyle = cssColor("rgba(var(--ink-rgb),calc(0.55 * var(--mute) + var(--floor)))");
       ctx.fillText(tag, bx + 7, byy);
 
       const tex = new THREE.CanvasTexture(cv);

@@ -114,18 +114,18 @@ export default function MichiganCountyTable({ view, counties, statewide, liveCou
           </svg>
           <input
             type="text"
-            placeholder="Search counties"
+            placeholder="search counties…"
             value={q}
             onChange={(e) => setQ(e.target.value)}
           />
         </div>
         <div className="rd-county-sorts" role="group" aria-label="Sort counties">
           {([
-            ["turnout", view === "results" ? "Votes" : "Turnout"],
-            ["az", "A to Z"],
-            ["margin", "Margin"],
-            ["elSayed", "El-Sayed"],
-            ["stevens", "Stevens"],
+            ["turnout", view === "results" ? "votes" : "turnout"],
+            ["az", "a–z"],
+            ["margin", "margin"],
+            ["elSayed", "el-sayed"],
+            ["stevens", "stevens"],
           ] as [SortKey, string][]).map(([key, label]) => (
             <button
               key={key}
@@ -185,7 +185,7 @@ export default function MichiganCountyTable({ view, counties, statewide, liveCou
                   </td>
                   <td className="num">
                     <span className="rd-cand-cell">
-                      <b style={{ color: "var(--k2)" }}>{r.stPct.toFixed(1)}%</b>
+                      <b style={{ color: "var(--c2)" }}>{r.stPct.toFixed(1)}%</b>
                       <span className="rd-cand-votes">{fmtInt(r.stVotes)}</span>
                     </span>
                   </td>
@@ -211,7 +211,7 @@ export default function MichiganCountyTable({ view, counties, statewide, liveCou
                 </td>
                 <td className="num">
                   <span className="rd-cand-cell">
-                    <b style={{ color: "var(--k2)" }}>{totals.stPct.toFixed(1)}%</b>
+                    <b style={{ color: "var(--c2)" }}>{totals.stPct.toFixed(1)}%</b>
                     <span className="rd-cand-votes">{fmtInt(totals.stVotes)}</span>
                   </span>
                 </td>

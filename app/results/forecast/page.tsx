@@ -71,35 +71,35 @@ function SwingOMeter({ c1Name, c2Name, c1Color, c2Color, c1Prob, c2Prob, reporti
     <div>
       <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 8, padding: "0 2px" }}>
         <div>
-          <div style={{ fontFamily: "var(--font-m)", fontSize: 7, fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: `${c1Color}80`, marginBottom: 2 }}>C1</div>
-          <div style={{ fontFamily: "var(--font-m)", fontSize: 10, fontWeight: 700, color: c1Color, letterSpacing: "0.04em", maxWidth: 100, wordBreak: "break-word" }}>{c1Name}</div>
+          <div style={{ fontFamily: "'DM Mono', monospace", fontSize: 7, fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: `${c1Color}80`, marginBottom: 2 }}>C1</div>
+          <div style={{ fontFamily: "'DM Mono', monospace", fontSize: 10, fontWeight: 700, color: c1Color, letterSpacing: "0.04em", maxWidth: 100, wordBreak: "break-word" }}>{c1Name}</div>
         </div>
         <div style={{ textAlign: "right" }}>
-          <div style={{ fontFamily: "var(--font-m)", fontSize: 7, fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: `${c2Color}80`, marginBottom: 2 }}>C2</div>
-          <div style={{ fontFamily: "var(--font-m)", fontSize: 10, fontWeight: 700, color: c2Color, letterSpacing: "0.04em", maxWidth: 100, wordBreak: "break-word", textAlign: "right" }}>{c2Name}</div>
+          <div style={{ fontFamily: "'DM Mono', monospace", fontSize: 7, fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: `${c2Color}80`, marginBottom: 2 }}>C2</div>
+          <div style={{ fontFamily: "'DM Mono', monospace", fontSize: 10, fontWeight: 700, color: c2Color, letterSpacing: "0.04em", maxWidth: 100, wordBreak: "break-word", textAlign: "right" }}>{c2Name}</div>
         </div>
       </div>
 
       <svg viewBox={`0 0 ${W} ${H}`} style={{ width: "100%", height: "auto", overflow: "visible" }}>
         <path d={arc(0, 180, RO, RI)} fill="rgba(var(--line-rgb),0.03)" />
         {zones.map((z, i) => <path key={i} d={arc(z.s, z.e, RO, RI)} fill={z.color} opacity={z.alpha} />)}
-        <line x1={CX} y1={CY - RO + 5} x2={CX} y2={CY - RI - 5} stroke="rgba(var(--ink-rgb),calc(0.45 * var(--mute-k) + var(--floor)))" strokeWidth="1.5" />
+        <line x1={CX} y1={CY - RO + 5} x2={CX} y2={CY - RI - 5} stroke="rgba(var(--ink-rgb),calc(0.45 * var(--mute) + var(--floor)))" strokeWidth="1.5" />
         {[0, 45, 90, 135, 180].map((deg) => {
           const o = pt(deg, RO + 5), i2 = pt(deg, RO + 1);
           return <line key={deg} x1={i2.x} y1={i2.y} x2={o.x} y2={o.y} stroke="rgba(var(--line-rgb),0.15)" strokeWidth="1" />;
         })}
-        <circle cx={CX} cy={CY} r={14} fill="#120c1b" />
-        <circle cx={CX} cy={CY} r={14} fill="none" stroke="rgba(var(--ink-rgb),calc(0.1 * var(--mute-k) + var(--floor)))" strokeWidth="1" />
+        <circle cx={CX} cy={CY} r={14} fill="#0a0a08" />
+        <circle cx={CX} cy={CY} r={14} fill="none" stroke="rgba(var(--ink-rgb),calc(0.1 * var(--mute) + var(--floor)))" strokeWidth="1" />
         <g ref={needleRef} style={{ transformOrigin: `${CX}px ${CY}px`, transform: `rotate(${needleRot}deg)` }}>
           <line x1={CX} y1={CY + 6} x2={CX} y2={CY - 104} stroke="rgba(var(--line-rgb),0.6)" strokeWidth="4" strokeLinecap="round" />
-          <line x1={CX} y1={CY + 6} x2={CX} y2={CY - 104} stroke="var(--hi)" strokeWidth="2" strokeLinecap="round" />
+          <line x1={CX} y1={CY + 6} x2={CX} y2={CY - 104} stroke="#ffffff" strokeWidth="2" strokeLinecap="round" />
         </g>
-        <circle cx={CX} cy={CY} r={5} fill="var(--hi)" />
-        <circle cx={CX} cy={CY} r={2.5} fill="#120c1b" />
-        <text x={CX} y={CY - 22} textAnchor="middle" fontSize="19" fontWeight="900" fill={leaderColor} fontFamily="var(--font-d)" letterSpacing="1">
+        <circle cx={CX} cy={CY} r={5} fill="var(--purple2)" />
+        <circle cx={CX} cy={CY} r={2.5} fill="#0a0a08" />
+        <text x={CX} y={CY - 22} textAnchor="middle" fontSize="19" fontWeight="900" fill={leaderColor} fontFamily="'Bebas Neue', sans-serif" letterSpacing="1">
           {(leaderProb * 100).toFixed(0)}%
         </text>
-        <text x={CX} y={CY - 9} textAnchor="middle" fontSize="6" fill="rgba(var(--line-rgb),0.3)" fontFamily="var(--font-m)" letterSpacing="0.5">
+        <text x={CX} y={CY - 9} textAnchor="middle" fontSize="6" fill="rgba(var(--line-rgb),0.3)" fontFamily="'DM Mono', monospace" letterSpacing="0.5">
           {leader.split(" ")[0].toUpperCase().slice(0, 10)}
         </text>
       </svg>
@@ -107,21 +107,21 @@ function SwingOMeter({ c1Name, c2Name, c1Color, c2Color, c1Prob, c2Prob, reporti
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1px 1fr", marginTop: 4 }}>
         {[{ prob: c1Prob, color: c1Color }, null, { prob: c2Prob, color: c2Color }].map((item, i) => (
           item === null
-            ? <div key={i} style={{ background: "rgba(var(--ink-rgb),calc(0.08 * var(--mute-k) + var(--floor)))" }} />
+            ? <div key={i} style={{ background: "rgba(var(--ink-rgb),calc(0.08 * var(--mute) + var(--floor)))" }} />
             : <div key={i} style={{ textAlign: i === 0 ? "center" : "center", padding: "8px 4px" }}>
-                <div style={{ fontFamily: "var(--font-d)", fontSize: 22, color: item.color, lineHeight: 1 }}>{(item.prob * 100).toFixed(1)}%</div>
-                <div style={{ fontFamily: "var(--font-m)", fontSize: 7, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(var(--line-rgb),0.2)", marginTop: 2 }}>Win Prob</div>
+                <div style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 22, color: item.color, lineHeight: 1 }}>{(item.prob * 100).toFixed(1)}%</div>
+                <div style={{ fontFamily: "'DM Mono', monospace", fontSize: 7, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(var(--line-rgb),0.2)", marginTop: 2 }}>Win Prob</div>
               </div>
         ))}
       </div>
 
       <div style={{ marginTop: 10, padding: "0 2px" }}>
         <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 3 }}>
-          <span style={{ fontFamily: "var(--font-m)", fontSize: 7, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(var(--line-rgb),0.2)" }}>Reporting</span>
-          <span style={{ fontFamily: "var(--font-m)", fontSize: 7, fontWeight: 700, color: "rgba(var(--ink-rgb),calc(0.5 * var(--mute-k) + var(--floor)))" }}>{reportingPct.toFixed(1)}%</span>
+          <span style={{ fontFamily: "'DM Mono', monospace", fontSize: 7, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(var(--line-rgb),0.2)" }}>Reporting</span>
+          <span style={{ fontFamily: "'DM Mono', monospace", fontSize: 7, fontWeight: 700, color: "rgba(var(--ink-rgb),calc(0.5 * var(--mute) + var(--floor)))" }}>{reportingPct.toFixed(1)}%</span>
         </div>
-        <div style={{ height: 2, background: "rgba(var(--ink-rgb),calc(0.06 * var(--mute-k) + var(--floor)))", overflow: "hidden" }}>
-          <div style={{ height: "100%", width: `${reportingPct}%`, background: "rgba(var(--line-rgb),0.5)", transition: "width 0.8s ease" }} />
+        <div style={{ height: 2, background: "rgba(var(--ink-rgb),calc(0.06 * var(--mute) + var(--floor)))", overflow: "hidden" }}>
+          <div style={{ height: "100%", width: `${reportingPct}%`, background: "rgba(124,58,237,0.5)", transition: "width 0.8s ease" }} />
         </div>
       </div>
     </div>
@@ -249,66 +249,73 @@ export default function ForecastEnginePage() {
   }, [forecast]);
 
   const candidateColors: Record<CKey, string> = useMemo(() => {
-    const colors = forecast?.forecast.candidate_colors ?? ["#3d7bff", "#ff3b5c", "#c9c2d6", "rgba(var(--line-rgb),0.3)"];
+    const colors = forecast?.forecast.candidate_colors ?? ["#5b8fd4", "#d45b5b", "var(--purple2)", "rgba(var(--line-rgb),0.3)"];
     return { Candidate1: colors[0], Candidate2: colors[1], Candidate3: colors[2], Others: colors[3] };
   }, [forecast]);
 
   return (
     <>
       <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&display=swap');
+        body { background: #0a0a08 !important; }
         @keyframes fcast-load { 0%,100%{opacity:0.3} 50%{opacity:1} }
         @keyframes fcast-pulse { 0%,100%{opacity:1} 50%{opacity:0.25} }
+        * { scrollbar-width: thin; scrollbar-color: rgba(var(--ink-rgb),calc(0.1 * var(--mute) + var(--floor))) transparent; }
+        *::-webkit-scrollbar { width: 3px; }
+        *::-webkit-scrollbar-thumb { background: rgba(var(--ink-rgb),calc(0.1 * var(--mute) + var(--floor))); }
         .fcast-input {
-          width: 100%; background: rgba(var(--line-rgb),0.03); border: 1px solid rgba(var(--ink-rgb),calc(0.1 * var(--mute-k) + var(--floor)));
-          color: rgba(var(--ink-rgb),calc(0.75 * var(--mute-k) + var(--floor))); padding: 9px 11px; font-size: 10px;
-          font-family: var(--font-m); outline: none; letter-spacing: 0.06em;
+          width: 100%; background: rgba(var(--line-rgb),0.03); border: 1px solid rgba(var(--ink-rgb),calc(0.1 * var(--mute) + var(--floor)));
+          color: rgba(var(--ink-rgb),calc(0.75 * var(--mute) + var(--floor))); padding: 9px 11px; font-size: 10px;
+          font-family: 'DM Mono', monospace; outline: none; letter-spacing: 0.06em;
           transition: border-color 120ms ease; box-sizing: border-box;
         }
-        .fcast-input:focus { border-color: rgba(var(--line-rgb),0.4); }
+        .fcast-input:focus { border-color: rgba(124,58,237,0.4); }
         .fcast-input::placeholder { color: rgba(var(--line-rgb),0.2); }
         .fcast-race-item {
           display: flex; align-items: flex-start; width: 100%;
           padding: 10px 14px; background: transparent;
-          border: none; border-bottom: 1px solid rgba(var(--ink-rgb),calc(0.05 * var(--mute-k) + var(--floor)));
+          border: none; border-bottom: 1px solid rgba(var(--ink-rgb),calc(0.05 * var(--mute) + var(--floor)));
           cursor: pointer; text-align: left; transition: background 80ms ease;
         }
         .fcast-race-item:hover { background: rgba(var(--line-rgb),0.03); }
-        .fcast-race-item.active { background: rgba(var(--line-rgb),0.06); border-left: 2px solid var(--hi); }
-        input[type=range] { height: 3px; cursor: pointer; accent-color: var(--hi); }
+        .fcast-race-item.active { background: rgba(124,58,237,0.06); border-left: 2px solid var(--purple2); }
+        input[type=range] { height: 3px; cursor: pointer; accent-color: var(--purple2); }
       `}</style>
 
-      <div style={{ fontFamily: "var(--font-b)" }}>
+      <div style={{ minHeight: "100vh", fontFamily: "'DM Mono', monospace" }}>
 
-        {/* ── HEADER ── */}
-        <div className="opp">
-          <nav className="crumbs" aria-label="Breadcrumb">
-            <a href="/">Home</a><span className="sep">/</span>
-            <a href="/results">Results</a><span className="sep">/</span>
-            <span>Forecast engine</span>
-          </nav>
-          <header className="ph">
-            <div className="eye g">OnPoint Politics results desk</div>
-            <h1>Election night forecast <em>engine</em></h1>
-            <p className="lede">
-              Live results, historical playback and Bayesian modeling. Search any civicAPI race and run a
-              probabilistic forecast against the count.
-            </p>
+        {/* ── HERO HEADER ── */}
+        <div style={{ background: "#0f0f0d", borderBottom: "1px solid rgba(var(--ink-rgb),calc(0.08 * var(--mute) + var(--floor)))" }}>
+          <div style={{ maxWidth: 1280, margin: "0 auto", padding: "28px 32px 24px" }}>
+            <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: "var(--purple2)", marginBottom: 10 }}>National Polling Index · Forecast Engine</div>
+            <div style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: "clamp(36px, 5vw, 64px)", letterSpacing: "0.04em", color: "#fff", lineHeight: 0.95, marginBottom: 14 }}>
+              Election<br />
+              <span style={{ color: "#5b8fd4" }}>Forecast</span>{" "}
+              <span style={{ color: "#d45b5b" }}>Engine</span>
+            </div>
+            <div style={{ fontFamily: "'DM Mono', monospace", fontSize: 11, color: "rgba(var(--line-rgb),0.3)", lineHeight: 1.8, maxWidth: 480, letterSpacing: "0.03em" }}>
+              Live results · Historical playback · Bayesian modeling.
+              Search any CivicAPI race globally and run probabilistic forecasts.
+            </div>
             {selectedRace && (
-              <div className="pmeta"><span className="eye">Auto refresh every 30 seconds</span></div>
+              <div style={{ marginTop: 12, display: "flex", alignItems: "center", gap: 6, fontSize: 9, color: "rgba(var(--ink-rgb),calc(0.45 * var(--mute) + var(--floor)))", letterSpacing: "0.1em", textTransform: "uppercase" }}>
+                <span style={{ width: 5, height: 5, borderRadius: "50%", background: "var(--purple2)", animation: "fcast-pulse 1.8s ease-in-out infinite", display: "inline-block" }} />
+                Auto-refresh · 30s
+              </div>
             )}
-          </header>
+          </div>
         </div>
 
         {/* ── BODY ── */}
-        <div style={{ display: "grid", gridTemplateColumns: "minmax(0, 280px) minmax(0, 1fr)", gap: 16 }}>
+        <div style={{ maxWidth: 1280, margin: "0 auto", padding: "20px 32px", display: "grid", gridTemplateColumns: "280px 1fr", gap: 16 }}>
 
           {/* ── SIDEBAR ── */}
           <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
 
             {/* Search panel */}
-            <div style={{ background: "var(--glass)", border: "1px solid var(--line)", borderRadius: "var(--r)" }}>
-              <div style={{ padding: "11px 14px", borderBottom: "1px solid rgba(var(--ink-rgb),calc(0.06 * var(--mute-k) + var(--floor)))" }}>
-                <span style={{ fontSize: 8, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(var(--ink-rgb),calc(0.45 * var(--mute-k) + var(--floor)))" }}>Search Races</span>
+            <div style={{ background: "#0f0f0d", border: "1px solid rgba(var(--ink-rgb),calc(0.08 * var(--mute) + var(--floor)))" }}>
+              <div style={{ padding: "11px 14px", borderBottom: "1px solid rgba(var(--ink-rgb),calc(0.06 * var(--mute) + var(--floor)))" }}>
+                <span style={{ fontSize: 8, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(var(--ink-rgb),calc(0.45 * var(--mute) + var(--floor)))" }}>Search Races</span>
               </div>
               <div style={{ padding: "14px", display: "flex", flexDirection: "column", gap: 8 }}>
                 <input className="fcast-input" placeholder="Election name…" value={query}
@@ -318,25 +325,25 @@ export default function ForecastEnginePage() {
                   onChange={(e) => setCountry(e.target.value)}
                   onKeyDown={(e) => e.key === "Enter" && doSearch()} />
                 <button onClick={doSearch} disabled={searching}
-                  style={{ padding: "9px 16px", background: searching ? "rgba(var(--ink-rgb),calc(0.06 * var(--mute-k) + var(--floor)))" : "var(--hi)", color: searching ? "rgba(var(--line-rgb),0.3)" : "var(--bg)", border: "none", fontFamily: "var(--font-m)", fontSize: 9, fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", cursor: "pointer", width: "100%", transition: "background 120ms" }}>
-                  {searching ? "Searching" : "Search"}
+                  style={{ padding: "9px 16px", background: searching ? "rgba(var(--ink-rgb),calc(0.06 * var(--mute) + var(--floor)))" : "var(--purple2)", color: searching ? "rgba(var(--line-rgb),0.3)" : "#fff", border: "none", fontFamily: "'DM Mono', monospace", fontSize: 9, fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", cursor: "pointer", width: "100%", transition: "background 120ms" }}>
+                  {searching ? "Searching…" : "Search →"}
                 </button>
               </div>
             </div>
 
             {/* Results */}
             {searchResults.length > 0 && (
-              <div style={{ background: "var(--glass)", border: "1px solid var(--line)", borderRadius: "var(--r)", overflow: "hidden" }}>
-                <div style={{ padding: "11px 14px", borderBottom: "1px solid rgba(var(--ink-rgb),calc(0.06 * var(--mute-k) + var(--floor)))", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                  <span style={{ fontSize: 8, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(var(--ink-rgb),calc(0.45 * var(--mute-k) + var(--floor)))" }}>Results</span>
+              <div style={{ background: "#0f0f0d", border: "1px solid rgba(var(--ink-rgb),calc(0.08 * var(--mute) + var(--floor)))", overflow: "hidden" }}>
+                <div style={{ padding: "11px 14px", borderBottom: "1px solid rgba(var(--ink-rgb),calc(0.06 * var(--mute) + var(--floor)))", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                  <span style={{ fontSize: 8, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(var(--ink-rgb),calc(0.45 * var(--mute) + var(--floor)))" }}>Results</span>
                   <span style={{ fontSize: 8, color: "rgba(var(--line-rgb),0.2)", letterSpacing: "0.08em" }}>{searchResults.length}</span>
                 </div>
                 <div style={{ maxHeight: 300, overflowY: "auto" }}>
                   {searchResults.map((r) => (
                     <button key={r.id} className={`fcast-race-item ${selectedRace?.id === r.id ? "active" : ""}`} onClick={() => selectRace(r)}>
                       <div style={{ flex: 1 }}>
-                        <div style={{ fontFamily: "var(--font-m)", fontSize: 10, fontWeight: selectedRace?.id === r.id ? 700 : 400, color: selectedRace?.id === r.id ? "rgba(var(--line-rgb),0.8)" : "rgba(var(--line-rgb),0.5)", marginBottom: 4, lineHeight: 1.4, letterSpacing: "0.02em" }}>{r.election_name}</div>
-                        <div style={{ fontSize: 8, color: "rgba(var(--ink-rgb),calc(0.45 * var(--mute-k) + var(--floor)))", letterSpacing: "0.08em" }}>{r.country}{r.province ? ` · ${r.province}` : ""} · {new Date(r.election_date).toLocaleDateString()}</div>
+                        <div style={{ fontFamily: "'DM Mono', monospace", fontSize: 10, fontWeight: selectedRace?.id === r.id ? 700 : 400, color: selectedRace?.id === r.id ? "rgba(var(--line-rgb),0.8)" : "rgba(var(--line-rgb),0.5)", marginBottom: 4, lineHeight: 1.4, letterSpacing: "0.02em" }}>{r.election_name}</div>
+                        <div style={{ fontSize: 8, color: "rgba(var(--ink-rgb),calc(0.45 * var(--mute) + var(--floor)))", letterSpacing: "0.08em" }}>{r.country}{r.province ? ` · ${r.province}` : ""} · {new Date(r.election_date).toLocaleDateString()}</div>
                         <div style={{ fontSize: 8, color: "rgba(var(--line-rgb),0.2)", letterSpacing: "0.06em", marginTop: 2 }}>{r.percent_reporting > 99 ? ">99" : r.percent_reporting}% reporting</div>
                       </div>
                     </button>
@@ -347,9 +354,9 @@ export default function ForecastEnginePage() {
 
             {/* Model options */}
             {selectedRace && (
-              <div style={{ background: "var(--glass)", border: "1px solid var(--line)", borderRadius: "var(--r)" }}>
-                <div style={{ padding: "11px 14px", borderBottom: "1px solid rgba(var(--ink-rgb),calc(0.06 * var(--mute-k) + var(--floor)))" }}>
-                  <span style={{ fontSize: 8, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(var(--ink-rgb),calc(0.45 * var(--mute-k) + var(--floor)))" }}>Model Options</span>
+              <div style={{ background: "#0f0f0d", border: "1px solid rgba(var(--ink-rgb),calc(0.08 * var(--mute) + var(--floor)))" }}>
+                <div style={{ padding: "11px 14px", borderBottom: "1px solid rgba(var(--ink-rgb),calc(0.06 * var(--mute) + var(--floor)))" }}>
+                  <span style={{ fontSize: 8, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(var(--ink-rgb),calc(0.45 * var(--mute) + var(--floor)))" }}>Model Options</span>
                 </div>
                 <div style={{ padding: "14px", display: "flex", flexDirection: "column", gap: 10 }}>
                   <div>
@@ -369,8 +376,8 @@ export default function ForecastEnginePage() {
                       if (timestamps.length > 0 && historyList) runForecastAtIndex(selectedRace.id, historyList.timestamps, historyIndex);
                       else runForecastLive(selectedRace.id);
                     }}
-                    style={{ padding: "9px 16px", background: loadingForecast ? "rgba(var(--ink-rgb),calc(0.05 * var(--mute-k) + var(--floor)))" : "rgba(var(--line-rgb),0.15)", color: loadingForecast ? "rgba(var(--line-rgb),0.2)" : "var(--hi)", border: "1px solid rgba(var(--line-rgb),0.25)", fontFamily: "var(--font-m)", fontSize: 9, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", cursor: "pointer", width: "100%" }}>
-                    {loadingForecast ? "Running" : "Rerun forecast"}
+                    style={{ padding: "9px 16px", background: loadingForecast ? "rgba(var(--ink-rgb),calc(0.05 * var(--mute) + var(--floor)))" : "rgba(91,143,212,0.15)", color: loadingForecast ? "rgba(var(--line-rgb),0.2)" : "#5b8fd4", border: "1px solid rgba(91,143,212,0.25)", fontFamily: "'DM Mono', monospace", fontSize: 9, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", cursor: "pointer", width: "100%" }}>
+                    {loadingForecast ? "Running…" : "Rerun Forecast →"}
                   </button>
                 </div>
               </div>
@@ -381,26 +388,26 @@ export default function ForecastEnginePage() {
           <div style={{ minWidth: 0, display: "flex", flexDirection: "column", gap: 14 }}>
 
             {error && (
-              <div style={{ background: "rgba(var(--line-rgb),0.06)", border: "1px solid rgba(var(--line-rgb),0.2)", padding: "10px 14px", fontSize: 10, color: "#c9c2d6", letterSpacing: "0.06em", fontFamily: "var(--font-m)" }}>
+              <div style={{ background: "rgba(212,91,91,0.06)", border: "1px solid rgba(212,91,91,0.2)", padding: "10px 14px", fontSize: 10, color: "#d45b5b", letterSpacing: "0.06em", fontFamily: "'DM Mono', monospace" }}>
                 ⚠ {error}
               </div>
             )}
 
             {!selectedRace && !searchResults.length && (
               <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", minHeight: 400, textAlign: "center" }}>
-                <div style={{ fontFamily: "var(--font-d)", fontSize: 80, color: "rgba(var(--ink-rgb),calc(0.05 * var(--mute-k) + var(--floor)))", letterSpacing: "0.1em", lineHeight: 1, marginBottom: 20 }}>FORECAST</div>
-                <div style={{ fontFamily: "var(--font-m)", fontSize: 11, color: "rgba(var(--line-rgb),0.2)", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 8 }}>Search for an election to begin</div>
-                <div style={{ fontFamily: "var(--font-m)", fontSize: 9, color: "rgba(var(--ink-rgb),calc(0.14 * var(--mute-k) + var(--floor)))", letterSpacing: "0.1em" }}>Use the search panel on the left</div>
+                <div style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 80, color: "rgba(var(--ink-rgb),calc(0.05 * var(--mute) + var(--floor)))", letterSpacing: "0.1em", lineHeight: 1, marginBottom: 20 }}>FORECAST</div>
+                <div style={{ fontFamily: "'DM Mono', monospace", fontSize: 11, color: "rgba(var(--line-rgb),0.2)", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 8 }}>Search for an election to begin</div>
+                <div style={{ fontFamily: "'DM Mono', monospace", fontSize: 9, color: "rgba(var(--ink-rgb),calc(0.14 * var(--mute) + var(--floor)))", letterSpacing: "0.1em" }}>Use the search panel on the left</div>
               </div>
             )}
 
             {(loadingHistory || loadingForecast) && !forecast && (
-              <div style={{ background: "var(--glass)", border: "1px solid var(--line)", borderRadius: "var(--r)", padding: "48px 0", textAlign: "center" }}>
-                <div style={{ fontFamily: "var(--font-m)", fontSize: 9, color: "rgba(var(--line-rgb),0.2)", letterSpacing: "0.14em", textTransform: "uppercase", marginBottom: 12 }}>
+              <div style={{ background: "#0f0f0d", border: "1px solid rgba(var(--ink-rgb),calc(0.08 * var(--mute) + var(--floor)))", padding: "48px 0", textAlign: "center" }}>
+                <div style={{ fontFamily: "'DM Mono', monospace", fontSize: 9, color: "rgba(var(--line-rgb),0.2)", letterSpacing: "0.14em", textTransform: "uppercase", marginBottom: 12 }}>
                   {loadingHistory ? "Loading race history…" : "Running forecast model…"}
                 </div>
-                <div style={{ height: 2, background: "rgba(var(--ink-rgb),calc(0.06 * var(--mute-k) + var(--floor)))", width: 120, margin: "0 auto", overflow: "hidden" }}>
-                  <div style={{ height: "100%", width: "60%", background: "var(--hi)", animation: "fcast-load 1.4s ease-in-out infinite" }} />
+                <div style={{ height: 2, background: "rgba(var(--ink-rgb),calc(0.06 * var(--mute) + var(--floor)))", width: 120, margin: "0 auto", overflow: "hidden" }}>
+                  <div style={{ height: "100%", width: "60%", background: "var(--purple2)", animation: "fcast-load 1.4s ease-in-out infinite" }} />
                 </div>
               </div>
             )}
@@ -408,41 +415,41 @@ export default function ForecastEnginePage() {
             {forecast && selectedRace && (
               <>
                 {/* Race info + playback */}
-                <div style={{ background: "var(--glass)", border: "1px solid var(--line)", borderRadius: "var(--r)", overflow: "hidden" }}>
-                  <div style={{ height: 2, background: "var(--line2)" }} />
+                <div style={{ background: "#0f0f0d", border: "1px solid rgba(var(--ink-rgb),calc(0.08 * var(--mute) + var(--floor)))", overflow: "hidden" }}>
+                  <div style={{ height: 2, background: "linear-gradient(90deg, #5b8fd4 50%, #d45b5b 50%)" }} />
                   <div style={{ padding: "18px 20px" }}>
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 12, marginBottom: 14 }}>
                       <div>
-                        <div style={{ fontFamily: "var(--font-d)", fontSize: 28, letterSpacing: "0.04em", color: "var(--hi)", lineHeight: 1, marginBottom: 6 }}>{forecast.race.election_name}</div>
+                        <div style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 28, letterSpacing: "0.04em", color: "#fff", lineHeight: 1, marginBottom: 6 }}>{forecast.race.election_name}</div>
                         <div style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
-                          <span style={{ fontFamily: "var(--font-m)", fontSize: 9, color: "rgba(var(--line-rgb),0.3)", letterSpacing: "0.08em" }}>{new Date(forecast.race.election_date).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}</span>
-                          <span style={{ fontFamily: "var(--font-m)", fontSize: 9, color: "rgba(var(--line-rgb),0.2)", letterSpacing: "0.06em" }}>{forecast.race.percent_reporting > 99 ? ">99" : forecast.race.percent_reporting}% reporting</span>
-                          {loadingForecast && <span style={{ fontFamily: "var(--font-m)", fontSize: 8, color: "#c9c2d6", letterSpacing: "0.1em" }}>Updating</span>}
+                          <span style={{ fontFamily: "'DM Mono', monospace", fontSize: 9, color: "rgba(var(--line-rgb),0.3)", letterSpacing: "0.08em" }}>{new Date(forecast.race.election_date).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}</span>
+                          <span style={{ fontFamily: "'DM Mono', monospace", fontSize: 9, color: "rgba(var(--line-rgb),0.2)", letterSpacing: "0.06em" }}>{forecast.race.percent_reporting > 99 ? ">99" : forecast.race.percent_reporting}% reporting</span>
+                          {loadingForecast && <span style={{ fontFamily: "'DM Mono', monospace", fontSize: 8, color: "#9d5cf0", letterSpacing: "0.1em" }}>↻ updating…</span>}
                         </div>
                       </div>
-                      <span style={{ fontFamily: "var(--font-m)", fontSize: 8, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", padding: "4px 10px", background: forecast.forecast.mode_trigger === "RUNOFF" ? "rgba(var(--line-rgb),0.12)" : "rgba(var(--line-rgb),0.12)", border: `1px solid ${forecast.forecast.mode_trigger === "RUNOFF" ? "rgba(var(--line-rgb),0.3)" : "rgba(var(--line-rgb),0.3)"}`, color: forecast.forecast.mode_trigger === "RUNOFF" ? "#c9c2d6" : "#ffffff", flexShrink: 0 }}>
+                      <span style={{ fontFamily: "'DM Mono', monospace", fontSize: 8, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", padding: "4px 10px", background: forecast.forecast.mode_trigger === "RUNOFF" ? "rgba(212,91,91,0.12)" : "rgba(91,143,212,0.12)", border: `1px solid ${forecast.forecast.mode_trigger === "RUNOFF" ? "rgba(212,91,91,0.3)" : "rgba(91,143,212,0.3)"}`, color: forecast.forecast.mode_trigger === "RUNOFF" ? "#d45b5b" : "#5b8fd4", flexShrink: 0 }}>
                         {forecast.forecast.mode_trigger}
                       </span>
                     </div>
 
                     {timestamps.length > 1 && (
                       <>
-                        <div style={{ height: 1, background: "rgba(var(--ink-rgb),calc(0.06 * var(--mute-k) + var(--floor)))", marginBottom: 14 }} />
+                        <div style={{ height: 1, background: "rgba(var(--ink-rgb),calc(0.06 * var(--mute) + var(--floor)))", marginBottom: 14 }} />
                         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 10 }}>
-                          <span style={{ fontFamily: "var(--font-m)", fontSize: 8, fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: "rgba(var(--line-rgb),0.2)" }}>Historical Playback</span>
+                          <span style={{ fontFamily: "'DM Mono', monospace", fontSize: 8, fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: "rgba(var(--line-rgb),0.2)" }}>Historical Playback</span>
                           <button onClick={() => { if (playing) { setPlaying(false); return; } if (historyIndex >= timestamps.length - 1) setHistoryIndex(0); setPlaying(true); }}
-                            style={{ padding: "5px 14px", background: playing ? "rgba(var(--line-rgb),0.12)" : "rgba(var(--line-rgb),0.1)", color: playing ? "var(--ink2)" : "var(--hi)", border: `1px solid ${playing ? "rgba(var(--line-rgb),0.25)" : "rgba(var(--line-rgb),0.25)"}`, fontFamily: "var(--font-m)", fontSize: 8, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", cursor: "pointer" }}>
+                            style={{ padding: "5px 14px", background: playing ? "rgba(212,91,91,0.12)" : "rgba(124,58,237,0.1)", color: playing ? "#d45b5b" : "var(--purple2)", border: `1px solid ${playing ? "rgba(212,91,91,0.25)" : "rgba(124,58,237,0.25)"}`, fontFamily: "'DM Mono', monospace", fontSize: 8, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", cursor: "pointer" }}>
                             {playing ? "⏹ Stop" : "▶ Play"}
                           </button>
                         </div>
                         <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 6 }}>
-                          <span style={{ fontFamily: "var(--font-m)", fontSize: 8, color: "rgba(var(--line-rgb),0.2)" }}>{shortDate(timestamps[0])}</span>
-                          <span style={{ fontFamily: "var(--font-m)", fontSize: 8, color: "rgba(var(--line-rgb),0.2)" }}>{shortDate(timestamps[timestamps.length - 1])}</span>
+                          <span style={{ fontFamily: "'DM Mono', monospace", fontSize: 8, color: "rgba(var(--line-rgb),0.2)" }}>{shortDate(timestamps[0])}</span>
+                          <span style={{ fontFamily: "'DM Mono', monospace", fontSize: 8, color: "rgba(var(--line-rgb),0.2)" }}>{shortDate(timestamps[timestamps.length - 1])}</span>
                         </div>
                         <input type="range" min={0} max={timestamps.length - 1} value={historyIndex}
                           onChange={(e) => handleHistoryChange(Number(e.target.value))}
                           style={{ width: "100%", marginBottom: 6 }} />
-                        <div style={{ textAlign: "center", fontFamily: "var(--font-m)", fontSize: 9, color: "rgba(var(--line-rgb),0.3)" }}>
+                        <div style={{ textAlign: "center", fontFamily: "'DM Mono', monospace", fontSize: 9, color: "rgba(var(--line-rgb),0.3)" }}>
                           {shortDate(timestamps[historyIndex])} · {historyIndex + 1}/{timestamps.length}
                         </div>
                       </>
@@ -454,8 +461,8 @@ export default function ForecastEnginePage() {
                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
 
                   {/* Swing-o-meter */}
-                  <div style={{ background: "var(--glass)", border: "1px solid var(--line)", borderRadius: "var(--r)", padding: "16px" }}>
-                    <div style={{ fontFamily: "var(--font-m)", fontSize: 8, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(var(--ink-rgb),calc(0.45 * var(--mute-k) + var(--floor)))", marginBottom: 14 }}>
+                  <div style={{ background: "#0f0f0d", border: "1px solid rgba(var(--ink-rgb),calc(0.08 * var(--mute) + var(--floor)))", padding: "16px" }}>
+                    <div style={{ fontFamily: "'DM Mono', monospace", fontSize: 8, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(var(--ink-rgb),calc(0.45 * var(--mute) + var(--floor)))", marginBottom: 14 }}>
                       {raceRule === "PLURALITY" ? "Win Probability" : "Majority Win Probability"}
                     </div>
                     <SwingOMeter
@@ -471,26 +478,26 @@ export default function ForecastEnginePage() {
                       const c3Prob = raceRule === "PLURALITY" ? forecast.forecast.plurality_odds_to_win["Candidate3"] : forecast.forecast.majority_win_prob["Candidate3"];
                       if (c3Prob < 0.005) return null;
                       return (
-                        <div style={{ marginTop: 10, padding: "8px 10px", border: "1px solid rgba(var(--ink-rgb),calc(0.08 * var(--mute-k) + var(--floor)))", background: "rgba(var(--line-rgb),0.02)", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                        <div style={{ marginTop: 10, padding: "8px 10px", border: "1px solid rgba(var(--ink-rgb),calc(0.08 * var(--mute) + var(--floor)))", background: "rgba(var(--line-rgb),0.02)", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
                           <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
                             <span style={{ width: 6, height: 6, borderRadius: "50%", background: candidateColors["Candidate3"], display: "inline-block" }} />
-                            <span style={{ fontFamily: "var(--font-m)", fontSize: 9, color: "rgba(var(--line-rgb),0.4)" }}>{candidateLabels["Candidate3"]}</span>
+                            <span style={{ fontFamily: "'DM Mono', monospace", fontSize: 9, color: "rgba(var(--line-rgb),0.4)" }}>{candidateLabels["Candidate3"]}</span>
                           </div>
-                          <span style={{ fontFamily: "var(--font-d)", fontSize: 16, color: candidateColors["Candidate3"] }}>{pct(c3Prob)}</span>
+                          <span style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 16, color: candidateColors["Candidate3"] }}>{pct(c3Prob)}</span>
                         </div>
                       );
                     })()}
                     {raceRule === "MAJORITY" && (
-                      <div style={{ marginTop: 8, padding: "8px 10px", border: "1px solid rgba(var(--line-rgb),0.15)", background: "rgba(var(--line-rgb),0.04)", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                        <span style={{ fontFamily: "var(--font-m)", fontSize: 9, color: "rgba(var(--line-rgb),0.6)" }}>Runoff needed</span>
-                        <span style={{ fontFamily: "var(--font-d)", fontSize: 16, color: "#c9c2d6" }}>{pct(forecast.forecast.runoff_needed_prob)}</span>
+                      <div style={{ marginTop: 8, padding: "8px 10px", border: "1px solid rgba(212,91,91,0.15)", background: "rgba(212,91,91,0.04)", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                        <span style={{ fontFamily: "'DM Mono', monospace", fontSize: 9, color: "rgba(212,91,91,0.6)" }}>Runoff needed</span>
+                        <span style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 16, color: "#d45b5b" }}>{pct(forecast.forecast.runoff_needed_prob)}</span>
                       </div>
                     )}
                   </div>
 
                   {/* Vote share */}
-                  <div style={{ background: "var(--glass)", border: "1px solid var(--line)", borderRadius: "var(--r)", padding: "16px" }}>
-                    <div style={{ fontFamily: "var(--font-m)", fontSize: 8, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(var(--ink-rgb),calc(0.45 * var(--mute-k) + var(--floor)))", marginBottom: 14 }}>Projected Vote Share</div>
+                  <div style={{ background: "#0f0f0d", border: "1px solid rgba(var(--ink-rgb),calc(0.08 * var(--mute) + var(--floor)))", padding: "16px" }}>
+                    <div style={{ fontFamily: "'DM Mono', monospace", fontSize: 8, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(var(--ink-rgb),calc(0.45 * var(--mute) + var(--floor)))", marginBottom: 14 }}>Projected Vote Share</div>
                     <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8, marginBottom: 16 }}>
                       {(["Candidate1", "Candidate2", "Candidate3"] as const).map((key) => {
                         const color = candidateColors[key];
@@ -498,11 +505,11 @@ export default function ForecastEnginePage() {
                         const votes = forecast.forecast.modeled_votes[key];
                         const isLeader = forecast.forecast.leader === key;
                         return (
-                          <div key={key} style={{ padding: "10px 12px", border: `1px solid ${isLeader ? `${color}44` : "rgba(var(--ink-rgb),calc(0.08 * var(--mute-k) + var(--floor)))"}`, background: isLeader ? `${color}08` : "rgba(var(--line-rgb),0.02)" }}>
-                            <div style={{ fontFamily: "var(--font-m)", fontSize: 8, color: "rgba(var(--line-rgb),0.3)", marginBottom: 4, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", letterSpacing: "0.04em" }}>{candidateLabels[key]}</div>
-                            <div style={{ fontFamily: "var(--font-d)", fontSize: 26, color, lineHeight: 1, marginBottom: 2 }}>{pct(share)}</div>
-                            <div style={{ fontFamily: "var(--font-m)", fontSize: 8, color: "rgba(var(--line-rgb),0.2)", letterSpacing: "0.06em" }}>{fmt(votes)} proj.</div>
-                            {isLeader && <div style={{ marginTop: 4, fontFamily: "var(--font-m)", fontSize: 7, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "#c9c2d6" }}>Leader</div>}
+                          <div key={key} style={{ padding: "10px 12px", border: `1px solid ${isLeader ? `${color}44` : "rgba(var(--ink-rgb),calc(0.08 * var(--mute) + var(--floor)))"}`, background: isLeader ? `${color}08` : "rgba(var(--line-rgb),0.02)" }}>
+                            <div style={{ fontFamily: "'DM Mono', monospace", fontSize: 8, color: "rgba(var(--line-rgb),0.3)", marginBottom: 4, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", letterSpacing: "0.04em" }}>{candidateLabels[key]}</div>
+                            <div style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 26, color, lineHeight: 1, marginBottom: 2 }}>{pct(share)}</div>
+                            <div style={{ fontFamily: "'DM Mono', monospace", fontSize: 8, color: "rgba(var(--line-rgb),0.2)", letterSpacing: "0.06em" }}>{fmt(votes)} proj.</div>
+                            {isLeader && <div style={{ marginTop: 4, fontFamily: "'DM Mono', monospace", fontSize: 7, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", color: "#9d5cf0" }}>Leader</div>}
                           </div>
                         );
                       })}
@@ -511,14 +518,14 @@ export default function ForecastEnginePage() {
                     {/* Runoff probs if majority */}
                     {raceRule === "MAJORITY" && (
                       <div style={{ marginBottom: 16 }}>
-                        <div style={{ fontFamily: "var(--font-m)", fontSize: 8, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(var(--line-rgb),0.2)", marginBottom: 10 }}>Runoff Advance Probability</div>
+                        <div style={{ fontFamily: "'DM Mono', monospace", fontSize: 8, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(var(--line-rgb),0.2)", marginBottom: 10 }}>Runoff Advance Probability</div>
                         {CANDIDATE_KEYS.map((k) => (
                           <div key={k} style={{ marginBottom: 8 }}>
                             <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 3 }}>
-                              <span style={{ fontFamily: "var(--font-m)", fontSize: 9, color: "rgba(var(--ink-rgb),calc(0.5 * var(--mute-k) + var(--floor)))" }}>{candidateLabels[k]}</span>
-                              <span style={{ fontFamily: "var(--font-d)", fontSize: 14, color: candidateColors[k] }}>{pct(forecast.forecast.runoff_prob[k])}</span>
+                              <span style={{ fontFamily: "'DM Mono', monospace", fontSize: 9, color: "rgba(var(--ink-rgb),calc(0.5 * var(--mute) + var(--floor)))" }}>{candidateLabels[k]}</span>
+                              <span style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 14, color: candidateColors[k] }}>{pct(forecast.forecast.runoff_prob[k])}</span>
                             </div>
-                            <div style={{ height: 2, background: "rgba(var(--ink-rgb),calc(0.06 * var(--mute-k) + var(--floor)))" }}>
+                            <div style={{ height: 2, background: "rgba(var(--ink-rgb),calc(0.06 * var(--mute) + var(--floor)))" }}>
                               <div style={{ height: "100%", width: pct(Math.min(forecast.forecast.runoff_prob[k], 1)), background: candidateColors[k], transition: "width 600ms ease" }} />
                             </div>
                           </div>
@@ -527,8 +534,8 @@ export default function ForecastEnginePage() {
                     )}
 
                     {/* Model stats */}
-                    <div style={{ borderTop: "1px solid rgba(var(--ink-rgb),calc(0.06 * var(--mute-k) + var(--floor)))", paddingTop: 14 }}>
-                      <div style={{ fontFamily: "var(--font-m)", fontSize: 8, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(var(--line-rgb),0.2)", marginBottom: 10 }}>Model Statistics</div>
+                    <div style={{ borderTop: "1px solid rgba(var(--ink-rgb),calc(0.06 * var(--mute) + var(--floor)))", paddingTop: 14 }}>
+                      <div style={{ fontFamily: "'DM Mono', monospace", fontSize: 8, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(var(--line-rgb),0.2)", marginBottom: 10 }}>Model Statistics</div>
                       {[
                         ["Total proj.", fmt(forecast.forecast.modeled_total_vote)],
                         ["Remaining", fmt(forecast.forecast.modeled_vote_remaining)],
@@ -538,8 +545,8 @@ export default function ForecastEnginePage() {
                         ["Runner-up", candidateLabels[forecast.forecast.runner_up]],
                       ].map(([label, val]) => (
                         <div key={label} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "5px 0", borderBottom: "1px solid rgba(var(--line-rgb),0.03)" }}>
-                          <span style={{ fontFamily: "var(--font-m)", fontSize: 8, color: "rgba(var(--line-rgb),0.2)", letterSpacing: "0.1em", textTransform: "uppercase" }}>{label}</span>
-                          <span style={{ fontFamily: "var(--font-m)", fontSize: 10, fontWeight: 700, color: "rgba(var(--line-rgb),0.6)" }}>{val}</span>
+                          <span style={{ fontFamily: "'DM Mono', monospace", fontSize: 8, color: "rgba(var(--line-rgb),0.2)", letterSpacing: "0.1em", textTransform: "uppercase" }}>{label}</span>
+                          <span style={{ fontFamily: "'DM Mono', monospace", fontSize: 10, fontWeight: 700, color: "rgba(var(--line-rgb),0.6)" }}>{val}</span>
                         </div>
                       ))}
                     </div>

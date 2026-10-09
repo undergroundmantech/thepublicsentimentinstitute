@@ -107,7 +107,7 @@ export default function OklahomaCountyTable({ view, counties, liveCounties }: Pr
           </svg>
           <input
             type="text"
-            placeholder="Search counties"
+            placeholder="search counties…"
             value={q}
             onChange={(e) => setQ(e.target.value)}
           />
@@ -115,12 +115,12 @@ export default function OklahomaCountyTable({ view, counties, liveCounties }: Pr
         <div className="rd-county-sorts" role="group" aria-label="Sort counties">
           {(
             [
-              ["turnout", view === "results" ? "Votes" : "Turnout"],
-              ["az", "A to Z"],
-              ["region", "Region"],
-              ["reporting", "Reporting"],
-              ["margin", "Margin"],
-              ...CANDIDATE_ORDER.map((k) => [k, CANDIDATE_LAST[k]]),
+              ["turnout", view === "results" ? "votes" : "turnout"],
+              ["az", "a–z"],
+              ["region", "region"],
+              ["reporting", "reporting"],
+              ["margin", "margin"],
+              ...CANDIDATE_ORDER.map((k) => [k, CANDIDATE_LAST[k].toLowerCase()]),
             ] as [SortKey, string][]
           ).map(([key, label]) => (
             <button

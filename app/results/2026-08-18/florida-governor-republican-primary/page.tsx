@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import FloridaBoard from "../FloridaBoard";
 
-const TITLE = "Florida governor Republican primary results 2026: county map and forecast";
+const TITLE = "Florida Governor Republican Primary Results 2026 — Live County Map & Forecast";
 const DESC =
-  "Live results and the OnPoint Politics county forecast for the August 18, 2026 Florida " +
+  "Live results and TPSI county-level forecast for the August 18, 2026 Florida " +
   "Republican gubernatorial primary. Byron Donalds, James Fishback, Jay Collins " +
   "and Paul Renner, with all 67 counties, projected turnout and a statewide " +
   "win probability updated as votes are counted.";
@@ -15,11 +15,11 @@ export const metadata: Metadata = {
   description: DESC,
   alternates: { canonical: CANONICAL },
   openGraph: {
-    title: `${TITLE} | OnPoint Politics`,
+    title: TITLE,
     description: DESC,
     url: CANONICAL,
     type: "article",
-    siteName: "OnPoint Politics",
+    siteName: "The Public Sentiment Institute",
   },
   twitter: { card: "summary_large_image", title: TITLE, description: DESC },
 };
@@ -50,7 +50,7 @@ export default function Page() {
             },
             publisher: {
               "@type": "Organization",
-              name: "OnPoint Politics",
+              name: "The Public Sentiment Institute",
             },
           }),
         }}

@@ -8,15 +8,15 @@
 // reported margin. Anything more would be inventing 46 county estimates out of
 // a single statewide judgement call.
 
-import React, { useMemo, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { SC_COUNTY_PATHS, SC_VIEWBOX, SC_TRANSLATE } from "../_data/scCountyGeo";
 import { SC_CANDIDATE_ORDER, SC_CANDIDATE_LAST, type ScCandidateKey } from "../_data/scSenateForecast";
 
 type RGB = [number, number, number];
 
 const CAND_RGB: Record<ScCandidateKey, [RGB, RGB]> = {
-  graham: [[255, 131, 153], [140, 10, 40]],  // --k1 red, the party hue
-  norman: [[225, 220, 234], [111, 104, 131]], // --k2 ink
+  graham: [[209, 137, 130], [110, 36, 29]], // #B23A2E
+  norman: [[120, 168, 182], [19, 68, 83]],  // #1E6E86
 };
 
 export const SC_CAND_CSS: Record<ScCandidateKey, string> = {
@@ -24,7 +24,8 @@ export const SC_CAND_CSS: Record<ScCandidateKey, string> = {
   norman: "var(--k2)",
 };
 
-const MID_DARK: RGB = [44, 38, 56];
+const MID_DARK: RGB = [58, 58, 66];
+const MID_LIGHT: RGB = [232, 232, 226];
 
 /** Runoff margins run wider than a primary plurality, so the ramp is scaled to
  *  20 points rather than the 12 the Oklahoma map uses. */
@@ -53,6 +54,19 @@ const TIP_W = 230;
 const TIP_H = 140;
 const TIP_GAP = 12;
 
+function useSiteTheme(): "light" | "dark" {
+  const [theme, setTheme] = useState<"light" | "dark">("light");
+  useEffect(() => {
+    const read = () =>
+      setTheme(document.documentElement.getAttribute("data-theme") === "dark" ? "dark" : "light");
+    read();
+    const mo = new MutationObserver(read);
+    mo.observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+    return () => mo.disconnect();
+  }, []);
+  return theme;
+}
+
 export type ScLiveCounty = {
   votes: Record<ScCandidateKey, number>;
   total: number;
@@ -70,7 +84,8 @@ export default function SouthCarolinaCountyMap({ counties }: Props) {
     { key: string; x: number; y: number; w: number; h: number } | null
   >(null);
   const wrapRef = useRef<HTMLDivElement | null>(null);
-  const mid = MID_DARK;
+  const theme = useSiteTheme();
+  const mid = theme === "dark" ? MID_DARK : MID_LIGHT;
 
   const entries = useMemo(() => Object.entries(SC_COUNTY_PATHS), []);
   const lc = hover ? counties[hover.key] : undefined;

@@ -152,7 +152,7 @@ export default function LiveTimeline({
     {
       key: "reporting",
       title: "est. reporting",
-      series: [{ label: "reporting", color: "#f3eff8", values: reporting }],
+      series: [{ label: "reporting", color: "#b7ff00", values: reporting }],
     },
     {
       key: "share",

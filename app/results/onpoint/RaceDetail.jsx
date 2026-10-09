@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
-import { useTheme } from './lib/theme.jsx'
+import { useTheme, tripToggleTheme } from './lib/theme.jsx'
 
 // The race detail map IS the precinct app (same as the NYC/VA projects):
 // a full-screen iframe of the precinct build at ?d=CIVIC&race=<id> — its real
@@ -46,7 +46,7 @@ function syncIframeTheme(iframe, next) {
 }
 
 export default function RaceDetail({ race, onClose }) {
-  const { theme } = useTheme()
+  const { theme, toggle } = useTheme()
   const pushedRef = useRef(false)
   const iframeRef = useRef(null)
   // LIVE THEME PROPAGATION (no reload):
@@ -118,6 +118,18 @@ export default function RaceDetail({ race, onClose }) {
     }
   }
 
+  const handleThemeToggle = () => {
+    tripToggleTheme({
+      theme,
+      toggle,
+      // Inside the View Transitions callback the hub's <html data-theme>
+      // is mutated up front — now mirror that into the iframe so the new
+      // snapshot captures both documents in the same state.
+      onAfterSwap: (next) => syncIframeTheme(iframeRef.current, next),
+    })
+  }
+
+  const light = theme === 'light'
 
   // src carries the MOUNT-time theme only (initialThemeRef) so a fresh load /
   // direct link / refresh paints in the right theme — and then stays put on
@@ -150,10 +162,17 @@ export default function RaceDetail({ race, onClose }) {
   // buttons. Crisper backdrop (slight darken in light mode, slight
   // lighten in dark) keeps the pill legible against whatever the
   // basemap is doing underneath.
-  const clusterBg = 'rgba(var(--bg2-rgb),0.9)'
-  const clusterBorder = 'rgba(var(--line-rgb),0.16)'
-  const clusterShadow = '0 12px 40px rgba(0,0,0,0.5)'
+  const clusterBg = light
+    ? 'rgba(255,255,255,0.86)'
+    : 'rgba(14,15,19,0.78)'
+  const clusterBorder = light
+    ? 'rgba(0,0,0,0.10)'
+    : 'rgba(255,255,255,0.10)'
+  const clusterShadow = light
+    ? '0 10px 24px -12px rgba(15,23,42,0.20), 0 0 0 0.5px rgba(0,0,0,0.04)'
+    : '0 10px 28px -14px rgba(0,0,0,0.7), 0 0 0 0.5px rgba(255,255,255,0.04)'
   const segmentInkBase = 'var(--ink)'
+  const dividerColor = light ? 'rgba(0,0,0,0.10)' : 'rgba(255,255,255,0.12)'
 
   const segmentStyle = {
     appearance: 'none',
@@ -166,9 +185,9 @@ export default function RaceDetail({ race, onClose }) {
     justifyContent: 'center',
     height: '100%', // fill the parent pill so mobile/desktop heights both work
     color: segmentInkBase,
-    fontFamily: 'var(--font-b)',
+    fontFamily: '"Instrument Sans", system-ui, sans-serif',
     fontSize: 13,
-    fontWeight: 700,
+    fontWeight: 600,
     padding: 0,
     transition: 'background 140ms ease, color 140ms ease',
   }
@@ -179,7 +198,7 @@ export default function RaceDetail({ race, onClose }) {
         position: 'fixed',
         inset: 0,
         zIndex: 10000,
-        background: 'var(--bg)',
+        background: 'var(--page)',
         opacity: 1,
       }}
     >
@@ -254,13 +273,32 @@ export default function RaceDetail({ race, onClose }) {
             gap: 6,
             padding: '0 14px 0 12px',
           }}
-          onMouseEnter={(e) => { e.currentTarget.style.background = 'rgba(var(--line-rgb),0.06)' }}
+          onMouseEnter={(e) => { e.currentTarget.style.background = light ? 'rgba(0,0,0,0.05)' : 'rgba(255,255,255,0.06)' }}
           onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent' }}
         >
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
             <path d="M15 6l-6 6 6 6" />
           </svg>
-          <span style={{ lineHeight: 1 }}>Back to results</span>
+          <span style={{ lineHeight: 1 }}>Back</span>
+        </button>
+        <span aria-hidden style={{ width: 1, alignSelf: 'stretch', background: dividerColor }} />
+        <button
+          onClick={handleThemeToggle}
+          aria-label={light ? 'Switch to dark mode' : 'Switch to light mode'}
+          title={light ? 'Dark mode' : 'Light mode'}
+          style={{
+            ...segmentStyle,
+            width: 38,
+            color: 'var(--ink-mute)',
+          }}
+          onMouseEnter={(e) => { e.currentTarget.style.background = light ? 'rgba(0,0,0,0.05)' : 'rgba(255,255,255,0.06)'; e.currentTarget.style.color = 'var(--ink)' }}
+          onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = 'var(--ink-mute)' }}
+        >
+          {light ? (
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" /></svg>
+          ) : (
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" aria-hidden><circle cx="12" cy="12" r="4.2" /><path d="M12 2.5v2M12 19.5v2M4.6 4.6l1.5 1.5M17.9 17.9l1.5 1.5M2.5 12h2M19.5 12h2M4.6 19.4l1.5-1.5M17.9 6.1l1.5-1.5" /></svg>
+          )}
         </button>
       </div>
 
@@ -268,38 +306,38 @@ export default function RaceDetail({ race, onClose }) {
         <div
           style={{
             position: 'absolute', inset: 0, zIndex: 1, display: 'grid', placeItems: 'center',
-            padding: 24, background: 'var(--bg)', textAlign: 'center',
-            fontFamily: 'var(--font-b)',
+            padding: 24, background: 'var(--page)', textAlign: 'center',
+            fontFamily: '"Instrument Sans", system-ui, sans-serif',
           }}
         >
           <div style={{ maxWidth: 460 }}>
-            <div className="eye" style={{ fontSize: 11, fontWeight: 700, letterSpacing: '0.16em', textTransform: 'uppercase', color: 'var(--mute)' }}>
+            <div style={{ fontFamily: '"Oswald", system-ui, sans-serif', textTransform: 'uppercase', letterSpacing: '0.12em', fontSize: 12, fontWeight: 700, color: 'var(--ink-dim)' }}>
               Precinct map unavailable
             </div>
-            <h2 style={{ margin: '12px 0 8px', fontFamily: 'var(--font-d)', fontWeight: 800, letterSpacing: '-0.03em', fontSize: 26, lineHeight: 1.1, color: 'var(--ink)' }}>
+            <h2 style={{ margin: '12px 0 8px', fontFamily: '"Oswald", system-ui, sans-serif', fontSize: 24, lineHeight: 1.1, color: 'var(--ink)' }}>
               This race&apos;s map isn&apos;t responding
             </h2>
             <p style={{ margin: '0 0 20px', fontSize: 14, lineHeight: 1.65, color: 'var(--ink-mute)' }}>
               The detail map loads from{' '}
-              <code style={{ fontFamily: 'var(--font-m)', fontSize: 12.5, padding: '1px 6px', borderRadius: 5, background: 'var(--glass2)', color: 'var(--ink)' }}>{base}</code>.{' '}
-              The precinct map service may be offline for a moment. Retry below, or open it directly.
+              <code style={{ fontFamily: '"JetBrains Mono", ui-monospace, monospace', fontSize: 12.5, padding: '1px 6px', borderRadius: 5, background: 'var(--wash)', color: 'var(--ink)' }}>{base}</code>.{' '}
+              The precinct map service may be momentarily offline — retry below, or open it directly.
             </p>
             <div style={{ display: 'inline-flex', gap: 10, flexWrap: 'wrap', justifyContent: 'center' }}>
               <button
                 onClick={() => setRetry((n) => n + 1)}
-                style={{ fontFamily: 'inherit', fontSize: 13, fontWeight: 700, color: 'var(--bg)', background: 'var(--hi)', border: 0, borderRadius: 99, padding: '10px 20px', cursor: 'pointer' }}
+                style={{ fontFamily: 'inherit', fontSize: 13, fontWeight: 650, color: '#0a0b0d', background: 'var(--ink)', border: 0, borderRadius: 99, padding: '10px 20px', cursor: 'pointer' }}
               >
                 Retry
               </button>
               <a
                 href={src} target="_blank" rel="noreferrer"
-                style={{ fontFamily: 'inherit', fontSize: 13, fontWeight: 600, color: 'var(--ink)', background: 'transparent', border: '1px solid var(--line2)', borderRadius: 99, padding: '10px 18px', textDecoration: 'none' }}
+                style={{ fontFamily: 'inherit', fontSize: 13, fontWeight: 600, color: 'var(--ink)', background: 'transparent', border: '1px solid var(--card-bd)', borderRadius: 99, padding: '10px 18px', textDecoration: 'none' }}
               >
-                Open directly
+                Open directly ↗
               </a>
               <button
                 onClick={() => setReachable(true)}
-                style={{ fontFamily: 'inherit', fontSize: 13, fontWeight: 600, color: 'var(--ink2)', background: 'transparent', border: '1px solid var(--line2)', borderRadius: 99, padding: '10px 18px', cursor: 'pointer' }}
+                style={{ fontFamily: 'inherit', fontSize: 13, fontWeight: 600, color: 'var(--ink-mute)', background: 'transparent', border: '1px solid var(--card-bd)', borderRadius: 99, padding: '10px 18px', cursor: 'pointer' }}
               >
                 Dismiss
               </button>

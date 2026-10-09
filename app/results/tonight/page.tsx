@@ -1,7 +1,7 @@
 "use client";
 
 /**
- * /results/live: the board on an election night, the landing page between them.
+ * /results/tonight — the board on an election night, the landing page between them.
  *
  * The August 25 runoff board is retired and lives on unchanged at
  * /results/archive/2026-08-25, alongside August 4 and August 18. The standalone

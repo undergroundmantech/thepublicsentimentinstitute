@@ -15,15 +15,15 @@ export async function generateMetadata({
   params: Promise<{ date: string }>;
 }): Promise<Metadata> {
   const { date } = await params;
-  if (!ELECTION_DATES.includes(date)) return { title: "Election results archive" };
+  if (!ELECTION_DATES.includes(date)) return { title: "Election Results Archive · TPSI" };
   const heading = formatElectionDate(date);
-  const title = `${heading} election results`;
-  const description = `Reported results for all ${getRacesByDate(date).length} races the OnPoint Politics results desk tracked on ${heading}.`;
-  const url = `/results/archive/${date}`;
+  const title = `${heading} Election Results · TPSI`;
+  const description = `Reported results for all ${getRacesByDate(date).length} races TPSI tracked on ${heading}.`;
+  const url = `https://thepublicsentimentinstitute.com/results/archive/${date}`;
   return {
     title,
     description,
-    openGraph: { title: `${title} | OnPoint Politics`, description, url, siteName: "OnPoint Politics", type: "website" },
+    openGraph: { title, description, url, siteName: "The Public Sentiment Institute", type: "website" },
     alternates: { canonical: url },
   };
 }

@@ -4,7 +4,7 @@
  * ELECTION NIGHT BOARD — August 25, 2026 · Oklahoma, South Carolina, Georgia runoffs.
  *
  * Rendered at two routes from one component:
- *   variant="board" → /results/archive/2026-08-25, headline race plus the full slate
+ *   variant="board" → /results/tonight, headline race plus the full slate
  *   variant="race"  → /results/2026-08-25/oklahoma-governor-republican-runoff,
  *                     the Governor runoff alone, for search
  *
@@ -119,7 +119,7 @@ const MODEL = {
   raceRule: FORECAST_META.raceRule,
   deck:
     "Gentner Drummond and Mike Mazzei finish a runoff neither led outright in June. " +
-    "The OnPoint model separates them by less than a point and a half — inside its own " +
+    "The TPSI model separates them by less than a point and a half — inside its own " +
     "margin of error — with Drummond ahead on the strength of rural and western " +
     "Oklahoma and Mazzei holding the two metros. Whoever finishes first takes the " +
     "nomination; there is nothing after this.",
@@ -353,16 +353,18 @@ const partyOf = (p?: string) => {
   return "n";
 };
 
-/** Party colors only. The leader carries the party hue; a same party runner up
- *  takes the pale tint of that hue, never the other party's color. Nonpartisan
- *  contests use ink. */
-const tone = (i: number, party?: string, leadParty?: string) => {
-  const p = partyOf(party);
-  const same = i > 0 && partyOf(leadParty) === p;
-  if (p === "d") return same ? "var(--dem3)" : "var(--dem)";
-  if (p === "r") return same ? "var(--gop3)" : "var(--gop)";
-  if (/independ/i.test(String(party || ""))) return "var(--ind)";
-  return i === 0 ? "var(--ink)" : "var(--mute)";
+/**
+ * Color LAW: same-party primary uses the party hue for A and --c2 for B.
+ * Never the opposing party's color inside a one-party race.
+ */
+const tone = (i: number, party?: string) => {
+  if (i === 0) {
+    const p = partyOf(party);
+    return p === "r" ? "var(--gop)" : p === "d" ? "var(--dem)" : "var(--ink2)";
+  }
+  if (i === 1) return "var(--c2)";
+  if (i === 2) return "var(--k3)";
+  return "var(--ink3)";
 };
 
 /** Both runoff candidates are Republicans, so party colour carries no
@@ -412,7 +414,7 @@ const STATUS_COPY: Record<RaceState, string> = {
   SCHEDULED: "Polls open",
   LIVE_GATED: "Too early to call",
   LIVE_FORECAST: "Counting",
-  PROJECTED: "OnPoint projection",
+  PROJECTED: "TPSI projection",
   OFFICIAL: "Race called",
 };
 
@@ -503,9 +505,7 @@ export default function OklahomaBoard({ variant = "board" }: { variant?: "board"
 
   const stamp = updated
     ? updated.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" }) + " ET"
-    : "--";
-  // civicAPI never answered: say so rather than implying the polls are still open.
-  const feedDown = stale && !updated && !live;
+    : "—";
 
   const grouped = useMemo(
     () =>
@@ -677,7 +677,7 @@ export default function OklahomaBoard({ variant = "board" }: { variant?: "board"
   });
 
   const headline = projectedKey
-    ? `OnPoint Politics projects ${CANDIDATE_NAMES[projectedKey]} wins the Republican nomination. ` +
+    ? `TPSI projects ${CANDIDATE_NAMES[projectedKey]} wins the Republican nomination. ` +
       `He leads by ${int(leadGap)} votes with ${pctLabel(modeledRep)}% of the estimated ` +
       `vote counted, and the projected margin of ${signed(marginPP)} sits beyond what the ` +
       `outstanding ballots can move.`
@@ -685,7 +685,7 @@ export default function OklahomaBoard({ variant = "board" }: { variant?: "board"
       ? `${CAND_NAMES[call.leader as keyof typeof CAND_NAMES] ?? CANDIDATE_LAST[leaderKey]} ` +
         `leads by ${int(leadGap)} votes, far enough ahead that the model would call it. ` +
         `Oklahoma polls do not close until 8:00 PM ET, in ${formatCountdown(msLeft)}, and ` +
-        `OnPoint Politics publishes no projection while any Oklahoma voter is still in line.`
+        `TPSI publishes no projection while any Oklahoma voter is still in line.`
       : live
         ? call.line
         : MODEL.headline;
@@ -695,14 +695,12 @@ export default function OklahomaBoard({ variant = "board" }: { variant?: "board"
     rState === "OFFICIAL"
       ? STATUS_COPY.OFFICIAL
       : projectedKey
-        ? `OnPoint projection: ${CANDIDATE_LAST[projectedKey]}`
+        ? `TPSI projection — ${CANDIDATE_LAST[projectedKey]}`
         : embargoed
-          ? "Held, polls open"
+          ? "Held — polls open"
           : live && call.verdict === "LEANING"
             ? "Leaning"
-            : feedDown && msLeft <= 0
-              ? "Feed unavailable"
-              : STATUS_COPY[rState];
+            : STATUS_COPY[rState];
 
   /* ── South Carolina ── */
 
@@ -788,46 +786,48 @@ export default function OklahomaBoard({ variant = "board" }: { variant?: "board"
   const scLeaderProb = scModel.winProbability[scModel.leader];
 
   return (
-    <div className="opp desk">
+    <div className="desk">
       <style>{CSS}</style>
 
       <main className="shell">
 
         {/* ═══ RACE HEADER ═══ */}
         <section className="race-header" id="overview" aria-labelledby="race-title">
-          <nav className="crumbs" aria-label="Breadcrumb">
-            <a href="/">Home</a><span className="sep">/</span>
-            <a href="/results">Results</a><span className="sep">/</span>
-            {full ? (
-              <><a href="/results/archive">Archive</a><span className="sep">/</span><span>August 25, 2026</span></>
-            ) : (
-              <><a href="/results/archive/2026-08-25">August 25, 2026</a><span className="sep">/</span><span>Oklahoma governor</span></>
-            )}
-          </nav>
-          <header className="ph">
-            <div className="eye g">{MODEL.state} runoff · August 25 · statewide forecast</div>
-            <h1 id="race-title">Oklahoma governor Republican <em>runoff</em></h1>
-            <p className="lede">{MODEL.deck}</p>
-            <div className="pmeta" aria-label="Race update summary">
-              {live && rState !== "OFFICIAL" ? <span className="pill live">Live</span> : <span className="eye">Archived</span>}
-              <span>Status <b>{statusCopy}</b></span>
-              <span>Reported votes <b className="mono">{live ? int(counted(gov)) : "0"}</b></span>
-              <span>Est. reporting <b className="mono">{live ? `${pctLabel(rep)}%` : "0%"}</b></span>
-              <span>Precincts <b className="mono">{live ? `${pctLabel(precinctRep)}%` : "0%"}</b></span>
-              <span>Updated <b className="mono">{stamp}</b></span>
-              {full
-                ? <a className="btn sm" href="/results/live">Live desk</a>
-                : <a className="btn sm" href="/results/archive/2026-08-25">Full night board</a>}
+          {!full && (
+            <div className="archive-banner">
+              <span>August 25, 2026</span>
+              <a href="/results/archive/2026-08-25">Full election night board →</a>
             </div>
-            <nav className="rx-tabs" aria-label="Race sections">
-              <a href="#overview" aria-current="page">Overview</a>
-              <a href="#forecast">Forecast</a>
-              <a href="#counties">Counties</a>
-              <a href="#south-carolina">South Carolina</a>
-              {full && <a href="#board">All races</a>}
-              <a href="#method">Method</a>
-            </nav>
-          </header>
+          )}
+          <div className="race-kicker">
+            {live && rState !== "OFFICIAL" && <span className="live-dot" aria-hidden />}
+            <span>{MODEL.state} runoff · August 25</span>
+            <span>•</span>
+            <span>Statewide forecast · county projection</span>
+          </div>
+
+          <div className="race-heading-row">
+            <div>
+              <h1 id="race-title">{MODEL.title}</h1>
+              <p className="race-deck">{MODEL.deck}</p>
+            </div>
+            <div className="race-meta" aria-label="Race update summary">
+              <div className="meta-block"><span>Last updated</span><b>{stamp}</b></div>
+              <div className="meta-block"><span>Reported votes</span><b>{live ? int(counted(gov)) : "0"}</b></div>
+              <div className="meta-block"><span>Estimated reporting</span><b>{live ? `${pctLabel(rep)}%` : "0%"}</b></div>
+              <div className="meta-block"><span>Precincts</span><b>{live ? `${pctLabel(precinctRep)}%` : "0%"}</b></div>
+              <div className="meta-block"><span>Race status</span><b>{statusCopy}</b></div>
+            </div>
+          </div>
+
+          <nav className="race-tabs" aria-label="Race sections">
+            <a href="#overview" aria-current="page">Overview</a>
+            <a href="#forecast">Forecast</a>
+            <a href="#counties">Counties</a>
+            <a href="#south-carolina">South Carolina</a>
+            {full && <a href="#board">All races</a>}
+            <a href="#method">Method</a>
+          </nav>
         </section>
 
         <div className="dashboard-grid">
@@ -839,7 +839,7 @@ export default function OklahomaBoard({ variant = "board" }: { variant?: "board"
                 <div className="winner-band">
                   <span className="winner-badge" aria-hidden>✓</span>
                   <div className="winner-copy">
-                    <span>Winner · {calledCand ? "race called" : "OnPoint projection"}</span>
+                    <span>Winner · {calledCand ? "race called" : "TPSI projection"}</span>
                     <strong>{CANDIDATE_NAMES[winnerKey]} wins the Republican runoff</strong>
                     <small>
                       {signed(leadMarginPP)} margin · {int(leadGap)} votes · {pctLabel(rep)}% of the
@@ -865,7 +865,7 @@ export default function OklahomaBoard({ variant = "board" }: { variant?: "board"
 
               {cands.length > 0 ? (
                 <>
-                  {!live && msLeft > 0 && (
+                  {!live && (
                     <p className="prose empty-note">
                       Oklahoma votes on Central time, so polls close statewide at 8:00 PM ET,
                       in {formatCountdown(msLeft)}. Both candidates are listed below and
@@ -891,7 +891,7 @@ export default function OklahomaBoard({ variant = "board" }: { variant?: "board"
                                 <span className="topline-lead">Leads by {int(leadGap)} votes</span>
                               )}
                               {isProjected && (
-                                <span className="topline-lead won">OnPoint projected winner</span>
+                                <span className="topline-lead won">TPSI projected winner</span>
                               )}
                               {c.winner && <span className="topline-lead won">Race called</span>}
                             </div>
@@ -908,22 +908,11 @@ export default function OklahomaBoard({ variant = "board" }: { variant?: "board"
                 </>
               ) : (
                 <div className="empty-live">
-                  {msLeft <= 0 ? (
-                    <div className="rx-feed" role="status">
-                      <span className="dot" aria-hidden />
-                      <div>
-                        <b>{feedDown ? "Results feed unavailable" : "Waiting on the feed"}</b>
-                        The candidate list and vote totals come from AP through civicAPI and have not loaded.
-                        The forecast and county model on this page are the published pre-election baseline.
-                      </div>
-                    </div>
-                  ) : (
-                    <p className="prose">
-                      Waiting on the first candidate list from the feed. Oklahoma votes on
-                      Central time, so the state closes at 8:00 PM ET, in{" "}
-                      {formatCountdown(msLeft)}.
-                    </p>
-                  )}
+                  <p className="prose">
+                    Waiting on the first candidate list from the feed. Oklahoma votes on
+                    Central time, so the state closes at 8:00 PM ET, in{" "}
+                    {formatCountdown(msLeft)}.
+                  </p>
                 </div>
               )}
 
@@ -1011,7 +1000,7 @@ export default function OklahomaBoard({ variant = "board" }: { variant?: "board"
               <div className="projected-top">
                 <div className="projected-intro">
                   <span className="model-label">
-                    {projectedKey ? "OnPoint projection" : "Model projection · not actual results"}
+                    {projectedKey ? "TPSI projection" : "Model projection · not actual results"}
                   </span>
                   <div className="projected-name">
                     {projectedKey
@@ -1089,16 +1078,16 @@ export default function OklahomaBoard({ variant = "board" }: { variant?: "board"
           <div className="county-head">
             <div className="rd-view-toggles" role="group" aria-label="County view">
               <button type="button" className={countyView === "forecast" ? "on" : ""}
-                      onClick={() => setCountyChoice("forecast")}>Forecast</button>
+                      onClick={() => setCountyChoice("forecast")}>forecast</button>
               <button type="button" className={countyView === "results" ? "on" : ""}
-                      onClick={() => setCountyChoice("results")}>Results</button>
+                      onClick={() => setCountyChoice("results")}>results</button>
             </div>
             {countyView === "forecast" && (
               <div className="rd-map-toggles" role="group" aria-label="County map shading">
                 <button type="button" className={mapMode === "margin" ? "on" : ""}
-                        onClick={() => setMapMode("margin")}>Margin</button>
+                        onClick={() => setMapMode("margin")}>margin</button>
                 <button type="button" className={mapMode === "turnout" ? "on" : ""}
-                        onClick={() => setMapMode("turnout")}>Turnout</button>
+                        onClick={() => setMapMode("turnout")}>turnout</button>
               </div>
             )}
           </div>
@@ -1123,13 +1112,13 @@ export default function OklahomaBoard({ variant = "board" }: { variant?: "board"
             {countyView === "forecast" && mapMode === "turnout" ? (
               <>
                 <span className="rd-map-legend-sw"
-                      style={{ background: "linear-gradient(90deg,var(--ramp-lo),rgb(201,194,214))" }} />
-                <span>lower to higher projected turnout</span>
+                      style={{ background: "linear-gradient(90deg,var(--ramp-lo),rgb(15,95,85))" }} />
+                <span>lower → higher projected turnout</span>
               </>
             ) : (
               <>
                 <span className="rd-map-legend-sw"
-                      style={{ background: "linear-gradient(90deg,#6f6883,var(--ramp-mid),#8c0a28)" }} />
+                      style={{ background: "linear-gradient(90deg,#134453,var(--ramp-mid),#6e241d)" }} />
                 {CANDIDATE_ORDER.map((k) => (
                   <span className="rd-key" key={k}>
                     <i style={{ background: CAND_CSS[k] }} aria-hidden />
@@ -1170,9 +1159,9 @@ export default function OklahomaBoard({ variant = "board" }: { variant?: "board"
                 <span>•</span>
                 <span>Statewide forecast · no county model</span>
               </div>
-              <h2 id="sc-title">U.S. Senate special Republican runoff</h2>
+              <h2 id="sc-title">U.S. Senate Special Republican Runoff</h2>
               <p className="prose sc-deck">
-                The OnPoint model gives {SC_CANDIDATE_LAST[scModel.leader]} a{" "}
+                TPSI gives {SC_CANDIDATE_LAST[scModel.leader]} a{" "}
                 {scLeaderProb.toFixed(0)}% chance of winning the nomination.{" "}
                 <strong>There is no TPSI poll of this runoff.</strong> The starting
                 probability was a desk judgement from the first round, the endorsements
@@ -1228,10 +1217,8 @@ export default function OklahomaBoard({ variant = "board" }: { variant?: "board"
                 })
               ) : (
                 <p className="prose sc-note">
-                  {scMsLeft <= 0
-                    ? "Results feed unavailable. The candidate list and vote totals from AP through civicAPI have not loaded; the forecast below is the published baseline."
-                    : <>Polls close at 7:00 PM ET, in {formatCountdown(scMsLeft)}. Candidates
-                  appear as soon as the feed carries them.</>}
+                  Polls close at 7:00 PM ET, in {formatCountdown(scMsLeft)}. Candidates
+                  appear as soon as the feed carries them.
                 </p>
               )}
 
@@ -1297,7 +1284,7 @@ export default function OklahomaBoard({ variant = "board" }: { variant?: "board"
               </div>
               <div className="rd-map-legend">
                 <span className="rd-map-legend-sw"
-                      style={{ background: "linear-gradient(90deg,#6f6883,var(--ramp-mid),#8c0a28)" }} />
+                      style={{ background: "linear-gradient(90deg,#134453,var(--ramp-mid),#6e241d)" }} />
                 {SC_CANDIDATE_ORDER.map((k) => (
                   <span className="rd-key" key={k}>
                     <i style={{ background: SC_CAND_CSS[k] }} aria-hidden />
@@ -1327,7 +1314,7 @@ export default function OklahomaBoard({ variant = "board" }: { variant?: "board"
               counties recompute against the same model this board projects from.
             </p>
           </div>
-          <a className="btn g" href="/forecast">Open the forecast</a>
+          <a className="utility-button lg" href="/forecast">Open the forecast desk →</a>
         </section>
 
         {/* ═══ SLATE ═══ */}
@@ -1335,8 +1322,8 @@ export default function OklahomaBoard({ variant = "board" }: { variant?: "board"
           <section id="board" className="board">
             <div className="board-head">
               <div>
-                <h2>Every race on the night</h2>
-                <p>Reported results only, no OnPoint model.</p>
+                <h2>All races tonight</h2>
+                <p>Reported results only, no TPSI model.</p>
               </div>
               <div className="board-meta">
                 <span className="model-label">{SLATE.length} races · 2 states</span>
@@ -1365,7 +1352,7 @@ export default function OklahomaBoard({ variant = "board" }: { variant?: "board"
             Reported vote is solid. Projected share is muted and dashed, on the same
             0 to 100% scale, and is the sum of all 77 county projections. Estimated
             reporting is the share of expected vote, not precincts. Race calls come from
-            AP through civicAPI; OnPoint Politics projects independently once the leader&rsquo;s margin
+            AP through CivicAPI; TPSI projects independently once the leader&rsquo;s margin
             clears three standard deviations of the outstanding vote and at least 35% is
             counted, and those projections are labeled as ours.
           </p>
@@ -1412,8 +1399,8 @@ export default function OklahomaBoard({ variant = "board" }: { variant?: "board"
             the state.
           </p>
           <div className="method-foot">
-            <span className="model-label">OnPoint Politics results desk · fieldwork by The Public Sentiment Institute</span>
-            <span className="model-label">Returns via civicAPI</span>
+            <span className="model-label">© 2026 The Public Sentiment Institute</span>
+            <span className="model-label">Powered by CivicAPI</span>
           </div>
         </section>
       </main>
@@ -1458,7 +1445,7 @@ function SlateCard({ entry, race }: { entry: Entry; race?: Race }) {
               </span>
               <span className="l4-pct">{pctLabel(share(c, all))}%</span>
               <div className="l4-bar">
-                <span style={{ width: `${Math.max(share(c, all), 0)}%`, background: tone(i, c.party, show[0]?.party) }} />
+                <span style={{ width: `${Math.max(share(c, all), 0)}%`, background: tone(i, c.party) }} />
               </div>
             </div>
           ))}
@@ -1477,24 +1464,32 @@ function SlateCard({ entry, race }: { entry: Entry; race?: Race }) {
 }
 
 /* ═════════════════════ STYLE ═════════════════════ */
-/* Inherited from the August 18 board. Tokens come from globals.css; the glass
-   overrides shared by every board live in app/results/results.css. */
+/* Inherited from the August 18 board. Surface, ink, party and signal tokens come
+   from globals.css so the desk flips with the site's data-theme; only desk-local
+   values are declared here. */
 
 const CSS = `
 .desk{
-  /* Candidate lane. Both runoffs are Republican, so party colors only: the red
-     family plus neutral ink. k3 to k5 stay defined for the shared rules below. */
-  --k1:#ff3b5c; --k2:#c9c2d6; --k3:#ffbfcb; --k4:#b0163a; --k5:#6f6883;
-  --map-stroke:rgba(var(--line-rgb),.10); --map-stroke-hi:rgba(var(--line-rgb),.55);
-  --map-hatch:rgba(var(--line-rgb),.28); --map-blank:#1c1626;
-  --ramp-mid:rgb(44,38,56); --ramp-lo:rgb(26,20,36);
-  --tip-shadow:0 12px 40px rgba(0,0,0,.5);
-  --mono:var(--font-m);
-  --sans:var(--font-b);
+  /* Candidate lane. Two names here, but the k3–k5 slots stay defined so the
+     shared component CSS below doesn't reference a missing variable. */
+  --k1:#B23A2E; --k2:#1E6E86; --k3:#6D4B96; --k4:#A87516; --k5:#8A929C;
+  --map-stroke:rgba(var(--canvas-rgb),.14); --map-stroke-hi:rgba(var(--canvas-rgb),.55);
+  --map-hatch:rgba(var(--canvas-rgb),.22); --map-blank:#dcdcd2;
+  --ramp-mid:rgb(232,232,226); --ramp-lo:rgb(237,237,231);
+  --tip-shadow:0 10px 30px rgba(var(--ink-rgb),calc(0.16 * var(--struct)));
+  --mono:var(--font-numeric,'JetBrains Mono'),ui-monospace,monospace;
+  --sans:var(--font-body,'Geist'),system-ui,sans-serif;
   --r-panel:14px; --r-card:10px; --r-pill:999px;
   --shadow:none;
-  color:var(--ink);font-family:var(--sans);
+  color:var(--ink);min-height:100vh;font-family:var(--sans);
   -webkit-font-smoothing:antialiased;
+}
+html[data-theme="dark"] .desk{
+  --k3:#8a63ef; --k4:#e8b93c;
+  --map-stroke:rgba(var(--line-rgb),.10); --map-stroke-hi:rgba(var(--line-rgb),.55);
+  --map-hatch:rgba(var(--line-rgb),.28); --map-blank:#2e2e36;
+  --ramp-mid:rgb(58,58,66); --ramp-lo:rgb(30,30,36);
+  --tip-shadow:0 10px 30px rgba(var(--line-rgb),.45);
 }
 
 .desk *{margin:0;padding:0;box-sizing:border-box}

@@ -9,8 +9,8 @@ import React, { useEffect, useRef, useState } from "react";
 // side caps, and the "LEADER +M pts · P% to win · BAND" headline. This inline
 // version is pure presentation — no polling, no fixed positioning.
 
-const OSWALD = 'var(--font-d)';
-const MONO = "var(--font-m)";
+const OSWALD = '"Oswald", "Barlow Condensed", system-ui, sans-serif';
+const MONO = '"JetBrains Mono", ui-monospace, monospace';
 // Resolved from the host page when it defines them, otherwise the dark
 // values this component has always used.
 const INK = "var(--fc-ink, var(--ink))";

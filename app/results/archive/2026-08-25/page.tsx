@@ -4,7 +4,7 @@
  * ARCHIVED BOARD — August 25, 2026 runoff night (Oklahoma, South Carolina, Georgia).
  * Route: /results/archive/2026-08-25
  *
- * Retired from /results/live (formerly /results/tonight) after the runoffs, exactly as August 4 and
+ * Retired from /results/tonight after the runoffs, exactly as August 4 and
  * August 18 were retired before it; that route is the standing elections
  * landing page again. Live CivicAPI polling still runs, so the feed returns the
  * certified final numbers rather than a frozen snapshot — which is what an

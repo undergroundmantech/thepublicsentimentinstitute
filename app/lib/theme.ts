@@ -17,6 +17,7 @@ export function setTheme(next: Theme, persist = true): void {
   if (typeof document === "undefined") return;
   const root = document.documentElement;
   root.dataset.theme = next;
+  root.dataset.opaTheme = next;
   root.style.colorScheme = next;
   document.querySelector('meta[name="theme-color"]')?.setAttribute("content", CHROME[next]);
   if (persist) {
@@ -33,4 +34,4 @@ export function toggleTheme(): Theme {
 
 // Inline, blocking, runs in <head>. Keeps a returning light-mode visitor from
 // seeing a dark flash.
-export const THEME_INIT_SCRIPT = `(function(){try{var t=localStorage.getItem("${THEME_KEY}");var r=document.documentElement;if(t==="light"||t==="dark"){r.dataset.theme=t;r.style.colorScheme=t;var m=document.querySelector('meta[name="theme-color"]');if(m)m.setAttribute("content",t==="light"?"${CHROME.light}":"${CHROME.dark}")}}catch(e){}})();`;
+export const THEME_INIT_SCRIPT = `(function(){try{var t=localStorage.getItem("${THEME_KEY}");var r=document.documentElement;if(t==="light"||t==="dark"){r.dataset.theme=t;r.dataset.opaTheme=t;r.style.colorScheme=t;var m=document.querySelector('meta[name="theme-color"]');if(m)m.setAttribute("content",t==="light"?"${CHROME.light}":"${CHROME.dark}")}}catch(e){}})();`;

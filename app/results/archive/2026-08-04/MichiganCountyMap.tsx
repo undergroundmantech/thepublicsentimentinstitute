@@ -17,17 +17,18 @@ export type ForecastMode = "margin" | "turnout";
 
 type RGB = [number, number, number];
 
-// A Democratic primary: El-Sayed carries the party blue, Stevens neutral ink, so
-// neither candidate borrows another party's hue. Pale near a tie, deep when solid.
-const EL: RGB = [127, 166, 255];
-const ELD: RGB = [16, 40, 140];
-const ST: RGB = [225, 220, 234];
-const STD: RGB = [111, 104, 131];
+const EL: RGB = [47, 168, 148];
+const ELD: RGB = [11, 95, 84];
+const ST: RGB = [144, 112, 196];
+const STD: RGB = [74, 47, 134];
 
-const MID_DARK: RGB = [44, 38, 56];
-const T1_DARK: RGB = [26, 20, 36];
-/** Turnout is not a party number, so its ramp runs to ink, not a party hue. */
-const T2: RGB = [201, 194, 214];
+// Ramp midpoints differ by theme so a 50/50 county reads as neutral surface
+// rather than a dark blot on a white page.
+const MID_DARK: RGB = [58, 58, 66];
+const MID_LIGHT: RGB = [232, 232, 226];
+const T1_DARK: RGB = [30, 30, 36];
+const T1_LIGHT: RGB = [237, 237, 231];
+const T2: RGB = [15, 95, 85];
 
 const mix = (a: RGB, b: RGB, t: number): RGB => [
   Math.round(a[0] + (b[0] - a[0]) * t),
@@ -37,7 +38,7 @@ const mix = (a: RGB, b: RGB, t: number): RGB => [
 const rgb = (c: RGB) => `rgb(${c[0]},${c[1]},${c[2]})`;
 const clamp = (n: number, lo: number, hi: number) => Math.min(Math.max(n, lo), hi);
 
-/** Two-way El-Sayed share on a blue and ink divergent ramp, saturating at 15 pts. */
+/** Two-way El-Sayed share → teal/purple divergent ramp, saturating at ±15 pts. */
 function cMargin(twoWay: number, mid: RGB): string {
   const d = clamp(twoWay - 50, -15, 15) / 15;
   if (d >= 0) return rgb(d < 0.5 ? mix(mid, EL, d * 2) : mix(EL, ELD, (d - 0.5) * 2));
@@ -74,6 +75,22 @@ function clampT(t: Transform): Transform {
   };
 }
 
+/** Follows the site's <html data-theme> so the ramps flip with everything else. */
+function useSiteTheme(): "light" | "dark" {
+  const [theme, setTheme] = useState<"light" | "dark">("light");
+  useEffect(() => {
+    const read = () =>
+      setTheme(
+        document.documentElement.getAttribute("data-theme") === "dark" ? "dark" : "light"
+      );
+    read();
+    const mo = new MutationObserver(read);
+    mo.observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+    return () => mo.disconnect();
+  }, []);
+  return theme;
+}
+
 interface Props {
   view: MapView;
   mode: ForecastMode;
@@ -95,8 +112,9 @@ export default function MichiganCountyMap({ view, mode, counties, liveCounties }
   const svgRef = useRef<SVGSVGElement | null>(null);
   const drag = useRef<{ id: number; x: number; y: number; moved: boolean } | null>(null);
 
-  const mid = MID_DARK;
-  const t1 = T1_DARK;
+  const theme = useSiteTheme();
+  const mid = theme === "dark" ? MID_DARK : MID_LIGHT;
+  const t1 = theme === "dark" ? T1_DARK : T1_LIGHT;
 
   const vmax = useMemo(
     () => Object.values(counties).reduce((m, c) => Math.max(m, c.projectedTurnout), 1),
@@ -287,7 +305,7 @@ export default function MichiganCountyMap({ view, mode, counties, liveCounties }
                   <b>{fmtInt(live.elSayedVotes)}</b>
                 </div>
                 <div className="mi-tip-row">
-                  <span style={{ color: "var(--k2)" }}>Stevens</span>
+                  <span style={{ color: "var(--c2)" }}>Stevens</span>
                   <b>{fmtInt(live.stevensVotes)}</b>
                 </div>
                 {(() => {
@@ -311,7 +329,7 @@ export default function MichiganCountyMap({ view, mode, counties, liveCounties }
                 <b>{hover.c.elSayed.toFixed(1)}%</b>
               </div>
               <div className="mi-tip-row">
-                <span style={{ color: "var(--k2)" }}>Stevens</span>
+                <span style={{ color: "var(--c2)" }}>Stevens</span>
                 <b>{hover.c.stevens.toFixed(1)}%</b>
               </div>
               <div className="mi-tip-sub">

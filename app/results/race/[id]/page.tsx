@@ -15,13 +15,11 @@ export default function ResultsRacePage() {
   if (!SITE_V2) notFound();
   const router = useRouter();
   useEffect(() => {
-    router.replace("/results/live");
+    router.replace("/results/tonight");
   }, [router]);
   return (
     <>
-      <div className="opp" aria-live="polite">
-        <div className="empty">Opening the live results desk</div>
-      </div>
+      <div aria-hidden style={{ position: "fixed", inset: 0, zIndex: 200, background: "var(--ink)" }} />
     </>
   );
 }

@@ -4,7 +4,7 @@
  * ARCHIVED BOARD — August 4, 2026 primary night (Michigan et al).
  * Route: /results/archive/2026-08-04
  *
- * Retired from /results/live (formerly /results/tonight) after the August 4 primaries; that route is now
+ * Retired from /results/tonight after the August 4 primaries; that route is now
  * the standing elections landing page. Kept live and unchanged so the night can
  * still be viewed. Live CivicAPI polling still runs — the feed returns the
  * certified final numbers, which is what an archive should show.
@@ -118,7 +118,7 @@ const MODEL = {
   title: "U.S. Senate Michigan Democratic Primary",
   state: "Michigan",
   deck:
-    "Abdul El-Sayed leads the OnPoint model, built on a TPSI poll, against Rep. Haley Stevens in an open " +
+    "Abdul El-Sayed leads the TPSI model against Rep. Haley Stevens in an open " +
     "seat contest, with the Upper Peninsula vote outstanding until the final " +
     "polls close an hour after the rest of the state.",
   close: MI_S,
@@ -293,26 +293,17 @@ const partyOf = (p?: string) => {
   return "n";
 };
 
-/** Party colors only. The leader carries the party hue; a same party runner up
- *  takes the pale tint of that hue, never the other party's color. Nonpartisan
- *  contests use ink. */
-const tone = (i: number, party?: string, leadParty?: string) => {
-  const p = partyOf(party);
-  const same = i > 0 && partyOf(leadParty) === p;
-  if (p === "d") return same ? "var(--dem3)" : "var(--dem)";
-  if (p === "r") return same ? "var(--gop3)" : "var(--gop)";
-  if (/independ/i.test(String(party || ""))) return "var(--ind)";
-  return i === 0 ? "var(--ink)" : "var(--mute)";
-};
-
-/** The headline race by identity, never by rank: El-Sayed carries the party
- *  blue, Stevens neutral ink (--k2), matching the county map ramps. */
-const miTone = (c: Cand, i: number) => {
-  const n = String(c.name || "").toLowerCase();
-  if (n.includes(CAND_MATCH.Candidate1)) return "var(--dem)";
-  if (n.includes(CAND_MATCH.Candidate2)) return "var(--k2)";
-  if (n.includes(CAND_MATCH.Candidate3)) return "var(--dem3)";
-  return i === 0 ? "var(--dem)" : "var(--mute)";
+/**
+ * Color LAW: same-party primary uses the party hue for A and --c2 for B.
+ * Never the opposing party's color inside a one-party race.
+ */
+const tone = (i: number, party?: string) => {
+  if (i === 0) {
+    const p = partyOf(party);
+    return p === "r" ? "var(--gop)" : p === "d" ? "var(--dem)" : "var(--ink2)";
+  }
+  if (i === 1) return "var(--c2)";
+  return "var(--ink3)";
 };
 
 const closeAt = (e: { close: string; final: boolean }) => {
@@ -334,7 +325,7 @@ const STATUS_COPY: Record<RaceState, string> = {
   SCHEDULED: "Polls open",
   LIVE_GATED: "Too early to call",
   LIVE_FORECAST: "Counting",
-  PROJECTED: "OnPoint projection",
+  PROJECTED: "TPSI projection",
   OFFICIAL: "Race called",
 };
 
@@ -357,9 +348,7 @@ export default function TonightBoard() {
 
   const stamp = updated
     ? updated.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" }) + " ET"
-    : "--";
-  // civicAPI never answered: say so rather than implying the polls are still open.
-  const feedDown = stale && !updated && !live;
+    : "—";
 
   const grouped = useMemo(
     () =>
@@ -433,7 +422,7 @@ export default function TonightBoard() {
   const deskWinnerMatch = DESK_CALL ? CAND_MATCH[DESK_CALL.key] : null;
 
   const headline = deskCalled
-    ? `OnPoint Politics projects ${deskWinner} wins the Democratic nomination. He leads by ` +
+    ? `TPSI projects ${deskWinner} wins the Democratic nomination. He leads by ` +
       `${int(leadGap)} votes with ${pctLabel(modeledRep)}% of the estimated vote counted, ` +
       `and the projected margin of ${signed(marginPP)} sits outside the 95% interval ` +
       `for a Stevens comeback.`
@@ -446,46 +435,49 @@ export default function TonightBoard() {
     rState === "OFFICIAL"
       ? STATUS_COPY.OFFICIAL
       : deskCalled
-        ? `OnPoint projection: ${deskWinner}`
+        ? `TPSI projection — ${deskWinner}`
         : live && call.verdict === "LEANING"
           ? "Leaning"
-          : feedDown && msLeft <= 0
-            ? "Feed unavailable"
-            : STATUS_COPY[rState];
+          : STATUS_COPY[rState];
 
   return (
-    <div className="opp desk">
+    <div className="desk">
       <style>{CSS}</style>
 
       <main className="shell">
 
         {/* ═══ RACE HEADER ═══ */}
         <section className="race-header" id="overview" aria-labelledby="race-title">
-          <nav className="crumbs" aria-label="Breadcrumb">
-            <a href="/">Home</a><span className="sep">/</span>
-            <a href="/results">Results</a><span className="sep">/</span>
-            <a href="/results/archive">Archive</a><span className="sep">/</span>
-            <span>August 4, 2026</span>
-          </nav>
-          <header className="ph">
-            <div className="eye g">{MODEL.state} primary · August 4 · statewide forecast</div>
-            <h1 id="race-title">Michigan U.S. Senate Democratic <em>primary</em></h1>
-            <p className="lede">{MODEL.deck}</p>
-            <div className="pmeta" aria-label="Race update summary">
-              {live && rState !== "OFFICIAL" ? <span className="pill live">Live</span> : <span className="eye">Archived</span>}
-              <span>Status <b>{statusCopy}</b></span>
-              <span>Reported votes <b className="mono">{live ? int(counted(mi)) : "0"}</b></span>
-              <span>Est. reporting <b className="mono">{live ? `${pctLabel(rep)}%` : "0%"}</b></span>
-              <span>Updated <b className="mono">{stamp}</b></span>
-              <a className="btn sm" href="/results/live">Live desk</a>
+          <div className="archive-banner">
+            <span>Archived · August 4, 2026</span>
+            <a href="/results/tonight">Back to elections →</a>
+          </div>
+          <div className="race-kicker">
+            {live && rState !== "OFFICIAL" && <span className="live-dot" aria-hidden />}
+            <span>{MODEL.state} primary · August 4</span>
+            <span>•</span>
+            <span>Level 2 coverage · statewide forecast</span>
+          </div>
+
+          <div className="race-heading-row">
+            <div>
+              <h1 id="race-title">{MODEL.title}</h1>
+              <p className="race-deck">{MODEL.deck}</p>
             </div>
-            <nav className="rx-tabs" aria-label="Race sections">
-              <a href="#overview" aria-current="page">Overview</a>
-              <a href="#forecast">Forecast</a>
-              <a href="#board">All races</a>
-              <a href="#method">Method</a>
-            </nav>
-          </header>
+            <div className="race-meta" aria-label="Race update summary">
+              <div className="meta-block"><span>Last updated</span><b>{stamp}</b></div>
+              <div className="meta-block"><span>Reported votes</span><b>{live ? int(counted(mi)) : "0"}</b></div>
+              <div className="meta-block"><span>Estimated reporting</span><b>{live ? `${pctLabel(rep)}%` : "0%"}</b></div>
+              <div className="meta-block"><span>Race status</span><b>{statusCopy}</b></div>
+            </div>
+          </div>
+
+          <nav className="race-tabs" aria-label="Race sections">
+            <a href="#overview" aria-current="page">Overview</a>
+            <a href="#forecast">Forecast</a>
+            <a href="#board">All races</a>
+            <a href="#method">Method</a>
+          </nav>
         </section>
 
         <div className="dashboard-grid">
@@ -511,7 +503,7 @@ export default function TonightBoard() {
               {live ? (
                 cands.map((c, i) => {
                   const p = share(c, cands);
-                  const col = miTone(c, i);
+                  const col = tone(i, c.party);
                   const projectedWinner =
                     !c.winner &&
                     deskCalled &&
@@ -532,7 +524,7 @@ export default function TonightBoard() {
                               <span className="topline-lead">Leads by {int(leadGap)} votes</span>
                             )}
                             {projectedWinner && (
-                              <span className="topline-lead won">OnPoint projected winner</span>
+                              <span className="topline-lead won">TPSI projected winner</span>
                             )}
                             {c.winner && <span className="topline-lead won">Race called</span>}
                           </div>
@@ -548,21 +540,10 @@ export default function TonightBoard() {
                 })
               ) : (
                 <div className="empty-live">
-                  {msLeft <= 0 ? (
-                    <div className="rx-feed" role="status">
-                      <span className="dot" aria-hidden />
-                      <div>
-                        <b>{feedDown ? "Results feed unavailable" : "No votes reported"}</b>
-                        The candidate list and vote totals come from AP through civicAPI and have not loaded.
-                        The forecast on this page is the published pre-election baseline.
-                      </div>
-                    </div>
-                  ) : (
-                    <p className="prose">
-                      No votes reported. Michigan&rsquo;s final polls close at 9:00 PM ET,
-                      in {formatCountdown(msLeft)}. Results appear here automatically.
-                    </p>
-                  )}
+                  <p className="prose">
+                    No votes reported. Michigan&rsquo;s final polls close at 9:00 PM ET,
+                    in {formatCountdown(msLeft)}. Results appear here automatically.
+                  </p>
                 </div>
               )}
 
@@ -622,7 +603,7 @@ export default function TonightBoard() {
                         <span>{MODEL.a.last} wins</span><b>{pctLabel(winA)}%</b>
                       </div>
                       <div className="outcome-row">
-                        <i style={{ background: "var(--k2)" }} aria-hidden />
+                        <i style={{ background: "var(--c2)" }} aria-hidden />
                         <span>{MODEL.b.last} wins</span><b>{pctLabel(winB)}%</b>
                       </div>
                       {/* §5.4 — residual normalizes, never a separate comeback number */}
@@ -655,7 +636,7 @@ export default function TonightBoard() {
                 <div className="projected-top">
                   <div className="projected-intro">
                     <span className="model-label">
-                      {deskCalled ? "OnPoint projection" : "Model projection · not actual results"}
+                      {deskCalled ? "TPSI projection" : "Model projection · not actual results"}
                     </span>
                     <div className="projected-name">
                       {deskCalled ? `${deskWinner} wins` : `${leaderLast} projected ahead`}
@@ -682,8 +663,8 @@ export default function TonightBoard() {
 
                 <div className="projected-bars">
                   {[{ ...MODEL.a, share: shareA }, { ...MODEL.b, share: shareB }].map((c, i) => {
-                    const col = i === 0 ? "var(--dem)" : "var(--k2)";
-                    const tint = i === 0 ? "var(--dem-tint)" : "var(--k2-tint)";
+                    const col = i === 0 ? "var(--dem)" : "var(--c2)";
+                    const tint = i === 0 ? "var(--dem-tint)" : "var(--c2-tint)";
                     const match = i === 0 ? CAND_MATCH.Candidate1 : CAND_MATCH.Candidate2;
                     const liveCand = cands.find((x) =>
                       String(x.name || "").toLowerCase().includes(match)
@@ -733,16 +714,16 @@ export default function TonightBoard() {
           <div className="county-head">
             <div className="rd-view-toggles" role="group" aria-label="County view">
               <button type="button" className={countyView === "forecast" ? "on" : ""}
-                      onClick={() => setCountyView("forecast")}>Forecast</button>
+                      onClick={() => setCountyView("forecast")}>forecast</button>
               <button type="button" className={countyView === "results" ? "on" : ""}
-                      onClick={() => setCountyView("results")}>Results</button>
+                      onClick={() => setCountyView("results")}>results</button>
             </div>
             {countyView === "forecast" && (
               <div className="rd-map-toggles" role="group" aria-label="County map shading">
                 <button type="button" className={mapMode === "margin" ? "on" : ""}
-                        onClick={() => setMapMode("margin")}>Margin</button>
+                        onClick={() => setMapMode("margin")}>margin</button>
                 <button type="button" className={mapMode === "turnout" ? "on" : ""}
-                        onClick={() => setMapMode("turnout")}>Turnout</button>
+                        onClick={() => setMapMode("turnout")}>turnout</button>
               </div>
             )}
           </div>
@@ -755,23 +736,21 @@ export default function TonightBoard() {
           <div className="rd-map-legend" aria-hidden>
             {countyView === "results" ? (
               <>
-                <span>Stevens</span>
                 <span className="rd-map-legend-sw"
-                      style={{ background: "linear-gradient(90deg,rgb(111,104,131),var(--ramp-mid),rgb(16,40,140))" }} />
-                <span>El-Sayed · reported margin</span>
+                      style={{ background: "linear-gradient(90deg,rgb(74,47,134),var(--ramp-mid),rgb(11,95,84))" }} />
+                <span>Stevens ← reported margin → El-Sayed</span>
               </>
             ) : mapMode === "turnout" ? (
               <>
                 <span className="rd-map-legend-sw"
-                      style={{ background: "linear-gradient(90deg,var(--ramp-lo),rgb(201,194,214))" }} />
-                <span>lower to higher projected turnout</span>
+                      style={{ background: "linear-gradient(90deg,var(--ramp-lo),rgb(15,95,85))" }} />
+                <span>lower → higher projected turnout</span>
               </>
             ) : (
               <>
-                <span>Stevens</span>
                 <span className="rd-map-legend-sw"
-                      style={{ background: "linear-gradient(90deg,rgb(111,104,131),var(--ramp-mid),rgb(16,40,140))" }} />
-                <span>El-Sayed · projected margin · hatched = too close to call</span>
+                      style={{ background: "linear-gradient(90deg,rgb(74,47,134),var(--ramp-mid),rgb(11,95,84))" }} />
+                <span>Stevens ← projected margin → El-Sayed · hatched = too close to call</span>
               </>
             )}
             <span className="rd-map-hint">scroll or pinch to zoom · drag to pan</span>
@@ -786,8 +765,8 @@ export default function TonightBoard() {
         <section id="board" className="board">
           <div className="board-head">
             <div>
-              <h2>Every race on the night</h2>
-              <p>Reported results only, no OnPoint model.</p>
+              <h2>All races tonight</h2>
+              <p>Level 4 coverage. Reported results only, no TPSI model.</p>
             </div>
             <div className="board-meta">
               <span className="model-label">23 races · 5 states</span>
@@ -814,13 +793,13 @@ export default function TonightBoard() {
           <p className="prose">
             Reported vote is solid. Projected share is muted and dashed, on the same
             0 to 100% scale. Estimated reporting is the share of expected vote, not
-            precincts. Race calls come from AP through civicAPI. OnPoint Politics projections are
+            precincts. Race calls come from AP through CivicAPI. TPSI projections are
             modeled estimates, labeled separately from calls, and appear only on the
             Michigan Senate primary.
           </p>
           <div className="method-foot">
-            <span className="model-label">OnPoint Politics results desk · fieldwork by The Public Sentiment Institute</span>
-            <span className="model-label">Returns via civicAPI</span>
+            <span className="model-label">© 2026 The Public Sentiment Institute</span>
+            <span className="model-label">Powered by CivicAPI</span>
           </div>
         </section>
       </main>
@@ -855,7 +834,7 @@ function L4Card({ entry, race }: { entry: Entry; race?: Race }) {
               <span className="l4-nm">{c.name}</span>
               <span className="l4-pct">{pctLabel(share(c, all))}%</span>
               <div className="l4-bar">
-                <span style={{ width: `${Math.max(share(c, all), 0)}%`, background: tone(i, c.party, show[0]?.party) }} />
+                <span style={{ width: `${Math.max(share(c, all), 0)}%`, background: tone(i, c.party) }} />
               </div>
             </div>
           ))}
@@ -875,30 +854,38 @@ function L4Card({ entry, race }: { entry: Entry; race?: Race }) {
 }
 
 /* ═════════════════════ STYLE ═════════════════════ */
-/* Prototype layout. Tokens come from globals.css; the glass overrides shared by
-   every board live in app/results/results.css. */
+/* Prototype layout, TPSI tokens per Design System §1. Light and dark both ride
+   the site's globals.css tokens so the desk never fights the rest of the site. */
 
 const CSS = `
+/* Surface, ink, party and signal tokens are INHERITED from globals.css so the
+   desk flips with the site's data-theme. Only desk-local values are declared. */
 .desk{
-  /* A Democratic primary: El-Sayed is the party blue, Stevens neutral ink. */
-  --k2:#c9c2d6;
-  --dem-tint:rgba(61,123,255,.16); --k2-tint:rgba(201,194,214,.14);
-  --map-stroke:rgba(var(--line-rgb),.10); --map-stroke-hi:rgba(var(--line-rgb),.55);
-  --map-hatch:rgba(var(--line-rgb),.28); --map-blank:#1c1626;
-  --ramp-mid:rgb(44,38,56); --ramp-lo:rgb(26,20,36);
-  --tip-shadow:0 12px 40px rgba(0,0,0,.5);
-  --mono:var(--font-m);
-  --sans:var(--font-b);
+  --dem-tint:rgba(29,95,196,.14); --c2-tint:rgba(181,51,143,.14);
+  --map-stroke:rgba(var(--canvas-rgb),.14); --map-stroke-hi:rgba(var(--canvas-rgb),.55);
+  --map-hatch:rgba(var(--canvas-rgb),.22); --map-blank:var(--panel2);
+  --ramp-mid:rgb(232,232,226); --ramp-lo:rgb(237,237,231);
+  --tip-shadow:0 10px 30px rgba(var(--ink-rgb),calc(0.16 * var(--struct)));
+  --brand-grad:linear-gradient(90deg,#d2494b 0%,#a44197 20%,#6d3ee9 51%,#3f60e8 100%);
+  --mono:var(--font-numeric,'JetBrains Mono'),ui-monospace,monospace;
+  --sans:var(--font-body,'Geist'),system-ui,sans-serif;
   --r-panel:14px; --r-card:10px; --r-pill:999px;
   --shadow:none;
-  color:var(--ink);font-family:var(--sans);
+  color:var(--ink);min-height:100vh;font-family:var(--sans);
   -webkit-font-smoothing:antialiased;
+}
+html[data-theme="dark"] .desk{
+  --dem-tint:rgba(59,123,222,.16); --c2-tint:rgba(199,87,168,.16);
+  --map-stroke:rgba(var(--line-rgb),.10); --map-stroke-hi:rgba(var(--line-rgb),.55);
+  --map-hatch:rgba(var(--line-rgb),.28);
+  --ramp-mid:rgb(58,58,66); --ramp-lo:rgb(30,30,36);
+  --tip-shadow:0 10px 30px rgba(var(--line-rgb),.45);
 }
 
 .desk *{margin:0;padding:0;box-sizing:border-box}
 .desk a{text-decoration:none;color:inherit}
 
-/* type: Sora for titles, Manrope for prose, JetBrains Mono for labels and numerals */
+/* type: Geist for titles and prose, JetBrains Mono for labels and numerals */
 .desk h1,.desk h2,.desk h3,.desk .projected-name,.desk .snapshot-heading strong{
   font-family:var(--sans);font-weight:800;letter-spacing:-.028em}
 .desk .model-label,.desk .topline-status,.desk .topline-columns,.desk .race-kicker,
@@ -1082,7 +1069,7 @@ const CSS = `
 .rd-view-toggles button{padding:6px 15px;border-radius:999px;border:0;background:none;cursor:pointer;
   font-family:var(--mono);font-size:10.5px;font-weight:700;letter-spacing:.08em;
   text-transform:uppercase;color:var(--ink3);transition:background .15s ease,color .15s ease}
-.rd-view-toggles button.on{background:var(--hi);color:var(--bg)}
+.rd-view-toggles button.on{background:var(--dem);color:#fff}
 .rd-map-toggles{display:flex;gap:4px;padding:3px;border-radius:999px;
   background:var(--panel2);border:1px solid var(--hairline)}
 .rd-map-toggles button{padding:5px 13px;border-radius:999px;border:0;background:none;cursor:pointer;
@@ -1195,7 +1182,7 @@ const CSS = `
 .l4:hover{border-color:var(--hairline2)}
 .l4-hd{display:flex;gap:9px;align-items:flex-start}
 .l4-dot{width:8px;height:8px;border-radius:50%;margin-top:4px;flex:0 0 auto;background:var(--ink3)}
-.l4-dot.d{background:var(--dem)} .l4-dot.r{background:var(--gop)} .l4-dot.n{background:var(--mute)}
+.l4-dot.d{background:var(--dem)} .l4-dot.r{background:var(--gop)} .l4-dot.n{background:var(--c2)}
 .l4-title{flex:1;min-width:0}
 .l4-title strong{display:block;font-size:13px;font-weight:700;letter-spacing:-.01em}
 .l4-title small{display:block;font-family:var(--mono);font-size:8px;letter-spacing:.08em;

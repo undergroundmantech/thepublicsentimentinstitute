@@ -37,7 +37,6 @@ export const redirects: Redirect[] = [
   p("/voterregistration", "/maps/voter-registration"),
 
   // results
-  p("/results/tonight", "/results/live"),
   p("/results/onpoint", "/results"),
   p("/results/onpoint/:path*", "/results/:path*"),
 
