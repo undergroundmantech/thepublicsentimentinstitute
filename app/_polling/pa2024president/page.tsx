@@ -92,7 +92,7 @@ const CSS = `
     border-left:3px solid rgba(74,222,128,0.6);
   }
   .pa24-archive-banner-text {
-    font-family:ui-monospace,monospace; font-size:8.5px; font-weight:700;
+    font-family:var(--font-m); font-size:8.5px; font-weight:700;
     letter-spacing:0.22em; text-transform:uppercase; color:#4ade80; line-height:1.6;
   }
   .pa24-archive-banner-result {
@@ -100,18 +100,18 @@ const CSS = `
     gap:3px; flex-shrink:0;
   }
   .pa24-archive-banner-winner {
-    font-family:ui-monospace,monospace; font-size:11px; font-weight:900;
+    font-family:var(--font-m); font-size:11px; font-weight:900;
     letter-spacing:0.16em; text-transform:uppercase; color:var(--rep);
   }
   .pa24-archive-banner-margin {
-    font-family:ui-monospace,monospace; font-size:8px;
+    font-family:var(--font-m); font-size:8px;
     letter-spacing:0.18em; text-transform:uppercase; color:var(--muted3);
   }
 
   /* EYEBROW */
   .pa24-eyebrow {
     display:flex; align-items:center; gap:8px;
-    font-family:ui-monospace,monospace; font-size:8px; font-weight:700;
+    font-family:var(--font-m); font-size:8px; font-weight:700;
     letter-spacing:0.32em; text-transform:uppercase; color:var(--purple-soft);
     margin-bottom:12px;
   }
@@ -159,7 +159,7 @@ const CSS = `
     -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
   }
   .pa24-hero-desc {
-    font-family:ui-monospace,monospace; font-size:9.5px; letter-spacing:0.12em;
+    font-family:var(--font-m); font-size:9.5px; letter-spacing:0.12em;
     line-height:1.75; color:var(--muted2); text-transform:uppercase; max-width:520px;
   }
   .pa24-hero-badge-row { display:flex; flex-wrap:wrap; gap:6px; margin-top:16px; }
@@ -168,7 +168,7 @@ const CSS = `
   .pa24-badge {
     display:inline-flex; align-items:center; gap:5px; padding:3px 8px;
     border:1px solid var(--border); background:rgba(var(--line-rgb),0.03);
-    font-family:ui-monospace,monospace; font-size:7.5px; font-weight:700;
+    font-family:var(--font-m); font-size:7.5px; font-weight:700;
     letter-spacing:0.22em; text-transform:uppercase; color:var(--muted3);
   }
   .pa24-badge-archive { border-color:rgba(74,222,128,0.28); background:rgba(74,222,128,0.06); color:#4ade80; }
@@ -183,17 +183,17 @@ const CSS = `
   }
   .pa24-hero-read-row.final { border-color:rgba(74,222,128,0.22); background:rgba(74,222,128,0.04); }
   .pa24-hero-read-label {
-    font-family:ui-monospace,monospace; font-size:7px; font-weight:700;
+    font-family:var(--font-m); font-size:7px; font-weight:700;
     letter-spacing:0.24em; text-transform:uppercase; color:var(--muted3);
   }
   .pa24-hero-read-val {
-    font-family:ui-monospace,monospace; font-size:18px; font-weight:900;
+    font-family:var(--font-m); font-size:18px; font-weight:900;
     font-variant-numeric:tabular-nums;
   }
 
   /* SECTION LABEL */
   .pa24-section-label {
-    font-family:ui-monospace,monospace; font-size:7.5px; font-weight:700;
+    font-family:var(--font-m); font-size:7.5px; font-weight:700;
     letter-spacing:0.32em; text-transform:uppercase; color:var(--muted3);
     display:flex; align-items:center; gap:10px; margin-bottom:12px;
   }
@@ -213,15 +213,15 @@ const CSS = `
   .pa24-kpi:hover { border-color:var(--border2); }
   .pa24-kpi-accent { position:absolute; top:0; left:0; right:0; height:2px; }
   .pa24-kpi-label {
-    font-family:ui-monospace,monospace; font-size:7.5px; font-weight:700;
+    font-family:var(--font-m); font-size:7.5px; font-weight:700;
     letter-spacing:0.28em; text-transform:uppercase; color:var(--muted3); margin-bottom:8px;
   }
   .pa24-kpi-val {
-    font-family:ui-monospace,monospace; font-size:clamp(22px,2.5vw,30px); font-weight:900;
+    font-family:var(--font-m); font-size:clamp(22px,2.5vw,30px); font-weight:900;
     color:#fff; line-height:1; font-variant-numeric:tabular-nums;
   }
   .pa24-kpi-sub {
-    font-family:ui-monospace,monospace; font-size:8px; letter-spacing:0.16em;
+    font-family:var(--font-m); font-size:8px; letter-spacing:0.16em;
     text-transform:uppercase; color:var(--muted3); margin-top:6px;
   }
   .pa24-kpi-bar { height:2px; margin-top:10px; background:rgba(var(--ink-rgb),calc(0.08 * var(--struct))); }
@@ -236,7 +236,7 @@ const CSS = `
     padding:14px 20px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px;
   }
   .pa24-accuracy-head-title {
-    font-family:ui-monospace,monospace; font-size:9px; font-weight:700;
+    font-family:var(--font-m); font-size:9px; font-weight:700;
     letter-spacing:0.26em; text-transform:uppercase; color:#4ade80;
   }
   .pa24-accuracy-inner {
@@ -247,15 +247,15 @@ const CSS = `
     border:1px solid var(--border); padding:14px 16px; background:rgba(var(--line-rgb),0.02);
   }
   .pa24-acc-item-label {
-    font-family:ui-monospace,monospace; font-size:7px; font-weight:700;
+    font-family:var(--font-m); font-size:7px; font-weight:700;
     letter-spacing:0.26em; text-transform:uppercase; color:var(--muted3); margin-bottom:8px;
   }
   .pa24-acc-item-val {
-    font-family:ui-monospace,monospace; font-size:22px; font-weight:900;
+    font-family:var(--font-m); font-size:22px; font-weight:900;
     font-variant-numeric:tabular-nums; color:#fff;
   }
   .pa24-acc-item-sub {
-    font-family:ui-monospace,monospace; font-size:8px; letter-spacing:0.14em;
+    font-family:var(--font-m); font-size:8px; letter-spacing:0.14em;
     text-transform:uppercase; color:var(--muted3); margin-top:5px;
   }
 
@@ -266,20 +266,20 @@ const CSS = `
     padding:14px 20px; display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;
   }
   .pa24-table-head-title {
-    font-family:ui-monospace,monospace; font-size:9px; font-weight:700;
+    font-family:var(--font-m); font-size:9px; font-weight:700;
     letter-spacing:0.26em; text-transform:uppercase; color:var(--purple-soft);
   }
   .pa24-table-scroll { overflow-x:auto; max-height:540px; overflow-y:auto; }
   table.pa24-table { width:100%; border-collapse:collapse; min-width:820px; }
   table.pa24-table thead { position:sticky; top:0; background:var(--bg2); z-index:2; }
   table.pa24-table th {
-    font-family:ui-monospace,monospace; font-size:7.5px; font-weight:700;
+    font-family:var(--font-m); font-size:7.5px; font-weight:700;
     letter-spacing:0.22em; text-transform:uppercase; color:var(--muted3);
     padding:10px 16px; text-align:left; border-bottom:1px solid var(--border); white-space:nowrap;
   }
   table.pa24-table th.r { text-align:right; }
   table.pa24-table td {
-    font-family:ui-monospace,monospace; font-size:10.5px; padding:10px 16px;
+    font-family:var(--font-m); font-size:10.5px; padding:10px 16px;
     border-bottom:1px solid rgba(var(--ink-rgb),calc(0.05 * var(--struct))); color:var(--muted);
     vertical-align:middle; font-variant-numeric:tabular-nums;
   }
@@ -290,13 +290,13 @@ const CSS = `
   .pa24-gold-badge {
     display:inline-flex; align-items:center; padding:1px 6px;
     border:1px solid rgba(245,158,11,0.30); background:rgba(245,158,11,0.07);
-    font-family:ui-monospace,monospace; font-size:7px; font-weight:700;
+    font-family:var(--font-m); font-size:7px; font-weight:700;
     letter-spacing:0.18em; text-transform:uppercase; color:var(--gold);
   }
   .pa24-partisan-badge {
     display:inline-flex; align-items:center; padding:1px 6px;
     border:1px solid rgba(255,80,80,0.22); background:rgba(255,80,80,0.07);
-    font-family:ui-monospace,monospace; font-size:7px; font-weight:700;
+    font-family:var(--font-m); font-size:7px; font-weight:700;
     letter-spacing:0.16em; text-transform:uppercase; color:rgba(255,80,80,0.8);
   }
   .pa24-dem-col  { color:rgba(77,127,212,1)     !important; font-weight:700; }
@@ -310,7 +310,7 @@ const CSS = `
     display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px;
   }
   .pa24-footnote-text {
-    font-family:ui-monospace,monospace; font-size:8px; letter-spacing:0.18em;
+    font-family:var(--font-m); font-size:8px; letter-spacing:0.18em;
     text-transform:uppercase; color:var(--muted3);
   }
 
@@ -523,7 +523,7 @@ export default function PA2024PresidentPage() {
             <span className="pa24-table-head-title">ALL INCLUDED POLLS</span>
             <div style={{ display: "flex", gap: "8px", alignItems: "center", flexWrap: "wrap" }}>
               <span className="pa24-badge pa24-badge-gold">★ GOLD STANDARD = ×2 WEIGHT</span>
-              <span style={{ fontFamily:"ui-monospace,monospace", fontSize:"7.5px", letterSpacing:"0.20em", textTransform:"uppercase", color:"var(--muted3)" }}>
+              <span style={{ fontFamily:"var(--font-m)", fontSize:"7.5px", letterSpacing:"0.20em", textTransform:"uppercase", color:"var(--muted3)" }}>
                 SORTED BY END DATE ↓
               </span>
             </div>

@@ -152,7 +152,8 @@ export default function DeskMapField({ className, states }: { className?: string
         ctx.fillRect(0, 0, canvas.width, canvas.height);
       }
       // corner label — quiet, mono, broadcast chyron
-      ctx.font = `600 ${Math.round(10 * dpr)}px "JetBrains Mono", monospace`;
+      const jbm = getComputedStyle(document.documentElement).getPropertyValue("--font-jbm").trim();
+      ctx.font = `600 ${Math.round(10 * dpr)}px ${jbm || '"JetBrains Mono"'}, monospace`;
       ctx.fillStyle = cssColor("rgba(var(--ink-rgb),calc(0.3 * var(--mute-k) + var(--floor)))");
       ctx.fillText(label().toUpperCase().split("").join(" "), Math.round(24 * dpr), canvas.height - Math.round(22 * dpr));
     };

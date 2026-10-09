@@ -251,7 +251,7 @@ export default function DeskSphere({
       .catch(() => { geoFeats = []; });
 
     const fam = getComputedStyle(host).fontFamily || "Manrope, sans-serif";
-    const mono = '"JetBrains Mono", ui-monospace, monospace';
+    const mono = var(--font-m);
     const texCache = new Map<number, THREE.CanvasTexture>();
 
     // find the county a local contest lives in — locality beats state

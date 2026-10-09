@@ -210,10 +210,10 @@ export default function JDVanceFavorabilityPage() {
         {/* ── METHODOLOGY ── */}
         <div className="pap-table-panel" style={{ borderTop: "none" }}>
           <div style={{ padding: "12px 18px" }}>
-            <div style={{ fontFamily: "ui-monospace,monospace", fontSize: 7, fontWeight: 700, letterSpacing: "0.28em", textTransform: "uppercase", color: "var(--purple-soft, #a78bfa)", marginBottom: 6 }}>
+            <div style={{ fontFamily: "var(--font-m)", fontSize: 7, fontWeight: 700, letterSpacing: "0.28em", textTransform: "uppercase", color: "var(--purple-soft, #a78bfa)", marginBottom: 6 }}>
               METHODOLOGY
             </div>
-            <p style={{ fontFamily: "ui-monospace,monospace", fontSize: 8.5, lineHeight: 1.75, letterSpacing: "0.08em", color: "rgba(var(--ink-rgb),calc(0.22 * var(--struct)))", margin: 0 }}>
+            <p style={{ fontFamily: "var(--font-m)", fontSize: 8.5, lineHeight: 1.75, letterSpacing: "0.08em", color: "rgba(var(--ink-rgb),calc(0.22 * var(--struct)))", margin: 0 }}>
               Favorability figures are sourced from public national polls. Each poll is weighted by recency
               (exponential decay), square-root of sample size, and sample type (LV &gt; RV &gt; A). Gold Standard
               pollsters receive a ×{GOLD_STANDARD_MULTIPLIER} weight multiplier applied to their effective sample size

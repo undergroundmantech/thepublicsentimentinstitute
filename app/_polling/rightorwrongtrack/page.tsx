@@ -142,18 +142,18 @@ export default function RightTrackWrongTrackPage() {
         {/* ── SENTIMENT CONTEXT ── */}
         <div className="pap-context-panel">
           <div style={{ display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap" }}>
-            <div style={{ fontFamily: "ui-monospace,monospace", fontSize: 7, fontWeight: 700, letterSpacing: "0.28em", textTransform: "uppercase", color: "rgba(var(--ink-rgb),calc(0.3 * var(--mute-k) + var(--floor)))", whiteSpace: "nowrap" }}>
+            <div style={{ fontFamily: "var(--font-m)", fontSize: 7, fontWeight: 700, letterSpacing: "0.28em", textTransform: "uppercase", color: "rgba(var(--ink-rgb),calc(0.3 * var(--mute-k) + var(--floor)))", whiteSpace: "nowrap" }}>
               CURRENT READING
             </div>
             <span style={{
               display: "inline-flex", alignItems: "center", padding: "4px 10px",
               border: `1px solid ${sentiment.color}44`, background: `${sentiment.color}11`,
-              fontFamily: "ui-monospace,monospace", fontSize: 8, fontWeight: 700,
+              fontFamily: "var(--font-m)", fontSize: 8, fontWeight: 700,
               letterSpacing: "0.22em", textTransform: "uppercase", color: sentiment.color,
             }}>
               {sentiment.label}
             </span>
-            <span style={{ fontFamily: "ui-monospace,monospace", fontSize: 8.5, letterSpacing: "0.1em", color: "rgba(var(--ink-rgb),calc(0.35 * var(--mute-k) + var(--floor)))", textTransform: "uppercase" }}>
+            <span style={{ fontFamily: "var(--font-m)", fontSize: 8.5, letterSpacing: "0.1em", color: "rgba(var(--ink-rgb),calc(0.35 * var(--mute-k) + var(--floor)))", textTransform: "uppercase" }}>
               {sentiment.desc}
             </span>
           </div>
@@ -362,7 +362,7 @@ const CSS = `
     -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
   }
   .pap-hero-desc {
-    font-family: ui-monospace,monospace; font-size: 9.5px; letter-spacing: 0.12em;
+    font-family: var(--font-m); font-size: 9.5px; letter-spacing: 0.12em;
     line-height: 1.75; color: var(--muted2); text-transform: uppercase; max-width: 520px;
   }
   .pap-hero-badge-row { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 16px; }
@@ -370,7 +370,7 @@ const CSS = `
   .pap-badge {
     display: inline-flex; align-items: center; gap: 5px; padding: 3px 8px;
     border: 1px solid var(--border); background: var(--panel2);
-    font-family: ui-monospace,monospace; font-size: 7.5px; font-weight: 700;
+    font-family: var(--font-m); font-size: 7.5px; font-weight: 700;
     letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted3);
   }
   .pap-badge-live   { border-color:rgba(109, 62, 233,0.35); background:rgba(109, 62, 233,0.07); color:var(--purple-soft); }
@@ -383,15 +383,15 @@ const CSS = `
     padding: 10px 14px; border: 1px solid var(--border); background: var(--panel2);
   }
   .pap-hero-read-label {
-    font-family: ui-monospace,monospace; font-size: 7.5px; font-weight: 700;
+    font-family: var(--font-m); font-size: 7.5px; font-weight: 700;
     letter-spacing: 0.24em; text-transform: uppercase; color: var(--muted3);
   }
   .pap-hero-read-val {
-    font-family: ui-monospace,monospace; font-size: 20px; font-weight: 900; font-variant-numeric: tabular-nums;
+    font-family: var(--font-m); font-size: 20px; font-weight: 900; font-variant-numeric: tabular-nums;
   }
 
   .pap-section-label {
-    font-family: ui-monospace,monospace; font-size: 7.5px; font-weight: 700;
+    font-family: var(--font-m); font-size: 7.5px; font-weight: 700;
     letter-spacing: 0.32em; text-transform: uppercase; color: var(--muted3);
     display: flex; align-items: center; gap: 10px; margin-bottom: 12px;
   }
@@ -408,9 +408,9 @@ const CSS = `
   }
   .pap-kpi:hover { border-color: var(--border2); }
   .pap-kpi-accent { position: absolute; top: 0; left: 0; right: 0; height: 2px; }
-  .pap-kpi-label { font-family: ui-monospace,monospace; font-size: 7.5px; font-weight: 700; letter-spacing: 0.28em; text-transform: uppercase; color: var(--muted3); margin-bottom: 8px; }
-  .pap-kpi-val   { font-family: ui-monospace,monospace; font-size: clamp(22px,2.5vw,30px); font-weight: 900; color: #fff; line-height: 1; font-variant-numeric: tabular-nums; }
-  .pap-kpi-sub   { font-family: ui-monospace,monospace; font-size: 8px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted3); margin-top: 6px; }
+  .pap-kpi-label { font-family: var(--font-m); font-size: 7.5px; font-weight: 700; letter-spacing: 0.28em; text-transform: uppercase; color: var(--muted3); margin-bottom: 8px; }
+  .pap-kpi-val   { font-family: var(--font-m); font-size: clamp(22px,2.5vw,30px); font-weight: 900; color: #fff; line-height: 1; font-variant-numeric: tabular-nums; }
+  .pap-kpi-sub   { font-family: var(--font-m); font-size: 8px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted3); margin-top: 6px; }
   .pap-kpi-bar { height: 2px; margin-top: 10px; background: rgba(var(--ink-rgb),calc(0.08 * var(--struct))); }
   .pap-kpi-bar-fill { height: 100%; animation: pap-bar-in 800ms cubic-bezier(0.22,1,0.36,1) both; }
 
@@ -424,28 +424,28 @@ const CSS = `
   }
   @media (max-width: 700px) { .pap-context-benchmarks { grid-template-columns: repeat(2,1fr); } }
   .pap-context-item { display: flex; flex-direction: column; gap: 4px; }
-  .pap-context-item-label { font-family: ui-monospace,monospace; font-size: 7px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted3); }
-  .pap-context-item-val   { font-family: ui-monospace,monospace; font-size: 16px; font-weight: 900; font-variant-numeric: tabular-nums; }
+  .pap-context-item-label { font-family: var(--font-m); font-size: 7px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted3); }
+  .pap-context-item-val   { font-family: var(--font-m); font-size: 16px; font-weight: 900; font-variant-numeric: tabular-nums; }
 
   .pap-table-panel { background: var(--panel); border: 1px solid var(--border); overflow: hidden; }
   .pap-table-head {
     background: var(--bg2); border-bottom: 1px solid var(--border);
     padding: 14px 20px; display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap;
   }
-  .pap-table-head-title { font-family: ui-monospace,monospace; font-size: 9px; font-weight: 700; letter-spacing: 0.26em; text-transform: uppercase; color: var(--purple-soft); }
-  .pap-table-head-note  { font-family: ui-monospace,monospace; font-size: 7.5px; letter-spacing: 0.20em; text-transform: uppercase; color: var(--muted3); }
+  .pap-table-head-title { font-family: var(--font-m); font-size: 9px; font-weight: 700; letter-spacing: 0.26em; text-transform: uppercase; color: var(--purple-soft); }
+  .pap-table-head-note  { font-family: var(--font-m); font-size: 7.5px; letter-spacing: 0.20em; text-transform: uppercase; color: var(--muted3); }
   .pap-table-scroll { overflow-x: auto; max-height: 520px; overflow-y: auto; }
 
   table.pap-table { width: 100%; border-collapse: collapse; min-width: 820px; }
   table.pap-table thead { position: sticky; top: 0; background: var(--bg2); z-index: 2; }
   table.pap-table th {
-    font-family: ui-monospace,monospace; font-size: 7.5px; font-weight: 700;
+    font-family: var(--font-m); font-size: 7.5px; font-weight: 700;
     letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted3);
     padding: 10px 16px; text-align: left; border-bottom: 1px solid var(--border); white-space: nowrap;
   }
   table.pap-table th.r { text-align: right; }
   table.pap-table td {
-    font-family: ui-monospace,monospace; font-size: 10.5px; padding: 10px 16px;
+    font-family: var(--font-m); font-size: 10.5px; padding: 10px 16px;
     border-bottom: 1px solid rgba(var(--ink-rgb),calc(0.05 * var(--struct))); color: var(--muted);
     vertical-align: middle; font-variant-numeric: tabular-nums;
   }
@@ -456,7 +456,7 @@ const CSS = `
   .pap-gold-badge {
     display: inline-flex; align-items: center; padding: 1px 6px;
     border: 1px solid rgba(167,139,250,0.28); background: rgba(109, 62, 233,0.07);
-    font-family: ui-monospace,monospace; font-size: 7px; font-weight: 700;
+    font-family: var(--font-m); font-size: 7px; font-weight: 700;
     letter-spacing: 0.18em; text-transform: uppercase; color: var(--purple-soft);
   }
 

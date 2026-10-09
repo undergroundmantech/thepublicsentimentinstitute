@@ -59,7 +59,7 @@
   /* type: next/font declares --font-sora, --font-manrope and --font-jbm on <html> */
   --font-d: var(--font-sora), "Sora", system-ui, sans-serif;
   --font-b: var(--font-manrope), "Manrope", system-ui, sans-serif;
-  --font-m: var(--font-jbm), "JetBrains Mono", ui-monospace, monospace;
+  --font-m: var(--font-jbm), var(--font-m);
 
   /* shape */
   --r: 14px;

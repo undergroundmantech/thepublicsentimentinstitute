@@ -454,7 +454,7 @@ const GLASS_CSS = `
     mask-position: left center;
   }
   .opa-site-kicker {
-    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-family: var(--font-m);
     font-size: 9px;
     font-weight: 600;
     letter-spacing: 0.18em;
@@ -629,7 +629,7 @@ const kbdCapStyle = {
   display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
   minWidth: 16, height: 16, padding: '0 3px', borderRadius: 4,
   border: '1px solid var(--rule)', background: 'var(--wash)',
-  fontFamily: '"JetBrains Mono", ui-monospace, monospace', fontSize: 10, lineHeight: 1,
+  fontFamily: var(--font-m), fontSize: 10, lineHeight: 1,
   color: 'var(--ink-mute)',
 }
 // compact glassy magnifier button (calendar landing)

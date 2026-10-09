@@ -273,7 +273,7 @@ function StateMap({ tpsiNet, tpsiApprove, tpsiDisapprove }: {
         border: "1px solid rgba(var(--ink-rgb),calc(0.1 * var(--struct)))",
         borderTop: "none",
       }}>
-        <span style={{ fontFamily: "ui-monospace,monospace", fontSize: 7, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(var(--ink-rgb),calc(0.45 * var(--mute-k) + var(--floor)))", whiteSpace: "nowrap" }}>NET APPROVE</span>
+        <span style={{ fontFamily: "var(--font-m)", fontSize: 7, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(var(--ink-rgb),calc(0.45 * var(--mute-k) + var(--floor)))", whiteSpace: "nowrap" }}>NET APPROVE</span>
         <div style={{ display: "flex", gap: 2, flex: 1 }}>
           {[
             { label: "+30", net: 35 }, { label: "+20", net: 22 }, { label: "+10", net: 12 },
@@ -282,11 +282,11 @@ function StateMap({ tpsiNet, tpsiApprove, tpsiDisapprove }: {
           ].map(({ label, net }) => (
             <div key={label} style={{ display: "flex", flexDirection: "column", alignItems: "center", flex: 1, gap: 2 }}>
               <div style={{ width: "100%", height: 8, background: netToColor(net) }} />
-              <span style={{ fontFamily: "ui-monospace,monospace", fontSize: 6, color: "var(--muted2)", letterSpacing: "0.1em" }}>{label}</span>
+              <span style={{ fontFamily: "var(--font-m)", fontSize: 6, color: "var(--muted2)", letterSpacing: "0.1em" }}>{label}</span>
             </div>
           ))}
         </div>
-        <span style={{ fontFamily: "ui-monospace,monospace", fontSize: 7, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(var(--ink-rgb),calc(0.45 * var(--mute-k) + var(--floor)))", whiteSpace: "nowrap" }}>NET DISAPPROVE</span>
+        <span style={{ fontFamily: "var(--font-m)", fontSize: 7, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(var(--ink-rgb),calc(0.45 * var(--mute-k) + var(--floor)))", whiteSpace: "nowrap" }}>NET DISAPPROVE</span>
       </div>
 
       {/* ── D3 Albers USA Map ── */}
@@ -300,7 +300,7 @@ function StateMap({ tpsiNet, tpsiApprove, tpsiDisapprove }: {
         {!topoData && (
           <div style={{
             height: 400, display: "flex", alignItems: "center", justifyContent: "center",
-            fontFamily: "ui-monospace,monospace", fontSize: 10, letterSpacing: "0.2em",
+            fontFamily: "var(--font-m)", fontSize: 10, letterSpacing: "0.2em",
             color: "rgba(var(--ink-rgb),calc(0.45 * var(--mute-k) + var(--floor)))", textTransform: "uppercase",
           }}>
             Loading map…
@@ -491,10 +491,10 @@ function StateMap({ tpsiNet, tpsiApprove, tpsiDisapprove }: {
       {/* Methodology */}
       <div className="pap-table-panel" style={{ borderTop: "none" }}>
         <div style={{ padding: "12px 18px" }}>
-          <div style={{ fontFamily: "ui-monospace,monospace", fontSize: 7, fontWeight: 700, letterSpacing: "0.28em", textTransform: "uppercase", color: "var(--purple-soft, #a78bfa)", marginBottom: 6 }}>
+          <div style={{ fontFamily: "var(--font-m)", fontSize: 7, fontWeight: 700, letterSpacing: "0.28em", textTransform: "uppercase", color: "var(--purple-soft, #a78bfa)", marginBottom: 6 }}>
             METHODOLOGY
           </div>
-          <p style={{ fontFamily: "ui-monospace,monospace", fontSize: 8.5, lineHeight: 1.75, letterSpacing: "0.08em", color: "rgba(var(--ink-rgb),calc(0.22 * var(--struct)))", margin: 0 }}>
+          <p style={{ fontFamily: "var(--font-m)", fontSize: 8.5, lineHeight: 1.75, letterSpacing: "0.08em", color: "rgba(var(--ink-rgb),calc(0.22 * var(--struct)))", margin: 0 }}>
             State net approval figures are sourced from Civiqs, The Economist/YouGov, and Morning Consult
             tracking polls. The three-pollster simple average is corrected by an additive offset equal to the
             difference between the population-weighted implied national net from raw state data and the current
@@ -826,7 +826,7 @@ const CSS = `
   }
 
   .pap-hero-desc {
-    font-family: ui-monospace,monospace;
+    font-family: var(--font-m);
     font-size: 9.5px;
     letter-spacing: 0.12em;
     line-height: 1.75;
@@ -847,7 +847,7 @@ const CSS = `
     padding: 3px 8px;
     border: 1px solid var(--border);
     background: var(--panel2);
-    font-family: ui-monospace,monospace;
+    font-family: var(--font-m);
     font-size: 7.5px; font-weight: 700; letter-spacing: 0.22em;
     text-transform: uppercase; color: var(--muted3);
   }
@@ -874,20 +874,20 @@ const CSS = `
     overflow: hidden;
   }
   .pap-hero-read-label {
-    font-family: ui-monospace,monospace;
+    font-family: var(--font-m);
     font-size: 7.5px; font-weight: 700;
     letter-spacing: 0.24em; text-transform: uppercase;
     color: var(--muted3);
   }
   .pap-hero-read-val {
-    font-family: ui-monospace,monospace;
+    font-family: var(--font-m);
     font-size: 20px; font-weight: 900;
     font-variant-numeric: tabular-nums;
   }
 
   /* SECTION LABEL */
   .pap-section-label {
-    font-family: ui-monospace,monospace;
+    font-family: var(--font-m);
     font-size: 7.5px; font-weight: 700;
     letter-spacing: 0.32em; text-transform: uppercase;
     color: var(--muted3);
@@ -919,20 +919,20 @@ const CSS = `
     position: absolute; top: 0; left: 0; right: 0; height: 2px;
   }
   .pap-kpi-label {
-    font-family: ui-monospace,monospace;
+    font-family: var(--font-m);
     font-size: 7.5px; font-weight: 700;
     letter-spacing: 0.28em; text-transform: uppercase;
     color: var(--muted3); margin-bottom: 8px;
   }
   .pap-kpi-val {
-    font-family: ui-monospace,monospace;
+    font-family: var(--font-m);
     font-size: clamp(22px,2.5vw,30px);
     font-weight: 900;
     color: #fff; line-height: 1;
     font-variant-numeric: tabular-nums;
   }
   .pap-kpi-sub {
-    font-family: ui-monospace,monospace;
+    font-family: var(--font-m);
     font-size: 8px; letter-spacing: 0.16em;
     text-transform: uppercase; color: var(--muted3);
     margin-top: 6px;
@@ -957,13 +957,13 @@ const CSS = `
     gap: 12px; flex-wrap: wrap;
   }
   .pap-table-head-title {
-    font-family: ui-monospace,monospace;
+    font-family: var(--font-m);
     font-size: 9px; font-weight: 700;
     letter-spacing: 0.26em; text-transform: uppercase;
     color: var(--purple-soft);
   }
   .pap-table-head-note {
-    font-family: ui-monospace,monospace;
+    font-family: var(--font-m);
     font-size: 7.5px; letter-spacing: 0.20em;
     text-transform: uppercase; color: var(--muted3);
   }
@@ -983,7 +983,7 @@ const CSS = `
     z-index: 2;
   }
   table.pap-table th {
-    font-family: ui-monospace,monospace;
+    font-family: var(--font-m);
     font-size: 7.5px; font-weight: 700;
     letter-spacing: 0.22em; text-transform: uppercase;
     color: var(--muted3);
@@ -994,7 +994,7 @@ const CSS = `
   }
   table.pap-table th.r { text-align: right; }
   table.pap-table td {
-    font-family: ui-monospace,monospace;
+    font-family: var(--font-m);
     font-size: 10.5px;
     padding: 10px 16px;
     border-bottom: 1px solid rgba(var(--ink-rgb),calc(0.05 * var(--struct)));
@@ -1010,7 +1010,7 @@ const CSS = `
     padding: 1px 6px;
     border: 1px solid rgba(167,139,250,0.28);
     background: rgba(109, 62, 233,0.07);
-    font-family: ui-monospace,monospace;
+    font-family: var(--font-m);
     font-size: 7px; font-weight: 700;
     letter-spacing: 0.18em; text-transform: uppercase;
     color: var(--purple-soft);

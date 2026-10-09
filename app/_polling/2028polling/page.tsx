@@ -501,7 +501,7 @@ const CSS = `
   table.p28-table { width:100%; border-collapse:collapse; min-width:820px; }
   table.p28-table thead { position:sticky; top:0; background:var(--bg2); z-index:2; }
   table.p28-table th {
-    font-family: ui-monospace,monospace; font-size: 7.5px; font-weight: 700;
+    font-family: var(--font-m); font-size: 7.5px; font-weight: 700;
     letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted3);
     padding: 10px 16px; text-align: left; border-bottom: 1px solid var(--border); white-space: nowrap;
   }

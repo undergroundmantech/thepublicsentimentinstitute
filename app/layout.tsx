@@ -11,9 +11,9 @@ import RolloutGate from "./components/RolloutGate";
 
 // OnPoint Politics type: Sora for headlines and big numbers, Manrope for body,
 // JetBrains Mono for anything tabular. globals.css maps these to --font-d, --font-b, --font-m.
-const sora = Sora({ subsets: ["latin"], weight: ["500", "600", "700", "800"], variable: "--font-sora", display: "swap" });
-const manrope = Manrope({ subsets: ["latin"], weight: ["400", "500", "600", "700"], variable: "--font-manrope", display: "swap" });
-const jbm = JetBrains_Mono({ subsets: ["latin"], weight: ["400", "500", "600", "700"], variable: "--font-jbm", display: "swap" });
+const sora = Sora({ subsets: ["latin"], variable: "--font-sora", display: "swap" });
+const manrope = Manrope({ subsets: ["latin"], variable: "--font-manrope", display: "swap" });
+const jbm = JetBrains_Mono({ subsets: ["latin"], variable: "--font-jbm", display: "swap" });
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://onpointpolitics.com"),
