@@ -547,6 +547,12 @@ def main():
             reg_ = poll_daily.REGISTRY[st]
             pd.DataFrame(reg_["series"]).to_csv(f"{OUT}/{nm}{'_governor' if office == 'governor' else ''}_daily_poll_average.csv", index=False)
             reg_["audit"].to_csv(f"{OUT}/{nm}{'_governor' if office == 'governor' else ''}_poll_weight_audit.csv", index=False, float_format="%.4f")
+        # Oct 7: write the summary after every race, so a lane that is killed keeps the races it finished
+        json.dump(dict(national_intercept_shift=shift, national_lv_d2=nat, national_mean_turnout_index=nat_turn,
+                       state_region=model["state_region"], results={**prev, **results},
+                       dynamic=dict(n_sims=N, seed=SEED, elasticity_tau=el.TAU, office_var=el.OFFICE_VAR,
+                                    prior_beta=list(map(float, el._PRIOR["beta"])), prior_tau_moments=float(el._PRIOR["tau2"] ** 0.5))),
+                  open(f"{OUT}/run_summary.json", "w"), indent=1, default=float)
     meta = dict(national_intercept_shift=shift, national_lv_d2=nat, national_mean_turnout_index=nat_turn,
                 state_region=model["state_region"], results={**prev, **results},
                 dynamic=dict(n_sims=N, seed=SEED, elasticity_tau=el.TAU, office_var=el.OFFICE_VAR,

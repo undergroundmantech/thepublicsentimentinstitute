@@ -113,7 +113,7 @@ export default function ContactPage() {
             <p className="ct-hero-desc">
               Request a poll, propose a partnership, or discuss recurring fielding.
               All inquiries route directly to our research team at{" "}
-              <span style={{ color: "rgba(var(--ink-rgb),calc(0.6 * var(--mute) + var(--floor)))" }}>{CONTACT_EMAIL}</span>.
+              <span style={{ color: "rgba(var(--ink-rgb),calc(0.6 * var(--mute-k) + var(--floor)))" }}>{CONTACT_EMAIL}</span>.
             </p>
 
             <div className="ct-badge-row">

@@ -438,7 +438,7 @@ stamp_published_odds(chambers)
 natgen = H.get("natgen", 55.29)
 gb_margin = round(100 - 2 * natgen, 1)                     # GOP positive
 approval = RS["GA"]["electorate"]["history"].get("enthusiasm", 0)
-net_app = -14                                              # TPSI national net approval, GOP positive sign
+net_app = -24                                              # registered voter net Trump approval input, Oct 1 2026; the model derives likely voters from it
 model = dict(
     meta=dict(updated=UPDATED, election=ELECTION, daysOut=DAYS_OUT, npe=gb_margin, sims=SIMS,
               senNotUpR=SEN_NOT_UP_R, senNotUpD=SEN_NOT_UP_D,

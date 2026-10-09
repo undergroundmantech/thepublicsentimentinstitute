@@ -119,7 +119,7 @@ export default function WireGlobe() {
       for (let lat = -75; lat <= 75; lat += 15)
         for (let lon = -180; lon < 180; lon += 2) pts.push(latLonToVec3(lat, lon, R), latLonToVec3(lat, lon + 2, R));
       const geo = new THREE.BufferGeometry().setFromPoints(pts);
-      globe.add(new THREE.LineSegments(geo, new THREE.LineBasicMaterial({ color: "var(--ink)", transparent: true, opacity: 0.03 })));
+      globe.add(new THREE.LineSegments(geo, new THREE.LineBasicMaterial({ color: "#f3eff8", transparent: true, opacity: 0.03 })));
     }
 
     const sprite = makeCircleSprite();
@@ -156,7 +156,7 @@ export default function WireGlobe() {
     // brand-purple beacons on the toss-up senate states — the live layer
     const hot = SENATE_MODEL.filter((r) => Math.abs(r.m) < 1.5 && STATE_CENTROIDS[r.st]);
     const beaconMat = new THREE.PointsMaterial({
-      color: new THREE.Color("#6d3ee9"), size: 0.052, map: sprite, transparent: true,
+      color: new THREE.Color("#e7b341"), size: 0.052, map: sprite, transparent: true,
       opacity: 0.95, depthWrite: false, sizeAttenuation: true,
     });
     {

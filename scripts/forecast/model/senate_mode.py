@@ -278,6 +278,10 @@ def cfgget(cfg, k, default=None):
     if UNIFORM and k in DISCRETIONARY: return default
     return cfg.get(k, default)
 ELECTORATE = os.environ.get("ELECTORATE") is not None   # Electorate Mode: estimated 2026 electorate
+# Oct 7 2026: the electorate's county pattern also reaches the approval and polling legs, level neutral, so the
+# 2026 electorate shapes all three legs; ELECTORATE_ALL=0 restores the census leg only setting
+ELECTORATE_ALL = ELECTORATE and os.environ.get("ELECTORATE_ALL", "1") != "0"
+EL_ALL_AUDIT = {}
 DYNAMIC = os.environ.get("DYNAMIC") is not None   # Dynamic Mode: county elasticities in the history leg
 MOVE_A = os.environ.get('NO_MOVE_A') is None   # primary structure sits with previous results, not with approval
 # How much of a past split ticket gap carries to the next cycle. Measured on 192 House districts
@@ -786,7 +790,13 @@ EXTRA_POLLS = {
     # comma. Both waves predate the August 11 primary Janoo won, and the recency curve leaves them
     # about 1 percent and 0.1 percent of the September read, so the level here is the September poll.
     "VTG": [dict(source="University of New Hampshire", dates="September 17-21, 2026", end="2026-09-21", n=835, pop="LV", D=49, R=43, O=2, U=6)],
-    "MI": [dict(source="co/efficient (R)", dates="September 21-23, 2026", end="2026-09-23", n=843, pop="LV", D=45, R=45, O=2, U=8),
+    # Oct 8 morning sweep: Guidant Polling for Public First Action, released Oct 7; field dates, sample size and voter type not
+    # published, entered as LV with 600 ending Oct 5. Two ballots, 48 to 43 and 49 to 45, averaged into one row.
+    "MI": [# Oct 9 2026, supplied by the user: Z to A Research for Rust Belt Rising, Sept 28-Oct 1 2026, 483 voters, part of a
+           # 1,430 voter MI PA WI sample; voter type not given, entered as RV; other 3, undecided by subtraction.
+           dict(source="Z to A Research for Rust Belt Rising (D)", dates="September 28-October 1, 2026", end="2026-10-01", n=483, pop="RV", D=49, R=42, O=3, U=6),
+           dict(source="Guidant Polling for Public First Action", dates="October 2026 field dates not published", end="2026-10-05", n=600, pop="LV", D=48.5, R=44, O=1, U=6.5),
+           dict(source="co/efficient (R)", dates="September 21-23, 2026", end="2026-09-23", n=843, pop="LV", D=45, R=45, O=2, U=8),
            dict(source="Big Data Poll", dates="September 22-24, 2026", end="2026-09-24", n=678, pop="LV", D=46.7, R=42.1, O=0, U=11.2),   # Oct 4 sweep, likely voters with leaners
            dict(source="GBAO (D)", dates="September 19-22, 2026", end="2026-09-22", n=800, pop="LV", D=48, R=44, O=0, U=8),   # Sept 28 2026
            dict(source="New York Times/Siena University", dates="September 15-22, 2026", end="2026-09-22", n=613, pop="LV", D=49, R=44, O=0, U=7),
@@ -808,7 +818,12 @@ EXTRA_POLLS = {
            dict(source="Trafalgar Group (R)", dates="September 28-30, 2026", end="2026-09-30", n=1085, pop="LV", D=46.9, R=45.1, O=2.9, U=5.0),
            # Oct 5 2026 evening sweep: Mitchell Research for CBS Detroit, Oct 1 2026, likely voters, margin of error 3.8; the sample
            # size was not published, 650 is a placeholder matching that margin. Other is Christensen 3, Kristy 2, Long 1, Marsh 1.
-           dict(source="Mitchell Research for CBS Detroit", dates="October 1, 2026", end="2026-10-01", n=650, pop="LV", D=45.6, R=41.4, O=7.0, U=6.0)],
+           dict(source="Mitchell Research for CBS Detroit", dates="October 1, 2026", end="2026-10-01", n=682, pop="LV", D=45.6, R=41.4, O=7.0, U=6.0),
+           # Oct 6 2026: YouGov, Sept 22 to Oct 4 2026, 3,949 likely voters
+           dict(source="YouGov", dates="September 22-October 4, 2026", end="2026-10-04", n=3949, pop="LV", D=49, R=48, O=1, U=2),
+           # Oct 7 2026 evening sweep: Quantus Insights, released Oct 7, "October survey" of 762 likely voters; field dates not
+           # published, so the end date is a placeholder; other and undecided not reported, entered as undecided
+           dict(source="Quantus Insights", dates="October 5-6, 2026", end="2026-10-06", n=762, pop="LV", D=48, R=47, O=0, U=5)],
     "ME": [dict(source="University of New Hampshire", dates="September 17-21, 2026", end="2026-09-21", n=1312, pop="LV", D=51, R=47, O=0, U=2),
            dict(source="New York Times/Siena University", dates="September 15-22, 2026", end="2026-09-22", n=619, pop="LV", D=46, R=49, O=0, U=5)],
     "NH": [dict(source="University of New Hampshire", dates="September 17-21, 2026", end="2026-09-21", n=1418, pop="LV", D=50, R=42, O=4, U=4),
@@ -826,7 +841,11 @@ EXTRA_POLLS = {
     # and the sample, not against an aggregator's release-date listing.
     # Ohio is the special election; Wikipedia moved the polling table to that page, which is why
     # these two were missed.
-    "OH": [dict(source="New York Times/Siena", dates="September 22-October 1, 2026", end="2026-10-01", n=616, pop="LV", D=49, R=46, O=0, U=5),   # Oct 3 sweep; n and dates from the Oct 3 release
+    "OH": [# Oct 9 2026 sweep: co/efficient, Oct 5-6 2026, 925 likely voters, full ballot; other is Levy 3 and Redpath 1.
+           dict(source="co/efficient (R)", dates="October 5-6, 2026", end="2026-10-06", n=925, pop="LV", D=43, R=44, O=4, U=9),
+           dict(source="CNN/SSRS", dates="September 29-October 5, 2026", end="2026-10-05", n=760, pop="LV", D=49, R=43, O=0, U=8),   # Oct 8 morning sweep, no third party or undecided published
+           dict(source="YouGov", dates="September 18-30, 2026", end="2026-09-30", n=3780, pop="LV", D=49, R=45, O=2, U=4),   # Oct 6 2026 sweep, 3,780 likely voters
+           dict(source="New York Times/Siena", dates="September 22-October 1, 2026", end="2026-10-01", n=616, pop="LV", D=49, R=46, O=0, U=5),   # Oct 3 sweep; n and dates from the Oct 3 release
            dict(source="Rasmussen Reports", dates="September 22-23, 2026", end="2026-09-23", n=1115, pop="LV", D=46, R=43, O=5, U=7),   # Oct 4 sweep
            dict(source="Quantus Insights", dates="September 21-23, 2026", end="2026-09-23", n=695, pop="LV", D=47.3, R=46.8, O=3.5, U=2.4),   # Oct 4 sweep, full ballot with leaners
            dict(source="Bowling Green State University/YouGov", dates="September 1-10, 2026", end="2026-09-10", n=1000, pop="LV", D=48, R=45, O=0, U=7),
@@ -2918,6 +2937,14 @@ def run_state(st, model, shift, nat_turn_rate):
         import electorate as _ev
         el_delta, el_w26, el_enth, el_prim_share, _G, _acomp = _ev.midterm_shift(sys.modules[__name__], model, fl, reg, actual24, p24.total_votes, prim)
         m2 = inv(logit(m2) + el_delta)
+        if ELECTORATE_ALL:
+            # approval leg: the electorate's county pattern, demeaned on the 2026 electorate so the leg's statewide level is kept
+            _elw = pd.Series(np.asarray(el_w26, float), index=fl); _eld = pd.Series(np.asarray(el_delta, float), index=fl)
+            _el_shape = _eld - float((_eld * _elw).sum() / _elw.sum())
+            _m1_before = float((m1 * _elw).sum() / _elw.sum())
+            m1 = inv(logit(m1) + _el_shape)
+            EL_ALL_AUDIT[st] = dict(shape_sd_logit=round(float(_el_shape.std()), 4), shape_range_logit=[round(float(_el_shape.min()), 4), round(float(_el_shape.max()), 4)],
+                                    m1_level_before=round(_m1_before, 5), m1_level_after=round(float((m1 * _elw).sum() / _elw.sum()), 5))
         if cand_prof is not None:
             _hinfo = _ev.HISTORY_INFO.get(st, {})
             m1 = inv(logit(m1) + pd.Series(_hinfo.get("candidate_county_shift", np.zeros(len(fl))), index=fl))
@@ -2990,6 +3017,12 @@ def run_state(st, model, shift, nat_turn_rate):
     lean_base = sum(wt * lean[y] for wt, y in zip(hw, years)) + tc * (lean[years[0]] - lean[years[1]]) * 0.5
     if _trd.ON:
         lean_base = lean_base + _trd.PRES_CARRY * _trd.M3_PRES_SHARE * pd.Series(_TR.values, index=fl).reindex(lean_base.index).fillna(0.0)
+    if ELECTORATE_ALL and st in EL_ALL_AUDIT:
+        # polling leg: the same county pattern, scaled by the share of the history weight from presidential year races,
+        # since the midterm races in the history already carry a midterm electorate; the leg is leveled to the polls below
+        _pres_share = sum(wt for wt, y in zip(hw, years) if y % 4 == 0) / sum(hw[:len(years)])
+        lean_base = lean_base + _pres_share * _el_shape.reindex(lean_base.index).fillna(0.0)
+        EL_ALL_AUDIT[st]["m3_scale"] = round(float(_pres_share), 3)
     if pavg.get("D2") is None:
         # no polls: level M3 to the turnout weighted average of M1 and M2, so M3 contributes only the historical county pattern
         pavg["D2"] = float((((w_fund * m1 + w_census * m2) / (w_fund + w_census)) * turnout).sum() / turnout.sum())
@@ -3172,7 +3205,7 @@ def run_state(st, model, shift, nat_turn_rate):
                        components_statewide=dict(M1=float((m1 * turnout).sum() / V * 100), M2=float((m2 * turnout).sum() / V * 100),
                                                  M3=float((m3 * turnout).sum() / V * 100), final_d2=float((d2 * turnout).sum() / V * 100)),
                        poll_avg=pavg, n_polls=len(polls), primary_source=prim_note, history_years=years, history_counties_filled=fillnotes,
-                   blend_weights=dict(M1=round(w_fund, 4), M2=round(w_census, 4), M3=round(w_hist, 4)), history_level=HIST_AUDIT.get(st), third_party_level=THIRD_AUDIT.get(st), approval_input=APPROVAL_INPUT or None, county_trend=TREND_AUDIT.get(st), county_calibration=CALIB_AUDIT.get(st), respondent_model=_rv2_race(st, fl), bounds=dict(county_support=_BND_S, county_turnout=_BND_T),
+                   blend_weights=dict(M1=round(w_fund, 4), M2=round(w_census, 4), M3=round(w_hist, 4)), history_level=HIST_AUDIT.get(st), electorate_all=EL_ALL_AUDIT.get(st), third_party_level=THIRD_AUDIT.get(st), approval_input=APPROVAL_INPUT or None, county_trend=TREND_AUDIT.get(st), county_calibration=CALIB_AUDIT.get(st), respondent_model=_rv2_race(st, fl), bounds=dict(county_support=_BND_S, county_turnout=_BND_T),
                    poll_tier=poll_tier, poll_house_index=house_index, poll_houses_recent=n_houses, newest_poll_days=newest_days,
                        state_total_turnout=state_total, nat_ratio=nat_ratio, st_factor=st_factor, third_parties=[(nm, pty) for nm, pty, _ in tcols])
         summary["finance"] = dict(shift_logit=float(fin_shift), status=fin_why)
@@ -3196,7 +3229,7 @@ def run_state(st, model, shift, nat_turn_rate):
                        **(dict(first_choice_d2=float((d2_fc * turnout).sum() / V * 100)) if cfg.get("rcv_fc") else {})),
                    poll_avg=pavg, n_polls=len(polls), primary_source=prim_note, history_years=years,
                    history_counties_filled=fillnotes,
-                   blend_weights=dict(M1=round(w_fund, 4), M2=round(w_census, 4), M3=round(w_hist, 4)), history_level=HIST_AUDIT.get(st), third_party_level=THIRD_AUDIT.get(st), approval_input=APPROVAL_INPUT or None, county_trend=TREND_AUDIT.get(st), county_calibration=CALIB_AUDIT.get(st), respondent_model=_rv2_race(st, fl), bounds=dict(county_support=_BND_S, county_turnout=_BND_T),
+                   blend_weights=dict(M1=round(w_fund, 4), M2=round(w_census, 4), M3=round(w_hist, 4)), history_level=HIST_AUDIT.get(st), electorate_all=EL_ALL_AUDIT.get(st), third_party_level=THIRD_AUDIT.get(st), approval_input=APPROVAL_INPUT or None, county_trend=TREND_AUDIT.get(st), county_calibration=CALIB_AUDIT.get(st), respondent_model=_rv2_race(st, fl), bounds=dict(county_support=_BND_S, county_turnout=_BND_T),
                    poll_tier=poll_tier, poll_house_index=house_index, poll_houses_recent=n_houses, newest_poll_days=newest_days, state_total_turnout=state_total, nat_ratio=nat_ratio, st_factor=st_factor,
                    third_parties=[(nm, pty) for nm, pty, _ in tcols])
     if ELECTORATE:

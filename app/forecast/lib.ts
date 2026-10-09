@@ -133,43 +133,20 @@ export interface Model {
   races: Race[];
 }
 
-export const INK = "#f4f4ef";
-
-// Relative luminance, sRGB, per WCAG.
-function relLum(hex: string) {
-  const n = parseInt(hex.slice(1), 16);
-  const c = [(n >> 16) & 255, (n >> 8) & 255, n & 255].map((v) => {
-    const s = v / 255;
-    return s <= 0.03928 ? s / 12.92 : Math.pow((s + 0.055) / 1.055, 2.4);
-  });
-  return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2];
-}
-const LIGHT_CANVAS = relLum("#f7f7f4");
-
-// A band or outlet colour used as TEXT on the light canvas. The pale end of the
-// rating scale — Tilt and Lean — has almost no contrast on white, so darken the
-// colour along its own hue until it clears WCAG AA. Dark mode never calls this:
-// those same colours already read against near-black.
-export function onLight(hex: string) {
-  let [r, g, b] = [(parseInt(hex.slice(1), 16) >> 16) & 255,
-                   (parseInt(hex.slice(1), 16) >> 8) & 255,
-                    parseInt(hex.slice(1), 16) & 255];
-  for (let i = 0; i < 24; i++) {
-    const h = "#" + [r, g, b].map((v) => Math.round(v).toString(16).padStart(2, "0")).join("");
-    if ((LIGHT_CANVAS + 0.05) / (relLum(h) + 0.05) >= 6.0) return h;
-    r *= 0.92; g *= 0.92; b *= 0.92;
-  }
-  return "#101014";
-}
-export const LIME = "#6d3ee9";
-export const DEM = "#3b6fde";
-export const GOP = "#e23950";
-// Minor party tones, deliberately outside the red/blue range so a strong independent
-// reads as its own thing and never as a weak version of one of the majors.
-export const IND = "#7a4bb0";
-export const LIB = "#c08a2a";
-export const GRN = "#2f8f5b";
-export const OTH = "#8b8a85";
+// Brand tokens, mirrored from app/globals.css so values computed in JS (map
+// fills, chart strokes) match the CSS custom properties exactly. Dark only.
+export const INK = "#f3eff8";
+// No brand accent survives here: UI state is white and ink, and colour is data.
+export const LIME = INK;
+export const DEM = "#3d7bff";   // --dem
+export const GOP = "#ff3b5c";   // --gop
+// Independents take the brand lavender, which is reserved for them.
+export const IND = "#b78cff";   // --ind
+// Minor party tones, kept outside the red, blue, lavender and gold ranges so a
+// Libertarian or Green never reads as a major party or as a toss up.
+export const LIB = "#c98a5a";
+export const GRN = "#4fb58a";
+export const OTH = "#8e86a3";   // --mute
 
 export function partyColor(p: string): string {
   switch ((p || "").toUpperCase()) {
@@ -194,80 +171,84 @@ export function partyLabel(p: string): string {
   return PARTY_NAMES[k] || (k === "" ? "Other" : k);
 }
 
-// ── rating bands (identical to the build) ───────────────────────────────────
-// TPSI's own cut points, the ones the House page and the ratings board use:
-// under 2 Tilt, 2 to 6 Lean, 6 to 12 Likely, 12 or more Safe. There is no
-// toss-up category. A race inside two points still leans somewhere, and naming
-// the side it leans is worth more than a purple square that names nobody, so
-// the closest band is Tilt and it takes a party like every other band.
+// ── rating bands (the brand ramp, app/lib/opp.ts) ───────────────────────────
+// Under 2 points is a toss up, 2 to 6 lean, 6 to 12 likely, 12 or more safe.
+// Pale for close, deep for solid. The toss up band is split at zero into two
+// entries so code that walks the scale can still tell which side of even a
+// race sits on; both carry the same label and the same gold.
 // Margins are GOP-positive throughout.
 export const RATING_BANDS = [
-  { cat: "Safe R", lo: 12, hi: 999, color: "#8f1f2b" },
-  { cat: "Likely R", lo: 6, hi: 12, color: "#c22e3c" },
-  { cat: "Lean R", lo: 2, hi: 6, color: "#e05c6a" },
-  { cat: "Tilt R", lo: 0, hi: 2, color: "#efa3aa" },
-  { cat: "Tilt D", lo: -2, hi: 0, color: "#9db4ec" },
-  { cat: "Lean D", lo: -6, hi: -2, color: "#6f92e8" },
-  { cat: "Likely D", lo: -12, hi: -6, color: "#2f5bc4" },
-  { cat: "Safe D", lo: -999, hi: -12, color: "#1d3a85" },
+  { cat: "Safe R", lo: 12, hi: 999, color: "#b0163a" },
+  { cat: "Likely R", lo: 6, hi: 12, color: "#ff3b5c" },
+  { cat: "Lean R", lo: 2, hi: 6, color: "#ffb3c0" },
+  { cat: "Toss up", lo: 0, hi: 2, color: "#e7b341" },
+  { cat: "Toss up", lo: -2, hi: 0, color: "#e7b341" },
+  { cat: "Lean D", lo: -6, hi: -2, color: "#a6c2ff" },
+  { cat: "Likely D", lo: -12, hi: -6, color: "#3d7bff" },
+  { cat: "Safe D", lo: -999, hi: -12, color: "#1a3fb0" },
 ] as const;
-const TILT_R = 3, TILT_D = 4;
+const TOSS_R = 3, TOSS_D = 4;
+/** One entry per rating, Safe D through Safe R, for legends. */
+export const RATING_LEGEND: [string, string][] = [...RATING_BANDS].reverse()
+  .filter((b, i, a) => a.findIndex((x) => x.cat === b.cat) === i)
+  .map((b) => [b.cat, b.color]);
 
 export function ratingFor(margin: number, ind = false) {
   const m = Number.isFinite(margin) ? margin : 0;
-  const band = RATING_BANDS.find((b) => m >= b.lo && m < b.hi) ?? RATING_BANDS[m > 0 ? TILT_R : TILT_D];
+  const band = RATING_BANDS.find((b) => m >= b.lo && m < b.hi) ?? RATING_BANDS[m > 0 ? TOSS_R : TOSS_D];
   // Where the non-Republican side is an independent, a band that says "Lean D" names the
-  // wrong party. Same cut points, same strength word, independent colour and letter.
+  // wrong party. Same cut points, same strength word, the independent lavender.
   if (!ind || m >= 0) return band;
-  return { ...band, cat: band.cat.replace(/ D$/, " I"), color: IND_BAND[band.cat] ?? band.color };
+  return { ...band, cat: band.cat.replace(/ D$/, " I"), color: IND };
 }
-const IND_BAND: Record<string, string> = {
-  "Tilt D": "#cdb9ea", "Lean D": "#a887d6", "Likely D": "#7a4bb0", "Safe D": "#40206b",
-};
 
-// ── margin scale: banded diverging, desk tones ──────────────────────────────
-// The ramp turns on the same 2 / 6 / 12 points the bands do, and it changes
-// party at zero rather than passing through a neutral colour: the palest blue
-// and the palest red sit either side of the midline, so a one-point seat still
-// reads as a side.
-const MARGIN_STOPS: [number, string][] = [
-  [-30, "#16306f"], [-20, "#1d3f96"], [-12, "#2c56c4"], [-6, "#3b6fde"],
-  [-2, "#7b8fe0"], [-0.01, "#b9c9f2"], [0, "#f2bfc4"], [2, "#e08a94"],
-  [6, "#e23950"], [12, "#c22638"], [20, "#98182a"], [30, "#701020"],
-];
+/** Colour for an outside rating as the outlet prints it: "Toss-up", "Tilt D", "Lean R". */
+export function outletColor(cat: string): string | null {
+  const c = cat.trim().toLowerCase().replace(/[-\s]+/g, " ");
+  if (/^(toss ?up|tilt [dri])$/.test(c)) return RATING_BANDS[TOSS_R].color;
+  const hit = RATING_BANDS.find((b) => b.cat.toLowerCase() === c);
+  if (hit) return hit.color;
+  if (/ i$/.test(c)) return IND;
+  return null;
+}
+
 function hexLerp(a: string, b: string, t: number) {
   const pa = [1, 3, 5].map((i) => parseInt(a.slice(i, i + 2), 16));
   const pb = [1, 3, 5].map((i) => parseInt(b.slice(i, i + 2), 16));
   return `#${pa.map((v, i) => Math.round(v + (pb[i] - v) * t).toString(16).padStart(2, "0")).join("")}`;
 }
+
+// ── margin scale: the brand county ramp (opp-ui maps.md) ────────────────────
+// Pale for close, deep for solid, interpolated by |margin| / 40, changing party
+// at zero rather than passing through a neutral colour.
+export const D_PALE = "#d6e2ff", D_DEEP = "#10288c";   // --county-d-pale, --county-d-deep
+export const R_PALE = "#ffdce4", R_DEEP = "#8c0a28";   // --county-r-pale, --county-r-deep
+export const I_PALE = "#ebe0ff", I_DEEP = "#4b2a86";   // the same ramp on the independent lavender
+export const MARGIN_RAMP_CSS = "linear-gradient(90deg,#10288c 0%,#3d7bff 25%,#d6e2ff 48%,#ffdce4 52%,#ff3b5c 75%,#8c0a28 100%)";
 export function marginColor(m: number) {
-  const x = Math.max(-30, Math.min(30, m));
-  for (let i = 0; i < MARGIN_STOPS.length - 1; i++) {
-    const [x0, c0] = MARGIN_STOPS[i];
-    const [x1, c1] = MARGIN_STOPS[i + 1];
-    if (x >= x0 && x <= x1) return hexLerp(c0, c1, (x - x0) / (x1 - x0));
-  }
-  return MARGIN_STOPS[x < 0 ? 0 : MARGIN_STOPS.length - 1][1];
+  const a = Math.min(40, Math.abs(Number.isFinite(m) ? m : 0)) / 40;
+  return m < 0 ? hexLerp(D_PALE, D_DEEP, a) : hexLerp(R_PALE, R_DEEP, a);
 }
 
-// ── odds scale: certainty of the favorite ────────────────────────────────────
-export const TILT_D_TONE = "#b9c9f2";
-export const TILT_R_TONE = "#f2bfc4";
+// ── odds scale: certainty of the favorite, on the same endpoints ────────────
+export const TILT_D_TONE = D_PALE;
+export const TILT_R_TONE = R_PALE;
+export const ODDS_RAMP_CSS = `linear-gradient(90deg,${D_DEEP} 0%,${D_PALE} 49%,${R_PALE} 51%,${R_DEEP} 100%)`;
 export function oddsColor(gopProb: number) {
   const p = Math.max(0.001, Math.min(0.999, gopProb));
-  if (p > 0.5) return hexLerp(TILT_R_TONE, "#a01426", Math.min(1, (p - 0.5) / 0.48));
-  return hexLerp(TILT_D_TONE, "#183685", Math.min(1, (0.5 - p) / 0.48));
+  if (p > 0.5) return hexLerp(R_PALE, R_DEEP, Math.min(1, (p - 0.5) / 0.48));
+  return hexLerp(D_PALE, D_DEEP, Math.min(1, (0.5 - p) / 0.48));
 }
 
-// Text laid on one of these fills has to flip with the fill: the tilt and lean
-// shades are pale enough that white on them is unreadable.
+// Text laid on one of these fills has to flip with the fill: the pale shades are
+// light enough that white on them is unreadable, so they take the dark label ink.
 export function inkOn(hex: string) {
   const c = hex.trim().replace("#", "");
-  if (c.length < 6) return "#f4f4ef";
+  if (c.length < 6) return INK;
   const lin = (v: number) => (v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4));
   const [r, g, b] = [0, 2, 4].map((i) => lin(parseInt(c.slice(i, i + 2), 16) / 255));
   const L = 0.2126 * r + 0.7152 * g + 0.0722 * b;
-  return (L + 0.05) / 0.05 >= 1.05 / (L + 0.05) ? "#121212" : "#f4f4ef";
+  return (L + 0.05) / 0.05 >= 1.05 / (L + 0.05) ? "#1a1030" : INK;
 }
 
 // ── who is actually on each side of a race ──────────────────────────────────
@@ -296,21 +277,20 @@ export const fmtRaceMargin = (r: Race, m: number) =>
     : m > 0 ? `${sideInitial(r, "gop")}+${Math.abs(m).toFixed(1)}`
             : `${sideInitial(r, "dem")}+${Math.abs(m).toFixed(1)}`;
 
-/** The margin ramp, with the left-hand end swung to the independent purple where the
+/** The margin ramp, with the left-hand end swung to the independent lavender where the
  *  left-hand candidate is an independent. The right-hand half is untouched. */
 export function raceMarginColor(r: Race, m: number) {
   const base = marginColor(m);
   if (!indSide(r) || m >= 0) return base;
-  // Depth of the blue end, 0 at the midline to 1 at 30 points, applied to purple.
-  const depth = Math.min(1, Math.abs(Math.max(-30, m)) / 30);
-  return hexLerp("#cdb9ea", "#40206b", depth);
+  // Depth of the blue end, 0 at the midline to 1 at 40 points, applied to lavender.
+  return hexLerp(I_PALE, I_DEEP, Math.min(40, Math.abs(m)) / 40);
 }
 
 export function raceColor(r: Race, view: ViewMode) {
   const side = r.est;
   if (view === "margin") return raceMarginColor(r, side.margin);
   if (view === "odds") return indSide(r) && side.prob < 0.5
-    ? hexLerp("#cdb9ea", "#40206b", Math.min(1, (0.5 - side.prob) / 0.48))
+    ? hexLerp(I_PALE, I_DEEP, Math.min(1, (0.5 - side.prob) / 0.48))
     : oddsColor(side.prob);
   return ratingFor(side.margin, indSide(r)).color;
 }

@@ -46,7 +46,7 @@ function formatDateTooltip(iso: string): string {
 }
 
 function fmtPct(v: number): string {
-  return Number.isFinite(v) ? `${v.toFixed(1)}%` : "–";
+  return Number.isFinite(v) ? `${v.toFixed(1)}%` : "n/a";
 }
 
 function CustomTooltip({ active, payload, label }: any) {
@@ -58,24 +58,23 @@ function CustomTooltip({ active, payload, label }: any) {
 
   return (
     <div style={{
-      background: "var(--panel)",
-      border: "1px solid var(--border)",
-      borderRadius: 2,
-      boxShadow: "var(--shadow-md)",
-      fontFamily: "var(--font-body), monospace",
+      background: "rgba(var(--bg2-rgb),.94)",
+      border: "1px solid var(--line2)",
+      borderRadius: 10,
+      boxShadow: "0 12px 40px rgba(0,0,0,.5)",
+      backdropFilter: "blur(10px)",
+      fontFamily: "var(--font-b)",
       minWidth: 200,
       overflow: "hidden",
       pointerEvents: "none",
     }}>
       {/* Header */}
       <div style={{
-        padding: "8px 12px",
-        background: "var(--background2)",
-        borderBottom: "1px solid var(--border)",
-        fontSize: 11,
-        fontWeight: 600,
-        color: "var(--muted)",
-        letterSpacing: "0.04em",
+        padding: "8px 12px 4px",
+        fontFamily: "var(--font-d)",
+        fontSize: 13,
+        fontWeight: 700,
+        color: "var(--hi)",
       }}>
         {formatDateTooltip(label ?? "")}
       </div>
@@ -91,9 +90,9 @@ function CustomTooltip({ active, payload, label }: any) {
                 background: item.color,
                 flexShrink: 0,
               }} />
-              <span style={{ fontSize: 13, color: "var(--muted)" }}>{item.name}</span>
+              <span style={{ fontSize: 12.5, color: "var(--ink2)" }}>{item.name}</span>
             </div>
-            <span style={{ fontSize: 15, fontWeight: 700, color: item.color, fontVariantNumeric: "tabular-nums" }}>
+            <span style={{ fontFamily: "var(--font-m)", fontSize: 13, fontWeight: 600, color: item.color, fontVariantNumeric: "tabular-nums" }}>
               {fmtPct(Number(item.value))}
             </span>
           </div>
@@ -112,12 +111,12 @@ function Legend({ series }: { series: Array<{ key: string; label: string; color:
           alignItems: "center",
           gap: 6,
           padding: "4px 10px",
-          border: "1px solid var(--border)",
+          border: "1px solid var(--line)",
           borderRadius: 100,
-          background: "var(--border)",
+          background: "var(--glass2)",
           fontSize: 12,
           fontWeight: 600,
-          color: "var(--muted)",
+          color: "var(--ink2)",
         }}>
           <span style={{ width: 8, height: 8, borderRadius: "50%", background: s.color, flexShrink: 0 }} />
           {s.label}
@@ -158,117 +157,38 @@ export default function PollingTimeSeriesChart({
   return (
     <>
       <style>{`
-        .psc {
-          background: var(--panel);
-          border: 1px solid var(--border);
-          border-radius: 8px;
-          overflow: hidden;
-          box-shadow: var(--shadow-md);
-        }
-
-        .psc-stripe {
-          height: 3px;
-          background: linear-gradient(90deg, #c22f3b 33%, #6d3ee9 66%, #1d5fc4 100%);
-        }
-
-        .psc-header {
-          padding: 16px 20px;
-          border-bottom: 1px solid var(--border);
-          background: var(--background2);
-          display: flex;
-          align-items: flex-start;
-          justify-content: space-between;
-          gap: 16px;
-          flex-wrap: wrap;
-        }
-
-        .psc-title {
-          font-family: var(--font-display), sans-serif;
-          font-size: 18px;
-          font-weight: 700;
-          color: var(--foreground);
-          margin-bottom: 3px;
-          text-transform: uppercase;
-        }
-
-        .psc-subtitle {
-          font-size: 12px;
-          color: var(--muted);
-          line-height: 1.5;
-        }
-
-        .psc-hint {
-          font-size: 11px;
-          color: var(--muted2);
-          display: flex;
-          align-items: center;
-          gap: 5px;
-          white-space: nowrap;
-          flex-shrink: 0;
-          padding-top: 2px;
-        }
-
-        .psc-chart-area {
-          padding: 16px 12px 8px;
-          background: var(--panel);
-        }
-
-        .psc-footer {
-          padding: 10px 20px 14px;
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          flex-wrap: wrap;
-          gap: 8px;
-          border-top: 1px solid var(--border);
-          background: var(--panel2);
-        }
-        .psc-footer-note { font-size: 11px; color: var(--muted2); }
-        .psc-footer-badge {
-          display: inline-flex;
-          align-items: center;
-          gap: 5px;
-          padding: 3px 10px;
-          border: 1px solid rgba(109,62,233,0.3);
-          background: var(--purple-dim);
-          border-radius: 100px;
-          font-size: 11px;
-          font-weight: 600;
-          color: #8a63ef;
-        }
-
-        /* Recharts overrides inside chart */
-        .psc .recharts-cartesian-axis-tick-value { fill: var(--muted) !important; font-size: 11px !important; }
-        .psc .recharts-cartesian-grid line { stroke: var(--border) !important; }
+        .psc { background: var(--glass); border: 1px solid var(--line); border-radius: var(--r); overflow: hidden; color: var(--ink); }
+        .psc-header { padding: 14px 18px; border-bottom: 1px solid var(--line); display: flex; align-items: flex-start; justify-content: space-between; gap: 12px 16px; flex-wrap: wrap; }
+        .psc-title { font: 700 16px/1.25 var(--font-d); letter-spacing: -.02em; color: var(--ink); margin-bottom: 3px; }
+        .psc-subtitle { font-size: 12.5px; color: var(--mute); line-height: 1.5; }
+        .psc-hint { font: 700 10.5px var(--font-m); letter-spacing: .1em; text-transform: uppercase; color: var(--mute); white-space: nowrap; flex-shrink: 0; padding-top: 3px; }
+        .psc-chart-area { padding: 16px 12px 10px; }
+        .psc-footer { padding: 10px 18px 12px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; border-top: 1px solid var(--line); }
+        .psc-footer-note { font-size: 12px; color: var(--mute); }
+        .psc-footer-badge { font: 700 10.5px var(--font-m); letter-spacing: .1em; text-transform: uppercase; color: var(--ink2); }
+        .psc .recharts-cartesian-axis-tick-value { fill: var(--mute) !important; font-family: var(--font-m) !important; font-size: 10px !important; }
+        .psc .recharts-cartesian-grid line { stroke: var(--line) !important; }
       `}</style>
 
       <div className="psc">
-        <div className="psc-stripe" />
-
         <div className="psc-header">
           <div>
             <div className="psc-title">{title}</div>
             <div className="psc-subtitle">{subtitle}</div>
           </div>
-          <div className="psc-hint">
-            <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-              <circle cx="6" cy="6" r="5.5" stroke="#ccc" />
-              <path d="M6 5v4M6 4h.01" stroke="#aaa" strokeWidth="1.2" strokeLinecap="round" />
-            </svg>
-            Hover for values
-          </div>
+          <div className="psc-hint">Hover for values</div>
         </div>
 
         <div className="psc-chart-area">
           <div style={{ height: "clamp(260px, 38vh, 460px)" }}>
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={data} margin={{ top: 12, right: 16, left: 4, bottom: 4 }}>
-                <CartesianGrid stroke="var(--border)" strokeDasharray="3 8" vertical={false} />
+                <CartesianGrid stroke="var(--line)" vertical={false} />
                 <XAxis
                   dataKey="date"
                   tickLine={false}
-                  axisLine={{ stroke: "var(--border)" }}
-                  tick={{ fontFamily: "var(--font-body),monospace", fontSize: 11, fill: "var(--muted)" }}
+                  axisLine={{ stroke: "var(--line)" }}
+                  tick={{ fontFamily: "var(--font-m)", fontSize: 10, fill: "var(--mute)" }}
                   ticks={tickDates}
                   tickFormatter={formatDateLabel}
                   minTickGap={20}
@@ -277,13 +197,13 @@ export default function PollingTimeSeriesChart({
                   domain={computedDomain}
                   tickLine={false}
                   axisLine={false}
-                  tick={{ fontFamily: "var(--font-body),monospace", fontSize: 11, fill: "var(--muted)" }}
+                  tick={{ fontFamily: "var(--font-m)", fontSize: 10, fill: "var(--mute)" }}
                   tickFormatter={(v) => `${v}%`}
                   width={40}
                 />
-                <ReferenceLine y={50} stroke="var(--border2)" strokeDasharray="3 4" />
+                <ReferenceLine y={50} stroke="rgba(var(--line-rgb),.3)" strokeDasharray="3 4" />
                 <Tooltip
-                  cursor={{ stroke: "var(--border3)", strokeWidth: 1 }}
+                  cursor={{ stroke: "rgba(var(--line-rgb),.45)", strokeWidth: 1 }}
                   content={<CustomTooltip />}
                   wrapperStyle={{ zIndex: 10 }}
                 />
@@ -297,7 +217,7 @@ export default function PollingTimeSeriesChart({
                     strokeWidth={2.5}
                     dot={false}
                     connectNulls
-                    activeDot={{ r: 5, stroke: "var(--panel)", strokeWidth: 2, fill: s.color }}
+                    activeDot={{ r: 4.5, stroke: "var(--bg)", strokeWidth: 2, fill: s.color }}
                   />
                 ))}
               </LineChart>
@@ -307,8 +227,8 @@ export default function PollingTimeSeriesChart({
         </div>
 
         <div className="psc-footer">
-          <span className="psc-footer-note">Daily weighted averages · not raw poll points</span>
-          <span className="psc-footer-badge">PSI · Methodology documented</span>
+          <span className="psc-footer-note">Daily weighted averages, not raw poll points</span>
+          <a className="psc-footer-badge" href="/tpsi/methodology">OnPoint average methodology</a>
         </div>
       </div>
     </>

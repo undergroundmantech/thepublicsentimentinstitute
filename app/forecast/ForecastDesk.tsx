@@ -2,28 +2,30 @@
 
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import SwingOMeter from "../results/components/SwingOMeter";
 import {
-  DEM, GOP, IND, INK, LIME, RATING_BANDS, TILT_D_TONE, TILT_R_TONE,
-  type CountiesPayload, type CountyRow, type Crosstabs, type CrosstabRow, type Cand,
-  partyColor, partyLabel,
+  DEM, GOP, IND, RATING_LEGEND, MARGIN_RAMP_CSS, ODDS_RAMP_CSS,
+  type CountiesPayload, type CountyRow, type Crosstabs, type CrosstabRow,
+  partyColor, partyLabel, outletColor,
   type Geo, type Model, type Office, type Race, type RaceSide, type StateDetail, type ViewMode,
-  OFFICE_LABEL, fmtMargin, fmtPct, inkOn, marginColor, onLight, raceColor, ratingFor, surname,
+  OFFICE_LABEL, fmtMargin, fmtPct, inkOn, raceColor, ratingFor, surname,
   indSide, sideColor, sideLabel, fmtRaceMargin, raceMarginColor,
   isUncontested,
   isPlaceholderName,
 } from "./lib";
+import { raceHref } from "@/app/lib/opp";
 
 // ─────────────────────────────────────────────────────────────────────────────
-// The Forecast — one editorial page, top to bottom:
-//   headline → seat bar → controls → THE MAP → the aggregate, in sections →
-//   every race, as a table. Selecting a race swaps the map itself for that
-//   race's real geography, and the sections below become that race's work-up.
-// No drawers, no dashboard tiles. The desk's own type, tones, and hairlines.
+// The forecast desk, in the OnPoint Politics inner template: crumbs, eyebrow,
+// headline, lede and meta row, then glass cards. The map card carries the
+// office switch, the seat bar and the map; selecting a race swaps the map for
+// that race's real geography, and the cards below become that race's work-up.
+// Dark only. Fonts and colours come from the brand tokens in app/globals.css.
 // ─────────────────────────────────────────────────────────────────────────────
 
-const MONO = '"JetBrains Mono", ui-monospace, monospace';
-const OSWALD = '"Oswald", "Barlow Condensed", system-ui, sans-serif';
+const MONO = "var(--font-m)";
 
 // ── data hooks ───────────────────────────────────────────────────────────────
 const jsonCache = new Map<string, unknown>();
@@ -49,13 +51,18 @@ const fmtDate = (iso: string) =>
   new Date(iso + "T14:00:00").toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" });
 
 // ── shared micro-components ──────────────────────────────────────────────────
-function Eyebrow({ children, live }: { children: React.ReactNode; live?: boolean }) {
+/** A glass card with the design system's header row: title left, mono eyebrow right. */
+function Sec({ eye, title, children, className, aside }: {
+  eye: string; title: React.ReactNode; children: React.ReactNode; className?: string; aside?: React.ReactNode;
+}) {
   return (
-    <span className="fc-eyebrow">
-      <span className="fc-eyebrow-mk" aria-hidden />
-      {children}
-      {live ? <span className="fc-eyebrow-pip" aria-hidden /> : null}
-    </span>
+    <section className={`card fc-card${className ? " " + className : ""}`}>
+      <div className="card-h">
+        <h3>{title}</h3>
+        {aside ?? <span className="eye" style={{ marginLeft: "auto" }}>{eye}</span>}
+      </div>
+      <div className="card-b">{children}</div>
+    </section>
   );
 }
 
@@ -63,7 +70,7 @@ function Seg<T extends string>({ value, options, onChange, small, ariaLabel }: {
   value: T; options: { v: T; label: string }[]; onChange: (v: T) => void; small?: boolean; ariaLabel: string;
 }) {
   return (
-    <div className={`fc-seg ${small ? "sm" : ""}`} role="tablist" aria-label={ariaLabel}>
+    <div className={`seg fc-segc${small ? " sm" : ""}`} role="tablist" aria-label={ariaLabel}>
       {options.map((o) => (
         <button key={o.v} role="tab" aria-selected={value === o.v} className={value === o.v ? "on" : ""} onClick={() => onChange(o.v)}>
           {o.label}
@@ -100,12 +107,66 @@ function Spark({ pts, color }: { pts: number[]; color: string }) {
 }
 
 // ── the page ─────────────────────────────────────────────────────────────────
-export default function ForecastDesk() {
+const signed = (m: number) => `${m > 0 ? "R" : "D"} +${Math.abs(m).toFixed(1)}`;
+
+/** The inner template header: crumbs, eyebrow, headline with one gradient word, lede, meta row. */
+function DeskHeader({ model, office }: { model: Model | null; office: Office }) {
+  const chamber = model ? model.chambers[office] : null;
+  let h1: React.ReactNode = <>The 2026 <em>forecast</em></>;
+  if (chamber) {
+    const dem = chamber.demControl;
+    const fav = dem >= 0.5 ? "d" : "r";
+    const p = Math.round(Math.max(dem, 1 - dem) * 100);
+    const partyName = fav === "d" ? "Democrats" : "Republicans";
+    const [pre, word] =
+      office === "house" ? ["of winning the", "House"] :
+      office === "senate" ? [fav === "r" ? "of holding the" : "of flipping the", "Senate"] :
+      ["of holding most of the 50", "governorships"];
+    h1 = <><span className={`fc-hp ${fav}`}>{partyName}</span> have {article(p)} <span className={`fc-hp ${fav}`}>{p}%</span> chance {pre} <em>{word}</em></>;
+  }
+  const gb = model?.meta.genericBallot;
+  return (
+    <>
+      <nav className="crumbs" aria-label="Breadcrumb">
+        <Link href="/">Home</Link><span className="sep">/</span><span>Forecast</span>
+      </nav>
+      <header className="ph">
+        <div className="eye g">2026 forecast</div>
+        <h1>{h1}</h1>
+        <p className="lede">
+          The OnPoint Politics model for every Senate, House and governor race on the 2026 ballot. It blends
+          fundamentals with the polling average, then runs {model ? model.meta.sims.toLocaleString() : "2,000"} correlated
+          simulations of the election, county by county.
+        </p>
+        <div className="pmeta">
+          <span><b className="mono">{model ? model.meta.sims.toLocaleString() : "2,000"}</b> simulations</span>
+          {model ? <span>Updated <b>{fmtDate(model.meta.updated)}</b></span> : null}
+          {model ? <span><b className="mono">{model.meta.daysOut}</b> days to Election Day</span> : null}
+          {model ? <span>Environment <b className={`mono ${model.meta.npe > 0 ? "r" : "d"}`}>{signed(model.meta.npe)}</b></span> : null}
+          {gb ? <span>Generic ballot <b className={`mono ${gb.avg > 0 ? "r" : "d"}`}>{signed(gb.avg)}</b></span> : null}
+          {gb ? <span>Net approval <b className="mono">{gb.netApproval}</b></span> : null}
+          <Link className="btn sm" href="/forecast/methodology">Methodology</Link>
+          <Link className="btn sm" href="/forecast/changelog">Changelog</Link>
+        </div>
+      </header>
+    </>
+  );
+}
+
+export default function ForecastDesk({ initialOffice = "house" }: { initialOffice?: Office }) {
+  const router = useRouter();
   const model = useJson<Model>("/forecast/model.json");
   const geo = useJson<Geo>("/forecast/geo.json");
   const counties = (useJson<Record<string, unknown>>("/forecast/counties.json") ?? null) as CountiesPayload | null;
 
-  const [office, setOffice] = useState<Office>("house");
+  // The office comes from ?office= so /forecast?office=senate opens on the Senate,
+  // and switching office writes it back without a scroll or a history entry.
+  const [office, setOfficeState] = useState<Office>(initialOffice);
+  useEffect(() => { setOfficeState(initialOffice); }, [initialOffice]);
+  const setOffice = (o: Office) => {
+    setOfficeState(o);
+    router.replace(`/forecast?office=${o}`, { scroll: false });
+  };
   const [view, setView] = useState<ViewMode>("margin");
   const [mapKind, setMapKind] = useState<"geo" | "hex">("geo");
   const [selId, setSelId] = useState<string | null>(null);
@@ -113,7 +174,7 @@ export default function ForecastDesk() {
   const [query, setQuery] = useState("");
   const [sortKey, setSortKey] = useState<"close" | "prob" | "name">("close");
   const [showAll, setShowAll] = useState(false);
-  const mapAnchor = useRef<HTMLDivElement | null>(null);
+  const mapAnchor = useRef<HTMLElement | null>(null);
 
   const races = useMemo(() => (model ? model.races.filter((r) => r.office === office) : []), [model, office]);
   const byId = useMemo(() => new Map(model ? model.races.map((r) => [r.id, r]) : []), [model]);
@@ -121,19 +182,6 @@ export default function ForecastDesk() {
 
   const detail = useJson<StateDetail>(sel ? `/forecast/states/${sel.st}.json` : null);
   const chamber = model ? model.chambers[office] : null;
-
-  const head = useMemo(() => {
-    if (!chamber) return null;
-    const dem = chamber.demControl;
-    const fav = dem >= 0.5 ? "dem" : "gop";
-    const p = Math.round(Math.max(dem, 1 - dem) * 100);
-    const partyName = fav === "dem" ? "Democrats" : "Republicans";
-    const object =
-      office === "house" ? "of winning the House" :
-      office === "senate" ? (fav === "gop" ? "of holding the Senate" : "of flipping the Senate") :
-      "of holding most of the 50 governorships";
-    return { fav, p, partyName, object };
-  }, [chamber, office]);
 
   const pick = (id: string) => {
     setSelId(id);
@@ -161,137 +209,97 @@ export default function ForecastDesk() {
   }, [races, query, sortKey, showAll]);
   const truncated = !query.trim() && !showAll && races.length > 24;
 
-  if (!model || !geo || !chamber || !head) {
+  if (!model || !geo || !chamber) {
     return (
-      <div className="fc-page">
+      <div className="opp fc-page">
         <style>{CSS}</style>
-        <div className="fc-loading"><span /><em>loading the forecast…</em></div>
+        <DeskHeader model={model} office={office} />
+        <div className="card"><div className="empty">Loading the forecast</div></div>
       </div>
     );
   }
 
-  const gb = model.meta.genericBallot;
-
   return (
-    <div className="fc-page">
+    <div className="opp fc-page">
       <style>{CSS}</style>
-      <div className="fc-grain" aria-hidden />
+      <DeskHeader model={model} office={office} />
 
-      <div className="fc-status">
-        <div className="fc-shell fc-status-in">
-          <span><i className="fc-pip" /> THE FORECAST <em>·</em> 2026 MIDTERMS</span>
-          <span>{model.meta.sims.toLocaleString()} SIMULATIONS <em>·</em> UPDATED {fmtDate(model.meta.updated).toUpperCase()}</span>
-        </div>
-      </div>
+      <div className="fc-stack">
+        {/* ── the map card: office, seat bar, controls, map ── */}
+        <section className="card fc-card fc-mapcard" ref={mapAnchor}>
+          <div className="card-h">
+            <h3>{sel ? sel.name : `${OFFICE_LABEL[office]} forecast map`}</h3>
+            <Seg ariaLabel="Office" value={office} onChange={setOffice} options={[
+              { v: "governor", label: "Governors" }, { v: "senate", label: "Senate" }, { v: "house", label: "House" },
+            ]} />
+          </div>
+          <div className="card-b">
+            <SeatBar chamber={chamber} office={office} model={model} />
 
-      <div className="fc-shell">
-</div>
+            {/* the map controls only reach the national map: inside a state the stage
+                draws its own counties and districts, and neither switch does anything */}
+            {sel ? null : (
+              <div className="fc-controls">
+                <span className="fc-ctl-label">View</span>
+                <Seg small ariaLabel="Map style" value={mapKind} onChange={setMapKind} options={[
+                  { v: "geo", label: "Map" }, { v: "hex", label: "Cartogram" },
+                ]} />
+                <span className="fc-ctl-label">Color by</span>
+                <Seg small ariaLabel="Color mode" value={view} onChange={setView} options={[
+                  { v: "margin", label: "Margin" }, { v: "odds", label: "Odds" }, { v: "rating", label: "Rating" },
+                ]} />
+              </div>
+            )}
 
-      {/* ── headline ── */}
-      <header className="fc-head">
-        <Eyebrow live>the 2026 forecast</Eyebrow>
-        <h1 className="fc-h1">
-          <b style={{ color: head.fav === "dem" ? "var(--fc-dem)" : "var(--fc-gop)" }}>{head.partyName}</b> have {article(head.p)}{" "}
-          <b style={{ color: head.fav === "dem" ? "var(--fc-dem)" : "var(--fc-gop)" }}>{head.p}%</b> chance {head.object}<em>.</em>
-        </h1>
-        <div className="fc-updated">
-          last updated {fmtDate(model.meta.updated).toLowerCase()} · 2:00 pm et · {model.meta.daysOut} days to election day
-        </div>
-        <div className="fc-envline">
-          <span>national environment <b style={{ color: "var(--fc-dem)" }}>D+{Math.abs(model.meta.npe).toFixed(1)}</b></span>
-          <em>·</em>
-          <span>generic ballot <b style={{ color: "var(--fc-dem)" }}>D+{Math.abs(gb.avg).toFixed(1)}</b></span>
-          <em>·</em>
-          <span>net approval <b style={{ color: "var(--fc-gop)" }}>{gb.netApproval}</b></span>
-          <em>·</em>
-          <span>{model.meta.sims.toLocaleString()} sims run today</span>
-        </div>
-      </header>
+            <div className="fc-mapwrap">
+              {!sel ? (
+                <>
+                  <NationalMap geo={geo} races={races} office={office} view={view} kind={mapKind} onPick={pick} hover={hover} setHover={setHover} />
+                  <Legend view={view} />
+                  {hover && byId.get(hover.id) ? <MapTip race={byId.get(hover.id)!} x={hover.x} y={hover.y} /> : null}
+                </>
+              ) : (
+                <RaceStage
+                  race={sel} detail={detail} counties={counties} onBack={back} onPick={pick}
+                  stateRaces={model.races.filter((r) => r.office === sel.office && r.st === sel.st)
+                    .sort((a, b) => a.district - b.district)}
+                />
+              )}
+            </div>
+          </div>
+        </section>
 
-      {/* ── seat bar ── */}
-      <div className="fc-shell">
-        <SeatBar chamber={chamber} office={office} model={model} />
-      </div>
-
-      {/* ── controls ── */}
-      <div className="fc-shell fc-controls" ref={mapAnchor}>
-        <Seg ariaLabel="Office" value={office} onChange={setOffice} options={[
-          { v: "governor", label: "Governors" }, { v: "senate", label: "Senate" }, { v: "house", label: "House" },
-        ]} />
-        {/* the map controls only reach the national map: inside a state the stage
-            draws its own counties and districts, and neither switch does anything */}
-        {sel ? null : <div className="fc-controls-r">
-          <span className="fc-ctl-label">view</span>
-          <Seg small ariaLabel="Map style" value={mapKind} onChange={setMapKind} options={[
-            { v: "geo", label: "map" }, { v: "hex", label: "cartogram" },
-          ]} />
-          <span className="fc-ctl-label" style={{ marginLeft: 16 }}>color by</span>
-          <Seg small ariaLabel="Color mode" value={view} onChange={setView} options={[
-            { v: "margin", label: "margin" }, { v: "odds", label: "odds" }, { v: "rating", label: "rating" },
-          ]} />
-        </div>}
-      </div>
-
-      {/* ── the map ── */}
-      <section className="fc-mapwrap">
+        {/* ── below the map ── */}
         {!sel ? (
           <>
-            <NationalMap geo={geo} races={races} office={office} view={view} kind={mapKind} onPick={pick} hover={hover} setHover={setHover} />
-            <Legend view={view} />
-            {hover && byId.get(hover.id) ? <MapTip race={byId.get(hover.id)!} x={hover.x} y={hover.y} /> : null}
-          </>
-        ) : (
-          <RaceStage
-            race={sel} detail={detail} counties={counties} onBack={back} onPick={pick}
-            stateRaces={model.races.filter((r) => r.office === sel.office && r.st === sel.st)
-              .sort((a, b) => a.district - b.district)}
-          />
-        )}
-      </section>
-
-      {/* ── below the map ── */}
-      {!sel ? (
-        <>
-          <SectionDistribution chamber={chamber} office={office} sims={model.meta.sims} />
-          <SectionSeats chamber={chamber} office={office} updated={model.meta.updated} />
-          <SectionProbability chamber={chamber} office={office} updated={model.meta.updated} />
-          <section className="fc-sec last">
-            <div className="fc-shell">
-              <Eyebrow>every race</Eyebrow>
-              <h2 className="fc-h2">the {OFFICE_LABEL[office].toLowerCase()} board, closest first<em>.</em></h2>
+            <SectionDistribution chamber={chamber} office={office} sims={model.meta.sims} />
+            <SectionSeats chamber={chamber} office={office} updated={model.meta.updated} />
+            <SectionProbability chamber={chamber} office={office} updated={model.meta.updated} />
+            <Sec eye={`${races.length} races`} title={`Every ${office === "governor" ? "governor" : office === "senate" ? "Senate" : "House"} race, closest first`}>
               <div className="fc-table-tools">
-                <div className="fc-find">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden>
-                    <circle cx="11" cy="11" r="7" stroke="currentColor" strokeWidth="2" />
-                    <path d="M21 21l-4.3-4.3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                  </svg>
-                  <input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Search races, states, or candidates" aria-label="Search races" spellCheck={false} />
-                </div>
-                <div className="fc-sorts" role="group" aria-label="Sort">
-                  {([["close", "closest"], ["prob", "win prob."], ["name", "a–z"]] as const).map(([k, label]) => (
-                    <button key={k} className={sortKey === k ? "on" : ""} onClick={() => setSortKey(k)}>{label}</button>
-                  ))}
-                </div>
+                <input className="search fc-find" value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Search races, states or candidates" aria-label="Search races" spellCheck={false} />
+                <Seg small ariaLabel="Sort" value={sortKey} onChange={setSortKey} options={[
+                  { v: "close", label: "Closest" }, { v: "prob", label: "Win prob." }, { v: "name", label: "A to Z" },
+                ]} />
               </div>
               <RaceTable rows={tableRows} onPick={pick} />
               {truncated ? (
-                <button className="fc-more" onClick={() => setShowAll(true)}>
-                  show all {races.length} races <span aria-hidden>↓</span>
+                <button className="btn fc-more" onClick={() => setShowAll(true)}>
+                  Show all {races.length} races
                 </button>
               ) : null}
-            </div>
-          </section>
-        </>
-      ) : (
-        <RaceSections race={sel} byId={byId} onPick={pick} sims={model.meta.sims} updated={model.meta.updated} env={{ npe: model.meta.npe, gb: model.meta.genericBallot.avg, approval: model.meta.genericBallot.netApproval }} />
-      )}
+            </Sec>
+          </>
+        ) : (
+          <RaceSections race={sel} byId={byId} onPick={pick} sims={model.meta.sims} updated={model.meta.updated} env={{ npe: model.meta.npe, gb: model.meta.genericBallot.avg, approval: model.meta.genericBallot.netApproval }} />
+        )}
+      </div>
 
-      <footer className="fc-foot">
-        <div className="fc-shell fc-foot-in">
-          <span>fundamentals → polling (ENOP-weighted) → expert ratings → markets → {model.meta.sims.toLocaleString()} correlated simulations</span>
-          <span>TPSI · the public sentiment institute</span>
-        </div>
-      </footer>
+      <p className="fc-foot">
+        Fundamentals, the polling average, expert ratings and markets, then {model.meta.sims.toLocaleString()} correlated
+        simulations. Fieldwork for the TPSI polls in the model by The Public Sentiment Institute.{" "}
+        <Link href="/forecast/methodology">How the model works</Link>.
+      </p>
     </div>
   );
 }
@@ -313,7 +321,7 @@ function SeatBar({ chamber, office, model }: { chamber: ChamberT; office: Office
     <div className="fc-seatbar">
       <div className="fc-seatbar-ends">
         <span style={{ color: "var(--fc-dem)" }}><b>{dem}</b> Democrats</span>
-        <span className="fc-seatbar-mid">{office === "senate" ? "50 + tiebreak controls" : `${control} to control`}</span>
+        <span className="fc-seatbar-mid">{office === "senate" ? "50 plus the tiebreak controls" : `${control} to control`}</span>
         <span style={{ color: "var(--fc-gop)" }}><b>{gop}</b> Republicans</span>
       </div>
       <div className="fc-seatbar-track" role="img" aria-label={`Projected: ${dem} Democratic ${seats}, ${gop} Republican`}>
@@ -321,10 +329,10 @@ function SeatBar({ chamber, office, model }: { chamber: ChamberT; office: Office
         <span className="fc-seatbar-tick" style={{ left: `${(control / total) * 100}%` }} />
       </div>
       <div className="fc-seatbar-note">
-        every race called for its projected winner · across {model.meta.sims.toLocaleString()} simulations
-        the Democratic count averages {chamber.demSeats.toFixed(1)}, with 80% of runs between {chamber.demP10} and {chamber.demP90}
-        {office === "senate" ? ` · ${model.meta.senNotUpD} Democratic and ${model.meta.senNotUpR} Republican seats are not on the 2026 ballot` : ""}
-        {office === "governor" ? ` · ${model.meta.govOnBallot} are on the 2026 ballot, and ${model.meta.govNotUpD} Democratic and ${model.meta.govNotUpR} Republican governorships are not` : ""}
+        Every race called for its projected winner. Across {model.meta.sims.toLocaleString()} simulations
+        the Democratic count averages {chamber.demSeats.toFixed(1)}, with 80% of runs between {chamber.demP10} and {chamber.demP90}.
+        {office === "senate" ? ` ${model.meta.senNotUpD} Democratic and ${model.meta.senNotUpR} Republican seats are not on the 2026 ballot.` : ""}
+        {office === "governor" ? ` ${model.meta.govOnBallot} are on the 2026 ballot, and ${model.meta.govNotUpD} Democratic and ${model.meta.govNotUpR} Republican governorships are not.` : ""}
       </div>
     </div>
   );
@@ -354,7 +362,7 @@ function NationalMap({ geo, races, office, view, kind, onPick, hover, setHover }
       const byId = new Map(races.map((r) => [r.id, r]));
       const hovered = hover ? geo.hexHouse[hover.id] : null;
       return (
-        <svg key="hex-house" className="fc-map anim" viewBox={`0 0 ${W} ${H}`} role="img" aria-label="House cartogram — one hexagon per district">
+        <svg key="hex-house" className="fc-map anim" viewBox={`0 0 ${W} ${H}`} role="img" aria-label="House cartogram, one hexagon per district">
           {Object.entries(geo.hexHouse).map(([id, [x, y]], i) => {
             const r = byId.get(id);
             if (!r) return null;
@@ -378,7 +386,7 @@ function NationalMap({ geo, races, office, view, kind, onPick, hover, setHover }
     const byState = new Map(races.map((r) => [r.st, r]));
     const hoverSt = hover ? hover.id.split("-")[1] : null;
     return (
-      <svg key="hex-state" className="fc-map anim" viewBox={`0 0 ${W} ${H}`} role="img" aria-label={`${OFFICE_LABEL[office]} cartogram — one tile per state`}>
+      <svg key="hex-state" className="fc-map anim" viewBox={`0 0 ${W} ${H}`} role="img" aria-label={`${OFFICE_LABEL[office]} cartogram, one tile per state`}>
         {Object.entries(geo.hexStates).map(([st, [x, y]], i) => {
           const r = byState.get(st);
           const delay = `${(i % 26) * 14}ms`;
@@ -463,17 +471,21 @@ function NationalMap({ geo, races, office, view, kind, onPick, hover, setHover }
 }
 
 function Legend({ view }: { view: ViewMode }) {
-  const items: [string, string][] =
-    view === "rating"
-      ? [...RATING_BANDS].reverse().map((b) => [b.cat, b.color] as [string, string])   // Safe D through Safe R, straight off the bands
-      : view === "odds"
-        ? [["Safe D", "#183685"], ["Favored D", "#4a5fb8"], ["Tilt D", TILT_D_TONE], ["Tilt R", TILT_R_TONE], ["Favored R", "#c2536b"], ["Safe R", "#a01426"]]
-        : [["D+30", "#16306f"], ["D+12", "#2c56c4"], ["D+6", "#3b6fde"], ["D+2", "#7b8fe0"], ["tilt D", TILT_D_TONE], ["tilt R", TILT_R_TONE], ["R+2", "#e08a94"], ["R+6", "#e23950"], ["R+12", "#c22638"], ["R+30", "#701020"]];
+  if (view === "rating") {
+    return (
+      <div className="legend fc-legend" aria-hidden>
+        {RATING_LEGEND.map(([label, c]) => <span key={label}><i style={{ background: c }} />{label}</span>)}
+        <span><i style={{ background: IND }} />Independent</span>
+      </div>
+    );
+  }
+  const odds = view === "odds";
   return (
-    <div className="fc-legend" aria-hidden>
-      {items.map(([label, c]) => (
-        <span key={label}><i style={{ background: c }} />{label}</span>
-      ))}
+    <div className="legend fc-legend" aria-hidden>
+      <span className="mono">{odds ? "D certain" : "D +40"}</span>
+      <span className="ramp fc-ramp" style={{ background: odds ? ODDS_RAMP_CSS : MARGIN_RAMP_CSS }} />
+      <span className="mono">{odds ? "R certain" : "R +40"}</span>
+      <span className="fc-legend-note">{odds ? "Shaded by the favorite's chance of winning" : "Shaded by the model margin, pale for close"}</span>
     </div>
   );
 }
@@ -505,7 +517,7 @@ function MapTip({ race, x, y }: { race: Race; x: number; y: number }) {
         <span style={{ color: tone }}>{fmtRaceMargin(race, s.margin)}</span>
         <em>{fmtPct(p)} to win</em>
       </div>
-      <div className="fc-tip-foot">{ratingFor(s.margin).cat} · click for the full race</div>
+      <div className="fc-tip-foot">{ratingFor(s.margin, indSide(race)).cat} · click to open the race</div>
     </div>
     </TipPortal>
   );
@@ -558,10 +570,10 @@ function VoteTip({ title, sub, demName, gopName, demColor = DEM, dem, rep, total
             <div className="fc-tip-vote"><i style={{ background: demColor }} /><b>{demName}</b><span>{commas(dem)}</span><em>{shareOf(dem, total)}</em></div>
             <div className="fc-tip-vote"><i style={{ background: GOP }} /><b>{gopName}</b><span>{commas(rep)}</span><em>{shareOf(rep, total)}</em></div>
             {total > 0 && (total - dem - rep) / total >= 0.0005
-              ? <div className="fc-tip-vote"><i style={{ background: "rgba(var(--fc-ink-rgb),calc(0.3 * var(--fc-mute) + var(--fc-floor)))" }} /><b>other candidates</b><span>{commas(total - dem - rep)}</span><em>{shareOf(total - dem - rep, total)}</em></div>
+              ? <div className="fc-tip-vote"><i style={{ background: "rgba(var(--fc-ink-rgb),calc(0.3 * var(--fc-mute) + var(--fc-floor)))" }} /><b>Other candidates</b><span>{commas(total - dem - rep)}</span><em>{shareOf(total - dem - rep, total)}</em></div>
               : null}
           </>)}
-      <div className="fc-tip-vote total"><i /><b>total votes</b><span>{commas(total)}</span><em style={{ color: margin > 0 ? "var(--fc-gop)" : "var(--fc-dem)" }}>{fmtMargin(margin)}</em></div>
+      <div className="fc-tip-vote total"><i /><b>Total votes</b><span>{commas(total)}</span><em style={{ color: margin > 0 ? "var(--fc-gop)" : "var(--fc-dem)" }}>{fmtMargin(margin)}</em></div>
       {foot ? <div className="fc-tip-foot">{foot}</div> : null}
     </div>
     </TipPortal>
@@ -570,29 +582,10 @@ function VoteTip({ title, sub, demName, gopName, demColor = DEM, dem, rep, total
 
 const OFFICE_WORD: Record<Office, string> = { house: "U.S. House", senate: "U.S. Senate", governor: "governor" };
 
-// The page follows the site's data-theme attribute. CSS handles almost all of
-// it; this is for the few colours computed in JS, where the value depends on
-// data rather than on a rule.
-function useLightMode() {
-  const [light, setLight] = useState(false);
-  useEffect(() => {
-    const read = () => setLight(document.documentElement.getAttribute("data-theme") === "light");
-    read();
-    const ob = new MutationObserver(read);
-    ob.observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
-    return () => ob.disconnect();
-  }, []);
-  return light;
-}
-
-// A rating chip paints the band colour as text over a tint of itself. On white
-// the pale bands — Tilt, Lean — vanish, so light mode darkens the ink while
-// keeping the tint, which preserves the colour coding either way.
+// A rating chip paints the band colour as text over a tint of itself.
 function RatingChip({ color, cat, outlet }: { color: string; cat: string; outlet?: string }) {
-  const light = useLightMode();
-  const ink = light ? onLight(color) : color;
   return (
-    <i className="fc-rating" style={{ color: ink, borderColor: `${ink}55`, background: `${color}1f` }}>
+    <i className="fc-rating" style={{ color: `color-mix(in srgb, ${color} 62%, var(--hi))`, borderColor: `${color}66`, background: `${color}24` }}>
       {cat}{outlet ? <u>{outlet}</u> : null}
     </i>
   );
@@ -681,9 +674,9 @@ function RaceStage({ race, detail, counties, stateRaces, onPick, onBack }: {
   // carry a full forecast row for every borough and island county, so the only
   // condition that should suppress the layer is an actually empty geometry file.
   if (detail && detail.counties.length === 0) {
-    stage = <div className="fc-map-loading static"><em>no county detail for {race.state} — the model prices this race statewide</em></div>;
+    stage = <div className="empty">No county detail for {race.state}. The model prices this race statewide.</div>;
   } else if (!detail) {
-    stage = <div className="fc-map-loading"><span /><em>drawing {race.state}…</em></div>;
+    stage = <div className="empty fc-map-loading">Drawing {race.state}</div>;
   } else {
     stage = (
       <svg viewBox="0 0 900 620" className="fc-map race" role="img"
@@ -741,34 +734,35 @@ function RaceStage({ race, detail, counties, stateRaces, onPick, onBack }: {
 
   return (
     <div className="fc-stage">
-      <div className="fc-shell">
-        <button className="fc-back" onClick={onBack}>
-          <span aria-hidden>←</span> the national map
-        </button>
+      <div className="fc-stage-head">
+        <div className="fc-stage-actions">
+          <button className="btn sm" onClick={onBack}>Back to the national map</button>
+          <Link className="btn sm white" href={raceHref(race.id)}>Full race page</Link>
+        </div>
         <div className="fc-stage-title">
-          <span className="fc-stage-year">2026 · {race.office}{race.marquee ? " · marquee" : ""}</span>
+          <span className="eye">2026 {race.office}{race.marquee ? " · marquee" : ""}</span>
           <h2>{race.name}</h2>
-          <div className="fc-stage-banner" style={{ color: s.margin > 0 ? "var(--fc-gop)" : "var(--fc-dem)" }}>
+          <div className="fc-stage-banner" style={{ color: s.margin > 0 ? "var(--fc-gop)" : indSide(race) ? "var(--ind)" : "var(--fc-dem)" }}>
             {unopposed
               ? (noFiler
-                ? `${surname(fav)} is unopposed \u2014 no major-party opponent filed`
-                : `${surname(race.dem)} against ${surname(race.gop)} \u2014 the model does not price this ballot`)
+                ? `${surname(fav)} is unopposed, no major party opponent filed`
+                : `${surname(race.dem)} against ${surname(race.gop)}, a ballot the model does not price`)
               : <>{surname(fav)} favored by {Math.abs(s.margin).toFixed(1)} · {fmtPct(s.margin > 0 ? s.prob : 1 - s.prob)} to win</>}
           </div>
           {rv && rv.total > 0 && rv.dem + rv.rep > 0 ? (
             <div className="fc-stage-votes">
               <span><i style={{ background: sideColor(race, "dem") }} />{surname(race.dem)} <b>{commas(rv.dem)}</b> <em>{shareOf(rv.dem, rv.total)}</em></span>
               <span><i style={{ background: GOP }} />{surname(race.gop)} <b>{commas(rv.rep)}</b> <em>{shareOf(rv.rep, rv.total)}</em></span>
-              <span>projected turnout <b>{commas(rv.total)}</b></span>
+              <span>Projected turnout <b>{commas(rv.total)}</b></span>
             </div>
           ) : null}
           {race.rcv ? (
             <div className="fc-stage-votes rcv">
-              <span>ranked choice final round</span>
+              <span>Ranked choice final round</span>
               <span><i style={{ background: sideColor(race, "dem") }} />{surname(race.dem)} <b>{commas(race.rcv.dem)}</b> <em>{race.rcv.demPct.toFixed(1)}%</em></span>
               <span><i style={{ background: GOP }} />{surname(race.gop)} <b>{commas(race.rcv.rep)}</b> <em>{race.rcv.repPct.toFixed(1)}%</em></span>
-              <span>exhausted <b>{commas(race.rcv.exhausted)}</b></span>
-              <span>first choice <b>{fmtMargin(-race.rcv.firstChoice)}</b></span>
+              <span>Exhausted <b>{commas(race.rcv.exhausted)}</b></span>
+              <span>First choice <b>{fmtMargin(-race.rcv.firstChoice)}</b></span>
             </div>
           ) : null}
         </div>
@@ -778,8 +772,8 @@ function RaceStage({ race, detail, counties, stateRaces, onPick, onBack }: {
 
       {isHouse && detail && detail.counties.length > 0 && multiDist ? (
         <div className="fc-stage-layer" role="group" aria-label="Map layer">
-          <button className={layer === "district" ? "on" : ""} aria-pressed={layer === "district"} onClick={() => setLayer("district")}>districts</button>
-          <button className={layer === "county" ? "on" : ""} aria-pressed={layer === "county"} onClick={() => setLayer("county")}>counties</button>
+          <button className={layer === "district" ? "on" : ""} aria-pressed={layer === "district"} onClick={() => setLayer("district")}>Districts</button>
+          <button className={layer === "county" ? "on" : ""} aria-pressed={layer === "county"} onClick={() => setLayer("county")}>Counties</button>
         </div>
       ) : null}
 
@@ -869,18 +863,15 @@ function SectionDistribution({ chamber, office, sims }: { chamber: ChamberT; off
   const bx1 = x(chamber.demP10), bx2 = x(chamber.demP90);
 
   return (
-    <section className="fc-sec fc-band">
-      <div className="fc-shell">
-        <Eyebrow>the distribution</Eyebrow>
-        <h2 className="fc-h2">every way the {office === "house" ? "house" : office === "senate" ? "senate" : "map"} could go<em>.</em></h2>
+    <Sec eye="The distribution" title={`Every way the ${office === "house" ? "House" : office === "senate" ? "Senate" : "map"} could go`}>
         <p className="fc-body">
-          {sims.toLocaleString()} full runs of the model this morning — every bar is a Democratic {office === "governor" ? "governorship" : "seat"} total
+          {sims.toLocaleString()} full runs of the model. Every bar is a Democratic {office === "governor" ? "governorship" : "seat"} total
           the simulation landed on.{" "}
           {office === "senate"
-            ? "Democrats need 51 — a 50–50 chamber stays Republican on the Vice President\u2019s tiebreak."
+            ? "Democrats need 51, since a 50 to 50 chamber stays Republican on the Vice President\u2019s tiebreak."
             : office === "governor"
-              ? "The rule marks 26 \u2014 a majority of all 50 governorships, counting the 14 not on this year\u2019s ballot."
-              : "The rule marks control — 218."}
+              ? "The rule marks 26, a majority of all 50 governorships, counting the 14 not on this year\u2019s ballot."
+              : "The rule marks control at 218."}
         </p>
 
         <div className="fc-hist">
@@ -952,16 +943,15 @@ function SectionDistribution({ chamber, office, sims }: { chamber: ChamberT; off
           </svg>
 
           <span className="fc-hist-rulelabel" style={{ left: `${((x(control) - (W / span) * 0.5) / W) * 100}%` }}>
-            {office === "senate" ? "51 — vp breaks 50\u201350 gop" : `${control} to control`}
+            {office === "senate" ? "51, the VP breaks a 50 to 50 tie" : `${control} to control`}
           </span>
           <div className="fc-hist-bracket" style={{ left: `${(((bx1 + bx2) / 2) / W) * 100}%` }}>
-            the bracket holds the middle 80% of {sims.toLocaleString()} simulations —{" "}
+            Middle 80% of {sims.toLocaleString()} simulations:{" "}
             <b style={{ color: chamber.demP10 >= control ? "var(--fc-dem)" : "var(--fc-gop)" }}>{chamber.demP10}</b> to{" "}
-            <b style={{ color: chamber.demP90 >= control ? "var(--fc-dem)" : "var(--fc-gop)" }}>{chamber.demP90}</b> democratic {seatNoun(office, 2)}
+            <b style={{ color: chamber.demP90 >= control ? "var(--fc-dem)" : "var(--fc-gop)" }}>{chamber.demP90}</b> Democratic {seatNoun(office, 2)}
           </div>
         </div>
-      </div>
-    </section>
+    </Sec>
   );
 }
 
@@ -987,11 +977,8 @@ function SectionSeats({ chamber, office, updated }: { chamber: ChamberT; office:
   const hi = hover.idx;
 
   return (
-    <section className="fc-sec">
-      <div className="fc-shell">
-        <Eyebrow>expected seats</Eyebrow>
-        <h2 className="fc-h2">the {office === "governor" ? "map" : "seat count"}, day by day<em>.</em></h2>
-        <p className="fc-body">Daily model average; the shaded band holds 80% of simulations.</p>
+    <Sec eye="Expected seats" title={`The ${office === "governor" ? "map" : "seat count"}, day by day`}>
+        <p className="fc-body">Daily model average. The shaded band holds 80% of simulations.</p>
         <div className="fc-chartwrap" onMouseMove={hover.onMove} onMouseLeave={hover.onLeave}>
           <svg viewBox={`0 0 ${W} ${H}`} className="fc-chart" role="img" aria-label="Expected seats trend" preserveAspectRatio="none">
             <defs>
@@ -1028,7 +1015,7 @@ function SectionSeats({ chamber, office, updated }: { chamber: ChamberT; office:
             )}
           </svg>
           {control >= min && control <= max ? (
-            <span className="fc-chart-tag" style={{ top: `${(y(control) / H) * 100}%` }}>{office === "senate" ? "50 + vp" : `${control} to control`}</span>
+            <span className="fc-chart-tag" style={{ top: `${(y(control) / H) * 100}%` }}>{office === "senate" ? "50 plus VP" : `${control} to control`}</span>
           ) : null}
           <div className="fc-chart-ends">
             <span style={{ color: "var(--fc-dem)", top: `${(y(dem[n - 1]) / H) * 100}%` }}>{chamber.demSeats.toFixed(1)}</span>
@@ -1042,9 +1029,8 @@ function SectionSeats({ chamber, office, updated }: { chamber: ChamberT; office:
             </div>
           ) : null}
         </div>
-        <div className="fc-chart-x"><span>sixty days ago</span><span>today · {dayLabel(updated, n, n - 1)}</span></div>
-      </div>
-    </section>
+        <div className="fc-chart-x"><span>Sixty days ago</span><span>Today · {dayLabel(updated, n, n - 1)}</span></div>
+    </Sec>
   );
 }
 
@@ -1059,10 +1045,7 @@ function SectionProbability({ chamber, office, updated }: { chamber: ChamberT; o
   const hi = hover.idx;
 
   return (
-    <section className="fc-sec">
-      <div className="fc-shell">
-        <Eyebrow live>the probability</Eyebrow>
-        <h2 className="fc-h2">each side&rsquo;s chance of {office === "house" ? "the majority" : office === "senate" ? "the chamber" : "the map"}<em>.</em></h2>
+    <Sec eye="The probability" title={`Each side\u2019s chance of ${office === "house" ? "the majority" : office === "senate" ? "the chamber" : "the map"}`}>
         <div className="fc-chartwrap" onMouseMove={hover.onMove} onMouseLeave={hover.onLeave}>
           <svg viewBox={`0 0 ${W} ${H}`} className="fc-chart" role="img" aria-label="Win probability trend" preserveAspectRatio="none">
             <defs>
@@ -1098,7 +1081,7 @@ function SectionProbability({ chamber, office, updated }: { chamber: ChamberT; o
               </g>
             )}
           </svg>
-          <span className="fc-chart-tag" style={{ top: `${(y(50) / H) * 100}%` }}>even odds</span>
+          <span className="fc-chart-tag" style={{ top: `${(y(50) / H) * 100}%` }}>Even odds</span>
           <div className="fc-chart-ends">
             <span style={{ color: "var(--fc-dem)", top: `${(y(dem[n - 1]) / H) * 100}%` }}>{dem[n - 1].toFixed(1)}%</span>
             <span style={{ color: "var(--fc-gop)", top: `${(y(gop[n - 1]) / H) * 100}%` }}>{gop[n - 1].toFixed(1)}%</span>
@@ -1111,9 +1094,8 @@ function SectionProbability({ chamber, office, updated }: { chamber: ChamberT; o
             </div>
           ) : null}
         </div>
-        <div className="fc-chart-x"><span>sixty days ago</span><span>today</span></div>
-      </div>
-    </section>
+        <div className="fc-chart-x"><span>Sixty days ago</span><span>Today</span></div>
+    </Sec>
   );
 }
 
@@ -1138,21 +1120,22 @@ function RaceTable({ rows, onPick }: { rows: Race[]; onPick: (id: string) => voi
         const favProb = fav === "gop" ? s.prob : 1 - s.prob;
         const rt = ratingFor(s.margin, ind);
         return (
-          <button key={r.id} className="fc-tr" role="row" onClick={() => onPick(r.id)}>
+          <div key={r.id} className="fc-tr" role="row" tabIndex={0} onClick={() => onPick(r.id)}
+            onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); onPick(r.id); } }}>
             <span role="cell" className="fc-td-name">
-              <b>{r.name}</b>
-              <em>{r.marquee ? "marquee · " : ""}{r.open ? "open seat" : "incumbent running"}</em>
+              <Link href={raceHref(r.id)} onClick={(e) => e.stopPropagation()}><b>{r.name}</b></Link>
+              <em>{r.marquee ? "Marquee · " : ""}{r.open ? "Open seat" : "Incumbent running"}</em>
             </span>
             <span role="cell" className="fc-td-cands">
               <span><i className={ind ? "i" : "d"}>{ind ? "I" : "D"}</i>{r.dem}</span>
               <span><i className="r">R</i>{r.gop}</span>
             </span>
-            <span role="cell" className="fc-td-margin num" style={{ color: s.margin > 0 ? "var(--fc-gop)" : ind ? IND : "var(--fc-dem)" }}>{fmtRaceMargin(r, s.margin)}</span>
+            <span role="cell" className="fc-td-margin num" style={{ color: s.margin > 0 ? "var(--fc-gop)" : ind ? "var(--ind)" : "var(--fc-dem)" }}>{fmtRaceMargin(r, s.margin)}</span>
             <span role="cell" className="fc-td-bar"><MarginBar m={s.margin} p10={s.p10} p90={s.p90} /></span>
             <span role="cell" className="fc-td-prob num">{fmtPct(favProb, 1)}</span>
             <span role="cell"><RatingChip color={rt.color} cat={rt.cat} /></span>
             <span role="cell"><Spark pts={r.trend.map((t) => 100 - t.p * 100)} color={tone} /></span>
-          </button>
+          </div>
         );
       })}
     </div>
@@ -1236,13 +1219,13 @@ function OutcomeDist({ race, s, sims }: { race: Race; s: RaceSide; sims: number 
         <div className="fc-outcome-axis">
           {[-30, -15, 0, 15, 30].map((v) => (
             <span key={v} style={{ left: `${(xOf(v) / W) * 100}%`, color: v === 0 ? "rgba(var(--fc-ink-rgb),calc(0.45 * var(--fc-mute) + var(--fc-floor)))" : v > 0 ? "var(--fc-gop)" : "var(--fc-dem)" }}>
-              {v === 0 ? "even" : v > 0 ? `R+${v}` : `D+${-v}`}
+              {v === 0 ? "Even" : v > 0 ? `R+${v}` : `D+${-v}`}
             </span>
           ))}
         </div>
       </div>
       <div className="fc-outcome-note">
-        the ticks bracket the middle 80% of simulations — <b style={{ color: s.p10 > 0 ? "var(--fc-gop)" : "var(--fc-dem)" }}>{fmtRaceMargin(race, s.p10)}</b> to{" "}
+        The ticks bracket the middle 80% of simulations, <b style={{ color: s.p10 > 0 ? "var(--fc-gop)" : "var(--fc-dem)" }}>{fmtRaceMargin(race, s.p10)}</b> to{" "}
         <b style={{ color: s.p90 > 0 ? "var(--fc-gop)" : "var(--fc-dem)" }}>{fmtRaceMargin(race, s.p90)}</b>
       </div>
     </div>
@@ -1271,20 +1254,20 @@ function StageFlow({ race, env, sims }: {
   const rows: Row[] = [
     {
       k: "the anchor", v: st.anchor, on: true,
-      cap: <>presidential lean <b style={{ color: st.anchor > 0 ? "var(--fc-gop)" : "var(--fc-dem)" }}>{fmtRaceMargin(race, st.anchor)}</b> — the last two presidential results, candidate record priced in</>,
+      cap: <>Presidential lean <b style={{ color: st.anchor > 0 ? "var(--fc-gop)" : "var(--fc-dem)" }}>{fmtRaceMargin(race, st.anchor)}</b>, from the last two presidential results with the candidate record priced in</>,
     },
     {
       k: "the environment", v: st.fund, on: true, carry: `${fundShare}%`,
-      cap: <>a <b style={{ color: env.npe > 0 ? "var(--fc-gop)" : "var(--fc-dem)" }}>{env.npe > 0 ? `R+${Math.abs(env.npe).toFixed(1)}` : `D+${Math.abs(env.npe).toFixed(1)}`}</b> national
-        environment lands through ×{race.elast.toFixed(2)} elasticity · {race.open ? "open seat" : "incumbent running"}</>,
+      cap: <>A <b style={{ color: env.npe > 0 ? "var(--fc-gop)" : "var(--fc-dem)" }}>{env.npe > 0 ? `R+${Math.abs(env.npe).toFixed(1)}` : `D+${Math.abs(env.npe).toFixed(1)}`}</b> national
+        environment lands through a {race.elast.toFixed(2)} elasticity · {race.open ? "open seat" : "incumbent running"}</>,
     },
     {
       k: "the polls", v: st.poll, on: true, carry: `${pollShare}%`,
       cap: race.pollAvg != null
         ? race.pollLevel === "lowess"
-          ? <>{race.enop.toFixed(0)} polls project to an Election Day polling average of <b style={{ color: race.pollAvg > 0 ? "var(--fc-gop)" : "var(--fc-dem)" }}>{fmtRaceMargin(race, race.pollAvg)}</b> · LOWESS trend, every poll counted once{race.pollPsi != null ? <> · PSI weighted average {fmtRaceMargin(race, race.pollPsi)}</> : null}</>
+          ? <>{race.enop.toFixed(0)} polls project to an Election Day polling average of <b style={{ color: race.pollAvg > 0 ? "var(--fc-gop)" : "var(--fc-dem)" }}>{fmtRaceMargin(race, race.pollAvg)}</b> · LOWESS trend, every poll counted once{race.pollPsi != null ? <> · weighted average {fmtRaceMargin(race, race.pollPsi)}</> : null}</>
           : <>{race.enop.toFixed(1)} effective polls averaging <b style={{ color: race.pollAvg > 0 ? "var(--fc-gop)" : "var(--fc-dem)" }}>{fmtRaceMargin(race, race.pollAvg)}</b> · weights decay with age and pollster record</>
-        : <>no usable polling — the fundamentals carry through untouched</>,
+        : <>No usable polling, so the fundamentals carry through untouched</>,
     },
     {
       k: "expert ratings", v: st.rate, on: complete,
@@ -1292,12 +1275,11 @@ function StageFlow({ race, env, sims }: {
         <>
           <span className="fc-flow-chips">
             {race.ratings.map((rt) => {
-              const band = RATING_BANDS.find((b) => b.cat.toLowerCase() === rt.cat.toLowerCase());
-              const c = band ? band.color : "rgba(var(--fc-ink-rgb),calc(0.6 * var(--fc-mute) + var(--fc-floor)))";
+              const c = outletColor(rt.cat) ?? "#c9c2d6";
               return <RatingChip key={rt.outlet} color={c} cat={rt.cat} outlet={rt.outlet} />;
             })}
           </span>
-          guardrails — they pull only when the estimate drifts outside the category
+          Guardrails that pull only when the estimate drifts outside the category
         </>
       ) : null,
     },
@@ -1306,8 +1288,8 @@ function StageFlow({ race, env, sims }: {
       carry: complete && mktShare ? `${mktShare}%` : undefined,
       cap: complete
         ? race.market
-          ? <><b style={{ color: race.market.q > 0.5 ? "var(--fc-gop)" : "var(--fc-dem)" }}>{fmtPct(Math.max(race.market.q, 1 - race.market.q), 0)}</b> implied {surname(mktFav!)} · liquidity {(race.market.liquidity * 100).toFixed(0)} · trade-vs-book λ blend</>
-          : <>no usable order book — the estimate passes through</>
+          ? <><b style={{ color: race.market.q > 0.5 ? "var(--fc-gop)" : "var(--fc-dem)" }}>{fmtPct(Math.max(race.market.q, 1 - race.market.q), 0)}</b> implied {surname(mktFav!)} · liquidity {(race.market.liquidity * 100).toFixed(0)} · trade and book blend</>
+          : <>No usable order book, so the estimate passes through</>
         : null,
     },
   ];
@@ -1347,7 +1329,7 @@ function StageFlow({ race, env, sims }: {
                 {row.on && row.carry ? <em className="fc-flow-carry">carries {row.carry}</em> : null}
               </span>
               <p className="fc-flow-cap">
-                {row.on ? row.cap : "no usable input at this stage"}
+                {row.on ? row.cap : "No usable input at this stage"}
               </p>
             </div>
             <div className="fc-flow-track" aria-hidden={!row.on}>
@@ -1368,7 +1350,7 @@ function StageFlow({ race, env, sims }: {
                     left: `${x(row.v)}%`, color: row.v > 0 ? "var(--fc-gop)" : "var(--fc-dem)",
                     transform: labelLeft ? "translate(calc(-100% - 9px), -50%)" : "translate(9px, -50%)",
                   }}>
-                    {fmtRaceMargin(race, row.v)}{moved ? <em> {row.v < from! ? "←" : "→"} {Math.abs(row.v - from!).toFixed(1)}</em> : null}
+                    {fmtRaceMargin(race, row.v)}{moved ? <em> {row.v < from! ? "D" : "R"} {Math.abs(row.v - from!).toFixed(1)}</em> : null}
                   </b>
                 </>
               ) : null}
@@ -1380,7 +1362,7 @@ function StageFlow({ race, env, sims }: {
       <div className="fc-flow-row final">
         <div className="fc-flow-left">
           <span className="fc-flow-k final">the estimate</span>
-          <p className="fc-flow-cap">all six stages · {sims.toLocaleString()} simulations run on it today</p>
+          <p className="fc-flow-cap">All six stages · {sims.toLocaleString()} simulations run on it today</p>
         </div>
         <div className="fc-flow-track final">
           {zeroIn ? <i className="fc-flow-even" style={{ left: `${x(0)}%` }} /> : null}
@@ -1469,10 +1451,7 @@ function SectionCrosstabs({ race }: { race: Race }) {
   );
 
   return (
-    <section className="fc-sec">
-      <div className="fc-shell">
-        <Eyebrow>simulated crosstabs</Eyebrow>
-        <h2 className="fc-h2">how {race.state} is projected to vote<em>.</em></h2>
+    <Sec eye="Simulated crosstabs" title={`How ${race.state} is projected to vote`}>
         <p className="fc-body">
           Estimates for the {race.name} race read off the simulated voter file, not asked of anyone. Every
           county&rsquo;s adults are rebuilt as TPSI respondents matched on age, race, college, party and vote history,
@@ -1482,7 +1461,7 @@ function SectionCrosstabs({ race }: { race: Race }) {
         </p>
 
         {!rows ? (
-          <div className="fc-map-loading"><span /><em>reading the simulated electorate…</em></div>
+          <div className="empty">Reading the simulated electorate</div>
         ) : (
           <>
             {total ? (
@@ -1515,7 +1494,7 @@ function SectionCrosstabs({ race }: { race: Race }) {
             <div className="fc-xt-panel" role="tabpanel">
               {cut === OVERVIEW ? (
                 <>
-                  <h3 className="fc-xt-ph">where the race is decided</h3>
+                  <h3 className="fc-xt-ph">Where the race is decided</h3>
                   <p className="fc-xt-pn">
                     Each group&rsquo;s share of projected voters times how far its margin sits from the
                     statewide {fmtRaceMargin(race, allMargin)}. Blocs at the top are the ones actually moving this
@@ -1566,8 +1545,7 @@ function SectionCrosstabs({ race }: { race: Race }) {
             </p>
           </>
         )}
-      </div>
-    </section>
+      </Sec>
   );
 }
 
@@ -1625,7 +1603,6 @@ function RaceSections({ race, byId, onPick, sims, updated, env }: {
   race: Race; byId: Map<string, Race>; onPick: (id: string) => void; sims: number; updated: string;
   env: { npe: number; gb: number; approval: number };
 }) {
-  const light = useLightMode();
   const s = race.est;
   const demProb = 1 - s.prob;
   const demTone = sideColor(race, "dem");
@@ -1639,10 +1616,7 @@ function RaceSections({ race, byId, onPick, sims, updated, env }: {
   return (
     <>
       {/* the odds */}
-      <section className="fc-sec">
-        <div className="fc-shell">
-          <Eyebrow live>the odds</Eyebrow>
-          <h2 className="fc-h2">where the race stands today<em>.</em></h2>
+      <Sec eye="The odds" title={"Where the race stands today"}>
           <div className="fc-odds">
             <div className="fc-score">
               {(() => {
@@ -1673,7 +1647,7 @@ function RaceSections({ race, byId, onPick, sims, updated, env }: {
             <div className="fc-odds-dial">
               <SwingOMeter
                 c1Name={race.dem} c2Name={race.gop}
-                c1Color={light ? "#1d5fc4" : "#3b7bde"} c2Color={light ? "#c22f3b" : "#d64550"}
+                c1Color={demTone} c2Color={GOP}
                 c1Prob={demProb} c2Prob={s.prob}
                 reportingPct={0}
                 marginPp={Math.abs(s.margin)}
@@ -1691,14 +1665,10 @@ function RaceSections({ race, byId, onPick, sims, updated, env }: {
           ) : (
             <OutcomeDist race={race} s={s} sims={sims} />
           )}
-        </div>
-      </section>
+        </Sec>
 
       {/* the tracker */}
-      <section className="fc-sec">
-        <div className="fc-shell">
-          <Eyebrow>the tracker</Eyebrow>
-          <h2 className="fc-h2">sixty days of this race<em>.</em></h2>
+      <Sec eye="The tracker" title={"Sixty days of this race"}>
           <div className="fc-chartwrap" onMouseMove={thover.onMove} onMouseLeave={thover.onLeave}>
             <svg viewBox={`0 0 ${W} ${H}`} className="fc-chart" role="img" aria-label="Race win-probability trend" preserveAspectRatio="none">
               <line x1="0" x2={W} y1={y(50)} y2={y(50)} stroke="currentColor" strokeOpacity={0.22} strokeDasharray="3 5" />
@@ -1718,7 +1688,7 @@ function RaceSections({ race, byId, onPick, sims, updated, env }: {
                 </g>
               )}
             </svg>
-            <span className="fc-chart-tag" style={{ top: `${(y(50) / H) * 100}%` }}>even odds</span>
+            <span className="fc-chart-tag" style={{ top: `${(y(50) / H) * 100}%` }}>Even odds</span>
             <div className="fc-chart-ends">
               <span style={{ color: "var(--fc-dem)", top: `${(y(demPts[demPts.length - 1]) / H) * 100}%` }}>{surname(race.dem)} {fmtPct(demProb)}</span>
               <span style={{ color: "var(--fc-gop)", top: `${(y(100 - demPts[demPts.length - 1]) / H) * 100}%` }}>{surname(race.gop)} {fmtPct(s.prob)}</span>
@@ -1731,26 +1701,22 @@ function RaceSections({ race, byId, onPick, sims, updated, env }: {
               </div>
             ) : null}
           </div>
-          <div className="fc-chart-x"><span>sixty days ago</span><span>today</span></div>
-        </div>
-      </section>
+          <div className="fc-chart-x"><span>Sixty days ago</span><span>Today</span></div>
+        </Sec>
 
       {/* the inputs */}
-      <section className="fc-sec">
-        <div className="fc-shell">
-          <Eyebrow>the inputs</Eyebrow>
-          <h2 className="fc-h2">what the model is looking at<em>.</em></h2>
+      <Sec eye="The inputs" title={"What the model is looking at"}>
           <div className="fc-envchips" role="list" aria-label="The national environment">
-            <span role="listitem">national environment <b style={{ color: env.npe > 0 ? "var(--fc-gop)" : "var(--fc-dem)" }}>{env.npe > 0 ? "R" : "D"}+{Math.abs(env.npe).toFixed(1)}</b></span>
-            <span role="listitem">generic ballot <b style={{ color: env.gb > 0 ? "var(--fc-gop)" : "var(--fc-dem)" }}>{env.gb > 0 ? "R" : "D"}+{Math.abs(env.gb).toFixed(1)}</b></span>
-            <span role="listitem">net approval <b style={{ color: "var(--fc-gop)" }}>{env.approval}</b></span>
-            <span role="listitem"><b className="lime">{sims.toLocaleString()}</b> sims run today</span>
+            <span role="listitem">National environment <b style={{ color: env.npe > 0 ? "var(--fc-gop)" : "var(--fc-dem)" }}>{env.npe > 0 ? "R" : "D"}+{Math.abs(env.npe).toFixed(1)}</b></span>
+            <span role="listitem">Generic ballot <b style={{ color: env.gb > 0 ? "var(--fc-gop)" : "var(--fc-dem)" }}>{env.gb > 0 ? "R" : "D"}+{Math.abs(env.gb).toFixed(1)}</b></span>
+            <span role="listitem">Net approval <b style={{ color: "var(--fc-gop)" }}>{env.approval}</b></span>
+            <span role="listitem"><b className="hl">{sims.toLocaleString()}</b> sims run today</span>
           </div>
           <StageFlow race={race} env={env} sims={sims} />
 
           {race.polls.length ? (
             <div className="fc-polls">
-              <div className="fc-polls-h"><span>latest polls</span><span>weighted by recency · pollster record · sponsorship</span></div>
+              <div className="fc-polls-h"><span>Latest polls</span><span>Weighted by recency · pollster record · sponsorship</span></div>
               {race.polls.map((p, i) => (
                 <div key={i} className="fc-poll">
                   <b>{p.pollster}{p.grade ? <i className="fc-grade">{p.grade}</i> : null}</b>
@@ -1761,17 +1727,13 @@ function RaceSections({ race, byId, onPick, sims, updated, env }: {
               ))}
             </div>
           ) : null}
-        </div>
-      </section>
+        </Sec>
 
       <SectionCrosstabs race={race} />
 
       {/* moves with */}
-      <section className="fc-sec last">
-        <div className="fc-shell">
-          <Eyebrow>moves with</Eyebrow>
-          <h2 className="fc-h2">races correlated with this one<em>.</em></h2>
-          <p className="fc-body">Shared national, regional, and state shocks tie outcomes together — when this race moves, these tend to move too. ρ is the correlation of simulated outcomes between the two races.</p>
+      <Sec eye="Moves with" title={"Races correlated with this one"}>
+          <p className="fc-body">Shared national, regional and state shocks tie outcomes together, so when this race moves, these tend to move too. ρ is the correlation of simulated outcomes between the two races.</p>
           <div className="fc-similar">
             {race.similar.slice(0, 10).map((sim) => {
               const other = byId.get(sim.id);
@@ -1786,162 +1748,96 @@ function RaceSections({ race, byId, onPick, sims, updated, env }: {
               );
             })}
           </div>
-        </div>
-      </section>
+        </Sec>
     </>
   );
 }
 
 // ── styles ───────────────────────────────────────────────────────────────────
 const CSS = `
-/* @import must be the first rule in a sheet or the parser drops it. It was
-   sitting a hundred lines down, so Oswald never loaded and every heading fell
-   back to the system condensed face. */
-@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&display=swap');
-
-/* ── theme tokens ──────────────────────────────────────────────────────────
-   The desk is dark by default and the site sets data-theme on <html>, so the
-   base below is the dark rendering and the [data-theme="light"] block is the
-   inversion. Every rule downstream keeps its own alpha.
-
-   This used to be three near-identical copies of the same block, and the last
-   two set --fc-bg and --fc-ink to var(--fc-bg) and var(--fc-ink). A custom
-   property that references itself is a cycle, which is invalid at computed-value
-   time, so both resolved to nothing. Light mode still worked because the light
-   block assigns literals; dark mode had no background at all, fell through to
-   the site's light canvas, and then painted near-white ink on it. That is the
-   washed-out page. One block, literal values, no cycles. */
-:root {
-  --fc-bg: #050505;
-  --fc-bg-rgb: 5,5,5;
-  --fc-ink: #f4f4ef;
-  --fc-ink-rgb: 244,244,239;
-  --fc-line-rgb: 255,255,255;        /* hairlines and panel fills, as overlays */
-  --fc-band: #08080a;                /* the lifted band behind the distribution */
-  --fc-idle: #0b0c10;                /* a unit with no race in it */
-  --fc-idle-line: rgba(5,5,7,0.55);  /* the hairline between map units */
-  --fc-elev: rgba(10,11,15,0.94);    /* tooltips and crosshairs, above the page */
-  --fc-elev-shadow: 0 24px 60px rgba(0,0,0,0.6);
-  --fc-dem: #3b7bde; --fc-dem-rgb: 59,123,222;
-  --fc-gop: #d64550; --fc-gop-rgb: 214,69,80;
-  --fc-accent: #8a63ef;
-  --fc-gold: #e0b34c; --fc-gold-rgb: 224,179,76;
+/* ── desk tokens, mapped onto the OnPoint Politics brand tokens ──────────────
+   The desk keeps its own --fc-* names so the rules below stay readable, but
+   every one resolves to a brand token from app/globals.css. Dark only. */
+.fc-page {
+  --fc-bg: var(--bg);
+  --fc-bg-rgb: 10,7,17;
+  --fc-ink: var(--ink);
+  --fc-ink-rgb: 243,239,248;
+  --fc-line-rgb: 255,255,255;
+  --fc-band: var(--glass);
+  --fc-idle: rgba(var(--line-rgb),.06);
+  --fc-idle-line: rgba(var(--canvas-rgb),.6);
+  --fc-elev: rgba(var(--bg2-rgb),.94);
+  --fc-elev-shadow: 0 12px 40px rgba(0,0,0,.5);
+  --fc-dem: var(--dem2); --fc-dem-rgb: 61,123,255;
+  --fc-gop: var(--gop2); --fc-gop-rgb: 255,59,92;
+  --fc-accent: var(--ink);
+  --fc-gold: var(--ink2); --fc-gold-rgb: 201,194,214;
+  --fc-line: var(--line);
+  --fc-ink-2: var(--ink2);
   --fc-mute: 1; --fc-floor: 0.13; --fc-struct: 1.25;
-  --fc-shadow: none;
+  position: relative; color: var(--ink); font-family: var(--font-b); font-size: 15px;
 }
-:root[data-theme="light"] {
-  --fc-bg: #f7f7f4;
-  --fc-bg-rgb: 247,247,244;
-  --fc-ink: #17171b;
-  --fc-ink-rgb: 23,23,27;
-  --fc-line-rgb: 23,23,27;
-  --fc-band: #f1f1ed;
-  --fc-idle: #e4e4de;
-  --fc-idle-line: rgba(23,23,27,0.28);
-  /* The raised surface has to be a light panel here. It was written as
-     rgba(var(--fc-line-rgb),0.97), and in light mode the line colour IS the ink,
-     so every tooltip came out a near-black card carrying near-black text. */
-  --fc-elev: rgba(var(--fc-line-rgb),0.97);
-  --fc-elev-shadow: 0 18px 44px rgba(23,23,27,0.16);
-  /* the site's own light-theme party colours — the dark-lifted pair sits just
-     under AA as text on white */
-  --fc-dem: #1d5fc4; --fc-dem-rgb: 29,95,196;
-  --fc-gop: #c22f3b; --fc-gop-rgb: 194,47,59;
-  --fc-accent: #5a2fd4;
-  --fc-gold: #7a5a10; --fc-gold-rgb: 122,90,16;
-  --fc-mute: 1.05; --fc-floor: 0.24; --fc-struct: 1.5;
-  --fc-shadow: 0 1px 2px rgba(23,23,27,0.04), 0 2px 10px rgba(23,23,27,0.06);
-}
+.fc-page .ph h1 .fc-hp.d { color: var(--dem2); }
+.fc-page .ph h1 .fc-hp.r { color: var(--gop2); }
+.fc-page .pmeta b.d { color: var(--dem2); }
+.fc-page .pmeta b.r { color: var(--gop2); }
+.fc-page .pmeta .btn { text-decoration: none; }
+.fc-stack { display: grid; gap: 16px; }
+.fc-card { min-width: 0; }
+.fc-card .card-h h3 { font-family: var(--font-d); font-weight: 700; letter-spacing: -.02em; }
+.fc-page .seg.fc-segc { flex-shrink: 0; }
+.fc-page .seg.sm button { padding: 5px 11px; font-size: 11.5px; }
+.fc-page .seg button:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+.fc-body { margin: 0; max-width: 70ch; font-size: 14px; line-height: 1.6; color: var(--ink2); }
+.fc-foot { margin: 22px 0 0; font-size: 12.5px; color: var(--mute); }
+.fc-foot a { color: var(--ink2); text-decoration: underline; text-underline-offset: 3px; }
+.fc-foot a:hover { color: var(--hi); }
 
-html, body { background: var(--fc-bg, var(--fc-bg)) !important; }
-html { height: auto !important; overflow-y: auto !important; }
-body { height: auto !important; min-height: 100svh; overflow: visible !important; overflow-x: clip !important; }
-body main > div { max-width: none !important; padding-left: 0 !important; padding-right: 0 !important; }
-body main > div > div { padding-top: 0 !important; padding-bottom: 0 !important; }
+.fc-seatbar { margin: 0 0 4px; }
+.fc-seatbar-ends { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; font-size: 14px; font-weight: 700; }
+.fc-seatbar-ends b { font-family: var(--font-d); font-size: 24px; font-weight: 800; letter-spacing: -.03em; font-variant-numeric: tabular-nums; }
+.fc-seatbar-mid { font-family: ${MONO}; font-size: 10px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--mute); }
+.fc-seatbar-track { position: relative; height: 12px; margin-top: 8px; border-radius: 99px; overflow: hidden; background: var(--gop); }
+.fc-seatbar-fill { position: absolute; left: 0; top: 0; bottom: 0; background: var(--dem); }
+.fc-seatbar-tick { position: absolute; top: -2px; bottom: -2px; width: 2px; background: var(--hi); opacity: .9; }
+.fc-seatbar-note { margin-top: 8px; font-size: 12px; color: var(--mute); }
 
-.fc-page { position: relative; min-height: 100svh; color: var(--fc-ink); background: var(--fc-bg); overflow-x: clip;
-  font-family: var(--font-body); font-size: 15px; letter-spacing: -0.01em;
-  width: 100vw; margin-left: calc(50% - 50vw); }
-.fc-page h1, .fc-page h2, .fc-page h3 { text-transform: none; margin: 0; font-family: var(--font-display); font-weight: 500; letter-spacing: -0.02em; }
-.fc-shell { position: relative; z-index: 2; max-width: 1280px; margin: 0 auto; padding: 0 clamp(20px, 4vw, 44px); }
-.fc-grain { position: fixed; inset: -40px; z-index: 3; pointer-events: none; opacity: 0.045; mix-blend-mode: overlay;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='0.6'/%3E%3C/svg%3E"); }
-
-.fc-loading { display: flex; align-items: center; justify-content: center; gap: 12px; min-height: 70svh; color: rgba(var(--fc-ink-rgb),calc(0.55 * var(--fc-mute) + var(--fc-floor))); font-size: 14px; }
-.fc-loading span, .fc-map-loading span { width: 8px; height: 8px; border-radius: 99px; background: var(--brand-grad); animation: fcPulse 1.4s ease-in-out infinite; }
-.fc-loading em, .fc-map-loading em { font-style: normal; }
-@keyframes fcPulse { 0%,100% { opacity: 1 } 50% { opacity: 0.25 } }
-
-.fc-eyebrow { display: inline-flex; align-items: center; gap: 9px; font-family: ${MONO}; font-size: 11.5px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(var(--fc-ink-rgb),calc(0.5 * var(--fc-mute) + var(--fc-floor))); }
-.fc-eyebrow-mk { width: 7px; height: 7px; background: var(--brand-grad); border-radius: 1.5px; flex-shrink: 0; }
-.fc-eyebrow-pip { width: 6px; height: 6px; border-radius: 99px; background: #e23950; box-shadow: 0 0 0 3px rgba(226,57,80,0.16); animation: fcPulse 1.8s ease-in-out infinite; }
-.fc-h2 { font-size: clamp(26px, 3.4vw, 42px); font-weight: 500; letter-spacing: -0.03em; line-height: 1.06; text-transform: lowercase; color: var(--fc-ink); margin-top: 14px; }
-.fc-h2 em, .fc-h1 em { font-style: normal; color: var(--fc-accent); }
-.fc-body { margin-top: 14px; max-width: 56ch; font-size: 15px; line-height: 1.6; color: rgba(var(--fc-ink-rgb),calc(0.58 * var(--fc-mute) + var(--fc-floor))); }
-
-.fc-status { position: sticky; top: 0; z-index: 40; background: rgba(var(--fc-bg-rgb),0.82); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(var(--fc-line-rgb),0.07); }
-.fc-status-in { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 9px clamp(20px,4vw,44px); font-size: 10.5px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(var(--fc-ink-rgb),calc(0.42 * var(--fc-mute) + var(--fc-floor))); }
-.fc-status-in em { font-style: normal; color: rgba(var(--fc-ink-rgb),calc(0.36 * var(--fc-mute) + var(--fc-floor))); margin: 0 6px; }
-.fc-pip { display: inline-block; width: 6px; height: 6px; border-radius: 99px; background: #e23950; margin-right: 7px; animation: fcPulse 1.8s ease-in-out infinite; }
-
-.fc-head { max-width: 980px; margin: clamp(34px, 6vh, 64px) auto 0; padding: 0 clamp(20px,4vw,44px); text-align: center; }
-.fc-h1 { margin-top: 18px; font-size: clamp(34px, 4.6vw, 58px); font-weight: 500; letter-spacing: -0.035em; line-height: 1.08; text-transform: lowercase; color: var(--fc-ink); }
-.fc-h1 b { font-weight: 800; }
-.fc-updated { margin-top: 16px; font-family: ${MONO}; font-size: 11px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(var(--fc-ink-rgb),calc(0.4 * var(--fc-mute) + var(--fc-floor))); }
-.fc-envline { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 10px; margin-top: 12px; font-size: 13px; font-weight: 500; color: rgba(var(--fc-ink-rgb),calc(0.5 * var(--fc-mute) + var(--fc-floor))); }
-.fc-envline b { font-weight: 800; font-variant-numeric: tabular-nums; }
-.fc-envline em { font-style: normal; color: rgba(var(--fc-ink-rgb),calc(0.36 * var(--fc-mute) + var(--fc-floor))); }
-
-.fc-seatbar { max-width: 980px; margin: clamp(26px, 4.4vh, 44px) auto 0; }
-.fc-seatbar-ends { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; font-size: 15px; font-weight: 600; }
-.fc-seatbar-ends b { font-size: 22px; font-weight: 800; font-variant-numeric: tabular-nums; }
-.fc-seatbar-mid { font-family: ${MONO}; font-size: 10px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(var(--fc-ink-rgb),calc(0.35 * var(--fc-mute) + var(--fc-floor))); }
-.fc-seatbar-track { position: relative; height: 12px; margin-top: 10px; border-radius: 99px; overflow: hidden; background: linear-gradient(90deg, #b62c3c, #a01426); }
-.fc-seatbar-fill { position: absolute; left: 0; top: 0; bottom: 0; background: linear-gradient(90deg, #183685, #3b6fde); }
-.fc-seatbar-tick { position: absolute; top: -2px; bottom: -2px; width: 2.5px; background: var(--fc-ink); box-shadow: 0 0 8px rgba(var(--fc-bg-rgb),0.8); }
-.fc-seatbar-note { margin-top: 8px; text-align: center; font-size: 11.5px; color: rgba(var(--fc-ink-rgb),calc(0.38 * var(--fc-mute) + var(--fc-floor))); }
-
-.fc-controls { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px; margin-top: clamp(24px, 4vh, 40px); scroll-margin-top: 60px; }
-.fc-controls-r { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
-.fc-ctl-label { font-family: ${MONO}; font-size: 10px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(var(--fc-ink-rgb),calc(0.38 * var(--fc-mute) + var(--fc-floor))); }
-.fc-seg { display: inline-flex; padding: 3px; border: 1px solid rgba(var(--fc-line-rgb),0.12); border-radius: 10px; background: rgba(var(--fc-line-rgb),0.03); }
-.fc-seg button { appearance: none; border: 0; background: none; cursor: pointer; padding: 9px 18px; border-radius: 8px;
-  font-family: inherit; font-size: 14px; font-weight: 600; color: rgba(var(--fc-ink-rgb),calc(0.55 * var(--fc-mute) + var(--fc-floor))); letter-spacing: -0.01em; transition: color .15s ease, background .15s ease; }
-.fc-seg button:hover { color: rgba(var(--fc-ink-rgb),calc(0.85 * var(--fc-mute) + var(--fc-floor))); }
-.fc-seg button.on { background: var(--fc-ink); color: var(--fc-bg); }
-.fc-seg.sm button { padding: 6px 12px; font-size: 12.5px; }
-.fc-seg button:focus-visible { outline: 2px solid #6d3ee9; outline-offset: 2px; }
-
-.fc-mapwrap { position: relative; margin-top: clamp(18px, 3vh, 30px); }
-.fc-map { display: block; width: min(1180px, 96vw); margin: 0 auto; overflow: visible; }
-.fc-map.race { width: min(760px, 92vw); }
+.fc-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: 18px; scroll-margin-top: 90px; }
+.fc-controls .seg { margin-left: 0; }
+.fc-ctl-label { font-family: ${MONO}; font-size: 10px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--mute); }
+.fc-ctl-label + .seg + .fc-ctl-label { margin-left: 10px; }
+.fc-mapcard { scroll-margin-top: 90px; }
+.fc-mapwrap { position: relative; margin-top: 16px; }
+.fc-map { display: block; width: 100%; max-width: 1180px; height: auto; margin: 0 auto; overflow: visible; }
+.fc-map.race { width: min(760px, 100%); }
 .fc-map-idle { fill: var(--fc-idle); stroke: rgba(var(--fc-ink-rgb),calc(0.06 * var(--fc-struct))); stroke-width: 0.8; }
-.fc-map-race { stroke: rgba(5,5,7,0.6); stroke-width: 0.7; cursor: pointer; transition: filter .15s ease; }
-.fc-map-race.cd { stroke: rgba(5,5,7,0.5); stroke-width: 0.45; }
-.fc-map-race:hover { filter: brightness(1.25); }
+.fc-map-race { stroke: rgba(var(--canvas-rgb),0.7); stroke-width: 0.7; cursor: pointer; transition: filter .15s ease; }
+.fc-map-race.cd { stroke: rgba(var(--canvas-rgb),0.55); stroke-width: 0.45; }
+.fc-map-race:hover { filter: brightness(1.25); stroke: var(--hi); }
 .fc-map-stateline { fill: none; stroke: rgba(var(--fc-ink-rgb),calc(0.3 * var(--fc-mute) + var(--fc-floor))); stroke-width: 0.9; pointer-events: none; }
 .fc-map-halo { fill: none; stroke: var(--fc-ink); stroke-width: 1.6; pointer-events: none; }
-.fc-map-loading { display: flex; align-items: center; justify-content: center; gap: 12px; height: 420px; color: rgba(var(--fc-ink-rgb),calc(0.5 * var(--fc-mute) + var(--fc-floor))); font-size: 13.5px; }
-.fc-map-loading.static { height: 120px; font-family: ${MONO}; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; }
+.fc-map-loading { min-height: 320px; display: grid; place-items: center; }
 .fc-map.anim { animation: fcMapIn 420ms cubic-bezier(0.16, 1, 0.3, 1); }
 @keyframes fcMapIn { from { opacity: 0; transform: scale(0.985); } to { opacity: 1; transform: none; } }
-.fc-hex { stroke: rgba(5,5,7,0.65); stroke-width: 1; cursor: pointer; transition: filter .15s ease; animation: fcHexIn 360ms cubic-bezier(0.16, 1, 0.3, 1) both; }
+.fc-hex { stroke: rgba(var(--canvas-rgb),0.7); stroke-width: 1; cursor: pointer; transition: filter .15s ease; animation: fcHexIn 360ms cubic-bezier(0.16, 1, 0.3, 1) both; }
 .fc-hexg { animation: fcHexIn 360ms cubic-bezier(0.16, 1, 0.3, 1) both; }
 .fc-hexg .fc-hex { animation: none; }
 .fc-hex:hover { filter: brightness(1.25); }
 .fc-hex.idle { fill: var(--fc-idle); stroke: rgba(var(--fc-ink-rgb),calc(0.07 * var(--fc-struct))); cursor: default; }
 .fc-hex.idle:hover { filter: none; }
-.fc-hex-label { fill: rgba(var(--fc-ink-rgb),calc(0.9 * var(--fc-mute) + var(--fc-floor))); font-family: ${MONO}; font-size: 12px; font-weight: 700; text-anchor: middle; pointer-events: none; paint-order: stroke; stroke: rgba(5,5,7,0.55); stroke-width: 2.5px; }
+.fc-hex-label { fill: rgba(var(--fc-ink-rgb),calc(0.9 * var(--fc-mute) + var(--fc-floor))); font-family: ${MONO}; font-size: 12px; font-weight: 700; text-anchor: middle; pointer-events: none; paint-order: stroke; stroke: rgba(var(--canvas-rgb),0.55); stroke-width: 2.5px; }
 .fc-hex-label.idle { fill: rgba(var(--fc-ink-rgb),calc(0.22 * var(--fc-struct))); stroke: none; }
 @keyframes fcHexIn { from { opacity: 0; transform: scale(0.6); transform-box: fill-box; transform-origin: center; } to { opacity: 1; transform: scale(1); transform-box: fill-box; transform-origin: center; } }
-.fc-legend { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; margin-top: 18px; font-family: ${MONO}; font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(var(--fc-ink-rgb),calc(0.5 * var(--fc-mute) + var(--fc-floor))); }
-.fc-legend span { display: inline-flex; align-items: center; gap: 6px; }
-.fc-legend i { width: 12px; height: 12px; border-radius: 3px; }
 
-.fc-tip { position: fixed; z-index: 60; width: 274px; padding: 12px 14px; border-radius: 12px; pointer-events: none;
+.fc-legend { justify-content: center; align-items: center; margin-top: 14px; }
+.fc-legend .mono { font-family: ${MONO}; font-size: 11px; color: var(--ink2); }
+.fc-ramp { flex: 1; max-width: 300px; margin: 0 !important; }
+.fc-legend-note { width: 100%; text-align: center; font-size: 12px; }
+.fc-tip { position: fixed; z-index: 80; font-family: var(--font-b); color: var(--ink2); width: 274px; padding: 12px 14px; border-radius: 12px; pointer-events: none;
   background: var(--fc-elev); border: 1px solid rgba(var(--fc-line-rgb),0.13); box-shadow: var(--fc-elev-shadow);
   -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); }
-.fc-tip-name { font-family: ${OSWALD}; font-weight: 600; font-size: 15px; letter-spacing: 0.03em; text-transform: uppercase; color: var(--fc-ink); }
+.fc-tip-name { font-family: var(--font-d); font-weight: 700; font-size: 14px; letter-spacing: -0.01em; color: var(--hi); }
 .fc-tip-row { display: flex; align-items: center; gap: 8px; margin-top: 8px; font-size: 13.5px; }
 .fc-tip-row i { width: 3px; height: 16px; flex-shrink: 0; }
 .fc-tip-row b { font-weight: 700; }
@@ -1963,7 +1859,7 @@ body main > div > div { padding-top: 0 !important; padding-bottom: 0 !important;
 .fc-stage-layer button { font-family: ${MONO}; font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(var(--fc-ink-rgb),calc(0.42 * var(--fc-mute) + var(--fc-floor))); background: rgba(var(--fc-line-rgb),0.03); border: 1px solid rgba(var(--fc-line-rgb),0.09); border-radius: 999px; padding: 7px 16px; cursor: pointer; }
 .fc-stage-layer button:hover { color: rgba(var(--fc-ink-rgb),calc(0.75 * var(--fc-mute) + var(--fc-floor))); }
 .fc-stage-layer button.on { color: var(--fc-ink); background: rgba(var(--fc-line-rgb),0.1); border-color: rgba(var(--fc-line-rgb),0.22); }
-.fc-stage-votes { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 22px; margin-top: 12px; font-size: 13px; }
+.fc-stage-votes { display: flex; flex-wrap: wrap; justify-content: flex-start; gap: 8px 22px; margin-top: 12px; font-size: 13px; }
 .fc-stage-votes span { display: inline-flex; align-items: center; gap: 7px; color: rgba(var(--fc-ink-rgb),calc(0.58 * var(--fc-mute) + var(--fc-floor))); }
 .fc-stage-votes i { width: 3px; height: 14px; flex-shrink: 0; }
 .fc-stage-votes b { color: var(--fc-ink); font-family: ${MONO}; font-weight: 700; font-variant-numeric: tabular-nums; }
@@ -1971,30 +1867,22 @@ body main > div > div { padding-top: 0 !important; padding-bottom: 0 !important;
 .fc-stage-votes.rcv { margin-top: 8px; font-size: 12px; gap: 6px 18px; }
 .fc-stage-votes.rcv > span:first-child { font-family: ${MONO}; font-size: 9.5px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(var(--fc-ink-rgb),calc(0.36 * var(--fc-mute) + var(--fc-floor))); }
 
-.fc-back { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 20px; background: none; border: 1px solid rgba(var(--fc-line-rgb),0.14); border-radius: 99px; padding: 8px 16px; cursor: pointer;
-  font-family: inherit; font-size: 13px; font-weight: 600; color: rgba(var(--fc-ink-rgb),calc(0.7 * var(--fc-mute) + var(--fc-floor))); transition: border-color .15s ease, color .15s ease; }
-.fc-back:hover { color: var(--fc-ink); border-color: rgba(109,62,233,0.5); }
-.fc-back span { transition: transform .15s ease; display: inline-block; }
-.fc-back:hover span { transform: translateX(-3px); }
-.fc-stage-year { font-family: ${MONO}; font-size: 10.5px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(var(--fc-ink-rgb),calc(0.4 * var(--fc-mute) + var(--fc-floor))); }
-.fc-stage-title h2 { margin-top: 8px; font-family: ${OSWALD}; font-weight: 600; font-size: clamp(28px, 4vw, 44px); letter-spacing: 0.01em; text-transform: uppercase; line-height: 1.04; color: var(--fc-ink); }
+.fc-stage-head { display: grid; gap: 14px; }
+.fc-stage-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.fc-stage-title h2 { margin-top: 6px; font-family: var(--font-d); font-weight: 800; font-size: clamp(24px, 3vw, 34px); letter-spacing: -0.03em; line-height: 1.08; color: var(--hi); }
 .fc-stage-banner { margin-top: 10px; font-family: ${MONO}; font-size: 12.5px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
 .fc-stage-map { margin-top: 10px; }
 .fc-stage-caption { margin-top: 12px; text-align: center; font-family: ${MONO}; font-size: 10px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(var(--fc-ink-rgb),calc(0.35 * var(--fc-mute) + var(--fc-floor))); }
 
-.fc-sec { padding: clamp(48px, 8vh, 92px) 0 0; }
-.fc-sec.last { padding-bottom: clamp(40px, 6vh, 70px); }
-.fc-band { margin-top: clamp(48px, 8vh, 92px); padding: clamp(44px, 7vh, 80px) 0; background: var(--fc-band); border-top: 1px solid rgba(var(--fc-line-rgb),0.05); border-bottom: 1px solid rgba(var(--fc-line-rgb),0.05); }
-.fc-band + .fc-sec { padding-top: clamp(40px, 6.5vh, 76px); }
 
-.fc-hist { position: relative; margin-top: 40px; padding-bottom: 44px; }
+.fc-hist { position: relative; margin-top: 30px; padding-bottom: 44px; }
 .fc-hist-svg { display: block; width: 100%; height: auto; }
 .fc-hist-bar { transition: opacity .15s ease; }
 .fc-hist:hover .fc-hist-bar { opacity: 0.92; }
 .fc-hist-anno { position: absolute; top: -6px; z-index: 2; display: flex; flex-direction: column; gap: 3px; pointer-events: none; }
 .fc-hist-anno.gop { left: 0; }
 .fc-hist-anno.dem { right: 0; text-align: right; }
-.fc-hist-anno b { font-size: clamp(34px, 4vw, 52px); font-weight: 800; line-height: 1; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
+.fc-hist-anno b { font-family: var(--font-d); font-size: clamp(34px, 4vw, 52px); font-weight: 800; line-height: 1; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
 .fc-hist-anno span { font-size: 13.5px; font-weight: 600; color: rgba(var(--fc-ink-rgb),calc(0.85 * var(--fc-mute) + var(--fc-floor))); }
 .fc-hist-anno em { font-style: normal; font-family: ${MONO}; font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(var(--fc-ink-rgb),calc(0.4 * var(--fc-mute) + var(--fc-floor))); }
 .fc-hist-rulelabel { position: absolute; top: -2px; transform: translateX(-50%); font-family: ${MONO}; font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(var(--fc-ink-rgb),calc(0.6 * var(--fc-mute) + var(--fc-floor))); white-space: nowrap; }
@@ -2004,7 +1892,7 @@ body main > div > div { padding-top: 0 !important; padding-bottom: 0 !important;
 .fc-hist-svglabel { fill: rgba(var(--fc-ink-rgb),calc(0.85 * var(--fc-mute) + var(--fc-floor))); font-family: ${MONO}; font-size: 10.5px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
 .fc-hist-svglabel.side { font-size: 11.5px; }
 
-.fc-chartwrap { position: relative; margin-top: 28px; padding-right: 96px; }
+.fc-chartwrap { position: relative; margin-top: 20px; padding-right: 96px; }
 .fc-chart { display: block; width: 100%; }
 .fc-chart-ends { position: absolute; right: 0; top: 0; bottom: 0; width: 90px; pointer-events: none; }
 .fc-chart-ends span { position: absolute; left: 8px; transform: translateY(-50%); font-family: ${MONO}; font-size: 12.5px; font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; }
@@ -2014,23 +1902,18 @@ body main > div > div { padding-top: 0 !important; padding-bottom: 0 !important;
 .fc-xhair em { font-style: normal; font-family: ${MONO}; font-size: 9.5px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(var(--fc-ink-rgb),calc(0.45 * var(--fc-mute) + var(--fc-floor))); }
 .fc-xhair span { font-family: ${MONO}; font-size: 12px; font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; }
 
-.fc-table-tools { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px; margin-top: 26px; }
-.fc-find { display: flex; align-items: center; gap: 10px; flex: 1; min-width: 260px; max-width: 460px; height: 44px; padding: 0 14px;
-  border: 1px solid rgba(var(--fc-line-rgb),0.12); border-radius: 12px; background: rgba(var(--fc-line-rgb),0.03); color: rgba(var(--fc-ink-rgb),calc(0.4 * var(--fc-mute) + var(--fc-floor))); transition: border-color .15s ease; }
-.fc-find:focus-within { border-color: rgba(109,62,233,0.5); }
-.fc-find input { flex: 1; background: none; border: 0; outline: none; color: var(--fc-ink); font-family: inherit; font-size: 14px; }
-.fc-find input::placeholder { color: rgba(var(--fc-ink-rgb),calc(0.35 * var(--fc-mute) + var(--fc-floor))); }
-.fc-sorts { display: inline-flex; gap: 4px; }
-.fc-sorts button { appearance: none; background: none; border: 1px solid transparent; border-radius: 99px; padding: 7px 13px; cursor: pointer;
-  font-family: ${MONO}; font-size: 10.5px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(var(--fc-ink-rgb),calc(0.45 * var(--fc-mute) + var(--fc-floor))); transition: color .15s ease, border-color .15s ease; }
-.fc-sorts button:hover { color: rgba(var(--fc-ink-rgb),calc(0.8 * var(--fc-mute) + var(--fc-floor))); }
-.fc-sorts button.on { color: var(--fc-accent); border-color: rgba(109,62,233,0.35); }
+.fc-table-tools { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px; }
+.fc-table-tools .seg { margin-left: 0; }
+.opp input.search.fc-find { flex: 1; min-width: 240px; max-width: 440px; padding: 10px 16px; font-size: 14px; }
 
 .fc-table { margin-top: 14px; }
 .fc-tr { display: grid; grid-template-columns: minmax(0, 2.1fr) minmax(0, 1.7fr) 74px minmax(90px, 1fr) 84px 100px 76px; align-items: center; gap: 16px;
   width: 100%; text-align: left; padding: 14px 10px; background: none; border: 0; border-top: 1px solid rgba(var(--fc-line-rgb),0.08); cursor: pointer; transition: background .15s ease; font-family: inherit; color: inherit; }
 .fc-tr:last-of-type { border-bottom: 1px solid rgba(var(--fc-line-rgb),0.08); }
-.fc-tr:not(.fc-th):hover { background: rgba(var(--fc-line-rgb),0.03); }
+.fc-tr:not(.fc-th):hover { background: var(--glass2); }
+.fc-tr:focus-visible { outline: 2px solid var(--gold); outline-offset: -2px; }
+.fc-td-name a { color: var(--hi); }
+.fc-td-name a:hover b { text-decoration: underline; text-underline-offset: 3px; }
 .fc-th { cursor: default; border-top: 0; padding-bottom: 8px; }
 .fc-th span { font-family: ${MONO}; font-size: 9.5px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(var(--fc-ink-rgb),calc(0.38 * var(--fc-mute) + var(--fc-floor))); }
 .fc-th .num { text-align: right; }
@@ -2038,11 +1921,11 @@ body main > div > div { padding-top: 0 !important; padding-bottom: 0 !important;
 .fc-td-name em { display: block; margin-top: 2px; font-style: normal; font-size: 11px; color: rgba(var(--fc-ink-rgb),calc(0.4 * var(--fc-mute) + var(--fc-floor))); }
 .fc-td-cands { display: flex; flex-direction: column; gap: 3px; font-size: 12.5px; color: rgba(var(--fc-ink-rgb),calc(0.8 * var(--fc-mute) + var(--fc-floor))); }
 .fc-td-cands i { display: inline-flex; align-items: center; justify-content: center; width: 15px; height: 15px; margin-right: 7px; border-radius: 4px; font-style: normal; font-family: ${MONO}; font-size: 9px; font-weight: 700; }
-.fc-td-cands i.d { background: rgba(var(--fc-dem-rgb),0.07); color: var(--fc-dem); }
-.fc-td-cands i.r { background: rgba(var(--fc-gop-rgb),0.045); color: var(--fc-gop); }
+.fc-td-cands i.d { background: rgba(var(--fc-dem-rgb),0.16); color: var(--fc-dem); }
+.fc-td-cands i.r { background: rgba(var(--fc-gop-rgb),0.16); color: var(--fc-gop); }
 /* Independents take the same chip, in the independent purple. Osborn, Bengs, Achilles
    and Bodnar sit in the build's Democratic slot and were reading as Democrats. */
-.fc-td-cands i.i { background: rgba(122,75,176,0.10); color: #8d5cc6; }
+.fc-td-cands i.i { background: rgba(183,140,255,0.14); color: var(--ind); }
 .fc-td-margin, .fc-td-prob { font-family: ${MONO}; font-size: 13px; font-weight: 700; text-align: right; font-variant-numeric: tabular-nums; }
 .fc-rating { display: inline-flex; align-items: center; gap: 6px; font-style: normal; font-family: ${MONO}; font-size: 9.5px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
   padding: 4px 9px; border-radius: 6px; border: 1px solid rgba(var(--fc-line-rgb),0.16); white-space: nowrap; }
@@ -2050,23 +1933,21 @@ body main > div > div { padding-top: 0 !important; padding-bottom: 0 !important;
 
 .fc-mbar { position: relative; display: block; height: 14px; }
 .fc-mbar-track { position: absolute; left: 0; right: 0; top: 5px; height: 4px; border-radius: 99px;
-  background: linear-gradient(90deg, #1d3a85, #6f92e8 40%, ${TILT_D_TONE} 49.6%, ${TILT_R_TONE} 50.4%, #e05c6a 60%, #8f1f2b); opacity: 0.5; }
+  background: ${MARGIN_RAMP_CSS}; opacity: 0.5; }
 .fc-mbar-band { position: absolute; top: 4px; height: 6px; border-radius: 99px; background: rgba(var(--fc-ink-rgb),calc(0.26 * var(--fc-struct))); }
 .fc-mbar-dot { position: absolute; top: 50%; width: 9px; height: 9px; border-radius: 99px; background: var(--fc-ink); transform: translate(-50%, -50%); box-shadow: 0 0 0 2px var(--fc-bg); }
 .fc-mbar-mid { position: absolute; left: 50%; top: 1px; bottom: 1px; width: 1px; background: rgba(var(--fc-ink-rgb),calc(0.35 * var(--fc-mute) + var(--fc-floor))); }
 
-.fc-more { display: block; margin: 18px auto 0; background: none; border: 1px solid rgba(var(--fc-line-rgb),0.14); border-radius: 99px; padding: 10px 22px; cursor: pointer;
-  font-family: inherit; font-size: 13px; font-weight: 600; color: rgba(var(--fc-ink-rgb),calc(0.7 * var(--fc-mute) + var(--fc-floor))); transition: border-color .15s ease, color .15s ease; }
-.fc-more:hover { color: var(--fc-ink); border-color: rgba(109,62,233,0.5); }
 
-.fc-odds { display: grid; grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); gap: clamp(28px, 4vw, 64px); align-items: center; margin-top: 30px; }
+.fc-page .fc-more { display: flex; margin: 16px auto 0; }
+.fc-odds { display: grid; grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); gap: clamp(28px, 4vw, 64px); align-items: center; }
 .fc-score { padding-top: 6px; }
 .fc-score-row { display: flex; align-items: baseline; justify-content: space-between; gap: 18px; padding: 14px 0; }
 .fc-score-row + .fc-score-row { border-top: 1px solid rgba(var(--fc-line-rgb),0.08); }
 .fc-score-id { min-width: 0; }
 .fc-score-id b { display: block; font-size: clamp(19px, 2vw, 24px); font-weight: 700; letter-spacing: -0.015em; }
 .fc-score-id em { display: block; margin-top: 4px; font-style: normal; font-family: ${MONO}; font-size: 11px; font-weight: 600; letter-spacing: 0.06em; color: rgba(var(--fc-ink-rgb),calc(0.45 * var(--fc-mute) + var(--fc-floor))); }
-.fc-score-p { font-size: clamp(34px, 3.6vw, 46px); font-weight: 800; line-height: 1; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; flex-shrink: 0; }
+.fc-score-p { font-family: var(--font-d); font-size: clamp(34px, 3.6vw, 46px); font-weight: 800; line-height: 1; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; flex-shrink: 0; }
 .fc-h2h { position: relative; height: 8px; margin-top: 16px; border-radius: 99px; background: ${GOP}; overflow: visible; }
 .fc-h2h i { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 99px 0 0 99px; background: ${DEM}; }
 .fc-h2h-notch { position: absolute; left: 50%; top: -3px; bottom: -3px; width: 2px; background: var(--fc-bg); box-shadow: 0 0 0 1px rgba(var(--fc-ink-rgb),calc(0.35 * var(--fc-mute) + var(--fc-floor))); }
@@ -2087,7 +1968,7 @@ body main > div > div { padding-top: 0 !important; padding-bottom: 0 !important;
 .fc-ballot-id b { display: block; font-size: clamp(15px, 1.5vw, 18px); font-weight: 700; letter-spacing: -0.01em; }
 .fc-ballot-id em { display: block; margin-top: 3px; font-style: normal; font-family: ${MONO}; font-size: 10px; font-weight: 600; letter-spacing: 0.06em; color: rgba(var(--fc-ink-rgb),calc(0.45 * var(--fc-mute) + var(--fc-floor))); }
 .fc-ballot-num { grid-area: num; text-align: right; flex-shrink: 0; }
-.fc-ballot-num b { display: block; font-size: clamp(19px, 2vw, 24px); font-weight: 800; line-height: 1; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+.fc-ballot-num b { display: block; font-family: var(--font-d); font-size: clamp(19px, 2vw, 24px); font-weight: 800; line-height: 1; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
 .fc-ballot-num em { display: block; margin-top: 4px; font-style: normal; font-family: ${MONO}; font-size: 10px; font-weight: 600; letter-spacing: 0.04em; font-variant-numeric: tabular-nums; color: rgba(var(--fc-ink-rgb),calc(0.4 * var(--fc-mute) + var(--fc-floor))); }
 .fc-ballot-track { grid-area: track; height: 4px; margin-top: 6px; border-radius: 99px; background: rgba(var(--fc-ink-rgb),calc(0.08 * var(--fc-mute) + var(--fc-floor))); overflow: hidden; }
 .fc-ballot-track i { display: block; height: 100%; border-radius: 99px; }
@@ -2110,27 +1991,27 @@ body main > div > div { padding-top: 0 !important; padding-bottom: 0 !important;
 .fc-outcome-note b { font-family: ${MONO}; font-size: 12.5px; font-weight: 700; }
 
 /* what carries the estimate */
-.fc-grade { font-style: normal; margin-left: 8px; padding: 2px 6px; border-radius: 5px; font-family: ${MONO}; font-size: 9px; font-weight: 700; letter-spacing: 0.08em; color: var(--fc-accent); border: 1px solid rgba(109,62,233,0.3); background: rgba(109,62,233,0.06); vertical-align: 2px; }
+.fc-grade { font-style: normal; margin-left: 8px; padding: 2px 6px; border-radius: 5px; font-family: ${MONO}; font-size: 9px; font-weight: 700; letter-spacing: 0.08em; color: var(--ink); border: 1px solid var(--line2); background: var(--glass2); vertical-align: 2px; }
 
 /* the environment chips */
-.fc-envchips { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
+.fc-envchips { display: flex; flex-wrap: wrap; gap: 10px; }
 .fc-envchips span { display: inline-flex; align-items: baseline; gap: 7px; padding: 8px 13px; border: 1px solid rgba(var(--fc-line-rgb),0.1); border-radius: 9px; font-family: ${MONO}; font-size: 11px; font-weight: 600; letter-spacing: 0.05em; color: rgba(var(--fc-ink-rgb),calc(0.55 * var(--fc-mute) + var(--fc-floor))); }
 .fc-envchips b { font-size: 13px; font-weight: 700; font-variant-numeric: tabular-nums; }
-.fc-envchips b.lime { color: var(--fc-accent); }
+.fc-envchips b.hl { color: var(--ink); }
 
 /* the estimate waterfall */
-.fc-flow { margin-top: 30px; border-top: 1px solid rgba(var(--fc-line-rgb),0.1); }
+.fc-flow { margin-top: 22px; border-top: 1px solid rgba(var(--fc-line-rgb),0.1); }
 .fc-flow-scalehead { display: flex; justify-content: space-between; align-items: center; padding: 14px 0 4px; }
 .fc-flow-k { display: flex; align-items: center; gap: 10px; font-family: ${MONO}; font-size: 10px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(var(--fc-ink-rgb),calc(0.6 * var(--fc-mute) + var(--fc-floor))); }
 .fc-flow-k.head { color: rgba(var(--fc-ink-rgb),calc(0.38 * var(--fc-mute) + var(--fc-floor))); }
 .fc-flow-k.final { color: var(--fc-accent); }
 .fc-flow-num { font-style: normal; color: rgba(var(--fc-ink-rgb),calc(0.38 * var(--fc-mute) + var(--fc-floor))); }
-.fc-flow-carry { font-style: normal; margin-left: 4px; padding: 3px 7px; border-radius: 5px; border: 1px solid rgba(109,62,233,0.28); color: var(--fc-accent); font-size: 9px; letter-spacing: 0.1em; }
+.fc-flow-carry { font-style: normal; margin-left: 4px; padding: 3px 7px; border-radius: 5px; border: 1px solid var(--line2); color: var(--fc-accent); font-size: 9px; letter-spacing: 0.1em; }
 .fc-flow-window { display: inline-flex; align-items: center; gap: 8px; font-family: ${MONO}; font-size: 10.5px; font-weight: 700; }
 .fc-flow-window i { width: 44px; height: 1px; background: rgba(var(--fc-ink-rgb),calc(0.2 * var(--fc-struct))); }
 .fc-flow-row { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(20px, 3vw, 44px); align-items: center; padding: 17px 0; border-top: 1px solid rgba(var(--fc-line-rgb),0.06); }
 .fc-flow-row.off .fc-flow-k, .fc-flow-row.off .fc-flow-cap { opacity: 0.32; }
-.fc-flow-row.final { border-top: 1px solid rgba(var(--fc-line-rgb),0.14); background: linear-gradient(180deg, rgba(109,62,233,0.025), transparent); }
+.fc-flow-row.final { border-top: 1px solid rgba(var(--fc-line-rgb),0.14); background: rgba(var(--line-rgb),0.025); }
 .fc-flow-cap { margin: 6px 0 0; font-size: 13px; line-height: 1.55; color: rgba(var(--fc-ink-rgb),calc(0.55 * var(--fc-mute) + var(--fc-floor))); }
 .fc-flow-cap b { font-family: ${MONO}; font-size: 12.5px; font-weight: 700; }
 .fc-flow-chips { display: inline-flex; flex-wrap: wrap; gap: 6px; margin-right: 8px; vertical-align: middle; }
@@ -2148,7 +2029,7 @@ body main > div > div { padding-top: 0 !important; padding-bottom: 0 !important;
 .fc-flow-val.final em { font-size: 11.5px; color: rgba(var(--fc-ink-rgb),calc(0.6 * var(--fc-mute) + var(--fc-floor))); }
 
 
-.fc-polls { margin-top: 26px; }
+.fc-polls { margin-top: 22px; }
 .fc-polls-h { display: flex; justify-content: space-between; gap: 12px; padding-bottom: 10px; font-family: ${MONO}; font-size: 9.5px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(var(--fc-ink-rgb),calc(0.38 * var(--fc-mute) + var(--fc-floor))); }
 .fc-poll { display: flex; align-items: center; gap: 14px; padding: 11px 4px; border-top: 1px solid rgba(var(--fc-line-rgb),0.07); font-size: 13.5px; }
 .fc-poll b { font-weight: 600; min-width: 180px; }
@@ -2158,7 +2039,7 @@ body main > div > div { padding-top: 0 !important; padding-bottom: 0 !important;
 .fc-poll em { font-style: normal; font-family: ${MONO}; font-weight: 700; font-size: 13px; }
 
 /* simulated crosstabs */
-.fc-xt-total { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 26px; margin-top: 24px; padding: 16px 18px;
+.fc-xt-total { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 26px; margin-top: 18px; padding: 16px 18px;
   border: 1px solid rgba(var(--fc-line-rgb),0.1); border-radius: 14px; background: rgba(var(--fc-line-rgb),0.025); }
 .fc-xt-total .k { font-family: ${MONO}; font-size: 9.5px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(var(--fc-ink-rgb),calc(0.4 * var(--fc-mute) + var(--fc-floor))); }
 .fc-xt-total .v { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 20px; margin-left: auto; font-size: 13px; color: rgba(var(--fc-ink-rgb),calc(0.6 * var(--fc-mute) + var(--fc-floor))); }
@@ -2180,21 +2061,21 @@ body main > div > div { padding-top: 0 !important; padding-bottom: 0 !important;
 .fc-xt-tab.alt { letter-spacing: 0.14em; }
 .fc-xt-tab em { font-style: normal; font-size: 9.5px; font-weight: 700; color: rgba(var(--fc-ink-rgb),calc(0.42 * var(--fc-mute) + var(--fc-floor))); }
 .fc-xt-tab.on em { color: rgba(var(--fc-bg-rgb),0.45); }
-.fc-xt-tab:focus-visible { outline: 2px solid ${DEM}; outline-offset: 2px; }
+.fc-xt-tab:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
 .fc-xt-panel { margin-top: 18px; }
 .fc-xt-one { padding: 6px 18px 10px; border: 1px solid rgba(var(--fc-line-rgb),0.08); border-radius: 14px; background: rgba(var(--fc-line-rgb),0.02); overflow-x: auto; }
-.fc-page .fc-xt-ph { margin: 0 0 6px; font-family: ${OSWALD}; font-size: 15px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--fc-ink); }
+.fc-page .fc-xt-ph { margin: 0 0 6px; font-family: var(--font-d); font-size: 16px; font-weight: 700; letter-spacing: -0.01em; color: var(--hi); }
 .fc-xt-pn { margin: 0 0 14px; max-width: 68ch; font-size: 13.5px; line-height: 1.55; color: rgba(var(--fc-ink-rgb),calc(0.6 * var(--fc-mute) + var(--fc-floor))); }
 table.fc-xt.lead-table { padding: 0; }
 table.fc-xt.lead-table tr.clickable { cursor: pointer; }
 table.fc-xt.lead-table tr.clickable:hover td { background: rgba(var(--fc-line-rgb),0.04); }
-table.fc-xt.lead-table tr.clickable:focus-visible { outline: 2px solid ${DEM}; outline-offset: -2px; }
+table.fc-xt.lead-table tr.clickable:focus-visible { outline: 2px solid var(--gold); outline-offset: -2px; }
 table.fc-xt td.pull { font-family: ${MONO}; font-size: 12.5px; font-weight: 700; }
 table.fc-xt.lead-table td.g { width: 26%; min-width: 150px; }
 table.fc-xt.lead-table td.sh, table.fc-xt.lead-table th.sh { text-align: left; padding-left: 22px; }
 table.fc-xt.lead-table th:nth-child(3), table.fc-xt.lead-table td:nth-child(3) { text-align: right; padding-right: 8%; }
 .fc-xt-card { break-inside: avoid; -webkit-column-break-inside: avoid; margin-bottom: 16px; padding: 16px 16px 10px; border: 1px solid rgba(var(--fc-line-rgb),0.08); border-radius: 14px; background: rgba(var(--fc-line-rgb),0.02); min-width: 0; }
-.fc-page .fc-xt-card h3 { margin: 0 0 10px; font-family: ${OSWALD}; font-size: 13px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(var(--fc-ink-rgb),calc(0.75 * var(--fc-mute) + var(--fc-floor))); }
+.fc-page .fc-xt-card h3 { margin: 0 0 10px; font-family: ${MONO}; font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(var(--fc-ink-rgb),calc(0.75 * var(--fc-mute) + var(--fc-floor))); }
 .fc-xt-scroll { overflow-x: auto; }
 table.fc-xt { width: 100%; border-collapse: collapse; font-size: 12.5px; font-variant-numeric: tabular-nums; }
 table.fc-xt th { font-family: ${MONO}; font-size: 9px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
@@ -2224,16 +2105,14 @@ table.fc-xt td.mg i { display: inline-block; padding: 2px 7px; border-radius: 5p
   .fc-xt-total .v { margin-left: 0; gap: 8px 14px; }
 }
 
-.fc-similar { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 26px; }
+.fc-similar { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
 .fc-simchip { display: inline-flex; align-items: baseline; gap: 10px; background: rgba(var(--fc-line-rgb),0.03); border: 1px solid rgba(var(--fc-line-rgb),0.12); border-radius: 99px; padding: 10px 16px; cursor: pointer;
   font-family: inherit; color: inherit; transition: border-color .15s ease, background .15s ease; }
-.fc-simchip:hover { border-color: rgba(109,62,233,0.4); background: rgba(109,62,233,0.05); }
+.fc-simchip:hover { border-color: var(--line2); background: var(--glass2); }
 .fc-simchip b { font-size: 13px; font-weight: 600; }
 .fc-simchip span { font-family: ${MONO}; font-size: 11.5px; font-weight: 700; }
 .fc-simchip em { font-style: normal; font-family: ${MONO}; font-size: 10px; color: rgba(var(--fc-ink-rgb),calc(0.4 * var(--fc-mute) + var(--fc-floor))); }
 
-.fc-foot { margin-top: clamp(50px, 9vh, 100px); border-top: 1px solid rgba(var(--fc-line-rgb),0.08); }
-.fc-foot-in { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px; padding-top: 18px; padding-bottom: 26px; font-family: ${MONO}; font-size: 10px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(var(--fc-ink-rgb),calc(0.35 * var(--fc-mute) + var(--fc-floor))); }
 
 @media (max-width: 900px) {
   .fc-tr { grid-template-columns: minmax(0, 2fr) 70px minmax(70px, 1fr) 72px; }
@@ -2246,11 +2125,10 @@ table.fc-xt td.mg i { display: inline-block; padding: 2px 7px; border-radius: 5p
   .fc-outcome-axis span:nth-child(2), .fc-outcome-axis span:nth-child(4) { display: none; }
   .fc-score-p { font-size: 30px; }
   .fc-xhair { display: none; }
-  .fc-controls { justify-content: center; }
   .fc-chartwrap, .fc-chart-x { padding-right: 58px; }
   .fc-chart-ends { width: 54px; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .fc-pip, .fc-eyebrow-pip, .fc-loading span, .fc-map-loading span { animation: none; }
+  .fc-map.anim, .fc-hex, .fc-hexg { animation: none; }
 }
 `;

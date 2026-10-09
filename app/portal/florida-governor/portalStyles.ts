@@ -1,46 +1,42 @@
 /**
  * Styles for the internal desk. Surface, ink and signal tokens come from
- * globals.css so this flips with the site's data-theme; the candidate lane
+ * globals.css (dark only, OnPoint Politics tokens); the candidate lane
  * (--k1..--k5) and the map ramp are declared here to the same values the public
  * board uses, so a candidate is the same colour in both places.
  */
 
 export const PORTAL_CSS = `
 .pd{
-  --k1:#B23A2E; --k2:#1E6E86; --k3:#6D4B96; --k4:#A87516; --k5:#8A929C;
-  --map-stroke:rgba(var(--canvas-rgb),.14); --map-blank:#dcdcd2; --ramp-lo:rgb(237,237,231);
-  --mono:var(--font-numeric,'JetBrains Mono'),ui-monospace,monospace;
-  --sans:var(--font-body,'Geist'),system-ui,sans-serif;
+  --k1:#B23A2E; --k2:#1E6E86; --k3:#8a63ef; --k4:#e8b93c; --k5:#8A929C;
+  --map-stroke:rgba(var(--line-rgb),.10); --map-blank:#2e2e36; --ramp-lo:rgb(30,30,36);
+  --mono:var(--font-m);
+  --sans:var(--font-b);
   --r-panel:14px; --r-card:10px;
-  min-height:100vh;background:var(--canvas);color:var(--ink);
+  min-height:100vh;color:var(--ink);
   font-family:var(--sans);-webkit-font-smoothing:antialiased;
 }
-html[data-theme="dark"] .pd{
-  --k3:#8a63ef; --k4:#e8b93c;
-  --map-stroke:rgba(var(--line-rgb),.10); --map-blank:#2e2e36; --ramp-lo:rgb(30,30,36);
-}
 .pd *{margin:0;padding:0;box-sizing:border-box}
-.pd h1,.pd h2{font-weight:800;letter-spacing:-.028em}
+.pd h1,.pd h2{font-family:var(--font-d);font-weight:800;letter-spacing:-.03em}
 .pd .num,.pd b{font-variant-numeric:tabular-nums}
 .pd .good{color:var(--k2)}
 .pd .bad{color:var(--k1)}
 
-.pd-shell{max-width:1240px;margin:0 auto;padding:26px 22px 70px}
+.pd-shell{margin:0 auto;padding:0 0 40px}
 
 /* header */
 .pd-top{display:flex;justify-content:space-between;align-items:flex-start;gap:28px;
   flex-wrap:wrap;padding-bottom:20px;border-bottom:1px solid var(--hairline)}
 .pd-badge{display:inline-block;font-family:var(--mono);font-size:9px;font-weight:700;
-  letter-spacing:.13em;text-transform:uppercase;color:var(--gold);
-  border:1px solid var(--gold);border-radius:999px;padding:4px 10px}
+  letter-spacing:.13em;text-transform:uppercase;color:var(--ink2);
+  border:1px solid var(--line2);border-radius:999px;padding:4px 10px}
 .pd-top h1{font-size:clamp(22px,2.6vw,31px);line-height:1.12;margin-top:12px}
-.pd-top h1 em{font-style:normal;color:var(--k2)}
+.pd-top h1 em{font-style:normal;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
 .pd-deck{font-size:13.5px;color:var(--ink2);max-width:560px;margin-top:9px;line-height:1.6}
 .pd-top-right{display:flex;flex-direction:column;align-items:flex-end;gap:10px}
 .pd-stamp{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:10px;
   letter-spacing:.09em;text-transform:uppercase;color:var(--ink3)}
 .pd-stamp b{color:var(--ink);font-size:12px}
-.pd-stamp em{font-style:normal;color:var(--gold)}
+.pd-stamp em{font-style:normal;color:var(--ink)}
 .pd-dot{width:7px;height:7px;border-radius:50%;background:var(--live);animation:pd-pulse 1.7s infinite}
 @keyframes pd-pulse{50%{opacity:.3}}
 .pd-top-links{display:flex;gap:8px}

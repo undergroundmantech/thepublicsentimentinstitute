@@ -13,7 +13,7 @@ import {
   ReferenceLine,
   usePlotArea,
 } from "recharts";
-import type { AggDaily, AggPollPoint, Series } from "@/app/polling/lib/aggregates";
+import type { AggDaily, AggPollPoint, Series } from "@/app/_polling/lib/aggregates";
 
 /* =============================================================================
    AggregatePollChart — poll cloud + PSI aggregate line + RCP-style spread.
@@ -370,15 +370,15 @@ const CSS = `
   .apc-controls-right { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
 
   .apc-seg { display: inline-flex; padding: 3px; background: rgba(var(--line-rgb),0.04); border: 1px solid rgba(var(--line-rgb),0.09); border-radius: 10px; }
-  .apc-seg-btn { appearance: none; border: 0; background: transparent; cursor: pointer; font-family: var(--font-body), monospace; font-size: 12px; font-weight: 600; color: rgba(var(--ink-rgb),calc(0.5 * var(--mute) + var(--floor))); padding: 7px 16px; border-radius: 7px; line-height: 1; transition: color 160ms ease, background 160ms ease; }
+  .apc-seg-btn { appearance: none; border: 0; background: transparent; cursor: pointer; font-family: var(--font-body), monospace; font-size: 12px; font-weight: 600; color: rgba(var(--ink-rgb),calc(0.5 * var(--mute-k) + var(--floor))); padding: 7px 16px; border-radius: 7px; line-height: 1; transition: color 160ms ease, background 160ms ease; }
   .apc-seg-sm .apc-seg-btn { padding: 6px 11px; font-size: 11px; }
-  .apc-seg-btn:hover { color: rgba(var(--ink-rgb),calc(0.82 * var(--mute) + var(--floor))); }
+  .apc-seg-btn:hover { color: rgba(var(--ink-rgb),calc(0.82 * var(--mute-k) + var(--floor))); }
   .apc-seg-btn.is-active { color: #000; background: #fafafa; box-shadow: 0 1px 2px rgba(var(--line-rgb),0.5); }
 
-  .apc-toggle { display: inline-flex; align-items: center; gap: 8px; cursor: pointer; font-family: var(--font-body), monospace; font-size: 12px; font-weight: 600; color: rgba(var(--ink-rgb),calc(0.5 * var(--mute) + var(--floor))); padding: 7px 13px; border-radius: 9px; line-height: 1; border: 1px solid rgba(var(--line-rgb),0.09); background: transparent; transition: color 160ms ease, border-color 160ms ease, opacity 160ms ease; }
-  .apc-toggle:hover { color: rgba(var(--ink-rgb),calc(0.85 * var(--mute) + var(--floor))); border-color: rgba(var(--ink-rgb),calc(0.18 * var(--struct))); }
+  .apc-toggle { display: inline-flex; align-items: center; gap: 8px; cursor: pointer; font-family: var(--font-body), monospace; font-size: 12px; font-weight: 600; color: rgba(var(--ink-rgb),calc(0.5 * var(--mute-k) + var(--floor))); padding: 7px 13px; border-radius: 9px; line-height: 1; border: 1px solid rgba(var(--line-rgb),0.09); background: transparent; transition: color 160ms ease, border-color 160ms ease, opacity 160ms ease; }
+  .apc-toggle:hover { color: rgba(var(--ink-rgb),calc(0.85 * var(--mute-k) + var(--floor))); border-color: rgba(var(--ink-rgb),calc(0.18 * var(--struct))); }
   .apc-toggle:not(.is-on) { opacity: 0.5; }
-  .apc-toggle.is-on { color: rgba(var(--ink-rgb),calc(0.85 * var(--mute) + var(--floor))); }
+  .apc-toggle.is-on { color: rgba(var(--ink-rgb),calc(0.85 * var(--mute-k) + var(--floor))); }
   .apc-toggle-dots { display: inline-flex; gap: 3px; }
   .apc-toggle-dots i { width: 7px; height: 7px; border-radius: 50%; display: block; }
 
@@ -401,25 +401,25 @@ const CSS = `
   .apc-slider { position: absolute; top: 0; bottom: 0; width: 1px; background: rgba(var(--line-rgb),0.5); }
   /* borderless readout — text floats with a dark halo, no boxes */
   .apc-net { position: absolute; top: -4px; transform: translate(-50%, -100%); display: flex; flex-direction: column; align-items: center; gap: 3px; white-space: nowrap; text-shadow: 0 0 5px #000, 0 0 8px #000, 0 1px 2px #000; }
-  .apc-net-date { font-family: var(--font-body), monospace; font-size: 9.5px; font-weight: 600; letter-spacing: 0.06em; color: rgba(var(--ink-rgb),calc(0.55 * var(--mute) + var(--floor))); }
+  .apc-net-date { font-family: var(--font-body), monospace; font-size: 9.5px; font-weight: 600; letter-spacing: 0.06em; color: rgba(var(--ink-rgb),calc(0.55 * var(--mute-k) + var(--floor))); }
   .apc-net-val { display: inline-flex; align-items: baseline; gap: 7px; }
-  .apc-net-k { font-family: var(--font-body), monospace; font-size: 8.5px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(var(--ink-rgb),calc(0.5 * var(--mute) + var(--floor))); }
+  .apc-net-k { font-family: var(--font-body), monospace; font-size: 8.5px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(var(--ink-rgb),calc(0.5 * var(--mute-k) + var(--floor))); }
   .apc-net-val b { font-family: var(--font-body), monospace; font-size: 16px; font-weight: 700; font-variant-numeric: tabular-nums; letter-spacing: -0.01em; }
 
   .apc-adot { position: absolute; width: 11px; height: 11px; border-radius: 50%; border: 2.5px solid #000; transform: translate(-50%, -50%); box-shadow: 0 0 10px -1px currentColor; }
   .apc-chip { position: absolute; transform: translate(15px, -50%); display: inline-flex; align-items: baseline; gap: 7px; white-space: nowrap; text-shadow: 0 0 5px #000, 0 0 9px #000, 0 0 9px #000, 0 1px 2px #000; }
   .apc-chip.is-left { transform: translate(calc(-100% - 15px), -50%); }
   .apc-chip-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; align-self: center; }
-  .apc-chip-label { font-family: var(--font-body), monospace; font-size: 12px; font-weight: 600; color: #fff; }
+  .apc-chip-label { font-family: var(--font-body), monospace; font-size: 12px; font-weight: 600; color: var(--hi); }
   .apc-chip-val { font-family: var(--font-body), monospace; font-size: 13.5px; font-weight: 700; font-variant-numeric: tabular-nums; }
 
   .apc-spread-cap { display: flex; align-items: baseline; gap: 10px; margin: 14px 0 2px; padding-left: 4px; }
-  .apc-spread-cap > span:first-child { font-family: var(--font-body), monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(var(--ink-rgb),calc(0.5 * var(--mute) + var(--floor))); }
-  .apc-spread-sub { font-family: var(--font-body), monospace; font-size: 10px; color: rgba(var(--ink-rgb),calc(0.3 * var(--mute) + var(--floor))); letter-spacing: 0.04em; }
+  .apc-spread-cap > span:first-child { font-family: var(--font-body), monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(var(--ink-rgb),calc(0.5 * var(--mute-k) + var(--floor))); }
+  .apc-spread-sub { font-family: var(--font-body), monospace; font-size: 10px; color: rgba(var(--ink-rgb),calc(0.3 * var(--mute-k) + var(--floor))); letter-spacing: 0.04em; }
   .apc-spread { width: 100%; }
 
   .apc-legend { display: flex; flex-wrap: wrap; gap: 8px 18px; padding: 12px 4px 2px; justify-content: center; }
-  .apc-legend-item { display: inline-flex; align-items: center; gap: 7px; font-family: var(--font-body), monospace; font-size: 12px; color: rgba(var(--ink-rgb),calc(0.55 * var(--mute) + var(--floor))); }
+  .apc-legend-item { display: inline-flex; align-items: center; gap: 7px; font-family: var(--font-body), monospace; font-size: 12px; color: rgba(var(--ink-rgb),calc(0.55 * var(--mute-k) + var(--floor))); }
   .apc-legend-item b { font-variant-numeric: tabular-nums; margin-left: 2px; }
   .apc-legend-dot { width: 8px; height: 8px; border-radius: 50%; }
 `;

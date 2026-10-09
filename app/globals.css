@@ -1,681 +1,381 @@
 @import "tailwindcss";
 
 /* =========================================================
-   PSI — UI v2 (Light · Rounded · Modern)
-   Aesthetic: Modern fintech / SaaS — same palette and fonts.
+   OnPoint Politics, the site design system (opp-ui).
+   Dark by default, with a true light theme (html[data-theme="light"]).
+   Glass surfaces, one brand gradient, party colors for data.
+   Tokens: .github/skills/opp-ui/tokens.css. Component classes: app/opp.css.
    ========================================================= */
 
-/* -------------------------------------------
-   1) DESIGN TOKENS
--------------------------------------------- */
+/* ---------- 1) OnPoint tokens ---------- */
 :root {
-  /* ---- Core surfaces (LIGHT — clean newsroom) ---- */
-  --canvas:      #f7f7f4;
-  --background:  #f7f7f4;   /* alias */
-  --background2: #f1f1ed;   /* alias */
-  --panel:       #ffffff;
-  --panel2:      #f1f1ed;
-  --panel3:      #e9e9e4;
+  color-scheme: dark;
 
-  /* ---- Text ---- */
-  --ink:        #17171b;
-  --foreground: #17171b;    /* alias */
-  --foreground2:#3a3a3f;    /* alias */
-  --ink2:       #5d5d58;
-  --muted:      #5d5d58;    /* alias */
-  --ink3:       #62625b;
-  --muted2:     #62625b;    /* alias */
-  --muted3:     rgba(23, 23, 27, 0.68);
+  /* surfaces */
+  --bg: #0a0711;
+  --bg2: #110019;
+  --bg3: #160a24;
+  --glass: rgba(var(--line-rgb),.035);
+  --glass2: rgba(var(--line-rgb),.06);
+  --line: rgba(var(--line-rgb),.09);
+  --line2: rgba(var(--line-rgb),.16);
 
-  /* ---- Borders / hairlines ---- */
-  --hairline:  #e8e8e2;
-  --hairline2: #d9d9d1;
-  --border:  #e8e8e2;       /* alias */
-  --border2: #d9d9d1;       /* alias */
-  --border3: #c4c4ba;       /* alias */
+  /* text */
+  --ink: #f3eff8;
+  --ink2: #c9c2d6;
+  --mute: #8e86a3;
+  --mute2: #5f5873;
+  /* strongest foreground: emphasized text, inverted pills, hover outlines. #fff on dark, near-black on light */
+  --hi: #ffffff;
+  --logo: #ffffff;
 
-  /* ---- Party / candidate (DATA ONLY — never surface fill) ---- */
-  --dem:  #1d5fc4;
-  --gop:  #c22f3b;
-  --rep:  #c22f3b;          /* alias */
-  --c2:   #b5338f;          /* same-party primary: candidate B (magenta) */
-  --dem-dim: rgba(29, 95, 196, 0.10);
-  --gop-dim: rgba(194, 47, 59, 0.10);
+  /* brand */
+  --b1: #064bf9;
+  --b2: #83449c;
+  --b3: #f9064b;
+  --grad: linear-gradient(90deg, #064bf9 0%, #83449c 50%, #f9064b 100%);
+  --gold: #e7b341;
+  --gold2: #bb831c;
+  --gold-fill: #e7b341;   /* gold as a surface, with dark text on it, in both themes */
 
-  /* ---- Non-partisan signal lane ---- */
-  --live:   #0d9488;        /* live / auto-refresh */
-  --called: #15803d;        /* race called */
-  --win:    #15803d;        /* alias */
-  --gold:   #a16207;        /* target marker / meaningful-remaining highlight */
+  /* party, brightened for dark ground, data only */
+  --dem: #3d7bff;  --dem2: #7fa6ff;  --dem3: #b9ccff;
+  --gop: #ff3b5c;  --gop2: #ff8399;  --gop3: #ffbfcb;
+  --ind: #b78cff;
+  --toss: #e7b341;
+  --live: #ff3b5c;
+  --win: #3ddc97;
 
-  /* ---- Brand gradient (from tpsi-logo.svg) — TWO placements only ---- */
-  --brand-grad: linear-gradient(90deg,#d2494b 0%,#a44197 20%,#6d3ee9 51%,#3f60e8 100%);
+  /* rating ramp: pale for close, deep for solid */
+  --rate-safe-d: #1a3fb0;
+  --rate-likely-d: #3d7bff;
+  --rate-lean-d: #a6c2ff;
+  --rate-toss: #e7b341;
+  --rate-lean-r: #ffb3c0;
+  --rate-likely-r: #ff3b5c;
+  --rate-safe-r: #b0163a;
+  --rate-ind: #b78cff;
+  --rate-none: rgba(var(--line-rgb),.08);
 
-  /* ---- Legacy accent aliases (re-pointed; kept so token code survives) ---- */
-  --purple:      #6d3ee9;
-  --purple2:     #8a63ef;
-  --purple-soft: #5a2fd4;
-  --purple-dim:  rgba(109, 62, 233, 0.10);
-  --purple-glow: rgba(109, 62, 233, 0.20);
-  --red:      #c22f3b;
-  --red2:     #d64550;
-  --red-dim:  rgba(194, 47, 59, 0.10);
-  --red-glow: rgba(194, 47, 59, 0.20);
-  --blue:      #1d5fc4;
-  --blue2:     #3b7bde;
-  --blue-dim:  rgba(29, 95, 196, 0.10);
-  --blue-glow: rgba(29, 95, 196, 0.20);
-  --white-accent: #17171b;
+  /* county margin ramp endpoints, interpolate in RGB by |margin| / 40 */
+  --county-d-pale: #d6e2ff;  --county-d-deep: #10288c;
+  --county-r-pale: #ffdce4;  --county-r-deep: #8c0a28;
 
-  /* ---- Shadows — soft for light ---- */
-  --shadow-sm: 0 1px 2px rgba(23,23,27,0.04), 0 2px 8px rgba(23,23,27,0.05);
-  --shadow-md: 0 4px 12px rgba(23,23,27,0.05), 0 12px 32px rgba(23,23,27,0.07);
-  --shadow-lg: 0 6px 16px rgba(23,23,27,0.05), 0 24px 64px rgba(23,23,27,0.10);
-  --shadow-purple: 0 12px 40px rgba(109,62,233,0.12);
-  --shadow-red:    0 12px 40px rgba(194,47,59,0.12);
-  --shadow-blue:   0 12px 40px rgba(29,95,196,0.12);
+  /* type: next/font declares --font-display, --font-body (Geist) and --font-numeric (JetBrains Mono) on <html> */
+  --font-d: var(--font-display), system-ui, sans-serif;
+  --font-b: var(--font-body), system-ui, sans-serif;
+  --font-m: var(--font-numeric), ui-monospace, monospace;
 
-  /* ---- Gradients (legacy names — single-hue purple; brand-grad is reserved
-     for the nav underrule + active race-switcher tab only) ---- */
-  --gradient-purple:      linear-gradient(135deg, var(--purple2) 0%, var(--purple) 50%, var(--purple-soft) 100%);
-  --gradient-purple-soft: linear-gradient(135deg, var(--purple) 0%, var(--purple-soft) 100%);
+  /* shape */
+  --r: 14px;
+  --r-pill: 999px;
+  --shadow-card: 0 30px 80px rgba(0,0,0,.45), inset 0 1px 0 rgba(var(--line-rgb),.08);
+  --shadow-grad: 0 8px 30px rgba(131,68,156,.4);
 
-  /* ---- Radii ---- */
-  --r-sm: 5px; --r-md: 8px; --r-lg: 11px; --r-xl: 14px; --r-pill: 9999px;
+  /* layout */
+  --wrap: 1280px;
+  --gutter: 20px;
+}
 
-  /* ---- Fonts ----
-     next/font already declares --font-display, --font-body and --font-numeric on
-     <html> through the className in layout.tsx. Re-declaring them here as
-     var(--font-display) was a cycle: a custom property that references itself is
-     invalid at computed-value time, so whichever of the two rules won the cascade
-     could kill the font for the whole site. The next/font declarations are the
-     only ones, as they were meant to be. */
+/* ---------- 2) Aliases, so page code written for the PSI tokens keeps working ---------- */
+:root {
+  --background: var(--bg);
+  --background2: var(--bg2);
+  --panel: var(--glass);
+  --panel2: var(--glass2);
+  --panel3: rgba(var(--line-rgb),.08);
+  --foreground: var(--ink);
+  --foreground2: var(--ink2);
+  --muted: var(--mute);
+  --muted2: var(--mute2);
+  --muted3: var(--mute);
+  --border: var(--line);
+  --border2: var(--line2);
+  --border3: rgba(var(--line-rgb),.24);
+  --hairline: var(--line);
+  --hairline2: var(--line2);
+  --ink3: var(--mute);
+  --canvas: var(--bg);
+  --purple: var(--ind);
+  --purple2: var(--ind);
+  --purple-soft: var(--ind);
+  --purple-dim: rgba(183,140,255,.16);
+  --purple-glow: rgba(183,140,255,.24);
+  --red: var(--gop);
+  --red2: var(--gop2);
+  --red-dim: rgba(255,59,92,.16);
+  --red-glow: rgba(255,59,92,.24);
+  --blue: var(--dem);
+  --blue2: var(--dem2);
+  --blue-dim: rgba(61,123,255,.16);
+  --blue-glow: rgba(61,123,255,.24);
+  --rep: var(--gop);
+  --dem-dim: rgba(61,123,255,.16);
+  --gop-dim: rgba(255,59,92,.16);
+  --c2: var(--gop2);
+  --called: var(--win);
+  --white-accent: var(--ink);
+  --accent-link: var(--ink);
+  --approve: var(--win);
+  --disapprove: var(--gop);
+  --brand-grad: var(--grad);
+  --gradient-purple: var(--grad);
+  --gradient-purple-soft: var(--grad);
 
-  /* ---- Tracking ---- */
-  --trk-1: 0.04em; --trk-2: 0.08em; --trk-3: 0.14em;
+  /* base colors as rgb triples, for pages that draw every grey from one base */
+  --ink-rgb: 243, 239, 248;
+  --canvas-rgb: 10, 7, 17;
+  --line-rgb: 255, 255, 255;
+  --bg2-rgb: 17, 0, 25;
+  --hi-rgb: 255, 255, 255;
+  /* the muted-text multiplier, renamed from --mute so --mute can be the color */
+  --mute-k: 1; --floor: 0.13; --struct: 1.25;
 
-  /* ---- Motion ---- */
-  /* ── theme-following neutrals ───────────────────────────────────────────
-     Pages across the site painted their own greys as literal rgba(), which is
-     why several read as one theme's text on the other theme's ground. These
-     give every page one base to draw from. Only the base moves between
-     themes; each rule keeps its own alpha.
+  --shadow-sm: 0 1px 2px rgba(0,0,0,.4), 0 2px 8px rgba(0,0,0,.3);
+  --shadow-md: 0 4px 12px rgba(0,0,0,.45), 0 12px 32px rgba(0,0,0,.4);
+  --shadow-lg: var(--shadow-card);
+  --shadow-purple: var(--shadow-grad);
+  --shadow-red: 0 12px 40px rgba(255,59,92,.25);
+  --shadow-blue: 0 12px 40px rgba(61,123,255,.25);
 
-     mute/floor exist because the same alpha separates far less over a light
-     ground than over black: rgba(ink,0.38) is comfortable on near-black and
-     faint on white. Muted text is lifted in light only. struct is the gentler
-     curve for hairlines and gridlines, which must not turn heavy. */
-  --accent-link: #5a2fd4;
-  --approve:    #2c7a5b;   /* approval series, legible on the light ground */
-  --disapprove: #9c3aa8;
-  --ink-rgb:    23, 23, 27;
-  --canvas-rgb: 247, 247, 244;
-  --line-rgb:   23, 23, 27;
-  --mute: 1.05; --floor: 0.24; --struct: 1.5;
-
-  --ease-out:  cubic-bezier(0.22, 1, 0.36, 1);
+  --r-sm: 6px; --r-md: 10px; --r-lg: var(--r); --r-xl: var(--r);
+  --trk-1: 0.04em; --trk-2: 0.08em; --trk-3: 0.16em;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-soft: cubic-bezier(0.16, 1, 0.3, 1);
-  --dur-1: 140ms; --dur-2: 220ms; --dur-3: 420ms;
+  --dur-1: 150ms; --dur-2: 200ms; --dur-3: 420ms;
 }
 
-/* -------------------------------------------
-   1b) DARK THEME OVERRIDES — <html data-theme="dark">
-   Near-black canvas + warm off-white ink.
--------------------------------------------- */
-:root[data-theme="dark"] {
-  --accent-link: #8a63ef;
-  --approve:    #4fd39a;
-  --disapprove: #d67ae0;
-  --ink-rgb:    242, 242, 240;
-  --canvas-rgb: 10, 10, 12;
-  --line-rgb:   255, 255, 255;
-  --mute: 1; --floor: 0.13; --struct: 1.25;
+/* ---------- 2b) Light theme ----------
+   Same token names, light values. Everything that reads a token (or an -rgb
+   triple) flips with no per-page work. Party colors are deepened for contrast
+   on a pale ground. Dark is the default; the toggle writes data-theme. */
+:root[data-theme="light"] {
+  color-scheme: light;
 
-  --canvas:      #0a0a0c;
-  --background:  #0a0a0c;
-  --background2: #111114;
-  --panel:       #111114;
-  --panel2:      #16161a;
-  --panel3:      #1c1c21;
+  --bg: #f5f3fa;
+  --bg2: #ffffff;
+  --bg3: #ece8f6;
+  --glass: rgba(255,255,255,.74);
+  --glass2: rgba(var(--line-rgb),.05);
+  --line: rgba(var(--line-rgb),.10);
+  --line2: rgba(var(--line-rgb),.18);
 
-  --ink:        #f2f2f0;
-  --foreground: #f2f2f0;
-  --foreground2:rgba(242,242,240,0.78);
-  --ink2:       rgba(242,242,240,0.62);
-  --muted:      rgba(242,242,240,0.62);
-  --ink3:       rgba(242,242,240,0.50);
-  --muted2:     rgba(242,242,240,0.50);
-  --muted3:     rgba(242,242,240,0.52);
+  --ink: #16092a;
+  --ink2: #463d5a;
+  --mute: #6a6180;
+  --mute2: #8e86a3;
+  --hi: #110019;
+  --logo: #110019;
 
-  --hairline:  rgba(255,255,255,0.08);
-  --hairline2: rgba(255,255,255,0.15);
-  --border:  rgba(255,255,255,0.08);
-  --border2: rgba(255,255,255,0.15);
-  --border3: rgba(255,255,255,0.24);
+  --gold: #9a6a06;
+  --gold2: #7a5204;
 
-  /* Party — slightly lifted for contrast on dark; still DATA ONLY */
-  --dem:  #3b7bde;
-  --gop:  #d64550;
-  --rep:  #d64550;
-  --c2:   #c757a8;
-  --dem-dim: rgba(59,123,222,0.16);
-  --gop-dim: rgba(214,69,80,0.16);
+  --dem: #2a63f0;  --dem2: #1d4ed8;  --dem3: #4a74e8;
+  --gop: #e8264b;  --gop2: #c8102e;  --gop3: #de5a74;
+  --ind: #7c3aed;
+  --toss: #a8700a;
+  --live: #e11d48;
+  --win: #0f9d63;
 
-  /* Signal lane — brightened for dark */
-  --live:   #2dd4bf;
-  --called: #37b26c;
-  --win:    #37b26c;
-  --gold:   #e8b93c;
+  --shadow-card: 0 18px 50px rgba(40,18,80,.10), 0 1px 3px rgba(40,18,80,.06), inset 0 1px 0 rgba(255,255,255,.9);
+  --shadow-grad: 0 8px 24px rgba(131,68,156,.28);
+  --shadow-sm: 0 1px 2px rgba(40,18,80,.08), 0 2px 8px rgba(40,18,80,.06);
+  --shadow-md: 0 4px 12px rgba(40,18,80,.10), 0 12px 32px rgba(40,18,80,.08);
+  --shadow-red: 0 12px 40px rgba(232,38,75,.18);
+  --shadow-blue: 0 12px 40px rgba(42,99,240,.18);
 
-  /* Legacy aliases re-pointed for dark */
-  --purple:  #8a63ef;
-  --purple2: #a486f3;
-  --red:     #d64550;
-  --red2:    #e4737c;
-  --blue:    #3b7bde;
-  --blue2:   #6ea3ee;
-  --white-accent: #f2f2f0;
-  --purple-dim: rgba(138,99,239,0.18);
-  --red-dim:    rgba(214,69,80,0.18);
-  --blue-dim:   rgba(59,123,222,0.18);
+  --ink-rgb: 22, 9, 42;
+  --canvas-rgb: 245, 243, 250;
+  --line-rgb: 17, 0, 25;
+  --bg2-rgb: 255, 255, 255;
+  --hi-rgb: 17, 0, 25;
 
-  --shadow-sm: 0 1px 2px rgba(0,0,0,0.40), 0 2px 8px rgba(0,0,0,0.30);
-  --shadow-md: 0 4px 12px rgba(0,0,0,0.45), 0 12px 32px rgba(0,0,0,0.40);
-  --shadow-lg: 0 6px 16px rgba(0,0,0,0.50), 0 24px 64px rgba(0,0,0,0.55);
-  --shadow-purple: 0 12px 40px rgba(138,99,239,0.30);
-  --shadow-red:    0 12px 40px rgba(214,69,80,0.28);
-  --shadow-blue:   0 12px 40px rgba(59,123,222,0.28);
+  --purple-dim: rgba(124,58,237,.12);
+  --purple-glow: rgba(124,58,237,.18);
+  --red-dim: rgba(232,38,75,.12);
+  --red-glow: rgba(232,38,75,.18);
+  --blue-dim: rgba(42,99,240,.12);
+  --blue-glow: rgba(42,99,240,.18);
+  --dem-dim: rgba(42,99,240,.12);
+  --gop-dim: rgba(232,38,75,.12);
 }
+:root[data-theme="light"] ::selection { background: rgba(131,68,156,.28); color: var(--ink); }
+:root[data-theme="light"] .psi-badge-purple { background: rgba(124,58,237,.12); }
+:root[data-theme="light"] .psi-badge-red { background: rgba(232,38,75,.12); }
+:root[data-theme="light"] .psi-badge-blue { background: rgba(42,99,240,.12); }
 
-:root[data-theme="dark"] body::before {
-  background:
-    radial-gradient(ellipse 70% 50% at 0% 0%,   rgba(109, 62, 233, 0.06) 0%, transparent 60%),
-    radial-gradient(ellipse 60% 40% at 100% 0%, rgba(29, 95, 196, 0.05)  0%, transparent 60%),
-    radial-gradient(ellipse 50% 35% at 50% 100%,rgba(194, 47, 59, 0.04)  0%, transparent 60%);
-}
-
-:root[data-theme="dark"] .psi-glass {
-  background: rgba(22, 24, 39, 0.72);
-}
-
-:root[data-theme="dark"] .nb-link.nb-active {
-  background: var(--panel);
-}
-
-:root[data-theme="dark"] .nb-menu {
-  background: rgba(22, 24, 39, 0.98);
-}
-
-/* Smooth theme transitions */
-html { transition: background-color var(--dur-2) var(--ease-out), color var(--dur-2) var(--ease-out); }
-
-/* Theme toggle "trip" — the new theme reveals through a circle expanding
-   from the toggle button itself (ThemeToggle.tsx sets --theme-trip-x/y). */
-@keyframes theme-trip {
-  from { clip-path: circle(0% at var(--theme-trip-x, 100%) var(--theme-trip-y, 0%)); }
-  to   { clip-path: circle(140% at var(--theme-trip-x, 100%) var(--theme-trip-y, 0%)); }
-}
-::view-transition-old(root) {
-  animation: none;
-  z-index: 1;
-}
-::view-transition-new(root) {
-  animation: theme-trip 640ms cubic-bezier(0.22, 0.61, 0.36, 1);
-  z-index: 2;
-}
-@media (prefers-reduced-motion: reduce) {
-  ::view-transition-old(root),
-  ::view-transition-new(root) { animation: none !important; }
-}
-
-/* -------------------------------------------
-   2) BASE / RESET
--------------------------------------------- */
-*,
-*::before,
-*::after { box-sizing: border-box; }
-
-html, body { height: 100%; }
-
-html {
-  scroll-behavior: smooth;
-  -webkit-text-size-adjust: 100%;
-  font-family: var(--font-body);
-}
-
+/* ---------- 3) Base ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; background: var(--bg); font-family: var(--font-b); }
 body {
   margin: 0;
-  color: var(--foreground);
-  background: var(--background);
-  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-b);
   font-size: 15px;
   line-height: 1.55;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
 }
-
-/* Soft tri-color ambient wash */
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 0;
-  background:
-    radial-gradient(ellipse 70% 50% at 0% 0%,   rgba(109, 62, 233, 0.06) 0%, transparent 60%),
-    radial-gradient(ellipse 60% 40% at 100% 0%, rgba(29, 95, 196, 0.06)  0%, transparent 60%),
-    radial-gradient(ellipse 50% 35% at 50% 100%,rgba(194, 47, 59, 0.04)  0%, transparent 60%);
-}
-
-::selection { background: rgba(109, 62, 233, 0.22); color: var(--foreground); }
-
-a {
-  color: var(--purple-soft);
-  text-decoration: none;
-  transition: opacity var(--dur-1) var(--ease-out);
-}
-a:hover { opacity: 0.80; }
-
+::selection { background: rgba(131,68,156,.45); color: #fff; }
+a { color: inherit; text-decoration: none; }
 img, svg, video, canvas { display: block; max-width: 100%; }
-
 button, input, textarea, select { font: inherit; color: inherit; }
 
-/* -------------------------------------------
-   3) TYPOGRAPHY
--------------------------------------------- */
 h1, h2, h3, h4, h5, h6 {
-  margin: 0 0 0.5em;
-  font-family: var(--font-display), system-ui, sans-serif;
+  margin: 0 0 .5em;
+  font-family: var(--font-d);
   font-weight: 700;
-  letter-spacing: -0.03em;
+  letter-spacing: -.02em;
+  line-height: 1.1;
   color: var(--ink);
-  line-height: 1.04;
-  text-transform: none;          /* was: uppercase */
   text-wrap: balance;
-}
-
-/* Hero-scale display */
-h1 { font-size: clamp(34px, 5.6vw, 72px); letter-spacing: -0.032em; }
-
-/* Kicker / eyebrow / index utility — the ONLY place uppercase mono lives now */
-.psi-kicker,
-.hp-eyebrow,
-.hp-section-title {
-  font-family: var(--font-numeric), ui-monospace, monospace;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: var(--trk-3);
-  font-size: 0.72em;
-  color: var(--ink3);
-}
-
-/* Long-form title escape hatch (mono width-tax rule): apply this class to
-   multi-line editorial headings so they use Geist instead of wide mono. */
-.title-longform {
-  font-family: var(--font-body), system-ui, sans-serif;
-  font-weight: 600;
-  letter-spacing: -0.02em;
   text-transform: none;
 }
-
-/* Tabular numerals everywhere numbers matter */
-.psi-num,
-[class*="-num"],
-td.num, .num {
-  font-family: var(--font-numeric), ui-monospace, monospace;
-  font-variant-numeric: tabular-nums;
-}
-h1 { line-height: 0.98; margin-bottom: 0.35em; }
-h2 { margin-bottom: 0.45em; }
-h3, h4, h5, h6 { margin-bottom: 0.5em; }
-
-p { margin: 0 0 1em; color: var(--muted); }
+h1 { font-size: clamp(32px, 4.6vw, 56px); letter-spacing: -.035em; line-height: 1.02; }
+h3, h4, h5, h6 { font-weight: 700; }
+p { margin: 0 0 1em; color: var(--ink2); }
 p:last-child { margin-bottom: 0; }
+p a, li a, .prose a { text-decoration: underline; text-decoration-color: var(--line2); text-underline-offset: 3px; }
+p a:hover, li a:hover, .prose a:hover { text-decoration-color: var(--ink); }
+small { color: var(--mute); }
+ul, ol { margin: 0 0 1em; padding-left: 1.25em; color: var(--ink2); }
+li { margin: .35em 0; }
 
-small { color: var(--muted2); }
+.mono { font-family: var(--font-m); font-variant-numeric: tabular-nums; }
+.eye { font-size: 11px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--mute); }
+.eye.g { background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+.wrap { max-width: var(--wrap); margin: 0 auto; padding-inline: var(--gutter); }
+@media (max-width: 600px) { .wrap { padding-inline: 16px; } }
 
-ul, ol { margin: 0 0 1em; padding-left: 1.25em; color: var(--muted); }
-li { margin: 0.35em 0; }
-
-/* -------------------------------------------
-   4) PSI UTILITY CLASSES
--------------------------------------------- */
-.psi-label {
-  font-family: var(--font-body);
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: var(--trk-2);
-  text-transform: uppercase;
-  color: var(--muted);
+/* ---------- 4) PSI utility classes, restyled on the OnPoint system ---------- */
+.psi-kicker, .hp-eyebrow, .hp-section-title {
+  font-family: var(--font-b); font-weight: 700; text-transform: uppercase;
+  letter-spacing: .16em; font-size: 11px; color: var(--mute);
 }
-.psi-label-purple { color: var(--purple); }
-.psi-label-red    { color: var(--red); }
-.psi-label-blue   { color: var(--blue); }
+.title-longform { font-family: var(--font-d); font-weight: 700; letter-spacing: -.02em; }
+.psi-num, td.num, .num { font-family: var(--font-m); font-variant-numeric: tabular-nums; }
+.psi-label { font-family: var(--font-b); font-size: 11px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--mute); }
+.psi-label-purple { color: var(--ind); }
+.psi-label-red { color: var(--gop2); }
+.psi-label-blue { color: var(--dem2); }
+.psi-gradient-text { background: var(--grad); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.psi-mono { font-family: var(--font-m); font-variant-numeric: tabular-nums; }
+.psi-divider { height: 1px; width: 100%; background: var(--line); }
+.psi-divider-tri { height: 1px; width: 100%; background: var(--line2); }
 
-.psi-gradient-text {
-  background: linear-gradient(90deg, var(--red) 0%, var(--purple) 50%, var(--blue) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+.psi-card, .psi-glass, .psi-inset {
+  position: relative; overflow: hidden;
+  background: var(--glass);
+  border: 1px solid var(--line);
+  border-radius: var(--r);
 }
+.psi-glass { backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); }
+.psi-card { transition: transform .2s, border-color .2s; }
+.psi-card:hover { transform: translateY(-2px); border-color: var(--line2); }
+.psi-card-active { border-color: var(--line2); }
 
-.psi-mono {
-  font-family: var(--font-body);
-  font-variant-numeric: tabular-nums;
-  font-feature-settings: "tnum" 1;
+a.psi-btn, button.psi-btn, .psi-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 9px 16px; border-radius: 999px;
+  border: 1px solid var(--line2); background: var(--glass2); color: var(--hi);
+  font: 700 13px/1 var(--font-b); cursor: pointer; white-space: nowrap; user-select: none;
+  transition: background .18s, transform .18s;
 }
+a.psi-btn:hover, button.psi-btn:hover { background: rgba(var(--line-rgb),.1); transform: translateY(-1px); }
+.psi-btn-primary, .psi-btn-purple { border: 0; background: var(--grad); color: #fff; box-shadow: var(--shadow-grad); }
+.psi-btn-red, .psi-btn-blue { background: var(--hi); border: 0; color: var(--bg); }
+.psi-btn-ghost { background: transparent; color: var(--ink2); border-color: var(--line2); }
+.psi-btn-ghost:hover { background: var(--glass2); color: var(--hi); }
 
-.psi-divider { height: 1px; width: 100%; background: var(--border); }
-
-.psi-divider-tri {
-  height: 3px;
-  width: 100%;
-  background: linear-gradient(90deg, var(--red) 0%, var(--purple) 50%, var(--blue) 100%);
-  border-radius: var(--r-pill);
-  box-shadow: 0 0 12px 1px rgba(109, 62, 233, 0.28);
-}
-
-/* -------------------------------------------
-   5) SURFACES — rounded boxes
--------------------------------------------- */
-.psi-card {
-  position: relative;
-  overflow: hidden;
-  background: var(--panel);
-  border: 1px solid var(--border);
-  border-radius: var(--r-lg);
-  box-shadow: var(--shadow-sm);
-  transition:
-    transform    var(--dur-2) var(--ease-out),
-    border-color var(--dur-2) var(--ease-out),
-    box-shadow   var(--dur-2) var(--ease-out);
-}
-.psi-card:hover {
-  transform: translateY(-2px);
-  border-color: var(--border2);
-  box-shadow: var(--shadow-md);
-}
-
-.psi-card-active {
-  border-color: rgba(109, 62, 233, 0.45);
-  box-shadow: var(--shadow-md), 0 0 0 2px rgba(109, 62, 233, 0.16);
-}
-
-.psi-glass {
-  position: relative;
-  overflow: hidden;
-  background: rgba(255, 255, 255, 0.78);
-  border: 1px solid var(--border);
-  border-radius: var(--r-lg);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
-  box-shadow: var(--shadow-md);
-}
-.psi-inset {
-  position: relative;
-  overflow: hidden;
-  background: var(--panel2);
-  border: 1px solid var(--border);
-  border-radius: var(--r-md);
-}
-
-/* -------------------------------------------
-   6) BUTTONS / BADGES — rounded
--------------------------------------------- */
-a.psi-btn,
-button.psi-btn,
-.psi-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  padding: 0.7rem 1.15rem;
-  border-radius: var(--r-pill);
-  border: 1px solid var(--border2);
-  background: var(--panel);
-  color: var(--foreground);
-  font-family: var(--font-numeric), ui-monospace, monospace;
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: -0.005em;
-  line-height: 1;
-  transition:
-    background    var(--dur-1) var(--ease-out),
-    border-color  var(--dur-1) var(--ease-out),
-    transform     var(--dur-1) var(--ease-out),
-    opacity       var(--dur-1) var(--ease-out);
-  user-select: none;
-  cursor: pointer;
-}
-a.psi-btn:hover,
-button.psi-btn:hover { background: var(--panel2); transform: translateY(-1px); opacity: 1; }
-a.psi-btn:active,
-button.psi-btn:active { transform: translateY(0); opacity: 0.95; }
-
-.psi-btn-primary {
-  background: var(--gradient-purple);
-  border-color: var(--purple);
-  color: #fff;
-  box-shadow: var(--shadow-purple);
-}
-.psi-btn-primary:hover { background: var(--gradient-purple-soft); border-color: var(--purple-soft); color: #fff; }
-
-.psi-btn-red    { background: var(--red);    border-color: var(--red);    color: #fff; }
-.psi-btn-blue   { background: var(--blue);   border-color: var(--blue);   color: #fff; }
-.psi-btn-purple { background: var(--gradient-purple); border-color: var(--purple); color: #fff; }
-
-.psi-btn-ghost {
-  background: transparent;
-  color: var(--muted);
-  border-color: var(--border2);
-}
-.psi-btn-ghost:hover { background: var(--panel2); border-color: var(--border3); color: var(--foreground); }
-
-/* Badges */
 .psi-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
-  padding: 0.25rem 0.7rem;
-  border-radius: var(--r-pill);
-  font-family: var(--font-body);
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  border: 1px solid var(--border2);
-  background: var(--panel2);
-  color: var(--muted);
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 4px 9px; border-radius: 999px;
+  font: 700 11px/1.2 var(--font-b); letter-spacing: .08em; text-transform: uppercase;
+  background: rgba(var(--line-rgb),.06); color: var(--ink2); border: 0;
 }
-.psi-badge-purple { border-color: rgba(109, 62, 233, 0.30); background: rgba(109, 62, 233, 0.10); color: var(--purple); }
-.psi-badge-red    { border-color: rgba(194, 47, 59, 0.25); background: rgba(194, 47, 59, 0.10); color: var(--red); }
-.psi-badge-blue   { border-color: rgba(29, 95, 196, 0.25); background: rgba(29, 95, 196, 0.10); color: var(--blue); }
-.psi-badge-live   { border-color: rgba(194, 47, 59, 0.30); background: rgba(194, 47, 59, 0.12); color: var(--red); }
-
+.psi-badge-purple { background: rgba(183,140,255,.18); color: var(--ind); }
+.psi-badge-red { background: rgba(255,59,92,.18); color: var(--gop2); }
+.psi-badge-blue { background: rgba(61,123,255,.18); color: var(--dem2); }
+.psi-badge-live { background: var(--live); color: #fff; }
 .psi-live-dot {
-  display: inline-block;
-  width: 8px; height: 8px;
-  border-radius: 50%;
-  background: var(--rep);
-  box-shadow: 0 0 0 4px rgba(194, 47, 59, 0.18);
-  animation: psi-pulse 2s infinite;
+  display: inline-block; width: 7px; height: 7px; border-radius: 50%;
+  background: var(--live); animation: psi-pulse 1.8s infinite;
 }
-@keyframes psi-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.40; } }
+@keyframes psi-pulse { 0% { box-shadow: 0 0 0 0 rgba(255,59,92,.55); } 70% { box-shadow: 0 0 0 8px rgba(255,59,92,0); } 100% { box-shadow: 0 0 0 0 rgba(255,59,92,0); } }
 
-/* -------------------------------------------
-   7) TABLES
--------------------------------------------- */
 .psi-table {
-  width: 100%;
-  border-collapse: separate;
-  border-spacing: 0;
-  border: 1px solid var(--border);
-  border-radius: var(--r-md);
-  overflow: hidden;
-  background: var(--panel);
-  box-shadow: var(--shadow-sm);
+  width: 100%; border-collapse: collapse; font-size: 13px;
+  background: var(--glass); border: 1px solid var(--line); border-radius: var(--r); overflow: hidden;
 }
 .psi-table thead th {
-  text-align: left;
-  font-family: var(--font-body);
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: var(--trk-2);
-  text-transform: uppercase;
-  color: var(--muted);
-  background: var(--panel2);
-  border-bottom: 1px solid var(--border);
-  padding: 12px 16px;
-  white-space: nowrap;
+  text-align: left; font: 700 10.5px var(--font-b); letter-spacing: .1em; text-transform: uppercase;
+  color: var(--mute); padding: 9px 12px; border-bottom: 1px solid var(--line); white-space: nowrap; background: transparent;
 }
-.psi-table tbody td {
-  padding: 12px 16px;
-  border-bottom: 1px solid var(--border);
-  font-size: 0.95rem;
-  color: var(--foreground);
-}
-.psi-table tbody tr:hover td { background: rgba(109, 62, 233, 0.04); }
-.psi-num { text-align: right; font-variant-numeric: tabular-nums; font-family: var(--font-body); }
+.psi-table tbody td { padding: 10px 12px; border-bottom: 1px solid var(--line); color: var(--ink); font-size: 13px; }
+.psi-table tbody tr:hover td { background: var(--glass2); }
+.psi-num { text-align: right; }
 
-/* -------------------------------------------
-   8) SCROLLBAR
--------------------------------------------- */
-* {
-  scrollbar-width: thin;
-  scrollbar-color: rgba(15, 16, 32, 0.18) transparent;
-}
+/* Older pages paint cards with Tailwind's white; on the dark site they are glass. */
+.bg-white { background-color: var(--glass) !important; }
+.border-gray-200 { border-color: var(--line) !important; }
+
+/* ---------- 5) Scrollbars, charts ---------- */
+* { scrollbar-width: thin; scrollbar-color: rgba(var(--line-rgb),.16) transparent; }
 *::-webkit-scrollbar { width: 6px; height: 6px; }
 *::-webkit-scrollbar-track { background: transparent; }
-*::-webkit-scrollbar-thumb { background: rgba(15, 16, 32, 0.16); border-radius: var(--r-pill); }
-*::-webkit-scrollbar-thumb:hover { background: rgba(109, 62, 233, 0.55); }
+*::-webkit-scrollbar-thumb { background: rgba(var(--line-rgb),.14); border-radius: 999px; }
+*::-webkit-scrollbar-thumb:hover { background: rgba(var(--line-rgb),.3); }
 
-/* -------------------------------------------
-   9) RECHARTS POLISH
--------------------------------------------- */
-.recharts-text,
-.recharts-cartesian-axis-tick-value {
-  fill: var(--muted2) !important;
-  font-family: var(--font-body) !important;
-  font-size: 0.70rem !important;
-  letter-spacing: 0.04em !important;
+.recharts-text, .recharts-cartesian-axis-tick-value {
+  fill: var(--mute) !important; font-family: var(--font-m) !important; font-size: 10px !important;
 }
-.recharts-cartesian-grid line { stroke: var(--border) !important; }
+.recharts-cartesian-grid line { stroke: rgba(var(--line-rgb),.07) !important; }
 .recharts-tooltip-wrapper .recharts-default-tooltip {
-  background: rgba(255, 255, 255, 0.98) !important;
-  border: 1px solid var(--border2) !important;
-  border-radius: var(--r-md) !important;
-  box-shadow: var(--shadow-md) !important;
-  color: var(--foreground) !important;
+  background: rgba(var(--bg2-rgb),.94) !important; border: 1px solid var(--line2) !important;
+  border-radius: 10px !important; color: var(--ink2) !important; backdrop-filter: blur(10px);
 }
 
-/* -------------------------------------------
-   10) ANIMATIONS
--------------------------------------------- */
-@keyframes psi-fade-up {
-  from { opacity: 0; transform: translateY(10px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-.psi-animate-in { animation: psi-fade-up var(--dur-3) var(--ease-soft) both; }
-
+/* ---------- 6) Motion ---------- */
+/* Static content no longer fades up on load; the class stays so page code that uses it is harmless. */
+.psi-animate-in { animation: none; }
 .county-pop { animation: countyPop 520ms ease-out; }
-@keyframes countyPop {
-  0%   { filter: drop-shadow(0 0 0px rgba(109, 62, 233, 0)); transform: scale(1); }
-  45%  { filter: drop-shadow(0 0 12px rgba(109, 62, 233, 0.40)); transform: scale(1.003); }
-  100% { filter: drop-shadow(0 0 6px rgba(109, 62, 233, 0.16)); transform: scale(1); }
-}
-
+@keyframes countyPop { 0% { filter: brightness(1); } 45% { filter: brightness(1.2); } 100% { filter: brightness(1); } }
 @keyframes county-ping {
-  0%   { filter: brightness(1); stroke-width: 0.6; }
-  20%  { filter: brightness(1.4) saturate(1.3); stroke-width: 2.2; stroke: var(--purple); }
-  100% { filter: brightness(1); stroke-width: 0.6; stroke: var(--border); }
+  0% { filter: brightness(1); stroke-width: .6; }
+  20% { filter: brightness(1.35); stroke-width: 2.2; stroke: var(--hi); }
+  100% { filter: brightness(1); stroke-width: .6; stroke: var(--line); }
 }
 .animate-update { animation: county-ping 1.2s var(--ease-out); }
-
+@media (max-width: 640px) { .cty-votes-row { display: none !important; } }
 @media (prefers-reduced-motion: reduce) {
-  .psi-animate-in,
-  .county-pop,
-  .animate-update { animation: none !important; }
-  .psi-card,
-  .psi-btn { transition: none !important; }
+  *, *::before, *::after { animation: none !important; transition: none !important; }
 }
 
-/* County table: hide vote-count sub-rows on mobile */
-@media (max-width: 640px) {
-  .cty-votes-row { display: none !important; }
+/* Results boards (.desk) keep main's surface, ink and signal tokens so rings, tables and maps render as on main. */
+html[data-theme="light"] .desk {
+  --canvas:#f7f7f4; --background:#f7f7f4; --background2:#f1f1ed; --panel:#ffffff; --panel2:#f1f1ed; --panel3:#e9e9e4;
+  --ink:#17171b; --foreground:#17171b; --foreground2:#3a3a3f; --ink2:#5d5d58; --muted:#5d5d58; --ink3:#62625b; --muted2:#62625b; --muted3:rgba(23,23,27,.68);
+  --hairline:#e8e8e2; --hairline2:#d9d9d1; --border:#e8e8e2; --border2:#d9d9d1; --border3:#c4c4ba;
+  --dem:#1d5fc4; --gop:#c22f3b; --rep:#c22f3b; --c2:#b5338f; --dem-dim:rgba(29,95,196,.10); --gop-dim:rgba(194,47,59,.10);
+  --live:#0d9488; --called:#15803d; --win:#15803d; --gold:#a16207;
+  --purple:#6d3ee9; --purple2:#8a63ef; --red:#c22f3b; --red2:#d64550; --blue:#1d5fc4; --blue2:#3b7bde;
+  --purple-dim:rgba(109,62,233,.10); --red-dim:rgba(194,47,59,.10); --blue-dim:rgba(29,95,196,.10); --white-accent:#17171b;
+  --shadow-sm:0 1px 2px rgba(23,23,27,.04),0 2px 8px rgba(23,23,27,.05); --shadow-md:0 4px 12px rgba(23,23,27,.05),0 12px 32px rgba(23,23,27,.07); --shadow-lg:0 6px 16px rgba(23,23,27,.05),0 24px 64px rgba(23,23,27,.10);
+  --accent-link:#5a2fd4; --approve:#2c7a5b; --disapprove:#9c3aa8;
+  --ink-rgb:23,23,27; --canvas-rgb:247,247,244; --line-rgb:23,23,27; --mute:1.05; --floor:.24; --struct:1.5;
 }
-
-/* Dark theme: the older pages (latest poll, stat cards) paint their cards with
-   Tailwind's bg-white while their text follows the theme, which left light text
-   on white cards in dark mode. The cards follow the panel token instead. */
-:root[data-theme="dark"] .bg-white { background-color: var(--panel); }
-:root[data-theme="dark"] .border-gray-200 { border-color: var(--hairline); }
-
-/* ─────────────────────────────────────────────────────────────────────────────
-   UNIFORM PAGE SYSTEM, site v2
-   Every desk page shares one frame: the same content width, the same side
-   gutters, and the same page title style, so moving between pages reads as one
-   site. Specificity (html[data-site] + class) wins over each page's own <style>
-   block without !important. Home keeps its own hero and is not listed here.
-   ───────────────────────────────────────────────────────────────────────────── */
-html[data-site="v2"] {
-  --page-max: 1440px;
-  --page-pad: clamp(16px, 3vw, 40px);
-}
-
-/* one content width, filling wide screens */
-html[data-site="v2"] .ev-shell,
-html[data-site="v2"] .eb-shell,
-html[data-site="v2"] .fc-shell,
-html[data-site="v2"] .ct-shell,
-html[data-site="v2"] .sr-page,
-html[data-site="v2"] .vr-page,
-html[data-site="v2"] .pd-root,
-html[data-site="v2"] .pm-shell {
-  max-width: var(--page-max) !important;
-  width: 100%;
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: var(--page-pad) !important;
-  padding-right: var(--page-pad) !important;
-  box-sizing: border-box;
-}
-html[data-site="v2"] .tps .shell {
-  width: min(var(--page-max), 100%);
-  padding-left: var(--page-pad);
-  padding-right: var(--page-pad);
-  box-sizing: border-box;
-}
-
-/* pages fill at least the screen, so short pages don't leave the footer floating */
-html[data-site="v2"] main { min-height: calc(100svh - 64px); }
-
-/* one page title style */
-html[data-site="v2"] :is(.ev-h1, .eb-h1, .fc-h1, .ct-title, .sr-title, .vr-title, .pd-hero-title, .pa-title, .hero-h, .pm-title) {
-  font-family: var(--font-display), system-ui, sans-serif !important;
-  font-size: clamp(34px, 4.4vw, 60px) !important;
-  font-weight: 600 !important;
-  letter-spacing: -0.035em !important;
-  line-height: 1.04 !important;
-  text-transform: none !important;
-  margin-top: 14px;
-}
-html[data-site="v2"] :is(.ev-h1, .eb-h1, .fc-h1, .ct-title, .sr-title, .vr-title, .pd-hero-title, .pa-title, .hero-h, .pm-title)::first-letter {
-  text-transform: uppercase;
-}
-
-/* home hero: a static dot texture replaces the live cursor field */
-html[data-site="v2"] .lp-hero::before {
-  content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none;
-  background-image: radial-gradient(rgba(var(--ink-rgb, 255,255,255), 0.22) 1.1px, transparent 1.7px);
-  background-size: 15px 15px;
-  -webkit-mask-image: radial-gradient(ellipse 60% 70% at 72% 45%, #000 0%, transparent 72%);
-          mask-image: radial-gradient(ellipse 60% 70% at 72% 45%, #000 0%, transparent 72%);
-  opacity: 0.55;
-}
-/* phones: the layout's own gutter is enough, and segmented controls wrap */
-@media (max-width: 640px) {
-  html[data-site="v2"] { --page-pad: 0px; }
-  html[data-site="v2"] .ev-seg { flex-wrap: wrap; max-width: 100%; }
-  html[data-site="v2"] .ev-seg button { padding: 8px 11px; }
+html[data-theme="dark"] .desk {
+  --canvas:#0a0a0c; --background:#0a0a0c; --background2:#111114; --panel:#111114; --panel2:#16161a; --panel3:#1c1c21;
+  --ink:#f2f2f0; --foreground:#f2f2f0; --foreground2:rgba(242,242,240,.78); --ink2:rgba(242,242,240,.62); --muted:rgba(242,242,240,.62); --ink3:rgba(242,242,240,.50); --muted2:rgba(242,242,240,.50); --muted3:rgba(242,242,240,.52);
+  --hairline:rgba(255,255,255,.08); --hairline2:rgba(255,255,255,.15); --border:rgba(255,255,255,.08); --border2:rgba(255,255,255,.15); --border3:rgba(255,255,255,.24);
+  --dem:#3b7bde; --gop:#d64550; --rep:#d64550; --c2:#c757a8; --dem-dim:rgba(59,123,222,.16); --gop-dim:rgba(214,69,80,.16);
+  --live:#2dd4bf; --called:#37b26c; --win:#37b26c; --gold:#e8b93c;
+  --purple:#8a63ef; --purple2:#a486f3; --red:#d64550; --red2:#e4737c; --blue:#3b7bde; --blue2:#6ea3ee;
+  --purple-dim:rgba(138,99,239,.18); --red-dim:rgba(214,69,80,.18); --blue-dim:rgba(59,123,222,.18); --white-accent:#f2f2f0;
+  --shadow-sm:0 1px 2px rgba(0,0,0,.40),0 2px 8px rgba(0,0,0,.30); --shadow-md:0 4px 12px rgba(0,0,0,.45),0 12px 32px rgba(0,0,0,.40); --shadow-lg:0 6px 16px rgba(0,0,0,.50),0 24px 64px rgba(0,0,0,.55);
+  --accent-link:#8a63ef; --approve:#4fd39a; --disapprove:#d67ae0;
+  --ink-rgb:242,242,240; --canvas-rgb:10,10,12; --line-rgb:255,255,255; --mute:1; --floor:.13; --struct:1.25;
 }

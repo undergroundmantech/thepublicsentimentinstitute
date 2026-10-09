@@ -1,4 +1,4 @@
-import { AGGREGATES } from "@/app/polling/lib/aggregates";
+import { AGGREGATES } from "@/app/_polling/lib/aggregates";
 const out = AGGREGATES.map((d) => ({
   id: d.id, category: d.category, title: d.title, keyA: d.keyA, keyB: d.keyB,
   aParty: d.seriesA.party ?? null, bParty: d.seriesB.party ?? null, aLabel: d.seriesA.label, bLabel: d.seriesB.label,

@@ -1,19 +1,24 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
+import { Icon, Lockup } from "./opp/Logo";
 
-// First-visit announcement — shown once, then remembered. Two beats:
-//   1 · the reveal — artwork on top, a line of copy, Continue
-//   2 · the demo — the panel widens; live video left, caption right
+// First-visit announcement, shown once and then remembered under SEEN_KEY.
 // `?intro=1` forces it back up for review; `?nointro=1` suppresses it.
 const SEEN_KEY = "psi-intro-v2";
 
+const FEATURES: [string, string, string][] = [
+  ["Polls", "Polling averages", "Every tracked race, weighted by recency, sample and pollster quality."],
+  ["Forecast", "The 2026 forecast", "Senate, House and governor odds from thousands of simulated elections."],
+  ["Results", "Live results", "County maps that fill in as returns land on election night."],
+  ["Fieldwork", "Polls by TPSI", "Original surveys fielded by The Public Sentiment Institute."],
+];
+
 export default function SiteIntro() {
   const [phase, setPhase] = useState<"idle" | "in" | "out">("idle");
-  const [step, setStep] = useState<0 | 1>(0);
   const [mounted, setMounted] = useState(false);
   const panelRef = useRef<HTMLDivElement | null>(null);
-  const videoRef = useRef<HTMLVideoElement | null>(null);
 
   useEffect(() => {
     try {
@@ -37,20 +42,6 @@ export default function SiteIntro() {
     window.setTimeout(() => setMounted(false), 360);
   };
 
-  // step 2's video: React's `muted` prop doesn't reliably reach the DOM, and
-  // an unmuted video is denied autoplay — set it directly, then play
-  useEffect(() => {
-    if (step !== 1) return;
-    const v = videoRef.current;
-    if (v) {
-      v.muted = true;
-      v.defaultMuted = true;
-      v.play().catch(() => {});
-    }
-    // hand focus to the new page's button so Enter still advances
-    panelRef.current?.querySelector("button")?.focus();
-  }, [step]);
-
   // scroll lock + escape while open
   useEffect(() => {
     if (phase !== "in") return;
@@ -60,7 +51,7 @@ export default function SiteIntro() {
       if (e.key === "Escape") dismiss();
     };
     window.addEventListener("keydown", onKey);
-    panelRef.current?.querySelector("button")?.focus();
+    panelRef.current?.querySelector<HTMLButtonElement>("button.btn.g")?.focus();
     return () => {
       document.body.style.overflow = prev;
       window.removeEventListener("keydown", onKey);
@@ -72,183 +63,82 @@ export default function SiteIntro() {
 
   return (
     <div
-      className="psi-intro"
+      className="opp opp-intro"
       data-phase={phase}
       role="dialog"
       aria-modal="true"
-      aria-labelledby="psi-intro-title"
+      aria-labelledby="opp-intro-title"
       onMouseDown={(e) => {
         if (e.target === e.currentTarget) dismiss();
       }}
     >
       <style>{`
-        .psi-intro {
+        .opp-intro {
           position: fixed; inset: 0; z-index: 200;
           display: grid; place-items: center; padding: 24px;
-          /* keep the page's color alive behind the glass — the panel drinks it */
-          background: rgba(3, 3, 6, 0.44);
+          background: rgba(var(--canvas-rgb), .62);
           -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
-          opacity: 0; transition: opacity 340ms ease;
+          opacity: 0; transition: opacity 320ms ease;
         }
-        .psi-intro[data-phase="in"] { opacity: 1; }
-        .psi-intro[data-phase="out"] { opacity: 0; pointer-events: none; }
-        .psi-intro-panel {
-          position: relative;
-          width: min(500px, 100%);
-          font-family: var(--font-body);
-          /* the glass: translucent gradient fill + heavy saturated blur */
-          background: linear-gradient(165deg, rgba(30, 32, 44, 0.58), rgba(12, 13, 19, 0.66) 55%, rgba(10, 10, 15, 0.7));
-          -webkit-backdrop-filter: blur(32px) saturate(1.75); backdrop-filter: blur(32px) saturate(1.75);
-          border-radius: 22px;
-          /* edge light: bright bevel above, falloff below — not a flat border */
-          border: 1px solid rgba(var(--line-rgb),0.12);
-          box-shadow:
-            inset 0 1px 0 rgba(var(--line-rgb),0.18),
-            inset 0 -1px 0 rgba(var(--line-rgb),0.03),
-            0 40px 110px rgba(var(--line-rgb),0.58),
-            0 2px 12px rgba(var(--line-rgb),0.38);
-          overflow: hidden;
-          transform: translateY(14px) scale(0.975);
-          transition: transform 420ms cubic-bezier(0.22, 1, 0.36, 1), width 480ms cubic-bezier(0.22, 1, 0.36, 1);
+        .opp-intro[data-phase="in"] { opacity: 1; }
+        .opp-intro[data-phase="out"] { opacity: 0; pointer-events: none; }
+        .opp-intro .panel {
+          position: relative; width: min(540px, 100%); max-height: calc(100vh - 48px); overflow: auto;
+          background: linear-gradient(180deg, rgba(var(--line-rgb),.07), rgba(var(--line-rgb),.03)), rgba(var(--bg2-rgb),.92);
+          -webkit-backdrop-filter: blur(24px) saturate(140%); backdrop-filter: blur(24px) saturate(140%);
+          border: 1px solid var(--line2); border-radius: 20px;
+          box-shadow: var(--shadow-card);
+          transform: translateY(12px); transition: transform 420ms cubic-bezier(.2,.8,.2,1);
         }
-        /* specular sheen sweeping from the light source (top-left) */
-        .psi-intro-panel::before {
-          content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none;
-          background:
-            radial-gradient(130% 55% at 16% -4%, rgba(var(--line-rgb),0.11), transparent 52%),
-            linear-gradient(115deg, transparent 42%, rgba(var(--line-rgb),0.045) 50%, transparent 58%);
+        .opp-intro[data-phase="in"] .panel { transform: none; }
+        .opp-intro .art {
+          position: relative; overflow: hidden; padding: 34px 28px 26px;
+          background: radial-gradient(420px 220px at 10% -10%, rgba(6,75,249,.38), transparent 70%),
+                      radial-gradient(360px 220px at 100% 120%, rgba(249,6,75,.28), transparent 70%), #110019;
+          border-bottom: 1px solid var(--line); color: #fff;
         }
-        /* fine grain so the glass doesn't band */
-        .psi-intro-panel::after {
-          content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none;
-          opacity: 0.05; mix-blend-mode: overlay;
-          background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.6'/%3E%3C/svg%3E");
+        .opp-intro .art .wm { position: absolute; right: -36px; bottom: -48px; opacity: .12; color: #fff; }
+        .opp-intro .body { padding: 22px 28px 26px; }
+        .opp-intro h2 { font-size: 24px; font-weight: 800; letter-spacing: -.03em; margin: 8px 0 8px; }
+        .opp-intro h2 em { font-style: normal; background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        .opp-intro .lede { color: var(--ink2); font-size: 14.5px; margin: 0 0 16px; }
+        .opp-intro .feat { display: grid; grid-template-columns: 92px 1fr; gap: 4px 14px; padding: 10px 0; border-top: 1px solid var(--line); }
+        .opp-intro .feat .k { font: 700 10.5px var(--font-m); letter-spacing: .12em; text-transform: uppercase; color: var(--mute); padding-top: 3px; }
+        .opp-intro .feat b { display: block; font: 700 14px var(--font-b); color: var(--ink); }
+        .opp-intro .feat span { font-size: 13px; color: var(--mute); }
+        .opp-intro .acts { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 18px; }
+        .opp-intro .acts .btn.g { flex: 1; justify-content: center; padding: 12px 18px; font-size: 14px; }
+        .opp-intro .btn:focus-visible { outline: 2px solid var(--hi); outline-offset: 3px; }
+        @media (max-width: 600px) {
+          .opp-intro { padding: 16px; }
+          .opp-intro .art, .opp-intro .body { padding-inline: 20px; }
+          .opp-intro .feat { grid-template-columns: 1fr; }
         }
-        .psi-intro-panel > * { position: relative; z-index: 2; }
-        .psi-intro[data-phase="in"] .psi-intro-panel { transform: none; }
-        .psi-intro-panel[data-step="1"] { width: min(1020px, 100%); }
-        .psi-intro-page { animation: psiPageIn 380ms cubic-bezier(0.22, 1, 0.36, 1) both; }
-        @keyframes psiPageIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
-
-        /* beat 1 — the reveal */
-        .psi-intro-art {
-          position: relative; aspect-ratio: 1954 / 1234;
-          background: #060608;
-          border-bottom: 1px solid rgba(var(--line-rgb),0.07);
-        }
-        .psi-intro-art img {
-          position: absolute; inset: 0; width: 100%; height: 100%;
-          object-fit: cover; object-position: center; display: block;
-        }
-        .psi-intro-art::after {
-          content: ""; position: absolute; inset: 0;
-          background: linear-gradient(180deg, transparent 82%, rgba(8, 9, 14, 0.5) 100%);
-        }
-        .psi-intro-body { padding: 26px 28px 28px; text-align: center; }
-        .psi-intro-body h2 {
-          margin: 0 0 10px; color: var(--ink);
-          font-family: inherit;
-          font-size: 21px; line-height: 1.3; font-weight: 800;
-          letter-spacing: -0.01em; text-transform: none; text-wrap: balance;
-        }
-        .psi-intro-body p {
-          margin: 0 auto 24px; max-width: 44ch;
-          color: rgba(var(--ink-rgb),calc(0.7 * var(--mute) + var(--floor)));
-          font-size: 14px; line-height: 1.6; font-weight: 500;
-        }
-        .psi-intro-btn {
-          display: block; width: 100%; padding: 13px 18px;
-          border: 0; border-radius: 999px; cursor: pointer;
-          background: var(--ink); color: var(--canvas);
-          font-family: inherit; font-size: 14.5px; font-weight: 600;
-          line-height: 1; letter-spacing: 0.01em;
-          transition: transform 160ms ease, background 160ms ease;
-          box-shadow: 0 10px 26px rgba(var(--line-rgb),0.38), inset 0 1px 0 rgba(var(--line-rgb),0.9);
-        }
-        .psi-intro-btn:hover { background: #ffffff; }
-        .psi-intro-btn:active { transform: scale(0.985); }
-        .psi-intro-btn:focus-visible { outline: 2px solid rgba(var(--ink-rgb),calc(0.6 * var(--mute) + var(--floor))); outline-offset: 3px; }
-
-        /* beat 2 — the demo: video left, words right. The film's native
-           2560:1618 ratio sets the row height so nothing gets cropped short */
-        .psi-intro-duo { display: grid; grid-template-columns: minmax(0, 60fr) minmax(0, 40fr); align-items: stretch; }
-        .psi-intro-film {
-          position: relative; background: #060608;
-          aspect-ratio: 2560 / 1618; height: auto;
-          border-right: 1px solid rgba(var(--line-rgb),0.07);
-        }
-        .psi-intro-film video {
-          position: absolute; inset: 0; width: 100%; height: 100%;
-          object-fit: cover; display: block;
-        }
-        .psi-intro-side {
-          display: flex; flex-direction: column; justify-content: center;
-          padding: 36px 34px; text-align: left; min-height: 0;
-        }
-        .psi-intro-side h2 {
-          margin: 0 0 10px; color: var(--ink); font-family: inherit;
-          font-size: 20px; line-height: 1.3; font-weight: 800; letter-spacing: -0.01em;
-          text-transform: none;
-        }
-        .psi-intro-side p {
-          margin: 0 0 24px; color: rgba(var(--ink-rgb),calc(0.7 * var(--mute) + var(--floor)));
-          font-size: 13.5px; line-height: 1.65; font-weight: 500;
-        }
-        .psi-intro-dots { display: flex; gap: 5px; margin-bottom: 16px; }
-        .psi-intro-dots i { width: 5px; height: 5px; border-radius: 99px; background: rgba(var(--ink-rgb),calc(0.22 * var(--struct))); }
-        .psi-intro-dots i.on { width: 16px; background: rgba(var(--ink-rgb),calc(0.85 * var(--mute) + var(--floor))); }
         @media (prefers-reduced-motion: reduce) {
-          .psi-intro, .psi-intro-panel, .psi-intro-page { transition: none; transform: none; animation: none; }
-        }
-        @media (max-width: 640px) {
-          .psi-intro { padding: 16px; }
-          .psi-intro-body { padding: 22px 20px 22px; }
-          .psi-intro-duo { grid-template-columns: 1fr; }
-          .psi-intro-film { aspect-ratio: 2560 / 1618; border-right: 0; border-bottom: 1px solid rgba(var(--line-rgb),0.07); }
-          .psi-intro-film video { position: absolute; }
-          .psi-intro-side { padding: 22px 20px; }
+          .opp-intro, .opp-intro .panel { transition: none; transform: none; }
         }
       `}</style>
 
-      <div ref={panelRef} className="psi-intro-panel" data-step={step}>
-        {step === 0 ? (
-          <div className="psi-intro-page" key="reveal">
-            <div className="psi-intro-art" aria-hidden="true">
-              <img src="/announce/new-site.jpg" alt="" draggable={false} />
+      <div ref={panelRef} className="panel">
+        <div className="art">
+          <Lockup height={52} mono />
+          <Icon size={220} className="wm" />
+        </div>
+        <div className="body">
+          <div className="eye g">Welcome</div>
+          <h2 id="opp-intro-title">This is <em>OnPoint Politics</em></h2>
+          <p className="lede">The new home for polling averages, the 2026 forecast and live election results, with fieldwork by The Public Sentiment Institute.</p>
+          {FEATURES.map(([k, t, s]) => (
+            <div className="feat" key={k}>
+              <div className="k">{k}</div>
+              <div><b>{t}</b><span>{s}</span></div>
             </div>
-            <div className="psi-intro-body">
-              <h2 id="psi-intro-title">
-                Introducing the New Public Sentiment Institute Site
-              </h2>
-              <p>
-                Polling averages, race ratings, and live election results —
-                rebuilt from the ground up on one transparent data desk.
-              </p>
-              <button type="button" className="psi-intro-btn" onClick={() => setStep(1)}>
-                Continue
-              </button>
-            </div>
+          ))}
+          <div className="acts">
+            <button type="button" className="btn g" onClick={dismiss}>Enter the site</button>
+            <Link className="btn" href="/forecast" onClick={dismiss}>See the forecast</Link>
           </div>
-        ) : (
-          <div className="psi-intro-page psi-intro-duo" key="demo">
-            <div className="psi-intro-film" aria-hidden="true">
-              {/* poster keeps the pane filled while the film buffers */}
-              <video ref={videoRef} src="/desk/desk-tour.mp4" poster="/desk/film-map.jpg" muted loop playsInline preload="auto" />
-            </div>
-            <div className="psi-intro-side">
-              <div className="psi-intro-dots" aria-hidden="true"><i /><i className="on" /></div>
-              <h2 id="psi-intro-title">Every race, live</h2>
-              <p>
-                County maps that fill in as returns land, win-probability on
-                every board, and a precinct-level map one click away. This is
-                the desk running on a real election night.
-              </p>
-              <button type="button" className="psi-intro-btn" onClick={dismiss}>
-                Enter the site
-              </button>
-            </div>
-          </div>
-        )}
+        </div>
       </div>
     </div>
   );

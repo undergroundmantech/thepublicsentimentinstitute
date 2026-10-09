@@ -12,12 +12,12 @@ import {
   CartesianGrid,
   usePlotArea,
 } from "recharts";
-import type { MultiDaily, MultiPollPoint, MultiSeries } from "@/app/polling/lib/aggregates";
+import type { MultiDaily, MultiPollPoint, MultiSeries } from "@/app/_polling/lib/aggregates";
 
 /* =============================================================================
-   MultiCandidateChart — N-candidate primary chart. Same visual language as the
-   head-to-head chart (black, mono, faint flag, poll cloud, on-chart hover that
-   fades the future), minus the margin/spread which only apply head-to-head.
+   MultiCandidateChart: N candidate primary chart. Same visual language as the
+   head to head chart (glass, mono axes, poll cloud, on chart hover that fades
+   the future), minus the margin and spread which only apply head to head.
 ============================================================================= */
 
 type Props = {
@@ -54,7 +54,7 @@ function monthTicks(minT: number, maxT: number): number[] {
 }
 function dotRadius(n: number) {
   const s = Math.sqrt(Math.max(0, n)) / Math.sqrt(3000);
-  return clamp(1.5 + s * 3.1, 1.5, 4.6);
+  return clamp(1.4 + s * 2.2, 1.4, 3.4);
 }
 function nearestIndex(rows: MultiDaily[], t: number) {
   let lo = 0, hi = rows.length - 1;
@@ -92,8 +92,8 @@ function EndLabels({ series, last, domain }: { series: MultiSeries[]; last: numb
         <g key={i} transform={`translate(${x},${it.y})`}>
           <line x1={2} y1={0} x2={11} y2={0} stroke={it.color} strokeWidth={1.25} opacity={0.5} />
           <circle cx={14} cy={0} r={3} fill={it.color} />
-          <text x={22} y={-1} dominantBaseline="middle" style={{ fontFamily: "var(--font-body),monospace", fontSize: 12.5, fontWeight: 700, fontVariantNumeric: "tabular-nums" }} fill={it.color}>{it.value.toFixed(1)}</text>
-          <text x={22} y={11} dominantBaseline="middle" style={{ fontFamily: "var(--font-body),monospace", fontSize: 8.5, fontWeight: 600, letterSpacing: "0.06em" }} fill="var(--muted2)">{it.label.length > 11 ? it.label.slice(0, 10) + "…" : it.label}</text>
+          <text x={22} y={-1} dominantBaseline="middle" style={{ fontFamily: "var(--font-m)", fontSize: 12.5, fontWeight: 700, fontVariantNumeric: "tabular-nums" }} fill={it.color}>{it.value.toFixed(1)}</text>
+          <text x={22} y={11} dominantBaseline="middle" style={{ fontFamily: "var(--font-m)", fontSize: 9, fontWeight: 600, letterSpacing: "0.04em" }} fill="var(--mute)">{it.label.length > 11 ? it.label.slice(0, 10) + "…" : it.label}</text>
         </g>
       ))}
     </g>
@@ -171,6 +171,9 @@ export default function MultiCandidateChart({ daily, polls, series, unit = "%", 
   const [range, setRange] = useState<Range>("All");
   const [showPolls, setShowPolls] = useState(true);
   const [plot, setPlot] = useState<Plot | null>(null);
+  // the average line draws in once on load, unless the reader asked for reduced motion
+  const [anim, setAnim] = useState(true);
+  useEffect(() => { if (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) setAnim(false); }, []);
 
   const wrapRef = useRef<HTMLDivElement | null>(null);
   const [width, setWidth] = useState(900);
@@ -244,7 +247,7 @@ export default function MultiCandidateChart({ daily, polls, series, unit = "%", 
   const renderDot = (props: { cx?: number; cy?: number; payload?: { r: number; color: string } }) => {
     const { cx, cy, payload } = props;
     if (cx == null || cy == null || !payload) return <g />;
-    return <circle cx={cx} cy={cy} r={payload.r} fill={payload.color} fillOpacity={0.2} />;
+    return <circle cx={cx} cy={cy} r={payload.r} fill={payload.color} fillOpacity={0.3} />;
   };
 
   return (
@@ -268,24 +271,20 @@ export default function MultiCandidateChart({ daily, polls, series, unit = "%", 
       </div>
 
       <div className="mcc-plot" style={{ height: "clamp(300px, 44vh, 480px)" }}>
-        <div className="mcc-flag" aria-hidden>
-          <div className="mcc-flag-stripes" />
-          <div className="mcc-flag-canton"><div className="mcc-flag-stars" /></div>
-        </div>
         <div className="mcc-plot-svg">
           <ResponsiveContainer width="100%" height="100%">
             <ComposedChart key={animKey} data={chartData} margin={{ top: 18, right: rightMargin, left: 4, bottom: 6 }}>
-              <CartesianGrid stroke="var(--border)" vertical={false} />
-              <XAxis dataKey="t" type="number" scale="time" domain={xDomain} ticks={ticks} tickFormatter={fmtTick} tickLine={false} axisLine={{ stroke: "var(--border)" }} tickMargin={12}
-                tick={{ fontFamily: "var(--font-body),monospace", fontSize: 11, fill: "var(--muted2)" }} />
+              <CartesianGrid stroke="var(--line)" vertical={false} />
+              <XAxis dataKey="t" type="number" scale="time" domain={xDomain} ticks={ticks} tickFormatter={fmtTick} tickLine={false} axisLine={{ stroke: "var(--line)" }} tickMargin={12}
+                tick={{ fontFamily: "var(--font-m)", fontSize: 10, fill: "var(--mute)" }} />
               <YAxis domain={yDomain} tickLine={false} axisLine={false} width={40} tickMargin={6} tickFormatter={(v) => `${v}${unit}`}
-                tick={{ fontFamily: "var(--font-body),monospace", fontSize: 11, fill: "var(--muted2)" }} />
+                tick={{ fontFamily: "var(--font-m)", fontSize: 10, fill: "var(--mute)" }} />
               {showPolls && <Scatter data={dots} dataKey="y" shape={renderDot} isAnimationActive={false} />}
               {series.map((s, i) => (
-                <Area key={`b-${s.key}`} type="monotone" dataKey={`b${i}`} stroke="none" fill={s.color} fillOpacity={0.08} isAnimationActive={false} activeDot={false} connectNulls />
+                <Area key={`b-${s.key}`} type="monotone" dataKey={`b${i}`} stroke="none" fill={s.color} fillOpacity={0.07} isAnimationActive={false} activeDot={false} connectNulls />
               ))}
               {series.map((s, i) => (
-                <Line key={`c-${s.key}`} type="monotone" dataKey={`c${i}`} name={s.label} stroke={s.color} strokeWidth={2.25} dot={false} activeDot={false} connectNulls isAnimationActive={LINE_ANIM} animationDuration={850} animationBegin={i * 90} />
+                <Line key={`c-${s.key}`} type="monotone" dataKey={`c${i}`} name={s.label} stroke={s.color} strokeWidth={2.25} dot={false} activeDot={false} connectNulls isAnimationActive={LINE_ANIM && anim} animationDuration={850} animationBegin={i * 90} />
               ))}
               {!narrow && <EndLabels series={series} last={last} domain={yDomain} />}
               <PlotAreaReporter onChange={setPlot} />
@@ -300,37 +299,33 @@ export default function MultiCandidateChart({ daily, polls, series, unit = "%", 
 
 const CSS = `
   .mcc { position: relative; }
-  .mcc-controls { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-bottom: 18px; }
+  .mcc-controls { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px 12px; margin-bottom: 16px; }
   .mcc-legend { display: flex; flex-wrap: wrap; gap: 7px 16px; }
-  .mcc-legend-item { display: inline-flex; align-items: center; gap: 7px; font-family: var(--font-body), monospace; font-size: 12px; color: var(--muted); }
-  .mcc-legend-item b { font-variant-numeric: tabular-nums; margin-left: 1px; }
+  .mcc-legend-item { display: inline-flex; align-items: center; gap: 7px; font-size: 12.5px; color: var(--ink2); }
+  .mcc-legend-item b { font-family: var(--font-m); font-variant-numeric: tabular-nums; margin-left: 1px; }
   .mcc-legend-dot { width: 8px; height: 8px; border-radius: 50%; }
   .mcc-controls-right { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
-  .mcc-seg { display: inline-flex; padding: 3px; background: var(--panel); border: 1px solid var(--border); border-radius: 10px; }
-  .mcc-seg-btn { appearance: none; border: 0; background: transparent; cursor: pointer; font-family: var(--font-body), monospace; font-size: 11px; font-weight: 600; color: var(--muted); padding: 6px 11px; border-radius: 7px; line-height: 1; transition: color 160ms ease, background 160ms ease; }
-  .mcc-seg-btn:hover { color: var(--foreground); }
-  .mcc-seg-btn.is-active { color: #000; background: #fafafa; }
-  .mcc-toggle { display: inline-flex; align-items: center; gap: 8px; cursor: pointer; font-family: var(--font-body), monospace; font-size: 12px; font-weight: 600; color: var(--muted); padding: 7px 13px; border-radius: 9px; line-height: 1; border: 1px solid var(--border); background: transparent; transition: color 160ms ease, border-color 160ms ease, opacity 160ms ease; }
-  .mcc-toggle:hover { color: var(--foreground); border-color: var(--border2); }
-  .mcc-toggle:not(.is-on) { opacity: 0.5; }
+  .mcc-seg { display: inline-flex; gap: 2px; padding: 3px; background: rgba(var(--line-rgb),.06); border-radius: 999px; }
+  .mcc-seg-btn { appearance: none; border: 0; background: transparent; cursor: pointer; font: 700 12px var(--font-b); color: var(--mute); padding: 6px 12px; border-radius: 999px; line-height: 1.2; transition: color .15s, background .15s; }
+  .mcc-seg-btn:hover { color: var(--hi); }
+  .mcc-seg-btn.is-active { color: var(--bg); background: var(--hi); }
+  .mcc-seg-btn:focus-visible, .mcc-toggle:focus-visible { outline: 2px solid var(--hi); outline-offset: 2px; }
+  .mcc-toggle { display: inline-flex; align-items: center; gap: 8px; cursor: pointer; font: 700 12px var(--font-b); color: var(--ink2); padding: 6px 12px; border-radius: 999px; line-height: 1.2; border: 1px solid var(--line2); background: var(--glass2); transition: color .15s, opacity .15s; }
+  .mcc-toggle:hover { color: var(--hi); }
+  .mcc-toggle:not(.is-on) { opacity: .5; }
 
   .mcc-plot { width: 100%; position: relative; }
   .mcc-plot-svg { position: relative; z-index: 1; height: 100%; }
   .mcc .recharts-surface { overflow: visible; }
 
-  .mcc-flag { position: absolute; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; border-radius: 8px; }
-  .mcc-flag-stripes { position: absolute; inset: 0; background: repeating-linear-gradient(180deg, rgba(229,72,77,0.038) 0, rgba(229,72,77,0.038) 7.6923%, rgba(var(--line-rgb),0.015) 7.6923%, rgba(var(--line-rgb),0.015) 15.3846%); }
-  .mcc-flag-canton { position: absolute; left: 0; top: 0; width: 38%; height: 53.84%; background: rgba(70,116,206,0.055); }
-  .mcc-flag-stars { position: absolute; inset: 0; background-image: radial-gradient(rgba(var(--line-rgb),0.11) 0.6px, transparent 0.7px); background-size: 9.5% 18%; background-position: 4% 9%; }
-
   .mcc-hit { position: absolute; pointer-events: auto; cursor: crosshair; z-index: 3; touch-action: pan-y; }
   .mcc-hit > * { pointer-events: none; }
-  .mcc-dim { position: absolute; top: 0; bottom: 0; background: linear-gradient(90deg, transparent 0, color-mix(in srgb, var(--background) 62%, transparent) 30px); }
-  .mcc-slider { position: absolute; top: 0; bottom: 0; width: 1px; background: var(--muted); }
-  .mcc-date { position: absolute; top: -4px; transform: translate(-50%, -100%); font-family: var(--font-body), monospace; font-size: 10px; font-weight: 600; letter-spacing: 0.06em; color: var(--muted); white-space: nowrap; text-shadow: 0 0 5px var(--background), 0 0 8px var(--background); }
-  .mcc-adot { position: absolute; width: 11px; height: 11px; border-radius: 50%; border: 2.5px solid var(--background); transform: translate(-50%, -50%); box-shadow: 0 0 10px -1px currentColor; }
-  .mcc-chip { position: absolute; transform: translate(15px, -50%); display: inline-flex; align-items: baseline; gap: 7px; white-space: nowrap; text-shadow: 0 0 5px var(--background), 0 0 9px var(--background), 0 0 9px var(--background), 0 1px 2px var(--background); }
+  .mcc-dim { position: absolute; top: 0; bottom: 0; background: rgba(var(--canvas-rgb),.55); }
+  .mcc-slider { position: absolute; top: 0; bottom: 0; width: 1px; background: rgba(var(--line-rgb),.45); }
+  .mcc-date { position: absolute; top: -4px; transform: translate(-50%, -100%); font: 600 10px var(--font-m); letter-spacing: .04em; color: var(--mute); white-space: nowrap; text-shadow: 0 0 5px var(--bg), 0 0 8px var(--bg); }
+  .mcc-adot { position: absolute; width: 11px; height: 11px; border-radius: 50%; border: 2.5px solid var(--bg); transform: translate(-50%, -50%); }
+  .mcc-chip { position: absolute; transform: translate(15px, -50%); display: inline-flex; align-items: baseline; gap: 7px; white-space: nowrap; padding: 3px 8px; border-radius: 8px; background: rgba(var(--bg2-rgb),.9); border: 1px solid var(--line2); }
   .mcc-chip.is-left { transform: translate(calc(-100% - 15px), -50%); }
-  .mcc-chip-label { font-family: var(--font-body), monospace; font-size: 12px; font-weight: 600; color: var(--foreground); }
-  .mcc-chip-val { font-family: var(--font-body), monospace; font-size: 13.5px; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .mcc-chip-label { font: 600 12px var(--font-b); color: var(--ink2); }
+  .mcc-chip-val { font: 700 13px var(--font-m); font-variant-numeric: tabular-nums; }
 `;

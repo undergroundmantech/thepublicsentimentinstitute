@@ -184,11 +184,11 @@ export default function PortalDashboard() {
           <div className="pd-top-left">
             <span className="pd-badge">Internal · not for publication</span>
             <h1>
-              Florida Governor <em>{TARGET_NAME} desk</em>
+              Florida governor, {TARGET_NAME} <em>desk</em>
             </h1>
             <p className="pd-deck">
               Every number here is measured against the pre-election county baseline.
-              Counties are never called — the county layer exists to show where the
+              Counties are never called; the county layer exists to show where the
               outstanding vote sits.
             </p>
           </div>
@@ -398,7 +398,7 @@ export default function PortalDashboard() {
               </div>
             </div>
             <p className="pd-note">
-              Reporting is measured against ballots cast, not precincts closed — Florida
+              Reporting is measured against ballots cast, not precincts closed. Florida
               posts its banked mail and early vote first, so the precinct number runs
               far behind the count. The projected margin is the county roll-up, which is
               the only place Renner exists as his own quantity.

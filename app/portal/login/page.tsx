@@ -2,32 +2,24 @@
 
 import { useState, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import Link from "next/link";
 
 const CSS = `
-.pl-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;
-  padding:32px 20px;background:var(--canvas);color:var(--ink);
-  font-family:var(--font-body,'Geist'),system-ui,sans-serif}
-.pl-card{width:100%;max-width:380px;background:var(--panel);
-  border:1px solid var(--hairline);border-radius:14px;padding:30px 28px}
-.pl-kicker{font-family:var(--font-numeric,'JetBrains Mono'),ui-monospace,monospace;
-  font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3)}
-.pl-card h1{font-size:22px;margin:8px 0 6px;letter-spacing:-.01em}
-.pl-card p.pl-deck{font-size:13px;color:var(--ink2);line-height:1.55;margin-bottom:22px}
-.pl-field{display:block;margin-bottom:14px}
-.pl-field span{display:block;font-family:var(--font-numeric,'JetBrains Mono'),ui-monospace,monospace;
-  font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink3);margin-bottom:6px}
-.pl-field input{width:100%;box-sizing:border-box;padding:10px 12px;font-size:14px;
-  font-family:inherit;color:var(--ink);background:var(--panel2);
-  border:1px solid var(--hairline);border-radius:8px}
-.pl-field input:focus{outline:2px solid var(--ink);outline-offset:1px}
-.pl-btn{width:100%;padding:11px 14px;margin-top:6px;font-family:inherit;font-size:14px;
-  font-weight:600;color:var(--panel);background: var(--ink);border:none;border-radius:8px;
-  cursor:pointer}
-.pl-btn:disabled{opacity:.55;cursor:default}
-.pl-error{margin-top:14px;font-size:12.5px;color:var(--gop);line-height:1.5}
-.pl-foot{margin-top:20px;padding-top:16px;border-top:1px solid var(--hairline);
-  font-size:11.5px;color:var(--ink3);line-height:1.5}
-.pl-foot a{color:var(--ink2)}
+.pl { display: grid; place-items: center; padding: 48px 0 32px; }
+.pl .pl-card { width: 100%; max-width: 420px; }
+.pl .pl-card h1 { font-size: clamp(28px, 4vw, 36px); font-weight: 800; letter-spacing: -.035em; margin: 8px 0 6px; }
+.pl .pl-card h1 em { font-style: normal; background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.pl .pl-deck { font-size: 14px; margin: 0 0 20px; }
+.pl .pl-field { display: grid; gap: 6px; margin-bottom: 14px; }
+.pl .pl-field > span { font: 700 10.5px var(--font-m); letter-spacing: .12em; text-transform: uppercase; color: var(--mute); }
+.pl .pl-field input { width: 100%; padding: 11px 14px; border-radius: 10px; border: 1px solid var(--line2); background: var(--glass2); color: var(--ink); font: 500 14px var(--font-b); outline: none; transition: border-color .15s, box-shadow .15s; }
+.pl .pl-field input:focus-visible { border-color: var(--hi); box-shadow: 0 0 0 3px rgba(var(--line-rgb),.18); outline: none; }
+.pl .pl-btn { width: 100%; justify-content: center; padding: 12px 18px; font-size: 14px; margin-top: 4px; }
+.pl .pl-btn:disabled { opacity: .55; cursor: default; transform: none; }
+.pl .pl-btn:focus-visible { outline: 2px solid var(--hi); outline-offset: 3px; }
+.pl .pl-error { margin: 14px 0 0; font-size: 13px; color: var(--ink); padding: 10px 12px; border-radius: 10px; border: 1px solid var(--line2); background: var(--glass2); }
+.pl .pl-foot { margin: 0; padding: 14px 18px; border-top: 1px solid var(--line); font-size: 12.5px; color: var(--mute); }
+.pl .pl-foot a { color: var(--ink); text-decoration: underline; text-underline-offset: 2px; }
 `;
 
 function LoginForm() {
@@ -74,38 +66,40 @@ function LoginForm() {
   }
 
   return (
-    <div className="pl-wrap">
+    <div className="opp pl">
       <style>{CSS}</style>
-      <div className="pl-card">
-        <p className="pl-kicker">The Public Sentiment Institute</p>
-        <h1>Portal sign in</h1>
-        <p className="pl-deck">
-          Internal election desk. Everything behind this page is working analysis, not
-          published TPSI output.
-        </p>
+      <div className="card pl-card">
+        <div className="card-h"><h3>Client portal</h3><span className="eye" style={{ marginLeft: "auto" }}>Internal</span></div>
+        <div className="card-b">
+          <div className="eye g">OnPoint Politics · TPSI</div>
+          <h1>Sign in to the <em>portal</em></h1>
+          <p className="pl-deck">
+            Internal election desk. Everything behind this page is working analysis, not
+            published TPSI output.
+          </p>
 
-        <form onSubmit={submit}>
-          <label className="pl-field">
-            <span>Username</span>
-            <input value={user} onChange={(e) => setUser(e.target.value)}
-                   autoComplete="username" autoCapitalize="none" autoCorrect="off"
-                   required disabled={busy} />
-          </label>
-          <label className="pl-field">
-            <span>Password</span>
-            <input type="password" value={pass} onChange={(e) => setPass(e.target.value)}
-                   autoComplete="current-password" required disabled={busy} />
-          </label>
-          <button className="pl-btn" type="submit" disabled={busy}>
-            {busy ? "Signing in…" : "Sign in"}
-          </button>
-        </form>
+          <form onSubmit={submit}>
+            <label className="pl-field">
+              <span>Username</span>
+              <input value={user} onChange={(e) => setUser(e.target.value)}
+                     autoComplete="username" autoCapitalize="none" autoCorrect="off"
+                     required disabled={busy} />
+            </label>
+            <label className="pl-field">
+              <span>Password</span>
+              <input type="password" value={pass} onChange={(e) => setPass(e.target.value)}
+                     autoComplete="current-password" required disabled={busy} />
+            </label>
+            <button className="btn g pl-btn" type="submit" disabled={busy}>
+              {busy ? "Signing in..." : "Sign in"}
+            </button>
+          </form>
 
-        {error && <p className="pl-error" role="alert">{error}</p>}
-
+          {error && <p className="pl-error" role="alert">{error}</p>}
+        </div>
         <p className="pl-foot">
           Looking for tonight&rsquo;s results? The public board is at{" "}
-          <a href="/results/tonight">/results/tonight</a>.
+          <Link href="/results/tonight">/results/tonight</Link>.
         </p>
       </div>
     </div>

@@ -1,6 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react'
 import Link from 'next/link'
-import DarkNav from '@/app/components/DarkNav'
 import ResultMap from './ResultMap.jsx'
 import RaceDetail from './RaceDetail.jsx'
 import ElectionSearch, { SearchIcon } from './components/ElectionSearch.jsx'
@@ -689,7 +688,6 @@ function ResultsTopNav({ selectedDate, onCalendar, onSearch }) {
         }
         .opa-search-util:hover { color: var(--ink); border-color: var(--ink-mute); }
       `}</style>
-      <DarkNav />
       <div className="opa-utility">
         {onSearch ? (
           <button type="button" onClick={onSearch} className="opa-search-util" aria-label="Search elections" title="Search elections  ( / )">

@@ -3,19 +3,15 @@
 // as-is so the math stays byte-for-byte with the reference build.
 import B from "./flData.json";
 
-// The prototype ships one fixed light palette. These are its exact hues, plus a
-// lifted set for dark mode where the originals fall below usable contrast.
-const CO_LIGHT = { Donalds: "#B23A2E", Fishback: "#1E6E86", Collins: "#6D4B96", Renner: "#A87516", Other: "#8A929C" };
+// OnPoint Politics is dark only: the prototype's hues lifted for contrast on the dark ground.
+// (Hand edit after the rebrand: the light palette and the data-theme observer were removed.)
 const CO_DARK = { Donalds: "#E06A5B", Fishback: "#4FA8C4", Collins: "#A98BD6", Renner: "#D9A83F", Other: "#9AA0AC" };
-function isDarkTheme() {
-  return typeof document !== "undefined" && document.documentElement.getAttribute("data-theme") === "dark";
-}
 
 export function initFloridaEngine() {
   const CAND=['Donalds','Fishback','Collins','Renner'],ALL=CAND.concat('Other');
   const NM={Donalds:'Byron Donalds',Fishback:'James Fishback',Collins:'Jay Collins',Renner:'Paul Renner',Other:'Other'};
   const LB={Donalds:'Donalds',Fishback:'Fishback',Collins:'Collins',Renner:'Renner',Other:'Other'};
-  let CO=isDarkTheme()?CO_DARK:CO_LIGHT;
+  const CO=CO_DARK;
   const AGE=B.age,RXE=B.rxe,CT=B.counties,DEF=B.def,BE=B.base_elec,PR=B.prop,TN=B.turnout;
   const HOME=[
    {c:'Fishback',seat:'MADISON',name:'Madison',sub:'Fishback residence',spill:['JEFFERSON','TAYLOR','HAMILTON','SUWANNEE','LAFAYETTE']},
@@ -173,7 +169,6 @@ export function initFloridaEngine() {
     electorate, now <b id="et_${id}">${t.toFixed(1)}%</b>.</div></div></div>`;
    return h;}
   function render(){
-  CO=isDarkTheme()?CO_DARK:CO_LIGHT;
    document.getElementById('fl-presets').innerHTML=Object.entries(PRESETS).map(([k,v])=>
     `<button class="pbtn${k===cur?' on':''}" data-p="${k}">${v.label}</button>`).join('');
    document.querySelectorAll('[data-p]').forEach(b=>b.onclick=()=>loadPreset(b.dataset.p));
@@ -396,9 +391,5 @@ export function initFloridaEngine() {
      <div class="note">`+wo.slice(1).map(c=>`${LB[c]} ${(win[c]/N*100).toFixed(1)}%`).join(' · ')+`</div></div>`;}
   loadPreset('published');
 
-  // Re-render on theme toggle so the map, legend and table recolour live.
-  const themeObserver = new MutationObserver(() => render());
-  themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
-
-  return () => themeObserver.disconnect();
+  return () => {};
 }
