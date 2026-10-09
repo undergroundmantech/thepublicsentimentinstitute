@@ -2,7 +2,7 @@
 // Michigan — 2026 U.S. Senate: Abdul El-Sayed (D) vs. Mike Rogers (R)
 // Generated from the TPSI forecast poll feed (run of 2026-09-22), merged with
 // the polls this file already carried. Polls of matchups that are not on the
-// ballot were dropped. Newest poll: 2026-09-23.
+// ballot were dropped. Newest poll: 2026-09-24.
 
 export type SampleType = "LV" | "RV" | "A";
 
@@ -59,5 +59,15 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "MI-SEN-2026", "pollster": "New York Times/Siena University", "startDate": "2026-09-15", "endDate": "2026-09-22", "sampleSize": 613, "sampleType": "LV", "results": {"Abdul El-Sayed (D)": 49.0, "Mike Rogers (R)": 44.0, "Undecided": 7.0}},
     {"raceId": "MI-SEN-2026", "pollster": "co/efficient (R)", "startDate": "2026-09-21", "endDate": "2026-09-23", "sampleSize": 843, "sampleType": "LV", "results": {"Abdul El-Sayed (D)": 45.0, "Mike Rogers (R)": 45.0, "Other": 2.0, "Undecided": 8.0}},
     {"raceId": "MI-SEN-2026", "pollster": "GBAO (D)", "startDate": "2026-09-19", "endDate": "2026-09-22", "sampleSize": 800, "sampleType": "LV", "results": {"Abdul El-Sayed (D)": 48.0, "Mike Rogers (R)": 44.0, "Undecided": 8.0}},
+    {"raceId": "MI-SEN-2026", "pollster": "Cygnal (R)/Beacon Research (D)", "startDate": "2026-09-18", "endDate": "2026-09-21", "sampleSize": 600, "sampleType": "LV", "results": {"Abdul El-Sayed (D)": 45.0, "Mike Rogers (R)": 40.0, "Undecided": 15.0}, "notes": "For Michigan Enjoyer."},
+    {"raceId": "MI-SEN-2026", "pollster": "NPR/Marist", "startDate": "2026-09-24", "endDate": "2026-09-27", "sampleSize": 1200, "sampleType": "RV", "results": {"Abdul El-Sayed (D)": 51.0, "Mike Rogers (R)": 44.0, "Undecided": 5.0}, "notes": "Sample size not yet posted by Marist, entered as 1,200."},
+    {"raceId": "MI-SEN-2026", "pollster": "Fox News/Beacon Research and Shaw & Company", "startDate": "2026-09-24", "endDate": "2026-09-28", "sampleSize": 1028, "sampleType": "LV", "results": {"Abdul El-Sayed (D)": 50.0, "Mike Rogers (R)": 49.0, "Undecided": 1.0}, "notes": "Likely voters. Registered voters, 1,203: El-Sayed 51, Rogers 48. Other and undecided 1 combined."},
+    {"raceId": "MI-SEN-2026", "pollster": "Trafalgar Group (R)", "startDate": "2026-09-28", "endDate": "2026-09-30", "sampleSize": 1085, "sampleType": "LV", "results": {"Abdul El-Sayed (D)": 46.9, "Mike Rogers (R)": 45.1, "Other": 2.9, "Undecided": 5.0}},
+    {"raceId": "MI-SEN-2026", "pollster": "Big Data Poll", "startDate": "2026-09-22", "endDate": "2026-09-24", "sampleSize": 678, "sampleType": "LV", "results": {"Abdul El-Sayed (D)": 46.7, "Mike Rogers (R)": 42.1, "Undecided": 11.2}, "notes": "Likely voters with leaners."},
+    {"raceId": "MI-SEN-2026", "pollster": "Mitchell Research for CBS Detroit", "startDate": "2026-10-01", "endDate": "2026-10-01", "sampleSize": 682, "sampleType": "LV", "results": {"Abdul El-Sayed (D)": 45.6, "Mike Rogers (R)": 41.4, "Other": 7.0, "Undecided": 6.0}},
+    {"raceId": "MI-SEN-2026", "pollster": "YouGov", "startDate": "2026-09-22", "endDate": "2026-10-04", "sampleSize": 3949, "sampleType": "LV", "results": {"Abdul El-Sayed (D)": 49.0, "Mike Rogers (R)": 48.0, "Other": 1.0, "Undecided": 2.0}},
+    {"raceId": "MI-SEN-2026", "pollster": "Quantus Insights", "startDate": "2026-10-05", "endDate": "2026-10-06", "sampleSize": 762, "sampleType": "LV", "results": {"Abdul El-Sayed (D)": 48.0, "Mike Rogers (R)": 47.0, "Undecided": 5.0}, "notes": "Released Oct 7; field dates not published, so the dates shown are placeholders."},
+    {"raceId": "MI-SEN-2026", "pollster": "Guidant Polling for Public First Action", "startDate": "2026-10-05", "endDate": "2026-10-05", "sampleSize": 600, "sampleType": "LV", "results": {"Abdul El-Sayed (D)": 48.5, "Mike Rogers (R)": 44.0, "Other": 1.0, "Undecided": 6.5}, "notes": "Released Oct 7. Two ballots, 48 to 43 and 49 to 45, averaged as the model does; field dates, sample size and voter type not published, so they are placeholders."},
+    {"raceId": "MI-SEN-2026", "pollster": "Z to A Research for Rust Belt Rising (D)", "startDate": "2026-09-28", "endDate": "2026-10-01", "sampleSize": 483, "sampleType": "RV", "results": {"Abdul El-Sayed (D)": 49.0, "Mike Rogers (R)": 42.0, "Other": 3.0, "Undecided": 6.0}, "notes": "Z to A Research for Rust Belt Rising, part of a 1,430 voter Michigan, Pennsylvania and Wisconsin sample; voter type not given."}
   ],
 };

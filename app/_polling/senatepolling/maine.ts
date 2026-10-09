@@ -2,7 +2,7 @@
 // Maine — 2026 U.S. Senate: Troy Jackson (D) vs. Susan Collins (R)
 // Generated from the TPSI forecast poll feed (run of 2026-09-22), merged with
 // the polls this file already carried. Polls of matchups that are not on the
-// ballot were dropped. Newest poll: 2026-09-22.
+// ballot were dropped. Newest poll: 2026-10-01.
 
 export type SampleType = "LV" | "RV" | "A";
 
@@ -46,9 +46,18 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "ME-SEN-2026", "pollster": "SSRS", "startDate": "2026-08-31", "endDate": "2026-09-06", "sampleSize": 880, "sampleType": "LV", "results": {"Troy Jackson (D)": 48.0, "Susan Collins (R)": 45.0, "Other": 7.0}},
     {"raceId": "ME-SEN-2026", "pollster": "YouGov", "startDate": "2026-09-02", "endDate": "2026-09-08", "sampleSize": 1335, "sampleType": "LV", "results": {"Troy Jackson (D)": 48.0, "Susan Collins (R)": 44.0, "Other": 1.0, "Undecided": 6.0}},
     {"raceId": "ME-SEN-2026", "pollster": "Rasmussen Reports (R)", "startDate": "2026-09-08", "endDate": "2026-09-10", "sampleSize": 1033, "sampleType": "LV", "results": {"Troy Jackson (D)": 46.0, "Susan Collins (R)": 45.0, "Undecided": 9.0}},
-    {"raceId": "ME-SEN-2026", "pollster": "Quantus Insights (R)", "startDate": "2026-09-14", "endDate": "2026-09-15", "sampleSize": 621, "sampleType": "LV", "results": {"Troy Jackson (D)": 46.5, "Susan Collins (R)": 47.5, "Other": 2.0, "Undecided": 4.5}},
+    {"raceId": "ME-SEN-2026", "pollster": "Quantus Insights", "startDate": "2026-09-14", "endDate": "2026-09-15", "sampleSize": 621, "sampleType": "LV", "results": {"Troy Jackson (D)": 46.5, "Susan Collins (R)": 47.5, "Other": 2.0, "Undecided": 4.5}},
     {"raceId": "ME-SEN-2026", "pollster": "University of New Hampshire", "startDate": "2026-09-17", "endDate": "2026-09-21", "sampleSize": 1312, "sampleType": "LV", "moe": 2.7, "results": {"Troy Jackson (D)": 51.0, "Susan Collins (R)": 47.0, "Undecided": 2.0}},
     {"raceId": "ME-SEN-2026", "pollster": "New York Times/Siena University", "startDate": "2026-09-15", "endDate": "2026-09-22", "sampleSize": 619, "sampleType": "LV", "results": {"Troy Jackson (D)": 46.0, "Susan Collins (R)": 49.0, "Undecided": 5.0}},
     {"raceId": "ME-SEN-2026", "pollster": "InsiderAdvantage", "startDate": "2026-09-22", "endDate": "2026-09-23", "sampleSize": 1200, "sampleType": "LV", "results": {"Troy Jackson (D)": 46.4, "Susan Collins (R)": 45.6, "Undecided": 8.0}},
+    {"raceId": "ME-SEN-2026", "pollster": "Fabrizio Ward and Impact Research for AARP", "startDate": "2026-09-20", "endDate": "2026-09-22", "sampleSize": 982, "sampleType": "LV", "moe": 3.1, "results": {"Troy Jackson (D)": 50.0, "Susan Collins (R)": 47.0, "Other": 1.0, "Undecided": 3.0}, "notes": "Bipartisan. 2024 recalled vote Harris 48, Trump 42."},
+    {"raceId": "ME-SEN-2026", "pollster": "co/efficient (R)", "startDate": "2026-09-28", "endDate": "2026-09-30", "sampleSize": 1240, "sampleType": "LV", "results": {"Troy Jackson (D)": 46.0, "Susan Collins (R)": 48.0, "Undecided": 6.0}},
+    {"raceId": "ME-SEN-2026", "pollster": "Wedgewood Polls", "startDate": "2026-09-27", "endDate": "2026-10-01", "sampleSize": 400, "sampleType": "LV", "results": {"Troy Jackson (D)": 52.0, "Susan Collins (R)": 48.0}, "notes": "Sponsor not stated."},
+    {"raceId": "ME-SEN-2026", "pollster": "CBS News/YouGov", "startDate": "2026-09-23", "endDate": "2026-10-01", "sampleSize": 1144, "sampleType": "LV", "results": {"Troy Jackson (D)": 50.0, "Susan Collins (R)": 50.0}, "notes": "1,144 registered voters; ballot among likely voters with leaners."},
+    {"raceId": "ME-SEN-2026", "pollster": "Trafalgar Group (R)", "startDate": "2026-09-29", "endDate": "2026-10-01", "sampleSize": 1091, "sampleType": "LV", "results": {"Troy Jackson (D)": 46.2, "Susan Collins (R)": 45.9, "Undecided": 7.9}},
+    {"raceId": "ME-SEN-2026", "pollster": "UMass Lowell/YouGov", "startDate": "2026-08-28", "endDate": "2026-09-14", "sampleSize": 650, "sampleType": "LV", "results": {"Troy Jackson (D)": 48.0, "Susan Collins (R)": 43.0, "Other": 1.0, "Undecided": 6.0}},
+    {"raceId": "ME-SEN-2026", "pollster": "Maine People's Resource Center (D)", "startDate": "2026-09-25", "endDate": "2026-09-29", "sampleSize": 684, "sampleType": "LV", "results": {"Troy Jackson (D)": 49.3, "Susan Collins (R)": 46.5, "Undecided": 4.2}, "notes": "Sponsored by Maine People's Alliance."},
+    {"raceId": "ME-SEN-2026", "pollster": "Marist College", "startDate": "2026-10-01", "endDate": "2026-10-04", "sampleSize": 1505, "sampleType": "RV", "results": {"Troy Jackson (D)": 51.0, "Susan Collins (R)": 47.0, "Undecided": 2.0}},
+    {"raceId": "ME-SEN-2026", "pollster": "The Washington Post", "startDate": "2026-09-30", "endDate": "2026-10-05", "sampleSize": 800, "sampleType": "LV", "results": {"Troy Jackson (D)": 50.0, "Susan Collins (R)": 46.0, "Undecided": 4.0}, "notes": "Sample size not yet published; 800 is a placeholder."}
   ],
 };

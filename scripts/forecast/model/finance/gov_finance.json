@@ -6,39 +6,41 @@
   "R_candidate": "Byron Donalds",
   "verified": true,
   "basis": "raised",
-  "source": "News Service of Florida via CBS12, Sept 21 2026, through 2026-09-11",
+  "source": "https://www.newsfromthestates.com/node/431021",
   "D": {
-   "individual": 14600000.0,
+   "individual": 11258278.1,
    "self_fund": 0.0,
+   "incumbent": false,
+   "in_state_share": null,
    "items": [
     [
-     "Jolly campaign account raised",
-     8200000.0
+     "raised campaign account, cycle through 2026-09-11",
+     17000000.0
     ],
     [
-     "Florida 2026 political committee raised",
-     6400000.0
+     "cash ",
+     null
     ]
-   ],
-   "incumbent": false,
-   "in_state_share": null
+   ]
   },
   "R": {
-   "individual": 120900000.0,
+   "individual": 88741721.9,
    "self_fund": 0.0,
+   "incumbent": false,
+   "in_state_share": null,
    "items": [
     [
-     "Donalds campaign account raised",
-     13300000.0
+     "raised",
+     134000000.0
     ],
     [
-     "Friends of Byron Donalds PAC raised",
-     107600000.0
+     "cash",
+     null
     ]
-   ],
-   "incumbent": false,
-   "in_state_share": null
-  }
+   ]
+  },
+  "checked": "2026-10-08",
+  "money_share_d": 0.1126
  },
  "TXG": {
   "state": "Texas",
@@ -46,32 +48,42 @@
   "D_candidate": "Gina Hinojosa",
   "R_candidate": "Greg Abbott",
   "verified": true,
-  "basis": "cash on hand",
-  "source": "Texas Ethics Commission July semiannual via Off the Kuff and The Texan, Jun 30 2026",
+  "basis": "mean of raised and cash shares",
+  "source": "https://www.texastribune.org/?p=245471",
   "D": {
-   "individual": 3002415.0,
+   "individual": 28705978.7,
    "self_fund": 0.0,
+   "incumbent": false,
+   "in_state_share": null,
    "items": [
     [
-     "Hinojosa cash Jun 30",
-     3002415
+     "raised Jul 1 to Sep 24 2026 only",
+     13000000.0
+    ],
+    [
+     "cash 2026-09-24",
+     4000000.0
     ]
-   ],
-   "incumbent": false,
-   "in_state_share": null
+   ]
   },
   "R": {
-   "individual": 67400000.0,
+   "individual": 71294021.3,
    "self_fund": 0.0,
+   "incumbent": true,
+   "in_state_share": null,
    "items": [
     [
-     "Abbott cash Jun 30",
-     67400000
+     "raised",
+     20000000.0
+    ],
+    [
+     "cash",
+     18200000.0
     ]
-   ],
-   "incumbent": true,
-   "in_state_share": null
-  }
+   ]
+  },
+  "checked": "2026-10-08",
+  "money_share_d": 0.2871
  },
  "IAG": {
   "state": "Iowa",
@@ -79,40 +91,42 @@
   "D_candidate": "Rob Sand",
   "R_candidate": "Zach Lahn",
   "verified": true,
-  "basis": "raised",
-  "source": "Iowa Capital Dispatch, Jul 14 2026; party checks already inside raised",
+  "basis": "mean of raised and cash shares",
+  "source": "https://littlevillagemag.com/rob-sand-widens-fundraising-lead-over-lahn/",
   "D": {
-   "individual": 9680000.0,
+   "individual": 77029194.2,
    "self_fund": 0.0,
+   "incumbent": false,
+   "in_state_share": null,
    "items": [
     [
-     "Sand raised 2026",
-     9680000
+     "raised May 27 to Jul 14 2026 only",
+     9385646.0
+    ],
+    [
+     "cash 2026-07-14",
+     17957959.0
     ]
-   ],
-   "incumbent": false,
-   "in_state_share": null
+   ]
   },
   "R": {
-   "individual": 6860000.0,
+   "individual": 22970805.8,
    "self_fund": 0.0,
+   "incumbent": false,
+   "in_state_share": null,
    "items": [
     [
-     "Lahn raised May 27 to Jul 14",
-     6300000
+     "raised",
+     6372831.0
     ],
     [
-     "Lahn earlier raised",
-     60000
-    ],
-    [
-     "Lahn loan",
-     500000
+     "cash",
+     1045365.0
     ]
-   ],
-   "incumbent": false,
-   "in_state_share": null
-  }
+   ]
+  },
+  "checked": "2026-10-08",
+  "money_share_d": 0.7703
  },
  "OHG": {
   "state": "Ohio",
@@ -120,33 +134,43 @@
   "D_candidate": "Amy Acton",
   "R_candidate": "Vivek Ramaswamy",
   "verified": true,
-  "basis": "raised",
-  "source": "NBC4 WCMH analysis of Ohio Secretary of State records, Aug 2026, as quoted in Acton campaign release Aug 19 2026, through 2026-07-31",
+  "basis": "mean of raised and cash shares",
+  "source": "https://crackedbuckeye.com/election/2026/governor/",
   "D": {
-   "individual": 16470000.0,
+   "individual": 43949849.2,
    "self_fund": 0.0,
+   "incumbent": false,
+   "in_state_share": null,
    "items": [
     [
-     "Acton raised Jan 1 to Jul 31 2026",
-     16470000.0
+     "raised 2026 through Sep 3",
+     20476881.0
+    ],
+    [
+     "cash 2026-09-03",
+     18056008.0
     ]
-   ],
-   "incumbent": false,
-   "in_state_share": null
+   ]
   },
   "R": {
-   "individual": 14400000.0,
+   "individual": 56050150.8,
    "self_fund": 0.0,
+   "incumbent": false,
+   "in_state_share": null,
    "items": [
     [
-     "Ramaswamy donations Jan 1 to Jul 31 2026",
-     14400000.0
+     "raised",
+     16153195.0
+    ],
+    [
+     "cash",
+     38372767.0
     ]
-   ],
-   "incumbent": false,
-   "in_state_share": null
+   ]
   },
-  "note": "Ramaswamy's own $25M is outside the $14.4M donations figure, so no self funding is subtracted again."
+  "note": "Ramaswamy's own $25M is outside the $14.4M donations figure, so no self funding is subtracted again.",
+  "checked": "2026-10-08",
+  "money_share_d": 0.4395
  },
  "GAG": {
   "state": "Georgia",
@@ -154,36 +178,42 @@
   "D_candidate": "Keisha Lance Bottoms",
   "R_candidate": "Rick Jackson",
   "verified": true,
-  "basis": "raised",
-  "source": "Capitol Beat, Jul 31 2026; Jackson total includes $108M of his own; party checks already inside raised",
+  "basis": "mean of raised and cash shares",
+  "source": "https://roughdraftatlanta.com/2026/08/11/rick-jackson-outpaces-bottoms-fundraising/",
   "D": {
-   "individual": 8700000.0,
+   "individual": 9897649.6,
    "self_fund": 0.0,
+   "incumbent": false,
+   "in_state_share": null,
    "items": [
     [
-     "Bottoms raised",
-     5700000
+     "raised cycle through 2026-07-31",
+     5700000.0
     ],
     [
-     "Bottoms leadership committee since June",
-     3000000
+     "cash 2026-07-31",
+     770000.0
     ]
-   ],
-   "incumbent": false,
-   "in_state_share": null
+   ]
   },
   "R": {
-   "individual": 118000000.0,
+   "individual": 90102350.4,
    "self_fund": 0.0,
+   "incumbent": false,
+   "in_state_share": null,
    "items": [
     [
-     "Jackson raised and own money",
-     118000000
+     "raised",
+     118000000.0
+    ],
+    [
+     "cash",
+     4300000.0
     ]
-   ],
-   "incumbent": false,
-   "in_state_share": null
-  }
+   ]
+  },
+  "checked": "2026-10-08",
+  "money_share_d": 0.099
  },
  "WIG": {
   "state": "Wisconsin",
@@ -191,32 +221,42 @@
   "D_candidate": "David Crowley",
   "R_candidate": "Tom Tiffany",
   "verified": true,
-  "basis": "raised",
-  "source": "WPR and Wisconsin Examiner, Oct 1 2026, Wisconsin Ethics Commission September reports, through 2026-09-23",
+  "basis": "mean of raised and cash shares",
+  "source": "https://fox11online.com/news/state/3-billionaires-give-republican-tom-tiffany-a-big-cash-boost-in-governors-race-democrat-david-crowley-wisconsin-election-fundraising-politics",
   "D": {
-   "individual": 10200000.0,
+   "individual": 20368550.4,
    "self_fund": 0.0,
+   "incumbent": false,
+   "in_state_share": null,
    "items": [
     [
-     "Crowley raised Jul 1 to Sept 23",
-     10200000.0
+     "raised cycle through 2026-09-23",
+     12000000.0
+    ],
+    [
+     "cash 2026-09-23",
+     2800000.0
     ]
-   ],
-   "incumbent": false,
-   "in_state_share": null
+   ]
   },
   "R": {
-   "individual": 26300000.0,
+   "individual": 79631449.6,
    "self_fund": 0.0,
+   "incumbent": false,
+   "in_state_share": null,
    "items": [
     [
-     "Tiffany raised Jul 1 to Sept 23",
-     26300000.0
+     "raised",
+     43000000.0
+    ],
+    [
+     "cash",
+     12000000.0
     ]
-   ],
-   "incumbent": false,
-   "in_state_share": null
-  }
+   ]
+  },
+  "checked": "2026-10-08",
+  "money_share_d": 0.2037
  },
  "MIG": {
   "state": "Michigan",
@@ -224,52 +264,42 @@
   "D_candidate": "Jocelyn Benson",
   "R_candidate": "John James",
   "verified": true,
-  "basis": "raised",
-  "source": "Bridge Michigan, Jan 1 to Jul 20 2026 both; Mission Michigan spending was in the primary",
+  "basis": "cash on hand",
+  "source": "https://bridgemi.com/michigan-government/jocelyn-benson-outraises-john-james-see-top-donors-in-michigan-governor-race/",
   "D": {
-   "individual": 6880000.0,
+   "individual": 79729729.7,
    "self_fund": 0.0,
+   "incumbent": false,
+   "in_state_share": null,
    "items": [
     [
-     "Benson raised to Jul 20",
-     5000000
+     "raised not comparable",
+     12500000.0
     ],
     [
-     "Benson raised Jul 20 to Aug 24",
-     1800000
-    ],
-    [
-     "DGA Victory Fund",
-     80000
+     "cash 2026-08-24",
+     5900000.0
     ]
-   ],
-   "incumbent": false,
-   "in_state_share": null
+   ]
   },
   "R": {
-   "individual": 9371000.0,
+   "individual": 20270270.3,
    "self_fund": 0.0,
+   "incumbent": false,
+   "in_state_share": null,
    "items": [
     [
-     "James raised to Jul 20",
-     3100000
+     "raised",
+     null
     ],
     [
-     "James private donations Jul 20 to Aug 24",
-     1200000
-    ],
-    [
-     "James public funding",
-     371000
-    ],
-    [
-     "Mission Michigan super PAC",
-     4700000
+     "cash",
+     1500000.0
     ]
-   ],
-   "incumbent": false,
-   "in_state_share": null
-  }
+   ]
+  },
+  "checked": "2026-10-08",
+  "money_share_d": 0.7973
  },
  "NYG": {
   "state": "New York",
@@ -277,40 +307,42 @@
   "D_candidate": "Kathy Hochul",
   "R_candidate": "Bruce Blakeman",
   "verified": true,
-  "basis": "raised",
-  "source": "WXXI Jul 2026; raised figures cover different periods; $1M super PAC ads against Hochul",
+  "basis": "mean of raised and cash shares",
+  "source": "https://www.cityandstateny.com/politics/2026/09/one-month-out-election-day-hochul-has-more-33-million-bank/416290/",
   "D": {
-   "individual": 17200000.0,
+   "individual": 64064890.6,
    "self_fund": 0.0,
+   "incumbent": true,
+   "in_state_share": null,
    "items": [
     [
-     "Hochul raised 2026",
-     5800000
+     "raised mid July to Sep 28 2026 only",
+     2600000.0
     ],
     [
-     "state Democratic committee raised",
-     11400000
+     "cash 2026-09-28",
+     18500000.0
     ]
-   ],
-   "incumbent": true,
-   "in_state_share": null
+   ]
   },
   "R": {
-   "individual": 12400000.0,
+   "individual": 35935109.4,
    "self_fund": 0.0,
+   "incumbent": false,
+   "in_state_share": null,
    "items": [
     [
-     "Blakeman raised",
-     11400000
+     "raised",
+     6340000.0
     ],
     [
-     "super PAC ads against Hochul",
-     1000000
+     "cash",
+     178000.0
     ]
-   ],
-   "incumbent": false,
-   "in_state_share": null
-  }
+   ]
+  },
+  "checked": "2026-10-08",
+  "money_share_d": 0.6406
  },
  "PAG": {
   "state": "Pennsylvania",
@@ -318,32 +350,42 @@
   "D_candidate": "Josh Shapiro",
   "R_candidate": "Stacy Garrity",
   "verified": true,
-  "basis": "raised",
-  "source": "Spotlight PA, Sept 25 2026, Pennsylvania Department of State reports through Sept 14 2026, through 2026-09-14",
+  "basis": "mean of raised and cash shares",
+  "source": "https://www.cityandstatepa.com/politics/2026/09/mind-gap-shapiro-raises-133m-latest-fundraising-period-garrity-brings-18m/416174/",
   "D": {
-   "individual": 31000000.0,
+   "individual": 91567318.6,
    "self_fund": 0.0,
+   "incumbent": true,
+   "in_state_share": null,
    "items": [
     [
-     "Shapiro raised 2026 year to date",
-     31000000.0
+     "raised 2026 through Sep 14",
+     31700000.0
+    ],
+    [
+     "cash 2026-09-14",
+     19800000.0
     ]
-   ],
-   "incumbent": true,
-   "in_state_share": null
+   ]
   },
   "R": {
-   "individual": 3800000.0,
+   "individual": 8432681.4,
    "self_fund": 0.0,
+   "incumbent": false,
+   "in_state_share": null,
    "items": [
     [
-     "Garrity raised 2026 year to date",
+     "raised",
      3800000.0
+    ],
+    [
+     "cash",
+     1300000.0
     ]
-   ],
-   "incumbent": false,
-   "in_state_share": null
-  }
+   ]
+  },
+  "checked": "2026-10-08",
+  "money_share_d": 0.9157
  },
  "AZG": {
   "state": "Arizona",
@@ -351,33 +393,43 @@
   "D_candidate": "Katie Hobbs",
   "R_candidate": "Andy Biggs",
   "verified": true,
-  "basis": "cash on hand",
-  "source": "KTAR, Q2 2026; Biggs cycle total not reported, DGA $10M pledge not counted",
+  "basis": "mean of raised and cash shares",
+  "source": "https://azmirror.com/?p=27721",
   "D": {
-   "individual": 1400000.0,
+   "individual": 70299807.6,
    "self_fund": 0.0,
+   "incumbent": true,
+   "in_state_share": null,
    "items": [
     [
-     "Hobbs cash Jun 30",
-     1400000.0
+     "raised Q2 2026 only",
+     2600000.0
+    ],
+    [
+     "cash 2026-06-30",
+     2400000.0
     ]
-   ],
-   "incumbent": true,
-   "in_state_share": null
+   ]
   },
   "R": {
-   "individual": 1270000.0,
+   "individual": 29700192.4,
    "self_fund": 0.0,
+   "incumbent": false,
+   "in_state_share": null,
    "items": [
     [
-     "Biggs cash Jun 30",
-     1270000
+     "raised",
+     916700.0
+    ],
+    [
+     "cash",
+     1200000.0
     ]
-   ],
-   "incumbent": false,
-   "in_state_share": null
+   ]
   },
-  "notes_oct2": "The $10M DGA pledge was inside the total though the source note said it was not counted; removed."
+  "notes_oct2": "The $10M DGA pledge was inside the total though the source note said it was not counted; removed.",
+  "checked": "2026-10-08",
+  "money_share_d": 0.703
  },
  "NVG": {
   "state": "Nevada",
@@ -385,40 +437,42 @@
   "D_candidate": "Aaron Ford",
   "R_candidate": "Joe Lombardo",
   "verified": true,
-  "basis": "raised",
-  "source": "Nevada Independent, Jun 30 2026; no cycle totals reported",
+  "basis": "mean of raised and cash shares",
+  "source": "https://thenevadaindependent.com/article/what-we-learned-from-nevadas-latest-campaign-finance-reports/",
   "D": {
-   "individual": 2500000.0,
+   "individual": 31016949.2,
    "self_fund": 0.0,
+   "incumbent": false,
+   "in_state_share": null,
    "items": [
     [
-     "Ford Q2 campaign",
-     1400000
+     "raised Q2 2026 only",
+     1400000.0
     ],
     [
-     "Ford Q2 PACs",
-     1100000
+     "cash 2026-06-30",
+     2600000.0
     ]
-   ],
-   "incumbent": false,
-   "in_state_share": null
+   ]
   },
   "R": {
-   "individual": 16100000.0,
+   "individual": 68983050.8,
    "self_fund": 0.0,
+   "incumbent": true,
+   "in_state_share": null,
    "items": [
     [
-     "Lombardo Q2 campaign",
-     2100000
+     "raised",
+     2100000.0
     ],
     [
-     "Lombardo Q2 PACs, RGA $5M inside",
-     14000000
+     "cash",
+     9200000.0
     ]
-   ],
-   "incumbent": true,
-   "in_state_share": null
-  }
+   ]
+  },
+  "checked": "2026-10-08",
+  "money_share_d": 0.3102
  },
  "CAG": {
   "state": "California",
@@ -426,36 +480,42 @@
   "D_candidate": "Xavier Becerra",
   "R_candidate": "Steve Hilton",
   "verified": true,
-  "basis": "raised",
-  "source": "LA Times analysis through Sept 3 2026",
+  "basis": "mean of raised and cash shares",
+  "source": "https://kmph.com/news/beyond-the-podium/breakdown-of-becerra-hilton-campaign-contributions",
   "D": {
-   "individual": 51300000.0,
+   "individual": 66435231.4,
    "self_fund": 0.0,
+   "incumbent": false,
+   "in_state_share": null,
    "items": [
     [
-     "Becerra campaign and supporting committees through Sept 3",
-     48800000
+     "raised cycle through latest Form 460, September",
+     29748565.0
     ],
     [
-     "committee opposing Hilton",
-     2500000
+     "cash 2026-06-30",
+     6200000.0
     ]
-   ],
-   "incumbent": false,
-   "in_state_share": null
+   ]
   },
   "R": {
-   "individual": 18800000.0,
+   "individual": 33564768.6,
    "self_fund": 0.0,
+   "incumbent": false,
+   "in_state_share": null,
    "items": [
     [
-     "Hilton raised",
-     18800000
+     "raised",
+     21390703.0
+    ],
+    [
+     "cash",
+     2100000.0
     ]
-   ],
-   "incumbent": false,
-   "in_state_share": null
-  }
+   ]
+  },
+  "checked": "2026-10-08",
+  "money_share_d": 0.6644
  },
  "ORG": {
   "state": "Oregon",
@@ -463,32 +523,42 @@
   "D_candidate": "Tina Kotek",
   "R_candidate": "Christine Drazan",
   "verified": true,
-  "basis": "raised",
-  "source": "Oregon Capital Chronicle, Sept 15 2026",
+  "basis": "mean of raised and cash shares",
+  "source": "https://www.opb.org/article/2026/10/01/ten-million-dollar-political-check-oregon-election-carpenters-union/",
   "D": {
-   "individual": 12000000.0,
+   "individual": 64827586.2,
    "self_fund": 0.0,
+   "incumbent": true,
+   "in_state_share": null,
    "items": [
     [
-     "Kotek raised",
-     12000000
+     "raised since Jan 2025 through 2026-10-01",
+     14700000.0
+    ],
+    [
+     "cash 2026-10-01",
+     4400000.0
     ]
-   ],
-   "incumbent": true,
-   "in_state_share": null
+   ]
   },
   "R": {
-   "individual": 9400000.0,
+   "individual": 35172413.8,
    "self_fund": 0.0,
+   "incumbent": false,
+   "in_state_share": null,
    "items": [
     [
-     "Drazan raised",
-     9400000
+     "raised",
+     11400000.0
+    ],
+    [
+     "cash",
+     1600000.0
     ]
-   ],
-   "incumbent": false,
-   "in_state_share": null
-  }
+   ]
+  },
+  "checked": "2026-10-08",
+  "money_share_d": 0.6483
  },
  "KSG": {
   "state": "Kansas",
@@ -496,41 +566,43 @@
   "D_candidate": "Cindy Holscher",
   "R_candidate": "Ty Masterson",
   "verified": true,
-  "basis": "raised",
-  "source": "Kansas Governmental Ethics Commission filings, Jul 23 2026; RGA $6.9M booking is a reservation and not counted",
+  "basis": "mean of raised and cash shares",
+  "source": "https://www.kansas.gov/ethics/CFAScanned/StWide/2026ElecCycle/202607/SW01TM_202607.pdf",
   "D": {
-   "individual": 809630.21,
+   "individual": 24386818.1,
    "self_fund": 0.0,
+   "incumbent": false,
+   "in_state_share": null,
    "items": [
     [
-     "Holscher raised 2026",
-     412630.21
+     "raised cycle through 2026-07-23",
+     810582.0
     ],
     [
-     "Holscher raised 2025",
-     397000
+     "cash 2026-07-23",
+     64934.0
     ]
-   ],
-   "incumbent": false,
-   "in_state_share": null
+   ]
   },
   "R": {
-   "individual": 1466535.24,
+   "individual": 75613181.9,
    "self_fund": 0.0,
+   "incumbent": false,
+   "in_state_share": null,
    "items": [
     [
-     "Masterson raised 2026",
-     766535.24
+     "raised",
+     1462533.0
     ],
     [
-     "Take Back Kansas nonprofit balance",
-     700000.0
+     "cash",
+     430212.0
     ]
-   ],
-   "incumbent": false,
-   "in_state_share": null
+   ]
   },
-  "notes_oct2": "The $6.9M RGA booking was inside the total though the note said it was a reservation not counted; removed."
+  "notes_oct2": "The $6.9M RGA booking was inside the total though the note said it was a reservation not counted; removed.",
+  "checked": "2026-10-08",
+  "money_share_d": 0.2439
  },
  "NEG": {
   "state": "Nebraska",
@@ -538,44 +610,42 @@
   "D_candidate": "Lynne Walz",
   "R_candidate": "Jim Pillen",
   "verified": true,
-  "basis": "raised",
-  "source": "KRVN post primary reports Jun 16 2026; raised figures cover different periods",
+  "basis": "mean of raised and cash shares",
+  "source": "https://nebraskapublicmedia.org/en/news/news-articles/over-165-million-raised-in-nebraska-governors-race-as-pillen-reports-triple-walzs-contributions-double-her-spending/",
   "D": {
-   "individual": 984472.0,
+   "individual": 16658692.2,
    "self_fund": 0.0,
+   "incumbent": false,
+   "in_state_share": null,
    "items": [
     [
-     "Walz raised to Apr 27",
-     692000
+     "raised cycle through 2026-09-29",
+     3800000.0
     ],
     [
-     "Walz raised Apr 28 to Jun 16",
-     292472
+     "cash 2026-09-29",
+     860000.0
     ]
-   ],
-   "incumbent": false,
-   "in_state_share": null
+   ]
   },
   "R": {
-   "individual": 12728709.0,
+   "individual": 83341307.8,
    "self_fund": 0.0,
+   "incumbent": true,
+   "in_state_share": null,
    "items": [
     [
-     "Pillen raised 2023 to 2025, nearly",
-     12000000
+     "raised",
+     12700000.0
     ],
     [
-     "Pillen raised to Apr 27",
-     565000
-    ],
-    [
-     "Pillen raised Apr 28 to Jun 16",
-     163709
+     "cash",
+     7500000.0
     ]
-   ],
-   "incumbent": true,
-   "in_state_share": null
-  }
+   ]
+  },
+  "checked": "2026-10-08",
+  "money_share_d": 0.1666
  },
  "OKG": {
   "state": "Oklahoma",
@@ -616,32 +686,42 @@
   "D_candidate": "Doug Jones",
   "R_candidate": "Tommy Tuberville",
   "verified": true,
-  "basis": "raised",
-  "source": "Alabama Campaign Finance Tracker via Tuscaloosa Thread, Sept 2026",
+  "basis": "mean of raised and cash shares",
+  "source": "https://aldailynews.com/?p=192080 ; https://www.newsfromthestates.com/node/430925",
   "D": {
-   "individual": 4764710.0,
+   "individual": 26292703.2,
    "self_fund": 0.0,
+   "incumbent": false,
+   "in_state_share": null,
    "items": [
     [
-     "Jones raised",
-     4764710
+     "raised cycle through 2026-09-30",
+     5880000.0
+    ],
+    [
+     "cash 2026-09-30",
+     2200000.0
     ]
-   ],
-   "incumbent": false,
-   "in_state_share": null
+   ]
   },
   "R": {
-   "individual": 14534353.0,
+   "individual": 73707296.8,
    "self_fund": 0.0,
+   "incumbent": false,
+   "in_state_share": null,
    "items": [
     [
-     "Tuberville raised",
-     14534353
+     "raised",
+     15660000.0
+    ],
+    [
+     "cash",
+     6500000.0
     ]
-   ],
-   "incumbent": false,
-   "in_state_share": null
-  }
+   ]
+  },
+  "checked": "2026-10-08",
+  "money_share_d": 0.2629
  },
  "SDG": {
   "state": "South Dakota",
@@ -691,33 +771,43 @@
   "D_candidate": "Amanda Janoo",
   "R_candidate": "Phil Scott",
   "verified": true,
-  "basis": "cash on hand",
-  "source": "Vermont Public, Sept 1 2026, cash on hand both sides",
+  "basis": "mean of raised and cash shares",
+  "source": "https://vtdigger.org/2026/10/02/amanda-janoo-bests-phil-scott-in-september-campaign-fundraising-blitz/",
   "D": {
-   "individual": 59000.0,
+   "individual": 55834620.3,
    "self_fund": 0.0,
+   "incumbent": false,
+   "in_state_share": null,
    "items": [
     [
-     "Janoo cash Sept 1",
-     59000.0
+     "raised cycle through 2026-10-01",
+     706080.0
+    ],
+    [
+     "cash 2026-10-01",
+     280075.0
     ]
-   ],
-   "incumbent": false,
-   "in_state_share": null
+   ]
   },
   "R": {
-   "individual": 309000.0,
+   "individual": 44165379.7,
    "self_fund": 0.0,
+   "incumbent": true,
+   "in_state_share": null,
    "items": [
     [
-     "Scott cash Sept 1",
-     309000.0
+     "raised",
+     414000.0
+    ],
+    [
+     "cash",
+     295845.0
     ]
-   ],
-   "incumbent": true,
-   "in_state_share": null
+   ]
   },
-  "notes_oct2": "Mixed bases fixed: cash on hand for both on Sept 1."
+  "notes_oct2": "Mixed bases fixed: cash on hand for both on Sept 1.",
+  "checked": "2026-10-08",
+  "money_share_d": 0.5583
  },
  "COG": {
   "state": "Colorado",
@@ -725,48 +815,42 @@
   "D_candidate": "Phil Weiser",
   "R_candidate": "Victor Marx",
   "verified": true,
-  "basis": "raised",
-  "source": "Colorado Newsline, Jul 27 2026; Marx exact total not reported",
+  "basis": "mean of raised and cash shares",
+  "source": "https://coloradonewsline.com/2026/10/08/weiser-democrats-fundraising-edge/",
   "D": {
-   "individual": 7444795.0,
+   "individual": 71400962.3,
    "self_fund": 0.0,
+   "incumbent": false,
+   "in_state_share": null,
    "items": [
     [
-     "Weiser primary raised",
-     6700000
+     "raised Q3 2026 only",
+     1700000.0
     ],
     [
-     "Weiser July raised",
-     486005
-    ],
-    [
-     "Fighting for Colorado super PAC",
-     258790
+     "cash 2026-10-01",
+     724879.0
     ]
-   ],
-   "incumbent": false,
-   "in_state_share": null
+   ]
   },
   "R": {
-   "individual": 3217294.0,
+   "individual": 28599037.7,
    "self_fund": 0.0,
+   "incumbent": false,
+   "in_state_share": null,
    "items": [
     [
-     "Marx primary raised, nearly",
-     3000000
+     "raised",
+     1100000.0
     ],
     [
-     "Marx July raised",
-     185694
-    ],
-    [
-     "Freedom IE committee",
-     31600
+     "cash",
+     158176.0
     ]
-   ],
-   "incumbent": false,
-   "in_state_share": null
-  }
+   ]
+  },
+  "checked": "2026-10-08",
+  "money_share_d": 0.714
  },
  "NHG": {
   "state": "New Hampshire",
@@ -774,32 +858,42 @@
   "D_candidate": "Cinde Warmington",
   "R_candidate": "Kelly Ayotte",
   "verified": true,
-  "basis": "raised",
-  "source": "Union Leader Aug 2026; RGA $2M check already inside raised",
+  "basis": "cash on hand",
+  "source": "https://nhjournal.com/analysis-dead-warmington-walking-seven-months-in-cindes-yet-to-raise-1m/",
   "D": {
-   "individual": 890000.0,
+   "individual": 13333333.3,
    "self_fund": 0.0,
+   "incumbent": false,
+   "in_state_share": null,
    "items": [
     [
-     "Warmington raised",
-     890000
+     "raised not comparable",
+     null
+    ],
+    [
+     "cash 2026-09-02",
+     400000.0
     ]
-   ],
-   "incumbent": false,
-   "in_state_share": null
+   ]
   },
   "R": {
-   "individual": 5900000.0,
+   "individual": 86666666.7,
    "self_fund": 0.0,
+   "incumbent": true,
+   "in_state_share": null,
    "items": [
     [
-     "Ayotte raised, RGA check inside",
-     5900000
+     "raised",
+     6400000.0
+    ],
+    [
+     "cash",
+     2600000.0
     ]
-   ],
-   "incumbent": true,
-   "in_state_share": null
-  }
+   ]
+  },
+  "checked": "2026-10-08",
+  "money_share_d": 0.1333
  },
  "TNG": {
   "state": "Tennessee",
@@ -807,37 +901,43 @@
   "D_candidate": "Jerri Green",
   "R_candidate": "Marsha Blackburn",
   "verified": true,
-  "basis": "raised",
-  "source": "Tennessee Firefly tracker exact figures, Oct 2026, and Tennessee Lookout Aug 2026",
+  "basis": "mean of raised and cash shares",
+  "source": "https://tnfirefly.com/tennessee-governor-race/finance",
   "D": {
-   "individual": 849586.0,
+   "individual": 5766851.3,
    "self_fund": 0.0,
+   "incumbent": false,
+   "in_state_share": null,
    "items": [
     [
-     "Green raised",
+     "raised cycle through 2026-07-27",
      849586.0
+    ],
+    [
+     "cash 2026-07-27",
+     118002.0
     ]
-   ],
-   "incumbent": false,
-   "in_state_share": null
+   ]
   },
   "R": {
-   "individual": 15545910.0,
+   "individual": 94233148.7,
    "self_fund": 0.0,
+   "incumbent": false,
+   "in_state_share": null,
    "items": [
     [
-     "Blackburn raised",
+     "raised",
      10735910.0
     ],
     [
-     "School Freedom Fund money behind Blackburn",
-     4810000.0
+     "cash",
+     2691224.0
     ]
-   ],
-   "incumbent": false,
-   "in_state_share": null
+   ]
   },
-  "notes_oct2": "Exact Firefly figures."
+  "notes_oct2": "Exact Firefly figures.",
+  "checked": "2026-10-08",
+  "money_share_d": 0.0577
  },
  "MNG": {
   "state": "Minnesota",
@@ -845,44 +945,42 @@
   "D_candidate": "Amy Klobuchar",
   "R_candidate": "Lisa Demuth",
   "verified": true,
-  "basis": "raised",
-  "source": "Minnesota Reformer, Sept 23 2026; MPR News, Sept 23 2026, through 2026-09-15",
+  "basis": "mean of raised and cash shares",
+  "source": "https://www.mprnews.org/story/2026/09/23/money-in-minnesota-governors-race-cash-capitol-power",
   "D": {
-   "individual": 13800000.0,
+   "individual": 82586158.6,
    "self_fund": 0.0,
+   "incumbent": false,
+   "in_state_share": null,
    "items": [
     [
-     "Klobuchar raised since late January",
+     "raised cycle through 2026-09-15",
      12500000.0
     ],
     [
-     "Alliance for a Better Minnesota ads against Demuth",
-     1300000.0
+     "cash 2026-09-15",
+     3500000.0
     ]
-   ],
-   "incumbent": false,
-   "in_state_share": null
+   ]
   },
   "R": {
-   "individual": 8800000.0,
+   "individual": 17413841.4,
    "self_fund": 0.0,
+   "incumbent": false,
+   "in_state_share": null,
    "items": [
     [
-     "Demuth raised 2026, includes $1.3M public subsidy",
-     2600000.0
+     "raised",
+     3090000.0
     ],
     [
-     "Restore Sanity PAC ads for Demuth",
-     4400000.0
-    ],
-    [
-     "Restore Sanity PAC ads against Klobuchar",
-     1800000.0
+     "cash",
+     618000.0
     ]
-   ],
-   "incumbent": false,
-   "in_state_share": null
-  }
+   ]
+  },
+  "checked": "2026-10-08",
+  "money_share_d": 0.8259
  },
  "SCG": {
   "state": "South Carolina",
@@ -923,32 +1021,42 @@
   "D_candidate": "Terri Pickens",
   "R_candidate": "Brad Little",
   "verified": true,
-  "basis": "raised",
-  "source": "Idaho Capital Sun, Aug 4 2026",
+  "basis": "mean of raised and cash shares",
+  "source": "https://idahocapitalsun.com/?p=32428",
   "D": {
-   "individual": 161787.0,
+   "individual": 6562165.6,
    "self_fund": 0.0,
+   "incumbent": false,
+   "in_state_share": null,
    "items": [
     [
-     "Pickens raised",
-     161787
+     "raised 2026 contributions through 2026-09-30",
+     217520.0
+    ],
+    [
+     "cash 2026-06-15",
+     45336.0
     ]
-   ],
-   "incumbent": false,
-   "in_state_share": null
+   ]
   },
   "R": {
-   "individual": 2130522.0,
+   "individual": 93437834.4,
    "self_fund": 0.0,
+   "incumbent": true,
+   "in_state_share": null,
    "items": [
     [
-     "Little raised",
-     2130522
+     "raised",
+     2309940.0
+    ],
+    [
+     "cash",
+     958103.0
     ]
-   ],
-   "incumbent": true,
-   "in_state_share": null
-  }
+   ]
+  },
+  "checked": "2026-10-08",
+  "money_share_d": 0.0656
  },
  "WYG": {
   "state": "Wyoming",
@@ -989,32 +1097,42 @@
   "D_candidate": "Jonathan Kreiss-Tomkins",
   "R_candidate": "Bernadette Wilson",
   "verified": true,
-  "basis": "raised",
-  "source": "APOC via Wikipedia Aug 8 2026; Wilson Alaska Public Media Jul 24 2026 primary period, other reports up to $900K",
+  "basis": "cash on hand",
+  "source": "https://thealaskastory.com/fundraising-reports-sharpen-governors-race-wilson-leads-republicans-while-jkt-holds-a-commanding-money-advantage/",
   "D": {
-   "individual": 2170998.0,
+   "individual": 82850041.4,
    "self_fund": 0.0,
+   "incumbent": false,
+   "in_state_share": null,
    "items": [
     [
-     "Kreiss-Tomkins raised, APOC Aug 8",
-     2170998
+     "raised not comparable",
+     4000000.0
+    ],
+    [
+     "cash 2026-10-02",
+     1000000.0
     ]
-   ],
-   "incumbent": false,
-   "in_state_share": null
+   ]
   },
   "R": {
-   "individual": 460000.0,
+   "individual": 17149958.6,
    "self_fund": 0.0,
+   "incumbent": false,
+   "in_state_share": null,
    "items": [
     [
-     "Wilson raised, pre-primary report",
-     460000
+     "raised",
+     null
+    ],
+    [
+     "cash",
+     207000.0
     ]
-   ],
-   "incumbent": false,
-   "in_state_share": null
-  }
+   ]
+  },
+  "checked": "2026-10-08",
+  "money_share_d": 0.8285
  },
  "MEG": {
   "state": "Maine",
@@ -1022,44 +1140,42 @@
   "D_candidate": "Hannah Pingree",
   "R_candidate": "Bobby Charles",
   "verified": true,
-  "basis": "raised",
-  "source": "Maine Public, Sept 24 2026; Spectrum News Maine, Oct 1 2026; BDN Maine Politics, Sept 23 2026, as quoted by Maine Democratic Party, through 2026-09-15",
+  "basis": "mean of raised and cash shares",
+  "source": "https://www.mainepublic.org/politics/2026-09-24/hannah-pingree-leads-fundraising-in-maines-race-for-governor",
   "D": {
-   "individual": 13100000.0,
+   "individual": 72725805.3,
    "self_fund": 0.0,
+   "incumbent": false,
+   "in_state_share": null,
    "items": [
     [
-     "Pingree raised",
-     4300000.0
+     "raised Jul 15 to Sep 15 2026 only",
+     1200000.0
     ],
     [
-     "Maine Conservation Voters spending, kept from Press Herald Sept 17",
-     600000.0
-    ],
-    [
-     "Pine Tree Prosperity, DGA arm, ad reservations",
-     8200000.0
+     "cash 2026-09-15",
+     1200000.0
     ]
-   ],
-   "incumbent": false,
-   "in_state_share": null
+   ]
   },
   "R": {
-   "individual": 1860000.0,
-   "self_fund": 250000.0,
+   "individual": 27274194.7,
+   "self_fund": 0.0,
+   "incumbent": false,
+   "in_state_share": null,
    "items": [
     [
-     "Charles raised, includes $250K personal loan",
-     1800000.0
+     "raised",
+     509000.0
     ],
     [
-     "Reclaim Maine PAC, kept from Press Herald Sept 17",
-     60000.0
+     "cash",
+     395000.0
     ]
-   ],
-   "incumbent": false,
-   "in_state_share": null
-  }
+   ]
+  },
+  "checked": "2026-10-08",
+  "money_share_d": 0.7273
  },
  "CTG": {
   "state": "Connecticut",
@@ -1104,33 +1220,43 @@
   "D_candidate": "Helena Foulkes",
   "R_candidate": "Aaron Guckian",
   "verified": true,
-  "basis": "cash on hand",
-  "source": "Rhode Island Board of Elections Jun 30 2026 reports, cash on hand both sides; loan balances removed as self funding",
+  "basis": "mean of raised and cash shares",
+  "source": "https://www.bostonglobe.com/2026/10/07/metro/rhode-island-campaign-finance-reports-october-2026/",
   "D": {
-   "individual": 3338991.08,
-   "self_fund": 1835000.0,
+   "individual": 97710013.7,
+   "self_fund": 0.0,
+   "incumbent": false,
+   "in_state_share": null,
    "items": [
     [
-     "Foulkes cash Jun 30",
-     3338991.08
+     "raised Sep 2 to Oct 5 2026 only",
+     529000.0
+    ],
+    [
+     "cash 2026-10-05",
+     214871.0
     ]
-   ],
-   "incumbent": false,
-   "in_state_share": null
+   ]
   },
   "R": {
-   "individual": 30190.38,
-   "self_fund": 10500.0,
+   "individual": 2289986.3,
+   "self_fund": 0.0,
+   "incumbent": false,
+   "in_state_share": null,
    "items": [
     [
-     "Guckian cash Jun 30",
-     30190.38
+     "raised",
+     7000.0
+    ],
+    [
+     "cash",
+     7273.0
     ]
-   ],
-   "incumbent": false,
-   "in_state_share": null
+   ]
   },
-  "notes_oct2": "Mixed dates fixed: both sides on Jun 30."
+  "notes_oct2": "Mixed dates fixed: both sides on Jun 30.",
+  "checked": "2026-10-08",
+  "money_share_d": 0.9771
  },
  "MAG": {
   "state": "Massachusetts",
@@ -1139,35 +1265,41 @@
   "R_candidate": "Michael Minogue",
   "verified": true,
   "basis": "raised",
-  "source": "Boston.com from OCPF, Sept 18 2026, 2026 year to date both",
+  "source": "https://www.boston.com/news/politics/2026/09/17/charts-see-how-much-gov-maura-healey-and-mike-minogue-have-raised-so-far/",
   "D": {
-   "individual": 3780000.0,
+   "individual": 24609375.0,
    "self_fund": 0.0,
-   "items": [
-    [
-     "Healey raised 2026",
-     3780000
-    ]
-   ],
    "incumbent": true,
-   "in_state_share": null
-  },
-  "R": {
-   "individual": 17080000.0,
-   "self_fund": 0.0,
+   "in_state_share": null,
    "items": [
     [
-     "Minogue raised 2026",
-     11580000
+     "raised 2026 through August",
+     3780000.0
     ],
     [
-     "Minogue own money before 2026",
-     5500000
+     "cash ",
+     6860000.0
     ]
-   ],
+   ]
+  },
+  "R": {
+   "individual": 75390625.0,
+   "self_fund": 0.0,
    "incumbent": false,
-   "in_state_share": null
-  }
+   "in_state_share": null,
+   "items": [
+    [
+     "raised",
+     11580000.0
+    ],
+    [
+     "cash",
+     1500000.0
+    ]
+   ]
+  },
+  "checked": "2026-10-08",
+  "money_share_d": 0.2461
  },
  "MDG": {
   "state": "Maryland",
@@ -1175,32 +1307,42 @@
   "D_candidate": "Wes Moore",
   "R_candidate": "Dan Cox",
   "verified": true,
-  "basis": "cash on hand",
-  "source": "FOX 5 DC, Aug 18 2026; no cycle raised totals reported",
+  "basis": "mean of raised and cash shares",
+  "source": "https://www.fox5dc.com/news/wes-moore-holds-nearly-48-to-1-cash-advantage-over-dan-cox-maryland-rematch",
   "D": {
-   "individual": 6490000.0,
+   "individual": 94673518.2,
    "self_fund": 0.0,
+   "incumbent": true,
+   "in_state_share": null,
    "items": [
     [
-     "Moore cash Aug 18",
-     6490000
+     "raised Jun 8 to Aug 18 2026 only",
+     1727122.0
+    ],
+    [
+     "cash 2026-08-18",
+     6493553.0
     ]
-   ],
-   "incumbent": true,
-   "in_state_share": null
+   ]
   },
   "R": {
-   "individual": 136000.0,
+   "individual": 5326481.8,
    "self_fund": 0.0,
+   "incumbent": false,
+   "in_state_share": null,
    "items": [
     [
-     "Cox cash Aug 18",
-     136000
+     "raised",
+     162512.0
+    ],
+    [
+     "cash",
+     136092.0
     ]
-   ],
-   "incumbent": false,
-   "in_state_share": null
-  }
+   ]
+  },
+  "checked": "2026-10-08",
+  "money_share_d": 0.9467
  },
  "NMG": {
   "state": "New Mexico",
@@ -1208,32 +1350,42 @@
   "D_candidate": "Deb Haaland",
   "R_candidate": "Gregg Hull",
   "verified": true,
-  "basis": "raised",
-  "source": "Source NM Sept 15 2026",
+  "basis": "mean of raised and cash shares",
+  "source": "https://www.santafenewmexican.com/news/elections/haaland-dwarfs-hull-with-3-4-million-fundraising-haul-in-new-mexico-governors-race/article_4db56022-849b-4b01-91fb-71c45934c421.html",
   "D": {
-   "individual": 17300000.0,
+   "individual": 82699688.0,
    "self_fund": 0.0,
+   "incumbent": false,
+   "in_state_share": null,
    "items": [
     [
-     "Haaland raised",
-     17300000
+     "raised Jun 28 to Sep 7 2026 only",
+     3400000.0
+    ],
+    [
+     "cash 2026-09-07",
+     3400000.0
     ]
-   ],
-   "incumbent": false,
-   "in_state_share": null
+   ]
   },
   "R": {
-   "individual": 1900000.0,
+   "individual": 17300312.0,
    "self_fund": 0.0,
+   "incumbent": false,
+   "in_state_share": null,
    "items": [
     [
-     "Hull raised",
-     1900000
+     "raised",
+     943000.0
+    ],
+    [
+     "cash",
+     503000.0
     ]
-   ],
-   "incumbent": false,
-   "in_state_share": null
-  }
+   ]
+  },
+  "checked": "2026-10-08",
+  "money_share_d": 0.827
  },
  "ARG": {
   "state": "Arkansas",
@@ -1241,32 +1393,42 @@
   "D_candidate": "Fredrick Love",
   "R_candidate": "Sarah Huckabee Sanders",
   "verified": true,
-  "basis": "raised",
-  "source": "Steve Brawner column, The Arkadelphian, Jul 23 2026, citing June reports filed with the Arkansas Secretary of State, through 2026-06-30",
+  "basis": "mean of raised and cash shares",
+  "source": "https://arkadelphian.com/2026/07/23/governor-has-money-opponents-had-debate/",
   "D": {
-   "individual": 193000.0,
+   "individual": 1296023.7,
    "self_fund": 0.0,
+   "incumbent": false,
+   "in_state_share": null,
    "items": [
     [
-     "Love raised, cycle through June 2026",
+     "raised cycle through 2026-06-30",
      193000.0
+    ],
+    [
+     "cash 2026-06-30",
+     7500.0
     ]
-   ],
-   "incumbent": false,
-   "in_state_share": null
+   ]
   },
   "R": {
-   "individual": 7700000.0,
+   "individual": 98703976.3,
    "self_fund": 0.0,
+   "incumbent": true,
+   "in_state_share": null,
    "items": [
     [
-     "Sanders raised, cycle through June 2026",
+     "raised",
      7700000.0
+    ],
+    [
+     "cash",
+     5100000.0
     ]
-   ],
-   "incumbent": true,
-   "in_state_share": null
-  }
+   ]
+  },
+  "checked": "2026-10-08",
+  "money_share_d": 0.013
  },
  "ILG": {
   "state": "Illinois",
@@ -1274,32 +1436,42 @@
   "D_candidate": "JB Pritzker",
   "R_candidate": "Darren Bailey",
   "verified": true,
-  "basis": "raised",
-  "source": "Capitol News Illinois, Aug 18 2026; Pritzker money is his own",
+  "basis": "mean of raised and cash shares",
+  "source": "https://insider.capitolnewsillinois.com/with-65m-infusion-pritzker-has-now-self-funded-439m-since-2018-campaign-launch/",
   "D": {
-   "individual": 90500000.0,
+   "individual": 96855749.0,
    "self_fund": 0.0,
+   "incumbent": true,
+   "in_state_share": null,
    "items": [
     [
-     "Pritzker own money this cycle",
-     90500000
+     "raised cycle, mid 2026",
+     90500000.0
+    ],
+    [
+     "cash 2026-06-30",
+     3141018.0
     ]
-   ],
-   "incumbent": true,
-   "in_state_share": null
+   ]
   },
   "R": {
-   "individual": 2200000.0,
+   "individual": 3144251.0,
    "self_fund": 0.0,
+   "incumbent": false,
+   "in_state_share": null,
    "items": [
     [
-     "Bailey raised",
-     2200000
+     "raised",
+     2200000.0
+    ],
+    [
+     "cash",
+     127990.0
     ]
-   ],
-   "incumbent": false,
-   "in_state_share": null
-  }
+   ]
+  },
+  "checked": "2026-10-08",
+  "money_share_d": 0.9686
  },
  "HIG": {
   "state": "Hawaii",

@@ -2,7 +2,7 @@
 // Kansas — 2026 U.S. Senate: Adam Hamilton (D) vs. Roger Marshall (R)
 // Generated from the TPSI forecast poll feed (run of 2026-09-22), merged with
 // the polls this file already carried. Polls of matchups that are not on the
-// ballot were dropped. Newest poll: 2026-09-24.
+// ballot were dropped. Newest poll: 2026-10-01.
 
 export type SampleType = "LV" | "RV" | "A";
 
@@ -42,6 +42,11 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "KS-SEN-2026", "pollster": "Global Strategy Group (D)", "startDate": "2026-08-12", "endDate": "2026-08-16", "sampleSize": 800, "sampleType": "LV", "results": {"Adam Hamilton (D)": 44.0, "Roger Marshall (R)": 43.0, "Other": 5.0, "Undecided": 8.0}},
     {"raceId": "KS-SEN-2026", "pollster": "co/efficient (R)", "startDate": "2026-09-08", "endDate": "2026-09-10", "sampleSize": 915, "sampleType": "LV", "results": {"Adam Hamilton (D)": 44.0, "Roger Marshall (R)": 49.0, "Other": 2.0, "Undecided": 5.0}},
     {"raceId": "KS-SEN-2026", "pollster": "Emerson College / Nexstar", "startDate": "2026-09-15", "endDate": "2026-09-16", "sampleSize": 750, "sampleType": "LV", "results": {"Adam Hamilton (D)": 45.0, "Roger Marshall (R)": 43.0, "Other": 4.0, "Undecided": 8.0}},
-    {"raceId": "KS-SEN-2026", "pollster": "Wedgewood Polls", "startDate": "2026-09-22", "endDate": "2026-09-24", "sampleSize": 500, "sampleType": "LV", "moe": 4.4, "results": {"Adam Hamilton (D)": 50.0, "Roger Marshall (R)": 48.0, "Other": 2.0}, "notes": "Leaners pushed, no undecided reported."}
+    {"raceId": "KS-SEN-2026", "pollster": "Wedgewood Polls", "startDate": "2026-09-22", "endDate": "2026-09-24", "sampleSize": 500, "sampleType": "LV", "moe": 4.4, "results": {"Adam Hamilton (D)": 50.0, "Roger Marshall (R)": 48.0, "Other": 2.0}, "notes": "Leaners pushed, no undecided reported."},
+    {"raceId": "KS-SEN-2026", "pollster": "Global Strategy Group (D)", "startDate": "2026-09-13", "endDate": "2026-09-16", "sampleSize": 800, "sampleType": "LV", "results": {"Adam Hamilton (D)": 47.0, "Roger Marshall (R)": 43.0, "Other": 5.0, "Undecided": 5.0}, "notes": "Head to head: Hamilton 49, Marshall 47."},
+    {"raceId": "KS-SEN-2026", "pollster": "Trafalgar Group (R)", "startDate": "2026-09-29", "endDate": "2026-10-01", "sampleSize": 1095, "sampleType": "LV", "results": {"Adam Hamilton (D)": 44.4, "Roger Marshall (R)": 43.5, "Other": 2.0, "Undecided": 10.1}, "notes": "Other is David Graham at 2. Sample R54, D29, I18."},
+    {"raceId": "KS-SEN-2026", "pollster": "New York Times/Siena", "startDate": "2026-09-21", "endDate": "2026-09-30", "sampleSize": 600, "sampleType": "LV", "results": {"Adam Hamilton (D)": 45.0, "Roger Marshall (R)": 45.0, "Other": 3.0, "Undecided": 7.0}, "notes": "Other is David Graham. Sample size was not yet published, so 600 is a placeholder."},
+    {"raceId": "KS-SEN-2026", "pollster": "YouGov", "startDate": "2026-09-24", "endDate": "2026-10-04", "sampleSize": 2255, "sampleType": "LV", "results": {"Adam Hamilton (D)": 48.0, "Roger Marshall (R)": 45.0, "Other": 1.0, "Undecided": 6.0}},
+    {"raceId": "KS-SEN-2026", "pollster": "GBAO for Hamilton (D)", "startDate": "2026-09-30", "endDate": "2026-10-04", "sampleSize": 600, "sampleType": "LV", "results": {"Adam Hamilton (D)": 47.5, "Roger Marshall (R)": 42.5, "Other": 3.5, "Undecided": 6.5}, "notes": "Hamilton campaign internal. Two published figures, 46 to 41 with David Graham at 7 and 49 to 44, averaged as the model does."}
   ],
 };

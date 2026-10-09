@@ -50,6 +50,9 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "NY-GOV-2026", "pollster": "Concord Public Opinion Partners", "startDate": "2026-08-19", "endDate": "2026-08-21", "sampleSize": 505, "sampleType": "LV", "results": {"Kathy Hochul (D)": 50.0, "Bruce Blakeman (R)": 34.0, "Other": 5.0, "Undecided": 11.0}},
     {"raceId": "NY-GOV-2026", "pollster": "McLaughlin & Associates (R)", "startDate": "2026-08-27", "endDate": "2026-08-31", "sampleSize": 800, "sampleType": "LV", "results": {"Kathy Hochul (D)": 50.0, "Bruce Blakeman (R)": 46.0, "Undecided": 5.0}},
     {"raceId": "NY-GOV-2026", "pollster": "Siena College", "startDate": "2026-09-11", "endDate": "2026-09-17", "sampleSize": 1144, "sampleType": "LV", "results": {"Kathy Hochul (D)": 50.0, "Bruce Blakeman (R)": 41.0}},
-    {"raceId": "NY-GOV-2026", "pollster": "Quinnipiac University", "startDate": "2026-09-17", "endDate": "2026-09-20", "sampleSize": 1026, "sampleType": "LV", "results": {"Kathy Hochul (D)": 58.0, "Bruce Blakeman (R)": 39.0}}
+    {"raceId": "NY-GOV-2026", "pollster": "Quinnipiac University", "startDate": "2026-09-17", "endDate": "2026-09-20", "sampleSize": 1026, "sampleType": "LV", "results": {"Kathy Hochul (D)": 58.0, "Bruce Blakeman (R)": 39.0}},
+    {"raceId": "NY-GOV-2026", "pollster": "co/efficient (R)", "startDate": "2026-09-25", "endDate": "2026-09-25", "sampleSize": 1046, "sampleType": "LV", "results": {"Kathy Hochul (D)": 48.0, "Bruce Blakeman (R)": 41.0, "Undecided": 11.0}, "notes": "Start date and voter type not published; undecided and other combined."},
+    {"raceId": "NY-GOV-2026", "pollster": "Marist College", "startDate": "2026-10-01", "endDate": "2026-10-04", "sampleSize": 1361, "sampleType": "RV", "results": {"Kathy Hochul (D)": 53.0, "Bruce Blakeman (R)": 42.0, "Undecided": 5.0}},
+    {"raceId": "NY-GOV-2026", "pollster": "Emerson College/PIX11", "startDate": "2026-10-03", "endDate": "2026-10-05", "sampleSize": 900, "sampleType": "LV", "results": {"Kathy Hochul (D)": 52.0, "Bruce Blakeman (R)": 40.0, "Undecided": 8.0}}
   ],
 };

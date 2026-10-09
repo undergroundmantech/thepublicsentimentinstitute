@@ -83,11 +83,89 @@
    "n_sims": 10000,
    "chambers": {
     "senate": {
-     "d_control": 87.73,
+     "d_control": 88.64,
      "d_seats_median": 54.0,
      "p10": 50.0,
      "p90": 56.0,
-     "d_control_without_osborn": 84.61
+     "d_control_without_osborn": 85.49
+    },
+    "governors": {
+     "d_majority": 91.5,
+     "d_median": 28.0,
+     "p10": 26.0,
+     "p90": 31.0
+    },
+    "house": {
+     "d_majority": 95.87,
+     "d_seats_median": 248.0,
+     "p10": 224.0,
+     "p90": 278.0,
+     "n_sims": 10000
+    }
+   }
+  },
+  {
+   "date": "2026-10-07",
+   "n_sims": 10000,
+   "chambers": {
+    "senate": {
+     "d_control": 89.33,
+     "d_seats_median": 54.0,
+     "p10": 50.0,
+     "p90": 56.0,
+     "d_control_without_osborn": 86.67
+    },
+    "governors": {
+     "d_majority": 92.58,
+     "d_median": 28.0,
+     "p10": 26.0,
+     "p90": 31.0
+    },
+    "house": {
+     "d_majority": 95.97,
+     "d_seats_median": 248.0,
+     "p10": 224.0,
+     "p90": 279.0,
+     "n_sims": 10000
+    }
+   }
+  },
+  {
+   "date": "2026-10-08",
+   "n_sims": 10000,
+   "chambers": {
+    "senate": {
+     "d_control": 88.55,
+     "d_seats_median": 54.0,
+     "p10": 50.0,
+     "p90": 56.0,
+     "d_control_without_osborn": 85.82
+    },
+    "governors": {
+     "d_majority": 93.44,
+     "d_median": 28.0,
+     "p10": 26.0,
+     "p90": 31.0
+    },
+    "house": {
+     "d_majority": 94.93,
+     "d_seats_median": 247.0,
+     "p10": 223.0,
+     "p90": 279.0,
+     "n_sims": 10000
+    }
+   }
+  },
+  {
+   "date": "2026-10-09",
+   "n_sims": 10000,
+   "chambers": {
+    "senate": {
+     "d_control": 88.46,
+     "d_seats_median": 54.0,
+     "p10": 50.0,
+     "p90": 56.0,
+     "d_control_without_osborn": 85.57
     },
     "governors": {
      "d_majority": 92.41,
@@ -96,9 +174,9 @@
      "p90": 31.0
     },
     "house": {
-     "d_majority": 95.99,
-     "d_seats_median": 248.0,
-     "p10": 224.0,
+     "d_majority": 94.95,
+     "d_seats_median": 247.0,
+     "p10": 223.0,
      "p90": 279.0,
      "n_sims": 10000
     }

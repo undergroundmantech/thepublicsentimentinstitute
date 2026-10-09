@@ -36,6 +36,7 @@ export const RACES = [
 
 export const STATE_POLLS: Record<string, Poll[]> = {
   AL: [
-    {"raceId": "AL-GOV-2026", "pollster": "yes. every kid.", "startDate": "2026-07-08", "endDate": "2026-07-11", "sampleSize": 601, "sampleType": "LV", "results": {"Doug Jones (D)": 41.0, "Tommy Tuberville (R)": 49.0, "Undecided": 11.0}}
+    {"raceId": "AL-GOV-2026", "pollster": "yes. every kid.", "startDate": "2026-07-08", "endDate": "2026-07-11", "sampleSize": 601, "sampleType": "LV", "results": {"Doug Jones (D)": 41.0, "Tommy Tuberville (R)": 49.0, "Undecided": 11.0}},
+    {"raceId": "AL-GOV-2026", "pollster": "Napolitan News Service/RMG Research for Alabama Policy Action (R)", "startDate": "2026-09-21", "endDate": "2026-09-25", "sampleSize": 800, "sampleType": "RV", "results": {"Doug Jones (D)": 37.0, "Tommy Tuberville (R)": 50.0, "Other": 2.0, "Undecided": 8.0}},
   ],
 };

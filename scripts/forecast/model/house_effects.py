@@ -32,7 +32,8 @@ ALIASES = [(r"siena", "siena"), (r"beacon|shaw\s*&\s*co", "beacon/shaw"), (r"dat
            (r"\bssrs\b|\bcnn\b", "cnn/ssrs"), (r"new hampshire|\bunh\b", "u. new hampshire"), (r"trafalgar", "trafalgar"),
            (r"insider\s*advantage", "insideradvantage"), (r"atlas\s*intel", "atlasintel"), (r"quantus", "quantus"),
            (r"public policy polling|\bppp\b", "ppp"), (r"co/efficient", "co/efficient"), (r"cygnal", "cygnal"),
-           (r"fabrizio,?\s*lee", "fabrizio lee"), (r"suffolk", "suffolk"), (r"mason.dixon", "mason-dixon")]
+           (r"fabrizio,?\s*lee", "fabrizio lee"), (r"suffolk", "suffolk"), (r"mason.dixon", "mason-dixon"),
+           (r"hendrix", "hendrix college")]   # Oct 8: Talk Business & Politics / Hendrix College and Hendrix College are one firm
 
 def house_key(name):
     """One id per polling firm: an alias for firms that publish under several names, else the TPSI scorecard key

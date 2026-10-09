@@ -2,7 +2,7 @@
 // Ohio — 2026 U.S. Senate: Sherrod Brown (D) vs. Jon Husted (R)
 // Generated from the TPSI forecast poll feed (run of 2026-09-22), merged with
 // the polls this file already carried. Polls of matchups that are not on the
-// ballot were dropped. Newest poll: 2026-09-16.
+// ballot were dropped. Newest poll: 2026-09-30.
 
 export type SampleType = "LV" | "RV" | "A";
 
@@ -52,6 +52,16 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "OH-SEN-2026", "pollster": "Abacus Data", "startDate": "2026-08-26", "endDate": "2026-08-28", "sampleSize": 306, "sampleType": "LV", "results": {"Sherrod Brown (D)": 52.0, "Jon Husted (R)": 46.0, "Other": 3.0}},
     {"raceId": "OH-SEN-2026", "pollster": "InsiderAdvantage (R)", "startDate": "2026-09-08", "endDate": "2026-09-09", "sampleSize": 1200, "sampleType": "LV", "results": {"Sherrod Brown (D)": 47.0, "Jon Husted (R)": 42.0, "Other": 3.0, "Undecided": 8.0}},
     {"raceId": "OH-SEN-2026", "pollster": "Bowling Green State University/YouGov", "startDate": "2026-09-01", "endDate": "2026-09-10", "sampleSize": 1000, "sampleType": "LV", "results": {"Sherrod Brown (D)": 48.0, "Jon Husted (R)": 45.0}},
-    {"raceId": "OH-SEN-2026", "pollster": "Trafalgar Group (R)", "startDate": "2026-09-14", "endDate": "2026-09-16", "sampleSize": 1085, "sampleType": "LV", "results": {"Sherrod Brown (D)": 45.0, "Jon Husted (R)": 42.0}}
+    {"raceId": "OH-SEN-2026", "pollster": "Trafalgar Group (R)", "startDate": "2026-09-14", "endDate": "2026-09-16", "sampleSize": 1085, "sampleType": "LV", "results": {"Sherrod Brown (D)": 45.0, "Jon Husted (R)": 42.0}},
+    {"raceId": "OH-SEN-2026", "pollster": "Big Data Poll", "startDate": "2026-09-26", "endDate": "2026-09-27", "sampleSize": 682, "sampleType": "LV", "moe": 4.0, "results": {"Sherrod Brown (D)": 46.9, "Jon Husted (R)": 42.5, "Undecided": 10.6}, "notes": "Buckeye State Poll by Richard Baris, Senate with leaners, 682 likely voters of 735."},
+    {"raceId": "OH-SEN-2026", "pollster": "NPR/Marist", "startDate": "2026-09-24", "endDate": "2026-09-27", "sampleSize": 1298, "sampleType": "RV", "moe": 3.8, "results": {"Sherrod Brown (D)": 51.0, "Jon Husted (R)": 43.0, "Undecided": 6.0}},
+    {"raceId": "OH-SEN-2026", "pollster": "Suffolk University/USA TODAY Network", "startDate": "2026-09-23", "endDate": "2026-09-27", "sampleSize": 500, "sampleType": "LV", "results": {"Sherrod Brown (D)": 47.0, "Jon Husted (R)": 44.0}, "notes": "Senate crosstabs embargoed; other and undecided not published."},
+    {"raceId": "OH-SEN-2026", "pollster": "InsiderAdvantage", "startDate": "2026-09-28", "endDate": "2026-09-29", "sampleSize": 1200, "sampleType": "LV", "results": {"Sherrod Brown (D)": 44.0, "Jon Husted (R)": 43.0, "Other": 6.0, "Undecided": 7.0}, "notes": "Other is Redpath 4 and Levy 2."},
+    {"raceId": "OH-SEN-2026", "pollster": "New York Times/Siena", "startDate": "2026-09-21", "endDate": "2026-09-30", "sampleSize": 600, "sampleType": "LV", "results": {"Sherrod Brown (D)": 49.0, "Jon Husted (R)": 46.0, "Undecided": 5.0}, "notes": "Sample size was not yet published, so 600 is a placeholder."},
+    {"raceId": "OH-SEN-2026", "pollster": "Quantus Insights", "startDate": "2026-09-21", "endDate": "2026-09-23", "sampleSize": 695, "sampleType": "LV", "results": {"Sherrod Brown (D)": 47.3, "Jon Husted (R)": 46.8, "Other": 3.5, "Undecided": 2.4}, "notes": "Full ballot with leaners."},
+    {"raceId": "OH-SEN-2026", "pollster": "Rasmussen Reports", "startDate": "2026-09-22", "endDate": "2026-09-23", "sampleSize": 1115, "sampleType": "LV", "results": {"Sherrod Brown (D)": 46.0, "Jon Husted (R)": 43.0, "Other": 5.0, "Undecided": 7.0}},
+    {"raceId": "OH-SEN-2026", "pollster": "YouGov", "startDate": "2026-09-18", "endDate": "2026-09-30", "sampleSize": 3780, "sampleType": "LV", "results": {"Sherrod Brown (D)": 49.0, "Jon Husted (R)": 45.0, "Other": 2.0, "Undecided": 4.0}},
+    {"raceId": "OH-SEN-2026", "pollster": "CNN/SSRS", "startDate": "2026-09-29", "endDate": "2026-10-05", "sampleSize": 760, "sampleType": "LV", "results": {"Sherrod Brown (D)": 49.0, "Jon Husted (R)": 43.0}, "notes": "Third party and undecided shares not published."},
+    {"raceId": "OH-SEN-2026", "pollster": "co/efficient (R)", "startDate": "2026-10-05", "endDate": "2026-10-06", "sampleSize": 925, "sampleType": "LV", "moe": 3.49, "results": {"Sherrod Brown (D)": 43.0, "Jon Husted (R)": 44.0, "Other": 4.0, "Undecided": 9.0}, "notes": "Full ballot; other is Levy 3 and Redpath 1. Head to head Husted 46 Brown 45."}
   ],
 };

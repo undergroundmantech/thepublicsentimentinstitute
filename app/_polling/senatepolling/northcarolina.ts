@@ -2,7 +2,7 @@
 // North Carolina — 2026 U.S. Senate: Roy Cooper (D) vs. Michael Whatley (R)
 // Generated from the TPSI forecast poll feed (run of 2026-09-22), merged with
 // the polls this file already carried. Polls of matchups that are not on the
-// ballot were dropped. Newest poll: 2026-09-17.
+// ballot were dropped. Newest poll: 2026-09-22.
 
 export type SampleType = "LV" | "RV" | "A";
 
@@ -48,7 +48,7 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "NC-SEN-2026", "pollster": "Public Policy Polling (D)", "startDate": "2026-03-13", "endDate": "2026-03-14", "sampleSize": 556, "sampleType": "RV", "results": {"Roy Cooper (D)": 47.0, "Michael Whatley (R)": 44.0, "Undecided": 9.0}},
     {"raceId": "NC-SEN-2026", "pollster": "Catawba College/YouGov", "startDate": "2026-03-09", "endDate": "2026-03-18", "sampleSize": 1000, "sampleType": "LV", "results": {"Roy Cooper (D)": 48.0, "Michael Whatley (R)": 34.0, "Other": 4.0, "Undecided": 14.0}},
     {"raceId": "NC-SEN-2026", "pollster": "Harper Polling (R)", "startDate": "2026-03-22", "endDate": "2026-03-23", "sampleSize": 600, "sampleType": "LV", "results": {"Roy Cooper (D)": 49.0, "Michael Whatley (R)": 41.0, "Other": 4.0, "Undecided": 6.0}},
-    {"raceId": "NC-SEN-2026", "pollster": "Quantus Insights (R)", "startDate": "2026-03-31", "endDate": "2026-04-01", "sampleSize": 987, "sampleType": "LV", "results": {"Roy Cooper (D)": 49.0, "Michael Whatley (R)": 44.0, "Other": 2.0, "Undecided": 6.0}},
+    {"raceId": "NC-SEN-2026", "pollster": "Quantus Insights", "startDate": "2026-03-31", "endDate": "2026-04-01", "sampleSize": 987, "sampleType": "LV", "results": {"Roy Cooper (D)": 49.0, "Michael Whatley (R)": 44.0, "Other": 2.0, "Undecided": 6.0}},
     {"raceId": "NC-SEN-2026", "pollster": "High Point University/YouGov", "startDate": "2026-03-26", "endDate": "2026-04-06", "sampleSize": 703, "sampleType": "LV", "results": {"Roy Cooper (D)": 50.0, "Michael Whatley (R)": 42.0, "Other": 2.0, "Undecided": 6.0}},
     {"raceId": "NC-SEN-2026", "pollster": "Opinion Diagnostics (R)", "startDate": "2026-04-21", "endDate": "2026-04-24", "sampleSize": 830, "sampleType": "RV", "results": {"Roy Cooper (D)": 50.0, "Michael Whatley (R)": 41.0, "Undecided": 9.0}},
     {"raceId": "NC-SEN-2026", "pollster": "Change Research (D)", "startDate": "2026-05-04", "endDate": "2026-05-08", "sampleSize": 957, "sampleType": "LV", "results": {"Roy Cooper (D)": 49.0, "Michael Whatley (R)": 42.0, "Undecided": 9.0}},
@@ -68,5 +68,13 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "NC-SEN-2026", "pollster": "Harper Polling (R)", "startDate": "2026-09-13", "endDate": "2026-09-15", "sampleSize": 608, "sampleType": "LV", "results": {"Roy Cooper (D)": 49.0, "Michael Whatley (R)": 34.0, "Other": 5.0, "Undecided": 12.0}},
     {"raceId": "NC-SEN-2026", "pollster": "InsiderAdvantage (R)", "startDate": "2026-09-16", "endDate": "2026-09-17", "sampleSize": 1200, "sampleType": "LV", "results": {"Roy Cooper (D)": 48.0, "Michael Whatley (R)": 43.0, "Other": 3.0, "Undecided": 6.0}},
     {"raceId": "NC-SEN-2026", "pollster": "AARP (Fabrizio Ward/Impact Research)", "startDate": "2026-09-17", "endDate": "2026-09-20", "sampleSize": 0, "sampleType": "LV", "results": {"Roy Cooper (D)": 53.0, "Michael Whatley (R)": 42.0, "Undecided": 5}, "notes": "Sample size not published"},
+    {"raceId": "NC-SEN-2026", "pollster": "Big Data Poll", "startDate": "2026-09-27", "endDate": "2026-09-29", "sampleSize": 642, "sampleType": "LV", "moe": 4.0, "results": {"Roy Cooper (D)": 50.8, "Michael Whatley (R)": 38.5, "Undecided": 10.7}, "notes": "Tar Heel State Poll, with leaners. 698 registered voters, 642 likely."},
+    {"raceId": "NC-SEN-2026", "pollster": "High Point University", "startDate": "2026-09-06", "endDate": "2026-09-16", "sampleSize": 706, "sampleType": "LV", "results": {"Roy Cooper (D)": 50.0, "Michael Whatley (R)": 42.0, "Other": 3.0, "Undecided": 5.0}},
+    {"raceId": "NC-SEN-2026", "pollster": "YouGov", "startDate": "2026-09-15", "endDate": "2026-09-18", "sampleSize": 3745, "sampleType": "LV", "results": {"Roy Cooper (D)": 53.0, "Michael Whatley (R)": 41.0, "Other": 1.0, "Undecided": 4.0}},
+    {"raceId": "NC-SEN-2026", "pollster": "Opinion Diagnostics for Common Cause North Carolina", "startDate": "2026-09-17", "endDate": "2026-09-20", "sampleSize": 857, "sampleType": "LV", "results": {"Roy Cooper (D)": 52.0, "Michael Whatley (R)": 44.0, "Other": 2.0, "Undecided": 3.0}, "notes": "With leaners."},
+    {"raceId": "NC-SEN-2026", "pollster": "Quantus Insights", "startDate": "2026-09-21", "endDate": "2026-09-22", "sampleSize": 686, "sampleType": "LV", "results": {"Roy Cooper (D)": 48.4, "Michael Whatley (R)": 43.3, "Other": 1.6, "Undecided": 3.6}},
+    {"raceId": "NC-SEN-2026", "pollster": "Rasmussen Reports", "startDate": "2026-09-22", "endDate": "2026-09-22", "sampleSize": 1047, "sampleType": "LV", "results": {"Roy Cooper (D)": 48.0, "Michael Whatley (R)": 41.0, "Other": 4.0, "Undecided": 7.0}},
+    {"raceId": "NC-SEN-2026", "pollster": "Catawba College/YouGov", "startDate": "2026-09-04", "endDate": "2026-09-15", "sampleSize": 885, "sampleType": "LV", "results": {"Roy Cooper (D)": 47.0, "Michael Whatley (R)": 35.0, "Undecided": 18.0}, "notes": "Undecided and other combined."},
+    {"raceId": "NC-SEN-2026", "pollster": "East Carolina University", "startDate": "2026-09-30", "endDate": "2026-10-03", "sampleSize": 810, "sampleType": "LV", "moe": 4.0, "results": {"Roy Cooper (D)": 50.0, "Michael Whatley (R)": 43.0, "Other": 2.0, "Undecided": 5.0}}
   ],
 };

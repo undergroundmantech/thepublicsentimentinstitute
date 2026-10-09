@@ -2,7 +2,7 @@
 // Iowa — 2026 Governor: Rob Sand (D) vs. Zach Lahn (R)
 // Generated from the TPSI forecast poll feed (run of 2026-09-22), merged with
 // the polls this file already carried. Polls of matchups that are not on the
-// ballot were dropped. Newest poll: 2026-09-20.
+// ballot were dropped. Newest poll: 2026-09-30.
 
 export type SampleType = "LV" | "RV" | "A";
 
@@ -46,6 +46,11 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "IA-GOV-2026", "pollster": "YouGov", "startDate": "2026-09-03", "endDate": "2026-09-08", "sampleSize": 2041, "sampleType": "LV", "results": {"Rob Sand (D)": 51.0, "Zach Lahn (R)": 41.0, "Undecided": 8.0}},
     {"raceId": "IA-GOV-2026", "pollster": "Cygnal (R)", "startDate": "2026-09-09", "endDate": "2026-09-11", "sampleSize": 500, "sampleType": "LV", "results": {"Rob Sand (D)": 48.0, "Zach Lahn (R)": 44.0, "Undecided": 8.0}},
     {"raceId": "IA-GOV-2026", "pollster": "co/efficient (R)", "startDate": "2026-09-14", "endDate": "2026-09-16", "sampleSize": 831, "sampleType": "LV", "results": {"Rob Sand (D)": 46.0, "Zach Lahn (R)": 42.0, "Undecided": 12.0}},
-    {"raceId": "IA-GOV-2026", "pollster": "NPR/Marist", "startDate": "2026-09-17", "endDate": "2026-09-20", "sampleSize": 1050, "sampleType": "RV", "results": {"Rob Sand (D)": 54.0, "Zach Lahn (R)": 42.0}}
+    {"raceId": "IA-GOV-2026", "pollster": "NPR/Marist", "startDate": "2026-09-17", "endDate": "2026-09-20", "sampleSize": 1050, "sampleType": "RV", "results": {"Rob Sand (D)": 54.0, "Zach Lahn (R)": 42.0}},
+    {"raceId": "IA-GOV-2026", "pollster": "Fox News/Beacon Research and Shaw & Company", "startDate": "2026-09-24", "endDate": "2026-09-28", "sampleSize": 1008, "sampleType": "LV", "results": {"Rob Sand (D)": 53.0, "Zach Lahn (R)": 44.0}, "notes": "Likely voters."},
+    {"raceId": "IA-GOV-2026", "pollster": "New York Times/Siena", "startDate": "2026-09-21", "endDate": "2026-09-30", "sampleSize": 600, "sampleType": "LV", "results": {"Rob Sand (D)": 52.0, "Zach Lahn (R)": 41.0, "Undecided": 7.0}, "notes": "Sample size was not yet published, so 600 is a placeholder."},
+    {"raceId": "IA-GOV-2026", "pollster": "Suffolk University", "startDate": "2026-10-01", "endDate": "2026-10-04", "sampleSize": 500, "sampleType": "LV", "results": {"Rob Sand (D)": 54.8, "Zach Lahn (R)": 42.8, "Undecided": 2.4}},
+    {"raceId": "IA-GOV-2026", "pollster": "CNN/SSRS", "startDate": "2026-09-29", "endDate": "2026-10-05", "sampleSize": 801, "sampleType": "LV", "results": {"Rob Sand (D)": 51.0, "Zach Lahn (R)": 42.0}, "notes": "Third party and undecided shares not published."},
+    {"raceId": "IA-GOV-2026", "pollster": "Emerson College/Nexstar Media", "startDate": "2026-10-05", "endDate": "2026-10-06", "sampleSize": 650, "sampleType": "LV", "moe": 3.8, "results": {"Rob Sand (D)": 49.0, "Zach Lahn (R)": 45.0, "Undecided": 6.0}}
   ],
 };

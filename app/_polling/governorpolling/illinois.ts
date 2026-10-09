@@ -36,6 +36,7 @@ export const RACES = [
 
 export const STATE_POLLS: Record<string, Poll[]> = {
   IL: [
-    {"raceId": "IL-GOV-2026", "pollster": "Victory Research", "startDate": "2025-11-25", "endDate": "2025-11-25", "sampleSize": 1208, "sampleType": "LV", "results": {"JB Pritzker (D)": 54.0, "Darren Bailey (R)": 34.0, "Undecided": 12.0}}
+    {"raceId": "IL-GOV-2026", "pollster": "Victory Research", "startDate": "2025-11-25", "endDate": "2025-11-25", "sampleSize": 1208, "sampleType": "LV", "results": {"JB Pritzker (D)": 54.0, "Darren Bailey (R)": 34.0, "Undecided": 12.0}},
+    {"raceId": "IL-GOV-2026", "pollster": "Public Policy Polling for Chicago News Weekly", "startDate": "2026-09-30", "endDate": "2026-10-01", "sampleSize": 569, "sampleType": "LV", "results": {"JB Pritzker (D)": 54.0, "Darren Bailey (R)": 34.0, "Other": 6.0, "Undecided": 6.0}, "notes": "Other is Collin Corbett, independent. Voter type not published."}
   ],
 };

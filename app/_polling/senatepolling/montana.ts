@@ -2,7 +2,7 @@
 // Montana — 2026 U.S. Senate: Seth Bodnar (I) vs. Kurt Alme (R)
 // Generated from the TPSI forecast poll feed (run of 2026-09-22), merged with
 // the polls this file already carried. Polls of matchups that are not on the
-// ballot were dropped. Newest poll: 2026-09-15.
+// ballot were dropped. Newest poll: 2026-09-24.
 // Open seat. Four candidate ballot: Kurt Alme (R), Seth Bodnar (I), Alani Bankhead (D)
 // and Kyle Austin (L). Bodnar leads the non Republican vote and carries this matchup.
 
@@ -48,6 +48,7 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "MT-SEN-2026", "pollster": "Hart Research (D)", "startDate": "2026-08-01", "endDate": "2026-08-04", "sampleSize": 800, "sampleType": "LV", "results": {"Seth Bodnar (I)": 45.0, "Kurt Alme (R)": 45.0, "Other": 6.0, "Undecided": 4.0}},
     {"raceId": "MT-SEN-2026", "pollster": "Peak Insights", "startDate": "2026-08-23", "endDate": "2026-08-25", "sampleSize": 600, "sampleType": "LV", "results": {"Seth Bodnar (I)": 41.0, "Kurt Alme (R)": 44.0, "Other": 2.0, "Undecided": 13.0}},
     {"raceId": "MT-SEN-2026", "pollster": "Rutgers University Eagleton Institute of Politics", "startDate": "2026-08-27", "endDate": "2026-09-07", "sampleSize": 845, "sampleType": "RV", "results": {"Seth Bodnar (I)": 46.0, "Kurt Alme (R)": 38.0, "Other": 5.0, "Undecided": 11.0}},
-    {"raceId": "MT-SEN-2026", "pollster": "Aspect Strategic (I)", "startDate": "2026-09-07", "endDate": "2026-09-15", "sampleSize": 715, "sampleType": "LV", "results": {"Seth Bodnar (I)": 46.0, "Kurt Alme (R)": 44.0, "Undecided": 10.0}}
+    {"raceId": "MT-SEN-2026", "pollster": "Aspect Strategic (I)", "startDate": "2026-09-07", "endDate": "2026-09-15", "sampleSize": 715, "sampleType": "LV", "results": {"Seth Bodnar (I)": 46.0, "Kurt Alme (R)": 44.0, "Undecided": 10.0}},
+    {"raceId": "MT-SEN-2026", "pollster": "American Pulse Research & Polling for NonStop Local", "startDate": "2026-09-19", "endDate": "2026-09-24", "sampleSize": 600, "sampleType": "RV", "results": {"Seth Bodnar (I)": 26.1, "Kurt Alme (R)": 45.1, "Other": 18.9, "Undecided": 9.9}, "notes": "Other is Alani Bankhead (D). Sample described as over 600 Montanans; voter type not published. Undecided is the remainder."}
   ],
 };

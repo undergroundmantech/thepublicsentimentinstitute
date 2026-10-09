@@ -2,7 +2,7 @@
 // Alaska — 2026 Governor: Jonathan Kreiss-Tomkins (D) vs. Bernadette Wilson (R)
 // Generated from the TPSI forecast poll feed (run of 2026-09-22), merged with
 // the polls this file already carried. Polls of matchups that are not on the
-// ballot were dropped. Newest poll: 2026-09-17.
+// ballot were dropped. Newest poll: 2026-09-30.
 
 export type SampleType = "LV" | "RV" | "A";
 
@@ -37,6 +37,9 @@ export const RACES = [
 export const STATE_POLLS: Record<string, Poll[]> = {
   AK: [
     {"raceId": "AK-GOV-2026", "pollster": "Fabrizio Ward/Impact Research", "startDate": "2026-09-08", "endDate": "2026-09-11", "sampleSize": 800, "sampleType": "LV", "results": {"Jonathan Kreiss-Tomkins (D)": 55, "Bernadette Wilson (R)": 45}, "notes": "Published ranked-choice final round. Bipartisan, for AARP. First choice: Kreiss-Tomkins 40, Wilson 20, Bronson 14, Taylor 7, undecided 18."},
-    {"raceId": "AK-GOV-2026", "pollster": "co/efficient (R)", "startDate": "2026-09-14", "endDate": "2026-09-17", "sampleSize": 799, "sampleType": "LV", "results": {"Jonathan Kreiss-Tomkins (D)": 43, "Bernadette Wilson (R)": 20, "Dave Bronson (R)": 17, "Treg Taylor (R)": 6, "Undecided": 14}, "notes": "First-choice ballot; no final round published."}
+    {"raceId": "AK-GOV-2026", "pollster": "co/efficient (R)", "startDate": "2026-09-14", "endDate": "2026-09-17", "sampleSize": 799, "sampleType": "LV", "results": {"Jonathan Kreiss-Tomkins (D)": 43, "Bernadette Wilson (R)": 20, "Dave Bronson (R)": 17, "Treg Taylor (R)": 6, "Undecided": 14}, "notes": "First-choice ballot; no final round published."},
+    {"raceId": "AK-GOV-2026", "pollster": "Cygnal (R)", "startDate": "2026-09-24", "endDate": "2026-09-27", "sampleSize": 502, "sampleType": "LV", "results": {"Jonathan Kreiss-Tomkins (D)": 44.0, "Bernadette Wilson (R)": 24.0, "Other": 18.0, "Undecided": 15.0}, "notes": "Ranked choice first round. Other is Taylor 8, Bronson 8 and others."},
+    {"raceId": "AK-GOV-2026", "pollster": "New York Times/Siena", "startDate": "2026-09-21", "endDate": "2026-09-30", "sampleSize": 600, "sampleType": "LV", "results": {"Jonathan Kreiss-Tomkins (D)": 52.0, "Bernadette Wilson (R)": 48.0}, "notes": "Two way figure as published. Sample size was not yet published, so 600 is a placeholder."},
+    {"raceId": "AK-GOV-2026", "pollster": "Alaska Survey Research", "startDate": "2026-10-01", "endDate": "2026-10-03", "sampleSize": 1512, "sampleType": "LV", "results": {"Jonathan Kreiss-Tomkins (D)": 54.0, "Bernadette Wilson (R)": 46.0}, "notes": "Final ranked choice round. First round Kreiss-Tomkins 48, Wilson 27, Bronson 15, Taylor 10."}
   ],
 };

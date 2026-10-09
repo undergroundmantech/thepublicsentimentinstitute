@@ -2,7 +2,7 @@
 // Maine — 2026 Governor: Hannah Pingree (D) vs. Bobby Charles (R)
 // Generated from the TPSI forecast poll feed (run of 2026-09-22), merged with
 // the polls this file already carried. Polls of matchups that are not on the
-// ballot were dropped. Newest poll: 2026-08-10.
+// ballot were dropped. Newest poll: 2026-10-01.
 
 export type SampleType = "LV" | "RV" | "A";
 
@@ -39,6 +39,14 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "ME-GOV-2026", "pollster": "New York Times / Portland Press Herald / Siena", "startDate": "2026-06-19", "endDate": "2026-06-26", "sampleSize": 608, "sampleType": "LV", "results": {"Hannah Pingree (D)": 50.0, "Bobby Charles (R)": 36.0, "Other": 8.0, "Undecided": 5.0}},
     {"raceId": "ME-GOV-2026", "pollster": "University of New Hampshire", "startDate": "2026-07-15", "endDate": "2026-07-20", "sampleSize": 1178, "sampleType": "LV", "results": {"Hannah Pingree (D)": 49.0, "Bobby Charles (R)": 35.0, "Other": 7.0, "Undecided": 8.0}},
     {"raceId": "ME-GOV-2026", "pollster": "Beacon Research / Shaw & Co.", "startDate": "2026-08-10", "endDate": "2026-08-10", "sampleSize": 1000, "sampleType": "RV", "results": {"Hannah Pingree (D)": 49.0, "Bobby Charles (R)": 38.0, "Other": 9.0, "Undecided": 3.0}},
-    {"raceId": "ME-GOV-2026", "pollster": "University of New Hampshire", "startDate": "2026-09-17", "endDate": "2026-09-21", "sampleSize": 1312, "sampleType": "LV", "moe": 2.7, "results": {"Hannah Pingree (D)": 48.0, "Bobby Charles (R)": 40.0, "Other": 5.0, "Undecided": 7.0}, "notes": "Other is Rick Bennett, independent, at 5."}
+    {"raceId": "ME-GOV-2026", "pollster": "University of New Hampshire", "startDate": "2026-09-17", "endDate": "2026-09-21", "sampleSize": 1312, "sampleType": "LV", "moe": 2.7, "results": {"Hannah Pingree (D)": 48.0, "Bobby Charles (R)": 40.0, "Other": 5.0, "Undecided": 7.0}, "notes": "Other is Rick Bennett, independent, at 5."},
+    {"raceId": "ME-GOV-2026", "pollster": "Fabrizio Ward and Impact Research for AARP", "startDate": "2026-09-20", "endDate": "2026-09-22", "sampleSize": 982, "sampleType": "LV", "moe": 3.1, "results": {"Hannah Pingree (D)": 52.0, "Bobby Charles (R)": 39.0, "Rick Bennett (I)": 6.0, "Undecided": 3.0}, "notes": "Bipartisan. 2024 recalled vote Harris 48, Trump 42."},
+    {"raceId": "ME-GOV-2026", "pollster": "co/efficient (R)", "startDate": "2026-09-28", "endDate": "2026-09-30", "sampleSize": 1240, "sampleType": "LV", "results": {"Hannah Pingree (D)": 47.0, "Bobby Charles (R)": 38.0, "Other": 6.0, "Undecided": 9.0}, "notes": "Other is independent Rick Bennett."},
+    {"raceId": "ME-GOV-2026", "pollster": "CBS News/YouGov", "startDate": "2026-09-23", "endDate": "2026-10-01", "sampleSize": 1144, "sampleType": "LV", "results": {"Hannah Pingree (D)": 56.0, "Bobby Charles (R)": 44.0}, "notes": "1,144 registered voters; ballot among likely voters with leaners."},
+    {"raceId": "ME-GOV-2026", "pollster": "UMass Lowell/YouGov", "startDate": "2026-08-28", "endDate": "2026-09-14", "sampleSize": 650, "sampleType": "LV", "results": {"Hannah Pingree (D)": 49.0, "Bobby Charles (R)": 38.0, "Other": 1.0, "Undecided": 10.0}},
+    {"raceId": "ME-GOV-2026", "pollster": "New York Times/Siena University", "startDate": "2026-09-15", "endDate": "2026-09-22", "sampleSize": 619, "sampleType": "LV", "results": {"Hannah Pingree (D)": 47.0, "Bobby Charles (R)": 34.0, "Other": 8.0, "Undecided": 11.0}, "notes": "Other is Bennett (I). Undecided is the remainder."},
+    {"raceId": "ME-GOV-2026", "pollster": "Marist College", "startDate": "2026-10-01", "endDate": "2026-10-04", "sampleSize": 1505, "sampleType": "RV", "results": {"Hannah Pingree (D)": 52.0, "Bobby Charles (R)": 40.0, "Other": 6.0, "Undecided": 2.0}, "notes": "Other is independent Rick Bennett, 6%."},
+    {"raceId": "ME-GOV-2026", "pollster": "Maine People's Resource Center (D)", "startDate": "2026-09-25", "endDate": "2026-09-29", "sampleSize": 684, "sampleType": "LV", "results": {"Hannah Pingree (D)": 49.9, "Bobby Charles (R)": 33.8, "Other": 4.5, "Undecided": 11.8}, "notes": "Other is Bennett (I) 4.5."},
+    {"raceId": "ME-GOV-2026", "pollster": "The Washington Post", "startDate": "2026-09-30", "endDate": "2026-10-05", "sampleSize": 800, "sampleType": "LV", "results": {"Hannah Pingree (D)": 49.0, "Bobby Charles (R)": 36.0, "Undecided": 15.0}, "notes": "Field dates inferred from the Senate release; sample size not yet published, 800 is a placeholder; other and undecided not reported."}
   ],
 };

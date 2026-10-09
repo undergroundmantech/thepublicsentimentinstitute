@@ -36,6 +36,7 @@ export const RACES = [
 
 export const STATE_POLLS: Record<string, Poll[]> = {
   MD: [
-    {"raceId": "MD-GOV-2026", "pollster": "Zenith Research", "startDate": "2026-07-27", "endDate": "2026-08-03", "sampleSize": 800, "sampleType": "LV", "results": {"Wes Moore (D)": 58.0, "Dan Cox (R)": 31.0, "Other": 3.0, "Undecided": 9.0}}
+    {"raceId": "MD-GOV-2026", "pollster": "Zenith Research", "startDate": "2026-07-27", "endDate": "2026-08-03", "sampleSize": 800, "sampleType": "LV", "results": {"Wes Moore (D)": 58.0, "Dan Cox (R)": 31.0, "Other": 3.0, "Undecided": 9.0}},
+    {"raceId": "MD-GOV-2026", "pollster": "UMBC Institute of Politics", "startDate": "2026-09-22", "endDate": "2026-09-27", "sampleSize": 776, "sampleType": "LV", "results": {"Wes Moore (D)": 51.0, "Dan Cox (R)": 24.0, "Other": 11.0, "Undecided": 14.0}}
   ],
 };

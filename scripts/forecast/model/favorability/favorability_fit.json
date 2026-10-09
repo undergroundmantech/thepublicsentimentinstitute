@@ -1,11 +1,11 @@
 {
  "fit": {
   "races": 34,
-  "slope_logit_per_net_point": 0.008749389400420499,
-  "corr": 0.5679493752964775,
+  "slope_logit_per_net_point": 0.00875213656032142,
+  "corr": 0.5653457804194847,
   "loo_mae_no_term": 0.1475255498652008,
-  "loo_mae_with_term": 0.11229574242546399,
-  "slope_per_10_net_points_in_margin_pts": 4.37
+  "loo_mae_with_term": 0.11317767384382235,
+  "slope_per_10_net_points_in_margin_pts": 4.38
  },
  "net": {
   "AK": {
@@ -225,8 +225,8 @@
   },
   "TXG": {
    "D": 11.187791185137073,
-   "R": -1.827324204517518,
-   "netdiff": 13.015115389654591
+   "R": 0.6777447240847718,
+   "netdiff": 10.510046461052301
   },
   "VTG": {
    "D": null,
@@ -775,9 +775,9 @@
   {
    "race": "TXG",
    "side": "R",
-   "net": -1.827324204517518,
-   "readings": 5,
-   "latest": "2026-09-14"
+   "net": 0.6777447240847718,
+   "readings": 7,
+   "latest": "2026-09-28"
   },
   {
    "race": "VTG",

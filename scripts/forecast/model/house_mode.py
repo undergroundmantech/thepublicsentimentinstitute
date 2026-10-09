@@ -578,6 +578,17 @@ DE = [
 # (Pulido 51, De La Cruz 45), Texas Southern Aug 18-22 (50, 45) and House Majority PAC late September (54, 41), whose
 # dates and sample were not given and are entered as ending Sept 28 with 500 likely voters.
 POLLS = {
+         # Oct 8 2026 second pass, every House district: the rest of the map swept too, nonpartisan district polls now carry
+         # the pollster's statewide house effect, and a sample its own margin of error contradicts enters at the size the
+         # margin implies (Hendrix AR-2). /tmp/hpolls/build_1008b.py, copied to scratchpad/house_polls_build_1008b.py.
+         # Oct 8 2026 full district sweep: the 67 Lean D, Tilt and Lean R seats, every 2026 general election poll of the current
+         # nominees, rebuilt from the full record by the Sept 19 rule with no carried forward entry. Poll list and drops in
+         # /tmp/hpolls/build_1008.py; informed ballots dropped, two versions of one sample averaged, 2025 polls dropped.
+         # Oct 8 morning sweep: NC-01 GQR for Davis (D) Sept 29-Oct 4, 500 LV, Davis 47 Buckhout 39 Bailey 8, and Neighborhood
+         # Research and Media, posted Oct 7 with no dates or sample, Davis 51 Buckhout 41, entered untagged as 400 ending Oct 5
+         # because its sponsor is not published; TN-05 Impact Research for Molder (D), Hatcher 46 Molder 41, no dates or sample,
+         # entered as 500 ending Oct 6; each blended against the prior entry. TX-02 Impact Research for Finnie (D), Toth 46
+         # Finnie 37, no dates or sample, taken outright after the sponsor shift.
          # Oct 5 sweep: NY-17 Emerson for PIX11 Sept 27-29, 400 LV, Conley 48 Lawler 46, blended against the prior entry.
          # Oct 4 evening sweep: TX-09 PPP for Gutierrez (D), Mealer 45 Gutierrez 39, and TX-10 Change Research for Rourk (D),
          # Gober 48 Rourk 41, both released about Sept 30 with no dates or sample size, taken outright after the sponsor shift;
@@ -588,58 +599,58 @@ POLLS = {
          # for Dunlap Sept 27-30, Dunlap 50 LePage 48; each blended against the prior entry as a 500 sample poll two weeks
          # old. UT-01 Lighthouse Research Aug 31-Sept 24, McAdams 63 Owen 21, taken outright; UT-02 to UT-04 dropped at
          # 20 percent undecided or more.
-         "FL": {},
-         "TX": {9: dict(d=37.5, r=46.5), 10: dict(d=39.5, r=49.5), 15: dict(d=51.0, r=44.2), 28: dict(d=45.0, r=34.0), 34: dict(d=45.0, r=42.0), 35: dict(d=42.5, r=46.5)},
-         "NYG": {17: dict(d=48.0, r=46.2), 21: dict(d=41.3, r=48.5), 23: dict(d=34.5, r=52.5)},
-         "VA": {1: dict(d=48.3, r=46.8), 2: dict(d=45.5, r=48.5), 5: dict(d=43.9, r=49.1), 6: dict(d=30.5, r=57.5)},
-         "CAG": {},
-         "PAG": {1: dict(d=43.2, r=49.8), 7: dict(d=45.0, r=40.0), 8: dict(d=45.0, r=46.5), 10: dict(d=47.0, r=44.0)},
-         "OH": {1: dict(d=47.0, r=43.0), 7: dict(d=46.1, r=40.3), 9: dict(d=45.3, r=47.2), 10: dict(d=40.1, r=50.1), 15: dict(d=36.6, r=44.0)},
-         "NC": {1: dict(d=45.8, r=43.0), 3: dict(d=39.5, r=45.5), 7: dict(d=37.5, r=46.5), 9: dict(d=40.5, r=47.5), 10: dict(d=38.5, r=50.5), 11: dict(d=45.5, r=45.5)},
-         "MI": {4: dict(d=45.9, r=46.5), 7: dict(d=44.5, r=46.5), 10: dict(d=42.5, r=43.5)},
+         "FL": {8: dict(d=43.5, r=49.5), 9: dict(d=39.5, r=42.5), 11: dict(d=41.9, r=42.1), 13: dict(d=44.0, r=47.1), 14: dict(d=45.5, r=38.5), 16: dict(d=39.0, r=43.0), 22: dict(d=47.7, r=47.9), 27: dict(d=44.0, r=47.6), 28: dict(d=39.9, r=46.1)},
+         "TX": {2: dict(d=35.5, r=47.5), 9: dict(d=37.5, r=46.5), 10: dict(d=39.5, r=49.5), 15: dict(d=50.7, r=44.4), 23: dict(d=40.8, r=46.7), 28: dict(d=43.8, r=36.4), 34: dict(d=43.8, r=42.0), 35: dict(d=42.5, r=46.5)},
+         "NYG": {17: dict(d=48.2, r=47.0), 18: dict(d=51.2, r=37.4), 21: dict(d=41.9, r=46.7), 23: dict(d=32.8, r=54.2)},
+         "VA": {1: dict(d=48.1, r=46.9), 2: dict(d=45.5, r=48.5), 5: dict(d=44.2, r=49.6), 6: dict(d=29.9, r=58.1)},
+         "CAG": {22: dict(d=46.5, r=45.5), 48: dict(d=45.4, r=43.6)},
+         "PAG": {1: dict(d=43.8, r=49.5), 7: dict(d=45.0, r=41.3), 8: dict(d=46.4, r=45.2), 10: dict(d=46.5, r=44.8)},
+         "OH": {1: dict(d=47.8, r=42.2), 7: dict(d=46.7, r=41.0), 9: dict(d=46.3, r=49.2), 10: dict(d=39.5, r=48.9), 15: dict(d=41.3, r=45.5)},
+         "NC": {1: dict(d=48.0, r=41.5), 3: dict(d=41.1, r=43.9), 7: dict(d=37.5, r=46.5), 9: dict(d=40.5, r=47.5), 10: dict(d=37.0, r=52.0), 11: dict(d=45.5, r=45.5), 14: dict(d=40.0, r=48.0)},
+         "MI": {4: dict(d=46.7, r=46.2), 7: dict(d=47.7, r=47.3), 10: dict(d=43.5, r=46.3)},
          "GA": {},
          "IL": {},
-         "NJ": {7: dict(d=46.4, r=43.0)},
-         "WA": {3: dict(d=42.8, r=44.7), 5: dict(d=45.5, r=54.5)},
-         "AZG": {2: dict(d=42.7, r=49.1), 6: dict(d=46.1, r=45.8)},
-         "TN": {5: dict(d=38.5, r=49.5), 9: dict(d=42.5, r=49.5)},
+         "NJ": {2: dict(d=39.3, r=47.7), 7: dict(d=46.8, r=42.3)},
+         "WA": {3: dict(d=44.7, r=46.6), 5: dict(d=47.2, r=52.8)},
+         "AZG": {1: dict(d=44.4, r=41.6), 2: dict(d=41.3, r=46.9), 6: dict(d=46.1, r=45.8)},
+         "TN": {5: dict(d=39.2, r=48.2), 9: dict(d=42.5, r=49.5)},
          "MA": {},
-         "MO": {2: dict(d=39.5, r=45.5)},
-         "MDG": {1: dict(d=37.5, r=53.5)},
-         "MN": {1: dict(d=41.8, r=48.4)},
-         "WIG": {1: dict(d=46.3, r=50.0), 3: dict(d=48.4, r=47.7)},
-         "CO": {3: dict(d=41.1, r=45.9), 8: dict(d=47.5, r=46.5)},
+         "MO": {2: dict(d=41.7, r=43.3)},
+         "MDG": {1: dict(d=39.2, r=51.8)},
+         "MN": {1: dict(d=45.2, r=47.5), 2: dict(d=50.2, r=40.4)},
+         "WIG": {1: dict(d=46.4, r=49.2), 3: dict(d=48.4, r=47.7), 6: dict(d=39.2, r=60.8)},
+         "CO": {3: dict(d=43.5, r=47.5), 5: dict(d=42.5, r=46.5), 8: dict(d=47.5, r=46.5)},
          "IN": {5: dict(d=44.5, r=49.5)},
          "OR": {},
-         "NVG": {2: dict(d=39.4, r=41.8)},
-         "UT": {1: dict(d=63.0, r=21.0)},
-         "AK": {1: dict(d=42.4, r=51.9)},
+         "NVG": {2: dict(d=40.6, r=43.0)},
+         "UT": {1: dict(d=62.7, r=21.2), 2: dict(d=34.0, r=39.0), 3: dict(d=26.4, r=44.5), 4: dict(d=32.9, r=41.7)},
+         "AK": {1: dict(d=45.4, r=53.6)},
          "HIG": {},
          "ID": {},
          "WY": {},
-         "MT": {1: dict(d=43.8, r=46.3)},
+         "MT": {1: dict(d=43.5, r=44.4)},
          "ND": {},
-         "SD": {},
-         "NE": {1: dict(d=39.8, r=46.5)},
+         "SD": {1: dict(d=43.0, r=47.0)},
+         "NE": {1: dict(d=45.3, r=45.9), 2: dict(d=46.0, r=42.0)},
          "KS": {},
-         "OK": {5: dict(d=41.5, r=49.5)},
-         "NM": {2: dict(d=45.9, r=42.8)},
-         "AR": {2: dict(d=47.6, r=44.1)},
-         "IA": {1: dict(d=40.0, r=35.0), 2: dict(d=44.5, r=46.5), 3: dict(d=43.5, r=46.5)},
+         "OK": {5: dict(d=40.3, r=46.8)},
+         "NM": {2: dict(d=45.7, r=42.6)},
+         "AR": {2: dict(d=41.7, r=49.8)},
+         "IA": {1: dict(d=38.6, r=36.4), 2: dict(d=44.5, r=46.5), 3: dict(d=43.5, r=46.5)},
          "LA": {},
          "MS": {},
-         "AL": {2: dict(d=45.1, r=48.2)},
-         "SC": {1: dict(d=41.8, r=45.3)},
-         "KY": {6: dict(d=43.9, r=45.1)},
+         "AL": {2: dict(d=44.6, r=47.8)},
+         "SC": {1: dict(d=40.5, r=44.7)},
+         "KY": {6: dict(d=42.5, r=42.5)},
          "WV": {},
          "CTG": {},
          "RI": {},
-         "VTG": {1: dict(d=60.7, r=25.4)},
-         "NH": {1: dict(d=46.0, r=42.0), 2: dict(d=52.9, r=35.5)},
+         "VTG": {1: dict(d=63.5, r=27.7)},
+         "NH": {1: dict(d=46.1, r=41.9), 2: dict(d=53.0, r=34.6)},
          # UNH Sept 17-21 2026: ME-01 Pingree 57 Russell 35, ME-02 Dunlap 51 LePage 45. ME-02 blends
          # the new reading at 0.6 against the prior entry of unknown vintage, because it is both the
          # newest and from the largest sample; ME-01 had no entry, so it takes the poll outright.
-         "ME": {1: dict(d=57.0, r=35.0), 2: dict(d=48.3, r=49.0)},
+         "ME": {1: dict(d=57.0, r=35.0), 2: dict(d=48.6, r=48.2)},
          "DE": {}}
 UNCONTESTED = {"FL": {10: "D"}, "TX": {}, "NYG": {}, "VA": {}, "CAG": {}, "PAG": {},
                "OH": {}, "NC": {}, "MI": {}, "GA": {}, "IL": {}, "NJ": {}, "WA": {},

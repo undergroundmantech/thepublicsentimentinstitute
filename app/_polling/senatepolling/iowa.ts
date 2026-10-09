@@ -2,7 +2,7 @@
 // Iowa — 2026 U.S. Senate: Josh Turek (D) vs. Ashley Hinson (R)
 // Generated from the TPSI forecast poll feed (run of 2026-09-22), merged with
 // the polls this file already carried. Polls of matchups that are not on the
-// ballot were dropped. Newest poll: 2026-09-20.
+// ballot were dropped. Newest poll: 2026-09-30.
 
 export type SampleType = "LV" | "RV" | "A";
 
@@ -58,5 +58,12 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "IA-SEN-2026", "pollster": "Marist College", "startDate": "2026-09-17", "endDate": "2026-09-20", "sampleSize": 1050, "sampleType": "RV", "results": {"Josh Turek (D)": 50.0, "Ashley Hinson (R)": 42.0, "Other": 2.0, "Undecided": 5.0}},
     {"raceId": "IA-SEN-2026", "pollster": "Big Data Poll", "startDate": "2026-09-23", "endDate": "2026-09-23", "sampleSize": 650, "sampleType": "RV", "results": {"Josh Turek (D)": 46.5, "Ashley Hinson (R)": 42.2, "Other": 4.6, "Undecided": 6.7}, "notes": "Field dates not published; released Sept 23, 2026"},
     {"raceId": "IA-SEN-2026", "pollster": "InsiderAdvantage", "startDate": "2026-09-22", "endDate": "2026-09-23", "sampleSize": 1200, "sampleType": "LV", "results": {"Josh Turek (D)": 47.4, "Ashley Hinson (R)": 45.7, "Other": 1.6, "Undecided": 5.3}},
+    {"raceId": "IA-SEN-2026", "pollster": "Quantus Insights", "startDate": "2026-09-28", "endDate": "2026-09-29", "sampleSize": 714, "sampleType": "LV", "moe": 3.8, "results": {"Josh Turek (D)": 46.6, "Ashley Hinson (R)": 48.5, "Thomas Laehn (L)": 1.7, "Undecided": 3.2}, "notes": "Including leaners. 738 respondents, 714 likely voters in the ballot."},
+    {"raceId": "IA-SEN-2026", "pollster": "Fox News/Beacon Research and Shaw & Company", "startDate": "2026-09-24", "endDate": "2026-09-28", "sampleSize": 1008, "sampleType": "LV", "results": {"Josh Turek (D)": 49.0, "Ashley Hinson (R)": 47.0}, "notes": "Likely voters. Registered voters, 1,204: Turek 50, Hinson 46."},
+    {"raceId": "IA-SEN-2026", "pollster": "Rasmussen Reports (R)", "startDate": "2026-09-28", "endDate": "2026-09-30", "sampleSize": 1028, "sampleType": "LV", "results": {"Josh Turek (D)": 47.0, "Ashley Hinson (R)": 43.0, "Other": 3.0, "Undecided": 7.0}, "notes": "Other is Thomas Laehn at 3."},
+    {"raceId": "IA-SEN-2026", "pollster": "New York Times/Siena", "startDate": "2026-09-21", "endDate": "2026-09-30", "sampleSize": 600, "sampleType": "LV", "results": {"Josh Turek (D)": 47.0, "Ashley Hinson (R)": 48.0, "Undecided": 5.0}, "notes": "Sample size was not yet published, so 600 is a placeholder."},
+    {"raceId": "IA-SEN-2026", "pollster": "Suffolk University", "startDate": "2026-10-01", "endDate": "2026-10-04", "sampleSize": 500, "sampleType": "LV", "results": {"Josh Turek (D)": 48.0, "Ashley Hinson (R)": 43.6, "Other": 2.2, "Undecided": 6.2}, "notes": "Other is Thomas Laehn, Libertarian."},
+    {"raceId": "IA-SEN-2026", "pollster": "CNN/SSRS", "startDate": "2026-09-29", "endDate": "2026-10-05", "sampleSize": 801, "sampleType": "LV", "results": {"Josh Turek (D)": 43.0, "Ashley Hinson (R)": 45.0}, "notes": "Third party and undecided shares not published."},
+    {"raceId": "IA-SEN-2026", "pollster": "Emerson College/Nexstar Media", "startDate": "2026-10-05", "endDate": "2026-10-06", "sampleSize": 650, "sampleType": "LV", "moe": 3.8, "results": {"Josh Turek (D)": 45.0, "Ashley Hinson (R)": 47.0, "Other": 2.0, "Undecided": 6.0}, "notes": "Other is Laehn (L) 2."}
   ],
 };

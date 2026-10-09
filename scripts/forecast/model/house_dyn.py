@@ -484,6 +484,11 @@ def county_projection(R, df):
     _mean, _k2 = an.m2_params(sm, model, shift); ec = an.county_e(sm, model, shift, fl)
     m2 = inv(logit(a24) + (logit(g26) - logit(g24)) - _mean + ec * _k2 + S["delta"])
     m3 = inv(logit(a24) + ec * an.m3_constant(sm, model, shift))
+    if getattr(sm, "ELECTORATE_ALL", False):
+        # Oct 7 2026: the 2026 electorate's county pattern reaches the approval and history legs too, demeaned on the
+        # 2026 electorate so each leg keeps its statewide level; the history leg here is built on 2024, so it takes all of it
+        _d = np.asarray(S["delta"], float); _w = np.asarray(V26, float); _sh = _d - float((_d * _w).sum() / _w.sum())
+        m1 = inv(logit(m1) + _sh); m3 = inv(logit(m3) + _sh)
     d2 = sm.W_FUND * m1 + sm.W_CENSUS * m2 + sm.W_HIST * m3
     import calib26 as _cb
     if _cb.ON and _cb.load():

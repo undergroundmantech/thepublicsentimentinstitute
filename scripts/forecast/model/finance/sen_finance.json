@@ -1,46 +1,36 @@
 {
  "AK": {
   "D": {
-   "fec_id": [
-    "S6AK00276"
-   ],
-   "fec_name": [
-    "PELTOLA, MARY"
-   ],
-   "raised": 18545132.43,
-   "outside_support": 2395401.15,
-   "outside_against_opponent": 5652011.84,
-   "coordinated": 884835.0,
-   "individual": 27477380.419999998,
+   "individual": 53057890.9,
    "self_fund": 0.0,
-   "spent": 13908377.35,
-   "cash_on_hand": 4636755.08,
-   "coverage_end": [
-    "07/29/2026"
-   ],
+   "incumbent": false,
    "in_state_share": null,
-   "incumbent": false
+   "items": [
+    [
+     "raised",
+     15561662.0
+    ],
+    [
+     "outside for",
+     11000000.0
+    ]
+   ]
   },
   "R": {
-   "fec_id": [
-    "S4AK00214"
-   ],
-   "fec_name": [
-    "SULLIVAN, DAN"
-   ],
-   "raised": 9136966.96,
-   "outside_support": 3127947.33,
-   "outside_against_opponent": 9640932.75,
-   "coordinated": 136570.0,
-   "individual": 22042417.04,
+   "individual": 46942109.1,
    "self_fund": 0.0,
-   "spent": 3932802.55,
-   "cash_on_hand": 7295069.2,
-   "coverage_end": [
-    "07/29/2026"
-   ],
+   "incumbent": true,
    "in_state_share": null,
-   "incumbent": true
+   "items": [
+    [
+     "raised",
+     8500000.0
+    ],
+    [
+     "outside for",
+     15000000.0
+    ]
+   ]
   },
   "notes": [],
   "verified": true,
@@ -48,50 +38,50 @@
   "office": "senate",
   "D_candidate": "Mary Peltola",
   "R_candidate": "Dan S. Sullivan",
-  "source": "AFI 2026 fundraising file from FEC, generated 2026-09-21T16:10:41.093358+00:00"
+  "source": "https://alaskapublic.org/news/politics/washington-d-c/2026-07-16/peltola-vastly-outraises-sullivan-in-alaskas-u-s-senate-race ; https://axios.com/2026/07/23/democrat-senate-super-pac-tv-ads",
+  "adimpact": {
+   "r_aired_advantage": 12000000.0,
+   "slf_september_aired": 7400000.0,
+   "no_going_back_september_aired": 3500000.0,
+   "through": "2026-09-30",
+   "source": "AdImpact, Republicans Hold Aired Spend Advantage in Senate Battlegrounds, Oct 1 2026, aired through Sept 30; and Republicans Air $200M More in Congressional Ads Than Democrats in September, Sept 30 2026"
+  },
+  "basis": "raised plus outside",
+  "checked": "2026-10-08",
+  "money_share_d": 0.5306
  },
  "AL": {
   "D": {
-   "fec_id": [
-    "S6AL00518"
-   ],
-   "fec_name": [
-    "Everett Wess"
-   ],
-   "raised": 83340.65,
-   "outside_support": 0.0,
-   "outside_against_opponent": 0.0,
-   "coordinated": 0.0,
-   "individual": 83340.65,
+   "individual": 2153140.9,
    "self_fund": 0.0,
-   "spent": 62271.98,
-   "cash_on_hand": 18282.65,
-   "coverage_end": [
-    "06/30/2026"
-   ],
+   "incumbent": false,
    "in_state_share": null,
-   "incumbent": false
+   "items": [
+    [
+     "raised",
+     83341.0
+    ],
+    [
+     "outside for",
+     0.0
+    ]
+   ]
   },
   "R": {
-   "fec_id": [
-    "S6AL00476"
-   ],
-   "fec_name": [
-    "Barry Moore"
-   ],
-   "raised": 3787329.72,
-   "outside_support": 67373.35,
-   "outside_against_opponent": 0.0,
-   "coordinated": 0.0,
-   "individual": 3854703.0700000003,
+   "individual": 97846859.1,
    "self_fund": 0.0,
-   "spent": 3284673.21,
-   "cash_on_hand": 627788.17,
-   "coverage_end": [
-    "06/30/2026"
-   ],
+   "incumbent": false,
    "in_state_share": null,
-   "incumbent": false
+   "items": [
+    [
+     "raised",
+     3787330.0
+    ],
+    [
+     "outside for",
+     0.0
+    ]
+   ]
   },
   "notes": [],
   "verified": true,
@@ -99,50 +89,43 @@
   "office": "senate",
   "D_candidate": "Everett Wess",
   "R_candidate": "Barry Moore",
-  "source": "AFI 2026 fundraising file from FEC, generated 2026-09-21T16:10:41.093358+00:00"
+  "source": "https://en.wikipedia.org/wiki/2026_United_States_Senate_election_in_Alabama",
+  "basis": "raised plus outside",
+  "checked": "2026-10-08",
+  "money_share_d": 0.0215
  },
  "AR": {
   "D": {
-   "fec_id": [
-    "S6AR00199"
-   ],
-   "fec_name": [
-    "Hallie Shoffner"
-   ],
-   "raised": 2269113.78,
-   "outside_support": 0.0,
-   "outside_against_opponent": 0.0,
-   "coordinated": 0.0,
-   "individual": 2269113.78,
+   "individual": 14297988.0,
    "self_fund": 0.0,
-   "spent": 1405535.66,
-   "cash_on_hand": 863578.12,
-   "coverage_end": [
-    "06/30/2026"
-   ],
+   "incumbent": false,
    "in_state_share": null,
-   "incumbent": false
+   "items": [
+    [
+     "raised",
+     2269114.0
+    ],
+    [
+     "outside for",
+     0.0
+    ]
+   ]
   },
   "R": {
-   "fec_id": [
-    "S4AR00103"
-   ],
-   "fec_name": [
-    "Tom Cotton"
-   ],
-   "raised": 6233116.56,
-   "outside_support": 0.0,
-   "outside_against_opponent": 2577945.03,
-   "coordinated": 0.0,
-   "individual": 8811061.59,
+   "individual": 85702012.0,
    "self_fund": 0.0,
-   "spent": 3752101.46,
-   "cash_on_hand": 9931884.93,
-   "coverage_end": [
-    "06/30/2026"
-   ],
+   "incumbent": true,
    "in_state_share": null,
-   "incumbent": true
+   "items": [
+    [
+     "raised",
+     13601049.0
+    ],
+    [
+     "outside for",
+     0.0
+    ]
+   ]
   },
   "notes": [],
   "verified": true,
@@ -150,50 +133,43 @@
   "office": "senate",
   "D_candidate": "Hallie Shoffner",
   "R_candidate": "Tom Cotton",
-  "source": "AFI 2026 fundraising file from FEC, generated 2026-09-21T16:10:41.093358+00:00"
+  "source": "https://en.wikipedia.org/wiki/2026_United_States_Senate_election_in_Arkansas",
+  "basis": "raised plus outside",
+  "checked": "2026-10-08",
+  "money_share_d": 0.143
  },
  "CO": {
   "D": {
-   "fec_id": [
-    "S0CO00575"
-   ],
-   "fec_name": [
-    "John Hickenlooper"
-   ],
-   "raised": 8119380.12,
-   "outside_support": 0.0,
-   "outside_against_opponent": 0.0,
-   "coordinated": 0.0,
-   "individual": 8119380.12,
+   "individual": 98941837.2,
    "self_fund": 0.0,
-   "spent": 7471142.64,
-   "cash_on_hand": 2083870.46,
-   "coverage_end": [
-    "06/30/2026"
-   ],
+   "incumbent": true,
    "in_state_share": null,
-   "incumbent": true
+   "items": [
+    [
+     "raised",
+     10285376.0
+    ],
+    [
+     "outside for",
+     0.0
+    ]
+   ]
   },
   "R": {
-   "fec_id": [
-    "S6CO00507"
-   ],
-   "fec_name": [
-    "Mark Baisley"
-   ],
-   "raised": 138147.47,
-   "outside_support": 0.0,
-   "outside_against_opponent": 0.0,
-   "coordinated": 0.0,
-   "individual": 138147.47,
+   "individual": 1058162.8,
    "self_fund": 0.0,
-   "spent": 88913.26,
-   "cash_on_hand": 50021.12,
-   "coverage_end": [
-    "06/30/2026"
-   ],
+   "incumbent": false,
    "in_state_share": null,
-   "incumbent": false
+   "items": [
+    [
+     "raised",
+     110000.0
+    ],
+    [
+     "outside for",
+     0.0
+    ]
+   ]
   },
   "notes": [],
   "verified": true,
@@ -201,50 +177,43 @@
   "office": "senate",
   "D_candidate": "John Hickenlooper",
   "R_candidate": "Mark Baisley",
-  "source": "AFI 2026 fundraising file from FEC, generated 2026-09-21T16:10:41.093358+00:00"
+  "source": "https://www.coloradopolitics.com/2026/07/17/democrat-john-hickenlooper-hauls-in-1-3-million-in-2nd-quarter-in-colorados-u-s-senate-race/",
+  "basis": "raised plus outside",
+  "checked": "2026-10-08",
+  "money_share_d": 0.9894
  },
  "DE": {
   "D": {
-   "fec_id": [
-    "S0DE00092"
-   ],
-   "fec_name": [
-    "COONS, CHRISTOPHER A."
-   ],
-   "raised": 4168081.31,
-   "outside_support": 0.0,
-   "outside_against_opponent": 0.0,
-   "coordinated": 0.0,
-   "individual": 4168081.31,
+   "individual": 97741559.0,
    "self_fund": 0.0,
-   "spent": 1559897.11,
-   "cash_on_hand": 4793384.05,
-   "coverage_end": [
-    "08/26/2026"
-   ],
+   "incumbent": true,
    "in_state_share": null,
-   "incumbent": true
+   "items": [
+    [
+     "raised",
+     6897138.0
+    ],
+    [
+     "outside for",
+     0.0
+    ]
+   ]
   },
   "R": {
-   "fec_id": [
-    "S6DE00206"
-   ],
-   "fec_name": [
-    "KATZ, MICHAEL S DR."
-   ],
-   "raised": 159367.0,
-   "outside_support": 0.0,
-   "outside_against_opponent": 0.0,
-   "coordinated": 0.0,
-   "individual": 159367.0,
+   "individual": 2258441.0,
    "self_fund": 0.0,
-   "spent": 60954.39,
-   "cash_on_hand": 98412.61,
-   "coverage_end": [
-    "08/26/2026"
-   ],
+   "incumbent": false,
    "in_state_share": null,
-   "incumbent": false
+   "items": [
+    [
+     "raised",
+     159367.0
+    ],
+    [
+     "outside for",
+     0.0
+    ]
+   ]
   },
   "notes": [],
   "verified": true,
@@ -252,50 +221,43 @@
   "office": "senate",
   "D_candidate": "Chris Coons",
   "R_candidate": "Michael Katz",
-  "source": "AFI 2026 fundraising file from FEC, generated 2026-09-21T16:10:41.093358+00:00"
+  "source": "https://en.wikipedia.org/wiki/2026_United_States_Senate_election_in_Delaware",
+  "basis": "raised plus outside",
+  "checked": "2026-10-08",
+  "money_share_d": 0.9774
  },
  "FL": {
   "D": {
-   "fec_id": [
-    "S6FL00830"
-   ],
-   "fec_name": [
-    "Angie Nixon"
-   ],
-   "raised": 974844.71,
-   "outside_support": 87.5,
-   "outside_against_opponent": 0.0,
-   "coordinated": 0.0,
-   "individual": 974932.21,
+   "individual": 5689562.3,
    "self_fund": 0.0,
-   "spent": 709866.35,
-   "cash_on_hand": 264978.36,
-   "coverage_end": [
-    "07/29/2026"
-   ],
+   "incumbent": false,
    "in_state_share": null,
-   "incumbent": false
+   "items": [
+    [
+     "raised",
+     974845.0
+    ],
+    [
+     "outside for",
+     0.0
+    ]
+   ]
   },
   "R": {
-   "fec_id": [
-    "S6FL00640"
-   ],
-   "fec_name": [
-    "Ashley Moody"
-   ],
-   "raised": 11270804.54,
-   "outside_support": 37037.24,
-   "outside_against_opponent": 0.0,
-   "coordinated": 0.0,
-   "individual": 11307841.78,
+   "individual": 94310437.7,
    "self_fund": 0.0,
-   "spent": 2779629.11,
-   "cash_on_hand": 8491175.43,
-   "coverage_end": [
-    "07/29/2026"
-   ],
+   "incumbent": true,
    "in_state_share": null,
-   "incumbent": true
+   "items": [
+    [
+     "raised",
+     11259074.0
+    ],
+    [
+     "outside for",
+     4900000.0
+    ]
+   ]
   },
   "notes": [],
   "verified": true,
@@ -303,50 +265,43 @@
   "office": "senate",
   "D_candidate": "Angie Nixon",
   "R_candidate": "Ashley Moody",
-  "source": "AFI 2026 fundraising file from FEC, generated 2026-09-21T16:10:41.093358+00:00"
+  "source": "https://hedgeweek.com/news/citadel-founder-backed-super-pac-spends-4-9m-in-florida-senate-race",
+  "basis": "raised plus outside",
+  "checked": "2026-10-08",
+  "money_share_d": 0.0569
  },
  "GA": {
   "D": {
-   "fec_id": [
-    "S8GA00180"
-   ],
-   "fec_name": [
-    "Jon Ossoff"
-   ],
-   "raised": 77279766.48,
-   "outside_support": 209215.83,
-   "outside_against_opponent": 3805334.42,
-   "coordinated": 0.0,
-   "individual": 81294316.73,
+   "individual": 63985395.9,
    "self_fund": 0.0,
-   "spent": 39682882.19,
-   "cash_on_hand": 42587451.0,
-   "coverage_end": [
-    "06/30/2026"
-   ],
+   "incumbent": true,
    "in_state_share": null,
-   "incumbent": true
+   "items": [
+    [
+     "raised",
+     97986263.0
+    ],
+    [
+     "outside for",
+     20000000.0
+    ]
+   ]
   },
   "R": {
-   "fec_id": [
-    "S6GA00390"
-   ],
-   "fec_name": [
-    "Mike Collins"
-   ],
-   "raised": 7409349.57,
-   "outside_support": 408629.45,
-   "outside_against_opponent": 7883297.54,
-   "coordinated": 0.0,
-   "individual": 15701276.56,
+   "individual": 36014604.1,
    "self_fund": 0.0,
-   "spent": 5932538.69,
-   "cash_on_hand": 2079981.42,
-   "coverage_end": [
-    "06/30/2026"
-   ],
+   "incumbent": false,
    "in_state_share": null,
-   "incumbent": false
+   "items": [
+    [
+     "raised",
+     7409350.0
+    ],
+    [
+     "outside for",
+     59000000.0
+    ]
+   ]
   },
   "notes": [],
   "verified": true,
@@ -354,50 +309,51 @@
   "office": "senate",
   "D_candidate": "Jon Ossoff",
   "R_candidate": "Mike Collins",
-  "source": "AFI 2026 fundraising file from FEC, generated 2026-09-21T16:10:41.093358+00:00"
+  "source": "https://www.ajc.com/politics/2026/08/gop-groups-ramp-up-spending-to-support-georgias-mike-collins/",
+  "adimpact": {
+   "future_reserved_R": 16600000.0,
+   "future_reserved_D": 22200000.0,
+   "slf_september_aired": 1000000.0,
+   "no_going_back_september_aired": 2300000.0,
+   "through": "2026-09-30",
+   "source": "AdImpact, Republicans Hold Aired Spend Advantage in Senate Battlegrounds, Oct 1 2026, aired through Sept 30; and Republicans Air $200M More in Congressional Ads Than Democrats in September, Sept 30 2026"
+  },
+  "basis": "raised plus outside",
+  "checked": "2026-10-08",
+  "money_share_d": 0.6399
  },
  "IA": {
   "D": {
-   "fec_id": [
-    "S6IA00298"
-   ],
-   "fec_name": [
-    "Josh Turek"
-   ],
-   "raised": 6276526.9,
-   "outside_support": 1570409.78,
-   "outside_against_opponent": 13326699.86,
-   "coordinated": 0.0,
-   "individual": 21173636.54,
+   "individual": 48325753.3,
    "self_fund": 0.0,
-   "spent": 3914213.12,
-   "cash_on_hand": 2362313.78,
-   "coverage_end": [
-    "06/30/2026"
-   ],
+   "incumbent": false,
    "in_state_share": null,
-   "incumbent": false
+   "items": [
+    [
+     "raised",
+     6276527.0
+    ],
+    [
+     "outside for",
+     30400000.0
+    ]
+   ]
   },
   "R": {
-   "fec_id": [
-    "S6IA00314"
-   ],
-   "fec_name": [
-    "Ashley Hinson"
-   ],
-   "raised": 10217845.39,
-   "outside_support": 6835152.72,
-   "outside_against_opponent": 22054024.21,
-   "coordinated": 526499.0,
-   "individual": 39633521.32,
+   "individual": 51674246.7,
    "self_fund": 0.0,
-   "spent": 5396429.3,
-   "cash_on_hand": 6749491.49,
-   "coverage_end": [
-    "06/30/2026"
-   ],
+   "incumbent": false,
    "in_state_share": null,
-   "incumbent": false
+   "items": [
+    [
+     "raised",
+     10217845.0
+    ],
+    [
+     "outside for",
+     29000000.0
+    ]
+   ]
   },
   "notes": [],
   "verified": true,
@@ -405,50 +361,50 @@
   "office": "senate",
   "D_candidate": "Josh Turek",
   "R_candidate": "Ashley Hinson",
-  "source": "AFI 2026 fundraising file from FEC, generated 2026-09-21T16:10:41.093358+00:00"
+  "source": "https://iowacapitaldispatch.com/briefs/national-democratic-pac-announces-17m-fall-ad-buy-targeting-ashley-hinson/",
+  "adimpact": {
+   "r_aired_advantage": 17000000.0,
+   "d_candidate_aired": 11000000.0,
+   "slf_september_aired": 15300000.0,
+   "through": "2026-09-30",
+   "source": "AdImpact, Republicans Hold Aired Spend Advantage in Senate Battlegrounds, Oct 1 2026, aired through Sept 30; and Republicans Air $200M More in Congressional Ads Than Democrats in September, Sept 30 2026"
+  },
+  "basis": "raised plus outside",
+  "checked": "2026-10-08",
+  "money_share_d": 0.4833
  },
  "ID": {
   "D": {
-   "fec_id": [
-    "S6ID00146"
-   ],
-   "fec_name": [
-    "Todd Achilles"
-   ],
-   "raised": 692245.06,
-   "outside_support": 0.0,
-   "outside_against_opponent": 0.0,
-   "coordinated": 0.0,
-   "individual": 692245.06,
+   "individual": 13511601.2,
    "self_fund": 0.0,
-   "spent": 506311.48,
-   "cash_on_hand": 194226.5,
-   "coverage_end": [
-    "06/30/2026"
-   ],
+   "incumbent": false,
    "in_state_share": null,
-   "incumbent": false
+   "items": [
+    [
+     "raised",
+     692245.0
+    ],
+    [
+     "outside for",
+     0.0
+    ]
+   ]
   },
   "R": {
-   "fec_id": [
-    "S8ID00092"
-   ],
-   "fec_name": [
-    "Jim Risch"
-   ],
-   "raised": 3357516.42,
-   "outside_support": 0.0,
-   "outside_against_opponent": 0.0,
-   "coordinated": 0.0,
-   "individual": 3357516.42,
+   "individual": 86488398.8,
    "self_fund": 0.0,
-   "spent": 2241924.87,
-   "cash_on_hand": 3535956.11,
-   "coverage_end": [
-    "06/30/2026"
-   ],
+   "incumbent": true,
    "in_state_share": null,
-   "incumbent": true
+   "items": [
+    [
+     "raised",
+     4431093.0
+    ],
+    [
+     "outside for",
+     0.0
+    ]
+   ]
   },
   "notes": [],
   "verified": true,
@@ -456,50 +412,43 @@
   "office": "senate",
   "D_candidate": "Todd Achilles",
   "R_candidate": "Jim Risch",
-  "source": "AFI 2026 fundraising file from FEC, generated 2026-09-21T16:10:41.093358+00:00"
+  "source": "https://en.wikipedia.org/wiki/2026_United_States_Senate_election_in_Idaho",
+  "basis": "raised plus outside",
+  "checked": "2026-10-08",
+  "money_share_d": 0.1351
  },
  "IL": {
   "D": {
-   "fec_id": [
-    "S6IL00458"
-   ],
-   "fec_name": [
-    "Juliana Stratton"
-   ],
-   "raised": 5906598.55,
-   "outside_support": 0.0,
-   "outside_against_opponent": 0.0,
-   "coordinated": 109127.0,
-   "individual": 6015725.55,
+   "individual": 70598300.0,
    "self_fund": 0.0,
-   "spent": 4798640.54,
-   "cash_on_hand": 1107958.01,
-   "coverage_end": [
-    "06/30/2026"
-   ],
+   "incumbent": false,
    "in_state_share": null,
-   "incumbent": false
+   "items": [
+    [
+     "raised",
+     5906599.0
+    ],
+    [
+     "outside for",
+     0.0
+    ]
+   ]
   },
   "R": {
-   "fec_id": [
-    "S6IL00615"
-   ],
-   "fec_name": [
-    "Don Tracy"
-   ],
-   "raised": 2459889.83,
-   "outside_support": 0.0,
-   "outside_against_opponent": 0.0,
-   "coordinated": 0.0,
-   "individual": 2459889.83,
+   "individual": 29401700.0,
    "self_fund": 0.0,
-   "spent": 947465.99,
-   "cash_on_hand": 1512423.84,
-   "coverage_end": [
-    "06/30/2026"
-   ],
+   "incumbent": false,
    "in_state_share": null,
-   "incumbent": false
+   "items": [
+    [
+     "raised",
+     2459890.0
+    ],
+    [
+     "outside for",
+     0.0
+    ]
+   ]
   },
   "notes": [],
   "verified": true,
@@ -507,50 +456,43 @@
   "office": "senate",
   "D_candidate": "Juliana Stratton",
   "R_candidate": "Don Tracy",
-  "source": "AFI 2026 fundraising file from FEC, generated 2026-09-21T16:10:41.093358+00:00"
+  "source": "https://en.wikipedia.org/wiki/2026_United_States_Senate_election_in_Illinois",
+  "basis": "raised plus outside",
+  "checked": "2026-10-08",
+  "money_share_d": 0.706
  },
  "KS": {
   "D": {
-   "fec_id": [
-    "S6KS00312"
-   ],
-   "fec_name": [
-    "Adam Hamilton"
-   ],
-   "raised": 4169077.81,
-   "outside_support": 12500.0,
-   "outside_against_opponent": 8088439.0,
-   "coordinated": 0.0,
-   "individual": 12270016.81,
+   "individual": 27902653.3,
    "self_fund": 0.0,
-   "spent": 2438456.9,
-   "cash_on_hand": 1730620.91,
-   "coverage_end": [
-    "07/15/2026"
-   ],
+   "incumbent": false,
    "in_state_share": null,
-   "incumbent": false
+   "items": [
+    [
+     "raised",
+     4169078.0
+    ],
+    [
+     "outside for",
+     556000.0
+    ]
+   ]
   },
   "R": {
-   "fec_id": [
-    "S0KS00315"
-   ],
-   "fec_name": [
-    "Roger Marshall"
-   ],
-   "raised": 4009074.73,
-   "outside_support": 30839.79,
-   "outside_against_opponent": 1969057.0,
-   "coordinated": 0.0,
-   "individual": 6008971.52,
+   "individual": 72097346.7,
    "self_fund": 0.0,
-   "spent": 326015.09,
-   "cash_on_hand": 5388078.28,
-   "coverage_end": [
-    "07/15/2026"
-   ],
+   "incumbent": true,
    "in_state_share": null,
-   "incumbent": true
+   "items": [
+    [
+     "raised",
+     4009075.0
+    ],
+    [
+     "outside for",
+     8200000.0
+    ]
+   ]
   },
   "notes": [],
   "verified": true,
@@ -558,50 +500,49 @@
   "office": "senate",
   "D_candidate": "Adam Hamilton",
   "R_candidate": "Roger Marshall",
-  "source": "AFI 2026 fundraising file from FEC, generated 2026-09-21T16:10:41.093358+00:00"
+  "source": "https://www.kctv5.com/2026/10/02/senate-republicans-move-more-cash-kansas-marshall-hamilton-race-heats-up/",
+  "adimpact": {
+   "future_reserved_R": 2600000.0,
+   "future_reserved_D": 1200000.0,
+   "through": "2026-09-30",
+   "source": "AdImpact, Republicans Hold Aired Spend Advantage in Senate Battlegrounds, Oct 1 2026, aired through Sept 30; and Republicans Air $200M More in Congressional Ads Than Democrats in September, Sept 30 2026"
+  },
+  "basis": "raised plus outside",
+  "checked": "2026-10-08",
+  "money_share_d": 0.279
  },
  "KY": {
   "D": {
-   "fec_id": [
-    "S6KY00385"
-   ],
-   "fec_name": [
-    "Charles Booker"
-   ],
-   "raised": 1099509.09,
-   "outside_support": 0.0,
-   "outside_against_opponent": 0.0,
-   "coordinated": 0.0,
-   "individual": 1099509.09,
+   "individual": 9922861.3,
    "self_fund": 0.0,
-   "spent": 789886.51,
-   "cash_on_hand": 309622.58,
-   "coverage_end": [
-    "06/30/2026"
-   ],
+   "incumbent": false,
    "in_state_share": null,
-   "incumbent": false
+   "items": [
+    [
+     "raised",
+     1099509.0
+    ],
+    [
+     "outside for",
+     0.0
+    ]
+   ]
   },
   "R": {
-   "fec_id": [
-    "S6KY00286"
-   ],
-   "fec_name": [
-    "Andy Barr"
-   ],
-   "raised": 9981055.48,
-   "outside_support": 0.0,
-   "outside_against_opponent": 0.0,
-   "coordinated": 0.0,
-   "individual": 9981055.48,
+   "individual": 90077138.7,
    "self_fund": 0.0,
-   "spent": 11368587.12,
-   "cash_on_hand": 2305546.0,
-   "coverage_end": [
-    "06/30/2026"
-   ],
+   "incumbent": false,
    "in_state_share": null,
-   "incumbent": false
+   "items": [
+    [
+     "raised",
+     9981055.0
+    ],
+    [
+     "outside for",
+     0.0
+    ]
+   ]
   },
   "notes": [],
   "verified": true,
@@ -609,7 +550,10 @@
   "office": "senate",
   "D_candidate": "Charles Booker",
   "R_candidate": "Andy Barr",
-  "source": "AFI 2026 fundraising file from FEC, generated 2026-09-21T16:10:41.093358+00:00"
+  "source": "https://www.fec.gov/data/candidate/S6KY00286/?cycle=2026",
+  "basis": "raised plus outside",
+  "checked": "2026-10-08",
+  "money_share_d": 0.0992
  },
  "LA": {
   "D": {
@@ -664,46 +608,36 @@
  },
  "MA": {
   "D": {
-   "fec_id": [
-    "S4MA00028"
-   ],
-   "fec_name": [
-    "Ed Markey"
-   ],
-   "raised": 5352148.33,
-   "outside_support": 0.0,
-   "outside_against_opponent": 0.0,
-   "coordinated": 0.0,
-   "individual": 5352148.33,
+   "individual": 77415806.9,
    "self_fund": 0.0,
-   "spent": 5814159.22,
-   "cash_on_hand": 1348676.08,
-   "coverage_end": [
-    "08/12/2026"
-   ],
+   "incumbent": true,
    "in_state_share": null,
-   "incumbent": true
+   "items": [
+    [
+     "raised",
+     5352148.0
+    ],
+    [
+     "outside for",
+     0.0
+    ]
+   ]
   },
   "R": {
-   "fec_id": [
-    "S6MA00304"
-   ],
-   "fec_name": [
-    "John Deaton"
-   ],
-   "raised": 1561360.3,
-   "outside_support": 0.0,
-   "outside_against_opponent": 0.0,
-   "coordinated": 0.0,
-   "individual": 1561360.3,
+   "individual": 22584193.1,
    "self_fund": 0.0,
-   "spent": 848942.9,
-   "cash_on_hand": 712417.4,
-   "coverage_end": [
-    "08/12/2026"
-   ],
+   "incumbent": false,
    "in_state_share": null,
-   "incumbent": false
+   "items": [
+    [
+     "raised",
+     1561360.0
+    ],
+    [
+     "outside for",
+     0.0
+    ]
+   ]
   },
   "notes": [],
   "verified": true,
@@ -711,7 +645,10 @@
   "office": "senate",
   "D_candidate": "Ed Markey",
   "R_candidate": "John Deaton",
-  "source": "AFI 2026 fundraising file from FEC, generated 2026-09-21T16:10:41.093358+00:00"
+  "source": "https://www.fec.gov/data/candidate/S4MA00028/",
+  "basis": "raised plus outside",
+  "checked": "2026-10-08",
+  "money_share_d": 0.7742
  },
  "ME": {
   "D": {
@@ -764,50 +701,47 @@
   "office": "senate",
   "D_candidate": "Troy Jackson",
   "R_candidate": "Susan Collins",
-  "source": "AFI 2026 fundraising file from FEC, generated 2026-09-21T16:10:41.093358+00:00"
+  "source": "AFI 2026 fundraising file from FEC, generated 2026-09-21T16:10:41.093358+00:00",
+  "adimpact": {
+   "r_aired_advantage": 27000000.0,
+   "d_candidate_aired": 13000000.0,
+   "slf_september_aired": 13100000.0,
+   "through": "2026-09-30",
+   "source": "AdImpact, Republicans Hold Aired Spend Advantage in Senate Battlegrounds, Oct 1 2026, aired through Sept 30; and Republicans Air $200M More in Congressional Ads Than Democrats in September, Sept 30 2026"
+  }
  },
  "MI": {
   "D": {
-   "fec_id": [
-    "S6MI00418"
-   ],
-   "fec_name": [
-    "Abdul El-Sayed"
-   ],
-   "raised": 14514335.93,
-   "outside_support": 1245705.32,
-   "outside_against_opponent": 14159169.6,
-   "coordinated": 0.0,
-   "individual": 29919210.85,
+   "individual": 34828206.1,
    "self_fund": 0.0,
-   "spent": 11961573.38,
-   "cash_on_hand": 2552762.55,
-   "coverage_end": [
-    "07/15/2026"
-   ],
+   "incumbent": false,
    "in_state_share": null,
-   "incumbent": false
+   "items": [
+    [
+     "raised",
+     14514336.0
+    ],
+    [
+     "outside for",
+     23000000.0
+    ]
+   ]
   },
   "R": {
-   "fec_id": [
-    "S4MI00595"
-   ],
-   "fec_name": [
-    "Mike Rogers"
-   ],
-   "raised": 10898177.09,
-   "outside_support": 14611655.41,
-   "outside_against_opponent": 33666913.42,
-   "coordinated": 0.0,
-   "individual": 59176745.92,
+   "individual": 65171793.9,
    "self_fund": 0.0,
-   "spent": 6680643.32,
-   "cash_on_hand": 4473237.49,
-   "coverage_end": [
-    "07/15/2026"
-   ],
+   "incumbent": false,
    "in_state_share": null,
-   "incumbent": false
+   "items": [
+    [
+     "raised",
+     10898177.0
+    ],
+    [
+     "outside for",
+     59300000.0
+    ]
+   ]
   },
   "notes": [],
   "verified": true,
@@ -815,7 +749,19 @@
   "office": "senate",
   "D_candidate": "Abdul El-Sayed",
   "R_candidate": "Mike Rogers",
-  "source": "AFI 2026 fundraising file from FEC, generated 2026-09-21T16:10:41.093358+00:00"
+  "source": "https://bridgemi.com/michigan-government/trump-pac-helps-drive-michigan-senate-race-toward-record-spending/",
+  "adimpact": {
+   "r_aired_advantage": 15000000.0,
+   "d_candidate_aired": 18000000.0,
+   "r_coordinated_aired": 12000000.0,
+   "slf_september_aired": 16100000.000000002,
+   "no_going_back_september_aired": 10700000.0,
+   "through": "2026-09-30",
+   "source": "AdImpact, Republicans Hold Aired Spend Advantage in Senate Battlegrounds, Oct 1 2026, aired through Sept 30; and Republicans Air $200M More in Congressional Ads Than Democrats in September, Sept 30 2026"
+  },
+  "basis": "raised plus outside",
+  "checked": "2026-10-08",
+  "money_share_d": 0.3483
  },
  "MN": {
   "D": {
@@ -870,46 +816,36 @@
  },
  "MS": {
   "D": {
-   "fec_id": [
-    "S6MS00133"
-   ],
-   "fec_name": [
-    "Scott Colom"
-   ],
-   "raised": 2384921.14,
-   "outside_support": 1012841.49,
-   "outside_against_opponent": 1607135.61,
-   "coordinated": 0.0,
-   "individual": 5004898.24,
+   "individual": 53407066.9,
    "self_fund": 0.0,
-   "spent": 1537875.34,
-   "cash_on_hand": 847045.8,
-   "coverage_end": [
-    "06/30/2026"
-   ],
+   "incumbent": false,
    "in_state_share": null,
-   "incumbent": false
+   "items": [
+    [
+     "raised",
+     2384921.0
+    ],
+    [
+     "outside for",
+     2000000.0
+    ]
+   ]
   },
   "R": {
-   "fec_id": [
-    "S8MS00261"
-   ],
-   "fec_name": [
-    "Cindy Hyde-Smith"
-   ],
-   "raised": 3825454.97,
-   "outside_support": 529830.66,
-   "outside_against_opponent": 0.0,
-   "coordinated": 0.0,
-   "individual": 4355285.63,
+   "individual": 46592933.1,
    "self_fund": 0.0,
-   "spent": 1759323.1,
-   "cash_on_hand": 2535895.72,
-   "coverage_end": [
-    "06/30/2026"
-   ],
+   "incumbent": true,
    "in_state_share": null,
-   "incumbent": true
+   "items": [
+    [
+     "raised",
+     3825455.0
+    ],
+    [
+     "outside for",
+     0.0
+    ]
+   ]
   },
   "notes": [],
   "verified": true,
@@ -917,53 +853,43 @@
   "office": "senate",
   "D_candidate": "Scott Colom",
   "R_candidate": "Cindy Hyde-Smith",
-  "source": "AFI 2026 fundraising file from FEC, generated 2026-09-21T16:10:41.093358+00:00"
+  "source": "https://mississippitoday.org/2026/06/09/colom-super-pac-hyde-smith/",
+  "basis": "raised plus outside",
+  "checked": "2026-10-08",
+  "money_share_d": 0.5341
  },
  "MT": {
   "D": {
-   "fec_id": [
-    "S6MT00287",
-    "S6MT00253"
-   ],
-   "fec_name": [
-    "Seth Bodnar",
-    "Alani Bankhead"
-   ],
-   "raised": 3296979.8000000003,
-   "outside_support": 6169668.92,
-   "outside_against_opponent": 954042.37,
-   "coordinated": 0.0,
-   "individual": 10420691.09,
+   "individual": 63320463.3,
    "self_fund": 0.0,
-   "spent": 2297382.8200000003,
-   "cash_on_hand": 999263.9800000001,
-   "coverage_end": [
-    "06/30/2026",
-    "06/30/2026"
-   ],
+   "incumbent": false,
    "in_state_share": null,
-   "incumbent": false
+   "items": [
+    [
+     "raised",
+     3280000.0
+    ],
+    [
+     "outside for",
+     0.0
+    ]
+   ]
   },
   "R": {
-   "fec_id": [
-    "S6MT00295"
-   ],
-   "fec_name": [
-    "Kurt Alme"
-   ],
-   "raised": 1984860.91,
-   "outside_support": 1838551.12,
-   "outside_against_opponent": 1124380.34,
-   "coordinated": 0.0,
-   "individual": 4947792.37,
+   "individual": 36679536.7,
    "self_fund": 0.0,
-   "spent": 534142.12,
-   "cash_on_hand": 1450718.79,
-   "coverage_end": [
-    "06/30/2026"
-   ],
+   "incumbent": false,
    "in_state_share": null,
-   "incumbent": false
+   "items": [
+    [
+     "raised",
+     1900000.0
+    ],
+    [
+     "outside for",
+     0.0
+    ]
+   ]
   },
   "notes": [],
   "verified": true,
@@ -971,50 +897,43 @@
   "office": "senate",
   "D_candidate": "Seth Bodnar + Alani Bankhead",
   "R_candidate": "Kurt Alme",
-  "source": "AFI 2026 fundraising file from FEC, generated 2026-09-21T16:10:41.093358+00:00"
+  "source": "https://nbcmontana.com/news/beyond-the-podium/campaigns-report-fundraising-totals-in-montanas-key-us-senate-house-races",
+  "basis": "raised plus outside",
+  "checked": "2026-10-08",
+  "money_share_d": 0.6332
  },
  "NC": {
   "D": {
-   "fec_id": [
-    "S6NC00407"
-   ],
-   "fec_name": [
-    "Roy Cooper"
-   ],
-   "raised": 34975789.18,
-   "outside_support": 1216503.43,
-   "outside_against_opponent": 18899458.66,
-   "coordinated": 0.0,
-   "individual": 55091751.269999996,
+   "individual": 61256961.0,
    "self_fund": 0.0,
-   "spent": 14258221.92,
-   "cash_on_hand": 20717567.26,
-   "coverage_end": [
-    "06/30/2026"
-   ],
+   "incumbent": false,
    "in_state_share": null,
-   "incumbent": false
+   "items": [
+    [
+     "raised",
+     35000000.0
+    ],
+    [
+     "outside for",
+     42000000.0
+    ]
+   ]
   },
   "R": {
-   "fec_id": [
-    "S6NC00415"
-   ],
-   "fec_name": [
-    "Michael Whatley"
-   ],
-   "raised": 11272504.49,
-   "outside_support": 4118079.34,
-   "outside_against_opponent": 32935010.59,
-   "coordinated": 0.0,
-   "individual": 48325594.42,
+   "individual": 38743039.0,
    "self_fund": 0.0,
-   "spent": 7810806.43,
-   "cash_on_hand": 3461698.06,
-   "coverage_end": [
-    "06/30/2026"
-   ],
+   "incumbent": false,
    "in_state_share": null,
-   "incumbent": false
+   "items": [
+    [
+     "raised",
+     11000000.0
+    ],
+    [
+     "outside for",
+     37700000.0
+    ]
+   ]
   },
   "notes": [],
   "verified": true,
@@ -1022,50 +941,50 @@
   "office": "senate",
   "D_candidate": "Roy Cooper",
   "R_candidate": "Michael Whatley",
-  "source": "AFI 2026 fundraising file from FEC, generated 2026-09-21T16:10:41.093358+00:00"
+  "source": "https://spectrumlocalnews.com/nc/charlotte/news/2026/07/21/nc-senate-campaign-finance-report",
+  "adimpact": {
+   "d_candidate_aired": 19000000.0,
+   "slf_september_aired": 17300000.0,
+   "no_going_back_september_aired": 7800000.0,
+   "through": "2026-09-30",
+   "source": "AdImpact, Republicans Hold Aired Spend Advantage in Senate Battlegrounds, Oct 1 2026, aired through Sept 30; and Republicans Air $200M More in Congressional Ads Than Democrats in September, Sept 30 2026"
+  },
+  "basis": "raised plus outside",
+  "checked": "2026-10-08",
+  "money_share_d": 0.6126
  },
  "NE": {
   "D": {
-   "fec_id": [
-    "S4NE00207"
-   ],
-   "fec_name": [
-    "Dan Osborn"
-   ],
-   "raised": 5751950.79,
-   "outside_support": 1437130.11,
-   "outside_against_opponent": 2108691.39,
-   "coordinated": 0.0,
-   "individual": 9297772.290000001,
+   "individual": 34131736.5,
    "self_fund": 0.0,
-   "spent": 3393629.65,
-   "cash_on_hand": 2421487.06,
-   "coverage_end": [
-    "06/30/2026"
-   ],
+   "incumbent": false,
    "in_state_share": null,
-   "incumbent": false
+   "items": [
+    [
+     "raised",
+     5700000.0
+    ],
+    [
+     "outside for",
+     0.0
+    ]
+   ]
   },
   "R": {
-   "fec_id": [
-    "S6NE00129"
-   ],
-   "fec_name": [
-    "Pete Ricketts"
-   ],
-   "raised": 11233506.7,
-   "outside_support": 4636.24,
-   "outside_against_opponent": 3527508.37,
-   "coordinated": 0.0,
-   "individual": 14765651.309999999,
+   "individual": 65868263.5,
    "self_fund": 0.0,
-   "spent": 4809505.91,
-   "cash_on_hand": 6910969.9,
-   "coverage_end": [
-    "06/30/2026"
-   ],
+   "incumbent": true,
    "in_state_share": null,
-   "incumbent": true
+   "items": [
+    [
+     "raised",
+     11000000.0
+    ],
+    [
+     "outside for",
+     0.0
+    ]
+   ]
   },
   "notes": [],
   "verified": true,
@@ -1073,50 +992,43 @@
   "office": "senate",
   "D_candidate": "Dan Osborn",
   "R_candidate": "Pete Ricketts",
-  "source": "AFI 2026 fundraising file from FEC, generated 2026-09-21T16:10:41.093358+00:00"
+  "source": "https://www.newsfromthestates.com/node/419552",
+  "basis": "raised plus outside",
+  "checked": "2026-10-08",
+  "money_share_d": 0.3413
  },
  "NH": {
   "D": {
-   "fec_id": [
-    "S6NH00141"
-   ],
-   "fec_name": [
-    "Chris Pappas"
-   ],
-   "raised": 15384656.83,
-   "outside_support": 425818.0,
-   "outside_against_opponent": 4089458.77,
-   "coordinated": 0.0,
-   "individual": 19899933.6,
+   "individual": 46011131.7,
    "self_fund": 0.0,
-   "spent": 11540323.25,
-   "cash_on_hand": 4251917.81,
-   "coverage_end": [
-    "08/19/2026"
-   ],
+   "incumbent": false,
    "in_state_share": null,
-   "incumbent": false
+   "items": [
+    [
+     "raised",
+     14600000.0
+    ],
+    [
+     "outside for",
+     10200000.0
+    ]
+   ]
   },
   "R": {
-   "fec_id": [
-    "S6NH00208"
-   ],
-   "fec_name": [
-    "John E. Sununu"
-   ],
-   "raised": 4180251.88,
-   "outside_support": 1497760.93,
-   "outside_against_opponent": 8657281.5,
-   "coordinated": 75782.0,
-   "individual": 14411076.309999999,
+   "individual": 53988868.3,
    "self_fund": 0.0,
-   "spent": 1110715.12,
-   "cash_on_hand": 3070033.12,
-   "coverage_end": [
-    "08/19/2026"
-   ],
+   "incumbent": false,
    "in_state_share": null,
-   "incumbent": false
+   "items": [
+    [
+     "raised",
+     4100000.0
+    ],
+    [
+     "outside for",
+     25000000.0
+    ]
+   ]
   },
   "notes": [],
   "verified": true,
@@ -1124,7 +1036,16 @@
   "office": "senate",
   "D_candidate": "Chris Pappas",
   "R_candidate": "John E. Sununu",
-  "source": "AFI 2026 fundraising file from FEC, generated 2026-09-21T16:10:41.093358+00:00"
+  "source": "https://www.newsfromthestates.com/node/427348",
+  "adimpact": {
+   "slf_september_aired": 5000000.0,
+   "no_going_back_september_aired": 5300000.0,
+   "through": "2026-09-30",
+   "source": "AdImpact, Republicans Hold Aired Spend Advantage in Senate Battlegrounds, Oct 1 2026, aired through Sept 30; and Republicans Air $200M More in Congressional Ads Than Democrats in September, Sept 30 2026"
+  },
+  "basis": "raised plus outside",
+  "checked": "2026-10-08",
+  "money_share_d": 0.4601
  },
  "NJ": {
   "D": {
@@ -1230,46 +1151,36 @@
  },
  "OH": {
   "D": {
-   "fec_id": [
-    "S6OH00163"
-   ],
-   "fec_name": [
-    "Sherrod Brown"
-   ],
-   "raised": 38566234.1,
-   "outside_support": 1370846.75,
-   "outside_against_opponent": 19361971.83,
-   "coordinated": 0.0,
-   "individual": 59299052.68,
+   "individual": 47864819.7,
    "self_fund": 0.0,
-   "spent": 22336492.78,
-   "cash_on_hand": 16229741.32,
-   "coverage_end": [
-    "06/30/2026"
-   ],
+   "incumbent": false,
    "in_state_share": null,
-   "incumbent": false
+   "items": [
+    [
+     "raised",
+     38566234.0
+    ],
+    [
+     "outside for",
+     60000000.0
+    ]
+   ]
   },
   "R": {
-   "fec_id": [
-    "S6OH00304"
-   ],
-   "fec_name": [
-    "Jon Husted"
-   ],
-   "raised": 14360027.53,
-   "outside_support": 9329479.22,
-   "outside_against_opponent": 33642391.44,
-   "coordinated": 1152180.0,
-   "individual": 58484078.19,
+   "individual": 52135180.3,
    "self_fund": 0.0,
-   "spent": 4940716.33,
-   "cash_on_hand": 9419311.2,
-   "coverage_end": [
-    "06/30/2026"
-   ],
+   "incumbent": true,
    "in_state_share": null,
-   "incumbent": true
+   "items": [
+    [
+     "raised",
+     14360028.0
+    ],
+    [
+     "outside for",
+     93000000.0
+    ]
+   ]
   },
   "notes": [],
   "verified": true,
@@ -1277,50 +1188,53 @@
   "office": "senate",
   "D_candidate": "Sherrod Brown",
   "R_candidate": "Jon Husted",
-  "source": "AFI 2026 fundraising file from FEC, generated 2026-09-21T16:10:41.093358+00:00"
+  "source": "https://www.newsweek.com/gop-sinks-millions-more-into-key-senate-race-for-jd-vances-old-seat-12519285",
+  "adimpact": {
+   "r_aired_advantage": 41000000.0,
+   "d_candidate_aired": 41000000.0,
+   "r_coordinated_aired": 13000000.0,
+   "future_r_advantage": 32000000.0,
+   "slf_september_aired": 32100000.0,
+   "no_going_back_september_aired": 12600000.0,
+   "through": "2026-09-30",
+   "source": "AdImpact, Republicans Hold Aired Spend Advantage in Senate Battlegrounds, Oct 1 2026, aired through Sept 30; and Republicans Air $200M More in Congressional Ads Than Democrats in September, Sept 30 2026"
+  },
+  "basis": "raised plus outside",
+  "checked": "2026-10-08",
+  "money_share_d": 0.4786
  },
  "OK": {
   "D": {
-   "fec_id": [
-    "S6OK04163"
-   ],
-   "fec_name": [
-    "N'Kiyla Jasmine Thomas"
-   ],
-   "raised": 57158.83,
-   "outside_support": 0.0,
-   "outside_against_opponent": 0.0,
-   "coordinated": 0.0,
-   "individual": 57158.83,
+   "individual": 570976.9,
    "self_fund": 0.0,
-   "spent": 57639.22,
-   "cash_on_hand": 455.95,
-   "coverage_end": [
-    "08/05/2026"
-   ],
+   "incumbent": false,
    "in_state_share": null,
-   "incumbent": false
+   "items": [
+    [
+     "raised",
+     57159.0
+    ],
+    [
+     "outside for",
+     0.0
+    ]
+   ]
   },
   "R": {
-   "fec_id": [
-    "S6OK04247"
-   ],
-   "fec_name": [
-    "Kevin Hern"
-   ],
-   "raised": 9953578.89,
-   "outside_support": 67596.38,
-   "outside_against_opponent": 0.0,
-   "coordinated": 0.0,
-   "individual": 10021175.270000001,
+   "individual": 99429023.1,
    "self_fund": 0.0,
-   "spent": 7461668.78,
-   "cash_on_hand": 2491910.11,
-   "coverage_end": [
-    "06/30/2026"
-   ],
+   "incumbent": false,
    "in_state_share": null,
-   "incumbent": false
+   "items": [
+    [
+     "raised",
+     9953579.0
+    ],
+    [
+     "outside for",
+     0.0
+    ]
+   ]
   },
   "notes": [],
   "verified": true,
@@ -1328,50 +1242,43 @@
   "office": "senate",
   "D_candidate": "N'Kiyla Jasmine Thomas",
   "R_candidate": "Kevin Hern",
-  "source": "AFI 2026 fundraising file from FEC, generated 2026-09-21T16:10:41.093358+00:00"
+  "source": "https://www.fec.gov/data/candidate/S6OK04247/?cycle=2026",
+  "basis": "raised plus outside",
+  "checked": "2026-10-08",
+  "money_share_d": 0.0057
  },
  "OR": {
   "D": {
-   "fec_id": [
-    "S8OR00207"
-   ],
-   "fec_name": [
-    "Jeff Merkley"
-   ],
-   "raised": 4540973.95,
-   "outside_support": 0.0,
-   "outside_against_opponent": 0.0,
-   "coordinated": 0.0,
-   "individual": 4540973.95,
+   "individual": 97409547.6,
    "self_fund": 0.0,
-   "spent": 1979568.88,
-   "cash_on_hand": 6828403.72,
-   "coverage_end": [
-    "06/30/2026"
-   ],
+   "incumbent": true,
    "in_state_share": null,
-   "incumbent": true
+   "items": [
+    [
+     "raised",
+     4540974.0
+    ],
+    [
+     "outside for",
+     0.0
+    ]
+   ]
   },
   "R": {
-   "fec_id": [
-    "S6OR05218"
-   ],
-   "fec_name": [
-    "David Brock Smith"
-   ],
-   "raised": 120760.19,
-   "outside_support": 0.0,
-   "outside_against_opponent": 0.0,
-   "coordinated": 0.0,
-   "individual": 120760.19,
+   "individual": 2590452.4,
    "self_fund": 0.0,
-   "spent": 91780.62,
-   "cash_on_hand": 28979.57,
-   "coverage_end": [
-    "06/30/2026"
-   ],
+   "incumbent": false,
    "in_state_share": null,
-   "incumbent": false
+   "items": [
+    [
+     "raised",
+     120760.0
+    ],
+    [
+     "outside for",
+     0.0
+    ]
+   ]
   },
   "notes": [],
   "verified": true,
@@ -1379,50 +1286,43 @@
   "office": "senate",
   "D_candidate": "Jeff Merkley",
   "R_candidate": "David Brock Smith",
-  "source": "AFI 2026 fundraising file from FEC, generated 2026-09-21T16:10:41.093358+00:00"
+  "source": "https://www.fec.gov/data/candidate/S8OR00207/?cycle=2026",
+  "basis": "raised plus outside",
+  "checked": "2026-10-08",
+  "money_share_d": 0.9741
  },
  "RI": {
   "D": {
-   "fec_id": [
-    "S6RI00163"
-   ],
-   "fec_name": [
-    "Jack Reed"
-   ],
-   "raised": 3381651.34,
-   "outside_support": 0.0,
-   "outside_against_opponent": 0.0,
-   "coordinated": 0.0,
-   "individual": 3381651.34,
+   "individual": 94933689.8,
    "self_fund": 0.0,
-   "spent": 1876159.78,
-   "cash_on_hand": 3093683.6,
-   "coverage_end": [
-    "08/20/2026"
-   ],
+   "incumbent": true,
    "in_state_share": null,
-   "incumbent": true
+   "items": [
+    [
+     "raised",
+     3381651.0
+    ],
+    [
+     "outside for",
+     0.0
+    ]
+   ]
   },
   "R": {
-   "fec_id": [
-    "S4RI00051"
-   ],
-   "fec_name": [
-    "Raymond McKay"
-   ],
-   "raised": 180468.45,
-   "outside_support": 0.0,
-   "outside_against_opponent": 0.0,
-   "coordinated": 0.0,
-   "individual": 180468.45,
+   "individual": 5066310.2,
    "self_fund": 0.0,
-   "spent": 173238.14,
-   "cash_on_hand": 7568.84,
-   "coverage_end": [
-    "08/20/2026"
-   ],
+   "incumbent": false,
    "in_state_share": null,
-   "incumbent": false
+   "items": [
+    [
+     "raised",
+     180468.0
+    ],
+    [
+     "outside for",
+     0.0
+    ]
+   ]
   },
   "notes": [],
   "verified": true,
@@ -1430,50 +1330,43 @@
   "office": "senate",
   "D_candidate": "Jack Reed",
   "R_candidate": "Raymond McKay",
-  "source": "AFI 2026 fundraising file from FEC, generated 2026-09-21T16:10:41.093358+00:00"
+  "source": "https://www.fec.gov/data/candidate/S6RI00163/?cycle=2026",
+  "basis": "raised plus outside",
+  "checked": "2026-10-08",
+  "money_share_d": 0.9493
  },
  "SC": {
   "D": {
-   "fec_id": [
-    "S6SC04239"
-   ],
-   "fec_name": [
-    "Annie Andrews"
-   ],
-   "raised": 10804040.5,
-   "outside_support": 22786.76,
-   "outside_against_opponent": 0.0,
-   "coordinated": 0.0,
-   "individual": 10826827.26,
+   "individual": 66894673.6,
    "self_fund": 0.0,
-   "spent": 6684745.5,
-   "cash_on_hand": 4119295.0,
-   "coverage_end": [
-    "06/30/2026"
-   ],
+   "incumbent": false,
    "in_state_share": null,
-   "incumbent": false
+   "items": [
+    [
+     "raised",
+     10804041.0
+    ],
+    [
+     "outside for",
+     0.0
+    ]
+   ]
   },
   "R": {
-   "fec_id": [
-    "S6SC04437"
-   ],
-   "fec_name": [
-    "Darline Graham"
-   ],
-   "raised": 346782.64,
-   "outside_support": 504889.66,
-   "outside_against_opponent": 65830.64,
-   "coordinated": 165205.0,
-   "individual": 1082707.94,
+   "individual": 33105326.4,
    "self_fund": 0.0,
-   "spent": 95351.36,
-   "cash_on_hand": 251431.28,
-   "coverage_end": [
-    "08/05/2026"
-   ],
+   "incumbent": false,
    "in_state_share": null,
-   "incumbent": false
+   "items": [
+    [
+     "raised",
+     346783.0
+    ],
+    [
+     "outside for",
+     5000000.0
+    ]
+   ]
   },
   "notes": [],
   "verified": true,
@@ -1481,50 +1374,43 @@
   "office": "senate",
   "D_candidate": "Annie Andrews",
   "R_candidate": "Darline Graham",
-  "source": "AFI 2026 fundraising file from FEC, generated 2026-09-21T16:10:41.093358+00:00"
+  "source": "https://axios.com/2026/10/06/south-carolina-senate-gop-graham-money",
+  "basis": "raised plus outside",
+  "checked": "2026-10-08",
+  "money_share_d": 0.6689
  },
  "SD": {
   "D": {
-   "fec_id": [
-    "S6SD01117"
-   ],
-   "fec_name": [
-    "Brian Bengs"
-   ],
-   "raised": 782049.78,
-   "outside_support": 0.0,
-   "outside_against_opponent": 0.0,
-   "coordinated": 0.0,
-   "individual": 782049.78,
+   "individual": 19756215.8,
    "self_fund": 0.0,
-   "spent": 730644.27,
-   "cash_on_hand": 51405.51,
-   "coverage_end": [
-    "06/30/2026"
-   ],
+   "incumbent": false,
    "in_state_share": null,
-   "incumbent": false
+   "items": [
+    [
+     "raised",
+     782050.0
+    ],
+    [
+     "outside for",
+     0.0
+    ]
+   ]
   },
   "R": {
-   "fec_id": [
-    "S4SD00049"
-   ],
-   "fec_name": [
-    "Mike Rounds"
-   ],
-   "raised": 3176450.98,
-   "outside_support": 0.0,
-   "outside_against_opponent": 414076.0,
-   "coordinated": 0.0,
-   "individual": 3590526.98,
+   "individual": 80243784.2,
    "self_fund": 0.0,
-   "spent": 2309816.14,
-   "cash_on_hand": 2736663.91,
-   "coverage_end": [
-    "06/30/2026"
-   ],
+   "incumbent": true,
    "in_state_share": null,
-   "incumbent": true
+   "items": [
+    [
+     "raised",
+     3176451.0
+    ],
+    [
+     "outside for",
+     0.0
+    ]
+   ]
   },
   "notes": [],
   "verified": true,
@@ -1532,50 +1418,43 @@
   "office": "senate",
   "D_candidate": "Brian Bengs",
   "R_candidate": "Mike Rounds",
-  "source": "AFI 2026 fundraising file from FEC, generated 2026-09-21T16:10:41.093358+00:00"
+  "source": "https://www.fec.gov/data/candidate/S4SD00049/?cycle=2026",
+  "basis": "raised plus outside",
+  "checked": "2026-10-08",
+  "money_share_d": 0.1976
  },
  "TN": {
   "D": {
-   "fec_id": [
-    "S4TN00542"
-   ],
-   "fec_name": [
-    "Marquita Bradshaw"
-   ],
-   "raised": 2257.07,
-   "outside_support": 0.0,
-   "outside_against_opponent": 0.0,
-   "coordinated": 0.0,
-   "individual": 2257.07,
+   "individual": 31499.7,
    "self_fund": 0.0,
-   "spent": 1293.13,
-   "cash_on_hand": 1042.59,
-   "coverage_end": [
-    "07/17/2026"
-   ],
+   "incumbent": false,
    "in_state_share": null,
-   "incumbent": false
+   "items": [
+    [
+     "raised",
+     2257.0
+    ],
+    [
+     "outside for",
+     0.0
+    ]
+   ]
   },
   "R": {
-   "fec_id": [
-    "S0TN00169"
-   ],
-   "fec_name": [
-    "Bill Hagerty"
-   ],
-   "raised": 7162897.1,
-   "outside_support": 21884.84,
-   "outside_against_opponent": 0.0,
-   "coordinated": 4.0,
-   "individual": 7184785.9399999995,
+   "individual": 99968500.3,
    "self_fund": 0.0,
-   "spent": 3855936.81,
-   "cash_on_hand": 5234429.36,
-   "coverage_end": [
-    "07/17/2026"
-   ],
+   "incumbent": true,
    "in_state_share": null,
-   "incumbent": true
+   "items": [
+    [
+     "raised",
+     7162897.0
+    ],
+    [
+     "outside for",
+     0.0
+    ]
+   ]
   },
   "notes": [],
   "verified": true,
@@ -1583,50 +1462,43 @@
   "office": "senate",
   "D_candidate": "Marquita Bradshaw",
   "R_candidate": "Bill Hagerty",
-  "source": "AFI 2026 fundraising file from FEC, generated 2026-09-21T16:10:41.093358+00:00"
+  "source": "https://www.fec.gov/data/candidate/S0TN00169/?cycle=2026",
+  "basis": "raised plus outside",
+  "checked": "2026-10-08",
+  "money_share_d": 0.0003
  },
  "TX": {
   "D": {
-   "fec_id": [
-    "S6TX00479"
-   ],
-   "fec_name": [
-    "James Talarico"
-   ],
-   "raised": 68555930.42,
-   "outside_support": 2265273.67,
-   "outside_against_opponent": 5829698.6,
-   "coordinated": 0.0,
-   "individual": 76650902.69,
+   "individual": 30918809.1,
    "self_fund": 0.0,
-   "spent": 47012775.34,
-   "cash_on_hand": 21548155.08,
-   "coverage_end": [
-    "06/30/2026"
-   ],
+   "incumbent": false,
    "in_state_share": null,
-   "incumbent": false
+   "items": [
+    [
+     "raised",
+     68560930.0
+    ],
+    [
+     "outside for",
+     13900000.0
+    ]
+   ]
   },
   "R": {
-   "fec_id": [
-    "S6TX00388"
-   ],
-   "fec_name": [
-    "Ken Paxton"
-   ],
-   "raised": 9248698.53,
-   "outside_support": 48058240.8,
-   "outside_against_opponent": 61890682.33,
-   "coordinated": 0.0,
-   "individual": 119197621.66,
+   "individual": 69081190.9,
    "self_fund": 0.0,
-   "spent": 7492915.18,
-   "cash_on_hand": 1755783.35,
-   "coverage_end": [
-    "06/30/2026"
-   ],
+   "incumbent": false,
    "in_state_share": null,
-   "incumbent": false
+   "items": [
+    [
+     "raised",
+     9240578.0
+    ],
+    [
+     "outside for",
+     175000000.0
+    ]
+   ]
   },
   "notes": [],
   "verified": true,
@@ -1634,50 +1506,50 @@
   "office": "senate",
   "D_candidate": "James Talarico",
   "R_candidate": "Ken Paxton",
-  "source": "AFI 2026 fundraising file from FEC, generated 2026-09-21T16:10:41.093358+00:00"
+  "source": "https://www.texastribune.org/2026/10/05/ken-paxton-third-quarter-fundraising-texas-senate-race-2026/",
+  "adimpact": {
+   "r_aired_advantage": 61000000.0,
+   "d_candidate_aired": 59000000.0,
+   "future_gap_note": "R +80 percent of future reservations",
+   "through": "2026-09-30",
+   "source": "AdImpact, Republicans Hold Aired Spend Advantage in Senate Battlegrounds, Oct 1 2026, aired through Sept 30; and Republicans Air $200M More in Congressional Ads Than Democrats in September, Sept 30 2026"
+  },
+  "basis": "raised plus outside",
+  "checked": "2026-10-08",
+  "money_share_d": 0.3092
  },
  "VA": {
   "D": {
-   "fec_id": [
-    "S6VA00093"
-   ],
-   "fec_name": [
-    "Mark Warner"
-   ],
-   "raised": 17889335.15,
-   "outside_support": 0.0,
-   "outside_against_opponent": 0.0,
-   "coordinated": 58400.0,
-   "individual": 17947735.15,
+   "individual": 97712801.8,
    "self_fund": 0.0,
-   "spent": 7327843.73,
-   "cash_on_hand": 16114725.24,
-   "coverage_end": [
-    "07/15/2026"
-   ],
+   "incumbent": true,
    "in_state_share": null,
-   "incumbent": true
+   "items": [
+    [
+     "raised",
+     17889335.0
+    ],
+    [
+     "outside for",
+     0.0
+    ]
+   ]
   },
   "R": {
-   "fec_id": [
-    "S8VA00321"
-   ],
-   "fec_name": [
-    "Bert Mizusawa"
-   ],
-   "raised": 418742.24,
-   "outside_support": 0.0,
-   "outside_against_opponent": 0.0,
-   "coordinated": 0.0,
-   "individual": 418742.24,
+   "individual": 2287198.2,
    "self_fund": 0.0,
-   "spent": 328750.21,
-   "cash_on_hand": 90327.92,
-   "coverage_end": [
-    "07/15/2026"
-   ],
+   "incumbent": false,
    "in_state_share": null,
-   "incumbent": false
+   "items": [
+    [
+     "raised",
+     418742.0
+    ],
+    [
+     "outside for",
+     0.0
+    ]
+   ]
   },
   "notes": [],
   "verified": true,
@@ -1685,50 +1557,43 @@
   "office": "senate",
   "D_candidate": "Mark Warner",
   "R_candidate": "Bert Mizusawa",
-  "source": "AFI 2026 fundraising file from FEC, generated 2026-09-21T16:10:41.093358+00:00"
+  "source": "https://www.fec.gov/data/candidate/S6VA00093/?cycle=2026",
+  "basis": "raised plus outside",
+  "checked": "2026-10-08",
+  "money_share_d": 0.9771
  },
  "WV": {
   "D": {
-   "fec_id": [
-    "S6WV00188"
-   ],
-   "fec_name": [
-    "Rachel Fetty Anderson"
-   ],
-   "raised": 49913.08,
-   "outside_support": 0.0,
-   "outside_against_opponent": 0.0,
-   "coordinated": 0.0,
-   "individual": 49913.08,
+   "individual": 1067872.9,
    "self_fund": 0.0,
-   "spent": 34780.27,
-   "cash_on_hand": 22129.44,
-   "coverage_end": [
-    "06/30/2026"
-   ],
+   "incumbent": false,
    "in_state_share": null,
-   "incumbent": false
+   "items": [
+    [
+     "raised",
+     49913.0
+    ],
+    [
+     "outside for",
+     0.0
+    ]
+   ]
   },
   "R": {
-   "fec_id": [
-    "S4WV00159"
-   ],
-   "fec_name": [
-    "Shelley Moore Capito"
-   ],
-   "raised": 4624145.47,
-   "outside_support": 49140.57,
-   "outside_against_opponent": 0.0,
-   "coordinated": 0.0,
-   "individual": 4673286.04,
+   "individual": 98932127.1,
    "self_fund": 0.0,
-   "spent": 2558310.16,
-   "cash_on_hand": 4377200.52,
-   "coverage_end": [
-    "06/30/2026"
-   ],
+   "incumbent": true,
    "in_state_share": null,
-   "incumbent": true
+   "items": [
+    [
+     "raised",
+     4624145.0
+    ],
+    [
+     "outside for",
+     0.0
+    ]
+   ]
   },
   "notes": [],
   "verified": true,
@@ -1736,50 +1601,43 @@
   "office": "senate",
   "D_candidate": "Rachel Fetty Anderson",
   "R_candidate": "Shelley Moore Capito",
-  "source": "AFI 2026 fundraising file from FEC, generated 2026-09-21T16:10:41.093358+00:00"
+  "source": "https://www.fec.gov/data/candidate/S4WV00159/?cycle=2026",
+  "basis": "raised plus outside",
+  "checked": "2026-10-08",
+  "money_share_d": 0.0107
  },
  "WY": {
   "D": {
-   "fec_id": [
-    "S6WY00217"
-   ],
-   "fec_name": [
-    "James W. Byrd"
-   ],
-   "raised": 22558.71,
-   "outside_support": 0.0,
-   "outside_against_opponent": 0.0,
-   "coordinated": 0.0,
-   "individual": 22558.71,
+   "individual": 917934.8,
    "self_fund": 0.0,
-   "spent": 23292.88,
-   "cash_on_hand": 356.16,
-   "coverage_end": [
-    "07/29/2026"
-   ],
+   "incumbent": false,
    "in_state_share": null,
-   "incumbent": false
+   "items": [
+    [
+     "raised",
+     22559.0
+    ],
+    [
+     "outside for",
+     0.0
+    ]
+   ]
   },
   "R": {
-   "fec_id": [
-    "S6WY00209"
-   ],
-   "fec_name": [
-    "Harriet Hageman"
-   ],
-   "raised": 2435022.54,
-   "outside_support": 36535.54,
-   "outside_against_opponent": 0.0,
-   "coordinated": 0.0,
-   "individual": 2471558.08,
+   "individual": 99082065.2,
    "self_fund": 0.0,
-   "spent": 2402616.58,
-   "cash_on_hand": 915369.0,
-   "coverage_end": [
-    "07/29/2026"
-   ],
+   "incumbent": false,
    "in_state_share": null,
-   "incumbent": false
+   "items": [
+    [
+     "raised",
+     2435023.0
+    ],
+    [
+     "outside for",
+     0.0
+    ]
+   ]
   },
   "notes": [],
   "verified": true,
@@ -1787,6 +1645,9 @@
   "office": "senate",
   "D_candidate": "James Byrd",
   "R_candidate": "Harriet Hageman",
-  "source": "AFI 2026 fundraising file from FEC, generated 2026-09-21T16:10:41.093358+00:00"
+  "source": "https://www.fec.gov/data/candidate/S6WY00209/?cycle=2026",
+  "basis": "raised plus outside",
+  "checked": "2026-10-08",
+  "money_share_d": 0.0092
  }
 }

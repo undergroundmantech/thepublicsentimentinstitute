@@ -36,6 +36,7 @@ export const RACES = [
 
 export const STATE_POLLS: Record<string, Poll[]> = {
   NM: [
-    {"raceId": "NM-SEN-2026", "pollster": "Research & Polling Inc.", "startDate": "2026-08-21", "endDate": "2026-08-28", "sampleSize": 516, "sampleType": "LV", "results": {"Ben Ray Luján (D)": 53.0, "Larry Marker (R)": 38.0, "Undecided": 9.0}}
+    {"raceId": "NM-SEN-2026", "pollster": "Research & Polling Inc.", "startDate": "2026-08-21", "endDate": "2026-08-28", "sampleSize": 516, "sampleType": "LV", "results": {"Ben Ray Luján (D)": 53.0, "Larry Marker (R)": 38.0, "Undecided": 9.0}},
+    {"raceId": "NM-SEN-2026", "pollster": "SurveyUSA for KOB 4", "startDate": "2026-09-25", "endDate": "2026-09-30", "sampleSize": 567, "sampleType": "LV", "results": {"Ben Ray Luján (D)": 54.0, "Larry Marker (R)": 36.0, "Undecided": 10.0}}
   ],
 };

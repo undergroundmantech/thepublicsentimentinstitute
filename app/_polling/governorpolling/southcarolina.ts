@@ -37,6 +37,7 @@ export const RACES = [
 export const STATE_POLLS: Record<string, Poll[]> = {
   SC: [
     {"raceId": "SC-GOV-2026", "pollster": "Public Policy Polling (D)", "startDate": "2026-07-16", "endDate": "2026-07-17", "sampleSize": 577, "sampleType": "RV", "results": {"Jermaine Johnson (D)": 37.0, "Alan Wilson (R)": 45.0, "Undecided": 17.0}},
-    {"raceId": "SC-GOV-2026", "pollster": "Hart Research (D)", "startDate": "2026-08-12", "endDate": "2026-08-15", "sampleSize": 600, "sampleType": "RV", "results": {"Jermaine Johnson (D)": 42.0, "Alan Wilson (R)": 50.0, "Undecided": 8.0}}
+    {"raceId": "SC-GOV-2026", "pollster": "Hart Research (D)", "startDate": "2026-08-12", "endDate": "2026-08-15", "sampleSize": 600, "sampleType": "RV", "results": {"Jermaine Johnson (D)": 42.0, "Alan Wilson (R)": 50.0, "Undecided": 8.0}},
+    {"raceId": "SC-GOV-2026", "pollster": "FITSNews/Rick Quinn", "startDate": "2026-09-29", "endDate": "2026-10-03", "sampleSize": 638, "sampleType": "RV", "results": {"Jermaine Johnson (D)": 35.03, "Alan Wilson (R)": 45.17, "Undecided": 19.8}}
   ],
 };
