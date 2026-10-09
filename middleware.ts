@@ -14,13 +14,18 @@ import { PORTAL_COOKIE, verifySession } from "@/app/lib/portalSession";
  * raise its own credential dialog, which we cannot style and which appears as a
  * popup over whatever page triggered it.
  */
-export const config = { matcher: ["/portal/:path*", "/api/freshtake"] };
+export const config = { matcher: ["/portal/:path*", "/api/freshtake", "/v2", "/v2/:path*", "/polling/old/:path*"] };
 
 const LOGIN = "/portal/login";
 const HOME = "/portal/florida-governor";
 
 export async function middleware(req: NextRequest) {
   const { pathname, search } = req.nextUrl;
+
+  // Retired experiments answer 410 Gone with the site's gone page, so search engines drop them.
+  if (pathname === "/v2" || pathname.startsWith("/v2/") || pathname.startsWith("/polling/old/")) {
+    return NextResponse.rewrite(new URL("/gone", req.url), { status: 410 });
+  }
 
   // A deploy with no credentials still fails closed — credentialsMatch and
   // verifySession both refuse without them — but it sends browsers to the login

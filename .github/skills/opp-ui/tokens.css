@@ -1,0 +1,114 @@
+/* OnPoint Politics design tokens. Drop into app/globals.css, replacing the PSI :root block.
+   Fonts: add to app/layout.tsx via next/font/google:
+     Sora (500,600,700,800), Manrope (400,500,600,700), JetBrains_Mono (400,500,600)
+   and map them to --font-d, --font-b, --font-m. */
+
+:root {
+  color-scheme: dark;
+
+  /* surfaces */
+  --bg: #0a0711;          /* page */
+  --bg2: #110019;         /* brand dark, hero and footer bands, behind the white logo */
+  --bg3: #160a24;         /* CTA band base */
+  --glass: rgba(255,255,255,.035);
+  --glass2: rgba(255,255,255,.06);
+  --line: rgba(255,255,255,.09);
+  --line2: rgba(255,255,255,.16);
+
+  /* text */
+  --ink: #f3eff8;
+  --ink2: #c9c2d6;
+  --mute: #8e86a3;
+  --mute2: #5f5873;
+
+  /* brand */
+  --b1: #064bf9;
+  --b2: #83449c;
+  --b3: #f9064b;
+  --grad: linear-gradient(90deg, #064bf9 0%, #83449c 50%, #f9064b 100%);
+  --gold: #e7b341;
+  --gold2: #bb831c;
+
+  /* party, brightened for dark ground, data only */
+  --dem: #3d7bff;  --dem2: #7fa6ff;  --dem3: #b9ccff;
+  --gop: #ff3b5c;  --gop2: #ff8399;  --gop3: #ffbfcb;
+  --ind: #b78cff;
+  --toss: #e7b341;
+  --live: #ff3b5c;
+  --win: #3ddc97;
+
+  /* rating ramp: pale for close, deep for solid */
+  --rate-safe-d: #1a3fb0;
+  --rate-likely-d: #3d7bff;
+  --rate-lean-d: #a6c2ff;
+  --rate-toss: #e7b341;
+  --rate-lean-r: #ffb3c0;
+  --rate-likely-r: #ff3b5c;
+  --rate-safe-r: #b0163a;
+  --rate-ind: #b78cff;
+  --rate-none: rgba(255,255,255,.08);
+
+  /* county margin ramp endpoints, interpolate in RGB by |margin| / 40 */
+  --county-d-pale: #d6e2ff;  --county-d-deep: #10288c;
+  --county-r-pale: #ffdce4;  --county-r-deep: #8c0a28;
+
+  /* type */
+  --font-d: "Sora", system-ui, sans-serif;
+  --font-b: "Manrope", system-ui, sans-serif;
+  --font-m: "JetBrains Mono", ui-monospace, monospace;
+
+  /* shape */
+  --r: 14px;
+  --r-pill: 999px;
+  --shadow-card: 0 30px 80px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.08);
+  --shadow-grad: 0 8px 30px rgba(131,68,156,.4);
+
+  /* layout */
+  --wrap: 1280px;
+  --gutter: 20px;
+}
+
+/* aliases so old PSI class code keeps working during the migration */
+:root {
+  --background: var(--bg);
+  --background2: var(--bg2);
+  --panel: var(--glass);
+  --panel2: var(--glass2);
+  --foreground: var(--ink);
+  --foreground2: var(--ink2);
+  --muted: var(--mute);
+  --muted2: var(--mute2);
+  --border: var(--line);
+  --border2: var(--line2);
+  --border3: var(--line2);
+  --purple: var(--ind);
+  --red: var(--gop);
+  --blue: var(--dem);
+  --rep: var(--gop);
+  --brand-grad: var(--grad);
+  --font-display: var(--font-d);
+  --font-body: var(--font-b);
+  --font-numeric: var(--font-m);
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-b);
+  font-size: 15px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+h1, h2, h3, h4 { margin: 0; font-family: var(--font-d); text-wrap: balance; line-height: 1.1; letter-spacing: -.02em; }
+.mono { font-family: var(--font-m); font-variant-numeric: tabular-nums; }
+.eye { font-size: 11px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--mute); }
+.eye.g { background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+.wrap { max-width: var(--wrap); margin: 0 auto; padding-inline: var(--gutter); }
+@media (max-width: 600px) { .wrap { padding-inline: 16px; } }
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
+}

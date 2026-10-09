@@ -1,0 +1,31 @@
+// Poll data for this tracker, kept out of the client page so server code can import it.
+import type { Poll } from "@/app/_polling/lib/buildDailyModel";
+
+export const RAW_POLLS: Poll[] = [
+  { pollster: "AtlasIntel", endDate: "2024-11-04", sampleSize: 2202, sampleType: "LV", results: { Harris: 51, Trump: 46 } },
+  { pollster: "Research Co.", endDate: "2024-11-03", sampleSize: 450, sampleType: "LV", results: { Harris: 51, Trump: 45 } },
+  { pollster: "Cygnal (R)", endDate: "2024-10-29", sampleSize: 600, sampleType: "LV", results: { Harris: 50, Trump: 43 } },
+  { pollster: "Roanoke College", endDate: "2024-10-29", sampleSize: 859, sampleType: "LV", results: { Harris: 51, Trump: 41 } },
+  { pollster: "ActiVote", endDate: "2024-10-28", sampleSize: 400, sampleType: "LV", results: { Harris: 54, Trump: 46 } },
+  { pollster: "Rasmussen Reports (R)", endDate: "2024-10-25", sampleSize: 1014, sampleType: "LV", results: { Harris: 48, Trump: 46 } },
+  { pollster: "CES/YouGov", endDate: "2024-10-25", sampleSize: 2015, sampleType: "LV", results: { Harris: 53, Trump: 44 } },
+  { pollster: "Quantus Insights (R)", endDate: "2024-10-24", sampleSize: 725, sampleType: "LV", results: { Harris: 49, Trump: 48 } },
+  { pollster: "Braun Research", endDate: "2024-10-23", sampleSize: 1004, sampleType: "LV", results: { Harris: 49, Trump: 43 } },
+  { pollster: "Christopher Newport University", endDate: "2024-10-04", sampleSize: 800, sampleType: "LV", results: { Harris: 52, Trump: 41 } },
+  { pollster: "VCU", endDate: "2024-09-25", sampleSize: 762, sampleType: "RV", results: { Harris: 47, Trump: 37 } },
+  { pollster: "Emerson College", endDate: "2024-09-24", sampleSize: 860, sampleType: "LV", results: { Harris: 52, Trump: 44 } },
+  { pollster: "Rasmussen Reports (R)", endDate: "2024-09-22", sampleSize: 1144, sampleType: "LV", results: { Harris: 49, Trump: 46 } },
+  { pollster: "Morning Consult", endDate: "2024-09-18", sampleSize: 899, sampleType: "LV", results: { Harris: 51, Trump: 44 } },
+  { pollster: "ActiVote", endDate: "2024-09-17", sampleSize: 400, sampleType: "LV", results: { Harris: 55, Trump: 45 } },
+  { pollster: "Research America Inc.", endDate: "2024-09-09", sampleSize: 756, sampleType: "LV", results: { Harris: 48, Trump: 46 } },
+  { pollster: "Washington Post/Schar School", endDate: "2024-09-08", sampleSize: 1005, sampleType: "LV", results: { Harris: 51, Trump: 43 } },
+  { pollster: "Morning Consult", endDate: "2024-09-08", sampleSize: 873, sampleType: "LV", results: { Harris: 52, Trump: 42 } },
+  { pollster: "VCU", endDate: "2024-09-06", sampleSize: 749, sampleType: "RV", results: { Harris: 49, Trump: 36 } },
+  { pollster: "Quantus Insights (R)", endDate: "2024-08-22", sampleSize: 629, sampleType: "RV", results: { Harris: 47, Trump: 44 } },
+  { pollster: "Roanoke College", endDate: "2024-08-16", sampleSize: 691, sampleType: "LV", results: { Harris: 47, Trump: 44 } },
+  { pollster: "Emerson College", endDate: "2024-07-15", sampleSize: 1000, sampleType: "RV", results: { Harris: 45, Trump: 47 } },
+  { pollster: "Mainstreet Research/FAU", endDate: "2024-07-15", sampleSize: 265, sampleType: "LV", results: { Harris: 43, Trump: 47 } },
+  { pollster: "Mainstreet Research/FAU", endDate: "2024-07-13", sampleSize: 544, sampleType: "LV", results: { Harris: 46, Trump: 42 } },
+  { pollster: "NY Times/Siena College", endDate: "2024-07-12", sampleSize: 661, sampleType: "LV", results: { Harris: 49, Trump: 44 } },
+  { pollster: "SoCal Strategies (R)", endDate: "2024-07-11", sampleSize: 1000, sampleType: "RV", results: { Harris: 47, Trump: 47 } },
+];

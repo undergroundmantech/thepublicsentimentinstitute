@@ -1,0 +1,292 @@
+@import "tailwindcss";
+
+/* =========================================================
+   OnPoint Politics, the site design system (opp-ui).
+   Dark only. Glass surfaces, one brand gradient, party colors for data.
+   Tokens: .github/skills/opp-ui/tokens.css. Component classes: app/opp.css.
+   ========================================================= */
+
+/* ---------- 1) OnPoint tokens ---------- */
+:root {
+  color-scheme: dark;
+
+  /* surfaces */
+  --bg: #0a0711;
+  --bg2: #110019;
+  --bg3: #160a24;
+  --glass: rgba(255,255,255,.035);
+  --glass2: rgba(255,255,255,.06);
+  --line: rgba(255,255,255,.09);
+  --line2: rgba(255,255,255,.16);
+
+  /* text */
+  --ink: #f3eff8;
+  --ink2: #c9c2d6;
+  --mute: #8e86a3;
+  --mute2: #5f5873;
+
+  /* brand */
+  --b1: #064bf9;
+  --b2: #83449c;
+  --b3: #f9064b;
+  --grad: linear-gradient(90deg, #064bf9 0%, #83449c 50%, #f9064b 100%);
+  --gold: #e7b341;
+  --gold2: #bb831c;
+
+  /* party, brightened for dark ground, data only */
+  --dem: #3d7bff;  --dem2: #7fa6ff;  --dem3: #b9ccff;
+  --gop: #ff3b5c;  --gop2: #ff8399;  --gop3: #ffbfcb;
+  --ind: #b78cff;
+  --toss: #e7b341;
+  --live: #ff3b5c;
+  --win: #3ddc97;
+
+  /* rating ramp: pale for close, deep for solid */
+  --rate-safe-d: #1a3fb0;
+  --rate-likely-d: #3d7bff;
+  --rate-lean-d: #a6c2ff;
+  --rate-toss: #e7b341;
+  --rate-lean-r: #ffb3c0;
+  --rate-likely-r: #ff3b5c;
+  --rate-safe-r: #b0163a;
+  --rate-ind: #b78cff;
+  --rate-none: rgba(255,255,255,.08);
+
+  /* county margin ramp endpoints, interpolate in RGB by |margin| / 40 */
+  --county-d-pale: #d6e2ff;  --county-d-deep: #10288c;
+  --county-r-pale: #ffdce4;  --county-r-deep: #8c0a28;
+
+  /* type: next/font declares --font-sora, --font-manrope and --font-jbm on <html> */
+  --font-d: var(--font-sora), "Sora", system-ui, sans-serif;
+  --font-b: var(--font-manrope), "Manrope", system-ui, sans-serif;
+  --font-m: var(--font-jbm), "JetBrains Mono", ui-monospace, monospace;
+
+  /* shape */
+  --r: 14px;
+  --r-pill: 999px;
+  --shadow-card: 0 30px 80px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.08);
+  --shadow-grad: 0 8px 30px rgba(131,68,156,.4);
+
+  /* layout */
+  --wrap: 1280px;
+  --gutter: 20px;
+}
+
+/* ---------- 2) Aliases, so page code written for the PSI tokens keeps working ---------- */
+:root {
+  --background: var(--bg);
+  --background2: var(--bg2);
+  --panel: var(--glass);
+  --panel2: var(--glass2);
+  --panel3: rgba(255,255,255,.08);
+  --foreground: var(--ink);
+  --foreground2: var(--ink2);
+  --muted: var(--mute);
+  --muted2: var(--mute2);
+  --muted3: var(--mute);
+  --border: var(--line);
+  --border2: var(--line2);
+  --border3: rgba(255,255,255,.24);
+  --hairline: var(--line);
+  --hairline2: var(--line2);
+  --ink3: var(--mute);
+  --canvas: var(--bg);
+  --purple: var(--ind);
+  --purple2: var(--ind);
+  --purple-soft: var(--ind);
+  --purple-dim: rgba(183,140,255,.16);
+  --purple-glow: rgba(183,140,255,.24);
+  --red: var(--gop);
+  --red2: var(--gop2);
+  --red-dim: rgba(255,59,92,.16);
+  --red-glow: rgba(255,59,92,.24);
+  --blue: var(--dem);
+  --blue2: var(--dem2);
+  --blue-dim: rgba(61,123,255,.16);
+  --blue-glow: rgba(61,123,255,.24);
+  --rep: var(--gop);
+  --dem-dim: rgba(61,123,255,.16);
+  --gop-dim: rgba(255,59,92,.16);
+  --c2: var(--gop2);
+  --called: var(--win);
+  --white-accent: var(--ink);
+  --accent-link: var(--ink);
+  --approve: var(--win);
+  --disapprove: var(--gop);
+  --brand-grad: var(--grad);
+  --gradient-purple: var(--grad);
+  --gradient-purple-soft: var(--grad);
+  --font-display: var(--font-d);
+  --font-body: var(--font-b);
+  --font-numeric: var(--font-m);
+
+  /* base colors as rgb triples, for pages that draw every grey from one base */
+  --ink-rgb: 243, 239, 248;
+  --canvas-rgb: 10, 7, 17;
+  --line-rgb: 255, 255, 255;
+  /* the muted-text multiplier, renamed from --mute so --mute can be the color */
+  --mute-k: 1; --floor: 0.13; --struct: 1.25;
+
+  --shadow-sm: 0 1px 2px rgba(0,0,0,.4), 0 2px 8px rgba(0,0,0,.3);
+  --shadow-md: 0 4px 12px rgba(0,0,0,.45), 0 12px 32px rgba(0,0,0,.4);
+  --shadow-lg: var(--shadow-card);
+  --shadow-purple: var(--shadow-grad);
+  --shadow-red: 0 12px 40px rgba(255,59,92,.25);
+  --shadow-blue: 0 12px 40px rgba(61,123,255,.25);
+
+  --r-sm: 6px; --r-md: 10px; --r-lg: var(--r); --r-xl: var(--r);
+  --trk-1: 0.04em; --trk-2: 0.08em; --trk-3: 0.16em;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-soft: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur-1: 150ms; --dur-2: 200ms; --dur-3: 420ms;
+}
+
+/* ---------- 3) Base ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; background: var(--bg); font-family: var(--font-b); }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-b);
+  font-size: 15px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+::selection { background: rgba(131,68,156,.45); color: #fff; }
+a { color: inherit; text-decoration: none; }
+img, svg, video, canvas { display: block; max-width: 100%; }
+button, input, textarea, select { font: inherit; color: inherit; }
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0 0 .5em;
+  font-family: var(--font-d);
+  font-weight: 800;
+  letter-spacing: -.02em;
+  line-height: 1.1;
+  color: var(--ink);
+  text-wrap: balance;
+  text-transform: none;
+}
+h1 { font-size: clamp(32px, 4.6vw, 56px); letter-spacing: -.035em; line-height: 1.02; }
+h3, h4, h5, h6 { font-weight: 700; }
+p { margin: 0 0 1em; color: var(--ink2); }
+p:last-child { margin-bottom: 0; }
+p a, li a, .prose a { text-decoration: underline; text-decoration-color: var(--line2); text-underline-offset: 3px; }
+p a:hover, li a:hover, .prose a:hover { text-decoration-color: var(--ink); }
+small { color: var(--mute); }
+ul, ol { margin: 0 0 1em; padding-left: 1.25em; color: var(--ink2); }
+li { margin: .35em 0; }
+
+.mono { font-family: var(--font-m); font-variant-numeric: tabular-nums; }
+.eye { font-size: 11px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--mute); }
+.eye.g { background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+.wrap { max-width: var(--wrap); margin: 0 auto; padding-inline: var(--gutter); }
+@media (max-width: 600px) { .wrap { padding-inline: 16px; } }
+
+/* ---------- 4) PSI utility classes, restyled on the OnPoint system ---------- */
+.psi-kicker, .hp-eyebrow, .hp-section-title {
+  font-family: var(--font-b); font-weight: 700; text-transform: uppercase;
+  letter-spacing: .16em; font-size: 11px; color: var(--mute);
+}
+.title-longform { font-family: var(--font-d); font-weight: 800; letter-spacing: -.02em; }
+.psi-num, td.num, .num { font-family: var(--font-m); font-variant-numeric: tabular-nums; }
+.psi-label { font-family: var(--font-b); font-size: 11px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--mute); }
+.psi-label-purple { color: var(--ind); }
+.psi-label-red { color: var(--gop2); }
+.psi-label-blue { color: var(--dem2); }
+.psi-gradient-text { background: var(--grad); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.psi-mono { font-family: var(--font-m); font-variant-numeric: tabular-nums; }
+.psi-divider { height: 1px; width: 100%; background: var(--line); }
+.psi-divider-tri { height: 1px; width: 100%; background: var(--line2); }
+
+.psi-card, .psi-glass, .psi-inset {
+  position: relative; overflow: hidden;
+  background: var(--glass);
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+}
+.psi-glass { backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); }
+.psi-card { transition: transform .2s, border-color .2s; }
+.psi-card:hover { transform: translateY(-2px); border-color: var(--line2); }
+.psi-card-active { border-color: var(--line2); }
+
+a.psi-btn, button.psi-btn, .psi-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 9px 16px; border-radius: 999px;
+  border: 1px solid var(--line2); background: var(--glass2); color: #fff;
+  font: 700 13px/1 var(--font-b); cursor: pointer; white-space: nowrap; user-select: none;
+  transition: background .18s, transform .18s;
+}
+a.psi-btn:hover, button.psi-btn:hover { background: rgba(255,255,255,.1); transform: translateY(-1px); }
+.psi-btn-primary, .psi-btn-purple { border: 0; background: var(--grad); color: #fff; box-shadow: var(--shadow-grad); }
+.psi-btn-red, .psi-btn-blue { background: #fff; border: 0; color: var(--bg); }
+.psi-btn-ghost { background: transparent; color: var(--ink2); border-color: var(--line2); }
+.psi-btn-ghost:hover { background: var(--glass2); color: #fff; }
+
+.psi-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 4px 9px; border-radius: 999px;
+  font: 700 11px/1.2 var(--font-b); letter-spacing: .08em; text-transform: uppercase;
+  background: rgba(255,255,255,.06); color: var(--ink2); border: 0;
+}
+.psi-badge-purple { background: rgba(183,140,255,.18); color: var(--ind); }
+.psi-badge-red { background: rgba(255,59,92,.18); color: var(--gop2); }
+.psi-badge-blue { background: rgba(61,123,255,.18); color: var(--dem2); }
+.psi-badge-live { background: var(--live); color: #fff; }
+.psi-live-dot {
+  display: inline-block; width: 7px; height: 7px; border-radius: 50%;
+  background: var(--live); animation: psi-pulse 1.8s infinite;
+}
+@keyframes psi-pulse { 0% { box-shadow: 0 0 0 0 rgba(255,59,92,.55); } 70% { box-shadow: 0 0 0 8px rgba(255,59,92,0); } 100% { box-shadow: 0 0 0 0 rgba(255,59,92,0); } }
+
+.psi-table {
+  width: 100%; border-collapse: collapse; font-size: 13px;
+  background: var(--glass); border: 1px solid var(--line); border-radius: var(--r); overflow: hidden;
+}
+.psi-table thead th {
+  text-align: left; font: 700 10.5px var(--font-b); letter-spacing: .1em; text-transform: uppercase;
+  color: var(--mute); padding: 9px 12px; border-bottom: 1px solid var(--line); white-space: nowrap; background: transparent;
+}
+.psi-table tbody td { padding: 10px 12px; border-bottom: 1px solid var(--line); color: var(--ink); font-size: 13px; }
+.psi-table tbody tr:hover td { background: var(--glass2); }
+.psi-num { text-align: right; }
+
+/* Older pages paint cards with Tailwind's white; on the dark site they are glass. */
+.bg-white { background-color: var(--glass) !important; }
+.border-gray-200 { border-color: var(--line) !important; }
+
+/* ---------- 5) Scrollbars, charts ---------- */
+* { scrollbar-width: thin; scrollbar-color: rgba(255,255,255,.16) transparent; }
+*::-webkit-scrollbar { width: 6px; height: 6px; }
+*::-webkit-scrollbar-track { background: transparent; }
+*::-webkit-scrollbar-thumb { background: rgba(255,255,255,.14); border-radius: 999px; }
+*::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,.3); }
+
+.recharts-text, .recharts-cartesian-axis-tick-value {
+  fill: var(--mute) !important; font-family: var(--font-m) !important; font-size: 10px !important;
+}
+.recharts-cartesian-grid line { stroke: rgba(255,255,255,.07) !important; }
+.recharts-tooltip-wrapper .recharts-default-tooltip {
+  background: rgba(17,0,25,.94) !important; border: 1px solid var(--line2) !important;
+  border-radius: 10px !important; color: var(--ink2) !important; backdrop-filter: blur(10px);
+}
+
+/* ---------- 6) Motion ---------- */
+/* Static content no longer fades up on load; the class stays so page code that uses it is harmless. */
+.psi-animate-in { animation: none; }
+.county-pop { animation: countyPop 520ms ease-out; }
+@keyframes countyPop { 0% { filter: brightness(1); } 45% { filter: brightness(1.2); } 100% { filter: brightness(1); } }
+@keyframes county-ping {
+  0% { filter: brightness(1); stroke-width: .6; }
+  20% { filter: brightness(1.35); stroke-width: 2.2; stroke: #fff; }
+  100% { filter: brightness(1); stroke-width: .6; stroke: var(--line); }
+}
+.animate-update { animation: county-ping 1.2s var(--ease-out); }
+@media (max-width: 640px) { .cty-votes-row { display: none !important; } }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
