@@ -92,9 +92,9 @@ function SwingOMeter({ c1Name, c2Name, c1Color, c2Color, c1Prob, c2Prob, reporti
         <circle cx={CX} cy={CY} r={14} fill="none" stroke="rgba(var(--ink-rgb),calc(0.1 * var(--mute-k) + var(--floor)))" strokeWidth="1" />
         <g ref={needleRef} style={{ transformOrigin: `${CX}px ${CY}px`, transform: `rotate(${needleRot}deg)` }}>
           <line x1={CX} y1={CY + 6} x2={CX} y2={CY - 104} stroke="rgba(var(--line-rgb),0.6)" strokeWidth="4" strokeLinecap="round" />
-          <line x1={CX} y1={CY + 6} x2={CX} y2={CY - 104} stroke="#ffffff" strokeWidth="2" strokeLinecap="round" />
+          <line x1={CX} y1={CY + 6} x2={CX} y2={CY - 104} stroke="var(--hi)" strokeWidth="2" strokeLinecap="round" />
         </g>
-        <circle cx={CX} cy={CY} r={5} fill="#ffffff" />
+        <circle cx={CX} cy={CY} r={5} fill="var(--hi)" />
         <circle cx={CX} cy={CY} r={2.5} fill="#120c1b" />
         <text x={CX} y={CY - 22} textAnchor="middle" fontSize="19" fontWeight="900" fill={leaderColor} fontFamily="var(--font-d)" letterSpacing="1">
           {(leaderProb * 100).toFixed(0)}%
@@ -121,7 +121,7 @@ function SwingOMeter({ c1Name, c2Name, c1Color, c2Color, c1Prob, c2Prob, reporti
           <span style={{ fontFamily: "var(--font-m)", fontSize: 7, fontWeight: 700, color: "rgba(var(--ink-rgb),calc(0.5 * var(--mute-k) + var(--floor)))" }}>{reportingPct.toFixed(1)}%</span>
         </div>
         <div style={{ height: 2, background: "rgba(var(--ink-rgb),calc(0.06 * var(--mute-k) + var(--floor)))", overflow: "hidden" }}>
-          <div style={{ height: "100%", width: `${reportingPct}%`, background: "rgba(255,255,255,0.5)", transition: "width 0.8s ease" }} />
+          <div style={{ height: "100%", width: `${reportingPct}%`, background: "rgba(var(--line-rgb),0.5)", transition: "width 0.8s ease" }} />
         </div>
       </div>
     </div>
@@ -249,7 +249,7 @@ export default function ForecastEnginePage() {
   }, [forecast]);
 
   const candidateColors: Record<CKey, string> = useMemo(() => {
-    const colors = forecast?.forecast.candidate_colors ?? ["#3d7bff", "#ff3b5c", "#c9c2d6", "rgba(255,255,255,0.3)"];
+    const colors = forecast?.forecast.candidate_colors ?? ["#3d7bff", "#ff3b5c", "#c9c2d6", "rgba(var(--line-rgb),0.3)"];
     return { Candidate1: colors[0], Candidate2: colors[1], Candidate3: colors[2], Others: colors[3] };
   }, [forecast]);
 
@@ -264,7 +264,7 @@ export default function ForecastEnginePage() {
           font-family: var(--font-m); outline: none; letter-spacing: 0.06em;
           transition: border-color 120ms ease; box-sizing: border-box;
         }
-        .fcast-input:focus { border-color: rgba(255,255,255,0.4); }
+        .fcast-input:focus { border-color: rgba(var(--line-rgb),0.4); }
         .fcast-input::placeholder { color: rgba(var(--line-rgb),0.2); }
         .fcast-race-item {
           display: flex; align-items: flex-start; width: 100%;
@@ -273,8 +273,8 @@ export default function ForecastEnginePage() {
           cursor: pointer; text-align: left; transition: background 80ms ease;
         }
         .fcast-race-item:hover { background: rgba(var(--line-rgb),0.03); }
-        .fcast-race-item.active { background: rgba(255,255,255,0.06); border-left: 2px solid #fff; }
-        input[type=range] { height: 3px; cursor: pointer; accent-color: #fff; }
+        .fcast-race-item.active { background: rgba(var(--line-rgb),0.06); border-left: 2px solid var(--hi); }
+        input[type=range] { height: 3px; cursor: pointer; accent-color: var(--hi); }
       `}</style>
 
       <div style={{ fontFamily: "var(--font-b)" }}>
@@ -318,7 +318,7 @@ export default function ForecastEnginePage() {
                   onChange={(e) => setCountry(e.target.value)}
                   onKeyDown={(e) => e.key === "Enter" && doSearch()} />
                 <button onClick={doSearch} disabled={searching}
-                  style={{ padding: "9px 16px", background: searching ? "rgba(var(--ink-rgb),calc(0.06 * var(--mute-k) + var(--floor)))" : "#ffffff", color: searching ? "rgba(var(--line-rgb),0.3)" : "#fff", border: "none", fontFamily: "var(--font-m)", fontSize: 9, fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", cursor: "pointer", width: "100%", transition: "background 120ms" }}>
+                  style={{ padding: "9px 16px", background: searching ? "rgba(var(--ink-rgb),calc(0.06 * var(--mute-k) + var(--floor)))" : "var(--hi)", color: searching ? "rgba(var(--line-rgb),0.3)" : "var(--bg)", border: "none", fontFamily: "var(--font-m)", fontSize: 9, fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", cursor: "pointer", width: "100%", transition: "background 120ms" }}>
                   {searching ? "Searching" : "Search"}
                 </button>
               </div>
@@ -369,7 +369,7 @@ export default function ForecastEnginePage() {
                       if (timestamps.length > 0 && historyList) runForecastAtIndex(selectedRace.id, historyList.timestamps, historyIndex);
                       else runForecastLive(selectedRace.id);
                     }}
-                    style={{ padding: "9px 16px", background: loadingForecast ? "rgba(var(--ink-rgb),calc(0.05 * var(--mute-k) + var(--floor)))" : "rgba(255,255,255,0.15)", color: loadingForecast ? "rgba(var(--line-rgb),0.2)" : "#ffffff", border: "1px solid rgba(255,255,255,0.25)", fontFamily: "var(--font-m)", fontSize: 9, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", cursor: "pointer", width: "100%" }}>
+                    style={{ padding: "9px 16px", background: loadingForecast ? "rgba(var(--ink-rgb),calc(0.05 * var(--mute-k) + var(--floor)))" : "rgba(var(--line-rgb),0.15)", color: loadingForecast ? "rgba(var(--line-rgb),0.2)" : "var(--hi)", border: "1px solid rgba(var(--line-rgb),0.25)", fontFamily: "var(--font-m)", fontSize: 9, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", cursor: "pointer", width: "100%" }}>
                     {loadingForecast ? "Running" : "Rerun forecast"}
                   </button>
                 </div>
@@ -381,7 +381,7 @@ export default function ForecastEnginePage() {
           <div style={{ minWidth: 0, display: "flex", flexDirection: "column", gap: 14 }}>
 
             {error && (
-              <div style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.2)", padding: "10px 14px", fontSize: 10, color: "#c9c2d6", letterSpacing: "0.06em", fontFamily: "var(--font-m)" }}>
+              <div style={{ background: "rgba(var(--line-rgb),0.06)", border: "1px solid rgba(var(--line-rgb),0.2)", padding: "10px 14px", fontSize: 10, color: "#c9c2d6", letterSpacing: "0.06em", fontFamily: "var(--font-m)" }}>
                 ⚠ {error}
               </div>
             )}
@@ -400,7 +400,7 @@ export default function ForecastEnginePage() {
                   {loadingHistory ? "Loading race history…" : "Running forecast model…"}
                 </div>
                 <div style={{ height: 2, background: "rgba(var(--ink-rgb),calc(0.06 * var(--mute-k) + var(--floor)))", width: 120, margin: "0 auto", overflow: "hidden" }}>
-                  <div style={{ height: "100%", width: "60%", background: "#ffffff", animation: "fcast-load 1.4s ease-in-out infinite" }} />
+                  <div style={{ height: "100%", width: "60%", background: "var(--hi)", animation: "fcast-load 1.4s ease-in-out infinite" }} />
                 </div>
               </div>
             )}
@@ -413,14 +413,14 @@ export default function ForecastEnginePage() {
                   <div style={{ padding: "18px 20px" }}>
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 12, marginBottom: 14 }}>
                       <div>
-                        <div style={{ fontFamily: "var(--font-d)", fontSize: 28, letterSpacing: "0.04em", color: "#fff", lineHeight: 1, marginBottom: 6 }}>{forecast.race.election_name}</div>
+                        <div style={{ fontFamily: "var(--font-d)", fontSize: 28, letterSpacing: "0.04em", color: "var(--hi)", lineHeight: 1, marginBottom: 6 }}>{forecast.race.election_name}</div>
                         <div style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
                           <span style={{ fontFamily: "var(--font-m)", fontSize: 9, color: "rgba(var(--line-rgb),0.3)", letterSpacing: "0.08em" }}>{new Date(forecast.race.election_date).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}</span>
                           <span style={{ fontFamily: "var(--font-m)", fontSize: 9, color: "rgba(var(--line-rgb),0.2)", letterSpacing: "0.06em" }}>{forecast.race.percent_reporting > 99 ? ">99" : forecast.race.percent_reporting}% reporting</span>
                           {loadingForecast && <span style={{ fontFamily: "var(--font-m)", fontSize: 8, color: "#c9c2d6", letterSpacing: "0.1em" }}>Updating</span>}
                         </div>
                       </div>
-                      <span style={{ fontFamily: "var(--font-m)", fontSize: 8, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", padding: "4px 10px", background: forecast.forecast.mode_trigger === "RUNOFF" ? "rgba(255,255,255,0.12)" : "rgba(255,255,255,0.12)", border: `1px solid ${forecast.forecast.mode_trigger === "RUNOFF" ? "rgba(255,255,255,0.3)" : "rgba(255,255,255,0.3)"}`, color: forecast.forecast.mode_trigger === "RUNOFF" ? "#c9c2d6" : "#ffffff", flexShrink: 0 }}>
+                      <span style={{ fontFamily: "var(--font-m)", fontSize: 8, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", padding: "4px 10px", background: forecast.forecast.mode_trigger === "RUNOFF" ? "rgba(var(--line-rgb),0.12)" : "rgba(var(--line-rgb),0.12)", border: `1px solid ${forecast.forecast.mode_trigger === "RUNOFF" ? "rgba(var(--line-rgb),0.3)" : "rgba(var(--line-rgb),0.3)"}`, color: forecast.forecast.mode_trigger === "RUNOFF" ? "#c9c2d6" : "#ffffff", flexShrink: 0 }}>
                         {forecast.forecast.mode_trigger}
                       </span>
                     </div>
@@ -431,7 +431,7 @@ export default function ForecastEnginePage() {
                         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 10 }}>
                           <span style={{ fontFamily: "var(--font-m)", fontSize: 8, fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: "rgba(var(--line-rgb),0.2)" }}>Historical Playback</span>
                           <button onClick={() => { if (playing) { setPlaying(false); return; } if (historyIndex >= timestamps.length - 1) setHistoryIndex(0); setPlaying(true); }}
-                            style={{ padding: "5px 14px", background: playing ? "rgba(255,255,255,0.12)" : "rgba(255,255,255,0.1)", color: playing ? "#c9c2d6" : "#ffffff", border: `1px solid ${playing ? "rgba(255,255,255,0.25)" : "rgba(255,255,255,0.25)"}`, fontFamily: "var(--font-m)", fontSize: 8, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", cursor: "pointer" }}>
+                            style={{ padding: "5px 14px", background: playing ? "rgba(var(--line-rgb),0.12)" : "rgba(var(--line-rgb),0.1)", color: playing ? "var(--ink2)" : "var(--hi)", border: `1px solid ${playing ? "rgba(var(--line-rgb),0.25)" : "rgba(var(--line-rgb),0.25)"}`, fontFamily: "var(--font-m)", fontSize: 8, fontWeight: 700, letterSpacing: "0.14em", textTransform: "uppercase", cursor: "pointer" }}>
                             {playing ? "⏹ Stop" : "▶ Play"}
                           </button>
                         </div>
@@ -481,8 +481,8 @@ export default function ForecastEnginePage() {
                       );
                     })()}
                     {raceRule === "MAJORITY" && (
-                      <div style={{ marginTop: 8, padding: "8px 10px", border: "1px solid rgba(255,255,255,0.15)", background: "rgba(255,255,255,0.04)", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                        <span style={{ fontFamily: "var(--font-m)", fontSize: 9, color: "rgba(255,255,255,0.6)" }}>Runoff needed</span>
+                      <div style={{ marginTop: 8, padding: "8px 10px", border: "1px solid rgba(var(--line-rgb),0.15)", background: "rgba(var(--line-rgb),0.04)", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                        <span style={{ fontFamily: "var(--font-m)", fontSize: 9, color: "rgba(var(--line-rgb),0.6)" }}>Runoff needed</span>
                         <span style={{ fontFamily: "var(--font-d)", fontSize: 16, color: "#c9c2d6" }}>{pct(forecast.forecast.runoff_needed_prob)}</span>
                       </div>
                     )}

@@ -2,7 +2,8 @@
 
 /* =========================================================
    OnPoint Politics, the site design system (opp-ui).
-   Dark only. Glass surfaces, one brand gradient, party colors for data.
+   Dark by default, with a true light theme (html[data-theme="light"]).
+   Glass surfaces, one brand gradient, party colors for data.
    Tokens: .github/skills/opp-ui/tokens.css. Component classes: app/opp.css.
    ========================================================= */
 
@@ -14,16 +15,19 @@
   --bg: #0a0711;
   --bg2: #110019;
   --bg3: #160a24;
-  --glass: rgba(255,255,255,.035);
-  --glass2: rgba(255,255,255,.06);
-  --line: rgba(255,255,255,.09);
-  --line2: rgba(255,255,255,.16);
+  --glass: rgba(var(--line-rgb),.035);
+  --glass2: rgba(var(--line-rgb),.06);
+  --line: rgba(var(--line-rgb),.09);
+  --line2: rgba(var(--line-rgb),.16);
 
   /* text */
   --ink: #f3eff8;
   --ink2: #c9c2d6;
   --mute: #8e86a3;
   --mute2: #5f5873;
+  /* strongest foreground: emphasized text, inverted pills, hover outlines. #fff on dark, near-black on light */
+  --hi: #ffffff;
+  --logo: #ffffff;
 
   /* brand */
   --b1: #064bf9;
@@ -32,6 +36,7 @@
   --grad: linear-gradient(90deg, #064bf9 0%, #83449c 50%, #f9064b 100%);
   --gold: #e7b341;
   --gold2: #bb831c;
+  --gold-fill: #e7b341;   /* gold as a surface, with dark text on it, in both themes */
 
   /* party, brightened for dark ground, data only */
   --dem: #3d7bff;  --dem2: #7fa6ff;  --dem3: #b9ccff;
@@ -50,21 +55,21 @@
   --rate-likely-r: #ff3b5c;
   --rate-safe-r: #b0163a;
   --rate-ind: #b78cff;
-  --rate-none: rgba(255,255,255,.08);
+  --rate-none: rgba(var(--line-rgb),.08);
 
   /* county margin ramp endpoints, interpolate in RGB by |margin| / 40 */
   --county-d-pale: #d6e2ff;  --county-d-deep: #10288c;
   --county-r-pale: #ffdce4;  --county-r-deep: #8c0a28;
 
-  /* type: next/font declares --font-sora, --font-manrope and --font-jbm on <html> */
-  --font-d: var(--font-sora), "Sora", system-ui, sans-serif;
-  --font-b: var(--font-manrope), "Manrope", system-ui, sans-serif;
-  --font-m: var(--font-jbm), var(--font-m);
+  /* type: next/font declares --font-display, --font-body (Geist) and --font-numeric (JetBrains Mono) on <html> */
+  --font-d: var(--font-display), system-ui, sans-serif;
+  --font-b: var(--font-body), system-ui, sans-serif;
+  --font-m: var(--font-numeric), ui-monospace, monospace;
 
   /* shape */
   --r: 14px;
   --r-pill: 999px;
-  --shadow-card: 0 30px 80px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.08);
+  --shadow-card: 0 30px 80px rgba(0,0,0,.45), inset 0 1px 0 rgba(var(--line-rgb),.08);
   --shadow-grad: 0 8px 30px rgba(131,68,156,.4);
 
   /* layout */
@@ -78,7 +83,7 @@
   --background2: var(--bg2);
   --panel: var(--glass);
   --panel2: var(--glass2);
-  --panel3: rgba(255,255,255,.08);
+  --panel3: rgba(var(--line-rgb),.08);
   --foreground: var(--ink);
   --foreground2: var(--ink2);
   --muted: var(--mute);
@@ -86,7 +91,7 @@
   --muted3: var(--mute);
   --border: var(--line);
   --border2: var(--line2);
-  --border3: rgba(255,255,255,.24);
+  --border3: rgba(var(--line-rgb),.24);
   --hairline: var(--line);
   --hairline2: var(--line2);
   --ink3: var(--mute);
@@ -116,14 +121,13 @@
   --brand-grad: var(--grad);
   --gradient-purple: var(--grad);
   --gradient-purple-soft: var(--grad);
-  --font-display: var(--font-d);
-  --font-body: var(--font-b);
-  --font-numeric: var(--font-m);
 
   /* base colors as rgb triples, for pages that draw every grey from one base */
   --ink-rgb: 243, 239, 248;
   --canvas-rgb: 10, 7, 17;
   --line-rgb: 255, 255, 255;
+  --bg2-rgb: 17, 0, 25;
+  --hi-rgb: 255, 255, 255;
   /* the muted-text multiplier, renamed from --mute so --mute can be the color */
   --mute-k: 1; --floor: 0.13; --struct: 1.25;
 
@@ -140,6 +144,65 @@
   --ease-soft: cubic-bezier(0.16, 1, 0.3, 1);
   --dur-1: 150ms; --dur-2: 200ms; --dur-3: 420ms;
 }
+
+/* ---------- 2b) Light theme ----------
+   Same token names, light values. Everything that reads a token (or an -rgb
+   triple) flips with no per-page work. Party colors are deepened for contrast
+   on a pale ground. Dark is the default; the toggle writes data-theme. */
+:root[data-theme="light"] {
+  color-scheme: light;
+
+  --bg: #f5f3fa;
+  --bg2: #ffffff;
+  --bg3: #ece8f6;
+  --glass: rgba(255,255,255,.74);
+  --glass2: rgba(var(--line-rgb),.05);
+  --line: rgba(var(--line-rgb),.10);
+  --line2: rgba(var(--line-rgb),.18);
+
+  --ink: #16092a;
+  --ink2: #463d5a;
+  --mute: #6a6180;
+  --mute2: #8e86a3;
+  --hi: #110019;
+  --logo: #110019;
+
+  --gold: #9a6a06;
+  --gold2: #7a5204;
+
+  --dem: #2a63f0;  --dem2: #1d4ed8;  --dem3: #4a74e8;
+  --gop: #e8264b;  --gop2: #c8102e;  --gop3: #de5a74;
+  --ind: #7c3aed;
+  --toss: #a8700a;
+  --live: #e11d48;
+  --win: #0f9d63;
+
+  --shadow-card: 0 18px 50px rgba(40,18,80,.10), 0 1px 3px rgba(40,18,80,.06), inset 0 1px 0 rgba(255,255,255,.9);
+  --shadow-grad: 0 8px 24px rgba(131,68,156,.28);
+  --shadow-sm: 0 1px 2px rgba(40,18,80,.08), 0 2px 8px rgba(40,18,80,.06);
+  --shadow-md: 0 4px 12px rgba(40,18,80,.10), 0 12px 32px rgba(40,18,80,.08);
+  --shadow-red: 0 12px 40px rgba(232,38,75,.18);
+  --shadow-blue: 0 12px 40px rgba(42,99,240,.18);
+
+  --ink-rgb: 22, 9, 42;
+  --canvas-rgb: 245, 243, 250;
+  --line-rgb: 17, 0, 25;
+  --bg2-rgb: 255, 255, 255;
+  --hi-rgb: 17, 0, 25;
+
+  --purple-dim: rgba(124,58,237,.12);
+  --purple-glow: rgba(124,58,237,.18);
+  --red-dim: rgba(232,38,75,.12);
+  --red-glow: rgba(232,38,75,.18);
+  --blue-dim: rgba(42,99,240,.12);
+  --blue-glow: rgba(42,99,240,.18);
+  --dem-dim: rgba(42,99,240,.12);
+  --gop-dim: rgba(232,38,75,.12);
+}
+:root[data-theme="light"] ::selection { background: rgba(131,68,156,.28); color: var(--ink); }
+:root[data-theme="light"] .psi-badge-purple { background: rgba(124,58,237,.12); }
+:root[data-theme="light"] .psi-badge-red { background: rgba(232,38,75,.12); }
+:root[data-theme="light"] .psi-badge-blue { background: rgba(42,99,240,.12); }
 
 /* ---------- 3) Base ---------- */
 *, *::before, *::after { box-sizing: border-box; }
@@ -217,21 +280,21 @@ li { margin: .35em 0; }
 a.psi-btn, button.psi-btn, .psi-btn {
   display: inline-flex; align-items: center; justify-content: center; gap: 8px;
   padding: 9px 16px; border-radius: 999px;
-  border: 1px solid var(--line2); background: var(--glass2); color: #fff;
+  border: 1px solid var(--line2); background: var(--glass2); color: var(--hi);
   font: 700 13px/1 var(--font-b); cursor: pointer; white-space: nowrap; user-select: none;
   transition: background .18s, transform .18s;
 }
-a.psi-btn:hover, button.psi-btn:hover { background: rgba(255,255,255,.1); transform: translateY(-1px); }
+a.psi-btn:hover, button.psi-btn:hover { background: rgba(var(--line-rgb),.1); transform: translateY(-1px); }
 .psi-btn-primary, .psi-btn-purple { border: 0; background: var(--grad); color: #fff; box-shadow: var(--shadow-grad); }
-.psi-btn-red, .psi-btn-blue { background: #fff; border: 0; color: var(--bg); }
+.psi-btn-red, .psi-btn-blue { background: var(--hi); border: 0; color: var(--bg); }
 .psi-btn-ghost { background: transparent; color: var(--ink2); border-color: var(--line2); }
-.psi-btn-ghost:hover { background: var(--glass2); color: #fff; }
+.psi-btn-ghost:hover { background: var(--glass2); color: var(--hi); }
 
 .psi-badge {
   display: inline-flex; align-items: center; gap: 6px;
   padding: 4px 9px; border-radius: 999px;
   font: 700 11px/1.2 var(--font-b); letter-spacing: .08em; text-transform: uppercase;
-  background: rgba(255,255,255,.06); color: var(--ink2); border: 0;
+  background: rgba(var(--line-rgb),.06); color: var(--ink2); border: 0;
 }
 .psi-badge-purple { background: rgba(183,140,255,.18); color: var(--ind); }
 .psi-badge-red { background: rgba(255,59,92,.18); color: var(--gop2); }
@@ -260,18 +323,18 @@ a.psi-btn:hover, button.psi-btn:hover { background: rgba(255,255,255,.1); transf
 .border-gray-200 { border-color: var(--line) !important; }
 
 /* ---------- 5) Scrollbars, charts ---------- */
-* { scrollbar-width: thin; scrollbar-color: rgba(255,255,255,.16) transparent; }
+* { scrollbar-width: thin; scrollbar-color: rgba(var(--line-rgb),.16) transparent; }
 *::-webkit-scrollbar { width: 6px; height: 6px; }
 *::-webkit-scrollbar-track { background: transparent; }
-*::-webkit-scrollbar-thumb { background: rgba(255,255,255,.14); border-radius: 999px; }
-*::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,.3); }
+*::-webkit-scrollbar-thumb { background: rgba(var(--line-rgb),.14); border-radius: 999px; }
+*::-webkit-scrollbar-thumb:hover { background: rgba(var(--line-rgb),.3); }
 
 .recharts-text, .recharts-cartesian-axis-tick-value {
   fill: var(--mute) !important; font-family: var(--font-m) !important; font-size: 10px !important;
 }
-.recharts-cartesian-grid line { stroke: rgba(255,255,255,.07) !important; }
+.recharts-cartesian-grid line { stroke: rgba(var(--line-rgb),.07) !important; }
 .recharts-tooltip-wrapper .recharts-default-tooltip {
-  background: rgba(17,0,25,.94) !important; border: 1px solid var(--line2) !important;
+  background: rgba(var(--bg2-rgb),.94) !important; border: 1px solid var(--line2) !important;
   border-radius: 10px !important; color: var(--ink2) !important; backdrop-filter: blur(10px);
 }
 
@@ -282,7 +345,7 @@ a.psi-btn:hover, button.psi-btn:hover { background: rgba(255,255,255,.1); transf
 @keyframes countyPop { 0% { filter: brightness(1); } 45% { filter: brightness(1.2); } 100% { filter: brightness(1); } }
 @keyframes county-ping {
   0% { filter: brightness(1); stroke-width: .6; }
-  20% { filter: brightness(1.35); stroke-width: 2.2; stroke: #fff; }
+  20% { filter: brightness(1.35); stroke-width: 2.2; stroke: var(--hi); }
   100% { filter: brightness(1); stroke-width: .6; stroke: var(--line); }
 }
 .animate-update { animation: county-ping 1.2s var(--ease-out); }

@@ -128,7 +128,7 @@ export function ResultCard({ race, onOpen, compact = false, mapDelay }) {
       {/* left — solid colour-headed result block */}
       <div style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column' }}>
         <div style={{ padding: compact ? '10px 12px 11px' : '13px 18px 14px', background: headerBg }}>
-          <div style={{ fontFamily: DISPLAY, fontSize: 12, fontWeight: 600, color: 'rgba(255,255,255,0.62)' }}>
+          <div style={{ fontFamily: DISPLAY, fontSize: 12, fontWeight: 600, color: 'rgba(var(--line-rgb),0.62)' }}>
             {yearOf(race.election_date) || '2026'}
           </div>
           <div
@@ -139,7 +139,7 @@ export function ResultCard({ race, onOpen, compact = false, mapDelay }) {
               fontSize: 'clamp(15px, 1.2vw, 18px)',
               lineHeight: 1.18,
               letterSpacing: '-0.02em',
-              color: '#fff',
+              color: 'var(--hi)',
               display: '-webkit-box',
               WebkitLineClamp: 2,
               WebkitBoxOrient: 'vertical',
@@ -419,7 +419,7 @@ const selStyle = {
 const glassSheen = { display: 'none' }
 
 const GLASS_CSS = `
-  .opa-glass:hover { border-color: rgba(255,255,255,.3) !important; background: rgba(255,255,255,.1) !important; }
+  .opa-glass:hover { border-color: rgba(var(--line-rgb),.3) !important; background: rgba(var(--line-rgb),.1) !important; }
   .opa-glass:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
   .opa-glass::placeholder { color: var(--ink-dim); }
   .opa-glass option { background: #150f1f; color: var(--ink); }
@@ -629,7 +629,7 @@ const kbdCapStyle = {
   display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
   minWidth: 16, height: 16, padding: '0 3px', borderRadius: 4,
   border: '1px solid var(--rule)', background: 'var(--wash)',
-  fontFamily: var(--font-m), fontSize: 10, lineHeight: 1,
+  fontFamily: 'var(--font-m)', fontSize: 10, lineHeight: 1,
   color: 'var(--ink-mute)',
 }
 // compact glassy magnifier button (calendar landing)
@@ -1056,7 +1056,7 @@ export default function ElectionResults({ dateParam = null }) {
                         {mapsOnly ? 'Maps only' : 'All races'}
                       </span>
                       <span aria-hidden style={{ position: 'relative', width: 34, height: 18, borderRadius: 99, flexShrink: 0, background: mapsOnly ? 'var(--accent)' : 'var(--rule-strong)', transition: 'background 200ms ease' }}>
-                        <span style={{ position: 'absolute', top: 2, left: mapsOnly ? 18 : 2, width: 14, height: 14, borderRadius: 99, background: '#fff', boxShadow: '0 1px 2px rgba(0,0,0,0.35)', transition: 'left 200ms cubic-bezier(.2,.8,.2,1)' }} />
+                        <span style={{ position: 'absolute', top: 2, left: mapsOnly ? 18 : 2, width: 14, height: 14, borderRadius: 99, background: 'var(--hi)', boxShadow: '0 1px 2px rgba(0,0,0,0.35)', transition: 'left 200ms cubic-bezier(.2,.8,.2,1)' }} />
                       </span>
                     </button>
                     <span aria-hidden style={glassSheen} />
@@ -1160,7 +1160,7 @@ export default function ElectionResults({ dateParam = null }) {
                 No mapped races on this day.{' '}
                 <button
                   onClick={() => setMapsOnly(false)}
-                  style={{ background: 'none', border: 0, color: '#fff', cursor: 'pointer', font: 'inherit', textDecoration: 'underline' }}
+                  style={{ background: 'none', border: 0, color: 'var(--hi)', cursor: 'pointer', font: 'inherit', textDecoration: 'underline' }}
                 >
                   Show all {fmtInt(totalForDay)} races
                 </button>

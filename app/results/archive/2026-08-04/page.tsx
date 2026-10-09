@@ -1082,7 +1082,7 @@ const CSS = `
 .rd-view-toggles button{padding:6px 15px;border-radius:999px;border:0;background:none;cursor:pointer;
   font-family:var(--mono);font-size:10.5px;font-weight:700;letter-spacing:.08em;
   text-transform:uppercase;color:var(--ink3);transition:background .15s ease,color .15s ease}
-.rd-view-toggles button.on{background:#fff;color:var(--bg)}
+.rd-view-toggles button.on{background:var(--hi);color:var(--bg)}
 .rd-map-toggles{display:flex;gap:4px;padding:3px;border-radius:999px;
   background:var(--panel2);border:1px solid var(--hairline)}
 .rd-map-toggles button{padding:5px 13px;border-radius:999px;border:0;background:none;cursor:pointer;

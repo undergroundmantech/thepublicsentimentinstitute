@@ -397,7 +397,7 @@ function BoardHeader({ updated }: { updated: string | null }) {
 const CSS = `
 /* Dark only, on the brand tokens. Capture mode drops the header, prose and
    controls and enlarges the count, which is what a screen recording needs. */
-.eb-page { --eb-idle: rgba(255,255,255,.08); color: var(--ink); }
+.eb-page { --eb-idle: rgba(var(--line-rgb),.08); color: var(--ink); }
 .eb-card { min-width: 0; }
 .eb-card .card-h h3 { font-family: var(--font-d); }
 .eb-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-left: auto; }
@@ -414,8 +414,8 @@ const CSS = `
 .eb-party { display: inline-flex; gap: 6px; }
 .eb-pbtn { appearance: none; cursor: pointer; padding: 8px 14px; border-radius: 999px; border: 1px solid var(--line2);
   background: transparent; font: 700 12.5px var(--font-b); color: var(--ink2); }
-.eb-pbtn:hover { background: var(--glass2); color: #fff; }
-.eb-pbtn.on { background: #fff; border-color: #fff; color: var(--bg); }
+.eb-pbtn:hover { background: var(--glass2); color: var(--hi); }
+.eb-pbtn.on { background: var(--hi); border-color: var(--hi); color: var(--bg); }
 .eb-pbtn:focus-visible, .eb-sbtn:focus-visible, .eb-leg:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
 .eb-strengths { display: inline-flex; flex-wrap: wrap; gap: 6px; }
 .eb-sbtn { appearance: none; cursor: pointer; display: inline-flex; align-items: center; gap: 7px;
@@ -437,23 +437,23 @@ const CSS = `
 .eb-mid { text-align: center; }
 .eb-mid em { font-style: normal; font-family: ${MONO}; font-size: 10.5px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--mute); }
 .eb-mid em.win { display: block; margin-top: 9px; color: var(--ink); }
-.eb-bar { position: relative; display: flex; height: 14px; margin-top: 10px; border-radius: 99px; overflow: hidden; background: rgba(255,255,255,0.06); }
+.eb-bar { position: relative; display: flex; height: 14px; margin-top: 10px; border-radius: 99px; overflow: hidden; background: rgba(var(--line-rgb),0.06); }
 .eb-bar i { display: block; height: 100%; transition: width 220ms cubic-bezier(0.16,1,0.3,1); }
 .eb-bar i.d { background: var(--dem); }
 .eb-bar i.t { background: var(--toss); }
 .eb-bar i.r { background: var(--gop); margin-left: auto; }
-.eb-bar .tick { position: absolute; top: -3px; bottom: -3px; width: 2px; background: #fff; transform: translateX(-50%); }
+.eb-bar .tick { position: absolute; top: -3px; bottom: -3px; width: 2px; background: var(--hi); transform: translateX(-50%); }
 
 .eb-mapwrap { position: relative; margin-top: 18px; }
 .eb-map { display: block; width: 100%; height: auto; max-height: 72svh; margin: 0 auto; }
-.eb-unit { stroke: rgba(10,7,17,0.7); stroke-width: 0.8; cursor: pointer; transition: filter .12s ease; }
-.eb-unit:hover { filter: brightness(1.25); stroke: #fff; }
+.eb-unit { stroke: rgba(var(--canvas-rgb),0.7); stroke-width: 0.8; cursor: pointer; transition: filter .12s ease; }
+.eb-unit:hover { filter: brightness(1.25); stroke: var(--hi); }
 .eb-unit.cd { stroke-width: 0.45; }
 .eb-unit.hex { stroke-width: 1.2; }
 
 .eb-tip { position: fixed; z-index: 80; pointer-events: none; width: 236px; padding: 10px 12px; border-radius: 10px;
-  background: rgba(17,0,25,.94); border: 1px solid var(--line2); box-shadow: 0 12px 40px rgba(0,0,0,.5); backdrop-filter: blur(10px); }
-.eb-tip .n { font: 700 13px var(--font-d); color: #fff; }
+  background: rgba(var(--bg2-rgb),.94); border: 1px solid var(--line2); box-shadow: 0 12px 40px rgba(0,0,0,.5); backdrop-filter: blur(10px); }
+.eb-tip .n { font: 700 13px var(--font-d); color: var(--hi); }
 .eb-tip .c { display: flex; align-items: center; gap: 9px; margin-top: 8px; }
 .eb-tip .c i { font-style: normal; padding: 3px 8px; border-radius: 6px; font-family: ${MONO}; font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
 .eb-tip .c em { font-style: normal; font-size: 11.5px; color: var(--mute); }
@@ -462,9 +462,9 @@ const CSS = `
 .eb-leg { display: inline-flex; align-items: center; gap: 7px; padding: 6px 12px; border-radius: 999px; cursor: pointer;
   border: 1px solid var(--line); background: var(--glass);
   font-family: ${MONO}; font-size: 10px; font-weight: 700; letter-spacing: 0.09em; text-transform: uppercase; color: var(--ink2); }
-.eb-leg.on { border-color: #fff; color: #fff; }
+.eb-leg.on { border-color: var(--hi); color: var(--hi); }
 .eb-leg i { width: 11px; height: 11px; border-radius: 3px; }
-.eb-leg u { text-decoration: none; color: #fff; font-variant-numeric: tabular-nums; }
+.eb-leg u { text-decoration: none; color: var(--hi); font-variant-numeric: tabular-nums; }
 
 .eb-note { margin: 18px 0 0; max-width: 80ch; font-size: 12.5px; line-height: 1.65; color: var(--mute); }
 

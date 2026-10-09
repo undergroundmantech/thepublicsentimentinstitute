@@ -983,12 +983,12 @@ const CSS = `
 .ev-link { background: none; border: 0; padding: 0; cursor: pointer; font: inherit; color: var(--accent-link); text-decoration: underline; text-underline-offset: 3px; }
 
 .ev-controls { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 26px; }
-.ev-seg { display: inline-flex; padding: 3px; gap: 2px; border-radius: 999px; background: rgba(255,255,255,0.06); }
+.ev-seg { display: inline-flex; padding: 3px; gap: 2px; border-radius: 999px; background: rgba(var(--line-rgb),0.06); }
 .ev-seg button { appearance: none; border: 0; background: none; cursor: pointer; padding: 7px 14px; border-radius: 999px;
   font: 700 12px var(--font-b); color: var(--mute);
   transition: color .15s ease, background .15s ease; }
 .ev-seg button:hover { color: var(--ink); }
-.ev-seg button.on { background: #fff; color: var(--bg); }
+.ev-seg button.on { background: var(--hi); color: var(--bg); }
 .ev-seg.sm button { padding: 5px 11px; font-size: 11.5px; }
 .ev-seg button:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
 
@@ -1008,7 +1008,7 @@ const CSS = `
 .ev-key b { font-family: ${MONO}; font-weight: 700; color: var(--ink); font-variant-numeric: tabular-nums; }
 .ev-key u { text-decoration: none; font-family: ${MONO}; font-size: 11.5px; color: var(--muted2); }
 
-.ev-page { --ev-idle: rgba(var(--line-rgb),0.07); --ev-nodata: rgba(var(--line-rgb),0.16); --ev-mid: rgba(255,255,255,0.06); --ev-turnout: var(--ink2); }
+.ev-page { --ev-idle: rgba(var(--line-rgb),0.07); --ev-nodata: rgba(var(--line-rgb),0.16); --ev-mid: rgba(var(--line-rgb),0.06); --ev-turnout: var(--ink2); }
 .ev-mapwrap { position: relative; margin-top: 30px; }
 .ev-map { display: block; width: 100%; height: auto; max-height: 66svh; margin: 0 auto; }
 .ev-unit { stroke: var(--bg); stroke-width: 0.7; stroke-linejoin: round; transition: filter .12s ease; }
@@ -1071,8 +1071,8 @@ table.ev-table td.rt { white-space: nowrap; }
 .ev-tip .row.vol b { color: var(--muted2); font-family: ${MONO}; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; }
 
 .ev-tip { position: fixed; z-index: 70; pointer-events: none; width: 252px; padding: 12px 14px; border-radius: 12px;
-  background: rgba(17,0,25,.94); border: 1px solid var(--line2); box-shadow: 0 12px 40px rgba(0,0,0,.5); backdrop-filter: blur(10px); }
-.ev-tip .n { font-family: var(--font-d); font-size: 14px; font-weight: 700; letter-spacing: -0.01em; color: #fff; }
+  background: rgba(var(--bg2-rgb),.94); border: 1px solid var(--line2); box-shadow: 0 12px 40px rgba(0,0,0,.5); backdrop-filter: blur(10px); }
+.ev-tip .n { font-family: var(--font-d); font-size: 14px; font-weight: 700; letter-spacing: -0.01em; color: var(--hi); }
 .ev-tip .s { margin-top: 2px; font-family: ${MONO}; font-size: 9.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted2); }
 .ev-tip .row { display: flex; align-items: center; gap: 8px; margin-top: 7px; font-size: 12.5px; }
 .ev-tip .row i { width: 3px; height: 14px; flex-shrink: 0; }
@@ -1086,7 +1086,7 @@ table.ev-table td.rt { white-space: nowrap; }
 .ev-bar { display: flex; height: 9px; border-radius: 99px; overflow: hidden; background: rgba(var(--line-rgb),0.07); }
 .ev-bar i { display: block; height: 100%; }
 
-.ev-h2 { font-family: var(--font-d); font-size: 16px; font-weight: 700; letter-spacing: -0.01em; color: #fff; }
+.ev-h2 { font-family: var(--font-d); font-size: 16px; font-weight: 700; letter-spacing: -0.01em; color: var(--hi); }
 
 .ev-demo { margin-top: 34px; }
 .ev-demo-rows { margin-top: 14px; display: grid; gap: 9px; }
@@ -1144,7 +1144,7 @@ table.ev-table th.est { color: var(--ink); }
 table.ev-table td.est { font-style: italic; }
 table.ev-table td.mg { font-style: normal; font-family: ${MONO}; font-weight: 700; font-size: 12px; }
 /* the tooltip is portalled to body, outside .ev-page, so it carries the map tokens its swatches use */
-.ev-tip { width: 284px; z-index: 90; --ev-nodata: rgba(255,255,255,0.16); --ev-mid: rgba(255,255,255,0.06); --ev-turnout: var(--ink2); }
+.ev-tip { width: 284px; z-index: 90; --ev-nodata: rgba(var(--line-rgb),0.16); --ev-mid: rgba(var(--line-rgb),0.06); --ev-turnout: var(--ink2); }
 .ev-tip .est-h { margin-top: 10px; padding-top: 8px; border-top: 1px dashed var(--border2); font-family: ${MONO}; font-size: 9.5px;
   font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink); }
 .ev-tip .row.tot u { min-width: 0; white-space: nowrap; }
@@ -1157,7 +1157,7 @@ table.ev-table td.mg { font-style: normal; font-family: ${MONO}; font-weight: 70
   display: flex; flex-direction: column; gap: 10px; padding: 16px 18px; border-radius: 14px;
   border: 1px solid var(--line); background: var(--glass); transition: border-color .15s ease, background .15s ease; }
 .ev-nat-card:hover { border-color: var(--border3, var(--border2)); }
-.ev-nat-card.on { border-color: #fff; background: var(--glass2); }
+.ev-nat-card.on { border-color: var(--hi); background: var(--glass2); }
 .ev-nat-card:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
 .ev-nat-card .lab { display: flex; align-items: baseline; justify-content: space-between; gap: 10px;
   font-family: ${MONO}; font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink); }

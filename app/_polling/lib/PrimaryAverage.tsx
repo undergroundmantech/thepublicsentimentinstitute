@@ -148,7 +148,7 @@ export default function PrimaryAverage({ cfg }: { cfg: PrimaryConfig }) {
                       <tr key={r.name}>
                         <td><span className="pp-sw" style={{ background: color(r.name) }} />{r.name}</td>
                         <td className="n">{r.avg.toFixed(1)}%</td>
-                        <td className="n" style={{ color: "#fff", fontWeight: 700 }}>{r.actual.toFixed(2)}%</td>
+                        <td className="n" style={{ color: "var(--hi)", fontWeight: 700 }}>{r.actual.toFixed(2)}%</td>
                         <td className="n" style={{ color: Math.abs(r.error) <= 2 ? "var(--win)" : "var(--ink)" }}>{r.error > 0 ? "+" : r.error < 0 ? "−" : ""}{Math.abs(r.error).toFixed(1)}</td>
                         <td>
                           <div className="pp-cmp" aria-label={`Average ${r.avg.toFixed(1)}, result ${r.actual.toFixed(2)}`}>
@@ -210,7 +210,7 @@ export default function PrimaryAverage({ cfg }: { cfg: PrimaryConfig }) {
                         <td className="pp-who">{p.pollster.replace(/\*\*/g, "")}{partisan && <span className="pp-int">Internal</span>}</td>
                         <td className="n">{fmtIso(p.endDate)}</td>
                         <td className="n">{p.sampleSize > 0 ? p.sampleSize.toLocaleString("en-US") : "n/a"}<span className="pp-type">{p.sampleType}</span></td>
-                        {vals.map((v, ci) => <td key={series[ci].key} className="n" style={v === top && v > 0 ? { color: "#fff", fontWeight: 700 } : { color: "var(--ink2)" }}>{pct(v)}</td>)}
+                        {vals.map((v, ci) => <td key={series[ci].key} className="n" style={v === top && v > 0 ? { color: "var(--hi)", fontWeight: 700 } : { color: "var(--ink2)" }}>{pct(v)}</td>)}
                         <td className="n" style={{ fontWeight: 700 }}>{top > 0 ? `${topName} +${round1(top - second).toFixed(1)}` : ""}</td>
                       </tr>
                     );
@@ -295,9 +295,9 @@ const CSS = `
 .pp .pp-res td { background: rgba(61,220,151,.06); }
 .pp .pill.pp-called { background: rgba(61,220,151,.16); color: var(--win); }
 .pp .pill.pp-miss { background: var(--glass2); color: var(--ink2); }
-.pp .pp-cmp { position: relative; height: 8px; border-radius: 99px; background: rgba(255,255,255,.06); }
+.pp .pp-cmp { position: relative; height: 8px; border-radius: 99px; background: rgba(var(--line-rgb),.06); }
 .pp .pp-cmp i { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 99px; opacity: .75; }
-.pp .pp-cmp b { position: absolute; top: -4px; bottom: -4px; width: 2px; margin-left: -1px; background: #fff; border-radius: 1px; }
+.pp .pp-cmp b { position: absolute; top: -4px; bottom: -4px; width: 2px; margin-left: -1px; background: var(--hi); border-radius: 1px; }
 .pp .pp-stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 1px solid var(--line); }
 .pp .pp-stats div { padding: 12px 18px; display: grid; gap: 4px; border-left: 1px solid var(--line); }
 .pp .pp-stats div:first-child { border-left: 0; }

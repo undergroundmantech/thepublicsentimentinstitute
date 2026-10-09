@@ -354,7 +354,7 @@ const CSS = `
   .pap-hero-title {
     font-family: var(--font-display), system-ui, -apple-system, BlinkMacOSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: clamp(22px,3.5vw,46px); font-weight: 900; text-transform: uppercase;
-    letter-spacing: 0.02em; line-height: 0.92; color: #fff; margin: 0 0 14px;
+    letter-spacing: 0.02em; line-height: 0.92; color: var(--hi); margin: 0 0 14px;
   }
   .pap-em-wrong {
     font-style: normal;
@@ -409,7 +409,7 @@ const CSS = `
   .pap-kpi:hover { border-color: var(--border2); }
   .pap-kpi-accent { position: absolute; top: 0; left: 0; right: 0; height: 2px; }
   .pap-kpi-label { font-family: var(--font-m); font-size: 7.5px; font-weight: 700; letter-spacing: 0.28em; text-transform: uppercase; color: var(--muted3); margin-bottom: 8px; }
-  .pap-kpi-val   { font-family: var(--font-m); font-size: clamp(22px,2.5vw,30px); font-weight: 900; color: #fff; line-height: 1; font-variant-numeric: tabular-nums; }
+  .pap-kpi-val   { font-family: var(--font-m); font-size: clamp(22px,2.5vw,30px); font-weight: 900; color: var(--hi); line-height: 1; font-variant-numeric: tabular-nums; }
   .pap-kpi-sub   { font-family: var(--font-m); font-size: 8px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted3); margin-top: 6px; }
   .pap-kpi-bar { height: 2px; margin-top: 10px; background: rgba(var(--ink-rgb),calc(0.08 * var(--struct))); }
   .pap-kpi-bar-fill { height: 100%; animation: pap-bar-in 800ms cubic-bezier(0.22,1,0.36,1) both; }

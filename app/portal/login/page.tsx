@@ -13,10 +13,10 @@ const CSS = `
 .pl .pl-field { display: grid; gap: 6px; margin-bottom: 14px; }
 .pl .pl-field > span { font: 700 10.5px var(--font-m); letter-spacing: .12em; text-transform: uppercase; color: var(--mute); }
 .pl .pl-field input { width: 100%; padding: 11px 14px; border-radius: 10px; border: 1px solid var(--line2); background: var(--glass2); color: var(--ink); font: 500 14px var(--font-b); outline: none; transition: border-color .15s, box-shadow .15s; }
-.pl .pl-field input:focus-visible { border-color: #fff; box-shadow: 0 0 0 3px rgba(255,255,255,.18); outline: none; }
+.pl .pl-field input:focus-visible { border-color: var(--hi); box-shadow: 0 0 0 3px rgba(var(--line-rgb),.18); outline: none; }
 .pl .pl-btn { width: 100%; justify-content: center; padding: 12px 18px; font-size: 14px; margin-top: 4px; }
 .pl .pl-btn:disabled { opacity: .55; cursor: default; transform: none; }
-.pl .pl-btn:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+.pl .pl-btn:focus-visible { outline: 2px solid var(--hi); outline-offset: 3px; }
 .pl .pl-error { margin: 14px 0 0; font-size: 13px; color: var(--ink); padding: 10px 12px; border-radius: 10px; border: 1px solid var(--line2); background: var(--glass2); }
 .pl .pl-foot { margin: 0; padding: 14px 18px; border-top: 1px solid var(--line); font-size: 12.5px; color: var(--mute); }
 .pl .pl-foot a { color: var(--ink); text-decoration: underline; text-underline-offset: 2px; }

@@ -10,7 +10,7 @@ import React, { useEffect, useRef, useState } from "react";
 // version is pure presentation — no polling, no fixed positioning.
 
 const OSWALD = 'var(--font-d)';
-const MONO = var(--font-m);
+const MONO = "var(--font-m)";
 // Resolved from the host page when it defines them, otherwise the dark
 // values this component has always used.
 const INK = "var(--fc-ink, var(--ink))";

@@ -348,7 +348,7 @@ const CSS = `
     text-transform: uppercase;
     letter-spacing: 0.02em;
     line-height: 0.92;
-    color: #fff;
+    color: var(--hi);
     margin: 0 0 14px;
   }
   .pap-em-fav {
@@ -462,7 +462,7 @@ const CSS = `
     font-family: var(--font-body), "Geist Mono", monospace;
     font-size: clamp(22px,2.5vw,30px);
     font-weight: 900;
-    color: #fff; line-height: 1;
+    color: var(--hi); line-height: 1;
     font-variant-numeric: tabular-nums;
   }
   .pap-kpi-sub {

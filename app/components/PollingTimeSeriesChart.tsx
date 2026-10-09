@@ -58,7 +58,7 @@ function CustomTooltip({ active, payload, label }: any) {
 
   return (
     <div style={{
-      background: "rgba(17,0,25,.94)",
+      background: "rgba(var(--bg2-rgb),.94)",
       border: "1px solid var(--line2)",
       borderRadius: 10,
       boxShadow: "0 12px 40px rgba(0,0,0,.5)",
@@ -74,7 +74,7 @@ function CustomTooltip({ active, payload, label }: any) {
         fontFamily: "var(--font-d)",
         fontSize: 13,
         fontWeight: 700,
-        color: "#fff",
+        color: "var(--hi)",
       }}>
         {formatDateTooltip(label ?? "")}
       </div>
@@ -201,9 +201,9 @@ export default function PollingTimeSeriesChart({
                   tickFormatter={(v) => `${v}%`}
                   width={40}
                 />
-                <ReferenceLine y={50} stroke="rgba(255,255,255,.3)" strokeDasharray="3 4" />
+                <ReferenceLine y={50} stroke="rgba(var(--line-rgb),.3)" strokeDasharray="3 4" />
                 <Tooltip
-                  cursor={{ stroke: "rgba(255,255,255,.45)", strokeWidth: 1 }}
+                  cursor={{ stroke: "rgba(var(--line-rgb),.45)", strokeWidth: 1 }}
                   content={<CustomTooltip />}
                   wrapperStyle={{ zIndex: 10 }}
                 />

@@ -275,7 +275,7 @@ export default function ElectionSearch({ open, onClose, onPick }) {
     }
   }
 
-  const scrim = 'rgba(10,7,17,0.66)'
+  const scrim = 'rgba(var(--canvas-rgb),0.66)'
 
   return createPortal(
     <AnimatePresence>
@@ -322,11 +322,11 @@ export default function ElectionSearch({ open, onClose, onPick }) {
               display: 'flex',
               flexDirection: 'column',
               borderRadius: 16,
-              background: 'rgba(17,0,25,0.94)',
+              background: 'rgba(var(--bg2-rgb),0.94)',
               backdropFilter: 'blur(18px) saturate(140%)',
               WebkitBackdropFilter: 'blur(18px) saturate(140%)',
               border: '1px solid var(--line2)',
-              boxShadow: 'var(--shadow-pop), inset 0 1px 0 rgba(255,255,255,0.06)',
+              boxShadow: 'var(--shadow-pop), inset 0 1px 0 rgba(var(--line-rgb),0.06)',
               overflow: 'hidden',
             }}
           >

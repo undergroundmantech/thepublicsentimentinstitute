@@ -21,7 +21,7 @@ export default function SearchBox({ entries }: { entries: Entry[] }) {
   return (
     <>
       <style>{`
-        .opp .sbx input.search:focus-visible { outline: none; border-color: #fff; box-shadow: 0 0 0 3px rgba(255,255,255,.18); }
+        .opp .sbx input.search:focus-visible { outline: none; border-color: var(--hi); box-shadow: 0 0 0 3px rgba(var(--line-rgb),.18); }
         .opp .sbx .race { grid-template-columns: minmax(0,1fr) auto; }
         .opp .sbx .path { font: 500 11.5px var(--font-m); color: var(--mute2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 40vw; }
         .opp .sbx .race:hover .path { color: var(--ink2); }

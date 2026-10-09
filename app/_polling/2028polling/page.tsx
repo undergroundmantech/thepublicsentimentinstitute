@@ -266,7 +266,7 @@ const CSS = `
   .p28-hero-title {
     font-family: var(--font-display), system-ui, -apple-system, BlinkMacOSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: clamp(22px,3.5vw,46px); font-weight: 900; text-transform: uppercase;
-    letter-spacing: 0.02em; line-height: 0.92; color: #fff; margin: 0 0 14px;
+    letter-spacing: 0.02em; line-height: 0.92; color: var(--hi); margin: 0 0 14px;
   }
   .p28-hero-title .rep {
     font-style: normal;
@@ -334,7 +334,7 @@ const CSS = `
   }
   .p28-kpi-val {
     font-family: var(--font-body), "Geist Mono", monospace;
-    font-weight: 900; color: #fff; line-height: 1; font-variant-numeric: tabular-nums;
+    font-weight: 900; color: var(--hi); line-height: 1; font-variant-numeric: tabular-nums;
   }
   .p28-kpi-sub {
     font-family: var(--font-body), "Geist Mono", monospace;

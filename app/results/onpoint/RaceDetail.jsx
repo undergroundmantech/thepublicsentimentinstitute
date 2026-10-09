@@ -150,8 +150,8 @@ export default function RaceDetail({ race, onClose }) {
   // buttons. Crisper backdrop (slight darken in light mode, slight
   // lighten in dark) keeps the pill legible against whatever the
   // basemap is doing underneath.
-  const clusterBg = 'rgba(17,0,25,0.9)'
-  const clusterBorder = 'rgba(255,255,255,0.16)'
+  const clusterBg = 'rgba(var(--bg2-rgb),0.9)'
+  const clusterBorder = 'rgba(var(--line-rgb),0.16)'
   const clusterShadow = '0 12px 40px rgba(0,0,0,0.5)'
   const segmentInkBase = 'var(--ink)'
 
@@ -254,7 +254,7 @@ export default function RaceDetail({ race, onClose }) {
             gap: 6,
             padding: '0 14px 0 12px',
           }}
-          onMouseEnter={(e) => { e.currentTarget.style.background = 'rgba(255,255,255,0.06)' }}
+          onMouseEnter={(e) => { e.currentTarget.style.background = 'rgba(var(--line-rgb),0.06)' }}
           onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent' }}
         >
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
@@ -287,7 +287,7 @@ export default function RaceDetail({ race, onClose }) {
             <div style={{ display: 'inline-flex', gap: 10, flexWrap: 'wrap', justifyContent: 'center' }}>
               <button
                 onClick={() => setRetry((n) => n + 1)}
-                style={{ fontFamily: 'inherit', fontSize: 13, fontWeight: 700, color: 'var(--bg)', background: '#fff', border: 0, borderRadius: 99, padding: '10px 20px', cursor: 'pointer' }}
+                style={{ fontFamily: 'inherit', fontSize: 13, fontWeight: 700, color: 'var(--bg)', background: 'var(--hi)', border: 0, borderRadius: 99, padding: '10px 20px', cursor: 'pointer' }}
               >
                 Retry
               </button>

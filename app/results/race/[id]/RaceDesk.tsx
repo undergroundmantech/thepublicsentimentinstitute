@@ -2,7 +2,7 @@
 
 import React, { useEffect, useMemo, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { ThemeProvider, tripToggleTheme } from "../../onpoint/lib/theme.jsx";
+import { ThemeProvider } from "../../onpoint/lib/theme.jsx";
 import { OPA_GLOBAL_CSS } from "../../onpoint/OpaResultsPage.jsx";
 import RaceMapHover from "../../components/RaceMapHover";
 import RaceDetail from "../../onpoint/RaceDetail.jsx";
@@ -144,28 +144,6 @@ const RUNOFF_RULE_COPY: Record<string, string> = {
   THRESHOLD_35_CONVENTION: "short of 35%, the party convention decides the nominee.",
   THRESHOLD_35_RUNOFF: "short of 35%, the top two candidates meet in a runoff 8 weeks later.",
 };
-// The race page's own light/dark control (CO-04: light-default here, unlike
-// the results hub). Same tripToggleTheme helper the hub uses so the flip
-// looks identical everywhere.
-function ThemeToggleButton() {
-  const { theme, toggle } = useTheme();
-  const light = theme === "light";
-  return (
-    <button
-      type="button"
-      className="rd-theme-toggle"
-      onClick={() => tripToggleTheme({ theme, toggle, onAfterSwap: undefined })}
-      aria-label={light ? "Switch to dark mode" : "Switch to light mode"}
-      title={light ? "Dark mode" : "Light mode"}
-    >
-      {light ? (
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" /></svg>
-      ) : (
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" aria-hidden><circle cx="12" cy="12" r="4.2" /><path d="M12 2.5v2M12 19.5v2M4.6 4.6l1.5 1.5M17.9 17.9l1.5 1.5M2.5 12h2M19.5 12h2M4.6 19.4l1.5-1.5M17.9 6.1l1.5-1.5" /></svg>
-      )}
-    </button>
-  );
-}
 
 function RunoffModule({ needle, raceRule }: { needle: NeedleProjection; raceRule: string }) {
   return (
@@ -556,17 +534,6 @@ function BallotLandscape({ needle }: { needle: NeedleProjection }) {
 }
 
 export default function RaceDesk() {
-  if (typeof document !== "undefined") {
-    // CO-04: the individual race page is light-default with full dark
-    // support — unlike the results hub (ResultsDesk), which stays
-    // dark-default. Only fall back to light; an explicit stored preference
-    // (from the toggle, on either page) is always respected.
-    try {
-      let stored: string | null = null;
-      try { stored = localStorage.getItem("opa-theme"); } catch {}
-      document.documentElement.dataset.opaTheme = stored === "dark" ? "dark" : "light";
-    } catch {}
-  }
   return (
     <ThemeProvider>
       <Desk />
@@ -656,7 +623,7 @@ function Desk() {
       <div className="rd-shell">
         <div className="rd-folio">
           <button type="button" className="rd-back" onClick={() => router.push("/results")}>← the results desk</button>
-          <span className="rd-folio-r">live returns · county maps · forecasts<ThemeToggleButton /></span>
+          <span className="rd-folio-r">live returns · county maps · forecasts</span>
         </div>
 
         {!index && !error ? (
@@ -753,7 +720,7 @@ body main > div > div { padding-top: 0 !important; padding-bottom: 0 !important;
 .rd-tallies { display: flex; flex-direction: column; }
 .rd-thead { display: flex; flex-direction: column; gap: 4px; padding: 14px 16px 15px; border-radius: 11px 11px 0 0; }
 .rd-thead-yr { font-family: var(--font-d); font-size: 11.5px; font-weight: 600; letter-spacing: 0.06em; color: rgba(var(--ink-rgb),calc(0.62 * var(--mute-k) + var(--floor))); }
-.rd-thead-title { font-family: var(--font-d); font-weight: 400; font-size: clamp(18px, 1.9vw, 24px); line-height: 1.06; letter-spacing: 0.015em; text-transform: uppercase; color: #ffffff; }
+.rd-thead-title { font-family: var(--font-d); font-weight: 400; font-size: clamp(18px, 1.9vw, 24px); line-height: 1.06; letter-spacing: 0.015em; text-transform: uppercase; color: var(--hi); }
 .rd-banner { font-family: var(--font-d); font-weight: 600; font-size: 11.5px; letter-spacing: 0.09em; text-transform: uppercase; padding: 10px 16px; }
 .rd-trow { display: grid; grid-template-columns: 3px 34px minmax(0, 1fr) auto auto; align-items: center; gap: clamp(9px, 1.1vw, 15px); padding: 12px 4px; border-bottom: 1px solid var(--hair, rgba(var(--line-rgb),0.08)); font-family: var(--font-b); }
 .rd-trow-tick { width: 3px; height: 22px; border-radius: 2px; }
@@ -761,10 +728,10 @@ body main > div > div { padding-top: 0 !important; padding-bottom: 0 !important;
 .rd-trow-name { min-width: 0; display: flex; flex-direction: column; gap: 2px; }
 .rd-trow-name b { display: flex; align-items: center; gap: 7px; font-size: 15.5px; font-weight: 700; letter-spacing: -0.01em; color: var(--ink, var(--ink)); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .rd-trow-name small { font-family: var(--font-m); font-size: 9.5px; font-weight: 500; letter-spacing: 0.07em; text-transform: uppercase; color: var(--ink-dim, rgba(var(--ink-rgb),calc(0.38 * var(--mute-k) + var(--floor)))); }
-.rd-trow.won .rd-trow-name b { color: var(--ink-strong, #fff); }
+.rd-trow.won .rd-trow-name b { color: var(--ink-strong, var(--hi)); }
 .rd-checkbox { display: inline-flex; align-items: center; justify-content: center; width: 15px; height: 15px; border-radius: 4px; background: var(--called, #15803d); color: #fff; font-size: 9.5px; font-weight: 700; flex-shrink: 0; }
 .rd-trow-votes { font-family: var(--font-b); font-size: 13.5px; color: var(--ink-mute, rgba(var(--ink-rgb),calc(0.6 * var(--mute-k) + var(--floor)))); font-variant-numeric: tabular-nums; }
-.rd-trow-pct { font-family: var(--font-b); font-size: 16px; font-weight: 700; color: var(--ink-strong, #fff); font-variant-numeric: tabular-nums; min-width: 56px; text-align: right; }
+.rd-trow-pct { font-family: var(--font-b); font-size: 16px; font-weight: 700; color: var(--ink-strong, var(--hi)); font-variant-numeric: tabular-nums; min-width: 56px; text-align: right; }
 .rd-slider { padding: 18px 2px 0; }
 .rd-slider-track { position: relative; display: block; height: 4px; border-radius: 99px; background: var(--ink-dimmer, rgba(var(--ink-rgb),calc(0.16 * var(--struct)))); }
 .rd-slider-track i { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 99px; background: var(--ink-strong); }

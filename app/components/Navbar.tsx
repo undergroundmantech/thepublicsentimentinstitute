@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Lockup } from "./opp/Logo";
+import ThemeToggle from "./ThemeToggle";
 
 // The OnPoint Politics masthead (.top in opp-ui/components.md). One header for every page.
 // Results carries the pulsing live dot while RESULTS_LIVE is on.
@@ -54,6 +55,7 @@ export default function Navbar() {
           </nav>
           <div className="right">
             <Link className="btn ghost" href="/search">Search</Link>
+            <ThemeToggle />
             <Link className="btn gold" href="/tpsi/weighting-room">The Weighting Room</Link>
             <button type="button" className="btn burger" aria-expanded={open} aria-controls="opp-mnav" onClick={() => setOpen(true)}>Menu</button>
           </div>
@@ -72,6 +74,7 @@ export default function Navbar() {
           <div className="mfoot">
             <Link className="btn gold" href="/tpsi/weighting-room">The Weighting Room</Link>
             <Link className="btn" href="/contact">Contact</Link>
+            <ThemeToggle className="btn" />
           </div>
         </div>
       )}

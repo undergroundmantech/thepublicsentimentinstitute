@@ -134,7 +134,7 @@ export default async function Page({ params }: { params: Promise<{ state: string
                     const mid = b.x + (dist!.w / 2);
                     return <rect key={i} x={20 + i * w} y={120 - h} width={Math.max(1, w - 1.5)} height={h} rx={1.5} fill={mid < 0 ? "#3d7bff" : "#ff3b5c"} opacity={0.9}><title>{`${fmtM(mid)}: ${b.c} simulations`}</title></rect>;
                   })}
-                  {(() => { const zx = 20 + ((0 - dist!.lo) / (dist!.w * bins.length)) * 560; return zx > 20 && zx < 580 ? <line x1={zx} x2={zx} y1={4} y2={124} stroke="#fff" strokeWidth={1.5} opacity={0.8} /> : null; })()}
+                  {(() => { const zx = 20 + ((0 - dist!.lo) / (dist!.w * bins.length)) * 560; return zx > 20 && zx < 580 ? <line x1={zx} x2={zx} y1={4} y2={124} stroke="var(--hi)" strokeWidth={1.5} opacity={0.8} /> : null; })()}
                   <text x={20} y={142} style={{ font: "500 10px var(--font-m)", fill: "#8e86a3" }}>{fmtM(dist!.lo)}</text>
                   <text x={580} y={142} textAnchor="end" style={{ font: "500 10px var(--font-m)", fill: "#8e86a3" }}>{fmtM(dist!.lo + dist!.w * bins.length)}</text>
                 </svg>

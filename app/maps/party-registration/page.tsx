@@ -473,7 +473,7 @@ export default function PartyMapPage() {
             <svg viewBox="0 0 960 600" style={{ width: "100%", display: "block" }} preserveAspectRatio="xMidYMid meet">
               <defs>
                 <pattern id="pm-hatch" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)">
-                  <rect width="6" height="6" fill="rgba(255,255,255,0.04)" />
+                  <rect width="6" height="6" fill="rgba(var(--line-rgb),0.04)" />
                   <line x1="0" y1="0" x2="0" y2="6" stroke="#8e86a3" strokeWidth="1.4" />
                 </pattern>
               </defs>
@@ -548,18 +548,18 @@ const CSS = `
 .opp .pm-legend { margin: 0 0 0 auto; gap: 6px 12px; font-size: 11.5px; }
 .pm-loading { position: absolute; inset: 0; display: grid; place-items: center; z-index: 2; }
 .pm-state { stroke: var(--bg); stroke-width: 0.9; cursor: pointer; transition: filter 110ms; }
-.pm-state:hover { filter: brightness(1.2); stroke: #fff; stroke-width: 1.4; }
+.pm-state:hover { filter: brightness(1.2); stroke: var(--hi); stroke-width: 1.4; }
 .pm-county { stroke: var(--bg); stroke-width: 0.28; cursor: pointer; transition: filter 110ms; }
-.pm-county:hover { filter: brightness(1.2); stroke: #fff; stroke-width: 0.9; }
+.pm-county:hover { filter: brightness(1.2); stroke: var(--hi); stroke-width: 0.9; }
 .pm-lab { font: 600 10px var(--font-m); text-anchor: middle; dominant-baseline: central; pointer-events: none; user-select: none; }
 .opp .pm-a { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
 .pm-tip { position: fixed; z-index: 99999; pointer-events: none; padding: 11px 13px; border-radius: 10px;
-  background: rgba(17,0,25,.94); border: 1px solid var(--line2); border-left: 3px solid var(--line2);
+  background: rgba(var(--bg2-rgb),.94); border: 1px solid var(--line2); border-left: 3px solid var(--line2);
   box-shadow: 0 12px 40px rgba(0,0,0,.5); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
   font-family: var(--font-b); color: var(--ink2); }
 .pm-tip-top { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
-.pm-tip-top b { font: 700 14px var(--font-d); color: #fff; }
-.pm-tip-top span { font: 700 14px var(--font-m); color: #fff; }
+.pm-tip-top b { font: 700 14px var(--font-d); color: var(--hi); }
+.pm-tip-top span { font: 700 14px var(--font-m); color: var(--hi); }
 .pm-tip-sub { margin-top: 3px; font: 600 10px var(--font-m); letter-spacing: .08em; text-transform: uppercase; color: var(--mute); }
 .pm-tip-bar { display: flex; gap: 1.5px; height: 7px; margin: 10px 0 8px; border-radius: 999px; overflow: hidden; }
 .pm-tip-bar i { display: block; height: 100%; }

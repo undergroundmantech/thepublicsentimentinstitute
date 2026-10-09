@@ -410,7 +410,7 @@ const CSS = `
   .apc-chip { position: absolute; transform: translate(15px, -50%); display: inline-flex; align-items: baseline; gap: 7px; white-space: nowrap; text-shadow: 0 0 5px #000, 0 0 9px #000, 0 0 9px #000, 0 1px 2px #000; }
   .apc-chip.is-left { transform: translate(calc(-100% - 15px), -50%); }
   .apc-chip-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; align-self: center; }
-  .apc-chip-label { font-family: var(--font-body), monospace; font-size: 12px; font-weight: 600; color: #fff; }
+  .apc-chip-label { font-family: var(--font-body), monospace; font-size: 12px; font-weight: 600; color: var(--hi); }
   .apc-chip-val { font-family: var(--font-body), monospace; font-size: 13.5px; font-weight: 700; font-variant-numeric: tabular-nums; }
 
   .apc-spread-cap { display: flex; align-items: baseline; gap: 10px; margin: 14px 0 2px; padding-left: 4px; }

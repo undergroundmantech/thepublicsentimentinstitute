@@ -446,7 +446,7 @@ const CSS = `
   .pa-cats { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 16px; }
   .pa-cat { appearance: none; cursor: pointer; background: transparent; border: 0; border-radius: 8px; padding: 7px 12px; line-height: 1; font-family: var(--font-body), monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted2); transition: color 140ms ease, background 140ms ease; }
   .pa-cat:hover { color: var(--foreground); background: var(--border2); }
-  .pa-cat.is-active { color: #fff; background: var(--purple); }
+  .pa-cat.is-active { color: var(--hi); background: var(--purple); }
 
   /* one cohesive "aggregate index" strip — cells flex to fill width, hairline-divided */
   .pa-tiles { display: flex; flex-wrap: nowrap; gap: 0; overflow-x: auto; overflow-y: hidden; border: 1px solid var(--border); border-radius: 12px; background: var(--panel2); scrollbar-width: thin; }
@@ -485,7 +485,7 @@ const CSS = `
   .pa-seg-btn { appearance: none; cursor: pointer; background: transparent; border: 0; border-right: 1px solid var(--border); padding: 7px 13px; line-height: 1; font-family: var(--font-body), monospace; font-size: 11.5px; font-weight: 600; letter-spacing: 0.04em; color: var(--muted); display: inline-flex; align-items: center; gap: 7px; transition: color 140ms ease, background 140ms ease; }
   .pa-seg-btn:last-child { border-right: 0; }
   .pa-seg-btn:hover:not(:disabled):not(.is-active) { color: var(--foreground); background: var(--border); }
-  .pa-seg-btn.is-active { background: var(--purple); color: #fff; }
+  .pa-seg-btn.is-active { background: var(--purple); color: var(--hi); }
   .pa-seg-btn:disabled { color: var(--muted2); cursor: not-allowed; opacity: 0.5; }
   .pa-seg-n { font-size: 10px; font-weight: 600; font-variant-numeric: tabular-nums; color: var(--muted2); }
   .pa-seg-btn:hover:not(:disabled):not(.is-active) .pa-seg-n { color: var(--muted); }

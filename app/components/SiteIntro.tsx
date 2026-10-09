@@ -76,7 +76,7 @@ export default function SiteIntro() {
         .opp-intro {
           position: fixed; inset: 0; z-index: 200;
           display: grid; place-items: center; padding: 24px;
-          background: rgba(10, 7, 17, .62);
+          background: rgba(var(--canvas-rgb), .62);
           -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
           opacity: 0; transition: opacity 320ms ease;
         }
@@ -84,7 +84,7 @@ export default function SiteIntro() {
         .opp-intro[data-phase="out"] { opacity: 0; pointer-events: none; }
         .opp-intro .panel {
           position: relative; width: min(540px, 100%); max-height: calc(100vh - 48px); overflow: auto;
-          background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.03)), rgba(17,0,25,.86);
+          background: linear-gradient(180deg, rgba(var(--line-rgb),.07), rgba(var(--line-rgb),.03)), rgba(var(--bg2-rgb),.92);
           -webkit-backdrop-filter: blur(24px) saturate(140%); backdrop-filter: blur(24px) saturate(140%);
           border: 1px solid var(--line2); border-radius: 20px;
           box-shadow: var(--shadow-card);
@@ -94,7 +94,7 @@ export default function SiteIntro() {
         .opp-intro .art {
           position: relative; overflow: hidden; padding: 34px 28px 26px;
           background: radial-gradient(420px 220px at 10% -10%, rgba(6,75,249,.38), transparent 70%),
-                      radial-gradient(360px 220px at 100% 120%, rgba(249,6,75,.28), transparent 70%), var(--bg2);
+                      radial-gradient(360px 220px at 100% 120%, rgba(249,6,75,.28), transparent 70%), #110019;
           border-bottom: 1px solid var(--line); color: #fff;
         }
         .opp-intro .art .wm { position: absolute; right: -36px; bottom: -48px; opacity: .12; color: #fff; }
@@ -108,7 +108,7 @@ export default function SiteIntro() {
         .opp-intro .feat span { font-size: 13px; color: var(--mute); }
         .opp-intro .acts { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 18px; }
         .opp-intro .acts .btn.g { flex: 1; justify-content: center; padding: 12px 18px; font-size: 14px; }
-        .opp-intro .btn:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+        .opp-intro .btn:focus-visible { outline: 2px solid var(--hi); outline-offset: 3px; }
         @media (max-width: 600px) {
           .opp-intro { padding: 16px; }
           .opp-intro .art, .opp-intro .body { padding-inline: 20px; }

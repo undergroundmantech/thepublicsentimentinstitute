@@ -47,7 +47,7 @@ export default function AveragePanel({ title, href, pill, pillCls, color, series
         <svg key={range} className="chart" viewBox={`0 0 ${W} ${H}`} role="img" aria-label={`${title} average over time`}>
           {ticks.map((v) => (<g key={v}><line className="grid" x1={pl} x2={W - pr} y1={Y(v)} y2={Y(v)} /><text x={pl - 8} y={Y(v) + 3} textAnchor="end">{f(v)}</text></g>))}
           {months.map((m, i) => <text key={i} x={m.x} y={H - 8} textAnchor="middle">{m.l}</text>)}
-          {lo < 0 && hi > 0 && <line x1={pl} x2={W - pr} y1={Y(0)} y2={Y(0)} stroke="rgba(255,255,255,.35)" strokeDasharray="3 4" />}
+          {lo < 0 && hi > 0 && <line x1={pl} x2={W - pr} y1={Y(0)} y2={Y(0)} stroke="rgba(var(--line-rgb),.35)" strokeDasharray="3 4" />}
           {d.map((p, i) => <circle key={i} className="dot" cx={X(p.t)} cy={Y(p.v)} r={2.4} fill={color} opacity={0.3} style={{ animationDelay: `${Math.min(i, 200) * 8}ms` }} />)}
           {line && <path className="line" d={line} stroke={color} />}
           {last && (<>

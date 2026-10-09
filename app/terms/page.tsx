@@ -90,7 +90,7 @@ export default function TermsPage() {
         .tc .tc-sec:first-child { border-top: 0; }
         .tc .tc-trigger { width: 100%; display: grid; grid-template-columns: 34px 1fr auto; gap: 12px; align-items: center; padding: 14px 18px; background: none; border: 0; color: var(--ink); cursor: pointer; text-align: left; transition: background .15s; }
         .tc .tc-trigger:hover, .tc .tc-sec.open .tc-trigger { background: var(--glass2); }
-        .tc .tc-trigger:focus-visible { outline: 2px solid #fff; outline-offset: -2px; }
+        .tc .tc-trigger:focus-visible { outline: 2px solid var(--hi); outline-offset: -2px; }
         .tc .tc-num { font: 700 12px var(--font-m); color: var(--mute); }
         .tc .tc-title { font: 700 15px var(--font-b); }
         .tc .tc-tog { font: 700 10.5px var(--font-m); letter-spacing: .1em; text-transform: uppercase; color: var(--mute); }
@@ -98,7 +98,7 @@ export default function TermsPage() {
         .tc .tc-toc { display: grid; padding: 6px 0; max-height: calc(100vh - 220px); overflow-y: auto; }
         .tc .tc-toc a { display: grid; grid-template-columns: 26px 1fr; gap: 6px; padding: 6px 18px; font-size: 12.5px; color: var(--ink2); transition: background .15s; }
         .tc .tc-toc a span:first-child { font-family: var(--font-m); color: var(--mute2); font-size: 11.5px; }
-        .tc .tc-toc a:hover, .tc .tc-toc a.on { background: var(--glass2); color: #fff; }
+        .tc .tc-toc a:hover, .tc .tc-toc a.on { background: var(--glass2); color: var(--hi); }
         .tc .tc-sticky { position: sticky; top: 130px; display: grid; gap: 16px; }
         @media (max-width: 960px) { .tc .tc-sticky { position: static; } .tc .tc-toc { max-height: none; } }
         @media (max-width: 600px) { .tc .tc-body { padding-left: 18px; } }

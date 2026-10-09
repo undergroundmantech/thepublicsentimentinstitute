@@ -115,7 +115,7 @@ export default function ElectionsLanding() {
                 {NEXT_ELECTION.stats.map((s) => (
                   <div key={s.k}>
                     <div className="eye" style={{ fontSize: 10 }}>{s.k}</div>
-                    <div className="mono" style={{ font: "700 22px var(--font-m)", color: "#fff", marginTop: 4 }}>{s.v}</div>
+                    <div className="mono" style={{ font: "700 22px var(--font-m)", color: "var(--hi)", marginTop: 4 }}>{s.v}</div>
                   </div>
                 ))}
               </div>
@@ -175,7 +175,7 @@ export default function ElectionsLanding() {
                   <div><b>{parts.m}</b><span>min</span></div>
                 </div>
               ) : (
-                <div className="mono" style={{ font: "700 22px var(--font-m)", color: "#fff" }}>{pollsOpen ? "Polls open" : " "}</div>
+                <div className="mono" style={{ font: "700 22px var(--font-m)", color: "var(--hi)" }}>{pollsOpen ? "Polls open" : " "}</div>
               )}
               <p style={{ margin: "12px 0 0", fontSize: 12.5, color: "var(--mute)" }}>First polls close 7:00 PM ET, November 3. Election night coverage begins here.</p>
             </div>

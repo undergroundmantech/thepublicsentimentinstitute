@@ -217,6 +217,6 @@ const CSS = `
 .opp .fm-toc { display: grid; gap: 2px; padding-top: 10px; padding-bottom: 10px; }
 .opp .fm-toc a { padding: 6px 0; font-size: 13.5px; color: var(--ink2); border-bottom: 1px solid var(--line); }
 .opp .fm-toc a:last-child { border-bottom: 0; }
-.opp .fm-toc a:hover { color: #fff; }
+.opp .fm-toc a:hover { color: var(--hi); }
 .opp .fm-sw { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 8px; vertical-align: -1px; }
 `;

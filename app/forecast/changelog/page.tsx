@@ -89,7 +89,7 @@ const CSS = `
 .opp .cl-list { list-style: none; margin: 0; padding: 0; }
 .opp .cl-list li { display: grid; grid-template-columns: 76px minmax(0,1fr); gap: 14px; padding: 14px 18px; border-top: 1px solid var(--line); }
 .opp .cl-list li:first-child { border-top: 0; }
-.opp .cl-list b { font: 700 15px/1.3 var(--font-d); letter-spacing: -.01em; color: #fff; }
+.opp .cl-list b { font: 700 15px/1.3 var(--font-d); letter-spacing: -.01em; color: var(--hi); }
 .opp .cl-list p { margin: 4px 0 0; font-size: 14px; line-height: 1.6; color: var(--ink2); max-width: 70ch; }
 .opp .cl-tag { align-self: start; justify-self: start; margin-top: 2px; padding: 3px 8px; border-radius: 999px; border: 1px solid var(--line2); background: var(--glass2);
   font: 700 10px var(--font-m); letter-spacing: .1em; text-transform: uppercase; color: var(--ink2); }

@@ -305,13 +305,13 @@ const CSS = `
   .mcc-legend-item b { font-family: var(--font-m); font-variant-numeric: tabular-nums; margin-left: 1px; }
   .mcc-legend-dot { width: 8px; height: 8px; border-radius: 50%; }
   .mcc-controls-right { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
-  .mcc-seg { display: inline-flex; gap: 2px; padding: 3px; background: rgba(255,255,255,.06); border-radius: 999px; }
+  .mcc-seg { display: inline-flex; gap: 2px; padding: 3px; background: rgba(var(--line-rgb),.06); border-radius: 999px; }
   .mcc-seg-btn { appearance: none; border: 0; background: transparent; cursor: pointer; font: 700 12px var(--font-b); color: var(--mute); padding: 6px 12px; border-radius: 999px; line-height: 1.2; transition: color .15s, background .15s; }
-  .mcc-seg-btn:hover { color: #fff; }
-  .mcc-seg-btn.is-active { color: var(--bg); background: #fff; }
-  .mcc-seg-btn:focus-visible, .mcc-toggle:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+  .mcc-seg-btn:hover { color: var(--hi); }
+  .mcc-seg-btn.is-active { color: var(--bg); background: var(--hi); }
+  .mcc-seg-btn:focus-visible, .mcc-toggle:focus-visible { outline: 2px solid var(--hi); outline-offset: 2px; }
   .mcc-toggle { display: inline-flex; align-items: center; gap: 8px; cursor: pointer; font: 700 12px var(--font-b); color: var(--ink2); padding: 6px 12px; border-radius: 999px; line-height: 1.2; border: 1px solid var(--line2); background: var(--glass2); transition: color .15s, opacity .15s; }
-  .mcc-toggle:hover { color: #fff; }
+  .mcc-toggle:hover { color: var(--hi); }
   .mcc-toggle:not(.is-on) { opacity: .5; }
 
   .mcc-plot { width: 100%; position: relative; }
@@ -320,11 +320,11 @@ const CSS = `
 
   .mcc-hit { position: absolute; pointer-events: auto; cursor: crosshair; z-index: 3; touch-action: pan-y; }
   .mcc-hit > * { pointer-events: none; }
-  .mcc-dim { position: absolute; top: 0; bottom: 0; background: rgba(10,7,17,.55); }
-  .mcc-slider { position: absolute; top: 0; bottom: 0; width: 1px; background: rgba(255,255,255,.45); }
+  .mcc-dim { position: absolute; top: 0; bottom: 0; background: rgba(var(--canvas-rgb),.55); }
+  .mcc-slider { position: absolute; top: 0; bottom: 0; width: 1px; background: rgba(var(--line-rgb),.45); }
   .mcc-date { position: absolute; top: -4px; transform: translate(-50%, -100%); font: 600 10px var(--font-m); letter-spacing: .04em; color: var(--mute); white-space: nowrap; text-shadow: 0 0 5px var(--bg), 0 0 8px var(--bg); }
   .mcc-adot { position: absolute; width: 11px; height: 11px; border-radius: 50%; border: 2.5px solid var(--bg); transform: translate(-50%, -50%); }
-  .mcc-chip { position: absolute; transform: translate(15px, -50%); display: inline-flex; align-items: baseline; gap: 7px; white-space: nowrap; padding: 3px 8px; border-radius: 8px; background: rgba(17,0,25,.9); border: 1px solid var(--line2); }
+  .mcc-chip { position: absolute; transform: translate(15px, -50%); display: inline-flex; align-items: baseline; gap: 7px; white-space: nowrap; padding: 3px 8px; border-radius: 8px; background: rgba(var(--bg2-rgb),.9); border: 1px solid var(--line2); }
   .mcc-chip.is-left { transform: translate(calc(-100% - 15px), -50%); }
   .mcc-chip-label { font: 600 12px var(--font-b); color: var(--ink2); }
   .mcc-chip-val { font: 700 13px var(--font-m); font-variant-numeric: tabular-nums; }

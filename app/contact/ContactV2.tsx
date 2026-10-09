@@ -204,11 +204,11 @@ const CSS = `
 .ct .ct-field select { background-image: linear-gradient(45deg, transparent 50%, var(--mute) 50%), linear-gradient(135deg, var(--mute) 50%, transparent 50%); background-position: calc(100% - 18px) 50%, calc(100% - 13px) 50%; background-size: 5px 5px; background-repeat: no-repeat; padding-right: 34px; }
 .ct .ct-field select option { background: var(--bg2); color: var(--ink); }
 .ct .ct-field input::placeholder, .ct .ct-field textarea::placeholder { color: var(--mute2); }
-.ct .ct-field input:focus-visible, .ct .ct-field select:focus-visible, .ct .ct-field textarea:focus-visible { border-color: #fff; box-shadow: 0 0 0 3px rgba(255,255,255,.18); outline: none; }
+.ct .ct-field input:focus-visible, .ct .ct-field select:focus-visible, .ct .ct-field textarea:focus-visible { border-color: var(--hi); box-shadow: 0 0 0 3px rgba(var(--line-rgb),.18); outline: none; }
 .ct .ct-actions { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-top: 18px; }
 .ct .ct-send { padding: 12px 20px; font-size: 14px; }
 .ct .ct-send:disabled { opacity: .45; cursor: not-allowed; transform: none; }
-.ct .ct-send:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+.ct .ct-send:focus-visible { outline: 2px solid var(--hi); outline-offset: 3px; }
 .ct .ct-status { font-size: 13px; color: var(--mute); }
 .ct .ct-status .ok { color: var(--ink); }
 .ct .ct-mail { font-size: 13px; font-weight: 700; color: var(--ink); text-decoration: underline; text-underline-offset: 3px; word-break: break-all; }

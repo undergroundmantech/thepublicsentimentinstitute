@@ -18,7 +18,7 @@ function Thumb({ seed }: { seed: number }) {
   return (
     <svg viewBox="0 0 320 120" aria-hidden="true" preserveAspectRatio="none">
       <rect width="320" height="120" fill="#160a24" />
-      {bars.map((h, i) => <rect key={i} x={14 + i * 21.5} y={108 - h} width={13} height={h} rx={2} fill="#fff" opacity={0.06 + (i % 4) * 0.035} />)}
+      {bars.map((h, i) => <rect key={i} x={14 + i * 21.5} y={108 - h} width={13} height={h} rx={2} fill="var(--hi)" opacity={0.06 + (i % 4) * 0.035} />)}
     </svg>
   );
 }

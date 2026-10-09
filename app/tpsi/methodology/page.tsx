@@ -93,12 +93,12 @@ export default function Page() {
         .opp .gs-row:first-child { border-top: 0; }
         .opp .gs-head { width: 100%; display: grid; grid-template-columns: 26px 44px minmax(0,1fr) auto 40px 52px 40px; gap: 12px; align-items: center; padding: 12px 18px; background: none; border: 0; cursor: pointer; text-align: left; color: var(--ink); transition: background .15s; }
         .opp .gs-head:hover, .opp .gs-row.open .gs-head { background: var(--glass2); }
-        .opp .gs-head:focus-visible { outline: 2px solid #fff; outline-offset: -2px; }
+        .opp .gs-head:focus-visible { outline: 2px solid var(--hi); outline-offset: -2px; }
         .opp .gs-idx { color: var(--mute2); font-size: 12px; }
         .opp .gs-abbr { color: var(--mute); font-size: 12px; font-weight: 700; }
         .opp .gs-name { font-weight: 700; font-size: 14px; }
         .opp .gs-dots, .opp .gs-key { display: flex; gap: 4px; align-items: center; }
-        .opp .gs-dots i, .opp .gs-key i { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,.12); display: inline-block; }
+        .opp .gs-dots i, .opp .gs-key i { width: 8px; height: 8px; border-radius: 50%; background: rgba(var(--line-rgb),.12); display: inline-block; }
         .opp .gs-dots i.on, .opp .gs-key i.on { background: var(--ink2); }
         .opp .gs-disc { font-size: 12px; color: var(--mute); text-align: right; }
         .opp .gs-mult { font-size: 13px; font-weight: 700; text-align: right; }

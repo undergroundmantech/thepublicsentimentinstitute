@@ -222,7 +222,7 @@ export default function RaceMapHover({ race, mode = "margin" }: { race: any; mod
           >
             <div style={{ padding: "10px 16px", background: `linear-gradient(180deg, ${tip.lead} 0%, ${tip.lead}d9 100%)`, boxShadow: "inset 0 -1px 0 rgba(var(--line-rgb),0.30)" }}>
               <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", gap: 12 }}>
-                <div style={{ fontSize: 15, fontWeight: 800, textTransform: "uppercase", letterSpacing: "-0.01em", color: "#fff", lineHeight: 1.06, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", fontFamily: 'var(--font-b)' }}>
+                <div style={{ fontSize: 15, fontWeight: 800, textTransform: "uppercase", letterSpacing: "-0.01em", color: "var(--hi)", lineHeight: 1.06, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", fontFamily: 'var(--font-b)' }}>
                   {tip.s.name}
                 </div>
                 <div style={{ fontSize: 9, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.18em", color: "rgba(var(--ink-rgb),calc(0.7 * var(--mute-k) + var(--floor)))", whiteSpace: "nowrap", fontFamily: 'var(--font-b)' }}>
@@ -271,7 +271,7 @@ export default function RaceMapHover({ race, mode = "margin" }: { race: any; mod
                           <span style={{ color: "rgba(var(--ink-rgb),calc(0.4 * var(--mute-k) + var(--floor)))", fontWeight: 500, fontSize: 11 }}> {c.party}</span>
                         ) : null}
                       </span>
-                      <span style={{ fontFamily: var(--font-m), fontSize: 12, color: "rgba(var(--ink-rgb),calc(0.5 * var(--mute-k) + var(--floor)))", fontVariantNumeric: "tabular-nums", marginRight: 16 }}>
+                      <span style={{ fontFamily: "var(--font-m)", fontSize: 12, color: "rgba(var(--ink-rgb),calc(0.5 * var(--mute-k) + var(--floor)))", fontVariantNumeric: "tabular-nums", marginRight: 16 }}>
                         {fmtInt(c.votes || 0)}
                       </span>
                       <span style={{ fontSize: 14, fontVariantNumeric: "tabular-nums", letterSpacing: "-0.02em", width: 58, textAlign: "right", fontWeight: win ? 800 : 700, color: win ? "#f6f1e6" : "rgba(var(--ink-rgb),calc(0.75 * var(--mute-k) + var(--floor)))" }}>

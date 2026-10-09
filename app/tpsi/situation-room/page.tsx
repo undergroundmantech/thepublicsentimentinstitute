@@ -117,7 +117,7 @@ function DualSpark({ daily, w = 640, h = 120, tones, labelDigits = 1 }: {
   if (Math.abs(ya - yb) < 15) { const mid = (ya + yb) / 2, s = ya <= yb ? 1 : -1; ya = mid - s * 7.5; yb = mid + s * 7.5; }
   return (
     <svg viewBox={`0 0 ${w} ${h}`} className="sr-spark" aria-hidden="true">
-      <line x1={2} x2={w - 54} y1={h - 5} y2={h - 5} stroke="rgba(255,255,255,.1)" strokeWidth="1" />
+      <line x1={2} x2={w - 54} y1={h - 5} y2={h - 5} stroke="rgba(var(--line-rgb),.1)" strokeWidth="1" />
       <path d={area("a")} fill={tones[0]} opacity="0.08" />
       <path d={area("b")} fill={tones[1]} opacity="0.07" />
       <path d={path("b")} stroke={tones[1]} strokeWidth="1.7" fill="none" opacity="0.8" />
@@ -491,10 +491,10 @@ const CSS = `
 .sr .sr-w-split em { font-style: normal; color: var(--mute2); margin: 0 4px; }
 .sr .sr-w-cand { display: inline-flex; align-items: center; gap: 6px; color: var(--ink2); }
 .sr .sr-w-cand i { width: 8px; height: 8px; border-radius: 2px; display: inline-block; }
-.sr .sr-w-bar { display: inline-flex; width: 120px; height: 5px; border-radius: 99px; overflow: hidden; background: rgba(255,255,255,.06); }
+.sr .sr-w-bar { display: inline-flex; width: 120px; height: 5px; border-radius: 99px; overflow: hidden; background: rgba(var(--line-rgb),.06); }
 .sr .sr-w-bar i { display: block; height: 100%; }
 .sr .sr-w-note { font-size: 13.5px; color: var(--ink2); margin: 0; }
-.sr .sr-skel { display: block; height: 10px; border-radius: 4px; background: rgba(255,255,255,.07); margin: 4px 0; }
+.sr .sr-skel { display: block; height: 10px; border-radius: 4px; background: rgba(var(--line-rgb),.07); margin: 4px 0; }
 
 .sr .sr-trends { display: grid; grid-template-columns: 1fr 1fr; }
 .sr .sr-trend { display: grid; gap: 6px; padding: 16px 18px; border-top: 1px solid var(--line); transition: background .15s; align-content: start; }
@@ -508,7 +508,7 @@ const CSS = `
 .sr .sr-spark { width: 100%; height: auto; display: block; margin-top: 4px; }
 .sr .sr-seats { position: relative; display: flex; gap: 1.5px; height: 22px; margin-top: 8px; }
 .sr .sr-seats i { flex: 1; border-radius: 1px; }
-.sr .sr-seam { position: absolute; left: 50%; top: -4px; bottom: -4px; width: 1px; background: #fff; }
+.sr .sr-seam { position: absolute; left: 50%; top: -4px; bottom: -4px; width: 1px; background: var(--hi); }
 .sr .sr-seam span { position: absolute; top: -14px; left: -8px; font: 600 9px var(--font-m); color: var(--mute); }
 @media (max-width: 700px) {
   .sr .sr-trends { grid-template-columns: 1fr; }
@@ -527,7 +527,7 @@ const CSS = `
 
 .sr .sr-watch .st { font-size: 12px; white-space: nowrap; }
 .sr .sr-watch { grid-template-columns: 52px 1fr auto; }
-.sr .sr-watch-bar { position: relative; display: block; height: 4px; margin-top: 6px; border-radius: 99px; background: rgba(255,255,255,.06); }
+.sr .sr-watch-bar { position: relative; display: block; height: 4px; margin-top: 6px; border-radius: 99px; background: rgba(var(--line-rgb),.06); }
 .sr .sr-watch-seam { position: absolute; left: 50%; top: -2px; bottom: -2px; width: 1px; background: var(--line2); }
 .sr .sr-watch-fill { position: absolute; top: 0; bottom: 0; border-radius: 99px; }
 

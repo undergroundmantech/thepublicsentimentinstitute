@@ -214,8 +214,8 @@ const CSS = `
 .srm-svg { display: block; width: 100%; height: auto; }
 .srm-state { stroke: var(--bg); stroke-width: .8; transition: fill .5s, filter .2s; outline: none; opacity: 0; animation: srm-in .6s ease forwards; }
 .srm-state.is-live { cursor: pointer; }
-.srm-state.is-live:hover, .srm-state.is-live:focus-visible { filter: brightness(1.25); stroke: #fff; stroke-width: 1.2; }
-.srm-state.is-on { stroke: #fff; stroke-width: 2; }
+.srm-state.is-live:hover, .srm-state.is-live:focus-visible { filter: brightness(1.25); stroke: var(--hi); stroke-width: 1.2; }
+.srm-state.is-on { stroke: var(--hi); stroke-width: 2; }
 .srm-lab { font: 600 8.5px var(--font-m); fill: rgba(255,255,255,.85); pointer-events: none; text-anchor: middle; }
 .srm-chip { cursor: pointer; outline: none; }
 .srm-chip rect { stroke: var(--line2); stroke-width: .8; transition: filter .2s; }
@@ -232,8 +232,8 @@ const CSS = `
 .srm-ro-val { font: 700 13px var(--font-m); font-variant-numeric: tabular-nums; }
 .srm-ro-n { font: 600 10.5px var(--font-m); letter-spacing: .1em; text-transform: uppercase; color: var(--mute); margin-left: auto; }
 .srm-foot { margin: 10px 0 0; font-size: 12px; line-height: 1.55; color: var(--mute); }
-.srm-tip { position: fixed; z-index: 80; pointer-events: none; background: rgba(17,0,25,.94); border: 1px solid var(--line2); border-radius: 10px; padding: 10px 12px; font-size: 12.5px; color: var(--ink2); box-shadow: 0 12px 40px rgba(0,0,0,.5); min-width: 200px; max-width: 280px; backdrop-filter: blur(10px); }
-.srm-tip b { color: #fff; display: block; font: 700 13px var(--font-d); margin-bottom: 4px; }
+.srm-tip { position: fixed; z-index: 80; pointer-events: none; background: rgba(var(--bg2-rgb),.94); border: 1px solid var(--line2); border-radius: 10px; padding: 10px 12px; font-size: 12.5px; color: var(--ink2); box-shadow: 0 12px 40px rgba(0,0,0,.5); min-width: 200px; max-width: 280px; backdrop-filter: blur(10px); }
+.srm-tip b { color: var(--hi); display: block; font: 700 13px var(--font-d); margin-bottom: 4px; }
 .srm-tip .row { display: flex; justify-content: space-between; gap: 12px; }
 .srm-tip .row span:last-child { font-family: var(--font-m); font-weight: 600; font-variant-numeric: tabular-nums; }
 @keyframes srm-in { to { opacity: 1; } }

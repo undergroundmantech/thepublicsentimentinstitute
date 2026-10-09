@@ -1,12 +1,11 @@
-import React, { createContext, useContext } from 'react'
+import React, { createContext, useContext, useMemo, useSyncExternalStore } from 'react'
+import { THEME_EVENT, getTheme, toggleTheme, setTheme } from '../../../lib/theme'
 
 // ── Theme ────────────────────────────────────────────────────────────────
-// The OnPoint Politics results desk is dark only. This module keeps its old
-// API (ThemeProvider, useTheme, PALETTES, tripToggleTheme) so every consumer
-// keeps working, but there is exactly one palette and no toggle. It only
-// carries the hex values that color MATH needs (mix()/shade()/choropleth
-// fills parse hex and cannot read var(--x)); everything else uses the site
-// tokens from app/globals.css.
+// Follows the site theme (<html data-theme>, owned by app/lib/theme.ts and the
+// masthead toggle). This module only carries the hex values that color MATH
+// needs (mix()/shade()/choropleth fills parse hex and cannot read var(--x));
+// everything else uses the site tokens from app/globals.css.
 
 const DARK = {
   page: '#0a0711', pageElev: '#140e1d', card: '#120c1b', cardBd: 'rgba(255,255,255,0.09)',
@@ -26,20 +25,43 @@ const DARK = {
   mute: '#8e86a3',
 }
 
-// `light` is kept as an alias so any stale reference resolves to the one palette.
-export const PALETTES = { dark: DARK, light: DARK }
+const LIGHT = {
+  page: '#f5f3fa', pageElev: '#ffffff', card: '#ffffff', cardBd: 'rgba(17,0,25,0.10)',
+  ink: '#16092a', inkStrong: '#110019',
+  accent: '#16092a',
+  approve: '#0f9d63', disapprove: '#6a6180', dem: '#2a63f0', gop: '#e8264b',
+  yes: '#0f9d63', no: '#6a6180',
+  shadeBase: '#e6e1f0',
+  faintFill: 'rgba(17,0,25,0.04)', faintStroke: 'rgba(17,0,25,0.10)',
+  countyStroke: 'rgba(245,243,250,0.8)',
+  stripFgTarget: '#110019',
+  set: ['#16092a', '#463d5a', '#6a6180', '#9b93ad'],
+  mute: '#6a6180',
+}
 
-const VALUE = { theme: 'dark', toggle: () => {}, setTheme: () => {}, P: DARK }
-const ThemeCtx = createContext(VALUE)
+export const PALETTES = { dark: DARK, light: LIGHT }
+
+const subscribe = (cb) => {
+  window.addEventListener(THEME_EVENT, cb)
+  return () => window.removeEventListener(THEME_EVENT, cb)
+}
+
+function makeValue(theme) {
+  return { theme, toggle: toggleTheme, setTheme, P: PALETTES[theme] }
+}
+const VALUES = { dark: makeValue('dark'), light: makeValue('light') }
+const ThemeCtx = createContext(VALUES.dark)
 
 export function ThemeProvider({ children }) {
-  return <ThemeCtx.Provider value={VALUE}>{children}</ThemeCtx.Provider>
+  const theme = useSyncExternalStore(subscribe, getTheme, () => 'dark')
+  const value = useMemo(() => VALUES[theme], [theme])
+  return <ThemeCtx.Provider value={value}>{children}</ThemeCtx.Provider>
 }
 
 export const useTheme = () => useContext(ThemeCtx)
 
-// There is no theme to flip. Kept so older callers compile; it only runs the
-// optional callback with the one theme there is.
+// Flip the site theme, then run the optional callback with the new value.
 export function tripToggleTheme({ onAfterSwap } = {}) {
-  try { onAfterSwap && onAfterSwap('dark') } catch {}
+  const next = toggleTheme()
+  try { onAfterSwap && onAfterSwap(next) } catch {}
 }

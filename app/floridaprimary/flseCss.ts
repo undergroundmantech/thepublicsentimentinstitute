@@ -11,7 +11,7 @@ export const FLSE_CSS = `
 }
 
 .flse *{margin:0;padding:0;box-sizing:border-box}
-.flse button:focus-visible,.flse input:focus-visible{outline:2px solid #fff;outline-offset:2px}
+.flse button:focus-visible,.flse input:focus-visible{outline:2px solid var(--hi);outline-offset:2px}
 
 .flse .wrap{margin:0 auto;padding:0 0 20px}
 .flse .masthead{margin-bottom:18px}
@@ -22,7 +22,7 @@ export const FLSE_CSS = `
 .flse .pbtn{font-size:12px;font-weight:600;padding:8px 14px;border:1px solid var(--line);background:var(--pnl2);
  border-radius:99px;cursor:pointer;color:var(--ink2);transition:all .12s;white-space:nowrap}
 .flse .pbtn:hover{border-color:var(--ink3);color:var(--ink)}
-.flse .pbtn.on{background:#fff;color:var(--bg);border-color:#fff}
+.flse .pbtn.on{background:var(--hi);color:var(--bg);border-color:var(--hi)}
 .flse .grid{display:grid;grid-template-columns:436px minmax(0,1fr) 296px;gap:16px;align-items:start}
 .flse .card{background:var(--glass);border:1px solid var(--line2);border-radius:var(--r);margin-bottom:14px;box-shadow:none}
 .flse .ch{display:flex;justify-content:space-between;align-items:center;padding:13px 16px;border-bottom:1px solid var(--line2)}
@@ -37,7 +37,7 @@ export const FLSE_CSS = `
 .flse .mx td:first-child{font-size:11px;font-weight:500;color:var(--ink2);white-space:nowrap;padding-right:6px}
 .flse .mx input{background:var(--pnl2);width:100%;min-width:34px;font-family:var(--m);font-size:11px;font-weight:600;text-align:right;
  border:1px solid var(--line);border-radius:6px;padding:5px 4px;color:var(--ink);transition:border .12s}
-.flse .mx input:focus-visible{outline:none;border-color:#fff;box-shadow:0 0 0 2px rgba(255,255,255,.18)}
+.flse .mx input:focus-visible{outline:none;border-color:var(--hi);box-shadow:0 0 0 2px rgba(var(--line-rgb),.18)}
 .flse .mx input.ro{background:var(--fill);color:var(--ink4);border-color:transparent;cursor:default}
 .flse .mx input.el{background:var(--pnl2)}
 .flse .hint{font-size:11px;color:var(--ink4);line-height:1.5;margin-top:10px}
@@ -51,7 +51,7 @@ export const FLSE_CSS = `
  background:transparent;color:var(--ink3);cursor:pointer;transition:all .12s;white-space:nowrap}
 .flse .seg button+button{border-left:1px solid var(--line)}
 .flse .seg button:hover:not(.on){background:var(--fill);color:var(--ink)}
-.flse .seg button.on{background:#fff;color:var(--bg)}
+.flse .seg button.on{background:var(--hi);color:var(--bg)}
 .flse .rl{font-size:12.5px;font-weight:600;color:var(--ink)}
 .flse .rl i{display:block;font-style:normal;font-size:10.5px;color:var(--ink4);font-weight:400;margin-top:1px}
 .flse input[type=range]{width:100%;accent-color:var(--ink);height:3px}
@@ -60,18 +60,18 @@ export const FLSE_CSS = `
  transition:background .16s;border:none;padding:0;justify-self:end}
 .flse .tgl:after{content:'';position:absolute;top:2px;left:2px;width:18px;height:18px;border-radius:50%;
  background:var(--pnl2);box-shadow:0 1px 3px rgba(var(--line-rgb),.3),0 0 0 1px var(--line2);transition:transform .16s}
-.flse .tgl.on{background:#fff}
+.flse .tgl.on{background:var(--hi)}
 .flse .tgl.on:after{background:var(--bg)}
 .flse .tgl.on:after{transform:translateX(18px)}
 .flse .cbtn{border:1px solid var(--line);background:var(--pnl2);border-radius:6px;width:22px;height:22px;
  cursor:pointer;color:var(--ink3);font-size:11px;line-height:1;padding:0;transition:all .12s;flex-shrink:0}
 .flse .cbtn:hover{border-color:var(--ink3);color:var(--ink)}
-.flse .cbtn.on{background:#fff;color:var(--bg);border-color:#fff}
+.flse .cbtn.on{background:var(--hi);color:var(--bg);border-color:var(--hi)}
 .flse .cname{display:flex;align-items:center;gap:9px}
 .flse .xbtn{font-size:11px;font-weight:600;padding:5px 11px;border:1px solid var(--line);background:var(--pnl2);
  border-radius:99px;cursor:pointer;color:var(--ink2);transition:all .12s;white-space:nowrap}
 .flse .xbtn:hover{border-color:var(--ink3)}
-.flse .xbtn.on{background:#fff;color:var(--bg);border-color:#fff}
+.flse .xbtn.on{background:var(--hi);color:var(--bg);border-color:var(--hi)}
 .flse .ctbl th{cursor:pointer;user-select:none}
 .flse .ctbl th:hover{color:var(--ink2)}
 .flse .ctbl th .ar{opacity:0;margin-left:3px;font-size:8px}
@@ -84,12 +84,12 @@ export const FLSE_CSS = `
 .flse .tab{font-size:11.5px;font-weight:600;padding:7px 13px;border:1px solid var(--line);background:var(--pnl2);
  border-radius:99px;cursor:pointer;color:var(--ink3);transition:all .12s}
 .flse .tab:hover{border-color:var(--ink3)}
-.flse .tab.on{background:#fff;color:var(--bg);border-color:#fff}
+.flse .tab.on{background:var(--hi);color:var(--bg);border-color:var(--hi)}
 .flse .mapwrap{background:var(--glass);border:1px solid var(--line2);border-radius:var(--r);padding:12px}
 .flse svg#fl-map{width:100%;height:auto;display:block}
 .flse path.cty{stroke:var(--bg);stroke-width:.7;cursor:pointer;transition:opacity .1s}
 .flse path.cty:hover{opacity:.78}
-.flse .tip{position:fixed;background:rgba(17,0,25,.94);backdrop-filter:blur(10px);color:var(--ink);border:1px solid var(--line2);
+.flse .tip{position:fixed;background:rgba(var(--bg2-rgb),.94);backdrop-filter:blur(10px);color:var(--ink);border:1px solid var(--line2);
  box-shadow:0 12px 40px rgba(0,0,0,.5);font-size:12px;line-height:1.55;padding:11px 13px;
  border-radius:9px;pointer-events:none;opacity:0;transition:opacity .1s;z-index:99;max-width:250px}
 .flse .tip b{font-weight:700}
@@ -105,7 +105,7 @@ export const FLSE_CSS = `
 .flse .rvv{font-family:var(--m);font-size:10px;color:var(--ink4);margin-bottom:11px}
 .flse .stack{display:flex;height:22px;border-radius:6px;overflow:hidden;margin-bottom:14px}
 .flse .note{font-size:11.5px;color:var(--ink3);line-height:1.5;padding-top:11px;margin-top:2px;border-top:1px solid var(--line2)}
-.flse .btn{font-size:13px;font-weight:700;padding:10px;border:1px solid #fff;background:#fff;
+.flse .btn{font-size:13px;font-weight:700;padding:10px;border:1px solid var(--hi);background:var(--hi);
  color:var(--bg);border-radius:999px;cursor:pointer;width:100%}
 .flse .btn.alt{background:var(--glass2);color:var(--ink);border-color:var(--line2)}
 .flse .btn:hover{opacity:.88}

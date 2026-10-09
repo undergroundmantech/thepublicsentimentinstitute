@@ -1574,8 +1574,8 @@ const CSS = `
   /* Field report switcher */
   .tps .reports { display: flex; flex-wrap: wrap; gap: 8px; margin: 4px 0 22px; }
   .tps .rep { display: flex; flex-direction: column; gap: 2px; align-items: flex-start; padding: 10px 14px; border-radius: 12px; border: 1px solid var(--line); background: var(--glass); cursor: pointer; text-align: left; color: var(--ink2); transition: .15s; }
-  .tps .rep:hover { border-color: var(--line2); color: #fff; }
-  .tps .rep.on { background: #fff; border-color: #fff; color: var(--bg); }
+  .tps .rep:hover { border-color: var(--line2); color: var(--hi); }
+  .tps .rep.on { background: var(--hi); border-color: var(--hi); color: var(--bg); }
   .tps .rep-no { font: 700 10px var(--font-m); letter-spacing: .12em; text-transform: uppercase; opacity: .7; }
   .tps .rep-name { font: 700 14px var(--font-b); white-space: nowrap; }
   .tps .rep-date { font: 500 11px var(--font-m); opacity: .7; }
@@ -1608,9 +1608,9 @@ const CSS = `
   .tps .rail-name { font-size: 13px; font-weight: 500; line-height: 1.3; color: var(--ink2); }
   .tps .rail-lead { font: 700 11.5px var(--font-m); color: var(--mute2); font-variant-numeric: tabular-nums; }
   .tps .rail-item:hover { background: var(--glass2); }
-  .tps .rail-item:hover .rail-name { color: #fff; }
+  .tps .rail-item:hover .rail-name { color: var(--hi); }
   .tps .rail-item.on { background: var(--glass2); }
-  .tps .rail-item.on .rail-name { color: #fff; font-weight: 700; }
+  .tps .rail-item.on .rail-name { color: var(--hi); font-weight: 700; }
 
   .tps .survey-main { min-width: 0; padding: 22px 24px 24px; }
   .tps .qv-kick { display: flex; align-items: center; gap: 12px; font: 700 11px var(--font-m); letter-spacing: .12em; text-transform: uppercase; color: var(--mute); }
@@ -1630,7 +1630,7 @@ const CSS = `
   .tps .rc-row { display: grid; grid-template-columns: 196px 1fr 62px; align-items: center; gap: 16px; padding: 9px 0; border-bottom: 1px solid var(--line); }
   .tps .rc-row:last-child { border-bottom: none; }
   .tps .rc-name { font-size: 13px; color: var(--ink2); text-align: right; line-height: 1.25; } .tps .rc-row.lead .rc-name { color: var(--ink); font-weight: 700; }
-  .tps .rc-track { height: 8px; background: rgba(255,255,255,.06); border-radius: 999px; overflow: hidden; }
+  .tps .rc-track { height: 8px; background: rgba(var(--line-rgb),.06); border-radius: 999px; overflow: hidden; }
   .tps .rc-fill { height: 100%; border-radius: 999px; transition: width .8s var(--ease); }
   .tps .rc-pct { font: 700 15px var(--font-m); text-align: right; color: var(--ink2); font-variant-numeric: tabular-nums; } .tps .rc-pct i { font-style: normal; font-size: .7em; color: var(--mute); margin-left: 1px; }
   .tps .rc-row.lead .rc-pct { font-size: 17px; }
@@ -1661,7 +1661,7 @@ const CSS = `
   .tps .iss-rank { font: 700 12px var(--font-m); color: var(--mute2); } .tps .iss-row.top .iss-rank { color: var(--ink); }
   .tps .iss-label { font-size: 13px; color: var(--ink2); line-height: 1.3; display: flex; flex-direction: column; gap: 3px; } .tps .iss-row.top .iss-label { color: var(--ink); font-weight: 700; font-size: 15px; }
   .tps .iss-tag { font: 700 9.5px var(--font-m); letter-spacing: .1em; text-transform: uppercase; color: var(--mute2); } .tps .iss-row.top .iss-tag { color: var(--mute); }
-  .tps .iss-track { height: 8px; background: rgba(255,255,255,.06); border-radius: 999px; overflow: hidden; } .tps .iss-fill { height: 100%; border-radius: 999px; transition: width .8s var(--ease); }
+  .tps .iss-track { height: 8px; background: rgba(var(--line-rgb),.06); border-radius: 999px; overflow: hidden; } .tps .iss-fill { height: 100%; border-radius: 999px; transition: width .8s var(--ease); }
   .tps .iss-pct { font: 700 15px var(--font-m); text-align: right; color: var(--ink2); font-variant-numeric: tabular-nums; } .tps .iss-pct i { font-style: normal; font-size: .7em; color: var(--mute); } .tps .iss-row.top .iss-pct { font-size: 19px; }
 
   .tps .qv-read { margin: 22px 0 0; padding: 14px 16px; border: 1px solid var(--line); border-radius: 10px; background: var(--glass); max-width: 72ch; font-size: 14.5px; line-height: 1.55; color: var(--ink2); }
@@ -1669,13 +1669,13 @@ const CSS = `
   .tps .qv-step { display: flex; flex-direction: column; gap: 4px; padding: 10px 12px; border-radius: 10px; border: 1px solid var(--line); background: var(--glass); cursor: pointer; text-align: left; color: var(--ink2); transition: .15s; } .tps .qv-step.r { text-align: right; align-items: flex-end; }
   .tps .qv-step:disabled { opacity: .35; cursor: default; }
   .tps .qv-step span { font: 700 10.5px var(--font-m); letter-spacing: .12em; text-transform: uppercase; color: var(--mute); }
-  .tps .qv-step b { font-size: 13.5px; font-weight: 600; } .tps .qv-step:not(:disabled):hover { border-color: var(--line2); color: #fff; }
+  .tps .qv-step b { font-size: 13.5px; font-weight: 600; } .tps .qv-step:not(:disabled):hover { border-color: var(--line2); color: var(--hi); }
 
   .tps .tps-foot { margin-top: 16px; }
   .tps .tps-foot p { font-size: 13px; line-height: 1.6; max-width: 90ch; margin: 0; }
   .tps .tps-foot-org { margin-top: 10px; font: 700 10.5px var(--font-m); letter-spacing: .12em; text-transform: uppercase; color: var(--mute); }
 
-  .tps button:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+  .tps button:focus-visible { outline: 2px solid var(--hi); outline-offset: 2px; }
   .tps .survey-main { animation: tps-in .35s var(--ease) both; }
   @keyframes tps-in { from { opacity: 0; } to { opacity: 1; } }
 

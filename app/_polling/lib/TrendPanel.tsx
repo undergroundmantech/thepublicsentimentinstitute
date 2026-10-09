@@ -253,32 +253,32 @@ const CSS = `
 .tr-legend { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 12px; color: var(--ink2); }
 .tr-key { display: inline-flex; align-items: center; gap: 7px; }
 .tr-key em { font-style: normal; font: 500 11px var(--font-m); color: var(--mute); }
-.tr-band-sw { display: inline-block; width: 14px; height: 10px; border-radius: 3px; background: rgba(255,255,255,.1); border: 1px dashed rgba(255,255,255,.4); }
-.tr-seg { display: inline-flex; gap: 2px; padding: 3px; background: rgba(255,255,255,.06); border-radius: 999px; }
+.tr-band-sw { display: inline-block; width: 14px; height: 10px; border-radius: 3px; background: rgba(var(--line-rgb),.1); border: 1px dashed rgba(var(--line-rgb),.4); }
+.tr-seg { display: inline-flex; gap: 2px; padding: 3px; background: rgba(var(--line-rgb),.06); border-radius: 999px; }
 .tr-seg button { appearance: none; border: 0; background: none; cursor: pointer; padding: 6px 12px; border-radius: 999px; font: 700 12px var(--font-b); color: var(--mute); transition: .15s; }
-.tr-seg button:hover { color: #fff; }
-.tr-seg button.on { background: #fff; color: var(--bg); }
-.tr-seg button:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+.tr-seg button:hover { color: var(--hi); }
+.tr-seg button.on { background: var(--hi); color: var(--bg); }
+.tr-seg button:focus-visible { outline: 2px solid var(--hi); outline-offset: 2px; }
 .tr-chart { position: relative; width: 100%; overflow: hidden; }
 .tr-grid { stroke: var(--line); }
-.tr-zero { stroke: rgba(255,255,255,.35); stroke-width: 1; stroke-dasharray: 3 4; }
+.tr-zero { stroke: rgba(var(--line-rgb),.35); stroke-width: 1; stroke-dasharray: 3 4; }
 .tr-ytick { font: 500 10px var(--font-m); fill: var(--mute); text-anchor: end; }
 .tr-xtick { font: 500 10px var(--font-m); fill: var(--mute); text-anchor: middle; }
 .tr-side { font: 600 10px var(--font-m); letter-spacing: .1em; text-transform: uppercase; fill: var(--mute2); }
 .tr-dot { opacity: .35; }
-.tr-band { fill: rgba(255,255,255,.07); stroke: rgba(255,255,255,.3); stroke-dasharray: 3 3; }
-.tr-proj { stroke: #fff; stroke-width: 1.6; stroke-dasharray: 2 4; stroke-linecap: round; }
-.tr-eday { stroke: rgba(255,255,255,.25); stroke-dasharray: 2 3; }
+.tr-band { fill: rgba(var(--line-rgb),.07); stroke: rgba(var(--line-rgb),.3); stroke-dasharray: 3 3; }
+.tr-proj { stroke: var(--hi); stroke-width: 1.6; stroke-dasharray: 2 4; stroke-linecap: round; }
+.tr-eday { stroke: rgba(var(--line-rgb),.25); stroke-dasharray: 2 3; }
 .tr-eday-lab { font: 600 10px var(--font-m); letter-spacing: .1em; text-transform: uppercase; fill: var(--mute); text-anchor: end; }
-.tr-diamond { fill: #fff; stroke: var(--bg); stroke-width: 2; }
+.tr-diamond { fill: var(--hi); stroke: var(--bg); stroke-width: 2; }
 .tr-dlabel { font: 600 10.5px var(--font-m); fill: var(--ink); text-anchor: end; paint-order: stroke; stroke: var(--bg); stroke-width: 3px; stroke-linejoin: round; }
-.tr-cross { stroke: rgba(255,255,255,.4); }
+.tr-cross { stroke: rgba(var(--line-rgb),.4); }
 .tr-tip { position: absolute; top: 8px; width: 218px; pointer-events: none; display: grid; gap: 5px; padding: 10px 12px; border-radius: 10px;
-  background: rgba(17,0,25,.94); border: 1px solid var(--line2); box-shadow: 0 12px 40px rgba(0,0,0,.5); backdrop-filter: blur(10px); font-size: 12.5px; color: var(--ink2); }
-.tr-tip b { color: #fff; font: 700 13px var(--font-d); }
+  background: rgba(var(--bg2-rgb),.94); border: 1px solid var(--line2); box-shadow: 0 12px 40px rgba(0,0,0,.5); backdrop-filter: blur(10px); font-size: 12.5px; color: var(--ink2); }
+.tr-tip b { color: var(--hi); font: 700 13px var(--font-d); }
 .tr-tip .row { display: flex; align-items: center; gap: 7px; }
 .tr-tip .row i { width: 10px; height: 3px; border-radius: 2px; flex-shrink: 0; }
-.tr-tip .row span { margin-left: auto; font: 600 12px var(--font-m); color: #fff; font-variant-numeric: tabular-nums; }
+.tr-tip .row span { margin-left: auto; font: 600 12px var(--font-m); color: var(--hi); font-variant-numeric: tabular-nums; }
 .tr-tip .poll { padding-top: 5px; border-top: 1px solid var(--line); color: var(--ink); }
 .tr-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 10px; margin-top: 14px; }
 .tr-card { display: flex; flex-direction: column; gap: 5px; padding: 12px 14px; border: 1px solid var(--line); border-radius: 12px; background: var(--glass); }

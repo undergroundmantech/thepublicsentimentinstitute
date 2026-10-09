@@ -146,7 +146,7 @@ const CSS = `
   .pa24-hero-title {
     font-family:var(--font-display),system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif;
     font-size:clamp(22px,3.5vw,46px); font-weight:900; text-transform:uppercase;
-    letter-spacing:0.02em; line-height:0.92; color:#fff; margin:0 0 14px;
+    letter-spacing:0.02em; line-height:0.92; color:var(--hi); margin:0 0 14px;
   }
   .pa24-hero-title .rep {
     font-style:normal;
@@ -218,7 +218,7 @@ const CSS = `
   }
   .pa24-kpi-val {
     font-family:var(--font-m); font-size:clamp(22px,2.5vw,30px); font-weight:900;
-    color:#fff; line-height:1; font-variant-numeric:tabular-nums;
+    color:var(--hi); line-height:1; font-variant-numeric:tabular-nums;
   }
   .pa24-kpi-sub {
     font-family:var(--font-m); font-size:8px; letter-spacing:0.16em;
@@ -252,7 +252,7 @@ const CSS = `
   }
   .pa24-acc-item-val {
     font-family:var(--font-m); font-size:22px; font-weight:900;
-    font-variant-numeric:tabular-nums; color:#fff;
+    font-variant-numeric:tabular-nums; color:var(--hi);
   }
   .pa24-acc-item-sub {
     font-family:var(--font-m); font-size:8px; letter-spacing:0.14em;

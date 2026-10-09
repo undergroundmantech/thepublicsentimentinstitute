@@ -4,7 +4,7 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
-import { ThemeProvider, useTheme, tripToggleTheme } from "./onpoint/lib/theme.jsx";
+import { ThemeProvider } from "./onpoint/lib/theme.jsx";
 import { OPA_GLOBAL_CSS } from "./onpoint/OpaResultsPage.jsx";
 import { ResultCard } from "./onpoint/ElectionResults.jsx";
 import { useElectionIndex } from "./onpoint/lib/electionIndex.js";
@@ -79,31 +79,6 @@ function useInView(rootMargin = "-12% 0px"): [React.RefObject<HTMLElement | null
   return [ref, seen];
 }
 
-
-// The desk's own light/dark control. The hero orb/sphere/ticker are built
-// dark-only and never change (see the note in ResultsDesk() below), but
-// everything past the fold (docket, cards, rails, plates) is themed off
-// data-opa-theme — same trip helper + View Transitions wipe RaceDesk and
-// the results hub use, so the flip looks identical everywhere.
-function ThemeToggleButton() {
-  const { theme, toggle } = useTheme();
-  const light = theme === "light";
-  return (
-    <button
-      type="button"
-      className="desk-theme-toggle"
-      onClick={() => tripToggleTheme({ theme, toggle, onAfterSwap: undefined })}
-      aria-label={light ? "Switch to dark mode" : "Switch to light mode"}
-      title={light ? "Dark mode" : "Light mode"}
-    >
-      {light ? (
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" /></svg>
-      ) : (
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" aria-hidden><circle cx="12" cy="12" r="4.2" /><path d="M12 2.5v2M12 19.5v2M4.6 4.6l1.5 1.5M17.9 17.9l1.5 1.5M2.5 12h2M19.5 12h2M4.6 19.4l1.5-1.5M17.9 6.1l1.5-1.5" /></svg>
-      )}
-    </button>
-  );
-}
 
 function Eyebrow({ children, live }: { children: React.ReactNode; live?: boolean }) {
   return (
@@ -228,18 +203,6 @@ function DayStrip({ index, onPick }: { index: any; onPick: (date: string) => voi
 }
 
 export default function ResultsDesk() {
-  if (typeof document !== "undefined") {
-    // The hub stays dark-DEFAULT (the hero orb/sphere/video/ticker are
-    // built dark-only and never change) but now respects an explicit
-    // stored light preference — same opt-in pattern as RaceDesk — so the
-    // non-hero sections (docket, cards, rails, plates) can actually render
-    // light when toggled elsewhere in the onpoint theme system.
-    try {
-      let stored: string | null = null;
-      try { stored = localStorage.getItem("opa-theme"); } catch {}
-      document.documentElement.dataset.opaTheme = stored === "light" ? "light" : "dark";
-    } catch {}
-  }
   return (
     <ThemeProvider>
       <Desk />
@@ -625,7 +588,7 @@ function Desk() {
           <span className="desk-status-l"><span className="desk-pip" aria-hidden /> LIVE DESK <em>·</em> 2026 SEASON</span>
           <span className="desk-status-r">
             {coveredCount ? `${fmtInt(coveredCount)} contests` : "loading the season"} <em>·</em> auto-refresh 14s
-            <ThemeToggleButton />
+            
           </span>
         </div>
       </div>
@@ -1233,7 +1196,7 @@ body main > div > div { padding-top: 0 !important; padding-bottom: 0 !important;
 .desk-srow-st { display: inline-flex; align-items: center; justify-content: center; width: 100%; height: 24px; border-radius: 7px; background: rgba(var(--line-rgb),0.06); border: 1px solid rgba(var(--line-rgb),0.08); font-size: 11px; font-weight: 700; letter-spacing: 0.03em; color: rgba(var(--ink-rgb),calc(0.8 * var(--mute-k) + var(--floor))); }
 .desk-srow-main { min-width: 0; display: flex; flex-direction: column; gap: 2px; }
 .desk-srow-title { font-size: 13.5px; font-weight: 600; color: rgba(var(--ink-rgb),calc(0.92 * var(--mute-k) + var(--floor))); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.desk-hl { background: none; color: #fff; font-weight: 700; }
+.desk-hl { background: none; color: var(--hi); font-weight: 700; }
 .desk-srow-meta { font-size: 11px; color: rgba(var(--ink-rgb),calc(0.42 * var(--mute-k) + var(--floor))); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .desk-srow-right { display: flex; flex-direction: column; align-items: flex-end; gap: 1px; }
 .desk-srow-right b { font-size: 12px; font-weight: 700; white-space: nowrap; font-variant-numeric: tabular-nums; }
@@ -1351,7 +1314,7 @@ body main > div > div { padding-top: 0 !important; padding-bottom: 0 !important;
 @keyframes capIn { from { opacity: 0.2; } to { opacity: 1; } }
 .desk-plate-dots { position: absolute; left: 4px; bottom: 4px; z-index: 3; display: flex; gap: 4px; }
 .desk-plate-dots i { width: 4px; height: 4px; border-radius: 99px; background: rgba(var(--line-rgb),0.2); transition: background .35s ease, width .35s ease; }
-.desk-plate-dots i.on { width: 13px; background: color-mix(in srgb, var(--t,#2dd4bf) 75%, #fff); }
+.desk-plate-dots i.on { width: 13px; background: color-mix(in srgb, var(--t,#2dd4bf) 75%, var(--hi)); }
 .desk-plate-cap { display: flex; align-items: baseline; gap: 12px; border-top: 1px solid rgba(var(--line-rgb),0.1); padding: 10px 2px 0; }
 .desk-plate-no { flex-shrink: 0; font-family: var(--font-m); font-size: 9px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(45,212,191,0.65); }
 .desk-plate-body { min-width: 0; flex: 1; display: flex; flex-direction: column; gap: 2px; }
@@ -1516,7 +1479,7 @@ body main > div > div { padding-top: 0 !important; padding-bottom: 0 !important;
   border: 1px solid rgba(var(--line-rgb),0.13); box-shadow: 0 14px 32px -16px rgba(var(--line-rgb),0.85); }
 .pp-badge-pip { width: 7px; height: 7px; border-radius: 99px; background: #2dd4bf; box-shadow: 0 0 0 3px rgba(45,212,191,0.18); animation: desk-pip 1.8s ease-in-out infinite; }
 .pp-badge-lead { font-family: var(--font-b), "Manrope", sans-serif; font-size: 12.5px; font-weight: 700; color: var(--ink); letter-spacing: -0.01em; text-transform: uppercase; }
-.pp-badge-margin { font-family: var(--font-m); font-size: 11.5px; font-weight: 600; color: color-mix(in srgb, var(--pp-tone,#9ab) 70%, #fff); padding-left: 8px; border-left: 1px solid rgba(var(--line-rgb),0.14); }
+.pp-badge-margin { font-family: var(--font-m); font-size: 11.5px; font-weight: 600; color: color-mix(in srgb, var(--pp-tone,#9ab) 70%, var(--hi)); padding-left: 8px; border-left: 1px solid rgba(var(--line-rgb),0.14); }
 
 /* floating partisan-lean legend — bottom-left */
 .pp-legend { position: absolute; left: 14px; bottom: 64px; z-index: 4; display: inline-flex; align-items: center; gap: 8px;

@@ -5,18 +5,18 @@
 /* ---- inner page header extras ---- */
 .opp .rx-tabs { display: flex; gap: 4px; flex-wrap: wrap; margin-top: 16px; }
 .opp .rx-tabs a { font: 700 12px var(--font-b); color: var(--mute); padding: 6px 12px; border-radius: 999px; border: 1px solid transparent; transition: .15s; }
-.opp .rx-tabs a:hover { color: #fff; background: var(--glass2); }
-.opp .rx-tabs a[aria-current="page"] { color: var(--bg); background: #fff; }
+.opp .rx-tabs a:hover { color: var(--hi); background: var(--glass2); }
+.opp .rx-tabs a[aria-current="page"] { color: var(--bg); background: var(--hi); }
 .opp .rx-banner { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 16px; padding: 10px 14px; border-radius: 10px; background: var(--glass); border: 1px solid var(--line); font: 600 12.5px var(--font-b); color: var(--ink2); }
 .opp .rx-banner .eye { margin-right: 8px; }
-.opp .rx-banner a { color: #fff; font-weight: 700; }
+.opp .rx-banner a { color: var(--hi); font-weight: 700; }
 .opp .rx-banner a:hover { text-decoration: underline; text-underline-offset: 3px; }
 .opp .mono { font-family: var(--font-m); font-variant-numeric: tabular-nums; }
 .opp .pmeta b.mono { font-weight: 600; }
 
 /* feed notices: civicAPI down, stale refresh, nothing reported yet */
 .opp .rx-feed { display: flex; gap: 12px; align-items: flex-start; padding: 14px 16px; border-radius: 10px; border: 1px dashed var(--line2); background: var(--glass); color: var(--ink2); font-size: 13.5px; line-height: 1.55; }
-.opp .rx-feed b { color: #fff; display: block; font: 700 14px var(--font-d); letter-spacing: -.01em; margin-bottom: 2px; }
+.opp .rx-feed b { color: var(--hi); display: block; font: 700 14px var(--font-d); letter-spacing: -.01em; margin-bottom: 2px; }
 .opp .rx-feed .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--mute); margin-top: 6px; flex: 0 0 auto; }
 .opp .rx-feed.stale .dot { background: var(--ink2); }
 
@@ -24,11 +24,11 @@
 .opp .rx-row { display: grid; grid-template-columns: 1fr auto; gap: 12px; align-items: center; padding: 14px 18px; border-top: 1px solid var(--line); transition: background .15s; }
 .opp .rx-row:first-child { border-top: 0; }
 .opp .rx-row:hover { background: var(--glass2); }
-.opp .rx-row strong { display: block; font: 700 15px var(--font-d); letter-spacing: -.01em; color: #fff; }
+.opp .rx-row strong { display: block; font: 700 15px var(--font-d); letter-spacing: -.01em; color: var(--hi); }
 .opp .rx-row small { display: block; font-size: 13px; color: var(--ink2); margin-top: 2px; }
 .opp .rx-row .eye { display: block; margin-top: 6px; font-size: 10px; letter-spacing: .12em; }
 .opp .rx-row .go { font: 700 12px var(--font-b); color: var(--mute); white-space: nowrap; }
-.opp .rx-row:hover .go { color: #fff; }
+.opp .rx-row:hover .go { color: var(--hi); }
 .opp .rx-chips { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 10px; }
 .opp .rx-chip { display: flex; align-items: center; gap: 10px; padding: 11px 14px; background: var(--glass); border: 1px solid var(--line); border-radius: 10px; font-size: 13.5px; font-weight: 600; color: var(--ink); transition: .15s; }
 .opp .rx-chip:hover { border-color: var(--line2); background: var(--glass2); }
@@ -38,7 +38,7 @@
 /* countdown clock card */
 .opp .rx-clock .n { display: flex; gap: 16px; margin-top: 10px; }
 .opp .rx-clock .n div { text-align: center; }
-.opp .rx-clock .n b { font: 800 34px/1 var(--font-d); letter-spacing: -.03em; display: block; font-variant-numeric: tabular-nums; color: #fff; }
+.opp .rx-clock .n b { font: 800 34px/1 var(--font-d); letter-spacing: -.03em; display: block; font-variant-numeric: tabular-nums; color: var(--hi); }
 .opp .rx-clock .n span { font: 600 10px var(--font-m); letter-spacing: .14em; text-transform: uppercase; color: var(--mute); }
 
 /* ---- the election night boards (.desk): Michigan, Florida, Oklahoma and the generic night board ---- */
@@ -69,19 +69,19 @@
 .opp.desk .method .prose, .opp.desk .county-caveat { font-size: 13px; }
 
 /* buttons: glass pills, never party colors */
-.opp.desk .utility-button { font: 700 12px var(--font-b); letter-spacing: 0; text-transform: none; color: #fff; background: var(--glass2); border: 1px solid var(--line2); border-radius: 999px; padding: 6px 12px; }
-.opp.desk .utility-button:hover { background: rgba(255, 255, 255, .1); }
+.opp.desk .utility-button { font: 700 12px var(--font-b); letter-spacing: 0; text-transform: none; color: var(--hi); background: var(--glass2); border: 1px solid var(--line2); border-radius: 999px; padding: 6px 12px; }
+.opp.desk .utility-button:hover { background: rgba(var(--line-rgb),.1); }
 .opp.desk .utility-button.lg { padding: 9px 16px; font-size: 13px; }
 
 /* segmented controls: active is white with dark text */
-.opp.desk .rd-view-toggles, .opp.desk .rd-map-toggles, .opp.desk .rd-county-sorts { background: rgba(255, 255, 255, .06); border: 0; }
+.opp.desk .rd-view-toggles, .opp.desk .rd-map-toggles, .opp.desk .rd-county-sorts { background: rgba(var(--line-rgb),.06); border: 0; }
 .opp.desk .rd-view-toggles button, .opp.desk .rd-map-toggles button, .opp.desk .rd-county-sorts button { font: 700 12px var(--font-b); letter-spacing: 0; text-transform: none; color: var(--mute); }
-.opp.desk .rd-view-toggles button:hover, .opp.desk .rd-map-toggles button:hover, .opp.desk .rd-county-sorts button:hover { color: #fff; }
-.opp.desk .rd-view-toggles button.on, .opp.desk .rd-map-toggles button.on, .opp.desk .rd-county-sorts button.on { background: #fff; color: var(--bg); }
+.opp.desk .rd-view-toggles button:hover, .opp.desk .rd-map-toggles button:hover, .opp.desk .rd-county-sorts button:hover { color: var(--hi); }
+.opp.desk .rd-view-toggles button.on, .opp.desk .rd-map-toggles button.on, .opp.desk .rd-county-sorts button.on { background: var(--hi); color: var(--bg); }
 
 /* rings: an opaque hole, the reporting ring is ink (it is not a party number) */
 .opp.desk .prob-ring::before, .opp.desk .rep-ring::before { background: #130d1c; box-shadow: inset 0 0 0 1px var(--line); }
-.opp.desk .rep-ring { background: conic-gradient(from -90deg, var(--ink) calc(var(--value) * 1%), rgba(255, 255, 255, .08) 0); }
+.opp.desk .rep-ring { background: conic-gradient(from -90deg, var(--ink) calc(var(--value) * 1%), rgba(var(--line-rgb),.08) 0); }
 
 /* county tables: sticky rows need an opaque ground */
 .opp.desk .rd-county-tablewrap { background: var(--glass); border-color: var(--line); }
@@ -94,13 +94,13 @@
 .opp.desk .rd-county-search input { font-family: var(--font-b); }
 
 /* map chrome */
-.opp.desk .rd-map { background: rgba(255, 255, 255, .02); border-color: var(--line); }
+.opp.desk .rd-map { background: rgba(var(--line-rgb),.02); border-color: var(--line); }
 .opp.desk .rd-map-legend { font: 500 11px var(--font-m); color: var(--mute); }
-.opp.desk .fl-zoom, .opp.desk .ok-zoom, .opp.desk .mi-zoom { background: rgba(17, 0, 25, .9); border-color: var(--line2); box-shadow: 0 8px 24px rgba(0, 0, 0, .4); }
+.opp.desk .fl-zoom, .opp.desk .ok-zoom, .opp.desk .mi-zoom { background: rgba(var(--bg2-rgb),.9); border-color: var(--line2); box-shadow: 0 8px 24px rgba(0, 0, 0, .4); }
 .opp.desk .fl-zoom button, .opp.desk .ok-zoom button, .opp.desk .mi-zoom button { background: transparent; color: var(--ink2); }
-.opp.desk .fl-zoom button:hover:not(:disabled), .opp.desk .ok-zoom button:hover:not(:disabled), .opp.desk .mi-zoom button:hover:not(:disabled) { background: var(--glass2); color: #fff; }
-.opp.desk .fl-tip, .opp.desk .ok-tip, .opp.desk .mi-tip, .opp.desk .sc-tip { background: rgba(17, 0, 25, .94); backdrop-filter: blur(10px); border: 1px solid var(--line2); border-radius: 10px; box-shadow: 0 12px 40px rgba(0, 0, 0, .5); font-family: var(--font-b); color: var(--ink2); }
-.opp.desk .fl-tip strong, .opp.desk .ok-tip strong, .opp.desk .mi-tip strong, .opp.desk .sc-tip strong { font-family: var(--font-d); color: #fff; }
+.opp.desk .fl-zoom button:hover:not(:disabled), .opp.desk .ok-zoom button:hover:not(:disabled), .opp.desk .mi-zoom button:hover:not(:disabled) { background: var(--glass2); color: var(--hi); }
+.opp.desk .fl-tip, .opp.desk .ok-tip, .opp.desk .mi-tip, .opp.desk .sc-tip { background: rgba(var(--bg2-rgb),.94); backdrop-filter: blur(10px); border: 1px solid var(--line2); border-radius: 10px; box-shadow: 0 12px 40px rgba(0, 0, 0, .5); font-family: var(--font-b); color: var(--ink2); }
+.opp.desk .fl-tip strong, .opp.desk .ok-tip strong, .opp.desk .mi-tip strong, .opp.desk .sc-tip strong { font-family: var(--font-d); color: var(--hi); }
 .opp.desk .fl-tip-row, .opp.desk .ok-tip-row, .opp.desk .mi-tip-row, .opp.desk .sc-tip-row { font-family: var(--font-m); font-variant-numeric: tabular-nums; }
 
 /* slate cards, swing boxes, banners */
@@ -119,7 +119,7 @@
 .opp.desk .winner-badge, .opp.desk .topline-check, .opp.desk .l4-check { color: var(--bg); background: var(--win); }
 .opp.desk .winner-copy span { font-size: 10px; }
 .opp.desk .winner-copy strong { font-family: var(--font-d); font-weight: 800; }
-.opp.desk .sc-map-frame { background: rgba(255, 255, 255, .02); border-color: var(--line); }
+.opp.desk .sc-map-frame { background: rgba(var(--line-rgb),.02); border-color: var(--line); }
 .opp.desk .sc-note, .opp.desk .sc-deck { font-size: 13px; }
 
 @media (prefers-reduced-motion: reduce) {

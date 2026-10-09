@@ -64,7 +64,7 @@ export default function Page() {
           <Link className="btn g" href="/contact">Contact the desk</Link>
           <Link className="btn" href="/tpsi/polls">See recent polls</Link>
         </div>
-        <Icon size={260} className="icon" style={{ color: "#fff" }} />
+        <Icon size={260} className="icon" style={{ color: "var(--hi)" }} />
       </section>
       <style>{`
         .opp .svc-row { display: grid; grid-template-columns: 100px 1fr; gap: 14px; padding: 15px 18px; border-top: 1px solid var(--line); }

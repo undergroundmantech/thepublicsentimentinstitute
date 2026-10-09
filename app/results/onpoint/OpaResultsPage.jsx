@@ -9,19 +9,19 @@ import { ThemeProvider } from "./lib/theme.jsx";
 // token, so mounting the hub never recolors the rest of the page. Dark only.
 export const OPA_GLOBAL_CSS = `
   :root {
-    --page: var(--bg); --page-elev: rgba(255,255,255,.035); --page-sunken: var(--bg);
-    --card: rgba(255,255,255,.035); --card-2: rgba(255,255,255,.06); --card-bd: var(--line);
-    --ink-strong: #ffffff;
+    --page: var(--bg); --page-elev: rgba(var(--line-rgb),.035); --page-sunken: var(--bg);
+    --card: rgba(var(--line-rgb),.035); --card-2: rgba(var(--line-rgb),.06); --card-bd: var(--line);
+    --ink-strong: var(--hi);
     --ink-mute: var(--ink2); --ink-dim: var(--mute); --ink-dimmer: var(--mute2);
-    --rule: var(--line); --rule-soft: rgba(255,255,255,.05); --rule-strong: var(--line2);
-    --wash: rgba(255,255,255,.06); --hover: rgba(255,255,255,.08); --hair: var(--line);
-    --page-rgb: 10,7,17;
-    --frost-bg: rgba(255,255,255,.035);
+    --rule: var(--line); --rule-soft: rgba(var(--line-rgb),.05); --rule-strong: var(--line2);
+    --wash: rgba(var(--line-rgb),.06); --hover: rgba(var(--line-rgb),.08); --hair: var(--line);
+    --page-rgb: var(--canvas-rgb);
+    --frost-bg: rgba(var(--line-rgb),.035);
     --frost-shadow: 0 0 0 1px var(--line);
     --shadow-pop: 0 12px 40px rgba(0,0,0,.5);
-    --accent: #ffffff; --accent-soft: rgba(255,255,255,.14); --accent-dim: rgba(255,255,255,.55);
+    --accent: var(--hi); --accent-soft: rgba(var(--line-rgb),.14); --accent-dim: rgba(var(--line-rgb),.55);
     --neutral: #3a3348;
-    --scrollbar-thumb: rgba(255,255,255,.14); --scrollbar-thumb-hover: rgba(255,255,255,.24); --selection: rgba(255,255,255,.14);
+    --scrollbar-thumb: rgba(var(--line-rgb),.14); --scrollbar-thumb-hover: rgba(var(--line-rgb),.24); --selection: rgba(var(--line-rgb),.14);
   }
   .opa-results-shell * { box-sizing: border-box; }
   .opa-results-shell ::-webkit-scrollbar { width: 6px; height: 6px; }

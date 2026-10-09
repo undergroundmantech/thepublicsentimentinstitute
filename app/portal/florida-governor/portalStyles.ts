@@ -8,7 +8,7 @@
 export const PORTAL_CSS = `
 .pd{
   --k1:#B23A2E; --k2:#1E6E86; --k3:#8a63ef; --k4:#e8b93c; --k5:#8A929C;
-  --map-stroke:rgba(255,255,255,.10); --map-blank:#2e2e36; --ramp-lo:rgb(30,30,36);
+  --map-stroke:rgba(var(--line-rgb),.10); --map-blank:#2e2e36; --ramp-lo:rgb(30,30,36);
   --mono:var(--font-m);
   --sans:var(--font-b);
   --r-panel:14px; --r-card:10px;

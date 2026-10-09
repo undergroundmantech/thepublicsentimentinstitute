@@ -34,18 +34,18 @@ export default function SmsOptInPage() {
         .sms .sms-label .req { color: var(--ink); margin-left: 3px; }
         .sms .sms-input { width: 100%; padding: 11px 14px; border-radius: 10px; border: 1px solid var(--line2); background: var(--glass2); color: var(--ink); font: 500 14px var(--font-b); outline: none; transition: border-color .15s, box-shadow .15s; -webkit-appearance: none; }
         .sms .sms-input::placeholder { color: var(--mute2); }
-        .sms .sms-input:focus-visible { border-color: #fff; box-shadow: 0 0 0 3px rgba(255,255,255,.18); outline: none; }
+        .sms .sms-input:focus-visible { border-color: var(--hi); box-shadow: 0 0 0 3px rgba(var(--line-rgb),.18); outline: none; }
         .sms .sms-consent { display: grid; grid-template-columns: 18px 1fr; gap: 12px; align-items: start; padding: 14px; border-radius: 10px; border: 1px solid var(--line); background: var(--glass); cursor: pointer; transition: border-color .15s; }
         .sms .sms-consent:hover { border-color: var(--line2); }
-        .sms .sms-consent:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+        .sms .sms-consent:focus-visible { outline: 2px solid var(--hi); outline-offset: 2px; }
         .sms .sms-box { width: 18px; height: 18px; border-radius: 5px; border: 1px solid var(--line2); background: var(--glass2); display: grid; place-items: center; margin-top: 1px; }
-        .sms .sms-box.on { background: #fff; border-color: #fff; }
+        .sms .sms-box.on { background: var(--hi); border-color: var(--hi); }
         .sms .sms-box.on i { width: 8px; height: 8px; border-radius: 2px; background: var(--bg); display: block; }
         .sms .sms-consent p { font-size: 12px; line-height: 1.6; color: var(--mute); margin: 0; }
         .sms .sms-consent a { color: var(--ink); text-decoration: underline; text-underline-offset: 2px; }
         .sms .sms-error { font-size: 13px; color: var(--ink); padding: 10px 14px; border-radius: 10px; border: 1px solid var(--line2); background: var(--glass2); }
         .sms .sms-submit { width: 100%; justify-content: center; padding: 12px 18px; font-size: 14px; }
-        .sms .sms-submit:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+        .sms .sms-submit:focus-visible { outline: 2px solid var(--hi); outline-offset: 3px; }
         .sms .sms-done { text-align: center; display: grid; gap: 10px; justify-items: center; padding: 18px 4px; }
         .sms .sms-done .ok { width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; background: rgba(61,220,151,.14); color: var(--win); font-weight: 800; font-size: 18px; }
         .sms .sms-done p { font-size: 14px; margin: 0; max-width: 34ch; }

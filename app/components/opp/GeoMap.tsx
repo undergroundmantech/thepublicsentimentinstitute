@@ -22,13 +22,13 @@ export default function GeoMap({ paths, fills, tips, hrefs, highlight, label, W 
           {paths.map((p, i) => {
             const t = tips[p.id];
             const el = (
-              <path key={p.id} d={p.d} fill={fills[p.id] ?? "rgba(255,255,255,.08)"} style={{ strokeWidth: 1 / sc, animationDelay: `${Math.min(i, 250) * 4}ms`, opacity: highlight && highlight !== p.id ? undefined : undefined }}
+              <path key={p.id} d={p.d} fill={fills[p.id] ?? "rgba(var(--line-rgb),.08)"} style={{ strokeWidth: 1 / sc, animationDelay: `${Math.min(i, 250) * 4}ms`, opacity: highlight && highlight !== p.id ? undefined : undefined }}
                 onMouseMove={(e) => t && show(<><b>{t.title}</b>{t.rows.map(([k, v, c]) => <div className="row" key={k}><span>{k}</span><span style={c ? { color: c } : undefined}>{v}</span></div>)}</>, e)}
                 onMouseLeave={hide} />
             );
             return hrefs?.[p.id] ? <Link key={p.id} href={hrefs[p.id]} aria-label={t?.title}>{el}</Link> : el;
           })}
-          {hl && <path d={hl.d} fill="none" stroke="#fff" strokeWidth={2.4 / sc} style={{ pointerEvents: "none", opacity: 1, animation: "none" }} />}
+          {hl && <path d={hl.d} fill="none" stroke="var(--hi)" strokeWidth={2.4 / sc} style={{ pointerEvents: "none", opacity: 1, animation: "none" }} />}
         </g>
       </svg>
       <Tip tip={tip} />

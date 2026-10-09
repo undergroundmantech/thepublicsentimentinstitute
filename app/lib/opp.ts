@@ -6,7 +6,7 @@ export const RATE = {
   safeD: "#1a3fb0", likelyD: "#3d7bff", leanD: "#a6c2ff",
   toss: "#e7b341",
   leanR: "#ffb3c0", likelyR: "#ff3b5c", safeR: "#b0163a",
-  ind: "#b78cff", none: "rgba(255,255,255,.08)",
+  ind: "#b78cff", none: "rgba(var(--line-rgb),.08)",
 } as const;
 export type Rating = keyof typeof RATE;
 

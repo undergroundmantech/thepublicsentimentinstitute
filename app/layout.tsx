@@ -2,18 +2,19 @@ import "./globals.css";
 import "./opp.css";
 
 import type { Metadata, Viewport } from "next";
-import { Sora, Manrope, JetBrains_Mono } from "next/font/google";
+import { Geist, JetBrains_Mono } from "next/font/google";
 import Navbar from "./components/Navbar";
 import TickerBar from "./components/TickerBar";
 import Footer from "./components/Footer";
 import Ambient from "./components/Ambient";
 import RolloutGate from "./components/RolloutGate";
+import { THEME_INIT_SCRIPT } from "./lib/theme";
 
-// OnPoint Politics type: Sora for headlines and big numbers, Manrope for body,
-// JetBrains Mono for anything tabular. globals.css maps these to --font-d, --font-b, --font-m.
-const sora = Sora({ subsets: ["latin"], variable: "--font-sora", display: "swap" });
-const manrope = Manrope({ subsets: ["latin"], variable: "--font-manrope", display: "swap" });
-const jbm = JetBrains_Mono({ subsets: ["latin"], variable: "--font-jbm", display: "swap" });
+// Same type system as the main site: Geist for display and body, JetBrains Mono for data.
+// globals.css maps --font-display, --font-body and --font-numeric to --font-d, --font-b, --font-m.
+const display = Geist({ subsets: ["latin"], variable: "--font-display", display: "swap" });
+const body = Geist({ subsets: ["latin"], variable: "--font-body", display: "swap" });
+const numeric = JetBrains_Mono({ subsets: ["latin"], weight: ["500", "700", "800"], variable: "--font-numeric", display: "swap" });
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://onpointpolitics.com"),
@@ -24,11 +25,14 @@ export const metadata: Metadata = {
   twitter: { card: "summary_large_image" },
 };
 
-export const viewport: Viewport = { themeColor: "#110019", colorScheme: "dark" };
+export const viewport: Viewport = { themeColor: "#110019", colorScheme: "dark light" };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" data-theme="dark" className={`${sora.variable} ${manrope.variable} ${jbm.variable}`} suppressHydrationWarning>
+    <html lang="en" data-theme="dark" className={`${display.variable} ${body.variable} ${numeric.variable}`} suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
+      </head>
       <body suppressHydrationWarning>
         <RolloutGate />
         <Ambient />
