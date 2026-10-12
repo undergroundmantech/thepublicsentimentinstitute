@@ -44,6 +44,7 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "CA-GOV-2026", "pollster": "PPIC", "startDate": "2026-09-04", "endDate": "2026-09-10", "sampleSize": 1103, "sampleType": "LV", "results": {"Xavier Becerra (D)": 60.0, "Steve Hilton (R)": 38.0, "Other": 1.0, "Undecided": 1.0}},
     {"raceId": "CA-GOV-2026", "pollster": "Berkeley IGS", "startDate": "2026-09-15", "endDate": "2026-09-20", "sampleSize": 4512, "sampleType": "LV", "results": {"Xavier Becerra (D)": 58.0, "Steve Hilton (R)": 33.0, "Undecided": 9.0}},
     {"raceId": "CA-GOV-2026", "pollster": "Independent Voter Project", "startDate": "2026-09-23", "endDate": "2026-10-02", "sampleSize": 2906, "sampleType": "LV", "results": {"Xavier Becerra (D)": 48.0, "Steve Hilton (R)": 38.0, "Undecided": 14.0}},
-    {"raceId": "CA-GOV-2026", "pollster": "David Wolfson for Hilton (R)", "startDate": "2026-10-01", "endDate": "2026-10-02", "sampleSize": 1020, "sampleType": "RV", "results": {"Xavier Becerra (D)": 45.7, "Steve Hilton (R)": 40.1, "Other": 0.1, "Undecided": 14.1}, "notes": "Hilton campaign poll; voter type not published, entered as registered voters."}
+    {"raceId": "CA-GOV-2026", "pollster": "David Wolfson for Hilton (R)", "startDate": "2026-10-01", "endDate": "2026-10-02", "sampleSize": 1020, "sampleType": "RV", "results": {"Xavier Becerra (D)": 45.7, "Steve Hilton (R)": 40.1, "Other": 0.1, "Undecided": 14.1}, "notes": "Hilton campaign poll; voter type not published, entered as registered voters."},
+    {"raceId": "CA-GOV-2026", "pollster": "Manhattan Institute", "startDate": "2026-09-24", "endDate": "2026-10-01", "sampleSize": 1000, "sampleType": "LV", "results": {"Xavier Becerra (D)": 57.0, "Steve Hilton (R)": 38.0, "Undecided": 5.0}}
   ],
 };

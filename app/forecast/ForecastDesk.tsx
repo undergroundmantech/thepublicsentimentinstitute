@@ -1834,9 +1834,14 @@ const CSS = `
 .fc-legend .mono { font-family: ${MONO}; font-size: 11px; color: var(--ink2); }
 .fc-ramp { flex: 1; max-width: 300px; margin: 0 !important; }
 .fc-legend-note { width: 100%; text-align: center; font-size: 12px; }
-.fc-tip { position: fixed; z-index: 80; font-family: var(--font-b); color: var(--ink2); width: 274px; padding: 12px 14px; border-radius: 12px; pointer-events: none;
-  background: var(--fc-elev); border: 1px solid rgba(var(--fc-line-rgb),0.13); box-shadow: var(--fc-elev-shadow);
-  -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); }
+/* The tips are portaled to document.body, outside .fc-page, so they carry their own tokens.
+   Before, every --fc-* token was undefined there and the card rendered see-through over the map. */
+.fc-tip { --fc-ink-rgb: 243,239,248; --fc-line-rgb: var(--line-rgb); --fc-mute: 1; --fc-floor: 0.13; --fc-struct: 1.25;
+  --fc-dem: var(--dem2); --fc-gop: var(--gop2);
+  position: fixed; z-index: 80; font-family: var(--font-b); color: var(--ink2); width: 274px; padding: 12px 14px; border-radius: 12px; pointer-events: none;
+  background: rgba(var(--bg2-rgb),.98); border: 1px solid var(--line2);
+  box-shadow: 0 14px 36px rgba(0,0,0,.45), inset 0 1px 0 rgba(var(--line-rgb),.06); }
+:root[data-theme="light"] .fc-tip { --fc-ink-rgb: 17,0,25; box-shadow: 0 12px 30px rgba(17,0,25,.14); }
 .fc-tip-name { font-family: var(--font-d); font-weight: 700; font-size: 14px; letter-spacing: -0.01em; color: var(--hi); }
 .fc-tip-row { display: flex; align-items: center; gap: 8px; margin-top: 8px; font-size: 13.5px; }
 .fc-tip-row i { width: 3px; height: 16px; flex-shrink: 0; }

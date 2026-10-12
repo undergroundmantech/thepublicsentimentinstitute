@@ -75,6 +75,7 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "NC-SEN-2026", "pollster": "Quantus Insights", "startDate": "2026-09-21", "endDate": "2026-09-22", "sampleSize": 686, "sampleType": "LV", "results": {"Roy Cooper (D)": 48.4, "Michael Whatley (R)": 43.3, "Other": 1.6, "Undecided": 3.6}},
     {"raceId": "NC-SEN-2026", "pollster": "Rasmussen Reports", "startDate": "2026-09-22", "endDate": "2026-09-22", "sampleSize": 1047, "sampleType": "LV", "results": {"Roy Cooper (D)": 48.0, "Michael Whatley (R)": 41.0, "Other": 4.0, "Undecided": 7.0}},
     {"raceId": "NC-SEN-2026", "pollster": "Catawba College/YouGov", "startDate": "2026-09-04", "endDate": "2026-09-15", "sampleSize": 885, "sampleType": "LV", "results": {"Roy Cooper (D)": 47.0, "Michael Whatley (R)": 35.0, "Undecided": 18.0}, "notes": "Undecided and other combined."},
-    {"raceId": "NC-SEN-2026", "pollster": "East Carolina University", "startDate": "2026-09-30", "endDate": "2026-10-03", "sampleSize": 810, "sampleType": "LV", "moe": 4.0, "results": {"Roy Cooper (D)": 50.0, "Michael Whatley (R)": 43.0, "Other": 2.0, "Undecided": 5.0}}
+    {"raceId": "NC-SEN-2026", "pollster": "East Carolina University", "startDate": "2026-09-30", "endDate": "2026-10-03", "sampleSize": 810, "sampleType": "LV", "moe": 4.0, "results": {"Roy Cooper (D)": 50.0, "Michael Whatley (R)": 43.0, "Other": 2.0, "Undecided": 5.0}},
+    {"raceId": "NC-SEN-2026", "pollster": "Trafalgar Group (R)", "startDate": "2026-10-08", "endDate": "2026-10-10", "sampleSize": 1091, "sampleType": "LV", "results": {"Roy Cooper (D)": 49.0, "Michael Whatley (R)": 41.0, "Other": 3.0, "Undecided": 7.0}}
   ],
 };

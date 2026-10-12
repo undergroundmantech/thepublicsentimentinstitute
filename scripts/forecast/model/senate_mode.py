@@ -792,7 +792,10 @@ EXTRA_POLLS = {
     "VTG": [dict(source="University of New Hampshire", dates="September 17-21, 2026", end="2026-09-21", n=835, pop="LV", D=49, R=43, O=2, U=6)],
     # Oct 8 morning sweep: Guidant Polling for Public First Action, released Oct 7; field dates, sample size and voter type not
     # published, entered as LV with 600 ending Oct 5. Two ballots, 48 to 43 and 49 to 45, averaged into one row.
-    "MI": [# Oct 9 2026, supplied by the user: Z to A Research for Rust Belt Rising, Sept 28-Oct 1 2026, 483 voters, part of a
+    "MI": [# Oct 12 2026, supplied by the user: InsiderAdvantage Oct 9-10, 1,200 LV; Wedgewood Oct 8-9, 867 LV, forced choice.
+           dict(source="InsiderAdvantage", dates="October 9-10, 2026", end="2026-10-10", n=1200, pop="LV", D=48, R=46, O=0, U=6),
+           dict(source="Wedgewood Polls", dates="October 8-9, 2026", end="2026-10-09", n=867, pop="LV", D=53, R=47, O=0, U=0),
+           # Oct 9 2026, supplied by the user: Z to A Research for Rust Belt Rising, Sept 28-Oct 1 2026, 483 voters, part of a
            # 1,430 voter MI PA WI sample; voter type not given, entered as RV; other 3, undecided by subtraction.
            dict(source="Z to A Research for Rust Belt Rising (D)", dates="September 28-October 1, 2026", end="2026-10-01", n=483, pop="RV", D=49, R=42, O=3, U=6),
            dict(source="Guidant Polling for Public First Action", dates="October 2026 field dates not published", end="2026-10-05", n=600, pop="LV", D=48.5, R=44, O=1, U=6.5),

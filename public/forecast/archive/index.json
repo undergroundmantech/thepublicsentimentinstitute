@@ -181,6 +181,32 @@
      "n_sims": 10000
     }
    }
+  },
+  {
+   "date": "2026-10-12",
+   "n_sims": 10000,
+   "chambers": {
+    "senate": {
+     "d_control": 87.89,
+     "d_seats_median": 53.0,
+     "p10": 50.0,
+     "p90": 56.0,
+     "d_control_without_osborn": 84.66
+    },
+    "governors": {
+     "d_majority": 92.79,
+     "d_median": 28.0,
+     "p10": 26.0,
+     "p90": 31.0
+    },
+    "house": {
+     "d_majority": 94.97,
+     "d_seats_median": 247.0,
+     "p10": 222.0,
+     "p90": 279.0,
+     "n_sims": 10000
+    }
+   }
   }
  ]
 }
