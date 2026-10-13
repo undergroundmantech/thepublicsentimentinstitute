@@ -2,7 +2,7 @@
 // Arkansas — 2026 U.S. Senate: Hallie Shoffner (D) vs. Tom Cotton (R)
 // Generated from the TPSI forecast poll feed (run of 2026-09-22), merged with
 // the polls this file already carried. Polls of matchups that are not on the
-// ballot were dropped. Newest poll: 2026-08-18.
+// ballot were dropped. Newest poll: 2026-10-04.
 
 export type SampleType = "LV" | "RV" | "A";
 
@@ -39,6 +39,7 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "AR-SEN-2026", "pollster": "GrayHouse (R)", "startDate": "2026-02-07", "endDate": "2026-02-09", "sampleSize": 550, "sampleType": "LV", "results": {"Hallie Shoffner (D)": 36.0, "Tom Cotton (R)": 58.0, "Undecided": 7.0}},
     {"raceId": "AR-SEN-2026", "pollster": "2040 Strategy Group (D)", "startDate": "2026-07-17", "endDate": "2026-07-25", "sampleSize": 586, "sampleType": "LV", "results": {"Hallie Shoffner (D)": 43.0, "Tom Cotton (R)": 46.0, "Undecided": 11.0}},
     {"raceId": "AR-SEN-2026", "pollster": "Hendrix College", "startDate": "2026-08-11", "endDate": "2026-08-12", "sampleSize": 1217, "sampleType": "LV", "results": {"Hallie Shoffner (D)": 47.0, "Tom Cotton (R)": 44.0, "Other": 3.0, "Undecided": 6.0}},
-    {"raceId": "AR-SEN-2026", "pollster": "J.L. Partners", "startDate": "2026-08-14", "endDate": "2026-08-18", "sampleSize": 803, "sampleType": "LV", "results": {"Hallie Shoffner (D)": 35.0, "Tom Cotton (R)": 51.0, "Other": 4.0, "Undecided": 11.0}}
+    {"raceId": "AR-SEN-2026", "pollster": "J.L. Partners", "startDate": "2026-08-14", "endDate": "2026-08-18", "sampleSize": 803, "sampleType": "LV", "results": {"Hallie Shoffner (D)": 35.0, "Tom Cotton (R)": 51.0, "Other": 4.0, "Undecided": 11.0}},
+    {"raceId": "AR-SEN-2026", "pollster": "GrayHouse (R)", "startDate": "2026-09-30", "endDate": "2026-10-04", "sampleSize": 550, "sampleType": "LV", "results": {"Hallie Shoffner (D)": 39.0, "Tom Cotton (R)": 50.0, "Other": 4.0, "Undecided": 7.0}}
   ],
 };

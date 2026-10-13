@@ -2,7 +2,7 @@
 // New Mexico — 2026 Governor: Deb Haaland (D) vs. Gregg Hull (R)
 // Generated from the TPSI forecast poll feed (run of 2026-09-22), merged with
 // the polls this file already carried. Polls of matchups that are not on the
-// ballot were dropped. Newest poll: 2026-08-28.
+// ballot were dropped. Newest poll: 2026-10-09.
 
 export type SampleType = "LV" | "RV" | "A";
 
@@ -39,6 +39,7 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "NM-GOV-2026", "pollster": "McLaughlin & Associates (R) for the Hull campaign", "startDate": "2026-07-13", "endDate": "2026-07-15", "sampleSize": 400, "sampleType": "LV", "results": {"Deb Haaland (D)": 46.0, "Gregg Hull (R)": 45.0, "Undecided": 9.0}},
     {"raceId": "NM-GOV-2026", "pollster": "BSP Research", "startDate": "2026-07-22", "endDate": "2026-08-07", "sampleSize": 800, "sampleType": "RV", "results": {"Deb Haaland (D)": 41.0, "Gregg Hull (R)": 24.0, "Other": 3.0, "Undecided": 27.0}},
     {"raceId": "NM-GOV-2026", "pollster": "Research & Polling for the Albuquerque Journal", "startDate": "2026-08-28", "endDate": "2026-08-28", "sampleSize": 516, "sampleType": "LV", "results": {"Deb Haaland (D)": 49.0, "Gregg Hull (R)": 43.0, "Undecided": 8.0}},
+    {"raceId": "NM-GOV-2026", "pollster": "SurveyUSA", "startDate": "2026-09-25", "endDate": "2026-09-30", "sampleSize": 567, "sampleType": "LV", "results": {"Deb Haaland (D)": 47.0, "Gregg Hull (R)": 41.0, "Undecided": 12.0}},
     {"raceId": "NM-GOV-2026", "pollster": "SurveyUSA for KOB 4", "startDate": "2026-10-02", "endDate": "2026-10-02", "sampleSize": 567, "sampleType": "LV", "results": {"Deb Haaland (D)": 47.0, "Gregg Hull (R)": 41.0, "Undecided": 12.0}, "notes": "Released Oct 5; field dates not published, so the dates shown are placeholders."},
     {"raceId": "NM-GOV-2026", "pollster": "Research & Polling for the Albuquerque Journal", "startDate": "2026-10-01", "endDate": "2026-10-09", "sampleSize": 1125, "sampleType": "LV", "results": {"Deb Haaland (D)": 49.0, "Gregg Hull (R)": 42.0, "Undecided": 9.0}}
   ],

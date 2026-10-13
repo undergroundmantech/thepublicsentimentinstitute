@@ -2,7 +2,7 @@
 // Connecticut — 2026 Governor: Ned Lamont (D) vs. Ryan Fazio (R)
 // Generated from the TPSI forecast poll feed (run of 2026-09-22), merged with
 // the polls this file already carried. Polls of matchups that are not on the
-// ballot were dropped. Newest poll: 2026-08-24.
+// ballot were dropped. Newest poll: 2026-09-21.
 
 export type SampleType = "LV" | "RV" | "A";
 
@@ -39,6 +39,9 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "CT-GOV-2026", "pollster": "University of New Hampshire", "startDate": "2026-06-18", "endDate": "2026-06-23", "sampleSize": 828, "sampleType": "LV", "results": {"Ned Lamont (D)": 49.0, "Ryan Fazio (R)": 36.0, "Other": 2.0, "Undecided": 12.0}},
     {"raceId": "CT-GOV-2026", "pollster": "Sacred Heart University / WFSB / CT Insider", "startDate": "2026-07-21", "endDate": "2026-07-26", "sampleSize": 1000, "sampleType": "RV", "results": {"Ned Lamont (D)": 50.0, "Ryan Fazio (R)": 30.0, "Other": 1.0, "Undecided": 20.0}},
     {"raceId": "CT-GOV-2026", "pollster": "University of New Hampshire", "startDate": "2026-08-24", "endDate": "2026-08-24", "sampleSize": 809, "sampleType": "LV", "results": {"Ned Lamont (D)": 52.0, "Ryan Fazio (R)": 37.0, "Other": 3.0, "Undecided": 9.0}},
+    {"raceId": "CT-GOV-2026", "pollster": "GreatBlue Research", "startDate": "2026-09-01", "endDate": "2026-09-08", "sampleSize": 1000, "sampleType": "RV", "results": {"Ned Lamont (D)": 48.0, "Ryan Fazio (R)": 34.0, "Undecided": 18.0}},
+    {"raceId": "CT-GOV-2026", "pollster": "Quinnipiac University Polling Institute", "startDate": "2026-09-08", "endDate": "2026-09-14", "sampleSize": 1288, "sampleType": "LV", "results": {"Ned Lamont (D)": 55.0, "Ryan Fazio (R)": 38.0, "Other": 2.0, "Undecided": 5.0}},
+    {"raceId": "CT-GOV-2026", "pollster": "co/efficient (R)", "startDate": "2026-09-16", "endDate": "2026-09-17", "sampleSize": 979, "sampleType": "LV", "results": {"Ned Lamont (D)": 48.0, "Ryan Fazio (R)": 41.0, "Undecided": 11.0}},
     {"raceId": "CT-GOV-2026", "pollster": "University of New Hampshire", "startDate": "2026-09-17", "endDate": "2026-09-21", "sampleSize": 540, "sampleType": "LV", "moe": 4.2, "results": {"Ned Lamont (D)": 55.0, "Ryan Fazio (R)": 38.0, "Other": 1.0, "Undecided": 6.0}}
   ],
 };

@@ -1,12 +1,14 @@
 source,dates,end,n,pop,R,D,O,U
-Mason-Dixon for the Star Tribune,October 5-7 2026 dates read from 10/5-7 as supplied,2026-10-07,800,LV,43,47,0,10
-Morning Consult,October 2-7 2026,2026-10-07,1000,RV,41,45,0,14
+Mason-Dixon for the Star Tribune,October 5-7 2026 dates read from 10/5-7 as supplied,2026-10-07,800,LV,43.0,47.0,0.0,10.0
+Morning Consult,October 2-7 2026,2026-10-07,1000,RV,41.0,45.0,0.0,14.0
 Big Data Poll,September 29-30 2026,2026-09-30,622,LV,43.6,45.8,5.2,5.4
-co/efficient (R),September 14-15 2026,2026-09-15,833,LV,42,43,4,11
-Quantus Insights,September 8-10 2026,2026-09-10,720,LV,44,48,0,7
-KSTP/SurveyUSA,September 9-14 2026,2026-09-14,654,LV,42,42,4,12
-TIPP Insights (R),August 31-September 2 2026,2026-09-02,1494,RV,38,40,8,14
-TIPP Insights (R),August 31-September 2 2026,2026-09-02,1201,LV,42,44,6,8
-Deep Root Analytics (R),August 17-18 2026,2026-08-18,597,RV,45,50,0,5
-KTSP/SurveyUSA,August 13-17 2026,2026-08-17,661,LV,41,46,2,11
-InsiderAdvantage,September 28-29 2026,2026-09-29,1200,LV,45,46,3,6
+co/efficient (R),September 14-15 2026,2026-09-15,833,LV,42.0,43.0,4.0,11.0
+Quantus Insights,September 8-10 2026,2026-09-10,720,LV,44.0,48.0,0.0,7.0
+KSTP/SurveyUSA,September 9-14 2026,2026-09-14,654,LV,42.0,42.0,4.0,12.0
+TIPP Insights (R),August 31-September 2 2026,2026-09-02,1494,RV,38.0,40.0,8.0,14.0
+TIPP Insights (R),August 31-September 2 2026,2026-09-02,1201,LV,42.0,44.0,6.0,8.0
+Deep Root Analytics (R),August 17-18 2026,2026-08-18,597,RV,45.0,50.0,0.0,5.0
+KTSP/SurveyUSA,August 13-17 2026,2026-08-17,661,LV,41.0,46.0,2.0,11.0
+InsiderAdvantage,September 28-29 2026,2026-09-29,1200,LV,45.0,46.0,3.0,6.0
+Rasmussen Reports (R),October 5-7 2026,2026-10-07,856,LV,45.0,48.0,0.0,7.0
+GQR (D),October 1-4 2026,2026-10-04,800,LV,44.0,53.0,0.0,3.0

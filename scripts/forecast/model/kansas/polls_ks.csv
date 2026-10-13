@@ -1,14 +1,15 @@
 source,dates,end,n,pop,R,D,O,U
-InsiderAdvantage,October 9-10 2026 sample size not given so 1200 placeholder from the same release,2026-10-10,1200,LV,47,48,0,5
+InsiderAdvantage,October 9-10 2026 sample size not given so 1200 placeholder from the same release,2026-10-10,1200,LV,47.0,48.0,0.0,5.0
 GBAO for Hamilton (D),September 30-October 4 2026,2026-10-04,600,LV,42.5,47.5,3.5,6.5
-YouGov,September 24-October 4 2026,2026-10-04,2255,LV,45,48,1,6
-New York Times/Siena,September 22-30 2026,2026-09-30,605,LV,45,45,3,7
-Trafalgar Group (R),September 29-October 1 2026,2026-10-01,1095,LV,43.5,44.4,2,10.1
-Global Strategy Group (D),September 13-16 2026,2026-09-16,800,LV,43,47,5,5
-Emerson College / Nexstar,September 15-16 2026,2026-09-16,750,LV,43,45,4,8
-co/efficient (R),September 8-10 2026,2026-09-10,915,LV,49,44,2,5
-Global Strategy Group (D),August 12-16 2026,2026-08-16,800,LV,43,44,5,8
-Public Policy Polling (D),August 7-8 2026,2026-08-08,569,LV,46,45,0,0
-Wedgewood Polls,September 22-24 2026,2026-09-24,500,LV,48,50,2,0
-GBAO (D),July 8-13 2026,2026-07-13,600,LV,47,43,0,10
-Tavern Research (D),January 26-28 2026,2026-01-28,1013,LV,54,46,0,0
+YouGov,September 24-October 4 2026,2026-10-04,2255,LV,45.0,48.0,1.0,6.0
+New York Times/Siena,September 22-30 2026,2026-09-30,605,LV,45.0,45.0,3.0,7.0
+Trafalgar Group (R),September 29-October 1 2026,2026-10-01,1095,LV,43.5,44.4,2.0,10.1
+Global Strategy Group (D),September 13-16 2026,2026-09-16,800,LV,43.0,47.0,5.0,5.0
+Emerson College / Nexstar,September 15-16 2026,2026-09-16,750,LV,43.0,45.0,4.0,8.0
+co/efficient (R),September 8-10 2026,2026-09-10,915,LV,49.0,44.0,2.0,5.0
+Global Strategy Group (D),August 12-16 2026,2026-08-16,800,LV,43.0,44.0,5.0,8.0
+Public Policy Polling (D),August 7-8 2026,2026-08-08,569,LV,46.0,45.0,0.0,0.0
+Wedgewood Polls,September 22-24 2026,2026-09-24,500,LV,48.0,50.0,2.0,0.0
+GBAO (D),July 8-13 2026,2026-07-13,600,LV,47.0,43.0,0.0,10.0
+Tavern Research (D),January 26-28 2026,2026-01-28,1013,LV,54.0,46.0,0.0,0.0
+GBAO (D),September 30-October 4 2026,2026-10-04,600,LV,44.0,49.0,0.0,7.0

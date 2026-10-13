@@ -1,11 +1,13 @@
 source,dates,end,n,pop,R,D,O,U
-Manhattan Institute,September 24-October 1 2026,2026-10-01,1000,LV,38,57,0,5
+Manhattan Institute,September 24-October 1 2026,2026-10-01,1000,LV,38.0,57.0,0.0,5.0
 David Wolfson for Hilton (R),October 1-2 2026 voter type not published so RV,2026-10-02,1020,RV,40.1,45.7,0.1,14.1
-Independent Voter Project,September 23-October 2 2026,2026-10-02,2906,LV,38,48,0,14
-Berkeley IGS,September 15-20 2026,2026-09-20,4512,LV,33,58,0,9
-PPIC,September 4-10 2026,2026-09-10,1103,LV,38,60,1,1
-Berkeley IGS,August 3-9 2026,2026-08-09,2310,LV,37,55,0,8
-PPIC,June 29-July 6 2026,2026-07-06,1003,LV,36,61,0,2
-Kreate Strategies,June 13-17 2026,2026-06-17,900,LV,33,58,0,8
-CEPP,May 23-26 2026,2026-05-26,735,LV,35,58,2,5
-Berkeley IGS,May 19-24 2026,2026-05-24,8578,RV,31,52,0,17
+Berkeley IGS,September 15-20 2026,2026-09-20,4512,LV,33.0,58.0,0.0,9.0
+PPIC,September 4-10 2026,2026-09-10,1103,LV,38.0,60.0,1.0,1.0
+Berkeley IGS,August 3-9 2026,2026-08-09,2310,LV,37.0,55.0,0.0,8.0
+PPIC,June 29-July 6 2026,2026-07-06,1003,LV,36.0,61.0,0.0,2.0
+Kreate Strategies,June 13-17 2026,2026-06-17,900,LV,33.0,58.0,0.0,8.0
+CEPP,May 23-26 2026,2026-05-26,735,LV,35.0,58.0,2.0,5.0
+Berkeley IGS,May 19-24 2026,2026-05-24,8578,RV,31.0,52.0,0.0,17.0
+Independent Voter Project,September 23-28 2026,2026-09-28,2906,LV,38.0,48.0,3.0,11.0
+SurveyUSA,September 15-20 2026,2026-09-20,742,LV,33.0,55.0,0.0,12.0
+UC Berkeley Citrin Center/TrueDot/Politico,September 8-14 2026,2026-09-14,1983,LV,36.0,54.0,2.0,8.0

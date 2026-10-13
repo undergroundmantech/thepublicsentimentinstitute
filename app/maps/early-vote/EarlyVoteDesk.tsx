@@ -4,9 +4,10 @@ import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from "re
 import { createPortal } from "react-dom";
 import Link from "next/link";
 import {
-  CATEGORIES, FEED_CATEGORIES, mergeVoted, mergeCombined, mergeSims, DIMENSIONS, commas, compact, fillFor, getCapabilities, getCategory, getDemographics,
+  CATEGORIES, DIMENSIONS, commas, compact, fillFor, getCapabilities, getCategory, getDemographics,
   marginOf, matchCounty, pct, STATE_NAME, stateOfFips, sumRow, toneFor, turnoutFill, volumeScale,
   getPartyModel, modeOf, simulate, fmtMargin, combineNational, returnTilt, demoAdjust, regimeOf, REGIME_WORD, stateParts,
+  statePlace, stateView, type StateView,
   ratingOf, RATINGS, RATING_WORD, EV_DEM, EV_REP, EV_TOSS, type Rating,
   type Capabilities, type Combined, type Estimate, type Mode, type Part, type Place, type DemoAdjust, type PartyModel, type ReturnTilt, type Category, type CategoryPayload, type DemographicPayload,
   type Dimension, type Geo, type RegionRow, type StateGeo,
@@ -233,7 +234,7 @@ function CombinedBar({ k }: { k: Combined }) {
 }
 
 /** Plain words for the party return offsets behind the returned estimate. */
-function ReturnNote({ tilt }: { tilt: ReturnTilt }) {
+function ReturnNote({ tilt, reg }: { tilt: ReturnTilt; reg: boolean }) {
   const x = (b: number) => Math.exp(b).toFixed(2);
   const join = (a: string[]) => { const n = a.map((s) => STATE_NAME[s] ?? s); return n.length > 1 ? `${n.slice(0, -1).join(", ")} and ${n[n.length - 1]}` : n[0]; };
   return (
@@ -260,20 +261,54 @@ function ReturnNote({ tilt }: { tilt: ReturnTilt }) {
       {tilt.calib ? (
         <p>
           {join(tilt.calib.states)} {tilt.calib.states.length === 1 ? "publishes" : "publish"} party for returns
-          but not for requests, the one direct check on an estimated return mix. Registration is not party
-          identification, so the check compares tilts: how far the reported returns run from the state&apos;s registered
-          voters, against how far the estimated returns run from the model&apos;s electorate.{" "}
+          but not for requests, the one direct check on an estimated return mix.{" "}
+          {reg ? <>The estimate is already on a registration basis, so reported and estimated returns are compared
+            directly.{" "}</> : <>Registration is not party identification, so the check compares tilts: how far the
+            reported returns run from the state&apos;s registered voters, against how far the estimated returns run from
+            the model&apos;s electorate.{" "}</>}
           {tilt.calib.before.map((b, i) => (
             <span key={b.st}>{i ? "; " : ""}{STATE_NAME[b.st] ?? b.st}: returns {b.actual.toFixed(1)}% Republican of the two party
               vote against {b.regShare !== null ? `${b.regShare.toFixed(1)}% of registered voters` : "no published file"}, the
               model {b.model.toFixed(1)}% against {b.lvShare !== null ? `${b.lvShare.toFixed(1)}%` : "its electorate"}</span>
           ))}. Estimated returns everywhere are shifted {tilt.calib.shift >= 0 ? "toward Republicans" : "toward Democrats"} by{" "}
           {Math.abs(tilt.calib.shift).toFixed(2)} in log odds, the part of the gap the check states share, scaled down by how
-          much they disagree and by how few ballots they hold, {commas(tilt.calib.returned)}. On the October 1 feed the
-          two disagree: calibrating on Maryland alone would move Idaho further from its reported tilt, and the reverse.
+          much they disagree and by how few ballots they hold, {commas(tilt.calib.returned)}. The
+          check states can disagree, which is why the shift is only their common part.
         </p>
       ) : null}
     </>
+  );
+}
+
+/** Where each state's party basis comes from, in plain words. */
+function RegistrationNote({ model, st }: { model: PartyModel; st: string | null }) {
+  const f = model.meta.registrationFit;
+  if (model.meta.basis !== "registration" || !f) {
+    return <p>This is party identification, not party registration.</p>;
+  }
+  const src = st ? f.source[st] : null;
+  const lam = st ? f.primaryWeight[st] : undefined;
+  const sh = st ? f.shift[st] : undefined;
+  const dir = (x: number) => (x < 0 ? "toward Democrats" : "toward Republicans");
+  return (
+    <p>
+      Party here is read the way the states and L2 report it, registration or modeled party, not the party voters
+      name in a survey. The two differ, and by state: old Democratic registrations in the South, Wyoming Democrats
+      registered Republican for the primary, unaffiliated Democrats in New England. Every state that publishes party on
+      its requests measures that gap directly, and the pooled gap across them, each state counted once, is{" "}
+      {f.pooled.toFixed(2)} in log odds with a spread of {f.spread.toFixed(2)} between states.{" "}
+      {st && src === "feed" ? <>{STATE_NAME[st] ?? st} publishes party on its own requests, so its own gap is used.</>
+        : st && src === "registration" && sh !== undefined ? <>{STATE_NAME[st] ?? st} registers voters by party, so the
+            estimate is set to its published registration totals, which moves it {Math.abs(sh).toFixed(2)} in log odds {dir(sh)}.</>
+        : st && src === "primary" && sh !== undefined ? <>{STATE_NAME[st] ?? st} has no party registration, so party is
+            modeled the way L2 does it: from the primary ballot a voter pulled, county by county from the 2026 primaries,
+            for the {((lam ?? 0) * 100).toFixed(0)}% of voters with a primary history, and the pooled gap for the rest.
+            Together that moves it {Math.abs(sh).toFixed(2)} in log odds {dir(sh)}.</>
+        : st ? <>{STATE_NAME[st] ?? st} takes the pooled gap.</>
+        : <>States with party registration are set to their published totals; states without it are modeled from
+            primary history county by county, the way L2 assigns party.</>}
+      {" "}Each simulation adds that evidence&apos;s own error as a statewide shock.
+    </p>
   );
 }
 
@@ -342,36 +377,33 @@ function EstimatePanel({ e, sub, mode, model, tilt, shade, setShade, st, adj }: 
             predicts, a scale of {model.meta.mailSkewScale.toFixed(2)}, so the skew is kept almost as fitted.
             {adj ? <> This estimate is also reweighted to the {adj.dims.join(" and ")} of the ballots {STATE_NAME[st ?? ""] ?? "the state"} reports: {adj.note}.</> : null}
           </p>
-          {mode === "returned" && tilt ? <ReturnNote tilt={tilt} /> : null}
+          {mode === "returned" && tilt ? <ReturnNote tilt={tilt} reg={model.meta.basis === "registration"} /> : null}
           <p>
             The mode model is refit on {model.meta.draws} bootstrap resamples of TPSI likely voters, the skew scale is
             drawn from how far it moves when one check state is left out, and each state&apos;s electorate takes a party
             shock of its own. Every run is applied to today&apos;s county counts, and the range above is the middle 80% of
-            those runs. This is party identification, not party registration, and it is an estimate of who is voting
-            early, not a result.
+            those runs. It is an estimate of who is voting early, not a result.
           </p>
+          <RegistrationNote model={model} st={st} />
           <div className="ev-est-check">
             <em>Check against states that do report party, mail ballots requested</em>
             <table>
-              <thead><tr><th>State</th><th className="num">Requesters against all voters, TPSI</th><th className="num">Requesters against registered voters, reported</th></tr></thead>
+              <thead><tr><th>State</th><th className="num">TPSI, state left out</th><th className="num">Reported</th></tr></thead>
               <tbody>
                 {model.meta.check.map((c) => (
-                  // the tilt is Democratic positive in the file; the page prints it the way margins read
+                  // check margins are Democratic positive; the page prints them the way margins read
                   <tr key={c.st}>
                     <td>{STATE_NAME[c.st] ?? c.st}</td>
-                    <td className="num">{fmtMargin(-c.modelTilt)}</td>
-                    <td className="num">{fmtMargin(-c.reportedTilt)}</td>
+                    <td className="num">{fmtMargin(-(c.heldOut ?? c.modelMargin))}</td>
+                    <td className="num">{fmtMargin(-c.reportedMargin)}</td>
                   </tr>
                 ))}
               </tbody>
             </table>
             <p>
-              Party identification is not registration, so the check compares tilts: how far each state&apos;s mail
-              requesters run from its whole electorate. North Carolina lands within two points and Florida within five;
-              New Jersey&apos;s permanent list makes its requesters less Democratic than the model expects, and
-              Pennsylvania&apos;s more. With any one state held out, the other three set the scale within 0.12 of the
-              full fit. A universal mail state needs no such check: Colorado and Nevada report requests that match their
-              voter files, and the model reads them the same way.
+              Each row is the model run as if that state reported no party: its own registration gap is taken out and
+              the pooled gap of the other states put in. That is the honest test of how the estimate does in a state
+              like Michigan or Georgia, where nothing can be checked directly.
             </p>
           </div>
         </div>
@@ -409,52 +441,66 @@ export default function EarlyVoteDesk() {
   // states that publish party for both requests and returns.
   useEffect(() => {
     let live = true;
-    for (const c of FEED_CATEGORIES) getCategory("US", c).then((us) => { if (live) setNatl((m) => ({ ...m, [c]: us })); });
+    for (const c of CATEGORIES.map((x) => x.key)) getCategory("US", c).then((us) => { if (live) setNatl((m) => ({ ...m, [c]: us })); });
     return () => { live = false; };
   }, []);
-  // county counts of the no-party states, for the national cards only
+  // County counts, and the age and race counts, of every state that reports any
+  // ballots as Unspecified, so the national map, the national cards and each state
+  // page estimate a state from exactly the same inputs.
+  const [natlDemo, setNatlDemo] = useState<Partial<Record<Category, Record<string, Partial<Record<"age" | "race", DemographicPayload | null>>>>>>({});
+  const unspecStates = (us: CategoryPayload | null | undefined) =>
+    Object.entries(us?.regions ?? {}).filter(([, row]) => (row["Unspecified"]?.votes ?? 0) > 0).map(([st]) => st);
   useEffect(() => {
     if (scope !== "US") return;
     let live = true;
-    for (const c of FEED_CATEGORIES) {
+    for (const c of CATEGORIES.map((x) => x.key)) {
       const us = natl[c];
       if (!us || natlCounties[c]) continue;
-      const noParty = Object.entries(us.regions)
-        .filter(([, row]) => Object.keys(row).every((g) => g === "Unspecified"))
-        .map(([st]) => st);
-      Promise.all(noParty.map((st) => getCategory(st, c).then((d) => [st, d] as const)))
+      const sts = unspecStates(us);
+      Promise.all(sts.map((st) => getCategory(st, c).then((d) => [st, d] as const)))
         .then((got) => { if (live) setNatlCounties((m) => ({ ...m, [c]: Object.fromEntries(got) })); });
+      Promise.all(sts.map(async (st) => {
+        const cp = await getCapabilities(st); const m = cp?.categories?.[c];
+        const out: Partial<Record<"age" | "race", DemographicPayload | null>> = {};
+        for (const dd of ["age", "race"] as const) if (m?.[dd]) out[dd] = await getDemographics(st, c, dd);
+        return [st, out] as const;
+      })).then((got) => { if (live) setNatlDemo((m) => ({ ...m, [c]: Object.fromEntries(got) })); });
     }
     return () => { live = false; };
   }, [scope, natl, natlCounties]);
-  const natlAll = useMemo(() => ("returned" in natl && "inperson" in natl
-    ? { ...natl, voted: mergeVoted(natl.returned ?? null, natl.inperson ?? null) } : natl), [natl]);
+  // demographic reweighting per state and category, the same function the state page runs
+  const natlAdj = useMemo(() => {
+    const out: Partial<Record<Category, Record<string, DemoAdjust>>> = {};
+    if (!model) return out;
+    for (const c of CATEGORIES.map((x) => x.key)) {
+      const per = natlDemo[c]; if (!per) continue;
+      out[c] = Object.fromEntries(Object.entries(per).map(([st, p]) => [st, demoAdjust(model, st, modeOf(c), p)]));
+    }
+    return out;
+  }, [model, natlDemo]);
   const tilt: ReturnTilt | null = useMemo(
     () => (model ? returnTilt(natl.requested, natl.returned, model) : null), [model, natl]);
   const combined = useMemo(() => {
     const out: Partial<Record<Category, Combined | null>> = {};
     if (!model) return out;
-    for (const c of FEED_CATEGORIES) {
+    for (const c of CATEGORIES.map((x) => x.key)) {
       const us = natl[c];
       out[c] = us ? combineNational(us, natlCounties[c] ?? {}, model, countyNames, modeOf(c),
-        c === "returned" ? { us: natl.requested, counties: natlCounties.requested ?? {} } : undefined, tilt) : null;
+        c === "returned" ? { us: natl.requested, counties: natlCounties.requested ?? {} } : undefined, tilt, natlAdj[c]) : null;
     }
-    // every ballot already cast: returned mail plus in person, summed draw by draw
-    if ("returned" in out && "inperson" in out) out.voted = mergeCombined(out.returned, out.inperson);
     return out;
-  }, [model, natl, natlCounties, countyNames, tilt]);
+  }, [model, natl, natlCounties, countyNames, tilt, natlAdj]);
 
   // an open state's own requests, so each county's returned ballots can be read
   // against the ballots it sent out
   const [reqState, setReqState] = useState<CategoryPayload | null>(null);
-  const needReq = cat === "returned" || cat === "voted";
   useEffect(() => {
     setReqState(null);
-    if (scope === "US" || !needReq) return;
+    if (scope === "US" || cat !== "returned") return;
     let live = true;
     getCategory(scope, "requested").then((d) => { if (live) setReqState(d); });
     return () => { live = false; };
-  }, [scope, needReq]);
+  }, [scope, cat]);
 
   // the national outline and the county name table load once
   useEffect(() => {
@@ -546,37 +592,44 @@ export default function EarlyVoteDesk() {
   // shape, is its counties weighted by adults.
   const est = useMemo(() => {
     if (!model || !noPartyRows.length) return null;
+    const ret = cat === "returned";
     // return rate of a place: its returned ballots over the ballots it sent out
     const reqOf = (name: string) => (scope === "US" ? sumRow(natl.requested?.regions[name]) : sumRow(reqState?.regions[name]));
-    const reqAll = scope === "US" ? 0 : sumRow(reqState?.statewide_total);
-    const adjust = adj && scope !== "US" ? { [scope]: adj } : undefined;
-    // one category's places; votes of a place come from that category's own payload
-    const run = (c: Category, votesOf: (name: string) => number, catTotal: number) => {
-      const ret = c === "returned";
-      const stateRho = ret && reqAll > 0 ? catTotal / reqAll : undefined;
-      const places: Place[] = noPartyRows.map(({ name }) => {
-        const n = votesOf(name);
-        const q = ret ? reqOf(name) : 0;
-        const rho = ret ? (q > 0 ? n / q : stateRho) : undefined;
-        if (scope === "US") return { key: name, st: name, parts: stateParts(model, name, rho), votes: n };
-        const f = fipsOf[name];
-        return { key: name, st: scope, parts: f && model.mix[f] ? [[f, 1, rho] as Part] : stateParts(model, scope, rho), votes: n };
-      });
-      return simulate(places, model, modeOf(c), tilt, adjust);
-    };
-    if (cat === "voted" && data?.parts) {
-      // every ballot cast: estimate the mail half and the in person half each in its own mode
-      const { returned: r, inperson: i } = data.parts;
-      return mergeSims(run("returned", (nm) => sumRow(r?.regions[nm]), sumRow(r?.statewide_total)),
-                       run("inperson", (nm) => sumRow(i?.regions[nm]), 0));
-    }
-    const nOf: Record<string, number> = Object.fromEntries(noPartyRows.map((r) => [r.name, r.n]));
-    return run(cat, (nm) => nOf[nm] ?? 0, total);
-  }, [model, noPartyRows, fipsOf, scope, cat, data, natl, reqState, total, tilt, adj]);
+    const reqU = scope === "US" ? 0 : (natl.requested?.regions[scope]?.["Unspecified"]?.votes ?? 0);
+    const myU = scope === "US" ? 0 : (natl[cat]?.regions[scope]?.["Unspecified"]?.votes ?? 0);
+    const stateRho = ret && reqU > 0 ? myU / reqU : undefined;
+    const places: Place[] = noPartyRows.map(({ name, n }) => {
+      const q = ret ? reqOf(name) : 0;
+      const rho = ret ? (q > 0 ? n / q : stateRho) : undefined;
+      if (scope === "US") return statePlace(name, n, natlCounties[cat]?.[name], countyNames, model, modeOf(cat),
+        ret ? { row: natl.requested?.regions[name], counties: natlCounties.requested?.[name] } : undefined).place;
+      const f = fipsOf[name];
+      return { key: name, st: scope, parts: f && model.mix[f] ? [[f, 1, rho] as Part] : stateParts(model, scope, rho), votes: n };
+    });
+    return simulate(places, model, modeOf(cat), tilt, scope === "US" ? natlAdj[cat] : adj ? { [scope]: adj } : undefined);
+  }, [model, noPartyRows, fipsOf, scope, cat, natl, natlCounties, natlAdj, countyNames, reqState, tilt, adj]);
+
+  // One rated number per state, reported party plus the estimate of its Unspecified
+  // ballots. The national map, table and tooltip and the state page headline all
+  // read it, built from the same feed rows, county counts and reweighting.
+  const viewOf = (st: string, cp: CategoryPayload | null | undefined, sAdj: DemoAdjust, reqC: CategoryPayload | null | undefined): StateView | null =>
+    model ? stateView(st, natl[cat]?.regions[st] ?? (scope === st ? data?.statewide_total : undefined), cp, countyNames, model, modeOf(cat), tilt, sAdj,
+      cat === "returned" ? { row: natl.requested?.regions[st], counties: reqC } : undefined) : null;
+  const views = useMemo(() => {
+    const out: Record<string, StateView | null> = {};
+    if (!model || scope !== "US" || !data) return out;
+    for (const st of Object.keys(data.regions)) out[st] = viewOf(st, natlCounties[cat]?.[st], natlAdj[cat]?.[st] ?? null, natlCounties.requested?.[st]);
+    return out;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [model, scope, data, natl, natlCounties, natlAdj, cat, countyNames, tilt]);
+  const myView = useMemo(
+    () => (scope === "US" || !data ? null : viewOf(scope, data, adj, reqState)),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [model, scope, data, natl, adj, reqState, cat, countyNames, tilt]);
   const showEst = shade === "estimate" && !!est?.total;
 
   const fillRow = (key: string, row: RegionRow) => {
-    const m = marginOf(row);
+    const m = marginFor(key, row);
     if (m !== null) return fillFor(m);
     const e = est?.byKey[key];
     if (showEst && e) return fillFor(e.margin);
@@ -584,12 +637,15 @@ export default function EarlyVoteDesk() {
   };
   /** the margin a place is rated on: reported party, else the TPSI estimate when it is shown */
   const marginFor = (key: string, row: RegionRow): number | null => {
+    if (scope === "US" && showEst && views[key]) return views[key]!.margin;
     const m = marginOf(row);
     if (m !== null) return m;
     const e = est?.byKey[key];
     return showEst && e ? e.margin : null;
   };
-  const hatched = (key: string, row: RegionRow) => showEst && marginOf(row) === null && !!est?.byKey[key];
+  const hatched = (key: string, row: RegionRow) => showEst && (scope === "US"
+    ? (views[key]?.estShare ?? 0) >= 0.5
+    : marginOf(row) === null && !!est?.byKey[key]);
 
   const national = scope === "US";
   const catMeta = CATEGORIES.find((c) => c.key === cat)!;
@@ -655,6 +711,22 @@ export default function EarlyVoteDesk() {
               </div>
               <div className="ev-top-split">
                 <Bar row={data.statewide_total} groups={groups} total={total} />
+                {!national && myView && (showEst || myView.u <= 0) ? (() => {
+                  const r = ratingOf(myView.margin);
+                  return (
+                    <div className="ev-stview">
+                      <span className="pill" style={{ background: r.color, color: r.rating === "SAFE" || r.rating === "LIKELY" ? "#fff" : "#111" }}>{r.label}</span>
+                      <b style={{ color: myView.margin > 0 ? "var(--gop)" : "var(--dem)" }}>{fmtMargin(myView.margin)}</b>
+                      <span>
+                        statewide, {myView.u > 0
+                          ? myView.d + myView.r > 0
+                            ? <>reported party plus the TPSI estimate of {commas(myView.u)} Unspecified ballots, 80% range {fmtRange(myView.lo, myView.hi)}</>
+                            : <>TPSI estimate, 80% range {fmtRange(myView.lo, myView.hi)}</>
+                          : <>as reported</>}. The national map rates {STATE_NAME[scope] ?? scope} on this same number.
+                      </span>
+                    </div>
+                  );
+                })() : null}
                 <div className="ev-key">
                   {groups.map((g) => {
                     const v = data.statewide_total[g]?.votes ?? 0;
@@ -671,7 +743,7 @@ export default function EarlyVoteDesk() {
             </section>
 
             {national && model ? (
-              <NationalCombined combined={combined} loaded={natlAll} cat={cat} setCat={setCat} tilt={tilt} />
+              <NationalCombined combined={combined} loaded={natl} cat={cat} setCat={setCat} tilt={tilt} />
             ) : null}
 
             {someNoParty && est?.total ? (
@@ -705,7 +777,7 @@ export default function EarlyVoteDesk() {
 
             {/* the map */}
             <section className="ev-mapwrap">
-              <RatingBoard places={rows.map(({ name, row, n }) => ({ m: marginFor(name, row), n, est: marginOf(row) === null }))}
+              <RatingBoard places={rows.map(({ name, row, n }) => ({ m: marginFor(name, row), n, est: hatched(name, row) }))}
                 unit={national ? "state" : "county"} />
               {national && geo ? (
                 <svg viewBox={`0 0 ${geo.frame[0]} ${geo.frame[1]}`} className="ev-map" role="img"
@@ -871,7 +943,7 @@ export default function EarlyVoteDesk() {
                           const mm = marginFor(name, row);
                           if (mm === null) return <td className="rt">—</td>;
                           const r = ratingOf(mm);
-                          return <td className="rt"><span className={`ev-chip${marginOf(row) === null ? " est" : ""}`}>
+                          return <td className="rt"><span className={`ev-chip${hatched(name, row) ? " est" : ""}`}>
                             <i style={{ background: r.color }} />{r.label}</span></td>;
                         })() : null}
                         <td className="split">
@@ -896,6 +968,7 @@ export default function EarlyVoteDesk() {
           const row = data.regions[tip.key];
           const t = sumRow(row);
           const m = marginOf(row);
+          const sv = national && showEst ? views[tip.key] : null;
           const label = national ? (STATE_NAME[tip.key] ?? tip.key) : tip.key;
           return (
             <TipBox x={tip.x} y={tip.y}>
@@ -907,7 +980,7 @@ export default function EarlyVoteDesk() {
                 return (
                   <div className="s rated">
                     <span className="pill" style={{ background: r.color, color: r.rating === "SAFE" || r.rating === "LIKELY" ? "#fff" : "#111" }}>{r.label}</span>
-                    {m === null ? "TPSI estimate · " : ""}{catMeta.blurb}
+                    {sv && sv.u > 0 ? (sv.d + sv.r > 0 ? "reported plus TPSI estimate · " : "TPSI estimate · ") : m === null ? "TPSI estimate · " : ""}{catMeta.blurb}
                   </div>
                 );
               })()}
@@ -923,6 +996,10 @@ export default function EarlyVoteDesk() {
               })}
               <div className="row tot"><i /><b>total</b><span>{commas(t)}</span>
                 <u>{m === null ? "—" : m > 0 ? `R+${m.toFixed(1)}` : `D+${Math.abs(m).toFixed(1)}`}</u></div>
+              {sv && sv.u > 0 && sv.d + sv.r > 0 ? (
+                <div className="row tot"><i /><b>with estimate</b><span>{fmtMargin(sv.margin)}</span>
+                  <u>{fmtRange(sv.lo, sv.hi)}</u></div>
+              ) : null}
               {m === null && showEst && est?.byKey[tip.key] ? (() => {
                 const e = est.byKey[tip.key];
                 return (
@@ -965,7 +1042,7 @@ export default function EarlyVoteDesk() {
 }
 
 const CSS = `
-/* Dark only, on the OnPoint Politics tokens: glass cards, Geist and
+/* Dark only, on the OnPoint Politics tokens: glass cards, Sora, Manrope and
    JetBrains Mono, the brand rating ramp for party margins. */
 .ev-page { position: relative; color: var(--ink); }
 .ev-shell { padding-bottom: 40px; }
@@ -983,12 +1060,12 @@ const CSS = `
 .ev-link { background: none; border: 0; padding: 0; cursor: pointer; font: inherit; color: var(--accent-link); text-decoration: underline; text-underline-offset: 3px; }
 
 .ev-controls { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 26px; }
-.ev-seg { display: inline-flex; padding: 3px; gap: 2px; border-radius: 999px; background: rgba(var(--line-rgb),0.06); }
+.ev-seg { display: inline-flex; padding: 3px; gap: 2px; border-radius: 999px; background: rgba(255,255,255,0.06); }
 .ev-seg button { appearance: none; border: 0; background: none; cursor: pointer; padding: 7px 14px; border-radius: 999px;
   font: 700 12px var(--font-b); color: var(--mute);
   transition: color .15s ease, background .15s ease; }
 .ev-seg button:hover { color: var(--ink); }
-.ev-seg button.on { background: var(--hi); color: var(--bg); }
+.ev-seg button.on { background: #fff; color: var(--bg); }
 .ev-seg.sm button { padding: 5px 11px; font-size: 11.5px; }
 .ev-seg button:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
 
@@ -1002,13 +1079,16 @@ const CSS = `
 .ev-top-n b { font-family: var(--font-d); font-size: clamp(30px,4vw,44px); font-weight: 800; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
 .ev-top-n span { margin-left: auto; font-family: ${MONO}; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted2); }
 .ev-top-split { margin-top: 16px; }
+.ev-stview { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 12px; margin-top: 14px; padding: 10px 14px; border: 1px solid var(--line); border-radius: 12px; background: var(--glass, rgba(255,255,255,.03)); font-size: 13px; color: var(--muted); }
+.ev-stview .pill { display: inline-block; padding: 3px 9px; border-radius: 99px; font-size: 10.5px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; }
+.ev-stview b { font-family: ${MONO}; font-size: 20px; font-weight: 800; font-variant-numeric: tabular-nums; }
 .ev-key { display: flex; flex-wrap: wrap; gap: 8px 22px; margin-top: 14px; font-size: 13px; color: var(--muted); }
 .ev-key span { display: inline-flex; align-items: center; gap: 7px; }
 .ev-key i { width: 10px; height: 10px; border-radius: 3px; flex-shrink: 0; }
 .ev-key b { font-family: ${MONO}; font-weight: 700; color: var(--ink); font-variant-numeric: tabular-nums; }
 .ev-key u { text-decoration: none; font-family: ${MONO}; font-size: 11.5px; color: var(--muted2); }
 
-.ev-page { --ev-idle: rgba(var(--line-rgb),0.07); --ev-nodata: rgba(var(--line-rgb),0.16); --ev-mid: rgba(var(--line-rgb),0.06); --ev-turnout: var(--ink2); }
+.ev-page { --ev-idle: rgba(var(--line-rgb),0.07); --ev-nodata: rgba(var(--line-rgb),0.16); --ev-mid: rgba(255,255,255,0.06); --ev-turnout: var(--ink2); }
 .ev-mapwrap { position: relative; margin-top: 30px; }
 .ev-map { display: block; width: 100%; height: auto; max-height: 66svh; margin: 0 auto; }
 .ev-unit { stroke: var(--bg); stroke-width: 0.7; stroke-linejoin: round; transition: filter .12s ease; }
@@ -1071,8 +1151,8 @@ table.ev-table td.rt { white-space: nowrap; }
 .ev-tip .row.vol b { color: var(--muted2); font-family: ${MONO}; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; }
 
 .ev-tip { position: fixed; z-index: 70; pointer-events: none; width: 252px; padding: 12px 14px; border-radius: 12px;
-  background: rgba(var(--bg2-rgb),.94); border: 1px solid var(--line2); box-shadow: 0 12px 40px rgba(0,0,0,.5); backdrop-filter: blur(10px); }
-.ev-tip .n { font-family: var(--font-d); font-size: 14px; font-weight: 700; letter-spacing: -0.01em; color: var(--hi); }
+  background: rgba(17,0,25,.94); border: 1px solid var(--line2); box-shadow: 0 12px 40px rgba(0,0,0,.5); backdrop-filter: blur(10px); }
+.ev-tip .n { font-family: var(--font-d); font-size: 14px; font-weight: 700; letter-spacing: -0.01em; color: #fff; }
 .ev-tip .s { margin-top: 2px; font-family: ${MONO}; font-size: 9.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted2); }
 .ev-tip .row { display: flex; align-items: center; gap: 8px; margin-top: 7px; font-size: 12.5px; }
 .ev-tip .row i { width: 3px; height: 14px; flex-shrink: 0; }
@@ -1086,7 +1166,7 @@ table.ev-table td.rt { white-space: nowrap; }
 .ev-bar { display: flex; height: 9px; border-radius: 99px; overflow: hidden; background: rgba(var(--line-rgb),0.07); }
 .ev-bar i { display: block; height: 100%; }
 
-.ev-h2 { font-family: var(--font-d); font-size: 16px; font-weight: 700; letter-spacing: -0.01em; color: var(--hi); }
+.ev-h2 { font-family: var(--font-d); font-size: 16px; font-weight: 700; letter-spacing: -0.01em; color: #fff; }
 
 .ev-demo { margin-top: 34px; }
 .ev-demo-rows { margin-top: 14px; display: grid; gap: 9px; }
@@ -1144,7 +1224,7 @@ table.ev-table th.est { color: var(--ink); }
 table.ev-table td.est { font-style: italic; }
 table.ev-table td.mg { font-style: normal; font-family: ${MONO}; font-weight: 700; font-size: 12px; }
 /* the tooltip is portalled to body, outside .ev-page, so it carries the map tokens its swatches use */
-.ev-tip { width: 284px; z-index: 90; --ev-nodata: rgba(var(--line-rgb),0.16); --ev-mid: rgba(var(--line-rgb),0.06); --ev-turnout: var(--ink2); }
+.ev-tip { width: 284px; z-index: 90; --ev-nodata: rgba(255,255,255,0.16); --ev-mid: rgba(255,255,255,0.06); --ev-turnout: var(--ink2); }
 .ev-tip .est-h { margin-top: 10px; padding-top: 8px; border-top: 1px dashed var(--border2); font-family: ${MONO}; font-size: 9.5px;
   font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink); }
 .ev-tip .row.tot u { min-width: 0; white-space: nowrap; }
@@ -1157,7 +1237,7 @@ table.ev-table td.mg { font-style: normal; font-family: ${MONO}; font-weight: 70
   display: flex; flex-direction: column; gap: 10px; padding: 16px 18px; border-radius: 14px;
   border: 1px solid var(--line); background: var(--glass); transition: border-color .15s ease, background .15s ease; }
 .ev-nat-card:hover { border-color: var(--border3, var(--border2)); }
-.ev-nat-card.on { border-color: var(--hi); background: var(--glass2); }
+.ev-nat-card.on { border-color: #fff; background: var(--glass2); }
 .ev-nat-card:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
 .ev-nat-card .lab { display: flex; align-items: baseline; justify-content: space-between; gap: 10px;
   font-family: ${MONO}; font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink); }

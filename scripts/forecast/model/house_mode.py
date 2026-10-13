@@ -577,6 +577,8 @@ DE = [
 # Oct 1 2026: TX-15 rebuilt by the same rule from three polls: Normington Petts for House Majority PAC July 23-28
 # (Pulido 51, De La Cruz 45), Texas Southern Aug 18-22 (50, 45) and House Majority PAC late September (54, 41), whose
 # dates and sample were not given and are entered as ending Sept 28 with 500 likely voters.
+# Oct 12 2026 sweep: NY-21 Siena Oct 6 (46 to 42) and Impact Research for Gendebien (D) Oct 4 (45 to 48), SC-1 co/efficient (R)
+# Oct 1 (40 to 46); /tmp/hpolls/build_1012.py, the 1008b rule.
 POLLS = {
          # Oct 8 2026 second pass, every House district: the rest of the map swept too, nonpartisan district polls now carry
          # the pollster's statewide house effect, and a sample its own margin of error contradicts enters at the size the
@@ -601,7 +603,7 @@ POLLS = {
          # 20 percent undecided or more.
          "FL": {8: dict(d=43.5, r=49.5), 9: dict(d=39.5, r=42.5), 11: dict(d=41.9, r=42.1), 13: dict(d=44.0, r=47.1), 14: dict(d=45.5, r=38.5), 16: dict(d=39.0, r=43.0), 22: dict(d=47.7, r=47.9), 27: dict(d=44.0, r=47.6), 28: dict(d=39.9, r=46.1)},
          "TX": {2: dict(d=35.5, r=47.5), 9: dict(d=37.5, r=46.5), 10: dict(d=39.5, r=49.5), 15: dict(d=50.7, r=44.4), 23: dict(d=40.8, r=46.7), 28: dict(d=43.8, r=36.4), 34: dict(d=43.8, r=42.0), 35: dict(d=42.5, r=46.5)},
-         "NYG": {17: dict(d=48.2, r=47.0), 18: dict(d=51.2, r=37.4), 21: dict(d=41.9, r=46.7), 23: dict(d=32.8, r=54.2)},
+         "NYG": {17: dict(d=48.2, r=47.0), 18: dict(d=51.2, r=37.4), 21: dict(d=43.3, r=46.0), 23: dict(d=32.8, r=54.2)},
          "VA": {1: dict(d=48.1, r=46.9), 2: dict(d=45.5, r=48.5), 5: dict(d=44.2, r=49.6), 6: dict(d=29.9, r=58.1)},
          "CAG": {22: dict(d=46.5, r=45.5), 48: dict(d=45.4, r=43.6)},
          "PAG": {1: dict(d=44.1, r=48.5), 7: dict(d=45.0, r=41.3), 8: dict(d=46.4, r=45.2), 10: dict(d=46.5, r=44.8)},
@@ -640,7 +642,7 @@ POLLS = {
          "LA": {},
          "MS": {},
          "AL": {2: dict(d=44.6, r=47.8)},
-         "SC": {1: dict(d=42.0, r=45.1)},
+         "SC": {1: dict(d=41.9, r=44.9)},
          "KY": {6: dict(d=43.5, r=41.5)},
          "WV": {},
          "CTG": {},

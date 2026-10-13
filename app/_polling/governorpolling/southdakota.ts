@@ -36,6 +36,6 @@ export const RACES = [
 
 export const STATE_POLLS: Record<string, Poll[]> = {
   SD: [
-
+    {"raceId": "SD-GOV-2026", "pollster": "Lake Research Partners (D)", "startDate": "2026-08-26", "endDate": "2026-08-30", "sampleSize": 500, "sampleType": "LV", "results": {"Dan Ahlers (D)": 44.0, "Larry Rhoden (R)": 51.0, "Undecided": 5.0}}
   ],
 };

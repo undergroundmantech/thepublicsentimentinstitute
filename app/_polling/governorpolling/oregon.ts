@@ -2,7 +2,7 @@
 // Oregon — 2026 Governor: Tina Kotek (D) vs. Christine Drazan (R)
 // Generated from the TPSI forecast poll feed (run of 2026-09-22), merged with
 // the polls this file already carried. Polls of matchups that are not on the
-// ballot were dropped. Newest poll: 2026-09-09.
+// ballot were dropped. Newest poll: 2026-10-04.
 
 export type SampleType = "LV" | "RV" | "A";
 
@@ -39,6 +39,7 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "OR-GOV-2026", "pollster": "Public Opinion Strategies (R)", "startDate": "2026-06-22", "endDate": "2026-06-24", "sampleSize": 600, "sampleType": "RV", "results": {"Tina Kotek (D)": 44.0, "Christine Drazan (R)": 48.0, "Undecided": 8.0}},
     {"raceId": "OR-GOV-2026", "pollster": "DHM Research", "startDate": "2026-09-03", "endDate": "2026-09-09", "sampleSize": 600, "sampleType": "LV", "results": {"Tina Kotek (D)": 43.0, "Christine Drazan (R)": 45.0, "Other": 4.0, "Undecided": 13.0}},
     {"raceId": "OR-GOV-2026", "pollster": "DHM Research/Oregon Public Broadcasting", "startDate": "2026-09-17", "endDate": "2026-09-27", "sampleSize": 915, "sampleType": "LV", "results": {"Tina Kotek (D)": 44.0, "Christine Drazan (R)": 46.0, "Other": 3.0, "Undecided": 8.0}, "notes": "Other is Smith. With leaners: Drazan 47, Kotek 46, Smith 3."},
-    {"raceId": "OR-GOV-2026", "pollster": "DHM Research for The Oregonian", "startDate": "2026-09-24", "endDate": "2026-10-01", "sampleSize": 549, "sampleType": "LV", "results": {"Tina Kotek (D)": 46.0, "Christine Drazan (R)": 44.0, "Other": 3.0, "Undecided": 7.0}, "notes": "Other is Brett Smith (Pacific Green) 3."}
+    {"raceId": "OR-GOV-2026", "pollster": "DHM Research for The Oregonian", "startDate": "2026-09-24", "endDate": "2026-10-01", "sampleSize": 549, "sampleType": "LV", "results": {"Tina Kotek (D)": 46.0, "Christine Drazan (R)": 44.0, "Other": 3.0, "Undecided": 7.0}, "notes": "Other is Brett Smith (Pacific Green) 3."},
+    {"raceId": "OR-GOV-2026", "pollster": "GBAO (D)", "startDate": "2026-10-01", "endDate": "2026-10-04", "sampleSize": 800, "sampleType": "LV", "results": {"Tina Kotek (D)": 46.0, "Christine Drazan (R)": 42.0, "Other": 6.0, "Undecided": 6.0}}
   ],
 };

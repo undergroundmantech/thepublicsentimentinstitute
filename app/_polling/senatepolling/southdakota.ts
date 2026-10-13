@@ -40,6 +40,7 @@ export const STATE_POLLS: Record<string, Poll[]> = {
   SD: [
     {"raceId": "SD-SEN-2026", "pollster": "Public Opinion Strategies (R)", "startDate": "2026-07-06", "endDate": "2026-07-09", "sampleSize": 500, "sampleType": "LV", "results": {"Brian Bengs (I)": 33.0, "Mike Rounds (R)": 56.0, "Undecided": 11.0}},
     {"raceId": "SD-SEN-2026", "pollster": "Impact Research (D)", "startDate": "2026-08-13", "endDate": "2026-08-17", "sampleSize": 500, "sampleType": "LV", "results": {"Brian Bengs (I)": 44.0, "Mike Rounds (R)": 44.0, "Undecided": 12.0}},
+    {"raceId": "SD-SEN-2026", "pollster": "Lake Research Partners (D)", "startDate": "2026-08-26", "endDate": "2026-08-30", "sampleSize": 500, "sampleType": "LV", "results": {"Brian Bengs (I)": 51.0, "Mike Rounds (R)": 44.0, "Undecided": 5.0}},
     {"raceId": "SD-SEN-2026", "pollster": "Public Policy Polling (D)", "startDate": "2026-09-08", "endDate": "2026-09-09", "sampleSize": 629, "sampleType": "RV", "results": {"Brian Bengs (I)": 42.0, "Mike Rounds (R)": 45.0, "Undecided": 13.0}},
     {"raceId": "SD-SEN-2026", "pollster": "Zenith Research for Bengs (I)", "startDate": "2026-09-28", "endDate": "2026-09-28", "sampleSize": 600, "sampleType": "RV", "results": {"Brian Bengs (I)": 38.0, "Mike Rounds (R)": 44.0, "Undecided": 18.0}, "notes": "Bengs campaign internal. Field dates and sample size not published; placeholders shown."}
   ],

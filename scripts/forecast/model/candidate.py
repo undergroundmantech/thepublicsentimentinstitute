@@ -56,9 +56,12 @@ K_MOB, MOB_CLIP = 0.15, 0.30
 # Primary priority, Sept 29 2026. This year's primaries now carry more of the candidate signal: party unity moves the race
 # PRIMARY_BOOST times as far, with the cap raised in step, and the demographic, home ground and mobilization readings of
 # each nominee's primary vote count half that much more. PRIMARY_BOOST=1 restores the Sept 28 settings.
-PRIMARY_BOOST = float(os.environ.get("PRIMARY_BOOST", "1.5"))
+PRIMARY_BOOST = float(os.environ.get("PRIMARY_BOOST", "1.8"))   # Oct 12 2026: 1.5 became 1.8, primaries weigh more
 _PB_HALF = 1.0 + (PRIMARY_BOOST - 1.0) / 2.0
-K_UNITY, UNITY_CAP = K_UNITY * PRIMARY_BOOST, UNITY_CAP * PRIMARY_BOOST
+# Oct 12 2026 rerun: the statewide party unity shift keeps its own multiplier, UNITY_BOOST, so the stronger primary
+# setting moves the county pieces (demographic, home ground, mobilization) and not one uniform statewide swing
+UNITY_BOOST = float(os.environ.get("UNITY_BOOST", str(PRIMARY_BOOST)))
+K_UNITY, UNITY_CAP = K_UNITY * UNITY_BOOST, UNITY_CAP * UNITY_BOOST
 K_DEMO_VOTE, K_DEMO_TURN, K_MOB = K_DEMO_VOTE * _PB_HALF, K_DEMO_TURN * _PB_HALF, K_MOB * _PB_HALF
 # home ground: county residual of the nominee's primary share after the demographic fit
 K_GEO_V, K_GEO_IND, K_GEO_T, GEO_N0, GEO_CLIP = 0.25, 0.10, 0.10, 500.0, 1.0

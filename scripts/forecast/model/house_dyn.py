@@ -62,7 +62,7 @@ SIG_STATE_H, SIG_DIST, SIG_TURN_ST, SIG_TURN_DIST = 0.07, 0.05, 0.06, 0.04
 K_UNITY, UNITY_CAP, UNOPPOSED_SHARE = 0.025, 0.05, 0.75
 # Primary priority, Sept 29 2026: the same PRIMARY_BOOST as the statewide candidate model, on party unity in full and on
 # the district primary participation term at half strength. PRIMARY_BOOST=1 restores the Sept 28 settings.
-PRIMARY_BOOST = float(os.environ.get("PRIMARY_BOOST", "1.5"))
+PRIMARY_BOOST = float(os.environ.get("PRIMARY_BOOST", "1.8"))   # Oct 12 2026: 1.5 became 1.8, primaries weigh more
 K_UNITY, UNITY_CAP = K_UNITY * PRIMARY_BOOST, UNITY_CAP * PRIMARY_BOOST
 H["K_PRIMARY_PARTY"] = H["K_PRIMARY_PARTY"] * (1.0 + (PRIMARY_BOOST - 1.0) / 2.0)
 KERNEL = 0.25          # log odds width of the county analog kernel
@@ -109,7 +109,7 @@ def state_setup(st):
         info["turnout"] = float(V26.sum()); info["no_statewide_race"] = True
     comps = sm.census_components(model, fl, lambda f: reg)
     e, e0, own, used = el.county_elasticity(sm, st, {}, fl, model, shift, comps, {}, [], F16, F20, F24, V26.values, a24)
-    return dict(fl=fl, P24=P24, P20=P20, a24=a24, reg=reg, comps=comps, delta=delta.values, V26=V26.values, info=info,
+    return dict(fl=fl, P24=P24, P20=P20, P16=F16.reindex(fl), a24=a24, reg=reg, comps=comps, delta=delta.values, V26=V26.values, info=info,
                 L=L, e=e.values)
 
 def run(st, table, slug, name):
@@ -153,7 +153,28 @@ def run(st, table, slug, name):
     m2c = inv(logit(a24) + (logit(g26) - logit(g24)) - _mean + ec * _k2 + S["delta"])
     M2 = float((m2c * w).sum() / w.sum())
     M3 = float((inv(logit(a24) + ec * an.m3_constant(sm, model, shift)) * w).sum() / w.sum())
-    LEVEL = sm.W_FUND * M1 + sm.W_CENSUS * M2 + sm.W_HIST * M3
+    # Oct 12 2026: the previous result leg weighs more in the House level, by the user's choice: a third each became
+    # 0.30, 0.30 and 0.40 (HOUSE_LEVEL_W). M3 is the certified 2024 result moved by the national swing.
+    _hw = [float(x) for x in os.environ.get("HOUSE_LEVEL_W", "0.30,0.30,0.40").split(",")]
+    LEVEL = _hw[0] * M1 + _hw[1] * M2 + _hw[2] * M3
+    # Oct 12 2026 statewide top out for the House vote, the same rule as the Senate and governor races: a state that
+    # votes one way every time cannot run much past its most lopsided presidential result of 2016, 2020 and 2024
+    LEVEL_BEFORE_TOPOUT = LEVEL
+    if sm.TOPOUT:
+        _past = []
+        for _k in ("P16", "P20", "P24"):
+            try:
+                _pp = S[_k]; _v = float(_pp.votes_dem.sum() / (_pp.votes_dem.sum() + _pp.votes_gop.sum()))
+                if np.isfinite(_v): _past.append(_v)
+            except Exception: pass
+        if len(_past) >= 2:
+            _mu, _x = float(np.mean(_past)), float(logit(LEVEL))
+            if _mu > 0.5 + sm.TOP_BAND:
+                _lim = float(logit(max(_past))) + sm.TOP_ROOM
+                if _x > _lim: LEVEL = float(inv(_lim + sm.TOP_TAU * np.tanh((_x - _lim) / sm.TOP_TAU)))
+            elif _mu < 0.5 - sm.TOP_BAND:
+                _lim = float(logit(min(_past))) - sm.TOP_ROOM
+                if _x < _lim: LEVEL = float(inv(_lim - sm.TOP_TAU * np.tanh((_lim - _x) / sm.TOP_TAU)))
 
     # district turnout: the state's 2026 total, split by the 2026 turnout rate its counties show at each lean
     ad = np.maximum(adults, 1.0); rate = np.clip(V26 / ad, 0.02, 0.95)
@@ -252,6 +273,30 @@ def run(st, table, slug, name):
         if p: df.loc[i, "poll_d2"] = p["d"] / (p["d"] + p["r"])
     df["poll_gap"] = np.where(df.poll_d2.notna(), logit(df.poll_d2.fillna(0.5).values) - logit(df.model_d2.values), np.nan)
     df["final_d2"] = np.where(df.poll_d2.notna(), (1 - W_POLL_DIST) * df.model_d2 + W_POLL_DIST * df.poll_d2.fillna(0), df.model_d2)
+    # Oct 12 2026 district top out: a district that has voted one way in every recent result cannot run much past the
+    # most lopsided result it has given, its 2020 and 2024 presidential results and its 2024 House result, with the same
+    # room and softness as the statewide top out. The limit binds only in the district's usual direction.
+    if sm.TOPOUT:
+        _fd = df.final_d2.values.astype(float).copy(); _hit = 0
+        for j, r in enumerate(df.itertuples()):
+            if r.district in unc or r.district in same: continue
+            past = [float(r.d2_24)]
+            pv = PVI_ROWS.get((st[:2], int(r.district)))
+            if pv:
+                past.append(0.5 - pv["m24"] / 200.0)
+                if pv["imputed20"] == 0: past.append(0.5 - pv["m20"] / 200.0)
+            past = [min(max(x, 0.01), 0.99) for x in past if np.isfinite(x)]
+            if len(past) < 2: continue
+            mu, x = float(np.mean(past)), float(logit(_fd[j]))
+            if mu > 0.5 + sm.TOP_BAND:
+                lim = float(logit(max(past))) + sm.TOP_ROOM
+                if x > lim: _fd[j] = float(inv(lim + sm.TOP_TAU * np.tanh((x - lim) / sm.TOP_TAU))); _hit += 1
+            elif mu < 0.5 - sm.TOP_BAND:
+                lim = float(logit(min(past))) - sm.TOP_ROOM
+                if x < lim: _fd[j] = float(inv(lim - sm.TOP_TAU * np.tanh((lim - x) / sm.TOP_TAU))); _hit += 1
+        df["final_d2_before_topout"] = df.final_d2.values
+        df["final_d2"] = _fd
+        df["topped_out"] = np.abs(_fd - df.final_d2_before_topout.values) > 1e-6
     df["third_share"] = np.where(df.third.astype(bool),
                                  [THIRD_BY_PARTY.get(str(tp), THIRD_DEFAULT) for tp in df.third_party.fillna("")], 0.0)
     for dnum, share in H["THIRD_OVERRIDE"].get(st, {}).items():
@@ -259,7 +304,7 @@ def run(st, table, slug, name):
     df["projected_votes"] = (state_votes * tshare).round(0)
     df["fixed"] = [same.get(d, "") for d in df.district]
     return dict(st=st, slug=slug, name=name, S=S, df=df, base=base, e_d=e_d, tshare=tshare, fin=fin, cand=cand, unc=unc,
-                same=same, LEVEL=LEVEL, M=(M1, M2, M3), state_votes=state_votes, level_shift=level_shift, Kw=Kw)
+                same=same, LEVEL=LEVEL, LEVEL0=LEVEL_BEFORE_TOPOUT, M=(M1, M2, M3), state_votes=state_votes, level_shift=level_shift, Kw=Kw)
 
 def poll_strength_all(runs):
     # The centre is the mean district poll gap across the states in this invocation, so a subset
@@ -439,7 +484,7 @@ def finish(R, Sm):
     curves = np.array([100 * (2 * inv(base + e_d * ls(0.5 + g / 200.0, 0.0) + extra) - 1) for g in grid])
     df["flip"] = [None if df.fixed.iloc[i] else (float(grid[np.argmax(curves[:, i] > 0)]) if (curves[:, i] > 0).any() else None) for i in range(len(df))]
     M1, M2, M3 = R["M"]
-    summary = dict(state=name, abbr=st, districts=len(df), components=dict(M1=100 * M1, M2=100 * M2, M3=100 * M3, blend=100 * R["LEVEL"]),
+    summary = dict(state=name, abbr=st, districts=len(df), components=dict(M1=100 * M1, M2=100 * M2, M3=100 * M3, blend=100 * R["LEVEL"], blend_before_topout=100 * R.get("LEVEL0", R["LEVEL"])),
                    state_2024_d2=None, spine=os.environ.get("SPINE"),
                    districts_with_primary_term=int((df.prim_term != 0).sum()), districts_with_ticket_term=int((df.ticket_term != 0).sum()),
                    statewide_house_margin=100 * (2 * R["LEVEL"] - 1),

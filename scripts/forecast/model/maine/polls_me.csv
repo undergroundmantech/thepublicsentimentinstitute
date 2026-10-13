@@ -1,25 +1,27 @@
 source,dates,end,n,pop,R,D,O,U
-Rasmussen Reports,October 5-8 2026,2026-10-08,804,LV,47,49,0,4
-The Washington Post-Schar School,September 30-October 5 2026,2026-10-05,800,LV,46,50,0,4
-Marist College,October 1-4 2026,2026-10-04,1505,RV,47,51,0,2
-Maine People's Resource Center (D),September 25-29 2026,2026-09-29,684,LV,46.5,49.3,0,4.2
-UMass Lowell/YouGov,August 28-September 14 2026,2026-09-14,650,LV,43,48,1,6
-CBS News/YouGov,September 23-October 1 2026,2026-10-01,1144,LV,50,50,0,0
-Trafalgar Group (R),September 29-October 1 2026,2026-10-01,1091,LV,45.9,46.2,0,7.9
-Wedgewood Polls,September 27-October 1 2026,2026-10-01,400,LV,48,52,0,0
-co/efficient (R),September 28-30 2026,2026-09-30,1240,LV,48,46,0,6
-Fabrizio Ward and Impact Research for AARP,September 20-22 2026,2026-09-22,982,LV,47,50,1,3
-Quantus Insights,September 14-15 2026,2026-09-15,621,LV,47.5,46.5,2,4.5
-Rasmussen Reports (R),September 8-10 2026,2026-09-10,1033,LV,45,46,0,9
-YouGov,September 2-8 2026,2026-09-08,1335,LV,44,48,1,6
-YouGov,September 2-8 2026,2026-09-08,1378,RV,44,46,1,9
-SSRS,August 31-September 6 2026,2026-09-06,880,LV,45,48,7,0
-Abacus Data,August 26-28 2026,2026-08-28,327,LV,43,52,4,0
-Abacus Data,August 26-28 2026,2026-08-28,500,RV,46,45,9,0
-Beacon Research (D)/Shaw & Co. Research (R),August 6-10 2026,2026-08-10,1000,RV,46,48,1,5
-Hart Research (D),July 27-August 1 2026,2026-08-01,802,LV,45,49,0,6
-University of New Hampshire,July 15-20 2026,2026-07-20,1178,LV,46,49,2,3
-Z to A Research (D),July 7-8 2026,2026-07-08,988,LV,48,47,0,5
-Public Policy Polling (D),July 7 2026,2026-07-07,785,LV,44,49,0,7
-Wedgewood Polls (D),July 4-6 2026,2026-07-06,405,LV,43,48,0,9
+Rasmussen Reports,October 5-8 2026,2026-10-08,804,LV,47.0,49.0,0.0,4.0
+The Washington Post-Schar School,September 30-October 5 2026,2026-10-05,800,LV,46.0,50.0,0.0,4.0
+Marist College,October 1-4 2026,2026-10-04,1505,RV,47.0,51.0,0.0,2.0
+Maine People's Resource Center (D),September 25-29 2026,2026-09-29,684,LV,46.5,49.3,0.0,4.2
+UMass Lowell/YouGov,August 28-September 14 2026,2026-09-14,650,LV,43.0,48.0,1.0,6.0
+CBS News/YouGov,September 23-October 1 2026,2026-10-01,1144,LV,50.0,50.0,0.0,0.0
+Trafalgar Group (R),September 29-October 1 2026,2026-10-01,1091,LV,45.9,46.2,0.0,7.9
+Wedgewood Polls,September 27-October 1 2026,2026-10-01,400,LV,48.0,52.0,0.0,0.0
+co/efficient (R),September 28-30 2026,2026-09-30,1240,LV,48.0,46.0,0.0,6.0
+Fabrizio Ward and Impact Research for AARP,September 20-22 2026,2026-09-22,982,LV,47.0,50.0,1.0,3.0
+Quantus Insights,September 14-15 2026,2026-09-15,621,LV,47.5,46.5,2.0,4.5
+Rasmussen Reports (R),September 8-10 2026,2026-09-10,1033,LV,45.0,46.0,0.0,9.0
+YouGov,September 2-8 2026,2026-09-08,1335,LV,44.0,48.0,1.0,6.0
+YouGov,September 2-8 2026,2026-09-08,1378,RV,44.0,46.0,1.0,9.0
+SSRS,August 31-September 6 2026,2026-09-06,880,LV,45.0,48.0,7.0,0.0
+Abacus Data,August 26-28 2026,2026-08-28,327,LV,43.0,52.0,4.0,0.0
+Abacus Data,August 26-28 2026,2026-08-28,500,RV,46.0,45.0,9.0,0.0
+Beacon Research (D)/Shaw & Co. Research (R),August 6-10 2026,2026-08-10,1000,RV,46.0,48.0,1.0,5.0
+Hart Research (D),July 27-August 1 2026,2026-08-01,802,LV,45.0,49.0,0.0,6.0
+University of New Hampshire,July 15-20 2026,2026-07-20,1178,LV,46.0,49.0,2.0,3.0
+Z to A Research (D),July 7-8 2026,2026-07-08,988,LV,48.0,47.0,0.0,5.0
+Public Policy Polling (D),July 7 2026,2026-07-07,785,LV,44.0,49.0,0.0,7.0
+Wedgewood Polls (D),July 4-6 2026,2026-07-06,405,LV,43.0,48.0,0.0,9.0
 InsiderAdvantage,September 22-23 2026,2026-09-23,1200,LV,45.6,46.4,0.0,8.0
+New York Times/Siena University,September 15-22 2026,2026-09-22,619,LV,49.0,46.0,0.0,5.0
+University of New Hampshire,September 17-21 2026,2026-09-21,1312,LV,47.0,51.0,1.0,1.0

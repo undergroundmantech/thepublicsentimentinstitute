@@ -8,17 +8,13 @@
 // ST is a state abbreviation or "US", and on "US" the regions ARE the states,
 // which is what the national view reads.
 
-export type Category = "requested" | "returned" | "inperson" | "voted";
-/** the three categories the feed publishes; "voted" is built from two of them */
-export type FeedCategory = Exclude<Category, "voted">;
-export const FEED_CATEGORIES: FeedCategory[] = ["requested", "returned", "inperson"];
+export type Category = "requested" | "returned" | "inperson";
 export type Dimension = "party" | "gender" | "race" | "ethnicity" | "age";
 
 export const CATEGORIES: { key: Category; label: string; blurb: string }[] = [
   { key: "requested", label: "Requested", blurb: "mail ballots requested" },
   { key: "returned",  label: "Returned",  blurb: "mail ballots returned" },
   { key: "inperson",  label: "In person", blurb: "ballots cast in person" },
-  { key: "voted",     label: "Fully voted", blurb: "returned mail plus in person, every ballot already cast" },
 ];
 
 export const DIMENSIONS: { key: Dimension; label: string }[] = [
@@ -45,8 +41,6 @@ export type CategoryPayload = {
   snapshot_date: string;
   regions: Record<string, RegionRow>;
   statewide_total: RegionRow;
-  /** only on "voted": the two feed payloads it was summed from */
-  parts?: { returned: CategoryPayload | null; inperson: CategoryPayload | null };
 };
 
 export type DemographicPayload = {
@@ -71,51 +65,10 @@ async function get<T>(path: string): Promise<T | null> {
   }
 }
 
-/* ── "voted": returned mail ballots plus ballots cast in person ─────────────
- * Every ballot already cast. Built on the client by summing the two feed
- * categories bucket by bucket, so no new endpoint is needed. */
-function addRow(into: RegionRow, row: RegionRow | undefined) {
-  for (const [g, b] of Object.entries(row ?? {})) {
-    const cur = into[g];
-    into[g] = { votes: (cur?.votes ?? 0) + (b?.votes ?? 0), color: cur?.color ?? b?.color };
-  }
-}
-export function mergeVoted(ret: CategoryPayload | null, inp: CategoryPayload | null): CategoryPayload | null {
-  const base = ret ?? inp;
-  if (!base) return null;
-  const regions: Record<string, RegionRow> = {};
-  for (const src of [ret, inp]) for (const [name, row] of Object.entries(src?.regions ?? {})) addRow(regions[name] ??= {}, row);
-  const statewide_total: RegionRow = {};
-  addRow(statewide_total, ret?.statewide_total); addRow(statewide_total, inp?.statewide_total);
-  const snap = [ret?.snapshot_date, inp?.snapshot_date].filter(Boolean).sort().at(-1) ?? base.snapshot_date;
-  return { ...base, category: "voted", snapshot_date: snap, regions, statewide_total, parts: { returned: ret, inperson: inp } };
-}
-
-export const getCapabilities = (st: string) => get<Capabilities>(`${st}/capabilities`).then((c) => {
-  if (!c?.categories) return c;
-  const r = c.categories.returned, i = c.categories.inperson;
-  if (r || i) {
-    const v = {} as Record<Dimension, boolean>;
-    // a breakdown of "voted" needs both halves, unless the state only publishes one
-    for (const d of DIMENSIONS.map((x) => x.key)) v[d] = r && i ? !!(r[d] && i[d]) : !!(r ?? i)?.[d];
-    c.categories.voted = v;
-  }
-  return c;
-});
-export const getCategory = (st: string, c: Category): Promise<CategoryPayload | null> =>
-  c === "voted"
-    ? Promise.all([getCategory(st, "returned"), getCategory(st, "inperson")]).then(([r, i]) => mergeVoted(r, i))
-    : get<CategoryPayload>(`${st}/${c}`);
-export const getDemographics = (st: string, c: Category, by: Dimension): Promise<DemographicPayload | null> => {
-  if (c !== "voted") return get<DemographicPayload>(`${st}/${c}/demographics?by=${by}`);
-  return Promise.all([getDemographics(st, "returned", by), getDemographics(st, "inperson", by)]).then(([r, i]) => {
-    if (!r || !i) return r ?? i;
-    const values: Record<string, number> = { ...r.values };
-    for (const [g, n] of Object.entries(i.values)) values[g] = (values[g] ?? 0) + n;
-    return { ...r, category: "voted", values, total: r.total + i.total,
-      snapshot_date: [r.snapshot_date, i.snapshot_date].sort().at(-1) ?? r.snapshot_date };
-  });
-};
+export const getCapabilities = (st: string) => get<Capabilities>(`${st}/capabilities`);
+export const getCategory = (st: string, c: Category) => get<CategoryPayload>(`${st}/${c}`);
+export const getDemographics = (st: string, c: Category, by: Dimension) =>
+  get<DemographicPayload>(`${st}/${c}/demographics?by=${by}`);
 
 export const sumRow = (row: RegionRow | undefined) =>
   row ? Object.values(row).reduce((n, b) => n + (b?.votes ?? 0), 0) : 0;
@@ -189,14 +142,20 @@ export function matchCounty(apiName: string, geoNames: Record<string, string>): 
   return null;
 }
 
-/** Two-party margin of a row, Republican positive, or null where the state
- *  reports no party at all. */
+/** Margin of a row across every ballot that carries a party label, Republican
+ *  positive, or null where the state reports no party at all. Third party and
+ *  unaffiliated ballots stay in the denominator, the way registration based
+ *  trackers report it and the way the TPSI estimate is scored, so a reported
+ *  place and an estimated place are read on the same scale. */
 export function marginOf(row: RegionRow | undefined): number | null {
   if (!row) return null;
-  const d = row["Democratic"]?.votes ?? 0;
-  const r = row["Republican"]?.votes ?? 0;
+  let d = 0, r = 0, o = 0;
+  for (const [g, b] of Object.entries(row)) {
+    const v = b?.votes ?? 0;
+    if (g === "Democratic") d += v; else if (g === "Republican") r += v; else if (g !== "Unspecified") o += v;
+  }
   if (d + r <= 0) return null;
-  return ((r - d) / (d + r)) * 100;
+  return ((r - d) / (d + r + o)) * 100;
 }
 
 /**
@@ -293,7 +252,10 @@ export type PartyModel = {
     calibration: { st: string; observed: number; uncalibrated: number; held_out: number; k_without: number }[];
     fileReturn: Record<string, number>; fallbackStates: string[];
     lv: Record<string, number[]>; registration: Record<string, number[]>;
-    check: { st: string; modelMargin: number; lo: number; hi: number; reportedMargin: number; modelTilt: number; reportedTilt: number }[];
+    basis?: "registration" | "identification";
+    registrationFit?: { pooled: number; spread: number; heldOutError: number; independents: number;
+      source: Record<string, "feed" | "registration" | "primary" | "pooled">; primaryWeight: Record<string, number>; shift: Record<string, number> };
+    check: { st: string; heldOut?: number; modelMargin: number; lo: number; hi: number; reportedMargin: number; modelTilt: number; reportedTilt: number }[];
   };
   regime: Record<string, Regime>;
   point: number[];                                  // survey return prior: [Republican, Independent] vs Democratic
@@ -307,15 +269,13 @@ export type PartyModel = {
 export const getPartyModel = () =>
   fetch("/earlyvote-party-model.json")
     .then((r) => (r.ok ? (r.json() as Promise<PartyModel>) : null))
-    .then((m) => (m && m.meta?.version === 2 ? m : null))
+    .then((m) => (m && (m.meta?.version === 2 || m.meta?.version === 3) ? m : null))
     .catch(() => null);
 
 /** requested ballots read the mailed out mix; returned ballots the mail mix and
  *  then the party return rates; in person ballots the early mix */
 export type Mode = "mail" | "returned" | "early";
-// "voted" is estimated as its two halves (see mergeSims, mergeCombined); where a
-// single mode is needed for display it reads as cast ballots, the early mix.
-export const modeOf = (c: Category): Mode => (c === "inperson" || c === "voted" ? "early" : c === "returned" ? "returned" : "mail");
+export const modeOf = (c: Category): Mode => (c === "inperson" ? "early" : c === "returned" ? "returned" : "mail");
 const MIX_INDEX: Record<Mode, number> = { mail: 2, returned: 0, early: 1 };
 
 export const regimeOf = (model: PartyModel, st: string): Regime => model.regime[st] ?? "request";
@@ -485,10 +445,10 @@ export const fmtMargin = (m: number) => (Math.abs(m) < 0.05 ? "EVEN" : m > 0 ? `
  * One number per category for the whole country. Ballots a state reports with
  * a party are counted as reported: Democratic, Republican, and every other
  * label as Independent or other. Ballots reported as Unspecified are estimated.
- * A state with no party at all is estimated from its own county counts when
- * those have loaded, the same way the state page does, so the two agree; until
- * then, and for the Unspecified remainder inside a party state, its counties
- * are weighted by adults.
+ * Every state with Unspecified ballots, whether it reports no party at all or
+ * only some, is estimated from its own county counts and reweighted to the ages
+ * and races it reports, exactly as its state page does, so the two agree.
+ * Until a state's county counts load, its counties are weighted by adults.
  */
 
 export type Combined = {
@@ -497,8 +457,79 @@ export type Combined = {
   estimated: { votes: number; states: number; countyWeighted: number };
   d: number; r: number; o: number;          // final ballots, reported plus mean estimate
   margin: number; lo: number; hi: number;   // R minus D, points, 80% range from the estimate
-  dk: number[]; rk: number[];               // Democratic and Republican ballots per draw, reported plus estimated
 };
+
+/**
+ * The Unspecified ballots of one state as one simulated place. Every county that
+ * reports Unspecified ballots is a part weighted by those ballots, at its own
+ * forecast electorate; a county with no matching shape is spread over the
+ * state's counties by adults. Both the national map and the state page build a
+ * state from this, so the two always show the same number.
+ */
+export function statePlace(
+  st: string, u: number, cp: CategoryPayload | null | undefined, countyNames: Record<string, string> | null,
+  model: PartyModel, mode: Mode,
+  req?: { row: RegionRow | undefined; counties: CategoryPayload | null | undefined },
+): { place: Place; countyWeighted: boolean } {
+  const reqS = splitRow(req?.row);
+  const stateRho = mode === "returned"
+    ? (reqS.u > 0 ? u / reqS.u : undefined)
+    : undefined;
+  if (cp && countyNames && Object.keys(cp.regions ?? {}).length) {
+    const local: Record<string, string> = {};
+    for (const [f, nm] of Object.entries(countyNames)) if (stateOfFips(f) === st) local[nm] = f;
+    const reqC = req?.counties?.regions;
+    const parts: Part[] = [];
+    for (const [name, crow] of Object.entries(cp.regions)) {
+      const cu = splitRow(crow).u; if (cu <= 0) continue;
+      let rho: number | undefined;
+      if (mode === "returned") {
+        const qrow = reqC?.[name]; const qU = splitRow(qrow).u, qN = sumRow(qrow);
+        rho = qU > 0 ? cu / qU : qN > 0 ? sumRow(crow) / qN : stateRho;
+      }
+      const f = matchCounty(name, local);
+      if (f && model.mix[f]) parts.push([f, cu, rho]);
+      else for (const [ff, a] of stateParts(model, st, rho)) parts.push([ff, (cu * a) / Math.max(1, stateAdults(model, st)), rho]);
+    }
+    if (parts.length) return { place: { key: st, st, parts, votes: u }, countyWeighted: true };
+  }
+  return { place: { key: st, st, parts: stateParts(model, st, stateRho), votes: u }, countyWeighted: false };
+}
+
+/** One state as rated everywhere on the page: reported party ballots plus the
+ *  TPSI estimate of its Unspecified ballots, scored across all ballots. */
+export type StateView = {
+  d: number; r: number; o: number; u: number;   // reported
+  ed: number; er: number; ei: number;           // estimated, mean ballots
+  margin: number; lo: number; hi: number;       // R minus D over every ballot, points
+  estShare: number;                             // share of ballots that are estimated
+  countyWeighted: boolean;
+};
+
+export function stateView(
+  st: string, row: RegionRow | undefined, cp: CategoryPayload | null | undefined,
+  countyNames: Record<string, string> | null, model: PartyModel, mode: Mode,
+  tilt?: ReturnTilt | null, adj?: DemoAdjust,
+  req?: { row: RegionRow | undefined; counties: CategoryPayload | null | undefined },
+): StateView | null {
+  const { d, r, o, u } = splitRow(row);
+  const N = d + r + o + u; if (N <= 0) return null;
+  if (u <= 0) {
+    if (d + r <= 0) return null;
+    const m = ((r - d) / N) * 100;
+    return { d, r, o, u, ed: 0, er: 0, ei: 0, margin: m, lo: m, hi: m, estShare: 0, countyWeighted: false };
+  }
+  const { place, countyWeighted } = statePlace(st, u, cp, countyNames, model, mode, req);
+  const sim = simulate([place], model, mode, tilt, adj ? { [st]: adj } : undefined);
+  if (!sim.total) return d + r > 0
+    ? { d, r, o, u, ed: 0, er: 0, ei: 0, margin: ((r - d) / (d + r + o)) * 100, lo: NaN, hi: NaN, estShare: 0, countyWeighted }
+    : null;
+  const nD = model.draws.length;
+  const mg = sim.draws.d.map((ed, k) => ((r + sim.draws.r[k] - d - ed) / N) * 100);
+  const mean = (a: number[]) => a.reduce((s, x) => s + x, 0) / nD;
+  return { d, r, o, u, ed: mean(sim.draws.d), er: mean(sim.draws.r), ei: mean(sim.draws.i),
+    margin: mean(mg), lo: q(mg, 0.1), hi: q(mg, 0.9), estShare: u / N, countyWeighted };
+}
 
 export function combineNational(
   us: CategoryPayload, counties: Record<string, CategoryPayload | null | undefined>,
@@ -506,42 +537,21 @@ export function combineNational(
   // for returned ballots: the same places' requests, and the party return offsets
   req?: { us: CategoryPayload | null | undefined; counties: Record<string, CategoryPayload | null | undefined> },
   tilt?: ReturnTilt | null,
+  adjust?: Record<string, DemoAdjust>,
 ): Combined | null {
   let rd = 0, rr = 0, ro = 0, repStates = 0, estStates = 0, countyWeighted = 0;
   const places: Place[] = [];
   for (const [st, row] of Object.entries(us.regions)) {
-    let d = 0, r = 0, o = 0, u = 0;
-    for (const [g, b] of Object.entries(row)) {
-      const v = b?.votes ?? 0;
-      if (g === "Democratic") d += v; else if (g === "Republican") r += v;
-      else if (g === "Unspecified") u += v; else o += v;
-    }
+    const { d, r, o, u } = splitRow(row);
     if (d + r + o > 0) { rd += d; rr += r; ro += o; repStates++; }
     if (u <= 0) continue;
     estStates += d + r + o > 0 ? 0 : 1;
-    const cp = d + r + o > 0 ? null : counties[st];
-    // a returned ballot's place return rate: its returns over its requests
-    const reqU = req ? splitRow(req.us?.regions[st]).u : 0;
-    const stateRho = mode === "returned" && reqU > 0 ? u / reqU : undefined;
-    if (cp && countyNames && Object.keys(cp.regions).length) {
-      const local: Record<string, string> = {};
-      for (const [f, nm] of Object.entries(countyNames)) if (stateOfFips(f) === st) local[nm] = f;
-      const reqC = req?.counties[st]?.regions;
-      const parts: Part[] = [];
-      for (const [name, crow] of Object.entries(cp.regions)) {
-        const n = sumRow(crow); if (n <= 0) continue;
-        const f = matchCounty(name, local);
-        const qq = reqC ? sumRow(reqC[name]) : 0;
-        const rho = mode === "returned" ? (qq > 0 ? n / qq : stateRho) : undefined;
-        if (f && model.mix[f]) parts.push([f, n, rho]);
-        else for (const [ff, a] of stateParts(model, st, rho)) parts.push([ff, (n * a) / Math.max(1, stateAdults(model, st)), rho]);
-      }
-      if (parts.length) { places.push({ key: st, st, parts, votes: u }); countyWeighted++; continue; }
-    }
-    places.push({ key: st, st, parts: stateParts(model, st, stateRho), votes: u });
+    const sp = statePlace(st, u, counties[st], countyNames, model, mode,
+      req ? { row: req.us?.regions[st], counties: req.counties[st] } : undefined);
+    places.push(sp.place); if (sp.countyWeighted) countyWeighted++;
   }
 
-  const sim = simulate(places, model, mode, tilt);
+  const sim = simulate(places, model, mode, tilt, adjust);
   const estVotes = sim.total?.votes ?? 0;
   const total = rd + rr + ro + estVotes;
   if (total <= 0) return null;
@@ -555,47 +565,7 @@ export function combineNational(
     estimated: { votes: estVotes, states: estStates, countyWeighted },
     d: rd + ed, r: rr + er, o: ro + ei,
     margin: mean(mg), lo: q(mg, 0.1), hi: q(mg, 0.9),
-    dk: sim.draws.d.map((x) => rd + (estVotes ? x : 0)), rk: sim.draws.r.map((x) => rr + (estVotes ? x : 0)),
   };
-}
-
-/** nationwide "voted": returned plus in person, summed draw by draw so the range stays exact */
-export function mergeCombined(a: Combined | null | undefined, b: Combined | null | undefined): Combined | null {
-  if (!a || !b) return a ?? b ?? null;
-  const total = a.total + b.total;
-  const mg = a.dk.map((d, k) => ((a.rk[k] + b.rk[k] - d - b.dk[k]) / total) * 100);
-  return {
-    total,
-    reported: { d: a.reported.d + b.reported.d, r: a.reported.r + b.reported.r, o: a.reported.o + b.reported.o,
-      votes: a.reported.votes + b.reported.votes, states: Math.max(a.reported.states, b.reported.states) },
-    estimated: { votes: a.estimated.votes + b.estimated.votes, states: Math.max(a.estimated.states, b.estimated.states),
-      countyWeighted: Math.max(a.estimated.countyWeighted, b.estimated.countyWeighted) },
-    d: a.d + b.d, r: a.r + b.r, o: a.o + b.o,
-    margin: mg.reduce((s, x) => s + x, 0) / mg.length, lo: q(mg, 0.1), hi: q(mg, 0.9),
-    dk: a.dk.map((d, k) => d + b.dk[k]), rk: a.rk.map((r, k) => r + b.rk[k]),
-  };
-}
-
-type Sim = ReturnType<typeof simulate>;
-/** a place's "voted" estimate: its returned and in person estimates, ballot weighted;
- *  the total is summed draw by draw */
-export function mergeSims(a: Sim, b: Sim): Sim {
-  const byKey: Record<string, Estimate> = { ...a.byKey };
-  for (const [k, e] of Object.entries(b.byKey)) {
-    const o = byKey[k];
-    if (!o) { byKey[k] = e; continue; }
-    const v = o.votes + e.votes, w = (x: number, y: number) => (x * o.votes + y * e.votes) / v;
-    byKey[k] = { d: w(o.d, e.d), r: w(o.r, e.r), i: w(o.i, e.i), margin: w(o.margin, e.margin),
-      lo: w(o.lo, e.lo), hi: w(o.hi, e.hi), votes: v };
-  }
-  const draws = { d: a.draws.d.map((x, k) => x + b.draws.d[k]), r: a.draws.r.map((x, k) => x + b.draws.r[k]),
-    i: a.draws.i.map((x, k) => x + b.draws.i[k]) };
-  const totV = (a.total?.votes ?? 0) + (b.total?.votes ?? 0);
-  if (totV <= 0) return { byKey, total: null, draws };
-  const tm = draws.r.map((r, k) => ((r - draws.d[k]) / totV) * 100);
-  const mean = (x: number[]) => x.reduce((s, y) => s + y, 0) / x.length / totV;
-  return { byKey, total: { d: mean(draws.d), r: mean(draws.r), i: mean(draws.i),
-    margin: tm.reduce((s, x) => s + x, 0) / tm.length, lo: q(tm, 0.1), hi: q(tm, 0.9), votes: totV }, draws };
 }
 
 const _adults: Record<string, number> = {};
@@ -755,7 +725,7 @@ export function returnTilt(req: CategoryPayload | null | undefined, ret: Categor
     const gap = cal.map((c) => {
       const est = logit(twoParty(c.st, c.rho, -1, [bR, bO]));
       const reg = model.meta.registration?.[c.st], lv = model.meta.lv?.[c.st];
-      if (reg && lv) return (logit(c.actual) - logit(reg[0] / (reg[0] + reg[1]))) - (est - logit(lv[1] / (lv[0] + lv[1])));
+      if (reg && lv && model.meta.basis !== "registration") return (logit(c.actual) - logit(reg[0] / (reg[0] + reg[1]))) - (est - logit(lv[1] / (lv[0] + lv[1])));
       return logit(c.actual) - est;
     });
     const meanGap = gap.reduce((s, x) => s + x, 0) / gap.length;
