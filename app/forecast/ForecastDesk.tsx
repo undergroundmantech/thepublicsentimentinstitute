@@ -16,6 +16,7 @@ import {
   isPlaceholderName,
 } from "./lib";
 import { raceHref } from "@/app/lib/opp";
+import ForecastAtlas, { ATLAS_CSS } from "./ForecastAtlas";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // The forecast desk, in the OnPoint Politics inner template: crumbs, eyebrow,
@@ -175,6 +176,11 @@ export default function ForecastDesk({ initialOffice = "house" }: { initialOffic
   const [sortKey, setSortKey] = useState<"close" | "prob" | "name">("close");
   const [showAll, setShowAll] = useState(false);
   const mapAnchor = useRef<HTMLElement | null>(null);
+  // The forecast runs on a black studio floor: the page ground goes black while the desk is mounted.
+  useEffect(() => {
+    document.documentElement.classList.add("fc-black");
+    return () => document.documentElement.classList.remove("fc-black");
+  }, []);
 
   const races = useMemo(() => (model ? model.races.filter((r) => r.office === office) : []), [model, office]);
   const byId = useMemo(() => new Map(model ? model.races.map((r) => [r.id, r]) : []), [model]);
@@ -212,7 +218,7 @@ export default function ForecastDesk({ initialOffice = "house" }: { initialOffic
   if (!model || !geo || !chamber) {
     return (
       <div className="opp fc-page">
-        <style>{CSS}</style>
+        <style>{CSS + ATLAS_CSS}</style>
         <DeskHeader model={model} office={office} />
         <div className="card"><div className="empty">Loading the forecast</div></div>
       </div>
@@ -221,7 +227,7 @@ export default function ForecastDesk({ initialOffice = "house" }: { initialOffic
 
   return (
     <div className="opp fc-page">
-      <style>{CSS}</style>
+      <style>{CSS + ATLAS_CSS}</style>
       <DeskHeader model={model} office={office} />
 
       <div className="fc-stack">
@@ -272,6 +278,7 @@ export default function ForecastDesk({ initialOffice = "house" }: { initialOffic
         {/* ── below the map ── */}
         {!sel ? (
           <>
+            <ForecastAtlas model={model} counties={counties} office={office} onPickRace={pick} statePaths={geo.states} />
             <SectionDistribution chamber={chamber} office={office} sims={model.meta.sims} />
             <SectionSeats chamber={chamber} office={office} updated={model.meta.updated} />
             <SectionProbability chamber={chamber} office={office} updated={model.meta.updated} />
@@ -2135,5 +2142,53 @@ table.fc-xt td.mg i { display: inline-block; padding: 2px 7px; border-radius: 5p
 }
 @media (prefers-reduced-motion: reduce) {
   .fc-map.anim, .fc-hex, .fc-hexg { animation: none; }
+}
+
+/* ── studio floor: black ground, floating maps, motion on arrival ─────────── */
+html.fc-black, html.fc-black body { background: #000; }
+html.fc-black .opp.ambient .orbs { opacity: .22; }
+.fc-page {
+  --bg: #000; --bg2: #08060c; --bg3: #110d18;
+  --glass: rgba(255,255,255,.035); --glass2: rgba(255,255,255,.06);
+  --line: rgba(255,255,255,.09); --line2: rgba(255,255,255,.16);
+  --ink: #f3eff8; --ink2: #c9c2d6; --mute: #8e86a3; --mute2: #5f5873; --hi: #ffffff;
+  --gold: #e7b341; --gold2: #bb831c;
+  --dem: #3d7bff; --dem2: #7fa6ff; --dem3: #b9ccff;
+  --gop: #ff3b5c; --gop2: #ff8399; --gop3: #ffbfcb;
+  --ind: #b78cff; --toss: #e7b341; --win: #3ddc97;
+  --ink-rgb: 243, 239, 248; --canvas-rgb: 0, 0, 0; --line-rgb: 255, 255, 255; --bg2-rgb: 8, 6, 12; --hi-rgb: 255, 255, 255;
+  --shadow-card: 0 30px 80px rgba(0,0,0,.6), inset 0 1px 0 rgba(255,255,255,.07);
+  color-scheme: dark;
+}
+.fc-page .card { background: linear-gradient(180deg, rgba(255,255,255,.045), rgba(255,255,255,.012)); border-color: rgba(255,255,255,.08); box-shadow: 0 30px 80px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,.06); }
+.fc-stack > * { animation: fcRise .8s cubic-bezier(.16,1,.3,1) both; }
+.fc-stack > *:nth-child(2) { animation-delay: .08s; } .fc-stack > *:nth-child(3) { animation-delay: .14s; }
+.fc-stack > *:nth-child(4) { animation-delay: .2s; } .fc-stack > *:nth-child(5) { animation-delay: .26s; }
+@keyframes fcRise { from { opacity: 0; transform: translateY(26px) scale(.985); } }
+/* the map card is not a card any more: the map floats on the floor */
+.fc-page .fc-mapcard { background: transparent; border-color: transparent; box-shadow: none; -webkit-backdrop-filter: none; backdrop-filter: none; overflow: visible; }
+.fc-mapwrap { padding: 18px 0 30px; isolation: isolate; }
+.fc-mapwrap::before { content: ""; position: absolute; left: 8%; right: 8%; bottom: 2%; height: 70px; z-index: -1; border-radius: 50%; pointer-events: none;
+  background: radial-gradient(closest-side, rgba(131,68,156,.42), transparent); filter: blur(22px); animation: fcFloor 9s ease-in-out infinite alternate; }
+.fc-mapwrap::after { content: ""; position: absolute; inset: -6% -4% 0; z-index: -2; pointer-events: none; opacity: .55;
+  background-image: radial-gradient(rgba(255,255,255,.08) 1px, transparent 1px); background-size: 24px 24px;
+  mask-image: radial-gradient(60% 55% at 50% 50%, #000, transparent); -webkit-mask-image: radial-gradient(60% 55% at 50% 50%, #000, transparent); }
+@keyframes fcFloor { from { transform: scaleX(.9); opacity: .6; } to { transform: scaleX(1.05); opacity: 1; } }
+.fc-map { filter: drop-shadow(0 30px 36px rgba(0,0,0,.9)) drop-shadow(0 0 34px rgba(131,68,156,.22)); }
+.fc-map.anim { animation: fcBoard .95s cubic-bezier(.16,1,.3,1) both; }
+.fc-map.race { animation: fcDeep .75s cubic-bezier(.16,1,.3,1) both; }
+/* the bob runs on the wrapper, a plain composited layer, so the map itself never repaints */
+.fc-mapwrap > .fc-map, .fc-stage-map { will-change: transform; }
+.fc-stage-map, .fc-mapwrap { animation: fcBob 11s ease-in-out 1s infinite alternate; }
+@keyframes fcBoard { 0% { transform: perspective(2400px) translateY(46px) rotateX(12deg) scale(.95); opacity: 0; filter: blur(10px); } 55% { filter: blur(0); } 100% { transform: none; opacity: 1; } }
+@keyframes fcDeep { from { opacity: 0; transform: scale(1.05); filter: blur(8px); } }
+@keyframes fcBob { from { transform: translateY(-4px); } to { transform: translateY(4px); } }
+.fc-map-race, .fc-unit { transition: filter .2s ease, transform .2s ease; }
+.fc-map-race:hover { filter: brightness(1.3) drop-shadow(0 0 8px rgba(255,255,255,.35)); }
+.fc-seatbar-track { box-shadow: 0 0 26px rgba(131,68,156,.35); }
+.fc-seatbar-fill { animation: fcFill 1.1s cubic-bezier(.16,1,.3,1) both; transform-origin: 0 50%; }
+@keyframes fcFill { from { transform: scaleX(0); } }
+@media (prefers-reduced-motion: reduce) {
+  .fc-stack > *, .fc-map, .fc-map.anim, .fc-map.race, .fc-mapwrap, .fc-stage-map, .fc-mapwrap::before, .fc-seatbar-fill { animation: none !important; }
 }
 `;
