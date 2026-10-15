@@ -1,5 +1,5 @@
 """
-TPSI / OnPoint Politics  Senate Mode county forecast, rerun of Sept 16 2026
+TPSI / On Point Politics  Senate Mode county forecast, rerun of Sept 16 2026
 Deterministic: no random draws. Same inputs produce identical outputs.
 
 Final county two party share = 0.40 * M1 fundamental + 0.40 * M2 national/census + 0.20 * M3 history/polling

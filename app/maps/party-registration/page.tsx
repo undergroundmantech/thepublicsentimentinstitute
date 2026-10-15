@@ -9,7 +9,7 @@ import Link from "next/link";
  * Each state / county is colored by the single largest registered party bloc,
  * shaded by margin (states & focused view) or by registration size (national
  * county view). Click a state to focus on its counties. Dark glass cards on the
- * OnPoint Politics tokens. Unaffiliated is a neutral grey violet, never the
+ * On Point Politics tokens. Unaffiliated is a neutral grey violet, never the
  * independent lavender, which is reserved for independent candidates.
  *
  * Data: /public/voterreg/{summary.json, county_values.json, counties/<ABBR>.json}

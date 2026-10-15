@@ -316,10 +316,10 @@ export default function PollingAveragesPage({ initialId, forecast }: { initialId
     reading = isMatchup
       ? (Math.abs(hLatest.net) < 0.05 ? "The race is even" : `${lead} ${verb} by ${Math.abs(hLatest.net).toFixed(1)} points`)
       : `${h2hDef.marginLabel} stands at ${h2hDef.fmtMargin(hLatest.net)}`;
-    reading += ` in the OnPoint average of ${totalPolls} public poll${totalPolls === 1 ? "" : "s"}, weighted by recency, sample size, voter screen and pollster grade.`;
+    reading += ` in the On Point average of ${totalPolls} public poll${totalPolls === 1 ? "" : "s"}, weighted by recency, sample size, voter screen and pollster grade.`;
   } else if (multiDef && builtMulti?.latest) {
     const li = leaderIdx(builtMulti.latest);
-    reading = `${multiDef.series[li].label} leads the field at ${builtMulti.latest[li].toFixed(1)} percent in the OnPoint average of ${totalPolls} public polls.`;
+    reading = `${multiDef.series[li].label} leads the field at ${builtMulti.latest[li].toFixed(1)} percent in the On Point average of ${totalPolls} public polls.`;
   }
   const lede = `${isMatchup && h2hDef ? `${h2hDef.seriesA.label} vs. ${h2hDef.seriesB.label}. ` : ""}${reading}`;
 
@@ -369,7 +369,7 @@ export default function PollingAveragesPage({ initialId, forecast }: { initialId
         <header className="ph">
           <div className="eye g">Polling averages</div>
           <h1>The full <em>board</em></h1>
-          <p className="lede">Every average OnPoint Politics tracks, with its latest reading and trend. Open any tile for the chart, the trend lines and every poll.</p>
+          <p className="lede">Every average On Point Politics tracks, with its latest reading and trend. Open any tile for the chart, the trend lines and every poll.</p>
           <div className="pmeta">
             <span><b>{CATALOG.length}</b> averages</span>
             <span>Weighted by recency, sample size, voter screen and pollster grade</span>
@@ -514,7 +514,7 @@ export default function PollingAveragesPage({ initialId, forecast }: { initialId
                   <tbody>
                     {builtMulti?.latest && (
                       <tr className="avg">
-                        <td>OnPoint average</td><td className="n">{updated ? fmtIso(updated) : ""}</td><td className="n">{totalPolls} polls</td>
+                        <td>On Point average</td><td className="n">{updated ? fmtIso(updated) : ""}</td><td className="n">{totalPolls} polls</td>
                         {multiDef.series.map((s, ci) => <td key={s.key} className="n" style={{ color: s.color }}>{Number.isFinite(builtMulti.latest![ci]) ? builtMulti.latest![ci].toFixed(1) : ""}</td>)}
                       </tr>
                     )}
@@ -549,7 +549,7 @@ export default function PollingAveragesPage({ initialId, forecast }: { initialId
                   <tbody>
                     {hLatest && (
                       <tr className="avg">
-                        <td>OnPoint average</td>
+                        <td>On Point average</td>
                         <td className="n">{updated ? fmtIso(updated) : ""}</td>
                         <td className="n">{totalPolls} polls</td>
                         <td className="n" style={{ color: h2hDef.seriesA.color }}>{hLatest.a.toFixed(1)}</td>
@@ -654,7 +654,7 @@ export default function PollingAveragesPage({ initialId, forecast }: { initialId
 
           <div className="callout">
             <div className="eye">Methodology</div>
-            The OnPoint average weights every public poll by recency, sample size, voter screen and pollster grade, and is rebuilt every day. TPSI polls are fielded by The Public Sentiment Institute. <Link href="/tpsi/methodology" style={{ textDecoration: "underline" }}>How the average works</Link>.
+            The On Point average weights every public poll by recency, sample size, voter screen and pollster grade, and is rebuilt every day. TPSI polls are fielded by The Public Sentiment Institute. <Link href="/tpsi/methodology" style={{ textDecoration: "underline" }}>How the average works</Link>.
           </div>
         </aside>
       </div>

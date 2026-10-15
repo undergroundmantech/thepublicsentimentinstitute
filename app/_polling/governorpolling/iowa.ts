@@ -51,6 +51,7 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "IA-GOV-2026", "pollster": "New York Times/Siena", "startDate": "2026-09-21", "endDate": "2026-09-30", "sampleSize": 600, "sampleType": "LV", "results": {"Rob Sand (D)": 52.0, "Zach Lahn (R)": 41.0, "Undecided": 7.0}, "notes": "Sample size was not yet published, so 600 is a placeholder."},
     {"raceId": "IA-GOV-2026", "pollster": "Suffolk University", "startDate": "2026-10-01", "endDate": "2026-10-04", "sampleSize": 500, "sampleType": "LV", "results": {"Rob Sand (D)": 54.8, "Zach Lahn (R)": 42.8, "Undecided": 2.4}},
     {"raceId": "IA-GOV-2026", "pollster": "CNN/SSRS", "startDate": "2026-09-29", "endDate": "2026-10-05", "sampleSize": 801, "sampleType": "LV", "results": {"Rob Sand (D)": 51.0, "Zach Lahn (R)": 42.0}, "notes": "Third party and undecided shares not published."},
-    {"raceId": "IA-GOV-2026", "pollster": "Emerson College/Nexstar Media", "startDate": "2026-10-05", "endDate": "2026-10-06", "sampleSize": 650, "sampleType": "LV", "moe": 3.8, "results": {"Rob Sand (D)": 49.0, "Zach Lahn (R)": 45.0, "Undecided": 6.0}}
+    {"raceId": "IA-GOV-2026", "pollster": "Emerson College/Nexstar Media", "startDate": "2026-10-05", "endDate": "2026-10-06", "sampleSize": 650, "sampleType": "LV", "moe": 3.8, "results": {"Rob Sand (D)": 49.0, "Zach Lahn (R)": 45.0, "Undecided": 6.0}},
+    {"raceId": "IA-GOV-2026", "pollster": "YouGov", "startDate": "2026-10-08", "endDate": "2026-10-12", "sampleSize": 1000, "sampleType": "LV", "results": {"Rob Sand (D)": 50.0, "Zach Lahn (R)": 44.0, "Undecided": 6.0}, "notes": "Sample size was not in the release we have, so 1,000 is a placeholder. Recalled 2024 vote in the sample: Trump 52, Harris 41."}
   ],
 };

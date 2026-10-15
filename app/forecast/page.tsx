@@ -5,7 +5,7 @@ import type { Office } from "./lib";
 export const metadata: Metadata = {
   title: "2026 forecast",
   description:
-    "The OnPoint Politics 2026 midterm forecast for governors, the Senate and the House, from fundamentals, the polling average and 2,000 correlated simulations.",
+    "The On Point Politics 2026 midterm forecast for governors, the Senate and the House, from fundamentals, the polling average and 2,000 correlated simulations.",
   alternates: { canonical: "/forecast" },
 };
 

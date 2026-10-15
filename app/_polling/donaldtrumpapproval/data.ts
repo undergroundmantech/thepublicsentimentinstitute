@@ -6,6 +6,32 @@ export const GOLD_STANDARD_NAMES = [
 ];
 
 export const RAW_POLLS: Poll[] = [
+  // ── Added Oct 14, 2026: releases through the Oct 10 to 12 Economist/YouGov poll ──
+  { pollster: "Economist/YouGov", endDate: "2026-10-12", sampleSize: 1548, sampleType: "A", results: { Approve: 34, Disapprove: 62 } },   // Oct 10 to 12, adult citizens; registered voter approval not published
+  { pollster: "Morning Consult", endDate: "2026-10-11", sampleSize: 2204, sampleType: "RV", results: { Approve: 42, Disapprove: 56 } },   // Oct 5 to 11
+  { pollster: "NewsNation", endDate: "2026-10-09", sampleSize: 974, sampleType: "LV", results: { Approve: 38, Disapprove: 60 } },   // NewsNation/DDHQ by TrueDot.ai, Oct 5 to 9
+  { pollster: "Rasmussen Reports", endDate: "2026-10-08", sampleSize: 1500, sampleType: "LV", results: { Approve: 41, Disapprove: 58 } },   // weekly wave Oct 2 to 8
+  { pollster: "Noble Predictive Insights", endDate: "2026-10-07", sampleSize: 2527, sampleType: "RV", results: { Approve: 43, Disapprove: 55 } },   // for The Center Square, Oct 5 to 7
+  { pollster: "RMG Research*", endDate: "2026-10-06", sampleSize: 2000, sampleType: "RV", results: { Approve: 43, Disapprove: 56 } },   // Sep 28 to Oct 6
+  { pollster: "Morning Consult", endDate: "2026-10-05", sampleSize: 2202, sampleType: "RV", results: { Approve: 41, Disapprove: 57 } },   // Oct 4 to 5
+  { pollster: "Navigator Research", endDate: "2026-10-05", sampleSize: 1000, sampleType: "RV", results: { Approve: 36, Disapprove: 62 } },   // Sep 30 to Oct 5
+  { pollster: "Reuters/Ipsos", endDate: "2026-10-05", sampleSize: 3526, sampleType: "A", results: { Approve: 32, Disapprove: 65 } },   // Sep 30 to Oct 5
+  { pollster: "Economist/YouGov", endDate: "2026-10-05", sampleSize: 1381, sampleType: "RV", results: { Approve: 38, Disapprove: 60 } },   // Oct 2 to 5
+  { pollster: "Financial Times", endDate: "2026-10-04", sampleSize: 2275, sampleType: "RV", results: { Approve: 34, Disapprove: 59 } },   // FT/Focaldata, Oct 2 to 4
+  { pollster: "Pew Research", endDate: "2026-10-04", sampleSize: 5062, sampleType: "A", results: { Approve: 30, Disapprove: 68 } },   // Sep 28 to Oct 4
+  { pollster: "I&I/TIPP", endDate: "2026-10-01", sampleSize: 1488, sampleType: "A", results: { Approve: 39, Disapprove: 52 } },   // Sep 29 to Oct 1
+  { pollster: "Centerline Research", endDate: "2026-10-01", sampleSize: 930, sampleType: "RV", results: { Approve: 35, Disapprove: 64 } },   // Sep 26 to Oct 1
+  { pollster: "RMG Research*", endDate: "2026-09-29", sampleSize: 2000, sampleType: "RV", results: { Approve: 41, Disapprove: 58 } },   // Napolitan News, Sep 21 to 29
+  { pollster: "Independent Center/AlphaROC", endDate: "2026-09-28", sampleSize: 1000, sampleType: "A", results: { Approve: 35.3, Disapprove: 61.2 } },   // Sep 25 to 28
+  { pollster: "Morning Consult", endDate: "2026-09-27", sampleSize: 18786, sampleType: "RV", results: { Approve: 42, Disapprove: 55.5 } },   // weekly tracker Sep 21 to 27
+  { pollster: "Angus Reid", endDate: "2026-09-25", sampleSize: 919, sampleType: "RV", results: { Approve: 34, Disapprove: 61 } },   // Sep 19 to 25
+  // ── Added Oct 5, 2026: releases through the Sep 30 to Oct 2 CBS News poll ──
+  { pollster: "CBS News", endDate: "2026-10-02", sampleSize: 2166, sampleType: "A", results: { Approve: 39, Disapprove: 61 } },
+  { pollster: "Rasmussen Reports", endDate: "2026-10-01", sampleSize: 1500, sampleType: "LV", results: { Approve: 42, Disapprove: 57 } },   // wave posted Oct 2; sample size per the series, not published with the wave
+  { pollster: "AP/NORC", endDate: "2026-09-28", sampleSize: 2140, sampleType: "A", results: { Approve: 31, Disapprove: 69 } },
+  { pollster: "Economist/YouGov", endDate: "2026-09-28", sampleSize: 1429, sampleType: "RV", results: { Approve: 36, Disapprove: 62 } },
+  { pollster: "Harvard-Harris", endDate: "2026-09-28", sampleSize: 2200, sampleType: "RV", results: { Approve: 42, Disapprove: 55 } },
+  { pollster: "Quinnipiac", endDate: "2026-09-27", sampleSize: 1032, sampleType: "RV", results: { Approve: 34, Disapprove: 61 } },
   // ── RCP feed added Sep 25, 2026 (through the Sep 20–24 Rasmussen wave) ──
   { pollster: "Rasmussen Reports", endDate: "2026-09-24", sampleSize: 1500, sampleType: "LV", results: { Approve: 44, Disapprove: 56 } },
   { pollster: "Emerson", endDate: "2026-09-22", sampleSize: 1000, sampleType: "LV", results: { Approve: 39, Disapprove: 58 } },

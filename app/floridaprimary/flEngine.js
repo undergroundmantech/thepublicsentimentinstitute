@@ -3,7 +3,7 @@
 // as-is so the math stays byte-for-byte with the reference build.
 import B from "./flData.json";
 
-// OnPoint Politics is dark only: the prototype's hues lifted for contrast on the dark ground.
+// On Point Politics is dark only: the prototype's hues lifted for contrast on the dark ground.
 // (Hand edit after the rebrand: the light palette and the data-theme observer were removed.)
 const CO_DARK = { Donalds: "#E06A5B", Fishback: "#4FA8C4", Collins: "#A98BD6", Renner: "#D9A83F", Other: "#9AA0AC" };
 

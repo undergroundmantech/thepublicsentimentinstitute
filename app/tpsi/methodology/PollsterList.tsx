@@ -35,7 +35,7 @@ export const POLLSTERS: Pollster[] = [
       "Provides toplines in consistent format",
     ],
     multiplier: 2,
-    note: "Gold Standard upweight in OnPoint averages.",
+    note: "Gold Standard upweight in On Point averages.",
     transparency: { fieldDates: true, sampleType: true, sampleSize: true, methodology: true, sponsorDisclosure: false },
   },
   {
@@ -53,7 +53,7 @@ export const POLLSTERS: Pollster[] = [
       "Provides toplines in consistent format",
     ],
     multiplier: 2,
-    note: "Gold Standard upweight; OnPoint may cap impact depending on documentation/mode considerations.",
+    note: "Gold Standard upweight; On Point may cap impact depending on documentation/mode considerations.",
     transparency: { fieldDates: true, sampleType: true, sampleSize: true, methodology: true, sponsorDisclosure: false },
   },
   {
@@ -107,7 +107,7 @@ export const POLLSTERS: Pollster[] = [
       "Provides toplines in consistent format",
     ],
     multiplier: 2,
-    note: "Gold Standard upweight; OnPoint may adjust depending on project mode/field method details.",
+    note: "Gold Standard upweight; On Point may adjust depending on project mode/field method details.",
     transparency: { fieldDates: true, sampleType: true, sampleSize: true, methodology: true, sponsorDisclosure: false },
   },
   {
@@ -125,7 +125,7 @@ export const POLLSTERS: Pollster[] = [
       "Provides toplines in consistent format",
     ],
     multiplier: 2,
-    note: "Conditional upweight; OnPoint may cap impact if documentation is thin.",
+    note: "Conditional upweight; On Point may cap impact if documentation is thin.",
     transparency: { fieldDates: true, sampleType: true, sampleSize: true, methodology: true, sponsorDisclosure: false },
   },
   {

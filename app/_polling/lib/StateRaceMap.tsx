@@ -3,9 +3,9 @@
 /**
  * StateRaceMap: the clickable 2026 map on the polling averages pages.
  *
- * Each state with at least one public poll of the office is filled on the OnPoint
+ * Each state with at least one public poll of the office is filled on the On Point
  * rating ramp (pale for close, deep for solid, lavender when an independent leads),
- * using the current OnPoint average margin. States with no public poll stay flat and
+ * using the current On Point average margin. States with no public poll stay flat and
  * are not clickable: the map shows where polling exists, not where a race exists.
  *
  * The nine states too small to hit with a cursor (VT through DC) are repeated as chips
@@ -191,7 +191,7 @@ export default function StateRaceMap({
 
       <p className="srm-foot">
         {rows.length} of the 2026 {office === "Governor" ? "governor" : "Senate"} races carry at least one public poll. Shading is the
-        current OnPoint average margin on the forecast rating bands: pale when close, deep past 12 points. A state with no public
+        current On Point average margin on the forecast rating bands: pale when close, deep past 12 points. A state with no public
         poll is left flat rather than filled in from a model.
       </p>
 
@@ -199,7 +199,7 @@ export default function StateRaceMap({
         <div className="srm-tip" style={tipStyle} role="tooltip">
           <b>{tipRow.title.replace(/\s+[—–]\s+/g, ": ")}</b>
           <div className="row"><span>Leader</span><span style={{ color: tipRow.color }}>{tipRow.leader}</span></div>
-          <div className="row"><span>OnPoint average</span><span>{tipRow.marginText}</span></div>
+          <div className="row"><span>On Point average</span><span>{tipRow.marginText}</span></div>
           <div className="row"><span>Rating band</span><span>{RATING_LABEL[rowRating(tipRow)]}</span></div>
           <div className="row"><span>Polls</span><span>{tipRow.polls}</span></div>
         </div>

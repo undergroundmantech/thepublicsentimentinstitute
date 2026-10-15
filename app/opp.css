@@ -1,4 +1,4 @@
-/* OnPoint Politics component classes, from opp-ui/site.css (the approved mock), scoped under .opp
+/* On Point Politics component classes, from opp-ui/site.css (the approved mock), scoped under .opp
    so they never collide with class names older pages still use. Wrap any new surface in
    <div className="opp"> to use .card, .btn, .pill, .seg, .race, .kpi, .tbl and the rest. */
 .opp a { color: inherit; text-decoration: none; }

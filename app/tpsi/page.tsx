@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "About TPSI",
-  description: "The Public Sentiment Institute is the polling and research arm behind OnPoint Politics: fieldwork, the DSMeridian likely voter model and dual panel surveys.",
+  description: "The Public Sentiment Institute is the polling and research arm behind On Point Politics: fieldwork, the DSMeridian likely voter model and dual panel surveys.",
   alternates: { canonical: "/tpsi" },
 };
 
@@ -28,8 +28,8 @@ export default function Page() {
       <nav className="crumbs" aria-label="Breadcrumb"><Link href="/">Home</Link><span className="sep">/</span><span>TPSI</span></nav>
       <header className="ph">
         <div className="eye g">About TPSI</div>
-        <h1>The research arm behind <em>OnPoint</em></h1>
-        <p className="lede">The Public Sentiment Institute is the polling and research arm behind OnPoint Politics. TPSI fields the surveys, runs the DSMeridian likely voter model and feeds the polling averages, the 2026 forecast and election night coverage.</p>
+        <h1>The research arm behind <em>On Point</em></h1>
+        <p className="lede">The Public Sentiment Institute is the polling and research arm behind On Point Politics. TPSI fields the surveys, runs the DSMeridian likely voter model and feeds the polling averages, the 2026 forecast and election night coverage.</p>
         <div className="pmeta">
           <span>Based in <b>Miami</b></span>
           <span>Field reports <b className="mono">4</b></span>

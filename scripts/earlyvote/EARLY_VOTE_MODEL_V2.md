@@ -142,7 +142,7 @@ By state, with counties weighted by adults; the page itself weights by each coun
 
 - `scripts/earlyvote/build_party_model.py`: version 2. Version 1 is kept as `build_party_model_v1.py`.
 - `public/earlyvote-party-model.json`: 800 KB, with no respondent level data.
-- `app/maps/early-vote/lib.ts` and `EarlyVoteDesk.tsx` on OnPoint; `app/earlyvote/` on the TPSI copy.
+- `app/maps/early-vote/lib.ts` and `EarlyVoteDesk.tsx` on On Point; `app/earlyvote/` on the TPSI copy.
 
 Rebuild with:
 

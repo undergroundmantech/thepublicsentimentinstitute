@@ -1,4 +1,4 @@
-// OnPoint Politics shared rules, ported from opp-ui/site.js so every page colors and labels
+// On Point Politics shared rules, ported from opp-ui/site.js so every page colors and labels
 // races the same way. Margins follow the forecast data: negative is a Democratic (or
 // independent) lead, positive a Republican lead.
 

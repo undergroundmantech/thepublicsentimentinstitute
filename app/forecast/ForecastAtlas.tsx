@@ -55,14 +55,14 @@ const TOUR = ["GA", "MI", "NC", "ME", "IA", "TX", "OH", "AZ", "WI", "PA", "NV", 
 const GROUPS: { name: string; keys: string[] }[] = [
   { name: "Forecast", keys: ["fc", "shift", "turn", "loc"] },
   { name: "Voters", keys: ["p24", "lpT", "lpH"] },
-  { name: "Economy", keys: ["gas", "emp", "wage", "tariff"] },
-  { name: "Data centers", keys: ["dc"] },
+  { name: "Economy", keys: ["gas", "gasx", "emp", "wage", "tariff"] },
+  { name: "Data centers", keys: ["dc", "dcx"] },
   { name: "Places", keys: ["popg", "mig", "rural", "evang", "news"] },
 ];
 const SHORT: Record<string, string> = {
   fc: "Forecast", shift: "Swing from 2024", turn: "Turnout", loc: "Local conditions", p24: "2024 result",
   lpT: "Low prop. Trump", lpH: "Low prop. Harris", gas: "Gas price", emp: "Job growth", wage: "Wage growth",
-  tariff: "Tariff exposure", dc: "Data centers", popg: "Population growth", mig: "Immigration", rural: "Rurality",
+  tariff: "Tariff exposure", dc: "Data centers", dcx: "Data center pull", gasx: "Gas strain pull", popg: "Population growth", mig: "Immigration", rural: "Rurality",
   evang: "Evangelical", news: "Local news",
 };
 
@@ -106,7 +106,7 @@ const commas = (n: number) => Math.round(n).toLocaleString("en-US");
 function fmtVal(key: string, v: Num): string {
   if (v == null || !Number.isFinite(v)) return "No data";
   switch (key) {
-    case "fc": case "p24": case "loc": return fmtMargin(v);
+    case "fc": case "p24": case "loc": case "dcx": case "gasx": return fmtMargin(v);
     case "shift": return Math.abs(v) < 0.05 ? "No swing" : `${v > 0 ? "R" : "D"}+${Math.abs(v).toFixed(1)} swing`;
     case "gas": return `$${v.toFixed(2)}`;
     case "dc": return v === 1 ? "1 site" : `${commas(v)} sites`;
@@ -646,7 +646,7 @@ export default function ForecastAtlas({ model, counties, office, onPickRace, sta
 
           {stats.top.length ? (
             <div className="atl-list">
-              <span className="atl-lh">{layer === "dc" ? "Most data center sites" : layer === "shift" ? "Swinging most Republican" : layer === "fc" || layer === "p24" || layer === "loc" ? "Most Republican" : "Highest"}</span>
+              <span className="atl-lh">{layer === "dc" ? "Most data center sites" : layer === "shift" ? "Swinging most Republican" : layer === "fc" || layer === "p24" || layer === "loc" || layer === "dcx" || layer === "gasx" ? "Most Republican" : "Highest"}</span>
               {stats.top.map(({ c, v }, i) => (
                 <button type="button" key={c.f} className="atl-li" style={{ animationDelay: `${i * 45}ms` }}
                   onMouseEnter={() => setPin(c.f)} onClick={() => { stopTour(); if (!scope) goState(c.st); setPin(c.f); }}>
@@ -659,7 +659,7 @@ export default function ForecastAtlas({ model, counties, office, onPickRace, sta
           ) : null}
           {stats.bottom.length ? (
             <div className="atl-list">
-              <span className="atl-lh">{layer === "shift" ? "Swinging most Democratic" : layer === "fc" || layer === "p24" || layer === "loc" ? "Most Democratic" : "Lowest"}</span>
+              <span className="atl-lh">{layer === "shift" ? "Swinging most Democratic" : layer === "fc" || layer === "p24" || layer === "loc" || layer === "dcx" || layer === "gasx" ? "Most Democratic" : "Lowest"}</span>
               {stats.bottom.map(({ c, v }, i) => (
                 <button type="button" key={c.f} className="atl-li" style={{ animationDelay: `${200 + i * 45}ms` }}
                   onMouseEnter={() => setPin(c.f)} onClick={() => { stopTour(); if (!scope) goState(c.st); setPin(c.f); }}>

@@ -13,6 +13,24 @@ export const GOLD_STANDARD_NAMES = [
 ];
 
 export const RAW_POLLS: Poll[] = [
+  // ── Added Oct 14, 2026: releases through the Oct 5 to 9 NewsNation/DDHQ poll ──
+  { pollster: "NewsNation", endDate: "2026-10-09", sampleSize: 974, sampleType: "LV", results: { Democrats: 49, Republicans: 42 } },   // NewsNation/DDHQ by TrueDot.ai, Oct 5 to 9
+  { pollster: "Financial Times", endDate: "2026-10-06", sampleSize: 2275, sampleType: "LV", results: { Democrats: 52, Republicans: 44 } },   // FT/Focaldata, Oct 3 to 6
+  { pollster: "The Honest Poll", endDate: "2026-10-06", sampleSize: 0, sampleType: "LV", results: { Democrats: 53, Republicans: 41 } },   // Oct 4 to 6; sample size not published with the release
+  { pollster: "Economist/YouGov", endDate: "2026-10-05", sampleSize: 0, sampleType: "LV", results: { Democrats: 51, Republicans: 40 } },   // Oct 2 to 5; likely voter count not published
+  { pollster: "Reuters/Ipsos", endDate: "2026-10-05", sampleSize: 0, sampleType: "RV", results: { Democrats: 44, Republicans: 37 } },   // Sep 30 to Oct 5; registered voter count not published
+  { pollster: "Pew Research", endDate: "2026-10-04", sampleSize: 0, sampleType: "RV", results: { Democrats: 44, Republicans: 36 } },   // Sep 28 to Oct 4; registered voter count not published
+  { pollster: "Morning Consult", endDate: "2026-10-04", sampleSize: 0, sampleType: "LV", results: { Democrats: 50, Republicans: 43 } },   // Oct 2 to 4; sample size not published by RCP
+  { pollster: "ActiVote", endDate: "2026-10-02", sampleSize: 1000, sampleType: "LV", results: { Democrats: 52.2, Republicans: 47.8 } },   // Sep 22 to Oct 2
+  { pollster: "Cygnal", endDate: "2026-10-02", sampleSize: 1500, sampleType: "LV", results: { Democrats: 52, Republicans: 43 } },   // Oct 1 to 2; sample size per the series
+  // ── Added Oct 5, 2026: releases through the Sep 30 to Oct 2 CBS News poll ──
+  { pollster: "CBS News", endDate: "2026-10-02", sampleSize: 0, sampleType: "LV", results: { Democrats: 54, Republicans: 45 } },   // likely voter sample size not published
+  { pollster: "Economist/YouGov", endDate: "2026-09-28", sampleSize: 1003, sampleType: "LV", results: { Democrats: 53, Republicans: 38 } },
+  { pollster: "Harvard-Harris", endDate: "2026-09-28", sampleSize: 0, sampleType: "LV", results: { Democrats: 51, Republicans: 49 } },   // likely midterm voters; 2,200 registered voters split 50 to 50
+  { pollster: "Quinnipiac", endDate: "2026-09-27", sampleSize: 1032, sampleType: "RV", results: { Democrats: 51, Republicans: 39 } },
+  { pollster: "Rasmussen Reports", endDate: "2026-09-23", sampleSize: 1819, sampleType: "LV", results: { Democrats: 48, Republicans: 43 } },
+  { pollster: "Wall Street Journal", endDate: "2026-09-21", sampleSize: 1500, sampleType: "RV", results: { Democrats: 50, Republicans: 42 } },
+  { pollster: "ActiVote", endDate: "2026-09-21", sampleSize: 1000, sampleType: "LV", results: { Democrats: 52.8, Republicans: 47.2 } },
   // ── RCP feed added Sep 25, 2026 (through the Sep 21–22 Emerson wave) ──
   { pollster: "Emerson", endDate: "2026-09-22", sampleSize: 1000, sampleType: "LV", results: { Democrats: 53, Republicans: 42 } },
   { pollster: "Echelon Insights", endDate: "2026-09-21", sampleSize: 1002, sampleType: "LV", results: { Democrats: 51, Republicans: 43 } },

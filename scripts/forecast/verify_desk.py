@@ -1,4 +1,4 @@
-"""Check the desk's model.json against the three published OnPoint forecast pages.
+"""Check the desk's model.json against the three published On Point forecast pages.
 
 The desk is built from the same data files those pages ship, so every race, margin,
 win probability, vote total and county figure has to agree exactly. Margins are

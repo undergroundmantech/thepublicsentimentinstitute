@@ -228,7 +228,7 @@ export default function PollingTimeSeriesChart({
 
         <div className="psc-footer">
           <span className="psc-footer-note">Daily weighted averages, not raw poll points</span>
-          <a className="psc-footer-badge" href="/tpsi/methodology">OnPoint average methodology</a>
+          <a className="psc-footer-badge" href="/tpsi/methodology">On Point average methodology</a>
         </div>
       </div>
     </>

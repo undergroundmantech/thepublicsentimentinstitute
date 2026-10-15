@@ -4,7 +4,7 @@
    PrimaryAverage: the page body for a same party primary tracked outside the
    averages engine (Florida governor GOP, Texas Senate GOP and Democratic, Maine
    Senate Democratic). Each primary page passes its polls and, once the votes are
-   in, the result; this renders the OnPoint inner template around them: header,
+   in, the result; this renders the On Point inner template around them: header,
    chart, the average against the result, the poll table with the average pinned,
    and the side cards.
 
@@ -103,8 +103,8 @@ export default function PrimaryAverage({ cfg }: { cfg: PrimaryConfig }) {
   }, [result, latest, leader]);
 
   const lede = result && acc
-    ? `${acc.winner} won the ${fmtIso(result.date, { month: "long", day: "numeric", year: "numeric" })} primary with ${result.results[acc.winner!].toFixed(1)} percent. The final OnPoint average of ${polls.length} public polls had ${leader.label} ahead at ${latest[leader.key].toFixed(1)} percent.`
-    : `${leader?.label} leads the field at ${latest[leader?.key ?? ""]?.toFixed(1)} percent in the OnPoint average of ${polls.length} public polls, weighted by recency, sample size and voter screen.`;
+    ? `${acc.winner} won the ${fmtIso(result.date, { month: "long", day: "numeric", year: "numeric" })} primary with ${result.results[acc.winner!].toFixed(1)} percent. The final On Point average of ${polls.length} public polls had ${leader.label} ahead at ${latest[leader.key].toFixed(1)} percent.`
+    : `${leader?.label} leads the field at ${latest[leader?.key ?? ""]?.toFixed(1)} percent in the On Point average of ${polls.length} public polls, weighted by recency, sample size and voter screen.`;
 
   return (
     <div className="opp pp">
@@ -187,7 +187,7 @@ export default function PrimaryAverage({ cfg }: { cfg: PrimaryConfig }) {
                 </thead>
                 <tbody>
                   <tr className="avg">
-                    <td>OnPoint average</td><td className="n">{updated ? fmtIso(updated) : ""}</td><td className="n">{polls.length} polls</td>
+                    <td>On Point average</td><td className="n">{updated ? fmtIso(updated) : ""}</td><td className="n">{polls.length} polls</td>
                     {series.map((s) => <td key={s.key} className="n">{latest[s.key].toFixed(1)}%</td>)}
                     <td className="n">{leader && runner ? `${leader.label} +${(latest[leader.key] - latest[runner.key]).toFixed(1)}` : ""}</td>
                   </tr>
@@ -226,7 +226,7 @@ export default function PrimaryAverage({ cfg }: { cfg: PrimaryConfig }) {
 
         <aside className="side">
           <div className="card">
-            <div className="card-h"><h3>{result ? "Final average" : "Current average"}</h3><span className="eye" style={{ marginLeft: "auto" }}>OnPoint</span></div>
+            <div className="card-h"><h3>{result ? "Final average" : "Current average"}</h3><span className="eye" style={{ marginLeft: "auto" }}>On Point</span></div>
             <div className="stat">
               <div className="k">Leader</div>
               <div className="v" style={{ color: party === "R" ? "var(--gop2)" : "var(--dem2)" }}>{leader ? `${leader.label} ${latest[leader.key].toFixed(1)}%` : "No polls"}</div>
@@ -274,7 +274,7 @@ export default function PrimaryAverage({ cfg }: { cfg: PrimaryConfig }) {
 
           <div className="callout">
             <div className="eye">Methodology</div>
-            The OnPoint average is rebuilt daily from every public poll, with recency decay, a square root sample size adjustment and voter screen weighting. Polls marked internal are partisan or sponsored and may carry less weight. A candidate left off a poll is left out of that poll&apos;s spread.{cfg.note ? ` ${cfg.note}` : ""} <Link href="/tpsi/methodology" style={{ textDecoration: "underline" }}>How the average works</Link>.
+            The On Point average is rebuilt daily from every public poll, with recency decay, a square root sample size adjustment and voter screen weighting. Polls marked internal are partisan or sponsored and may carry less weight. A candidate left off a poll is left out of that poll&apos;s spread.{cfg.note ? ` ${cfg.note}` : ""} <Link href="/tpsi/methodology" style={{ textDecoration: "underline" }}>How the average works</Link>.
           </div>
         </aside>
       </div>

@@ -1,7 +1,7 @@
 "use client";
 
 /* =============================================================================
-   TrendPanel: the OnPoint LOWESS trend lines and the Election Day polling average
+   TrendPanel: the On Point LOWESS trend lines and the Election Day polling average
    for one head-to-head aggregate. Every poll is a dot at its field midpoint;
    three robust LOWESS lines run through them; a flat projection and its 80%
    range run from the newest poll to Election Day. The method and its backtest
@@ -224,7 +224,7 @@ export default function TrendPanel({ def, polls }: { def: AggregateDef; polls: A
           {def.seriesA.label} minus {def.seriesB.label}. No poll is weighted by sample size or pollster rating, and published
           polling averages are left out so no poll counts twice. Each line is a robust LOWESS: a local straight-line fit across
           the nearest {Math.round(SPANS.recent * 100)}%, {Math.round(SPANS.balanced * 100)}% or {Math.round(SPANS.long * 100)}% of the
-          polls, then three robust passes that shrink the pull of any poll far off the line. The OnPoint average above weights polls by
+          polls, then three robust passes that shrink the pull of any poll far off the line. The On Point average above weights polls by
           recency, size and pollster grade; these lines deliberately do not.
         </p>
         <p>

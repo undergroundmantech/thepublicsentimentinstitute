@@ -10,7 +10,7 @@ const nextConfig: NextConfig = {
   // unset — an undefined NEXT_PUBLIC_* is not statically replaced, which
   // would keep both site versions in every client bundle.
   env: {
-    // OnPoint Politics launches on the v2 site. Set NEXT_PUBLIC_SITE_V2=off to preview v1.
+    // On Point Politics launches on the v2 site. Set NEXT_PUBLIC_SITE_V2=off to preview v1.
     NEXT_PUBLIC_SITE_V2: process.env.NEXT_PUBLIC_SITE_V2 ?? "on",
   },
   async rewrites() {

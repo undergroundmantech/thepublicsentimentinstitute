@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 
-export const metadata: Metadata = { title: "TPSI poll releases", description: "Toplines, crosstabs and methodology from polls fielded by The Public Sentiment Institute for OnPoint Politics.", alternates: { canonical: "/tpsi/polls" } };
+export const metadata: Metadata = { title: "TPSI poll releases", description: "Toplines, crosstabs and methodology from polls fielded by The Public Sentiment Institute for On Point Politics.", alternates: { canonical: "/tpsi/polls" } };
 
 const DASH = "/tpsi/polls/la-mayor-2026";
 const RELEASES = [
@@ -30,7 +30,7 @@ export default function Page() {
       <header className="ph">
         <div className="eye g">Fieldwork by TPSI</div>
         <h1>Poll <em>releases</em></h1>
-        <p className="lede">Surveys fielded by The Public Sentiment Institute for OnPoint Politics: dual panel samples weighted with the DSMeridian likely voter model, published with toplines and crosstabs.</p>
+        <p className="lede">Surveys fielded by The Public Sentiment Institute for On Point Politics: dual panel samples weighted with the DSMeridian likely voter model, published with toplines and crosstabs.</p>
         <div className="pmeta"><span>Releases <b className="mono">{RELEASES.length}</b></span><span>Latest <b>June 2026</b></span></div>
       </header>
       <div className="layout">

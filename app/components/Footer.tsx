@@ -40,7 +40,7 @@ export default function Footer() {
             ))}
           </div>
           <div className="bottom">
-            <span>© 2026 OnPoint Politics and The Public Sentiment Institute</span>
+            <span>© 2026 On Point Politics and The Public Sentiment Institute</span>
             <span><Link href="/terms">Terms</Link> · <Link href="/terms#privacy">Privacy</Link> · <Link href="/tpsi/sms">SMS opt in</Link></span>
           </div>
         </div>

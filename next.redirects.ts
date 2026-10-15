@@ -1,4 +1,4 @@
-// OnPoint Politics redirect map: every tpsielections.com URL 301s to its onpointpolitics.com route.
+// On Point Politics redirect map: every tpsielections.com URL 301s to its onpointpolitics.com route.
 // Domain level: point tpsielections.com at the same deployment and add a host redirect at the
 // edge (Vercel: Domains, redirect tpsielections.com to onpointpolitics.com, 308).
 // The retired experiments, /v2 and /polling/old/*, are answered 410 Gone by middleware.ts.

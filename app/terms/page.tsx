@@ -114,7 +114,7 @@ export default function TermsPage() {
           a clear understanding of how we collect, use, protect, and handle your information.
         </p>
         <div className="pmeta">
-          <span>Site <b>OnPoint Politics</b></span>
+          <span>Site <b>On Point Politics</b></span>
           <span>Operated with <b>The Public Sentiment Institute</b></span>
           <span>Last edited <b className="mono">2025</b></span>
           <span>Jurisdiction <b>United States</b></span>

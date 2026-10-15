@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { Lockup } from "./opp/Logo";
 import ThemeToggle from "./ThemeToggle";
 
-// The OnPoint Politics masthead (.top in opp-ui/components.md). One header for every page.
+// The On Point Politics masthead (.top in opp-ui/components.md). One header for every page.
 // Results carries the pulsing live dot while RESULTS_LIVE is on.
 const RESULTS_LIVE = true;
 
@@ -43,7 +43,7 @@ export default function Navbar() {
     <header className="opp opp-top">
       <div className="top">
         <div className="wrap">
-          <Link className="logo" href="/" aria-label="OnPoint Politics home"><Lockup height={44} /></Link>
+          <Link className="logo" href="/" aria-label="On Point Politics home"><Lockup height={44} /></Link>
           <nav className="nav" aria-label="Primary">
             {NAV.map((n) => (
               <Link key={n.href} href={n.href}
@@ -64,7 +64,7 @@ export default function Navbar() {
       {open && (
         <div className="mnav" id="opp-mnav" role="dialog" aria-modal="true" aria-label="Menu">
           <div className="mhead">
-            <Link className="logo" href="/" aria-label="OnPoint Politics home"><Lockup height={36} /></Link>
+            <Link className="logo" href="/" aria-label="On Point Politics home"><Lockup height={36} /></Link>
             <button type="button" className="btn sm" onClick={() => setOpen(false)}>Close</button>
           </div>
           <nav aria-label="Menu">

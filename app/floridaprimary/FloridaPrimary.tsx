@@ -8,7 +8,7 @@ import { FLSE_CSS } from "./flseCss";
  * Florida GOP Primary — Prediction Sandbox.
  * Layout, responsiveness, functionality and every number are the reference build's
  * (changeorders/TPSI_FL_Scenario_Engine_Final.html). Only the palette and type are
- * re-pointed at the OnPoint Politics tokens (dark only). The page header uses the shared
+ * re-pointed at the On Point Politics tokens (dark only). The page header uses the shared
  * .opp inner template; the engine stays outside .opp so its .card/.tip/.bar classes do not
  * collide with the shared component classes.
  * The engine itself is imperative DOM code — see flEngine.js for why.

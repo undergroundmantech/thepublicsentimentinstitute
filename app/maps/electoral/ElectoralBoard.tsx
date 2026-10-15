@@ -362,7 +362,7 @@ export default function ElectoralBoard() {
           })}
         </div>
         <p className="eb-note">
-          Starting position is the OnPoint Politics forecast of {model.meta.updated}. Seats not on this
+          Starting position is the On Point Politics forecast of {model.meta.updated}. Seats not on this
           year&rsquo;s ballot are counted in the totals: {meta?.senNotUpD} Democratic and{" "}
           {meta?.senNotUpR} Republican in the Senate, {meta?.govNotUpD} and {meta?.govNotUpR}{" "}
           among the governors. Moving a unit changes only your scenario, never the forecast.
@@ -383,7 +383,7 @@ function BoardHeader({ updated }: { updated: string | null }) {
       <header className="ph">
         <div className="eye g">Scenario board</div>
         <h1>Build your own <em>map</em></h1>
-        <p className="lede">Start from the OnPoint Politics forecast, paint each state or district, and watch the Senate, House or governor count move. Your scenario lives in the page link, ready to share.</p>
+        <p className="lede">Start from the On Point Politics forecast, paint each state or district, and watch the Senate, House or governor count move. Your scenario lives in the page link, ready to share.</p>
         <div className="pmeta">
           {date ? <span>Starting from the forecast of <b>{date}</b></span> : null}
           <span>Three chambers</span>

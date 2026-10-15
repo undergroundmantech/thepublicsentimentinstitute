@@ -1522,7 +1522,7 @@ export default function TPSIPollDashboard() {
     const sp = new URLSearchParams();
     sp.set("poll", pollId); sp.set("slide", slide.id);
     window.history.replaceState(null, "", `${window.location.pathname}?${sp.toString()}`);
-    document.title = `${poll.tab} poll | OnPoint Politics`;
+    document.title = `${poll.tab} poll | On Point Politics`;
   }, [pollId, slide.id, poll.tab]);
 
   return (

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Icon } from "@/app/components/opp/Logo";
 
-export const metadata: Metadata = { title: "Partner with TPSI", description: "Commission statewide, district or national polling from The Public Sentiment Institute, the polling arm behind OnPoint Politics.", alternates: { canonical: "/tpsi/services" } };
+export const metadata: Metadata = { title: "Partner with TPSI", description: "Commission statewide, district or national polling from The Public Sentiment Institute, the polling arm behind On Point Politics.", alternates: { canonical: "/tpsi/services" } };
 
 const LINES = [
   ["Polls", "Statewide and district polls", "Horse race, favorability, issues and message testing, with full crosstabs by region, party, age, race and education."],

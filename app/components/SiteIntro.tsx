@@ -126,7 +126,7 @@ export default function SiteIntro() {
         </div>
         <div className="body">
           <div className="eye g">Welcome</div>
-          <h2 id="opp-intro-title">This is <em>OnPoint Politics</em></h2>
+          <h2 id="opp-intro-title">This is <em>On Point Politics</em></h2>
           <p className="lede">The new home for polling averages, the 2026 forecast and live election results, with fieldwork by The Public Sentiment Institute.</p>
           {FEATURES.map(([k, t, s]) => (
             <div className="feat" key={k}>

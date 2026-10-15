@@ -387,7 +387,7 @@ def chamber(office):
 def projection(office):
     """The seat count you get by calling every race for its projected winner.
 
-    This is what the OnPoint pages print as the seat line, and it is not the
+    This is what the On Point pages print as the seat line, and it is not the
     mean of the simulations: the average is pulled toward the side holding the
     close seats, so the House averages 244 Democratic seats while the race by
     race call is 235. Both are true and the desk shows both, the projection on
@@ -401,7 +401,7 @@ def projection(office):
         d += GOV_NOT_UP_D; g += GOV_NOT_UP_R
     return d, g
 
-# ── the published OnPoint pages are the source of record for the headline
+# ── the published On Point pages are the source of record for the headline
 # numbers. The simulation here supplies the histogram shape; the control
 # probability, percentiles and median come straight off the artifact files so
 # the desk and the published pages can never disagree. ──────────────────────

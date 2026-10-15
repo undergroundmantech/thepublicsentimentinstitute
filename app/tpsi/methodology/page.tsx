@@ -4,7 +4,7 @@ import PollsterList from "./PollsterList";
 
 export const metadata: Metadata = {
   title: "Methodology",
-  description: "How TPSI fields and weights its polls with the DSMeridian likely voter model, and how OnPoint Politics weights Gold Standard pollsters in its averages.",
+  description: "How TPSI fields and weights its polls with the DSMeridian likely voter model, and how On Point Politics weights Gold Standard pollsters in its averages.",
   alternates: { canonical: "/tpsi/methodology" },
 };
 
@@ -31,7 +31,7 @@ export default function Page() {
       <header className="ph">
         <div className="eye g">Methodology</div>
         <h1>How the numbers are <em>weighted</em></h1>
-        <p className="lede">TPSI fields dual panel surveys and weights them with the DSMeridian likely voter model. OnPoint Politics averages add a Gold Standard upweight for a curated set of pollsters that meet criteria for consistency, transparency and real world accuracy.</p>
+        <p className="lede">TPSI fields dual panel surveys and weights them with the DSMeridian likely voter model. On Point Politics averages add a Gold Standard upweight for a curated set of pollsters that meet criteria for consistency, transparency and real world accuracy.</p>
         <div className="pmeta">
           <span>Gold Standard pollsters <b className="mono">{POLLSTER_COUNT}</b></span>
           <span>Upweight <b className="mono">x2.00</b></span>
@@ -78,7 +78,7 @@ export default function Page() {
             <p style={{ fontSize: 14, margin: "8px 0 12px" }}>Have a release with field dates, sample details and documentation? Send it over. Every submission is reviewed against the criteria.</p>
             <Link className="btn g" href="/contact">Contact the desk</Link>
           </div></div>
-          <div className="callout"><div className="eye">See it applied</div>The upweight feeds every <Link href="/polls" style={{ textDecoration: "underline" }}>OnPoint average</Link>; TPSI&rsquo;s own surveys are on the <Link href="/tpsi/polls" style={{ textDecoration: "underline" }}>releases page</Link>.</div>
+          <div className="callout"><div className="eye">See it applied</div>The upweight feeds every <Link href="/polls" style={{ textDecoration: "underline" }}>On Point average</Link>; TPSI&rsquo;s own surveys are on the <Link href="/tpsi/polls" style={{ textDecoration: "underline" }}>releases page</Link>.</div>
         </aside>
       </div>
       <style>{`

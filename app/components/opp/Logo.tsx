@@ -1,10 +1,10 @@
-// OnPoint Politics lockup and icon, from the v26 logo files (logos-svg/on-point-main-white.svg,
+// On Point Politics lockup and icon, from the v26 logo files (logos-svg/on-point-main-white.svg,
 // opp-icon-white.svg). Paths fill with currentColor, so the white lockup is color:#fff and the gold
 // lockup is color:var(--gold). The lockup viewBox is 0 0 500 200; the masthead crops it to
 // 30 40 460 120 so the mark and wordmark sit on one line without the padding.
 import type { CSSProperties } from "react";
 
-function MonoLockup({ height = 44, className, style, title = "OnPoint Politics" }: { height?: number; className?: string; style?: CSSProperties; title?: string }) {
+function MonoLockup({ height = 44, className, style, title = "On Point Politics" }: { height?: number; className?: string; style?: CSSProperties; title?: string }) {
   return (
     <svg viewBox="30 40 460 120" height={height} className={className} style={{ width: "auto", display: "block", ...style }} role="img" aria-label={title}>
       <g>
@@ -43,7 +43,7 @@ function MonoLockup({ height = 44, className, style, title = "OnPoint Politics" 
 
 // Dark theme: the currentColor lockup. Light theme: the full-color SVG, cropped to the same box.
 // CSS (.lk-d / .lk-l in opp.css) picks one. Pass mono for surfaces that stay dark in both themes.
-export function Lockup({ height = 44, className, style, title = "OnPoint Politics", mono = false }: { height?: number; className?: string; style?: CSSProperties; title?: string; mono?: boolean }) {
+export function Lockup({ height = 44, className, style, title = "On Point Politics", mono = false }: { height?: number; className?: string; style?: CSSProperties; title?: string; mono?: boolean }) {
   if (mono) return <MonoLockup height={height} className={className} style={style} title={title} />;
   const k = height / 120;
   return (

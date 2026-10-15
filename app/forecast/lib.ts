@@ -67,13 +67,13 @@ export interface Chamber {
   gopSeats: number;   // simulation average
   demSeats: number;   // simulation average
   // the seat by seat call: every race given to its projected winner, which is
-  // what the OnPoint pages print and is not the same as the average above
+  // what the On Point pages print and is not the same as the average above
   projD: number;
   projR: number;
   hist: [number, number][];
   demP10: number;
   demP90: number;
-  // the median of the published OnPoint run, stamped by the build so the desk
+  // the median of the published On Point run, stamped by the build so the desk
   // prints the same figure the artifact pages do rather than re-deriving it
   median?: number;
   trend: { t: number; dem: number; demSeats: number }[];

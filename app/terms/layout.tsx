@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Privacy policy and terms",
-  description: "The privacy policy, terms and conditions and mobile terms of service for OnPoint Politics and The Public Sentiment Institute.",
+  description: "The privacy policy, terms and conditions and mobile terms of service for On Point Politics and The Public Sentiment Institute.",
   alternates: { canonical: "/terms" },
 };
 

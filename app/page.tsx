@@ -16,7 +16,7 @@ import fs from "node:fs";
 import path from "node:path";
 
 export const metadata: Metadata = {
-  title: { absolute: "OnPoint Politics | Polling averages, forecasts and live results" },
+  title: { absolute: "On Point Politics | Polling averages, forecasts and live results" },
   description: "Polling averages, county level forecasts and live election results for the 2026 midterms, built on TPSI's own surveys and a transparent public poll feed.",
   alternates: { canonical: "/" },
 };
@@ -144,12 +144,12 @@ export default function Home() {
           <AveragePanel title="Trump job approval" href="/polls/approval" pill={`net ${ap.net.toFixed(1)}`} pillCls="r" color="#ff3b5c" fmt="net"
             series={pts(ap.daily)} polls={(APPROVAL_POLLS as RawPoll[]).filter((p) => Number.isFinite(p.results?.Approve)).map((p) => ({ t: new Date(p.endDate + "T00:00:00").getTime(), v: p.results.Approve - p.results.Disapprove }))}
             cols={["App", "Dis", "Net"]}
-            avgRow={{ pollster: "OnPoint average", dates: "", sample: "", a: ap.approve.toFixed(1), b: ap.disapprove.toFixed(1), net: ap.net.toFixed(1), cls: "r" }}
+            avgRow={{ pollster: "On Point average", dates: "", sample: "", a: ap.approve.toFixed(1), b: ap.disapprove.toFixed(1), net: ap.net.toFixed(1), cls: "r" }}
             rows={latestRows(APPROVAL_POLLS as RawPoll[], "Approve", "Disapprove", false)} />
           <AveragePanel title="Generic congressional ballot" href="/polls/generic-ballot" pill={`${gb.net >= 0 ? "D" : "R"} +${Math.abs(gb.net).toFixed(1)}`} pillCls={gb.net >= 0 ? "d" : "r"} color="#3d7bff" fmt="gb"
             series={pts(gb.daily)} polls={gb.polls.map((p) => ({ t: p.t, v: p.net }))}
             cols={["Dem", "GOP", "Margin"]}
-            avgRow={{ pollster: "OnPoint average", dates: "", sample: "", a: (gb.daily.at(-1)?.a ?? 0).toFixed(1), b: (gb.daily.at(-1)?.b ?? 0).toFixed(1), net: `${gb.net >= 0 ? "D" : "R"} +${Math.abs(gb.net).toFixed(1)}`, cls: gb.net >= 0 ? "d" : "r" }}
+            avgRow={{ pollster: "On Point average", dates: "", sample: "", a: (gb.daily.at(-1)?.a ?? 0).toFixed(1), b: (gb.daily.at(-1)?.b ?? 0).toFixed(1), net: `${gb.net >= 0 ? "D" : "R"} +${Math.abs(gb.net).toFixed(1)}`, cls: gb.net >= 0 ? "d" : "r" }}
             rows={latestRows(GENERIC_POLLS as RawPoll[], "Democrats", "Republicans", true)} />
         </div>
       </section>
@@ -180,7 +180,7 @@ export default function Home() {
           </Link>
           <Link href="/forecast/methodology" className="card story">
             <div className="thumb"><svg viewBox="0 0 320 180" aria-hidden="true"><rect width="320" height="180" fill="#120820" /><g fill="none" stroke="#e7b341" strokeWidth="2" opacity=".9"><path d="M20,120 Q80,40 160,90 T300,70" /></g><g fill="#e7b341" opacity=".5"><circle cx="40" cy="110" r="3" /><circle cx="90" cy="70" r="3" /><circle cx="130" cy="95" r="3" /><circle cx="200" cy="80" r="3" /><circle cx="250" cy="60" r="3" /><circle cx="285" cy="75" r="3" /></g></svg><span className="lab">Methods</span></div>
-            <div className="card-b"><h3>How OnPoint averages polls: robust LOWESS at three spans</h3><p>Every poll is one observation at its field midpoint.</p><div className="meta">Sep 28 · Methodology</div></div>
+            <div className="card-b"><h3>How On Point averages polls: robust LOWESS at three spans</h3><p>Every poll is one observation at its field midpoint.</p><div className="meta">Sep 28 · Methodology</div></div>
           </Link>
         </div>
       </section>

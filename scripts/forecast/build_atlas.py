@@ -18,6 +18,8 @@ Inputs (environment variables, defaults are the build machine paths):
   ZIPC       zip_county.csv                 zip to county, for county lat lon centroids
   PRES24     pres24.csv                     2024 presidential by county
   FCDIR      the statewide forecast run, for projected turnout
+  DCTERM     dc_term.csv, the data center proximity term by county
+  GASTERM    gas_term.csv, gas prices through financial strain by county
 Run from the repo root: python3 scripts/forecast/build_atlas.py
 """
 import os, re, json, glob, math
@@ -34,7 +36,9 @@ LOCAL = E("LOCAL", "/tmp/covx/county_local_shift.csv")
 SEGS = E("SEGS", "/tmp/seg/county_segments_cal.csv")
 DCPTS = E("DCPTS", f"{UP}/6b2b7c1d-datacenter_points.csv")
 ZIPC = E("ZIPC", "/tmp/covx/zip_county.csv")
-FCDIR = E("FCDIR", "/tmp/fc_v114")
+FCDIR = E("FCDIR", "/tmp/fc_v116")
+DCT = E("DCTERM", "/tmp/dcx/dc_term.csv")
+GST = E("GASTERM", "/tmp/gasx/gas_term.csv")
 GEO = E("GEODIR", "/tmp/claude-0/-home-claude/2fe66b6b-24b4-5fab-b0f7-c44b6f59cc0e/scratchpad/geo")
 PRES24 = E("PRES24", "")
 
@@ -86,6 +90,8 @@ if ct:
     c2 = pd.read_csv(ct[0], dtype={"county_fips": str}).set_index("county_fips")
     P = pd.concat([P[~P.index.str.startswith("091")], c2[["votes_dem", "votes_gop", "total_votes"]]])
 
+DCX = pd.read_csv(DCT, dtype={"fips": str}).set_index("fips") if os.path.exists(DCT) else pd.DataFrame()
+GSX = pd.read_csv(GST, dtype={"fips": str}).set_index("fips") if os.path.exists(GST) else pd.DataFrame()
 # projected turnout: the Senate race where there is one, else the governor's race
 TURN = {}
 for pth in sorted(glob.glob(f"{FCDIR}/*_2026_governor_county_forecast.csv")) + sorted(glob.glob(f"{FCDIR}/*_2026_senate_county_forecast.csv")):
@@ -108,6 +114,8 @@ LAYERS = [
     ("p24", "2024 presidential margin", "pts", "div", "party", "Trump against Harris, certified county results"),
     ("gas", "Gas price", "$", "seq", "fuel", "AAA average regular unleaded, county"),
     ("dc", "Data centers", "sites", "seq", "grid", "Mapped data center sites in the county"),
+    ("dcx", "Data center pull", "pts", "div", "party", "How far nearby and planned data centers move the county margin, from the Economist and YouGov distance curve at half strength"),
+    ("gasx", "Gas strain pull", "pts", "div", "party", "How far the county gas price moves the margin through financially strained voters, from the TPSI data at 0.6 strength"),
     ("emp", "Job growth", "%", "div", "growth", "Total employment change, year over year, QCEW"),
     ("wage", "Wage growth", "%", "div", "growth", "Average weekly wage change, year over year, QCEW"),
     ("tariff", "Tariff exposure", "index", "seq", "heat", "Manufacturing and farm employment exposed to tariffs"),
@@ -144,6 +152,10 @@ def layer_row(f):
         s = S.loc[f]; r["lpT"] = 100 * s["LP Trump"]; r["lpH"] = 100 * s["LP Harris"]
         if f in TURN and s.adults > 0:
             r["turn"] = min(100 * TURN[f] / s.adults, 99)
+    if f in DCX.index:
+        r["dcx"] = -2.0 * float(DCX.loc[f, "d2_shift_pts"])   # GOP positive margin points
+    if f in GSX.index:
+        r["gasx"] = -2.0 * float(GSX.loc[f, "d2_shift_pts"])   # GOP positive margin points
     if f in L.index:
         t = 1.5 * float(L.loc[f, "within"]) + float(L.loc[f, "state_part"])
         r["loc"] = -100 * (2 * inv(t) - 1)  # GOP positive, like every margin on the site

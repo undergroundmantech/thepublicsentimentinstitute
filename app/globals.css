@@ -1,13 +1,13 @@
 @import "tailwindcss";
 
 /* =========================================================
-   OnPoint Politics, the site design system (opp-ui).
+   On Point Politics, the site design system (opp-ui).
    Dark by default, with a true light theme (html[data-theme="light"]).
    Glass surfaces, one brand gradient, party colors for data.
    Tokens: .github/skills/opp-ui/tokens.css. Component classes: app/opp.css.
    ========================================================= */
 
-/* ---------- 1) OnPoint tokens ---------- */
+/* ---------- 1) On Point tokens ---------- */
 :root {
   color-scheme: dark;
 
@@ -250,7 +250,7 @@ li { margin: .35em 0; }
 .wrap { max-width: var(--wrap); margin: 0 auto; padding-inline: var(--gutter); }
 @media (max-width: 600px) { .wrap { padding-inline: 16px; } }
 
-/* ---------- 4) PSI utility classes, restyled on the OnPoint system ---------- */
+/* ---------- 4) PSI utility classes, restyled on the On Point system ---------- */
 .psi-kicker, .hp-eyebrow, .hp-section-title {
   font-family: var(--font-b); font-weight: 700; text-transform: uppercase;
   letter-spacing: .16em; font-size: 11px; color: var(--mute);

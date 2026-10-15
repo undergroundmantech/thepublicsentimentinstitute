@@ -1,6 +1,6 @@
 /**
  * Styles for the internal desk. Surface, ink and signal tokens come from
- * globals.css (dark only, OnPoint Politics tokens); the candidate lane
+ * globals.css (dark only, On Point Politics tokens); the candidate lane
  * (--k1..--k5) and the map ramp are declared here to the same values the public
  * board uses, so a candidate is the same colour in both places.
  */

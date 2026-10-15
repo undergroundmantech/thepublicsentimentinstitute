@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Contact",
-  description: "Commission a poll, request data or reach the OnPoint Politics research desk. Fieldwork by The Public Sentiment Institute.",
+  description: "Commission a poll, request data or reach the On Point Politics research desk. Fieldwork by The Public Sentiment Institute.",
   alternates: { canonical: "/contact" },
 };
 

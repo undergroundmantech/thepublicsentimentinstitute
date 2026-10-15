@@ -33,7 +33,7 @@ export async function generateMetadata({ params }: { params: Promise<{ state: st
   const title = r.office === "house" ? `${r.name} forecast` : `${r.state} ${r.office === "senate" ? "Senate" : "governor"} forecast`;
   return {
     title,
-    description: `${r.dem} vs ${r.gop}: the OnPoint Politics model margin, win probability, county simulation and every poll of the race.`,
+    description: `${r.dem} vs ${r.gop}: the On Point Politics model margin, win probability, county simulation and every poll of the race.`,
     alternates: { canonical: raceHref(r.id) },
   };
 }
@@ -149,7 +149,7 @@ export default async function Page({ params }: { params: Promise<{ state: string
               <table className="tbl">
                 <thead><tr><th>Pollster</th><th>Sample</th><th style={{ textAlign: "right" }}>Age</th><th style={{ textAlign: "right" }}>Margin</th></tr></thead>
                 <tbody>
-                  <tr className="avg"><td>OnPoint average</td><td>{r.pollLevel === "lowess" ? "LOWESS Election Day projection" : "Weighted average"}</td><td className="n" /><td className={`n ${r.pollAvg != null ? (r.pollAvg < 0 ? "d" : "r") : ""}`}>{r.pollAvg != null ? fmtM(r.pollAvg) : "No polls"}</td></tr>
+                  <tr className="avg"><td>On Point average</td><td>{r.pollLevel === "lowess" ? "LOWESS Election Day projection" : "Weighted average"}</td><td className="n" /><td className={`n ${r.pollAvg != null ? (r.pollAvg < 0 ? "d" : "r") : ""}`}>{r.pollAvg != null ? fmtM(r.pollAvg) : "No polls"}</td></tr>
                   {(r.polls ?? []).slice(0, 25).map((p, i) => (
                     <tr key={i}><td>{p.pollster}</td><td className="mono" style={{ color: "var(--ink2)" }}>{p.n ? p.n.toLocaleString() : ""} {p.kind}</td><td className="n">{p.age}d</td><td className={`n ${p.margin < 0 ? "d" : p.margin > 0 ? "r" : ""}`}>{fmtM(p.margin)}</td></tr>
                   ))}

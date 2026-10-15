@@ -2,7 +2,7 @@
 import { RAW_POLLS } from "./data";
 import PrimaryAverage from "@/app/_polling/lib/PrimaryAverage";
 
-// Florida governor Republican primary: the OnPoint average of every public poll,
+// Florida governor Republican primary: the On Point average of every public poll,
 // rendered at /polls/fl/governor-gop-primary.
 export default function FloridaGovRepublicanPrimaryPage() {
   return (

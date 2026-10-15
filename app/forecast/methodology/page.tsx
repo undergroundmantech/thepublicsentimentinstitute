@@ -7,7 +7,7 @@ import { RATE, RATING_LABEL } from "@/app/lib/opp";
 export const metadata: Metadata = {
   title: "Forecast methodology",
   description:
-    "How the OnPoint Politics 2026 forecast works: fundamentals, the polling average, candidate effects, 2,000 correlated simulations, county and district models, and how chamber odds and ratings are set.",
+    "How the On Point Politics 2026 forecast works: fundamentals, the polling average, candidate effects, 2,000 correlated simulations, county and district models, and how chamber odds and ratings are set.",
   alternates: { canonical: "/forecast/methodology" },
 };
 

@@ -1,5 +1,5 @@
 // Auto-generated scoped stylesheet ported from changeorders/TPSI_FL_Scenario_Engine_Final.html.
-// Colors/fonts are aliased to the OnPoint Politics tokens (app/globals.css), dark only.
+// Colors/fonts are aliased to the On Point Politics tokens (app/globals.css), dark only.
 export const FLSE_CSS = `
 .flse{
  --bg:var(--background);--pnl:var(--panel);--pnl2:var(--panel2);--ink:var(--foreground);--ink2:var(--foreground2);--ink3:var(--muted);--ink4:var(--muted2);

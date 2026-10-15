@@ -19,7 +19,7 @@ import { raceHref } from "@/app/lib/opp";
 import ForecastAtlas, { ATLAS_CSS } from "./ForecastAtlas";
 
 // ─────────────────────────────────────────────────────────────────────────────
-// The forecast desk, in the OnPoint Politics inner template: crumbs, eyebrow,
+// The forecast desk, in the On Point Politics inner template: crumbs, eyebrow,
 // headline, lede and meta row, then glass cards. The map card carries the
 // office switch, the seat bar and the map; selecting a race swaps the map for
 // that race's real geography, and the cards below become that race's work-up.
@@ -135,7 +135,7 @@ function DeskHeader({ model, office }: { model: Model | null; office: Office }) 
         <div className="eye g">2026 forecast</div>
         <h1>{h1}</h1>
         <p className="lede">
-          The OnPoint Politics model for every Senate, House and governor race on the 2026 ballot. It blends
+          The On Point Politics model for every Senate, House and governor race on the 2026 ballot. It blends
           fundamentals with the polling average, then runs {model ? model.meta.sims.toLocaleString() : "2,000"} correlated
           simulations of the election, county by county.
         </p>
@@ -315,7 +315,7 @@ export default function ForecastDesk({ initialOffice = "house" }: { initialOffic
 type ChamberT = Model["chambers"]["house"];
 // The bar carries the seat by seat call — every race given to its projected
 // winner — because that is the forecast's answer to "who wins what" and it is
-// what the OnPoint pages print. The average across the simulations is a
+// what the On Point pages print. The average across the simulations is a
 // different number, and sits underneath where it can be read as one: the mean
 // leans toward whoever holds the close seats, which is why the House calls 235
 // Democratic seats and averages 244.
@@ -839,7 +839,7 @@ function SectionDistribution({ chamber, office, sims }: { chamber: ChamberT; off
     const sorted = [...raw.entries()].sort((a, b) => a[0] - b[0]);
     let cum = 0, median = sorted.length ? sorted[0][0] : 0;
     for (const [s, p] of sorted) { cum += p; if (cum >= 0.5) { median = s; break; } }
-    // the published OnPoint run carries its own median; prefer it when present
+    // the published On Point run carries its own median; prefer it when present
     if (typeof chamber.median === "number") median = chamber.median;
     // clip the 0.2% tails — outlier sims stretch the axis and flatten the shape
     let acc = 0; const kept: [number, number][] = [];
@@ -1762,7 +1762,7 @@ function RaceSections({ race, byId, onPick, sims, updated, env }: {
 
 // ── styles ───────────────────────────────────────────────────────────────────
 const CSS = `
-/* ── desk tokens, mapped onto the OnPoint Politics brand tokens ──────────────
+/* ── desk tokens, mapped onto the On Point Politics brand tokens ──────────────
    The desk keeps its own --fc-* names so the rules below stay readable, but
    every one resolves to a brand token from app/globals.css. Dark only. */
 .fc-page {

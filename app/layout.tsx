@@ -18,10 +18,10 @@ const numeric = JetBrains_Mono({ subsets: ["latin"], weight: ["500", "700", "800
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://onpointpolitics.com"),
-  title: { default: "OnPoint Politics", template: "%s | OnPoint Politics" },
+  title: { default: "On Point Politics", template: "%s | On Point Politics" },
   description: "Polling averages, county level forecasts and live election results for the 2026 midterms. Fieldwork and modeling by The Public Sentiment Institute.",
-  applicationName: "OnPoint Politics",
-  openGraph: { siteName: "OnPoint Politics", type: "website", locale: "en_US" },
+  applicationName: "On Point Politics",
+  openGraph: { siteName: "On Point Politics", type: "website", locale: "en_US" },
   twitter: { card: "summary_large_image" },
 };
 

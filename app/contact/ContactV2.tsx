@@ -182,7 +182,7 @@ export default function ContactPage() {
               ))}
             </div>
           </div>
-          <div className="callout"><div className="eye">Fieldwork</div>Polls are fielded by The Public Sentiment Institute for OnPoint Politics. See the <Link href="/tpsi/services" style={{ textDecoration: "underline" }}>services</Link> and <Link href="/tpsi/methodology" style={{ textDecoration: "underline" }}>methodology</Link>.</div>
+          <div className="callout"><div className="eye">Fieldwork</div>Polls are fielded by The Public Sentiment Institute for On Point Politics. See the <Link href="/tpsi/services" style={{ textDecoration: "underline" }}>services</Link> and <Link href="/tpsi/methodology" style={{ textDecoration: "underline" }}>methodology</Link>.</div>
         </aside>
       </div>
     </div>

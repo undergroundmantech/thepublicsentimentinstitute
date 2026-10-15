@@ -33,7 +33,7 @@ export default function Page() {
       <header className="ph">
         <div className="eye g">Search</div>
         <h1>Find a <em>race</em></h1>
-        <p className="lede">Search every forecast, polling average and page on OnPoint Politics by race, state or candidate.</p>
+        <p className="lede">Search every forecast, polling average and page on On Point Politics by race, state or candidate.</p>
         <div className="pmeta"><span>Indexed <b className="mono">{entries.length.toLocaleString()}</b></span><span>Forecasts <b className="mono">{getModel().races.length}</b></span><span>Averages <b className="mono">{AGGREGATES.length + Object.keys(PRIMARIES).length}</b></span></div>
       </header>
       <SearchBox entries={entries} />
