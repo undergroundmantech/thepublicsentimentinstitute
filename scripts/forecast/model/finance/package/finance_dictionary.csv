@@ -1,0 +1,17 @@
+column,description
+race,"state-office-district; office H House, S Senate, G governor"
+d_candidate / r_candidate,"Candidate treated as each side's nominee: top money-raiser of that party, unless set in finance_inputs/nominees.csv"
+d_is_independent,1 when no Democrat is running and an independent carries the anti-Republican side
+receipts_d / receipts_r,Total raised by each nominee's campaign this cycle
+spent_d / spent_r,Total spent by each nominee's campaign
+coh_d / coh_r,Cash on hand at the last report
+ie_pro_d / ie_pro_r,Outside spending helping each side: support for that side plus attacks on the other
+ie_pro_d_30d / ie_pro_r_30d,"The same, counting only the last 30 days"
+total_pro_d / total_pro_r,Campaign spending plus outside spending helping each side
+money_share_d,total_pro_d / (total_pro_d + total_pro_r); 0.5 = even
+log_money_ratio,ln((total_pro_d + 1) / (total_pro_r + 1)); positive favors the Democratic side
+coh_share_d,Democratic share of the two nominees' cash on hand
+google_ads_d / google_ads_r,Google ad spend this cycle by each nominee's campaign
+google_ads_geo,All political Google ad spend in the state since 2018 reporting began; a measure of how heavily targeted the place is
+incumbent_side,"D, R or open, from FEC incumbent flags"
+as_of,Coverage end date of the latest campaign report

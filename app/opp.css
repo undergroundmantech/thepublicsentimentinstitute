@@ -219,6 +219,10 @@ header.opp.opp-top { position: sticky; top: env(safe-area-inset-top, 0px); z-ind
 @media (max-width: 960px) {
   .opp .burger { display: inline-flex; padding: 8px 12px; }
 }
+@media (max-width: 600px) {
+  .opp .top .right .btn.ghost, .opp .top .right .btn.gold { display: none; }
+  .opp .top .right { gap: 8px; }
+}
 .opp .mnav { position: fixed; inset: 0; z-index: 90; background: rgba(var(--canvas-rgb),.96); backdrop-filter: blur(18px); display: flex; flex-direction: column; padding: calc(env(safe-area-inset-top,0px) + 16px) 20px 24px; }
 .opp .mnav .mhead { display: flex; align-items: center; justify-content: space-between; height: 50px; }
 .opp .mnav nav { display: grid; gap: 4px; margin-top: 18px; }
@@ -285,3 +289,7 @@ footer.opp { position: relative; z-index: 1; }
 .opp .lk .lk-l{display:none}
 :root[data-theme="light"] .opp .lk .lk-d{display:none !important} /* beats the inline display:block on the svg */
 :root[data-theme="light"] .opp .lk .lk-l{display:block}
+@media (max-width: 600px) {
+  .opp .card, .opp-main .card { min-width: 0; max-width: 100%; }
+  .opp .card-h, .opp-main .card-h { flex-wrap: wrap; row-gap: 8px; }
+}

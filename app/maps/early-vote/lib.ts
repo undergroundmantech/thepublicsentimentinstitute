@@ -17,6 +17,46 @@ export const CATEGORIES: { key: Category; label: string; blurb: string }[] = [
   { key: "inperson",  label: "In person", blurb: "ballots cast in person" },
 ];
 
+/** What the page can show: one feed category, or every ballot already cast, the
+ *  returned mail ballots and the in person ballots added together. Requests are
+ *  not votes, so they stay out of the total. */
+export type View = Category | "total";
+export const TOTAL_PARTS: Category[] = ["returned", "inperson"];
+export const VIEWS: { key: View; label: string; blurb: string }[] = [
+  { key: "total", label: "Total cast", blurb: "ballots cast so far, mail returned plus in person" },
+  ...CATEGORIES,
+];
+
+/** Two feed payloads added group by group, county by county. */
+export function mergePayloads(parts: (CategoryPayload | null | undefined)[]): CategoryPayload | null {
+  const ok = parts.filter((p): p is CategoryPayload => !!p && !!p.regions);
+  if (!ok.length) return null;
+  const add = (into: RegionRow, row: RegionRow | undefined) => {
+    for (const [g, b] of Object.entries(row ?? {})) {
+      const cur = into[g];
+      into[g] = { votes: (cur?.votes ?? 0) + (b?.votes ?? 0), color: cur?.color ?? b?.color ?? "#999" };
+    }
+  };
+  const regions: Record<string, RegionRow> = {};
+  const statewide_total: RegionRow = {};
+  for (const p of ok) {
+    for (const [k, row] of Object.entries(p.regions)) { regions[k] = regions[k] ?? {}; add(regions[k], row); }
+    add(statewide_total, p.statewide_total);
+  }
+  const snap = ok.map((p) => p.snapshot_date).filter(Boolean).sort();
+  return { state: ok[0].state, category: "total", election_name: ok.map((p) => p.election_name).filter(Boolean).join(" and "),
+    snapshot_date: snap[snap.length - 1] ?? "", regions, statewide_total };
+}
+
+/** Two demographic payloads added group by group. */
+export function mergeDemographics(parts: (DemographicPayload | null | undefined)[]): DemographicPayload | null {
+  const ok = parts.filter((p): p is DemographicPayload => !!p && !!p.values);
+  if (!ok.length) return null;
+  const values: Record<string, number> = {};
+  for (const p of ok) for (const [k, v] of Object.entries(p.values)) values[k] = (values[k] ?? 0) + (v || 0);
+  return { ...ok[0], category: "total", values, total: ok.reduce((s, p) => s + (p.total || 0), 0) };
+}
+
 export const DIMENSIONS: { key: Dimension; label: string }[] = [
   { key: "party", label: "Party" },
   { key: "gender", label: "Gender" },
@@ -65,10 +105,23 @@ async function get<T>(path: string): Promise<T | null> {
   }
 }
 
-export const getCapabilities = (st: string) => get<Capabilities>(`${st}/capabilities`);
-export const getCategory = (st: string, c: Category) => get<CategoryPayload>(`${st}/${c}`);
-export const getDemographics = (st: string, c: Category, by: Dimension) =>
-  get<DemographicPayload>(`${st}/${c}/demographics?by=${by}`);
+/** Capabilities, with a "total" entry: a breakdown is offered for the total only
+ *  when every part that has ballots publishes it, so a total is never half a total. */
+export const getCapabilities = async (st: string) => {
+  const c = await get<Capabilities>(`${st}/capabilities`);
+  if (c?.categories) {
+    const tot = {} as Record<Dimension, boolean>;
+    for (const d of DIMENSIONS) tot[d.key] = TOTAL_PARTS.every((p) => !c.categories[p] || !!c.categories[p][d.key]) && TOTAL_PARTS.some((p) => !!c.categories[p]?.[d.key]);
+    c.categories = { ...c.categories, total: tot };
+  }
+  return c;
+};
+const getFeed = (st: string, c: Category) => get<CategoryPayload>(`${st}/${c}`);
+export const getCategory = async (st: string, c: View): Promise<CategoryPayload | null> =>
+  c === "total" ? mergePayloads(await Promise.all(TOTAL_PARTS.map((p) => getFeed(st, p)))) : getFeed(st, c);
+const getDemo = (st: string, c: Category, by: Dimension) => get<DemographicPayload>(`${st}/${c}/demographics?by=${by}`);
+export const getDemographics = async (st: string, c: View, by: Dimension): Promise<DemographicPayload | null> =>
+  c === "total" ? mergeDemographics(await Promise.all(TOTAL_PARTS.map((p) => getDemo(st, p, by)))) : getDemo(st, c, by);
 
 export const sumRow = (row: RegionRow | undefined) =>
   row ? Object.values(row).reduce((n, b) => n + (b?.votes ?? 0), 0) : 0;
@@ -275,7 +328,7 @@ export const getPartyModel = () =>
 /** requested ballots read the mailed out mix; returned ballots the mail mix and
  *  then the party return rates; in person ballots the early mix */
 export type Mode = "mail" | "returned" | "early";
-export const modeOf = (c: Category): Mode => (c === "inperson" ? "early" : c === "returned" ? "returned" : "mail");
+export const modeOf = (c: View): Mode => (c === "inperson" ? "early" : c === "returned" ? "returned" : "mail");
 const MIX_INDEX: Record<Mode, number> = { mail: 2, returned: 0, early: 1 };
 
 export const regimeOf = (model: PartyModel, st: string): Regime => model.regime[st] ?? "request";
@@ -327,6 +380,21 @@ export function bandShares(values: Record<string, number>, dim: "age" | "race"):
   return out.map((x) => x / used);
 }
 
+/** True when a race breakdown carries its own Hispanic category. */
+export function raceHasHispanic(values: Record<string, number>): boolean {
+  return Object.entries(values).some(([k, v]) => v > 0 && raceBand(k) === 2);
+}
+
+/** Lines reported race bands up with the model's. A state that publishes no Hispanic
+ *  category counts those voters under other races, so the Hispanic and the Asian and
+ *  other bands are pooled and split back by the shares the model expects. */
+export function alignRace(rep: number[], exp: number[], values: Record<string, number>): number[] {
+  if (raceHasHispanic(values)) return rep;
+  const pool = rep[2] + rep[3], e = exp[2] + exp[3];
+  if (!(e > 0)) return rep;
+  return [rep[0], rep[1], pool * exp[2] / e, pool * exp[3] / e];
+}
+
 const lrOf = (m: number[]): [number, number] => [Math.log(m[1] / m[0]), Math.log(m[2] / m[0])];
 
 /** Log odds offset that moves a state's estimate from the ages, or races, the model
@@ -338,8 +406,9 @@ export function demoAdjust(model: PartyModel, st: string, mode: Mode,
   let off: [number, number] = [0, 0]; const dims: string[] = []; const notes: string[] = [];
   for (const dim of ["age", "race"] as const) {
     const p = payloads[dim]; if (!p) continue;
-    const rep = bandShares(p.values, dim); if (!rep) continue;
+    const raw = bandShares(p.values, dim); if (!raw) continue;
     const t = tab[dim];
+    const rep = dim === "race" ? alignRace(raw, t.share, p.values) : raw;
     const mixAt = (w: number[]) => [0, 1, 2].map((j) => w.reduce((s, x, b) => s + x * t.mix[b][j], 0));
     const a = lrOf(mixAt(rep)), b = lrOf(mixAt(t.share));
     off = [off[0] + a[0] - b[0], off[1] + a[1] - b[1]];
@@ -746,4 +815,55 @@ export function returnTilt(req: CategoryPayload | null | undefined, ret: Categor
         lvShare: model.meta.lv?.[c.st] ? (model.meta.lv[c.st][1] / (model.meta.lv[c.st][0] + model.meta.lv[c.st][1])) * 100 : null })) };
   }
   return { source, states: rows.map((x) => x.st).sort(), bR, bO, draws, returned: n, universal, calib };
+}
+
+
+/* ── adding the two parts of a total ────────────────────────────────────────
+ *
+ * The total cast is returned mail ballots plus in person ballots. Each part is
+ * estimated the way its own tab estimates it, with its own mode, return rates
+ * and demographic reweighting, and the two are added here. The 80% range of the
+ * sum takes the two parts' ranges as moving together, which is the cautious
+ * reading: the same state party shock drives both.
+ */
+export function mergeEstimates(a: Estimate | null | undefined, b: Estimate | null | undefined): Estimate | null {
+  if (!a) return b ?? null; if (!b) return a;
+  const v = a.votes + b.votes; if (v <= 0) return null;
+  const w = (x: number, y: number) => (x * a.votes + y * b.votes) / v;
+  return { d: w(a.d, b.d), r: w(a.r, b.r), i: w(a.i, b.i), margin: w(a.margin, b.margin),
+    lo: w(a.lo, b.lo), hi: w(a.hi, b.hi), votes: v };
+}
+export function mergeEstimateMaps(a: Record<string, Estimate> | undefined, b: Record<string, Estimate> | undefined) {
+  const out: Record<string, Estimate> = {};
+  for (const k of new Set([...Object.keys(a ?? {}), ...Object.keys(b ?? {})])) {
+    const m = mergeEstimates(a?.[k], b?.[k]); if (m) out[k] = m;
+  }
+  return out;
+}
+export function mergeViews(a: StateView | null | undefined, b: StateView | null | undefined): StateView | null {
+  if (!a) return b ?? null; if (!b) return a;
+  const N = (x: StateView) => x.d + x.r + x.o + x.u;
+  const na = N(a), nb = N(b), n = na + nb; if (n <= 0) return null;
+  const d = a.d + b.d, r = a.r + b.r, o = a.o + b.o, u = a.u + b.u;
+  const ed = a.ed + b.ed, er = a.er + b.er, ei = a.ei + b.ei;
+  const margin = ((r + er - d - ed) / n) * 100;
+  const sp = (x: StateView, k: "lo" | "hi") => (isFinite(x[k]) ? x[k] - x.margin : 0);
+  return { d, r, o, u, ed, er, ei, margin,
+    lo: margin + (sp(a, "lo") * na + sp(b, "lo") * nb) / n, hi: margin + (sp(a, "hi") * na + sp(b, "hi") * nb) / n,
+    estShare: u / n, countyWeighted: a.countyWeighted || b.countyWeighted };
+}
+export function mergeCombined(a: Combined | null | undefined, b: Combined | null | undefined): Combined | null {
+  if (!a) return b ?? null; if (!b) return a;
+  const total = a.total + b.total; if (total <= 0) return null;
+  const d = a.d + b.d, r = a.r + b.r, o = a.o + b.o;
+  const margin = ((r - d) / total) * 100;
+  const sp = (x: Combined, k: "lo" | "hi") => (x[k] - x.margin) * x.total;
+  return {
+    total,
+    reported: { d: a.reported.d + b.reported.d, r: a.reported.r + b.reported.r, o: a.reported.o + b.reported.o,
+      votes: a.reported.votes + b.reported.votes, states: Math.max(a.reported.states, b.reported.states) },
+    estimated: { votes: a.estimated.votes + b.estimated.votes, states: Math.max(a.estimated.states, b.estimated.states),
+      countyWeighted: a.estimated.countyWeighted + b.estimated.countyWeighted },
+    d, r, o, margin, lo: margin + (sp(a, "lo") + sp(b, "lo")) / total, hi: margin + (sp(a, "hi") + sp(b, "hi")) / total,
+  };
 }

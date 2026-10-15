@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { createPortal } from "react-dom";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import SwingOMeter from "../results/components/SwingOMeter";
@@ -17,6 +16,8 @@ import {
 } from "./lib";
 import { raceHref } from "@/app/lib/opp";
 import ForecastAtlas, { ATLAS_CSS } from "./ForecastAtlas";
+import SpendingTracker, { RaceMoney, SPENDING_CSS } from "./Spending";
+import { TIP_CSS, TipPortal, VoteTip, commas, shareOf } from "./Tips";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // The forecast desk, in the On Point Politics inner template: crumbs, eyebrow,
@@ -170,6 +171,8 @@ export default function ForecastDesk({ initialOffice = "house" }: { initialOffic
   };
   const [view, setView] = useState<ViewMode>("margin");
   const [mapKind, setMapKind] = useState<"geo" | "hex">("geo");
+  // one map card: the race map by state or district, or every county with its layers
+  const [mapScope, setMapScope] = useState<"races" | "counties">("races");
   const [selId, setSelId] = useState<string | null>(null);
   const [hover, setHover] = useState<{ id: string; x: number; y: number } | null>(null);
   const [query, setQuery] = useState("");
@@ -218,7 +221,7 @@ export default function ForecastDesk({ initialOffice = "house" }: { initialOffic
   if (!model || !geo || !chamber) {
     return (
       <div className="opp fc-page">
-        <style>{CSS + ATLAS_CSS}</style>
+        <style>{CSS + ATLAS_CSS + TIP_CSS + SPENDING_CSS}</style>
         <DeskHeader model={model} office={office} />
         <div className="card"><div className="empty">Loading the forecast</div></div>
       </div>
@@ -227,7 +230,7 @@ export default function ForecastDesk({ initialOffice = "house" }: { initialOffic
 
   return (
     <div className="opp fc-page">
-      <style>{CSS + ATLAS_CSS}</style>
+      <style>{CSS + ATLAS_CSS + TIP_CSS + SPENDING_CSS}</style>
       <DeskHeader model={model} office={office} />
 
       <div className="fc-stack">
@@ -246,19 +249,29 @@ export default function ForecastDesk({ initialOffice = "house" }: { initialOffic
                 draws its own counties and districts, and neither switch does anything */}
             {sel ? null : (
               <div className="fc-controls">
-                <span className="fc-ctl-label">View</span>
-                <Seg small ariaLabel="Map style" value={mapKind} onChange={setMapKind} options={[
-                  { v: "geo", label: "Map" }, { v: "hex", label: "Cartogram" },
+                <span className="fc-ctl-label">Map</span>
+                <Seg small ariaLabel="Map scope" value={mapScope} onChange={setMapScope} options={[
+                  { v: "races", label: office === "house" ? "Districts" : "States" }, { v: "counties", label: "Counties" },
                 ]} />
-                <span className="fc-ctl-label">Color by</span>
-                <Seg small ariaLabel="Color mode" value={view} onChange={setView} options={[
-                  { v: "margin", label: "Margin" }, { v: "odds", label: "Odds" }, { v: "rating", label: "Rating" },
-                ]} />
+                {mapScope === "races" ? (
+                  <>
+                    <span className="fc-ctl-label">View</span>
+                    <Seg small ariaLabel="Map style" value={mapKind} onChange={setMapKind} options={[
+                      { v: "geo", label: "Map" }, { v: "hex", label: "Cartogram" },
+                    ]} />
+                    <span className="fc-ctl-label">Color by</span>
+                    <Seg small ariaLabel="Color mode" value={view} onChange={setView} options={[
+                      { v: "margin", label: "Margin" }, { v: "odds", label: "Odds" }, { v: "rating", label: "Rating" },
+                    ]} />
+                  </>
+                ) : null}
               </div>
             )}
 
             <div className="fc-mapwrap">
-              {!sel ? (
+              {!sel && mapScope === "counties" ? (
+                <ForecastAtlas embedded model={model} counties={counties} office={office} onPickRace={pick} statePaths={geo.states} />
+              ) : !sel ? (
                 <>
                   <NationalMap geo={geo} races={races} office={office} view={view} kind={mapKind} onPick={pick} hover={hover} setHover={setHover} />
                   <Legend view={view} />
@@ -278,7 +291,6 @@ export default function ForecastDesk({ initialOffice = "house" }: { initialOffic
         {/* ── below the map ── */}
         {!sel ? (
           <>
-            <ForecastAtlas model={model} counties={counties} office={office} onPickRace={pick} statePaths={geo.states} />
             <SectionDistribution chamber={chamber} office={office} sims={model.meta.sims} />
             <SectionSeats chamber={chamber} office={office} updated={model.meta.updated} />
             <SectionProbability chamber={chamber} office={office} updated={model.meta.updated} />
@@ -296,6 +308,7 @@ export default function ForecastDesk({ initialOffice = "house" }: { initialOffic
                 </button>
               ) : null}
             </Sec>
+            <SpendingTracker office={office} onPick={pick} />
           </>
         ) : (
           <RaceSections race={sel} byId={byId} onPick={pick} sims={model.meta.sims} updated={model.meta.updated} env={{ npe: model.meta.npe, gb: model.meta.genericBallot.avg, approval: model.meta.genericBallot.netApproval }} />
@@ -501,91 +514,42 @@ function Legend({ view }: { view: ViewMode }) {
 // transform, and a transformed ancestor becomes the containing block for fixed
 // children — so the tip rendered offset by exactly the scroll distance. Sending
 // it to document.body escapes that ancestor and puts it back under the cursor.
-function TipPortal({ children }: { children: React.ReactNode }) {
-  const [host, setHost] = useState<HTMLElement | null>(null);
-  useEffect(() => { setHost(document.body); return () => setHost(null); }, []);
-  return host ? createPortal(children, host) : null;
-}
-
 function MapTip({ race, x, y }: { race: Race; x: number; y: number }) {
   const s = race.est;
-  const fav = s.margin > 0 ? race.gop : race.dem;
-  const tone = sideColor(race, s.margin > 0 ? "gop" : "dem");
-  const p = s.margin > 0 ? s.prob : 1 - s.prob;
-  const flip = typeof window !== "undefined" && x > window.innerWidth - 330;
-  const yc = typeof window !== "undefined" ? Math.min(y, window.innerHeight - 130) : y;
-  return (
-    <TipPortal>
-    <div className="fc-tip" style={{ left: x + (flip ? -292 : 18), top: yc - 14 }}>
-      <div className="fc-tip-name">{race.name}</div>
-      <div className="fc-tip-row">
-        <i style={{ background: tone }} />
-        <b>{surname(fav)}</b>
-        <span style={{ color: tone }}>{fmtRaceMargin(race, s.margin)}</span>
-        <em>{fmtPct(p)} to win</em>
+  const v = race.votes;
+  const house = race.office === "house";
+  const sub = house ? `${race.dem} · ${race.gop}` : `${race.state} · ${OFFICE_WORD[race.office]}`;
+  // the same card the counties print: names, projected votes and shares, the margin,
+  // then the odds, so the national map and the drill down read alike
+  if (!v || !(v.total > 0)) {
+    const tone = sideColor(race, s.margin > 0 ? "gop" : "dem");
+    const flip = typeof window !== "undefined" && x > window.innerWidth - 330;
+    return (
+      <TipPortal>
+      <div className="fc-tip" style={{ left: x + (flip ? -292 : 18), top: y - 14 }}>
+        <div className="fc-tip-name">{race.name}</div>
+        <div className="fc-tip-row"><i style={{ background: tone }} /><b>{surname(s.margin > 0 ? race.gop : race.dem)}</b>
+          <span style={{ color: tone }}>{fmtRaceMargin(race, s.margin)}</span><em>{fmtPct(s.margin > 0 ? s.prob : 1 - s.prob)} to win</em></div>
+        <div className="fc-tip-foot">{ratingFor(s.margin, indSide(race)).cat} · click to open the race</div>
       </div>
-      <div className="fc-tip-foot">{ratingFor(s.margin, indSide(race)).cat} · click to open the race</div>
-    </div>
-    </TipPortal>
+      </TipPortal>
+    );
+  }
+  return (
+    <VoteTip
+      title={race.name} sub={sub}
+      demName={surname(race.dem)} gopName={surname(race.gop)} demColor={sideColor(race, "dem")}
+      dem={v.dem} rep={v.rep} total={v.total} margin={s.margin}
+      cands={race.cands && race.cands.length > 2 ? race.cands : undefined}
+      odds={{ dem: 1 - s.prob, gop: s.prob }}
+      foot={`${ratingFor(s.margin, indSide(race)).cat} · projected vote · click to open the race`}
+      x={x} y={y}
+    />
   );
 }
 
 // ── race stage — the map swaps in place ──────────────────────────
 type StageHover = { kind: "county" | "district"; id: string; x: number; y: number };
-
-const commas = (n: number) => Math.round(n).toLocaleString("en-US");
-
-// Surnames alone are the right label right up until two people on the same ballot
-// share one. Alaska's Senate race runs Dan S. Sullivan against Dan J. Sullivan, and
-// Oregon's runs two Smiths; printing "Sullivan" twice in a county tooltip is worse
-// than printing nothing. Where a surname repeats, those candidates get their full
-// name and everyone else keeps the short one.
-function ballotLabels(cands: { name: string }[]): string[] {
-  const short = cands.map((c) => surname(c.name));
-  const seen = new Map<string, number>();
-  for (const s of short) seen.set(s, (seen.get(s) ?? 0) + 1);
-  return short.map((s, i) => ((seen.get(s) ?? 0) > 1 ? cands[i].name : s));
-}
-const shareOf = (v: number, t: number) => (t > 0 ? `${((v / t) * 100).toFixed(1)}%` : "\u2014");
-
-// One tooltip shape for both layers: who, how many votes, what share, and the margin
-// underneath. Counts are the point — a shade alone never told anyone the size of a place.
-function VoteTip({ title, sub, demName, gopName, demColor = DEM, dem, rep, total, margin, foot, x, y, cands }: {
-  title: string; sub?: string; demName: string; gopName: string; demColor?: string;
-  dem: number; rep: number; total: number; margin: number; foot?: string; x: number; y: number;
-  // when the race runs more than two names, the county's whole ballot rather than
-  // a Democrat, a Republican and an undifferentiated "other"
-  cands?: { name: string; party: string; pct: number }[];
-}) {
-  const flip = typeof window !== "undefined" && x > window.innerWidth - 350;
-  const yc = typeof window !== "undefined" ? Math.min(y, window.innerHeight - 200) : y;
-  return (
-    <TipPortal>
-    <div className="fc-tip wide" style={{ left: x + (flip ? -320 : 18), top: yc - 14 }}>
-      <div className="fc-tip-name">{title}</div>
-      {sub ? <div className="fc-tip-sub">{sub}</div> : null}
-      {cands && cands.length > 2
-        ? ballotLabels(cands).map((label, i) => { const c = cands[i]; return (
-            <div key={`${c.name}-${i}`} className="fc-tip-vote">
-              <i style={{ background: partyColor(c.party) }} />
-              <b>{label}</b>
-              <span>{commas(Math.round(total * c.pct / 100))}</span>
-              <em>{c.pct.toFixed(1)}%</em>
-            </div>
-          ); })
-        : (<>
-            <div className="fc-tip-vote"><i style={{ background: demColor }} /><b>{demName}</b><span>{commas(dem)}</span><em>{shareOf(dem, total)}</em></div>
-            <div className="fc-tip-vote"><i style={{ background: GOP }} /><b>{gopName}</b><span>{commas(rep)}</span><em>{shareOf(rep, total)}</em></div>
-            {total > 0 && (total - dem - rep) / total >= 0.0005
-              ? <div className="fc-tip-vote"><i style={{ background: "rgba(var(--fc-ink-rgb),calc(0.3 * var(--fc-mute) + var(--fc-floor)))" }} /><b>Other candidates</b><span>{commas(total - dem - rep)}</span><em>{shareOf(total - dem - rep, total)}</em></div>
-              : null}
-          </>)}
-      <div className="fc-tip-vote total"><i /><b>Total votes</b><span>{commas(total)}</span><em style={{ color: margin > 0 ? "var(--fc-gop)" : "var(--fc-dem)" }}>{fmtMargin(margin)}</em></div>
-      {foot ? <div className="fc-tip-foot">{foot}</div> : null}
-    </div>
-    </TipPortal>
-  );
-}
 
 const OFFICE_WORD: Record<Office, string> = { house: "U.S. House", senate: "U.S. Senate", governor: "governor" };
 
@@ -1737,6 +1701,8 @@ function RaceSections({ race, byId, onPick, sims, updated, env }: {
         </Sec>
 
       <SectionCrosstabs race={race} />
+
+      <RaceMoney race={race} />
 
       {/* moves with */}
       <Sec eye="Moves with" title={"Races correlated with this one"}>

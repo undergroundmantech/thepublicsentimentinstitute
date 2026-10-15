@@ -6,6 +6,7 @@ import {
   type CountiesPayload, type CountyRow, type Model, type Office, type Race, type StateDetail,
   fmtMargin, fmtPct, marginColor, surname, fmtRaceMargin, sideColor,
 } from "./lib";
+import { VoteTip } from "./Tips";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // The county atlas. Every county in the country on a black stage, colored by
@@ -218,15 +219,18 @@ const CountyPaths = memo(function CountyPaths({ rows, fill, sweep, frameW, dim }
 });
 
 // ── main component ───────────────────────────────────────────────────────────
-export default function ForecastAtlas({ model, counties, office, onPickRace, statePaths }: {
+export default function ForecastAtlas({ model, counties, office, onPickRace, statePaths, embedded = false }: {
   model: Model; counties: CountiesPayload | null; office: Office; onPickRace: (id: string) => void;
   statePaths: Record<string, string>;
+  // inside the desk's map card the office comes from the card's own switch
+  embedded?: boolean;
 }) {
   const atlas = useFetch<AtlasData>("/forecast/atlas/us.json");
   const [layer, setLayer] = useState<string>("fc");
   // the forecast layer follows the desk's office until the reader picks one here
   const [fcPick, setFcOffice] = useState<FcOffice | null>(null);
-  const fcOffice: FcOffice = fcPick ?? (office === "governor" ? "governor" : office === "house" ? "house" : "senate");
+  const deskOffice: FcOffice = office === "governor" ? "governor" : office === "house" ? "house" : "senate";
+  const fcOffice: FcOffice = embedded ? deskOffice : fcPick ?? deskOffice;
   const [dots, setDots] = useState(true);
   const [lines, setLines] = useState(true);
   const [scope, setScope] = useState<string | null>(null);   // state on screen, null for the nation
@@ -494,12 +498,12 @@ export default function ForecastAtlas({ model, counties, office, onPickRace, sta
   const highlightD = focus ? (scope ? statePathFor(focus.f) : focus.d) : null;
 
   return (
-    <section className="atl" aria-label="County atlas">
+    <section className={`atl${embedded ? " embedded" : ""}`} aria-label="County atlas">
       <div className="atl-head">
         <div>
           <span className="atl-eye">County atlas · {commas(parsed.rows.length)} counties · {commas(atlas.centers.length)} data centers</span>
-          <h2>Every county, <span className="atl-grad">every layer</span></h2>
-          <p>Switch the map between the forecast and the conditions underneath it. Click any state to fly in, or let the tour run through the battlegrounds.</p>
+          {embedded ? null : <h2>Every county, <span className="atl-grad">every layer</span></h2>}
+          <p>{embedded ? "Every county under the forecast, or the conditions underneath it. " : "Switch the map between the forecast and the conditions underneath it. "}Click any state to fly in, or let the tour run through the battlegrounds.</p>
         </div>
         <div className="atl-kpis">
           <div className="atl-kpi" style={{ animationDelay: "60ms" }}><b>${kGas.toFixed(2)}</b><span>Average gallon of regular</span></div>
@@ -527,7 +531,9 @@ export default function ForecastAtlas({ model, counties, office, onPickRace, sta
       </div>
 
       <div className="atl-bar">
-        {layer === "fc" || layer === "shift" ? (
+        {(layer === "fc" || layer === "shift") && embedded ? (
+          <span className="atl-note">{def.note}. The office switch above picks the race.</span>
+        ) : layer === "fc" || layer === "shift" ? (
           <div className="atl-seg" role="group" aria-label="Forecast race">
             {(["senate", "governor", "house"] as FcOffice[]).map((o) => (
               <button key={o} type="button" className={fcOffice === o ? "on" : ""} aria-pressed={fcOffice === o} onClick={() => setFcOffice(o)}>
@@ -705,7 +711,8 @@ export default function ForecastAtlas({ model, counties, office, onPickRace, sta
       </div>
 
       {hover && hovered ? (
-        <CountyTip c={hovered} x={hover.x} y={hover.y} layer={layer} def={def} value={valueOf(hovered)} fc={fcRows.get(hovered.f) ?? null} fcOffice={fcOffice} />
+        <CountyTip c={hovered} x={hover.x} y={hover.y} layer={layer} def={def} value={valueOf(hovered)} fc={fcRows.get(hovered.f) ?? null} fcOffice={fcOffice}
+          race={(raceByState.get(hovered.st) ?? []).find((r) => r.office === fcOffice) ?? null} />
       ) : null}
       {dcHover && atlas.centers[dcHover.i] ? (
         <DcTip c={atlas.centers[dcHover.i]} county={parsed.byF.get(atlas.centers[dcHover.i][0]) ?? null} x={dcHover.x} y={dcHover.y} />
@@ -741,26 +748,45 @@ function FocusCard({ c, fc, fcOffice, layer, value, pinned }: { c: County; fc: C
   );
 }
 
-function CountyTip({ c, x, y, layer, def, value, fc, fcOffice }: {
-  c: County; x: number; y: number; layer: string; def: LayerDef; value: Num; fc: CountyRow | null; fcOffice: FcOffice;
+function CountyTip({ c, x, y, layer, def, value, fc, fcOffice, race }: {
+  c: County; x: number; y: number; layer: string; def: LayerDef; value: Num; fc: CountyRow | null; fcOffice: FcOffice; race: Race | null;
 }) {
-  const flip = typeof window !== "undefined" && x > window.innerWidth - 320;
-  const yc = typeof window !== "undefined" ? Math.min(y, window.innerHeight - 230) : y;
   const o = fcOffice === "senate" ? "Senate" : fcOffice === "governor" ? "Governor" : "House vote";
   const rows: [string, string][] = [];
-  if (layer !== "fc") rows.push([`2026 ${o}`, fc ? fmtMargin(fc[0]) : "No race"]);
+  if (layer !== "fc") rows.push([def.label, fmtVal(layer, value)]);
   if (layer !== "p24") rows.push(["2024 result", fmtVal("p24", c.v.p24)]);
   if (layer !== "gas") rows.push(["Gas", fmtVal("gas", c.v.gas)]);
   if (layer !== "dc") rows.push(["Data centers", c.v.dc ? fmtVal("dc", c.v.dc) : "None mapped"]);
   if (layer !== "emp") rows.push(["Job growth", fmtVal("emp", c.v.emp)]);
+  // the same card as the desk's county tooltip: who, projected votes, share, margin
+  if (fc && fc[3] > 0) {
+    const house = fcOffice === "house";
+    const shares = fc[4];
+    return (
+      <VoteTip
+        title={countyLabel(c.name)}
+        sub={`${STATE_NAME[c.st] ?? c.st} · 2026 ${o}`}
+        demName={house || !race ? "Democratic" : surname(race.dem)}
+        gopName={house || !race ? "Republican" : surname(race.gop)}
+        demColor={race && !house ? sideColor(race, "dem") : undefined}
+        dem={fc[1]} rep={fc[2]} total={fc[3]} margin={fc[0]}
+        cands={!house && race && shares && race.cands ? race.cands.map((k, i) => ({ name: k.name, party: k.party, pct: shares[i] ?? 0 })) : undefined}
+        rows={rows}
+        foot="Projected county vote · click to fly in or pin"
+        x={x} y={y}
+      />
+    );
+  }
+  const flip = typeof window !== "undefined" && x > window.innerWidth - 320;
+  const yc = typeof window !== "undefined" ? Math.min(y, window.innerHeight - 230) : y;
   return (
     <TipPortal>
       <div className="atl-tip" style={{ left: x + (flip ? -290 : 18), top: yc - 12 }}>
         <div className="atl-tn">{countyLabel(c.name)}</div>
-        <div className="atl-ts">{STATE_NAME[c.st] ?? c.st}{fc ? ` · ${commas(fc[3])} projected votes` : ""}</div>
+        <div className="atl-ts">{STATE_NAME[c.st] ?? c.st} · no {o === "House vote" ? "House" : o} race on the 2026 ballot</div>
         <div className="atl-tv"><span>{def.label}</span><b>{fmtVal(layer, value)}</b></div>
-        {rows.map(([k, v]) => <div key={k} className="atl-tr"><span>{k}</span><b>{v}</b></div>)}
-        <div className="atl-tf">Click to {typeof window !== "undefined" ? "fly in or pin" : "open"}</div>
+        {rows.filter(([k]) => k !== def.label).map(([k, v]) => <div key={k} className="atl-tr"><span>{k}</span><b>{v}</b></div>)}
+        <div className="atl-tf">Click to fly in or pin</div>
       </div>
     </TipPortal>
   );
@@ -783,6 +809,8 @@ function DcTip({ c, county, x, y }: { c: AtlasData["centers"][number]; county: C
 }
 
 export const ATLAS_CSS = `
+.atl.embedded { margin-top: 0; animation: none; }
+.atl.embedded .atl-head p { margin-top: 6px; }
 .atl { position: relative; display: grid; gap: 18px; margin-top: 8px; animation: atlBoard .9s cubic-bezier(.16,1,.3,1) both; }
 @keyframes atlBoard { 0% { transform: perspective(2400px) translateY(46px) rotateX(10deg) scale(.95); opacity: 0; filter: blur(10px); } 55% { filter: blur(0); } 100% { transform: none; opacity: 1; filter: none; } }
 .atl-head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 18px 28px; }

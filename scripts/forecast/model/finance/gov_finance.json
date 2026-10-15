@@ -40,7 +40,21 @@
    ]
   },
   "checked": "2026-10-08",
-  "money_share_d": 0.1126
+  "money_share_d": 0.1126,
+  "google_ads": {
+   "d": 142857.89,
+   "r": 30790.2,
+   "d_committees": [
+    "DAVID JOLLY FOR GOVERNOR"
+   ],
+   "r_committees": [
+    "BYRON DONALDS FOR GOVERNOR"
+   ],
+   "dga": 1922.62,
+   "rga": 0.0,
+   "note": "Google political ads this cycle, in state; reference only, not in the money share",
+   "checked": "2026-10-14"
+  }
  },
  "TXG": {
   "state": "Texas",
@@ -83,7 +97,17 @@
    ]
   },
   "checked": "2026-10-08",
-  "money_share_d": 0.2871
+  "money_share_d": 0.2871,
+  "google_ads": {
+   "d": 0.0,
+   "r": 0.0,
+   "d_committees": [],
+   "r_committees": [],
+   "dga": 1583.33,
+   "rga": 0.0,
+   "note": "Google political ads this cycle, in state; reference only, not in the money share",
+   "checked": "2026-10-14"
+  }
  },
  "IAG": {
   "state": "Iowa",
@@ -126,7 +150,20 @@
    ]
   },
   "checked": "2026-10-08",
-  "money_share_d": 0.7703
+  "money_share_d": 0.7703,
+  "google_ads": {
+   "d": 0.0,
+   "r": 1587406.81,
+   "d_committees": [],
+   "r_committees": [
+    "Lahn for Governor",
+    "Lahn for Governor"
+   ],
+   "dga": 252.26,
+   "rga": 0.0,
+   "note": "Google political ads this cycle, in state; reference only, not in the money share",
+   "checked": "2026-10-14"
+  }
  },
  "OHG": {
   "state": "Ohio",
@@ -170,7 +207,17 @@
   },
   "note": "Ramaswamy's own $25M is outside the $14.4M donations figure, so no self funding is subtracted again.",
   "checked": "2026-10-08",
-  "money_share_d": 0.4395
+  "money_share_d": 0.4395,
+  "google_ads": {
+   "d": 0.0,
+   "r": 0.0,
+   "d_committees": [],
+   "r_committees": [],
+   "dga": 804.7,
+   "rga": 0.0,
+   "note": "Google political ads this cycle, in state; reference only, not in the money share",
+   "checked": "2026-10-14"
+  }
  },
  "GAG": {
   "state": "Georgia",
@@ -213,7 +260,19 @@
    ]
   },
   "checked": "2026-10-08",
-  "money_share_d": 0.099
+  "money_share_d": 0.099,
+  "google_ads": {
+   "d": 0.0,
+   "r": 11669706.05,
+   "d_committees": [],
+   "r_committees": [
+    "Jackson for Governor, Inc."
+   ],
+   "dga": 717.7,
+   "rga": 0.0,
+   "note": "Google political ads this cycle, in state; reference only, not in the money share",
+   "checked": "2026-10-14"
+  }
  },
  "WIG": {
   "state": "Wisconsin",
@@ -256,7 +315,17 @@
    ]
   },
   "checked": "2026-10-08",
-  "money_share_d": 0.2037
+  "money_share_d": 0.2037,
+  "google_ads": {
+   "d": 0.0,
+   "r": 0.0,
+   "d_committees": [],
+   "r_committees": [],
+   "dga": 487.15,
+   "rga": 0.0,
+   "note": "Google political ads this cycle, in state; reference only, not in the money share",
+   "checked": "2026-10-14"
+  }
  },
  "MIG": {
   "state": "Michigan",
@@ -299,7 +368,19 @@
    ]
   },
   "checked": "2026-10-08",
-  "money_share_d": 0.7973
+  "money_share_d": 0.7973,
+  "google_ads": {
+   "d": 67640.6,
+   "r": 0.0,
+   "d_committees": [
+    "JOCELYN BENSON FOR GOVERNOR"
+   ],
+   "r_committees": [],
+   "dga": 878.65,
+   "rga": 0.0,
+   "note": "Google political ads this cycle, in state; reference only, not in the money share",
+   "checked": "2026-10-14"
+  }
  },
  "NYG": {
   "state": "New York",
@@ -342,7 +423,17 @@
    ]
   },
   "checked": "2026-10-08",
-  "money_share_d": 0.6406
+  "money_share_d": 0.6406,
+  "google_ads": {
+   "d": 0.0,
+   "r": 0.0,
+   "d_committees": [],
+   "r_committees": [],
+   "dga": 1905.19,
+   "rga": 0.0,
+   "note": "Google political ads this cycle, in state; reference only, not in the money share",
+   "checked": "2026-10-14"
+  }
  },
  "PAG": {
   "state": "Pennsylvania",
@@ -385,7 +476,17 @@
    ]
   },
   "checked": "2026-10-08",
-  "money_share_d": 0.9157
+  "money_share_d": 0.9157,
+  "google_ads": {
+   "d": 0.0,
+   "r": 0.0,
+   "d_committees": [],
+   "r_committees": [],
+   "dga": 6843.95,
+   "rga": 0.0,
+   "note": "Google political ads this cycle, in state; reference only, not in the money share",
+   "checked": "2026-10-14"
+  }
  },
  "AZG": {
   "state": "Arizona",
@@ -429,7 +530,17 @@
   },
   "notes_oct2": "The $10M DGA pledge was inside the total though the source note said it was not counted; removed.",
   "checked": "2026-10-08",
-  "money_share_d": 0.703
+  "money_share_d": 0.703,
+  "google_ads": {
+   "d": 0.0,
+   "r": 0.0,
+   "d_committees": [],
+   "r_committees": [],
+   "dga": 778.6,
+   "rga": 0.0,
+   "note": "Google political ads this cycle, in state; reference only, not in the money share",
+   "checked": "2026-10-14"
+  }
  },
  "NVG": {
   "state": "Nevada",
@@ -472,7 +583,19 @@
    ]
   },
   "checked": "2026-10-08",
-  "money_share_d": 0.3102
+  "money_share_d": 0.3102,
+  "google_ads": {
+   "d": 0.0,
+   "r": 524441.23,
+   "d_committees": [],
+   "r_committees": [
+    "LOMBARDO FOR GOVERNOR"
+   ],
+   "dga": 356.66,
+   "rga": 0.0,
+   "note": "Google political ads this cycle, in state; reference only, not in the money share",
+   "checked": "2026-10-14"
+  }
  },
  "CAG": {
   "state": "California",
@@ -515,7 +638,21 @@
    ]
   },
   "checked": "2026-10-08",
-  "money_share_d": 0.6644
+  "money_share_d": 0.6644,
+  "google_ads": {
+   "d": 1972727.82,
+   "r": 3237.74,
+   "d_committees": [
+    "BECERRA FOR GOVERNOR 2026"
+   ],
+   "r_committees": [
+    "STEVE HILTON FOR GOVERNOR 2026"
+   ],
+   "dga": 4689.15,
+   "rga": 0.0,
+   "note": "Google political ads this cycle, in state; reference only, not in the money share",
+   "checked": "2026-10-14"
+  }
  },
  "ORG": {
   "state": "Oregon",
@@ -558,7 +695,17 @@
    ]
   },
   "checked": "2026-10-08",
-  "money_share_d": 0.6483
+  "money_share_d": 0.6483,
+  "google_ads": {
+   "d": 0.0,
+   "r": 0.0,
+   "d_committees": [],
+   "r_committees": [],
+   "dga": 743.8,
+   "rga": 0.0,
+   "note": "Google political ads this cycle, in state; reference only, not in the money share",
+   "checked": "2026-10-14"
+  }
  },
  "KSG": {
   "state": "Kansas",
@@ -602,7 +749,19 @@
   },
   "notes_oct2": "The $6.9M RGA booking was inside the total though the note said it was a reservation not counted; removed.",
   "checked": "2026-10-08",
-  "money_share_d": 0.2439
+  "money_share_d": 0.2439,
+  "google_ads": {
+   "d": 0.0,
+   "r": 131405.78,
+   "d_committees": [],
+   "r_committees": [
+    "TY MASTERSON FOR GOVERNOR"
+   ],
+   "dga": 252.26,
+   "rga": 0.0,
+   "note": "Google political ads this cycle, in state; reference only, not in the money share",
+   "checked": "2026-10-14"
+  }
  },
  "NEG": {
   "state": "Nebraska",
@@ -645,7 +804,21 @@
    ]
   },
   "checked": "2026-10-08",
-  "money_share_d": 0.1666
+  "money_share_d": 0.1666,
+  "google_ads": {
+   "d": 3.19,
+   "r": 294682.76,
+   "d_committees": [
+    "Tim Walz for Governor"
+   ],
+   "r_committees": [
+    "JIM PILLEN FOR GOVERNOR"
+   ],
+   "dga": 178.31,
+   "rga": 0.0,
+   "note": "Google political ads this cycle, in state; reference only, not in the money share",
+   "checked": "2026-10-14"
+  }
  },
  "OKG": {
   "state": "Oklahoma",
@@ -678,6 +851,18 @@
    ],
    "incumbent": false,
    "in_state_share": null
+  },
+  "google_ads": {
+   "d": 0.0,
+   "r": 687629.0,
+   "d_committees": [],
+   "r_committees": [
+    "MAZZEI FOR GOVERNOR-2026"
+   ],
+   "dga": 265.31,
+   "rga": 0.0,
+   "note": "Google political ads this cycle, in state; reference only, not in the money share",
+   "checked": "2026-10-14"
   }
  },
  "ALG": {
@@ -721,7 +906,22 @@
    ]
   },
   "checked": "2026-10-08",
-  "money_share_d": 0.2629
+  "money_share_d": 0.2629,
+  "google_ads": {
+   "d": 0.0,
+   "r": 623922.89,
+   "d_committees": [
+    "Brandon Jones for Governor 2026",
+    "VERNON JONES FOR GOVERNOR"
+   ],
+   "r_committees": [
+    "TUBERVILLE FOR GOVERNOR INC"
+   ],
+   "dga": 291.41,
+   "rga": 0.0,
+   "note": "Google political ads this cycle, in state; reference only, not in the money share",
+   "checked": "2026-10-14"
+  }
  },
  "SDG": {
   "state": "South Dakota",
@@ -763,7 +963,19 @@
    "incumbent": true,
    "in_state_share": null
   },
-  "notes_oct2": "The Democratic figure was primary outside spending against Rhoden, not Ahlers money, and the record had no source; set unverified until Ahlers files."
+  "notes_oct2": "The Democratic figure was primary outside spending against Rhoden, not Ahlers money, and the record had no source; set unverified until Ahlers files.",
+  "google_ads": {
+   "d": 0.0,
+   "r": 47908.47,
+   "d_committees": [],
+   "r_committees": [
+    "Rhoden for Governor"
+   ],
+   "dga": 108.71,
+   "rga": 0.0,
+   "note": "Google political ads this cycle, in state; reference only, not in the money share",
+   "checked": "2026-10-14"
+  }
  },
  "VTG": {
   "state": "Vermont",
@@ -807,7 +1019,21 @@
   },
   "notes_oct2": "Mixed bases fixed: cash on hand for both on Sept 1.",
   "checked": "2026-10-08",
-  "money_share_d": 0.5583
+  "money_share_d": 0.5583,
+  "google_ads": {
+   "d": 6551.35,
+   "r": 0.0,
+   "d_committees": [
+    "AMANDA JANOO FOR GOVERNOR"
+   ],
+   "r_committees": [
+    "DR SCOTT JENSEN FOR GOVERNOR"
+   ],
+   "dga": 156.56,
+   "rga": 0.0,
+   "note": "Google political ads this cycle, in state; reference only, not in the money share",
+   "checked": "2026-10-14"
+  }
  },
  "COG": {
   "state": "Colorado",
@@ -850,7 +1076,19 @@
    ]
   },
   "checked": "2026-10-08",
-  "money_share_d": 0.714
+  "money_share_d": 0.714,
+  "google_ads": {
+   "d": 0.0,
+   "r": 777.14,
+   "d_committees": [],
+   "r_committees": [
+    "Victor Marx for Governor"
+   ],
+   "dga": 722.05,
+   "rga": 0.0,
+   "note": "Google political ads this cycle, in state; reference only, not in the money share",
+   "checked": "2026-10-14"
+  }
  },
  "NHG": {
   "state": "New Hampshire",
@@ -893,7 +1131,17 @@
    ]
   },
   "checked": "2026-10-08",
-  "money_share_d": 0.1333
+  "money_share_d": 0.1333,
+  "google_ads": {
+   "d": 0.0,
+   "r": 0.0,
+   "d_committees": [],
+   "r_committees": [],
+   "dga": 208.76,
+   "rga": 0.0,
+   "note": "Google political ads this cycle, in state; reference only, not in the money share",
+   "checked": "2026-10-14"
+  }
  },
  "TNG": {
   "state": "Tennessee",
@@ -937,7 +1185,19 @@
   },
   "notes_oct2": "Exact Firefly figures.",
   "checked": "2026-10-08",
-  "money_share_d": 0.0577
+  "money_share_d": 0.0577,
+  "google_ads": {
+   "d": 15.38,
+   "r": 0.0,
+   "d_committees": [
+    "GREEN FOR GOVERNOR"
+   ],
+   "r_committees": [],
+   "dga": 443.66,
+   "rga": 0.0,
+   "note": "Google political ads this cycle, in state; reference only, not in the money share",
+   "checked": "2026-10-14"
+  }
  },
  "MNG": {
   "state": "Minnesota",
@@ -980,7 +1240,19 @@
    ]
   },
   "checked": "2026-10-08",
-  "money_share_d": 0.8259
+  "money_share_d": 0.8259,
+  "google_ads": {
+   "d": 0.0,
+   "r": 1578.57,
+   "d_committees": [],
+   "r_committees": [
+    "Demuth, Lisa Gov Committee"
+   ],
+   "dga": 587.2,
+   "rga": 0.0,
+   "note": "Google political ads this cycle, in state; reference only, not in the money share",
+   "checked": "2026-10-14"
+  }
  },
  "SCG": {
   "state": "South Carolina",
@@ -1013,6 +1285,21 @@
    ],
    "incumbent": false,
    "in_state_share": null
+  },
+  "google_ads": {
+   "d": 44132.12,
+   "r": 0.0,
+   "d_committees": [
+    "Jermaine Johnson for Governor",
+    "Jermaine Johnson for Governor",
+    "JOHNSON FOR LT. GOV.",
+    "Perry Johnson for Governor"
+   ],
+   "r_committees": [],
+   "dga": 400.16,
+   "rga": 0.0,
+   "note": "Google political ads this cycle, in state; reference only, not in the money share",
+   "checked": "2026-10-14"
   }
  },
  "IDG": {
@@ -1056,7 +1343,17 @@
    ]
   },
   "checked": "2026-10-08",
-  "money_share_d": 0.0656
+  "money_share_d": 0.0656,
+  "google_ads": {
+   "d": 0.0,
+   "r": 0.0,
+   "d_committees": [],
+   "r_committees": [],
+   "dga": 208.76,
+   "rga": 0.0,
+   "note": "Google political ads this cycle, in state; reference only, not in the money share",
+   "checked": "2026-10-14"
+  }
  },
  "WYG": {
   "state": "Wyoming",
@@ -1089,6 +1386,16 @@
    ],
    "incumbent": false,
    "in_state_share": null
+  },
+  "google_ads": {
+   "d": 0.0,
+   "r": 0.0,
+   "d_committees": [],
+   "r_committees": [],
+   "dga": 113.06,
+   "rga": 0.0,
+   "note": "Google political ads this cycle, in state; reference only, not in the money share",
+   "checked": "2026-10-14"
   }
  },
  "AKG": {
@@ -1132,7 +1439,17 @@
    ]
   },
   "checked": "2026-10-08",
-  "money_share_d": 0.8285
+  "money_share_d": 0.8285,
+  "google_ads": {
+   "d": 0.0,
+   "r": 0.0,
+   "d_committees": [],
+   "r_committees": [],
+   "dga": 130.46,
+   "rga": 0.0,
+   "note": "Google political ads this cycle, in state; reference only, not in the money share",
+   "checked": "2026-10-14"
+  }
  },
  "MEG": {
   "state": "Maine",
@@ -1175,7 +1492,22 @@
    ]
   },
   "checked": "2026-10-08",
-  "money_share_d": 0.7273
+  "money_share_d": 0.7273,
+  "google_ads": {
+   "d": 38286.97,
+   "r": 2470.59,
+   "d_committees": [
+    "Hannah Pingree For Governor",
+    "HANNAH PINGREE FOR GOVERNOR EXPLORATORY COMMITTEE"
+   ],
+   "r_committees": [
+    "Bobby Charles for Maine Governor Campaign Committee"
+   ],
+   "dga": 230.51,
+   "rga": 0.0,
+   "note": "Google political ads this cycle, in state; reference only, not in the money share",
+   "checked": "2026-10-14"
+  }
  },
  "CTG": {
   "state": "Connecticut",
@@ -1212,6 +1544,16 @@
    ],
    "incumbent": false,
    "in_state_share": null
+  },
+  "google_ads": {
+   "d": 0.0,
+   "r": 0.0,
+   "d_committees": [],
+   "r_committees": [],
+   "dga": 421.91,
+   "rga": 0.0,
+   "note": "Google political ads this cycle, in state; reference only, not in the money share",
+   "checked": "2026-10-14"
   }
  },
  "RIG": {
@@ -1256,7 +1598,17 @@
   },
   "notes_oct2": "Mixed dates fixed: both sides on Jun 30.",
   "checked": "2026-10-08",
-  "money_share_d": 0.9771
+  "money_share_d": 0.9771,
+  "google_ads": {
+   "d": 0.0,
+   "r": 0.0,
+   "d_committees": [],
+   "r_committees": [],
+   "dga": 165.26,
+   "rga": 0.0,
+   "note": "Google political ads this cycle, in state; reference only, not in the money share",
+   "checked": "2026-10-14"
+  }
  },
  "MAG": {
   "state": "Massachusetts",
@@ -1299,7 +1651,19 @@
    ]
   },
   "checked": "2026-10-08",
-  "money_share_d": 0.2461
+  "money_share_d": 0.2461,
+  "google_ads": {
+   "d": 0.0,
+   "r": 843.84,
+   "d_committees": [],
+   "r_committees": [
+    "Mike Minogue for Governor"
+   ],
+   "dga": 765.55,
+   "rga": 0.0,
+   "note": "Google political ads this cycle, in state; reference only, not in the money share",
+   "checked": "2026-10-14"
+  }
  },
  "MDG": {
   "state": "Maryland",
@@ -1342,7 +1706,19 @@
    ]
   },
   "checked": "2026-10-08",
-  "money_share_d": 0.9467
+  "money_share_d": 0.9467,
+  "google_ads": {
+   "d": 0.0,
+   "r": 0.0,
+   "d_committees": [],
+   "r_committees": [
+    "KIRK COX FOR GOVERNOR"
+   ],
+   "dga": 661.15,
+   "rga": 0.0,
+   "note": "Google political ads this cycle, in state; reference only, not in the money share",
+   "checked": "2026-10-14"
+  }
  },
  "NMG": {
   "state": "New Mexico",
@@ -1385,7 +1761,17 @@
    ]
   },
   "checked": "2026-10-08",
-  "money_share_d": 0.827
+  "money_share_d": 0.827,
+  "google_ads": {
+   "d": 0.0,
+   "r": 0.0,
+   "d_committees": [],
+   "r_committees": [],
+   "dga": 343.61,
+   "rga": 0.0,
+   "note": "Google political ads this cycle, in state; reference only, not in the money share",
+   "checked": "2026-10-14"
+  }
  },
  "ARG": {
   "state": "Arkansas",
@@ -1428,7 +1814,17 @@
    ]
   },
   "checked": "2026-10-08",
-  "money_share_d": 0.013
+  "money_share_d": 0.013,
+  "google_ads": {
+   "d": 0.0,
+   "r": 0.0,
+   "d_committees": [],
+   "r_committees": [],
+   "dga": 204.41,
+   "rga": 0.0,
+   "note": "Google political ads this cycle, in state; reference only, not in the money share",
+   "checked": "2026-10-14"
+  }
  },
  "ILG": {
   "state": "Illinois",
@@ -1471,7 +1867,17 @@
    ]
   },
   "checked": "2026-10-08",
-  "money_share_d": 0.9686
+  "money_share_d": 0.9686,
+  "google_ads": {
+   "d": 0.0,
+   "r": 0.0,
+   "d_committees": [],
+   "r_committees": [],
+   "dga": 7694.93,
+   "rga": 0.0,
+   "note": "Google political ads this cycle, in state; reference only, not in the money share",
+   "checked": "2026-10-14"
+  }
  },
  "HIG": {
   "state": "Hawaii",
@@ -1504,6 +1910,18 @@
    ],
    "incumbent": false,
    "in_state_share": null
+  },
+  "google_ads": {
+   "d": 7.69,
+   "r": 0.0,
+   "d_committees": [
+    "GREEN FOR GOVERNOR"
+   ],
+   "r_committees": [],
+   "dga": 234.86,
+   "rga": 0.0,
+   "note": "Google political ads this cycle, in state; reference only, not in the money share",
+   "checked": "2026-10-14"
   }
  }
 }

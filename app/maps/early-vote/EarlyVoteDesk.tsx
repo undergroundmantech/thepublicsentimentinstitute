@@ -4,14 +4,15 @@ import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from "re
 import { createPortal } from "react-dom";
 import Link from "next/link";
 import {
-  CATEGORIES, DIMENSIONS, commas, compact, fillFor, getCapabilities, getCategory, getDemographics,
+  CATEGORIES, VIEWS, TOTAL_PARTS, commas, compact, fillFor, getCapabilities, getCategory, getDemographics,
   marginOf, matchCounty, pct, STATE_NAME, stateOfFips, sumRow, toneFor, turnoutFill, volumeScale,
   getPartyModel, modeOf, simulate, fmtMargin, combineNational, returnTilt, demoAdjust, regimeOf, REGIME_WORD, stateParts,
-  statePlace, stateView, type StateView,
+  statePlace, stateView, type StateView, mergeEstimateMaps, mergeEstimates, mergeViews, mergeCombined, mergePayloads,
   ratingOf, RATINGS, RATING_WORD, EV_DEM, EV_REP, EV_TOSS, type Rating,
   type Capabilities, type Combined, type Estimate, type Mode, type Part, type Place, type DemoAdjust, type PartyModel, type ReturnTilt, type Category, type CategoryPayload, type DemographicPayload,
-  type Dimension, type Geo, type RegionRow, type StateGeo,
+  type Geo, type RegionRow, type StateGeo, type View,
 } from "./lib";
+import Electorate, { EarlyDemographics, ELECTORATE_CSS, type ActualUnit, type P3 } from "./Electorate";
 
 const MONO = "var(--font-m)";
 
@@ -152,9 +153,9 @@ function RatingBoard({ places, unit }: { places: { m: number | null; n: number; 
 }
 
 function NationalCombined({ combined, loaded, cat, setCat, tilt }: {
-  combined: Partial<Record<Category, Combined | null>>; tilt: ReturnTilt | null;
-  loaded: Partial<Record<Category, CategoryPayload | null>>;
-  cat: Category; setCat: (c: Category) => void;
+  combined: Partial<Record<View, Combined | null>>; tilt: ReturnTilt | null;
+  loaded: Partial<Record<View, CategoryPayload | null>>;
+  cat: View; setCat: (c: View) => void;
 }) {
   return (
     <section className="ev-nat" aria-label="Nationwide party breakdown">
@@ -166,7 +167,7 @@ function NationalCombined({ combined, loaded, cat, setCat, tilt }: {
         </p>
       </div>
       <div className="ev-nat-grid">
-        {CATEGORIES.map((c) => {
+        {VIEWS.map((c) => {
           const k = combined[c.key];
           const isOn = c.key === cat;
           const waiting = !(c.key in loaded);
@@ -414,11 +415,9 @@ function EstimatePanel({ e, sub, mode, model, tilt, shade, setShade, st, adj }: 
 
 export default function EarlyVoteDesk() {
   const [scope, setScope] = useState("US");           // "US" or a state abbreviation
-  const [cat, setCat] = useState<Category>("requested");
-  const [dim, setDim] = useState<Dimension>("party");
+  const [cat, setCat] = useState<View>("total");
   const [caps, setCaps] = useState<Capabilities | null>(null);
   const [data, setData] = useState<CategoryPayload | null>(null);
-  const [demo, setDemo] = useState<DemographicPayload | null>(null);
   const [loading, setLoading] = useState(true);
   const [sortDesc, setSortDesc] = useState(true);
   const [geo, setGeo] = useState<Geo | null>(null);
@@ -480,14 +479,17 @@ export default function EarlyVoteDesk() {
   }, [model, natlDemo]);
   const tilt: ReturnTilt | null = useMemo(
     () => (model ? returnTilt(natl.requested, natl.returned, model) : null), [model, natl]);
+  const natlAll = useMemo<Partial<Record<View, CategoryPayload | null>>>(() => (
+    "returned" in natl && "inperson" in natl ? { ...natl, total: mergePayloads([natl.returned, natl.inperson]) } : natl), [natl]);
   const combined = useMemo(() => {
-    const out: Partial<Record<Category, Combined | null>> = {};
+    const out: Partial<Record<View, Combined | null>> = {};
     if (!model) return out;
     for (const c of CATEGORIES.map((x) => x.key)) {
       const us = natl[c];
       out[c] = us ? combineNational(us, natlCounties[c] ?? {}, model, countyNames, modeOf(c),
         c === "returned" ? { us: natl.requested, counties: natlCounties.requested ?? {} } : undefined, tilt, natlAdj[c]) : null;
     }
+    if ("returned" in out || "inperson" in out) out.total = mergeCombined(out.returned, out.inperson);
     return out;
   }, [model, natl, natlCounties, countyNames, tilt, natlAdj]);
 
@@ -496,7 +498,7 @@ export default function EarlyVoteDesk() {
   const [reqState, setReqState] = useState<CategoryPayload | null>(null);
   useEffect(() => {
     setReqState(null);
-    if (scope === "US" || cat !== "returned") return;
+    if (scope === "US" || (cat !== "returned" && cat !== "total")) return;
     let live = true;
     getCategory(scope, "requested").then((d) => { if (live) setReqState(d); });
     return () => { live = false; };
@@ -519,29 +521,25 @@ export default function EarlyVoteDesk() {
 
   useEffect(() => { getCapabilities(scope).then(setCaps); }, [scope]);
 
+  // a total keeps its two parts as well, so each part is estimated on its own terms
+  const [parts, setParts] = useState<Partial<Record<Category, CategoryPayload | null>>>({});
   useEffect(() => {
     let live = true;
     setLoading(true);
-    getCategory(scope, cat).then((d) => { if (live) { setData(d); setLoading(false); } });
+    if (cat === "total") {
+      Promise.all(TOTAL_PARTS.map((p) => getCategory(scope, p))).then((got) => {
+        if (!live) return;
+        const pp = Object.fromEntries(TOTAL_PARTS.map((p, i) => [p, got[i]])) as Partial<Record<Category, CategoryPayload | null>>;
+        setParts(pp); setData(mergePayloads(got)); setLoading(false);
+      });
+    } else {
+      setParts({});
+      getCategory(scope, cat).then((d) => { if (live) { setData(d); setLoading(false); } });
+    }
     return () => { live = false; };
   }, [scope, cat]);
 
-  useEffect(() => {
-    let live = true;
-    setDemo(null);
-    getDemographics(scope, cat, dim).then((d) => { if (live) setDemo(d); });
-    return () => { live = false; };
-  }, [scope, cat, dim]);
-
-  // which breakdowns this state actually publishes for this category
-  const available = useMemo(() => {
-    const m = caps?.categories?.[cat];
-    return DIMENSIONS.filter((d) => (m ? m[d.key] : d.key === "party"));
-  }, [caps, cat]);
-
-  useEffect(() => {
-    if (available.length && !available.some((d) => d.key === dim)) setDim(available[0].key);
-  }, [available, dim]);
+  // the breakdown cards below read every dimension themselves (EarlyDemographics)
 
   const groups = useMemo(
     () => orderGroups(Object.keys(data?.statewide_total ?? {})), [data]);
@@ -575,58 +573,123 @@ export default function EarlyVoteDesk() {
   // matching shape, is its counties weighted by adults.
   // The feed's own age and race counts for an open state, when it publishes them,
   // reweight the estimate to who is actually voting.
-  const [demoAdj, setDemoAdj] = useState<Partial<Record<"age" | "race", DemographicPayload | null>>>({});
+  const [demoAdj, setDemoAdj] = useState<Partial<Record<Category, Partial<Record<"age" | "race", DemographicPayload | null>>>>>({});
   useEffect(() => {
     setDemoAdj({});
     if (scope === "US") return;
-    const m = caps?.categories?.[cat]; if (!m) return;
     let live = true;
-    for (const dd of ["age", "race"] as const) if (m[dd]) getDemographics(scope, cat, dd).then((p) => { if (live) setDemoAdj((x) => ({ ...x, [dd]: p })); });
+    for (const c of cat === "total" ? TOTAL_PARTS : [cat]) {
+      const m = caps?.categories?.[c]; if (!m) continue;
+      for (const dd of ["age", "race"] as const) if (m[dd]) getDemographics(scope, c, dd).then((p) => {
+        if (live) setDemoAdj((x) => ({ ...x, [c]: { ...(x[c] ?? {}), [dd]: p } }));
+      });
+    }
     return () => { live = false; };
   }, [scope, cat, caps]);
-  const adj: DemoAdjust = useMemo(
-    () => (model && scope !== "US" ? demoAdjust(model, scope, modeOf(cat), demoAdj) : null), [model, scope, cat, demoAdj]);
+  const adjOf = (c: Category): DemoAdjust => (model && scope !== "US" ? demoAdjust(model, scope, modeOf(c), demoAdj[c] ?? {}) : null);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const adj: DemoAdjust = useMemo(() => (cat === "total" ? null : adjOf(cat)), [model, scope, cat, demoAdj]);
 
   // TPSI party estimate for every place that reports no party. A county is its own
   // forecast electorate. A state on the national map, or a county with no matching
   // shape, is its counties weighted by adults.
-  const est = useMemo(() => {
-    if (!model || !noPartyRows.length) return null;
-    const ret = cat === "returned";
+  // One feed category's estimate on one payload: the rows it reports with no party,
+  // each county at its own forecast electorate, reweighted to the ages and races
+  // reported for that category.
+  const estFor = (c: Category, payload: CategoryPayload | null | undefined, adjC: DemoAdjust) => {
+    if (!model || !payload) return null;
+    const npRows = Object.entries(payload.regions ?? {}).map(([name, row]) => ({ name, row, n: sumRow(row) }))
+      .filter((r) => marginOf(r.row) === null && r.n > 0);
+    if (!npRows.length) return null;
+    const ret = c === "returned";
     // return rate of a place: its returned ballots over the ballots it sent out
     const reqOf = (name: string) => (scope === "US" ? sumRow(natl.requested?.regions[name]) : sumRow(reqState?.regions[name]));
     const reqU = scope === "US" ? 0 : (natl.requested?.regions[scope]?.["Unspecified"]?.votes ?? 0);
-    const myU = scope === "US" ? 0 : (natl[cat]?.regions[scope]?.["Unspecified"]?.votes ?? 0);
+    const myU = scope === "US" ? 0 : (natl[c]?.regions[scope]?.["Unspecified"]?.votes ?? 0);
     const stateRho = ret && reqU > 0 ? myU / reqU : undefined;
-    const places: Place[] = noPartyRows.map(({ name, n }) => {
+    const places: Place[] = npRows.map(({ name, n }) => {
       const q = ret ? reqOf(name) : 0;
       const rho = ret ? (q > 0 ? n / q : stateRho) : undefined;
-      if (scope === "US") return statePlace(name, n, natlCounties[cat]?.[name], countyNames, model, modeOf(cat),
+      if (scope === "US") return statePlace(name, n, natlCounties[c]?.[name], countyNames, model, modeOf(c),
         ret ? { row: natl.requested?.regions[name], counties: natlCounties.requested?.[name] } : undefined).place;
       const f = fipsOf[name];
       return { key: name, st: scope, parts: f && model.mix[f] ? [[f, 1, rho] as Part] : stateParts(model, scope, rho), votes: n };
     });
-    return simulate(places, model, modeOf(cat), tilt, scope === "US" ? natlAdj[cat] : adj ? { [scope]: adj } : undefined);
-  }, [model, noPartyRows, fipsOf, scope, cat, natl, natlCounties, natlAdj, countyNames, reqState, tilt, adj]);
+    return simulate(places, model, modeOf(c), tilt, scope === "US" ? natlAdj[c] : adjC ? { [scope]: adjC } : undefined);
+  };
+  const est = useMemo(() => {
+    if (!model) return null;
+    if (cat !== "total") return noPartyRows.length ? estFor(cat, data, adj) : null;
+    const a = estFor("returned", parts.returned, adjOf("returned")), b = estFor("inperson", parts.inperson, adjOf("inperson"));
+    if (!a && !b) return null;
+    return { byKey: mergeEstimateMaps(a?.byKey, b?.byKey), total: mergeEstimates(a?.total, b?.total),
+      parts: { returned: a?.byKey ?? {}, inperson: b?.byKey ?? {} } as Partial<Record<Category, Record<string, Estimate>>> };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [model, noPartyRows, fipsOf, scope, cat, data, parts, natl, natlCounties, natlAdj, countyNames, reqState, tilt, adj, demoAdj]);
 
   // One rated number per state, reported party plus the estimate of its Unspecified
   // ballots. The national map, table and tooltip and the state page headline all
   // read it, built from the same feed rows, county counts and reweighting.
-  const viewOf = (st: string, cp: CategoryPayload | null | undefined, sAdj: DemoAdjust, reqC: CategoryPayload | null | undefined): StateView | null =>
-    model ? stateView(st, natl[cat]?.regions[st] ?? (scope === st ? data?.statewide_total : undefined), cp, countyNames, model, modeOf(cat), tilt, sAdj,
-      cat === "returned" ? { row: natl.requested?.regions[st], counties: reqC } : undefined) : null;
+  const viewOf1 = (c: Category, st: string, cp: CategoryPayload | null | undefined, sAdj: DemoAdjust, reqC: CategoryPayload | null | undefined,
+    own?: CategoryPayload | null): StateView | null =>
+    model ? stateView(st, natl[c]?.regions[st] ?? (scope === st ? own?.statewide_total : undefined), cp, countyNames, model, modeOf(c), tilt, sAdj,
+      c === "returned" ? { row: natl.requested?.regions[st], counties: reqC } : undefined) : null;
+  /** a state's view in the current tab; the total adds its two parts */
+  const viewOf = (st: string, cpOf: (c: Category) => CategoryPayload | null | undefined, adjFor: (c: Category) => DemoAdjust,
+    reqC: CategoryPayload | null | undefined): StateView | null =>
+    cat === "total"
+      ? mergeViews(viewOf1("returned", st, cpOf("returned"), adjFor("returned"), reqC, parts.returned),
+                   viewOf1("inperson", st, cpOf("inperson"), adjFor("inperson"), reqC, parts.inperson))
+      : viewOf1(cat, st, cpOf(cat), adjFor(cat), reqC, data);
   const views = useMemo(() => {
     const out: Record<string, StateView | null> = {};
     if (!model || scope !== "US" || !data) return out;
-    for (const st of Object.keys(data.regions)) out[st] = viewOf(st, natlCounties[cat]?.[st], natlAdj[cat]?.[st] ?? null, natlCounties.requested?.[st]);
+    for (const st of Object.keys(data.regions)) out[st] = viewOf(st, (c) => natlCounties[c]?.[st], (c) => natlAdj[c]?.[st] ?? null, natlCounties.requested?.[st]);
     return out;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [model, scope, data, natl, natlCounties, natlAdj, cat, countyNames, tilt]);
   const myView = useMemo(
-    () => (scope === "US" || !data ? null : viewOf(scope, data, adj, reqState)),
+    () => (scope === "US" || !data ? null : viewOf(scope, (c) => (cat === "total" ? parts[c] : data), (c) => (cat === "total" ? adjOf(c) : adj), reqState)),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [model, scope, data, natl, adj, reqState, cat, countyNames, tilt]);
+    [model, scope, data, parts, natl, adj, demoAdj, reqState, cat, countyNames, tilt]);
   const showEst = shade === "estimate" && !!est?.total;
+
+  // The electorate tracker's units: every state, or every county of the open state,
+  // with its mail returns and in person ballots split by party, reported plus estimated.
+  const units = useMemo<ActualUnit[]>(() => {
+    if (cat !== "total" || !model) return [];
+    const split = (row: Record<string, { votes: number }> | undefined) => {
+      let d = 0, r = 0, o = 0, u = 0;
+      for (const [g, b] of Object.entries(row ?? {})) { const v = b?.votes ?? 0; if (g === "Democratic") d += v; else if (g === "Republican") r += v; else if (g === "Unspecified") u += v; else o += v; }
+      return { d, r, o, u };
+    };
+    const fromView = (v: StateView | null | undefined, row?: Record<string, { votes: number }>): P3 & { u: number } => {
+      if (v) { const n = v.d + v.r + v.o + v.u; const left = Math.max(0, v.u - v.ed - v.er - v.ei); return { d: v.d + v.ed, r: v.r + v.er, o: v.o + v.ei + left, n, u: v.u }; }
+      const x = split(row); return { d: x.d, r: x.r, o: x.o + x.u, n: x.d + x.r + x.o + x.u, u: x.u };
+    };
+    if (scope === "US") {
+      const sts = new Set([...Object.keys(natl.returned?.regions ?? {}), ...Object.keys(natl.inperson?.regions ?? {})]);
+      return [...sts].map((st) => {
+        const mv = viewOf1("returned", st, natlCounties.returned?.[st], natlAdj.returned?.[st] ?? null, natlCounties.requested?.[st]);
+        const ev = viewOf1("inperson", st, natlCounties.inperson?.[st], natlAdj.inperson?.[st] ?? null, null);
+        const mail = fromView(mv, natl.returned?.regions[st]), early = fromView(ev, natl.inperson?.regions[st]);
+        const n = mail.n + early.n;
+        return { key: st, label: STATE_NAME[st] ?? st, st, fips: null, mail, early, estShare: n > 0 ? (mail.u + early.u) / n : 0 };
+      });
+    }
+    const names = new Set([...Object.keys(parts.returned?.regions ?? {}), ...Object.keys(parts.inperson?.regions ?? {})]);
+    const one = (c: Category, name: string): P3 & { u: number } => {
+      const x = split(parts[c]?.regions[name]);
+      const e = est && "parts" in est ? (est as { parts?: Partial<Record<Category, Record<string, Estimate>>> }).parts?.[c]?.[name] : undefined;
+      if (e && x.u > 0) return { d: x.d + e.d * x.u, r: x.r + e.r * x.u, o: x.o + e.i * x.u, n: x.d + x.r + x.o + x.u, u: x.u };
+      return { d: x.d, r: x.r, o: x.o + x.u, n: x.d + x.r + x.o + x.u, u: x.u };
+    };
+    return [...names].map((name) => {
+      const mail = one("returned", name), early = one("inperson", name); const n = mail.n + early.n;
+      return { key: name, label: name, st: scope, fips: fipsOf[name] ?? null, mail, early, estShare: n > 0 ? (mail.u + early.u) / n : 0 };
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [cat, model, scope, natl, natlCounties, natlAdj, parts, est, fipsOf, countyNames, tilt]);
 
   const fillRow = (key: string, row: RegionRow) => {
     const m = marginFor(key, row);
@@ -636,8 +699,17 @@ export default function EarlyVoteDesk() {
     return vol ? turnoutFill(vol.t(sumRow(row))) : "var(--ev-nodata)";
   };
   /** the margin a place is rated on: reported party, else the TPSI estimate when it is shown */
+  // In the total a county can report party on one part and not the other, so its
+  // margin is the reported ballots plus the estimate of the rest, over all of them.
+  const mixed = (key: string, row: RegionRow) => {
+    const e = est?.byKey[key]; if (!e) return null;
+    let d = 0, r = 0, n = 0;
+    for (const [g, b] of Object.entries(row)) { const v = b?.votes ?? 0; n += v; if (g === "Democratic") d += v; else if (g === "Republican") r += v; }
+    return n > 0 ? { m: ((r + e.r * e.votes - d - e.d * e.votes) / n) * 100, share: e.votes / n } : null;
+  };
   const marginFor = (key: string, row: RegionRow): number | null => {
     if (scope === "US" && showEst && views[key]) return views[key]!.margin;
+    if (cat === "total" && showEst) { const x = mixed(key, row); if (x) return x.m; }
     const m = marginOf(row);
     if (m !== null) return m;
     const e = est?.byKey[key];
@@ -645,14 +717,15 @@ export default function EarlyVoteDesk() {
   };
   const hatched = (key: string, row: RegionRow) => showEst && (scope === "US"
     ? (views[key]?.estShare ?? 0) >= 0.5
+    : cat === "total" ? (mixed(key, row)?.share ?? 0) >= 0.5
     : marginOf(row) === null && !!est?.byKey[key]);
 
   const national = scope === "US";
-  const catMeta = CATEGORIES.find((c) => c.key === cat)!;
+  const catMeta = VIEWS.find((c) => c.key === cat)!;
 
   return (
     <div className="opp ev-page">
-      <style>{CSS}</style>
+      <style>{CSS + ELECTORATE_CSS}</style>
 
       <div className="ev-shell">
         <nav className="crumbs" aria-label="Breadcrumb">
@@ -678,19 +751,11 @@ export default function EarlyVoteDesk() {
         {/* category */}
         <div className="ev-controls">
           <div className="ev-seg" role="tablist" aria-label="Ballot category">
-            {CATEGORIES.map((c) => (
+            {VIEWS.map((c) => (
               <button key={c.key} role="tab" aria-selected={cat === c.key}
                 className={cat === c.key ? "on" : ""} onClick={() => setCat(c.key)}>{c.label}</button>
             ))}
           </div>
-          {available.length > 1 ? (
-            <div className="ev-seg sm" role="tablist" aria-label="Breakdown">
-              {available.map((d) => (
-                <button key={d.key} role="tab" aria-selected={dim === d.key}
-                  className={dim === d.key ? "on" : ""} onClick={() => setDim(d.key)}>{d.label}</button>
-              ))}
-            </div>
-          ) : null}
         </div>
 
         {loading ? (
@@ -743,7 +808,7 @@ export default function EarlyVoteDesk() {
             </section>
 
             {national && model ? (
-              <NationalCombined combined={combined} loaded={natl} cat={cat} setCat={setCat} tilt={tilt} />
+              <NationalCombined combined={combined} loaded={natlAll} cat={cat} setCat={setCat} tilt={tilt} />
             ) : null}
 
             {someNoParty && est?.total ? (
@@ -751,29 +816,13 @@ export default function EarlyVoteDesk() {
                 ? `Across the ${noPartyRows.length} ${noPartyRows.length === 1 ? "state that reports" : "states that report"} every ballot as Unspecified.`
                 : allNoParty ? `${STATE_NAME[scope] ?? scope} reports every ballot as Unspecified.`
                 : `Across the ${noPartyRows.length} ${noPartyRows.length === 1 ? "county that reports" : "counties that report"} every ballot as Unspecified.`}
-                mode={modeOf(cat)} model={model!} tilt={tilt} shade={shade} setShade={setShade}
+                mode={cat === "total" ? "returned" : modeOf(cat)} model={model!} tilt={tilt} shade={shade} setShade={setShade}
                 st={national ? null : scope} adj={national ? null : adj} />
             ) : null}
 
-            {/* the chosen breakdown, when it is not the party columns already shown */}
-            {demo && dim !== "party" ? (
-              <section className="ev-demo">
-                <h2 className="ev-h2">by {dim}</h2>
-                <div className="ev-demo-rows">
-                  {Object.entries(demo.values)
-                    .filter(([, v]) => v > 0)
-                    .sort((a, b) => b[1] - a[1])
-                    .map(([k, v]) => (
-                      <div key={k} className="ev-demo-row">
-                        <span className="k">{k}</span>
-                        <span className="track"><i style={{ width: `${(v / Math.max(1, demo.total)) * 100}%` }} /></span>
-                        <span className="v">{commas(v)}</span>
-                        <span className="p">{pct(v, demo.total)}</span>
-                      </div>
-                    ))}
-                </div>
-              </section>
-            ) : null}
+            {cat === "total" ? <Electorate scope={scope} units={units} model={model} snapshot={data.snapshot_date} onOpen={(k) => setScope(k)} /> : null}
+
+            <EarlyDemographics scope={scope} cat={cat} caps={caps} model={model} catLabel={catMeta.blurb} />
 
             {/* the map */}
             <section className="ev-mapwrap">
@@ -930,12 +979,12 @@ export default function EarlyVoteDesk() {
                         ))}
                         <td className="num tot">{commas(n)}</td>
                         {showEst ? (() => {
-                          const e = marginOf(row) === null ? est?.byKey[name] : undefined;
+                          const e = marginOf(row) === null || cat === "total" ? est?.byKey[name] : undefined;
                           if (!e) return <><td className="num">—</td><td className="num">—</td><td className="num">—</td><td className="num">—</td></>;
                           return <>
-                            <td className="num est">{commas(e.d * n)}</td>
-                            <td className="num est">{commas(e.r * n)}</td>
-                            <td className="num est">{commas(e.i * n)}</td>
+                            <td className="num est">{commas(e.d * e.votes)}</td>
+                            <td className="num est">{commas(e.r * e.votes)}</td>
+                            <td className="num est">{commas(e.i * e.votes)}</td>
                             <td className="num est mg" style={{ color: e.margin > 0 ? "var(--gop)" : "var(--dem)" }}>{fmtMargin(e.margin)}</td>
                           </>;
                         })() : null}
@@ -1168,14 +1217,6 @@ table.ev-table td.rt { white-space: nowrap; }
 
 .ev-h2 { font-family: var(--font-d); font-size: 16px; font-weight: 700; letter-spacing: -0.01em; color: #fff; }
 
-.ev-demo { margin-top: 34px; }
-.ev-demo-rows { margin-top: 14px; display: grid; gap: 9px; }
-.ev-demo-row { display: grid; grid-template-columns: minmax(120px,1.1fr) 3fr auto auto; align-items: center; gap: 14px; font-size: 13.5px; }
-.ev-demo-row .k { color: var(--ink); }
-.ev-demo-row .track { height: 10px; border-radius: 99px; background: rgba(var(--line-rgb),0.07); overflow: hidden; }
-.ev-demo-row .track i { display: block; height: 100%; background: var(--ink2); }
-.ev-demo-row .v { font-family: ${MONO}; font-weight: 700; font-variant-numeric: tabular-nums; }
-.ev-demo-row .p { font-family: ${MONO}; font-size: 11.5px; color: var(--muted2); min-width: 52px; text-align: right; }
 
 .ev-tablewrap { margin-top: 38px; }
 .ev-tablehead { display: flex; align-items: baseline; justify-content: space-between; gap: 14px; }
@@ -1264,7 +1305,5 @@ table.ev-table td.mg { font-style: normal; font-family: ${MONO}; font-weight: 70
 
 @media (max-width: 760px) {
   .ev-top-n span { margin-left: 0; width: 100%; }
-  .ev-demo-row { grid-template-columns: minmax(90px,1fr) 2fr auto; }
-  .ev-demo-row .p { display: none; }
-}
+    }
 `;

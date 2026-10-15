@@ -65,7 +65,7 @@ const strip = (s: string) =>
     .replace(/\s+/g, " ")
     .trim();
 
-export function parseCountyTable(html: string): { counties: CountyTurnout[]; statewide: CountyTurnout | null } {
+function parseCountyTable(html: string): { counties: CountyTurnout[]; statewide: CountyTurnout | null } {
   const table = html.match(/<table[^>]*class="[^"]*data-table[^"]*"[^>]*>([\s\S]*?)<\/table>/i);
   if (!table) return { counties: [], statewide: null };
 
