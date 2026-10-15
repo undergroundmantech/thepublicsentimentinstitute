@@ -47,6 +47,7 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "MN-SEN-2026", "pollster": "GQR (D)", "startDate": "2026-10-01", "endDate": "2026-10-04", "sampleSize": 800, "sampleType": "LV", "results": {"Peggy Flanagan (D)": 53.0, "Michele Tafoya (R)": 44.0, "Undecided": 3.0}},
     {"raceId": "MN-SEN-2026", "pollster": "Mason-Dixon for the Star Tribune", "startDate": "2026-10-05", "endDate": "2026-10-07", "sampleSize": 800, "sampleType": "LV", "results": {"Peggy Flanagan (D)": 47.0, "Michele Tafoya (R)": 43.0, "Undecided": 10.0}, "notes": "Field dates read from 10/5-7 as supplied."},
     {"raceId": "MN-SEN-2026", "pollster": "Morning Consult", "startDate": "2026-10-02", "endDate": "2026-10-07", "sampleSize": 1000, "sampleType": "RV", "results": {"Peggy Flanagan (D)": 45.0, "Michele Tafoya (R)": 41.0, "Undecided": 14.0}},
-    {"raceId": "MN-SEN-2026", "pollster": "Rasmussen Reports (R)", "startDate": "2026-10-05", "endDate": "2026-10-07", "sampleSize": 856, "sampleType": "LV", "results": {"Peggy Flanagan (D)": 48.0, "Michele Tafoya (R)": 45.0, "Undecided": 7.0}}
+    {"raceId": "MN-SEN-2026", "pollster": "Rasmussen Reports (R)", "startDate": "2026-10-05", "endDate": "2026-10-07", "sampleSize": 856, "sampleType": "LV", "results": {"Peggy Flanagan (D)": 48.0, "Michele Tafoya (R)": 45.0, "Undecided": 7.0}},
+    {"raceId": "MN-SEN-2026", "pollster": "KSTP/SurveyUSA", "startDate": "2026-10-08", "endDate": "2026-10-12", "sampleSize": 650, "sampleType": "LV", "results": {"Peggy Flanagan (D)": 45.0, "Michele Tafoya (R)": 42.0, "Undecided": 13.0}, "notes": "The release gives its numbers in charts without a sample size, so 650 is a placeholder near the last two KSTP/SurveyUSA samples."}
   ],
 };

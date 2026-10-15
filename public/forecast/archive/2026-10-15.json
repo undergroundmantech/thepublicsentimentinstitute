@@ -1,15 +1,15 @@
 {
  "date": "2026-10-15",
- "statewide_run": "/tmp/fc_v123",
+ "statewide_run": "/tmp/fc_v124",
  "house_run": "/tmp/house_v61",
  "n_sims": 2000,
  "chambers": {
   "senate": {
-   "d_control": 81.75,
+   "d_control": 81.4,
    "d_seats_median": 53.0,
    "p10": 49.0,
    "p90": 56.0,
-   "d_control_without_osborn": 77.3
+   "d_control_without_osborn": 76.75
   },
   "governors": {
    "d_majority": 89.85,
@@ -30,27 +30,27 @@
    "office": "senate",
    "n_sims": 2000,
    "margin": 0.19,
-   "win_d": 50.6,
-   "p10": -6.41,
-   "p90": 7.04,
-   "deterministic_margin": 0.11875367840389485,
+   "win_d": 50.7,
+   "p10": -6.48,
+   "p90": 6.81,
+   "deterministic_margin": 0.3562833689152338,
    "n_polls": 24,
    "poll_house_index": 5.0,
    "poll_avg": {
-    "D": 48.89351234972289,
-    "R": 48.006487650277116,
+    "D": 49.070322992388455,
+    "R": 47.82967700761155,
     "O": 0.0,
-    "D2": 0.5045770108330535,
-    "third": 0.05345911949685534,
+    "D2": 0.5064016820679923,
+    "third": 0.053571428571428575,
     "first_choice": {
-     "D": 45.2,
-     "R": 45.1,
+     "D": 45.1,
+     "R": 45.0,
      "Dan J. Sullivan": 3.5,
      "Gerald Heikes": 1.6
     },
     "first_choice_share": {
-     "Dan J. Sullivan": 0.03668763102725367,
-     "Gerald Heikes": 0.016771488469601678
+     "Dan J. Sullivan": 0.03676470588235294,
+     "Gerald Heikes": 0.016806722689075633
     },
     "method": "daily",
     "psi": {
@@ -62,10 +62,10 @@
     "lowess": {
      "n": 24,
      "imputed": 0,
-     "recent": 1.43302624707136,
-     "balanced": 0.4363273436856978,
-     "long": 0.5230236676953928,
-     "eday_margin": 0.8870246994457797,
+     "recent": 1.7699772816470332,
+     "balanced": 0.7484358433906564,
+     "long": 0.8877584535301442,
+     "eday_margin": 1.2406459847768998,
      "newest": "2026-10-09"
     }
    },
@@ -419,45 +419,45 @@
   "CTG": {
    "office": "governor",
    "n_sims": 2000,
-   "margin": 17.24,
-   "win_d": 99.3,
-   "p10": 9.3,
-   "p90": 25.03,
-   "deterministic_margin": 17.501476471178172,
-   "n_polls": 8,
-   "poll_house_index": 3.0,
+   "margin": 15.08,
+   "win_d": 98.85,
+   "p10": 7.42,
+   "p90": 22.68,
+   "deterministic_margin": 15.539348082567102,
+   "n_polls": 9,
+   "poll_house_index": 4.0,
    "poll_avg": {
-    "D": 56.91326247213843,
-    "R": 37.98673752786158,
-    "O": 0.2,
-    "D2": 0.5997182557654207,
-    "third": 0.002103049421661409,
+    "D": 54.03764499963099,
+    "R": 38.76235500036902,
+    "O": 0.1,
+    "D2": 0.5823022090477477,
+    "third": 0.001076426264800861,
     "method": "daily",
     "psi": {
-     "D": 56.4,
-     "R": 38.5,
-     "D2": 0.5943097997892518
+     "D": 54.6,
+     "R": 38.2,
+     "D2": 0.5883620689655172
     },
     "poll_level": "lowess",
     "lowess": {
-     "n": 8,
+     "n": 9,
      "imputed": 0,
-     "recent": 18.92652494427685,
-     "balanced": 18.92652494427685,
-     "long": 18.926524944276846,
-     "eday_margin": 18.92652494427685,
-     "newest": "2026-10-10"
+     "recent": 13.771409171994122,
+     "balanced": 16.082227801087104,
+     "long": 16.277877217440544,
+     "eday_margin": 15.275289999261975,
+     "newest": "2026-10-11"
     }
    },
    "spread_calibration": {
-    "k": 1.05,
+    "k": 1.02,
     "ref_total": 0.117,
     "national_vote_share_before": 0.199,
     "corr_nat_f": 0.5,
     "sig_region": 0.02,
     "rho_scale": 0.5,
     "own_before": 0.0849,
-    "own_after": 0.1025,
+    "own_after": 0.0983,
     "tail_df": 5.0
    }
   },
@@ -1397,34 +1397,34 @@
   "MN": {
    "office": "senate",
    "n_sims": 2000,
-   "margin": 9.97,
-   "win_d": 96.9,
-   "p10": 3.41,
-   "p90": 16.53,
-   "deterministic_margin": 10.058556621021175,
-   "n_polls": 12,
+   "margin": 8.13,
+   "win_d": 93.35,
+   "p10": 1.47,
+   "p90": 14.7,
+   "deterministic_margin": 8.358769505127064,
+   "n_polls": 13,
    "poll_house_index": 6.5,
    "poll_avg": {
-    "D": 48.444331005080684,
-    "R": 43.65566899491931,
+    "D": 47.24939631313437,
+    "R": 44.75060368686563,
     "O": 1.8,
-    "D2": 0.525997079316837,
-    "third": 0.01916932907348243,
+    "D2": 0.5135803947079822,
+    "third": 0.019189765458422176,
     "method": "daily",
     "psi": {
-     "D": 47.9,
+     "D": 47.8,
      "R": 44.2,
-     "D2": 0.5200868621064061
+     "D2": 0.5195652173913043
     },
     "poll_level": "lowess",
     "lowess": {
-     "n": 12,
+     "n": 13,
      "imputed": 0,
-     "recent": 4.822363855720056,
-     "balanced": 4.241642681145829,
-     "long": 4.766194113122264,
-     "eday_margin": 4.788662010161381,
-     "newest": "2026-10-06"
+     "recent": 2.428647712254559,
+     "balanced": 2.4776474028677473,
+     "long": 2.5455559022781946,
+     "eday_margin": 2.4987926262687403,
+     "newest": "2026-10-10"
     }
    },
    "spread_calibration": {
@@ -1442,24 +1442,24 @@
   "MNG": {
    "office": "governor",
    "n_sims": 2000,
-   "margin": 16.87,
-   "win_d": 99.6,
-   "p10": 9.6,
-   "p90": 23.68,
-   "deterministic_margin": 16.775739781977833,
-   "n_polls": 6,
+   "margin": 16.22,
+   "win_d": 99.35,
+   "p10": 8.8,
+   "p90": 23.65,
+   "deterministic_margin": 16.307634827507975,
+   "n_polls": 7,
    "poll_house_index": 4.0,
    "poll_avg": {
-    "D": 48.7,
-    "R": 41.1,
-    "O": 3.7,
-    "D2": 0.542316258351893,
-    "third": 0.03957219251336898,
+    "D": 48.3,
+    "R": 41.2,
+    "O": 2.3,
+    "D2": 0.5396648044692737,
+    "third": 0.02505446623093682,
     "method": "daily",
     "psi": {
-     "D": 48.7,
-     "R": 41.1,
-     "D2": 0.542316258351893
+     "D": 48.3,
+     "R": 41.2,
+     "D2": 0.5396648044692737
     },
     "poll_level": "psi",
     "lowess": null
