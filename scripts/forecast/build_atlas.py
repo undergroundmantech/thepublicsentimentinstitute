@@ -31,14 +31,14 @@ UP = "/root/.claude/uploads/2fe66b6b-24b4-5fab-b0f7-c44b6f59cc0e"
 E = lambda k, d: os.environ.get(k, d)
 FEATURES = E("FEATURES", "/tmp/covx/county_features.csv")
 COVARS = E("COVARS", f"{UP}/675891cf-county_covariates.csv")
-GAS = E("GAS", f"{UP}/ceb9f930-aaa_county_gas_2026-10-14.csv")
+GAS = E("GAS", f"{UP}/72a1ecf2-aaa_county_gas_2026-10-15.csv")
 LOCAL = E("LOCAL", "/tmp/covx/county_local_shift.csv")
 SEGS = E("SEGS", "/tmp/seg/county_segments_cal.csv")
 DCPTS = E("DCPTS", f"{UP}/6b2b7c1d-datacenter_points.csv")
 ZIPC = E("ZIPC", "/tmp/covx/zip_county.csv")
 FCDIR = E("FCDIR", "/tmp/fc_v116")
 DCT = E("DCTERM", "/tmp/dcx/dc_term.csv")
-GST = E("GASTERM", "/tmp/gasx/gas_term.csv")
+GST = E("GASTERM", "/tmp/gasx2/gas_term.csv")
 GEO = E("GEODIR", "/tmp/claude-0/-home-claude/2fe66b6b-24b4-5fab-b0f7-c44b6f59cc0e/scratchpad/geo")
 PRES24 = E("PRES24", "")
 
@@ -113,9 +113,10 @@ LAYERS = [
     # key, label, unit, kind (div = diverging R/D, seq = sequential), palette, note
     ("p24", "2024 presidential margin", "pts", "div", "party", "Trump against Harris, certified county results"),
     ("gas", "Gas price", "$", "seq", "fuel", "AAA average regular unleaded, county"),
+    ("gasr", "Gas price rise", "$", "seq", "fuel", "Rise in regular gas since Oct 2025: the county's AAA price over the nearest metro's year ago change within 50 km, else the state's"),
     ("dc", "Data centers", "sites", "seq", "grid", "Mapped data center sites in the county"),
-    ("dcx", "Data center pull", "pts", "div", "party", "How far nearby and planned data centers move the county margin, from the Economist and YouGov distance curve at half strength"),
-    ("gasx", "Gas strain pull", "pts", "div", "party", "How far the county gas price moves the margin through financially strained voters, from the TPSI data at 0.6 strength"),
+    ("dcx", "Data center pull", "pts", "div", "party", "How far nearby and planned data centers move the county margin, from the Economist and YouGov distance curve, scaled to three quarters of the 6.3 point gap measured within 2 km today"),
+    ("gasx", "Gas price rise pull", "pts", "div", "party", "How far the county's gas price rise since Oct 2025, against the national rise, moves the margin through financially strained voters, at 0.6 strength"),
     ("emp", "Job growth", "%", "div", "growth", "Total employment change, year over year, QCEW"),
     ("wage", "Wage growth", "%", "div", "growth", "Average weekly wage change, year over year, QCEW"),
     ("tariff", "Tariff exposure", "index", "seq", "heat", "Manufacturing and farm employment exposed to tariffs"),
@@ -156,10 +157,11 @@ def layer_row(f):
         r["dcx"] = -2.0 * float(DCX.loc[f, "d2_shift_pts"])   # GOP positive margin points
     if f in GSX.index:
         r["gasx"] = -2.0 * float(GSX.loc[f, "d2_shift_pts"])   # GOP positive margin points
+        if "gas_rise" in GSX.columns: r["gasr"] = float(GSX.loc[f, "gas_rise"])
     if f in L.index:
         t = 1.5 * float(L.loc[f, "within"]) + float(L.loc[f, "state_part"])
         r["loc"] = -100 * (2 * inv(t) - 1)  # GOP positive, like every margin on the site
-    return [rnd(r.get(k), 3 if k == "tariff" else (3 if k == "gas" else 1)) for k in KEYS]
+    return [rnd(r.get(k), 3 if k == "tariff" else (3 if k in ("gas", "gasr") else 1)) for k in KEYS]
 
 
 # ---------- geometry: state frame to national frame ----------
@@ -237,7 +239,7 @@ for st in STATES:
         ok = ~np.isnan(v)
         if not ok.any():
             out.append(None); continue
-        out.append(rnd(v[ok].sum() if k == "dc" else np.average(v[ok], weights=w[ok]), 3 if k in ("gas", "tariff") else 1))
+        out.append(rnd(v[ok].sum() if k == "dc" else np.average(v[ok], weights=w[ok]), 3 if k in ("gas", "gasr", "tariff") else 1))
     summ[st] = out
 
 res = dict(

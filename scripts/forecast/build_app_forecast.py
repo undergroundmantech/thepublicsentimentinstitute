@@ -238,6 +238,15 @@ def statewide(page, office, prefix):
         inc = incumbency(seat, open_seat, dem, gop)
         pavg = v.get("poll_avg", {})
         pa = None if v["n_polls"] == 0 or pavg.get("D2") is None else round(100 - 200 * pavg["D2"], 2)
+        if key == "AKG" and pa is not None:
+            # Oct 15 2026: Alaska governor polls are first choice splits, Kreiss-Tomkins against the whole Republican bloc,
+            # while the forecast is the final round. The poll average is carried to the final round the same way the model
+            # counts it: the two Republicans eliminated first hold 0.606 of the bloc, their ballots go 70 percent to Wilson,
+            # 8 percent to Kreiss-Tomkins and 22 percent exhaust.
+            def _akfinal(d2, f=(13349 + 11924) / (13349 + 11924 + 16456), to_d=0.08, ex=0.22):
+                o = f * (1 - d2); return (d2 + to_d * o) / (1 - ex * o)
+            pavg = dict(pavg, D2=_akfinal(pavg["D2"]), psi=dict(pavg.get("psi", {}), D2=_akfinal(pavg["psi"]["D2"])) if pavg.get("psi", {}).get("D2") else pavg.get("psi", {}))
+            pa = round(100 - 200 * pavg["D2"], 2)
         # Since Sept 28 2026 the polling level is the LOWESS Election Day polling average wherever a race
         # has 8 or more polls. The desk labels which one fed the race and keeps the PSI average beside it.
         plevel = pavg.get("poll_level", "psi")

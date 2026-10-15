@@ -63,6 +63,17 @@ const SECTIONS: { id: string; eye: string; title: string; body: ReactNode }[] = 
     ),
   },
   {
+    id: "local", eye: "Step 4b", title: "Local conditions, gas, data centers and coalitions",
+    body: (
+      <>
+        <p>Gallup party identification runs at full strength as its own leg of every Senate and governor forecast, at least 40 percent of the blend and 60 percent of each state&rsquo;s House fundamentals level: each county&rsquo;s certified 2024 vote is moved by the TPSI demographic swing and by its own elasticity to Gallup&rsquo;s 50 Democratic to 39 Republican. Applied the same way, Gallup&rsquo;s third quarter 2025 reading called Virginia&rsquo;s and New Jersey&rsquo;s 2025 governor races within about a point, where the final polling averages were 5 to 10 points short. Those were open seats, so where an incumbent governor is running the Gallup leg follows the national environment at 0.6 like the other legs, and in a governor race with 10 or more polls its floor is 30 percent.</p>
+        <p>Gas counts by how much prices have risen since October 2025, not by how high they are. Each county&rsquo;s rise is its AAA price today against a year earlier, through the nearest metro&rsquo;s change within 50 kilometers or its state&rsquo;s: about $1.27 a gallon nationally, from about 91 to 93 cents in Oregon, North Carolina and Georgia to $1.71 in Michigan. Everyone is paying more, and that national rise is already in the polls; the term says where the squeeze is worst. In counties with the steepest rise, Trump 2024 voters who call their finances difficult move toward Democrats and strained Harris voters hold, at 0.6 of the size fitted on the TPSI data.</p>
+        <p>Data centers have their own term. The Economist and YouGov track the generic ballot by distance to the nearest data center, and people within 2 kilometers now vote 6.3 points more Democratic than people farther away, up from almost no gap in January 2025. The model moves the voters of each ZIP code near an operating or planned site by three quarters of that measured gap, carried to counties and districts, with governors at 1.15 times since siting and power rates are state decisions. In governor races the statewide data center and gas pushes together are held within 2 points.</p>
+        <p>Each nominee&rsquo;s coalition is read from the 2026 county primary results with the census. Where the top challenger beat the nominee among a group of voters, the nominee&rsquo;s own party voters in that group defect and stay home more in November, and an incumbent&rsquo;s personal vote is placed by the groups that carried them before. A runoff winner is read on the average of the first round and the runoff.</p>
+      </>
+    ),
+  },
+  {
     id: "sims", eye: "Step 5", title: "2,000 correlated simulations",
     body: (
       <>

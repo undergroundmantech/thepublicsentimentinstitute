@@ -55,14 +55,14 @@ const TOUR = ["GA", "MI", "NC", "ME", "IA", "TX", "OH", "AZ", "WI", "PA", "NV", 
 const GROUPS: { name: string; keys: string[] }[] = [
   { name: "Forecast", keys: ["fc", "shift", "turn", "loc"] },
   { name: "Voters", keys: ["p24", "lpT", "lpH"] },
-  { name: "Economy", keys: ["gas", "gasx", "emp", "wage", "tariff"] },
+  { name: "Economy", keys: ["gas", "gasr", "gasx", "emp", "wage", "tariff"] },
   { name: "Data centers", keys: ["dc", "dcx"] },
   { name: "Places", keys: ["popg", "mig", "rural", "evang", "news"] },
 ];
 const SHORT: Record<string, string> = {
   fc: "Forecast", shift: "Swing from 2024", turn: "Turnout", loc: "Local conditions", p24: "2024 result",
   lpT: "Low prop. Trump", lpH: "Low prop. Harris", gas: "Gas price", emp: "Job growth", wage: "Wage growth",
-  tariff: "Tariff exposure", dc: "Data centers", dcx: "Data center pull", gasx: "Gas strain pull", popg: "Population growth", mig: "Immigration", rural: "Rurality",
+  tariff: "Tariff exposure", dc: "Data centers", dcx: "Data center pull", gasr: "Gas price rise", gasx: "Gas price rise pull", popg: "Population growth", mig: "Immigration", rural: "Rurality",
   evang: "Evangelical", news: "Local news",
 };
 
@@ -109,6 +109,7 @@ function fmtVal(key: string, v: Num): string {
     case "fc": case "p24": case "loc": case "dcx": case "gasx": return fmtMargin(v);
     case "shift": return Math.abs(v) < 0.05 ? "No swing" : `${v > 0 ? "R" : "D"}+${Math.abs(v).toFixed(1)} swing`;
     case "gas": return `$${v.toFixed(2)}`;
+    case "gasr": return `+$${v.toFixed(2)}`;
     case "dc": return v === 1 ? "1 site" : `${commas(v)} sites`;
     case "emp": case "wage": case "popg": return `${v > 0 ? "+" : ""}${v.toFixed(1)}%`;
     case "tariff": return v.toFixed(2);
