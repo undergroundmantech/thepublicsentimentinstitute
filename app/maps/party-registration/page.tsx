@@ -54,7 +54,7 @@ const FIPS: Record<string, string> = {
 
 const PCOL: Record<"DEM" | "REP" | "UNA", string> = { DEM: "#3d7bff", REP: "#ff3b5c", UNA: "#a39cb8" };
 const OTH_C = "#5f5873";      // --mute2, other parties
-const NOPARTY_C = "#3a3448";  // a state that does not record party
+const NOPARTY_C = "var(--pr-noparty)";  // a state that does not record party
 const PWORD: Record<"DEM" | "REP" | "UNA", string> = { DEM: "Democratic", REP: "Republican", UNA: "Unaffiliated" };
 // per-party [light, deep] ramps — the light end is still a clearly-readable
 // party hue so even a razor-thin plurality reads as its color, not grey.
@@ -63,7 +63,6 @@ const RAMP: Record<"DEM" | "REP" | "UNA", [number[], number[]]> = {
   REP: [[255, 179, 192], [140, 10, 40]],
   UNA: [[214, 208, 228], [95, 88, 115]],
 };
-const GREY: [number[], number[]] = [[92, 86, 110], [58, 52, 72]];
 
 const STATES_URL   = "https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json";
 const COUNTIES_URL = "https://cdn.jsdelivr.net/npm/us-atlas@3/counties-10m.json";
@@ -84,6 +83,7 @@ function partyMargin(p: Party): number {
 const intensity = (m: number) => clamp(0.42 + (m / 0.4) * 0.58, 0.42, 1);
 function ink(fill: string): string {
   const m = fill.match(/\d+/g);
+  if (fill.includes("var(")) return "var(--pr-lab-lo)";
   if (!m || m.length < 3) return "rgba(255,255,255,0.85)";
   const [r, g, b] = m.map(Number);
   return (0.299 * r + 0.587 * g + 0.114 * b) / 255 > 0.6 ? "#1a1030" : "rgba(255,255,255,0.9)";
@@ -298,8 +298,8 @@ export default function PartyMapPage() {
   }, []);
   // national county view: solid plurality color so every county clearly shows its party
   const fillCounty = useCallback((fips: string): string => {
-    const v = countyVals?.[fips]; if (!v) return "rgba(255,255,255,0.08)";
-    return v.p ? PCOL[v.p] : lerp(GREY[0], GREY[1], 0.4);
+    const v = countyVals?.[fips]; if (!v) return "rgba(128,120,150,0.16)";
+    return v.p ? PCOL[v.p] : "var(--pr-noparty)";
   }, [countyVals]);
   const fillIso = useCallback((fips: string): string => {
     const u = detailByFips[fips];
@@ -309,7 +309,7 @@ export default function PartyMapPage() {
     if (v && v.p) return PCOL[v.p];
     // town / district states (NH, CT, RI, AK): no county-level rolls — show the statewide plurality
     if (iso?.plurality) return PCOL[iso.plurality];
-    return "rgba(255,255,255,0.08)";
+    return "rgba(128,120,150,0.16)";
   }, [detailByFips, countyVals, iso]);
 
   // ── tooltip builders ──
@@ -535,6 +535,8 @@ export default function PartyMapPage() {
 }
 
 const CSS = `
+:root { --pr-noparty:#3a3448; --pr-lab-lo:rgba(255,255,255,.88); }
+:root[data-theme="light"] { --pr-noparty:#d6d1e0; --pr-lab-lo:#1a1030; }
 .pm-page { color: var(--ink); }
 .pm-stack { display: grid; gap: 16px; }
 .pm-beam { display: flex; gap: 2px; height: 12px; border-radius: 999px; overflow: hidden; }
@@ -555,7 +557,7 @@ const CSS = `
 .opp .pm-a { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
 .pm-tip { position: fixed; z-index: 99999; pointer-events: none; padding: 11px 13px; border-radius: 10px;
   background: rgba(var(--bg2-rgb),.94); border: 1px solid var(--line2); border-left: 3px solid var(--line2);
-  box-shadow: 0 12px 40px rgba(0,0,0,.5); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  box-shadow: var(--shadow-md, 0 12px 40px rgba(0,0,0,.5)); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
   font-family: var(--font-b); color: var(--ink2); }
 .pm-tip-top { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
 .pm-tip-top b { font: 700 14px var(--font-d); color: var(--hi); }

@@ -41,27 +41,19 @@ interface Geo { key: string; d: string; cx?: number; cy?: number; abbr?: string;
 const PCOL: Record<"DEM" | "REP" | "UNA", string> = { DEM: "#3d7bff", REP: "#ff3b5c", UNA: "#a39cb8" };
 const OTH_C = "#5f5873";
 const PWORD: Record<"DEM" | "REP" | "UNA", string> = { DEM: "Democratic", REP: "Republican", UNA: "Unaffiliated" };
-const DIM_NOREG = "#1c1626";     // North Dakota, no registration
-const DIM_NOPARTY = "#3a3448";   // state that doesn't record party (in party lens)
+const DIM_NOREG = "var(--vr-noreg)";     // North Dakota, no registration
+const DIM_NOPARTY = "var(--vr-noparty)";   // state that doesn't record party (in party lens)
 const STATES_URL = "https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json";
 const COUNTIES_URL = "https://cdn.jsdelivr.net/npm/us-atlas@3/counties-10m.json";
 
-// Registration size is not partisan, so its ramp is neutral: from the dark ground
-// through the brand mute greys to ink white, never a party colour or the lavender.
-const REG_STOPS: [number, [number, number, number]][] = [
-  [0.00, [38, 32, 52]], [0.25, [64, 57, 82]], [0.50, [95, 88, 115]],
-  [0.72, [142, 134, 163]], [0.88, [201, 194, 214]], [1.00, [243, 239, 248]],
-];
+// Registration size is not partisan, so its ramp is neutral: from the ground
+// through the brand mute greys to ink, never a party colour or the lavender.
+// Theme aware: the ramp runs from the ground toward ink, so more voters always
+// reads as more contrast, dark on light and light on dark.
 function rampReg(t: number): string {
   t = Math.max(0, Math.min(1, t));
-  for (let i = 1; i < REG_STOPS.length; i++) {
-    if (t <= REG_STOPS[i][0]) {
-      const [t0, c0] = REG_STOPS[i - 1], [t1, c1] = REG_STOPS[i];
-      const f = (t - t0) / (t1 - t0 || 1);
-      return `rgb(${c0.map((v, j) => Math.round(v + (c1[j] - v) * f)).join(",")})`;
-    }
-  }
-  return `rgb(${REG_STOPS[REG_STOPS.length - 1][1].join(",")})`;
+  const p = Math.round(100 * Math.pow(t, 1.8));
+  return `color-mix(in srgb, var(--vr-hi) ${p}%, var(--vr-lo))`;
 }
 const logNorm = (v: number, min: number, max: number) =>
   max <= min ? 0.5 : (Math.log(Math.max(v, 1)) - Math.log(Math.max(min, 1))) / (Math.log(max) - Math.log(Math.max(min, 1)));
@@ -244,13 +236,13 @@ export default function VoterRegistrationPage() {
   }, [lens, stateDomain]);
   const fillCounty = useCallback((fips: string): string => {
     const v = countyVals?.[fips];
-    if (!v) return "#14171f";
+    if (!v) return "var(--vr-nodata)";
     if (lens === "party") return v.p ? PCOL[v.p] : DIM_NOPARTY;
     return rampReg(logNorm(v.r, countyDomain[0], countyDomain[1]));
   }, [countyVals, lens, countyDomain]);
   const fillIso = useCallback((fips: string): string => {
     const u = detail?.counties.find(c => c.fips === fips);
-    if (!u || u.total == null) return "#1a1e2a";
+    if (!u || u.total == null) return "var(--vr-nodata)";
     if (lens === "party") return u.plurality ? PCOL[u.plurality] : DIM_NOPARTY;
     return rampReg(logNorm(u.total, isoDomain[0], isoDomain[1]));
   }, [detail, lens, isoDomain]);
@@ -320,7 +312,7 @@ export default function VoterRegistrationPage() {
     const top = [...summary].filter(s => s.total).sort((a, b) => b.total! - a.total!);
     const shown = top.slice(0, 10); const rest = top.slice(10).reduce((s, x) => s + (x.total ?? 0), 0);
     const segs = shown.map((s, i) => ({ w: s.total!, c: rampReg(0.9 - i * 0.07), k: s.abbr, lab: s.name }));
-    if (rest > 0) segs.push({ w: rest, c: "#2a2338", k: "rest", lab: "all other states" });
+    if (rest > 0) segs.push({ w: rest, c: "var(--vr-noparty)", k: "rest", lab: "all other states" });
     return segs;
   }, [summary]);
 
@@ -666,16 +658,17 @@ function tipForUnit(u: DetailUnit | undefined, geoName: string, lens: Lens, rows
   };
 }
 function inkOn(fill: string, lens: Lens): string {
+  if (fill.includes("--vr-no")) return "var(--vr-lab-lo)";
   if (lens === "party") return "rgba(255,255,255,0.92)";
-  const m = fill.match(/\d+/g); if (!m) return "rgba(255,255,255,0.85)";
-  const [r, g, b] = m.map(Number);
-  const lum = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
-  return lum > 0.62 ? "#1a1030" : "rgba(255,255,255,0.9)";
+  const m = fill.match(/(\d+)%/);
+  return m && Number(m[1]) > 58 ? "var(--vr-lab-hi)" : "var(--vr-lab-lo)";
 }
 
 // ─── styles ──────────────────────────────────────────────────────────────────
 const CSS = `
-/* Dark only, on the On Point Politics tokens: glass cards, Geist and
+:root { --vr-lo:#262034; --vr-hi:#f3eff8; --vr-noreg:#1c1626; --vr-noparty:#3a3448; --vr-nodata:#1a1e2a; --vr-lab-hi:#1a1030; --vr-lab-lo:rgba(255,255,255,.9); }
+:root[data-theme="light"] { --vr-lo:#ebe7f3; --vr-hi:#2a1f40; --vr-noreg:#f1eff5; --vr-noparty:#d6d1e0; --vr-nodata:#eeecf2; --vr-lab-hi:#ffffff; --vr-lab-lo:#1a1030; }
+/* Both themes, on the On Point Politics tokens: glass cards, Geist and
    JetBrains Mono. Motion is reader driven only: no entry choreography. */
 .vr-page { position: relative; color: var(--ink); font-family: var(--font-b); font-size: 14px; padding-bottom: 70px; }
 
@@ -769,7 +762,7 @@ const CSS = `
 .vr-foot a { color:var(--ink); text-decoration:underline; text-underline-offset:3px; }
 
 /* dock */
-.vr-dock { position:fixed; left:50%; bottom:18px; transform:translateX(-50%); z-index:240; display:inline-flex; gap:2px; padding:3px; border-radius:999px; border:1px solid var(--line2); background:rgba(var(--bg2-rgb),.8); backdrop-filter:blur(18px) saturate(140%); -webkit-backdrop-filter:blur(18px) saturate(140%); box-shadow:0 12px 40px rgba(0,0,0,.45); font-family:var(--font-b) !important; }
+.vr-dock { position:fixed; left:50%; bottom:18px; transform:translateX(-50%); z-index:240; display:inline-flex; gap:2px; padding:3px; border-radius:999px; border:1px solid var(--line2); background:rgba(var(--bg2-rgb),.8); backdrop-filter:blur(18px) saturate(140%); -webkit-backdrop-filter:blur(18px) saturate(140%); box-shadow:0 12px 40px rgba(var(--canvas-rgb),.45); font-family:var(--font-b) !important; }
 .vr-dock-btn { padding:8px 18px; border:0; border-radius:999px; background:transparent; font:700 12px var(--font-b); color:var(--mute); cursor:pointer; transition:color .15s ease, background .15s ease; }
 .vr-dock-btn:hover { color:var(--hi); }
 .vr-dock-btn.is-on { background:var(--hi); color:var(--bg); }

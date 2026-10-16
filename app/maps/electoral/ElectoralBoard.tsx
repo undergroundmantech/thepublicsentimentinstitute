@@ -452,7 +452,7 @@ const CSS = `
 .eb-unit.hex { stroke-width: 1.2; }
 
 .eb-tip { position: fixed; z-index: 80; pointer-events: none; width: 236px; padding: 10px 12px; border-radius: 10px;
-  background: rgba(var(--bg2-rgb),.94); border: 1px solid var(--line2); box-shadow: 0 12px 40px rgba(0,0,0,.5); backdrop-filter: blur(10px); }
+  background: rgba(var(--bg2-rgb),.94); border: 1px solid var(--line2); box-shadow: var(--shadow-md); backdrop-filter: blur(10px); }
 .eb-tip .n { font: 700 13px var(--font-d); color: var(--hi); }
 .eb-tip .c { display: flex; align-items: center; gap: 9px; margin-top: 8px; }
 .eb-tip .c i { font-style: normal; padding: 3px 8px; border-radius: 6px; font-family: ${MONO}; font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }

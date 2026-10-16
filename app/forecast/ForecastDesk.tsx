@@ -1730,27 +1730,29 @@ function RaceSections({ race, byId, onPick, sims, updated, env }: {
 const CSS = `
 /* ── desk tokens, mapped onto the On Point Politics brand tokens ──────────────
    The desk keeps its own --fc-* names so the rules below stay readable, but
-   every one resolves to a brand token from app/globals.css. Dark only. */
+   every one resolves to a brand token from app/globals.css, in both themes. */
 .fc-page {
   --fc-bg: var(--bg);
-  --fc-bg-rgb: 10,7,17;
+  --fc-bg-rgb: var(--canvas-rgb);
   --fc-ink: var(--ink);
-  --fc-ink-rgb: 243,239,248;
-  --fc-line-rgb: 255,255,255;
+  --fc-ink-rgb: var(--ink-rgb);
+  --fc-line-rgb: var(--line-rgb);
   --fc-band: var(--glass);
   --fc-idle: rgba(var(--line-rgb),.06);
   --fc-idle-line: rgba(var(--canvas-rgb),.6);
   --fc-elev: rgba(var(--bg2-rgb),.94);
-  --fc-elev-shadow: 0 12px 40px rgba(0,0,0,.5);
+  --fc-elev-shadow: var(--shadow-md);
   --fc-dem: var(--dem2); --fc-dem-rgb: 61,123,255;
   --fc-gop: var(--gop2); --fc-gop-rgb: 255,59,92;
   --fc-accent: var(--ink);
   --fc-gold: var(--ink2); --fc-gold-rgb: 201,194,214;
+  /* light theme: the rgb triples above follow the page tokens */
   --fc-line: var(--line);
   --fc-ink-2: var(--ink2);
   --fc-mute: 1; --fc-floor: 0.13; --fc-struct: 1.25;
   position: relative; color: var(--ink); font-family: var(--font-b); font-size: 15px;
 }
+:root[data-theme="light"] .fc-page, :root[data-theme="light"] .fc-tip { --fc-floor: 0.3; --fc-gold-rgb: 70,61,90; --fc-dem-rgb: 42,99,240; --fc-gop-rgb: 232,38,75; }
 .fc-page .ph h1 .fc-hp.d { color: var(--dem2); }
 .fc-page .ph h1 .fc-hp.r { color: var(--gop2); }
 .fc-page .pmeta b.d { color: var(--dem2); }
@@ -1809,11 +1811,11 @@ const CSS = `
 .fc-legend-note { width: 100%; text-align: center; font-size: 12px; }
 /* The tips are portaled to document.body, outside .fc-page, so they carry their own tokens.
    Before, every --fc-* token was undefined there and the card rendered see-through over the map. */
-.fc-tip { --fc-ink-rgb: 243,239,248; --fc-line-rgb: var(--line-rgb); --fc-mute: 1; --fc-floor: 0.13; --fc-struct: 1.25;
+.fc-tip { --fc-ink-rgb: var(--ink-rgb); --fc-line-rgb: var(--line-rgb); --fc-mute: 1; --fc-floor: 0.13; --fc-struct: 1.25;
   --fc-dem: var(--dem2); --fc-gop: var(--gop2);
   position: fixed; z-index: 80; font-family: var(--font-b); color: var(--ink2); width: 274px; padding: 12px 14px; border-radius: 12px; pointer-events: none;
   background: rgba(var(--bg2-rgb),.98); border: 1px solid var(--line2);
-  box-shadow: 0 14px 36px rgba(0,0,0,.45), inset 0 1px 0 rgba(var(--line-rgb),.06); }
+  box-shadow: 0 14px 36px rgba(var(--canvas-rgb),.45), inset 0 1px 0 rgba(var(--line-rgb),.06); }
 :root[data-theme="light"] .fc-tip { --fc-ink-rgb: 17,0,25; box-shadow: 0 12px 30px rgba(17,0,25,.14); }
 .fc-tip-name { font-family: var(--font-d); font-weight: 700; font-size: 14px; letter-spacing: -0.01em; color: var(--hi); }
 .fc-tip-row { display: flex; align-items: center; gap: 8px; margin-top: 8px; font-size: 13.5px; }
@@ -2111,22 +2113,23 @@ table.fc-xt td.mg i { display: inline-block; padding: 2px 7px; border-radius: 5p
 }
 
 /* ── studio floor: black ground, floating maps, motion on arrival ─────────── */
-html.fc-black, html.fc-black body { background: #000; }
-html.fc-black .opp.ambient .orbs { opacity: .22; }
-.fc-page {
+html.fc-black:not([data-theme="light"]), html.fc-black:not([data-theme="light"]) body { background: #000; }
+html.fc-black:not([data-theme="light"]) .opp.ambient .orbs { opacity: .22; }
+/* the black studio floor is the dark theme only; the light theme keeps its own tokens */
+:root:not([data-theme="light"]) .fc-page {
   --bg: #000; --bg2: #08060c; --bg3: #110d18;
-  --glass: rgba(255,255,255,.035); --glass2: rgba(255,255,255,.06);
-  --line: rgba(255,255,255,.09); --line2: rgba(255,255,255,.16);
-  --ink: #f3eff8; --ink2: #c9c2d6; --mute: #8e86a3; --mute2: #5f5873; --hi: #ffffff;
+  --glass: rgba(var(--line-rgb),.035); --glass2: rgba(var(--line-rgb),.06);
+  --line: rgba(var(--line-rgb),.09); --line2: rgba(var(--line-rgb),.16);
+  --ink: var(--ink); --ink2: var(--ink2); --mute: var(--mute); --mute2: var(--mute2); --hi: #ffffff;
   --gold: #e7b341; --gold2: #bb831c;
   --dem: #3d7bff; --dem2: #7fa6ff; --dem3: #b9ccff;
   --gop: #ff3b5c; --gop2: #ff8399; --gop3: #ffbfcb;
   --ind: #b78cff; --toss: #e7b341; --win: #3ddc97;
   --ink-rgb: 243, 239, 248; --canvas-rgb: 0, 0, 0; --line-rgb: 255, 255, 255; --bg2-rgb: 8, 6, 12; --hi-rgb: 255, 255, 255;
-  --shadow-card: 0 30px 80px rgba(0,0,0,.6), inset 0 1px 0 rgba(255,255,255,.07);
+  --shadow-card: 0 30px 80px rgba(0,0,0,.6), inset 0 1px 0 rgba(var(--line-rgb),.07);
   color-scheme: dark;
 }
-.fc-page .card { background: linear-gradient(180deg, rgba(255,255,255,.045), rgba(255,255,255,.012)); border-color: rgba(255,255,255,.08); box-shadow: 0 30px 80px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,.06); }
+:root:not([data-theme="light"]) .fc-page .card { background: linear-gradient(180deg, rgba(var(--line-rgb),.045), rgba(var(--line-rgb),.012)); border-color: rgba(var(--line-rgb),.08); box-shadow: 0 30px 80px rgba(0,0,0,.55), inset 0 1px 0 rgba(var(--line-rgb),.06); }
 .fc-stack > * { animation: fcRise .8s cubic-bezier(.16,1,.3,1) both; }
 .fc-stack > *:nth-child(2) { animation-delay: .08s; } .fc-stack > *:nth-child(3) { animation-delay: .14s; }
 .fc-stack > *:nth-child(4) { animation-delay: .2s; } .fc-stack > *:nth-child(5) { animation-delay: .26s; }
@@ -2137,10 +2140,12 @@ html.fc-black .opp.ambient .orbs { opacity: .22; }
 .fc-mapwrap::before { content: ""; position: absolute; left: 8%; right: 8%; bottom: 2%; height: 70px; z-index: -1; border-radius: 50%; pointer-events: none;
   background: radial-gradient(closest-side, rgba(131,68,156,.42), transparent); filter: blur(22px); animation: fcFloor 9s ease-in-out infinite alternate; }
 .fc-mapwrap::after { content: ""; position: absolute; inset: -6% -4% 0; z-index: -2; pointer-events: none; opacity: .55;
-  background-image: radial-gradient(rgba(255,255,255,.08) 1px, transparent 1px); background-size: 24px 24px;
+  background-image: radial-gradient(rgba(var(--line-rgb),.08) 1px, transparent 1px); background-size: 24px 24px;
   mask-image: radial-gradient(60% 55% at 50% 50%, #000, transparent); -webkit-mask-image: radial-gradient(60% 55% at 50% 50%, #000, transparent); }
 @keyframes fcFloor { from { transform: scaleX(.9); opacity: .6; } to { transform: scaleX(1.05); opacity: 1; } }
 .fc-map { filter: drop-shadow(0 30px 36px rgba(0,0,0,.9)) drop-shadow(0 0 34px rgba(131,68,156,.22)); }
+:root[data-theme="light"] .fc-map { filter: drop-shadow(0 18px 26px rgba(40,18,80,.16)) drop-shadow(0 0 24px rgba(131,68,156,.12)); }
+:root[data-theme="light"] .fc-mapwrap::before { background: radial-gradient(closest-side, rgba(131,68,156,.18), transparent); }
 .fc-map.anim { animation: fcBoard .95s cubic-bezier(.16,1,.3,1) both; }
 .fc-map.race { animation: fcDeep .75s cubic-bezier(.16,1,.3,1) both; }
 /* the bob runs on the wrapper, a plain composited layer, so the map itself never repaints */
@@ -2150,7 +2155,7 @@ html.fc-black .opp.ambient .orbs { opacity: .22; }
 @keyframes fcDeep { from { opacity: 0; transform: scale(1.05); filter: blur(8px); } }
 @keyframes fcBob { from { transform: translateY(-4px); } to { transform: translateY(4px); } }
 .fc-map-race, .fc-unit { transition: filter .2s ease, transform .2s ease; }
-.fc-map-race:hover { filter: brightness(1.3) drop-shadow(0 0 8px rgba(255,255,255,.35)); }
+.fc-map-race:hover { filter: brightness(1.3) drop-shadow(0 0 8px rgba(var(--line-rgb),.35)); }
 .fc-seatbar-track { box-shadow: 0 0 26px rgba(131,68,156,.35); }
 .fc-seatbar-fill { animation: fcFill 1.1s cubic-bezier(.16,1,.3,1) both; transform-origin: 0 50%; }
 @keyframes fcFill { from { transform: scaleX(0); } }

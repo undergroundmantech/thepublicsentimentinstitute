@@ -188,7 +188,7 @@ export function TopCards({ scope, E, calc, races, reportedShare, cast, expTotal 
         </div>
         <p className="db-note">
           {live ? <>Early ballots so far {fmtMargin(mE)} for this race, the band their likely range, against the forecast&apos;s {fmtMargin(mF)} for
-            the whole electorate, the white tick. Early ballots lean Democratic in most states, so read the band against what
+            the whole electorate, the solid tick. Early ballots lean Democratic in most states, so read the band against what
             these kinds of ballots usually do, in the verdict below.</> : <>The forecast for the whole electorate, {fmtMargin(mF)}.</>}
         </p>
       </section>
@@ -266,10 +266,30 @@ function Panel({ title, rows, cov, note }: { title: string; rows: { k: string; s
   );
 }
 
-export function SidePanels({ scope, view, E, calc, model, caps, units, party }: {
+function LeadCard({ scope, party, snapshot }: { scope: string; party: { d: number; r: number; o: number; n: number; reported: number }; snapshot?: string }) {
+  const N = Math.max(1, party.n);
+  const m = ((party.r - party.d) / N) * 100;
+  let day = snapshot ?? "";
+  try { if (snapshot) day = new Date(`${snapshot}T12:00:00`).toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric" }); } catch { /* keep the raw date */ }
+  const est = party.reported < 0.5;
+  return (
+    <div className="db-lead">
+      <b className="day">{day || (scope === "US" ? "Nationwide" : STATE_NAME[scope] ?? scope)}</b>
+      <span className="sub">{commas(party.n)} ballots cast so far</span>
+      {([["Dem", party.d, "var(--lead-d)"], ["Rep", party.r, "var(--lead-r)"], ["Unaff.", party.o, "color-mix(in srgb, var(--lead-d) 35%, var(--lead-even))"]] as const).map(([k, v, c]) => (
+        <div key={k} className="row"><span>{k}</span><span className="trk"><i style={{ width: pctS(v / N), background: c }} /></span><b>{pctS(v / N)}</b></div>
+      ))}
+      <span className="db-cap lead-cap">{scope === "US" ? "Lead among ballots cast" : "Statewide lead"}{est ? ", estimated" : ""}</span>
+      <b className="big" style={{ color: m > 0 ? "var(--lead-r)" : "var(--lead-d)" }}>{fmtLead(m)}</b>
+      <span className="sub">Dem {commas(party.d)} · Rep {commas(party.r)} · Unaff./other {commas(party.o)}</span>
+    </div>
+  );
+}
+
+export function SidePanels({ scope, view, E, calc, model, caps, units, party, snapshot }: {
   scope: string; view: DashView; E: ElectModel | null; calc: ElectCalc; model: PartyModel | null;
   caps: Capabilities | null; units: ActualUnit[];
-  party: { d: number; r: number; o: number; n: number; reported: number };
+  party: { d: number; r: number; o: number; n: number; reported: number }; snapshot?: string;
 }) {
   const cats: Category[] = view === "requested" ? ["requested"] : view === "inperson" ? ["inperson"] : view === "returned" ? ["returned"] : TOTAL_PARTS;
   const [demo, setDemo] = useState<{ k: string; v: Partial<Record<"age" | "race" | "gender", DemographicPayload | null>> }>({ k: "", v: {} });
@@ -337,10 +357,11 @@ export function SidePanels({ scope, view, E, calc, model, caps, units, party }: 
   }
   const N = out.N;
   const g = calc && !calc.none ? calc.actG : null;
-  const c4 = ["#c7c2d6", "#5fd0a5", "#e3c35a", "#9b8cff"];
+  const c4 = ["var(--ink2)", "#3fbf8f", "#d6a92e", "#8c7bff"];
   return (
     <aside className="db-side" aria-label="Who has voted">
       <div className="db-sidehead"><span className="db-cap">{scope === "US" ? "Nationwide" : "Statewide"}</span><b>{scope === "US" ? "All reporting states" : STATE_NAME[scope] ?? scope}</b></div>
+      <LeadCard scope={scope} party={party} snapshot={snapshot} />
       {g ? (
         <Panel title="Modeled 2024 presidential vote" cov={null}
           rows={[{ k: "Harris", s: g[1], n: g[1] * N, c: "var(--dem)" }, { k: "Trump", s: g[0], n: g[0] * N, c: "var(--gop)" }, { k: "Other or new", s: g[2], n: g[2] * N, c: "var(--muted2)" }]}
@@ -382,6 +403,17 @@ export function centroidOf(d: string): [number, number] | null {
   return [cx / (3 * A), cy / (3 * A)];
 }
 
+/** Party lead shading, the way a county lead map reads: pale near even, deep at a 40 point lead either way,
+ *  grey where a place has too few ballots to say. Margins are Republican positive. */
+export function leadFill(m: number | null, n?: number): string {
+  if (m === null || !isFinite(m)) return "var(--ev-nodata)";
+  if (n !== undefined && n < 20) return "var(--lead-low)";
+  const t = Math.min(1, Math.abs(m) / 40);
+  const pct = Math.round(10 + 90 * Math.pow(t, 0.8));
+  return `color-mix(in srgb, ${m > 0 ? "var(--lead-r)" : "var(--lead-d)"} ${pct}%, var(--lead-even))`;
+}
+export const fmtLead = (m: number) => (Math.abs(m) < 0.05 ? "Even" : `${m > 0 ? "R" : "D"} +${Math.abs(m).toFixed(1)}`);
+
 export function paceFill(p: number | null): string {
   if (p === null || !isFinite(p)) return "var(--ev-nodata)";
   const t = Math.max(0, Math.min(1, p));
@@ -389,6 +421,8 @@ export function paceFill(p: number | null): string {
 }
 
 export const DASH_CSS = `
+:root { --lead-d: #2152d6; --lead-r: #c8352b; --lead-even: #d4d0de; --lead-low: rgba(140,134,160,.38); }
+:root[data-theme="light"] { --lead-d: #1f4fd1; --lead-r: #c63a2c; --lead-even: #eceaf1; --lead-low: rgba(120,114,140,.28); }
 .db-kpis { margin-top: 18px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
 .db-kpi { appearance: none; font: inherit; color: inherit; text-align: left; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 12px;
   padding: 14px 16px; border-radius: 14px; border: 1px solid var(--line); background: var(--glass); transition: border-color .15s ease, background .15s ease; }
@@ -396,8 +430,8 @@ export const DASH_CSS = `
 .db-kpi.on { border-color: #9b8cff; background: var(--glass2, rgba(155,140,255,.08)); box-shadow: inset 0 0 0 1px rgba(155,140,255,.35); }
 .db-kpi:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
 .db-kpi .txt { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
-.db-kpi b { font-family: var(--font-d); font-size: clamp(20px, 2.2vw, 27px); font-weight: 800; letter-spacing: -0.02em; color: #fff; font-variant-numeric: tabular-nums; }
-.db-kpi.on b { color: #c9c0ff; }
+.db-kpi b { font-family: var(--font-d); font-size: clamp(20px, 2.2vw, 27px); font-weight: 800; letter-spacing: -0.02em; color: var(--hi); font-variant-numeric: tabular-nums; }
+.db-kpi.on b { color: var(--ind); }
 .db-kpi em { font-style: normal; font-size: 12.5px; font-weight: 600; color: var(--ink); }
 .db-kpi small { font-size: 11px; line-height: 1.35; color: var(--muted2); }
 .db-ring { flex-shrink: 0; }
@@ -411,28 +445,28 @@ export const DASH_CSS = `
 .db-vote { border-color: rgba(155,140,255,.55); }
 .db-vhead { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; }
 .db-sel { appearance: auto; font: 600 12.5px var(--font-b); color: var(--ink); background: rgba(var(--line-rgb),.06); border: 1px solid var(--border2); border-radius: 8px; padding: 6px 8px; max-width: 100%; }
-.db-pill { padding: 3px 10px; border-radius: 99px; background: rgba(155,140,255,.18); color: #c9c0ff; font-family: ${MONO}; font-size: 10px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
+.db-pill { padding: 3px 10px; border-radius: 99px; background: rgba(155,140,255,.18); color: var(--ind); font-family: ${MONO}; font-size: 10px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
 .db-sub { font-size: 12px; color: var(--muted2); }
 .db-cands { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 4px; }
 .db-cand { display: flex; flex-direction: column; gap: 2px; }
 .db-cand.r { text-align: right; align-items: flex-end; }
-.db-cand .nm { font-family: var(--font-d); font-size: 15px; font-weight: 700; color: #fff; }
+.db-cand .nm { font-family: var(--font-d); font-size: 15px; font-weight: 700; color: var(--hi); }
 .db-cand .lab { font-size: 11px; color: var(--muted2); }
 .db-cand b { font-family: var(--font-d); font-size: clamp(20px, 2.3vw, 28px); font-weight: 800; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
 .db-cand.d b { color: var(--dem); } .db-cand.r b { color: var(--gop); }
 .db-cand small { font-family: ${MONO}; font-size: 10.5px; color: var(--muted2); }
-.pt { font-style: normal; display: inline-grid; place-items: center; min-width: 18px; height: 18px; padding: 0 4px; border-radius: 5px; font-family: ${MONO}; font-size: 10px; font-weight: 800; color: #fff; vertical-align: 2px; }
+.pt { font-style: normal; display: inline-grid; place-items: center; min-width: 18px; height: 18px; padding: 0 4px; border-radius: 5px; font-family: ${MONO}; font-size: 10px; font-weight: 800; color: var(--hi); vertical-align: 2px; }
 .pt.d { background: var(--dem); } .pt.r { background: var(--gop); }
 .db-mbar { position: relative; height: 46px; margin: 6px 4px 0; }
 .db-mbar .axis { position: absolute; left: 0; right: 0; top: 14px; height: 2px; background: rgba(var(--line-rgb),.25); }
 .db-mbar .tick { position: absolute; top: 8px; width: 1px; height: 14px; background: rgba(var(--line-rgb),.45); }
 .db-mbar .tick.mid { width: 2px; top: 4px; height: 22px; background: var(--ink); }
 .db-mbar .band { position: absolute; top: 5px; height: 20px; border-radius: 4px; background: rgba(155,140,255,.28); border: 1px solid rgba(155,140,255,.8); }
-.db-mbar .fc { position: absolute; top: 2px; width: 3px; height: 26px; margin-left: -1.5px; border-radius: 2px; background: #fff; box-shadow: 0 0 0 1px rgba(0,0,0,.4); }
+.db-mbar .fc { position: absolute; top: 2px; width: 3px; height: 26px; margin-left: -1.5px; border-radius: 2px; background: var(--hi); box-shadow: 0 0 0 1px rgba(0,0,0,.4); }
 .db-mbar .lbls { position: absolute; left: 0; right: 0; top: 30px; display: flex; justify-content: space-between; font-family: ${MONO}; font-size: 9.5px; color: var(--muted2); }
 .db-vfoot { display: grid; grid-template-columns: auto minmax(60px, 1fr) auto; gap: 12px; align-items: center; padding-top: 8px; border-top: 1px solid var(--border); }
 .db-vfoot .lab { font-size: 11.5px; color: var(--muted2); white-space: nowrap; }
-.db-vfoot .lab b { font-family: ${MONO}; color: #c9c0ff; }
+.db-vfoot .lab b { font-family: ${MONO}; color: var(--ind); }
 .db-prog { display: block; height: 8px; border-radius: 99px; background: rgba(var(--line-rgb),.1); overflow: hidden; }
 .db-prog i { display: block; height: 100%; border-radius: 99px; background: #9b8cff; }
 .db-note { font-size: 11.5px; line-height: 1.5; color: var(--muted2); margin: 0; }
@@ -455,16 +489,32 @@ export const DASH_CSS = `
 .db-mapcard { position: relative; padding: 12px 14px 12px; border-radius: 14px; border: 1px solid var(--line); background: var(--glass); min-width: 0; }
 .db-maptools { position: absolute; right: 14px; top: 12px; z-index: 2; display: flex; gap: 6px; }
 .db-tool { appearance: none; border: 1px solid var(--border2); background: rgba(var(--line-rgb),.06); color: var(--ink); border-radius: 8px; padding: 5px 9px; cursor: pointer; font: 700 11px var(--font-b); }
-.db-tool.on { border-color: #e3c35a; color: #e3c35a; }
+.db-tool.on { border-color: var(--gold); color: var(--gold); }
 .db-tabs { display: flex; justify-content: center; margin-top: 8px; }
 .db-bub { fill: rgba(227,195,90,.78); stroke: rgba(80,60,0,.55); stroke-width: .8; pointer-events: none; }
-.db-bub.rem { fill: rgba(200,200,215,.35); stroke: rgba(255,255,255,.5); }
+.db-bub.rem { fill: rgba(200,200,215,.35); stroke: rgba(var(--line-rgb),.5); }
 .db-bubkey { position: absolute; right: 16px; bottom: 54px; display: flex; flex-direction: column; align-items: flex-end; gap: 2px; font-family: ${MONO}; font-size: 9.5px; color: var(--muted2); pointer-events: none; }
+.db-lead { padding: 14px 14px 12px; border-radius: 14px; border: 1px solid var(--line); background: var(--glass); display: flex; flex-direction: column; gap: 6px; }
+.db-lead .day { font-family: var(--font-d); font-size: 24px; font-weight: 800; letter-spacing: -.02em; color: var(--hi); }
+.db-lead .sub { font-size: 11.5px; color: var(--mute); }
+.db-lead .row { display: grid; grid-template-columns: 46px minmax(0,1fr) 48px; gap: 8px; align-items: center; font-size: 12px; font-weight: 600; color: var(--ink); }
+.db-lead .row b { font-family: ${MONO}; font-size: 12px; text-align: right; }
+.db-lead .trk { height: 12px; background: rgba(var(--line-rgb),.08); border-radius: 2px; overflow: hidden; }
+.db-lead .trk i { display: block; height: 100%; }
+.db-lead .lead-cap { margin-top: 6px; padding-top: 8px; border-top: 2px solid var(--gold); }
+.db-lead .big { font-family: var(--font-d); font-size: 34px; font-weight: 800; letter-spacing: -.03em; line-height: 1; }
+.db-clab { font-family: var(--font-b); font-size: 9px; font-weight: 700; fill: var(--hi); paint-order: stroke; stroke: var(--bg); stroke-width: 2.4px; stroke-linejoin: round; pointer-events: none; }
+.db-leadleg { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 8px 14px; margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--line);
+  font-family: ${MONO}; font-size: 10px; letter-spacing: .06em; text-transform: uppercase; color: var(--mute); }
+.db-leadleg .ramp { width: min(320px, 50vw); height: 10px; border-radius: 3px; border: 1px solid var(--line); }
+.db-leadleg .ends { display: flex; justify-content: space-between; width: min(320px, 50vw); margin-top: 3px; font-size: 9.5px; }
+.db-leadleg .sw { display: inline-block; width: 11px; height: 11px; border-radius: 2px; vertical-align: -1px; margin-right: 5px; }
+.db-leadleg b { color: var(--ink); }
 .db-side { display: flex; flex-direction: column; gap: 8px; max-height: 820px; overflow-y: auto; scrollbar-width: thin; }
 .db-sidehead { padding: 12px 14px; border-radius: 14px; border: 1px solid var(--line); background: var(--glass); display: flex; flex-direction: column; gap: 2px; }
-.db-sidehead b { font-family: var(--font-d); font-size: 16px; color: #fff; }
+.db-sidehead b { font-family: var(--font-d); font-size: 16px; color: var(--hi); }
 .db-panel { padding: 10px 12px; border-radius: 14px; border: 1px solid var(--line); background: var(--glass); }
-.db-panel h3 { margin: 0 0 8px; font-family: var(--font-d); font-size: 13.5px; font-weight: 700; color: #fff; }
+.db-panel h3 { margin: 0 0 8px; font-family: var(--font-d); font-size: 13.5px; font-weight: 700; color: var(--hi); }
 .db-prow { display: grid; grid-template-columns: 92px minmax(30px, 1fr) 46px 40px; gap: 8px; align-items: center; margin-bottom: 6px; }
 .db-prow .k { font-size: 11.5px; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .db-prow .p { font-family: ${MONO}; font-size: 11.5px; font-weight: 800; text-align: right; }
@@ -472,9 +522,9 @@ export const DASH_CSS = `
 .db-prow .db-ptrack i { display: block; height: 100%; border-radius: 99px; }
 .db-prow .n { font-family: ${MONO}; font-size: 10px; color: var(--muted2); text-align: right; }
 .db-cov { display: flex; gap: 6px; align-items: baseline; padding-top: 8px; border-top: 1px solid var(--border); font-family: ${MONO}; font-size: 9.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted2); }
-.db-cov b { color: #5fd0a5; margin-right: 6px; }
+.db-cov b { color: var(--win); margin-right: 6px; }
 .db-more { margin-top: 18px; border: 1px solid var(--line); border-radius: 14px; background: var(--glass); padding: 0 16px; }
-.db-more > summary { cursor: pointer; padding: 14px 0; font-family: var(--font-d); font-size: 14px; font-weight: 700; color: #fff; list-style: none; display: flex; justify-content: space-between; }
+.db-more > summary { cursor: pointer; padding: 14px 0; font-family: var(--font-d); font-size: 14px; font-weight: 700; color: var(--hi); list-style: none; display: flex; justify-content: space-between; }
 .db-more > summary::after { content: "+"; font-family: ${MONO}; color: var(--muted2); }
 .db-more[open] > summary::after { content: "–"; }
 .db-more > summary::-webkit-details-marker { display: none; }

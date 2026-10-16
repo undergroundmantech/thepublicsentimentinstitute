@@ -117,84 +117,105 @@ const dShare = (g: number[], x: ElectModel["meta"]["crossover"]) => g[0] * x.tru
 
 /** The electorate model and its comparison with the ballots cast so far, shared by the dashboard cards and the
  *  verdict section so every number on the page comes from one calculation. */
+type ExpMix = ReturnType<typeof useExpMix>;
+/** The whole electorate calculation for one scope, pure, so the national view can also run it state by state. */
+export function computeElectorate(E: ElectModel, expMix: ExpMix, scope: string, units: ActualUnit[]) {
+  const national = scope === "US";
+  const allFips = Object.keys(E.counties).filter((f) => national || stateOfFips(f) === scope);
+  const scopeExp = expectFor(allFips, E, expMix);
+  const fipsByState: Record<string, string[]> = {};
+  for (const f of allFips) (fipsByState[stateOfFips(f)] ??= []).push(f);
+
+  // reporting units with their own expectation
+  const rows = units.map((u) => {
+    const ex = u.fips ? expectFor([u.fips], E, expMix) : expectFor(fipsByState[u.st] ?? [], E, expMix);
+    const a = { d: u.mail.d + u.early.d, r: u.mail.r + u.early.r, o: u.mail.o + u.early.o, n: u.mail.n + u.early.n };
+    const exE = ex.mail + ex.early;
+    const m = a.n > 0 ? ((a.r - a.d) / a.n) * 100 : null;
+    // the unit's expected margin at the mix of mail and in person ballots it has actually cast
+    const em = a.n > 0 ? (((ex.partyMail[1] - ex.partyMail[0]) * u.mail.n + (ex.partyEarly[1] - ex.partyEarly[0]) * u.early.n) / a.n) * 100
+      : (ex.party[1] - ex.party[0]) * 100;
+    return { u, ex, a, pace: exE > 0 ? a.n / exE : null, m, em, delta: m === null ? null : m - em };
+  }).filter((r) => r.a.n > 0);
+
+  const A = rows.reduce((s, r) => ({ d: s.d + r.a.d, r: s.r + r.a.r, o: s.o + r.a.o, n: s.n + r.a.n,
+    mail: s.mail + r.u.mail.n, early: s.early + r.u.early.n }), { d: 0, r: 0, o: 0, n: 0, mail: 0, early: 0 });
+  if (A.n <= 0) return { national, scopeExp, rows, A, none: true as const, expEarly: scopeExp.mail + scopeExp.early,
+    fcElect: national ? E.nation.electorate : E.states[scope]?.electorate ?? [0.45, 0.48, 0.07] };
+  const expEarly = scopeExp.mail + scopeExp.early;
+  const actualM = ((A.r - A.d) / A.n) * 100;
+  const pm = scopeExp.partyMail, pe = scopeExp.partyEarly;
+  // the forecast's early electorate for the whole scope, at the mix of mail and in person ballots cast so far
+  const modeParty = norm(sum3(pm.map((x) => x * A.mail), pe, A.early));
+  const expM = (modeParty[1] - modeParty[0]) * 100;
+  // the same places' own expected early voters, at the ballots each has cast: where and how held fixed
+  let gw = [0, 0, 0], gn = 0;
+  for (const r of rows) {
+    const ex = r.ex; if (ex.mail + ex.early <= 0) continue;
+    gw = sum3(sum3(gw, ex.partyMail, r.u.mail.n), ex.partyEarly, r.u.early.n); gn += r.u.mail.n + r.u.early.n;
+  }
+  const geoParty = gn > 0 ? gw.map((x) => x / gn) : modeParty;
+  const geoM = (geoParty[1] - geoParty[0]) * 100;
+  // Nationally, states open early voting on different dates, so which states have ballots in says more about the
+  // calendar than about turnout: the national verdict holds the places fixed. Inside a state every county votes on
+  // the same calendar, so a state's verdict counts where the ballots come from too.
+  const baseParty = national ? geoParty : modeParty;
+  const delta = actualM - (national ? geoM : expM);
+
+  // the early electorate by 2024 vote: the model's own expected mix, moved by the gap the party data shows,
+  // with party read through TPSI likely voters (how Democrats, Republicans and independents voted in 2024)
+  const PG = E.meta.partyToGroup;
+  const toG = (p: number[]) => norm(sum3(sum3(PG.Democrat.map((x) => x * p[0]), PG.Republican, p[1]), PG.Independent, p[2]));
+  const gap = toG([A.d / A.n, A.r / A.n, A.o / A.n]).map((x, i) => x - toG(baseParty)[i]);
+  const expG = norm(sum3(scopeExp.groups.mail.map((x) => x * A.mail), scopeExp.groups.early, A.early));
+  const actG = norm(expG.map((x, i) => Math.max(0.001, x + gap[i])));
+  // project the final electorate: the ballots in, the rest of the early vote and Election Day at the expected mix,
+  // half of today's gap carried forward into the ballots still to come
+  const KAPPA = 0.5;
+  const restMail = Math.max(0, scopeExp.mail - A.mail), restEarly = Math.max(0, scopeExp.early - A.early);
+  const shiftG = (g: number[]) => norm(g.map((x, i) => Math.max(0.001, x + KAPPA * gap[i])));
+  const proj = norm(sum3(sum3(sum3(actG.map((x) => x * A.n), shiftG(scopeExp.groups.mail), restMail), shiftG(scopeExp.groups.early), restEarly),
+    shiftG(scopeExp.groups.eday), scopeExp.eday));
+  const fcElect = national ? E.nation.electorate : E.states[scope]?.electorate ?? norm(sum3(sum3(scopeExp.groups.mail.map((x) => x * scopeExp.mail), scopeExp.groups.early, scopeExp.early), scopeExp.groups.eday, scopeExp.eday));
+  const dProj = dShare(proj, E.meta.crossover), dFc = dShare(fcElect, E.meta.crossover);
+  const impliedShift = (dFc - dProj) * 200;  // R minus D points, positive toward Republicans
+
+  // pace by 2024 lean: are red or blue places voting faster
+  const lean = [[0, 0.35], [0.35, 0.5], [0.5, 0.65], [0.65, 1.01]].map(([lo, hi]) => {
+    let a = 0, e = 0;
+    for (const r of rows) { const t = r.ex.t24; if (t >= lo && t < hi) { a += r.a.n; e += r.ex.mail + r.ex.early; } }
+    return { lo, hi, a, e, pace: e > 0 ? a / e : null };
+  });
+  return { national, scopeExp, rows, A, none: false as const, expEarly, actualM, expM, geoM, delta, actG, expG, proj, fcElect,
+    impliedShift, lean, baseM: national ? geoM : expM };
+}
+
+/** One state's turnout read: the shift the early vote implies for the forecast, and how strong the signal is. */
+export type StateSignal = { st: string; shift: number; delta: number; n: number; expEarly: number; pace: number; reported: number; expTotal: number };
+const signalOf = (st: string, c: ReturnType<typeof computeElectorate>, estShare: number): StateSignal | null =>
+  c.none ? null : { st, shift: c.impliedShift, delta: c.delta, n: c.A.n, expEarly: c.expEarly, pace: c.A.n / Math.max(1, c.expEarly),
+    reported: 1 - estShare, expTotal: c.scopeExp.mail + c.scopeExp.early + c.scopeExp.eday };
+
 export function useElectorate(scope: string, units: ActualUnit[], model: PartyModel | null) {
   const [E, setE] = useState<ElectModel | null>(null);
   useEffect(() => { getElectorate().then(setE); }, []);
   const expMix = useExpMix(model);
-  const calc = useMemo(() => {
-    if (!E || !model) return null;
-    const national = scope === "US";
-    const allFips = Object.keys(E.counties).filter((f) => national || stateOfFips(f) === scope);
-    const scopeExp = expectFor(allFips, E, expMix);
-    const fipsByState: Record<string, string[]> = {};
-    for (const f of allFips) (fipsByState[stateOfFips(f)] ??= []).push(f);
-
-    // reporting units with their own expectation
-    const rows = units.map((u) => {
-      const ex = u.fips ? expectFor([u.fips], E, expMix) : expectFor(fipsByState[u.st] ?? [], E, expMix);
-      const a = { d: u.mail.d + u.early.d, r: u.mail.r + u.early.r, o: u.mail.o + u.early.o, n: u.mail.n + u.early.n };
-      const exE = ex.mail + ex.early;
-      const m = a.n > 0 ? ((a.r - a.d) / a.n) * 100 : null;
-      // the unit's expected margin at the mix of mail and in person ballots it has actually cast
-      const em = a.n > 0 ? (((ex.partyMail[1] - ex.partyMail[0]) * u.mail.n + (ex.partyEarly[1] - ex.partyEarly[0]) * u.early.n) / a.n) * 100
-        : (ex.party[1] - ex.party[0]) * 100;
-      return { u, ex, a, pace: exE > 0 ? a.n / exE : null, m, em, delta: m === null ? null : m - em };
-    }).filter((r) => r.a.n > 0);
-
-    const A = rows.reduce((s, r) => ({ d: s.d + r.a.d, r: s.r + r.a.r, o: s.o + r.a.o, n: s.n + r.a.n,
-      mail: s.mail + r.u.mail.n, early: s.early + r.u.early.n }), { d: 0, r: 0, o: 0, n: 0, mail: 0, early: 0 });
-    if (A.n <= 0) return { national, scopeExp, rows, A, none: true as const, expEarly: scopeExp.mail + scopeExp.early,
-      fcElect: national ? E.nation.electorate : E.states[scope]?.electorate ?? [0.45, 0.48, 0.07] };
-    const expEarly = scopeExp.mail + scopeExp.early;
-    const actualM = ((A.r - A.d) / A.n) * 100;
-    const pm = scopeExp.partyMail, pe = scopeExp.partyEarly;
-    // the forecast's early electorate for the whole scope, at the mix of mail and in person ballots cast so far
-    const modeParty = norm(sum3(pm.map((x) => x * A.mail), pe, A.early));
-    const expM = (modeParty[1] - modeParty[0]) * 100;
-    // the same places' own expected early voters, at the ballots each has cast: where and how held fixed
-    let gw = [0, 0, 0], gn = 0;
-    for (const r of rows) {
-      const ex = r.ex; if (ex.mail + ex.early <= 0) continue;
-      gw = sum3(sum3(gw, ex.partyMail, r.u.mail.n), ex.partyEarly, r.u.early.n); gn += r.u.mail.n + r.u.early.n;
+  const calc = useMemo(() => (!E || !model ? null : computeElectorate(E, expMix, scope, units)), [E, model, units, scope, expMix]);
+  // every state's own signal: on the national view each state unit runs alone, inside a state the scope's calc is the state's
+  const signals = useMemo(() => {
+    const out: Record<string, StateSignal> = {};
+    if (!E || !model || !calc) return out;
+    if (scope === "US") {
+      for (const u of units) { const sg = signalOf(u.st, computeElectorate(E, expMix, u.st, [u]), u.estShare); if (sg) out[u.st] = sg; }
+    } else {
+      const n = calc.A.n; const est = units.reduce((s, u) => s + u.estShare * (u.mail.n + u.early.n), 0) / Math.max(1, n);
+      const sg = signalOf(scope, calc, est); if (sg) out[scope] = sg;
     }
-    const geoParty = gn > 0 ? gw.map((x) => x / gn) : modeParty;
-    const geoM = (geoParty[1] - geoParty[0]) * 100;
-    // Nationally, states open early voting on different dates, so which states have ballots in says more about the
-    // calendar than about turnout: the national verdict holds the places fixed. Inside a state every county votes on
-    // the same calendar, so a state's verdict counts where the ballots come from too.
-    const baseParty = national ? geoParty : modeParty;
-    const delta = actualM - (national ? geoM : expM);
-
-    // the early electorate by 2024 vote: the model's own expected mix, moved by the gap the party data shows,
-    // with party read through TPSI likely voters (how Democrats, Republicans and independents voted in 2024)
-    const PG = E.meta.partyToGroup;
-    const toG = (p: number[]) => norm(sum3(sum3(PG.Democrat.map((x) => x * p[0]), PG.Republican, p[1]), PG.Independent, p[2]));
-    const gap = toG([A.d / A.n, A.r / A.n, A.o / A.n]).map((x, i) => x - toG(baseParty)[i]);
-    const expG = norm(sum3(scopeExp.groups.mail.map((x) => x * A.mail), scopeExp.groups.early, A.early));
-    const actG = norm(expG.map((x, i) => Math.max(0.001, x + gap[i])));
-    // project the final electorate: the ballots in, the rest of the early vote and Election Day at the expected mix,
-    // half of today's gap carried forward into the ballots still to come
-    const KAPPA = 0.5;
-    const restMail = Math.max(0, scopeExp.mail - A.mail), restEarly = Math.max(0, scopeExp.early - A.early);
-    const shiftG = (g: number[]) => norm(g.map((x, i) => Math.max(0.001, x + KAPPA * gap[i])));
-    const proj = norm(sum3(sum3(sum3(actG.map((x) => x * A.n), shiftG(scopeExp.groups.mail), restMail), shiftG(scopeExp.groups.early), restEarly),
-      shiftG(scopeExp.groups.eday), scopeExp.eday));
-    const fcElect = national ? E.nation.electorate : E.states[scope]?.electorate ?? norm(sum3(sum3(scopeExp.groups.mail.map((x) => x * scopeExp.mail), scopeExp.groups.early, scopeExp.early), scopeExp.groups.eday, scopeExp.eday));
-    const dProj = dShare(proj, E.meta.crossover), dFc = dShare(fcElect, E.meta.crossover);
-    const impliedShift = (dFc - dProj) * 200;  // R minus D points, positive toward Republicans
-
-    // pace by 2024 lean: are red or blue places voting faster
-    const lean = [[0, 0.35], [0.35, 0.5], [0.5, 0.65], [0.65, 1.01]].map(([lo, hi]) => {
-      let a = 0, e = 0;
-      for (const r of rows) { const t = r.ex.t24; if (t >= lo && t < hi) { a += r.a.n; e += r.ex.mail + r.ex.early; } }
-      return { lo, hi, a, e, pace: e > 0 ? a / e : null };
-    });
-    return { national, scopeExp, rows, A, none: false as const, expEarly, actualM, expM, geoM, delta, actG, expG, proj, fcElect,
-      impliedShift, lean, baseM: national ? geoM : expM };
-  }, [E, model, units, scope, expMix]);
-  return { E, calc };
+    return out;
+  }, [E, model, calc, units, scope, expMix]);
+  return { E, calc, signals };
 }
-export type ElectCalc = ReturnType<typeof useElectorate>["calc"];
+export type ElectCalc = ReturnType<typeof computeElectorate> | null;
 export { verdictOf, dShare };
 
 export default function Electorate({ scope, E, calc, model, snapshot, onOpen }: {
@@ -497,7 +518,7 @@ export function EarlyDemographics({ scope, cat, caps, model, catLabel }: {
 }
 
 export const ELECTORATE_CSS = `
-.el-wrap tr.clickable{cursor:pointer}.el-wrap tr.clickable:hover td{background:rgba(255,255,255,.04)}.el-wrap tr.clickable:focus-visible{outline:2px solid var(--dem);outline-offset:-2px}
+.el-wrap tr.clickable{cursor:pointer}.el-wrap tr.clickable:hover td{background:rgba(var(--line-rgb),.04)}.el-wrap tr.clickable:focus-visible{outline:2px solid var(--dem);outline-offset:-2px}
 .el-wrap, .el-demo { margin-top: 26px; padding: 22px 24px 20px; border: 1px solid var(--line); border-radius: var(--r, 16px); background: var(--glass); }
 .el-head { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; }
 .el-tag { display: inline-block; margin-bottom: 8px; padding: 3px 9px; border-radius: 99px; border: 1px solid var(--border2);
@@ -508,7 +529,7 @@ export const ELECTORATE_CSS = `
 .el-ml { display: block; font-family: ${MONO}; font-size: 9.5px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted2); }
 .el-modes { margin-top: 18px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
 .el-mode { display: flex; flex-direction: column; gap: 6px; padding: 14px 16px; border-radius: 12px; border: 1px solid var(--line); background: rgba(var(--line-rgb),0.03); }
-.el-mode b { font-family: var(--font-d); font-size: 24px; font-weight: 800; letter-spacing: -0.02em; color: #fff; font-variant-numeric: tabular-nums; }
+.el-mode b { font-family: var(--font-d); font-size: 24px; font-weight: 800; letter-spacing: -0.02em; color: var(--hi); font-variant-numeric: tabular-nums; }
 .el-ms { font-size: 12px; line-height: 1.4; color: var(--muted); }
 .el-track { display: block; height: 8px; border-radius: 99px; background: rgba(var(--line-rgb),0.08); overflow: hidden; }
 .el-track i { display: block; height: 100%; border-radius: 99px; background: var(--ink2); }
@@ -524,7 +545,7 @@ export const ELECTORATE_CSS = `
 .el-vparts em { grid-column: 1 / -1; font-style: normal; font-size: 11.5px; color: var(--muted2); }
 .el-grid { margin-top: 16px; display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 14px; }
 .el-card { padding: 16px 18px; border-radius: 14px; border: 1px solid var(--line); background: rgba(var(--line-rgb),0.03); }
-.el-card h3, .el-dcard h3 { margin: 4px 0 12px; font-family: var(--font-d); font-size: 15px; font-weight: 700; color: #fff; }
+.el-card h3, .el-dcard h3 { margin: 4px 0 12px; font-family: var(--font-d); font-size: 15px; font-weight: 700; color: var(--hi); }
 .el-grow { display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 4px 12px; align-items: center; margin-bottom: 10px; }
 .el-grow .k { font-size: 12.5px; color: var(--ink); }
 .el-grow .v { grid-column: 2; font-family: ${MONO}; font-size: 11px; color: var(--muted2); }

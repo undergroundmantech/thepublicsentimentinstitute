@@ -13,7 +13,8 @@ import {
   type Geo, type RegionRow, type StateGeo, type View,
 } from "./lib";
 import Electorate, { EarlyDemographics, ELECTORATE_CSS, useElectorate, type ActualUnit, type P3 } from "./Electorate";
-import { KpiStrip, TopCards, SidePanels, DASH_CSS, centroidOf, paceFill, getForecastRaces, type DashView, type FcRace } from "./Dashboard";
+import AdjustedForecast, { ADJ_CSS } from "./Adjusted";
+import { KpiStrip, TopCards, SidePanels, DASH_CSS, centroidOf, paceFill, leadFill, getForecastRaces, type DashView, type FcRace } from "./Dashboard";
 
 const MONO = "var(--font-m)";
 
@@ -702,18 +703,21 @@ export default function EarlyVoteDesk() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [model, scope, natl, natlCounties, natlAdj, parts, estParts, fipsOf, countyNames, tilt]);
 
-  const { E, calc } = useElectorate(scope, units, model);
+  const { E, calc, signals } = useElectorate(scope, units, model);
   const [races, setRaces] = useState<FcRace[]>([]);
   useEffect(() => { getForecastRaces().then(setRaces); }, []);
-  const [bubbles, setBubbles] = useState(true);
+  // ballot bubbles: on for the national map, off for a state, where the county lead map names its largest counties
+  const [bubblePref, setBubblePref] = useState<{ scope: string; on: boolean } | null>(null);
+  const bubbles = bubblePref && bubblePref.scope === scope ? bubblePref.on : scope === "US";
+  const setBubbles = (f: (b: boolean) => boolean) => setBubblePref({ scope, on: f(bubbles) });
   const natCent = useMemo(() => (geo ? Object.fromEntries(Object.entries(geo.states).map(([k, d]) => [k, centroidOf(d)])) : {}) as Record<string, [number, number] | null>, [geo]);
   const ctyCent = useMemo(() => (stateGeo ? Object.fromEntries(stateGeo.counties.map((c) => [c.id, centroidOf(c.d)])) : {}) as Record<string, [number, number] | null>, [stateGeo]);
 
   const fillRow = (key: string, row: RegionRow) => {
     const m = marginFor(key, row);
-    if (m !== null) return fillFor(m);
+    if (m !== null) return leadFill(m, sumRow(row));
     const e = est?.byKey[key];
-    if (showEst && e) return fillFor(e.margin);
+    if (showEst && e) return leadFill(e.margin, sumRow(row));
     return vol ? turnoutFill(vol.t(sumRow(row))) : "var(--ev-nodata)";
   };
   /** the margin a place is rated on: reported party, else the TPSI estimate when it is shown */
@@ -773,7 +777,7 @@ export default function EarlyVoteDesk() {
 
   return (
     <div className="opp ev-page">
-      <style>{CSS + ELECTORATE_CSS + DASH_CSS}</style>
+      <style>{CSS + ELECTORATE_CSS + DASH_CSS + ADJ_CSS}</style>
 
       <div className="ev-shell">
         <nav className="crumbs" aria-label="Breadcrumb">
@@ -819,7 +823,7 @@ export default function EarlyVoteDesk() {
                     return (
                       <path key={abbr} d={d}
                         className={`ev-unit${row ? " live" : ""}`}
-                        fill={row ? (view === "remaining" ? paceFill(paceOf(abbr, sumRow(row))) : fillRow(abbr, row)) : "var(--ev-idle)"}
+                        style={{ fill: row ? (view === "remaining" ? paceFill(paceOf(abbr, sumRow(row))) : fillRow(abbr, row)) : "var(--ev-idle)" }}
                         onClick={row ? () => setScope(abbr) : undefined}
                         onMouseMove={row ? (e) => setTip({ key: abbr, x: e.clientX, y: e.clientY }) : undefined}
                         onMouseLeave={() => setTip(null)} />
@@ -854,7 +858,7 @@ export default function EarlyVoteDesk() {
                           return (
                             <path key={c.id} d={c.d}
                               className={`ev-unit${row ? " live" : ""}`}
-                              fill={row ? (view === "remaining" ? paceFill(paceOf(name!, sumRow(row))) : fillRow(name!, row)) : "var(--ev-idle)"}
+                              style={{ fill: row ? (view === "remaining" ? paceFill(paceOf(name!, sumRow(row))) : fillRow(name!, row)) : "var(--ev-idle)" }}
                               onMouseMove={row ? (e) => setTip({ key: name!, x: e.clientX, y: e.clientY }) : undefined}
                               onMouseLeave={() => setTip(null)} />
                           );
@@ -871,6 +875,15 @@ export default function EarlyVoteDesk() {
                           const v = bubbleVal(name!, sumRow(row)); if (v <= 0) return null;
                           return <circle key={`b-${c.id}`} cx={ct[0]} cy={ct[1]} r={Math.max(1.4, 22 * Math.sqrt(v / bubbleMax))} className={`db-bub${view === "remaining" ? " rem" : ""}`} />;
                         }) : null}
+                        {!bubbles ? (() => {
+                          // the counties casting the most ballots are named on the map
+                          const top = stateGeo.counties.map((c) => ({ c, name: byFips[c.id], n: byFips[c.id] ? sumRow(data.regions[byFips[c.id]]) : 0 }))
+                            .filter((x) => x.n > 0 && ctyCent[x.c.id]).sort((a, b) => b.n - a.n).slice(0, 10);
+                          return top.map(({ c, name }) => {
+                            const ct = ctyCent[c.id]!;
+                            return <text key={`l-${c.id}`} x={ct[0]} y={ct[1]} dy="0.32em" textAnchor="middle" className="db-clab">{name.replace(/ (County|Parish|city)$/i, "")}</text>;
+                          });
+                        })() : null}
                       </svg>
                       {matched < Object.keys(data.regions).length ? (
                         <p className="ev-mapnote">
@@ -890,15 +903,16 @@ export default function EarlyVoteDesk() {
                   <div className="ev-leg-row">{[0, 0.25, 0.5, 0.75, 1].map((t) => <span key={t} className="ev-leg"><i style={{ background: paceFill(t) }} />{Math.round(t * 100)}%</span>)}</div>
                   <span className="ev-leg-note">bubbles are the ballots still expected, early and on Election Day</span></div>
               ) : !allNoParty || showEst ? (
-                <div className="ev-legend">
-                  <span className="ev-cap">Ratings</span>
-                  <div className="ev-leg-row">
-                    {RATINGS.map((rt) => <span key={"d" + rt} className="ev-leg"><i style={{ background: EV_DEM[rt] }} />{RATING_WORD[rt]} D</span>)}
-                    <span className="ev-leg"><i style={{ background: EV_TOSS }} />Toss-up</span>
-                    {[...RATINGS].reverse().map((rt) => <span key={"r" + rt} className="ev-leg"><i style={{ background: EV_REP[rt] }} />{RATING_WORD[rt]} R</span>)}
-                    {showEst ? <span className="ev-leg"><i className="hatch" />TPSI estimate</span> : null}
-                  </div>
-                  <span className="ev-leg-note">margin of the ballots cast · tilt &lt;5 · lean &lt;15 · likely &lt;30 · safe 30+</span>
+                <div className="db-leadleg">
+                  <b>R lead</b>
+                  <span>
+                    <span className="ramp" style={{ display: "block", background: `linear-gradient(90deg, ${leadFill(40)}, ${leadFill(20)}, ${leadFill(0.01)}, ${leadFill(-20)}, ${leadFill(-40)})` }} />
+                    <span className="ends"><span>R+40</span><span>even</span><span>D+40</span></span>
+                  </span>
+                  <b>D lead</b>
+                  <span><i className="sw" style={{ background: "var(--lead-low)" }} />under 20 ballots</span>
+                  {showEst ? <span><i className="sw" style={{ background: "repeating-linear-gradient(45deg, var(--mute) 0 2px, transparent 2px 5px)" }} />TPSI party estimate</span> : null}
+                  <span>{national ? "registered party of the ballots cast, by state" : "registered party of the ballots cast, by county"}{!national ? " · turn off bubbles to name the largest counties" : ""}</span>
                 </div>
               ) : null}
               {someNoParty && vol && !showEst && view !== "remaining" ? (
@@ -946,9 +960,12 @@ export default function EarlyVoteDesk() {
                 </div>
               </div>
             </section>
-            <SidePanels scope={scope} view={view} E={E} calc={calc} model={model} caps={caps} units={units} party={party} />
+            <SidePanels scope={scope} view={view} E={E} calc={calc} model={model} caps={caps} units={units} party={party} snapshot={data.snapshot_date} />
           </div>
         )}
+
+        {data && !loading ? <AdjustedForecast scope={scope} signals={signals} calc={calc} geo={geo} stateGeo={stateGeo}
+          onOpen={(k) => { setScope(k); setTimeout(() => document.getElementById("ev-adj")?.scrollIntoView({ behavior: "smooth", block: "start" }), 400); }} /> : null}
 
         {data && !loading ? <Electorate scope={scope} E={E} calc={calc} model={model} snapshot={data.snapshot_date} onOpen={(k) => setScope(k)} /> : null}
 
@@ -1139,12 +1156,12 @@ const CSS = `
 .ev-link { background: none; border: 0; padding: 0; cursor: pointer; font: inherit; color: var(--accent-link); text-decoration: underline; text-underline-offset: 3px; }
 
 .ev-controls { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 26px; }
-.ev-seg { display: inline-flex; padding: 3px; gap: 2px; border-radius: 999px; background: rgba(255,255,255,0.06); }
+.ev-seg { display: inline-flex; padding: 3px; gap: 2px; border-radius: 999px; background: rgba(var(--line-rgb),0.06); }
 .ev-seg button { appearance: none; border: 0; background: none; cursor: pointer; padding: 7px 14px; border-radius: 999px;
   font: 700 12px var(--font-b); color: var(--mute);
   transition: color .15s ease, background .15s ease; }
 .ev-seg button:hover { color: var(--ink); }
-.ev-seg button.on { background: #fff; color: var(--bg); }
+.ev-seg button.on { background: var(--hi); color: var(--bg); }
 .ev-seg.sm button { padding: 5px 11px; font-size: 11.5px; }
 .ev-seg button:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
 
@@ -1158,7 +1175,7 @@ const CSS = `
 .ev-top-n b { font-family: var(--font-d); font-size: clamp(30px,4vw,44px); font-weight: 800; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
 .ev-top-n span { margin-left: auto; font-family: ${MONO}; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted2); }
 .ev-top-split { margin-top: 16px; }
-.ev-stview { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 12px; margin-top: 14px; padding: 10px 14px; border: 1px solid var(--line); border-radius: 12px; background: var(--glass, rgba(255,255,255,.03)); font-size: 13px; color: var(--muted); }
+.ev-stview { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 12px; margin-top: 14px; padding: 10px 14px; border: 1px solid var(--line); border-radius: 12px; background: var(--glass, rgba(var(--line-rgb),.03)); font-size: 13px; color: var(--muted); }
 .ev-stview .pill { display: inline-block; padding: 3px 9px; border-radius: 99px; font-size: 10.5px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; }
 .ev-stview b { font-family: ${MONO}; font-size: 20px; font-weight: 800; font-variant-numeric: tabular-nums; }
 .ev-key { display: flex; flex-wrap: wrap; gap: 8px 22px; margin-top: 14px; font-size: 13px; color: var(--muted); }
@@ -1167,7 +1184,7 @@ const CSS = `
 .ev-key b { font-family: ${MONO}; font-weight: 700; color: var(--ink); font-variant-numeric: tabular-nums; }
 .ev-key u { text-decoration: none; font-family: ${MONO}; font-size: 11.5px; color: var(--muted2); }
 
-.ev-page { --ev-idle: rgba(var(--line-rgb),0.07); --ev-nodata: rgba(var(--line-rgb),0.16); --ev-mid: rgba(255,255,255,0.06); --ev-turnout: var(--ink2); }
+.ev-page { --ev-idle: rgba(var(--line-rgb),0.07); --ev-nodata: rgba(var(--line-rgb),0.16); --ev-mid: rgba(var(--line-rgb),0.06); --ev-turnout: var(--ink2); }
 .ev-mapwrap { position: relative; margin-top: 30px; }
 .ev-map { display: block; width: 100%; height: auto; max-height: 66svh; margin: 0 auto; }
 .ev-unit { stroke: var(--bg); stroke-width: 0.7; stroke-linejoin: round; transition: filter .12s ease; }
@@ -1230,8 +1247,8 @@ table.ev-table td.rt { white-space: nowrap; }
 .ev-tip .row.vol b { color: var(--muted2); font-family: ${MONO}; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; }
 
 .ev-tip { position: fixed; z-index: 70; pointer-events: none; width: 252px; padding: 12px 14px; border-radius: 12px;
-  background: rgba(17,0,25,.94); border: 1px solid var(--line2); box-shadow: 0 12px 40px rgba(0,0,0,.5); backdrop-filter: blur(10px); }
-.ev-tip .n { font-family: var(--font-d); font-size: 14px; font-weight: 700; letter-spacing: -0.01em; color: #fff; }
+  background: rgba(var(--bg2-rgb),.96); border: 1px solid var(--line2); box-shadow: 0 12px 40px rgba(0,0,0,.5); backdrop-filter: blur(10px); }
+.ev-tip .n { font-family: var(--font-d); font-size: 14px; font-weight: 700; letter-spacing: -0.01em; color: var(--hi); }
 .ev-tip .s { margin-top: 2px; font-family: ${MONO}; font-size: 9.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted2); }
 .ev-tip .row { display: flex; align-items: center; gap: 8px; margin-top: 7px; font-size: 12.5px; }
 .ev-tip .row i { width: 3px; height: 14px; flex-shrink: 0; }
@@ -1245,7 +1262,7 @@ table.ev-table td.rt { white-space: nowrap; }
 .ev-bar { display: flex; height: 9px; border-radius: 99px; overflow: hidden; background: rgba(var(--line-rgb),0.07); }
 .ev-bar i { display: block; height: 100%; }
 
-.ev-h2 { font-family: var(--font-d); font-size: 16px; font-weight: 700; letter-spacing: -0.01em; color: #fff; }
+.ev-h2 { font-family: var(--font-d); font-size: 16px; font-weight: 700; letter-spacing: -0.01em; color: var(--hi); }
 
 
 .ev-tablewrap { margin-top: 38px; }
@@ -1255,7 +1272,7 @@ table.ev-table td.rt { white-space: nowrap; }
 .ev-sort:hover { color: var(--ink); border-color: var(--border3); }
 .ev-scroll { margin-top: 14px; overflow-x: auto; border: 1px solid var(--line); border-radius: var(--r); background: var(--glass); }
 table.ev-table { width: 100%; border-collapse: collapse; font-size: 13px; font-variant-numeric: tabular-nums; }
-table.ev-table th { position: sticky; top: 0; z-index: 1; background: #150d20; text-align: left; padding: 13px 14px;
+table.ev-table th { position: sticky; top: 0; z-index: 1; background: var(--bg2); text-align: left; padding: 13px 14px;
   font-family: ${MONO}; font-size: 9.5px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
   color: var(--muted2); border-bottom: 1px solid var(--border2); white-space: nowrap; }
 table.ev-table th.num, table.ev-table td.num { text-align: right; }
@@ -1269,7 +1286,7 @@ table.ev-table tr.clickable:focus-visible { outline: 2px solid var(--gold); outl
 table.ev-table td.split { min-width: 120px; }
 
 .ev-hatch { pointer-events: none; }
-.ev-hatch-line { stroke: #ffffff; stroke-width: 1; stroke-opacity: 0.55; }
+.ev-hatch-line { stroke: var(--hi); stroke-width: 1; stroke-opacity: 0.55; }
 .ev-hatch-line.dark { stroke: #000000; stroke-opacity: 0.22; }
 .ev-scale .sw.hatch { background: repeating-linear-gradient(45deg, var(--muted2) 0 2px, transparent 2px 5px); border: 1px solid var(--border2); }
 
@@ -1295,7 +1312,7 @@ table.ev-table th.est { color: var(--ink); }
 table.ev-table td.est { font-style: italic; }
 table.ev-table td.mg { font-style: normal; font-family: ${MONO}; font-weight: 700; font-size: 12px; }
 /* the tooltip is portalled to body, outside .ev-page, so it carries the map tokens its swatches use */
-.ev-tip { width: 284px; z-index: 90; --ev-nodata: rgba(255,255,255,0.16); --ev-mid: rgba(255,255,255,0.06); --ev-turnout: var(--ink2); }
+.ev-tip { width: 284px; z-index: 90; --ev-nodata: rgba(var(--line-rgb),0.16); --ev-mid: rgba(var(--line-rgb),0.06); --ev-turnout: var(--ink2); }
 .ev-tip .est-h { margin-top: 10px; padding-top: 8px; border-top: 1px dashed var(--border2); font-family: ${MONO}; font-size: 9.5px;
   font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink); }
 .ev-tip .row.tot u { min-width: 0; white-space: nowrap; }
@@ -1308,7 +1325,7 @@ table.ev-table td.mg { font-style: normal; font-family: ${MONO}; font-weight: 70
   display: flex; flex-direction: column; gap: 10px; padding: 16px 18px; border-radius: 14px;
   border: 1px solid var(--line); background: var(--glass); transition: border-color .15s ease, background .15s ease; }
 .ev-nat-card:hover { border-color: var(--border3, var(--border2)); }
-.ev-nat-card.on { border-color: #fff; background: var(--glass2); }
+.ev-nat-card.on { border-color: var(--hi); background: var(--glass2); }
 .ev-nat-card:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
 .ev-nat-card .lab { display: flex; align-items: baseline; justify-content: space-between; gap: 10px;
   font-family: ${MONO}; font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink); }
@@ -1328,7 +1345,7 @@ table.ev-table td.mg { font-style: normal; font-family: ${MONO}; font-weight: 70
 .ev-nat-card .src.tilt { border-top: 0; padding-top: 0; margin-top: -4px; color: var(--muted); }
 .ev-nat-card .none { font-size: 13px; color: var(--muted2); }
 .ev-bar.comb { height: 12px; }
-.ev-bar i.est { background-image: repeating-linear-gradient(45deg, transparent 0 3px, rgba(255,255,255,0.45) 3px 5px) !important; }
+.ev-bar i.est { background-image: repeating-linear-gradient(45deg, transparent 0 3px, rgba(var(--line-rgb),0.45) 3px 5px) !important; }
 
 .ev-note { margin-top: 30px; max-width: 78ch; font-size: 12.5px; line-height: 1.65; color: var(--muted2); }
 .ev-note a { color: var(--accent-link); }
