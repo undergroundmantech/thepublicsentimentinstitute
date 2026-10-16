@@ -307,8 +307,10 @@ export type PartyModel = {
     lv: Record<string, number[]>; registration: Record<string, number[]>;
     basis?: "registration" | "identification";
     registrationFit?: { pooled: number; spread: number; heldOutError: number; independents: number;
-      source: Record<string, "feed" | "registration" | "primary" | "pooled">; primaryWeight: Record<string, number>; shift: Record<string, number> };
-    check: { st: string; heldOut?: number; modelMargin: number; lo: number; hi: number; reportedMargin: number; modelTilt: number; reportedTilt: number }[];
+      source: Record<string, "feed" | "registration" | "primary" | "pooled">; primaryWeight: Record<string, number>; shift: Record<string, number>;
+      anchorError?: number; marginError?: { fromRegistration: number; pooled: number };
+      county?: Record<string, { cover: number; asOf: string; spread: number }> };
+    check: { st: string; heldOut?: number; fromRegistration?: number; modelMargin: number; lo: number; hi: number; reportedMargin: number; modelTilt: number; reportedTilt: number }[];
   };
   regime: Record<string, Regime>;
   point: number[];                                  // survey return prior: [Republican, Independent] vs Democratic

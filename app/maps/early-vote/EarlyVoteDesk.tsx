@@ -292,24 +292,37 @@ function RegistrationNote({ model, st }: { model: PartyModel; st: string | null 
   const src = st ? f.source[st] : null;
   const lam = st ? f.primaryWeight[st] : undefined;
   const sh = st ? f.shift[st] : undefined;
+  const cty = st ? f.county?.[st] : undefined;
+  const byCounty = !!cty && cty.cover >= 0.5;
+  const asOf = cty?.asOf ? new Date(cty.asOf + "T12:00:00").toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" }) : null;
   const dir = (x: number) => (x < 0 ? "toward Democrats" : "toward Republicans");
+  const name = st ? STATE_NAME[st] ?? st : "";
+  const err = f.marginError;
   return (
     <p>
-      Party here is read the way the states and L2 report it, registration or modeled party, not the party voters
-      name in a survey. The two differ, and by state: old Democratic registrations in the South, Wyoming Democrats
-      registered Republican for the primary, unaffiliated Democrats in New England. Every state that publishes party on
-      its requests measures that gap directly, and the pooled gap across them, each state counted once, is{" "}
-      {f.pooled.toFixed(2)} in log odds with a spread of {f.spread.toFixed(2)} between states.{" "}
-      {st && src === "feed" ? <>{STATE_NAME[st] ?? st} publishes party on its own requests, so its own gap is used.</>
-        : st && src === "registration" && sh !== undefined ? <>{STATE_NAME[st] ?? st} registers voters by party, so the
-            estimate is set to its published registration totals, which moves it {Math.abs(sh).toFixed(2)} in log odds {dir(sh)}.</>
-        : st && src === "primary" && sh !== undefined ? <>{STATE_NAME[st] ?? st} has no party registration, so party is
+      Party here is party registration, the label a state puts on its voters, and where a state registers no one by
+      party, the party L2 models from primary ballots. It is not the party voters name in a survey, so every state is
+      read on the same basis as the states that report party. The two differ a lot by state: old Democratic
+      registrations in Kentucky, West Virginia and Louisiana, Wyoming Democrats registered Republican for the primary,
+      and unaffiliated Democrats in Massachusetts and Rhode Island.{" "}
+      {st && src === "feed" ? <>{name} publishes party on its own requests, so the statewide mix is set to those
+            requests exactly, and each county is spread around it by {byCounty ? "its own published registration" : "the state\u2019s registration"}.</>
+        : st && src === "registration" && sh !== undefined ? <>{name} registers voters by party but sends its ballots
+            without it, so {byCounty ? "every county is set to its own" : "the state is set to its"} published
+            registration{asOf ? <>, as of {asOf},</> : null} measured against the forecast&apos;s registered voters, and
+            mail voters keep their own lean within it. That moves it {Math.abs(sh).toFixed(2)} in log odds {dir(sh)}.</>
+        : st && src === "primary" && sh !== undefined ? <>{name} has no party registration, so party is
             modeled the way L2 does it: from the primary ballot a voter pulled, county by county from the 2026 primaries,
-            for the {((lam ?? 0) * 100).toFixed(0)}% of voters with a primary history, and the pooled gap for the rest.
-            Together that moves it {Math.abs(sh).toFixed(2)} in log odds {dir(sh)}.</>
-        : st ? <>{STATE_NAME[st] ?? st} takes the pooled gap.</>
-        : <>States with party registration are set to their published totals; states without it are modeled from
-            primary history county by county, the way L2 assigns party.</>}
+            for the {((lam ?? 0) * 100).toFixed(0)}% of voters with a primary history, and the pooled registration gap
+            for the rest. Together that moves it {Math.abs(sh).toFixed(2)} in log odds {dir(sh)}.</>
+        : st ? <>{name} has no party registration and too little primary history to model from, so it takes the pooled
+            registration gap, {f.pooled.toFixed(2)} in log odds, measured across every state that registers by party.</>
+        : <>States that report party on their ballots are set to it. States that register by party but report none on
+            their ballots are set to their published registration, county by county. States without party registration
+            are modeled from primary history, the way L2 assigns party.</>}
+      {err ? <>{" "}Tested on the states that report party on their requests, the registration step alone lands
+        {" "}{err.fromRegistration.toFixed(1)} points from the reported request margin on average, against {err.pooled.toFixed(1)} for one
+        {" "}pooled gap.</> : null}
       {" "}Each simulation adds that evidence&apos;s own error as a statewide shock.
     </p>
   );
@@ -391,12 +404,13 @@ function EstimatePanel({ e, sub, mode, model, tilt, shade, setShade, st, adj }: 
           <div className="ev-est-check">
             <em>Check against states that do report party, mail ballots requested</em>
             <table>
-              <thead><tr><th>State</th><th className="num">TPSI, state left out</th><th className="num">Reported</th></tr></thead>
+              <thead><tr><th>State</th><th className="num">From registration</th><th className="num">Pooled gap</th><th className="num">Reported</th></tr></thead>
               <tbody>
                 {model.meta.check.map((c) => (
                   // check margins are Democratic positive; the page prints them the way margins read
                   <tr key={c.st}>
                     <td>{STATE_NAME[c.st] ?? c.st}</td>
+                    <td className="num">{c.fromRegistration !== undefined ? fmtMargin(-c.fromRegistration) : ""}</td>
                     <td className="num">{fmtMargin(-(c.heldOut ?? c.modelMargin))}</td>
                     <td className="num">{fmtMargin(-c.reportedMargin)}</td>
                   </tr>
@@ -404,9 +418,10 @@ function EstimatePanel({ e, sub, mode, model, tilt, shade, setShade, st, adj }: 
               </tbody>
             </table>
             <p>
-              Each row is the model run as if that state reported no party: its own registration gap is taken out and
-              the pooled gap of the other states put in. That is the honest test of how the estimate does in a state
-              like Michigan or Georgia, where nothing can be checked directly.
+              Each row is the model run as if that state reported no party on its requests. From registration sets it
+              to its published registration alone, the test for a state like Kentucky or Maryland. Pooled gap puts in
+              the gap of the other states instead, the test for a state like Michigan or Georgia, where nothing can be
+              checked directly.
             </p>
           </div>
         </div>

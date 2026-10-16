@@ -1,5 +1,15 @@
-"""Build public/earlyvote-party-model.json, version 2 of the TPSI party estimate for
-early vote ballots in states that report no party. October 1 2026.
+"""Build public/earlyvote-party-model.json, the TPSI party estimate for early vote
+ballots in states that report no party. Version 2 October 1 2026; version 3, the
+registration basis, October 13; version 4, county registration, October 16.
+
+Version 4 puts every state on the same party registration basis as the states that
+report party. Each party registration state is read from its published registration,
+county by county from public/voterreg, against the forecast's own registered voters,
+so requesters keep their mail skew instead of being set to the registration mix.
+States that publish party on requests are pinned to those requests statewide and
+spread across counties by their registration. States without party registration keep
+the L2 style primary history model, with the pooled gap now measured across every
+registration state. Set VOTERREG to a different voterreg folder if needed.
 
 Fourteen states send every early ballot as Unspecified: Hawaii, Idaho on requests,
 Illinois, Indiana, Maryland on requests, Michigan, Minnesota, Mississippi, Montana,
@@ -48,7 +58,7 @@ Run from the repository root:
     FC_DIR=path/to/latest_statewide_run \
     python3 scripts/earlyvote/build_party_model.py
 """
-import json, os, glob, datetime
+import json, os, glob, datetime, re, unicodedata
 import numpy as np
 import pandas as pd
 
@@ -378,6 +388,74 @@ for it in range(DRAWS):
 #   4. anything else: the pooled gap.
 # The pool is a robust mean over the measured states, every state counted once, since
 # the spread between states, not sampling noise, is what limits it.
+# ── version 4, October 16 2026: published registration, county by county ────────────
+# Version 3 set Kentucky, Maryland and Idaho requests to the statewide registration mix,
+# which erased their mail skew, and gave every other registration state the pooled gap.
+# Version 4 reads the published registration of every party registration state, county by
+# county where the state reports it, against the forecast's own registered voters: the
+# forecast's adults with each type's registration chance set so the state's total matches.
+# The gap that comes out is applied to every mode, so requesters keep their own skew.
+VR = os.environ.get("VOTERREG", os.path.join(ROOT, "public", "voterreg"))
+VRS = {x["abbr"]: x for x in json.load(open(os.path.join(VR, "summary.json")))["states"]}
+_nm = lambda x: re.sub(r"[^a-z]", "", unicodedata.normalize("NFKD", str(x)).encode("ascii", "ignore").decode().lower()
+                      .replace("county", "").replace("parish", "").replace("saint", "st"))
+CFIPS = {(st_, _nm(n_)): f_ for f_, n_, st_ in zip(c.fips, c.COUNTY, c.st)}
+TOWN = {}
+try:                                   # New England towns report registration; the model runs on counties
+    import zipcodes
+    _tv = {}
+    for z_ in zipcodes.list_all():
+        if z_["state"] in ("CT", "NH", "RI", "VT", "ME", "MA"):
+            f_ = CFIPS.get((z_["state"], _nm(z_["county"])))
+            if f_: _tv.setdefault((z_["state"], _nm(z_["city"])), []).append(f_)
+    TOWN = {k_: max(set(v_), key=v_.count) for k_, v_ in _tv.items()}
+except ImportError:
+    print("zipcodes not installed: town level registration falls back to the state total")
+def county_reg(st):
+    s_ = VRS.get(st)
+    if not s_ or not s_.get("registers_by_party") or not s_.get("party"): return None
+    P_ = s_["party"]; tot = np.array([P_["DEM"], P_["REP"], P_.get("UNA", 0) + P_.get("OTH", 0)], float)
+    out_ = {}
+    p_ = os.path.join(VR, "counties", f"{st}.json")
+    if os.path.exists(p_):
+        for r_ in json.load(open(p_)).get("counties", []):
+            f_ = str(r_["fips"]).zfill(5) if r_.get("fips") else TOWN.get((st, _nm(re.sub(r"\s+(town|city|plantation)$", "", r_["name"], flags=re.I))))
+            if not f_ or not r_.get("party"): continue
+            q_ = r_["party"]; out_[f_] = out_.get(f_, 0) + np.array([q_["DEM"], q_["REP"], q_.get("UNA", 0) + q_.get("OTH", 0)], float)
+    return tot, out_, s_["as_of"]
+N_REG0 = 1500.0        # county readings shrink toward the state's own gap below about this many registrants
+def reg_universe(st, total):
+    """[C, 3] registered voters by party in the forecast's terms, D, R, I."""
+    if TYPES.get(st) is None:
+        m_ = point[st]["lv"]; return m_ * total / m_.sum()
+    lo_, hi_ = -3.0, 10.0
+    for _ in range(60):
+        mid = (lo_ + hi_) / 2
+        lo_, hi_ = (mid, hi_) if electorate(st, mid).sum() < total else (lo_, mid)
+    return party_sum(electorate(st, (lo_ + hi_) / 2), type_parts(st)["j"])
+def reg_gaps(st):
+    cr = county_reg(st)
+    if cr is None or st not in point: return None
+    tot, cty, asof = cr
+    U = reg_universe(st, tot.sum()); fips_ = point[st]["fips"]; nC_ = len(fips_)
+    m_ = U.sum(0)
+    gR_ = float(np.log(tot[1] / tot[0]) - np.log(m_[1] / m_[0])); gI_ = float(np.log(tot[2] / tot[0]) - np.log(m_[2] / m_[0]))
+    cR, cI = np.full(nC_, gR_), np.full(nC_, gI_); covered = 0.0
+    for i_, f_ in enumerate(fips_):
+        v_ = cty.get(f_)
+        if v_ is None or min(v_[0], v_[1]) <= 0 or min(U[i_]) <= 0: continue
+        w_ = v_.sum() / (v_.sum() + N_REG0); covered += v_.sum()
+        cR[i_] = gR_ + w_ * float(np.clip(np.log(v_[1] / v_[0]) - np.log(U[i_, 1] / U[i_, 0]) - gR_, -2.5, 2.5))
+        if v_[2] > 0:
+            cI[i_] = gI_ + w_ * float(np.clip(np.log(v_[2] / v_[0]) - np.log(U[i_, 2] / U[i_, 0]) - gI_, -2.5, 2.5))
+    # the shifted universe must add up to the state's published totals exactly
+    for _ in range(30):
+        z_ = lr(U) + np.column_stack([cR, cI]); e_ = np.concatenate([np.ones((nC_, 1)), np.exp(z_)], -1)
+        sm = (U.sum(-1, keepdims=True) * e_ / e_.sum(-1, keepdims=True)).sum(0)
+        dR = np.log(tot[1] / tot[0]) - np.log(sm[1] / sm[0]); dI = np.log(tot[2] / tot[0]) - np.log(sm[2] / sm[0])
+        cR += dR; cI += dI
+        if abs(dR) + abs(dI) < 1e-6: break
+    return dict(gR=gR_, gI=gI_, cR=cR, cI=cI, cover=round(covered / tot.sum(), 3), asof=asof, tot=tot)
 PRIM = json.load(open(os.environ.get("PRIM_FILE", os.path.join(os.path.dirname(os.path.abspath(__file__)), "county_primaries_2026.json"))))
 # requests by party in the feed, October 12 2026: R, D, all others
 OBS = {"AZ": (1140446, 1040747, 1057237), "CO": (884686, 993105, 2148724), "CT": (5979, 17278, 9962),
@@ -441,10 +519,23 @@ def huber(y, c=1.345):
         r = (y - mu) / sc; w = np.minimum(1.0, c / np.maximum(np.abs(r), 1e-9))
         mu = float((w * y).sum() / w.sum())
     return mu, sc
-gRs = np.array([r["gR"] for r in REGROWS]); gIs = np.array([r["gI"] for r in REGROWS])
+REGG = {st: reg_gaps(st) for st in point}
+REGG = {k: v for k, v in REGG.items() if v is not None}
+# Validation: in the states that publish party on their requests, the gap measured on the
+# requests against the gap the published registration alone gives. Their difference is
+# the error a registration anchored state carries, since its requests cannot be checked.
+VAL = [dict(st=r["st"], feed=r["gR"], reg=REGG[r["st"]]["gR"]) for r in REGROWS if r["st"] in REGG]
+REG_XMU, REG_X = huber([v["feed"] - v["reg"] for v in VAL])
+print(f"registration anchor against the feed: mean {REG_XMU:+.3f}, robust spread {REG_X:.3f} over {len(VAL)} states")
+for v in VAL: print(f"   {v['st']} requests {v['feed']:+.3f}  registration {v['reg']:+.3f}")
+# the pooled gap for voters without registration or primary history: every registration
+# state counted once, measured on its registered voters
+gRs = np.array([v["gR"] for v in REGG.values()]); gIs = np.array([v["gI"] for v in REGG.values()])
 REG_A, REG_TAU = huber(gRs)
 REG_I, _ = huber(gIs)
-LOO_MU = {r["st"]: huber(np.delete(gRs, i))[0] for i, r in enumerate(REGROWS)}
+REG_TAU = max(REG_TAU, REG_X)
+_gst = list(REGG)
+LOO_MU = {r["st"]: huber(np.delete(gRs, _gst.index(r["st"])) if r["st"] in _gst else gRs)[0] for r in REGROWS}
 REG_LOO = float(np.sqrt(np.mean([(r["gR"] - LOO_MU[r["st"]]) ** 2 for r in REGROWS])))
 # the old weighted mean let Arizona, a third of every request in the pool, set the answer
 print(f"registration basis: pooled gap {REG_A:+.3f} (spread {REG_TAU:.3f}, held out error {REG_LOO:.3f}), independents {REG_I:+.3f}")
@@ -452,12 +543,22 @@ SHIFT, SHIFT_I, SHOCK, SOURCE, LAMBDA = {}, {}, {}, {}, {}
 for st, r in point.items():
     nC = len(r["fips"]); mm = r["file"].sum(0)
     row = next((x for x in REGROWS if x["st"] == st), None)
+    gg_ = REGG.get(st)
     if row is not None:
-        sh = np.full(nC, row["gR"]); si = row["gI"]; sd = 0.05; SOURCE[st] = "feed"
-    elif st in REG_FILE:
-        R_, D_, O_ = REG_FILE[st]
-        sh = np.full(nC, float(np.log(R_ / D_) - np.log(mm[1] / mm[0]))); si = float(np.log(O_ / D_) - np.log(mm[2] / mm[0]))
-        sd = 0.08; SOURCE[st] = "registration"
+        # the state level from its own requests; the county pattern from its registration
+        sh = np.full(nC, row["gR"]); si = np.full(nC, row["gI"]); sd = 0.05; SOURCE[st] = "feed"
+        if gg_ is not None:
+            sh = sh + (gg_["cR"] - gg_["gR"]); si = si + (gg_["cI"] - gg_["gI"])
+            # the county pattern must not move the state off its own reported requests
+            R_, D_, O_ = OBS[st]; mx = r["file" if st in UNIVERSAL else "mail"]
+            for _ in range(30):
+                z_ = lr(mx) + np.column_stack([sh, si]); e_ = np.concatenate([np.ones((nC, 1)), np.exp(z_)], -1)
+                sm = (mx.sum(-1, keepdims=True) * e_ / e_.sum(-1, keepdims=True)).sum(0)
+                dR = np.log(R_ / D_) - np.log(sm[1] / sm[0]); dI = np.log(O_ / D_) - np.log(sm[2] / sm[0])
+                sh = sh + dR; si = si + dI
+                if abs(dR) + abs(dI) < 1e-6: break
+    elif gg_ is not None:
+        sh = gg_["cR"].copy(); si = gg_["cI"].copy(); sd = REG_X; SOURCE[st] = "registration"
     elif st in NO_REG and prim_ok(st):
         d_, r_ = _prim(st)
         lam = float(min(LAM_CAP, HIST_MULT * (d_ + r_) / max(1.0, float(r["lv"].sum()))))
@@ -472,19 +573,19 @@ for st, r in point.items():
             else:
                 pg = pgs
             sh.append(lam * pg + (1 - lam) * REG_A)
-        sh = np.array(sh); si = REG_I; LAMBDA[st] = round(lam, 3)
+        sh = np.array(sh); si = np.full(nC, REG_I); LAMBDA[st] = round(lam, 3)
         sd = float(np.sqrt(((1 - lam) * REG_TAU) ** 2 + (lam * 0.25) ** 2)); SOURCE[st] = "primary"
     else:
-        sh = np.full(nC, REG_A); si = REG_I; sd = REG_TAU; SOURCE[st] = "pooled"
+        sh = np.full(nC, REG_A); si = np.full(nC, REG_I); sd = REG_TAU; SOURCE[st] = "pooled"
     SHIFT[st], SHIFT_I[st], SHOCK[st] = sh, si, sd
     for m in ("mail", "early", "file", "lv"):
-        z = lr(r[m]); z = z + np.column_stack([sh, np.full(nC, si)])
+        z = lr(r[m]); z = z + np.column_stack([sh, si])
         n_ = r[m].sum(-1, keepdims=True); e = np.concatenate([np.ones(z.shape[:-1] + (1,)), np.exp(z)], -1)
         r[m] = n_ * e / e.sum(-1, keepdims=True)
 for st in sorted(SOURCE):
-    if SOURCE[st] in ("registration", "primary") or st in OBS:
+    if True:
         mean_sh = float(np.average(SHIFT[st], weights=np.maximum(point[st]["lv"].sum(-1), 1e-9)))
-        print(f"   {st} {SOURCE[st]:12s} shift {mean_sh:+.3f}  I {SHIFT_I[st]:+.3f}  sd {SHOCK[st]:.3f}" + (f"  primary weight {LAMBDA[st]:.2f}" if st in LAMBDA else ""))
+        print(f"   {st} {SOURCE[st]:12s} shift {mean_sh:+.3f}  I {float(np.mean(SHIFT_I[st])):+.3f}  sd {SHOCK[st]:.3f}" + (f"  primary weight {LAMBDA[st]:.2f}" if st in LAMBDA else ""))
 # the evidence's own error is part of every draw: a state level shock on the R/D log odds
 for st in OFF:
     for o in OFF[st]:
@@ -496,27 +597,31 @@ REG_B, USE_SLOPE = 0.0, False
 # ── checks against states that do publish party ─────────────────────────────────
 def margin(m): m = np.asarray(m, float); return float((m[0] - m[1]) / m.sum() * 100)
 check = []
-for st in REG:
-    rq = REQ[st]; T = sum(rq)
+for st, rq in OBS.items():
+    if st not in point or st not in REGG: continue
+    T = sum(rq)
     sims = []
     for o in OFF[st]:
         z = state_lr(point, st, "mail") + np.array(o[0])
         e = np.array([1, np.exp(z[0]), np.exp(z[1])]); e /= e.sum(); sims.append((e[0] - e[1]) * 100)
-    # the model is party identification and the feed is registration, so the comparison
-    # is made on the tilt: the model's requesters against its own electorate, the feed's
-    # requesters against the state's registered voters
-    regm = (REG[st][1] - REG[st][0]) / sum(REG[st]) * 100
+    tot = REGG[st]["tot"]
+    regm = (tot[0] - tot[1]) / tot.sum() * 100
     lvm = margin(point[st]["lv"].sum(0))
     pm = margin(point[st]["mail"].sum(0))
-    own = next((x["gR"] for x in REGROWS if x["st"] == st), None)
-    if own is not None:
-        zz = lr(point[st]["mail"].sum(0)) + np.array([LOO_MU[st] - own, 0.0])
-        ee = np.array([1, np.exp(zz[0]), np.exp(zz[1])]); ee /= ee.sum(); held = float((ee[0] - ee[1]) * 100)
-    else:
-        held = pm
-    check.append(dict(st=st, heldOut=round(held, 1), modelMargin=round(pm, 1), lo=round(float(np.percentile(sims, 10)), 1),
+    own = next(x["gR"] for x in REGROWS if x["st"] == st)
+    def _as_if(g):
+        zz = lr(point[st]["mail"].sum(0)) + np.array([g - own, 0.0])
+        ee = np.array([1, np.exp(zz[0]), np.exp(zz[1])]); ee /= ee.sum(); return float((ee[0] - ee[1]) * 100)
+    # as if the state reported no party on its requests: from its published registration
+    # alone, and from the pooled gap with the state itself left out
+    check.append(dict(st=st, heldOut=round(_as_if(LOO_MU[st]), 1), fromRegistration=round(_as_if(REGG[st]["gR"]), 1),
+                      modelMargin=round(pm, 1), lo=round(float(np.percentile(sims, 10)), 1),
                       hi=round(float(np.percentile(sims, 90)), 1), reportedMargin=round((rq[1] - rq[0]) / T * 100, 1),
                       modelTilt=round(pm - lvm, 1), reportedTilt=round((rq[1] - rq[0]) / T * 100 - regm, 1)))
+check.sort(key=lambda x: -sum(OBS[x["st"]]))
+_e_reg = float(np.sqrt(np.mean([(x["fromRegistration"] - x["reportedMargin"]) ** 2 for x in check])))
+_e_pool = float(np.sqrt(np.mean([(x["heldOut"] - x["reportedMargin"]) ** 2 for x in check])))
+print(f"request margin error as if unreported: from registration {_e_reg:.1f} points, pooled {_e_pool:.1f} points")
 
 pr = np.array(PRIOR)
 FILE_RETURN = {st: round(float(point[st]["lv"].sum() / point[st]["file"].sum()), 3) for st in DELTA if TYPES.get(st) is not None}
@@ -534,7 +639,9 @@ for st, r in point.items():
 
 out = {
     "meta": {
-        "version": 3, "basis": "registration", "registrationFit": {"pooled": round(REG_A, 4), "spread": round(REG_TAU, 4), "heldOutError": round(REG_LOO, 4), "independents": round(REG_I, 4), "primaryHistoryMult": HIST_MULT, "states": [dict(st=r["st"], gap=round(r["gR"], 3), heldOut=round(LOO_MU[r["st"]], 3)) for r in REGROWS], "source": SOURCE, "primaryWeight": LAMBDA, "shift": {st: round(float(np.average(SHIFT[st], weights=np.maximum(point[st]["lv"].sum(-1), 1e-9))), 3) for st in SHIFT}}, "built": datetime.date.today().isoformat(), "respondents": int(len(fit)), "draws": DRAWS,
+        "version": 4, "basis": "registration", "registrationFit": {"pooled": round(REG_A, 4), "spread": round(REG_TAU, 4), "heldOutError": round(REG_LOO, 4), "independents": round(REG_I, 4), "primaryHistoryMult": HIST_MULT,
+            "anchorError": round(REG_X, 4), "anchorBias": round(REG_XMU, 4), "marginError": {"fromRegistration": round(_e_reg, 1), "pooled": round(_e_pool, 1)},
+            "county": {st: dict(cover=v["cover"], asOf=v["asof"], spread=round(float(np.std(v["cR"])), 3)) for st, v in REGG.items()}, "states": [dict(st=r["st"], gap=round(r["gR"], 3), heldOut=round(LOO_MU[r["st"]], 3)) for r in REGROWS], "source": SOURCE, "primaryWeight": LAMBDA, "shift": {st: round(float(np.average(SHIFT[st], weights=np.maximum(point[st]["lv"].sum(-1), 1e-9))), 3) for st in SHIFT}}, "built": datetime.date.today().isoformat(), "respondents": int(len(fit)), "draws": DRAWS,
         "forecast": os.path.basename(os.path.normpath(FC)), "modes": MODES,
         "mailSkewScale": round(K0, 3), "mailSkewScaleSd": round(K_SD, 3), "calibration": loo,
         "fileDelta": {k: round(v, 3) for k, v in DELTA.items()},
@@ -545,7 +652,7 @@ out = {
         # each state's whole 2026 electorate, so a live check on returns can compare tilts
         "lv": {st: [round(float(x), 4) for x in (r["lv"].sum(0) / r["lv"].sum())] for st, r in point.items()},
         # registration by party, R, D, others, for states whose returns or requests are checked
-        "registration": {**{k: list(v) for k, v in REG.items()}, **{k: list(v) for k, v in REG_CHECK.items()}},
+        "registration": {st: [int(v["tot"][1]), int(v["tot"][0]), int(v["tot"][2])] for st, v in REGG.items()},
         "check": check,
         "paramKeys": ["returnPriorR", "returnPriorI"],
     },
@@ -560,5 +667,5 @@ out = {
 json.dump(out, open(OUT, "w"), separators=(",", ":"))
 print(f"wrote {OUT}: {len(fit)} respondents, {DRAWS} draws, {len(mix_out)} counties, {os.path.getsize(OUT) // 1024} KB")
 for r in check:
-    print(f"  {r['st']}  held out D{r['heldOut']:+.1f}  fitted D{r['modelMargin']:+.1f} [{r['lo']:+.1f}, {r['hi']:+.1f}]  reported D{r['reportedMargin']:+.1f}"
+    print(f"  {r['st']}  from registration D{r['fromRegistration']:+.1f}  held out D{r['heldOut']:+.1f}  fitted D{r['modelMargin']:+.1f} [{r['lo']:+.1f}, {r['hi']:+.1f}]  reported D{r['reportedMargin']:+.1f}"
           f"   tilt model {r['modelTilt']:+.1f} reported {r['reportedTilt']:+.1f}")
