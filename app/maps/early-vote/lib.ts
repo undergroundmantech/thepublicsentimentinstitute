@@ -324,7 +324,7 @@ export type PartyModel = {
 export const getPartyModel = () =>
   fetch("/earlyvote-party-model.json")
     .then((r) => (r.ok ? (r.json() as Promise<PartyModel>) : null))
-    .then((m) => (m && (m.meta?.version === 2 || m.meta?.version === 3) ? m : null))
+    .then((m) => (m && typeof m.meta?.version === "number" && m.meta.version >= 2 ? m : null))
     .catch(() => null);
 
 /** requested ballots read the mailed out mix; returned ballots the mail mix and
