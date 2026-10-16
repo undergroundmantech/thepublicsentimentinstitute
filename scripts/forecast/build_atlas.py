@@ -116,7 +116,7 @@ LAYERS = [
     ("gasr", "Gas price rise", "$", "seq", "fuel", "Rise in regular gas since Oct 2025: the county's AAA price over the nearest metro's year ago change within 50 km, else the state's"),
     ("dc", "Data centers", "sites", "seq", "grid", "Mapped data center sites in the county"),
     ("dcx", "Data center pull", "pts", "div", "party", "How far nearby and planned data centers move the county margin, from the Economist and YouGov distance curve, scaled to three quarters of the 6.3 point gap measured within 2 km today"),
-    ("gasx", "Gas price rise pull", "pts", "div", "party", "How far the county's gas price rise since Oct 2025, against the national rise, moves the margin through financially strained voters, at 0.6 strength"),
+    ("gasx", "Gas price rise pull", "pts", "div", "party", "How far the county's gas price rise since Oct 2025, against the national rise both ways, moves the margin through financially strained voters: above the national rise toward Democrats, below it toward Republicans"),
     ("emp", "Job growth", "%", "div", "growth", "Total employment change, year over year, QCEW"),
     ("wage", "Wage growth", "%", "div", "growth", "Average weekly wage change, year over year, QCEW"),
     ("tariff", "Tariff exposure", "index", "seq", "heat", "Manufacturing and farm employment exposed to tariffs"),
@@ -159,7 +159,7 @@ def layer_row(f):
         r["gasx"] = -2.0 * float(GSX.loc[f, "d2_shift_pts"])   # GOP positive margin points
         if "gas_rise" in GSX.columns: r["gasr"] = float(GSX.loc[f, "gas_rise"])
     if f in L.index:
-        t = 1.5 * float(L.loc[f, "within"]) + float(L.loc[f, "state_part"])
+        t = float(os.environ.get("LOCAL_WT", "1.5")) * float(L.loc[f, "within"]) + float(os.environ.get("LOCAL_SWT", "1.0")) * float(L.loc[f, "state_part"])
         r["loc"] = -100 * (2 * inv(t) - 1)  # GOP positive, like every margin on the site
     return [rnd(r.get(k), 3 if k == "tariff" else (3 if k in ("gas", "gasr") else 1)) for k in KEYS]
 

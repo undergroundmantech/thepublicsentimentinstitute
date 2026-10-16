@@ -37,6 +37,7 @@ export const RACES = [
 export const STATE_POLLS: Record<string, Poll[]> = {
   MS: [
     {"raceId": "MS-SEN-2026", "pollster": "Impact Research (D)", "startDate": "2026-04-08", "endDate": "2026-04-12", "sampleSize": 500, "sampleType": "LV", "results": {"Scott Colom (D)": 39.0, "Cindy Hyde-Smith (R)": 42.0, "Other": 6.0, "Undecided": 13.0}},
-    {"raceId": "MS-SEN-2026", "pollster": "Data for Progress (D)", "startDate": "2026-08-05", "endDate": "2026-08-15", "sampleSize": 1018, "sampleType": "LV", "results": {"Scott Colom (D)": 38.0, "Cindy Hyde-Smith (R)": 44.0, "Other": 7.0, "Undecided": 11.0}}
+    {"raceId": "MS-SEN-2026", "pollster": "Data for Progress (D)", "startDate": "2026-08-05", "endDate": "2026-08-15", "sampleSize": 1018, "sampleType": "LV", "results": {"Scott Colom (D)": 38.0, "Cindy Hyde-Smith (R)": 44.0, "Other": 7.0, "Undecided": 11.0}},
+    {"raceId": "MS-SEN-2026", "pollster": "Wedgewood Polls", "startDate": "2026-10-12", "endDate": "2026-10-14", "sampleSize": 511, "sampleType": "LV", "results": {"Scott Colom (D)": 48.0, "Cindy Hyde-Smith (R)": 52.0}, "notes": "Head to head without Ty Pinkins."}
   ],
 };

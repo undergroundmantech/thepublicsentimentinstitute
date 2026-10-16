@@ -27,11 +27,14 @@ type ElectStates = Record<string, {
   turnout: number; modes: Record<"mail" | "early" | "eday", number>; modeShare: Record<"mail" | "early" | "eday", number>;
   groupShare: Record<"mail" | "early" | "eday", number[]>; electorate: number[]; trump24: number; votes24: number;
   eavs2024?: number[]; eavsFilled?: boolean; regime?: string;
+  tpsi2026?: number[]; target2026?: number[]; women?: number[]; margin24?: number;
+  house?: { dem: number; rep: number; total: number };
 }>;
 export type ElectModel = {
   meta: { built: string; respondents: number; likelyVoters: number; countyCols: string[];
     crossover: { trumpToD: number; harrisToR: number; newShare: number; newD: number };
-    partyToGroup: Record<"Democrat" | "Republican" | "Independent", number[]> };
+    partyToGroup: Record<"Democrat" | "Republican" | "Independent", number[]>;
+    modeMethod?: { tpsiWeight: number; note: string }; womenUS?: number[] };
   nation: ElectStates[string];
   states: ElectStates;
   counties: Record<string, number[]>;
@@ -112,15 +115,12 @@ function verdictOf(delta: number) {
 /** two party Democratic share an electorate of [Trump, Harris, new] voters casts, at the TPSI crossover rates */
 const dShare = (g: number[], x: ElectModel["meta"]["crossover"]) => g[0] * x.trumpToD + g[1] * (1 - x.harrisToR) + g[2] * x.newD;
 
-export default function Electorate({ scope, units, model, snapshot, onOpen }: {
-  scope: string; units: ActualUnit[]; model: PartyModel | null; snapshot?: string; onOpen?: (key: string) => void;
-}) {
+/** The electorate model and its comparison with the ballots cast so far, shared by the dashboard cards and the
+ *  verdict section so every number on the page comes from one calculation. */
+export function useElectorate(scope: string, units: ActualUnit[], model: PartyModel | null) {
   const [E, setE] = useState<ElectModel | null>(null);
   useEffect(() => { getElectorate().then(setE); }, []);
   const expMix = useExpMix(model);
-  const [sort, setSort] = useState<"expected" | "pace" | "delta">("expected");
-  const [showAll, setShowAll] = useState(false);
-
   const calc = useMemo(() => {
     if (!E || !model) return null;
     const national = scope === "US";
@@ -143,7 +143,8 @@ export default function Electorate({ scope, units, model, snapshot, onOpen }: {
 
     const A = rows.reduce((s, r) => ({ d: s.d + r.a.d, r: s.r + r.a.r, o: s.o + r.a.o, n: s.n + r.a.n,
       mail: s.mail + r.u.mail.n, early: s.early + r.u.early.n }), { d: 0, r: 0, o: 0, n: 0, mail: 0, early: 0 });
-    if (A.n <= 0) return { national, scopeExp, rows, A, none: true as const };
+    if (A.n <= 0) return { national, scopeExp, rows, A, none: true as const, expEarly: scopeExp.mail + scopeExp.early,
+      fcElect: national ? E.nation.electorate : E.states[scope]?.electorate ?? [0.45, 0.48, 0.07] };
     const expEarly = scopeExp.mail + scopeExp.early;
     const actualM = ((A.r - A.d) / A.n) * 100;
     const pm = scopeExp.partyMail, pe = scopeExp.partyEarly;
@@ -191,11 +192,20 @@ export default function Electorate({ scope, units, model, snapshot, onOpen }: {
     return { national, scopeExp, rows, A, none: false as const, expEarly, actualM, expM, geoM, delta, actG, expG, proj, fcElect,
       impliedShift, lean, baseM: national ? geoM : expM };
   }, [E, model, units, scope, expMix]);
+  return { E, calc };
+}
+export type ElectCalc = ReturnType<typeof useElectorate>["calc"];
+export { verdictOf, dShare };
+
+export default function Electorate({ scope, E, calc, model, snapshot, onOpen }: {
+  scope: string; E: ElectModel | null; calc: ElectCalc; model: PartyModel | null; snapshot?: string; onOpen?: (key: string) => void;
+}) {
+  const [sort, setSort] = useState<"expected" | "pace" | "delta">("expected");
+  const [showAll, setShowAll] = useState(false);
 
   if (!E || !model) return <section className="el-wrap"><div className="el-loading">Loading the electorate model</div></section>;
   if (!calc) return null;
   const place = calc.national ? "the country" : STATE_NAME[scope] ?? scope;
-  const S = calc.scopeExp;
 
   const sorted = [...calc.rows].sort((a, b) => sort === "expected" ? (b.ex.mail + b.ex.early) - (a.ex.mail + a.ex.early)
     : sort === "pace" ? (b.pace ?? -1) - (a.pace ?? -1) : (a.delta ?? 0) - (b.delta ?? 0));
@@ -206,33 +216,12 @@ export default function Electorate({ scope, units, model, snapshot, onOpen }: {
       <div className="el-head">
         <div>
           <span className="el-tag">TPSI electorate model</span>
-          <h2 className="ev-h2">Is the early vote good or bad for each party?</h2>
+          <h2 className="ev-h2">Better or worse than expected for each party?</h2>
           <p className="el-sub">
             Ballots cast so far in {place}, mail returned plus in person, against the electorate the forecast expects,
             split by how each kind of voter casts a ballot.{snapshot ? ` Feed of ${snapshot}.` : ""}
           </p>
         </div>
-      </div>
-
-      {/* the three ways the vote is cast */}
-      <div className="el-modes">
-        {([
-          ["Mail", "mail", calc.A.mail, "Returned mail ballots"],
-          ["Early in person", "early", calc.A.early, "Cast in person before Election Day"],
-          ["Election Day", "eday", 0, "Cast on November 3"],
-        ] as const).map(([label, k, got, sub]) => {
-          const exp = S[k];
-          const share = S.tv > 0 ? exp / S.tv : 0;
-          return (
-            <div key={k} className="el-mode">
-              <span className="el-ml">{label}</span>
-              <b>{commas(exp)}</b>
-              <span className="el-ms">expected · {pctS(share, 0)} of the {commas(S.tv)} votes the forecast expects</span>
-              <span className="el-track"><i style={{ width: `${Math.min(100, exp > 0 ? (got / exp) * 100 : 0)}%` }} /></span>
-              <span className="el-ms">{k === "eday" ? sub : got > 0 ? `${commas(got)} in so far, ${pctS(exp > 0 ? got / exp : 0)} of expected` : `${sub}: none reported yet`}</span>
-            </div>
-          );
-        })}
       </div>
 
       {calc.none ? (
@@ -373,12 +362,18 @@ export default function Electorate({ scope, units, model, snapshot, onOpen }: {
         <p>
           A model fitted on {commas(E.meta.respondents)} TPSI likely voters gives each group its chance of voting by mail,
           early in person or on Election Day, by 2024 vote, age and the state&apos;s ballot rules, at each county&apos;s
-          ages from the census. Each state&apos;s totals are then set to how it actually voted in 2024 in the federal Election
-          Administration and Voting Survey, because a national survey cannot see that Georgia and Texas vote early in
-          person while New York and New Hampshire mostly do not.
+          ages from the census. The split between the three comes from the TPSI national dataset, what 2026 likely voters
+          say they will do, pooled half and half in log odds with how each state actually voted in 2024 in the federal
+          Election Administration and Voting Survey, because a national survey cannot see that Georgia and Texas vote early
+          in person while New York and New Hampshire mostly do not, and voters who say Election Day often vote early. TPSI
+          alone puts {E.nation.tpsi2026 ? pctS(E.nation.tpsi2026[2], 0) : "about two thirds"} of the vote on Election Day and 2024 put{" "}
+          {E.nation.eavs2024 ? pctS(E.nation.eavs2024[2], 0) : "about 37%"} there; pooled, the country is expected to cast{" "}
+          {pctS(E.nation.modeShare.mail, 0)} by mail, {pctS(E.nation.modeShare.early, 0)} early in person and{" "}
+          {pctS(E.nation.modeShare.eday, 0)} on Election Day, about where the 2022 midterm landed.
           {!calc.national && E.states[scope]?.eavs2024 ? <> In {place} in 2024, {pctS(E.states[scope]!.eavs2024![0], 0)} of
             ballots came by mail, {pctS(E.states[scope]!.eavs2024![1], 0)} early in person and {pctS(E.states[scope]!.eavs2024![2], 0)} on
-            Election Day{E.states[scope]?.eavsFilled ? ", partly filled from states with the same ballot rules where the survey has gaps" : ""}.</> : null}
+            Election Day{E.states[scope]?.eavsFilled ? ", partly filled from states with the same ballot rules where the survey has gaps" : ""};
+            for 2026 the model expects {pctS(E.states[scope]!.modeShare.mail, 0)}, {pctS(E.states[scope]!.modeShare.early, 0)} and {pctS(E.states[scope]!.modeShare.eday, 0)}.</> : null}
         </p>
         <p>
           The party of ballots comes from the state where it reports party and from the TPSI party estimate where it does

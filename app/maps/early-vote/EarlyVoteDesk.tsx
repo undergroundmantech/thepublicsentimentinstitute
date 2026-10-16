@@ -12,7 +12,8 @@ import {
   type Capabilities, type Combined, type Estimate, type Mode, type Part, type Place, type DemoAdjust, type PartyModel, type ReturnTilt, type Category, type CategoryPayload, type DemographicPayload,
   type Geo, type RegionRow, type StateGeo, type View,
 } from "./lib";
-import Electorate, { EarlyDemographics, ELECTORATE_CSS, type ActualUnit, type P3 } from "./Electorate";
+import Electorate, { EarlyDemographics, ELECTORATE_CSS, useElectorate, type ActualUnit, type P3 } from "./Electorate";
+import { KpiStrip, TopCards, SidePanels, DASH_CSS, centroidOf, paceFill, getForecastRaces, type DashView, type FcRace } from "./Dashboard";
 
 const MONO = "var(--font-m)";
 
@@ -415,7 +416,10 @@ function EstimatePanel({ e, sub, mode, model, tilt, shade, setShade, st, adj }: 
 
 export default function EarlyVoteDesk() {
   const [scope, setScope] = useState("US");           // "US" or a state abbreviation
-  const [cat, setCat] = useState<View>("total");
+  // the dashboard view: a ballot category, every ballot cast, or the ballots still to come
+  const [view, setView] = useState<DashView>("total");
+  const cat: View = view === "remaining" ? "total" : view;
+  const setCat = (c: View) => setView(c);
   const [caps, setCaps] = useState<Capabilities | null>(null);
   const [data, setData] = useState<CategoryPayload | null>(null);
   const [loading, setLoading] = useState(true);
@@ -498,11 +502,11 @@ export default function EarlyVoteDesk() {
   const [reqState, setReqState] = useState<CategoryPayload | null>(null);
   useEffect(() => {
     setReqState(null);
-    if (scope === "US" || (cat !== "returned" && cat !== "total")) return;
+    if (scope === "US") return;
     let live = true;
     getCategory(scope, "requested").then((d) => { if (live) setReqState(d); });
     return () => { live = false; };
-  }, [scope, cat]);
+  }, [scope]);
 
   // the national outline and the county name table load once
   useEffect(() => {
@@ -523,19 +527,20 @@ export default function EarlyVoteDesk() {
 
   // a total keeps its two parts as well, so each part is estimated on its own terms
   const [parts, setParts] = useState<Partial<Record<Category, CategoryPayload | null>>>({});
+  // The two parts of the total load on every view, since the ballot tiles, the modeled vote and the side panel all
+  // read every ballot cast; the map and table then show the tab that is open.
   useEffect(() => {
     let live = true;
     setLoading(true);
-    if (cat === "total") {
-      Promise.all(TOTAL_PARTS.map((p) => getCategory(scope, p))).then((got) => {
-        if (!live) return;
-        const pp = Object.fromEntries(TOTAL_PARTS.map((p, i) => [p, got[i]])) as Partial<Record<Category, CategoryPayload | null>>;
-        setParts(pp); setData(mergePayloads(got)); setLoading(false);
-      });
-    } else {
-      setParts({});
-      getCategory(scope, cat).then((d) => { if (live) { setData(d); setLoading(false); } });
-    }
+    Promise.all(TOTAL_PARTS.map((p) => getCategory(scope, p))).then(async (got) => {
+      if (!live) return;
+      const pp = Object.fromEntries(TOTAL_PARTS.map((p, i) => [p, got[i]])) as Partial<Record<Category, CategoryPayload | null>>;
+      setParts(pp);
+      if (cat === "total") { setData(mergePayloads(got)); setLoading(false); return; }
+      if (cat === "returned" || cat === "inperson") { setData(pp[cat] ?? null); setLoading(false); return; }
+      const d = await getCategory(scope, cat);
+      if (live) { setData(d); setLoading(false); }
+    });
     return () => { live = false; };
   }, [scope, cat]);
 
@@ -578,7 +583,7 @@ export default function EarlyVoteDesk() {
     setDemoAdj({});
     if (scope === "US") return;
     let live = true;
-    for (const c of cat === "total" ? TOTAL_PARTS : [cat]) {
+    for (const c of [...new Set<Category>([...TOTAL_PARTS, ...(cat === "total" ? [] : [cat as Category])])]) {
       const m = caps?.categories?.[c]; if (!m) continue;
       for (const dd of ["age", "race"] as const) if (m[dd]) getDemographics(scope, c, dd).then((p) => {
         if (live) setDemoAdj((x) => ({ ...x, [c]: { ...(x[c] ?? {}), [dd]: p } }));
@@ -617,15 +622,21 @@ export default function EarlyVoteDesk() {
     });
     return simulate(places, model, modeOf(c), tilt, scope === "US" ? natlAdj[c] : adjC ? { [scope]: adjC } : undefined);
   };
-  const est = useMemo(() => {
+  // the two parts of the total, estimated on every view: the tiles, side panel and electorate read them
+  const estParts = useMemo(() => {
     if (!model) return null;
-    if (cat !== "total") return noPartyRows.length ? estFor(cat, data, adj) : null;
-    const a = estFor("returned", parts.returned, adjOf("returned")), b = estFor("inperson", parts.inperson, adjOf("inperson"));
-    if (!a && !b) return null;
-    return { byKey: mergeEstimateMaps(a?.byKey, b?.byKey), total: mergeEstimates(a?.total, b?.total),
-      parts: { returned: a?.byKey ?? {}, inperson: b?.byKey ?? {} } as Partial<Record<Category, Record<string, Estimate>>> };
+    return { returned: estFor("returned", parts.returned, adjOf("returned")), inperson: estFor("inperson", parts.inperson, adjOf("inperson")) };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [model, noPartyRows, fipsOf, scope, cat, data, parts, natl, natlCounties, natlAdj, countyNames, reqState, tilt, adj, demoAdj]);
+  }, [model, fipsOf, scope, parts, natl, natlCounties, natlAdj, countyNames, reqState, tilt, demoAdj]);
+  const est = useMemo(() => {
+    if (!model || !estParts) return null;
+    if (cat === "returned" || cat === "inperson") return estParts[cat];
+    if (cat !== "total") return noPartyRows.length ? estFor(cat, data, adj) : null;
+    const a = estParts.returned, b = estParts.inperson;
+    if (!a && !b) return null;
+    return { byKey: mergeEstimateMaps(a?.byKey, b?.byKey), total: mergeEstimates(a?.total, b?.total) };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [model, estParts, noPartyRows, scope, cat, data, adj]);
 
   // One rated number per state, reported party plus the estimate of its Unspecified
   // ballots. The national map, table and tooltip and the state page headline all
@@ -657,7 +668,7 @@ export default function EarlyVoteDesk() {
   // The electorate tracker's units: every state, or every county of the open state,
   // with its mail returns and in person ballots split by party, reported plus estimated.
   const units = useMemo<ActualUnit[]>(() => {
-    if (cat !== "total" || !model) return [];
+    if (!model) return [];
     const split = (row: Record<string, { votes: number }> | undefined) => {
       let d = 0, r = 0, o = 0, u = 0;
       for (const [g, b] of Object.entries(row ?? {})) { const v = b?.votes ?? 0; if (g === "Democratic") d += v; else if (g === "Republican") r += v; else if (g === "Unspecified") u += v; else o += v; }
@@ -680,7 +691,7 @@ export default function EarlyVoteDesk() {
     const names = new Set([...Object.keys(parts.returned?.regions ?? {}), ...Object.keys(parts.inperson?.regions ?? {})]);
     const one = (c: Category, name: string): P3 & { u: number } => {
       const x = split(parts[c]?.regions[name]);
-      const e = est && "parts" in est ? (est as { parts?: Partial<Record<Category, Record<string, Estimate>>> }).parts?.[c]?.[name] : undefined;
+      const e: Estimate | undefined = c === "returned" || c === "inperson" ? estParts?.[c]?.byKey[name] : undefined;
       if (e && x.u > 0) return { d: x.d + e.d * x.u, r: x.r + e.r * x.u, o: x.o + e.i * x.u, n: x.d + x.r + x.o + x.u, u: x.u };
       return { d: x.d, r: x.r, o: x.o + x.u, n: x.d + x.r + x.o + x.u, u: x.u };
     };
@@ -689,7 +700,14 @@ export default function EarlyVoteDesk() {
       return { key: name, label: name, st: scope, fips: fipsOf[name] ?? null, mail, early, estShare: n > 0 ? (mail.u + early.u) / n : 0 };
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [cat, model, scope, natl, natlCounties, natlAdj, parts, est, fipsOf, countyNames, tilt]);
+  }, [model, scope, natl, natlCounties, natlAdj, parts, estParts, fipsOf, countyNames, tilt]);
+
+  const { E, calc } = useElectorate(scope, units, model);
+  const [races, setRaces] = useState<FcRace[]>([]);
+  useEffect(() => { getForecastRaces().then(setRaces); }, []);
+  const [bubbles, setBubbles] = useState(true);
+  const natCent = useMemo(() => (geo ? Object.fromEntries(Object.entries(geo.states).map(([k, d]) => [k, centroidOf(d)])) : {}) as Record<string, [number, number] | null>, [geo]);
+  const ctyCent = useMemo(() => (stateGeo ? Object.fromEntries(stateGeo.counties.map((c) => [c.id, centroidOf(c.d)])) : {}) as Record<string, [number, number] | null>, [stateGeo]);
 
   const fillRow = (key: string, row: RegionRow) => {
     const m = marginFor(key, row);
@@ -722,41 +740,59 @@ export default function EarlyVoteDesk() {
 
   const national = scope === "US";
   const catMeta = VIEWS.find((c) => c.key === cat)!;
+  const placeName = national ? "the country" : STATE_NAME[scope] ?? scope;
+
+  // ── dashboard numbers ──
+  const expScope = E ? (national ? E.nation : E.states[scope]) : null;
+  const exp = expScope ? { total: expScope.turnout, mail: expScope.modes.mail, early: expScope.modes.early } : null;
+  const mailN = national ? sumRow(natl.returned?.statewide_total) : sumRow(parts.returned?.statewide_total);
+  const inN = national ? sumRow(natl.inperson?.statewide_total) : sumRow(parts.inperson?.statewide_total);
+  const reqN = national ? sumRow(natl.requested?.statewide_total) : sumRow(natl.requested?.regions[scope]) || sumRow(reqState?.statewide_total);
+  const party = useMemo(() => {
+    let d = 0, r = 0, o = 0, n = 0, est = 0;
+    for (const u of units) {
+      d += u.mail.d + u.early.d; r += u.mail.r + u.early.r; o += u.mail.o + u.early.o;
+      const nn = u.mail.n + u.early.n; n += nn; est += u.estShare * nn;
+    }
+    return { d, r, o, n, reported: n > 0 ? 1 - est / n : 0 };
+  }, [units]);
+  // what a place is expected to cast in all, for the remaining ballots view
+  const expOfPlace = (key: string): number | null => {
+    if (!E) return null;
+    if (national) return E.states[key]?.turnout ?? null;
+    const f = fipsOf[key];
+    return f && E.counties[f] ? E.counties[f][0] : null;
+  };
+  const paceOf = (key: string, n: number) => { const e = expOfPlace(key); return e && e > 0 ? n / e : null; };
+  const bubbleVal = (key: string, n: number) => (view === "remaining" ? Math.max(0, (expOfPlace(key) ?? 0) - n) : n);
+  const bubbleMax = Math.max(1, ...rows.map((r) => bubbleVal(r.name, r.n)));
+  const MAP_TABS: { k: DashView; label: string }[] = [
+    { k: "total", label: "Total" }, { k: "inperson", label: "Early in person" }, { k: "returned", label: "Mail returns" },
+    { k: "remaining", label: "Remaining ballots" }, { k: "requested", label: "Requests" },
+  ];
 
   return (
     <div className="opp ev-page">
-      <style>{CSS + ELECTORATE_CSS}</style>
+      <style>{CSS + ELECTORATE_CSS + DASH_CSS}</style>
 
       <div className="ev-shell">
         <nav className="crumbs" aria-label="Breadcrumb">
           <Link href="/">Home</Link><span className="sep">/</span><Link href="/maps">Maps</Link><span className="sep">/</span>
           {national ? <span>Early vote</span> : <><button className="ev-link ev-crumbstate" onClick={() => setScope("US")}>Early vote</button><span className="sep">/</span><span>{STATE_NAME[scope] ?? scope}</span></>}
         </nav>
-        <header className="ph">
+        <header className="ph ev-ph">
           <div className="eye g">Early vote tracker</div>
           <h1>{national ? <>Early vote, <em>nationwide</em></> : <>{STATE_NAME[scope] ?? scope} early <em>vote</em></>}</h1>
-          <p className="lede ev-lede">
-            Ballots requested, returned and cast in person, as reported by the states that publish
-            them. {national
-              ? "Click any state for its counties."
-              : <>Counties below. <button className="ev-link" onClick={() => setScope("US")}>Back to all states</button></>}
-          </p>
           <div className="pmeta">
             <span>General election <b>November 3, 2026</b></span>
             {data?.snapshot_date ? <span>Snapshot <b>{data.snapshot_date}</b></span> : null}
-            <span>Party estimate by <b>TPSI</b> where states report none</span>
+            <span>Modeled by <b>TPSI</b> where states report no party or demographics</span>
+            {!national ? <button className="ev-link" onClick={() => setScope("US")}>Back to all states</button> : <span>Click a state for its counties</span>}
           </div>
         </header>
 
-        {/* category */}
-        <div className="ev-controls">
-          <div className="ev-seg" role="tablist" aria-label="Ballot category">
-            {VIEWS.map((c) => (
-              <button key={c.key} role="tab" aria-selected={cat === c.key}
-                className={cat === c.key ? "on" : ""} onClick={() => setCat(c.key)}>{c.label}</button>
-            ))}
-          </div>
-        </div>
+        <KpiStrip view={view} setView={setView} mail={mailN} inperson={inN} requested={reqN} exp={exp} />
+        <TopCards scope={scope} E={E} calc={calc} races={races} reportedShare={party.reported} cast={mailN + inN} expTotal={exp?.total ?? 0} />
 
         {loading ? (
           <div className="ev-empty">Reading the early vote feed</div>
@@ -766,68 +802,14 @@ export default function EarlyVoteDesk() {
             {" "}States report on their own schedule, so this fills in as they do.
           </div>
         ) : (
-          <>
-            {/* headline */}
-            <section className="ev-top">
-              <div className="ev-top-n">
-                <em>{catMeta.blurb}</em>
-                <b>{commas(total)}</b>
-                <span>{national ? `${rows.length} states reporting` : `${rows.length} counties`}</span>
+          <div className="db-main">
+            <section className="db-mapcard ev-mapwrap">
+              <div className="db-maptools">
+                <button className={`db-tool${bubbles ? " on" : ""}`} onClick={() => setBubbles((b) => !b)} aria-pressed={bubbles}>Ballot bubbles</button>
+                {someNoParty && view !== "remaining" ? (
+                  <button className="db-tool" onClick={() => setShade(shade === "estimate" ? "turnout" : "estimate")}>{shade === "estimate" ? "Show volume" : "Show estimate"}</button>
+                ) : null}
               </div>
-              <div className="ev-top-split">
-                <Bar row={data.statewide_total} groups={groups} total={total} />
-                {!national && myView && (showEst || myView.u <= 0) ? (() => {
-                  const r = ratingOf(myView.margin);
-                  return (
-                    <div className="ev-stview">
-                      <span className="pill" style={{ background: r.color, color: r.rating === "SAFE" || r.rating === "LIKELY" ? "#fff" : "#111" }}>{r.label}</span>
-                      <b style={{ color: myView.margin > 0 ? "var(--gop)" : "var(--dem)" }}>{fmtMargin(myView.margin)}</b>
-                      <span>
-                        statewide, {myView.u > 0
-                          ? myView.d + myView.r > 0
-                            ? <>reported party plus the TPSI estimate of {commas(myView.u)} Unspecified ballots, 80% range {fmtRange(myView.lo, myView.hi)}</>
-                            : <>TPSI estimate, 80% range {fmtRange(myView.lo, myView.hi)}</>
-                          : <>as reported</>}. The national map rates {STATE_NAME[scope] ?? scope} on this same number.
-                      </span>
-                    </div>
-                  );
-                })() : null}
-                <div className="ev-key">
-                  {groups.map((g) => {
-                    const v = data.statewide_total[g]?.votes ?? 0;
-                    if (v <= 0) return null;
-                    return (
-                      <span key={g}>
-                        <i style={{ background: toneFor(g, data.statewide_total[g]?.color) }} />
-                        {g}<b>{commas(v)}</b><u>{pct(v, total)}</u>
-                      </span>
-                    );
-                  })}
-                </div>
-              </div>
-            </section>
-
-            {national && model ? (
-              <NationalCombined combined={combined} loaded={natlAll} cat={cat} setCat={setCat} tilt={tilt} />
-            ) : null}
-
-            {someNoParty && est?.total ? (
-              <EstimatePanel e={est.total} sub={national
-                ? `Across the ${noPartyRows.length} ${noPartyRows.length === 1 ? "state that reports" : "states that report"} every ballot as Unspecified.`
-                : allNoParty ? `${STATE_NAME[scope] ?? scope} reports every ballot as Unspecified.`
-                : `Across the ${noPartyRows.length} ${noPartyRows.length === 1 ? "county that reports" : "counties that report"} every ballot as Unspecified.`}
-                mode={cat === "total" ? "returned" : modeOf(cat)} model={model!} tilt={tilt} shade={shade} setShade={setShade}
-                st={national ? null : scope} adj={national ? null : adj} />
-            ) : null}
-
-            {cat === "total" ? <Electorate scope={scope} units={units} model={model} snapshot={data.snapshot_date} onOpen={(k) => setScope(k)} /> : null}
-
-            <EarlyDemographics scope={scope} cat={cat} caps={caps} model={model} catLabel={catMeta.blurb} />
-
-            {/* the map */}
-            <section className="ev-mapwrap">
-              <RatingBoard places={rows.map(({ name, row, n }) => ({ m: marginFor(name, row), n, est: hatched(name, row) }))}
-                unit={national ? "state" : "county"} />
               {national && geo ? (
                 <svg viewBox={`0 0 ${geo.frame[0]} ${geo.frame[1]}`} className="ev-map" role="img"
                      aria-label="Early vote by state">
@@ -837,7 +819,7 @@ export default function EarlyVoteDesk() {
                     return (
                       <path key={abbr} d={d}
                         className={`ev-unit${row ? " live" : ""}`}
-                        fill={row ? fillRow(abbr, row) : "var(--ev-idle)"}
+                        fill={row ? (view === "remaining" ? paceFill(paceOf(abbr, sumRow(row))) : fillRow(abbr, row)) : "var(--ev-idle)"}
                         onClick={row ? () => setScope(abbr) : undefined}
                         onMouseMove={row ? (e) => setTip({ key: abbr, x: e.clientX, y: e.clientY }) : undefined}
                         onMouseLeave={() => setTip(null)} />
@@ -845,9 +827,15 @@ export default function EarlyVoteDesk() {
                   })}
                   {Object.entries(geo.states).map(([abbr, d]) => {
                     const row = data.regions[abbr];
-                    return row && hatched(abbr, row)
+                    return row && hatched(abbr, row) && view !== "remaining"
                       ? <path key={`h-${abbr}`} d={d} className="ev-hatch" fill="url(#ev-hatch)" /> : null;
                   })}
+                  {bubbles ? Object.keys(geo.states).map((abbr) => {
+                    const row = data.regions[abbr]; const c = natCent[abbr];
+                    if (!row || !c) return null;
+                    const v = bubbleVal(abbr, sumRow(row)); if (v <= 0) return null;
+                    return <circle key={`b-${abbr}`} cx={c[0]} cy={c[1]} r={Math.max(1.8, 26 * Math.sqrt(v / bubbleMax))} className={`db-bub${view === "remaining" ? " rem" : ""}`} />;
+                  }) : null}
                 </svg>
               ) : !national && stateGeo && countyNames ? (
                 (() => {
@@ -866,7 +854,7 @@ export default function EarlyVoteDesk() {
                           return (
                             <path key={c.id} d={c.d}
                               className={`ev-unit${row ? " live" : ""}`}
-                              fill={row ? fillRow(name!, row) : "var(--ev-idle)"}
+                              fill={row ? (view === "remaining" ? paceFill(paceOf(name!, sumRow(row))) : fillRow(name!, row)) : "var(--ev-idle)"}
                               onMouseMove={row ? (e) => setTip({ key: name!, x: e.clientX, y: e.clientY }) : undefined}
                               onMouseLeave={() => setTip(null)} />
                           );
@@ -874,9 +862,15 @@ export default function EarlyVoteDesk() {
                         {stateGeo.counties.map((c) => {
                           const name = byFips[c.id];
                           const row = name ? data.regions[name] : undefined;
-                          return row && hatched(name!, row)
+                          return row && hatched(name!, row) && view !== "remaining"
                             ? <path key={`h-${c.id}`} d={c.d} className="ev-hatch" fill="url(#ev-hatch)" /> : null;
                         })}
+                        {bubbles ? stateGeo.counties.map((c) => {
+                          const name = byFips[c.id]; const row = name ? data.regions[name] : undefined; const ct = ctyCent[c.id];
+                          if (!row || !ct) return null;
+                          const v = bubbleVal(name!, sumRow(row)); if (v <= 0) return null;
+                          return <circle key={`b-${c.id}`} cx={ct[0]} cy={ct[1]} r={Math.max(1.4, 22 * Math.sqrt(v / bubbleMax))} className={`db-bub${view === "remaining" ? " rem" : ""}`} />;
+                        }) : null}
                       </svg>
                       {matched < Object.keys(data.regions).length ? (
                         <p className="ev-mapnote">
@@ -891,8 +885,11 @@ export default function EarlyVoteDesk() {
               ) : (
                 <div className="ev-maploading"><span /> drawing the map…</div>
               )}
-
-              {!allNoParty || showEst ? (
+              {view === "remaining" ? (
+                <div className="ev-legend"><span className="ev-cap">Share of the expected vote cast</span>
+                  <div className="ev-leg-row">{[0, 0.25, 0.5, 0.75, 1].map((t) => <span key={t} className="ev-leg"><i style={{ background: paceFill(t) }} />{Math.round(t * 100)}%</span>)}</div>
+                  <span className="ev-leg-note">bubbles are the ballots still expected, early and on Election Day</span></div>
+              ) : !allNoParty || showEst ? (
                 <div className="ev-legend">
                   <span className="ev-cap">Ratings</span>
                   <div className="ev-leg-row">
@@ -904,7 +901,7 @@ export default function EarlyVoteDesk() {
                   <span className="ev-leg-note">margin of the ballots cast · tilt &lt;5 · lean &lt;15 · likely &lt;30 · safe 30+</span>
                 </div>
               ) : null}
-              {someNoParty && vol && !showEst ? (
+              {someNoParty && vol && !showEst && view !== "remaining" ? (
                 <div className="ev-scale turnout">
                   {!allNoParty ? <em className="lab">no party reported</em> : null}
                   <span>Fewer ballots</span>
@@ -919,7 +916,7 @@ export default function EarlyVoteDesk() {
                   <span>More ballots</span>
                 </div>
               ) : null}
-              {showEst ? (
+              {view === "remaining" ? null : showEst ? (
                 <p className="ev-mapnote">
                   {allNoParty
                     ? `${national ? "None of the reporting states attach" : `${STATE_NAME[scope] ?? scope} does not attach`} a party to these ballots. `
@@ -941,9 +938,43 @@ export default function EarlyVoteDesk() {
                   so {noPartyRows.length === 1 ? "it is" : "they are"} shaded green by raw ballot count on a log scale.
                 </p>
               ) : null}
+              <div className="db-tabs">
+                <div className="ev-seg" role="tablist" aria-label="Map view">
+                  {MAP_TABS.map((t) => (
+                    <button key={t.k} role="tab" aria-selected={view === t.k} className={view === t.k ? "on" : ""} onClick={() => setView(t.k)}>{t.label}</button>
+                  ))}
+                </div>
+              </div>
             </section>
+            <SidePanels scope={scope} view={view} E={E} calc={calc} model={model} caps={caps} units={units} party={party} />
+          </div>
+        )}
 
-            {/* the table */}
+        {data && !loading ? <Electorate scope={scope} E={E} calc={calc} model={model} snapshot={data.snapshot_date} onOpen={(k) => setScope(k)} /> : null}
+
+        <details className="db-more">
+          <summary>Every breakdown {national ? "the states publish" : `${STATE_NAME[scope] ?? scope} publishes`}</summary>
+          <EarlyDemographics scope={scope} cat={cat} caps={caps} model={model} catLabel={catMeta.blurb} />
+        </details>
+        {data && !loading && (national || (someNoParty && est?.total)) ? (
+          <details className="db-more">
+            <summary>The party estimate, and how it is made</summary>
+            {national && model ? <NationalCombined combined={combined} loaded={natlAll} cat={cat} setCat={setCat} tilt={tilt} /> : null}
+            {someNoParty && est?.total ? (
+              <EstimatePanel e={est.total} sub={national
+                ? `Across the ${noPartyRows.length} ${noPartyRows.length === 1 ? "state that reports" : "states that report"} every ballot as Unspecified.`
+                : allNoParty ? `${STATE_NAME[scope] ?? scope} reports every ballot as Unspecified.`
+                : `Across the ${noPartyRows.length} ${noPartyRows.length === 1 ? "county that reports" : "counties that report"} every ballot as Unspecified.`}
+                mode={cat === "total" ? "returned" : modeOf(cat)} model={model!} tilt={tilt} shade={shade} setShade={setShade}
+                st={national ? null : scope} adj={national ? null : adj} />
+            ) : null}
+            <RatingBoard places={rows.map(({ name, row, n }) => ({ m: marginFor(name, row), n, est: hatched(name, row) }))}
+              unit={national ? "state" : "county"} />
+          </details>
+        ) : null}
+        {data && !loading ? (
+          <details className="db-more">
+            <summary>The feed, {national ? "state by state" : "county by county"}, for {placeName}</summary>
             <section className="ev-tablewrap">
               <div className="ev-tablehead">
                 <h2 className="ev-h2">{national ? "by state" : "by county"}</h2>
@@ -1010,8 +1041,8 @@ export default function EarlyVoteDesk() {
                 </table>
               </div>
             </section>
-          </>
-        )}
+          </details>
+        ) : null}
 
         {tip && data && data.regions[tip.key] ? (() => {
           const row = data.regions[tip.key];
@@ -1077,7 +1108,6 @@ export default function EarlyVoteDesk() {
             </TipBox>
           );
         })() : null}
-
         <p className="ev-note">
           Early vote figures come from <a href="https://civicapi.org/early-vote/" target="_blank" rel="noreferrer">civicAPI</a>,
           which collects them from state election authorities. Each state reports on its own

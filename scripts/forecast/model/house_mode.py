@@ -580,6 +580,9 @@ DE = [
 # Oct 12 2026 sweep: NY-21 Siena Oct 6 (46 to 42) and Impact Research for Gendebien (D) Oct 4 (45 to 48), SC-1 co/efficient (R)
 # Oct 1 (40 to 46); /tmp/hpolls/build_1012.py, the 1008b rule.
 POLLS = {
+         # Oct 15 2026 8 PM sweep: RI-1 and RI-2 Emerson/WPRI Oct 8-11, NM-2 Research & Polling for the Albuquerque Journal Oct 1-9,
+         # GA-3 VoteNexus for Keller (D) and GA-7 20/20 Insight for Kozycki (D), NE-2 National Public Affairs (R), and the SC-1
+         # co/efficient duplicate dropped; /tmp/hpolls/build_1015.py.
          # Oct 8 2026 second pass, every House district: the rest of the map swept too, nonpartisan district polls now carry
          # the pollster's statewide house effect, and a sample its own margin of error contradicts enters at the size the
          # margin implies (Hendrix AR-2). /tmp/hpolls/build_1008b.py, copied to scratchpad/house_polls_build_1008b.py.
@@ -592,6 +595,10 @@ POLLS = {
          # entered as 500 ending Oct 6; each blended against the prior entry. TX-02 Impact Research for Finnie (D), Toth 46
          # Finnie 37, no dates or sample, taken outright after the sponsor shift.
          # Oct 5 sweep: NY-17 Emerson for PIX11 Sept 27-29, 400 LV, Conley 48 Lawler 46, blended against the prior entry.
+         # Oct 14 2026 later, supplied by the user: VA-02 CNU Wason Center Oct 1-10, 702 LV, Luria 46 Kiggans 43, and KY-06 DCCC (D)
+         # Oct 2-5 LV, Dembo 46 Alvarado 40 Bowman 5, n not published so 400; both blended by /tmp/hpolls/build_1014b.py.
+         # Oct 14 2026, supplied by the user: TX-09 University of Houston Hobby School Oct 3-7, 677 LV, Mealer 48 Gutierrez 42,
+         # blended with the PPP for Gutierrez (D) poll by /tmp/hpolls/build_1014.py.
          # Oct 4 evening sweep: TX-09 PPP for Gutierrez (D), Mealer 45 Gutierrez 39, and TX-10 Change Research for Rourk (D),
          # Gober 48 Rourk 41, both released about Sept 30 with no dates or sample size, taken outright after the sponsor shift;
          # VA-05 Expedition Strategies for Perriello (D) Sept 21-24, McGuire 46 Perriello 45 Harvey 6, n not published, blended.
@@ -602,15 +609,15 @@ POLLS = {
          # old. UT-01 Lighthouse Research Aug 31-Sept 24, McAdams 63 Owen 21, taken outright; UT-02 to UT-04 dropped at
          # 20 percent undecided or more.
          "FL": {8: dict(d=43.5, r=49.5), 9: dict(d=39.5, r=42.5), 11: dict(d=41.9, r=42.1), 13: dict(d=44.0, r=47.1), 14: dict(d=45.5, r=38.5), 16: dict(d=39.0, r=43.0), 22: dict(d=47.7, r=47.9), 27: dict(d=44.0, r=47.6), 28: dict(d=39.9, r=46.1)},
-         "TX": {2: dict(d=35.5, r=47.5), 9: dict(d=37.5, r=46.5), 10: dict(d=39.5, r=49.5), 15: dict(d=50.7, r=44.4), 23: dict(d=40.8, r=46.7), 28: dict(d=43.8, r=36.4), 34: dict(d=43.8, r=42.0), 35: dict(d=42.5, r=46.5)},
+         "TX": {2: dict(d=35.5, r=47.5), 9: dict(d=40.5, r=47.5), 10: dict(d=39.5, r=49.5), 15: dict(d=50.7, r=44.4), 23: dict(d=40.8, r=46.7), 28: dict(d=43.8, r=36.4), 34: dict(d=43.8, r=42.0), 35: dict(d=42.5, r=46.5)},
          "NYG": {17: dict(d=48.2, r=47.0), 18: dict(d=51.2, r=37.4), 21: dict(d=43.3, r=46.0), 23: dict(d=32.8, r=54.2)},
-         "VA": {1: dict(d=48.1, r=46.9), 2: dict(d=45.5, r=48.5), 5: dict(d=44.2, r=49.6), 6: dict(d=29.9, r=58.1)},
+         "VA": {1: dict(d=48.1, r=46.9), 2: dict(d=45.9, r=43.8), 5: dict(d=44.2, r=49.6), 6: dict(d=29.9, r=58.1)},
          "CAG": {22: dict(d=46.5, r=45.5), 48: dict(d=45.4, r=43.6)},
          "PAG": {1: dict(d=44.1, r=48.5), 7: dict(d=45.0, r=41.3), 8: dict(d=46.4, r=45.2), 10: dict(d=46.5, r=44.8)},
          "OH": {1: dict(d=47.8, r=42.2), 7: dict(d=46.7, r=41.0), 9: dict(d=46.3, r=49.2), 10: dict(d=39.5, r=48.9), 15: dict(d=41.3, r=45.5)},
          "NC": {1: dict(d=46.9, r=41.5), 3: dict(d=41.1, r=43.9), 7: dict(d=37.5, r=46.5), 9: dict(d=40.5, r=47.5), 10: dict(d=37.0, r=52.0), 11: dict(d=45.5, r=45.5), 14: dict(d=40.0, r=48.0)},
          "MI": {4: dict(d=46.7, r=46.2), 7: dict(d=47.7, r=47.3), 10: dict(d=43.5, r=46.3)},
-         "GA": {},
+         "GA": {3: dict(d=43.5, r=51.5), 7: dict(d=45.5, r=46.5)},   # Oct 15 8 PM sweep: GA-3 VoteNexus for Keller (D), GA-7 20/20 Insight for Kozycki (D), /tmp/hpolls/build_1015.py
          "IL": {},
          "NJ": {2: dict(d=39.3, r=47.7), 7: dict(d=46.8, r=42.3)},
          "WA": {3: dict(d=44.7, r=46.6), 5: dict(d=47.2, r=52.8)},
@@ -619,7 +626,7 @@ POLLS = {
          "MA": {},
          "MO": {2: dict(d=41.7, r=43.3)},
          "MDG": {1: dict(d=39.2, r=51.8)},
-         "MN": {1: dict(d=45.2, r=47.5), 2: dict(d=50.2, r=40.4)},
+         "MN": {1: dict(d=45.7, r=45.3), 2: dict(d=50.2, r=40.4)},   # Oct 13: MN-1 SurveyUSA Oct 4-9, Johnson 46 Finstad 44, /tmp/hpolls/build_1013.py
          "WIG": {1: dict(d=46.4, r=49.2), 3: dict(d=48.4, r=47.7), 6: dict(d=39.2, r=60.8)},
          "CO": {3: dict(d=43.5, r=47.5), 5: dict(d=42.5, r=46.5), 8: dict(d=47.5, r=46.5), 4: dict(d=38.5, r=46.5)},
          "IN": {5: dict(d=44.5, r=49.5)},
@@ -633,20 +640,20 @@ POLLS = {
          "MT": {1: dict(d=43.5, r=44.4)},
          "ND": {},
          "SD": {1: dict(d=43.0, r=47.0)},
-         "NE": {1: dict(d=45.3, r=45.9), 2: dict(d=46.0, r=42.0)},
+         "NE": {1: dict(d=45.3, r=45.9), 2: dict(d=49.1, r=38.9)},
          "KS": {},
          "OK": {5: dict(d=40.3, r=46.8)},
-         "NM": {2: dict(d=45.7, r=42.6)},
+         "NM": {2: dict(d=47.2, r=43.2)},
          "AR": {2: dict(d=41.7, r=49.8)},
          "IA": {1: dict(d=38.6, r=36.4), 2: dict(d=44.5, r=46.5), 3: dict(d=43.5, r=46.5)},
          "LA": {},
          "MS": {},
          "AL": {2: dict(d=44.6, r=47.8)},
-         "SC": {1: dict(d=41.9, r=44.9)},
-         "KY": {6: dict(d=43.5, r=41.5)},
+         "SC": {1: dict(d=42.4, r=44.9)},
+         "KY": {6: dict(d=43.7, r=41.5)},
          "WV": {},
          "CTG": {},
-         "RI": {},
+         "RI": {1: dict(d=54.3, r=25.7), 2: dict(d=55.4, r=38.6)},   # Oct 15 8 PM sweep: Emerson/WPRI Oct 8-11
          "VTG": {1: dict(d=63.5, r=27.7)},
          "NH": {1: dict(d=46.1, r=41.9), 2: dict(d=53.0, r=34.6)},
          # UNH Sept 17-21 2026: ME-01 Pingree 57 Russell 35, ME-02 Dunlap 51 LePage 45. ME-02 blends

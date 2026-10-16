@@ -149,3 +149,16 @@ Rebuild with:
 ```
 TPSI_DB=TPSI_Unified_Respondent_Dataset.csv TPSI_COUNTY=TPSI_Trump_Approval_By_County_Combined_FULL.csv FC_DIR=/tmp/fc_v47 python3 scripts/earlyvote/build_party_model.py
 ```
+
+## Oct 16 2026: the 2026 mode split from the TPSI national dataset, and the dashboard
+
+- `build_electorate_model.py` now sets each state's expected split between mail, early in person and Election Day from
+  the TPSI national dataset, the mode model at the state's own counties, ages and ballot rules, pooled with the state's
+  2024 EAVS record in log odds at `TPSI_MODE_W` (0.5). TPSI alone puts about 64 percent of the vote on Election Day; 2024
+  put 37 percent there. Pooled, the nation is expected to cast about 27 percent by mail, 23 percent early in person and
+  50 percent on Election Day of 128.5 million votes. Set `TPSI_MODE_W=1` for TPSI alone.
+- New per state fields: `tpsi2026`, `target2026`, `women` (women's share of each mode's likely voters, TPSI, shrunk to
+  the nation at 40 respondents), `margin24` (Trump minus Harris, all votes) and `house` (the forecast's House vote).
+- The page is a dashboard (`app/maps/early-vote/Dashboard.tsx`): ballot tiles, the modeled 2026 vote of the ballots cast
+  for a race, the final electorate shift, a forecast check, and side panels that report party, race, age and gender where
+  a state publishes them and fill the rest from the TPSI expectation for that state's mail and in person voters.

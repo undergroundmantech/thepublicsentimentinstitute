@@ -1,50 +1,57 @@
 source,dates,end,n,pop,R,D,O,U
-Trafalgar Group (R),October 6-8 2026 sample size not given so 1090 placeholder,2026-10-08,1090,LV,43.6,47.1,0,9.3
-UMass Lowell/YouGov,September 18-28 2026,2026-09-28,850,LV,45,45,3,7
-Guidant Polling for Public First Action,October 2026 field dates not published,2026-10-05,800,LV,44,47,4,5
-YouGov,September 28-October 5 2026,2026-10-05,3625,LV,44,50,2,4
-New York Times/Siena,September 21-30 2026,2026-09-30,615,LV,45,51,0,4
-Pulse Decision Science (R),September 24-27 2026,2026-09-27,800,LV,48,45,0,7
-Fox News/Beacon Research and Shaw & Company,September 24-28 2026,2026-09-28,881,LV,49,51,0,0
-Rasmussen Reports,September 28-29 2026,2026-09-29,1128,LV,45,46,4,5
-Texas Public Opinion Research (D),September 19-22 2026,2026-09-22,1007,LV,44,49,4,3
-Marist University,September 17-20 2026,2026-09-20,1139,RV,44,50,2,4
-Texas Southern University,September 15-19 2026,2026-09-19,1800,LV,46,47,3,4
-Trafalgar Group (R),September 15-17 2026,2026-09-17,1079,LV,45,46,3,6
-Emerson College,September 12-14 2026,2026-09-14,1000,LV,46,47,2,4
-SoCal Strategies,September 12-13 2026,2026-09-13,649,LV,45,50,0,5
-ReconMR/Siena University,September 8-11 2026,2026-09-11,614,LV,43,49,4,4
-Mason-Dixon Polling & Strategy,September 8-10 2026,2026-09-10,625,LV,43,46,3,8
-InsiderAdvantage,September 8-9 2026,2026-09-09,1200,LV,46,47,2,5
-Univision/YouGov,August 27 - September 4 2026,2026-09-04,1000,RV,43,48,1,7
-Fabrizio Ward and Impact Research bipartisan,August 30 - September 1 2026,2026-09-01,895,LV,44,48,0,8
-Overton Insights (R),August 24-26 2026,2026-08-26,1167,LV,50,50,0,0
-Texas Public Opinion Research (D),August 21-24 2026,2026-08-24,1000,LV,42,48,2,7
-University of Texas/Texas Politics Project,August 5-13 2026,2026-08-13,1200,RV,39,42,4,14
-Emerson College,August 9-10 2026,2026-08-10,1000,LV,47,46,2,5
-Wedgewood Polls,July 30-31 2026,2026-07-31,800,LV,46,48,0,6
-YouGov Blue (D),July 15-31 2026,2026-07-31,1001,RV,45,48,0,6
-Texas A&M University/ReconMR/Siena University,July 27-30 2026,2026-07-30,619,LV,43,47,4,6
-Texas Southern University,July 27-30 2026,2026-07-30,1200,LV,45,47,2,6
-Beacon Research and Shaw & Co. Research bipartisan,July 23-27 2026,2026-07-27,1005,RV,48,51,0,3
-Texas Public Opinion Research (D),July 15-17 2026,2026-07-17,1048,LV,40,45,1,14
-A2 Insights,June 23-28 2026,2026-06-28,618,LV,46,48,3,3
-New York Times/Siena University,June 19-27 2026,2026-06-27,656,LV,47,47,0,6
-SoCal Strategies (R),June 21 2026,2026-06-21,800,LV,49,47,0,4
-University of Texas/Texas Politics Project,June 5-12 2026,2026-06-12,1200,RV,43,42,6,10
-Quantus Insights,June 3-4 2026,2026-06-04,800,LV,45,43,4,7
-Texas A&M University/ReconMR/Siena University,June 1-4 2026,2026-06-04,807,LV,46,46,4,5
-Texas Public Opinion Research (D),May 27-28 2026,2026-05-28,1670,LV,44,47,3,7
-Public Policy Polling (D),May 22-23 2026,2026-05-23,643,RV,38,45,3,14
-Texas Southern University,April 22 - May 6 2026,2026-05-06,1223,LV,45,45,2,8
-Texas Public Opinion Research (D),April 17-20 2026,2026-04-20,1018,LV,41,46,0,9
-University of Texas/Texas Politics Project,April 10-20 2026,2026-04-20,1200,RV,34,42,5,19
-Impact Research (D),March 12-17 2026,2026-03-17,900,LV,43,44,5,7
-Public Policy Polling (D),March 4-5 2026,2026-03-05,576,V,45,47,0,8
-University of Houston/YouGov,January 20-31 2026,2026-01-31,1502,LV,46,44,3,7
-Emerson College,January 10-12 2026,2026-01-12,1165,RV,46,46,0,9
-Ragnar Research Partners (R),November 12-17 2025,2025-11-17,1000,LV,44,44,0,12
-University of Houston/Texas Southern University,September 19 - October 1 2025,2025-10-01,1650,RV,49,46,0,5
-UT Tyler,September 17-24 2025,2025-09-24,1032,RV,38,37,8,17
-Stratus Intelligence (R),September 22-24 2026,2026-09-24,856,LV,48,48,0.0,4.0
-Big Data Poll,September 24-26 2026,2026-09-26,698,LV,44.9,46.8,0.0,8.3
+InsiderAdvantage,October 13-14 2026 sample size not given so 800 placeholder,2026-10-14,800,LV,49,48,0,3
+Quantus Insights,October 9-11 2026,2026-10-11,839,LV,47.2,46.7,2.2,3.9
+ReconMR/Siena University,October 5-8 2026,2026-10-08,617,LV,44,48,0,8
+Trafalgar Group (R),October 6-8 2026,2026-10-08,1086,LV,44.0,47.0,2.0,8.0
+UMass Lowell/YouGov,September 18-28 2026,2026-09-28,850,LV,45.0,45.0,3.0,7.0
+Guidant Polling for Public First Action,September 20-28 2026,2026-09-28,800,LV,44.0,47.0,4.0,5.0
+YouGov,September 28-October 5 2026,2026-10-05,3625,LV,44.0,50.0,2.0,4.0
+New York Times/Siena,September 21-30 2026,2026-09-30,615,LV,45.0,51.0,0.0,4.0
+Pulse Decision Science (R),September 24-27 2026,2026-09-27,800,LV,48.0,45.0,0.0,7.0
+Fox News/Beacon Research and Shaw & Company,September 24-28 2026,2026-09-28,881,LV,49.0,51.0,0.0,0.0
+Rasmussen Reports,September 28-29 2026,2026-09-29,1128,LV,45.0,46.0,4.0,5.0
+Texas Public Opinion Research (D),September 19-22 2026,2026-09-22,1007,LV,44.0,49.0,4.0,3.0
+Marist University,September 17-20 2026,2026-09-20,1139,RV,44.0,50.0,2.0,4.0
+Texas Southern University,September 15-19 2026,2026-09-19,1800,LV,46.0,47.0,3.0,4.0
+Trafalgar Group (R),September 15-17 2026,2026-09-17,1079,LV,45.0,46.0,3.0,6.0
+Emerson College,September 12-14 2026,2026-09-14,1000,LV,46.0,47.0,2.0,4.0
+SoCal Strategies,September 12-13 2026,2026-09-13,649,LV,45.0,50.0,0.0,5.0
+ReconMR/Siena University,September 8-11 2026,2026-09-11,614,LV,43.0,49.0,4.0,4.0
+Mason-Dixon Polling & Strategy,September 8-10 2026,2026-09-10,625,LV,43.0,46.0,3.0,8.0
+InsiderAdvantage,September 8-9 2026,2026-09-09,1200,LV,46.0,47.0,2.0,5.0
+Univision/YouGov,August 27 - September 4 2026,2026-09-04,1000,RV,43.0,48.0,1.0,7.0
+Fabrizio Ward and Impact Research bipartisan,August 30 - September 1 2026,2026-09-01,895,LV,44.0,48.0,0.0,8.0
+Overton Insights (R),"August 24-26 2026, leaned and initial ballots averaged",2026-08-26,1167,LV,46.5,47.0,0.0,6.5
+Texas Public Opinion Research (D),August 21-24 2026,2026-08-24,1000,LV,42.0,48.0,2.0,7.0
+University of Texas/Texas Politics Project,August 5-13 2026,2026-08-13,1200,RV,39.0,42.0,4.0,14.0
+Emerson College,August 9-10 2026,2026-08-10,1000,LV,47.0,46.0,2.0,5.0
+Wedgewood Polls,July 30-31 2026,2026-07-31,800,LV,46.0,48.0,0.0,6.0
+YouGov Blue (D),July 15-31 2026,2026-07-31,1001,RV,45.0,48.0,0.0,6.0
+Texas A&M University/ReconMR/Siena University,July 27-30 2026,2026-07-30,619,LV,43.0,47.0,4.0,6.0
+Texas Southern University,July 27-30 2026,2026-07-30,1200,LV,45.0,47.0,2.0,6.0
+Beacon Research and Shaw & Co. Research bipartisan,July 23-27 2026,2026-07-27,1005,RV,48.0,51.0,0.0,3.0
+Texas Public Opinion Research (D),July 15-17 2026,2026-07-17,1048,LV,40.0,45.0,1.0,14.0
+A2 Insights,June 23-28 2026,2026-06-28,618,LV,46.0,48.0,3.0,3.0
+New York Times/Siena University,June 19-27 2026,2026-06-27,656,LV,47.0,47.0,0.0,6.0
+SoCal Strategies (R),June 21 2026,2026-06-21,800,LV,49.0,47.0,0.0,4.0
+University of Texas/Texas Politics Project,June 5-12 2026,2026-06-12,1200,RV,43.0,42.0,6.0,10.0
+Quantus Insights,June 3-4 2026,2026-06-04,800,LV,45.0,43.0,4.0,7.0
+Texas A&M University/ReconMR/Siena University,June 1-4 2026,2026-06-04,807,LV,46.0,46.0,4.0,5.0
+Texas Public Opinion Research (D),May 27-28 2026,2026-05-28,1670,LV,44.0,47.0,3.0,7.0
+Public Policy Polling (D),May 22-23 2026,2026-05-23,643,RV,38.0,45.0,3.0,14.0
+Texas Southern University,April 22 - May 6 2026,2026-05-06,1223,LV,45.0,45.0,2.0,8.0
+Texas Public Opinion Research (D),April 17-20 2026,2026-04-20,1018,LV,41.0,46.0,0.0,9.0
+University of Texas/Texas Politics Project,April 10-20 2026,2026-04-20,1200,RV,34.0,42.0,5.0,19.0
+Impact Research (D),March 12-17 2026,2026-03-17,900,LV,43.0,44.0,5.0,7.0
+Public Policy Polling (D),March 4-5 2026,2026-03-05,576,V,45.0,47.0,0.0,8.0
+University of Houston/YouGov,January 20-31 2026,2026-01-31,1502,LV,46.0,44.0,3.0,7.0
+Emerson College,January 10-12 2026,2026-01-12,1165,RV,46.0,46.0,0.0,9.0
+Ragnar Research Partners (R),November 12-17 2025,2025-11-17,1000,LV,44.0,44.0,0.0,12.0
+University of Houston/Texas Southern University,September 19 - October 1 2025,2025-10-01,1650,RV,49.0,46.0,0.0,5.0
+UT Tyler,September 17-24 2025,2025-09-24,1032,RV,38.0,37.0,8.0,17.0
+Stratus Intelligence (R),September 22-24 2026,2026-09-24,856,LV,48.0,48.0,0.0,4.0
+Big Data Poll,"September 24-26 2026, leaned and initial ballots averaged",2026-09-26,698,LV,43.5,46.0,6.5,4.0
+Fox News/Beacon Research and Shaw & Company,September 24-28 2026,2026-09-28,1203,RV,46.0,53.0,0.0,1.0
+Big Data Poll,"September 24-26 2026, leaned and initial ballots averaged",2026-09-26,793,RV,41.5,45.0,7.5,6.0
+Marist University,October 8-11 2026,2026-10-11,950,LV,45.0,47.0,0.0,8.0
+University of Texas/Texas Politics Project,September 25-October 5 2026,2026-10-05,1000,LV,47.0,50.0,1.0,2.0

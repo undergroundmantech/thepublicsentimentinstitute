@@ -103,6 +103,21 @@ for it in range(400):
 def pmode(rg, g, a):
     z = np.append(design(rg, g, a) @ B, 0.0); p = np.exp(z - z.max()); return p / p.sum()
 
+# women's share of each mode's likely voters, nationally and by state shrunk toward the nation (40 respondents)
+_GM = M[M.ballot_method.isin(METHOD)].copy() if "gender" in M else None
+GENDER = {}
+try:
+    _G = pd.read_csv(f"{RR}/tpsi_db/TPSI_Unified_Respondent_Dataset.csv", low_memory=False, usecols=["state", "gender", "ballot_method", "likely_voter"])
+    _G = _G[_G.likely_voter.astype(str).isin(["1", "1.0", "True"]) & _G.ballot_method.isin(METHOD) & _G.gender.isin(["Female", "Male"])].copy()
+    _G["m"] = _G.ballot_method.map(METHOD); _G["fem"] = (_G.gender == "Female").astype(float)
+    nat_f = _G.groupby("m").fem.mean().reindex(MODES).fillna(0.52)
+    GENDER["US"] = [round(float(nat_f[m]), 4) for m in MODES]
+    for st_, g_ in _G.groupby("state"):
+        k_ = 40.0
+        GENDER[str(st_)] = [round(float((g_[g_.m == m].fem.sum() + k_ * nat_f[m]) / ((g_.m == m).sum() + k_)), 4) for m in MODES]
+except Exception as _e:
+    print("gender expectation skipped", _e)
+
 # ── 2. counties ──────────────────────────────────────────────────────────────
 C = json.load(open(os.path.join(ROOT, "public", "forecast", "counties.json")))
 rows = {}
@@ -185,6 +200,25 @@ for rg in REGS:
 filled = {st: (t is None) for st, t in targets.items()}
 targets = {st: (t if t is not None else reg_avg[REGIME.get(st, "request")]) for st, t in targets.items()}
 
+# Oct 16 2026, by the user's choice: the national split between mail, early in person and Election Day comes from the
+# TPSI national dataset, what 2026 likely voters say they will do, pooled with each state's own 2024 record. Each
+# state's TPSI share is the mode model at its counties' voters and ages under its ballot rules, with no state offset;
+# the two are blended in log odds at TPSI_MODE_W (0.5), since a national panel cannot see each state's habits and
+# voters who say Election Day often vote early. TPSI alone would put about two thirds of the vote on Election Day.
+TPSI_W = float(os.environ.get("TPSI_MODE_W", "0.5"))
+tpsi_sh, eavs_raw = {}, {}
+for st in st_tot:
+    tot = np.zeros(3)
+    for f, c in cty.items():
+        if c["st"] == st: tot += (c["N"][:, None] * c["pm"]).sum(0)
+    tpsi_sh[st] = tot / tot.sum()
+    eavs_raw[st] = targets[st].copy()
+    if st in ("OR", "WA"): continue          # every voter is mailed a ballot and returns it by mail or drop box
+    lt = np.log(np.clip(tpsi_sh[st], 1e-4, None)); le = np.log(np.clip(targets[st], 1e-4, None))
+    lb = TPSI_W * (lt - lt[2]) + (1 - TPSI_W) * (le - le[2])
+    if targets[st][1] <= 1e-4: lb[1] = -9.0   # a state with no early in person voting keeps none
+    b = np.exp(lb); targets[st] = b / b.sum()
+
 off = {}
 for st in st_tot:
     fs = [f for f, c in cty.items() if c["st"] == st]
@@ -229,8 +263,12 @@ def summ(gm, T, H, tot24, st=None):
                groupShare={m: [round(float(x), 4) for x in gm[:, i] / max(gm[:, i].sum(), 1e-9)] for i, m in enumerate(MODES)},
                electorate=[round(float(x), 4) for x in gm.sum(1) / max(gm.sum(), 1e-9)],
                trump24=round(float(T / max(T + H, 1)), 4), votes24=round(tot24))
+    out["margin24"] = round(float((T - H) / max(tot24, 1) * 100), 2)   # Trump minus Harris, all votes, points
     if st:
-        out["eavs2024"] = [round(float(x), 4) for x in targets[st]]
+        out["eavs2024"] = [round(float(x), 4) for x in eavs_raw[st]]
+        out["tpsi2026"] = [round(float(x), 4) for x in tpsi_sh[st]]
+        out["target2026"] = [round(float(x), 4) for x in targets[st]]
+        out["women"] = GENDER.get(st, GENDER.get("US"))
         out["eavsFilled"] = bool(filled[st])
         out["regime"] = REGIME.get(st, "request")
     return out
@@ -241,6 +279,8 @@ payload = {
         "modes": MODES, "groups": GROUPS,
         "crossover": {"trumpToD": round(float(xT), 4), "harrisToR": round(float(xH), 4), "newShare": round(n_new, 4), "newD": round(float(dn), 4)},
         "partyToGroup": PARTY_TO_GROUP,
+        "modeMethod": {"tpsiWeight": TPSI_W, "note": "TPSI 2026 ballot method intent pooled with each state's 2024 EAVS record in log odds"},
+        "womenUS": GENDER.get("US"),
         "countyCols": ["turnout", "mail", "early", "eday", "trumpMail", "trumpEarly", "trumpEday", "harrisMail", "harrisEarly", "harrisEday", "trump24"],
         "sources": ["On Point Politics forecast, county House vote", "2024 certified presidential vote by county",
                     "TPSI likely voters", "EAC 2024 EAVS Executive Summary Table 1", "ACS 2024 five year S1501"],
@@ -249,6 +289,19 @@ payload = {
     "states": st_out,
     "counties": out_c,
 }
+# the forecast's House vote, statewide and nationally, for the modeled vote card
+_hv = {}
+for f, r in rows.items():
+    st = FIPS_ST.get(f[:2])
+    if st: a_ = _hv.setdefault(st, [0.0, 0.0, 0.0]); a_[0] += float(r[1]); a_[1] += float(r[2]); a_[2] += float(r[3])
+for st, a_ in _hv.items():
+    if st in payload["states"]: payload["states"][st]["house"] = {"dem": round(a_[0]), "rep": round(a_[1]), "total": round(a_[2])}
+payload["nation"]["house"] = {k: round(sum(a_[i] for a_ in _hv.values())) for i, k in enumerate(["dem", "rep", "total"])}
+_w = {st: states[st]["gm"].sum() for st in states}
+_W = sum(_w.values())
+payload["nation"]["eavs2024"] = [round(float(sum(_w[st] * eavs_raw[st][i] for st in _w) / _W), 4) for i in range(3)]
+payload["nation"]["tpsi2026"] = [round(float(sum(_w[st] * tpsi_sh[st][i] for st in _w) / _W), 4) for i in range(3)]
+payload["nation"]["women"] = GENDER.get("US")
 json.dump(payload, open(OUT, "w"), separators=(",", ":"))
 print(f"wrote {OUT}: {len(out_c)} counties, {len(st_out)} states, {os.path.getsize(OUT)//1024} KB")
 print("crossover", payload["meta"]["crossover"])
