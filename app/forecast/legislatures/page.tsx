@@ -6,12 +6,10 @@ import LegisTiles from "@/app/components/opp/LegisTiles";
 import USLegisMap, { type USChamber } from "@/app/components/opp/USLegisMap";
 import { BAND_LABEL, controlBand, currentMajority, getStatehouse, slHref, type SLChamber } from "./data";
 import "./legislatures.css";
+import JsonLd from "@/app/components/JsonLd";
+import { legislaturesLd, legislaturesMeta } from "../seo";
 
-export const metadata: Metadata = {
-  title: "2026 state legislative forecast",
-  description: "District by district On Point Politics forecasts for all 87 partisan state legislative chambers on the 2026 ballot.",
-  alternates: { canonical: "/forecast/legislatures" },
-};
+export function generateMetadata(): Metadata { return legislaturesMeta(); }
 
 const pct = (p: number) => (p > 0.99 ? ">99%" : p < 0.01 ? "<1%" : `${Math.round(p * 100)}%`);
 
@@ -44,6 +42,7 @@ export default function LegislaturesPage() {
         <Link href="/">Home</Link><span className="sep">/</span><Link href="/forecast">Forecast</Link><span className="sep">/</span><span>State legislatures</span>
       </nav>
       <ForecastNav />
+      <JsonLd data={legislaturesLd()} />
       <header className="ph">
         <div className="eye g">2026 forecast</div>
         <h1>State legislatures <em>forecast</em></h1>

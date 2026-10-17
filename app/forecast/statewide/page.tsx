@@ -3,13 +3,11 @@ import Link from "next/link";
 import ForecastNav from "@/app/components/opp/ForecastNav";
 import { RATING_LABEL, fmtM, lastName, rating, ratingPill } from "@/app/lib/opp";
 import { OFFICE_ORDER, dbHref, getDownballot, type DBRace } from "./data";
+import { seo } from "@/app/lib/seo";
+import JsonLd from "@/app/components/JsonLd";
+import { statewideLd } from "../seo";
 
-export const metadata: Metadata = {
-  title: "2026 statewide offices forecast",
-  description:
-    "County by county On Point Politics forecasts for every 2026 lieutenant governor, attorney general, secretary of state, treasurer, auditor, agriculture commissioner and railroad commissioner race.",
-  alternates: { canonical: "/forecast/statewide" },
-};
+export const metadata: Metadata = seo({"title": "2026 statewide offices forecast: attorney general, secretary of state and more", "description": "County by county On Point Politics forecasts for every 2026 lieutenant governor, attorney general, secretary of state, treasurer, auditor, agriculture commissioner and railroad commissioner race.", "path": "/forecast/statewide"});
 
 function Row({ r }: { r: DBRace }) {
   const m = r.est.margin;
@@ -54,6 +52,7 @@ export default function StatewidePage() {
         <Link href="/">Home</Link><span className="sep">/</span><Link href="/forecast">Forecast</Link><span className="sep">/</span><span>Statewide offices</span>
       </nav>
       <ForecastNav />
+      <JsonLd data={statewideLd()} />
       <header className="ph">
         <div className="eye g">2026 forecast</div>
         <h1>Statewide offices <em>forecast</em></h1>

@@ -1,26 +1,11 @@
 import type { Metadata } from "next";
 
+// No canonical here: each results page names its own, so none of them points at another.
 export const metadata: Metadata = {
-  title: "Election Results & Forecast · TPSI",
-  description:
-    "Live election night results, precinct-level maps, and AI-driven forecast models for U.S. primary and general elections — powered by The Public Sentiment Institute.",
-  openGraph: {
-    title: "Election Results & Forecast · TPSI",
-    description:
-      "Live election night results, precinct-level maps, and AI-driven forecast models for U.S. primary and general elections.",
-    url: "https://thepublicsentimentinstitute.com/results",
-    siteName: "The Public Sentiment Institute",
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Election Results & Forecast · TPSI",
-    description:
-      "Live election night results, precinct-level maps, and AI-driven forecast models for U.S. primary and general elections.",
-  },
-  alternates: {
-    canonical: "https://thepublicsentimentinstitute.com/results",
-  },
+  title: { default: "2026 election results", template: "%s | On Point Politics" },
+  description: "Live election night results and county maps for 2026 primaries, runoffs and the November 3 general election, from On Point Politics.",
+  openGraph: { title: "2026 election results | On Point Politics", description: "Live election night results and county maps for 2026 primaries, runoffs and the November 3 general election.", siteName: "On Point Politics", type: "website", locale: "en_US" },
+  twitter: { card: "summary_large_image", title: "2026 election results | On Point Politics", description: "Live election night results and county maps for 2026 primaries, runoffs and the November 3 general election." },
 };
 
 export default function ResultsLayout({ children }: { children: React.ReactNode }) {

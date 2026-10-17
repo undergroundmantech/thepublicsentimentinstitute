@@ -1,3 +1,12 @@
+import type { Metadata } from "next";
+import { seo } from "@/app/lib/seo";
+
+export const metadata: Metadata = seo({
+  title: "2026 election results",
+  description: "Live election night results and county maps for 2026 primaries, runoffs and the November 3 general election, with every night already counted in the archive.",
+  path: "/results",
+});
+
 // Inline env check + dynamic import so the bundler drops the unrendered
 // site version from the client graph entirely — see app/lib/flags.ts.
 export default async function Page() {

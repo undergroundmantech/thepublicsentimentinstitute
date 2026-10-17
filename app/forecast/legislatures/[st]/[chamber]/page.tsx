@@ -9,6 +9,8 @@ import ChamberExplorer, { type ChamberMapData } from "../../ChamberExplorer";
 import fs from "node:fs";
 import path from "node:path";
 import "../../legislatures.css";
+import JsonLd from "@/app/components/JsonLd";
+import { chamberLd, chamberMeta } from "../../../seo";
 
 export const dynamicParams = false;
 export function generateStaticParams() {
@@ -19,12 +21,7 @@ const find = (st: string, ch: string): SLChamber | undefined => getStatehouse().
 export async function generateMetadata({ params }: { params: Promise<{ st: string; chamber: string }> }): Promise<Metadata> {
   const { st, chamber } = await params;
   const c = find(st, chamber);
-  if (!c) return {};
-  return {
-    title: `${c.name} forecast`,
-    description: `District by district On Point Politics forecast for the 2026 ${c.name}: ${Math.round(c.demControl * 100)}% Democratic control, ${c.up} seats on the ballot.`,
-    alternates: { canonical: slHref(c) },
-  };
+  return c ? chamberMeta(c) : {};
 }
 
 const pct = (p: number) => (p > 0.99 ? ">99%" : p < 0.01 ? "<1%" : `${Math.round(p * 100)}%`);
@@ -68,6 +65,7 @@ export default async function Page({ params }: { params: Promise<{ st: string; c
         <Link href="/forecast/legislatures">State legislatures</Link><span className="sep">/</span><span>{c.name}</span>
       </nav>
       <ForecastNav />
+      <JsonLd data={chamberLd(c)} />
       <header className="sl-head">
         <div>
           <div className="eye g">2026 state legislative forecast</div>

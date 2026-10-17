@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import FloridaBoard from "../FloridaBoard";
 
-const TITLE = "Florida Governor Republican Primary Results 2026 — Live County Map & Forecast";
+const TITLE = "Florida governor Republican primary results 2026: county map and forecast";
 const DESC =
-  "Live results and TPSI county-level forecast for the August 18, 2026 Florida " +
+  "Results and the On Point Politics county level forecast for the August 18, 2026 Florida " +
   "Republican gubernatorial primary. Byron Donalds, James Fishback, Jay Collins " +
   "and Paul Renner, with all 67 counties, projected turnout and a statewide " +
   "win probability updated as votes are counted.";
@@ -11,7 +11,7 @@ const DESC =
 const CANONICAL = "/results/2026-08-18/florida-governor-republican-primary";
 
 export const metadata: Metadata = {
-  title: TITLE,
+  title: { absolute: `${TITLE} | On Point Politics` },
   description: DESC,
   alternates: { canonical: CANONICAL },
   openGraph: {
@@ -19,7 +19,8 @@ export const metadata: Metadata = {
     description: DESC,
     url: CANONICAL,
     type: "article",
-    siteName: "The Public Sentiment Institute",
+    siteName: "On Point Politics",
+    images: [{ url: "/opengraph-image.png", width: 1200, height: 630, alt: "On Point Politics" }],
   },
   twitter: { card: "summary_large_image", title: TITLE, description: DESC },
 };
@@ -43,15 +44,21 @@ export default function Page() {
               startDate: "2026-08-18T07:00:00-04:00",
               endDate: "2026-08-18T20:00:00-04:00",
               eventStatus: "https://schema.org/EventScheduled",
+              eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
               location: {
                 "@type": "AdministrativeArea",
                 name: "Florida",
               },
             },
+            author: { "@type": "Organization", name: "On Point Politics", url: "https://onpointpolitics.com" },
             publisher: {
-              "@type": "Organization",
-              name: "The Public Sentiment Institute",
+              "@type": "NewsMediaOrganization",
+              "@id": "https://onpointpolitics.com/#organization",
+              name: "On Point Politics",
+              logo: { "@type": "ImageObject", url: "https://onpointpolitics.com/icon.png" },
             },
+            mainEntityOfPage: "https://onpointpolitics.com" + CANONICAL,
+            image: ["https://onpointpolitics.com/opengraph-image.png"],
           }),
         }}
       />

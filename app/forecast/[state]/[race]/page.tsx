@@ -10,6 +10,8 @@ import GeoMap, { type GeoTip } from "@/app/components/opp/GeoMap";
 import type { CountyPath, CountyRow } from "@/app/components/home/countyGeo";
 import { pollHref } from "@/app/polls/registry";
 import { AGGREGATES } from "@/app/_polling/lib/aggregates";
+import JsonLd from "@/app/components/JsonLd";
+import { raceLd, raceMeta } from "../../seo";
 
 export const dynamicParams = false;
 
@@ -30,13 +32,7 @@ function officeWord(r: FRace) { return r.office === "senate" ? "Senate" : r.offi
 export async function generateMetadata({ params }: { params: Promise<{ state: string; race: string }> }): Promise<Metadata> {
   const { state, race } = await params;
   const r = findRace(state, race);
-  if (!r) return {};
-  const title = r.office === "house" ? `${r.name} forecast` : `${r.state} ${r.office === "senate" ? "Senate" : "governor"} forecast`;
-  return {
-    title,
-    description: `${r.dem} vs ${r.gop}: the On Point Politics model margin, win probability, county simulation and every poll of the race.`,
-    alternates: { canonical: raceHref(r.id) },
-  };
+  return r ? raceMeta(r) : {};
 }
 
 const readJson = (rel: string) => JSON.parse(fs.readFileSync(path.join(process.cwd(), "public", "forecast", rel), "utf8"));
@@ -100,6 +96,7 @@ export default async function Page({ params }: { params: Promise<{ state: string
         <Link href={`/forecast?office=${r.office}`}>{r.office === "senate" ? "Senate" : r.office === "governor" ? "Governor" : "House"}</Link><span className="sep">/</span><span>{STATE_NAME[r.st] ?? r.st}{r.office === "house" ? ` ${r.district}` : ""}</span>
       </nav>
       <ForecastNav />
+      <JsonLd data={raceLd(r)} />
       <header className="ph">
         <div className="eye g">2026 forecast</div>
         <h1>{officeTitle} <em>forecast</em></h1>

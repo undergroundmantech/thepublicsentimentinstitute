@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
 import Average from "../../Average";
-export const metadata: Metadata = { title: "JD Vance favorability polling average", alternates: { canonical: "/polls/approval/vance" } };
+import { avgById, avgMeta } from "../../seo";
+
+export const metadata: Metadata = avgMeta(avgById("vance-favorability")!, "JD Vance favorability polling average");
 export default function Page() { return <Average id="vance-favorability" />; }

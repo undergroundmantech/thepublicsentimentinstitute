@@ -2,19 +2,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ELECTION_DATES, getRacesByDate, formatElectionDate, getRaceUrl } from "../_data/raceRegistry";
 import { SITE_V2 } from "../../lib/flags";
+import { seo } from "@/app/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Election Results Archive · TPSI",
-  description: "Browse all election night results by date — primary and general elections tracked by The Public Sentiment Institute.",
-  openGraph: {
-    title: "Election Results Archive · TPSI",
-    description: "Browse all election night results by date — primary and general elections tracked by The Public Sentiment Institute.",
-    url: "https://thepublicsentimentinstitute.com/results/archive",
-    siteName: "The Public Sentiment Institute",
-    type: "website",
-  },
-  alternates: { canonical: "https://thepublicsentimentinstitute.com/results/archive" },
-};
+export const metadata: Metadata = seo({"title": "Election results archive", "description": "Every election night On Point Politics has covered in 2026, by date: primaries, runoffs and special elections with county results.", "path": "/results/archive"});
 
 /** Nights that have a whole-board archive route, not just per-race pages. */
 const NIGHT_BOARDS: Record<string, string> = {

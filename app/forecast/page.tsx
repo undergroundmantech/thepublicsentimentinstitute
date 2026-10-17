@@ -3,13 +3,11 @@ import ForecastDesk from "./ForecastDesk";
 import ForecastHub from "./ForecastHub";
 import DeskJump from "./DeskJump";
 import { DB_OFFICES, type DeskOffice } from "./lib";
+import ForecastIndex from "./ForecastIndex";
+import JsonLd from "@/app/components/JsonLd";
+import { hubLd, hubMeta } from "./seo";
 
-export const metadata: Metadata = {
-  title: "2026 forecast",
-  description:
-    "Every 2026 forecast on one board: the Senate, the House, governors, statewide offices and all 87 state legislative chambers, from the On Point Politics model and 2,000 correlated simulations.",
-  alternates: { canonical: "/forecast" },
-};
+export function generateMetadata(): Metadata { return hubMeta(); }
 
 const OFFICES: readonly string[] = ["governor", "senate", "house", ...DB_OFFICES];
 
@@ -25,8 +23,10 @@ export default async function ForecastPage({ searchParams }: { searchParams: Pro
     : q === "governors" || q === "gov" ? "governor" : q === "sen" ? "senate" : "house";
   return (
     <>
+      <JsonLd data={hubLd()} />
       <div className="opp fc-page hub-wrap"><ForecastHub /></div>
       <ForecastDesk initialOffice={office} embedded />
+      <div className="opp fc-page fc-wide"><ForecastIndex /></div>
       {q ? <DeskJump /> : null}
     </>
   );

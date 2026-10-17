@@ -5,8 +5,9 @@ import { pollHref, PRIMARIES } from "@/app/polls/registry";
 import { getModel } from "@/app/lib/forecastData";
 import { STATE_NAME, raceHref } from "@/app/lib/opp";
 import SearchBox, { type Entry } from "./SearchBox";
+import { seo } from "@/app/lib/seo";
 
-export const metadata: Metadata = { title: "Search", description: "Find any race, state, candidate or polling average.", alternates: { canonical: "/search" } };
+export const metadata: Metadata = seo({"title": "Search races, candidates and polls", "description": "Find any race, state, candidate or polling average.", "path": "/search"});
 
 const PAGES: [string, string, string][] = [
   ["/polls", "Polling averages", "every tracked average"], ["/forecast", "Forecast", "Senate, House and governor"], ["/maps/electoral", "Electoral map", "build a map"],

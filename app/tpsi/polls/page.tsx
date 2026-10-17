@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { seo } from "@/app/lib/seo";
 
-export const metadata: Metadata = { title: "TPSI poll releases", description: "Toplines, crosstabs and methodology from polls fielded by The Public Sentiment Institute for On Point Politics.", alternates: { canonical: "/tpsi/polls" } };
+export const metadata: Metadata = seo({"title": "TPSI poll releases", "description": "Toplines, crosstabs and methodology from polls fielded by The Public Sentiment Institute for On Point Politics.", "path": "/tpsi/polls"});
 
 const DASH = "/tpsi/polls/la-mayor-2026";
 const RELEASES = [

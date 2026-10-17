@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { seo } from "@/app/lib/seo";
 
-export const metadata: Metadata = { title: "The Weighting Room", description: "The subscriber community from The Public Sentiment Institute and On Point Politics: raw crosstabs, model notes and early looks at the data.", alternates: { canonical: "/tpsi/weighting-room" } };
+export const metadata: Metadata = seo({"title": "The Weighting Room", "description": "The subscriber community from The Public Sentiment Institute and On Point Politics: raw crosstabs, model notes and early looks at the data.", "path": "/tpsi/weighting-room"});
 
 const PERKS = [
   ["Raw crosstabs", "The full tables behind every TPSI release, before they are summarized."],

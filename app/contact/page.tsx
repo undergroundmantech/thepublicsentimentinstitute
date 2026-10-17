@@ -1,10 +1,7 @@
 import type { Metadata } from "next";
+import { seo } from "@/app/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Contact",
-  description: "Commission a poll, request data or reach the On Point Politics research desk. Fieldwork by The Public Sentiment Institute.",
-  alternates: { canonical: "/contact" },
-};
+export const metadata: Metadata = seo({"title": "Contact", "description": "Commission a poll, request data or reach the On Point Politics research desk. Fieldwork by The Public Sentiment Institute.", "path": "/contact"});
 
 // Inline env check + dynamic import so the bundler drops the unrendered
 // site version from the client graph entirely — see app/lib/flags.ts.

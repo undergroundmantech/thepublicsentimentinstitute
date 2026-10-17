@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
 import Average from "../Average";
-export const metadata: Metadata = { title: "Right track or wrong track polling average", alternates: { canonical: "/polls/right-track" } };
+import { avgById, avgMeta } from "../seo";
+
+export const metadata: Metadata = avgMeta(avgById("right-wrong-track")!, "Right track or wrong track polling average");
 export default function Page() { return <Average id="right-wrong-track" />; }

@@ -9,6 +9,8 @@ import type { CountyPath } from "@/app/components/home/countyGeo";
 import { STATE_NAME } from "@/app/lib/opp";
 import { GROUP_LABEL, YES_RAMP, bmHref, getMeasures, verdict, yesFill, type Measure } from "../../data";
 import "../../measures.css";
+import JsonLd from "@/app/components/JsonLd";
+import { measureLd, measureMeta } from "../../../seo";
 
 export const dynamicParams = false;
 export function generateStaticParams() {
@@ -19,8 +21,7 @@ const find = (st: string, slug: string): Measure | undefined => getMeasures().me
 export async function generateMetadata({ params }: { params: Promise<{ st: string; slug: string }> }): Promise<Metadata> {
   const { st, slug } = await params;
   const m = find(st, slug);
-  if (!m) return {};
-  return { title: `${STATE_NAME[m.st] ?? m.st} ${m.label} forecast`, description: `${m.title}: On Point Politics gives it a ${Math.round(m.est.prob * 100)}% chance to pass, county by county.`, alternates: { canonical: bmHref(m) } };
+  return m ? measureMeta(m) : {};
 }
 
 const pct = (p: number) => (p > 0.99 ? ">99%" : p < 0.01 ? "<1%" : `${Math.round(p * 100)}%`);
@@ -65,6 +66,7 @@ export default async function Page({ params }: { params: Promise<{ st: string; s
         <Link href="/forecast/measures">Ballot measures</Link><span className="sep">/</span><span>{state} {m.label}</span>
       </nav>
       <ForecastNav />
+      <JsonLd data={measureLd(m)} />
       <header className="bm-head">
         <div>
           <div className="eye g">2026 ballot measure forecast</div>

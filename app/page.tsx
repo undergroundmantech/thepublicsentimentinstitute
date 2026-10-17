@@ -14,12 +14,9 @@ import { CountUp, Grow } from "@/app/components/home/motion";
 import { Icon } from "@/app/components/opp/Logo";
 import fs from "node:fs";
 import path from "node:path";
+import { seo } from "@/app/lib/seo";
 
-export const metadata: Metadata = {
-  title: { absolute: "On Point Politics | Polling averages, forecasts and live results" },
-  description: "Polling averages, county level forecasts and live election results for the 2026 midterms, built on TPSI's own surveys and a transparent public poll feed.",
-  alternates: { canonical: "/" },
-};
+export const metadata: Metadata = seo({"title": "On Point Politics: 2026 midterm forecasts, polling averages and live results", "description": "Who is favored in the 2026 midterms: Senate, House and governor forecasts, every state legislature and statewide ballot measure, daily polling averages and live election night results from On Point Politics.", "path": "/", "absoluteTitle": true});
 
 type RawPoll = { pollster: string; startDate?: string; endDate: string; sampleSize?: number; sampleType?: string; results: Record<string, number> };
 

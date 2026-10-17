@@ -5,12 +5,10 @@ import { STATE_NAME } from "@/app/lib/opp";
 import { GROUP_LABEL, bmHref, getMeasures } from "./data";
 import MeasuresBoard, { type BoardMeasure } from "./MeasuresBoard";
 import "./measures.css";
+import JsonLd from "@/app/components/JsonLd";
+import { measuresLd, measuresMeta } from "../seo";
 
-export const metadata: Metadata = {
-  title: "2026 ballot measure forecast",
-  description: "County by county On Point Politics forecasts for every statewide ballot measure on the Nov. 3, 2026 ballot, with the chance each one passes.",
-  alternates: { canonical: "/forecast/measures" },
-};
+export function generateMetadata(): Metadata { return measuresMeta(); }
 
 export default function MeasuresPage() {
   const data = getMeasures();
@@ -32,6 +30,7 @@ export default function MeasuresPage() {
         <Link href="/">Home</Link><span className="sep">/</span><Link href="/forecast">Forecast</Link><span className="sep">/</span><span>Ballot measures</span>
       </nav>
       <ForecastNav />
+      <JsonLd data={measuresLd()} />
       <header className="bm-head">
         <div>
           <div className="eye g">2026 forecast</div>

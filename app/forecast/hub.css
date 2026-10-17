@@ -119,3 +119,29 @@
 .hub-bm-bar i{position:absolute;inset:0 auto 0 0;border-radius:99px 0 0 99px;background:#2fbf9b}
 .hub-bm-bar s{position:absolute;top:-4px;bottom:-4px;width:2px;background:var(--hi)}
 .hub-bm-p{text-align:right;font-weight:700;font-size:13px}
+
+/* the forecast in brief: a server rendered index of every forecast page */
+.fx{margin:44px 0 8px;padding-top:28px;border-top:1px solid var(--line)}
+.fx h2{font:800 clamp(24px,3vw,36px)/1.08 var(--font-d);letter-spacing:-.035em;margin:8px 0 12px;text-wrap:balance}
+.fx h2 em{font-style:normal;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.fx-lede{color:var(--ink2);font-size:14.5px;line-height:1.6;max-width:92ch;margin:0 0 18px}
+.fx-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;align-items:start}
+@media (max-width:1180px){.fx-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:720px){.fx-grid{grid-template-columns:1fr}}
+.fx-list{list-style:none;margin:0;padding:6px 8px 10px;max-height:420px;overflow:auto}
+.fx-list li{display:grid;grid-template-columns:minmax(0,auto) minmax(0,1fr) 52px;gap:10px;align-items:baseline;padding:6px 8px;border-radius:8px;font-size:13px}
+.fx-list li:hover{background:rgba(var(--line-rgb),.05)}
+.fx-list a{color:var(--ink);text-decoration:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.fx-list a:hover{color:var(--hi);text-decoration:underline}
+.fx-who{color:var(--mute);font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.fx-p{text-align:right;font-size:12.5px;font-variant-numeric:tabular-nums;color:var(--ink2)}
+.fx .d{color:var(--dem2)}.fx .r{color:var(--gop2)}.fx .i{color:var(--ind)}
+.fx-house{margin-top:14px}
+.fx-st{display:grid;grid-template-columns:150px minmax(0,1fr);gap:10px;padding:5px 0;border-bottom:1px solid var(--line);font-size:12.5px}
+.fx-st:last-child{border-bottom:0}
+.fx-st b{color:var(--ink);font-weight:600}
+.fx-st span{display:flex;flex-wrap:wrap;gap:4px}
+.fx-d{display:inline-block;min-width:26px;text-align:center;padding:2px 6px;border-radius:6px;border:1px solid var(--line);font:600 11.5px var(--font-m);text-decoration:none}
+.fx-d:hover{border-color:var(--line2);background:rgba(var(--line-rgb),.06)}
+.fx-d:focus-visible,.fx-list a:focus-visible{outline:2px solid var(--b2);outline-offset:2px}
+@media (max-width:560px){.fx-st{grid-template-columns:1fr;gap:4px}}

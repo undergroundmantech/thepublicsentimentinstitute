@@ -1,12 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import PollsterList from "./PollsterList";
+import { seo } from "@/app/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Methodology",
-  description: "How TPSI fields and weights its polls with the DSMeridian likely voter model, and how On Point Politics weights Gold Standard pollsters in its averages.",
-  alternates: { canonical: "/tpsi/methodology" },
-};
+export const metadata: Metadata = seo({"title": "TPSI polling methodology", "description": "How TPSI fields and weights its polls with the DSMeridian likely voter model, and how On Point Politics weights Gold Standard pollsters in its averages.", "path": "/tpsi/methodology", "type": "article"});
 
 // kept in sync with the POLLSTERS list in ./PollsterList (a server page cannot read values out of a client module)
 const POLLSTER_COUNT = 8;

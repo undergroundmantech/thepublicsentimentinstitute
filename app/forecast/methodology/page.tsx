@@ -4,13 +4,11 @@ import ForecastNav from "@/app/components/opp/ForecastNav";
 import type { ReactNode } from "react";
 import { getModel } from "@/app/lib/forecastData";
 import { RATE, RATING_LABEL } from "@/app/lib/opp";
+import { seo } from "@/app/lib/seo";
+import JsonLd from "@/app/components/JsonLd";
+import { methodologyLd } from "../seo";
 
-export const metadata: Metadata = {
-  title: "Forecast methodology",
-  description:
-    "How the On Point Politics 2026 forecast works: fundamentals, the polling average, candidate effects, 2,000 correlated simulations, county and district models, and how chamber odds and ratings are set.",
-  alternates: { canonical: "/forecast/methodology" },
-};
+export const metadata: Metadata = seo({"title": "How the 2026 election forecast works", "description": "How the On Point Politics 2026 forecast works: fundamentals, the polling average, candidate effects, 2,000 correlated simulations, county and district models, and how chamber odds and ratings are set.", "path": "/forecast/methodology", "type": "article"});
 
 // Every figure below is read off the model code in scripts/forecast/model (senate_mode.py,
 // poll_daily.py, lowess_trend.py, dynamic_mode.py, house_dyn.py) and the build script
@@ -158,6 +156,7 @@ export default function Page() {
         <Link href="/">Home</Link><span className="sep">/</span><Link href="/forecast">Forecast</Link><span className="sep">/</span><span>Methodology</span>
       </nav>
       <ForecastNav />
+      <JsonLd data={methodologyLd()} />
       <header className="ph">
         <div className="eye g">Forecast methodology</div>
         <h1>How the forecast <em>works</em></h1>

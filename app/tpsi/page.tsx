@@ -1,11 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { seo } from "@/app/lib/seo";
 
-export const metadata: Metadata = {
-  title: "About TPSI",
-  description: "The Public Sentiment Institute is the polling and research arm behind On Point Politics: fieldwork, the DSMeridian likely voter model and dual panel surveys.",
-  alternates: { canonical: "/tpsi" },
-};
+export const metadata: Metadata = seo({"title": "About The Public Sentiment Institute", "description": "The Public Sentiment Institute is the polling and research arm behind On Point Politics: fieldwork, the DSMeridian likely voter model and dual panel surveys.", "path": "/tpsi"});
 
 const PILLARS: [string, string, string][] = [
   ["Fieldwork", "Original surveys", "Statewide, district and national polls written, fielded and weighted in house, published with full toplines and crosstabs."],

@@ -2,12 +2,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import fs from "fs";
 import path from "path";
+import { seo } from "@/app/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Interactive maps",
-  description: "The forecast map, the early vote tracker, the electoral map, party registration and voter registration, state by state and county by county.",
-  alternates: { canonical: "/maps" },
-};
+export const metadata: Metadata = seo({"title": "Interactive election maps", "description": "The forecast map, the early vote tracker, the electoral map, party registration and voter registration, state by state and county by county.", "path": "/maps"});
 
 // Server rendered. Every mini map is drawn from the same files the full maps
 // read, so the thumbnails always match the data behind them.

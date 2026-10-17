@@ -8,6 +8,8 @@ import { RATING_LABEL, RAMP_CSS, fmtM, lastName, marginColor, rating, ratingPill
 import GeoMap, { type GeoTip } from "@/app/components/opp/GeoMap";
 import type { CountyPath } from "@/app/components/home/countyGeo";
 import { dbHref, getDownballot, getDownballotCounties, type CountyRow, type DBRace } from "../../data";
+import JsonLd from "@/app/components/JsonLd";
+import { dbLd, dbMeta } from "../../../seo";
 
 export const dynamicParams = false;
 
@@ -21,12 +23,7 @@ const find = (st: string, office: string): DBRace | undefined =>
 export async function generateMetadata({ params }: { params: Promise<{ st: string; office: string }> }): Promise<Metadata> {
   const { st, office } = await params;
   const r = find(st, office);
-  if (!r) return {};
-  return {
-    title: `${r.state} ${r.officeLabel.toLowerCase()} forecast`,
-    description: r.uncontested ? `${r.state} ${r.officeLabel.toLowerCase()}: uncontested in 2026.` : `${r.dem} vs ${r.gop}: the On Point Politics county by county forecast for ${r.state} ${r.officeLabel.toLowerCase()}.`,
-    alternates: { canonical: dbHref(r) },
-  };
+  return r ? dbMeta(r) : {};
 }
 
 const LEG_NAME: Record<string, string> = { T: "Top of ticket", F: "Approval fundamentals", G: "Gallup, relaxed", H: "Down ballot history", P: "2026 primaries" };
@@ -85,6 +82,7 @@ export default async function Page({ params }: { params: Promise<{ st: string; o
         <Link href="/forecast/statewide">Statewide offices</Link><span className="sep">/</span><span>{title}</span>
       </nav>
       <ForecastNav />
+      <JsonLd data={dbLd(r)} />
       <header className="ph">
         <div className="eye g">2026 forecast</div>
         <h1>{title} <em>forecast</em></h1>

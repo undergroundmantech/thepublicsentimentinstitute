@@ -1,11 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { seo } from "@/app/lib/seo";
 
-export const metadata: Metadata = {
-  title: "2026 national poll",
-  description: "TPSI's 2026 national survey of registered and likely voters: motivation, the generic ballot, Vance vs Newsom, Trump approval and party trust on the issues.",
-  alternates: { canonical: "/tpsi/polls/national-2026" },
-};
+export const metadata: Metadata = seo({"title": "2026 national poll: generic ballot, Trump approval and 2028", "description": "TPSI's 2026 national survey of registered and likely voters: motivation, the generic ballot, Vance vs Newsom, Trump approval and party trust on the issues.", "path": "/tpsi/polls/national-2026", "type": "article"});
 
 const SURVEY_URL = "https://wss.pollfish.com/link/522d0e01-b70f-4955-8514-b42a7f10d4b6";
 

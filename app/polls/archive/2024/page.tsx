@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
 import Average from "../../Average";
-export const metadata: Metadata = { title: "2024 presidential polling average, national", alternates: { canonical: "/polls/archive/2024" } };
+import { avgById, avgMeta } from "../../seo";
+
+export const metadata: Metadata = avgMeta(avgById("2024-national")!, "2024 presidential polling average, national");
 export default function Page() { return <Average id="2024-national" />; }
