@@ -1,0 +1,969 @@
+{
+ "state": "CA",
+ "chamber": "house",
+ "sources": [
+  "https://elections.cdn.sos.ca.gov/statewide-elections/2026-general/cert-list-candidates.pdf"
+ ],
+ "as_of": "2026-10-17",
+ "complete": true,
+ "districts": [
+  {
+   "d": "1",
+   "dem": [
+    "Dianna Margaret James"
+   ],
+   "gop": [
+    "Heather Hadwick"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "2",
+   "dem": [
+    "Chris Rogers"
+   ],
+   "gop": [
+    "Michael Greer"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "3",
+   "dem": [],
+   "gop": [
+    "Dom Belza",
+    "James \"Jamie\" Johansson"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "top two: two Republicans, no Democrat"
+  },
+  {
+   "d": "4",
+   "dem": [
+    "Cecilia M. Aguiar-Curry"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "only one candidate on general ballot"
+  },
+  {
+   "d": "5",
+   "dem": [
+    "Neva Parker"
+   ],
+   "gop": [
+    "Joe Patterson"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "6",
+   "dem": [
+    "Maggy Krell",
+    "Jagtar Singh"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "top two: two Democrats, no Republican"
+  },
+  {
+   "d": "7",
+   "dem": [
+    "Amy L. Slavensky"
+   ],
+   "gop": [
+    "Josh Hoover"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "8",
+   "dem": [],
+   "gop": [
+    "David Jariustokaeutulelei Tangipa"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "only one candidate on general ballot"
+  },
+  {
+   "d": "9",
+   "dem": [
+    "Matthew Adams"
+   ],
+   "gop": [
+    "Heath Flora"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "10",
+   "dem": [
+    "Stephanie Nguyen"
+   ],
+   "gop": [
+    "Vinaya Singh"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "11",
+   "dem": [
+    "Lori D Wilson"
+   ],
+   "gop": [],
+   "others": [
+    {
+     "name": "Jenny Leilani Callison",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "no Republican; minor party or NPP candidate is the only challenger; Jenny Leilani Callison is No party preference"
+  },
+  {
+   "d": "12",
+   "dem": [
+    "Jackie Elward",
+    "Eric Lucan"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "top two: two Democrats, no Republican"
+  },
+  {
+   "d": "13",
+   "dem": [
+    "Rhodesia Ransom"
+   ],
+   "gop": [
+    "Tom Patti"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "14",
+   "dem": [
+    "Buffy Wicks"
+   ],
+   "gop": [],
+   "others": [
+    {
+     "name": "Mark Rendon",
+     "party": "G"
+    }
+   ],
+   "withdrawn": [],
+   "note": "no Republican; minor party or NPP candidate is the only challenger"
+  },
+  {
+   "d": "15",
+   "dem": [
+    "Anamarie Avila Farias"
+   ],
+   "gop": [],
+   "others": [
+    {
+     "name": "Arthur Webb",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "no Republican; minor party or NPP candidate is the only challenger; Arthur Webb is No party preference"
+  },
+  {
+   "d": "16",
+   "dem": [
+    "Rebecca Bauer-Kahan"
+   ],
+   "gop": [
+    "Joseph A. Rubay"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "17",
+   "dem": [
+    "Matt Haney"
+   ],
+   "gop": [
+    "Manuel Noris-Barrera"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "18",
+   "dem": [
+    "Mia Bonta",
+    "Andre Sandford"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "top two: two Democrats, no Republican"
+  },
+  {
+   "d": "19",
+   "dem": [
+    "Catherine Stefani"
+   ],
+   "gop": [
+    "Philip Louis Wing"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "20",
+   "dem": [
+    "Liz Ortega"
+   ],
+   "gop": [
+    "Patricia Muga"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "21",
+   "dem": [
+    "Diane Papan"
+   ],
+   "gop": [
+    "Jabra J Muhawieh"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "22",
+   "dem": [],
+   "gop": [
+    "Juan Alanis"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "only one candidate on general ballot"
+  },
+  {
+   "d": "23",
+   "dem": [
+    "Marc Berman"
+   ],
+   "gop": [
+    "David G. Johnson"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "24",
+   "dem": [
+    "Alex Lee"
+   ],
+   "gop": [
+    "Max Hsia"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "25",
+   "dem": [
+    "Ash Kalra"
+   ],
+   "gop": [
+    "Himat Singh Bainiwal"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "26",
+   "dem": [
+    "Patrick Ahrens"
+   ],
+   "gop": [
+    "Tim Gorsulowsky"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "27",
+   "dem": [
+    "Brian Pacheco"
+   ],
+   "gop": [
+    "Mike Murphy"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "28",
+   "dem": [
+    "Gail Pellerin"
+   ],
+   "gop": [
+    "Carol Pefley"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "29",
+   "dem": [
+    "Robert Rivas"
+   ],
+   "gop": [
+    "Dennis P. Sanchez"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "30",
+   "dem": [
+    "Dawn Addis"
+   ],
+   "gop": [
+    "Shannon Kessler"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "31",
+   "dem": [
+    "Annalisa Perea"
+   ],
+   "gop": [
+    "Jim Polsgrove"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "32",
+   "dem": [],
+   "gop": [
+    "David Couch"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "only one candidate on general ballot"
+  },
+  {
+   "d": "33",
+   "dem": [
+    "Hipolito Angel Cerros"
+   ],
+   "gop": [
+    "Alexandra (Ali) Macedo"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "34",
+   "dem": [
+    "Randall Putz"
+   ],
+   "gop": [
+    "Charles Frederick Hughes"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "35",
+   "dem": [
+    "Andrae Gonzales"
+   ],
+   "gop": [
+    "Saul Ayon"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "36",
+   "dem": [
+    "Ida S. Obeso-Martinez"
+   ],
+   "gop": [
+    "Jeff Gonzalez"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "37",
+   "dem": [
+    "Gregg Hart"
+   ],
+   "gop": [
+    "Sari Domingues"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "38",
+   "dem": [
+    "Steve Bennett",
+    "Michael MacDonald"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "top two: two Democrats, no Republican"
+  },
+  {
+   "d": "39",
+   "dem": [
+    "Juan Carrillo"
+   ],
+   "gop": [
+    "Paul Andre Marsh"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "40",
+   "dem": [
+    "Pilar Schiavo"
+   ],
+   "gop": [
+    "Rickey Tracy Hayes II"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "41",
+   "dem": [
+    "John Harabedian"
+   ],
+   "gop": [
+    "Adam Christopher Vena"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "42",
+   "dem": [
+    "Deborah Klein Lopez"
+   ],
+   "gop": [
+    "Ted Nordblum"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "43",
+   "dem": [
+    "Celeste Rodriguez"
+   ],
+   "gop": [
+    "Ricardo Benitez"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "44",
+   "dem": [
+    "Nicholas \"Nick\" Schultz"
+   ],
+   "gop": [
+    "Carolyn Daniels"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "45",
+   "dem": [
+    "James C. Ramos"
+   ],
+   "gop": [
+    "Greg Abdouch"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "46",
+   "dem": [
+    "Jesse Gabriel"
+   ],
+   "gop": [
+    "Tracey Schroeder"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "47",
+   "dem": [
+    "Leila Namvar"
+   ],
+   "gop": [
+    "Greg Wallis"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "48",
+   "dem": [
+    "Blanca Rubio"
+   ],
+   "gop": [
+    "Dan T. Tran"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "49",
+   "dem": [
+    "Mike Fong"
+   ],
+   "gop": [
+    "Long David Liu"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "50",
+   "dem": [
+    "Robert Garcia"
+   ],
+   "gop": [
+    "Victoria Viveros Mageno"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "51",
+   "dem": [
+    "Colin D. Hernandez",
+    "Rick Chavez Zbur"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "top two: two Democrats, no Republican"
+  },
+  {
+   "d": "52",
+   "dem": [
+    "Jessica Caloza"
+   ],
+   "gop": [
+    "Andrea Lee Anderson"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "53",
+   "dem": [
+    "Michelle Rodriguez"
+   ],
+   "gop": [
+    "Rafaela Romero"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "54",
+   "dem": [
+    "Mark Gonzalez"
+   ],
+   "gop": [
+    "Alexandra Briseno"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "55",
+   "dem": [
+    "Ashley M. Brown",
+    "Isaac G. Bryan"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "top two: two Democrats, no Republican"
+  },
+  {
+   "d": "56",
+   "dem": [
+    "Lisa Calderon"
+   ],
+   "gop": [
+    "Jessica Martinez"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "57",
+   "dem": [
+    "Sade Elhawary"
+   ],
+   "gop": [
+    "Constance Jewel Menzies"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "58",
+   "dem": [
+    "Clarissa Cervantes"
+   ],
+   "gop": [
+    "Leticia Castillo"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "59",
+   "dem": [],
+   "gop": [
+    "Phillip Chen"
+   ],
+   "others": [
+    {
+     "name": "Victor Hernandez",
+     "party": "G"
+    }
+   ],
+   "withdrawn": [],
+   "note": "no Democrat; minor party candidate is the only challenger"
+  },
+  {
+   "d": "60",
+   "dem": [
+    "Corey A Jackson"
+   ],
+   "gop": [
+    "Ed Delgado"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "61",
+   "dem": [
+    "Tina Simone McKinnor"
+   ],
+   "gop": [
+    "Brian Lockwood"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "62",
+   "dem": [
+    "José Luis Solache"
+   ],
+   "gop": [
+    "Paul Irving Jones"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "63",
+   "dem": [],
+   "gop": [
+    "Natasha Johnson"
+   ],
+   "others": [
+    {
+     "name": "Kevin Akin",
+     "party": "O"
+    }
+   ],
+   "withdrawn": [],
+   "note": "no Democrat; minor party candidate is the only challenger; Kevin Akin is Peace and Freedom"
+  },
+  {
+   "d": "64",
+   "dem": [
+    "Blanca Pacheco"
+   ],
+   "gop": [
+    "Raul Ortiz Jr."
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "65",
+   "dem": [
+    "Ayanna Davis"
+   ],
+   "gop": [
+    "Lydia A. Gutiérrez"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "66",
+   "dem": [
+    "Sara Deen",
+    "Paul Seo"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "top two: two Democrats, no Republican"
+  },
+  {
+   "d": "67",
+   "dem": [
+    "Mark Pulido"
+   ],
+   "gop": [
+    "Paulo Morales"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "68",
+   "dem": [
+    "Jessie Lopez",
+    "David Penaloza"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "top two: two Democrats, no Republican"
+  },
+  {
+   "d": "69",
+   "dem": [
+    "Carolyn J. Essex",
+    "Josh Lowenthal"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "top two: two Democrats, no Republican"
+  },
+  {
+   "d": "70",
+   "dem": [
+    "Paula Swift"
+   ],
+   "gop": [
+    "Tri Ta"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "71",
+   "dem": [
+    "JJ Galvez"
+   ],
+   "gop": [
+    "Kate Sanchez"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "72",
+   "dem": [
+    "Chris Kluwe"
+   ],
+   "gop": [
+    "Gracey Van Der Mark"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "73",
+   "dem": [
+    "Cottie Petrie-Norris"
+   ],
+   "gop": [
+    "Urson Russell"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "74",
+   "dem": [
+    "Sergio Farias"
+   ],
+   "gop": [
+    "Laurie Davies"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "75",
+   "dem": [
+    "Gerald C. Boursiquot"
+   ],
+   "gop": [
+    "Carl DeMaio"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "76",
+   "dem": [
+    "Darshana Patel"
+   ],
+   "gop": [
+    "Carrie S. Espinoza Villanueva"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "77",
+   "dem": [
+    "Tasha Boerner"
+   ],
+   "gop": [
+    "Trinity Hannaway"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "78",
+   "dem": [
+    "Chris Ward"
+   ],
+   "gop": [
+    "Payton Galvez"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "79",
+   "dem": [
+    "LaShae Sharp-Collins"
+   ],
+   "gop": [
+    "Andrew Lawson"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "80",
+   "dem": [
+    "David A. Alvarez"
+   ],
+   "gop": [
+    "Alejandro Galicia"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  }
+ ],
+ "method": "CA SOS Certified List of Candidates for Nov 3 2026, certified Aug 27 2026; top two system"
+}

@@ -1,0 +1,334 @@
+{
+ "state": "MT",
+ "chamber": "senate",
+ "sources": [
+  "https://theballotbrief.com/state/montana/yellowstone-county",
+  "https://theballotbrief.com/state/montana/missoula-county",
+  "https://theballotbrief.com/state/montana/gallatin-county",
+  "https://theballotbrief.com/state/montana/flathead-county",
+  "https://theballotbrief.com/state/montana/cascade-county",
+  "https://theballotbrief.com/state/montana/lewis-and-clark-county",
+  "https://theballotbrief.com/state/montana/ravalli-county",
+  "https://theballotbrief.com/state/montana/silver-bow-county",
+  "https://theballotbrief.com/state/montana/lake-county",
+  "https://theballotbrief.com/state/montana/hill-county",
+  "https://theballotbrief.com/state/montana/park-county",
+  "https://theballotbrief.com/state/montana/lincoln-county",
+  "https://theballotbrief.com/state/montana/sanders-county",
+  "https://theballotbrief.com/state/montana/glacier-county",
+  "https://theballotbrief.com/state/montana/teton-county",
+  "https://theballotbrief.com/state/montana/fergus-county",
+  "https://theballotbrief.com/state/montana/valley-county",
+  "https://theballotbrief.com/state/montana/richland-county",
+  "https://theballotbrief.com/state/montana/dawson-county",
+  "https://theballotbrief.com/state/montana/big-horn-county",
+  "https://theballotbrief.com/state/montana/carbon-county",
+  "https://theballotbrief.com/state/montana/stillwater-county",
+  "https://theballotbrief.com/state/montana/deer-lodge-county",
+  "https://theballotbrief.com/state/montana/custer-county",
+  "https://theballotbrief.com/state/montana/jefferson-county",
+  "https://theballotbrief.com/state/montana/powell-county"
+ ],
+ "as_of": "2026-10-17",
+ "complete": true,
+ "districts": [
+  {
+   "d": "1",
+   "dem": [
+    "Jonathan Russell Jameson"
+   ],
+   "gop": [
+    "Steve Gunderson"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "4",
+   "dem": [
+    "Kyle Waterman"
+   ],
+   "gop": [
+    "Amy Regier"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "6",
+   "dem": [
+    "Patrick Fitzpatrick"
+   ],
+   "gop": [
+    "Mark Noland"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "8",
+   "dem": [
+    "Tyson T. Running Wolf"
+   ],
+   "gop": [
+    "Christopher Paul Buckles"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "9",
+   "dem": [
+    "Noy Holland"
+   ],
+   "gop": [
+    "Llew Jones"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "10",
+   "dem": [
+    "Margaret Mitchell"
+   ],
+   "gop": [
+    "Jessica Dyrdahl"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "11",
+   "dem": [
+    "Valynda Holland"
+   ],
+   "gop": [
+    "Steven Galloway"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "12",
+   "dem": [
+    "Mindy Leach"
+   ],
+   "gop": [
+    "George Nikolakakos"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "14",
+   "dem": [
+    "Blake Borst"
+   ],
+   "gop": [
+    "Eric Albus"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "18",
+   "dem": [
+    "Stan Taylor"
+   ],
+   "gop": [
+    "Greg Kmetz"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "19",
+   "dem": [
+    "Deanna J. Daigrepont"
+   ],
+   "gop": [
+    "Chris Rindal"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "22",
+   "dem": [],
+   "gop": [
+    "Daniel Zolnikov"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "23",
+   "dem": [
+    "Emma Kerr-Carpenter"
+   ],
+   "gop": [
+    "Joanna Oblander"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "25",
+   "dem": [
+    "Julie Hippler"
+   ],
+   "gop": [
+    "Dennis Lenz"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "28",
+   "dem": [
+    "Kelly Hale"
+   ],
+   "gop": [
+    "Forrest J. Mandeville"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "29",
+   "dem": [
+    "Scott Rosenzweig"
+   ],
+   "gop": [
+    "Jason Gunderson"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "31",
+   "dem": [
+    "Kathleen Williams"
+   ],
+   "gop": [
+    "Richard Aungier"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "32",
+   "dem": [
+    "Kelly Kortum"
+   ],
+   "gop": [
+    "Neal Ganser"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "34",
+   "dem": [
+    "Carl Anderson"
+   ],
+   "gop": [
+    "Caleb Hinkle"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "41",
+   "dem": [
+    "Erin Farris-Olsen"
+   ],
+   "gop": [],
+   "others": [
+    {
+     "name": "Dru Koester",
+     "party": "L"
+    }
+   ],
+   "withdrawn": [],
+   "note": "no Republican; Libertarian is the only challenger"
+  },
+  {
+   "d": "42",
+   "dem": [
+    "Mary Ann Dunwell"
+   ],
+   "gop": [
+    "Stephen Lapraim"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "43",
+   "dem": [
+    "Stephen Leuchtman"
+   ],
+   "gop": [
+    "David Bedey"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "48",
+   "dem": [
+    "Andrea Olsen"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "49",
+   "dem": [
+    "Willis Curdy"
+   ],
+   "gop": [
+    "Brad Tschida"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "50",
+   "dem": [
+    "Shane A. Morigeau"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  }
+ ],
+ "method": "General candidates from The Ballot Brief county pages, which cite the Montana SOS candidate list checked Sept 17 2026 and describe themselves as AI assisted; iVoterGuide Montana page had no legislative races. 25 Senate seats found on the ballot."
+}

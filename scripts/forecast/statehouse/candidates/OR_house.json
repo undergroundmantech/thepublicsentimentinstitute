@@ -1,0 +1,755 @@
+{
+ "state": "OR",
+ "chamber": "house",
+ "sources": [
+  "https://theballotbrief.com/state/oregon/multnomah-county",
+  "https://theballotbrief.com/state/oregon/washington-county",
+  "https://theballotbrief.com/state/oregon/clackamas-county",
+  "https://theballotbrief.com/state/oregon/lane-county",
+  "https://theballotbrief.com/state/oregon/marion-county",
+  "https://theballotbrief.com/state/oregon/jackson-county",
+  "https://theballotbrief.com/state/oregon/deschutes-county",
+  "https://theballotbrief.com/state/oregon/josephine-county",
+  "https://theballotbrief.com/state/oregon/douglas-county",
+  "https://theballotbrief.com/state/oregon/benton-county",
+  "https://theballotbrief.com/state/oregon/yamhill-county",
+  "https://theballotbrief.com/state/oregon/clatsop-county",
+  "https://theballotbrief.com/state/oregon/umatilla-county",
+  "https://theballotbrief.com/state/oregon/klamath-county",
+  "https://theballotbrief.com/state/oregon/lincoln-county",
+  "https://theballotbrief.com/state/oregon/crook-county",
+  "https://theballotbrief.com/state/oregon/coos-county",
+  "https://en.wikipedia.org/wiki/2026_Oregon_State_Senate_election"
+ ],
+ "as_of": "2026-10-17",
+ "complete": true,
+ "districts": [
+  {
+   "d": "1",
+   "dem": [
+    "Bret Cecil"
+   ],
+   "gop": [
+    "Court Boice"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "2",
+   "dem": [],
+   "gop": [
+    "Virgle Osborne"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed; Osborne R is also on the Democratic line"
+  },
+  {
+   "d": "3",
+   "dem": [
+    "Susan Fischer-Maki"
+   ],
+   "gop": [
+    "Dwayne Yunker"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "4",
+   "dem": [],
+   "gop": [
+    "Alek Skarlatos"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "5",
+   "dem": [
+    "Pam Marsh"
+   ],
+   "gop": [
+    "Alexander Krigsvold"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "fusion: Marsh also on Independent Party line"
+  },
+  {
+   "d": "6",
+   "dem": [
+    "John Holm"
+   ],
+   "gop": [
+    "Kim Wallan"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "7",
+   "dem": [
+    "Kori Rodley"
+   ],
+   "gop": [
+    "Adam Wilson"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "fusion: Rodley also Working Families; Wilson also Libertarian; open seat, John Lively D retiring"
+  },
+  {
+   "d": "8",
+   "dem": [
+    "Lisa Fragala"
+   ],
+   "gop": [
+    "Bill Vivian"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "9",
+   "dem": [
+    "John Ezra Scheirman"
+   ],
+   "gop": [
+    "Claire Lynn"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "open seat, Boomer Wright R retiring"
+  },
+  {
+   "d": "10",
+   "dem": [
+    "David Gomberg"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed; Gomberg D also on Republican and Independent Party lines"
+  },
+  {
+   "d": "11",
+   "dem": [
+    "Ivan Maluski"
+   ],
+   "gop": [
+    "Ken Jackola"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "fusion: Maluski also Independent Party and Working Families; open seat"
+  },
+  {
+   "d": "12",
+   "dem": [
+    "Amber Smith"
+   ],
+   "gop": [
+    "Darin Harbick"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "13",
+   "dem": [
+    "Nancy Nathanson"
+   ],
+   "gop": [
+    "Jonathan Abrahamsen"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "14",
+   "dem": [
+    "Julie Fahey"
+   ],
+   "gop": [
+    "Kevin Burton"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "15",
+   "dem": [
+    "Joanna Robinson"
+   ],
+   "gop": [
+    "Shelly Boshart Davis"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "fusion: Robinson also Independent Party and Working Families"
+  },
+  {
+   "d": "16",
+   "dem": [
+    "Sarah Finger McDonald"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed; McDonald D also on Republican line"
+  },
+  {
+   "d": "17",
+   "dem": [
+    "David Nelson"
+   ],
+   "gop": [
+    "Dan Farrington"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "open seat, Ed Diehl R running for governor"
+  },
+  {
+   "d": "18",
+   "dem": [
+    "Roy Kaufmann"
+   ],
+   "gop": [
+    "Amanda Staehely"
+   ],
+   "others": [
+    {
+     "name": "Patrick Marnell",
+     "party": "L"
+    }
+   ],
+   "withdrawn": [],
+   "note": "fusion: Kaufmann also Independent Party, Working Families and Progressive; open seat, Rick Lewis R retiring"
+  },
+  {
+   "d": "19",
+   "dem": [
+    "Tom Andersen"
+   ],
+   "gop": [
+    "Anna Munson"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "fusion: Andersen also Independent Party and Working Families; Munson also Libertarian"
+  },
+  {
+   "d": "20",
+   "dem": [
+    "Paul Evans"
+   ],
+   "gop": [
+    "Andrew Fudge"
+   ],
+   "others": [
+    {
+     "name": "Taylor Rickey",
+     "party": "L"
+    }
+   ],
+   "withdrawn": [],
+   "note": "fusion: Evans also Working Families; Fudge also Independent Party"
+  },
+  {
+   "d": "21",
+   "dem": [
+    "Michael Welsh"
+   ],
+   "gop": [
+    "Kevin Mannix"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "fusion: Welsh also Working Families"
+  },
+  {
+   "d": "22",
+   "dem": [
+    "Lesly Muñoz"
+   ],
+   "gop": [
+    "Noemi Legaspi"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "fusion: Muñoz also Independent Party and Working Families; Legaspi also Libertarian"
+  },
+  {
+   "d": "23",
+   "dem": [
+    "Kriss Wright"
+   ],
+   "gop": [
+    "Anna Scharf"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "24",
+   "dem": [],
+   "gop": [
+    "Lucetta Elmer"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "25",
+   "dem": [
+    "Ben Bowman"
+   ],
+   "gop": [
+    "Bob Niemeyer"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "fusion: Bowman also Working Families"
+  },
+  {
+   "d": "26",
+   "dem": [
+    "Sue Rieke Smith"
+   ],
+   "gop": [
+    "Stephanie Carkin"
+   ],
+   "others": [
+    {
+     "name": "Steph Terrio",
+     "party": "O"
+    }
+   ],
+   "withdrawn": [],
+   "note": "Terrio is the Progressive Party nominee, also on Pacific Green line; Rieke Smith also Independent Party; Carkin also Libertarian"
+  },
+  {
+   "d": "27",
+   "dem": [
+    "Tammy Carpenter"
+   ],
+   "gop": [
+    "Mark Norman"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "fusion: Carpenter also Progressive and Working Families; open seat, Ken Helm D retiring"
+  },
+  {
+   "d": "28",
+   "dem": [
+    "Dacia Grayber"
+   ],
+   "gop": [
+    "Randall Fryer"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "fusion: Grayber also Independent Party and Working Families"
+  },
+  {
+   "d": "29",
+   "dem": [
+    "Susan McLain"
+   ],
+   "gop": [
+    "Brian Schimmel"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "fusion: Schimmel R also Independent Party"
+  },
+  {
+   "d": "30",
+   "dem": [
+    "Nathan Sosa"
+   ],
+   "gop": [
+    "Charles Ross"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "31",
+   "dem": [
+    "Tom Forest"
+   ],
+   "gop": [
+    "Darcey Edwards"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "32",
+   "dem": [
+    "Cyrus Javadi"
+   ],
+   "gop": [
+    "Max Sherman"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Javadi switched from R to D in Sept 2025; also on Independent Party line"
+  },
+  {
+   "d": "33",
+   "dem": [
+    "Shannon Jones Isadore"
+   ],
+   "gop": [
+    "Ciatta Thompson"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "34",
+   "dem": [
+    "Mari Watanabe"
+   ],
+   "gop": [
+    "Shaunie Cousins"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "open seat, Lisa Reynolds D running for Senate 17"
+  },
+  {
+   "d": "35",
+   "dem": [
+    "Farrah Chaichi"
+   ],
+   "gop": [
+    "Dan Martin"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "fusion: Chaichi also Working Families"
+  },
+  {
+   "d": "36",
+   "dem": [
+    "Hai Pham"
+   ],
+   "gop": [
+    "Michael Orth"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "37",
+   "dem": [
+    "Jules Walters"
+   ],
+   "gop": [
+    "Chad Parker"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "fusion: Walters also Independent Party and Working Families"
+  },
+  {
+   "d": "38",
+   "dem": [
+    "Daniel Nguyen"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed; Nguyen D also on Republican line"
+  },
+  {
+   "d": "39",
+   "dem": [
+    "April Dobson"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed; Dobson D also on Republican and Independent Party lines"
+  },
+  {
+   "d": "40",
+   "dem": [
+    "Michael Sugar"
+   ],
+   "gop": [
+    "Adam Baker"
+   ],
+   "others": [
+    {
+     "name": "Pat Hubbell",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "fusion: Sugar also Working Families; open seat, Annessa Hartman D retiring"
+  },
+  {
+   "d": "41",
+   "dem": [
+    "Mark Gamba"
+   ],
+   "gop": [
+    "Elvis Clark"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "fusion: Gamba also Working Families"
+  },
+  {
+   "d": "42",
+   "dem": [
+    "Rob Nosse"
+   ],
+   "gop": [],
+   "others": [
+    {
+     "name": "Morey Straus",
+     "party": "L"
+    }
+   ],
+   "withdrawn": [],
+   "note": "no Republican; Libertarian is the only challenger"
+  },
+  {
+   "d": "43",
+   "dem": [
+    "Tawna Sanchez"
+   ],
+   "gop": [
+    "Tim LeMaster"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "44",
+   "dem": [
+    "Travis Nelson"
+   ],
+   "gop": [
+    "Margo Logan"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "fusion: Nelson also Working Families"
+  },
+  {
+   "d": "45",
+   "dem": [
+    "Thuy Tran"
+   ],
+   "gop": [
+    "Jason Boyce"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "fusion: Tran also Working Families and Independent Party"
+  },
+  {
+   "d": "46",
+   "dem": [
+    "Willy Chotzen"
+   ],
+   "gop": [
+    "Leo Morley"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "fusion: Chotzen also Working Families"
+  },
+  {
+   "d": "47",
+   "dem": [
+    "Andrea Valderrama"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "48",
+   "dem": [
+    "Lamar Wise"
+   ],
+   "gop": [
+    "Andrew Morrison"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "fusion: Wise also Independent Party and Working Families"
+  },
+  {
+   "d": "49",
+   "dem": [
+    "Zach Hudson"
+   ],
+   "gop": [
+    "Ann Walker"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "fusion: Hudson also Working Families"
+  },
+  {
+   "d": "50",
+   "dem": [
+    "Ricki Ruiz"
+   ],
+   "gop": [
+    "Brian Gray"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "fusion: Ruiz also Independent Party"
+  },
+  {
+   "d": "51",
+   "dem": [
+    "Darla Mead"
+   ],
+   "gop": [
+    "Matt Bunch"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "fusion: Mead also Working Families"
+  },
+  {
+   "d": "52",
+   "dem": [
+    "Hank Sanders"
+   ],
+   "gop": [
+    "Scott Hege"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "fusion: Sanders also Independent Party; open seat, Jeff Helfrich R running for Senate 26"
+  },
+  {
+   "d": "53",
+   "dem": [
+    "Emerson Levy"
+   ],
+   "gop": [
+    "Michael Summers"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "fusion: Levy also Independent Party; Summers also Libertarian"
+  },
+  {
+   "d": "54",
+   "dem": [
+    "Jason Kropf"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "55",
+   "dem": [
+    "Colby Simmons"
+   ],
+   "gop": [
+    "E. Werner Reschke"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "56",
+   "dem": [],
+   "gop": [
+    "Emily McIntire"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "57",
+   "dem": [],
+   "gop": [
+    "Greg Smith"
+   ],
+   "others": [
+    {
+     "name": "Josiah Dean",
+     "party": "G"
+    }
+   ],
+   "withdrawn": [],
+   "note": "no Democrat; Pacific Green is the only challenger"
+  },
+  {
+   "d": "58",
+   "dem": [
+    "Brian Campbell"
+   ],
+   "gop": [
+    "Bobby Levy"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "59",
+   "dem": [
+    "Lawrence Jones"
+   ],
+   "gop": [
+    "Vikki Breese-Iverson"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "60",
+   "dem": [
+    "Beth Spell"
+   ],
+   "gop": [
+    "Mark Owens"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  }
+ ],
+ "method": "General candidates with fusion lines from The Ballot Brief county pages, which describe themselves as AI assisted research of SOS filings; Ballotpedia snapshot available was pre-primary and Wikipedia House page lists no candidates. Fusion cross nominations are recorded in notes; the candidate is listed under their primary party. Party I is used for Independent Party of Oregon nominees."
+}

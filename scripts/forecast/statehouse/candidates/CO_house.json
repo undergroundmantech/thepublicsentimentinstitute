@@ -1,0 +1,849 @@
+{
+ "state": "CO",
+ "chamber": "house",
+ "sources": [
+  "https://ivoterguide.com/all-in-state/co",
+  "https://en.wikipedia.org/wiki/2026_Colorado_Senate_election",
+  "https://en.wikipedia.org/wiki/2026_Colorado_House_of_Representatives_election"
+ ],
+ "as_of": "2026-10-17",
+ "complete": true,
+ "districts": [
+  {
+   "d": "1",
+   "dem": [
+    "Javier Mabrey"
+   ],
+   "gop": [
+    "Joseph Montoya"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "2",
+   "dem": [
+    "Scott Baldermann"
+   ],
+   "gop": [
+    "Carey Marin"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "3",
+   "dem": [
+    "Gena Ozols"
+   ],
+   "gop": [
+    "Rebecca Winegar"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "4",
+   "dem": [
+    "Cecelia Espenoza"
+   ],
+   "gop": [
+    "Ellwood Ervin"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "5",
+   "dem": [
+    "Justine Sandoval"
+   ],
+   "gop": [
+    "Johnnie W. Johnson"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "6",
+   "dem": [
+    "Iris Halpern"
+   ],
+   "gop": [
+    "Kathleen Angel"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "7",
+   "dem": [
+    "Jennifer Bacon"
+   ],
+   "gop": [],
+   "others": [
+    {
+     "name": "Jeff Wilson",
+     "party": "L"
+    }
+   ],
+   "withdrawn": [],
+   "note": "no Republican; minor party or unaffiliated candidate is the main challenger"
+  },
+  {
+   "d": "8",
+   "dem": [
+    "Lindsay Gilchrist"
+   ],
+   "gop": [
+    "Carolyn Barnes"
+   ],
+   "others": [
+    {
+     "name": "Jesse Lashawn Parris",
+     "party": "O"
+    }
+   ],
+   "withdrawn": [],
+   "note": "Parris party shown only as other"
+  },
+  {
+   "d": "9",
+   "dem": [
+    "Monica VanBuskirk"
+   ],
+   "gop": [
+    "Tom Cowhick"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "10",
+   "dem": [
+    "Junie Joseph"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "11",
+   "dem": [
+    "Karen McCormick"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "12",
+   "dem": [
+    "Kyle Brown"
+   ],
+   "gop": [
+    "Ryan Rhatigan"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "13",
+   "dem": [
+    "Consuelo Redhorse"
+   ],
+   "gop": [
+    "Miguel Martinez"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "14",
+   "dem": [
+    "Sarah Emery"
+   ],
+   "gop": [
+    "Ava Flanell"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "15",
+   "dem": [
+    "Jeff K. Livingston"
+   ],
+   "gop": [
+    "Pricella Tiegen"
+   ],
+   "others": [
+    {
+     "name": "Doug Jones",
+     "party": "L"
+    }
+   ],
+   "withdrawn": [],
+   "note": "open seat, Scott Bottoms R running for governor"
+  },
+  {
+   "d": "16",
+   "dem": [
+    "Steph Vigil"
+   ],
+   "gop": [
+    "Jill Haffley"
+   ],
+   "others": [
+    {
+     "name": "John C. Hjersman",
+     "party": "L"
+    }
+   ],
+   "withdrawn": [],
+   "note": "open seat"
+  },
+  {
+   "d": "17",
+   "dem": [
+    "Regina English"
+   ],
+   "gop": [
+    "Laura Martin"
+   ],
+   "others": [
+    {
+     "name": "John Michael Angle",
+     "party": "L"
+    }
+   ],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "18",
+   "dem": [
+    "Amy T. Paschal"
+   ],
+   "gop": [
+    "Adriana Cuva"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "19",
+   "dem": [
+    "Jillaire McMillan"
+   ],
+   "gop": [
+    "Dan Woog"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "20",
+   "dem": [],
+   "gop": [
+    "Jarvis Caldwell"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "21",
+   "dem": [
+    "Michelle Tweed"
+   ],
+   "gop": [
+    "Brenda Miller"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "22",
+   "dem": [
+    "Michael Pierson"
+   ],
+   "gop": [
+    "Ken DeGraaf"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "23",
+   "dem": [
+    "Alexis Hoffkling"
+   ],
+   "gop": [],
+   "others": [
+    {
+     "name": "Ross Metler",
+     "party": "L"
+    }
+   ],
+   "withdrawn": [],
+   "note": "no Republican; minor party or unaffiliated candidate is the main challenger"
+  },
+  {
+   "d": "24",
+   "dem": [
+    "Lisa Feret"
+   ],
+   "gop": [
+    "Kristopher Johnson"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "25",
+   "dem": [
+    "Tammy Story"
+   ],
+   "gop": [
+    "Mark Herzfeld"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "26",
+   "dem": [
+    "Meghan Lukens"
+   ],
+   "gop": [
+    "James Kellogg"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "27",
+   "dem": [
+    "Danielle Varda"
+   ],
+   "gop": [
+    "Eric Bodenstab"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "28",
+   "dem": [
+    "David Rein"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "29",
+   "dem": [
+    "Lori Goldstein"
+   ],
+   "gop": [
+    "Kristine Ireland"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "30",
+   "dem": [
+    "Rebekah Stewart"
+   ],
+   "gop": [
+    "William Tyler Switzer"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "31",
+   "dem": [
+    "Gabriel Cervantes"
+   ],
+   "gop": [
+    "Ray Roll"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "32",
+   "dem": [
+    "Chris VanDijk"
+   ],
+   "gop": [
+    "Michelle D. Lee"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "33",
+   "dem": [
+    "Kenny Van Nguyen"
+   ],
+   "gop": [
+    "Nate Jorgensen"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "34",
+   "dem": [
+    "Jenny Willford"
+   ],
+   "gop": [
+    "Craig Sullivan"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "35",
+   "dem": [
+    "Lorena Garcia"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "36",
+   "dem": [
+    "Michael Carter"
+   ],
+   "gop": [
+    "Paul E. Nelson"
+   ],
+   "others": [
+    {
+     "name": "Andrew Gibson",
+     "party": "L"
+    }
+   ],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "37",
+   "dem": [
+    "Chad Clifford"
+   ],
+   "gop": [
+    "Jill Thompson"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "38",
+   "dem": [
+    "Gretchen Rydin"
+   ],
+   "gop": [],
+   "others": [
+    {
+     "name": "Allison Madrigal",
+     "party": "I"
+    },
+    {
+     "name": "Norm Olsen",
+     "party": "L"
+    },
+    {
+     "name": "Tim Martin",
+     "party": "O"
+    }
+   ],
+   "withdrawn": [],
+   "note": "no Republican; minor party or unaffiliated candidate is the main challenger; Allison Madrigal is unaffiliated; Tim Martin party shown only as other"
+  },
+  {
+   "d": "39",
+   "dem": [
+    "Christian Schilder"
+   ],
+   "gop": [
+    "Brandi Bradley"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "40",
+   "dem": [
+    "Naquetta Ricks"
+   ],
+   "gop": [
+    "Clinton Porter"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "41",
+   "dem": [
+    "Jamie Jackson"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "42",
+   "dem": [
+    "Sarah Amelia Woodson"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "43",
+   "dem": [
+    "Robert \"Bob\" Marshall"
+   ],
+   "gop": [
+    "Nate Marsh"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "44",
+   "dem": [
+    "Richard Bowness"
+   ],
+   "gop": [
+    "Anthony Hartsook"
+   ],
+   "others": [
+    {
+     "name": "John H. Sutton",
+     "party": "L"
+    }
+   ],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "45",
+   "dem": [
+    "Michael Clarkson"
+   ],
+   "gop": [
+    "Max Brooks"
+   ],
+   "others": [
+    {
+     "name": "Caryn Ann Harlos",
+     "party": "L"
+    }
+   ],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "46",
+   "dem": [
+    "Tisha Mauro"
+   ],
+   "gop": [
+    "Jonathan Post"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "47",
+   "dem": [
+    "Vic Meyers"
+   ],
+   "gop": [
+    "Ty Winter"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "48",
+   "dem": [
+    "Dez Packard"
+   ],
+   "gop": [
+    "Carlos Barron"
+   ],
+   "others": [
+    {
+     "name": "Eric E. Joss",
+     "party": "L"
+    }
+   ],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "49",
+   "dem": [
+    "Lesley Smith"
+   ],
+   "gop": [
+    "Michael Sheperek"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "50",
+   "dem": [
+    "Tommy Butler"
+   ],
+   "gop": [
+    "Ryan Gonzalez"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "51",
+   "dem": [
+    "Jacki Marsh"
+   ],
+   "gop": [
+    "Amy Parks"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "52",
+   "dem": [
+    "Yara Zokaie"
+   ],
+   "gop": [],
+   "others": [
+    {
+     "name": "Steve Yurash",
+     "party": "O"
+    }
+   ],
+   "withdrawn": [],
+   "note": "no Republican; minor party or unaffiliated candidate is the main challenger; no Republican; Yurash party shown only as other"
+  },
+  {
+   "d": "53",
+   "dem": [
+    "Andy Boesenecker"
+   ],
+   "gop": [
+    "Daniel Frick"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "54",
+   "dem": [
+    "Mallory Martin"
+   ],
+   "gop": [
+    "Jason Bias"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "open seat, Matt Soper term limited"
+  },
+  {
+   "d": "55",
+   "dem": [
+    "Brittni Packard"
+   ],
+   "gop": [
+    "Rick Taggart"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "56",
+   "dem": [],
+   "gop": [
+    "Chris Richardson"
+   ],
+   "others": [
+    {
+     "name": "Amy L. Lunde",
+     "party": "L"
+    }
+   ],
+   "withdrawn": [],
+   "note": "no Democrat; minor party candidate is the main challenger"
+  },
+  {
+   "d": "57",
+   "dem": [
+    "Elizabeth Velasco"
+   ],
+   "gop": [
+    "Russ Andrews"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "58",
+   "dem": [
+    "Susannah Smith"
+   ],
+   "gop": [
+    "Larry Don Suckla"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "59",
+   "dem": [
+    "Katie Stewart"
+   ],
+   "gop": [
+    "Naomi Riess"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "60",
+   "dem": [
+    "Kathryn Kester Green"
+   ],
+   "gop": [
+    "Matt Alexander"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "61",
+   "dem": [
+    "Eliza Hamrick"
+   ],
+   "gop": [
+    "Scott Shamblin"
+   ],
+   "others": [
+    {
+     "name": "Kevin Gulbranson",
+     "party": "L"
+    }
+   ],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "62",
+   "dem": [
+    "Matthew Martinez"
+   ],
+   "gop": [
+    "Steven Rodriguez"
+   ],
+   "others": [
+    {
+     "name": "Donald Luke Vermillion",
+     "party": "L"
+    }
+   ],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "63",
+   "dem": [],
+   "gop": [
+    "Dusty Johnson"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "64",
+   "dem": [
+    "Maureen (Mo) Dower"
+   ],
+   "gop": [
+    "Scott L. Slaugh"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "65",
+   "dem": [],
+   "gop": [
+    "Lori Garcia Sander"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  }
+ ],
+ "method": "General election candidates from iVoterGuide Colorado statewide list, page version 2026-10-13; page cautions that unaffiliated candidates may still change as SOS verifies them."
+}

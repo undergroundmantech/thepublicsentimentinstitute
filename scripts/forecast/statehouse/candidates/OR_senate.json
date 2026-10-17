@@ -1,0 +1,225 @@
+{
+ "state": "OR",
+ "chamber": "senate",
+ "sources": [
+  "https://theballotbrief.com/state/oregon/multnomah-county",
+  "https://theballotbrief.com/state/oregon/washington-county",
+  "https://theballotbrief.com/state/oregon/clackamas-county",
+  "https://theballotbrief.com/state/oregon/lane-county",
+  "https://theballotbrief.com/state/oregon/marion-county",
+  "https://theballotbrief.com/state/oregon/jackson-county",
+  "https://theballotbrief.com/state/oregon/deschutes-county",
+  "https://theballotbrief.com/state/oregon/josephine-county",
+  "https://theballotbrief.com/state/oregon/douglas-county",
+  "https://theballotbrief.com/state/oregon/benton-county",
+  "https://theballotbrief.com/state/oregon/yamhill-county",
+  "https://theballotbrief.com/state/oregon/clatsop-county",
+  "https://theballotbrief.com/state/oregon/umatilla-county",
+  "https://theballotbrief.com/state/oregon/klamath-county",
+  "https://theballotbrief.com/state/oregon/lincoln-county",
+  "https://theballotbrief.com/state/oregon/crook-county",
+  "https://theballotbrief.com/state/oregon/coos-county",
+  "https://en.wikipedia.org/wiki/2026_Oregon_State_Senate_election"
+ ],
+ "as_of": "2026-10-17",
+ "complete": true,
+ "districts": [
+  {
+   "d": "3",
+   "dem": [
+    "Denise Krause"
+   ],
+   "gop": [
+    "Brad Hicks"
+   ],
+   "others": [
+    {
+     "name": "Clay Bearnson",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "Bearnson is Independent Party nominee also on Pacific Green line; Hicks also Libertarian; open seat, Jeff Golden D retiring"
+  },
+  {
+   "d": "4",
+   "dem": [
+    "Floyd Prozanski"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed; Prozanski D also on Republican line"
+  },
+  {
+   "d": "6",
+   "dem": [
+    "Sierrah Williams"
+   ],
+   "gop": [
+    "Jack Tibbetts"
+   ],
+   "others": [
+    {
+     "name": "Caleb Ticer",
+     "party": "L"
+    }
+   ],
+   "withdrawn": [],
+   "note": "fusion: Williams also Working Families; open seat"
+  },
+  {
+   "d": "7",
+   "dem": [
+    "James Manning Jr."
+   ],
+   "gop": [
+    "Jake Huff"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "fusion: Manning also Independent Party and Working Families"
+  },
+  {
+   "d": "8",
+   "dem": [
+    "Sara Gelser Blouin"
+   ],
+   "gop": [
+    "Valerie Draper Woldeit"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "10",
+   "dem": [
+    "Deb Patterson"
+   ],
+   "gop": [
+    "Angela Plowhead"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "fusion: Patterson also Working Families; Plowhead also Libertarian"
+  },
+  {
+   "d": "11",
+   "dem": [
+    "Virginia Stapleton"
+   ],
+   "gop": [
+    "Tracy Cramer"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "fusion: Stapleton also Working Families; open seat, Kim Thatcher R barred"
+  },
+  {
+   "d": "13",
+   "dem": [
+    "Courtney Neron Misslin"
+   ],
+   "gop": [
+    "Glenn Lancaster"
+   ],
+   "others": [
+    {
+     "name": "Tim Nelson",
+     "party": "L"
+    }
+   ],
+   "withdrawn": [],
+   "note": "fusion: Neron Misslin also Working Families"
+  },
+  {
+   "d": "15",
+   "dem": [
+    "Myrna Muñoz"
+   ],
+   "gop": [
+    "Harold Hutchison"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "fusion: Muñoz also Working Families; incumbent Janeen Sollman D lost primary to Muñoz"
+  },
+  {
+   "d": "16",
+   "dem": [
+    "Rachel Armitage"
+   ],
+   "gop": [
+    "Courtney Bangs"
+   ],
+   "others": [
+    {
+     "name": "Melisa Finkle",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "open seat, Suzanne Weber R barred"
+  },
+  {
+   "d": "17",
+   "dem": [
+    "Lisa Reynolds"
+   ],
+   "gop": [
+    "John Chee"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "19",
+   "dem": [
+    "Rob Wagner"
+   ],
+   "gop": [
+    "Mary Dirksen"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "20",
+   "dem": [
+    "Mark Meek"
+   ],
+   "gop": [
+    "Michele Stroh"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "24",
+   "dem": [
+    "Kayse Jama"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed; Jama also Working Families"
+  },
+  {
+   "d": "26",
+   "dem": [
+    "Nicole Bassett"
+   ],
+   "gop": [
+    "Jeff Helfrich"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "fusion: Bassett also Independent Party and Working Families; open seat, Christine Drazan R running for governor"
+  }
+ ],
+ "method": "General candidates with fusion lines from The Ballot Brief county pages, which describe themselves as AI assisted research of SOS filings; Ballotpedia snapshot available was pre-primary and Wikipedia House page lists no candidates. Fusion cross nominations are recorded in notes; the candidate is listed under their primary party. Party I is used for Independent Party of Oregon nominees. 15 Senate seats on the ballot."
+}

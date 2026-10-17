@@ -1,0 +1,326 @@
+{
+ "state": "PA",
+ "chamber": "senate",
+ "sources": [
+  "https://en.wikipedia.org/wiki/2026_Pennsylvania_Senate_election",
+  "https://www.spotlightpa.org/news/2026/09/races-to-watch-pennsylvania-house-senate-2026-midterm-election-elections/",
+  "https://www.heraldstandard.com/news/local-news/2026/jun/24/democrats-withdrawal-from-46th-senate-race-paves-way-for-independent/",
+  "https://accessharrisburg.spotlightpa.org/p/she-s-one-of-the-few-independents-on-the-nov-ballot"
+ ],
+ "as_of": "2026-10-17",
+ "complete": true,
+ "districts": [
+  {
+   "d": "2",
+   "seats": 1,
+   "dem": [
+    "Christine Tartaglione"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican filed"
+  },
+  {
+   "d": "4",
+   "seats": 1,
+   "dem": [
+    "Art Haywood"
+   ],
+   "gop": [
+    "Todd Johnson"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "6",
+   "seats": 1,
+   "dem": [
+    "Eileen T. Hartnett Albillar"
+   ],
+   "gop": [
+    "Frank Farry"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "competitive; Aug poll Albillar 46 Farry 45"
+  },
+  {
+   "d": "8",
+   "seats": 1,
+   "dem": [
+    "Anthony H. Williams"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican filed"
+  },
+  {
+   "d": "10",
+   "seats": 1,
+   "dem": [
+    "Steve Santarsiero"
+   ],
+   "gop": [
+    "Gregory J. Bankos Jr."
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "12",
+   "seats": 1,
+   "dem": [
+    "Maria Collett"
+   ],
+   "gop": [
+    "Robert F. Costello III"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "14",
+   "seats": 1,
+   "dem": [
+    "Nick Miller"
+   ],
+   "gop": [
+    "Omy Juriel Maldonado"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "GOP target"
+  },
+  {
+   "d": "16",
+   "seats": 1,
+   "dem": [
+    "Mark Pinsley"
+   ],
+   "gop": [
+    "Jarrett Coleman"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "competitive"
+  },
+  {
+   "d": "18",
+   "seats": 1,
+   "dem": [
+    "Lisa Boscola"
+   ],
+   "gop": [
+    "Scott Janney"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "20",
+   "seats": 1,
+   "dem": [
+    "Jackie Baker"
+   ],
+   "gop": [
+    "Lisa Baker"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "incumbent Baker won R primary over Tyler Meyers"
+  },
+  {
+   "d": "22",
+   "seats": 1,
+   "dem": [
+    "Marty Flynn"
+   ],
+   "gop": [
+    "Sharon Soltis"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "24",
+   "seats": 1,
+   "dem": [
+    "Chris Thomas"
+   ],
+   "gop": [
+    "Tracy Pennycuick"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "competitive"
+  },
+  {
+   "d": "26",
+   "seats": 1,
+   "dem": [
+    "Tim Kearney"
+   ],
+   "gop": [
+    "Alfeia Devaughn-Goodwin"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "28",
+   "seats": 1,
+   "dem": [
+    "Thomas Johnson"
+   ],
+   "gop": [
+    "Kristin Phillips-Hill"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "30",
+   "seats": 1,
+   "dem": [
+    "Sean Steeg"
+   ],
+   "gop": [
+    "Judy Ward"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "32",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Patrick J. Stefano"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Democrat filed"
+  },
+  {
+   "d": "34",
+   "seats": 1,
+   "dem": [
+    "Nathan Wood"
+   ],
+   "gop": [
+    "Greg Rothman"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "36",
+   "seats": 1,
+   "dem": [
+    "James Malone"
+   ],
+   "gop": [
+    "Tom Jones"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "competitive; R nominee is state Rep. Tom Jones; Sept poll Jones 48 Malone 45"
+  },
+  {
+   "d": "38",
+   "seats": 1,
+   "dem": [
+    "Lindsey Williams"
+   ],
+   "gop": [
+    "Thomas West"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "GOP target"
+  },
+  {
+   "d": "40",
+   "seats": 1,
+   "dem": [
+    "Brian A. Wrightson"
+   ],
+   "gop": [
+    "Rosemary Brown"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "competitive; Sept poll Brown 47 Wrightson 44"
+  },
+  {
+   "d": "42",
+   "seats": 1,
+   "dem": [
+    "Wayne D. Fontana"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican filed"
+  },
+  {
+   "d": "44",
+   "seats": 1,
+   "dem": [
+    "Katie Muth"
+   ],
+   "gop": [
+    "Melissa C. Dicranian"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "46",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Camera Bartolotta"
+   ],
+   "others": [
+    {
+     "name": "Jodi Borello",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [
+    {
+     "name": "Evan Snyder",
+     "party": "D",
+     "note": "Democratic nominee withdrew June 2026"
+    }
+   ],
+   "note": "independent is the main challenger; Borello qualified by petition in Aug 2026"
+  },
+  {
+   "d": "48",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Chris Gebhard"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Democrat filed"
+  },
+  {
+   "d": "50",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Michele Brooks"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Democrat filed"
+  }
+ ]
+}

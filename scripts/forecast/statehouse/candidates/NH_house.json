@@ -1,0 +1,3005 @@
+{
+ "state": "NH",
+ "chamber": "house",
+ "sources": [
+  "https://www.citizenscount.org/elections/2026-nh-house-general-election",
+  "https://www.citizenscount.org/elections/2026-nh-house-primary",
+  "https://ballotpedia.org/New_Hampshire_House_of_Representatives_elections,_2026"
+ ],
+ "as_of": "2026-10-17",
+ "complete": true,
+ "method_note": "Candidates from Citizens Count general election listing, all 15 pages; seat counts from Ballotpedia; withdrawals inferred by comparing with Citizens Count primary results. NH SoS site was not reachable.",
+ "districts": [
+  {
+   "d": "Belknap 1",
+   "seats": 1,
+   "dem": [
+    "Amber Schaefer"
+   ],
+   "gop": [
+    "Tom Ploszaj"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Belknap 2",
+   "seats": 2,
+   "dem": [
+    "Dean S.T. Cascadden",
+    "Seth Wheeler"
+   ],
+   "gop": [
+    "Matthew Coker",
+    "Scott Wallace"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Belknap 3",
+   "seats": 1,
+   "dem": [
+    "William Lawrence, Jr."
+   ],
+   "gop": [
+    "Steven Bunce"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Belknap 4",
+   "seats": 1,
+   "dem": [
+    "Liz Charlwood"
+   ],
+   "gop": [
+    "Kevin M. Nugent, Jr."
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Belknap 5",
+   "seats": 4,
+   "dem": [
+    "Marcia Hayward",
+    "Eric Hoffman",
+    "Lois A. Kessin",
+    "Denise Riley"
+   ],
+   "gop": [
+    "Mike Bordes",
+    "Timothy Minor",
+    "Cody Pfaff",
+    "Paul Rossi"
+   ],
+   "others": [],
+   "withdrawn": [
+    {
+     "name": "Charlie St. Clair",
+     "party": "D",
+     "note": "incumbent, on primary ballot, not nominated"
+    }
+   ],
+   "note": "Incumbent Charlie St. Clair (D) was on the primary ballot but not nominated; Eric Hoffman is listed as the fourth Democratic nominee."
+  },
+  {
+   "d": "Belknap 6",
+   "seats": 4,
+   "dem": [
+    "Allan Frank",
+    "Bob McLean",
+    "David Nagel",
+    "Lisa Rivard"
+   ],
+   "gop": [
+    "Glen Aldrich",
+    "Priscilla M. Bean",
+    "Colleen M. Harkey",
+    "Jade Wood"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Belknap 7",
+   "seats": 3,
+   "dem": [
+    "Stephen Copithorne",
+    "Laura Dunham",
+    "Nancy Mitchell"
+   ],
+   "gop": [
+    "Barbara Comtois",
+    "Paul A. Terry",
+    "Peter R. Varney"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Belknap 8",
+   "seats": 2,
+   "dem": [
+    "Donald J. Giguere",
+    "Don House"
+   ],
+   "gop": [
+    "Lisa M. Freeman",
+    "Cameron Thompson"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Carroll 1",
+   "seats": 3,
+   "dem": [
+    "Benjamin Colbath",
+    "Ellin M. Leonard",
+    "David Paige"
+   ],
+   "gop": [
+    "Gregory T. Corrigan",
+    "Robert W. Nelson",
+    "Karen C. Umberger"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Carroll 2",
+   "seats": 2,
+   "dem": [
+    "Anita Burroughs",
+    "Adam Heard"
+   ],
+   "gop": [
+    "Erlon Jones",
+    "Jennifer LePla"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Carroll 3",
+   "seats": 2,
+   "dem": [
+    "Todd Milliken",
+    "Bryan Randolph"
+   ],
+   "gop": [
+    "Richard R. Brown",
+    "Karel A. Crawford"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Carroll 4",
+   "seats": 2,
+   "dem": [
+    "Annie Gehring"
+   ],
+   "gop": [
+    "Lino M. Avellani",
+    "Mike Belcher"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Carroll 5",
+   "seats": 1,
+   "dem": [
+    "Morgan Bultman"
+   ],
+   "gop": [
+    "Steven Brown"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Carroll 6",
+   "seats": 2,
+   "dem": [
+    "Deirdre McEachern",
+    "Phoebe VanScoy-Giessler"
+   ],
+   "gop": [
+    "Tim Bauman",
+    "John T. MacDonald"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Carroll 7",
+   "seats": 1,
+   "dem": [
+    "Karen Burnett-Kurie"
+   ],
+   "gop": [
+    "Dale Fincher"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Carroll 8",
+   "seats": 2,
+   "dem": [
+    "James Pittman",
+    "George Randell"
+   ],
+   "gop": [
+    "Colin Mitchell",
+    "Tammy Simmons Garthwaite"
+   ],
+   "others": [
+    {
+     "name": "George Randell",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "George Randell won the Democratic nomination by write-in and is listed as running as both Democrat and Independent."
+  },
+  {
+   "d": "Cheshire 1",
+   "seats": 1,
+   "dem": [
+    "Dylan Germana"
+   ],
+   "gop": [
+    "Timothy J. Donovan"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Cheshire 2",
+   "seats": 1,
+   "dem": [
+    "Dru Fox"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "No Republican nominee."
+  },
+  {
+   "d": "Cheshire 3",
+   "seats": 1,
+   "dem": [
+    "Philip Jones"
+   ],
+   "gop": [
+    "Marissa W. Salisbury"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Cheshire 4",
+   "seats": 1,
+   "dem": [
+    "Jodi Newell"
+   ],
+   "gop": [
+    "Robert Johnson"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Cheshire 5",
+   "seats": 1,
+   "dem": [
+    "Lucy McVitty Weber"
+   ],
+   "gop": [
+    "William J. Sommer"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Cheshire 6",
+   "seats": 2,
+   "dem": [
+    "Paul Berch",
+    "Cathryn A. Harvey"
+   ],
+   "gop": [
+    "Sean Graves",
+    "Zachary Nutting"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Cheshire 7",
+   "seats": 1,
+   "dem": [
+    "Teresa \"Terri\" O'Rorke"
+   ],
+   "gop": [
+    "Jonathan Liptak"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Cheshire 8",
+   "seats": 1,
+   "dem": [
+    "Christine L. Parshall"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "No Republican nominee."
+  },
+  {
+   "d": "Cheshire 9",
+   "seats": 1,
+   "dem": [
+    "James Gruber"
+   ],
+   "gop": [
+    "Richard M. Nalevanko"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Cheshire 10",
+   "seats": 2,
+   "dem": [
+    "Alan Gross",
+    "Steve Russell"
+   ],
+   "gop": [
+    "Sly Karasinski",
+    "Michael R. York"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Primary page did not mark Michael R. York (R) as a winner, but the general election page lists him."
+  },
+  {
+   "d": "Cheshire 11",
+   "seats": 1,
+   "dem": [
+    "Lindseigh Picard"
+   ],
+   "gop": [
+    "Denis Vincent Murphy, II"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Cheshire 12",
+   "seats": 1,
+   "dem": [
+    "Kristan Tilton"
+   ],
+   "gop": [
+    "Richard \"Dick\" Thackston III"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Cheshire 13",
+   "seats": 1,
+   "dem": [
+    "Tom Ahlborn-Hsu"
+   ],
+   "gop": [
+    "Matthew John Santonastaso"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Cheshire 14",
+   "seats": 1,
+   "dem": [
+    "Gene Andersen"
+   ],
+   "gop": [
+    "John B. Hunt"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Cheshire 15",
+   "seats": 2,
+   "dem": [
+    "Nicholas Germana",
+    "Samantha Jacobs"
+   ],
+   "gop": [
+    "Matthew Roach",
+    "Becky Shields"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Cheshire 16",
+   "seats": 1,
+   "dem": [
+    "Lucius Parshall"
+   ],
+   "gop": [
+    "Alexander Nalevanko"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Cheshire 17",
+   "seats": 1,
+   "dem": [
+    "Jennie Gomarlo"
+   ],
+   "gop": [
+    "Jennifer Rhodes"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Cheshire 18",
+   "seats": 2,
+   "dem": [
+    "Allen Davis",
+    "Rory Lovett Sherman"
+   ],
+   "gop": [
+    "Rita Mattson",
+    "Jim Qualey"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Coos 1",
+   "seats": 2,
+   "dem": [
+    "Jay Ennis",
+    "Lee Ann Potter"
+   ],
+   "gop": [
+    "Sam Hoehn",
+    "Amy Norris"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Coos 2",
+   "seats": 1,
+   "dem": [
+    "Lincoln Robertson"
+   ],
+   "gop": [
+    "Arnold G. Davis"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Coos 3",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Mike Ouellet"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "No Democratic nominee."
+  },
+  {
+   "d": "Coos 4",
+   "seats": 1,
+   "dem": [
+    "David Holmander"
+   ],
+   "gop": [
+    "Seth King"
+   ],
+   "others": [
+    {
+     "name": "Scott McKinnon Black",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "Independent Scott McKinnon Black qualified by petition."
+  },
+  {
+   "d": "Coos 5",
+   "seats": 2,
+   "dem": [],
+   "gop": [
+    "Mark Evans",
+    "Peter Morency"
+   ],
+   "others": [
+    {
+     "name": "Cassie Mason",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "No Democratic nominee; independent Cassie Mason is the only challenger to the two Republicans."
+  },
+  {
+   "d": "Coos 6",
+   "seats": 1,
+   "dem": [
+    "Richard Umiker"
+   ],
+   "gop": [
+    "Robert Gargano"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Coos 7",
+   "seats": 1,
+   "dem": [
+    "Corinne E. Cascadden"
+   ],
+   "gop": [
+    "Lori Korzen"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Grafton 1",
+   "seats": 3,
+   "dem": [
+    "Joseph Goderic Beaulieu",
+    "Timothy T. Egan",
+    "Linda Massimilla"
+   ],
+   "gop": [
+    "Joseph Barton",
+    "Calvin Beaulier",
+    "Andrew Dorsett"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Grafton 2",
+   "seats": 1,
+   "dem": [
+    "Jared Sullivan"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "No Republican nominee."
+  },
+  {
+   "d": "Grafton 3",
+   "seats": 1,
+   "dem": [
+    "Jerry M. Stringham"
+   ],
+   "gop": [
+    "Bonnie Ham"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Grafton 4",
+   "seats": 1,
+   "dem": [
+    "Heather P. Baldwin"
+   ],
+   "gop": [
+    "David Adams Rardin"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Grafton 5",
+   "seats": 2,
+   "dem": [
+    "Dustin Vigneault"
+   ],
+   "gop": [
+    "Greg Mathieson",
+    "Marie Louise Bjelobrk"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Grafton 6",
+   "seats": 1,
+   "dem": [
+    "Paul J. Goundrey"
+   ],
+   "gop": [
+    "Linda Franz"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Grafton 7",
+   "seats": 1,
+   "dem": [
+    "Janet Marie Lucas"
+   ],
+   "gop": [
+    "Jon A. Gablinske"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Grafton 8",
+   "seats": 3,
+   "dem": [
+    "Bill Bolton",
+    "Sallie Fellows",
+    "Peter Lovett"
+   ],
+   "gop": [
+    "George Kirk"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Grafton 9",
+   "seats": 1,
+   "dem": [
+    "Ella V. Barrett"
+   ],
+   "gop": [
+    "Bradley Macrae"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Grafton 10",
+   "seats": 1,
+   "dem": [
+    "Marc E. Bourassa"
+   ],
+   "gop": [
+    "Steven Coffill"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Grafton 11",
+   "seats": 1,
+   "dem": [
+    "Roger B. Larochelle, Jr."
+   ],
+   "gop": [
+    "Jake Abuhav"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Grafton 12",
+   "seats": 4,
+   "dem": [
+    "Mary A. Hakken-Phillips",
+    "Russell Muirhead",
+    "Ellen Rockmore",
+    "Terry Spahr"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "No Republican nominee."
+  },
+  {
+   "d": "Grafton 13",
+   "seats": 1,
+   "dem": [
+    "Laurel Stavis"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "No Republican nominee."
+  },
+  {
+   "d": "Grafton 14",
+   "seats": 1,
+   "dem": [
+    "Kathryn Brennan"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "No Republican nominee."
+  },
+  {
+   "d": "Grafton 15",
+   "seats": 1,
+   "dem": [
+    "Zoe Hill"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "No Republican nominee."
+  },
+  {
+   "d": "Grafton 16",
+   "seats": 1,
+   "dem": [
+    "David Fracht"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "No Republican nominee."
+  },
+  {
+   "d": "Grafton 17",
+   "seats": 1,
+   "dem": [
+    "Thomas Cormen"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "No Republican nominee."
+  },
+  {
+   "d": "Grafton 18",
+   "seats": 1,
+   "dem": [
+    "Marko Kloos"
+   ],
+   "gop": [
+    "Donald McFarlane"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Hillsborough 1",
+   "seats": 4,
+   "dem": [
+    "Lisa Brown",
+    "Noah Lamoureaux",
+    "Debbie Ryan"
+   ],
+   "gop": [
+    "Deborah Kruzel",
+    "Tom Mannion",
+    "Diane Rogers",
+    "Jeffrey Tenczar"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Hillsborough 2",
+   "seats": 7,
+   "dem": [
+    "Todd C. Fahey",
+    "John K. Fitzgerald",
+    "Jeffrey L. Kerr",
+    "Ryan Nugent",
+    "Sheila Quick",
+    "Catherine A. Rombeau",
+    "Geoffrey Wellington"
+   ],
+   "gop": [
+    "Matthew Castanien",
+    "Phil Greazzo",
+    "Peter Kujawski",
+    "Brian Labrie",
+    "Pat MacMonagle",
+    "Kristin Noble",
+    "John Schneller"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Hillsborough 3",
+   "seats": 3,
+   "dem": [
+    "Suzanne A. Beaulieu",
+    "Fred E. Davis, Jr.",
+    "Michael Joseph"
+   ],
+   "gop": [
+    "John Menyhard"
+   ],
+   "others": [],
+   "withdrawn": [
+    {
+     "name": "Michael P. Aksten",
+     "party": "D",
+     "note": "won primary Sept 2026, not on general list"
+    }
+   ],
+   "note": "Michael P. Aksten won a Democratic nomination in the primary but the general election list shows Michael Joseph instead."
+  },
+  {
+   "d": "Hillsborough 4",
+   "seats": 3,
+   "dem": [
+    "Renae Lias",
+    "Camille Pattison",
+    "Linda V. Ryan"
+   ],
+   "gop": [
+    "Shawn Martin"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Hillsborough 5",
+   "seats": 3,
+   "dem": [
+    "Susan A. Elberger",
+    "Heather Raymond",
+    "Dale Swanson"
+   ],
+   "gop": [
+    "Paul Schibbelhute"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Hillsborough 6",
+   "seats": 3,
+   "dem": [
+    "Michele Roussel Buckley",
+    "Lee Ann Kluger",
+    "Adam R. Thompson"
+   ],
+   "gop": [
+    "Doris Hohensee",
+    "Elena Pavlou",
+    "Daniel Richardson"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Hillsborough 7",
+   "seats": 3,
+   "dem": [
+    "Louis C. Juris",
+    "Jim Mahoney",
+    "Charlene Bangs Pedersen"
+   ],
+   "gop": [
+    "Avalon Lewis",
+    "Roy H. Parker"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Hillsborough 8",
+   "seats": 3,
+   "dem": [
+    "Efstathia Booras",
+    "Christal Lloyd",
+    "Frances E. Nutter-Upham"
+   ],
+   "gop": [
+    "Travis Tripodi"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Hillsborough 9",
+   "seats": 3,
+   "dem": [
+    "Rich Green",
+    "Sanjeev K. Manohar",
+    "Santosh Salvi"
+   ],
+   "gop": [
+    "Joseph Cole"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Hillsborough 10",
+   "seats": 3,
+   "dem": [
+    "Linda Harriott-Gathright",
+    "Martin \"Marty\" Jack",
+    "Samantha O'Loughlin"
+   ],
+   "gop": [
+    "Bill Ohm"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Hillsborough 11",
+   "seats": 3,
+   "dem": [
+    "Manoj Chourasia",
+    "William \"Will\" Darby",
+    "Arya Shams"
+   ],
+   "gop": [
+    "Kristie Hart"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Hillsborough 12",
+   "seats": 8,
+   "dem": [
+    "Rebecca Boutin",
+    "Matthew Brown",
+    "Nancy A. Murphy",
+    "Marc Nozell",
+    "Mary Beth Raven",
+    "Heather Robitaille",
+    "Rosemarie Rung",
+    "Wendy E.N. Thomas"
+   ],
+   "gop": [
+    "Kevin Francis Ballantine",
+    "Bill Boyd",
+    "Julie Miles",
+    "Maureen Mooney",
+    "Jeanine Notter",
+    "Adam Presa",
+    "Kevin Southwick",
+    "Wolfram von Schoen"
+   ],
+   "others": [
+    {
+     "name": "Kyle Haines",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "Independent Kyle Haines qualified by petition."
+  },
+  {
+   "d": "Hillsborough 13",
+   "seats": 6,
+   "dem": [
+    "Luan Baci",
+    "James Battis",
+    "Jim Caron",
+    "Kate Messner",
+    "Don Staveley"
+   ],
+   "gop": [
+    "Dillon Dumont",
+    "Cathy Kenny",
+    "Andrew Prout",
+    "Tom Trost",
+    "Jordan G. Ulery",
+    "Robert James Wherry III"
+   ],
+   "others": [
+    {
+     "name": "C. Mark DelSesto",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "Independent C. Mark DelSesto qualified by petition."
+  },
+  {
+   "d": "Hillsborough 14",
+   "seats": 2,
+   "dem": [
+    "Ray Ealy",
+    "Paula Paciulan"
+   ],
+   "gop": [
+    "Richard W. Lascelles",
+    "Raymond C. Peeples, Jr."
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Hillsborough 15",
+   "seats": 2,
+   "dem": [
+    "Michael Farley",
+    "Michael Fitzell"
+   ],
+   "gop": [
+    "Mark McLean",
+    "Mark Proulx"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Hillsborough 16",
+   "seats": 2,
+   "dem": [
+    "Benjamin C. Baroody",
+    "Maxine B. Mosley"
+   ],
+   "gop": [
+    "David A. Smith",
+    "Michael J. Tkacz"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Only Benjamin C. Baroody won the Democratic primary; Maxine B. Mosley was added later to fill the second Democratic slot."
+  },
+  {
+   "d": "Hillsborough 17",
+   "seats": 2,
+   "dem": [
+    "Rob Fox",
+    "Sean Parr"
+   ],
+   "gop": [
+    "Ben Prescott"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Hillsborough 18",
+   "seats": 2,
+   "dem": [
+    "Jessica Grill",
+    "Jim Normand"
+   ],
+   "gop": [
+    "Steven Kesselring"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Hillsborough 19",
+   "seats": 2,
+   "dem": [
+    "Jane Ellen Beaulieu",
+    "Chrissy Simonds"
+   ],
+   "gop": [
+    "Matt Drew",
+    "Mickey Mullin"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Hillsborough 20",
+   "seats": 2,
+   "dem": [
+    "Pauline Martineau",
+    "Alissandra Murray"
+   ],
+   "gop": [
+    "Pierre Dupont",
+    "Jose R. Marte"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Hillsborough 21",
+   "seats": 2,
+   "dem": [
+    "Jeffrey \"Jeff\" Goley",
+    "Christine Seibert"
+   ],
+   "gop": [
+    "Chris Morgan"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Hillsborough 22",
+   "seats": 2,
+   "dem": [
+    "Greg Erskine",
+    "Nicole Leapley"
+   ],
+   "gop": [
+    "Max Abramson",
+    "Brittany Ping"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Hillsborough 23",
+   "seats": 2,
+   "dem": [
+    "Jean Leniol Jeudy",
+    "Mary Ngwanda Georges"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "No Republican nominee."
+  },
+  {
+   "d": "Hillsborough 24",
+   "seats": 2,
+   "dem": [
+    "Frank Anthony",
+    "Jessica Margeson"
+   ],
+   "gop": [
+    "Shuvom Ghose",
+    "Paul LaFerriere"
+   ],
+   "others": [],
+   "withdrawn": [
+    {
+     "name": "Anthony Carideo",
+     "party": "D",
+     "note": "won primary Sept 2026, not on general list"
+    }
+   ],
+   "note": "Anthony Carideo won a Democratic nomination in the primary but is not on the general list; Jessica Margeson, who had filed as an independent, is now listed as a Democrat."
+  },
+  {
+   "d": "Hillsborough 25",
+   "seats": 2,
+   "dem": [
+    "Heather Deiner",
+    "Kathy Staub"
+   ],
+   "gop": [
+    "Kathleen Paquette"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Hillsborough 26",
+   "seats": 2,
+   "dem": [
+    "Mary C. Freitas",
+    "Patrick N. Long"
+   ],
+   "gop": [
+    "Brian D. Cole",
+    "Henry Emele"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Rep. Brian D. Cole, after losing the U.S. House primary, was appointed to fill the vacant second Republican nomination."
+  },
+  {
+   "d": "Hillsborough 27",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Mary Murphy"
+   ],
+   "others": [
+    {
+     "name": "Timothy J. Coffin",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "No Democratic nominee; independent Timothy J. Coffin is the main challenger."
+  },
+  {
+   "d": "Hillsborough 28",
+   "seats": 2,
+   "dem": [
+    "David E. Erikson",
+    "Benson H. Goodwin"
+   ],
+   "gop": [
+    "Travis Corcoran",
+    "Keith Erf"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Hillsborough 29",
+   "seats": 4,
+   "dem": [
+    "Karyn Battey",
+    "Christopher Calhoun",
+    "Judi L. Lanza",
+    "Marie B. Morgan"
+   ],
+   "gop": [
+    "Joe Alexander Jr.",
+    "Shanun R. Carey",
+    "Henry R. Giasson III",
+    "Sherri Reinfurt"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Hillsborough 30",
+   "seats": 3,
+   "dem": [
+    "W. Gordon Allen",
+    "William Bryk",
+    "Janet McEwen"
+   ],
+   "gop": [
+    "Larry Baker",
+    "Austin Cottle",
+    "Tim Morehouse"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Hillsborough 31",
+   "seats": 1,
+   "dem": [
+    "Molly C. Howard"
+   ],
+   "gop": [
+    "Jarvis Martin Adams IV"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Hillsborough 32",
+   "seats": 3,
+   "dem": [
+    "Richard Swanson",
+    "Kermit Williams"
+   ],
+   "gop": [
+    "Diane Kelley",
+    "Jim Kofalt",
+    "Shane Sirois"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Hillsborough 33",
+   "seats": 2,
+   "dem": [
+    "Peter R. Leishman",
+    "Jonah Orion Wheeler"
+   ],
+   "gop": [
+    "Kimberly Joy Thomas"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Hillsborough 34",
+   "seats": 3,
+   "dem": [
+    "Stephanie Grund",
+    "Daniel LeClerc",
+    "Daniel T. Veilleux"
+   ],
+   "gop": [
+    "Jason Hennessey",
+    "Russ Hodgkins",
+    "Diane Layton"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Hillsborough 35",
+   "seats": 2,
+   "dem": [
+    "Kat McGhee",
+    "Ben Ming"
+   ],
+   "gop": [
+    "Liz Barbour",
+    "James \"Jim\" Kelly"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Hillsborough 36",
+   "seats": 2,
+   "dem": [
+    "Michael Pellerito",
+    "Stephen Spratt"
+   ],
+   "gop": [
+    "Diane Pauer",
+    "John W. Suiter"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Hillsborough 37",
+   "seats": 1,
+   "dem": [
+    "Megan A. Murray"
+   ],
+   "gop": [
+    "Michael \"Mike\" Thornton"
+   ],
+   "others": [
+    {
+     "name": "Daryl D'Angelo",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "Independent Daryl D'Angelo qualified by petition."
+  },
+  {
+   "d": "Hillsborough 38",
+   "seats": 2,
+   "dem": [
+    "Mahendra Bakshi",
+    "Heidi Jakoby"
+   ],
+   "gop": [
+    "Adam Haverstock",
+    "Ted Trost"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Hillsborough 39",
+   "seats": 2,
+   "dem": [
+    "Ellen A. Boudreau",
+    "Thomas Katsiantonis"
+   ],
+   "gop": [
+    "Jon DiPietro",
+    "William Infantine"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Hillsborough 40",
+   "seats": 4,
+   "dem": [
+    "Erin Kerwin",
+    "Mark S. MacKenzie",
+    "Robert Richard-Snipes",
+    "Trinidad Tellez"
+   ],
+   "gop": [
+    "Lynne M. Cumming",
+    "Carlos Gonzalez",
+    "William \"Bill\" O'Brien",
+    "Robert Rivera"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Hillsborough 41",
+   "seats": 3,
+   "dem": [
+    "Lily M. Foss",
+    "Bishwa Bahadur Shah",
+    "Tom Stewart"
+   ],
+   "gop": [
+    "Ryan Hebert",
+    "Jason Hodgdon",
+    "Joseph Skinner"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Hillsborough 42",
+   "seats": 3,
+   "dem": [
+    "Teri Harkins",
+    "Lee Nyquist",
+    "Peter Ryder"
+   ],
+   "gop": [
+    "Gerald \"Gerry\" Griffin",
+    "Rob Lovett",
+    "Lisa C.M. Post"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Hillsborough 43",
+   "seats": 4,
+   "dem": [
+    "Ethan Aho",
+    "Paul Dargie",
+    "Claire Holston",
+    "Maria Perez"
+   ],
+   "gop": [
+    "William J. Bieschke",
+    "Gary L. Daniels",
+    "Elizabeth Keenan",
+    "Vanessa L. Sheehan"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Hillsborough 44",
+   "seats": 2,
+   "dem": [
+    "Chris Conroy",
+    "Robert \"Bob\" Jones"
+   ],
+   "gop": [
+    "Ross Berry",
+    "Lisa Mazur"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Hillsborough 45",
+   "seats": 1,
+   "dem": [
+    "Jerry Roche"
+   ],
+   "gop": [
+    "Jack B. Flanagan"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Merrimack 1",
+   "seats": 1,
+   "dem": [
+    "Lorrie Carey"
+   ],
+   "gop": [
+    "Rick Devoid"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Merrimack 2",
+   "seats": 1,
+   "dem": [
+    "Joyce May Fulweiler"
+   ],
+   "gop": [
+    "Gregory \"Greg\" Hill"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Merrimack 3",
+   "seats": 2,
+   "dem": [
+    "Scott A. Burns",
+    "Vivian Marie Hall"
+   ],
+   "gop": [
+    "Werner D. Horn",
+    "Michael Visconti"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Merrimack 4",
+   "seats": 2,
+   "dem": [
+    "Cody York"
+   ],
+   "gop": [
+    "Jose E. Cambrils",
+    "Michael Moffett"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Merrimack 5",
+   "seats": 2,
+   "dem": [
+    "Lorna Carlisle",
+    "Thomas Ware"
+   ],
+   "gop": [
+    "Louise Andrus",
+    "Deborah Aylward"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Merrimack 6",
+   "seats": 1,
+   "dem": [
+    "Thomas \"Tom\" Schamberg"
+   ],
+   "gop": [
+    "Paul M. Little"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Merrimack 7",
+   "seats": 2,
+   "dem": [
+    "Karen E. Ebel",
+    "Gregory M. Sargent"
+   ],
+   "gop": [
+    "Dorothy L. Hitchmoth"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Merrimack 8",
+   "seats": 3,
+   "dem": [
+    "Tony Caplan",
+    "Eileen Kelly",
+    "Stephanie R. Payeur"
+   ],
+   "gop": [
+    "Matt Center",
+    "Stephen Craig Pierce",
+    "Natalie J. Wells"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Merrimack 9",
+   "seats": 4,
+   "dem": [
+    "Eleana Marie Colby",
+    "Muriel Hall",
+    "David Luneau",
+    "James Newsom"
+   ],
+   "gop": [
+    "John F. Martin",
+    "Matthew Poulin"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Merrimack 10",
+   "seats": 4,
+   "dem": [
+    "Lucas J. Coriaty",
+    "Ricky Gurung",
+    "William Patrick Lynch",
+    "Germano Martins"
+   ],
+   "gop": [
+    "Stephen E. Boyd",
+    "Pamela McMahon",
+    "Yury Polozov",
+    "Thomas C. Walsh"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Merrimack 11",
+   "seats": 1,
+   "dem": [
+    "Al Turcotte"
+   ],
+   "gop": [
+    "Matthew Pitaro"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Merrimack 12",
+   "seats": 2,
+   "dem": [
+    "Mariana R. Beer",
+    "Kenneth Nivison"
+   ],
+   "gop": [
+    "Peter L. Mehegan",
+    "Brian Seaworth"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Merrimack 13",
+   "seats": 2,
+   "dem": [],
+   "gop": [
+    "Cyril Aures",
+    "Clayton Wood"
+   ],
+   "others": [
+    {
+     "name": "Becky Berk",
+     "party": "I"
+    },
+    {
+     "name": "Paul Twomey",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "No Democratic nominee; independents Becky Berk and Paul Twomey are the challengers to the two Republicans."
+  },
+  {
+   "d": "Merrimack 14",
+   "seats": 1,
+   "dem": [
+    "Glenn Horner"
+   ],
+   "gop": [
+    "Gary Matteson"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Merrimack 15",
+   "seats": 1,
+   "dem": [
+    "Tracy Anne Bricchi"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "No Republican nominee."
+  },
+  {
+   "d": "Merrimack 16",
+   "seats": 1,
+   "dem": [
+    "Connie Lane"
+   ],
+   "gop": [
+    "Laurence R. Weissbrot"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Merrimack 17",
+   "seats": 1,
+   "dem": [
+    "Beth Richards"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "No Republican nominee."
+  },
+  {
+   "d": "Merrimack 18",
+   "seats": 1,
+   "dem": [
+    "Lisa D. Beaudoin"
+   ],
+   "gop": [
+    "Elijah J. Wilson"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Merrimack 19",
+   "seats": 1,
+   "dem": [
+    "Mary Jane Wallner"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "No Republican nominee."
+  },
+  {
+   "d": "Merrimack 20",
+   "seats": 1,
+   "dem": [
+    "Nathan Giffard"
+   ],
+   "gop": [
+    "Jonathan Clark"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Merrimack 21",
+   "seats": 1,
+   "dem": [
+    "Timothy Soucy"
+   ],
+   "gop": [
+    "Darryl Berleth"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Merrimack 22",
+   "seats": 1,
+   "dem": [
+    "Alison Murphy"
+   ],
+   "gop": [
+    "Jonathan Cate"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Merrimack 23",
+   "seats": 1,
+   "dem": [
+    "Kristopher Levesque"
+   ],
+   "gop": [
+    "Andrew Georgevits"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Merrimack 24",
+   "seats": 1,
+   "dem": [
+    "Matthew S. Hicks"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "No Republican nominee."
+  },
+  {
+   "d": "Merrimack 25",
+   "seats": 1,
+   "dem": [
+    "Erica Russell"
+   ],
+   "gop": [
+    "James Thibault"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Merrimack 26",
+   "seats": 1,
+   "dem": [
+    "Harold D. Tuttle"
+   ],
+   "gop": [
+    "Alvin B. See"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Merrimack 27",
+   "seats": 2,
+   "dem": [
+    "Harry Kozlowski",
+    "Phillip James Walker"
+   ],
+   "gop": [
+    "Raymond Plante",
+    "Vanessa Poulin"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Merrimack 28",
+   "seats": 1,
+   "dem": [
+    "Lisa Brown"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "No Republican nominee."
+  },
+  {
+   "d": "Merrimack 29",
+   "seats": 1,
+   "dem": [
+    "Kristina \"Kris\" Schultz"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "No Republican nominee."
+  },
+  {
+   "d": "Merrimack 30",
+   "seats": 1,
+   "dem": [
+    "Jason Quinno"
+   ],
+   "gop": [
+    "Robert C. Washburn, Sr."
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Rockingham 1",
+   "seats": 3,
+   "dem": [
+    "Donna Danis",
+    "Hal Rafter",
+    "Pamela Sanderson"
+   ],
+   "gop": [
+    "Scott R. Bryer",
+    "James Guzofski",
+    "Paul D. Tudor"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Rockingham 2",
+   "seats": 3,
+   "dem": [
+    "Kendra Cohen",
+    "Judith Lindsey",
+    "Robert Prieto"
+   ],
+   "gop": [
+    "Will Huebner",
+    "Jason Osborne",
+    "James Spillane"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Rockingham 3",
+   "seats": 1,
+   "dem": [
+    "Charles \"Chuck\" R. Heuer"
+   ],
+   "gop": [
+    "Mary J. Ford"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Rockingham 4",
+   "seats": 3,
+   "dem": [
+    "Art Hunt",
+    "Christine Pierce"
+   ],
+   "gop": [
+    "Cindy L. Bennett",
+    "Mike Drago",
+    "Brian Nadeau"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Rockingham 5",
+   "seats": 2,
+   "dem": [
+    "Joe Perry",
+    "Mark Vallone"
+   ],
+   "gop": [
+    "Trevor Morse",
+    "John Scully"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Rockingham 6",
+   "seats": 1,
+   "dem": [
+    "Eric S. Turer"
+   ],
+   "gop": [
+    "Allen W. Cook"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Rockingham 7",
+   "seats": 1,
+   "dem": [
+    "JJ DeFeo"
+   ],
+   "gop": [
+    "Laurence A. Miner"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Rockingham 8",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Sayra Lynn DeVito"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "No Democratic nominee."
+  },
+  {
+   "d": "Rockingham 9",
+   "seats": 2,
+   "dem": [],
+   "gop": [
+    "Matthew Brooks",
+    "Kevin M. Major"
+   ],
+   "others": [],
+   "withdrawn": [
+    {
+     "name": "Benjamin Sharpe",
+     "party": "D",
+     "note": "won write-in nomination Sept 2026, not on general list"
+    }
+   ],
+   "note": "Benjamin Sharpe won the Democratic nomination by write-in but is not on the general list. Republican Kevin M. Major is also running as the Democratic nominee; there is no separate Democrat."
+  },
+  {
+   "d": "Rockingham 10",
+   "seats": 3,
+   "dem": [
+    "Michael Cahill",
+    "Charlotte I. DiLorenzo",
+    "Ellen Read"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "No Republican nominee."
+  },
+  {
+   "d": "Rockingham 11",
+   "seats": 4,
+   "dem": [
+    "Julie D. Gilman",
+    "Enna Grazier",
+    "Steven C. Jones",
+    "Mark A. Paige"
+   ],
+   "gop": [
+    "Robert Goeman"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Rockingham 12",
+   "seats": 2,
+   "dem": [
+    "Allison Knab",
+    "Zoe R. Manos"
+   ],
+   "gop": [
+    "Patrick Abrami",
+    "James Scamman"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Rockingham 13",
+   "seats": 10,
+   "dem": [
+    "Thomas Bosia",
+    "Haley Carreau",
+    "Jamie Carreau",
+    "Paula Mahon d'Entremont",
+    "Matt Glavin",
+    "Hollie Hesse",
+    "Jim Marshall",
+    "David Provencher",
+    "Kristine Trow",
+    "Thomas C. Wood"
+   ],
+   "gop": [
+    "Michael Appleton",
+    "Brandon Bach",
+    "Brian Chirichiello",
+    "Charles Foote",
+    "Anthony Henry",
+    "Erica Layon",
+    "David C. Love",
+    "Jodi Nelson",
+    "John Potucek",
+    "Richard P. Tripp"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Ten seat district."
+  },
+  {
+   "d": "Rockingham 14",
+   "seats": 2,
+   "dem": [
+    "Paul C. Paone"
+   ],
+   "gop": [
+    "Pamela Brown",
+    "Kenneth L. Weyler"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Rockingham 15",
+   "seats": 2,
+   "dem": [
+    "Lisa DeMio",
+    "Laurie A. Warnock"
+   ],
+   "gop": [
+    "Joseph \"Joe\" Guthrie",
+    "Lilli Walsh"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Rockingham 16",
+   "seats": 7,
+   "dem": [
+    "Edward 'Ted' Combes",
+    "Jane Cooper",
+    "Bob Cote",
+    "Isaac Fernandez",
+    "Michela Hites",
+    "Neil Marceau",
+    "Paul Skudlarek"
+   ],
+   "gop": [
+    "Gregory G. Carson",
+    "Ron Dunn",
+    "David C. Lundgren",
+    "Wayne D. MacDonald",
+    "Jeffrey McGraw",
+    "Sherman Packard",
+    "Kristine Perez"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Neil Marceau originally filed as an independent and is now listed as a Democrat."
+  },
+  {
+   "d": "Rockingham 17",
+   "seats": 4,
+   "dem": [
+    "Irene L. Harnden",
+    "David Martsolf",
+    "Darryn E. Remillard",
+    "Matthew Swoboda"
+   ],
+   "gop": [
+    "Katelyn Kuttab",
+    "Bob Lynn",
+    "Charles E. McMahon",
+    "Daniel Popovici-Muller"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Rockingham 18",
+   "seats": 2,
+   "dem": [
+    "Beth M. Cacciotti",
+    "Chris Duerr"
+   ],
+   "gop": [
+    "Debra L. DeSimone",
+    "Jay Markell"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Rockingham 19",
+   "seats": 1,
+   "dem": [
+    "Wendy Larson"
+   ],
+   "gop": [
+    "Susan M. Porcelli"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Rockingham 20",
+   "seats": 3,
+   "dem": [
+    "Rick Faulconer"
+   ],
+   "gop": [
+    "Robert D. Harb",
+    "Charles R. Melvin, Sr.",
+    "James Summers"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Rockingham 21",
+   "seats": 1,
+   "dem": [
+    "Anna Howard"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "No Republican nominee."
+  },
+  {
+   "d": "Rockingham 22",
+   "seats": 1,
+   "dem": [
+    "Rebecca Audet"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "No Republican nominee."
+  },
+  {
+   "d": "Rockingham 23",
+   "seats": 1,
+   "dem": [
+    "Jim Maggiore"
+   ],
+   "gop": [],
+   "others": [
+    {
+     "name": "Kirsten Larsen Schultz",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "No Republican nominee; independent Kirsten Larsen Schultz is the main challenger."
+  },
+  {
+   "d": "Rockingham 24",
+   "seats": 2,
+   "dem": [
+    "Dennis Malloy",
+    "Michael J. Moody"
+   ],
+   "gop": [
+    "Marilyn Page",
+    "Kevin Szmyd"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Rockingham 25",
+   "seats": 9,
+   "dem": [
+    "Claudia DeFuria",
+    "Kienen Dyer",
+    "Donna Loranger"
+   ],
+   "gop": [
+    "Lorie Ball",
+    "Edward W. Huminick",
+    "John Janigian",
+    "George I. Kassas",
+    "Dennis Mannion",
+    "Valerie McDonnell",
+    "Joe Sweeney",
+    "John Sytek",
+    "Susan J. Vandecasteele"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Nine seat district; only three Democrats."
+  },
+  {
+   "d": "Rockingham 26",
+   "seats": 1,
+   "dem": [
+    "Buzz Scherr"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "No Republican nominee."
+  },
+  {
+   "d": "Rockingham 27",
+   "seats": 1,
+   "dem": [
+    "Gerald W.R. Ward"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "No Republican nominee."
+  },
+  {
+   "d": "Rockingham 28",
+   "seats": 1,
+   "dem": [
+    "Carrie Sorensen"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "No Republican nominee."
+  },
+  {
+   "d": "Rockingham 29",
+   "seats": 4,
+   "dem": [
+    "Ward Galanis",
+    "Rebecca LaPierre",
+    "Molly McCoy",
+    "Nathan Andrew Riggs"
+   ],
+   "gop": [
+    "Nicholas D. Bridle",
+    "Ken Sheffert",
+    "Bruce R. Theriault",
+    "Richard Wickson, Jr."
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Rockingham 30",
+   "seats": 2,
+   "dem": [
+    "Diana Labrecque Chapman"
+   ],
+   "gop": [
+    "Jason A. Janvrin",
+    "Aboul B. Khan"
+   ],
+   "others": [],
+   "withdrawn": [
+    {
+     "name": "Bob Albright",
+     "party": "D",
+     "note": "won write-in nomination Sept 2026, not on general list"
+    }
+   ],
+   "note": "Bob Albright won a Democratic write-in nomination but is not on the general list; one Democrat for two seats."
+  },
+  {
+   "d": "Rockingham 31",
+   "seats": 2,
+   "dem": [
+    "Peter Boudreau",
+    "Yaz Safarzadeh"
+   ],
+   "gop": [
+    "Jess Edwards",
+    "Terry Roy"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Rockingham 32",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Melissa A. Litchfield"
+   ],
+   "others": [
+    {
+     "name": "Kaley Dvorak",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "No Democratic nominee; independent Kaley Dvorak, who also won Democratic primary write-in votes, is the main challenger."
+  },
+  {
+   "d": "Rockingham 33",
+   "seats": 1,
+   "dem": [
+    "Alexis Simpson"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "No Republican nominee."
+  },
+  {
+   "d": "Rockingham 34",
+   "seats": 1,
+   "dem": [
+    "Jade DeMio"
+   ],
+   "gop": [
+    "Mark A. Pearson"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Rockingham 35",
+   "seats": 1,
+   "dem": [
+    "Michelle Stith"
+   ],
+   "gop": [
+    "Julius F. Soti"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Rockingham 36",
+   "seats": 1,
+   "dem": [
+    "Paul Bonzani"
+   ],
+   "gop": [
+    "J D Bernardy"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Rockingham 37",
+   "seats": 1,
+   "dem": [
+    "Kate Cook"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "No Republican nominee."
+  },
+  {
+   "d": "Rockingham 38",
+   "seats": 1,
+   "dem": [
+    "Peggy Balboni"
+   ],
+   "gop": [
+    "Paul Martino"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Rockingham 39",
+   "seats": 1,
+   "dem": [
+    "Barbara M. Ward"
+   ],
+   "gop": [
+    "Sue Polidura"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Rockingham 40",
+   "seats": 1,
+   "dem": [
+    "Justin Gregory Packard"
+   ],
+   "gop": [
+    "Linda McGrath"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Strafford 1",
+   "seats": 2,
+   "dem": [
+    "Brian Beaverstock",
+    "Jimmy Bourque"
+   ],
+   "gop": [
+    "W. Packy Campbell",
+    "Andy Dow"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Strafford 2",
+   "seats": 3,
+   "dem": [
+    "Larry Brown"
+   ],
+   "gop": [
+    "Glenn Bailey",
+    "Michael Granger",
+    "Mark F. Racic"
+   ],
+   "others": [],
+   "withdrawn": [
+    {
+     "name": "Dwight Harvey",
+     "party": "D",
+     "note": "won write-in nomination Sept 2026, not on general list"
+    }
+   ],
+   "note": "Dwight Harvey won a Democratic write-in nomination but is not on the general list."
+  },
+  {
+   "d": "Strafford 3",
+   "seats": 1,
+   "dem": [
+    "Linda R. Adamo"
+   ],
+   "gop": [
+    "Susan DeRoy"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Strafford 4",
+   "seats": 3,
+   "dem": [
+    "Kimberly McGlinchey",
+    "Ginna Schonwald",
+    "Scott Shepard"
+   ],
+   "gop": [
+    "JoAnne Hack",
+    "Tanya Rich",
+    "Kurt Wuelper"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Strafford 5",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Jenny O. Wilson"
+   ],
+   "others": [
+    {
+     "name": "William F. Fessenden",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "No Democratic nominee; independent William F. Fessenden, who also won Democratic primary write-in votes, is the main challenger."
+  },
+  {
+   "d": "Strafford 6",
+   "seats": 1,
+   "dem": [
+    "Daniel Fitzpatrick"
+   ],
+   "gop": [
+    "Denise DeDe-Poulin"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Strafford 7",
+   "seats": 1,
+   "dem": [
+    "John Larochelle"
+   ],
+   "gop": [
+    "Eric Bourgeois"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Strafford 8",
+   "seats": 1,
+   "dem": [
+    "Ty Wyman"
+   ],
+   "gop": [
+    "David Walker"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Strafford 9",
+   "seats": 1,
+   "dem": [
+    "Nevin Dexter"
+   ],
+   "gop": [
+    "Robert Qua"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Strafford 10",
+   "seats": 4,
+   "dem": [
+    "Wayne M. Burton",
+    "Timothy Horrigan",
+    "Siena R. Schaier",
+    "Loren Selig"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "No Republican nominee."
+  },
+  {
+   "d": "Strafford 11",
+   "seats": 3,
+   "dem": [
+    "Erik Johnson",
+    "Thomas Southworth",
+    "Janet G. Wall"
+   ],
+   "gop": [
+    "Monique Meadows"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Strafford 12",
+   "seats": 4,
+   "dem": [
+    "Billie Butler",
+    "Myles England",
+    "Will Hurley",
+    "Wayne Pearson"
+   ],
+   "gop": [
+    "Omero N. Ambriz",
+    "Paul T. Edgar",
+    "David Hilton",
+    "Philip Houde"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Republican Omero N. Ambriz got the nomination by write-in after first filing as an independent."
+  },
+  {
+   "d": "Strafford 13",
+   "seats": 1,
+   "dem": [
+    "Peter Bixby"
+   ],
+   "gop": [
+    "Daniel A. Furman"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Strafford 14",
+   "seats": 1,
+   "dem": [
+    "Peter B. Schmidt"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "No Republican nominee."
+  },
+  {
+   "d": "Strafford 15",
+   "seats": 1,
+   "dem": [
+    "Samuel Chouinard"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "No Republican nominee."
+  },
+  {
+   "d": "Strafford 16",
+   "seats": 1,
+   "dem": [
+    "Gary R. Gilmore"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "No Republican nominee."
+  },
+  {
+   "d": "Strafford 17",
+   "seats": 1,
+   "dem": [
+    "Jessica F. LaMontagne"
+   ],
+   "gop": [
+    "Matthew D. Albion"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Strafford 18",
+   "seats": 1,
+   "dem": [
+    "Thom Flynn"
+   ],
+   "gop": [
+    "Michael Harrington"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Strafford 19",
+   "seats": 3,
+   "dem": [
+    "Jonathan J. King",
+    "Justin McIsaac",
+    "Nick Paul"
+   ],
+   "gop": [
+    "Samuel Farrington",
+    "James Higginbottom",
+    "Jonathan Verbicky"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Strafford 20",
+   "seats": 1,
+   "dem": [
+    "Allan Howland"
+   ],
+   "gop": [
+    "John Colford"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Strafford 21",
+   "seats": 3,
+   "dem": [
+    "Seth Miller",
+    "Geoffrey Smith",
+    "Alice Wade"
+   ],
+   "gop": [
+    "Joseph D. Morganella"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Sullivan 1",
+   "seats": 1,
+   "dem": [
+    "Brian M. Sullivan"
+   ],
+   "gop": [
+    "Joel T. Hutchins"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Sullivan 2",
+   "seats": 1,
+   "dem": [
+    "Jenny Ramsey"
+   ],
+   "gop": [
+    "Michael Belanger"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Sullivan 3",
+   "seats": 3,
+   "dem": [
+    "Lisa DeBartolomao",
+    "Timothy Fitzpatrick",
+    "Jeffrey F. Kessler"
+   ],
+   "gop": [
+    "Skip Rollins",
+    "Steven Smith",
+    "Walter Spilsbury"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Sullivan 4",
+   "seats": 1,
+   "dem": [
+    "Chris Salmon"
+   ],
+   "gop": [
+    "Ron Rule"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Sullivan 5",
+   "seats": 1,
+   "dem": [
+    "Judith M. Thackaberry"
+   ],
+   "gop": [
+    "George C. Grant"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Sullivan 6",
+   "seats": 3,
+   "dem": [
+    "John R. Cloutier",
+    "Chris Cogswell",
+    "Lisa R. Gosselin"
+   ],
+   "gop": [
+    "Dale Girard",
+    "Wayne J. Hemingway",
+    "Emily Sandblade"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Sullivan 7",
+   "seats": 1,
+   "dem": [
+    "Lawrence A. Schissel"
+   ],
+   "gop": [
+    "Margaret M. Drye"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Sullivan 8",
+   "seats": 2,
+   "dem": [
+    "Hope Damon",
+    "Samuel Deering"
+   ],
+   "gop": [
+    "Catherine Peschke",
+    "Jonathan F. Stone"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  }
+ ]
+}

@@ -9,6 +9,7 @@ export type SLDistrict = {
   d: string; seats: number; margin: number | null; probD: number | null; lean: number | null; leanSrc: string | null;
   last: { year: number | null; d2: number | null; won: string[] | null } | null;
   status: string; prim: number | null; polls: SLPoll[] | null; dem?: string | null; gop?: string | null; winner?: string | null;
+  ind?: string | null; indParty?: string | null; indMain?: boolean; note?: string | null;
 };
 export type SLChamber = {
   id: string; st: string; state: string; chamber: "house" | "senate"; name: string; seats: number; up: number; majority: number;

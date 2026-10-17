@@ -1,0 +1,218 @@
+{
+ "state": "TN",
+ "chamber": "senate",
+ "sources": [
+  "https://en.wikipedia.org/wiki/2026_Tennessee_Senate_election",
+  "https://ivoterguide.com/all-in-state/tn"
+ ],
+ "as_of": "2026-10-17",
+ "complete": true,
+ "districts": [
+  {
+   "d": "1",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "J. Adam Lowe"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "3",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Rusty Crowe"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "5",
+   "seats": 1,
+   "dem": [
+    "David Miller"
+   ],
+   "gop": [
+    "Jimmy Matlock"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "open; Randy McNally retiring"
+  },
+  {
+   "d": "7",
+   "seats": 1,
+   "dem": [
+    "Bryan Langan"
+   ],
+   "gop": [
+    "Richard Briggs"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "9",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Steve Southerland"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "11",
+   "seats": 1,
+   "dem": [
+    "Tim Roberts"
+   ],
+   "gop": [
+    "Bo Watson"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "13",
+   "seats": 1,
+   "dem": [
+    "Angela Evans Wynn"
+   ],
+   "gop": [
+    "Dawn White"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "15",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Paul Bailey"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "17",
+   "seats": 1,
+   "dem": [
+    "Lindsey Patrick-Wright"
+   ],
+   "gop": [
+    "Mark Pody"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "19",
+   "seats": 1,
+   "dem": [
+    "Charlane Oliver"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "21",
+   "seats": 1,
+   "dem": [
+    "Jeff Yarbro"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "23",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Kerry Roberts"
+   ],
+   "others": [
+    {
+     "name": "David Lee Marcum",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "no Democrat; independent is main challenger"
+  },
+  {
+   "d": "25",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Ed Jackson"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "27",
+   "seats": 1,
+   "dem": [
+    "David A. Hardy"
+   ],
+   "gop": [
+    "Jack Johnson"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "29",
+   "seats": 1,
+   "dem": [
+    "Raumesh Akbari"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "31",
+   "seats": 1,
+   "dem": [
+    "David Weatherspoon"
+   ],
+   "gop": [
+    "Brent Taylor"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "33",
+   "seats": 1,
+   "dem": [
+    "London Lamar"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  }
+ ]
+}

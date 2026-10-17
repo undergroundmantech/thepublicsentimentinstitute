@@ -1,0 +1,442 @@
+{
+ "state": "ID",
+ "chamber": "senate",
+ "sources": [
+  "https://ivoterguide.com/all-in-state/id"
+ ],
+ "as_of": "2026-10-17",
+ "complete": true,
+ "districts": [
+  {
+   "d": "1",
+   "dem": [],
+   "gop": [
+    "Scott Herndon"
+   ],
+   "others": [
+    {
+     "name": "Steve Johnson",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "no Democrat; minor party or independent is the main challenger"
+  },
+  {
+   "d": "2",
+   "dem": [
+    "Valerie Wade"
+   ],
+   "gop": [
+    "Phil Hart"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "3",
+   "dem": [
+    "Brian Seguin"
+   ],
+   "gop": [
+    "Doug \"Doug O\" Okuniewicz"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "4",
+   "dem": [
+    "Carissa Brewer"
+   ],
+   "gop": [
+    "Ben Toews"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "5",
+   "dem": [
+    "Adam Chapman"
+   ],
+   "gop": [
+    "Carl J Bjerke"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "6",
+   "dem": [
+    "Robin Weldy"
+   ],
+   "gop": [
+    "Dan Foreman"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "7",
+   "dem": [
+    "Patrice Yeatter"
+   ],
+   "gop": [
+    "Cindy Carlson"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "8",
+   "dem": [],
+   "gop": [
+    "Christy Zito"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "9",
+   "dem": [
+    "Janice Martell"
+   ],
+   "gop": [
+    "Brandon Shippy"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "10",
+   "dem": [
+    "Nancy M Parker"
+   ],
+   "gop": [
+    "Tammy Nichols"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "11",
+   "dem": [
+    "Susan Counsil"
+   ],
+   "gop": [
+    "Camille Blaylock"
+   ],
+   "others": [
+    {
+     "name": "Esther Ma",
+     "party": "O"
+    }
+   ],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "12",
+   "dem": [
+    "Krystal Flippence"
+   ],
+   "gop": [
+    "Ben Adams"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "13",
+   "dem": [
+    "Letishia Silva"
+   ],
+   "gop": [
+    "Brian Lenney"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "14",
+   "dem": [],
+   "gop": [
+    "C. Scott Grow"
+   ],
+   "others": [
+    {
+     "name": "Kirsten Faith Richardson",
+     "party": "O"
+    }
+   ],
+   "withdrawn": [],
+   "note": "no Democrat; minor party or independent is the main challenger"
+  },
+  {
+   "d": "15",
+   "dem": [
+    "Nancy Gregory"
+   ],
+   "gop": [
+    "Desi Burbank"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "16",
+   "dem": [
+    "Sonia Galaviz"
+   ],
+   "gop": [
+    "Geoffrey Surbeck"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "17",
+   "dem": [
+    "Carrie Semmelroth"
+   ],
+   "gop": [
+    "Benjamin Chafetz"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "18",
+   "dem": [
+    "Janie Ward-Engelking"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "19",
+   "dem": [
+    "Melissa Wintrow"
+   ],
+   "gop": [
+    "Melissa J. Christian"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "20",
+   "dem": [
+    "Pamela Renee Wilson"
+   ],
+   "gop": [
+    "Josh Keyser"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "21",
+   "dem": [],
+   "gop": [
+    "Treg A. Bernt"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "22",
+   "dem": [
+    "Karlie Easley"
+   ],
+   "gop": [
+    "Lori Den Hartog"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "23",
+   "dem": [
+    "Paul Morgan"
+   ],
+   "gop": [
+    "Todd Lakey"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "24",
+   "dem": [
+    "Mary Jo Durfee"
+   ],
+   "gop": [
+    "Brent D Reinke"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "25",
+   "dem": [
+    "W. Lane Startin"
+   ],
+   "gop": [
+    "Casey Swensen"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "26",
+   "dem": [
+    "Ron Taylor"
+   ],
+   "gop": [
+    "Bryan Hyde"
+   ],
+   "others": [
+    {
+     "name": "Shaila Tate",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "27",
+   "dem": [
+    "Margo Saunders"
+   ],
+   "gop": [
+    "Kelly Arthur Anthon"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "28",
+   "dem": [
+    "Mandy Peace"
+   ],
+   "gop": [
+    "Jim Guthrie"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "29",
+   "dem": [
+    "James D. Ruchti"
+   ],
+   "gop": [
+    "John Crowder"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "30",
+   "dem": [
+    "Joni Lin Sorensen"
+   ],
+   "gop": [
+    "Julie VanOrden"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "31",
+   "dem": [
+    "Kevin Gerrard"
+   ],
+   "gop": [
+    "Van T. Burtenshaw"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "32",
+   "dem": [
+    "Konnor Whitfield"
+   ],
+   "gop": [
+    "Kevin J Cook"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "33",
+   "dem": [
+    "Jan Brown"
+   ],
+   "gop": [
+    "Dave Lent"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "34",
+   "dem": [
+    "Ethan Sanford"
+   ],
+   "gop": [
+    "Doug Ricks"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "35",
+   "dem": [
+    "Marty Rotz Kilhefner"
+   ],
+   "gop": [
+    "Mark Harris"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  }
+ ],
+ "method": "General candidates from iVoterGuide Idaho statewide list dated Oct 16 2026. Constitution Party coded O."
+}

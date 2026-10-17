@@ -1,0 +1,1761 @@
+{
+ "state": "MA",
+ "chamber": "house",
+ "sources": [
+  "https://www.sec.state.ma.us/divisions/elections/research-and-statistics/2026-state-election-candidates.htm"
+ ],
+ "as_of": "2026-10-17",
+ "complete": true,
+ "districts": [
+  {
+   "d": "Barnstable, Dukes & Nantucket",
+   "seats": 1,
+   "dem": [
+    "Thomas W. Moakley"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "First Barnstable",
+   "seats": 1,
+   "dem": [
+    "Christopher Lambton"
+   ],
+   "gop": [],
+   "others": [
+    {
+     "name": "Joe B. Glynn",
+     "party": "O"
+    }
+   ],
+   "withdrawn": [],
+   "note": "Glynn uses Gulf War Veteran designation"
+  },
+  {
+   "d": "Second Barnstable",
+   "seats": 1,
+   "dem": [
+    "Kip A. Diggs"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Third Barnstable",
+   "seats": 1,
+   "dem": [
+    "Jack Peter Richardson"
+   ],
+   "gop": [
+    "David T. Vieira"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Fourth Barnstable",
+   "seats": 1,
+   "dem": [
+    "Hadley Luddy"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Fifth Barnstable",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Steven G. Xiarhos"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "SOC list shows no party for Xiarhos; he is the Republican incumbent; unopposed"
+  },
+  {
+   "d": "First Berkshire",
+   "seats": 1,
+   "dem": [
+    "John Barrett, III"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Second Berkshire",
+   "seats": 1,
+   "dem": [
+    "Tricia Farley-Bouvier"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Third Berkshire",
+   "seats": 1,
+   "dem": [
+    "Leigh Susan Davis"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "First Bristol",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Michael Chaisson"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Second Bristol",
+   "seats": 1,
+   "dem": [
+    "James Kimball Hawkins"
+   ],
+   "gop": [],
+   "others": [
+    {
+     "name": "Andrew Nelson",
+     "party": "O"
+    }
+   ],
+   "withdrawn": [],
+   "note": "Nelson on Workers Party designation"
+  },
+  {
+   "d": "Third Bristol",
+   "seats": 1,
+   "dem": [
+    "Lisa M. Field"
+   ],
+   "gop": [
+    "Lawrence Joseph Quintal"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Fourth Bristol",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Steven S. Howitt"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Fifth Bristol",
+   "seats": 1,
+   "dem": [
+    "Jamison D. Souza"
+   ],
+   "gop": [
+    "Justin E. Thurber"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Sixth Bristol",
+   "seats": 1,
+   "dem": [
+    "Carole A. Fiola"
+   ],
+   "gop": [
+    "Robert G. Anctil"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Seventh Bristol",
+   "seats": 1,
+   "dem": [
+    "Alan Silvia"
+   ],
+   "gop": [
+    "Talos D. Farris"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Eighth Bristol",
+   "seats": 1,
+   "dem": [
+    "Steven J. Ouellette"
+   ],
+   "gop": [
+    "Jesse W. St. Gelais"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Ninth Bristol",
+   "seats": 1,
+   "dem": [
+    "Edward M. Pacheco"
+   ],
+   "gop": [
+    "Chester M. Tam"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Tenth Bristol",
+   "seats": 1,
+   "dem": [
+    "Mark D. Sylvia"
+   ],
+   "gop": [
+    "Brendalee A. Smith"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Eleventh Bristol",
+   "seats": 1,
+   "dem": [
+    "Christopher M. Hendricks"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Twelfth Bristol",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Norman J. Orrall"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Thirteenth Bristol",
+   "seats": 1,
+   "dem": [
+    "Antonio F.D. Cabral"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Fourteenth Bristol",
+   "seats": 1,
+   "dem": [
+    "Adam J. Scanlon"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "First Essex",
+   "seats": 1,
+   "dem": [
+    "Dawne Frances Shand"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Second Essex",
+   "seats": 1,
+   "dem": [
+    "Kristin Elena Kassner"
+   ],
+   "gop": [
+    "Daniel James Kelly"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Third Essex",
+   "seats": 1,
+   "dem": [
+    "Andres Xavier Vargas"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Fourth Essex",
+   "seats": 1,
+   "dem": [
+    "Estela Reyes"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Fifth Essex",
+   "seats": 1,
+   "dem": [
+    "Andrew Francis Robert Tarr"
+   ],
+   "gop": [
+    "Christina Delisio"
+   ],
+   "others": [
+    {
+     "name": "Gil Frieden",
+     "party": "O"
+    }
+   ],
+   "withdrawn": [],
+   "note": "Frieden on Transparency Inclusion Environment designation"
+  },
+  {
+   "d": "Sixth Essex",
+   "seats": 1,
+   "dem": [
+    "Hannah Louise Bowen"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Seventh Essex",
+   "seats": 1,
+   "dem": [
+    "Manny Cruz"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Eighth Essex",
+   "seats": 1,
+   "dem": [
+    "Jennifer WB Armini"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Ninth Essex",
+   "seats": 1,
+   "dem": [
+    "Peter Meaney"
+   ],
+   "gop": [
+    "Donald H. Wong"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Tenth Essex",
+   "seats": 1,
+   "dem": [
+    "Daniel Francis Cahill"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Eleventh Essex",
+   "seats": 1,
+   "dem": [
+    "Sean Daniel Reid"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Twelfth Essex",
+   "seats": 1,
+   "dem": [
+    "Thomas P. Walsh"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Thirteenth Essex",
+   "seats": 1,
+   "dem": [
+    "Sally Patrice Kerans"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Fourteenth Essex",
+   "seats": 1,
+   "dem": [
+    "Adrianne Pusateri Ramos"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Fifteenth Essex",
+   "seats": 1,
+   "dem": [
+    "Ryan M. Hamilton"
+   ],
+   "gop": [
+    "Ronald L. Heiseler, III"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Sixteenth Essex",
+   "seats": 1,
+   "dem": [
+    "Celina A. Reyes"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Seventeenth Essex",
+   "seats": 1,
+   "dem": [
+    "Frank A. Moran"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Eighteenth Essex",
+   "seats": 1,
+   "dem": [
+    "Connor A. Murray"
+   ],
+   "gop": [
+    "Christopher C. Shepley"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "First Franklin",
+   "seats": 1,
+   "dem": [
+    "Lora L. Wondolowski"
+   ],
+   "gop": [],
+   "others": [
+    {
+     "name": "Amy E. Lavallee",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "Lavallee unenrolled"
+  },
+  {
+   "d": "Second Franklin",
+   "seats": 1,
+   "dem": [],
+   "gop": [],
+   "others": [
+    {
+     "name": "Susannah M. Whipps",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "independent incumbent Whipps unopposed"
+  },
+  {
+   "d": "First Hampden",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Todd M. Smola"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Second Hampden",
+   "seats": 1,
+   "dem": [
+    "Brian Michael Ashe"
+   ],
+   "gop": [
+    "Peter Warren"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Third Hampden",
+   "seats": 1,
+   "dem": [
+    "Thomas D. Hendrickson"
+   ],
+   "gop": [
+    "Nicholas A. Boldyga"
+   ],
+   "others": [
+    {
+     "name": "Jason M. Perron",
+     "party": "I"
+    }
+   ],
+   "withdrawn": []
+  },
+  {
+   "d": "Fourth Hampden",
+   "seats": 1,
+   "dem": [
+    "Colby Walshe Hoffman"
+   ],
+   "gop": [
+    "Kelly W. Pease"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Fifth Hampden",
+   "seats": 1,
+   "dem": [
+    "Patricia A. Duffy"
+   ],
+   "gop": [],
+   "others": [
+    {
+     "name": "Jose Ramon Candelario Gonzalez",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "independent is only challenger"
+  },
+  {
+   "d": "Sixth Hampden",
+   "seats": 1,
+   "dem": [
+    "Michael James Finn"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Seventh Hampden",
+   "seats": 1,
+   "dem": [
+    "Aaron L. Saunders"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Eighth Hampden",
+   "seats": 1,
+   "dem": [
+    "Shirley Arriaga"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Ninth Hampden",
+   "seats": 1,
+   "dem": [
+    "Orlando Ramos"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Tenth Hampden",
+   "seats": 1,
+   "dem": [
+    "Carlos Gonzalez"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Eleventh Hampden",
+   "seats": 1,
+   "dem": [
+    "Bud L. Williams"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Twelfth Hampden",
+   "seats": 1,
+   "dem": [
+    "Angelo J. Puppolo, Jr."
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "First Hampshire",
+   "seats": 1,
+   "dem": [
+    "Lindsay N. Sabadosa"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Second Hampshire",
+   "seats": 1,
+   "dem": [
+    "Homar Gomez"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Third Hampshire",
+   "seats": 1,
+   "dem": [
+    "Mindy Domb"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "First Middlesex",
+   "seats": 1,
+   "dem": [
+    "Margaret R. Scarsdale"
+   ],
+   "gop": [
+    "Christopher M. Lyons"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Second Middlesex",
+   "seats": 1,
+   "dem": [
+    "James Arciero"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Third Middlesex",
+   "seats": 1,
+   "dem": [
+    "Kate Hogan"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Fourth Middlesex",
+   "seats": 1,
+   "dem": [
+    "Danielle W. Gregoire"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Fifth Middlesex",
+   "seats": 1,
+   "dem": [
+    "David Paul Linsky"
+   ],
+   "gop": [
+    "Luisa A. Cestari"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Sixth Middlesex",
+   "seats": 1,
+   "dem": [
+    "Priscila S. Sousa"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Seventh Middlesex",
+   "seats": 1,
+   "dem": [
+    "Jack Patrick Lewis"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Eighth Middlesex",
+   "seats": 1,
+   "dem": [
+    "James C. Arena-DeRosa"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Ninth Middlesex",
+   "seats": 1,
+   "dem": [
+    "Thomas M. Stanley"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Tenth Middlesex",
+   "seats": 1,
+   "dem": [
+    "John J. Lawn"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Eleventh Middlesex",
+   "seats": 1,
+   "dem": [
+    "Amy Mah Sangiolo"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Twelfth Middlesex",
+   "seats": 1,
+   "dem": [
+    "Greg Schwartz"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Thirteenth Middlesex",
+   "seats": 1,
+   "dem": [
+    "Ravi Simon"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Fourteenth Middlesex",
+   "seats": 1,
+   "dem": [
+    "Simon J. Cataldo"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Fifteenth Middlesex",
+   "seats": 1,
+   "dem": [
+    "Michelle Ciccolo"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Sixteenth Middlesex",
+   "seats": 1,
+   "dem": [
+    "Lorena G. Betts"
+   ],
+   "gop": [
+    "Karla J. Miller"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Seventeenth Middlesex",
+   "seats": 1,
+   "dem": [
+    "John M. Drinkwater"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Eighteenth Middlesex",
+   "seats": 1,
+   "dem": [
+    "Tara Hong"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Nineteenth Middlesex",
+   "seats": 1,
+   "dem": [
+    "David Allen Robertson"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Twentieth Middlesex",
+   "seats": 1,
+   "dem": [
+    "Joseph Markey"
+   ],
+   "gop": [
+    "Trevor David Currier"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Twenty-First Middlesex",
+   "seats": 1,
+   "dem": [
+    "Kenneth Ira Gordon"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Twenty-Second Middlesex",
+   "seats": 1,
+   "dem": [
+    "Daniel Ronald Darris-O'Connor"
+   ],
+   "gop": [
+    "Marc T. Lombardo"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Twenty-Third Middlesex",
+   "seats": 1,
+   "dem": [
+    "Sean Garballey"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Twenty-Fourth Middlesex",
+   "seats": 1,
+   "dem": [
+    "David M. Rogers"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Twenty-Fifth Middlesex",
+   "seats": 1,
+   "dem": [
+    "Marjorie C. Decker"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Twenty-Sixth Middlesex",
+   "seats": 1,
+   "dem": [
+    "Mike Connolly"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Twenty-Seventh Middlesex",
+   "seats": 1,
+   "dem": [
+    "Ben Ewen-Campen"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Twenty-Eighth Middlesex",
+   "seats": 1,
+   "dem": [
+    "Joseph W. McGonagle"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Twenty-Ninth Middlesex",
+   "seats": 1,
+   "dem": [
+    "Steven Charles Owens"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Thirtieth Middlesex",
+   "seats": 1,
+   "dem": [
+    "Richard M. Haggerty"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Thirty-First Middlesex",
+   "seats": 1,
+   "dem": [
+    "Michael Seamus Day"
+   ],
+   "gop": [
+    "Stephen G. Ternullo"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Thirty-Second Middlesex",
+   "seats": 1,
+   "dem": [
+    "Leila Bhatti Migliorelli"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Thirty-Third Middlesex",
+   "seats": 1,
+   "dem": [
+    "Steven Ultrino"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Thirty-Fourth Middlesex",
+   "seats": 1,
+   "dem": [
+    "Will Mbah"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Thirty-Fifth Middlesex",
+   "seats": 1,
+   "dem": [
+    "Paul J. Donato"
+   ],
+   "gop": [
+    "James C. Seibel"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Thirty-Sixth Middlesex",
+   "seats": 1,
+   "dem": [
+    "Colleen M. Garry"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Thirty-Seventh Middlesex",
+   "seats": 1,
+   "dem": [
+    "Danillo A. Sena"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "First Norfolk",
+   "seats": 1,
+   "dem": [
+    "Bruce J. Ayers"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Second Norfolk",
+   "seats": 1,
+   "dem": [
+    "Tackey Chan"
+   ],
+   "gop": [
+    "Sharon Marie Cintolo"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Third Norfolk",
+   "seats": 1,
+   "dem": [
+    "Ronald Mariano"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "House Speaker"
+  },
+  {
+   "d": "Fourth Norfolk",
+   "seats": 1,
+   "dem": [
+    "James Michael Murphy"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Fifth Norfolk",
+   "seats": 1,
+   "dem": [
+    "Mark J. Cusack"
+   ],
+   "gop": [],
+   "others": [
+    {
+     "name": "Stephen M. Foley",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "Foley unenrolled; only challenger"
+  },
+  {
+   "d": "Sixth Norfolk",
+   "seats": 1,
+   "dem": [
+    "Lisa R. Lopez"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Seventh Norfolk",
+   "seats": 1,
+   "dem": [
+    "Richard Gerard Wells, Jr."
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Eighth Norfolk",
+   "seats": 1,
+   "dem": [
+    "Ted Philips"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Ninth Norfolk",
+   "seats": 1,
+   "dem": [
+    "Thomas R. Melville"
+   ],
+   "gop": [
+    "Marcus S. Vaughn"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Tenth Norfolk",
+   "seats": 1,
+   "dem": [
+    "Jeffrey N. Roy"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Eleventh Norfolk",
+   "seats": 1,
+   "dem": [
+    "Paul McMurtry"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Twelfth Norfolk",
+   "seats": 1,
+   "dem": [
+    "John Healy Rogers"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Thirteenth Norfolk",
+   "seats": 1,
+   "dem": [
+    "Joshua Brian Tarsky"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Fourteenth Norfolk",
+   "seats": 1,
+   "dem": [
+    "Alice Hanlon Peisch"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Fifteenth Norfolk",
+   "seats": 1,
+   "dem": [
+    "Tommy Vitolo"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "First Plymouth",
+   "seats": 1,
+   "dem": [
+    "Michelle L. Badger"
+   ],
+   "gop": [
+    "David Michael Golden, Jr."
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Second Plymouth",
+   "seats": 1,
+   "dem": [
+    "Sarah G. Hewins"
+   ],
+   "gop": [
+    "John Robert Gaskey"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Third Plymouth",
+   "seats": 1,
+   "dem": [
+    "Joan Meschino"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Fourth Plymouth",
+   "seats": 1,
+   "dem": [
+    "Patrick Joseph Kearney"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Fifth Plymouth",
+   "seats": 1,
+   "dem": [
+    "Lori Childs"
+   ],
+   "gop": [
+    "David F. DeCoste"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Sixth Plymouth",
+   "seats": 1,
+   "dem": [
+    "Jessica Marie Rushing"
+   ],
+   "gop": [
+    "Kenneth Peter Sweezey"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Seventh Plymouth",
+   "seats": 1,
+   "dem": [
+    "Rosemary Aahanna-Hill"
+   ],
+   "gop": [
+    "Alyson M. Sullivan-Almeida"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Eighth Plymouth",
+   "seats": 1,
+   "dem": [
+    "Dennis C. Gallagher"
+   ],
+   "gop": [
+    "John Edward Norris"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Ninth Plymouth",
+   "seats": 1,
+   "dem": [
+    "Bridget Marie Plouffe"
+   ],
+   "gop": [
+    "Lawrence Peter Novak"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Tenth Plymouth",
+   "seats": 1,
+   "dem": [
+    "Michelle Marie DuBois"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "SOC list shows no party for DuBois; she is the Democratic incumbent; unopposed"
+  },
+  {
+   "d": "Eleventh Plymouth",
+   "seats": 1,
+   "dem": [
+    "Rita A. Mendes"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Twelfth Plymouth",
+   "seats": 1,
+   "dem": [
+    "Kathleen LaNatra"
+   ],
+   "gop": [
+    "Eric J. Meschino"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "First Suffolk",
+   "seats": 1,
+   "dem": [
+    "Adrian C. Madaro"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Second Suffolk",
+   "seats": 1,
+   "dem": [
+    "Daniel J. Ryan"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Third Suffolk",
+   "seats": 1,
+   "dem": [
+    "Aaron Michlewitz"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Fourth Suffolk",
+   "seats": 1,
+   "dem": [
+    "David M. Biele"
+   ],
+   "gop": [],
+   "others": [
+    {
+     "name": "Charles J. Delaney",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "independent is only challenger"
+  },
+  {
+   "d": "Fifth Suffolk",
+   "seats": 1,
+   "dem": [
+    "Christopher J. Worrell"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Sixth Suffolk",
+   "seats": 1,
+   "dem": [
+    "Russell Earl Holmes"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Seventh Suffolk",
+   "seats": 1,
+   "dem": [
+    "Chynah T. Tyler"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Eighth Suffolk",
+   "seats": 1,
+   "dem": [
+    "Jay D. Livingstone"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Ninth Suffolk",
+   "seats": 1,
+   "dem": [
+    "John Francis Moran"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Tenth Suffolk",
+   "seats": 1,
+   "dem": [
+    "William F. MacGregor"
+   ],
+   "gop": [],
+   "others": [
+    {
+     "name": "Devin Allen Kreinbring",
+     "party": "O"
+    }
+   ],
+   "withdrawn": [],
+   "note": "Kreinbring on Workers Party designation"
+  },
+  {
+   "d": "Eleventh Suffolk",
+   "seats": 1,
+   "dem": [
+    "Judith Garcia"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Twelfth Suffolk",
+   "seats": 1,
+   "dem": [
+    "Brandy Fluker Reid"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Thirteenth Suffolk",
+   "seats": 1,
+   "dem": [
+    "Daniel J. Hunt"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Fourteenth Suffolk",
+   "seats": 1,
+   "dem": [
+    "Rob Consalvo"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Fifteenth Suffolk",
+   "seats": 1,
+   "dem": [
+    "Samantha Montaño"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Sixteenth Suffolk",
+   "seats": 1,
+   "dem": [
+    "Jessica Ann Giannino"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Seventeenth Suffolk",
+   "seats": 1,
+   "dem": [
+    "Kevin G. Honan"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Eighteenth Suffolk",
+   "seats": 1,
+   "dem": [
+    "Michael J. Moran"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Nineteenth Suffolk",
+   "seats": 1,
+   "dem": [
+    "Jeffrey Rosario Turco"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "First Worcester",
+   "seats": 1,
+   "dem": [
+    "Krista Suzanne Ferrante"
+   ],
+   "gop": [
+    "Stephanie R. Mulroy"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Second Worcester",
+   "seats": 1,
+   "dem": [
+    "Michael Joseph Nicholson"
+   ],
+   "gop": [],
+   "others": [
+    {
+     "name": "John D. Reilly, Jr.",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "Reilly unenrolled; only challenger"
+  },
+  {
+   "d": "Third Worcester",
+   "seats": 1,
+   "dem": [
+    "Michael P. Kushmerek"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Fourth Worcester",
+   "seats": 1,
+   "dem": [
+    "Natalie Marie Higgins"
+   ],
+   "gop": [
+    "Josh William Bowdridge"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Fifth Worcester",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Donald Roger Berthiaume, Jr."
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Sixth Worcester",
+   "seats": 1,
+   "dem": [
+    "Jeanne Renaud Costello"
+   ],
+   "gop": [
+    "John J. Marsi, Jr."
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Seventh Worcester",
+   "seats": 1,
+   "dem": [
+    "Nicholas Lazzaro"
+   ],
+   "gop": [
+    "Paul K. Frost"
+   ],
+   "others": [
+    {
+     "name": "Terry Burke Dotson",
+     "party": "I"
+    }
+   ],
+   "withdrawn": []
+  },
+  {
+   "d": "Eighth Worcester",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Michael J. Soter"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Ninth Worcester",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "David Kent Muradian, Jr."
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Tenth Worcester",
+   "seats": 1,
+   "dem": [
+    "Brian W. Murray"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Eleventh Worcester",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Hannah Elizabeth Kane"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Twelfth Worcester",
+   "seats": 1,
+   "dem": [
+    "Meghan Kilcoyne"
+   ],
+   "gop": [
+    "Lisa K. Mair"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Thirteenth Worcester",
+   "seats": 1,
+   "dem": [
+    "John J. Mahoney"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Fourteenth Worcester",
+   "seats": 1,
+   "dem": [
+    "James J. O'Day"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Fifteenth Worcester",
+   "seats": 1,
+   "dem": [
+    "Mary S. Keefe"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "SOC list shows no party for Keefe; she is the Democratic incumbent; unopposed"
+  },
+  {
+   "d": "Sixteenth Worcester",
+   "seats": 1,
+   "dem": [
+    "Daniel M. Donahue"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Seventeenth Worcester",
+   "seats": 1,
+   "dem": [
+    "David Henry Argosky LeBoeuf"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Eighteenth Worcester",
+   "seats": 1,
+   "dem": [
+    "Jenifer Heck"
+   ],
+   "gop": [
+    "Joseph D. McKenna"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Nineteenth Worcester",
+   "seats": 1,
+   "dem": [
+    "Kate Donaghue"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": []
+  }
+ ]
+}

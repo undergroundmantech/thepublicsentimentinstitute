@@ -29,19 +29,21 @@ function Detail({ x, hold, label, map }: { x: SLDistrict | null; hold?: string; 
   }
   if (!x) return <div className="slx-detail"><div className="eye">{label}</div><h3>Not on the 2026 ballot</h3><p>This seat was won by {partyWord(hold)} in 2024 and is next up in 2028.</p></div>;
   const m = x.margin, modeled = m != null && Math.abs(m) < 99;
-  const rt = modeled ? rating(m!) : x.probD === 1 ? "safeD" : "safeR";
+  const rt = modeled ? (x.indMain && m! < 0 ? "ind" : rating(m!)) : x.probD === 1 ? "safeD" : "safeR";
+  const sideD = x.indMain ? `${x.ind ?? "Independent"}` : "Democrats";
   const p = x.probD ?? 0.5;
   return (
     <div className="slx-detail">
       <div className="slx-d-top"><div><div className="eye">{label}</div><h3>District {x.d}{x.seats > 1 ? <small> · {x.seats} seats</small> : null}</h3></div><span className={`pill ${ratingPill(rt)}`}>{RATING_LABEL[rt]}</span></div>
-      <div className="slx-d-odds"><div><b className="d mono">{pct(p)}</b><span>Democrats</span></div><div style={{ textAlign: "right" }}><b className="r mono">{pct(1 - p)}</b><span>Republicans</span></div></div>
+      <div className="slx-d-odds"><div><b className="d mono" style={x.indMain ? { color: "var(--ind)" } : undefined}>{pct(p)}</b><span>{sideD}</span></div><div style={{ textAlign: "right" }}><b className="r mono">{pct(1 - p)}</b><span>Republicans</span></div></div>
       <i className="slx-d-bar"><s style={{ width: `${p * 100}%` }} /></i>
       <dl className="slx-d-dl">
-        <div><dt>Forecast</dt><dd className={`mono ${modeled ? (m! < 0 ? "d" : "r") : ""}`}>{modeled ? fmtM(m!) : x.status === "no Democrat filed" ? "No Democrat filed" : x.status === "no Republican filed" ? "No Republican filed" : "Unopposed last time"}</dd></div>
+        <div><dt>Forecast</dt><dd className={`mono ${modeled ? (m! < 0 ? "d" : "r") : ""}`}>{modeled ? (x.indMain ? fmtM(m!).replace("D +", "I +") : fmtM(m!)) : x.status === "no Democrat filed" ? "No Democrat filed" : x.status === "no Republican filed" ? "No Republican filed" : "Unopposed last time"}</dd></div>
         <div><dt>2024 lean</dt><dd className={`mono ${x.lean == null ? "" : x.lean < 0 ? "d" : "r"}`}>{x.lean == null ? "Not on file" : fmtM(x.lean)}</dd></div>
         <div><dt>Last winner</dt><dd>{x.winner ?? "Not on file"}{x.last?.year ? <span className="mono" style={{ color: "var(--mute)" }}> {x.last.year}</span> : null}</dd></div>
         {x.last?.d2 != null ? <div><dt>Last result</dt><dd className="mono">{fmtM(100 - 2 * x.last.d2)}</dd></div> : null}
-        {x.dem || x.gop ? <div><dt>2026 nominees</dt><dd><span className="d">{x.dem ?? "No Democrat"}</span> <span style={{ color: "var(--mute)" }}>vs</span> <span className="r">{x.gop ?? "No Republican"}</span></dd></div> : null}
+        {x.dem || x.gop || x.ind ? <div><dt>2026 candidates</dt><dd>{x.dem ? <span className="d">{x.dem}</span> : null}{x.dem && (x.gop || x.ind) ? <span style={{ color: "var(--mute)" }}> vs </span> : null}{x.gop ? <span className="r">{x.gop}</span> : null}{x.ind ? <span style={{ color: "var(--ind)" }}>{x.gop || x.dem ? " vs " : ""}{x.ind} ({x.indParty ?? "I"})</span> : null}</dd></div> : null}
+        {x.note ? <div><dt>Ballot change</dt><dd>{x.note}</dd></div> : null}
         {x.prim != null ? <div><dt>Primary vote</dt><dd className="mono">{x.prim.toFixed(1)}% Democratic</dd></div> : null}
       </dl>
       {x.polls?.length ? (
@@ -104,7 +106,7 @@ export default function ChamberExplorer({ districts, map, label, chamberName, as
                 {cells.map((c) => {
                   const x = byD.get(c.d);
                   const hold = !x ? map.hold[c.d] ?? "O" : null;
-                  const fill = hold ? `url(#slx-h-${hold})` : districtFill(mode, x!.probD, x!.margin, x!.last?.won?.[0]);
+                  const fill = hold ? `url(#slx-h-${hold})` : districtFill(mode, x!.probD, x!.margin, x!.last?.won?.[0], !!x!.indMain);
                   return (
                     <path key={c.d} d={c.path} fill={fill} className={`slx-cell${sel === c.d ? " sel" : ""}`} style={{ strokeWidth: span / 900 }}
                       onMouseEnter={() => setHov(c.d)} onClick={() => { setSel(c.d); history.replaceState(null, "", `#d-${encodeURIComponent(c.d)}`); }}>

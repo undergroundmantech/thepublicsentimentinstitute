@@ -1,0 +1,238 @@
+{
+ "state": "TX",
+ "chamber": "senate",
+ "sources": [
+  "https://en.wikipedia.org/wiki/2026_Texas_Senate_election",
+  "https://ivoterguide.com/all-in-state/tx",
+  "https://theballotbrief.com/state/texas/tarrant-county",
+  "https://theballotbrief.com/state/texas/harris-county",
+  "https://www.sos.state.tx.us/elections/laws/independent-declarations-2026.shtml"
+ ],
+ "as_of": "2026-10-17",
+ "complete": true,
+ "districts": [
+  {
+   "d": "1",
+   "seats": 1,
+   "dem": [
+    "Laticia Ambroz"
+   ],
+   "gop": [
+    "Bryan Hughes"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "independent Steve Clugston application rejected"
+  },
+  {
+   "d": "2",
+   "seats": 1,
+   "dem": [
+    "Keenen Colbert"
+   ],
+   "gop": [
+    "Bob Hall"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "3",
+   "seats": 1,
+   "dem": [
+    "Bobby Tillman"
+   ],
+   "gop": [
+    "Trent Ashby"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "open; Robert Nichols retiring"
+  },
+  {
+   "d": "4",
+   "seats": 1,
+   "dem": [
+    "Ron C. Angeletti"
+   ],
+   "gop": [
+    "Brett W. Ligon"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Ligon won May 2 2026 special election after Brandon Creighton resigned"
+  },
+  {
+   "d": "5",
+   "seats": 1,
+   "dem": [
+    "Paul Thomasson"
+   ],
+   "gop": [
+    "Charles Schwertner"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "9",
+   "seats": 1,
+   "dem": [
+    "Taylor Rehmet"
+   ],
+   "gop": [
+    "Leigh Wambsganss"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "rematch of Jan 31 2026 special runoff won by Rehmet (D)"
+  },
+  {
+   "d": "11",
+   "seats": 1,
+   "dem": [
+    "Shannon Dicely"
+   ],
+   "gop": [
+    "Dennis Paul"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "open; Mayes Middleton running for attorney general"
+  },
+  {
+   "d": "13",
+   "seats": 1,
+   "dem": [
+    "Borris L. Miles"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "18",
+   "seats": 1,
+   "dem": [
+    "Erica Gillum"
+   ],
+   "gop": [
+    "Lois W. Kolkhorst"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "19",
+   "seats": 1,
+   "dem": [
+    "Roland Gutierrez"
+   ],
+   "gop": [
+    "Marcus Cardenas"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Cardenas won May 26 GOP runoff"
+  },
+  {
+   "d": "21",
+   "seats": 1,
+   "dem": [
+    "Judith Zaffirini"
+   ],
+   "gop": [
+    "Julie Dahlberg"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Wikipedia shows Zaffirini unopposed, ivoterguide lists Dahlberg (R) on ballot"
+  },
+  {
+   "d": "22",
+   "seats": 1,
+   "dem": [
+    "Amy Martinez-Salas"
+   ],
+   "gop": [
+    "David Cook"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "open; Brian Birdwell retiring. A special election for the unexpired term with the same two candidates is also on the Nov 3 ballot"
+  },
+  {
+   "d": "22",
+   "seats": 1,
+   "dem": [
+    "Amy Martinez-Salas"
+   ],
+   "gop": [
+    "David Cook"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "special election for the unexpired term after Birdwell left, same candidates as the regular race",
+   "special": true
+  },
+  {
+   "d": "24",
+   "seats": 1,
+   "dem": [
+    "Joe Paz Herrera"
+   ],
+   "gop": [
+    "Pete Flores"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "26",
+   "seats": 1,
+   "dem": [
+    "José Menéndez"
+   ],
+   "gop": [],
+   "others": [
+    {
+     "name": "Julián Villarreal",
+     "party": "G"
+    }
+   ],
+   "withdrawn": [],
+   "note": "no Republican; Green is only challenger"
+  },
+  {
+   "d": "28",
+   "seats": 1,
+   "dem": [
+    "Riley Rodriquez"
+   ],
+   "gop": [
+    "Charles Perry"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "31",
+   "seats": 1,
+   "dem": [
+    "John Betancourt"
+   ],
+   "gop": [
+    "Kevin Sparks"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  }
+ ]
+}

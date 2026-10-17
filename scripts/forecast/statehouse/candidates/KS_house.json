@@ -1,0 +1,346 @@
+{
+ "state": "KS",
+ "chamber": "house",
+ "sources": [
+  "https://www.jocoelection.org/sites/default/files/2026-10/11-03-2026%20-%20Notice%20of%20Election%20%28candidates%29%20-%20REVISED.pdf",
+  "https://www.jocoelection.org/events-elections/november-3-2026-general-election"
+ ],
+ "as_of": "2026-10-17",
+ "complete": false,
+ "districts": [
+  {
+   "d": "5",
+   "seats": 1,
+   "dem": [
+    "Henry Johns"
+   ],
+   "gop": [
+    "Courtney Sappington"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "8",
+   "seats": 1,
+   "dem": [
+    "Megan Phillips"
+   ],
+   "gop": [
+    "Chris Croft"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "14",
+   "seats": 1,
+   "dem": [
+    "Sherry Giebler"
+   ],
+   "gop": [
+    "Charlotte Esau"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "15",
+   "seats": 1,
+   "dem": [
+    "Allison Hougland"
+   ],
+   "gop": [
+    "Lauren N. Bohi"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "16",
+   "seats": 1,
+   "dem": [
+    "Linda Featherston"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "Democrat unopposed on Johnson County ballot"
+  },
+  {
+   "d": "17",
+   "seats": 1,
+   "dem": [
+    "Jo Ella Hoye"
+   ],
+   "gop": [
+    "Jim Eschrich"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "18",
+   "seats": 1,
+   "dem": [
+    "Cindy Neighbor"
+   ],
+   "gop": [
+    "Robert Whitman"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "19",
+   "seats": 1,
+   "dem": [
+    "Stephanie Sawyer Clayton"
+   ],
+   "gop": [
+    "Mark Hermes"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "20",
+   "seats": 1,
+   "dem": [
+    "Mari-Lynn Poskin"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "Democrat unopposed on Johnson County ballot"
+  },
+  {
+   "d": "21",
+   "seats": 1,
+   "dem": [
+    "Jerry Stogsdill"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "Democrat unopposed on Johnson County ballot"
+  },
+  {
+   "d": "22",
+   "seats": 1,
+   "dem": [
+    "Reed Krewson"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "Open seat; Democrat unopposed on Johnson County ballot"
+  },
+  {
+   "d": "23",
+   "seats": 1,
+   "dem": [
+    "Susan Ruiz"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "Democrat unopposed on Johnson County ballot"
+  },
+  {
+   "d": "24",
+   "seats": 1,
+   "dem": [
+    "Jarrod Ousley"
+   ],
+   "gop": [
+    "Scott Speicker"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "25",
+   "seats": 1,
+   "dem": [
+    "Rui Xu"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "Democrat unopposed on Johnson County ballot"
+  },
+  {
+   "d": "26",
+   "seats": 1,
+   "dem": [
+    "Laura Johnson"
+   ],
+   "gop": [
+    "Chip VanHouden"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "27",
+   "seats": 1,
+   "dem": [
+    "Sara Kiewiet"
+   ],
+   "gop": [
+    "Sean E. Tarwater"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "28",
+   "seats": 1,
+   "dem": [
+    "Bryan Mouber"
+   ],
+   "gop": [
+    "Alex N. Bergman"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "29",
+   "seats": 1,
+   "dem": [
+    "Heather Meyer"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "Democrat unopposed on Johnson County ballot"
+  },
+  {
+   "d": "30",
+   "seats": 1,
+   "dem": [
+    "Amelia Wiederaenders"
+   ],
+   "gop": [
+    "Laura Williams"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "39",
+   "seats": 1,
+   "dem": [
+    "Zach Maier"
+   ],
+   "gop": [
+    "Angela Stiens"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "43",
+   "seats": 1,
+   "dem": [
+    "Kristen Schultz"
+   ],
+   "gop": [
+    "William (Bill) Sutton"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "48",
+   "seats": 1,
+   "dem": [
+    "Dan Osman"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "Democrat unopposed on Johnson County ballot"
+  },
+  {
+   "d": "49",
+   "seats": 1,
+   "dem": [
+    "Nikki McDonald"
+   ],
+   "gop": [
+    "Tricia Sinclair"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "78",
+   "seats": 1,
+   "dem": [
+    "Tim Lundberg"
+   ],
+   "gop": [
+    "Robyn R. Essex"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "108",
+   "seats": 1,
+   "dem": [
+    "Brandon Woodard"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "Democrat unopposed on Johnson County ballot"
+  },
+  {
+   "d": "117",
+   "seats": 1,
+   "dem": [
+    "Brandon Holland"
+   ],
+   "gop": [
+    "Adam Turk"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "121",
+   "seats": 1,
+   "dem": [
+    "Kelsey Stock"
+   ],
+   "gop": [
+    "Thomas Palenske"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  }
+ ],
+ "gap": "Only the 27 districts on the Johnson County ballot (revised notice of election dated Oct 5 2026) are covered. The Kansas SOS candidate list is a drop-down form the fetch tool cannot use, Wikipedia is a pre-primary snapshot with no nominees, and Ballotpedia returned a stale pre-primary snapshot. Districts 1 to 4, 6, 7, 9 to 13, 31 to 38, 40 to 42, 44 to 47, 50 to 77, 79 to 107, 109 to 116, 118 to 120, 122 to 125 are missing. Kansas Senate is not up in 2026."
+}

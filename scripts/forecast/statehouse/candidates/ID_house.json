@@ -1,0 +1,853 @@
+{
+ "state": "ID",
+ "chamber": "house",
+ "sources": [
+  "https://ivoterguide.com/all-in-state/id"
+ ],
+ "as_of": "2026-10-17",
+ "complete": true,
+ "districts": [
+  {
+   "d": "1A",
+   "dem": [
+    "Karen Matthee"
+   ],
+   "gop": [
+    "Jane Sauter"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "1B",
+   "dem": [],
+   "gop": [
+    "Cornel Rasor"
+   ],
+   "others": [
+    {
+     "name": "Kathryn Larson",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "no Democrat; minor party or independent is the main challenger"
+  },
+  {
+   "d": "2A",
+   "dem": [
+    "Birgid Niedenzu"
+   ],
+   "gop": [
+    "Heather Scott"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "2B",
+   "dem": [
+    "Sabine Krier"
+   ],
+   "gop": [
+    "Dale Hawkins"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "3A",
+   "dem": [
+    "Melissa Mateer"
+   ],
+   "gop": [
+    "Vito Barbieri"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "3B",
+   "dem": [],
+   "gop": [
+    "Jordan Redman"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "4A",
+   "dem": [
+    "Maxwell McSwain"
+   ],
+   "gop": [
+    "Joe Alfieri"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "4B",
+   "dem": [
+    "Aaron Hayes"
+   ],
+   "gop": [
+    "Elaine Price"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "5A",
+   "dem": [
+    "Mirna Pleines"
+   ],
+   "gop": [
+    "Ron Mendive"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "5B",
+   "dem": [
+    "Lee Wallace"
+   ],
+   "gop": [
+    "Tony Wisniewski"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "6A",
+   "dem": [
+    "Trish Carter-Goodheart"
+   ],
+   "gop": [
+    "Colton Bennett"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "6B",
+   "dem": [
+    "Kathy Dawes"
+   ],
+   "gop": [
+    "Brandon Mitchell"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "7A",
+   "dem": [
+    "Larry Nostrant"
+   ],
+   "gop": [
+    "Kyle Harris"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "7B",
+   "dem": [
+    "Pete Gertonson"
+   ],
+   "gop": [
+    "Charlie Shepherd"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "8A",
+   "dem": [],
+   "gop": [
+    "Rob Beiswenger"
+   ],
+   "others": [
+    {
+     "name": "Heather S. Lewis",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "no Democrat; minor party or independent is the main challenger"
+  },
+  {
+   "d": "8B",
+   "dem": [
+    "Jared Dawson"
+   ],
+   "gop": [
+    "Brian Beckley"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "9A",
+   "dem": [],
+   "gop": [
+    "John C. Shirts"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "9B",
+   "dem": [
+    "Lupita Connor"
+   ],
+   "gop": [
+    "Judy Boyle"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "10A",
+   "dem": [
+    "Michael Hofferber"
+   ],
+   "gop": [
+    "Mike Moyle"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "10B",
+   "dem": [
+    "Beth Ann McFalls"
+   ],
+   "gop": [
+    "Bruce D. Skaug"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "11A",
+   "dem": [],
+   "gop": [
+    "Kent A. Marmon"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "11B",
+   "dem": [
+    "Joshua Preminger"
+   ],
+   "gop": [
+    "Debbie Geyer"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "12A",
+   "dem": [
+    "Sterling Barnett"
+   ],
+   "gop": [
+    "Jeff Cornilles"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "12B",
+   "dem": [
+    "Curtis James"
+   ],
+   "gop": [
+    "Jaron Crane"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "13A",
+   "dem": [
+    "Cliff Hohman"
+   ],
+   "gop": [
+    "Brent J Crane"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "13B",
+   "dem": [
+    "Cody Gorman"
+   ],
+   "gop": [
+    "Steven Tanner"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "14A",
+   "dem": [
+    "Jo Daly"
+   ],
+   "gop": [
+    "Ted Hill"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "14B",
+   "dem": [
+    "Valerie Ruxton"
+   ],
+   "gop": [
+    "Josh Tanner"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "15A",
+   "dem": [
+    "Steve Berch"
+   ],
+   "gop": [
+    "Steve Keyser"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "15B",
+   "dem": [
+    "Jae Etchart"
+   ],
+   "gop": [
+    "Dori Healey"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "16A",
+   "dem": [
+    "Megan Woller"
+   ],
+   "gop": [
+    "Jackie Davidson"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "16B",
+   "dem": [
+    "Annie Haws"
+   ],
+   "gop": [
+    "Chandler Stewart Hadraba"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "17A",
+   "dem": [
+    "John Gannon"
+   ],
+   "gop": [
+    "James R Nechwedowich"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "17B",
+   "dem": [
+    "Megan Egbert"
+   ],
+   "gop": [
+    "Justin Alexander Peter Hughes"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "18A",
+   "dem": [
+    "Ilana Rubel"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "18B",
+   "dem": [
+    "Brooke Green"
+   ],
+   "gop": [],
+   "others": [
+    {
+     "name": "Joseph Bishop",
+     "party": "L"
+    }
+   ],
+   "withdrawn": [],
+   "note": "no Republican; minor party or independent is the main challenger"
+  },
+  {
+   "d": "19A",
+   "dem": [
+    "Monica C. Church"
+   ],
+   "gop": [
+    "Bryan Hopkins"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "19B",
+   "dem": [
+    "Chris Mathias"
+   ],
+   "gop": [
+    "Stanley Roach"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "20A",
+   "dem": [
+    "Jennifer Stephens"
+   ],
+   "gop": [
+    "Joe A Palmer"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "20B",
+   "dem": [
+    "Mary A Mosley"
+   ],
+   "gop": [
+    "James D. Holtzclaw"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "21A",
+   "dem": [
+    "Camille Allan"
+   ],
+   "gop": [
+    "James Petzke"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "21B",
+   "dem": [
+    "Casey Hess"
+   ],
+   "gop": [
+    "Jeff Ehlers"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "22A",
+   "dem": [
+    "Loren Petty"
+   ],
+   "gop": [
+    "Kelly Walton"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "22B",
+   "dem": [
+    "Amanda Easley"
+   ],
+   "gop": [
+    "Jason A. Monks"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "23A",
+   "dem": [],
+   "gop": [
+    "Chris Bruce"
+   ],
+   "others": [
+    {
+     "name": "Paul M Smith",
+     "party": "O"
+    }
+   ],
+   "withdrawn": [],
+   "note": "no Democrat; minor party or independent is the main challenger"
+  },
+  {
+   "d": "23B",
+   "dem": [
+    "Joe Fuller"
+   ],
+   "gop": [
+    "Shawn R Dygert"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "24A",
+   "dem": [],
+   "gop": [
+    "Clint Hostetler"
+   ],
+   "others": [
+    {
+     "name": "Kevin Moxley",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "no Democrat; minor party or independent is the main challenger"
+  },
+  {
+   "d": "24B",
+   "dem": [],
+   "gop": [
+    "Chance Requa"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "25A",
+   "dem": [
+    "Marla Palmer"
+   ],
+   "gop": [
+    "Grayson Stone"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "25B",
+   "dem": [],
+   "gop": [
+    "Cherie Vollmer"
+   ],
+   "others": [
+    {
+     "name": "Liyah Babayan",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "no Democrat; minor party or independent is the main challenger"
+  },
+  {
+   "d": "26A",
+   "dem": [
+    "Anita Janis"
+   ],
+   "gop": [
+    "Mike Pohanka"
+   ],
+   "others": [
+    {
+     "name": "Bella Schiffler",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "26B",
+   "dem": [
+    "Kevin Marsh"
+   ],
+   "gop": [
+    "Lyle Johnstone"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "27A",
+   "dem": [],
+   "gop": [
+    "Douglas T Pickett"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "27B",
+   "dem": [],
+   "gop": [
+    "Clay Handy"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "28A",
+   "dem": [
+    "Kim Jackman"
+   ],
+   "gop": [
+    "Richard \"Rick\" Cheatum"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "28B",
+   "dem": [
+    "Jayson Meline"
+   ],
+   "gop": [
+    "Dan Garner"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "29A",
+   "dem": [
+    "Mary Shea"
+   ],
+   "gop": [
+    "Dustin W. Manwaring"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "29B",
+   "dem": [
+    "Nate Roberts"
+   ],
+   "gop": [
+    "Jennifer Miles"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "30A",
+   "dem": [],
+   "gop": [
+    "David Cannon"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "30B",
+   "dem": [
+    "Bree Buckingham"
+   ],
+   "gop": [
+    "Ben G. Fuhriman"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "31A",
+   "dem": [
+    "Kindsey Smith"
+   ],
+   "gop": [
+    "Jerald Dallas Raymond"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "31B",
+   "dem": [
+    "Wendy Norman"
+   ],
+   "gop": [
+    "Rod Furniss"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "32A",
+   "dem": [],
+   "gop": [
+    "Stephanie Mickelsen"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "32B",
+   "dem": [
+    "Kamber Weninger"
+   ],
+   "gop": [
+    "Erin Bingham"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "33A",
+   "dem": [
+    "Chance Marshall"
+   ],
+   "gop": [
+    "Barbara Ehardt"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "33B",
+   "dem": [
+    "Todd DeVries"
+   ],
+   "gop": [
+    "Marco Erickson"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "34A",
+   "dem": [],
+   "gop": [
+    "Jon O Weber"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "34B",
+   "dem": [],
+   "gop": [
+    "Britt Raybould"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "35A",
+   "dem": [
+    "Walter Boyd"
+   ],
+   "gop": [
+    "Mike Veile"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "35B",
+   "dem": [
+    "Mary Kaufman"
+   ],
+   "gop": [
+    "Joshua D. Wheeler"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  }
+ ],
+ "method": "General candidates from iVoterGuide Idaho statewide list dated Oct 16 2026. Constitution Party coded O. Seats A and B listed separately."
+}

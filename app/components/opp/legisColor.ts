@@ -14,8 +14,9 @@ export function oddsFill(p: number) {
 }
 
 /** Fill for one district. Margin is Republican minus Democratic, probD the Democratic win chance, last the party that won it last time. */
-export function districtFill(mode: LegisMode, probD: number | null, margin: number | null, last?: string | null) {
+export function districtFill(mode: LegisMode, probD: number | null, margin: number | null, last?: string | null, ind = false) {
   if (probD == null) return "rgba(128,120,150,.35)";
+  if (ind && probD > 0.4) return mode === "flips" ? (last === "O" ? "rgba(183,140,255,.18)" : RATE.ind) : probD >= 0.6 ? RATE.ind : "#d7c3ff";
   if (mode === "odds") return oddsFill(probD);
   if (mode === "margin") return marginColor(margin == null || Math.abs(margin) >= 99 ? (probD > 0.5 ? -40 : 40) : margin);
   const fav = probD >= 0.5 ? "D" : "R";

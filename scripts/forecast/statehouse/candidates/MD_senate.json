@@ -1,0 +1,562 @@
+{
+ "state": "MD",
+ "chamber": "senate",
+ "sources": [
+  "https://elections.maryland.gov/elections/2026/General_candidates/2026_GG_statewide_candidatelist.html"
+ ],
+ "as_of": "2026-10-17",
+ "complete": true,
+ "caveat": "Official Maryland SBE general election candidate list; all listed Senate candidates are Active.",
+ "districts": [
+  {
+   "d": "1",
+   "seats": 1,
+   "dem": [
+    "Ashley Emerick"
+   ],
+   "gop": [
+    "Mike McKay"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "2",
+   "seats": 1,
+   "dem": [
+    "Eric Martin Van Buren"
+   ],
+   "gop": [
+    "Paul D. Corderman"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "3",
+   "seats": 1,
+   "dem": [
+    "Karen Lewis Young"
+   ],
+   "gop": [
+    "Shelley Aloi"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "4",
+   "seats": 1,
+   "dem": [
+    "Lara Westdorp"
+   ],
+   "gop": [
+    "William Folden"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "5",
+   "seats": 1,
+   "dem": [
+    "Gary Foote"
+   ],
+   "gop": [
+    "Justin Ready"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "6",
+   "seats": 1,
+   "dem": [
+    "Justin Holliday"
+   ],
+   "gop": [
+    "Johnny Ray Salling"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "7",
+   "seats": 1,
+   "dem": [
+    "Bill Geibler"
+   ],
+   "gop": [
+    "J. B. Jennings"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "8",
+   "seats": 1,
+   "dem": [
+    "Carl Jackson"
+   ],
+   "gop": [
+    "Yahu Blackwell"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "9",
+   "seats": 1,
+   "dem": [
+    "Katie Fry Hester"
+   ],
+   "gop": [
+    "Ben Hightower"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "10",
+   "seats": 1,
+   "dem": [
+    "Ben Brooks"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "11",
+   "seats": 1,
+   "dem": [
+    "Shelly L. Hettleman"
+   ],
+   "gop": [
+    "Jim Simpson"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "12",
+   "seats": 1,
+   "dem": [
+    "Clarence Lam"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "13",
+   "seats": 1,
+   "dem": [
+    "Guy Guzzone"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "14",
+   "seats": 1,
+   "dem": [
+    "Craig J. Zucker"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "15",
+   "seats": 1,
+   "dem": [
+    "Brian J. Feldman"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "16",
+   "seats": 1,
+   "dem": [
+    "Sara N. Love"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "17",
+   "seats": 1,
+   "dem": [
+    "Cheryl C. Kagan"
+   ],
+   "gop": [
+    "Helene Meister"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "18",
+   "seats": 1,
+   "dem": [
+    "Jeff Waldstreicher"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "19",
+   "seats": 1,
+   "dem": [
+    "Ben Kramer"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "20",
+   "seats": 1,
+   "dem": [
+    "Will Smith"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "21",
+   "seats": 1,
+   "dem": [
+    "Jim Rosapepe"
+   ],
+   "gop": [
+    "Lee Havis"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "22",
+   "seats": 1,
+   "dem": [
+    "Alonzo T. Washington"
+   ],
+   "gop": [
+    "Jim Wass"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "23",
+   "seats": 1,
+   "dem": [
+    "Ron Watson"
+   ],
+   "gop": [
+    "James A. T. Amah"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "24",
+   "seats": 1,
+   "dem": [
+    "Tiffany Alston"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "25",
+   "seats": 1,
+   "dem": [
+    "Nick Charles"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "26",
+   "seats": 1,
+   "dem": [
+    "C. Anthony Muse"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "27",
+   "seats": 1,
+   "dem": [
+    "Kevin M. Harris"
+   ],
+   "gop": [
+    "Al Larsen"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "28",
+   "seats": 1,
+   "dem": [
+    "C. T. Wilson"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "29",
+   "seats": 1,
+   "dem": [
+    "Chuck Borges"
+   ],
+   "gop": [
+    "Jack Bailey"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "30",
+   "seats": 1,
+   "dem": [
+    "Shaneka T. Henson"
+   ],
+   "gop": [
+    "Jessica Haire"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "31",
+   "seats": 1,
+   "dem": [
+    "Brent Mulrooney"
+   ],
+   "gop": [
+    "Nicholaus Kipke"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "32",
+   "seats": 1,
+   "dem": [
+    "Mark S. Chang"
+   ],
+   "gop": [
+    "Justin Gallucci"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "33",
+   "seats": 1,
+   "dem": [
+    "Dawn D. Gile"
+   ],
+   "gop": [
+    "Amy Leahy"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "34",
+   "seats": 1,
+   "dem": [
+    "Mary-Dulany James"
+   ],
+   "gop": [
+    "Raj Goel"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "35",
+   "seats": 1,
+   "dem": [
+    "Neil Jennings"
+   ],
+   "gop": [
+    "Jason C. Gallion"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "36",
+   "seats": 1,
+   "dem": [
+    "Nivek Johnson"
+   ],
+   "gop": [
+    "Steve Hershey"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "37",
+   "seats": 1,
+   "dem": [
+    "Katie G. Clendaniel"
+   ],
+   "gop": [
+    "Johnny Mautz"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "38",
+   "seats": 1,
+   "dem": [
+    "Lino V. Cressotti"
+   ],
+   "gop": [
+    "Mary Beth Carozza"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "39",
+   "seats": 1,
+   "dem": [
+    "Amar Mukunda"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "40",
+   "seats": 1,
+   "dem": [
+    "Antonio Hayes"
+   ],
+   "gop": [],
+   "others": [
+    {
+     "name": "Alan Rebar",
+     "party": "O"
+    }
+   ],
+   "withdrawn": [],
+   "note": "Rebar on Working Class Party line; no Republican"
+  },
+  {
+   "d": "41",
+   "seats": 1,
+   "dem": [
+    "Malcolm P. Ruff"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "42",
+   "seats": 1,
+   "dem": [
+    "Stephanie Popescu"
+   ],
+   "gop": [
+    "Kevin Ford"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "43",
+   "seats": 1,
+   "dem": [
+    "Mary Washington"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "44",
+   "seats": 1,
+   "dem": [
+    "Charles E. Sydnor, III"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "45",
+   "seats": 1,
+   "dem": [
+    "Cory V. McCray"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "46",
+   "seats": 1,
+   "dem": [
+    "Bill Ferguson"
+   ],
+   "gop": [
+    "Emmanuel Digman"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Senate President"
+  },
+  {
+   "d": "47",
+   "seats": 1,
+   "dem": [
+    "Malcolm Augustine"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  }
+ ]
+}

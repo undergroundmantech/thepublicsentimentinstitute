@@ -1,0 +1,976 @@
+{
+ "state": "MI",
+ "chamber": "house",
+ "sources": [
+  "https://en.wikipedia.org/wiki/2026_Michigan_House_of_Representatives_election",
+  "https://www.kentcountymi.gov/DocumentCenter/View/8870/November-3-2026-Candidates-and-Proposals-PDF",
+  "https://www.kalcounty.gov/DocumentCenter/View/6469/Unofficial-November-2026-Candidate-List"
+ ],
+ "as_of": "2026-10-17",
+ "complete": false,
+ "districts": [
+  {
+   "d": "1",
+   "seats": 1,
+   "dem": [
+    "Tyrone Carter"
+   ],
+   "gop": [
+    "Valerie Whittaker"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "2",
+   "seats": 1,
+   "dem": [
+    "Joanna Whaley"
+   ],
+   "gop": [
+    "Ron Kokinda"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Open seat"
+  },
+  {
+   "d": "3",
+   "seats": 1,
+   "dem": [
+    "Alabas Farhat"
+   ],
+   "gop": [
+    "Gus Tarraf"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "4",
+   "seats": 1,
+   "dem": [
+    "Regina Ross"
+   ],
+   "gop": [
+    "Everett Davis"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Open seat"
+  },
+  {
+   "d": "5",
+   "seats": 1,
+   "dem": [
+    "Candace Calloway"
+   ],
+   "gop": [
+    "Chris Venable"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Open seat"
+  },
+  {
+   "d": "6",
+   "seats": 1,
+   "dem": [
+    "Melanie Macey"
+   ],
+   "gop": [
+    "Mike Steger"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Open seat"
+  },
+  {
+   "d": "7",
+   "seats": 1,
+   "dem": [
+    "Tonya Myers Phillips"
+   ],
+   "gop": [
+    "Reginald Moorer"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "8",
+   "seats": 1,
+   "dem": [
+    "Chris Gilmer-Hill"
+   ],
+   "gop": [
+    "Bruce Langran"
+   ],
+   "others": [
+    {
+     "name": "Stephen Boyle",
+     "party": "G"
+    }
+   ],
+   "withdrawn": [],
+   "note": "Incumbent D Helena Scott lost primary"
+  },
+  {
+   "d": "9",
+   "seats": 1,
+   "dem": [
+    "Willie Burton"
+   ],
+   "gop": [
+    "Michele Lundgren"
+   ],
+   "others": [
+    {
+     "name": "Jahdante John Elijah Smith",
+     "party": "G"
+    },
+    {
+     "name": "Logan Ausherman",
+     "party": "O"
+    },
+    {
+     "name": "Danetta L. Simpson",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "Open seat; Ausherman is Working Class Party"
+  },
+  {
+   "d": "10",
+   "seats": 1,
+   "dem": [
+    "Veronica Paiz"
+   ],
+   "gop": [
+    "Peter Ochs"
+   ],
+   "others": [
+    {
+     "name": "Piper Willow Smith",
+     "party": "O"
+    }
+   ],
+   "withdrawn": [],
+   "note": "Smith is Working Class Party"
+  },
+  {
+   "d": "11",
+   "seats": 1,
+   "dem": [
+    "Kimberly Fisher"
+   ],
+   "gop": [
+    "Matthew Stafford"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Open seat"
+  },
+  {
+   "d": "12",
+   "seats": 1,
+   "dem": [
+    "Kimberly Edwards"
+   ],
+   "gop": [
+    "Randell Shafer"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "13",
+   "seats": 1,
+   "dem": [
+    "Mai Xiong"
+   ],
+   "gop": [
+    "Mark Foster"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "14",
+   "seats": 1,
+   "dem": [
+    "Mike McFall"
+   ],
+   "gop": [
+    "Larry Syzska"
+   ],
+   "others": [
+    {
+     "name": "Jeff Sparling",
+     "party": "G"
+    }
+   ],
+   "withdrawn": [],
+   "note": "R surname also spelled Szyska on source"
+  },
+  {
+   "d": "15",
+   "seats": 1,
+   "dem": [
+    "Jalal Abdallah"
+   ],
+   "gop": [
+    "Hassan Nehme"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Open seat"
+  },
+  {
+   "d": "16",
+   "seats": 1,
+   "dem": [
+    "Stephanie Young"
+   ],
+   "gop": [
+    "Brian Duggan"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "17",
+   "seats": 1,
+   "dem": [
+    "Laurie Pohutsky"
+   ],
+   "gop": [
+    "Ken Crider"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "18",
+   "seats": 1,
+   "dem": [
+    "Kelly Garrett"
+   ],
+   "gop": [
+    "Ryan Foster"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Open seat"
+  },
+  {
+   "d": "19",
+   "seats": 1,
+   "dem": [
+    "Samantha Steckloff"
+   ],
+   "gop": [
+    "Kevin Hammer"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "20",
+   "seats": 1,
+   "dem": [
+    "Noah Arbit"
+   ],
+   "gop": [
+    "S. David Sullivan"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "21",
+   "seats": 1,
+   "dem": [
+    "Kelly Breen"
+   ],
+   "gop": [
+    "Ross Barranco"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "R first name also shown as Rose on source"
+  },
+  {
+   "d": "22",
+   "seats": 1,
+   "dem": [
+    "Lisa McIntyre"
+   ],
+   "gop": [
+    "Casey Noce"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Open seat"
+  },
+  {
+   "d": "23",
+   "seats": 1,
+   "dem": [
+    "Jason Morgan"
+   ],
+   "gop": [
+    "Miriam Corvino"
+   ],
+   "others": [
+    {
+     "name": "Christina Marudas",
+     "party": "G"
+    }
+   ],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "24",
+   "seats": 1,
+   "dem": [
+    "Ranjeev Puri"
+   ],
+   "gop": [
+    "Allison Fuller"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "25",
+   "seats": 1,
+   "dem": [
+    "Peter Herzberg"
+   ],
+   "gop": [
+    "Dawn Udell"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "26",
+   "seats": 1,
+   "dem": [
+    "Dylan Wegela"
+   ],
+   "gop": [
+    "Chris Dobis"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "27",
+   "seats": 1,
+   "dem": [
+    "Jaime Churches"
+   ],
+   "gop": [
+    "Rylee Linting"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "28",
+   "seats": 1,
+   "dem": [
+    "Sherry Berecz"
+   ],
+   "gop": [
+    "Jamie Thompson"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "29",
+   "seats": 1,
+   "dem": [
+    "Darian Counts"
+   ],
+   "gop": [
+    "James DeSana"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "30",
+   "seats": 1,
+   "dem": [
+    "Omar Ferdin"
+   ],
+   "gop": [
+    "William Bruck"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "31",
+   "seats": 1,
+   "dem": [
+    "Shannon Dare Wayne"
+   ],
+   "gop": [
+    "Laura Perry"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Open seat"
+  },
+  {
+   "d": "32",
+   "seats": 1,
+   "dem": [
+    "Jimmie Wilson Jr."
+   ],
+   "gop": [
+    "Mike Eller"
+   ],
+   "others": [
+    {
+     "name": "John R. Tatar",
+     "party": "O"
+    },
+    {
+     "name": "Ryan Sample",
+     "party": "G"
+    }
+   ],
+   "withdrawn": [],
+   "note": "Tatar is Constitution/US Taxpayers"
+  },
+  {
+   "d": "33",
+   "seats": 1,
+   "dem": [
+    "Morgan Foreman"
+   ],
+   "gop": [
+    "Catherine Rogers"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "34",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Nancy Jenkins"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "No Democrat; both Democratic filers disqualified or withdrew before primary"
+  },
+  {
+   "d": "35",
+   "seats": 1,
+   "dem": [
+    "Jeff Cooley"
+   ],
+   "gop": [
+    "Jennifer Wortz"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "36",
+   "seats": 1,
+   "dem": [
+    "Cole Slaski"
+   ],
+   "gop": [
+    "Steve Carra"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "37",
+   "seats": 1,
+   "dem": [
+    "Angela Jones"
+   ],
+   "gop": [
+    "Brad Paquette"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "38",
+   "seats": 1,
+   "dem": [
+    "Joey Andrews"
+   ],
+   "gop": [
+    "Mark Krieger"
+   ],
+   "others": [
+    {
+     "name": "Jett Newton",
+     "party": "G"
+    }
+   ],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "39",
+   "seats": 1,
+   "dem": [
+    "Kerry Tapper"
+   ],
+   "gop": [
+    "Pauline Wendzel"
+   ],
+   "others": [
+    {
+     "name": "Jared Polonowski",
+     "party": "G"
+    }
+   ],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "40",
+   "seats": 1,
+   "dem": [
+    "Matt Longjohn"
+   ],
+   "gop": [
+    "Robert Sitarski"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "41",
+   "seats": 1,
+   "dem": [
+    "Jen Strebs"
+   ],
+   "gop": [
+    "Nicole Sabel"
+   ],
+   "others": [
+    {
+     "name": "Rafael Wolf",
+     "party": "L"
+    }
+   ],
+   "withdrawn": [],
+   "note": "Open seat"
+  },
+  {
+   "d": "42",
+   "seats": 1,
+   "dem": [
+    "Nick Rowe"
+   ],
+   "gop": [
+    "Matt Hall"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "43",
+   "seats": 1,
+   "dem": [
+    "Alan Swank"
+   ],
+   "gop": [
+    "Rachelle Smit"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "44",
+   "seats": 1,
+   "dem": [
+    "Jim Haadsma"
+   ],
+   "gop": [
+    "Steve Frisbie"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "45",
+   "seats": 1,
+   "dem": [
+    "Randy Davis"
+   ],
+   "gop": [
+    "Sarah Lightner"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "46",
+   "seats": 1,
+   "dem": [
+    "Jan Maino"
+   ],
+   "gop": [
+    "Kathy Schmaltz"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "47",
+   "seats": 1,
+   "dem": [
+    "Carrie Rheingans"
+   ],
+   "gop": [
+    "Justin Griffis"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "48",
+   "seats": 1,
+   "dem": [
+    "Jennifer Conlin"
+   ],
+   "gop": [
+    "Brian Ignatowski"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "49",
+   "seats": 1,
+   "dem": [
+    "Dan Pelchat"
+   ],
+   "gop": [
+    "Ann Bollin"
+   ],
+   "others": [
+    {
+     "name": "Trevor Step",
+     "party": "L"
+    }
+   ],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "50",
+   "seats": 1,
+   "dem": [
+    "Cassie Canedo"
+   ],
+   "gop": [
+    "Jason Woolford"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "51",
+   "seats": 1,
+   "dem": [
+    "Stacey McDuffie"
+   ],
+   "gop": [
+    "Matt Maddock"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "52",
+   "seats": 1,
+   "dem": [
+    "Brendan Leddy"
+   ],
+   "gop": [
+    "Mike Harris"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "53",
+   "seats": 1,
+   "dem": [
+    "Brenda Carter"
+   ],
+   "gop": [
+    "Melissa Schultz"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "54",
+   "seats": 1,
+   "dem": [
+    "Sarah Pounds"
+   ],
+   "gop": [
+    "Roman Gaskey"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Open seat"
+  },
+  {
+   "d": "55",
+   "seats": 1,
+   "dem": [
+    "Alex Hawkins"
+   ],
+   "gop": [
+    "Mark Tisdel"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "56",
+   "seats": 1,
+   "dem": [
+    "Sharon MacDonell"
+   ],
+   "gop": [
+    "Ashok Baddi"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "57",
+   "seats": 1,
+   "dem": [
+    "Tom Turner"
+   ],
+   "gop": [
+    "Thomas Kuhn"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "58",
+   "seats": 1,
+   "dem": [
+    "Katrina Manetta"
+   ],
+   "gop": [
+    "Ron Robinson"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "59",
+   "seats": 1,
+   "dem": [
+    "Jason Robbins"
+   ],
+   "gop": [
+    "Sylvia Grot"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Open seat; Grot won R primary, Wikipedia general table missing so others unverified"
+  },
+  {
+   "d": "78",
+   "seats": 1,
+   "dem": [
+    "Rachel Gross"
+   ],
+   "gop": [
+    "Brandon L. Strong"
+   ],
+   "others": [
+    {
+     "name": "Ben DeJong",
+     "party": "L"
+    }
+   ],
+   "withdrawn": [],
+   "note": "Open seat"
+  },
+  {
+   "d": "79",
+   "seats": 1,
+   "dem": [
+    "Zach Abbott"
+   ],
+   "gop": [
+    "Angela Rigas"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "80",
+   "seats": 1,
+   "dem": [
+    "Lily Cheng-Schulting"
+   ],
+   "gop": [
+    "Doug Lee"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Open seat"
+  },
+  {
+   "d": "81",
+   "seats": 1,
+   "dem": [
+    "Stephen Wooden"
+   ],
+   "gop": [
+    "Holly DeBoer"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "82",
+   "seats": 1,
+   "dem": [
+    "Kristian C. Grant"
+   ],
+   "gop": [
+    "Ryan Malinoski"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "83",
+   "seats": 1,
+   "dem": [
+    "John Fitzgerald"
+   ],
+   "gop": [
+    "Cindy Ramirez"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "84",
+   "seats": 1,
+   "dem": [
+    "Khristian Silvis"
+   ],
+   "gop": [
+    "Drew Jake Robbins"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Open seat"
+  },
+  {
+   "d": "89",
+   "seats": 1,
+   "dem": [
+    "Meegan Zickus"
+   ],
+   "gop": [
+    "Joe Moss"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Open seat"
+  },
+  {
+   "d": "90",
+   "seats": 1,
+   "dem": [
+    "Rachel Crowther"
+   ],
+   "gop": [
+    "Lynn Afendoulis"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Open seat"
+  },
+  {
+   "d": "91",
+   "seats": 1,
+   "dem": [
+    "Frank Lafata"
+   ],
+   "gop": [
+    "Pat Outman"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  }
+ ],
+ "gap": "Districts 60 to 77, 85 to 88 and 92 to 110 are missing. The Wikipedia page as fetched stops at District 59, the Michigan SOS candidate listing (mielections.us) is blocked by robots.txt, and Ballotpedia returned a stale pre-filing snapshot. Districts 78 to 84 and 89 to 91 come from the Kent County official candidate list updated 10/16/2026. Districts 1 to 59 come from Wikipedia, which may miss some minor party convention nominees."
+}

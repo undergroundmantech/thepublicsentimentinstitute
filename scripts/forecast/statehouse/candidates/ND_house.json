@@ -1,0 +1,382 @@
+{
+ "state": "ND",
+ "chamber": "house",
+ "sources": [
+  "https://northdakotamonitor.com/2026/04/06/north-dakota-sees-more-contested-races-for-2026-legislative-elections/",
+  "https://northdakotamonitor.com/2026/06/10/6-incumbent-north-dakota-lawmakers-ousted-in-gop-primary/",
+  "https://northdakotamonitor.com/2026/10/05/arguments-set-in-court-case-challenging-4-north-dakota-legislative-candidates/",
+  "https://en.wikipedia.org/wiki/2026_North_Dakota_House_of_Representatives_election"
+ ],
+ "as_of": "2026-10-17",
+ "complete": false,
+ "districts": [
+  {
+   "d": "1",
+   "seats": 2,
+   "dem": [
+    "Alex Johnson",
+    "Steve Thoring"
+   ],
+   "gop": [
+    "Laurie Garbel",
+    "David Richter"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "3",
+   "seats": 2,
+   "dem": [
+    "Tara Hiatt",
+    "Natalie Mclaughlin"
+   ],
+   "gop": [
+    "Blaine DesLauriers",
+    "Timothy Mihalick"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Incumbent R Jeff Hoverson lost primary; DesLauriers and Mihalick face ND Supreme Court petition challenge seeking their seats declared vacant, oral argument Oct 21"
+  },
+  {
+   "d": "5",
+   "seats": 2,
+   "dem": [
+    "Kyle Erickson",
+    "Zach Raknerud"
+   ],
+   "gop": [
+    "Scott Louser",
+    "Roger Brabandt"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "7",
+   "seats": 2,
+   "dem": [
+    "Tiffany Williams-Rice",
+    "Jason Thoms"
+   ],
+   "gop": [
+    "Greg Vetter",
+    "Steve Sauter"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "R nominees per Wikipedia primary table; Sauter faces ND Supreme Court petition challenge, oral argument Oct 21"
+  },
+  {
+   "d": "9",
+   "seats": 2,
+   "dem": [
+    "Duane Poitra",
+    "Collette Brown"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "No Republican candidates"
+  },
+  {
+   "d": "11",
+   "seats": 2,
+   "dem": [
+    "Stass Andrianova",
+    "Liz Conmy"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "No Republicans; incumbent D Liz Conmy died April 25 2026 but remains on the ballot"
+  },
+  {
+   "d": "13",
+   "seats": 2,
+   "dem": [
+    "Maggi Gadaire",
+    "Brenda Jo Gillund"
+   ],
+   "gop": [
+    "Austen Schauer",
+    "Jim Jonas"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "R nominees per Wikipedia primary table"
+  },
+  {
+   "d": "15",
+   "seats": 2,
+   "dem": [
+    "Frances Drury"
+   ],
+   "gop": [
+    "Kathy Frelich",
+    "Corry Kenner"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Incumbent R Donna Henderson lost primary; only one Democrat for two seats"
+  },
+  {
+   "d": "17",
+   "seats": 2,
+   "dem": [
+    "Don Aandal"
+   ],
+   "gop": [
+    "Mark Sanford",
+    "Reed Johnson"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Only one Democrat for two seats"
+  },
+  {
+   "d": "19",
+   "seats": 2,
+   "dem": [
+    "Jolene L Hermanson",
+    "Lynnell Popowski"
+   ],
+   "gop": [
+    "Karen A Anderson",
+    "David Monson"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "21",
+   "seats": 2,
+   "dem": [
+    "LaurieBeth Hager",
+    "Laura Dronen"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "No Republican candidates"
+  },
+  {
+   "d": "23",
+   "seats": 2,
+   "dem": [
+    "Mark Casler",
+    "Michael A Steele"
+   ],
+   "gop": [
+    "Corey Johnson",
+    "Dennis Nehring"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "R nominees per Wikipedia primary table; Sharlet Mohr eliminated"
+  },
+  {
+   "d": "25",
+   "seats": 2,
+   "dem": [
+    "Alisa Mitskog"
+   ],
+   "gop": [
+    "Kathy Skroch",
+    "Terry Goerger"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Matt Evans lost R primary; Goerger faces ND Supreme Court petition challenge, oral argument Oct 21; only one Democrat for two seats"
+  },
+  {
+   "d": "26",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Brent Schwan"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Special election for two year unexpired term, one seat; no Democrat"
+  },
+  {
+   "d": "27",
+   "seats": 2,
+   "dem": [],
+   "gop": [
+    "Shawn Kessel",
+    "Greg Stemen"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "No Democrats; R nominees per Wikipedia primary table, Grant Allex eliminated"
+  },
+  {
+   "d": "29",
+   "seats": 2,
+   "dem": [
+    "Dianne Norris"
+   ],
+   "gop": [
+    "Kevin Wolsky",
+    "Craig Headland"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Only one Democrat for two seats"
+  },
+  {
+   "d": "31",
+   "seats": 2,
+   "dem": [
+    "Tim Spilman",
+    "Rissa M Williams"
+   ],
+   "gop": [
+    "Dawson Holle",
+    "Karen Rohr"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "INFERRED R nominees; four R filers Holle, Rohr, Jim Schmidt, Kevin Remington and no primary results found; Holle and Rohr listed as incumbents and ND Monitor names only six ousted incumbents, not them"
+  },
+  {
+   "d": "33",
+   "seats": 2,
+   "dem": [
+    "Kimball Banks",
+    "Stacie Kruckenberg"
+   ],
+   "gop": [
+    "Anna S. Novak",
+    "Mike Heger"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Incumbent R Bill Tveit lost primary"
+  },
+  {
+   "d": "35",
+   "seats": 2,
+   "dem": [
+    "Taylor Johnson",
+    "Lynne M Lafer-Halvorson"
+   ],
+   "gop": [
+    "Karen Karls",
+    "Bob Martinson"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "37",
+   "seats": 2,
+   "dem": [
+    "Susan Josephson",
+    "Shelley Lenz"
+   ],
+   "gop": [
+    "Vicky Steiner",
+    "Kylan Klauzer"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "39",
+   "seats": 2,
+   "dem": [
+    "Sandy Baertsch"
+   ],
+   "gop": [
+    "Keith Kempenich",
+    "Mike Schatz"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "INFERRED R nominees; three R filers Kempenich, Schatz, Jason Dodge and no primary results found; Kempenich and Schatz listed as incumbents and not among the six ousted incumbents; only one Democrat"
+  },
+  {
+   "d": "41",
+   "seats": 2,
+   "dem": [
+    "Chris Tiongson",
+    "Stacy Heidenreich"
+   ],
+   "gop": [
+    "Jennifer Benson",
+    "Rich Slagle"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "42",
+   "seats": 1,
+   "dem": [
+    "Nicole Derenne"
+   ],
+   "gop": [
+    "Connie Osowski"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Special election for unexpired term, one seat; appointed incumbent R Dustin McNally lost primary to Osowski"
+  },
+  {
+   "d": "43",
+   "seats": 2,
+   "dem": [
+    "Lukas Arthur Maughan",
+    "Tyler York"
+   ],
+   "gop": [
+    "Jill T Chandler",
+    "Mike Holmes"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Incumbent R Eric Murphy lost primary"
+  },
+  {
+   "d": "45",
+   "seats": 2,
+   "dem": [
+    "Don Lippert",
+    "Ross Lockhart"
+   ],
+   "gop": [
+    "Carrie McLeod",
+    "Scott Wagner"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "47",
+   "seats": 2,
+   "dem": [
+    "Rosann Jacobs-Fode",
+    "Cole Montoya"
+   ],
+   "gop": [
+    "Michael Motschenbacher",
+    "Jon Lee"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  }
+ ],
+ "gap": "Official ND certified general list (vip.sos.nd.gov candidatelist eid=348) and results site could not be read (search form and JS app only). Nominees built from the ND Monitor April filed candidate list plus primary results from ND Monitor and Wikipedia. Where a party had at most two filers they are treated as nominees. R nominees in districts 31 and 39 are inferred, not confirmed: ND Monitor reports only six incumbents lost GOP primaries and these listed incumbents were not among them. No independent or third party House candidates found in these sources, but none could be ruled out."
+}

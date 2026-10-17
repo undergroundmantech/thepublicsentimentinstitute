@@ -1,0 +1,503 @@
+{
+ "state": "DE",
+ "chamber": "house",
+ "sources": [
+  "https://elections.delaware.gov/candidates/candidatelist/genl_fcddt_2026.html"
+ ],
+ "as_of": "2026-10-17",
+ "complete": true,
+ "caveat": "Official Delaware Department of Elections general election candidate list, updated 2026-10-15.",
+ "districts": [
+  {
+   "d": "1",
+   "seats": 1,
+   "dem": [
+    "Nnamdi O. Chukwuocha"
+   ],
+   "gop": [
+    "Lisa McInnis"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "2",
+   "seats": 1,
+   "dem": [
+    "Michelle H. Booker"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "3",
+   "seats": 1,
+   "dem": [
+    "Branden Fletcher-Dominguez"
+   ],
+   "gop": [
+    "Shawn L. Dottery"
+   ],
+   "others": [
+    {
+     "name": "Dexter Bland",
+     "party": "O"
+    }
+   ],
+   "withdrawn": [],
+   "note": "Bland on Independent Party of Delaware line"
+  },
+  {
+   "d": "4",
+   "seats": 1,
+   "dem": [
+    "Gregg Lindner"
+   ],
+   "gop": [
+    "Dan Zitofsky"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "5",
+   "seats": 1,
+   "dem": [
+    "Kendra Johnson"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "6",
+   "seats": 1,
+   "dem": [
+    "Rachel Krantz"
+   ],
+   "gop": [
+    "Tanya Hettler"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "7",
+   "seats": 1,
+   "dem": [
+    "Larry Lambert"
+   ],
+   "gop": [
+    "Shane Stoneman"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "8",
+   "seats": 1,
+   "dem": [
+    "Sherae'a Moore"
+   ],
+   "gop": [
+    "Gary Taylor"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "9",
+   "seats": 1,
+   "dem": [
+    "Ayanna Khan-Flowers"
+   ],
+   "gop": [
+    "Jamar Money"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "10",
+   "seats": 1,
+   "dem": [
+    "Melanie Ross Levin"
+   ],
+   "gop": [
+    "Dolores Dunleavy"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "11",
+   "seats": 1,
+   "dem": [
+    "Tori Parker"
+   ],
+   "gop": [
+    "Jeffrey N. Spiegelman"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "12",
+   "seats": 1,
+   "dem": [
+    "Krista Griffith"
+   ],
+   "gop": [
+    "Steve Pickering"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "13",
+   "seats": 1,
+   "dem": [
+    "DeShanna U. Neal"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "14",
+   "seats": 1,
+   "dem": [
+    "Claire Snyder-Hall"
+   ],
+   "gop": [
+    "Mike Simpler"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "15",
+   "seats": 1,
+   "dem": [
+    "Kamela T. Smith"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "16",
+   "seats": 1,
+   "dem": [
+    "Pamela Salaam"
+   ],
+   "gop": [
+    "Enala A. Mwashitete"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "17",
+   "seats": 1,
+   "dem": [
+    "Melissa Minor Brown"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "18",
+   "seats": 1,
+   "dem": [
+    "Sophie Phillips"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "19",
+   "seats": 1,
+   "dem": [
+    "Kim Williams"
+   ],
+   "gop": [
+    "Janyce Colmery"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "20",
+   "seats": 1,
+   "dem": [
+    "Alonna Berry"
+   ],
+   "gop": [
+    "Gene Dvornick"
+   ],
+   "others": [],
+   "withdrawn": [
+    {
+     "name": "Nikki Miller",
+     "party": "R",
+     "note": "withdrew 2/20/2026"
+    },
+    {
+     "name": "Dan Poliseno",
+     "party": "R",
+     "note": "withdrew 3/16/2026"
+    }
+   ]
+  },
+  {
+   "d": "21",
+   "seats": 1,
+   "dem": [
+    "Frank Burns"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "22",
+   "seats": 1,
+   "dem": [
+    "Alex Green"
+   ],
+   "gop": [
+    "Mike Smith"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "23",
+   "seats": 1,
+   "dem": [
+    "Dave Redlawsk"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "24",
+   "seats": 1,
+   "dem": [
+    "Ed Osienski"
+   ],
+   "gop": [
+    "Stephen P. Ondich"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "25",
+   "seats": 1,
+   "dem": [
+    "Cyndie Romer"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "26",
+   "seats": 1,
+   "dem": [
+    "Madinah Wilson-Anton"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "27",
+   "seats": 1,
+   "dem": [
+    "Eric Morrison"
+   ],
+   "gop": [
+    "Mary Kubin"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "28",
+   "seats": 1,
+   "dem": [
+    "Tyeisha Grier"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "29",
+   "seats": 1,
+   "dem": [
+    "William Bush"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "30",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Wm Shannon Morris"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Democrat"
+  },
+  {
+   "d": "31",
+   "seats": 1,
+   "dem": [
+    "Sean M. Lynn"
+   ],
+   "gop": [
+    "Anton Brogden"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "32",
+   "seats": 1,
+   "dem": [
+    "Kerri Evelyn Harris"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "33",
+   "seats": 1,
+   "dem": [
+    "Joshua Pennington"
+   ],
+   "gop": [
+    "Morgan Hudson"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "34",
+   "seats": 1,
+   "dem": [
+    "Annie Norman"
+   ],
+   "gop": [
+    "Lyndon D. Yearick"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "35",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Jesse R. Vanderwende"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Democrat"
+  },
+  {
+   "d": "36",
+   "seats": 1,
+   "dem": [
+    "Andrew Gorlich"
+   ],
+   "gop": [
+    "Bryan William Shupe"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "37",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Valerie Jones Giltner"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Democrat"
+  },
+  {
+   "d": "38",
+   "seats": 1,
+   "dem": [
+    "Maureen Madden"
+   ],
+   "gop": [
+    "Carlie Carey"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "39",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Daniel B. Short"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Democrat"
+  },
+  {
+   "d": "40",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Timothy Dale Dukes"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Democrat"
+  },
+  {
+   "d": "41",
+   "seats": 1,
+   "dem": [
+    "Ryan Stuckey"
+   ],
+   "gop": [
+    "John Atkins"
+   ],
+   "others": [],
+   "withdrawn": []
+  }
+ ]
+}

@@ -1,0 +1,308 @@
+{
+ "state": "ND",
+ "chamber": "senate",
+ "sources": [
+  "https://northdakotamonitor.com/2026/04/06/north-dakota-sees-more-contested-races-for-2026-legislative-elections/",
+  "https://northdakotamonitor.com/2026/06/10/6-incumbent-north-dakota-lawmakers-ousted-in-gop-primary/",
+  "https://en.wikipedia.org/wiki/2026_North_Dakota_Senate_election"
+ ],
+ "as_of": "2026-10-17",
+ "complete": false,
+ "districts": [
+  {
+   "d": "1",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Brad Bekkedahl"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "3",
+   "seats": 1,
+   "dem": [
+    "Michael Thiesen"
+   ],
+   "gop": [
+    "Bob Paulson"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Thiesen party per ND Monitor list"
+  },
+  {
+   "d": "5",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Jay Fisher"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Open seat"
+  },
+  {
+   "d": "7",
+   "seats": 1,
+   "dem": [
+    "Kevin Horneman"
+   ],
+   "gop": [
+    "Michelle Axtman"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "INFERRED R nominee; incumbent Axtman faced Jerri Hopfauf in primary, result not found, Axtman not among ousted incumbents"
+  },
+  {
+   "d": "9",
+   "seats": 1,
+   "dem": [
+    "Jayme Davis"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "Incumbent D Richard Marcellais lost primary to Rep. Jayme Davis; no Republican"
+  },
+  {
+   "d": "11",
+   "seats": 1,
+   "dem": [
+    "Tim Mathern"
+   ],
+   "gop": [
+    "Christine O'Riley"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "O'Riley party per ND Monitor list"
+  },
+  {
+   "d": "13",
+   "seats": 1,
+   "dem": [
+    "Landis Larson"
+   ],
+   "gop": [
+    "Judy Lee"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Lee beat Philip Sallberg in R primary"
+  },
+  {
+   "d": "15",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Kristin Kenner"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Incumbent R Kent Weston lost primary to Kenner; no Democrat"
+  },
+  {
+   "d": "17",
+   "seats": 1,
+   "dem": [
+    "Katie Benton"
+   ],
+   "gop": [
+    "Jonathan Sickler"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "19",
+   "seats": 1,
+   "dem": [
+    "Jefferey E. Hermanson"
+   ],
+   "gop": [
+    "Janne Myrdal"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "21",
+   "seats": 1,
+   "dem": [
+    "Mary Schneider"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "Open seat; no Republican"
+  },
+  {
+   "d": "23",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Todd Beard"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "25",
+   "seats": 1,
+   "dem": [
+    "Bob Heitkamp"
+   ],
+   "gop": [
+    "Larry Luick"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "27",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Kristin Roers"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "29",
+   "seats": 1,
+   "dem": [
+    "John Kelly"
+   ],
+   "gop": [
+    "Terry Wanzek"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "31",
+   "seats": 1,
+   "dem": [
+    "Kelly Spilman"
+   ],
+   "gop": [
+    "Donald Schaible"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "INFERRED R nominee; incumbent Schaible faced Mary Graner in primary, result not found, Schaible not among ousted incumbents"
+  },
+  {
+   "d": "33",
+   "seats": 1,
+   "dem": [
+    "Signe Snortland"
+   ],
+   "gop": [
+    "Keith Boehm"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "35",
+   "seats": 1,
+   "dem": [
+    "Dale Pittman"
+   ],
+   "gop": [
+    "Sean D. Cleary"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "37",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Dean Rummel"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "39",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Greg Kessel"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "41",
+   "seats": 1,
+   "dem": [
+    "Nyamal Dei"
+   ],
+   "gop": [
+    "Kyle Davison"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "43",
+   "seats": 1,
+   "dem": [
+    "Mary K. Adams"
+   ],
+   "gop": [
+    "Jeff Barta"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "45",
+   "seats": 1,
+   "dem": [
+    "Dan Mitchell"
+   ],
+   "gop": [
+    "Ronald Sorvaag"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "47",
+   "seats": 1,
+   "dem": [
+    "Bill Patrie"
+   ],
+   "gop": [
+    "Michael Dwyer"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  }
+ ],
+ "gap": "Official ND certified general list could not be read. Built from ND Monitor filed candidate list plus primary results. R nominees in districts 7 and 31 are inferred, not confirmed: incumbents Axtman and Schaible had primary challengers, no results found, and ND Monitor lists six ousted incumbents that do not include them. No independents found in these sources but none could be ruled out."
+}

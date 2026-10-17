@@ -1,0 +1,460 @@
+{
+ "state": "AZ",
+ "chamber": "house",
+ "sources": [
+  "https://en.wikipedia.org/wiki/2026_Arizona_House_of_Representatives_election",
+  "https://ballotpedia.org/Arizona_House_of_Representatives_elections,_2026",
+  "https://azsos.gov/sites/default/files/docs/2026-General-Write-In-and-Withdrawn-Candidate-List-0909.pdf",
+  "https://ivoterguide.com/all-in-state/az"
+ ],
+ "as_of": "2026-10-17",
+ "complete": true,
+ "districts": [
+  {
+   "d": "1",
+   "seats": 2,
+   "dem": [
+    "Sandy Zalecki"
+   ],
+   "gop": [
+    "Selina Bliss",
+    "Quang Nguyen"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Libertarian Charles Eakins is a general election write-in only"
+  },
+  {
+   "d": "2",
+   "seats": 2,
+   "dem": [
+    "Stephanie Simacek"
+   ],
+   "gop": [
+    "Justin Wilmeth",
+    "Paul Carver Jr."
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Carver won nomination as a primary write-in; only one Democrat for two seats"
+  },
+  {
+   "d": "3",
+   "seats": 2,
+   "dem": [
+    "Julie Gable",
+    "Rick Spargo"
+   ],
+   "gop": [
+    "George Khalaf",
+    "Cody Reim"
+   ],
+   "others": [
+    {
+     "name": "John Skirbst",
+     "party": "O"
+    }
+   ],
+   "withdrawn": [],
+   "note": "Skirbst is No Labels, nominated via a 7 vote primary write-in and listed on iVoterGuide; Alexander Kolodin R running for secretary of state; Jay Schlum lost R primary"
+  },
+  {
+   "d": "4",
+   "seats": 2,
+   "dem": [
+    "Karen Gresham",
+    "Tammy Caputi"
+   ],
+   "gop": [
+    "Matt Gress",
+    "Pamela Carter"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "5",
+   "seats": 2,
+   "dem": [
+    "Sarah Liguori",
+    "Aaron Márquez"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican candidate"
+  },
+  {
+   "d": "6",
+   "seats": 2,
+   "dem": [
+    "Mae Peshlakai",
+    "Ian Teller"
+   ],
+   "gop": [],
+   "others": [
+    {
+     "name": "Brendan Trachsel",
+     "party": "G"
+    }
+   ],
+   "withdrawn": [],
+   "note": "no Republican on ballot; Green Trachsel nominated via primary write-in and is the only challenger; Royce Jenkins R is a general write-in only"
+  },
+  {
+   "d": "7",
+   "seats": 2,
+   "dem": [
+    "Samuel Martin"
+   ],
+   "gop": [
+    "Walt Blackman",
+    "David Cook Sr."
+   ],
+   "others": [
+    {
+     "name": "Richard Grayson",
+     "party": "G"
+    }
+   ],
+   "withdrawn": [],
+   "note": "Green Grayson nominated via primary write-in"
+  },
+  {
+   "d": "8",
+   "seats": 2,
+   "dem": [
+    "Brian Garcia",
+    "Janeen Connolly"
+   ],
+   "gop": [
+    "Donald Hawker"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "9",
+   "seats": 2,
+   "dem": [
+    "Lorena Austin",
+    "Jacob Martinez"
+   ],
+   "gop": [
+    "Bradley Bettencourt"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "10",
+   "seats": 2,
+   "dem": [
+    "Helen Hunter",
+    "Brian Calaway"
+   ],
+   "gop": [
+    "Justin Olson",
+    "James Rogers"
+   ],
+   "others": [
+    {
+     "name": "David Scott",
+     "party": "O"
+    }
+   ],
+   "withdrawn": [],
+   "note": "David Scott is the No Labels Party nominee"
+  },
+  {
+   "d": "11",
+   "seats": 2,
+   "dem": [
+    "Oscar De Los Santos",
+    "Junelle Cavero"
+   ],
+   "gop": [
+    "Joseph Charles Dailey",
+    "Cesar Aleman"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "12",
+   "seats": 2,
+   "dem": [
+    "Stacey Travers",
+    "Armando Montero"
+   ],
+   "gop": [
+    "David Richardson"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "13",
+   "seats": 2,
+   "dem": [
+    "Racquel Armstrong",
+    "Jacob Weinberg"
+   ],
+   "gop": [
+    "Kevin Hartke",
+    "Janet Weninger"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "14",
+   "seats": 2,
+   "dem": [
+    "Mary Rose"
+   ],
+   "gop": [
+    "Tyler Farnsworth",
+    "Laurin Hendrix"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "incumbent Khyl Powell R dropped reelection bid for health reasons before primary"
+  },
+  {
+   "d": "15",
+   "seats": 2,
+   "dem": [],
+   "gop": [
+    "Neal Carter",
+    "Michael Way"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Democratic candidate"
+  },
+  {
+   "d": "16",
+   "seats": 2,
+   "dem": [
+    "Julia Gusse"
+   ],
+   "gop": [
+    "Chris Lopez",
+    "Teresa Martinez"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "17",
+   "seats": 2,
+   "dem": [
+    "Hollace Lyon",
+    "Kevin Volk"
+   ],
+   "gop": [
+    "John Winchester",
+    "Rachel Keshel"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Rachel Keshel is listed as incumbent; Wikipedia district table shows incumbent as Rachel Jones, likely same person"
+  },
+  {
+   "d": "18",
+   "seats": 2,
+   "dem": [
+    "Nancy Gutierrez",
+    "Chris Mathis"
+   ],
+   "gop": [
+    "Bob Dohse"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "19",
+   "seats": 2,
+   "dem": [
+    "Jackie Anderson",
+    "Aiden Swallow"
+   ],
+   "gop": [
+    "David Gowan",
+    "Lupe Diaz"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Cheryl Caswell lost R primary; a pre-primary Ballotpedia snapshot showed her as no party preference in the general table, unconfirmed, excluded"
+  },
+  {
+   "d": "20",
+   "seats": 2,
+   "dem": [
+    "Sally Ann Gonzales",
+    "Betty Villegas"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican on ballot; R write-in Katherine Weasel 204 primary votes is not listed on the general ballot guide"
+  },
+  {
+   "d": "21",
+   "seats": 2,
+   "dem": [
+    "Consuelo Hernandez",
+    "Miranda Lopez"
+   ],
+   "gop": [
+    "Christopher Kibbey"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "incumbent Stephanie Stahl Hamilton D lost primary"
+  },
+  {
+   "d": "22",
+   "seats": 2,
+   "dem": [
+    "Elda Luna-Nájera",
+    "Betsy Munoz"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican on ballot; R primary write-ins Blaine Griffin Sr. and Diana Jones are not listed on the general ballot guide"
+  },
+  {
+   "d": "23",
+   "seats": 2,
+   "dem": [
+    "Mariana Sandoval",
+    "Emilia Cortez"
+   ],
+   "gop": [
+    "Michele Peña",
+    "Gary Snyder"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "24",
+   "seats": 2,
+   "dem": [
+    "Alberto Flores",
+    "Lisbeth Arescurenaga"
+   ],
+   "gop": [
+    "Delores McLaughlin"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "incumbent Lydia Hernandez D lost primary"
+  },
+  {
+   "d": "25",
+   "seats": 2,
+   "dem": [
+    "Tiffany Byrne"
+   ],
+   "gop": [
+    "Michael Carbone",
+    "Nick Kupper"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "26",
+   "seats": 2,
+   "dem": [
+    "Cesar Aguilar",
+    "Quantá Crews"
+   ],
+   "gop": [
+    "Frank Roberts",
+    "Jonathan McKenna"
+   ],
+   "others": [
+    {
+     "name": "Hector Gomez",
+     "party": "G"
+    }
+   ],
+   "withdrawn": [],
+   "note": "Green Hector Gomez is the Green nominee"
+  },
+  {
+   "d": "27",
+   "seats": 2,
+   "dem": [
+    "Deborah Howard"
+   ],
+   "gop": [
+    "Lisa Fink",
+    "Tony Rivero"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "28",
+   "seats": 2,
+   "dem": [
+    "Barbara Fike",
+    "Marc Graham"
+   ],
+   "gop": [
+    "Beverly Pingerelli",
+    "David Livingston"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "29",
+   "seats": 2,
+   "dem": [
+    "Christine Scianna"
+   ],
+   "gop": [
+    "Steve Montenegro",
+    "James Taylor"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "30",
+   "seats": 2,
+   "dem": [
+    "Brian McMahan"
+   ],
+   "gop": [
+    "Mike Gannuscio",
+    "David Rose"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  }
+ ],
+ "method": "Nominees from July 21 2026 primary results on Wikipedia, cross checked against the iVoterGuide Arizona general ballot list dated Oct 16 2026, which settled write-in nominees; Ballotpedia snapshot fetched was pre-primary; AZ SOS general withdrawn list of 9/9/2026 shows no legislative withdrawals"
+}

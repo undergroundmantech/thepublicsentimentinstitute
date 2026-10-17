@@ -1,0 +1,254 @@
+{
+ "state": "VT",
+ "chamber": "senate",
+ "sources": [
+  "https://vtdigger.org/2026-general-election-guide/",
+  "https://theballotbrief.com/state/vermont",
+  "https://theballotbrief.com/state/vermont/rutland-county",
+  "https://theballotbrief.com/state/vermont/chittenden-county"
+ ],
+ "as_of": "2026-10-17",
+ "complete": true,
+ "method_note": "VTDigger county guides cross checked with The Ballot Brief for fusion labels.",
+ "districts": [
+  {
+   "d": "Addison",
+   "seats": 2,
+   "dem": [
+    "Ruth Hardy",
+    "Hannah Sessions"
+   ],
+   "gop": [
+    "Steven Heffernan",
+    "Andrew Klein"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Bennington",
+   "seats": 2,
+   "dem": [
+    "Seth Bongartz",
+    "Robert F. Plunkett"
+   ],
+   "gop": [
+    "Lawrence \"Spike\" Whitmire",
+    "Josh R. Williams"
+   ],
+   "others": [
+    {
+     "name": "Rachel Shaw",
+     "party": "P"
+    }
+   ],
+   "withdrawn": [],
+   "note": "Progressive Rachel Shaw also on the ballot."
+  },
+  {
+   "d": "Caledonia",
+   "seats": 1,
+   "dem": [
+    "David M. Roth"
+   ],
+   "gop": [
+    "Scott L. Beck"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Chittenden-Central",
+   "seats": 3,
+   "dem": [
+    "Nikhil Goyal",
+    "Martine Larocque Gulick",
+    "Tanya Vyhovsky"
+   ],
+   "gop": [
+    "Louis \"Louie\" Manno"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Nikhil Goyal is Democratic/Progressive and Tanya Vyhovsky is Progressive/Democratic."
+  },
+  {
+   "d": "Chittenden-North",
+   "seats": 1,
+   "dem": [
+    "Irene Wrenner"
+   ],
+   "gop": [
+    "Ashley R. Bartley"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Chittenden-Southeast",
+   "seats": 3,
+   "dem": [
+    "Thomas Chittenden",
+    "Kesha Ram Hinsdale",
+    "Virginia \"Ginny\" Lyons"
+   ],
+   "gop": [
+    "Bruce Roy",
+    "Javen Sears",
+    "Rohan St Marthe"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Essex",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Russ Ingalls"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Russ Ingalls (R) is also the Democratic nominee, Republican/Democratic; unopposed."
+  },
+  {
+   "d": "Franklin",
+   "seats": 2,
+   "dem": [
+    "Alexander Bobella",
+    "A. Gregory Rainville"
+   ],
+   "gop": [
+    "Randy Brock",
+    "Robert W. Norris"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Grand Isle",
+   "seats": 1,
+   "dem": [
+    "Kim Gleason"
+   ],
+   "gop": [
+    "Pat Brennan"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Lamoille",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Richard A. Westman"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Richard Westman (R) is also the Democratic nominee, Republican/Democratic; unopposed."
+  },
+  {
+   "d": "Orange",
+   "seats": 1,
+   "dem": [
+    "Monique Priestley"
+   ],
+   "gop": [
+    "John K. Benson"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Monique Priestley is Democratic/Progressive."
+  },
+  {
+   "d": "Orleans",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "John Morley III"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "John Morley III (R) is also the Democratic nominee, Republican/Democratic; unopposed."
+  },
+  {
+   "d": "Rutland",
+   "seats": 3,
+   "dem": [],
+   "gop": [
+    "Brian \"Bc\" Collamore",
+    "David H. Weeks",
+    "Terry K. Williams"
+   ],
+   "others": [
+    {
+     "name": "Dave Wolk",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "All three Republicans are also the Democratic nominees, Republican/Democratic; independent Dave Wolk is the only challenger."
+  },
+  {
+   "d": "Washington",
+   "seats": 3,
+   "dem": [
+    "Ann Cummings",
+    "Andrew Perchlik",
+    "Anne Watson"
+   ],
+   "gop": [
+    "Rob Laclair",
+    "Christopher A. Neddo",
+    "Peter Schmeeckle"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Andrew Perchlik and Anne Watson are Democratic/Progressive."
+  },
+  {
+   "d": "Windham",
+   "seats": 2,
+   "dem": [
+    "Wendy K. Harrison",
+    "Nader Hashim"
+   ],
+   "gop": [
+    "Dale L. Gassett",
+    "Rusty E. Sage"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Windsor",
+   "seats": 3,
+   "dem": [
+    "Elizabeth Burrows",
+    "Joe Major",
+    "Rebecca White"
+   ],
+   "gop": [
+    "Jonathan Gleason",
+    "Andrea Murray",
+    "Jack Williams"
+   ],
+   "others": [
+    {
+     "name": "Joe Izzo",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "Elizabeth Burrows is Democratic/Progressive; independent Joe Izzo also on the ballot."
+  }
+ ]
+}

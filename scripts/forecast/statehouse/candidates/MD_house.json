@@ -1,0 +1,984 @@
+{
+ "state": "MD",
+ "chamber": "house",
+ "sources": [
+  "https://elections.maryland.gov/elections/2026/General_candidates/2026_GG_statewide_candidatelist.html",
+  "https://elections.maryland.gov/elections/2026/primary_results/gen_results_2026_6.html",
+  "https://elections.maryland.gov/elections/2026/primary_results/gen_results_2026_6_50.html"
+ ],
+ "as_of": "2026-10-17",
+ "complete": true,
+ "caveat": "Districts 1A to 9A come from the official SBE general election candidate list, including minor party, unaffiliated and declined entries. The fetched list was cut off after 9A, so districts 9B to 47B use the official June 23 primary winners from SBE results pages: post primary withdrawals or replacements and any Libertarian, Green, Working Class or unaffiliated candidates in 9B to 47B are not captured.",
+ "districts": [
+  {
+   "d": "1A",
+   "seats": 1,
+   "dem": [
+    "Jason M. Jobe"
+   ],
+   "gop": [
+    "Dan Duggan"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "1B",
+   "seats": 1,
+   "dem": [
+    "Rhiannon C. Brown"
+   ],
+   "gop": [
+    "Jason C. Buckel"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "1C",
+   "seats": 1,
+   "dem": [
+    "Seth Funk"
+   ],
+   "gop": [
+    "Terry Baker"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "2A",
+   "seats": 2,
+   "dem": [
+    "John D. Leonard",
+    "Brandon Thompson"
+   ],
+   "gop": [
+    "William Valentine",
+    "William J. Wivell"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "2B",
+   "seats": 1,
+   "dem": [
+    "Matthew J. Schindler"
+   ],
+   "gop": [
+    "Brenda J. Thiam"
+   ],
+   "others": [],
+   "withdrawn": [
+    {
+     "name": "Sean Flaherty",
+     "party": "R",
+     "note": "declined nomination 07/31/2026"
+    }
+   ]
+  },
+  {
+   "d": "3",
+   "seats": 3,
+   "dem": [
+    "Kris Fair",
+    "Ken Kerr",
+    "Karen Simpson"
+   ],
+   "gop": [
+    "Angela McIntosh"
+   ],
+   "others": [],
+   "withdrawn": [
+    {
+     "name": "Ashley Nieves",
+     "party": "R",
+     "note": "declined nomination 08/03/2026"
+    }
+   ]
+  },
+  {
+   "d": "4",
+   "seats": 3,
+   "dem": [
+    "Jerry Donald",
+    "Andrew Duck",
+    "Alleria Stanley"
+   ],
+   "gop": [
+    "Jason E. Keckler",
+    "April Fleming Miller",
+    "Jesse T. Pippy"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "5",
+   "seats": 3,
+   "dem": [
+    "Dayana Bergman",
+    "Alison Rudolph",
+    "Courtney Alexa Welch"
+   ],
+   "gop": [
+    "April R. Rose",
+    "Chris Tomlinson",
+    "Steve Whisler"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "6",
+   "seats": 3,
+   "dem": [
+    "Artus W. Huffman",
+    "Megan Ann Mioduszewski",
+    "Rayneika Robinson"
+   ],
+   "gop": [
+    "Robin L. Grammer",
+    "Bob Long",
+    "Ric Metzgar"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "unaffiliated Brett Shepherd failed to submit required signatures 08/13/2026, not on ballot"
+  },
+  {
+   "d": "7A",
+   "seats": 2,
+   "dem": [
+    "Ly Xinzhen Brown",
+    "Satish Chapagain"
+   ],
+   "gop": [
+    "Ryan Nawrocki",
+    "Kathy Szeliga"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "7B",
+   "seats": 1,
+   "dem": [
+    "Candace Hart"
+   ],
+   "gop": [
+    "Lauren Arikan"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "8",
+   "seats": 3,
+   "dem": [
+    "Nick Allen",
+    "Harry Bhandari",
+    "Kim L. Ross"
+   ],
+   "gop": [
+    "Brian A. Campbell",
+    "Glen Geelhaar",
+    "Steven J. Riemer"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "9A",
+   "seats": 2,
+   "dem": [
+    "Chao Wu",
+    "Natalie Ziegler"
+   ],
+   "gop": [
+    "Fitzgerald Mofor"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "9B",
+   "seats": 1,
+   "dem": [
+    "Courtney Watson"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "from primary results; no Republican"
+  },
+  {
+   "d": "10",
+   "seats": 3,
+   "dem": [
+    "Robin Harvey",
+    "N. Scott Phillips",
+    "Jennifer White Holland"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "from primary results; no Republican"
+  },
+  {
+   "d": "11A",
+   "seats": 1,
+   "dem": [
+    "Cheryl E. Pasteur"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "from primary results; no Republican"
+  },
+  {
+   "d": "11B",
+   "seats": 2,
+   "dem": [
+    "Jon S. Cardin",
+    "Dana Stein"
+   ],
+   "gop": [
+    "John C. Gordon"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "from primary results"
+  },
+  {
+   "d": "12A",
+   "seats": 2,
+   "dem": [
+    "Jessica Feldmark",
+    "Terri Hill"
+   ],
+   "gop": [
+    "Frank Glover"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "from primary results"
+  },
+  {
+   "d": "12B",
+   "seats": 1,
+   "dem": [
+    "Gary Simmons"
+   ],
+   "gop": [
+    "Blair L. Brannock"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "from primary results"
+  },
+  {
+   "d": "13",
+   "seats": 3,
+   "dem": [
+    "Amy Brooks",
+    "Pam Lanman Guzzone",
+    "Gabriel Maximilian Moreno"
+   ],
+   "gop": [
+    "Mark Fisher"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "from primary results"
+  },
+  {
+   "d": "14",
+   "seats": 3,
+   "dem": [
+    "Anne R. Kaiser",
+    "Bernice Mireku-North",
+    "Matt Post"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "from primary results; no Republican"
+  },
+  {
+   "d": "15",
+   "seats": 3,
+   "dem": [
+    "Linda Foley",
+    "David V. Fraser-Hidalgo",
+    "Lily Qi"
+   ],
+   "gop": [
+    "Peter Chan"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "from primary results"
+  },
+  {
+   "d": "16",
+   "seats": 3,
+   "dem": [
+    "Marc Korman",
+    "Sarah Wolek",
+    "Teresa Saavedra Woorman"
+   ],
+   "gop": [
+    "Ann Guthrie Hingston"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "from primary results"
+  },
+  {
+   "d": "17",
+   "seats": 3,
+   "dem": [
+    "Julie Palakovich Carr",
+    "Ryan Spiegel",
+    "Joe Vogel"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "from primary results; no Republican"
+  },
+  {
+   "d": "18",
+   "seats": 3,
+   "dem": [
+    "Aaron M. Kaufman",
+    "Emily Shetty",
+    "Jared Solomon"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "from primary results; no Republican"
+  },
+  {
+   "d": "19",
+   "seats": 3,
+   "dem": [
+    "Charlotte Crutchfield",
+    "Vaughn Stewart",
+    "Christa Tichy"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "from primary results; no Republican"
+  },
+  {
+   "d": "20",
+   "seats": 3,
+   "dem": [
+    "Lorig Charkoudian",
+    "David Moon",
+    "Jheanelle K. Wilkins"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "from primary results; no Republican"
+  },
+  {
+   "d": "21",
+   "seats": 3,
+   "dem": [
+    "Ben Barnes",
+    "Mary A. Lehman",
+    "Joseline A. Peña-Melnyk"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "from primary results; no Republican"
+  },
+  {
+   "d": "22",
+   "seats": 3,
+   "dem": [
+    "Tracy Gant",
+    "Ashanti Martinez",
+    "Molly McKee-Seabrook"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "from primary results; no Republican"
+  },
+  {
+   "d": "23",
+   "seats": 3,
+   "dem": [
+    "Marvin E. Holmes, Jr.",
+    "Keenon James",
+    "Kym Taylor"
+   ],
+   "gop": [
+    "Michael Riker",
+    "Kimberly Simmons Robinson"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "from primary results"
+  },
+  {
+   "d": "24",
+   "seats": 3,
+   "dem": [
+    "Derrick L. Coley",
+    "Andrea Fletcher Harrison",
+    "LaTasha R. Ward"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "from primary results; no Republican"
+  },
+  {
+   "d": "25",
+   "seats": 3,
+   "dem": [
+    "Kent Roberson",
+    "Denise Roberts",
+    "Karen Toles"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "from primary results; no Republican"
+  },
+  {
+   "d": "26",
+   "seats": 3,
+   "dem": [
+    "Veronica Turner",
+    "Kriselda Valderrama",
+    "Jamila J. Woods"
+   ],
+   "gop": [
+    "JoAnn Y. Fisher",
+    "Ike Puzon"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "from primary results"
+  },
+  {
+   "d": "27A",
+   "seats": 1,
+   "dem": [
+    "Darrell C. Odom, Sr."
+   ],
+   "gop": [
+    "Jim Crawford"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "from primary results"
+  },
+  {
+   "d": "27B",
+   "seats": 1,
+   "dem": [
+    "Jeffrie E. Long, Jr."
+   ],
+   "gop": [
+    "Dan L. Thomas"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "from primary results"
+  },
+  {
+   "d": "27C",
+   "seats": 1,
+   "dem": [
+    "Jennifer M. Davidson"
+   ],
+   "gop": [
+    "Mark N. Fisher"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "from primary results"
+  },
+  {
+   "d": "28",
+   "seats": 3,
+   "dem": [
+    "Abena Affum-McAllister",
+    "Debra Davis",
+    "Edith J. Patterson"
+   ],
+   "gop": [
+    "James Emerson Ashburn",
+    "Winfield W. Clark, Jr."
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "from primary results"
+  },
+  {
+   "d": "29A",
+   "seats": 1,
+   "dem": [
+    "Jennifer Lynn Clancy"
+   ],
+   "gop": [
+    "Matt Morgan"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "from primary results"
+  },
+  {
+   "d": "29B",
+   "seats": 1,
+   "dem": [
+    "Adrianne M. Mathis"
+   ],
+   "gop": [
+    "BJ Hall"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "from primary results"
+  },
+  {
+   "d": "29C",
+   "seats": 1,
+   "dem": [
+    "Shaara Watts"
+   ],
+   "gop": [
+    "Todd B. Morgan"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "from primary results"
+  },
+  {
+   "d": "30A",
+   "seats": 2,
+   "dem": [
+    "Dylan Behler",
+    "Dana Jones"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "from primary results; no Republican"
+  },
+  {
+   "d": "30B",
+   "seats": 1,
+   "dem": [
+    "Matt Johnston"
+   ],
+   "gop": [
+    "Seth Howard"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "from primary results"
+  },
+  {
+   "d": "31",
+   "seats": 3,
+   "dem": [
+    "Joan Barone Cole",
+    "Heidi Buchanan Schmidt",
+    "Ryan Kelly Shaban"
+   ],
+   "gop": [
+    "LaToya Marie Caldwell-Nkongolo",
+    "Brian A. Chisholm",
+    "Mike Jacobs"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "from primary results"
+  },
+  {
+   "d": "32",
+   "seats": 3,
+   "dem": [
+    "J. Sandy Bartlett",
+    "Spencer F. Dixon",
+    "Mike Rogers"
+   ],
+   "gop": [
+    "Colin McEvers",
+    "Mary Phelps",
+    "Marcus Damon Snipes, Jr."
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "from primary results"
+  },
+  {
+   "d": "33A",
+   "seats": 1,
+   "dem": [
+    "Andrew C. Pruski"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "from primary results; no Republican"
+  },
+  {
+   "d": "33B",
+   "seats": 1,
+   "dem": [
+    "Chuck Cook"
+   ],
+   "gop": [
+    "Stuart M. Schmidt, Jr."
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "from primary results"
+  },
+  {
+   "d": "33C",
+   "seats": 1,
+   "dem": [
+    "Heather A. Bagnall"
+   ],
+   "gop": [
+    "Kristin M. Norris"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "from primary results"
+  },
+  {
+   "d": "34A",
+   "seats": 2,
+   "dem": [
+    "Andre V. Johnson, Jr.",
+    "Steve Johnson"
+   ],
+   "gop": [
+    "Elliott Joseph Herneker"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "from primary results"
+  },
+  {
+   "d": "34B",
+   "seats": 1,
+   "dem": [
+    "Anthony Lyon"
+   ],
+   "gop": [
+    "Jake Taylor"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "from primary results"
+  },
+  {
+   "d": "35A",
+   "seats": 2,
+   "dem": [
+    "Gregory V. Anderson",
+    "Michael A. Eckels, Jr."
+   ],
+   "gop": [
+    "Mike Griffith",
+    "Teresa Reilly"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "from primary results"
+  },
+  {
+   "d": "35B",
+   "seats": 1,
+   "dem": [
+    "Blessing T. Oluwadare"
+   ],
+   "gop": [
+    "Derek J. Howell"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "from primary results"
+  },
+  {
+   "d": "36",
+   "seats": 3,
+   "dem": [
+    "Nevin Crouse",
+    "Michelle Ravert",
+    "Crystal Woodward"
+   ],
+   "gop": [
+    "Jeff Ghrist",
+    "Jay A. Jacobs",
+    "Steve Arentz"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "from primary results; one delegate per county residency rule"
+  },
+  {
+   "d": "37A",
+   "seats": 1,
+   "dem": [
+    "Sheree Sample-Hughes"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "from primary results; no Republican"
+  },
+  {
+   "d": "37B",
+   "seats": 2,
+   "dem": [
+    "Michele W. Johnson",
+    "Marco Antonio Garcia"
+   ],
+   "gop": [
+    "Tom Hutchinson",
+    "Chris Adams"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "from primary results"
+  },
+  {
+   "d": "38A",
+   "seats": 1,
+   "dem": [
+    "Shelley Johnson"
+   ],
+   "gop": [
+    "C. L. Marshall, III"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "from primary results"
+  },
+  {
+   "d": "38B",
+   "seats": 1,
+   "dem": [
+    "Josh Hastings"
+   ],
+   "gop": [
+    "Barry S. Beauchamp"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "from primary results"
+  },
+  {
+   "d": "38C",
+   "seats": 1,
+   "dem": [
+    "Laurie Anne Brittingham"
+   ],
+   "gop": [
+    "Wayne A. Hartman"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "from primary results"
+  },
+  {
+   "d": "39",
+   "seats": 3,
+   "dem": [
+    "Lesley J. Lopez",
+    "Gabriel Acevero",
+    "Greg Wims"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "from primary results; no Republican"
+  },
+  {
+   "d": "40",
+   "seats": 3,
+   "dem": [
+    "Marlon D. Amprey",
+    "Melissa Wells",
+    "Tiffany Welch"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "from primary results; no Republican"
+  },
+  {
+   "d": "41",
+   "seats": 3,
+   "dem": [
+    "S. I. Sandy Rosenberg",
+    "Sean A. Stinnett",
+    "Ryan Turner"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "from primary results; no Republican"
+  },
+  {
+   "d": "42A",
+   "seats": 1,
+   "dem": [
+    "Jyoti Mohan"
+   ],
+   "gop": [
+    "Charles Edward Murphy, III"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "from primary results"
+  },
+  {
+   "d": "42B",
+   "seats": 1,
+   "dem": [
+    "Michele Guyton"
+   ],
+   "gop": [
+    "Jeffry K. McDonald"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "from primary results"
+  },
+  {
+   "d": "42C",
+   "seats": 1,
+   "dem": [
+    "Corynne Courpas"
+   ],
+   "gop": [
+    "Steve Patten"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "from primary results"
+  },
+  {
+   "d": "43A",
+   "seats": 2,
+   "dem": [
+    "Regina T. Boyce",
+    "Elizabeth Embry"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "from primary results; no Republican"
+  },
+  {
+   "d": "43B",
+   "seats": 1,
+   "dem": [
+    "Cathi Forbes"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "from primary results; no Republican"
+  },
+  {
+   "d": "44A",
+   "seats": 1,
+   "dem": [
+    "Eric Ebersole"
+   ],
+   "gop": [
+    "Chuck Linton"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "from primary results"
+  },
+  {
+   "d": "44B",
+   "seats": 2,
+   "dem": [
+    "Aletheia McCaskill",
+    "Sheila Ruth"
+   ],
+   "gop": [
+    "Domonic Martin"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "from primary results"
+  },
+  {
+   "d": "45",
+   "seats": 3,
+   "dem": [
+    "Jackie Addison",
+    "Caylin Young",
+    "Chanel A. Branch"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "from primary results; no Republican"
+  },
+  {
+   "d": "46",
+   "seats": 3,
+   "dem": [
+    "Luke Clippinger",
+    "Mark Edelson",
+    "Robbyn Lewis"
+   ],
+   "gop": [
+    "Jeremy L. Amason"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "confirmed on Baltimore City general ballot"
+  },
+  {
+   "d": "47A",
+   "seats": 2,
+   "dem": [
+    "Robert Julian Ivey",
+    "Diana M. Fennell"
+   ],
+   "gop": [
+    "Fred M. Price, Jr."
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "from primary results"
+  },
+  {
+   "d": "47B",
+   "seats": 1,
+   "dem": [
+    "Deni Taveras"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "from primary results; no Republican"
+  }
+ ]
+}

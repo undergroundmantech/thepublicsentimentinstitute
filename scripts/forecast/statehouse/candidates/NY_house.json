@@ -1,0 +1,1940 @@
+{
+ "state": "NY",
+ "chamber": "house",
+ "sources": [
+  "https://www.chenangocountyny.gov/DocumentCenter/View/7428",
+  "https://www.vote.nyc/sites/default/files/pdf/candidates/2026/9_11_2026%2010_26_11%20AM_General%20Contest%20List%20Web%20Version.pdf",
+  "https://www.ontariocountyny.gov/DocumentCenter/View/64060"
+ ],
+ "as_of": "2026-10-17",
+ "complete": true,
+ "caveat": "Main source is the NYS Board of Elections Amended Certification for the Nov 3 2026 general election dated 2026-10-07, read from a copy hosted by Chenango County; NYC districts 23 to 87 cross checked against the NYC BOE contest list of 2026-09-11. Minor party lines held by a major party nominee are given in the note. A few line assignments in the certification text were ambiguous to the extraction tool.",
+ "districts": [
+  {
+   "d": "1",
+   "seats": 1,
+   "dem": [
+    "Thomas J. Schiavoni"
+   ],
+   "gop": [
+    "Stephen F. Kiely"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Schiavoni also W; Kiely also C"
+  },
+  {
+   "d": "2",
+   "seats": 1,
+   "dem": [
+    "Michael J. Szika"
+   ],
+   "gop": [
+    "Jodi A. Giglio"
+   ],
+   "others": [
+    {
+     "name": "Kimberly Wilder",
+     "party": "O"
+    }
+   ],
+   "withdrawn": [],
+   "note": "Giglio also C; Wilder on Voter Options line"
+  },
+  {
+   "d": "3",
+   "seats": 1,
+   "dem": [
+    "Joshua P. Slaughter"
+   ],
+   "gop": [
+    "Joseph P. De Stefano"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Slaughter also W; De Stefano also C"
+  },
+  {
+   "d": "4",
+   "seats": 1,
+   "dem": [
+    "Rebecca A. Kassay"
+   ],
+   "gop": [
+    "Will Sussman"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Sussman also C"
+  },
+  {
+   "d": "5",
+   "seats": 1,
+   "dem": [
+    "Victoria A. Russell"
+   ],
+   "gop": [
+    "Douglas M. Smith"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Smith also C"
+  },
+  {
+   "d": "6",
+   "seats": 1,
+   "dem": [
+    "Philip R. Ramos"
+   ],
+   "gop": [
+    "Dennis J. Barravecchio"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Ramos also W"
+  },
+  {
+   "d": "7",
+   "seats": 1,
+   "dem": [
+    "Patricia A. Kopp"
+   ],
+   "gop": [
+    "Dawn Marie D. Kuhn"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Kopp also W; Kuhn also C"
+  },
+  {
+   "d": "8",
+   "seats": 1,
+   "dem": [
+    "Lynn M. Trupiano-O'Keefe"
+   ],
+   "gop": [
+    "Michael J. Fitzpatrick"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Fitzpatrick also C"
+  },
+  {
+   "d": "9",
+   "seats": 1,
+   "dem": [
+    "Christopher J. Walis"
+   ],
+   "gop": [
+    "Michael A. Durso"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Durso also C"
+  },
+  {
+   "d": "10",
+   "seats": 1,
+   "dem": [
+    "Steve Stern"
+   ],
+   "gop": [
+    "Tiffany L. LeGrow"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "LeGrow also C"
+  },
+  {
+   "d": "11",
+   "seats": 1,
+   "dem": [
+    "Kwani B. O'Pharrow"
+   ],
+   "gop": [
+    "Joseph R. Cardinale"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Cardinale also C"
+  },
+  {
+   "d": "12",
+   "seats": 1,
+   "dem": [
+    "Craig G. Herskowitz"
+   ],
+   "gop": [
+    "David D. Weber Jr."
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Herskowitz also W; Weber also C"
+  },
+  {
+   "d": "13",
+   "seats": 1,
+   "dem": [
+    "Charles D. Lavine"
+   ],
+   "gop": [
+    "Conner Phillip Dunleavy"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Dunleavy also C"
+  },
+  {
+   "d": "14",
+   "seats": 1,
+   "dem": [
+    "John E. Brooks"
+   ],
+   "gop": [
+    "Shannon R. Fredericks"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Fredericks also C"
+  },
+  {
+   "d": "15",
+   "seats": 1,
+   "dem": [
+    "Dean Tarulli"
+   ],
+   "gop": [
+    "Paolo A. Pironi"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Pironi also C"
+  },
+  {
+   "d": "16",
+   "seats": 1,
+   "dem": [
+    "Kim Keiserman"
+   ],
+   "gop": [
+    "David Hassid"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Hassid also C"
+  },
+  {
+   "d": "17",
+   "seats": 1,
+   "dem": [
+    "Sunita J. Lofters"
+   ],
+   "gop": [
+    "John K. Mikulin"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Mikulin also C"
+  },
+  {
+   "d": "18",
+   "seats": 1,
+   "dem": [
+    "Noah Burroughs"
+   ],
+   "gop": [
+    "Charlene Jackson"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Burroughs also W; Jackson also C"
+  },
+  {
+   "d": "19",
+   "seats": 1,
+   "dem": [
+    "Colleen Connaughton"
+   ],
+   "gop": [
+    "Edward P. Ra"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Ra also C"
+  },
+  {
+   "d": "20",
+   "seats": 1,
+   "dem": [
+    "Meir Fischer"
+   ],
+   "gop": [
+    "Eric Ari Brown"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Brown also C"
+  },
+  {
+   "d": "21",
+   "seats": 1,
+   "dem": [
+    "Judy A. Griffin"
+   ],
+   "gop": [
+    "Irene V. Villacci"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Villacci also C"
+  },
+  {
+   "d": "22",
+   "seats": 1,
+   "dem": [
+    "Michaelle C. Solages"
+   ],
+   "gop": [
+    "Robert G. Inzerillo"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Solages also W; Inzerillo also C"
+  },
+  {
+   "d": "23",
+   "seats": 1,
+   "dem": [
+    "Pesach Osina"
+   ],
+   "gop": [
+    "Thomas P. Sullivan"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Osina also Community First; Sullivan also C and We The People"
+  },
+  {
+   "d": "24",
+   "seats": 1,
+   "dem": [
+    "David I. Weprin"
+   ],
+   "gop": [
+    "Welson Chang"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Chang also Queens United"
+  },
+  {
+   "d": "25",
+   "seats": 1,
+   "dem": [
+    "Nily D. Rozic"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "26",
+   "seats": 1,
+   "dem": [
+    "Edward C. Braunstein"
+   ],
+   "gop": [
+    "Robert J. Speranza"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "27",
+   "seats": 1,
+   "dem": [
+    "Sam Berger"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "Berger also C; no Republican"
+  },
+  {
+   "d": "28",
+   "seats": 1,
+   "dem": [
+    "Andrew D. Hevesi"
+   ],
+   "gop": [],
+   "others": [
+    {
+     "name": "Jonathan Rinaldi",
+     "party": "O"
+    },
+    {
+     "name": "David J. Kemp",
+     "party": "O"
+    }
+   ],
+   "withdrawn": [],
+   "note": "no Republican; Rinaldi on No Kings line, Kemp on 4 Our Immigrants line"
+  },
+  {
+   "d": "29",
+   "seats": 1,
+   "dem": [
+    "Alicia L. Hyndman"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "Hyndman also W; no Republican"
+  },
+  {
+   "d": "30",
+   "seats": 1,
+   "dem": [
+    "Patrick Martinez"
+   ],
+   "gop": [
+    "Brandon P. Castro"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Castro also C, Reform and Arts & Culture"
+  },
+  {
+   "d": "31",
+   "seats": 1,
+   "dem": [
+    "Khaleel M. Anderson"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "Anderson also W; no Republican"
+  },
+  {
+   "d": "32",
+   "seats": 1,
+   "dem": [
+    "Nathaniel Hezekiah III"
+   ],
+   "gop": [],
+   "others": [
+    {
+     "name": "Paul Nichols",
+     "party": "O"
+    }
+   ],
+   "withdrawn": [],
+   "note": "no Republican; Nichols on The Answer line"
+  },
+  {
+   "d": "33",
+   "seats": 1,
+   "dem": [
+    "Clyde Vanel"
+   ],
+   "gop": [],
+   "others": [
+    {
+     "name": "Oster Bryan",
+     "party": "W"
+    }
+   ],
+   "withdrawn": [],
+   "note": "no Republican; WFP nominee is a separate candidate, name order uncertain"
+  },
+  {
+   "d": "34",
+   "seats": 1,
+   "dem": [
+    "Brian Romero"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "Romero also W; no Republican"
+  },
+  {
+   "d": "35",
+   "seats": 1,
+   "dem": [
+    "Larinda C. Hooks"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "Hooks also W; no Republican"
+  },
+  {
+   "d": "36",
+   "seats": 1,
+   "dem": [
+    "Diana C. Moreno"
+   ],
+   "gop": [
+    "Edward Lee"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Moreno also W"
+  },
+  {
+   "d": "37",
+   "seats": 1,
+   "dem": [
+    "Samantha Kattan"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "Kattan also W; no Republican"
+  },
+  {
+   "d": "38",
+   "seats": 1,
+   "dem": [
+    "David Orkin"
+   ],
+   "gop": [
+    "Ruben D. Cruz II"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Orkin also W; Cruz also Queens United"
+  },
+  {
+   "d": "39",
+   "seats": 1,
+   "dem": [
+    "Catalina Cruz"
+   ],
+   "gop": [
+    "Ramses S. Frias"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Cruz also W; Frias also 4 Our Immigrants"
+  },
+  {
+   "d": "40",
+   "seats": 1,
+   "dem": [
+    "Ron Kim"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "Kim also W; no Republican"
+  },
+  {
+   "d": "41",
+   "seats": 1,
+   "dem": [
+    "Kalman Yeger"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "Yeger holds D, R, C and W lines; effectively unopposed"
+  },
+  {
+   "d": "42",
+   "seats": 1,
+   "dem": [
+    "Rodneyse Bichotte"
+   ],
+   "gop": [
+    "Herman G. Hall"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "43",
+   "seats": 1,
+   "dem": [
+    "Brian-Christopher A. Cunningham"
+   ],
+   "gop": [
+    "Anna Shpilkovskaya"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Cunningham also W"
+  },
+  {
+   "d": "44",
+   "seats": 1,
+   "dem": [
+    "Robert C. Carroll"
+   ],
+   "gop": [
+    "Glenn Nocera"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Carroll also W; Nocera also C"
+  },
+  {
+   "d": "45",
+   "seats": 1,
+   "dem": [
+    "Joey Cohen-Saban"
+   ],
+   "gop": [
+    "Michael Novakhov"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Cohen-Saban also Fight Antisemitism line; Novakhov also C"
+  },
+  {
+   "d": "46",
+   "seats": 1,
+   "dem": [
+    "Chris McCreight"
+   ],
+   "gop": [
+    "Alec Brook-Krasny"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "McCreight also W and Affordable & Safe; Brook-Krasny R incumbent also C"
+  },
+  {
+   "d": "47",
+   "seats": 1,
+   "dem": [
+    "William Colton"
+   ],
+   "gop": [
+    "John J. Ricottone"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Ricottone also C and Stop Mamdani"
+  },
+  {
+   "d": "48",
+   "seats": 1,
+   "dem": [
+    "Simcha Eichenstein"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "Eichenstein also C; no Republican"
+  },
+  {
+   "d": "49",
+   "seats": 1,
+   "dem": [
+    "Joyce Xiaoqiong Xie"
+   ],
+   "gop": [
+    "Lester Chang"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Chang also C"
+  },
+  {
+   "d": "50",
+   "seats": 1,
+   "dem": [
+    "Emily Gallagher"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "51",
+   "seats": 1,
+   "dem": [
+    "Marcela Mitaynes"
+   ],
+   "gop": [
+    "Carla Danielson"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Mitaynes also W; Danielson also C"
+  },
+  {
+   "d": "52",
+   "seats": 1,
+   "dem": [
+    "Jo Anne Simon"
+   ],
+   "gop": [
+    "Brett Wynkoop"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Simon also W; Wynkoop also C"
+  },
+  {
+   "d": "53",
+   "seats": 1,
+   "dem": [
+    "Maritza Davila"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "54",
+   "seats": 1,
+   "dem": [
+    "Christian Celeste Tate"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "Tate also W; no Republican"
+  },
+  {
+   "d": "55",
+   "seats": 1,
+   "dem": [
+    "Latrice M. Walker"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "Walker also W; no Republican"
+  },
+  {
+   "d": "56",
+   "seats": 1,
+   "dem": [
+    "Eon Huntley"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "Huntley also W; no Republican"
+  },
+  {
+   "d": "57",
+   "seats": 1,
+   "dem": [
+    "Phara Souffrant Forrest"
+   ],
+   "gop": [
+    "Yolanda Allison"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Souffrant Forrest also W"
+  },
+  {
+   "d": "58",
+   "seats": 1,
+   "dem": [
+    "Monique Chandler-Waterman"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "Chandler-Waterman also W; no Republican"
+  },
+  {
+   "d": "59",
+   "seats": 1,
+   "dem": [
+    "Jaime R. Williams"
+   ],
+   "gop": [],
+   "others": [
+    {
+     "name": "Jibreel Jalloh",
+     "party": "W"
+    }
+   ],
+   "withdrawn": [],
+   "note": "Williams also C; no Republican; WFP nominee is a separate candidate"
+  },
+  {
+   "d": "60",
+   "seats": 1,
+   "dem": [
+    "Nikki Lucas"
+   ],
+   "gop": [
+    "Norman H. Ramsay"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Ramsay also C"
+  },
+  {
+   "d": "61",
+   "seats": 1,
+   "dem": [
+    "Charles D. Fall"
+   ],
+   "gop": [
+    "Casey Marie O'Connor-Manasia"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "62",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Michael W. Reilly Jr."
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Reilly also C; no Democrat"
+  },
+  {
+   "d": "63",
+   "seats": 1,
+   "dem": [
+    "Matthew Mobilia"
+   ],
+   "gop": [
+    "Sam T. Pirozzolo"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Pirozzolo also C"
+  },
+  {
+   "d": "64",
+   "seats": 1,
+   "dem": [
+    "Tim Qorraj"
+   ],
+   "gop": [
+    "Michael Tannousis"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Tannousis also C"
+  },
+  {
+   "d": "65",
+   "seats": 1,
+   "dem": [
+    "Illapa Sairitupac"
+   ],
+   "gop": [
+    "Helen Qiu"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "66",
+   "seats": 1,
+   "dem": [
+    "David Siffert"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "67",
+   "seats": 1,
+   "dem": [
+    "Linda B. Rosenthal"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "Rosenthal also W; no Republican"
+  },
+  {
+   "d": "68",
+   "seats": 1,
+   "dem": [
+    "Diana I. Ayala"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "Ayala also W; no Republican"
+  },
+  {
+   "d": "69",
+   "seats": 1,
+   "dem": [
+    "Eli Northrup"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "Northrup also W; no Republican"
+  },
+  {
+   "d": "70",
+   "seats": 1,
+   "dem": [
+    "Jordan J.G. Wright"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "71",
+   "seats": 1,
+   "dem": [
+    "Al Taylor"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "Taylor also W; no Republican"
+  },
+  {
+   "d": "72",
+   "seats": 1,
+   "dem": [
+    "Manny De Los Santos"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "De Los Santos also W; no Republican"
+  },
+  {
+   "d": "73",
+   "seats": 1,
+   "dem": [
+    "Vanessa Aronson"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "Aronson also W; no Republican"
+  },
+  {
+   "d": "74",
+   "seats": 1,
+   "dem": [
+    "Keith Powers"
+   ],
+   "gop": [
+    "Veronica I. Gonzalez"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Gonzalez also C"
+  },
+  {
+   "d": "75",
+   "seats": 1,
+   "dem": [
+    "Tony Simone"
+   ],
+   "gop": [
+    "Cristina Fontanelli"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Simone also W; Fontanelli also Save NYC"
+  },
+  {
+   "d": "76",
+   "seats": 1,
+   "dem": [
+    "Rebecca A. Seawright"
+   ],
+   "gop": [
+    "Louis Puliafito"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Seawright also W"
+  },
+  {
+   "d": "77",
+   "seats": 1,
+   "dem": [
+    "Landon C. Dais"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "78",
+   "seats": 1,
+   "dem": [
+    "George A. Alvarez"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "Alvarez also W; no Republican"
+  },
+  {
+   "d": "79",
+   "seats": 1,
+   "dem": [
+    "Chantel Jackson"
+   ],
+   "gop": [],
+   "others": [
+    {
+     "name": "Emmanuel A. Findlay Jr.",
+     "party": "C"
+    }
+   ],
+   "withdrawn": [],
+   "note": "no Republican; Findlay on Conservative line"
+  },
+  {
+   "d": "80",
+   "seats": 1,
+   "dem": [
+    "John Zaccaro Jr."
+   ],
+   "gop": [],
+   "others": [
+    {
+     "name": "Denise Smith",
+     "party": "C"
+    }
+   ],
+   "withdrawn": [],
+   "note": "no Republican; Smith on Conservative line"
+  },
+  {
+   "d": "81",
+   "seats": 1,
+   "dem": [
+    "Jeffrey Dinowitz"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "82",
+   "seats": 1,
+   "dem": [
+    "Michael R. Benedetto"
+   ],
+   "gop": [
+    "Irene Guanill"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Guanill also C and Vote Affordable"
+  },
+  {
+   "d": "83",
+   "seats": 1,
+   "dem": [
+    "Carl E. Heastie"
+   ],
+   "gop": [],
+   "others": [
+    {
+     "name": "James Washington-Ward",
+     "party": "C"
+    }
+   ],
+   "withdrawn": [],
+   "note": "Speaker; no Republican; Washington-Ward on Conservative line"
+  },
+  {
+   "d": "84",
+   "seats": 1,
+   "dem": [
+    "Amanda N. Septimo"
+   ],
+   "gop": [],
+   "others": [
+    {
+     "name": "Tyreek Goodman",
+     "party": "C"
+    }
+   ],
+   "withdrawn": [],
+   "note": "Septimo also W; no Republican; Goodman on Conservative line"
+  },
+  {
+   "d": "85",
+   "seats": 1,
+   "dem": [
+    "Emerita Torres"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "Torres also W; no Republican"
+  },
+  {
+   "d": "86",
+   "seats": 1,
+   "dem": [
+    "Yudelka Tapia"
+   ],
+   "gop": [
+    "Maria Diaz"
+   ],
+   "others": [
+    {
+     "name": "Shery A. Olivo",
+     "party": "C"
+    }
+   ],
+   "withdrawn": [],
+   "note": "Conservative nominee is a separate candidate"
+  },
+  {
+   "d": "87",
+   "seats": 1,
+   "dem": [
+    "Karines Reyes"
+   ],
+   "gop": [],
+   "others": [
+    {
+     "name": "Zenobia Merced-Bonilla",
+     "party": "C"
+    },
+    {
+     "name": "Zakir Choudhury",
+     "party": "O"
+    }
+   ],
+   "withdrawn": [],
+   "note": "Reyes also W; no Republican; Choudhury on People First line"
+  },
+  {
+   "d": "88",
+   "seats": 1,
+   "dem": [
+    "Amy Paulin"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "Paulin also W; no Republican"
+  },
+  {
+   "d": "89",
+   "seats": 1,
+   "dem": [
+    "J. Gary Pretlow"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "90",
+   "seats": 1,
+   "dem": [
+    "Frank Jereis"
+   ],
+   "gop": [
+    "John Isaac"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "91",
+   "seats": 1,
+   "dem": [
+    "Steven Otis"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "Otis also W; no Republican"
+  },
+  {
+   "d": "92",
+   "seats": 1,
+   "dem": [
+    "MaryJane C. Shimsky"
+   ],
+   "gop": [
+    "Bob Welch"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Shimsky also W; Welch also C"
+  },
+  {
+   "d": "93",
+   "seats": 1,
+   "dem": [
+    "Chris Burdick"
+   ],
+   "gop": [
+    "Braille Diaz"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Diaz also C"
+  },
+  {
+   "d": "94",
+   "seats": 1,
+   "dem": [
+    "Daniel Guzman"
+   ],
+   "gop": [
+    "Matthew J. Slater"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Slater also C"
+  },
+  {
+   "d": "95",
+   "seats": 1,
+   "dem": [
+    "Dana Levenberg"
+   ],
+   "gop": [
+    "Laurie Ryan"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Levenberg also W; Ryan also C"
+  },
+  {
+   "d": "96",
+   "seats": 1,
+   "dem": [
+    "Patrick Carroll"
+   ],
+   "gop": [
+    "Brett L. Yagel"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Carroll also W; Yagel also C"
+  },
+  {
+   "d": "97",
+   "seats": 1,
+   "dem": [
+    "Aron B. Wieder"
+   ],
+   "gop": [
+    "Rob Bonomolo"
+   ],
+   "others": [
+    {
+     "name": "Abraham Klein",
+     "party": "C"
+    }
+   ],
+   "withdrawn": [],
+   "note": "Conservative nominee is a separate candidate"
+  },
+  {
+   "d": "98",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Karl A. Brabenec"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Brabenec also C; no Democrat"
+  },
+  {
+   "d": "99",
+   "seats": 1,
+   "dem": [
+    "Christopher W. Eachus"
+   ],
+   "gop": [
+    "Richard A. Vargus"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Eachus also W; Vargus also C"
+  },
+  {
+   "d": "100",
+   "seats": 1,
+   "dem": [
+    "Paula Elaine Kay"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "Kay also People Over Politics line; no Republican"
+  },
+  {
+   "d": "101",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Brian M. Maher"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Maher also C; no Democrat"
+  },
+  {
+   "d": "102",
+   "seats": 1,
+   "dem": [
+    "Janet S. Tweed"
+   ],
+   "gop": [
+    "Marcus Molinaro"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Tweed also W"
+  },
+  {
+   "d": "103",
+   "seats": 1,
+   "dem": [
+    "Sarahana Shrestha"
+   ],
+   "gop": [
+    "Santos Lopez"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Shrestha also W; Lopez also C"
+  },
+  {
+   "d": "104",
+   "seats": 1,
+   "dem": [
+    "Jonathan G. Jacobson"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "Jacobson also W; no Republican"
+  },
+  {
+   "d": "105",
+   "seats": 1,
+   "dem": [
+    "Brooklyn Talarico"
+   ],
+   "gop": [
+    "Anil R. Beephan Jr."
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Beephan also C"
+  },
+  {
+   "d": "106",
+   "seats": 1,
+   "dem": [
+    "Didi Barrett"
+   ],
+   "gop": [
+    "Gregory Campus"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Campus also C"
+  },
+  {
+   "d": "107",
+   "seats": 1,
+   "dem": [
+    "Chloe E. Pierce"
+   ],
+   "gop": [
+    "Scott H. Bendett"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Pierce also W; Bendett also C"
+  },
+  {
+   "d": "108",
+   "seats": 1,
+   "dem": [
+    "John T. McDonald III"
+   ],
+   "gop": [
+    "Joseph J. Adamo III"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "109",
+   "seats": 1,
+   "dem": [
+    "Gabriella Romero"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "Romero also W; no Republican"
+  },
+  {
+   "d": "110",
+   "seats": 1,
+   "dem": [
+    "Phillip G. Steck"
+   ],
+   "gop": [
+    "Frank A. Mauriello"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Steck also W; Mauriello also C"
+  },
+  {
+   "d": "111",
+   "seats": 1,
+   "dem": [
+    "Angelo L. Santabarbara"
+   ],
+   "gop": [
+    "Nicholas J. Sokaris"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Santabarbara also People First; Sokaris also C"
+  },
+  {
+   "d": "112",
+   "seats": 1,
+   "dem": [
+    "Mario L. Fantini"
+   ],
+   "gop": [
+    "Mary Beth Walsh"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Fantini also W; Walsh also C"
+  },
+  {
+   "d": "113",
+   "seats": 1,
+   "dem": [
+    "Carrie Woerner"
+   ],
+   "gop": [
+    "Allen Caruso"
+   ],
+   "others": [
+    {
+     "name": "Thomas J. Kenny",
+     "party": "W"
+    }
+   ],
+   "withdrawn": [],
+   "note": "Caruso also C and Vote Affordable; Kenny on W and No Kings lines"
+  },
+  {
+   "d": "114",
+   "seats": 1,
+   "dem": [
+    "John Gunther"
+   ],
+   "gop": [
+    "Matthew J. Simpson"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Gunther also W; Simpson also C"
+  },
+  {
+   "d": "115",
+   "seats": 1,
+   "dem": [
+    "Michael Cashman"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "Cashman also W; no Republican"
+  },
+  {
+   "d": "116",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Scott A. Gray"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Gray also C; no Democrat"
+  },
+  {
+   "d": "117",
+   "seats": 1,
+   "dem": [
+    "Dennis Gordon"
+   ],
+   "gop": [
+    "Tammie Nabywaniec"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Gordon also W; Nabywaniec also C"
+  },
+  {
+   "d": "118",
+   "seats": 1,
+   "dem": [
+    "Colleen Maxwell"
+   ],
+   "gop": [
+    "Heather A. Scribner"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Scribner also C"
+  },
+  {
+   "d": "119",
+   "seats": 1,
+   "dem": [
+    "Jonathan E. Lipe"
+   ],
+   "gop": [
+    "Michael C. Gentile"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Lipe also W and Mohawk Valley 1st; Gentile also C"
+  },
+  {
+   "d": "120",
+   "seats": 1,
+   "dem": [
+    "Timothy C. Allers"
+   ],
+   "gop": [
+    "Jim Weatherup"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Weatherup also C"
+  },
+  {
+   "d": "121",
+   "seats": 1,
+   "dem": [
+    "Vicki Davis"
+   ],
+   "gop": [
+    "Joe Angelino"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Angelino also C"
+  },
+  {
+   "d": "122",
+   "seats": 1,
+   "dem": [
+    "Ihor Semko"
+   ],
+   "gop": [
+    "Brian D. Miller"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Semko also W; Miller also C"
+  },
+  {
+   "d": "123",
+   "seats": 1,
+   "dem": [
+    "Dan Norton"
+   ],
+   "gop": [
+    "Lynn E. Parker"
+   ],
+   "others": [
+    {
+     "name": "Heather L. Micha",
+     "party": "O"
+    }
+   ],
+   "withdrawn": [],
+   "note": "Parker also C; Micha on Coalition line"
+  },
+  {
+   "d": "124",
+   "seats": 1,
+   "dem": [
+    "Andrew G. Fagan"
+   ],
+   "gop": [
+    "Christopher S. Friend"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Fagan also W; Friend also C"
+  },
+  {
+   "d": "125",
+   "seats": 1,
+   "dem": [
+    "Anna Kelles"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "Kelles also W; no Republican"
+  },
+  {
+   "d": "126",
+   "seats": 1,
+   "dem": [
+    "Ian Phillips"
+   ],
+   "gop": [
+    "John Lemondes Jr."
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Phillips also W; Lemondes also C"
+  },
+  {
+   "d": "127",
+   "seats": 1,
+   "dem": [
+    "Albert A. Stirpe Jr."
+   ],
+   "gop": [
+    "Timothy R. Kelly"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Stirpe also W; Kelly also C"
+  },
+  {
+   "d": "128",
+   "seats": 1,
+   "dem": [
+    "Pamela Jo Hunter"
+   ],
+   "gop": [
+    "Patrick J. Becher"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Hunter also W; Becher also C"
+  },
+  {
+   "d": "129",
+   "seats": 1,
+   "dem": [
+    "Maurice Mo Brown"
+   ],
+   "gop": [
+    "Shawn M. Fiato"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Brown also W; Fiato also C"
+  },
+  {
+   "d": "130",
+   "seats": 1,
+   "dem": [
+    "Carl Fitzsimmons"
+   ],
+   "gop": [
+    "George Dobbins"
+   ],
+   "others": [
+    {
+     "name": "Joseph Lamanna",
+     "party": "O"
+    }
+   ],
+   "withdrawn": [],
+   "note": "Dobbins also C; Lamanna on Common Sense line"
+  },
+  {
+   "d": "131",
+   "seats": 1,
+   "dem": [
+    "Phillip Fleming"
+   ],
+   "gop": [
+    "Mark Benjamin"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Benjamin also C"
+  },
+  {
+   "d": "132",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Philip A. Palmesano"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Palmesano also C; no Democrat"
+  },
+  {
+   "d": "133",
+   "seats": 1,
+   "dem": [
+    "Gladys Flores"
+   ],
+   "gop": [
+    "Andrea K. Bailey"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Bailey also C"
+  },
+  {
+   "d": "134",
+   "seats": 1,
+   "dem": [
+    "Kurt Vanwuyckhuyse"
+   ],
+   "gop": [
+    "Josh Jensen"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Vanwuyckhuyse also W; Jensen also C"
+  },
+  {
+   "d": "135",
+   "seats": 1,
+   "dem": [
+    "Jen Lunsford"
+   ],
+   "gop": [
+    "Kalinda Washington"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Lunsford also W; Washington also C"
+  },
+  {
+   "d": "136",
+   "seats": 1,
+   "dem": [
+    "Sarah H. Clark"
+   ],
+   "gop": [
+    "Clianda A. Florence"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Clark also W; Florence also C"
+  },
+  {
+   "d": "137",
+   "seats": 1,
+   "dem": [
+    "Demond L. Meeks"
+   ],
+   "gop": [
+    "Dave Ferris"
+   ],
+   "others": [
+    {
+     "name": "Mercedes Vazquez-Simmons",
+     "party": "O"
+    }
+   ],
+   "withdrawn": [],
+   "note": "Meeks also W; Ferris also C; Vazquez-Simmons on Mercedes Simmons Cares line"
+  },
+  {
+   "d": "138",
+   "seats": 1,
+   "dem": [
+    "Harry B. Bronson"
+   ],
+   "gop": [
+    "Tracy Diflorio"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Bronson also W"
+  },
+  {
+   "d": "139",
+   "seats": 1,
+   "dem": [
+    "Sarah R. Wolcott"
+   ],
+   "gop": [
+    "Stephen M. Hawley"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Hawley also C"
+  },
+  {
+   "d": "140",
+   "seats": 1,
+   "dem": [
+    "William C. Conrad III"
+   ],
+   "gop": [
+    "Mohammed H. Faisal"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Conrad also W"
+  },
+  {
+   "d": "141",
+   "seats": 1,
+   "dem": [
+    "Leah M. Halton-Pope"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "142",
+   "seats": 1,
+   "dem": [
+    "Patrick B. Burke"
+   ],
+   "gop": [
+    "Gary A. Dickson"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Burke also W; Dickson also C"
+  },
+  {
+   "d": "143",
+   "seats": 1,
+   "dem": [
+    "Ryan J. Taughrin"
+   ],
+   "gop": [
+    "Patrick J. Chludzinski"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Taughrin also W; Chludzinski also C"
+  },
+  {
+   "d": "144",
+   "seats": 1,
+   "dem": [
+    "Donna L. Dye Sholk"
+   ],
+   "gop": [
+    "Paul A. Bologna"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Dye Sholk also W; Bologna also C"
+  },
+  {
+   "d": "145",
+   "seats": 1,
+   "dem": [
+    "Nathan D. McMurray"
+   ],
+   "gop": [
+    "Becky Wydysh"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Wydysh also C"
+  },
+  {
+   "d": "146",
+   "seats": 1,
+   "dem": [
+    "Karen M. McMahon"
+   ],
+   "gop": [
+    "Terence G. McGuire"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "McGuire also C"
+  },
+  {
+   "d": "147",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "David J. DiPietro"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "DiPietro also C; no Democrat"
+  },
+  {
+   "d": "148",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Joseph Sempolinski"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Sempolinski also C; no Democrat"
+  },
+  {
+   "d": "149",
+   "seats": 1,
+   "dem": [
+    "Adam L. Bojak"
+   ],
+   "gop": [
+    "Frank M. Bogulski"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Bojak also W; Bogulski also C"
+  },
+  {
+   "d": "150",
+   "seats": 1,
+   "dem": [
+    "Thomas A. Carle"
+   ],
+   "gop": [
+    "Andrew M. Molitor"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Carle also W; Molitor also C"
+  }
+ ]
+}

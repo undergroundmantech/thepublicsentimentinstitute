@@ -1,0 +1,338 @@
+{
+ "state": "IN",
+ "chamber": "senate",
+ "sources": [
+  "https://en.wikipedia.org/wiki/2026_Indiana_Senate_election",
+  "https://indianacapitalchronicle.com/voter-guides/2026-general-election/"
+ ],
+ "as_of": "2026-10-17",
+ "complete": false,
+ "districts": [
+  {
+   "d": "1",
+   "seats": 1,
+   "dem": [
+    "Scott Houldieson"
+   ],
+   "gop": [
+    "Trevor De Vries"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Incumbent R Dan Dernulc lost primary"
+  },
+  {
+   "d": "4",
+   "seats": 1,
+   "dem": [
+    "Rodney Pol Jr."
+   ],
+   "gop": [
+    "Nate Uldricks"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "6",
+   "seats": 1,
+   "dem": [
+    "Kate-Lynn Holley"
+   ],
+   "gop": [
+    "Jay Starkey"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Incumbent R Rick Niemeyer lost primary"
+  },
+  {
+   "d": "11",
+   "seats": 1,
+   "dem": [
+    "Gabrianna Gratzol"
+   ],
+   "gop": [
+    "Brian Schmutzler"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Incumbent R Linda Rogers lost primary"
+  },
+  {
+   "d": "14",
+   "seats": 1,
+   "dem": [
+    "Blaine Sefton"
+   ],
+   "gop": [
+    "Tyler Johnson"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "15",
+   "seats": 1,
+   "dem": [
+    "Julie McGill"
+   ],
+   "gop": [
+    "Liz Brown"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Brown won primary by about 15 votes; recount petition filed May 19"
+  },
+  {
+   "d": "17",
+   "seats": 1,
+   "dem": [
+    "Cynthia Wehr"
+   ],
+   "gop": [
+    "Chris Parker"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Incumbent R Nick McKinley lost primary"
+  },
+  {
+   "d": "19",
+   "seats": 1,
+   "dem": [
+    "Timothy Murphy"
+   ],
+   "gop": [
+    "Blake Fiechter"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Incumbent R Travis Holdman lost primary"
+  },
+  {
+   "d": "21",
+   "seats": 1,
+   "dem": [
+    "Kirsten Root"
+   ],
+   "gop": [
+    "Tracey Powell"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Incumbent R Jim Buck lost primary"
+  },
+  {
+   "d": "22",
+   "seats": 1,
+   "dem": [
+    "Natasha Baker"
+   ],
+   "gop": [
+    "Ron Alting"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "23",
+   "seats": 1,
+   "dem": [
+    "David Sanders"
+   ],
+   "gop": [
+    "Spencer Deery"
+   ],
+   "others": [
+    {
+     "name": "Joshua Brant",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "Disputed R primary; Wikipedia says the Indiana Supreme Court ruled Deery the winner Sept 10 after a report that challenger Copenhaver was certified Aug 10"
+  },
+  {
+   "d": "25",
+   "seats": 1,
+   "dem": [
+    "Tamie Dixon-Tatum"
+   ],
+   "gop": [
+    "Mike Gaskill"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "26",
+   "seats": 1,
+   "dem": [
+    "Andrew Dale"
+   ],
+   "gop": [
+    "Scott Alexander"
+   ],
+   "others": [
+    {
+     "name": "Tanya Pearson",
+     "party": "O"
+    }
+   ],
+   "withdrawn": [],
+   "note": "Pearson is a Socialist"
+  },
+  {
+   "d": "27",
+   "seats": 1,
+   "dem": [
+    "Ron Itnyre"
+   ],
+   "gop": [
+    "Jeff Raatz"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "29",
+   "seats": 1,
+   "dem": [
+    "Kristina Moorhead"
+   ],
+   "gop": [
+    "John Ruckelshaus"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Open seat"
+  },
+  {
+   "d": "31",
+   "seats": 1,
+   "dem": [
+    "Kerry Forestal"
+   ],
+   "gop": [
+    "Juanita Albright"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Open seat"
+  },
+  {
+   "d": "38",
+   "seats": 1,
+   "dem": [
+    "Kacey Blundell"
+   ],
+   "gop": [
+    "Greg Goode"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "39",
+   "seats": 1,
+   "dem": [
+    "Joseph Baughman"
+   ],
+   "gop": [
+    "Jeff Ellington"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Open seat; Democrat Baughman listed but unverified, Wikipedia general table shows only Ellington"
+  },
+  {
+   "d": "41",
+   "seats": 1,
+   "dem": [
+    "Ross Thomas"
+   ],
+   "gop": [
+    "Michelle Davis"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Incumbent R Greg Walker lost primary"
+  },
+  {
+   "d": "43",
+   "seats": 1,
+   "dem": [
+    "Byron Holland"
+   ],
+   "gop": [
+    "Randy Maxwell"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "45",
+   "seats": 1,
+   "dem": [
+    "Nick Marshall"
+   ],
+   "gop": [
+    "Chris Garten"
+   ],
+   "others": [
+    {
+     "name": "Larry Mahaney",
+     "party": "L"
+    }
+   ],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "46",
+   "seats": 1,
+   "dem": [
+    "Allissa Impink"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "Open seat; no Republican listed"
+  },
+  {
+   "d": "47",
+   "seats": 1,
+   "dem": [
+    "Ethan Sweetland-May"
+   ],
+   "gop": [
+    "Gary Byrne"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "49",
+   "seats": 1,
+   "dem": [
+    "Cindi Clayton"
+   ],
+   "gop": [
+    "Jim Tomes"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  }
+ ],
+ "gap": "25 seats are up but only 24 districts could be identified; the official Indiana candidate list is an xlsx file the fetch tool cannot read and direct download is blocked. Nominees are primary winners per Wikipedia, partly confirmed by the Indiana Capital Chronicle general election guide (districts 1, 4, 11, 29, 31, 41). Post-primary caucus replacements or minor party candidates may be missing."
+}

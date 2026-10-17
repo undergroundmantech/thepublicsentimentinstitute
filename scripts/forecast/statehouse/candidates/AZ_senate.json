@@ -1,0 +1,380 @@
+{
+ "state": "AZ",
+ "chamber": "senate",
+ "sources": [
+  "https://en.wikipedia.org/wiki/2026_Arizona_Senate_election",
+  "https://ballotpedia.org/Arizona_State_Senate_elections,_2026",
+  "https://azsos.gov/sites/default/files/docs/2026-General-Write-In-and-Withdrawn-Candidate-List-0909.pdf",
+  "https://ivoterguide.com/all-in-state/az"
+ ],
+ "as_of": "2026-10-17",
+ "complete": true,
+ "districts": [
+  {
+   "d": "1",
+   "dem": [
+    "Christine Dargon"
+   ],
+   "gop": [
+    "Mark Finchem"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "2",
+   "dem": [
+    "Amelia Gallitano"
+   ],
+   "gop": [
+    "Shawnna Bolick"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "3",
+   "dem": [
+    "Jeff Fortney"
+   ],
+   "gop": [
+    "John Kavanagh"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Frank Bertone R general write-in only"
+  },
+  {
+   "d": "4",
+   "dem": [
+    "Aaron Lieberman"
+   ],
+   "gop": [
+    "Carine Werner"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "5",
+   "dem": [
+    "Christine Marsh"
+   ],
+   "gop": [],
+   "others": [
+    {
+     "name": "Jason LaForest",
+     "party": "O"
+    }
+   ],
+   "withdrawn": [],
+   "note": "no Republican; Jason LaForest is No Labels nominee and the main challenger"
+  },
+  {
+   "d": "6",
+   "dem": [
+    "Jamescita Peshlakai"
+   ],
+   "gop": [
+    "Lloyd Johnson"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Myron Tsosie lost D primary"
+  },
+  {
+   "d": "7",
+   "dem": [
+    "Michiel \"Mike\" Montiel"
+   ],
+   "gop": [
+    "Wendy Rogers"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "8",
+   "dem": [
+    "Lauren Kuby"
+   ],
+   "gop": [
+    "Bill Loughrige"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Loughrige won R nomination as a primary write-in"
+  },
+  {
+   "d": "9",
+   "dem": [
+    "Kiana Sears"
+   ],
+   "gop": [
+    "Bridget Fitzgibbons"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Eva Burch D did not make the ballot"
+  },
+  {
+   "d": "10",
+   "dem": [
+    "Blair Moses"
+   ],
+   "gop": [
+    "Dave Farnsworth"
+   ],
+   "others": [
+    {
+     "name": "Nick Fierro",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "11",
+   "dem": [
+    "Catherine Miranda"
+   ],
+   "gop": [
+    "Joshua Ayala"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "12",
+   "dem": [
+    "Patty Contreras"
+   ],
+   "gop": [],
+   "others": [
+    {
+     "name": "Anthony Ramirez",
+     "party": "O"
+    }
+   ],
+   "withdrawn": [],
+   "note": "no Republican on ballot; Anthony Ramirez won No Labels primary, also described as Arizona Independent; Gary Hatch R general write-in only"
+  },
+  {
+   "d": "13",
+   "dem": [
+    "Kristie O'Brien"
+   ],
+   "gop": [
+    "Julie Willoughby"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "14",
+   "dem": [
+    "Stephanie Walsh"
+   ],
+   "gop": [
+    "Mylie Biggs"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "15",
+   "dem": [
+    "Jayme Accalia"
+   ],
+   "gop": [
+    "Jake Hoffman"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "16",
+   "dem": [
+    "Elaine Aldrete"
+   ],
+   "gop": [
+    "T.J. Shope"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "17",
+   "dem": [
+    "Edgar Soto"
+   ],
+   "gop": [
+    "Chris King"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "18",
+   "dem": [
+    "Priya Sundareshan"
+   ],
+   "gop": [
+    "Douglas Everett"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "19",
+   "dem": [
+    "Bob Karp"
+   ],
+   "gop": [
+    "Gail Griffin"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Karp won D nomination as a primary write-in"
+  },
+  {
+   "d": "20",
+   "dem": [
+    "Alma Hernandez"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "21",
+   "dem": [
+    "Rosanna Gabaldón"
+   ],
+   "gop": [
+    "Esteban Flores"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "22",
+   "dem": [
+    "Eva Diaz"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "23",
+   "dem": [
+    "Brian Fernandez"
+   ],
+   "gop": [
+    "Michelle Altherr"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "24",
+   "dem": [
+    "Analise Ortiz"
+   ],
+   "gop": [
+    "Frank Steele"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "25",
+   "dem": [
+    "Laura Huber"
+   ],
+   "gop": [
+    "Tim Dunn"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "26",
+   "dem": [
+    "Flavio Bravo"
+   ],
+   "gop": [
+    "Jim Bishop"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "27",
+   "dem": [
+    "Kyle Clayton"
+   ],
+   "gop": [
+    "Kevin Payne"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Anthony Kern lost R primary"
+  },
+  {
+   "d": "28",
+   "dem": [
+    "Michael Braun"
+   ],
+   "gop": [
+    "Frank Carroll"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "29",
+   "dem": [
+    "Eric Stafford"
+   ],
+   "gop": [
+    "Janae Shamp"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "30",
+   "dem": [],
+   "gop": [
+    "Leo Biasiucci"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Democrat"
+  }
+ ],
+ "method": "Nominees from July 21 2026 primary results on Wikipedia, cross checked against iVoterGuide Arizona general list dated Oct 16 2026"
+}

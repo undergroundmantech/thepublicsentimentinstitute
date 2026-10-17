@@ -1,0 +1,141 @@
+{
+ "state": "AK",
+ "chamber": "senate",
+ "sources": [
+  "https://ivoterguide.com/all-in-state/ak"
+ ],
+ "as_of": "2026-10-17",
+ "complete": true,
+ "districts": [
+  {
+   "d": "A",
+   "dem": [],
+   "gop": [
+    "Bert K. Stedman"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "top four general with ranked choice; unopposed"
+  },
+  {
+   "d": "C",
+   "dem": [],
+   "gop": [
+    "Carrie L. Harris",
+    "Heath Smith",
+    "Louise B. Stutes"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "top four general with ranked choice; only Republicans advanced"
+  },
+  {
+   "d": "E",
+   "dem": [],
+   "gop": [
+    "Cathy Giessel",
+    "Gretchen W. Stoddard",
+    "Jason \"Jace\" White"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "top four general with ranked choice; only Republicans advanced"
+  },
+  {
+   "d": "G",
+   "dem": [
+    "Elvi Gray-Jackson"
+   ],
+   "gop": [],
+   "others": [
+    {
+     "name": "Nicholas Danger",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "top four general with ranked choice; no Republican; minor party or independent is the main challenger"
+  },
+  {
+   "d": "I",
+   "dem": [
+    "Löki Gale Tobin"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "top four general with ranked choice; unopposed"
+  },
+  {
+   "d": "K",
+   "dem": [
+    "Bill Wielechowski"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "top four general with ranked choice; unopposed"
+  },
+  {
+   "d": "M",
+   "dem": [
+    "Patricia R. Chesbro"
+   ],
+   "gop": [
+    "Ryan Berry",
+    "Cathy L. Tilton",
+    "Zane Vrvilo"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "top four general with ranked choice"
+  },
+  {
+   "d": "O",
+   "dem": [
+    "Peter Bauer"
+   ],
+   "gop": [
+    "George Rauscher",
+    "Ryan W. Sheldon"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "top four general with ranked choice"
+  },
+  {
+   "d": "Q",
+   "dem": [
+    "William Hunt"
+   ],
+   "gop": [
+    "Frank Tomaszewski"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "top four general with ranked choice"
+  },
+  {
+   "d": "S",
+   "dem": [
+    "Wassilie \"WG\" Guy"
+   ],
+   "gop": [
+    "Darren Morgan Deacon"
+   ],
+   "others": [
+    {
+     "name": "Bryce Edgmon",
+     "party": "I"
+    },
+    {
+     "name": "Richard \"Rick\" Robb",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "top four general with ranked choice"
+  }
+ ],
+ "method": "General candidates from iVoterGuide Alaska statewide list, page version 2026-10-13. Alaska uses top four primaries and ranked choice generals. NP and NPA candidates are coded I; several are bipartisan coalition members. Post primary withdrawals were not separately verified against the Division of Elections list. Ten Senate seats on the ballot: A C E G I K M O Q S."
+}

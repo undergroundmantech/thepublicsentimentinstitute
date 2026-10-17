@@ -17,7 +17,7 @@ type HubChamber = {
   id: string; st: string; state: string; chamber: "house" | "senate"; name: string; seats: number; up: number; majority: number;
   hold: Record<"D" | "R" | "O", number>; current: Record<"D" | "R" | "O", number>;
   demControl: number; gopControl: number; tie: number; demSeats: number; gopSeats: number; p10: number; p90: number; median: number;
-  d: [string, number, number | null, number | null, (string | null)?][]; holdD?: [string, string][];
+  d: [string, number, number | null, number | null, (string | null)?, number?][]; holdD?: [string, string][];
 };
 type HubSL = { meta: { updated: string; chambers: number; districts: number; seatsUp: number }; chambers: HubChamber[] };
 
@@ -65,9 +65,9 @@ function useHub() {
       out.push({ lvl: "db", p: 1 - r.est.prob, m: unc ? null : r.est.margin, name: r.name, href: raceHref(r.id), sub: unc ? "Uncontested" : `${(r.dem || "").split(" ").pop()} vs ${(r.gop || "").split(" ").pop()}` });
     }
     for (const c of sl.chambers) {
-      for (const [d, seats, p, m] of c.d) {
+      for (const [d, seats, p, m, , ind] of c.d) {
         const unc = m == null || Math.abs(m) >= 99;
-        for (let i = 0; i < seats; i++) out.push({ lvl: "sl", p: p ?? 0.5, m: unc ? null : m, name: `${c.name}, District ${d}`, href: slHref(c), sub: unc ? "Uncontested or unopposed" : c.name });
+        for (let i = 0; i < seats; i++) out.push({ lvl: "sl", p: p ?? 0.5, m: unc ? null : m, ind: !!ind, name: `${c.name}, District ${d}`, href: slHref(c), sub: unc ? "Uncontested or unopposed" : ind ? `${c.name}, independent challenger` : c.name });
       }
     }
     return out;

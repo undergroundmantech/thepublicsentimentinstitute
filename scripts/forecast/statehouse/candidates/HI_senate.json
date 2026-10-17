@@ -1,0 +1,169 @@
+{
+ "state": "HI",
+ "chamber": "senate",
+ "sources": [
+  "https://theballotbrief.com/state/hawaii/honolulu-county",
+  "https://theballotbrief.com/state/hawaii/hawaii-county",
+  "https://theballotbrief.com/state/hawaii/maui-county",
+  "https://theballotbrief.com/state/hawaii/kauai-county"
+ ],
+ "as_of": "2026-10-17",
+ "complete": true,
+ "districts": [
+  {
+   "d": "2",
+   "dem": [
+    "Joy San Buenaventura"
+   ],
+   "gop": [],
+   "others": [
+    {
+     "name": "Frederick F. Fogel",
+     "party": "L"
+    }
+   ],
+   "withdrawn": [],
+   "note": "no Republican; minor party or independent is the main challenger"
+  },
+  {
+   "d": "5",
+   "dem": [
+    "Troy N. Hashimoto"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "8",
+   "dem": [
+    "Ronald D. Kouchi"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "9",
+   "dem": [
+    "Stanley Chang"
+   ],
+   "gop": [
+    "David A. Croswell"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "10",
+   "dem": [
+    "Jackson D. Sayama"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "11",
+   "dem": [
+    "Carol Fukunaga"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "13",
+   "dem": [
+    "Tricia Kwai Lin Nakamatsu"
+   ],
+   "gop": [
+    "Wallyn Kanoelani Christian"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "14",
+   "dem": [
+    "Donna Mercado Kim"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "15",
+   "dem": [
+    "Glenn Wakai"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "17",
+   "dem": [
+    "Donovan Dela Cruz"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "19",
+   "dem": [
+    "Rachele F. Lamosao"
+   ],
+   "gop": [
+    "Elijah Pierick"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "20",
+   "dem": [
+    "Markus Owens"
+   ],
+   "gop": [
+    "Kurt Fevella",
+    "Bob McDermott"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Republican primary tied 1,212 to 1,212 between Fevella and McDermott; both listed pending a Hawaii Supreme Court challenge; only one will be the nominee"
+  },
+  {
+   "d": "21",
+   "dem": [
+    "Mike Gabbard"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "25",
+   "dem": [
+    "Chris Lee"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  }
+ ],
+ "method": "General candidates from The Ballot Brief county pages, AI assisted research of Office of Elections data; no official list fetched because search budget ran out. 14 Senate seats found on the ballot."
+}

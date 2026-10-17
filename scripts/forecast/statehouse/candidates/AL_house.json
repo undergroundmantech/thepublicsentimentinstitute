@@ -1,0 +1,1243 @@
+{
+ "state": "AL",
+ "chamber": "house",
+ "sources": [
+  "https://en.wikipedia.org/wiki/2026_Alabama_House_of_Representatives_election",
+  "https://www.alreporter.com/2026/06/17/incumbents-prevail-in-alabamas-legislative-runoff-elections/"
+ ],
+ "as_of": "2026-10-17",
+ "complete": true,
+ "districts": [
+  {
+   "d": "1",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Maurice McCaney"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "incumbent Phillip Pettus lost primary"
+  },
+  {
+   "d": "2",
+   "seats": 1,
+   "dem": [
+    "Rick Pressnell"
+   ],
+   "gop": [
+    "Ben Harrison"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "3",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Kerry Underwood"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "4",
+   "seats": 1,
+   "dem": [
+    "Hanu Karlapalem"
+   ],
+   "gop": [
+    "Parker Moore"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "5",
+   "seats": 1,
+   "dem": [
+    "Jessie Barcala"
+   ],
+   "gop": [
+    "Danny Crawford"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "6",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Andy Whitt"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "7",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Ernie Yarbrough"
+   ],
+   "others": [
+    {
+     "name": "Angelo \"Doc\" Mancuso",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "no Democrat; independent is main challenger"
+  },
+  {
+   "d": "8",
+   "seats": 1,
+   "dem": [
+    "Bruce Sparkman"
+   ],
+   "gop": [
+    "Patrick Johnson"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "open; Terri Collins retiring"
+  },
+  {
+   "d": "9",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Scott Stadthagen"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "10",
+   "seats": 1,
+   "dem": [
+    "Marilyn Lands"
+   ],
+   "gop": [
+    "Aaron Thomas"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "11",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Heath Allbright"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "12",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Cindy Myrex"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "13",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Mike Elliott"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "incumbent Greg Barnes lost primary"
+  },
+  {
+   "d": "14",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Tim Wadsworth"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "15",
+   "seats": 1,
+   "dem": [
+    "Nell Brown"
+   ],
+   "gop": [
+    "Leigh Hulsey"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "16",
+   "seats": 1,
+   "dem": [
+    "Christian Martin"
+   ],
+   "gop": [
+    "Bryan Brinyark"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "17",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Phil Segraves"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "open; Tracy Estes retiring; Segraves won GOP runoff over Micheal Beck"
+  },
+  {
+   "d": "18",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Jamie Kiel"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "19",
+   "seats": 1,
+   "dem": [
+    "Laura Hall"
+   ],
+   "gop": [
+    "Donald Barnes"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "20",
+   "seats": 1,
+   "dem": [
+    "James Linderholm"
+   ],
+   "gop": [
+    "James Lomax"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Lomax beat Mo Brooks in primary"
+  },
+  {
+   "d": "21",
+   "seats": 1,
+   "dem": [
+    "Forrest Satterfield"
+   ],
+   "gop": [
+    "Rex Reynolds"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "22",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Ritchie Whorton"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "23",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Mike Kirkland"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "24",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Nathaniel Ledbetter"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "25",
+   "seats": 1,
+   "dem": [
+    "Allison T. Montgomery"
+   ],
+   "gop": [
+    "Phillip Rigsby"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "26",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Brock Colvin"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "27",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Jeana Ross"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "28",
+   "seats": 1,
+   "dem": [
+    "Robert Hunter"
+   ],
+   "gop": [
+    "Mack Butler"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "29",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Mark Gidley"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "30",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Craig Lipscomb"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "31",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Troy Stubbs"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "32",
+   "seats": 1,
+   "dem": [
+    "Debra D. Foster"
+   ],
+   "gop": [
+    "Joey Callahan"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "open; Barbara Boyd retiring"
+  },
+  {
+   "d": "33",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Ben Robbins"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "34",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "David Standridge"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "35",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Steve Hurst"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "36",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Randy Wood"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "37",
+   "seats": 1,
+   "dem": [
+    "Michelle French"
+   ],
+   "gop": [
+    "Jeff Monroe"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "open; Bob Fincher retiring; Monroe won GOP runoff over John Jacobs"
+  },
+  {
+   "d": "38",
+   "seats": 1,
+   "dem": [
+    "Hazel Floyd"
+   ],
+   "gop": [
+    "Kristin Nelson"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "39",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Ginny Shaver"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "40",
+   "seats": 1,
+   "dem": [
+    "Pam Howard"
+   ],
+   "gop": [
+    "Chad Robertson"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "41",
+   "seats": 1,
+   "dem": [
+    "David J. A. Morgan"
+   ],
+   "gop": [
+    "Corley Ellis"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "42",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Ivan Smith"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "43",
+   "seats": 1,
+   "dem": [
+    "Taylor Cook"
+   ],
+   "gop": [
+    "Arnold Mooney"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "44",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Danny Garrett"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "45",
+   "seats": 1,
+   "dem": [
+    "Toni Kornegay Vaughn"
+   ],
+   "gop": [
+    "Susan DuBose"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "46",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "David Faulkner"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "47",
+   "seats": 1,
+   "dem": [
+    "Jim Toomey"
+   ],
+   "gop": [
+    "Mike Shaw"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "48",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Lloyd Peeples"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "incumbent Jim Carns lost primary"
+  },
+  {
+   "d": "49",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Russell Bedsole"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "50",
+   "seats": 1,
+   "dem": [
+    "Alan Thomas"
+   ],
+   "gop": [
+    "Bill Morris"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "open; Jim Hill retiring"
+  },
+  {
+   "d": "51",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Allen Treadaway"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "52",
+   "seats": 1,
+   "dem": [
+    "GiGi Hayes"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "incumbent Kelvin Datcher lost primary; Hayes won Dem runoff over LaTanya Millhouse"
+  },
+  {
+   "d": "53",
+   "seats": 1,
+   "dem": [
+    "Anthony Daniels"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "54",
+   "seats": 1,
+   "dem": [
+    "Neil Rafferty"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "55",
+   "seats": 1,
+   "dem": [
+    "Travis Hendrix"
+   ],
+   "gop": [],
+   "others": [
+    {
+     "name": "Keith O. Williams",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "no Republican; independent is main challenger"
+  },
+  {
+   "d": "56",
+   "seats": 1,
+   "dem": [
+    "Ontario Tillman"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "57",
+   "seats": 1,
+   "dem": [
+    "Patrick Sellers"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "58",
+   "seats": 1,
+   "dem": [
+    "Rolanda Hollis"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "59",
+   "seats": 1,
+   "dem": [
+    "Mary Moore"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "60",
+   "seats": 1,
+   "dem": [
+    "Alicia Escott Lumpkin"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "incumbent Juandalynn Givan lost primary"
+  },
+  {
+   "d": "61",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Ron Bolton"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "62",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Bill Lamb"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "63",
+   "seats": 1,
+   "dem": [
+    "Judith Taylor"
+   ],
+   "gop": [
+    "Norman Crow"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "64",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Donna Givens"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "65",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "John Knapp"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "open; Brett Easterbrook retiring"
+  },
+  {
+   "d": "66",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Alan Baker"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "67",
+   "seats": 1,
+   "dem": [
+    "Prince Chestnut"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "68",
+   "seats": 1,
+   "dem": [
+    "Thomas Jackson"
+   ],
+   "gop": [
+    "Fred Kelley"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "69",
+   "seats": 1,
+   "dem": [
+    "Kelvin Lawrence"
+   ],
+   "gop": [
+    "Josh Pendergrass"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "70",
+   "seats": 1,
+   "dem": [
+    "Christopher J. England"
+   ],
+   "gop": [
+    "Ian M. Chwatuk"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "71",
+   "seats": 1,
+   "dem": [
+    "Artis J. McCampbell"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "72",
+   "seats": 1,
+   "dem": [
+    "Curtis Travis"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "73",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Kenneth Paschal"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "74",
+   "seats": 1,
+   "dem": [
+    "Jasmyne Crimiel"
+   ],
+   "gop": [
+    "Alva Lambert"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "open; Phillip Ensler running for lieutenant governor"
+  },
+  {
+   "d": "75",
+   "seats": 1,
+   "dem": [
+    "Tisha Dickson Nickson"
+   ],
+   "gop": [
+    "Reed Ingram"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "76",
+   "seats": 1,
+   "dem": [
+    "Patrice McClammy"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "77",
+   "seats": 1,
+   "dem": [
+    "Tashina Morris"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "78",
+   "seats": 1,
+   "dem": [
+    "Kenyatté Hassell"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "79",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Joe Lovvorn"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "80",
+   "seats": 1,
+   "dem": [
+    "Manfred Malone"
+   ],
+   "gop": [
+    "Chris Blackshear"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "81",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Ed Oliver"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "82",
+   "seats": 1,
+   "dem": [
+    "Pebblin W. Warren"
+   ],
+   "gop": [
+    "Kinsley Hammons"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Warren won Dem runoff over Sidney \"Doc\" Brown"
+  },
+  {
+   "d": "83",
+   "seats": 1,
+   "dem": [
+    "Jeremy Gray"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "84",
+   "seats": 1,
+   "dem": [
+    "Berry Forte"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "85",
+   "seats": 1,
+   "dem": [
+    "Aristotle Onassis Kirkland"
+   ],
+   "gop": [
+    "Rick Rehm"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "86",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Paul Lee"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "87",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Jeff Sorrells"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "88",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Jerry Starnes"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "89",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Marcus Paramore"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "90",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Chris Sells"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "91",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Jody Linton"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "open; Rhett Marques running for U.S. House"
+  },
+  {
+   "d": "92",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Matthew Hammett"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "93",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Steve Clouse"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "94",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Jennifer Fidler"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "95",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Frances Holk-Jones"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Holk-Jones won GOP runoff over Joe Freeman"
+  },
+  {
+   "d": "96",
+   "seats": 1,
+   "dem": [
+    "Terri Osborne"
+   ],
+   "gop": [
+    "Danielle Duggar"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "incumbent Matt Simpson lost primary"
+  },
+  {
+   "d": "97",
+   "seats": 1,
+   "dem": [
+    "Adline Clarke"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "98",
+   "seats": 1,
+   "dem": [
+    "Napoleon Bracy Jr."
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "99",
+   "seats": 1,
+   "dem": [
+    "Sam Jones"
+   ],
+   "gop": [
+    "Charlie Watts"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "100",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Mark Shirey"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "101",
+   "seats": 1,
+   "dem": [
+    "Joan Friedlander"
+   ],
+   "gop": [
+    "Chris Pringle"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "102",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Shane Stringer"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "103",
+   "seats": 1,
+   "dem": [
+    "Barbara Drummond"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "104",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Margie Wilcox"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "105",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Chip Brown"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  }
+ ]
+}

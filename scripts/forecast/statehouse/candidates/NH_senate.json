@@ -1,0 +1,322 @@
+{
+ "state": "NH",
+ "chamber": "senate",
+ "sources": [
+  "https://www.citizenscount.org/elections/2026-nh-senate-general-election",
+  "https://www.citizenscount.org/elections/2026-nh-senate-primary"
+ ],
+ "as_of": "2026-10-17",
+ "complete": true,
+ "districts": [
+  {
+   "d": "1",
+   "seats": 1,
+   "dem": [
+    "Cathleen A. Fountain"
+   ],
+   "gop": [
+    "David Rochefort"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "2",
+   "seats": 1,
+   "dem": [
+    "Kurt Webber"
+   ],
+   "gop": [
+    "Timothy P. Lang Sr."
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "3",
+   "seats": 1,
+   "dem": [
+    "Bobbi Boudman"
+   ],
+   "gop": [
+    "Mark E. McConkey"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "4",
+   "seats": 1,
+   "dem": [
+    "David H. Watters"
+   ],
+   "gop": [
+    "Shawn Mickelonis"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "5",
+   "seats": 1,
+   "dem": [
+    "Suzanne M. Prentiss"
+   ],
+   "gop": [
+    "Conrad Schoeffter"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "6",
+   "seats": 1,
+   "dem": [
+    "Cecil Abels"
+   ],
+   "gop": [
+    "James P. Gray"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "7",
+   "seats": 1,
+   "dem": [
+    "Rebecca Harned"
+   ],
+   "gop": [
+    "Daniel Innis"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Richard A. Lobban, Jr. appeared as Independent/Other on the primary listing but is not on the general election list."
+  },
+  {
+   "d": "8",
+   "seats": 1,
+   "dem": [
+    "David Trumble"
+   ],
+   "gop": [
+    "Jim Creighton"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Fred Wilkinson, Jr. appeared as Independent/Other on the primary listing but is not on the general election list."
+  },
+  {
+   "d": "9",
+   "seats": 1,
+   "dem": [
+    "Matthew McLaughlin"
+   ],
+   "gop": [
+    "Denise Ricciardi"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "10",
+   "seats": 1,
+   "dem": [
+    "Donovan Fenton"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "No Republican nominee; Democrat Donovan Fenton unopposed on the major party lines."
+  },
+  {
+   "d": "11",
+   "seats": 1,
+   "dem": [
+    "Shannon E. Chandley"
+   ],
+   "gop": [
+    "Tim McGough"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "12",
+   "seats": 1,
+   "dem": [
+    "Carryl L. Roy"
+   ],
+   "gop": [
+    "Kevin A. Avard"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "13",
+   "seats": 1,
+   "dem": [
+    "Laura Telerski"
+   ],
+   "gop": [
+    "Daniel J. Paul"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "14",
+   "seats": 1,
+   "dem": [
+    "Timothy Wyatt"
+   ],
+   "gop": [
+    "Sharon M. Carson"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "15",
+   "seats": 1,
+   "dem": [
+    "Tara Reardon"
+   ],
+   "gop": [
+    "Dennis Blankenbeker"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "16",
+   "seats": 1,
+   "dem": [
+    "Dian McCarthy"
+   ],
+   "gop": [
+    "Keith Murphy"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "17",
+   "seats": 1,
+   "dem": [
+    "Robert Lawliss"
+   ],
+   "gop": [
+    "Howard C. Pearl"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "18",
+   "seats": 1,
+   "dem": [
+    "Leonard Bell"
+   ],
+   "gop": [
+    "Victoria Sullivan"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "19",
+   "seats": 1,
+   "dem": [
+    "Michelle Moge"
+   ],
+   "gop": [
+    "Regina M. Birdsell"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "20",
+   "seats": 1,
+   "dem": [
+    "Patrick \"Pat\" Long"
+   ],
+   "gop": [
+    "Patrick Binder"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "21",
+   "seats": 1,
+   "dem": [
+    "Rebecca Perkins Kwoka"
+   ],
+   "gop": [
+    "Jeffrey D. Berlin"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "22",
+   "seats": 1,
+   "dem": [
+    "Chris Tardif"
+   ],
+   "gop": [
+    "Daryl A. Abbas"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "23",
+   "seats": 1,
+   "dem": [
+    "David Childs"
+   ],
+   "gop": [
+    "William \"Bill\" Gannon"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "24",
+   "seats": 1,
+   "dem": [
+    "Debra Altschiller"
+   ],
+   "gop": [
+    "Lou Gargiulo"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  }
+ ]
+}

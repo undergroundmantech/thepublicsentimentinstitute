@@ -1,0 +1,157 @@
+{
+ "state": "DE",
+ "chamber": "senate",
+ "sources": [
+  "https://elections.delaware.gov/candidates/candidatelist/genl_fcddt_2026.html",
+  "https://en.wikipedia.org/wiki/2026_Delaware_Senate_election"
+ ],
+ "as_of": "2026-10-17",
+ "complete": true,
+ "caveat": "Official Delaware Department of Elections general election candidate list, updated 2026-10-15. Only the 11 districts listed are up in 2026.",
+ "districts": [
+  {
+   "d": "1",
+   "seats": 1,
+   "dem": [
+    "Dan Cruce"
+   ],
+   "gop": [
+    "Hildi Bachtle"
+   ],
+   "others": [
+    {
+     "name": "Steven Washington",
+     "party": "O"
+    }
+   ],
+   "withdrawn": [],
+   "note": "Washington on Independent Party of Delaware line"
+  },
+  {
+   "d": "5",
+   "seats": 1,
+   "dem": [
+    "Shay Frisby"
+   ],
+   "gop": [
+    "Brent Burdge"
+   ],
+   "others": [
+    {
+     "name": "Carolyn Frank",
+     "party": "O"
+    }
+   ],
+   "withdrawn": [],
+   "note": "incumbent Ray Seigfried D is not the nominee; Frisby is the D nominee; Frank on Independent Party of Delaware line"
+  },
+  {
+   "d": "7",
+   "seats": 1,
+   "dem": [
+    "Spiros Mantzavinos"
+   ],
+   "gop": [
+    "Chris Rowe"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "8",
+   "seats": 1,
+   "dem": [
+    "Mara Gorman"
+   ],
+   "gop": [
+    "Shane Cavanaugh"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "open seat, David Sokola D retiring"
+  },
+  {
+   "d": "9",
+   "seats": 1,
+   "dem": [
+    "Jack Walsh"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "12",
+   "seats": 1,
+   "dem": [
+    "Nicole Poore"
+   ],
+   "gop": [
+    "Mark Esposito"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "13",
+   "seats": 1,
+   "dem": [
+    "Marie Pinkney"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "14",
+   "seats": 1,
+   "dem": [
+    "Kyra L. Hoffner"
+   ],
+   "gop": [
+    "Mark Pugh"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "15",
+   "seats": 1,
+   "dem": [
+    "Nisha Lodhavia"
+   ],
+   "gop": [
+    "Emily A. Thompson"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "open seat, David Lawson R retiring"
+  },
+  {
+   "d": "19",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Brian G. Pettyjohn"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Democrat"
+  },
+  {
+   "d": "20",
+   "seats": 1,
+   "dem": [
+    "Harry S. Gold"
+   ],
+   "gop": [
+    "Gerald W. Hocker"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Senate Republican leader"
+  }
+ ]
+}

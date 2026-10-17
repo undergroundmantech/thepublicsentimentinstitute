@@ -147,6 +147,21 @@ NO_UNOPPOSED_PRINT = {"AL", "KY"}          # unopposed primaries are not printed
 
 # polls
 POLLS = json.load(open("/tmp/statleg/polls_statleg_2026.json"))["confirmed"]
+try:
+    _new = json.load(open("/tmp/sl/cands/new_polls.json"))["confirmed"]
+except Exception:
+    _new = []
+_seen = {(p.get("state"), str(p.get("chamber")), str(p.get("district")), p.get("end"), p.get("D"), p.get("R")) for p in POLLS}
+for p in _new:
+    k = (p.get("state"), str(p.get("chamber")), str(p.get("district")), p.get("end"), p.get("D"), p.get("R"))
+    if k in _seen: continue
+    # one Iowa survey was published with two weightings; keep the standard one
+    if p.get("state") == "IA" and str(p.get("district")) == "35" and "recall" in (str(p.get("note", "")) + str(p.get("source", ""))).lower(): continue
+    _seen.add(k); POLLS.append(p)
+for p in POLLS:
+    # PA House 145, State Navigate Oct 10 to 14: the independent's share sits in the Democratic slot
+    if p.get("state") == "PA" and str(p.get("district")) == "145" and p.get("D") is None:
+        p["D"] = 46; p["R"] = 49; p["main_challenger_party"] = "I"; p["n"] = p.get("n") or 514
 def poll_w(p):
     try: age = (TODAY - pd.Timestamp(p["end"])).days
     except Exception: return 0.0
@@ -161,6 +176,27 @@ def poll_d2(p):
     if re.search(r"\(D\)|D-aligned|Democratic-aligned", s): d2 -= 0.015
     if re.search(r"\(R\)|R-aligned|Republican-aligned", s): d2 += 0.015
     return d2
+
+# 2026 general election candidate lists, one file per state and chamber, from the October 2026 ballot research
+ORDW = {w: f"{i}{'ST' if i % 10 == 1 and i != 11 else 'ND' if i % 10 == 2 and i != 12 else 'RD' if i % 10 == 3 and i != 13 else 'TH'}" for i, w in enumerate(
+    "ZERO FIRST SECOND THIRD FOURTH FIFTH SIXTH SEVENTH EIGHTH NINTH TENTH ELEVENTH TWELFTH THIRTEENTH FOURTEENTH FIFTEENTH SIXTEENTH SEVENTEENTH EIGHTEENTH NINETEENTH TWENTIETH".split())}
+def cnorm(d):
+    s = str(d).upper().replace("&", " AND ").replace("DISTRICT", " ")
+    s = re.sub(r"[-–,.]", " ", s); s = re.sub(r"\s+", " ", s).strip()
+    return " ".join(ORDW.get(t, t.lstrip("0") or "0") if (t in ORDW or t.isdigit()) else t for t in s.split())
+CANDS, CSPEC = {}, {}
+for f in glob.glob("/tmp/sl/cands/*_*.json"):
+    b = os.path.basename(f)[:-5]
+    if b.count("_") != 1 or not re.match(r"^[A-Z]{2}_(house|senate)$", b): continue
+    st_, ch_ = b.split("_")
+    try: j = json.load(open(f))
+    except Exception: continue
+    for e in j.get("districts", []):
+        k = cnorm(e.get("d"))
+        if e.get("special"): CSPEC.setdefault((st_, ch_), {})[k] = e
+        else: CANDS.setdefault((st_, ch_), {})[k] = e
+SERIOUS = {"I", "P", "W", "O", "F", "C"}          # independents and the minor lines that run real campaigns; Libertarians and Greens rarely do
+IND_PENALTY = 0.3                                  # an independent with no party line and no poll runs about 7 points behind a nominee
 
 # 2022 California Senate, even districts, from the certified results (MEDSL's 2022 California file has no Senate rows).
 # Two Democrat finals carry an estimated two party share from the district's character, marked below.
@@ -230,6 +266,17 @@ for st in sorted(set(HOUSE) | set(SENATE)):
                 else:
                     hold[d] = dict(seats=1, won=[party])
                 filled.add(d)
+        # seats the candidate lists put on the ballot that the cohort rule held over: specials for vacancies, a second WV seat
+        idx = {cnorm(d): d for d in set(up) | set(hold)}
+        for kk, e in list(CANDS.get((st, ch), {}).items()) + list(CSPEC.get((st, ch), {}).items()):
+            d = idx.get(kk)
+            if d is None or d not in hold: continue
+            take = max(1, int(e.get("seats") or 1)) if d not in up else 1
+            take = min(take, hold[d]["seats"])
+            up[d] = up.get(d, 0) + take
+            if d not in src_last or src_last[d] == (None, None): src_last[d] = (2024, k24.get(d)) if d in k24 else (None, None)
+            hold[d]["seats"] -= take; hold[d]["won"] = hold[d]["won"][take:]
+            if hold[d]["seats"] <= 0: del hold[d]
         seats_up = sum(up.values())
         held = {"D": 0, "R": 0, "O": 0}
         for v in hold.values():
@@ -256,18 +303,35 @@ for st in sorted(set(HOUSE) | set(SENATE)):
             if st in PRIM_STATES and pr and st not in NO_UNOPPOSED_PRINT:
                 if pr["nD"] == 0 and pr["nR"] > 0: status = "no Democrat filed"
                 elif pr["nR"] == 0 and pr["nD"] > 0: status = "no Republican filed"
+            ce = CANDS.get((st, ch), {}).get(cnorm(d)) or CSPEC.get((st, ch), {}).get(cnorm(d))
+            info = {}
+            if ce:
+                dl = [x for x in (ce.get("dem") or []) if x]; gl = [x for x in (ce.get("gop") or []) if x]
+                ol = [o for o in (ce.get("others") or []) if o.get("name") and str(o.get("party", "")).upper() in SERIOUS]
+                info = dict(dem=", ".join(dl) or None, gop=", ".join(gl) or None, ind=ol[0]["name"] if ol else None,
+                            indParty=str(ol[0].get("party", "I")).upper() if ol else None, dcap=len(dl), rcap=len(gl),
+                            note="; ".join(f"{w.get('name')} ({w.get('party')}) withdrew" for w in (ce.get("withdrawn") or []) if w.get("name")) or None)
+                if not dl and not gl: status = "no major party candidate" if ol else status
+                elif not dl: status = "independent challenger" if ol else "no Democrat filed"
+                elif not gl: status = "no Republican filed"
+                else: status = "contested"
             if lean is None:
                 # no lean at all: a seat that was uncontested and unprinted; it stays with its last winner
                 party = (last["won"][0] if last else None)
                 status = f"uncontested, last held by {party}" if party else "no data"
                 if not party: party = "D" if P24[st] > 0.5 else "R"
-                rows.append(dict(d=d, seats=seats, lean=None, leanSrc=None, last=None, L=None, status=status, hold=party, winner=winner))
+                if status == "no Democrat filed": party = "R"
+                elif status == "no Republican filed": party = "D"
+                rows.append(dict(d=d, seats=seats, lean=None, leanSrc=None, last=None, L=None, status=status, hold=party, winner=winner, info=info))
                 continue
             L = lean + delta + K_CAND * cand
             prim = None
             if pr and pr["D"] > 0 and pr["R"] > 0:
                 prim = pr["D"] / (pr["D"] + pr["R"])
-            rows.append(dict(d=d, seats=seats, lean=lean, leanSrc=lean_src, cand=cand, L=L, prim=prim, status=status, winner=winner,
+            ind_inc = bool(info.get("ind")) and ((last and "O" in (last.get("won") or [])) or (winner and info["ind"].split()[-1].upper() in str(winner).upper()))
+            if ind_inc: info["indInc"] = True
+            if status == "independent challenger" and not ind_inc: L -= IND_PENALTY
+            rows.append(dict(d=d, seats=seats, lean=lean, leanSrc=lean_src, cand=cand, L=L, prim=prim, status=status, winner=winner, info=info,
                              last=dict(year=yr, d2=None if not last or last["d2"] is None else round(100 * last["d2"], 1),
                                        won=last["won"] if last else None) if last else None))
         if not rows: continue
@@ -294,6 +358,9 @@ for st in sorted(set(HOUSE) | set(SENATE)):
             ws = [(poll_w(p), poll_d2(p), p) for p in dp if p.get("D") is not None and p.get("R") is not None]; ws = [x for x in ws if x[0] > 0]
             if ws:
                 w = min(0.6, 0.35 * sum(x[0] for x in ws))
+                if r["status"] == "independent challenger":
+                    if not (r.get("info") or {}).get("indInc"): r["L"] += IND_PENALTY                      # the poll speaks for the independent's real strength
+                    w = min(0.75, 0.6 * sum(x[0] for x in ws))
                 pl = sum(x[0] * lg(x[1]) for x in ws) / sum(x[0] for x in ws)
                 r["L"] = (1 - w) * r["L"] + w * pl
                 r["polls"] = [dict(pollster=re.sub(r"\s*\(.*?\)", "", x[2]["source"]).strip(), end=x[2]["end"], D=x[2]["D"], R=x[2]["R"], n=x[2].get("n")) for x in ws]
@@ -308,18 +375,28 @@ for st in sorted(set(HOUSE) | set(SENATE)):
                 rseats += r["seats"]; r["probD"] = 0.0; r["margin"] = 100.0; continue
             if r["status"] == "no Republican filed":
                 dseats += r["seats"]; r["probD"] = 1.0; r["margin"] = -100.0; continue
+            if r["status"] == "no major party candidate":
+                oseats += r["seats"]; r["probD"] = 0.0; r["margin"] = None; continue
             z = r["L"] + nat + stsh + rng.normal(0, SD_DIST, N)
             if r["seats"] > 1:
                 wins = sum((z + rng.normal(0, SD_SEAT, N)) > 0 for _ in range(r["seats"]))
             else:
                 wins = (z > 0).astype(int)
-            dseats += wins; rseats += r["seats"] - wins
+            inf = r.get("info") or {}
+            if inf.get("dcap") is not None and inf.get("rcap") is not None and r["status"] == "contested":
+                # a multi member district with fewer nominees than seats on one side
+                wins = np.clip(wins, max(0, r["seats"] - inf["rcap"]), min(r["seats"], inf["dcap"]))
+            if r["status"] == "independent challenger":
+                oseats += wins; rseats += r["seats"] - wins
+            else:
+                dseats += wins; rseats += r["seats"] - wins
             r["probD"] = round(float((z > 0).mean()), 4)
             r["margin"] = round(float(100 * (1 - 2 * inv(r["L"]))), 2)          # Republican minus Democratic, two party
         dseats += max(0, missing) * 0   # unaccounted seats are reported, not guessed
         total_known = size - max(0, missing)
         maj = size // 2 + 1
-        dc = float((dseats >= maj).mean()); rc = float((rseats >= maj).mean())
+        # Alaska's House and Senate are run by bipartisan coalitions, so independents count with the Democrats for control
+        dc = float(((dseats + (oseats if st == "AK" else 0)) >= maj).mean()); rc = float((rseats >= maj).mean())
         vals, cnts = np.unique(dseats.astype(int), return_counts=True)
         cur = {"D": held["D"], "R": held["R"], "O": held["O"]}
         for d, (yr, last) in src_last.items():
@@ -339,7 +416,12 @@ for st in sorted(set(HOUSE) | set(SENATE)):
             districts=[dict(d=r["d"], seats=r["seats"], margin=r.get("margin"), probD=r.get("probD"),
                             lean=None if r["lean"] is None else round(float(100 * (1 - 2 * inv(r["lean"]))), 1), leanSrc=r.get("leanSrc"),
                             last=r.get("last"), status=r["status"], prim=None if r.get("prim") is None else round(100 * r["prim"], 1),
-                            polls=r.get("polls"), dem=NOM.get((st, ch, r["d"], "D")), gop=NOM.get((st, ch, r["d"], "R")),
+                            polls=r.get("polls"),
+                            dem=(r.get("info") or {}).get("dem") or (None if r.get("info") else NOM.get((st, ch, r["d"], "D"))),
+                            gop=(r.get("info") or {}).get("gop") or (None if r.get("info") else NOM.get((st, ch, r["d"], "R"))),
+                            ind=(r.get("info") or {}).get("ind"), indParty=(r.get("info") or {}).get("indParty"),
+                            indMain=r["status"] in ("independent challenger", "no major party candidate"),
+                            note=(r.get("info") or {}).get("note"),
                             winner=r.get("winner")) for r in rows]))
         log.append((st, ch, size, seats_up, held, missing, round(dc, 3)))
 
@@ -354,6 +436,6 @@ hub = []
 for c in chambers:
     hub.append(dict({k: c[k] for k in ("id", "st", "state", "chamber", "name", "seats", "up", "majority", "hold", "current",
                                         "demControl", "gopControl", "tie", "demSeats", "gopSeats", "p10", "p90", "median")},
-                    d=[[x["d"], x["seats"], x["probD"], x["margin"], (x["last"] or {}).get("won", [None])[0] if x["last"] and x["last"].get("won") else None] for x in c["districts"]],
+                    d=[[x["d"], x["seats"], x["probD"], x["margin"], (x["last"] or {}).get("won", [None])[0] if x["last"] and x["last"].get("won") else None, 1 if x.get("indMain") else 0] for x in c["districts"]],
                     holdD=c["holdD"]))
 json.dump(dict(meta=meta | dict(method=None), chambers=hub), open(OUT.replace(".json", "_hub.json"), "w"), separators=(",", ":"))

@@ -1,0 +1,289 @@
+{
+ "state": "CO",
+ "chamber": "senate",
+ "sources": [
+  "https://ivoterguide.com/all-in-state/co",
+  "https://en.wikipedia.org/wiki/2026_Colorado_Senate_election",
+  "https://en.wikipedia.org/wiki/2026_Colorado_House_of_Representatives_election"
+ ],
+ "as_of": "2026-10-17",
+ "complete": true,
+ "districts": [
+  {
+   "d": "1",
+   "dem": [
+    "Jamie Jeffery"
+   ],
+   "gop": [
+    "Byron Pelton"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "3",
+   "dem": [
+    "Aaron Gutierrez"
+   ],
+   "gop": [
+    "Dana Charles"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "4",
+   "dem": [
+    "Justin Kurth"
+   ],
+   "gop": [
+    "Teddy Collins III"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "7",
+   "dem": [],
+   "gop": [
+    "Janice Rich"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "8",
+   "dem": [
+    "Dylan Roberts"
+   ],
+   "gop": [
+    "Corey Marshall"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "9",
+   "dem": [
+    "William Delano Moses III"
+   ],
+   "gop": [
+    "Terri Carver"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "incumbent Lynda Zamora Wilson R lost renomination"
+  },
+  {
+   "d": "11",
+   "dem": [
+    "Tony Exum Sr"
+   ],
+   "gop": [
+    "Levon Stilson"
+   ],
+   "others": [
+    {
+     "name": "Janet Turner",
+     "party": "L"
+    }
+   ],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "15",
+   "dem": [
+    "Janice Marchman"
+   ],
+   "gop": [
+    "Rob Woodward"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "17",
+   "dem": [
+    "Katie Wallace"
+   ],
+   "gop": [
+    "Pat Miller"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "20",
+   "dem": [
+    "Sheila Lieder"
+   ],
+   "gop": [
+    "Richard Mancuso"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "21",
+   "dem": [
+    "Adrienne Benavidez"
+   ],
+   "gop": [
+    "Frederick Alfred Jr"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "22",
+   "dem": [
+    "Monica Duran"
+   ],
+   "gop": [
+    "Steve Harkess"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "24",
+   "dem": [
+    "Kyle Mullica"
+   ],
+   "gop": [
+    "Kevin Allen"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "25",
+   "dem": [
+    "William Lindstedt"
+   ],
+   "gop": [
+    "Paul Kohlhoff"
+   ],
+   "others": [
+    {
+     "name": "Mark Bromley",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "Mark Bromley is unaffiliated"
+  },
+  {
+   "d": "27",
+   "dem": [
+    "Tom Sullivan"
+   ],
+   "gop": [
+    "Danielle Lammon"
+   ],
+   "others": [
+    {
+     "name": "Michele Poague",
+     "party": "L"
+    }
+   ],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "29",
+   "dem": [
+    "Iman Jodeh"
+   ],
+   "gop": [
+    "Robert McKenna"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "30",
+   "dem": [
+    "Kevin Leung"
+   ],
+   "gop": [
+    "John Carson"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "31",
+   "dem": [
+    "Matt Ball"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "32",
+   "dem": [
+    "Emily Sirota"
+   ],
+   "gop": [
+    "Sydnnia Wulff"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "34",
+   "dem": [
+    "Chela Garcia Irlando"
+   ],
+   "gop": [],
+   "others": [
+    {
+     "name": "Jacob Luria",
+     "party": "L"
+    }
+   ],
+   "withdrawn": [],
+   "note": "no Republican; minor party or unaffiliated candidate is the main challenger"
+  },
+  {
+   "d": "35",
+   "dem": [
+    "Duane Gurule"
+   ],
+   "gop": [
+    "Rod Pelton"
+   ],
+   "others": [
+    {
+     "name": "Travis Nelson",
+     "party": "I"
+    },
+    {
+     "name": "Richard Graf",
+     "party": "L"
+    }
+   ],
+   "withdrawn": [],
+   "note": "Travis Nelson is unaffiliated"
+  }
+ ],
+ "method": "General election candidates from iVoterGuide Colorado statewide list, page version 2026-10-13; page cautions that unaffiliated candidates may still change as SOS verifies them. 21 Senate seats on ballot including seats held by appointees."
+}

@@ -1,0 +1,879 @@
+{
+ "state": "RI",
+ "chamber": "house",
+ "sources": [
+  "https://vote.sos.ri.gov/Candidates/CandidateSearchSummary?OfficeType=593&Election=18239"
+ ],
+ "as_of": "2026-10-17",
+ "complete": true,
+ "caveat": "Official RI Secretary of State candidate database, current as of 2026-10-17; it lists no independent or minor party candidates for state House. Names converted from all caps.",
+ "districts": [
+  {
+   "d": "1",
+   "seats": 1,
+   "dem": [
+    "Edith H Ajello"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "Ajello beat Michael Garman in D primary; no Republican"
+  },
+  {
+   "d": "2",
+   "seats": 1,
+   "dem": [
+    "Christopher Richard Blazejewski"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "3",
+   "seats": 1,
+   "dem": [
+    "Nathan W Biah"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "4",
+   "seats": 1,
+   "dem": [
+    "Rebecca Michele Kislak"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "5",
+   "seats": 1,
+   "dem": [
+    "Anthony J Desimone"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "6",
+   "seats": 1,
+   "dem": [
+    "Raymond A Hull"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "7",
+   "seats": 1,
+   "dem": [
+    "Amy J Santiago"
+   ],
+   "gop": [
+    "Christopher L Ireland"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "open seat, David Morales running for Providence mayor; Santiago beat Jo-Ann Ryan in D primary"
+  },
+  {
+   "d": "8",
+   "seats": 1,
+   "dem": [
+    "John Joseph Lombardi"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "9",
+   "seats": 1,
+   "dem": [
+    "Enrique George Sanchez"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "Sanchez beat Santos Javier in D primary; no Republican"
+  },
+  {
+   "d": "10",
+   "seats": 1,
+   "dem": [
+    "Scott A Slater"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "11",
+   "seats": 1,
+   "dem": [
+    "Grace Diaz"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "12",
+   "seats": 1,
+   "dem": [
+    "Arlette Hidalgo"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "Hidalgo beat Carlos Cedeno in D primary; no Republican"
+  },
+  {
+   "d": "13",
+   "seats": 1,
+   "dem": [
+    "Ramon A Perez"
+   ],
+   "gop": [
+    "Derick Alvin Reels"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "14",
+   "seats": 1,
+   "dem": [
+    "Charlene Lima"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "Lima beat Naiommi Baret in D primary; no Republican"
+  },
+  {
+   "d": "15",
+   "seats": 1,
+   "dem": [
+    "Colleen Marie Crudele"
+   ],
+   "gop": [
+    "Christopher G Paplauskas"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "16",
+   "seats": 1,
+   "dem": [
+    "Brandon Potter"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "17",
+   "seats": 1,
+   "dem": [
+    "Jacquelyn Maria Baginski"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "18",
+   "seats": 1,
+   "dem": [
+    "Arthur Baskin Handy"
+   ],
+   "gop": [
+    "Jessica S Gomes"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "19",
+   "seats": 1,
+   "dem": [
+    "Joseph Michael McNamara"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "20",
+   "seats": 1,
+   "dem": [
+    "David Alan Bennett"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "21",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Marie A Hopkins"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Democrat"
+  },
+  {
+   "d": "22",
+   "seats": 1,
+   "dem": [
+    "Zakary James Smith Pereira"
+   ],
+   "gop": [
+    "Barbara J Quigley"
+   ],
+   "others": [],
+   "withdrawn": [
+    {
+     "name": "Thomas Ames Lynch",
+     "party": "D",
+     "note": "declaration withdrawn per SOS candidate list, not on ballot"
+    }
+   ],
+   "note": "Smith Pereira beat Janie Segui in D primary"
+  },
+  {
+   "d": "23",
+   "seats": 1,
+   "dem": [
+    "William Anthony Muto"
+   ],
+   "gop": [
+    "Dana James Traversie"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Muto beat Timothy Howe in D primary"
+  },
+  {
+   "d": "24",
+   "seats": 1,
+   "dem": [
+    "Evan Patrick Shanley"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "25",
+   "seats": 1,
+   "dem": [
+    "Thomas E Noret"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "26",
+   "seats": 1,
+   "dem": [
+    "Earl A Read"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "27",
+   "seats": 1,
+   "dem": [
+    "Angela S Coburn"
+   ],
+   "gop": [
+    "Lawrence Paul Almagno"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "28",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "George A Nardone"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Democrat"
+  },
+  {
+   "d": "29",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Sherry L Roberts"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Democrat"
+  },
+  {
+   "d": "30",
+   "seats": 1,
+   "dem": [
+    "Justine A Caldwell"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "31",
+   "seats": 1,
+   "dem": [
+    "James Christopher Sheehan"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "Sheehan won 3 way D primary; no Republican"
+  },
+  {
+   "d": "32",
+   "seats": 1,
+   "dem": [
+    "Robert Emmett Craven"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "Craven won D primary over Kevin Hoyle and is on the ballot despite earlier reports he would run for attorney general; no Republican"
+  },
+  {
+   "d": "33",
+   "seats": 1,
+   "dem": [
+    "Carol Hagan McEntee"
+   ],
+   "gop": [
+    "Jessica A Drew Day"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "34",
+   "seats": 1,
+   "dem": [
+    "Teresa A Tanzi"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "35",
+   "seats": 1,
+   "dem": [
+    "Kathleen A Fogarty"
+   ],
+   "gop": [
+    "Jennifer P Nerbonne"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "36",
+   "seats": 1,
+   "dem": [
+    "Tina L Spears"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "Spears beat Leah Boisclair in D primary; no Republican"
+  },
+  {
+   "d": "37",
+   "seats": 1,
+   "dem": [
+    "Samuel Angelo Azzinaro"
+   ],
+   "gop": [
+    "Christopher M Stanton"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "38",
+   "seats": 1,
+   "dem": [
+    "Brian Patrick Kennedy"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "Kennedy beat Stephen Moffitt in D primary; no Republican"
+  },
+  {
+   "d": "39",
+   "seats": 1,
+   "dem": [
+    "Megan L Cotter"
+   ],
+   "gop": [
+    "Jasmin H Roy"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "40",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Michael W Chippendale"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Democrat"
+  },
+  {
+   "d": "41",
+   "seats": 1,
+   "dem": [
+    "Shaina N Smith"
+   ],
+   "gop": [
+    "Michael J Riley"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "42",
+   "seats": 1,
+   "dem": [
+    "Edward William Stravato"
+   ],
+   "gop": [
+    "Richard Rawdon Fascia"
+   ],
+   "others": [],
+   "withdrawn": [
+    {
+     "name": "Edward Thomas Cardillo",
+     "party": "D",
+     "note": "declaration withdrawn per SOS candidate list, not on ballot"
+    }
+   ]
+  },
+  {
+   "d": "43",
+   "seats": 1,
+   "dem": [
+    "Deborah Ann Fellela"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "44",
+   "seats": 1,
+   "dem": [
+    "Gregory J Costantino"
+   ],
+   "gop": [
+    "Joseph T Hosey"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "45",
+   "seats": 1,
+   "dem": [
+    "Mia Anne Ackerman"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "46",
+   "seats": 1,
+   "dem": [
+    "Mary Ann Shallcross Smith"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "47",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "David J Place"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Democrat"
+  },
+  {
+   "d": "48",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Brian C Newberry"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Democrat"
+  },
+  {
+   "d": "49",
+   "seats": 1,
+   "dem": [
+    "Veronicka Nicole Vega"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "independent incumbent Jon Brien not on the candidate list; Vega D unopposed; no Republican"
+  },
+  {
+   "d": "50",
+   "seats": 1,
+   "dem": [
+    "Stephen Matthew Casey"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "51",
+   "seats": 1,
+   "dem": [
+    "Robert Douglas Phillips"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "52",
+   "seats": 1,
+   "dem": [
+    "Alex Daniel Marszalkowski"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "53",
+   "seats": 1,
+   "dem": [
+    "Suzanna L Alba"
+   ],
+   "gop": [
+    "Paul Monti Santucci"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "54",
+   "seats": 1,
+   "dem": [
+    "William W O'Brien"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "55",
+   "seats": 1,
+   "dem": [
+    "Arthur J Corvese"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "56",
+   "seats": 1,
+   "dem": [
+    "Joshua J D Giraldo"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "57",
+   "seats": 1,
+   "dem": [
+    "Brandon T Voas"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "Voas beat James McLaughlin in D primary; no Republican"
+  },
+  {
+   "d": "58",
+   "seats": 1,
+   "dem": [
+    "Cherie L Cruz"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "59",
+   "seats": 1,
+   "dem": [
+    "Jennifer A Stewart"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "60",
+   "seats": 1,
+   "dem": [
+    "Karen Alzate"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [
+    {
+     "name": "Luis Ernesto Sandoval",
+     "party": "R",
+     "note": "filed but did not qualify for ballot"
+    }
+   ],
+   "note": "no Republican"
+  },
+  {
+   "d": "61",
+   "seats": 1,
+   "dem": [
+    "Leonela Felix"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [
+    {
+     "name": "Kevin Joseph Whalen",
+     "party": "R",
+     "note": "declaration withdrawn per SOS list"
+    }
+   ],
+   "note": "Felix beat Mark Theroux in D primary; no Republican"
+  },
+  {
+   "d": "62",
+   "seats": 1,
+   "dem": [
+    "Mary Duffy Messier"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "63",
+   "seats": 1,
+   "dem": [
+    "Katherine Sheena Kazarian"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "64",
+   "seats": 1,
+   "dem": [
+    "Jenni Azanero Furtado"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "65",
+   "seats": 1,
+   "dem": [
+    "Matthew Shane Dawson"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "Dawson won 3 way D primary; no Republican"
+  },
+  {
+   "d": "66",
+   "seats": 1,
+   "dem": [
+    "Jennifer Smith Boylan"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "67",
+   "seats": 1,
+   "dem": [
+    "Nicole Pinkie Jellinek"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "open seat, Jason Knight running for attorney general; Jellinek beat Ronald Jarvais in D primary; no Republican"
+  },
+  {
+   "d": "68",
+   "seats": 1,
+   "dem": [
+    "June S Speakman"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "69",
+   "seats": 1,
+   "dem": [
+    "Susan Ann Donovan"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "70",
+   "seats": 1,
+   "dem": [
+    "John G Edwards"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "71",
+   "seats": 1,
+   "dem": [
+    "Michelle Elise McGaw"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "72",
+   "seats": 1,
+   "dem": [
+    "Terri-Denise Cortvriend"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "73",
+   "seats": 1,
+   "dem": [
+    "Marvin L Abney"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "74",
+   "seats": 1,
+   "dem": [
+    "Alex Finkelman"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "75",
+   "seats": 1,
+   "dem": [
+    "Lauren H Carson"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  }
+ ]
+}

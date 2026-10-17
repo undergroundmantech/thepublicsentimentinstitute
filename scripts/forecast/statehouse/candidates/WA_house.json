@@ -1,0 +1,1198 @@
+{
+ "state": "WA",
+ "chamber": "house",
+ "sources": [
+  "https://ivoterguide.com/all-in-state/wa",
+  "https://theballotbrief.com/state/washington/king-county",
+  "https://theballotbrief.com/state/washington/snohomish-county",
+  "https://theballotbrief.com/state/washington/pierce-county",
+  "https://theballotbrief.com/state/washington/spokane-county",
+  "https://theballotbrief.com/state/washington/clark-county",
+  "https://theballotbrief.com/state/washington/thurston-county",
+  "https://theballotbrief.com/state/washington/whatcom-county",
+  "https://theballotbrief.com/state/washington/benton-county",
+  "https://theballotbrief.com/state/washington/yakima-county",
+  "https://theballotbrief.com/state/washington/kitsap-county",
+  "https://theballotbrief.com/state/washington/clallam-county",
+  "https://theballotbrief.com/state/washington/grant-county",
+  "https://theballotbrief.com/state/washington/skagit-county",
+  "https://cdn.kingcounty.gov/-/media/king-county/depts/elections/results/2026/08/webresults-20260818-final.csv",
+  "https://en.wikipedia.org/wiki/2026_Washington_House_of_Representatives_election",
+  "https://www.cleantechalliance.org/wp-content/uploads/2026/08/Boswell-Consulting-Day-One-2026-Primary-Election-Report.pdf"
+ ],
+ "as_of": "2026-10-17",
+ "complete": true,
+ "districts": [
+  {
+   "d": "1-1",
+   "dem": [
+    "Davina Duerr"
+   ],
+   "gop": [
+    "Maggie Wang"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Wikipedia primary table shows Mark Davies R second; King County final returns and Ballot Brief show Maggie Wang R advancing"
+  },
+  {
+   "d": "1-2",
+   "dem": [
+    "Shelley Kloba"
+   ],
+   "gop": [
+    "Cliff Moon"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "2-1",
+   "dem": [
+    "William Dehnel"
+   ],
+   "gop": [
+    "Andrew Barkis"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Dehnel's stated preference shown as Labor Democrat on Wikipedia, Democratic on Ballot Brief"
+  },
+  {
+   "d": "2-2",
+   "dem": [
+    "Angela Taylor"
+   ],
+   "gop": [
+    "Matt Marshall"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "3-1",
+   "dem": [
+    "Natasha Hill"
+   ],
+   "gop": [
+    "Tony Kiepe"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "3-2",
+   "dem": [
+    "Luc Jasmin III"
+   ],
+   "gop": [
+    "Natalie Poulson"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Pam Kohlmeier D led Jasmin on election night but Jasmin advanced in final count"
+  },
+  {
+   "d": "4-1",
+   "dem": [],
+   "gop": [
+    "Hillary Pham",
+    "Trent Maier"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "two Republicans, no Democrat"
+  },
+  {
+   "d": "4-2",
+   "dem": [
+    "Rob Tupper"
+   ],
+   "gop": [
+    "Rob Chase"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "5-1",
+   "dem": [
+    "Zach Hall"
+   ],
+   "gop": [
+    "Michelle Bennett"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "5-2",
+   "dem": [
+    "Lisa Callan"
+   ],
+   "gop": [
+    "Patrick Peacock"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "6-1",
+   "dem": [
+    "Michaela Kelso"
+   ],
+   "gop": [
+    "Alan Nolan"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "6-2",
+   "dem": [
+    "Julia Payne"
+   ],
+   "gop": [
+    "Jonathan Bingle"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "7-1",
+   "dem": [],
+   "gop": [
+    "Andrew Engell"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "7-2",
+   "dem": [],
+   "gop": [
+    "Hunter Abell"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "8-1",
+   "dem": [],
+   "gop": [
+    "Stephanie Barnard"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "8-2",
+   "dem": [],
+   "gop": [
+    "April Connors"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "9-1",
+   "dem": [],
+   "gop": [
+    "Mary Dye"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "9-2",
+   "dem": [
+    "Karina Wallace"
+   ],
+   "gop": [
+    "Joe Schmick"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "10-1",
+   "dem": [
+    "Clyde Shavers"
+   ],
+   "gop": [
+    "Robert \"Chili\" Hicks"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "10-2",
+   "dem": [
+    "Dave Paul"
+   ],
+   "gop": [
+    "Tim Hazelo"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "11-1",
+   "dem": [
+    "David Hackney",
+    "Ashley Fedan"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "two Democrats, no Republican"
+  },
+  {
+   "d": "11-2",
+   "dem": [
+    "Steve Bergquist"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "12-1",
+   "dem": [
+    "Stacy Willoughby"
+   ],
+   "gop": [
+    "Brian Burnett"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "12-2",
+   "dem": [
+    "Maggie Adams"
+   ],
+   "gop": [
+    "Mike Steele"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "13-1",
+   "dem": [
+    "Juan \"Jerry\" Garcia"
+   ],
+   "gop": [
+    "Tom Dent"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "13-2",
+   "dem": [],
+   "gop": [
+    "Deanna Martinez",
+    "Joshua Thompson"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "two Republicans, no Democrat"
+  },
+  {
+   "d": "14-1",
+   "dem": [
+    "Chelsea Dimas"
+   ],
+   "gop": [
+    "Gloria Mendoza"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "14-2",
+   "dem": [
+    "Ezequiel Morfín"
+   ],
+   "gop": [
+    "Deb Manjarrez"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "15-1",
+   "dem": [
+    "Jack McEntire"
+   ],
+   "gop": [
+    "Chris Corry"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "15-2",
+   "dem": [],
+   "gop": [
+    "Reedy Berg"
+   ],
+   "others": [
+    {
+     "name": "Liz Hallock",
+     "party": "O"
+    }
+   ],
+   "withdrawn": [],
+   "note": "no Democrat; Liz Hallock states preference No Kings Party and is the main challenger"
+  },
+  {
+   "d": "16-1",
+   "dem": [
+    "Kyle Palmer"
+   ],
+   "gop": [
+    "Mark Klicker"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "16-2",
+   "dem": [
+    "Derek Sarley"
+   ],
+   "gop": [
+    "Skyler Rude"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "17-1",
+   "dem": [
+    "Ben Christly"
+   ],
+   "gop": [
+    "Kevin Waters"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "name also spelled Ben Christy in one source"
+  },
+  {
+   "d": "17-2",
+   "dem": [
+    "Diana Perez"
+   ],
+   "gop": [
+    "David Stuebe"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "18-1",
+   "dem": [
+    "Randi Knott"
+   ],
+   "gop": [
+    "Stephanie McClintock"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "18-2",
+   "dem": [
+    "Deken Letinich"
+   ],
+   "gop": [
+    "John Ley"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "19-1",
+   "dem": [
+    "Kevin Moynihan"
+   ],
+   "gop": [
+    "Jim Walsh"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "19-2",
+   "dem": [
+    "Terry Carlson"
+   ],
+   "gop": [
+    "Joel McEntire"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "20-1",
+   "dem": [
+    "Andy Zahn"
+   ],
+   "gop": [
+    "Peter Abbarno"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "20-2",
+   "dem": [
+    "Evan Jones"
+   ],
+   "gop": [
+    "Ed Orcutt"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "21-1",
+   "dem": [
+    "Strom Peterson",
+    "Jason Moon"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "two Democrats, no Republican"
+  },
+  {
+   "d": "21-2",
+   "dem": [
+    "Lillian Ortiz-Self"
+   ],
+   "gop": [],
+   "others": [
+    {
+     "name": "Bruce Guthrie",
+     "party": "L"
+    }
+   ],
+   "withdrawn": [],
+   "note": "no Republican; Libertarian is the main challenger"
+  },
+  {
+   "d": "22-1",
+   "dem": [
+    "Beth Doglio"
+   ],
+   "gop": [
+    "Don Hewett"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "22-2",
+   "dem": [
+    "Lisa Parshley",
+    "Jamie Keenan-deVargas"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "two Democrats, no Republican"
+  },
+  {
+   "d": "23-1",
+   "dem": [
+    "Tarra Simmons",
+    "Daria Ilgen"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "two Democrats, no Republican"
+  },
+  {
+   "d": "23-2",
+   "dem": [
+    "Greg Nance"
+   ],
+   "gop": [
+    "Lance Byrd"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "24-1",
+   "dem": [
+    "Adam Bernbaum"
+   ],
+   "gop": [
+    "Eric Pratt"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "24-2",
+   "dem": [
+    "Kaylee Kuehn"
+   ],
+   "gop": [],
+   "others": [
+    {
+     "name": "Marcia Kelbon",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "no Republican; Marcia Kelbon states no party preference or Independent and finished first in the primary"
+  },
+  {
+   "d": "25-1",
+   "dem": [
+    "David Berg"
+   ],
+   "gop": [
+    "Michael Keaton"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "25-2",
+   "dem": [
+    "Jenn Marie Strickling"
+   ],
+   "gop": [
+    "Cyndy Jacobsen"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "26-1",
+   "dem": [
+    "Adison Richards"
+   ],
+   "gop": [
+    "David Olson"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Olson also spelled Olsen in one source"
+  },
+  {
+   "d": "26-2",
+   "dem": [
+    "Renee Hernandez Greenfield"
+   ],
+   "gop": [
+    "Katy Cornell"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "27-1",
+   "dem": [
+    "Laurie Jinkins"
+   ],
+   "gop": [
+    "Carole Sue Braaten"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "27-2",
+   "dem": [
+    "Jake Fey"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "28-1",
+   "dem": [
+    "Mari Leavitt"
+   ],
+   "gop": [
+    "Kathy Richardson"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "28-2",
+   "dem": [
+    "Dan Bronoske"
+   ],
+   "gop": [],
+   "others": [
+    {
+     "name": "Kerry Hills",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "Kerry Hills listed as Nonpartisan; was not a named primary candidate, apparently advanced as a write-in"
+  },
+  {
+   "d": "29-1",
+   "dem": [
+    "Krista Perez",
+    "Melanie Morgan"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "two Democrats, no Republican"
+  },
+  {
+   "d": "29-2",
+   "dem": [
+    "Joe Bushnell",
+    "Patrick Stickney"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "two Democrats, no Republican"
+  },
+  {
+   "d": "30-1",
+   "dem": [
+    "Jamila Taylor"
+   ],
+   "gop": [
+    "Tiffany Bowyer"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "30-2",
+   "dem": [
+    "Kristine Reeves"
+   ],
+   "gop": [],
+   "others": [
+    {
+     "name": "Paul McDaniel",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "no Republican; independent is the main challenger"
+  },
+  {
+   "d": "31-1",
+   "dem": [
+    "Stephen Szczurko-Walton"
+   ],
+   "gop": [
+    "Drew Stokesbary"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "31-2",
+   "dem": [
+    "John Bielka"
+   ],
+   "gop": [
+    "Josh Penner"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "32-1",
+   "dem": [
+    "Keith Scully",
+    "Danica Noble"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "two Democrats, no Republican"
+  },
+  {
+   "d": "32-2",
+   "dem": [
+    "Lauren Davis",
+    "Imraan Siddiqi"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "two Democrats, no Republican"
+  },
+  {
+   "d": "33-1",
+   "dem": [
+    "Edwin Obras"
+   ],
+   "gop": [
+    "Chris Martinez"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "33-2",
+   "dem": [
+    "Mia Su-Ling Gregerson"
+   ],
+   "gop": [
+    "Yuri Marinchik"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "34-1",
+   "dem": [
+    "Brianna K. Thomas"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "34-2",
+   "dem": [
+    "Joe Fitzgibbon",
+    "Mary Anito"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "two Democrats, no Republican"
+  },
+  {
+   "d": "35-1",
+   "dem": [
+    "Jim Pierson"
+   ],
+   "gop": [
+    "Dan Griffey"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "35-2",
+   "dem": [
+    "Maria Littlesun"
+   ],
+   "gop": [
+    "Travis Couture"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "36-1",
+   "dem": [
+    "Julia Grant Reed"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "36-2",
+   "dem": [
+    "Liz Berry"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "37-1",
+   "dem": [
+    "Kelabe Tewolde",
+    "Sharon Tomiko Santos"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "two Democrats, no Republican; incumbent Santos finished second in primary"
+  },
+  {
+   "d": "37-2",
+   "dem": [
+    "Jaelynn Scott"
+   ],
+   "gop": [],
+   "others": [
+    {
+     "name": "Evon McCorkle",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "no Republican; McCorkle listed Independent on Ballot Brief, Democratic in a lobbyist report"
+  },
+  {
+   "d": "38-1",
+   "dem": [
+    "Julio Cortes"
+   ],
+   "gop": [],
+   "others": [
+    {
+     "name": "Thomas \"Jeff\" Kelly",
+     "party": "O"
+    }
+   ],
+   "withdrawn": [],
+   "note": "no Republican; Kelly states Cascade Party preference"
+  },
+  {
+   "d": "38-2",
+   "dem": [
+    "Mary Fosse"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "39-1",
+   "dem": [
+    "Kathryn Lewandowsky"
+   ],
+   "gop": [
+    "Sam Low"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "39-2",
+   "dem": [
+    "Ida Keeley"
+   ],
+   "gop": [
+    "Steve Ewing"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "40-1",
+   "dem": [
+    "Debra Lekanoff"
+   ],
+   "gop": [
+    "Cindy Carter"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "40-2",
+   "dem": [
+    "Alex Ramel"
+   ],
+   "gop": [],
+   "others": [
+    {
+     "name": "Joseph Segault",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "no Republican; independent is the main challenger"
+  },
+  {
+   "d": "41-1",
+   "dem": [
+    "Janice Zahn"
+   ],
+   "gop": [
+    "Elle Nguyen"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "41-2",
+   "dem": [
+    "My-Linh Thai"
+   ],
+   "gop": [],
+   "others": [
+    {
+     "name": "Michael Rosen",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "no Republican; independent is the main challenger"
+  },
+  {
+   "d": "42-1",
+   "dem": [
+    "Alicia Rule"
+   ],
+   "gop": [
+    "Misty Flowers"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "42-2",
+   "dem": [
+    "Joe Timmons"
+   ],
+   "gop": [
+    "Justin Pike"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "43-1",
+   "dem": [
+    "Nicole Macri",
+    "Alby Clendennin"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "two Democrats, no Republican"
+  },
+  {
+   "d": "43-2",
+   "dem": [
+    "Shaun Scott"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "44-1",
+   "dem": [
+    "Brandy Donaghy"
+   ],
+   "gop": [
+    "Chris Elder"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "44-2",
+   "dem": [
+    "April Berg"
+   ],
+   "gop": [
+    "Tonya Stadlman"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "45-1",
+   "dem": [
+    "Roger Goodman"
+   ],
+   "gop": [
+    "JoAnn Tolentino"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "45-2",
+   "dem": [
+    "Vanessa Kritzer"
+   ],
+   "gop": [
+    "John P. Gibbons"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "46-1",
+   "dem": [
+    "Gerry Pollet",
+    "Will Dreher"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "two Democrats, no Republican"
+  },
+  {
+   "d": "46-2",
+   "dem": [
+    "Darya Farivar"
+   ],
+   "gop": [],
+   "others": [
+    {
+     "name": "Rodney \"Star\" Thornley",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "no Republican; independent is the main challenger"
+  },
+  {
+   "d": "47-1",
+   "dem": [
+    "Debra Jean Entenman"
+   ],
+   "gop": [],
+   "others": [
+    {
+     "name": "Cobi Clark",
+     "party": "L"
+    }
+   ],
+   "withdrawn": [],
+   "note": "no Republican; Libertarian is the main challenger"
+  },
+  {
+   "d": "47-2",
+   "dem": [
+    "Chris Stearns"
+   ],
+   "gop": [
+    "Ted Cooke"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "48-1",
+   "dem": [
+    "Osman Salahuddin"
+   ],
+   "gop": [
+    "Jeffery Poppe"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "48-2",
+   "dem": [
+    "Jessica Forsythe",
+    "Amy Walen"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "two Democrats, no Republican; incumbent Walen"
+  },
+  {
+   "d": "49-1",
+   "dem": [
+    "Kim Harless"
+   ],
+   "gop": [
+    "Sarah Mittelman"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "49-2",
+   "dem": [
+    "Monica Jurado Stonier"
+   ],
+   "gop": [
+    "Derek Thompson"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  }
+ ],
+ "method": "Top two general candidates from The Ballot Brief county pages, cross checked against King County final primary returns and Wikipedia primary results for LD1 to LD31. The SOS 2026 certification PDF exists but is a scanned image and could not be read. Party is the candidate's stated preference. The Ballot Brief notes its content is AI written, so treat individual labels with some caution. Every race was then confirmed against the iVoterGuide Washington statewide list dated Oct 14 2026, which matches on all 98 House positions and 24 Senate seats."
+}

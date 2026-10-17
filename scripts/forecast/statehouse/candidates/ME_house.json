@@ -1,0 +1,2104 @@
+{
+ "state": "ME",
+ "chamber": "house",
+ "sources": [
+  "https://theballotbrief.com/state/maine",
+  "https://www1.maine.gov/sos/elections-voting/upcoming-elections",
+  "https://www.maine.gov/sos/sites/maine.gov.sos/files/inline-files/2026%20Post%20Primary%20Withdrawals%20%26%20Replacement%20Candidates%20-%20Updated%209.22.26_0.pdf"
+ ],
+ "as_of": "2026-10-17",
+ "complete": true,
+ "method_note": "Candidates from The Ballot Brief Maine county pages, which say they follow the Maine SoS 2026 general election candidate list; districts on several county pages were deduplicated. The SoS candidate spreadsheet itself could not be fetched. Withdrawals and replacements come from the SoS post primary withdrawals PDF dated 9/22/2026, and every replacement and every no replacement case matches the Ballot Brief lists. Non major party candidates are coded I because the source labels them Independent, Unenrolled or Undeclared; any Green Independent or Libertarian nominee could be mislabeled, and none was found. The web search budget ran out before a separate check for Green or Libertarian nominees could be made.",
+ "districts": [
+  {
+   "d": "1",
+   "seats": 1,
+   "dem": [
+    "Jennifer L. Levesque"
+   ],
+   "gop": [
+    "Austin Theriault"
+   ],
+   "others": [],
+   "withdrawn": [
+    {
+     "name": "Dana M. Appleby",
+     "party": "D",
+     "note": "withdrew 7/9/2026; replaced by Jennifer L. Levesque"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "d": "2",
+   "seats": 1,
+   "dem": [
+    "Roland Daniel Martin"
+   ],
+   "gop": [
+    "Roger C. Albert"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "3",
+   "seats": 1,
+   "dem": [
+    "David H. McCrea"
+   ],
+   "gop": [
+    "Susan Bernard"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "4",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Timothy Conrad Guerrette"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "No Democratic nominee; Republican unopposed."
+  },
+  {
+   "d": "5",
+   "seats": 1,
+   "dem": [
+    "Lori G. Kenneson"
+   ],
+   "gop": [
+    "Douglas C. Carlisle Jr."
+   ],
+   "others": [],
+   "withdrawn": [
+    {
+     "name": "Bruce Archer",
+     "party": "D",
+     "note": "withdrew 7/10/2026; replaced by Lori G. Kenneson"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "d": "6",
+   "seats": 1,
+   "dem": [
+    "Melanie Tompkins"
+   ],
+   "gop": [
+    "Donald James Ardell"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "7",
+   "seats": 1,
+   "dem": [
+    "Matthew J. Rush"
+   ],
+   "gop": [
+    "Jantzen Stephen Craine"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "8",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Tracy Lynn Quint"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "No Democratic nominee; Republican unopposed."
+  },
+  {
+   "d": "9",
+   "seats": 1,
+   "dem": [
+    "Nicole N. Richards"
+   ],
+   "gop": [
+    "Arthur K. Mingo"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "10",
+   "seats": 1,
+   "dem": [
+    "Genevieve M. Lemire"
+   ],
+   "gop": [
+    "William R. Tuell"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "11",
+   "seats": 1,
+   "dem": [
+    "Keith A. Newman"
+   ],
+   "gop": [
+    "Tiffany Strout"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "12",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Thomas Arthur Hart Jr."
+   ],
+   "others": [
+    {
+     "name": "Roy D. Gott",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "No Democrat; Roy D. Gott (independent/unenrolled) is the main challenger."
+  },
+  {
+   "d": "13",
+   "seats": 1,
+   "dem": [
+    "Michael H. Cunningham II"
+   ],
+   "gop": [
+    "Russell P. White"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "14",
+   "seats": 1,
+   "dem": [
+    "Gary R. Friedmann"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [
+    {
+     "name": "Jean M. Donovan",
+     "party": "R",
+     "note": "withdrew 7/10/2026; no replacement"
+    }
+   ],
+   "note": "Republican withdrew; Democrat unopposed."
+  },
+  {
+   "d": "15",
+   "seats": 1,
+   "dem": [
+    "Holly R. Eaton"
+   ],
+   "gop": [],
+   "others": [
+    {
+     "name": "Clifford John Noyes",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "No Republican; Clifford John Noyes (independent/unenrolled) is the main challenger."
+  },
+  {
+   "d": "16",
+   "seats": 1,
+   "dem": [
+    "Nina Azella Milliken"
+   ],
+   "gop": [
+    "Eric M. White"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "17",
+   "seats": 1,
+   "dem": [
+    "Ronald B. Russell"
+   ],
+   "gop": [
+    "Steven Matthew Bishop"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "18",
+   "seats": 1,
+   "dem": [
+    "Jonathan C. Goble"
+   ],
+   "gop": [
+    "Mathew David McIntyre"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "19",
+   "seats": 1,
+   "dem": [
+    "David Ulrich"
+   ],
+   "gop": [
+    "Richard H. Campbell"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "20",
+   "seats": 1,
+   "dem": [
+    "Dani O'Halloran"
+   ],
+   "gop": [
+    "Patrick A. Jude"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "21",
+   "seats": 1,
+   "dem": [
+    "Ambureen Rana"
+   ],
+   "gop": [
+    "Frank Joseph Casella"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "22",
+   "seats": 1,
+   "dem": [
+    "Laura D. Supica"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [
+    {
+     "name": "Colleen T. O'Neal",
+     "party": "R",
+     "note": "withdrew 7/22/2026 after deadline; no replacement allowed"
+    }
+   ],
+   "note": "Republican withdrew; Democrat unopposed."
+  },
+  {
+   "d": "23",
+   "seats": 1,
+   "dem": [
+    "Victoria P. Kornfield"
+   ],
+   "gop": [
+    "Brian A. Ames"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "24",
+   "seats": 1,
+   "dem": [
+    "Sean F. Faircloth"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "No Republican nominee; Democrat unopposed."
+  },
+  {
+   "d": "25",
+   "seats": 1,
+   "dem": [
+    "Laurie Osher"
+   ],
+   "gop": [
+    "Anthony M. Weaver"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "26",
+   "seats": 1,
+   "dem": [
+    "James F. Dill"
+   ],
+   "gop": [],
+   "others": [
+    {
+     "name": "Adam Joseph Shaw",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [
+    {
+     "name": "Edward L. Paradis",
+     "party": "R",
+     "note": "withdrew 6/26/2026; no replacement"
+    }
+   ],
+   "note": "Republican withdrew; independent Adam Joseph Shaw is now the main challenger."
+  },
+  {
+   "d": "27",
+   "seats": 1,
+   "dem": [
+    "Devan C. Arnold"
+   ],
+   "gop": [
+    "David Giles"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "28",
+   "seats": 1,
+   "dem": [
+    "Gordon P. Street"
+   ],
+   "gop": [
+    "Irene A. Gifford"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "29",
+   "seats": 1,
+   "dem": [
+    "Nancy Marie McDowell"
+   ],
+   "gop": [
+    "Nancy J. Theriault"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "30",
+   "seats": 1,
+   "dem": [
+    "John Contreni"
+   ],
+   "gop": [
+    "James L. White"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "31",
+   "seats": 1,
+   "dem": [
+    "Eric J. Boothroyd"
+   ],
+   "gop": [
+    "Andrew R. Torbett"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "32",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Shawn L. Lancaster"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "No Democratic nominee; Republican unopposed."
+  },
+  {
+   "d": "33",
+   "seats": 1,
+   "dem": [
+    "Michael A. Brayson"
+   ],
+   "gop": [
+    "Kenneth Wade Fredette"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "34",
+   "seats": 1,
+   "dem": [
+    "James P. McClymer"
+   ],
+   "gop": [
+    "Stacey K. Guerin"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "35",
+   "seats": 1,
+   "dem": [
+    "Debora S. Farnham"
+   ],
+   "gop": [
+    "James E. Thorne"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "36",
+   "seats": 1,
+   "dem": [
+    "Clifton Guy Foster III"
+   ],
+   "gop": [
+    "Kimberly M. Haggan"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "37",
+   "seats": 1,
+   "dem": [
+    "Alan Lee Orcutt"
+   ],
+   "gop": [
+    "Reagan L. Paul"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "38",
+   "seats": 1,
+   "dem": [
+    "Kayla M.T. Miller"
+   ],
+   "gop": [
+    "Benjamin C. Hymes"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "39",
+   "seats": 1,
+   "dem": [
+    "Madison Crissey Cook"
+   ],
+   "gop": [
+    "Michael J. Nicholson"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "40",
+   "seats": 1,
+   "dem": [
+    "D. Michael Ray"
+   ],
+   "gop": [
+    "Joseph M. McLaughlin"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "41",
+   "seats": 1,
+   "dem": [
+    "Joshua D. Gerritsen"
+   ],
+   "gop": [
+    "Cory Christopher Raymond"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "42",
+   "seats": 1,
+   "dem": [
+    "Valli D. Geiger"
+   ],
+   "gop": [
+    "Melissa Joy Byer"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "43",
+   "seats": 1,
+   "dem": [
+    "Rhiannon Corey Hampson"
+   ],
+   "gop": [
+    "Christopher Paul Austin"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "44",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Ray A. Thombs Jr."
+   ],
+   "others": [
+    {
+     "name": "Shawn Saindon",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "No Democrat; Shawn Saindon (independent/unenrolled) is the main challenger."
+  },
+  {
+   "d": "45",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Rebecca M. Stephens"
+   ],
+   "others": [
+    {
+     "name": "Clinton E. Collamore",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "No Democrat; Clinton E. Collamore (independent/unenrolled) is the main challenger."
+  },
+  {
+   "d": "46",
+   "seats": 1,
+   "dem": [
+    "Jennifer F. Mayher"
+   ],
+   "gop": [],
+   "others": [
+    {
+     "name": "Kristine A. Poland",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "No Republican; Kristine A. Poland (independent/unenrolled) is the main challenger."
+  },
+  {
+   "d": "47",
+   "seats": 1,
+   "dem": [
+    "Wayne K. Farrin"
+   ],
+   "gop": [
+    "Chester B. Grover III"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "48",
+   "seats": 1,
+   "dem": [
+    "Charlotte Nutt"
+   ],
+   "gop": [
+    "Erik D. Hobson"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "49",
+   "seats": 1,
+   "dem": [
+    "Trent E. Vellella"
+   ],
+   "gop": [
+    "Suzanne R. Andresen"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "50",
+   "seats": 1,
+   "dem": [
+    "David A. Sinclair"
+   ],
+   "gop": [
+    "Jedediah James Rice II"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "51",
+   "seats": 1,
+   "dem": [
+    "Rafael Macias"
+   ],
+   "gop": [
+    "Annalyse O. Sarvinas"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "52",
+   "seats": 1,
+   "dem": [
+    "Sally Jeane Cluchey"
+   ],
+   "gop": [
+    "David W. Guilmette"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "53",
+   "seats": 1,
+   "dem": [
+    "Richard Marc Goldman"
+   ],
+   "gop": [
+    "Michael H. Lemelin"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "54",
+   "seats": 1,
+   "dem": [
+    "Karen L. Montell"
+   ],
+   "gop": [
+    "Michelle M. Tucker"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "55",
+   "seats": 1,
+   "dem": [
+    "Maureen AuCoin"
+   ],
+   "gop": [
+    "Charles L. Hippler IV"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "56",
+   "seats": 1,
+   "dem": [
+    "Robin L. Upton-Sukeforth"
+   ],
+   "gop": [
+    "Randall Adam Greenwood"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "57",
+   "seats": 1,
+   "dem": [
+    "Tavis Rock Hasenfus"
+   ],
+   "gop": [
+    "David R. Potvin"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "58",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Dexter E. Bridges Jr."
+   ],
+   "others": [
+    {
+     "name": "Sharon C. Frost",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "No Democrat; Sharon C. Frost (independent/unenrolled) is the main challenger."
+  },
+  {
+   "d": "59",
+   "seats": 1,
+   "dem": [
+    "Katrina Couch Ray-Saulis"
+   ],
+   "gop": [
+    "John Reny"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "60",
+   "seats": 1,
+   "dem": [
+    "William R. Bridgeo"
+   ],
+   "gop": [
+    "Wyatt Albert Beaulieu"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "61",
+   "seats": 1,
+   "dem": [
+    "Robin G. Crawley"
+   ],
+   "gop": [
+    "Alicia Carol Collins"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "62",
+   "seats": 1,
+   "dem": [
+    "Pamela Jo Swift"
+   ],
+   "gop": [
+    "Katrina J. Smith"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "63",
+   "seats": 1,
+   "dem": [
+    "Taylor Marie West"
+   ],
+   "gop": [
+    "Paul R. Flynn"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "64",
+   "seats": 1,
+   "dem": [
+    "Flavia M. DeBrito"
+   ],
+   "gop": [
+    "Shawn M. Packard"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "65",
+   "seats": 1,
+   "dem": [
+    "Cassie Lynn Julia"
+   ],
+   "gop": [
+    "Jeremy R. McArthur"
+   ],
+   "others": [],
+   "withdrawn": [
+    {
+     "name": "Scott Walter Strom",
+     "party": "R",
+     "note": "withdrew 7/8/2026; replaced by Jeremy R. McArthur"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "d": "66",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Michael D. Perkins"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "No Democratic nominee; Republican unopposed."
+  },
+  {
+   "d": "67",
+   "seats": 1,
+   "dem": [
+    "Matthew C. Townsend"
+   ],
+   "gop": [
+    "Shawn M. Dixon"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "68",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Amanda Noelle Collamore"
+   ],
+   "others": [
+    {
+     "name": "Zachary S. Lejonhud",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "No Democrat; Zachary S. Lejonhud (independent/unenrolled) is the main challenger."
+  },
+  {
+   "d": "69",
+   "seats": 1,
+   "dem": [
+    "Jessica B. Blanchard"
+   ],
+   "gop": [
+    "Dean A. Cray"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "70",
+   "seats": 1,
+   "dem": [
+    "Joseph R. Almand"
+   ],
+   "gop": [
+    "Jennifer Lynn Poirier"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "71",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "John E. Ducharme III"
+   ],
+   "others": [],
+   "withdrawn": [
+    {
+     "name": "Allison Perkins",
+     "party": "D",
+     "note": "withdrew 6/10/2026; no replacement"
+    }
+   ],
+   "note": "Democrat withdrew; Republican unopposed."
+  },
+  {
+   "d": "72",
+   "seats": 1,
+   "dem": [
+    "Cynthia J. Soma-Hernandez"
+   ],
+   "gop": [
+    "Douglas Andrew Thomas"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "73",
+   "seats": 1,
+   "dem": [
+    "Daniel J. Simonds"
+   ],
+   "gop": [
+    "Michael Soboleski"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "74",
+   "seats": 1,
+   "dem": [
+    "Marc Edwards"
+   ],
+   "gop": [
+    "Russell J. Black"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "75",
+   "seats": 1,
+   "dem": [
+    "H. Scott Landry"
+   ],
+   "gop": [
+    "Randall D. Gauvin"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "76",
+   "seats": 1,
+   "dem": [
+    "Trevor Alex Doiron"
+   ],
+   "gop": [
+    "Sheila Ann Lyman"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "77",
+   "seats": 1,
+   "dem": [
+    "Arlie E. Hetrick Jr."
+   ],
+   "gop": [
+    "Tammy L. Schmersal-Burgess"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "78",
+   "seats": 1,
+   "dem": [
+    "Woodleigh H. Hughes"
+   ],
+   "gop": [
+    "Rachel A. Henderson"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "79",
+   "seats": 1,
+   "dem": [
+    "Brianna Fern Lueck"
+   ],
+   "gop": [
+    "Michael J. Lance"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "80",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Ernest M. Fitts IV"
+   ],
+   "others": [
+    {
+     "name": "Azalea D. Cormier",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "No Democrat; Azalea D. Cormier (independent/unenrolled) is the main challenger."
+  },
+  {
+   "d": "81",
+   "seats": 1,
+   "dem": [
+    "Christopher A. Easton"
+   ],
+   "gop": [
+    "Peter C. Wood"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "82",
+   "seats": 1,
+   "dem": [
+    "Christopher Alfred Lewey"
+   ],
+   "gop": [
+    "Caleb J. Ness"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "83",
+   "seats": 1,
+   "dem": [
+    "Timothy J. Becker"
+   ],
+   "gop": [
+    "Marygrace Caroline Cimino"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "84",
+   "seats": 1,
+   "dem": [
+    "Cassandra Anne Dove"
+   ],
+   "gop": [
+    "Mark Walker"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "85",
+   "seats": 1,
+   "dem": [
+    "Paul Harris Welch"
+   ],
+   "gop": [
+    "Adrienne Paul"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "86",
+   "seats": 1,
+   "dem": [
+    "Abigail N. Geer"
+   ],
+   "gop": [
+    "Rolf A. Olsen Jr."
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "87",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "David Wayne Boyer Jr."
+   ],
+   "others": [],
+   "withdrawn": [
+    {
+     "name": "John Baldwin",
+     "party": "G",
+     "note": "withdrew 7/9/2026; no replacement"
+    }
+   ],
+   "note": "Green withdrew; Republican unopposed."
+  },
+  {
+   "d": "88",
+   "seats": 1,
+   "dem": [
+    "Dana N. Staples"
+   ],
+   "gop": [
+    "Quentin James Chapman"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "89",
+   "seats": 1,
+   "dem": [
+    "Adam R. Lee"
+   ],
+   "gop": [
+    "James D. Berube"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "90",
+   "seats": 1,
+   "dem": [
+    "Pamela B. Hart"
+   ],
+   "gop": [
+    "James W. Sorcek"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "91",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Jeffrey L. Timberlake"
+   ],
+   "others": [],
+   "withdrawn": [
+    {
+     "name": "Emily Dingman",
+     "party": "D",
+     "note": "withdrew 6/29/2026; no replacement"
+    }
+   ],
+   "note": "Democrat withdrew; Republican unopposed."
+  },
+  {
+   "d": "92",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Stephen J. Wood"
+   ],
+   "others": [
+    {
+     "name": "Scott G. Girardin",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "No Democrat; Scott G. Girardin (independent/unenrolled) is the main challenger."
+  },
+  {
+   "d": "93",
+   "seats": 1,
+   "dem": [
+    "Julia McCabe"
+   ],
+   "gop": [
+    "Susan G. Longchamps"
+   ],
+   "others": [],
+   "withdrawn": [
+    {
+     "name": "Chad E. Syphers",
+     "party": "R",
+     "note": "withdrew 7/9/2026; replaced by Susan G. Longchamps"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "d": "94",
+   "seats": 1,
+   "dem": [
+    "Scott A. Harriman"
+   ],
+   "gop": [
+    "Janet Inger Beaudoin"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "95",
+   "seats": 1,
+   "dem": [
+    "Kiernan Innes Majerus-Collins"
+   ],
+   "gop": [
+    "Bret M. Martel"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "96",
+   "seats": 1,
+   "dem": [
+    "Luke Dylan Jensen"
+   ],
+   "gop": [
+    "Kerryl Lee Clement"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "97",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Dale John Crafts"
+   ],
+   "others": [],
+   "withdrawn": [
+    {
+     "name": "Thomas R. Watson",
+     "party": "D",
+     "note": "withdrew 7/8/2026; no replacement"
+    }
+   ],
+   "note": "Democrat withdrew; Republican unopposed."
+  },
+  {
+   "d": "98",
+   "seats": 1,
+   "dem": [
+    "Kilton McCarthy Webb"
+   ],
+   "gop": [
+    "William J. St. Michel"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "99",
+   "seats": 1,
+   "dem": [
+    "Cheryl A. Golek"
+   ],
+   "gop": [
+    "Braeden D. Webber"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "100",
+   "seats": 1,
+   "dem": [
+    "Daniel Joseph Ankeles"
+   ],
+   "gop": [
+    "Brett Y. Barrett"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "101",
+   "seats": 1,
+   "dem": [
+    "Poppy T. Arford"
+   ],
+   "gop": [
+    "Ravi Jackson"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "102",
+   "seats": 1,
+   "dem": [
+    "Maura H. Pillsbury"
+   ],
+   "gop": [
+    "Henry Lloyd Lawrence III"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "103",
+   "seats": 1,
+   "dem": [
+    "Karin Orenstein"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "No Republican nominee; Democrat unopposed."
+  },
+  {
+   "d": "104",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "R. Melissa Winslow"
+   ],
+   "others": [
+    {
+     "name": "L. Samuel Pfeifle",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "No Democrat; L. Samuel Pfeifle (independent/unenrolled) is the main challenger."
+  },
+  {
+   "d": "105",
+   "seats": 1,
+   "dem": [
+    "Anne Palmer Graham"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [
+    {
+     "name": "Susan E. Fuller",
+     "party": "R",
+     "note": "withdrew 7/7/2026; no replacement"
+    }
+   ],
+   "note": "Republican withdrew; Democrat unopposed."
+  },
+  {
+   "d": "106",
+   "seats": 1,
+   "dem": [
+    "Bradley M. Youngs"
+   ],
+   "gop": [
+    "Barbara Bagshaw"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "107",
+   "seats": 1,
+   "dem": [
+    "Joseph A. Campbell"
+   ],
+   "gop": [
+    "Mark C. Cooper"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "108",
+   "seats": 1,
+   "dem": [
+    "Parnell W. Terry"
+   ],
+   "gop": [
+    "Kelly L. Dearborn"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "109",
+   "seats": 1,
+   "dem": [
+    "Seven R. Siegel"
+   ],
+   "gop": [
+    "Diana Kushnar"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "110",
+   "seats": 1,
+   "dem": [
+    "Christina R.C. Mitchell"
+   ],
+   "gop": [
+    "Jason Lewis Copp"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "111",
+   "seats": 1,
+   "dem": [
+    "Amy D. Kuhn"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "No Republican nominee; Democrat unopposed."
+  },
+  {
+   "d": "112",
+   "seats": 1,
+   "dem": [
+    "Sean M. Mahoney"
+   ],
+   "gop": [
+    "Lauren Chelsea Jones"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "113",
+   "seats": 1,
+   "dem": [
+    "Grayson Benjamin Lookner"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "No Republican nominee; Democrat unopposed."
+  },
+  {
+   "d": "114",
+   "seats": 1,
+   "dem": [
+    "April D. Fournier"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "No Republican nominee; Democrat unopposed."
+  },
+  {
+   "d": "115",
+   "seats": 1,
+   "dem": [
+    "Andrew J. Zarro"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "No Republican nominee; Democrat unopposed."
+  },
+  {
+   "d": "116",
+   "seats": 1,
+   "dem": [
+    "Samuel Lewis Zager"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "No Republican nominee; Democrat unopposed."
+  },
+  {
+   "d": "117",
+   "seats": 1,
+   "dem": [
+    "Matthew Moonen"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "No Republican nominee; Democrat unopposed."
+  },
+  {
+   "d": "118",
+   "seats": 1,
+   "dem": [
+    "Yusuf M. Yusuf"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "No Republican nominee; Democrat unopposed."
+  },
+  {
+   "d": "119",
+   "seats": 1,
+   "dem": [
+    "Michael P. Dixon"
+   ],
+   "gop": [
+    "Jacob Murray Wakem"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "120",
+   "seats": 1,
+   "dem": [
+    "Jason J. Shedlock"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [
+    {
+     "name": "Michael J. Dougherty",
+     "party": "R",
+     "note": "withdrew 6/15/2026; no replacement"
+    }
+   ],
+   "note": "Republican withdrew; Democrat unopposed."
+  },
+  {
+   "d": "121",
+   "seats": 1,
+   "dem": [
+    "Lucy Louisa Perkins"
+   ],
+   "gop": [
+    "Meagan J. Smith"
+   ],
+   "others": [],
+   "withdrawn": [
+    {
+     "name": "Robert Cameron",
+     "party": "D",
+     "note": "withdrew 6/18/2026; replaced by Lucy Louisa Perkins"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "d": "122",
+   "seats": 1,
+   "dem": [
+    "Matthew D. Beck"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "No Republican nominee; Democrat unopposed."
+  },
+  {
+   "d": "123",
+   "seats": 1,
+   "dem": [
+    "Michelle N. Boyer"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [
+    {
+     "name": "Annie Christy",
+     "party": "R",
+     "note": "withdrew 7/13/2026; no replacement"
+    }
+   ],
+   "note": "Republican withdrew; Democrat unopposed."
+  },
+  {
+   "d": "124",
+   "seats": 1,
+   "dem": [
+    "Eric James Nathanson"
+   ],
+   "gop": [
+    "Scott W. Doherty"
+   ],
+   "others": [
+    {
+     "name": "Mary Shannon Lindstrom",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "125",
+   "seats": 1,
+   "dem": [
+    "Kelly Noonan Murphy"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "No Republican nominee; Democrat unopposed."
+  },
+  {
+   "d": "126",
+   "seats": 1,
+   "dem": [
+    "Andrew Gattine"
+   ],
+   "gop": [
+    "Ethan E. Mongue"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "127",
+   "seats": 1,
+   "dem": [
+    "Morgan J. Rielly"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "No Republican nominee; Democrat unopposed."
+  },
+  {
+   "d": "128",
+   "seats": 1,
+   "dem": [
+    "Suzanne M. Salisbury"
+   ],
+   "gop": [],
+   "others": [
+    {
+     "name": "Lawrence P. McWilliams",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "No Republican; Lawrence P. McWilliams (independent/unenrolled) is the main challenger."
+  },
+  {
+   "d": "129",
+   "seats": 1,
+   "dem": [
+    "Marshall F. Archer"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "No Republican nominee; Democrat unopposed."
+  },
+  {
+   "d": "130",
+   "seats": 1,
+   "dem": [
+    "Lynn Holland Copeland"
+   ],
+   "gop": [],
+   "others": [
+    {
+     "name": "Todd M. Davis",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "No Republican; Todd M. Davis (independent/unenrolled) is the main challenger."
+  },
+  {
+   "d": "131",
+   "seats": 1,
+   "dem": [
+    "Robert James Kelly"
+   ],
+   "gop": [],
+   "others": [
+    {
+     "name": "Kenneth Craig Blow",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "No Republican; Kenneth Craig Blow (independent/unenrolled) is the main challenger."
+  },
+  {
+   "d": "132",
+   "seats": 1,
+   "dem": [
+    "Ryan Fecteau"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "No Republican nominee; Democrat unopposed."
+  },
+  {
+   "d": "133",
+   "seats": 1,
+   "dem": [
+    "Marc G. Malon II"
+   ],
+   "gop": [],
+   "others": [
+    {
+     "name": "Marc P. Lessard",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "No Republican; Marc P. Lessard (independent/unenrolled) is the main challenger."
+  },
+  {
+   "d": "134",
+   "seats": 1,
+   "dem": [
+    "Traci Gere"
+   ],
+   "gop": [],
+   "others": [
+    {
+     "name": "Allen Anthony Daggett",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "No Republican; Allen Anthony Daggett (independent/unenrolled) is the main challenger."
+  },
+  {
+   "d": "135",
+   "seats": 1,
+   "dem": [
+    "Lisa Joy Pratt"
+   ],
+   "gop": [],
+   "others": [
+    {
+     "name": "Scott E. Craig",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "No Republican; Scott E. Craig (independent/unenrolled) is the main challenger."
+  },
+  {
+   "d": "136",
+   "seats": 1,
+   "dem": [
+    "Michelle K. Conners"
+   ],
+   "gop": [
+    "John Eder"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "137",
+   "seats": 1,
+   "dem": [
+    "Charles Tilburg"
+   ],
+   "gop": [
+    "Nathan M. Carlow"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "138",
+   "seats": 1,
+   "dem": [
+    "Oliver D. McAvoy"
+   ],
+   "gop": [
+    "Jonathan Lee Kinney"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "139",
+   "seats": 1,
+   "dem": [
+    "Dean P. LePage"
+   ],
+   "gop": [
+    "Jamie K. Newton"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "140",
+   "seats": 1,
+   "dem": [
+    "Kirstan L. Watson"
+   ],
+   "gop": [
+    "Wayne R. Parry"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "141",
+   "seats": 1,
+   "dem": [
+    "Rebecca L. Flood Andrews"
+   ],
+   "gop": [
+    "Marc A. Boisse"
+   ],
+   "others": [
+    {
+     "name": "David R. Mongeau II",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "142",
+   "seats": 1,
+   "dem": [
+    "Ayn M. Hanselmann"
+   ],
+   "gop": [
+    "Domingo E. Torres"
+   ],
+   "others": [],
+   "withdrawn": [
+    {
+     "name": "Gordon E. Frohloff",
+     "party": "R",
+     "note": "withdrew 7/3/2026; replaced by Domingo E. Torres"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "d": "143",
+   "seats": 1,
+   "dem": [
+    "John R. Henkelman"
+   ],
+   "gop": [
+    "Melissa A. Simpson"
+   ],
+   "others": [],
+   "withdrawn": [
+    {
+     "name": "Eric H. Small",
+     "party": "R",
+     "note": "withdrew 6/12/2026; replaced by Melissa A. Simpson"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "d": "144",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Karen A. Gerrish"
+   ],
+   "others": [
+    {
+     "name": "Corinna Cole",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [
+    {
+     "name": "Jeffrey S. Adams",
+     "party": "R",
+     "note": "withdrew 6/18/2026; replaced by Karen A. Gerrish"
+    }
+   ],
+   "note": "No Democrat; unenrolled Corinna Cole is the main challenger."
+  },
+  {
+   "d": "145",
+   "seats": 1,
+   "dem": [
+    "Kristin T. Davis"
+   ],
+   "gop": [
+    "Caleb J. Chase"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "146",
+   "seats": 1,
+   "dem": [
+    "Walter Gerard Runte Jr."
+   ],
+   "gop": [
+    "Bradley S. Moulton"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "147",
+   "seats": 1,
+   "dem": [
+    "Holly T. Sargent"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "No Republican nominee; Democrat unopposed."
+  },
+  {
+   "d": "148",
+   "seats": 1,
+   "dem": [
+    "Marissa L. Tasker"
+   ],
+   "gop": [
+    "Thomas Arthur Lavigne"
+   ],
+   "others": [],
+   "withdrawn": [
+    {
+     "name": "Margaret Wheeler",
+     "party": "D",
+     "note": "withdrew 7/2/2026; replaced by Marissa L. Tasker"
+    },
+    {
+     "name": "Noah Arthur Cobb",
+     "party": "I",
+     "note": "unenrolled, withdrew 7/20/2026; no replacement allowed"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "d": "149",
+   "seats": 1,
+   "dem": [
+    "Mallory A. Cook"
+   ],
+   "gop": [
+    "Timothy R. Towne"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "150",
+   "seats": 1,
+   "dem": [
+    "Alexandros Orestis"
+   ],
+   "gop": [
+    "Mark F. Zimmer"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "151",
+   "seats": 1,
+   "dem": [
+    "Kristi M. Mathieson"
+   ],
+   "gop": [
+    "Suzanne Johnson"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  }
+ ]
+}

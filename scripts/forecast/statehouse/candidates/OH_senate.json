@@ -1,0 +1,237 @@
+{
+ "state": "OH",
+ "chamber": "senate",
+ "sources": [
+  "https://en.wikipedia.org/wiki/2026_Ohio_Senate_election",
+  "https://publicfiles.ohiosos.gov/election-results/past-elections/2026/Primary+Special%20Election%20-%20May%205,%202026/group1/summary-level-official-results-2026-primary---republican.xlsx"
+ ],
+ "as_of": "2026-10-17",
+ "complete": false,
+ "districts": [
+  {
+   "d": "1",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Craig Riedel"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Open seat; Riedel beat Rep. Jim Hoops 51.0 to 49.0 in R primary; no Democrat found in source"
+  },
+  {
+   "d": "3",
+   "seats": 1,
+   "dem": [
+    "Stacie Baker"
+   ],
+   "gop": [
+    "Michele Reynolds"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "5",
+   "seats": 1,
+   "dem": [
+    "Jeffrey Harris"
+   ],
+   "gop": [
+    "Phil Plummer"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Open seat; Democrat Harris won nomination as a write-in in the primary with 584 votes"
+  },
+  {
+   "d": "7",
+   "seats": 1,
+   "dem": [
+    "Cara Jacob"
+   ],
+   "gop": [
+    "Zac Haines"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Open seat"
+  },
+  {
+   "d": "9",
+   "seats": 1,
+   "dem": [
+    "Catherine Ingram"
+   ],
+   "gop": [
+    "Linda Matthews"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Republican Matthews won nomination as a write-in in the primary with 214 votes"
+  },
+  {
+   "d": "11",
+   "seats": 1,
+   "dem": [
+    "Paula Hicks-Hudson"
+   ],
+   "gop": [
+    "James Nowak"
+   ],
+   "others": [
+    {
+     "name": "Kenneth Sharp",
+     "party": "L"
+    }
+   ],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "13",
+   "seats": 1,
+   "dem": [
+    "Joe Miller"
+   ],
+   "gop": [
+    "Gayle Manning"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Open seat"
+  },
+  {
+   "d": "15",
+   "seats": 1,
+   "dem": [
+    "Latyna Humphrey"
+   ],
+   "gop": [
+    "Joseph Healy"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Open seat"
+  },
+  {
+   "d": "17",
+   "seats": 1,
+   "dem": [
+    "Brian Deer"
+   ],
+   "gop": [
+    "Shane Wilkin"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "19",
+   "seats": 1,
+   "dem": [
+    "Janet Wagner"
+   ],
+   "gop": [
+    "Ryan Rivers"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Open seat"
+  },
+  {
+   "d": "21",
+   "seats": 1,
+   "dem": [
+    "Kent Smith"
+   ],
+   "gop": [
+    "Mikhail Alterman"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "23",
+   "seats": 1,
+   "dem": [
+    "Bride Rose Sweeney"
+   ],
+   "gop": [
+    "Robert Dintaman"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Open seat"
+  },
+  {
+   "d": "25",
+   "seats": 1,
+   "dem": [
+    "Bill DeMora"
+   ],
+   "gop": [
+    "Don Roberts"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "27",
+   "seats": 1,
+   "dem": [
+    "Mike Roberto"
+   ],
+   "gop": [
+    "Steve Demetriou"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Open seat"
+  },
+  {
+   "d": "29",
+   "seats": 1,
+   "dem": [
+    "Thomas West"
+   ],
+   "gop": [
+    "Jane Timken"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Libertarian Zach Moore got only 3 write-in primary votes and is not counted as a nominee"
+  },
+  {
+   "d": "31",
+   "seats": 1,
+   "dem": [
+    "Laura Sirot"
+   ],
+   "gop": [
+    "Al Landis"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "33",
+   "seats": 1,
+   "dem": [
+    "Michael Kripchak"
+   ],
+   "gop": [
+    "Al Cutrona"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  }
+ ],
+ "gap": "Built from May 5 primary winners on Wikipedia; no official Ohio general election candidate list could be read (SOS results are xlsx files the fetch tool cannot parse). District 1 Democratic nominee not found, may be none. Post-primary replacements or withdrawals could be missed."
+}

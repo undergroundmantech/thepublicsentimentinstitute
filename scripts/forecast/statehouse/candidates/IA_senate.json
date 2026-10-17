@@ -1,0 +1,328 @@
+{
+ "state": "IA",
+ "chamber": "senate",
+ "sources": [
+  "https://sos.iowa.gov/sites/default/files/2026-08/2026%20General%20-%20Candidate%20List%20Database%20-%20All%20Elections_1.pdf",
+  "https://sos.iowa.gov/general-election"
+ ],
+ "as_of": "2026-10-17",
+ "complete": true,
+ "districts": [
+  {
+   "d": "1",
+   "seats": 1,
+   "dem": [
+    "Catelin Drey"
+   ],
+   "gop": [
+    "Christopher Prosch"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "3",
+   "seats": 1,
+   "dem": [
+    "Mike Frantz"
+   ],
+   "gop": [
+    "Lynn Evans"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "5",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Dave Rowley"
+   ],
+   "others": [
+    {
+     "name": "Rachel Gravert",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "No Democrat; No Party candidate Rachel Gravert is the main challenger"
+  },
+  {
+   "d": "7",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Kevin Alons"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Republican unopposed"
+  },
+  {
+   "d": "9",
+   "seats": 1,
+   "dem": [
+    "James Uhlenkamp"
+   ],
+   "gop": [
+    "Steve Baier"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Democrat added after primary (on 8/19 list, not 8/14 list)"
+  },
+  {
+   "d": "11",
+   "seats": 1,
+   "dem": [
+    "Sinikka Waugh"
+   ],
+   "gop": [
+    "Hollie Arlene Zajicek"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "13",
+   "seats": 1,
+   "dem": [
+    "Brenda Case"
+   ],
+   "gop": [
+    "Jeff Kulmatycki"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "15",
+   "seats": 1,
+   "dem": [
+    "Tony Bisignano"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "Democrat unopposed"
+  },
+  {
+   "d": "17",
+   "seats": 1,
+   "dem": [
+    "Samy El-Baroudi"
+   ],
+   "gop": [
+    "Ronald Langston"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "19",
+   "seats": 1,
+   "dem": [
+    "Zachary Mecham"
+   ],
+   "gop": [
+    "Barb Kniff McCulla"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "21",
+   "seats": 1,
+   "dem": [
+    "Heather Matson"
+   ],
+   "gop": [
+    "John Hollinrake"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "23",
+   "seats": 1,
+   "dem": [
+    "Tony Thompson"
+   ],
+   "gop": [
+    "Wes Enos"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Republican added after primary (on 8/19 list, not 8/14 list)"
+  },
+  {
+   "d": "25",
+   "seats": 1,
+   "dem": [
+    "Herman C Quirmbach"
+   ],
+   "gop": [
+    "Paul Wacker"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "27",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Annette Sweeney"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Republican unopposed"
+  },
+  {
+   "d": "29",
+   "seats": 1,
+   "dem": [
+    "Jim Vowels"
+   ],
+   "gop": [
+    "Sandy Salmon"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "31",
+   "seats": 1,
+   "dem": [
+    "Timi Brown Powers"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "Democrat unopposed"
+  },
+  {
+   "d": "33",
+   "seats": 1,
+   "dem": [
+    "Mary Ungs-Sogaard"
+   ],
+   "gop": [
+    "Carrie Koelker"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "35",
+   "seats": 1,
+   "dem": [
+    "Mike Zimmer"
+   ],
+   "gop": [
+    "Joe Stutting"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "37",
+   "seats": 1,
+   "dem": [
+    "Molly Donahue"
+   ],
+   "gop": [
+    "Randy Marzen"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "39",
+   "seats": 1,
+   "dem": [
+    "Liz Bennett"
+   ],
+   "gop": [
+    "Edward Bernie Hayes"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "41",
+   "seats": 1,
+   "dem": [
+    "Tom Wieck"
+   ],
+   "gop": [
+    "Kerry Gruenhagen"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "43",
+   "seats": 1,
+   "dem": [
+    "Meghann Foster"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "Democrat unopposed"
+  },
+  {
+   "d": "45",
+   "seats": 1,
+   "dem": [
+    "Janice Weiner"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "Democrat unopposed"
+  },
+  {
+   "d": "47",
+   "seats": 1,
+   "dem": [
+    "Nikhil Wagle"
+   ],
+   "gop": [
+    "Scott Webster"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "49",
+   "seats": 1,
+   "dem": [
+    "Cindy Winckler"
+   ],
+   "gop": [
+    "Cynthia Mensendick"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  }
+ ]
+}

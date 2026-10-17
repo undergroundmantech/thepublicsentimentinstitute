@@ -1,0 +1,493 @@
+{
+ "state": "IL",
+ "chamber": "senate",
+ "sources": [
+  "https://www.ballotready.org/elections/illinois-general-election-bdf14780-8511-4c9b-b696-e32fc2c49bd9",
+  "https://en.wikipedia.org/wiki/2026_Illinois_Senate_election",
+  "https://applications.kanecountyil.gov/ElectionWebsite/en-US/Candidates/List/31/NP",
+  "https://www.lakecountyil.gov/DocumentCenter/View/13059/Candidate-List"
+ ],
+ "as_of": "2026-10-17",
+ "complete": true,
+ "districts": [
+  {
+   "d": "2",
+   "seats": 1,
+   "dem": [
+    "Omar Aquino"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "Democrat unopposed"
+  },
+  {
+   "d": "3",
+   "seats": 1,
+   "dem": [
+    "Mattie Hunter"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "Democrat unopposed"
+  },
+  {
+   "d": "5",
+   "seats": 1,
+   "dem": [
+    "Lakesia Collins"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "Democrat unopposed"
+  },
+  {
+   "d": "6",
+   "seats": 1,
+   "dem": [
+    "Sara Feigenholtz"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "Democrat unopposed on BallotReady; Wikipedia lists Republican Frank Rowder, who had only 3 write-in primary votes and does not appear on BallotReady"
+  },
+  {
+   "d": "8",
+   "seats": 1,
+   "dem": [
+    "Ram Villivalam"
+   ],
+   "gop": [
+    "Vince Romano"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "9",
+   "seats": 1,
+   "dem": [
+    "Patrick Hanley"
+   ],
+   "gop": [
+    "Tom Lally"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Open seat"
+  },
+  {
+   "d": "11",
+   "seats": 1,
+   "dem": [
+    "Mike Porfirio"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "Democrat unopposed"
+  },
+  {
+   "d": "12",
+   "seats": 1,
+   "dem": [
+    "Celina Villanueva"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "Democrat unopposed"
+  },
+  {
+   "d": "14",
+   "seats": 1,
+   "dem": [
+    "Emil Jones III"
+   ],
+   "gop": [
+    "Brian Skala"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "15",
+   "seats": 1,
+   "dem": [
+    "Napoleon B. Harris III"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "Democrat unopposed"
+  },
+  {
+   "d": "17",
+   "seats": 1,
+   "dem": [
+    "Elgie R. Sims Jr."
+   ],
+   "gop": [
+    "Frederick L. Walls"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "18",
+   "seats": 1,
+   "dem": [
+    "Frances Ann Hurley"
+   ],
+   "gop": [
+    "Christine Shanahan McGovern"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Open seat, incumbent Bill Cunningham not on ballot"
+  },
+  {
+   "d": "20",
+   "seats": 1,
+   "dem": [
+    "Graciela Guzman"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "Democrat unopposed"
+  },
+  {
+   "d": "21",
+   "seats": 1,
+   "dem": [
+    "Laura Ellman"
+   ],
+   "gop": [
+    "Julie Anne Berkowicz"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "23",
+   "seats": 1,
+   "dem": [
+    "Suzanne \"Suzy\" Glowiak-Hilton"
+   ],
+   "gop": [
+    "Linda Z. Polacek"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "24",
+   "seats": 1,
+   "dem": [
+    "Benjamin \"Ben\" McAdams"
+   ],
+   "gop": [
+    "Seth Lewis"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "26",
+   "seats": 1,
+   "dem": [
+    "Nabeela Syed"
+   ],
+   "gop": [
+    "Darby Hills"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "27",
+   "seats": 1,
+   "dem": [
+    "Carina Santa Maria"
+   ],
+   "gop": [
+    "David Mathis"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Open seat"
+  },
+  {
+   "d": "29",
+   "seats": 1,
+   "dem": [
+    "Julie A. Morrison"
+   ],
+   "gop": [
+    "Kate McGrath"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "30",
+   "seats": 1,
+   "dem": [
+    "Adriane L. Johnson"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "Democrat unopposed"
+  },
+  {
+   "d": "32",
+   "seats": 1,
+   "dem": [
+    "Karen Battaglia"
+   ],
+   "gop": [
+    "Craig Wilcox"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "33",
+   "seats": 1,
+   "dem": [
+    "Michele Clark"
+   ],
+   "gop": [
+    "Danielle Penman"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Open seat"
+  },
+  {
+   "d": "35",
+   "seats": 1,
+   "dem": [
+    "Sarah B. Mertens"
+   ],
+   "gop": [
+    "Dave Syverson"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "36",
+   "seats": 1,
+   "dem": [
+    "Michael W. Halpin"
+   ],
+   "gop": [
+    "Brad Beekman"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "38",
+   "seats": 1,
+   "dem": [
+    "Ernie R. Marcelain"
+   ],
+   "gop": [
+    "Sue Rezin"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "39",
+   "seats": 1,
+   "dem": [
+    "Don Harmon"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "Democrat unopposed"
+  },
+  {
+   "d": "41",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "John Curran"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Republican unopposed"
+  },
+  {
+   "d": "42",
+   "seats": 1,
+   "dem": [
+    "Jared Ploger"
+   ],
+   "gop": [
+    "Edgardo \"Eddie\" Perez"
+   ],
+   "others": [],
+   "withdrawn": [
+    {
+     "name": "Linda Holmes",
+     "party": "D",
+     "note": "incumbent won March primary per Wikipedia but is not on the general ballot, Jared Ploger is the Democrat on BallotReady and the Kane County list"
+    }
+   ],
+   "note": "Democratic nominee replaced after the primary"
+  },
+  {
+   "d": "44",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Sally J. Turner"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Republican unopposed"
+  },
+  {
+   "d": "45",
+   "seats": 1,
+   "dem": [
+    "Joseph \"Joe\" H. Berning"
+   ],
+   "gop": [
+    "Andrew S. Chesney"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "47",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Neil Anderson"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Republican unopposed"
+  },
+  {
+   "d": "48",
+   "seats": 1,
+   "dem": [
+    "Doris Turner"
+   ],
+   "gop": [
+    "Frank J. Lesko"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "50",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Jil Tracy"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Republican unopposed"
+  },
+  {
+   "d": "51",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Chapin Rose"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Republican unopposed"
+  },
+  {
+   "d": "53",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Chris Balkema"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Republican unopposed"
+  },
+  {
+   "d": "54",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Steve McClure"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Republican unopposed"
+  },
+  {
+   "d": "56",
+   "seats": 1,
+   "dem": [
+    "Marsia Geldert-Murphey"
+   ],
+   "gop": [
+    "Erica Harriss"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "57",
+   "seats": 1,
+   "dem": [
+    "Christopher Belt"
+   ],
+   "gop": [
+    "Daniel Rhyne"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "59",
+   "seats": 1,
+   "dem": [
+    "Tamiko Mueller"
+   ],
+   "gop": [
+    "Paul Jacobs"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Open seat"
+  }
+ ]
+}

@@ -1,0 +1,597 @@
+{
+ "state": "HI",
+ "chamber": "house",
+ "sources": [
+  "https://theballotbrief.com/state/hawaii/honolulu-county",
+  "https://theballotbrief.com/state/hawaii/hawaii-county",
+  "https://theballotbrief.com/state/hawaii/maui-county",
+  "https://theballotbrief.com/state/hawaii/kauai-county"
+ ],
+ "as_of": "2026-10-17",
+ "complete": true,
+ "districts": [
+  {
+   "d": "1",
+   "dem": [
+    "Matthias Kusch"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "2",
+   "dem": [
+    "Sue Keohokapu Lee Loy"
+   ],
+   "gop": [
+    "Jonathan Kennealy"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "3",
+   "dem": [
+    "Christopher L.T. Todd"
+   ],
+   "gop": [],
+   "others": [
+    {
+     "name": "Austin Martin",
+     "party": "L"
+    }
+   ],
+   "withdrawn": [],
+   "note": "no Republican; minor party or independent is the main challenger"
+  },
+  {
+   "d": "4",
+   "dem": [
+    "Greggor Ilagan"
+   ],
+   "gop": [
+    "Zak Wittenhagen"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "5",
+   "dem": [
+    "Jeanne Kapela"
+   ],
+   "gop": [
+    "Dalene McCormick"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "6",
+   "dem": [
+    "Kirstin Kahaloa"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "7",
+   "dem": [
+    "Nicole Lowen"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "8",
+   "dem": [
+    "David A. Tarnas"
+   ],
+   "gop": [
+    "Monique Perreira"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "9",
+   "dem": [
+    "Justin H. Woodson"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "10",
+   "dem": [
+    "Tyson K. Miyake"
+   ],
+   "gop": [
+    "Travis Bumanglag"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "11",
+   "dem": [
+    "Terez Amato"
+   ],
+   "gop": [
+    "Sheila Walker"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "12",
+   "dem": [
+    "Kyle T. Yamashita"
+   ],
+   "gop": [
+    "Dan Johnson"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "13",
+   "dem": [
+    "Mahina Poepoe"
+   ],
+   "gop": [
+    "Robin D. Vanderpool"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "14",
+   "dem": [
+    "Sne Patel"
+   ],
+   "gop": [
+    "Elle Cochran"
+   ],
+   "others": [
+    {
+     "name": "Pa'ele Kiakona",
+     "party": "G"
+    }
+   ],
+   "withdrawn": [],
+   "note": "Elle Cochran is listed as Republican by the source, but she is the sitting Democratic member; label doubtful, verify"
+  },
+  {
+   "d": "15",
+   "dem": [
+    "Nadine K. Nakamura"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "16",
+   "dem": [
+    "Luke A. Evslin"
+   ],
+   "gop": [
+    "David Hazlebeck"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "17",
+   "dem": [
+    "Daynette (Dee) Morikawa"
+   ],
+   "gop": [
+    "Misty Cluett"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "source is inconsistent, also says sitting member Dee Morikawa is not on the November ballot; verify"
+  },
+  {
+   "d": "18",
+   "dem": [
+    "James (Jamie) Wataru"
+   ],
+   "gop": [
+    "Joe Gedeon"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "19",
+   "dem": [
+    "Mark Jun Hashem"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "20",
+   "dem": [
+    "Tina Nakada Grandinetti"
+   ],
+   "gop": [
+    "David Asing"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "21",
+   "dem": [
+    "Derek Turbin"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "22",
+   "dem": [
+    "Andrew Takuya Garrett"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "23",
+   "dem": [
+    "Ikaika M. Olds"
+   ],
+   "gop": [
+    "Victor Muh"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "24",
+   "dem": [
+    "Adrian Tam"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed; nonpartisan candidate did not advance"
+  },
+  {
+   "d": "25",
+   "dem": [
+    "Kim Coco Iwamoto"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "26",
+   "dem": [
+    "Ian M.A. Ross"
+   ],
+   "gop": [
+    "Tony Silva"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "27",
+   "dem": [
+    "Jenna W.Y.C. Takenouchi"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "28",
+   "dem": [
+    "Michael (Cov) Ratcliffe"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "29",
+   "dem": [
+    "Ikaika Hussey"
+   ],
+   "gop": [
+    "Tess Abalos"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "30",
+   "dem": [
+    "Shirley Ann Templo"
+   ],
+   "gop": [
+    "Amanda Ybanez"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "31",
+   "dem": [
+    "Linda Ichiyama"
+   ],
+   "gop": [
+    "Nancy Valdez"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "32",
+   "dem": [
+    "Micah Pookela Kim Aiu"
+   ],
+   "gop": [
+    "Garner M. Shimizu"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "33",
+   "dem": [
+    "Sam Satoru Kong"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "34",
+   "dem": [
+    "Gregg Takayama"
+   ],
+   "gop": [
+    "Gaius Dupio"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "35",
+   "dem": [
+    "Cory M. Chun"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "36",
+   "dem": [
+    "Daisy Balais Hartsfield"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "37",
+   "dem": [
+    "Trish La Chica"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed; nonpartisan candidate did not advance"
+  },
+  {
+   "d": "38",
+   "dem": [],
+   "gop": [
+    "Lauren Cheape Matsumoto"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "39",
+   "dem": [
+    "Corey Rosenlee"
+   ],
+   "gop": [
+    "Daniel (Danny) Degracia"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "40",
+   "dem": [
+    "Rose Martinez"
+   ],
+   "gop": [
+    "Julie Reyes Oda"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "41",
+   "dem": [],
+   "gop": [
+    "David A. Alcos"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "42",
+   "dem": [
+    "Anthony Makana Paris"
+   ],
+   "gop": [
+    "Diamond Garcia"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "43",
+   "dem": [],
+   "gop": [
+    "Sheila Medeiros",
+    "Kanani Souza"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Republican primary ended in a tie; source lists both Medeiros and Souza pending a court ordered new contest; only one will be the nominee; no Democrat"
+  },
+  {
+   "d": "44",
+   "dem": [
+    "Darius K. Kila"
+   ],
+   "gop": [
+    "Charla (Kahealani) Weaver"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "nonpartisan candidate did not advance"
+  },
+  {
+   "d": "45",
+   "dem": [
+    "Kalehua Kaopua"
+   ],
+   "gop": [
+    "Chris Muraoka"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "46",
+   "dem": [
+    "Amy A. Perruso"
+   ],
+   "gop": [
+    "Daniel Michael Gabriel"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "47",
+   "dem": [
+    "Sean Quinlan"
+   ],
+   "gop": [
+    "Mark Talaeai"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "48",
+   "dem": [
+    "Lisa C. Kitagawa"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "49",
+   "dem": [
+    "Scot Matayoshi"
+   ],
+   "gop": [
+    "'Ale Rodas"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "50",
+   "dem": [
+    "Mike Lee"
+   ],
+   "gop": [],
+   "others": [
+    {
+     "name": "Jesse W.M. Fitzgerald",
+     "party": "G"
+    }
+   ],
+   "withdrawn": [],
+   "note": "no Republican; minor party or independent is the main challenger"
+  },
+  {
+   "d": "51",
+   "dem": [
+    "Lisa Marten"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  }
+ ],
+ "method": "General candidates from The Ballot Brief county pages, AI assisted research of Office of Elections data; no official list fetched because search budget ran out."
+}

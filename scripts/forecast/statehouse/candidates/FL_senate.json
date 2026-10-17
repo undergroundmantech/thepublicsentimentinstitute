@@ -1,0 +1,296 @@
+{
+ "state": "FL",
+ "chamber": "senate",
+ "sources": [
+  "https://ivoterguide.com/all-in-state/fl",
+  "https://en.wikipedia.org/wiki/2026_Florida_Senate_election"
+ ],
+ "as_of": "2026-10-17",
+ "complete": true,
+ "districts": [
+  {
+   "d": "2",
+   "seats": 1,
+   "dem": [
+    "Lauren Donahoo"
+   ],
+   "gop": [
+    "Jay Trumbull"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "4",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Clay Yarborough"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "elected unopposed per Wikipedia, general cancelled; Wikipedia candidate list also names Sharmin Turner with unclear status; not on ivoterguide general ballot"
+  },
+  {
+   "d": "6",
+   "seats": 1,
+   "dem": [
+    "Jason Bellamy-Fults"
+   ],
+   "gop": [
+    "Jennifer Bradley"
+   ],
+   "others": [
+    {
+     "name": "Joseph Thornton",
+     "party": "O"
+    }
+   ],
+   "withdrawn": [],
+   "note": "Thornton is American Solidarity Party"
+  },
+  {
+   "d": "8",
+   "seats": 1,
+   "dem": [
+    "Judy M. Ngying"
+   ],
+   "gop": [
+    "Jake Johansson"
+   ],
+   "others": [
+    {
+     "name": "Gabriel Jude Wozniak",
+     "party": "L"
+    }
+   ],
+   "withdrawn": [],
+   "note": "open; Tom Wright term-limited"
+  },
+  {
+   "d": "10",
+   "seats": 1,
+   "dem": [
+    "John Lowndes"
+   ],
+   "gop": [
+    "Jason Brodeur"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "12",
+   "seats": 1,
+   "dem": [
+    "Alfred Reynolds"
+   ],
+   "gop": [
+    "Colleen Burton"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "14",
+   "seats": 1,
+   "dem": [
+    "Brian Nathan"
+   ],
+   "gop": [
+    "Josie Tomkow"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Nathan (D) won Mar 24 2026 special 50.25 to 49.75"
+  },
+  {
+   "d": "16",
+   "seats": 1,
+   "dem": [
+    "Fentrice Driskell"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "open; Driskell won Dem primary over Michele Rayner and was elected unopposed; not on general ballot"
+  },
+  {
+   "d": "18",
+   "seats": 1,
+   "dem": [
+    "Karla Kemp"
+   ],
+   "gop": [
+    "Nick DiCeglie"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "20",
+   "seats": 1,
+   "dem": [
+    "Gerald Baldi"
+   ],
+   "gop": [
+    "Jim Boyd"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "22",
+   "seats": 1,
+   "dem": [
+    "Lew Wasserman"
+   ],
+   "gop": [
+    "James Buchanan"
+   ],
+   "others": [
+    {
+     "name": "Martin Hyde",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "open; Joe Gruters term-limited; Hyde is No Party Affiliation"
+  },
+  {
+   "d": "24",
+   "seats": 1,
+   "dem": [
+    "Mack Bernard"
+   ],
+   "gop": [
+    "Jackie Green"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "26",
+   "seats": 1,
+   "dem": [
+    "David Silvers"
+   ],
+   "gop": [
+    "Rick Roth"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "open; Lori Berman term-limited; Yvette Drucker (D) withdrew before primary"
+  },
+  {
+   "d": "28",
+   "seats": 1,
+   "dem": [
+    "David Silverberg"
+   ],
+   "gop": [
+    "Lauren Uhlich Melo"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "open; Kathleen Passidomo term-limited"
+  },
+  {
+   "d": "30",
+   "seats": 1,
+   "dem": [
+    "Lauren Book"
+   ],
+   "gop": [
+    "Hector Rivera"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "open; Tina Polsky retiring"
+  },
+  {
+   "d": "32",
+   "seats": 1,
+   "dem": [
+    "Rosalind Osgood"
+   ],
+   "gop": [],
+   "others": [
+    {
+     "name": "Crescente Furnaguera",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "no Republican; NPA candidate is main challenger"
+  },
+  {
+   "d": "34",
+   "seats": 1,
+   "dem": [
+    "Ashley Viola Gantt"
+   ],
+   "gop": [
+    "Elizabeth Jeanty"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "open; Shevrin Jones not seeking reelection"
+  },
+  {
+   "d": "36",
+   "seats": 1,
+   "dem": [
+    "George Lavin"
+   ],
+   "gop": [
+    "Ileana Garcia"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "38",
+   "seats": 1,
+   "dem": [
+    "Richard Lamondin Jr."
+   ],
+   "gop": [
+    "Alexis Maria Calatayud"
+   ],
+   "others": [
+    {
+     "name": "Jeffrey \"Doc\" Solomon",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "Solomon is No Party Affiliation"
+  },
+  {
+   "d": "40",
+   "seats": 1,
+   "dem": [
+    "Jose Antonio Stoute"
+   ],
+   "gop": [
+    "Ana Maria Rodriguez"
+   ],
+   "others": [
+    {
+     "name": "Ramiro Orta",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "Orta is No Party Affiliation"
+  }
+ ]
+}

@@ -1,0 +1,436 @@
+{
+ "state": "SD",
+ "chamber": "senate",
+ "sources": [
+  "https://www.sdpb.org/2026-09-10/2026-south-dakota-legislative-candidate-list",
+  "https://vip.sdsos.gov/candidatelist.aspx?eid=774"
+ ],
+ "as_of": "2026-10-17",
+ "complete": true,
+ "districts": [
+  {
+   "d": "1",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Michael Rohl"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "2",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "John Sjaarda"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "3",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Katie Washnok"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "4",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Stephanie Sauder"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "5",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Glen Vilhauer"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "6",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Ernie Otten"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "7",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Tim Reed"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "8",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Casey Crabtree"
+   ],
+   "others": [
+    {
+     "name": "Clint Hoyer",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "No Democrat; independent Clint Hoyer is the only challenger"
+  },
+  {
+   "d": "9",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Joy Hohn"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "10",
+   "seats": 1,
+   "dem": [
+    "Liz Larson"
+   ],
+   "gop": [
+    "Michael Dupic"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "11",
+   "seats": 1,
+   "dem": [
+    "Aaron Matson"
+   ],
+   "gop": [
+    "Chris Karr"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "12",
+   "seats": 1,
+   "dem": [
+    "Joe Zweifel"
+   ],
+   "gop": [
+    "Kari Shanard-Koenders"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "13",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Sue Peterson"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "14",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Larry Zikmund"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "15",
+   "seats": 1,
+   "dem": [
+    "Erik Muckey"
+   ],
+   "gop": [
+    "Brenda Lawrence"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "16",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Kevin Jensen"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "17",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Sydney Davis"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "18",
+   "seats": 1,
+   "dem": [
+    "Kay Swihart"
+   ],
+   "gop": [
+    "Lauren Nelson"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "19",
+   "seats": 1,
+   "dem": [
+    "Russell Graeff"
+   ],
+   "gop": [
+    "Kyle Schoenfish"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "20",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Paul Miskimins"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "21",
+   "seats": 1,
+   "dem": [
+    "Dan Andersson"
+   ],
+   "gop": [
+    "Mykala Voita"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "22",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Brandon Wipf"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "23",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Mark Lapka"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "24",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Jim Mehlhaff"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "25",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Bart Sample"
+   ],
+   "others": [
+    {
+     "name": "Brian Breitling",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "No Democrat; independent Brian Breitling is the only challenger"
+  },
+  {
+   "d": "26",
+   "seats": 1,
+   "dem": [
+    "Shawn Bordeaux"
+   ],
+   "gop": [
+    "Rebecca Reimer"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "27",
+   "seats": 1,
+   "dem": [
+    "Celestine Stadnick"
+   ],
+   "gop": [
+    "Anthony Kathol"
+   ],
+   "others": [
+    {
+     "name": "Peri Pourier",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "28",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Sam Marty"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "29",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "William Meirose"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "30",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Amber Hulse"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "31",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Randy Deibert"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "32",
+   "seats": 1,
+   "dem": [
+    "Jeff Shelton"
+   ],
+   "gop": [
+    "Helene Duhamel"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "33",
+   "seats": 1,
+   "dem": [
+    "Chris Baumgartner"
+   ],
+   "gop": [
+    "David Johnson"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "34",
+   "seats": 1,
+   "dem": [
+    "Michael Calabrese"
+   ],
+   "gop": [
+    "Taffy Howard"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "35",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Greg Blanc"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  }
+ ]
+}

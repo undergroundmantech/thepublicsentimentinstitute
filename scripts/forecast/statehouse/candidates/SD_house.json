@@ -1,0 +1,552 @@
+{
+ "state": "SD",
+ "chamber": "house",
+ "sources": [
+  "https://www.sdpb.org/2026-09-10/2026-south-dakota-legislative-candidate-list",
+  "https://vip.sdsos.gov/candidatelist.aspx?eid=774"
+ ],
+ "as_of": "2026-10-17",
+ "complete": true,
+ "districts": [
+  {
+   "d": "1",
+   "seats": 2,
+   "dem": [
+    "Courtney Enfield"
+   ],
+   "gop": [
+    "Nick Fosness",
+    "Daniel Kjos"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "2",
+   "seats": 2,
+   "dem": [
+    "Blake Rife"
+   ],
+   "gop": [
+    "Manuel Luschas",
+    "Adam Long"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "3",
+   "seats": 2,
+   "dem": [
+    "Erin Rudner"
+   ],
+   "gop": [
+    "Tim Hanigan",
+    "Spencer Sommers"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "4",
+   "seats": 2,
+   "dem": [
+    "Emilia Enquist"
+   ],
+   "gop": [
+    "Ryan Kohl",
+    "Fred Deutsch"
+   ],
+   "others": [
+    {
+     "name": "Sam Froehlke",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "5",
+   "seats": 2,
+   "dem": [],
+   "gop": [
+    "Matt Roby",
+    "Byron Callies"
+   ],
+   "others": [
+    {
+     "name": "Neal Tapio",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "No Democrat; independent Neal Tapio is the only non-Republican"
+  },
+  {
+   "d": "6",
+   "seats": 2,
+   "dem": [
+    "Austin Wolf",
+    "Garret Campbell"
+   ],
+   "gop": [
+    "Jerry Jongeling",
+    "Elliott Neff"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "7",
+   "seats": 2,
+   "dem": [
+    "Blake Stevens"
+   ],
+   "gop": [
+    "Mellissa Heerman",
+    "Roger DeGroot"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "8",
+   "seats": 2,
+   "dem": [],
+   "gop": [
+    "Todd Wilkinson",
+    "Jon Nelson"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "9",
+   "seats": 2,
+   "dem": [
+    "Amanda Potter"
+   ],
+   "gop": [
+    "Megan Tschetter",
+    "Tesa Schwans"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "10",
+   "seats": 2,
+   "dem": [
+    "Kathleen Brudvig",
+    "Adam Bair"
+   ],
+   "gop": [
+    "John Pohlman",
+    "Kimberly Petterson"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "11",
+   "seats": 2,
+   "dem": [
+    "Sonja Mentzer"
+   ],
+   "gop": [
+    "Brian Mulder",
+    "Keri Weems"
+   ],
+   "others": [
+    {
+     "name": "Tracey Quint",
+     "party": "L"
+    }
+   ],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "12",
+   "seats": 2,
+   "dem": [
+    "Stephanie Arne"
+   ],
+   "gop": [
+    "Amber Arlint",
+    "Kerry Loudenslager"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "13",
+   "seats": 2,
+   "dem": [
+    "Ali Rae Horsted"
+   ],
+   "gop": [
+    "John Hughes",
+    "Jack Kolbeck"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "14",
+   "seats": 2,
+   "dem": [
+    "Erinn Williams"
+   ],
+   "gop": [
+    "Taylor Rehfeldt",
+    "Tyler Tordsen"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "15",
+   "seats": 2,
+   "dem": [
+    "Kadyn Wittman",
+    "June CopperStad"
+   ],
+   "gop": [
+    "Andr\u00e9 Zachariahs",
+    "Joni Tschetter"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "16",
+   "seats": 2,
+   "dem": [
+    "Tim Rhead"
+   ],
+   "gop": [
+    "John Shubeck",
+    "Lisa Bogue"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "17",
+   "seats": 2,
+   "dem": [
+    "Leslie Gerrish",
+    "Austin Brunick"
+   ],
+   "gop": [
+    "Chris Kassin",
+    "Troy Redler"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "18",
+   "seats": 2,
+   "dem": [
+    "Jarod Holcomb",
+    "Karen Springer"
+   ],
+   "gop": [
+    "Mike Stevens",
+    "John Marquardt"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "19",
+   "seats": 2,
+   "dem": [
+    "Heidi Hora"
+   ],
+   "gop": [
+    "Jessica Bahmuller",
+    "Drew Peterson"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "20",
+   "seats": 2,
+   "dem": [],
+   "gop": [
+    "Jeff Bathke",
+    "Terry Sabers"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "21",
+   "seats": 2,
+   "dem": [],
+   "gop": [
+    "Marty Overweg",
+    "Jim Halverson"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "22",
+   "seats": 2,
+   "dem": [
+    "Cully Williams"
+   ],
+   "gop": [
+    "Kevin Van Diepen",
+    "Lana Greenfield"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "23",
+   "seats": 2,
+   "dem": [],
+   "gop": [
+    "Spencer Gosch",
+    "Dick Werner"
+   ],
+   "others": [
+    {
+     "name": "Garrett Heinz",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "No Democrat; independent Garrett Heinz is the only non-Republican"
+  },
+  {
+   "d": "24",
+   "seats": 2,
+   "dem": [],
+   "gop": [
+    "Mike Weisgram",
+    "Laurie Gill"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "25",
+   "seats": 2,
+   "dem": [],
+   "gop": [
+    "Carrie Sanderson",
+    "Nick Buchholz"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "26A",
+   "seats": 1,
+   "dem": [
+    "Eric Emery"
+   ],
+   "gop": [
+    "Ron Frederick"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "26B",
+   "seats": 1,
+   "dem": [
+    "Lewis GrassRope"
+   ],
+   "gop": [
+    "Angi Hanzlik"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "27",
+   "seats": 2,
+   "dem": [],
+   "gop": [
+    "Liz May"
+   ],
+   "others": [
+    {
+     "name": "Elizabeth Lone Eagle",
+     "party": "I"
+    },
+    {
+     "name": "Evangeline Poor Bear",
+     "party": "I"
+    },
+    {
+     "name": "Jay Yohner",
+     "party": "I"
+    },
+    {
+     "name": "Joy Flood",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "Two seats; no Democrat and only one Republican, four independents compete for the seats"
+  },
+  {
+   "d": "28A",
+   "seats": 1,
+   "dem": [
+    "Chastity Jewett"
+   ],
+   "gop": [
+    "Jana Hunt"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "28B",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Travis Ismay"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "29",
+   "seats": 2,
+   "dem": [],
+   "gop": [
+    "Garry Cammack",
+    "Gary Deering"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "30",
+   "seats": 2,
+   "dem": [
+    "Bret Swanson"
+   ],
+   "gop": [
+    "Trish Ladner",
+    "Tim Goodwin"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "31",
+   "seats": 2,
+   "dem": [
+    "Morgan Plucker"
+   ],
+   "gop": [
+    "Scott Odenbach",
+    "Mary Fitzgerald"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "32",
+   "seats": 2,
+   "dem": [
+    "Nicole Uhre-Balk"
+   ],
+   "gop": [
+    "Steff Duffy",
+    "Zachary Martin"
+   ],
+   "others": [
+    {
+     "name": "Samuel Hare Sr.",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "33",
+   "seats": 2,
+   "dem": [
+    "Kari Hall"
+   ],
+   "gop": [
+    "Phil Jensen",
+    "Curt Massie"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "34",
+   "seats": 2,
+   "dem": [
+    "Victor Dominguez"
+   ],
+   "gop": [
+    "Mike Derby",
+    "Becky Drury"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "35",
+   "seats": 2,
+   "dem": [
+    "Ken Jeakins"
+   ],
+   "gop": [
+    "Dale Bartscher",
+    "Jason Fleming"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  }
+ ]
+}

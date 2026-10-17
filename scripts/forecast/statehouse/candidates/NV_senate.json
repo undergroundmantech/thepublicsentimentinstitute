@@ -1,0 +1,163 @@
+{
+ "state": "NV",
+ "chamber": "senate",
+ "sources": [
+  "https://ivoterguide.com/all-in-state/nv",
+  "https://theballotbrief.com/state/nevada/clark-county",
+  "https://theballotbrief.com/state/nevada/washoe-county",
+  "https://theballotbrief.com/state/nevada/elko-county",
+  "https://theballotbrief.com/state/nevada/lyon-county",
+  "https://theballotbrief.com/state/nevada/douglas-county",
+  "https://theballotbrief.com/state/nevada/nye-county",
+  "https://theballotbrief.com/state/nevada/carson-city"
+ ],
+ "as_of": "2026-10-17",
+ "complete": true,
+ "districts": [
+  {
+   "d": "2",
+   "dem": [
+    "Edgar Flores"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "8",
+   "dem": [
+    "Marilyn Dondero Loop"
+   ],
+   "gop": [
+    "George E. Harris"
+   ],
+   "others": [
+    {
+     "name": "Jamie S. Miller",
+     "party": "I"
+    },
+    {
+     "name": "Robert Morris",
+     "party": "I"
+    },
+    {
+     "name": "Steven S. \"Mr. Fix It\" Cohen",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "Cohen is confirmed by both sources; Miller and Morris listed by The Ballot Brief but not by iVoterGuide, ballot status unconfirmed"
+  },
+  {
+   "d": "9",
+   "dem": [
+    "Melanie Scheible"
+   ],
+   "gop": [
+    "Maria Thompson"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "10",
+   "dem": [
+    "Fabian Donate"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "12",
+   "dem": [
+    "Julie Ann Pazina"
+   ],
+   "gop": [
+    "Rafael Arroyo"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "13",
+   "dem": [
+    "Richard \"Skip\" Daly"
+   ],
+   "gop": [
+    "Matthew R. Buehler"
+   ],
+   "others": [
+    {
+     "name": "Charlene Young",
+     "party": "O"
+    }
+   ],
+   "withdrawn": [],
+   "note": "Young is Independent American Party"
+  },
+  {
+   "d": "14",
+   "dem": [],
+   "gop": [
+    "Ira D. Hansen"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "16",
+   "dem": [
+    "Chrystal L. Roll"
+   ],
+   "gop": [
+    "Lisa Krasner"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "17",
+   "dem": [
+    "Lynne Ballatore"
+   ],
+   "gop": [
+    "Robin L. Titus"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "20",
+   "dem": [
+    "Calvin Sandoval"
+   ],
+   "gop": [
+    "Danielle Gallant"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "21",
+   "dem": [
+    "James Ohrenschall"
+   ],
+   "gop": [
+    "Al Rojas"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  }
+ ],
+ "method": "General candidates from The Ballot Brief county pages, which describe themselves as AI assisted research and defer to the SOS certified list; no official NV list was fetched. Cross checked against the iVoterGuide Nevada list, version 2026-10-13: all major party nominees match; several independents appear only in The Ballot Brief and are flagged. 11 Senate seats found on the ballot."
+}

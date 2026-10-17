@@ -1,0 +1,195 @@
+{
+ "state": "WY",
+ "chamber": "senate",
+ "sources": [
+  "https://ivoterguide.com/all-in-state/wy"
+ ],
+ "as_of": "2026-10-17",
+ "complete": true,
+ "districts": [
+  {
+   "d": "1",
+   "dem": [],
+   "gop": [
+    "Ogden Driskill"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "3",
+   "dem": [],
+   "gop": [
+    "Cheri Steinmetz"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "5",
+   "dem": [
+    "Ted Hanlon"
+   ],
+   "gop": [
+    "Lauren Schoenfeld"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "6",
+   "dem": [],
+   "gop": [
+    "Taft Love"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed; even numbered seat, apparently a special election for an unexpired term"
+  },
+  {
+   "d": "7",
+   "dem": [
+    "Jim Lee"
+   ],
+   "gop": [
+    "Mark Rinne"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "9",
+   "dem": [
+    "Chris Rothfuss"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "11",
+   "dem": [
+    "Jim Wilson"
+   ],
+   "gop": [
+    "Bob Davis"
+   ],
+   "others": [
+    {
+     "name": "Don VanMatre",
+     "party": "O"
+    }
+   ],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "13",
+   "dem": [],
+   "gop": [
+    "Stacy Jones"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "15",
+   "dem": [],
+   "gop": [
+    "Wendy Davis Schuler"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "17",
+   "dem": [
+    "Mike Gierau"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "19",
+   "dem": [],
+   "gop": [
+    "R.J. Kost"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "21",
+   "dem": [],
+   "gop": [
+    "Melissa Butcher"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "23",
+   "dem": [],
+   "gop": [
+    "Abby Angelos"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "25",
+   "dem": [],
+   "gop": [
+    "Cale Case"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "27",
+   "dem": [],
+   "gop": [
+    "Kevin Helling"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "29",
+   "dem": [],
+   "gop": [
+    "Lisa Engebretsen"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "31",
+   "dem": [
+    "Shifa Hamid"
+   ],
+   "gop": [
+    "Evie Brennan"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  }
+ ],
+ "method": "General candidates from iVoterGuide Wyoming statewide list, page version 2026-10-13; Constitution Party coded O. Single candidate districts treated as uncontested. Odd numbered Senate seats are regularly up in 2026."
+}

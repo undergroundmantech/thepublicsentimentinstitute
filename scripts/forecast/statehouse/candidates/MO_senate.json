@@ -1,0 +1,235 @@
+{
+ "state": "MO",
+ "chamber": "senate",
+ "sources": [
+  "https://www.sos.mo.gov/CMSImages/ElectionCandidates/2026GeneralElectionCertifiedCandidates.pdf"
+ ],
+ "as_of": "2026-10-17",
+ "complete": true,
+ "districts": [
+  {
+   "d": "2",
+   "seats": 1,
+   "dem": [
+    "Susan Shumway"
+   ],
+   "gop": [
+    "Nick Schroer"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "4",
+   "seats": 1,
+   "dem": [
+    "Gina Mitten"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "Democrat unopposed"
+  },
+  {
+   "d": "6",
+   "seats": 1,
+   "dem": [
+    "J. Don Salcedo"
+   ],
+   "gop": [
+    "Jake Vogel"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "8",
+   "seats": 1,
+   "dem": [
+    "Keri Ingle"
+   ],
+   "gop": [
+    "Jon Patterson"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "10",
+   "seats": 1,
+   "dem": [
+    "John Wells"
+   ],
+   "gop": [
+    "Mike Deering"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "12",
+   "seats": 1,
+   "dem": [
+    "Judy McNeece"
+   ],
+   "gop": [
+    "Rusty Black"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "14",
+   "seats": 1,
+   "dem": [
+    "Raychel Proudie"
+   ],
+   "gop": [
+    "Vernon Norman"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "16",
+   "seats": 1,
+   "dem": [
+    "Virginia Staabs"
+   ],
+   "gop": [
+    "Bill Hardwick"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "18",
+   "seats": 1,
+   "dem": [
+    "Nick Miller"
+   ],
+   "gop": [
+    "Greg Sharpe"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "20",
+   "seats": 1,
+   "dem": [
+    "Sean Fal"
+   ],
+   "gop": [
+    "Lori Rook"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Democrat surname truncated in PDF text extraction (shows \"Sean Fal...\")"
+  },
+  {
+   "d": "22",
+   "seats": 1,
+   "dem": [
+    "Jeff Abn"
+   ],
+   "gop": [
+    "Jim Avery"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Democrat surname truncated in PDF text extraction (shows \"Jeff Abn...\")"
+  },
+  {
+   "d": "24",
+   "seats": 1,
+   "dem": [
+    "Tracy McCreery"
+   ],
+   "gop": [
+    "LaVanna Wrobley"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Democrat name partly garbled in PDF text extraction"
+  },
+  {
+   "d": "26",
+   "seats": 1,
+   "dem": [
+    "Vicky Wors"
+   ],
+   "gop": [
+    "Ben Brown"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Democrat surname truncated in PDF text extraction (shows \"Vicky Wors...\")"
+  },
+  {
+   "d": "28",
+   "seats": 1,
+   "dem": [
+    "Mike McCaffree"
+   ],
+   "gop": [
+    "Sam Alexander"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "30",
+   "seats": 1,
+   "dem": [
+    "Betsy Fogle"
+   ],
+   "gop": [
+    "Melanie Stinnett"
+   ],
+   "others": [
+    {
+     "name": "Cecil Ince",
+     "party": "L"
+    }
+   ],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "32",
+   "seats": 1,
+   "dem": [
+    "Imma J Curl"
+   ],
+   "gop": [
+    "Jill Carter"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "34",
+   "seats": 1,
+   "dem": [
+    "Shereka Barnes"
+   ],
+   "gop": [
+    "Mike Jones"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  }
+ ]
+}

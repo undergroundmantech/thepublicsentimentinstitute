@@ -1,0 +1,514 @@
+{
+ "state": "ME",
+ "chamber": "senate",
+ "sources": [
+  "https://theballotbrief.com/state/maine",
+  "https://www1.maine.gov/sos/elections-voting/upcoming-elections",
+  "https://www.maine.gov/sos/sites/maine.gov.sos/files/inline-files/2026%20Post%20Primary%20Withdrawals%20%26%20Replacement%20Candidates%20-%20Updated%209.22.26_0.pdf"
+ ],
+ "as_of": "2026-10-17",
+ "complete": true,
+ "method_note": "Candidates from The Ballot Brief Maine county pages, which say they follow the Maine SoS 2026 general election candidate list; districts on several county pages were deduplicated. The SoS candidate spreadsheet itself could not be fetched. Withdrawals and replacements come from the SoS post primary withdrawals PDF dated 9/22/2026, and every replacement and every no replacement case matches the Ballot Brief lists. Non major party candidates are coded I because the source labels them Independent, Unenrolled or Undeclared; any Green Independent or Libertarian nominee could be mislabeled, and none was found. The web search budget ran out before a separate check for Green or Libertarian nominees could be made.",
+ "districts": [
+  {
+   "d": "1",
+   "seats": 1,
+   "dem": [
+    "Vaughn J. McLaughlin"
+   ],
+   "gop": [
+    "Lucien J.B. Daigle"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "2",
+   "seats": 1,
+   "dem": [
+    "Janel C. Underwood-Charette"
+   ],
+   "gop": [
+    "Harold L. Stewart III"
+   ],
+   "others": [],
+   "withdrawn": [
+    {
+     "name": "Harold Steve Hull",
+     "party": "D",
+     "note": "withdrew 7/9/2026; replaced by Janel C. Underwood-Charette"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "d": "3",
+   "seats": 1,
+   "dem": [
+    "Ester B. Franklin"
+   ],
+   "gop": [
+    "Joel R. Stetkis"
+   ],
+   "others": [],
+   "withdrawn": [
+    {
+     "name": "Stanley Short Jr.",
+     "party": "D",
+     "note": "withdrew 6/17/2026; replaced by Ester Franklin"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "d": "4",
+   "seats": 1,
+   "dem": [
+    "Lisa G. Kalp"
+   ],
+   "gop": [
+    "Chad Richard Perkins"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "5",
+   "seats": 1,
+   "dem": [
+    "Robert F. Sullebarger"
+   ],
+   "gop": [
+    "Elizabeth M. Caruso"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "6",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Billy Bob Faulkingham"
+   ],
+   "others": [
+    {
+     "name": "Aaron M. Dana",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "No Democrat; independent Aaron M. Dana is the main challenger."
+  },
+  {
+   "d": "7",
+   "seats": 1,
+   "dem": [
+    "Nicole C. Grohoski"
+   ],
+   "gop": [
+    "Cheryl A. Hewes"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "8",
+   "seats": 1,
+   "dem": [
+    "Michael Tipping"
+   ],
+   "gop": [
+    "Leo C. Kenney"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "9",
+   "seats": 1,
+   "dem": [
+    "Amy J. Roeder"
+   ],
+   "gop": [],
+   "others": [
+    {
+     "name": "Stephen Richard Carey",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "No Republican; independent/unenrolled Stephen Richard Carey is the main challenger."
+  },
+  {
+   "d": "10",
+   "seats": 1,
+   "dem": [
+    "Jaric T. Fontaine"
+   ],
+   "gop": [
+    "David G. Haggan"
+   ],
+   "others": [],
+   "withdrawn": [
+    {
+     "name": "Kevin J.M. O'Connell",
+     "party": "D",
+     "note": "withdrew 7/13/2026; replaced by Jaric T. Fontaine"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "d": "11",
+   "seats": 1,
+   "dem": [
+    "Glenn Chip Curry"
+   ],
+   "gop": [
+    "Ryan C. Otis"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "12",
+   "seats": 1,
+   "dem": [
+    "Ann H. Matlack"
+   ],
+   "gop": [],
+   "others": [
+    {
+     "name": "Nicole Lynn Kalloch",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "No Republican; independent/unenrolled Nicole Lynn Kalloch is the main challenger."
+  },
+  {
+   "d": "13",
+   "seats": 1,
+   "dem": [
+    "Cameron Reny"
+   ],
+   "gop": [],
+   "others": [
+    {
+     "name": "Edwin M. Mitchell Jr.",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "No Republican; independent/unenrolled Edwin M. Mitchell Jr. is the main challenger."
+  },
+  {
+   "d": "14",
+   "seats": 1,
+   "dem": [
+    "Craig V. Hickman"
+   ],
+   "gop": [
+    "Steven A. McGee"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "15",
+   "seats": 1,
+   "dem": [
+    "Amanda Ann Heath"
+   ],
+   "gop": [
+    "Kati McCormick"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "16",
+   "seats": 1,
+   "dem": [
+    "Patric Aaron Moore"
+   ],
+   "gop": [
+    "Scott Wynn Cyrway"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "17",
+   "seats": 1,
+   "dem": [
+    "Jo-Jean C. Keller"
+   ],
+   "gop": [
+    "Richard G. Mason"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "18",
+   "seats": 1,
+   "dem": [
+    "Elizabeth D. Bosworth"
+   ],
+   "gop": [
+    "John E. Andrews"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "19",
+   "seats": 1,
+   "dem": [
+    "Peter J. Southam"
+   ],
+   "gop": [
+    "Joseph E. Martin"
+   ],
+   "others": [
+    {
+     "name": "David A. Duguay",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "Independent David A. Duguay also on the ballot."
+  },
+  {
+   "d": "20",
+   "seats": 1,
+   "dem": [
+    "Michael R. Scott"
+   ],
+   "gop": [
+    "Bruce A. Bickford"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "21",
+   "seats": 1,
+   "dem": [
+    "Shanna Cox"
+   ],
+   "gop": [],
+   "others": [
+    {
+     "name": "Eryn M. Soule",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "No Republican; independent/unenrolled Eryn M. Soule is the main challenger."
+  },
+  {
+   "d": "22",
+   "seats": 1,
+   "dem": [
+    "Nathan Burnett"
+   ],
+   "gop": [
+    "Kimberly J. Pomerleau"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "23",
+   "seats": 1,
+   "dem": [
+    "Matthea Elisabeth Daughtry"
+   ],
+   "gop": [
+    "Bernard Porter"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "24",
+   "seats": 1,
+   "dem": [
+    "Denise Tepler"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "No Republican nominee; Democrat unopposed."
+  },
+  {
+   "d": "25",
+   "seats": 1,
+   "dem": [
+    "Teresa S. Pierce"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "No Republican nominee; Democrat unopposed."
+  },
+  {
+   "d": "26",
+   "seats": 1,
+   "dem": [
+    "Timothy E. Nangle"
+   ],
+   "gop": [
+    "Kenneth James Cianchette"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "27",
+   "seats": 1,
+   "dem": [
+    "Jill C. Duson"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "No Republican nominee; Democrat unopposed."
+  },
+  {
+   "d": "28",
+   "seats": 1,
+   "dem": [
+    "Rachel Talbot Ross"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "No Republican nominee; Democrat unopposed."
+  },
+  {
+   "d": "29",
+   "seats": 1,
+   "dem": [
+    "Anne M. Carney"
+   ],
+   "gop": [
+    "Vincent A. Maietta"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "30",
+   "seats": 1,
+   "dem": [
+    "Sophia Bailey Warren"
+   ],
+   "gop": [
+    "M. Thad Moody"
+   ],
+   "others": [],
+   "withdrawn": [
+    {
+     "name": "Harry J. White",
+     "party": "R",
+     "note": "withdrew 7/8/2026; replaced by M. Thad Moody"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "d": "31",
+   "seats": 1,
+   "dem": [
+    "Donna Bailey"
+   ],
+   "gop": [
+    "Scott Benedetto Eccleston"
+   ],
+   "others": [],
+   "withdrawn": [
+    {
+     "name": "Garrett Plummer",
+     "party": "R",
+     "note": "withdrew 7/9/2026; replaced by Scott Benedetto Eccleston"
+    }
+   ],
+   "note": ""
+  },
+  {
+   "d": "32",
+   "seats": 1,
+   "dem": [
+    "Henry L. Ingwersen"
+   ],
+   "gop": [],
+   "others": [
+    {
+     "name": "Jason G. Litalien",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "No Republican; independent/unenrolled Jason G. Litalien is the main challenger."
+  },
+  {
+   "d": "33",
+   "seats": 1,
+   "dem": [
+    "Mark H. Vigliotta"
+   ],
+   "gop": [
+    "Matthew A. Harrington"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "34",
+   "seats": 1,
+   "dem": [
+    "Daniel R. Sayre"
+   ],
+   "gop": [
+    "Jonathan R. Fallon"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "35",
+   "seats": 1,
+   "dem": [
+    "Michele Meyer"
+   ],
+   "gop": [
+    "Julie N. Rakic"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  }
+ ]
+}

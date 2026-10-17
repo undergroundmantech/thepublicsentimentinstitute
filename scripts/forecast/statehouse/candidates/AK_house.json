@@ -1,0 +1,572 @@
+{
+ "state": "AK",
+ "chamber": "house",
+ "sources": [
+  "https://ivoterguide.com/all-in-state/ak"
+ ],
+ "as_of": "2026-10-17",
+ "complete": true,
+ "districts": [
+  {
+   "d": "1",
+   "dem": [],
+   "gop": [
+    "Jeremy T. Bynum"
+   ],
+   "others": [
+    {
+     "name": "Grant EchoHawk",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "top four general with ranked choice; no Democrat; minor party or independent is the main challenger"
+  },
+  {
+   "d": "2",
+   "dem": [],
+   "gop": [
+    "Kenny \"Kenny Karl\" Skaflestad"
+   ],
+   "others": [
+    {
+     "name": "Rebecca Himschoot",
+     "party": "I"
+    },
+    {
+     "name": "Alston C. Evans",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "top four general with ranked choice; no Democrat; minor party or independent is the main challenger"
+  },
+  {
+   "d": "3",
+   "dem": [
+    "Andrea \"Andi\" Story"
+   ],
+   "gop": [
+    "Annette Kreitzer"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "top four general with ranked choice"
+  },
+  {
+   "d": "4",
+   "dem": [
+    "Sara Hannan"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "top four general with ranked choice; unopposed"
+  },
+  {
+   "d": "5",
+   "dem": [],
+   "gop": [
+    "Sheldon R.J. Prout"
+   ],
+   "others": [
+    {
+     "name": "Kathy C. Simpler",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "top four general with ranked choice; no Democrat; minor party or independent is the main challenger"
+  },
+  {
+   "d": "6",
+   "dem": [],
+   "gop": [
+    "Sarah L. Vance"
+   ],
+   "others": [
+    {
+     "name": "Brent Johnson",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "top four general with ranked choice; no Democrat; minor party or independent is the main challenger"
+  },
+  {
+   "d": "7",
+   "dem": [
+    "Kate Veh"
+   ],
+   "gop": [
+    "Justin M. Ruffridge"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "top four general with ranked choice"
+  },
+  {
+   "d": "8",
+   "dem": [],
+   "gop": [
+    "William H. \"Bill\" Elam"
+   ],
+   "others": [
+    {
+     "name": "Frank Quinn",
+     "party": "I"
+    },
+    {
+     "name": "Nissa Savage",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "top four general with ranked choice; no Democrat; minor party or independent is the main challenger"
+  },
+  {
+   "d": "9",
+   "dem": [],
+   "gop": [
+    "John C. Boyle"
+   ],
+   "others": [
+    {
+     "name": "Ky Holland",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "top four general with ranked choice; no Democrat; minor party or independent is the main challenger"
+  },
+  {
+   "d": "10",
+   "dem": [],
+   "gop": [
+    "Charles M. \"Chuck\" Kopp"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "top four general with ranked choice; unopposed"
+  },
+  {
+   "d": "11",
+   "dem": [
+    "Danni M. Hall"
+   ],
+   "gop": [
+    "Julie Coulombe"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "top four general with ranked choice"
+  },
+  {
+   "d": "12",
+   "dem": [],
+   "gop": [
+    "Jieun \"Jini\" McDonald"
+   ],
+   "others": [
+    {
+     "name": "Calvin R. Schrage",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "top four general with ranked choice; no Democrat; minor party or independent is the main challenger"
+  },
+  {
+   "d": "13",
+   "dem": [
+    "Lisa M. Keller"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "top four general with ranked choice; unopposed"
+  },
+  {
+   "d": "14",
+   "dem": [],
+   "gop": [],
+   "others": [
+    {
+     "name": "Alyse S. Galvin",
+     "party": "I"
+    },
+    {
+     "name": "Russell O. Wyatt",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "top four general with ranked choice"
+  },
+  {
+   "d": "15",
+   "dem": [
+    "Denny Wells"
+   ],
+   "gop": [
+    "Mia Costello"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "top four general with ranked choice"
+  },
+  {
+   "d": "16",
+   "dem": [
+    "Carolyn Hall"
+   ],
+   "gop": [
+    "Liz Vazquez"
+   ],
+   "others": [
+    {
+     "name": "Phil Isley",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "top four general with ranked choice"
+  },
+  {
+   "d": "17",
+   "dem": [
+    "William \"Zack\" Fields"
+   ],
+   "gop": [
+    "Daniel L. Bradley"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "top four general with ranked choice"
+  },
+  {
+   "d": "18",
+   "dem": [
+    "Cliff Groh"
+   ],
+   "gop": [
+    "Dan Sager"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "top four general with ranked choice"
+  },
+  {
+   "d": "19",
+   "dem": [
+    "Genevieve G. Mina"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "top four general with ranked choice; unopposed"
+  },
+  {
+   "d": "20",
+   "dem": [
+    "Andrew T. Gray"
+   ],
+   "gop": [],
+   "others": [
+    {
+     "name": "Paul A. Bauer Jr.",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "top four general with ranked choice; no Republican; minor party or independent is the main challenger"
+  },
+  {
+   "d": "21",
+   "dem": [
+    "Donna Mears"
+   ],
+   "gop": [
+    "Aimee Sims"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "top four general with ranked choice"
+  },
+  {
+   "d": "22",
+   "dem": [
+    "Ted J. Eischeid"
+   ],
+   "gop": [
+    "Jose Roel A. Tagle"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "top four general with ranked choice"
+  },
+  {
+   "d": "23",
+   "dem": [
+    "Jim Arlington",
+    "Lee E. Hammermeister"
+   ],
+   "gop": [
+    "Jamie Allard",
+    "Ruby Jones"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "top four general with ranked choice"
+  },
+  {
+   "d": "24",
+   "dem": [],
+   "gop": [
+    "Ken McCarty",
+    "Gina T. Wall"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "top four general with ranked choice; only Republicans advanced"
+  },
+  {
+   "d": "25",
+   "dem": [],
+   "gop": [
+    "Michael Bowles",
+    "DeLena M. Johnson"
+   ],
+   "others": [
+    {
+     "name": "Steven L. Merritt",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "top four general with ranked choice; no Democrat; minor party or independent is the main challenger"
+  },
+  {
+   "d": "26",
+   "dem": [
+    "Jeanne Troshynski"
+   ],
+   "gop": [
+    "Steve J. St. Clair"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "top four general with ranked choice"
+  },
+  {
+   "d": "27",
+   "dem": [],
+   "gop": [
+    "David Eastman",
+    "Jubilee L. Underwood"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "top four general with ranked choice; only Republicans advanced"
+  },
+  {
+   "d": "28",
+   "dem": [
+    "Kathleen \"Kit\" Kennedy"
+   ],
+   "gop": [
+    "Elexie B. Moore",
+    "Stephen Wright"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "top four general with ranked choice"
+  },
+  {
+   "d": "29",
+   "dem": [
+    "Kimberly Slone"
+   ],
+   "gop": [
+    "Gerald \"Garret\" Nelson",
+    "Steve Menard"
+   ],
+   "others": [
+    {
+     "name": "Jessica Kusner-Kalarchik",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "top four general with ranked choice"
+  },
+  {
+   "d": "30",
+   "dem": [
+    "Sandra D. Loomis"
+   ],
+   "gop": [
+    "Doug Massie",
+    "Kevin J. McCabe"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "top four general with ranked choice"
+  },
+  {
+   "d": "31",
+   "dem": [
+    "Maxine L. Dibert"
+   ],
+   "gop": [
+    "Aimee Moore"
+   ],
+   "others": [
+    {
+     "name": "Jonathan Powell-Mark",
+     "party": "L"
+    }
+   ],
+   "withdrawn": [],
+   "note": "top four general with ranked choice"
+  },
+  {
+   "d": "32",
+   "dem": [],
+   "gop": [
+    "Will Stapp"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "top four general with ranked choice; unopposed"
+  },
+  {
+   "d": "33",
+   "dem": [],
+   "gop": [
+    "Barbara Haney",
+    "Glenn \"Mike\" Prax"
+   ],
+   "others": [
+    {
+     "name": "Pepper McFarland",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "top four general with ranked choice; no Democrat; minor party or independent is the main challenger"
+  },
+  {
+   "d": "34",
+   "dem": [],
+   "gop": [
+    "Harmony Tomaszewski"
+   ],
+   "others": [
+    {
+     "name": "Joy \"Joy Beth\" Cottle",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "top four general with ranked choice; no Democrat; minor party or independent is the main challenger"
+  },
+  {
+   "d": "35",
+   "dem": [
+    "Ashley E. Carrick"
+   ],
+   "gop": [
+    "Jeffrey \"Jeff\" Rentzel"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "top four general with ranked choice"
+  },
+  {
+   "d": "36",
+   "dem": [],
+   "gop": [
+    "Rebecca A. Schwanke"
+   ],
+   "others": [
+    {
+     "name": "Crystal Jones",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "top four general with ranked choice; no Democrat; minor party or independent is the main challenger"
+  },
+  {
+   "d": "37",
+   "dem": [
+    "Evelynn M. Trefon"
+   ],
+   "gop": [
+    "Brenda L. Wilson"
+   ],
+   "others": [
+    {
+     "name": "Mark Smith",
+     "party": "I"
+    },
+    {
+     "name": "Cade J. Woods",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "top four general with ranked choice"
+  },
+  {
+   "d": "38",
+   "dem": [
+    "Nellie \"Unangiq\" Jimmie",
+    "CJ McCormick"
+   ],
+   "gop": [
+    "Willy Keppel"
+   ],
+   "others": [
+    {
+     "name": "Joseph R. Amik",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "top four general with ranked choice"
+  },
+  {
+   "d": "39",
+   "dem": [
+    "Neal \"Quannaq\" Foster"
+   ],
+   "gop": [],
+   "others": [
+    {
+     "name": "Tyler Ivanoff",
+     "party": "I"
+    },
+    {
+     "name": "Reynold \"Papa Joe\" Okitkun",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "top four general with ranked choice; no Republican; minor party or independent is the main challenger"
+  },
+  {
+   "d": "40",
+   "dem": [
+    "Robyn Niayuq Burke Frier",
+    "Saima Chase"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "top four general with ranked choice; only Democrats advanced"
+  }
+ ],
+ "method": "General candidates from iVoterGuide Alaska statewide list, page version 2026-10-13. Alaska uses top four primaries and ranked choice generals. NP and NPA candidates are coded I; several are bipartisan coalition members. Post primary withdrawals were not separately verified against the Division of Elections list."
+}

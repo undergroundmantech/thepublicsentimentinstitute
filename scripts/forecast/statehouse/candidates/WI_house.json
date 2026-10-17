@@ -1,0 +1,1320 @@
+{
+ "state": "WI",
+ "chamber": "house",
+ "sources": [
+  "https://en.wikipedia.org/wiki/2026_Wisconsin_State_Assembly_election"
+ ],
+ "as_of": "2026-10-17",
+ "complete": true,
+ "districts": [
+  {
+   "d": "1",
+   "seats": 1,
+   "dem": [
+    "Renee Paplham"
+   ],
+   "gop": [
+    "Joel Kitchens"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "2",
+   "seats": 1,
+   "dem": [
+    "Alicia Saunders"
+   ],
+   "gop": [
+    "Shae Sortwell"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "3",
+   "seats": 1,
+   "dem": [
+    "Michael J. Goodwin"
+   ],
+   "gop": [
+    "Ron Tusler"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Goodwin won Democratic nomination via write-in campaign in primary"
+  },
+  {
+   "d": "4",
+   "seats": 1,
+   "dem": [
+    "Alexia Unertl"
+   ],
+   "gop": [
+    "David Steffen"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "5",
+   "seats": 1,
+   "dem": [
+    "Justin Schumacher"
+   ],
+   "gop": [
+    "Joy Goeben"
+   ],
+   "others": [
+    {
+     "name": "David Schupbach",
+     "party": "G"
+    }
+   ],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "6",
+   "seats": 1,
+   "dem": [
+    "Shirley Hinze"
+   ],
+   "gop": [
+    "Elijah Behnke"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "7",
+   "seats": 1,
+   "dem": [
+    "Karen Kirsch"
+   ],
+   "gop": [
+    "Lee Whiting"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "8",
+   "seats": 1,
+   "dem": [
+    "Ismael Luna"
+   ],
+   "gop": [
+    "Angel Sanchez"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Incumbent D Sylvia Ortiz-Velez lost primary"
+  },
+  {
+   "d": "9",
+   "seats": 1,
+   "dem": [
+    "Priscilla Prado"
+   ],
+   "gop": [
+    "Samuel Guerreo"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "10",
+   "seats": 1,
+   "dem": [
+    "Darrin Madison"
+   ],
+   "gop": [],
+   "others": [
+    {
+     "name": "Robert Longwell-Grice",
+     "party": "G"
+    }
+   ],
+   "withdrawn": [],
+   "note": "No Republican; Green Robert Longwell-Grice is the only challenger"
+  },
+  {
+   "d": "11",
+   "seats": 1,
+   "dem": [
+    "Sequanna Taylor"
+   ],
+   "gop": [
+    "Shandowlyon Reaves"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "12",
+   "seats": 1,
+   "dem": [
+    "Russell Goodwin"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "Democrat unopposed"
+  },
+  {
+   "d": "13",
+   "seats": 1,
+   "dem": [
+    "Amy Zimmerman"
+   ],
+   "gop": [
+    "Mike Morgan"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Open seat"
+  },
+  {
+   "d": "14",
+   "seats": 1,
+   "dem": [
+    "Angelito Tenorio"
+   ],
+   "gop": [
+    "AmyRose Murphy"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "15",
+   "seats": 1,
+   "dem": [
+    "Stephen Tryon"
+   ],
+   "gop": [
+    "Adam Neylon"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "16",
+   "seats": 1,
+   "dem": [
+    "Kalan Haywood"
+   ],
+   "gop": [
+    "Alciro Deacon"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "17",
+   "seats": 1,
+   "dem": [
+    "Supreme Moore Omokunde"
+   ],
+   "gop": [
+    "Charlene Abughrin"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "18",
+   "seats": 1,
+   "dem": [
+    "Margaret Arney"
+   ],
+   "gop": [
+    "Joel Richmond"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "19",
+   "seats": 1,
+   "dem": [
+    "Ryan Clancy"
+   ],
+   "gop": [
+    "Yasmine B. Outlaw"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "20",
+   "seats": 1,
+   "dem": [
+    "Christine Sinicki"
+   ],
+   "gop": [
+    "Kyle Cleary"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "21",
+   "seats": 1,
+   "dem": [
+    "Dan J. Bukiewicz"
+   ],
+   "gop": [
+    "Dylan Pfaffenbach"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Open seat"
+  },
+  {
+   "d": "22",
+   "seats": 1,
+   "dem": [
+    "Dana Glasstein"
+   ],
+   "gop": [
+    "Paul Melotik"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "23",
+   "seats": 1,
+   "dem": [
+    "Deb Andraca"
+   ],
+   "gop": [
+    "Aleaner Pabonnie"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Wikipedia text and candidate list name Pabonnie; its general table shows John Belanger, who is the District 26 nominee, so the table looks wrong"
+  },
+  {
+   "d": "24",
+   "seats": 1,
+   "dem": [
+    "Matt Brown"
+   ],
+   "gop": [
+    "Dan Knodl"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "25",
+   "seats": 1,
+   "dem": [
+    "Chris Able"
+   ],
+   "gop": [
+    "Paul Tittl"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "26",
+   "seats": 1,
+   "dem": [
+    "Joe Sheehan"
+   ],
+   "gop": [
+    "John Belanger"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "27",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Lindee Brill"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Republican unopposed"
+  },
+  {
+   "d": "28",
+   "seats": 1,
+   "dem": [
+    "Robin Lillesve"
+   ],
+   "gop": [
+    "Robin Kreibich"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "29",
+   "seats": 1,
+   "dem": [
+    "Chris Danou"
+   ],
+   "gop": [
+    "Treig Pronschinske"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "30",
+   "seats": 1,
+   "dem": [
+    "Kevin Knoke"
+   ],
+   "gop": [
+    "Shannon Zimmerman"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "31",
+   "seats": 1,
+   "dem": [
+    "John Perryman"
+   ],
+   "gop": [
+    "Tyler August"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "32",
+   "seats": 1,
+   "dem": [
+    "Greg Miller"
+   ],
+   "gop": [
+    "Amanda Nedweski"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "33",
+   "seats": 1,
+   "dem": [
+    "Maria Elena Bisabarros"
+   ],
+   "gop": [
+    "Steve Wicklund"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Open seat (Vos retiring); Wicklund won R primary 54.4 to 45.5 over Rick Stacey; Wikipedia general table wrongly shows Stacey"
+  },
+  {
+   "d": "34",
+   "seats": 1,
+   "dem": [
+    "Merlin Van Buren"
+   ],
+   "gop": [
+    "Rob Swearingen"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "35",
+   "seats": 1,
+   "dem": [
+    "Elizabeth McCrank"
+   ],
+   "gop": [
+    "Calvin Callahan"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "36",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Jeffrey Mursau"
+   ],
+   "others": [
+    {
+     "name": "Shena Chapman",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "No Democrat; independent Shena Chapman is the only challenger"
+  },
+  {
+   "d": "37",
+   "seats": 1,
+   "dem": [
+    "LaToya Bates"
+   ],
+   "gop": [
+    "Mark Born"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "38",
+   "seats": 1,
+   "dem": [
+    "Terri Wenkman"
+   ],
+   "gop": [
+    "William Penterman"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "39",
+   "seats": 1,
+   "dem": [
+    "Michael Skivington"
+   ],
+   "gop": [
+    "Alex Dallman"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "40",
+   "seats": 1,
+   "dem": [
+    "Karen DeSanto"
+   ],
+   "gop": [
+    "Julie Helmer"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "41",
+   "seats": 1,
+   "dem": [
+    "Zach Commons"
+   ],
+   "gop": [
+    "Tony Kurtz"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "42",
+   "seats": 1,
+   "dem": [
+    "Maureen McCarville"
+   ],
+   "gop": [
+    "Keith F. Miller"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "43",
+   "seats": 1,
+   "dem": [
+    "Brienne Brown"
+   ],
+   "gop": [
+    "Paul McGraw"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Wikipedia text and candidate list name McGraw; its general table repeats Keith F. Miller from District 42"
+  },
+  {
+   "d": "44",
+   "seats": 1,
+   "dem": [
+    "Ann Roe"
+   ],
+   "gop": [
+    "Ron Woodman"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "45",
+   "seats": 1,
+   "dem": [
+    "Clinton Anderson"
+   ],
+   "gop": [
+    "Jocelyn Jordan"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "46",
+   "seats": 1,
+   "dem": [
+    "Joan Fitzgerald"
+   ],
+   "gop": [
+    "John Donahue"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "47",
+   "seats": 1,
+   "dem": [
+    "Randy Udell"
+   ],
+   "gop": [
+    "Sandy Bakk"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "48",
+   "seats": 1,
+   "dem": [
+    "Andrew Hysell"
+   ],
+   "gop": [
+    "Mark Kjorlie"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "49",
+   "seats": 1,
+   "dem": [
+    "John Rindy"
+   ],
+   "gop": [
+    "Travis Tranel"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "50",
+   "seats": 1,
+   "dem": [
+    "Bill Oemichen"
+   ],
+   "gop": [
+    "Jon Aleckson"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Open seat"
+  },
+  {
+   "d": "51",
+   "seats": 1,
+   "dem": [
+    "Ben Gruber"
+   ],
+   "gop": [
+    "Todd Novak"
+   ],
+   "others": [
+    {
+     "name": "Nathan Tataje",
+     "party": "O"
+    }
+   ],
+   "withdrawn": [],
+   "note": "Tataje is American Solidarity Party"
+  },
+  {
+   "d": "52",
+   "seats": 1,
+   "dem": [
+    "Lee Snodgrass"
+   ],
+   "gop": [
+    "Reive Pullen"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "53",
+   "seats": 1,
+   "dem": [
+    "Becky Nichols"
+   ],
+   "gop": [
+    "David Daniels"
+   ],
+   "others": [
+    {
+     "name": "Rachael Dowling",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "Open seat"
+  },
+  {
+   "d": "54",
+   "seats": 1,
+   "dem": [
+    "Lori Palmeri"
+   ],
+   "gop": [
+    "Tim Paterson"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "55",
+   "seats": 1,
+   "dem": [
+    "Alex Corrigan"
+   ],
+   "gop": [
+    "Nate Gustafson"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "56",
+   "seats": 1,
+   "dem": [
+    "Grace Abitz"
+   ],
+   "gop": [
+    "Anthony Phillips"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Open seat"
+  },
+  {
+   "d": "57",
+   "seats": 1,
+   "dem": [
+    "Joey Marschall"
+   ],
+   "gop": [
+    "Kevin Krentz"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Open seat"
+  },
+  {
+   "d": "58",
+   "seats": 1,
+   "dem": [
+    "Dennis D. Degenhardt"
+   ],
+   "gop": [
+    "Bernie Newman"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Open seat"
+  },
+  {
+   "d": "59",
+   "seats": 1,
+   "dem": [
+    "Jack Holzman"
+   ],
+   "gop": [
+    "Bradley Petersen"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Open seat"
+  },
+  {
+   "d": "60",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Marty Ryan"
+   ],
+   "others": [
+    {
+     "name": "Tiffany Brault",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "Open seat; no Democrat, independent Tiffany Brault is the only challenger"
+  },
+  {
+   "d": "61",
+   "seats": 1,
+   "dem": [
+    "Ben Brist"
+   ],
+   "gop": [
+    "Bob Donovan"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "62",
+   "seats": 1,
+   "dem": [
+    "Angelina Cruz"
+   ],
+   "gop": [
+    "Mike Bellagio"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "63",
+   "seats": 1,
+   "dem": [
+    "Eddie Phanichkul"
+   ],
+   "gop": [
+    "Robert Wittke"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "64",
+   "seats": 1,
+   "dem": [
+    "Tip McGuire"
+   ],
+   "gop": [
+    "Ed Hibsch"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "65",
+   "seats": 1,
+   "dem": [
+    "Ben DeSmidt"
+   ],
+   "gop": [
+    "Valerie Kretchmer"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "66",
+   "seats": 1,
+   "dem": [
+    "Greta Neubauer"
+   ],
+   "gop": [
+    "Gina Cefalu Paulick"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "67",
+   "seats": 1,
+   "dem": [
+    "Indiana Thompson"
+   ],
+   "gop": [
+    "David Armstrong"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "68",
+   "seats": 1,
+   "dem": [
+    "Elisha King"
+   ],
+   "gop": [
+    "Rob Summerfield"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "69",
+   "seats": 1,
+   "dem": [
+    "Roger Halls"
+   ],
+   "gop": [
+    "Karen Hurd"
+   ],
+   "others": [
+    {
+     "name": "Josh Kelley",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "D name also spelled Roger Hall on the page"
+  },
+  {
+   "d": "70",
+   "seats": 1,
+   "dem": [
+    "Stephanie Stuve-Bodeen"
+   ],
+   "gop": [
+    "Nancy VanderMeer"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "71",
+   "seats": 1,
+   "dem": [
+    "Vinnie Miresse"
+   ],
+   "gop": [
+    "Jeff Disher"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "72",
+   "seats": 1,
+   "dem": [
+    "Christine Maltese"
+   ],
+   "gop": [
+    "Scott Krug"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "73",
+   "seats": 1,
+   "dem": [
+    "Angela Stroud"
+   ],
+   "gop": [
+    "Frank Kostka"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "74",
+   "seats": 1,
+   "dem": [
+    "Paul Johnson"
+   ],
+   "gop": [
+    "Chanz Green"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "75",
+   "seats": 1,
+   "dem": [
+    "Keith Mogel"
+   ],
+   "gop": [
+    "Duke Tucker"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "76",
+   "seats": 1,
+   "dem": [
+    "Dina Nina Martinez-Rutherford"
+   ],
+   "gop": [
+    "Nina Chat"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Open seat"
+  },
+  {
+   "d": "77",
+   "seats": 1,
+   "dem": [
+    "Renuka Mayadev"
+   ],
+   "gop": [
+    "Jane McCormick"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "78",
+   "seats": 1,
+   "dem": [
+    "Shelia Stubbs"
+   ],
+   "gop": [
+    "Henry Johnson"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "79",
+   "seats": 1,
+   "dem": [
+    "Lisa Subeck"
+   ],
+   "gop": [
+    "John Fons"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "80",
+   "seats": 1,
+   "dem": [
+    "Mike Bare"
+   ],
+   "gop": [
+    "Simran Arora"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "81",
+   "seats": 1,
+   "dem": [
+    "Alex Joers"
+   ],
+   "gop": [
+    "Mark S. Maier"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "82",
+   "seats": 1,
+   "dem": [
+    "Rico Camacho"
+   ],
+   "gop": [
+    "Bryson Reyes"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Open seat"
+  },
+  {
+   "d": "83",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Dave Maxey"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Republican unopposed"
+  },
+  {
+   "d": "84",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Chuck Wichgers"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Republican unopposed"
+  },
+  {
+   "d": "85",
+   "seats": 1,
+   "dem": [
+    "John Kroll"
+   ],
+   "gop": [
+    "Patrick Snyder"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "86",
+   "seats": 1,
+   "dem": [
+    "Andy Wuethrich"
+   ],
+   "gop": [
+    "John Spiros"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "87",
+   "seats": 1,
+   "dem": [
+    "Bob Look"
+   ],
+   "gop": [
+    "Brent Jacobson"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "88",
+   "seats": 1,
+   "dem": [
+    "Brandy Tollefson"
+   ],
+   "gop": [
+    "Ben Franklin"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "89",
+   "seats": 1,
+   "dem": [
+    "Ryan Spaude"
+   ],
+   "gop": [
+    "Bobby Lindsey"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "90",
+   "seats": 1,
+   "dem": [
+    "Amaad Rivera-Wagner"
+   ],
+   "gop": [
+    "Jessica Henderson"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "91",
+   "seats": 1,
+   "dem": [
+    "Jodi Emerson"
+   ],
+   "gop": [
+    "Bruce Stabenow"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "92",
+   "seats": 1,
+   "dem": [
+    "Jeremiah Fredrickson"
+   ],
+   "gop": [
+    "Clint Moses"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "93",
+   "seats": 1,
+   "dem": [
+    "Christian Phelps"
+   ],
+   "gop": [
+    "Michael Ayala"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "94",
+   "seats": 1,
+   "dem": [
+    "Steve Doyle"
+   ],
+   "gop": [
+    "Keith Purnell"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "95",
+   "seats": 1,
+   "dem": [
+    "Jill Billings"
+   ],
+   "gop": [
+    "Cedric Schnitzler"
+   ],
+   "others": [
+    {
+     "name": "Paul Michael Weber",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "96",
+   "seats": 1,
+   "dem": [
+    "Tara Johnson"
+   ],
+   "gop": [
+    "Jim Green"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "97",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Cindi Duchow"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Republican unopposed"
+  },
+  {
+   "d": "98",
+   "seats": 1,
+   "dem": [
+    "Matt Philibert"
+   ],
+   "gop": [
+    "Jim Piwowarczyk"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "99",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Barbara Dittrich"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Republican unopposed"
+  }
+ ]
+}

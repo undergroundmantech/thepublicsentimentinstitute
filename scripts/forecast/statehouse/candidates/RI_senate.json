@@ -1,0 +1,447 @@
+{
+ "state": "RI",
+ "chamber": "senate",
+ "sources": [
+  "https://vote.sos.ri.gov/Candidates/CandidateSearchSummary?OfficeType=621&Election=18239"
+ ],
+ "as_of": "2026-10-17",
+ "complete": true,
+ "caveat": "Official RI Secretary of State candidate database, current as of 2026-10-17; it lists no independent or minor party candidates for state Senate. Names converted from all caps.",
+ "districts": [
+  {
+   "d": "1",
+   "seats": 1,
+   "dem": [
+    "Jacob Ernest Bissaillon"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "2",
+   "seats": 1,
+   "dem": [
+    "Ana B Quezada"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "3",
+   "seats": 1,
+   "dem": [
+    "Samuel David Zurier"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "4",
+   "seats": 1,
+   "dem": [
+    "Stefano Vittorio Famiglietti"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "5",
+   "seats": 1,
+   "dem": [
+    "Samuel Wade Bell"
+   ],
+   "gop": [
+    "William D Connell"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "incumbent Bell won D primary over Moquin and Newcomer"
+  },
+  {
+   "d": "6",
+   "seats": 1,
+   "dem": [
+    "Tiara Tyshae Mack"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "7",
+   "seats": 1,
+   "dem": [
+    "Frank Anthony Ciccone"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "Senate Majority Leader; no Republican"
+  },
+  {
+   "d": "8",
+   "seats": 1,
+   "dem": [
+    "Lori Urso"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [
+    {
+     "name": "Albert Joseph Vitali",
+     "party": "D",
+     "note": "declaration withdrawn per SOS candidate list, not on ballot"
+    },
+    {
+     "name": "Adam Peter Carreiro",
+     "party": "R",
+     "note": "declaration withdrawn and did not qualify per SOS list"
+    }
+   ],
+   "note": "Urso beat Gena Felix in D primary; no Republican"
+  },
+  {
+   "d": "9",
+   "seats": 1,
+   "dem": [
+    "John Patrick Burke"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "10",
+   "seats": 1,
+   "dem": [
+    "Walter S Felag"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "11",
+   "seats": 1,
+   "dem": [
+    "Linda Lee Ujifusa"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "12",
+   "seats": 1,
+   "dem": [
+    "Louis P Dipalma"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "13",
+   "seats": 1,
+   "dem": [
+    "Dawn M Euer"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "Euer beat Angela Lima in D primary; no Republican"
+  },
+  {
+   "d": "14",
+   "seats": 1,
+   "dem": [
+    "Valarie Jean Lawson"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "Senate President; no Republican"
+  },
+  {
+   "d": "15",
+   "seats": 1,
+   "dem": [
+    "Meghan Elizabeth Kallman"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "Kallman beat Vanessa Rosa Lopez in D primary; no Republican"
+  },
+  {
+   "d": "16",
+   "seats": 1,
+   "dem": [
+    "Jonathon Acosta"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "17",
+   "seats": 1,
+   "dem": [
+    "Nelly Evelyn Burdette"
+   ],
+   "gop": [
+    "Thomas Joseph Paolino"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "18",
+   "seats": 1,
+   "dem": [
+    "Robert Britto"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "19",
+   "seats": 1,
+   "dem": [
+    "Ryan W Pearson"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "Pearson beat James Metivier in D primary; no Republican"
+  },
+  {
+   "d": "20",
+   "seats": 1,
+   "dem": [
+    "Brian Joseph Thompson"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "21",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Gordon E Rogers"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Democrat"
+  },
+  {
+   "d": "22",
+   "seats": 1,
+   "dem": [
+    "David Peter Tikoian"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "23",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Jessica Delacruz"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Senate Minority Leader"
+  },
+  {
+   "d": "24",
+   "seats": 1,
+   "dem": [
+    "Melissa Ann Murray"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "25",
+   "seats": 1,
+   "dem": [
+    "Andrew R Dimitri"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "26",
+   "seats": 1,
+   "dem": [
+    "Todd Michael Patalano"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "27",
+   "seats": 1,
+   "dem": [
+    "Hanna M Gallo"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "28",
+   "seats": 1,
+   "dem": [
+    "Lammis J Vargas"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "29",
+   "seats": 1,
+   "dem": [
+    "Peter A Appollonio"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "30",
+   "seats": 1,
+   "dem": [
+    "Mark Philip McKenney"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "31",
+   "seats": 1,
+   "dem": [
+    "Matthew Liam Lamountain"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "32",
+   "seats": 1,
+   "dem": [
+    "Pamela Jean Lauria"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "33",
+   "seats": 1,
+   "dem": [
+    "Leonidas Peter Raptakis"
+   ],
+   "gop": [
+    "James P Pierson"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "34",
+   "seats": 1,
+   "dem": [
+    "Samantha R Wilcox"
+   ],
+   "gop": [
+    "Elaine J Morgan"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "35",
+   "seats": 1,
+   "dem": [
+    "Bridget G Valverde"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "36",
+   "seats": 1,
+   "dem": [
+    "Alana M Dimario"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "DiMario beat Mark Mesrobian in D primary; no Republican"
+  },
+  {
+   "d": "37",
+   "seats": 1,
+   "dem": [
+    "Virginia Susan Sosnowski"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "38",
+   "seats": 1,
+   "dem": [
+    "Victoria Gu"
+   ],
+   "gop": [
+    "Westin Jerel Place"
+   ],
+   "others": [],
+   "withdrawn": []
+  }
+ ]
+}

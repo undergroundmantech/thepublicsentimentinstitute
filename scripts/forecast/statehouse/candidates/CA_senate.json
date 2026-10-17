@@ -1,0 +1,253 @@
+{
+ "state": "CA",
+ "chamber": "senate",
+ "sources": [
+  "https://elections.cdn.sos.ca.gov/statewide-elections/2026-general/cert-list-candidates.pdf"
+ ],
+ "as_of": "2026-10-17",
+ "complete": true,
+ "districts": [
+  {
+   "d": "2",
+   "dem": [
+    "Damon Connolly"
+   ],
+   "gop": [
+    "Tief Gibbs"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "4",
+   "dem": [
+    "Jaron Brandon"
+   ],
+   "gop": [
+    "Alexandra Duarte"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "6",
+   "dem": [
+    "Sean Frame"
+   ],
+   "gop": [
+    "Roger Niello"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "8",
+   "dem": [
+    "Angelique Ashby"
+   ],
+   "gop": [
+    "Susan A Mason"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "10",
+   "dem": [
+    "Scott Sakakihara"
+   ],
+   "gop": [
+    "Linda R. Price"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "12",
+   "dem": [],
+   "gop": [
+    "Nathan Magsig"
+   ],
+   "others": [
+    {
+     "name": "William Brown Jr.",
+     "party": "L"
+    }
+   ],
+   "withdrawn": [],
+   "note": "no Democrat; minor party candidate is the only challenger"
+  },
+  {
+   "d": "14",
+   "dem": [
+    "Esmeralda Soria"
+   ],
+   "gop": [
+    "Darin S. DuPont"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "16",
+   "dem": [
+    "Melissa Hurtado"
+   ],
+   "gop": [
+    "Guillermo Asuncion Gonzalez"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "18",
+   "dem": [
+    "Steve Padilla"
+   ],
+   "gop": [
+    "Art Hodges"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "20",
+   "dem": [
+    "Caroline Menjivar"
+   ],
+   "gop": [
+    "Tony Rodriguez"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "22",
+   "dem": [
+    "Susan Rubio"
+   ],
+   "gop": [
+    "Mike Netter"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "24",
+   "dem": [
+    "John M. Erickson",
+    "Brian Goldsmith"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "top two: two Democrats, no Republican"
+  },
+  {
+   "d": "26",
+   "dem": [
+    "Sara Hernandez",
+    "Sarah Rascón"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "top two: two Democrats, no Republican"
+  },
+  {
+   "d": "28",
+   "dem": [
+    "Lola Smallwood-Cuevas"
+   ],
+   "gop": [
+    "Joe Lisuzzo"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "30",
+   "dem": [
+    "Bob J. Archuleta"
+   ],
+   "gop": [
+    "Araceli Martinez"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "32",
+   "dem": [
+    "Tiffanie Tate"
+   ],
+   "gop": [
+    "Kelly Seyarto"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "34",
+   "dem": [
+    "Avelino Valencia"
+   ],
+   "gop": [
+    "Rhonda Shader"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "36",
+   "dem": [
+    "Chris Duncan"
+   ],
+   "gop": [
+    "Tony Strickland"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "38",
+   "dem": [
+    "Catherine S. Blakespear"
+   ],
+   "gop": [
+    "Laura Bassett"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "40",
+   "dem": [
+    "Mara Elliott"
+   ],
+   "gop": [
+    "Kristie Bruce-Lane"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  }
+ ],
+ "method": "CA SOS Certified List of Candidates for Nov 3 2026, certified Aug 27 2026; even numbered Senate districts on ballot; top two system"
+}

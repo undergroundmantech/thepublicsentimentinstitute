@@ -1,0 +1,513 @@
+{
+ "state": "MI",
+ "chamber": "senate",
+ "sources": [
+  "https://en.wikipedia.org/wiki/2026_Michigan_Senate_election",
+  "https://www.kentcountymi.gov/DocumentCenter/View/8870/November-3-2026-Candidates-and-Proposals-PDF",
+  "https://www.kalcounty.gov/DocumentCenter/View/6469/Unofficial-November-2026-Candidate-List"
+ ],
+ "as_of": "2026-10-17",
+ "complete": false,
+ "districts": [
+  {
+   "d": "1",
+   "seats": 1,
+   "dem": [
+    "Justin Onwenu"
+   ],
+   "gop": [
+    "Patrick O'Connell"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Open seat"
+  },
+  {
+   "d": "2",
+   "seats": 1,
+   "dem": [
+    "Abbas Alawieh"
+   ],
+   "gop": [
+    "Harry Sawicki"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Open seat"
+  },
+  {
+   "d": "3",
+   "seats": 1,
+   "dem": [
+    "John Conyers III"
+   ],
+   "gop": [
+    "Mark Ashley Price"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Open seat"
+  },
+  {
+   "d": "4",
+   "seats": 1,
+   "dem": [
+    "Darrin Camilleri"
+   ],
+   "gop": [
+    "Marcie Grzywacz"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "5",
+   "seats": 1,
+   "dem": [
+    "Matt Koleszar"
+   ],
+   "gop": [
+    "Estelle Oliansky"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Open seat"
+  },
+  {
+   "d": "6",
+   "seats": 1,
+   "dem": [
+    "Mary Cavanagh"
+   ],
+   "gop": [
+    "Joi Pokerwinski"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "7",
+   "seats": 1,
+   "dem": [
+    "Jason Hoskins"
+   ],
+   "gop": [
+    "Anthony Paesano"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Open seat"
+  },
+  {
+   "d": "8",
+   "seats": 1,
+   "dem": [
+    "Dayna Polehanki"
+   ],
+   "gop": [
+    "Kenneth D. Massey"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Open seat; Sen. Polehanki moved from District 5"
+  },
+  {
+   "d": "9",
+   "seats": 1,
+   "dem": [
+    "Theresa Brooks"
+   ],
+   "gop": [
+    "Michael Webber"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "10",
+   "seats": 1,
+   "dem": [
+    "Natalie Price"
+   ],
+   "gop": [
+    "Michelle Nard"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Open seat; Nard is a former Democrat"
+  },
+  {
+   "d": "11",
+   "seats": 1,
+   "dem": [
+    "Veronica Klinefelt"
+   ],
+   "gop": [
+    "Johnnie Townsend"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "12",
+   "seats": 1,
+   "dem": [
+    "Kevin Hertel"
+   ],
+   "gop": [
+    "John Goldwater"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "13",
+   "seats": 1,
+   "dem": [
+    "Sean Carlson"
+   ],
+   "gop": [
+    "Ryan Berman"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Open seat"
+  },
+  {
+   "d": "14",
+   "seats": 1,
+   "dem": [
+    "Sue Shink"
+   ],
+   "gop": [
+    "Tawn Shawnelle Beliger"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "15",
+   "seats": 1,
+   "dem": [
+    "Felicia Brabec"
+   ],
+   "gop": [
+    "Jason Rogers"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Open seat"
+  },
+  {
+   "d": "16",
+   "seats": 1,
+   "dem": [
+    "Deandre Barnes"
+   ],
+   "gop": [
+    "Joe Bellino"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "17",
+   "seats": 1,
+   "dem": [
+    "Ashleigh Baker"
+   ],
+   "gop": [
+    "Jonathan Lindsey"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "18",
+   "seats": 1,
+   "dem": [
+    "Anthony Pennock"
+   ],
+   "gop": [
+    "Thomas A. Albert"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Confirmed on Kent and Kalamazoo county lists"
+  },
+  {
+   "d": "19",
+   "seats": 1,
+   "dem": [
+    "Julie Rogers"
+   ],
+   "gop": [
+    "Shaun Young"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Open seat; confirmed on Kalamazoo county list"
+  },
+  {
+   "d": "20",
+   "seats": 1,
+   "dem": [
+    "Dale Murney"
+   ],
+   "gop": [
+    "Chris Moraitis"
+   ],
+   "others": [
+    {
+     "name": "Shamara Clay",
+     "party": "G"
+    }
+   ],
+   "withdrawn": [],
+   "note": "Open seat; confirmed on Kent county list"
+  },
+  {
+   "d": "21",
+   "seats": 1,
+   "dem": [
+    "Sarah Anthony"
+   ],
+   "gop": [
+    "Josh Burns"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "22",
+   "seats": 1,
+   "dem": [
+    "Rob Hower"
+   ],
+   "gop": [
+    "Mike Murphy"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Open seat"
+  },
+  {
+   "d": "23",
+   "seats": 1,
+   "dem": [
+    "Greg Hill"
+   ],
+   "gop": [
+    "Donni Steele"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Open seat"
+  },
+  {
+   "d": "24",
+   "seats": 1,
+   "dem": [
+    "Edlira Sako"
+   ],
+   "gop": [
+    "Doug Wozniak"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Open seat"
+  },
+  {
+   "d": "25",
+   "seats": 1,
+   "dem": [
+    "April Osentowski"
+   ],
+   "gop": [
+    "Andrew Beeler"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Open seat"
+  },
+  {
+   "d": "26",
+   "seats": 1,
+   "dem": [
+    "Brendan J. Johnson"
+   ],
+   "gop": [
+    "Matthew Bierlein"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Open seat"
+  },
+  {
+   "d": "27",
+   "seats": 1,
+   "dem": [
+    "John Daniel Cherry"
+   ],
+   "gop": [
+    "Bill Bain"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "28",
+   "seats": 1,
+   "dem": [
+    "Rashida Harrison"
+   ],
+   "gop": [
+    "Julie DeRose"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Open seat"
+  },
+  {
+   "d": "29",
+   "seats": 1,
+   "dem": [
+    "Abbie Groff-Blaszak"
+   ],
+   "gop": [
+    "Brady A. Middleton"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Open seat; confirmed on Kent county list"
+  },
+  {
+   "d": "30",
+   "seats": 1,
+   "dem": [
+    "Carol Glanville"
+   ],
+   "gop": [
+    "Mark E. Huizenga"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Confirmed on Kent county list"
+  },
+  {
+   "d": "31",
+   "seats": 1,
+   "dem": [
+    "Chris Kleinjans"
+   ],
+   "gop": [
+    "John Wetzel"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Open seat"
+  },
+  {
+   "d": "32",
+   "seats": 1,
+   "dem": [
+    "Rebecca Amidon"
+   ],
+   "gop": [
+    "Kim Cole"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Open seat"
+  },
+  {
+   "d": "33",
+   "seats": 1,
+   "dem": [
+    "Stan Opal"
+   ],
+   "gop": [
+    "Gina Johnsen"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Open seat; confirmed on Kent county list"
+  },
+  {
+   "d": "34",
+   "seats": 1,
+   "dem": [
+    "Tyler Landgraf"
+   ],
+   "gop": [
+    "Roger Hauck"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "35",
+   "seats": 1,
+   "dem": [
+    "Chedrick Greene"
+   ],
+   "gop": [
+    "Jason Tunney"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Greene won May 2026 special election over Tunney"
+  },
+  {
+   "d": "36",
+   "seats": 1,
+   "dem": [
+    "Mark Yonkman"
+   ],
+   "gop": [
+    "Michele Hoitenga"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "37",
+   "seats": 1,
+   "dem": [
+    "Kate Gallup"
+   ],
+   "gop": [
+    "John Damoose"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "38",
+   "seats": 1,
+   "dem": [
+    "Kelli van Ginhoven"
+   ],
+   "gop": [
+    "David Prestin"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Open seat; former Rep. Sara Cambensy listed on Wikipedia with unclear party or status"
+  }
+ ],
+ "gap": "D and R nominees are the Aug 4 primary winners from Wikipedia, which has no general ballot list. Minor party convention nominees are known only where a county list was read (Kent, Kalamazoo), so Green, Libertarian, US Taxpayers, Working Class or Natural Law candidates in other districts may be missing. The Michigan SOS candidate listing is blocked by robots.txt."
+}

@@ -1,0 +1,542 @@
+{
+ "state": "NV",
+ "chamber": "house",
+ "sources": [
+  "https://ivoterguide.com/all-in-state/nv",
+  "https://theballotbrief.com/state/nevada/clark-county",
+  "https://theballotbrief.com/state/nevada/washoe-county",
+  "https://theballotbrief.com/state/nevada/elko-county",
+  "https://theballotbrief.com/state/nevada/lyon-county",
+  "https://theballotbrief.com/state/nevada/douglas-county",
+  "https://theballotbrief.com/state/nevada/nye-county",
+  "https://theballotbrief.com/state/nevada/carson-city"
+ ],
+ "as_of": "2026-10-17",
+ "complete": true,
+ "districts": [
+  {
+   "d": "1",
+   "dem": [
+    "Alexis Elizabeth Esparza"
+   ],
+   "gop": [],
+   "others": [
+    {
+     "name": "Tarik A. \"TAB\" Barnes",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "no Republican; independent Barnes is the only possible challenger, listed by The Ballot Brief but not by iVoterGuide, ballot status unconfirmed"
+  },
+  {
+   "d": "2",
+   "dem": [
+    "Kamilah Bywaters"
+   ],
+   "gop": [
+    "Drew Teitelbaum"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "3",
+   "dem": [
+    "Selena Torres-Fossett"
+   ],
+   "gop": [
+    "Joseph P. Silvestri"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "4",
+   "dem": [
+    "Eileen Eady"
+   ],
+   "gop": [
+    "Lisa Cole"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "5",
+   "dem": [
+    "Brittney M. Miller"
+   ],
+   "gop": [
+    "Kelly Quinn"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "6",
+   "dem": [
+    "Jovan Alexander Jackson"
+   ],
+   "gop": [],
+   "others": [
+    {
+     "name": "Katherine \"Katie\" Duncan",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "no Republican; independent is the only challenger"
+  },
+  {
+   "d": "7",
+   "dem": [
+    "Cameron \"C.H.\" Miller"
+   ],
+   "gop": [],
+   "others": [
+    {
+     "name": "Anthony Scott \"Red\" Willett",
+     "party": "L"
+    },
+    {
+     "name": "Michael D. Musick",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "no Republican; Libertarian Willett is the main challenger; Musick listed by The Ballot Brief but not by iVoterGuide, ballot status unconfirmed"
+  },
+  {
+   "d": "8",
+   "dem": [
+    "Duy Ngoc Nguyen"
+   ],
+   "gop": [
+    "Joseph \"Joey\" Charafi"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "9",
+   "dem": [
+    "Ryan Hampton"
+   ],
+   "gop": [
+    "Erica Alejandra Neely"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "10",
+   "dem": [
+    "Venise L. Karris"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "11",
+   "dem": [
+    "Cinthia Moore"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "12",
+   "dem": [
+    "Max Carter II"
+   ],
+   "gop": [
+    "Nancy \"Nan\" Roecker"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "13",
+   "dem": [
+    "Daniel Andrews"
+   ],
+   "gop": [
+    "Brian Hibbetts"
+   ],
+   "others": [
+    {
+     "name": "Gage C. Beck",
+     "party": "L"
+    }
+   ],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "14",
+   "dem": [
+    "Erica Mosca"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "15",
+   "dem": [
+    "Miguel Davila"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "16",
+   "dem": [
+    "Cecelia Gonzalez"
+   ],
+   "gop": [
+    "John Carlo"
+   ],
+   "others": [
+    {
+     "name": "Jasmine Kurys",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "Kurys listed by The Ballot Brief but not by iVoterGuide, ballot status unconfirmed"
+  },
+  {
+   "d": "17",
+   "dem": [
+    "Linda F. Hunt"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "18",
+   "dem": [
+    "Venicia Considine"
+   ],
+   "gop": [
+    "Crystal Newton"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "19",
+   "dem": [],
+   "gop": [
+    "Jason Patchett"
+   ],
+   "others": [
+    {
+     "name": "Zackaraih Lysaght",
+     "party": "L"
+    }
+   ],
+   "withdrawn": [],
+   "note": "no Democrat; Libertarian is the only challenger"
+  },
+  {
+   "d": "20",
+   "dem": [
+    "David Orentlicher"
+   ],
+   "gop": [],
+   "others": [
+    {
+     "name": "Stan Vaughan",
+     "party": "O"
+    }
+   ],
+   "withdrawn": [],
+   "note": "no Republican; Vaughan is Independent American Party, the only challenger"
+  },
+  {
+   "d": "21",
+   "dem": [
+    "Elaine Marzola"
+   ],
+   "gop": [
+    "Patsy A. Carvalho"
+   ],
+   "others": [
+    {
+     "name": "Tighe Galvin",
+     "party": "L"
+    }
+   ],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "22",
+   "dem": [
+    "Shenea Booth"
+   ],
+   "gop": [
+    "Melissa Hardy"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "23",
+   "dem": [
+    "Jan Allen Aspelund"
+   ],
+   "gop": [
+    "Denise Daniels Fanning"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "24",
+   "dem": [
+    "Erica Roth"
+   ],
+   "gop": [],
+   "others": [
+    {
+     "name": "Andrew A. Schaefer",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "no Republican; independent Schaefer is the only possible challenger, listed by The Ballot Brief but not by iVoterGuide, ballot status unconfirmed"
+  },
+  {
+   "d": "25",
+   "dem": [
+    "Selena La Rue Hatch"
+   ],
+   "gop": [
+    "Michael A. Ginsburg"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "26",
+   "dem": [
+    "Sam Baugh"
+   ],
+   "gop": [
+    "Richard DeLong"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "27",
+   "dem": [
+    "Heather Goulding"
+   ],
+   "gop": [
+    "Veronica \"Lunch Lady\" Cortes"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "28",
+   "dem": [
+    "Reuben D'Silva"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "29",
+   "dem": [
+    "Alex J. Pereszlenyi"
+   ],
+   "gop": [
+    "Joe Ludwig"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "30",
+   "dem": [
+    "Natha C. Anderson"
+   ],
+   "gop": [
+    "Trista Gomez"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "31",
+   "dem": [
+    "Neal Schwartz"
+   ],
+   "gop": [
+    "Jill Dickman"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "32",
+   "dem": [],
+   "gop": [
+    "Alexis M. Hansen"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "33",
+   "dem": [],
+   "gop": [
+    "Bert K. Gurr"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "34",
+   "dem": [
+    "Hanadi Nadeem"
+   ],
+   "gop": [
+    "Brandon Davis"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "35",
+   "dem": [
+    "Joe Spica"
+   ],
+   "gop": [
+    "Rebecca Edgeworth"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "36",
+   "dem": [
+    "Jon Penn Junejo"
+   ],
+   "gop": [
+    "Gregory T. Hafen II"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "37",
+   "dem": [
+    "Shea M. Backus"
+   ],
+   "gop": [
+    "Jill M. Douglass"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "38",
+   "dem": [],
+   "gop": [
+    "Gregory S. Koenig"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "39",
+   "dem": [
+    "Erich Obermayr"
+   ],
+   "gop": [
+    "Blayne Osborn"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "40",
+   "dem": [
+    "Oscar Fuentes"
+   ],
+   "gop": [
+    "Julie A. Butler"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "open seat; incumbent PK O'Neill not on ballot"
+  },
+  {
+   "d": "41",
+   "dem": [
+    "Vinny Spotleson"
+   ],
+   "gop": [
+    "Kelly Chapman"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "42",
+   "dem": [
+    "Tracy Brown-May"
+   ],
+   "gop": [
+    "Christopher Brandlin"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  }
+ ],
+ "method": "General candidates from The Ballot Brief county pages, which describe themselves as AI assisted research and defer to the SOS certified list; no official NV list was fetched. Cross checked against the iVoterGuide Nevada list, version 2026-10-13: all major party nominees match; several independents appear only in The Ballot Brief and are flagged."
+}

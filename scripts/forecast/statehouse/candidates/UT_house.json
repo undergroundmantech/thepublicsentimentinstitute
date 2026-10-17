@@ -1,0 +1,997 @@
+{
+ "state": "UT",
+ "chamber": "house",
+ "sources": [
+  "https://ivoterguide.com/all-in-state/ut",
+  "https://theballotbrief.com/state/utah/salt-lake-county",
+  "https://theballotbrief.com/state/utah/utah-county",
+  "https://theballotbrief.com/state/utah/davis-county",
+  "https://theballotbrief.com/state/utah/washington-county",
+  "https://theballotbrief.com/state/utah/weber-county",
+  "https://theballotbrief.com/state/utah/cache-county",
+  "https://theballotbrief.com/state/utah/uintah-county",
+  "https://theballotbrief.com/state/utah/sevier-county",
+  "https://theballotbrief.com/state/utah/iron-county",
+  "https://theballotbrief.com/state/utah/tooele-county",
+  "https://theballotbrief.com/state/utah/carbon-county",
+  "https://theballotbrief.com/state/utah/summit-county"
+ ],
+ "as_of": "2026-10-17",
+ "complete": true,
+ "districts": [
+  {
+   "d": "1",
+   "dem": [
+    "Chris Reid"
+   ],
+   "gop": [
+    "Thomas Peterson"
+   ],
+   "others": [
+    {
+     "name": "Jason O'Dell",
+     "party": "O"
+    }
+   ],
+   "withdrawn": [],
+   "note": "O = Forward Party or Constitution Party"
+  },
+  {
+   "d": "2",
+   "dem": [
+    "Barbara J. Haggerty"
+   ],
+   "gop": [
+    "Mike Petersen"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "3",
+   "dem": [],
+   "gop": [
+    "Jason E. Thompson"
+   ],
+   "others": [
+    {
+     "name": "Patrick Belmont",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "no Democrat; minor party or independent is the main challenger"
+  },
+  {
+   "d": "4",
+   "dem": [
+    "Zane Woolstenhulme"
+   ],
+   "gop": [
+    "Tiara Auxier"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "5",
+   "dem": [
+    "Kendra Penry"
+   ],
+   "gop": [
+    "Casey Snider"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "6",
+   "dem": [],
+   "gop": [
+    "Rob Bishop"
+   ],
+   "others": [
+    {
+     "name": "James Rich",
+     "party": "O"
+    }
+   ],
+   "withdrawn": [],
+   "note": "no Democrat; minor party or independent is the main challenger; O = Forward Party or Constitution Party"
+  },
+  {
+   "d": "7",
+   "dem": [
+    "Bianca Mittendorf"
+   ],
+   "gop": [
+    "Ryan D. Wilcox"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "8",
+   "dem": [
+    "Kim James"
+   ],
+   "gop": [
+    "Jason B Kyle"
+   ],
+   "others": [
+    {
+     "name": "Libby Shelton",
+     "party": "O"
+    }
+   ],
+   "withdrawn": [],
+   "note": "O = Forward Party or Constitution Party"
+  },
+  {
+   "d": "9",
+   "dem": [
+    "Angela Choberka"
+   ],
+   "gop": [
+    "Jake Sawyer"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "10",
+   "dem": [
+    "Rosemary T Lesser"
+   ],
+   "gop": [
+    "Jim Alvey"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "11",
+   "dem": [
+    "Dave Calder"
+   ],
+   "gop": [
+    "Katy Hall"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "12",
+   "dem": [
+    "Anna Graff"
+   ],
+   "gop": [
+    "Mike Schultz"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "13",
+   "dem": [
+    "Jeffrey Anderson"
+   ],
+   "gop": [
+    "Erik R. Craythorne"
+   ],
+   "others": [
+    {
+     "name": "Tony De Mille",
+     "party": "O"
+    }
+   ],
+   "withdrawn": [],
+   "note": "O = Forward Party or Constitution Party"
+  },
+  {
+   "d": "14",
+   "dem": [
+    "Brandon Young"
+   ],
+   "gop": [
+    "John Taylor"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "15",
+   "dem": [
+    "Anne Berbert"
+   ],
+   "gop": [
+    "Ariel Defay"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "16",
+   "dem": [
+    "Abigail Treasure"
+   ],
+   "gop": [
+    "Bob J Stevenson"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "17",
+   "dem": [
+    "Eric Last"
+   ],
+   "gop": [
+    "Lili Bitner"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "18",
+   "dem": [
+    "Scott Troxel"
+   ],
+   "gop": [
+    "Paul Cutler"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "19",
+   "dem": [],
+   "gop": [
+    "Raymond P. Ward"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "20",
+   "dem": [
+    "Phil Graves"
+   ],
+   "gop": [
+    "Melissa Ballard"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "21",
+   "dem": [
+    "Stephen Otterstrom"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "22",
+   "dem": [
+    "Jen Dailey-Provost"
+   ],
+   "gop": [
+    "Char Varga"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "23",
+   "dem": [
+    "Hoang Nguyen"
+   ],
+   "gop": [
+    "Franklin D. Robinson"
+   ],
+   "others": [
+    {
+     "name": "Cabot W Nelson",
+     "party": "O"
+    }
+   ],
+   "withdrawn": [],
+   "note": "O = Forward Party or Constitution Party"
+  },
+  {
+   "d": "24",
+   "dem": [
+    "Grant Amjad Miller"
+   ],
+   "gop": [
+    "Braeden J. Oswald"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "25",
+   "dem": [
+    "Angela Romero"
+   ],
+   "gop": [
+    "Richard T Nowak"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "26",
+   "dem": [
+    "Michael E Finch"
+   ],
+   "gop": [
+    "Matt MacPherson"
+   ],
+   "others": [
+    {
+     "name": "Travis Alico",
+     "party": "O"
+    }
+   ],
+   "withdrawn": [],
+   "note": "Alico party shown only as other"
+  },
+  {
+   "d": "27",
+   "dem": [
+    "Liz Oates"
+   ],
+   "gop": [
+    "Anthony Loubet"
+   ],
+   "others": [
+    {
+     "name": "Jeffrey Marshall",
+     "party": "O"
+    }
+   ],
+   "withdrawn": [],
+   "note": "Marshall party shown only as other"
+  },
+  {
+   "d": "28",
+   "dem": [
+    "Anita Dalrymple"
+   ],
+   "gop": [
+    "Nicholeen Peck"
+   ],
+   "others": [
+    {
+     "name": "Wales Nematollahi",
+     "party": "O"
+    }
+   ],
+   "withdrawn": [],
+   "note": "O = Forward Party or Constitution Party"
+  },
+  {
+   "d": "29",
+   "dem": [
+    "Sara Snow"
+   ],
+   "gop": [
+    "Sheldon Birch"
+   ],
+   "others": [
+    {
+     "name": "Tynley Bean",
+     "party": "O"
+    },
+    {
+     "name": "Jonathan Garrard",
+     "party": "O"
+    }
+   ],
+   "withdrawn": [],
+   "note": "O = Forward Party or Constitution Party"
+  },
+  {
+   "d": "30",
+   "dem": [
+    "Jake Fitisemanu"
+   ],
+   "gop": [
+    "Dave Parke"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "31",
+   "dem": [
+    "Verona Mauga"
+   ],
+   "gop": [
+    "Melody Jones"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "32",
+   "dem": [
+    "Sahara Hayes"
+   ],
+   "gop": [
+    "Aileen Hampton"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "33",
+   "dem": [
+    "Doug Owens"
+   ],
+   "gop": [
+    "Anna Reeves"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "34",
+   "dem": [
+    "Julie Jackson"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "35",
+   "dem": [
+    "Rosalba Dominguez"
+   ],
+   "gop": [
+    "Monique I. Ketcham"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "36",
+   "dem": [
+    "Blake Townsend"
+   ],
+   "gop": [
+    "Jim Dunnigan"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "37",
+   "dem": [
+    "Ashlee Matthews"
+   ],
+   "gop": [
+    "Casey Saxton"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "38",
+   "dem": [],
+   "gop": [
+    "Chris McConnehey"
+   ],
+   "others": [
+    {
+     "name": "Sergio Sotelo",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "no Democrat; minor party or independent is the main challenger"
+  },
+  {
+   "d": "39",
+   "dem": [
+    "Drew Howells"
+   ],
+   "gop": [
+    "Ken Ivory"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "40",
+   "dem": [
+    "Andrew Stoddard"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "41",
+   "dem": [
+    "John Arthur"
+   ],
+   "gop": [
+    "Darren Croft"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "42",
+   "dem": [
+    "Iva Williams"
+   ],
+   "gop": [
+    "Clint Okerlund"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "43",
+   "dem": [
+    "Ofa Matagi"
+   ],
+   "gop": [
+    "Steve Eliason"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "44",
+   "dem": [
+    "Jess Birtcher"
+   ],
+   "gop": [
+    "Jordan Teuscher"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "45",
+   "dem": [
+    "Rod Moser"
+   ],
+   "gop": [
+    "Tracy Miller"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "46",
+   "dem": [
+    "Braxten Rutherford"
+   ],
+   "gop": [
+    "Cal Roberts"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "47",
+   "dem": [],
+   "gop": [
+    "Mark A. Strong"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "48",
+   "dem": [
+    "Benyde Walker"
+   ],
+   "gop": [
+    "Jake Hunsaker"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "49",
+   "dem": [
+    "Lillian Bowles"
+   ],
+   "gop": [
+    "Candice B. Pierucci"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "50",
+   "dem": [
+    "Kristin Meyer"
+   ],
+   "gop": [
+    "Stephanie Gricius"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "51",
+   "dem": [
+    "Brett Nielsen"
+   ],
+   "gop": [
+    "Leah Hansen"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "52",
+   "dem": [
+    "Nicole Melling"
+   ],
+   "gop": [
+    "Cory Maloy"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "53",
+   "dem": [
+    "Kevin R Slater"
+   ],
+   "gop": [
+    "Kay J. Christofferson"
+   ],
+   "others": [
+    {
+     "name": "John Boyd",
+     "party": "O"
+    }
+   ],
+   "withdrawn": [],
+   "note": "O = Forward Party or Constitution Party"
+  },
+  {
+   "d": "54",
+   "dem": [
+    "Kristina Robinson"
+   ],
+   "gop": [
+    "Kristen S. Chevrier"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "55",
+   "dem": [
+    "Travis Hysell"
+   ],
+   "gop": [
+    "Jon Hawkins"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "56",
+   "dem": [
+    "Natassja Grossman"
+   ],
+   "gop": [
+    "Val L. Peterson"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "57",
+   "dem": [],
+   "gop": [
+    "Nelson Abbott"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "58",
+   "dem": [
+    "Karli Black"
+   ],
+   "gop": [
+    "David Shallenberger"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "59",
+   "dem": [
+    "Celeste T. Johnson"
+   ],
+   "gop": [
+    "Luke Searle"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "60",
+   "dem": [],
+   "gop": [
+    "Grant Pace"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "61",
+   "dem": [
+    "Alan Jimenez"
+   ],
+   "gop": [
+    "Lisa Shepherd"
+   ],
+   "others": [
+    {
+     "name": "Jennifer K Doud",
+     "party": "O"
+    }
+   ],
+   "withdrawn": [],
+   "note": "O = Forward Party or Constitution Party"
+  },
+  {
+   "d": "62",
+   "dem": [
+    "David Chappell"
+   ],
+   "gop": [
+    "Norm Thurston"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "63",
+   "dem": [
+    "Mark Youngquist"
+   ],
+   "gop": [
+    "Stephen L. Whyte"
+   ],
+   "others": [
+    {
+     "name": "Julie Smith",
+     "party": "O"
+    }
+   ],
+   "withdrawn": [],
+   "note": "O = Forward Party or Constitution Party"
+  },
+  {
+   "d": "64",
+   "dem": [],
+   "gop": [
+    "Jackie Larson"
+   ],
+   "others": [
+    {
+     "name": "Alan Wessman",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "no Democrat; minor party or independent is the main challenger"
+  },
+  {
+   "d": "65",
+   "dem": [],
+   "gop": [
+    "Doug Welton"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "66",
+   "dem": [
+    "Breanne Mashek"
+   ],
+   "gop": [
+    "Troy Shelley"
+   ],
+   "others": [
+    {
+     "name": "Russ Hatch",
+     "party": "O"
+    }
+   ],
+   "withdrawn": [],
+   "note": "O = Forward Party or Constitution Party"
+  },
+  {
+   "d": "67",
+   "dem": [
+    "Carl Ingwell"
+   ],
+   "gop": [
+    "JR Bird"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "68",
+   "dem": [],
+   "gop": [
+    "Scott H Chew"
+   ],
+   "others": [
+    {
+     "name": "Sonya Ray",
+     "party": "O"
+    }
+   ],
+   "withdrawn": [],
+   "note": "no Democrat; minor party or independent is the main challenger; O = Forward Party or Constitution Party"
+  },
+  {
+   "d": "69",
+   "dem": [
+    "Tracie Yellowman Tso"
+   ],
+   "gop": [
+    "Logan J. Monson"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "70",
+   "dem": [
+    "Stacey D. Pendergraft"
+   ],
+   "gop": [
+    "Carl R. Albrecht"
+   ],
+   "others": [
+    {
+     "name": "Zeno B. Parry",
+     "party": "O"
+    }
+   ],
+   "withdrawn": [],
+   "note": "O = Forward Party or Constitution Party"
+  },
+  {
+   "d": "71",
+   "dem": [
+    "Thomas Loveheart"
+   ],
+   "gop": [
+    "Rex P Shipp"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "72",
+   "dem": [
+    "Eva M Weldon"
+   ],
+   "gop": [
+    "Joseph Elison"
+   ],
+   "others": [
+    {
+     "name": "April A Pinkston",
+     "party": "O"
+    }
+   ],
+   "withdrawn": [],
+   "note": "O = Forward Party or Constitution Party"
+  },
+  {
+   "d": "73",
+   "dem": [
+    "Glenn D Webb"
+   ],
+   "gop": [
+    "Colin W. Jack"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "74",
+   "dem": [
+    "Jeffrey N Lipe"
+   ],
+   "gop": [
+    "R. Neil Walter"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "75",
+   "dem": [
+    "Rebecca Winsor"
+   ],
+   "gop": [
+    "Walt Brooks"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  }
+ ],
+ "method": "Contested races from iVoterGuide Utah statewide list (version 2026-10-13), which omits unopposed races; unopposed races and Forward or Constitution labels from The Ballot Brief county pages."
+}

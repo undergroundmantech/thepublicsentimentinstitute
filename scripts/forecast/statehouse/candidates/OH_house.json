@@ -1,0 +1,1111 @@
+{
+ "state": "OH",
+ "chamber": "house",
+ "sources": [
+  "https://en.wikipedia.org/wiki/2026_Ohio_House_of_Representatives_election"
+ ],
+ "as_of": "2026-10-17",
+ "complete": false,
+ "districts": [
+  {
+   "d": "1",
+   "seats": 1,
+   "dem": [
+    "Dontavius Jarrells"
+   ],
+   "gop": [
+    "Joel Greff"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "2",
+   "seats": 1,
+   "dem": [
+    "Charity Martin King"
+   ],
+   "gop": [],
+   "others": [
+    {
+     "name": "Steve Dodge",
+     "party": "L"
+    }
+   ],
+   "withdrawn": [],
+   "note": "Open seat; no Republican found; Libertarian Dodge nominated by write-in primary, threshold not verified"
+  },
+  {
+   "d": "3",
+   "seats": 1,
+   "dem": [
+    "Ismail Mohamed"
+   ],
+   "gop": [
+    "Bernedine Kennedy Kent"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Republican nominated by write-in primary, threshold not verified"
+  },
+  {
+   "d": "4",
+   "seats": 1,
+   "dem": [
+    "Beryl Piccolantonio"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "No Republican found in source"
+  },
+  {
+   "d": "5",
+   "seats": 1,
+   "dem": [
+    "Meredith Lawson-Rowe"
+   ],
+   "gop": [
+    "Richard Cole"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Republican nominated by write-in primary, threshold not verified"
+  },
+  {
+   "d": "6",
+   "seats": 1,
+   "dem": [
+    "Christine Cockley"
+   ],
+   "gop": [
+    "Matthew Jackson"
+   ],
+   "others": [
+    {
+     "name": "Jennifer Crayton",
+     "party": "L"
+    }
+   ],
+   "withdrawn": [],
+   "note": "Libertarian nominated by write-in primary, threshold not verified"
+  },
+  {
+   "d": "7",
+   "seats": 1,
+   "dem": [
+    "Ukeme Jeter"
+   ],
+   "gop": [
+    "William Mercier"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Open seat"
+  },
+  {
+   "d": "8",
+   "seats": 1,
+   "dem": [
+    "Anita Somani"
+   ],
+   "gop": [
+    "Kelly Hunter-Kalagidis"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Republican nominated by write-in primary, threshold not verified"
+  },
+  {
+   "d": "9",
+   "seats": 1,
+   "dem": [
+    "Munira Abdullahi"
+   ],
+   "gop": [
+    "Bruce Euans"
+   ],
+   "others": [
+    {
+     "name": "Steven Linnabary",
+     "party": "L"
+    }
+   ],
+   "withdrawn": [],
+   "note": "Libertarian nominated by write-in primary, threshold not verified"
+  },
+  {
+   "d": "10",
+   "seats": 1,
+   "dem": [
+    "Mark Sigrist"
+   ],
+   "gop": [
+    "Denise D'Angelo"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "11",
+   "seats": 1,
+   "dem": [
+    "Crystal Lett"
+   ],
+   "gop": [
+    "Shawn Kaeser"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "12",
+   "seats": 1,
+   "dem": [
+    "Liam Strasburg"
+   ],
+   "gop": [
+    "Brian Stewart"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "13",
+   "seats": 1,
+   "dem": [
+    "Tristan Rader"
+   ],
+   "gop": [
+    "Billy Fronimo"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "14",
+   "seats": 1,
+   "dem": [
+    "Sean Brennan"
+   ],
+   "gop": [
+    "David J. Morgan"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Republican nominated by write-in primary, threshold not verified"
+  },
+  {
+   "d": "15",
+   "seats": 1,
+   "dem": [
+    "Chris Glassburn"
+   ],
+   "gop": [
+    "Daniel Conway"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "16",
+   "seats": 1,
+   "dem": [
+    "Scott DiMauro"
+   ],
+   "gop": [
+    "Sophia Tjotjos"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Open seat (Sweeney running for Senate 23)"
+  },
+  {
+   "d": "17",
+   "seats": 1,
+   "dem": [
+    "Megan Coy"
+   ],
+   "gop": [
+    "Mike Dovilla"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "18",
+   "seats": 1,
+   "dem": [
+    "Davida Russell"
+   ],
+   "gop": [
+    "Maureen Lynn"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Open seat"
+  },
+  {
+   "d": "19",
+   "seats": 1,
+   "dem": [
+    "Nicole Sigurdson"
+   ],
+   "gop": [
+    "Ed Hargate"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Open seat"
+  },
+  {
+   "d": "20",
+   "seats": 1,
+   "dem": [
+    "Eugene Miller"
+   ],
+   "gop": [
+    "Donna Walker-Brown"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Open seat"
+  },
+  {
+   "d": "21",
+   "seats": 1,
+   "dem": [
+    "Eric Synenberg"
+   ],
+   "gop": [
+    "Tina Barhams"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Republican nominated by write-in primary, threshold not verified"
+  },
+  {
+   "d": "22",
+   "seats": 1,
+   "dem": [
+    "Darnell Brewer"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "No Republican found in source"
+  },
+  {
+   "d": "23",
+   "seats": 1,
+   "dem": [
+    "Dan Troy"
+   ],
+   "gop": [
+    "Julie Belich"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "35",
+   "seats": 1,
+   "dem": [
+    "Samantha Salamon"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "Open seat; Republican nominee not found in source (gap, not confirmed absent)"
+  },
+  {
+   "d": "36",
+   "seats": 1,
+   "dem": [
+    "Tom Herner"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "Republican nominee not found in source (gap, not confirmed absent)"
+  },
+  {
+   "d": "40",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Rodney Creech"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "No Democrat found in source"
+  },
+  {
+   "d": "43",
+   "seats": 1,
+   "dem": [
+    "Michele Grim"
+   ],
+   "gop": [
+    "David Karmol"
+   ],
+   "others": [
+    {
+     "name": "Zach Hall",
+     "party": "L"
+    }
+   ],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "44",
+   "seats": 1,
+   "dem": [
+    "David Fournier"
+   ],
+   "gop": [
+    "Edward Schimmel"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "45",
+   "seats": 1,
+   "dem": [
+    "Jayson Rasheed"
+   ],
+   "gop": [
+    "Jennifer Gross"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "46",
+   "seats": 1,
+   "dem": [
+    "Benjamin McCall"
+   ],
+   "gop": [
+    "Thomas Hall"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "47",
+   "seats": 1,
+   "dem": [
+    "Jordan Haire"
+   ],
+   "gop": [
+    "Diane Mullins"
+   ],
+   "others": [
+    {
+     "name": "Justin Purviance",
+     "party": "L"
+    }
+   ],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "48",
+   "seats": 1,
+   "dem": [
+    "Nick Morris"
+   ],
+   "gop": [
+    "Christina Hagan"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Open seat"
+  },
+  {
+   "d": "49",
+   "seats": 1,
+   "dem": [
+    "Krista Allison"
+   ],
+   "gop": [
+    "Jim Thomas"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "50",
+   "seats": 1,
+   "dem": [
+    "Rylan Finzer"
+   ],
+   "gop": [
+    "Matthew Kishman"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "51",
+   "seats": 1,
+   "dem": [
+    "Amanda Fontana"
+   ],
+   "gop": [
+    "Jodi Salvo"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "52",
+   "seats": 1,
+   "dem": [
+    "Mike Baker"
+   ],
+   "gop": [
+    "Nathan Manning"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Open seat"
+  },
+  {
+   "d": "53",
+   "seats": 1,
+   "dem": [
+    "Matt Lundy"
+   ],
+   "gop": [
+    "Bradley Lacko"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Open seat"
+  },
+  {
+   "d": "54",
+   "seats": 1,
+   "dem": [
+    "Brenda Buchanan"
+   ],
+   "gop": [
+    "Kellie Deeter"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "55",
+   "seats": 1,
+   "dem": [
+    "Paul Kurtz"
+   ],
+   "gop": [
+    "Michelle Teska"
+   ],
+   "others": [
+    {
+     "name": "Philip Pirdy",
+     "party": "L"
+    }
+   ],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "56",
+   "seats": 1,
+   "dem": [
+    "Laalitya Acharya"
+   ],
+   "gop": [
+    "Adam Mathews"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "57",
+   "seats": 1,
+   "dem": [
+    "Rick Walker"
+   ],
+   "gop": [
+    "Jesse Styles"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Open seat"
+  },
+  {
+   "d": "58",
+   "seats": 1,
+   "dem": [
+    "John Boccieri"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "Open seat; no Republican found in source"
+  },
+  {
+   "d": "59",
+   "seats": 1,
+   "dem": [
+    "Wayne Penny Jr."
+   ],
+   "gop": [
+    "Tex Fischer"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "60",
+   "seats": 1,
+   "dem": [
+    "Shelby Kimball"
+   ],
+   "gop": [
+    "Brian Lorenz"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "61",
+   "seats": 1,
+   "dem": [
+    "Vince McGrail"
+   ],
+   "gop": [
+    "Shawn Stevens"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Open seat"
+  },
+  {
+   "d": "62",
+   "seats": 1,
+   "dem": [
+    "Ian Schwartz"
+   ],
+   "gop": [
+    "Jean Schmidt"
+   ],
+   "others": [
+    {
+     "name": "Ron Grethel",
+     "party": "L"
+    }
+   ],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "63",
+   "seats": 1,
+   "dem": [
+    "Debbie Davidson"
+   ],
+   "gop": [
+    "Adam Bird"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "64",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Nick Santucci"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "No Democrat found in source"
+  },
+  {
+   "d": "65",
+   "seats": 1,
+   "dem": [
+    "Lorna Westlake"
+   ],
+   "gop": [
+    "David Thomas"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "66",
+   "seats": 1,
+   "dem": [
+    "Chris Nardo"
+   ],
+   "gop": [
+    "Sean Hutson"
+   ],
+   "others": [
+    {
+     "name": "Justin Peroli",
+     "party": "L"
+    }
+   ],
+   "withdrawn": [],
+   "note": "Open seat; Nardo per primary table, the page general table shows Heather Sample (the District 67 Democrat), likely an error"
+  },
+  {
+   "d": "67",
+   "seats": 1,
+   "dem": [
+    "Heather Sample"
+   ],
+   "gop": [
+    "Melanie Miller"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "68",
+   "seats": 1,
+   "dem": [
+    "Mason Blankenship"
+   ],
+   "gop": [
+    "Thaddeus Claggett"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "69",
+   "seats": 1,
+   "dem": [
+    "Amy Rigsby"
+   ],
+   "gop": [
+    "Kevin D. Miller"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "70",
+   "seats": 1,
+   "dem": [
+    "Kim McCarthy"
+   ],
+   "gop": [
+    "Brian Lampton"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "71",
+   "seats": 1,
+   "dem": [
+    "Krista Magaw"
+   ],
+   "gop": [
+    "Levi Dean"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "72",
+   "seats": 1,
+   "dem": [
+    "Jeff Clapper"
+   ],
+   "gop": [
+    "Heidi Workman"
+   ],
+   "others": [
+    {
+     "name": "Michael Fricke",
+     "party": "L"
+    }
+   ],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "73",
+   "seats": 1,
+   "dem": [
+    "Whittney Wood"
+   ],
+   "gop": [
+    "Jeff LaRe"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "74",
+   "seats": 1,
+   "dem": [
+    "Darrell Jackson"
+   ],
+   "gop": [
+    "Bernard Willis"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "75",
+   "seats": 1,
+   "dem": [
+    "Jake Kielmeyer"
+   ],
+   "gop": [
+    "Haraz Ghanbari"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "76",
+   "seats": 1,
+   "dem": [
+    "Colton Stidam"
+   ],
+   "gop": [
+    "Marilyn John"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "77",
+   "seats": 1,
+   "dem": [
+    "Brooke Dillon"
+   ],
+   "gop": [
+    "Meredith Craig"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "78",
+   "seats": 1,
+   "dem": [
+    "Jeffrey Givan"
+   ],
+   "gop": [
+    "Matt Huffman"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "79",
+   "seats": 1,
+   "dem": [
+    "Bob Guy"
+   ],
+   "gop": [
+    "Monica Robb Blasdel"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "80",
+   "seats": 1,
+   "dem": [
+    "Katie Wagner"
+   ],
+   "gop": [
+    "Johnathan Newman"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "81",
+   "seats": 1,
+   "dem": [
+    "David Swanson"
+   ],
+   "gop": [
+    "Patti Rockey"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Open seat"
+  },
+  {
+   "d": "82",
+   "seats": 1,
+   "dem": [
+    "Maddux McCray"
+   ],
+   "gop": [
+    "Roy Klopfenstein"
+   ],
+   "others": [
+    {
+     "name": "Christopher Elder",
+     "party": "L"
+    }
+   ],
+   "withdrawn": [],
+   "note": "Democrat nominated by write-in primary, threshold not verified"
+  },
+  {
+   "d": "83",
+   "seats": 1,
+   "dem": [
+    "Sheila Coressel"
+   ],
+   "gop": [
+    "Ty Mathews"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "84",
+   "seats": 1,
+   "dem": [
+    "Adrienne Childrey"
+   ],
+   "gop": [
+    "Angela King"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "85",
+   "seats": 1,
+   "dem": [
+    "Victoria Maddox"
+   ],
+   "gop": [
+    "Tim Barhorst"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "86",
+   "seats": 1,
+   "dem": [
+    "Kent Halloran"
+   ],
+   "gop": [
+    "Ben Weber"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "87",
+   "seats": 1,
+   "dem": [
+    "Lora Covrett"
+   ],
+   "gop": [
+    "Jeffrey McClain"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Democrat nominated by write-in primary, threshold not verified"
+  },
+  {
+   "d": "88",
+   "seats": 1,
+   "dem": [
+    "Aaron Jones"
+   ],
+   "gop": [
+    "Gary Click"
+   ],
+   "others": [
+    {
+     "name": "Benjamin Machoukas",
+     "party": "L"
+    }
+   ],
+   "withdrawn": [],
+   "note": "Libertarian nominated by write-in primary, threshold not verified"
+  },
+  {
+   "d": "89",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "D.J. Swearingen"
+   ],
+   "others": [],
+   "withdrawn": [
+    {
+     "name": "Easton Retzke",
+     "party": "D",
+     "note": "marked withdrawn on Wikipedia but still shown in its general table"
+    }
+   ],
+   "note": "Democratic nominee withdrew; no replacement found"
+  },
+  {
+   "d": "90",
+   "seats": 1,
+   "dem": [
+    "Collin Docterman"
+   ],
+   "gop": [
+    "Justin Pizzulli"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "91",
+   "seats": 1,
+   "dem": [
+    "Amy Wright"
+   ],
+   "gop": [
+    "Bob Peterson"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "92",
+   "seats": 1,
+   "dem": [
+    "Sarah Seniff"
+   ],
+   "gop": [
+    "Mark Johnson"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Democrat nominated by write-in primary, threshold not verified"
+  },
+  {
+   "d": "93",
+   "seats": 1,
+   "dem": [
+    "Jessica Harper"
+   ],
+   "gop": [
+    "Jason Stephens"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "94",
+   "seats": 1,
+   "dem": [
+    "Wenda Sheard"
+   ],
+   "gop": [
+    "Kevin Ritter"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "95",
+   "seats": 1,
+   "dem": [
+    "Paul Cameron"
+   ],
+   "gop": [
+    "Ty Moore"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "96",
+   "seats": 1,
+   "dem": [
+    "Charrie Foglio"
+   ],
+   "gop": [
+    "Ron Ferguson"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "97",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Adam Holmes"
+   ],
+   "others": [
+    {
+     "name": "Tim Godwin",
+     "party": "L"
+    }
+   ],
+   "withdrawn": [],
+   "note": "No Democrat found; Libertarian is the only challenger"
+  }
+ ],
+ "gap": "Built from May 5 primary results on Wikipedia; the page has no usable candidate data for districts 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 37, 38, 39, 41, 42, 98 and 99, which are omitted. Republican nominees for 35 and 36 were not found. No official Ohio general candidate list could be read. Several nominees won write-in primaries and vote totals were not verified against the write-in threshold. Post-primary replacements may be missed."
+}

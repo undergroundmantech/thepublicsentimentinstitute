@@ -1,0 +1,1463 @@
+{
+ "state": "VT",
+ "chamber": "house",
+ "sources": [
+  "https://vtdigger.org/2026-general-election-guide/",
+  "https://theballotbrief.com/state/vermont",
+  "https://theballotbrief.com/state/vermont/caledonia-county",
+  "https://theballotbrief.com/state/vermont/essex-county",
+  "https://ballotpedia.org/Vermont_House_of_Representatives_elections,_2026"
+ ],
+ "as_of": "2026-10-17",
+ "complete": true,
+ "method_note": "Candidates from VTDigger 2026 general election guide county pages, cross checked against The Ballot Brief county pages, which also give fusion labels; Caledonia and Essex districts come from The Ballot Brief only because the VTDigger pages for those counties were rate limited. Fusion nominees are placed by their first party label: D/P and P/D in dem, R/D in gop, with a note. Ballotpedia's 2026 page still shows pre primary declared candidates, including independents such as Anne Donahue in Washington-1, John Burns in Washington-2 and James Haddad in Washington-Chittenden, who appear on neither general election list and were left out. No withdrawals were reported by either source. Seats from Ballotpedia.",
+ "districts": [
+  {
+   "d": "Addison-1",
+   "seats": 2,
+   "dem": [
+    "Mike Roy",
+    "Robin Scheu"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "No Republican nominee."
+  },
+  {
+   "d": "Addison-2",
+   "seats": 1,
+   "dem": [
+    "Tanya Byker"
+   ],
+   "gop": [
+    "Annie Wilson"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Addison-3",
+   "seats": 2,
+   "dem": [
+    "Ariel Bolles",
+    "John Stroup"
+   ],
+   "gop": [
+    "Joseph \"Joe\" Baker",
+    "Rob North"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Ariel Bolles is the Democratic/Progressive fusion nominee."
+  },
+  {
+   "d": "Addison-4",
+   "seats": 2,
+   "dem": [
+    "Jeanne Albert",
+    "Karen Lueders"
+   ],
+   "gop": [
+    "Lynn Dike",
+    "Chanin Hill"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Addison-5",
+   "seats": 1,
+   "dem": [
+    "Jubilee McGill"
+   ],
+   "gop": [
+    "Del Thompson"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Addison-Rutland",
+   "seats": 1,
+   "dem": [
+    "Jonathan Hescock"
+   ],
+   "gop": [
+    "Jim Casey"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Bennington-1",
+   "seats": 1,
+   "dem": [
+    "Jonathan Cooper"
+   ],
+   "gop": [
+    "Charles Edward Jewett"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Bennington-2",
+   "seats": 2,
+   "dem": [
+    "Timothy R. Corcoran II",
+    "William \"Will\" Greer"
+   ],
+   "gop": [
+    "Anthony A. Cook"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Bennington-3",
+   "seats": 1,
+   "dem": [
+    "David K. Durfee"
+   ],
+   "gop": [
+    "Victor K. Harwood Jr."
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Bennington-4",
+   "seats": 2,
+   "dem": [
+    "Robert Hunter",
+    "Thomas West"
+   ],
+   "gop": [
+    "Alford \"Al\" Clayton"
+   ],
+   "others": [
+    {
+     "name": "Michael Fernandez",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "Independent Michael Fernandez also on the ballot."
+  },
+  {
+   "d": "Bennington-5",
+   "seats": 2,
+   "dem": [
+    "Thomas \"Tom\" Blakely",
+    "Michael Nigro"
+   ],
+   "gop": [
+    "Mary A. Morrissey"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Bennington-Rutland",
+   "seats": 1,
+   "dem": [
+    "Mike Rice"
+   ],
+   "gop": [
+    "Sandra \"Sandy\" Pinsonault"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Caledonia-1",
+   "seats": 1,
+   "dem": [
+    "David Tucker"
+   ],
+   "gop": [
+    "Debra \"Debbie\" Powers"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Caledonia-2",
+   "seats": 1,
+   "dem": [
+    "Audrey Grant"
+   ],
+   "gop": [
+    "Michael Southworth"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Caledonia-3",
+   "seats": 2,
+   "dem": [
+    "Bill Coleman",
+    "Dennis R. Labounty"
+   ],
+   "gop": [
+    "Erik R. Lavallee",
+    "Beth M. Quimby"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Bill Coleman is the Progressive/Democratic fusion nominee."
+  },
+  {
+   "d": "Caledonia-Essex",
+   "seats": 2,
+   "dem": [
+    "Amanda Cochrane",
+    "Heather Whitemore Young"
+   ],
+   "gop": [
+    "Deborah Cordz Dolgin",
+    "Steven Dolgin"
+   ],
+   "others": [
+    {
+     "name": "Brandolyn Bradley",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "Independent Brandolyn Bradley also on the ballot."
+  },
+  {
+   "d": "Caledonia-Washington",
+   "seats": 1,
+   "dem": [
+    "Eric Bach"
+   ],
+   "gop": [
+    "Greg Burtt"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Chittenden-1",
+   "seats": 1,
+   "dem": [
+    "Jana Brown"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "No Republican nominee."
+  },
+  {
+   "d": "Chittenden-2",
+   "seats": 2,
+   "dem": [
+    "Angela Arsenault",
+    "Erin Brady"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "No Republican nominee."
+  },
+  {
+   "d": "Chittenden-3",
+   "seats": 2,
+   "dem": [
+    "Edye Graning",
+    "Trevor Squirrell"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "No Republican nominee."
+  },
+  {
+   "d": "Chittenden-4",
+   "seats": 1,
+   "dem": [
+    "Kelsey Pasteris"
+   ],
+   "gop": [],
+   "others": [
+    {
+     "name": "John Kingston",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "No Republican; independent John Kingston is the main challenger."
+  },
+  {
+   "d": "Chittenden-5",
+   "seats": 1,
+   "dem": [
+    "Chea Waters Evans"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "No Republican nominee."
+  },
+  {
+   "d": "Chittenden-6",
+   "seats": 1,
+   "dem": [
+    "Kate Lalley"
+   ],
+   "gop": [
+    "Deb Mayfield"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Chittenden-7",
+   "seats": 1,
+   "dem": [
+    "Shawn J. Sweeney"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "No Republican nominee."
+  },
+  {
+   "d": "Chittenden-8",
+   "seats": 1,
+   "dem": [
+    "Bridget Burkhardt"
+   ],
+   "gop": [
+    "Mitchel Cypes"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Chittenden-9",
+   "seats": 1,
+   "dem": [
+    "Emilie Krasnow"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "No Republican nominee."
+  },
+  {
+   "d": "Chittenden-10",
+   "seats": 1,
+   "dem": [
+    "Kate Nugent"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "No Republican nominee."
+  },
+  {
+   "d": "Chittenden-11",
+   "seats": 1,
+   "dem": [
+    "Brian Minier"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "No Republican nominee."
+  },
+  {
+   "d": "Chittenden-12",
+   "seats": 1,
+   "dem": [
+    "Martin J. LaLonde"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "No Republican nominee."
+  },
+  {
+   "d": "Chittenden-13",
+   "seats": 2,
+   "dem": [
+    "Bram Kleppner",
+    "Karen Paul"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "No Republican nominee."
+  },
+  {
+   "d": "Chittenden-14",
+   "seats": 2,
+   "dem": [
+    "Elizabeth Allen-Pennebaker",
+    "Adam Franz"
+   ],
+   "gop": [
+    "Aaliyah Davila"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Adam Franz is the Progressive/Democratic fusion nominee."
+  },
+  {
+   "d": "Chittenden-15",
+   "seats": 2,
+   "dem": [
+    "Ben Bosley",
+    "Brian Cina"
+   ],
+   "gop": [],
+   "others": [
+    {
+     "name": "Troy Headrick",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "Brian Cina is the Progressive/Democratic fusion nominee; no Republican, independent Troy Headrick is an incumbent."
+  },
+  {
+   "d": "Chittenden-16",
+   "seats": 2,
+   "dem": [
+    "Trang Do",
+    "Jeffrey Peterson"
+   ],
+   "gop": [],
+   "others": [
+    {
+     "name": "Christopher Haessly",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "Trang Do and Jeffrey Peterson are Progressive/Democratic fusion nominees; no Republican, independent Christopher Haessly is the main challenger."
+  },
+  {
+   "d": "Chittenden-17",
+   "seats": 1,
+   "dem": [
+    "Abbey Duke"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "No Republican nominee."
+  },
+  {
+   "d": "Chittenden-18",
+   "seats": 2,
+   "dem": [
+    "Ali Dieng",
+    "Carol Ode"
+   ],
+   "gop": [],
+   "others": [
+    {
+     "name": "Dave Hartnett",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "No Republican; independent Dave Hartnett is the main challenger."
+  },
+  {
+   "d": "Chittenden-19",
+   "seats": 2,
+   "dem": [
+    "Sarah \"Sarita\" Austin",
+    "Wendy Critchlow"
+   ],
+   "gop": [
+    "Spencer Sherman",
+    "Alex R. Thibault"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Chittenden-20",
+   "seats": 2,
+   "dem": [
+    "Doug Bishop",
+    "Gayle Pezzo"
+   ],
+   "gop": [
+    "Bill Bezio",
+    "Doug Wood"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Chittenden-21",
+   "seats": 2,
+   "dem": [
+    "Daisy Berbeco",
+    "Matt Gile"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "Matt Gile is the Progressive/Democratic fusion nominee."
+  },
+  {
+   "d": "Chittenden-22",
+   "seats": 2,
+   "dem": [
+    "Karen Dolan",
+    "Lori Houghton"
+   ],
+   "gop": [
+    "Brent Boerger",
+    "Seth Adam Manley"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Chittenden-23",
+   "seats": 2,
+   "dem": [
+    "Rey Garofano",
+    "Erik Post"
+   ],
+   "gop": [
+    "Pearl Lucero Beckage",
+    "Lynn U. Smith"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Chittenden-24",
+   "seats": 1,
+   "dem": [
+    "Alyssa Black"
+   ],
+   "gop": [
+    "Stephanie Mack"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Chittenden-25",
+   "seats": 1,
+   "dem": [
+    "Julia Andrews"
+   ],
+   "gop": [
+    "Brenda Steady"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Chittenden-Franklin",
+   "seats": 2,
+   "dem": [
+    "Henry A. Bonges III",
+    "Natalie Cashen"
+   ],
+   "gop": [
+    "Kumulia \"Kase\" Long",
+    "Anthony \"Tony\" Micklus"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Essex-Caledonia",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "John Kascenska"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "John Kascenska (R) is also the Democratic nominee, Republican/Democratic; no other candidate."
+  },
+  {
+   "d": "Essex-Orleans",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "David M. Jacobs"
+   ],
+   "others": [
+    {
+     "name": "John \"Woton\" Lally",
+     "party": "O"
+    }
+   ],
+   "withdrawn": [],
+   "note": "No Democrat; John Lally is on the ballot under the Women's Liberation Vegi-Aryan label."
+  },
+  {
+   "d": "Franklin-1",
+   "seats": 2,
+   "dem": [
+    "Caroline Bright",
+    "Julie Filiberti"
+   ],
+   "gop": [
+    "Keith Billado",
+    "Bob Stebbins"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Franklin-2",
+   "seats": 1,
+   "dem": [
+    "Pam McCarthy"
+   ],
+   "gop": [
+    "Eileen \"Lynn\" Dickinson"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Franklin-3",
+   "seats": 1,
+   "dem": [
+    "Suzanne Kenyon"
+   ],
+   "gop": [
+    "Joseph \"Joe\" Luneau"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Franklin-4",
+   "seats": 2,
+   "dem": [
+    "Tamar Bouchard",
+    "Carmela Ann Mayette"
+   ],
+   "gop": [
+    "Thomas \"Tom\" Oliver",
+    "Matthew E. Walker"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Franklin-5",
+   "seats": 2,
+   "dem": [],
+   "gop": [
+    "Lisa A. Hango",
+    "Wayne A. Laroche"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Republicans Lisa A. Hango and Wayne A. Laroche are also the Democratic nominees, Republican/Democratic."
+  },
+  {
+   "d": "Franklin-6",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "James Gregoire"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "James Gregoire (R) is also the Democratic nominee, Republican/Democratic."
+  },
+  {
+   "d": "Franklin-7",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Allen \"Penny\" Demar"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Allen Demar (R) is also the Democratic nominee, Republican/Democratic."
+  },
+  {
+   "d": "Franklin-8",
+   "seats": 1,
+   "dem": [
+    "Zach Scheffler"
+   ],
+   "gop": [
+    "John \"Jack\" Brigham"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Grand Isle-Chittenden",
+   "seats": 2,
+   "dem": [
+    "Sylvia Jensen",
+    "Dave Skinner"
+   ],
+   "gop": [
+    "Josie Henry",
+    "Michael R. Morgan"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Lamoille-1",
+   "seats": 1,
+   "dem": [],
+   "gop": [],
+   "others": [
+    {
+     "name": "Jed Lipsky",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "Only independent Jed Lipsky on the ballot; no major party nominee."
+  },
+  {
+   "d": "Lamoille-2",
+   "seats": 2,
+   "dem": [
+    "James \"Jim\" Lipinski",
+    "Daniel Noyes"
+   ],
+   "gop": [
+    "Richard J. Bailey",
+    "Malcolm \"Mac\" Teale"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Lamoille-3",
+   "seats": 1,
+   "dem": [
+    "Deb Nevil"
+   ],
+   "gop": [
+    "Rebecca Pitre"
+   ],
+   "others": [
+    {
+     "name": "Adam Howard",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "Independent Adam Howard also on the ballot."
+  },
+  {
+   "d": "Lamoille-Washington",
+   "seats": 2,
+   "dem": [
+    "Saudia LaMont",
+    "David Yacovone"
+   ],
+   "gop": [
+    "Susanna Guthmann Burnham",
+    "Jason Thompson"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Orange-1",
+   "seats": 1,
+   "dem": [
+    "Gregory Wilson"
+   ],
+   "gop": [
+    "Michael \"Mike\" Tagliavia"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Orange-2",
+   "seats": 1,
+   "dem": [
+    "Lance V. Mills"
+   ],
+   "gop": [
+    "Nicholas Dilorenzo"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Orange-3",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Fran Covey"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "No Democratic nominee."
+  },
+  {
+   "d": "Orange-Caledonia",
+   "seats": 1,
+   "dem": [
+    "Aiden Boyd Otterman"
+   ],
+   "gop": [
+    "Tom Otterman"
+   ],
+   "others": [
+    {
+     "name": "Susan Culp",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "Independent Susan Culp also on the ballot."
+  },
+  {
+   "d": "Orange-Washington-Addison",
+   "seats": 2,
+   "dem": [
+    "Emery Mattheis",
+    "Larry Satcowitz"
+   ],
+   "gop": [
+    "Lance Ryan",
+    "Stephen W. Webster"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Emery Mattheis is the Progressive/Democratic fusion nominee."
+  },
+  {
+   "d": "Orleans-1",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Richard Nelson"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "No Democratic nominee."
+  },
+  {
+   "d": "Orleans-2",
+   "seats": 1,
+   "dem": [
+    "Xavier Stevens"
+   ],
+   "gop": [
+    "Woodman \"Woody\" H. Page"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Orleans-3",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Kenneth L. Wells"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "No Democratic nominee."
+  },
+  {
+   "d": "Orleans-4",
+   "seats": 1,
+   "dem": [
+    "Leanne Harple"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "No Republican nominee."
+  },
+  {
+   "d": "Orleans-Lamoille",
+   "seats": 2,
+   "dem": [],
+   "gop": [
+    "Mark Higley",
+    "Praneet Menon"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Republicans Mark Higley and Praneet Menon are also the Democratic nominees, Republican/Democratic."
+  },
+  {
+   "d": "Rutland-1",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Patricia A. McCoy"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "No Democratic nominee."
+  },
+  {
+   "d": "Rutland-2",
+   "seats": 2,
+   "dem": [
+    "Marsha Cassel"
+   ],
+   "gop": [
+    "David \"Dave\" Bosch",
+    "Thomas \"Tom\" Burditt"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Rutland-3",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Chris Brown"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "No Democratic nominee."
+  },
+  {
+   "d": "Rutland-4",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Christopher Howland"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "No Democratic nominee."
+  },
+  {
+   "d": "Rutland-5",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Eric Maguire"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "No Democratic nominee."
+  },
+  {
+   "d": "Rutland-6",
+   "seats": 1,
+   "dem": [
+    "Chris Siliski"
+   ],
+   "gop": [
+    "Cindy Laskevich"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Cindy Laskevich (R) is listed by The Ballot Brief but not by VTDigger, which shows only Chris Siliski (D); likely a post primary Republican nominee."
+  },
+  {
+   "d": "Rutland-7",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Chris Keyser"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "No Democratic nominee."
+  },
+  {
+   "d": "Rutland-8",
+   "seats": 1,
+   "dem": [
+    "Genevieve K. Duchesneau"
+   ],
+   "gop": [
+    "Alicia Malay"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Rutland-9",
+   "seats": 1,
+   "dem": [
+    "Jeff Haylon"
+   ],
+   "gop": [
+    "Aida Nielsen"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Rutland-10",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "William P. Canfield"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "No Democratic nominee."
+  },
+  {
+   "d": "Rutland-11",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Valorie Taylor"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "No Democratic nominee."
+  },
+  {
+   "d": "Rutland-Bennington",
+   "seats": 1,
+   "dem": [
+    "Jessica Van Oort"
+   ],
+   "gop": [
+    "Chris Pritchard"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Jessica Van Oort is the Democratic/Progressive fusion nominee."
+  },
+  {
+   "d": "Rutland-Windsor",
+   "seats": 1,
+   "dem": [
+    "Phoebe Tucker"
+   ],
+   "gop": [
+    "Kevin C. Winter"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Washington-1",
+   "seats": 2,
+   "dem": [],
+   "gop": [
+    "Kenneth W. Goslant",
+    "Lucas J. Herring"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Republicans Kenneth W. Goslant and Lucas J. Herring are also the Democratic nominees, Republican/Democratic; no other candidates."
+  },
+  {
+   "d": "Washington-2",
+   "seats": 2,
+   "dem": [
+    "Dara Torre",
+    "Candice White"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "No Republican nominee."
+  },
+  {
+   "d": "Washington-3",
+   "seats": 2,
+   "dem": [
+    "Sonya Spaulding",
+    "Edward \"Teddy\" Waszazak"
+   ],
+   "gop": [
+    "Michael Boutin",
+    "John G. Santorello"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Washington-4",
+   "seats": 2,
+   "dem": [
+    "Jared Duval",
+    "Kate McCann"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "Jared Duval and Kate McCann are Democratic/Progressive fusion nominees."
+  },
+  {
+   "d": "Washington-5",
+   "seats": 1,
+   "dem": [
+    "Ela Chapin"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "No Republican nominee."
+  },
+  {
+   "d": "Washington-6",
+   "seats": 1,
+   "dem": [
+    "Marc Mihaly"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "No Republican nominee."
+  },
+  {
+   "d": "Washington-Chittenden",
+   "seats": 2,
+   "dem": [
+    "Katarina Lisaius",
+    "Theresa A. M. Wood"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "No Republican nominee."
+  },
+  {
+   "d": "Washington-Orange",
+   "seats": 2,
+   "dem": [
+    "Melissa Battah",
+    "Emily Wheeler-Reynolds"
+   ],
+   "gop": [
+    "Gina Galfetti",
+    "David Soucy"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Windham-1",
+   "seats": 1,
+   "dem": [
+    "Zon Eastes"
+   ],
+   "gop": [
+    "Nancy L. Gassett"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Windham-2",
+   "seats": 1,
+   "dem": [],
+   "gop": [],
+   "others": [
+    {
+     "name": "Laura Sibilia",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "Only independent incumbent Laura Sibilia on the ballot; no major party nominee."
+  },
+  {
+   "d": "Windham-3",
+   "seats": 2,
+   "dem": [
+    "Michelle Bos-Lun",
+    "Chris Lundberg"
+   ],
+   "gop": [
+    "Nicole Amanda Cota",
+    "Ryan M. Coyne"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Windham-4",
+   "seats": 1,
+   "dem": [
+    "Mike Mrowicki"
+   ],
+   "gop": [
+    "Lynne Wilkins"
+   ],
+   "others": [
+    {
+     "name": "Ian G. Diamondstone",
+     "party": "O"
+    }
+   ],
+   "withdrawn": [],
+   "note": "Mike Mrowicki was previously elected as Democratic/Progressive; the 2026 source page shows only D. Ian G. Diamondstone is the Peace and Justice nominee."
+  },
+  {
+   "d": "Windham-5",
+   "seats": 1,
+   "dem": [
+    "Emily Long"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "No Republican nominee."
+  },
+  {
+   "d": "Windham-6",
+   "seats": 1,
+   "dem": [
+    "Emily Carris Duncan"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "No Republican nominee."
+  },
+  {
+   "d": "Windham-7",
+   "seats": 1,
+   "dem": [
+    "Emilie Kornheiser"
+   ],
+   "gop": [
+    "Aaron Smith"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Windham-8",
+   "seats": 1,
+   "dem": [
+    "Daniel Quipp"
+   ],
+   "gop": [
+    "William \"Bill\" Harvey"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Windham-9",
+   "seats": 1,
+   "dem": [
+    "Ian Goodnow"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "No Republican nominee."
+  },
+  {
+   "d": "Windham-Windsor-Bennington",
+   "seats": 1,
+   "dem": [
+    "Chris Morrow"
+   ],
+   "gop": [
+    "E. Stuart Coleman"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Windsor-1",
+   "seats": 2,
+   "dem": [
+    "Dylan Morse",
+    "John G. Tansey"
+   ],
+   "gop": [],
+   "others": [
+    {
+     "name": "Rich Thomas",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "No Republican; independent Rich Thomas is the main challenger."
+  },
+  {
+   "d": "Windsor-2",
+   "seats": 1,
+   "dem": [
+    "Mark Yuengling"
+   ],
+   "gop": [
+    "VL Coffin"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Windsor-3",
+   "seats": 2,
+   "dem": [
+    "Alice M. Emmons",
+    "Kristi C. Morris"
+   ],
+   "gop": [
+    "Randy A. Gray",
+    "Judith Stern"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Windsor-4",
+   "seats": 1,
+   "dem": [
+    "Michael Hoyt"
+   ],
+   "gop": [],
+   "others": [
+    {
+     "name": "Kyle Hansen",
+     "party": "I"
+    },
+    {
+     "name": "Justin Schoville",
+     "party": "O"
+    }
+   ],
+   "withdrawn": [],
+   "note": "No Republican; independent Kyle Hansen and Peace and Justice nominee Justin Schoville challenge Democrat Michael Hoyt."
+  },
+  {
+   "d": "Windsor-5",
+   "seats": 1,
+   "dem": [
+    "Charlie Kimbell"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "No Republican nominee."
+  },
+  {
+   "d": "Windsor-6",
+   "seats": 2,
+   "dem": [
+    "James \"Jimmy\" Coleman",
+    "Alanna Ojibway"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "James Coleman is Progressive/Democratic and Alanna Ojibway is Democratic/Progressive."
+  },
+  {
+   "d": "Windsor-Addison",
+   "seats": 1,
+   "dem": [
+    "Kirk White"
+   ],
+   "gop": [
+    "Michael J. White"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Windsor-Orange-1",
+   "seats": 1,
+   "dem": [
+    "John K. O'Brien"
+   ],
+   "gop": [
+    "Bruce Post"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "Windsor-Orange-2",
+   "seats": 2,
+   "dem": [
+    "Dee Gish",
+    "Lauren Morando Rhim"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "Dee Gish is the Democratic/Progressive fusion nominee."
+  },
+  {
+   "d": "Windsor-Windham",
+   "seats": 1,
+   "dem": [
+    "William \"Will\" Hoser"
+   ],
+   "gop": [
+    "Thomas F. Charlton"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  }
+ ]
+}

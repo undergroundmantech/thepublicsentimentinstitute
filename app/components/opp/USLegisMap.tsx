@@ -9,7 +9,7 @@ import "./usl.css";
 
 export type USChamber = {
   id: string; st: string; chamber: "house" | "senate"; name: string; demControl: number;
-  d: [string, number, number | null, number | null, (string | null)?][]; holdD?: [string, string][];
+  d: [string, number, number | null, number | null, (string | null)?, number?][]; holdD?: [string, string][];
 };
 type USMap = { frame: [number, number]; chambers: Record<string, Record<string, string>> };
 type GeoStates = { frame: [number, number]; states: Record<string, string> };
@@ -19,7 +19,7 @@ const getJson = <T,>(u: string) => { if (!cache.has(u)) cache.set(u, fetch(u).th
 const pct = (p: number) => (p > 0.99 ? ">99%" : p < 0.01 ? "<1%" : `${Math.round(p * 100)}%`);
 const cssVar = (el: Element, v: string, fb: string) => getComputedStyle(el).getPropertyValue(v).trim() || fb;
 
-type Cell = { key: string; ch: USChamber; d: string; seats: number; p: number | null; m: number | null; last: string | null; hold?: string; path: Path2D; bb: [number, number, number, number] };
+type Cell = { key: string; ch: USChamber; d: string; seats: number; p: number | null; m: number | null; last: string | null; ind: boolean; hold?: string; path: Path2D; bb: [number, number, number, number] };
 
 function bboxOf(s: string): [number, number, number, number] {
   let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
@@ -61,7 +61,7 @@ export default function USLegisMap({ chambers, height }: { chambers: USChamber[]
       for (const [d, s] of Object.entries(paths)) {
         if (!s) continue;
         const r = row.get(d);
-        out.push({ key: `${ch.id}:${d}`, ch, d, seats: r?.[1] ?? 1, p: r ? r[2] : null, m: r ? r[3] : null, last: (r?.[4] as string | null) ?? null, hold: r ? undefined : hold.get(d) ?? "O", path: new Path2D(s), bb: bboxOf(s) });
+        out.push({ key: `${ch.id}:${d}`, ch, d, seats: r?.[1] ?? 1, p: r ? r[2] : null, m: r ? r[3] : null, last: (r?.[4] as string | null) ?? null, ind: !!r?.[5], hold: r ? undefined : hold.get(d) ?? "O", path: new Path2D(s), bb: bboxOf(s) });
       }
     }
     return out;
@@ -110,7 +110,7 @@ export default function USLegisMap({ chambers, height }: { chambers: USChamber[]
     for (const s of states) { ctx.fillStyle = upStates.has(s.st) ? "rgba(140,130,160,.10)" : none; ctx.fill(s.path); }
     ctx.restore();
     for (const cl of cells) {
-      ctx.fillStyle = cl.hold ? holdP[cl.hold] ?? holdP.O : districtFill(mode, cl.p, cl.m, cl.last);
+      ctx.fillStyle = cl.hold ? holdP[cl.hold] ?? holdP.O : districtFill(mode, cl.p, cl.m, cl.last, cl.ind);
       ctx.fill(cl.path);
     }
     ctx.strokeStyle = bg; ctx.lineWidth = Math.max(0.25 / view.s, 0.7 / ks); ctx.globalAlpha = 0.8;
@@ -224,7 +224,7 @@ export default function USLegisMap({ chambers, height }: { chambers: USChamber[]
           <b>District {hover.c.d}{hover.c.seats > 1 ? ` · ${hover.c.seats} seats` : ""}</b>
           {hover.c.hold ? <div className="hub-tip-row"><span style={{ color: "var(--mute)" }}>Not on the 2026 ballot, held by {hover.c.hold === "D" ? "Democrats" : hover.c.hold === "R" ? "Republicans" : "another party"}</span></div> : (
             <>
-              <div className="hub-tip-row"><span className="d mono">D {pct(hover.c.p ?? 0)}</span>{hover.c.m != null && Math.abs(hover.c.m) < 99 ? <span className={`mono ${hover.c.m < 0 ? "d" : "r"}`}>{hover.c.m < 0 ? "D" : "R"} +{Math.abs(hover.c.m).toFixed(1)}</span> : <span style={{ color: "var(--mute)" }}>Unopposed</span>}<span className="r mono">R {pct(1 - (hover.c.p ?? 0))}</span></div>
+              <div className="hub-tip-row"><span className="d mono" style={hover.c.ind ? { color: "var(--ind)" } : undefined}>{hover.c.ind ? "I" : "D"} {pct(hover.c.p ?? 0)}</span>{hover.c.m != null && Math.abs(hover.c.m) < 99 ? <span className={`mono ${hover.c.m < 0 ? "d" : "r"}`}>{hover.c.m < 0 ? (hover.c.ind ? "I" : "D") : "R"} +{Math.abs(hover.c.m).toFixed(1)}</span> : <span style={{ color: "var(--mute)" }}>Unopposed</span>}<span className="r mono">R {pct(1 - (hover.c.p ?? 0))}</span></div>
               <i className="hub-tip-bar"><s style={{ width: `${(hover.c.p ?? 0) * 100}%` }} /></i>
               {hover.c.last ? <div className="hub-tip-row"><span style={{ color: "var(--mute)" }}>Won last time by {hover.c.last === "D" ? "Democrats" : hover.c.last === "R" ? "Republicans" : "another party"}</span></div> : null}
             </>

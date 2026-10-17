@@ -1,0 +1,784 @@
+{
+ "state": "NM",
+ "chamber": "house",
+ "sources": [
+  "https://ivoterguide.com/all-in-state/nm"
+ ],
+ "as_of": "2026-10-17",
+ "complete": true,
+ "districts": [
+  {
+   "d": "1",
+   "dem": [],
+   "gop": [
+    "Rod Montoya"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "2",
+   "dem": [],
+   "gop": [
+    "P Mark Duncan"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "3",
+   "dem": [],
+   "gop": [
+    "William A Hall II"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "4",
+   "dem": [],
+   "gop": [
+    "Heather Scott Ellison"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "5",
+   "dem": [
+    "Doreen Wonda Johnson"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "6",
+   "dem": [
+    "Martha Garcia"
+   ],
+   "gop": [
+    "Paul L Spencer"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "7",
+   "dem": [
+    "Rickie Allen Gonzales II"
+   ],
+   "gop": [
+    "Tanya R Mirabal Moya"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "8",
+   "dem": [
+    "Katherine Joanna Gauer"
+   ],
+   "gop": [
+    "Brian G Baca"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "9",
+   "dem": [
+    "Patricia 'Patty' A Lundstrom"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "10",
+   "dem": [
+    "G Andres Romero"
+   ],
+   "gop": [
+    "Christopher P Crane"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "11",
+   "dem": [
+    "Javier I Martinez"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "12",
+   "dem": [
+    "Art De La Cruz"
+   ],
+   "gop": [
+    "Steven E Tafoya"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "13",
+   "dem": [
+    "Patricia A Roybal Caballero"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "14",
+   "dem": [
+    "Miguel P Garcia"
+   ],
+   "gop": [
+    "Richard Victor Zubia"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "15",
+   "dem": [
+    "Dayan \"Day\" Mercedes Hochman-Vigil"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "16",
+   "dem": [
+    "Yanira Gurrola Valenzuela"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "17",
+   "dem": [
+    "Cynthia D Borrego"
+   ],
+   "gop": [
+    "Brenda Diane Boatman"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "18",
+   "dem": [
+    "Marianna A Anaya"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "19",
+   "dem": [
+    "Janelle I Anyanonu"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "20",
+   "dem": [
+    "Meredith A Dixon"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "21",
+   "dem": [
+    "Debra Marie Sarinana"
+   ],
+   "gop": [
+    "Robert L Mason"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "22",
+   "dem": [
+    "William (Bill) Scott"
+   ],
+   "gop": [
+    "Stefani Lord"
+   ],
+   "others": [
+    {
+     "name": "Zachary P Withers",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "23",
+   "dem": [],
+   "gop": [
+    "Alan T Martinez"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "24",
+   "dem": [
+    "Elizabeth L Thomson"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "25",
+   "dem": [
+    "Cristina S Parajon"
+   ],
+   "gop": [
+    "Denis Litvinenko"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "26",
+   "dem": [
+    "Eleanor Chavez"
+   ],
+   "gop": [
+    "Corey Rubin Zimmerman"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "27",
+   "dem": [
+    "Abby Christine Foster"
+   ],
+   "gop": [
+    "Jahnelle Louise Garcia"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "28",
+   "dem": [
+    "Pamelya Paulette Herndon"
+   ],
+   "gop": [
+    "Brenda J Olson"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "29",
+   "dem": [
+    "Joy I Garratt"
+   ],
+   "gop": [
+    "Carolyn Stith"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "30",
+   "dem": [
+    "Elizabeth Diane Torres-Velasquez"
+   ],
+   "gop": [
+    "Jerry L Trujillo"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "31",
+   "dem": [
+    "Lisa K Curtis"
+   ],
+   "gop": [
+    "Nicole Chavez"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "32",
+   "dem": [
+    "Laura Mairel Parra"
+   ],
+   "gop": [
+    "Jenifer Marie Jones"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "33",
+   "dem": [
+    "Micaela Lara Cadena"
+   ],
+   "gop": [
+    "Enrique Kiki Vigil"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "34",
+   "dem": [
+    "Raymundo Lara"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "35",
+   "dem": [
+    "Angelica Rubio"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "36",
+   "dem": [
+    "Nathan P Small"
+   ],
+   "gop": [
+    "Julia E Ruiz"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "37",
+   "dem": [
+    "Lori A Martinez"
+   ],
+   "gop": [
+    "Isabella Solis"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "38",
+   "dem": [
+    "David L Mooney"
+   ],
+   "gop": [
+    "Rebecca Dow"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "39",
+   "dem": [
+    "Raul S Turrieta"
+   ],
+   "gop": [
+    "Luis M Terrazas"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "40",
+   "dem": [
+    "Joseph L Sanchez"
+   ],
+   "gop": [
+    "Landon McGuire Dooley"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "41",
+   "dem": [
+    "Yolanda R Jaramillo"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "42",
+   "dem": [
+    "Kristina Ortez"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "43",
+   "dem": [
+    "Christine Chandler"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "44",
+   "dem": [
+    "Kathleen M Cates"
+   ],
+   "gop": [
+    "Adam Stanley Prior"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "45",
+   "dem": [
+    "Linda Michelle Serrato"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "46",
+   "dem": [
+    "Andrea D Romero"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "47",
+   "dem": [
+    "Reena C Szczepanski"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "48",
+   "dem": [
+    "Tara L Lujan"
+   ],
+   "gop": [
+    "Victoria May Garcia"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "49",
+   "dem": [],
+   "gop": [
+    "Gail \"Missy\" Armstrong"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "50",
+   "dem": [
+    "Sarah Boses"
+   ],
+   "gop": [
+    "Kenneth Donald Brennan"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "51",
+   "dem": [],
+   "gop": [
+    "John Block"
+   ],
+   "others": [
+    {
+     "name": "Grace A Nagamine",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "no Democrat; independent Grace Nagamine is the only challenger"
+  },
+  {
+   "d": "52",
+   "dem": [
+    "Doreen Yvonne Gallegos"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "53",
+   "dem": [
+    "Sarah Angelina Silva"
+   ],
+   "gop": [
+    "Ben Luna Jr"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "54",
+   "dem": [],
+   "gop": [
+    "Jonathan Allen Henry"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "55",
+   "dem": [],
+   "gop": [
+    "Cathrynn N Brown"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "56",
+   "dem": [],
+   "gop": [
+    "Harlan H Vincent"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "57",
+   "dem": [
+    "Chriselle Verene Martinez"
+   ],
+   "gop": [
+    "Catherine Jeanette Cullen"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "58",
+   "dem": [],
+   "gop": [
+    "Angelita Mejia"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "59",
+   "dem": [],
+   "gop": [
+    "Stephen Ryan Dodson"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "60",
+   "dem": [
+    "Luke Nicholas Jungmann"
+   ],
+   "gop": [
+    "Joshua N Hernandez"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "61",
+   "dem": [],
+   "gop": [
+    "Randall Thomas Pettigrew"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "62",
+   "dem": [],
+   "gop": [
+    "Elaine Sena Cortez"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "63",
+   "dem": [],
+   "gop": [
+    "Seth H Martin"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "64",
+   "dem": [],
+   "gop": [
+    "Andrea R Reeb"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "65",
+   "dem": [
+    "Derrick J Lente"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "66",
+   "dem": [],
+   "gop": [
+    "LeAnne Gandy"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "67",
+   "dem": [
+    "Vincent M Soule"
+   ],
+   "gop": [
+    "Jackey O Chatfield"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "68",
+   "dem": [
+    "Charlotte L Little"
+   ],
+   "gop": [
+    "David E Adkins"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "69",
+   "dem": [
+    "Michelle Paulene Abeyta"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "70",
+   "dem": [
+    "Anita Amalia Gonzales"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  }
+ ],
+ "method": "General election candidates from iVoterGuide New Mexico statewide list, page version 2026-10-13. Single candidate districts are treated as uncontested; the page showed a partial load warning, so a few single name districts could be missing a challenger. NM Senate not up in 2026."
+}

@@ -1,0 +1,480 @@
+{
+ "state": "MA",
+ "chamber": "senate",
+ "sources": [
+  "https://www.sec.state.ma.us/divisions/elections/research-and-statistics/2026-state-election-candidates.htm",
+  "https://en.wikipedia.org/wiki/2026_Massachusetts_Senate_election"
+ ],
+ "as_of": "2026-10-17",
+ "complete": true,
+ "districts": [
+  {
+   "d": "Berkshire, Hampden, Franklin & Hampshire",
+   "seats": 1,
+   "dem": [
+    "Paul W. Mark"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "Bristol & Norfolk",
+   "seats": 1,
+   "dem": [
+    "Paul Richard Feeney"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "First Bristol & Plymouth",
+   "seats": 1,
+   "dem": [
+    "Michael J. Rodrigues"
+   ],
+   "gop": [
+    "Gabriel Boomer Amaral"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Second Bristol & Plymouth",
+   "seats": 1,
+   "dem": [
+    "Mark C.W. Montigny"
+   ],
+   "gop": [
+    "Robert Scott McConnell"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Third Bristol & Plymouth",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Kelly A. Dooner"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Democrat"
+  },
+  {
+   "d": "Cape & Islands",
+   "seats": 1,
+   "dem": [
+    "Julian Cyr"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "First Essex",
+   "seats": 1,
+   "dem": [
+    "Pavel M. Payano"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "Second Essex",
+   "seats": 1,
+   "dem": [
+    "Joan B. Lovely"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "Third Essex",
+   "seats": 1,
+   "dem": [
+    "Brendan Peter Crighton"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "First Essex & Middlesex",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Bruce E. Tarr"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Democrat"
+  },
+  {
+   "d": "Second Essex & Middlesex",
+   "seats": 1,
+   "dem": [
+    "Barry R. Finegold"
+   ],
+   "gop": [
+    "Theodore T. Semesnyei"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Hampden",
+   "seats": 1,
+   "dem": [
+    "Adam Gomez"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "Hampden & Hampshire",
+   "seats": 1,
+   "dem": [
+    "John Christopher Velis"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "Hampden, Hampshire & Worcester",
+   "seats": 1,
+   "dem": [
+    "Jacob R. Oliveira"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "Hampshire, Franklin & Worcester",
+   "seats": 1,
+   "dem": [
+    "Joanne M. Comerford"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "First Middlesex",
+   "seats": 1,
+   "dem": [
+    "Vanna Howard"
+   ],
+   "gop": [
+    "Sam Meas"
+   ],
+   "others": [
+    {
+     "name": "Joe Espinola",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "Howard won March 2026 special"
+  },
+  {
+   "d": "Second Middlesex",
+   "seats": 1,
+   "dem": [
+    "Erika Uyterhoeven"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "open seat, Pat Jehlen retiring; Uyterhoeven won multi candidate Sept 1 D primary"
+  },
+  {
+   "d": "Third Middlesex",
+   "seats": 1,
+   "dem": [
+    "Michael J. Barrett"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "Fourth Middlesex",
+   "seats": 1,
+   "dem": [
+    "Cindy F. Friedman"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "Fifth Middlesex",
+   "seats": 1,
+   "dem": [
+    "Kate Lipper-Garabedian"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "open seat, Jason Lewis retiring; Lipper-Garabedian won Sept 1 D primary"
+  },
+  {
+   "d": "Middlesex & Norfolk",
+   "seats": 1,
+   "dem": [
+    "Karen E. Spilka"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "Senate President; no Republican"
+  },
+  {
+   "d": "Middlesex & Suffolk",
+   "seats": 1,
+   "dem": [
+    "Sal N. DiDomenico"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "Middlesex & Worcester",
+   "seats": 1,
+   "dem": [
+    "James Bradley Eldridge"
+   ],
+   "gop": [
+    "Joseph Timothy Shea"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Norfolk & Middlesex",
+   "seats": 1,
+   "dem": [
+    "Cynthia Stone Creem"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "Norfolk & Plymouth",
+   "seats": 1,
+   "dem": [
+    "John F. Keenan"
+   ],
+   "gop": [],
+   "others": [
+    {
+     "name": "Alexander Mendez",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "independent is only challenger"
+  },
+  {
+   "d": "Norfolk, Plymouth & Bristol",
+   "seats": 1,
+   "dem": [
+    "William J. Driscoll, Jr."
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "Norfolk & Suffolk",
+   "seats": 1,
+   "dem": [
+    "Persis S. Yu"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "incumbent Mike Rush lost Sept 1 D primary to Yu"
+  },
+  {
+   "d": "Norfolk, Worcester & Middlesex",
+   "seats": 1,
+   "dem": [
+    "Rebecca L. Rausch"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "Plymouth & Barnstable",
+   "seats": 1,
+   "dem": [
+    "Dylan A. Fernandes"
+   ],
+   "gop": [
+    "Kari Della MacRae"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "First Plymouth & Norfolk",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Patrick M. O'Connor"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Democrat"
+  },
+  {
+   "d": "Second Plymouth & Norfolk",
+   "seats": 1,
+   "dem": [
+    "Michael D. Brady"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "First Suffolk",
+   "seats": 1,
+   "dem": [
+    "Nicholas P. Collins"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "Second Suffolk",
+   "seats": 1,
+   "dem": [
+    "Liz Miranda"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "Third Suffolk",
+   "seats": 1,
+   "dem": [
+    "Lydia Marie Edwards"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "Suffolk & Middlesex",
+   "seats": 1,
+   "dem": [
+    "William N. Brownsberger"
+   ],
+   "gop": [],
+   "others": [
+    {
+     "name": "Brandon Charles Wood",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "Wood unenrolled; only challenger"
+  },
+  {
+   "d": "First Worcester",
+   "seats": 1,
+   "dem": [
+    "Robyn Kennedy"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "Second Worcester",
+   "seats": 1,
+   "dem": [
+    "Michael O. Moore"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "Worcester & Hampden",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Ryan C. Fattman"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Democrat"
+  },
+  {
+   "d": "Worcester & Hampshire",
+   "seats": 1,
+   "dem": [
+    "Shannon M. Teabo"
+   ],
+   "gop": [
+    "Peter J. Durant"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "Worcester & Middlesex",
+   "seats": 1,
+   "dem": [
+    "John Cronin"
+   ],
+   "gop": [],
+   "others": [
+    {
+     "name": "Ming Zhang",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "Zhang unenrolled; only challenger"
+  }
+ ]
+}

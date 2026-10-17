@@ -1,0 +1,529 @@
+{
+ "state": "IN",
+ "chamber": "house",
+ "sources": [
+  "https://en.wikipedia.org/wiki/2026_Indiana_House_of_Representatives_election",
+  "https://indianacapitalchronicle.com/voter-guides/2026-general-election/",
+  "https://indianacapitalchronicle.com/2026/10/16/could-data-center-opposition-boost-democrats-in-indiana-house-races/"
+ ],
+ "as_of": "2026-10-17",
+ "complete": false,
+ "districts": [
+  {
+   "d": "4",
+   "seats": 1,
+   "dem": [
+    "Ryan Kominakis"
+   ],
+   "gop": [
+    "Ed Soliday"
+   ],
+   "others": [
+    {
+     "name": "Travis Gearhart",
+     "party": "L"
+    }
+   ],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "9",
+   "seats": 1,
+   "dem": [
+    "Randy Novak"
+   ],
+   "gop": [
+    "Chris Cleveland"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Novak replaced Pat Boy in the seat and is on the ballot for the first time"
+  },
+  {
+   "d": "10",
+   "seats": 1,
+   "dem": [
+    "Chuck Moseley"
+   ],
+   "gop": [
+    "Ted Uzelac"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "13",
+   "seats": 1,
+   "dem": [
+    "Brenna Geswein"
+   ],
+   "gop": [
+    "Matt Commons"
+   ],
+   "others": [
+    {
+     "name": "Ben Davis",
+     "party": "O"
+    }
+   ],
+   "withdrawn": [],
+   "note": "Davis is a Socialist"
+  },
+  {
+   "d": "20",
+   "seats": 1,
+   "dem": [
+    "Laura Liskey"
+   ],
+   "gop": [
+    "Jim Pressel"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "24",
+   "seats": 1,
+   "dem": [
+    "Racheal Bleicher"
+   ],
+   "gop": [
+    "Hunter Smith"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "25",
+   "seats": 1,
+   "dem": [
+    "Tiffany Stoner"
+   ],
+   "gop": [
+    "Becky Cash"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "2024 rematch"
+  },
+  {
+   "d": "27",
+   "seats": 1,
+   "dem": [
+    "Sheila Klinker"
+   ],
+   "gop": [
+    "Tracy Brown"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "28",
+   "seats": 1,
+   "dem": [
+    "Karen Whitney"
+   ],
+   "gop": [
+    "Jeff Thompson"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "29",
+   "seats": 1,
+   "dem": [
+    "Devon Wellington"
+   ],
+   "gop": [
+    "Alaina Shonkwiler"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "30",
+   "seats": 1,
+   "dem": [
+    "Jack Chance"
+   ],
+   "gop": [
+    "Paula Davis"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Open seat"
+  },
+  {
+   "d": "34",
+   "seats": 1,
+   "dem": [
+    "Sara Gullion"
+   ],
+   "gop": [
+    "Richard Ivy"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Open seat"
+  },
+  {
+   "d": "36",
+   "seats": 1,
+   "dem": [
+    "Kim Townsend"
+   ],
+   "gop": [
+    "Kyle Pierce"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "37",
+   "seats": 1,
+   "dem": [
+    "Lauren Cole"
+   ],
+   "gop": [
+    "Todd Huston"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "38",
+   "seats": 1,
+   "dem": [
+    "Nate Stout"
+   ],
+   "gop": [
+    "Heath VanNatter"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "39",
+   "seats": 1,
+   "dem": [
+    "Lindsay Gramlich"
+   ],
+   "gop": [
+    "Danny Lopez"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "40",
+   "seats": 1,
+   "dem": [
+    "William Colteryahn"
+   ],
+   "gop": [
+    "Greg Steuerwald"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "43",
+   "seats": 1,
+   "dem": [
+    "Tonya Pfaff"
+   ],
+   "gop": [
+    "Amy Lore"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "44",
+   "seats": 1,
+   "dem": [
+    "Kelsey Kauffman"
+   ],
+   "gop": [
+    "Beau Baird"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "45",
+   "seats": 1,
+   "dem": [
+    "Becky Mayfield"
+   ],
+   "gop": [
+    "Kellie Streeter"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "46",
+   "seats": 1,
+   "dem": [
+    "James Pittsford III"
+   ],
+   "gop": [
+    "Bob Heaton"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "48",
+   "seats": 1,
+   "dem": [
+    "Emily Yaw"
+   ],
+   "gop": [
+    "Doug Miller"
+   ],
+   "others": [
+    {
+     "name": "Marshall Travis",
+     "party": "G"
+    }
+   ],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "49",
+   "seats": 1,
+   "dem": [
+    "Michelle Milne"
+   ],
+   "gop": [
+    "Joanna King"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "51",
+   "seats": 1,
+   "dem": [
+    "Judy Rowe"
+   ],
+   "gop": [
+    "Tony Isa"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "56",
+   "seats": 1,
+   "dem": [
+    "Thomas Rockwell"
+   ],
+   "gop": [
+    "Randy Retter"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Open seat"
+  },
+  {
+   "d": "57",
+   "seats": 1,
+   "dem": [
+    "Suzanne Fortenberry"
+   ],
+   "gop": [
+    "Wes Bennett"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Open seat"
+  },
+  {
+   "d": "58",
+   "seats": 1,
+   "dem": [
+    "Michelle Hennessee Sears"
+   ],
+   "gop": [
+    "John Reed"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Open seat"
+  },
+  {
+   "d": "60",
+   "seats": 1,
+   "dem": [
+    "Carrie Syczylo"
+   ],
+   "gop": [
+    "Peggy Mayfield"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "62",
+   "seats": 1,
+   "dem": [
+    "Amy Huffman Oliver"
+   ],
+   "gop": [
+    "Dave Hall"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "63",
+   "seats": 1,
+   "dem": [
+    "Tiffanie Arthur"
+   ],
+   "gop": [
+    "Amy Kippenbrock"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Open seat"
+  },
+  {
+   "d": "65",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Chris May"
+   ],
+   "others": [
+    {
+     "name": "Sean Steele",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "No Democrat; independent Sean Steele, son of former GOP Sen. Brent Steele, is the main challenger"
+  },
+  {
+   "d": "70",
+   "seats": 1,
+   "dem": [
+    "Sarah Blessing"
+   ],
+   "gop": [
+    "Scott Fluhr"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Open seat"
+  },
+  {
+   "d": "71",
+   "seats": 1,
+   "dem": [
+    "Wendy Dant Chesser"
+   ],
+   "gop": [
+    "James McClure Jr."
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "72",
+   "seats": 1,
+   "dem": [
+    "Michele Henry"
+   ],
+   "gop": [
+    "Darrell Neeley"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Open seat (Ed Clere not running)"
+  },
+  {
+   "d": "73",
+   "seats": 1,
+   "dem": [
+    "A.J. Miller"
+   ],
+   "gop": [
+    "Jennifer Meltzer"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "81",
+   "seats": 1,
+   "dem": [
+    "Sharon Wight"
+   ],
+   "gop": [
+    "Martin Carbaugh"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "88",
+   "seats": 1,
+   "dem": [
+    "Stephanie Jo Yocum"
+   ],
+   "gop": [
+    "Chris Jeter"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Capital Chronicle names the matchup without a district number; placed in 88 as Jeter is the Fishers incumbent there"
+  },
+  {
+   "d": "97",
+   "seats": 1,
+   "dem": [
+    "Justin Moed"
+   ],
+   "gop": [],
+   "others": [
+    {
+     "name": "Mark Renholzberger",
+     "party": "L"
+    }
+   ],
+   "withdrawn": [],
+   "note": "No Republican; Libertarian is the only challenger"
+  }
+ ],
+ "gap": "Only 38 of 100 districts covered. The official Indiana candidate list is an xlsx file the fetch tool cannot read and direct download is blocked, Ballotpedia is a stale snapshot, and Wikipedia has labeled general election tables for only about 30 districts. Missing: 1 to 3, 5 to 8, 11, 12, 14 to 19, 21 to 23, 26, 31 to 33, 35, 41, 42, 47, 50, 52 to 55, 59, 61, 64, 66 to 69, 74 to 80, 82 to 87, 89 to 96, 98 to 100."
+}

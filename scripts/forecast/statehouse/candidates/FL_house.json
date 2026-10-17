@@ -1,0 +1,1549 @@
+{
+ "state": "FL",
+ "chamber": "house",
+ "sources": [
+  "https://ivoterguide.com/all-in-state/fl",
+  "https://en.wikipedia.org/wiki/2026_Florida_House_of_Representatives_election"
+ ],
+ "as_of": "2026-10-17",
+ "complete": false,
+ "gap": "Districts 13 and 54 not found in any source: no general ballot race on ivoterguide and no Elected entry on Wikipedia; likely decided before the general or write-in only. Dem and gop left empty for those two.",
+ "districts": [
+  {
+   "d": "1",
+   "seats": 1,
+   "dem": [
+    "Francesca Yabraian"
+   ],
+   "gop": [
+    "Michelle Salzman"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "2",
+   "seats": 1,
+   "dem": [
+    "Johnny Austin Thompson"
+   ],
+   "gop": [
+    "Jon Fay"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "3",
+   "seats": 1,
+   "dem": [
+    "Ingrid D. Wadsworth"
+   ],
+   "gop": [
+    "Nathan Boyles"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "4",
+   "seats": 1,
+   "dem": [
+    "John Peter Emerling"
+   ],
+   "gop": [
+    "Patt Maney"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "5",
+   "seats": 1,
+   "dem": [
+    "Alex Finney"
+   ],
+   "gop": [
+    "Shane Abbott"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "6",
+   "seats": 1,
+   "dem": [
+    "Stephanie Lyn Leonard"
+   ],
+   "gop": [
+    "Tricia Berry"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "7",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Jason Shoaf"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "elected unopposed per Wikipedia Elected column; race not on general ballot"
+  },
+  {
+   "d": "8",
+   "seats": 1,
+   "dem": [
+    "Gallop Franklin"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "elected unopposed per Wikipedia Elected column; race not on general ballot"
+  },
+  {
+   "d": "9",
+   "seats": 1,
+   "dem": [
+    "Allison Tant"
+   ],
+   "gop": [
+    "Tracy Robinson"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "10",
+   "seats": 1,
+   "dem": [
+    "Merrillee Malwitz Jipson"
+   ],
+   "gop": [
+    "Marshall Rawson"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "11",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Sam Garrison"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "elected unopposed per Wikipedia Elected column; race not on general ballot"
+  },
+  {
+   "d": "12",
+   "seats": 1,
+   "dem": [
+    "Benjamin Sandlin"
+   ],
+   "gop": [
+    "Terrance Freeman"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "13",
+   "seats": 1,
+   "dem": [],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "UNKNOWN: open seat, Angie Nixon running for U.S. Senate; no race on ivoterguide general ballot and not in Wikipedia Elected column; likely decided in a closed or universal primary or write-in only race; candidates not found"
+  },
+  {
+   "d": "14",
+   "seats": 1,
+   "dem": [
+    "Kimberly Daniels"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "elected unopposed per Wikipedia Elected column; race not on general ballot"
+  },
+  {
+   "d": "15",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Dean Black"
+   ],
+   "others": [
+    {
+     "name": "Chadd Charland",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "no Democrat; NPA candidate is main challenger"
+  },
+  {
+   "d": "16",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Kiyan Michael"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "elected unopposed per Wikipedia Elected column; race not on general ballot"
+  },
+  {
+   "d": "17",
+   "seats": 1,
+   "dem": [
+    "Jacob Guerrero"
+   ],
+   "gop": [
+    "Jessica Baker"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "18",
+   "seats": 1,
+   "dem": [
+    "Art Stresing"
+   ],
+   "gop": [
+    "Kim Kendall"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "19",
+   "seats": 1,
+   "dem": [
+    "Suzanna Pavelle"
+   ],
+   "gop": [
+    "Sam Greco"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "20",
+   "seats": 1,
+   "dem": [
+    "Lee Butler"
+   ],
+   "gop": [
+    "Judson Sapp"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "21",
+   "seats": 1,
+   "dem": [
+    "Jacquelyn Randall"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "elected unopposed per Wikipedia Elected column; race not on general ballot; open, incumbent Yvonne Hayes Hinson not returning"
+  },
+  {
+   "d": "22",
+   "seats": 1,
+   "dem": [
+    "Amy Trask"
+   ],
+   "gop": [
+    "Chad Johnson"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "23",
+   "seats": 1,
+   "dem": [
+    "Mark Leland Baker"
+   ],
+   "gop": [
+    "J.J. Grow"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "24",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Ryan Chamberlin"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "elected unopposed per Wikipedia Elected column; race not on general ballot"
+  },
+  {
+   "d": "25",
+   "seats": 1,
+   "dem": [
+    "Farmer Banks Helfrich"
+   ],
+   "gop": [
+    "Taylor Yarkosky"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "26",
+   "seats": 1,
+   "dem": [
+    "Robyn Elaine Lawrence"
+   ],
+   "gop": [
+    "Nan Cobb"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "27",
+   "seats": 1,
+   "dem": [
+    "Andy Ferrari"
+   ],
+   "gop": [
+    "Richard Gentry"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "28",
+   "seats": 1,
+   "dem": [
+    "Sammy Jackson"
+   ],
+   "gop": [
+    "Bill Partington"
+   ],
+   "others": [
+    {
+     "name": "Joseph \"Joe\" Hannoush",
+     "party": "L"
+    }
+   ],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "29",
+   "seats": 1,
+   "dem": [
+    "Don Kanfer"
+   ],
+   "gop": [
+    "Webster Barnaby"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "30",
+   "seats": 1,
+   "dem": [
+    "Edwin Munoz"
+   ],
+   "gop": [
+    "Chase Tramont"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "31",
+   "seats": 1,
+   "dem": [
+    "Daniel Lewis Cicirelli"
+   ],
+   "gop": [
+    "Matt Woodside"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "32",
+   "seats": 1,
+   "dem": [
+    "Juan J. Hinojosa"
+   ],
+   "gop": [
+    "Brian Hodgers"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "33",
+   "seats": 1,
+   "dem": [
+    "Daniel R. McDow"
+   ],
+   "gop": [
+    "Monique Miller"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "34",
+   "seats": 1,
+   "dem": [
+    "Jordyn Guadalupe Balderas"
+   ],
+   "gop": [
+    "Robert Brackett"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "35",
+   "seats": 1,
+   "dem": [
+    "Eric Gray"
+   ],
+   "gop": [
+    "Erika Booth"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "36",
+   "seats": 1,
+   "dem": [
+    "Darryl Block"
+   ],
+   "gop": [
+    "Rachel Plakon"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "37",
+   "seats": 1,
+   "dem": [
+    "Jane Aman"
+   ],
+   "gop": [
+    "Robert Prater"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "38",
+   "seats": 1,
+   "dem": [
+    "Nik Dean"
+   ],
+   "gop": [
+    "Emily Duda Buckley"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "39",
+   "seats": 1,
+   "dem": [
+    "Jarod Fox"
+   ],
+   "gop": [
+    "Doug Bankson"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "40",
+   "seats": 1,
+   "dem": [
+    "Ra'Shon Young"
+   ],
+   "gop": [
+    "Tuan Le"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "41",
+   "seats": 1,
+   "dem": [
+    "Bruce Antone"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "elected unopposed per Wikipedia Elected column; race not on general ballot"
+  },
+  {
+   "d": "42",
+   "seats": 1,
+   "dem": [
+    "Felipe Sousa Lazaballet"
+   ],
+   "gop": [
+    "Bonnie Jackson"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "43",
+   "seats": 1,
+   "dem": [
+    "Samuel Vilchez Santiago"
+   ],
+   "gop": [
+    "Jorge Malavet"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "44",
+   "seats": 1,
+   "dem": [
+    "Rita Harris"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "elected unopposed per Wikipedia Elected column; race not on general ballot"
+  },
+  {
+   "d": "45",
+   "seats": 1,
+   "dem": [
+    "Leonard Spencer"
+   ],
+   "gop": [
+    "Erin Huntley"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "46",
+   "seats": 1,
+   "dem": [
+    "Jose Alvarez"
+   ],
+   "gop": [
+    "Michael Cruz"
+   ],
+   "others": [
+    {
+     "name": "Ivan A. Rivera",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "Ivan A. Rivera is No Party Affiliation"
+  },
+  {
+   "d": "47",
+   "seats": 1,
+   "dem": [
+    "Anthony Nieves"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "elected unopposed per Wikipedia Elected column; race not on general ballot; Republican incumbent Paula Stark failed to qualify; Dem pickup"
+  },
+  {
+   "d": "48",
+   "seats": 1,
+   "dem": [
+    "Alethea Pugh"
+   ],
+   "gop": [
+    "Jonathan Albert"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "49",
+   "seats": 1,
+   "dem": [
+    "Robert Anzalone"
+   ],
+   "gop": [
+    "Jennifer Kincart Jonsson"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "50",
+   "seats": 1,
+   "dem": [
+    "Ricky Santiago"
+   ],
+   "gop": [
+    "Jennifer Canady"
+   ],
+   "others": [
+    {
+     "name": "Jarvis Washington",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "Jarvis Washington is No Party Affiliation"
+  },
+  {
+   "d": "51",
+   "seats": 1,
+   "dem": [
+    "Octavio E. Hernandez"
+   ],
+   "gop": [
+    "Hilary Holley"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "52",
+   "seats": 1,
+   "dem": [
+    "Pamala Kaye Bivins"
+   ],
+   "gop": [
+    "Samantha Scott"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "53",
+   "seats": 1,
+   "dem": [
+    "Tony Claude"
+   ],
+   "gop": [
+    "Brian Hawkins"
+   ],
+   "others": [
+    {
+     "name": "Christopher Anger",
+     "party": "O"
+    }
+   ],
+   "withdrawn": [],
+   "note": "Christopher Anger is Constitution Party"
+  },
+  {
+   "d": "54",
+   "seats": 1,
+   "dem": [],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "UNKNOWN: incumbent Randy Maggard (R); no race on ivoterguide general ballot and not in Wikipedia Elected column; candidates not found"
+  },
+  {
+   "d": "55",
+   "seats": 1,
+   "dem": [
+    "Zach Funkhouser"
+   ],
+   "gop": [
+    "Walter Price"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "seat vacant, Republican Kevin Steele resigned Aug 7 2026"
+  },
+  {
+   "d": "56",
+   "seats": 1,
+   "dem": [
+    "Jose Freites"
+   ],
+   "gop": [
+    "Brad Yeager"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "57",
+   "seats": 1,
+   "dem": [
+    "Wendy Hoy"
+   ],
+   "gop": [
+    "Adam C. Anderson"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "58",
+   "seats": 1,
+   "dem": [
+    "Bryan Beckman"
+   ],
+   "gop": [
+    "Kimberly \"Kim\" Berfield"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "59",
+   "seats": 1,
+   "dem": [
+    "Susan Rochelle Leff"
+   ],
+   "gop": [
+    "Berny Jacques"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "60",
+   "seats": 1,
+   "dem": [
+    "Lindsay Polega-Quigley"
+   ],
+   "gop": [
+    "Melissa Rutland"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "61",
+   "seats": 1,
+   "dem": [
+    "May Thach"
+   ],
+   "gop": [
+    "Linda Chaney"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "62",
+   "seats": 1,
+   "dem": [
+    "Kyandra Darling"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "elected unopposed per Wikipedia Elected column; race not on general ballot; open, Michele Rayner-Goolsby ran for state Senate"
+  },
+  {
+   "d": "63",
+   "seats": 1,
+   "dem": [
+    "Jacqueline Coffie-Leeks"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "elected unopposed per Wikipedia Elected column; race not on general ballot; open, incumbent Dianne Hart not returning"
+  },
+  {
+   "d": "64",
+   "seats": 1,
+   "dem": [
+    "Luis Salazar"
+   ],
+   "gop": [
+    "Dan Weldon"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "65",
+   "seats": 1,
+   "dem": [
+    "Ben Braver"
+   ],
+   "gop": [
+    "Karen Gonzalez Pittman"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "66",
+   "seats": 1,
+   "dem": [
+    "Jose A. \"Dante\" Sanchez Sanchez"
+   ],
+   "gop": [
+    "Traci Koster"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "67",
+   "seats": 1,
+   "dem": [
+    "Luis Viera"
+   ],
+   "gop": [
+    "Lisette Bonano"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "68",
+   "seats": 1,
+   "dem": [
+    "Tony Smith"
+   ],
+   "gop": [
+    "Ryan Gill"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "69",
+   "seats": 1,
+   "dem": [
+    "Ashley Elizabeth Herrmann"
+   ],
+   "gop": [
+    "Daniel \"Danny\" Alvarez"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "70",
+   "seats": 1,
+   "dem": [
+    "Luther Keith Wilkins"
+   ],
+   "gop": [
+    "Michael Owen"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "71",
+   "seats": 1,
+   "dem": [
+    "Ocean Fitts"
+   ],
+   "gop": [
+    "Jordan Varnadore"
+   ],
+   "others": [
+    {
+     "name": "Joseph Hoolihan",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "Joseph Hoolihan is No Party Affiliation"
+  },
+  {
+   "d": "72",
+   "seats": 1,
+   "dem": [
+    "Harvey Shifrin"
+   ],
+   "gop": [
+    "William \"Bill\" Conerly"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "73",
+   "seats": 1,
+   "dem": [
+    "Lisa Klein"
+   ],
+   "gop": [
+    "Fiona McFarland"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "74",
+   "seats": 1,
+   "dem": [
+    "Ryan Neill"
+   ],
+   "gop": [
+    "Nick Pachota"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "75",
+   "seats": 1,
+   "dem": [
+    "Cynthia L. Butler"
+   ],
+   "gop": [
+    "Danny Nix Jr."
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "76",
+   "seats": 1,
+   "dem": [
+    "Phillip Ray Carter"
+   ],
+   "gop": [
+    "Vanessa Oliver"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "77",
+   "seats": 1,
+   "dem": [
+    "Cornelius Fowler"
+   ],
+   "gop": [
+    "Tiffany Esposito"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "78",
+   "seats": 1,
+   "dem": [
+    "Cindy Banyai"
+   ],
+   "gop": [
+    "Susan Frantz"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "seat vacant, Republican Jenna Persons-Mulicka resigned May 20 2026"
+  },
+  {
+   "d": "79",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Mike Giallombardo"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "elected unopposed per Wikipedia Elected column; race not on general ballot"
+  },
+  {
+   "d": "80",
+   "seats": 1,
+   "dem": [
+    "William Moskal"
+   ],
+   "gop": [
+    "Adam Botana"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "81",
+   "seats": 1,
+   "dem": [
+    "Kim Finer"
+   ],
+   "gop": [
+    "Yvette Benarroch"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "82",
+   "seats": 1,
+   "dem": [
+    "Arthur Boyer"
+   ],
+   "gop": [
+    "Liesa Priddy"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "83",
+   "seats": 1,
+   "dem": [
+    "Leigh Estes"
+   ],
+   "gop": [
+    "Kaylee Tuck"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "84",
+   "seats": 1,
+   "dem": [
+    "Jennifer Massey"
+   ],
+   "gop": [
+    "Dana Trabulsy"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "85",
+   "seats": 1,
+   "dem": [
+    "Wayne Richter"
+   ],
+   "gop": [
+    "Anthony Bonna"
+   ],
+   "others": [
+    {
+     "name": "Amr Metwally",
+     "party": "O"
+    }
+   ],
+   "withdrawn": [],
+   "note": "Amr Metwally listed with party Other"
+  },
+  {
+   "d": "86",
+   "seats": 1,
+   "dem": [
+    "Elizabeth Brendel Pandich"
+   ],
+   "gop": [
+    "John Snyder"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "87",
+   "seats": 1,
+   "dem": [
+    "Emily Gregory"
+   ],
+   "gop": [
+    "Jon Maples"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "88",
+   "seats": 1,
+   "dem": [
+    "Jervonte \"Tae\" Edmonds"
+   ],
+   "gop": [
+    "William Joseph"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "89",
+   "seats": 1,
+   "dem": [
+    "Debra Tendrich"
+   ],
+   "gop": [
+    "Cathy Higgins"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "90",
+   "seats": 1,
+   "dem": [
+    "Rob Long"
+   ],
+   "gop": [
+    "Ionel Roiban"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "91",
+   "seats": 1,
+   "dem": [
+    "Luis Garcia"
+   ],
+   "gop": [
+    "Peggy Gossett-Seidman"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "92",
+   "seats": 1,
+   "dem": [
+    "Kelly Skidmore"
+   ],
+   "gop": [
+    "Steve Byers"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "93",
+   "seats": 1,
+   "dem": [
+    "August Mangeney"
+   ],
+   "gop": [
+    "Anne Gerwig"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "94",
+   "seats": 1,
+   "dem": [
+    "Elizabeth Holmes"
+   ],
+   "gop": [
+    "Megan Weinberger"
+   ],
+   "others": [
+    {
+     "name": "Doug Barrow",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "Doug Barrow is No Party Affiliation"
+  },
+  {
+   "d": "95",
+   "seats": 1,
+   "dem": [
+    "Christine Hunschofsky"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "elected unopposed per Wikipedia Elected column; race not on general ballot"
+  },
+  {
+   "d": "96",
+   "seats": 1,
+   "dem": [
+    "Dan Daley"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "elected unopposed per Wikipedia Elected column; race not on general ballot"
+  },
+  {
+   "d": "97",
+   "seats": 1,
+   "dem": [
+    "Lisa Dunkley"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "elected unopposed per Wikipedia Elected column; race not on general ballot"
+  },
+  {
+   "d": "98",
+   "seats": 1,
+   "dem": [
+    "Mitch Rosenwald"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "elected unopposed per Wikipedia Elected column; race not on general ballot"
+  },
+  {
+   "d": "99",
+   "seats": 1,
+   "dem": [
+    "Daryl Campbell"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "elected unopposed per Wikipedia Elected column; race not on general ballot"
+  },
+  {
+   "d": "100",
+   "seats": 1,
+   "dem": [
+    "Michael Terence Ferguson"
+   ],
+   "gop": [
+    "Yoni Anijar"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "101",
+   "seats": 1,
+   "dem": [
+    "Todd Delmay"
+   ],
+   "gop": [
+    "Hillary Cassel"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "102",
+   "seats": 1,
+   "dem": [
+    "Michael \"Mike\" Friend"
+   ],
+   "gop": [
+    "Mery Lopez-Palma"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "103",
+   "seats": 1,
+   "dem": [
+    "Robin Bartleman"
+   ],
+   "gop": [
+    "Imtiaz Mohammad"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "104",
+   "seats": 1,
+   "dem": [
+    "Felicia Robinson"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "elected unopposed per Wikipedia Elected column; race not on general ballot"
+  },
+  {
+   "d": "105",
+   "seats": 1,
+   "dem": [
+    "Marie Woodson"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "elected unopposed per Wikipedia Elected column; race not on general ballot"
+  },
+  {
+   "d": "106",
+   "seats": 1,
+   "dem": [
+    "Lucia Baez-Geller"
+   ],
+   "gop": [
+    "Fabian Basabe"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "107",
+   "seats": 1,
+   "dem": [
+    "Wallace Aristide"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "elected unopposed per Wikipedia Elected column; race not on general ballot"
+  },
+  {
+   "d": "108",
+   "seats": 1,
+   "dem": [
+    "Daphne Campbell"
+   ],
+   "gop": [
+    "Wancito Francius"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "109",
+   "seats": 1,
+   "dem": [
+    "James Bush III"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "elected unopposed per Wikipedia Elected column; race not on general ballot; open, Ashley Gantt running for state Senate"
+  },
+  {
+   "d": "110",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Tom Fabricio"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "elected unopposed per Wikipedia Elected column; race not on general ballot"
+  },
+  {
+   "d": "111",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "David Borrero"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "elected unopposed per Wikipedia Elected column; race not on general ballot"
+  },
+  {
+   "d": "112",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Alex Rizo"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "elected unopposed per Wikipedia Elected column; race not on general ballot"
+  },
+  {
+   "d": "113",
+   "seats": 1,
+   "dem": [
+    "Gloria Romero Roses"
+   ],
+   "gop": [
+    "Bruno A. Barreiro"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "seat vacant, Republican Vicki Lopez resigned Nov 2025"
+  },
+  {
+   "d": "114",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Demi Busatta"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "elected unopposed per Wikipedia Elected column; race not on general ballot"
+  },
+  {
+   "d": "115",
+   "seats": 1,
+   "dem": [
+    "Marcos Reyes"
+   ],
+   "gop": [
+    "Omar Blanco"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "116",
+   "seats": 1,
+   "dem": [
+    "Nicolas Ramos"
+   ],
+   "gop": [
+    "Ashley Perez-Biliskov"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "seat vacant, Speaker Daniel Perez resigned Aug 21 2026"
+  },
+  {
+   "d": "117",
+   "seats": 1,
+   "dem": [
+    "Kevin Chambliss"
+   ],
+   "gop": [
+    "Miguel Granda"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "118",
+   "seats": 1,
+   "dem": [
+    "Armando \"A.C.\" Castillo"
+   ],
+   "gop": [
+    "Mike Redondo"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "119",
+   "seats": 1,
+   "dem": [
+    "Rey Lazaro Sordo"
+   ],
+   "gop": [
+    "Juan Carlos Porras"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "120",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Jim Mooney"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "elected unopposed per Wikipedia Elected column; race not on general ballot"
+  }
+ ]
+}

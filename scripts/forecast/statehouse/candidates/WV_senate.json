@@ -1,0 +1,286 @@
+{
+ "state": "WV",
+ "chamber": "senate",
+ "sources": [
+  "https://en.wikipedia.org/wiki/2026_West_Virginia_Senate_election"
+ ],
+ "as_of": "2026-10-17",
+ "complete": true,
+ "districts": [
+  {
+   "d": "1",
+   "seats": 1,
+   "dem": [
+    "Shawn Fluharty"
+   ],
+   "gop": [
+    "Laura Chapman"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "2",
+   "seats": 1,
+   "dem": [
+    "Chris Claypole"
+   ],
+   "gop": [
+    "Toby Heaney"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "open; Charles Clements retiring"
+  },
+  {
+   "d": "3",
+   "seats": 1,
+   "dem": [
+    "Caci Petrehn"
+   ],
+   "gop": [
+    "Mike Azinger"
+   ],
+   "others": [
+    {
+     "name": "Ronnie Green",
+     "party": "O"
+    }
+   ],
+   "withdrawn": [],
+   "note": "regular seat; Green is Constitution Party; William Wesley Cox listed as candidate on Wikipedia with unclear status. District 3 also has a special election for the other seat, see separate entry"
+  },
+  {
+   "d": "3",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Trenton Barnhart"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "special election for the district's other seat, unexpired term; no Democrat filed",
+   "special": true
+  },
+  {
+   "d": "4",
+   "seats": 1,
+   "dem": [
+    "Zachary Abbott"
+   ],
+   "gop": [
+    "Eric Tarr"
+   ],
+   "others": [
+    {
+     "name": "Stephanie Butcher",
+     "party": "L"
+    }
+   ],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "5",
+   "seats": 1,
+   "dem": [
+    "DuRon Jackson"
+   ],
+   "gop": [
+    "Chris Miller"
+   ],
+   "others": [
+    {
+     "name": "Glendon Watts",
+     "party": "O"
+    }
+   ],
+   "withdrawn": [],
+   "note": "open; Mike Woelfel retiring; Watts is Constitution Party"
+  },
+  {
+   "d": "6",
+   "seats": 1,
+   "dem": [
+    "Wyatt Lilly"
+   ],
+   "gop": [
+    "Mark Maynard"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "7",
+   "seats": 1,
+   "dem": [
+    "Cynthia Brake"
+   ],
+   "gop": [
+    "Zack Maynard"
+   ],
+   "others": [
+    {
+     "name": "Shawn M. Legg",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "8",
+   "seats": 1,
+   "dem": [
+    "Kim Hundley"
+   ],
+   "gop": [
+    "Lance V. Wheeler"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "incumbent T. Kevan Bartlett lost renomination"
+  },
+  {
+   "d": "9",
+   "seats": 1,
+   "dem": [
+    "Christy Cardwell"
+   ],
+   "gop": [
+    "Rollan Roberts"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "10",
+   "seats": 1,
+   "dem": [
+    "Kent Gilkerson"
+   ],
+   "gop": [
+    "Vince Deeds"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "11",
+   "seats": 1,
+   "dem": [
+    "Kevin Leon Carpenter"
+   ],
+   "gop": [
+    "Bill Hamilton"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "12",
+   "seats": 1,
+   "dem": [
+    "Lynette Murray"
+   ],
+   "gop": [
+    "Ben Queen"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "13",
+   "seats": 1,
+   "dem": [
+    "John Williams"
+   ],
+   "gop": [
+    "Mike Oliverio"
+   ],
+   "others": [
+    {
+     "name": "Taylor Richmond",
+     "party": "L"
+    }
+   ],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "14",
+   "seats": 1,
+   "dem": [
+    "Jason Armentrout"
+   ],
+   "gop": [
+    "Jay Taylor"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "15",
+   "seats": 1,
+   "dem": [
+    "Elizabeth Ferris"
+   ],
+   "gop": [
+    "Darren Thorne"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "16",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Jason Barrett"
+   ],
+   "others": [
+    {
+     "name": "Travis Bost",
+     "party": "L"
+    }
+   ],
+   "withdrawn": [],
+   "note": "no Democrat; Libertarian is only challenger"
+  },
+  {
+   "d": "17",
+   "seats": 1,
+   "dem": [
+    "Wes Holden"
+   ],
+   "gop": [
+    "Tom Takubo"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "regular seat. District 17 also has a special election for the other seat, see separate entry"
+  },
+  {
+   "d": "17",
+   "seats": 1,
+   "dem": [
+    "Richie Robb"
+   ],
+   "gop": [
+    "Anne Charnock"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "special election for the district's other seat, unexpired term; Robb won Dem special primary 50.35 to 49.65 over Ted Boettner",
+   "special": true
+  }
+ ]
+}

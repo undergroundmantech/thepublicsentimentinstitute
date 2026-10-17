@@ -1,0 +1,439 @@
+{
+ "state": "AL",
+ "chamber": "senate",
+ "sources": [
+  "https://en.wikipedia.org/wiki/2026_Alabama_Senate_election",
+  "https://www.alreporter.com/2026/06/17/incumbents-prevail-in-alabamas-legislative-runoff-elections/",
+  "https://alarise.org/blog-posts/what-you-need-to-know-about-alabamas-aug-11-special-primary-election/",
+  "https://www.ballotready.org/elections/alabama-special-congressional-primary-election-2026-08-11"
+ ],
+ "as_of": "2026-10-17",
+ "complete": true,
+ "districts": [
+  {
+   "d": "1",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Tim Melson"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "2",
+   "seats": 1,
+   "dem": [
+    "Rudolph Valentino Drake"
+   ],
+   "gop": [
+    "John Roberts"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "open; Tom Butler retiring; Drake won Dem runoff over Alex House"
+  },
+  {
+   "d": "3",
+   "seats": 1,
+   "dem": [
+    "John Dickey"
+   ],
+   "gop": [
+    "Arthur Orr"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "4",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Garlan Gudger"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "5",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Matt Woods"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "6",
+   "seats": 1,
+   "dem": [
+    "Bobby Martin"
+   ],
+   "gop": [
+    "Larry Stutts"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "7",
+   "seats": 1,
+   "dem": [
+    "Jared Sluss"
+   ],
+   "gop": [
+    "Sam Givhan"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "8",
+   "seats": 1,
+   "dem": [
+    "Katie Kramer"
+   ],
+   "gop": [
+    "Steve Livingston"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "9",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Wes Kitchens"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "10",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Andrew Jones"
+   ],
+   "others": [
+    {
+     "name": "Jesse Battles",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "no Democrat; independent is main challenger"
+  },
+  {
+   "d": "11",
+   "seats": 1,
+   "dem": [
+    "Donald Mottern"
+   ],
+   "gop": [
+    "Lance Bell"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "12",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Keith Kelley"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "13",
+   "seats": 1,
+   "dem": [
+    "Jamie Forsyth"
+   ],
+   "gop": [
+    "Randy Price"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "14",
+   "seats": 1,
+   "dem": [
+    "Mandie Ledkins"
+   ],
+   "gop": [
+    "April Weaver"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "15",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Scott Ortis"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "incumbent Dan Roberts lost primary"
+  },
+  {
+   "d": "16",
+   "seats": 1,
+   "dem": [
+    "Spencer Stone"
+   ],
+   "gop": [
+    "J.T. \"Jabo\" Waggoner"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "17",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Shay Shelnutt"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "18",
+   "seats": 1,
+   "dem": [
+    "Rodger Smitherman"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "19",
+   "seats": 1,
+   "dem": [
+    "Merika Coleman"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "20",
+   "seats": 1,
+   "dem": [
+    "Linda Coleman-Madison"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "21",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Gerald Allen"
+   ],
+   "others": [
+    {
+     "name": "Jolie Woodrow Minor Jr.",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "no Democrat; independent is main challenger"
+  },
+  {
+   "d": "22",
+   "seats": 1,
+   "dem": [
+    "Ashley Sharpe"
+   ],
+   "gop": [
+    "Terry Waters"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "incumbent Greg Albritton lost primary"
+  },
+  {
+   "d": "23",
+   "seats": 1,
+   "dem": [
+    "Robert Stewart"
+   ],
+   "gop": [
+    "Thayer Spencer"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "24",
+   "seats": 1,
+   "dem": [
+    "Bobby Singleton"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "Wikipedia notes ballot access of Richard Benderson was questioned; no other candidate confirmed"
+  },
+  {
+   "d": "25",
+   "seats": 1,
+   "dem": [
+    "Phadra Carson Foster"
+   ],
+   "gop": [
+    "Will Barfoot"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "court restored 2021 map; May primary voided, no special primary needed as each party had one candidate"
+  },
+  {
+   "d": "26",
+   "seats": 1,
+   "dem": [
+    "Kirk Hatcher"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "court restored 2021 map; May primary voided; Hatcher only candidate"
+  },
+  {
+   "d": "27",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Jay Hovey"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "28",
+   "seats": 1,
+   "dem": [
+    "Billy Beasley"
+   ],
+   "gop": [
+    "Brent Comer"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "29",
+   "seats": 1,
+   "dem": [
+    "Jimmy McCray"
+   ],
+   "gop": [
+    "Donnie Chesteen"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "30",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Clyde Chambliss"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "31",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Josh Carnley"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "32",
+   "seats": 1,
+   "dem": [
+    "Janet Appleby"
+   ],
+   "gop": [
+    "Chris Elliott"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "33",
+   "seats": 1,
+   "dem": [
+    "Vivian Davis Figures"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "34",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Rusty Glover"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "open; Jack W. Williams running for Agriculture Commissioner"
+  },
+  {
+   "d": "35",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "David Sessions"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  }
+ ]
+}

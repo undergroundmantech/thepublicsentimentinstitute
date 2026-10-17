@@ -1,0 +1,206 @@
+{
+ "state": "AR",
+ "chamber": "senate",
+ "sources": [
+  "https://en.wikipedia.org/wiki/2026_Arkansas_Senate_election"
+ ],
+ "as_of": "2026-10-17",
+ "complete": true,
+ "districts": [
+  {
+   "d": "2",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Matt Stone"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "7",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Alan Clark"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "9",
+   "seats": 1,
+   "dem": [
+    "Jessie McGruder"
+   ],
+   "gop": [
+    "Kenny Phillips"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "open; Reginald Murdock term-limited"
+  },
+  {
+   "d": "10",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Ron Caldwell"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "11",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Ricky Hill"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "13",
+   "seats": 1,
+   "dem": [
+    "Allison Sweatman"
+   ],
+   "gop": [
+    "Brandon Achor"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "open; Jane English term-limited"
+  },
+  {
+   "d": "14",
+   "seats": 1,
+   "dem": [
+    "Clarke Tucker"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "15",
+   "seats": 1,
+   "dem": [
+    "Tara Shephard"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "open; Fredrick Love term-limited; Shephard won Dem runoff over Charity Smith-Allen"
+  },
+  {
+   "d": "16",
+   "seats": 1,
+   "dem": [
+    "Joshua Irby"
+   ],
+   "gop": [
+    "Rodney Wright"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "open; Kim Hammer term-limited"
+  },
+  {
+   "d": "21",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Jeremy Wooldridge"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "incumbent Blake Johnson lost GOP primary"
+  },
+  {
+   "d": "24",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Missy Irvin"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "27",
+   "seats": 1,
+   "dem": [
+    "Eduardo Guzman"
+   ],
+   "gop": [
+    "Justin Boyd"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "28",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Bryan King"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "30",
+   "seats": 1,
+   "dem": [
+    "Denise Garner"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "open; Greg Leding term-limited"
+  },
+  {
+   "d": "31",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Clint Penzo"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "32",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Joshua P. Bryant"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "35",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Tyler Dees"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  }
+ ]
+}

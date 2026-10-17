@@ -1,0 +1,448 @@
+{
+ "state": "CT",
+ "chamber": "senate",
+ "sources": [
+  "https://en.wikipedia.org/wiki/2026_Connecticut_Senate_election"
+ ],
+ "as_of": "2026-10-17",
+ "complete": true,
+ "caveat": "Built from Wikipedia per district tables; the official SOTS list of nominees could not be read, so Working Families and Independent Party cross endorsements and petitioning candidates may be missing.",
+ "districts": [
+  {
+   "d": "1",
+   "seats": 1,
+   "dem": [
+    "John Fonfara"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "2",
+   "seats": 1,
+   "dem": [
+    "Maryam Khan"
+   ],
+   "gop": [
+    "Tim Knotts"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "incumbent Doug McCrory D lost Aug 11 primary to Khan"
+  },
+  {
+   "d": "3",
+   "seats": 1,
+   "dem": [
+    "Saud Anwar"
+   ],
+   "gop": [
+    "Elliot Hughes"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "4",
+   "seats": 1,
+   "dem": [
+    "MD Rahman"
+   ],
+   "gop": [
+    "Jenn Jennings"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "5",
+   "seats": 1,
+   "dem": [
+    "Derek Slap"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "6",
+   "seats": 1,
+   "dem": [
+    "Rick Lopes"
+   ],
+   "gop": [
+    "Tremell Collins"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "7",
+   "seats": 1,
+   "dem": [
+    "David Kiner"
+   ],
+   "gop": [
+    "John Kissel"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "8",
+   "seats": 1,
+   "dem": [
+    "Paul Honig"
+   ],
+   "gop": [
+    "Mike Criss"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "9",
+   "seats": 1,
+   "dem": [
+    "Matt Lesser"
+   ],
+   "gop": [
+    "Grant Polomsky"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "10",
+   "seats": 1,
+   "dem": [
+    "Gary Winfield"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "11",
+   "seats": 1,
+   "dem": [
+    "Al Paolillo"
+   ],
+   "gop": [],
+   "others": [
+    {
+     "name": "Rosa Pepper-Macias",
+     "party": "O"
+    }
+   ],
+   "withdrawn": [],
+   "note": "open seat, Martin Looney retiring; Pepper-Macias on Workers' Voice Party line; no Republican"
+  },
+  {
+   "d": "12",
+   "seats": 1,
+   "dem": [
+    "Christine Cohen"
+   ],
+   "gop": [
+    "Lisa Deane"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "13",
+   "seats": 1,
+   "dem": [
+    "Jack Fazzino"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "open seat, Jan Hochadel retiring; Fazzino won D primary over Jim Jinks; no Republican listed"
+  },
+  {
+   "d": "14",
+   "seats": 1,
+   "dem": [
+    "James Maroney"
+   ],
+   "gop": [
+    "Owen Weaver"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "15",
+   "seats": 1,
+   "dem": [
+    "Joan Hartley"
+   ],
+   "gop": [
+    "Ruben Rodriguez"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "16",
+   "seats": 1,
+   "dem": [
+    "Jack Perry"
+   ],
+   "gop": [
+    "Robert Sampson"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "17",
+   "seats": 1,
+   "dem": [
+    "Jorge Cabrera"
+   ],
+   "gop": [
+    "John-Paul Dorais"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "18",
+   "seats": 1,
+   "dem": [
+    "Joe de la Cruz"
+   ],
+   "gop": [
+    "Heather Somers"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "19",
+   "seats": 1,
+   "dem": [
+    "Catherine Osten"
+   ],
+   "gop": [
+    "Jason Guidone"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Guidone won R primary over Mike France"
+  },
+  {
+   "d": "20",
+   "seats": 1,
+   "dem": [
+    "Martha Marx"
+   ],
+   "gop": [
+    "Ronald LaBonte"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "21",
+   "seats": 1,
+   "dem": [
+    "Carolann Reid"
+   ],
+   "gop": [
+    "Jason Perillo"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "22",
+   "seats": 1,
+   "dem": [
+    "Sujata Gadkar-Wilcox"
+   ],
+   "gop": [
+    "Scott Modlin"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "23",
+   "seats": 1,
+   "dem": [
+    "Herron Gaston"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "24",
+   "seats": 1,
+   "dem": [
+    "Julie Kushner"
+   ],
+   "gop": [
+    "Melissa Lindsey"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "25",
+   "seats": 1,
+   "dem": [
+    "Bob Duff"
+   ],
+   "gop": [
+    "Justin Perry"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Senate Majority Leader"
+  },
+  {
+   "d": "26",
+   "seats": 1,
+   "dem": [
+    "Samantha Nestor"
+   ],
+   "gop": [
+    "Alma Sarelli"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "open seat, Ceci Maher D retiring"
+  },
+  {
+   "d": "27",
+   "seats": 1,
+   "dem": [
+    "Patricia Billie Miller"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "no Republican"
+  },
+  {
+   "d": "28",
+   "seats": 1,
+   "dem": [
+    "Rob Blanchard"
+   ],
+   "gop": [
+    "Amybeth Laroche"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "open seat, Tony Hwang R retiring"
+  },
+  {
+   "d": "29",
+   "seats": 1,
+   "dem": [
+    "Mae Flexer"
+   ],
+   "gop": [
+    "Christopher Reddy"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "30",
+   "seats": 1,
+   "dem": [
+    "Aaron Zimmer"
+   ],
+   "gop": [
+    "Stephen Harding"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "31",
+   "seats": 1,
+   "dem": [
+    "Laurel LaPorte-Grimes"
+   ],
+   "gop": [
+    "Henri Martin"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "32",
+   "seats": 1,
+   "dem": [
+    "Matt Knickerbocker"
+   ],
+   "gop": [
+    "Eric Berthel"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "33",
+   "seats": 1,
+   "dem": [
+    "Norman Needleman"
+   ],
+   "gop": [
+    "Charles Ferraro"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "34",
+   "seats": 1,
+   "dem": [
+    "Brandi Mandato"
+   ],
+   "gop": [
+    "Paul Cicarella"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "35",
+   "seats": 1,
+   "dem": [
+    "Ethan Werstler"
+   ],
+   "gop": [
+    "Jeff Gordon"
+   ],
+   "others": [],
+   "withdrawn": []
+  },
+  {
+   "d": "36",
+   "seats": 1,
+   "dem": [
+    "Jill Oberlander"
+   ],
+   "gop": [
+    "Joseph Kelly"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "open seat, Ryan Fazio R running for governor"
+  }
+ ]
+}

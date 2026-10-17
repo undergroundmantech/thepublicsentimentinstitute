@@ -1,0 +1,1248 @@
+{
+ "state": "MT",
+ "chamber": "house",
+ "sources": [
+  "https://theballotbrief.com/state/montana/yellowstone-county",
+  "https://theballotbrief.com/state/montana/missoula-county",
+  "https://theballotbrief.com/state/montana/gallatin-county",
+  "https://theballotbrief.com/state/montana/flathead-county",
+  "https://theballotbrief.com/state/montana/cascade-county",
+  "https://theballotbrief.com/state/montana/lewis-and-clark-county",
+  "https://theballotbrief.com/state/montana/ravalli-county",
+  "https://theballotbrief.com/state/montana/silver-bow-county",
+  "https://theballotbrief.com/state/montana/lake-county",
+  "https://theballotbrief.com/state/montana/hill-county",
+  "https://theballotbrief.com/state/montana/park-county",
+  "https://theballotbrief.com/state/montana/lincoln-county",
+  "https://theballotbrief.com/state/montana/sanders-county",
+  "https://theballotbrief.com/state/montana/glacier-county",
+  "https://theballotbrief.com/state/montana/teton-county",
+  "https://theballotbrief.com/state/montana/fergus-county",
+  "https://theballotbrief.com/state/montana/valley-county",
+  "https://theballotbrief.com/state/montana/richland-county",
+  "https://theballotbrief.com/state/montana/dawson-county",
+  "https://theballotbrief.com/state/montana/big-horn-county",
+  "https://theballotbrief.com/state/montana/carbon-county",
+  "https://theballotbrief.com/state/montana/stillwater-county",
+  "https://theballotbrief.com/state/montana/deer-lodge-county",
+  "https://theballotbrief.com/state/montana/custer-county",
+  "https://theballotbrief.com/state/montana/jefferson-county",
+  "https://theballotbrief.com/state/montana/powell-county"
+ ],
+ "as_of": "2026-10-17",
+ "complete": true,
+ "districts": [
+  {
+   "d": "1",
+   "dem": [
+    "Dakota V. Adams"
+   ],
+   "gop": [
+    "Michelle Bianco"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "2",
+   "dem": [
+    "Jane Maahs"
+   ],
+   "gop": [
+    "Tom Millett"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "3",
+   "dem": [
+    "Debo Powers"
+   ],
+   "gop": [
+    "Derek Peachey"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "4",
+   "dem": [
+    "Paula Koch"
+   ],
+   "gop": [
+    "Shaun Pandina"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "5",
+   "dem": [
+    "Luca Welle"
+   ],
+   "gop": [
+    "Braxton Mitchell"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "6",
+   "dem": [
+    "Darren Fix"
+   ],
+   "gop": [
+    "Jim Riley"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "7",
+   "dem": [
+    "Madison Evans"
+   ],
+   "gop": [
+    "Courtenay Sprunger"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "8",
+   "dem": [
+    "Calvin Lime"
+   ],
+   "gop": [
+    "Lukas Schubert"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "9",
+   "dem": [
+    "Kate McLaughlin"
+   ],
+   "gop": [
+    "Steven C. Kelly"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "10",
+   "dem": [
+    "Catherine C. Allen"
+   ],
+   "gop": [
+    "Terry Falk"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "11",
+   "dem": [
+    "Maeve Kintzler"
+   ],
+   "gop": [
+    "Ed Byrne"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "12",
+   "dem": [
+    "Cindy L. Bruckner"
+   ],
+   "gop": [
+    "Tracy A. Sharp"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "13",
+   "dem": [
+    "Dalton Bradford"
+   ],
+   "gop": [
+    "Finley Warden"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "14",
+   "dem": [
+    "Colleen Hinds"
+   ],
+   "gop": [
+    "Paul Fielder"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "15",
+   "dem": [
+    "Thedis B. Crowe"
+   ],
+   "gop": [
+    "Ralph Foster"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "16",
+   "dem": [
+    "Lona R. Running Wolf"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "17",
+   "dem": [
+    "Chris Bechtold"
+   ],
+   "gop": [
+    "Justin W. Cleveland"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "18",
+   "dem": [],
+   "gop": [
+    "Bruce \"Butch\" Gillespie"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "19",
+   "dem": [
+    "Jane Weber"
+   ],
+   "gop": [
+    "Hannah Trebas"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "20",
+   "dem": [
+    "Steve Keller"
+   ],
+   "gop": [
+    "Melissa Nikolakakos"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "21",
+   "dem": [
+    "Lela Graham"
+   ],
+   "gop": [
+    "Trevor P. Funseth"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "22",
+   "dem": [
+    "Neal Miller"
+   ],
+   "gop": [
+    "Jason Lorang"
+   ],
+   "others": [
+    {
+     "name": "Dave Von Eschen",
+     "party": "L"
+    }
+   ],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "23",
+   "dem": [
+    "Rebecca Bogden-Richards"
+   ],
+   "gop": [
+    "Eric Tilleman"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "24",
+   "dem": [
+    "Pam Carroll"
+   ],
+   "gop": [
+    "Steve Fitzpatrick"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "25",
+   "dem": [
+    "Jerry Ferderer"
+   ],
+   "gop": [
+    "Steve Gist"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "26",
+   "dem": [
+    "Paul Jefferson"
+   ],
+   "gop": [
+    "Russel Miner"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "27",
+   "dem": [
+    "Paul Tuss"
+   ],
+   "gop": [],
+   "others": [
+    {
+     "name": "Jordan Ophus",
+     "party": "L"
+    }
+   ],
+   "withdrawn": [],
+   "note": "no Republican; Libertarian is the only challenger"
+  },
+  {
+   "d": "28",
+   "dem": [],
+   "gop": [
+    "Chisholm B. Christensen"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "29",
+   "dem": [
+    "Tess Fahlgren"
+   ],
+   "gop": [
+    "Valerie Moore"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "30",
+   "dem": [
+    "Jason Boeshore"
+   ],
+   "gop": [
+    "Morgan Thiel"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "31",
+   "dem": [
+    "Natalie Oneal"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "32",
+   "dem": [
+    "Mike Fox"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "33",
+   "dem": [
+    "Tristan Veverka"
+   ],
+   "gop": [
+    "Brandon Ler"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "34",
+   "dem": [
+    "Jasmine Erickson"
+   ],
+   "gop": [
+    "Jerry Schillinger"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "35",
+   "dem": [
+    "Natalie Parker"
+   ],
+   "gop": [
+    "Gary Parry"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "36",
+   "dem": [
+    "Benjamin Keyes"
+   ],
+   "gop": [
+    "Ty Linger"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "37",
+   "dem": [
+    "Tracey Miller Karcher"
+   ],
+   "gop": [
+    "Shane Klakken"
+   ],
+   "others": [
+    {
+     "name": "Jason Wilson",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "38",
+   "dem": [],
+   "gop": [
+    "Greg Oblander"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "39",
+   "dem": [
+    "Melissa Smith"
+   ],
+   "gop": [
+    "Kerri Seekins Crowe"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "40",
+   "dem": [
+    "Gabriel Bradshaw"
+   ],
+   "gop": [
+    "Mike Vinton"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "41",
+   "dem": [
+    "Jade Sooktis"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "42",
+   "dem": [
+    "Sidney Chip Fitzpatrick"
+   ],
+   "gop": [
+    "Jeremiah Jabs"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "43",
+   "dem": [
+    "Rudolf Haden"
+   ],
+   "gop": [
+    "Larry Brewster"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "44",
+   "dem": [
+    "Mike Eaton"
+   ],
+   "gop": [
+    "Katie Zolnikov"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "45",
+   "dem": [
+    "Denise Baum"
+   ],
+   "gop": [
+    "Bryce Walston"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "46",
+   "dem": [
+    "Denise Joy"
+   ],
+   "gop": [
+    "Kim Welzenbach"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "47",
+   "dem": [
+    "James Reavis"
+   ],
+   "gop": [
+    "John Maxwell"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "48",
+   "dem": [
+    "Tucker Colvin"
+   ],
+   "gop": [
+    "Curtis Schomer"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "49",
+   "dem": [
+    "Rebecca Noell"
+   ],
+   "gop": [
+    "Charlie Loveridge"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "50",
+   "dem": [
+    "Mark Peters"
+   ],
+   "gop": [
+    "Stewart Harris"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "51",
+   "dem": [
+    "Precious McKenzie"
+   ],
+   "gop": [
+    "Jodee Etchart"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "52",
+   "dem": [
+    "Elizabeth Heald"
+   ],
+   "gop": [
+    "Stacy Zinn"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "53",
+   "dem": [
+    "Matthew J. Hankins"
+   ],
+   "gop": [
+    "Troy Charbonneau"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "54",
+   "dem": [
+    "Janine Coole"
+   ],
+   "gop": [
+    "Lee Deming"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "55",
+   "dem": [
+    "Richard Gessling"
+   ],
+   "gop": [
+    "Brad Barker"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "56",
+   "dem": [],
+   "gop": [
+    "Fiona B. Nave"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "57",
+   "dem": [
+    "Becky Edwards"
+   ],
+   "gop": [
+    "Bob Crank"
+   ],
+   "others": [],
+   "withdrawn": [
+    {
+     "name": "Jordan Viegut",
+     "party": "D",
+     "note": "withdrew after the June 2 primary for personal reasons; Livingston Enterprise reports Democrats named Becky Edwards; SOS list still showed Viegut as of Sept 17 2026"
+    }
+   ],
+   "note": "Democratic nominee replaced after the primary"
+  },
+  {
+   "d": "58",
+   "dem": [
+    "Jamie L. Isaly"
+   ],
+   "gop": [
+    "Joshua Congleton"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "59",
+   "dem": [
+    "Katie Fire Thunder"
+   ],
+   "gop": [
+    "Marc Greendorfer"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "60",
+   "dem": [
+    "Alanah Griffith"
+   ],
+   "gop": [
+    "Greg Leman"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "61",
+   "dem": [
+    "Rio Roland"
+   ],
+   "gop": [
+    "Eric Jacobs"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "62",
+   "dem": [
+    "Joshua A. Seckinger"
+   ],
+   "gop": [
+    "Esther Fishbaugh"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "63",
+   "dem": [
+    "Peter Strand"
+   ],
+   "gop": [
+    "Lawrence R. Moore"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "64",
+   "dem": [
+    "Brady Bremer"
+   ],
+   "gop": [
+    "Daniel Ricardo Martinez"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "65",
+   "dem": [
+    "Brian Close"
+   ],
+   "gop": [
+    "Joe Flynn"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "66",
+   "dem": [
+    "Eric Matthews"
+   ],
+   "gop": [
+    "Owen Lang"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "67",
+   "dem": [
+    "Logan Henke"
+   ],
+   "gop": [
+    "Jedediah Hinkle"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "68",
+   "dem": [
+    "Jocelyn Kent"
+   ],
+   "gop": [
+    "Randy Chamberlin"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "69",
+   "dem": [],
+   "gop": [
+    "Trevor Walter"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "70",
+   "dem": [
+    "Kobi Craddock"
+   ],
+   "gop": [
+    "Shannon Maness"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "71",
+   "dem": [
+    "Scott DeMarois"
+   ],
+   "gop": [
+    "Suzzann Nordwick"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "72",
+   "dem": [
+    "Donavon Hawk"
+   ],
+   "gop": [
+    "Michael Saul"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "73",
+   "dem": [
+    "Jennifer Lynch"
+   ],
+   "gop": [
+    "Gerry Kennedy"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "74",
+   "dem": [
+    "Marc J. Lee"
+   ],
+   "gop": [
+    "Trenin Bayless"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "75",
+   "dem": [
+    "Patrick Sullivan"
+   ],
+   "gop": [
+    "Mark Reinschmidt"
+   ],
+   "others": [
+    {
+     "name": "Greg Devries",
+     "party": "L"
+    }
+   ],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "76",
+   "dem": [],
+   "gop": [
+    "Trish Schreiber"
+   ],
+   "others": [
+    {
+     "name": "Shayne Morgan",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "no Democrat; independent Shayne Morgan is the only challenger, his petition was listed as pending on the SOS list as of Sept 17 2026"
+  },
+  {
+   "d": "77",
+   "dem": [
+    "Deborah Anne Hansen"
+   ],
+   "gop": [
+    "Jane Gillette"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "78",
+   "dem": [
+    "Mark White"
+   ],
+   "gop": [
+    "Randyn Gregg"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "79",
+   "dem": [
+    "Luke Muszkiewicz"
+   ],
+   "gop": [
+    "Chiko Olson"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "80",
+   "dem": [
+    "Megan Lane"
+   ],
+   "gop": [
+    "Katie Fruits"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "81",
+   "dem": [
+    "Janet Ellis"
+   ],
+   "gop": [
+    "John J. Looney Sr."
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "82",
+   "dem": [
+    "Pete Elverum"
+   ],
+   "gop": [
+    "Clinton McKay"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "83",
+   "dem": [
+    "Joe Cohenour"
+   ],
+   "gop": [
+    "Aaron J. Leas"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "84",
+   "dem": [
+    "Tia Nelson"
+   ],
+   "gop": [
+    "Roy Caldwell"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "85",
+   "dem": [
+    "Laura Jackson"
+   ],
+   "gop": [
+    "Kim Dailey"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "86",
+   "dem": [
+    "Archie Thomas"
+   ],
+   "gop": [
+    "Wayne Rusk"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "87",
+   "dem": [
+    "Bill Jones"
+   ],
+   "gop": [
+    "Terry Nelson"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "88",
+   "dem": [
+    "Evan Schroedel"
+   ],
+   "gop": [
+    "Greg Overstreet"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "89",
+   "dem": [
+    "Mark A. Thane"
+   ],
+   "gop": [
+    "Lyn Hellegaard"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "90",
+   "dem": [],
+   "gop": [
+    "Jeff Stanek"
+   ],
+   "others": [
+    {
+     "name": "Kelley Durbin-Williams",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "no Democrat; independent Kelley Durbin-Williams is the only challenger, petition pending on SOS list as of Sept 17 2026"
+  },
+  {
+   "d": "91",
+   "dem": [
+    "Shelly Fyant"
+   ],
+   "gop": [
+    "Charles Headley"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "92",
+   "dem": [
+    "Monica Tranel"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "93",
+   "dem": [
+    "Ben Davis"
+   ],
+   "gop": [
+    "Roy Handley"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "94",
+   "dem": [
+    "Robin Kendall"
+   ],
+   "gop": [
+    "Greg Woodward"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "95",
+   "dem": [
+    "Zooey Zephyr"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "96",
+   "dem": [
+    "Bob Carter"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "97",
+   "dem": [
+    "Melody J. Cunningham"
+   ],
+   "gop": [
+    "Michael P. Hagestad"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "98",
+   "dem": [
+    "Jonathan Karlen"
+   ],
+   "gop": [
+    "Bryan Muzzana"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "99",
+   "dem": [
+    "Tom France"
+   ],
+   "gop": [
+    "Ryan Darling"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "100",
+   "dem": [
+    "SJ Howell"
+   ],
+   "gop": [
+    "Michael Daniel Bowles"
+   ],
+   "others": [
+    {
+     "name": "JC Windmueller",
+     "party": "L"
+    }
+   ],
+   "withdrawn": [],
+   "note": ""
+  }
+ ],
+ "method": "General candidates from The Ballot Brief county pages, which cite the Montana SOS candidate list checked Sept 17 2026 and describe themselves as AI assisted; iVoterGuide Montana page had no legislative races."
+}

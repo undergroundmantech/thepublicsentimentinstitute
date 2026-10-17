@@ -1,0 +1,239 @@
+{
+ "state": "KY",
+ "chamber": "senate",
+ "sources": [
+  "https://en.wikipedia.org/wiki/2026_Kentucky_Senate_election",
+  "https://ivoterguide.com/all-in-state/ky"
+ ],
+ "as_of": "2026-10-17",
+ "complete": true,
+ "districts": [
+  {
+   "d": "2",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Danny Carroll"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "4",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Robby Mills"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "6",
+   "seats": 1,
+   "dem": [
+    "Christian Furman"
+   ],
+   "gop": [
+    "Lindsey Tichenor"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "8",
+   "seats": 1,
+   "dem": [
+    "Vicki Quisenberry"
+   ],
+   "gop": [
+    "Gary Boswell"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "10",
+   "seats": 1,
+   "dem": [
+    "Christopher Gatrost"
+   ],
+   "gop": [
+    "Matt Deneen"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "12",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Amanda Mays Bledsoe"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "14",
+   "seats": 1,
+   "dem": [
+    "Carrie Gribbins Truitt"
+   ],
+   "gop": [
+    "Ben Mudd"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "open; Jimmy Higdon retiring"
+  },
+  {
+   "d": "16",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Max Wise"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "18",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Robin L. Webb"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "incumbent switched from Democratic to Republican in May 2025"
+  },
+  {
+   "d": "20",
+   "seats": 1,
+   "dem": [
+    "Stella R. Pollard"
+   ],
+   "gop": [
+    "Gex Williams"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "22",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Donald Douglas"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "24",
+   "seats": 1,
+   "dem": [
+    "Joshua Baker"
+   ],
+   "gop": [
+    "Shelley Funke Frommeyer"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "26",
+   "seats": 1,
+   "dem": [
+    "Karen Berg"
+   ],
+   "gop": [
+    "Everett C. Corley"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "28",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Greg Elkins"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "30",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Brandon Smith"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "32",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Mike Wilson"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "34",
+   "seats": 1,
+   "dem": [
+    "Jessica D. McIntosh"
+   ],
+   "gop": [
+    "Jared Carpenter"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "36",
+   "seats": 1,
+   "dem": [
+    "Sarah Cole McIntosh"
+   ],
+   "gop": [
+    "Julie Raque Adams"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "38",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Mike Nemes"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  }
+ ]
+}

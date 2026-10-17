@@ -1,0 +1,300 @@
+{
+ "state": "WA",
+ "chamber": "senate",
+ "sources": [
+  "https://ivoterguide.com/all-in-state/wa",
+  "https://theballotbrief.com/state/washington/king-county",
+  "https://theballotbrief.com/state/washington/snohomish-county",
+  "https://theballotbrief.com/state/washington/pierce-county",
+  "https://theballotbrief.com/state/washington/spokane-county",
+  "https://theballotbrief.com/state/washington/clark-county",
+  "https://theballotbrief.com/state/washington/thurston-county",
+  "https://theballotbrief.com/state/washington/whatcom-county",
+  "https://theballotbrief.com/state/washington/benton-county",
+  "https://theballotbrief.com/state/washington/yakima-county",
+  "https://theballotbrief.com/state/washington/kitsap-county",
+  "https://theballotbrief.com/state/washington/clallam-county",
+  "https://theballotbrief.com/state/washington/grant-county",
+  "https://theballotbrief.com/state/washington/skagit-county",
+  "https://cdn.kingcounty.gov/-/media/king-county/depts/elections/results/2026/08/webresults-20260818-final.csv",
+  "https://en.wikipedia.org/wiki/2026_Washington_House_of_Representatives_election",
+  "https://www.cleantechalliance.org/wp-content/uploads/2026/08/Boswell-Consulting-Day-One-2026-Primary-Election-Report.pdf"
+ ],
+ "as_of": "2026-10-17",
+ "complete": true,
+ "districts": [
+  {
+   "d": "6",
+   "dem": [],
+   "gop": [
+    "Jeff Holy"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "7",
+   "dem": [],
+   "gop": [
+    "Shelly Short"
+   ],
+   "others": [
+    {
+     "name": "Ronald McCoy",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "no Democrat; independent is the only challenger"
+  },
+  {
+   "d": "8",
+   "dem": [],
+   "gop": [
+    "Nikki Torres",
+    "Gabe Galbraith"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "two Republicans, no Democrat"
+  },
+  {
+   "d": "13",
+   "dem": [],
+   "gop": [
+    "Alex Ybarra"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "15",
+   "dem": [],
+   "gop": [
+    "Jeremie Dufault"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "21",
+   "dem": [
+    "Marko Liias"
+   ],
+   "gop": [
+    "Riaz Khan"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "26",
+   "dem": [
+    "Deborah Krishnadasan"
+   ],
+   "gop": [
+    "Gary Parker"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "29",
+   "dem": [
+    "Sharlett Mena",
+    "David Anderson"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "two Democrats, no Republican"
+  },
+  {
+   "d": "30",
+   "dem": [
+    "Claire Wilson"
+   ],
+   "gop": [
+    "Michael Rutland"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "31",
+   "dem": [
+    "Tamara Stramel"
+   ],
+   "gop": [
+    "Phil Fortunato"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "32",
+   "dem": [
+    "Cindy Ryu",
+    "Jesse Salomon"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "two Democrats, no Republican; incumbent Salomon finished second in primary"
+  },
+  {
+   "d": "33",
+   "dem": [
+    "Tina Orwall"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "34",
+   "dem": [
+    "Emily Alvarado"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "35",
+   "dem": [
+    "Carolina Mejia"
+   ],
+   "gop": [
+    "Drew MacEwen"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "36",
+   "dem": [
+    "Noel Frame"
+   ],
+   "gop": [
+    "Jillian England"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "37",
+   "dem": [
+    "Chipalo Street",
+    "Tatiana Brown"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "two Democrats, no Republican"
+  },
+  {
+   "d": "38",
+   "dem": [
+    "June Robinson"
+   ],
+   "gop": [
+    "Brad Bender"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "42",
+   "dem": [
+    "Michael Alvarez Shepard"
+   ],
+   "gop": [
+    "Erika Creydt"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "43",
+   "dem": [
+    "Jamie Pedersen",
+    "Hannah Sabio-Howell"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "two Democrats, no Republican"
+  },
+  {
+   "d": "44",
+   "dem": [
+    "John Lovick"
+   ],
+   "gop": [
+    "Sherri Larkin"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "45",
+   "dem": [
+    "Manka Dhingra"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "46",
+   "dem": [
+    "Javier Valdez"
+   ],
+   "gop": [
+    "Sandra Stephens"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "47",
+   "dem": [
+    "Claudia Kauffman"
+   ],
+   "gop": [
+    "Kristina Soltys"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Carmen Goers R stepped aside in May 2026 before the primary"
+  },
+  {
+   "d": "48",
+   "dem": [
+    "Vandana Slatter"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  }
+ ],
+ "method": "Top two general candidates from The Ballot Brief county pages, cross checked against King County final primary returns and Wikipedia primary results for LD1 to LD31. The SOS 2026 certification PDF exists but is a scanned image and could not be read. Party is the candidate's stated preference. The Ballot Brief notes its content is AI written, so treat individual labels with some caution. Every race was then confirmed against the iVoterGuide Washington statewide list dated Oct 14 2026, which matches on all 98 House positions and 24 Senate seats. 24 Senate seats on the 2026 ballot."
+}

@@ -1,0 +1,238 @@
+{
+ "state": "UT",
+ "chamber": "senate",
+ "sources": [
+  "https://ivoterguide.com/all-in-state/ut",
+  "https://theballotbrief.com/state/utah/salt-lake-county",
+  "https://theballotbrief.com/state/utah/utah-county",
+  "https://theballotbrief.com/state/utah/davis-county",
+  "https://theballotbrief.com/state/utah/washington-county",
+  "https://theballotbrief.com/state/utah/weber-county",
+  "https://theballotbrief.com/state/utah/cache-county",
+  "https://theballotbrief.com/state/utah/uintah-county",
+  "https://theballotbrief.com/state/utah/sevier-county",
+  "https://theballotbrief.com/state/utah/iron-county",
+  "https://theballotbrief.com/state/utah/tooele-county",
+  "https://theballotbrief.com/state/utah/carbon-county",
+  "https://theballotbrief.com/state/utah/summit-county"
+ ],
+ "as_of": "2026-10-17",
+ "complete": true,
+ "districts": [
+  {
+   "d": "1",
+   "dem": [
+    "Claudia Bigler"
+   ],
+   "gop": [
+    "Scott Sandall"
+   ],
+   "others": [
+    {
+     "name": "Julie Quinlan",
+     "party": "O"
+    }
+   ],
+   "withdrawn": [],
+   "note": "O = Forward Party or Constitution Party"
+  },
+  {
+   "d": "5",
+   "dem": [
+    "\"CJ\" Christina Hernandez"
+   ],
+   "gop": [
+    "Jill F. Koford"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "6",
+   "dem": [
+    "Jared Neal"
+   ],
+   "gop": [
+    "Tami Tran"
+   ],
+   "others": [
+    {
+     "name": "Josh Smith",
+     "party": "O"
+    }
+   ],
+   "withdrawn": [],
+   "note": "O = Forward Party or Constitution Party"
+  },
+  {
+   "d": "7",
+   "dem": [
+    "Garret Rushforth"
+   ],
+   "gop": [
+    "Stephanie Hollist"
+   ],
+   "others": [
+    {
+     "name": "Jeffrey Ostler",
+     "party": "O"
+    }
+   ],
+   "withdrawn": [],
+   "note": "O = Forward Party or Constitution Party"
+  },
+  {
+   "d": "9",
+   "dem": [
+    "Jen Plumb"
+   ],
+   "gop": [
+    "Thaddeus A Evans"
+   ],
+   "others": [
+    {
+     "name": "J. Lowry Snow",
+     "party": "O"
+    }
+   ],
+   "withdrawn": [],
+   "note": "O = Forward Party or Constitution Party"
+  },
+  {
+   "d": "11",
+   "dem": [],
+   "gop": [
+    "Brooks Benson"
+   ],
+   "others": [
+    {
+     "name": "Emily Buss",
+     "party": "O"
+    }
+   ],
+   "withdrawn": [],
+   "note": "no Democrat; minor party or independent is the main challenger; no Democrat; Emily Buss is shown as the Forward Party candidate and incumbent, main challenger to Republican Brooks Benson; O = Forward Party or Constitution Party"
+  },
+  {
+   "d": "12",
+   "dem": [
+    "Karen Kwan"
+   ],
+   "gop": [
+    "Deidre Tyler"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "13",
+   "dem": [
+    "Silvia Catten"
+   ],
+   "gop": [
+    "Ryan L. Mahoney"
+   ],
+   "others": [
+    {
+     "name": "Colin Smith",
+     "party": "O"
+    }
+   ],
+   "withdrawn": [],
+   "note": "O = Forward Party or Constitution Party"
+  },
+  {
+   "d": "14",
+   "dem": [
+    "Stephanie Pitcher"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "unopposed"
+  },
+  {
+   "d": "18",
+   "dem": [
+    "A Dane Anderson"
+   ],
+   "gop": [
+    "Doug Fiefia"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "19",
+   "dem": [
+    "Shana Anderson"
+   ],
+   "gop": [
+    "Kirk Cullimore"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "20",
+   "dem": [],
+   "gop": [
+    "Ronald M Winterton"
+   ],
+   "others": [
+    {
+     "name": "Annette McRae",
+     "party": "O"
+    }
+   ],
+   "withdrawn": [],
+   "note": "no Democrat; minor party or independent is the main challenger; O = Forward Party or Constitution Party"
+  },
+  {
+   "d": "21",
+   "dem": [
+    "Kandee Myers"
+   ],
+   "gop": [
+    "Brady Brammer"
+   ],
+   "others": [
+    {
+     "name": "Wayne Woodfield",
+     "party": "O"
+    }
+   ],
+   "withdrawn": [],
+   "note": "O = Forward Party or Constitution Party"
+  },
+  {
+   "d": "23",
+   "dem": [
+    "Tucker Smith"
+   ],
+   "gop": [
+    "Keith Grover"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "28",
+   "dem": [
+    "Richard S Robillard"
+   ],
+   "gop": [
+    "Evan J Vickers"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  }
+ ],
+ "method": "Contested races from iVoterGuide Utah statewide list (version 2026-10-13), which omits unopposed races; unopposed races and Forward or Constitution labels from The Ballot Brief county pages. 15 Senate seats found on the ballot."
+}

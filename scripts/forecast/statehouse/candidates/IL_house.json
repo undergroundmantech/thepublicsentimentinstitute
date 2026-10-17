@@ -1,0 +1,710 @@
+{
+ "state": "IL",
+ "chamber": "house",
+ "sources": [
+  "https://www.ballotready.org/elections/illinois-general-election-bdf14780-8511-4c9b-b696-e32fc2c49bd9",
+  "https://www.lakecountyil.gov/DocumentCenter/View/13059/Candidate-List",
+  "https://applications.kanecountyil.gov/ElectionWebsite/en-US/Candidates/List/31/NP",
+  "https://en.wikipedia.org/wiki/2026_Illinois_House_of_Representatives_election",
+  "https://chicago.suntimes.com/elections/2026/10/01/illinois-statehouse-elections-november-3-senate-house-general-assembly-what-to-know"
+ ],
+ "as_of": "2026-10-17",
+ "complete": false,
+ "districts": [
+  {
+   "d": "8",
+   "seats": 1,
+   "dem": [
+    "Shantel Franklin"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "Open seat; Franklin led D primary per Wikipedia; Republican not found (gap, not confirmed absent)"
+  },
+  {
+   "d": "12",
+   "seats": 1,
+   "dem": [
+    "Paul Kendrick"
+   ],
+   "gop": [
+    "Justin J. Kumar"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Open seat; from Wikipedia primary results"
+  },
+  {
+   "d": "13",
+   "seats": 1,
+   "dem": [
+    "Demerike Palecek"
+   ],
+   "gop": [
+    "Terry Nguyen Le"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Open seat; from Wikipedia primary results"
+  },
+  {
+   "d": "42",
+   "seats": 1,
+   "dem": [
+    "Margaret DeLaRosa"
+   ],
+   "gop": [
+    "Stephanie W. Trussell"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "From Wikipedia primary results"
+  },
+  {
+   "d": "43",
+   "seats": 1,
+   "dem": [
+    "Anna Moeller"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "Democrat unopposed per Kane County list"
+  },
+  {
+   "d": "47",
+   "seats": 1,
+   "dem": [
+    "Erica Bray-Parker"
+   ],
+   "gop": [
+    "Robert A. Vrankovich"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Open seat; from Wikipedia primary results"
+  },
+  {
+   "d": "49",
+   "seats": 1,
+   "dem": [
+    "Maura Hirschauer"
+   ],
+   "gop": [
+    "John Paul Augustynowicz"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "50",
+   "seats": 1,
+   "dem": [
+    "Barbara Hernandez"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "Democrat unopposed"
+  },
+  {
+   "d": "51",
+   "seats": 1,
+   "dem": [
+    "Jenny Levin"
+   ],
+   "gop": [
+    "Lori Smith"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Open seat"
+  },
+  {
+   "d": "52",
+   "seats": 1,
+   "dem": [
+    "Maria Peterson"
+   ],
+   "gop": [
+    "Martin McLaughlin"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "2024 rematch"
+  },
+  {
+   "d": "53",
+   "seats": 1,
+   "dem": [
+    "Nicolle Grasse"
+   ],
+   "gop": [
+    "Elizabeth Bauer"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "55",
+   "seats": 1,
+   "dem": [
+    "Justin Cochran"
+   ],
+   "gop": [
+    "Joseph Johnson"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Open seat; from Wikipedia primary results"
+  },
+  {
+   "d": "57",
+   "seats": 1,
+   "dem": [
+    "Tracy Katz Muhl"
+   ],
+   "gop": [
+    "Daniel T. Behr"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "58",
+   "seats": 1,
+   "dem": [
+    "Bob Morgan"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "Democrat unopposed"
+  },
+  {
+   "d": "59",
+   "seats": 1,
+   "dem": [
+    "Daniel Didech"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "Democrat unopposed"
+  },
+  {
+   "d": "60",
+   "seats": 1,
+   "dem": [
+    "Rita Mayfield"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "Democrat unopposed"
+  },
+  {
+   "d": "61",
+   "seats": 1,
+   "dem": [
+    "Joyce Mason"
+   ],
+   "gop": [
+    "Tina Marie Durrant"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "62",
+   "seats": 1,
+   "dem": [
+    "Laura Faver Dias"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "Democrat unopposed"
+  },
+  {
+   "d": "64",
+   "seats": 1,
+   "dem": [
+    "AJ Johnson"
+   ],
+   "gop": [
+    "Tom Weber"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "65",
+   "seats": 1,
+   "dem": [
+    "Ricky Rivard"
+   ],
+   "gop": [
+    "Dan Ugaste"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "66",
+   "seats": 1,
+   "dem": [
+    "Suzanne Ness"
+   ],
+   "gop": [
+    "Laurie Parman"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "67",
+   "seats": 1,
+   "dem": [
+    "Maurice A. West II"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "Democrat unopposed"
+  },
+  {
+   "d": "70",
+   "seats": 1,
+   "dem": [
+    "Veronica Garcia-Martinez"
+   ],
+   "gop": [
+    "Jeff Keicher"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "71",
+   "seats": 1,
+   "dem": [
+    "Kermit Thomas"
+   ],
+   "gop": [
+    "Dan Swanson"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "From Wikipedia (Thomas described as presumptive nominee)"
+  },
+  {
+   "d": "72",
+   "seats": 1,
+   "dem": [
+    "Gregg C. Johnson"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "Democrat unopposed"
+  },
+  {
+   "d": "73",
+   "seats": 1,
+   "dem": [
+    "Nicole Dopler"
+   ],
+   "gop": [
+    "Ryan Spain"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "76",
+   "seats": 1,
+   "dem": [
+    "Amy \"Murri\" Briel"
+   ],
+   "gop": [
+    "Liz Bishop"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "2024 rematch per Chicago Sun-Times"
+  },
+  {
+   "d": "83",
+   "seats": 1,
+   "dem": [
+    "Matt Hanson"
+   ],
+   "gop": [
+    "Jesse Rodriguez"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "84",
+   "seats": 1,
+   "dem": [
+    "Saba Haider"
+   ],
+   "gop": [
+    "Brian Scopa"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Open seat"
+  },
+  {
+   "d": "89",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Tony M. McCombie"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Republican unopposed"
+  },
+  {
+   "d": "90",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "John M. Cabello"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Republican unopposed"
+  },
+  {
+   "d": "91",
+   "seats": 1,
+   "dem": [
+    "Sharon Chung"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "Democrat unopposed"
+  },
+  {
+   "d": "93",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Travis Robert Weaver"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Republican unopposed"
+  },
+  {
+   "d": "94",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Joshua S. Higgins"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Republican unopposed; Wikipedia listed incumbent Norine Hammond as seeking reelection but BallotReady shows Higgins"
+  },
+  {
+   "d": "95",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Michael \"Mike\" J. Coffey Jr."
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Republican unopposed"
+  },
+  {
+   "d": "96",
+   "seats": 1,
+   "dem": [
+    "Sue Scherer"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "Democrat unopposed"
+  },
+  {
+   "d": "97",
+   "seats": 1,
+   "dem": [
+    "Jessica Dixon Heitman"
+   ],
+   "gop": [
+    "Gabby Shanahan"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "98",
+   "seats": 1,
+   "dem": [
+    "Natalie A. Manley"
+   ],
+   "gop": [
+    "Nona Parker"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "99",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Kyle A. Moore"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Republican unopposed"
+  },
+  {
+   "d": "100",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Christopher \"C.D.\" Davidsmeyer"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Republican unopposed"
+  },
+  {
+   "d": "101",
+   "seats": 1,
+   "dem": [
+    "Douglas Fagan"
+   ],
+   "gop": [
+    "Chris G. Miller"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "102",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Adam M. Niemerg"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Republican unopposed"
+  },
+  {
+   "d": "103",
+   "seats": 1,
+   "dem": [
+    "Carol Ammons"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "Democrat unopposed"
+  },
+  {
+   "d": "104",
+   "seats": 1,
+   "dem": [
+    "Mary Catherine Roberson"
+   ],
+   "gop": [
+    "Brandun Schweizer"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "105",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Tim D. Ruestman"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Open seat; Republican unopposed"
+  },
+  {
+   "d": "106",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Jason R. Bunting"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Republican unopposed"
+  },
+  {
+   "d": "107",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Brad Halbrook"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Republican unopposed"
+  },
+  {
+   "d": "108",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Wayne Arthur Rosenthal"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Republican unopposed"
+  },
+  {
+   "d": "109",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Charles Meier"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Republican unopposed"
+  },
+  {
+   "d": "110",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Blaine Wilhour"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Republican unopposed"
+  },
+  {
+   "d": "111",
+   "seats": 1,
+   "dem": [
+    "Rosetta \"Rosie\" Brown"
+   ],
+   "gop": [
+    "Amy Elik"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "112",
+   "seats": 1,
+   "dem": [
+    "Katie Stuart"
+   ],
+   "gop": [
+    "Jimmy Ford"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "113",
+   "seats": 1,
+   "dem": [
+    "Jay Hoffman"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "Democrat unopposed"
+  },
+  {
+   "d": "114",
+   "seats": 1,
+   "dem": [
+    "George McClellan Jr."
+   ],
+   "gop": [
+    "Kevin Schmidt"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "115",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "David Friess"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Republican unopposed"
+  },
+  {
+   "d": "116",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Dave Severin"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Republican unopposed"
+  },
+  {
+   "d": "117",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Patrick Windhorst"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Republican unopposed"
+  },
+  {
+   "d": "118",
+   "seats": 1,
+   "dem": [
+    "Homer \"Chip\" Markel"
+   ],
+   "gop": [
+    "Scott Doody"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Doody appointed after Jacobs went to the Senate; Joe DeBose withdrew from the race earlier per Wikipedia"
+  }
+ ],
+ "gap": "Only 58 of 118 districts covered. The ISBE candidate list is blocked by robots.txt, Ballotpedia returned a stale pre-primary snapshot, the Wikipedia page has nominee data for only a handful of districts, and the BallotReady statewide page lists only 37 House districts. Missing: 1 to 7, 9 to 11, 14 to 41, 44 to 46, 48, 54, 56, 63, 68, 69, 74, 75, 77 to 82, 85 to 88, 92. Districts 8, 12, 13, 42, 47, 55, 71 come from Wikipedia primary results and may miss post-primary changes or minor party candidates."
+}

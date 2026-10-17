@@ -1,0 +1,245 @@
+{
+ "state": "WI",
+ "chamber": "senate",
+ "sources": [
+  "https://en.wikipedia.org/wiki/2026_Wisconsin_Senate_election"
+ ],
+ "as_of": "2026-10-17",
+ "complete": true,
+ "districts": [
+  {
+   "d": "1",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Nic Cravillion"
+   ],
+   "others": [
+    {
+     "name": "Mark Becker",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [
+    {
+     "name": "Sean Grorich",
+     "party": "D",
+     "note": "withdrew and endorsed independent Mark Becker"
+    }
+   ],
+   "note": "Open seat; no Democrat on ballot, independent Mark Becker is the main challenger"
+  },
+  {
+   "d": "3",
+   "seats": 1,
+   "dem": [
+    "Tim Carpenter"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "Democrat unopposed"
+  },
+  {
+   "d": "5",
+   "seats": 1,
+   "dem": [
+    "Robyn Vining"
+   ],
+   "gop": [
+    "Mike Roberts"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Open seat; Democrat Sarah Harrison withdrew in January before filing deadline"
+  },
+  {
+   "d": "7",
+   "seats": 1,
+   "dem": [
+    "Chris Larson"
+   ],
+   "gop": [
+    "Mike Moeller"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "9",
+   "seats": 1,
+   "dem": [],
+   "gop": [
+    "Amy Binsfeld"
+   ],
+   "others": [
+    {
+     "name": "Christian Ellis",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": "Open seat; no Democrat, independent Christian Ellis is the only challenger"
+  },
+  {
+   "d": "11",
+   "seats": 1,
+   "dem": [
+    "Adam Duda"
+   ],
+   "gop": [
+    "Ellen Schutt"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Open seat"
+  },
+  {
+   "d": "13",
+   "seats": 1,
+   "dem": [
+    "Sasha Ripley"
+   ],
+   "gop": [
+    "John Jagler"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "15",
+   "seats": 1,
+   "dem": [
+    "Mark Spreitzer"
+   ],
+   "gop": [
+    "Scott Fleming"
+   ],
+   "others": [
+    {
+     "name": "Christopher Dean",
+     "party": "I"
+    }
+   ],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "17",
+   "seats": 1,
+   "dem": [
+    "Jenna Jacobson"
+   ],
+   "gop": [
+    "Howard Marklein"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "19",
+   "seats": 1,
+   "dem": [
+    "Emily Tseffos"
+   ],
+   "gop": [
+    "Rachael Cabral-Guevara"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "21",
+   "seats": 1,
+   "dem": [
+    "Trevor Jung"
+   ],
+   "gop": [
+    "Jim Croft"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Open seat"
+  },
+  {
+   "d": "23",
+   "seats": 1,
+   "dem": [
+    "Jeff Foster"
+   ],
+   "gop": [
+    "Romaine Quinn"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Open seat; Sen. Romaine Quinn moved from the 25th"
+  },
+  {
+   "d": "25",
+   "seats": 1,
+   "dem": [
+    "Charly Ray"
+   ],
+   "gop": [
+    "Erik Severson"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Open seat"
+  },
+  {
+   "d": "27",
+   "seats": 1,
+   "dem": [
+    "Dianne Hesselbein"
+   ],
+   "gop": [],
+   "others": [],
+   "withdrawn": [],
+   "note": "No Republican on ballot; Nathan Kalmoe running write-in campaign (excluded)"
+  },
+  {
+   "d": "29",
+   "seats": 1,
+   "dem": [
+    "Gillian Battino"
+   ],
+   "gop": [
+    "Cory Tomczyk"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "31",
+   "seats": 1,
+   "dem": [
+    "Jeff Smith"
+   ],
+   "gop": [
+    "Michele Magadance Skinner"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": ""
+  },
+  {
+   "d": "33",
+   "seats": 1,
+   "dem": [
+    "Mike Van Someren"
+   ],
+   "gop": [
+    "Chris Kapenga"
+   ],
+   "others": [],
+   "withdrawn": [],
+   "note": "Kapenga also running for Waukesha County executive and would resign seat in Jan 2027 if elected"
+  }
+ ]
+}

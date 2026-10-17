@@ -33,7 +33,7 @@ export default function LegislaturesPage() {
   const flipsToR = ch.filter((c) => currentMajority(c) !== "R" && c.gopControl > 0.5);
   const inPlay = ch.filter((c) => c.demControl > 0.08 && c.demControl < 0.92).sort((a, b) => Math.abs(a.demControl - 0.5) - Math.abs(b.demControl - 0.5));
   const us: USChamber[] = ch.map((c) => ({ id: c.id, st: c.st, chamber: c.chamber, name: c.name, demControl: c.demControl,
-    d: c.districts.map((x) => [x.d, x.seats, x.probD, x.margin, x.last?.won?.[0] ?? null] as USChamber["d"][number]),
+    d: c.districts.map((x) => [x.d, x.seats, x.probD, x.margin, x.last?.won?.[0] ?? null, x.indMain ? 1 : 0] as USChamber["d"][number]),
     holdD: c.holdD ?? [] }));
   const all = [...ch].sort((a, b) => a.state.localeCompare(b.state) || (a.chamber === "senate" ? -1 : 1));
 
