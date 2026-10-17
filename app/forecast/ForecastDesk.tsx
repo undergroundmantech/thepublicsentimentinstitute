@@ -143,6 +143,7 @@ function DeskHeader({ model, office, dbRows, embedded }: { model: Model | null; 
           <span>Every race, its map, its polls and its counties</span>
           {model ? <span>Updated <b>{fmtDate(model.meta.updated)}</b></span> : null}
           <Link className="btn sm" href="/forecast/legislatures">State legislatures</Link>
+          <Link className="btn sm" href="/forecast/measures">Ballot measures</Link>
           <Link className="btn sm" href="/forecast/methodology">Methodology</Link>
           <Link className="btn sm" href="/forecast/changelog">Changelog</Link>
         </div>

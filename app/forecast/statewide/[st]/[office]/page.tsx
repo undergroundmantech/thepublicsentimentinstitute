@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import ForecastNav from "@/app/components/opp/ForecastNav";
 import { notFound } from "next/navigation";
 import fs from "node:fs";
 import path from "node:path";
@@ -83,6 +84,7 @@ export default async function Page({ params }: { params: Promise<{ st: string; o
         <Link href="/">Home</Link><span className="sep">/</span><Link href="/forecast">Forecast</Link><span className="sep">/</span>
         <Link href="/forecast/statewide">Statewide offices</Link><span className="sep">/</span><span>{title}</span>
       </nav>
+      <ForecastNav />
       <header className="ph">
         <div className="eye g">2026 forecast</div>
         <h1>{title} <em>forecast</em></h1>

@@ -1,0 +1,660 @@
+{
+ "region": "midwest",
+ "as_of": "2026-10-17",
+ "states_checked": [
+  "IA",
+  "IL",
+  "IN",
+  "KS",
+  "MI",
+  "MN",
+  "MO",
+  "NE",
+  "ND",
+  "OH",
+  "SD",
+  "WI"
+ ],
+ "measures": [
+  {
+   "state": "IA",
+   "id": "Amendment 1",
+   "short_title": "Two-thirds legislative vote to raise income taxes",
+   "summary": "Requires a two-thirds vote of both chambers of the Iowa General Assembly to raise individual or corporate income tax rates or to create a new tax on income.",
+   "type": "legislative referral constitutional",
+   "category": "taxes_income",
+   "lean": "R",
+   "threshold": 0.5,
+   "threshold_note": "Simple majority of those voting on the amendment. Passed GA twice (HJR 2006 in 2024, SJR 11 in 2025-26) on party-line votes.",
+   "campaign": "Yes: Iowans for Tax Relief and GOP legislators. No: Fair Taxes for Iowa's Future coalition (Common Good Iowa, Iowa State Education Association, labor). No dollar figures reported.",
+   "polls": [
+    {
+     "pollster": "Suffolk University Political Research Center",
+     "sponsor": null,
+     "sponsor_side": "independent",
+     "start": "2026-08-20",
+     "end": "2026-08-23",
+     "n": 500,
+     "pop": "LV",
+     "yes": 33,
+     "no": 36,
+     "undecided": 30,
+     "url": "https://iowacapitaldispatch.com/?p=59330",
+     "note": "1% refused; MoE 4.4"
+    }
+   ],
+   "sources": [
+    "https://news.ballotpedia.org/2026/05/05/iowa-voters-will-decide-a-constitutional-amendment-that-would-require-two-thirds-approval-from-the-general-assembly-to-increase-income-taxes/",
+    "https://iowacapitaldispatch.com/?p=59330",
+    "https://www.newsfromthestates.com/node/424739",
+    "https://www.kcrg.com/2026/09/09/coalition-launches-campaign-opposing-constitutional-amendment-taxes/",
+    "https://www.newsfromthestates.com/node/428148"
+   ]
+  },
+  {
+   "state": "IN",
+   "id": "Public Question #1",
+   "short_title": "Allow judges to deny bail to dangerous defendants",
+   "summary": "Amends Article 1, Section 17 so courts may deny bail to people charged with offenses other than murder or treason when proof is evident and the state shows by clear and convincing evidence that no release conditions can protect the community.",
+   "type": "legislative referral constitutional",
+   "category": "criminal_justice",
+   "lean": "R",
+   "threshold": 0.5,
+   "threshold_note": "Majority of voters on the question. SJR 1 first passed 2023, second passage Feb 2026 (House 75-11).",
+   "campaign": "Yes: Sen. Eric Koch and Rep. Chris Jeter, Republican legislative leadership. No: legislative Democrats and civil liberties critics; no organized campaign or money reported.",
+   "polls": [],
+   "sources": [
+    "https://indianacapitalchronicle.com/2026/02/17/indiana-bail-amendment-clears-general-assembly-sending-detention-question-to-november-ballot/",
+    "https://www.fox19.com/2026/10/07/election-2026-explaining-kentucky-indianas-ballot-measures/",
+    "https://www.in.gov/counties/noble/files/2026-general-election-sample-balllots/P6.pdf",
+    "https://www.in.gov/counties/cass/files/3_Clay_English.pdf"
+   ]
+  },
+  {
+   "state": "IN",
+   "id": "Public Question #2",
+   "short_title": "Let city or town judges live in adjacent county",
+   "summary": "Amends Article 6, Section 6 so a city or town court judge may reside in the county where the court sits or in the nearest bordering county.",
+   "type": "legislative referral constitutional",
+   "category": "other",
+   "lean": "none",
+   "threshold": 0.5,
+   "threshold_note": "Majority of voters on the question.",
+   "campaign": "No organized campaigns reported.",
+   "polls": [],
+   "sources": [
+    "https://www.fox19.com/2026/10/07/election-2026-explaining-kentucky-indianas-ballot-measures/",
+    "https://www.in.gov/counties/noble/files/2026-general-election-sample-balllots/P6.pdf",
+    "https://www.in.gov/counties/cass/files/3_Clay_English.pdf"
+   ]
+  },
+  {
+   "state": "KS",
+   "id": "Constitutional Amendment No. 1",
+   "short_title": "Only U.S. citizens may vote",
+   "summary": "Amends the voter qualifications section of the Kansas Constitution to state that only U.S. citizens are eligible to vote in Kansas; citizenship is already required by state law.",
+   "type": "legislative referral constitutional",
+   "category": "elections_voting",
+   "lean": "R",
+   "threshold": 0.5,
+   "threshold_note": "Simple majority. Referred by HCR 5004 (2025).",
+   "campaign": "Placed by GOP legislature; no organized campaigns or spending reported.",
+   "polls": [],
+   "sources": [
+    "https://www.stantoncountyks.com/elections/page/2026-general-election",
+    "https://www.kctv5.com/2026/09/28/kansas-voter-guide-what-you-need-know-november-elections/",
+    "https://www.kcur.org/politics-elections-and-government/2026-09-15/missouri-kansas-election-guide-2026-voting-registration",
+    "https://news.ballotpedia.org/2025/03/27/kansas-voters-will-decide-on-citizenship-voting-requirement-amendment-in-2026-similar-measures-were-approved-in-eight-states-in-2024/",
+    "https://sos.ks.gov/publications/sessionlaws/2025/Chapter-136-HCR-5004.html"
+   ]
+  },
+  {
+   "state": "MI",
+   "id": "Proposal 1",
+   "short_title": "Call a state constitutional convention",
+   "summary": "A Yes vote calls a convention to revise the Michigan Constitution, with 148 delegates elected in partisan races by state House and Senate district; any new constitution would go back to voters.",
+   "type": "other",
+   "category": "other",
+   "lean": "none",
+   "threshold": 0.5,
+   "threshold_note": "Simple majority. Automatic question every 16 years (Art. XII Sec. 3); rejected in 1978, 1994, 2010 (67% No in 2010).",
+   "campaign": "No: bipartisan Protect MI Constitution From Special Interests coalition (ACLU of Michigan, Michigan Chamber, Michigan AFL-CIO, MEA, Working Families Party; Detroit Regional Chamber also opposed). No organized Yes campaign or spending reported.",
+   "polls": [
+    {
+     "pollster": "Glengariff Group",
+     "sponsor": "The Detroit News / WDIV-TV",
+     "sponsor_side": "independent",
+     "start": "2026-08-31",
+     "end": "2026-09-03",
+     "n": 600,
+     "pop": "LV",
+     "yes": 47,
+     "no": 31,
+     "undecided": 22,
+     "url": "https://www.dailygazette.com/tribune/michigan-voters-back-con-con-money-out-of-politics-ballot-proposals-poll-finds/article_8e576c98-d745-5b0b-9e32-d22d21a7e7cf.html",
+     "note": "MoE 4"
+    }
+   ],
+   "sources": [
+    "https://www.michiganpublic.org/politics-government/2026-09-04/michigans-november-2026-ballot-is-official-includes-two-questions-for-all-voters",
+    "https://theballotbrief.com/measures/michigan/constitutional-convention-question",
+    "https://www.newsfromthestates.com/node/427567",
+    "https://www.detroitchamber.com/detroit-regional-chamber-opposes-constitutional-convention-joins-no-coalition/",
+    "https://www.dailygazette.com/tribune/michigan-voters-back-con-con-money-out-of-politics-ballot-proposals-poll-finds/article_8e576c98-d745-5b0b-9e32-d22d21a7e7cf.html"
+   ]
+  },
+  {
+   "state": "MI",
+   "id": "Proposal 2",
+   "short_title": "Ban political donations from utilities and big contractors",
+   "summary": "Bars regulated gas and electric utilities and companies with over $250,000 in state contracts, plus people tied to them, from making political contributions, and expands disclosure for candidate ads.",
+   "type": "initiated statute",
+   "category": "government_ethics",
+   "lean": "D",
+   "threshold": 0.5,
+   "threshold_note": "Simple majority. Indirect initiated statute; Legislature did not act by Sept. 5, so it went to the ballot; survived a Michigan Supreme Court challenge.",
+   "campaign": "Yes: Michiganders for Money Out of Politics, $7.4M raised incl. $5.4M from All Hands on Deck; backed by all four Democratic statewide nominees. No: Protect MI Free Speech, about $579K from DTE and CMS affiliates and BCBS of Michigan (late July reports).",
+   "polls": [
+    {
+     "pollster": "Glengariff Group",
+     "sponsor": "The Detroit News / WDIV-TV",
+     "sponsor_side": "independent",
+     "start": "2026-08-31",
+     "end": "2026-09-03",
+     "n": 600,
+     "pop": "LV",
+     "yes": 71.5,
+     "no": 16,
+     "undecided": 13,
+     "url": "https://www.dailygazette.com/tribune/michigan-voters-back-con-con-money-out-of-politics-ballot-proposals-poll-finds/article_8e576c98-d745-5b0b-9e32-d22d21a7e7cf.html",
+     "note": "undecided reported as nearly 13"
+    },
+    {
+     "pollster": "Not named",
+     "sponsor": "Progress Michigan",
+     "sponsor_side": "yes",
+     "start": "2026-05-01",
+     "end": "2026-05-31",
+     "n": null,
+     "pop": null,
+     "yes": null,
+     "no": null,
+     "undecided": null,
+     "url": "https://michiganadvance.com/2026/08/20/michiganders-for-money-out-of-politics-faces-final-hurdles-lawsuit-legislature/",
+     "note": "Reported only as about 8 in 10 support, 82% of Dems and 76% of Reps; exact dates, n, population and toplines not found; dates are month placeholders; may duplicate the Nov 2025 PPP Lake Effect poll for Progress Michigan (81 support, 9 oppose, 11 not sure) which is excluded as pre 2026"
+    }
+   ],
+   "sources": [
+    "https://www.michiganpublic.org/politics-government/2026-09-04/michigans-november-2026-ballot-is-official-includes-two-questions-for-all-voters",
+    "https://michiganadvance.com/2026/08/20/michiganders-for-money-out-of-politics-faces-final-hurdles-lawsuit-legislature/",
+    "https://planetdetroit.org/2026/06/lawmakers-pledge-reject-dte-consumers-money/",
+    "https://votersnotpoliticians.com/this-is-what-democracy-looks-like-fighting-corruption-builds-a-big-bipartisan-tent/",
+    "https://www.dailygazette.com/tribune/michigan-voters-back-con-con-money-out-of-politics-ballot-proposals-poll-finds/article_8e576c98-d745-5b0b-9e32-d22d21a7e7cf.html"
+   ]
+  },
+  {
+   "state": "MN",
+   "id": "Constitutional Amendment 1",
+   "short_title": "Permanent School Fund payouts to school districts",
+   "summary": "Replaces the requirement that Permanent School Fund principal stay perpetual and inviolate with a duty to preserve its purchasing power, letting companion law distribute 4.5% of the fund's three-year average value to districts each year, effective July 1, 2027.",
+   "type": "legislative referral constitutional",
+   "category": "education",
+   "lean": "none",
+   "threshold": 0.5,
+   "threshold_note": "Must win a majority of ALL ballots cast in the election; blank votes count as No. Ballot label number not confirmed.",
+   "campaign": "Sponsors Sen. Mary Kunesh (DFL) and Rep. Spencer Igo (R); House 134-0 (some sources 133-0), Senate 43-24 party line; education coalition incl. Education Minnesota backs it; no organized opposition or money reported.",
+   "polls": [],
+   "sources": [
+    "https://news.ballotpedia.org/2026/05/19/minnesota-voters-to-decide-on-a-constitutional-amendment-that-would-allow-more-state-funds-to-be-distributed-to-school-districts-each-year/",
+    "https://www.sspps.org/about/elections/mn-psf-amendment",
+    "https://www.fox9.com/news/mn-constitutional-amendment-vote-educators-aims-increase-permanent-school-fund-aug-2026.amp"
+   ]
+  },
+  {
+   "state": "MO",
+   "id": "Amendment 3",
+   "short_title": "Repeal 2024 abortion rights amendment, restrict abortion",
+   "summary": "Repeals the 2024 reproductive freedom amendment, allows abortion only for medical emergencies, fetal anomalies, and rape or incest before 12 weeks, requires parental consent for minors, permits regulation, and bans gender transition procedures for minors.",
+   "type": "legislative referral constitutional",
+   "category": "abortion",
+   "lean": "R",
+   "threshold": 0.5,
+   "threshold_note": "Simple majority. HCS HJR 73 (2025).",
+   "campaign": "Yes: GOP legislature, Missouri Catholic Conference and anti-abortion groups. No: abortion rights coalition campaign launched May 27, 2026. Money not captured.",
+   "polls": [
+    {
+     "pollster": "YouGov",
+     "sponsor": "Saint Louis University (SLU Poll)",
+     "sponsor_side": "independent",
+     "start": "2026-02-09",
+     "end": "2026-02-22",
+     "n": 900,
+     "pop": "LV",
+     "yes": 47,
+     "no": 40,
+     "undecided": 12,
+     "url": "https://www.slu.edu/news/2026/march/slu-poll.php",
+     "note": "As first published; SLU later reweighted and reported 50 support, 39 oppose"
+    },
+    {
+     "pollster": "YouGov",
+     "sponsor": "Saint Louis University (SLU Poll)",
+     "sponsor_side": "independent",
+     "start": "2026-08-13",
+     "end": "2026-08-24",
+     "n": 900,
+     "pop": "LV",
+     "yes": 43,
+     "no": 44,
+     "undecided": 13,
+     "url": "https://www.slu.edu/news/2026/september/slu-poll.php",
+     "note": "MoE 4.09"
+    }
+   ],
+   "sources": [
+    "https://www.sos.mo.gov/petitions/2026BallotMeasures",
+    "https://www.slu.edu/news/2026/september/slu-poll.php",
+    "https://missouriindependent.com/2026/09/11/latest-missouri-poll-finds-another-razor-thin-margin-ahead-of-november-vote-on-abortion/",
+    "https://missouriindependent.com/2026/05/27/abortion-rights-coalition-launches-campaign-against-missouri-amendment-3/",
+    "https://mocatholic.org/poll-shows-missouri-voters-favor-pro-life-amendment/"
+   ]
+  },
+  {
+   "state": "MO",
+   "id": "Amendment 6",
+   "short_title": "Protect citizen initiatives from legislative repeal",
+   "summary": "Makes initiative and referendum a fundamental right, lets courts revise ballot summaries, bars the legislature from weakening those powers, and requires 80% of both chambers to send changes to voter-approved measures to the ballot.",
+   "type": "initiated constitutional amendment",
+   "category": "elections_voting",
+   "lean": "D",
+   "threshold": 0.5,
+   "threshold_note": "Simple majority. Aug 4 Amendment 4, which would have required a majority in each congressional district for initiated amendments, failed, so the simple majority rule applies.",
+   "campaign": "Yes: Respect MO Voters / Yes on Amendment 6 PAC, $2.7M raised mostly from labor, $929K on broadcast ads from Sept 22. No: Missouri GOP committee resolution, Sen. Jason Bean forming a committee. SoS Hoskins tried to block it; courts restored it.",
+   "polls": [
+    {
+     "pollster": "YouGov",
+     "sponsor": "Saint Louis University (SLU Poll)",
+     "sponsor_side": "independent",
+     "start": "2026-08-13",
+     "end": "2026-08-24",
+     "n": 900,
+     "pop": "LV",
+     "yes": 48,
+     "no": 21,
+     "undecided": 32,
+     "url": "https://www.slu.edu/news/2026/september/slu-poll.php"
+    }
+   ],
+   "sources": [
+    "https://www.sos.mo.gov/petitions/2026BallotMeasures",
+    "https://www.slu.edu/news/2026/september/slu-poll.php",
+    "https://www.kcur.org/politics-elections-and-government/2026-09-29/missouri-republicans-amendment-6-proposition-a-election",
+    "https://missouriindependent.com/2026/08/18/missouri-ballot-proposals-blocked-by-secretary-of-state-had-enough-signatures-records-show/",
+    "https://www.ky3.com/2026/08/05/august-primary-missouri-voters-fail-amendment-4/"
+   ]
+  },
+  {
+   "state": "MO",
+   "id": "Amendment 7",
+   "short_title": "Create Show-Me Prosperity Fund to replace state taxes",
+   "summary": "Creates a permanent endowment meant to eventually eliminate state taxes, barring spending until the Treasurer certifies it can replace them and capping yearly draws at 3% of the five-year average value.",
+   "type": "legislative referral constitutional",
+   "category": "taxes_income",
+   "lean": "R",
+   "threshold": 0.5,
+   "threshold_note": "Simple majority. SS SCS SJR 95 (2026).",
+   "campaign": "Placed by GOP legislature; no campaign or money reported.",
+   "polls": [],
+   "sources": [
+    "https://www.sos.mo.gov/petitions/2026BallotMeasures",
+    "https://www.kcur.org/politics-elections-and-government/2026-09-15/missouri-kansas-election-guide-2026-voting-registration"
+   ]
+  },
+  {
+   "state": "MO",
+   "id": "Amendment 8",
+   "short_title": "Constitutionally require elected county sheriffs",
+   "summary": "Writes four-year county sheriff elections and sheriff duties into the constitution, with St. Louis area exceptions, and allows removal only by quo warranto initiated by the Attorney General.",
+   "type": "legislative referral constitutional",
+   "category": "criminal_justice",
+   "lean": "R",
+   "threshold": 0.5,
+   "threshold_note": "Simple majority. CCS HCS SS SJR 87 (2026).",
+   "campaign": "Placed by GOP legislature; no campaign or money reported.",
+   "polls": [],
+   "sources": [
+    "https://www.sos.mo.gov/petitions/2026BallotMeasures",
+    "https://www.kcur.org/politics-elections-and-government/2026-09-15/missouri-kansas-election-guide-2026-voting-registration"
+   ]
+  },
+  {
+   "state": "MO",
+   "id": "Proposition A",
+   "short_title": "Keep 2025 Republican-drawn congressional map",
+   "summary": "A Yes vote approves HB 1 (2025 special session), replacing Missouri's congressional map with the 2025 boundaries; a No vote keeps the 2022 map. The 2026 election is being held under the 2022 map.",
+   "type": "veto referendum",
+   "category": "redistricting",
+   "lean": "R",
+   "threshold": 0.5,
+   "threshold_note": "Simple majority. Referendum petition by People Not Politicians; SoS tried to block it, courts put it on the ballot.",
+   "campaign": "No (repeal map): People Not Politicians, about $800K in TV ads booked. Yes (keep map): Missouri GOP committee resolution, Act for Missouri; Put Missouri First PAC has spent $2.9M, mostly on petition-stage fights and litigation.",
+   "polls": [
+    {
+     "pollster": "YouGov",
+     "sponsor": "Saint Louis University (SLU Poll)",
+     "sponsor_side": "independent",
+     "start": "2026-02-09",
+     "end": "2026-02-22",
+     "n": 900,
+     "pop": "LV",
+     "yes": 41,
+     "no": 44,
+     "undecided": 15,
+     "url": "https://www.slu.edu/news/2026/march/slu-poll.php",
+     "note": "Asked support for the new map, not the Prop A ballot language; MoE 5.19; treat as a proxy"
+    },
+    {
+     "pollster": "YouGov",
+     "sponsor": "Saint Louis University (SLU Poll)",
+     "sponsor_side": "independent",
+     "start": "2026-08-13",
+     "end": "2026-08-24",
+     "n": 900,
+     "pop": "LV",
+     "yes": 35,
+     "no": 32,
+     "undecided": 33,
+     "url": "https://www.slu.edu/news/2026/september/slu-poll.php",
+     "note": "Yes means upholding the 2025 map"
+    }
+   ],
+   "sources": [
+    "https://www.sos.mo.gov/petitions/2026BallotMeasures",
+    "https://www.slu.edu/news/2026/september/slu-poll.php",
+    "https://www.kctv5.com/2026/09/22/missouri-voters-split-polling-data-congressional-redistricting/",
+    "https://www.kcur.org/politics-elections-and-government/2026-09-29/missouri-republicans-amendment-6-proposition-a-election",
+    "https://missouriindependent.com/2026/08/18/missouri-ballot-proposals-blocked-by-secretary-of-state-had-enough-signatures-records-show/"
+   ]
+  },
+  {
+   "state": "NE",
+   "id": "Constitutional Amendment 1",
+   "short_title": "Allow three consecutive legislative terms",
+   "summary": "Lets state senators serve three consecutive four-year terms instead of two.",
+   "type": "legislative referral constitutional",
+   "category": "government_ethics",
+   "lean": "none",
+   "threshold": 0.5,
+   "threshold_note": "Majority of those voting on the measure, and Yes votes must also equal at least 35% of total ballots cast in the election.",
+   "campaign": "Referred by the Legislature in May 2025; no organized campaigns or money reported.",
+   "polls": [],
+   "sources": [
+    "https://www.newsfromthestates.com/article/secretary-state-evnen-certifies-nebraskas-fall-2026-ballot-after-lawsuit-heavy-summer",
+    "https://news.ballotpedia.org/2025/05/29/nebraska-voters-to-decide-on-change-to-state-legislative-term-limit-in-2026-20-years-after-it-took-effect/"
+   ]
+  },
+  {
+   "state": "NE",
+   "id": "Initiative Measure 440",
+   "short_title": "Legalize online sports betting through racetracks",
+   "summary": "Amends the constitution to legalize online sports betting conducted through vendors at Nebraska's six licensed racetrack casinos.",
+   "type": "initiated constitutional amendment",
+   "category": "gambling",
+   "lean": "none",
+   "threshold": 0.5,
+   "threshold_note": "Majority of those voting on the measure, and Yes votes must also equal at least 35% of total ballots cast in the election.",
+   "campaign": "Yes: Tax Relief Nebraska, backed by BetMGM, DraftKings, FanDuel, Fanatics and racetrack operators such as WarHorse; reported around $2.6M. No formal opposition; Nebraska Council on Problem Gambling raised concerns.",
+   "polls": [],
+   "sources": [
+    "https://www.newsfromthestates.com/article/secretary-state-evnen-certifies-nebraskas-fall-2026-ballot-after-lawsuit-heavy-summer",
+    "https://news.ballotpedia.org/2026/07/06/campaign-behind-two-online-sports-betting-initiatives-submitted-signatures-in-nebraska/",
+    "https://www.wowt.com/2026/08/22/nebraska-secretary-state-certifies-online-sports-wagering-petitions/",
+    "https://brightsideofnews.com/gambling/nebraska-sports-betting-ballot-2026/"
+   ]
+  },
+  {
+   "state": "NE",
+   "id": "Initiative Measure 441",
+   "short_title": "Regulate online sports betting",
+   "summary": "Statute defining online sports betting and requiring the Nebraska Racing and Gaming Commission to adopt rules by June 1, 2027.",
+   "type": "initiated statute",
+   "category": "gambling",
+   "lean": "none",
+   "threshold": 0.5,
+   "threshold_note": "Majority of those voting on the measure, and Yes votes must also equal at least 35% of total ballots cast in the election.",
+   "campaign": "Companion to IM 440, same Tax Relief Nebraska campaign and sportsbook backers.",
+   "polls": [],
+   "sources": [
+    "https://www.newsfromthestates.com/article/secretary-state-evnen-certifies-nebraskas-fall-2026-ballot-after-lawsuit-heavy-summer",
+    "https://news.ballotpedia.org/2026/07/06/campaign-behind-two-online-sports-betting-initiatives-submitted-signatures-in-nebraska/"
+   ]
+  },
+  {
+   "state": "NE",
+   "id": "Initiative Measure 442",
+   "short_title": "Sex-separate school and college sports teams",
+   "summary": "Adds to the constitution a requirement that public K-12 schools, colleges and private schools that compete with them designate teams as male, female or coed and bar males from female teams, making part of a 2025 law permanent.",
+   "type": "initiated constitutional amendment",
+   "category": "lgbtq_rights",
+   "lean": "R",
+   "threshold": 0.5,
+   "threshold_note": "Majority of those voting on the measure, and Yes votes must also equal at least 35% of total ballots cast in the election. A Nebraska Supreme Court challenge was argued Sept 30, 2026; the state says any reversal must come by Oct 27.",
+   "campaign": "Yes: Fairness for Girls campaign, record of about 211K signatures. No: legal challenge by Lincoln voter Cara Ullman; no funded No campaign reported.",
+   "polls": [],
+   "sources": [
+    "https://www.newsfromthestates.com/article/secretary-state-evnen-certifies-nebraskas-fall-2026-ballot-after-lawsuit-heavy-summer",
+    "https://www.newsfromthestates.com/node/430069",
+    "https://nebraskaexaminer.com/2026/06/30/measure-that-would-add-limits-on-school-sports-by-sex-to-nebraska-constitution-gathers-211k-signatures/",
+    "https://nebraskaexaminer.com/?p=43913"
+   ]
+  },
+  {
+   "state": "ND",
+   "id": "Constitutional Measure No. 1",
+   "short_title": "Require 60% voter approval for constitutional amendments",
+   "summary": "Requires future constitutional amendments, whether legislative or initiated, to win at least 60% voter approval to take effect.",
+   "type": "legislative referral constitutional",
+   "category": "elections_voting",
+   "lean": "R",
+   "threshold": 0.5,
+   "threshold_note": "Simple majority to adopt. Referred by HCR 3003 (2025).",
+   "campaign": "Yes: legislative Republicans (Rep. Robin Weisz), North Dakota Farm Bureau. No organized No campaign or money found.",
+   "polls": [],
+   "sources": [
+    "https://www.valleynewslive.com/2026/10/15/north-dakota-voters-decide-two-constitutional-amendments-november-election/",
+    "https://ndfb.org/image/cache/NDFB_Measure_Voter_Guide_2026.pdf",
+    "https://northdakotamonitor.com/?p=11615",
+    "https://www.sos.nd.gov/sites/default/files/documents/elections/measures/ballot-language-2026-general-measure1.pdf"
+   ]
+  },
+  {
+   "state": "ND",
+   "id": "Initiated Constitutional Measure No. 2",
+   "short_title": "Free breakfast and lunch for all public school students",
+   "summary": "Requires public schools to give every student one free breakfast and one free lunch each school day, with full state reimbursement adjusted for inflation and the Legacy Fund earnings as fallback funding, starting 2027-28.",
+   "type": "initiated constitutional amendment",
+   "category": "education",
+   "lean": "D",
+   "threshold": 0.5,
+   "threshold_note": "Simple majority under current rules; unclear whether a same-day Measure 1 win would apply to it.",
+   "campaign": "Citizen sponsoring committee; estimated cost $124M to $134M per biennium; Farm Bureau neutral; no money totals found.",
+   "polls": [],
+   "sources": [
+    "https://www.valleynewslive.com/2026/10/15/north-dakota-voters-decide-two-constitutional-amendments-november-election/",
+    "https://ndfb.org/image/cache/NDFB_Measure_Voter_Guide_2026.pdf",
+    "https://www.sos.nd.gov/news/constitutional-initiative-related-funding-school-lunches-approved-november-3-2026-ballot"
+   ]
+  },
+  {
+   "state": "OH",
+   "id": "Issue 3",
+   "short_title": "Put photo voter ID in Ohio Constitution",
+   "summary": "Requires an approved government-issued photo ID to vote in person, with a religious-objection alternative; absentee voters also need photo ID unless law allows signature plus another identifier.",
+   "type": "legislative referral constitutional",
+   "category": "voter_id",
+   "lean": "R",
+   "threshold": 0.5,
+   "threshold_note": "Simple majority. SJR 10 (2026); Ohio's only statewide issue this year.",
+   "campaign": "Yes: GOP legislators, Honest Elections Project Action. No: Ohio Citizen Action and voting rights groups. No money totals found.",
+   "polls": [
+    {
+     "pollster": "Not named",
+     "sponsor": "Honest Elections Project Action",
+     "sponsor_side": "yes",
+     "start": "2026-05-27",
+     "end": "2026-06-02",
+     "n": 800,
+     "pop": "LV",
+     "yes": 70,
+     "no": null,
+     "undecided": null,
+     "url": "https://www.dailysignal.com/2026/06/05/poll-ohio-voter-id-amendment/",
+     "note": "Mixed phone and online; oppose and undecided not reported; asked before ballot language was final"
+    },
+    {
+     "pollster": "YouGov",
+     "sponsor": "Bowling Green State University",
+     "sponsor_side": "independent",
+     "start": "2026-09-01",
+     "end": "2026-09-10",
+     "n": 1000,
+     "pop": "LV",
+     "yes": 64,
+     "no": 29,
+     "undecided": 7,
+     "url": "https://scholarworks.bgsu.edu/cgi/viewcontent.cgi?article=1027&context=depo",
+     "note": "Q31: favor/oppose amending the constitution to require voter ID; MoE 3.96"
+    }
+   ],
+   "sources": [
+    "https://ohiocapitaljournal.com/voter-guides/ballot-measures/2026-ohio-general-election-statewide-issue-3/",
+    "https://www.cleveland19.com/2026/08/04/ohio-voter-id-amendment-is-officially-headed-november-ballot/",
+    "https://www.ohiosos.gov/office/media-center/categories/week-in-review/week-in-review-2026-08-21",
+    "https://ohiocitizen.org/campaigns/no-on-hjr-9-and-sjr-10/",
+    "https://www.dailysignal.com/2026/06/05/poll-ohio-voter-id-amendment/",
+    "https://scholarworks.bgsu.edu/depo/28/"
+   ]
+  },
+  {
+   "state": "SD",
+   "id": "Constitutional Amendment I",
+   "short_title": "Tie Medicaid expansion to federal funding level",
+   "summary": "Conditions the 2022 voter-approved Medicaid expansion on the federal funding level, letting the state pull back expansion if federal matching funds drop below a set level.",
+   "type": "legislative referral constitutional",
+   "category": "health_care",
+   "lean": "R",
+   "threshold": 0.5,
+   "threshold_note": "Simple majority. If Amendment L passes, it is unclear whether it applies to amendments on the same ballot. HJR 5001 (2025).",
+   "campaign": "Referred by GOP legislature; no campaign data found.",
+   "polls": [],
+   "sources": [
+    "https://sdsos.gov/Division%20of%20Elections/Ballot%20Questions/ballot-questions-2026.aspx",
+    "https://www.thedakotascout.com/p/2026-general-election-ballot-set"
+   ]
+  },
+  {
+   "state": "SD",
+   "id": "Constitutional Amendment J",
+   "short_title": "Only U.S. citizens may vote",
+   "summary": "Amends the constitution to limit voting eligibility to U.S. citizens.",
+   "type": "legislative referral constitutional",
+   "category": "elections_voting",
+   "lean": "R",
+   "threshold": 0.5,
+   "threshold_note": "Simple majority. If Amendment L passes, it is unclear whether it applies to amendments on the same ballot. SJR 503 (2025).",
+   "campaign": "Referred by GOP legislature; no campaign data found.",
+   "polls": [],
+   "sources": [
+    "https://sdsos.gov/Division%20of%20Elections/Ballot%20Questions/ballot-questions-2026.aspx"
+   ]
+  },
+  {
+   "state": "SD",
+   "id": "Constitutional Amendment K",
+   "short_title": "Create trust for unclaimed property fund",
+   "summary": "Puts the state's unclaimed property fund into a constitutional trust.",
+   "type": "legislative referral constitutional",
+   "category": "bonds_spending",
+   "lean": "none",
+   "threshold": 0.5,
+   "threshold_note": "Simple majority. If Amendment L passes, it is unclear whether it applies to amendments on the same ballot. SJR 505 (2025).",
+   "campaign": "No campaign data found.",
+   "polls": [],
+   "sources": [
+    "https://sdsos.gov/Division%20of%20Elections/Ballot%20Questions/ballot-questions-2026.aspx"
+   ]
+  },
+  {
+   "state": "SD",
+   "id": "Constitutional Amendment L",
+   "short_title": "Require 60% to pass constitutional amendments",
+   "summary": "Raises the vote needed to approve future constitutional amendments from a simple majority to 60% of votes cast.",
+   "type": "legislative referral constitutional",
+   "category": "elections_voting",
+   "lean": "R",
+   "threshold": 0.5,
+   "threshold_note": "Simple majority to adopt. HJR 5003 (2025).",
+   "campaign": "Yes: Rep. John Hughes and GOP legislators. No: Voter Defense Association of South Dakota, Dakota Rural Action; The Fairness Project has spent about $260K on ads against.",
+   "polls": [],
+   "sources": [
+    "https://sdsos.gov/Division%20of%20Elections/Ballot%20Questions/ballot-questions-2026.aspx",
+    "https://www.newsfromthestates.com/node/432672",
+    "https://en.wikipedia.org/wiki/2026_South_Dakota_Amendment_L"
+   ]
+  },
+  {
+   "state": "WI",
+   "id": "Question 1",
+   "short_title": "Bar partial veto to raise taxes or fees",
+   "summary": "Bars the governor from using the partial veto to create or increase any tax or fee; it does not undo Gov. Evers' 2023 400-year school funding veto.",
+   "type": "legislative referral constitutional",
+   "category": "taxes_sales_other",
+   "lean": "R",
+   "threshold": 0.5,
+   "threshold_note": "Simple majority. Passed two consecutive legislatures.",
+   "campaign": "Yes: Republican legislative leaders. No: Democrats and school funding advocates. No money reported.",
+   "polls": [],
+   "sources": [
+    "https://www.wpr.org/news/what-to-know-wisconsin-november-2026-referendums",
+    "https://www.somerswi.gov/wp-content/uploads/2026/08/TYPE-A-NOTICE-OF-REFERENDUM-STATE.pdf",
+    "https://wisconsinexaminer.com/2026/01/22/senate-approves-constitutional-amendments-on-anti-dei-partial-veto-and-health-emergency-closures/"
+   ]
+  },
+  {
+   "state": "WI",
+   "id": "Question 2",
+   "short_title": "Bar closing places of worship during emergencies",
+   "summary": "Bars the state or local governments from closing places of worship or forbidding gatherings for worship during a state of emergency, including a public health emergency.",
+   "type": "legislative referral constitutional",
+   "category": "civil_rights",
+   "lean": "R",
+   "threshold": 0.5,
+   "threshold_note": "Simple majority.",
+   "campaign": "Yes: Rep. Ron Tusler, Sen. Cory Tomczyk and GOP lawmakers. No: public health advocates and critics who call it vague. No money reported.",
+   "polls": [],
+   "sources": [
+    "https://www.wpr.org/news/what-to-know-wisconsin-november-2026-referendums",
+    "https://www.somerswi.gov/wp-content/uploads/2026/08/TYPE-A-NOTICE-OF-REFERENDUM-STATE.pdf"
+   ]
+  },
+  {
+   "state": "WI",
+   "id": "Question 3",
+   "short_title": "Ban government discrimination or preferences by race or sex",
+   "summary": "Bars government entities from discriminating against or giving preferential treatment to anyone based on race, sex, color, ethnicity or national origin in public jobs, education, contracting and administration, effectively banning DEI preferences.",
+   "type": "legislative referral constitutional",
+   "category": "civil_rights",
+   "lean": "R",
+   "threshold": 0.5,
+   "threshold_note": "Simple majority. AJR 102.",
+   "campaign": "Yes: Sen. Steve Nass, Wisconsin Institute for Law and Liberty. No: Wisconsin Democracy Campaign and civil rights advocates. No money reported.",
+   "polls": [],
+   "sources": [
+    "https://www.wpr.org/news/what-to-know-wisconsin-november-2026-referendums",
+    "https://www.somerswi.gov/wp-content/uploads/2026/08/TYPE-A-NOTICE-OF-REFERENDUM-STATE.pdf",
+    "https://will-law.org/will-backed-equality-amendment-on-november-2026-ballot/"
+   ]
+  }
+ ],
+ "gaps": "Illinois: no statewide measure found for Nov 3 2026; Cook County only has a local advisory question on a Millionaire Amendment. Not confirmed against an Illinois State Board of Elections list. Ballotpedia main site was blocked by robots, so lists were checked against official SoS pages where possible: MO SoS list, SD SoS list, OH SoS directive, IN county sample ballots, KS county sample ballot, ND SoS PDFs and voter guide. NE is based on the Nebraska Examiner certification article; MI on Michigan Public's report of the certified ballot; MN, IA, WI on news, school district pages and municipal notices. Labels not confirmed on an official ballot: MN 'Constitutional Amendment 1', which is inferred from Minnesota convention; NE 'Constitutional Amendment 1' is from the Examiner. Nebraska IM 442 has a pending Supreme Court challenge, argued Sept 30, with any reversal due by Oct 27. ND legislative term limits measure SCR 4008 was reported for Nov 2026 in 2025, but the SoS-era voter guides list only Measures 1 and 2. Its fate was not resolved. SD: the SB 245 property tax referral and citizen initiatives did not qualify; Dakota Scout says a referral effort fell short. Polls: no 2026 public polls found for IN, KS, MN, NE, ND, SD, WI measures, or for MO Amendments 7 and 8. The Progress Michigan May 2026 Prop 2 poll lacks toplines and dates. A WILL / Platform Communications poll claiming over 60% for WI Question 3 has no date or sample. A Marquette poll of 850 RV, March 11 to 18, year unclear, found 61% say the partial veto gives governors too much power; it is not a ballot question poll and was excluded. Pre-2026 polls were excluded: PPP for Progress Michigan, Nov 2025, MI Prop 2 at 81/9/11. Search budget of 40 used up; a second pass could check Emerson, Remington and Missouri Scout for MO, plus Iowa Poll and Mason-Dixon for SD and NE."
+}

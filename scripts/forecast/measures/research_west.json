@@ -1,0 +1,1545 @@
+{
+ "region": "west",
+ "as_of": "2026-10-17",
+ "states_checked": [
+  "AK",
+  "AZ",
+  "CA",
+  "CO",
+  "HI",
+  "ID",
+  "MT",
+  "NV",
+  "NM",
+  "OR",
+  "UT",
+  "WA",
+  "WY"
+ ],
+ "measures": [
+  {
+   "state": "CA",
+   "id": "Proposition 1",
+   "short_title": "Affordable housing and veterans housing bond",
+   "summary": "Authorizes 11.25 billion dollars in state general obligation bonds, 10 billion for affordable housing and 1.25 billion for CalVet home loans.",
+   "type": "bond",
+   "category": "housing",
+   "lean": "D",
+   "threshold": 0.5,
+   "threshold_note": "Simple majority of votes cast on the measure.",
+   "campaign": "Placed by Legislature via SB 417 (Veterans and Affordable Housing Bond Act of 2026). LAO estimates about 17.39 billion to repay over 30 years.",
+   "polls": [
+    {
+     "pollster": "Public Policy Institute of California (PPIC Statewide Survey)",
+     "sponsor": "PPIC",
+     "sponsor_side": "independent",
+     "start": "2026-09-04",
+     "end": "2026-09-10",
+     "n": 1103,
+     "pop": "LV",
+     "yes": 55,
+     "no": 43,
+     "undecided": null,
+     "url": "https://www.ppic.org/publication/ppic-statewide-survey-californians-and-their-government-september-2026/",
+     "note": "Undecided not reported in release text"
+    }
+   ],
+   "sources": [
+    "https://elections.cdn.sos.ca.gov/ccrov/2026/june/26179jj.pdf",
+    "https://growsf.org/news/2026-07-02-14-state-measures/",
+    "https://www.ppic.org/publication/ppic-statewide-survey-californians-and-their-government-september-2026/"
+   ]
+  },
+  {
+   "state": "CA",
+   "id": "Proposition 2",
+   "short_title": "Raise rainy day fund cap to 20 percent",
+   "summary": "Doubles the state budget reserve cap from 10 to 20 percent of the General Fund and changes deposit and debt payment rules.",
+   "type": "legislative referral constitutional",
+   "category": "bonds_spending",
+   "lean": "none",
+   "threshold": 0.5,
+   "threshold_note": "Simple majority of votes cast on the measure.",
+   "campaign": "ACA 20 placed by legislative Democrats as part of the 2026 budget deal.",
+   "polls": [
+    {
+     "pollster": "Public Policy Institute of California (PPIC Statewide Survey)",
+     "sponsor": "PPIC",
+     "sponsor_side": "independent",
+     "start": "2026-09-04",
+     "end": "2026-09-10",
+     "n": 1103,
+     "pop": "LV",
+     "yes": 60,
+     "no": 39,
+     "undecided": null,
+     "url": "https://www.ppic.org/publication/ppic-statewide-survey-californians-and-their-government-september-2026/",
+     "note": "Undecided not reported in release text"
+    }
+   ],
+   "sources": [
+    "https://elections.cdn.sos.ca.gov/ccrov/2026/june/26179jj.pdf",
+    "https://growsf.org/news/2026-07-02-14-state-measures/",
+    "https://www.ppic.org/publication/ppic-statewide-survey-californians-and-their-government-september-2026/"
+   ]
+  },
+  {
+   "state": "CA",
+   "id": "Proposition 3",
+   "short_title": "Make top income tax rates permanent",
+   "summary": "Removes the 2030 expiration of the 10.3 to 12.3 percent top income tax brackets first created by Prop 30 and extended by Prop 55, funding schools and health care.",
+   "type": "initiated constitutional amendment",
+   "category": "taxes_income",
+   "lean": "D",
+   "threshold": 0.5,
+   "threshold_note": "Simple majority of votes cast on the measure.",
+   "campaign": "Initiative extending Prop 30/55 high earner rates; backed by education and health care labor coalition per news reports.",
+   "polls": [
+    {
+     "pollster": "Public Policy Institute of California (PPIC Statewide Survey)",
+     "sponsor": "PPIC",
+     "sponsor_side": "independent",
+     "start": "2026-09-04",
+     "end": "2026-09-10",
+     "n": 1103,
+     "pop": "LV",
+     "yes": 58,
+     "no": 40,
+     "undecided": null,
+     "url": "https://www.ppic.org/publication/ppic-statewide-survey-californians-and-their-government-september-2026/",
+     "note": "Undecided not reported in release text"
+    },
+    {
+     "pollster": "UC Berkeley Institute of Governmental Studies",
+     "sponsor": "Berkeley IGS",
+     "sponsor_side": "independent",
+     "start": "2026-09-15",
+     "end": "2026-09-20",
+     "n": 2261,
+     "pop": "LV",
+     "yes": 54,
+     "no": 34,
+     "undecided": 13,
+     "url": "https://escholarship.org/content/qt3w14s99c/qt3w14s99c.pdf"
+    }
+   ],
+   "sources": [
+    "https://elections.cdn.sos.ca.gov/ccrov/2026/june/26179jj.pdf",
+    "https://growsf.org/news/2026-07-02-14-state-measures/",
+    "https://www.ppic.org/publication/ppic-statewide-survey-californians-and-their-government-september-2026/",
+    "https://escholarship.org/content/qt3w14s99c/qt3w14s99c.pdf",
+    "https://calmatters.org/newsletter/billionaire-tax-proposition-poll/"
+   ]
+  },
+  {
+   "state": "CA",
+   "id": "Proposition 4",
+   "short_title": "Allow public financing of campaigns",
+   "summary": "Repeals the 1988 ban on public financing so state and local governments may fund candidate campaigns subject to spending limits.",
+   "type": "legislative referral statute",
+   "category": "government_ethics",
+   "lean": "D",
+   "threshold": 0.5,
+   "threshold_note": "Simple majority of votes cast on the measure.",
+   "campaign": "SB 42, California Fair Elections Act of 2026, placed by Legislature. No major campaign money reported.",
+   "polls": [
+    {
+     "pollster": "Public Policy Institute of California (PPIC Statewide Survey)",
+     "sponsor": "PPIC",
+     "sponsor_side": "independent",
+     "start": "2026-09-04",
+     "end": "2026-09-10",
+     "n": 1103,
+     "pop": "LV",
+     "yes": 42,
+     "no": 53,
+     "undecided": null,
+     "url": "https://www.ppic.org/publication/ppic-statewide-survey-californians-and-their-government-september-2026/",
+     "note": "Undecided not reported in release text"
+    },
+    {
+     "pollster": "UC Berkeley Institute of Governmental Studies",
+     "sponsor": "Berkeley IGS",
+     "sponsor_side": "independent",
+     "start": "2026-09-15",
+     "end": "2026-09-20",
+     "n": 2251,
+     "pop": "LV",
+     "yes": 35,
+     "no": 35,
+     "undecided": 30,
+     "url": "https://escholarship.org/content/qt3w14s99c/qt3w14s99c.pdf"
+    }
+   ],
+   "sources": [
+    "https://elections.cdn.sos.ca.gov/ccrov/2026/june/26179jj.pdf",
+    "https://growsf.org/news/2026-07-02-14-state-measures/",
+    "https://www.ppic.org/publication/ppic-statewide-survey-californians-and-their-government-september-2026/",
+    "https://escholarship.org/content/qt3w14s99c/qt3w14s99c.pdf"
+   ]
+  },
+  {
+   "state": "CA",
+   "id": "Proposition 5",
+   "short_title": "Recall: remove successor election",
+   "summary": "Replaces the two question recall with a single yes or no removal vote; a recalled governor is succeeded by the lieutenant governor.",
+   "type": "legislative referral constitutional",
+   "category": "elections_voting",
+   "lean": "D",
+   "threshold": 0.5,
+   "threshold_note": "Simple majority of votes cast on the measure.",
+   "campaign": "SCA 1 placed by Democratic legislature after 2021 Newsom recall.",
+   "polls": [
+    {
+     "pollster": "Public Policy Institute of California (PPIC Statewide Survey)",
+     "sponsor": "PPIC",
+     "sponsor_side": "independent",
+     "start": "2026-09-04",
+     "end": "2026-09-10",
+     "n": 1103,
+     "pop": "LV",
+     "yes": 35,
+     "no": 59,
+     "undecided": null,
+     "url": "https://www.ppic.org/publication/ppic-statewide-survey-californians-and-their-government-september-2026/",
+     "note": "Undecided not reported in release text"
+    }
+   ],
+   "sources": [
+    "https://elections.cdn.sos.ca.gov/ccrov/2026/june/26179jj.pdf",
+    "https://growsf.org/news/2026-07-02-14-state-measures/",
+    "https://www.ppic.org/publication/ppic-statewide-survey-californians-and-their-government-september-2026/"
+   ]
+  },
+  {
+   "state": "CA",
+   "id": "Proposition 37",
+   "short_title": "Loans for middle income buyers of new homes",
+   "summary": "Authorizes 25 billion in bonds to fund fixed rate second mortgages on new homes for buyers up to 200 percent of area median income, repaid by borrowers.",
+   "type": "initiated statute",
+   "category": "housing",
+   "lean": "none",
+   "threshold": 0.5,
+   "threshold_note": "Simple majority of votes cast on the measure.",
+   "campaign": "Citizen initiative; includes opt-in builder track trading labor enforcement for friendlier defect rules.",
+   "polls": [
+    {
+     "pollster": "Public Policy Institute of California (PPIC Statewide Survey)",
+     "sponsor": "PPIC",
+     "sponsor_side": "independent",
+     "start": "2026-09-04",
+     "end": "2026-09-10",
+     "n": 1103,
+     "pop": "LV",
+     "yes": 61,
+     "no": 35,
+     "undecided": null,
+     "url": "https://www.ppic.org/publication/ppic-statewide-survey-californians-and-their-government-september-2026/",
+     "note": "Undecided not reported in release text"
+    }
+   ],
+   "sources": [
+    "https://elections.cdn.sos.ca.gov/ccrov/2026/june/26179jj.pdf",
+    "https://growsf.org/news/2026-07-02-14-state-measures/",
+    "https://www.ppic.org/publication/ppic-statewide-survey-californians-and-their-government-september-2026/"
+   ]
+  },
+  {
+   "state": "CA",
+   "id": "Proposition 38",
+   "short_title": "Immunology research bonds",
+   "summary": "Authorizes 8.4 billion in general obligation bonds for immunology and immunotherapy research through an institute and competitive grants.",
+   "type": "initiated statute",
+   "category": "bonds_spending",
+   "lean": "none",
+   "threshold": 0.5,
+   "threshold_note": "Simple majority of votes cast on the measure.",
+   "campaign": "Bankrolled by billionaire surgeon Gary Michelson. LAO estimates about 500 million a year from General Fund for about 25 years.",
+   "polls": [
+    {
+     "pollster": "Public Policy Institute of California (PPIC Statewide Survey)",
+     "sponsor": "PPIC",
+     "sponsor_side": "independent",
+     "start": "2026-09-04",
+     "end": "2026-09-10",
+     "n": 1103,
+     "pop": "LV",
+     "yes": 55,
+     "no": 42,
+     "undecided": null,
+     "url": "https://www.ppic.org/publication/ppic-statewide-survey-californians-and-their-government-september-2026/",
+     "note": "Undecided not reported in release text"
+    }
+   ],
+   "sources": [
+    "https://elections.cdn.sos.ca.gov/ccrov/2026/june/26179jj.pdf",
+    "https://growsf.org/news/2026-07-02-14-state-measures/",
+    "https://www.ppic.org/publication/ppic-statewide-survey-californians-and-their-government-september-2026/"
+   ]
+  },
+  {
+   "state": "CA",
+   "id": "Proposition 39",
+   "short_title": "Voter ID and citizenship verification",
+   "summary": "Requires photo ID to vote in person, an ID number on mail ballots, and citizenship verification for voter registration.",
+   "type": "initiated constitutional amendment",
+   "category": "voter_id",
+   "lean": "R",
+   "threshold": 0.5,
+   "threshold_note": "Simple majority of votes cast on the measure.",
+   "campaign": "Republican backed initiative; Democrats strongly opposed. Likely federal preemption litigation.",
+   "polls": [
+    {
+     "pollster": "Public Policy Institute of California (PPIC Statewide Survey)",
+     "sponsor": "PPIC",
+     "sponsor_side": "independent",
+     "start": "2026-09-04",
+     "end": "2026-09-10",
+     "n": 1103,
+     "pop": "LV",
+     "yes": 43,
+     "no": 55,
+     "undecided": null,
+     "url": "https://www.ppic.org/publication/ppic-statewide-survey-californians-and-their-government-september-2026/",
+     "note": "Undecided not reported in release text"
+    },
+    {
+     "pollster": "UC Berkeley Institute of Governmental Studies",
+     "sponsor": "Berkeley IGS",
+     "sponsor_side": "independent",
+     "start": "2026-09-15",
+     "end": "2026-09-20",
+     "n": 4512,
+     "pop": "LV",
+     "yes": 39,
+     "no": 52,
+     "undecided": 9,
+     "url": "https://escholarship.org/content/qt3w14s99c/qt3w14s99c.pdf"
+    },
+    {
+     "pollster": "UC Berkeley Institute of Governmental Studies",
+     "sponsor": "Berkeley IGS",
+     "sponsor_side": "independent",
+     "start": "2026-08-03",
+     "end": "2026-08-09",
+     "n": 2310,
+     "pop": "LV",
+     "yes": 42,
+     "no": 51,
+     "undecided": 7,
+     "url": "https://escholarship.org/content/qt2zw023kt/qt2zw023kt.pdf"
+    }
+   ],
+   "sources": [
+    "https://elections.cdn.sos.ca.gov/ccrov/2026/june/26179jj.pdf",
+    "https://growsf.org/news/2026-07-02-14-state-measures/",
+    "https://www.ppic.org/publication/ppic-statewide-survey-californians-and-their-government-september-2026/",
+    "https://escholarship.org/content/qt3w14s99c/qt3w14s99c.pdf",
+    "https://escholarship.org/content/qt2zw023kt/qt2zw023kt.pdf",
+    "https://www.kqed.org/news/12095116/california-billionaire-tax-has-strong-support-of-democratic-voters-new-poll-shows"
+   ]
+  },
+  {
+   "state": "CA",
+   "id": "Proposition 40",
+   "short_title": "One time 5 percent billionaire wealth tax",
+   "summary": "Imposes a one time 5 percent tax on net worth above 1 billion dollars for certain individuals and trusts; 90 percent to health care, 10 percent to schools and food aid.",
+   "type": "initiated constitutional amendment and statute",
+   "category": "taxes_sales_other",
+   "lean": "D",
+   "threshold": 0.5,
+   "threshold_note": "Simple majority, but Props 41 and 42 contain conflict provisions that can nullify Prop 40 if they pass with more yes votes.",
+   "campaign": "Placed by SEIU United Healthcare Workers West; opposed by billionaire funded campaigns behind Props 41 and 42.",
+   "polls": [
+    {
+     "pollster": "Public Policy Institute of California (PPIC Statewide Survey)",
+     "sponsor": "PPIC",
+     "sponsor_side": "independent",
+     "start": "2026-09-04",
+     "end": "2026-09-10",
+     "n": 1103,
+     "pop": "LV",
+     "yes": 52,
+     "no": 46,
+     "undecided": null,
+     "url": "https://www.ppic.org/publication/ppic-statewide-survey-californians-and-their-government-september-2026/",
+     "note": "Undecided not reported in release text"
+    },
+    {
+     "pollster": "UC Berkeley Institute of Governmental Studies",
+     "sponsor": "Berkeley IGS",
+     "sponsor_side": "independent",
+     "start": "2026-09-15",
+     "end": "2026-09-20",
+     "n": 4512,
+     "pop": "LV",
+     "yes": 45,
+     "no": 42,
+     "undecided": 13,
+     "url": "https://escholarship.org/content/qt3w14s99c/qt3w14s99c.pdf"
+    },
+    {
+     "pollster": "UC Berkeley Institute of Governmental Studies",
+     "sponsor": "Berkeley IGS",
+     "sponsor_side": "independent",
+     "start": "2026-08-03",
+     "end": "2026-08-09",
+     "n": 2310,
+     "pop": "LV",
+     "yes": 48,
+     "no": 41,
+     "undecided": 11,
+     "url": "https://escholarship.org/content/qt2zw023kt/qt2zw023kt.pdf"
+    }
+   ],
+   "sources": [
+    "https://elections.cdn.sos.ca.gov/ccrov/2026/june/26179jj.pdf",
+    "https://growsf.org/news/2026-07-02-14-state-measures/",
+    "https://www.ppic.org/publication/ppic-statewide-survey-californians-and-their-government-september-2026/",
+    "https://www.ppic.org/press-release/likely-voters-send-mixed-signals-on-billionaire-wealth-tax-becerra-maintains-wide-lead-over-hilton/",
+    "https://escholarship.org/content/qt3w14s99c/qt3w14s99c.pdf",
+    "https://escholarship.org/content/qt2zw023kt/qt2zw023kt.pdf",
+    "https://www.kqed.org/news/12099825/california-billionaires-tax-has-a-slim-lead-in-new-poll-but-still-a-lot-of-work-to-do"
+   ]
+  },
+  {
+   "state": "CA",
+   "id": "Proposition 41",
+   "short_title": "Audits of new special taxes, Gann limit rule",
+   "summary": "Requires audits of programs funded by new state special taxes and bars new state taxes from being excluded from the voter approved Gann spending limit.",
+   "type": "initiated constitutional amendment",
+   "category": "taxes_sales_other",
+   "lean": "R",
+   "threshold": 0.5,
+   "threshold_note": "Simple majority; conflict provision with Prop 40 (whichever has more yes votes prevails on conflicting provisions).",
+   "campaign": "Counter measure to Prop 40 backed by business and wealthy donors.",
+   "polls": [
+    {
+     "pollster": "Public Policy Institute of California (PPIC Statewide Survey)",
+     "sponsor": "PPIC",
+     "sponsor_side": "independent",
+     "start": "2026-09-04",
+     "end": "2026-09-10",
+     "n": 1103,
+     "pop": "LV",
+     "yes": 51,
+     "no": 44,
+     "undecided": null,
+     "url": "https://www.ppic.org/publication/ppic-statewide-survey-californians-and-their-government-september-2026/",
+     "note": "Undecided not reported in release text"
+    },
+    {
+     "pollster": "UC Berkeley Institute of Governmental Studies",
+     "sponsor": "Berkeley IGS",
+     "sponsor_side": "independent",
+     "start": "2026-09-15",
+     "end": "2026-09-20",
+     "n": 4512,
+     "pop": "LV",
+     "yes": 37,
+     "no": 33,
+     "undecided": 30,
+     "url": "https://escholarship.org/content/qt3w14s99c/qt3w14s99c.pdf"
+    },
+    {
+     "pollster": "UC Berkeley Institute of Governmental Studies",
+     "sponsor": "Berkeley IGS",
+     "sponsor_side": "independent",
+     "start": "2026-08-03",
+     "end": "2026-08-09",
+     "n": 2310,
+     "pop": "LV",
+     "yes": 35,
+     "no": 37,
+     "undecided": 28,
+     "url": "https://escholarship.org/content/qt2zw023kt/qt2zw023kt.pdf"
+    }
+   ],
+   "sources": [
+    "https://elections.cdn.sos.ca.gov/ccrov/2026/june/26179jj.pdf",
+    "https://growsf.org/news/2026-07-02-14-state-measures/",
+    "https://www.ppic.org/publication/ppic-statewide-survey-californians-and-their-government-september-2026/",
+    "https://escholarship.org/content/qt3w14s99c/qt3w14s99c.pdf",
+    "https://escholarship.org/content/qt2zw023kt/qt2zw023kt.pdf"
+   ]
+  },
+  {
+   "state": "CA",
+   "id": "Proposition 42",
+   "short_title": "Ban new state wealth and personal property taxes",
+   "summary": "Prohibits new state taxes on personal property such as financial assets and most retroactive state taxes.",
+   "type": "initiated constitutional amendment",
+   "category": "taxes_property",
+   "lean": "R",
+   "threshold": 0.5,
+   "threshold_note": "Simple majority; conflict provision with Prop 40.",
+   "campaign": "Counter measure to Prop 40 funded by billionaires per news reports.",
+   "polls": [
+    {
+     "pollster": "Public Policy Institute of California (PPIC Statewide Survey)",
+     "sponsor": "PPIC",
+     "sponsor_side": "independent",
+     "start": "2026-09-04",
+     "end": "2026-09-10",
+     "n": 1103,
+     "pop": "LV",
+     "yes": 54,
+     "no": 43,
+     "undecided": null,
+     "url": "https://www.ppic.org/publication/ppic-statewide-survey-californians-and-their-government-september-2026/",
+     "note": "Undecided not reported in release text"
+    },
+    {
+     "pollster": "UC Berkeley Institute of Governmental Studies",
+     "sponsor": "Berkeley IGS",
+     "sponsor_side": "independent",
+     "start": "2026-09-15",
+     "end": "2026-09-20",
+     "n": 4512,
+     "pop": "LV",
+     "yes": 43,
+     "no": 34,
+     "undecided": 23,
+     "url": "https://escholarship.org/content/qt3w14s99c/qt3w14s99c.pdf"
+    },
+    {
+     "pollster": "UC Berkeley Institute of Governmental Studies",
+     "sponsor": "Berkeley IGS",
+     "sponsor_side": "independent",
+     "start": "2026-08-03",
+     "end": "2026-08-09",
+     "n": 2310,
+     "pop": "LV",
+     "yes": 40,
+     "no": 37,
+     "undecided": 23,
+     "url": "https://escholarship.org/content/qt2zw023kt/qt2zw023kt.pdf"
+    }
+   ],
+   "sources": [
+    "https://elections.cdn.sos.ca.gov/ccrov/2026/june/26179jj.pdf",
+    "https://growsf.org/news/2026-07-02-14-state-measures/",
+    "https://www.ppic.org/publication/ppic-statewide-survey-californians-and-their-government-september-2026/",
+    "https://escholarship.org/content/qt3w14s99c/qt3w14s99c.pdf",
+    "https://escholarship.org/content/qt2zw023kt/qt2zw023kt.pdf"
+   ]
+  },
+  {
+   "state": "CA",
+   "id": "Proposition 43",
+   "short_title": "Two thirds vote for local special taxes",
+   "summary": "Requires two thirds voter approval for new local special taxes, including those placed by citizen initiative, prospectively.",
+   "type": "legislative referral constitutional",
+   "category": "taxes_sales_other",
+   "lean": "R",
+   "threshold": 0.5,
+   "threshold_note": "Simple majority of votes cast on the measure.",
+   "campaign": "ACA 22 placed by Legislature in deal with Howard Jarvis Taxpayers Association to withdraw a broader initiative.",
+   "polls": [
+    {
+     "pollster": "Public Policy Institute of California (PPIC Statewide Survey)",
+     "sponsor": "PPIC",
+     "sponsor_side": "independent",
+     "start": "2026-09-04",
+     "end": "2026-09-10",
+     "n": 1103,
+     "pop": "LV",
+     "yes": 43,
+     "no": 51,
+     "undecided": null,
+     "url": "https://www.ppic.org/publication/ppic-statewide-survey-californians-and-their-government-september-2026/",
+     "note": "Undecided not reported in release text"
+    },
+    {
+     "pollster": "UC Berkeley Institute of Governmental Studies",
+     "sponsor": "Berkeley IGS",
+     "sponsor_side": "independent",
+     "start": "2026-09-15",
+     "end": "2026-09-20",
+     "n": 4512,
+     "pop": "LV",
+     "yes": 31,
+     "no": 40,
+     "undecided": 29,
+     "url": "https://escholarship.org/content/qt3w14s99c/qt3w14s99c.pdf"
+    }
+   ],
+   "sources": [
+    "https://elections.cdn.sos.ca.gov/ccrov/2026/june/26179jj.pdf",
+    "https://growsf.org/news/2026-07-02-14-state-measures/",
+    "https://www.ppic.org/publication/ppic-statewide-survey-californians-and-their-government-september-2026/",
+    "https://escholarship.org/content/qt3w14s99c/qt3w14s99c.pdf"
+   ]
+  },
+  {
+   "state": "CA",
+   "id": "Proposition 44",
+   "short_title": "Community clinics must spend 90 percent on services",
+   "summary": "Requires nonprofit community health clinics to spend at least 90 percent of revenue on patient care and mission related program services.",
+   "type": "initiated statute",
+   "category": "health_care",
+   "lean": "none",
+   "threshold": 0.5,
+   "threshold_note": "Simple majority of votes cast on the measure.",
+   "campaign": "Placed by SEIU-UHW after AB 1113 died; clinics oppose and are challenging it in federal court.",
+   "polls": [
+    {
+     "pollster": "Public Policy Institute of California (PPIC Statewide Survey)",
+     "sponsor": "PPIC",
+     "sponsor_side": "independent",
+     "start": "2026-09-04",
+     "end": "2026-09-10",
+     "n": 1103,
+     "pop": "LV",
+     "yes": 34,
+     "no": 61,
+     "undecided": null,
+     "url": "https://www.ppic.org/publication/ppic-statewide-survey-californians-and-their-government-september-2026/",
+     "note": "Undecided not reported in release text"
+    }
+   ],
+   "sources": [
+    "https://elections.cdn.sos.ca.gov/ccrov/2026/june/26179jj.pdf",
+    "https://growsf.org/news/2026-07-02-14-state-measures/",
+    "https://www.ppic.org/publication/ppic-statewide-survey-californians-and-their-government-september-2026/"
+   ]
+  },
+  {
+   "state": "CA",
+   "id": "Proposition 45",
+   "short_title": "Fast track CEQA review for essential projects",
+   "summary": "Speeds and narrows environmental review and judicial challenges under CEQA for housing, water, clean energy and other essential projects.",
+   "type": "initiated statute",
+   "category": "environment_energy",
+   "lean": "none",
+   "threshold": 0.5,
+   "threshold_note": "Simple majority of votes cast on the measure.",
+   "campaign": "Over 13.7 million in supporter funding; no organized opposition committee reported as of March 31, 2026.",
+   "polls": [
+    {
+     "pollster": "Public Policy Institute of California (PPIC Statewide Survey)",
+     "sponsor": "PPIC",
+     "sponsor_side": "independent",
+     "start": "2026-09-04",
+     "end": "2026-09-10",
+     "n": 1103,
+     "pop": "LV",
+     "yes": 49,
+     "no": 46,
+     "undecided": null,
+     "url": "https://www.ppic.org/publication/ppic-statewide-survey-californians-and-their-government-september-2026/",
+     "note": "Undecided not reported in release text"
+    }
+   ],
+   "sources": [
+    "https://elections.cdn.sos.ca.gov/ccrov/2026/june/26179jj.pdf",
+    "https://growsf.org/news/2026-07-02-14-state-measures/",
+    "https://www.ppic.org/publication/ppic-statewide-survey-californians-and-their-government-september-2026/",
+    "https://www.cpapracticeadvisor.com/2026/09/23/california-voters-back-billionaire-tax-and-measures-that-could-block-it-new-poll-finds/190410/"
+   ]
+  },
+  {
+   "state": "AZ",
+   "id": "Proposition 141",
+   "short_title": "Ban vehicle miles traveled taxes",
+   "summary": "Bars state and local taxes or fees based on vehicle miles traveled and bars monitoring or limiting mileage without consent.",
+   "type": "legislative referral constitutional",
+   "category": "taxes_sales_other",
+   "lean": "R",
+   "threshold": 0.5,
+   "threshold_note": "Simple majority of votes cast on the measure.",
+   "campaign": "Referred by the Republican led Legislature, bypassing Gov. Hobbs. No campaign finance figures found.",
+   "polls": [],
+   "sources": [
+    "https://www.newsfromthestates.com/node/423399",
+    "https://www.azfamily.com/2026/09/16/voter-id-dei-more-what-know-about-8-statewide-ballot-proposals/",
+    "https://www.axios.com/local/phoenix/2026/08/25/statewide-ballot-measures-propositions-arizona-election-2026-"
+   ]
+  },
+  {
+   "state": "AZ",
+   "id": "Proposition 142",
+   "short_title": "Ban race based preferences and DEI mandates",
+   "summary": "Expands the 2010 affirmative action ban to bar public bodies from race or ethnicity preferences and compelled DEI training or offices.",
+   "type": "legislative referral constitutional",
+   "category": "civil_rights",
+   "lean": "R",
+   "threshold": 0.5,
+   "threshold_note": "Simple majority of votes cast on the measure.",
+   "campaign": "Referred by the Republican led Legislature, bypassing Gov. Hobbs. No campaign finance figures found.",
+   "polls": [],
+   "sources": [
+    "https://www.newsfromthestates.com/node/423399",
+    "https://www.azfamily.com/2026/09/16/voter-id-dei-more-what-know-about-8-statewide-ballot-proposals/",
+    "https://www.axios.com/local/phoenix/2026/08/25/statewide-ballot-measures-propositions-arizona-election-2026-"
+   ]
+  },
+  {
+   "state": "AZ",
+   "id": "Proposition 144",
+   "short_title": "Voter ID for all voters including mail",
+   "summary": "Requires government ID for every voter including mail voters, limits voting to citizens, bars foreign election contributions; effective 2028.",
+   "type": "legislative referral constitutional",
+   "category": "voter_id",
+   "lean": "R",
+   "threshold": 0.5,
+   "threshold_note": "Simple majority of votes cast on the measure.",
+   "campaign": "Referred by the Republican led Legislature, bypassing Gov. Hobbs. No campaign finance figures found. Arizona Supreme Court rejected a challenge to remove it from the ballot.",
+   "polls": [],
+   "sources": [
+    "https://www.newsfromthestates.com/node/423399",
+    "https://www.azfamily.com/2026/09/16/voter-id-dei-more-what-know-about-8-statewide-ballot-proposals/",
+    "https://www.axios.com/local/phoenix/2026/08/25/statewide-ballot-measures-propositions-arizona-election-2026-"
+   ]
+  },
+  {
+   "state": "AZ",
+   "id": "Proposition 316",
+   "short_title": "Cap local grocery taxes at 2 percent",
+   "summary": "Caps municipal sales taxes on food for home consumption at 2 percent and requires voter approval for new or higher food taxes.",
+   "type": "legislative referral statute",
+   "category": "taxes_sales_other",
+   "lean": "R",
+   "threshold": 0.5,
+   "threshold_note": "Simple majority of votes cast on the measure.",
+   "campaign": "Referred by the Republican led Legislature, bypassing Gov. Hobbs. No campaign finance figures found.",
+   "polls": [],
+   "sources": [
+    "https://www.newsfromthestates.com/node/423399",
+    "https://www.azfamily.com/2026/09/16/voter-id-dei-more-what-know-about-8-statewide-ballot-proposals/",
+    "https://www.axios.com/local/phoenix/2026/08/25/statewide-ballot-measures-propositions-arizona-election-2026-"
+   ]
+  },
+  {
+   "state": "AZ",
+   "id": "Proposition 317",
+   "short_title": "Designate drug cartels as terrorist organizations",
+   "summary": "Designates drug cartels as terrorist organizations under state law and directs the state Department of Homeland Security to address them.",
+   "type": "legislative referral statute",
+   "category": "criminal_justice",
+   "lean": "R",
+   "threshold": 0.5,
+   "threshold_note": "Simple majority of votes cast on the measure.",
+   "campaign": "Referred by the Republican led Legislature, bypassing Gov. Hobbs. No campaign finance figures found. Introduced by House Speaker Steve Montenegro.",
+   "polls": [],
+   "sources": [
+    "https://www.newsfromthestates.com/node/423399",
+    "https://www.azfamily.com/2026/09/16/voter-id-dei-more-what-know-about-8-statewide-ballot-proposals/",
+    "https://www.axios.com/local/phoenix/2026/08/25/statewide-ballot-measures-propositions-arizona-election-2026-"
+   ]
+  },
+  {
+   "state": "AZ",
+   "id": "Proposition 318",
+   "short_title": "Sex based school sports, restrooms, locker rooms",
+   "summary": "Requires teams designated by biological sex and bars transgender students from restrooms and locker rooms not matching birth sex.",
+   "type": "legislative referral statute",
+   "category": "lgbtq_rights",
+   "lean": "R",
+   "threshold": 0.5,
+   "threshold_note": "Simple majority of votes cast on the measure.",
+   "campaign": "Referred by the Republican led Legislature, bypassing Gov. Hobbs. No campaign finance figures found.",
+   "polls": [],
+   "sources": [
+    "https://www.newsfromthestates.com/node/423399",
+    "https://www.azfamily.com/2026/09/16/voter-id-dei-more-what-know-about-8-statewide-ballot-proposals/",
+    "https://www.axios.com/local/phoenix/2026/08/25/statewide-ballot-measures-propositions-arizona-election-2026-"
+   ]
+  },
+  {
+   "state": "AZ",
+   "id": "Proposition 319",
+   "short_title": "Restrict photo radar traffic enforcement",
+   "summary": "Bars new photo radar enforcement; existing speed and red light cameras need local voter approval every 10 years to continue.",
+   "type": "legislative referral statute",
+   "category": "other",
+   "lean": "R",
+   "threshold": 0.5,
+   "threshold_note": "Simple majority of votes cast on the measure.",
+   "campaign": "Referred by the Republican led Legislature, bypassing Gov. Hobbs. No campaign finance figures found.",
+   "polls": [],
+   "sources": [
+    "https://www.newsfromthestates.com/node/423399",
+    "https://www.azfamily.com/2026/09/16/voter-id-dei-more-what-know-about-8-statewide-ballot-proposals/",
+    "https://www.axios.com/local/phoenix/2026/08/25/statewide-ballot-measures-propositions-arizona-election-2026-"
+   ]
+  },
+  {
+   "state": "AZ",
+   "id": "Proposition 320",
+   "short_title": "Require 60 percent spending on instruction",
+   "summary": "Requires large school districts to spend at least 60 percent of operational budgets on direct instruction or face Classroom Site Fund cuts.",
+   "type": "legislative referral statute",
+   "category": "education",
+   "lean": "R",
+   "threshold": 0.5,
+   "threshold_note": "Simple majority of votes cast on the measure.",
+   "campaign": "Referred by the Republican led Legislature, bypassing Gov. Hobbs. No campaign finance figures found.",
+   "polls": [],
+   "sources": [
+    "https://www.newsfromthestates.com/node/423399",
+    "https://www.azfamily.com/2026/09/16/voter-id-dei-more-what-know-about-8-statewide-ballot-proposals/",
+    "https://www.axios.com/local/phoenix/2026/08/25/statewide-ballot-measures-propositions-arizona-election-2026-"
+   ]
+  },
+  {
+   "state": "CO",
+   "id": "Proposition NN",
+   "short_title": "Raise TABOR cap for K-12 school funding",
+   "summary": "Raises the TABOR revenue cap and keeps about 4.6 billion in surplus revenue for K-12 education.",
+   "type": "legislative referral statute",
+   "category": "education",
+   "lean": "D",
+   "threshold": 0.5,
+   "threshold_note": "Simple majority of votes cast on the measure.",
+   "campaign": "Referred by Legislature (SB26-135). Colorado Democratic Party supports.",
+   "polls": [],
+   "sources": [
+    "https://news.ballotpedia.org/2026/09/14/colorado-voters-will-decide-on-14-ballot-measures-in-2026/",
+    "https://www.koaa.com/americavotes/colorados-2026-general-election-ballot-has-been-certified-what-you-need-to-know",
+    "https://www.coloradodems.org/press/colorado-democrats-finalize-positions-on-2026-ballot-measures"
+   ]
+  },
+  {
+   "state": "CO",
+   "id": "Amendment 81",
+   "short_title": "Police must report undocumented violent offenders to DHS",
+   "summary": "Requires state and local police to notify federal DHS within 72 hours when a person charged with a violent crime or prior felony is not lawfully present.",
+   "type": "initiated constitutional amendment",
+   "category": "immigration",
+   "lean": "R",
+   "threshold": 0.55,
+   "threshold_note": "Colorado constitutional amendments need 55 percent of votes cast on the measure.",
+   "campaign": "Citizen initiative; Colorado Democratic Party opposes.",
+   "polls": [],
+   "sources": [
+    "https://news.ballotpedia.org/2026/09/14/colorado-voters-will-decide-on-14-ballot-measures-in-2026/",
+    "https://www.koaa.com/americavotes/colorados-2026-general-election-ballot-has-been-certified-what-you-need-to-know",
+    "https://www.coloradodems.org/press/colorado-democrats-finalize-positions-on-2026-ballot-measures"
+   ]
+  },
+  {
+   "state": "CO",
+   "id": "Amendment 82",
+   "short_title": "Constitutional right to natural gas",
+   "summary": "Creates a consumer right to buy natural gas for cooking or heating and lets utilities and distributors sell it.",
+   "type": "initiated constitutional amendment",
+   "category": "environment_energy",
+   "lean": "R",
+   "threshold": 0.55,
+   "threshold_note": "Colorado constitutional amendments need 55 percent of votes cast on the measure.",
+   "campaign": "Citizen initiative; Colorado Democratic Party opposes.",
+   "polls": [],
+   "sources": [
+    "https://news.ballotpedia.org/2026/09/14/colorado-voters-will-decide-on-14-ballot-measures-in-2026/",
+    "https://www.koaa.com/americavotes/colorados-2026-general-election-ballot-has-been-certified-what-you-need-to-know",
+    "https://www.coloradodems.org/press/colorado-democrats-finalize-positions-on-2026-ballot-measures"
+   ]
+  },
+  {
+   "state": "CO",
+   "id": "Amendment 83",
+   "short_title": "Constitutional right to hunt and fish",
+   "summary": "Establishes a constitutional right to hunt, fish and take wildlife using traditional methods.",
+   "type": "initiated constitutional amendment",
+   "category": "animal",
+   "lean": "R",
+   "threshold": 0.55,
+   "threshold_note": "Colorado constitutional amendments need 55 percent of votes cast on the measure.",
+   "campaign": "Citizen initiative; Democratic Party took no listed position.",
+   "polls": [],
+   "sources": [
+    "https://news.ballotpedia.org/2026/09/14/colorado-voters-will-decide-on-14-ballot-measures-in-2026/",
+    "https://www.koaa.com/americavotes/colorados-2026-general-election-ballot-has-been-certified-what-you-need-to-know",
+    "https://www.coloradodems.org/press/colorado-democrats-finalize-positions-on-2026-ballot-measures"
+   ]
+  },
+  {
+   "state": "CO",
+   "id": "Amendment 84",
+   "short_title": "ID number required on mail ballots",
+   "summary": "Requires mail voters to give a signature plus an ID number such as last four SSN digits, checked against registration records.",
+   "type": "initiated constitutional amendment",
+   "category": "voter_id",
+   "lean": "R",
+   "threshold": 0.55,
+   "threshold_note": "Colorado constitutional amendments need 55 percent of votes cast on the measure.",
+   "campaign": "Citizen initiative; Colorado Democratic Party opposes.",
+   "polls": [],
+   "sources": [
+    "https://news.ballotpedia.org/2026/09/14/colorado-voters-will-decide-on-14-ballot-measures-in-2026/",
+    "https://www.koaa.com/americavotes/colorados-2026-general-election-ballot-has-been-certified-what-you-need-to-know",
+    "https://www.coloradodems.org/press/colorado-democrats-finalize-positions-on-2026-ballot-measures"
+   ]
+  },
+  {
+   "state": "CO",
+   "id": "Amendment 85",
+   "short_title": "Plain language ballot questions",
+   "summary": "Requires ballot questions be written in plain language at no more than an eighth grade reading level.",
+   "type": "initiated constitutional amendment",
+   "category": "elections_voting",
+   "lean": "R",
+   "threshold": 0.55,
+   "threshold_note": "Colorado constitutional amendments need 55 percent of votes cast on the measure.",
+   "campaign": "Citizen initiative; Colorado Democratic Party opposes.",
+   "polls": [],
+   "sources": [
+    "https://news.ballotpedia.org/2026/09/14/colorado-voters-will-decide-on-14-ballot-measures-in-2026/",
+    "https://www.koaa.com/americavotes/colorados-2026-general-election-ballot-has-been-certified-what-you-need-to-know",
+    "https://www.coloradodems.org/press/colorado-democrats-finalize-positions-on-2026-ballot-measures"
+   ]
+  },
+  {
+   "state": "CO",
+   "id": "Amendment 86",
+   "short_title": "Limits on mid decade congressional redistricting",
+   "summary": "Requires both the independent commission and state Supreme Court to approve any mid decade congressional map and bars partisan maps.",
+   "type": "initiated constitutional amendment",
+   "category": "redistricting",
+   "lean": "R",
+   "threshold": 0.55,
+   "threshold_note": "Colorado constitutional amendments need 55 percent of votes cast on the measure.",
+   "campaign": "Citizen initiative; Colorado Democratic Party opposes.",
+   "polls": [],
+   "sources": [
+    "https://news.ballotpedia.org/2026/09/14/colorado-voters-will-decide-on-14-ballot-measures-in-2026/",
+    "https://www.koaa.com/americavotes/colorados-2026-general-election-ballot-has-been-certified-what-you-need-to-know",
+    "https://www.coloradodems.org/press/colorado-democrats-finalize-positions-on-2026-ballot-measures"
+   ]
+  },
+  {
+   "state": "CO",
+   "id": "Amendment 87",
+   "short_title": "Graduated income tax for schools and health",
+   "summary": "Replaces the flat income tax with graduated rates from 3.7 to 8.4 percent, removing TABOR's single rate rule, funding K-12, health care, child care.",
+   "type": "initiated constitutional amendment",
+   "category": "taxes_income",
+   "lean": "D",
+   "threshold": 0.55,
+   "threshold_note": "Colorado constitutional amendments need 55 percent of votes cast on the measure. Combined constitutional and statutory initiative. Conflicts with Prop 136; if both pass, the one with more yes votes prevails.",
+   "campaign": "Citizen initiative; Colorado Democratic Party supports; Gov. Polis called it a 2.7 billion tax hike and Denver Gazette editorial board opposes.",
+   "polls": [],
+   "sources": [
+    "https://news.ballotpedia.org/2026/09/14/colorado-voters-will-decide-on-14-ballot-measures-in-2026/",
+    "https://www.koaa.com/americavotes/colorados-2026-general-election-ballot-has-been-certified-what-you-need-to-know",
+    "https://www.coloradodems.org/press/colorado-democrats-finalize-positions-on-2026-ballot-measures",
+    "https://www.denvergazette.com/?p=608200"
+   ]
+  },
+  {
+   "state": "CO",
+   "id": "Proposition 132",
+   "short_title": "Tougher fentanyl penalties",
+   "summary": "Raises felony penalties for fentanyl distribution and possession and requires court ordered treatment for low level possession.",
+   "type": "initiated statute",
+   "category": "criminal_justice",
+   "lean": "R",
+   "threshold": 0.5,
+   "threshold_note": "Simple majority of votes cast on the measure.",
+   "campaign": "Citizen initiative; Colorado Democratic Party opposes.",
+   "polls": [],
+   "sources": [
+    "https://news.ballotpedia.org/2026/09/14/colorado-voters-will-decide-on-14-ballot-measures-in-2026/",
+    "https://www.koaa.com/americavotes/colorados-2026-general-election-ballot-has-been-certified-what-you-need-to-know",
+    "https://www.coloradodems.org/press/colorado-democrats-finalize-positions-on-2026-ballot-measures"
+   ]
+  },
+  {
+   "state": "CO",
+   "id": "Proposition 133",
+   "short_title": "Life without parole for child sex trafficking",
+   "summary": "Requires life in prison without parole for those convicted of trafficking children for sexual servitude.",
+   "type": "initiated statute",
+   "category": "criminal_justice",
+   "lean": "R",
+   "threshold": 0.5,
+   "threshold_note": "Simple majority of votes cast on the measure.",
+   "campaign": "Citizen initiative; Democratic Party took no listed position.",
+   "polls": [],
+   "sources": [
+    "https://news.ballotpedia.org/2026/09/14/colorado-voters-will-decide-on-14-ballot-measures-in-2026/",
+    "https://www.koaa.com/americavotes/colorados-2026-general-election-ballot-has-been-certified-what-you-need-to-know",
+    "https://www.coloradodems.org/press/colorado-democrats-finalize-positions-on-2026-ballot-measures"
+   ]
+  },
+  {
+   "state": "CO",
+   "id": "Proposition 134",
+   "short_title": "School sports teams by biological sex",
+   "summary": "Requires student athletes to play on school and college teams matching their biological sex.",
+   "type": "initiated statute",
+   "category": "lgbtq_rights",
+   "lean": "R",
+   "threshold": 0.5,
+   "threshold_note": "Simple majority of votes cast on the measure.",
+   "campaign": "Citizen initiative; Colorado Democratic Party opposes.",
+   "polls": [],
+   "sources": [
+    "https://news.ballotpedia.org/2026/09/14/colorado-voters-will-decide-on-14-ballot-measures-in-2026/",
+    "https://www.koaa.com/americavotes/colorados-2026-general-election-ballot-has-been-certified-what-you-need-to-know",
+    "https://www.coloradodems.org/press/colorado-democrats-finalize-positions-on-2026-ballot-measures"
+   ]
+  },
+  {
+   "state": "CO",
+   "id": "Proposition 135",
+   "short_title": "Ban gender transition surgeries for minors",
+   "summary": "Bans surgeries on minors intended to change sex characteristics and bars public funds or insurance from paying for them.",
+   "type": "initiated statute",
+   "category": "lgbtq_rights",
+   "lean": "R",
+   "threshold": 0.5,
+   "threshold_note": "Simple majority of votes cast on the measure.",
+   "campaign": "Citizen initiative; Colorado Democratic Party opposes.",
+   "polls": [],
+   "sources": [
+    "https://news.ballotpedia.org/2026/09/14/colorado-voters-will-decide-on-14-ballot-measures-in-2026/",
+    "https://www.koaa.com/americavotes/colorados-2026-general-election-ballot-has-been-certified-what-you-need-to-know",
+    "https://www.coloradodems.org/press/colorado-democrats-finalize-positions-on-2026-ballot-measures"
+   ]
+  },
+  {
+   "state": "CO",
+   "id": "Proposition 136",
+   "short_title": "Cap income tax rate at 4.4 percent",
+   "summary": "Caps individual and corporate income tax rates at 4.4 percent of federal taxable income.",
+   "type": "initiated statute",
+   "category": "taxes_income",
+   "lean": "R",
+   "threshold": 0.5,
+   "threshold_note": "Simple majority. Competes with Amendment 87; if both pass, the one with more yes votes prevails.",
+   "campaign": "Citizen initiative; Colorado Democratic Party opposes; Gov. Polis predicted it would pass.",
+   "polls": [],
+   "sources": [
+    "https://news.ballotpedia.org/2026/09/14/colorado-voters-will-decide-on-14-ballot-measures-in-2026/",
+    "https://www.koaa.com/americavotes/colorados-2026-general-election-ballot-has-been-certified-what-you-need-to-know",
+    "https://www.coloradodems.org/press/colorado-democrats-finalize-positions-on-2026-ballot-measures",
+    "https://www.denvergazette.com/?p=608200"
+   ]
+  },
+  {
+   "state": "CO",
+   "id": "Proposition 137",
+   "short_title": "Sporting goods sales tax for conservation",
+   "summary": "Exempts sporting goods sales tax revenue from TABOR refunds and dedicates it to water, land, forest conservation and wildfire prevention.",
+   "type": "initiated statute",
+   "category": "environment_energy",
+   "lean": "none",
+   "threshold": 0.5,
+   "threshold_note": "Simple majority of votes cast on the measure.",
+   "campaign": "Citizen initiative; Colorado Democratic Party opposes.",
+   "polls": [],
+   "sources": [
+    "https://news.ballotpedia.org/2026/09/14/colorado-voters-will-decide-on-14-ballot-measures-in-2026/",
+    "https://www.koaa.com/americavotes/colorados-2026-general-election-ballot-has-been-certified-what-you-need-to-know",
+    "https://www.coloradodems.org/press/colorado-democrats-finalize-positions-on-2026-ballot-measures"
+   ]
+  },
+  {
+   "state": "HI",
+   "id": "Question 1",
+   "short_title": "More Senate time on judicial appointments",
+   "summary": "Gives the state Senate 60 days instead of 30 to act on judicial appointments made April 1 through December 31 when not in session.",
+   "type": "legislative referral constitutional",
+   "category": "other",
+   "lean": "none",
+   "threshold": 0.5,
+   "threshold_note": "Must win a majority of all ballots cast in the election; blank votes count as no.",
+   "campaign": "Referred by Legislature; no organized campaigns reported.",
+   "polls": [],
+   "sources": [
+    "https://www.hawaiipublicradio.org/local-news/2026-10-13/voting-explainer-2026-state-constitutional-amendment-ballot-questions"
+   ]
+  },
+  {
+   "state": "HI",
+   "id": "Question 2",
+   "short_title": "County tax increment bonds for infrastructure",
+   "summary": "Lets counties issue bonds for sewer, water and drainage in designated districts repaid from property tax revenue growth, outside debt limits.",
+   "type": "legislative referral constitutional",
+   "category": "bonds_spending",
+   "lean": "none",
+   "threshold": 0.5,
+   "threshold_note": "Must win a majority of all ballots cast in the election; blank votes count as no.",
+   "campaign": "Referred by Legislature; supporters say it aids housing; no organized campaigns reported.",
+   "polls": [],
+   "sources": [
+    "https://www.hawaiipublicradio.org/local-news/2026-10-13/voting-explainer-2026-state-constitutional-amendment-ballot-questions"
+   ]
+  },
+  {
+   "state": "ID",
+   "id": "HJR 4",
+   "short_title": "Only Legislature may legalize marijuana and drugs",
+   "summary": "Gives the Legislature sole power to legalize marijuana, narcotics and other psychoactive substances, blocking legalization by citizen initiative.",
+   "type": "legislative referral constitutional",
+   "category": "marijuana",
+   "lean": "R",
+   "threshold": 0.5,
+   "threshold_note": "Simple majority of votes cast on the measure.",
+   "campaign": "Referred by Republican legislature; Democrats oppose saying it removes voter power.",
+   "polls": [],
+   "sources": [
+    "https://legislature.idaho.gov/proposed-amendment-to-the-idaho-constitution/",
+    "https://www.kmvt.com/2026/06/05/idaho-legislators-approve-language-ballot-measures-marijuana-english-official-language/"
+   ]
+  },
+  {
+   "state": "ID",
+   "id": "HJR 6",
+   "short_title": "English as official state language",
+   "summary": "Adds a constitutional provision making English the official language of Idaho.",
+   "type": "legislative referral constitutional",
+   "category": "other",
+   "lean": "R",
+   "threshold": 0.5,
+   "threshold_note": "Simple majority of votes cast on the measure.",
+   "campaign": "Referred by Republican legislature; opponents note state law already designates English.",
+   "polls": [],
+   "sources": [
+    "https://legislature.idaho.gov/proposed-amendment-to-the-idaho-constitution/",
+    "https://www.kmvt.com/2026/06/05/idaho-legislators-approve-language-ballot-measures-marijuana-english-official-language/"
+   ]
+  },
+  {
+   "state": "ID",
+   "id": "Reproductive Freedom and Privacy Act (initiative)",
+   "short_title": "Restore abortion access before viability",
+   "summary": "Creates a statutory right to reproductive decisions including abortion before fetal viability, with emergencies after, and protects contraception and IVF.",
+   "type": "initiated statute",
+   "category": "abortion",
+   "lean": "D",
+   "threshold": 0.5,
+   "threshold_note": "Simple majority of votes cast on the measure.",
+   "campaign": "Citizen initiative led by organizer Melanie Folwell (Idahoans United for Women and Family); 75,478 signatures; opposed by Idaho Chooses Life.",
+   "polls": [
+    {
+     "pollster": "Boise State University School of Public Service (2026 Idaho Public Policy Survey)",
+     "sponsor": "Boise State University",
+     "sponsor_side": "independent",
+     "start": null,
+     "end": null,
+     "n": null,
+     "pop": "A",
+     "yes": 61,
+     "no": 28,
+     "undecided": 12,
+     "url": "https://idahocapitalsun.com/2026/07/10/repub/in-deep-red-idaho-support-for-ballot-question-on-abortion-access-is-spread-across-party-lines/",
+     "note": "Field dates and n not given in news report; approximate shares (strongly or somewhat support); asked before the measure qualified"
+    }
+   ],
+   "sources": [
+    "https://www.kmvt.com/2026/07/14/reproductive-rights-measure-qualifies-idaho-ballot-cannabis-initiative-falls-short/",
+    "https://idahocapitalsun.com/2026/07/13/initiative-to-end-idahos-strict-abortion-ban-qualifies-for-novembers-general-election-ballot/",
+    "https://idahocapitalsun.com/2026/07/10/repub/in-deep-red-idaho-support-for-ballot-question-on-abortion-access-is-spread-across-party-lines/"
+   ]
+  },
+  {
+   "state": "MT",
+   "id": "CI-132",
+   "short_title": "Keep judicial elections nonpartisan",
+   "summary": "Amends the constitution to require that judicial elections remain nonpartisan.",
+   "type": "initiated constitutional amendment",
+   "category": "other",
+   "lean": "D",
+   "threshold": 0.5,
+   "threshold_note": "Simple majority of votes cast on the measure.",
+   "campaign": "Montanans for Nonpartisan Courts, over 3.3 million raised through June 25; Montana Republican Party opposes.",
+   "polls": [],
+   "sources": [
+    "https://sosmt.gov/elections/ballot_issues/proposed-2026-ballot-issues/",
+    "https://news.ballotpedia.org/2026/08/19/montana-secretary-of-state-certifies-three-ballot-initiatives-for-november-addressing-judicial-elections-the-initiative-power-and-corporate-contributions-to-campaigns/",
+    "https://news.ballotpedia.org/?p=51711"
+   ]
+  },
+  {
+   "state": "MT",
+   "id": "CI-133",
+   "short_title": "Protect initiative and referendum rights",
+   "summary": "Adds initiative and referendum rights to the Declaration of Rights, applies strict scrutiny to limits, and sets rules for ballot language and signature gathering.",
+   "type": "initiated constitutional amendment",
+   "category": "elections_voting",
+   "lean": "D",
+   "threshold": 0.5,
+   "threshold_note": "Simple majority of votes cast on the measure.",
+   "campaign": "Montanans Decide, over 2 million raised; opposed by Rep. Braxton Mitchell side.",
+   "polls": [],
+   "sources": [
+    "https://sosmt.gov/elections/ballot_issues/proposed-2026-ballot-issues/",
+    "https://news.ballotpedia.org/2026/08/19/montana-secretary-of-state-certifies-three-ballot-initiatives-for-november-addressing-judicial-elections-the-initiative-power-and-corporate-contributions-to-campaigns/"
+   ]
+  },
+  {
+   "state": "MT",
+   "id": "I-194",
+   "short_title": "Bar corporate political spending via charter limits",
+   "summary": "Limits powers of artificial persons so corporations and other entities cannot spend on candidates, ballot measures or parties.",
+   "type": "initiated statute",
+   "category": "government_ethics",
+   "lean": "D",
+   "threshold": 0.5,
+   "threshold_note": "Simple majority of votes cast on the measure.",
+   "campaign": "Transparent Election Initiative PAC, 305,000 raised, endorsed by former Gov. Steve Bullock; opposed by Montanans for Free Speech.",
+   "polls": [],
+   "sources": [
+    "https://sosmt.gov/elections/ballot_issues/proposed-2026-ballot-issues/",
+    "https://news.ballotpedia.org/2026/08/19/montana-secretary-of-state-certifies-three-ballot-initiatives-for-november-addressing-judicial-elections-the-initiative-power-and-corporate-contributions-to-campaigns/"
+   ]
+  },
+  {
+   "state": "NV",
+   "id": "Question 6",
+   "short_title": "Constitutional right to abortion until viability",
+   "summary": "Second vote to add a right to abortion until fetal viability, or after to protect patient life or health, to the Nevada Constitution.",
+   "type": "initiated constitutional amendment",
+   "category": "abortion",
+   "lean": "D",
+   "threshold": 0.5,
+   "threshold_note": "Simple majority; this is the required second approval of an initiated constitutional amendment first passed in 2024. If it fails, the amendment does not take effect. Passed with 64 percent in 2024.",
+   "campaign": "Nevadans for Reproductive Freedom support; Nevadans Right to Life oppose. No money figures found.",
+   "polls": [],
+   "sources": [
+    "https://news3lv.com/news/local/nevadans-will-only-vote-on-two-statewide-ballot-questions-this-year-the-fewest-since-2012-voter-id-identification-abortion-rights",
+    "https://www.ktnv.com/news/abortion-voter-id-to-be-decided-by-nevada-voters-in-november-ballot-questions"
+   ]
+  },
+  {
+   "state": "NV",
+   "id": "Question 7",
+   "short_title": "Photo voter ID requirement",
+   "summary": "Second vote to require photo ID to vote in person and an ID number on mail ballots, effective for 2028 elections.",
+   "type": "initiated constitutional amendment",
+   "category": "voter_id",
+   "lean": "R",
+   "threshold": 0.5,
+   "threshold_note": "Simple majority; this is the required second approval of an initiated constitutional amendment first passed in 2024. If it fails, the amendment does not take effect. Passed with 73 percent in 2024.",
+   "campaign": "Backed by Dave Gibbs with support from Gov. Joe Lombardo; critics say unnecessary. No money figures found.",
+   "polls": [],
+   "sources": [
+    "https://news3lv.com/news/local/nevadans-will-only-vote-on-two-statewide-ballot-questions-this-year-the-fewest-since-2012-voter-id-identification-abortion-rights",
+    "https://www.ktnv.com/news/abortion-voter-id-to-be-decided-by-nevada-voters-in-november-ballot-questions"
+   ]
+  },
+  {
+   "state": "NM",
+   "id": "Constitutional Amendment 1",
+   "short_title": "End pocket veto, require veto explanations",
+   "summary": "Bills the governor neither signs nor vetoes become law, and the governor must explain any full or partial veto.",
+   "type": "legislative referral constitutional",
+   "category": "government_ethics",
+   "lean": "none",
+   "threshold": 0.5,
+   "threshold_note": "Simple majority of votes cast on the measure.",
+   "campaign": "Co-sponsored by Rep. Matthew McQueen (D); critics call it superfluous.",
+   "polls": [],
+   "sources": [
+    "https://www.sos.nm.gov/wp-content/uploads/2026/08/2026-CA-and-GOB-Questions.pdf",
+    "https://sourcenm.com/2026/09/17/new-mexico-election-2026-constitutional-amendments-1-3/"
+   ]
+  },
+  {
+   "state": "NM",
+   "id": "Constitutional Amendment 2",
+   "short_title": "Allow school elections with partisan elections",
+   "summary": "Removes the requirement that school elections be held separately from partisan elections, allowing them on November even year ballots.",
+   "type": "legislative referral constitutional",
+   "category": "elections_voting",
+   "lean": "none",
+   "threshold": 0.5,
+   "threshold_note": "Simple majority assumed. It amends Art. VII Sec. 1 (elective franchise), which Art. XIX Sec. 1 has historically shielded with a 3/4 statewide and 2/3 per county requirement; whether that applies was not confirmed.",
+   "campaign": "Co-sponsored by Sen. Linda Trujillo (D); critics warn of voter fatigue.",
+   "polls": [],
+   "sources": [
+    "https://www.sos.nm.gov/wp-content/uploads/2026/08/2026-CA-and-GOB-Questions.pdf",
+    "https://sourcenm.com/2026/09/17/new-mexico-election-2026-constitutional-amendments-1-3/"
+   ]
+  },
+  {
+   "state": "NM",
+   "id": "Constitutional Amendment 3",
+   "short_title": "Nominating committee for university regents",
+   "summary": "Creates nominating committees to recommend university regents to the governor and bars recent party switchers from serving.",
+   "type": "legislative referral constitutional",
+   "category": "education",
+   "lean": "none",
+   "threshold": 0.5,
+   "threshold_note": "Simple majority of votes cast on the measure.",
+   "campaign": "Co-sponsored by Sen. Jeff Steinborn (D).",
+   "polls": [],
+   "sources": [
+    "https://www.sos.nm.gov/wp-content/uploads/2026/08/2026-CA-and-GOB-Questions.pdf",
+    "https://sourcenm.com/2026/09/17/new-mexico-election-2026-constitutional-amendments-1-3/"
+   ]
+  },
+  {
+   "state": "NM",
+   "id": "Constitutional Amendment 4",
+   "short_title": "Tie legislator pay to median income",
+   "summary": "Gives legislators a salary tied to state median household income, with delayed implementation.",
+   "type": "legislative referral constitutional",
+   "category": "government_ethics",
+   "lean": "none",
+   "threshold": 0.5,
+   "threshold_note": "Simple majority of votes cast on the measure.",
+   "campaign": "Referred by Legislature; no campaign details found.",
+   "polls": [],
+   "sources": [
+    "https://www.sos.nm.gov/wp-content/uploads/2026/08/2026-CA-and-GOB-Questions.pdf",
+    "https://sourcenm.com/2026/09/17/new-mexico-election-2026-constitutional-amendments-1-3/"
+   ]
+  },
+  {
+   "state": "NM",
+   "id": "Bond Question 1",
+   "short_title": "Senior citizen facilities bond",
+   "summary": "Authorizes 21,582,213 dollars in general obligation bonds for senior citizen facility improvements and equipment.",
+   "type": "bond",
+   "category": "bonds_spending",
+   "lean": "none",
+   "threshold": 0.5,
+   "threshold_note": "Simple majority of votes cast on the measure.",
+   "campaign": "2026 Capital Projects GO Bond Act; repaid by property tax levy.",
+   "polls": [],
+   "sources": [
+    "https://www.sos.nm.gov/wp-content/uploads/2026/08/2026-CA-and-GOB-Questions.pdf"
+   ]
+  },
+  {
+   "state": "NM",
+   "id": "Bond Question 2",
+   "short_title": "Library acquisitions bond",
+   "summary": "Authorizes 19,324,188 dollars in general obligation bonds for academic, public school, public and tribal library resources.",
+   "type": "bond",
+   "category": "bonds_spending",
+   "lean": "none",
+   "threshold": 0.5,
+   "threshold_note": "Simple majority of votes cast on the measure.",
+   "campaign": "2026 Capital Projects GO Bond Act; repaid by property tax levy.",
+   "polls": [],
+   "sources": [
+    "https://www.sos.nm.gov/wp-content/uploads/2026/08/2026-CA-and-GOB-Questions.pdf"
+   ]
+  },
+  {
+   "state": "NM",
+   "id": "Bond Question 3",
+   "short_title": "Higher education and tribal schools bond",
+   "summary": "Authorizes 352,225,379 dollars in general obligation bonds for higher education institutions, special schools and tribal schools.",
+   "type": "bond",
+   "category": "bonds_spending",
+   "lean": "none",
+   "threshold": 0.5,
+   "threshold_note": "Simple majority of votes cast on the measure.",
+   "campaign": "2026 Capital Projects GO Bond Act; repaid by property tax levy.",
+   "polls": [],
+   "sources": [
+    "https://www.sos.nm.gov/wp-content/uploads/2026/08/2026-CA-and-GOB-Questions.pdf"
+   ]
+  },
+  {
+   "state": "UT",
+   "id": "Amendment A",
+   "short_title": "Flexible publication of proposed amendments",
+   "summary": "Replaces the two month newspaper publication rule for proposed amendments, letting lawmakers set the format if notice is given 60 days before the election.",
+   "type": "legislative referral constitutional",
+   "category": "other",
+   "lean": "none",
+   "threshold": 0.5,
+   "threshold_note": "Simple majority of votes cast on the measure.",
+   "campaign": "Passed Legislature unanimously; no opposition campaign.",
+   "polls": [],
+   "sources": [
+    "https://www.deseret.com/politics/2026/10/06/two-amendments-one-fights-utah-ballot-november/"
+   ]
+  },
+  {
+   "state": "UT",
+   "id": "Amendment B",
+   "short_title": "60 percent vote for tax raising initiatives",
+   "summary": "Requires 60 percent voter approval for citizen initiatives that create, raise or expand taxes.",
+   "type": "legislative referral constitutional",
+   "category": "elections_voting",
+   "lean": "R",
+   "threshold": 0.5,
+   "threshold_note": "Amendment B itself needs a simple majority.",
+   "campaign": "Sponsored by Sen. Lincoln Fillmore and Rep. Jason Kyle, backed by Utah Taxpayers Association and Taxpayer Shield PAC; opposed by Utahns Protecting Our Constitution (Better Boundaries), described as a million dollar campaign.",
+   "polls": [
+    {
+     "pollster": "Noble Predictive Insights",
+     "sponsor": null,
+     "sponsor_side": "independent",
+     "start": "2026-09-08",
+     "end": "2026-09-12",
+     "n": 602,
+     "pop": "RV",
+     "yes": 50,
+     "no": 21,
+     "undecided": 23,
+     "url": "https://www.ksl.com/article/51631261/proposed-amendment-would-raise-the-bar-for-some-utah-ballot-initiatives",
+     "note": "6 percent said they do not plan to vote; sponsor not stated"
+    }
+   ],
+   "sources": [
+    "https://www.deseret.com/politics/2026/10/06/two-amendments-one-fights-utah-ballot-november/",
+    "https://www.ksl.com/article/51631261/proposed-amendment-would-raise-the-bar-for-some-utah-ballot-initiatives",
+    "https://www.axios.com/local/salt-lake-city/2026/10/07/amendment-b-utah-legislature-taxes-raise-thresehold-ballot-initatives"
+   ]
+  },
+  {
+   "state": "WA",
+   "id": "Initiative Measure No. IL26-638",
+   "short_title": "Girls' sports limited to biological females",
+   "summary": "Bars students defined as biologically male from girls' interschool sports and requires a provider statement verifying sex to participate.",
+   "type": "initiated statute",
+   "category": "lgbtq_rights",
+   "lean": "R",
+   "threshold": 0.5,
+   "threshold_note": "Simple majority of votes cast on the measure.",
+   "campaign": "Let's Go Washington (Brian Heywood) initiative to the Legislature, 400,000 plus signatures; Legislature did not act; WEA and Northwest Progressive Institute oppose.",
+   "polls": [
+    {
+     "pollster": "Undisclosed",
+     "sponsor": "Let's Go Washington",
+     "sponsor_side": "yes",
+     "start": "2026-08-01",
+     "end": "2026-08-31",
+     "n": 7500,
+     "pop": "LV",
+     "yes": 56,
+     "no": 24,
+     "undecided": 22,
+     "url": "https://komonews.com/news/local/new-polling-shows-support-for-washington-transgender-girls-sports-initiative-high-school-interscholastic-wiaa-trans-discrimination-inclusivity-local-community-politics-midterm-election",
+     "note": "Sponsor internal poll; field dates reported only as August 2026 (start/end are month bounds, not exact); methodology not disclosed; released about Oct 7, 2026"
+    }
+   ],
+   "sources": [
+    "https://www.theurbanist.org/2026-general-election-endorsements/",
+    "https://www.kxly.com/news/politics/4thepeople-elections-coverage/washington-voters-to-decide-on-transgender-athlete-ban-and-parents-rights-initiatives/article_5eb03564-1b25-4057-aa51-3f4f94cee980.html",
+    "https://en.wikipedia.org/wiki/2026_Washington_Initiative_IL26-638",
+    "https://www.kuow.org/elections/2026-10-05/polling-shows-ban-on-trans-girls-in-girls-sports-could-pass-in-november",
+    "https://www.foxnews.com/outkick-sports/poll-shows-washington-state-voters-ready-end-boys-competing-girls-sports"
+   ]
+  },
+  {
+   "state": "WA",
+   "id": "Initiative Measure No. IL26-001",
+   "short_title": "Parents' Bill of Rights reinstatement",
+   "summary": "Fully reinstates the Parents' Bill of Rights giving parents access to student academic, medical and counseling records and notifications, repealing 2025 changes.",
+   "type": "initiated statute",
+   "category": "education",
+   "lean": "R",
+   "threshold": 0.5,
+   "threshold_note": "Simple majority of votes cast on the measure.",
+   "campaign": "Let's Go Washington initiative to the Legislature; Legislature did not act; WEA and LGBTQ advocates oppose.",
+   "polls": [],
+   "sources": [
+    "https://www.theurbanist.org/2026-general-election-endorsements/",
+    "https://www.kxly.com/news/politics/4thepeople-elections-coverage/washington-voters-to-decide-on-transgender-athlete-ban-and-parents-rights-initiatives/article_5eb03564-1b25-4057-aa51-3f4f94cee980.html"
+   ]
+  },
+  {
+   "state": "WA",
+   "id": "Initiative Measure No. IP26-645",
+   "short_title": "Repeal millionaires income tax, ban income taxes",
+   "summary": "Repeals the 2026 9.9 percent tax on individual income over 1 million and bars state and local income taxes.",
+   "type": "initiated statute",
+   "category": "taxes_income",
+   "lean": "R",
+   "threshold": 0.5,
+   "threshold_note": "Simple majority of votes cast on the measure.",
+   "campaign": "Let's Go Washington initiative to the people; No campaign backed by Rick Steves and Ken Jennings; court upheld ballot language including fiscal impact statement (about 11.4 billion revenue loss FY2027 to 2031).",
+   "polls": [
+    {
+     "pollster": "DHM Research",
+     "sponsor": null,
+     "sponsor_side": "independent",
+     "start": "2026-09-14",
+     "end": "2026-09-21",
+     "n": 400,
+     "pop": null,
+     "yes": 35,
+     "no": 57,
+     "undecided": 8,
+     "url": "https://www.cpapracticeadvisor.com/?p=190794",
+     "note": "Split sample: half shown fiscal impact ballot language; population not stated (residents); sponsor not stated"
+    },
+    {
+     "pollster": "DHM Research",
+     "sponsor": null,
+     "sponsor_side": "independent",
+     "start": "2026-09-14",
+     "end": "2026-09-21",
+     "n": 400,
+     "pop": null,
+     "yes": 40,
+     "no": 44,
+     "undecided": 16,
+     "url": "https://www.cpapracticeadvisor.com/?p=190794",
+     "note": "Split sample: half NOT shown fiscal impact language; population not stated"
+    }
+   ],
+   "sources": [
+    "https://www.wastatepta.org/?p=26671",
+    "https://www.fox13seattle.com/news/ballot-wording-supports-millionaires-tax",
+    "https://komonews.com/news/politics/millioinares-tax-washington-state-survey-find-ballot-language-could-sway-november-vote-on-millionaires-tax-olympia-governer-ballot-state-attorney-generals-office",
+    "https://www.theurbanist.org/2026-general-election-endorsements/"
+   ]
+  },
+  {
+   "state": "WY",
+   "id": "Proposed Initiative Proposition Number One",
+   "short_title": "50 percent homestead property tax exemption",
+   "summary": "Exempts 50 percent of the assessed value of a qualifying owner occupied primary residence from property tax.",
+   "type": "initiated statute",
+   "category": "taxes_property",
+   "lean": "R",
+   "threshold": 0.5,
+   "threshold_note": "Must receive a majority of all ballots cast in the general election, not just votes on the question; blank votes effectively count as no.",
+   "campaign": "Sponsored by BCR Initiatives (Brent Bien, Cheryl Aguiar, Rich Weber); first Wyoming initiative on the ballot since 1996; state revenue loss about 92.6 million in FY2028; a group organized against it.",
+   "polls": [],
+   "sources": [
+    "https://sos.wyo.gov/Elections/Docs/2026/2026_Statewide_Ballot_Propositions.pdf",
+    "https://news.ballotpedia.org/2025/01/08/wyoming-voters-to-decide-on-ballot-initiative-to-exempt-50-of-home-property-value-from-taxes-the-first-initiative-to-appear-on-the-states-ballot-in-30-years/",
+    "https://sos.wyo.gov/Media/2025/SoS_Release_2025-11-18.pdf"
+   ]
+  },
+  {
+   "state": "AK",
+   "id": "Ballot Measure 2",
+   "short_title": "Repeal open primaries and ranked choice voting",
+   "summary": "Repeals the top four open primary and ranked choice general elections, restoring party primaries, and repeals 2020 campaign finance disclosure rules.",
+   "type": "initiated statute",
+   "category": "ranked_choice",
+   "lean": "R",
+   "threshold": 0.5,
+   "threshold_note": "Simple majority of votes cast on the measure.",
+   "campaign": "Repeal Now (yes) raised 1.1 million, 846,000 from Aurora Action Network; No on 2 / Protect Alaska's Elections raised 5.75 million, 4 million from Unite America. 2024 repeal failed by 737 votes.",
+   "polls": [],
+   "sources": [
+    "https://alaskapublic.org/news/politics/elections/2026-07-29/alaskans-to-vote-on-ballot-measure-that-would-overhaul-state-election-system",
+    "https://alaskabeacon.com/2026/07/31/ranked-choice-voting-hold-on-alaskans-have-another-ballot-measure-to-decide-first/",
+    "https://akcommonground.org/2026-ballot-measures-are-you-confused/"
+   ]
+  },
+  {
+   "state": "AK",
+   "id": "Ballot Measure 3",
+   "short_title": "Only U.S. citizens may vote",
+   "summary": "Amends state law to provide that only U.S. citizens may vote in any Alaska election.",
+   "type": "initiated statute",
+   "category": "elections_voting",
+   "lean": "R",
+   "threshold": 0.5,
+   "threshold_note": "Simple majority of votes cast on the measure.",
+   "campaign": "Citizen initiative (indirect statute); no campaign finance found.",
+   "polls": [],
+   "sources": [
+    "https://theballotbrief.com/measures/alaska/ballot-measure-3",
+    "https://news.ballotpedia.org/2026/07/08/six-citizenship-voting-measures-on-the-ballot-in-2026-continue-historical-trend/",
+    "https://akcommonground.org/2026-ballot-measures-are-you-confused/"
+   ]
+  }
+ ],
+ "gaps": "Oregon: no statewide measures on Nov 3 per Oregon SOS (Measure 120 gas tax referendum was on May 19, 2026 and failed). Alaska Ballot Measure 1 (campaign contribution limits) was on the Aug 18 primary ballot, so excluded. Washington: official ballot designations unconfirmed; sources use IL26-638/I-638, IL26-001/I-001, IP26-645/I-645; SOS page could not be fetched. No WA SJRs found. Arizona: one source called the school spending measure Prop 143; azfamily, Axios and Arizona Mirror say Prop 320, used here. Montana: SOS lists only CI-132, CI-133, I-194 as qualified; no 2025 legislative referrals found but not independently confirmed. Utah: only Amendments A and B per Deseret News; HB 267 union referendum not on ballot (not separately confirmed why). Wyoming: SOS 2026 propositions PDF shows only the initiative; SJ7 abortion amendment failed introduction. Idaho: initiative ballot label (Proposition number) not found; Boise State poll lacks field dates and n. Polls not found for any AZ, CO, NV, AK, MT, NM, HI, WY measure or ID HJR 4/HJR 6 within budget. KSNV aired voter ID polling graphic for NV with no published numbers. PPIC July 2026 reportedly had Prop 45 at 73 percent yes and PPIC February had Prop 1 at 49 percent yes but full numbers/dates were not retrieved so excluded. PPIC Sept 2026 undecided shares not reported. Let's Go Washington I-638 poll is sponsor internal with undisclosed pollster and only month level dates. NM Amendment 2 possible supermajority requirement unverified. Search budget of 40 exhausted; Ballotpedia main state pages were stale or robots blocked."
+}

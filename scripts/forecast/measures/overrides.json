@@ -1,0 +1,17 @@
+{
+ "NC|Constitutional Amendment - Require Photo ID for Voting": {
+  "id": "Photo ID Amendment"
+ },
+ "NC|Constitutional Amendment - Maximum Income Tax Rate of 3.5%": {
+  "id": "Income Tax Cap Amendment"
+ },
+ "NC|Constitutional Amendment - Property Tax Levy Limit": {
+  "id": "Property Tax Limit Amendment"
+ },
+ "CA|Proposition 39": {
+  "category": "voter_id"
+ },
+ "ID|Reproductive Freedom and Privacy Act (initiative)": {
+  "id": "Reproductive Freedom and Privacy Act"
+ }
+}

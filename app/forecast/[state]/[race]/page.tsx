@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import ForecastNav from "@/app/components/opp/ForecastNav";
 import { notFound } from "next/navigation";
 import fs from "node:fs";
 import path from "node:path";
@@ -98,6 +99,7 @@ export default async function Page({ params }: { params: Promise<{ state: string
         <Link href="/">Home</Link><span className="sep">/</span><Link href="/forecast">Forecast</Link><span className="sep">/</span>
         <Link href={`/forecast?office=${r.office}`}>{r.office === "senate" ? "Senate" : r.office === "governor" ? "Governor" : "House"}</Link><span className="sep">/</span><span>{STATE_NAME[r.st] ?? r.st}{r.office === "house" ? ` ${r.district}` : ""}</span>
       </nav>
+      <ForecastNav />
       <header className="ph">
         <div className="eye g">2026 forecast</div>
         <h1>{officeTitle} <em>forecast</em></h1>

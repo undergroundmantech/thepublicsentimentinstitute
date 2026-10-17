@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import ForecastNav from "@/app/components/opp/ForecastNav";
 import { notFound } from "next/navigation";
 import Hemicycle, { type HemiSeat } from "@/app/components/opp/Hemicycle";
 import SeatHist from "@/app/components/opp/SeatHist";
@@ -66,6 +67,7 @@ export default async function Page({ params }: { params: Promise<{ st: string; c
         <Link href="/">Home</Link><span className="sep">/</span><Link href="/forecast">Forecast</Link><span className="sep">/</span>
         <Link href="/forecast/legislatures">State legislatures</Link><span className="sep">/</span><span>{c.name}</span>
       </nav>
+      <ForecastNav />
       <header className="sl-head">
         <div>
           <div className="eye g">2026 state legislative forecast</div>

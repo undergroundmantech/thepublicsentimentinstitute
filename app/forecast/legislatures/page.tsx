@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import ForecastNav from "@/app/components/opp/ForecastNav";
 import Hemicycle, { type HemiSeat } from "@/app/components/opp/Hemicycle";
 import LegisTiles from "@/app/components/opp/LegisTiles";
 import USLegisMap, { type USChamber } from "@/app/components/opp/USLegisMap";
@@ -42,6 +43,7 @@ export default function LegislaturesPage() {
       <nav className="crumbs" aria-label="Breadcrumb">
         <Link href="/">Home</Link><span className="sep">/</span><Link href="/forecast">Forecast</Link><span className="sep">/</span><span>State legislatures</span>
       </nav>
+      <ForecastNav />
       <header className="ph">
         <div className="eye g">2026 forecast</div>
         <h1>State legislatures <em>forecast</em></h1>

@@ -1,0 +1,1004 @@
+{
+  "region": "south",
+  "as_of": "2026-10-17",
+  "states_checked": [
+    "AL",
+    "AR",
+    "FL",
+    "GA",
+    "KY",
+    "LA",
+    "MS",
+    "NC",
+    "OK",
+    "SC",
+    "TN",
+    "TX",
+    "VA",
+    "WV"
+  ],
+  "measures": [
+    {
+      "state": "AL",
+      "id": "Statewide Amendment 1",
+      "short_title": "Lieutenant governor vacancies and legislative officer pay",
+      "summary": "Provides an election to fill a lieutenant governor vacancy early in a term, lets the Legislature set pay for the lieutenant governor and legislative officers by joint resolution, and requires a legislative officer to approve legislative travel spending.",
+      "type": "legislative referral constitutional",
+      "category": "government_ethics",
+      "lean": "none",
+      "threshold": 0.5,
+      "threshold_note": "",
+      "campaign": "Sponsored by Sen. Sam Givhan R; passed both chambers unanimously; no organized campaign reported.",
+      "polls": [],
+      "sources": [
+        "https://alabamareflector.com/2026/08/05/alabamians-to-vote-on-four-statewide-constitutional-amendments-in-november/",
+        "https://theballotbrief.com/measures/alabama",
+        "https://www.sos.alabama.gov/sites/default/files/election-2026/2026GeneralElectionStateCertificationofConstitutionalAmendments.pdf"
+      ]
+    },
+    {
+      "state": "AL",
+      "id": "Statewide Amendment 2",
+      "short_title": "Process for merging county school systems",
+      "summary": "Creates a constitutional process for merging neighboring county school systems, with a State Board of Education impact study and a protest and referendum procedure.",
+      "type": "legislative referral constitutional",
+      "category": "education",
+      "lean": "none",
+      "threshold": 0.5,
+      "threshold_note": "",
+      "campaign": "Sponsored by Rep. Terri Collins R; passed House 96 to 2 and Senate unanimously; no organized campaign reported.",
+      "polls": [],
+      "sources": [
+        "https://alabamareflector.com/2026/08/05/alabamians-to-vote-on-four-statewide-constitutional-amendments-in-november/",
+        "https://theballotbrief.com/measures/alabama",
+        "https://www.sos.alabama.gov/sites/default/files/election-2026/2026GeneralElectionStateCertificationofConstitutionalAmendments.pdf"
+      ]
+    },
+    {
+      "state": "AL",
+      "id": "Statewide Amendment 3",
+      "short_title": "Daily Pledge and student led prayer in schools",
+      "summary": "Requires local school boards to adopt policies for a daily Pledge of Allegiance in public K to 12 schools and authorizes policies allowing student initiated, student led prayer.",
+      "type": "legislative referral constitutional",
+      "category": "education",
+      "lean": "R",
+      "threshold": 0.5,
+      "threshold_note": "",
+      "campaign": "Sponsored by Rep. Reed Ingram R; passed House 94 to 4 and Senate unanimously; no organized campaign reported.",
+      "polls": [],
+      "sources": [
+        "https://alabamareflector.com/2026/08/05/alabamians-to-vote-on-four-statewide-constitutional-amendments-in-november/",
+        "https://theballotbrief.com/measures/alabama",
+        "https://www.sos.alabama.gov/sites/default/files/election-2026/2026GeneralElectionStateCertificationofConstitutionalAmendments.pdf"
+      ]
+    },
+    {
+      "state": "AL",
+      "id": "Statewide Amendment 4",
+      "short_title": "Weekly national anthem in public schools",
+      "summary": "Requires local school boards to adopt policies for each public K to 12 school to play or perform the first stanza of the Star Spangled Banner at least once a week.",
+      "type": "legislative referral constitutional",
+      "category": "education",
+      "lean": "R",
+      "threshold": 0.5,
+      "threshold_note": "",
+      "campaign": "Sponsored by Sen. Gerald Allen R; passed Senate 22 to 5 and House 75 to 27; no organized campaign reported.",
+      "polls": [],
+      "sources": [
+        "https://alabamareflector.com/2026/08/05/alabamians-to-vote-on-four-statewide-constitutional-amendments-in-november/",
+        "https://theballotbrief.com/measures/alabama",
+        "https://www.sos.alabama.gov/sites/default/files/election-2026/2026GeneralElectionStateCertificationofConstitutionalAmendments.pdf"
+      ]
+    },
+    {
+      "state": "AR",
+      "id": "Issue 1",
+      "short_title": "Only U.S. citizens may vote",
+      "summary": "Amends the constitution so only U.S. citizens who meet state qualifications may vote in state and local elections in Arkansas.",
+      "type": "legislative referral constitutional",
+      "category": "elections_voting",
+      "lean": "R",
+      "threshold": 0.5,
+      "threshold_note": "",
+      "campaign": "Legislative referral; critics cited by the UA Public Policy Center say it could lead to stricter proof of citizenship rules; no campaign money reported.",
+      "polls": [
+        {
+          "pollster": "Talk Business & Politics-Hendrix College Poll",
+          "sponsor": "Talk Business & Politics / Hendrix College",
+          "sponsor_side": "independent",
+          "start": "2026-08-11",
+          "end": "2026-08-12",
+          "n": 1217,
+          "pop": "LV",
+          "yes": 60,
+          "no": 27,
+          "undecided": 13,
+          "url": "https://talkbusiness.net/2026/08/poll-voters-weigh-in-on-4-ballot-proposals/",
+          "note": "SMS text to web; MOE +/-4.7"
+        }
+      ],
+      "sources": [
+        "https://www.axios.com/local/nw-arkansas/2026/10/13/ballot-initiatives-arkansas-2026-guide",
+        "https://theballotbrief.com/measures/arkansas",
+        "https://talkbusiness.net/2026/08/poll-voters-weigh-in-on-4-ballot-proposals/",
+        "https://www.uaex.uada.edu/business-communities/voter-education/docs/2026-Arkansas-Ballot-Issues-Voter-Guide.pdf"
+      ]
+    },
+    {
+      "state": "AR",
+      "id": "Issue 2",
+      "short_title": "Right to bear arms shall not be infringed",
+      "summary": "Declares the right to keep and bear arms, including ammunition, accessories and components, a natural, fundamental and individual right that shall not be infringed.",
+      "type": "legislative referral constitutional",
+      "category": "guns",
+      "lean": "R",
+      "threshold": 0.5,
+      "threshold_note": "",
+      "campaign": "Supporters say it clarifies what arms covers; opponents worry the without limitation wording could conflict with bans on gun possession by felons or domestic abusers; no money reported.",
+      "polls": [
+        {
+          "pollster": "Talk Business & Politics-Hendrix College Poll",
+          "sponsor": "Talk Business & Politics / Hendrix College",
+          "sponsor_side": "independent",
+          "start": "2026-08-11",
+          "end": "2026-08-12",
+          "n": 1217,
+          "pop": "LV",
+          "yes": 67,
+          "no": 23,
+          "undecided": 10,
+          "url": "https://talkbusiness.net/2026/08/poll-voters-weigh-in-on-4-ballot-proposals/",
+          "note": "SMS text to web; MOE +/-4.7"
+        }
+      ],
+      "sources": [
+        "https://www.axios.com/local/nw-arkansas/2026/10/13/ballot-initiatives-arkansas-2026-guide",
+        "https://theballotbrief.com/measures/arkansas",
+        "https://talkbusiness.net/2026/08/poll-voters-weigh-in-on-4-ballot-proposals/",
+        "https://www.uaex.uada.edu/business-communities/voter-education/docs/2026-Arkansas-Ballot-Issues-Voter-Guide.pdf"
+      ]
+    },
+    {
+      "state": "AR",
+      "id": "Issue 3",
+      "short_title": "Economic development districts and public loans",
+      "summary": "Lets the General Assembly create economic development districts and fund programs, loans and grants of public money, including district bonds for industrial, headquarters or sports projects.",
+      "type": "legislative referral constitutional",
+      "category": "taxes_sales_other",
+      "lean": "none",
+      "threshold": 0.5,
+      "threshold_note": "",
+      "campaign": "No organized support or opposition or money reported.",
+      "polls": [
+        {
+          "pollster": "Talk Business & Politics-Hendrix College Poll",
+          "sponsor": "Talk Business & Politics / Hendrix College",
+          "sponsor_side": "independent",
+          "start": "2026-08-11",
+          "end": "2026-08-12",
+          "n": 1217,
+          "pop": "LV",
+          "yes": 37,
+          "no": 25,
+          "undecided": 38,
+          "url": "https://talkbusiness.net/2026/08/poll-voters-weigh-in-on-4-ballot-proposals/",
+          "note": "SMS text to web; MOE +/-4.7"
+        }
+      ],
+      "sources": [
+        "https://www.axios.com/local/nw-arkansas/2026/10/13/ballot-initiatives-arkansas-2026-guide",
+        "https://theballotbrief.com/measures/arkansas",
+        "https://talkbusiness.net/2026/08/poll-voters-weigh-in-on-4-ballot-proposals/",
+        "https://www.uaex.uada.edu/business-communities/voter-education/docs/2026-Arkansas-Ballot-Issues-Voter-Guide.pdf"
+      ]
+    },
+    {
+      "state": "AR",
+      "id": "Issue 4",
+      "short_title": "$500 million water infrastructure bonds",
+      "summary": "Authorizes the Arkansas Natural Resources Commission to issue up to $500 million in general obligation bonds for water, waste disposal, pollution control, flood control, irrigation and wetlands projects.",
+      "type": "bond",
+      "category": "bonds_spending",
+      "lean": "none",
+      "threshold": 0.5,
+      "threshold_note": "",
+      "campaign": "Legislatively referred bond issue; no organized opposition or money reported.",
+      "polls": [
+        {
+          "pollster": "Talk Business & Politics-Hendrix College Poll",
+          "sponsor": "Talk Business & Politics / Hendrix College",
+          "sponsor_side": "independent",
+          "start": "2026-08-11",
+          "end": "2026-08-12",
+          "n": 1217,
+          "pop": "LV",
+          "yes": 66,
+          "no": 10,
+          "undecided": 24,
+          "url": "https://talkbusiness.net/2026/08/poll-voters-weigh-in-on-4-ballot-proposals/",
+          "note": "SMS text to web; MOE +/-4.7"
+        }
+      ],
+      "sources": [
+        "https://www.axios.com/local/nw-arkansas/2026/10/13/ballot-initiatives-arkansas-2026-guide",
+        "https://theballotbrief.com/measures/arkansas",
+        "https://talkbusiness.net/2026/08/poll-voters-weigh-in-on-4-ballot-proposals/",
+        "https://www.uaex.uada.edu/business-communities/voter-education/docs/2026-Arkansas-Ballot-Issues-Voter-Guide.pdf"
+      ]
+    },
+    {
+      "state": "FL",
+      "id": "Amendment 1",
+      "short_title": "Bigger rainy day fund with required deposits",
+      "summary": "Raises the Budget Stabilization Fund cap to 25% of general revenue and requires annual transfers of $750 million until the cap is met, with limited suspension and withdrawal rules.",
+      "type": "legislative referral constitutional",
+      "category": "bonds_spending",
+      "lean": "none",
+      "threshold": 0.6,
+      "threshold_note": "Florida constitutional amendments need 60% of votes cast on the measure.",
+      "campaign": "Republican Party of Florida endorses; Jolly D supports with guardrails; Gov. DeSantis calls it foolish and Donalds R opposes; Miami-Dade and Palm Beach Democratic parties urge no; no money reported.",
+      "polls": [],
+      "sources": [
+        "https://www.wlrn.org/government-politics/2026-10-15/what-florida-voters-need-to-know-about-amendments-1-and-2",
+        "https://theballotbrief.com/measures/florida",
+        "https://constitutionalinitiatives.dos.fl.gov/Home/InitDetail?account=10&seqnum=108"
+      ]
+    },
+    {
+      "state": "FL",
+      "id": "Amendment 2",
+      "short_title": "Property tax exemption for farm equipment",
+      "summary": "Exempts tangible personal property such as farm equipment used for agricultural production or agritourism on agricultural land from property taxes starting in 2027.",
+      "type": "legislative referral constitutional",
+      "category": "taxes_property",
+      "lean": "none",
+      "threshold": 0.6,
+      "threshold_note": "Florida constitutional amendments need 60% of votes cast on the measure.",
+      "campaign": "Sponsored by Sen. Keith Truenow R; Hillsborough County Democratic Party opposes; about $31M a year local revenue loss estimated; no money reported.",
+      "polls": [],
+      "sources": [
+        "https://www.wlrn.org/government-politics/2026-10-15/what-florida-voters-need-to-know-about-amendments-1-and-2",
+        "https://theballotbrief.com/measures/florida",
+        "https://constitutionalinitiatives.dos.fl.gov/Home/InitDetail?account=10&seqnum=109"
+      ]
+    },
+    {
+      "state": "FL",
+      "id": "Amendment 3",
+      "short_title": "Large homestead property tax cut toward elimination",
+      "summary": "Exempts the first $250,000 of homestead value from non school levies on a schedule toward full elimination, limits local property tax uses and future business assessments, and requires five years residency for new residents to get the larger exemption.",
+      "type": "legislative referral constitutional",
+      "category": "taxes_property",
+      "lean": "R",
+      "threshold": 0.6,
+      "threshold_note": "Florida constitutional amendments need 60% of votes cast on the measure. Placed by HJR 1F.",
+      "campaign": "Yes on 3 backed by RPOF, Gov. DeSantis and Florida Realtors, which has spent about $18M; opposed by the Florida Democratic Party, many local officials, sheriffs and public employee unions; Florida Policy Institute estimates $12B recurring local revenue loss.",
+      "polls": [
+        {
+          "pollster": "Sachs Media",
+          "sponsor": null,
+          "sponsor_side": "independent",
+          "start": "2026-06-22",
+          "end": "2026-06-24",
+          "n": 850,
+          "pop": "RV",
+          "yes": 64,
+          "no": 36,
+          "undecided": null,
+          "url": "https://floridianpress.com/2026/07/sachs-media-poll-florida-voters-would-approve-property-tax-amendment-on-november-ballot/",
+          "note": "Population reported only as Florida voters; sponsor not stated; no undecided reported, appears forced choice; MOE +/-3.8"
+        },
+        {
+          "pollster": "University of North Florida Public Opinion Research Lab",
+          "sponsor": "UNF PORL",
+          "sponsor_side": "independent",
+          "start": "2026-07-08",
+          "end": "2026-07-17",
+          "n": null,
+          "pop": null,
+          "yes": 61,
+          "no": 32,
+          "undecided": null,
+          "url": "https://www.miamitimesonline.com/business/amendment-3-can-pass-but-only-if-voters-never-learn-what-it-does-new-unf/article_1bc02430-ff81-4dfc-835e-cd4cdb460739.html",
+          "note": "Ballot wording result; n and population not stated in the report found; informed version with $11.86B local revenue cost: 45 yes, 47 no; MOE +/-3.8"
+        },
+        {
+          "pollster": "Sachs Media",
+          "sponsor": null,
+          "sponsor_side": "independent",
+          "start": null,
+          "end": "2026-08-03",
+          "n": null,
+          "pop": null,
+          "yes": 64,
+          "no": null,
+          "undecided": null,
+          "url": "https://thecapitolist.com/new-poll-shows-amendment-3-above-60-threshold-with-revised-language/",
+          "note": "Only reported as an earlier Sachs survey conducted Aug. 3 showing 64% support; other details not reported"
+        },
+        {
+          "pollster": "Sachs Media",
+          "sponsor": null,
+          "sponsor_side": "independent",
+          "start": "2026-08-18",
+          "end": "2026-08-18",
+          "n": 800,
+          "pop": "RV",
+          "yes": 63,
+          "no": 37,
+          "undecided": null,
+          "url": "https://thecapitolist.com/new-poll-shows-amendment-3-above-60-threshold-with-revised-language/",
+          "note": "Population reported as Florida voters; split sample: original ballot language 60 yes, revised AG Uthmeier language 65 yes; MOE +/-3.5"
+        },
+        {
+          "pollster": "Mason-Dixon Polling & Strategy",
+          "sponsor": "NBC 6 South Florida / Telemundo Station Group",
+          "sponsor_side": "independent",
+          "start": "2026-09-28",
+          "end": "2026-10-01",
+          "n": 625,
+          "pop": "LV",
+          "yes": 55,
+          "no": 26,
+          "undecided": 19,
+          "url": "https://www.nbcmiami.com/elections/majority-of-florida-voters-support-amendment-3-new-poll-finds/3869270/",
+          "note": "Registered voters who said they were likely to vote; live phone; MOE +/-4"
+        },
+        {
+          "pollster": "McLaughlin & Associates",
+          "sponsor": "Associated Industries of Florida",
+          "sponsor_side": "independent",
+          "start": "2026-09-28",
+          "end": "2026-10-01",
+          "n": 800,
+          "pop": "LV",
+          "yes": 53,
+          "no": 28,
+          "undecided": 19,
+          "url": "https://www.winknews.com/news/new-poll-shows-floridas-amendment-3-falling-short-of-support-needed-to-pass-in-november/article_649bb81b-dec9-474d-8674-aff514d8e9c8.html",
+          "note": "AIF is a business advocacy group; its position on Amendment 3 not confirmed, so marked independent; 40% definitely yes; MOE +/-3.5"
+        },
+        {
+          "pollster": "Targoz Market Research",
+          "sponsor": "James Madison Institute",
+          "sponsor_side": "independent",
+          "start": "2026-09-28",
+          "end": "2026-10-04",
+          "n": 857,
+          "pop": "LV",
+          "yes": 63,
+          "no": 21,
+          "undecided": 15,
+          "url": "https://www.cpapracticeadvisor.com/?p=191562",
+          "note": "Online, shown ballot language; 1,200 RV total incl. 857 LV; JMI is a conservative think tank, position on Amendment 3 not confirmed; Florida Politics reports support falls once tradeoffs are described"
+        },
+        {
+          "pollster": "St. Pete Polls",
+          "sponsor": "Florida Politics",
+          "sponsor_side": "independent",
+          "start": "2026-10-05",
+          "end": "2026-10-07",
+          "n": 836,
+          "pop": "LV",
+          "yes": 42,
+          "no": 35,
+          "undecided": 23,
+          "url": "https://www.cpapracticeadvisor.com/?p=191562",
+          "note": "IVR and text; MOE +/-3"
+        }
+      ],
+      "sources": [
+        "https://theballotbrief.com/measures/florida",
+        "https://constitutionalinitiatives.dos.fl.gov/Home/InitDetail?account=10&seqnum=110",
+        "https://www.cpapracticeadvisor.com/?p=191562",
+        "https://www.rismedia.com/2026/10/14/election-day-looming-polls-differ-florida-property-tax-cut-amendment/",
+        "https://www.nbcmiami.com/elections/majority-of-florida-voters-support-amendment-3-new-poll-finds/3869270/",
+        "https://www.winknews.com/news/new-poll-shows-floridas-amendment-3-falling-short-of-support-needed-to-pass-in-november/article_649bb81b-dec9-474d-8674-aff514d8e9c8.html",
+        "https://floridianpress.com/2026/07/sachs-media-poll-florida-voters-would-approve-property-tax-amendment-on-november-ballot/",
+        "https://thecapitolist.com/new-poll-shows-amendment-3-above-60-threshold-with-revised-language/",
+        "https://www.miamitimesonline.com/business/amendment-3-can-pass-but-only-if-voters-never-learn-what-it-does-new-unf/article_1bc02430-ff81-4dfc-835e-cd4cdb460739.html"
+      ]
+    },
+    {
+      "state": "GA",
+      "id": "Amendment 1",
+      "short_title": "Raise conservation use acreage cap to 4,000",
+      "summary": "Doubles the maximum acreage that can qualify for bona fide conservation use property tax assessment from 2,000 to 4,000 acres.",
+      "type": "legislative referral constitutional",
+      "category": "taxes_property",
+      "lean": "none",
+      "threshold": 0.5,
+      "threshold_note": "",
+      "campaign": "HR 32 2025; passed with two thirds; no organized campaign or polling reported.",
+      "polls": [],
+      "sources": [
+        "https://sos.ga.gov/sites/default/files/2026-09/2026%20Constitutional%20Summaries%20booklet%20FINAL.pdf",
+        "https://www.news4jax.com/voters-guide/2026/10/08/2026-voters-guide-georgia-constitutional-amendments/",
+        "https://theballotbrief.com/measures/georgia"
+      ]
+    },
+    {
+      "state": "GA",
+      "id": "Amendment 2",
+      "short_title": "Nonpartisan elections for all probate judges",
+      "summary": "Requires all probate court judges to be elected in nonpartisan elections.",
+      "type": "legislative referral constitutional",
+      "category": "elections_voting",
+      "lean": "none",
+      "threshold": 0.5,
+      "threshold_note": "",
+      "campaign": "HR 251; no organized campaign reported.",
+      "polls": [],
+      "sources": [
+        "https://sos.ga.gov/sites/default/files/2026-09/2026%20Constitutional%20Summaries%20booklet%20FINAL.pdf",
+        "https://www.news4jax.com/voters-guide/2026/10/08/2026-voters-guide-georgia-constitutional-amendments/",
+        "https://theballotbrief.com/measures/georgia"
+      ]
+    },
+    {
+      "state": "GA",
+      "id": "Amendment 3",
+      "short_title": "Dedicated Next Generation 911 fund",
+      "summary": "Authorizes the General Assembly to dedicate existing revenues, such as 911 fees, to a nonlapsing fund used only for 911 systems.",
+      "type": "legislative referral constitutional",
+      "category": "other",
+      "lean": "none",
+      "threshold": 0.5,
+      "threshold_note": "",
+      "campaign": "HR 1243 per the SOS booklet, News4JAX lists HR 1251; no organized campaign reported.",
+      "polls": [],
+      "sources": [
+        "https://sos.ga.gov/sites/default/files/2026-09/2026%20Constitutional%20Summaries%20booklet%20FINAL.pdf",
+        "https://www.news4jax.com/voters-guide/2026/10/08/2026-voters-guide-georgia-constitutional-amendments/",
+        "https://theballotbrief.com/measures/georgia"
+      ]
+    },
+    {
+      "state": "KY",
+      "id": "Constitutional Amendment 1",
+      "short_title": "Limit governor pardons near gubernatorial election",
+      "summary": "Bars the governor from granting pardons, commutations or reprieves from 60 days before the gubernatorial election until the new term begins, except in impeachment matters.",
+      "type": "legislative referral constitutional",
+      "category": "criminal_justice",
+      "lean": "none",
+      "threshold": 0.5,
+      "threshold_note": "",
+      "campaign": "SB 10 by Sen. Chris McDaniel R, prompted by Gov. Bevin's 2019 end of term pardons; no organized opposition or money reported. Ballot question says the window ends at swearing in while the text says the fifth Tuesday after the election.",
+      "polls": [],
+      "sources": [
+        "https://theballotbrief.com/measures/kentucky",
+        "https://en.wikipedia.org/wiki/2026_Kentucky_Amendment_1",
+        "https://nkytribune.com/2026/09/on-the-ballot-proposed-reform-of-govenors-pardon-power-is-put-before-kentucky-voters/",
+        "https://web.sos.ky.gov/ballots/FAYETTE%202026G.pdf"
+      ]
+    },
+    {
+      "state": "LA",
+      "id": "Amendment 1",
+      "short_title": "Surviving spouse can transfer disabled veteran exemption",
+      "summary": "Lets a surviving spouse of a qualifying disabled veteran move the homestead property tax exemption to a new home one time.",
+      "type": "legislative referral constitutional",
+      "category": "taxes_property",
+      "lean": "none",
+      "threshold": 0.5,
+      "threshold_note": "",
+      "campaign": "Legislative referral; no organized campaign, money or polling reported; PAR Louisiana guide summarizes arguments.",
+      "polls": [],
+      "sources": [
+        "https://www.wafb.com/2026/10/14/louisiana-voters-face-10-constitutional-amendments-november-heres-what-yes-or-no-vote-means/",
+        "https://theballotbrief.com/measures/louisiana",
+        "https://news.ballotpedia.org/2026/06/05/louisiana-voters-will-decide-on-10-legislatively-referred-ballot-measures-in-nov-2026-the-most-since-2014/"
+      ]
+    },
+    {
+      "state": "LA",
+      "id": "Amendment 2",
+      "short_title": "Keep right to restore prior maximum millage",
+      "summary": "Lets local taxing authorities levy below their prior maximum rate without permanently losing the ability to return to a previously authorized maximum, up to the voter approved cap.",
+      "type": "legislative referral constitutional",
+      "category": "taxes_property",
+      "lean": "none",
+      "threshold": 0.5,
+      "threshold_note": "",
+      "campaign": "Legislative referral; no organized campaign, money or polling reported; PAR Louisiana guide summarizes arguments.",
+      "polls": [],
+      "sources": [
+        "https://www.wafb.com/2026/10/14/louisiana-voters-face-10-constitutional-amendments-november-heres-what-yes-or-no-vote-means/",
+        "https://theballotbrief.com/measures/louisiana",
+        "https://news.ballotpedia.org/2026/06/05/louisiana-voters-will-decide-on-10-legislatively-referred-ballot-measures-in-nov-2026-the-most-since-2014/"
+      ]
+    },
+    {
+      "state": "LA",
+      "id": "Amendment 3",
+      "short_title": "No post conviction bail for crimes against minors",
+      "summary": "Prohibits post conviction bail for people convicted of certain aggravated offenses against children.",
+      "type": "legislative referral constitutional",
+      "category": "criminal_justice",
+      "lean": "R",
+      "threshold": 0.5,
+      "threshold_note": "",
+      "campaign": "Legislative referral; no organized campaign, money or polling reported; PAR Louisiana guide summarizes arguments.",
+      "polls": [],
+      "sources": [
+        "https://www.wafb.com/2026/10/14/louisiana-voters-face-10-constitutional-amendments-november-heres-what-yes-or-no-vote-means/",
+        "https://theballotbrief.com/measures/louisiana",
+        "https://news.ballotpedia.org/2026/06/05/louisiana-voters-will-decide-on-10-legislatively-referred-ballot-measures-in-nov-2026-the-most-since-2014/"
+      ]
+    },
+    {
+      "state": "LA",
+      "id": "Amendment 4",
+      "short_title": "Lifetime two term limit for governor",
+      "summary": "Bars anyone who has served more than one and a half terms as governor from being elected again, making two terms a lifetime limit.",
+      "type": "legislative referral constitutional",
+      "category": "government_ethics",
+      "lean": "none",
+      "threshold": 0.5,
+      "threshold_note": "",
+      "campaign": "Sponsored by Reps. Mike Bayham R and Mandie Landry D; no organized campaign or money reported.",
+      "polls": [],
+      "sources": [
+        "https://www.wafb.com/2026/10/14/louisiana-voters-face-10-constitutional-amendments-november-heres-what-yes-or-no-vote-means/",
+        "https://theballotbrief.com/measures/louisiana",
+        "https://news.ballotpedia.org/2026/06/05/louisiana-voters-will-decide-on-10-legislatively-referred-ballot-measures-in-nov-2026-the-most-since-2014/",
+        "https://www.wafb.com/2026/10/14/louisiana-voters-could-ban-governors-serving-more-than-two-terms-under-november-amendment/"
+      ]
+    },
+    {
+      "state": "LA",
+      "id": "Amendment 5",
+      "short_title": "Flexibility in paying retirement system debt",
+      "summary": "Removes the rule that nonrecurring state money must pay a retirement system's oldest unfunded liability first.",
+      "type": "legislative referral constitutional",
+      "category": "bonds_spending",
+      "lean": "none",
+      "threshold": 0.5,
+      "threshold_note": "",
+      "campaign": "Legislative referral; no organized campaign, money or polling reported; PAR Louisiana guide summarizes arguments.",
+      "polls": [],
+      "sources": [
+        "https://www.wafb.com/2026/10/14/louisiana-voters-face-10-constitutional-amendments-november-heres-what-yes-or-no-vote-means/",
+        "https://theballotbrief.com/measures/louisiana",
+        "https://news.ballotpedia.org/2026/06/05/louisiana-voters-will-decide-on-10-legislatively-referred-ballot-measures-in-nov-2026-the-most-since-2014/"
+      ]
+    },
+    {
+      "state": "LA",
+      "id": "Amendment 6",
+      "short_title": "Extra local property tax exemption for seniors",
+      "summary": "Lets parishes and municipalities offer an additional homestead exemption of up to $30,000 assessed value, rising with age, to qualifying homeowners 65 and older.",
+      "type": "legislative referral constitutional",
+      "category": "taxes_property",
+      "lean": "none",
+      "threshold": 0.5,
+      "threshold_note": "",
+      "campaign": "Legislative referral; no organized campaign, money or polling reported; PAR Louisiana guide summarizes arguments.",
+      "polls": [],
+      "sources": [
+        "https://www.wafb.com/2026/10/14/louisiana-voters-face-10-constitutional-amendments-november-heres-what-yes-or-no-vote-means/",
+        "https://theballotbrief.com/measures/louisiana",
+        "https://news.ballotpedia.org/2026/06/05/louisiana-voters-will-decide-on-10-legislatively-referred-ballot-measures-in-nov-2026-the-most-since-2014/"
+      ]
+    },
+    {
+      "state": "LA",
+      "id": "Amendment 7",
+      "short_title": "Public funds for private drinking water lines",
+      "summary": "Allows public funds to identify, remove or replace hazardous drinking water service lines on customer owned property.",
+      "type": "legislative referral constitutional",
+      "category": "environment_energy",
+      "lean": "none",
+      "threshold": 0.5,
+      "threshold_note": "",
+      "campaign": "Legislative referral; no organized campaign, money or polling reported; PAR Louisiana guide summarizes arguments.",
+      "polls": [],
+      "sources": [
+        "https://www.wafb.com/2026/10/14/louisiana-voters-face-10-constitutional-amendments-november-heres-what-yes-or-no-vote-means/",
+        "https://theballotbrief.com/measures/louisiana",
+        "https://news.ballotpedia.org/2026/06/05/louisiana-voters-will-decide-on-10-legislatively-referred-ballot-measures-in-nov-2026-the-most-since-2014/"
+      ]
+    },
+    {
+      "state": "LA",
+      "id": "Amendment 8",
+      "short_title": "Bar foreign adversaries from expropriating property",
+      "summary": "Prohibits foreign adversaries and their agents from using expropriation to acquire private property.",
+      "type": "legislative referral constitutional",
+      "category": "other",
+      "lean": "R",
+      "threshold": 0.5,
+      "threshold_note": "",
+      "campaign": "Legislative referral; no organized campaign, money or polling reported; PAR Louisiana guide summarizes arguments.",
+      "polls": [],
+      "sources": [
+        "https://www.wafb.com/2026/10/14/louisiana-voters-face-10-constitutional-amendments-november-heres-what-yes-or-no-vote-means/",
+        "https://theballotbrief.com/measures/louisiana",
+        "https://news.ballotpedia.org/2026/06/05/louisiana-voters-will-decide-on-10-legislatively-referred-ballot-measures-in-nov-2026-the-most-since-2014/"
+      ]
+    },
+    {
+      "state": "LA",
+      "id": "Amendment 9",
+      "short_title": "Raise income limit for assessment freeze to $150,000",
+      "summary": "Raises the income limit for the special property tax assessment level freeze from $100,000 to $150,000.",
+      "type": "legislative referral constitutional",
+      "category": "taxes_property",
+      "lean": "none",
+      "threshold": 0.5,
+      "threshold_note": "",
+      "campaign": "Legislative referral; no organized campaign, money or polling reported; PAR Louisiana guide summarizes arguments.",
+      "polls": [],
+      "sources": [
+        "https://www.wafb.com/2026/10/14/louisiana-voters-face-10-constitutional-amendments-november-heres-what-yes-or-no-vote-means/",
+        "https://theballotbrief.com/measures/louisiana",
+        "https://news.ballotpedia.org/2026/06/05/louisiana-voters-will-decide-on-10-legislatively-referred-ballot-measures-in-nov-2026-the-most-since-2014/"
+      ]
+    },
+    {
+      "state": "LA",
+      "id": "Amendment 10",
+      "short_title": "Tax exemption for rehabilitated blighted property",
+      "summary": "Lets parishes create property tax exemptions for rehabilitated blighted or abandoned property.",
+      "type": "legislative referral constitutional",
+      "category": "taxes_property",
+      "lean": "none",
+      "threshold": 0.5,
+      "threshold_note": "",
+      "campaign": "Legislative referral; no organized campaign, money or polling reported; PAR Louisiana guide summarizes arguments.",
+      "polls": [],
+      "sources": [
+        "https://www.wafb.com/2026/10/14/louisiana-voters-face-10-constitutional-amendments-november-heres-what-yes-or-no-vote-means/",
+        "https://theballotbrief.com/measures/louisiana",
+        "https://news.ballotpedia.org/2026/06/05/louisiana-voters-will-decide-on-10-legislatively-referred-ballot-measures-in-nov-2026-the-most-since-2014/"
+      ]
+    },
+    {
+      "state": "NC",
+      "id": "Constitutional Amendment - Require Photo ID for Voting",
+      "short_title": "Photo ID for all voters including mail",
+      "summary": "Requires every voter, not only those voting in person, to present photo identification before voting.",
+      "type": "legislative referral constitutional",
+      "category": "voter_id",
+      "lean": "R",
+      "threshold": 0.5,
+      "threshold_note": "",
+      "campaign": "Backed by Republican legislative majority; opposed by Democrats and voting rights groups; no money reported.",
+      "polls": [
+        {
+          "pollster": "Elon University Poll / YouGov",
+          "sponsor": "Elon University",
+          "sponsor_side": "independent",
+          "start": "2026-08-21",
+          "end": "2026-08-31",
+          "n": null,
+          "pop": "LV",
+          "yes": 63,
+          "no": 25,
+          "undecided": 12,
+          "url": "https://www.elon.edu/u/news/?p=1056336",
+          "note": "YouGov online; 1,121 adults matched to 800, LV subsample size not reported; MOE +/-5.5 LV; ballot text wording"
+        },
+        {
+          "pollster": "YouGov",
+          "sponsor": "Catawba College Center for NC Politics & Public Service",
+          "sponsor_side": "independent",
+          "start": null,
+          "end": null,
+          "n": 1000,
+          "pop": "A",
+          "yes": 70,
+          "no": null,
+          "undecided": null,
+          "url": "https://catawba.edu/news/all-news/2026/yougov-34/",
+          "note": "Fielded August 2026, exact dates not given; released 2026-09-02; only support reported; question described as photo ID for absentee by mail voting"
+        }
+      ],
+      "sources": [
+        "https://s3.amazonaws.com/dl.ncsbe.gov/Elections/2026/Candidate%20Filing/statewide_referendums_20261103.pdf",
+        "https://theballotbrief.com/measures/north-carolina",
+        "https://ncnewsline.com/2026/09/17/new-nc-poll-shows-voters-strongly-favor-constitutional-amendments-on-taxes-voting/",
+        "https://www.elon.edu/u/news/?p=1056336",
+        "https://catawba.edu/news/all-news/2026/yougov-34/"
+      ]
+    },
+    {
+      "state": "NC",
+      "id": "Constitutional Amendment - Maximum Income Tax Rate of 3.5%",
+      "short_title": "Cap state income tax rate at 3.5%",
+      "summary": "Lowers the constitutional cap on the state income tax rate from 7% to 3.5%.",
+      "type": "legislative referral constitutional",
+      "category": "taxes_income",
+      "lean": "R",
+      "threshold": 0.5,
+      "threshold_note": "",
+      "campaign": "Backed by Republican legislators; NC groups launched a campaign to defeat the two tax amendments; no money reported.",
+      "polls": [
+        {
+          "pollster": "Elon University Poll / YouGov",
+          "sponsor": "Elon University",
+          "sponsor_side": "independent",
+          "start": "2026-08-21",
+          "end": "2026-08-31",
+          "n": null,
+          "pop": "LV",
+          "yes": 67,
+          "no": 18,
+          "undecided": 16,
+          "url": "https://www.elon.edu/u/news/?p=1056336",
+          "note": "YouGov online; 1,121 adults matched to 800, LV subsample size not reported; MOE +/-5.5 LV; ballot text wording"
+        },
+        {
+          "pollster": "YouGov",
+          "sponsor": "Catawba College Center for NC Politics & Public Service",
+          "sponsor_side": "independent",
+          "start": null,
+          "end": null,
+          "n": 1000,
+          "pop": "A",
+          "yes": 67,
+          "no": null,
+          "undecided": null,
+          "url": "https://catawba.edu/news/all-news/2026/yougov-34/",
+          "note": "Fielded August 2026, exact dates not given; released 2026-09-02; only support reported; with arguments on both sides support was 66"
+        }
+      ],
+      "sources": [
+        "https://s3.amazonaws.com/dl.ncsbe.gov/Elections/2026/Candidate%20Filing/statewide_referendums_20261103.pdf",
+        "https://theballotbrief.com/measures/north-carolina",
+        "https://ncnewsline.com/2026/09/17/new-nc-poll-shows-voters-strongly-favor-constitutional-amendments-on-taxes-voting/",
+        "https://www.elon.edu/u/news/?p=1056336",
+        "https://catawba.edu/news/all-news/2026/yougov-34/"
+      ]
+    },
+    {
+      "state": "NC",
+      "id": "Constitutional Amendment - Property Tax Levy Limit",
+      "short_title": "Require limits on local property tax increases",
+      "summary": "Requires the General Assembly to enact limits on how much local governments can raise property taxes.",
+      "type": "legislative referral constitutional",
+      "category": "taxes_property",
+      "lean": "R",
+      "threshold": 0.5,
+      "threshold_note": "",
+      "campaign": "Backed by Republican legislators incl. Senate Leader Berger; local government advocates and Democrats warn of service cuts; targeted by the campaign against the two tax amendments.",
+      "polls": [
+        {
+          "pollster": "Elon University Poll / YouGov",
+          "sponsor": "Elon University",
+          "sponsor_side": "independent",
+          "start": "2026-08-21",
+          "end": "2026-08-31",
+          "n": null,
+          "pop": "LV",
+          "yes": 72,
+          "no": 14,
+          "undecided": 14,
+          "url": "https://www.elon.edu/u/news/?p=1056336",
+          "note": "YouGov online; 1,121 adults matched to 800, LV subsample size not reported; MOE +/-5.5 LV; ballot text wording"
+        },
+        {
+          "pollster": "YouGov",
+          "sponsor": "Catawba College Center for NC Politics & Public Service",
+          "sponsor_side": "independent",
+          "start": null,
+          "end": null,
+          "n": 1000,
+          "pop": "A",
+          "yes": 79,
+          "no": null,
+          "undecided": null,
+          "url": "https://catawba.edu/news/all-news/2026/yougov-34/",
+          "note": "Fielded August 2026, exact dates not given; released 2026-09-02; only support reported; with arguments on both sides support was 69"
+        }
+      ],
+      "sources": [
+        "https://s3.amazonaws.com/dl.ncsbe.gov/Elections/2026/Candidate%20Filing/statewide_referendums_20261103.pdf",
+        "https://theballotbrief.com/measures/north-carolina",
+        "https://ncnewsline.com/2026/09/17/new-nc-poll-shows-voters-strongly-favor-constitutional-amendments-on-taxes-voting/",
+        "https://www.elon.edu/u/news/?p=1056336",
+        "https://catawba.edu/news/all-news/2026/yougov-34/"
+      ]
+    },
+    {
+      "state": "OK",
+      "id": "State Question 845",
+      "short_title": "Restructure Judicial Nominating Commission",
+      "summary": "Changes who can serve on the Judicial Nominating Commission and how members are selected, including appointments by current congressional districts.",
+      "type": "legislative referral constitutional",
+      "category": "criminal_justice",
+      "lean": "R",
+      "threshold": 0.5,
+      "threshold_note": "",
+      "campaign": "Legislative referral from the GOP majority; Oklahoma Policy Institute urges no, saying it strips protections in choosing top judges; no money reported.",
+      "polls": [],
+      "sources": [
+        "https://okpolicy.org/november2026elections/",
+        "https://theballotbrief.com/measures/oklahoma",
+        "https://oklahoma.gov/elections/elections-results/state-question-info.html"
+      ]
+    },
+    {
+      "state": "OK",
+      "id": "State Question 847",
+      "short_title": "Lower annual caps on taxable property value growth",
+      "summary": "Lowers annual caps on growth in taxable value from 3% to 1.75% for homesteads and farmland and from 5% to 4% for other property, and replaces the senior freeze with income based caps, starting 2027.",
+      "type": "legislative referral constitutional",
+      "category": "taxes_property",
+      "lean": "R",
+      "threshold": 0.5,
+      "threshold_note": "",
+      "campaign": "Authored by House Speaker Kyle Hilbert R, backed by Oklahoma Farm Bureau; opposed by Oklahoma Policy Institute and some Democrats over school and local revenue.",
+      "polls": [],
+      "sources": [
+        "https://okpolicy.org/november2026elections/",
+        "https://theballotbrief.com/measures/oklahoma",
+        "https://oklahoma.gov/elections/elections-results/state-question-info.html",
+        "https://www.news9.com/oklahoma-elections/oklahoma-state-question-847-property-taxes"
+      ]
+    },
+    {
+      "state": "TN",
+      "id": "Amendment 1",
+      "short_title": "Remove right to bail for specified serious offenses",
+      "summary": "Removes the constitutional right to bail for defendants charged with specified serious felonies when proof is evident, letting judges deny pretrial release.",
+      "type": "legislative referral constitutional",
+      "category": "criminal_justice",
+      "lean": "R",
+      "threshold": 0.5,
+      "threshold_note": "Must receive a majority of all votes cast in the governor's race, not just a majority of votes on the amendment.",
+      "campaign": "Sponsored by House Speaker Cameron Sexton R; Tennessee Association of Professional Bail Agents organizing opposition; no money reported.",
+      "polls": [],
+      "sources": [
+        "https://theballotbrief.com/measures/tennessee",
+        "https://tennesseelookout.com/?p=33266",
+        "https://fox17.com/news/local/early-voters-face-3-tennessee-constitutional-amendments-on-bail-taxes-and-victims-rights"
+      ]
+    },
+    {
+      "state": "TN",
+      "id": "Amendment 2",
+      "short_title": "Ban a state property tax",
+      "summary": "Prohibits the legislature from enacting taxes on property.",
+      "type": "legislative referral constitutional",
+      "category": "taxes_property",
+      "lean": "R",
+      "threshold": 0.5,
+      "threshold_note": "Must receive a majority of all votes cast in the governor's race, not just a majority of votes on the amendment.",
+      "campaign": "Yes on 2 campaign launched by Republican leaders with the Tennessee Chamber and Farm Bureau; no organized opposition reported.",
+      "polls": [],
+      "sources": [
+        "https://theballotbrief.com/measures/tennessee",
+        "https://tennesseelookout.com/?p=33266",
+        "https://fox17.com/news/local/early-voters-face-3-tennessee-constitutional-amendments-on-bail-taxes-and-victims-rights"
+      ]
+    },
+    {
+      "state": "TN",
+      "id": "Amendment 3",
+      "short_title": "Marsy's Law crime victims' rights",
+      "summary": "Rewrites and expands the constitutional list of crime victims' rights, including notice, being heard, restitution and a speedy trial.",
+      "type": "legislative referral constitutional",
+      "category": "criminal_justice",
+      "lean": "none",
+      "threshold": 0.5,
+      "threshold_note": "Must receive a majority of all votes cast in the governor's race, not just a majority of votes on the amendment.",
+      "campaign": "No visible campaign; some question cost implications.",
+      "polls": [],
+      "sources": [
+        "https://theballotbrief.com/measures/tennessee",
+        "https://tennesseelookout.com/?p=33266",
+        "https://fox17.com/news/local/early-voters-face-3-tennessee-constitutional-amendments-on-bail-taxes-and-victims-rights"
+      ]
+    },
+    {
+      "state": "VA",
+      "id": "Question 1",
+      "short_title": "Right to reproductive freedom including abortion",
+      "summary": "Adds a constitutional right to make one's own decisions about pregnancy, contraception, abortion and fertility care, allowing third trimester restrictions with health exceptions.",
+      "type": "legislative referral constitutional",
+      "category": "abortion",
+      "lean": "D",
+      "threshold": 0.5,
+      "threshold_note": "",
+      "campaign": "Supported by Gov. Spanberger, ACLU of Virginia, Planned Parenthood Virginia, Reproductive Freedom for All; opposed by Winsome Earle-Sears' vote no tour, Virginia Catholic Conference, Family Foundation; money not found.",
+      "polls": [
+        {
+          "pollster": "Christopher Newport University Wason Center",
+          "sponsor": "CNU Wason Center",
+          "sponsor_side": "independent",
+          "start": "2026-01-13",
+          "end": "2026-01-20",
+          "n": 807,
+          "pop": "RV",
+          "yes": 66,
+          "no": null,
+          "undecided": null,
+          "url": "https://cnu.edu/wason/surveys/archive/2026-01-28.html",
+          "note": "Wason Center CNU; asked before final legislative passage, describing the amendment generally; only support/strongly support published; MOE +/-4.4"
+        }
+      ],
+      "sources": [
+        "https://www.elections.virginia.gov/casting-a-ballot/candidate-list/november-2026-proposed-constitutional-amendments/",
+        "https://theballotbrief.com/measures/virginia",
+        "https://cardinalnews.org/2026/08/25/virginians-will-weigh-in-on-3-changes-to-their-state-constitution-this-fall-heres-a-look-at-the-proposed-amendments/",
+        "https://news.ballotpedia.org/2026/01/21/virginia-general-assembly-places-constitutional-amendments-on-same-sex-marriage-abortion-voting-rights-following-criminal-convictions-on-the-nov-2026-ballot/",
+        "https://en.wikipedia.org/wiki/2026_Virginia_Question_1"
+      ]
+    },
+    {
+      "state": "VA",
+      "id": "Question 2",
+      "short_title": "Repeal same sex marriage ban",
+      "summary": "Removes the 2006 ban on same sex marriage and affirms that two adults may marry regardless of sex, gender or race with equal legal treatment.",
+      "type": "legislative referral constitutional",
+      "category": "lgbtq_rights",
+      "lean": "D",
+      "threshold": 0.5,
+      "threshold_note": "",
+      "campaign": "Supported by Gov. Spanberger and Democratic legislators; opposed by Earle-Sears and conservative groups; money not found.",
+      "polls": [],
+      "sources": [
+        "https://www.elections.virginia.gov/casting-a-ballot/candidate-list/november-2026-proposed-constitutional-amendments/",
+        "https://theballotbrief.com/measures/virginia",
+        "https://cardinalnews.org/2026/08/25/virginians-will-weigh-in-on-3-changes-to-their-state-constitution-this-fall-heres-a-look-at-the-proposed-amendments/",
+        "https://news.ballotpedia.org/2026/01/21/virginia-general-assembly-places-constitutional-amendments-on-same-sex-marriage-abortion-voting-rights-following-criminal-convictions-on-the-nov-2026-ballot/",
+        "https://en.wikipedia.org/wiki/2026_Virginia_Question_2"
+      ]
+    },
+    {
+      "state": "VA",
+      "id": "Question 3",
+      "short_title": "Automatic voting rights restoration after prison",
+      "summary": "Establishes a fundamental right to vote and automatically restores voting rights to people with felony convictions upon release from incarceration, and replaces the mental incompetence bar with a capacity standard.",
+      "type": "legislative referral constitutional",
+      "category": "elections_voting",
+      "lean": "D",
+      "threshold": 0.5,
+      "threshold_note": "",
+      "campaign": "Democratic referral; Republican opposition; no committee money found.",
+      "polls": [
+        {
+          "pollster": "Christopher Newport University Wason Center",
+          "sponsor": "CNU Wason Center",
+          "sponsor_side": "independent",
+          "start": "2026-01-13",
+          "end": "2026-01-20",
+          "n": 807,
+          "pop": "RV",
+          "yes": 64,
+          "no": null,
+          "undecided": null,
+          "url": "https://cnu.edu/wason/surveys/archive/2026-01-28.html",
+          "note": "Wason Center CNU; asked before final legislative passage, describing the amendment generally; only support/strongly support published; MOE +/-4.4"
+        }
+      ],
+      "sources": [
+        "https://www.elections.virginia.gov/casting-a-ballot/candidate-list/november-2026-proposed-constitutional-amendments/",
+        "https://theballotbrief.com/measures/virginia",
+        "https://cardinalnews.org/2026/08/25/virginians-will-weigh-in-on-3-changes-to-their-state-constitution-this-fall-heres-a-look-at-the-proposed-amendments/",
+        "https://news.ballotpedia.org/2026/01/21/virginia-general-assembly-places-constitutional-amendments-on-same-sex-marriage-abortion-voting-rights-following-criminal-convictions-on-the-nov-2026-ballot/",
+        "https://www.vpm.org/elections/2026-09-18/what-is-ballot-question-3-va/"
+      ]
+    },
+    {
+      "state": "WV",
+      "id": "Amendment 1",
+      "short_title": "Only U.S. citizens may vote",
+      "summary": "Adds a requirement to the constitution that only U.S. citizens who are West Virginia residents may vote, barring local noncitizen voting.",
+      "type": "legislative referral constitutional",
+      "category": "elections_voting",
+      "lean": "R",
+      "threshold": 0.5,
+      "threshold_note": "",
+      "campaign": "SJR 9 passed unanimously; Americans for Citizen Voting supports; League of Women Voters of WV and WV Citizen Action Group oppose; no money reported.",
+      "polls": [],
+      "sources": [
+        "https://www.newsfromthestates.com/article/wv-voters-will-decide-proposed-citizen-only-voting-constitutional-amendment-november",
+        "https://news.ballotpedia.org/2026/03/17/west-virginia-becomes-fourth-state-to-place-citizenship-requirement-amendment-on-2026-ballot/",
+        "https://theballotbrief.com/measures/west-virginia"
+      ]
+    }
+  ],
+  "gaps": "MS, SC, TX: no statewide measures found for Nov 3, 2026. Not confirmed against an official certified list: Ballotpedia state pages were stale or blocked by robots, and the SC Election Commission 2026 releases and news voter guides list none. Texas holds amendment elections in odd years; Nov 2025 had 17, and none were found for 2026. MS ballot initiative restoration did not pass. Ballotpedia main and state pages served snapshots from late 2025, so the measure lists come from official SOS documents (GA booklet, NC SBE list, KY sample ballot, VA ELECT) where they could be read, plus The Ballot Brief and local news. The AL SOS certification PDF had no readable text; AL numbering comes from Alabama Reflector. Polls: no public 2026 polls found for AL, GA, KY, LA, OK, TN, WV, FL Amendments 1 and 2, or VA Question 2. The only 2026 VA poll found, CNU Wason in January, came before final passage and published support only. Roanoke College, VCU and WaPo-Schar fall polls were searched for but not found. One October 2026 Floridian Press article on an Amendment 3 poll (floridianpress.com/2026/10/poll-finds-amendment-3-failing-to-pass-when-voters-informed-of-language) could not be read because of a proxy rate limit, so it may be a missing poll. Florida Politics UNF and JMI pages could not be fetched; UNF came from a reprint and JMI/Targoz from the Sun-Sentinel via a reprint. Missing poll fields: Sachs Media sponsors, Sachs Aug 3 details, UNF n and population, Elon likely voter n, Catawba exact dates and no/undecided. Sachs and CNU only partly report the No side. Sponsor_side for AIF and JMI is marked independent because their positions on Amendment 3 were not confirmed. Campaign finance was found only for FL Amendment 3: Florida Realtors spent about $18M. Leans are judgment calls based on sponsors and endorsers."
+}

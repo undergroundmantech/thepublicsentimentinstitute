@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import ForecastNav from "@/app/components/opp/ForecastNav";
 import type { ReactNode } from "react";
 import { getModel } from "@/app/lib/forecastData";
 import { RATE, RATING_LABEL } from "@/app/lib/opp";
@@ -156,6 +157,7 @@ export default function Page() {
       <nav className="crumbs" aria-label="Breadcrumb">
         <Link href="/">Home</Link><span className="sep">/</span><Link href="/forecast">Forecast</Link><span className="sep">/</span><span>Methodology</span>
       </nav>
+      <ForecastNav />
       <header className="ph">
         <div className="eye g">Forecast methodology</div>
         <h1>How the forecast <em>works</em></h1>

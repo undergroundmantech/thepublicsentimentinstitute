@@ -1,0 +1,6 @@
+.fnav{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;margin:0 0 16px;padding:4px;border:1px solid var(--line);border-radius:999px;background:var(--glass);width:max-content;max-width:100%}
+.fnav::-webkit-scrollbar{display:none}
+.fnav a{flex:0 0 auto;padding:7px 14px;border-radius:999px;font:700 12.5px var(--font-b);color:var(--ink2);text-decoration:none;white-space:nowrap;transition:background .15s,color .15s}
+.fnav a:hover{color:var(--hi);background:rgba(var(--line-rgb),.06)}
+.fnav a.on{background:var(--hi);color:var(--bg)}
+.fnav a:focus-visible{outline:2px solid var(--b2);outline-offset:2px}

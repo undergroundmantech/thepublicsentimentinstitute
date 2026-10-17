@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import ForecastNav from "@/app/components/opp/ForecastNav";
 import { RATING_LABEL, fmtM, lastName, rating, ratingPill } from "@/app/lib/opp";
 import { OFFICE_ORDER, dbHref, getDownballot, type DBRace } from "./data";
 
@@ -52,6 +53,7 @@ export default function StatewidePage() {
       <nav className="crumbs" aria-label="Breadcrumb">
         <Link href="/">Home</Link><span className="sep">/</span><Link href="/forecast">Forecast</Link><span className="sep">/</span><span>Statewide offices</span>
       </nav>
+      <ForecastNav />
       <header className="ph">
         <div className="eye g">2026 forecast</div>
         <h1>Statewide offices <em>forecast</em></h1>

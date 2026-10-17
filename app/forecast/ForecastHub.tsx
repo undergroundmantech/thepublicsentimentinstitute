@@ -9,6 +9,7 @@ import { useJson } from "./ForecastDesk";
 import { type DBJson, type Model, dbRaces, indSide } from "./lib";
 import { RATE, raceHref } from "@/app/lib/opp";
 import USLegisMap from "@/app/components/opp/USLegisMap";
+import ForecastNav from "@/app/components/opp/ForecastNav";
 import "./hub.css";
 
 type Lvl = "sen" | "gov" | "db" | "house" | "sl";
@@ -51,6 +52,7 @@ function useHub() {
   const model = useJson<Model>("/forecast/model.json");
   const db = useJson<DBJson>("/forecast/downballot.json");
   const sl = useJson<HubSL>("/forecast/statehouse_hub.json");
+  const bm = useJson<{ updated: string; measures: [string, string, string, number, number, number, string][] }>("/forecast/measures_hub.json");
   const items = useMemo<Item[]>(() => {
     if (!model || !db || !sl) return [];
     const out: Item[] = [];
@@ -72,7 +74,7 @@ function useHub() {
     }
     return out;
   }, [model, db, sl]);
-  return { model, db, sl, items };
+  return { model, db, sl, items, bm };
 }
 
 // ── tooltip ───────────────────────────────────────────────────────────────────
@@ -364,12 +366,12 @@ function Spectrum({ items }: { items: Item[] }) {
 }
 
 // ── control strip ─────────────────────────────────────────────────────────────
-function Meter({ label, big, unit, p, sub, href, onClick }: { label: string; big: string; unit: string; p: number; sub: React.ReactNode; href?: string; onClick?: () => void }) {
+function Meter({ label, big, unit, p, sub, href, onClick, neutral }: { label: string; big: string; unit: string; p: number; sub: React.ReactNode; href?: string; onClick?: () => void; neutral?: boolean }) {
   const inner = (
     <>
       <div className="hub-m-lab">{label}</div>
-      <div className="hub-m-big"><span className={p >= 0.5 ? "d" : "r"}>{big}</span><small>{unit}</small></div>
-      <div className="hub-m-bar" aria-hidden><i style={{ width: `${p * 100}%` }} /><b /></div>
+      <div className="hub-m-big"><span className={neutral ? "" : p >= 0.5 ? "d" : "r"} style={neutral ? { color: "#2fbf9b" } : undefined}>{big}</span><small>{unit}</small></div>
+      {neutral ? null : <div className="hub-m-bar" aria-hidden><i style={{ width: `${p * 100}%` }} /><b /></div>}
       <div className="hub-m-sub">{sub}</div>
     </>
   );
@@ -378,7 +380,7 @@ function Meter({ label, big, unit, p, sub, href, onClick }: { label: string; big
 
 // ── the page ──────────────────────────────────────────────────────────────────
 export default function ForecastHub() {
-  const { model, sl, items } = useHub();
+  const { model, sl, items, bm } = useHub();
   const router = useRouter();
   const goDesk = (office: string) => {
     router.replace(`/forecast?office=${office}`, { scroll: false });
@@ -397,6 +399,7 @@ export default function ForecastHub() {
   return (
     <section className="hub fc-wide" aria-labelledby="hub-h">
       <nav className="crumbs" aria-label="Breadcrumb"><Link href="/">Home</Link><span className="sep">/</span><span>Forecast</span></nav>
+      <ForecastNav />
       <div className="hub-top">
         <div className="card hub-stagecard">
           {ready ? <GrandHemicycle items={items} /> : <div className="hub-loading"><span />Drawing every seat on the ballot</div>}
@@ -407,7 +410,7 @@ export default function ForecastHub() {
             <h1 id="hub-h">Every race on the ballot. <em>One board.</em></h1>
             <p className="lede">
               The Senate, the House, {govs.length || 36} governors, {by("db").length || 114} statewide offices and {sl?.chambers.length ?? 87} state legislative chambers,
-              forecast on one national environment. Each dot is one seat on the 2026 ballot, colored by who is favored. Hover for the odds, click for the race.
+              forecast on one national environment, plus {bm ? bm.measures.length : 145} statewide ballot measures. Each dot is one seat on the 2026 ballot, colored by who is favored. Hover for the odds, click for the race.
             </p>
             <div className="hub-ribbon">
               <span><b className="mono">{ready ? items.length.toLocaleString() : "6,700"}</b>seats</span>
@@ -427,6 +430,11 @@ export default function ForecastHub() {
                 sub={<>Expected Democratic wins <b className="d">{dbLive.reduce((a, r) => a + r.p, 0).toFixed(1)}</b></>} onClick={() => goDesk("attorney-general")} />
               <Meter label="State legislatures" big={`${favD} of ${sl.chambers.length}`} unit="favor Democrats" p={favD / sl.chambers.length}
                 sub={<>Expected Democratic chambers <b className="d">{chambersD.toFixed(1)}</b></>} href="/forecast/legislatures" />
+              {bm ? (() => {
+                const n = bm.measures.length, pass = bm.measures.filter((x) => x[4] > 0.5).length, close = bm.measures.filter((x) => x[4] > 0.35 && x[4] < 0.65).length;
+                return <Meter label="Ballot measures" big={`${pass} of ${n}`} unit="favored to pass" p={0.5} neutral
+                  sub={<>{close} close calls across {new Set(bm.measures.map((x) => x[0])).size} states</>} href="/forecast/measures" />;
+              })() : null}
             </div>
           ) : null}
         </aside>
@@ -462,6 +470,22 @@ export default function ForecastHub() {
               </div>
             </div>
           </div>
+
+          {bm ? (
+            <div className="card hub-bm">
+              <div className="card-h"><h3>Ballot measures</h3><span className="eye" style={{ marginLeft: "auto" }}>{bm.measures.length} statewide questions · closest first</span><Link className="btn sm" href="/forecast/measures">All measures</Link></div>
+              <div className="card-b hub-bm-grid">
+                {[...bm.measures].sort((a, b) => Math.abs(a[4] - 0.5) - Math.abs(b[4] - 0.5)).slice(0, 12).map(([st, label, title, yes, prob, thr, href]) => (
+                  <Link key={href} href={href} className="hub-bm-row">
+                    <span className="hub-tag sl">{st}</span>
+                    <span className="hub-bm-name"><b>{label}</b><small>{title}</small></span>
+                    <span className="hub-bm-bar" title={`Yes ${yes.toFixed(1)}%, needs ${Math.round(thr * 1000) / 10}%`}><i style={{ width: `${Math.max(0, Math.min(100, ((yes - 20) / 60) * 100))}%` }} /><s style={{ left: `${((thr * 100 - 20) / 60) * 100}%` }} /></span>
+                    <span className="mono hub-bm-p" style={{ color: prob >= 0.6 ? "#2fbf9b" : prob <= 0.4 ? "#e8794a" : "var(--gold)" }}>{pct(prob)}</span>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          ) : null}
 
           <div className="card hub-speccard">
             <div className="card-h"><h3>Every margin on one line</h3><span className="eye" style={{ marginLeft: "auto" }}>{items.filter((i) => i.m != null).length.toLocaleString()} contested races</span></div>

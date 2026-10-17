@@ -1,0 +1,901 @@
+{
+ "region": "northeast",
+ "as_of": "2026-10-17",
+ "states_checked": [
+  "CT",
+  "DE",
+  "ME",
+  "MD",
+  "MA",
+  "NH",
+  "NJ",
+  "NY",
+  "PA",
+  "RI",
+  "VT",
+  "DC"
+ ],
+ "measures": [
+  {
+   "state": "MA",
+   "id": "Question 1",
+   "short_title": "Apply public records law to Legislature and governor",
+   "summary": "Makes most records of the governor's office and the state Legislature subject to the public records law, ending their current exclusion.",
+   "type": "initiated statute",
+   "category": "government_ethics",
+   "lean": "none",
+   "threshold": 0.5,
+   "threshold_note": "Initiative statute: majority of votes on the question AND yes votes at least 30 percent of all ballots cast.",
+   "campaign": "Backed by Auditor Diana DiZoglio's Committee for Transparency and Democracy and the Coalition for Healthy Democracy, which raised about $5.2M across Q1 and Q3; no organized opposition filed.",
+   "polls": [
+    {
+     "pollster": "UMass Amherst Poll / YouGov",
+     "sponsor": "WCVB",
+     "sponsor_side": "independent",
+     "start": "2026-08-05",
+     "end": "2026-08-12",
+     "n": 800,
+     "pop": "RV",
+     "yes": 84,
+     "no": 7,
+     "undecided": 7,
+     "url": "https://www.umass.edu/poll/about/reports/2026-08-massachusetts-public-opinion-poll-0",
+     "note": "UMass Amherst ballot numbering differs from official; matched by content. Yes/No combine definitely+probably. 3 pct said they did not understand."
+    },
+    {
+     "pollster": "MassINC Polling Group",
+     "sponsor": "CommonWealth Beacon",
+     "sponsor_side": "independent",
+     "start": "2026-09-14",
+     "end": "2026-09-22",
+     "n": 800,
+     "pop": "LV",
+     "yes": 63,
+     "no": 14,
+     "undecided": 23,
+     "url": "https://commonwealthbeacon.org/wp-content/uploads/2026/09/Topline-2026-09-CWB-Ballot-Questions.pdf"
+    }
+   ],
+   "sources": [
+    "https://www.sec.state.ma.us/divisions/elections/research-and-statistics/2026-Information-for-voters/2026-ballot-questions.htm",
+    "https://www.boston.com/news/politics/2026/07/21/there-9-ballot-questions-will-be-up-for-a-vote-in-november/",
+    "https://www.nbcboston.com/news/local/massachusetts-ballot-questions-2026/4026011/",
+    "https://commonwealthbeacon.org/ballot-questions/deep-pocketed-donors-flood-the-ballot-question-field-with-cash/"
+   ]
+  },
+  {
+   "state": "MA",
+   "id": "Question 2",
+   "short_title": "Collective bargaining for public defender agency staff",
+   "summary": "Lets Committee for Public Counsel Services employees, including public defenders, unionize and bargain collectively, and raises bar advocate pay.",
+   "type": "initiated statute",
+   "category": "labor",
+   "lean": "D",
+   "threshold": 0.5,
+   "threshold_note": "Initiative statute: majority of votes on the question AND yes votes at least 30 percent of all ballots cast.",
+   "campaign": "Labor Unions for Public Counsel Workers Rights supports; no organized opposition filed; supporters spent at least $1M.",
+   "polls": [
+    {
+     "pollster": "UMass Amherst Poll / YouGov",
+     "sponsor": "WCVB",
+     "sponsor_side": "independent",
+     "start": "2026-08-05",
+     "end": "2026-08-12",
+     "n": 800,
+     "pop": "RV",
+     "yes": 45,
+     "no": 24,
+     "undecided": 18,
+     "url": "https://www.umass.edu/poll/about/reports/2026-08-massachusetts-public-opinion-poll-0",
+     "note": "UMass Amherst ballot numbering differs from official; matched by content. Yes/No combine definitely+probably. 13 pct said they did not understand."
+    },
+    {
+     "pollster": "MassINC Polling Group",
+     "sponsor": "CommonWealth Beacon",
+     "sponsor_side": "independent",
+     "start": "2026-09-14",
+     "end": "2026-09-22",
+     "n": 800,
+     "pop": "LV",
+     "yes": 48,
+     "no": 25,
+     "undecided": 26,
+     "url": "https://commonwealthbeacon.org/wp-content/uploads/2026/09/Topline-2026-09-CWB-Ballot-Questions.pdf"
+    }
+   ],
+   "sources": [
+    "https://www.sec.state.ma.us/divisions/elections/research-and-statistics/2026-Information-for-voters/2026-ballot-questions.htm",
+    "https://www.boston.com/news/politics/2026/07/21/there-9-ballot-questions-will-be-up-for-a-vote-in-november/",
+    "https://www.nbcboston.com/news/local/massachusetts-ballot-questions-2026/4026011/",
+    "https://commonwealthbeacon.org/ballot-questions/deep-pocketed-donors-flood-the-ballot-question-field-with-cash/",
+    "https://boston.com/news/politics/2026/08/19/poll-has-good-news-for-mass-ballot-questions-except-these-two"
+   ]
+  },
+  {
+   "state": "MA",
+   "id": "Question 3",
+   "short_title": "Single all-party primary, top two advance",
+   "summary": "Replaces party primaries for state offices with one primary listing all candidates, with the top two finishers advancing to the general election.",
+   "type": "initiated statute",
+   "category": "elections_voting",
+   "lean": "none",
+   "threshold": 0.5,
+   "threshold_note": "Initiative statute: majority of votes on the question AND yes votes at least 30 percent of all ballots cast.",
+   "campaign": "Coalition for Healthy Democracy (Danielle Allen) spent nearly $5M, top donors Randy Peeler over $1M and Andrew Balson nearly $800K; opposed by state Democratic and Republican parties and Voter Rights MA.",
+   "polls": [
+    {
+     "pollster": "UNH Survey Center (Bay State Poll)",
+     "sponsor": "none (UNH)",
+     "sponsor_side": "independent",
+     "start": "2026-02-12",
+     "end": "2026-02-16",
+     "n": 620,
+     "pop": "LV",
+     "yes": 41,
+     "no": null,
+     "undecided": null,
+     "url": "https://scholars.unh.edu/cgi/viewcontent.cgi?article=1930&context=survey_center_polls",
+     "note": "Pre-certification Feb wave, support/oppose wording on a 5 point scale. PDF tables were misaligned in text extraction; yes is from the release narrative. Only the 41 pct plurality support figure is reported reliably."
+    },
+    {
+     "pollster": "UMass Amherst Poll / YouGov",
+     "sponsor": "WCVB",
+     "sponsor_side": "independent",
+     "start": "2026-08-05",
+     "end": "2026-08-12",
+     "n": 800,
+     "pop": "RV",
+     "yes": 51,
+     "no": 32,
+     "undecided": 17,
+     "url": "https://www.umass.edu/poll/about/reports/2026-08-massachusetts-public-opinion-poll-0",
+     "note": "UMass Amherst ballot numbering differs from official; matched by content. Yes/No combine definitely+probably."
+    },
+    {
+     "pollster": "Suffolk University Political Research Center",
+     "sponsor": "Boston Globe",
+     "sponsor_side": "independent",
+     "start": "2026-08-13",
+     "end": "2026-08-16",
+     "n": 500,
+     "pop": "LV",
+     "yes": 40.2,
+     "no": 44.8,
+     "undecided": 14.8,
+     "url": "https://www.suffolk.edu/-/media/suffolk/documents/academics/research-at-suffolk/suprc/polls/massachusetts2/2026/8_18_2026_massachusetts_dem_primary_statewide_marginals.pdf",
+     "note": "Democratic primary likely voters only (Democrats plus unenrolled), not a general electorate sample."
+    },
+    {
+     "pollster": "UNH Survey Center (Bay State Poll)",
+     "sponsor": "none (UNH)",
+     "sponsor_side": "independent",
+     "start": "2026-09-17",
+     "end": "2026-09-21",
+     "n": 564,
+     "pop": "LV",
+     "yes": 41,
+     "no": 39,
+     "undecided": 19,
+     "url": "https://scholars.unh.edu/cgi/viewcontent.cgi?article=2007&context=survey_center_polls",
+     "note": "Extractor flagged chart and text inconsistency for this item; verify against PDF."
+    },
+    {
+     "pollster": "MassINC Polling Group",
+     "sponsor": "CommonWealth Beacon",
+     "sponsor_side": "independent",
+     "start": "2026-09-14",
+     "end": "2026-09-22",
+     "n": 800,
+     "pop": "LV",
+     "yes": 43,
+     "no": 36,
+     "undecided": 20,
+     "url": "https://commonwealthbeacon.org/wp-content/uploads/2026/09/Topline-2026-09-CWB-Ballot-Questions.pdf"
+    }
+   ],
+   "sources": [
+    "https://www.sec.state.ma.us/divisions/elections/research-and-statistics/2026-Information-for-voters/2026-ballot-questions.htm",
+    "https://www.boston.com/news/politics/2026/07/21/there-9-ballot-questions-will-be-up-for-a-vote-in-november/",
+    "https://www.nbcboston.com/news/local/massachusetts-ballot-questions-2026/4026011/",
+    "https://commonwealthbeacon.org/ballot-questions/deep-pocketed-donors-flood-the-ballot-question-field-with-cash/",
+    "https://www.wbur.org/news/2026/09/30/ballot-questions-gun-law-primaries"
+   ]
+  },
+  {
+   "state": "MA",
+   "id": "Question 4",
+   "short_title": "Election Day voter registration",
+   "summary": "Lets eligible residents register to vote or update their registration at the polls on Election Day and during early voting.",
+   "type": "initiated statute",
+   "category": "elections_voting",
+   "lean": "D",
+   "threshold": 0.5,
+   "threshold_note": "Initiative statute: majority of votes on the question AND yes votes at least 30 percent of all ballots cast.",
+   "campaign": "YES on Election Day Registration, a push led by Secretary of State Bill Galvin, about $156K total activity; Massachusetts Republican Party opposes.",
+   "polls": [
+    {
+     "pollster": "UNH Survey Center (Bay State Poll)",
+     "sponsor": "none (UNH)",
+     "sponsor_side": "independent",
+     "start": "2026-02-12",
+     "end": "2026-02-16",
+     "n": 620,
+     "pop": "LV",
+     "yes": 61,
+     "no": 21,
+     "undecided": 17,
+     "url": "https://scholars.unh.edu/cgi/viewcontent.cgi?article=1930&context=survey_center_polls",
+     "note": "Pre-certification Feb wave, support/oppose wording on a 5 point scale. PDF tables were misaligned in text extraction; yes is from the release narrative. Yes 61 per narrative; no 21 and undecided 17 (13 neutral plus 4 unsure) from the table row whose 49 strongly / 13 somewhat breakdown matches the narrative."
+    },
+    {
+     "pollster": "UMass Amherst Poll / YouGov",
+     "sponsor": "WCVB",
+     "sponsor_side": "independent",
+     "start": "2026-08-05",
+     "end": "2026-08-12",
+     "n": 800,
+     "pop": "RV",
+     "yes": 69,
+     "no": 22,
+     "undecided": 5,
+     "url": "https://www.umass.edu/poll/about/reports/2026-08-massachusetts-public-opinion-poll-0",
+     "note": "UMass Amherst ballot numbering differs from official; matched by content. Yes/No combine definitely+probably."
+    },
+    {
+     "pollster": "UNH Survey Center (Bay State Poll)",
+     "sponsor": "none (UNH)",
+     "sponsor_side": "independent",
+     "start": "2026-09-17",
+     "end": "2026-09-21",
+     "n": 564,
+     "pop": "LV",
+     "yes": 59,
+     "no": 38,
+     "undecided": 4,
+     "url": "https://scholars.unh.edu/cgi/viewcontent.cgi?article=2007&context=survey_center_polls",
+     "note": "Extractor flagged chart and text inconsistency for this item; verify against PDF."
+    },
+    {
+     "pollster": "MassINC Polling Group",
+     "sponsor": "CommonWealth Beacon",
+     "sponsor_side": "independent",
+     "start": "2026-09-14",
+     "end": "2026-09-22",
+     "n": 800,
+     "pop": "LV",
+     "yes": 53,
+     "no": 33,
+     "undecided": 14,
+     "url": "https://commonwealthbeacon.org/wp-content/uploads/2026/09/Topline-2026-09-CWB-Ballot-Questions.pdf"
+    }
+   ],
+   "sources": [
+    "https://www.sec.state.ma.us/divisions/elections/research-and-statistics/2026-Information-for-voters/2026-ballot-questions.htm",
+    "https://www.boston.com/news/politics/2026/07/21/there-9-ballot-questions-will-be-up-for-a-vote-in-november/",
+    "https://www.nbcboston.com/news/local/massachusetts-ballot-questions-2026/4026011/",
+    "https://commonwealthbeacon.org/ballot-questions/deep-pocketed-donors-flood-the-ballot-question-field-with-cash/"
+   ]
+  },
+  {
+   "state": "MA",
+   "id": "Question 5",
+   "short_title": "Change state revenue cap and rebate excess",
+   "summary": "Bases the state tax revenue limit on prior year actual net state revenue plus wage and salary growth and rebates revenue above the limit to taxpayers.",
+   "type": "initiated statute",
+   "category": "taxes_income",
+   "lean": "R",
+   "threshold": 0.5,
+   "threshold_note": "Initiative statute: majority of votes on the question AND yes votes at least 30 percent of all ballots cast.",
+   "campaign": "Massachusetts Opportunity Alliance business coalition (Taxpayers for an Affordable Massachusetts) about $1.9M in-kind; labor unions (Protect Massachusetts' Future) over $700K opposing.",
+   "polls": [
+    {
+     "pollster": "UMass Amherst Poll / YouGov",
+     "sponsor": "WCVB",
+     "sponsor_side": "independent",
+     "start": "2026-08-05",
+     "end": "2026-08-12",
+     "n": 800,
+     "pop": "RV",
+     "yes": 59,
+     "no": 14,
+     "undecided": 16,
+     "url": "https://www.umass.edu/poll/about/reports/2026-08-massachusetts-public-opinion-poll-0",
+     "note": "UMass Amherst ballot numbering differs from official; matched by content. Yes/No combine definitely+probably. 10 pct said they did not understand."
+    },
+    {
+     "pollster": "MassINC Polling Group",
+     "sponsor": "CommonWealth Beacon",
+     "sponsor_side": "independent",
+     "start": "2026-09-14",
+     "end": "2026-09-22",
+     "n": 800,
+     "pop": "LV",
+     "yes": 47,
+     "no": 26,
+     "undecided": 25,
+     "url": "https://commonwealthbeacon.org/wp-content/uploads/2026/09/Topline-2026-09-CWB-Ballot-Questions.pdf"
+    }
+   ],
+   "sources": [
+    "https://www.sec.state.ma.us/divisions/elections/research-and-statistics/2026-Information-for-voters/2026-ballot-questions.htm",
+    "https://www.boston.com/news/politics/2026/07/21/there-9-ballot-questions-will-be-up-for-a-vote-in-november/",
+    "https://www.nbcboston.com/news/local/massachusetts-ballot-questions-2026/4026011/",
+    "https://commonwealthbeacon.org/ballot-questions/deep-pocketed-donors-flood-the-ballot-question-field-with-cash/"
+   ]
+  },
+  {
+   "state": "MA",
+   "id": "Question 6",
+   "short_title": "Create Nature for All conservation fund",
+   "summary": "Creates a Nature for All Fund for conservation and recreation, dedicating sales tax revenue from certain sporting goods, recreational vehicles and golf courses, roughly $65M a year.",
+   "type": "initiated statute",
+   "category": "environment_energy",
+   "lean": "D",
+   "threshold": 0.5,
+   "threshold_note": "Initiative statute: majority of votes on the question AND yes votes at least 30 percent of all ballots cast.",
+   "campaign": "Led by Mass Audubon; no organized opposition filed; supporters spent at least $1M.",
+   "polls": [
+    {
+     "pollster": "UMass Amherst Poll / YouGov",
+     "sponsor": "WCVB",
+     "sponsor_side": "independent",
+     "start": "2026-08-05",
+     "end": "2026-08-12",
+     "n": 800,
+     "pop": "RV",
+     "yes": 67,
+     "no": 22,
+     "undecided": 8,
+     "url": "https://www.umass.edu/poll/about/reports/2026-08-massachusetts-public-opinion-poll-0",
+     "note": "UMass Amherst ballot numbering differs from official; matched by content. Yes/No combine definitely+probably."
+    },
+    {
+     "pollster": "UNH Survey Center (Bay State Poll)",
+     "sponsor": "none (UNH)",
+     "sponsor_side": "independent",
+     "start": "2026-09-17",
+     "end": "2026-09-21",
+     "n": 564,
+     "pop": "LV",
+     "yes": 69,
+     "no": 15,
+     "undecided": 16,
+     "url": "https://scholars.unh.edu/cgi/viewcontent.cgi?article=2007&context=survey_center_polls"
+    },
+    {
+     "pollster": "MassINC Polling Group",
+     "sponsor": "CommonWealth Beacon",
+     "sponsor_side": "independent",
+     "start": "2026-09-14",
+     "end": "2026-09-22",
+     "n": 800,
+     "pop": "LV",
+     "yes": 56,
+     "no": 24,
+     "undecided": 20,
+     "url": "https://commonwealthbeacon.org/wp-content/uploads/2026/09/Topline-2026-09-CWB-Ballot-Questions.pdf"
+    }
+   ],
+   "sources": [
+    "https://www.sec.state.ma.us/divisions/elections/research-and-statistics/2026-Information-for-voters/2026-ballot-questions.htm",
+    "https://www.boston.com/news/politics/2026/07/21/there-9-ballot-questions-will-be-up-for-a-vote-in-november/",
+    "https://www.nbcboston.com/news/local/massachusetts-ballot-questions-2026/4026011/",
+    "https://commonwealthbeacon.org/ballot-questions/deep-pocketed-donors-flood-the-ballot-question-field-with-cash/"
+   ]
+  },
+  {
+   "state": "MA",
+   "id": "Question 7",
+   "short_title": "Allow single-family homes on smaller lots",
+   "summary": "Requires municipalities to allow single-family homes on residential lots of at least 5,000 square feet with 50 feet of frontage served by public water and sewer; Boston excluded.",
+   "type": "initiated statute",
+   "category": "housing",
+   "lean": "none",
+   "threshold": 0.5,
+   "threshold_note": "Initiative statute: majority of votes on the question AND yes votes at least 30 percent of all ballots cast.",
+   "campaign": "Legalize Starter Homes supports, spent at least $1M; Massachusetts Municipal Association opposes.",
+   "polls": [
+    {
+     "pollster": "UNH Survey Center (Bay State Poll)",
+     "sponsor": "none (UNH)",
+     "sponsor_side": "independent",
+     "start": "2026-02-12",
+     "end": "2026-02-16",
+     "n": 620,
+     "pop": "LV",
+     "yes": 36,
+     "no": null,
+     "undecided": null,
+     "url": "https://scholars.unh.edu/cgi/viewcontent.cgi?article=1930&context=survey_center_polls",
+     "note": "Pre-certification Feb wave, support/oppose wording on a 5 point scale. PDF tables were misaligned in text extraction; yes is from the release narrative. Only the 36 pct support figure is reported reliably; high undecided."
+    },
+    {
+     "pollster": "UMass Amherst Poll / YouGov",
+     "sponsor": "WCVB",
+     "sponsor_side": "independent",
+     "start": "2026-08-05",
+     "end": "2026-08-12",
+     "n": 800,
+     "pop": "RV",
+     "yes": 59,
+     "no": 21,
+     "undecided": 14,
+     "url": "https://www.umass.edu/poll/about/reports/2026-08-massachusetts-public-opinion-poll-0",
+     "note": "UMass Amherst ballot numbering differs from official; matched by content. Yes/No combine definitely+probably. 6 pct said they did not understand."
+    },
+    {
+     "pollster": "UNH Survey Center (Bay State Poll)",
+     "sponsor": "none (UNH)",
+     "sponsor_side": "independent",
+     "start": "2026-09-17",
+     "end": "2026-09-21",
+     "n": 564,
+     "pop": "LV",
+     "yes": 59,
+     "no": 14,
+     "undecided": 26,
+     "url": "https://scholars.unh.edu/cgi/viewcontent.cgi?article=2007&context=survey_center_polls"
+    },
+    {
+     "pollster": "MassINC Polling Group",
+     "sponsor": "CommonWealth Beacon",
+     "sponsor_side": "independent",
+     "start": "2026-09-14",
+     "end": "2026-09-22",
+     "n": 800,
+     "pop": "LV",
+     "yes": 51,
+     "no": 24,
+     "undecided": 24,
+     "url": "https://commonwealthbeacon.org/wp-content/uploads/2026/09/Topline-2026-09-CWB-Ballot-Questions.pdf"
+    }
+   ],
+   "sources": [
+    "https://www.sec.state.ma.us/divisions/elections/research-and-statistics/2026-Information-for-voters/2026-ballot-questions.htm",
+    "https://www.boston.com/news/politics/2026/07/21/there-9-ballot-questions-will-be-up-for-a-vote-in-november/",
+    "https://www.nbcboston.com/news/local/massachusetts-ballot-questions-2026/4026011/",
+    "https://commonwealthbeacon.org/ballot-questions/deep-pocketed-donors-flood-the-ballot-question-field-with-cash/"
+   ]
+  },
+  {
+   "state": "MA",
+   "id": "Question 8",
+   "short_title": "Repeal recreational marijuana sales",
+   "summary": "Prohibits retail sales of recreational marijuana, repeals home cultivation, and sets new possession limits and civil penalties; medical marijuana unaffected.",
+   "type": "initiated statute",
+   "category": "marijuana",
+   "lean": "R",
+   "threshold": 0.5,
+   "threshold_note": "Initiative statute: majority of votes on the question AND yes votes at least 30 percent of all ballots cast.",
+   "campaign": "Coalition For a Healthy Massachusetts funded mostly by SAM Action Inc. (nearly $3.2M); Massachusetts Cannabis Coalition and industry opposing with almost $1.6M.",
+   "polls": [
+    {
+     "pollster": "UNH Survey Center (Bay State Poll)",
+     "sponsor": "none (UNH)",
+     "sponsor_side": "independent",
+     "start": "2026-02-12",
+     "end": "2026-02-16",
+     "n": 620,
+     "pop": "LV",
+     "yes": 20,
+     "no": 63,
+     "undecided": 16,
+     "url": "https://scholars.unh.edu/cgi/viewcontent.cgi?article=1930&context=survey_center_polls",
+     "note": "Pre-certification Feb wave, support/oppose wording on a 5 point scale. PDF tables were misaligned in text extraction; yes is from the release narrative. No 63 per narrative (48 strongly, 15 somewhat); yes 20 and undecided 16 (9 neutral plus 7 unsure) from the table row whose breakdown matches."
+    },
+    {
+     "pollster": "UMass Amherst Poll / YouGov",
+     "sponsor": "WCVB",
+     "sponsor_side": "independent",
+     "start": "2026-08-05",
+     "end": "2026-08-12",
+     "n": 800,
+     "pop": "RV",
+     "yes": 33,
+     "no": 55,
+     "undecided": 10,
+     "url": "https://www.umass.edu/poll/about/reports/2026-08-massachusetts-public-opinion-poll-0",
+     "note": "UMass Amherst ballot numbering differs from official; matched by content. Yes/No combine definitely+probably. 3 pct said they did not understand."
+    },
+    {
+     "pollster": "Suffolk University Political Research Center",
+     "sponsor": "Boston Globe",
+     "sponsor_side": "independent",
+     "start": "2026-08-13",
+     "end": "2026-08-16",
+     "n": 500,
+     "pop": "LV",
+     "yes": 16.2,
+     "no": 79.0,
+     "undecided": 4.4,
+     "url": "https://www.suffolk.edu/-/media/suffolk/documents/academics/research-at-suffolk/suprc/polls/massachusetts2/2026/8_18_2026_massachusetts_dem_primary_statewide_marginals.pdf",
+     "note": "Democratic primary likely voters only (Democrats plus unenrolled), not a general electorate sample."
+    },
+    {
+     "pollster": "UNH Survey Center (Bay State Poll)",
+     "sponsor": "none (UNH)",
+     "sponsor_side": "independent",
+     "start": "2026-09-17",
+     "end": "2026-09-21",
+     "n": 564,
+     "pop": "LV",
+     "yes": 24,
+     "no": 71,
+     "undecided": 5,
+     "url": "https://scholars.unh.edu/cgi/viewcontent.cgi?article=2007&context=survey_center_polls"
+    },
+    {
+     "pollster": "MassINC Polling Group",
+     "sponsor": "CommonWealth Beacon",
+     "sponsor_side": "independent",
+     "start": "2026-09-14",
+     "end": "2026-09-22",
+     "n": 800,
+     "pop": "LV",
+     "yes": 27,
+     "no": 61,
+     "undecided": 11,
+     "url": "https://commonwealthbeacon.org/wp-content/uploads/2026/09/Topline-2026-09-CWB-Ballot-Questions.pdf"
+    }
+   ],
+   "sources": [
+    "https://www.sec.state.ma.us/divisions/elections/research-and-statistics/2026-Information-for-voters/2026-ballot-questions.htm",
+    "https://www.boston.com/news/politics/2026/07/21/there-9-ballot-questions-will-be-up-for-a-vote-in-november/",
+    "https://www.nbcboston.com/news/local/massachusetts-ballot-questions-2026/4026011/",
+    "https://commonwealthbeacon.org/ballot-questions/deep-pocketed-donors-flood-the-ballot-question-field-with-cash/",
+    "https://www.marijuanamoment.net/another-poll-shows-massachusetts-voters-dont-want-to-reverse-marijuana-legalization/"
+   ]
+  },
+  {
+   "state": "MA",
+   "id": "Question 9",
+   "short_title": "Keep or repeal 2024 gun law",
+   "summary": "A Yes vote keeps the 2024 firearms law (H.4885), which expanded the assault-style firearm ban and other rules; a No vote repeals it.",
+   "type": "veto referendum",
+   "category": "guns",
+   "lean": "D",
+   "threshold": 0.5,
+   "threshold_note": "Referendum on existing law: the law is repealed only if No wins a majority AND No votes are at least 30 percent of all ballots cast; Yes keeps the law.",
+   "campaign": "Vote Yes for a Safe Massachusetts supports keeping the law; The Civil Rights Coalition (gun rights groups) leads repeal.",
+   "polls": [
+    {
+     "pollster": "UMass Amherst Poll / YouGov",
+     "sponsor": "WCVB",
+     "sponsor_side": "independent",
+     "start": "2026-08-05",
+     "end": "2026-08-12",
+     "n": 800,
+     "pop": "RV",
+     "yes": 70,
+     "no": 22,
+     "undecided": 5,
+     "url": "https://www.umass.edu/poll/about/reports/2026-08-massachusetts-public-opinion-poll-0",
+     "note": "UMass Amherst ballot numbering differs from official; matched by content. Yes/No combine definitely+probably."
+    },
+    {
+     "pollster": "UNH Survey Center (Bay State Poll)",
+     "sponsor": "none (UNH)",
+     "sponsor_side": "independent",
+     "start": "2026-09-17",
+     "end": "2026-09-21",
+     "n": 564,
+     "pop": "LV",
+     "yes": 38,
+     "no": 27,
+     "undecided": 35,
+     "url": "https://scholars.unh.edu/cgi/viewcontent.cgi?article=2007&context=survey_center_polls",
+     "note": "Unusually high undecided relative to other polls; verify against PDF."
+    },
+    {
+     "pollster": "MassINC Polling Group",
+     "sponsor": "CommonWealth Beacon",
+     "sponsor_side": "independent",
+     "start": "2026-09-14",
+     "end": "2026-09-22",
+     "n": 800,
+     "pop": "LV",
+     "yes": 70,
+     "no": 18,
+     "undecided": 11,
+     "url": "https://commonwealthbeacon.org/wp-content/uploads/2026/09/Topline-2026-09-CWB-Ballot-Questions.pdf"
+    }
+   ],
+   "sources": [
+    "https://www.sec.state.ma.us/divisions/elections/research-and-statistics/2026-Information-for-voters/2026-ballot-questions.htm",
+    "https://www.boston.com/news/politics/2026/07/21/there-9-ballot-questions-will-be-up-for-a-vote-in-november/",
+    "https://www.nbcboston.com/news/local/massachusetts-ballot-questions-2026/4026011/",
+    "https://www.newsfromthestates.com/node/430214"
+   ]
+  },
+  {
+   "state": "MD",
+   "id": "Question 1",
+   "short_title": "Require budget to fund state worker contracts",
+   "summary": "Requires the governor's budget to fully fund state employee collective bargaining agreements, including terms set by a neutral arbitrator (HB 604, Arbitration Reform for State Employees Act of 2026).",
+   "type": "legislative referral constitutional",
+   "category": "labor",
+   "lean": "D",
+   "threshold": 0.5,
+   "threshold_note": "Simple majority.",
+   "campaign": "Backed by state employee unions; no organized campaign or money reported in sources reviewed.",
+   "polls": [],
+   "sources": [
+    "https://elections.maryland.gov/elections/2026/ballot_questions.html",
+    "https://theballotbrief.com/measures/maryland"
+   ]
+  },
+  {
+   "state": "MD",
+   "id": "Question 2",
+   "short_title": "Temporary appointments to judicial disabilities commission",
+   "summary": "Allows temporary substitute or recalled members on the Commission on Judicial Disabilities when a member is recused or a term expires.",
+   "type": "legislative referral constitutional",
+   "category": "other",
+   "lean": "none",
+   "threshold": 0.5,
+   "threshold_note": "Simple majority.",
+   "campaign": "No organized campaign reported.",
+   "polls": [],
+   "sources": [
+    "https://elections.maryland.gov/elections/2026/ballot_questions.html"
+   ]
+  },
+  {
+   "state": "MD",
+   "id": "Question 3",
+   "short_title": "Remove constitutional limits on congressional districting",
+   "summary": "Limits districting requirements to state legislative districts, sets no constitutional criteria for congressional maps, and lets the General Assembly give the Supreme Court of Maryland original jurisdiction over congressional map challenges; enables mid-decade congressional redistricting.",
+   "type": "legislative referral constitutional",
+   "category": "redistricting",
+   "lean": "D",
+   "threshold": 0.5,
+   "threshold_note": "Simple majority. Ballot text rewritten by Supreme Court of Maryland order of Sept 3, 2026.",
+   "campaign": "Fight Back Maryland, Gov. Wes Moore, Democrats and unions support; Protect Maryland Votes (spokesman Doug Mayer) opposes; passed in August 2026 special session; no money totals found.",
+   "polls": [
+    {
+     "pollster": "Hart Research Associates",
+     "sponsor": "Fight Back Maryland",
+     "sponsor_side": "yes",
+     "start": "2026-09-08",
+     "end": "2026-09-10",
+     "n": 600,
+     "pop": "LV",
+     "yes": 40,
+     "no": 35,
+     "undecided": 25,
+     "url": "https://marylandmatters.org/2026/09/24/poll-wording-of-redistricting-amendment-difficult-for-voters-to-understand/",
+     "note": "Exact ballot wording. After a positive message: 53 yes, 11 undecided."
+    },
+    {
+     "pollster": "Ragnar Research Partners (R) and Lincoln Park Strategies (D)",
+     "sponsor": "Protect Maryland Votes",
+     "sponsor_side": "no",
+     "start": "2026-09-10",
+     "end": "2026-09-13",
+     "n": 600,
+     "pop": "LV",
+     "yes": 28,
+     "no": 40,
+     "undecided": 31,
+     "url": "https://marylandmatters.org/2026/09/24/poll-wording-of-redistricting-amendment-difficult-for-voters-to-understand/",
+     "note": "Exact court-revised ballot wording."
+    },
+    {
+     "pollster": "UMBC Institute of Politics",
+     "sponsor": "none (UMBC)",
+     "sponsor_side": "independent",
+     "start": "2026-09-22",
+     "end": "2026-09-27",
+     "n": 776,
+     "pop": "LV",
+     "yes": 25,
+     "no": 53,
+     "undecided": 19,
+     "url": "https://marylandmatters.org/2026/10/07/poll-voters-oppose-redistricting-ballot-question-when-presented-meat-of-the-political-outcome/",
+     "note": "Plain-language description of the outcome, not the ballot wording."
+    }
+   ],
+   "sources": [
+    "https://elections.maryland.gov/elections/2026/ballot_questions.html",
+    "https://marylandmatters.org/2026/10/07/poll-voters-oppose-redistricting-ballot-question-when-presented-meat-of-the-political-outcome/",
+    "https://www.nbcwashington.com/decision-2026/maryland-redistricting-enters-the-spotlight-ahead-of-november-election/4164714/"
+   ]
+  },
+  {
+   "state": "NH",
+   "id": "Question 1",
+   "short_title": "Eliminate elected register of probate office",
+   "summary": "Removes the register of probate from the constitution's list of elected county officers (CACR 13).",
+   "type": "legislative referral constitutional",
+   "category": "other",
+   "lean": "none",
+   "threshold": 0.6666666666666666,
+   "threshold_note": "Two thirds of those voting on the question. A similar 2022 amendment got 62.9 percent and failed.",
+   "campaign": "Passed House 325-15 and Senate 23-1; no organized campaign.",
+   "polls": [],
+   "sources": [
+    "https://news.ballotpedia.org/2026/03/31/new-hampshire-voters-to-decide-amendment-to-eliminate-register-of-probate-references-from-state-constitution-similar-measure-failed-two-thirds-requirement-in-2022",
+    "https://theballotbrief.com/measures/new-hampshire"
+   ]
+  },
+  {
+   "state": "VT",
+   "id": "Proposal 3",
+   "short_title": "Constitutional right to collective bargaining",
+   "summary": "Adds a constitutional right for employees to organize and bargain collectively, barring laws that interfere with it, effectively banning right-to-work laws.",
+   "type": "legislative referral constitutional",
+   "category": "labor",
+   "lean": "D",
+   "threshold": 0.5,
+   "threshold_note": "Simple majority.",
+   "campaign": "Yes on 3 (Rep. Conor Casey) and Vermont AFL-CIO support; Right for Vermont Foundation opposes; no money totals reported.",
+   "polls": [
+    {
+     "pollster": "UNH Survey Center (Green Mountain State Poll)",
+     "sponsor": "none (UNH)",
+     "sponsor_side": "independent",
+     "start": "2026-09-17",
+     "end": "2026-09-21",
+     "n": 835,
+     "pop": "LV",
+     "yes": 65,
+     "no": 22,
+     "undecided": 13,
+     "url": "https://scholars.unh.edu/cgi/viewcontent.cgi?article=2005&amp=&context=survey_center_polls"
+    },
+    {
+     "pollster": "Jim Eltringham",
+     "sponsor": "Fiscal Alliance Foundation",
+     "sponsor_side": "no",
+     "start": null,
+     "end": null,
+     "n": 600,
+     "pop": null,
+     "yes": 27,
+     "no": 55,
+     "undecided": null,
+     "url": "https://www.wcax.com/2026/09/03/new-poll-shows-vermonters-affordability-concerns-cross-party-lines/",
+     "note": "Conditional message test (support if it meant higher taxes), not a ballot test; released about 2026-09-03; dates and population not reported."
+    }
+   ],
+   "sources": [
+    "https://www.wcax.com/2026/07/28/vermont-voters-consider-2-constitutional-amendments-november-ballot/",
+    "https://vtdigger.org/2026/09/07/vermonters-will-vote-on-constitutional-amendment-enshrining-labor-protections-in-november/",
+    "https://www.sevendaysvt.com/guides/electionvoterguide/vermonters-will-vote-on-two-constitutional-amendments-this-fall/"
+   ]
+  },
+  {
+   "state": "VT",
+   "id": "Proposal 4",
+   "short_title": "Constitutional equal protection guarantee",
+   "summary": "Bars the state from denying equal treatment based on race, sex, religion, disability, sexual orientation, gender identity and other traits, while allowing measures for historically disadvantaged groups.",
+   "type": "legislative referral constitutional",
+   "category": "civil_rights",
+   "lean": "D",
+   "threshold": 0.5,
+   "threshold_note": "Simple majority.",
+   "campaign": "Backed by Democratic legislators and the Vermont Human Rights Commission; small opposition group noprop4vt.org.",
+   "polls": [
+    {
+     "pollster": "UNH Survey Center (Green Mountain State Poll)",
+     "sponsor": "none (UNH)",
+     "sponsor_side": "independent",
+     "start": "2026-09-17",
+     "end": "2026-09-21",
+     "n": 835,
+     "pop": "LV",
+     "yes": 69,
+     "no": 21,
+     "undecided": 9,
+     "url": "https://scholars.unh.edu/cgi/viewcontent.cgi?article=2005&amp=&context=survey_center_polls"
+    }
+   ],
+   "sources": [
+    "https://news.ballotpedia.org/2026/05/14/vermont-constitutional-amendment-on-equal-protection-of-the-law-headed-to-november-ballot/",
+    "https://www.sevendaysvt.com/guides/electionvoterguide/vermonters-will-vote-on-two-constitutional-amendments-this-fall/"
+   ]
+  },
+  {
+   "state": "RI",
+   "id": "Question 1",
+   "short_title": "$275M higher education facilities bond",
+   "summary": "Authorizes $275M in bonds: $165M URI Integrated Health Building, $50M RIC Adams Library, $60M CCRI Workforce Innovation Center.",
+   "type": "bond",
+   "category": "bonds_spending",
+   "lean": "none",
+   "threshold": 0.5,
+   "threshold_note": "Simple majority of those voting on the question. Question numbers follow the enacted budget (H 7127, Article 5) order; confirm against the official ballot.",
+   "campaign": "Placed by the FY2027 budget signed June 12, 2026; no organized opposition or polling found.",
+   "polls": [],
+   "sources": [
+    "https://webserver.rilegislature.gov/PublicLaws/law26/law26084-05.htm",
+    "https://news.ballotpedia.org/2026/06/16/rhode-island-voters-will-weigh-in-on-five-bond-issues-in-nov-2026-included-in-the-states-budget"
+   ]
+  },
+  {
+   "state": "RI",
+   "id": "Question 2",
+   "short_title": "$120M housing and homeownership bond",
+   "summary": "Authorizes $120M in bonds for affordable and accessible housing, with at least $25M for homeownership.",
+   "type": "bond",
+   "category": "bonds_spending",
+   "lean": "none",
+   "threshold": 0.5,
+   "threshold_note": "Simple majority of those voting on the question. Question numbers follow the enacted budget (H 7127, Article 5) order; confirm against the official ballot.",
+   "campaign": "Placed by the FY2027 budget signed June 12, 2026; no organized opposition or polling found.",
+   "polls": [],
+   "sources": [
+    "https://webserver.rilegislature.gov/PublicLaws/law26/law26084-05.htm",
+    "https://news.ballotpedia.org/2026/06/16/rhode-island-voters-will-weigh-in-on-five-bond-issues-in-nov-2026-included-in-the-states-budget"
+   ]
+  },
+  {
+   "state": "RI",
+   "id": "Question 3",
+   "short_title": "$100M economic development bond",
+   "summary": "Authorizes $100M in bonds: $55M site development including Quonset and I-195 District, $45M growth industry infrastructure.",
+   "type": "bond",
+   "category": "bonds_spending",
+   "lean": "none",
+   "threshold": 0.5,
+   "threshold_note": "Simple majority of those voting on the question. Question numbers follow the enacted budget (H 7127, Article 5) order; confirm against the official ballot.",
+   "campaign": "Placed by the FY2027 budget signed June 12, 2026; no organized opposition or polling found.",
+   "polls": [],
+   "sources": [
+    "https://webserver.rilegislature.gov/PublicLaws/law26/law26084-05.htm",
+    "https://news.ballotpedia.org/2026/06/16/rhode-island-voters-will-weigh-in-on-five-bond-issues-in-nov-2026-included-in-the-states-budget"
+   ]
+  },
+  {
+   "state": "RI",
+   "id": "Question 4",
+   "short_title": "$50M cultural economy bond",
+   "summary": "Authorizes $50M in bonds: $45M new State History Center, $5M historic preservation grants.",
+   "type": "bond",
+   "category": "bonds_spending",
+   "lean": "none",
+   "threshold": 0.5,
+   "threshold_note": "Simple majority of those voting on the question. Question numbers follow the enacted budget (H 7127, Article 5) order; confirm against the official ballot.",
+   "campaign": "Placed by the FY2027 budget signed June 12, 2026; no organized opposition or polling found.",
+   "polls": [],
+   "sources": [
+    "https://webserver.rilegislature.gov/PublicLaws/law26/law26084-05.htm",
+    "https://news.ballotpedia.org/2026/06/16/rhode-island-voters-will-weigh-in-on-five-bond-issues-in-nov-2026-included-in-the-states-budget"
+   ]
+  },
+  {
+   "state": "RI",
+   "id": "Question 5",
+   "short_title": "$55M green economy bond",
+   "summary": "Authorizes $55M in bonds for resilience, brownfields, recreation, Narragansett Bay, farmland and open space.",
+   "type": "bond",
+   "category": "bonds_spending",
+   "lean": "none",
+   "threshold": 0.5,
+   "threshold_note": "Simple majority of those voting on the question. Question numbers follow the enacted budget (H 7127, Article 5) order; confirm against the official ballot.",
+   "campaign": "Placed by the FY2027 budget signed June 12, 2026; no organized opposition or polling found.",
+   "polls": [],
+   "sources": [
+    "https://webserver.rilegislature.gov/PublicLaws/law26/law26084-05.htm",
+    "https://news.ballotpedia.org/2026/06/16/rhode-island-voters-will-weigh-in-on-five-bond-issues-in-nov-2026-included-in-the-states-budget"
+   ]
+  },
+  {
+   "state": "DC",
+   "id": "Initiative 86",
+   "short_title": "Ban sale of force-fed foie gras",
+   "summary": "Prohibits selling foie gras produced by force-feeding birds in the District, effective July 1, 2027.",
+   "type": "initiated statute",
+   "category": "animal",
+   "lean": "none",
+   "threshold": 0.5,
+   "threshold_note": "Simple majority.",
+   "campaign": "Pro-Animal DC; 31,726 valid signatures of 46,020 submitted (23,940 needed), certified Aug 5, 2026; no organized opposition or money reported.",
+   "polls": [],
+   "sources": [
+    "https://www.popville.com/2026/08/force-fed-foie-gras-prohibition-dc-i86-qualifies-for-nov-ballot/"
+   ]
+  }
+ ],
+ "gaps": "ME: no statewide measures confirmed. The trans sports initiative was disqualified (SOS May 2026, upheld by courts) and a 2026 bond package appeared stalled in April; official SOS 2026 pages were not updated, so a late bond or amendment cannot be fully ruled out. CT, NJ, NY, PA, DE: no statewide measures found; NJ official 2026 election page lists none, NY amendments (redistricting) go to 2027, NYC charter proposals are city only and excluded, CT and PA confirmed only by absence in searches. NH: only Question 1; CACR 11 (sheriff age), CACR 12 (income tax ban) failed the House 3/5 vote. RI: question numbers follow budget order; not yet confirmed on the official ballot. MD Q1 and Q2, NH Q1, RI bonds, DC I-86: no public polls found. DC I-86 campaign cited an unnamed survey of 438 registered voters without numbers, not included. MA: Suffolk/Globe June 2026 poll tested an income tax cut question later removed from the ballot by the SJC, not included; MA UNH Feb 2026 numbers come from a PDF whose tables extracted out of order, so only narrative-confirmed values are used; UNH Sept Q3, Q4, Q9 figures were flagged by the extractor and should be checked against the PDF. Q1 and Q2 and Q5 were not in the UNH Sept release. Ballotpedia main pages were stale or blocked by robots; official SOS lists used where available. The search budget limited checks for late October polls."
+}
