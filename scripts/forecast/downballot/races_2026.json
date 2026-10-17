@@ -1,0 +1,3556 @@
+[
+ {
+  "state": "AL",
+  "office": "attorney-general",
+  "d_name": "Jeff McLaughlin",
+  "r_name": "Katherine Robertson",
+  "others": [],
+  "incumbent_name": "Steve Marshall",
+  "incumbent_party": "R",
+  "incumbent_running": false,
+  "uncontested": null,
+  "polls": [
+   {
+    "source": "yes. every kid. Foundation (school-choice advocacy group; pollster not named)",
+    "dates": "Jul 8-11, 2026",
+    "end": "2026-07-11",
+    "n": 601,
+    "pop": "LV",
+    "D": 31,
+    "R": 47,
+    "O": null,
+    "U": 23,
+    "url": "https://yeseverykidfoundation.org/alabama-likely-voters-support-fully-funding-the-choose-act/"
+   }
+  ],
+  "primary_files": {
+   "251749": "R",
+   "700226": "R"
+  },
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_Alabama_Attorney_General_election",
+   "https://1819news.com/news/item/poll-tuberville-holds-slight-lead-over-jones-support-high-for-fully-funded-school-choice"
+  ],
+  "note": "Open seat; Marshall term-limited, ran for US Senate. Robertson beat Jay Mitchell in Jun 16 runoff 55.1-44.9. Poll sponsor is an advocacy group; undecided per Wikipedia table."
+ },
+ {
+  "state": "AL",
+  "office": "agriculture-commissioner",
+  "d_name": "Ron Sparks",
+  "r_name": "Corey Hill",
+  "others": [],
+  "incumbent_name": "Rick Pate",
+  "incumbent_party": "R",
+  "incumbent_running": false,
+  "uncontested": null,
+  "polls": [],
+  "primary_files": {
+   "251757": "R",
+   "700293": "R"
+  },
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_Alabama_Commissioner_of_Agriculture_and_Industries_election"
+  ],
+  "note": "Commissioner of Agriculture and Industries. Open seat, Pate term-limited. Hill beat Christina McInnis in runoff 53.3-46.7. Democrat Ron Sparks is former commissioner 2003-2011; D primary result not confirmed. No general election polls found."
+ },
+ {
+  "state": "AR",
+  "office": "attorney-general",
+  "d_name": null,
+  "r_name": "Tim Griffin",
+  "others": [],
+  "incumbent_name": "Tim Griffin",
+  "incumbent_party": "R",
+  "incumbent_running": true,
+  "uncontested": "D",
+  "polls": [],
+  "primary_files": {
+   "243873": "R"
+  },
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_Arkansas_Attorney_General_election",
+   "https://www.orrick.com/en/Insights/2026/10/Orrick-State-Attorney-General-2026-Election-Preview",
+   "https://www.yahoo.com/news/articles/arkansas-libertarians-nominate-candidates-2026-182548621.html"
+  ],
+  "note": "Griffin unopposed; no Democratic or Libertarian AG nominee."
+ },
+ {
+  "state": "AZ",
+  "office": "attorney-general",
+  "d_name": "Kris Mayes",
+  "r_name": "Warren Petersen",
+  "others": [],
+  "incumbent_name": "Kris Mayes",
+  "incumbent_party": "D",
+  "incumbent_running": true,
+  "uncontested": null,
+  "polls": [
+   {
+    "source": "NextGen Polling",
+    "dates": "Aug 17-19, 2026",
+    "end": "2026-08-19",
+    "n": 1627,
+    "pop": "RV",
+    "D": 37,
+    "R": 34,
+    "O": null,
+    "U": 29,
+    "url": "https://en.wikipedia.org/wiki/2026_Arizona_Attorney_General_election"
+   },
+   {
+    "source": "HighGround, Inc.",
+    "dates": "Aug 15-18, 2026",
+    "end": "2026-08-18",
+    "n": 400,
+    "pop": "LV",
+    "D": 48,
+    "R": 40,
+    "O": 0,
+    "U": 11,
+    "url": "https://azhighground.com/arizona-democrats-lead-down-ballot-races/"
+   },
+   {
+    "source": "GrayHouse (R)",
+    "dates": "Aug 11-13, 2026",
+    "end": "2026-08-13",
+    "n": 600,
+    "pop": "LV",
+    "D": 47,
+    "R": 46,
+    "O": null,
+    "U": 7,
+    "url": "https://en.wikipedia.org/wiki/2026_Arizona_Attorney_General_election"
+   },
+   {
+    "source": "Stealth Analytics",
+    "dates": "Aug 11-13, 2026",
+    "end": "2026-08-13",
+    "n": 530,
+    "pop": "LV",
+    "D": 41,
+    "R": 38,
+    "O": null,
+    "U": 21,
+    "url": "https://www.stealth-analytics.com/dispatches/az-general-lv-statewide-august-2026"
+   },
+   {
+    "source": "Noble Predictive Insights",
+    "dates": "Aug 10-13, 2026",
+    "end": "2026-08-13",
+    "n": 923,
+    "pop": "LV",
+    "D": 44,
+    "R": 38,
+    "O": 2,
+    "U": 16,
+    "url": "https://www.noblepredictiveinsights.com/post/fontes-and-mayes-lead-down-ballot-yee-holds-narrow-edge-for-schools-chief"
+   },
+   {
+    "source": "Fabrizio Ward (R) / Impact Research (D) for AARP",
+    "dates": "Jul 26-28, 2026",
+    "end": "2026-07-28",
+    "n": 913,
+    "pop": "LV",
+    "D": 48,
+    "R": 43,
+    "O": 1,
+    "U": 9,
+    "url": "https://fox10phoenix.com/election/2026-election-kris-mayes-ahead-warren-petersen-arizona-ag-race-poll-shows"
+   }
+  ],
+  "primary_files": {
+   "283877": "R"
+  },
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_Arizona_Attorney_General_election",
+   "https://fox10phoenix.com/election/2026-election-kris-mayes-ahead-warren-petersen-arizona-ag-race-poll-shows"
+  ],
+  "note": "Petersen beat Rodney Glassman 56.4-43.6 in R primary; Mayes unopposed in D primary. Poll figures from Wikipedia table; AARP poll numbers per Wikipedia, article confirms Mayes +5."
+ },
+ {
+  "state": "CA",
+  "office": "attorney-general",
+  "d_name": "Rob Bonta",
+  "r_name": "Michael Gates",
+  "others": [],
+  "incumbent_name": "Rob Bonta",
+  "incumbent_party": "D",
+  "incumbent_running": true,
+  "uncontested": null,
+  "polls": [],
+  "primary_files": {
+   "251824": "top-two"
+  },
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_California_Attorney_General_election"
+  ],
+  "note": "Top-two primary Jun 2: Bonta 56.6, Gates 37.9, Marjorie Mikels (Green) 5.4; only Bonta and Gates advance. No post-primary general polls found."
+ },
+ {
+  "state": "CO",
+  "office": "attorney-general",
+  "d_name": "Jena Griswold",
+  "r_name": "Michael Allen",
+  "others": [],
+  "incumbent_name": "Phil Weiser",
+  "incumbent_party": "D",
+  "incumbent_running": false,
+  "uncontested": null,
+  "polls": [],
+  "primary_files": {
+   "283850": "D",
+   "283851": "R"
+  },
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_Colorado_Attorney_General_election",
+   "https://www.coloradopolitics.com/2026/10/02/colorado-griswold-allen-attorney-general-race/",
+   "https://pueblostarjournal.org/news/2026/06/30/jena-griswold-wins-democratic-primary-colorado-attorney-general/"
+  ],
+  "note": "Open seat; Weiser term-limited, ran for governor. Griswold won Jun 30 D primary over Seligman, Dougherty, Doshi; Allen beat David Willson in R primary. No general polls found."
+ },
+ {
+  "state": "CT",
+  "office": "attorney-general",
+  "d_name": "William Tong",
+  "r_name": "John Bolton",
+  "others": [],
+  "incumbent_name": "William Tong",
+  "incumbent_party": "D",
+  "incumbent_running": true,
+  "uncontested": null,
+  "polls": [
+   {
+    "source": "University of New Hampshire Survey Center",
+    "dates": "Sep 17-21, 2026",
+    "end": "2026-09-21",
+    "n": 540,
+    "pop": "LV",
+    "D": 57,
+    "R": 30,
+    "O": 0,
+    "U": 13,
+    "url": "https://scholars.unh.edu/cgi/viewcontent.cgi?article=2009&context=survey_center_polls"
+   }
+  ],
+  "primary_files": {},
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_Connecticut_Attorney_General_election"
+  ],
+  "note": "Republican John Bolton is a Westport attorney, not the former NSA. Tong also on Working Families line. UNH other was under 1%."
+ },
+ {
+  "state": "DE",
+  "office": "attorney-general",
+  "d_name": "Kathy Jennings",
+  "r_name": "Dave Graham",
+  "others": [],
+  "incumbent_name": "Kathy Jennings",
+  "incumbent_party": "D",
+  "incumbent_running": true,
+  "uncontested": null,
+  "polls": [],
+  "primary_files": {
+   "293195": "D"
+  },
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_Delaware_Attorney_General_election",
+   "https://www.pbs.org/newshour/politics/live-results-delaware-midterm-primaries",
+   "https://www.orrick.com/en/Insights/2026/10/Orrick-State-Attorney-General-2026-Election-Preview"
+  ],
+  "note": "Jennings won Sep 15 D primary over Dwayne Bensing and Patty Rickman; Graham unopposed for R nomination. No general polls found."
+ },
+ {
+  "state": "FL",
+  "office": "attorney-general",
+  "d_name": "Jos\u00e9 Javier Rodr\u00edguez",
+  "r_name": "James Uthmeier",
+  "others": [],
+  "incumbent_name": "James Uthmeier",
+  "incumbent_party": "R",
+  "incumbent_running": true,
+  "uncontested": null,
+  "polls": [
+   {
+    "source": "St. Pete Polls for Florida Politics",
+    "dates": "Oct 5-7, 2026",
+    "end": "2026-10-07",
+    "n": null,
+    "pop": "LV",
+    "D": 43,
+    "R": 45,
+    "O": null,
+    "U": 12,
+    "url": "https://floridapolitics.com/archives/823945-republicans-hold-2-point-edges-in-cabinet-races-james-uthmeier-45-43-over-jose-javier-rodriguez-blaise-ingoglia-44-42-over-annette-taddeo/"
+   },
+   {
+    "source": "Targoz Market Research for James Madison Institute (conservative)",
+    "dates": "Sep 28-Oct 4, 2026",
+    "end": "2026-10-04",
+    "n": 854,
+    "pop": "LV",
+    "D": 40,
+    "R": 50,
+    "O": 2,
+    "U": 7,
+    "url": "https://jamesmadison.org/wp-content/uploads/JMI-October-2026-Poll-Marginals.pdf"
+   },
+   {
+    "source": "St. Pete Polls for Florida Politics",
+    "dates": "Sep 15-17, 2026",
+    "end": "2026-09-17",
+    "n": 913,
+    "pop": "LV",
+    "D": 42,
+    "R": 43,
+    "O": null,
+    "U": 15,
+    "url": "https://www.miamitimesonline.com/news/florida/poll-james-uthmeier-43-jos-javier-rodr-guez-42-as-attorney-general-holds-narrow-edge/article_fe0d4218-dcf1-4cfd-b79a-f431a61a6fda.html"
+   }
+  ],
+  "primary_files": {},
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_Florida_Attorney_General_election",
+   "https://floridaphoenix.com/2026/08/18/the-florida-cabinet-races-are-set-for-november/",
+   "https://politicalcortadito.com/2026/10/15/national-democrat-party-florida-attorney-general-race/",
+   "https://jamesmadison.org/wp-content/uploads/JMI-October-2026-Poll-Marginals.pdf"
+  ],
+  "note": "Uthmeier appointed 2025 after Ashley Moody went to US Senate; seeking full term. No primaries for either party. JMI RV result: R46 D37 O3 U14, n=1163. Oct St. Pete Polls numbers via politicalcortadito, Florida Politics page could not be fetched; n unknown. Orrick mentions another Sept poll tied 46-46, source not found."
+ },
+ {
+  "state": "FL",
+  "office": "agriculture-commissioner",
+  "d_name": "Joey Mendoza Atkins",
+  "r_name": "Wilton Simpson",
+  "others": [],
+  "incumbent_name": "Wilton Simpson",
+  "incumbent_party": "R",
+  "incumbent_running": true,
+  "uncontested": null,
+  "polls": [
+   {
+    "source": "Targoz Market Research for James Madison Institute (conservative)",
+    "dates": "Sep 28-Oct 4, 2026",
+    "end": "2026-10-04",
+    "n": 852,
+    "pop": "LV",
+    "D": 39,
+    "R": 50,
+    "O": 3,
+    "U": 8,
+    "url": "https://jamesmadison.org/wp-content/uploads/JMI-October-2026-Poll-Marginals.pdf"
+   }
+  ],
+  "primary_files": {
+   "284174": "D",
+   "284175": "R"
+  },
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_Florida_Commissioner_of_Agriculture_election",
+   "https://floridaphoenix.com/2026/08/18/the-florida-cabinet-races-are-set-for-november/",
+   "https://jamesmadison.org/wp-content/uploads/JMI-October-2026-Poll-Marginals.pdf"
+  ],
+  "note": "Simpson beat Matt Taylor 69-31; Atkins beat Don Prichard 60-40 in Aug 18 primaries. JMI RV result: R45 D36 O3 U15, n=1172."
+ },
+ {
+  "state": "GA",
+  "office": "attorney-general",
+  "d_name": "Tanya Miller",
+  "r_name": "Brian Strickland",
+  "others": [],
+  "incumbent_name": "Chris Carr",
+  "incumbent_party": "R",
+  "incumbent_running": false,
+  "uncontested": null,
+  "polls": [],
+  "primary_files": {
+   "243737": "D",
+   "243739": "R"
+  },
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_Georgia_Attorney_General_election",
+   "https://www.cbsnews.com/atlanta/news/georgia-2026-midterm-election-sample-ballot-candidates-resolutions/"
+  ],
+  "note": "Open seat; Carr ran for governor. Strickland beat Bill Cowsert, Miller beat Bob Trammell in May primaries. No general polls found."
+ },
+ {
+  "state": "GA",
+  "office": "agriculture-commissioner",
+  "d_name": "Katherine Juhan-Arnold",
+  "r_name": "Tyler Harper",
+  "others": [],
+  "incumbent_name": "Tyler Harper",
+  "incumbent_party": "R",
+  "incumbent_running": true,
+  "uncontested": null,
+  "polls": [],
+  "primary_files": {
+   "251624": "D"
+  },
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_Georgia_Agriculture_Commissioner_election",
+   "https://www.cbsnews.com/atlanta/news/georgia-2026-midterm-election-sample-ballot-candidates-resolutions/"
+  ],
+  "note": "Harper unopposed in R primary; Juhan-Arnold beat Sedrick Rowe 62-38. No general polls found."
+ },
+ {
+  "state": "ID",
+  "office": "attorney-general",
+  "d_name": "Lori Hickman",
+  "r_name": "Ra\u00fal Labrador",
+  "others": [],
+  "incumbent_name": "Ra\u00fal Labrador",
+  "incumbent_party": "R",
+  "incumbent_running": true,
+  "uncontested": null,
+  "polls": [
+   {
+    "source": "Change Research for Stegner for Idaho",
+    "dates": "Jul 28-30, 2026",
+    "end": "2026-07-30",
+    "n": 1213,
+    "pop": "LV",
+    "D": 31,
+    "R": 49,
+    "O": null,
+    "U": 20,
+    "url": "https://docs.google.com/document/d/1u6Y5rUbSLEoS0nBgXqKarEzHEQCOzxPjj_Wm27eHKE8/edit?tab=t.0"
+   }
+  ],
+  "primary_files": {},
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_Idaho_Attorney_General_election"
+  ],
+  "note": "Both unopposed in May 19 primaries. Poll sponsor is a campaign Wikipedia tags (I); not an AG campaign."
+ },
+ {
+  "state": "IL",
+  "office": "attorney-general",
+  "d_name": "Kwame Raoul",
+  "r_name": "Bob Fioretti",
+  "others": [],
+  "incumbent_name": "Kwame Raoul",
+  "incumbent_party": "D",
+  "incumbent_running": true,
+  "uncontested": null,
+  "polls": [
+   {
+    "source": "Public Policy Polling (sponsor likely Chicago News Weekly / CNW Media)",
+    "dates": "Sep 30-Oct 1, 2026",
+    "end": "2026-10-01",
+    "n": 569,
+    "pop": "LV",
+    "D": 52,
+    "R": 38,
+    "O": null,
+    "U": 11,
+    "url": "https://en.wikipedia.org/wiki/2026_Illinois_Attorney_General_election"
+   }
+  ],
+  "primary_files": {},
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_Illinois_Attorney_General_election",
+   "https://uspollingdata.com/races/governor/illinois/",
+   "https://www.wbez.org/government-politics/elections/2026/10/01/what-to-know-candidates-race-illinois-attorney-general-kwame-raoul-bob-fioretti"
+  ],
+  "note": "Both unopposed in March primary. PPP poll AG numbers only on Wikipedia; sponsor inferred from uspollingdata link to CNW Media."
+ },
+ {
+  "state": "IA",
+  "office": "attorney-general",
+  "d_name": "Nate Willems",
+  "r_name": "Brenna Bird",
+  "others": [],
+  "incumbent_name": "Brenna Bird",
+  "incumbent_party": "R",
+  "incumbent_running": true,
+  "uncontested": null,
+  "polls": [
+   {
+    "source": "Cygnal (R)",
+    "dates": "Sep 9-11, 2026",
+    "end": "2026-09-11",
+    "n": 500,
+    "pop": "LV",
+    "D": 40,
+    "R": 40,
+    "O": null,
+    "U": 21,
+    "url": "https://en.wikipedia.org/wiki/2026_Iowa_Attorney_General_election"
+   },
+   {
+    "source": "Cygnal (R)",
+    "dates": "Jun 16-19, 2026",
+    "end": "2026-06-19",
+    "n": 600,
+    "pop": "LV",
+    "D": 39,
+    "R": 44,
+    "O": null,
+    "U": 17,
+    "url": "https://en.wikipedia.org/wiki/2026_Iowa_Attorney_General_election"
+   }
+  ],
+  "primary_files": {},
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_Iowa_Attorney_General_election",
+   "https://littlevillagemag.com/new-poll-ag-brenna-bird-2-points-ahead-nate-willems/"
+  ],
+  "note": "Cygnal sponsors not identified; figures from Wikipedia only."
+ },
+ {
+  "state": "IA",
+  "office": "agriculture-commissioner",
+  "d_name": "Chris Jones",
+  "r_name": "Mike Naig",
+  "others": [],
+  "incumbent_name": "Mike Naig",
+  "incumbent_party": "R",
+  "incumbent_running": true,
+  "uncontested": null,
+  "polls": [
+   {
+    "source": "Cygnal (R)",
+    "dates": "Sep 9-11, 2026",
+    "end": "2026-09-11",
+    "n": 500,
+    "pop": "LV",
+    "D": 36,
+    "R": 43,
+    "O": null,
+    "U": 21,
+    "url": "https://en.wikipedia.org/wiki/2026_Iowa_Secretary_of_Agriculture_election"
+   },
+   {
+    "source": "Change Research for Chris Jones campaign (D)",
+    "dates": "Jul 28-Aug 1, 2026",
+    "end": "2026-08-01",
+    "n": 1071,
+    "pop": "LV",
+    "D": 40,
+    "R": 42,
+    "O": null,
+    "U": 16,
+    "url": "https://www.bleedingheartland.com/static/media/2026/08/Memo-_-Chris-Jones-for-Iowa-Secretary-of-Agriculture-_-August-2026.pdf"
+   }
+  ],
+  "primary_files": {},
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_Iowa_Secretary_of_Agriculture_election",
+   "https://www.bleedingheartland.com/2026/08/12/poll-shows-chris-jones-within-striking-distance-of-mike-naig/"
+  ],
+  "note": "Office is Iowa Secretary of Agriculture. Change Research informed ballot after bios: Jones 46 Naig 40."
+ },
+ {
+  "state": "KS",
+  "office": "attorney-general",
+  "d_name": "Chris Mann",
+  "r_name": "Kris Kobach",
+  "others": [],
+  "incumbent_name": "Kris Kobach",
+  "incumbent_party": "R",
+  "incumbent_running": true,
+  "uncontested": null,
+  "polls": [],
+  "primary_files": {},
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_Kansas_Attorney_General_election"
+  ],
+  "note": "Both unopposed Aug 4. Only pre-June polls exist: Pulse Decision Science (R) Jan 2026 Kobach 47-37; GSG (D) Nov 2025 46-44."
+ },
+ {
+  "state": "MD",
+  "office": "attorney-general",
+  "d_name": "Anthony Brown",
+  "r_name": "James Rutledge III",
+  "others": [],
+  "incumbent_name": "Anthony Brown",
+  "incumbent_party": "D",
+  "incumbent_running": true,
+  "uncontested": null,
+  "polls": [],
+  "primary_files": {},
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_Maryland_Attorney_General_election"
+  ],
+  "note": "Both unopposed in primaries. No polls found."
+ },
+ {
+  "state": "MA",
+  "office": "attorney-general",
+  "d_name": "Andrea Campbell",
+  "r_name": "Michael Walsh",
+  "others": [],
+  "incumbent_name": "Andrea Campbell",
+  "incumbent_party": "D",
+  "incumbent_running": true,
+  "uncontested": null,
+  "polls": [],
+  "primary_files": {},
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_Massachusetts_Attorney_General_election",
+   "https://www.stateagreport.com/states/massachusetts/",
+   "https://www.bostonglobe.com/2026/07/13/metro/sjc-walsh-gop-signature-fraud/"
+  ],
+  "note": "Walsh kept on ballot by SJC despite signature fraud allegations. No polls found."
+ },
+ {
+  "state": "MI",
+  "office": "attorney-general",
+  "d_name": "Eli Savit",
+  "r_name": "Doug Lloyd",
+  "others": [
+   {
+    "name": "Jason Dye",
+    "party": "Libertarian"
+   },
+   {
+    "name": "Jeff Polonowski",
+    "party": "Green"
+   },
+   {
+    "name": "John Ludtke Jr.",
+    "party": "U.S. Taxpayers"
+   },
+   {
+    "name": "Doug Dern",
+    "party": "Natural Law"
+   }
+  ],
+  "incumbent_name": "Dana Nessel",
+  "incumbent_party": "D",
+  "incumbent_running": false,
+  "uncontested": null,
+  "polls": [
+   {
+    "source": "Mitchell Research & Communications for Michigan TV stations incl. CBS Detroit",
+    "dates": "Oct 1, 2026",
+    "end": "2026-10-01",
+    "n": 682,
+    "pop": "LV",
+    "D": 36,
+    "R": 36,
+    "O": 7,
+    "U": 21,
+    "url": "https://www.cbsnews.com/detroit/news/secretary-of-state-attorney-general-michigan-election-poll/"
+   },
+   {
+    "source": "Glengariff Group for WDIV / Detroit News",
+    "dates": "Aug 31-Sep 3, 2026",
+    "end": "2026-09-03",
+    "n": 600,
+    "pop": "LV",
+    "D": 36.3,
+    "R": 35.0,
+    "O": 0,
+    "U": 28.8,
+    "url": "https://www.clickondetroit.com/news/local/2026/09/08/poll-where-michigan-voters-stand-with-2026-attorney-general-race/"
+   }
+  ],
+  "primary_files": {},
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_Michigan_Attorney_General_election",
+   "https://www.myupnow.com/matchups-set-michigan-parties-finalize-nominees-for-attorney-general-secretary-of-state/article_7cc767e0-e8d3-4d2b-b638-c1b65d580fe4.html"
+  ],
+  "note": "Open seat; Nessel term-limited. Nominees chosen by party conventions, not primaries. Third-party list from Wikipedia."
+ },
+ {
+  "state": "MN",
+  "office": "attorney-general",
+  "d_name": "Keith Ellison",
+  "r_name": "Ron Schutz",
+  "others": [],
+  "incumbent_name": "Keith Ellison",
+  "incumbent_party": "D",
+  "incumbent_running": true,
+  "uncontested": null,
+  "polls": [
+   {
+    "source": "SurveyUSA for KSTP",
+    "dates": "Sep 9-14, 2026",
+    "end": "2026-09-14",
+    "n": 654,
+    "pop": "LV",
+    "D": 43,
+    "R": 45,
+    "O": null,
+    "U": 12,
+    "url": "https://www.newsweek.com/republican-leads-minnesota-poll-democrats-seat-decades-12454517"
+   },
+   {
+    "source": "SurveyUSA for KSTP",
+    "dates": "Aug 13-17, 2026",
+    "end": "2026-08-17",
+    "n": 661,
+    "pop": "LV",
+    "D": 43,
+    "R": 43,
+    "O": null,
+    "U": 15,
+    "url": "https://kstp.com/wp-content/uploads/2026/08/Election-Poll-8-19-26.pdf"
+   },
+   {
+    "source": "SurveyUSA for KSTP",
+    "dates": "Jul 29-Aug 4, 2026",
+    "end": "2026-08-04",
+    "n": 1435,
+    "pop": "LV",
+    "D": 44,
+    "R": 36,
+    "O": null,
+    "U": 19,
+    "url": "https://kstp.com/wp-content/uploads/2026/08/ElectionAugust.pdf"
+   },
+   {
+    "source": "SurveyUSA for KSTP",
+    "dates": "Jul 15-20, 2026",
+    "end": "2026-07-20",
+    "n": 1387,
+    "pop": "LV",
+    "D": 42,
+    "R": 38,
+    "O": null,
+    "U": 20,
+    "url": "https://kstp.com/wp-content/uploads/2026/07/ElectionPoll.pdf"
+   },
+   {
+    "source": "SurveyUSA for KSTP",
+    "dates": "Jun 11-16, 2026",
+    "end": "2026-06-16",
+    "n": 1440,
+    "pop": "LV",
+    "D": 44,
+    "R": 37,
+    "O": null,
+    "U": 19,
+    "url": "https://kstp.com/kstp-news/top-news/kstp-surveyusa-poll-lindell-leads-gop-governor-race-tafoya-craig-up-in-senate-primaries/"
+   }
+  ],
+  "primary_files": {
+   "284062": "D"
+  },
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_Minnesota_Attorney_General_election",
+   "https://www.mprnews.org/story/2026/09/28/keith-ellison-and-ron-schultz-focus-on-fraud-trump-in-minnesota-attorney-general-race"
+  ],
+  "note": "Ellison is DFL, beat David Madgett in Aug 11 primary. Schutz is GOP-endorsed nominee."
+ },
+ {
+  "state": "NE",
+  "office": "attorney-general",
+  "d_name": "Jocelyn Brasher",
+  "r_name": "Mike Hilgers",
+  "others": [],
+  "incumbent_name": "Mike Hilgers",
+  "incumbent_party": "R",
+  "incumbent_running": true,
+  "uncontested": null,
+  "polls": [],
+  "primary_files": {},
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_Nebraska_Attorney_General_election"
+  ],
+  "note": "Both unopposed May 12. No polls found."
+ },
+ {
+  "state": "NV",
+  "office": "attorney-general",
+  "d_name": "Nicole Cannizzaro",
+  "r_name": "Adriana Guzm\u00e1n Fralick",
+  "others": [],
+  "incumbent_name": "Aaron Ford",
+  "incumbent_party": "D",
+  "incumbent_running": false,
+  "uncontested": null,
+  "polls": [],
+  "primary_files": {
+   "273787": "D",
+   "273788": "R"
+  },
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_Nevada_Attorney_General_election",
+   "https://news.ballotpedia.org/2026/09/14/nevada-attorney-generals-role-in-suing-the-federal-government-a-major-theme-in-election-between-nicole-cannizzaro-d-and-adriana-guzman-fralick-r/"
+  ],
+  "note": "Open seat; Ford term-limited, ran for governor. Cannizzaro beat Zach Conine, Fralick beat Danny Tarkanian on Jun 9. No general polls with the nominees found."
+ },
+ {
+  "state": "NM",
+  "office": "attorney-general",
+  "d_name": "Ra\u00fal Torrez",
+  "r_name": "Sam Kane",
+  "others": [],
+  "incumbent_name": "Ra\u00fal Torrez",
+  "incumbent_party": "D",
+  "incumbent_running": true,
+  "uncontested": null,
+  "polls": [],
+  "primary_files": {},
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_New_Mexico_Attorney_General_election"
+  ],
+  "note": "Both unopposed in primaries. No polls found."
+ },
+ {
+  "state": "NY",
+  "office": "attorney-general",
+  "d_name": "Letitia James",
+  "r_name": "Saritha Komatireddy",
+  "others": [],
+  "incumbent_name": "Letitia James",
+  "incumbent_party": "D",
+  "incumbent_running": true,
+  "uncontested": null,
+  "polls": [
+   {
+    "source": "Siena Research Institute",
+    "dates": "Sep 11-17, 2026",
+    "end": "2026-09-17",
+    "n": 1144,
+    "pop": "LV",
+    "D": 52,
+    "R": 39,
+    "O": null,
+    "U": null,
+    "url": "https://ny1.com/nyc/all-boroughs/politics/2026/09/22/siena-poll--hochul-s-lead-over-blakeman-sees-little-change-among-likely-voters"
+   },
+   {
+    "source": "Siena Research Institute",
+    "dates": "Aug 3-6, 2026",
+    "end": "2026-08-06",
+    "n": 811,
+    "pop": "LV",
+    "D": 54,
+    "R": 36,
+    "O": null,
+    "U": 10,
+    "url": "https://en.wikipedia.org/wiki/2026_New_York_Attorney_General_election"
+   }
+  ],
+  "primary_files": {},
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_New_York_Attorney_General_election",
+   "https://www.foxnews.com/politics/letitia-james-re-election-cushion-shrinks-little-known-challenger-starts-turning-heads.amp"
+  ],
+  "note": "James also on Working Families line; Komatireddy also on Conservative line. Sept Siena undecided not reported, about 9 implied."
+ },
+ {
+  "state": "ND",
+  "office": "attorney-general",
+  "d_name": "Tim Lamb",
+  "r_name": "Drew Wrigley",
+  "others": [],
+  "incumbent_name": "Drew Wrigley",
+  "incumbent_party": "R",
+  "incumbent_running": true,
+  "uncontested": null,
+  "polls": [],
+  "primary_files": {},
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_North_Dakota_Attorney_General_election",
+   "https://www.270towin.com/content/other-statewide-office-primary-elections-in-nevada-north-dakota-south-carolina"
+  ],
+  "note": "Lamb is Democratic-NPL nominee. No polls found."
+ },
+ {
+  "state": "ND",
+  "office": "agriculture-commissioner",
+  "d_name": "Vern Thompson",
+  "r_name": "Doug Goehring",
+  "others": [],
+  "incumbent_name": "Doug Goehring",
+  "incumbent_party": "R",
+  "incumbent_running": true,
+  "uncontested": null,
+  "polls": [],
+  "primary_files": {},
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_North_Dakota_Agriculture_Commissioner_election"
+  ],
+  "note": "Thompson is Democratic-NPL nominee. Both unopposed Jun 9. No polls found."
+ },
+ {
+  "state": "OH",
+  "office": "attorney-general",
+  "d_name": "John Kulewicz",
+  "r_name": "Keith Faber",
+  "others": [],
+  "incumbent_name": "Andy Wilson",
+  "incumbent_party": "R",
+  "incumbent_running": false,
+  "uncontested": null,
+  "polls": [
+   {
+    "source": "Tulchin Research (D) for Kulewicz campaign",
+    "dates": "Jul 29-Aug 4, 2026",
+    "end": "2026-08-04",
+    "n": 600,
+    "pop": "LV",
+    "D": 36,
+    "R": 32,
+    "O": null,
+    "U": 32,
+    "url": "https://www.documentcloud.org/documents/28549388-oh-sen-gov-ag-tulchin-research-for-john-kulewicz/"
+   },
+   {
+    "source": "Tulchin Research (D) for Kulewicz campaign",
+    "dates": "Jun 2-4, 2026",
+    "end": "2026-06-04",
+    "n": 600,
+    "pop": "LV",
+    "D": 34,
+    "R": 34,
+    "O": null,
+    "U": 32,
+    "url": "https://www.nbc4i.com/news/your-local-election-hq/new-poll-shows-democratic-candidates-ahead-in-ohio/amp/"
+   }
+  ],
+  "primary_files": {
+   "243914": "D"
+  },
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_Ohio_Attorney_General_election",
+   "https://local12.com/news/local/dewine-appoints-andy-wilson-as-new-attorney-general"
+  ],
+  "note": "Open seat. Dave Yost resigned May 2026; DeWine appointed Andy Wilson (R), who is not running and endorsed Faber. Kulewicz beat Elliot Forhan 63-37; Faber unopposed."
+ },
+ {
+  "state": "OK",
+  "office": "attorney-general",
+  "d_name": "Nick Coffey",
+  "r_name": "Jon Echols",
+  "others": [],
+  "incumbent_name": "Gentner Drummond",
+  "incumbent_party": "R",
+  "incumbent_running": false,
+  "uncontested": null,
+  "polls": [
+   {
+    "source": "CHS & Associates",
+    "dates": "Aug 3-6, 2026",
+    "end": "2026-08-06",
+    "n": 500,
+    "pop": "RV",
+    "D": 34,
+    "R": 52,
+    "O": null,
+    "U": 14,
+    "url": "https://en.wikipedia.org/wiki/2026_Oklahoma_Attorney_General_election"
+   }
+  ],
+  "primary_files": {
+   "283703": "R"
+  },
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_Oklahoma_Attorney_General_election",
+   "https://www.news9.com/oklahoma-elections/oklahoma-attorney-general-echols-coffey-general-election"
+  ],
+  "note": "Open seat; Drummond ran for governor. Echols beat Jeff Starling 55-45 Jun 16, no runoff."
+ },
+ {
+  "state": "RI",
+  "office": "attorney-general",
+  "d_name": "Kimberly Ahern",
+  "r_name": "Alan Gordon",
+  "others": [],
+  "incumbent_name": "Peter Neronha",
+  "incumbent_party": "D",
+  "incumbent_running": false,
+  "uncontested": null,
+  "polls": [],
+  "primary_files": {
+   "288388": "D"
+  },
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_Rhode_Island_Attorney_General_election",
+   "https://www.wpri.com/news/elections/ahern-wins-democratic-nomination-for-ri-attorney-general/amp/"
+  ],
+  "note": "Open seat; Neronha term-limited. Ahern won Sep 8 D primary over Hoffmann, Solomon, Knight. Only D primary polls exist, no general polls."
+ },
+ {
+  "state": "SC",
+  "office": "attorney-general",
+  "d_name": "Richard Hricik",
+  "r_name": "David Stumbo",
+  "others": [],
+  "incumbent_name": "Alan Wilson",
+  "incumbent_party": "R",
+  "incumbent_running": false,
+  "uncontested": null,
+  "polls": [],
+  "primary_files": {
+   "274331": "R",
+   "702282": "R"
+  },
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_South_Carolina_Attorney_General_election",
+   "https://scdailygazette.com/voter-guides/contests/2026-attorney-general/"
+  ],
+  "note": "Open seat; Wilson ran for governor. Stumbo beat Stephen Goldfinch in Jun 23 runoff 55.7-44.3. No general polls found."
+ },
+ {
+  "state": "SC",
+  "office": "agriculture-commissioner",
+  "d_name": "DeShawn Blanding",
+  "r_name": "Cody Simpson",
+  "others": [
+   {
+    "name": "Chris Nelums",
+    "party": "United Citizens"
+   },
+   {
+    "name": "Michael Sullens",
+    "party": "Libertarian"
+   }
+  ],
+  "incumbent_name": "Hugh Weathers",
+  "incumbent_party": "R",
+  "incumbent_running": false,
+  "uncontested": null,
+  "polls": [],
+  "primary_files": {
+   "274335": "R",
+   "702280": "R"
+  },
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_South_Carolina_Commissioner_of_Agriculture_election"
+  ],
+  "note": "Open seat; Weathers retiring. Simpson beat Danny Ford II in runoff 62.6-37.4. No general polls found."
+ },
+ {
+  "state": "SD",
+  "office": "attorney-general",
+  "d_name": null,
+  "r_name": "Lance Russell",
+  "others": [],
+  "incumbent_name": "Marty Jackley",
+  "incumbent_party": "R",
+  "incumbent_running": false,
+  "uncontested": "D",
+  "polls": [],
+  "primary_files": {},
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_South_Dakota_Attorney_General_election",
+   "https://southdakotasearchlight.com/2026/09/08/qa-south-dakotas-next-attorney-general-aims-to-undo-criminal-justice-reforms-just-not-right-away/"
+  ],
+  "note": "Open seat; Jackley ran for US House. Russell won GOP convention nomination Jun 27 over Austin Hoffman and John Fitzgerald; unopposed in November."
+ },
+ {
+  "state": "TX",
+  "office": "attorney-general",
+  "d_name": "Nathan Johnson",
+  "r_name": "Mayes Middleton",
+  "others": [
+   {
+    "name": "Tom Oxford",
+    "party": "Libertarian"
+   },
+   {
+    "name": "Omer Wagas Khwaja",
+    "party": "Independent"
+   }
+  ],
+  "incumbent_name": "Ken Paxton",
+  "incumbent_party": "R",
+  "incumbent_running": false,
+  "uncontested": null,
+  "polls": [
+   {
+    "source": "Texas Public Opinion Research",
+    "dates": "Sep 19-22, 2026",
+    "end": "2026-09-22",
+    "n": 1007,
+    "pop": "LV",
+    "D": 43,
+    "R": 46,
+    "O": 2,
+    "U": 9,
+    "url": "https://texaspublicopinionresearch.substack.com/p/new-poll-in-texas-general-election-662"
+   },
+   {
+    "source": "Texas Southern University",
+    "dates": "Sep 15-19, 2026",
+    "end": "2026-09-19",
+    "n": 1800,
+    "pop": "LV",
+    "D": 42,
+    "R": 47,
+    "O": 2,
+    "U": 9,
+    "url": "https://www.fox4news.com/election/james-talarico-ken-paxton-texas-us-senate-tsu-poll"
+   },
+   {
+    "source": "ReconMR Texas Poll",
+    "dates": "Sep 8-11, 2026",
+    "end": "2026-09-11",
+    "n": 614,
+    "pop": "LV",
+    "D": 44,
+    "R": 45,
+    "O": 3,
+    "U": 8,
+    "url": "https://reconmr.com/wp-content/uploads/2026/09/ReconMR-Texas-Poll-September-Release-Final.pdf"
+   },
+   {
+    "source": "Texas Public Opinion Research",
+    "dates": "Aug 21-24, 2026",
+    "end": "2026-08-24",
+    "n": 1000,
+    "pop": "LV",
+    "D": 41,
+    "R": 44,
+    "O": 2,
+    "U": 10,
+    "url": "https://texaspublicopinionresearch.substack.com/p/new-poll-in-texas-general-election"
+   },
+   {
+    "source": "UT / Texas Politics Project",
+    "dates": "Aug 5-13, 2026",
+    "end": "2026-08-13",
+    "n": 1200,
+    "pop": "RV",
+    "D": 35,
+    "R": 40,
+    "O": 4,
+    "U": 21,
+    "url": "https://texaspolitics.utexas.edu/files/202608_POLL_TOPLINE-c5d4ba53.pdf"
+   },
+   {
+    "source": "Texas A&M / ReconMR / Siena",
+    "dates": "Jul 27-30, 2026",
+    "end": "2026-07-30",
+    "n": 619,
+    "pop": "LV",
+    "D": 44,
+    "R": 46,
+    "O": null,
+    "U": 10,
+    "url": "https://en.wikipedia.org/wiki/2026_Texas_Attorney_General_election"
+   },
+   {
+    "source": "Texas Southern University",
+    "dates": "Jul 27-30, 2026",
+    "end": "2026-07-30",
+    "n": 1200,
+    "pop": "LV",
+    "D": 41,
+    "R": 46,
+    "O": 3,
+    "U": 10,
+    "url": "https://static1.squarespace.com/static/67aa7aa3e284b002cd6a420e/t/6a713767d4ed824b91ea090d/1785804647961/Texas+Statewide+August2026.pdf"
+   },
+   {
+    "source": "Texas Public Opinion Research",
+    "dates": "Jul 15-17, 2026",
+    "end": "2026-07-17",
+    "n": 1048,
+    "pop": "LV",
+    "D": 38,
+    "R": 39,
+    "O": 5,
+    "U": 18,
+    "url": "https://texaspublicopinionresearch.substack.com/p/new-poll-james-talaricos-lead-over"
+   },
+   {
+    "source": "UT / Texas Politics Project",
+    "dates": "Jun 5-12, 2026",
+    "end": "2026-06-12",
+    "n": 1200,
+    "pop": "RV",
+    "D": 36,
+    "R": 41,
+    "O": 6,
+    "U": 18,
+    "url": "https://texaspolitics.utexas.edu/files/202606_POLL_TOPLINE-723970a4.pdf"
+   },
+   {
+    "source": "ReconMR / Texas A&M Texas Poll",
+    "dates": "Jun 1-4, 2026",
+    "end": "2026-06-04",
+    "n": 807,
+    "pop": "LV",
+    "D": 40,
+    "R": 45,
+    "O": 4,
+    "U": 11,
+    "url": "https://reconmr.com/wp-content/uploads/2026/06/TXPLV-Crosstabs-1.pdf"
+   }
+  ],
+  "primary_files": {
+   "243886": "D",
+   "243887": "R",
+   "680724": "D",
+   "680725": "R"
+  },
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_Texas_Attorney_General_election",
+   "https://www.orrick.com/en/Insights/2026/10/Orrick-State-Attorney-General-2026-Election-Preview"
+  ],
+  "note": "Open seat; Paxton ran for US Senate. Middleton beat Chip Roy, Johnson beat Joe Jaworski in May 26 runoffs. TPOR is run by Democrat Luke Warford and reports leaners in topline. Jul 27-30 Texas A&M poll from Wikipedia only, source PDF blocked."
+ },
+ {
+  "state": "TX",
+  "office": "agriculture-commissioner",
+  "d_name": "Clayton Tucker",
+  "r_name": "Nate Sheets",
+  "others": [
+   {
+    "name": "Austin Kelly",
+    "party": "Libertarian"
+   },
+   {
+    "name": "Alfred Molison",
+    "party": "Green"
+   }
+  ],
+  "incumbent_name": "Sid Miller",
+  "incumbent_party": "R",
+  "incumbent_running": false,
+  "uncontested": null,
+  "polls": [
+   {
+    "source": "Texas Public Opinion Research",
+    "dates": "Sep 19-22, 2026",
+    "end": "2026-09-22",
+    "n": 1007,
+    "pop": "LV",
+    "D": 44,
+    "R": 46,
+    "O": 2,
+    "U": 7,
+    "url": "https://texaspublicopinionresearch.substack.com/p/new-poll-in-texas-general-election-662"
+   },
+   {
+    "source": "Texas Southern University",
+    "dates": "Sep 15-19, 2026",
+    "end": "2026-09-19",
+    "n": 1800,
+    "pop": "LV",
+    "D": 39,
+    "R": 45,
+    "O": 2,
+    "U": 14,
+    "url": "https://www.fox4news.com/election/james-talarico-ken-paxton-texas-us-senate-tsu-poll"
+   },
+   {
+    "source": "Texas Public Opinion Research",
+    "dates": "Aug 21-24, 2026",
+    "end": "2026-08-24",
+    "n": 1000,
+    "pop": "LV",
+    "D": 40,
+    "R": 44,
+    "O": 2,
+    "U": 11,
+    "url": "https://texaspublicopinionresearch.substack.com/p/new-poll-in-texas-general-election"
+   }
+  ],
+  "primary_files": {
+   "243889": "R"
+  },
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_Texas_Commissioner_of_Agriculture_election",
+   "https://www.texastribune.org/2026/09/24/texas-agriculture-commissioner-2026-guide-nate-sheets-clayton-tucker/"
+  ],
+  "note": "Incumbent Sid Miller sought reelection but lost Mar 3 R primary to Sheets 52.7-47.3, so not on Nov ballot. Tucker unopposed in D primary."
+ },
+ {
+  "state": "TX",
+  "office": "railroad-commissioner",
+  "d_name": "Jon Rosenthal",
+  "r_name": "Bo French",
+  "others": [
+   {
+    "name": "Arthur DiBianca",
+    "party": "Libertarian"
+   }
+  ],
+  "incumbent_name": "Jim Wright",
+  "incumbent_party": "R",
+  "incumbent_running": false,
+  "uncontested": null,
+  "polls": [
+   {
+    "source": "Texas Public Opinion Research",
+    "dates": "Sep 19-22, 2026",
+    "end": "2026-09-22",
+    "n": 1007,
+    "pop": "LV",
+    "D": 44,
+    "R": 45,
+    "O": 2,
+    "U": 7,
+    "url": "https://texaspublicopinionresearch.substack.com/p/new-poll-in-texas-general-election-662"
+   },
+   {
+    "source": "Texas Southern University",
+    "dates": "Sep 15-19, 2026",
+    "end": "2026-09-19",
+    "n": 1800,
+    "pop": "LV",
+    "D": 42,
+    "R": 44,
+    "O": 3,
+    "U": 11,
+    "url": "https://www.fox4news.com/election/james-talarico-ken-paxton-texas-us-senate-tsu-poll"
+   },
+   {
+    "source": "Texas Public Opinion Research",
+    "dates": "Aug 21-24, 2026",
+    "end": "2026-08-24",
+    "n": 1000,
+    "pop": "LV",
+    "D": 41,
+    "R": 45,
+    "O": 1,
+    "U": 9,
+    "url": "https://texaspublicopinionresearch.substack.com/p/new-poll-in-texas-general-election"
+   },
+   {
+    "source": "Texas Southern University",
+    "dates": "Jul 27-30, 2026",
+    "end": "2026-07-30",
+    "n": 1200,
+    "pop": "LV",
+    "D": 41,
+    "R": 44,
+    "O": 2,
+    "U": 13,
+    "url": "https://static1.squarespace.com/static/67aa7aa3e284b002cd6a420e/t/6a713767d4ed824b91ea090d/1785804647961/Texas+Statewide+August2026.pdf"
+   }
+  ],
+  "primary_files": {
+   "243895": "R",
+   "680726": "R"
+  },
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_Texas_Railroad_Commissioner_election",
+   "https://www.texastribune.org/2026/09/15/texas-railroad-commission-election-2026-bo-french-jon-rosenthal/",
+   "https://www.keranews.org/elections-2026/2026-05-27/former-tarrant-gop-chairman-bo-french-wins-primary-runoff-for-state-office"
+  ],
+  "note": "Incumbent Jim Wright lost May 26 R runoff to French 50.6-49.4, so not on Nov ballot. Rosenthal unopposed in D primary."
+ },
+ {
+  "state": "VT",
+  "office": "attorney-general",
+  "d_name": "Charity Clark",
+  "r_name": "Ed Kemon",
+  "others": [],
+  "incumbent_name": "Charity Clark",
+  "incumbent_party": "D",
+  "incumbent_running": true,
+  "uncontested": null,
+  "polls": [],
+  "primary_files": {},
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_Vermont_Attorney_General_election",
+   "https://www.wcax.com/2026/08/26/vermont-gop-picks-candidates-replace-perennial-ballot-placeholder/"
+  ],
+  "note": "Unsure: H. Brooke Paige won R primary as placeholder; WCAX Aug 26 says GOP picked Ed Kemon as AG candidate. Orrick and Vermont Wikipedia page still list Paige. Two-year term. No polls found."
+ },
+ {
+  "state": "WI",
+  "office": "attorney-general",
+  "d_name": "Josh Kaul",
+  "r_name": "Eric Toney",
+  "others": [],
+  "incumbent_name": "Josh Kaul",
+  "incumbent_party": "D",
+  "incumbent_running": true,
+  "uncontested": null,
+  "polls": [],
+  "primary_files": {},
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_Wisconsin_Attorney_General_election"
+  ],
+  "note": "Rematch of 2022. Both unopposed Aug 11. No polls found."
+ },
+ {
+  "state": "AL",
+  "office": "secretary-of-state",
+  "d_name": "Wayne Rogers",
+  "r_name": "Caroleene Dobson",
+  "others": [],
+  "incumbent_name": "Wes Allen",
+  "incumbent_party": "R",
+  "incumbent_running": false,
+  "uncontested": null,
+  "polls": [],
+  "primary_files": {
+   "251751": "R"
+  },
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_Alabama_Secretary_of_State_election",
+   "https://en.wikipedia.org/wiki/2026_United_States_secretary_of_state_elections"
+  ],
+  "note": "Open seat; Allen ran for lieutenant governor and lost the GOP runoff. Dobson won the May 19 GOP primary outright with 65.5%. Rogers had no Democratic primary file. No general election polls found."
+ },
+ {
+  "state": "AZ",
+  "office": "secretary-of-state",
+  "d_name": "Adrian Fontes",
+  "r_name": "Alexander Kolodin",
+  "others": [
+   {
+    "name": "Duwayne Collier",
+    "party": "Green"
+   }
+  ],
+  "incumbent_name": "Adrian Fontes",
+  "incumbent_party": "D",
+  "incumbent_running": true,
+  "uncontested": null,
+  "polls": [
+   {
+    "source": "Equis Research",
+    "dates": "2026-09-01 to 2026-09-09",
+    "end": "2026-09-09",
+    "n": 1214,
+    "pop": "RV",
+    "D": 46,
+    "R": 44,
+    "O": null,
+    "U": 10,
+    "url": "https://www.weareequis.us/research/memo-arizona-voter-research---sept-2026"
+   },
+   {
+    "source": "Arizona State University",
+    "dates": "2026-08-18 to 2026-09-04",
+    "end": "2026-09-04",
+    "n": 1300,
+    "pop": "RV",
+    "D": 39,
+    "R": 35,
+    "O": 3,
+    "U": 23,
+    "url": "https://www.dropbox.com/scl/fi/wwuz99s4jj7q4eot3gjak/Topline-ASU-Survey-August-2026.pdf?rlkey=ftd9j7m13txzpvche7encqmqm&st=tf10u4h2&e=2&dl=0"
+   },
+   {
+    "source": "HighGround, Inc.",
+    "dates": "2026-08-15 to 2026-08-18",
+    "end": "2026-08-18",
+    "n": 400,
+    "pop": "LV",
+    "D": 43,
+    "R": 35,
+    "O": 3,
+    "U": 19,
+    "url": "https://azhighground.com/arizona-democrats-lead-down-ballot-races/"
+   },
+   {
+    "source": "Grayhouse (R)",
+    "dates": "2026-08-11 to 2026-08-13",
+    "end": "2026-08-13",
+    "n": 600,
+    "pop": "LV",
+    "D": 46,
+    "R": 42,
+    "O": null,
+    "U": 12,
+    "url": null
+   },
+   {
+    "source": "Stealth Analytics",
+    "dates": "2026-08-11 to 2026-08-13",
+    "end": "2026-08-13",
+    "n": 530,
+    "pop": "LV",
+    "D": 39,
+    "R": 38,
+    "O": 2,
+    "U": 21,
+    "url": "https://www.stealth-analytics.com/dispatches/az-general-lv-statewide-august-2026"
+   },
+   {
+    "source": "Noble Predictive Insights",
+    "dates": "2026-08-10 to 2026-08-13",
+    "end": "2026-08-13",
+    "n": 923,
+    "pop": "LV",
+    "D": 41,
+    "R": 35,
+    "O": 5,
+    "U": 20,
+    "url": "https://www.noblepredictiveinsights.com/post/fontes-and-mayes-lead-down-ballot-yee-holds-narrow-edge-for-schools-chief"
+   }
+  ],
+  "primary_files": {
+   "283879": "R"
+  },
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_Arizona_Secretary_of_State_election",
+   "https://ktar.com/arizona-politics-news/election/poll-democrats-lead-down-ballot"
+  ],
+  "note": "Kolodin beat Gina Swoboda in the GOP primary. Poll rows come from the Wikipedia race page. Its rows are not linked one by one, so URLs were matched to the reference list by pollster and date. No source URL was found for Grayhouse. Wikipedia lists no sponsors. Equis Research is a Democratic-aligned research group. KTAR confirmed the NPI numbers."
+ },
+ {
+  "state": "AR",
+  "office": "secretary-of-state",
+  "d_name": "Kelly Grappe",
+  "r_name": "Kim Hammer",
+  "others": [
+   {
+    "name": "Michael Pakko",
+    "party": "Libertarian"
+   }
+  ],
+  "incumbent_name": "Cole Jester",
+  "incumbent_party": "R",
+  "incumbent_running": false,
+  "uncontested": null,
+  "polls": [],
+  "primary_files": {
+   "243874": "D",
+   "243875": "R",
+   "606838": "R"
+  },
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_Arkansas_Secretary_of_State_election",
+   "https://politics1.com/ar.htm"
+  ],
+  "note": "Open seat. Jester was appointed in 2024 and the state constitution bars him from running; he is running for land commissioner. Hammer beat Bryan Norris 50.6 to 49.4 in the March 31 runoff, file 606838. Grappe was unopposed, and file 243874 has 0 votes. No polls found."
+ },
+ {
+  "state": "CA",
+  "office": "secretary-of-state",
+  "d_name": "Shirley Weber",
+  "r_name": "Don Wagner",
+  "others": [],
+  "incumbent_name": "Shirley Weber",
+  "incumbent_party": "D",
+  "incumbent_running": true,
+  "uncontested": null,
+  "polls": [],
+  "primary_files": {
+   "251825": "top-two (all parties)"
+  },
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_California_Secretary_of_State_election",
+   "https://igs.berkeley.edu/research/berkeley-igs-poll/2026-berkeley-igs-poll-releases"
+  ],
+  "note": "Top-two general between Weber (D) and Wagner (R, Orange County supervisor). No general election polls found; Berkeley IGS releases after June do not include this race."
+ },
+ {
+  "state": "CO",
+  "office": "secretary-of-state",
+  "d_name": "Amanda Gonzalez",
+  "r_name": "James Wiley",
+  "others": [
+   {
+    "name": "Sean Vadney",
+    "party": "Libertarian"
+   },
+   {
+    "name": "Celeste Landry",
+    "party": "Forward"
+   }
+  ],
+  "incumbent_name": "Jena Griswold",
+  "incumbent_party": "D",
+  "incumbent_running": false,
+  "uncontested": null,
+  "polls": [],
+  "primary_files": {
+   "283852": "D"
+  },
+  "sources": [
+   "https://www.cpr.org/2026/06/30/colorado-secretary-of-state-primary-election-2026-results/",
+   "https://www.coloradopolitics.com/2026/10/02/gonzales-wiley-vadney-landry-secretary-of-state/",
+   "https://en.wikipedia.org/wiki/2026_Colorado_Secretary_of_State_election"
+  ],
+  "note": "Open seat; Griswold is term-limited. Gonzalez, the Jefferson County clerk, beat Jessie Danielson in the June 30 Democratic primary. Wiley, a former Libertarian Party of Colorado executive director, was unopposed for the Republican nomination. The Wikipedia page is stale here: it lists the Democratic nominee as TBD and labels Wiley inconsistently. Colorado Politics also mentions Amanda Campbell of the American Constitution Party. No polls found."
+ },
+ {
+  "state": "CT",
+  "office": "secretary-of-state",
+  "d_name": "Stephanie Thomas",
+  "r_name": "Peter Lumaj",
+  "others": [],
+  "incumbent_name": "Stephanie Thomas",
+  "incumbent_party": "D",
+  "incumbent_running": true,
+  "uncontested": null,
+  "polls": [],
+  "primary_files": {},
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_Connecticut_Secretary_of_the_State_election",
+   "https://portal.ct.gov/-/media/sots/electionservices/town_ballots/2026/nov-ada-2026/north_branford_sample_ada.pdf"
+  ],
+  "note": "Office is Secretary of the State. The November sample ballot lists Thomas on the Democratic, Working Families and Independent Party lines and Lumaj as the Republican. No polls found."
+ },
+ {
+  "state": "GA",
+  "office": "secretary-of-state",
+  "d_name": "Penny Brown Reynolds",
+  "r_name": "Tim Fleming",
+  "others": [],
+  "incumbent_name": "Brad Raffensperger",
+  "incumbent_party": "R",
+  "incumbent_running": false,
+  "uncontested": null,
+  "polls": [],
+  "primary_files": {
+   "251626": "D",
+   "251627": "R",
+   "698679": "D",
+   "698680": "R"
+  },
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_Georgia_Secretary_of_State_election",
+   "https://wrdw.com/2026/06/17/tim-fleming-wins-gop-secretary-state-runoff",
+   "https://www.wabe.org/georgia-libertarians-end-efforts-to-get-on-2026-general-election-ballot/"
+  ],
+  "note": "Open seat; Raffensperger ran for governor and lost. In the June 16 runoffs, Fleming beat Vernon Jones 64.5 to 35.5 and Reynolds beat Dana Barrett 63.1 to 36.9. Georgia Libertarians ended their 2026 ballot effort, so the race is two-way. No general election polls found; the July State Navigate poll did not ask about this race."
+ },
+ {
+  "state": "ID",
+  "office": "secretary-of-state",
+  "d_name": "Shawn Keenan",
+  "r_name": "Phil McGrane",
+  "others": [],
+  "incumbent_name": "Phil McGrane",
+  "incumbent_party": "R",
+  "incumbent_running": true,
+  "uncontested": null,
+  "polls": [],
+  "primary_files": {},
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_Idaho_Secretary_of_State_election"
+  ],
+  "note": "Both nominees were unopposed in the May primary, and there is no primary file. No polls found."
+ },
+ {
+  "state": "IL",
+  "office": "secretary-of-state",
+  "d_name": "Alexi Giannoulias",
+  "r_name": "Diane Harris",
+  "others": [],
+  "incumbent_name": "Alexi Giannoulias",
+  "incumbent_party": "D",
+  "incumbent_running": true,
+  "uncontested": null,
+  "polls": [],
+  "primary_files": {
+   "243901": "R"
+  },
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_Illinois_Secretary_of_State_election"
+  ],
+  "note": "Giannoulias was unopposed in the March 17 Democratic primary. Harris beat Walter Adamczyk 53.0 to 47.0 in the GOP primary. No polls found."
+ },
+ {
+  "state": "IN",
+  "office": "secretary-of-state",
+  "d_name": "Beau Bayh",
+  "r_name": "Max Engling",
+  "others": [
+   {
+    "name": "Greg Ballard",
+    "party": "Independent (Lincoln Party line)"
+   },
+   {
+    "name": "Lauri Shillings",
+    "party": "Libertarian"
+   }
+  ],
+  "incumbent_name": "Diego Morales",
+  "incumbent_party": "R",
+  "incumbent_running": false,
+  "uncontested": null,
+  "polls": [
+   {
+    "source": "The Tarrance Group (R) for Hoosier Leadership for America (R)",
+    "dates": "2026-09-27 to 2026-09-30",
+    "end": "2026-09-30",
+    "n": 600,
+    "pop": "LV",
+    "D": 37,
+    "R": 38,
+    "O": 11,
+    "U": 14,
+    "url": "https://www.newsfromthestates.com/node/430530"
+   },
+   {
+    "source": "Schoen Cooperman Research (D) for Bayh campaign (D)",
+    "dates": "2026-09-01 to 2026-09-03",
+    "end": "2026-09-03",
+    "n": 605,
+    "pop": "LV",
+    "D": 42,
+    "R": 36,
+    "O": 10,
+    "U": 12,
+    "url": "https://indianacapitalchronicle.com/2026/10/02/polls-circulate-showing-tight-secretary-of-state-race-plus-bo-duke-actor-weighs-in/"
+   }
+  ],
+  "primary_files": {},
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_Indiana_Secretary_of_State_election",
+   "https://www.newsfromthestates.com/node/430530"
+  ],
+  "note": "Indiana nominates at party conventions, so there are no primary files. Morales sought re-election but lost renomination at the GOP convention to Engling; incumbent_running is false because he is not on the ballot. Ballard is a former Republican Indianapolis mayor. Other means Ballard plus Shillings: 5+6 in Tarrance and 5+5 in Schoen Cooperman. Hoosier Leadership for America is tied to Sen. Jim Banks. Indy Politics also reported an HLFA tie with no numbers. Minor candidates are Harrison Jacobo (Socialist) and a write-in."
+ },
+ {
+  "state": "IA",
+  "office": "secretary-of-state",
+  "d_name": "Ryan Peterman",
+  "r_name": "Paul Pate",
+  "others": [],
+  "incumbent_name": "Paul Pate",
+  "incumbent_party": "R",
+  "incumbent_running": true,
+  "uncontested": null,
+  "polls": [],
+  "primary_files": {},
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_Iowa_Secretary_of_State_election"
+  ],
+  "note": "Both won the June 2 primary unopposed, and there is no primary file. No polls found."
+ },
+ {
+  "state": "KS",
+  "office": "secretary-of-state",
+  "d_name": "Jennifer Day",
+  "r_name": "Pat Proctor",
+  "others": [
+   {
+    "name": "Scott E. Morgan",
+    "party": "United Kansas"
+   }
+  ],
+  "incumbent_name": "Scott Schwab",
+  "incumbent_party": "R",
+  "incumbent_running": false,
+  "uncontested": null,
+  "polls": [
+   {
+    "source": "Public Policy Polling (D) for Jennifer Day campaign (D)",
+    "dates": "2026-08-31 to 2026-09-01",
+    "end": "2026-09-01",
+    "n": 542,
+    "pop": "RV",
+    "D": 37,
+    "R": 39,
+    "O": null,
+    "U": 24,
+    "url": "https://www.documentcloud.org/documents/28606454-ks-sos-ppp-for-jennifer-day-sept-2026/"
+   }
+  ],
+  "primary_files": {
+   "283900": "D"
+  },
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_Kansas_Secretary_of_State_election",
+   "https://sunflowerstatejournal.com/internal-poll-shows-tight-race-for-secretary-of-state-high-undecideds/"
+  ],
+  "note": "Open seat; Schwab ran for governor. Day beat Samuel Lane 85 to 15 in the August 4 Democratic primary. Proctor was unopposed for the Republican nomination, and there is no Republican file. The PPP internal left out Morgan. Its dates, n and RV come from Wikipedia."
+ },
+ {
+  "state": "MA",
+  "office": "secretary-of-state",
+  "d_name": "William F. Galvin",
+  "r_name": "Anne Brensley",
+  "others": [],
+  "incumbent_name": "William F. Galvin",
+  "incumbent_party": "D",
+  "incumbent_running": true,
+  "uncontested": null,
+  "polls": [],
+  "primary_files": {},
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_Massachusetts_Secretary_of_the_Commonwealth_election",
+   "https://www.sec.state.ma.us/WhereDoIVoteMA/ShowBallot/ViewMyBallot/BallotOut/ST/167/0/1",
+   "https://www.statehousenews.com/news/politics/elections/endorsed-for-lg-brensley-says-shes-on-nov-ballot-as-state-secretary-candidate/article_c5838fc9-baf5-403b-a7d2-81c5c851ee7d.html"
+  ],
+  "note": "Office is Secretary of the Commonwealth. Galvin is seeking a ninth term. Brensley qualified through write-in votes in the September 1 Republican primary, and the official sample ballot lists Galvin (D) and Anne R. Brensley (R). No polls found."
+ },
+ {
+  "state": "MI",
+  "office": "secretary-of-state",
+  "d_name": "Garlin Gilchrist",
+  "r_name": "Anthony Forlini",
+  "others": [
+   {
+    "name": "Christine Sloan",
+    "party": "Libertarian"
+   },
+   {
+    "name": "Scott Aughney",
+    "party": "Constitution/US Taxpayers"
+   },
+   {
+    "name": "Eric Borregard",
+    "party": "Green"
+   }
+  ],
+  "incumbent_name": "Jocelyn Benson",
+  "incumbent_party": "D",
+  "incumbent_running": false,
+  "uncontested": null,
+  "polls": [
+   {
+    "source": "Cygnal (R) / Beacon Research (D) for Michigan Enjoyer",
+    "dates": "2026-09-18 to 2026-09-21",
+    "end": "2026-09-21",
+    "n": 600,
+    "pop": "LV",
+    "D": 41,
+    "R": 38,
+    "O": null,
+    "U": 20,
+    "url": "https://enjoyer.com/michigan-poll-fall-2026/"
+   },
+   {
+    "source": "Glengariff Group for WDIV/The Detroit News",
+    "dates": "2026-08-31 to 2026-09-03",
+    "end": "2026-09-03",
+    "n": 600,
+    "pop": "LV",
+    "D": 42,
+    "R": 36,
+    "O": null,
+    "U": 22,
+    "url": "https://www.detroitnews.com/story/news/politics/2026/09/09/michigan-secretary-of-state-poll-garlin-gilchrist-anthony-forlini/91653243007/"
+   },
+   {
+    "source": "Mitchell Research & Communications",
+    "dates": "2026-07-28 to 2026-07-29",
+    "end": "2026-07-29",
+    "n": 672,
+    "pop": "LV",
+    "D": 45,
+    "R": 40,
+    "O": null,
+    "U": 15,
+    "url": "https://static1.squarespace.com/static/5f14ae6fb2a20e01e9c6d608/t/6a6d26262f442f133d15fa49/1785538087149/MITCHELL+MI+Poll+Nov+Electio+Press+Release+7-31-2026+305PM_A.pdf"
+   },
+   {
+    "source": "Mitchell Research (as cited by Bridge Michigan; dates not reported)",
+    "dates": "not reported (cited 2026-10-08)",
+    "end": null,
+    "n": null,
+    "pop": null,
+    "D": 41,
+    "R": 36,
+    "O": null,
+    "U": 18,
+    "url": "https://bridgemi.com/?p=81112"
+   }
+  ],
+  "primary_files": {},
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_Michigan_Secretary_of_State_election",
+   "https://www.michiganpublic.org/politics-government/2026-10-09/secretary-of-state-candidates-square-off-over-election-integrity-at-debate",
+   "https://www.clickondetroit.com/news/local/2026/09/08/poll-which-us-senate-candidates-are-most-favorable-to-michigan-voters/"
+  ],
+  "note": "Open seat; Benson is term-limited and running for governor. Nominees were chosen at the April party conventions, so there are no primary files. The Detroit News article was blocked to fetching; its numbers come from Wikipedia. WDIV/Detroit News sponsorship and the field dates are confirmed by ClickOnDetroit for the same Glengariff wave. Bridge Michigan cited a later Mitchell poll at 41 to 36 with 18 undecided, but gave no dates or n. It may duplicate another poll; check it before use."
+ },
+ {
+  "state": "MN",
+  "office": "secretary-of-state",
+  "d_name": "Steve Simon",
+  "r_name": "Tad Jude",
+  "others": [
+   {
+    "name": "George 'Chip' Tangen",
+    "party": "Libertarian"
+   },
+   {
+    "name": "Seth Kuhl-Stennes",
+    "party": "Green"
+   }
+  ],
+  "incumbent_name": "Steve Simon",
+  "incumbent_party": "D",
+  "incumbent_running": true,
+  "uncontested": null,
+  "polls": [
+   {
+    "source": "SurveyUSA for KSTP",
+    "dates": "2026-08-13 to 2026-08-17",
+    "end": "2026-08-17",
+    "n": 661,
+    "pop": "LV",
+    "D": 41,
+    "R": 34,
+    "O": 4,
+    "U": 20,
+    "url": "https://kstp.com/wp-content/uploads/2026/08/Election-Poll-8-19-26.pdf"
+   }
+  ],
+  "primary_files": {
+   "284065": "R"
+  },
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_Minnesota_Secretary_of_State_election",
+   "https://kstp.com/kstp-news/top-news/kstp-surveyusa-poll-early-frontrunner-in-secretary-of-state-race-auditor-neck-and-neck/"
+  ],
+  "note": "Simon (DFL, counted as D) is seeking a fourth term. Jude beat Wendy Phillips in the August 11 GOP primary."
+ },
+ {
+  "state": "NE",
+  "office": "secretary-of-state",
+  "d_name": "Sarah Slattery",
+  "r_name": "Scott Petersen",
+  "others": [
+   {
+    "name": "Bob Krist",
+    "party": "America First"
+   },
+   {
+    "name": "Paul Rumbaugh",
+    "party": "Working People"
+   }
+  ],
+  "incumbent_name": "Bob Evnen",
+  "incumbent_party": "R",
+  "incumbent_running": false,
+  "uncontested": null,
+  "polls": [],
+  "primary_files": {
+   "243938": "D",
+   "243939": "R"
+  },
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_Nebraska_Secretary_of_State_election",
+   "https://www.yourwyominglink.com/former-state-sen-bob-krist-selects-america-first-party-for-secretary-of-state-run/article_194b26f4-d999-5aa1-87b9-ceb92bec340b.html"
+  ],
+  "note": "Evnen sought a third term but lost the May GOP primary to Petersen 54.6 to 45.4; incumbent_running is false because he is not on the ballot. Krist is a former state senator and the 2018 Democratic nominee for governor. No polls found."
+ },
+ {
+  "state": "NV",
+  "office": "secretary-of-state",
+  "d_name": "Cisco Aguilar",
+  "r_name": "Jim Marchant",
+  "others": [
+   {
+    "name": "Brad Lee Barnhill",
+    "party": "Independent American"
+   },
+   {
+    "name": "John T. Kennedy",
+    "party": "Libertarian"
+   }
+  ],
+  "incumbent_name": "Cisco Aguilar",
+  "incumbent_party": "D",
+  "incumbent_running": true,
+  "uncontested": null,
+  "polls": [
+   {
+    "source": "Noble Predictive Insights (Nevada Public Opinion Pulse)",
+    "dates": "2026-09-22 to 2026-09-26",
+    "end": "2026-09-26",
+    "n": 708,
+    "pop": "LV",
+    "D": 44,
+    "R": 37,
+    "O": 6,
+    "U": 12,
+    "url": "https://www.noblepredictiveinsights.com/post/lombardo-tries-to-escape-trump-s-orbit-up-2-over-ford"
+   }
+  ],
+  "primary_files": {
+   "273790": "R"
+  },
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_Nevada_Secretary_of_State_election",
+   "https://www.noblepredictiveinsights.com/post/lombardo-tries-to-escape-trump-s-orbit-up-2-over-ford"
+  ],
+  "note": "The NPI numbers come from Wikipedia. The NPI release confirms the field dates and LV n, and says Aguilar leads among independents by 11. The same poll's RV result (n=800) was D41, R32, other 8, undecided 19. The CSV shows 'James Marchant' winning the GOP primary over Shirley Folkins-Roberts and Sharron Angle. No Democratic primary file."
+ },
+ {
+  "state": "NM",
+  "office": "secretary-of-state",
+  "d_name": "Amanda L\u00f3pez Askin",
+  "r_name": "Ramona Goolsby",
+  "others": [],
+  "incumbent_name": "Maggie Toulouse Oliver",
+  "incumbent_party": "D",
+  "incumbent_running": false,
+  "uncontested": null,
+  "polls": [],
+  "primary_files": {
+   "251890": "D"
+  },
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_New_Mexico_Secretary_of_State_election",
+   "https://sourcenm.com/2026/09/29/new-mexico-election-2026-secretary-of-state/"
+  ],
+  "note": "Open seat; Toulouse Oliver is term-limited and running for lieutenant governor on the joint ticket. L\u00f3pez Askin beat Katharine Clark 53.2 to 46.8. Goolsby was unopposed, and there is no Republican file. No polls found."
+ },
+ {
+  "state": "ND",
+  "office": "secretary-of-state",
+  "d_name": "Ryan Braunberger",
+  "r_name": "Michael Howe",
+  "others": [],
+  "incumbent_name": "Michael Howe",
+  "incumbent_party": "R",
+  "incumbent_running": true,
+  "uncontested": null,
+  "polls": [],
+  "primary_files": {},
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_North_Dakota_Secretary_of_State_election",
+   "https://en.wikipedia.org/wiki/2026_United_States_secretary_of_state_elections"
+  ],
+  "note": "Braunberger is the Democratic-NPL nominee, counted as D. Howe faced only write-in opposition in the June primary. No polls found."
+ },
+ {
+  "state": "OH",
+  "office": "secretary-of-state",
+  "d_name": "Allison Russo",
+  "r_name": "Robert Sprague",
+  "others": [
+   {
+    "name": "Tom Pruss",
+    "party": "Libertarian"
+   }
+  ],
+  "incumbent_name": "Frank LaRose",
+  "incumbent_party": "R",
+  "incumbent_running": false,
+  "uncontested": null,
+  "polls": [],
+  "primary_files": {
+   "243916": "D",
+   "243917": "R"
+  },
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_Ohio_Secretary_of_State_election",
+   "https://ohiocapitaljournal.com/?p=38740",
+   "https://www.bgsu.edu/arts-and-sciences/democracy-and-public-policy-research-network/bgsu-poll.html"
+  ],
+  "note": "Open seat; LaRose is term-limited and running for auditor. Russo beat Bryan Hambley and Sprague, the state treasurer, beat Marcell Strbich in the May 5 primaries. No general election polls found; the September BGSU Ohio poll skipped this race."
+ },
+ {
+  "state": "RI",
+  "office": "secretary-of-state",
+  "d_name": "Gregg Amore",
+  "r_name": null,
+  "others": [],
+  "incumbent_name": "Gregg Amore",
+  "incumbent_party": "D",
+  "incumbent_running": true,
+  "uncontested": "D",
+  "polls": [],
+  "primary_files": {},
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_Rhode_Island_Secretary_of_State_election",
+   "https://www.270towin.com/2026-election-results-live/state/rhode-island/primary"
+  ],
+  "note": "270toWin says Amore has no primary or general election opposition. Wikipedia mentions a possible primary challenger, Anthony Tamba, but no primary file exists. No Republican filed. No polls."
+ },
+ {
+  "state": "SC",
+  "office": "secretary-of-state",
+  "d_name": "Jason Belton",
+  "r_name": "Mark Hammond",
+  "others": [],
+  "incumbent_name": "Mark Hammond",
+  "incumbent_party": "R",
+  "incumbent_running": true,
+  "uncontested": null,
+  "polls": [],
+  "primary_files": {
+   "274332": "D"
+  },
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_South_Carolina_Secretary_of_State_election"
+  ],
+  "note": "Belton beat Edwina Winter 50.6 to 49.4 in the June 9 Democratic primary. Hammond had no Republican file. No polls found."
+ },
+ {
+  "state": "SD",
+  "office": "secretary-of-state",
+  "d_name": "Terrence Davis",
+  "r_name": "Heather Baxter",
+  "others": [
+   {
+    "name": "Tamara Lesnar",
+    "party": "Libertarian"
+   }
+  ],
+  "incumbent_name": "Monae Johnson",
+  "incumbent_party": "R",
+  "incumbent_running": false,
+  "uncontested": null,
+  "polls": [],
+  "primary_files": {},
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_South_Dakota_Secretary_of_State_election",
+   "https://en.wikipedia.org/wiki/2026_United_States_secretary_of_state_elections"
+  ],
+  "note": "Nominees were chosen at party conventions, so there are no primary files. Johnson lost renomination to state Rep. Baxter at the GOP convention and has endorsed Democrat Davis; incumbent_running is false. No polls found."
+ },
+ {
+  "state": "VT",
+  "office": "secretary-of-state",
+  "d_name": "Sarah Copeland Hanzas",
+  "r_name": "H. Brooke Paige",
+  "others": [],
+  "incumbent_name": "Sarah Copeland Hanzas",
+  "incumbent_party": "D",
+  "incumbent_running": true,
+  "uncontested": null,
+  "polls": [],
+  "primary_files": {},
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_Vermont_Secretary_of_State_election",
+   "https://www.vermontpublic.org/local-news/2026-09-28/vermont-general-election-poll-results-2026"
+  ],
+  "note": "Both won the August 11 primaries with token opposition, and there are no primary files. Paige is a perennial candidate. The September Vermont Public/Braun poll may include this race, but only as a chart with no readable numbers, so it is not recorded."
+ },
+ {
+  "state": "WI",
+  "office": "secretary-of-state",
+  "d_name": "JoCasta Zamarripa",
+  "r_name": "Jay Schroeder",
+  "others": [
+   {
+    "name": "Pete Karas",
+    "party": "Green"
+   }
+  ],
+  "incumbent_name": "Sarah Godlewski",
+  "incumbent_party": "D",
+  "incumbent_running": false,
+  "uncontested": null,
+  "polls": [],
+  "primary_files": {
+   "284106": "R"
+  },
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_Wisconsin_Secretary_of_State_election",
+   "https://wpr.org/news/wisconsin-secretary-state-jay-schroeder-jocasta-zamarripa-pete-karas-2026"
+  ],
+  "note": "Open seat; Godlewski is running for lieutenant governor. Zamarripa was effectively unopposed in the Democratic primary, and there is no Democratic file. Schroeder won the GOP primary with 47 percent. No polls found."
+ },
+ {
+  "state": "WY",
+  "office": "secretary-of-state",
+  "d_name": "Bryan McCarty",
+  "r_name": "Robert Short",
+  "others": [],
+  "incumbent_name": "Chuck Gray",
+  "incumbent_party": "R",
+  "incumbent_running": false,
+  "uncontested": null,
+  "polls": [],
+  "primary_files": {
+   "284185": "R"
+  },
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_Wyoming_Secretary_of_State_election"
+  ],
+  "note": "Open seat; Gray ran for the U.S. House. Short, a Converse County commissioner, beat Rachel Rodriguez-Williams in the GOP primary. McCarty was unopposed, and there is no Democratic file. No polls found."
+ },
+ {
+  "state": "AL",
+  "office": "lieutenant-governor",
+  "d_name": "Phillip Ensler",
+  "r_name": "John Wahl",
+  "others": [],
+  "incumbent_name": "Will Ainsworth",
+  "incumbent_party": "R",
+  "incumbent_running": false,
+  "uncontested": null,
+  "polls": [],
+  "primary_files": {
+   "251746": "D",
+   "251747": "R",
+   "700194": "R"
+  },
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_Alabama_lieutenant_gubernatorial_election",
+   "https://en.wikipedia.org/wiki/2026_United_States_lieutenant_gubernatorial_elections"
+  ],
+  "note": "Open seat; Ainsworth is term-limited. Wahl, a former state GOP chair, beat Secretary of State Wes Allen 57 to 43 in the June 16 runoff, file 700194. Ensler beat Darryl Perryman in the May 19 Democratic primary. No general election polls found; all published polls were GOP primary or runoff polls."
+ },
+ {
+  "state": "AR",
+  "office": "lieutenant-governor",
+  "d_name": null,
+  "r_name": "Leslie Rutledge",
+  "others": [
+   {
+    "name": "Michael Kalagias",
+    "party": "Libertarian"
+   }
+  ],
+  "incumbent_name": "Leslie Rutledge",
+  "incumbent_party": "R",
+  "incumbent_running": true,
+  "uncontested": "R",
+  "polls": [],
+  "primary_files": {
+   "243871": "R"
+  },
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_Arkansas_lieutenant_gubernatorial_election",
+   "https://politics1.com/ar.htm"
+  ],
+  "note": "No Democrat filed, so Rutledge's only opponent is Libertarian Kalagias. She was unopposed in the primary, and file 243871 has 0 votes. No polls."
+ },
+ {
+  "state": "CA",
+  "office": "lieutenant-governor",
+  "d_name": "Fiona Ma",
+  "r_name": "Gloria Romero",
+  "others": [],
+  "incumbent_name": "Eleni Kounalakis",
+  "incumbent_party": "D",
+  "incumbent_running": false,
+  "uncontested": null,
+  "polls": [],
+  "primary_files": {
+   "251823": "top-two (all parties)"
+  },
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_California_lieutenant_gubernatorial_election",
+   "https://www.nbclosangeles.com/news/local/fiona-ma-and-gloria-romero-advance-to-lieutenant-governor-general-election/3902677/"
+  ],
+  "note": "Open seat; Kounalakis is term-limited and running for treasurer. Romero is a former Democratic state senator now running as a Republican. Polls that included both were pre-primary multi-candidate polls (Binder for Fryday, Tulchin for Ma, the CSULB/USC/Cal Poly Pomona poll). No head-to-head general polls were found."
+ },
+ {
+  "state": "GA",
+  "office": "lieutenant-governor",
+  "d_name": "Josh McLaurin",
+  "r_name": "Greg Dolezal",
+  "others": [],
+  "incumbent_name": "Burt Jones",
+  "incumbent_party": "R",
+  "incumbent_running": false,
+  "uncontested": null,
+  "polls": [
+   {
+    "source": "State Navigate",
+    "dates": "2026-07-10 to 2026-07-13",
+    "end": "2026-07-13",
+    "n": 448,
+    "pop": "LV",
+    "D": 48,
+    "R": 44,
+    "O": null,
+    "U": 9,
+    "url": "https://statenavigate.org/wp-content/uploads/2026/07/GA_Statewide_July_StateNav_Briefing_PartyID-1.pdf"
+   }
+  ],
+  "primary_files": {
+   "243699": "R",
+   "243730": "D",
+   "698671": "R",
+   "698672": "D"
+  },
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_Georgia_lieutenant_gubernatorial_election",
+   "https://statenavigate.org/ga/state-navigate-poll-shows-lance-bottoms-with-7-point-lead-in-georgia-governor-race",
+   "https://www.ajc.com/politics/2026/07/new-poll-shows-promise-and-peril-for-democrats-in-key-georgia-races/"
+  ],
+  "note": "Open seat; Jones ran for governor and lost. Runoffs: Dolezal beat John F. Kennedy 54.2 to 45.8, and McLaurin beat Nabilah Parkes 54.9 to 45.1. State Navigate numbers include leaners; without leaners, nearly one in five were undecided. The Wikipedia table has a second row with 43 D, 39 R and 18 undecided but no pollster, date or n. It may be State Navigate's no-leaner ballot, so it is not recorded. There is no Libertarian on the ballot."
+ },
+ {
+  "state": "ID",
+  "office": "lieutenant-governor",
+  "d_name": "Eric Myricks",
+  "r_name": "Scott Bedke",
+  "others": [],
+  "incumbent_name": "Scott Bedke",
+  "incumbent_party": "R",
+  "incumbent_running": true,
+  "uncontested": null,
+  "polls": [],
+  "primary_files": {},
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_Idaho_lieutenant_gubernatorial_election"
+  ],
+  "note": "Both won the May 19 primary unopposed, and there is no primary file. No polls found."
+ },
+ {
+  "state": "NV",
+  "office": "lieutenant-governor",
+  "d_name": "Sandra Jauregui",
+  "r_name": "Stavros Anthony",
+  "others": [
+   {
+    "name": "Janine Hansen",
+    "party": "Independent American"
+   }
+  ],
+  "incumbent_name": "Stavros Anthony",
+  "incumbent_party": "R",
+  "incumbent_running": true,
+  "uncontested": null,
+  "polls": [],
+  "primary_files": {
+   "273785": "D"
+  },
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_Nevada_lieutenant_gubernatorial_election",
+   "https://www.noblepredictiveinsights.com/post/lombardo-tries-to-escape-trump-s-orbit-up-2-over-ford"
+  ],
+  "note": "Jauregui won the Democratic primary with 59.8%. NPI's Sept 22-26 poll (708 LV) asked this race, but the published text says only that Democrats lead down-ballot by 1 to 8 points and Jauregui leads independents by 4. The full numbers are in an xlsx that could not be read, so no poll is recorded. NPI's March 10-13 poll had Jauregui 37 and Anthony 32 (RV), before the June cutoff. Cornelius Jones is also listed as a candidate."
+ },
+ {
+  "state": "OK",
+  "office": "lieutenant-governor",
+  "d_name": "Kelly Forbes",
+  "r_name": "T. W. Shannon",
+  "others": [],
+  "incumbent_name": "Matt Pinnell",
+  "incumbent_party": "R",
+  "incumbent_running": false,
+  "uncontested": null,
+  "polls": [
+   {
+    "source": "CHS & Associates (R)",
+    "dates": "2026-08-03 to 2026-08-06",
+    "end": "2026-08-06",
+    "n": 500,
+    "pop": "RV",
+    "D": 34,
+    "R": 51,
+    "O": null,
+    "U": 15,
+    "url": "https://chs-inc.com/general-election-rep/"
+   }
+  ],
+  "primary_files": {
+   "283701": "R"
+  },
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_Oklahoma_lieutenant_gubernatorial_election",
+   "https://chs-inc.com/general-election-rep/",
+   "https://www.news9.com/oklahoma-elections/oklahoma-lieutenant-governor-race-guide-shannon-forbes"
+  ],
+  "note": "Open seat; Pinnell is term-limited. Shannon, a former House speaker, won the GOP primary outright with 53.8%. Forbes was unopposed. The CHS page confirms Shannon 51 and Forbes 34. Dates, n and RV come from Wikipedia, and the 15 left over is shown as undecided. CHS is a Republican consulting firm; no sponsor was named."
+ },
+ {
+  "state": "RI",
+  "office": "lieutenant-governor",
+  "d_name": "Sabina Matos",
+  "r_name": "John Loughlin",
+  "others": [],
+  "incumbent_name": "Sabina Matos",
+  "incumbent_party": "D",
+  "incumbent_running": true,
+  "uncontested": null,
+  "polls": [
+   {
+    "source": "University of New Hampshire Survey Center",
+    "dates": "2026-09-17 to 2026-09-21",
+    "end": "2026-09-21",
+    "n": 598,
+    "pop": "LV",
+    "D": 48,
+    "R": 44,
+    "O": null,
+    "U": 7,
+    "url": "https://www.newsfromthestates.com/node/431276"
+   }
+  ],
+  "primary_files": {
+   "288386": "D"
+  },
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_Rhode_Island_lieutenant_gubernatorial_election",
+   "https://scholars.unh.edu/survey_center_polls/1009/",
+   "https://www.golocalprov.com/politics/new-poll-ri-lt-governors-race-a-tie"
+  ],
+  "note": "Matos won the September 9 Democratic primary with 37.6% over Xay Khamsyvoravong. Loughlin was unopposed, and there is no Republican file. An April 13-16 Opinion Diagnostics poll for Loughlin's campaign showed a tie, but it is before the cutoff and had no published numbers. Wikipedia mentions an independent, Mabel Martinez, whose ballot status is unconfirmed."
+ },
+ {
+  "state": "TX",
+  "office": "lieutenant-governor",
+  "d_name": "Vikki Goodwin",
+  "r_name": "Dan Patrick",
+  "others": [
+   {
+    "name": "Anthony Cristo",
+    "party": "Libertarian"
+   },
+   {
+    "name": "Kevin McCormick",
+    "party": "Green"
+   },
+   {
+    "name": "Jeffery Wayne Marshall",
+    "party": "Independent"
+   }
+  ],
+  "incumbent_name": "Dan Patrick",
+  "incumbent_party": "R",
+  "incumbent_running": true,
+  "uncontested": null,
+  "polls": [
+   {
+    "source": "Texas Public Opinion Research",
+    "dates": "2026-08-21 to 2026-08-24",
+    "end": "2026-08-24",
+    "n": 1000,
+    "pop": "LV",
+    "D": 41,
+    "R": 47,
+    "O": 4,
+    "U": 8,
+    "url": "https://texaspublicopinionresearch.substack.com/p/new-poll-in-texas-general-election"
+   },
+   {
+    "source": "University of Texas / Texas Politics Project",
+    "dates": "2026-08-05 to 2026-08-13",
+    "end": "2026-08-13",
+    "n": 1200,
+    "pop": "RV",
+    "D": 35,
+    "R": 42,
+    "O": 7,
+    "U": 16,
+    "url": "https://texaspolitics.utexas.edu/files/202608_POLL_TOPLINE-c5d4ba53.pdf"
+   },
+   {
+    "source": "Texas A&M Bush School / ReconMR (Texas Pulse)",
+    "dates": "2026-07-27 to 2026-07-30",
+    "end": "2026-07-30",
+    "n": 619,
+    "pop": "LV",
+    "D": 48,
+    "R": 46,
+    "O": null,
+    "U": 6,
+    "url": "https://www.fox4news.com/election/texas-dan-patrick-vikki-goodwin-lieutenant-governor-poll-july-2026"
+   },
+   {
+    "source": "Texas Southern University",
+    "dates": "2026-07-27 to 2026-07-30",
+    "end": "2026-07-30",
+    "n": 1200,
+    "pop": "LV",
+    "D": 39,
+    "R": 46,
+    "O": 3,
+    "U": 12,
+    "url": "https://static1.squarespace.com/static/67aa7aa3e284b002cd6a420e/t/6a713767d4ed824b91ea090d/1785804647961/Texas+Statewide+August2026.pdf"
+   },
+   {
+    "source": "University of Texas / Texas Politics Project (YouGov)",
+    "dates": "2026-06-05 to 2026-06-12",
+    "end": "2026-06-12",
+    "n": 1200,
+    "pop": "RV",
+    "D": 36,
+    "R": 43,
+    "O": 5,
+    "U": 16,
+    "url": "https://texaspolitics.utexas.edu/files/202606_POLL_TOPLINE-723970a4.pdf"
+   },
+   {
+    "source": "Texas A&M / ReconMR",
+    "dates": "2026-06-01 to 2026-06-04",
+    "end": "2026-06-04",
+    "n": 807,
+    "pop": "LV",
+    "D": 44,
+    "R": 49,
+    "O": 2,
+    "U": 5,
+    "url": "https://reconmr.com/wp-content/uploads/2026/06/TXPLV-Crosstabs-1.pdf"
+   }
+  ],
+  "primary_files": {
+   "243884": "D",
+   "680723": "D",
+   "243885": "R"
+  },
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_Texas_lieutenant_gubernatorial_election",
+   "https://news.bgov.com/litigation/texas-independent-loses-ballot-fight-despite-judges-sympathy"
+  ],
+  "note": "Patrick is seeking a fourth term. Goodwin beat Marcos Velez in the May 26 Democratic runoff, file 680723. Mike Collier, the 2018 and 2022 Democratic nominee, ran as an independent but lost his August 10 federal ballot-access bid, so he is likely not on the ballot. Wikipedia still lists him. Texas Public Opinion Research calls itself nonpartisan, but its page is copyrighted to Luke Warford, a former Democratic candidate. In its poll, Cristo had 1 and Marshall had 1. URLs were matched from the Wikipedia reference list. The Fox 4 article confirms the July Texas Pulse numbers."
+ },
+ {
+  "state": "VT",
+  "office": "lieutenant-governor",
+  "d_name": "Molly Gray",
+  "r_name": "John Rodgers",
+  "others": [
+   {
+    "name": "Charlie Bass",
+    "party": "Freedom and Unity"
+   }
+  ],
+  "incumbent_name": "John Rodgers",
+  "incumbent_party": "R",
+  "incumbent_running": true,
+  "uncontested": null,
+  "polls": [
+   {
+    "source": "University of New Hampshire Survey Center (Green Mountain State Poll)",
+    "dates": "2026-09-17 to 2026-09-21",
+    "end": "2026-09-21",
+    "n": 835,
+    "pop": "LV",
+    "D": 54,
+    "R": 35,
+    "O": 0.5,
+    "U": 11,
+    "url": "https://scholars.unh.edu/cgi/viewcontent.cgi?article=2005&context=survey_center_polls"
+   },
+   {
+    "source": "Braun Research for Vermont Public (dir. Rich Clark)",
+    "dates": "2026-09-10 to 2026-09-21",
+    "end": "2026-09-21",
+    "n": 817,
+    "pop": "unspecified (all respondents)",
+    "D": 42.8,
+    "R": 34.8,
+    "O": 3.5,
+    "U": 18.8,
+    "url": "https://www.vermontpublic.org/local-news/2026-09-28/vermont-general-election-poll-results-2026"
+   },
+   {
+    "source": "University of New Hampshire Survey Center (Green Mountain State Poll)",
+    "dates": "2026-06-18 to 2026-06-23",
+    "end": "2026-06-23",
+    "n": 887,
+    "pop": "LV",
+    "D": 45,
+    "R": 29,
+    "O": 1,
+    "U": 26,
+    "url": "https://vermontbiz.com/node/244050"
+   }
+  ],
+  "primary_files": {
+   "284072": "D"
+  },
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_Vermont_lieutenant_gubernatorial_election",
+   "https://vtdigger.org/2026/08/11/molly-gray-wins-democratic-primary-for-lieutenant-governor-of-vermont/",
+   "https://www.wcax.com/2026/09/24/poll-shows-molly-gray-leading-lt-gov-race-balint-with-commanding-lead-house-race/"
+  ],
+  "note": "Gray, a former lieutenant governor, won the August 11 Democratic primary over Ryan McLaren and Esther Charlestin. Rodgers was unopposed. Vermont elects lieutenant governors to two-year terms. In the Vermont Public poll, 363 of 817 respondents heard 'Democrat/Progressive Molly Gray'; with the corrected wording Gray had 45.6 and Rodgers 34.7. A likely-voter breakout exists only in an xlsx. UNH's September 'other' was under 1%, recorded as 0.5. The June UNH poll was before the primary but already tested Gray against Rodgers."
+ },
+ {
+  "state": "US",
+  "office": "lieutenant-governor-joint-ticket-states",
+  "d_name": null,
+  "r_name": null,
+  "others": [],
+  "incumbent_name": null,
+  "incumbent_party": null,
+  "incumbent_running": null,
+  "uncontested": null,
+  "polls": [],
+  "primary_files": {
+   "283996": "D (HI LG primary)",
+   "283997": "R (HI LG primary)",
+   "251886": "D (NM LG primary)",
+   "251887": "R (NM LG primary)",
+   "251727": "R (PA LG primary)",
+   "284101": "R (WI LG primary)"
+  },
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_United_States_lieutenant_gubernatorial_elections",
+   "https://en.wikipedia.org/wiki/List_of_current_United_States_lieutenant_governors"
+  ],
+  "note": "Twenty states elect a lieutenant governor in 2026 on a joint ticket with the governor, so those races are not listed separately: AK, CO, CT, FL, HI, IL, IA, KS, MD, MA, MI, MN, NE, NM, NY, OH, PA, SC, SD, WI. In HI, NM, PA and WI, plus some others, the lieutenant governor is nominated in a separate primary, but the two run as one ticket in November. The uploaded LG primary files for those states are listed here. Ten states elect a lieutenant governor in a separate November 3, 2026 race, and each has its own object: AL, AR, CA, GA, ID, NV, OK, RI, TX, VT. AZ, ME, NH, OR, WY and TN have no lieutenant governor or give the title to the senate president. Other separately elected lieutenant governors, such as DE, LA, MS, MO, NC, VA and WA, are not up in 2026."
+ },
+ {
+  "state": "AL",
+  "office": "treasurer",
+  "d_name": "Rosilyn Houston",
+  "r_name": "Young Boozer",
+  "others": [],
+  "incumbent_name": "Young Boozer",
+  "incumbent_party": "R",
+  "incumbent_running": true,
+  "uncontested": null,
+  "polls": [],
+  "primary_files": {
+   "251753": "R"
+  },
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_Alabama_State_Treasurer_election",
+   "https://politics1.com/AL.htm"
+  ],
+  "note": "Boozer won R primary 68-32 over Steve Lolley; Houston (banker) qualified as D. No polls found."
+ },
+ {
+  "state": "AZ",
+  "office": "treasurer",
+  "d_name": "Nick Mansour",
+  "r_name": "Elijah Norton",
+  "others": [],
+  "incumbent_name": "Kimberly Yee",
+  "incumbent_party": "R",
+  "incumbent_running": false,
+  "uncontested": null,
+  "polls": [
+   {
+    "source": "HighGround Inc.",
+    "dates": "2026-10-06 to 2026-10-08",
+    "end": "2026-10-08",
+    "n": 400,
+    "pop": "LV",
+    "D": 44.5,
+    "R": 35.3,
+    "O": null,
+    "U": 20.2,
+    "url": "https://azhighground.com/hurricane-season-for-arizona-republicans/"
+   },
+   {
+    "source": "HighGround Inc.",
+    "dates": "2026-08-15 to 2026-08-18",
+    "end": "2026-08-18",
+    "n": 400,
+    "pop": "LV",
+    "D": 41.8,
+    "R": 39.0,
+    "O": 0,
+    "U": 19.2,
+    "url": "https://azhighground.com/arizona-democrats-lead-down-ballot-races/"
+   },
+   {
+    "source": "Grayhouse (R)",
+    "dates": "2026-08-11 to 2026-08-13",
+    "end": "2026-08-13",
+    "n": 600,
+    "pop": "LV",
+    "D": 39,
+    "R": 41,
+    "O": null,
+    "U": 20,
+    "url": "https://en.wikipedia.org/wiki/2026_Arizona_State_Treasurer_election"
+   },
+   {
+    "source": "Stealth Analytics",
+    "dates": "2026-08-11 to 2026-08-13",
+    "end": "2026-08-13",
+    "n": 530,
+    "pop": "LV",
+    "D": 35,
+    "R": 39,
+    "O": 2,
+    "U": 23,
+    "url": "https://www.stealth-analytics.com/dispatches/az-general-lv-statewide-august-2026"
+   }
+  ],
+  "primary_files": {
+   "283885": "R"
+  },
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_Arizona_State_Treasurer_election",
+   "https://azhighground.com/hurricane-season-for-arizona-republicans/",
+   "https://ktar.com/arizona-politics-news/election/arizona-poll-democrats-lead-races"
+  ],
+  "note": "Open seat: Yee term-limited, running for superintendent. Norton beat Katherine Haley 56-44 in R primary; Mansour unopposed in D primary. Oct HighGround release gives only D/R toplines, so U holds other plus undecided combined. Grayhouse and Stealth figures come from the Wikipedia poll table; the Stealth page itself only links the topline PDF, and no Grayhouse release URL was found."
+ },
+ {
+  "state": "AR",
+  "office": "treasurer",
+  "d_name": null,
+  "r_name": "John Thurston",
+  "others": [],
+  "incumbent_name": "John Thurston",
+  "incumbent_party": "R",
+  "incumbent_running": true,
+  "uncontested": "R",
+  "polls": [],
+  "primary_files": {
+   "243881": "R"
+  },
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_Arkansas_elections",
+   "https://www.thegreenpapers.com/G26/AR",
+   "https://www.yahoo.com/news/articles/arkansas-libertarians-nominate-candidates-2026-182548621.html"
+  ],
+  "note": "Thurston won 2024 special election after Mark Lowery died; seeking first full term. No Democrat or Libertarian filed, so the race is uncontested. The R primary file shows 0 votes because the unopposed primary was not held. Not confirmed whether Arkansas prints unopposed state races on the ballot."
+ },
+ {
+  "state": "CA",
+  "office": "treasurer",
+  "d_name": "Eleni Kounalakis",
+  "r_name": "Jennifer Hawks",
+  "others": [],
+  "incumbent_name": "Fiona Ma",
+  "incumbent_party": "D",
+  "incumbent_running": false,
+  "uncontested": null,
+  "polls": [],
+  "primary_files": {
+   "251829": "top-two (all parties)"
+  },
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_California_State_Treasurer_election"
+  ],
+  "note": "Open seat: Ma term-limited, running for Lt. Gov. Top-two primary June 2: Kounalakis D 36.7, Hawks R 24.0. Glenn Turner, Green, eliminated. No general election polls found."
+ },
+ {
+  "state": "CO",
+  "office": "treasurer",
+  "d_name": "Jeff Bridges",
+  "r_name": "Kevin Grantham",
+  "others": [
+   {
+    "name": "Jodie Barr",
+    "party": "Libertarian"
+   },
+   {
+    "name": "Marilee Langner Sturgis",
+    "party": "Approval Voting"
+   }
+  ],
+  "incumbent_name": "Dave Young",
+  "incumbent_party": "D",
+  "incumbent_running": false,
+  "uncontested": null,
+  "polls": [],
+  "primary_files": {},
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_Colorado_State_Treasurer_election",
+   "https://politics1.com/CO.htm",
+   "https://www.coloradopolitics.com/2026/10/02/state-treasurer-grantham-bridges-barr-seek-top-financial-position-3/"
+  ],
+  "note": "Open seat: Young term-limited. Both major-party primaries were unopposed. No polls found."
+ },
+ {
+  "state": "CT",
+  "office": "treasurer",
+  "d_name": "Erick Russell",
+  "r_name": "Fred Wilms",
+  "others": [],
+  "incumbent_name": "Erick Russell",
+  "incumbent_party": "D",
+  "incumbent_running": true,
+  "uncontested": null,
+  "polls": [],
+  "primary_files": {},
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_Connecticut_State_Treasurer_election",
+   "https://portal.ct.gov/-/media/sots/electionservices/town_ballots/2026/nov-2026/westport_sample.pdf"
+  ],
+  "note": "Fusion ballot: Russell also on Working Families line, Wilms also on Independent Party line, per the town sample ballot. No polls found."
+ },
+ {
+  "state": "DE",
+  "office": "treasurer",
+  "d_name": "Ted Lauzen",
+  "r_name": "Mike Ramone",
+  "others": [],
+  "incumbent_name": "Colleen Davis",
+  "incumbent_party": "D",
+  "incumbent_running": false,
+  "uncontested": null,
+  "polls": [],
+  "primary_files": {
+   "293199": "D"
+  },
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_Delaware_State_Treasurer_election",
+   "https://6abc.com/post/what-expect-delawares-state-primary-voters-head-polls/19835025/",
+   "https://politics1.com/DE.htm",
+   "https://ballotpedia.org/Ted_Lauzen"
+  ],
+  "note": "Open seat: Davis not seeking a third term. Lauzen won the Sept 15 D primary over Mike Miller and Michael Smith, with 38,566 of 85,169 votes per the CSV. Ramone, former House minority leader and 2024 governor nominee, was unopposed for the R nomination. No polls found."
+ },
+ {
+  "state": "FL",
+  "office": "treasurer",
+  "d_name": "Annette Taddeo",
+  "r_name": "Blaise Ingoglia",
+  "others": [],
+  "incumbent_name": "Blaise Ingoglia",
+  "incumbent_party": "R",
+  "incumbent_running": true,
+  "uncontested": null,
+  "polls": [
+   {
+    "source": "St. Pete Polls for Florida Politics",
+    "dates": "2026-10-05 to 2026-10-07",
+    "end": "2026-10-07",
+    "n": 836,
+    "pop": "LV",
+    "D": 42,
+    "R": 44,
+    "O": null,
+    "U": 14,
+    "url": "https://www.stpetepolls.org/files/StPetePolls_2026_State_Gov_October7_K7ZU3GA.pdf"
+   },
+   {
+    "source": "Targoz Market Research for James Madison Institute (R-leaning think tank)",
+    "dates": "2026-09-28 to 2026-10-04",
+    "end": "2026-10-04",
+    "n": 853,
+    "pop": "LV",
+    "D": 43,
+    "R": 43,
+    "O": 4,
+    "U": 10,
+    "url": "https://floridapolitics.com/archives/824045-byron-donalds-52-david-jolly-42-in-jmi-poll-as-blaise-ingoglia-and-annette-taddeo-tie-at-43/"
+   },
+   {
+    "source": "Targoz Market Research for James Madison Institute (R-leaning think tank)",
+    "dates": "2026-09-28 to 2026-10-04",
+    "end": "2026-10-04",
+    "n": 1166,
+    "pop": "RV",
+    "D": 38,
+    "R": 40,
+    "O": 5,
+    "U": 17,
+    "url": "https://jamesmadison.org/wp-content/uploads/JMI-October-2026-Poll-Marginals.pdf"
+   },
+   {
+    "source": "SEA Polling (D)",
+    "dates": "2026-09-07 to 2026-09-13",
+    "end": "2026-09-13",
+    "n": 701,
+    "pop": "LV",
+    "D": 42,
+    "R": 42,
+    "O": null,
+    "U": 16,
+    "url": "https://en.wikipedia.org/wiki/2026_Florida_Chief_Financial_Officer_election"
+   },
+   {
+    "source": "Change Research for Freedom Project USA (listed as D on Wikipedia)",
+    "dates": "2026-09-07 to 2026-09-09",
+    "end": "2026-09-09",
+    "n": 1107,
+    "pop": "LV",
+    "D": 44,
+    "R": 44,
+    "O": 1,
+    "U": 11,
+    "url": "https://changeresearch.com/research/2026/2026-09-10-florida-aapor-methodology-statement"
+   }
+  ],
+  "primary_files": {
+   "284176": "D",
+   "284177": "R"
+  },
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_Florida_Chief_Financial_Officer_election",
+   "https://politics1.com/FL.htm",
+   "https://www.miamitimesonline.com/news/florida/annette-taddeo-blaise-ingoglia-tied-in-new-poll-touting-emerging-florida-blue-wave/article_faacf796-e65e-485f-bfd9-4ae0dc4b8de7.html"
+  ],
+  "note": "Office is Chief Financial Officer, which serves as Florida's state treasurer; Ballotpedia's 25-treasurer count includes it. Ingoglia was appointed July 2025 to replace Jimmy Patronis and is seeking a full term. Ingoglia beat Frank Collige 61-39; Taddeo beat Earle Ford 66-34. The two Targoz rows are the LV and RV cuts of one JMI poll. In the Change Research row, O is 'would not vote'. A Ruth's List poll from Apr 23-30 is excluded as pre-June. No URL was found for the SEA Polling release."
+ },
+ {
+  "state": "ID",
+  "office": "treasurer",
+  "d_name": "Kevin Jones",
+  "r_name": "Julie Ellsworth",
+  "others": [],
+  "incumbent_name": "Julie Ellsworth",
+  "incumbent_party": "R",
+  "incumbent_running": true,
+  "uncontested": null,
+  "polls": [],
+  "primary_files": {},
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_Idaho_State_Treasurer_election",
+   "https://politics1.com/ID.htm"
+  ],
+  "note": "Both primaries were unopposed. No polls found."
+ },
+ {
+  "state": "IL",
+  "office": "treasurer",
+  "d_name": "Mike Frerichs",
+  "r_name": "Max Solomon",
+  "others": [],
+  "incumbent_name": "Mike Frerichs",
+  "incumbent_party": "D",
+  "incumbent_running": true,
+  "uncontested": null,
+  "polls": [],
+  "primary_files": {},
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_Illinois_State_Treasurer_election",
+   "https://cms5.revize.com/revize/dupage/Election/Documents/Candidate%20Information/WebsiteListingsByElection/2026GE/2026GE%20Candidate%20Listing.pdf"
+  ],
+  "note": "No Republican filed; Solomon became the R nominee through write-in votes, about 23k. Frerichs is seeking a 4th term. No polls found."
+ },
+ {
+  "state": "IN",
+  "office": "treasurer",
+  "d_name": "Coumba Kebe",
+  "r_name": "Daniel Elliott",
+  "others": [],
+  "incumbent_name": "Daniel Elliott",
+  "incumbent_party": "R",
+  "incumbent_running": true,
+  "uncontested": null,
+  "polls": [],
+  "primary_files": {},
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_Indiana_State_Treasurer_election",
+   "https://www.in.gov/counties/white/files/general-election-2026/Candidate_List_GE26.pdf"
+  ],
+  "note": "Nominated by party conventions, not primaries. No Libertarian on the county candidate list. No polls found."
+ },
+ {
+  "state": "IA",
+  "office": "treasurer",
+  "d_name": "John Norwood",
+  "r_name": "Roby Smith",
+  "others": [],
+  "incumbent_name": "Roby Smith",
+  "incumbent_party": "R",
+  "incumbent_running": true,
+  "uncontested": null,
+  "polls": [],
+  "primary_files": {},
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_Iowa_State_Treasurer_election",
+   "https://sos.iowa.gov/sites/default/files/2026-08/2026%20General%20-%20Candidate%20List%20Database%20-%20All%20Elections_0.pdf"
+  ],
+  "note": "Both primaries were unopposed. No polls found."
+ },
+ {
+  "state": "KS",
+  "office": "treasurer",
+  "d_name": "Juan Luengo",
+  "r_name": "Steven Johnson",
+  "others": [
+   {
+    "name": "Eric Lund",
+    "party": "Libertarian"
+   }
+  ],
+  "incumbent_name": "Steven Johnson",
+  "incumbent_party": "R",
+  "incumbent_running": true,
+  "uncontested": null,
+  "polls": [],
+  "primary_files": {},
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_Kansas_State_Treasurer_election",
+   "https://politics1.com/KS.htm"
+  ],
+  "note": "Both primaries were unopposed. No polls found."
+ },
+ {
+  "state": "MA",
+  "office": "treasurer",
+  "d_name": "Deb Goldberg",
+  "r_name": "Elizabeth Dionne",
+  "others": [],
+  "incumbent_name": "Deb Goldberg",
+  "incumbent_party": "D",
+  "incumbent_running": true,
+  "uncontested": null,
+  "polls": [],
+  "primary_files": {},
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_Massachusetts_Treasurer_and_Receiver-General_election",
+   "https://politics1.com/MA.htm",
+   "https://theballotbrief.com/state/massachusetts"
+  ],
+  "note": "Office is Treasurer and Receiver-General. Both primaries were unopposed. The Forward Party endorsed Dionne but has no separate ballot line found. No polls found."
+ },
+ {
+  "state": "NE",
+  "office": "treasurer",
+  "d_name": "Daniel Ebers",
+  "r_name": "Joey Spellerberg",
+  "others": [],
+  "incumbent_name": "Joey Spellerberg",
+  "incumbent_party": "R",
+  "incumbent_running": true,
+  "uncontested": null,
+  "polls": [],
+  "primary_files": {},
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_Nebraska_State_Treasurer_election",
+   "https://politics1.com/NE.htm",
+   "https://www.thegreenpapers.com/G26/NE"
+  ],
+  "note": "Spellerberg was appointed Nov 3, 2025 after Tom Briese resigned, and is seeking a full term. Both primaries were unopposed. No polls found."
+ },
+ {
+  "state": "NV",
+  "office": "treasurer",
+  "d_name": "Tya Mathis-Coleman",
+  "r_name": "Drew Johnson",
+  "others": [],
+  "incumbent_name": "Zach Conine",
+  "incumbent_party": "D",
+  "incumbent_running": false,
+  "uncontested": null,
+  "polls": [],
+  "primary_files": {
+   "273793": "D",
+   "273794": "R"
+  },
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_Nevada_State_Treasurer_election",
+   "https://thenevadaindependent.com/article/heres-where-nevadas-2026-treasurer-candidates-stand-on-the-issues"
+  ],
+  "note": "Open seat: Conine term-limited, ran for AG. Mathis-Coleman won the D primary 55%; Johnson edged Jeff Carter 45.5-43.9. A Noble Predictive poll from March 2026 tested hypothetical matchups before the primary and is excluded. No post-June polls found."
+ },
+ {
+  "state": "NM",
+  "office": "treasurer",
+  "d_name": "Laura Montoya",
+  "r_name": "Jim Ellison",
+  "others": [],
+  "incumbent_name": "Laura Montoya",
+  "incumbent_party": "D",
+  "incumbent_running": true,
+  "uncontested": null,
+  "polls": [
+   {
+    "source": "Research & Polling Inc. for Albuquerque Journal",
+    "dates": "2026-08-21 to 2026-08-28",
+    "end": "2026-08-28",
+    "n": 516,
+    "pop": "LV",
+    "D": 46,
+    "R": 37,
+    "O": null,
+    "U": null,
+    "url": "https://www.abqjournal.com/news/journal-poll-democrats-lead-in-five-statewide-races/3112749"
+   }
+  ],
+  "primary_files": {},
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_New_Mexico_State_Treasurer_election",
+   "https://politics1.com/NM.htm",
+   "https://www.abqjournal.com/news/journal-poll-democrats-lead-in-five-statewide-races/3112749"
+  ],
+  "note": "Ellison, a former PRC commissioner, was the R nominee via write-in. The Journal article gives only D/R shares, so O and U are unknown."
+ },
+ {
+  "state": "OH",
+  "office": "treasurer",
+  "d_name": "Seth Walsh",
+  "r_name": "Jay Edwards",
+  "others": [],
+  "incumbent_name": "Robert Sprague",
+  "incumbent_party": "R",
+  "incumbent_running": false,
+  "uncontested": null,
+  "polls": [],
+  "primary_files": {
+   "243921": "R"
+  },
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_Ohio_State_Treasurer_election",
+   "https://politics1.com/OH.htm"
+  ],
+  "note": "Open seat: Sprague term-limited, running for SoS. Edwards beat Kristina Roegner 53-47; Walsh, a Cincinnati council member, was unopposed. No 2026 polls found."
+ },
+ {
+  "state": "OK",
+  "office": "treasurer",
+  "d_name": null,
+  "r_name": "Cindy Byrd",
+  "others": [
+   {
+    "name": "Kiefer Perry",
+    "party": "Libertarian"
+   }
+  ],
+  "incumbent_name": "Todd Russ",
+  "incumbent_party": "R",
+  "incumbent_running": false,
+  "uncontested": "R",
+  "polls": [],
+  "primary_files": {
+   "283713": "R"
+  },
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_Oklahoma_State_Treasurer_election",
+   "https://kiowacountypress.net/content/candidate-filing-brings-surprises-one-new-oklahoma-statewide-office-seeker-wins-default",
+   "https://www.thegreenpapers.com/G26/OK"
+  ],
+  "note": "Incumbent Russ lost renomination to State Auditor Byrd 61.7-38.3 on June 16. No Democrat filed; the Libertarian is the only opponent, so the race is on the ballot but has no D. A pre-primary R-primary poll from April is excluded."
+ },
+ {
+  "state": "RI",
+  "office": "treasurer",
+  "d_name": "James Diossa",
+  "r_name": "Micholas Credle",
+  "others": [],
+  "incumbent_name": "James Diossa",
+  "incumbent_party": "D",
+  "incumbent_running": true,
+  "uncontested": null,
+  "polls": [],
+  "primary_files": {},
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_Rhode_Island_General_Treasurer_election",
+   "https://politics1.com/RI.htm"
+  ],
+  "note": "Office is General Treasurer. Both primaries were unopposed. No polls found."
+ },
+ {
+  "state": "SC",
+  "office": "treasurer",
+  "d_name": "Vincent Coe",
+  "r_name": "Curtis Loftis",
+  "others": [],
+  "incumbent_name": "Curtis Loftis",
+  "incumbent_party": "R",
+  "incumbent_running": true,
+  "uncontested": null,
+  "polls": [],
+  "primary_files": {
+   "274340": "D"
+  },
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_South_Carolina_State_Treasurer_election",
+   "https://politics1.com/SC.htm"
+  ],
+  "note": "Coe beat Trav Robertson, the former SCDP chair, 55.8-44.2 in the D primary. Loftis is seeking a 5th term; Wikipedia says 4th. He survived a Senate removal vote in 2026. No polls found."
+ },
+ {
+  "state": "SD",
+  "office": "treasurer",
+  "d_name": "Margaret Kuipers",
+  "r_name": "Melissa Hull",
+  "others": [],
+  "incumbent_name": "Josh Haeder",
+  "incumbent_party": "R",
+  "incumbent_running": false,
+  "uncontested": null,
+  "polls": [],
+  "primary_files": {},
+  "sources": [
+   "https://politics1.com/SD.htm",
+   "https://custercountychronicle.com/content/wrap-state-republican-convention",
+   "https://www.kotatv.com/2026/06/15/anti-tech-push-influences-secretary-state-race-conventions-make-state-officer-nominations/"
+  ],
+  "note": "Open seat: Haeder term-limited. Nominees were chosen at party conventions; Hull won the GOP nomination with 81%. No polls found."
+ },
+ {
+  "state": "VT",
+  "office": "treasurer",
+  "d_name": "Mike Pieciak",
+  "r_name": "Lynn LaFleur",
+  "others": [
+   {
+    "name": "Zachary Hampl",
+    "party": "Progressive (ballot line; not endorsed by the Progressive Party)"
+   }
+  ],
+  "incumbent_name": "Mike Pieciak",
+  "incumbent_party": "D",
+  "incumbent_running": true,
+  "uncontested": null,
+  "polls": [],
+  "primary_files": {},
+  "sources": [
+   "https://www.vermontpublic.org/local-news/2026-08-18/vermont-republicans-name-candidates-for-attorney-general-auditor-and-treasurer",
+   "https://vtdigger.org/2026/08/24/a-vermonter-is-running-for-treasurer-as-a-progressive-the-party-says-hes-not-their-candidate/",
+   "https://politics1.com/VT.htm"
+  ],
+  "note": "H. Brooke Paige won the R primary as a placeholder, then withdrew; the VT GOP named LaFleur. Wikipedia's race page is stale and still lists Paige. No polls found."
+ },
+ {
+  "state": "WI",
+  "office": "treasurer",
+  "d_name": "Yee Leng Xiong",
+  "r_name": "John Leiber",
+  "others": [],
+  "incumbent_name": "John Leiber",
+  "incumbent_party": "R",
+  "incumbent_running": true,
+  "uncontested": null,
+  "polls": [],
+  "primary_files": {
+   "284107": "D"
+  },
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_Wisconsin_State_Treasurer_election",
+   "https://wisconsinexaminer.com/voter-guides/contests/2026-general-treasurer/"
+  ],
+  "note": "Xiong beat Dylan Helmenstine 57-43 in the D primary. The only polls found, from State Navigate, cover the D primary. No general election polls found."
+ },
+ {
+  "state": "WY",
+  "office": "treasurer",
+  "d_name": null,
+  "r_name": "Curt Meier",
+  "others": [],
+  "incumbent_name": "Curt Meier",
+  "incumbent_party": "R",
+  "incumbent_running": true,
+  "uncontested": "R",
+  "polls": [],
+  "primary_files": {
+   "284191": "R"
+  },
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_Wyoming_State_Treasurer_election",
+   "https://www.thegreenpapers.com/G26/WY",
+   "https://politics1.com/WY.htm"
+  ],
+  "note": "Meier beat state Rep. Scott Smith 68-32 in the R primary. No D or third-party candidate."
+ },
+ {
+  "state": "AL",
+  "office": "auditor",
+  "d_name": "Violet Edwards",
+  "r_name": "Andrew Sorrell",
+  "others": [],
+  "incumbent_name": "Andrew Sorrell",
+  "incumbent_party": "R",
+  "incumbent_running": true,
+  "uncontested": null,
+  "polls": [],
+  "primary_files": {
+   "251755": "R"
+  },
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_Alabama_State_Auditor_election",
+   "https://politics1.com/AL.htm"
+  ],
+  "note": "Sorrell first ran for SoS, then switched back to re-election. He beat Derek Chen 68-32 in the R primary. Edwards is a Madison County commissioner. No polls found."
+ },
+ {
+  "state": "AR",
+  "office": "auditor",
+  "d_name": null,
+  "r_name": "Dennis Milligan",
+  "others": [],
+  "incumbent_name": "Dennis Milligan",
+  "incumbent_party": "R",
+  "incumbent_running": true,
+  "uncontested": "R",
+  "polls": [],
+  "primary_files": {
+   "243877": "R"
+  },
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_Arkansas_elections",
+   "https://www.thegreenpapers.com/G26/AR"
+  ],
+  "note": "Office is Auditor of State. No D or Libertarian filed. The R primary file shows 0 votes because the unopposed primary was not held."
+ },
+ {
+  "state": "DE",
+  "office": "auditor",
+  "d_name": "Lydia York",
+  "r_name": "April Callaway",
+  "others": [
+   {
+    "name": "Austin Cassidy",
+    "party": "Independent Party of Delaware"
+   }
+  ],
+  "incumbent_name": "Lydia York",
+  "incumbent_party": "D",
+  "incumbent_running": true,
+  "uncontested": null,
+  "polls": [],
+  "primary_files": {},
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_Delaware_State_Auditor_election",
+   "https://politics1.com/DE.htm",
+   "https://theballotbrief.com/candidate/april-callaway-de"
+  ],
+  "note": "Office is Auditor of Accounts. Callaway was nominated by the state GOP in August per the DE Elections filing list, after the convention produced no endorsed candidate. Her status is somewhat uncertain. No polls found."
+ },
+ {
+  "state": "IN",
+  "office": "auditor",
+  "d_name": "Jessica Bailey",
+  "r_name": "Elise Nieshalla",
+  "others": [
+   {
+    "name": "John Schick",
+    "party": "Libertarian"
+   }
+  ],
+  "incumbent_name": "Elise Nieshalla",
+  "incumbent_party": "R",
+  "incumbent_running": true,
+  "uncontested": null,
+  "polls": [],
+  "primary_files": {},
+  "sources": [
+   "https://www.in.gov/counties/white/files/general-election-2026/Candidate_List_GE26.pdf",
+   "https://indianacapitalchronicle.com/?p=27385"
+  ],
+  "note": "Indiana renamed its Auditor of State to State Comptroller in 2024, and the ballot list reads 'State Comptroller (Auditor of State)'. It is included as the state's auditor; drop it if comptroller titles should be excluded. Nieshalla was appointed in 2023. Nominees were chosen at party conventions. No polls found."
+ },
+ {
+  "state": "IA",
+  "office": "auditor",
+  "d_name": "Taylor Wettach",
+  "r_name": "Chris Cournoyer",
+  "others": [],
+  "incumbent_name": "Rob Sand",
+  "incumbent_party": "D",
+  "incumbent_running": false,
+  "uncontested": null,
+  "polls": [],
+  "primary_files": {
+   "251839": "R"
+  },
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_Iowa_State_Auditor_election",
+   "https://sos.iowa.gov/sites/default/files/2026-08/2026%20General%20-%20Candidate%20List%20Database%20-%20All%20Elections_0.pdf"
+  ],
+  "note": "Open seat: Sand running for governor. Cournoyer, the sitting Lt. Gov., beat Abigail Maas 54-46 in the R primary; Wettach was unopposed. No polls found."
+ },
+ {
+  "state": "MA",
+  "office": "auditor",
+  "d_name": "Diana DiZoglio",
+  "r_name": null,
+  "others": [
+   {
+    "name": "Al Ozonoff",
+    "party": "Libertarian"
+   }
+  ],
+  "incumbent_name": "Diana DiZoglio",
+  "incumbent_party": "D",
+  "incumbent_running": true,
+  "uncontested": "D",
+  "polls": [],
+  "primary_files": {},
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_Massachusetts_State_Auditor_election",
+   "https://politics1.com/MA.htm",
+   "https://theballotbrief.com/state/massachusetts"
+  ],
+  "note": "No Republican filed. Libertarian Al Ozonoff appears on politics1 and The Ballot Brief, but not on Wikipedia; unverified on the official ballot. No polls found."
+ },
+ {
+  "state": "MN",
+  "office": "auditor",
+  "d_name": "Zack Filipovich",
+  "r_name": "Scott Jensen",
+  "others": [
+   {
+    "name": "Jay Reeves",
+    "party": "Forward-Independence"
+   }
+  ],
+  "incumbent_name": "Julie Blaha",
+  "incumbent_party": "D",
+  "incumbent_running": false,
+  "uncontested": null,
+  "polls": [
+   {
+    "source": "SurveyUSA for KSTP",
+    "dates": "2026-09-09 to 2026-09-14",
+    "end": "2026-09-14",
+    "n": 654,
+    "pop": "LV",
+    "D": 36,
+    "R": 43,
+    "O": 4,
+    "U": 17,
+    "url": "https://kstp.com/kstp-news/top-news/kstp-surveyusa-poll-sos-race-gets-closer-ag-and-state-auditor-margins-widen/"
+   },
+   {
+    "source": "SurveyUSA for KSTP",
+    "dates": "2026-08-13 to 2026-08-17",
+    "end": "2026-08-17",
+    "n": 661,
+    "pop": "LV",
+    "D": 39,
+    "R": 39,
+    "O": 3,
+    "U": 19,
+    "url": "https://kstp.com/kstp-news/top-news/kstp-surveyusa-poll-early-frontrunner-in-secretary-of-state-race-auditor-neck-and-neck/"
+   }
+  ],
+  "primary_files": {
+   "284067": "R"
+  },
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_Minnesota_State_Auditor_election",
+   "https://politics1.com/MN.htm"
+  ],
+  "note": "Open seat: Blaha (DFL) retiring. Jensen, the 2022 GOP governor nominee, beat GOP-endorsed Nate George 67-26. Filipovich was unopposed in the DFL primary, which is not in the CSV. D means DFL. O is Reeves or 'another' per Wikipedia; the Aug figures come from the Wikipedia table."
+ },
+ {
+  "state": "MO",
+  "office": "auditor",
+  "d_name": "Quentin Wilson",
+  "r_name": "Scott Fitzpatrick",
+  "others": [
+   {
+    "name": "Dustin Coffell",
+    "party": "Libertarian"
+   }
+  ],
+  "incumbent_name": "Scott Fitzpatrick",
+  "incumbent_party": "R",
+  "incumbent_running": true,
+  "uncontested": null,
+  "polls": [],
+  "primary_files": {
+   "283956": "D",
+   "283957": "R"
+  },
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_Missouri_State_Auditor_election",
+   "https://politics1.com/MO.htm"
+  ],
+  "note": "Fitzpatrick beat Jerry Wistrand 85.5-14.5; Wilson beat Gregory Upchurch 67.8-32.2. No polls found."
+ },
+ {
+  "state": "NE",
+  "office": "auditor",
+  "d_name": null,
+  "r_name": "Mike Foley",
+  "others": [
+   {
+    "name": "John Knight",
+    "party": "America First"
+   }
+  ],
+  "incumbent_name": "Mike Foley",
+  "incumbent_party": "R",
+  "incumbent_running": true,
+  "uncontested": "R",
+  "polls": [],
+  "primary_files": {},
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_Nebraska_State_Auditor_election",
+   "https://politics1.com/NE.htm",
+   "https://www.thegreenpapers.com/G26/NE"
+  ],
+  "note": "Office is Auditor of Public Accounts. No Democrat; the only opponent is minor-party John Knight, per politics1 and Green Papers."
+ },
+ {
+  "state": "NM",
+  "office": "auditor",
+  "d_name": "Joseph Maestas",
+  "r_name": "Joshua Lawrence",
+  "others": [
+   {
+    "name": "Jason Vaillancourt",
+    "party": "Libertarian"
+   }
+  ],
+  "incumbent_name": "Joseph Maestas",
+  "incumbent_party": "D",
+  "incumbent_running": true,
+  "uncontested": null,
+  "polls": [
+   {
+    "source": "Research & Polling Inc. for Albuquerque Journal",
+    "dates": "2026-08-21 to 2026-08-28",
+    "end": "2026-08-28",
+    "n": 516,
+    "pop": "LV",
+    "D": 47,
+    "R": 34,
+    "O": null,
+    "U": null,
+    "url": "https://www.abqjournal.com/news/journal-poll-democrats-lead-in-five-statewide-races/3112749"
+   }
+  ],
+  "primary_files": {},
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_New_Mexico_State_Auditor_election",
+   "https://politics1.com/NM.htm",
+   "https://www.abqjournal.com/news/journal-poll-democrats-lead-in-five-statewide-races/3112749"
+  ],
+  "note": "Lawrence, full name Joshua James Lawrence, won the R nomination as a write-in. The Journal gives only D/R shares, so O and U are unknown."
+ },
+ {
+  "state": "OH",
+  "office": "auditor",
+  "d_name": "Annette Blackwell",
+  "r_name": "Frank LaRose",
+  "others": [],
+  "incumbent_name": "Keith Faber",
+  "incumbent_party": "R",
+  "incumbent_running": false,
+  "uncontested": null,
+  "polls": [],
+  "primary_files": {},
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_Ohio_State_Auditor_election",
+   "https://politics1.com/OH.htm"
+  ],
+  "note": "Open seat: Faber term-limited, running for AG. LaRose, the sitting SoS, and Blackwell, Maple Heights mayor, were both unopposed in primaries. No 2026 polls found."
+ },
+ {
+  "state": "OK",
+  "office": "auditor",
+  "d_name": null,
+  "r_name": "Melissa Capps",
+  "others": [],
+  "incumbent_name": "Cindy Byrd",
+  "incumbent_party": "R",
+  "incumbent_running": false,
+  "uncontested": "R",
+  "polls": [],
+  "primary_files": {},
+  "sources": [
+   "https://kiowacountypress.net/content/candidate-filing-brings-surprises-one-new-oklahoma-statewide-office-seeker-wins-default",
+   "https://www.thegreenpapers.com/G26/OK",
+   "https://politics1.com/OK.htm"
+  ],
+  "note": "Office is State Auditor and Inspector. Byrd ran for treasurer instead. Capps, the deputy auditor, was the only filer and won by default in April 2026. Under Oklahoma law unopposed offices do not appear on the ballot, so this race is likely NOT on the Nov 3 ballot."
+ },
+ {
+  "state": "SD",
+  "office": "auditor",
+  "d_name": "Tom Cool",
+  "r_name": "Catherine Barranco",
+  "others": [],
+  "incumbent_name": "Rich Sattgast",
+  "incumbent_party": "R",
+  "incumbent_running": false,
+  "uncontested": null,
+  "polls": [],
+  "primary_files": {},
+  "sources": [
+   "https://politics1.com/SD.htm",
+   "https://custercountychronicle.com/content/wrap-state-republican-convention",
+   "https://www.kotatv.com/2026/06/15/anti-tech-push-influences-secretary-state-race-conventions-make-state-officer-nominations/"
+  ],
+  "note": "Open seat: Sattgast term-limited. Nominees were chosen at conventions; Barranco won the GOP nomination with 52.9% after replacing her husband David. No polls found."
+ },
+ {
+  "state": "VT",
+  "office": "auditor",
+  "d_name": "Tim Ashe",
+  "r_name": "Ivar Kronick",
+  "others": [],
+  "incumbent_name": "Doug Hoffer",
+  "incumbent_party": "D",
+  "incumbent_running": false,
+  "uncontested": null,
+  "polls": [],
+  "primary_files": {
+   "284078": "D"
+  },
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_Vermont_Auditor_of_Accounts_election",
+   "https://www.vermontpublic.org/local-news/2026-08-18/vermont-republicans-name-candidates-for-attorney-general-auditor-and-treasurer",
+   "https://politics1.com/VT.htm"
+  ],
+  "note": "Office is Auditor of Accounts. Hoffer (D/P) retiring. Ashe won the D primary with 74.9% and likely also has Progressive Party backing (D/P per politics1). H. Brooke Paige won the R primary and withdrew; the GOP named Kronick. No polls found."
+ },
+ {
+  "state": "WY",
+  "office": "auditor",
+  "d_name": null,
+  "r_name": "Kristi Racines",
+  "others": [],
+  "incumbent_name": "Kristi Racines",
+  "incumbent_party": "R",
+  "incumbent_running": true,
+  "uncontested": "R",
+  "polls": [],
+  "primary_files": {},
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_Wyoming_State_Auditor_election",
+   "https://www.thegreenpapers.com/G26/WY",
+   "https://politics1.com/WY.htm"
+  ],
+  "note": "Unopposed in primary and general."
+ }
+]

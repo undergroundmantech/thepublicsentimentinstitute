@@ -8,7 +8,7 @@ const COLS = [
   ] },
   { h: "Forecast", links: [
     ["/forecast?office=senate", "Senate"], ["/forecast?office=house", "House"], ["/forecast?office=governor", "Governor"],
-    ["/forecast/methodology", "Methodology"], ["/forecast/changelog", "Changelog"],
+    ["/forecast/statewide", "Statewide offices"], ["/forecast/methodology", "Methodology"], ["/forecast/changelog", "Changelog"],
   ] },
   { h: "Results", links: [
     ["/results/tonight", "Live desk"], ["/results/archive", "Archive"], ["/maps/electoral", "Electoral map"],
