@@ -13,6 +13,7 @@ export type SLDistrict = {
 };
 export type SLChamber = {
   id: string; st: string; state: string; chamber: "house" | "senate"; name: string; seats: number; up: number; majority: number;
+  note?: string | null;
   hold: Record<"D" | "R" | "O", number>; missing: number; filled: number; current: Record<"D" | "R" | "O", number>; holdD?: [string, string][];
   demControl: number; gopControl: number; tie: number; demSeats: number; gopSeats: number; p10: number; p90: number; median: number;
   hist: [number, number][];

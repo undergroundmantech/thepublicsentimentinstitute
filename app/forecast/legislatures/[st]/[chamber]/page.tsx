@@ -122,6 +122,7 @@ export default async function Page({ params }: { params: Promise<{ st: string; c
           2026 primary turnout moves districts where it is posted, and district and statewide legislative polls count by recency and sample.
           A seat with no candidate from one party is called for the other. 2,000 simulations share a national, a state and a district shock.
           The map&apos;s district shapes are estimated from where each district&apos;s voters are in the precinct returns.{" "}
+          {c.note ? <>{c.note}{" "}</> : null}
           <Link href="/forecast/legislatures" style={{ textDecoration: "underline" }}>All chambers</Link>.
         </div>
       </div>

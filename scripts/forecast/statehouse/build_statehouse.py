@@ -205,6 +205,33 @@ MANUAL22 = {("CA", "senate", d): v for d, v in {
     "16": ("D", .50005), "18": ("D", .598), "20": ("D", .75), "22": ("D", .585), "24": ("D", .671), "26": ("D", .829), "28": ("D", .85),
     "30": ("D", .61), "32": ("R", .38), "34": ("D", .588), "36": ("R", .431), "38": ("D", .522), "40": ("R", .469)}.items()}
 
+# Senate districts that were not on the 2024 ballot still have a 2024 presidential vote on today's lines wherever the
+# house districts nest inside them: the senate district is the sum of its house districts. Checked against the senate
+# districts that were on the 2024 ballot, the sums match exactly in WI, MT, OR and AK and within a point or two elsewhere.
+_two = lambda h: str((int(re.sub(r"\D", "", h)) + 1) // 2)
+NEST = {"WI": (lambda h: str((int(h) + 2) // 3), 3), "MT": (_two, 2), "OR": (_two, 2), "IL": (_two, 2), "IA": (_two, 2),
+        "MN": (lambda h: str(int(re.sub(r"[AB]$", "", h))), 2), "AK": (lambda h: chr(ord("A") + (int(h) - 1) // 2), 2),
+        "WA": (lambda h: h.split("-")[0], 2), "ID": (lambda h: re.sub(r"[AB]$", "", h), 1), "ND": (lambda h: re.sub(r"[AB]$", "", h), 1)}
+
+def nested_senate(st, t):
+    if st not in NEST or t is None: return {}
+    f, k = NEST[st]
+    h = t[(t.chamber == "house") & (t.top_d + t.top_r > 0)].copy()
+    if not len(h): return {}
+    try: h["sd"] = h.district.map(f)
+    except Exception: return {}
+    out = {}
+    for sd, g in h.groupby("sd"):
+        if st == "WA" or len(g) >= k:
+            out[("senate", sd)] = g.top_d.sum() / (g.top_d.sum() + g.top_r.sum())
+    return out
+
+# District leans published on lines the precinct files do not carry. Michigan's Senate was redrawn by the court in
+# Agee v. Benson in July 2024 for the 2026 elections, and its districts were not on the 2024 ballot, so the 2024
+# presidential margin on the new lines comes from the published district results. Margins are Republican minus
+# Democratic in points. Districts in REDRAWN carry no candidate term, since their last result was on other lines.
+LEAN_OVERRIDE = json.load(open("/tmp/sl/cands/lean_overrides.json"))
+
 chambers, log = [], []
 for st in sorted(set(HOUSE) | set(SENATE)):
     if st not in P24 or st not in H26: log.append((st, "no 2024 presidential or 2026 House baseline")); continue
@@ -213,6 +240,7 @@ for st in sorted(set(HOUSE) | set(SENATE)):
     for (mst, mch, md), (party, d2) in MANUAL22.items():
         if mst == st and (mch, md) not in w22: w22[(mch, md)] = dict(seats=1, won=[party], d2=d2, dv=0.0, rv=0.0, cands=[])
     t24, t22 = tops(T24.get(st)), tops(T22.get(st))
+    for kk, v in nested_senate(st, T24.get(st)).items(): t24.setdefault(kk, v)
     t22_state = None
     if T22.get(st) is not None and len(T22[st]):
         g = T22[st][T22[st].chamber == ("house" if (T22[st].chamber == "house").any() else "senate")]
@@ -290,12 +318,17 @@ for st in sorted(set(HOUSE) | set(SENATE)):
             if last and last.get("cands"):
                 cs = sorted([c for c in last["cands"] if not junk(c[0])], key=lambda c: -c[2])[: max(1, seats)]
                 winner = ", ".join(str(c[0]).title() for c in cs) or None
-            if (ch, d) in t24: lean = lg(t24[(ch, d)]); lean_src = "2024 president"
+            ov = LEAN_OVERRIDE.get(f"{st}_{ch}")
+            if ov and d in ov["margins"]:
+                m = ov["margins"][d] / 100.0
+                lean = lg(0.5 - m / 2 / 0.98); lean_src = ov["label"]
+            elif (ch, d) in t24: lean = lg(t24[(ch, d)]); lean_src = "2024 president"
             elif (ch, d) in t22 and t22_state: lean = lg(t22[(ch, d)]) - lg(t22_state) + lg(P24[st]); lean_src = "2022 governor or Senate, moved to 2024"
             elif last and last["d2"] is not None: lean = lg(last["d2"]) - (delta if yr == 2024 else 0); lean_src = f"{yr} legislative result"
             else: lean = None; lean_src = None
             cand = 0.0
-            if last and last["d2"] is not None and lean is not None:
+            redrawn = bool(ov) and d in ov.get("redrawn", [])
+            if last and last["d2"] is not None and lean is not None and not redrawn:
                 base = lean if yr == 2024 else (lg(t22[(ch, d)]) if (ch, d) in t22 else lean)
                 cand = float(np.clip(lg(last["d2"]) - base, -0.8, 0.8))
             status = "contested"
@@ -406,6 +439,7 @@ for st in sorted(set(HOUSE) | set(SENATE)):
         chambers.append(dict(
             id=f"sl-{st}-{ch}", st=st, state=STATE_NAME.get(st, st), chamber=ch, name=name, seats=size, up=seats_up,
             majority=maj, hold=held, missing=max(0, missing), filled=len(filled), current=cur,
+            note=(LEAN_OVERRIDE.get(f"{st}_{ch}") or {}).get("note"),
             holdD=[[d, v["won"][0] if v["won"] else "O"] for d, v in sorted(hold.items(), key=lambda x: (num(x[0]) or 0, x[0]))],
             demControl=round(dc, 4), gopControl=round(rc, 4), tie=round(max(0.0, 1 - dc - rc), 4),
             demSeats=round(float(dseats.mean()), 1), gopSeats=round(float(rseats.mean()), 1),
