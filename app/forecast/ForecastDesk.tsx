@@ -32,19 +32,20 @@ const MONO = "var(--font-m)";
 
 // ── data hooks ───────────────────────────────────────────────────────────────
 const jsonCache = new Map<string, unknown>();
-function useJson<T>(url: string | null): T | null {
+const inflight = new Map<string, Promise<unknown>>();
+/** Fetches a forecast file once per page: the hub and the desk share the same download. */
+export function useJson<T>(url: string | null): T | null {
   const [data, setData] = useState<T | null>(() => (url && jsonCache.has(url) ? (jsonCache.get(url) as T) : null));
   useEffect(() => {
     if (!url) return;
     if (jsonCache.has(url)) { setData(jsonCache.get(url) as T); return; }
     let dead = false;
-    fetch(url, { cache: "no-store" })
-      .then((r) => r.json())
-      .then((j) => {
-        jsonCache.set(url, j);
-        if (!dead) setData(j as T);
-      })
-      .catch(() => {});
+    let p = inflight.get(url);
+    if (!p) {
+      p = fetch(url, { cache: "no-store" }).then((r) => r.json()).then((j) => { jsonCache.set(url, j); return j; });
+      inflight.set(url, p);
+    }
+    p.then((j) => { if (!dead) setData(j as T); }).catch(() => { inflight.delete(url); });
     return () => { dead = true; };
   }, [url]);
   return url ? data : null;
@@ -113,7 +114,7 @@ function Spark({ pts, color }: { pts: number[]; color: string }) {
 const signed = (m: number) => `${m > 0 ? "R" : "D"} +${Math.abs(m).toFixed(1)}`;
 
 /** The inner template header: crumbs, eyebrow, headline with one gradient word, lede, meta row. */
-function DeskHeader({ model, office, dbRows }: { model: Model | null; office: DeskOffice; dbRows?: Race[] }) {
+function DeskHeader({ model, office, dbRows, embedded }: { model: Model | null; office: DeskOffice; dbRows?: Race[]; embedded?: boolean }) {
   const chamber = model && !isDB(office) ? model.chambers[office] : null;
   let h1: React.ReactNode = <>The 2026 <em>forecast</em></>;
   if (isDB(office) && dbRows) {
@@ -133,6 +134,21 @@ function DeskHeader({ model, office, dbRows }: { model: Model | null; office: De
     h1 = <><span className={`fc-hp ${fav}`}>{partyName}</span> have {article(p)} <span className={`fc-hp ${fav}`}>{p}%</span> chance {pre} <em>{word}</em></>;
   }
   const gb = model?.meta.genericBallot;
+  if (embedded) {
+    return (
+      <header className="fc-deskhead" id="desk">
+        <div className="eye g">The race desk</div>
+        <h2>{h1}</h2>
+        <div className="pmeta">
+          <span>Every race, its map, its polls and its counties</span>
+          {model ? <span>Updated <b>{fmtDate(model.meta.updated)}</b></span> : null}
+          <Link className="btn sm" href="/forecast/legislatures">State legislatures</Link>
+          <Link className="btn sm" href="/forecast/methodology">Methodology</Link>
+          <Link className="btn sm" href="/forecast/changelog">Changelog</Link>
+        </div>
+      </header>
+    );
+  }
   return (
     <>
       <nav className="crumbs" aria-label="Breadcrumb">
@@ -162,7 +178,7 @@ function DeskHeader({ model, office, dbRows }: { model: Model | null; office: De
   );
 }
 
-export default function ForecastDesk({ initialOffice = "house" }: { initialOffice?: DeskOffice }) {
+export default function ForecastDesk({ initialOffice = "house", embedded = false }: { initialOffice?: DeskOffice; embedded?: boolean }) {
   const router = useRouter();
   const model = useJson<Model>("/forecast/model.json");
   const geo = useJson<Geo>("/forecast/geo.json");
@@ -240,7 +256,7 @@ export default function ForecastDesk({ initialOffice = "house" }: { initialOffic
     return (
       <div className="opp fc-page">
         <style>{CSS + ATLAS_CSS + TIP_CSS + SPENDING_CSS}</style>
-        <DeskHeader model={model} office={office} />
+        <DeskHeader model={model} office={office} embedded={embedded} />
         <div className="card"><div className="empty">Loading the forecast</div></div>
       </div>
     );
@@ -249,7 +265,7 @@ export default function ForecastDesk({ initialOffice = "house" }: { initialOffic
   return (
     <div className="opp fc-page">
       <style>{CSS + ATLAS_CSS + TIP_CSS + SPENDING_CSS}</style>
-      <DeskHeader model={model} office={office} dbRows={statewide ? races : undefined} />
+      <DeskHeader model={model} office={office} dbRows={statewide ? races : undefined} embedded={embedded} />
 
       <div className="fc-stack">
         {/* ── the map card: office, seat bar, controls, map ── */}

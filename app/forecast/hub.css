@@ -1,0 +1,99 @@
+/* The forecast hub: every forecast on one board. Brand tokens only; party colors only on data. */
+.hub{position:relative;z-index:1}
+.hub-hero{margin:4px 0 22px;display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:18px 40px;align-items:end}
+@media (max-width:900px){.hub-hero{grid-template-columns:1fr}}
+.hub-hero h1{font:800 clamp(34px,5vw,66px)/1 var(--font-d);letter-spacing:-.045em;margin:10px 0 0}
+.hub-hero h1 em{font-style:normal;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hub-hero .lede{color:var(--ink2);font-size:15.5px;max-width:62ch;margin:0}
+.hub-ribbon{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.hub-ribbon span{display:inline-flex;align-items:baseline;gap:8px;padding:7px 14px;border:1px solid var(--line);border-radius:999px;background:var(--glass);font:600 12px var(--font-b);color:var(--mute)}
+.hub-ribbon b{font-size:15px;color:var(--hi);font-weight:700;font-variant-numeric:tabular-nums}
+.hub-ribbon b.d{color:var(--dem2)}.hub-ribbon b.r{color:var(--gop2)}
+.hub .d{color:var(--dem2)}.hub .r{color:var(--gop2)}
+
+/* the grand hemicycle */
+.hub-stagecard{padding:22px 22px 18px;overflow:hidden}
+.hub-stagecard::before{content:"";position:absolute;left:50%;bottom:-40%;width:110%;aspect-ratio:2/1;transform:translateX(-50%);border-radius:50% 50% 0 0;
+  background:radial-gradient(closest-side,rgba(var(--line-rgb),.07),transparent 70%);pointer-events:none}
+.hub-grand{position:relative}
+.hub-grand-stage{position:relative;max-width:1180px;margin:0 auto}
+.hub-grand-mid{position:absolute;left:50%;transform:translateX(-50%);display:grid;justify-items:center;gap:4px;text-align:center;pointer-events:none}
+.hub-grand-n{font:800 clamp(22px,4.4vw,52px)/1 var(--font-d);letter-spacing:-.04em;color:var(--hi)}
+.hub-grand-mid .eye{font-size:clamp(8px,1.1vw,11px)}
+.hub-grand-split{display:flex;align-items:center;gap:10px;font:700 clamp(11px,1.5vw,16px) var(--font-m)}
+.hub-grand-split i{width:1px;height:14px;background:var(--line2)}
+.hub-chips{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-top:16px}
+.hub-chips button{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);background:var(--glass);color:var(--ink2);font:700 12px var(--font-b);padding:7px 13px;border-radius:999px;cursor:pointer;transition:.15s}
+.hub-chips button .mono{color:var(--mute);font-weight:600}
+.hub-chips button:hover{border-color:var(--line2);color:var(--hi)}
+.hub-chips button.on{background:var(--hi);color:var(--bg);border-color:transparent}
+.hub-chips button.on .mono{color:var(--bg);opacity:.7}
+.hub-chips button:focus-visible{outline:2px solid var(--b2);outline-offset:2px}
+.hub-ring{width:12px;height:12px;border-radius:50%;border:2px solid currentColor;opacity:.55;display:inline-block}
+.hub-ring[data-band="0"]{width:6px;height:6px}.hub-ring[data-band="1"]{width:8px;height:8px}.hub-ring[data-band="2"]{width:10px;height:10px}.hub-ring[data-band="4"]{width:14px;height:14px}
+.hub-legend{display:flex;flex-wrap:wrap;gap:10px 22px;justify-content:center;align-items:center;margin-top:14px;font-size:12px;color:var(--mute)}
+.hub-ramp{display:inline-flex;align-items:center;gap:2px}
+.hub-ramp i{width:18px;height:8px;border-radius:2px}
+.hub-ramp b{font-weight:600;font-size:11px;white-space:nowrap;margin:0 8px}
+.hub-ramp b:first-child{order:-1}
+.hub-loading{display:flex;align-items:center;justify-content:center;gap:12px;min-height:340px;color:var(--mute);font:600 14px var(--font-b)}
+.hub-loading span{width:14px;height:14px;border-radius:50%;border:2px solid var(--line2);border-top-color:var(--hi);animation:hubspin 1s linear infinite}
+@keyframes hubspin{to{transform:rotate(360deg)}}
+
+/* tooltip */
+.hub-tip{position:fixed;z-index:60;width:236px;padding:12px 14px;border-radius:12px;background:rgba(var(--bg2-rgb,8,6,12),.96);border:1px solid var(--line2);
+  box-shadow:0 20px 50px rgba(0,0,0,.5);pointer-events:none;display:grid;gap:5px;font-size:12.5px;backdrop-filter:blur(10px)}
+.hub-tip b{font:700 14px/1.2 var(--font-d);color:var(--hi)}
+.hub-tip-row{display:flex;justify-content:space-between;gap:8px;font-size:12px}
+.hub-tip-bar{display:block;height:5px;border-radius:99px;background:var(--gop);overflow:hidden}
+.hub-tip-bar s{display:block;height:100%;background:var(--dem);text-decoration:none}
+
+/* control strip */
+.hub-meters{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin-top:16px}
+@media (max-width:1100px){.hub-meters{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:640px){.hub-meters{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:400px){.hub-meters{grid-template-columns:1fr}}
+.hub-m{display:grid;gap:8px;padding:16px 16px 14px;text-align:left;color:inherit;text-decoration:none;font:inherit;cursor:pointer;transition:transform .18s,border-color .18s}
+.hub-m:hover{transform:translateY(-2px);border-color:var(--line2)}
+.hub-m:focus-visible{outline:2px solid var(--b2);outline-offset:2px}
+.hub-m-lab{font:700 11px var(--font-b);letter-spacing:.16em;text-transform:uppercase;color:var(--mute)}
+.hub-m-big{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px;font:800 30px/1 var(--font-d);letter-spacing:-.04em;font-variant-numeric:tabular-nums}
+.hub-m-big small{font:600 12px var(--font-b);letter-spacing:0;color:var(--mute)}
+.hub-m-bar{position:relative;height:6px;border-radius:99px;background:var(--gop);opacity:.95;overflow:hidden}
+.hub-m-bar i{position:absolute;inset:0 auto 0 0;background:var(--dem);transition:width 1.2s cubic-bezier(.2,.8,.2,1)}
+.hub-m-bar b{position:absolute;left:50%;top:-2px;bottom:-2px;width:2px;background:var(--bg);transform:translateX(-1px)}
+.hub-m-sub{font-size:12px;color:var(--mute)}
+.hub-m-sub b{font-variant-numeric:tabular-nums}
+
+/* map and knife's edge */
+.hub-two{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:16px;margin-top:16px;align-items:start}
+@media (max-width:960px){.hub-two{grid-template-columns:1fr}}
+.hub .lt-half{transition:opacity .15s}.hub .lt-half:hover{opacity:.75}
+.hub-tiles-foot{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin-top:12px;font-size:12px;color:var(--mute)}
+.hub-tiles-foot span{flex:1 1 260px}
+.hub-edge{display:grid;gap:2px;padding-top:10px}
+.hub-edge-row{display:grid;grid-template-columns:auto minmax(0,1fr) 72px 62px;gap:10px;align-items:center;padding:7px 6px;border-radius:9px;color:inherit;text-decoration:none;font-size:13px}
+.hub-edge-row:hover{background:rgba(var(--line-rgb),.05)}
+.hub-edge-row .mono{text-align:right;font-weight:700;font-size:12.5px}
+.hub-edge-name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--ink)}
+.hub-edge-bar{height:5px;border-radius:99px;background:rgba(255,59,92,.7);overflow:hidden;position:relative}
+.hub-edge-bar i{position:absolute;inset:0 auto 0 0;background:var(--dem)}
+.hub-tag{font:700 9.5px var(--font-b);letter-spacing:.1em;text-transform:uppercase;color:var(--mute);border:1px solid var(--line2);padding:3px 6px;border-radius:6px;min-width:0;white-space:nowrap}
+.hub-tag.sl{font-family:var(--font-m);letter-spacing:.04em}
+.hub-edge-h{margin:12px 6px 4px}
+@media (max-width:420px){.hub-edge-row{grid-template-columns:minmax(0,1fr) 56px}.hub-edge-row .hub-tag,.hub-edge-row .hub-edge-bar{display:none}}
+
+/* spectrum */
+.hub-speccard{margin-top:16px}
+.hub-spec{position:relative}
+.hub-spec-key{display:flex;flex-wrap:wrap;gap:6px 12px;font-size:11px;color:var(--mute);margin-bottom:6px}
+.hub-spec-key span::before{content:"";display:inline-block;width:8px;height:1px;background:var(--line2);margin-right:5px;vertical-align:middle}
+
+/* the race desk, under the hub */
+.fc-deskhead{margin:44px 0 18px;padding-top:28px;border-top:1px solid var(--line)}
+.fc-deskhead h2{font:800 clamp(26px,3.4vw,40px)/1.06 var(--font-d);letter-spacing:-.035em;margin:8px 0 12px}
+.fc-deskhead h2 em{font-style:normal;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.fc-deskhead h2 .fc-hp.d{color:var(--dem2)}.fc-deskhead h2 .fc-hp.r{color:var(--gop2)}
+.fc-deskhead .pmeta{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;font-size:13px;color:var(--mute)}
+@media (prefers-reduced-motion:reduce){.hub-m,.hub-m-bar i,.hub-loading span{transition:none;animation:none}}
+#desk{scroll-margin-top:84px}
