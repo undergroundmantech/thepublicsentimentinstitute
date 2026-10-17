@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import ForecastDesk from "./ForecastDesk";
-import type { Office } from "./lib";
+import { DB_OFFICES, type DeskOffice } from "./lib";
 
 export const metadata: Metadata = {
   title: "2026 forecast",
@@ -9,14 +9,15 @@ export const metadata: Metadata = {
   alternates: { canonical: "/forecast" },
 };
 
-const OFFICES: readonly string[] = ["governor", "senate", "house"];
+const OFFICES: readonly string[] = ["governor", "senate", "house", ...DB_OFFICES];
 
-// /forecast?office=senate (or governor, house) opens the desk on that office.
+// /forecast?office=senate (or governor, house, statewide, attorney-general and the other statewide offices) opens the desk on that office.
 export default async function ForecastPage({ searchParams }: { searchParams: Promise<Record<string, string | string[] | undefined>> }) {
   const sp = await searchParams;
   const raw = Array.isArray(sp.office) ? sp.office[0] : sp.office;
   const q = (raw ?? "").toLowerCase();
-  const office: Office = OFFICES.includes(q) ? (q as Office)
+  const office: DeskOffice = OFFICES.includes(q) ? (q as DeskOffice)
+    : q === "statewide" ? "attorney-general"
     : q === "governors" || q === "gov" ? "governor" : q === "sen" ? "senate" : "house";
   return <ForecastDesk initialOffice={office} />;
 }

@@ -78,6 +78,8 @@ export function raceHref(id: string) {
   if (office === "sen") return `/forecast/${s}/senate`;
   if (office === "gov") return `/forecast/${s}/governor`;
   if (office === "house") return `/forecast/${s}/house-${Number(dist)}`;
+  const DB: Record<string, string> = { lg: "lieutenant-governor", ag: "attorney-general", sos: "secretary-of-state", treas: "treasurer", aud: "auditor", agri: "agriculture-commissioner", rrc: "railroad-commissioner" };
+  if (DB[office]) return `/forecast/statewide/${s}/${DB[office]}`;
   return "/forecast";
 }
 export function raceIdFromRoute(state: string, race: string): string | null {

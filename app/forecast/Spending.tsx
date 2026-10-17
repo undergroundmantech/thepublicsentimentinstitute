@@ -287,7 +287,8 @@ export function RaceMoney({ race }: { race: Race }) {
   const data = useSpending();
   if (!data) return null;
   const office = race.office as Office;
-  const list = data.races[office] as (FedRow | GovRow)[];
+  const list = data.races[office] as (FedRow | GovRow)[] | undefined;
+  if (!list) return null;                         // statewide offices carry no spending file
   const r = list.find((x) => x.id === race.id);
   if (!r) return null;
   const fed = office !== "governor";

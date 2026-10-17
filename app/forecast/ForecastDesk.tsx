@@ -9,6 +9,7 @@ import {
   type CountiesPayload, type CountyRow, type Crosstabs, type CrosstabRow,
   partyColor, partyLabel, outletColor,
   type Geo, type Model, type Office, type Race, type RaceSide, type StateDetail, type ViewMode,
+  type DeskOffice, type DBOffice, type DBJson, DB_OFFICES, DB_LABEL, isDB, dbRaces,
   OFFICE_LABEL, fmtMargin, fmtPct, inkOn, raceColor, ratingFor, surname,
   indSide, sideColor, sideLabel, fmtRaceMargin, raceMarginColor,
   isUncontested,
@@ -112,10 +113,15 @@ function Spark({ pts, color }: { pts: number[]; color: string }) {
 const signed = (m: number) => `${m > 0 ? "R" : "D"} +${Math.abs(m).toFixed(1)}`;
 
 /** The inner template header: crumbs, eyebrow, headline with one gradient word, lede, meta row. */
-function DeskHeader({ model, office }: { model: Model | null; office: Office }) {
-  const chamber = model ? model.chambers[office] : null;
+function DeskHeader({ model, office, dbRows }: { model: Model | null; office: DeskOffice; dbRows?: Race[] }) {
+  const chamber = model && !isDB(office) ? model.chambers[office] : null;
   let h1: React.ReactNode = <>The 2026 <em>forecast</em></>;
-  if (chamber) {
+  if (isDB(office) && dbRows) {
+    const live = dbRows.filter((r) => Math.abs(r.est.margin) < 99.9);
+    const d = live.filter((r) => r.est.margin < 0).length, rr = live.length - d;
+    const fav = d >= rr ? "d" : "r";
+    h1 = <><span className={`fc-hp ${fav}`}>{fav === "d" ? "Democrats" : "Republicans"}</span> are favored in <span className={`fc-hp ${fav}`}>{Math.max(d, rr)} of {live.length}</span> <em>{DB_LABEL[office].toLowerCase()}</em> races</>;
+  } else if (chamber) {
     const dem = chamber.demControl;
     const fav = dem >= 0.5 ? "d" : "r";
     const p = Math.round(Math.max(dem, 1 - dem) * 100);
@@ -136,7 +142,8 @@ function DeskHeader({ model, office }: { model: Model | null; office: Office }) 
         <div className="eye g">2026 forecast</div>
         <h1>{h1}</h1>
         <p className="lede">
-          The On Point Politics model for every Senate, House and governor race on the 2026 ballot. It blends
+          The On Point Politics model for every Senate, House and governor race on the 2026 ballot, and every statewide
+          office below them, from attorney general to railroad commissioner. It blends
           fundamentals with the polling average, then runs {model ? model.meta.sims.toLocaleString() : "2,000"} correlated
           simulations of the election, county by county.
         </p>
@@ -155,17 +162,26 @@ function DeskHeader({ model, office }: { model: Model | null; office: Office }) 
   );
 }
 
-export default function ForecastDesk({ initialOffice = "house" }: { initialOffice?: Office }) {
+export default function ForecastDesk({ initialOffice = "house" }: { initialOffice?: DeskOffice }) {
   const router = useRouter();
   const model = useJson<Model>("/forecast/model.json");
   const geo = useJson<Geo>("/forecast/geo.json");
-  const counties = (useJson<Record<string, unknown>>("/forecast/counties.json") ?? null) as CountiesPayload | null;
+  const countiesTop = (useJson<Record<string, unknown>>("/forecast/counties.json") ?? null) as CountiesPayload | null;
+  const db = useJson<DBJson>("/forecast/downballot.json");
+  const dbCounties = (useJson<Record<string, unknown>>("/forecast/downballot_counties.json") ?? null) as CountiesPayload | null;
+  // the statewide offices join the county payload under their own race ids
+  const counties = useMemo<CountiesPayload | null>(() => {
+    if (!countiesTop) return null;
+    if (!dbCounties) return countiesTop;
+    const { _n, ...rest } = dbCounties as CountiesPayload;
+    return { ...countiesTop, ...rest, _n: { ...(_n as Record<string, string> ?? {}), ...((countiesTop._n as Record<string, string>) ?? {}) } };
+  }, [countiesTop, dbCounties]);
 
   // The office comes from ?office= so /forecast?office=senate opens on the Senate,
   // and switching office writes it back without a scroll or a history entry.
-  const [office, setOfficeState] = useState<Office>(initialOffice);
+  const [office, setOfficeState] = useState<DeskOffice>(initialOffice);
   useEffect(() => { setOfficeState(initialOffice); }, [initialOffice]);
-  const setOffice = (o: Office) => {
+  const setOffice = (o: DeskOffice) => {
     setOfficeState(o);
     router.replace(`/forecast?office=${o}`, { scroll: false });
   };
@@ -185,12 +201,14 @@ export default function ForecastDesk({ initialOffice = "house" }: { initialOffic
     return () => document.documentElement.classList.remove("fc-black");
   }, []);
 
-  const races = useMemo(() => (model ? model.races.filter((r) => r.office === office) : []), [model, office]);
-  const byId = useMemo(() => new Map(model ? model.races.map((r) => [r.id, r]) : []), [model]);
+  const allRaces = useMemo(() => (model ? [...model.races, ...dbRaces(db, model.meta.sims)] : []), [model, db]);
+  const races = useMemo(() => allRaces.filter((r) => r.office === office), [allRaces, office]);
+  const byId = useMemo(() => new Map(allRaces.map((r) => [r.id, r])), [allRaces]);
+  const statewide = isDB(office);
   const sel = selId ? byId.get(selId) ?? null : null;
 
   const detail = useJson<StateDetail>(sel ? `/forecast/states/${sel.st}.json` : null);
-  const chamber = model ? model.chambers[office] : null;
+  const chamber = model && !isDB(office) ? model.chambers[office] : null;
 
   const pick = (id: string) => {
     setSelId(id);
@@ -218,7 +236,7 @@ export default function ForecastDesk({ initialOffice = "house" }: { initialOffic
   }, [races, query, sortKey, showAll]);
   const truncated = !query.trim() && !showAll && races.length > 24;
 
-  if (!model || !geo || !chamber) {
+  if (!model || !geo || (!statewide && !chamber) || (statewide && !db)) {
     return (
       <div className="opp fc-page">
         <style>{CSS + ATLAS_CSS + TIP_CSS + SPENDING_CSS}</style>
@@ -231,29 +249,40 @@ export default function ForecastDesk({ initialOffice = "house" }: { initialOffic
   return (
     <div className="opp fc-page">
       <style>{CSS + ATLAS_CSS + TIP_CSS + SPENDING_CSS}</style>
-      <DeskHeader model={model} office={office} />
+      <DeskHeader model={model} office={office} dbRows={statewide ? races : undefined} />
 
       <div className="fc-stack">
         {/* ── the map card: office, seat bar, controls, map ── */}
         <section className="card fc-card fc-mapcard" ref={mapAnchor}>
           <div className="card-h">
-            <h3>{sel ? sel.name : `${OFFICE_LABEL[office]} forecast map`}</h3>
-            <Seg ariaLabel="Office" value={office} onChange={setOffice} options={[
-              { v: "governor", label: "Governors" }, { v: "senate", label: "Senate" }, { v: "house", label: "House" },
+            <h3>{sel ? sel.name : `${statewide ? DB_LABEL[office as DBOffice] : OFFICE_LABEL[office as Office]} forecast map`}</h3>
+            <Seg ariaLabel="Office" value={statewide ? "statewide" : office} onChange={(v) => setOffice(v === "statewide" ? "attorney-general" : v as DeskOffice)} options={[
+              { v: "governor", label: "Governors" }, { v: "senate", label: "Senate" }, { v: "house", label: "House" }, { v: "statewide", label: "Statewide" },
             ]} />
           </div>
           <div className="card-b">
-            <SeatBar chamber={chamber} office={office} model={model} />
+            {statewide ? (
+              <>
+                <div className="fc-controls fc-dbtabs">
+                  <span className="fc-ctl-label">Office</span>
+                  <Seg small ariaLabel="Statewide office" value={office} onChange={(v) => setOffice(v as DeskOffice)}
+                    options={DB_OFFICES.filter((o) => allRaces.some((r) => r.office === o)).map((o) => ({ v: o, label: DB_LABEL[o] }))} />
+                </div>
+                <DBBar races={races} label={DB_LABEL[office as DBOffice]} />
+              </>
+            ) : chamber ? <SeatBar chamber={chamber} office={office as Office} model={model} /> : null}
 
             {/* the map controls only reach the national map: inside a state the stage
                 draws its own counties and districts, and neither switch does anything */}
             {sel ? null : (
               <div className="fc-controls">
                 <span className="fc-ctl-label">Map</span>
-                <Seg small ariaLabel="Map scope" value={mapScope} onChange={setMapScope} options={[
-                  { v: "races", label: office === "house" ? "Districts" : "States" }, { v: "counties", label: "Counties" },
-                ]} />
-                {mapScope === "races" ? (
+                {statewide ? null : (
+                  <Seg small ariaLabel="Map scope" value={mapScope} onChange={setMapScope} options={[
+                    { v: "races", label: office === "house" ? "Districts" : "States" }, { v: "counties", label: "Counties" },
+                  ]} />
+                )}
+                {mapScope === "races" || statewide ? (
                   <>
                     <span className="fc-ctl-label">View</span>
                     <Seg small ariaLabel="Map style" value={mapKind} onChange={setMapKind} options={[
@@ -269,8 +298,8 @@ export default function ForecastDesk({ initialOffice = "house" }: { initialOffic
             )}
 
             <div className="fc-mapwrap">
-              {!sel && mapScope === "counties" ? (
-                <ForecastAtlas embedded model={model} counties={counties} office={office} onPickRace={pick} statePaths={geo.states} />
+              {!sel && mapScope === "counties" && !statewide ? (
+                <ForecastAtlas embedded model={model} counties={counties} office={office as Office} onPickRace={pick} statePaths={geo.states} />
               ) : !sel ? (
                 <>
                   <NationalMap geo={geo} races={races} office={office} view={view} kind={mapKind} onPick={pick} hover={hover} setHover={setHover} />
@@ -280,7 +309,7 @@ export default function ForecastDesk({ initialOffice = "house" }: { initialOffic
               ) : (
                 <RaceStage
                   race={sel} detail={detail} counties={counties} onBack={back} onPick={pick}
-                  stateRaces={model.races.filter((r) => r.office === sel.office && r.st === sel.st)
+                  stateRaces={allRaces.filter((r) => r.office === sel.office && r.st === sel.st)
                     .sort((a, b) => a.district - b.district)}
                 />
               )}
@@ -291,10 +320,14 @@ export default function ForecastDesk({ initialOffice = "house" }: { initialOffic
         {/* ── below the map ── */}
         {!sel ? (
           <>
-            <SectionDistribution chamber={chamber} office={office} sims={model.meta.sims} />
-            <SectionSeats chamber={chamber} office={office} updated={model.meta.updated} />
-            <SectionProbability chamber={chamber} office={office} updated={model.meta.updated} />
-            <Sec eye={`${races.length} races`} title={`Every ${office === "governor" ? "governor" : office === "senate" ? "Senate" : "House"} race, closest first`}>
+            {chamber ? (
+              <>
+                <SectionDistribution chamber={chamber} office={office as Office} sims={model.meta.sims} />
+                <SectionSeats chamber={chamber} office={office as Office} updated={model.meta.updated} />
+                <SectionProbability chamber={chamber} office={office as Office} updated={model.meta.updated} />
+              </>
+            ) : null}
+            <Sec eye={`${races.length} races`} title={`Every ${statewide ? DB_LABEL[office as DBOffice].toLowerCase() : office === "governor" ? "governor" : office === "senate" ? "Senate" : "House"} race, closest first`}>
               <div className="fc-table-tools">
                 <input className="search fc-find" value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Search races, states or candidates" aria-label="Search races" spellCheck={false} />
                 <Seg small ariaLabel="Sort" value={sortKey} onChange={setSortKey} options={[
@@ -308,18 +341,49 @@ export default function ForecastDesk({ initialOffice = "house" }: { initialOffic
                 </button>
               ) : null}
             </Sec>
-            <SpendingTracker office={office} onPick={pick} />
+            {statewide ? null : <SpendingTracker office={office as Office} onPick={pick} />}
           </>
         ) : (
           <RaceSections race={sel} byId={byId} onPick={pick} sims={model.meta.sims} updated={model.meta.updated} env={{ npe: model.meta.npe, gb: model.meta.genericBallot.avg, approval: model.meta.genericBallot.netApproval }} />
         )}
       </div>
 
+      {statewide ? (
+        <p className="fc-foot">
+          Statewide offices start from the state&apos;s own 2026 Senate and governor county forecasts and add the approval
+          fundamentals, a relaxed Gallup leg, the state&apos;s down ballot results from 2014, 2018 and 2022 and this year&apos;s primaries,
+          then move each county by its voters&apos; looseness in the ticket splitting model.{" "}
+          <Link href="/forecast/statewide">Every statewide race</Link>.
+        </p>
+      ) : null}
       <p className="fc-foot">
         Fundamentals, the polling average, expert ratings and markets, then {model.meta.sims.toLocaleString()} correlated
         simulations. Fieldwork for the TPSI polls in the model by The Public Sentiment Institute.{" "}
         <Link href="/forecast/methodology">How the model works</Link>.
       </p>
+    </div>
+  );
+}
+
+// ── statewide office bar: races favored by each side ───────────────────────────
+function DBBar({ races, label }: { races: Race[]; label: string }) {
+  const live = races.filter((r) => Math.abs(r.est.margin) < 99.9);
+  const un = races.length - live.length;
+  const d = live.filter((r) => r.est.margin <= -2).length, rr = live.filter((r) => r.est.margin >= 2).length, t = live.length - d - rr;
+  const unD = races.filter((r) => r.est.margin <= -99.9).length, unR = un - unD;
+  const tot = Math.max(1, races.length);
+  return (
+    <div className="fc-seatbar">
+      <div className="fc-seatbar-ends">
+        <span style={{ color: "var(--fc-dem)" }}><b>{d + unD}</b> Democratic</span>
+        <span className="fc-seatbar-mid">{races.length} {label.toLowerCase()} {races.length === 1 ? "race" : "races"}{t ? `, ${t} within 2 points` : ""}</span>
+        <span style={{ color: "var(--fc-gop)" }}>Republican <b>{rr + unR}</b></span>
+      </div>
+      <div className="fc-seatbar-track" role="img" aria-label={`${d + unD} lean Democratic, ${t} toss ups, ${rr + unR} lean Republican`}>
+        <span className="fc-seatbar-fill" style={{ width: `${((d + unD) / tot) * 100}%` }} />
+        <span className="fc-seatbar-fill" style={{ left: `${((d + unD) / tot) * 100}%`, width: `${(t / tot) * 100}%`, background: "var(--gold)" }} />
+      </div>
+      <div className="fc-seatbar-note">Each race is called for the side its model margin favors, gold within 2 points{un ? `; ${un} ${un === 1 ? "has" : "have"} only one major party nominee` : ""}. Pick a state for its county forecast.</div>
     </div>
   );
 }
@@ -369,7 +433,7 @@ function hexPts(cx: number, cy: number, r: number) {
 }
 
 function NationalMap({ geo, races, office, view, kind, onPick, hover, setHover }: {
-  geo: Geo; races: Race[]; office: Office; view: ViewMode; kind: "geo" | "hex";
+  geo: Geo; races: Race[]; office: DeskOffice; view: ViewMode; kind: "geo" | "hex";
   onPick: (id: string) => void; hover: { id: string; x: number; y: number } | null;
   setHover: (h: { id: string; x: number; y: number } | null) => void;
 }) {
@@ -551,7 +615,10 @@ function MapTip({ race, x, y }: { race: Race; x: number; y: number }) {
 // ── race stage — the map swaps in place ──────────────────────────
 type StageHover = { kind: "county" | "district"; id: string; x: number; y: number };
 
-const OFFICE_WORD: Record<Office, string> = { house: "U.S. House", senate: "U.S. Senate", governor: "governor" };
+const OFFICE_WORD: Record<DeskOffice, string> = {
+  house: "U.S. House", senate: "U.S. Senate", governor: "governor",
+  ...(Object.fromEntries(DB_OFFICES.map((o) => [o, DB_LABEL[o].toLowerCase()])) as Record<DBOffice, string>),
+};
 
 // A rating chip paints the band colour as text over a tint of itself.
 function RatingChip({ color, cat, outlet }: { color: string; cat: string; outlet?: string }) {
@@ -711,7 +778,7 @@ function RaceStage({ race, detail, counties, stateRaces, onPick, onBack }: {
           <Link className="btn sm white" href={raceHref(race.id)}>Full race page</Link>
         </div>
         <div className="fc-stage-title">
-          <span className="eye">2026 {race.office}{race.marquee ? " · marquee" : ""}</span>
+          <span className="eye">2026 {OFFICE_WORD[race.office]}{race.marquee ? " · marquee" : ""}</span>
           <h2>{race.name}</h2>
           <div className="fc-stage-banner" style={{ color: s.margin > 0 ? "var(--fc-gop)" : indSide(race) ? "var(--ind)" : "var(--fc-dem)" }}>
             {unopposed
@@ -1356,11 +1423,11 @@ function StageFlow({ race, env, sims }: {
 // simulated voter file, not asked of anyone. It loads on its own the first time
 // a statewide race is opened, because the national page never needs it.
 function SectionCrosstabs({ race }: { race: Race }) {
-  const data = useJson<Crosstabs>(race.office === "house" ? null : "/forecast/crosstabs.json");
+  const data = useJson<Crosstabs>(race.office === "house" || isDB(race.office) ? null : "/forecast/crosstabs.json");
   const rows = data ? data[race.id] ?? null : null;
   const [cut, setCut] = useState<string>(OVERVIEW);
   useEffect(() => { setCut(OVERVIEW); }, [race.id]);
-  if (race.office === "house") return null;
+  if (race.office === "house" || isDB(race.office)) return null;
 
   const total = rows ? rows.find((r) => r[0] === "All voters") ?? null : null;
   const cats: { name: string; rows: CrosstabRow[] }[] = [];

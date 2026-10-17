@@ -1,6 +1,15 @@
 // Shared types + scales for the forecast desk.
 
 export type Office = "governor" | "senate" | "house";
+// The statewide offices below the top of the ticket, forecast county by county like the Senate and governor races.
+export const DB_OFFICES = ["attorney-general", "secretary-of-state", "lieutenant-governor", "treasurer", "auditor", "agriculture-commissioner", "railroad-commissioner"] as const;
+export type DBOffice = (typeof DB_OFFICES)[number];
+export type DeskOffice = Office | DBOffice;
+export const isDB = (o: string): o is DBOffice => (DB_OFFICES as readonly string[]).includes(o);
+export const DB_LABEL: Record<DBOffice, string> = {
+  "attorney-general": "Attorney general", "secretary-of-state": "Secretary of state", "lieutenant-governor": "Lieutenant governor",
+  treasurer: "Treasurer", auditor: "Auditor", "agriculture-commissioner": "Agriculture commissioner", "railroad-commissioner": "Railroad commissioner",
+};
 export type ViewMode = "margin" | "odds" | "rating";
 
 export interface RaceSide {
@@ -23,7 +32,7 @@ export interface Cand {
 
 export interface Race {
   id: string;
-  office: Office;
+  office: DeskOffice;
   st: string;
   state: string;
   district: number;
@@ -334,13 +343,72 @@ export const surname = (n: string) => {
 };
 export const favParty = (m: number) => (m > 0 ? "gop" : "dem");
 
-export const OFFICE_LABEL: Record<Office, string> = {
+export const OFFICE_LABEL: Record<DeskOffice, string> = {
   governor: "Governors",
   senate: "Senate",
   house: "House",
+  ...DB_LABEL,
 };
 export const OFFICE_HEAD: Record<Office, string> = {
   governor: "governors' mansions",
   senate: "the Senate",
   house: "the House",
 };
+
+// ── statewide offices: downballot.json races in the desk's Race shape ─────────────────────────────────────────
+export interface DBRaceJson {
+  id: string; st: string; state: string; office: DBOffice; officeLabel: string;
+  dem: string | null; gop: string | null; others: { name: string; party: string }[];
+  incumbent?: string | null; incParty?: string | null; incRunning: boolean; uncontested?: "D" | "R";
+  est: { margin: number; prob: number; p10: number | null; p90: number | null };
+  votes?: { dem: number; rep: number; other: number; total: number };
+  polls: { pollster: string; end: string; n?: number | null; kind: string; margin: number; age: number }[];
+  pollWeight?: number; pollAvg?: number | null;
+  legs: { topOfTicket?: number; blend?: number; withCandidates?: number; final?: number; history?: number | null };
+}
+export interface DBJson { meta: { updated: string; races: number; modeled: number }; races: DBRaceJson[] }
+
+const PARTY_CODE: Record<string, string> = { Libertarian: "L", Green: "G", Independent: "IND", Constitution: "C" };
+
+/** Each statewide office race as a desk Race, so the map, table, county stage and race sections read it as they read a Senate race. */
+export function dbRaces(db: DBJson | null, sims = 2000): Race[] {
+  if (!db) return [];
+  return db.races.map((r) => {
+    const un = r.uncontested;
+    const m = un ? (un === "D" ? -100 : 100) : r.est.margin;
+    const prob = un ? (un === "D" ? 0 : 1) : r.est.prob;
+    const p10 = r.est.p10 ?? m, p90 = r.est.p90 ?? m;
+    let dist: RaceSide["dist"];
+    if (!un) {
+      const sd = Math.max(1, (p90 - p10) / 2.5631), w = 1.5;
+      const lo = Math.floor((m - 3.5 * sd) / w) * w, n = Math.ceil((7 * sd) / w) + 1, c: number[] = [];
+      for (let i = 0; i < n; i++) {
+        const x = lo + (i + 0.5) * w;
+        c.push(Math.round(sims * w * Math.exp(-0.5 * ((x - m) / sd) ** 2) / (sd * Math.sqrt(2 * Math.PI))));
+      }
+      dist = { lo, w, c };
+    }
+    const v = r.votes;
+    const pct = (x: number) => (v && v.total ? Math.round((1000 * x) / v.total) / 10 : 0);
+    const cands: Cand[] = [];
+    if (r.dem) cands.push({ name: r.dem, party: "D", pct: un ? 100 : pct(v?.dem ?? 0), votes: v?.dem ?? 0 });
+    if (r.gop) cands.push({ name: r.gop, party: "R", pct: un ? 100 : pct(v?.rep ?? 0), votes: v?.rep ?? 0 });
+    // the county rows carry one share for everyone else, so third candidates travel as one entry
+    if (v && r.others.length) {
+      const one = r.others.length === 1 ? r.others[0] : null;
+      cands.push({ name: one ? one.name : r.others.map((o) => o.name).join(", "), party: one ? PARTY_CODE[one.party] ?? one.party.slice(0, 3).toUpperCase() : "OTH", pct: pct(v.other), votes: v.other });
+    }
+    const L = r.legs || {};
+    return {
+      id: r.id, office: r.office, st: r.st, state: r.state, district: 0, name: `${r.state} ${r.officeLabel.toLowerCase()}`,
+      dem: r.dem ?? "No Democrat", gop: r.gop ?? "No Republican", cands,
+      inc: r.incRunning ? (r.incParty === "D" ? -1 : r.incParty === "R" ? 1 : 0) : 0, open: !r.incRunning, marquee: false,
+      pvi: 0, elast: 1, fundamentals: L.blend ?? m,
+      stages: { anchor: L.topOfTicket ?? m, fund: L.blend ?? m, poll: m, rate: m, market: m },
+      pollAvg: r.pollAvg ?? null, pollLevel: null, pollPsi: null, enop: r.polls.length, wPoll: r.pollWeight ?? 0, wMkt: 0,
+      market: null, ratings: [], est: { margin: m, prob, p10, p90, dist }, votes: v, rcv: null,
+      polls: r.polls.map((p) => ({ pollster: p.pollster, kind: p.kind, age: p.age, n: p.n ?? 0, margin: p.margin })),
+      similar: [], trend: [{ m, p: prob }, { m, p: prob }],
+    };
+  });
+}
