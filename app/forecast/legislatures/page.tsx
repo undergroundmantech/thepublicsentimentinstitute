@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Hemicycle, { type HemiSeat } from "@/app/components/opp/Hemicycle";
 import LegisTiles from "@/app/components/opp/LegisTiles";
+import USLegisMap, { type USChamber } from "@/app/components/opp/USLegisMap";
 import { BAND_LABEL, controlBand, currentMajority, getStatehouse, slHref, type SLChamber } from "./data";
 import "./legislatures.css";
 
@@ -31,10 +32,13 @@ export default function LegislaturesPage() {
   const flipsToD = ch.filter((c) => currentMajority(c) !== "D" && c.demControl > 0.5);
   const flipsToR = ch.filter((c) => currentMajority(c) !== "R" && c.gopControl > 0.5);
   const inPlay = ch.filter((c) => c.demControl > 0.08 && c.demControl < 0.92).sort((a, b) => Math.abs(a.demControl - 0.5) - Math.abs(b.demControl - 0.5));
+  const us: USChamber[] = ch.map((c) => ({ id: c.id, st: c.st, chamber: c.chamber, name: c.name, demControl: c.demControl,
+    d: c.districts.map((x) => [x.d, x.seats, x.probD, x.margin, x.last?.won?.[0] ?? null] as USChamber["d"][number]),
+    holdD: c.holdD ?? [] }));
   const all = [...ch].sort((a, b) => a.state.localeCompare(b.state) || (a.chamber === "senate" ? -1 : 1));
 
   return (
-    <div className="opp sl">
+    <div className="opp sl sl-wide fc-wide">
       <nav className="crumbs" aria-label="Breadcrumb">
         <Link href="/">Home</Link><span className="sep">/</span><Link href="/forecast">Forecast</Link><span className="sep">/</span><span>State legislatures</span>
       </nav>
@@ -55,20 +59,24 @@ export default function LegislaturesPage() {
         <div className="card kpi"><div><div className="lab">Chambers in play</div><div className="v mono" style={{ color: "var(--gold)" }}>{inPlay.length}</div><div className="sub">Between 8% and 92% for either party</div></div></div>
       </section>
 
-      <div className="card" style={{ marginTop: 16 }}>
-        <div className="card-h"><h3>Control by state</h3><span className="eye" style={{ marginLeft: "auto" }}>Senate left · House right</span></div>
-        <div className="card-b sl-map">
-          <LegisTiles chambers={ch.map((c) => ({ st: c.st, chamber: c.chamber, demControl: c.demControl, name: c.name, href: slHref(c) }))} />
-          <div className="sl-legend">
-            <span><i style={{ background: "#1a3fb0" }} />Safe D</span><span><i style={{ background: "#3d7bff" }} />Likely D</span><span><i style={{ background: "#a6c2ff" }} />Lean D</span>
-            <span><i style={{ background: "#e7b341" }} />Toss up</span><span><i style={{ background: "#ffb3c0" }} />Lean R</span><span><i style={{ background: "#ff3b5c" }} />Likely R</span><span><i style={{ background: "#b0163a" }} />Safe R</span><span><i className="hatch" />Not up</span>
-          </div>
-        </div>
+      <div className="card sl-map-us">
+        <div className="card-h"><h3>Every district on the 2026 ballot</h3><span className="eye" style={{ marginLeft: "auto" }}>Hover a district · click to open its chamber</span></div>
+        <div className="card-b"><USLegisMap chambers={us} /></div>
       </div>
 
-      {inPlay.length ? (
-        <>
-          <h2 className="sl-h2">Chambers in play</h2>
+      <div className="sl-pair">
+        <div className="card">
+          <div className="card-h"><h3>Control by state</h3><span className="eye" style={{ marginLeft: "auto" }}>Senate left · House right</span></div>
+          <div className="card-b">
+            <LegisTiles chambers={ch.map((c) => ({ st: c.st, chamber: c.chamber, demControl: c.demControl, name: c.name, href: slHref(c) }))} />
+            <div className="sl-legend">
+              <span><i style={{ background: "#1a3fb0" }} />Safe D</span><span><i style={{ background: "#3d7bff" }} />Likely D</span><span><i style={{ background: "#a6c2ff" }} />Lean D</span>
+              <span><i style={{ background: "#e7b341" }} />Toss up</span><span><i style={{ background: "#ffb3c0" }} />Lean R</span><span><i style={{ background: "#ff3b5c" }} />Likely R</span><span><i style={{ background: "#b0163a" }} />Safe R</span><span><i className="hatch" />Not up</span>
+            </div>
+          </div>
+        </div>
+        <div>
+          <h2 className="sl-h2" style={{ marginTop: 0 }}>Chambers in play</h2>
           <div className="sl-grid">
             {inPlay.map((c) => {
               const b = controlBand(c.demControl);
@@ -85,8 +93,8 @@ export default function LegislaturesPage() {
               );
             })}
           </div>
-        </>
-      ) : null}
+        </div>
+      </div>
 
       <div className="card" style={{ marginTop: 20 }}>
         <div className="card-h"><h3>Every chamber</h3><span className="eye" style={{ marginLeft: "auto" }}>{ch.length} chambers</span></div>

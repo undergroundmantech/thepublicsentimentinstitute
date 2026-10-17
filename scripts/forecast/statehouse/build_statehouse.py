@@ -329,6 +329,7 @@ for st in sorted(set(HOUSE) | set(SENATE)):
         chambers.append(dict(
             id=f"sl-{st}-{ch}", st=st, state=STATE_NAME.get(st, st), chamber=ch, name=name, seats=size, up=seats_up,
             majority=maj, hold=held, missing=max(0, missing), filled=len(filled), current=cur,
+            holdD=[[d, v["won"][0] if v["won"] else "O"] for d, v in sorted(hold.items(), key=lambda x: (num(x[0]) or 0, x[0]))],
             demControl=round(dc, 4), gopControl=round(rc, 4), tie=round(max(0.0, 1 - dc - rc), 4),
             demSeats=round(float(dseats.mean()), 1), gopSeats=round(float(rseats.mean()), 1),
             p10=int(np.percentile(dseats, 10)), p90=int(np.percentile(dseats, 90)), median=int(np.median(dseats)),
@@ -353,5 +354,6 @@ hub = []
 for c in chambers:
     hub.append(dict({k: c[k] for k in ("id", "st", "state", "chamber", "name", "seats", "up", "majority", "hold", "current",
                                         "demControl", "gopControl", "tie", "demSeats", "gopSeats", "p10", "p90", "median")},
-                    d=[[x["d"], x["seats"], x["probD"], x["margin"]] for x in c["districts"]]))
+                    d=[[x["d"], x["seats"], x["probD"], x["margin"], (x["last"] or {}).get("won", [None])[0] if x["last"] and x["last"].get("won") else None] for x in c["districts"]],
+                    holdD=c["holdD"]))
 json.dump(dict(meta=meta | dict(method=None), chambers=hub), open(OUT.replace(".json", "_hub.json"), "w"), separators=(",", ":"))

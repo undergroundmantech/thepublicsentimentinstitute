@@ -40,3 +40,57 @@
 .sl .sl-flips{display:flex;gap:22px}
 .sl .sl-flips span{display:inline-flex;align-items:baseline;gap:6px}
 .sl .sl-flips small{font:600 12px var(--font-b);color:var(--mute);letter-spacing:0}
+
+/* wide layout: the forecast pages run wider than the rest of the site */
+:root:has(.fc-wide){--wrap:1840px}
+.sl-wide .sl-head{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:18px 32px;align-items:end;margin-bottom:18px}
+@media (max-width:1100px){.sl-wide .sl-head{grid-template-columns:1fr}}
+.sl-wide .sl-head h1{font:800 clamp(30px,3.6vw,52px)/1.02 var(--font-d);letter-spacing:-.04em;margin:8px 0 10px}
+.sl-wide .sl-head h1 em{font-style:normal;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.sl-wide .sl-head .lede{color:var(--ink2);font-size:15px;max-width:66ch;margin:0 0 12px}
+.sl-wide .pmeta{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;font-size:13px;color:var(--mute)}
+.sl .sl-strip{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+@media (max-width:700px){.sl .sl-strip{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.sl .sl-s{padding:14px 14px 12px;display:grid;gap:6px;align-content:start}
+.sl .sl-s .lab{font:700 10.5px var(--font-b);letter-spacing:.14em;text-transform:uppercase;color:var(--mute)}
+.sl .sl-s .sub{font-size:11.5px;color:var(--mute)}
+.sl .sl-s-v{font:800 26px/1 var(--font-d);letter-spacing:-.03em}
+.sl .sl-s-odds{display:flex;align-items:baseline;gap:5px;font:800 26px/1 var(--font-d);letter-spacing:-.03em}
+.sl .sl-s-odds span{font:600 11px var(--font-b);color:var(--mute);letter-spacing:0;margin-right:10px}
+.sl .sl-s-bar{display:flex;height:6px;border-radius:99px;overflow:hidden;background:rgba(var(--line-rgb),.08)}
+.sl .sl-flips b{font:800 26px/1 var(--font-d)}
+
+.sl .slx{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(320px,1fr);gap:16px;align-items:start}
+@media (max-width:1000px){.sl .slx{grid-template-columns:1fr}}
+.sl .slx-side{display:grid;gap:16px;align-content:start;position:sticky;top:84px}
+@media (max-width:1000px){.sl .slx-side{position:static}}
+.sl .slx-svg{width:100%;height:auto;display:block;max-height:78vh}
+.sl .slx-cell{stroke:var(--bg);cursor:pointer;transition:opacity .12s}
+.sl .slx-cell:hover{opacity:.82}
+.sl .slx-lab{font-family:var(--font-m);font-weight:700;text-anchor:middle;dominant-baseline:central;pointer-events:none}
+.sl .slx-note{font-size:11.5px;color:var(--mute);text-align:center;margin:10px 0 0}
+.sl .slx-nomap{padding:60px 0;text-align:center;color:var(--mute)}
+.sl .sl-legend i.ramp{width:90px;border-radius:3px;height:8px;background:linear-gradient(90deg,#10288c,#3d7bff,#d6e2ff,#ffdce4,#ff3b5c,#8c0a28)}
+.sl .slx-detail{padding:18px;display:grid;gap:12px}
+.sl .slx-detail.empty p{margin:0;color:var(--ink2);font-size:13.5px}
+.sl .slx-detail h3{font:800 24px/1.1 var(--font-d);letter-spacing:-.03em;margin-top:4px}
+.sl .slx-detail h3 small{font:600 13px var(--font-b);color:var(--mute)}
+.sl .slx-detail p{margin:0;color:var(--ink2);font-size:13.5px}
+.sl .slx-d-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.sl .slx-d-odds{display:flex;justify-content:space-between}
+.sl .slx-d-odds b{display:block;font:800 34px/1 var(--font-d);letter-spacing:-.04em}
+.sl .slx-d-odds span{font-size:12px;color:var(--mute)}
+.sl .slx-d-bar{display:block;height:7px;border-radius:99px;background:var(--gop);overflow:hidden}
+.sl .slx-d-bar s{display:block;height:100%;background:var(--dem);text-decoration:none}
+.sl .slx-d-dl{display:grid;gap:7px;margin:0}
+.sl .slx-d-dl div{display:flex;justify-content:space-between;gap:12px;font-size:13px;border-bottom:1px solid var(--line);padding-bottom:6px}
+.sl .slx-d-dl dt{color:var(--mute)}.sl .slx-d-dl dd{margin:0;text-align:right}
+.sl .slx-d-polls{display:grid;gap:6px}
+.sl .slx-d-poll{display:grid;grid-template-columns:1fr auto auto;gap:10px;font-size:12.5px}
+.sl .sl-tbl tr.sel td{background:rgba(var(--line-rgb),.08)}
+.sl .sl-tbl tbody tr:hover td{background:rgba(var(--line-rgb),.04)}
+.sl .sl-foot{display:grid;grid-template-columns:repeat(auto-fit,minmax(360px,1fr));gap:16px;margin-top:16px}
+.sl .sl-map-us{margin-top:16px}
+.sl .sl-pair{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:16px;margin-top:16px;align-items:start}
+@media (max-width:1100px){.sl .sl-pair{grid-template-columns:1fr}}
+.sl-wide .ph h1{font:800 clamp(32px,3.6vw,54px)/1.02 var(--font-d);letter-spacing:-.04em}

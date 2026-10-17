@@ -1,5 +1,5 @@
 "use client";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { RATING_LABEL, fmtM, rating, ratingPill } from "@/app/lib/opp";
 import type { SLDistrict } from "./data";
 
@@ -14,10 +14,17 @@ function statusText(x: SLDistrict) {
   return null;
 }
 
-export default function DistrictTable({ rows, label }: { rows: SLDistrict[]; label: string }) {
+export default function DistrictTable({ rows, label, selected, onSelect }: { rows: SLDistrict[]; label: string; selected?: string | null; onSelect?: (d: string) => void }) {
   const [q, setQ] = useState("");
   const [view, setView] = useState<View>("close");
   const [sort, setSort] = useState<"close" | "dist">("close");
+  // a district picked on the map opens the full list at that row
+  useEffect(() => {
+    if (!selected) return;
+    setView("all"); setQ("");
+    const t = setTimeout(() => document.getElementById(`d-${selected}`)?.scrollIntoView({ block: "center", behavior: "smooth" }), 80);
+    return () => clearTimeout(t);
+  }, [selected]);
   const list = useMemo(() => {
     const s = q.trim().toLowerCase();
     let r = rows.filter((x) => !s || x.d.toLowerCase().includes(s) || (x.winner ?? "").toLowerCase().includes(s) || (x.dem ?? "").toLowerCase().includes(s) || (x.gop ?? "").toLowerCase().includes(s));
@@ -54,7 +61,7 @@ export default function DistrictTable({ rows, label }: { rows: SLDistrict[]; lab
               const rt = modeled ? rating(m!) : x.probD === 1 ? "safeD" : "safeR";
               const won = x.last?.won?.[0];
               return (
-                <tr key={x.d}>
+                <tr key={x.d} id={`d-${x.d}`} className={selected === x.d ? "sel" : undefined} onClick={onSelect ? () => onSelect(x.d) : undefined} style={onSelect ? { cursor: "pointer" } : undefined}>
                   <td className="mono">{x.d}{x.seats > 1 ? <span className="sl-mag">{x.seats} seats</span> : null}</td>
                   <td>{x.winner ? <span className={won === "D" ? "d" : won === "R" ? "r" : ""}>{x.winner}</span> : <span style={{ color: "var(--mute)" }}>Not on file</span>}{x.last?.year ? <span className="sl-yr"> {x.last.year}</span> : null}</td>
                   <td>{x.dem || x.gop ? <><span className="d">{x.dem ?? "No Democrat"}</span> <span style={{ color: "var(--mute)" }}>vs</span> <span className="r">{x.gop ?? "No Republican"}</span></> : <span style={{ color: "var(--mute)" }}>{st ?? "Primary results not posted"}</span>}{x.polls?.length ? <span className="pill t sl-poll">{x.polls.length} {x.polls.length === 1 ? "poll" : "polls"}</span> : null}</td>

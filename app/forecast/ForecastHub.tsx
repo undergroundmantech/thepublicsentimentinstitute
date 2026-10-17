@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 import { useJson } from "./ForecastDesk";
 import { type DBJson, type Model, dbRaces, indSide } from "./lib";
 import { RATE, raceHref } from "@/app/lib/opp";
-import LegisTiles from "@/app/components/opp/LegisTiles";
+import USLegisMap from "@/app/components/opp/USLegisMap";
 import "./hub.css";
 
 type Lvl = "sen" | "gov" | "db" | "house" | "sl";
@@ -17,7 +17,7 @@ type HubChamber = {
   id: string; st: string; state: string; chamber: "house" | "senate"; name: string; seats: number; up: number; majority: number;
   hold: Record<"D" | "R" | "O", number>; current: Record<"D" | "R" | "O", number>;
   demControl: number; gopControl: number; tie: number; demSeats: number; gopSeats: number; p10: number; p90: number; median: number;
-  d: [string, number, number | null, number | null][];
+  d: [string, number, number | null, number | null, (string | null)?][]; holdD?: [string, string][];
 };
 type HubSL = { meta: { updated: string; chambers: number; districts: number; seatsUp: number }; chambers: HubChamber[] };
 
@@ -390,59 +390,54 @@ export default function ForecastHub() {
   const govs = by("gov");
   const chambersD = sl ? sl.chambers.reduce((a, c) => a + c.demControl, 0) : 0;
   const favD = sl ? sl.chambers.filter((c) => c.demControl > c.gopControl).length : 0;
-  const closest = items.filter((i) => i.lvl !== "sl" && i.m != null).sort((a, b) => Math.abs(a.p - 0.5) - Math.abs(b.p - 0.5)).slice(0, 10);
-  const edge = sl ? [...sl.chambers].sort((a, b) => Math.abs(a.demControl - 0.5) - Math.abs(b.demControl - 0.5)).slice(0, 8) : [];
+  const closest = items.filter((i) => i.lvl !== "sl" && i.m != null).sort((a, b) => Math.abs(a.p - 0.5) - Math.abs(b.p - 0.5)).slice(0, 14);
+  const edge = sl ? [...sl.chambers].sort((a, b) => Math.abs(a.demControl - 0.5) - Math.abs(b.demControl - 0.5)).slice(0, 10) : [];
   const gb = model?.meta.genericBallot;
 
   return (
-    <section className="hub" aria-labelledby="hub-h">
+    <section className="hub fc-wide" aria-labelledby="hub-h">
       <nav className="crumbs" aria-label="Breadcrumb"><Link href="/">Home</Link><span className="sep">/</span><span>Forecast</span></nav>
-      <header className="hub-hero">
-        <div>
-          <div className="eye g">2026 forecast{model ? ` · ${model.meta.daysOut} days out` : ""}</div>
-          <h1 id="hub-h">Every race on the ballot. <em>One board.</em></h1>
+      <div className="hub-top">
+        <div className="card hub-stagecard">
+          {ready ? <GrandHemicycle items={items} /> : <div className="hub-loading"><span />Drawing every seat on the ballot</div>}
         </div>
-        <div>
-          <p className="lede">
-            The Senate, the House, {govs.length || 36} governors, {by("db").length || 114} statewide offices and {sl?.chambers.length ?? 87} state legislative chambers,
-            forecast on one national environment and drawn together. Each dot is one seat on the 2026 ballot, colored by who is favored to win it.
-            Hover a dot for its odds and click through to the race.
-          </p>
-          <div className="hub-ribbon">
-            <span><b className="mono">{ready ? items.length.toLocaleString() : "6,700"}</b>seats</span>
-            <span><b className="mono">5</b>forecasts</span>
-            <span><b className="mono">2,000</b>simulations</span>
-            {gb ? <span><b className={`mono ${gb.avg > 0 ? "r" : "d"}`}>{fmtM(gb.avg)}</b>generic ballot</span> : null}
-          </div>
-        </div>
-      </header>
-
-      <div className="card hub-stagecard">
-        {ready ? <GrandHemicycle items={items} /> : <div className="hub-loading"><span />Drawing every seat on the ballot</div>}
+        <aside className="hub-side">
+          <header className="hub-hero">
+            <div className="eye g">2026 forecast{model ? ` · ${model.meta.daysOut} days out` : ""}</div>
+            <h1 id="hub-h">Every race on the ballot. <em>One board.</em></h1>
+            <p className="lede">
+              The Senate, the House, {govs.length || 36} governors, {by("db").length || 114} statewide offices and {sl?.chambers.length ?? 87} state legislative chambers,
+              forecast on one national environment. Each dot is one seat on the 2026 ballot, colored by who is favored. Hover for the odds, click for the race.
+            </p>
+            <div className="hub-ribbon">
+              <span><b className="mono">{ready ? items.length.toLocaleString() : "6,700"}</b>seats</span>
+              <span><b className="mono">2,000</b>simulations</span>
+              {gb ? <span><b className={`mono ${gb.avg > 0 ? "r" : "d"}`}>{fmtM(gb.avg)}</b>generic ballot</span> : null}
+            </div>
+          </header>
+          {ready && model && sl ? (
+            <div className="hub-meters">
+              <Meter label="Senate" big={pct(model.chambers.senate.demControl)} unit="Democratic control" p={model.chambers.senate.demControl}
+                sub={<>Average <b className="d">{model.chambers.senate.demSeats.toFixed(1)}</b> D seats of 100</>} onClick={() => goDesk("senate")} />
+              <Meter label="House" big={pct(model.chambers.house.demControl)} unit="Democratic control" p={model.chambers.house.demControl}
+                sub={<>Average <b className="d">{model.chambers.house.demSeats.toFixed(0)}</b> D seats of 435</>} onClick={() => goDesk("house")} />
+              <Meter label="Governors" big={`${govs.filter((g) => g.p > 0.5).length} of ${govs.length}`} unit="favor Democrats" p={model.chambers.governor.demControl}
+                sub={<>Democrats lead most governorships in <b className="d">{pct(model.chambers.governor.demControl)}</b></>} onClick={() => goDesk("governor")} />
+              <Meter label="Statewide offices" big={`${dbLive.filter((r) => r.p > 0.5).length} of ${dbLive.length}`} unit="favor Democrats" p={dbLive.length ? dbLive.filter((r) => r.p > 0.5).length / dbLive.length : 0.5}
+                sub={<>Expected Democratic wins <b className="d">{dbLive.reduce((a, r) => a + r.p, 0).toFixed(1)}</b></>} onClick={() => goDesk("attorney-general")} />
+              <Meter label="State legislatures" big={`${favD} of ${sl.chambers.length}`} unit="favor Democrats" p={favD / sl.chambers.length}
+                sub={<>Expected Democratic chambers <b className="d">{chambersD.toFixed(1)}</b></>} href="/forecast/legislatures" />
+            </div>
+          ) : null}
+        </aside>
       </div>
 
       {ready && model && sl ? (
         <>
-          <div className="hub-meters">
-            <Meter label="Senate" big={pct(model.chambers.senate.demControl)} unit="Democratic control" p={model.chambers.senate.demControl}
-              sub={<>Average <b className="d">{model.chambers.senate.demSeats.toFixed(1)}</b> D seats of 100</>} onClick={() => goDesk("senate")} />
-            <Meter label="House" big={pct(model.chambers.house.demControl)} unit="Democratic control" p={model.chambers.house.demControl}
-              sub={<>Average <b className="d">{model.chambers.house.demSeats.toFixed(0)}</b> D seats of 435</>} onClick={() => goDesk("house")} />
-            <Meter label="Governors" big={`${govs.filter((g) => g.p > 0.5).length} of ${govs.length}`} unit="favor Democrats" p={model.chambers.governor.demControl}
-              sub={<>Democrats lead most governorships in <b className="d">{pct(model.chambers.governor.demControl)}</b></>} onClick={() => goDesk("governor")} />
-            <Meter label="Statewide offices" big={`${dbLive.filter((r) => r.p > 0.5).length} of ${dbLive.length}`} unit="favor Democrats" p={dbLive.length ? dbLive.filter((r) => r.p > 0.5).length / dbLive.length : 0.5}
-              sub={<>Expected Democratic wins <b className="d">{dbLive.reduce((a, r) => a + r.p, 0).toFixed(1)}</b></>} onClick={() => goDesk("attorney-general")} />
-            <Meter label="State legislatures" big={`${favD} of ${sl.chambers.length}`} unit="favor Democrats" p={favD / sl.chambers.length}
-              sub={<>Expected Democratic chambers <b className="d">{chambersD.toFixed(1)}</b></>} href="/forecast/legislatures" />
-          </div>
-
           <div className="hub-two">
             <div className="card">
-              <div className="card-h"><h3>Who runs the statehouses</h3><span className="eye" style={{ marginLeft: "auto" }}>Senate left · House right</span></div>
-              <div className="card-b">
-                <LegisTiles chambers={sl.chambers.map((c) => ({ st: c.st, chamber: c.chamber, demControl: c.demControl, name: c.name, href: slHref(c) }))} onPick={(c) => router.push(slHref(c))} />
-                <div className="hub-tiles-foot"><span>Color is the chance Democrats control the chamber after November. Hatched chambers have no partisan election this year.</span><Link className="btn sm" href="/forecast/legislatures">All {sl.chambers.length} chambers</Link></div>
-              </div>
+              <div className="card-h"><h3>Every state legislative district</h3><Link className="btn sm" href="/forecast/legislatures" style={{ marginLeft: "auto" }}>All {sl.chambers.length} chambers</Link></div>
+              <div className="card-b"><USLegisMap chambers={sl.chambers} /></div>
             </div>
             <div className="card">
               <div className="card-h"><h3>On the knife&apos;s edge</h3><span className="eye" style={{ marginLeft: "auto" }}>Closest odds</span></div>
