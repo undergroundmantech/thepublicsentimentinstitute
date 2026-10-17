@@ -50,6 +50,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     u("/tpsi", today, "monthly", 0.5),
     u("/tpsi/methodology", today, "monthly", 0.5),
     u("/tpsi/polls", today, "weekly", 0.6),
+    u("/tpsi/polls/ohio-2026", "2026-10-17", "weekly", 0.8),
     u("/tpsi/polls/national-2026", today, "monthly", 0.6),
     u("/tpsi/polls/la-mayor-2026", today, "monthly", 0.5),
     u("/tpsi/services", today, "monthly", 0.4),

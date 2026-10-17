@@ -16,7 +16,7 @@ const NAV = [
   { href: "/maps", label: "Maps" },
   { href: "/results", label: "Results", live: RESULTS_LIVE },
   { href: "/maps/early-vote", label: "Early Vote" },
-  { href: "/tpsi", label: "TPSI" },
+  { href: "/tpsi", label: "On Point Polling" },
 ];
 
 export default function Navbar() {

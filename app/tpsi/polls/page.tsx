@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { seo } from "@/app/lib/seo";
 
-export const metadata: Metadata = seo({"title": "TPSI poll releases", "description": "Toplines, crosstabs and methodology from polls fielded by The Public Sentiment Institute for On Point Politics.", "path": "/tpsi/polls"});
+export const metadata: Metadata = seo({"title": "On Point Polling poll releases", "description": "Toplines, crosstabs and methodology from every On Point Polling survey for On Point Politics, including the October 2026 Ohio Senate and governor poll.", "path": "/tpsi/polls"});
 
 const DASH = "/tpsi/polls/la-mayor-2026";
-const RELEASES = [
+const RELEASES: { href: string; no: string; lab: string; t: string; s: string; n: string; date: string; q: number; img?: string }[] = [
+  { href: "/tpsi/polls/ohio-2026", no: "05", lab: "Ohio", t: "Ohio Senate and governor", s: "Brown leads Husted by 4.3 and Acton leads Ramaswamy by 4.8, with Democrats banking a big early vote lead.", n: "635 LV", date: "October 2026", q: 0, img: "/tpsi/polls/ohio-2026/01_senate.jpg" },
   { href: `${DASH}?poll=sc`, no: "04", lab: "South Carolina", t: "South Carolina GOP primary", s: "Senate and governor primaries under the Meridian coalition model: Graham's standing and an open governor's race.", n: "369 LV", date: "June 2026", q: 13 },
   { href: `${DASH}?poll=sd`, no: "03", lab: "South Dakota", t: "South Dakota GOP primary", s: "A likely voter read on the Republican primary for governor, a three way race at the top of the ticket.", n: "400 LV", date: "May 2026", q: 4 },
   { href: `${DASH}?poll=national`, no: "02", lab: "National", t: "National benchmark", s: "The generic ballot, Trump approval, the 2028 field and the issues underneath it all.", n: "893 LV", date: "May 2026", q: 25 },
@@ -27,19 +29,20 @@ function Thumb({ seed }: { seed: number }) {
 export default function Page() {
   return (
     <div className="opp">
-      <nav className="crumbs" aria-label="Breadcrumb"><Link href="/">Home</Link><span className="sep">/</span><Link href="/tpsi">TPSI</Link><span className="sep">/</span><span>Polls</span></nav>
+      <nav className="crumbs" aria-label="Breadcrumb"><Link href="/">Home</Link><span className="sep">/</span><Link href="/tpsi">On Point Polling</Link><span className="sep">/</span><span>Polls</span></nav>
       <header className="ph">
-        <div className="eye g">Fieldwork by TPSI</div>
+        <div className="eye g">Fieldwork by On Point Polling</div>
         <h1>Poll <em>releases</em></h1>
-        <p className="lede">Surveys fielded by The Public Sentiment Institute for On Point Politics: dual panel samples weighted with the DSMeridian likely voter model, published with toplines and crosstabs.</p>
-        <div className="pmeta"><span>Releases <b className="mono">{RELEASES.length}</b></span><span>Latest <b>June 2026</b></span></div>
+        <p className="lede">Surveys fielded by On Point Polling, formerly The Public Sentiment Institute, for On Point Politics: dual panel samples weighted with the DSMeridian likely voter model, published with toplines and crosstabs.</p>
+        <div className="pmeta"><span>Releases <b className="mono">{RELEASES.length}</b></span><span>Latest <b>October 2026</b></span></div>
       </header>
       <div className="layout">
         <div className="grid2">
           {RELEASES.map((r, i) => (
             <Link key={r.href} href={r.href} className="card story">
               <div className="thumb" style={{ aspectRatio: "16/6" }}>
-                <Thumb seed={i} />
+                {r.img ? <Image src={r.img} alt="" fill sizes="(max-width: 960px) 100vw, 480px" style={{ objectFit: "cover", objectPosition: "top" }} /> : <Thumb seed={i} />}
+                {r.img ? <span aria-hidden="true" style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg, rgba(10,7,17,0) 40%, rgba(10,7,17,.94) 100%)" }} /> : null}
                 <span className="lab">{r.no ? `No. ${r.no} · ` : ""}{r.lab}</span>
               </div>
               <div className="card-b"><h3>{r.t}</h3><p>{r.s}</p><div className="meta mono">{r.date} · {r.n}{r.q ? ` · ${r.q} questions` : ""}</div></div>
@@ -49,12 +52,12 @@ export default function Page() {
         <aside className="side">
           <div className="callout">
             <div className="eye">Methodology</div>
-            How TPSI builds, weights and screens its samples, and how other pollsters are graded, is on the <Link href="/tpsi/methodology" style={{ textDecoration: "underline" }}>methodology page</Link>.
+            How On Point Polling builds, weights and screens its samples, and how other pollsters are graded, is on the <Link href="/tpsi/methodology" style={{ textDecoration: "underline" }}>methodology page</Link>.
           </div>
           <div className="card"><div className="card-b">
             <div className="eye">Commission a poll</div>
-            <p style={{ fontSize: 14, margin: "8px 0 12px" }}>Want a race or an issue polled? TPSI fields custom statewide, district and national surveys.</p>
-            <Link className="btn" href="/tpsi/services">Partner with TPSI</Link>
+            <p style={{ fontSize: 14, margin: "8px 0 12px" }}>Want a race or an issue polled? On Point Polling fields custom statewide, district and national surveys.</p>
+            <Link className="btn" href="/tpsi/services">Partner with On Point Polling</Link>
           </div></div>
         </aside>
       </div>

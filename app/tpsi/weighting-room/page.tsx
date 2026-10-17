@@ -2,10 +2,10 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { seo } from "@/app/lib/seo";
 
-export const metadata: Metadata = seo({"title": "The Weighting Room", "description": "The subscriber community from The Public Sentiment Institute and On Point Politics: raw crosstabs, model notes and early looks at the data.", "path": "/tpsi/weighting-room"});
+export const metadata: Metadata = seo({"title": "The Weighting Room", "description": "The subscriber community from On Point Polling and On Point Politics: raw crosstabs, model notes and early looks at the data.", "path": "/tpsi/weighting-room"});
 
 const PERKS = [
-  ["Raw crosstabs", "The full tables behind every TPSI release, before they are summarized."],
+  ["Raw crosstabs", "The full tables behind every On Point Polling release, before they are summarized."],
   ["Model notes", "Why the forecast moved, race by race, from the people who built it."],
   ["Early looks", "Toplines and county maps ahead of public release."],
   ["Ask the desk", "Questions answered in the community on method, weighting and the numbers."],
@@ -14,12 +14,12 @@ const PERKS = [
 export default function Page() {
   return (
     <div className="opp wr">
-      <nav className="crumbs" aria-label="Breadcrumb"><Link href="/">Home</Link><span className="sep">/</span><Link href="/tpsi">TPSI</Link><span className="sep">/</span><span>The Weighting Room</span></nav>
+      <nav className="crumbs" aria-label="Breadcrumb"><Link href="/">Home</Link><span className="sep">/</span><Link href="/tpsi">On Point Polling</Link><span className="sep">/</span><span>The Weighting Room</span></nav>
       <header className="ph">
         <div className="eye" style={{ color: "var(--gold)" }}>Subscriber community</div>
         <h1>The Weighting <em>Room</em></h1>
-        <p className="lede">Where TPSI works in the open: the raw data, the weighting decisions and the arguments about both.</p>
-        <div className="pmeta"><span>From <b>The Public Sentiment Institute</b></span><span>Status <b>Waitlist open</b></span></div>
+        <p className="lede">Where On Point Polling works in the open: the raw data, the weighting decisions and the arguments about both.</p>
+        <div className="pmeta"><span>From <b>On Point Polling</b></span><span>Status <b>Waitlist open</b></span></div>
       </header>
 
       <div className="layout">
@@ -45,7 +45,7 @@ export default function Page() {
               <Link className="btn" href="/tpsi/polls">Public releases</Link>
             </div>
           </div></div>
-          <div className="callout"><div className="eye">Method</div>How TPSI weights its samples is public on the <Link href="/tpsi/methodology" style={{ textDecoration: "underline" }}>methodology page</Link>.</div>
+          <div className="callout"><div className="eye">Method</div>How On Point Polling weights its samples is public on the <Link href="/tpsi/methodology" style={{ textDecoration: "underline" }}>methodology page</Link>.</div>
         </aside>
       </div>
       <style>{`

@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Icon } from "@/app/components/opp/Logo";
 import { seo } from "@/app/lib/seo";
 
-export const metadata: Metadata = seo({"title": "Commission a poll from TPSI", "description": "Commission statewide, district or national polling from The Public Sentiment Institute, the polling arm behind On Point Politics.", "path": "/tpsi/services"});
+export const metadata: Metadata = seo({"title": "Commission a poll from On Point Polling", "description": "Commission statewide, district or national polling from On Point Polling, the polling arm behind On Point Politics.", "path": "/tpsi/services"});
 
 const LINES = [
   ["Polls", "Statewide and district polls", "Horse race, favorability, issues and message testing, with full crosstabs by region, party, age, race and education."],
@@ -23,11 +23,11 @@ const STEPS: [string, string][] = [
 export default function Page() {
   return (
     <div className="opp">
-      <nav className="crumbs" aria-label="Breadcrumb"><Link href="/">Home</Link><span className="sep">/</span><Link href="/tpsi">TPSI</Link><span className="sep">/</span><span>Partner with TPSI</span></nav>
+      <nav className="crumbs" aria-label="Breadcrumb"><Link href="/">Home</Link><span className="sep">/</span><Link href="/tpsi">On Point Polling</Link><span className="sep">/</span><span>Partner with On Point Polling</span></nav>
       <header className="ph">
         <div className="eye g">Commission fieldwork</div>
-        <h1>Partner with <em>TPSI</em></h1>
-        <p className="lede">The Public Sentiment Institute runs dual panel surveys weighted with the DSMeridian likely voter model. Campaigns, PACs and newsrooms get a topline in days, not weeks.</p>
+        <h1>Partner with <em>On Point Polling</em></h1>
+        <p className="lede">On Point Polling runs dual panel surveys weighted with the DSMeridian likely voter model. Campaigns, PACs and newsrooms get a topline in days, not weeks.</p>
         <div className="pmeta"><span>Reply within <b>1 business day</b></span><span>Deliverables <b>Topline, crosstabs, method</b></span></div>
       </header>
       <div className="layout">

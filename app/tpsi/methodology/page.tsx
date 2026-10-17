@@ -3,7 +3,7 @@ import Link from "next/link";
 import PollsterList from "./PollsterList";
 import { seo } from "@/app/lib/seo";
 
-export const metadata: Metadata = seo({"title": "TPSI polling methodology", "description": "How TPSI fields and weights its polls with the DSMeridian likely voter model, and how On Point Politics weights Gold Standard pollsters in its averages.", "path": "/tpsi/methodology", "type": "article"});
+export const metadata: Metadata = seo({"title": "On Point Polling methodology", "description": "How On Point Polling fields and weights its polls with the DSMeridian likely voter model, and how On Point Politics weights Gold Standard pollsters in its averages.", "path": "/tpsi/methodology", "type": "article"});
 
 // kept in sync with the POLLSTERS list in ./PollsterList (a server page cannot read values out of a client module)
 const POLLSTER_COUNT = 8;
@@ -24,11 +24,11 @@ const CRITERIA: [string, string, string[]][] = [
 export default function Page() {
   return (
     <div className="opp">
-      <nav className="crumbs" aria-label="Breadcrumb"><Link href="/">Home</Link><span className="sep">/</span><Link href="/tpsi">TPSI</Link><span className="sep">/</span><span>Methodology</span></nav>
+      <nav className="crumbs" aria-label="Breadcrumb"><Link href="/">Home</Link><span className="sep">/</span><Link href="/tpsi">On Point Polling</Link><span className="sep">/</span><span>Methodology</span></nav>
       <header className="ph">
         <div className="eye g">Methodology</div>
         <h1>How the numbers are <em>weighted</em></h1>
-        <p className="lede">TPSI fields dual panel surveys and weights them with the DSMeridian likely voter model. On Point Politics averages add a Gold Standard upweight for a curated set of pollsters that meet criteria for consistency, transparency and real world accuracy.</p>
+        <p className="lede">On Point Polling fields dual panel surveys and weights them with the DSMeridian likely voter model. On Point Politics averages add a Gold Standard upweight for a curated set of pollsters that meet criteria for consistency, transparency and real world accuracy.</p>
         <div className="pmeta">
           <span>Gold Standard pollsters <b className="mono">{POLLSTER_COUNT}</b></span>
           <span>Upweight <b className="mono">x2.00</b></span>
@@ -39,7 +39,7 @@ export default function Page() {
       <div className="layout">
         <div style={{ display: "grid", gap: 16, minWidth: 0 }}>
           <div className="card">
-            <div className="card-h"><h3>How TPSI polls</h3><span className="eye" style={{ marginLeft: "auto" }}>DSMeridian</span></div>
+            <div className="card-h"><h3>How On Point Polling polls</h3><span className="eye" style={{ marginLeft: "auto" }}>DSMeridian</span></div>
             <div>
               {STAGES.map(([n, t, s]) => (
                 <div key={n} className="gs-stage"><span className="mono">{n}</span><div><b>{t}</b><p>{s}</p></div></div>
@@ -75,7 +75,7 @@ export default function Page() {
             <p style={{ fontSize: 14, margin: "8px 0 12px" }}>Have a release with field dates, sample details and documentation? Send it over. Every submission is reviewed against the criteria.</p>
             <Link className="btn g" href="/contact">Contact the desk</Link>
           </div></div>
-          <div className="callout"><div className="eye">See it applied</div>The upweight feeds every <Link href="/polls" style={{ textDecoration: "underline" }}>On Point average</Link>; TPSI&rsquo;s own surveys are on the <Link href="/tpsi/polls" style={{ textDecoration: "underline" }}>releases page</Link>.</div>
+          <div className="callout"><div className="eye">See it applied</div>The upweight feeds every <Link href="/polls" style={{ textDecoration: "underline" }}>On Point average</Link>; On Point Polling&rsquo;s own surveys are on the <Link href="/tpsi/polls" style={{ textDecoration: "underline" }}>releases page</Link>.</div>
         </aside>
       </div>
       <style>{`

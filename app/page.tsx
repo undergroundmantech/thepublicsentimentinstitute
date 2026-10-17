@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { getHomeStats } from "@/app/_polling/lib/homeStats";
 import { RAW_POLLS as APPROVAL_POLLS } from "@/app/_polling/donaldtrumpapproval/data";
@@ -86,9 +87,9 @@ export default function Home() {
       <section className="hero">
         <div className="hero-grid">
           <div>
-            <span className="chip"><i />Fieldwork and modeling by The Public Sentiment Institute</span>
+            <span className="chip"><i />Fieldwork and modeling by On Point Polling</span>
             <h1>Every race.<br />Every county.<br /><em>On point.</em></h1>
-            <p>Polling averages, county level forecasts and live election results for the 2026 midterms, built on TPSI&apos;s own surveys and a transparent public poll feed.</p>
+            <p>Polling averages, county level forecasts and live election results for the 2026 midterms, built on On Point Polling&apos;s own surveys and a transparent public poll feed.</p>
             <div className="cta">
               <Link className="btn g" href="/forecast">Open the forecast</Link>
               <Link className="btn" href="/polls">Polling averages</Link>
@@ -161,11 +162,11 @@ export default function Home() {
       </section>
 
       <section className="sec">
-        <div className="sec-h"><div><div className="eye g">From TPSI</div><h2>Latest releases and model notes</h2></div><Link className="btn more" href="/tpsi/polls">All releases</Link></div>
+        <div className="sec-h"><div><div className="eye g">From On Point Polling</div><h2>Latest releases and model notes</h2></div><Link className="btn more" href="/tpsi/polls">All releases</Link></div>
         <div className="grid4">
-          <Link href="/tpsi/polls/national-2026" className="card story">
-            <div className="thumb"><svg viewBox="0 0 320 180" aria-hidden="true"><defs><linearGradient id="t1" x1="0" x2="1"><stop offset="0" stopColor="#064bf9" /><stop offset="1" stopColor="#83449c" /></linearGradient></defs><rect width="320" height="180" fill="#120820" /><path d="M0,140 C60,120 90,150 140,110 S240,60 320,50" fill="none" stroke="url(#t1)" strokeWidth="3" /><path d="M0,140 C60,120 90,150 140,110 S240,60 320,50 L320,180 L0,180Z" fill="url(#t1)" opacity=".18" /></svg><span className="lab">National · TPSI poll</span></div>
-            <div className="card-b"><h3>The 2026 national poll: ballot, approval and the mood</h3><p>Registered and likely voters, weighted with the DSMeridian likely voter model.</p><div className="meta">Topline, crosstabs, methodology</div></div>
+          <Link href="/tpsi/polls/ohio-2026" className="card story">
+            <div className="thumb"><Image src="/tpsi/polls/ohio-2026/01_senate.jpg" alt="" fill sizes="(max-width: 960px) 100vw, 360px" style={{ objectFit: "cover", objectPosition: "left top" }} /><span aria-hidden="true" style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg, rgba(10,7,17,0) 45%, rgba(10,7,17,.94) 100%)" }} /><span className="lab">On Point Polling · Ohio</span></div>
+            <div className="card-b"><h3>Ohio poll: Brown +4.3, Acton +4.8 as early voters bank their edge</h3><p>635 likely voters, October 16 to 17, with the early vote, the regions and Trump approval.</p><div className="meta">Oct 17 · Poll release</div></div>
           </Link>
           <Link href={raceHref(oh.id)} className="card story">
             <div className="thumb"><svg viewBox="0 0 320 180" aria-hidden="true"><rect width="320" height="180" fill="#120820" /><MiniMap raceId={oh.id} /></svg><span className="lab">{oh.name}</span></div>
@@ -187,10 +188,10 @@ export default function Home() {
           <div>
             <div className="eye" style={{ color: "var(--gold)" }}>Commission fieldwork</div>
             <h2 style={{ marginTop: 8 }}>Statewide, district or national polling with full crosstabs.</h2>
-            <p>TPSI runs dual panel surveys weighted with the DSMeridian likely voter model. Campaigns, PACs and newsrooms get a topline in days, not weeks.</p>
+            <p>On Point Polling runs dual panel surveys weighted with the DSMeridian likely voter model. Campaigns, PACs and newsrooms get a topline in days, not weeks.</p>
           </div>
           <div style={{ display: "flex", gap: 10, flexWrap: "wrap", justifyContent: "flex-end" }}>
-            <Link className="btn white" href="/tpsi/services">Partner with TPSI</Link>
+            <Link className="btn white" href="/tpsi/services">Partner with On Point Polling</Link>
             <Link className="btn" href="/contact">Contact the desk</Link>
           </div>
           <Icon className="icon" size={260} gradient />

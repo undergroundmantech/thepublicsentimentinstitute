@@ -6,8 +6,8 @@ export const SITE = {
   url: "https://onpointpolitics.com",
   name: "On Point Politics",
   short: "On Point",
-  publisher: "The Public Sentiment Institute",
-  publisherShort: "TPSI",
+  publisher: "On Point Polling",
+  publisherShort: "On Point Polling",
   description:
     "Polling averages, county level forecasts and live election results for the 2026 midterms: the Senate, the House, every governor, every state legislative chamber and every statewide ballot measure.",
   logo: "/icon.png",
@@ -19,7 +19,7 @@ export const abs = (path: string) => (path.startsWith("http") ? path : `${SITE.u
 export const KEYWORDS = [
   "2026 midterm forecast", "2026 election forecast", "2026 Senate forecast", "2026 House forecast", "2026 governor forecast",
   "state legislature forecast", "ballot measure forecast", "polling average", "generic ballot", "Trump approval rating",
-  "election results", "election model", "On Point Politics", "The Public Sentiment Institute",
+  "election results", "election model", "On Point Politics", "On Point Polling",
 ];
 
 type SeoInput = {
@@ -89,9 +89,9 @@ export function orgLd(): LD[] {
       "@type": "ResearchOrganization",
       "@id": PUB_ID,
       name: SITE.publisher,
-      alternateName: SITE.publisherShort,
+      alternateName: ["The Public Sentiment Institute", "TPSI"],
       url: abs("/tpsi"),
-      description: "The polling and research arm behind On Point Politics: survey fieldwork, the DSMeridian likely voter model and dual panel surveys.",
+      description: "On Point Polling, formerly The Public Sentiment Institute, is the polling and research arm behind On Point Politics: survey fieldwork, the DSMeridian likely voter model and dual panel surveys.",
     },
     {
       "@type": "WebSite",

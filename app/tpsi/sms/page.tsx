@@ -54,7 +54,7 @@ export default function SmsOptInPage() {
         @media (max-width: 600px) { .sms .sms-benefit { grid-template-columns: 1fr; gap: 6px; } }
       `}</style>
 
-      <nav className="crumbs" aria-label="Breadcrumb"><Link href="/">Home</Link><span className="sep">/</span><Link href="/tpsi">TPSI</Link><span className="sep">/</span><span>SMS updates</span></nav>
+      <nav className="crumbs" aria-label="Breadcrumb"><Link href="/">Home</Link><span className="sep">/</span><Link href="/tpsi">On Point Polling</Link><span className="sep">/</span><span>SMS updates</span></nav>
       <header className="ph">
         <div className="eye g">Stay in the loop</div>
         <h1>Polling updates, <em>delivered</em></h1>

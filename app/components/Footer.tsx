@@ -14,8 +14,8 @@ const COLS = [
     ["/results/tonight", "Live desk"], ["/results/archive", "Archive"], ["/maps/electoral", "Electoral map"],
     ["/maps/party-registration", "Party registration"], ["/maps/early-vote", "Early vote"],
   ] },
-  { h: "TPSI", links: [
-    ["/tpsi", "About"], ["/tpsi/polls", "TPSI polls"], ["/tpsi/services", "Partner with us"],
+  { h: "On Point Polling", links: [
+    ["/tpsi", "About"], ["/tpsi/polls", "Poll releases"], ["/tpsi/services", "Partner with us"],
     ["/tpsi/weighting-room", "The Weighting Room"], ["/portal/login", "Client portal"], ["/contact", "Contact"],
   ] },
 ] as const;
@@ -29,7 +29,7 @@ export default function Footer() {
             <div>
               <div className="fbrand"><Lockup height={40} /></div>
               <p style={{ margin: 0, maxWidth: "40ch", color: "var(--mute)" }}>
-                Polling averages, election forecasts and live results. Fieldwork and modeling by The Public Sentiment Institute, Miami.
+                Polling averages, election forecasts and live results. Fieldwork and modeling by On Point Polling, Miami.
               </p>
             </div>
             {COLS.map((c) => (
@@ -40,7 +40,7 @@ export default function Footer() {
             ))}
           </div>
           <div className="bottom">
-            <span>© 2026 On Point Politics and The Public Sentiment Institute</span>
+            <span>© 2026 On Point Politics and On Point Polling</span>
             <span><Link href="/terms">Terms</Link> · <Link href="/terms#privacy">Privacy</Link> · <Link href="/tpsi/sms">SMS opt in</Link></span>
           </div>
         </div>

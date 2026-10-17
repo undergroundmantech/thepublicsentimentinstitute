@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { seo } from "@/app/lib/seo";
 
-export const metadata: Metadata = seo({"title": "About The Public Sentiment Institute", "description": "The Public Sentiment Institute is the polling and research arm behind On Point Politics: fieldwork, the DSMeridian likely voter model and dual panel surveys.", "path": "/tpsi"});
+export const metadata: Metadata = seo({"title": "On Point Polling: the polling arm behind On Point Politics", "description": "On Point Polling, formerly The Public Sentiment Institute, is the polling and research arm behind On Point Politics: statewide and national surveys, the DSMeridian likely voter model and dual panel fieldwork.", "path": "/tpsi"});
 
 const PILLARS: [string, string, string][] = [
   ["Fieldwork", "Original surveys", "Statewide, district and national polls written, fielded and weighted in house, published with full toplines and crosstabs."],
@@ -11,9 +11,9 @@ const PILLARS: [string, string, string][] = [
 ];
 
 const LINKS = [
-  { href: "/tpsi/polls", t: "Poll releases", s: "Toplines and crosstabs from TPSI surveys." },
+  { href: "/tpsi/polls", t: "Poll releases", s: "Toplines and crosstabs from every On Point Polling survey." },
   { href: "/tpsi/methodology", t: "Methodology", s: "DSMeridian weighting, the dual panel design and the gold standard pollster list." },
-  { href: "/tpsi/services", t: "Partner with TPSI", s: "Commission statewide, district or national polling." },
+  { href: "/tpsi/services", t: "Partner with On Point Polling", s: "Commission statewide, district or national polling." },
   { href: "/tpsi/weighting-room", t: "The Weighting Room", s: "The subscriber community for people who like their crosstabs raw." },
   { href: "/tpsi/situation-room", t: "Situation room", s: "Streams and election night video from the desk." },
   { href: "/tpsi/sms", t: "SMS updates", s: "Text alerts for releases and results nights." },
@@ -22,14 +22,15 @@ const LINKS = [
 export default function Page() {
   return (
     <div className="opp">
-      <nav className="crumbs" aria-label="Breadcrumb"><Link href="/">Home</Link><span className="sep">/</span><span>TPSI</span></nav>
+      <nav className="crumbs" aria-label="Breadcrumb"><Link href="/">Home</Link><span className="sep">/</span><span>On Point Polling</span></nav>
       <header className="ph">
-        <div className="eye g">About TPSI</div>
-        <h1>The research arm behind <em>On Point</em></h1>
-        <p className="lede">The Public Sentiment Institute is the polling and research arm behind On Point Politics. TPSI fields the surveys, runs the DSMeridian likely voter model and feeds the polling averages, the 2026 forecast and election night coverage.</p>
+        <div className="eye g">On Point Polling</div>
+        <h1>On Point <em>Polling</em></h1>
+        <p className="lede">On Point Polling, formerly The Public Sentiment Institute, is the polling and research arm behind On Point Politics. It fields the surveys, runs the DSMeridian likely voter model and feeds the polling averages, the 2026 forecast and election night coverage.</p>
         <div className="pmeta">
           <span>Based in <b>Miami</b></span>
-          <span>Field reports <b className="mono">4</b></span>
+          <span>Field reports <b className="mono">6</b></span>
+          <span>Latest <Link href="/tpsi/polls/ohio-2026"><b>Ohio, Oct 2026</b></Link></span>
           <span>Largest sample <b className="mono">893 LV</b></span>
         </div>
       </header>
@@ -37,7 +38,7 @@ export default function Page() {
       <div className="layout">
         <div style={{ display: "grid", gap: 16, minWidth: 0 }}>
           <div className="card">
-            <div className="card-h"><h3>What TPSI does</h3><span className="eye" style={{ marginLeft: "auto" }}>Polling and research</span></div>
+            <div className="card-h"><h3>What On Point Polling does</h3><span className="eye" style={{ marginLeft: "auto" }}>Polling and research</span></div>
             <div>
               {PILLARS.map(([k, t, s]) => (
                 <div key={k} className="tpsi-row">
@@ -66,10 +67,10 @@ export default function Page() {
             </div>
           </div>
           <div className="card"><div className="card-b">
-            <div className="eye">Work with TPSI</div>
+            <div className="eye">Work with On Point Polling</div>
             <h3 style={{ fontSize: 18, margin: "8px 0 6px" }}>Commission a poll</h3>
             <p style={{ fontSize: 14 }}>Campaigns, PACs and newsrooms get a topline in days, not weeks.</p>
-            <Link className="btn g" href="/tpsi/services" style={{ marginTop: 12 }}>Partner with TPSI</Link>
+            <Link className="btn g" href="/tpsi/services" style={{ marginTop: 12 }}>Partner with On Point Polling</Link>
           </div></div>
         </aside>
       </div>

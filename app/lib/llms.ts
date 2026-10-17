@@ -43,7 +43,7 @@ export function llmsText(full: boolean): string {
   L.push(
     `# ${SITE.name}`,
     "",
-    `> ${SITE.name} publishes the 2026 midterm election forecast, daily polling averages and live election night results for the United States: the Senate, the House, all 36 governor races, statewide down ballot offices, every partisan state legislative chamber and every statewide ballot measure. Polling and research come from The Public Sentiment Institute, TPSI, the polling arm behind the site.`,
+    `> ${SITE.name} publishes the 2026 midterm election forecast, daily polling averages and live election night results for the United States: the Senate, the House, all 36 governor races, statewide down ballot offices, every partisan state legislative chamber and every statewide ballot measure. Polling and research come from On Point Polling, formerly The Public Sentiment Institute or TPSI, the polling arm behind the site.`,
     "",
     `Forecast updated ${day(meta.updated)}. Election day is November 3, 2026, ${meta.daysOut} days after this update. Every forecast number below comes from ${meta.sims.toLocaleString()} correlated simulations of the election.`,
   );
@@ -125,9 +125,10 @@ export function llmsText(full: boolean): string {
     `* Early vote tracker: ${U("/maps/early-vote")}`,
     `* Electoral map builder: ${U("/maps/electoral")}`,
     `* Live election results: ${U("/results")}`,
-    `* TPSI poll releases: ${U("/tpsi/polls")}`,
-    `* TPSI polling methodology: ${U("/tpsi/methodology")}`,
-    `* About The Public Sentiment Institute: ${U("/tpsi")}`,
+    `* On Point Polling Ohio poll, October 2026, Brown 46.6 Husted 42.3 for Senate and Acton 47.9 Ramaswamy 43.1 for governor among 635 likely voters: ${U("/tpsi/polls/ohio-2026")}`,
+    `* On Point Polling poll releases: ${U("/tpsi/polls")}`,
+    `* On Point Polling methodology: ${U("/tpsi/methodology")}`,
+    `* About On Point Polling: ${U("/tpsi")}`,
   );
 
   h("Data that can be cited");

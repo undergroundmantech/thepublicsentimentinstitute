@@ -12,7 +12,7 @@ const FEATURES: [string, string, string][] = [
   ["Polls", "Polling averages", "Every tracked race, weighted by recency, sample and pollster quality."],
   ["Forecast", "The 2026 forecast", "Senate, House and governor odds from thousands of simulated elections."],
   ["Results", "Live results", "County maps that fill in as returns land on election night."],
-  ["Fieldwork", "Polls by TPSI", "Original surveys fielded by The Public Sentiment Institute."],
+  ["Fieldwork", "Polls by On Point Polling", "Original surveys fielded by On Point Polling."],
 ];
 
 export default function SiteIntro() {
@@ -127,7 +127,7 @@ export default function SiteIntro() {
         <div className="body">
           <div className="eye g">Welcome</div>
           <h2 id="opp-intro-title">This is <em>On Point Politics</em></h2>
-          <p className="lede">The new home for polling averages, the 2026 forecast and live election results, with fieldwork by The Public Sentiment Institute.</p>
+          <p className="lede">The new home for polling averages, the 2026 forecast and live election results, with fieldwork by On Point Polling.</p>
           {FEATURES.map(([k, t, s]) => (
             <div className="feat" key={k}>
               <div className="k">{k}</div>

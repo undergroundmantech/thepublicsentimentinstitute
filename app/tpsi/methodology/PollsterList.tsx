@@ -80,7 +80,7 @@ export const POLLSTERS: Pollster[] = [
     website: "https://socalpoll.com",
     why: [
       "Demonstrated accuracy in the Wisconsin Supreme Court race (April 2025).",
-      "Competitive performance vs. industry in NJ/VA gubernatorial contexts (2025) per TPSI review.",
+      "Competitive performance vs. industry in NJ/VA gubernatorial contexts (2025) per On Point Polling review.",
       "Newer pollster with strong early performance across select environments.",
     ],
     standards: [
@@ -115,7 +115,7 @@ export const POLLSTERS: Pollster[] = [
     abbr: "TFG",
     website: "https://www.thetrafalgargroup.org",
     why: [
-      "Historically competitive performance in select cycles per TPSI review.",
+      "Historically competitive performance in select cycles per On Point Polling review.",
       "Recognizable approach and consistent structure across election environments.",
       "Adds methodological diversity to aggregates when disclosures are present.",
     ],
@@ -151,7 +151,7 @@ export const POLLSTERS: Pollster[] = [
     abbr: "PAT",
     website: "https://patriotpolling.com",
     why: [
-      "Performed well in TPSI review of 2024 national and state-level releases.",
+      "Performed well in On Point Polling review of 2024 national and state-level releases.",
       "Produces structured releases that are easy to audit and aggregate.",
       "Timely field windows with consistent topline reporting format.",
     ],

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { seo } from "@/app/lib/seo";
 
-export const metadata: Metadata = seo({"title": "2026 national poll: generic ballot, Trump approval and 2028", "description": "TPSI's 2026 national survey of registered and likely voters: motivation, the generic ballot, Vance vs Newsom, Trump approval and party trust on the issues.", "path": "/tpsi/polls/national-2026", "type": "article"});
+export const metadata: Metadata = seo({"title": "2026 national poll: generic ballot, Trump approval and 2028", "description": "On Point Polling's 2026 national survey of registered and likely voters: motivation, the generic ballot, Vance vs Newsom, Trump approval and party trust on the issues.", "path": "/tpsi/polls/national-2026", "type": "article"});
 
 const SURVEY_URL = "https://wss.pollfish.com/link/522d0e01-b70f-4955-8514-b42a7f10d4b6";
 
@@ -25,11 +25,11 @@ const net = (d: number, r: number) => (d === r ? "Even" : d > r ? `D +${d - r}` 
 export default function Page() {
   return (
     <div className="opp">
-      <nav className="crumbs" aria-label="Breadcrumb"><Link href="/">Home</Link><span className="sep">/</span><Link href="/tpsi">TPSI</Link><span className="sep">/</span><Link href="/tpsi/polls">Polls</Link><span className="sep">/</span><span>National 2026</span></nav>
+      <nav className="crumbs" aria-label="Breadcrumb"><Link href="/">Home</Link><span className="sep">/</span><Link href="/tpsi">On Point Polling</Link><span className="sep">/</span><Link href="/tpsi/polls">Polls</Link><span className="sep">/</span><span>National 2026</span></nav>
       <header className="ph">
-        <div className="eye g">TPSI poll · Survey toplines</div>
+        <div className="eye g">On Point Polling · Survey toplines</div>
         <h1>The 2026 national <em>poll</em></h1>
-        <p className="lede">Weighted results among registered voters (n=316) and likely voters (n=249), fielded by The Public Sentiment Institute. Disclosure first polling on motivation, the ballot, hypotheticals, approval, the issues and policy.</p>
+        <p className="lede">Weighted results among registered voters (n=316) and likely voters (n=249), fielded by On Point Polling. Disclosure first polling on motivation, the ballot, hypotheticals, approval, the issues and policy.</p>
         <div className="pmeta">
           <span className="pill" style={{ background: "var(--glass2)", color: "var(--ink)" }}>National</span>
           <span>Registered voters <b className="mono">316</b> <span className="mono">(weighted n=282)</span></span>
@@ -126,7 +126,7 @@ export default function Page() {
           <div className="card"><div className="card-b">
             <div className="eye">Get involved</div>
             <p style={{ fontSize: 14, margin: "8px 0 12px" }}>Request custom cuts, crosstabs or recurring waves.</p>
-            <Link className="btn g" href="/tpsi/services">Partner with TPSI</Link>
+            <Link className="btn g" href="/tpsi/services">Partner with On Point Polling</Link>
           </div></div>
           <div className="card"><div className="card-b">
             <div className="eye">Take the survey</div>
