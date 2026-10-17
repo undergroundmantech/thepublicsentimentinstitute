@@ -60,7 +60,18 @@ export default function ChamberExplorer({ districts, map, label, chamberName, as
     const read = () => { const h = decodeURIComponent(location.hash.replace(/^#d-/, "")); if (h && (byD.has(h) || map?.hold[h])) setSel(h); };
     read(); window.addEventListener("hashchange", read); return () => window.removeEventListener("hashchange", read);
   }, [byD, map]);
-  const cells = useMemo(() => (map ? Object.entries(map.d).map(([d, [path, x, y]]) => ({ d, path, x, y, b: bb(path) })) : []), [map]);
+  // seats that share one district, like Washington's two positions, are drawn and labeled once
+  const cells = useMemo(() => {
+    if (!map) return [];
+    const seen = new Set<string>();
+    const out: { d: string; path: string; x: number; y: number; b: number[]; label: string }[] = [];
+    for (const [d, [path, x, y]] of Object.entries(map.d)) {
+      if (seen.has(path)) continue;
+      seen.add(path);
+      out.push({ d, path, x, y, b: bb(path), label: d.replace(/^(\d+)-\d$/, "$1") });
+    }
+    return out;
+  }, [map]);
   const [x0, y0, x1, y1] = map?.box ?? [0, 0, 100, 100];
   const pad = Math.max(x1 - x0, y1 - y0) * 0.02;
   const vb = `${x0 - pad} ${y0 - pad} ${x1 - x0 + 2 * pad} ${y1 - y0 + 2 * pad}`;
@@ -103,10 +114,10 @@ export default function ChamberExplorer({ districts, map, label, chamberName, as
                 })}
                 {cells.map((c) => {
                   const w = c.b[2] - c.b[0], h = c.b[3] - c.b[1];
-                  if (Math.min(w, h) < span * 0.05 || c.d.length > 4) return null;
+                  if (Math.min(w, h) < span * 0.05 || c.label.length > 4) return null;
                   const x = byD.get(c.d);
                   const dark = x && x.probD != null && x.probD > 0.2 && x.probD < 0.8 && mode === "odds";
-                  return <text key={`t${c.d}`} x={c.x} y={c.y} className="slx-lab" fontSize={Math.min(span * 0.022, Math.min(w, h) * 0.32)} fill={dark ? "#1a1020" : "rgba(255,255,255,.88)"}>{c.d}</text>;
+                  return <text key={`t${c.d}`} x={c.x} y={c.y} className="slx-lab" fontSize={Math.min(span * 0.022, Math.min(w, h) * 0.32)} fill={dark ? "#1a1020" : "rgba(255,255,255,.88)"}>{c.label}</text>;
                 })}
                 {focus && map.d[focus] ? <path d={map.d[focus][0]} fill="none" stroke="var(--hi)" strokeWidth={span / 260} style={{ pointerEvents: "none" }} /> : null}
               </svg>

@@ -38,6 +38,9 @@ export default function USLegisMap({ chambers, height }: { chambers: USChamber[]
   const [which, setWhich] = useState<"house" | "senate">("house");
   const [mode, setMode] = useState<LegisMode>("odds");
   const [hover, setHover] = useState<{ c: Cell; x: number; y: number } | null>(null);
+  // zoom and pan, in screen pixels: screen = view.s * k * frame + (view.x, view.y)
+  const [view, setView] = useState({ s: 1, x: 0, y: 0 });
+  const drag = useRef<{ x: number; y: number; vx: number; vy: number; moved: boolean } | null>(null);
 
   useEffect(() => { getJson<USMap>("/forecast/statehouse_map_us.json").then(setMap).catch(() => {}); getJson<GeoStates>("/forecast/geo.json").then(setGeo).catch(() => {}); }, []);
   useEffect(() => {
@@ -91,8 +94,9 @@ export default function USLegisMap({ chambers, height }: { chambers: USChamber[]
     off.width = W * dpr; off.height = H * dpr;
     const ctx = off.getContext("2d")!;
     const bg = cssVar(c, "--bg", "#000"), line = cssVar(c, "--line2", "rgba(255,255,255,.16)");
-    ctx.setTransform(dpr * k, 0, 0, dpr * k, 0, 0);
-    ctx.clearRect(0, 0, frame[0], frame[1]);
+    ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.clearRect(0, 0, off.width, off.height);
+    const ks = k * view.s;
+    ctx.setTransform(dpr * ks, 0, 0, dpr * ks, dpr * view.x, dpr * view.y);
     // hatch for states with no race in this chamber and for seats not up this year
     const hatch = (col: string, base: string) => {
       const p = document.createElement("canvas"); p.width = p.height = 8;
@@ -109,22 +113,33 @@ export default function USLegisMap({ chambers, height }: { chambers: USChamber[]
       ctx.fillStyle = cl.hold ? holdP[cl.hold] ?? holdP.O : districtFill(mode, cl.p, cl.m, cl.last);
       ctx.fill(cl.path);
     }
-    ctx.strokeStyle = bg; ctx.lineWidth = Math.max(0.35, 0.7 / k); ctx.globalAlpha = 0.75;
+    ctx.strokeStyle = bg; ctx.lineWidth = Math.max(0.25 / view.s, 0.7 / ks); ctx.globalAlpha = 0.8;
     for (const cl of cells) ctx.stroke(cl.path);
     ctx.globalAlpha = 1;
-    ctx.save(); ctx.scale(2, 2); ctx.strokeStyle = line; ctx.lineWidth = Math.max(0.5, 1.1 / (k * 2));
+    ctx.save(); ctx.scale(2, 2); ctx.strokeStyle = line; ctx.lineWidth = 1.2 / (ks * 2);
     for (const s of states) ctx.stroke(s.path);
     ctx.restore();
     const vis = c.getContext("2d")!; vis.setTransform(1, 0, 0, 1, 0, 0); vis.clearRect(0, 0, c.width, c.height); vis.drawImage(off, 0, 0);
-  }, [W, H, k, map, cells, states, upStates, mode, frame]);
+  }, [W, H, k, map, cells, states, upStates, mode, frame, view]);
   useEffect(() => {
     const c = cv.current, off = base.current;
     if (!c || !off || !W) return;
     const dpr = Math.min(2, window.devicePixelRatio || 1);
     const vis = c.getContext("2d")!;
     vis.setTransform(1, 0, 0, 1, 0, 0); vis.clearRect(0, 0, c.width, c.height); vis.drawImage(off, 0, 0);
-    if (hover) { vis.setTransform(dpr * k, 0, 0, dpr * k, 0, 0); vis.strokeStyle = cssVar(c, "--hi", "#fff"); vis.lineWidth = 2.2 / k; vis.stroke(hover.c.path); }
-  }, [hover, W, k]);
+    if (hover) { const ks = k * view.s; vis.setTransform(dpr * ks, 0, 0, dpr * ks, dpr * view.x, dpr * view.y); vis.strokeStyle = cssVar(c, "--hi", "#fff"); vis.lineWidth = 2.2 / ks; vis.stroke(hover.c.path); }
+  }, [hover, W, k, view]);
+  const zoomAt = (f: number, px: number, py: number) => setView((v) => {
+    const s2 = Math.max(1, Math.min(14, v.s * f));
+    if (s2 === 1) return { s: 1, x: 0, y: 0 };
+    const r = s2 / v.s;
+    return clampView({ s: s2, x: px - (px - v.x) * r, y: py - (py - v.y) * r });
+  });
+  const clampView = (v: { s: number; x: number; y: number }) => {
+    const mw = W * v.s, mh = H * v.s;
+    return { s: v.s, x: Math.min(0, Math.max(W - mw, v.x)), y: Math.min(0, Math.max(H - mh, v.y)) };
+  };
+  useEffect(() => { setView({ s: 1, x: 0, y: 0 }); }, [W]);
 
   // hit testing runs in map coordinates on a canvas the size of the map frame
   const probe = useMemo(() => {
@@ -135,7 +150,7 @@ export default function USLegisMap({ chambers, height }: { chambers: USChamber[]
   const hit = (e: React.MouseEvent): Cell | null => {
     if (!cv.current || !probe) return null;
     const b = cv.current.getBoundingClientRect();
-    const fx = (e.clientX - b.left) / k, fy = (e.clientY - b.top) / k;
+    const fx = (e.clientX - b.left - view.x) / (k * view.s), fy = (e.clientY - b.top - view.y) / (k * view.s);
     for (const cl of cells) {
       const [x0, y0, x1, y1] = cl.bb;
       if (fx < x0 || fx > x1 || fy < y0 || fy > y1) continue;
@@ -164,10 +179,34 @@ export default function USLegisMap({ chambers, height }: { chambers: USChamber[]
       </div>
       <div ref={wrap} className="usl-stage" style={height ? { maxWidth: height * (frame[0] / frame[1]) } : undefined}>
         {!map ? <div className="usl-loading">Drawing {which === "house" ? "every state house" : "every state senate"} district</div> : null}
-        <canvas ref={cv} style={{ width: "100%", display: "block" }} role="img" aria-label={`Every state ${which} district on the 2026 ballot, colored by ${MODE_LABEL[mode].toLowerCase()}`}
-          onMouseMove={(e) => { const c = hit(e); setHover(c ? { c, x: e.clientX, y: e.clientY } : null); if (cv.current) cv.current.style.cursor = c ? "pointer" : "default"; }}
-          onMouseLeave={() => setHover(null)}
-          onClick={(e) => { const c = hit(e); if (c) router.push(`/forecast/legislatures/${c.ch.st.toLowerCase()}/${c.ch.chamber}#d-${encodeURIComponent(c.d)}`); }} />
+        <canvas ref={cv} style={{ width: "100%", display: "block", touchAction: view.s > 1 ? "none" : "auto" }} role="img" aria-label={`Every state ${which} district on the 2026 ballot, colored by ${MODE_LABEL[mode].toLowerCase()}`}
+          onMouseDown={(e) => { drag.current = { x: e.clientX, y: e.clientY, vx: view.x, vy: view.y, moved: false }; }}
+          onMouseUp={() => { setTimeout(() => { drag.current = null; }, 0); }}
+          onMouseMove={(e) => {
+            const dr = drag.current;
+            if (dr && e.buttons === 1 && view.s > 1) {
+              const dx = e.clientX - dr.x, dy = e.clientY - dr.y;
+              if (Math.abs(dx) + Math.abs(dy) > 4) dr.moved = true;
+              if (dr.moved) { setHover(null); setView((v) => clampView({ s: v.s, x: dr.vx + dx, y: dr.vy + dy })); if (cv.current) cv.current.style.cursor = "grabbing"; return; }
+            }
+            const c = hit(e); setHover(c ? { c, x: e.clientX, y: e.clientY } : null); if (cv.current) cv.current.style.cursor = c ? "pointer" : view.s > 1 ? "grab" : "default";
+          }}
+          onMouseLeave={() => { setHover(null); drag.current = null; }}
+          onDoubleClick={(e) => { const b = cv.current!.getBoundingClientRect(); zoomAt(2.2, e.clientX - b.left, e.clientY - b.top); }}
+          onClick={(e) => { if (drag.current?.moved || e.detail > 1) return; const c = hit(e); if (c) router.push(`/forecast/legislatures/${c.ch.st.toLowerCase()}/${c.ch.chamber}#d-${encodeURIComponent(c.d)}`); }} />
+        {map ? (
+          <div className="usl-zoom" role="group" aria-label="Zoom">
+            <button type="button" onClick={() => zoomAt(1.8, W / 2, H / 2)} aria-label="Zoom in">+</button>
+            <button type="button" onClick={() => zoomAt(1 / 1.8, W / 2, H / 2)} aria-label="Zoom out">&minus;</button>
+            {view.s > 1 ? <button type="button" className="txt" onClick={() => setView({ s: 1, x: 0, y: 0 })}>Reset</button> : null}
+            <div className="usl-regions">
+              {([["Northeast", 0.84, 0.3, 3.2], ["Great Lakes", 0.64, 0.33, 2.8], ["Southeast", 0.76, 0.66, 2.6], ["Texas", 0.46, 0.8, 2.6], ["West", 0.16, 0.45, 2.1]] as [string, number, number, number][]).map(([n, fx, fy, s2]) => (
+                <button key={n} type="button" className="txt" onClick={() => setView(clampView({ s: s2, x: W / 2 - fx * W * s2, y: H / 2 - fy * H * s2 }))}>{n}</button>
+              ))}
+            </div>
+          </div>
+        ) : null}
+        {view.s === 1 && map ? <div className="usl-hint">Double click to zoom · drag to move</div> : null}
       </div>
       <div className="usl-legend">
         {mode === "odds" ? (

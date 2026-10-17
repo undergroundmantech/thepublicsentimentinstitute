@@ -21,3 +21,12 @@
 .usl .hub-tip-bar{display:block;height:5px;border-radius:99px;background:var(--gop);overflow:hidden}
 .usl .hub-tip-bar s{display:block;height:100%;background:var(--dem);text-decoration:none}
 .usl .d{color:var(--dem2)}.usl .r{color:var(--gop2)}
+.usl-stage{overflow:hidden;border-radius:10px}
+.usl-zoom{position:absolute;top:8px;right:8px;display:flex;flex-direction:column;align-items:flex-end;gap:4px;z-index:2}
+.usl-zoom button{min-width:32px;height:32px;border-radius:9px;border:1px solid var(--line2);background:rgba(var(--bg2-rgb,8,6,12),.82);color:var(--hi);font:700 16px var(--font-b);cursor:pointer;backdrop-filter:blur(6px)}
+.usl-zoom button.txt{font-size:11.5px;padding:0 10px;height:26px}
+.usl-zoom button:hover{border-color:var(--hi)}
+.usl-zoom button:focus-visible{outline:2px solid var(--b2);outline-offset:2px}
+.usl-regions{display:flex;flex-direction:column;align-items:flex-end;gap:4px;margin-top:6px}
+.usl-hint{position:absolute;left:10px;bottom:8px;font-size:11px;color:var(--mute);pointer-events:none}
+@media (max-width:640px){.usl-regions{display:none}}
