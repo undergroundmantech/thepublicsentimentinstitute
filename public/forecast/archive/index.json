@@ -350,7 +350,7 @@
      "d_control_without_osborn": 75.1
     },
     "governors": {
-     "d_majority": 91.8,
+     "d_majority": 91.2,
      "d_median": 28.0,
      "p10": 26.0,
      "p90": 31.0
