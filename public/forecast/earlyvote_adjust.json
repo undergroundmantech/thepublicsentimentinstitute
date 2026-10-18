@@ -83,7 +83,7 @@
    "estimatedShare": 1,
    "source": "early vote",
    "comp": 0.42,
-   "level": 0.0
+   "level": -0.03
   },
   "CO": {
    "gap": -1.163,
@@ -180,7 +180,7 @@
    "ballots": 33417,
    "estimatedShare": 0,
    "source": "early vote",
-   "comp": -0.33,
+   "comp": -0.32,
    "level": -0.1
   },
   "ID": {
@@ -333,7 +333,7 @@
    "estimatedShare": 1,
    "source": "early vote",
    "comp": 0.12,
-   "level": 0.0
+   "level": -0.0
   },
   "MO": {
    "gap": -0.163,
@@ -708,20 +708,20 @@
  },
  "chambers": {
   "governor": {
-   "seat_change": -0.09,
-   "dem_control_before": 0.9244,
-   "dem_control": 0.9173,
-   "dem_seats": 28.55
+   "seat_change": -0.0,
+   "dem_control_before": 0.9186,
+   "dem_control": 0.9186,
+   "dem_seats": 28.58
   },
   "senate": {
-   "seat_change": -0.07,
-   "dem_control_before": 0.8124,
-   "dem_control": 0.8055,
-   "dem_seats": 52.93
+   "seat_change": -0.0,
+   "dem_control_before": 0.8041,
+   "dem_control": 0.8041,
+   "dem_seats": 52.92
   },
   "house": {
-   "seat_change": 0.04,
-   "dem_control_before": 0.907,
+   "seat_change": -0.0,
+   "dem_control_before": 0.9073,
    "dem_control": 0.9073,
    "dem_seats": 242.95
   }

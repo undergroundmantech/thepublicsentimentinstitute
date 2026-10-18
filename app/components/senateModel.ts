@@ -12,10 +12,10 @@ export type SenateRace = { st: string; m: number; open?: boolean };
 export const SENATE_MODEL: SenateRace[] = [
   { st: "AK", m: -1.9 }, { st: "AL", m: 25.3, open: true }, { st: "AR", m: 13.4 },
   { st: "CO", m: -20.8 }, { st: "DE", m: -28.9 }, { st: "FL", m: 6.5 },
-  { st: "GA", m: -10.5 }, { st: "IA", m: -1.4, open: true }, { st: "ID", m: 20.9 },
+  { st: "GA", m: -10.5 }, { st: "IA", m: -0.9, open: true }, { st: "ID", m: 20.9 },
   { st: "IL", m: -25.9, open: true }, { st: "KS", m: 1.3 }, { st: "KY", m: 21.7, open: true },
   { st: "LA", m: 11.0, open: true }, { st: "MA", m: -34.0 }, { st: "ME", m: -2.5 },
-  { st: "MI", m: -3.8, open: true }, { st: "MN", m: -7.4, open: true }, { st: "MS", m: 5.6 },
+  { st: "MI", m: -3.8, open: true }, { st: "MN", m: -8.6, open: true }, { st: "MS", m: 5.6 },
   { st: "MT", m: 14.4, open: true }, { st: "NC", m: -11.5, open: true }, { st: "NE", m: -3.2 },
   { st: "NH", m: -10.3, open: true }, { st: "NJ", m: -24.2 }, { st: "NM", m: -25.3 },
   { st: "OH", m: -4.3 }, { st: "OK", m: 27.0, open: true }, { st: "OR", m: -28.3 },

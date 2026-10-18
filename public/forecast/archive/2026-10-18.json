@@ -1,18 +1,18 @@
 {
  "date": "2026-10-18",
- "statewide_run": "poll sweep 2026-10-18: S1018AK against B2, change applied to 2026-10-18",
+ "statewide_run": "poll sweep 2026-10-18: S1018B against S1018AK, change applied to 2026-10-18",
  "house_run": "rebuild Oct 16, change applied",
  "n_sims": 2000,
  "chambers": {
   "senate": {
-   "d_control": 80.5,
+   "d_control": 80.4,
    "d_seats_median": 53.0,
    "p10": 49.0,
    "p90": 56.0,
-   "d_control_without_osborn": 77.0
+   "d_control_without_osborn": 76.9
   },
   "governors": {
-   "d_majority": 91.7,
+   "d_majority": 91.9,
    "d_median": 29.0,
    "p10": 26.0,
    "p90": 31.0
@@ -314,12 +314,12 @@
   "CAG": {
    "office": "governor",
    "n_sims": 2000,
-   "margin": 16.94,
-   "win_d": 99.7,
-   "p10": 10.41,
-   "p90": 23.7,
+   "margin": 23.47,
+   "win_d": 99.95,
+   "p10": 16.94,
+   "p90": 30.23,
    "deterministic_margin": 16.91951454038326,
-   "n_polls": 13,
+   "n_polls": 14,
    "poll_house_index": 6.0,
    "poll_avg": {
     "D": 51.097276176108544,
@@ -704,12 +704,12 @@
   "IA": {
    "office": "senate",
    "n_sims": 2000,
-   "margin": 1.41,
-   "win_d": 58.13,
-   "p10": -5.16,
-   "p90": 8.54,
+   "margin": 0.88,
+   "win_d": 54.4,
+   "p10": -5.69,
+   "p90": 8.01,
    "deterministic_margin": 1.623670307677294,
-   "n_polls": 31,
+   "n_polls": 32,
    "poll_house_index": 12.0,
    "poll_avg": {
     "D": 47.206473050978,
@@ -1307,10 +1307,10 @@
   "MI": {
    "office": "senate",
    "n_sims": 2000,
-   "margin": 3.81,
-   "win_d": 76.83,
-   "p10": -2.71,
-   "p90": 10.5,
+   "margin": 3.78,
+   "win_d": 76.64,
+   "p10": -2.74,
+   "p90": 10.47,
    "deterministic_margin": 4.0846205940210965,
    "n_polls": 38,
    "poll_house_index": 16.5,
@@ -1397,12 +1397,12 @@
   "MN": {
    "office": "senate",
    "n_sims": 2000,
-   "margin": 7.4,
-   "win_d": 91.88,
-   "p10": 0.65,
-   "p90": 14.2,
+   "margin": 8.61,
+   "win_d": 94.31,
+   "p10": 1.86,
+   "p90": 15.41,
    "deterministic_margin": 7.257724251988101,
-   "n_polls": 13,
+   "n_polls": 14,
    "poll_house_index": 6.5,
    "poll_avg": {
     "D": 47.24767526984611,
@@ -2591,12 +2591,12 @@
   "TXG": {
    "office": "governor",
    "n_sims": 2000,
-   "margin": -1.53,
-   "win_d": 35.81,
-   "p10": -7.26,
-   "p90": 4.44,
+   "margin": -1.26,
+   "win_d": 38.13,
+   "p10": -6.99,
+   "p90": 4.71,
    "deterministic_margin": -2.1911910309232354,
-   "n_polls": 45,
+   "n_polls": 47,
    "poll_house_index": 15.0,
    "poll_avg": {
     "D": 47.383570636421396,
