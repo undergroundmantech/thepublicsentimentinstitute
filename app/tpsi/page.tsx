@@ -29,8 +29,8 @@ export default function Page() {
         <p className="lede">On Point Polling, formerly The Public Sentiment Institute, is the polling and research arm behind On Point Politics. It fields the surveys, runs the DSMeridian likely voter model and feeds the polling averages, the 2026 forecast and election night coverage.</p>
         <div className="pmeta">
           <span>Based in <b>Miami</b></span>
-          <span>Field reports <b className="mono">6</b></span>
-          <span>Latest <Link href="/tpsi/polls/ohio-2026"><b>Ohio, Oct 2026</b></Link></span>
+          <span>Field reports <b className="mono">7</b></span>
+          <span>Latest <Link href="/tpsi/polls/texas-2026"><b>Texas, Oct 2026</b></Link></span>
           <span>Largest sample <b className="mono">893 LV</b></span>
         </div>
       </header>

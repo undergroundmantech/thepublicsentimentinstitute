@@ -3,10 +3,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { seo } from "@/app/lib/seo";
 
-export const metadata: Metadata = seo({"title": "On Point Polling poll releases", "description": "Toplines, crosstabs and methodology from every On Point Polling survey for On Point Politics, including the October 2026 Ohio Senate and governor poll.", "path": "/tpsi/polls"});
+export const metadata: Metadata = seo({"title": "On Point Polling poll releases", "description": "Toplines, crosstabs and methodology from every On Point Polling survey for On Point Politics, including the October 2026 Texas and Ohio Senate and governor polls.", "path": "/tpsi/polls"});
 
 const DASH = "/tpsi/polls/la-mayor-2026";
 const RELEASES: { href: string; no: string; lab: string; t: string; s: string; n: string; date: string; q: number; img?: string }[] = [
+  { href: "/tpsi/polls/texas-2026", no: "06", lab: "Texas", t: "Texas Senate, governor and Railroad Commissioner", s: "Talarico leads Paxton by 5.8 while Abbott leads Hinojosa by 2.5, as Republicans and independents cross over against Paxton.", n: "661 RV", date: "October 2026", q: 0 },
   { href: "/tpsi/polls/ohio-2026", no: "05", lab: "Ohio", t: "Ohio Senate and governor", s: "Brown leads Husted by 4.3 and Acton leads Ramaswamy by 4.8, with Democrats banking a big early vote lead.", n: "635 LV", date: "October 2026", q: 0, img: "/tpsi/polls/ohio-2026/01_senate.jpg" },
   { href: `${DASH}?poll=sc`, no: "04", lab: "South Carolina", t: "South Carolina GOP primary", s: "Senate and governor primaries under the Meridian coalition model: Graham's standing and an open governor's race.", n: "369 LV", date: "June 2026", q: 13 },
   { href: `${DASH}?poll=sd`, no: "03", lab: "South Dakota", t: "South Dakota GOP primary", s: "A likely voter read on the Republican primary for governor, a three way race at the top of the ticket.", n: "400 LV", date: "May 2026", q: 4 },

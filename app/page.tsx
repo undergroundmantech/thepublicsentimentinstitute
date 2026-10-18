@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { getHomeStats } from "@/app/_polling/lib/homeStats";
 import { RAW_POLLS as APPROVAL_POLLS } from "@/app/_polling/donaldtrumpapproval/data";
@@ -164,9 +163,9 @@ export default function Home() {
       <section className="sec">
         <div className="sec-h"><div><div className="eye g">From On Point Polling</div><h2>Latest releases and model notes</h2></div><Link className="btn more" href="/tpsi/polls">All releases</Link></div>
         <div className="grid4">
-          <Link href="/tpsi/polls/ohio-2026" className="card story">
-            <div className="thumb"><Image src="/tpsi/polls/ohio-2026/01_senate.jpg" alt="" fill sizes="(max-width: 960px) 100vw, 360px" style={{ objectFit: "cover", objectPosition: "left top" }} /><span aria-hidden="true" style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg, rgba(10,7,17,0) 45%, rgba(10,7,17,.94) 100%)" }} /><span className="lab">On Point Polling · Ohio</span></div>
-            <div className="card-b"><h3>Ohio poll: Brown +4.3, Acton +4.8 as early voters bank their edge</h3><p>635 likely voters, October 16 to 17, with the early vote, the regions and Trump approval.</p><div className="meta">Oct 17 · Poll release</div></div>
+          <Link href="/tpsi/polls/texas-2026" className="card story">
+            <div className="thumb"><svg viewBox="0 0 320 180" aria-hidden="true"><rect width="320" height="180" fill="#120820" /><g fontFamily="var(--font-m)" fontSize="11" fill="#c9c2d6"><text x="20" y="44">SENATE</text><text x="20" y="104">GOVERNOR</text></g><rect x="20" y="54" width="280" height="14" rx="7" fill="rgba(255,255,255,.07)" /><rect x="20" y="54" width="137" height="14" rx="7" fill="#3d7bff" /><rect x="180" y="54" width="120" height="14" rx="7" fill="#ff3b5c" /><rect x="20" y="114" width="280" height="14" rx="7" fill="rgba(255,255,255,.07)" /><rect x="20" y="114" width="127" height="14" rx="7" fill="#3d7bff" /><rect x="166" y="114" width="134" height="14" rx="7" fill="#ff3b5c" /></svg><span className="lab">On Point Polling · Texas</span></div>
+            <div className="card-b"><h3>Texas poll: Talarico +5.8 over Paxton as Abbott holds on, +2.5</h3><p>661 Texas voters, October 17 to 18, with crossover, age, regions and how Texans plan to vote.</p><div className="meta">Oct 18 · Poll release</div></div>
           </Link>
           <Link href={raceHref(oh.id)} className="card story">
             <div className="thumb"><svg viewBox="0 0 320 180" aria-hidden="true"><rect width="320" height="180" fill="#120820" /><MiniMap raceId={oh.id} /></svg><span className="lab">{oh.name}</span></div>
