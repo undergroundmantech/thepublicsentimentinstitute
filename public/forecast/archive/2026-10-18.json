@@ -1,0 +1,2838 @@
+{
+ "date": "2026-10-18",
+ "statewide_run": "poll sweep 2026-10-18: S1018 against S1017C, change applied to 2026-10-17",
+ "house_run": "rebuild Oct 16, change applied",
+ "n_sims": 2000,
+ "chambers": {
+  "senate": {
+   "d_control": 78.5,
+   "d_seats_median": 53.0,
+   "p10": 49.0,
+   "p90": 56.0,
+   "d_control_without_osborn": 75.0
+  },
+  "governors": {
+   "d_majority": 91.6,
+   "d_median": 28.0,
+   "p10": 26.0,
+   "p90": 31.0
+  },
+  "house": {
+   "d_majority": 90.8,
+   "d_seats_median": 241.0,
+   "p10": 218.0,
+   "p90": 271.0,
+   "n_sims": 2000
+  }
+ },
+ "races": {
+  "AK": {
+   "office": "senate",
+   "n_sims": 2000,
+   "margin": 1.6,
+   "win_d": 61.77,
+   "p10": -5.16,
+   "p90": 8.42,
+   "deterministic_margin": 1.299768744253434,
+   "n_polls": 24,
+   "poll_house_index": 5.0,
+   "poll_avg": {
+    "D": 49.132425040972336,
+    "R": 47.76757495902767,
+    "O": 0.0,
+    "D2": 0.5070425700822738,
+    "third": 0.053571428571428575,
+    "first_choice": {
+     "D": 45.1,
+     "R": 45.0,
+     "Dan J. Sullivan": 3.5,
+     "Gerald Heikes": 1.6
+    },
+    "first_choice_share": {
+     "Dan J. Sullivan": 0.03676470588235294,
+     "Gerald Heikes": 0.016806722689075633
+    },
+    "method": "daily",
+    "psi": {
+     "D": 49.4,
+     "R": 47.5,
+     "D2": 0.5098039215686274
+    },
+    "poll_level": "lowess",
+    "lowess": {
+     "n": 24,
+     "imputed": 0,
+     "recent": 1.9344435528958015,
+     "balanced": 0.894596025182147,
+     "long": 0.9851211013105886,
+     "eday_margin": 1.3648500819446738,
+     "newest": "2026-10-09"
+    }
+   },
+   "spread_calibration": {
+    "k": 0.99,
+    "ref_total": 0.1001,
+    "national_vote_share_before": 0.528,
+    "corr_nat_f": 0.5,
+    "sig_region": 0.02,
+    "rho_scale": 0.5,
+    "own_before": 0.07,
+    "own_after": 0.0909,
+    "tail_df": 5.0
+   }
+  },
+  "AKG": {
+   "office": "governor",
+   "n_sims": 2000,
+   "margin": 17.09,
+   "win_d": 99.93,
+   "p10": 10.95,
+   "p90": 23.24,
+   "deterministic_margin": 17.067163194393537,
+   "n_polls": 5,
+   "poll_house_index": 3.0,
+   "poll_avg": {
+    "D": 50.1,
+    "R": 47.2,
+    "O": 0.1,
+    "D2": 0.5149023638232271,
+    "third": 0.001026694045174538,
+    "method": "daily",
+    "psi": {
+     "D": 50.1,
+     "R": 47.2,
+     "D2": 0.5149023638232271
+    },
+    "poll_level": "psi",
+    "lowess": null
+   },
+   "spread_calibration": {
+    "k": 1.05,
+    "ref_total": 0.1015,
+    "national_vote_share_before": 0.089,
+    "corr_nat_f": 0.5,
+    "sig_region": 0.02,
+    "rho_scale": 0.5,
+    "own_before": 0.0849,
+    "own_after": 0.0938,
+    "tail_df": 5.0
+   }
+  },
+  "AL": {
+   "office": "senate",
+   "n_sims": 2000,
+   "margin": -25.15,
+   "win_d": 0.05,
+   "p10": -33.33,
+   "p90": -17.05,
+   "deterministic_margin": -26.21641800192986,
+   "n_polls": 2,
+   "poll_house_index": 0.0,
+   "poll_avg": {
+    "D": 33.9,
+    "R": 53.1,
+    "O": 2.0,
+    "D2": 0.3896551724137931,
+    "third": 0.02247191011235955,
+    "method": "daily",
+    "psi": {
+     "D": 33.9,
+     "R": 53.1,
+     "D2": 0.3896551724137931
+    },
+    "poll_level": "psi",
+    "lowess": null
+   },
+   "spread_calibration": {
+    "k": 1.08,
+    "ref_total": 0.1268,
+    "national_vote_share_before": 0.363,
+    "corr_nat_f": 0.5,
+    "sig_region": 0.02,
+    "rho_scale": 0.5,
+    "own_before": 0.09,
+    "own_after": 0.1215,
+    "tail_df": 5.0
+   }
+  },
+  "ALG": {
+   "office": "governor",
+   "n_sims": 2000,
+   "margin": -14.97,
+   "win_d": 1.22,
+   "p10": -22.6,
+   "p90": -7.09,
+   "deterministic_margin": -15.822067043834195,
+   "n_polls": 2,
+   "poll_house_index": 0.0,
+   "poll_avg": {
+    "D": 37.9,
+    "R": 49.1,
+    "O": 2.0,
+    "D2": 0.435632183908046,
+    "third": 0.02247191011235955,
+    "method": "daily",
+    "psi": {
+     "D": 37.9,
+     "R": 49.1,
+     "D2": 0.435632183908046
+    },
+    "poll_level": "psi",
+    "lowess": null
+   },
+   "spread_calibration": {
+    "k": 1.08,
+    "ref_total": 0.114,
+    "national_vote_share_before": 0.158,
+    "corr_nat_f": 0.5,
+    "sig_region": 0.02,
+    "rho_scale": 0.5,
+    "own_before": 0.102,
+    "own_after": 0.1182,
+    "tail_df": 5.0
+   }
+  },
+  "AR": {
+   "office": "senate",
+   "n_sims": 2000,
+   "margin": -13.6,
+   "win_d": 1.59,
+   "p10": -20.97,
+   "p90": -6.0,
+   "deterministic_margin": -13.94252768371922,
+   "n_polls": 5,
+   "poll_house_index": 0.5,
+   "poll_avg": {
+    "D": 40.0,
+    "R": 48.8,
+    "O": 3.9,
+    "D2": 0.45045045045045046,
+    "third": 0.042071197411003236,
+    "method": "daily",
+    "psi": {
+     "D": 40.0,
+     "R": 48.8,
+     "D2": 0.45045045045045046
+    },
+    "poll_level": "psi",
+    "lowess": null
+   },
+   "spread_calibration": {
+    "k": 1.08,
+    "ref_total": 0.1079,
+    "national_vote_share_before": 0.572,
+    "corr_nat_f": 0.5,
+    "sig_region": 0.02,
+    "rho_scale": 0.5,
+    "own_before": 0.07,
+    "own_after": 0.1069,
+    "tail_df": 5.0
+   }
+  },
+  "ARG": {
+   "office": "governor",
+   "n_sims": 2000,
+   "margin": -17.58,
+   "win_d": 0.8,
+   "p10": -25.69,
+   "p90": -9.48,
+   "deterministic_margin": -18.205818965517246,
+   "n_polls": 2,
+   "poll_house_index": 0.0,
+   "poll_avg": {
+    "D": 40.6,
+    "R": 44.4,
+    "O": 2.4,
+    "D2": 0.4776470588235294,
+    "third": 0.02745995423340961,
+    "method": "daily",
+    "psi": {
+     "D": 40.6,
+     "R": 44.4,
+     "D2": 0.4776470588235294
+    },
+    "poll_level": "psi",
+    "lowess": null
+   },
+   "spread_calibration": {
+    "k": 1.08,
+    "ref_total": 0.1149,
+    "national_vote_share_before": 0.169,
+    "corr_nat_f": 0.5,
+    "sig_region": 0.02,
+    "rho_scale": 0.5,
+    "own_before": 0.102,
+    "own_after": 0.1189,
+    "tail_df": 5.0
+   }
+  },
+  "AZG": {
+   "office": "governor",
+   "n_sims": 2000,
+   "margin": 11.77,
+   "win_d": 98.17,
+   "p10": 4.55,
+   "p90": 19.15,
+   "deterministic_margin": 10.024342411357566,
+   "n_polls": 24,
+   "poll_house_index": 5.0,
+   "poll_avg": {
+    "D": 50.0612038056626,
+    "R": 42.338796194337405,
+    "O": 2.1,
+    "D2": 0.5417879199747034,
+    "third": 0.022222222222222223,
+    "method": "daily",
+    "psi": {
+     "D": 49.5,
+     "R": 42.9,
+     "D2": 0.5357142857142857
+    },
+    "poll_level": "lowess",
+    "lowess": {
+     "n": 26,
+     "imputed": 0,
+     "recent": 7.496585059725865,
+     "balanced": 7.89738410879086,
+     "long": 7.872955979058084,
+     "eday_margin": 7.722407611325195,
+     "newest": "2026-10-07"
+    }
+   },
+   "spread_calibration": {
+    "k": 0.99,
+    "ref_total": 0.1167,
+    "national_vote_share_before": 0.214,
+    "corr_nat_f": 0.5,
+    "sig_region": 0.02,
+    "rho_scale": 0.5,
+    "own_before": 0.0849,
+    "own_after": 0.0947,
+    "tail_df": 5.0
+   }
+  },
+  "CAG": {
+   "office": "governor",
+   "n_sims": 2000,
+   "margin": 16.52,
+   "win_d": 99.68,
+   "p10": 9.99,
+   "p90": 23.28,
+   "deterministic_margin": 16.91951454038326,
+   "n_polls": 13,
+   "poll_house_index": 6.0,
+   "poll_avg": {
+    "D": 51.097276176108544,
+    "R": 41.10272382389146,
+    "O": 0.9,
+    "D2": 0.5542003923656024,
+    "third": 0.00966702470461869,
+    "method": "daily",
+    "psi": {
+     "D": 55.1,
+     "R": 37.1,
+     "D2": 0.5976138828633406
+    },
+    "poll_level": "lowess",
+    "lowess": {
+     "n": 12,
+     "imputed": 0,
+     "recent": 9.084222667591845,
+     "balanced": 9.13933489800478,
+     "long": 10.601438808633914,
+     "eday_margin": 9.994552352217086,
+     "newest": "2026-10-01"
+    }
+   },
+   "spread_calibration": {
+    "k": 0.96,
+    "ref_total": 0.1133,
+    "national_vote_share_before": 0.148,
+    "corr_nat_f": 0.5,
+    "sig_region": 0.02,
+    "rho_scale": 0.5,
+    "own_before": 0.0849,
+    "own_after": 0.0865,
+    "tail_df": 5.0
+   }
+  },
+  "CO": {
+   "office": "senate",
+   "n_sims": 2000,
+   "margin": 19.82,
+   "win_d": 99.41,
+   "p10": 11.07,
+   "p90": 28.19,
+   "deterministic_margin": 19.777356761381263,
+   "n_polls": 0,
+   "poll_house_index": 0.0,
+   "poll_avg": {
+    "D": NaN,
+    "R": NaN,
+    "O": NaN,
+    "D2": 0.5977190012350415,
+    "third": 0.025884017775885122,
+    "no_polls": true
+   },
+   "spread_calibration": {
+    "k": 1.0,
+    "ref_total": 0.1408,
+    "national_vote_share_before": 0.357,
+    "corr_nat_f": 0.5,
+    "sig_region": 0.02,
+    "rho_scale": 0.5,
+    "own_before": 0.11,
+    "own_after": 0.1304,
+    "tail_df": 5.0
+   }
+  },
+  "COG": {
+   "office": "governor",
+   "n_sims": 2000,
+   "margin": 22.8,
+   "win_d": 99.68,
+   "p10": 13.55,
+   "p90": 31.62,
+   "deterministic_margin": 22.154457188019336,
+   "n_polls": 0,
+   "poll_house_index": 0.0,
+   "poll_avg": {
+    "D": NaN,
+    "R": NaN,
+    "O": NaN,
+    "D2": 0.6069523747061223,
+    "third": 0.030306738261899363,
+    "no_polls": true
+   },
+   "spread_calibration": {
+    "k": 1.0,
+    "ref_total": 0.145,
+    "national_vote_share_before": 0.115,
+    "corr_nat_f": 0.5,
+    "sig_region": 0.02,
+    "rho_scale": 0.5,
+    "own_before": 0.12,
+    "own_after": 0.1268,
+    "tail_df": 5.0
+   }
+  },
+  "CTG": {
+   "office": "governor",
+   "n_sims": 2000,
+   "margin": 15.31,
+   "win_d": 98.88,
+   "p10": 7.67,
+   "p90": 22.82,
+   "deterministic_margin": 15.01830098858764,
+   "n_polls": 9,
+   "poll_house_index": 4.0,
+   "poll_avg": {
+    "D": 54.02757861063479,
+    "R": 38.77242138936522,
+    "O": 0.1,
+    "D2": 0.5821937350283921,
+    "third": 0.001076426264800861,
+    "method": "daily",
+    "psi": {
+     "D": 54.6,
+     "R": 38.2,
+     "D2": 0.5883620689655172
+    },
+    "poll_level": "lowess",
+    "lowess": {
+     "n": 9,
+     "imputed": 0,
+     "recent": 13.74972020131905,
+     "balanced": 16.062796559462527,
+     "long": 16.25878190123659,
+     "eday_margin": 15.255157221269574,
+     "newest": "2026-10-11"
+    }
+   },
+   "spread_calibration": {
+    "k": 1.02,
+    "ref_total": 0.117,
+    "national_vote_share_before": 0.199,
+    "corr_nat_f": 0.5,
+    "sig_region": 0.02,
+    "rho_scale": 0.5,
+    "own_before": 0.0849,
+    "own_after": 0.0983,
+    "tail_df": 5.0
+   }
+  },
+  "DE": {
+   "office": "senate",
+   "n_sims": 2000,
+   "margin": 28.52,
+   "win_d": 99.82,
+   "p10": 19.68,
+   "p90": 37.23,
+   "deterministic_margin": 27.852308869598495,
+   "n_polls": 0,
+   "poll_house_index": 0.0,
+   "poll_avg": {
+    "D": NaN,
+    "R": NaN,
+    "O": NaN,
+    "D2": 0.6654035530797937,
+    "third": 0.024460463571239717,
+    "no_polls": true
+   },
+   "spread_calibration": {
+    "k": 1.0,
+    "ref_total": 0.1439,
+    "national_vote_share_before": 0.38,
+    "corr_nat_f": 0.5,
+    "sig_region": 0.02,
+    "rho_scale": 0.5,
+    "own_before": 0.11,
+    "own_after": 0.1327,
+    "tail_df": 5.0
+   }
+  },
+  "FL": {
+   "office": "senate",
+   "n_sims": 2000,
+   "margin": -4.93,
+   "win_d": 19.03,
+   "p10": -12.15,
+   "p90": 2.3,
+   "deterministic_margin": -4.876050930490166,
+   "n_polls": 11,
+   "poll_house_index": 6.0,
+   "poll_avg": {
+    "D": 43.115316280306665,
+    "R": 49.08468371969334,
+    "O": 1.5,
+    "D2": 0.467628159222415,
+    "third": 0.016008537886873,
+    "method": "daily",
+    "psi": {
+     "D": 43.1,
+     "R": 49.1,
+     "D2": 0.46746203904555317
+    },
+    "poll_level": "lowess",
+    "lowess": {
+     "n": 12,
+     "imputed": 0,
+     "recent": -6.456265976789368,
+     "balanced": -5.5175815214177035,
+     "long": -5.6447684144515495,
+     "eday_margin": -5.9693674393866765,
+     "newest": "2026-10-07"
+    }
+   },
+   "spread_calibration": {
+    "k": 0.96,
+    "ref_total": 0.116,
+    "national_vote_share_before": 0.539,
+    "corr_nat_f": 0.5,
+    "sig_region": 0.02,
+    "rho_scale": 0.5,
+    "own_before": 0.07,
+    "own_after": 0.0943,
+    "tail_df": 5.0
+   }
+  },
+  "FLG": {
+   "office": "governor",
+   "n_sims": 2000,
+   "margin": -1.67,
+   "win_d": 38.03,
+   "p10": -9.46,
+   "p90": 6.45,
+   "deterministic_margin": -2.029526010063705,
+   "n_polls": 29,
+   "poll_house_index": 5.0,
+   "poll_avg": {
+    "D": 44.5045118542151,
+    "R": 47.09548814578489,
+    "O": 0.7,
+    "D2": 0.485857116312392,
+    "third": 0.007583965330444203,
+    "method": "daily",
+    "psi": {
+     "D": 43.6,
+     "R": 48.0,
+     "D2": 0.47598253275109176
+    },
+    "poll_level": "lowess",
+    "lowess": {
+     "n": 29,
+     "imputed": 0,
+     "recent": -1.363519113074697,
+     "balanced": -3.7237792560916905,
+     "long": -3.4092810772331728,
+     "eday_margin": -2.5909762915697825,
+     "newest": "2026-10-09"
+    }
+   },
+   "spread_calibration": {
+    "k": 0.99,
+    "ref_total": 0.1204,
+    "national_vote_share_before": 0.177,
+    "corr_nat_f": 0.5,
+    "sig_region": 0.02,
+    "rho_scale": 0.5,
+    "own_before": 0.0849,
+    "own_after": 0.0933,
+    "tail_df": 5.0
+   }
+  },
+  "GA": {
+   "office": "senate",
+   "n_sims": 2000,
+   "margin": 10.53,
+   "win_d": 98.55,
+   "p10": 4.73,
+   "p90": 16.33,
+   "deterministic_margin": 10.230376502114673,
+   "n_polls": 18,
+   "poll_house_index": 6.0,
+   "poll_avg": {
+    "D": 52.10939340193953,
+    "R": 42.090606598060475,
+    "O": 0.1,
+    "D2": 0.5531782739059398,
+    "third": 0.0010604453870625664,
+    "method": "daily",
+    "psi": {
+     "D": 51.7,
+     "R": 42.5,
+     "D2": 0.5488322717622081
+    },
+    "poll_level": "lowess",
+    "lowess": {
+     "n": 18,
+     "imputed": 0,
+     "recent": 9.23345983173977,
+     "balanced": 9.580076411710431,
+     "long": 10.542338118638575,
+     "eday_margin": 10.018786803879053,
+     "newest": "2026-10-07"
+    }
+   },
+   "spread_calibration": {
+    "k": 0.96,
+    "ref_total": 0.0976,
+    "national_vote_share_before": 0.492,
+    "corr_nat_f": 0.5,
+    "sig_region": 0.02,
+    "rho_scale": 0.5,
+    "own_before": 0.07,
+    "own_after": 0.0853,
+    "tail_df": 5.0
+   }
+  },
+  "GAG": {
+   "office": "governor",
+   "n_sims": 2000,
+   "margin": 0.57,
+   "win_d": 56.04,
+   "p10": -6.25,
+   "p90": 7.22,
+   "deterministic_margin": 0.23239619668638056,
+   "n_polls": 15,
+   "poll_house_index": 3.0,
+   "poll_avg": {
+    "D": 48.29217184835956,
+    "R": 48.70782815164044,
+    "O": 0.0,
+    "D2": 0.49785744173566554,
+    "third": 0.0,
+    "method": "daily",
+    "psi": {
+     "D": 48.4,
+     "R": 48.6,
+     "D2": 0.49896907216494846
+    },
+    "poll_level": "lowess",
+    "lowess": {
+     "n": 15,
+     "imputed": 0,
+     "recent": 0.06497741706496207,
+     "balanced": -0.23794527782147032,
+     "long": -0.7360787835114572,
+     "eday_margin": -0.4156563032808894,
+     "newest": "2026-10-12"
+    }
+   },
+   "spread_calibration": {
+    "k": 1.05,
+    "ref_total": 0.1024,
+    "national_vote_share_before": 0.152,
+    "corr_nat_f": 0.5,
+    "sig_region": 0.02,
+    "rho_scale": 0.5,
+    "own_before": 0.0849,
+    "own_after": 0.0966,
+    "tail_df": 5.0
+   }
+  },
+  "HIG": {
+   "office": "governor",
+   "n_sims": 2000,
+   "margin": 36.56,
+   "win_d": 99.9,
+   "p10": 27.21,
+   "p90": 45.84,
+   "deterministic_margin": 36.5266431590705,
+   "n_polls": 0,
+   "poll_house_index": 0.0,
+   "poll_avg": {
+    "D": NaN,
+    "R": NaN,
+    "O": NaN,
+    "D2": 0.6960340139798744,
+    "third": 0.0,
+    "no_polls": true
+   },
+   "spread_calibration": {
+    "k": 1.0,
+    "ref_total": 0.1593,
+    "national_vote_share_before": 0.143,
+    "corr_nat_f": 0.5,
+    "sig_region": 0.02,
+    "rho_scale": 0.5,
+    "own_before": 0.12,
+    "own_after": 0.1303,
+    "tail_df": 5.0
+   }
+  },
+  "IA": {
+   "office": "senate",
+   "n_sims": 2000,
+   "margin": 1.83,
+   "win_d": 61.03,
+   "p10": -4.74,
+   "p90": 8.96,
+   "deterministic_margin": 1.623670307677294,
+   "n_polls": 31,
+   "poll_house_index": 12.0,
+   "poll_avg": {
+    "D": 47.206473050978,
+    "R": 47.093526949022014,
+    "O": 1.1,
+    "D2": 0.5005988658640296,
+    "third": 0.011530398322851153,
+    "method": "daily",
+    "psi": {
+     "D": 47.6,
+     "R": 46.7,
+     "D2": 0.5047720042417815
+    },
+    "poll_level": "lowess",
+    "lowess": {
+     "n": 31,
+     "imputed": 0,
+     "recent": 0.22060430987568536,
+     "balanced": -0.07085878278398405,
+     "long": 0.041173963342853254,
+     "eday_margin": 0.11294610195598609,
+     "newest": "2026-10-09"
+    }
+   },
+   "spread_calibration": {
+    "k": 0.9,
+    "ref_total": 0.1202,
+    "national_vote_share_before": 0.608,
+    "corr_nat_f": 0.5,
+    "sig_region": 0.02,
+    "rho_scale": 0.5,
+    "own_before": 0.07,
+    "own_after": 0.0913,
+    "tail_df": 5.0
+   }
+  },
+  "IAG": {
+   "office": "governor",
+   "n_sims": 2000,
+   "margin": 11.45,
+   "win_d": 98.86,
+   "p10": 4.43,
+   "p90": 18.63,
+   "deterministic_margin": 11.016310546284018,
+   "n_polls": 18,
+   "poll_house_index": 9.5,
+   "poll_avg": {
+    "D": 50.720481774168334,
+    "R": 45.57951822583168,
+    "O": 0.0,
+    "D2": 0.5266924379456732,
+    "third": 0.0,
+    "method": "daily",
+    "psi": {
+     "D": 52.2,
+     "R": 44.1,
+     "D2": 0.5420560747663551
+    },
+    "poll_level": "lowess",
+    "lowess": {
+     "n": 18,
+     "imputed": 0,
+     "recent": 4.952301789279751,
+     "balanced": 4.796914857361952,
+     "long": 5.266738054374603,
+     "eday_margin": 5.1409635483366625,
+     "newest": "2026-10-09"
+    }
+   },
+   "spread_calibration": {
+    "k": 0.9,
+    "ref_total": 0.125,
+    "national_vote_share_before": 0.197,
+    "corr_nat_f": 0.5,
+    "sig_region": 0.02,
+    "rho_scale": 0.5,
+    "own_before": 0.0849,
+    "own_after": 0.08,
+    "tail_df": 5.0
+   }
+  },
+  "ID": {
+   "office": "senate",
+   "n_sims": 2000,
+   "margin": -19.4,
+   "win_d": 0.27,
+   "p10": -26.11,
+   "p90": -12.39,
+   "deterministic_margin": -20.001156804904852,
+   "n_polls": 6,
+   "poll_house_index": 1.0,
+   "poll_avg": {
+    "D": 29.2,
+    "R": 46.0,
+    "O": 9.6,
+    "D2": 0.3882978723404255,
+    "third": 0.11320754716981132,
+    "method": "daily",
+    "psi": {
+     "D": 29.2,
+     "R": 46.0,
+     "D2": 0.3882978723404255
+    },
+    "poll_level": "psi",
+    "lowess": null
+   },
+   "spread_calibration": {
+    "k": 1.08,
+    "ref_total": 0.1088,
+    "national_vote_share_before": 0.588,
+    "corr_nat_f": 0.5,
+    "sig_region": 0.02,
+    "rho_scale": 0.5,
+    "own_before": 0.07,
+    "own_after": 0.1081,
+    "tail_df": 5.0
+   }
+  },
+  "IDG": {
+   "office": "governor",
+   "n_sims": 2000,
+   "margin": -22.66,
+   "win_d": 0.06,
+   "p10": -29.64,
+   "p90": -15.58,
+   "deterministic_margin": -23.346162504049154,
+   "n_polls": 2,
+   "poll_house_index": 1.0,
+   "poll_avg": {
+    "D": 25.3,
+    "R": 38.9,
+    "O": 15.9,
+    "D2": 0.3940809968847352,
+    "third": 0.19850187265917602,
+    "method": "daily",
+    "psi": {
+     "D": 25.3,
+     "R": 38.9,
+     "D2": 0.3940809968847352
+    },
+    "poll_level": "psi",
+    "lowess": null
+   },
+   "spread_calibration": {
+    "k": 1.08,
+    "ref_total": 0.1229,
+    "national_vote_share_before": 0.161,
+    "corr_nat_f": 0.5,
+    "sig_region": 0.02,
+    "rho_scale": 0.5,
+    "own_before": 0.102,
+    "own_after": 0.1208,
+    "tail_df": 5.0
+   }
+  },
+  "IL": {
+   "office": "senate",
+   "n_sims": 2000,
+   "margin": 25.77,
+   "win_d": 99.93,
+   "p10": 16.63,
+   "p90": 34.44,
+   "deterministic_margin": 24.690067722374216,
+   "n_polls": 1,
+   "poll_house_index": 0.0,
+   "poll_avg": {
+    "D": 48.5,
+    "R": 36.5,
+    "O": 0.0,
+    "D2": 0.5705882352941176,
+    "third": 0.0,
+    "method": "daily",
+    "psi": {
+     "D": 48.5,
+     "R": 36.5,
+     "D2": 0.5705882352941176
+    },
+    "poll_level": "psi",
+    "lowess": null
+   },
+   "spread_calibration": {
+    "k": 1.08,
+    "ref_total": 0.1447,
+    "national_vote_share_before": 0.295,
+    "corr_nat_f": 0.5,
+    "sig_region": 0.02,
+    "rho_scale": 0.5,
+    "own_before": 0.09,
+    "own_after": 0.1257,
+    "tail_df": 5.0
+   }
+  },
+  "ILG": {
+   "office": "governor",
+   "n_sims": 2000,
+   "margin": 25.89,
+   "win_d": 99.95,
+   "p10": 18.57,
+   "p90": 33.4,
+   "deterministic_margin": 25.496730118589795,
+   "n_polls": 2,
+   "poll_house_index": 1.0,
+   "poll_avg": {
+    "D": 54.2,
+    "R": 33.8,
+    "O": 6.0,
+    "D2": 0.615909090909091,
+    "third": 0.06382978723404255,
+    "method": "daily",
+    "psi": {
+     "D": 54.2,
+     "R": 33.8,
+     "D2": 0.615909090909091
+    },
+    "poll_level": "psi",
+    "lowess": null
+   },
+   "spread_calibration": {
+    "k": 1.08,
+    "ref_total": 0.1173,
+    "national_vote_share_before": 0.164,
+    "corr_nat_f": 0.5,
+    "sig_region": 0.02,
+    "rho_scale": 0.5,
+    "own_before": 0.102,
+    "own_after": 0.1193,
+    "tail_df": 5.0
+   }
+  },
+  "KS": {
+   "office": "senate",
+   "n_sims": 2000,
+   "margin": -1.76,
+   "win_d": 37.4,
+   "p10": -9.29,
+   "p90": 5.92,
+   "deterministic_margin": -1.8461809590613854,
+   "n_polls": 15,
+   "poll_house_index": 5.0,
+   "poll_avg": {
+    "D": 46.96892862034856,
+    "R": 47.43107137965145,
+    "O": 0.4,
+    "D2": 0.49755220996131944,
+    "third": 0.004219409282700422,
+    "method": "daily",
+    "psi": {
+     "D": 47.4,
+     "R": 47.0,
+     "D2": 0.5021186440677966
+    },
+    "poll_level": "lowess",
+    "lowess": {
+     "n": 15,
+     "imputed": 0,
+     "recent": -0.9022309872336284,
+     "balanced": -0.6979146418350778,
+     "long": -0.16875060734906266,
+     "eday_margin": -0.46214275930288895,
+     "newest": "2026-10-13"
+    }
+   },
+   "spread_calibration": {
+    "k": 0.99,
+    "ref_total": 0.1186,
+    "national_vote_share_before": 0.501,
+    "corr_nat_f": 0.5,
+    "sig_region": 0.02,
+    "rho_scale": 0.5,
+    "own_before": 0.07,
+    "own_after": 0.0975,
+    "tail_df": 5.0
+   }
+  },
+  "KSG": {
+   "office": "governor",
+   "n_sims": 2000,
+   "margin": 0.34,
+   "win_d": 51.37,
+   "p10": -8.05,
+   "p90": 8.52,
+   "deterministic_margin": 0.41452200051620025,
+   "n_polls": 7,
+   "poll_house_index": 4.0,
+   "poll_avg": {
+    "D": 46.5,
+    "R": 49.4,
+    "O": 0.1,
+    "D2": 0.48488008342022937,
+    "third": 0.0010416666666666667,
+    "method": "daily",
+    "psi": {
+     "D": 46.5,
+     "R": 49.4,
+     "D2": 0.48488008342022937
+    },
+    "poll_level": "psi",
+    "lowess": null
+   },
+   "spread_calibration": {
+    "k": 1.02,
+    "ref_total": 0.1238,
+    "national_vote_share_before": 0.171,
+    "corr_nat_f": 0.5,
+    "sig_region": 0.02,
+    "rho_scale": 0.5,
+    "own_before": 0.0849,
+    "own_after": 0.0982,
+    "tail_df": 5.0
+   }
+  },
+  "KY": {
+   "office": "senate",
+   "n_sims": 2000,
+   "margin": -21.61,
+   "win_d": 0.15,
+   "p10": -30.1,
+   "p90": -12.78,
+   "deterministic_margin": -22.182581613422407,
+   "n_polls": 2,
+   "poll_house_index": 0.0,
+   "poll_avg": {
+    "D": 38.8,
+    "R": 50.2,
+    "O": 0.0,
+    "D2": 0.43595505617977526,
+    "third": 0.0,
+    "method": "daily",
+    "psi": {
+     "D": 38.8,
+     "R": 50.2,
+     "D2": 0.43595505617977526
+    },
+    "poll_level": "psi",
+    "lowess": null
+   },
+   "spread_calibration": {
+    "k": 1.08,
+    "ref_total": 0.1288,
+    "national_vote_share_before": 0.453,
+    "corr_nat_f": 0.5,
+    "sig_region": 0.02,
+    "rho_scale": 0.5,
+    "own_before": 0.09,
+    "own_after": 0.1268,
+    "tail_df": 5.0
+   }
+  },
+  "LA": {
+   "office": "senate",
+   "n_sims": 2000,
+   "margin": -10.87,
+   "win_d": 5.05,
+   "p10": -18.78,
+   "p90": -2.55,
+   "deterministic_margin": -11.765034839893076,
+   "n_polls": 2,
+   "poll_house_index": 0.0,
+   "poll_avg": {
+    "D": 43.1,
+    "R": 48.9,
+    "O": 0.0,
+    "D2": 0.46847826086956523,
+    "third": 0.0,
+    "method": "daily",
+    "psi": {
+     "D": 43.1,
+     "R": 48.9,
+     "D2": 0.46847826086956523
+    },
+    "poll_level": "psi",
+    "lowess": null
+   },
+   "spread_calibration": {
+    "k": 1.08,
+    "ref_total": 0.1192,
+    "national_vote_share_before": 0.418,
+    "corr_nat_f": 0.5,
+    "sig_region": 0.02,
+    "rho_scale": 0.5,
+    "own_before": 0.09,
+    "own_after": 0.1205,
+    "tail_df": 5.0
+   }
+  },
+  "MA": {
+   "office": "senate",
+   "n_sims": 2000,
+   "margin": 33.71,
+   "win_d": 99.95,
+   "p10": 26.67,
+   "p90": 40.49,
+   "deterministic_margin": 33.45653366929822,
+   "n_polls": 11,
+   "poll_house_index": 2.0,
+   "poll_avg": {
+    "D": 52.929083322205415,
+    "R": 29.070916677794585,
+    "O": 0.9,
+    "D2": 0.6454766258805539,
+    "third": 0.010856453558504222,
+    "method": "daily",
+    "psi": {
+     "D": 53.7,
+     "R": 28.3,
+     "D2": 0.6548780487804878
+    },
+    "poll_level": "lowess",
+    "lowess": {
+     "n": 11,
+     "imputed": 0,
+     "recent": 23.24322901509574,
+     "balanced": 24.572906469965574,
+     "long": 24.268125063954223,
+     "eday_margin": 23.85816664441083,
+     "newest": "2026-09-19"
+    }
+   },
+   "spread_calibration": {
+    "k": 1.08,
+    "ref_total": 0.1063,
+    "national_vote_share_before": 0.578,
+    "corr_nat_f": 0.5,
+    "sig_region": 0.02,
+    "rho_scale": 0.5,
+    "own_before": 0.07,
+    "own_after": 0.1062,
+    "tail_df": 5.0
+   }
+  },
+  "MAG": {
+   "office": "governor",
+   "n_sims": 2000,
+   "margin": 26.38,
+   "win_d": 99.95,
+   "p10": 18.81,
+   "p90": 33.78,
+   "deterministic_margin": 25.969569748066178,
+   "n_polls": 6,
+   "poll_house_index": 2.0,
+   "poll_avg": {
+    "D": 53.9,
+    "R": 32.8,
+    "O": 0.2,
+    "D2": 0.621683967704729,
+    "third": 0.0023014959723820488,
+    "method": "daily",
+    "psi": {
+     "D": 53.9,
+     "R": 32.8,
+     "D2": 0.621683967704729
+    },
+    "poll_level": "psi",
+    "lowess": null
+   },
+   "spread_calibration": {
+    "k": 1.08,
+    "ref_total": 0.114,
+    "national_vote_share_before": 0.221,
+    "corr_nat_f": 0.5,
+    "sig_region": 0.02,
+    "rho_scale": 0.5,
+    "own_before": 0.0849,
+    "own_after": 0.1067,
+    "tail_df": 5.0
+   }
+  },
+  "MDG": {
+   "office": "governor",
+   "n_sims": 2000,
+   "margin": 35.8,
+   "win_d": 99.95,
+   "p10": 29.35,
+   "p90": 41.7,
+   "deterministic_margin": 36.14622788201616,
+   "n_polls": 2,
+   "poll_house_index": 1.0,
+   "poll_avg": {
+    "D": 50.9,
+    "R": 24.3,
+    "O": 10.9,
+    "D2": 0.6768617021276595,
+    "third": 0.12659698025551683,
+    "method": "daily",
+    "psi": {
+     "D": 50.9,
+     "R": 24.3,
+     "D2": 0.6768617021276595
+    },
+    "poll_level": "psi",
+    "lowess": null
+   },
+   "spread_calibration": {
+    "k": 1.08,
+    "ref_total": 0.1079,
+    "national_vote_share_before": 0.171,
+    "corr_nat_f": 0.5,
+    "sig_region": 0.02,
+    "rho_scale": 0.5,
+    "own_before": 0.102,
+    "own_after": 0.117,
+    "tail_df": 5.0
+   }
+  },
+  "ME": {
+   "office": "senate",
+   "n_sims": 2000,
+   "margin": 1.17,
+   "win_d": 60.58,
+   "p10": -5.7,
+   "p90": 7.69,
+   "deterministic_margin": 1.1690463637439592,
+   "n_polls": 26,
+   "poll_house_index": 14.5,
+   "poll_avg": {
+    "D": 48.65535775278209,
+    "R": 47.14464224721791,
+    "O": 0.2,
+    "D2": 0.5078847364591033,
+    "third": 0.0020833333333333333,
+    "method": "daily",
+    "psi": {
+     "D": 48.8,
+     "R": 47.0,
+     "D2": 0.5093945720250522
+    },
+    "poll_level": "lowess",
+    "lowess": {
+     "n": 26,
+     "imputed": 0,
+     "recent": 1.50083093514836,
+     "balanced": 1.405947115732013,
+     "long": 1.5173052191747138,
+     "eday_margin": 1.5107155055641723,
+     "newest": "2026-10-13"
+    }
+   },
+   "spread_calibration": {
+    "k": 0.9,
+    "ref_total": 0.1165,
+    "national_vote_share_before": 0.624,
+    "corr_nat_f": 0.5,
+    "sig_region": 0.02,
+    "rho_scale": 0.5,
+    "own_before": 0.07,
+    "own_after": 0.0909,
+    "tail_df": 5.0
+   }
+  },
+  "MEG": {
+   "office": "governor",
+   "n_sims": 2000,
+   "margin": 10.02,
+   "win_d": 95.12,
+   "p10": 2.38,
+   "p90": 17.41,
+   "deterministic_margin": 11.127336802697535,
+   "n_polls": 15,
+   "poll_house_index": 10.0,
+   "poll_avg": {
+    "D": 49.849501244582385,
+    "R": 40.150498755417615,
+    "O": 5.6,
+    "D2": 0.5538833471620265,
+    "third": 0.058577405857740586,
+    "method": "daily",
+    "psi": {
+     "D": 50.6,
+     "R": 39.4,
+     "D2": 0.5622222222222223
+    },
+    "poll_level": "lowess",
+    "lowess": {
+     "n": 15,
+     "imputed": 0,
+     "recent": 9.752411632450006,
+     "balanced": 9.71816534091186,
+     "long": 9.663396393641266,
+     "eday_margin": 9.699002489164762,
+     "newest": "2026-10-09"
+    }
+   },
+   "spread_calibration": {
+    "k": 0.9,
+    "ref_total": 0.115,
+    "national_vote_share_before": 0.217,
+    "corr_nat_f": 0.5,
+    "sig_region": 0.02,
+    "rho_scale": 0.5,
+    "own_before": 0.0849,
+    "own_after": 0.0819,
+    "tail_df": 5.0
+   }
+  },
+  "MI": {
+   "office": "senate",
+   "n_sims": 2000,
+   "margin": 3.34,
+   "win_d": 73.73,
+   "p10": -3.18,
+   "p90": 10.03,
+   "deterministic_margin": 4.0846205940210965,
+   "n_polls": 38,
+   "poll_house_index": 16.5,
+   "poll_avg": {
+    "D": 49.336322498026526,
+    "R": 46.56367750197348,
+    "O": 0.5,
+    "D2": 0.514455917601945,
+    "third": 0.005186721991701245,
+    "method": "daily",
+    "psi": {
+     "D": 49.1,
+     "R": 46.8,
+     "D2": 0.5119916579770594
+    },
+    "poll_level": "lowess",
+    "lowess": {
+     "n": 37,
+     "imputed": 1,
+     "recent": 2.4730119314679913,
+     "balanced": 2.8323653848955015,
+     "long": 2.972400372443077,
+     "eday_margin": 2.772644996053043,
+     "newest": "2026-10-09"
+    }
+   },
+   "spread_calibration": {
+    "k": 0.9,
+    "ref_total": 0.1168,
+    "national_vote_share_before": 0.576,
+    "corr_nat_f": 0.5,
+    "sig_region": 0.02,
+    "rho_scale": 0.5,
+    "own_before": 0.07,
+    "own_after": 0.0883,
+    "tail_df": 5.0
+   }
+  },
+  "MIG": {
+   "office": "governor",
+   "n_sims": 2000,
+   "margin": 13.17,
+   "win_d": 98.72,
+   "p10": 6.54,
+   "p90": 19.89,
+   "deterministic_margin": 13.251875768164055,
+   "n_polls": 29,
+   "poll_house_index": 13.0,
+   "poll_avg": {
+    "D": 53.486534803319074,
+    "R": 44.31346519668092,
+    "O": 0.6,
+    "D2": 0.5468970838785182,
+    "third": 0.006097560975609756,
+    "method": "daily",
+    "psi": {
+     "D": 53.3,
+     "R": 44.5,
+     "D2": 0.5449897750511248
+    },
+    "poll_level": "lowess",
+    "lowess": {
+     "n": 29,
+     "imputed": 0,
+     "recent": 10.22147747210387,
+     "balanced": 9.618152674366067,
+     "long": 8.474131029660992,
+     "eday_margin": 9.173069606638144,
+     "newest": "2026-10-08"
+    }
+   },
+   "spread_calibration": {
+    "k": 0.9,
+    "ref_total": 0.1204,
+    "national_vote_share_before": 0.217,
+    "corr_nat_f": 0.5,
+    "sig_region": 0.02,
+    "rho_scale": 0.5,
+    "own_before": 0.0849,
+    "own_after": 0.0816,
+    "tail_df": 5.0
+   }
+  },
+  "MN": {
+   "office": "senate",
+   "n_sims": 2000,
+   "margin": 7.28,
+   "win_d": 91.59,
+   "p10": 0.53,
+   "p90": 14.08,
+   "deterministic_margin": 7.257724251988101,
+   "n_polls": 13,
+   "poll_house_index": 6.5,
+   "poll_avg": {
+    "D": 47.24767526984611,
+    "R": 44.75232473015389,
+    "O": 1.8,
+    "D2": 0.5135616877157186,
+    "third": 0.019189765458422176,
+    "method": "daily",
+    "psi": {
+     "D": 47.9,
+     "R": 44.1,
+     "D2": 0.5206521739130434
+    },
+    "poll_level": "lowess",
+    "lowess": {
+     "n": 13,
+     "imputed": 0,
+     "recent": 2.42857545036442,
+     "balanced": 2.4956268357793543,
+     "long": 2.539867265910756,
+     "eday_margin": 2.4953505396922218,
+     "newest": "2026-10-10"
+    }
+   },
+   "spread_calibration": {
+    "k": 0.945,
+    "ref_total": 0.1099,
+    "national_vote_share_before": 0.553,
+    "corr_nat_f": 0.5,
+    "sig_region": 0.02,
+    "rho_scale": 0.5,
+    "own_before": 0.07,
+    "own_after": 0.0906,
+    "tail_df": 5.0
+   }
+  },
+  "MNG": {
+   "office": "governor",
+   "n_sims": 2000,
+   "margin": 15.52,
+   "win_d": 99.23,
+   "p10": 8.37,
+   "p90": 22.45,
+   "deterministic_margin": 15.65832873189649,
+   "n_polls": 6,
+   "poll_house_index": 4.0,
+   "poll_avg": {
+    "D": 48.3,
+    "R": 41.2,
+    "O": 2.3,
+    "D2": 0.5396648044692737,
+    "third": 0.02505446623093682,
+    "method": "daily",
+    "psi": {
+     "D": 48.3,
+     "R": 41.2,
+     "D2": 0.5396648044692737
+    },
+    "poll_level": "psi",
+    "lowess": null
+   },
+   "spread_calibration": {
+    "k": 1.02,
+    "ref_total": 0.11,
+    "national_vote_share_before": 0.199,
+    "corr_nat_f": 0.5,
+    "sig_region": 0.02,
+    "rho_scale": 0.5,
+    "own_before": 0.0849,
+    "own_after": 0.0967,
+    "tail_df": 5.0
+   }
+  },
+  "MS": {
+   "office": "senate",
+   "n_sims": 2000,
+   "margin": -5.36,
+   "win_d": 18.74,
+   "p10": -13.15,
+   "p90": 2.94,
+   "deterministic_margin": -6.160226353415105,
+   "n_polls": 3,
+   "poll_house_index": 1.0,
+   "poll_avg": {
+    "D": 48.2,
+    "R": 51.7,
+    "O": 0.0,
+    "D2": 0.4824824824824825,
+    "third": 0.0,
+    "method": "daily",
+    "psi": {
+     "D": 48.2,
+     "R": 51.7,
+     "D2": 0.4824824824824825
+    },
+    "poll_level": "psi",
+    "lowess": null
+   },
+   "spread_calibration": {
+    "k": 1.08,
+    "ref_total": 0.1064,
+    "national_vote_share_before": 0.411,
+    "corr_nat_f": 0.5,
+    "sig_region": 0.02,
+    "rho_scale": 0.5,
+    "own_before": 0.09,
+    "own_after": 0.1144,
+    "tail_df": 5.0
+   }
+  },
+  "MT": {
+   "office": "senate",
+   "n_sims": 2000,
+   "margin": -14.56,
+   "win_d": 0.65,
+   "p10": -20.86,
+   "p90": -8.14,
+   "deterministic_margin": -21.584545632634043,
+   "n_polls": 12,
+   "poll_house_index": 2.5,
+   "poll_avg": {
+    "D": 45.40945909371386,
+    "R": 44.09054090628614,
+    "O": 0.6,
+    "D2": 0.5073682580303225,
+    "third": 0.006659267480577137,
+    "method": "daily",
+    "split_share": 0.6175824175824176,
+    "psi": {
+     "D": 45.5,
+     "R": 44.0,
+     "D2": 0.5083798882681564
+    },
+    "poll_level": "lowess",
+    "lowess": {
+     "n": 12,
+     "imputed": 0,
+     "recent": 0.7035561759178677,
+     "balanced": 1.2584805025097592,
+     "long": 1.7291595284343,
+     "eday_margin": 1.318918187427727,
+     "newest": "2026-09-21"
+    }
+   },
+   "spread_calibration": {
+    "k": 1.065,
+    "ref_total": 0.1036,
+    "national_vote_share_before": 0.564,
+    "corr_nat_f": 0.5,
+    "sig_region": 0.02,
+    "rho_scale": 0.5,
+    "own_before": 0.07,
+    "own_after": 0.1024,
+    "tail_df": 5.0
+   }
+  },
+  "NC": {
+   "office": "senate",
+   "n_sims": 2000,
+   "margin": 11.07,
+   "win_d": 98.7,
+   "p10": 5.08,
+   "p90": 16.93,
+   "deterministic_margin": 10.622545619416108,
+   "n_polls": 43,
+   "poll_house_index": 11.0,
+   "poll_avg": {
+    "D": 51.03186547766969,
+    "R": 40.868134522330315,
+    "O": 1.8,
+    "D2": 0.5552977745121838,
+    "third": 0.0192102454642476,
+    "method": "daily",
+    "psi": {
+     "D": 50.4,
+     "R": 41.5,
+     "D2": 0.5484221980413493
+    },
+    "poll_level": "lowess",
+    "lowess": {
+     "n": 43,
+     "imputed": 0,
+     "recent": 10.532178873814136,
+     "balanced": 9.740307046067647,
+     "long": 9.91809900968954,
+     "eday_margin": 10.163730955339378,
+     "newest": "2026-10-09"
+    }
+   },
+   "spread_calibration": {
+    "k": 0.9,
+    "ref_total": 0.106,
+    "national_vote_share_before": 0.564,
+    "corr_nat_f": 0.5,
+    "sig_region": 0.02,
+    "rho_scale": 0.5,
+    "own_before": 0.07,
+    "own_after": 0.0844,
+    "tail_df": 5.0
+   }
+  },
+  "NE": {
+   "office": "senate",
+   "n_sims": 2000,
+   "margin": 1.0,
+   "win_d": 56.09,
+   "p10": -6.32,
+   "p90": 8.51,
+   "deterministic_margin": 1.0091572633513266,
+   "n_polls": 12,
+   "poll_house_index": 3.0,
+   "poll_avg": {
+    "D": 46.82216666701836,
+    "R": 47.17783333298164,
+    "O": 1.4,
+    "D2": 0.49810815603211017,
+    "third": 0.014675052410901467,
+    "method": "daily",
+    "psi": {
+     "D": 46.6,
+     "R": 47.4,
+     "D2": 0.4957446808510638
+    },
+    "poll_level": "lowess",
+    "lowess": {
+     "n": 12,
+     "imputed": 0,
+     "recent": -0.263796486707534,
+     "balanced": -0.09754687911144808,
+     "long": -0.41691345213379216,
+     "eday_margin": -0.3556666659632889,
+     "newest": "2026-10-03"
+    }
+   },
+   "spread_calibration": {
+    "k": 1.05,
+    "ref_total": 0.1101,
+    "national_vote_share_before": 0.587,
+    "corr_nat_f": 0.5,
+    "sig_region": 0.02,
+    "rho_scale": 0.5,
+    "own_before": 0.07,
+    "own_after": 0.1053,
+    "tail_df": 5.0
+   }
+  },
+  "NEG": {
+   "office": "governor",
+   "n_sims": 2000,
+   "margin": -3.15,
+   "win_d": 27.3,
+   "p10": -9.7,
+   "p90": 3.47,
+   "deterministic_margin": -3.1666385181957253,
+   "n_polls": 9,
+   "poll_house_index": 4.0,
+   "poll_avg": {
+    "D": 41.01992790735916,
+    "R": 42.880072092640845,
+    "O": 7.8,
+    "D2": 0.48891451617829745,
+    "third": 0.08505997818974918,
+    "method": "daily",
+    "psi": {
+     "D": 40.4,
+     "R": 43.5,
+     "D2": 0.4815256257449344
+    },
+    "poll_level": "lowess",
+    "lowess": {
+     "n": 9,
+     "imputed": 0,
+     "recent": -3.1396204411271924,
+     "balanced": -3.118385722133294,
+     "long": -1.0071600147180024,
+     "eday_margin": -1.8601441852816785,
+     "newest": "2026-10-03"
+    }
+   },
+   "spread_calibration": {
+    "k": 1.02,
+    "ref_total": 0.1002,
+    "national_vote_share_before": 0.21,
+    "corr_nat_f": 0.5,
+    "sig_region": 0.02,
+    "rho_scale": 0.5,
+    "own_before": 0.0849,
+    "own_after": 0.0951,
+    "tail_df": 5.0
+   }
+  },
+  "NH": {
+   "office": "senate",
+   "n_sims": 2000,
+   "margin": 10.09,
+   "win_d": 93.75,
+   "p10": 1.87,
+   "p90": 18.53,
+   "deterministic_margin": 9.24726291910872,
+   "n_polls": 24,
+   "poll_house_index": 4.0,
+   "poll_avg": {
+    "D": 49.32010303695361,
+    "R": 41.979896963046386,
+    "O": 1.9,
+    "D2": 0.5401982807990539,
+    "third": 0.0203862660944206,
+    "method": "daily",
+    "psi": {
+     "D": 49.3,
+     "R": 42.0,
+     "D2": 0.5399780941949617
+    },
+    "poll_level": "lowess",
+    "lowess": {
+     "n": 23,
+     "imputed": 0,
+     "recent": 6.499156046770502,
+     "balanced": 7.052733526776445,
+     "long": 7.900906091998372,
+     "eday_margin": 7.340206073907224,
+     "newest": "2026-10-03"
+    }
+   },
+   "spread_calibration": {
+    "k": 1.02,
+    "ref_total": 0.1231,
+    "national_vote_share_before": 0.626,
+    "corr_nat_f": 0.5,
+    "sig_region": 0.02,
+    "rho_scale": 0.5,
+    "own_before": 0.07,
+    "own_after": 0.1106,
+    "tail_df": 5.0
+   }
+  },
+  "NHG": {
+   "office": "governor",
+   "n_sims": 2000,
+   "margin": -11.89,
+   "win_d": 3.06,
+   "p10": -20.02,
+   "p90": -3.98,
+   "deterministic_margin": -8.40286097995952,
+   "n_polls": 10,
+   "poll_house_index": 4.0,
+   "poll_avg": {
+    "D": 42.7731966132686,
+    "R": 51.9268033867314,
+    "O": 0.2,
+    "D2": 0.45167050278002746,
+    "third": 0.002107481559536354,
+    "method": "daily",
+    "psi": {
+     "D": 43.1,
+     "R": 51.6,
+     "D2": 0.4551214361140444
+    },
+    "poll_level": "lowess",
+    "lowess": {
+     "n": 9,
+     "imputed": 0,
+     "recent": -9.803922149097936,
+     "balanced": -9.78913838118601,
+     "long": -8.720063189706035,
+     "eday_margin": -9.153606773462796,
+     "newest": "2026-10-01"
+    }
+   },
+   "spread_calibration": {
+    "k": 1.02,
+    "ref_total": 0.1246,
+    "national_vote_share_before": 0.231,
+    "corr_nat_f": 0.5,
+    "sig_region": 0.02,
+    "rho_scale": 0.5,
+    "own_before": 0.0849,
+    "own_after": 0.1019,
+    "tail_df": 5.0
+   }
+  },
+  "NJ": {
+   "office": "senate",
+   "n_sims": 2000,
+   "margin": 25.12,
+   "win_d": 99.8,
+   "p10": 16.05,
+   "p90": 34.55,
+   "deterministic_margin": 25.247151460460806,
+   "n_polls": 0,
+   "poll_house_index": 0.0,
+   "poll_avg": {
+    "D": NaN,
+    "R": NaN,
+    "O": NaN,
+    "D2": 0.6392730134336572,
+    "third": 0.02508054835949958,
+    "no_polls": true
+   },
+   "spread_calibration": {
+    "k": 1.0,
+    "ref_total": 0.1494,
+    "national_vote_share_before": 0.296,
+    "corr_nat_f": 0.5,
+    "sig_region": 0.02,
+    "rho_scale": 0.5,
+    "own_before": 0.11,
+    "own_after": 0.1291,
+    "tail_df": 5.0
+   }
+  },
+  "NM": {
+   "office": "senate",
+   "n_sims": 2000,
+   "margin": 24.6,
+   "win_d": 99.95,
+   "p10": 16.41,
+   "p90": 32.7,
+   "deterministic_margin": 24.17393853162269,
+   "n_polls": 2,
+   "poll_house_index": 1.5,
+   "poll_avg": {
+    "D": 53.7,
+    "R": 36.6,
+    "O": 0.0,
+    "D2": 0.5946843853820598,
+    "third": 0.0,
+    "method": "daily",
+    "psi": {
+     "D": 53.7,
+     "R": 36.6,
+     "D2": 0.5946843853820598
+    },
+    "poll_level": "psi",
+    "lowess": null
+   },
+   "spread_calibration": {
+    "k": 1.08,
+    "ref_total": 0.1206,
+    "national_vote_share_before": 0.444,
+    "corr_nat_f": 0.5,
+    "sig_region": 0.02,
+    "rho_scale": 0.5,
+    "own_before": 0.09,
+    "own_after": 0.1223,
+    "tail_df": 5.0
+   }
+  },
+  "NMG": {
+   "office": "governor",
+   "n_sims": 2000,
+   "margin": 17.48,
+   "win_d": 99.58,
+   "p10": 10.19,
+   "p90": 24.78,
+   "deterministic_margin": 17.025728789762084,
+   "n_polls": 5,
+   "poll_house_index": 2.0,
+   "poll_avg": {
+    "D": 49.3,
+    "R": 41.4,
+    "O": 0.0,
+    "D2": 0.5435501653803749,
+    "third": 0.0,
+    "method": "daily",
+    "psi": {
+     "D": 49.3,
+     "R": 41.4,
+     "D2": 0.5435501653803749
+    },
+    "poll_level": "psi",
+    "lowess": null
+   },
+   "spread_calibration": {
+    "k": 1.08,
+    "ref_total": 0.117,
+    "national_vote_share_before": 0.161,
+    "corr_nat_f": 0.5,
+    "sig_region": 0.02,
+    "rho_scale": 0.5,
+    "own_before": 0.0849,
+    "own_after": 0.1048,
+    "tail_df": 5.0
+   }
+  },
+  "NVG": {
+   "office": "governor",
+   "n_sims": 2000,
+   "margin": 3.4,
+   "win_d": 71.81,
+   "p10": -4.1,
+   "p90": 10.95,
+   "deterministic_margin": 3.248433939966148,
+   "n_polls": 13,
+   "poll_house_index": 2.0,
+   "poll_avg": {
+    "D": 41.43027269525491,
+    "R": 42.66972730474509,
+    "O": 4.7,
+    "D2": 0.49263106653097394,
+    "third": 0.05292792792792793,
+    "method": "daily",
+    "psi": {
+     "D": 41.8,
+     "R": 42.3,
+     "D2": 0.49702734839476814
+    },
+    "poll_level": "lowess",
+    "lowess": {
+     "n": 13,
+     "imputed": 0,
+     "recent": -2.544888176827506,
+     "balanced": -0.7410641911244804,
+     "long": -0.36916556459862027,
+     "eday_margin": -1.2394546094901746,
+     "newest": "2026-09-24"
+    }
+   },
+   "spread_calibration": {
+    "k": 1.08,
+    "ref_total": 0.1135,
+    "national_vote_share_before": 0.224,
+    "corr_nat_f": 0.5,
+    "sig_region": 0.02,
+    "rho_scale": 0.5,
+    "own_before": 0.0849,
+    "own_after": 0.1066,
+    "tail_df": 5.0
+   }
+  },
+  "NYG": {
+   "office": "governor",
+   "n_sims": 2000,
+   "margin": 14.24,
+   "win_d": 99.08,
+   "p10": 7.52,
+   "p90": 20.79,
+   "deterministic_margin": 13.895069910855327,
+   "n_polls": 19,
+   "poll_house_index": 5.5,
+   "poll_avg": {
+    "D": 50.296144063538776,
+    "R": 42.60385593646123,
+    "O": 0.2,
+    "D2": 0.5414009048820104,
+    "third": 0.0021482277121374865,
+    "method": "daily",
+    "psi": {
+     "D": 52.4,
+     "R": 40.5,
+     "D2": 0.5640473627556511
+    },
+    "poll_level": "lowess",
+    "lowess": {
+     "n": 19,
+     "imputed": 0,
+     "recent": 5.332814332343936,
+     "balanced": 7.6994711670155365,
+     "long": 9.265270656899956,
+     "eday_margin": 7.692288127077548,
+     "newest": "2026-10-10"
+    }
+   },
+   "spread_calibration": {
+    "k": 0.975,
+    "ref_total": 0.1082,
+    "national_vote_share_before": 0.193,
+    "corr_nat_f": 0.5,
+    "sig_region": 0.02,
+    "rho_scale": 0.5,
+    "own_before": 0.0849,
+    "own_after": 0.0904,
+    "tail_df": 5.0
+   }
+  },
+  "OH": {
+   "office": "senate",
+   "n_sims": 2000,
+   "margin": 4.02,
+   "win_d": 80.36,
+   "p10": -1.86,
+   "p90": 9.84,
+   "deterministic_margin": 3.7437767128447064,
+   "n_polls": 28,
+   "poll_house_index": 10.5,
+   "poll_avg": {
+    "D": 47.09720104008362,
+    "R": 44.10279895991637,
+    "O": 3.0,
+    "D2": 0.5164166780710924,
+    "third": 0.03184713375796179,
+    "method": "daily",
+    "psi": {
+     "D": 46.9,
+     "R": 44.3,
+     "D2": 0.5142543859649124
+    },
+    "poll_level": "lowess",
+    "lowess": {
+     "n": 27,
+     "imputed": 0,
+     "recent": 3.425941113820023,
+     "balanced": 3.275948271901753,
+     "long": 2.706709391065395,
+     "eday_margin": 2.994402080167246,
+     "newest": "2026-10-05"
+    }
+   },
+   "spread_calibration": {
+    "k": 0.9,
+    "ref_total": 0.1084,
+    "national_vote_share_before": 0.594,
+    "corr_nat_f": 0.5,
+    "sig_region": 0.02,
+    "rho_scale": 0.5,
+    "own_before": 0.07,
+    "own_after": 0.0866,
+    "tail_df": 5.0
+   }
+  },
+  "OHG": {
+   "office": "governor",
+   "n_sims": 2000,
+   "margin": 3.84,
+   "win_d": 76.34,
+   "p10": -2.77,
+   "p90": 10.64,
+   "deterministic_margin": 3.727949390140978,
+   "n_polls": 24,
+   "poll_house_index": 7.0,
+   "poll_avg": {
+    "D": 48.73163706744522,
+    "R": 45.368362932554774,
+    "O": 2.2,
+    "D2": 0.5178707446062192,
+    "third": 0.022845275181723784,
+    "method": "daily",
+    "psi": {
+     "D": 47.4,
+     "R": 46.7,
+     "D2": 0.5037194473963869
+    },
+    "poll_level": "lowess",
+    "lowess": {
+     "n": 24,
+     "imputed": 0,
+     "recent": 3.0664826797086304,
+     "balanced": 3.2798359293441663,
+     "long": 3.561135105011651,
+     "eday_margin": 3.363274134890443,
+     "newest": "2026-10-05"
+    }
+   },
+   "spread_calibration": {
+    "k": 0.93,
+    "ref_total": 0.1079,
+    "national_vote_share_before": 0.203,
+    "corr_nat_f": 0.5,
+    "sig_region": 0.02,
+    "rho_scale": 0.5,
+    "own_before": 0.0849,
+    "own_after": 0.0852,
+    "tail_df": 5.0
+   }
+  },
+  "OK": {
+   "office": "senate",
+   "n_sims": 2000,
+   "margin": -26.93,
+   "win_d": 0.05,
+   "p10": -33.89,
+   "p90": -19.64,
+   "deterministic_margin": -27.252484329613218,
+   "n_polls": 1,
+   "poll_house_index": 0.0,
+   "poll_avg": {
+    "D": 24.9,
+    "R": 49.1,
+    "O": 8.0,
+    "D2": 0.3364864864864865,
+    "third": 0.0975609756097561,
+    "method": "daily",
+    "psi": {
+     "D": 24.9,
+     "R": 49.1,
+     "D2": 0.3364864864864865
+    },
+    "poll_level": "psi",
+    "lowess": null
+   },
+   "spread_calibration": {
+    "k": 1.08,
+    "ref_total": 0.1155,
+    "national_vote_share_before": 0.431,
+    "corr_nat_f": 0.5,
+    "sig_region": 0.02,
+    "rho_scale": 0.5,
+    "own_before": 0.09,
+    "own_after": 0.1193,
+    "tail_df": 5.0
+   }
+  },
+  "OKG": {
+   "office": "governor",
+   "n_sims": 2000,
+   "margin": -10.81,
+   "win_d": 7.76,
+   "p10": -19.94,
+   "p90": -1.29,
+   "deterministic_margin": -11.206892601344485,
+   "n_polls": 0,
+   "poll_house_index": 0.0,
+   "poll_avg": {
+    "D": NaN,
+    "R": NaN,
+    "O": NaN,
+    "D2": 0.4431858488883057,
+    "third": 0.031037337616816943,
+    "no_polls": true
+   },
+   "spread_calibration": {
+    "k": 1.0,
+    "ref_total": 0.1493,
+    "national_vote_share_before": 0.117,
+    "corr_nat_f": 0.5,
+    "sig_region": 0.02,
+    "rho_scale": 0.5,
+    "own_before": 0.12,
+    "own_after": 0.1273,
+    "tail_df": 5.0
+   }
+  },
+  "OR": {
+   "office": "senate",
+   "n_sims": 2000,
+   "margin": 28.32,
+   "win_d": 99.95,
+   "p10": 19.78,
+   "p90": 36.73,
+   "deterministic_margin": 27.96976341637813,
+   "n_polls": 0,
+   "poll_house_index": 0.0,
+   "poll_avg": {
+    "D": NaN,
+    "R": NaN,
+    "O": NaN,
+    "D2": 0.6679454930931604,
+    "third": 0.036106078695516394,
+    "no_polls": true
+   },
+   "spread_calibration": {
+    "k": 1.0,
+    "ref_total": 0.1378,
+    "national_vote_share_before": 0.35,
+    "corr_nat_f": 0.5,
+    "sig_region": 0.02,
+    "rho_scale": 0.5,
+    "own_before": 0.11,
+    "own_after": 0.1292,
+    "tail_df": 5.0
+   }
+  },
+  "ORG": {
+   "office": "governor",
+   "n_sims": 2000,
+   "margin": 8.17,
+   "win_d": 90.41,
+   "p10": 0.29,
+   "p90": 15.89,
+   "deterministic_margin": 7.490596417068957,
+   "n_polls": 5,
+   "poll_house_index": 2.0,
+   "poll_avg": {
+    "D": 44.7,
+    "R": 45.1,
+    "O": 3.1,
+    "D2": 0.4977728285077951,
+    "third": 0.03336921420882669,
+    "method": "daily",
+    "psi": {
+     "D": 44.7,
+     "R": 45.1,
+     "D2": 0.4977728285077951
+    },
+    "poll_level": "psi",
+    "lowess": null
+   },
+   "spread_calibration": {
+    "k": 1.08,
+    "ref_total": 0.1219,
+    "national_vote_share_before": 0.176,
+    "corr_nat_f": 0.5,
+    "sig_region": 0.02,
+    "rho_scale": 0.5,
+    "own_before": 0.0849,
+    "own_after": 0.1072,
+    "tail_df": 5.0
+   }
+  },
+  "PAG": {
+   "office": "governor",
+   "n_sims": 2000,
+   "margin": 23.6,
+   "win_d": 99.95,
+   "p10": 17.34,
+   "p90": 30.02,
+   "deterministic_margin": 23.740350111299534,
+   "n_polls": 15,
+   "poll_house_index": 5.5,
+   "poll_avg": {
+    "D": 55.67896196419896,
+    "R": 33.92103803580103,
+    "O": 0.9,
+    "D2": 0.6214169862075777,
+    "third": 0.00994475138121547,
+    "method": "daily",
+    "psi": {
+     "D": 55.2,
+     "R": 34.4,
+     "D2": 0.6160714285714286
+    },
+    "poll_level": "lowess",
+    "lowess": {
+     "n": 15,
+     "imputed": 0,
+     "recent": 22.76918472639357,
+     "balanced": 20.957328052778298,
+     "long": 21.083750063067512,
+     "eday_margin": 21.757923928397936,
+     "newest": "2026-10-03"
+    }
+   },
+   "spread_calibration": {
+    "k": 0.975,
+    "ref_total": 0.1062,
+    "national_vote_share_before": 0.216,
+    "corr_nat_f": 0.5,
+    "sig_region": 0.02,
+    "rho_scale": 0.5,
+    "own_before": 0.0849,
+    "own_after": 0.0913,
+    "tail_df": 5.0
+   }
+  },
+  "RI": {
+   "office": "senate",
+   "n_sims": 2000,
+   "margin": 38.92,
+   "win_d": 99.95,
+   "p10": 32.08,
+   "p90": 46.19,
+   "deterministic_margin": 38.579891393779825,
+   "n_polls": 5,
+   "poll_house_index": 2.0,
+   "poll_avg": {
+    "D": 59.1,
+    "R": 24.9,
+    "O": 7.0,
+    "D2": 0.7035714285714286,
+    "third": 0.07692307692307693,
+    "method": "daily",
+    "psi": {
+     "D": 59.1,
+     "R": 24.9,
+     "D2": 0.7035714285714286
+    },
+    "poll_level": "psi",
+    "lowess": null
+   },
+   "spread_calibration": {
+    "k": 1.08,
+    "ref_total": 0.1172,
+    "national_vote_share_before": 0.568,
+    "corr_nat_f": 0.5,
+    "sig_region": 0.02,
+    "rho_scale": 0.5,
+    "own_before": 0.07,
+    "own_after": 0.1124,
+    "tail_df": 5.0
+   }
+  },
+  "RIG": {
+   "office": "governor",
+   "n_sims": 2000,
+   "margin": 12.08,
+   "win_d": 98.06,
+   "p10": 5.28,
+   "p90": 18.61,
+   "deterministic_margin": 15.42588834993687,
+   "n_polls": 4,
+   "poll_house_index": 2.0,
+   "poll_avg": {
+    "D": 43.8,
+    "R": 32.1,
+    "O": 13.6,
+    "D2": 0.5770750988142291,
+    "third": 0.15195530726256984,
+    "method": "daily",
+    "psi": {
+     "D": 43.8,
+     "R": 32.1,
+     "D2": 0.5770750988142291
+    },
+    "poll_level": "psi",
+    "lowess": null
+   },
+   "spread_calibration": {
+    "k": 1.08,
+    "ref_total": 0.0985,
+    "national_vote_share_before": 0.162,
+    "corr_nat_f": 0.5,
+    "sig_region": 0.02,
+    "rho_scale": 0.5,
+    "own_before": 0.0849,
+    "own_after": 0.0993,
+    "tail_df": 5.0
+   }
+  },
+  "SC": {
+   "office": "senate",
+   "n_sims": 2000,
+   "margin": -1.12,
+   "win_d": 40.49,
+   "p10": -9.08,
+   "p90": 7.04,
+   "deterministic_margin": -1.79054427570739,
+   "n_polls": 7,
+   "poll_house_index": 1.0,
+   "poll_avg": {
+    "D": 44.8,
+    "R": 46.1,
+    "O": 3.6,
+    "D2": 0.4928492849284928,
+    "third": 0.0380952380952381,
+    "method": "daily",
+    "psi": {
+     "D": 44.8,
+     "R": 46.1,
+     "D2": 0.4928492849284928
+    },
+    "poll_level": "psi",
+    "lowess": null
+   },
+   "spread_calibration": {
+    "k": 1.08,
+    "ref_total": 0.115,
+    "national_vote_share_before": 0.52,
+    "corr_nat_f": 0.5,
+    "sig_region": 0.02,
+    "rho_scale": 0.5,
+    "own_before": 0.07,
+    "own_after": 0.1089,
+    "tail_df": 5.0
+   }
+  },
+  "SCG": {
+   "office": "governor",
+   "n_sims": 2000,
+   "margin": -7.1,
+   "win_d": 14.71,
+   "p10": -15.59,
+   "p90": 1.72,
+   "deterministic_margin": -7.646725365327434,
+   "n_polls": 4,
+   "poll_house_index": 2.0,
+   "poll_avg": {
+    "D": 35.0,
+    "R": 45.3,
+    "O": 2.0,
+    "D2": 0.43586550435865506,
+    "third": 0.024301336573511544,
+    "method": "daily",
+    "psi": {
+     "D": 35.0,
+     "R": 45.3,
+     "D2": 0.43586550435865506
+    },
+    "poll_level": "psi",
+    "lowess": null
+   },
+   "spread_calibration": {
+    "k": 1.08,
+    "ref_total": 0.1326,
+    "national_vote_share_before": 0.179,
+    "corr_nat_f": 0.5,
+    "sig_region": 0.02,
+    "rho_scale": 0.5,
+    "own_before": 0.0849,
+    "own_after": 0.1111,
+    "tail_df": 5.0
+   }
+  },
+  "SD": {
+   "office": "senate",
+   "n_sims": 2000,
+   "margin": -10.98,
+   "win_d": 6.28,
+   "p10": -19.34,
+   "p90": -1.75,
+   "deterministic_margin": -11.35786603956172,
+   "n_polls": 5,
+   "poll_house_index": 1.0,
+   "poll_avg": {
+    "D": 41.8,
+    "R": 44.4,
+    "O": 0.0,
+    "D2": 0.4849187935034803,
+    "third": 0.0,
+    "method": "daily",
+    "psi": {
+     "D": 41.8,
+     "R": 44.4,
+     "D2": 0.4849187935034803
+    },
+    "poll_level": "psi",
+    "lowess": null
+   },
+   "spread_calibration": {
+    "k": 1.08,
+    "ref_total": 0.1319,
+    "national_vote_share_before": 0.509,
+    "corr_nat_f": 0.5,
+    "sig_region": 0.02,
+    "rho_scale": 0.5,
+    "own_before": 0.07,
+    "own_after": 0.1185,
+    "tail_df": 5.0
+   }
+  },
+  "SDG": {
+   "office": "governor",
+   "n_sims": 2000,
+   "margin": -7.87,
+   "win_d": 13.82,
+   "p10": -16.9,
+   "p90": 1.75,
+   "deterministic_margin": -8.362396482817907,
+   "n_polls": 1,
+   "poll_house_index": 0.0,
+   "poll_avg": {
+    "D": 42.5,
+    "R": 52.5,
+    "O": 0.0,
+    "D2": 0.4473684210526316,
+    "third": 0.0,
+    "method": "daily",
+    "psi": {
+     "D": 42.5,
+     "R": 52.5,
+     "D2": 0.4473684210526316
+    },
+    "poll_level": "psi",
+    "lowess": null
+   },
+   "spread_calibration": {
+    "k": 1.08,
+    "ref_total": 0.1485,
+    "national_vote_share_before": 0.128,
+    "corr_nat_f": 0.5,
+    "sig_region": 0.02,
+    "rho_scale": 0.5,
+    "own_before": 0.102,
+    "own_after": 0.1267,
+    "tail_df": 5.0
+   }
+  },
+  "TN": {
+   "office": "senate",
+   "n_sims": 2000,
+   "margin": -27.94,
+   "win_d": 0.05,
+   "p10": -35.2,
+   "p90": -20.6,
+   "deterministic_margin": -28.455822636499683,
+   "n_polls": 1,
+   "poll_house_index": 0.5,
+   "poll_avg": {
+    "D": 31.9,
+    "R": 50.1,
+    "O": 6.0,
+    "D2": 0.3890243902439024,
+    "third": 0.06818181818181818,
+    "method": "daily",
+    "psi": {
+     "D": 31.9,
+     "R": 50.1,
+     "D2": 0.3890243902439024
+    },
+    "poll_level": "psi",
+    "lowess": null
+   },
+   "spread_calibration": {
+    "k": 1.08,
+    "ref_total": 0.1097,
+    "national_vote_share_before": 0.436,
+    "corr_nat_f": 0.5,
+    "sig_region": 0.02,
+    "rho_scale": 0.5,
+    "own_before": 0.09,
+    "own_after": 0.1168,
+    "tail_df": 5.0
+   }
+  },
+  "TNG": {
+   "office": "governor",
+   "n_sims": 2000,
+   "margin": -12.17,
+   "win_d": 2.08,
+   "p10": -19.68,
+   "p90": -4.55,
+   "deterministic_margin": -12.344181518607115,
+   "n_polls": 3,
+   "poll_house_index": 1.5,
+   "poll_avg": {
+    "D": 35.4,
+    "R": 47.1,
+    "O": 11.1,
+    "D2": 0.4290909090909091,
+    "third": 0.1185897435897436,
+    "method": "daily",
+    "psi": {
+     "D": 35.4,
+     "R": 47.1,
+     "D2": 0.4290909090909091
+    },
+    "poll_level": "psi",
+    "lowess": null
+   },
+   "spread_calibration": {
+    "k": 1.08,
+    "ref_total": 0.1127,
+    "national_vote_share_before": 0.135,
+    "corr_nat_f": 0.5,
+    "sig_region": 0.02,
+    "rho_scale": 0.5,
+    "own_before": 0.102,
+    "own_after": 0.1169,
+    "tail_df": 5.0
+   }
+  },
+  "TX": {
+   "office": "senate",
+   "n_sims": 2000,
+   "margin": 1.62,
+   "win_d": 62.41,
+   "p10": -4.73,
+   "p90": 7.84,
+   "deterministic_margin": 1.0314087415886632,
+   "n_polls": 55,
+   "poll_house_index": 18.0,
+   "poll_avg": {
+    "D": 48.68308268456635,
+    "R": 47.616917315433646,
+    "O": 1.0,
+    "D2": 0.5055356457379684,
+    "third": 0.010277492291880781,
+    "method": "daily",
+    "psi": {
+     "D": 48.8,
+     "R": 47.5,
+     "D2": 0.5067497403946002
+    },
+    "poll_level": "lowess",
+    "lowess": {
+     "n": 54,
+     "imputed": 0,
+     "recent": 0.5993452379434631,
+     "balanced": 1.1856967027321306,
+     "long": 1.377378789925538,
+     "eday_margin": 1.066165369132708,
+     "newest": "2026-10-13"
+    }
+   },
+   "spread_calibration": {
+    "k": 0.9,
+    "ref_total": 0.1159,
+    "national_vote_share_before": 0.408,
+    "corr_nat_f": 0.5,
+    "sig_region": 0.02,
+    "rho_scale": 0.5,
+    "own_before": 0.07,
+    "own_after": 0.0778,
+    "tail_df": 5.0
+   }
+  },
+  "TXG": {
+   "office": "governor",
+   "n_sims": 2000,
+   "margin": -1.72,
+   "win_d": 34.16,
+   "p10": -7.45,
+   "p90": 4.25,
+   "deterministic_margin": -2.1911910309232354,
+   "n_polls": 45,
+   "poll_house_index": 15.0,
+   "poll_avg": {
+    "D": 47.383570636421396,
+    "R": 49.51642936357861,
+    "O": 0.5,
+    "D2": 0.4889945370115727,
+    "third": 0.00513347022587269,
+    "method": "daily",
+    "psi": {
+     "D": 46.6,
+     "R": 50.3,
+     "D2": 0.4809081527347781
+    },
+    "poll_level": "lowess",
+    "lowess": {
+     "n": 46,
+     "imputed": 2,
+     "recent": -2.198856050446376,
+     "balanced": -1.7941277631622317,
+     "long": -2.0888605116310925,
+     "eday_margin": -2.132858727157206,
+     "newest": "2026-10-09"
+    }
+   },
+   "spread_calibration": {
+    "k": 0.9,
+    "ref_total": 0.1043,
+    "national_vote_share_before": 0.178,
+    "corr_nat_f": 0.5,
+    "sig_region": 0.02,
+    "rho_scale": 0.5,
+    "own_before": 0.0849,
+    "own_after": 0.0803,
+    "tail_df": 5.0
+   }
+  },
+  "VA": {
+   "office": "senate",
+   "n_sims": 2000,
+   "margin": 20.48,
+   "win_d": 99.9,
+   "p10": 13.39,
+   "p90": 27.74,
+   "deterministic_margin": 20.609297032303253,
+   "n_polls": 2,
+   "poll_house_index": 0.0,
+   "poll_avg": {
+    "D": 51.2,
+    "R": 32.8,
+    "O": 3.0,
+    "D2": 0.6095238095238096,
+    "third": 0.034482758620689655,
+    "method": "daily",
+    "psi": {
+     "D": 51.2,
+     "R": 32.8,
+     "D2": 0.6095238095238096
+    },
+    "poll_level": "psi",
+    "lowess": null
+   },
+   "spread_calibration": {
+    "k": 1.08,
+    "ref_total": 0.1094,
+    "national_vote_share_before": 0.441,
+    "corr_nat_f": 0.5,
+    "sig_region": 0.02,
+    "rho_scale": 0.5,
+    "own_before": 0.09,
+    "own_after": 0.1168,
+    "tail_df": 5.0
+   }
+  },
+  "VTG": {
+   "office": "governor",
+   "n_sims": 2000,
+   "margin": -9.32,
+   "win_d": 7.08,
+   "p10": -17.37,
+   "p90": -1.01,
+   "deterministic_margin": -10.51766489764973,
+   "n_polls": 6,
+   "poll_house_index": 3.0,
+   "poll_avg": {
+    "D": 41.1,
+    "R": 45.5,
+    "O": 2.8,
+    "D2": 0.4745958429561201,
+    "third": 0.03131991051454139,
+    "method": "daily",
+    "psi": {
+     "D": 41.1,
+     "R": 45.5,
+     "D2": 0.4745958429561201
+    },
+    "poll_level": "psi",
+    "lowess": null
+   },
+   "spread_calibration": {
+    "k": 1.05,
+    "ref_total": 0.1209,
+    "national_vote_share_before": 0.242,
+    "corr_nat_f": 0.5,
+    "sig_region": 0.02,
+    "rho_scale": 0.5,
+    "own_before": 0.0849,
+    "own_after": 0.1059,
+    "tail_df": 5.0
+   }
+  },
+  "WIG": {
+   "office": "governor",
+   "n_sims": 2000,
+   "margin": 2.4,
+   "win_d": 65.66,
+   "p10": -5.73,
+   "p90": 10.8,
+   "deterministic_margin": 2.6496842183541105,
+   "n_polls": 6,
+   "poll_house_index": 2.0,
+   "poll_avg": {
+    "D": 48.2,
+    "R": 44.9,
+    "O": 0.3,
+    "D2": 0.5177228786251343,
+    "third": 0.0032119914346895075,
+    "method": "daily",
+    "psi": {
+     "D": 48.2,
+     "R": 44.9,
+     "D2": 0.5177228786251343
+    },
+    "poll_level": "psi",
+    "lowess": null
+   },
+   "spread_calibration": {
+    "k": 1.08,
+    "ref_total": 0.1153,
+    "national_vote_share_before": 0.19,
+    "corr_nat_f": 0.5,
+    "sig_region": 0.02,
+    "rho_scale": 0.5,
+    "own_before": 0.0849,
+    "own_after": 0.1057,
+    "tail_df": 5.0
+   }
+  },
+  "WV": {
+   "office": "senate",
+   "n_sims": 2000,
+   "margin": -32.84,
+   "win_d": 0.07,
+   "p10": -41.77,
+   "p90": -23.66,
+   "deterministic_margin": -34.044003483924726,
+   "n_polls": 0,
+   "poll_house_index": 0.0,
+   "poll_avg": {
+    "D": NaN,
+    "R": NaN,
+    "O": NaN,
+    "D2": 0.31459630724156146,
+    "third": 0.03477795215000748,
+    "no_polls": true
+   },
+   "spread_calibration": {
+    "k": 1.0,
+    "ref_total": 0.1591,
+    "national_vote_share_before": 0.348,
+    "corr_nat_f": 0.5,
+    "sig_region": 0.02,
+    "rho_scale": 0.5,
+    "own_before": 0.11,
+    "own_after": 0.1353,
+    "tail_df": 5.0
+   }
+  },
+  "WY": {
+   "office": "senate",
+   "n_sims": 2000,
+   "margin": -38.72,
+   "win_d": 0.08,
+   "p10": -45.83,
+   "p90": -31.29,
+   "deterministic_margin": -40.0008284889742,
+   "n_polls": 0,
+   "poll_house_index": 0.0,
+   "poll_avg": {
+    "D": NaN,
+    "R": NaN,
+    "O": NaN,
+    "D2": 0.2973087953246376,
+    "third": 0.0,
+    "no_polls": true
+   },
+   "spread_calibration": {
+    "k": 1.0,
+    "ref_total": 0.1412,
+    "national_vote_share_before": 0.372,
+    "corr_nat_f": 0.5,
+    "sig_region": 0.02,
+    "rho_scale": 0.5,
+    "own_before": 0.11,
+    "own_after": 0.1314,
+    "tail_df": 5.0
+   }
+  },
+  "WYG": {
+   "office": "governor",
+   "n_sims": 2000,
+   "margin": -23.36,
+   "win_d": 0.13,
+   "p10": -31.75,
+   "p90": -14.57,
+   "deterministic_margin": -24.161421491998155,
+   "n_polls": 0,
+   "poll_house_index": 0.0,
+   "poll_avg": {
+    "D": NaN,
+    "R": NaN,
+    "O": NaN,
+    "D2": 0.382972575540357,
+    "third": 0.0772817604123265,
+    "no_polls": true
+   },
+   "spread_calibration": {
+    "k": 1.0,
+    "ref_total": 0.1318,
+    "national_vote_share_before": 0.128,
+    "corr_nat_f": 0.5,
+    "sig_region": 0.02,
+    "rho_scale": 0.5,
+    "own_before": 0.12,
+    "own_after": 0.1262,
+    "tail_df": 5.0
+   }
+  }
+ }
+}
