@@ -123,7 +123,7 @@ export function llmsText(full: boolean): string {
     `* Governor polling averages: ${U("/polls/governor")}`,
     `* Generic ballot average: ${U("/polls/generic-ballot")}`,
     `* Trump approval average: ${U("/polls/approval")}`,
-    `* Early vote tracker: ${U("/maps/early-vote")}`,
+    `* Early vote tracker, with each state against its 2022 and 2024 pace on the same day before the election: ${U("/maps/early-vote")}`,
     `* Electoral map builder: ${U("/maps/electoral")}`,
     `* Live election results: ${U("/results")}`,
     `* On Point Polling Ohio poll, October 2026, Brown 46.6 Husted 42.3 for Senate and Acton 47.9 Ramaswamy 43.1 for governor among 635 likely voters: ${U("/tpsi/polls/ohio-2026")}`,

@@ -14,6 +14,7 @@ import {
 } from "./lib";
 import Electorate, { EarlyDemographics, ELECTORATE_CSS, useElectorate, type ActualUnit, type P3 } from "./Electorate";
 import AdjustedForecast, { ADJ_CSS } from "./Adjusted";
+import PaceCompare, { PACE_CSS } from "./Pace";
 import { KpiStrip, TopCards, SidePanels, DASH_CSS, centroidOf, paceFill, leadFill, getForecastRaces, type DashView, type FcRace } from "./Dashboard";
 
 const MONO = "var(--font-m)";
@@ -792,7 +793,7 @@ export default function EarlyVoteDesk() {
 
   return (
     <div className="opp ev-page">
-      <style>{CSS + ELECTORATE_CSS + DASH_CSS + ADJ_CSS}</style>
+      <style>{CSS + ELECTORATE_CSS + DASH_CSS + ADJ_CSS + PACE_CSS}</style>
 
       <div className="ev-shell">
         <nav className="crumbs" aria-label="Breadcrumb">
@@ -809,6 +810,10 @@ export default function EarlyVoteDesk() {
             {!national ? <button className="ev-link" onClick={() => setScope("US")}>Back to all states</button> : <span>Click a state for its counties</span>}
           </div>
         </header>
+
+        <PaceCompare scope={scope} ret={natl.returned} inp={natl.inperson}
+          snapshot={natl.returned?.snapshot_date ?? natl.inperson?.snapshot_date ?? data?.snapshot_date}
+          onOpen={(k) => { setScope(k); window.scrollTo({ top: 0, behavior: "smooth" }); }} />
 
         <KpiStrip view={view} setView={setView} mail={mailN} inperson={inN} requested={reqN} exp={exp} />
         <TopCards scope={scope} E={E} calc={calc} races={races} reportedShare={party.reported} cast={mailN + inN} expTotal={exp?.total ?? 0} />
