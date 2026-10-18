@@ -7,6 +7,8 @@ type Redirect = { source: string; destination: string; permanent: boolean };
 const p = (source: string, destination: string, permanent = true): Redirect => ({ source, destination, permanent });
 
 export const redirects: Redirect[] = [
+  // short address for the swingometer
+  p("/swingometer", "/forecast/swingometer", false),
   // polls
   p("/polling/donaldtrumpapproval", "/polls/approval"),
   p("/polling/jdvanceapproval", "/polls/approval/vance"),

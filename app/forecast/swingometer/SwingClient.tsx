@@ -4,7 +4,6 @@
 import Link from "next/link";
 import { useCallback, useDeferredValue, useEffect, useMemo, useRef, useState } from "react";
 import Hemicycle, { probFill, type HemiSeat } from "@/app/components/opp/Hemicycle";
-import { TILE } from "@/app/components/opp/LegisTiles";
 import type { SwingData, SwingRace } from "./data";
 import "./swing.css";
 
@@ -65,6 +64,11 @@ const sgn = (x: number, dig = 1) => (Math.abs(x) < 0.05 ? "0.0" : `${x > 0 ? "+"
 const shiftLabel = (v: number) => (Math.abs(v) < 0.05 ? "Forecast" : `${v > 0 ? "D" : "R"} +${Math.abs(v).toFixed(1)}`);
 const n0 = (n: number) => Math.round(n).toLocaleString("en-US");
 const OFFICE: Record<Office, string> = { s: "Senate", g: "Governor", h: "House" };
+const DIM_GROUPS: [string, string[]][] = [
+  ["Will they vote", ["voteprop", "partyprop", "prop", "history"]],
+  ["How they lean", ["party", "vote24", "approval"]],
+  ["Who they are", ["race", "age", "edu", "raceedu", "gender", "income"]],
+];
 
 // ---------- scenario helpers ----------
 function emptyShifts(data: SwingData): Shifts {
@@ -74,14 +78,50 @@ function emptyShifts(data: SwingData): Shifts {
 }
 const isZero = (sc: Scenario) => !sc.overall && Object.values(sc.shifts).every((s) => s.m.every((v) => !v) && s.t.every((v) => !v));
 
-type Preset = { key: string; label: string; note: string; set: (s: Shifts) => { overall?: number } | void };
+type Preset = { key: string; cat: "Turnout" | "Persuasion" | "Environment"; label: string; note: string; overall?: number; moves?: [string, number, "m" | "t", number][] };
+// group indexes follow DIMS in data.ts
 const PRESETS: Preset[] = [
-  { key: "young", label: "Young voters stay home", note: "Turnout under 30 falls a quarter and new voters a fifth.", set: (s) => { s.age.t[0] = -25; s.history.t[3] = -20; } },
-  { key: "latino", label: "Latino voters swing right", note: "Latino voters move 8 points toward Republicans.", set: (s) => { s.race.m[2] = -8; } },
-  { key: "diploma", label: "The diploma divide widens", note: "College graduates move 4 points left, everyone else 4 points right.", set: (s) => { s.edu.m[0] = 4; s.edu.m[1] = -4; } },
-  { key: "indep", label: "Independents break right", note: "Independents move 10 points toward Republicans.", set: (s) => { s.party.m[2] = -10; } },
-  { key: "surge", label: "Midterm surge voters show up", note: "Voters who skipped 2022 turn out 20% more, new voters 25% more.", set: (s) => { s.history.t[1] = 20; s.history.t[3] = 25; } },
-  { key: "black", label: "Black turnout drops", note: "Black voters turn out 12% less than the forecast expects.", set: (s) => { s.race.t[1] = -12; } },
+  // turnout
+  { key: "lowsurge", cat: "Turnout", label: "Low propensity voters surge", note: "Medium propensity voters turn out 15% more and low propensity voters 30% more.", moves: [["prop", 1, "t", 15], ["prop", 2, "t", 30]] },
+  { key: "lowhome", cat: "Turnout", label: "Low propensity voters stay home", note: "Medium propensity voters turn out 15% less and low propensity voters 30% less.", moves: [["prop", 1, "t", -15], ["prop", 2, "t", -30]] },
+  { key: "reliable", cat: "Turnout", label: "Only reliable voters show up", note: "A low turnout midterm: medium propensity voters down a quarter, low propensity voters down 45%.", moves: [["prop", 1, "t", -25], ["prop", 2, "t", -45]] },
+  { key: "lptrumpup", cat: "Turnout", label: "Low propensity Trump voters show up", note: "Lower propensity Trump 2024 voters turn out 30% more than the forecast expects.", moves: [["voteprop", 1, "t", 30]] },
+  { key: "lptrumpdown", cat: "Turnout", label: "Low propensity Trump voters stay home", note: "Lower propensity Trump 2024 voters turn out 30% less, the classic midterm drop off without Trump on the ballot.", moves: [["voteprop", 1, "t", -30]] },
+  { key: "lpharrisup", cat: "Turnout", label: "Low propensity Harris voters show up", note: "Lower propensity Harris 2024 voters turn out 30% more.", moves: [["voteprop", 3, "t", 30]] },
+  { key: "lpharrisdown", cat: "Turnout", label: "Low propensity Harris voters stay home", note: "Lower propensity Harris 2024 voters turn out 30% less.", moves: [["voteprop", 3, "t", -30]] },
+  { key: "maga", cat: "Turnout", label: "The MAGA base turns out", note: "Trump voters turn out more at every propensity, low propensity Trump voters most of all.", moves: [["voteprop", 0, "t", 6], ["voteprop", 1, "t", 25], ["approval", 0, "t", 5]] },
+  { key: "enthusiasm", cat: "Turnout", label: "Enthusiasm gap favors Democrats", note: "Trump disapprovers turn out 10% more and approvers 5% less.", moves: [["approval", 2, "t", 10], ["approval", 0, "t", -5]] },
+  { key: "nonvoters", cat: "Turnout", label: "2024 nonvoters show up", note: "People who skipped 2024 turn out 40% more than the forecast expects.", moves: [["voteprop", 5, "t", 40]] },
+  { key: "young", cat: "Turnout", label: "Young voters stay home", note: "Turnout under 30 falls a quarter and new voters a fifth.", moves: [["age", 0, "t", -25], ["history", 3, "t", -20]] },
+  { key: "youngup", cat: "Turnout", label: "Young voters surge", note: "Voters under 30 turn out 25% more.", moves: [["age", 0, "t", 25]] },
+  { key: "seniors", cat: "Turnout", label: "Seniors flood the polls", note: "Voters 65 and older turn out 10% more.", moves: [["age", 3, "t", 10]] },
+  { key: "black", cat: "Turnout", label: "Black turnout drops", note: "Black voters turn out 12% less than the forecast expects.", moves: [["race", 1, "t", -12]] },
+  { key: "blackup", cat: "Turnout", label: "Black turnout surges", note: "Black voters turn out 12% more than the forecast expects.", moves: [["race", 1, "t", 12]] },
+  { key: "latinot", cat: "Turnout", label: "Latino turnout drops", note: "Latino voters turn out 15% less.", moves: [["race", 2, "t", -15]] },
+  { key: "skipped22", cat: "Turnout", label: "Midterm surge voters show up", note: "Voters who skipped 2022 turn out 20% more, new voters 25% more.", moves: [["history", 1, "t", 20], ["history", 3, "t", 25]] },
+  // persuasion
+  { key: "latino", cat: "Persuasion", label: "Latino voters swing right", note: "Latino voters move 8 points toward Republicans.", moves: [["race", 2, "m", -8]] },
+  { key: "latinoleft", cat: "Persuasion", label: "Latino voters swing back left", note: "Latino voters move 8 points toward Democrats.", moves: [["race", 2, "m", 8]] },
+  { key: "blackright", cat: "Persuasion", label: "Black voters drift right", note: "Black voters move 6 points toward Republicans.", moves: [["race", 1, "m", -6]] },
+  { key: "indep", cat: "Persuasion", label: "Independents break right", note: "Independents move 10 points toward Republicans.", moves: [["party", 2, "m", -10]] },
+  { key: "indepleft", cat: "Persuasion", label: "Independents break left", note: "Independents move 10 points toward Democrats.", moves: [["party", 2, "m", 10]] },
+  { key: "diploma", cat: "Persuasion", label: "The diploma divide widens", note: "College graduates move 4 points left, everyone else 4 points right.", moves: [["edu", 0, "m", 4], ["edu", 1, "m", -4]] },
+  { key: "diplomanarrow", cat: "Persuasion", label: "The diploma divide narrows", note: "College graduates move 3 points right, everyone else 3 points left.", moves: [["edu", 0, "m", -3], ["edu", 1, "m", 3]] },
+  { key: "workingright", cat: "Persuasion", label: "Working class whites shift right", note: "White voters without a degree move 4 points toward Republicans.", moves: [["raceedu", 1, "m", -4]] },
+  { key: "suburbleft", cat: "Persuasion", label: "College whites shift left", note: "White college graduates move 5 points toward Democrats.", moves: [["raceedu", 0, "m", 5]] },
+  { key: "gendergap", cat: "Persuasion", label: "The gender gap widens", note: "Men move 4 points right and women 4 points left.", moves: [["gender", 0, "m", -4], ["gender", 1, "m", 4]] },
+  { key: "youngmen", cat: "Persuasion", label: "Young voters swing right", note: "Voters under 30 move 6 points toward Republicans.", moves: [["age", 0, "m", -6]] },
+  { key: "seniorsleft", cat: "Persuasion", label: "Seniors swing left", note: "Voters 65 and older move 5 points toward Democrats.", moves: [["age", 3, "m", 5]] },
+  { key: "trumpsour", cat: "Persuasion", label: "Trump voters sour", note: "Trump 2024 voters cross over: high propensity 4 points, low propensity 8 points toward Democrats.", moves: [["voteprop", 0, "m", 4], ["voteprop", 1, "m", 8]] },
+  { key: "harrissour", cat: "Persuasion", label: "Harris voters sour", note: "Harris 2024 voters cross over: high propensity 3 points, low propensity 7 points toward Republicans.", moves: [["voteprop", 2, "m", -3], ["voteprop", 3, "m", -7]] },
+  { key: "workingclass", cat: "Persuasion", label: "Lower income voters swing right", note: "Voters earning under $50K move 5 points toward Republicans.", moves: [["income", 0, "m", -5]] },
+  // environments
+  { key: "blue18", cat: "Environment", label: "A 2018 style blue wave", note: "Everyone moves 3 points left and low propensity Harris voters turn out 15% more.", overall: 3, moves: [["voteprop", 3, "t", 15], ["prop", 2, "t", 10]] },
+  { key: "red10", cat: "Environment", label: "A 2010 style red wave", note: "Everyone moves 6 points right, young voters stay home and low propensity Trump voters show up.", overall: -6, moves: [["age", 0, "t", -20], ["voteprop", 1, "t", 15]] },
+  { key: "miss20", cat: "Environment", label: "Polls miss Republicans like 2020", note: "Everyone moves 4 points right and low propensity Trump voters turn out 20% more than polls expect.", overall: -4, moves: [["voteprop", 1, "t", 20]] },
+  { key: "miss22", cat: "Environment", label: "Polls miss Democrats like 2022", note: "Everyone moves 3 points left and low propensity Trump voters turn out 15% less.", overall: 3, moves: [["voteprop", 1, "t", -15]] },
+  { key: "tied", cat: "Environment", label: "A tied national vote", note: "Everyone moves 12 points right, which erases the Democrats' lead in the generic ballot average.", overall: -12 },
+  { key: "back24", cat: "Environment", label: "Back to the 2024 national vote", note: "Everyone moves 13.5 points right, back to Trump's 2024 national margin.", overall: -13.5 },
 ];
 
 function encode(sc: Scenario, keys: string[]) {
@@ -139,10 +179,13 @@ export default function SwingClient() {
 function Swing({ data }: { data: SwingData }) {
   const keys = useMemo(() => data.dims.map((d) => d.key), [data]);
   const [sc, setSc] = useState<Scenario>(() => ({ overall: 0, shifts: emptyShifts(data) }));
-  const [dim, setDim] = useState(data.dims[0].key);
+  const [dim, setDim] = useState(data.dims.some((d) => d.key === "voteprop") ? "voteprop" : data.dims[0].key);
   const [office, setOffice] = useState<Office>("s");
   const [focus, setFocus] = useState<string>("");
+  const [mapO, setMapO] = useState<Office>("s");
   const [toast, setToast] = useState("");
+  const [preset, setPreset] = useState("");
+  const [pcat, setPcat] = useState<"Turnout" | "Persuasion" | "Environment">("Turnout");
   const booted = useRef(false);
 
   // a shared link opens on its scenario
@@ -189,10 +232,16 @@ function Swing({ data }: { data: SwingData }) {
   const movers = useMemo(() => moved.filter((m) => Math.abs(m.pD - m.r.pD) >= 0.005).sort((a, b) => Math.abs(b.pD - b.r.pD) - Math.abs(a.pD - a.r.pD)).slice(0, 14), [moved]);
   const avgD = useMemo(() => { const c = moved.filter((m) => m.r.x && m.r.o !== "h"); return c.reduce((a, m) => a + m.d, 0) / (c.length || 1); }, [moved]);
 
-  const setGroup = (k: string, gi: number, field: "m" | "t", v: number) => setSc((s) => ({ ...s, shifts: { ...s.shifts, [k]: { ...s.shifts[k], [field]: s.shifts[k][field].map((x, i) => (i === gi ? v : x)) } } }));
-  const resetDim = (k: string) => setSc((s) => ({ ...s, shifts: { ...s.shifts, [k]: { m: s.shifts[k].m.map(() => 0), t: s.shifts[k].t.map(() => 0) } } }));
-  const resetAll = () => setSc({ overall: 0, shifts: emptyShifts(data) });
-  const applyPreset = (p: Preset) => { const sh = emptyShifts(data); const r = p.set(sh) || {}; setSc({ overall: r.overall ?? 0, shifts: sh }); setToast(p.note); };
+  const setGroup = (k: string, gi: number, field: "m" | "t", v: number) => setScM((s) => ({ ...s, shifts: { ...s.shifts, [k]: { ...s.shifts[k], [field]: s.shifts[k][field].map((x, i) => (i === gi ? v : x)) } } }));
+  const resetDim = (k: string) => setScM((s) => ({ ...s, shifts: { ...s.shifts, [k]: { m: s.shifts[k].m.map(() => 0), t: s.shifts[k].t.map(() => 0) } } }));
+  const resetAll = () => { setSc({ overall: 0, shifts: emptyShifts(data) }); setPreset(""); };
+  const setScM: typeof setSc = (v) => { setPreset(""); setSc(v); };
+  const applyPreset = (p: Preset) => {
+    const sh = emptyShifts(data);
+    for (const [k, gi, f, v] of p.moves ?? []) if (sh[k]) sh[k][f][gi] = v;
+    setSc({ overall: p.overall ?? 0, shifts: sh }); setPreset(p.key); setToast(p.note);
+    const first = p.moves?.[0]?.[0]; if (first) setDim(first);
+  };
   useEffect(() => { if (!toast) return; const t = setTimeout(() => setToast(""), 3200); return () => clearTimeout(t); }, [toast]);
   const copy = async () => { try { await navigator.clipboard.writeText(window.location.href); setToast("Link copied. It opens on this scenario."); } catch { setToast("Copy the address bar to share this scenario."); } };
 
@@ -210,6 +259,21 @@ function Swing({ data }: { data: SwingData }) {
         <ChamberCard name="Governors" c={gov} unit="governorships" note="26 for a majority" />
       </section>
 
+      <section className="card sw-scen" aria-label="Ready made scenarios">
+        <div className="card-h">
+          <h3>Try a scenario</h3>
+          <div className="seg" role="tablist" aria-label="Scenario type">
+            {(["Turnout", "Persuasion", "Environment"] as const).map((c) => <button key={c} role="tab" aria-selected={pcat === c} className={pcat === c ? "on" : undefined} onClick={() => setPcat(c)}>{c}</button>)}
+          </div>
+        </div>
+        <div className="card-b">
+          <div className="sw-scen-chips">
+            {PRESETS.filter((p) => p.cat === pcat).map((p) => <button key={p.key} className={`sw-chip${preset === p.key ? " on" : ""}`} aria-pressed={preset === p.key} onClick={() => applyPreset(p)}>{p.label}</button>)}
+          </div>
+          <p className="sw-scen-note">{preset ? PRESETS.find((p) => p.key === preset)?.note : pcat === "Turnout" ? "Who shows up: high and low propensity voters, 2024 Trump and Harris voters by how likely they are to vote, age and race." : pcat === "Persuasion" ? "Who changes their mind: groups moving toward one party while turnout stays at the forecast." : "Whole elections: a wave, a polling miss, or the 2024 national vote again."}{preset ? " Every slider it set is open on the left to adjust." : ""}</p>
+        </div>
+      </section>
+
       <div className="sw-grid">
         {/* controls */}
         <aside className="card sw-ctl" aria-label="Swing controls">
@@ -221,16 +285,23 @@ function Swing({ data }: { data: SwingData }) {
             <div className="sw-overall">
               <label htmlFor="sw-overall">Every voter</label>
               <output className={`mono ${sc.overall > 0 ? "d" : sc.overall < 0 ? "r" : ""}`}>{shiftLabel(sc.overall)}</output>
-              <input id="sw-overall" type="range" className="sw-range m" min={-10} max={10} step={0.5} value={sc.overall}
-                aria-valuetext={shiftLabel(sc.overall)} onChange={(e) => setSc((s) => ({ ...s, overall: Number(e.target.value) }))} />
+              <input id="sw-overall" type="range" className="sw-range m" min={-15} max={15} step={0.5} value={sc.overall}
+                aria-valuetext={shiftLabel(sc.overall)} onChange={(e) => setScM((s) => ({ ...s, overall: Number(e.target.value) }))} />
               <div className="sw-scale"><span>Republican</span><span>Democratic</span></div>
             </div>
 
-            <div className="sw-dims" role="tablist" aria-label="Break voters down by">
-              {data.dims.map((d) => (
-                <button key={d.key} role="tab" aria-selected={dim === d.key} className={dim === d.key ? "on" : undefined} onClick={() => setDim(d.key)}>
-                  {d.label}{active.includes(d.key) ? <i aria-label="has changes" /> : null}
-                </button>
+            <div className="sw-dimgroups">
+              {DIM_GROUPS.map(([lab, ks]) => (
+                <div key={lab} className="sw-dimrow">
+                  <span className="eye">{lab}</span>
+                  <div className="sw-dims" role="tablist" aria-label={lab}>
+                    {ks.map((k) => data.dims.find((d) => d.key === k)).filter(Boolean).map((d) => (
+                      <button key={d!.key} role="tab" aria-selected={dim === d!.key} className={dim === d!.key ? "on" : undefined} onClick={() => setDim(d!.key)}>
+                        {d!.label}{active.includes(d!.key) ? <i aria-label="has changes" /> : null}
+                      </button>
+                    ))}
+                  </div>
+                </div>
               ))}
             </div>
 
@@ -269,16 +340,28 @@ function Swing({ data }: { data: SwingData }) {
               <button className="btn sm g" onClick={copy} disabled={zero}>Share this scenario</button>
             </div>
 
-            <div className="sw-presets">
-              <div className="eye">Try a scenario</div>
-              <div>{PRESETS.map((p) => <button key={p.key} className="sw-chip" onClick={() => applyPreset(p)}>{p.label}</button>)}</div>
-            </div>
-            <p className="sw-fine">Shares and margins shown are the forecast electorate across the states with a Senate or governor race. Changes in different breakdowns add together, and the same voter can sit in more than one.</p>
+            <p className="sw-fine">Shares and margins shown are the forecast electorate across the states with a Senate or governor race. High propensity means the model gives that kind of voter at least an 80% chance of voting; low propensity covers everyone below. Changes in different breakdowns add together, and the same voter can sit in more than one.</p>
           </div>
         </aside>
 
         {/* race focus and map */}
         <div className="sw-main">
+          <section className="card sw-mapcard" aria-label="Map of your scenario">
+            <div className="card-h">
+              <h3>The map</h3>
+              <div className="seg" role="tablist" aria-label="Map">
+                {(["s", "g", "h"] as Office[]).map((o) => <button key={o} role="tab" aria-selected={mapO === o} className={mapO === o ? "on" : undefined} onClick={() => setMapO(o)}>{o === "g" ? "Governors" : OFFICE[o]}</button>)}
+              </div>
+            </div>
+            <div className="card-b">
+              <USMap moved={moved} office={mapO} onPick={(id) => { setOffice(mapO); setFocus(id); document.querySelector(".sw-focus")?.scrollIntoView({ behavior: "smooth", block: "nearest" }); }} />
+              <div className="sw-legend">
+                {[0.97, 0.85, 0.7, 0.5, 0.3, 0.15, 0.03].map((p, i) => <span key={i}><i style={{ background: probFill(p) }} />{["Safe D", "Likely D", "Lean D", "Toss up", "Lean R", "Likely R", "Safe R"][i]}</span>)}
+                <span><i className="flip" />Favorite changed</span>
+                {mapO !== "h" ? <span><i className="hatch" />No race</span> : null}
+              </div>
+            </div>
+          </section>
           <section className="card sw-focus" aria-label="One race in your scenario">
             <div className="card-h">
               <h3>Watch a race</h3>
@@ -297,16 +380,6 @@ function Swing({ data }: { data: SwingData }) {
             </div>
           </section>
 
-          <section className="card sw-mapcard" aria-label="Senate and governor map">
-            <div className="card-h"><h3>The map</h3><span className="eye" style={{ marginLeft: "auto" }}>Senate left · governor right</span></div>
-            <div className="card-b">
-              <Tiles moved={moved} onPick={(id) => { setOffice(id.startsWith("sen") ? "s" : "g"); setFocus(id); }} />
-              <div className="sw-legend">
-                {[0.97, 0.85, 0.7, 0.5, 0.3, 0.15, 0.03].map((p, i) => <span key={i}><i style={{ background: probFill(p) }} />{["Safe D", "Likely D", "Lean D", "Toss up", "Lean R", "Likely R", "Safe R"][i]}</span>)}
-                <span><i className="hatch" />No race</span>
-              </div>
-            </div>
-          </section>
         </div>
       </div>
 
@@ -426,42 +499,59 @@ function Focus({ m, dims }: { m: Moved; dims: SwingData["dims"] }) {
   );
 }
 
-function Tiles({ moved, onPick }: { moved: Moved[]; onPick: (id: string) => void }) {
-  const cell = 56, g = 5, W = 12 * cell, H = 8 * cell;
-  const by = new Map(moved.filter((m) => m.r.o !== "h").map((m) => [m.r.id, m]));
+type Geo = { frame: [number, number]; states: Record<string, string>; districts: Record<string, { d: string }> };
+let geoCache: Promise<Geo> | null = null;
+const loadGeo = () => (geoCache ??= fetch("/forecast/geo.json").then((r) => r.json()));
+const STATE_NAMES: Record<string, string> = { AL: "Alabama", AK: "Alaska", AZ: "Arizona", AR: "Arkansas", CA: "California", CO: "Colorado", CT: "Connecticut", DE: "Delaware", FL: "Florida", GA: "Georgia", HI: "Hawaii", ID: "Idaho", IL: "Illinois", IN: "Indiana", IA: "Iowa", KS: "Kansas", KY: "Kentucky", LA: "Louisiana", ME: "Maine", MD: "Maryland", MA: "Massachusetts", MI: "Michigan", MN: "Minnesota", MS: "Mississippi", MO: "Missouri", MT: "Montana", NE: "Nebraska", NV: "Nevada", NH: "New Hampshire", NJ: "New Jersey", NM: "New Mexico", NY: "New York", NC: "North Carolina", ND: "North Dakota", OH: "Ohio", OK: "Oklahoma", OR: "Oregon", PA: "Pennsylvania", RI: "Rhode Island", SC: "South Carolina", SD: "South Dakota", TN: "Tennessee", TX: "Texas", UT: "Utah", VT: "Vermont", VA: "Virginia", WA: "Washington", WV: "West Virginia", WI: "Wisconsin", WY: "Wyoming" };
+
+function USMap({ moved, office, onPick }: { moved: Moved[]; office: Office; onPick: (id: string) => void }) {
+  const [geo, setGeo] = useState<Geo | null>(null);
+  const [hover, setHover] = useState<string>("");
+  useEffect(() => { let on = true; loadGeo().then((g) => { if (on) setGeo(g); }).catch(() => {}); return () => { on = false; }; }, []);
+  const by = useMemo(() => new Map(moved.map((m) => [m.r.id, m])), [moved]);
+  if (!geo) return <div className="sw-mapload">Loading the map</div>;
+  const [W, H] = geo.frame;
+  const pre = office === "s" ? "sen" : "gov";
+  const label = (m: Moved | undefined, fallback: string) => {
+    if (!m) return fallback;
+    const nm = m.r.o === "h" ? m.r.name : `${m.r.name} ${m.r.o === "s" ? "Senate" : "governor"}`;
+    if (!m.r.x) return `${nm}: uncontested`;
+    const side = m.r.ind ? "Independent" : "Democrat";
+    return `${nm}: ${side} ${pct(m.pD)}, Republican ${pct(1 - m.pD)} · the forecast had the ${side.toLowerCase()} at ${pct(m.r.pD)}`;
+  };
+  const hm = hover ? by.get(hover) : undefined;
+  const flipped = (m: Moved | undefined) => !!m && (m.r.pD >= 0.5) !== (m.pD >= 0.5);
+  const fill = (m: Moved | undefined) => (m ? (m.r.ind && m.pD >= 0.5 ? "#b78cff" : probFill(m.pD)) : "url(#sw-hatch)");
   return (
-    <svg viewBox={`0 0 ${W} ${H}`} className="sw-tiles" role="img" aria-label="Senate and governor races by state in your scenario">
-      <defs>
-        <pattern id="sw-hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
-          <rect width="6" height="6" fill="rgba(var(--line-rgb),.04)" /><line x1="0" y1="0" x2="0" y2="6" stroke="rgba(var(--line-rgb),.14)" strokeWidth="2" />
-        </pattern>
-      </defs>
-      {Object.entries(TILE).map(([st, [cx, cy]]) => {
-        const x = cx * cell + g / 2, y = cy * cell + g / 2, s = cell - g, half = s / 2;
-        const sen = by.get(`sen-${st}`), gov = by.get(`gov-${st}`);
-        const part = (m: Moved | undefined, left: boolean) => {
-          const fill = m ? probFill(m.pD) : "url(#sw-hatch)";
-          const flip = m && (m.r.pD >= 0.5) !== (m.pD >= 0.5);
-          return (
-            <g>
-              <rect x={left ? x : x + half} y={y} width={half} height={s} fill={fill} style={m && m.r.x ? { cursor: "pointer" } : undefined}
-                onClick={m && m.r.x ? () => onPick(m.r.id) : undefined}>
-                <title>{m ? `${m.r.name} ${left ? "Senate" : "governor"}: Democratic side ${pct(m.pD)}, forecast ${pct(m.r.pD)}` : `${st} ${left ? "Senate" : "governor"}: no race in 2026`}</title>
-              </rect>
-              {flip ? <circle cx={(left ? x : x + half) + half / 2} cy={y + s - 9} r={3.2} fill="var(--bg)" /> : null}
-            </g>
-          );
-        };
-        const anyP = [sen, gov].filter(Boolean).map((m) => (m as Moved).pD);
-        const mid = anyP.length ? anyP.reduce((a, b) => a + b, 0) / anyP.length : 0.5;
-        return (
-          <g key={st}>
-            <clipPath id={`sw-${st}`}><rect x={x} y={y} width={s} height={s} rx={7} /></clipPath>
-            <g clipPath={`url(#sw-${st})`}>{part(sen, true)}{part(gov, false)}<line x1={x + half} x2={x + half} y1={y} y2={y + s} stroke="var(--bg)" strokeWidth={1.5} /></g>
-            <text x={x + s / 2} y={y + s / 2 + 4} textAnchor="middle" className="sw-tile-st" fill={mid > 0.2 && mid < 0.8 ? "#1a1024" : "#fff"} pointerEvents="none">{st}</text>
-          </g>
-        );
-      })}
-    </svg>
+    <div className="sw-map">
+      <div className="sw-maphover" aria-live="polite">{hover ? label(hm, hover.startsWith("st-") ? `${STATE_NAMES[hover.slice(3)] ?? hover.slice(3)}: no ${office === "s" ? "Senate" : "governor"} race in 2026` : hover) : `Hover or tap a ${office === "h" ? "district" : "state"} for its odds · click to watch the race`}</div>
+      <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label={`${office === "h" ? "House districts" : office === "s" ? "Senate races" : "Governor races"} in your scenario`} onMouseLeave={() => setHover("")}>
+        <defs>
+          <pattern id="sw-hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+            <rect width="6" height="6" fill="rgba(var(--line-rgb),.05)" /><line x1="0" y1="0" x2="0" y2="6" stroke="rgba(var(--line-rgb),.16)" strokeWidth="2" />
+          </pattern>
+        </defs>
+        {office === "h" ? (
+          <>
+            {Object.entries(geo.districts).map(([id, g]) => {
+              const m = by.get(id);
+              return <path key={id} d={g.d} fill={fill(m)} stroke="var(--bg)" strokeWidth={0.3} className="sw-shape"
+                onMouseEnter={() => setHover(id)} onClick={() => m?.r.x && onPick(id)} style={{ cursor: m?.r.x ? "pointer" : "default" }} />;
+            })}
+            {Object.entries(geo.states).map(([st, d]) => <path key={st} d={d} fill="none" stroke="var(--bg)" strokeWidth={1.1} pointerEvents="none" />)}
+            {Object.entries(geo.districts).filter(([id]) => flipped(by.get(id))).map(([id, g]) => <path key={`f${id}`} d={g.d} fill="none" stroke="var(--gold)" strokeWidth={1.4} pointerEvents="none" />)}
+          </>
+        ) : (
+          <>
+            {Object.entries(geo.states).map(([st, d]) => {
+              const id = `${pre}-${st}`, m = by.get(id);
+              return <path key={st} d={d} fill={fill(m)} stroke="var(--bg)" strokeWidth={0.9} className="sw-shape"
+                onMouseEnter={() => setHover(m ? id : `st-${st}`)} onClick={() => m?.r.x && onPick(id)} style={{ cursor: m?.r.x ? "pointer" : "default" }} />;
+            })}
+            {Object.entries(geo.states).filter(([st]) => flipped(by.get(`${pre}-${st}`))).map(([st, d]) => <path key={`f${st}`} d={d} fill="none" stroke="var(--gold)" strokeWidth={2.4} pointerEvents="none" />)}
+          </>
+        )}
+      </svg>
+    </div>
   );
 }

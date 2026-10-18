@@ -16,7 +16,7 @@ type Race = {
 };
 type Chamber = { demControl: number; demSeats: number; seatsTotal: number; hist: [number, number][]; median?: number };
 
-export const DIMS: { key: string; label: string; src: string; groups: string[]; short?: string[]; cap: number }[] = [
+export const DIMS: { key: string; label: string; src: string; groups: string[]; cap: number }[] = [
   { key: "race", label: "Race", src: "Race", groups: ["White", "Black", "Latino", "Asian and other"], cap: 8 },
   { key: "age", label: "Age", src: "Age", groups: ["18 to 29", "30 to 44", "45 to 64", "65+"], cap: 1.6 },
   { key: "edu", label: "Education", src: "Education", groups: ["College graduate", "No college degree"], cap: 1.6 },
@@ -25,7 +25,13 @@ export const DIMS: { key: string; label: string; src: string; groups: string[]; 
   { key: "income", label: "Income", src: "Income", groups: ["Under $50K", "$50K to $124K", "$125K and up"], cap: 1.5 },
   { key: "party", label: "Party", src: "Party ID", groups: ["Democrat", "Republican", "Independent"], cap: 5 },
   { key: "vote24", label: "2024 vote", src: "2024 presidential vote", groups: ["Harris", "Trump", "Other or did not vote"], cap: 5 },
+  { key: "voteprop", label: "2024 vote by propensity", src: "types:voteprop", cap: 5,
+    groups: ["Trump voters, high propensity", "Trump voters, low propensity", "Harris voters, high propensity", "Harris voters, low propensity", "Third party 2024 voters", "Did not vote in 2024"] },
+  { key: "partyprop", label: "Party by propensity", src: "types:partyprop", cap: 5,
+    groups: ["Democrats, high propensity", "Democrats, low propensity", "Republicans, high propensity", "Republicans, low propensity", "Independents, high propensity", "Independents, low propensity"] },
+  { key: "prop", label: "Turnout propensity", src: "types:prop", groups: ["High propensity", "Medium propensity", "Low propensity"], cap: 1.6 },
   { key: "history", label: "Turnout history", src: "Vote history", groups: ["Voted in 2022 and 2024", "Voted in 2024, not 2022", "Voted in 2022, not 2024", "New or irregular voter"], cap: 1.6 },
+  { key: "approval", label: "Trump approval", src: "types:approval", groups: ["Approve", "No opinion", "Disapprove"], cap: 5 },
 ];
 
 /** One dimension of one race's electorate: [share of voters, Democratic minus Republican margin] per group. */
@@ -44,11 +50,18 @@ export type SwingData = {
 
 const r1 = (x: number) => Math.round(x * 10) / 10;
 
-function prof(rows: XRow[]): Prof[] {
-  return DIMS.map((d) => d.groups.map((g) => {
-    const r = rows.find((x) => x[0] === d.src && x[1] === g);
-    return r ? [r[2], r[3] - r[4]] as [number, number] : [0, 0] as [number, number];
-  }));
+type Types = Record<string, [number, number][]>;
+function prof(rows: XRow[], types?: Types): Prof[] {
+  return DIMS.map((d) => {
+    if (d.src.startsWith("types:")) {
+      const t = types?.[d.src.slice(6)];
+      return d.groups.map((_, gi) => (t?.[gi] ? [t[gi][0], t[gi][1]] as [number, number] : [0, 0] as [number, number]));
+    }
+    return d.groups.map((g) => {
+      const r = rows.find((x) => x[0] === d.src && x[1] === g);
+      return r ? [r[2], r[3] - r[4]] as [number, number] : [0, 0] as [number, number];
+    });
+  });
 }
 const total = (rows: XRow[]) => { const t = rows.find((x) => x[0] === "All voters"); return t ? t[3] - t[4] : 0; };
 const comp = (p: [number, number][]) => { const s = p.reduce((a, g) => a + g[0], 0) || 1; return p.reduce((a, g) => a + g[0] * g[1], 0) / s; };
@@ -79,6 +92,8 @@ export function getSwingData(): SwingData {
   const dir = path.join(process.cwd(), "public", "forecast");
   const model = JSON.parse(fs.readFileSync(path.join(dir, "model.json"), "utf8")) as { meta: Record<string, number | string>; chambers: Record<string, Chamber>; races: Race[] };
   const xt = JSON.parse(fs.readFileSync(path.join(dir, "crosstabs.json"), "utf8")) as Record<string, XRow[]>;
+  let TY: Record<string, Types> = {};
+  try { TY = (JSON.parse(fs.readFileSync(path.join(dir, "swing_types.json"), "utf8")) as { races: Record<string, Types> }).races; } catch { TY = {}; }
 
   // national electorate: each state counted once, by its statewide race with the most votes
   const byState = new Map<string, { rows: XRow[]; votes: number; race: Race }>();
@@ -92,7 +107,7 @@ export function getSwingData(): SwingData {
   const natTot = natW.reduce((a, s) => a + s.votes, 0) || 1;
   const nat: Prof[] = DIMS.map((_, di) => DIMS[di].groups.map((_, gi) => {
     let s = 0, m = 0, w = 0;
-    for (const x of natW) { const p = prof(x.rows)[di][gi]; s += (p[0] * x.votes) / natTot; m += p[1] * p[0] * x.votes; w += p[0] * x.votes; }
+    for (const x of natW) { const p = prof(x.rows, TY[x.race.id])[di][gi]; s += (p[0] * x.votes) / natTot; m += p[1] * p[0] * x.votes; w += p[0] * x.votes; }
     return [r1(s), r1(w ? m / w : 0)] as [number, number];
   }));
 
@@ -106,10 +121,10 @@ export function getSwingData(): SwingData {
     const unc = Math.abs(e.margin) >= 99;
     let x: Prof[] | null = null, est = false;
     if (!unc) {
-      if (xt[r.id]) x = prof(xt[r.id]).map((d) => d.map(([s, m]) => [r1(s), r1(m)] as [number, number]));
+      if (xt[r.id]) x = prof(xt[r.id], TY[r.id]).map((d) => d.map(([s, m]) => [r1(s), r1(m)] as [number, number]));
       else {
         const base = byState.get(r.st);
-        const sp = base ? prof(base.rows) : nat;
+        const sp = base ? prof(base.rows, TY[base.race.id]) : nat;
         const sTot = base ? total(base.rows) : comp(nat[0]);
         const stateD = base ? -base.race.est.margin : sTot;
         const target = sTot + (-e.margin - stateD);

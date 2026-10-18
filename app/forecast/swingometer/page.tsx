@@ -33,7 +33,7 @@ export default function Page() {
         <div className="eye g">2026 swingometer</div>
         <h1>Move the voters, <em>move the map</em></h1>
         <p className="lede">
-          Every slider starts at the On Point forecast. Shift how any group votes or how many of them turn out, and all {n.s} Senate races,
+          Every slider starts at the On Point forecast. Shift how any group votes or how many of them turn out, from low propensity Trump voters to college graduates, and all {n.s} Senate races,
           {" "}{n.g} governor races and {n.h} House races move with them, along with the vote counts and each party&apos;s chance to win the Senate, the House and the governorships.
         </p>
         <div className="pmeta"><span>Forecast updated <b>{updated}</b></span><span>Days to the election <b className="mono">{d.daysOut}</b></span><span>Groups <b className="mono">{d.dims.reduce((a, x) => a + x.groups.length, 0)}</b></span></div>
@@ -44,7 +44,8 @@ export default function Page() {
       <div className="callout" style={{ marginTop: 16 }}>
         <div className="eye">How the swingometer works</div>
         Each Senate and governor race is built on the forecast&apos;s own simulated electorate, the same voters behind the estimated exit poll on its race page:
-        how big each group is and how it splits. A vote margin slider moves that group&apos;s margin by the points you set, and a turnout slider grows or
+        how big each group is and how it splits. Turnout propensity is each kind of voter&apos;s modeled chance of voting, 80% or more for high propensity,
+        and a 2024 Trump or Harris voter is placed in each kind of voter by how On Point Polling respondents like them recalled their 2024 vote. A vote margin slider moves that group&apos;s margin by the points you set, and a turnout slider grows or
         shrinks its share of the electorate. The race&apos;s margin moves by exactly what that does to the total, and its chance to win moves along the
         forecast&apos;s own range of outcomes, so a race with little polling moves more than a heavily polled one would on the same shift. House districts have no
         published electorate of their own, so each starts from its state&apos;s and is tilted toward the district&apos;s partisanship: a deep blue city seat counts
