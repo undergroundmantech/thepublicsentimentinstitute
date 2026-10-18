@@ -417,6 +417,11 @@ export default function ForecastHub() {
               <span><b className="mono">2,000</b>simulations</span>
               {gb ? <span><b className={`mono ${gb.avg > 0 ? "r" : "d"}`}>{fmtM(gb.avg)}</b>generic ballot</span> : null}
             </div>
+            <Link href="/forecast/swingometer" className="hub-swing">
+              <span className="eye g">New</span>
+              <b>Swingometer</b>
+              <span>Move any group of voters and watch every race and chamber move with them</span>
+            </Link>
           </header>
           {ready && model && sl ? (
             <div className="hub-meters">

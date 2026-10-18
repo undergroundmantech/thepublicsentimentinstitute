@@ -7,7 +7,7 @@ const COLS = [
     ["/polls/governor", "Governor"], ["/polls/2028", "2028 primary"], ["/polls", "All averages"],
   ] },
   { h: "Forecast", links: [
-    ["/forecast?office=senate", "Senate"], ["/forecast?office=house", "House"], ["/forecast?office=governor", "Governor"],
+    ["/forecast?office=senate", "Senate"], ["/forecast?office=house", "House"], ["/forecast?office=governor", "Governor"], ["/forecast/swingometer", "Swingometer"],
     ["/forecast/statewide", "Statewide offices"], ["/forecast/legislatures", "State legislatures"], ["/forecast/measures", "Ballot measures"], ["/forecast/methodology", "Methodology"], ["/forecast/changelog", "Changelog"],
   ] },
   { h: "Results", links: [

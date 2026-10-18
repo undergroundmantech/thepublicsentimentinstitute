@@ -9,6 +9,7 @@ const TABS: { href: string; label: string; match?: (p: string) => boolean }[] = 
   { href: "/forecast?office=senate#desk", label: "Senate", match: (p) => /^\/forecast\/[a-z]{2}\/senate$/.test(p) },
   { href: "/forecast?office=house#desk", label: "House", match: (p) => /^\/forecast\/[a-z]{2}\/house-/.test(p) },
   { href: "/forecast?office=governor#desk", label: "Governors", match: (p) => /^\/forecast\/[a-z]{2}\/governor$/.test(p) },
+  { href: "/forecast/swingometer", label: "Swingometer" },
   { href: "/forecast/statewide", label: "Statewide offices" },
   { href: "/forecast/legislatures", label: "State legislatures" },
   { href: "/forecast/measures", label: "Ballot measures" },
