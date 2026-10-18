@@ -91,6 +91,17 @@ const SECTIONS: { id: string; eye: string; title: string; body: ReactNode }[] = 
     ),
   },
   {
+    id: "early-vote", eye: "Step 6", title: "The early vote, as a turnout correction",
+    body: (
+      <>
+        <p>Once ballots start coming in, the forecast reads them as a check on turnout. In every state that reports early ballots, the party mix of the mail and in person ballots cast so far, as reported or, where a state reports no party, as estimated on the <Link href="/maps/early-vote" style={{ textDecoration: "underline" }}>early vote tracker</Link>, is set against the party mix the forecast&apos;s own 2026 electorate expected of those ballots.</p>
+        <p>The gap is not taken at face value. Ballots cast early in the window run more Democratic than the early vote as a whole, so the reading is moved toward Republicans by how much of the early vote is still to come. Where a state published the party split of its early vote on the same day and at the close in 2022 or 2024, the like for like comparison, today against that day, less the forecast&apos;s expected early vote against that year&apos;s final, carries most of the weight. Only part of the electorate has voted: the ballots in carry the whole gap, and the ballots still to come carry half of it. The reading counts more with more ballots and more of the early vote in, and less where party is estimated rather than reported. Turnout volume against the early vote the forecast expects by this day, timed by each state&apos;s own 2022 and 2024 counts, reads whether the electorate is running larger or smaller. Primary turnout, the Democratic share of 2026 primary ballots against the 2018 and 2022 midterm primaries, is a weak prior on which party is more engaged.</p>
+        <p>Every state then also reads the states most like it, by the model&apos;s own correlation between races and by 2024 vote, race and education, so a state with no early vote yet takes its correction from similar states and its primary. The forecast is the prior throughout: a thin early vote barely moves a race.</p>
+        <p>The correction is not a flat shift. It becomes a change in each party&apos;s turnout among the forecast&apos;s simulated voters, the 1,152 kinds of voter in every county, and each race is recounted. Turnout is a logistic curve, so the same change moves low propensity voters far more than habitual ones: a race whose margin rests on one party&apos;s low propensity voters moves more, and every county moves by its own voters. House districts take their state&apos;s correction in proportion to how close their own vote is, so a safe seat moves less than a competitive one, and the statewide offices and legislatures are rebuilt on the adjusted forecast. Each race page shows the correction as its own step.</p>
+      </>
+    ),
+  },
+  {
     id: "governors", eye: "Governors", title: "Governor depolarization",
     body: (
       <>

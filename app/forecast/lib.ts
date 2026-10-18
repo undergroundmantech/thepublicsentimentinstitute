@@ -47,6 +47,8 @@ export interface Race {
   elast: number;
   fundamentals: number;
   stages: { anchor: number; fund: number; poll: number; rate: number; market: number };
+  /** the early vote turnout correction already inside est: shift in R minus D points, and what it was read from */
+  ev?: { shift: number; gap?: number; turnout?: number; theta?: number; source?: string; ballots?: number; run?: string } | null;
   pollAvg: number | null;
   /** "lowess": the LOWESS Election Day polling average fed the race; "psi": the PSI weighted average */
   pollLevel?: "lowess" | "psi" | null;

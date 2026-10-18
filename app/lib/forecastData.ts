@@ -13,13 +13,16 @@ export type FRace = {
   cands: Cand[]; rcv: unknown;
   polls?: { pollster: string; kind: string; age: number; n: number; margin: number }[];
   trend?: { m: number; p: number }[];
+  /** the early vote turnout correction inside est (scripts/forecast/earlyvote/ev_adjust.py), R minus D points */
+  ev?: { shift: number; gap?: number; turnout?: number; theta?: number; source?: string; ballots?: number; run?: string } | null;
 };
 export type Chamber = {
   office: string; seatsTotal: number; gopControl: number; demControl: number; gopSeats: number; demSeats: number;
   hist: [number, number][]; demP10?: number; demP90?: number; median?: number;
 };
 export type Model = {
-  meta: { updated: string; election: string; daysOut: number; npe: number; sims: number; senNotUpR: number; senNotUpD: number; govNotUpR: number; govNotUpD: number; genericBallot?: { avg: number; netApproval: number } };
+  meta: { updated: string; election: string; daysOut: number; npe: number; sims: number; senNotUpR: number; senNotUpD: number; govNotUpR: number; govNotUpD: number; genericBallot?: { avg: number; netApproval: number };
+    earlyVote?: { snapshot: string; daysOut: number; applied: string; states: number; ballots: number } };
   chambers: Record<"senate" | "governor" | "house", Chamber>;
   races: FRace[];
 };

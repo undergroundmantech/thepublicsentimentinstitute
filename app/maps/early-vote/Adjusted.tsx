@@ -24,6 +24,9 @@ type Dist = { lo: number; w: number; c: number[] };
 type Race = {
   id: string; office: "senate" | "governor" | "house"; st: string; name: string; dem: string; gop: string;
   est: { margin: number; prob: number; p10: number; p90: number; dist?: Dist };
+  // Oct 18 2026: the forecast itself now carries the early vote turnout correction (ev.shift, R minus D points),
+  // built by scripts/forecast/earlyvote/ev_adjust.py; this section shows the forecast before and after it
+  ev?: { shift: number; source?: string; ballots?: number } | null;
 };
 type Chamber = { demSeats: number; gopSeats: number; seatsTotal: number };
 type ModelFile = { meta: { updated: string }; chambers: Record<string, Chamber>; races: Race[] };
@@ -61,6 +64,15 @@ function erf(x: number) {
 }
 /** the model's own odds, moved by the change the shift makes along its distribution */
 const adjProb = (r: Race, s: number) => Math.min(0.9995, Math.max(0.0005, r.est.prob + probR(r.est, s) - probR(r.est, 0)));
+/** before and after the early vote: from the correction the forecast carries, else today's live signal applied here */
+function beforeAfter(r: Race, sg: StateSignal | null) {
+  if (r.ev) {
+    const s = r.ev.shift;
+    return { s, m: r.est.margin - s, ma: r.est.margin, p: adjProb(r, -s), pa: r.est.prob, has: true };
+  }
+  const s = sg?.shift ?? 0;
+  return { s, m: r.est.margin, ma: r.est.margin + s, p: r.est.prob, pa: sg ? adjProb(r, s) : r.est.prob, has: !!sg };
+}
 
 /** a shift on its own diverging ramp, deep at `dom` points, so the change map always spreads across the shades */
 const niceDom = (vals: number[]) => { const m = Math.max(0, ...vals.map(Math.abs)); return m <= 4 ? 4 : m <= 8 ? 8 : m <= 12 ? 12 : m <= 16 ? 16 : Math.ceil(m / 8) * 8; };
@@ -120,8 +132,8 @@ export default function AdjustedForecast({ scope, signals, calc, geo, stateGeo, 
           <span className="adj-eye">Forecast with the early vote</span>
           <h2>{national ? "Every race, with the turnout so far applied" : `${STATE_NAME[scope] ?? scope}, county by county, with the turnout so far`}</h2>
           <p className="db-note">
-            The forecast check&apos;s too Republican or too Democratic number, applied. Each state&apos;s margin moves by the shift its early vote
-            points to, and the win odds move along the model&apos;s own simulations. It reads the turnout mix only, not how undecided voters break.
+            The forecast now carries the early vote. Each state&apos;s ballots, read against the party mix the forecast expected of them, move each
+            party&apos;s turnout among the forecast&apos;s simulated voters, and the races are recounted. It reads turnout only, not how undecided voters break.
           </p>
         </div>
         <div className="adj-ctl">
@@ -145,22 +157,24 @@ function National({ model, races, office, signals, geo, shade, onOpen }: {
 }) {
   const [tip, setTip] = useState<{ st: string; x: number; y: number } | null>(null);
   const rows = useMemo(() => races.map((r) => {
-    const sg = signals[r.st] ?? null; const s = sg?.shift ?? 0;
-    const m = r.est.margin, ma = m + s, p = r.est.prob, pa = sg ? adjProb(r, s) : p;
-    return { r, sg, s, m, ma, p, pa, flip: sg ? (p >= 0.5) !== (pa >= 0.5) : false };
+    const sg = signals[r.st] ?? null;
+    const { s, m, ma, p, pa, has } = beforeAfter(r, sg);
+    return { r, sg, s, m, ma, p, pa, has, flip: has ? (p >= 0.5) !== (pa >= 0.5) : false };
   }).sort((a, b) => Math.abs(a.ma) - Math.abs(b.ma)), [races, signals]);
   const byState = useMemo(() => Object.fromEntries(rows.map((x) => [x.r.st, x])), [rows]);
 
   const ch = model.chambers[office];
   const dSeatChange = rows.reduce((t, x) => t - (x.pa - x.p), 0);
   const withSig = rows.filter((x) => x.sg);
+  const inModel = races.some((r) => r.ev);
   const flips = rows.filter((x) => x.flip);
   const lean = withSig.reduce((t, x) => t + x.s * (x.sg?.expTotal ?? 0), 0) / Math.max(1, withSig.reduce((t, x) => t + (x.sg?.expTotal ?? 0), 0));
+  const moved = rows.filter((x) => x.has);
 
   const dom = niceDom(withSig.map((x) => x.s));
   const fill = (st: string) => {
     const x = byState[st]; if (!x) return "var(--ev-idle)";
-    if (shade === "change") return x.sg ? shiftFill(x.s, dom) : "var(--lead-even)";
+    if (shade === "change") return x.has ? shiftFill(x.s, dom) : "var(--lead-even)";
     return leadFill(shade === "forecast" ? x.m : x.ma);
   };
   const t = tip ? byState[tip.st] : null;
@@ -185,14 +199,15 @@ function National({ model, races, office, signals, geo, shade, onOpen }: {
         <div className="db-card adj-sum">
           <span className="db-cap">{office === "senate" ? "Senate" : "Governors"} · expected Democratic seats</span>
           <div className="adj-two">
-            <div><span className="db-cap sm">Forecast</span><b className="mono">{ch ? ch.demSeats.toFixed(1) : "n/a"}</b></div>
-            <div><span className="db-cap sm">With early vote</span><b className="mono" style={{ color: tone(-dSeatChange) }}>{ch ? (ch.demSeats + dSeatChange).toFixed(1) : "n/a"}</b></div>
+            <div><span className="db-cap sm">{inModel ? "Before early vote" : "Forecast"}</span><b className="mono">{ch ? (ch.demSeats - (inModel ? dSeatChange : 0)).toFixed(1) : "n/a"}</b></div>
+            <div><span className="db-cap sm">{inModel ? "Forecast now" : "With early vote"}</span><b className="mono" style={{ color: tone(-dSeatChange) }}>{ch ? (ch.demSeats + (inModel ? 0 : dSeatChange)).toFixed(1) : "n/a"}</b></div>
           </div>
           <p className="db-note">
             {Math.abs(dSeatChange) < 0.05 ? "The early vote leaves the expected seat count where the forecast has it."
               : `The early vote moves ${Math.abs(dSeatChange).toFixed(1)} expected ${Math.abs(dSeatChange) >= 0.95 && Math.abs(dSeatChange) < 1.05 ? "seat" : "seats"} toward ${dSeatChange > 0 ? "Democrats" : "Republicans"}.`}
           </p>
           <div className="adj-kv"><span>Races with ballots in</span><b className="mono">{withSig.length} of {rows.length}</b></div>
+          {inModel ? <div className="adj-kv"><span>Races the correction moves</span><b className="mono">{moved.filter((x) => Math.abs(x.s) >= 0.05).length} of {rows.length}</b></div> : null}
           <div className="adj-kv"><span>Average shift, by expected votes</span><b className="mono" style={{ color: tone(lean) }}>{withSig.length ? fmtShift(lean) : "n/a"}</b></div>
           <div className="adj-kv"><span>Leaders that change</span><b className="mono">{flips.length}</b></div>
           {flips.length ? (
@@ -210,32 +225,34 @@ function National({ model, races, office, signals, geo, shade, onOpen }: {
       <div className="db-card adj-tablecard">
         <div className="adj-table" role="table" aria-label="Races with the early vote applied">
           <div className="adj-tr th" role="row">
-            <span role="columnheader">Race</span><span role="columnheader" className="num">Forecast</span><span role="columnheader" className="num">Early vote shift</span>
-            <span role="columnheader" className="num">Adjusted</span><span role="columnheader" className="num">R odds</span><span role="columnheader" className="num">Adjusted odds</span>
+            <span role="columnheader">Race</span><span role="columnheader" className="num">{inModel ? "Before" : "Forecast"}</span><span role="columnheader" className="num">Early vote shift</span>
+            <span role="columnheader" className="num">{inModel ? "Forecast now" : "Adjusted"}</span><span role="columnheader" className="num">R odds</span><span role="columnheader" className="num">{inModel ? "R odds now" : "Adjusted odds"}</span>
             <span role="columnheader">Signal</span>
           </div>
           {rows.map((x) => (
             <button key={x.r.id} role="row" className="adj-tr" onClick={() => onOpen(x.r.st)}>
               <span className="nm">{STATE_NAME[x.r.st] ?? x.r.st}<small>{x.r.dem} · {x.r.gop}</small></span>
               <span className="num mono" style={{ color: tone(x.m) }}>{fmtMargin(x.m)}</span>
-              <span className="num mono" style={{ color: x.sg ? tone(x.s) : undefined }}>{x.sg ? fmtShift(x.s) : "No ballots"}</span>
+              <span className="num mono" style={{ color: x.has ? tone(x.s) : undefined }}>{x.has ? fmtShift(x.s) : "No ballots"}</span>
               <span className="num mono strong" style={{ color: tone(x.ma) }}>{fmtMargin(x.ma)}{x.flip ? <i className={`adj-tag ${x.ma > 0 ? "r" : "d"}`}>flip</i> : null}</span>
               <span className="num mono">{pctS(x.p)}</span>
-              <span className="num mono strong" style={{ color: x.sg ? tone(x.pa - x.p) : undefined }}>{pctS(x.pa)}</span>
-              <span className="sig">{x.sg ? <>{strengthOf(x.sg.pace)}<small>{pctS(x.sg.pace)} of early vote in</small></> : <small>forecast stands</small>}</span>
+              <span className="num mono strong" style={{ color: x.has ? tone(x.pa - x.p) : undefined }}>{pctS(x.pa)}</span>
+              <span className="sig">{x.sg ? <>{strengthOf(x.sg.pace)}<small>{pctS(x.sg.pace)} of early vote in</small></> : x.r.ev ? <>From similar states<small>no ballots reported here yet</small></> : <small>forecast stands</small>}</span>
             </button>
           ))}
         </div>
-        <p className="db-note">Closest races first, after the adjustment. Click a race for its counties. A state with no ballots reported keeps the forecast as is.</p>
+        <p className="db-note">{inModel
+          ? "Closest races first. The forecast now includes this correction: each state's early vote, read against the party mix the forecast expected of it, timed against the same day in 2022 and 2024 and pooled with similar states and primary turnout, moves each party's turnout among the forecast's simulated voters. A state with no ballots reported takes its correction from similar states. Click a race for its counties."
+          : "Closest races first, after the adjustment. Click a race for its counties. A state with no ballots reported keeps the forecast as is."}</p>
       </div>
 
       {t && tip ? (
         <div className="adj-tip" style={{ left: Math.min(tip.x + 16, (typeof window !== "undefined" ? window.innerWidth : 1200) - 270), top: tip.y + 14 }}>
           <div className="n">{STATE_NAME[t.r.st] ?? t.r.st} {office === "senate" ? "Senate" : "Governor"}</div>
           <div className="s">{t.r.dem} · {t.r.gop}</div>
-          <div className="row"><span>Forecast</span><b style={{ color: tone(t.m) }}>{fmtMargin(t.m)}</b></div>
-          <div className="row"><span>Early vote shift</span><b style={{ color: t.sg ? tone(t.s) : undefined }}>{t.sg ? fmtShift(t.s) : "No ballots yet"}</b></div>
-          <div className="row"><span>With early vote</span><b style={{ color: tone(t.ma) }}>{fmtMargin(t.ma)}</b></div>
+          <div className="row"><span>{inModel ? "Before early vote" : "Forecast"}</span><b style={{ color: tone(t.m) }}>{fmtMargin(t.m)}</b></div>
+          <div className="row"><span>Early vote shift</span><b style={{ color: t.has ? tone(t.s) : undefined }}>{t.has ? fmtShift(t.s) : "No ballots yet"}</b></div>
+          <div className="row"><span>{inModel ? "Forecast now" : "With early vote"}</span><b style={{ color: tone(t.ma) }}>{fmtMargin(t.ma)}</b></div>
           <div className="row"><span>R win odds</span><b>{pctS(t.p)} · {pctS(t.pa)}</b></div>
         </div>
       ) : null}
@@ -249,13 +266,25 @@ function StateView({ race, sig, calc, counties, stateGeo, shade }: {
   race: Race | null; sig: StateSignal | null; calc: ElectCalc; counties: CountyFile | null; stateGeo: StateGeo | null; shade: Shade;
 }) {
   const [tip, setTip] = useState<{ f: string; x: number; y: number } | null>(null);
-  const S = sig?.shift ?? 0;
+  const inModel = !!race?.ev;
+  const S = race?.ev ? race.ev.shift : sig?.shift ?? 0;
+  const live = inModel || !!sig;
 
   // county shifts: the state's shift, plus each county's own early ballot gap against the state's, carried into the final electorate
   const cty = useMemo(() => {
     const out: Record<string, { name: string; m: number; tv: number; s: number; ma: number; n: number }> = {};
     if (!race || !counties) return out;
     const fc = counties[race.id] ?? {}; const names = counties._n ?? {};
+    // the forecast's own county corrections, when it carries them: each county before and after
+    const evC = (fc as Record<string, unknown>)._ev as Record<string, number> | undefined;
+    if (inModel && evC) {
+      for (const [fips, v] of Object.entries(fc)) {
+        if (fips.startsWith("_")) continue;
+        const s = evC[fips] ?? S;
+        out[fips] = { name: names[fips] ?? fips, m: v[0] - s, tv: v[3], s, ma: v[0], n: (calc && !calc.none ? calc.rows.find((r) => r.u.fips === fips)?.a.n : 0) ?? 0 };
+      }
+      return out;
+    }
     const rows = calc && !calc.none ? calc.rows : [];
     const byF: Record<string, { n: number; delta: number }> = {};
     let dn = 0, dw = 0;
@@ -278,17 +307,18 @@ function StateView({ race, sig, calc, counties, stateGeo, shade }: {
     const fix = sig && wsum > 0 ? S - ssum / wsum : 0;
     for (const v of Object.values(out)) { v.s += fix; v.ma = Math.max(-99, Math.min(99, v.m + v.s)); }
     return out;
-  }, [race, counties, calc, sig, S]);
+  }, [race, counties, calc, sig, S, inModel]);
 
   if (!race) return <div className="db-card db-load">No Senate or governor race in this state this year.</div>;
-  const m = race.est.margin, ma = m + S, p = race.est.prob, pa = sig ? adjProb(race, S) : p;
-  const flip = sig ? (p >= 0.5) !== (pa >= 0.5) : false;
+  const ba = beforeAfter(race, sig);
+  const m = ba.m, ma = ba.ma, p = ba.p, pa = ba.pa;
+  const flip = live ? (p >= 0.5) !== (pa >= 0.5) : false;
   const label = `${STATE_NAME[race.st] ?? race.st} ${race.office === "senate" ? "Senate" : "Governor"}`;
 
   const dom = niceDom(Object.values(cty).map((c) => c.s));
   const fill = (fips: string) => {
     const c = cty[fips]; if (!c) return "var(--ev-idle)";
-    if (shade === "change") return sig ? shiftFill(c.s, dom) : "var(--lead-even)";
+    if (shade === "change") return live ? shiftFill(c.s, dom) : "var(--lead-even)";
     return leadFill(shade === "forecast" ? c.m : c.ma);
   };
   const list = Object.entries(cty);
@@ -320,12 +350,12 @@ function StateView({ race, sig, calc, counties, stateGeo, shade }: {
           <span className="db-cap">{label}</span>
           <div className="adj-cands"><span className="d">{race.dem}</span><span className="r">{race.gop}</span></div>
           <div className="adj-two">
-            <div><span className="db-cap sm">Forecast</span><b className="mono" style={{ color: tone(m) }}>{fmtMargin(m)}</b></div>
-            <div><span className="db-cap sm">With early vote</span><b className="mono" style={{ color: tone(ma) }}>{fmtMargin(ma)}</b></div>
+            <div><span className="db-cap sm">{inModel ? "Before early vote" : "Forecast"}</span><b className="mono" style={{ color: tone(m) }}>{fmtMargin(m)}</b></div>
+            <div><span className="db-cap sm">{inModel ? "Forecast now" : "With early vote"}</span><b className="mono" style={{ color: tone(ma) }}>{fmtMargin(ma)}</b></div>
           </div>
-          <div className="adj-kv"><span>Early vote shift</span><b className="mono" style={{ color: sig ? tone(S) : undefined }}>{sig ? fmtShift(S) : "No ballots yet"}</b></div>
-          <div className="adj-kv"><span>Republican win odds</span><b className="mono">{pctS(p)} · <span style={{ color: sig ? tone(pa - p) : undefined }}>{pctS(pa)}</span></b></div>
-          <div className="adj-kv"><span>Signal</span><b>{sig ? `${strengthOf(sig.pace)}, ${pctS(sig.pace)} of early vote in` : "Waiting on ballots"}</b></div>
+          <div className="adj-kv"><span>Early vote shift</span><b className="mono" style={{ color: live ? tone(S) : undefined }}>{live ? fmtShift(S) : "No ballots yet"}</b></div>
+          <div className="adj-kv"><span>Republican win odds</span><b className="mono">{pctS(p)} · <span style={{ color: live ? tone(pa - p) : undefined }}>{pctS(pa)}</span></b></div>
+          <div className="adj-kv"><span>Signal</span><b>{sig ? `${strengthOf(sig.pace)}, ${pctS(sig.pace)} of early vote in` : inModel ? "From similar states and primary turnout" : "Waiting on ballots"}</b></div>
           {flip ? <div className={`adj-flipnote ${pa >= 0.5 ? "r" : "d"}`}>The leader changes: {pa >= 0.5 ? race.gop : race.dem} moves ahead once the turnout so far is applied.</div> : null}
           {movers.length ? (
             <>
@@ -335,8 +365,9 @@ function StateView({ race, sig, calc, counties, stateGeo, shade }: {
               ))}
             </>
           ) : null}
-          <p className="db-note">Each county moves with the state, plus or minus how far its own early ballots run ahead of or behind the state&apos;s,
-            shrunk toward the state where few ballots are in. The counties add back up to the state&apos;s shift.</p>
+          <p className="db-note">{inModel
+            ? "Each county moves by its own simulated voters: the same change in each party's turnout moves a county more where its margin rests on low propensity voters. The counties add back up to the state's shift."
+            : "Each county moves with the state, plus or minus how far its own early ballots run ahead of or behind the state's, shrunk toward the state where few ballots are in. The counties add back up to the state's shift."}</p>
         </div>
       </div>
 
@@ -344,9 +375,9 @@ function StateView({ race, sig, calc, counties, stateGeo, shade }: {
         <div className="adj-tip" style={{ left: Math.min(tip.x + 16, (typeof window !== "undefined" ? window.innerWidth : 1200) - 270), top: tip.y + 14 }}>
           <div className="n">{t.name}</div>
           <div className="s">{label}</div>
-          <div className="row"><span>Forecast</span><b style={{ color: tone(t.m) }}>{fmtMargin(t.m)}</b></div>
-          <div className="row"><span>Early vote shift</span><b style={{ color: sig ? tone(t.s) : undefined }}>{sig ? fmtShift(t.s) : "No ballots yet"}</b></div>
-          <div className="row"><span>With early vote</span><b style={{ color: tone(t.ma) }}>{fmtMargin(t.ma)}</b></div>
+          <div className="row"><span>{inModel ? "Before early vote" : "Forecast"}</span><b style={{ color: tone(t.m) }}>{fmtMargin(t.m)}</b></div>
+          <div className="row"><span>Early vote shift</span><b style={{ color: live ? tone(t.s) : undefined }}>{live ? fmtShift(t.s) : "No ballots yet"}</b></div>
+          <div className="row"><span>{inModel ? "Forecast now" : "With early vote"}</span><b style={{ color: tone(t.ma) }}>{fmtMargin(t.ma)}</b></div>
           <div className="row"><span>Early ballots in</span><b>{t.n ? t.n.toLocaleString("en-US") : "none reported"}</b></div>
         </div>
       ) : null}

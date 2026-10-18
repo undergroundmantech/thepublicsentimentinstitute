@@ -189,8 +189,20 @@ export default async function Page({ params }: { params: Promise<{ state: string
             <div className="stat"><div className="k">How the model gets there</div>
               <div className="kv"><span>Partisan lean</span><span>{fmtM(r.stages.anchor)}</span></div>
               <div className="kv"><span>Fundamentals</span><span>{fmtM(r.stages.fund)}</span></div>
-              <div className="kv"><span>With polls</span><span>{fmtM(r.stages.poll)}</span></div>
+              <div className="kv"><span>With polls</span><span>{fmtM(r.ev ? r.est.margin - r.ev.shift : r.stages.poll)}</span></div>
+              {r.ev ? <>
+                <div className="kv"><span>Early vote turnout</span><span>{Math.abs(r.ev.shift) < 0.05 ? "No change" : `${r.ev.shift > 0 ? "R" : "D"} +${Math.abs(r.ev.shift).toFixed(1)}`}</span></div>
+                <div className="kv"><span>With early vote</span><span>{fmtM(r.est.margin)}</span></div>
+              </> : null}
             </div>
+            {r.ev ? (
+              <p className="ev-src" style={{ fontSize: 12, lineHeight: 1.45, color: "var(--mute)", margin: "-4px 0 0" }}>
+                {r.ev.source === "early vote"
+                  ? `Read from ${Number(r.ev.ballots ?? 0).toLocaleString("en-US")} ballots cast so far in ${r.state}, against the party mix the forecast expected of them, with similar states and primary turnout.`
+                  : `${r.state} has no early vote reported yet, so its turnout correction comes from similar states that do and from its primary turnout.`}{" "}
+                <Link href="/maps/early-vote" style={{ textDecoration: "underline" }}>Early vote tracker</Link>
+              </p>
+            ) : null}
           </div>
           <div className="callout">
             <div className="eye">Methodology</div>
