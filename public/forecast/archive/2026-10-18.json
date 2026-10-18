@@ -1,18 +1,18 @@
 {
  "date": "2026-10-18",
- "statewide_run": "poll sweep 2026-10-18: S1018 against S1017C, change applied to 2026-10-17",
+ "statewide_run": "poll sweep 2026-10-18: S1018OH against S1017B, change applied to 2026-10-18",
  "house_run": "rebuild Oct 16, change applied",
  "n_sims": 2000,
  "chambers": {
   "senate": {
-   "d_control": 78.5,
+   "d_control": 78.6,
    "d_seats_median": 53.0,
    "p10": 49.0,
    "p90": 56.0,
-   "d_control_without_osborn": 75.0
+   "d_control_without_osborn": 75.1
   },
   "governors": {
-   "d_majority": 91.6,
+   "d_majority": 91.8,
    "d_median": 28.0,
    "p10": 26.0,
    "p90": 31.0
@@ -1981,12 +1981,12 @@
   "OH": {
    "office": "senate",
    "n_sims": 2000,
-   "margin": 4.02,
-   "win_d": 80.36,
-   "p10": -1.86,
-   "p90": 9.84,
+   "margin": 4.23,
+   "win_d": 81.68,
+   "p10": -1.65,
+   "p90": 10.05,
    "deterministic_margin": 3.7437767128447064,
-   "n_polls": 28,
+   "n_polls": 29,
    "poll_house_index": 10.5,
    "poll_avg": {
     "D": 47.09720104008362,
@@ -2026,12 +2026,12 @@
   "OHG": {
    "office": "governor",
    "n_sims": 2000,
-   "margin": 3.84,
-   "win_d": 76.34,
-   "p10": -2.77,
-   "p90": 10.64,
+   "margin": 4.59,
+   "win_d": 81.19,
+   "p10": -2.02,
+   "p90": 11.39,
    "deterministic_margin": 3.727949390140978,
-   "n_polls": 24,
+   "n_polls": 26,
    "poll_house_index": 7.0,
    "poll_avg": {
     "D": 48.73163706744522,
