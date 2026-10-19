@@ -1,0 +1,76 @@
+/* On Point Polling state poll map */
+.pm { --pm-empty: rgba(var(--line-rgb), .07); --pm-stroke: var(--bg); --pm-released: rgba(var(--line-rgb), .28); --pm-hatch-bg: rgba(var(--line-rgb), .08);
+  padding: 22px 24px 16px; margin: 0 0 28px; display: flex; flex-direction: column; gap: 16px; }
+.pm-top { display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; flex-wrap: wrap; }
+.pm-top h2 { margin: 6px 0 0; font-family: var(--font-d); font-weight: 800; font-size: clamp(22px, 3vw, 34px); line-height: 1.08; letter-spacing: -.02em; text-wrap: balance; }
+.pm-top h2 em { font-style: normal; color: var(--gold); }
+.pm-tog { display: inline-flex; border: 1px solid var(--line2); border-radius: 999px; padding: 3px; background: var(--glass); }
+.pm-tog button { font: 700 13px var(--font-b); color: var(--mute); background: none; border: 0; border-radius: 999px; padding: 7px 16px; cursor: pointer; }
+.pm-tog button.on { background: var(--ink); color: var(--bg); }
+.pm-tog button:focus-visible, .pm-row:focus-visible, .pm-chip:focus-visible, .pm-back:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+.pm-body { display: grid; grid-template-columns: minmax(0, 1.65fr) minmax(280px, 1fr); gap: 20px; align-items: start; }
+@media (max-width: 900px) { .pm-body { grid-template-columns: 1fr; } }
+.pm-mapwrap { min-width: 0; }
+.pm-map { width: 100%; height: auto; display: block; }
+.pm-st { stroke: var(--pm-stroke); stroke-width: 1; transition: opacity .15s, filter .15s; }
+.pm-st.has { cursor: pointer; }
+.pm-st.has.hov, .pm-st.sel { filter: brightness(1.15); stroke: var(--ink); stroke-width: 2; }
+.pm-st.next { stroke: var(--gold); stroke-width: 1.5; }
+.pm-q { font: 800 26px var(--font-d); fill: var(--gold); pointer-events: none; }
+.pm-tag { cursor: pointer; }
+.pm-tag rect { fill: var(--bg2); stroke: var(--ink2); stroke-width: 1.2; }
+.pm-tag text { font-family: var(--font-b); fill: var(--ink); }
+.pm-tag .n { font-weight: 700; font-size: 14px; }
+.pm-tag .m { font: 700 14px var(--font-m); }
+.pm-tag.d .m { fill: var(--dem2); }
+.pm-tag.r .m { fill: var(--gop2); }
+.pm-tag.field rect { fill: var(--bg2); stroke: var(--gold); }
+.pm-tag.field text { font: 700 12px var(--font-m); fill: var(--gold); letter-spacing: .08em; }
+.pm-key { display: flex; flex-wrap: wrap; gap: 8px 18px; margin-top: 10px; font: 600 12px var(--font-m); color: var(--mute); }
+.pm-key i { display: inline-block; width: 11px; height: 11px; border-radius: 2px; margin-right: 6px; vertical-align: -1px; }
+.pm-key i.hatch { background: repeating-linear-gradient(45deg, var(--gold) 0 3px, transparent 3px 7px); border: 1px solid var(--gold); }
+.pm-load { aspect-ratio: 975 / 610; display: grid; place-items: center; color: var(--mute); }
+.pm-side { display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+.pm-panel { border: 1px solid var(--line2); border-radius: 14px; background: var(--glass); padding: 14px 16px; display: flex; flex-direction: column; gap: 8px; }
+.pm-panel.gold { border-color: color-mix(in srgb, var(--gold) 45%, transparent); background: color-mix(in srgb, var(--gold) 6%, transparent); }
+.pm-panel p { margin: 0; font-size: 14px; color: var(--ink2); line-height: 1.45; }
+.pm-sub { margin-bottom: 2px; }
+.pm-row { all: unset; display: flex; flex-direction: column; gap: 4px; padding: 10px 0; border-bottom: 1px solid var(--line); cursor: pointer; }
+.pm-row:last-child { border-bottom: 0; }
+.pm-row:hover .st { text-decoration: underline; }
+.pm-rh { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+.pm-rh .st, .pm-rh > span { font-family: var(--font-d); font-weight: 700; font-size: 19px; }
+.pm-pill { font-size: 13px; font-weight: 700; padding: 3px 10px; border-radius: 999px; border: 1px solid; white-space: nowrap; }
+.pm-pill.d { color: var(--dem2); border-color: color-mix(in srgb, var(--dem) 60%, transparent); }
+.pm-pill.r { color: var(--gop2); border-color: color-mix(in srgb, var(--gop) 60%, transparent); }
+.pm-pill.n { color: var(--mute); border-color: var(--line2); font-weight: 600; }
+.pm-cands { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.pm-c { display: flex; align-items: baseline; gap: 6px; font-size: 15px; }
+.pm-c .nm { font-weight: 600; }
+.pm-c.d .nm, .pm-c.d b { color: var(--dem2); }
+.pm-c.r .nm, .pm-c.r b { color: var(--gop2); }
+.pm-c b { font-variant-numeric: tabular-nums; font-weight: 600; }
+.pm-race { padding: 10px 0; border-bottom: 1px solid var(--line); display: flex; flex-direction: column; gap: 6px; }
+.pm-race:last-of-type { border-bottom: 0; }
+.pm-race.big .pm-rh > span { font-size: 15px; font-family: var(--font-m); text-transform: uppercase; letter-spacing: .1em; color: var(--mute); }
+.pm-race.big .pm-cands { flex-direction: column; gap: 4px; }
+.pm-race.big .pm-c { justify-content: space-between; }
+.pm-race.big .pm-c b { font-size: 22px; margin-left: auto; }
+.pm-race.big .pm-c small { color: var(--mute); font-size: 12px; min-width: 92px; text-align: right; }
+.pm-bar { display: flex; gap: 3px; height: 8px; border-radius: 4px; overflow: hidden; background: var(--line); }
+.pm-bar i { display: block; height: 100%; }
+.pm-bar i.d { background: var(--dem); } .pm-bar i.r { background: var(--gop); margin-left: auto; }
+.pm-ph h3 { margin: 4px 0 2px; font-family: var(--font-d); font-weight: 800; font-size: 28px; }
+.pm-meta { font-size: 12px; color: var(--mute); }
+.pm-back { all: unset; cursor: pointer; font: 600 12px var(--font-m); color: var(--mute); }
+.pm-back::before { content: "‹ "; }
+.pm-note { font-size: 13px !important; color: var(--mute) !important; }
+.pm-kv { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+.pm-kv > span:last-child { display: flex; gap: 6px; }
+.pm-chip { font: 700 12px var(--font-m); padding: 5px 9px; border-radius: 6px; border: 1px solid var(--gold); color: var(--gold); background: none; cursor: pointer; }
+.pm-chip.on { background: var(--gold-fill); color: #1a1205; }
+.pm-fund { display: flex; flex-direction: column; gap: 10px; }
+.pm .btn { align-self: flex-start; margin-top: 4px; }
+.pm-src { margin: 0; font-size: 11.5px; color: var(--mute); line-height: 1.5; }
+.pm-links { display: flex; flex-wrap: wrap; gap: 8px; }
+.pm-links .btn { margin-top: 4px; }

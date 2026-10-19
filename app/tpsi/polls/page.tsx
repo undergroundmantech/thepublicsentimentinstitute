@@ -2,11 +2,14 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { seo } from "@/app/lib/seo";
+import PollMap from "./PollMap";
 
-export const metadata: Metadata = seo({"title": "On Point Polling poll releases", "description": "Toplines, crosstabs and methodology from every On Point Polling survey for On Point Politics, including the October 2026 Texas and Ohio Senate and governor polls.", "path": "/tpsi/polls"});
+export const metadata: Metadata = seo({"title": "On Point Polling poll releases", "description": "Toplines, crosstabs and methodology from every On Point Polling survey for On Point Politics, including the October 2026 Michigan, Ohio, Texas and Florida Senate and governor polls, with a map of every state polled.", "path": "/tpsi/polls"});
 
 const DASH = "/tpsi/polls/la-mayor-2026";
 const RELEASES: { href: string; no: string; lab: string; t: string; s: string; n: string; date: string; q: number; img?: string }[] = [
+  { href: "https://onpointpolitics.substack.com/p/florida-poll-moody-leads-nixon-donalds", no: "08", lab: "Florida", t: "Florida Senate and governor", s: "Moody leads Nixon by 6.7 and Donalds leads Jolly by 3.9 with undecideds leaned, while no party voters back Nixon 56 to 32.", n: "601 RV", date: "October 2026", q: 0 },
+  { href: "https://onpointpolitics.substack.com/p/michigan-poll-el-sayed-leads-rogers", no: "07", lab: "Michigan", t: "Michigan Senate and governor", s: "El-Sayed leads Rogers by 6.3 and Benson leads James by 12.0 with undecideds leaned, as Trump voters cross over at a higher rate than Harris voters.", n: "586 RV", date: "October 2026", q: 0 },
   { href: "/tpsi/polls/texas-2026", no: "06", lab: "Texas", t: "Texas Senate, governor and Railroad Commissioner", s: "Talarico leads Paxton by 5.8 while Abbott leads Hinojosa by 2.5, as Republicans and independents cross over against Paxton.", n: "661 RV", date: "October 2026", q: 0 },
   { href: "/tpsi/polls/ohio-2026", no: "05", lab: "Ohio", t: "Ohio Senate and governor", s: "Brown leads Husted by 4.3 and Acton leads Ramaswamy by 4.8, with Democrats banking a big early vote lead.", n: "635 LV", date: "October 2026", q: 0, img: "/tpsi/polls/ohio-2026/01_senate.jpg" },
   { href: `${DASH}?poll=sc`, no: "04", lab: "South Carolina", t: "South Carolina GOP primary", s: "Senate and governor primaries under the Meridian coalition model: Graham's standing and an open governor's race.", n: "369 LV", date: "June 2026", q: 13 },
@@ -37,6 +40,7 @@ export default function Page() {
         <p className="lede">Surveys fielded by On Point Polling, formerly The Public Sentiment Institute, for On Point Politics: dual panel samples weighted with the DSMeridian likely voter model, published with toplines and crosstabs.</p>
         <div className="pmeta"><span>Releases <b className="mono">{RELEASES.length}</b></span><span>Latest <b>October 2026</b></span></div>
       </header>
+      <PollMap />
       <div className="layout">
         <div className="grid2">
           {RELEASES.map((r, i) => (

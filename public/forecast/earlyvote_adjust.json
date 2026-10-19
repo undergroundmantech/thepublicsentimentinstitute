@@ -567,7 +567,7 @@
    "estimatedShare": null,
    "source": "neighbours and primaries",
    "comp": 0.1,
-   "level": -0.02
+   "level": -0.01
   },
   "SD": {
    "gap": 0.649,
@@ -581,7 +581,7 @@
    "estimatedShare": 0,
    "source": "early vote",
    "comp": -0.53,
-   "level": -0.03
+   "level": -0.04
   },
   "TN": {
    "gap": 0.109,
@@ -708,22 +708,22 @@
  },
  "chambers": {
   "governor": {
-   "seat_change": 0.0,
-   "dem_control_before": 0.9166,
-   "dem_control": 0.9166,
-   "dem_seats": 28.56
+   "seat_change": -0.0,
+   "dem_control_before": 0.9056,
+   "dem_control": 0.9056,
+   "dem_seats": 28.43
   },
   "senate": {
    "seat_change": -0.0,
-   "dem_control_before": 0.8089,
-   "dem_control": 0.8089,
-   "dem_seats": 52.98
+   "dem_control_before": 0.805,
+   "dem_control": 0.805,
+   "dem_seats": 52.96
   },
   "house": {
    "seat_change": -0.0,
-   "dem_control_before": 0.9073,
-   "dem_control": 0.9073,
-   "dem_seats": 242.95
+   "dem_control_before": 0.9085,
+   "dem_control": 0.9085,
+   "dem_seats": 243.08
   }
  }
 }
