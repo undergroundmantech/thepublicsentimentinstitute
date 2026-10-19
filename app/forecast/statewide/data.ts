@@ -7,6 +7,8 @@ import path from "node:path";
 export type DBPoll = { pollster: string; end: string; n?: number | null; kind: string; D: number; R: number; U?: number; margin: number; age: number; url?: string };
 export type DBRace = {
   id: string; st: string; state: string; office: string; officeLabel: string;
+  /** the seat, where a state elects several for one office; slug is the page address, the office unless there is a seat */
+  seat?: string | null; slug?: string; seatsUp?: number;
   dem: string | null; gop: string | null; others: { name: string; party: string }[];
   incumbent?: string | null; incParty?: string | null; incRunning: boolean; note?: string | null; sources: string[];
   uncontested?: "D" | "R";
@@ -29,5 +31,6 @@ let cache: DBData | null = null;
 export const getDownballot = (): DBData => (cache ??= read("downballot.json") as DBData);
 export const getDownballotCounties = () => read("downballot_counties.json") as Record<string, Record<string, CountyRow> | Record<string, string>>;
 
-export const OFFICE_ORDER = ["lieutenant-governor", "attorney-general", "secretary-of-state", "treasurer", "auditor", "agriculture-commissioner", "railroad-commissioner"];
-export const dbHref = (r: Pick<DBRace, "st" | "office">) => `/forecast/statewide/${r.st.toLowerCase()}/${r.office}`;
+export const OFFICE_ORDER = ["lieutenant-governor", "attorney-general", "secretary-of-state", "treasurer", "auditor", "agriculture-commissioner", "railroad-commissioner",
+  "comptroller", "land-commissioner", "superintendent", "insurance-commissioner", "labor-commissioner", "public-service-commission", "mine-inspector", "education-board", "supreme-court"];
+export const dbHref = (r: Pick<DBRace, "st" | "office"> & { slug?: string }) => `/forecast/statewide/${r.st.toLowerCase()}/${r.slug ?? r.office}`;

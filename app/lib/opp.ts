@@ -78,8 +78,11 @@ export function raceHref(id: string) {
   if (office === "sen") return `/forecast/${s}/senate`;
   if (office === "gov") return `/forecast/${s}/governor`;
   if (office === "house") return `/forecast/${s}/house-${Number(dist)}`;
-  const DB: Record<string, string> = { lg: "lieutenant-governor", ag: "attorney-general", sos: "secretary-of-state", treas: "treasurer", aud: "auditor", agri: "agriculture-commissioner", rrc: "railroad-commissioner" };
-  if (DB[office]) return `/forecast/statewide/${s}/${DB[office]}`;
+  const DB: Record<string, string> = { lg: "lieutenant-governor", ag: "attorney-general", sos: "secretary-of-state", treas: "treasurer", aud: "auditor", agri: "agriculture-commissioner", rrc: "railroad-commissioner",
+    comp: "comptroller", land: "land-commissioner", supt: "superintendent", ins: "insurance-commissioner", labor: "labor-commissioner",
+    psc: "public-service-commission", mine: "mine-inspector", edb: "education-board", court: "supreme-court" };
+  // a seat slug follows the state in the id when a state elects several seats for one office
+  if (DB[office]) { const seat = id.split("-").slice(2).join("-"); return `/forecast/statewide/${s}/${DB[office]}${seat ? `-${seat}` : ""}`; }
   return "/forecast";
 }
 export function raceIdFromRoute(state: string, race: string): string | null {

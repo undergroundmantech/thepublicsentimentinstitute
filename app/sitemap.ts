@@ -35,6 +35,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     u("/forecast/statewide", db.meta.updated, "daily", 0.8),
     u("/forecast/legislatures", sl.meta.updated, "daily", 0.9),
     u("/forecast/measures", ms.meta.updated, "daily", 0.9),
+    u("/forecast/other", ms.meta.updated, "daily", 0.7),
     u("/forecast/methodology", fc, "weekly", 0.6),
     u("/forecast/changelog", fc, "daily", 0.4),
     u("/polls", today, "daily", 0.9),

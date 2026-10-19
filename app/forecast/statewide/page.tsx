@@ -7,7 +7,7 @@ import { seo } from "@/app/lib/seo";
 import JsonLd from "@/app/components/JsonLd";
 import { statewideLd } from "../seo";
 
-export const metadata: Metadata = seo({"title": "2026 statewide offices forecast: attorney general, secretary of state and more", "description": "County by county On Point Politics forecasts for every 2026 lieutenant governor, attorney general, secretary of state, treasurer, auditor, agriculture commissioner and railroad commissioner race.", "path": "/forecast/statewide"});
+export const metadata: Metadata = seo({"title": "2026 statewide offices forecast: attorney general, secretary of state and more", "description": "County by county On Point Politics forecasts for every 2026 partisan statewide race: lieutenant governor, attorney general, secretary of state, treasurer, auditor, comptroller, superintendent, insurance, labor, land and agriculture commissioners, utility commissions, education boards and partisan supreme court seats.", "path": "/forecast/statewide"});
 
 function Row({ r }: { r: DBRace }) {
   const m = r.est.margin;
@@ -15,7 +15,7 @@ function Row({ r }: { r: DBRace }) {
     const who = r.uncontested === "D" ? r.dem : r.gop;
     return (
       <tr>
-        <td><Link href={dbHref(r)}>{r.state}</Link></td>
+        <td><Link href={dbHref(r)}>{r.state}{r.slug && r.slug !== r.office ? <span style={{ color: "var(--mute)", fontSize: 12 }}> · {r.seat ?? r.officeLabel}</span> : null}</Link></td>
         <td style={{ color: "var(--ink2)" }}>{who} runs without a {r.uncontested === "D" ? "Republican" : "Democratic"} opponent</td>
         <td><span className={`pill ${r.uncontested === "D" ? "d" : "r"}`}>Uncontested</span></td>
         <td className="n" /><td className="n" /><td className="n" />
@@ -26,7 +26,7 @@ function Row({ r }: { r: DBRace }) {
   const dWin = 1 - r.est.prob;
   return (
     <tr>
-      <td><Link href={dbHref(r)}>{r.state}</Link></td>
+      <td><Link href={dbHref(r)}>{r.state}{r.slug && r.slug !== r.office ? <span style={{ color: "var(--mute)", fontSize: 12 }}> · {r.seat ?? r.officeLabel}</span> : null}</Link></td>
       <td><span className="d">{r.dem}</span> <span style={{ color: "var(--mute)" }}>vs</span> <span className="r">{r.gop}</span>{r.incRunning && r.incumbent ? <span style={{ color: "var(--mute)", fontSize: 12 }}> · {lastName(r.incumbent)} is the incumbent</span> : null}</td>
       <td><span className={`pill ${ratingPill(rt)}`}>{RATING_LABEL[rt]}</span></td>
       <td className={`n ${m < 0 ? "d" : "r"}`}>{fmtM(m)}</td>
@@ -57,8 +57,9 @@ export default function StatewidePage() {
         <div className="eye g">2026 forecast</div>
         <h1>Statewide offices <em>forecast</em></h1>
         <p className="lede">
-          Every 2026 race for lieutenant governor, attorney general, secretary of state, treasurer, auditor, agriculture
-          commissioner and Texas railroad commissioner, {data.races.length} in all, forecast county by county. Democrats are favored in {dFav} of the {modeled.length} contested
+          Every 2026 partisan statewide race below the top of the ticket: lieutenant governor, attorney general, secretary of state,
+          treasurer, auditor, comptroller, schools superintendent, insurance, labor, land and agriculture commissioners, utility
+          commissions, the elected education boards, the partisan supreme court seats and Texas railroad commissioner, {data.races.length} in all, forecast county by county. Democrats are favored in {dFav} of the {modeled.length} contested
           races and {close} are within 6 points.
         </p>
         <div className="pmeta"><span>Updated <b>{updated}</b></span><span>Races <b className="mono">{data.races.length}</b></span><span>Contested <b className="mono">{modeled.length}</b></span></div>

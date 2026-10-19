@@ -13,6 +13,7 @@ const TABS: { href: string; label: string; match?: (p: string) => boolean }[] = 
   { href: "/forecast/statewide", label: "Statewide offices" },
   { href: "/forecast/legislatures", label: "State legislatures" },
   { href: "/forecast/measures", label: "Ballot measures" },
+  { href: "/forecast/other", label: "Every other race" },
   { href: "/forecast/methodology", label: "Methodology" },
 ];
 

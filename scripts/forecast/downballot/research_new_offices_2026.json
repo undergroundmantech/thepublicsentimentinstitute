@@ -1,0 +1,1812 @@
+[
+ {
+  "state": "CA",
+  "office": "comptroller",
+  "office_label": "State Controller",
+  "seat": null,
+  "seat_slug": null,
+  "seats_up": 1,
+  "d_name": "Malia Cohen",
+  "r_name": "Herb Morgan",
+  "others": [],
+  "incumbent_name": "Malia Cohen",
+  "incumbent_party": "D",
+  "incumbent_running": true,
+  "uncontested": null,
+  "primary_files": {},
+  "polls": [
+   {
+    "source": "David Wolfson",
+    "dates": "Sep 15-16, 2026",
+    "end": "2026-09-16",
+    "n": 828,
+    "pop": "LV",
+    "D": 49.5,
+    "R": 41.2,
+    "O": null,
+    "U": 9.4,
+    "url": "https://californiaglobe.com/wp-content/uploads/2026/09/CA.Controller.PollingMemo.pdf"
+   }
+  ],
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_California_State_Controller_election",
+   "https://elections.cdn.sos.ca.gov/statewide-elections/2026-general/cert-list-candidates.pdf",
+   "https://californiaglobe.com/wp-content/uploads/2026/09/CA.Controller.PollingMemo.pdf",
+   "https://californiaglobe.com/tag/pollster-david-wolfson/"
+  ],
+  "note": "Top two primary on June 2 sent incumbent Democrat Cohen at 56.8 percent and Republican Morgan at 37.5 percent to November, so this is a normal D vs R general; Peace and Freedom candidate Meghann Adams finished third and is not on the November ballot. The Wolfson poll memo names no sponsor and was publicized by California Globe alongside Morgan campaign coverage, so treat it as possibly partisan.",
+  "election_date": "2026-11-03"
+ },
+ {
+  "state": "CT",
+  "office": "comptroller",
+  "office_label": "Comptroller",
+  "seat": null,
+  "seat_slug": null,
+  "seats_up": 1,
+  "d_name": "Sean Scanlon",
+  "r_name": "Jennifer S. Tooker",
+  "others": [],
+  "incumbent_name": "Sean Scanlon",
+  "incumbent_party": "D",
+  "incumbent_running": true,
+  "uncontested": null,
+  "primary_files": {},
+  "polls": [],
+  "sources": [
+   "https://portal.ct.gov/-/media/sots/electionservices/town_ballots/2026/nov-ada-2026/bridgeport_sample_ada.pdf",
+   "https://portal.ct.gov/-/media/sots/electionservices/town_ballots/2026/nov-2026/westport_sample.pdf"
+  ],
+  "note": "Incumbent Democrat Scanlon seeks a second term and also appears on the Working Families and Independent Party lines; former Westport first selectwoman Tooker is the Republican nominee. No general election polls found.",
+  "election_date": "2026-11-03"
+ },
+ {
+  "state": "ID",
+  "office": "comptroller",
+  "office_label": "State Controller",
+  "seat": null,
+  "seat_slug": null,
+  "seats_up": 1,
+  "d_name": "Rakesh Mohan",
+  "r_name": "Brandon Woolf",
+  "others": [],
+  "incumbent_name": "Brandon Woolf",
+  "incumbent_party": "R",
+  "incumbent_running": true,
+  "uncontested": null,
+  "primary_files": {},
+  "polls": [],
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_Idaho_State_Controller_election",
+   "https://idahocapitalsun.com/2026/05/28/round-2-idahos-general-election-is-set-here-are-novembers-contenders/"
+  ],
+  "note": "Incumbent Republican Woolf and Democrat Mohan, a Boise State visiting professor, were both unopposed in the May 19 primaries; no third party candidates are listed. No general election polls found.",
+  "election_date": "2026-11-03"
+ },
+ {
+  "state": "IL",
+  "office": "comptroller",
+  "office_label": "Comptroller",
+  "seat": null,
+  "seat_slug": null,
+  "seats_up": 1,
+  "d_name": "Margaret Croke",
+  "r_name": "Bryan Drew",
+  "others": [],
+  "incumbent_name": "Susana Mendoza",
+  "incumbent_party": "D",
+  "incumbent_running": false,
+  "uncontested": null,
+  "primary_files": {},
+  "polls": [],
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_Illinois_Comptroller_election",
+   "https://www.nprillinois.org/government-politics/2026-03-19/margaret-croke-wins-democratic-primary-for-illinois-comptroller",
+   "https://news.wttw.com/2026/09/29/replacing-mendoza-candidates-vie-be-state-s-first-new-comptroller-decade"
+  ],
+  "note": "Open seat as Democrat Mendoza did not seek another term; state Rep. Croke won a four way Democratic primary on March 17 with about 34.5 percent and attorney Drew was unopposed for the Republican nomination. No third party candidate found and no general election polls found.",
+  "election_date": "2026-11-03"
+ },
+ {
+  "state": "IN",
+  "office": "comptroller",
+  "office_label": "State Comptroller",
+  "seat": null,
+  "seat_slug": null,
+  "seats_up": 1,
+  "d_name": "Jessica Bailey",
+  "r_name": "Elise Nieshalla",
+  "others": [
+   {
+    "name": "John Schick",
+    "party": "Libertarian"
+   }
+  ],
+  "incumbent_name": "Elise Nieshalla",
+  "incumbent_party": "R",
+  "incumbent_running": true,
+  "uncontested": null,
+  "primary_files": {},
+  "polls": [],
+  "sources": [
+   "https://indianacapitalchronicle.com/?p=27385",
+   "https://indianacapitalchronicle.com/2026/05/27/indiana-dems-announce-treasurer-comptroller-candidates/",
+   "https://news.ballotpedia.org/2026/04/30/49-state-financial-officers-and-four-insurance-commissioners-are-up-for-election-in-2026/"
+  ],
+  "note": "This is the tenth controller race: the office formerly called Auditor of State, now State Comptroller, held by Republican Nieshalla since a 2023 appointment by Gov. Holcomb and she seeks a full term. Nominees were chosen at party conventions in June, with Porter County Clerk Bailey for the Democrats and Libertarian Schick also on the ballot; no polls found.",
+  "election_date": "2026-11-03"
+ },
+ {
+  "state": "MD",
+  "office": "comptroller",
+  "office_label": "Comptroller",
+  "seat": null,
+  "seat_slug": null,
+  "seats_up": 1,
+  "d_name": "Brooke Lierman",
+  "r_name": "Sonya Dunn",
+  "others": [],
+  "incumbent_name": "Brooke Lierman",
+  "incumbent_party": "D",
+  "incumbent_running": true,
+  "uncontested": null,
+  "primary_files": {},
+  "polls": [],
+  "sources": [
+   "https://www.elections.maryland.gov/elections/2026/general_candidates/2026_GG_statewide_candidatelist.html",
+   "https://en.wikipedia.org/wiki/2026_Maryland_Comptroller_election"
+  ],
+  "note": "Incumbent Democrat Lierman seeks a second term against Republican businesswoman Dunn; both were unopposed in the June primaries and the state candidate list shows no other general election candidates. No general election polls found.",
+  "election_date": "2026-11-03"
+ },
+ {
+  "state": "NV",
+  "office": "comptroller",
+  "office_label": "State Controller",
+  "seat": null,
+  "seat_slug": null,
+  "seats_up": 1,
+  "d_name": "Michael MacDougall",
+  "r_name": "Andy Matthews",
+  "others": [],
+  "incumbent_name": "Andy Matthews",
+  "incumbent_party": "R",
+  "incumbent_running": true,
+  "uncontested": null,
+  "primary_files": {},
+  "polls": [],
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_Nevada_State_Controller_election",
+   "https://www.clarkcountynv.gov/adobe/assets/urn:aaid:aem:46b035ca-1d1f-4a0a-b748-a0f42dd45794/original/as/notice-general-election-26g.pdf"
+  ],
+  "note": "Incumbent Republican Matthews faces teacher MacDougall, who won the June 9 Democratic primary with 45.3 percent; the Clark County general election notice lists only these two plus None of these candidates. No general election polls found.",
+  "election_date": "2026-11-03"
+ },
+ {
+  "state": "NY",
+  "office": "comptroller",
+  "office_label": "State Comptroller",
+  "seat": null,
+  "seat_slug": null,
+  "seats_up": 1,
+  "d_name": "Tom DiNapoli",
+  "r_name": "Joseph Hernandez",
+  "others": [],
+  "incumbent_name": "Tom DiNapoli",
+  "incumbent_party": "D",
+  "incumbent_running": true,
+  "uncontested": null,
+  "primary_files": {},
+  "polls": [
+   {
+    "source": "Siena College",
+    "dates": "Sep 11-17, 2026",
+    "end": "2026-09-17",
+    "n": 1144,
+    "pop": "LV",
+    "D": 56,
+    "R": 33,
+    "O": null,
+    "U": 12,
+    "url": "https://ny1.com/nyc/all-boroughs/politics/2026/09/22/siena-poll--hochul-s-lead-over-blakeman-sees-little-change-among-likely-voters"
+   },
+   {
+    "source": "Siena College",
+    "dates": "Aug 3-6, 2026",
+    "end": "2026-08-06",
+    "n": 811,
+    "pop": "LV",
+    "D": 55,
+    "R": 32,
+    "O": 1,
+    "U": 12,
+    "url": "https://sri.siena.edu/wp-content/uploads/2026/08/SNY-August-2026-Poll-Release-8-12-26-FINAL.pdf"
+   }
+  ],
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_New_York_State_Comptroller_election",
+   "https://www.cityandstateny.com/politics/2026/10/dinapoli-defends-record-medicaid-fraud-comptroller-debate/416380/",
+   "https://sri.siena.edu/wp-content/uploads/2026/08/SNY-August-2026-Poll-Release-8-12-26-FINAL.pdf",
+   "https://ny1.com/nyc/all-boroughs/politics/2026/09/22/siena-poll--hochul-s-lead-over-blakeman-sees-little-change-among-likely-voters"
+  ],
+  "note": "Incumbent Democrat DiNapoli won the June 23 primary with 65.3 percent over Warshaw and Goyle and seeks a fifth full term; biotech investor Hernandez is the Republican and Conservative nominee. Wikipedia lists DiNapoli on the Working Families line but a cited report says WFP declined to endorse, so his WFP line is unconfirmed.",
+  "election_date": "2026-11-03"
+ },
+ {
+  "state": "SC",
+  "office": "comptroller",
+  "office_label": "Comptroller General",
+  "seat": null,
+  "seat_slug": null,
+  "seats_up": 1,
+  "d_name": "Tiffany Boozer",
+  "r_name": "Mike Burkhold",
+  "others": [],
+  "incumbent_name": "Brian Gaines",
+  "incumbent_party": "D",
+  "incumbent_running": false,
+  "uncontested": null,
+  "primary_files": {},
+  "polls": [],
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_South_Carolina_State_Comptroller_election",
+   "https://scdailygazette.com/voter-guides/contests/2026-comptroller-general/",
+   "https://www.wbtv.com/2026/06/08/tracking-south-carolina-comptroller-general-results-2026-primary-election/",
+   "https://en.wikipedia.org/wiki/South_Carolina_Comptroller_General"
+  ],
+  "note": "Open seat for the first time since 1998: Gaines, appointed by Gov. McMaster in 2023 after Richard Eckstrom resigned and listed as a Democrat by Wikipedia and WBTV, is not running. CPA Boozer won the Democratic primary with 74.5 percent and businessman Burkhold is the Republican nominee, apparently without primary opposition; no polls found.",
+  "election_date": "2026-11-03"
+ },
+ {
+  "state": "TX",
+  "office": "comptroller",
+  "office_label": "Comptroller of Public Accounts",
+  "seat": null,
+  "seat_slug": null,
+  "seats_up": 1,
+  "d_name": "Sarah Eckhardt",
+  "r_name": "Don Huffines",
+  "others": [
+   {
+    "name": "V. Alonzo Echavarria-Garza",
+    "party": "Libertarian"
+   },
+   {
+    "name": "Shehla Faizi",
+    "party": "Green"
+   }
+  ],
+  "incumbent_name": "Don Huffines",
+  "incumbent_party": "R",
+  "incumbent_running": true,
+  "uncontested": null,
+  "primary_files": {},
+  "polls": [
+   {
+    "source": "University of Houston Hobby School",
+    "dates": "Oct 10-14, 2026",
+    "end": "2026-10-14",
+    "n": 2000,
+    "pop": "LV",
+    "D": 40,
+    "R": 47,
+    "O": 2.4,
+    "U": 11,
+    "url": "https://www.uh.edu/hobby/texas2026/statewide26.pdf"
+   },
+   {
+    "source": "ActiVote",
+    "dates": "Sep 25-Oct 17, 2026",
+    "end": "2026-10-17",
+    "n": 400,
+    "pop": "LV",
+    "D": 44.0,
+    "R": 56.0,
+    "O": null,
+    "U": null,
+    "url": "https://www.activote.net/polls/2026/tx-comptroller/2026-10-17"
+   },
+   {
+    "source": "UT/Texas Politics Project",
+    "dates": "Sep 25-Oct 5, 2026",
+    "end": "2026-10-05",
+    "n": 861,
+    "pop": "LV",
+    "D": 46,
+    "R": 47,
+    "O": 6,
+    "U": null,
+    "url": "https://texaspolitics.utexas.edu/blog/latest-ut-texas-politics-poll-finds-historic-levels-of-competition-in-texas-midterm-elections"
+   },
+   {
+    "source": "Texas Southern University",
+    "dates": "Sep 15-19, 2026",
+    "end": "2026-09-19",
+    "n": 1800,
+    "pop": "LV",
+    "D": 39,
+    "R": 47,
+    "O": 3,
+    "U": 11,
+    "url": "https://en.wikipedia.org/wiki/2026_Texas_Comptroller_of_Public_Accounts_election"
+   },
+   {
+    "source": "Texas Public Opinion Research",
+    "dates": "Aug 21-24, 2026",
+    "end": "2026-08-24",
+    "n": 1000,
+    "pop": "LV",
+    "D": 41,
+    "R": 43,
+    "O": 4,
+    "U": 11,
+    "url": "https://en.wikipedia.org/wiki/2026_Texas_Comptroller_of_Public_Accounts_election"
+   },
+   {
+    "source": "UT/Texas Politics Project",
+    "dates": "Aug 5-13, 2026",
+    "end": "2026-08-13",
+    "n": 1200,
+    "pop": "RV",
+    "D": 34,
+    "R": 40,
+    "O": 2,
+    "U": 23,
+    "url": "https://texaspolitics.utexas.edu/blog/new-ut-texas-politics-project-poll-finds-talarico-leading-paxton-abbott-leading-hinojosa-continued-resistance-to-data-centers-2"
+   },
+   {
+    "source": "Texas Southern University",
+    "dates": "Jul 27-30, 2026",
+    "end": "2026-07-30",
+    "n": 1200,
+    "pop": "LV",
+    "D": 39,
+    "R": 46,
+    "O": 2.3,
+    "U": 13,
+    "url": "https://www.texastribune.org/wp-content/uploads/2026/08/TSUStatewideAugust2026.pdf"
+   },
+   {
+    "source": "UT/YouGov",
+    "dates": "Jun 5-12, 2026",
+    "end": "2026-06-12",
+    "n": 1200,
+    "pop": "RV",
+    "D": 34,
+    "R": 40,
+    "O": 4,
+    "U": 21,
+    "url": "https://en.wikipedia.org/wiki/2026_Texas_Comptroller_of_Public_Accounts_election"
+   }
+  ],
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_Texas_Comptroller_of_Public_Accounts_election",
+   "https://www.texastribune.org/2026/09/29/texas-comptroller-2026-election-huffines-eckhardt/",
+   "https://communityimpact.com/central-austin/election/q-a-meet-the-4-candidates-running-for-texas-comptroller/",
+   "https://www.tpr.org/text/news/2026-07-02/gov-abbott-appoints-don-huffines-to-be-texas-comptroller",
+   "https://www.uh.edu/hobby/texas2026/statewide26.pdf",
+   "https://texaspolitics.utexas.edu/blog/latest-ut-texas-politics-poll-finds-historic-levels-of-competition-in-texas-midterm-elections",
+   "https://texaspolitics.utexas.edu/blog/new-ut-texas-politics-project-poll-finds-talarico-leading-paxton-abbott-leading-hinojosa-continued-resistance-to-data-centers-2",
+   "https://www.texastribune.org/wp-content/uploads/2026/08/TSUStatewideAugust2026.pdf",
+   "https://www.activote.net/polls/2026/tx-comptroller/2026-10-17"
+  ],
+  "note": "Huffines beat acting comptroller Kelly Hancock 57.4 to 23.7 percent in the March 3 GOP primary, Hancock resigned, and Abbott appointed Huffines acting comptroller in July 2026, so Huffines runs as the appointed incumbent; state Sen. Eckhardt won the Democratic primary with 64.1 percent. ActiVote figures are two party shares and its page gives field dates Sep 25 to Oct 17, not Sep 30 to Oct 14; the TSU September, TPOR and June UT/YouGov polls come from Wikipedia only and were not checked against the pollster release.",
+  "election_date": "2026-11-03"
+ },
+ {
+  "state": "TX",
+  "office": "land-commissioner",
+  "office_label": "Commissioner of the General Land Office",
+  "seat": null,
+  "seat_slug": null,
+  "seats_up": 1,
+  "d_name": "Benjamin Flores",
+  "r_name": "Dawn Buckingham",
+  "others": [
+   {
+    "name": "Neill Snider",
+    "party": "Libertarian"
+   }
+  ],
+  "incumbent_name": "Dawn Buckingham",
+  "incumbent_party": "R",
+  "incumbent_running": true,
+  "uncontested": null,
+  "primary_files": {},
+  "polls": [
+   {
+    "source": "University of Houston Hobby School",
+    "dates": "Oct 10-14, 2026",
+    "end": "2026-10-14",
+    "n": 2000,
+    "pop": "LV",
+    "D": 40,
+    "R": 47,
+    "O": 2,
+    "U": 11,
+    "url": "https://www.uh.edu/hobby/texas2026/statewide26.pdf"
+   },
+   {
+    "source": "ActiVote",
+    "dates": "Sep 25-Oct 17, 2026",
+    "end": "2026-10-17",
+    "n": 400,
+    "pop": "LV",
+    "D": 48.1,
+    "R": 51.9,
+    "O": null,
+    "U": null,
+    "url": "https://www.activote.net/polls/2026/tx-land-commissioner/2026-10-17"
+   },
+   {
+    "source": "Texas Southern University",
+    "dates": "Jul 27-30, 2026",
+    "end": "2026-07-30",
+    "n": 1200,
+    "pop": "LV",
+    "D": 40,
+    "R": 45,
+    "O": 2,
+    "U": 13,
+    "url": "https://www.texastribune.org/wp-content/uploads/2026/08/TSUStatewideAugust2026.pdf"
+   }
+  ],
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_Texas_Land_Commissioner_election",
+   "https://www.texastribune.org/2026/09/18/texas-land-commissioner-glo-2026-buckingham/",
+   "https://www.uh.edu/hobby/texas2026/statewide26.pdf",
+   "https://www.texastribune.org/wp-content/uploads/2026/08/TSUStatewideAugust2026.pdf",
+   "https://www.activote.net/polls/2026/tx-land-commissioner/2026-10-17"
+  ],
+  "note": "Incumbent Republican Buckingham was unopposed in the March 3 primary and seeks a second term; Flores won the Democratic primary 55.6 to 44.4 over Jose Loya, announced a leukemia diagnosis in June and later said he is in remission. No Green candidate is on the ballot; ActiVote figures are two party shares with field dates Sep 25 to Oct 17 per its page.",
+  "election_date": "2026-11-03"
+ },
+ {
+  "state": "NM",
+  "office": "land-commissioner",
+  "office_label": "Commissioner of Public Lands",
+  "seat": null,
+  "seat_slug": null,
+  "seats_up": 1,
+  "d_name": "Juan Sanchez",
+  "r_name": "Michael Perry",
+  "others": [],
+  "incumbent_name": "Stephanie Garcia Richard",
+  "incumbent_party": "D",
+  "incumbent_running": false,
+  "uncontested": null,
+  "primary_files": {},
+  "polls": [],
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_New_Mexico_Commissioner_of_Public_Lands_election",
+   "https://sourcenm.com/2026/09/24/new-mexico-election-2026-commissioner-of-public-lands/"
+  ],
+  "note": "Open seat as term limited Democrat Garcia Richard is the Democratic nominee for lieutenant governor. Former Heinrich aide Juan de Jesus Sanchez III won the June 2 Democratic primary with 56.3 percent and Chaves County Commissioner Perry was unopposed for the Republicans; no third party candidates or polls found.",
+  "election_date": "2026-11-03"
+ },
+ {
+  "state": "AZ",
+  "office": "superintendent",
+  "office_label": "Superintendent of Public Instruction",
+  "seat": null,
+  "seat_slug": null,
+  "seats_up": 1,
+  "d_name": "Teresa Leyba Ruiz",
+  "r_name": "Kimberly Yee",
+  "others": [],
+  "incumbent_name": "Tom Horne",
+  "incumbent_party": "R",
+  "incumbent_running": false,
+  "uncontested": null,
+  "primary_files": {},
+  "polls": [
+   {
+    "source": "HighGround",
+    "dates": "Aug 15-18, 2026",
+    "end": "2026-08-18",
+    "n": 400,
+    "pop": "LV",
+    "D": 42,
+    "R": 41,
+    "O": 1,
+    "U": 16,
+    "url": "https://en.wikipedia.org/wiki/2026_Arizona_Superintendent_of_Public_Instruction_election"
+   },
+   {
+    "source": "Grayhouse (R)",
+    "dates": "Aug 11-13, 2026",
+    "end": "2026-08-13",
+    "n": 600,
+    "pop": "LV",
+    "D": 42,
+    "R": 45,
+    "O": null,
+    "U": 13,
+    "url": "https://en.wikipedia.org/wiki/2026_Arizona_Superintendent_of_Public_Instruction_election"
+   },
+   {
+    "source": "Stealth Analytics",
+    "dates": "Aug 11-13, 2026",
+    "end": "2026-08-13",
+    "n": 530,
+    "pop": "LV",
+    "D": 38,
+    "R": 42,
+    "O": null,
+    "U": 20,
+    "url": "https://en.wikipedia.org/wiki/2026_Arizona_Superintendent_of_Public_Instruction_election"
+   },
+   {
+    "source": "Noble Predictive Insights",
+    "dates": "Aug 10-13, 2026",
+    "end": "2026-08-13",
+    "n": 923,
+    "pop": "LV",
+    "D": 37,
+    "R": 40,
+    "O": 3,
+    "U": 20,
+    "url": "https://noblepredictiveinsights.com/post/fontes-and-mayes-lead-down-ballot-yee-holds-narrow-edge-for-schools-chief"
+   }
+  ],
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_Arizona_Superintendent_of_Public_Instruction_election",
+   "https://noblepredictiveinsights.com/post/fontes-and-mayes-lead-down-ballot-yee-holds-narrow-edge-for-schools-chief",
+   "https://www.fox10phoenix.com/election/2026-election-debate-arizona-superintendent-public-instruction-candidates",
+   "https://www.270towin.com/content/other-statewide-office-primary-elections-in-arizona"
+  ],
+  "note": "State Treasurer Kimberly Yee beat incumbent Tom Horne in the July 21 GOP primary, 53.2 to 46.8, and Teresa Leyba Ruiz beat Brett Newby 79.5 to 20.5 for the Democrats. Gerard Davis (Green) and Stephen Neal Jr. (No Labels) are write-in candidates only and are not printed on the ballot.",
+  "election_date": "2026-11-03"
+ },
+ {
+  "state": "GA",
+  "office": "superintendent",
+  "office_label": "State School Superintendent",
+  "seat": null,
+  "seat_slug": null,
+  "seats_up": 1,
+  "d_name": "Lydia Catalina Powell",
+  "r_name": "Richard Woods",
+  "others": [],
+  "incumbent_name": "Richard Woods",
+  "incumbent_party": "R",
+  "incumbent_running": true,
+  "uncontested": null,
+  "primary_files": {},
+  "polls": [],
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_Georgia_State_Superintendent_of_Schools_election",
+   "https://www.wabe.org/?p=968588"
+  ],
+  "note": "Three-term incumbent Richard Woods survived a June 16 GOP runoff against Bubba Longgrear 51.5 to 48.5 after taking 49.9 percent on May 19. Lydia Catalina Powell won the Democratic primary outright with 50.5 percent. No Libertarian is on the ballot because the party failed to petition onto the 2026 ballot. No public polls found.",
+  "election_date": "2026-11-03"
+ },
+ {
+  "state": "ID",
+  "office": "superintendent",
+  "office_label": "Superintendent of Public Instruction",
+  "seat": null,
+  "seat_slug": null,
+  "seats_up": 1,
+  "d_name": "Becky Sundin Mitchell",
+  "r_name": "Debbie Critchfield",
+  "others": [
+   {
+    "name": "Teresa Roundy",
+    "party": "Constitution"
+   }
+  ],
+  "incumbent_name": "Debbie Critchfield",
+  "incumbent_party": "R",
+  "incumbent_running": true,
+  "uncontested": null,
+  "primary_files": {},
+  "polls": [],
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_Idaho_Superintendent_of_Public_Instruction_election"
+  ],
+  "note": "Incumbent Debbie Critchfield and Democrat Becky Sundin Mitchell were both unopposed in the May primaries. Teresa Roundy appears in the Constitution Party primary; her November ballot status was not separately confirmed. No polls found.",
+  "election_date": "2026-11-03"
+ },
+ {
+  "state": "OK",
+  "office": "superintendent",
+  "office_label": "State Superintendent of Public Instruction",
+  "seat": null,
+  "seat_slug": null,
+  "seats_up": 1,
+  "d_name": "Jennettie Marshall",
+  "r_name": "Robert Franklin",
+  "others": [],
+  "incumbent_name": "Lindel Fields",
+  "incumbent_party": "R",
+  "incumbent_running": false,
+  "uncontested": null,
+  "primary_files": {},
+  "polls": [],
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_Oklahoma_elections",
+   "https://nondoc.com/2026/06/16/robert-franklin-james-taylor-advance-in-gop-supt-race-shannon-wins-lt-gov-nomination/",
+   "https://www.guthrienewsleader.net/node/10788",
+   "https://www.news9.com/oklahoma-politics/general-election-preview-november-2026",
+   "https://nondoc.com/2025/10/02/lindel-fields-appointed-superintendent-as-stitt-overhauls-education-leadership/"
+  ],
+  "note": "Open seat: Lindel Fields was appointed in fall 2025 after Ryan Walters resigned and said he would not run. Robert Franklin beat James Taylor in the Aug 25 GOP runoff with 54.6 percent, and Jennettie Marshall beat Craig McVay 57.7 to 42.3 in the Democratic primary. No polls found.",
+  "election_date": "2026-11-03"
+ },
+ {
+  "state": "SC",
+  "office": "superintendent",
+  "office_label": "Superintendent of Education",
+  "seat": null,
+  "seat_slug": null,
+  "seats_up": 1,
+  "d_name": "Sylvia Wright",
+  "r_name": "Ellen Weaver",
+  "others": [
+   {
+    "name": "Baba Amin Ojuok",
+    "party": "United Citizens"
+   }
+  ],
+  "incumbent_name": "Ellen Weaver",
+  "incumbent_party": "R",
+  "incumbent_running": true,
+  "uncontested": null,
+  "primary_files": {},
+  "polls": [],
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_South_Carolina_Superintendent_of_Education_election",
+   "https://scdailygazette.com/voter-guides/contests/2026-superintendent-of-education/"
+  ],
+  "note": "Incumbent Ellen Weaver seeks a second term. Sylvia Wright beat 2022 nominee Lisa Ellis 61.0 to 39.0 in the June 9 Democratic primary. No polls found.",
+  "election_date": "2026-11-03"
+ },
+ {
+  "state": "WY",
+  "office": "superintendent",
+  "office_label": "Superintendent of Public Instruction",
+  "seat": null,
+  "seat_slug": null,
+  "seats_up": 1,
+  "d_name": "Ana Cordova",
+  "r_name": "Steve Harshman",
+  "others": [],
+  "incumbent_name": "Megan Degenfelder",
+  "incumbent_party": "R",
+  "incumbent_running": false,
+  "uncontested": null,
+  "primary_files": {},
+  "polls": [],
+  "sources": [
+   "https://www.wyomingpublicmedia.org/politics-government/2026-08-19/moderates-win-republican-primaries-for-wyomings-top-offices"
+  ],
+  "note": "Open seat because Megan Degenfelder ran for governor. Former House Speaker Steve Harshman won the Aug 18 GOP primary with about 58 percent over Tom Kelly and Chad Auer, and Ana Cordova beat Sergio Maldonado 63 to 37 for the Democrats. Minor party candidates not checked; no polls found.",
+  "election_date": "2026-11-03"
+ },
+ {
+  "state": "CA",
+  "office": "insurance-commissioner",
+  "office_label": "Insurance Commissioner",
+  "seat": null,
+  "seat_slug": null,
+  "seats_up": 1,
+  "d_name": "Jane Kim",
+  "r_name": null,
+  "others": [
+   {
+    "name": "Ben Allen",
+    "party": "Democratic"
+   }
+  ],
+  "incumbent_name": "Ricardo Lara",
+  "incumbent_party": "D",
+  "incumbent_running": false,
+  "uncontested": "D",
+  "primary_files": {},
+  "polls": [
+   {
+    "source": "Independent Voter Project",
+    "dates": "Sep 23-Oct 2, 2026",
+    "end": "2026-10-02",
+    "n": null,
+    "pop": null,
+    "D": 14,
+    "R": null,
+    "O": 21,
+    "U": 64,
+    "url": "https://en.wikipedia.org/wiki/2026_California_Insurance_Commissioner_election",
+    "note": "D is Kim; O is Allen 11 plus other 10 as reported; n and population not given"
+   },
+   {
+    "source": "Probolsky Research",
+    "dates": "late Aug 2026",
+    "end": "2026-08-31",
+    "n": 1000,
+    "pop": null,
+    "D": 25,
+    "R": null,
+    "O": 18,
+    "U": 57,
+    "url": "https://insurancenewsnet.com/oarticle/poll-california-voters-undecided-in-democrat-showdown-for-insurance-commissioner",
+    "note": "D is Kim, O is Allen; exact field dates and LV or RV not given"
+   }
+  ],
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_California_Insurance_Commissioner_election",
+   "https://insurancenewsnet.com/oarticle/poll-california-voters-undecided-in-democrat-showdown-for-insurance-commissioner",
+   "https://www.probolskyresearch.com/?p=9142"
+  ],
+  "note": "Democrat versus Democrat under top two: Jane Kim 27.4 and state Sen. Ben Allen 19.4 advanced from the June 2 primary, ahead of Republican Stacy Korsgaden at 15.5. Ricardo Lara is term limited. No Republican on the November ballot.",
+  "election_date": "2026-11-03"
+ },
+ {
+  "state": "GA",
+  "office": "insurance-commissioner",
+  "office_label": "Commissioner of Insurance",
+  "seat": null,
+  "seat_slug": null,
+  "seats_up": 1,
+  "d_name": "Keisha Sean Waites",
+  "r_name": "John King",
+  "others": [],
+  "incumbent_name": "John King",
+  "incumbent_party": "R",
+  "incumbent_running": true,
+  "uncontested": null,
+  "primary_files": {},
+  "polls": [],
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_Georgia_Insurance_Commissioner_election",
+   "https://www.wabe.org/?p=968588"
+  ],
+  "note": "John King, who dropped a 2025 U.S. Senate bid, was unopposed for renomination. Keisha Sean Waites beat DeAndre Mathis 58.7 to 41.3 in the June 16 Democratic runoff. No Libertarian on the ballot; no public polls found.",
+  "election_date": "2026-11-03"
+ },
+ {
+  "state": "KS",
+  "office": "insurance-commissioner",
+  "office_label": "Commissioner of Insurance",
+  "seat": null,
+  "seat_slug": null,
+  "seats_up": 1,
+  "d_name": "Dinah Sykes",
+  "r_name": "Dan Hawkins",
+  "others": [
+   {
+    "name": "Ric Koehn",
+    "party": "Libertarian"
+   }
+  ],
+  "incumbent_name": "Vicki Schmidt",
+  "incumbent_party": "R",
+  "incumbent_running": false,
+  "uncontested": null,
+  "primary_files": {},
+  "polls": [],
+  "sources": [
+   "https://kansasreflector.com/2026/08/04/kansas-democrats-republicans-firm-up-teams-for-statewide-office-contests/"
+  ],
+  "note": "Open seat because Vicki Schmidt ran for governor and lost the Aug 4 GOP primary. State Sen. Dinah Sykes and House Speaker Dan Hawkins were both unopposed in their primaries. No polls found.",
+  "election_date": "2026-11-03"
+ },
+ {
+  "state": "OK",
+  "office": "insurance-commissioner",
+  "office_label": "Insurance Commissioner",
+  "seat": null,
+  "seat_slug": null,
+  "seats_up": 1,
+  "d_name": "Craig MacIntyre",
+  "r_name": "Bob Sullivan",
+  "others": [],
+  "incumbent_name": "Glen Mulready",
+  "incumbent_party": "R",
+  "incumbent_running": false,
+  "uncontested": null,
+  "primary_files": {},
+  "polls": [],
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_Oklahoma_elections",
+   "https://nondoc.com/2026/06/16/robert-franklin-james-taylor-advance-in-gop-supt-race-shannon-wins-lt-gov-nomination/",
+   "https://www.guthrienewsleader.net/node/10788",
+   "https://www.news9.com/oklahoma-politics/general-election-preview-november-2026"
+  ],
+  "note": "Open seat because Glen Mulready is term limited. Bob Sullivan beat former state Sen. Marty Quinn 55.1 to 44.9 in the Aug 25 GOP runoff. No polls found.",
+  "election_date": "2026-11-03"
+ },
+ {
+  "state": "GA",
+  "office": "labor-commissioner",
+  "office_label": "Commissioner of Labor",
+  "seat": null,
+  "seat_slug": null,
+  "seats_up": 1,
+  "d_name": "Nikki Porcher",
+  "r_name": "B\u00e1rbara Rivera Holmes",
+  "others": [],
+  "incumbent_name": "B\u00e1rbara Rivera Holmes",
+  "incumbent_party": "R",
+  "incumbent_running": true,
+  "uncontested": null,
+  "primary_files": {},
+  "polls": [],
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_Georgia_Labor_Commissioner_election",
+   "https://www.wabe.org/?p=968588"
+  ],
+  "note": "B\u00e1rbara Rivera Holmes was appointed by Gov. Kemp in 2025 and was unopposed in the GOP primary. Nikki Porcher beat Michelle Sanchez 61.7 to 38.3 in the June 16 Democratic runoff. No Libertarian on the ballot; no polls found.",
+  "election_date": "2026-11-03"
+ },
+ {
+  "state": "OK",
+  "office": "labor-commissioner",
+  "office_label": "Commissioner of Labor",
+  "seat": null,
+  "seat_slug": null,
+  "seats_up": 1,
+  "d_name": "Kevin Dawson",
+  "r_name": "Kevin West",
+  "others": [
+   {
+    "name": "Mike Hall",
+    "party": "Libertarian"
+   }
+  ],
+  "incumbent_name": "Leslie Osborn",
+  "incumbent_party": "R",
+  "incumbent_running": false,
+  "uncontested": null,
+  "primary_files": {},
+  "polls": [],
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_Oklahoma_elections",
+   "https://nondoc.com/2026/06/16/robert-franklin-james-taylor-advance-in-gop-supt-race-shannon-wins-lt-gov-nomination/",
+   "https://www.guthrienewsleader.net/node/10788",
+   "https://www.news9.com/oklahoma-politics/general-election-preview-november-2026"
+  ],
+  "note": "Open seat because Leslie Osborn is term limited. State Rep. Kevin West beat state Rep. John Pfeiffer 58.3 to 41.7 in the Aug 25 GOP runoff. No polls found.",
+  "election_date": "2026-11-03"
+ },
+ {
+  "state": "AZ",
+  "office": "mine-inspector",
+  "office_label": "State Mine Inspector",
+  "seat": null,
+  "seat_slug": null,
+  "seats_up": 1,
+  "d_name": "Brian Matlock",
+  "r_name": "Walter \"Les\" Presmyk",
+  "others": [],
+  "incumbent_name": "Walter \"Les\" Presmyk",
+  "incumbent_party": "R",
+  "incumbent_running": true,
+  "uncontested": null,
+  "primary_files": {},
+  "polls": [],
+  "sources": [
+   "https://www.fox10phoenix.com/election/2026-election-arizona-mine-inspector-candidates-face-off-debate",
+   "https://www.270towin.com/content/other-statewide-office-primary-elections-in-arizona"
+  ],
+  "note": "Les Presmyk was appointed by Gov. Hobbs in 2025 after Paul Marsh resigned; he and Democrat Brian Matlock were both unopposed in the July 21 primaries. No polls found.",
+  "election_date": "2026-11-03"
+ },
+ {
+  "state": "MI",
+  "office": "education-board",
+  "office_label": "State Board of Education",
+  "seat": null,
+  "seat_slug": "state-board-of-education",
+  "seats_up": 2,
+  "d_name": "Judith Pritchett and Tiffany Tilley",
+  "r_name": "Terence Collins and Bree Moeggenberg",
+  "others": [
+   {
+    "name": "Charles Essner",
+    "party": "Libertarian"
+   },
+   {
+    "name": "William Mohr II",
+    "party": "U.S. Taxpayers"
+   },
+   {
+    "name": "Christine C. Schwartz",
+    "party": "U.S. Taxpayers"
+   },
+   {
+    "name": "Wissam Charafeddine",
+    "party": "Green"
+   },
+   {
+    "name": "Mary Anne Hering",
+    "party": "Working Class"
+   },
+   {
+    "name": "Kelli Monroe",
+    "party": "Natural Law"
+   }
+  ],
+  "incumbent_name": "Judith Pritchett; Tiffany Tilley",
+  "incumbent_party": "D",
+  "incumbent_running": true,
+  "uncontested": null,
+  "primary_files": {},
+  "polls": [],
+  "sources": [
+   "https://www.kentcountymi.gov/DocumentCenter/View/8870/November-3-2026-Candidates-and-Proposals-PDF",
+   "https://michiganadvance.com/2026/08/30/michigan-democrats-finalize-nominations-continue-calls-for-unity-heading-into-november/",
+   "https://press.mirs.news/00b9eed6.pdf",
+   "https://www.wlns.com/capital-rundown/michigan-republicans-hold-nominating-convention/amp/",
+   "https://en.wikipedia.org/wiki/2026_Michigan_elections"
+  ],
+  "note": "Both Democratic incumbents were renominated at the Aug 2026 convention. Vote for two; candidate list from the Kent County Nov 3 ballot list. No polls found.",
+  "election_date": "2026-11-03"
+ },
+ {
+  "state": "MI",
+  "office": "education-board",
+  "office_label": "University of Michigan Board of Regents",
+  "seat": null,
+  "seat_slug": "university-of-michigan-board-of-regents",
+  "seats_up": 2,
+  "d_name": "Paul Brown and Amir Makled",
+  "r_name": "Lena Epstein and Michael Schostak",
+  "others": [
+   {
+    "name": "Andrew Chadderdon",
+    "party": "Libertarian"
+   },
+   {
+    "name": "Kyle Maas",
+    "party": "U.S. Taxpayers"
+   }
+  ],
+  "incumbent_name": "Paul Brown; Jordan Acker",
+  "incumbent_party": "D",
+  "incumbent_running": false,
+  "uncontested": null,
+  "primary_files": {},
+  "polls": [],
+  "sources": [
+   "https://www.kentcountymi.gov/DocumentCenter/View/8870/November-3-2026-Candidates-and-Proposals-PDF",
+   "https://michiganadvance.com/2026/08/30/michigan-democrats-finalize-nominations-continue-calls-for-unity-heading-into-november/",
+   "https://press.mirs.news/00b9eed6.pdf",
+   "https://www.wlns.com/capital-rundown/michigan-republicans-hold-nominating-convention/amp/",
+   "https://www.michiganpublic.org/politics-government/2026-10-09/meet-the-candidates-running-for-the-u-m-board-of-regents"
+  ],
+  "note": "Regent Paul Brown is running again, but Regent Jordan Acker lost the Democratic nomination to Dearborn attorney Amir Makled at the state convention. Vote for two. No polls found.",
+  "election_date": "2026-11-03"
+ },
+ {
+  "state": "MI",
+  "office": "education-board",
+  "office_label": "Michigan State University Board of Trustees",
+  "seat": null,
+  "seat_slug": "michigan-state-university-board-of-trustees",
+  "seats_up": 2,
+  "d_name": "Brianna Scott and Kelly Tebay Zemke",
+  "r_name": "Julie Maday and Roger Victory",
+  "others": [
+   {
+    "name": "Daniel R. Patterson",
+    "party": "Libertarian"
+   },
+   {
+    "name": "Will Tyler White",
+    "party": "Libertarian"
+   },
+   {
+    "name": "Janet Sanger",
+    "party": "U.S. Taxpayers"
+   },
+   {
+    "name": "John Sanger",
+    "party": "U.S. Taxpayers"
+   },
+   {
+    "name": "John Anthony La Pietra",
+    "party": "Green"
+   },
+   {
+    "name": "Yaz Ozbek",
+    "party": "Working Class"
+   }
+  ],
+  "incumbent_name": "Brianna Scott; Kelly Tebay Zemke",
+  "incumbent_party": "D",
+  "incumbent_running": true,
+  "uncontested": null,
+  "primary_files": {},
+  "polls": [],
+  "sources": [
+   "https://www.kentcountymi.gov/DocumentCenter/View/8870/November-3-2026-Candidates-and-Proposals-PDF",
+   "https://michiganadvance.com/2026/08/30/michigan-democrats-finalize-nominations-continue-calls-for-unity-heading-into-november/",
+   "https://press.mirs.news/00b9eed6.pdf",
+   "https://www.wlns.com/capital-rundown/michigan-republicans-hold-nominating-convention/amp/",
+   "https://en.wikipedia.org/wiki/2026_Michigan_State_University_Board_of_Trustees_election"
+  ],
+  "note": "Both Democratic incumbents were renominated over a challenge from state Sen. Sylvia Santana. Republicans nominated 2024 nominee Julie Maday and state Sen. Roger Victory. Vote for two. No polls found.",
+  "election_date": "2026-11-03"
+ },
+ {
+  "state": "MI",
+  "office": "education-board",
+  "office_label": "Wayne State University Board of Governors",
+  "seat": null,
+  "seat_slug": "wayne-state-university-board-of-governors",
+  "seats_up": 2,
+  "d_name": "Shereef Akeel and Richard Mack",
+  "r_name": "Andy Anuzis and Christa Murphy",
+  "others": [
+   {
+    "name": "Alex Avery",
+    "party": "Libertarian"
+   },
+   {
+    "name": "Jami Van Alstine",
+    "party": "Libertarian"
+   },
+   {
+    "name": "Jeff McDonald",
+    "party": "U.S. Taxpayers"
+   },
+   {
+    "name": "Paul M. Ragan",
+    "party": "Green"
+   },
+   {
+    "name": "Suzanne Roehrig",
+    "party": "Working Class"
+   },
+   {
+    "name": "Kathleen Oakford",
+    "party": "Natural Law"
+   }
+  ],
+  "incumbent_name": null,
+  "incumbent_party": "D",
+  "incumbent_running": false,
+  "uncontested": null,
+  "primary_files": {},
+  "polls": [],
+  "sources": [
+   "https://www.kentcountymi.gov/DocumentCenter/View/8870/November-3-2026-Candidates-and-Proposals-PDF",
+   "https://michiganadvance.com/2026/08/30/michigan-democrats-finalize-nominations-continue-calls-for-unity-heading-into-november/",
+   "https://press.mirs.news/00b9eed6.pdf",
+   "https://www.wlns.com/capital-rundown/michigan-republicans-hold-nominating-convention/amp/",
+   "https://en.wikipedia.org/wiki/2026_Wayne_State_University_Board_of_Governors_election"
+  ],
+  "note": "Both seats up are held by Democrats and appear to be open, since neither Democratic nominee is listed as an incumbent; the names of the departing governors were not confirmed. Vote for two. No polls found.",
+  "election_date": "2026-11-03"
+ },
+ {
+  "state": "AL",
+  "office": "public-service-commission",
+  "office_label": "Public Service Commission",
+  "seat": "Place 1",
+  "seat_slug": "place-1",
+  "seats_up": 1,
+  "d_name": "James O. Gordon",
+  "r_name": "Matt Gentry",
+  "others": [],
+  "incumbent_name": "Jeremy Oden",
+  "incumbent_party": "R",
+  "incumbent_running": true,
+  "uncontested": null,
+  "primary_files": {},
+  "polls": [],
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_Alabama_Public_Service_Commission_election",
+   "https://aldailynews.com/zeigler-ousts-incumbent-beeker-as-ivey-announces-psc-appointments/",
+   "https://alabamareflector.com/2026/06/17/former-state-auditor-jim-zeigler-wins-gop-nomination-for-public-service-commission/",
+   "https://www.sos.alabama.gov/sites/default/files/election-2026/2026RepublicanCertification.pdf"
+  ],
+  "note": "Cullman County Sheriff Matt Gentry beat incumbent Jeremy Oden about 75 to 25 in the May 19 GOP primary, and former state Rep. James O. Gordon won the Democratic primary with 58%. No general election polls found; a Dec 2025 Alabama Poll of the GOP primary had Gentry 15, Oden 9.",
+  "election_date": "2026-11-03"
+ },
+ {
+  "state": "AL",
+  "office": "public-service-commission",
+  "office_label": "Public Service Commission",
+  "seat": "Place 2",
+  "seat_slug": "place-2",
+  "seats_up": 1,
+  "d_name": "Sheila McNeil",
+  "r_name": "Jim Zeigler",
+  "others": [],
+  "incumbent_name": "Chris Beeker III",
+  "incumbent_party": "R",
+  "incumbent_running": true,
+  "uncontested": null,
+  "primary_files": {},
+  "polls": [],
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_Alabama_Public_Service_Commission_election",
+   "https://aldailynews.com/zeigler-ousts-incumbent-beeker-as-ivey-announces-psc-appointments/",
+   "https://alabamareflector.com/2026/06/17/former-state-auditor-jim-zeigler-wins-gop-nomination-for-public-service-commission/",
+   "https://www.sos.alabama.gov/sites/default/files/election-2026/2026RepublicanCertification.pdf",
+   "https://www.alreporter.com/2026/08/07/alabama-afl-cio-endorses-sheila-mcneil-for-public-service-commission/"
+  ],
+  "note": "Former state auditor Jim Zeigler beat appointed incumbent Chip Beeker III 51.3 to 48.7 in the June 16 GOP runoff. Madison County Democratic chair Sheila McNeil is the Democratic nominee; the Reflector spells her first name Sherry but Wikipedia and Alabama Reporter use Sheila.",
+  "election_date": "2026-11-03"
+ },
+ {
+  "state": "AZ",
+  "office": "public-service-commission",
+  "office_label": "Corporation Commission",
+  "seat": null,
+  "seat_slug": null,
+  "seats_up": 2,
+  "d_name": "Clara Pratte and Jonathon Hill",
+  "r_name": "Kevin Thompson and Ralph Heap",
+  "others": [
+   {
+    "name": "Mike Cease",
+    "party": "Green"
+   }
+  ],
+  "incumbent_name": "Kevin Thompson; Nick Myers",
+  "incumbent_party": "R",
+  "incumbent_running": true,
+  "uncontested": null,
+  "primary_files": {},
+  "polls": [],
+  "sources": [
+   "https://www.kjzz.org/politics/2026-07-23/2-arizona-corporation-commissioners-ran-for-reelection-only-1-made-it-out-of-gop-primary",
+   "https://votesolar.org/?p=11718",
+   "https://www.fox10phoenix.com/election/2026-election-arizona-corporation-commissioner-candidates-debate",
+   "https://www.kjzz.org/elections/2026-10-06/2026-arizona-corporation-commission-race-the-candidates-elex",
+   "https://www.cawp.rutgers.edu/blog/results-july-21st-primary-arizona"
+  ],
+  "note": "Vote for two. Both seats are held by Republicans Kevin Thompson and Nick Myers; Thompson led the July 21 GOP primary and state Rep. Ralph Heap ousted Myers, who conceded. Democrats Clara Pratte and Jonathon Hill are running as a slate, and Green Mike Cease is also on the ballot. No polls found.",
+  "election_date": "2026-11-03"
+ },
+ {
+  "state": "GA",
+  "office": "public-service-commission",
+  "office_label": "Public Service Commission",
+  "seat": "District 3",
+  "seat_slug": "district-3",
+  "seats_up": 1,
+  "d_name": "Peter Hubbard",
+  "r_name": "Fitz Johnson",
+  "others": [],
+  "incumbent_name": "Peter Hubbard",
+  "incumbent_party": "D",
+  "incumbent_running": true,
+  "uncontested": null,
+  "primary_files": {},
+  "polls": [
+   {
+    "source": "Quantus Insights",
+    "dates": "Jul 29-Aug 1, 2026",
+    "end": "2026-08-01",
+    "n": 815,
+    "pop": "LV",
+    "D": 39,
+    "R": 38,
+    "O": 2,
+    "U": 20,
+    "url": "https://en.wikipedia.org/wiki/2026_Georgia_Public_Service_Commission_election"
+   }
+  ],
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_Georgia_Public_Service_Commission_election",
+   "https://www.fox5atlanta.com/news/georgia-public-service-commission-candidates-4-candidates-ballot",
+   "https://news.ballotpedia.org/2026/08/10/partisan-control-of-georgia-public-service-commission-at-stake-in-november-election/",
+   "https://guides.vote/?p=5621",
+   "https://www.axios.com/local/atlanta/2025/11/05/georgia-public-service-commission-election-results",
+   "https://www.wabe.org/two-of-three-delayed-georgia-public-service-commission-elections-scheduled-for-november/"
+  ],
+  "note": "Elected statewide with a district residency rule. Hubbard flipped this seat in Nov 2025, beating Fitz Johnson for a one-year term ending Dec 31, 2026; Johnson won a narrow 50.2 to 49.8 GOP primary over Brandon Martin for a rematch. The other Nov 2025 race was District 2, won by Democrat Alicia Johnson over Tim Echols for a term through 2030, so it is not up.",
+  "election_date": "2026-11-03"
+ },
+ {
+  "state": "GA",
+  "office": "public-service-commission",
+  "office_label": "Public Service Commission",
+  "seat": "District 5",
+  "seat_slug": "district-5",
+  "seats_up": 1,
+  "d_name": "Shelia Edwards",
+  "r_name": "Josh Tolbert",
+  "others": [
+   {
+    "name": "Thomas Blooming",
+    "party": "Libertarian"
+   }
+  ],
+  "incumbent_name": "Tricia Pridemore",
+  "incumbent_party": "R",
+  "incumbent_running": false,
+  "uncontested": null,
+  "primary_files": {},
+  "polls": [
+   {
+    "source": "Quantus Insights",
+    "dates": "Jul 29-Aug 1, 2026",
+    "end": "2026-08-01",
+    "n": 815,
+    "pop": "LV",
+    "D": 40,
+    "R": 38,
+    "O": 1,
+    "U": 20,
+    "url": "https://en.wikipedia.org/wiki/2026_Georgia_Public_Service_Commission_election"
+   }
+  ],
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_Georgia_Public_Service_Commission_election",
+   "https://www.fox5atlanta.com/news/georgia-public-service-commission-candidates-4-candidates-ballot",
+   "https://news.ballotpedia.org/2026/08/10/partisan-control-of-georgia-public-service-commission-at-stake-in-november-election/",
+   "https://www.wabe.org/two-of-three-delayed-georgia-public-service-commission-elections-scheduled-for-november/"
+  ],
+  "note": "Open seat after Pridemore ran for U.S. House; a Democratic win flips the 3 to 2 Republican commission. Tolbert won the June 16 GOP runoff 59.8 to 40.2 over Bobby Mehan, and Edwards won the Democratic primary outright with 55.7%. Libertarian Thomas Blooming is listed by Ballotpedia News, and a Dec 1 runoff follows if no one wins a majority.",
+  "election_date": "2026-11-03"
+ },
+ {
+  "state": "ND",
+  "office": "public-service-commission",
+  "office_label": "Public Service Commission",
+  "seat": "Six-year term",
+  "seat_slug": "six-year-term",
+  "seats_up": 1,
+  "d_name": "John Pederson",
+  "r_name": "Sheri Haugen-Hoffart",
+  "others": [],
+  "incumbent_name": "Sheri Haugen-Hoffart",
+  "incumbent_party": "R",
+  "incumbent_running": true,
+  "uncontested": null,
+  "primary_files": {},
+  "polls": [],
+  "sources": [
+   "https://northdakotamonitor.com/2026/06/12/prevailing-psc-candidates-say-campaign-work-not-done-with-dem-opponents-on-horizon/",
+   "https://northdakotamonitor.com/2026/04/07/north-dakota-primary-to-see-3-contested-races-for-republicans-as-democrats-fill-all-slots/",
+   "https://en.wikipedia.org/wiki/2026_North_Dakota_elections"
+  ],
+  "note": "Incumbent Haugen-Hoffart won the June primary with 64% over Deven Styczynski, the NDGOP convention endorsee. Democrat John Pederson is a Mayville State University professor. No polls found.",
+  "election_date": "2026-11-03"
+ },
+ {
+  "state": "ND",
+  "office": "public-service-commission",
+  "office_label": "Public Service Commission",
+  "seat": "Two-year unexpired term",
+  "seat_slug": "two-year-unexpired-term",
+  "seats_up": 1,
+  "d_name": "Scot Kelsh",
+  "r_name": "Jill Kringstad",
+  "others": [],
+  "incumbent_name": "Jill Kringstad",
+  "incumbent_party": "R",
+  "incumbent_running": true,
+  "uncontested": null,
+  "primary_files": {},
+  "polls": [],
+  "sources": [
+   "https://northdakotamonitor.com/2026/06/12/prevailing-psc-candidates-say-campaign-work-not-done-with-dem-opponents-on-horizon/",
+   "https://northdakotamonitor.com/2026/04/07/north-dakota-primary-to-see-3-contested-races-for-republicans-as-democrats-fill-all-slots/"
+  ],
+  "note": "Special election for a two-year unexpired term. Kringstad, appointed by Gov. Armstrong in 2025, won the GOP primary with 54% over Chris Olson and faces former Democratic state lawmaker Scot Kelsh. No polls found.",
+  "election_date": "2026-11-03"
+ },
+ {
+  "state": "OK",
+  "office": "public-service-commission",
+  "office_label": "Corporation Commission",
+  "seat": null,
+  "seat_slug": null,
+  "seats_up": 1,
+  "d_name": "Rhonda Eastman",
+  "r_name": "Brad Boles",
+  "others": [],
+  "incumbent_name": "Todd Hiett",
+  "incumbent_party": "R",
+  "incumbent_running": false,
+  "uncontested": null,
+  "primary_files": {},
+  "polls": [],
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_Oklahoma_Corporation_Commission_election",
+   "https://bartlesvilleradio.com/pages/news/498702026/oklahoma-2026-primary-election-recap-for-statewide-offices",
+   "https://www.cnhinews.com/oklahoma/news/article_a4f36490-92e0-53e3-9b51-5fe843af933c.html"
+  ],
+  "note": "Open seat because Hiett is term limited. Brad Boles won the June 16 GOP primary 55.3 to 44.7 over Justin Hornback, and Rhonda Eastman won the Democratic primary with 70%. No third party candidates or polls found.",
+  "election_date": "2026-11-03"
+ },
+ {
+  "state": "SD",
+  "office": "public-service-commission",
+  "office_label": "Public Utilities Commission",
+  "seat": null,
+  "seat_slug": null,
+  "seats_up": 1,
+  "d_name": "Frank Kloucek",
+  "r_name": "Don Haggar",
+  "others": [],
+  "incumbent_name": "Gary Hanson",
+  "incumbent_party": "R",
+  "incumbent_running": false,
+  "uncontested": null,
+  "primary_files": {},
+  "polls": [],
+  "sources": [
+   "https://southdakotasearchlight.com/voter-guides/contests/2026-public-utilities-commission-race/",
+   "https://www.thedakotascout.com/p/populist-push-falls-short-in-south",
+   "https://www.thedakotascout.com/p/energy-pipelines-loom-over-gop-contest",
+   "https://www.keloland.com/news/capitol-news-bureau/puc-chair-has-cancer-plans-to-step-aside-as-leader/amp",
+   "https://puc.sd.gov/News/2025/103025.aspx"
+  ],
+  "note": "Nominees are chosen at party conventions; former lawmaker Don Haggar won the GOP nod in June, with the runner up eight votes short, and former legislator Frank Kloucek is the Democrat. Longtime Commissioner Gary Hanson said he would not seek a fifth term; the seat is assumed to be his, and no Libertarian nominee or polls were found.",
+  "election_date": "2026-11-03"
+ },
+ {
+  "state": "AL",
+  "office": "supreme-court",
+  "office_label": "Associate Justice of the Supreme Court",
+  "seat": "Place 7",
+  "seat_slug": "place-7",
+  "seats_up": 1,
+  "d_name": null,
+  "r_name": "Brad Mendheim",
+  "others": [],
+  "incumbent_name": "Brad Mendheim",
+  "incumbent_party": "R",
+  "incumbent_running": true,
+  "uncontested": "R",
+  "primary_files": {},
+  "polls": [],
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_Alabama_Supreme_Court_election",
+   "https://www.sos.alabama.gov/sites/default/files/election-2026/2026RepublicanCertification.pdf",
+   "https://theballotbrief.com/judges/alabama",
+   "https://ballotpedia.org/Alabama_Supreme_Court_elections,_2026",
+   "https://www.fox10tv.com/2025/11/10/ivey-appoints-new-justice-alabama-supreme-court"
+  ],
+  "note": "Mendheim, appointed in 2018 and elected in 2020, was the only certified candidate and has no Democratic opponent. uncontested is set to the party running unopposed.",
+  "election_date": "2026-11-03"
+ },
+ {
+  "state": "AL",
+  "office": "supreme-court",
+  "office_label": "Associate Justice of the Supreme Court",
+  "seat": "Place 8",
+  "seat_slug": "place-8",
+  "seats_up": 1,
+  "d_name": "AshLeigh Dunham",
+  "r_name": "Greg Shaw",
+  "others": [],
+  "incumbent_name": "Greg Shaw",
+  "incumbent_party": "R",
+  "incumbent_running": true,
+  "uncontested": null,
+  "primary_files": {},
+  "polls": [],
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_Alabama_Supreme_Court_election",
+   "https://www.sos.alabama.gov/sites/default/files/election-2026/2026RepublicanCertification.pdf",
+   "https://theballotbrief.com/judges/alabama",
+   "https://ballotpedia.org/Alabama_Supreme_Court_elections,_2026",
+   "https://www.fox10tv.com/2025/11/10/ivey-appoints-new-justice-alabama-supreme-court"
+  ],
+  "note": "Shaw is seeking a fourth term against Democrat AshLeigh Dunham, a Jefferson County juvenile court referee. Ballotpedia lists a third Alabama seat, but the Secretary of State certification shows only Places 7 and 8; that seat is now held by Will Parker, appointed in November 2025, and appears not to be on the 2026 ballot.",
+  "election_date": "2026-11-03"
+ },
+ {
+  "state": "OH",
+  "office": "supreme-court",
+  "office_label": "Justice of the Supreme Court",
+  "seat": "Seat held by Jennifer Brunner",
+  "seat_slug": "seat-held-by-jennifer-brunner",
+  "seats_up": 1,
+  "d_name": "Jennifer Brunner",
+  "r_name": "Colleen O'Donnell",
+  "others": [],
+  "incumbent_name": "Jennifer Brunner",
+  "incumbent_party": "D",
+  "incumbent_running": true,
+  "uncontested": null,
+  "primary_files": {},
+  "polls": [],
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_Ohio_Supreme_Court_election",
+   "https://en.wikipedia.org/wiki/2026_United_States_judicial_elections"
+  ],
+  "note": "Brunner, the lone Democrat on the court, was unopposed in the May 5 primary. O'Donnell won a four way GOP primary with 32.1% over Andrew King, Jill Flagg Lanzinger and Ronald Lewis. Ohio prints party labels on the ballot for Supreme Court.",
+  "election_date": "2026-11-03"
+ },
+ {
+  "state": "OH",
+  "office": "supreme-court",
+  "office_label": "Justice of the Supreme Court",
+  "seat": "Seat held by Daniel R. Hawkins",
+  "seat_slug": "seat-held-by-daniel-r-hawkins",
+  "seats_up": 1,
+  "d_name": "Marilyn Zayas",
+  "r_name": "Daniel R. Hawkins",
+  "others": [],
+  "incumbent_name": "Daniel R. Hawkins",
+  "incumbent_party": "R",
+  "incumbent_running": true,
+  "uncontested": null,
+  "primary_files": {},
+  "polls": [],
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_Ohio_Supreme_Court_election",
+   "https://en.wikipedia.org/wiki/2026_United_States_judicial_elections"
+  ],
+  "note": "Hawkins, elected in 2024, and Zayas, an appeals judge, were both unopposed in the May 5 primaries.",
+  "election_date": "2026-11-03"
+ },
+ {
+  "state": "NC",
+  "office": "supreme-court",
+  "office_label": "Associate Justice of the Supreme Court",
+  "seat": "Seat 1",
+  "seat_slug": null,
+  "seats_up": 1,
+  "d_name": "Anita Earls",
+  "r_name": "Sarah Stevens",
+  "others": [],
+  "incumbent_name": "Anita Earls",
+  "incumbent_party": "D",
+  "incumbent_running": true,
+  "uncontested": null,
+  "primary_files": {},
+  "polls": [
+   {
+    "source": "Harper Polling (R)",
+    "dates": "Sep 13-15, 2026",
+    "end": "2026-09-15",
+    "n": 608,
+    "pop": "LV",
+    "D": 47,
+    "R": 36,
+    "O": null,
+    "U": 16,
+    "url": "https://en.wikipedia.org/wiki/2026_North_Carolina_judicial_elections"
+   },
+   {
+    "source": "Harper Polling (R)",
+    "dates": "Aug 9-10, 2026",
+    "end": "2026-08-10",
+    "n": 600,
+    "pop": "LV",
+    "D": 43,
+    "R": 40,
+    "O": 3,
+    "U": 14,
+    "url": "https://en.wikipedia.org/wiki/2026_North_Carolina_judicial_elections"
+   },
+   {
+    "source": "YouGov",
+    "dates": "Aug 3-12, 2026",
+    "end": "2026-08-12",
+    "n": 660,
+    "pop": "LV",
+    "D": 47,
+    "R": 44,
+    "O": 1,
+    "U": 8,
+    "url": "https://en.wikipedia.org/wiki/2026_North_Carolina_judicial_elections"
+   },
+   {
+    "source": "Change Research (D)",
+    "dates": "Jul 29 - Aug 1, 2026",
+    "end": "2026-08-01",
+    "n": 967,
+    "pop": "LV",
+    "D": 45,
+    "R": 39,
+    "O": null,
+    "U": 16,
+    "url": "https://en.wikipedia.org/wiki/2026_North_Carolina_judicial_elections"
+   },
+   {
+    "source": "Public Policy Polling (D)",
+    "dates": "Jul 10-11, 2026",
+    "end": "2026-07-11",
+    "n": 759,
+    "pop": "LV",
+    "D": 44,
+    "R": 42,
+    "O": null,
+    "U": 14,
+    "url": "https://en.wikipedia.org/wiki/2026_North_Carolina_judicial_elections"
+   },
+   {
+    "source": "YouGov",
+    "dates": "Jun 1-10, 2026",
+    "end": "2026-06-10",
+    "n": 906,
+    "pop": "LV",
+    "D": 40,
+    "R": 35,
+    "O": 4,
+    "U": 21,
+    "url": "https://en.wikipedia.org/wiki/2026_North_Carolina_judicial_elections"
+   },
+   {
+    "source": "Harper Polling (R)",
+    "dates": "May 10-11, 2026",
+    "end": "2026-05-11",
+    "n": 600,
+    "pop": "LV",
+    "D": 41,
+    "R": 36,
+    "O": 5,
+    "U": 18,
+    "url": "https://en.wikipedia.org/wiki/2026_North_Carolina_judicial_elections"
+   },
+   {
+    "source": "Change Research (D)",
+    "dates": "May 4-8, 2026",
+    "end": "2026-05-08",
+    "n": 957,
+    "pop": "LV",
+    "D": 44,
+    "R": 40,
+    "O": null,
+    "U": 16,
+    "url": "https://en.wikipedia.org/wiki/2026_North_Carolina_judicial_elections"
+   },
+   {
+    "source": "YouGov",
+    "dates": "Mar 26 - Apr 6, 2026",
+    "end": "2026-04-06",
+    "n": 703,
+    "pop": "LV",
+    "D": 43,
+    "R": 43,
+    "O": 2,
+    "U": 13,
+    "url": "https://en.wikipedia.org/wiki/2026_North_Carolina_judicial_elections"
+   },
+   {
+    "source": "Harper Polling (R)",
+    "dates": "Mar 22-23, 2026",
+    "end": "2026-03-23",
+    "n": 600,
+    "pop": "LV",
+    "D": 41,
+    "R": 38,
+    "O": 3,
+    "U": 18,
+    "url": "https://en.wikipedia.org/wiki/2026_North_Carolina_judicial_elections"
+   },
+   {
+    "source": "Public Policy Polling (D)",
+    "dates": "Mar 13-14, 2026",
+    "end": "2026-03-14",
+    "n": 556,
+    "pop": "V",
+    "D": 43,
+    "R": 40,
+    "O": null,
+    "U": 17,
+    "url": "https://en.wikipedia.org/wiki/2026_North_Carolina_judicial_elections"
+   },
+   {
+    "source": "Change Research (D)",
+    "dates": "Jan 31 - Feb 4, 2026",
+    "end": "2026-02-04",
+    "n": 1069,
+    "pop": "V",
+    "D": 45,
+    "R": 43,
+    "O": null,
+    "U": 12,
+    "url": "https://en.wikipedia.org/wiki/2026_North_Carolina_judicial_elections"
+   },
+   {
+    "source": "Change Research (D)",
+    "dates": "Jan 5-7, 2026",
+    "end": "2026-01-07",
+    "n": 1105,
+    "pop": "LV",
+    "D": 41,
+    "R": 42,
+    "O": null,
+    "U": 17,
+    "url": "https://en.wikipedia.org/wiki/2026_North_Carolina_judicial_elections"
+   }
+  ],
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_North_Carolina_judicial_elections",
+   "https://en.wikipedia.org/wiki/2026_United_States_judicial_elections"
+  ],
+  "note": "Earls, one of two Democrats on the court, faces Republican state Rep. Sarah Stevens. Neither had a primary opponent. Two YouGov RV rows on Wikipedia with no labeled pollster were left out.",
+  "election_date": "2026-11-03"
+ },
+ {
+  "state": "TX",
+  "office": "supreme-court",
+  "office_label": "Chief Justice, Supreme Court",
+  "seat": "Chief Justice",
+  "seat_slug": "chief-justice",
+  "seats_up": 1,
+  "d_name": "Maggie Ellis",
+  "r_name": "Jimmy Blacklock",
+  "others": [],
+  "incumbent_name": "Jimmy Blacklock",
+  "incumbent_party": "R",
+  "incumbent_running": true,
+  "uncontested": null,
+  "primary_files": {},
+  "polls": [],
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_Texas_Supreme_Court_election",
+   "https://www.hppr.org/hppr-news/2026-03-04/for-texas-highest-courts-two-democratic-races-decided-one-gop-race-goes-to-runoff",
+   "https://www.tdcaa.com/wp-content/uploads/Judges-Races-Results-1.pdf",
+   "https://www.270towin.com/content/texas-primary-other-statewide-executive-and-judicial-election-results",
+   "https://www.lptexas.org/candidates"
+  ],
+  "note": "Blacklock was appointed chief in January 2025 after Nathan Hecht retired. Ellis beat Cory Carlyle 76.8% to 23.2% in the March 3 Democratic primary. No Libertarian is listed by LP Texas.",
+  "election_date": "2026-11-03"
+ },
+ {
+  "state": "TX",
+  "office": "supreme-court",
+  "office_label": "Justice, Supreme Court",
+  "seat": "Place 2",
+  "seat_slug": "place-2",
+  "seats_up": 1,
+  "d_name": "Chari Kelly",
+  "r_name": "James Sullivan",
+  "others": [],
+  "incumbent_name": "James Sullivan",
+  "incumbent_party": "R",
+  "incumbent_running": true,
+  "uncontested": null,
+  "primary_files": {},
+  "polls": [],
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_Texas_Supreme_Court_election",
+   "https://www.hppr.org/hppr-news/2026-03-04/for-texas-highest-courts-two-democratic-races-decided-one-gop-race-goes-to-runoff",
+   "https://www.tdcaa.com/wp-content/uploads/Judges-Races-Results-1.pdf",
+   "https://www.270towin.com/content/texas-primary-other-statewide-executive-and-judicial-election-results",
+   "https://www.lptexas.org/candidates"
+  ],
+  "note": "Special for the seat Blacklock left; Sullivan was appointed in 2025. Both nominees were unopposed in their primaries.",
+  "election_date": "2026-11-03"
+ },
+ {
+  "state": "TX",
+  "office": "supreme-court",
+  "office_label": "Justice, Supreme Court",
+  "seat": "Place 7",
+  "seat_slug": "place-7",
+  "seats_up": 1,
+  "d_name": "Kristen Hawkins",
+  "r_name": "Kyle Hawkins",
+  "others": [],
+  "incumbent_name": "Kyle Hawkins",
+  "incumbent_party": "R",
+  "incumbent_running": true,
+  "uncontested": null,
+  "primary_files": {},
+  "polls": [],
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_Texas_Supreme_Court_election",
+   "https://www.hppr.org/hppr-news/2026-03-04/for-texas-highest-courts-two-democratic-races-decided-one-gop-race-goes-to-runoff",
+   "https://www.tdcaa.com/wp-content/uploads/Judges-Races-Results-1.pdf",
+   "https://www.270towin.com/content/texas-primary-other-statewide-executive-and-judicial-election-results",
+   "https://www.lptexas.org/candidates"
+  ],
+  "note": "Kyle Hawkins was appointed after Jeff Boyd retired. Kristen Hawkins beat Gordon Goodman 75.6% to 24.4% in the Democratic primary.",
+  "election_date": "2026-11-03"
+ },
+ {
+  "state": "TX",
+  "office": "supreme-court",
+  "office_label": "Justice, Supreme Court",
+  "seat": "Place 8",
+  "seat_slug": "place-8",
+  "seats_up": 1,
+  "d_name": "Gisela Triana",
+  "r_name": "Brett Busby",
+  "others": [],
+  "incumbent_name": "Brett Busby",
+  "incumbent_party": "R",
+  "incumbent_running": true,
+  "uncontested": null,
+  "primary_files": {},
+  "polls": [],
+  "sources": [
+   "https://en.wikipedia.org/wiki/2026_Texas_Supreme_Court_election",
+   "https://www.hppr.org/hppr-news/2026-03-04/for-texas-highest-courts-two-democratic-races-decided-one-gop-race-goes-to-runoff",
+   "https://www.tdcaa.com/wp-content/uploads/Judges-Races-Results-1.pdf",
+   "https://www.270towin.com/content/texas-primary-other-statewide-executive-and-judicial-election-results",
+   "https://www.lptexas.org/candidates"
+  ],
+  "note": "Busby seeks re-election; both nominees were unopposed in their primaries.",
+  "election_date": "2026-11-03"
+ },
+ {
+  "state": "TX",
+  "office": "supreme-court",
+  "office_label": "Judge, Court of Criminal Appeals",
+  "seat": "Place 3",
+  "seat_slug": "criminal-appeals-place-3",
+  "seats_up": 1,
+  "d_name": "Okey Anyiam",
+  "r_name": "Thomas Smith",
+  "others": [
+   {
+    "name": "Mark Ash",
+    "party": "Libertarian"
+   }
+  ],
+  "incumbent_name": "Bert Richardson",
+  "incumbent_party": "R",
+  "incumbent_running": false,
+  "uncontested": null,
+  "primary_files": {},
+  "polls": [],
+  "sources": [
+   "https://www.texastribune.org/2026/02/12/texas-court-of-criminal-appeals-primary-2026/?nb=1",
+   "https://www.texastribune.org/2026/05/26/texas-court-criminal-appeals-republican-primary-runoff-result-2026/",
+   "https://www.click2houston.com/news/texas/2026/05/27/paxton-backed-thomas-smith-defeats-alison-fox-in-gop-runoff-for-texas-highest-criminal-court/",
+   "https://www.hppr.org/hppr-news/2026-03-04/for-texas-highest-courts-two-democratic-races-decided-one-gop-race-goes-to-runoff",
+   "https://www.tdcaa.com/wp-content/uploads/Judges-Races-Results-1.pdf",
+   "https://www.lptexas.org/candidates"
+  ],
+  "note": "Open seat: Richardson ran for a lower appeals court. Paxton backed Thomas Smith beat Alison Fox in the May 26 GOP runoff. Libertarian Mark Ash is listed by LP Texas.",
+  "election_date": "2026-11-03"
+ },
+ {
+  "state": "TX",
+  "office": "supreme-court",
+  "office_label": "Judge, Court of Criminal Appeals",
+  "seat": "Place 4",
+  "seat_slug": "criminal-appeals-place-4",
+  "seats_up": 1,
+  "d_name": "Audra Riley",
+  "r_name": "Kevin Yeary",
+  "others": [],
+  "incumbent_name": "Kevin Yeary",
+  "incumbent_party": "R",
+  "incumbent_running": true,
+  "uncontested": null,
+  "primary_files": {},
+  "polls": [],
+  "sources": [
+   "https://www.texastribune.org/2026/02/12/texas-court-of-criminal-appeals-primary-2026/?nb=1",
+   "https://www.texastribune.org/2026/05/26/texas-court-criminal-appeals-republican-primary-runoff-result-2026/",
+   "https://www.click2houston.com/news/texas/2026/05/27/paxton-backed-thomas-smith-defeats-alison-fox-in-gop-runoff-for-texas-highest-criminal-court/",
+   "https://www.hppr.org/hppr-news/2026-03-04/for-texas-highest-courts-two-democratic-races-decided-one-gop-race-goes-to-runoff",
+   "https://www.tdcaa.com/wp-content/uploads/Judges-Races-Results-1.pdf",
+   "https://www.lptexas.org/candidates"
+  ],
+  "note": "Yeary is the only CCA incumbent seeking re-election this year and had no primary opponent.",
+  "election_date": "2026-11-03"
+ },
+ {
+  "state": "TX",
+  "office": "supreme-court",
+  "office_label": "Judge, Court of Criminal Appeals",
+  "seat": "Place 9",
+  "seat_slug": "criminal-appeals-place-9",
+  "seats_up": 1,
+  "d_name": "Holly Taylor",
+  "r_name": "John Messinger",
+  "others": [],
+  "incumbent_name": "David Newell",
+  "incumbent_party": "R",
+  "incumbent_running": false,
+  "uncontested": null,
+  "primary_files": {},
+  "polls": [],
+  "sources": [
+   "https://www.texastribune.org/2026/02/12/texas-court-of-criminal-appeals-primary-2026/?nb=1",
+   "https://www.texastribune.org/2026/05/26/texas-court-criminal-appeals-republican-primary-runoff-result-2026/",
+   "https://www.click2houston.com/news/texas/2026/05/27/paxton-backed-thomas-smith-defeats-alison-fox-in-gop-runoff-for-texas-highest-criminal-court/",
+   "https://www.hppr.org/hppr-news/2026-03-04/for-texas-highest-courts-two-democratic-races-decided-one-gop-race-goes-to-runoff",
+   "https://www.tdcaa.com/wp-content/uploads/Judges-Races-Results-1.pdf",
+   "https://www.lptexas.org/candidates"
+  ],
+  "note": "Open seat: Newell retired. Messinger beat Jennifer Balido in the March 3 GOP primary.",
+  "election_date": "2026-11-03"
+ }
+]

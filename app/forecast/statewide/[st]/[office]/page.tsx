@@ -14,11 +14,11 @@ import { dbLd, dbMeta } from "../../../seo";
 export const dynamicParams = false;
 
 export function generateStaticParams() {
-  return getDownballot().races.map((r) => ({ st: r.st.toLowerCase(), office: r.office }));
+  return getDownballot().races.map((r) => ({ st: r.st.toLowerCase(), office: r.slug ?? r.office }));
 }
 
 const find = (st: string, office: string): DBRace | undefined =>
-  getDownballot().races.find((r) => r.st === st.toUpperCase() && r.office === office);
+  getDownballot().races.find((r) => r.st === st.toUpperCase() && (r.slug ?? r.office) === office);
 
 export async function generateMetadata({ params }: { params: Promise<{ st: string; office: string }> }): Promise<Metadata> {
   const { st, office } = await params;

@@ -6,13 +6,13 @@ export const contentType = OG_TYPE;
 export const alt = "On Point Politics statewide office forecast";
 
 export function generateStaticParams() {
-  return getDownballot().races.map((r) => ({ st: r.st.toLowerCase(), office: r.office }));
+  return getDownballot().races.map((r) => ({ st: r.st.toLowerCase(), office: r.slug ?? r.office }));
 }
 
 export default async function Image({ params }: { params: Promise<{ st: string; office: string }> }) {
   const { st, office } = await params;
   const db = getDownballot();
-  const r = db.races.find((x) => x.st === st.toUpperCase() && x.office === office);
+  const r = db.races.find((x) => x.st === st.toUpperCase() && (x.slug ?? x.office) === office);
   if (!r) return ogCard({ eyebrow: "2026 forecast", title: "Statewide offices forecast" });
   const title = `${r.state} ${r.officeLabel}`;
   if (r.uncontested || !r.dem || !r.gop) return ogCard({ eyebrow: `2026 forecast · ${dayOg(db.meta.updated)}`, title, sub: "Uncontested in 2026" });

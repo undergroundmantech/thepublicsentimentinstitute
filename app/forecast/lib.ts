@@ -2,13 +2,16 @@
 
 export type Office = "governor" | "senate" | "house";
 // The statewide offices below the top of the ticket, forecast county by county like the Senate and governor races.
-export const DB_OFFICES = ["attorney-general", "secretary-of-state", "lieutenant-governor", "treasurer", "auditor", "agriculture-commissioner", "railroad-commissioner"] as const;
+export const DB_OFFICES = ["attorney-general", "secretary-of-state", "lieutenant-governor", "treasurer", "auditor", "agriculture-commissioner", "railroad-commissioner",
+  "comptroller", "land-commissioner", "superintendent", "insurance-commissioner", "labor-commissioner", "public-service-commission", "mine-inspector", "education-board", "supreme-court"] as const;
 export type DBOffice = (typeof DB_OFFICES)[number];
 export type DeskOffice = Office | DBOffice;
 export const isDB = (o: string): o is DBOffice => (DB_OFFICES as readonly string[]).includes(o);
 export const DB_LABEL: Record<DBOffice, string> = {
   "attorney-general": "Attorney general", "secretary-of-state": "Secretary of state", "lieutenant-governor": "Lieutenant governor",
   treasurer: "Treasurer", auditor: "Auditor", "agriculture-commissioner": "Agriculture commissioner", "railroad-commissioner": "Railroad commissioner",
+  comptroller: "Comptroller", "land-commissioner": "Land commissioner", superintendent: "Schools superintendent", "insurance-commissioner": "Insurance commissioner",
+  "labor-commissioner": "Labor commissioner", "public-service-commission": "Utility commission", "mine-inspector": "Mine inspector", "education-board": "Education board", "supreme-court": "Supreme court",
 };
 export type ViewMode = "margin" | "odds" | "rating";
 

@@ -36,7 +36,8 @@ SITE = os.environ.get("SITE", "/tmp/site")
 PUB = f"{SITE}/public/forecast"
 RUNS = ["/tmp/fcrun/runs/S1017B", "/tmp/fcrun/runs/S1017", "/tmp/fcrun/runs/B2"]
 STORE = "/tmp/elecdata/store"
-RESEARCH = ["/tmp/elecdata/research_ag.json", "/tmp/elecdata/research_sos_lg.json", "/tmp/elecdata/research_treas_aud.json"]
+RESEARCH = ["/tmp/elecdata/research_ag.json", "/tmp/elecdata/research_sos_lg.json", "/tmp/elecdata/research_treas_aud.json",
+            "/tmp/elecdata/research_new_offices.json"]   # Oct 19 2026: the remaining partisan statewide offices (convert_new_offices.py)
 COUNTY = glob.glob("/tmp/fcrun/TPSI_B/model/41050065*/TEXASMODELFINAL/TPSI_Trump_Approval_By_County_Combined_FULL.csv")[0]
 W = dict(T=0.30, F=0.15, G=0.10, H=0.25, P=0.20)
 INC, UNITY_K, UNITY_CAP = 0.07, 0.15, 0.08
@@ -45,9 +46,16 @@ NAT_HOUSE_D2 = {2014: 0.4705, 2018: 0.5431, 2022: 0.4858}
 TODAY = pd.Timestamp(os.environ.get("TODAY", "2026-10-17"))
 OFFICE_LABEL = {"lieutenant-governor": "Lieutenant governor", "attorney-general": "Attorney general",
                 "secretary-of-state": "Secretary of state", "treasurer": "Treasurer", "auditor": "Auditor",
-                "agriculture-commissioner": "Agriculture commissioner", "railroad-commissioner": "Railroad commissioner"}
+                "agriculture-commissioner": "Agriculture commissioner", "railroad-commissioner": "Railroad commissioner",
+                "comptroller": "Comptroller", "land-commissioner": "Land commissioner", "superintendent": "Schools superintendent",
+                "insurance-commissioner": "Insurance commissioner", "labor-commissioner": "Labor commissioner",
+                "public-service-commission": "Utility commission", "mine-inspector": "Mine inspector", "education-board": "Education board",
+                "supreme-court": "Supreme court"}
 OFFICE_CODE = {"lieutenant-governor": "lg", "attorney-general": "ag", "secretary-of-state": "sos", "treasurer": "treas",
-               "auditor": "aud", "agriculture-commissioner": "agri", "railroad-commissioner": "rrc"}
+               "auditor": "aud", "agriculture-commissioner": "agri", "railroad-commissioner": "rrc",
+               "comptroller": "comp", "land-commissioner": "land", "superintendent": "supt", "insurance-commissioner": "ins",
+               "labor-commissioner": "labor", "public-service-commission": "psc", "mine-inspector": "mine", "education-board": "edb",
+               "supreme-court": "court"}
 STATE_NAME = {}
 
 lg = lambda p: np.log(np.clip(p, 1e-4, 1 - 1e-4) / (1 - np.clip(p, 1e-4, 1 - 1e-4)))
@@ -313,13 +321,17 @@ for st in sorted({r["state"] for r in races}):
     state_base(st)
 nat_gap = float(np.median(NAT_PRIM_GAP)) if NAT_PRIM_GAP else 0.0
 
-for r in sorted(races, key=lambda x: (x["state"], x["office"])):
+for r in sorted(races, key=lambda x: (x["state"], x["office"], x.get("seat_slug") or "")):
     st, off = r["state"], r["office"]
-    rid = f"{OFFICE_CODE[off]}-{st}"
+    ss = r.get("seat_slug")                                  # a state with several races for one office: one page per seat
+    rid = f"{OFFICE_CODE[off]}-{st}" + (f"-{ss}" if ss else "")
     dn, rn = (r.get("d_name") or "").strip(), (r.get("r_name") or "").strip()
-    base = dict(id=rid, st=st, state=STATE_NAME.get(st, st), office=off, officeLabel=OFFICE_LABEL[off], dem=dn or None, gop=rn or None,
+    olab = r.get("office_label") or OFFICE_LABEL[off]
+    if r.get("seat") and str(r["seat"]).lower() not in olab.lower(): olab = f"{olab}, {r['seat']}"
+    base = dict(id=rid, st=st, state=STATE_NAME.get(st, st), office=off, officeLabel=olab, dem=dn or None, gop=rn or None,
                 others=r.get("others") or [], incumbent=r.get("incumbent_name"), incParty=r.get("incumbent_party"),
-                incRunning=bool(r.get("incumbent_running")), note=r.get("note"), sources=(r.get("sources") or [])[:6])
+                incRunning=bool(r.get("incumbent_running")), note=r.get("note"), sources=(r.get("sources") or [])[:6],
+                seat=r.get("seat"), slug=(f"{off}-{ss}" if ss else off), seatsUp=r.get("seats_up") or 1)
     if not dn or not rn:
         winner = "D" if dn else "R"
         base.update(uncontested=winner, est=dict(margin=-100.0 if winner == "D" else 100.0, prob=0.0 if winner == "D" else 1.0, p10=None, p90=None),
