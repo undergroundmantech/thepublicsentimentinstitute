@@ -1601,7 +1601,7 @@ export default function TPSIPollDashboard() {
     params.set("slide", activeId);
     window.history.replaceState(null, "", `?${params.toString()}`);
     const pollLabels: Record<string, string> = { la: "LA Mayoral", national: "National Benchmark", sd: "SD GOP Primary", sc: "SC GOP Primary" };
-    document.title = `${pollLabels[activePoll] ?? "TPSI Poll"} · TPSI Polling`;
+    document.title = `${pollLabels[activePoll] ?? "On Point Polling Poll"} · On Point Polling`;
   }, [activePoll, activeId]);
 
   const categories = getCategories(slides);
@@ -1906,7 +1906,7 @@ export default function TPSIPollDashboard() {
         {/* Page header */}
         {activePoll === 'la' ? (
           <div style={{ padding:"20px 0 14px" }}>
-            <div className="tpsi-eyebrow">TPSI POLL · LOS ANGELES MAYOR · WAVE 1 · MAY 2026</div>
+            <div className="tpsi-eyebrow">On Point Polling POLL · LOS ANGELES MAYOR · WAVE 1 · MAY 2026</div>
             <div style={{ display:"flex", flexWrap:"wrap", alignItems:"flex-end", justifyContent:"space-between", gap:12 }}>
               <h1 className="tpsi-page-title">Los Angeles <em>Mayoral Election</em></h1>
               <div style={{ display:"flex", gap:6, flexWrap:"wrap", alignItems:"center" }}>
@@ -1919,7 +1919,7 @@ export default function TPSIPollDashboard() {
           </div>
         ) : activePoll === 'national' ? (
           <div style={{ padding:"20px 0 14px" }}>
-            <div className="tpsi-eyebrow">TPSI POLL · NATIONAL BENCHMARK · MAY 2026</div>
+            <div className="tpsi-eyebrow">On Point Polling POLL · NATIONAL BENCHMARK · MAY 2026</div>
             <div style={{ display:"flex", flexWrap:"wrap", alignItems:"flex-end", justifyContent:"space-between", gap:12 }}>
               <h1 className="tpsi-page-title">National <em>Benchmark Survey</em></h1>
               <div style={{ display:"flex", gap:6, flexWrap:"wrap", alignItems:"center" }}>
@@ -1931,7 +1931,7 @@ export default function TPSIPollDashboard() {
           </div>
         ) : activePoll === 'sd' ? (
           <div style={{ padding:"20px 0 14px" }}>
-            <div className="tpsi-eyebrow">TPSI POLL · SOUTH DAKOTA GOP PRIMARY · MAY 2026</div>
+            <div className="tpsi-eyebrow">On Point Polling POLL · SOUTH DAKOTA GOP PRIMARY · MAY 2026</div>
             <div style={{ display:"flex", flexWrap:"wrap", alignItems:"flex-end", justifyContent:"space-between", gap:12 }}>
               <h1 className="tpsi-page-title">South Dakota <em>Republican Primary</em></h1>
               <div style={{ display:"flex", gap:6, flexWrap:"wrap", alignItems:"center" }}>
@@ -1943,7 +1943,7 @@ export default function TPSIPollDashboard() {
           </div>
         ) : (
           <div style={{ padding:"20px 0 14px" }}>
-            <div className="tpsi-eyebrow">TPSI POLL · SOUTH CAROLINA GOP PRIMARY · JUNE 2026</div>
+            <div className="tpsi-eyebrow">On Point Polling POLL · SOUTH CAROLINA GOP PRIMARY · JUNE 2026</div>
             <div style={{ display:"flex", flexWrap:"wrap", alignItems:"flex-end", justifyContent:"space-between", gap:12 }}>
               <h1 className="tpsi-page-title">South Carolina <em>Republican Primary</em></h1>
               <div style={{ display:"flex", gap:6, flexWrap:"wrap", alignItems:"center" }}>

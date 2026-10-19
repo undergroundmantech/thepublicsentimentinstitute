@@ -1,7 +1,7 @@
 // The early vote page's own read of every reporting state, run outside the browser so the forecast can use it.
 //
 // It builds exactly what /maps/early-vote builds on its national view: each state's mail returns and early in person
-// ballots, party as reported where the state publishes it and the TPSI party estimate where it reports ballots as
+// ballots, party as reported where the state publishes it and the On Point Polling party estimate where it reports ballots as
 // Unspecified, then the electorate comparison (computeElectorate) against the 2026 electorate the forecast expects.
 // The one difference: it reads the national feed only, so an Unspecified state is estimated from its counties weighted
 // by adults rather than from county by county counts.

@@ -23,7 +23,7 @@ const NEXT_ELECTION = {
   iso: "2026-11-03T19:00:00-05:00",
   title: "2026 Midterm General Election",
   deck:
-    "The whole House, a third of the Senate and 36 governorships. TPSI race ratings " +
+    "The whole House, a third of the Senate and 36 governorships. On Point Polling race ratings " +
     "are live now; the forecast model and the election night board follow as the " +
     "calendar closes in. First polls close at 7:00 PM ET.",
   cta: { href: "/forecast", label: "See the 2026 race ratings" },
@@ -161,7 +161,7 @@ export default function ElectionsLanding() {
         </section>
 
         <div className="landing-foot">
-          <span>The Public Sentiment Institute</span>
+          <span>On Point Polling</span>
           <span>Election coverage</span>
         </div>
       </main>

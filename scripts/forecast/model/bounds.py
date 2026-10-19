@@ -10,7 +10,7 @@ changes, and past it the value bends toward the limit and can pass it by at most
    county's projection passes its limit it tops out, and the statewide level, which the polls set, is restored by
    moving every county, so the votes a capped county cannot give come from counties that still have room.
 
-2. Group support. How far a place can move a group from its national baseline is read from TPSI: the spread of
+2. Group support. How far a place can move a group from its national baseline is read from On Point Polling: the spread of
    each race by party group's generic ballot across the eight regions, shrunk toward the nation, plus a margin.
    Black Democrats vary little from region to region, white independents a great deal. In the voter simulation each
    voter type's county and simulation offsets are held inside its group's band, so a group that is already near its
@@ -130,9 +130,9 @@ def county_turnout(fl, turnout, m22, P24, cvap_of, mid_mult=TURN_HI_MID):
     return new.values, aud
 
 
-# ── 2. group bands from TPSI ──────────────────────────────────────────────────────────────────────
+# ── 2. group bands from On Point Polling ──────────────────────────────────────────────────────────────────────
 def group_bands(sm):
-    """[4 race, 3 party] low and high offsets in log odds from TPSI regional spread of the generic ballot."""
+    """[4 race, 3 party] low and high offsets in log odds from On Point Polling regional spread of the generic ballot."""
     if "bands" in _B: return _B["bands"]
     import voters as vf
     r = vf.prep(sm)
@@ -172,7 +172,7 @@ def widen_for_fit(err, LO, HI, C):
 #   White 43.9 and 43.9, Black 84.7 and 92.0, Hispanic 51.5 and 62.9, Asian 58.8 and 70.0.
 # The 2026 center for each group is the 2024 value moved by the national environment the model is anchored to,
 # NAT_D2 against the 2024 result, with its 2020 value as the other end of recent history. A state's group can sit
-# away from the national center by RACE_MARGIN plus the TPSI regional spread for that group, capped; whites vary by state far
+# away from the national center by RACE_MARGIN plus the On Point Polling regional spread for that group, capped; whites vary by state far
 # more than any band could honestly hold, so they get no statewide limit and absorb what the other groups cannot.
 PEW = {"White": (0.439, 0.439), "Black": (0.847, 0.920), "Hispanic": (0.515, 0.629), "Asian/Other": (0.588, 0.700)}
 RACE_MARGIN = 0.35
@@ -198,7 +198,7 @@ def race_limits(sm):
             devs.append(lg((n * pr + BAND_POOL * pn) / (n + BAND_POOL)) - lg(pn))
         c24, c20 = PEW[rc]
         center_lo = min(lg(c24), lg(c20)) + env; center_hi = max(lg(c24), lg(c20)) + env
-        # TPSI state and regional samples of these groups are small, so their spread widens the range by at most
+        # On Point Polling state and regional samples of these groups are small, so their spread widens the range by at most
         # RACE_SPREAD_CAP on either side
         lo = center_lo - RACE_MARGIN - min(RACE_SPREAD_CAP, -min(devs)); hi = center_hi + RACE_MARGIN + min(RACE_SPREAD_CAP, max(devs))
         out[rc] = (float(iv(lo)), float(iv(hi)))

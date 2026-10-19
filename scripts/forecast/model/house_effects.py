@@ -36,7 +36,7 @@ ALIASES = [(r"siena", "siena"), (r"beacon|shaw\s*&\s*co", "beacon/shaw"), (r"dat
            (r"hendrix", "hendrix college")]   # Oct 8: Talk Business & Politics / Hendrix College and Hendrix College are one firm
 
 def house_key(name):
-    """One id per polling firm: an alias for firms that publish under several names, else the TPSI scorecard key
+    """One id per polling firm: an alias for firms that publish under several names, else the On Point Polling scorecard key
     where the name matches one, else the cleaned name."""
     s = str(name)
     low = s.lower()

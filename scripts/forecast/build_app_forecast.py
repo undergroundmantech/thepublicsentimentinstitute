@@ -1,4 +1,4 @@
-"""Build the /forecast data files the site's Forecast desk reads, from the published TPSI forecasts.
+"""Build the /forecast data files the site's Forecast desk reads, from the published On Point Polling forecasts.
 
 Writes public/forecast/{model.json, geo.json, counties.json, states/<ST>.json}, in the shapes
 app/forecast/lib.ts declares. Geometry comes from the published pages (national frame 975 x 610);
@@ -248,7 +248,7 @@ def statewide(page, office, prefix):
             pavg = dict(pavg, D2=_akfinal(pavg["D2"]), psi=dict(pavg.get("psi", {}), D2=_akfinal(pavg["psi"]["D2"])) if pavg.get("psi", {}).get("D2") else pavg.get("psi", {}))
             pa = round(100 - 200 * pavg["D2"], 2)
         # Since Sept 28 2026 the polling level is the LOWESS Election Day polling average wherever a race
-        # has 8 or more polls. The desk labels which one fed the race and keeps the PSI average beside it.
+        # has 8 or more polls. The desk labels which one fed the race and keeps the On Point Polling average beside it.
         plevel = pavg.get("poll_level", "psi")
         psi = pavg.get("psi", {}).get("D2")
         psi_m = None if pa is None or psi is None else round(100 - 200 * psi, 2)

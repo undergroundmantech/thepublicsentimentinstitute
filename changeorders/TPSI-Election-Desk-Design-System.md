@@ -1,4 +1,4 @@
-# SKILL — TPSI Election Desk Design System (with code)
+# SKILL — On Point Polling Election Desk Design System (with code)
 ### DESIGN AUTHORITY for restyling the results/election pages.
 
 ## ⛔ RULE 0 — BRANCH DISCIPLINE
@@ -7,7 +7,7 @@ The owner is already working inside a non-main working branch. Commit your
 work in place on the CURRENT branch. Violating this destroys in-flight work.
 
 ## RULE 0.1 — USE THE ESTABLISHED PALETTE
-The token values in §1 are the TPSI palette already locked in prior change
+The token values in §1 are the On Point Polling palette already locked in prior change
 orders (CO-01 foundation, CO-03 home, CO-04 desk). Do not invent colors, do
 not sample from screenshots, do not keep legacy values. If the repo already
 defines these variables, REUSE them; only add what's missing.
@@ -17,8 +17,8 @@ defines these variables, REUSE them; only add what's missing.
 ## 1 · TOKENS — drop-in CSS 
 
 ```css
-/* ============ TPSI DESK TOKENS — light default, dark via [data-theme] ======= */
-/* ============ TPSI DESK TOKENS — light default, dark via [data-theme] ======= */
+/* ============ On Point Polling DESK TOKENS — light default, dark via [data-theme] ======= */
+/* ============ On Point Polling DESK TOKENS — light default, dark via [data-theme] ======= */
 
 :root {
   /* surfaces */
@@ -274,7 +274,7 @@ with a `Why it matters:` sentence in Geist. Render only when mode data exists.
 
 ## 6 · COPY RULES
 No em dashes (use `·`, commas, periods). `election night` never hyphenated.
-Full org name only in kickers/©; product voice says TPSI. Numbers: tabular
+Full org name only in kickers/©; product voice says On Point Polling. Numbers: tabular
 mono, thousands separators, `~` for estimates, `>99%` / `<1%` at extremes.
 
 ## 7 · ANTI-PATTERNS (reject on sight)

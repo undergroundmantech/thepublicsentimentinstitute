@@ -33,7 +33,7 @@ export async function GET(_req: Request, { params }: { params: Promise<{ avg: st
       marginText: b.latest ? def.fmtMargin(b.latest.net) : null,
       marginDefinition: `${def.seriesA.label} minus ${def.seriesB.label}`,
       page: `https://onpointpolitics.com${pollHref(def.id)}`,
-      source: "On Point Politics polling average, The Public Sentiment Institute",
+      source: "On Point Politics polling average, On Point Polling",
     },
     updated: last ? last.date : null,
     series: b.daily.map((d) => ({ date: d.date, a: r1(d.a), b: r1(d.b), margin: r1(d.net) })),

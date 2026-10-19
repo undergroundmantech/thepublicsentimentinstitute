@@ -22,7 +22,7 @@ const LIVE = "#f3eff8";     // live contest figures stay neutral; the live pill 
 // Mirrors the REDIST const on /electoralmap (enacted house nets, June 2026) —
 // update both together when a map moves.
 const REDIST_NET = { r: 9, d: 6 };
-// Mirrors the headline on /tpsi/polls/la-mayor-2026 (Bass margin, leaners allocated).
+// Mirrors the headline on /on-point-polling/polls/la-mayor-2026 (Bass margin, leaners allocated).
 const TPSI_HEADLINE = { fig: "B+18.8", sub: "LA mayor, Bass margin with leaners allocated" };
 
 const pad = (n: number) => String(n).padStart(2, "0");
@@ -224,7 +224,7 @@ export default function SituationRoomPage() {
       sub: stats ? `${stats.track.right.toFixed(0)} right · ${stats.track.wrong.toFixed(0)} wrong` : "Model loading",
     },
     {
-      label: "TPSI poll", href: "/tpsi/polls",
+      label: "On Point Polling poll", href: "/on-point-polling/polls",
       fig: TPSI_HEADLINE.fig, tone: D_SOFT, sub: TPSI_HEADLINE.sub,
     },
     {
@@ -254,7 +254,7 @@ export default function SituationRoomPage() {
   return (
     <div className="opp sr">
       <style>{CSS}</style>
-      <nav className="crumbs" aria-label="Breadcrumb"><Link href="/">Home</Link><span className="sep">/</span><Link href="/tpsi">On Point Polling</Link><span className="sep">/</span><span>Situation room</span></nav>
+      <nav className="crumbs" aria-label="Breadcrumb"><Link href="/">Home</Link><span className="sep">/</span><Link href="/on-point-polling">On Point Polling</Link><span className="sep">/</span><span>Situation room</span></nav>
       <header className="ph">
         <div className="eye g">Live monitor</div>
         <h1>Situation <em>room</em></h1>

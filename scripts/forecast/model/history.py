@@ -1,4 +1,4 @@
-"""TPSI Vote History Mode: individual vote history, a 2026 turnout model that is not anchored to a turnout ratio, and
+"""On Point Polling Vote History Mode: individual vote history, a 2026 turnout model that is not anchored to a turnout ratio, and
 the groups the voter simulation draws from.
 
 Every county's adults are split into 384 groups: 32 ACS cells of age, race and college, times Democrats, Republicans
@@ -9,19 +9,19 @@ and independents, times four vote histories:
     2024 only   voted in 2024, skipped 2022
     neither     no vote in either, which includes new adults and people who never vote
 
-1. Simulated vote history. TPSI respondents' validated recall gives, for every cell and party, the chance of having
+1. Simulated vote history. On Point Polling respondents' validated recall gives, for every cell and party, the chance of having
    voted in 2022 and the chance of having voted in 2024 given the 2022 vote. Two constants per county move those
    chances until the county's history reproduces its certified 2022 midterm turnout and its certified 2024 presidential
    turnout exactly. Survey recall overstates voting; the calibration removes that, so each county's history is real.
 
-2. How history becomes a midterm vote. From TPSI, the chance of voting in a midterm given the last midterm and the last
+2. How history becomes a midterm vote. From On Point Polling, the chance of voting in a midterm given the last midterm and the last
    presidential vote, fit on the 2022 vote given 2018 and 2020 history. That same transition is applied to 2026 with
    2022 and 2024 history. One national constant corrects survey recall, and it is set by a backtest: 2020 era history
    is built for every state from certified 2018 and 2020 turnout, the transition predicts 2022, and the constant is the
    one that makes the predicted national 2022 midterm vote match the certified one. No 2026 turnout total is imposed.
 
 3. What is specific to 2026:
-     * TPSI 2026 intent. The share of each party's respondents who say they are certain to vote, against the other
+     * On Point Polling 2026 intent. The share of each party's respondents who say they are certain to vote, against the other
        parties, controlling for cell and history, moves each party's turnout by half of that gap in log odds.
      * Primary enthusiasm. The Electorate Mode state term from the 2026 Senate and governor primaries moves Democratic
        and Republican turnout apart.
@@ -112,10 +112,10 @@ def fit(sm):
     mean_ = wD * pD_ + wR * pR_
     F["intent_party"] = LAM_INTENT * np.array([pD_ - mean_, pR_ - mean_, 0.0 - mean_])
     F["intent_raw"] = dict(D=float(pD_), R=float(pR_), certain_share={k: float(v) for k, v in r.groupby("party_id").turnout_intent.apply(lambda s: (s == "Certain / highly motivated").mean()).items()})
-    # vote by cell, party and history, weighted by TPSI turnout propensity
+    # vote by cell, party and history, weighted by On Point Polling turnout propensity
     m = r.gb_2way.notna().values
     F["bV"] = sm.irls(XH[m], (r.gb_2way[m] == "Democrat").values.astype(float), r.turnout_propensity.values[m])
-    # DSMeridian Model 13R3 Stage 3, PSI Pythagorean v8.1: A is the product of the intent, method and social scores,
+    # DSMeridian Model 13R3 Stage 3, On Point Polling Pythagorean v8.1: A is the product of the intent, method and social scores,
     # B half the history scalar, PT their Pythagorean sum, and P = logistic(12 (PT - mu)) with mu = 1 minus the p60 of
     # PT. The respondent file carries each wave's own mu; one pooled p60 anchor is used here so the relative propensity
     # of a cell does not depend on which panel happened to field it.
@@ -385,7 +385,7 @@ def build(sm, model, st, fl, reg, actual24, turnout24, prim, enth):
     lv_info = {}
     if LV_MODE:
         # The level of 2026 turnout in every county comes from the history transition and the 2026 signals above.
-        # Who makes up that turnout comes from the DSMeridian likely voter model: each group's PSI Pythagorean
+        # Who makes up that turnout comes from the DSMeridian likely voter model: each group's On Point Polling Pythagorean
         # propensity, plus the party enthusiasm from the primaries, with one county constant so the county total is
         # unchanged. Party intent is already inside the likely voter score, so it is not added a second time.
         V_level = (pop4 * inv(lt)).sum((1, 2, 3))

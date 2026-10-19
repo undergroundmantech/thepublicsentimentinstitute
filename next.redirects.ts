@@ -43,10 +43,14 @@ export const redirects: Redirect[] = [
   p("/results/onpoint/:path*", "/results/:path*"),
 
   // tpsi
-  p("/tpsipoll", "/tpsi/polls"),
-  p("/latestpoll", "/tpsi/polls"),
-  p("/goldstandard", "/tpsi/methodology"),
-  p("/situationroom", "/tpsi/situation-room"),
-  p("/SMSOptIn", "/tpsi/sms"),
+  p("/tpsipoll", "/on-point-polling/polls"),
+  p("/latestpoll", "/on-point-polling/polls"),
+  p("/goldstandard", "/on-point-polling/methodology"),
+  p("/situationroom", "/on-point-polling/situation-room"),
+  p("/SMSOptIn", "/on-point-polling/sms"),
+  // the polling section moved from /tpsi to /on-point-polling on Oct 19 2026; every old link, including the SMS opt in
+  // page and the poll pages linked from Substack, lands on its new address
+  p("/tpsi", "/on-point-polling"),
+  p("/tpsi/:path*", "/on-point-polling/:path*"),
   p("/TermsAndConditions", "/terms"),
 ];

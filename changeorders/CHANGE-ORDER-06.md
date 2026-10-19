@@ -80,7 +80,7 @@ Per CO-05 §5a, unchanged and out of scope:
 - The chyron's motion and presence
 
 Density is the proof a real election night is underway. Curation applies only
-where TPSI asserts a forecast, projection, or call.
+where On Point Polling asserts a forecast, projection, or call.
 
 ### Verification
 
@@ -96,7 +96,7 @@ Board renders **24 races**: 1 spotlight, 10 featured, 13 list.
 
 ## 2 · THE SPOTLIGHT — Michigan U.S. Senate D, id 84778
 
-The only race tonight carrying a TPSI model. It resolves to tier 4 via the
+The only race tonight carrying an On Point Polling model. It resolves to tier 4 via the
 capability override, which turns on `forecast`, `countyModel`, `modeData`, and
 `telemetry` through the existing `TIER_DEFAULTS` table. No new capability
 plumbing is needed.
@@ -135,7 +135,7 @@ Renders in full anywhere the projection appears. Not a truncatable footnote:
 
 ### Call-source separation
 
-`AP CALL` (driven by CivicAPI `winner: true`) and `TPSI PROJECTION` (driven by
+`AP CALL` (driven by CivicAPI `winner: true`) and `On Point Polling PROJECTION` (driven by
 our model) are different claims and must not share a treatment. If they
 disagree, both display. The disagreement is the story.
 

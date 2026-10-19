@@ -48,7 +48,7 @@ export function buildVoteModeRows(needle: NeedleProjection): VoteModeRow[] {
 }
 
 /** The "Why it matters" sentence (§4b) — for a placeholder breakdown, this
- *  IS the honest reading: say plainly that TPSI has no mode-level signal and
+ *  IS the honest reading: say plainly that On Point Polling has no mode-level signal and
  *  is not extrapolating one mode's behavior onto another. */
 export function voteModeWhyItMatters(needle: NeedleProjection): string {
   const gapPp = Math.abs(needle.leaderProjSharePct - needle.runnerProjSharePct);

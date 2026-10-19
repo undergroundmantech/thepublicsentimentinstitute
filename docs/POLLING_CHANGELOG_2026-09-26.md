@@ -22,10 +22,10 @@ Those places are now shaded green by raw ballot count.
 Files: `app/earlyvote/lib.ts` adds `volumeScale`, `turnoutFill` and `compact`.
 `app/earlyvote/EarlyVoteDesk.tsx` uses them for the map fill, legend, tooltip and table.
 
-# Early vote: TPSI party estimate for states with no party data
+# Early vote: On Point Polling party estimate for states with no party data
 
 The twelve states that report every early ballot as Unspecified now show a simulated party
-split built from TPSI polling. It is on by default in those states. A switch in the new
+split built from On Point Polling polling. It is on by default in those states. A switch in the new
 estimate panel goes back to the green turnout shading.
 
 ## What the page shows
@@ -40,13 +40,13 @@ estimate panel goes back to the green turnout shading.
 
 ## How it is estimated
 
-`scripts/earlyvote/build_party_model.py`, run on the TPSI national respondent database and
-the TPSI county file:
+`scripts/earlyvote/build_party_model.py`, run on the On Point Polling national respondent database and
+the On Point Polling county file:
 
-1. Each county starts from its 2024 Trump two party share, moved by the swing TPSI measures
+1. Each county starts from its 2024 Trump two party share, moved by the swing On Point Polling measures
    inside its own sample from 2024 recall to the 2026 generic ballot: 2.1 points toward the
    Democrats. The same respondents answer both, so the panel's partisan tilt cancels.
-2. TPSI likely voters set the party mix: 20.3% Independent. In 2024, Democrats voted Trump
+2. On Point Polling likely voters set the party mix: 20.3% Independent. In 2024, Democrats voted Trump
    at 7.5%, Independents at 44.5% and Republicans at 94.7%. Those numbers fix the one
    Democratic and Republican split that reproduces each county's lean.
 3. A weighted multinomial logit on party ID gives the early vote skew at the same local lean.
@@ -58,7 +58,7 @@ the TPSI county file:
 
 ## Check against states that do report party, mail ballots requested
 
-| State | TPSI estimate | 80% range | Registration |
+| State | On Point Polling estimate | 80% range | Registration |
 |---|---|---|---|
 | Florida | D+12.1 | D+5.6 to D+18.8 | D+11.2 |
 | North Carolina | D+20.3 | D+15.1 to D+26.0 | D+25.0 |
@@ -77,13 +77,13 @@ the right target there.
 
 The respondent file stays off the site. `public/earlyvote-party-model.json` holds fourteen
 model numbers per draw and public county figures: the 2024 Trump share and adult population.
-Keep the TPSI CSVs out of the repository and pass their paths in:
+Keep the On Point Polling CSVs out of the repository and pass their paths in:
 
     TPSI_DB=path/to/TPSI_National_Respondent_Database.csv \
     TPSI_COUNTY=path/to/TPSI_Trump_Approval_By_County_Combined_FULL.csv \
     python3 scripts/earlyvote/build_party_model.py
 
-Re-run it after each new TPSI wave.
+Re-run it after each new On Point Polling wave.
 
 # Early vote: tooltip follows the cursor
 
@@ -94,7 +94,7 @@ It is now rendered straight into the document body. It sits 14px beside the curs
 centred on it vertically, flips to the left of the cursor near the right edge and stays
 inside the window. The rank line is shortened so it no longer truncates.
 
-# Early vote: nationwide party breakdown, reported plus TPSI estimate
+# Early vote: nationwide party breakdown, reported plus On Point Polling estimate
 
 The national early vote view now opens with one card each for Requested, Returned and
 In person. Each card gives the final estimated party breakdown for the whole country.
@@ -102,7 +102,7 @@ In person. Each card gives the final estimated party breakdown for the whole cou
 - **Reported ballots are counted as reported.** Where a state publishes party, Democratic
   and Republican ballots go straight in. Every other label, such as No Party Affiliation,
   Other, Libertarian or Green, goes into Independent or other.
-- **Unspecified ballots are estimated with the TPSI model.** That covers the twelve states
+- **Unspecified ballots are estimated with the On Point Polling model.** That covers the twelve states
   with no party data, plus any Unspecified remainder inside a party state, such as
   Kentucky's. Mail skew applies to requested and returned ballots, early in person skew to
   in person ballots.
@@ -143,7 +143,7 @@ Democratic offset fixed at 0.
   let Pennsylvania decide the answer for every other state: its Republicans return at 0.40
   times the Democratic odds, while everyone else sits near 0.75.
 - **Fallback.** When fewer than two states, or under 2,000 party ballots, have come back,
-  the TPSI survey stands in. The prior is built from mail voters' turnout propensity by
+  the On Point Polling survey stands in. The prior is built from mail voters' turnout propensity by
   party and added to the model file.
 
 ## Live calibration
@@ -198,7 +198,7 @@ the national view, gets a rating, the same way the electoral map does.
   | Likely | 15 to 30 |
   | Safe | 30 and up |
 
-  Reported party margins and TPSI estimates are rated the same way. Estimated places keep
+  Reported party margins and On Point Polling estimates are rated the same way. Estimated places keep
   their hatching.
 - **Colours.** They go dark to light, Safe deepest and Tilt palest, and stay the same in
   both themes. Before, the dark theme ran the other way, with weak counties fading into the
@@ -214,7 +214,7 @@ the national view, gets a rating, the same way the electoral map does.
   It shows the share of ballots in Democratic and Republican rated places, a bar from Safe D
   to Safe R, and a count of places in each band.
 - **Ratings in the tooltip and table.** The tooltip leads with the rating pill. The county
-  table has a Rating column, in italics where the rating comes from the TPSI estimate.
+  table has a Rating column, in italics where the rating comes from the On Point Polling estimate.
 - **Hatching.** It is now a light and a dark line together, so it shows on both deep and
   pale fills in either theme.
 
@@ -235,9 +235,9 @@ from `UPDATED`. `public/forecast` is rebuilt from the Sept 25 run.
   example, now leads with Texas Public Opinion Research and Marist University.
 - The chamber trend lines are recomputed from the current trackers. Today's point is identical.
 
-# Polling averages: PSI LOWESS trend lines and the Election Day polling average, Sept 28
+# Polling averages: On Point Polling LOWESS trend lines and the Election Day polling average, Sept 28
 
-Every head to head on the Polling Averages page now has a Trend lines panel under the PSI
+Every head to head on the Polling Averages page now has a Trend lines panel under the On Point Polling
 average. That covers the generic ballot, approval, and every 2026 Senate and governor matchup.
 
 ## The trend lines
@@ -283,14 +283,14 @@ and the published settings. The House was not re-run and stays on the Sept. 25 H
 
 - **Polling level.** Wherever a race has 8 or more polls, the level of its polling average is
   the LOWESS Election Day polling average: 0.40 x the recent trend plus 0.60 x the long-term
-  trend. The PSI weighted average still sets the two main candidates' combined share, so
-  undecided voters are handled as before. Races with fewer than 8 polls keep the PSI weighted
-  average. On this run 21 races use LOWESS, 38 use the PSI average and 12 have no polls.
+  trend. The On Point Polling weighted average still sets the two main candidates' combined share, so
+  undecided voters are handled as before. Races with fewer than 8 polls keep the On Point Polling weighted
+  average. On this run 21 races use LOWESS, 38 use the On Point Polling average and 12 have no polls.
 - **Ranked choice.** Alaska's LOWESS level is taken on the final round margins.
 - **One poll set.** The model now reads the same polls as the site. 81 polls in 17 races that
   were on the site but missing from the model were added through `site_poll_sync.py`.
 - **The desk.** Each race's poll line says which average fed it. A LOWESS race reads "N polls
-  project to an Election Day polling average of X", with the PSI weighted average beside it.
+  project to an Election Day polling average of X", with the On Point Polling weighted average beside it.
 
 ## New polls in this run
 
@@ -327,7 +327,7 @@ Margins are Democratic side positive; win chance is the Democratic side's.
 |---|---|---|---|---|---|
 | NY Governor | +12.0 | +17.5 | 98.0% | 100% | LOWESS level |
 | IA Governor | +7.0 | +10.9 | 87.5% | 96.2% | LOWESS level |
-| MI Governor | +10.2 | +7.2 | 96.3% | 89.6% | LOWESS projects D+3.2, against a PSI average of D+7.3 |
+| MI Governor | +10.2 | +7.2 | 96.3% | 89.6% | LOWESS projects D+3.2, against an On Point Polling average of D+7.3 |
 | IA Senate | +0.9 | +3.5 | 55.8% | 71.5% | Big Data Poll and InsiderAdvantage |
 | PA Governor | +21.4 | +24.0 | 100% | 100% | LOWESS level |
 | NC Senate | +8.8 | +10.9 | 95.6% | 98.7% | AARP poll and LOWESS level |
@@ -367,7 +367,7 @@ Janoo 34, 817 likely voters, margin of error 3.4. Every other race keeps the num
 
 Vermont now leans to Scott, so projected governors go from 23 D and 13 R to 22 D and 14 R.
 
-Vermont has 4 polls, too few for LOWESS, so it uses the PSI weighted average, which moved
+Vermont has 4 polls, too few for LOWESS, so it uses the On Point Polling weighted average, which moved
 from Janoo +5.9 to Scott +5.5. Braun Research carries 72% of that average. It has no
 pollster grade, and the scorecard gives an unrated firm a quality weight of 0.60, while the
 University of New Hampshire, graded C-, gets 0.15.
@@ -434,7 +434,7 @@ once.
 | Governors, Democratic control | 84.9% | 84.4% |
 
 Arizona moves most because the long-term trend now carries Hobbs's stronger spring polling.
-The recent trend is still Hobbs +1.3, and the long-term trend is Hobbs +5.4. The PSI weighted
+The recent trend is still Hobbs +1.3, and the long-term trend is Hobbs +5.4. The On Point Polling weighted
 averages barely move, because the older polls get almost no recency weight.
 
 # Governor forecast depolarized, all 36 governor races re-run, Sept 28
@@ -532,7 +532,7 @@ Governor, one poll added: Wedgewood Polls, Sept. 22 to 24, 500 LV, Masterson 52,
 | Senate, Democratic control without Osborn | 75.4% | 76.5% |
 | Governors, Democratic control | 84.0% | 83.8% |
 
-Kansas Senate has 7 polls and the governor race 4, so both still use the PSI weighted average.
+Kansas Senate has 7 polls and the governor race 4, so both still use the On Point Polling weighted average.
 LOWESS needs 8.
 
 # House re-run, Sept 28

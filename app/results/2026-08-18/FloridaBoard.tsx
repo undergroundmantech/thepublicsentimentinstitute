@@ -120,7 +120,7 @@ const MODEL = {
   close: FL_S,
   raceRule: FORECAST_META.raceRule,
   deck:
-    "Byron Donalds carries a narrow plurality over James Fishback in the TPSI " +
+    "Byron Donalds carries a narrow plurality over James Fishback in the On Point Polling " +
     "model, with Jay Collins and Paul Renner holding enough of the vote to decide " +
     "it. No runoff: whoever finishes first takes the nomination, however small the " +
     "margin. The Panhandle votes on Central time, so the state does not finish " +
@@ -361,7 +361,7 @@ const STATUS_COPY: Record<RaceState, string> = {
   SCHEDULED: "Polls open",
   LIVE_GATED: "Too early to call",
   LIVE_FORECAST: "Counting",
-  PROJECTED: "TPSI projection",
+  PROJECTED: "On Point Polling projection",
   OFFICIAL: "Race called",
 };
 
@@ -529,7 +529,7 @@ export default function FloridaBoard({ variant = "board" }: { variant?: "board" 
   });
 
   const headline = projectedKey
-    ? `TPSI projects ${CANDIDATE_NAMES[projectedKey]} wins the Republican nomination. ` +
+    ? `On Point Polling projects ${CANDIDATE_NAMES[projectedKey]} wins the Republican nomination. ` +
       `He leads by ${int(leadGap)} votes with ${pctLabel(modeledRep)}% of the estimated ` +
       `vote counted, and the projected margin of ${signed(marginPP)} sits beyond what the ` +
       `outstanding ballots can move.`
@@ -537,7 +537,7 @@ export default function FloridaBoard({ variant = "board" }: { variant?: "board" 
       ? `${CAND_NAMES[call.leader as keyof typeof CAND_NAMES] ?? CANDIDATE_LAST[leaderKey]} ` +
         `leads by ${int(leadGap)} votes, far enough ahead that the model would call it. ` +
         `Panhandle polls do not close until 8:00 PM ET, in ${formatCountdown(msLeft)}, and ` +
-        `TPSI publishes no projection while any Florida voter is still in line.`
+        `On Point Polling publishes no projection while any Florida voter is still in line.`
       : live
         ? call.line
         : MODEL.headline;
@@ -547,7 +547,7 @@ export default function FloridaBoard({ variant = "board" }: { variant?: "board" 
     rState === "OFFICIAL"
       ? STATUS_COPY.OFFICIAL
       : projectedKey
-        ? `TPSI projection — ${CANDIDATE_LAST[projectedKey]}`
+        ? `On Point Polling projection — ${CANDIDATE_LAST[projectedKey]}`
         : embargoed
           ? "Held — polls open"
           : live && call.verdict === "LEANING"
@@ -674,7 +674,7 @@ export default function FloridaBoard({ variant = "board" }: { variant?: "board" 
                                 <span className="topline-lead">Leads by {int(leadGap)} votes</span>
                               )}
                               {isProjected && (
-                                <span className="topline-lead won">TPSI projected winner</span>
+                                <span className="topline-lead won">On Point Polling projected winner</span>
                               )}
                               {c.winner && <span className="topline-lead won">Race called</span>}
                             </div>
@@ -800,7 +800,7 @@ export default function FloridaBoard({ variant = "board" }: { variant?: "board" 
                 <div className="projected-top">
                   <div className="projected-intro">
                     <span className="model-label">
-                      {projectedKey ? "TPSI projection" : "Model projection · not actual results"}
+                      {projectedKey ? "On Point Polling projection" : "Model projection · not actual results"}
                     </span>
                     <div className="projected-name">
                       {projectedKey
@@ -1101,7 +1101,7 @@ export default function FloridaBoard({ variant = "board" }: { variant?: "board" 
             <div className="board-head">
               <div>
                 <h2>All races tonight</h2>
-                <p>Reported results only, no TPSI model.</p>
+                <p>Reported results only, no On Point Polling model.</p>
               </div>
               <div className="board-meta">
                 <span className="model-label">{SLATE.length} races · 3 states</span>
@@ -1130,7 +1130,7 @@ export default function FloridaBoard({ variant = "board" }: { variant?: "board" 
             Reported vote is solid. Projected share is muted and dashed, on the same
             0 to 100% scale, and is the sum of all 67 county projections. Estimated
             reporting is the share of expected vote, not precincts. Race calls come from
-            AP through CivicAPI; TPSI projects independently once the leader&rsquo;s margin
+            AP through CivicAPI; On Point Polling projects independently once the leader&rsquo;s margin
             clears three standard deviations of the outstanding vote and at least 35% is
             counted, and those projections are labeled as ours.
           </p>
@@ -1164,7 +1164,7 @@ export default function FloridaBoard({ variant = "board" }: { variant?: "board" 
             who actually turned out, not as a prediction about the state.
           </p>
           <div className="method-foot">
-            <span className="model-label">© 2026 The Public Sentiment Institute</span>
+            <span className="model-label">© 2026 On Point Polling</span>
             <span className="model-label">Powered by CivicAPI</span>
           </div>
         </section>

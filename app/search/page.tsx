@@ -13,8 +13,8 @@ const PAGES: [string, string, string][] = [
   ["/polls", "Polling averages", "every tracked average"], ["/forecast", "Forecast", "Senate, House and governor"], ["/maps/electoral", "Electoral map", "build a map"],
   ["/maps/early-vote", "Early vote tracker", "ballots requested and returned"], ["/maps/party-registration", "Party registration", "voter rolls by party"],
   ["/maps/voter-registration", "Voter registration", "registered voters"], ["/results", "Results", "election results center"], ["/results/tonight", "Live results desk", "election night"],
-  ["/results/archive", "Results archive", "past nights"], ["/tpsi", "On Point Polling", "polling research, formerly The Public Sentiment Institute TPSI"], ["/tpsi/polls", "TPSI poll releases", "The Public Sentiment Institute fieldwork"], ["/tpsi/methodology", "Methodology", "gold standard pollsters DSMeridian"],
-  ["/tpsi/services", "Partner with On Point Polling", "commission a poll"], ["/tpsi/weighting-room", "The Weighting Room", "subscriber community"], ["/contact", "Contact", "email the desk"], ["/tpsi/sms", "SMS updates", "text alerts"], ["/terms", "Privacy policy and terms", "legal"],
+  ["/results/archive", "Results archive", "past nights"], ["/on-point-polling", "On Point Polling", "polling research and survey fieldwork"], ["/on-point-polling/polls", "On Point Polling poll releases", "On Point Polling fieldwork"], ["/on-point-polling/methodology", "Methodology", "gold standard pollsters DSMeridian"],
+  ["/on-point-polling/services", "Partner with On Point Polling", "commission a poll"], ["/on-point-polling/weighting-room", "The Weighting Room", "subscriber community"], ["/contact", "Contact", "email the desk"], ["/on-point-polling/sms", "SMS updates", "text alerts"], ["/terms", "Privacy policy and terms", "legal"],
 ];
 
 export default function Page() {

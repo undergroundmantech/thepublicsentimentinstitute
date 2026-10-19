@@ -54,12 +54,12 @@ export default function SmsOptInPage() {
         @media (max-width: 600px) { .sms .sms-benefit { grid-template-columns: 1fr; gap: 6px; } }
       `}</style>
 
-      <nav className="crumbs" aria-label="Breadcrumb"><Link href="/">Home</Link><span className="sep">/</span><Link href="/tpsi">On Point Polling</Link><span className="sep">/</span><span>SMS updates</span></nav>
+      <nav className="crumbs" aria-label="Breadcrumb"><Link href="/">Home</Link><span className="sep">/</span><Link href="/on-point-polling">On Point Polling</Link><span className="sep">/</span><span>SMS updates</span></nav>
       <header className="ph">
         <div className="eye g">Stay in the loop</div>
         <h1>Polling updates, <em>delivered</em></h1>
         <p className="lede">Sign up to participate in our surveys and receive important polling updates via SMS. Join thousands of Americans helping shape the national data picture, one response at a time.</p>
-        <div className="pmeta"><span>Texts from <b>The Public Sentiment Institute</b></span><span>Opt out <b>Reply STOP</b></span></div>
+        <div className="pmeta"><span>Texts from <b>On Point Polling</b></span><span>Opt out <b>Reply STOP</b></span></div>
       </header>
 
       <div className="layout sms-layout">
@@ -78,7 +78,7 @@ export default function SmsOptInPage() {
                 </div>
               ))}
             </div>
-            <div className="sms-foot">The Public Sentiment Institute · United States · info@publicsentimentinstitute.com · Standard msg &amp; data rates may apply</div>
+            <div className="sms-foot">On Point Polling · United States · info@publicsentimentinstitute.com · Standard msg &amp; data rates may apply</div>
           </div>
           <div className="grid3">
             {[
@@ -105,7 +105,7 @@ export default function SmsOptInPage() {
                   <h3 style={{ fontSize: 20 }}>You&rsquo;re in</h3>
                   <p>
                     Thanks for signing up. Watch for a confirmation text. You'll receive polling
-                    invitations and data updates from the Public Sentiment Institute.
+                    invitations and data updates from On Point Polling.
                   </p>
                   <p style={{ fontSize: 12, color: "var(--mute)" }}>Reply STOP at any time to unsubscribe.</p>
                 </div>
@@ -136,7 +136,7 @@ export default function SmsOptInPage() {
                     <p>
                       By submitting this form and signing up for texts, you consent to receive
                       text messages (e.g., political polling and market research/surveys) from
-                      The Public Sentiment Institute at the number provided, including messages
+                      On Point Polling at the number provided, including messages
                       sent by auto-dialer. Consent is not a condition of purchase. Msg &amp; data
                       rates may apply. Msg frequency varies. Unsubscribe at any time by replying
                       STOP or clicking the unsubscribe link (where available). Reply HELP for help.
@@ -153,7 +153,7 @@ export default function SmsOptInPage() {
                 </form>
               )}
               <div className="sms-legal">
-                © 2025 The Public Sentiment Institute · All Rights Reserved<br />
+                © 2025 On Point Polling · All Rights Reserved<br />
                 <Link href="/terms">Privacy Policy &amp; Terms and Conditions</Link>
               </div>
             </div>

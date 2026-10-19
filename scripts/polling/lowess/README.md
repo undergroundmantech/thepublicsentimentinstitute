@@ -1,4 +1,4 @@
-# PSI LOWESS trend lines: Python reference and backtest
+# On Point Polling LOWESS trend lines: Python reference and backtest
 
 The site computes the trend lines in `app/polling/lib/lowessTrend.ts` and draws them with
 `app/polling/lib/TrendPanel.tsx` on the Polling Averages page. This folder holds the Python

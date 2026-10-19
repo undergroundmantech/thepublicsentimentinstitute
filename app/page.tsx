@@ -161,9 +161,9 @@ export default function Home() {
       </section>
 
       <section className="sec">
-        <div className="sec-h"><div><div className="eye g">From On Point Polling</div><h2>Latest releases and model notes</h2></div><Link className="btn more" href="/tpsi/polls">All releases</Link></div>
+        <div className="sec-h"><div><div className="eye g">From On Point Polling</div><h2>Latest releases and model notes</h2></div><Link className="btn more" href="/on-point-polling/polls">All releases</Link></div>
         <div className="grid4">
-          <Link href="/tpsi/polls/texas-2026" className="card story">
+          <Link href="/on-point-polling/polls/texas-2026" className="card story">
             <div className="thumb"><svg viewBox="0 0 320 180" aria-hidden="true"><rect width="320" height="180" fill="#120820" /><g fontFamily="var(--font-m)" fontSize="11" fill="#c9c2d6"><text x="20" y="44">SENATE</text><text x="20" y="104">GOVERNOR</text></g><rect x="20" y="54" width="280" height="14" rx="7" fill="rgba(255,255,255,.07)" /><rect x="20" y="54" width="137" height="14" rx="7" fill="#3d7bff" /><rect x="180" y="54" width="120" height="14" rx="7" fill="#ff3b5c" /><rect x="20" y="114" width="280" height="14" rx="7" fill="rgba(255,255,255,.07)" /><rect x="20" y="114" width="127" height="14" rx="7" fill="#3d7bff" /><rect x="166" y="114" width="134" height="14" rx="7" fill="#ff3b5c" /></svg><span className="lab">On Point Polling · Texas</span></div>
             <div className="card-b"><h3>Texas poll: Talarico +5.8 over Paxton as Abbott holds on, +2.5</h3><p>661 Texas voters, October 17 to 18, with crossover, age, regions and how Texans plan to vote.</p><div className="meta">Oct 18 · Poll release</div></div>
           </Link>
@@ -190,7 +190,7 @@ export default function Home() {
             <p>On Point Polling runs dual panel surveys weighted with the DSMeridian likely voter model. Campaigns, PACs and newsrooms get a topline in days, not weeks.</p>
           </div>
           <div style={{ display: "flex", gap: 10, flexWrap: "wrap", justifyContent: "flex-end" }}>
-            <Link className="btn white" href="/tpsi/services">Partner with On Point Polling</Link>
+            <Link className="btn white" href="/on-point-polling/services">Partner with On Point Polling</Link>
             <Link className="btn" href="/contact">Contact the desk</Link>
           </div>
           <Icon className="icon" size={260} gradient />

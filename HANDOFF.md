@@ -1,4 +1,4 @@
-# The Public Sentiment Institute — Handoff Doc
+# On Point Polling — Handoff Doc
 **Date:** June 17, 2026  
 **Repo:** `undergroundmantech/thepublicsentimentinstitute`  
 **Branch:** `main`  

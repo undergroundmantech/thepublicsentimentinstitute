@@ -29,7 +29,7 @@ export default function ResultsArchive() {
     <main style={{ maxWidth: 900, margin: "0 auto", padding: "40px 16px 80px", fontFamily: "var(--font-body)" }}>
       <div style={{ marginBottom: 32 }}>
         <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: "0.18em", color: "var(--muted2)", textTransform: "uppercase", marginBottom: 8 }}>
-          THE PUBLIC SENTIMENT INSTITUTE
+          ON POINT POLLING
         </div>
         <h1 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(22px,4vw,36px)", fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", color: "var(--foreground)", margin: 0 }}>
           Election Results Archive

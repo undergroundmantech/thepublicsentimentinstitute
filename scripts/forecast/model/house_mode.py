@@ -1,9 +1,9 @@
-"""TPSI House Mode: Florida and Texas, on the maps enacted for 2026.
+"""On Point Polling House Mode: Florida and Texas, on the maps enacted for 2026.
 
 Same structure as the Florida first build, now with two states and with projected vote totals for every district.
   spine    each district's 2024 presidential two party share on the enacted lines
-  M1       state county Trump approval, calibrated as in Senate Mode, converted to vote with the TPSI respondent crosstab
-  M2       the state's certified 2024 result moved by the TPSI demographic swing to the Gallup anchored 2026 environment
+  M1       state county Trump approval, calibrated as in Senate Mode, converted to vote with the On Point Polling respondent crosstab
+  M2       the state's certified 2024 result moved by the On Point Polling demographic swing to the Gallup anchored 2026 environment
   M3       the state's 2024 level moved by the national swing from 2024 to the 2026 generic ballot, district polls where they exist
   blend    equal thirds, giving one statewide House level
   spread   district lean plus a candidate term, with one constant so the turnout weighted statewide share matches the blend

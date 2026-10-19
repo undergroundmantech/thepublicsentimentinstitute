@@ -66,7 +66,7 @@ export default function ContactPage() {
       if (!res.ok) throw new Error("server error");
       setStatus({ type: "sent" });
     } catch {
-      const subject = encodeURIComponent("[PSI Project Request] " + (form.topic || "General Inquiry"));
+      const subject = encodeURIComponent("[On Point Polling Project Request] " + (form.topic || "General Inquiry"));
       const body = encodeURIComponent(
         [
           `Name: ${form.name}`,
@@ -100,7 +100,7 @@ export default function ContactPage() {
           <div className="ct-hero-left">
             <div className="ct-hero-tag">
               <span className="ct-tag-sep">—</span>
-              <span>Public Sentiment Institute</span>
+              <span>On Point Polling</span>
               <span className="ct-tag-sep">·</span>
               <span style={{ color: "#8a63ef" }}>Intake</span>
             </div>

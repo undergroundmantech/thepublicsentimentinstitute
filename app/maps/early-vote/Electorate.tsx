@@ -7,7 +7,7 @@ import {
 } from "./lib";
 
 // ─────────────────────────────────────────────────────────────────────────────
-// The electorate tracker. The forecast expects a 2026 electorate, and TPSI
+// The electorate tracker. The forecast expects a 2026 electorate, and On Point Polling
 // polling plus the 2024 EAVS say how that electorate splits between mail, early
 // in person and Election Day ballots, county by county. This section sets the
 // ballots already cast against that expectation, in three questions a reader
@@ -112,7 +112,7 @@ function verdictOf(delta: number) {
     : { side: "R" as const, word: `${strength} than expected for Republicans`, tone: "var(--gop)" };
 }
 
-/** two party Democratic share an electorate of [Trump, Harris, new] voters casts, at the TPSI crossover rates */
+/** two party Democratic share an electorate of [Trump, Harris, new] voters casts, at the On Point Polling crossover rates */
 const dShare = (g: number[], x: ElectModel["meta"]["crossover"]) => g[0] * x.trumpToD + g[1] * (1 - x.harrisToR) + g[2] * x.newD;
 
 /** The electorate model and its comparison with the ballots cast so far, shared by the dashboard cards and the
@@ -163,7 +163,7 @@ export function computeElectorate(E: ElectModel, expMix: ExpMix, scope: string, 
   const delta = actualM - (national ? geoM : expM);
 
   // the early electorate by 2024 vote: the model's own expected mix, moved by the gap the party data shows,
-  // with party read through TPSI likely voters (how Democrats, Republicans and independents voted in 2024)
+  // with party read through On Point Polling likely voters (how Democrats, Republicans and independents voted in 2024)
   const PG = E.meta.partyToGroup;
   const toG = (p: number[]) => norm(sum3(sum3(PG.Democrat.map((x) => x * p[0]), PG.Republican, p[1]), PG.Independent, p[2]));
   const gap = toG([A.d / A.n, A.r / A.n, A.o / A.n]).map((x, i) => x - toG(baseParty)[i]);
@@ -236,7 +236,7 @@ export default function Electorate({ scope, E, calc, model, snapshot, onOpen }: 
     <section className="el-wrap" aria-label="Electorate tracker">
       <div className="el-head">
         <div>
-          <span className="el-tag">TPSI electorate model</span>
+          <span className="el-tag">On Point Polling electorate model</span>
           <h2 className="ev-h2">Better or worse than expected for each party?</h2>
           <p className="el-sub">
             Ballots cast so far in {place}, mail returned plus in person, against the electorate the forecast expects,
@@ -246,7 +246,7 @@ export default function Electorate({ scope, E, calc, model, snapshot, onOpen }: 
       </div>
 
       {calc.none ? (
-        <p className="el-note">No mail returns or in person ballots have been reported for {place} yet. The expectation above is what the forecast and TPSI polling point to.</p>
+        <p className="el-note">No mail returns or in person ballots have been reported for {place} yet. The expectation above is what the forecast and On Point Polling polling point to.</p>
       ) : (() => {
         const v = verdictOf(calc.delta);
         const geo = calc.geoM - calc.expM, within = calc.actualM - calc.geoM;
@@ -299,7 +299,7 @@ export default function Electorate({ scope, E, calc, model, snapshot, onOpen }: 
                 ))}
                 <p className="el-note">
                   Voters are counted by how they voted in 2024: returning Trump voters, returning Harris voters, and new
-                  voters who skipped 2024 or voted third party. Ballots with a party are read through TPSI likely voters:
+                  voters who skipped 2024 or voted third party. Ballots with a party are read through On Point Polling likely voters:
                   {" "}{pctS(E.meta.partyToGroup.Republican[0], 0)} of Republicans and {pctS(E.meta.partyToGroup.Democrat[1], 0)} of
                   Democrats are returning voters of their own party&apos;s 2024 candidate. Trump won {pctS(calc.national ? E.nation.trump24 : E.states[scope]?.trump24 ?? 0)} of
                   the two party vote in {place} in 2024.
@@ -376,17 +376,17 @@ export default function Electorate({ scope, E, calc, model, snapshot, onOpen }: 
         <p>
           Every county starts from the forecast&apos;s projected 2026 vote. It is split into returning Trump voters,
           returning Harris voters and new voters so that it matches both the county&apos;s projected turnout and its projected
-          margin, using how TPSI likely voters say they will vote: {pctS(E.meta.crossover.trumpToD)} of Trump voters
+          margin, using how On Point Polling likely voters say they will vote: {pctS(E.meta.crossover.trumpToD)} of Trump voters
           back Democrats for Congress, {pctS(E.meta.crossover.harrisToR)} of Harris voters back Republicans, and new voters
           are {pctS(E.meta.crossover.newShare)} of the electorate and lean {pctS(E.meta.crossover.newD, 0)} Democratic.
         </p>
         <p>
-          A model fitted on {commas(E.meta.respondents)} TPSI likely voters gives each group its chance of voting by mail,
+          A model fitted on {commas(E.meta.respondents)} On Point Polling likely voters gives each group its chance of voting by mail,
           early in person or on Election Day, by 2024 vote, age and the state&apos;s ballot rules, at each county&apos;s
-          ages from the census. The split between the three comes from the TPSI national dataset, what 2026 likely voters
+          ages from the census. The split between the three comes from the On Point Polling national dataset, what 2026 likely voters
           say they will do, pooled half and half in log odds with how each state actually voted in 2024 in the federal
           Election Administration and Voting Survey, because a national survey cannot see that Georgia and Texas vote early
-          in person while New York and New Hampshire mostly do not, and voters who say Election Day often vote early. TPSI
+          in person while New York and New Hampshire mostly do not, and voters who say Election Day often vote early. On Point Polling
           alone puts {E.nation.tpsi2026 ? pctS(E.nation.tpsi2026[2], 0) : "about two thirds"} of the vote on Election Day and 2024 put{" "}
           {E.nation.eavs2024 ? pctS(E.nation.eavs2024[2], 0) : "about 37%"} there; pooled, the country is expected to cast{" "}
           {pctS(E.nation.modeShare.mail, 0)} by mail, {pctS(E.nation.modeShare.early, 0)} early in person and{" "}
@@ -397,7 +397,7 @@ export default function Electorate({ scope, E, calc, model, snapshot, onOpen }: 
             for 2026 the model expects {pctS(E.states[scope]!.modeShare.mail, 0)}, {pctS(E.states[scope]!.modeShare.early, 0)} and {pctS(E.states[scope]!.modeShare.eday, 0)}.</> : null}
         </p>
         <p>
-          The party of ballots comes from the state where it reports party and from the TPSI party estimate where it does
+          The party of ballots comes from the state where it reports party and from the On Point Polling party estimate where it does
           not, the same numbers as the map above. Where a state reports no party, the verdict can only move with where the
           ballots come from and with the ages and races the state reports, so read it as a turnout signal, not a party count.
         </p>
@@ -457,7 +457,7 @@ export function EarlyDemographics({ scope, cat, caps, model, catLabel }: {
           <span className="el-tag">From civicAPI</span>
           <h2 className="ev-h2">Who is voting early</h2>
           <p className="el-sub">Every breakdown {scope === "US" ? "the states publish, added up" : `${STATE_NAME[scope] ?? scope} publishes`} for {catLabel}.
-            {scope !== "US" ? " Age and race also show the share the TPSI model expects among these voters and how each group leans." : ""}
+            {scope !== "US" ? " Age and race also show the share the On Point Polling model expects among these voters and how each group leans." : ""}
             {" "}States publish these statewide only, so there is no county breakdown.</p>
         </div>
       </div>
@@ -487,7 +487,7 @@ export function EarlyDemographics({ scope, cat, caps, model, catLabel }: {
               ))}
               {band && exp ? (
                 <div className="el-dexp">
-                  <span className="el-ml">Against the TPSI model</span>
+                  <span className="el-ml">Against the On Point Polling model</span>
                   {(d === "age" ? AGE_BANDS : RACE_BANDS).map((b, i) => {
                     if (noHisp && i === 2) return null;
                     const pooled = noHisp && i === 3;

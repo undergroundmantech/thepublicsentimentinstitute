@@ -4,7 +4,7 @@
 // vocabulary — do not restate these strings/thresholds locally.
 
 // ─── Race state machine (§2) ────────────────────────────────────────────────
-// SCHEDULED → LIVE·GATED (<10%) → LIVE·FORECAST → PROJECTED (TPSI call) → OFFICIAL (certified)
+// SCHEDULED → LIVE·GATED (<10%) → LIVE·FORECAST → PROJECTED (On Point Polling call) → OFFICIAL (certified)
 
 export type RaceState = "SCHEDULED" | "LIVE_GATED" | "LIVE_FORECAST" | "PROJECTED" | "OFFICIAL";
 
@@ -22,7 +22,7 @@ export const GATE_THRESHOLD_PCT = 10;
 export function getRaceState(opts: {
   percentReporting: number | null; // 0-100
   hasOfficialCall: boolean;        // AP/CivicAPI winner flag set on a candidate
-  tpsiCalled: boolean;             // TPSI model has independently projected a winner
+  tpsiCalled: boolean;             // On Point Polling model has independently projected a winner
 }): RaceState {
   if (opts.hasOfficialCall) return "OFFICIAL";
   if (opts.tpsiCalled) return "PROJECTED";

@@ -1,4 +1,4 @@
-"""Build public/earlyvote-electorate.json: the TPSI electorate estimator for the Early Vote page. October 15 2026.
+"""Build public/earlyvote-electorate.json: the On Point Polling electorate estimator for the Early Vote page. October 15 2026.
 
 For every county, state and the nation it estimates how the 2026 vote will be cast, by mail, early in person and on
 Election Day, and who will cast it, measured against the 2024 presidential vote: how many of each mode's voters are
@@ -11,14 +11,14 @@ Inputs
 1. The forecast's projected 2026 vote in every county, from public/forecast/counties.json (the statewide House vote,
    which covers every county in every state).
 2. The certified 2024 presidential vote by county (rerun/geo/pres24.csv).
-3. TPSI likely voters (rerun/tpsi_db/TPSI_Unified_Respondent_Dataset.csv). The respondent file never leaves this
+3. On Point Polling likely voters (rerun/tpsi_db/TPSI_Unified_Respondent_Dataset.csv). The respondent file never leaves this
    machine; only fitted rates and county aggregates are written.
    - The 2026 generic ballot by recalled 2024 vote gives how many Trump voters cross to Democrats and Harris voters
      to Republicans, and how voters who skipped 2024 lean.
    - Ballot method by recalled 2024 vote, age and the state's ballot rules gives each group's chance of voting by
      mail, early in person or on Election Day.
 4. The 2024 EAVS, Executive Summary Table 1 (scripts/earlyvote/data/eavs_2024_modes.csv): each state's actual
-   ballots by mode. The TPSI mode model sets who votes which way; EAVS sets each state's mode totals, since a national
+   ballots by mode. The On Point Polling mode model sets who votes which way; EAVS sets each state's mode totals, since a national
    survey cannot see that Georgia and Texas vote early in person while New York and New Hampshire do not.
 5. ACS 2024 five year adults by age band for every county (S1501), so older counties lean toward mail.
 
@@ -26,12 +26,12 @@ How a county is built
 ---------------------
 - Its 2026 two party vote V and Democratic share d come from the forecast.
 - V is split into returning Trump voters, returning Harris voters and new voters. The new share n and its lean come
-  from TPSI. The two retention rates kT and kH solve the county's own V and d exactly:
+  from On Point Polling. The two retention rates kT and kH solve the county's own V and d exactly:
       kT T + kH H = (1 - n) V
       kT T xT + kH H (1 - xH) = d V - n V dn
   where T and H are the county's 2024 Trump and Harris votes, xT is the share of Trump voters voting Democratic in
   2026 and xH the share of Harris voters voting Republican. Rates are held between 0.2 and 1.4.
-- Each group's mode chances come from the TPSI multinomial logit at the county's age mix and the state's rule, then
+- Each group's mode chances come from the On Point Polling multinomial logit at the county's age mix and the state's rule, then
   every state's Democratic, Republican and new groups are shifted together in log odds until the state's turnout
   weighted mode shares match its 2024 EAVS shares.
 
@@ -55,7 +55,7 @@ FIPS_ST = {"01":"AL","02":"AK","04":"AZ","05":"AR","06":"CA","08":"CO","09":"CT"
   "46":"SD","47":"TN","48":"TX","49":"UT","50":"VT","51":"VA","53":"WA","54":"WV","55":"WI","56":"WY"}
 REGIME = json.load(open(os.path.join(ROOT, "public", "earlyvote-party-model.json")))["regime"]
 
-# ── 1. TPSI fits ─────────────────────────────────────────────────────────────
+# ── 1. On Point Polling fits ─────────────────────────────────────────────────────────────
 R = pd.read_csv(f"{RR}/tpsi_db/TPSI_Unified_Respondent_Dataset.csv", low_memory=False,
                 usecols=["state", "age_band", "recall_2024", "generic_ballot", "ballot_method", "likely_voter", "party_id"])
 LV = R[R.likely_voter.astype(str).isin(["1", "1.0", "True"])].copy()
@@ -133,7 +133,7 @@ num = lambda c: pd.to_numeric(A[c], errors="coerce").fillna(0)
 ag = pd.DataFrame({"a18": num("S1501_C01_001E") + 0.5 * num("S1501_C01_016E"),
                    "a30": 0.5 * num("S1501_C01_016E") + num("S1501_C01_019E"),
                    "a45": num("S1501_C01_022E"), "a65": num("S1501_C01_025E")})
-# voters by age band: ACS adults times TPSI likely voter rates by age
+# voters by age band: ACS adults times On Point Polling likely voter rates by age
 lvr = R.assign(lv=R.likely_voter.astype(str).isin(["1", "1.0", "True"])).groupby("age_band").lv.mean().reindex(AGES).values
 EAVS = pd.read_csv(os.path.join(ROOT, "scripts", "earlyvote", "data", "eavs_2024_modes.csv")).set_index("state")
 
@@ -201,10 +201,10 @@ filled = {st: (t is None) for st, t in targets.items()}
 targets = {st: (t if t is not None else reg_avg[REGIME.get(st, "request")]) for st, t in targets.items()}
 
 # Oct 16 2026, by the user's choice: the national split between mail, early in person and Election Day comes from the
-# TPSI national dataset, what 2026 likely voters say they will do, pooled with each state's own 2024 record. Each
-# state's TPSI share is the mode model at its counties' voters and ages under its ballot rules, with no state offset;
+# On Point Polling national dataset, what 2026 likely voters say they will do, pooled with each state's own 2024 record. Each
+# state's On Point Polling share is the mode model at its counties' voters and ages under its ballot rules, with no state offset;
 # the two are blended in log odds at TPSI_MODE_W (0.5), since a national panel cannot see each state's habits and
-# voters who say Election Day often vote early. TPSI alone would put about two thirds of the vote on Election Day.
+# voters who say Election Day often vote early. On Point Polling alone would put about two thirds of the vote on Election Day.
 TPSI_W = float(os.environ.get("TPSI_MODE_W", "0.5"))
 tpsi_sh, eavs_raw = {}, {}
 for st in st_tot:
@@ -279,11 +279,11 @@ payload = {
         "modes": MODES, "groups": GROUPS,
         "crossover": {"trumpToD": round(float(xT), 4), "harrisToR": round(float(xH), 4), "newShare": round(n_new, 4), "newD": round(float(dn), 4)},
         "partyToGroup": PARTY_TO_GROUP,
-        "modeMethod": {"tpsiWeight": TPSI_W, "note": "TPSI 2026 ballot method intent pooled with each state's 2024 EAVS record in log odds"},
+        "modeMethod": {"tpsiWeight": TPSI_W, "note": "On Point Polling 2026 ballot method intent pooled with each state's 2024 EAVS record in log odds"},
         "womenUS": GENDER.get("US"),
         "countyCols": ["turnout", "mail", "early", "eday", "trumpMail", "trumpEarly", "trumpEday", "harrisMail", "harrisEarly", "harrisEday", "trump24"],
         "sources": ["On Point Politics forecast, county House vote", "2024 certified presidential vote by county",
-                    "TPSI likely voters", "EAC 2024 EAVS Executive Summary Table 1", "ACS 2024 five year S1501"],
+                    "On Point Polling likely voters", "EAC 2024 EAVS Executive Summary Table 1", "ACS 2024 five year S1501"],
     },
     "nation": summ(nat, nat24[0], nat24[1], nat24[2]),
     "states": st_out,

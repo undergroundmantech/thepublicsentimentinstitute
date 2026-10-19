@@ -1,7 +1,7 @@
 "use client";
 
 // Gauge family for the Election Desk — restyled from spec-command-deck.html's
-// wheel/ring SVGs into TPSI tokens. Component-style reference only; this is
+// wheel/ring SVGs into On Point Polling tokens. Component-style reference only; this is
 // NOT that file's bento layout.
 
 import React from "react";
@@ -18,7 +18,7 @@ export function WinProbabilityWheel({
   colors: string[];
   size?: number;
   /** Background arc color — pass the host page's own rule/border var (this
-   *  file was authored against the main-site TPSI tokens; onpoint pages
+   *  file was authored against the main-site On Point Polling tokens; onpoint pages
    *  should pass "var(--rule)" instead since they don't define --border). */
   trackColor?: string;
 }) {

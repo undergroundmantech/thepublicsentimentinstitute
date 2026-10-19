@@ -1,10 +1,10 @@
-# TPSI voter behavior layer
+# On Point Polling voter behavior layer
 
 Run of September 29 2026. Every Senate, governor and House race was re-run with this layer. The House also took the new district polls listed at the end.
 
 ## What the layer does
 
-Every simulated voter type is built from real TPSI respondents who share its age, race, education, party and vote history. The layer reads six turnout motivations from those respondents, gives each voter type its own reasons to vote, lets every simulation move those reasons, and estimates how loosely each type holds its party vote.
+Every simulated voter type is built from real On Point Polling respondents who share its age, race, education, party and vote history. The layer reads six turnout motivations from those respondents, gives each voter type its own reasons to vote, lets every simulation move those reasons, and estimates how loosely each type holds its party vote.
 
 | Motivation | Read from |
 |---|---|
@@ -17,7 +17,7 @@ Every simulated voter type is built from real TPSI respondents who share its age
 
 ## Why voters show up
 
-A ridge fitted model of each respondent's TPSI likely voter score on the six motivations, plus age, race, college and party, gives each motivation's weight in log odds per standard deviation. It fits the score closely, with a correlation of 0.90 across 4,118 respondents.
+A ridge fitted model of each respondent's On Point Polling likely voter score on the six motivations, plus age, race, college and party, gives each motivation's weight in log odds per standard deviation. It fits the score closely, with a correlation of 0.90 across 4,118 respondents.
 
 | Motivation | Weight |
 |---|---|
@@ -57,7 +57,7 @@ The same turnout drop and low commitment scenarios are written for every House d
 
 ## Ticket splitting
 
-TPSI respondents who reported a 2024 vote and gave a 2026 generic ballot choice switched party 6.8 percent of the time:
+On Point Polling respondents who reported a 2024 vote and gave a 2026 generic ballot choice switched party 6.8 percent of the time:
 
 | Party and vote history | Switched |
 |---|---|
@@ -142,8 +142,8 @@ Districts polled for the first time: CO-8, NC-9, NC-11, NH-1, TN-5, TN-9, TX-15,
 
 ## Limits
 
-- TPSI has no question on a respondent's own Senate or governor vote. Ticket splitting therefore rests on switching between the 2024 vote and the 2026 generic ballot, applied to the model's own race by race preferences. A direct split ticket question in the next wave would test it.
-- The motivation weights are fitted to the TPSI likely voter score, which is itself built from intent, ballot plan, history and contacts. Their large weights are partly by construction. The small weights on intensity, grievance and activation are the new evidence.
+- On Point Polling has no question on a respondent's own Senate or governor vote. Ticket splitting therefore rests on switching between the 2024 vote and the 2026 generic ballot, applied to the model's own race by race preferences. A direct split ticket question in the next wave would test it.
+- The motivation weights are fitted to the On Point Polling likely voter score, which is itself built from intent, ballot plan, history and contacts. Their large weights are partly by construction. The small weights on intensity, grievance and activation are the new evidence.
 - The niche items were not asked in every wave; unasked items score as average.
 
 ## Files

@@ -1,10 +1,10 @@
-"""TPSI estimated exit poll crosstabs for every published Senate and governor race.
+"""On Point Polling estimated exit poll crosstabs for every published Senate and governor race.
 
 Method, per state:
 1. Electorate composition. Each county's projected voters are split into the 32 age x race x education cells used by the
-   census model: ACS 2024 adults in each cell times the TPSI turnout propensity for that cell, scaled to the county's
+   census model: ACS 2024 adults in each cell times the On Point Polling turnout propensity for that cell, scaled to the county's
    projected vote total.
-2. Donor voters. Every cell is filled with the TPSI respondents in that cell, weighted by turnout propensity, with
+2. Donor voters. Every cell is filled with the On Point Polling respondents in that cell, weighted by turnout propensity, with
    respondents from the state's region counted double. The respondents carry the attributes the census does not have:
    gender, income, party ID, ideology, 2024 vote and Trump approval.
 3. Individual vote model. A ridge logistic model of the two way generic ballot on age, race, education, gender, region,

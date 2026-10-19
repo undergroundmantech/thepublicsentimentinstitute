@@ -58,7 +58,7 @@ const isCovered = (d: any) => isCoveredId(Number(d?.id));
 // races have started reporting, isCovered alone would empty them out. Density
 // is the proof a real election night is underway, so they keep the old
 // forecast-grade threshold (any statewide/forecast-grade race, any night) —
-// named apart from isCovered above, which alone decides "what TPSI covers."
+// named apart from isCovered above, which alone decides "what On Point Polling covers."
 const DENSITY_TIER_MIN = 3;
 const isDense = (d: any) => tierOf(d) >= DENSITY_TIER_MIN;
 
@@ -257,7 +257,7 @@ function Desk() {
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
 
-  // the spotlight — the one race tonight carrying a TPSI model (CO-06 §2).
+  // the spotlight — the one race tonight carrying an On Point Polling model (CO-06 §2).
   // Editorial figures (projection, win probability, disclosure) are a fixed
   // analyst deliverable, not derived from the live feed; only the AP-call
   // comparison reads off the live index.
@@ -527,7 +527,7 @@ function Desk() {
   }, [index]);
 
   const count = index?.count || 0;
-  // hero headline count — races TPSI actually covers, not CivicAPI's full
+  // hero headline count — races On Point Polling actually covers, not CivicAPI's full
   // season firehose (which includes every county/township/school contest).
   const coveredCount = useMemo(() => (index ? index.docs.filter(isCovered).length : 0), [index]);
 
@@ -679,7 +679,7 @@ function Desk() {
         </div>
       </section>
 
-      {/* 1.15 · the spotlight — the one race tonight carrying a TPSI model,
+      {/* 1.15 · the spotlight — the one race tonight carrying an On Point Polling model,
           full width, above tonight's board. Never rendered for any other
           race: gated on the coverage registry's single SPOTLIGHT entry, and
           the forecast panel itself only ever mounts through the existing
@@ -1054,7 +1054,7 @@ function Desk() {
           <h2 className="desk-close-h">search any race<em>.</em></h2>
           <button className="desk-close-cta" onClick={focusSearch}>start typing <span aria-hidden>↑</span></button>
           <div className="desk-foot">
-            <span>The Public Sentiment Institute</span>
+            <span>On Point Polling</span>
             <span>independent polling &amp; election analysis</span>
           </div>
         </div>

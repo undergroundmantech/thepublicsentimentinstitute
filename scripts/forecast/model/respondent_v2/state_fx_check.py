@@ -1,4 +1,4 @@
-# Split half and leave one wave out checks of the TPSI state swing effects (respondent_v2)
+# Split half and leave one wave out checks of the On Point Polling state swing effects (respondent_v2)
 import sys, os, json
 RR = "/tmp/claude-0/-home-claude/2fe66b6b-24b4-5fab-b0f7-c44b6f59cc0e/scratchpad/rerun"
 sys.path.insert(0, RR); os.chdir(RR); sys.argv = ["x"]

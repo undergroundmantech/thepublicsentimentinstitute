@@ -6,7 +6,7 @@
  * as the August boards, so the archive reads as one publication rather than a
  * grid of links into a different design.
  *
- * Reported vote only. No TPSI model ran on these races, and this board must
+ * Reported vote only. No On Point Polling model ran on these races, and this board must
  * never imply one did.
  */
 
@@ -145,14 +145,14 @@ export default function NightBoard({ date }: { date: string }) {
             <span>·</span>
             <span>Reported results</span>
             <span>·</span>
-            <span>No TPSI model</span>
+            <span>No On Point Polling model</span>
           </div>
 
           <div className="race-heading-row">
             <div>
               <h1>{heading}</h1>
               <p className="race-deck">
-                Every race TPSI tracked on this date, as reported by AP through CivicAPI.
+                Every race On Point Polling tracked on this date, as reported by AP through CivicAPI.
                 Counted vote only — no forecast ran on these contests, and nothing on this
                 page is a projection.
               </p>
@@ -182,7 +182,7 @@ export default function NightBoard({ date }: { date: string }) {
           <div className="board-head">
             <div>
               <h2>Every race on the ballot</h2>
-              <p>Reported results only, no TPSI model.</p>
+              <p>Reported results only, no On Point Polling model.</p>
             </div>
             <div className="board-meta">
               <span className="model-label">
@@ -225,13 +225,13 @@ export default function NightBoard({ date }: { date: string }) {
           <h2>Method</h2>
           <p className="prose">
             These are reported vote totals carried from AP through CivicAPI, shown as the
-            share of the vote counted in each race. TPSI published no survey, no county
+            share of the vote counted in each race. On Point Polling published no survey, no county
             model and no projection for the races on this page; where a race is marked
             called, that is AP&rsquo;s decision, not ours. Percentages are of the counted vote
             and can move until a state certifies.
           </p>
           <div className="method-foot">
-            <span className="model-label">© 2026 The Public Sentiment Institute</span>
+            <span className="model-label">© 2026 On Point Polling</span>
             <span className="model-label">Powered by CivicAPI</span>
           </div>
         </section>

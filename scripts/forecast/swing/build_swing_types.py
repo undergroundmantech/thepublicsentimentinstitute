@@ -11,7 +11,7 @@ four more ways for the swingometer:
   partyprop   party identification crossed with propensity
   approval    Trump job approval: approve, no opinion, disapprove
 
-A type's 2024 vote is not part of the type, so each type is split by the share of TPSI respondents of the same
+A type's 2024 vote is not part of the type, so each type is split by the share of On Point Polling respondents of the same
 party, vote history and Trump approval who recalled voting for Trump, Harris, a third party or not at all, and
 each part's Democratic preference is the respondents' 2026 ballot preference for that recall, moved by one common
 log odds offset so the parts add back to the type's own preference. Only aggregates are written.

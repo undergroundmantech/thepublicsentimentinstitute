@@ -198,7 +198,7 @@ export function matchCounty(apiName: string, geoNames: Record<string, string>): 
 /** Margin of a row across every ballot that carries a party label, Republican
  *  positive, or null where the state reports no party at all. Third party and
  *  unaffiliated ballots stay in the denominator, the way registration based
- *  trackers report it and the way the TPSI estimate is scored, so a reported
+ *  trackers report it and the way the On Point Polling estimate is scored, so a reported
  *  place and an estimated place are read on the same scale. */
 export function marginOf(row: RegionRow | undefined): number | null {
   if (!row) return null;
@@ -284,10 +284,10 @@ export function fillFor(margin: number | null): string {
   return ratingOf(margin).color;
 }
 
-/* ── TPSI party estimate for states that report no party, version 2 ───────────
+/* ── On Point Polling party estimate for states that report no party, version 2 ───────────
  *
  * Built by scripts/earlyvote/build_party_model.py from the forecast's simulated
- * 2026 electorate and the TPSI respondent file. Every county carries three party
+ * 2026 electorate and the On Point Polling respondent file. Every county carries three party
  * mixes, Democratic, Republican and Independent: its mail voters, its early in
  * person voters, and the ballots it mails out, which in a universal mail state is
  * the voter file and elsewhere is its mail voters. Every simulation draw moves a
@@ -511,7 +511,7 @@ export function simulate(
 
 export const fmtMargin = (m: number) => (Math.abs(m) < 0.05 ? "EVEN" : m > 0 ? `R+${m.toFixed(1)}` : `D+${Math.abs(m).toFixed(1)}`);
 
-/* ── nationwide: reported party plus the TPSI estimate ──────────────────────
+/* ── nationwide: reported party plus the On Point Polling estimate ──────────────────────
  *
  * One number per category for the whole country. Ballots a state reports with
  * a party are counted as reported: Democratic, Republican, and every other
@@ -568,7 +568,7 @@ export function statePlace(
 }
 
 /** One state as rated everywhere on the page: reported party ballots plus the
- *  TPSI estimate of its Unspecified ballots, scored across all ballots. */
+ *  On Point Polling estimate of its Unspecified ballots, scored across all ballots. */
 export type StateView = {
   d: number; r: number; o: number; u: number;   // reported
   ed: number; er: number; ei: number;           // estimated, mean ballots
@@ -730,7 +730,7 @@ function tiltRows(req: CategoryPayload | null | undefined, ret: CategoryPayload 
 }
 
 /** Party return offsets measured today from the feed, one pair per draw from a
- *  bootstrap over the reporting states. Falls back to the TPSI survey prior
+ *  bootstrap over the reporting states. Falls back to the On Point Polling survey prior
  *  when fewer than two states, or under 2,000 party ballots, have come back. */
 export function returnTilt(req: CategoryPayload | null | undefined, ret: CategoryPayload | null | undefined,
   model: PartyModel): ReturnTilt {

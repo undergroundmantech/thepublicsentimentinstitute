@@ -1,4 +1,4 @@
-"""Build public/earlyvote-party-model.json, the TPSI party estimate for early vote
+"""Build public/earlyvote-party-model.json, the On Point Polling party estimate for early vote
 ballots in states that report no party. Version 2 October 1 2026; version 3, the
 registration basis, October 13; version 4, county registration, October 16.
 
@@ -22,7 +22,7 @@ mixes, statewide simulation offsets and public county figures only.
 What changed from version 1
 ---------------------------
 1. The electorate is the forecast's own. Version 1 rebuilt each county's party mix
-   from its 2024 Trump share and the swing inside the TPSI sample, about two points
+   from its 2024 Trump share and the swing inside the On Point Polling sample, about two points
    toward Democrats. The forecast runs on a D+12 national environment, so the early
    vote page and the forecast disagreed on who is voting. Version 2 reads the
    forecast's simulated 2026 electorate, 1,152 voter types per county by age, race,
@@ -34,7 +34,7 @@ What changed from version 1
    in Indiana or Mississippi needs an excuse, most often age. Each state is
    classed as universal mail, permanent list, request with no excuse, or excuse
    required, from the NCSL tables, and the mode model is fitted with those classes.
-3. Mode choice by voter type. A multinomial logit on TPSI likely voters gives each
+3. Mode choice by voter type. A multinomial logit on On Point Polling likely voters gives each
    type's chance of voting by mail, early in person or on Election Day from party,
    age, race, college, vote history, local lean and the state's ballot rules, with
    party and age allowed to matter differently under each rule. Each county's mail

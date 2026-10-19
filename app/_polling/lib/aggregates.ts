@@ -118,7 +118,7 @@ import * as GOV_WYOMING from "../governorpolling/wyoming";
 import { TX_CORNYN_POLLS, TX_PAXTON_POLLS } from "./txSenatePolls";
 
 /* =============================================================================
-   Aggregate registry — every PSI two-series polling average in one place,
+   Aggregate registry — every On Point Polling two-series polling average in one place,
    normalised to a shared shape so the unified Polling Averages page can switch
    between them with one chart + table.
 ============================================================================= */
@@ -177,7 +177,7 @@ const dvrMargin = (n: number) => (Math.abs(n) < 0.05 ? "Even" : n > 0 ? `D+${n.t
 function dvr(id: string, label: string, category: string, title: string, polls: Poll[], aLabel: string, bLabel: string, aKey: string, bKey: string): AggregateDef {
   return {
     id, label, category, title,
-    subtitle: "Daily PSI-weighted average of every public poll of this race — recency decay, sample-size sigmoid, voter screen, and pollster grade.",
+    subtitle: "Daily On Point Polling weighted average of every public poll of this race — recency decay, sample-size sigmoid, voter screen, and pollster grade.",
     unit: "%", keyA: aKey, keyB: bKey,
     seriesA: { label: aLabel, color: BLUE }, seriesB: { label: bLabel, color: RED },
     marginLabel: "Margin", fmtMargin: dvrMargin, polls, gold: [], goldMult: 1,
@@ -229,7 +229,7 @@ function rdSenate(id: string, abbr: string, stateName: string, aShort: string, b
   return {
     id, label: `${abbr} · ${aShort}–${bShort}`, category: "2026 Senate",
     title: `${stateName} · U.S. Senate — ${aShort} vs. ${bShort}`,
-    subtitle: "Daily PSI-weighted average of every public poll of this 2026 U.S. Senate matchup.",
+    subtitle: "Daily On Point Polling weighted average of every public poll of this 2026 U.S. Senate matchup.",
     unit: "%", keyA: "Republican", keyB: "Democrat",
     seriesA: { label: aShort, color: RED }, seriesB: { label: bShort, color: BLUE },
     marginLabel: "Margin",
@@ -253,7 +253,7 @@ function senateAggs(mod: SenateModule): AggregateDef[] {
       label: `${abbr} · ${aShort}–${bShort}`,
       category: "2026 Senate",
       title: `${name} · U.S. Senate — ${aShort} vs. ${bShort}`,
-      subtitle: "Daily PSI-weighted average of every public poll of this 2026 U.S. Senate matchup.",
+      subtitle: "Daily On Point Polling weighted average of every public poll of this 2026 U.S. Senate matchup.",
       unit: "%",
       keyA: aLabel, keyB: bLabel,
       seriesA: { label: aShort, color: partyColor(aLabel), party: partyWord(aLabel) },
@@ -281,7 +281,7 @@ function governorAggs(mod: SenateModule): AggregateDef[] {
       label: `${abbr} · ${aShort}–${bShort}`,
       category: "2026 Governor",
       title: `${name} · governor — ${aShort} vs. ${bShort}`,
-      subtitle: "Daily PSI-weighted average of every public poll of this 2026 governor's race.",
+      subtitle: "Daily On Point Polling weighted average of every public poll of this 2026 governor's race.",
       unit: "%",
       keyA: aLabel, keyB: bLabel,
       seriesA: { label: aShort, color: partyColor(aLabel), party: partyWord(aLabel) },
@@ -331,7 +331,7 @@ export const AGGREGATES: AggregateDef[] = [
     category: "Approval",
     title: "Donald Trump · job approval",
     subtitle:
-      "A daily weighted average of every public Trump job-approval poll, blended on the same PSI model — recency, sample size, voter screen, and pollster grade.",
+      "A daily weighted average of every public Trump job-approval poll, blended on the same On Point Polling model — recency, sample size, voter screen, and pollster grade.",
     unit: "%",
     keyA: "Approve", keyB: "Disapprove",
     seriesA: { label: "Approve", color: GREEN },
@@ -346,7 +346,7 @@ export const AGGREGATES: AggregateDef[] = [
     category: "Approval",
     title: "JD Vance · favorability",
     subtitle:
-      "A daily weighted average of every public JD Vance favorability poll, on the PSI model.",
+      "A daily weighted average of every public JD Vance favorability poll, on the On Point Polling model.",
     unit: "%",
     keyA: "Favorable", keyB: "Unfavorable",
     seriesA: { label: "Favorable", color: BLUE },
@@ -361,7 +361,7 @@ export const AGGREGATES: AggregateDef[] = [
     category: "National mood",
     title: "Right track · wrong track",
     subtitle:
-      "A daily weighted average of national direction-of-the-country polling, on the PSI model.",
+      "A daily weighted average of national direction-of-the-country polling, on the On Point Polling model.",
     unit: "%",
     keyA: "RightTrack", keyB: "WrongTrack",
     seriesA: { label: "Right track", color: GREEN },
@@ -376,7 +376,7 @@ export const AGGREGATES: AggregateDef[] = [
     category: "2028",
     title: "2028 · Vance vs. Newsom",
     subtitle:
-      "An early daily weighted average of hypothetical 2028 general-election matchups, on the PSI model.",
+      "An early daily weighted average of hypothetical 2028 general-election matchups, on the On Point Polling model.",
     unit: "%",
     keyA: "Vance", keyB: "Newsom",
     seriesA: { label: "Vance", color: RED },

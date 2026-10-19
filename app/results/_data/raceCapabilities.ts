@@ -2,7 +2,7 @@
 // that decide which Command Deck / Deep Dive sections mount for a given race.
 // Authoritative spec: changeorders/CHANGE-ORDER-04-election-desk.md §1.
 //
-// Tier numbering is TPSI-canonical (5 high → 2 low). The reference concept
+// Tier numbering is On Point Polling canonical (5 high → 2 low). The reference concept
 // doc (reference-deepdive.html) numbers tiers in the OPPOSITE direction —
 // ignore its numbering entirely.
 
@@ -55,7 +55,7 @@ export const RACE_CAPABILITY_OVERRIDES: Partial<Record<number, Partial<RaceCapab
   84105: { tier: 4, raceRule: "PLURALITY" },      // South Carolina Governor Republican Runoff (2-candidate runoff round)
 
   // August 4, 2026 primary night coverage gate (CO-07). Only 84778 carries a
-  // TPSI model — statewide (n=254), no county estimates — so it stays tier 3
+  // On Point Polling model — statewide (n=254), no county estimates — so it stays tier 3
   // Forecast, not tier 4 Spotlight; 84950/84951 are pinned to TOP_TWO for WA's
   // blanket primary. See _data/coverage.2026-08-04.ts for the full editorial
   // coverage list.

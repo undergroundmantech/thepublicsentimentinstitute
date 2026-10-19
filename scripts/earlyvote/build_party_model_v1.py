@@ -1,4 +1,4 @@
-"""Build public/earlyvote-party-model.json, the TPSI party estimate for early vote
+"""Build public/earlyvote-party-model.json, the On Point Polling party estimate for early vote
 ballots in states that report no party.
 
 Twelve states send every early ballot as Unspecified. This script estimates what
@@ -11,14 +11,14 @@ numbers per simulation draw plus public county figures.
 How the estimate is built
 -------------------------
 1. County baseline. Each county's 2024 Trump two party share, moved by the swing
-   TPSI measures inside its own sample from 2024 recall to the 2026 generic
+   On Point Polling measures inside its own sample from 2024 recall to the 2026 generic
    ballot. The same respondents answer both questions, so the panel's own
    partisan tilt cancels out of the swing.
-2. Party mix of the county's likely voters. TPSI likely voters split into
+2. Party mix of the county's likely voters. On Point Polling likely voters split into
    Democrats, Republicans and Independents, and each group voted Trump at its own
    rate in 2024. With the Independent share and the three rates fixed, exactly
    one Democrat and Republican mix reproduces the county's two party share.
-3. Early vote skew. Among TPSI likely voters at the same local lean, people who
+3. Early vote skew. Among On Point Polling likely voters at the same local lean, people who
    plan to vote by mail are far more Democratic than the electorate as a whole,
    and early in person voters are slightly more so. A multinomial logit on
    party_id gives those shifts in log odds, applied on top of step 2. The shift
@@ -117,7 +117,7 @@ def params(s):
     xm = x.mean()
     x = x - xm
     cint = (p.panel == "CINT/Qualtrics").astype(float).values
-    # The skew is allowed to change with local lean: in TPSI data the mail gap is
+    # The skew is allowed to change with local lean: in On Point Polling data the mail gap is
     # widest in Democratic counties and narrows as counties get redder.
     B = mnl(np.column_stack([np.ones_like(x), x, mail, early, mail * x, early * x, cint]),
             p.party_id.map(PID).values, w)
@@ -133,7 +133,7 @@ def params(s):
     ms, es = m1 - m0, e1 - e0
     # Return prior: how much less likely a Republican or Independent mail voter is
     # to send the ballot back than a Democratic one, in log odds, from the mean
-    # turnout propensity of TPSI mail voters in each party. The page uses this
+    # turnout propensity of On Point Polling mail voters in each party. The page uses this
     # only when too few party states have posted returns to measure it live.
     lg = lambda v: np.log(v / (1 - v))
     mp = p[mail == 1]

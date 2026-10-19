@@ -20,8 +20,8 @@
  * is left collapses. That is the whole mechanism.
  *
  * WHAT THIS MODULE DOES NOT DO
- * It never overrides an AP call. AP's call and a TPSI call are separate claims
- * (Design System §5.7). This produces the TPSI claim only.
+ * It never overrides an AP call. AP's call and an On Point Polling call are separate claims
+ * (Design System §5.7). This produces the On Point Polling claim only.
  */
 
 import type { ForecastOutput, CandidateKey } from "./electoralModel";

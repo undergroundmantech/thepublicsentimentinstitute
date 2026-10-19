@@ -1,4 +1,4 @@
-/* OnPoint Politics design tokens. Drop into app/globals.css, replacing the PSI :root block.
+/* OnPoint Politics design tokens. Drop into app/globals.css, replacing the On Point Polling :root block.
    Fonts: add to app/layout.tsx via next/font/google:
      Sora (500,600,700,800), Manrope (400,500,600,700), JetBrains_Mono (400,500,600)
    and map them to --font-d, --font-b, --font-m. */
@@ -68,7 +68,7 @@
   --gutter: 20px;
 }
 
-/* aliases so old PSI class code keeps working during the migration */
+/* aliases so old On Point Polling class code keeps working during the migration */
 :root {
   --background: var(--bg);
   --background2: var(--bg2);

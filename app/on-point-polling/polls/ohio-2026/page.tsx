@@ -4,8 +4,8 @@ import Link from "next/link";
 import JsonLd from "@/app/components/JsonLd";
 import { crumbsLd, graph, ORG_ID, SITE, SITE_ID, abs, seo } from "@/app/lib/seo";
 
-const PATH = "/tpsi/polls/ohio-2026";
-const IMG = "/tpsi/polls/ohio-2026";
+const PATH = "/on-point-polling/polls/ohio-2026";
+const IMG = "/on-point-polling/polls/ohio-2026";
 const TITLE = "Ohio poll: Democrats lead both races as early voters bank their edge";
 const DEK = "Brown leads Husted by 4.3 and Acton leads Ramaswamy by 4.8 among likely voters. Both leads are inside the margin of error, and Election Day still leans Republican.";
 
@@ -56,7 +56,7 @@ function Fig({ src, alt, cap, h = 1350 }: { src: string; alt: string; cap: strin
 
 export default function Page() {
   const ld = graph(
-    crumbsLd([["Home", "/"], ["On Point Polling", "/tpsi"], ["Polls", "/tpsi/polls"], ["Ohio 2026", PATH]]),
+    crumbsLd([["Home", "/"], ["On Point Polling", "/on-point-polling"], ["Polls", "/on-point-polling/polls"], ["Ohio 2026", PATH]]),
     {
       "@type": "NewsArticle",
       "@id": `${abs(PATH)}#article`,
@@ -65,7 +65,7 @@ export default function Page() {
       url: abs(PATH),
       datePublished: "2026-10-17T12:00:00-04:00",
       dateModified: "2026-10-17T12:00:00-04:00",
-      author: { "@type": "Organization", name: SITE.publisher, url: abs("/tpsi") },
+      author: { "@type": "Organization", name: SITE.publisher, url: abs("/on-point-polling") },
       publisher: { "@id": ORG_ID },
       isPartOf: { "@id": SITE_ID },
       image: [abs(`${IMG}/01_senate.jpg`), abs(`${IMG}/02_governor.jpg`), abs(`${IMG}/county_map.jpg`)],
@@ -79,8 +79,8 @@ export default function Page() {
     <div className="opp ohp">
       <JsonLd data={ld} />
       <nav className="crumbs" aria-label="Breadcrumb">
-        <Link href="/">Home</Link><span className="sep">/</span><Link href="/tpsi">On Point Polling</Link><span className="sep">/</span>
-        <Link href="/tpsi/polls">Polls</Link><span className="sep">/</span><span>Ohio 2026</span>
+        <Link href="/">Home</Link><span className="sep">/</span><Link href="/on-point-polling">On Point Polling</Link><span className="sep">/</span>
+        <Link href="/on-point-polling/polls">Polls</Link><span className="sep">/</span><span>Ohio 2026</span>
       </nav>
       <header className="ph">
         <div className="eye g">On Point Polling · Ohio poll</div>
@@ -253,9 +253,9 @@ export default function Page() {
           <div className="card"><div className="card-b">
             <div className="eye">Commission a poll</div>
             <p style={{ fontSize: 14, margin: "8px 0 12px" }}>Statewide, district or national polling with full crosstabs, in days, not weeks.</p>
-            <Link className="btn g" href="/tpsi/services">Partner with On Point Polling</Link>
+            <Link className="btn g" href="/on-point-polling/services">Partner with On Point Polling</Link>
           </div></div>
-          <div className="callout"><div className="eye">All releases</div>Every On Point Polling survey is on the <Link href="/tpsi/polls" style={{ textDecoration: "underline" }}>poll releases page</Link>.</div>
+          <div className="callout"><div className="eye">All releases</div>Every On Point Polling survey is on the <Link href="/on-point-polling/polls" style={{ textDecoration: "underline" }}>poll releases page</Link>.</div>
         </aside>
       </div>
 

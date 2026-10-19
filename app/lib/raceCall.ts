@@ -16,8 +16,8 @@
  * two tracks: the margin grows, and the uncertainty about what is left
  * collapses.
  *
- * This never overrides an AP call. AP's call and a TPSI call are separate
- * claims (Design System §5.7); this produces the TPSI claim only.
+ * This never overrides an AP call. AP's call and an On Point Polling call are separate
+ * claims (Design System §5.7); this produces the On Point Polling claim only.
  */
 
 import type { ForecastOutput, CandidateKey } from "./electoralModel";

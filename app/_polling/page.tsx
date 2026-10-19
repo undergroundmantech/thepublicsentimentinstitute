@@ -410,9 +410,9 @@ export const TRUMP_POLLS: Poll[] = [
 // ── NewsNation ────────────────────────────────────────────────────────────────
 { pollster: "NewsNation", endDate: "2025-10-29", sampleSize: 1159, sampleType: "LV", results: { Approve: 43, Disapprove: 56 } },
 { pollster: "NewsNation", endDate: "2025-04-27", sampleSize: 1448, sampleType: "RV", results: { Approve: 44, Disapprove: 56 } },
-// ── Public Sentiment Institute ────────────────────────────────────────────────
-{ pollster: "Public Sentiment Institute", endDate: "2026-02-28", sampleSize: 316, sampleType: "RV", results: { Approve: 35.5, Disapprove: 63.3 } },
-{ pollster: "Public Sentiment Institute", endDate: "2026-02-28", sampleSize: 249, sampleType: "LV", results: { Approve: 40.8, Disapprove: 58.8 } },
+// ── On Point Polling ────────────────────────────────────────────────
+{ pollster: "On Point Polling", endDate: "2026-02-28", sampleSize: 316, sampleType: "RV", results: { Approve: 35.5, Disapprove: 63.3 } },
+{ pollster: "On Point Polling", endDate: "2026-02-28", sampleSize: 249, sampleType: "LV", results: { Approve: 40.8, Disapprove: 58.8 } },
 // ── Yahoo News ────────────────────────────────────────────────────────────────
 { pollster: "Yahoo News", endDate: "2026-01-12", sampleSize: 1149, sampleType: "RV", results: { Approve: 43, Disapprove: 56 } },
 { pollster: "Yahoo News", endDate: "2025-11-24", sampleSize: 1132, sampleType: "RV", results: { Approve: 44, Disapprove: 54 } },
@@ -488,8 +488,8 @@ export const GB_POLLS: Poll[] = [
 { pollster: "Quantus Insights", endDate: "2026-03-03", sampleSize: 1624, sampleType: "LV", results: { Democrats: 48, Republicans: 42 } },
 { pollster: "CBS News", endDate: "2026-02-27", sampleSize: 2264, sampleType: "A", results: { Democrats: 45, Republicans: 40 } },
 { pollster: "Harvard-Harris", endDate: "2026-02-26", sampleSize: 1999, sampleType: "RV", results: { Democrats: 50, Republicans: 50 } },
-{ pollster: "Public Sentiment Institute", endDate: "2026-02-28", sampleSize: 316, sampleType: "RV", results: { Republicans: 32.8, Democrats: 40.7 } },
-{ pollster: "Public Sentiment Institute", endDate: "2026-02-28", sampleSize: 249, sampleType: "LV", results: { Republicans: 41.0, Democrats: 50.1 } },
+{ pollster: "On Point Polling", endDate: "2026-02-28", sampleSize: 316, sampleType: "RV", results: { Republicans: 32.8, Democrats: 40.7 } },
+{ pollster: "On Point Polling", endDate: "2026-02-28", sampleSize: 249, sampleType: "LV", results: { Republicans: 41.0, Democrats: 50.1 } },
 { pollster: "Emerson", endDate: "2026-02-22", sampleSize: 1000, sampleType: "LV", results: { Democrats: 50, Republicans: 42 } },
 { pollster: "Reuters/Ipsos", endDate: "2026-02-23", sampleSize: 3686, sampleType: "RV", results: { Democrats: 40, Republicans: 38 } },
 { pollster: "Big Data Poll", endDate: "2026-02-18", sampleSize: 1805, sampleType: "LV", results: { Democrats: 50, Republicans: 41 } },
@@ -755,12 +755,12 @@ export const KY04_POLLS: Poll[] = [
 
 // ── Florida Senate (Republican Primary) ──────────────────────────────────────
 const FL_SENATE_POLLS: Poll[] = [
-  { pollster: "Public Sentiment Institute (LV)",endDate: "2026-04-08", sampleSize: 112, sampleType: "LV", results: { Collins: 11, Donalds: 29, Fishback: 14, Renner: 1 } },
+  { pollster: "On Point Polling (LV)",endDate: "2026-04-08", sampleSize: 112, sampleType: "LV", results: { Collins: 11, Donalds: 29, Fishback: 14, Renner: 1 } },
   { pollster: "Keystone Analytics",             endDate: "2026-04-06", sampleSize: 795, sampleType: "LV", results: { Donalds: 43, Fishback: 19 } },
   { pollster: "Tarrance Group (R)",             endDate: "2026-04-02", sampleSize: 466, sampleType: "LV", results: { Collins: 6, Donalds: 50, Fishback: 9, Renner: 3 } },
   { pollster: "Emerson College",                endDate: "2026-03-31", sampleSize: 465, sampleType: "LV", results: { Collins: 4, Donalds: 46, Fishback: 4, Renner: 3 } },
   { pollster: "The American Promise",           endDate: "2026-02-26", sampleSize: 800, sampleType: "LV", results: { Collins: 4, Donalds: 44, Fishback: 5, Renner: 2 } },
-  { pollster: "Public Sentiment Institute (LV)",endDate: "2026-02-20", sampleSize: 400, sampleType: "LV", results: { Collins: 12, Donalds: 30, Fishback: 8, Renner: 2 } },
+  { pollster: "On Point Polling (LV)",endDate: "2026-02-20", sampleSize: 400, sampleType: "LV", results: { Collins: 12, Donalds: 30, Fishback: 8, Renner: 2 } },
   { pollster: "Univ. of North Florida",         endDate: "2026-02-20", sampleSize: 657, sampleType: "LV", results: { Collins: 4, Donalds: 31, Fishback: 6, Renner: 1 } },
   { pollster: "Targoz Market Research",         endDate: "2026-02-16", sampleSize: 401, sampleType: "RV", results: { Collins: 15, Donalds: 33, Fishback: 3, Renner: 9 } },
   { pollster: "Patriot Polling (R)",            endDate: "2026-01-29", sampleSize: 827, sampleType: "LV", results: { Donalds: 37, Fishback: 23 } },
@@ -1451,7 +1451,7 @@ export default function PollingDashboardPage() {
             <div className="pd-hero-left">
               <div className="pd-hero-eyebrow">
                 <span className="pd-live-dot" />
-                <span>Public Sentiment Institute · Live Tracking</span>
+                <span>On Point Polling · Live Tracking</span>
               </div>
               <h1 className="pd-hero-title">National Polling<br /><em>Dashboard</em></h1>
               <p className="pd-hero-desc">

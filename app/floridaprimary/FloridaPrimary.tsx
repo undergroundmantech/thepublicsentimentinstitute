@@ -28,9 +28,9 @@ export default function FloridaPrimaryPage() {
   return (
     <>
     <div className="opp">
-      <nav className="crumbs" aria-label="Breadcrumb"><Link href="/">Home</Link><span className="sep">/</span><Link href="/tpsi">TPSI</Link><span className="sep">/</span><span>Florida primary sandbox</span></nav>
+      <nav className="crumbs" aria-label="Breadcrumb"><Link href="/">Home</Link><span className="sep">/</span><Link href="/on-point-polling">On Point Polling</Link><span className="sep">/</span><span>Florida primary sandbox</span></nav>
       <header className="ph" style={{ marginBottom: 14 }}>
-        <div className="eye g">Scenario engine · Fieldwork by TPSI</div>
+        <div className="eye g">Scenario engine · Fieldwork by On Point Polling</div>
         <h1>Florida GOP primary <em>sandbox</em></h1>
         <p className="lede">
           Set how candidates perform within demographic groups, adjust who turns out, and every
@@ -69,7 +69,7 @@ export default function FloridaPrimaryPage() {
         </div>
 
         <div className="foot">
-          <span>Fieldwork by The Public Sentiment Institute</span>
+          <span>Fieldwork by On Point Polling</span>
           <span>Florida 2026</span>
         </div>
       </div>

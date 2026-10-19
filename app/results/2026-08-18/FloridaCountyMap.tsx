@@ -1,6 +1,6 @@
 "use client";
 
-// Florida county choropleth. Geometry is baked SVG lifted from the TPSI Florida
+// Florida county choropleth. Geometry is baked SVG lifted from the On Point Polling Florida
 // scenario engine, so it renders with no fetch and no projection math.
 //
 // This is a four-way race, so the Michigan two-colour divergent ramp does not

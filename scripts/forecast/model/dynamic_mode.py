@@ -1,8 +1,8 @@
-"""TPSI Dynamic Mode: Senate and Governor races rebuilt by simulating voters going to the polls.
+"""On Point Polling Dynamic Mode: Senate and Governor races rebuilt by simulating voters going to the polls.
 
 For each race the Senate Mode blend is run with dynamic county elasticities in the history leg (elasticity.py) and the
-TPSI county by county Trump approval alone in the fundamental leg. Each county's electorate is then rebuilt from 32 ACS
-cells, age by race by college, with the adult population of every cell, its TPSI midterm turnout probability and its TPSI
+On Point Polling county by county Trump approval alone in the fundamental leg. Each county's electorate is then rebuilt from 32 ACS
+cells, age by race by college, with the adult population of every cell, its On Point Polling midterm turnout probability and its On Point Polling
 vote probability. One turnout constant and one vote constant per county make the cells reproduce the county's projected
 turnout and two party share exactly. Then the election is run N times. In every run:
 
@@ -60,6 +60,39 @@ SIG_IRREG_NAT, SIG_IRREG_ST = 0.12, 0.06
 _rng_demo = np.random.default_rng(SEED + 17)
 NAT["demo_vote"] = _rng_demo.normal(0, SIG_DEMO_VOTE, (N, 7)); NAT["demo_turn"] = _rng_demo.normal(0, SIG_DEMO_TURN, (N, 7))
 NAT["irreg"] = _rng_demo.normal(0, SIG_IRREG_NAT, N)
+# Oct 19 2026: the five On Point polls of Oct 16 to 19 (Ohio, Texas, Michigan, Florida, South Carolina) shared one panel,
+# one questionnaire and one week of field, so whatever error they share moves all ten of their races together. OP_CORR_SIG
+# is that shared method error in log odds of the two party vote (0.06, about 3 points of margin). In each race it enters
+# at the On Point poll's weight in the polling average times the polling leg's weight, and the same variance is taken
+# out of the race's own draw, so every race is exactly as uncertain as before; only their correlation changes. It is
+# an uncertainty setting, not a bias: the draw has mean zero. OP_CORR_SIG=0 turns it off.
+OP_CORR_SIG = float(os.environ.get("OP_CORR_SIG", "0.06"))
+NAT["op"] = np.random.default_rng(SEED + 313).normal(0, 1, N)
+OP_AUDIT = {}
+def op_load(st, summ):
+    try: reg_ = poll_daily.REGISTRY.get(st) if OP_CORR_SIG > 0 else None
+    except NameError: reg_ = None
+    if not reg_ or reg_.get("audit") is None or "pollster" not in reg_["audit"]: return 0.0, 0.0, 0.0
+    a = reg_["audit"]; m = a.pollster.astype(str).str.startswith("On Point")
+    share = float(a.loc[m, "weight_share"].sum()) if "weight_share" in a else 0.0
+    # where the polling level is the LOWESS Election Day average, every poll counts once and the newest sits at the
+    # endpoint, so the On Point poll's pull is read off the average itself: move its margin one point and see how far
+    # the Election Day average moves. Elsewhere the weighted average's weight share is the pull.
+    av = reg_.get("avg") or {}; fr = reg_.get("frame")
+    if av.get("poll_level") == "lowess" and fr is not None and "source" in fr:
+        try:
+            import lowess_trend as _lt
+            base = _lt.projection(fr, poll_daily.AS_OF_DAILY)
+            f2 = fr.copy(); mm = f2.source.astype(str).str.startswith("On Point")
+            if mm.any() and base is not None:
+                f2.loc[mm, "D"] = f2.loc[mm, "D"].astype(float) + 0.5; f2.loc[mm, "R"] = f2.loc[mm, "R"].astype(float) - 0.5
+                share = float(np.clip(_lt.projection(f2, poll_daily.AS_OF_DAILY)["eday_margin"] - base["eday_margin"], 0.0, 1.0))
+        except Exception:
+            pass
+    gf = summ.get("gallup_full") or {}
+    wp = (gf.get("after") or gf.get("before") or {}).get("polls")
+    if wp is None: wp = float((summ.get("blend_weights") or {}).get("M3", 0.0))
+    return share * float(wp), share, float(wp)
 # Voter behavior layer, Sept 29 2026 (behavior.py): national shocks to the weight of each turnout motivation, shared
 # by every race in a run, so a cycle where commitment or approval intensity matters more hits every race at once
 import behavior as bh
@@ -311,6 +344,15 @@ def simulate(st, df, summ, model, shift):
         s_state = float(np.sqrt(max(own2, 0.03 ** 2)))
         SPREAD_AUD = dict(k=round(_k, 4), ref_total=round(float(np.sqrt(V)), 4), national_vote_share_before=r2v, corr_nat_f=CORR_NAT_F,
                           sig_region=SIG_REG, rho_scale=RHO_SCALE, own_before=round(_s0, 4), own_after=round(s_state, 4), tail_df=TAIL_DF)
+    _opL, _opS, _opW = op_load(st, summ)
+    OPD = np.zeros(N)
+    if _opL > 0:
+        _sh = _opL * OP_CORR_SIG
+        _own0 = s_state
+        s_state = float(np.sqrt(max(s_state ** 2 - _sh ** 2, 0.03 ** 2)))
+        OPD = _sh * NAT["op"]
+        OP_AUDIT[st] = dict(on_point_weight_share=round(_opS, 4), polling_leg_weight=round(_opW, 4), shared_sd_logit=round(_sh, 4),
+                            own_sd_before=round(_own0, 4), own_sd_after=round(s_state, 4), sigma=OP_CORR_SIG)
     if demo_v is not None and CORR_NAT_F != 1.0:
         demo_v = CORR_NAT_F * demo_v
     REG_SH = region_shock(reg) * gb if SIG_REG > 0 else np.zeros(N)
@@ -341,7 +383,7 @@ def simulate(st, df, summ, model, shift):
             PB = BATCH if C * K <= 120_000 else max(10, int(BATCH * 120_000 / (C * K)))
             for p0 in range(0, PN, PB):
                 Bp = min(PB, PN - p0); ps = slice(p0, p0 + Bp)
-                envp = gb * NAT_ENV[ps] + REG_SH[ps] + own_draw(prng, s_state, Bp)
+                envp = gb * NAT_ENV[ps] + REG_SH[ps] + own_draw(prng, s_state, Bp) + OPD[ps]
                 if CANDIDATE and st in cq.PROFILES:
                     envp = envp + prng.normal(0, cq.PROFILES[st]["sigma"], Bp)
                 shp = (e[None, :] * envp[:, None] + prng.normal(0, 1, (Bp, C)) * sig_cty[None, :]) * hfac[None, :]
@@ -365,7 +407,7 @@ def simulate(st, df, summ, model, shift):
     for s0 in range(0, N, BS):
         B = min(BS, N - s0); sl = slice(s0, s0 + B)
         _own = own_draw(rng, s_state, B)
-        env = gb * NAT_ENV[sl] + REG_SH[sl] + (np.sqrt(rho) * s_state * z_common[sl] + np.sqrt(1 - rho) * _own if BEH else _own)
+        env = gb * NAT_ENV[sl] + REG_SH[sl] + (np.sqrt(rho) * s_state * z_common[sl] + np.sqrt(1 - rho) * _own if BEH else _own) + OPD[sl]
         if CANDIDATE and st in cq.PROFILES:
             env = env + rng.normal(0, cq.PROFILES[st]["sigma"], B)
         shock = (e[None, :] * env[:, None] + rng.normal(0, 1, (B, C)) * sig_cty[None, :]) * hfac[None, :]
@@ -460,6 +502,7 @@ def simulate(st, df, summ, model, shift):
         s["rcv_final"] = {cfg["D"]: FDs / (FDs + FRs) * 100, cfg["R"]: FRs / (FDs + FRs) * 100}
         s["rcv_final_margin"] = (FDs - FRs) / (FDs + FRs) * 100; s["rcv_exhausted_votes"] = V - FDs - FRs
         s["counties_D"] = int((out.rcv_final_margin > 0).sum())
+    if OP_AUDIT.get(st): s["on_point_shared_error"] = OP_AUDIT[st]
     s["simulation"] = dict(n=N, win_prob_dem_side=float(100 * st_win.mean()),
                            margin_mean=float(st_margin.mean()), margin_median=float(np.median(st_margin)),
                            margin_p10=float(np.percentile(st_margin, 10)), margin_p90=float(np.percentile(st_margin, 90)),

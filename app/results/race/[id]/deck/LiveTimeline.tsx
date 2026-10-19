@@ -4,7 +4,7 @@
 // charts on one shared time axis — WIN PROBABILITY · EST. REPORTING ·
 // PROJECTED FINAL SHARE — hover-synced (one moment highlights across all
 // three) with a click-to-expand toggle per chart. Marks: the gate region
-// (<GATE_THRESHOLD_PCT reporting), the TPSI call line (first snapshot whose
+// (<GATE_THRESHOLD_PCT reporting), the On Point Polling call line (first snapshot whose
 // raceState reaches PROJECTED/OFFICIAL), and a now-point (last snapshot).
 //
 // Data source: flight-recorder snapshots (§6, app/results/_lib/

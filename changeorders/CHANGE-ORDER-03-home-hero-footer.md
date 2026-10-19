@@ -79,12 +79,12 @@ Replace the current centered hero composition in the HomeV2 hero component.
 
 ### 2b. Masthead eyebrow (replaces hero logo)
 ```
-● LIVE DESK · THE PUBLIC SENTIMENT INSTITUTE
+● LIVE DESK · ON POINT POLLING
 ```
 - JetBrains Mono, 11px, 700, letter-spacing .24em, uppercase.
 - "● LIVE DESK" segment in `--live` mint with pulsing 6px dot
   (`animation: pulse 1.8s infinite` → 50% opacity .35).
-- "THE PUBLIC SENTIMENT INSTITUTE" in muted ink (`--ink3`); this is the
+- "ON POINT POLLING" in muted ink (`--ink3`); this is the
   institutional masthead line — full name lives here, not as display type.
 
 ### 2c. Headline & sub (copy preserved)
@@ -164,7 +164,7 @@ Single centered card, `min(920px, 100%)`:
 - Grid `60fr / 40fr`; collapses to stacked <680px (divider becomes horizontal).
 
 **Left (identity):**
-- Kicker: mint dot + `THE PUBLIC SENTIMENT INSTITUTE` (mono, .24em).
+- Kicker: mint dot + `ON POINT POLLING` (mono, .24em).
 - Headline: `Work with the desk.` in **Geist 700**, clamp(40px,5.4vw,64px),
   with "desk" in brand-gradient text fill.
 - One body line (NO em dash):
@@ -179,13 +179,13 @@ Single centered card, `min(920px, 100%)`:
   current `tpsinstitutecontact@gmail.com`.
 - Note: `TYPICAL REPLY WITHIN ONE BUSINESS DAY` (mono 10px, uppercase) —
   placeholder copy, owner may revise.
-- Flex spacer, then foot block above a hairline: TPSI logo (18px, mono ink),
+- Flex spacer, then foot block above a hairline: On Point Polling logo (18px, mono ink),
   link row `POLLING / FORECASTS / RESULTS / CONTACT` (mono 11px uppercase),
-  and `© 2026 The Public Sentiment Institute · Florida`.
+  and `© 2026 On Point Polling · Florida`.
 
 ### 3c. Copy rules enforced
 - No em dashes anywhere in this section.
-- Organization name (full) appears in kicker + ©; product voice says TPSI.
+- Organization name (full) appears in kicker + ©; product voice says On Point Polling.
 
 ---
 

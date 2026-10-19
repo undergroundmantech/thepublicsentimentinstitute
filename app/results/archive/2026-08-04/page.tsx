@@ -11,8 +11,8 @@
  *
  * STRUCTURE AUTHORITY
  *   election_coverage_five_level_methodology_v6.html, Level 2 panel.
- *   Restyled in TPSI tokens per CO-04: "Its fonts/colors/spacing are a foreign
- *   system, restyle everything in TPSI tokens, but do NOT rearrange its layout."
+ *   Restyled in On Point Polling tokens per CO-04: "Its fonts/colors/spacing are a foreign
+ *   system, restyle everything in On Point Polling tokens, but do NOT rearrange its layout."
  *   Layout, section order, and component anatomy are the prototype's. Only the
  *   palette, type, and copy are ours.
  *
@@ -20,7 +20,7 @@
  *   84778 Michigan U.S. Senate D ...... LEVEL 2, statewide forecast
  *   the other 23 ...................... LEVEL 4, results only
  *
- * Level 2, not Level 1. The TPSI model is statewide (n=254) and produces no
+ * Level 2, not Level 1. The On Point Polling model is statewide (n=254) and produces no
  * county estimates, so countyModel is false and the ballot-landscape card is
  * suppressed exactly as the Level 2 panel suppresses it. This also means the
  * race is tier 3 Forecast in the CO-04 matrix, not tier 4 Spotlight.
@@ -118,7 +118,7 @@ const MODEL = {
   title: "U.S. Senate Michigan Democratic Primary",
   state: "Michigan",
   deck:
-    "Abdul El-Sayed leads the TPSI model against Rep. Haley Stevens in an open " +
+    "Abdul El-Sayed leads the On Point Polling model against Rep. Haley Stevens in an open " +
     "seat contest, with the Upper Peninsula vote outstanding until the final " +
     "polls close an hour after the rest of the state.",
   close: MI_S,
@@ -128,7 +128,7 @@ const MODEL = {
   withdrawn: "McMorrow",
   n: 254, moe: "±6.9",
   field: "July 25 to 29, 2026",
-  modelName: "TPSI DSMeridian 10",
+  modelName: "On Point Polling DSMeridian 10",
   headline:
     "The model expects El-Sayed to carry Wayne and Washtenaw by enough to absorb " +
     "Stevens' advantage in her Oakland County base. The projected margin is wide, " +
@@ -325,7 +325,7 @@ const STATUS_COPY: Record<RaceState, string> = {
   SCHEDULED: "Polls open",
   LIVE_GATED: "Too early to call",
   LIVE_FORECAST: "Counting",
-  PROJECTED: "TPSI projection",
+  PROJECTED: "On Point Polling projection",
   OFFICIAL: "Race called",
 };
 
@@ -422,7 +422,7 @@ export default function TonightBoard() {
   const deskWinnerMatch = DESK_CALL ? CAND_MATCH[DESK_CALL.key] : null;
 
   const headline = deskCalled
-    ? `TPSI projects ${deskWinner} wins the Democratic nomination. He leads by ` +
+    ? `On Point Polling projects ${deskWinner} wins the Democratic nomination. He leads by ` +
       `${int(leadGap)} votes with ${pctLabel(modeledRep)}% of the estimated vote counted, ` +
       `and the projected margin of ${signed(marginPP)} sits outside the 95% interval ` +
       `for a Stevens comeback.`
@@ -435,7 +435,7 @@ export default function TonightBoard() {
     rState === "OFFICIAL"
       ? STATUS_COPY.OFFICIAL
       : deskCalled
-        ? `TPSI projection — ${deskWinner}`
+        ? `On Point Polling projection — ${deskWinner}`
         : live && call.verdict === "LEANING"
           ? "Leaning"
           : STATUS_COPY[rState];
@@ -524,7 +524,7 @@ export default function TonightBoard() {
                               <span className="topline-lead">Leads by {int(leadGap)} votes</span>
                             )}
                             {projectedWinner && (
-                              <span className="topline-lead won">TPSI projected winner</span>
+                              <span className="topline-lead won">On Point Polling projected winner</span>
                             )}
                             {c.winner && <span className="topline-lead won">Race called</span>}
                           </div>
@@ -636,7 +636,7 @@ export default function TonightBoard() {
                 <div className="projected-top">
                   <div className="projected-intro">
                     <span className="model-label">
-                      {deskCalled ? "TPSI projection" : "Model projection · not actual results"}
+                      {deskCalled ? "On Point Polling projection" : "Model projection · not actual results"}
                     </span>
                     <div className="projected-name">
                       {deskCalled ? `${deskWinner} wins` : `${leaderLast} projected ahead`}
@@ -766,7 +766,7 @@ export default function TonightBoard() {
           <div className="board-head">
             <div>
               <h2>All races tonight</h2>
-              <p>Level 4 coverage. Reported results only, no TPSI model.</p>
+              <p>Level 4 coverage. Reported results only, no On Point Polling model.</p>
             </div>
             <div className="board-meta">
               <span className="model-label">23 races · 5 states</span>
@@ -793,12 +793,12 @@ export default function TonightBoard() {
           <p className="prose">
             Reported vote is solid. Projected share is muted and dashed, on the same
             0 to 100% scale. Estimated reporting is the share of expected vote, not
-            precincts. Race calls come from AP through CivicAPI. TPSI projections are
+            precincts. Race calls come from AP through CivicAPI. On Point Polling projections are
             modeled estimates, labeled separately from calls, and appear only on the
             Michigan Senate primary.
           </p>
           <div className="method-foot">
-            <span className="model-label">© 2026 The Public Sentiment Institute</span>
+            <span className="model-label">© 2026 On Point Polling</span>
             <span className="model-label">Powered by CivicAPI</span>
           </div>
         </section>
@@ -854,7 +854,7 @@ function L4Card({ entry, race }: { entry: Entry; race?: Race }) {
 }
 
 /* ═════════════════════ STYLE ═════════════════════ */
-/* Prototype layout, TPSI tokens per Design System §1. Light and dark both ride
+/* Prototype layout, On Point Polling tokens per Design System §1. Light and dark both ride
    the site's globals.css tokens so the desk never fights the rest of the site. */
 
 const CSS = `

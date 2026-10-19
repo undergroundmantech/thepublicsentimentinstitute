@@ -100,7 +100,7 @@ opponents, then normalized. Majority uses `1 − Φ((threshold − mean)/sd)`.
 ## 2 · THE MISSING PIECE — the three-sigma call
 
 `ForecastOutput` returns `sd_race` and `projected_margin_votes` but never turns
-them into a verdict. Nothing in the desk can say a race is decided on TPSI's
+them into a verdict. Nothing in the desk can say a race is decided on On Point Polling's
 own authority.
 
 `raceCall.ts` adds it:
@@ -130,7 +130,7 @@ Override per-race for known reporting patterns, for example an all-mail state.
 
 ### Never overrides AP
 
-This produces the TPSI claim only. AP's call and a TPSI call remain separate
+This produces the On Point Polling claim only. AP's call and an On Point Polling call remain separate
 and separately labeled, per Design System §5.7. If they disagree, both display.
 
 ---
@@ -156,7 +156,7 @@ import { evaluateCall } from "@/app/lib/raceCall";
 
 /** Pre-election prior. This is the ONLY place the poll numbers live. */
 const POLL_PRIOR = { Candidate1: 0.548, Candidate2: 0.452, Candidate3: 0 };
-const EXPECTED_TURNOUT = 1_100_000;   // ← set from the TPSI turnout model
+const EXPECTED_TURNOUT = 1_100_000;   // ← set from the On Point Polling turnout model
 
 const fc = useMemo(() => {
   const all = sortC(mi);
@@ -267,4 +267,4 @@ near 5M, but it will misfire on a general election.
 assumption produces a confident wrong answer rather than an obviously wrong
 one, which is the worse failure.
 
-The 1.1M in the sample code above is my placeholder, not a TPSI number.
+The 1.1M in the sample code above is my placeholder, not an On Point Polling number.

@@ -13,12 +13,12 @@
 // its job as a SORT fallback for ordering; it stops deciding membership.
 //
 // TIER vs BOARD — two different questions, per CO-04 §1.
-//   tier  = what TPSI can DO for the race (capability). Numeric, TPSI-canonical
+//   tier  = what On Point Polling can DO for the race (capability). Numeric, On Point Polling canonical
 //           5=National 4=Spotlight 3=Forecast 2=Featured, matching
 //           _data/raceCapabilities.ts. Feeds getRaceCapabilities().
 //   board = WHERE the race sits on the page (placement). Independent of tier.
 //
-// Only 84778 carries a TPSI model. It is tier 3 Forecast, NOT tier 4 Spotlight:
+// Only 84778 carries an On Point Polling model. It is tier 3 Forecast, NOT tier 4 Spotlight:
 // the model is statewide (n=254) and produces no county estimates, so
 // countyModel must stay false. Tier 4 would switch it on. This maps to Level 2
 // "Statewide forecast" in the five-level methodology prototype.
@@ -51,7 +51,7 @@ export interface CoverageEntry {
   finalClose: boolean;
   /** Editorial note / blurb. Board-visible on SPOTLIGHT and FEATURED. */
   note?: string;
-  /** TPSI forecast prior (name → projected share). Spotlight race only —
+  /** On Point Polling forecast prior (name → projected share). Spotlight race only —
    *  feeds both the ResultsDesk spotlight card and RaceDesk's needle model,
    *  so the two pages assert the same number. */
   pollAvg?: Record<string, number>;

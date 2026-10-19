@@ -1192,46 +1192,46 @@ interface PollDef {
 const RAW_POLLS: PollDef[] = [
   {
     id: "national", no: "No. 02", tab: "National Benchmark", date: "May 2026", defaultSlide: "nat-q13",
-    eyebrow: "TPSI poll · Field report No. 02",
+    eyebrow: "On Point Polling poll · Field report No. 02",
     h: <>The national mood, <em>measured</em></>,
     sub: "An original national likely-voter benchmark: the generic ballot, Trump approval, the 2028 field, and the issues underneath it all.",
     meta: [ { b:"893", t:"likely voters" }, { b:"May 2026", t:"· national LV" }, { b:"±3.3", t:"pts margin" }, { b:"25", t:"questions" } ],
     intro: "Every likely voter in the national sample, recut by whichever lens you choose.",
     secH: "Twenty five questions, one country",
-    method: "The Public Sentiment Institute surveyed 893 likely voters nationwide in May 2026. Results are weighted to the modeled likely-voter electorate; the margin of sampling error is approximately ±3.3 points. Figures may not sum to 100 due to rounding.",
+    method: "On Point Polling surveyed 893 likely voters nationwide in May 2026. Results are weighted to the modeled likely-voter electorate; the margin of sampling error is approximately ±3.3 points. Figures may not sum to 100 due to rounding.",
     slides: NATIONAL_SLIDES, lenses: NATIONAL_LENSES,
   },
   {
     id: "la", no: "No. 01", tab: "LA Mayoral", date: "May 2026", defaultSlide: "q10a",
-    eyebrow: "TPSI poll · Field report No. 01",
+    eyebrow: "On Point Polling poll · Field report No. 01",
     h: <>The Los Angeles mayoral race, <em>measured</em></>,
     sub: "An original likely-voter survey of the June ballot: candidate favorability, the issues driving the city, and a verdict on Donald Trump.",
     meta: [ { b:"465", t:"likely voters" }, { b:"May 2026", t:"· Wave I" }, { b:"±4.5", t:"pts margin" }, { b:"17", t:"questions" } ],
     intro: "Every likely voter in the survey, recut by whichever lens you choose.",
     secH: "Seventeen questions, one electorate",
-    method: "The Public Sentiment Institute surveyed 465 likely Los Angeles voters in May 2026 (Wave I). Results are weighted to the modeled likely-voter electorate; the margin of sampling error is approximately ±4.5 points. Leaner allocation distributes undecided respondents by stated second preference. Figures may not sum to 100 due to rounding.",
+    method: "On Point Polling surveyed 465 likely Los Angeles voters in May 2026 (Wave I). Results are weighted to the modeled likely-voter electorate; the margin of sampling error is approximately ±4.5 points. Leaner allocation distributes undecided respondents by stated second preference. Figures may not sum to 100 due to rounding.",
     slides: LA_SLIDES, lenses: LA_LENSES,
   },
   {
     id: "sd", no: "No. 03", tab: "SD GOP Primary", date: "May 2026", defaultSlide: "sd-q6",
-    eyebrow: "TPSI poll · Field report No. 03",
+    eyebrow: "On Point Polling poll · Field report No. 03",
     h: <>South Dakota&rsquo;s GOP primary, <em>measured</em></>,
     sub: "A likely-voter read on the Republican primary for governor, a genuine three way race at the top of the ticket.",
     meta: [ { b:"400", t:"likely voters" }, { b:"May 2026", t:"· GOP LV" }, { b:"±4.9", t:"pts margin" }, { b:"4", t:"questions" } ],
     intro: "Every likely Republican primary voter in the sample, recut by lens.",
     secH: "Four questions, one primary",
-    method: "The Public Sentiment Institute surveyed 400 likely Republican primary voters in South Dakota in May 2026. Results are weighted to the modeled primary electorate; the margin of sampling error is approximately ±4.9 points. Figures may not sum to 100 due to rounding.",
+    method: "On Point Polling surveyed 400 likely Republican primary voters in South Dakota in May 2026. Results are weighted to the modeled primary electorate; the margin of sampling error is approximately ±4.9 points. Figures may not sum to 100 due to rounding.",
     slides: SD_SLIDES, lenses: SD_LENSES,
   },
   {
     id: "sc", no: "No. 04", tab: "SC GOP Primary", date: "June 2026", defaultSlide: "sc-senate",
-    eyebrow: "TPSI poll · Field report No. 04",
+    eyebrow: "On Point Polling poll · Field report No. 04",
     h: <>South Carolina&rsquo;s GOP primary, <em>measured</em></>,
     sub: "Senate and governor primaries under the Meridian Coalition Voter model: Graham's standing, an open governor's race, and the currents moving an open primary.",
     meta: [ { b:"369", t:"likely voters" }, { b:"June 2026", t:"· Meridian model" }, { b:"±5.1", t:"pts margin" }, { b:"13", t:"questions" } ],
     intro: "Every likely primary voter in the Meridian sample, recut by lens.",
     secH: "Thirteen questions, one primary",
-    method: "The Public Sentiment Institute surveyed 369 likely Republican primary voters in South Carolina in June 2026 under the Meridian Coalition Voter model, which segments respondents by primary behavior. Results are weighted to the modeled open-primary electorate; the margin of sampling error is approximately ±5.1 points. Figures may not sum to 100 due to rounding.",
+    method: "On Point Polling surveyed 369 likely Republican primary voters in South Carolina in June 2026 under the Meridian Coalition Voter model, which segments respondents by primary behavior. Results are weighted to the modeled open-primary electorate; the margin of sampling error is approximately ±5.1 points. Figures may not sum to 100 due to rounding.",
     slides: SC_SLIDES, lenses: SC_LENSES,
   },
 ];
@@ -1528,7 +1528,7 @@ export default function TPSIPollDashboard() {
   return (
     <div className="opp tps">
       <style>{CSS}</style>
-      <nav className="crumbs" aria-label="Breadcrumb"><Link href="/">Home</Link><span className="sep">/</span><Link href="/tpsi">TPSI</Link><span className="sep">/</span><Link href="/tpsi/polls">Polls</Link><span className="sep">/</span><span>{poll.tab}</span></nav>
+      <nav className="crumbs" aria-label="Breadcrumb"><Link href="/">Home</Link><span className="sep">/</span><Link href="/on-point-polling">On Point Polling</Link><span className="sep">/</span><Link href="/on-point-polling/polls">Polls</Link><span className="sep">/</span><span>{poll.tab}</span></nav>
 
       <div className="reports" role="tablist" aria-label="Field reports">
         {POLLS.map(p => (
@@ -1560,7 +1560,7 @@ export default function TPSIPollDashboard() {
       <div className="callout tps-foot">
         <div className="eye">Methodology</div>
         <p>{poll.method}</p>
-        <div className="tps-foot-org">Fieldwork by The Public Sentiment Institute</div>
+        <div className="tps-foot-org">Fieldwork by On Point Polling</div>
       </div>
     </div>
   );

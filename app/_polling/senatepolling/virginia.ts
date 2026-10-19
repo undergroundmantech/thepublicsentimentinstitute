@@ -1,6 +1,6 @@
 // app/polling/senatepolling/virginia.ts
 // Virginia — 2026 U.S. Senate: Mark Warner (D) vs. Bert Mizusawa (R)
-// Generated from the TPSI forecast poll feed (run of 2026-09-22), merged with
+// Generated from the On Point Polling forecast poll feed (run of 2026-09-22), merged with
 // the polls this file already carried. Polls of matchups that are not on the
 // ballot were dropped. Newest poll: 2026-06-16.
 
@@ -36,7 +36,7 @@ export const RACES = [
 
 export const STATE_POLLS: Record<string, Poll[]> = {
   VA: [
-    {"raceId": "VA-SEN-2026", "pollster": "The Public Sentiment Institute/Virginia Project (R)", "startDate": "2026-05-01", "endDate": "2026-05-05", "sampleSize": 1047, "sampleType": "LV", "results": {"Mark Warner (D)": 55.0, "Bert Mizusawa (R)": 29.0, "Other": 3.0, "Undecided": 14.0}},
-    {"raceId": "VA-SEN-2026", "pollster": "The Public Sentiment Institute", "startDate": "2026-06-12", "endDate": "2026-06-16", "sampleSize": 996, "sampleType": "LV", "results": {"Mark Warner (D)": 51.0, "Bert Mizusawa (R)": 33.0, "Other": 3.0, "Undecided": 14.0}}
+    {"raceId": "VA-SEN-2026", "pollster": "On Point Polling/Virginia Project (R)", "startDate": "2026-05-01", "endDate": "2026-05-05", "sampleSize": 1047, "sampleType": "LV", "results": {"Mark Warner (D)": 55.0, "Bert Mizusawa (R)": 29.0, "Other": 3.0, "Undecided": 14.0}},
+    {"raceId": "VA-SEN-2026", "pollster": "On Point Polling", "startDate": "2026-06-12", "endDate": "2026-06-16", "sampleSize": 996, "sampleType": "LV", "results": {"Mark Warner (D)": 51.0, "Bert Mizusawa (R)": 33.0, "Other": 3.0, "Undecided": 14.0}}
   ],
 };

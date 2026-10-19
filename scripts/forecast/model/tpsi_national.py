@@ -1,8 +1,8 @@
-"""TPSI national generic ballot from the respondent database, on DSMeridian Model 13R3 Stages 2 and 3.
+"""On Point Polling national generic ballot from the respondent database, on DSMeridian Model 13R3 Stages 2 and 3.
 
 Stage 2  RV electorate: IPF rake on the locked separate national marginals, Age, Gender, Race4 and Region8, weights
          capped at 6 and floored at 0.12 of the mean, 150 iterations. Speeders flagged by RQCM are excluded.
-Stage 3  LV electorate: RV weight times each respondent's PSI Pythagorean v8.1 likely voter propensity, the one the
+Stage 3  LV electorate: RV weight times each respondent's On Point Polling Pythagorean v8.1 likely voter propensity, the one the
          database carries from its own wave and panel anchor.
 The generic ballot is the two party share of decided likely voters. No undecided allocation is applied, since the
 Meridian step in Stage 4 is a house reporting convention and not a vote estimate.

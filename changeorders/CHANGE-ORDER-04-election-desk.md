@@ -10,14 +10,14 @@ CO-03 (home hero/footer) is independent; order between 03 and 04 doesn't matter.
 - `reference-deepdive.html` — **LAYOUT + FUNCTION AUTHORITY** for the race
   page: the page structure, section order, and component arrangement follow
   this document. Its fonts/colors/spacing are a foreign system — restyle
-  everything in TPSI tokens (CO-01 light/dark sets, JetBrains Mono desk
+  everything in On Point Polling tokens (CO-01 light/dark sets, JetBrains Mono desk
   type), but do NOT rearrange its layout.
 - `spec-command-deck.html` — COMPONENT-STYLE reference only (NOT page
   layout): use it for the gauge family (wheel + ring), county-table rail
   treatment, chips, state badges, and token usage. The bento grid it shows
   is NOT the page layout for this order.
 - `reference-localboard.html` — FUNCTION reference for the local race board
-  card grammar (incl. ballot measures & nonpartisan races). Same rule: TPSI
+  card grammar (incl. ballot measures & nonpartisan races). Same rule: On Point Polling
   tokens, not its styling.
 
 ---
@@ -51,7 +51,7 @@ Build ONE race-page component tree. Sections mount based on the race's config,
 extending the existing registry pattern (`raceRegistry` / capability tiers):
 
 ```ts
-type RaceTier = 5 | 4 | 3 | 2;           // TPSI numbering: 5=National, 4=Spotlight, 3=Forecast, 2=Featured
+type RaceTier = 5 | 4 | 3 | 2;           // On Point Polling numbering: 5=National, 4=Spotlight, 3=Forecast, 2=Featured
 interface RaceCapabilities {
   tier: RaceTier;
   forecast: boolean;        // in-house model exists (tier 3+)
@@ -63,7 +63,7 @@ interface RaceCapabilities {
 }
 ```
 
-**Tier numbering is TPSI-canonical (5 high → 1 low).** The reference concept
+**Tier numbering is On Point Polling canonical (5 high → 1 low).** The reference concept
 document numbers tiers in the OPPOSITE direction — ignore its numbering
 entirely; use only its component content.
 
@@ -108,12 +108,12 @@ otherwise defer to a small follow-up. Everything else ships.
 
 ## 2 · VOCABULARY CANON (use these strings/definitions everywhere)
 
-- **EST. REPORTING** = estimated % of expected vote (TPSI methodology) — the
+- **EST. REPORTING** = estimated % of expected vote (On Point Polling methodology) — the
   LEADING reporting figure everywhere. Precinct-based % may appear as a
   secondary detail labeled `PRECINCTS`. One denominator leads; never mix
   unlabeled.
 - **Race states:** `SCHEDULED → LIVE·GATED (<10%) → LIVE·FORECAST →
-  PROJECTED (TPSI call) → OFFICIAL (certified)`. C's Race Clock, the header
+  PROJECTED (On Point Polling call) → OFFICIAL (certified)`. C's Race Clock, the header
   badges, and V1's state machine all speak this one vocabulary.
 - **Vote modes:** `EARLY / VBM / ELECTION DAY` (exact labels).
 - **Data semantics rule (from the concept doc — adopt fully):** reported
@@ -130,10 +130,10 @@ otherwise defer to a small follow-up. Everything else ships.
 
 ---
 
-## 3 · RACE PAGE ZONES (layout authority: `reference-deepdive.html`; styling: TPSI tokens + `spec-command-deck.html` components)
+## 3 · RACE PAGE ZONES (layout authority: `reference-deepdive.html`; styling: On Point Polling tokens + `spec-command-deck.html` components)
 
 Implement each zone in the reference document's position and arrangement,
-substituting TPSI components and vocabulary:
+substituting On Point Polling components and vocabulary:
 
 - **Zone 1 — Race header:** title (mono 800) + one-sentence dek (registry
   copy); meta stat blocks REPORTED VOTES · EST. REPORTING · RACE STATUS
@@ -171,7 +171,7 @@ substituting TPSI components and vocabulary:
 JetBrains Mono throughout (§7). Mobile: zones stack in the same order;
 Zone 2 cards stack results-first.
 
-## 4 · SECTION SPECS (content/behavior detail for Zones 4–8; restyle in TPSI tokens)
+## 4 · SECTION SPECS (content/behavior detail for Zones 4–8; restyle in On Point Polling tokens)
 
 **§4a Turnout & Remaining** (tier 3+): three stat blocks
 (VOTES REPORTED / EST. OUTSTANDING / PROJECTED TURNOUT — AUC turnout model
@@ -191,7 +191,7 @@ surge onto another (the sentence should be able to say exactly that).
 **§4c Live Timeline** (`telemetry:true` only; BUILD NOW, FLAG OFF):
 three charts on one shared time axis — WIN PROBABILITY · EST. REPORTING ·
 PROJECTED FINAL SHARE — hover-synced (one moment highlights across all
-three), click-to-expand each. Marks: gate region, TPSI call line, now-point.
+three), click-to-expand each. Marks: gate region, On Point Polling call line, now-point.
 Data source: flight-recorder snapshots (§6). When flag off, section does not
 mount and D's footer carries the absence line. Public debut: Nov 3 general.
 
@@ -246,7 +246,7 @@ One page under the results route (e.g. `/results/local?date=…`):
   `electionLib` utilities into the new tree (converted to TS); RETIRE the
   rest of the onpoint page stack (`OpaResultsPage`, `DayView`,
   `ElectionCalendar`, `ElectionResults`, `RaceDetail`, `resultRow`) once the
-  new desk reaches parity. Flag any onpoint piece with no TPSI equivalent
+  new desk reaches parity. Flag any onpoint piece with no On Point Polling equivalent
   for owner review BEFORE deletion.
 - **Desk typography exception:** desk headlines/panel titles/labels remain
   **JetBrains Mono** (`--font-numeric` family) — the Geist display switch

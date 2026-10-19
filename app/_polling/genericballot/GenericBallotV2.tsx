@@ -654,7 +654,7 @@ export default function PollingAveragesPage({ initialId, forecast }: { initialId
 
           <div className="callout">
             <div className="eye">Methodology</div>
-            The On Point average weights every public poll by recency, sample size, voter screen and pollster grade, and is rebuilt every day. TPSI polls are fielded by The Public Sentiment Institute. <Link href="/tpsi/methodology" style={{ textDecoration: "underline" }}>How the average works</Link>.
+            The On Point average weights every public poll by recency, sample size, voter screen and pollster grade, and is rebuilt every day. On Point Polling polls are fielded by On Point Polling. <Link href="/on-point-polling/methodology" style={{ textDecoration: "underline" }}>How the average works</Link>.
           </div>
         </aside>
       </div>

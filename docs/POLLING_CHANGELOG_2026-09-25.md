@@ -6,12 +6,12 @@ Averages page gained a clickable state map for the 2026 Senate and governor grou
 
 ## Where the averages land
 
-| Series | PSI average | RCP flat average |
+| Series | On Point Polling average | RCP flat average |
 |---|---|---|
 | Trump job approval | **40.3 / 58.3**, net −18.0 | 38.9 / 59.7, net −20.8 |
 | Generic ballot | **D 51.3 / R 43.4**, D+8.2 | 50.6 / 41.9, D+8.7 |
 
-PSI runs two to three points friendlier to Trump than RCP on approval. That is the
+On Point Polling runs two to three points friendlier to Trump than RCP on approval. That is the
 pollster-grade weighting doing its job, not a data gap: Rasmussen, Quantus, Big Data and
 Trafalgar all carry weight multipliers here and all sit on the high side of the approval
 range, while RCP averages every included poll flat.
@@ -607,11 +607,11 @@ and carries almost no weight on 25 September.
 Marist is the newest Iowa poll and the only one with Turek clearly ahead, 50 to 42, and it
 carries **2.5%** of the average. Trafalgar carries 32%. Three things stack:
 
-- The TPSI scorecard grades Marist **C**, weight 0.25. Trafalgar is A-, weight 1.70.
+- The On Point Polling scorecard grades Marist **C**, weight 0.25. Trafalgar is A-, weight 1.70.
 - It is a registered voter sample, weighted a third of a likely voter one.
 - 5% undecided takes it to 0.15 on the undecided penalty.
 
-The scorecard is a TPSI editorial choice, so it was left alone. But it is the single
+The scorecard is an On Point Polling editorial choice, so it was left alone. But it is the single
 biggest reason this race sits at a coin flip rather than leaning Turek.
 
 **A matching gap in the same scorecard.** "New York Times/Siena University" matches no
@@ -628,10 +628,10 @@ House, Senate and governor, every race, at `AS_OF=2026-09-25`, with `M2_ANCHOR=g
 
 ## What the switch does
 
-The census leg, the TPSI respondent model on ACS composition, is anchored again to Gallup
+The census leg, the On Point Polling respondent model on ACS composition, is anchored again to Gallup
 party identification of 49 D to 39 R, converted to a likely voter two party share. That is
 the original Senate Mode specification, and it is the setting that was removed on 22
-September when the census leg moved onto the TPSI Meridian ballot. The approval leg and the
+September when the census leg moved onto the On Point Polling Meridian ballot. The approval leg and the
 polling leg keep the Meridian anchor, as they had before the 22nd. The House imports the
 same module, so one switch sets all three.
 

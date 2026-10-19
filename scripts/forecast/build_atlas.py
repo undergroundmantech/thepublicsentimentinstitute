@@ -13,7 +13,7 @@ Inputs (environment variables, defaults are the build machine paths):
   COVARS     county_covariates.csv          raw covariate values
   GAS        aaa_county_gas_YYYY-MM-DD.csv  AAA county regular gas price
   LOCAL      county_local_shift.csv         local conditions term, within state and state part
-  SEGS       county_segments_cal.csv        TPSI voter segments by county
+  SEGS       county_segments_cal.csv        On Point Polling voter segments by county
   DCPTS      datacenter_points.csv          data center points, lat lon
   ZIPC       zip_county.csv                 zip to county, for county lat lon centroids
   PRES24     pres24.csv                     2024 presidential by county
@@ -125,8 +125,8 @@ LAYERS = [
     ("rural", "Rurality", "1 to 9", "seq", "earth", "USDA rural urban continuum code, 1 is the largest metros"),
     ("evang", "Evangelical share", "%", "seq", "earth", "Evangelical and nondenominational adherents per 100 residents"),
     ("news", "News outlets", "per 100k", "seq", "cool", "Local news outlets per 100,000 residents"),
-    ("lpT", "Low propensity Trump voters", "% adults", "seq", "red", "TPSI segment placed by county through the census"),
-    ("lpH", "Low propensity Harris voters", "% adults", "seq", "blue", "TPSI segment placed by county through the census"),
+    ("lpT", "Low propensity Trump voters", "% adults", "seq", "red", "On Point Polling segment placed by county through the census"),
+    ("lpH", "Low propensity Harris voters", "% adults", "seq", "blue", "On Point Polling segment placed by county through the census"),
     ("loc", "Local conditions push", "pts", "div", "party", "What gas, jobs, growth, migration and data centers add to the county margin"),
     ("turn", "Projected turnout", "% adults", "seq", "cool", "Projected 2026 votes per adult resident"),
 ]

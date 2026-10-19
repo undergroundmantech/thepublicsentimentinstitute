@@ -67,7 +67,7 @@ export function needleFromRace(race: any, raceRule: RaceRule = "PLURALITY", poll
   const cands = race.candidates.filter((c: any) => c && c.name);
   if (cands.length < 2) return null;
 
-  // Poll-sort when a TPSI prior exists (e.g. the spotlight race) so "leader"
+  // Poll-sort when an On Point Polling prior exists (e.g. the spotlight race) so "leader"
   // means the model's leader, not whoever CivicAPI lists first at 0 votes.
   const sorted = pollAvg
     ? sortByPollAvg(cands as any, pollAvg)
@@ -112,7 +112,7 @@ export function needleFromRace(race: any, raceRule: RaceRule = "PLURALITY", poll
     const twoWay = oddsL + oddsR;
     const pLeader = twoWay > 0 ? oddsL / twoWay : 0.5;
     // A fixed turnout call overrides the engine's own AUC estimate (e.g. the
-    // spotlight race, where TPSI asserts a specific projected total instead
+    // spotlight race, where On Point Polling asserts a specific projected total instead
     // of letting the generic model extrapolate from 0% reporting).
     const modeledTotalVote = turnoutOverride ?? out.modeled_total_vote;
     const reportedTotalVote = cr.candidates.reduce((s, c) => s + (c.votes || 0), 0);

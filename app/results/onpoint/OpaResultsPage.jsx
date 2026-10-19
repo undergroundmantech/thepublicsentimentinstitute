@@ -8,7 +8,7 @@ export const OPA_GLOBAL_CSS = `
   @import url("https://fonts.googleapis.com/css2?family=Anton&family=Barlow+Condensed:wght@600;700;800;900&family=Inter:wght@400;500;600;700;800&family=Instrument+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&family=Oswald:wght@500;600;700&display=swap");
 
   :root {
-    /* ── TPSI Election Desk Design System §1 — canonical tokens (dark) ── */
+    /* ── On Point Polling Election Desk Design System §1 — canonical tokens (dark) ── */
     --page: #0a0a0c; --page-elev: #16161a; --page-sunken: #0a0a0c;
     --card: #111114; --card-2: #16161a; --card-bd: rgba(255,255,255,0.08);
     --ink: #f2f2f0; --ink-strong: #ffffff;
@@ -33,7 +33,7 @@ export const OPA_GLOBAL_CSS = `
     --scrollbar-thumb: #2a2a2a; --scrollbar-thumb-hover: #3a3a3a; --selection: rgba(255,255,255,0.12);
   }
   :root[data-opa-theme="light"] {
-    /* ── TPSI Election Desk Design System §1 — canonical tokens (light) ── */
+    /* ── On Point Polling Election Desk Design System §1 — canonical tokens (light) ── */
     --page: #f7f7f4; --page-elev: #f1f1ed; --page-sunken: #e9e9e4;
     --card: #ffffff; --card-2: #f1f1ed; --card-bd: #e8e8e2;
     --ink: #17171b; --ink-strong: #0a0a0c;

@@ -1,4 +1,4 @@
-"""TPSI respondent component, version 2 (Sept 29 2026).
+"""On Point Polling respondent component, version 2 (Sept 29 2026).
 
 What changed from version 1, all behind RESP_V2 (default on, RESP_V2=0 restores version 1):
 
@@ -15,7 +15,7 @@ What changed from version 1, all behind RESP_V2 (default on, RESP_V2=0 restores 
 
 3. State effects. The census leg used national cell coefficients plus a region effect, so two states
    in one region with the same demographics moved identically from 2024. A partially pooled state
-   effect on the 2024 to 2026 swing is now estimated from TPSI respondents in that state, with a
+   effect on the 2024 to 2026 swing is now estimated from On Point Polling respondents in that state, with a
    second nested level for state by race group. Each level is shrunk by an empirical Bayes
    (DerSimonian and Laird) estimate of its between state variance, so a state with 20 respondents
    moves little and a state with 400 moves in proportion to what its respondents show.
@@ -42,6 +42,7 @@ IMPUTED_COLS = ["party_id", "political_type", "ideology5", "issue_top1", "trump_
                 "ballot_method", "right_track", "econ_strain", "registered_to_vote"]
 
 AUDIT = {}
+FIVE_ROWS = []      # the five state respondents, kept apart from the census fits
 STATE_FX = {}          # abbr -> dict(state=, race={group: fx}, sd=)
 
 
@@ -56,6 +57,25 @@ def load(base):
     r = pd.read_csv(path, low_memory=False)
     a = dict(source_file=os.path.basename(path), sha256_12=hashlib.sha256(open(path, "rb").read()).hexdigest()[:12],
              rows_in_file=int(len(r)))
+    # Oct 19 2026: the unified file now also holds the On Point five state poll respondents (source_dataset
+    # onpoint_five_state_oct2026). Their polls already sit in the polling leg of the ten races they asked, so they stay
+    # out of the census cell fits, which are fitted on national generic ballot answers, and reach the model only through
+    # five_state.py (group swing offsets, House state effects, parameters). FIVE_STATE_IN_FITS=1 puts them in the fits.
+    if "source_dataset" in r:
+        _five = r.source_dataset.eq("onpoint_five_state_oct2026")
+        FIVE_ROWS.clear(); FIVE_ROWS.append(r[_five].copy())
+        if os.environ.get("FIVE_STATE_IN_FITS", "0") != "1":
+            _blank5 = {c for c in r.columns if r[c].isna().any()}
+            r = r[~_five].copy()
+            # the five state rows leave blanks in columns the national rows fill completely, so pandas reads those columns
+            # as floats; put whole number columns back to integers so every consumer sees the national file as before
+            for _c in r.columns:
+                if _c in _blank5 and r[_c].dtype.kind == "f" and r[_c].notna().all() and np.all(np.mod(r[_c].values, 1) == 0):
+                    r[_c] = r[_c].astype("int64")
+            r = r.drop(columns=[c for c in r.columns if r[c].isna().all() and c not in ("registered_to_vote",)
+                                and (c.startswith("op5_") or c in ("source_dataset", "zip", "county", "party_id_note", "weight_rv_pop", "weight_lv_pop",
+                                                                   "generic_ballot_imputation"))])
+        a["five_state_rows"] = int(_five.sum()); a["five_state_in_fits"] = os.environ.get("FIVE_STATE_IN_FITS", "0") == "1"
     if not ON:
         AUDIT["load"] = a; return r
     keep = (r.get("analysis_ready", 1) == 1) & (r.get("rqcm_flag", 0).fillna(0) != 1)

@@ -5,7 +5,7 @@ import { THEME_EVENT, getTheme, toggleTheme } from '../../../lib/theme'
 // The election section is dark-first; light mode is a first-class toggle.
 // Almost all styling flips automatically through CSS variables keyed on
 // <html data-opa-theme> — a SEPARATE attribute from the main site's
-// data-theme, so toggling here never changes the rest of the TPSI site (and
+// data-theme, so toggling here never changes the rest of the On Point Polling site (and
 // vice-versa). THIS file only carries the hex palettes that color MATH
 // needs — mix()/shade()/choropleth fills parse hex and can't read var(--x).
 // Components doing such math call useTheme() and read `P`; everything else just

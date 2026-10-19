@@ -13,7 +13,7 @@ const isLight = () =>
 export const PARTY = {
   // Classic, saturated party colors — the ones you think of when you
   // think "Democrat" / "Republican", not washed pastels. Theme-aware
-  // getters (TPSI Election Desk Design System §1 --dem/--gop/--c2/--called/
+  // getters (On Point Polling Election Desk Design System §1 --dem/--gop/--c2/--called/
   // --gop tokens) so a race card reads correctly in both light and dark.
   get dem() {
     return isLight() ? '#1d5fc4' : '#3b7bde';

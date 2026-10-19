@@ -81,7 +81,7 @@ function fmtRange(lo: number, hi: number, sep = " to ") {
   return `${fmtMargin(a)}${sep}${fmtMargin(b)}`;
 }
 
-/** Thin diagonal lines laid over any shape filled from the TPSI estimate, so a
+/** Thin diagonal lines laid over any shape filled from the On Point Polling estimate, so a
  *  modelled county never reads as a reported one. */
 function HatchDefs() {
   return (
@@ -104,7 +104,7 @@ function EstBar({ e }: { e: Estimate }) {
   );
 }
 
-/** Reported party where a state publishes it, the TPSI estimate where it does
+/** Reported party where a state publishes it, the On Point Polling estimate where it does
  *  not, summed for the whole country, one card per ballot category. */
 /** The electoral map's seat bar, for ballots: every reporting place rated, and
  *  the bar sized by the ballots each band holds, Safe D on the left edge to
@@ -149,7 +149,7 @@ function RatingBoard({ places, unit }: { places: { m: number | null; n: number; 
         {bands.filter((b) => b.c > 0).map((b) => (
           <span key={b.k}><i style={{ background: b.color }} />{b.label}<b>{b.c}</b></span>
         ))}
-        {estN ? <span className="note">{estN} rated from the TPSI estimate</span> : null}
+        {estN ? <span className="note">{estN} rated from the On Point Polling estimate</span> : null}
       </div>
     </div>
   );
@@ -165,7 +165,7 @@ function NationalCombined({ combined, loaded, cat, setCat, tilt }: {
       <div className="ev-nat-head">
         <h2 className="ev-h2">Nationwide party breakdown</h2>
         <p>
-          Reported party where a state publishes it, the TPSI estimate where it reports ballots as
+          Reported party where a state publishes it, the On Point Polling estimate where it reports ballots as
           Unspecified. Solid segments are reported, hatched segments are estimated.
         </p>
       </div>
@@ -200,7 +200,7 @@ function NationalCombined({ combined, loaded, cat, setCat, tilt }: {
                     <span className="src tilt">
                       Estimated returns apply party return rates {tilt.source === "live"
                         ? `measured today in ${tilt.states.length} party states`
-                        : "from the TPSI survey, until enough party states post returns"}
+                        : "from the On Point Polling survey, until enough party states post returns"}
                       {tilt.calib ? `, calibrated live against ${tilt.calib.states.map((s) => STATE_NAME[s] ?? s).join(" and ")}` : ""}, so they
                       differ from the request mix.
                     </span>
@@ -253,7 +253,7 @@ function ReturnNote({ tilt, reg }: { tilt: ReturnTilt; reg: boolean }) {
               ballots with party. The typical state has Republican requesters returning at {x(tilt.bR)} times the
               Democratic odds, but states differ a lot, so each simulation takes one measured state&apos;s gap rather
               than an average that the biggest state would dominate.</>
-          : <>Too few party states have posted returns to measure this live yet, so the TPSI survey stands in:
+          : <>Too few party states have posted returns to measure this live yet, so the On Point Polling survey stands in:
               Republican mail voters complete at {x(tilt.bR)} times the Democratic odds, Independents at {x(tilt.bO)} times.</>}
         {" "}In a state that mails every voter a ballot, a county&apos;s returns are read against the share of its
         ballots that will ever come back, about the forecast&apos;s turnout, not against every ballot mailed.
@@ -340,10 +340,10 @@ function EstimatePanel({ e, sub, mode, model, tilt, shade, setShade, st, adj }: 
     { k: "Republican", s: e.r, c: "var(--gop)" },
   ];
   return (
-    <section className="ev-est" aria-label="TPSI party estimate">
+    <section className="ev-est" aria-label="On Point Polling party estimate">
       <div className="ev-est-head">
         <div>
-          <span className="ev-est-tag">TPSI estimate</span>
+          <span className="ev-est-tag">On Point Polling estimate</span>
           <h2 className="ev-h2">Simulated party of these ballots</h2>
           <p className="ev-est-sub">{sub}</p>
         </div>
@@ -378,7 +378,7 @@ function EstimatePanel({ e, sub, mode, model, tilt, shade, setShade, st, adj }: 
           <p>
             Each county starts from the forecast&apos;s own 2026 electorate: the 1,152 voter types the model
             simulates in every county, by age, race, college, party, vote history and Trump approval, each with its
-            chance of turning out in this year&apos;s D+12 environment. A model fitted on {commas(model.meta.respondents)} TPSI
+            chance of turning out in this year&apos;s D+12 environment. A model fitted on {commas(model.meta.respondents)} On Point Polling
             likely voters then gives every type its chance of voting by mail, early in person or on Election Day, from
             its party, age, race, college, vote history and local lean, under the state&apos;s own ballot rules.
             {st ? <> In {STATE_NAME[st] ?? st}, {REGIME_WORD[regimeOf(model, st)]}.</> : null}
@@ -396,7 +396,7 @@ function EstimatePanel({ e, sub, mode, model, tilt, shade, setShade, st, adj }: 
           </p>
           {mode === "returned" && tilt ? <ReturnNote tilt={tilt} reg={model.meta.basis === "registration"} /> : null}
           <p>
-            The mode model is refit on {model.meta.draws} bootstrap resamples of TPSI likely voters, the skew scale is
+            The mode model is refit on {model.meta.draws} bootstrap resamples of On Point Polling likely voters, the skew scale is
             drawn from how far it moves when one check state is left out, and each state&apos;s electorate takes a party
             shock of its own. Every run is applied to today&apos;s county counts, and the range above is the middle 80% of
             those runs. It is an estimate of who is voting early, not a result.
@@ -446,7 +446,7 @@ export default function EarlyVoteDesk() {
   const [countyNames, setCountyNames] = useState<Record<string, string> | null>(null);
   const [tip, setTip] = useState<{ key: string; x: number; y: number } | null>(null);
   const [model, setModel] = useState<PartyModel | null>(null);
-  // how places with no party data are shaded: the TPSI estimate or raw volume
+  // how places with no party data are shaded: the On Point Polling estimate or raw volume
   const [shade, setShade] = useState<"estimate" | "turnout">("estimate");
 
   useEffect(() => { getPartyModel().then(setModel); }, []);
@@ -590,7 +590,7 @@ export default function EarlyVoteDesk() {
     return out;
   }, [scope, countyNames, data]);
 
-  // TPSI party estimate for every place that reports no party. A county is one
+  // On Point Polling party estimate for every place that reports no party. A county is one
   // part at its own 2024 lean. A state on the national map, or a county with no
   // matching shape, is its counties weighted by adults.
   // The feed's own age and race counts for an open state, when it publishes them,
@@ -612,7 +612,7 @@ export default function EarlyVoteDesk() {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const adj: DemoAdjust = useMemo(() => (cat === "total" ? null : adjOf(cat)), [model, scope, cat, demoAdj]);
 
-  // TPSI party estimate for every place that reports no party. A county is its own
+  // On Point Polling party estimate for every place that reports no party. A county is its own
   // forecast electorate. A state on the national map, or a county with no matching
   // shape, is its counties weighted by adults.
   // One feed category's estimate on one payload: the rows it reports with no party,
@@ -736,7 +736,7 @@ export default function EarlyVoteDesk() {
     if (showEst && e) return leadFill(e.margin, sumRow(row));
     return vol ? turnoutFill(vol.t(sumRow(row))) : "var(--ev-nodata)";
   };
-  /** the margin a place is rated on: reported party, else the TPSI estimate when it is shown */
+  /** the margin a place is rated on: reported party, else the On Point Polling estimate when it is shown */
   // In the total a county can report party on one part and not the other, so its
   // margin is the reported ballots plus the estimate of the rest, over all of them.
   const mixed = (key: string, row: RegionRow) => {
@@ -806,7 +806,7 @@ export default function EarlyVoteDesk() {
           <div className="pmeta">
             <span>General election <b>November 3, 2026</b></span>
             {data?.snapshot_date ? <span>Snapshot <b>{data.snapshot_date}</b></span> : null}
-            <span>Modeled by <b>TPSI</b> where states report no party or demographics</span>
+            <span>Modeled by <b>On Point Polling</b> where states report no party or demographics</span>
             {!national ? <button className="ev-link" onClick={() => setScope("US")}>Back to all states</button> : <span>Click a state for its counties</span>}
           </div>
         </header>
@@ -931,7 +931,7 @@ export default function EarlyVoteDesk() {
                   </span>
                   <b>D lead</b>
                   <span><i className="sw" style={{ background: "var(--lead-low)" }} />under 20 ballots</span>
-                  {showEst ? <span><i className="sw" style={{ background: "repeating-linear-gradient(45deg, var(--mute) 0 2px, transparent 2px 5px)" }} />TPSI party estimate</span> : null}
+                  {showEst ? <span><i className="sw" style={{ background: "repeating-linear-gradient(45deg, var(--mute) 0 2px, transparent 2px 5px)" }} />On Point Polling party estimate</span> : null}
                   <span>{national ? "registered party of the ballots cast, by state" : "registered party of the ballots cast, by county"}{!national ? " · turn off bubbles to name the largest counties" : ""}</span>
                 </div>
               ) : null}
@@ -955,8 +955,8 @@ export default function EarlyVoteDesk() {
                   {allNoParty
                     ? `${national ? "None of the reporting states attach" : `${STATE_NAME[scope] ?? scope} does not attach`} a party to these ballots. `
                     : `${noPartyRows.length} ${national ? (noPartyRows.length === 1 ? "state reports" : "states report") : (noPartyRows.length === 1 ? "county reports" : "counties report")} no party. `}
-                  Hatched {national ? "states" : "counties"} are shaded by the TPSI party estimate, simulated from
-                  the forecast&apos;s 2026 electorate and TPSI polling on how each kind of voter casts a ballot.
+                  Hatched {national ? "states" : "counties"} are shaded by the On Point Polling party estimate, simulated from
+                  the forecast&apos;s 2026 electorate and On Point Polling polling on how each kind of voter casts a ballot.
                 </p>
               ) : allNoParty ? (
                 <p className="ev-mapnote">
@@ -1097,7 +1097,7 @@ export default function EarlyVoteDesk() {
                 return (
                   <div className="s rated">
                     <span className="pill" style={{ background: r.color, color: r.rating === "SAFE" || r.rating === "LIKELY" ? "#fff" : "#111" }}>{r.label}</span>
-                    {sv && sv.u > 0 ? (sv.d + sv.r > 0 ? "reported plus TPSI estimate · " : "TPSI estimate · ") : m === null ? "TPSI estimate · " : ""}{catMeta.blurb}
+                    {sv && sv.u > 0 ? (sv.d + sv.r > 0 ? "reported plus On Point Polling estimate · " : "On Point Polling estimate · ") : m === null ? "On Point Polling estimate · " : ""}{catMeta.blurb}
                   </div>
                 );
               })()}
@@ -1121,7 +1121,7 @@ export default function EarlyVoteDesk() {
                 const e = est.byKey[tip.key];
                 return (
                   <>
-                    <div className="est-h">TPSI estimate</div>
+                    <div className="est-h">On Point Polling estimate</div>
                     {([["Democratic", e.d, "var(--dem)"], ["Republican", e.r, "var(--gop)"], ["Independent", e.i, "var(--muted2)"]] as const).map(([g, s, c]) => (
                       <div key={g} className="row"><i style={{ background: c }} /><b>{g}</b>
                         <span>{commas(s * t)}</span><u>{(s * 100).toFixed(1)}%</u></div>

@@ -2,7 +2,7 @@
 
 // South Carolina county map — RESULTS ONLY.
 //
-// There is no TPSI poll of this runoff and therefore no county model, so this
+// There is no On Point Polling poll of this runoff and therefore no county model, so this
 // map has no forecast layer. It paints counties from live returns and nothing
 // else: grey until a county reports, then a Graham/Norman divergent ramp on the
 // reported margin. Anything more would be inventing 46 county estimates out of

@@ -1,4 +1,4 @@
-"""TPSI Candidate Mode: candidate quality, strength and weakness from the 2026 primaries and the polls.
+"""On Point Polling Candidate Mode: candidate quality, strength and weakness from the 2026 primaries and the polls.
 
 Four measures, each independent of the national environment because each is read inside one party or against the
 model's own environment based fundamentals:
@@ -17,7 +17,7 @@ model's own environment based fundamentals:
    where and among whom a candidate wins, not the party's statewide base.
 
 3. Candidate strength against the environment. Where polls exist, the gap between the polling average and the model's
-   own fundamentals, which already carry Trump approval, the Gallup environment, the census and TPSI electorate, the
+   own fundamentals, which already carry Trump approval, the Gallup environment, the census and On Point Polling electorate, the
    money and party unity, less the average gap across every polled race, which is the national environment, is what is
    left: the candidates themselves. Half of it, shrunk by the number of polls as
    n / (n + 4) and held to 0.12, moves the approval and census legs toward it.
@@ -71,7 +71,7 @@ GROUPS = [("Black", lambda ai, ri, ci: ri == 1), ("Hispanic", lambda ai, ri, ci:
           ("under 30", lambda ai, ri, ci: ai == 0), ("65 and over", lambda ai, ri, ci: ai == 3)]
 
 def primary_electorate(sm, model, st, fl):
-    """[C, 32, 3] expected primary voters by cell and party: ACS adults, the TPSI party mix solved to the county's 2024
+    """[C, 32, 3] expected primary voters by cell and party: ACS adults, the On Point Polling party mix solved to the county's 2024
     result, and the DSMeridian likely voter propensity of that cell's regular voters, the people who vote in primaries."""
     import history as hi, electorate as ev
     reg = model["state_region"][sm.STATES[st].get("base", st[:2])]

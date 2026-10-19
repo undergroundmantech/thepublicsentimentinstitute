@@ -206,7 +206,7 @@ export default async function Page({ params }: { params: Promise<{ state: string
           </div>
           <div className="callout">
             <div className="eye">Methodology</div>
-            Every county is rebuilt by simulating voters going to the polls, 2,000 times, from TPSI survey data, past results, and the polling average. <Link href="/forecast/methodology" style={{ textDecoration: "underline" }}>How the model works</Link>.
+            Every county is rebuilt by simulating voters going to the polls, 2,000 times, from On Point Polling survey data, past results, and the polling average. <Link href="/forecast/methodology" style={{ textDecoration: "underline" }}>How the model works</Link>.
           </div>
         </aside>
       </div>

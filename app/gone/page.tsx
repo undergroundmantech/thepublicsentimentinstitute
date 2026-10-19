@@ -10,7 +10,7 @@ export default function Gone() {
       <section className="ph" style={{ padding: "64px 0 40px", maxWidth: 720 }}>
         <div className="eye mono">410 Gone</div>
         <h1 style={{ fontSize: "clamp(34px,5vw,56px)" }}>This page was <em>retired</em></h1>
-        <p className="lede">It was an early experiment from tpsielections.com and is not coming back. What it showed now lives on the pages below.</p>
+        <p className="lede">It was an early experiment from our old site and is not coming back. What it showed now lives on the pages below.</p>
         <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginTop: 22 }}>
           <Link className="btn g" href="/polls">Polling averages</Link>
           <Link className="btn" href="/forecast">Forecast</Link>

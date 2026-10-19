@@ -71,11 +71,11 @@ function LoginForm() {
       <div className="card pl-card">
         <div className="card-h"><h3>Client portal</h3><span className="eye" style={{ marginLeft: "auto" }}>Internal</span></div>
         <div className="card-b">
-          <div className="eye g">On Point Politics · TPSI</div>
+          <div className="eye g">On Point Politics · On Point Polling</div>
           <h1>Sign in to the <em>portal</em></h1>
           <p className="pl-deck">
             Internal election desk. Everything behind this page is working analysis, not
-            published TPSI output.
+            published On Point Polling output.
           </p>
 
           <form onSubmit={submit}>

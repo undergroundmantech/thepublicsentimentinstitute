@@ -7,7 +7,7 @@ and structure should carry over one to one.
 ## Masthead `.top`
 Sticky, `rgba(10,7,17,.72)` + `backdrop-filter: blur(18px) saturate(140%)`, 66px tall,
 1px `--line` bottom border. Left: white lockup SVG at 44px. Middle: six links
-`Polls · Forecast · Maps · Results · Early Vote · TPSI`. Results gets `.live` (pulsing
+`Polls · Forecast · Maps · Results · Early Vote · On Point Polling`. Results gets `.live` (pulsing
 red dot, only when `RESULTS_LIVE` is true). Right: `.btn` Search and `.btn.gold`
 The Weighting Room. Under 960px hide the nav links and Search, keep the logo and
 gold button, add a hamburger.
@@ -20,7 +20,7 @@ const NAV = [
   { href: "/maps", label: "Maps" },
   { href: "/results", label: "Results", live: RESULTS_LIVE },
   { href: "/maps/early-vote", label: "Early Vote" },
-  { href: "/tpsi", label: "TPSI" },
+  { href: "/on-point-polling", label: "On Point Polling" },
 ];
 ```
 

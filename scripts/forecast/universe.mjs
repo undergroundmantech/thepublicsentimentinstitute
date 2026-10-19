@@ -1,5 +1,5 @@
 // ─────────────────────────────────────────────────────────────────────────────
-// TPSI Forecast — the 2026 race universe.
+// On Point Polling Forecast — the 2026 race universe.
 // 36 governorships · 35 Senate seats (class 2 + FL/OH specials) · 435 House
 // districts. Partisan baselines are PVI-style leans (R+ positive, D+ negative
 // on the model's Republican-margin scale). Marquee contests carry curated

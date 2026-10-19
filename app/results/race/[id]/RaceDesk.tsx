@@ -265,7 +265,7 @@ function Board({ doc, primary, onMap }: { doc: any; primary?: boolean; onMap: (r
   // Dustin's forecast engine (app/lib/electoralModel) drives the needle —
   // pass the race's real electoral rule so MAJORITY_RUNOFF/THRESHOLD_*
   // races actually trigger runoff math instead of silently defaulting to
-  // plain PLURALITY. The spotlight race also carries a TPSI poll prior
+  // plain PLURALITY. The spotlight race also carries an On Point Polling poll prior
   // (coverage.2026-08-04.ts) so the needle asserts the same forecast the
   // results hub shows, instead of an unweighted tie at 0% reporting.
   const coverageEntry = getCoverage(Number(doc?.id));
@@ -281,7 +281,7 @@ function Board({ doc, primary, onMap }: { doc: any; primary?: boolean; onMap: (r
   const totalVotes = Array.isArray(race?.candidates)
     ? race.candidates.reduce((s: number, c: any) => s + (Number(c.votes) || 0), 0)
     : 0;
-  // CO-04 §2 state machine — TPSI hasn't shipped an independent projection
+  // CO-04 §2 state machine — On Point Polling hasn't shipped an independent projection
   // call yet (tpsiCalled stays false), so PROJECTED only ever comes from an
   // official CivicAPI winner flag until that model lands.
   const raceState = getRaceState({ percentReporting: reporting, hasOfficialCall: called, tpsiCalled: false });

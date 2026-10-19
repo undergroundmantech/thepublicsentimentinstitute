@@ -1,8 +1,8 @@
-"""TPSI Voter File Mode: a simulated voter file for every county, built from individual TPSI respondents.
+"""On Point Polling Voter File Mode: a simulated voter file for every county, built from individual On Point Polling respondents.
 
 Every adult in a county belongs to one of 384 groups: 32 ACS cells of age, race and college, times Democrats,
 Republicans and independents, times four vote histories (Vote History Mode sets how many adults are in each group and
-calibrates the histories to certified 2022 and 2024 turnout). Each group is filled with real TPSI respondents who share
+calibrates the histories to certified 2022 and 2024 turnout). Each group is filled with real On Point Polling respondents who share
 its cell, party and vote history, so every simulated voter carries a full respondent profile: gender, income, ideology,
 2024 vote, Trump approval, right or wrong track, economic strain, top issue, immigration opinion and the DSMeridian
 likely voter score. Where a group has too few respondents, respondents who match it on race, college, party and history
@@ -14,11 +14,11 @@ For each simulated voter:
     party enthusiasm, county primary turnout and competition, from Vote History Mode) moved by half of the voter's own
     DSMeridian score against the group's average, with one constant per county and group keeping that group's
     expected 2026 turnout, so the spread of individual scores never changes who the electorate is.
-  * Trump approval is simulated from the TPSI county approval file. A ridge logistic model of approving against
+  * Trump approval is simulated from the On Point Polling county approval file. A ridge logistic model of approving against
     disapproving, on every other attribute, gives each voter a chance of approving; one county constant makes the
-    county's likely voters reproduce the county's TPSI two way approval. A second model gives the chance of having no
+    county's likely voters reproduce the county's On Point Polling two way approval. A second model gives the chance of having no
     opinion.
-  * Vote preference comes from a ridge logistic model of the TPSI generic ballot on every attribute, evaluated under
+  * Vote preference comes from a ridge logistic model of the On Point Polling generic ballot on every attribute, evaluated under
     each approval state and mixed by that voter's approval chances. Candidate effects from the primaries then move the
     voters of each party in each cell and county.
   * The county's party mix is solved so the simulated voters' own recalled 2024 votes reproduce the county's certified
@@ -436,7 +436,7 @@ def _ranges(u, defs, votes_of, pref, z, zband, nd, lpA, lpD, pn, pa, sm, clipz=N
     Two sources of uncertainty, combined in log odds:
       the race itself: every county's preference constant moves together by the state's 10th and 90th percentile
       simulated swing, so each group moves by its own sensitivity and every range stays consistent with the topline;
-      the group estimate: a group holding share s of the electorate is read from about s x N TPSI respondents, where N
+      the group estimate: a group holding share s of the electorate is read from about s x N On Point Polling respondents, where N
       is the respondent count after quality filters, giving a sampling spread of 1 / sqrt(s N p (1 - p)), plus the
       pooled state effect's own spread from respondent_v2."""
     import respondent_v2 as _rv
@@ -485,7 +485,7 @@ def _ranges(u, defs, votes_of, pref, z, zband, nd, lpA, lpD, pn, pa, sm, clipz=N
 
 def race_lambda(sm, n0=100.0):
     """How far each race group's party identification moves with its county's partisanship, relative to white adults,
-    from TPSI respondents: the slope of Democratic over Republican identification on the respondent's county 2024 vote,
+    from On Point Polling respondents: the slope of Democratic over Republican identification on the respondent's county 2024 vote,
     shrunk toward one by n / (n + 100) and held between 0.3 and 1. Used so a county's party mix moves each group by its
     own amount: a Black voter in a deep red county stays far more Democratic than a white voter there."""
     if "lam" in _M: return _M["lam"]

@@ -67,7 +67,7 @@ export const isoDay = (d: string) => (/^\d{4}-\d{2}-\d{2}$/.test(d) ? `${d}T08:0
 type LD = Record<string, unknown>;
 
 export const ORG_ID = `${SITE.url}/#organization`;
-export const PUB_ID = `${SITE.url}/#tpsi`;
+export const PUB_ID = `${SITE.url}/#on-point-polling`;
 export const SITE_ID = `${SITE.url}/#website`;
 
 export function orgLd(): LD[] {
@@ -89,9 +89,8 @@ export function orgLd(): LD[] {
       "@type": "ResearchOrganization",
       "@id": PUB_ID,
       name: SITE.publisher,
-      alternateName: ["The Public Sentiment Institute", "TPSI"],
-      url: abs("/tpsi"),
-      description: "On Point Polling, formerly The Public Sentiment Institute, is the polling and research arm behind On Point Politics: survey fieldwork, the DSMeridian likely voter model and dual panel surveys.",
+      url: abs("/on-point-polling"),
+      description: "On Point Polling is the polling and research arm behind On Point Politics: survey fieldwork, the DSMeridian likely voter model and dual panel surveys.",
     },
     {
       "@type": "WebSite",

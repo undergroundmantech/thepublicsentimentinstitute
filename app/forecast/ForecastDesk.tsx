@@ -375,7 +375,7 @@ export default function ForecastDesk({ initialOffice = "house", embedded = false
       ) : null}
       <p className="fc-foot">
         Fundamentals, the polling average, expert ratings and markets, then {model.meta.sims.toLocaleString()} correlated
-        simulations. Fieldwork for the TPSI polls in the model by The Public Sentiment Institute.{" "}
+        simulations. On Point Polling fields its own polls in the model.{" "}
         <Link href="/forecast/methodology">How the model works</Link>.
       </p>
     </div>
@@ -1509,7 +1509,7 @@ function SectionCrosstabs({ race }: { race: Race }) {
     <Sec eye="Simulated crosstabs" title={`How ${race.state} is projected to vote`}>
         <p className="fc-body">
           Estimates for the {race.name} race read off the simulated voter file, not asked of anyone. Every
-          county&rsquo;s adults are rebuilt as TPSI respondents matched on age, race, college, party and vote history,
+          county&rsquo;s adults are rebuilt as On Point Polling respondents matched on age, race, college, party and vote history,
           each one given a chance of turning out and a vote, and then summed by group. Share is the group&rsquo;s
           portion of projected voters; the candidate columns are percent of that group. Margins run Republican positive,
           as they do everywhere else on this page.

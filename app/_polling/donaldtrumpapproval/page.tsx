@@ -222,7 +222,7 @@ function StateMap({ tpsiNet, tpsiApprove, tpsiDisapprove }: {
         <div className="pap-stripe" />
         <div className="pap-hero-inner">
           <div>
-            <div className="pap-eyebrow">State-by-State · TPSI Correction Applied</div>
+            <div className="pap-eyebrow">State-by-State · On Point Polling Correction Applied</div>
             <h2 className="pap-hero-title" style={{ fontSize: "clamp(18px,2.5vw,32px)" }}>
               Trump Approval<br />
               <em style={{
@@ -234,12 +234,12 @@ function StateMap({ tpsiNet, tpsiApprove, tpsiDisapprove }: {
               }}>by State</em>
             </h2>
             <p className="pap-hero-desc">
-              Averaged from Civiqs, Economist/YouGov & Morning Consult — corrected to TPSI national avg.
+              Averaged from Civiqs, Economist/YouGov & Morning Consult — corrected to On Point Polling national avg.
               Hover any state for detail.
             </p>
             <div className="pap-hero-badge-row">
               <span className="pap-badge pap-badge-purple">SOURCE: CIVIQS · ECONOMIST · MORNING CONSULT</span>
-              <span className="pap-badge pap-badge-gold">CORRECTED TO TPSI NATIONAL AVG</span>
+              <span className="pap-badge pap-badge-gold">CORRECTED TO On Point Polling NATIONAL AVG</span>
               <span className="pap-badge">RAW NAT'L NET: {rawNationalNet >= 0 ? "+" : ""}{rawNationalNet.toFixed(1)}</span>
               <span className="pap-badge" style={{
                 borderColor: "rgba(251,191,36,0.3)",
@@ -252,9 +252,9 @@ function StateMap({ tpsiNet, tpsiApprove, tpsiDisapprove }: {
           </div>
           <div className="pap-hero-read">
             {[
-              { label: "TPSI APPROVE",    val: `${tpsiApprove.toFixed(1)}%`,    color: "rgba(77,127,212,1)"},
-              { label: "TPSI DISAPPROVE", val: `${tpsiDisapprove.toFixed(1)}%`, color: "rgba(255,0,64,0.9)" },
-              { label: "TPSI NET",        val: `${tpsiNet >= 0 ? "+" : ""}${tpsiNet.toFixed(1)}`, color: tpsiNet >= 0 ? "rgba(77,127,212,1) " : "rgba(255,0,64,0.9)" },
+              { label: "On Point Polling APPROVE",    val: `${tpsiApprove.toFixed(1)}%`,    color: "rgba(77,127,212,1)"},
+              { label: "On Point Polling DISAPPROVE", val: `${tpsiDisapprove.toFixed(1)}%`, color: "rgba(255,0,64,0.9)" },
+              { label: "On Point Polling NET",        val: `${tpsiNet >= 0 ? "+" : ""}${tpsiNet.toFixed(1)}`, color: tpsiNet >= 0 ? "rgba(77,127,212,1) " : "rgba(255,0,64,0.9)" },
             ].map(({ label, val, color }) => (
               <div key={label} className="pap-hero-read-row">
                 <span className="pap-hero-read-label">{label}</span>
@@ -498,10 +498,10 @@ function StateMap({ tpsiNet, tpsiApprove, tpsiDisapprove }: {
             State net approval figures are sourced from Civiqs, The Economist/YouGov, and Morning Consult
             tracking polls. The three-pollster simple average is corrected by an additive offset equal to the
             difference between the population-weighted implied national net from raw state data and the current
-            TPSI-adjusted national average (correction: {correctionOffset >= 0 ? "+" : ""}{correctionOffset.toFixed(1)} points).
+            On Point Polling adjusted national average (correction: {correctionOffset >= 0 ? "+" : ""}{correctionOffset.toFixed(1)} points).
             Approve/Disapprove splits are derived symmetrically around 50. State boundaries rendered using
             D3 geoAlbersUsa projection from US Atlas TopoJSON. Data from Civiqs, Economist/YouGov,
-            and Morning Consult; corrected to TPSI national weight.
+            and Morning Consult; corrected to On Point Polling national weight.
           </p>
         </div>
       </div>
@@ -560,7 +560,7 @@ export default function TrumpApprovalPage() {
               </h1>
               <p className="pap-hero-desc">
                 Daily weighted average across all included polls — recency decay,
-                sigmoid sample curve, tracker LV/RV/A ladder, PSI Gold Standard upweighting, and a 15% cap on any single poll.
+                sigmoid sample curve, tracker LV/RV/A ladder, On Point Polling Gold Standard upweighting, and a 15% cap on any single poll.
               </p>
               <div className="pap-hero-badge-row">
                 <span className="pap-badge pap-badge-live"><span className="pap-live-dot" />LIVE TRACKING</span>

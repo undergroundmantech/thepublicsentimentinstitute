@@ -3,7 +3,7 @@ name: opp-ui
 description: >
   OnPoint Politics design system. Use when styling any page or component on
   onpointpolitics.com (formerly tpsielections.com): the home desk, polling
-  averages, forecast and race pages, results pages, TPSI releases, nav, footer,
+  averages, forecast and race pages, results pages, On Point Polling releases, nav, footer,
   cards, tables, maps, charts, buttons, badges. Replaces the old psi-ui skill.
   Provides tokens, type, components, motion and map color rules so every page
   looks like the approved rebrand mock.
@@ -48,7 +48,7 @@ Reference files in this folder:
   <section class="sec">     county simulation map + race side panel
   <section class="sec">     polling averages, two chart cards with pinned average row
   <section class="sec">     results desk, two result cards + countdown card
-  <section class="sec">     TPSI releases, four story cards with mini maps
+  <section class="sec">     On Point Polling releases, four story cards with mini maps
   <section class="sec">     CTA band
 <footer class="foot">       five columns, white lockup, credits
 ```

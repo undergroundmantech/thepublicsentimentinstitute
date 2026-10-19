@@ -2,7 +2,7 @@
 
 Snapshot of the **latest available official voter-registration counts** for all 50 states + DC,
 at **statewide** and **county (or county-equivalent)** granularity, with party breakdowns where states
-register by party. Compiled June 2026 for The Public Sentiment Institute.
+register by party. Compiled June 2026 for On Point Polling.
 
 - **51 jurisdictions** (50 states + DC)
 - **3,541 county/sub-state units** with registration totals

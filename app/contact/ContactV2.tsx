@@ -72,7 +72,7 @@ export default function ContactPage() {
       if (!res.ok) throw new Error("server error");
       setStatus({ type: "sent" });
     } catch {
-      const subject = encodeURIComponent("[PSI Project Request] " + (form.topic || "General Inquiry"));
+      const subject = encodeURIComponent("[On Point Polling Project Request] " + (form.topic || "General Inquiry"));
       const body = encodeURIComponent(
         [
           `Name: ${form.name}`,
@@ -100,7 +100,7 @@ export default function ContactPage() {
       <header className="ph">
         <div className="eye g">Contact the desk</div>
         <h1>Partner with the <em>desk</em></h1>
-        <p className="lede">Custom surveys, recurring tracks and partner research, scoped, fielded by The Public Sentiment Institute and delivered with the crosstabs. Inquiries go directly to the research team.</p>
+        <p className="lede">Custom surveys, recurring tracks and partner research, scoped, fielded by On Point Polling and delivered with the crosstabs. Inquiries go directly to the research team.</p>
         <div className="pmeta">
           <span>Replies in <b>24 to 48 hours</b></span>
           <span>Model <b>Meridian coalition voter model</b></span>
@@ -182,7 +182,7 @@ export default function ContactPage() {
               ))}
             </div>
           </div>
-          <div className="callout"><div className="eye">Fieldwork</div>Polls are fielded by The Public Sentiment Institute for On Point Politics. See the <Link href="/tpsi/services" style={{ textDecoration: "underline" }}>services</Link> and <Link href="/tpsi/methodology" style={{ textDecoration: "underline" }}>methodology</Link>.</div>
+          <div className="callout"><div className="eye">Fieldwork</div>Polls are fielded by On Point Polling for On Point Politics. See the <Link href="/on-point-polling/services" style={{ textDecoration: "underline" }}>services</Link> and <Link href="/on-point-polling/methodology" style={{ textDecoration: "underline" }}>methodology</Link>.</div>
         </aside>
       </div>
     </div>

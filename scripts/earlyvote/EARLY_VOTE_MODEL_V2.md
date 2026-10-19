@@ -15,7 +15,7 @@ These states hold 6.7 million of the 17.0 million mail ballot requests in the fe
 ## What was wrong with version 1
 
 1. **It ran on a different electorate than the forecast.**
-   - Version 1 rebuilt each county from its 2024 Trump share plus the swing inside the TPSI sample, about two points toward Democrats.
+   - Version 1 rebuilt each county from its 2024 Trump share plus the swing inside the On Point Polling sample, about two points toward Democrats.
    - The forecast runs on D+12.
    - So the early vote page and the forecast disagreed on who is voting.
 2. **It treated every request as a self selected mail voter.**
@@ -46,12 +46,12 @@ These states hold 6.7 million of the 17.0 million mail ballot requests in the fe
 | Excuse needed, most often age | Indiana, Mississippi |
 
 **3. How each voter type votes.**
-- A multinomial logit on 2,313 TPSI likely voters with a definite plan gives every type its chance of voting by mail, early in person or on Election Day.
+- A multinomial logit on 2,313 On Point Polling likely voters with a definite plan gives every type its chance of voting by mail, early in person or on Election Day.
 - The inputs are party, age, race, college, vote history, local lean and the state's rule. Party and age effects are allowed to differ by rule.
 - A county's mail voters are its forecast voters times their mail chance, type by type.
 - In a universal mail state, a request is a registered voter. The registration chance is set so that each state's file matches the feed's request count. The eventual returns are the electorate itself.
 
-TPSI likely voters by state rule:
+On Point Polling likely voters by state rule:
 
 | Rule | Mail | Early in person | Election Day |
 |---|---|---|---|
@@ -134,7 +134,7 @@ By state, with counties weighted by adults; the page itself weights by each coun
 ## Limits
 
 - **Party identification, not registration.** Figures cannot be compared one to one with registration counts.
-- **Small cells.** The excuse states rest on few TPSI mail voters, about 30. Their party and age effects lean on the national fit through the penalty on the rule interactions.
+- **Small cells.** The excuse states rest on few On Point Polling mail voters, about 30. Their party and age effects lean on the national fit through the penalty on the rule interactions.
 - **Registration totals are typed in.** They come from the state releases and need refreshing: Florida August 31, North Carolina January 3, Pennsylvania August, New Jersey November 2025, Maryland August, Idaho October 1.
 - **The calibration is fixed at build time.** It uses October 1 requests. Rebuilding the file as requests grow will refresh it.
 
@@ -142,7 +142,7 @@ By state, with counties weighted by adults; the page itself weights by each coun
 
 - `scripts/earlyvote/build_party_model.py`: version 2. Version 1 is kept as `build_party_model_v1.py`.
 - `public/earlyvote-party-model.json`: 800 KB, with no respondent level data.
-- `app/maps/early-vote/lib.ts` and `EarlyVoteDesk.tsx` on On Point; `app/earlyvote/` on the TPSI copy.
+- `app/maps/early-vote/lib.ts` and `EarlyVoteDesk.tsx` on On Point; `app/earlyvote/` on the On Point Polling copy.
 
 Rebuild with:
 
@@ -150,15 +150,15 @@ Rebuild with:
 TPSI_DB=TPSI_Unified_Respondent_Dataset.csv TPSI_COUNTY=TPSI_Trump_Approval_By_County_Combined_FULL.csv FC_DIR=/tmp/fc_v47 python3 scripts/earlyvote/build_party_model.py
 ```
 
-## Oct 16 2026: the 2026 mode split from the TPSI national dataset, and the dashboard
+## Oct 16 2026: the 2026 mode split from the On Point Polling national dataset, and the dashboard
 
 - `build_electorate_model.py` now sets each state's expected split between mail, early in person and Election Day from
-  the TPSI national dataset, the mode model at the state's own counties, ages and ballot rules, pooled with the state's
-  2024 EAVS record in log odds at `TPSI_MODE_W` (0.5). TPSI alone puts about 64 percent of the vote on Election Day; 2024
+  the On Point Polling national dataset, the mode model at the state's own counties, ages and ballot rules, pooled with the state's
+  2024 EAVS record in log odds at `TPSI_MODE_W` (0.5). On Point Polling alone puts about 64 percent of the vote on Election Day; 2024
   put 37 percent there. Pooled, the nation is expected to cast about 27 percent by mail, 23 percent early in person and
-  50 percent on Election Day of 128.5 million votes. Set `TPSI_MODE_W=1` for TPSI alone.
-- New per state fields: `tpsi2026`, `target2026`, `women` (women's share of each mode's likely voters, TPSI, shrunk to
+  50 percent on Election Day of 128.5 million votes. Set `TPSI_MODE_W=1` for On Point Polling alone.
+- New per state fields: `tpsi2026`, `target2026`, `women` (women's share of each mode's likely voters, On Point Polling, shrunk to
   the nation at 40 respondents), `margin24` (Trump minus Harris, all votes) and `house` (the forecast's House vote).
 - The page is a dashboard (`app/maps/early-vote/Dashboard.tsx`): ballot tiles, the modeled 2026 vote of the ballots cast
   for a race, the final electorate shift, a forecast check, and side panels that report party, race, age and gender where
-  a state publishes them and fill the rest from the TPSI expectation for that state's mail and in person voters.
+  a state publishes them and fill the rest from the On Point Polling expectation for that state's mail and in person voters.

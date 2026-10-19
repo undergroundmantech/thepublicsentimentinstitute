@@ -4,13 +4,19 @@ usage: python3 ticket_split.py OUT_DYN
 For every state with both races, the two runs' voter types are matched county by county. Each type votes
 Democratic for Senate with chance pS and for governor with chance pG. The share voting Democratic in both is placed
 between the least splitting those two chances allow, min(pS, pG), and the most, max(0, pS + pG - 1), at the type's
-looseness lambda from TPSI respondents (behavior.py): P(both D) = min - lambda x (min - floor). So a straight
+looseness lambda from On Point Polling respondents (behavior.py): P(both D) = min - lambda x (min - floor). So a straight
 partisan type splits only as much as the two races differ for it, and a loose independent type splits more.
 Writes results[race]["ticket_splitting"] into run_summary.json and OUT_DYN/ticket_splitting.json."""
 import sys, os, json
 import numpy as np, pandas as pd
 
 OUT = sys.argv[1]
+# Oct 19 2026: looseness scaled to the On Point five state polls (Oct 16 to 19), which measured how many voters who chose
+# a Democrat or a Republican in both races split between the Senate and governor ballots: 3.1 percent in Texas to 8.9 in
+# South Carolina, against 6.4 to 9.0 from the unscaled voter types. One factor on every type's lambda, fitted by least
+# squares across the five states (ticket_calib.py), brings the mean miss from 2.3 to 1.5 points. TICKET_LAMBDA_SCALE=1
+# restores the unscaled looseness.
+LAM_SCALE = float(os.environ.get("TICKET_LAMBDA_SCALE", "0.528"))
 inv = lambda x: 1 / (1 + np.exp(-x))
 S = json.load(open(f"{OUT}/run_summary.json"))
 R = S["results"]
@@ -38,7 +44,7 @@ for sen in sorted(k for k in R if not k.endswith("G")):
     Va = a["pops"][ia] * inv(a["lt"][ia]); Vb = b["pops"][ib] * inv(b["lt"][ib])
     V = 0.5 * (Va + Vb)                                                          # one electorate, the two runs' mean
     pS, pG = inv(a["eta"][ia]).astype(float), inv(b["eta"][ib]).astype(float)
-    lam = a["lam"].astype(float)[None, :]
+    lam = np.clip(LAM_SCALE * a["lam"].astype(float)[None, :], 0.0, 1.0)
     mn = np.minimum(pS, pG); fl = np.maximum(0.0, pS + pG - 1)
     dd = mn - lam * (mn - fl)
     sDgR = pS - dd; sRgD = pG - dd
@@ -70,7 +76,7 @@ for sen in sorted(k for k in R if not k.endswith("G")):
                least_possible_split=share(np.abs(pS - pG)), groups=groups,
                heaviest_split_counties=[dict(fips=str(common[i]), split=round(100 * float(cs[i]), 1)) for i in top],
                simulated_outcomes=joint,
-               method="P(both D) = min(pS, pG) - lambda x (min(pS, pG) - max(0, pS + pG - 1)), lambda from TPSI 2024 to 2026 switching by party and vote history")
+               method="P(both D) = min(pS, pG) - lambda x (min(pS, pG) - max(0, pS + pG - 1)), lambda from On Point Polling 2024 to 2026 switching by party and vote history, scaled by " + str(LAM_SCALE) + " to the five state polls' observed splits")
     report[sen] = rep
     R[sen]["ticket_splitting"] = rep; R[gov]["ticket_splitting"] = rep
 json.dump(S, open(f"{OUT}/run_summary.json", "w"), indent=1, default=float)

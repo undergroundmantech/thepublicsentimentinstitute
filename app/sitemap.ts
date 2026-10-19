@@ -48,22 +48,22 @@ export default function sitemap(): MetadataRoute.Sitemap {
     u("/results", today, "daily", 0.8),
     u("/results/tonight", today, "daily", 0.7),
     u("/results/archive", today, "weekly", 0.5),
-    u("/tpsi", today, "monthly", 0.5),
-    u("/tpsi/methodology", today, "monthly", 0.5),
-    u("/tpsi/polls", today, "weekly", 0.6),
-    u("/tpsi/polls/texas-2026", "2026-10-18", "weekly", 0.8),
-    u("/tpsi/polls/ohio-2026", "2026-10-17", "weekly", 0.8),
-    u("/tpsi/polls/national-2026", today, "monthly", 0.6),
-    u("/tpsi/polls/la-mayor-2026", today, "monthly", 0.5),
-    u("/tpsi/services", today, "monthly", 0.4),
-    u("/tpsi/weighting-room", today, "monthly", 0.4),
-    u("/tpsi/sms", today, "yearly", 0.2),
+    u("/on-point-polling", today, "monthly", 0.5),
+    u("/on-point-polling/methodology", today, "monthly", 0.5),
+    u("/on-point-polling/polls", today, "weekly", 0.6),
+    u("/on-point-polling/polls/texas-2026", "2026-10-18", "weekly", 0.8),
+    u("/on-point-polling/polls/ohio-2026", "2026-10-17", "weekly", 0.8),
+    u("/on-point-polling/polls/national-2026", today, "monthly", 0.6),
+    u("/on-point-polling/polls/la-mayor-2026", today, "monthly", 0.5),
+    u("/on-point-polling/services", today, "monthly", 0.4),
+    u("/on-point-polling/weighting-room", today, "monthly", 0.4),
+    u("/on-point-polling/sms", today, "yearly", 0.2),
     u("/contact", today, "yearly", 0.3),
     u("/terms", today, "yearly", 0.1),
   );
 
   // the situation room ships dark in production until the desk launches it
-  if (SHOW_SITUATION_ROOM) out.push(u("/tpsi/situation-room", today, "daily", 0.5));
+  if (SHOW_SITUATION_ROOM) out.push(u("/on-point-polling/situation-room", today, "daily", 0.5));
 
   // forecast pages: marquee races first, so the sitemap reads in order of interest
   for (const r of model.races) out.push(u(raceHref(r.id), fc, "daily", r.office === "house" ? (r.marquee ? 0.8 : 0.6) : 0.9));

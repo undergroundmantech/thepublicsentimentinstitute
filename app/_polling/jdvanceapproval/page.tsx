@@ -85,7 +85,7 @@ export default function JDVanceFavorabilityPage() {
               </h1>
               <p className="pap-hero-desc">
                 Daily weighted average across all included polls — recency decay,
-                sigmoid sample curve, tracker LV/RV/A ladder, PSI Gold Standard upweighting, and a 15% cap on any single poll.
+                sigmoid sample curve, tracker LV/RV/A ladder, On Point Polling Gold Standard upweighting, and a 15% cap on any single poll.
               </p>
               <div className="pap-hero-badge-row">
                 <span className="pap-badge pap-badge-live"><span className="pap-live-dot" />LIVE TRACKING</span>

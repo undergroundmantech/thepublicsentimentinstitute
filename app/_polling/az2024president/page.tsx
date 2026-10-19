@@ -587,7 +587,7 @@ export default function PA2024PresidentPage() {
           <span className="pa24-footnote-text">
             Frozen Nov 5, 2024 · Recency decay · √n · LV/RV/A screen · Gold Standard ×2
           </span>
-          <span className="pa24-badge pa24-badge-archive">PSI · ACCURACY ON FILE</span>
+          <span className="pa24-badge pa24-badge-archive">ON POINT POLLING · ACCURACY ON FILE</span>
         </div>
       </div>
     </>

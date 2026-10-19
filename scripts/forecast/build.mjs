@@ -1,5 +1,5 @@
 // ─────────────────────────────────────────────────────────────────────────────
-// TPSI Forecast — model build.
+// On Point Polling Forecast — model build.
 //
 // Implements the layered VoteHub-style system:
 //   Stage I    fundamentals (PVI anchor → 2026 environment via elasticity,
@@ -58,10 +58,10 @@ const DAYS_OUT = Math.round((Date.parse(ELECTION) - Date.parse(TODAY)) / 8640000
 // ── the national environment, from the generic ballot ───────────────────────
 // A national poll bank feeds the same weighting machinery as race polls; the
 // average is regularized toward a midterm prior (out-party advantage scaled by
-// presidential net approval, −17.5 in the TPSI average) with the prior's
+// presidential net approval, −17.5 in the On Point Polling average) with the prior's
 // weight decaying to zero by Election Day.
 const NATIONAL_POLLSTERS = [
-  { n: "TPSI Poll",           q: 1.0,  he: 0.0 },
+  { n: "On Point Polling Poll",           q: 1.0,  he: 0.0 },
   { n: "Meridian Research",   q: 0.92, he: -0.4 },
   { n: "Beacon Analytics",    q: 0.9,  he: 0.5 },
   { n: "Statecraft Surveys",  q: 0.84, he: -0.8 },
@@ -161,7 +161,7 @@ function latentTruth(r, mF) {
 
 // ── Stage II · polling ───────────────────────────────────────────────────────
 const POLLSTERS = [
-  { n: "TPSI Poll",            q: 1.0,  he: 0.0,  kind: "public" },
+  { n: "On Point Polling Poll",            q: 1.0,  he: 0.0,  kind: "public" },
   { n: "Meridian Research",    q: 0.92, he: -0.5, kind: "public" },
   { n: "Beacon Analytics",     q: 0.9,  he: 0.6,  kind: "public" },
   { n: "Statecraft Surveys",   q: 0.84, he: -0.9, kind: "public" },
@@ -232,7 +232,7 @@ function pollWeight(office, enop, days) {
 }
 
 // ── Stage III · expert ratings ───────────────────────────────────────────────
-const OUTLETS = ["TPSI Ratings", "Capitol Index", "Meridian Board"];
+const OUTLETS = ["On Point Polling Ratings", "Capitol Index", "Meridian Board"];
 const CAT_BOUNDS = [
   { cat: "Safe R",   lo: 15, hi: 999 },
   { cat: "Likely R", lo: 6.5, hi: 15 },

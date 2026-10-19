@@ -11,7 +11,7 @@ data/                        JSON the mock reads: states.json, races.json, oh tx
 assets/                      logo PNGs (color, white, gold, Weighting Room gold, icon)
 logos-svg/                   the v26 SVG logo files
 opp-ui/SKILL.md              design system skill, install at .github/skills/opp-ui/ and delete psi-ui
-opp-ui/tokens.css            CSS variables, replaces the PSI :root block in app/globals.css
+opp-ui/tokens.css            CSS variables, replaces the On Point Polling :root block in app/globals.css
 opp-ui/site.css              every component style from the mock, verbatim
 opp-ui/site.js               every behavior from the mock, verbatim (maps, charts, tooltip, ticker, counters)
 opp-ui/components.md         component by component spec
@@ -22,7 +22,7 @@ next.redirects.js            redirects array for next.config
 
 ## Phase 1, brand and chrome (do first, touches every page)
 
-1. `app/globals.css`: replace the PSI `:root` and body rules with `opp-ui/tokens.css`.
+1. `app/globals.css`: replace the On Point Polling `:root` and body rules with `opp-ui/tokens.css`.
    Keep the alias block so old `--panel`, `--purple`, `--font-display` references still
    resolve while pages migrate. Remove the light theme sweep, the site is dark only.
 2. `app/layout.tsx`: load Sora, Manrope and JetBrains Mono with `next/font/google`
@@ -37,10 +37,10 @@ next.redirects.js            redirects array for next.config
    Delete `DarkNav.tsx` if it only existed for the dark variant.
 5. Add `app/components/TickerBar.tsx` reading marquee races from `public/forecast/model.json`.
 6. `app/components/Footer.tsx`: rebuild as `.foot`, five columns, credits line
-   `© 2026 OnPoint Politics and The Public Sentiment Institute`.
+   `© 2026 OnPoint Politics and On Point Polling`.
 7. Add `app/components/Ambient.tsx` rendering `.orbs` and `.grain` once in `layout.tsx`.
-8. Global copy: replace every `TPSI Elections`, `tpsielections.com`, `The Public
-   Sentiment Institute` site title with `OnPoint Politics`. TPSI stays as the pollster
+8. Global copy: replace every `On Point Politics`, `tpsielections.com`, `The Public
+   Sentiment Institute` site title with `OnPoint Politics`. On Point Polling stays as the pollster
    credit on releases, methodology and the footer.
 9. Metadata: `metadataBase` to `https://onpointpolitics.com`, new OG image built from
    the icon on `#110019`, titles in the form `Ohio Senate forecast | OnPoint Politics`.
@@ -70,10 +70,10 @@ next.redirects.js            redirects array for next.config
 | `app/earlyvote` | `app/maps/early-vote` |
 | `app/results/tonight` | `app/results/live` |
 | `app/results/onpoint` | `app/results` (becomes the default engine) |
-| `app/tpsipoll`, `app/latestpoll` | `app/tpsi/polls` |
-| `app/goldstandard` | `app/tpsi/methodology` |
-| `app/situationroom` | `app/tpsi/situation-room` |
-| `app/SMSOptIn` | `app/tpsi/sms` |
+| `app/tpsipoll`, `app/latestpoll` | `app/on-point-polling/polls` |
+| `app/goldstandard` | `app/on-point-polling/methodology` |
+| `app/situationroom` | `app/on-point-polling/situation-room` |
+| `app/SMSOptIn` | `app/on-point-polling/sms` |
 | `app/TermsAndConditions` | `app/terms` |
 | `app/v2`, `app/polling/old` | delete |
 | `app/portal`, `app/contact`, `app/api` | unchanged |
@@ -93,7 +93,7 @@ Rebuild `app/page.tsx` to the mock's Homepage view, section by section. Data wir
 | County simulation | `CountySim.tsx` | `public/forecast/states/{ST}.json` + `counties.json[raceId]` |
 | Polling averages | `AveragePanel.tsx` x2 | `buildDailyModel` series + `RAW_POLLS`, LOWESS line from `lowessTrend.ts` |
 | Results desk | `ResultCard.tsx` x2 + `Countdown.tsx` | `results/_data` latest nights |
-| TPSI releases | `StoryCard.tsx` x4 | release registry, mini county maps reuse `CountySim` at 320x180 |
+| On Point Polling releases | `StoryCard.tsx` x4 | release registry, mini county maps reuse `CountySim` at 320x180 |
 | CTA band | `CtaBand.tsx` | static |
 
 The JS in `opp-ui/site.js` is the reference for every calculation (rating bands,
@@ -103,7 +103,7 @@ it into hooks rather than re-deriving it.
 ## Phase 4, inner pages
 
 Apply the same chrome and cards to the polling average pages, forecast race page,
-results pages and TPSI release page. The first version of the mock (artifact
+results pages and On Point Polling release page. The first version of the mock (artifact
 version 1) has light theme layouts for these four templates; use their structure
 with the dark tokens: crumbs, h1, meta row, `1fr 320px` layout, chart card,
 poll table with the pinned average row, side panel cards, methodology callout.

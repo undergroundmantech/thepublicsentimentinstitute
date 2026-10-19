@@ -1,10 +1,10 @@
-# TPSI Main Landing Page Design Direction
+# On Point Polling Main Landing Page Design Direction
 
 ## Intent
 
-Build the main Public Sentiment Institute landing page as an editorial product surface, not a SaaS dashboard. The reference is Eleveight structurally: open space, huge type, quiet body copy, pill buttons, sparse abstract marks, and a horizontal gallery of real work. The current direction translates that into dark mode so the supplied election artwork belongs to the page instead of sitting inside pale frames.
+Build the main On Point Polling landing page as an editorial product surface, not a SaaS dashboard. The reference is Eleveight structurally: open space, huge type, quiet body copy, pill buttons, sparse abstract marks, and a horizontal gallery of real work. The current direction translates that into dark mode so the supplied election artwork belongs to the page instead of sitting inside pale frames.
 
-The translation for TPSI is: public opinion and election data shown with enough restraint that the product feels trustworthy, but enough specificity that it could only belong to a polling and forecasting institute.
+The translation for On Point Polling is: public opinion and election data shown with enough restraint that the product feels trustworthy, but enough specificity that it could only belong to a polling and forecasting institute.
 
 ## Source References
 
@@ -19,10 +19,10 @@ The translation for TPSI is: public opinion and election data shown with enough 
 1. Typography is the primary visual asset. The page should feel designed before any chart appears.
 2. The homepage should show the product, not describe an abstract company.
 3. White space is active. Do not fill it with chips, badges, fake metrics, or generic icon rows.
-4. Use one loud accent at a time. TPSI red, blue, and purple belong inside product previews. Acid lime belongs to coverage/footer moments.
-5. Cards are artifacts, not layout filler. Gallery cards represent real TPSI surfaces: polling averages, forecast ratings, live results, electoral map.
+4. Use one loud accent at a time. On Point Polling red, blue, and purple belong inside product previews. Acid lime belongs to coverage/footer moments.
+5. Cards are artifacts, not layout filler. Gallery cards represent real On Point Polling surfaces: polling averages, forecast ratings, live results, electoral map.
 6. Motion should clarify sequence: hero settles, gallery drifts, cards respond to pointer, FAQ opens with height/opacity, footer marquee moves.
-7. Avoid dark-dashboard gravity. The prior TPSI aesthetic is useful inside product previews, but the landing page itself should be pale and editorial.
+7. Avoid dark-dashboard gravity. The prior On Point Polling aesthetic is useful inside product previews, but the landing page itself should be pale and editorial.
 
 ## Page Structure
 
@@ -42,14 +42,14 @@ Layout:
 - Two compact rounded pill buttons. First white, second black.
 - Small abstract black mark above the H1, used as visual counterweight rather than a label.
 - Small black dot near the CTA row. Do not add arrow/cursor furniture here; the reference dot is cleaner.
-- The product gallery must begin inside the first viewport, with enough card interior visible to prove that these are real TPSI surfaces rather than decorative tiles.
+- The product gallery must begin inside the first viewport, with enough card interior visible to prove that these are real On Point Polling surfaces rather than decorative tiles.
 - Desktop geometry target: content column starts around 18% from the left edge in the Retina reference capture, hero mark sits near the top of the site canvas, headline begins roughly 150px below the mark, and the gallery band begins immediately after the CTA row breathing space.
-- Mobile gets a slim translucent nav bar: tiny PSI mark plus compact text links. It should feel like utility chrome, not a bulky header.
+- Mobile gets a slim translucent nav bar: tiny On Point Polling mark plus compact text links. It should feel like utility chrome, not a bulky header.
 
 ### Product Gallery
 
 Purpose:
-Show what TPSI actually has before asking users to trust the brand.
+Show what On Point Polling actually has before asking users to trust the brand.
 
 Cards:
 - Polling Averages: supplied dark thumbnail artwork with large white/pink type and approval trend imagery. Route to `/polling/donaldtrumpapproval`.
@@ -151,7 +151,7 @@ The first row starts open. Row text should be understated and factual.
 ### Footer
 
 Acid-lime band with:
-- PSI mark
+- On Point Polling mark
 - Moving marquee: `Work with public sentiment * Work with public sentiment *`
 - Email: `tpsinstitutecontact@gmail.com`
 - Links: Polling, Forecasts, Results, Contact
@@ -165,9 +165,9 @@ Acid-lime band with:
 - Muted text: `rgba(244, 244, 239, 0.58)`
 - Hairline: `rgba(255, 255, 255, 0.1)`
 - Acid lime: `#b7ff00`
-- TPSI red: `#e63946`
-- TPSI blue: `#2563eb`
-- TPSI purple: `#7c3aed`
+- On Point Polling red: `#e63946`
+- On Point Polling blue: `#2563eb`
+- On Point Polling purple: `#7c3aed`
 
 ## Motion Rules
 
@@ -180,7 +180,7 @@ Acid-lime band with:
 
 ## Implementation Notes
 
-- The landing page must neutralize the old global TPSI dark header/footer and uppercase heading styles inside `app/page.tsx`; otherwise the reference look collapses into mixed themes.
+- The landing page must neutralize the old global On Point Polling dark header/footer and uppercase heading styles inside `app/page.tsx`; otherwise the reference look collapses into mixed themes.
 - Keep the first viewport quiet but not empty: abstract mark, H1, body, two CTA pills, dot, then the gallery. Do not add badges, news tickers, pollster logos, nav chrome, or extra furniture above the gallery.
 - The gallery cards should look like built product objects, not generic CSS cards. Each card needs its own layout grammar, color world, and data hierarchy.
 - Mobile is not a compressed desktop. The gallery begins with readable card titles, the footer email wraps within the viewport, and card internals can simplify before they become cramped.
@@ -203,7 +203,7 @@ Acid-lime band with:
 - No generic bento grid.
 - No dark framed dashboard as the main homepage language.
 - No fake SaaS copy like productivity, automation, or scale.
-- No product surface that is unrelated to an actual TPSI route.
+- No product surface that is unrelated to an actual On Point Polling route.
 - No random gradients or blob/orb backgrounds.
 - No repeating the same card formula for every section.
 - No oversized labels inside compact controls.

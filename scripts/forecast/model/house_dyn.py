@@ -1,11 +1,11 @@
-"""TPSI Dynamic House Mode: the House on the same method as Dynamic Senate Mode and Dynamic Governor Mode.
+"""On Point Polling Dynamic House Mode: the House on the same method as Dynamic Senate Mode and Dynamic Governor Mode.
 
 Everything House Mode already did stays: the district spine on the lines in force, the incumbent and redrawn terms,
 measured ticket splitting, district primary participation, district polls, FEC money, top two one party generals and
 unopposed seats. On top of it, each state now runs the Senate machinery:
 
-  M1       TPSI county by county Trump approval alone, calibrated and converted with the TPSI respondent crosstab
-  M2       the certified 2024 county result moved by the TPSI demographic swing, then carried from the 2024 presidential
+  M1       On Point Polling county by county Trump approval alone, calibrated and converted with the On Point Polling respondent crosstab
+  M2       the certified 2024 county result moved by the On Point Polling demographic swing, then carried from the 2024 presidential
            electorate to the 2026 electorate built by Vote History Mode
   M3       the 2024 level moved by the national swing to the generic ballot
   turnout  Vote History Mode: every county's 2026 turnout is the sum of its 384 groups' own turnout chances, and each

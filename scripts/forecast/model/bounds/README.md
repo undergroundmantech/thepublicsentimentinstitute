@@ -53,14 +53,14 @@ Every limit is read from data. Every limit is soft: inside the range nothing cha
 - 86 counties were capped, and none needed a floor.
 
 **Group support inside a county.**
-- A county can move each voter type from its national baseline only as far as TPSI respondents show that race and party group varying across the eight regions, plus 0.45 in log odds.
+- A county can move each voter type from its national baseline only as far as On Point Polling respondents show that race and party group varying across the eight regions, plus 0.45 in log odds.
 - Black Democrats vary little from region to region; white independents vary a great deal.
 - A group that reaches its limit tops out, and the rest of the county has to move instead.
 - On average 11 percent of a race's voters sit at their group's limit, with a median of 7 percent and the most in New Hampshire governor at 46 percent. The simulation shocks then move every voter from there, so the state's range of outcomes is not narrowed.
 
 **Statewide group ranges.**
 - Each group's center is its Pew validated two party vote from 2024 and 2020, moved by this year's national environment: +0.25 in log odds from the 2024 result to the model's 2026 anchor.
-- The range around that center is 0.35 in log odds, plus the TPSI regional spread for the group capped at 0.25.
+- The range around that center is 0.35 in log odds, plus the On Point Polling regional spread for the group capped at 0.25.
 - White voters vary too much by state for any honest statewide limit. They have none, and they absorb what the other groups cannot.
 
 | Group | Pew 2024 | Pew 2020 | 2026 floor | 2026 ceiling |
@@ -69,7 +69,7 @@ Every limit is read from data. Every limit is soft: inside the range nothing cha
 | Hispanic | 51.5 | 62.9 | 42.7 | 79.8 |
 | Asian and other | 58.8 | 70.0 | 50.1 | 84.5 |
 
-**Where the Black floor bound.** In 38 races, Black voters had come out of the model below 79.5 percent Democratic. The TPSI panel itself has Black respondents at only 76 percent Democratic on the generic ballot, and Pew's validated 2024 vote was 85.
+**Where the Black floor bound.** In 38 races, Black voters had come out of the model below 79.5 percent Democratic. The On Point Polling panel itself has Black respondents at only 76 percent Democratic on the generic ballot, and Pew's validated 2024 vote was 85.
 
 | Race | Black Democratic share, before | After |
 |---|---|---|
@@ -97,8 +97,8 @@ Statewide margins moved by at most 0.3 points, in West Virginia. The limits main
 
 ## Limits of this component
 
-- The group support bands come from TPSI regional samples, which are small for Black, Hispanic and Asian independents. The bands are widened in any county they cannot otherwise fit, which happened in up to 75 counties in a race and in none in others.
-- The Black floor is deliberately lenient at 79.5 percent, because TPSI's own panel runs below validated vote studies. A floor closer to 85 would follow Pew more tightly and TPSI less.
+- The group support bands come from On Point Polling regional samples, which are small for Black, Hispanic and Asian independents. The bands are widened in any county they cannot otherwise fit, which happened in up to 75 counties in a race and in none in others.
+- The Black floor is deliberately lenient at 79.5 percent, because On Point Polling's own panel runs below validated vote studies. A floor closer to 85 would follow Pew more tightly and On Point Polling less.
 - House districts get the turnout limits for voter types and the county citizen rates. They do not get a district support envelope, because the model holds only one or two past results per district.
 
 ## Files

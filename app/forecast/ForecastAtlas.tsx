@@ -12,7 +12,7 @@ import { VoteTip } from "./Tips";
 // The county atlas. Every county in the country on a black stage, colored by
 // whichever layer the reader picks: the forecast itself, the swing from 2024,
 // gas prices, data centers, jobs, growth, migration, faith, news deserts and the
-// TPSI low propensity voter segments. Click a state, or let the tour run, and the
+// On Point Polling low propensity voter segments. Click a state, or let the tour run, and the
 // map flies into that state's own county geometry.
 // Data: /forecast/atlas/us.json from scripts/forecast/build_atlas.py, plus the
 // county forecasts the desk already loads from /forecast/counties.json.
@@ -719,7 +719,7 @@ export default function ForecastAtlas({ model, counties, office, onPickRace, sta
       ) : null}
       <p className="atl-foot">
         Gas prices from AAA county averages on {atlas.built}. Data center sites from OpenStreetMap. Jobs and wages from the BLS QCEW, growth and migration from Census estimates,
-        rurality from USDA, faith from the 2020 Religion Census. Low propensity segments from TPSI respondents placed through the census. Local conditions are the model&apos;s own county term.
+        rurality from USDA, faith from the 2020 Religion Census. Low propensity segments from On Point Polling respondents placed through the census. Local conditions are the model&apos;s own county term.
       </p>
     </section>
   );

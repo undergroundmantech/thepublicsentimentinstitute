@@ -274,7 +274,7 @@ export default function PrimaryAverage({ cfg }: { cfg: PrimaryConfig }) {
 
           <div className="callout">
             <div className="eye">Methodology</div>
-            The On Point average is rebuilt daily from every public poll, with recency decay, a square root sample size adjustment and voter screen weighting. Polls marked internal are partisan or sponsored and may carry less weight. A candidate left off a poll is left out of that poll&apos;s spread.{cfg.note ? ` ${cfg.note}` : ""} <Link href="/tpsi/methodology" style={{ textDecoration: "underline" }}>How the average works</Link>.
+            The On Point average is rebuilt daily from every public poll, with recency decay, a square root sample size adjustment and voter screen weighting. Polls marked internal are partisan or sponsored and may carry less weight. A candidate left off a poll is left out of that poll&apos;s spread.{cfg.note ? ` ${cfg.note}` : ""} <Link href="/on-point-polling/methodology" style={{ textDecoration: "underline" }}>How the average works</Link>.
           </div>
         </aside>
       </div>

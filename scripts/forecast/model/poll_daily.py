@@ -1,4 +1,4 @@
-"""Python port of TPSI buildDailyModel.ts, line for line, for the Senate and Governor poll averages.
+"""Python port of On Point Polling buildDailyModel.ts, line for line, for the Senate and Governor poll averages.
 
 Poll weight = sampleSizeWeight x recencyWeight x sampleTypeWeight x pollsterRepetitionFactor x getPollsterWeight
 x undecidedPenalty, then per candidate z score clipping at 2 SD, then the weighted mean rounded to one decimal.
@@ -169,8 +169,8 @@ def poll_audit(polls, as_of=AS_OF_DAILY):
     return df
 
 # ── LOWESS Election Day polling average, Sept 28 2026 ─────────────────────────
-# POLL_LEVEL=lowess, the default since Sept 28 2026: the race's polling level is the PSI LOWESS
-# Election Day polling average (lowess_trend.py) wherever a race has 8 or more polls. The PSI
+# POLL_LEVEL=lowess, the default since Sept 28 2026: the race's polling level is the On Point Polling LOWESS
+# Election Day polling average (lowess_trend.py) wherever a race has 8 or more polls. The On Point Polling
 # weighted average still supplies the decided share, D + R, and the third party share, so only
 # the split of the decided vote moves. POLL_LEVEL=psi restores the weighted average everywhere.
 POLL_LEVEL = os.environ.get("POLL_LEVEL", "lowess")
@@ -246,7 +246,7 @@ def install(sm):
         wmap = dict(zip(zip(aud.pollster, aud.end), aud.weight)) if len(aud) else {}
         p["w"] = [wmap.get((s, pd.Timestamp(e).date().isoformat()), 0.0) for s, e in zip(p.source, p.end)]
         out = _apply_lowess(out, p)
-        REGISTRY[st] = dict(series=ser, audit=aud, avg=out)
+        REGISTRY[st] = dict(series=ser, audit=aud, avg=out, frame=p)
         return p, out
     def _poll_avg_rcv(p):
         st = _CUR["st"]

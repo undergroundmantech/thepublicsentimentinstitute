@@ -37,7 +37,7 @@ Drop `tonight-page.tsx` at `app/results/tonight/page.tsx`. No other edits.
 ### Structure authority
 
 Built on the **Level 2 panel** of
-`election_coverage_five_level_methodology_v6.html`, restyled in TPSI tokens per
+`election_coverage_five_level_methodology_v6.html`, restyled in On Point Polling tokens per
 CO-04's instruction: its fonts and colors are a foreign system, its layout is
 not to be rearranged.
 
@@ -76,7 +76,7 @@ you want parity with `theme.jsx`, which currently falls back to dark.
 
 This is the substantive correction in this order.
 
-The TPSI model for 84778 is **statewide**: n=254 against the Michigan voter
+The On Point Polling model for 84778 is **statewide**: n=254 against the Michigan voter
 file, producing a single statewide share and margin. It produces **no county
 estimates**. That makes the race Level 2 "Statewide forecast," which maps to
 **tier 3 Forecast** in the CO-04 §1 capability matrix, not tier 4 Spotlight.
@@ -156,7 +156,7 @@ const isCovered = (d: any) => isCoveredId(Number(d?.id));
 
 Per CO-05 §5a: `DeskSphere` and its county rendering, the wall of boards and
 its 3-per-state cap, and the chyron. Density is the proof a real election night
-is underway. Curation applies only where TPSI asserts a forecast or a call.
+is underway. Curation applies only where On Point Polling asserts a forecast or a call.
 
 ---
 

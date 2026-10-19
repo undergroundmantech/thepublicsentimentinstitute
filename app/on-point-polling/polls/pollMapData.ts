@@ -1,4 +1,4 @@
-// On Point Polling's 2026 general election state polls, for the map on /tpsi/polls.
+// On Point Polling's 2026 general election state polls, for the map on /on-point-polling/polls.
 // The main number is likely voters with undecideds leaned; "asked" is the result before leaners.
 // Add a state here when a poll is released, and change its status as it moves from next to field to released.
 
@@ -24,7 +24,7 @@ export const STATE_POLLS: StatePoll[] = [
   },
   {
     st: "OH", name: "Ohio", status: "released", dates: "Oct. 16 to 17, 2026", sample: "635 RV", moe: "±4.9",
-    href: "/tpsi/polls/ohio-2026", hrefLabel: "Full results and crosstabs", release: "https://onpointpolitics.substack.com/p/ohio-poll-democrats-lead-both-races",
+    href: "/on-point-polling/polls/ohio-2026", hrefLabel: "Full results and crosstabs", release: "https://onpointpolitics.substack.com/p/ohio-poll-democrats-lead-both-races",
     races: [
       { race: "Senate", cands: [{ n: "Sherrod Brown", p: "d", leaned: 48.4, asked: 46.6 }, { n: "Jon Husted", p: "r", leaned: 44.8, asked: 42.3 }] },
       { race: "Governor", cands: [{ n: "Amy Acton", p: "d", leaned: 49.2, asked: 47.9 }, { n: "Vivek Ramaswamy", p: "r", leaned: 45.7, asked: 43.1 }] },
@@ -32,7 +32,7 @@ export const STATE_POLLS: StatePoll[] = [
   },
   {
     st: "TX", name: "Texas", status: "released", dates: "Oct. 17 to 18, 2026", sample: "661 RV", moe: "±5.5 LV",
-    href: "/tpsi/polls/texas-2026", hrefLabel: "Full results and crosstabs", release: "https://onpointpolitics.substack.com/p/texas-poll-talarico-leads-paxton",
+    href: "/on-point-polling/polls/texas-2026", hrefLabel: "Full results and crosstabs", release: "https://onpointpolitics.substack.com/p/texas-poll-talarico-leads-paxton",
     races: [
       { race: "Senate", cands: [{ n: "James Talarico", p: "d", leaned: 50.4, asked: 48.8 }, { n: "Ken Paxton", p: "r", leaned: 45.9, asked: 43.0 }] },
       { race: "Governor", cands: [{ n: "Gina Hinojosa", p: "d", leaned: 47.0, asked: 45.2 }, { n: "Greg Abbott", p: "r", leaned: 49.0, asked: 47.7 }] },
@@ -47,7 +47,13 @@ export const STATE_POLLS: StatePoll[] = [
       { race: "Governor", cands: [{ n: "David Jolly", p: "d", leaned: 44.4, asked: 42.4 }, { n: "Byron Donalds", p: "r", leaned: 48.3, asked: 46.6 }] },
     ],
   },
-  { st: "SC", name: "South Carolina", status: "field", races: [], note: "Senate and governor poll in the field now." },
+  {
+    st: "SC", name: "South Carolina", status: "released", dates: "Oct. 18 to 19, 2026", sample: "511 RV", moe: "±6.3 LV",
+    races: [
+      { race: "Senate", cands: [{ n: "Annie Andrews", p: "d", leaned: 48.5, asked: 45.6 }, { n: "Darline Graham Nordone", p: "r", leaned: 45.0, asked: 42.1 }] },
+      { race: "Governor", cands: [{ n: "Jermaine Johnson", p: "d", leaned: 44.9, asked: 42.5 }, { n: "Alan Wilson", p: "r", leaned: 53.1, asked: 51.1 }] },
+    ],
+  },
   { st: "NE", name: "Nebraska", status: "next", races: [], note: "Considering next. Not yet funded." },
   { st: "WI", name: "Wisconsin", status: "next", races: [], note: "Considering next. Not yet funded." },
 ];

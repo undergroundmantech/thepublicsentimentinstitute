@@ -64,7 +64,7 @@ House page, never from an older extract; both were stale before this run.
 | File | What changed |
 |---|---|
 | `lowess_trend.py` | New. Robust LOWESS matching the site's `app/polling/lib/lowessTrend.ts`, and the Election Day projection |
-| `poll_daily.py` | `POLL_LEVEL`, default `lowess`: a race with 8 or more polls takes its level from the LOWESS projection and keeps the PSI decided total. `POLL_LEVEL=psi` restores the old average |
+| `poll_daily.py` | `POLL_LEVEL`, default `lowess`: a race with 8 or more polls takes its level from the LOWESS projection and keeps the On Point Polling decided total. `POLL_LEVEL=psi` restores the old average |
 | `site_poll_sync.py` | New. 81 site polls in 17 races that the model was missing |
 | `senate_mode.py` | Merges `SITE_SYNC` into `EXTRA_POLLS`; GBAO Michigan added |
 | `texas/`, `iowa/`, `north_carolina/`, `south_carolina/`, `maine/`, `vermont/`, `georgia/`, `nevada/`, `arizona/`, `kansas/` | Poll files with the new and backfilled polls |
@@ -87,7 +87,7 @@ Run at most three lanes at once on an 8 GB machine; four lanes ran out of memory
 | `dynamic_mode.py` | Governor races take `GOV_BETA` of the shared national vote shock and of the shared group vote shocks, and the rest becomes their own. Turnout shocks stay national |
 | `depolarization/` | The backtest behind the two settings |
 
-## 29 September 2026, third parties and TPSI respondents
+## 29 September 2026, third parties and On Point Polling respondents
 
 | File | What changed |
 |---|---|
@@ -103,7 +103,7 @@ The respondent file itself is not included here. It stays with the model.
 
 | File | What changed |
 |---|---|
-| `behavior.py` | New. Six turnout motivations from TPSI respondents, their weights, each voter type's party looseness, simulation shock loadings and the race audit |
+| `behavior.py` | New. Six turnout motivations from On Point Polling respondents, their weights, each voter type's party looseness, simulation shock loadings and the race audit |
 | `ticket_split.py` | New. Split ticket voters for every state with both a Senate and a governor race |
 | `dynamic_mode.py`, `house_dyn.py` | Motivation shocks in every simulation; Senate and governor races in one state share part of the state shock |
 | `house_mode.py` | 36 district polls ending Aug 15 or later, 11 districts polled for the first time |
@@ -114,11 +114,11 @@ The respondent file itself is not included here. It stays with the model.
 
 | File | What changed |
 |---|---|
-| `bounds.py` | New. County support envelope, county turnout limits, group bands from TPSI and statewide race group ranges from Pew validated vote |
+| `bounds.py` | New. County support envelope, county turnout limits, group bands from On Point Polling and statewide race group ranges from Pew validated vote |
 | `respondent_v2.py`, `census/cvap_county_2020_2024.csv` | County citizen rates by race group from the Census CVAP 2020 to 2024 tabulation |
 | `senate_mode.py`, `dynamic_mode.py`, `voters.py`, `crosstabs.py`, `house_dyn.py` | The limits applied in the projections, the voter types and both crosstab builders |
 | `bounds/` | Methodology and results |
 
 ## 1 October 2026, national inputs
 
-The run uses `NAT_ANCHOR=generic GB_MARGIN=12 GB_DECIDED=100 M2_ANCHOR=meridian APPROVAL_RV_NET=-24`. The D+12 generic ballot is the two party national anchor for the approval and census legs, and `APPROVAL_RV_NET` turns a registered voter net approval into the likely voter level through the TPSI registered to likely voter gap. Each race's summary carries the conversion under `approval_input`.
+The run uses `NAT_ANCHOR=generic GB_MARGIN=12 GB_DECIDED=100 M2_ANCHOR=meridian APPROVAL_RV_NET=-24`. The D+12 generic ballot is the two party national anchor for the approval and census legs, and `APPROVAL_RV_NET` turns a registered voter net approval into the likely voter level through the On Point Polling registered to likely voter gap. Each race's summary carries the conversion under `approval_input`.

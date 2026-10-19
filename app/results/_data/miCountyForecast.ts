@@ -1,5 +1,5 @@
 /**
- * TPSI — Michigan Democratic U.S. Senate Primary
+ * On Point Polling — Michigan Democratic U.S. Senate Primary
  * County-level forecast seed data · Election August 4, 2026
  *
  * Generated from DSMeridian Model 10 post-stratified onto a 19,999-record
@@ -97,7 +97,7 @@ export interface ForecastMeta {
 }
 
 export const FORECAST_META: ForecastMeta = {
-  model: "TPSI DSMeridian Model 10 · Meridian-anchored simulation",
+  model: "On Point Polling DSMeridian Model 10 · Meridian-anchored simulation",
   electionDate: "2026-08-04",
   builtAt: "2026-08-01",
   fieldDates: "2026-07-25/2026-07-29",

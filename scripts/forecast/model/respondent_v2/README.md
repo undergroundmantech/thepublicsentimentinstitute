@@ -1,4 +1,4 @@
-# TPSI respondent component, version 2
+# On Point Polling respondent component, version 2
 
 Run of September 29 2026. Every Senate, governor and House race was re-run with this component and with the new third party level.
 
@@ -6,7 +6,7 @@ Run of September 29 2026. Every Senate, governor and House race was re-run with 
 
 This section records the model as it was found, before any change.
 
-**Respondents.** `senate_mode.py` loaded the TPSI national respondent database: 4,337 respondents across six waves, February to September 2026. The file carries no survey weight. Its consumers filtered it in three different ways:
+**Respondents.** `senate_mode.py` loaded the On Point Polling national respondent database: 4,337 respondents across six waves, February to September 2026. The file carries no survey weight. Its consumers filtered it in three different ways:
 
 - the census leg dropped only rows missing age, race, college or region;
 - the voter file kept `analysis_ready` rows;
@@ -22,7 +22,7 @@ The only weight anywhere outside the national rake was `turnout_propensity`.
 
 **Polling calibration.** The census leg is calibrated only nationally. A log odds intercept is solved so the national likely voter share matches the anchor. State polls set the level of the history and polling leg, which is solved by bisection so that its turnout weighted county shares equal the poll average. The final share is a weighted blend of the three legs.
 
-**Voter file.** No real voter file exists in the package. The voter file layer is synthetic: each county's 384 voter types are filled with up to 24 TPSI respondents as donors, then calibrated to certified turnout. It feeds the approval leg in voter file mode and the estimated vote by group tables.
+**Voter file.** No real voter file exists in the package. The voter file layer is synthetic: each county's 384 voter types are filled with up to 24 On Point Polling respondents as donors, then calibrated to certified turnout. It feeds the approval leg in voter file mode and the estimated vote by group tables.
 
 **Audit.** The run summary recorded the national shifts, but `national_lv_d2` held the 2024 pass, 0.4925, rather than the 2026 anchor. The respondent filters, the universe and the anchor source were not recorded.
 
@@ -89,12 +89,12 @@ The summary also holds `third_party_level` and `crosstabs.ranges`. `national_lv_
 
 | Input | Source | Status |
 |---|---|---|
-| Respondents | TPSI unified respondent dataset, 4,238 rows, six waves | Real, used inside the model only, never exported |
+| Respondents | On Point Polling unified respondent dataset, 4,238 rows, six waves | Real, used inside the model only, never exported |
 | Adults by age, race, education | ACS 2024 five year S1501, county | Real |
 | Citizen rate by race | National ACS 2023 CVAP to VAP ratios: White 0.985, Black 0.95, Hispanic 0.77, Asian and other 0.80 | Assumption, one national rate per group |
 | Registration | Fitted from respondents; 3,161 of the registration answers are imputed | Audit only, does not enter the vote |
 | Certified turnout and results | 2022 and 2024 county returns already in the package | Real |
-| Voter file | TPSI respondents as donors to 384 voter types per county | Synthetic, as before |
+| Voter file | On Point Polling respondents as donors to 384 voter types per county | Synthetic, as before |
 | Polls | The race poll files and EXTRA_POLLS | Real |
 
 Known limits:
@@ -131,11 +131,11 @@ The modeled likely voter count runs about 22 percent above 2022 turnout. The mid
 
 ## 5. Worked example: Texas and Maine
 
-The two states sit at opposite ends. Texas has a large Hispanic electorate and one of the biggest TPSI state samples. Maine is almost entirely white and has one of the smallest.
+The two states sit at opposite ends. Texas has a large Hispanic electorate and one of the biggest On Point Polling state samples. Maine is almost entirely white and has one of the smallest.
 
 | | Texas Senate | Maine Senate |
 |---|---|---|
-| TPSI respondents with both votes | 170, effective 155 | 19, effective 18.7 |
+| On Point Polling respondents with both votes | 170, effective 155 | 19, effective 18.7 |
 | Raw state swing effect | −0.118 ± 0.105 | −0.273 ± 0.235 |
 | Pooled effect | −0.032 ± 0.065 | −0.017 ± 0.077 |
 | Share of the raw effect kept | 27 percent | 6 percent |

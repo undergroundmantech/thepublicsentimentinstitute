@@ -1,7 +1,7 @@
 /* =============================================================================
-   PSI LOWESS trend lines, and the Election Day polling average they project.
+   On Point Polling LOWESS trend lines, and the Election Day polling average they project.
 
-   The PSI daily average (buildDailyModel.ts) weights every poll by recency,
+   The On Point Polling daily average (buildDailyModel.ts) weights every poll by recency,
    sample size, voter screen and pollster grade. This is a second, deliberately
    plainer read of the same polls, built to get past poll-to-poll noise and show
    whether the newest polling is pulling away from the broader trend or

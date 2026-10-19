@@ -1,8 +1,8 @@
-"""DSMeridian Model 13R3 on every response in the TPSI national respondent database.
+"""DSMeridian Model 13R3 on every response in the On Point Polling national respondent database.
 
 Each wave is run on its own, exactly as the production script runs a wave:
   Stage 2  IPF rake on the locked separate marginals Age, Gender, Race4, Region8 (cap 6, floor 0.12, 150 iterations)
-  Stage 3  LV weight = RV weight x the respondent's PSI Pythagorean v8.1 propensity carried in the database
+  Stage 3  LV weight = RV weight x the respondent's On Point Polling Pythagorean v8.1 propensity carried in the database
   Stage 4  aggregate only Meridian: high engagement decided anchors (intent score 0.70 or more), weighted category
            distributions of each signal for the Democratic and Republican anchor pools and for the undecided pool,
            match scores combined with the locked signal weights, one softmax at T = 8, and the days aware allocation

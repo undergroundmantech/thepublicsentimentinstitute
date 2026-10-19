@@ -19,7 +19,7 @@ export function initFloridaEngine() {
    {c:'Renner',seat:'FLAGLER',name:'Flagler',sub:'Renner home',spill:['VOLUSIA','ST. JOHNS','PUTNAM']},
    {c:'Donalds',seat:'COLLIER',name:'Collier / FL-19',sub:'Donalds district',spill:['LEE','CHARLOTTE','HENDRY']}];
   const PRESETS={
-   published:{label:'TPSI baseline',age:DEF.age,rxe:DEF.rxe,home:[0,0,0,0],oth:5.2,elec:null},
+   published:{label:'On Point Polling baseline',age:DEF.age,rxe:DEF.rxe,home:[0,0,0,0],oth:5.2,elec:null},
    home:{label:'Baseline + home field',age:B.preset_home.age,rxe:B.preset_home.rxe,home:B.preset_home.home,oth:B.preset_home.other,elec:B.preset_home.elec},
    fishback:{label:'Fishback surge',age:B.preset_fishback.age,rxe:B.preset_fishback.rxe,home:B.preset_fishback.home,oth:5.2,elec:B.preset_fishback.elec},
    split:{label:'Split field',age:B.preset_split.age,rxe:B.preset_split.rxe,home:B.preset_split.home,oth:B.preset_split.other,elec:B.preset_split.elec},

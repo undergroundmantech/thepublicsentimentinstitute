@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Icon } from "@/app/components/opp/Logo";
 import { seo } from "@/app/lib/seo";
 
-export const metadata: Metadata = seo({"title": "Commission a poll from On Point Polling", "description": "Commission statewide, district or national polling from On Point Polling, the polling arm behind On Point Politics.", "path": "/tpsi/services"});
+export const metadata: Metadata = seo({"title": "Commission a poll from On Point Polling", "description": "Commission statewide, district or national polling from On Point Polling, the polling arm behind On Point Politics.", "path": "/on-point-polling/services"});
 
 const LINES = [
   ["Polls", "Statewide and district polls", "Horse race, favorability, issues and message testing, with full crosstabs by region, party, age, race and education."],
@@ -23,7 +23,7 @@ const STEPS: [string, string][] = [
 export default function Page() {
   return (
     <div className="opp">
-      <nav className="crumbs" aria-label="Breadcrumb"><Link href="/">Home</Link><span className="sep">/</span><Link href="/tpsi">On Point Polling</Link><span className="sep">/</span><span>Partner with On Point Polling</span></nav>
+      <nav className="crumbs" aria-label="Breadcrumb"><Link href="/">Home</Link><span className="sep">/</span><Link href="/on-point-polling">On Point Polling</Link><span className="sep">/</span><span>Partner with On Point Polling</span></nav>
       <header className="ph">
         <div className="eye g">Commission fieldwork</div>
         <h1>Partner with <em>On Point Polling</em></h1>
@@ -51,7 +51,7 @@ export default function Page() {
               ))}
             </div>
           </div>
-          <div className="callout"><div className="eye">Method</div>See how samples are built and weighted on the <Link href="/tpsi/methodology" style={{ textDecoration: "underline" }}>methodology page</Link>.</div>
+          <div className="callout"><div className="eye">Method</div>See how samples are built and weighted on the <Link href="/on-point-polling/methodology" style={{ textDecoration: "underline" }}>methodology page</Link>.</div>
         </aside>
       </div>
 
@@ -63,7 +63,7 @@ export default function Page() {
         </div>
         <div style={{ display: "flex", gap: 10, flexWrap: "wrap", justifyContent: "flex-end", position: "relative", zIndex: 1 }}>
           <Link className="btn g" href="/contact">Contact the desk</Link>
-          <Link className="btn" href="/tpsi/polls">See recent polls</Link>
+          <Link className="btn" href="/on-point-polling/polls">See recent polls</Link>
         </div>
         <Icon size={260} className="icon" style={{ color: "var(--hi)" }} />
       </section>

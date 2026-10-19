@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { seo } from "@/app/lib/seo";
 
-export const metadata: Metadata = seo({"title": "The Weighting Room", "description": "The subscriber community from On Point Polling and On Point Politics: raw crosstabs, model notes and early looks at the data.", "path": "/tpsi/weighting-room"});
+export const metadata: Metadata = seo({"title": "The Weighting Room", "description": "The subscriber community from On Point Polling and On Point Politics: raw crosstabs, model notes and early looks at the data.", "path": "/on-point-polling/weighting-room"});
 
 const PERKS = [
   ["Raw crosstabs", "The full tables behind every On Point Polling release, before they are summarized."],
@@ -14,7 +14,7 @@ const PERKS = [
 export default function Page() {
   return (
     <div className="opp wr">
-      <nav className="crumbs" aria-label="Breadcrumb"><Link href="/">Home</Link><span className="sep">/</span><Link href="/tpsi">On Point Polling</Link><span className="sep">/</span><span>The Weighting Room</span></nav>
+      <nav className="crumbs" aria-label="Breadcrumb"><Link href="/">Home</Link><span className="sep">/</span><Link href="/on-point-polling">On Point Polling</Link><span className="sep">/</span><span>The Weighting Room</span></nav>
       <header className="ph">
         <div className="eye" style={{ color: "var(--gold)" }}>Subscriber community</div>
         <h1>The Weighting <em>Room</em></h1>
@@ -42,10 +42,10 @@ export default function Page() {
             <p style={{ fontSize: 14 }}>Join the waitlist and we will let you know when the doors open.</p>
             <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginTop: 14 }}>
               <Link className="btn gold" href="/contact">Join the waitlist</Link>
-              <Link className="btn" href="/tpsi/polls">Public releases</Link>
+              <Link className="btn" href="/on-point-polling/polls">Public releases</Link>
             </div>
           </div></div>
-          <div className="callout"><div className="eye">Method</div>How On Point Polling weights its samples is public on the <Link href="/tpsi/methodology" style={{ textDecoration: "underline" }}>methodology page</Link>.</div>
+          <div className="callout"><div className="eye">Method</div>How On Point Polling weights its samples is public on the <Link href="/on-point-polling/methodology" style={{ textDecoration: "underline" }}>methodology page</Link>.</div>
         </aside>
       </div>
       <style>{`

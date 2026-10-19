@@ -1,6 +1,6 @@
 // app/polling/senatepolling/alaska.ts
 // Alaska — 2026 U.S. Senate: Mary Peltola (D) vs. Dan S. Sullivan (R)
-// Generated from the TPSI forecast poll feed (run of 2026-09-22), merged with
+// Generated from the On Point Polling forecast poll feed (run of 2026-09-22), merged with
 // the polls this file already carried. Polls of matchups that are not on the
 // ballot were dropped. Newest poll: 2026-10-01.
 

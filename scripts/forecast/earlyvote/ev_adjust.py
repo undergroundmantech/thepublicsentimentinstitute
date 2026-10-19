@@ -2,7 +2,7 @@
 
 What it reads
   ev_signals.json        the early vote page's own read of every reporting state (ev_signals.ts): ballots by mail and in
-                         person, party as reported or as the TPSI party estimate, and the party mix the forecast's 2026
+                         person, party as reported or as the On Point Polling party estimate, and the party mix the forecast's 2026
                          electorate expects of those ballots at the mix of mail and in person ballots cast so far
   earlyvote-history.json ballots cast before Election Day on dated days in 2022 and 2024, final turnout, and the party
                          split of past early votes at the same point

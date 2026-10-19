@@ -312,7 +312,7 @@ export function SidePanels({ scope, view, E, calc, model, caps, units, party, sn
   const out = useMemo(() => {
     if (!E || !model) return null;
     const N = party.n;
-    // the modeled shares of these ballots: each state's TPSI expectation for its mail and in person voters,
+    // the modeled shares of these ballots: each state's On Point Polling expectation for its mail and in person voters,
     // weighted by the ballots each state has cast
     const wts: { st: string; mail: number; early: number }[] = scope === "US"
       ? units.map((u) => ({ st: u.st, mail: u.mail.n, early: u.early.n }))
@@ -365,18 +365,18 @@ export function SidePanels({ scope, view, E, calc, model, caps, units, party, sn
       {g ? (
         <Panel title="Modeled 2024 presidential vote" cov={null}
           rows={[{ k: "Harris", s: g[1], n: g[1] * N, c: "var(--dem)" }, { k: "Trump", s: g[0], n: g[0] * N, c: "var(--gop)" }, { k: "Other or new", s: g[2], n: g[2] * N, c: "var(--muted2)" }]}
-          note="How the ballots cast so far voted in 2024, read from their party and the TPSI electorate model." />
+          note="How the ballots cast so far voted in 2024, read from their party and the On Point Polling electorate model." />
       ) : null}
       <Panel title="Party" cov={party.reported}
         rows={[{ k: "Democratic", s: party.d / N, n: party.d, c: "var(--dem)" }, { k: "Republican", s: party.r / N, n: party.r, c: "var(--gop)" }, { k: "Independent or other", s: party.o / N, n: party.o, c: "var(--muted2)" }]}
-        note="Party registration where the state publishes it, the TPSI party estimate where it reports none." />
+        note="Party registration where the state publishes it, the On Point Polling party estimate where it reports none." />
       <Panel title="Modeled race" cov={out.race.reported}
         rows={RACE_LABELS.map((k, i) => ({ k, s: out.race.shares[i], n: out.race.shares[i] * N, c: c4[i] }))} />
       <Panel title="Modeled age" cov={out.age.reported}
         rows={AGE_LABELS.map((k, i) => ({ k, s: out.age.shares[i], n: out.age.shares[i] * N, c: c4[i] }))} />
       <Panel title="Modeled gender" cov={out.gender.reported}
         rows={[{ k: "Women", s: out.gender.shares[0], n: out.gender.shares[0] * N, c: "#c79cff" }, { k: "Men", s: out.gender.shares[1], n: out.gender.shares[1] * N, c: "#7fb2ff" }]}
-        note="Ballots a state reports with these details are counted as reported. The rest take the TPSI likely voter model for that state's mail and in person voters, from the census and the TPSI national dataset." />
+        note="Ballots a state reports with these details are counted as reported. The rest take the On Point Polling likely voter model for that state's mail and in person voters, from the census and the On Point Polling national dataset." />
     </aside>
   );
 }

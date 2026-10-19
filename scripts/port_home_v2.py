@@ -841,7 +841,7 @@ NEW_RETURN = '''  return (
                   <div style={{ textAlign: "right" }}><SpreadBadge a={r.dem} b={r.rep} /></div>
                 </div>
               ))}
-              <div className="hp-issue-footer">PSI National Issue Tracker · MoE ±1.9–2.4pp</div>
+              <div className="hp-issue-footer">On Point Polling National Issue Tracker · MoE ±1.9–2.4pp</div>
             </div>
           </div>
 
@@ -896,7 +896,7 @@ NEW_RETURN = '''  return (
         <div className="hp-explore-grid">
           {[
             { color: "#2563eb", label: "Analysis",    name: "Electoral Map",         desc: "State-by-state data with 2024 vs. 2026 comparison overlays.",        href: "/electoralmap",    cta: "Explore Map →" },
-            { color: "#7c3aed", label: "Projections", name: "Forecast Ratings",      desc: "PSI race ratings across Senate, House, and gubernatorial contests.", href: "/forecastratings", cta: "View Ratings →" },
+            { color: "#7c3aed", label: "Projections", name: "Forecast Ratings",      desc: "On Point Polling race ratings across Senate, House, and gubernatorial contests.", href: "/forecastratings", cta: "View Ratings →" },
             { color: "#e63946", label: "Results",     name: "Live Election Results", desc: "Real-time vote totals and night-of projections for every major race.", href: "/results",         cta: "See Results →" },
             { color: "#16a34a", label: "Methodology", name: "Gold Standard",         desc: "Curated aggregation of high-quality polls ranked by historical accuracy.", href: "/goldstandard", cta: "Browse Polls →" },
           ].map(c => (

@@ -1,4 +1,4 @@
-"""TPSI voter behavior layer (Sept 29 2026).
+"""On Point Polling voter behavior layer (Sept 29 2026).
 
 Reads the unified respondent file through voters.prep and gives every simulated voter type three things:
 

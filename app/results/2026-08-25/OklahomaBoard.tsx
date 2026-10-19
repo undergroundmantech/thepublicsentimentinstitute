@@ -19,7 +19,7 @@
  *   published forecast — South Carolina — with no county model behind it.
  *
  * TWO FORECASTS, TWO DIFFERENT THINGS
- *   Oklahoma has a TPSI poll (n=460, August 21–23) decomposed to 77 counties.
+ *   Oklahoma has an On Point Polling poll (n=460, August 21–23) decomposed to 77 counties.
  *   South Carolina has no poll at all: its win probability is a desk judgement
  *   and its margin is derived from it. Both are labelled as what they are, and
  *   the South Carolina panel gets a results-only map because there is no county
@@ -119,7 +119,7 @@ const MODEL = {
   raceRule: FORECAST_META.raceRule,
   deck:
     "Gentner Drummond and Mike Mazzei finish a runoff neither led outright in June. " +
-    "The TPSI model separates them by less than a point and a half — inside its own " +
+    "The On Point Polling model separates them by less than a point and a half — inside its own " +
     "margin of error — with Drummond ahead on the strength of rural and western " +
     "Oklahoma and Mazzei holding the two metros. Whoever finishes first takes the " +
     "nomination; there is nothing after this.",
@@ -414,7 +414,7 @@ const STATUS_COPY: Record<RaceState, string> = {
   SCHEDULED: "Polls open",
   LIVE_GATED: "Too early to call",
   LIVE_FORECAST: "Counting",
-  PROJECTED: "TPSI projection",
+  PROJECTED: "On Point Polling projection",
   OFFICIAL: "Race called",
 };
 
@@ -677,7 +677,7 @@ export default function OklahomaBoard({ variant = "board" }: { variant?: "board"
   });
 
   const headline = projectedKey
-    ? `TPSI projects ${CANDIDATE_NAMES[projectedKey]} wins the Republican nomination. ` +
+    ? `On Point Polling projects ${CANDIDATE_NAMES[projectedKey]} wins the Republican nomination. ` +
       `He leads by ${int(leadGap)} votes with ${pctLabel(modeledRep)}% of the estimated ` +
       `vote counted, and the projected margin of ${signed(marginPP)} sits beyond what the ` +
       `outstanding ballots can move.`
@@ -685,7 +685,7 @@ export default function OklahomaBoard({ variant = "board" }: { variant?: "board"
       ? `${CAND_NAMES[call.leader as keyof typeof CAND_NAMES] ?? CANDIDATE_LAST[leaderKey]} ` +
         `leads by ${int(leadGap)} votes, far enough ahead that the model would call it. ` +
         `Oklahoma polls do not close until 8:00 PM ET, in ${formatCountdown(msLeft)}, and ` +
-        `TPSI publishes no projection while any Oklahoma voter is still in line.`
+        `On Point Polling publishes no projection while any Oklahoma voter is still in line.`
       : live
         ? call.line
         : MODEL.headline;
@@ -695,7 +695,7 @@ export default function OklahomaBoard({ variant = "board" }: { variant?: "board"
     rState === "OFFICIAL"
       ? STATUS_COPY.OFFICIAL
       : projectedKey
-        ? `TPSI projection — ${CANDIDATE_LAST[projectedKey]}`
+        ? `On Point Polling projection — ${CANDIDATE_LAST[projectedKey]}`
         : embargoed
           ? "Held — polls open"
           : live && call.verdict === "LEANING"
@@ -839,7 +839,7 @@ export default function OklahomaBoard({ variant = "board" }: { variant?: "board"
                 <div className="winner-band">
                   <span className="winner-badge" aria-hidden>✓</span>
                   <div className="winner-copy">
-                    <span>Winner · {calledCand ? "race called" : "TPSI projection"}</span>
+                    <span>Winner · {calledCand ? "race called" : "On Point Polling projection"}</span>
                     <strong>{CANDIDATE_NAMES[winnerKey]} wins the Republican runoff</strong>
                     <small>
                       {signed(leadMarginPP)} margin · {int(leadGap)} votes · {pctLabel(rep)}% of the
@@ -891,7 +891,7 @@ export default function OklahomaBoard({ variant = "board" }: { variant?: "board"
                                 <span className="topline-lead">Leads by {int(leadGap)} votes</span>
                               )}
                               {isProjected && (
-                                <span className="topline-lead won">TPSI projected winner</span>
+                                <span className="topline-lead won">On Point Polling projected winner</span>
                               )}
                               {c.winner && <span className="topline-lead won">Race called</span>}
                             </div>
@@ -1000,7 +1000,7 @@ export default function OklahomaBoard({ variant = "board" }: { variant?: "board"
               <div className="projected-top">
                 <div className="projected-intro">
                   <span className="model-label">
-                    {projectedKey ? "TPSI projection" : "Model projection · not actual results"}
+                    {projectedKey ? "On Point Polling projection" : "Model projection · not actual results"}
                   </span>
                   <div className="projected-name">
                     {projectedKey
@@ -1161,9 +1161,9 @@ export default function OklahomaBoard({ variant = "board" }: { variant?: "board"
               </div>
               <h2 id="sc-title">U.S. Senate Special Republican Runoff</h2>
               <p className="prose sc-deck">
-                TPSI gives {SC_CANDIDATE_LAST[scModel.leader]} a{" "}
+                On Point Polling gives {SC_CANDIDATE_LAST[scModel.leader]} a{" "}
                 {scLeaderProb.toFixed(0)}% chance of winning the nomination.{" "}
-                <strong>There is no TPSI poll of this runoff.</strong> The starting
+                <strong>There is no On Point Polling poll of this runoff.</strong> The starting
                 probability was a desk judgement from the first round, the endorsements
                 since, and how runoff electorates have behaved here before — not a survey.
                 {scLive
@@ -1323,7 +1323,7 @@ export default function OklahomaBoard({ variant = "board" }: { variant?: "board"
             <div className="board-head">
               <div>
                 <h2>All races tonight</h2>
-                <p>Reported results only, no TPSI model.</p>
+                <p>Reported results only, no On Point Polling model.</p>
               </div>
               <div className="board-meta">
                 <span className="model-label">{SLATE.length} races · 2 states</span>
@@ -1352,7 +1352,7 @@ export default function OklahomaBoard({ variant = "board" }: { variant?: "board"
             Reported vote is solid. Projected share is muted and dashed, on the same
             0 to 100% scale, and is the sum of all 77 county projections. Estimated
             reporting is the share of expected vote, not precincts. Race calls come from
-            AP through CivicAPI; TPSI projects independently once the leader&rsquo;s margin
+            AP through CivicAPI; On Point Polling projects independently once the leader&rsquo;s margin
             clears three standard deviations of the outstanding vote and at least 35% is
             counted, and those projections are labeled as ours.
           </p>
@@ -1369,7 +1369,7 @@ export default function OklahomaBoard({ variant = "board" }: { variant?: "board"
             {FORECAST_META.marginOfError}.
           </p>
           <p className="prose">
-            <strong>South Carolina is a different kind of number.</strong> No TPSI survey
+            <strong>South Carolina is a different kind of number.</strong> No On Point Polling survey
             of that runoff exists. Its starting{" "}
             {SC_FORECAST.winProbability.graham.toFixed(0)}% figure was a desk judgement,
             and the {SC_FORECAST.margin.toFixed(1)}-point opening margin was derived from
@@ -1399,7 +1399,7 @@ export default function OklahomaBoard({ variant = "board" }: { variant?: "board"
             the state.
           </p>
           <div className="method-foot">
-            <span className="model-label">© 2026 The Public Sentiment Institute</span>
+            <span className="model-label">© 2026 On Point Polling</span>
             <span className="model-label">Powered by CivicAPI</span>
           </div>
         </section>

@@ -1,12 +1,12 @@
 /**
- * TPSI — South Carolina US Senate Special Republican Runoff
+ * On Point Polling — South Carolina US Senate Special Republican Runoff
  * Statewide forecast · Election August 25, 2026
  *
  * WHAT IS MEASURED AND WHAT IS NOT
  * Two inputs here are given: Graham's 57.9% win probability and the turnout
  * assumption. Everything else is arithmetic on those two.
  *
- * There is no TPSI poll of this runoff. The win probability is a desk judgement
+ * There is no On Point Polling poll of this runoff. The win probability is a desk judgement
  * from the first-round result, endorsements and the runoff's compressed
  * calendar — not a survey. That is why this race gets a statewide forecast and
  * no county model: a county decomposition needs a sample to decompose, and we
@@ -78,5 +78,5 @@ export const SC_FORECAST_META = {
   raceRule: "PLURALITY" as const,
   basis:
     "First-round result, endorsement movement and historical runoff dropoff. " +
-    "No TPSI poll of the runoff was fielded.",
+    "No On Point Polling poll of the runoff was fielded.",
 };

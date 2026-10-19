@@ -121,7 +121,7 @@ const RACE_FORECAST_DEFAULTS: Partial<Record<number, { raceRule: RaceRule; expec
   81015: { raceRule: "PLURALITY", overrideReporting: 0, pollsCloseIso: "2026-06-02T21:00:00-04:00" }, // NM US Senate R — 9pm ET
 
   // ── SOUTH CAROLINA — MAJORITY (50%+1 or runoff June 23) — June 9 ─────────
-  82664: { raceRule: "MAJORITY", expectedTurnout: 400_000, pollAvg: { "Graham": 51.0, "Lynch": 26.4, "Dismukes": 6.6, "Herrmann": 5.4, "Mitchell": 4.2, "Cowen": 2.0 } }, // SC US Senate R (TPSI DSMeridian Model 02 · June 3–4 · n=388)
+  82664: { raceRule: "MAJORITY", expectedTurnout: 400_000, pollAvg: { "Graham": 51.0, "Lynch": 26.4, "Dismukes": 6.6, "Herrmann": 5.4, "Mitchell": 4.2, "Cowen": 2.0 } }, // SC US Senate R (On Point Polling DSMeridian Model 02 · June 3–4 · n=388)
   82596: { raceRule: "MAJORITY", expectedTurnout: 380_000, pollAvg: { "Mace": 15.0, "Evette": 24.9, "Norman": 17.2, "Reddy": 16.4, "Wilson": 21.0 } }, // SC Governor R (pre-Trump-endorsement priors — live may diverge)
   82663: { raceRule: "MAJORITY", expectedTurnout: 130_000, pollAvg: { "Andrews": 62.0, "Brown": 24.0, "Bruce": 8.0, "Freeman": 4.0, "Giracello": 2.0 } }, // SC US Senate D (market-implied · Andrews ~99%)
   82595: { raceRule: "MAJORITY", expectedTurnout: 110_000, pollAvg: { "Johnson": 40.0, "Webster": 33.0, "McLeod": 18.0, "Bennett": 9.0 } }, // SC Governor D
@@ -2283,7 +2283,7 @@ export default function March3FeaturedClient() {
       title: "SC Governor Republican Primary",
       subtitle: "South Carolina · June 9, 2026",
       electionDate: "JUNE 9, 2026",
-      about: "South Carolina Republicans selected a nominee for governor in one of the most competitive open-seat primaries in the South, with Lt. Gov. Pamela Evette, Attorney General Alan Wilson, Rep. Nancy Mace, Rep. Ralph Norman, and businessman Rom Reddy all in contention. TPSI's Meridian CV model (June 3–4) showed Mace leading at 30% ahead of Trump's late endorsement of Evette, which moved prediction markets heavily in her favor. A June 23 runoff was triggered.",
+      about: "South Carolina Republicans selected a nominee for governor in one of the most competitive open-seat primaries in the South, with Lt. Gov. Pamela Evette, Attorney General Alan Wilson, Rep. Nancy Mace, Rep. Ralph Norman, and businessman Rom Reddy all in contention. On Point Polling's Meridian CV model (June 3–4) showed Mace leading at 30% ahead of Trump's late endorsement of Evette, which moved prediction markets heavily in her favor. A June 23 runoff was triggered.",
     },
     {
       id: SC_SENATE_R_ID,
@@ -2487,7 +2487,7 @@ export default function March3FeaturedClient() {
     const featuredMeta = FEATURED.find(r => r.id === activeId);
     const spotMeta = ALL_SPOTLIGHT_META.find(s => s.id === activeId);
     const raceName = idToLabel[activeId] ?? featuredMeta?.label ?? spotMeta?.title ?? "Election Results";
-    document.title = `${raceName} · TPSI Results`;
+    document.title = `${raceName} · On Point Polling Results`;
   }, [pageTab, spotlightTab, selectedId]);
 
   // OVERLAY DISABLED — projection winner popup turned off

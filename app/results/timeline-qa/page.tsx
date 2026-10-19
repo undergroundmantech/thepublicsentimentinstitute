@@ -68,7 +68,7 @@ export default function TimelineQAPage() {
           <h1>Zone 6 Live Timeline — storybook</h1>
           <p>
             Synthetic flight-recorder-shaped snapshots exercising the hover-synced charts, gate-region shading,
-            and TPSI-call marker while <code>TIMELINE_PUBLIC_FLAG</code> is off. See CHANGE-ORDER-04 §4c / §8 Phase C.
+            and On Point Polling call marker while <code>TIMELINE_PUBLIC_FLAG</code> is off. See CHANGE-ORDER-04 §4c / §8 Phase C.
           </p>
           <div className="tlqa-frame">
             <LiveTimeline snapshots={snapshots} needle={NEEDLE} />

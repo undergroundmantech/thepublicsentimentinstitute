@@ -660,7 +660,7 @@ export default function Election2028Page() {
               </h1>
               <p className="p28-hero-desc">
                 Daily weighted average across all included polls — recency decay,
-                √n sample adjustment, LV/RV/A screen, and PSI Gold Standard upweighting.
+                √n sample adjustment, LV/RV/A screen, and On Point Polling Gold Standard upweighting.
               </p>
               <div className="p28-hero-badge-row">
                 <span className="p28-badge p28-badge-live">

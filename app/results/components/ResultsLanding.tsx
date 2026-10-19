@@ -496,7 +496,7 @@ export default function ResultsLanding({ onRaceSelect }: Props) {
         <div className="rl-hero">
           <div className="rl-hero-eyebrow">
             <span className="rl-live-dot" />
-            <span>The Public Sentiment Institute</span>
+            <span>On Point Polling</span>
             {anyLive && <span className="rl-live-badge"><span className="rl-live-dot" />Live</span>}
           </div>
           <h1 className="rl-hero-title">

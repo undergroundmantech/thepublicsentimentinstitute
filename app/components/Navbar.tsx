@@ -17,7 +17,7 @@ const NAV = [
   { href: "/maps", label: "Maps" },
   { href: "/results", label: "Results", live: RESULTS_LIVE },
   { href: "/maps/early-vote", label: "Early Vote" },
-  { href: "/tpsi", label: "On Point Polling" },
+  { href: "/on-point-polling", label: "On Point Polling" },
 ];
 
 export default function Navbar() {
@@ -58,7 +58,7 @@ export default function Navbar() {
           <div className="right">
             <Link className="btn ghost" href="/search">Search</Link>
             <ThemeToggle />
-            <Link className="btn gold" href="/tpsi/weighting-room">The Weighting Room</Link>
+            <Link className="btn gold" href="/on-point-polling/weighting-room">The Weighting Room</Link>
             <button type="button" className="btn burger" aria-expanded={open} aria-controls="opp-mnav" onClick={() => setOpen(true)}>Menu</button>
           </div>
         </div>
@@ -74,7 +74,7 @@ export default function Navbar() {
             <Link href="/search">Search</Link>
           </nav>
           <div className="mfoot">
-            <Link className="btn gold" href="/tpsi/weighting-room">The Weighting Room</Link>
+            <Link className="btn gold" href="/on-point-polling/weighting-room">The Weighting Room</Link>
             <Link className="btn" href="/contact">Contact</Link>
             <ThemeToggle className="btn" />
           </div>

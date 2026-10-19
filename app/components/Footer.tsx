@@ -15,8 +15,8 @@ const COLS = [
     ["/maps/party-registration", "Party registration"], ["/maps/early-vote", "Early vote"],
   ] },
   { h: "On Point Polling", links: [
-    ["/tpsi", "About"], ["/tpsi/polls", "Poll releases"], ["/tpsi/services", "Partner with us"],
-    ["/tpsi/weighting-room", "The Weighting Room"], ["/portal/login", "Client portal"], ["/contact", "Contact"],
+    ["/on-point-polling", "About"], ["/on-point-polling/polls", "Poll releases"], ["/on-point-polling/services", "Partner with us"],
+    ["/on-point-polling/weighting-room", "The Weighting Room"], ["/portal/login", "Client portal"], ["/contact", "Contact"],
   ] },
 ] as const;
 
@@ -41,7 +41,7 @@ export default function Footer() {
           </div>
           <div className="bottom">
             <span>© 2026 On Point Politics and On Point Polling</span>
-            <span><Link href="/terms">Terms</Link> · <Link href="/terms#privacy">Privacy</Link> · <Link href="/tpsi/sms">SMS opt in</Link></span>
+            <span><Link href="/terms">Terms</Link> · <Link href="/terms#privacy">Privacy</Link> · <Link href="/on-point-polling/sms">SMS opt in</Link></span>
           </div>
         </div>
       </div>

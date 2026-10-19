@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { seo } from "@/app/lib/seo";
 
-export const metadata: Metadata = seo({"title": "On Point Polling: the polling arm behind On Point Politics", "description": "On Point Polling, formerly The Public Sentiment Institute, is the polling and research arm behind On Point Politics: statewide and national surveys, the DSMeridian likely voter model and dual panel fieldwork.", "path": "/tpsi"});
+export const metadata: Metadata = seo({"title": "On Point Polling: the polling arm behind On Point Politics", "description": "On Point Polling is the polling and research arm behind On Point Politics: statewide and national surveys, the DSMeridian likely voter model and dual panel fieldwork.", "path": "/on-point-polling"});
 
 const PILLARS: [string, string, string][] = [
   ["Fieldwork", "Original surveys", "Statewide, district and national polls written, fielded and weighted in house, published with full toplines and crosstabs."],
@@ -11,12 +11,12 @@ const PILLARS: [string, string, string][] = [
 ];
 
 const LINKS = [
-  { href: "/tpsi/polls", t: "Poll releases", s: "Toplines and crosstabs from every On Point Polling survey." },
-  { href: "/tpsi/methodology", t: "Methodology", s: "DSMeridian weighting, the dual panel design and the gold standard pollster list." },
-  { href: "/tpsi/services", t: "Partner with On Point Polling", s: "Commission statewide, district or national polling." },
-  { href: "/tpsi/weighting-room", t: "The Weighting Room", s: "The subscriber community for people who like their crosstabs raw." },
-  { href: "/tpsi/situation-room", t: "Situation room", s: "Streams and election night video from the desk." },
-  { href: "/tpsi/sms", t: "SMS updates", s: "Text alerts for releases and results nights." },
+  { href: "/on-point-polling/polls", t: "Poll releases", s: "Toplines and crosstabs from every On Point Polling survey." },
+  { href: "/on-point-polling/methodology", t: "Methodology", s: "DSMeridian weighting, the dual panel design and the gold standard pollster list." },
+  { href: "/on-point-polling/services", t: "Partner with On Point Polling", s: "Commission statewide, district or national polling." },
+  { href: "/on-point-polling/weighting-room", t: "The Weighting Room", s: "The subscriber community for people who like their crosstabs raw." },
+  { href: "/on-point-polling/situation-room", t: "Situation room", s: "Streams and election night video from the desk." },
+  { href: "/on-point-polling/sms", t: "SMS updates", s: "Text alerts for releases and results nights." },
 ];
 
 export default function Page() {
@@ -26,11 +26,11 @@ export default function Page() {
       <header className="ph">
         <div className="eye g">On Point Polling</div>
         <h1>On Point <em>Polling</em></h1>
-        <p className="lede">On Point Polling, formerly The Public Sentiment Institute, is the polling and research arm behind On Point Politics. It fields the surveys, runs the DSMeridian likely voter model and feeds the polling averages, the 2026 forecast and election night coverage.</p>
+        <p className="lede">On Point Polling is the polling and research arm behind On Point Politics. It fields the surveys, runs the DSMeridian likely voter model and feeds the polling averages, the 2026 forecast and election night coverage.</p>
         <div className="pmeta">
           <span>Based in <b>Miami</b></span>
           <span>Field reports <b className="mono">7</b></span>
-          <span>Latest <Link href="/tpsi/polls/texas-2026"><b>Texas, Oct 2026</b></Link></span>
+          <span>Latest <Link href="/on-point-polling/polls/texas-2026"><b>Texas, Oct 2026</b></Link></span>
           <span>Largest sample <b className="mono">893 LV</b></span>
         </div>
       </header>
@@ -70,7 +70,7 @@ export default function Page() {
             <div className="eye">Work with On Point Polling</div>
             <h3 style={{ fontSize: 18, margin: "8px 0 6px" }}>Commission a poll</h3>
             <p style={{ fontSize: 14 }}>Campaigns, PACs and newsrooms get a topline in days, not weeks.</p>
-            <Link className="btn g" href="/tpsi/services" style={{ marginTop: 12 }}>Partner with On Point Polling</Link>
+            <Link className="btn g" href="/on-point-polling/services" style={{ marginTop: 12 }}>Partner with On Point Polling</Link>
           </div></div>
         </aside>
       </div>

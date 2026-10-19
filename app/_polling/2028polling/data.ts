@@ -7,8 +7,8 @@ export const GOLD_STANDARD_NAMES = [
 ];
 
 export const RAW_POLLS: Poll[] = [
-  { pollster: "The Public Sentiment Institute",          endDate: "2026-02-28", sampleSize: 316, sampleType: "RV", results: { Vance: 43, Newsom: 38 } },
-  { pollster: "The Public Sentiment Institute",          endDate: "2026-02-28", sampleSize: 250, sampleType: "LV", results: { Vance: 41, Newsom: 46 } },
+  { pollster: "On Point Polling",          endDate: "2026-02-28", sampleSize: 316, sampleType: "RV", results: { Vance: 43, Newsom: 38 } },
+  { pollster: "On Point Polling",          endDate: "2026-02-28", sampleSize: 250, sampleType: "LV", results: { Vance: 41, Newsom: 46 } },
   { pollster: "Big Data Poll",          endDate: "2026-02-18", sampleSize: 1805, sampleType: "LV", results: { Vance: 46.8, Newsom: 53.2 } },
   { pollster: "YouGov / Yahoo",         endDate: "2026-02-12", sampleSize: 511,  sampleType: "LV", results: { Vance: 43.0, Newsom: 49.0 } },
   { pollster: "Zogby",                  endDate: "2026-01-07", sampleSize: 891,  sampleType: "LV", results: { Vance: 44.6, Newsom: 41.0 } },

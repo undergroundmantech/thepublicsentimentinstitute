@@ -1,5 +1,5 @@
 // app/polling/data/pastdata.ts
-// PSI past performance dataset (statewide, 50 states)
+// On Point Polling past performance dataset (statewide, 50 states)
 //
 // Conventions
 // - Margins are **R margin** = (Republican % - Democratic %)

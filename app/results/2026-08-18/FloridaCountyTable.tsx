@@ -1,6 +1,6 @@
 "use client";
 
-// County-by-county board. FORECAST reads the TPSI baseline blended with the
+// County-by-county board. FORECAST reads the On Point Polling baseline blended with the
 // shrunk statewide swing (countyForecast.ts); RESULTS reads live CivicAPI
 // county returns, which sit at zero until Florida reports below the statewide
 // level.

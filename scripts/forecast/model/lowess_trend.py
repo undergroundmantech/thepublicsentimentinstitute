@@ -1,11 +1,11 @@
-"""PSI LOWESS Election Day polling average, the forecast side of app/polling/lib/lowessTrend.ts.
+"""On Point Polling LOWESS Election Day polling average, the forecast side of app/polling/lib/lowessTrend.ts.
 
 Every poll counts once, at the midpoint of its field dates, with the margin D minus R. Published
 polling averages are left out. Robust LOWESS, a line for line match of statsmodels' lowess(it=3),
 at spans 0.30, 0.45 and 0.60. The Election Day polling average is 0.40 x the recent trend plus
 0.60 x the long-term trend where the newest poll sits, carried flat: the blend that missed the later
 polling least in a backtest of the site's own polls (scripts/polling/lowess in the site repo).
-Races with fewer than 8 polls return None, and the forecast keeps the PSI weighted average there.
+Races with fewer than 8 polls return None, and the forecast keeps the On Point Polling weighted average there.
 """
 import re
 import numpy as np

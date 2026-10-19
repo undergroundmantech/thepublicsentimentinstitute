@@ -3,7 +3,7 @@ import Link from "next/link";
 import PollsterList from "./PollsterList";
 import { seo } from "@/app/lib/seo";
 
-export const metadata: Metadata = seo({"title": "On Point Polling methodology", "description": "How On Point Polling fields and weights its polls with the DSMeridian likely voter model, and how On Point Politics weights Gold Standard pollsters in its averages.", "path": "/tpsi/methodology", "type": "article"});
+export const metadata: Metadata = seo({"title": "On Point Polling methodology", "description": "How On Point Polling fields and weights its polls with the DSMeridian likely voter model, and how On Point Politics weights Gold Standard pollsters in its averages.", "path": "/on-point-polling/methodology", "type": "article"});
 
 // kept in sync with the POLLSTERS list in ./PollsterList (a server page cannot read values out of a client module)
 const POLLSTER_COUNT = 8;
@@ -24,7 +24,7 @@ const CRITERIA: [string, string, string[]][] = [
 export default function Page() {
   return (
     <div className="opp">
-      <nav className="crumbs" aria-label="Breadcrumb"><Link href="/">Home</Link><span className="sep">/</span><Link href="/tpsi">On Point Polling</Link><span className="sep">/</span><span>Methodology</span></nav>
+      <nav className="crumbs" aria-label="Breadcrumb"><Link href="/">Home</Link><span className="sep">/</span><Link href="/on-point-polling">On Point Polling</Link><span className="sep">/</span><span>Methodology</span></nav>
       <header className="ph">
         <div className="eye g">Methodology</div>
         <h1>How the numbers are <em>weighted</em></h1>
@@ -75,7 +75,7 @@ export default function Page() {
             <p style={{ fontSize: 14, margin: "8px 0 12px" }}>Have a release with field dates, sample details and documentation? Send it over. Every submission is reviewed against the criteria.</p>
             <Link className="btn g" href="/contact">Contact the desk</Link>
           </div></div>
-          <div className="callout"><div className="eye">See it applied</div>The upweight feeds every <Link href="/polls" style={{ textDecoration: "underline" }}>On Point average</Link>; On Point Polling&rsquo;s own surveys are on the <Link href="/tpsi/polls" style={{ textDecoration: "underline" }}>releases page</Link>.</div>
+          <div className="callout"><div className="eye">See it applied</div>The upweight feeds every <Link href="/polls" style={{ textDecoration: "underline" }}>On Point average</Link>; On Point Polling&rsquo;s own surveys are on the <Link href="/on-point-polling/polls" style={{ textDecoration: "underline" }}>releases page</Link>.</div>
         </aside>
       </div>
       <style>{`

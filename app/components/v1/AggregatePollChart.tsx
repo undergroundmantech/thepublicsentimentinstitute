@@ -16,7 +16,7 @@ import {
 import type { AggDaily, AggPollPoint, Series } from "@/app/_polling/lib/aggregates";
 
 /* =============================================================================
-   AggregatePollChart — poll cloud + PSI aggregate line + RCP-style spread.
+   AggregatePollChart — poll cloud + On Point Polling aggregate line + RCP-style spread.
    Hover is a lightweight HTML overlay on an rAF loop (the SVG renders once and
    never re-renders on mouse move), so it stays smooth with 500+ dots. Hovering
    fades everything to the right of the readout line.

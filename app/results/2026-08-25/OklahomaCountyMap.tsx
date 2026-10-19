@@ -1,6 +1,6 @@
 "use client";
 
-// Oklahoma county choropleth. Geometry is baked SVG lifted from the TPSI
+// Oklahoma county choropleth. Geometry is baked SVG lifted from the On Point Polling
 // Oklahoma runoff forecast engine, so it renders with no fetch and no
 // projection math.
 //

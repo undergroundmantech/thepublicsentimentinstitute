@@ -1,6 +1,6 @@
 // app/polling/governorpolling/arizona.ts
 // Arizona — 2026 Governor: Katie Hobbs (D) vs. Andy Biggs (R)
-// Generated from the TPSI forecast poll feed (run of 2026-09-22), merged with
+// Generated from the On Point Polling forecast poll feed (run of 2026-09-22), merged with
 // the polls this file already carried. Polls of matchups that are not on the
 // ballot were dropped. Newest poll: 2026-10-08. Seven 2026 pre primary polls added Sept 28.
 
