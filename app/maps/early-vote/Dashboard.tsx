@@ -28,6 +28,8 @@ export type FcRace = {
   id: string; office: string; st: string; dem: string; gop: string;
   votes: { dem: number; rep: number; other: number; total: number };
   cands?: { name: string; party: string; pct: number }[];
+  // the early vote correction the forecast already carries, R minus D points of the whole vote (ev_adjust.py)
+  ev?: { shift: number } | null;
 };
 let _fc: Promise<FcRace[]> | null = null;
 export const getForecastRaces = () =>
@@ -35,21 +37,21 @@ export const getForecastRaces = () =>
     .then((m) => ((m?.races ?? []) as FcRace[]).filter((r) => r.office === "senate" || r.office === "governor"))
     .catch(() => []));
 
-type RaceOpt = { key: string; label: string; dName: string; rName: string; dLab: string; rLab: string; d: number; r: number; o: number };
+type RaceOpt = { key: string; label: string; dName: string; rName: string; dLab: string; rLab: string; d: number; r: number; o: number; ev: number };
 
 function raceOptions(scope: string, E: ElectModel | null, races: FcRace[]): RaceOpt[] {
   const out: RaceOpt[] = [];
   const place = scope === "US" ? "U.S." : STATE_NAME[scope] ?? scope;
-  const mk = (key: string, label: string, dName: string, rName: string, dLab: string, rLab: string, v: { dem: number; rep: number; total: number }) => {
+  const mk = (key: string, label: string, dName: string, rName: string, dLab: string, rLab: string, v: { dem: number; rep: number; total: number }, ev = 0) => {
     const t = Math.max(1, v.total);
-    out.push({ key, label, dName, rName, dLab, rLab, d: v.dem / t, r: v.rep / t, o: Math.max(0, 1 - (v.dem + v.rep) / t) });
+    out.push({ key, label, dName, rName, dLab, rLab, d: v.dem / t, r: v.rep / t, o: Math.max(0, 1 - (v.dem + v.rep) / t), ev });
   };
   if (scope !== "US") {
     for (const off of ["senate", "governor"]) {
       const r = races.find((x) => x.st === scope && x.office === off);
       if (!r || !r.votes?.total) continue;
       const dp = r.cands?.find((c) => c.name === r.dem)?.party ?? "D";
-      mk(r.id, `${place} ${off === "senate" ? "U.S. Senate" : "Governor"}`, r.dem, r.gop, dp, "R", { dem: r.votes.dem, rep: r.votes.rep, total: r.votes.total });
+      mk(r.id, `${place} ${off === "senate" ? "U.S. Senate" : "Governor"}`, r.dem, r.gop, dp, "R", { dem: r.votes.dem, rep: r.votes.rep, total: r.votes.total }, r.ev?.shift ?? 0);
     }
     const h = E?.states[scope]?.house;
     if (h) mk("house", `${place} U.S. House, statewide vote`, "Democrats", "Republicans", "D", "R", h);
@@ -123,7 +125,12 @@ export function TopCards({ scope, E, calc, races, reportedShare, cast, expTotal 
   // the ballots cast so far, by 2024 vote, against the forecast's whole electorate
   const early = live ? calc.actG : null;
   const shiftL = early ? lg(dShare(early, x)) - lg(dShare(calc.fcElect, x)) : 0;
-  const d2 = race.d / Math.max(1e-6, race.d + race.r);
+  // Oct 19 2026: the published forecast already carries the early vote correction, race.ev points (R minus D). The
+  // turnout read below is measured against the forecast's electorate before that correction, so it starts from the
+  // forecast without it; otherwise the correction would be counted twice.
+  const keep0 = Math.max(1e-6, race.d + race.r);
+  const mPre = (race.r - race.d) * 100 - race.ev;                  // forecast margin before the correction, R minus D
+  const d2 = Math.min(0.999, Math.max(0.001, (keep0 - mPre / 100) / 2 / keep0));
   const d2e = il(lg(d2) + shiftL);
   const keep = 1 - race.o;
   const dE = d2e * keep, rE = (1 - d2e) * keep;
@@ -141,13 +148,17 @@ export function TopCards({ scope, E, calc, races, reportedShare, cast, expTotal 
   const boost = m26 - m24;   // negative is toward Democrats
 
   // forecast check: does the early vote point to an electorate to the left or right of the forecast's
-  const imp = live ? calc.impliedShift : 0;
+  const impAll = live ? calc.impliedShift : 0;             // the whole turnout shift against the forecast's electorate
+  const imp = impAll - (live ? race.ev : 0);                 // what the forecast has not already counted
   const pace = live ? calc.A.n / Math.max(1, calc.expEarly) : 0;
   const strength = !live ? "no ballots yet" : pace < 0.15 ? "early signal" : pace < 0.4 ? "building signal" : "strong signal";
   const check = !live ? { word: "Waiting on ballots", tone: "var(--muted2)", sub: "No mail returns or in person ballots reported yet." }
     : Math.abs(imp) < 1.5 ? { word: "Forecast looks about right", tone: "var(--gold, #e3c35a)", sub: `The early vote points to an electorate within ${Math.abs(imp).toFixed(1)} points of the forecast's.` }
     : imp > 0 ? { word: "Forecast may be too Democratic", tone: "var(--gop)", sub: `The early vote points to an electorate ${imp.toFixed(1)} points more Republican than the forecast's.` }
     : { word: "Forecast may be too Republican", tone: "var(--dem)", sub: `The early vote points to an electorate ${Math.abs(imp).toFixed(1)} points more Democratic than the forecast's.` };
+  const counted = live && Math.abs(race.ev) >= 0.05
+    ? ` The forecast already counts ${Math.abs(race.ev).toFixed(1)} points ${race.ev < 0 ? "toward Democrats" : "toward Republicans"} of the early vote's ${Math.abs(impAll).toFixed(1)} point read; this is what is left.`
+    : "";
   const v = live ? verdictOf(calc.delta) : null;
 
   return (
@@ -210,10 +221,11 @@ export function TopCards({ scope, E, calc, races, reportedShare, cast, expTotal 
       <section className="db-card db-check" aria-label="Forecast check" style={{ borderColor: check.tone }}>
         <span className="db-cap">Forecast check · {strength}</span>
         <b className="word" style={{ color: check.tone }}>{check.word}</b>
-        <p className="db-note">{check.sub}</p>
+        <p className="db-note">{check.sub}{counted}</p>
         {live ? (
           <div className="db-chk">
             <div><span>Forecast, {race.label.replace(/^U\.S\. /, "")}</span><b style={{ color: mF > 0 ? "var(--gop)" : "var(--dem)" }}>{fmtMargin(mF)}</b></div>
+            {Math.abs(race.ev) >= 0.05 ? <div><span>Before the early vote correction</span><b style={{ color: mPre > 0 ? "var(--gop)" : "var(--dem)" }}>{fmtMargin(mPre)}</b></div> : null}
             <div><span>With the early vote electorate</span><b style={{ color: mF + imp > 0 ? "var(--gop)" : "var(--dem)" }}>{fmtMargin(mF + imp)}</b></div>
             {v ? <div className="v"><span>Early ballots against expected</span><b style={{ color: v.tone }}>{v.word}</b></div> : null}
           </div>

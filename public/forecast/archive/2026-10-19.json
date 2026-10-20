@@ -1,15 +1,15 @@
 {
  "date": "2026-10-19",
- "statewide_run": "full rerun 2026-10-19: every Senate, governor and House race refit with the On Point five state respondents added to the national census cell fits, S1019FX, change applied to 2026-10-18",
- "house_run": "S1019FX full House rerun against the same settings without the five state respondents",
+ "statewide_run": "8 PM sweep 2026-10-19: S1019PM, nine races with new polls, on top of the S1019FX full rerun with the five state respondents in the national fits",
+ "house_run": "S1019FX full House rerun",
  "n_sims": 2000,
  "chambers": {
   "senate": {
-   "d_control": 81.9,
+   "d_control": 82.1,
    "d_seats_median": 53.0,
    "p10": 49.0,
    "p90": 57.0,
-   "d_control_without_osborn": 78.4
+   "d_control_without_osborn": 78.6
   },
   "governors": {
    "d_majority": 90.8,
@@ -29,12 +29,12 @@
   "AK": {
    "office": "senate",
    "n_sims": 2000,
-   "margin": 1.26,
-   "win_d": 59.03,
-   "p10": -5.5,
-   "p90": 8.08,
+   "margin": 1.42,
+   "win_d": 60.39,
+   "p10": -5.34,
+   "p90": 8.24,
    "deterministic_margin": 1.299768744253434,
-   "n_polls": 25,
+   "n_polls": 26,
    "poll_house_index": 5.0,
    "poll_avg": {
     "D": 49.132425040972336,
@@ -200,7 +200,7 @@
    "p10": -20.66,
    "p90": -5.69,
    "deterministic_margin": -13.94252768371922,
-   "n_polls": 6,
+   "n_polls": 5,
    "poll_house_index": 0.5,
    "poll_avg": {
     "D": 40.0,
@@ -274,7 +274,7 @@
    "p10": 5.18,
    "p90": 19.78,
    "deterministic_margin": 10.024342411357566,
-   "n_polls": 26,
+   "n_polls": 24,
    "poll_house_index": 5.0,
    "poll_avg": {
     "D": 50.0612038056626,
@@ -419,12 +419,12 @@
   "CTG": {
    "office": "governor",
    "n_sims": 2000,
-   "margin": 14.89,
-   "win_d": 98.71,
-   "p10": 7.25,
-   "p90": 22.4,
+   "margin": 15.49,
+   "win_d": 98.94,
+   "p10": 7.85,
+   "p90": 23.0,
    "deterministic_margin": 15.01830098858764,
-   "n_polls": 10,
+   "n_polls": 11,
    "poll_house_index": 4.0,
    "poll_avg": {
     "D": 54.02757861063479,
@@ -494,12 +494,12 @@
   "FL": {
    "office": "senate",
    "n_sims": 2000,
-   "margin": -6.56,
-   "win_d": 12.4,
-   "p10": -13.78,
-   "p90": 0.67,
+   "margin": -6.77,
+   "win_d": 11.62,
+   "p10": -13.99,
+   "p90": 0.46,
    "deterministic_margin": -4.876050930490166,
-   "n_polls": 14,
+   "n_polls": 15,
    "poll_house_index": 6.0,
    "poll_avg": {
     "D": 43.115316280306665,
@@ -539,12 +539,12 @@
   "FLG": {
    "office": "governor",
    "n_sims": 2000,
-   "margin": -4.42,
-   "win_d": 21.86,
-   "p10": -12.21,
-   "p90": 3.7,
+   "margin": -4.9,
+   "win_d": 19.5,
+   "p10": -12.69,
+   "p90": 3.22,
    "deterministic_margin": -2.029526010063705,
-   "n_polls": 31,
+   "n_polls": 32,
    "poll_house_index": 5.0,
    "poll_avg": {
     "D": 44.5045118542151,
@@ -584,12 +584,12 @@
   "GA": {
    "office": "senate",
    "n_sims": 2000,
-   "margin": 10.3,
-   "win_d": 98.38,
-   "p10": 4.5,
-   "p90": 16.1,
+   "margin": 9.75,
+   "win_d": 97.96,
+   "p10": 3.95,
+   "p90": 15.55,
    "deterministic_margin": 10.230376502114673,
-   "n_polls": 18,
+   "n_polls": 19,
    "poll_house_index": 6.0,
    "poll_avg": {
     "D": 52.10939340193953,
@@ -629,12 +629,12 @@
   "GAG": {
    "office": "governor",
    "n_sims": 2000,
-   "margin": 0.38,
-   "win_d": 54.55,
-   "p10": -6.44,
-   "p90": 7.03,
+   "margin": 0.81,
+   "win_d": 57.87,
+   "p10": -6.01,
+   "p90": 7.46,
    "deterministic_margin": 0.23239619668638056,
-   "n_polls": 15,
+   "n_polls": 16,
    "poll_house_index": 3.0,
    "poll_avg": {
     "D": 48.29217184835956,
@@ -704,12 +704,12 @@
   "IA": {
    "office": "senate",
    "n_sims": 2000,
-   "margin": 0.95,
-   "win_d": 54.86,
-   "p10": -5.62,
-   "p90": 8.08,
+   "margin": 1.35,
+   "win_d": 57.66,
+   "p10": -5.22,
+   "p90": 8.48,
    "deterministic_margin": 1.623670307677294,
-   "n_polls": 32,
+   "n_polls": 33,
    "poll_house_index": 12.0,
    "poll_avg": {
     "D": 47.206473050978,
@@ -1098,12 +1098,12 @@
   "MA": {
    "office": "senate",
    "n_sims": 2000,
-   "margin": 33.99,
+   "margin": 34.19,
    "win_d": 99.95,
-   "p10": 26.95,
-   "p90": 40.77,
+   "p10": 27.15,
+   "p90": 40.97,
    "deterministic_margin": 33.45653366929822,
-   "n_polls": 11,
+   "n_polls": 12,
    "poll_house_index": 2.0,
    "poll_avg": {
     "D": 52.929083322205415,
@@ -1148,7 +1148,7 @@
    "p10": 18.98,
    "p90": 33.95,
    "deterministic_margin": 25.969569748066178,
-   "n_polls": 7,
+   "n_polls": 6,
    "poll_house_index": 2.0,
    "poll_avg": {
     "D": 53.9,
@@ -1447,7 +1447,7 @@
    "p10": 8.56,
    "p90": 22.64,
    "deterministic_margin": 15.65832873189649,
-   "n_polls": 7,
+   "n_polls": 6,
    "poll_house_index": 4.0,
    "poll_avg": {
     "D": 48.3,
@@ -1822,7 +1822,7 @@
    "p10": 17.48,
    "p90": 33.77,
    "deterministic_margin": 24.17393853162269,
-   "n_polls": 3,
+   "n_polls": 2,
    "poll_house_index": 1.5,
    "poll_avg": {
     "D": 53.7,
@@ -2205,12 +2205,12 @@
   "PAG": {
    "office": "governor",
    "n_sims": 2000,
-   "margin": 23.78,
+   "margin": 23.74,
    "win_d": 99.95,
-   "p10": 17.52,
-   "p90": 30.2,
+   "p10": 17.48,
+   "p90": 30.16,
    "deterministic_margin": 23.740350111299534,
-   "n_polls": 15,
+   "n_polls": 16,
    "poll_house_index": 5.5,
    "poll_avg": {
     "D": 55.67896196419896,
@@ -2292,7 +2292,7 @@
    "p10": 4.48,
    "p90": 17.81,
    "deterministic_margin": 15.42588834993687,
-   "n_polls": 5,
+   "n_polls": 4,
    "poll_house_index": 2.0,
    "poll_avg": {
     "D": 43.8,
@@ -2329,7 +2329,7 @@
    "p10": -6.5,
    "p90": 9.62,
    "deterministic_margin": -1.79054427570739,
-   "n_polls": 9,
+   "n_polls": 8,
    "poll_house_index": 1.0,
    "poll_avg": {
     "D": 44.8,
@@ -2366,7 +2366,7 @@
    "p10": -14.07,
    "p90": 3.24,
    "deterministic_margin": -7.646725365327434,
-   "n_polls": 5,
+   "n_polls": 4,
    "poll_house_index": 2.0,
    "poll_avg": {
     "D": 35.0,
@@ -2440,7 +2440,7 @@
    "p10": -18.91,
    "p90": -0.26,
    "deterministic_margin": -8.362396482817907,
-   "n_polls": 3,
+   "n_polls": 2,
    "poll_house_index": 0.0,
    "poll_avg": {
     "D": 42.5,
@@ -2551,7 +2551,7 @@
    "p10": -4.3,
    "p90": 8.27,
    "deterministic_margin": 1.0314087415886632,
-   "n_polls": 59,
+   "n_polls": 58,
    "poll_house_index": 18.0,
    "poll_avg": {
     "D": 48.68308268456635,
@@ -2596,7 +2596,7 @@
    "p10": -7.89,
    "p90": 3.81,
    "deterministic_margin": -2.1911910309232354,
-   "n_polls": 50,
+   "n_polls": 49,
    "poll_house_index": 15.0,
    "poll_avg": {
     "D": 47.383570636421396,
