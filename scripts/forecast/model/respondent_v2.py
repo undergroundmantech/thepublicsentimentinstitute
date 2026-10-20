@@ -64,7 +64,7 @@ def load(base):
     if "source_dataset" in r:
         _five = r.source_dataset.eq("onpoint_five_state_oct2026")
         FIVE_ROWS.clear(); FIVE_ROWS.append(r[_five].copy())
-        if os.environ.get("FIVE_STATE_IN_FITS", "0") != "1":
+        if True:   # every consumer keeps the national rows; FIVE_STATE_IN_FITS adds the five state rows in fit_frame
             _blank5 = {c for c in r.columns if r[c].isna().any()}
             r = r[~_five].copy()
             # the five state rows leave blanks in columns the national rows fill completely, so pandas reads those columns
@@ -214,6 +214,51 @@ def cvap(race_labels):
 
 
 # ── registration, for the universe audit ────────────────────────────────────────────────────────
+FIT_AUDIT = {}
+
+
+def fit_frame(r):
+    """Respondents for the national census cell fits. National rows only unless FIVE_STATE_IN_FITS=1, which adds the On
+    Point five state respondents in Texas, Florida, Michigan, Ohio and South Carolina.
+
+    Their 2026 vote: the Senate choice when it is D or R, else the governor choice, else undecided or third party, the
+    way the national file codes the generic ballot. The Senate is the federal race on the same ballot. Midterm history
+    from voted_2022 and voted_2018 where vote_history_years is blank.
+
+    Weights, fit_w: inside each of the five states every respondent, national or five state, counts n_national /
+    (n_national + n_five_state), so each state keeps the share of the fit it has in the national file and the age, race,
+    education and region slopes are not dominated by five states. FIVE_STATE_FIT_WEIGHT=equal counts every row as one.
+    State effects are unchanged by a constant within a state, so they use the full state samples."""
+    r = r.copy(); r["fit_w"] = 1.0
+    FIT_AUDIT.clear(); FIT_AUDIT["five_state_in_fits"] = False
+    if os.environ.get("FIVE_STATE_IN_FITS", "0") != "1" or not FIVE_ROWS: return r
+    f = FIVE_ROWS[0].copy()
+    two = lambda s: s.map({"D": "Democrat", "R": "Republican"})
+    sen, gov = two(f.op5_senate_party), two(f.op5_governor_party)
+    f["gb_2way"] = sen.fillna(gov)
+    rest = f.op5_senate_party.map({"Undecided": "Undecided", "Third": "Third party", "Other": "Third party"})
+    f["generic_ballot"] = f.gb_2way.fillna(rest)
+    yrs = f[["voted_2024", "voted_2022", "voted_2020", "voted_2018"]].fillna(0).astype(int)
+    built = yrs.apply(lambda x: ";".join(y for y, v in zip(("2024", "2022", "2020", "2018"), x) if v == 1), axis=1)
+    f["vote_history_years"] = f.vote_history_years.where(f.vote_history_years.notna(), built)
+    keep = [c for c in r.columns if c in f.columns]
+    f = f[keep].copy(); f["fit_w"] = 1.0; f["five_state_row"] = True; r["five_state_row"] = False
+    f = f.dropna(subset=["age_band", "race4", "college", "region8"])
+    how = os.environ.get("FIVE_STATE_FIT_WEIGHT", "balance")
+    nat_n = r.state.value_counts(); fs_n = f.state.value_counts(); wts = {}
+    if how != "equal":
+        for st, n5 in fs_n.items():
+            k = float(nat_n.get(st, 0)) / (float(nat_n.get(st, 0)) + n5); wts[st] = round(k, 4)
+            r.loc[r.state == st, "fit_w"] = k; f.loc[f.state == st, "fit_w"] = k
+    out = pd.concat([r, f], ignore_index=True)
+    FIT_AUDIT.update(five_state_in_fits=True, weighting=how, five_state_rows=int(len(f)), state_weight=wts,
+                     five_state_two_party=int(f.gb_2way.notna().sum()),
+                     split_ticket_rows_coded_by_senate=int((sen.notna() & gov.notna() & (sen != gov)).sum()),
+                     five_state_share_of_fit_weight=round(float(out.fit_w[out.five_state_row].sum() / out.fit_w.sum()), 4),
+                     five_states_share_of_fit_weight=round(float(out.fit_w[out.state.isin(list(fs_n.index))].sum() / out.fit_w.sum()), 4))
+    return out
+
+
 def fit_registration(irls, r, X):
     if not ON or "registered_to_vote" not in r: return None
     y = r.registered_to_vote.map({"Yes": 1.0, "No": 0.0})

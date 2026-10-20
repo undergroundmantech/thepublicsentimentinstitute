@@ -26,7 +26,7 @@
    "ballots": 0,
    "estimatedShare": null,
    "source": "neighbours and primaries",
-   "comp": 0.31,
+   "comp": 0.3,
    "level": -0.02
   },
   "AL": {
@@ -96,7 +96,7 @@
    "ballots": 369089,
    "estimatedShare": 0,
    "source": "early vote",
-   "comp": 0.98,
+   "comp": 0.97,
    "level": -0.0
   },
   "CT": {
@@ -124,7 +124,7 @@
    "ballots": 12043,
    "estimatedShare": 0,
    "source": "early vote",
-   "comp": 0.44,
+   "comp": 0.43,
    "level": -0.0
   },
   "FL": {
@@ -180,8 +180,8 @@
    "ballots": 33417,
    "estimatedShare": 0,
    "source": "early vote",
-   "comp": -0.31,
-   "level": -0.1
+   "comp": -0.32,
+   "level": -0.09
   },
   "ID": {
    "gap": 1.938,
@@ -194,8 +194,8 @@
    "ballots": 28945,
    "estimatedShare": 0,
    "source": "early vote",
-   "comp": -1.64,
-   "level": -0.02
+   "comp": -1.59,
+   "level": -0.03
   },
   "IL": {
    "gap": -0.23,
@@ -304,7 +304,7 @@
    "ballots": 59541,
    "estimatedShare": 0,
    "source": "early vote",
-   "comp": 1.35,
+   "comp": 1.34,
    "level": 0.05
   },
   "MI": {
@@ -318,8 +318,8 @@
    "ballots": 630001,
    "estimatedShare": 1,
    "source": "early vote",
-   "comp": 0.5,
-   "level": -0.02
+   "comp": 0.49,
+   "level": -0.01
   },
   "MN": {
    "gap": -0.127,
@@ -333,7 +333,7 @@
    "estimatedShare": 1,
    "source": "early vote",
    "comp": 0.11,
-   "level": -0.0
+   "level": 0.01
   },
   "MO": {
    "gap": -0.163,
@@ -372,7 +372,7 @@
    "ballots": 60172,
    "estimatedShare": 1,
    "source": "early vote",
-   "comp": 0.24,
+   "comp": 0.23,
    "level": -0.04
   },
   "NC": {
@@ -413,7 +413,7 @@
    "estimatedShare": 0,
    "source": "early vote",
    "comp": 2.31,
-   "level": -0.02
+   "level": -0.01
   },
   "NH": {
    "gap": -0.325,
@@ -441,7 +441,7 @@
    "estimatedShare": 0,
    "source": "early vote",
    "comp": -0.86,
-   "level": -0.08
+   "level": -0.09
   },
   "NM": {
    "gap": -0.873,
@@ -483,7 +483,7 @@
    "estimatedShare": null,
    "source": "neighbours and primaries",
    "comp": -0.09,
-   "level": -0.02
+   "level": -0.01
   },
   "OH": {
    "gap": -0.106,
@@ -552,7 +552,7 @@
    "ballots": 21366,
    "estimatedShare": 0,
    "source": "early vote",
-   "comp": -0.7,
+   "comp": -0.71,
    "level": -0.03
   },
   "SC": {
@@ -580,8 +580,8 @@
    "ballots": 31562,
    "estimatedShare": 0,
    "source": "early vote",
-   "comp": -0.53,
-   "level": -0.04
+   "comp": -0.52,
+   "level": -0.03
   },
   "TN": {
    "gap": 0.097,
@@ -594,7 +594,7 @@
    "ballots": 264294,
    "estimatedShare": 1,
    "source": "early vote",
-   "comp": -0.09,
+   "comp": -0.08,
    "level": -0.0
   },
   "TX": {
@@ -648,7 +648,7 @@
    "ballots": 22973,
    "estimatedShare": 1,
    "source": "early vote",
-   "comp": 0.3,
+   "comp": 0.29,
    "level": 0.04
   },
   "WA": {
@@ -675,7 +675,7 @@
    "estimatedShare": 1,
    "source": "early vote",
    "comp": 0.31,
-   "level": -0.01
+   "level": -0.0
   },
   "WV": {
    "gap": 0.064,
@@ -688,7 +688,7 @@
    "ballots": 0,
    "estimatedShare": null,
    "source": "neighbours and primaries",
-   "comp": -0.06,
+   "comp": -0.05,
    "level": -0.01
   },
   "WY": {
@@ -708,22 +708,22 @@
  },
  "chambers": {
   "governor": {
-   "seat_change": -0.0,
-   "dem_control_before": 0.9065,
-   "dem_control": 0.9064,
-   "dem_seats": 28.45
+   "seat_change": 0.0,
+   "dem_control_before": 0.9074,
+   "dem_control": 0.9075,
+   "dem_seats": 28.47
   },
   "senate": {
    "seat_change": -0.0,
-   "dem_control_before": 0.8171,
-   "dem_control": 0.817,
-   "dem_seats": 53.12
+   "dem_control_before": 0.8187,
+   "dem_control": 0.8187,
+   "dem_seats": 53.14
   },
   "house": {
    "seat_change": -0.0,
-   "dem_control_before": 0.9087,
-   "dem_control": 0.9087,
-   "dem_seats": 243.11
+   "dem_control_before": 0.9069,
+   "dem_control": 0.9069,
+   "dem_seats": 242.98
   }
  }
 }

@@ -2912,10 +2912,12 @@ def irls(X, y, w, ridge=1.0, it=50):
     return b
 
 def fit_respondents():
-    r = RESP.dropna(subset=["age_band", "race4", "college", "region8"]).copy()
+    r0 = RESP.dropna(subset=["age_band", "race4", "college", "region8"]).copy()
+    r = _rv2.fit_frame(r0)          # adds the five state respondents when FIVE_STATE_IN_FITS=1
+    fw = r.fit_w.values
     regions = sorted(r.region8.unique())
     X = np.vstack([design(a, b, c, g, regions) for a, b, c, g in zip(r.age_band, r.race4, r.college, r.region8)])
-    lv = r.turnout_propensity.values
+    lv = r.turnout_propensity.values * fw
     m = r.gb_2way.notna().values
     bvote = irls(X[m], (r.gb_2way[m] == "Democrat").values.astype(float), lv[m])
     # Turnout model. Stated intent is not a midterm electorate: it averages 69.5 percent against
@@ -2930,16 +2932,17 @@ def fit_respondents():
         return 1.0 if ("2022" in ys or "2018" in ys) else 0.0
     mid = r.vote_history_years.map(_midterm).values
     if os.environ.get("TURNOUT_INTENT"):
-        bturn = irls(X, r.turnout_propensity.values, np.ones(len(r)))
+        bturn = irls(X, r.turnout_propensity.values, fw)
     else:
-        bturn = irls(X, mid, np.ones(len(r)))
+        bturn = irls(X, mid, fw)
     m24 = r.recall_2024.isin(["Harris", "Trump"]).values
-    b24 = irls(X[m24], (r.recall_2024[m24] == "Harris").values.astype(float), np.ones(m24.sum()))
+    b24 = irls(X[m24], (r.recall_2024[m24] == "Harris").values.astype(float), fw[m24])
     state_region = r.groupby("state").region8.agg(lambda s: s.value_counts().index[0]).to_dict()
     model = dict(bvote=bvote, b24=b24, bturn=bturn, regions=regions, state_region=state_region)
     # version 2: partially pooled state and state by race group swing effects, and registration for the universe audit
     _rv2.fit_state_effects(None, r, X, model)
-    model["breg"] = _rv2.fit_registration(irls, r, X)
+    nat = ~r.five_state_row.values if "five_state_row" in r else np.ones(len(r), bool)
+    model["breg"] = _rv2.fit_registration(irls, r[nat], X[nat])
     return model
 
 def county_cells(fips_list):

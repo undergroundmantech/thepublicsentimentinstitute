@@ -2535,12 +2535,12 @@
    "note": "Nine partisan seats including a District 4 special whose winner serves to 2028; conservative PACs are spending heavily in Districts 2, 6 and 9. No Libertarian or Green nominees were listed in either source, but that was not checked against the state list."
   },
   {
-   "id": "board-ut-utah-state-board-of-education-eight-seats-confirmed-so-far-districts-1-2-7-8-11-14",
+   "id": "board-ut-utah-state-board-of-education-district-1",
    "category": "board",
    "state": "UT",
    "jurisdiction": "Utah",
    "office": "State Board of Education",
-   "seat": "Eight seats; confirmed so far: Districts 1, 2, 7, 8, 11, 14",
+   "seat": "District 1",
    "election_type": "partisan",
    "date": "2026-11-03",
    "status": "upcoming",
@@ -2549,107 +2549,397 @@
      "name": "Jennie Earl",
      "party": "R",
      "incumbent": true,
-     "note": "District 1"
+     "note": ""
     },
     {
      "name": "Cathy Callow-Heusser",
      "party": "D",
      "incumbent": false,
-     "note": "District 1"
-    },
+     "note": ""
+    }
+   ],
+   "result": null,
+   "incumbent": "Jennie Earl",
+   "primary": null,
+   "runoff": null,
+   "polls": [],
+   "sources": [
+    "https://vote.utah.gov/wp-content/uploads/2026/09/2026-General-Election-Certification-Amended-09-21.pdf",
+    "https://schools.utah.gov/board/utah/members.php"
+   ],
+   "note": "Jennie Earl is the incumbent."
+  },
+  {
+   "id": "board-ut-utah-state-board-of-education-district-2",
+   "category": "board",
+   "state": "UT",
+   "jurisdiction": "Utah",
+   "office": "State Board of Education",
+   "seat": "District 2",
+   "election_type": "partisan",
+   "date": "2026-11-03",
+   "status": "upcoming",
+   "candidates": [
     {
      "name": "Joseph Kerry",
      "party": "R",
-     "incumbent": true,
-     "note": "District 2; reportedly resigned and ended his campaign Sept 11, 2026 but remains on the ballot (not independently confirmed)"
+     "incumbent": false,
+     "note": ""
     },
     {
      "name": "Kacee Weaver",
      "party": "D",
      "incumbent": false,
-     "note": "District 2"
-    },
-    {
-     "name": "Erin Longacre",
-     "party": "R",
-     "incumbent": true,
-     "note": "District 7; two year term"
-    },
-    {
-     "name": "James Martin",
-     "party": "D",
-     "incumbent": false,
-     "note": "District 7"
-    },
-    {
-     "name": "Nicole McDermott",
-     "party": "R",
-     "incumbent": false,
-     "note": "District 8; open, Christina Boggess leaving"
-    },
-    {
-     "name": "Araueni Olivares",
-     "party": "D",
-     "incumbent": false,
-     "note": "District 8"
-    },
-    {
-     "name": "Tracy J. Nuttall",
-     "party": "R",
-     "incumbent": false,
-     "note": "District 11; open, Cindy Davis leaving; beat Terry Hutchinson 50.7 to 49.3"
-    },
-    {
-     "name": "Lacey Peterson",
-     "party": "D",
-     "incumbent": false,
-     "note": "District 11"
-    },
-    {
-     "name": "Linda Hanks",
-     "party": "R",
-     "incumbent": false,
-     "note": "District 14; uncontested; beat Nichole Beecher Isom 68.8 to 31.2 in the primary"
+     "note": ""
     }
    ],
-   "result": null,
-   "incumbent": "Jennie Earl (D1), Joseph Kerry (D2), Erin Longacre (D7), Christina Boggess (D8), Cindy Davis (D11), Emily Green (D14, per Wikipedia)",
-   "primary": null,
-   "runoff": null,
-   "polls": [],
-   "sources": [
-    "https://en.wikipedia.org/wiki/2026_Utah_State_Board_of_Education_election",
-    "https://vote.utah.gov/wp-content/uploads/2026/07/2026-Primary-Election-Certification.pdf",
-    "https://www.sltrib.com/news/politics/2026/10/14/utah-state-board-education/",
-    "https://theballotbrief.com/state/utah/cache-county/utah-state-school-board-district-1",
-    "https://theballotbrief.com/state/utah/weber-county/utah-state-school-board-district-2",
-    "https://theballotbrief.com/state/utah/salt-lake-county/utah-state-school-board-district-7",
-    "https://theballotbrief.com/state/utah/salt-lake-county/utah-state-school-board-district-8",
-    "https://theballotbrief.com/state/utah/salt-lake-county/utah-state-school-board-district-11",
-    "https://theballotbrief.com/state/utah/iron-county/utah-state-school-board-district-14"
-   ],
-   "note": "The Salt Lake Tribune says eight seats are up and four are already decided by lack of opposition; two of the eight seats were not identified. General election pairings come from The Ballot Brief, an AI written guide built from the state filing list, so they should be checked against vote.utah.gov."
-  },
-  {
-   "id": "board-dc-district-of-columbia-state-board-of-education",
-   "category": "board",
-   "state": "DC",
-   "jurisdiction": "District of Columbia",
-   "office": "State Board of Education",
-   "seat": null,
-   "election_type": "nonpartisan",
-   "date": "2026-11-03",
-   "status": "upcoming",
-   "candidates": [],
    "result": null,
    "incumbent": null,
    "primary": null,
    "runoff": null,
    "polls": [],
    "sources": [
-    "https://en.wikipedia.org/wiki/2026_District_of_Columbia_elections"
+    "https://vote.utah.gov/wp-content/uploads/2026/09/2026-General-Election-Certification-Amended-09-21.pdf",
+    "https://www.sltrib.com/news/education/2026/09/14/joe-kerry-utah-state-school-board/",
+    "https://schools.utah.gov/board/utah/members.php"
    ],
-   "note": "Wikipedia says four of the board's elected seats are on the 2026 ballot, but the wards, incumbents and candidates were not confirmed before the search limit was reached."
+   "note": "Joseph Kerry resigned the seat and ended his campaign in September after moving out of the district. His name remains on the certified ballot because the ballot was certified before he withdrew. The seat is currently vacant, so neither candidate is the incumbent."
+  },
+  {
+   "id": "board-ut-utah-state-board-of-education-district-4",
+   "category": "board",
+   "state": "UT",
+   "jurisdiction": "Utah",
+   "office": "State Board of Education",
+   "seat": "District 4",
+   "election_type": "partisan",
+   "date": "2026-11-03",
+   "status": "upcoming",
+   "candidates": [
+    {
+     "name": "LeAnn Wood",
+     "party": "R",
+     "incumbent": true,
+     "note": ""
+    }
+   ],
+   "result": null,
+   "incumbent": "LeAnn Wood",
+   "primary": null,
+   "runoff": null,
+   "polls": [],
+   "sources": [
+    "https://vote.utah.gov/wp-content/uploads/2026/09/2026-General-Election-Certification-Amended-09-21.pdf",
+    "https://schools.utah.gov/board/members/utah/leannwood.php"
+   ],
+   "note": "LeAnn Wood is the incumbent and is the only certified candidate."
+  },
+  {
+   "id": "board-ut-utah-state-board-of-education-district-5",
+   "category": "board",
+   "state": "UT",
+   "jurisdiction": "Utah",
+   "office": "State Board of Education",
+   "seat": "District 5",
+   "election_type": "partisan",
+   "date": "2026-11-03",
+   "status": "upcoming",
+   "candidates": [
+    {
+     "name": "Sarah Reale",
+     "party": "D",
+     "incumbent": true,
+     "note": ""
+    }
+   ],
+   "result": null,
+   "incumbent": "Sarah Reale",
+   "primary": null,
+   "runoff": null,
+   "polls": [],
+   "sources": [
+    "https://vote.utah.gov/wp-content/uploads/2026/09/2026-General-Election-Certification-Amended-09-21.pdf",
+    "https://schools.utah.gov/board/utah/members.php"
+   ],
+   "note": "Sarah Reale is the incumbent and is the only certified candidate."
+  },
+  {
+   "id": "board-ut-utah-state-board-of-education-district-7",
+   "category": "board",
+   "state": "UT",
+   "jurisdiction": "Utah",
+   "office": "State Board of Education",
+   "seat": "District 7",
+   "election_type": "partisan",
+   "date": "2026-11-03",
+   "status": "upcoming",
+   "candidates": [
+    {
+     "name": "Erin Longacre",
+     "party": "R",
+     "incumbent": true,
+     "note": ""
+    },
+    {
+     "name": "James Martin",
+     "party": "D",
+     "incumbent": false,
+     "note": ""
+    }
+   ],
+   "result": null,
+   "incumbent": "Erin Longacre",
+   "primary": null,
+   "runoff": null,
+   "polls": [],
+   "sources": [
+    "https://vote.utah.gov/wp-content/uploads/2026/09/2026-General-Election-Certification-Amended-09-21.pdf",
+    "https://schools.utah.gov/board/utah/members.php"
+   ],
+   "note": "Special election for a two year unexpired term. Erin Longacre is the incumbent."
+  },
+  {
+   "id": "board-ut-utah-state-board-of-education-district-8",
+   "category": "board",
+   "state": "UT",
+   "jurisdiction": "Utah",
+   "office": "State Board of Education",
+   "seat": "District 8",
+   "election_type": "partisan",
+   "date": "2026-11-03",
+   "status": "upcoming",
+   "candidates": [
+    {
+     "name": "Nicole McDermott",
+     "party": "R",
+     "incumbent": false,
+     "note": ""
+    },
+    {
+     "name": "Araueni Olivares",
+     "party": "D",
+     "incumbent": false,
+     "note": ""
+    }
+   ],
+   "result": null,
+   "incumbent": null,
+   "primary": null,
+   "runoff": null,
+   "polls": [],
+   "sources": [
+    "https://vote.utah.gov/wp-content/uploads/2026/09/2026-General-Election-Certification-Amended-09-21.pdf",
+    "https://schools.utah.gov/board/utah/members.php",
+    "https://en.wikipedia.org/wiki/2026_Utah_State_Board_of_Education_election"
+   ],
+   "note": "Open seat. Incumbent Christina Boggess is not on the ballot."
+  },
+  {
+   "id": "board-ut-utah-state-board-of-education-district-11",
+   "category": "board",
+   "state": "UT",
+   "jurisdiction": "Utah",
+   "office": "State Board of Education",
+   "seat": "District 11",
+   "election_type": "partisan",
+   "date": "2026-11-03",
+   "status": "upcoming",
+   "candidates": [
+    {
+     "name": "Tracy J. Nuttall",
+     "party": "R",
+     "incumbent": false,
+     "note": ""
+    },
+    {
+     "name": "Lacey Peterson",
+     "party": "D",
+     "incumbent": false,
+     "note": ""
+    }
+   ],
+   "result": null,
+   "incumbent": null,
+   "primary": null,
+   "runoff": null,
+   "polls": [],
+   "sources": [
+    "https://vote.utah.gov/wp-content/uploads/2026/09/2026-General-Election-Certification-Amended-09-21.pdf",
+    "https://schools.utah.gov/board/utah/members.php",
+    "https://en.wikipedia.org/wiki/2026_Utah_State_Board_of_Education_election"
+   ],
+   "note": "Open seat. Incumbent Cindy Bishop Davis is not on the ballot."
+  },
+  {
+   "id": "board-ut-utah-state-board-of-education-district-14",
+   "category": "board",
+   "state": "UT",
+   "jurisdiction": "Utah",
+   "office": "State Board of Education",
+   "seat": "District 14",
+   "election_type": "partisan",
+   "date": "2026-11-03",
+   "status": "upcoming",
+   "candidates": [
+    {
+     "name": "Linda Hanks",
+     "party": "R",
+     "incumbent": false,
+     "note": ""
+    }
+   ],
+   "result": null,
+   "incumbent": null,
+   "primary": null,
+   "runoff": null,
+   "polls": [],
+   "sources": [
+    "https://vote.utah.gov/wp-content/uploads/2026/09/2026-General-Election-Certification-Amended-09-21.pdf",
+    "https://schools.utah.gov/board/utah/members.php",
+    "https://en.wikipedia.org/wiki/2026_Utah_State_Board_of_Education_election"
+   ],
+   "note": "Linda Hanks is the only certified candidate. Incumbent Emily Green is not on the ballot."
+  },
+  {
+   "id": "board-dc-district-of-columbia-state-board-of-education-ward-1",
+   "category": "board",
+   "state": "DC",
+   "jurisdiction": "District of Columbia",
+   "office": "State Board of Education",
+   "seat": "Ward 1",
+   "election_type": "nonpartisan",
+   "date": "2026-11-03",
+   "status": "upcoming",
+   "candidates": [
+    {
+     "name": "Ben Williams",
+     "party": null,
+     "incumbent": true,
+     "note": ""
+    }
+   ],
+   "result": null,
+   "incumbent": "Ben Williams",
+   "primary": null,
+   "runoff": null,
+   "polls": [],
+   "sources": [
+    "https://dcboe.org/getContentAsset/1029b813-fb27-4055-9218-fbe40360aacb/5ebbd046-860b-4ee1-81c8-43d0e3bc446e/2026-General-CANDIDATES-07152026.pdf?language=en",
+    "https://sboe.dc.gov/page/board-biographies"
+   ],
+   "note": "Ben Williams is the incumbent and is the only candidate on the ballot."
+  },
+  {
+   "id": "board-dc-district-of-columbia-state-board-of-education-ward-3",
+   "category": "board",
+   "state": "DC",
+   "jurisdiction": "District of Columbia",
+   "office": "State Board of Education",
+   "seat": "Ward 3",
+   "election_type": "nonpartisan",
+   "date": "2026-11-03",
+   "status": "upcoming",
+   "candidates": [
+    {
+     "name": "Eric Goulet",
+     "party": null,
+     "incumbent": true,
+     "note": ""
+    },
+    {
+     "name": "Aaron Wesolowski",
+     "party": null,
+     "incumbent": false,
+     "note": ""
+    }
+   ],
+   "result": null,
+   "incumbent": "Eric Goulet",
+   "primary": null,
+   "runoff": null,
+   "polls": [],
+   "sources": [
+    "https://dcboe.org/getContentAsset/1029b813-fb27-4055-9218-fbe40360aacb/5ebbd046-860b-4ee1-81c8-43d0e3bc446e/2026-General-CANDIDATES-07152026.pdf?language=en",
+    "https://sboe.dc.gov/page/board-biographies"
+   ],
+   "note": "Eric Goulet is the incumbent."
+  },
+  {
+   "id": "board-dc-district-of-columbia-state-board-of-education-ward-5",
+   "category": "board",
+   "state": "DC",
+   "jurisdiction": "District of Columbia",
+   "office": "State Board of Education",
+   "seat": "Ward 5",
+   "election_type": "nonpartisan",
+   "date": "2026-11-03",
+   "status": "upcoming",
+   "candidates": [
+    {
+     "name": "Jon Alfuth",
+     "party": null,
+     "incumbent": false,
+     "note": ""
+    },
+    {
+     "name": "Lynn Jennings",
+     "party": null,
+     "incumbent": false,
+     "note": ""
+    }
+   ],
+   "result": null,
+   "incumbent": null,
+   "primary": null,
+   "runoff": null,
+   "polls": [],
+   "sources": [
+    "https://dcboe.org/getContentAsset/1029b813-fb27-4055-9218-fbe40360aacb/5ebbd046-860b-4ee1-81c8-43d0e3bc446e/2026-General-CANDIDATES-07152026.pdf?language=en",
+    "https://sboe.dc.gov/page/board-biographies"
+   ],
+   "note": "Open seat. Incumbent Robert Henderson is not on the ballot."
+  },
+  {
+   "id": "board-dc-district-of-columbia-state-board-of-education-ward-6",
+   "category": "board",
+   "state": "DC",
+   "jurisdiction": "District of Columbia",
+   "office": "State Board of Education",
+   "seat": "Ward 6",
+   "election_type": "nonpartisan",
+   "date": "2026-11-03",
+   "status": "upcoming",
+   "candidates": [
+    {
+     "name": "Amber A. Williams",
+     "party": null,
+     "incumbent": false,
+     "note": ""
+    },
+    {
+     "name": "David Parker",
+     "party": null,
+     "incumbent": false,
+     "note": ""
+    },
+    {
+     "name": "Joshua Wiley",
+     "party": null,
+     "incumbent": false,
+     "note": ""
+    }
+   ],
+   "result": null,
+   "incumbent": null,
+   "primary": null,
+   "runoff": null,
+   "polls": [],
+   "sources": [
+    "https://dcboe.org/getContentAsset/1029b813-fb27-4055-9218-fbe40360aacb/5ebbd046-860b-4ee1-81c8-43d0e3bc446e/2026-General-CANDIDATES-07152026.pdf?language=en",
+    "https://www.hillrag.com/2026/10/13/ward-6-sboe-candidates-propose-different-paths-to-stronger-schools/",
+    "https://sboe.dc.gov/page/board-biographies"
+   ],
+   "note": "Open seat. Incumbent Brandon Best is not on the ballot. With three candidates this contest uses ranked choice voting."
   },
   {
    "id": "office-la-louisiana-public-service-commission-district-1",
@@ -3221,7 +3511,7 @@
     },
     {
      "name": "Mindy Ruth Pechenuk",
-     "party": null,
+     "party": "R",
      "incumbent": false,
      "note": ""
     },
@@ -3239,7 +3529,8 @@
    "polls": [],
    "sources": [
     "https://www.oaklandca.gov/files/assets/city/v/20/city-clerk/documents/elections/nov-2026-election-qualified-candidate-list.pdf",
-    "https://en.wikipedia.org/wiki/2026_United_States_local_elections"
+    "https://en.wikipedia.org/wiki/2026_United_States_local_elections",
+    "https://eastbayinsiders.substack.com/p/alameda-county-republicans-gone-wild"
    ],
    "note": "Lee won the April 2025 special election and now seeks a full term against three lesser known challengers. No public polls found."
   },
@@ -3825,19 +4116,7 @@
      "note": ""
     },
     {
-     "name": "Davian N. Gomez",
-     "party": null,
-     "incumbent": false,
-     "note": ""
-    },
-    {
      "name": "John Calkusic",
-     "party": null,
-     "incumbent": false,
-     "note": ""
-    },
-    {
-     "name": "Anna Marie Hernandez",
      "party": null,
      "incumbent": false,
      "note": ""
@@ -3852,14 +4131,15 @@
    "result": null,
    "incumbent": "Paulette Guajardo",
    "primary": null,
-   "runoff": "Majority required; if no one tops 50 percent, a December runoff between the top two, as in 2022 and 2024. 2026 runoff date not confirmed.",
+   "runoff": "Majority required. If no one tops 50 percent, the top two meet in a runoff on December 12.",
    "polls": [],
    "sources": [
     "https://www.corpuschristitx.gov/news/posts/finalized-ballot-order-for-2026-city-council-election/",
-    "https://lufkindailynews.com/news_reuters/state/third-city-council-member-joins-race-for-corpus-christi-mayor/article_c61c3030-bfbd-5a60-9ad7-c7ebbfa6b646.html",
-    "https://en.wikipedia.org/wiki/2026_United_States_local_elections"
+    "https://www.corpuschristitx.gov/media/evybkvff/candidate-list-2026-14.pdf",
+    "https://playpotus.com/tx/corpus-christi",
+    "https://www.corpuschristitx.gov/department-directory/city-secretary/elections/2026-election-central/"
    ],
-   "note": "Nine candidates in ballot order; Guajardo was serving a 30 day council suspension tied to a tax incentive award. Party labels for Paxson and Gil Hernandez are from Wikipedia only. No polls found."
+   "note": "Seven candidates in ballot order. Davian N. Gomez and Anna Marie Hernandez withdrew after the ballot drawing and are off the city's October 8 list. Paxson and Gil Hernandez are sitting council members. Party labels are as reported by Wikipedia."
   },
   {
    "id": "mayor-tx-laredo-mayor",
@@ -3879,12 +4159,6 @@
      "note": ""
     },
     {
-     "name": "Alyssa Cigarroa",
-     "party": "D",
-     "incumbent": false,
-     "note": ""
-    },
-    {
      "name": "Jose David \"JD\" Gonzalez",
      "party": "R",
      "incumbent": false,
@@ -3901,6 +4175,12 @@
      "party": "R",
      "incumbent": false,
      "note": ""
+    },
+    {
+     "name": "Alyssa Cigarroa",
+     "party": "D",
+     "incumbent": false,
+     "note": ""
     }
    ],
    "result": null,
@@ -3909,11 +4189,11 @@
    "runoff": "Majority required; otherwise a December runoff between the top two, as in 2022. 2026 runoff date not confirmed.",
    "polls": [],
    "sources": [
-    "https://branch.vote/races/2026-texas-general-election-tx-state-mayor-tx-city-laredo",
-    "https://www.kgns.tv/politics/election-guide",
-    "https://en.wikipedia.org/wiki/2026_United_States_local_elections"
+    "https://www.kgns.tv/2026/08/20/random-drawing-sets-ballot-order-laredos-november-election/",
+    "https://www.kgns.tv/2026/10/08/laredo-mayoral-candidates-outline-competing-visions-growth-water-security/",
+    "https://www.cityoflaredo.com/departments/2026-general-elections"
    ],
-   "note": "Five candidates; party labels are from Wikipedia only. KGNS reported Cigarroa topped an unscientific website poll after an Oct chamber forum, not included as a poll."
+   "note": "Five candidates in ballot order, as reported by KGNS. Mayor Victor Trevi\u00f1o is the incumbent. Party labels are as reported by Wikipedia."
   },
   {
    "id": "mayor-nj-trenton-mayor",
@@ -3933,10 +4213,10 @@
      "note": ""
     },
     {
-     "name": "Jasi Edwards",
+     "name": "Corey McNair",
      "party": null,
      "incumbent": false,
-     "note": "At-large Council member"
+     "note": "City police detective"
     },
     {
      "name": "Austin Edwards",
@@ -3951,23 +4231,31 @@
      "note": "Former police lieutenant"
     },
     {
-     "name": "Corey McNair",
+     "name": "Jasi Edwards",
      "party": null,
      "incumbent": false,
-     "note": "City police detective"
+     "note": "At-large Council member"
+    },
+    {
+     "name": "Edward Forchion",
+     "party": null,
+     "incumbent": false,
+     "note": ""
     }
    ],
    "result": null,
    "incumbent": "Reed Gusciora",
    "primary": null,
-   "runoff": "Majority required; otherwise a runoff between the top two, reported as December 8, 2026 by an aggregator, not confirmed by the city.",
+   "runoff": "If no candidate wins a majority of the vote on November 3, the top two meet in a runoff on December 8, 2026.",
    "polls": [],
    "sources": [
-    "https://trentonjournal.com/trenton-journal-will-livestream-trenton-mayoral-candidate-forum/",
-    "https://newjerseyglobe.com/local/as-gusciora-is-expected-to-seek-third-mayoral-term-several-trentonians-sign-up-to-challenge-him",
-    "https://theballotbrief.com/state/new-jersey/trenton-city/trenton-mayor"
+    "https://petersonsbreakingnewsoftrenton.com/2026/08/28/robin-vaughn-joel-griffith-withdraw-trenton-election/",
+    "https://theballotbrief.com/state/new-jersey/trenton-city/trenton-mayor",
+    "https://newjerseyglobe.com/?p=167843",
+    "https://ballotpedia.org/Mayoral_election_in_Trenton,_New_Jersey_(2026)",
+    "https://whyy.org/articles/trenton-city-council-runoff-elections-scheduled/"
    ],
-   "note": "Gusciora seeks a third term. Robin M. Vaughn and Edward Forchion also appear on an aggregator list but were not confirmed by the city or local news and are left off. The city certified candidate page errored. No polls found."
+   "note": "Mayor Gusciora is seeking a third term. Six candidates remain. Edward Forchion is also on the ballot. Former councilwoman Robin Vaughn filed but withdrew on August 27. An official Mercer County Clerk list for 2026 was not found online, so this field comes from local news."
   },
   {
    "id": "mayor-mi-flint-mayor",
@@ -4625,9 +4913,10 @@
    "runoff": null,
    "polls": [],
    "sources": [
-    "https://en.wikipedia.org/wiki/2026_Nebraska_Legislature_election"
+    "https://sos.nebraska.gov/sites/default/files/doc/elections/2026/Final_Statewide_General_Candidate_Filing_List_9.11.26.pdf",
+    "https://nebraskaexaminer.com/2026/05/13/nebraska-legislative-race-voters-narrow-candidates-in-11-crowded-primaries/"
    ],
-   "note": "Open; Robert Clements (R) term limited."
+   "note": "Open seat."
   },
   {
    "id": "legislature-ne-nebraska-legislature-district-4",
@@ -4642,12 +4931,12 @@
    "candidates": [
     {
      "name": "Cindy Maxwell-Ostdiek",
-     "party": "I",
+     "party": "Nonpartisan",
      "incumbent": false,
      "note": ""
     },
     {
-     "name": "Brad von Gillern",
+     "name": "R. Brad von Gillern",
      "party": "R",
      "incumbent": true,
      "note": ""
@@ -4673,9 +4962,10 @@
    "runoff": null,
    "polls": [],
    "sources": [
-    "https://en.wikipedia.org/wiki/2026_Nebraska_Legislature_election"
+    "https://sos.nebraska.gov/sites/default/files/doc/elections/2026/Final_Statewide_General_Candidate_Filing_List_9.11.26.pdf",
+    "https://nebraskaexaminer.com/2026/05/13/nebraska-legislative-race-voters-narrow-candidates-in-11-crowded-primaries/"
    ],
-   "note": "Incumbent von Gillern (R) trailed in the primary."
+   "note": "Maxwell-Ostdiek finished first in the primary ahead of the incumbent."
   },
   {
    "id": "legislature-ne-nebraska-legislature-district-6",
@@ -4721,9 +5011,10 @@
    "runoff": null,
    "polls": [],
    "sources": [
-    "https://en.wikipedia.org/wiki/2026_Nebraska_Legislature_election"
+    "https://sos.nebraska.gov/sites/default/files/doc/elections/2026/Final_Statewide_General_Candidate_Filing_List_9.11.26.pdf",
+    "https://nebraskaexaminer.com/2026/05/13/nebraska-legislative-race-voters-narrow-candidates-in-11-crowded-primaries/"
    ],
-   "note": "Open; Machaela Cavanaugh (D) term limited. D vs D."
+   "note": "Open seat with two Democrats."
   },
   {
    "id": "legislature-ne-nebraska-legislature-district-8",
@@ -4737,13 +5028,13 @@
    "status": "upcoming",
    "candidates": [
     {
-     "name": "Erin Feichtinger",
+     "name": "Josh Livingston",
      "party": "D",
      "incumbent": false,
      "note": ""
     },
     {
-     "name": "Josh Livingston",
+     "name": "Erin Feichtinger",
      "party": "D",
      "incumbent": false,
      "note": ""
@@ -4774,9 +5065,10 @@
    "runoff": null,
    "polls": [],
    "sources": [
-    "https://en.wikipedia.org/wiki/2026_Nebraska_Legislature_election"
+    "https://sos.nebraska.gov/sites/default/files/doc/elections/2026/Final_Statewide_General_Candidate_Filing_List_9.11.26.pdf",
+    "https://nebraskaexaminer.com/2026/05/13/nebraska-legislative-race-voters-narrow-candidates-in-11-crowded-primaries/"
    ],
-   "note": "Open; Megan Hunt (I) term limited. D vs D."
+   "note": "Open seat with two Democrats."
   },
   {
    "id": "legislature-ne-nebraska-legislature-district-10",
@@ -4822,9 +5114,10 @@
    "runoff": null,
    "polls": [],
    "sources": [
-    "https://en.wikipedia.org/wiki/2026_Nebraska_Legislature_election"
+    "https://sos.nebraska.gov/sites/default/files/doc/elections/2026/Final_Statewide_General_Candidate_Filing_List_9.11.26.pdf",
+    "https://nebraskaexaminer.com/2026/05/13/nebraska-legislative-race-voters-narrow-candidates-in-11-crowded-primaries/"
    ],
-   "note": "Open; Wendy DeBoer (D) term limited, running for Public Service Commission."
+   "note": "Open seat."
   },
   {
    "id": "legislature-ne-nebraska-legislature-district-12",
@@ -4875,7 +5168,8 @@
    "runoff": null,
    "polls": [],
    "sources": [
-    "https://en.wikipedia.org/wiki/2026_Nebraska_Legislature_election"
+    "https://sos.nebraska.gov/sites/default/files/doc/elections/2026/Final_Statewide_General_Candidate_Filing_List_9.11.26.pdf",
+    "https://nebraskaexaminer.com/2026/05/13/nebraska-legislative-race-voters-narrow-candidates-in-11-crowded-primaries/"
    ],
    "note": "Write-ins took 5.27 percent."
   },
@@ -4891,14 +5185,14 @@
    "status": "upcoming",
    "candidates": [
     {
-     "name": "SuAnn Witt",
-     "party": "D",
+     "name": "Bill Bowes",
+     "party": "R",
      "incumbent": false,
      "note": ""
     },
     {
-     "name": "Bill Bowes",
-     "party": "R",
+     "name": "SuAnn Witt",
+     "party": "D",
      "incumbent": false,
      "note": ""
     }
@@ -4928,9 +5222,10 @@
    "runoff": null,
    "polls": [],
    "sources": [
-    "https://en.wikipedia.org/wiki/2026_Nebraska_Legislature_election"
+    "https://sos.nebraska.gov/sites/default/files/doc/elections/2026/Final_Statewide_General_Candidate_Filing_List_9.11.26.pdf",
+    "https://nebraskaexaminer.com/2026/05/13/nebraska-legislative-race-voters-narrow-candidates-in-11-crowded-primaries/"
    ],
-   "note": "Open; John Arch (R) term limited."
+   "note": "Open seat."
   },
   {
    "id": "legislature-ne-nebraska-legislature-district-16",
@@ -4976,9 +5271,10 @@
    "runoff": null,
    "polls": [],
    "sources": [
-    "https://en.wikipedia.org/wiki/2026_Nebraska_Legislature_election"
+    "https://sos.nebraska.gov/sites/default/files/doc/elections/2026/Final_Statewide_General_Candidate_Filing_List_9.11.26.pdf",
+    "https://nebraskaexaminer.com/2026/05/13/nebraska-legislative-race-voters-narrow-candidates-in-11-crowded-primaries/"
    ],
-   "note": "Open; Ben Hansen (R) term limited."
+   "note": "Open seat."
   },
   {
    "id": "legislature-ne-nebraska-legislature-district-18",
@@ -4992,14 +5288,14 @@
    "status": "upcoming",
    "candidates": [
     {
-     "name": "Jess Goldoni",
-     "party": "D",
+     "name": "Taylor Royal",
+     "party": "R",
      "incumbent": false,
      "note": ""
     },
     {
-     "name": "Taylor Royal",
-     "party": "R",
+     "name": "Jess Goldoni",
+     "party": "D",
      "incumbent": false,
      "note": ""
     }
@@ -5029,9 +5325,10 @@
    "runoff": null,
    "polls": [],
    "sources": [
-    "https://en.wikipedia.org/wiki/2026_Nebraska_Legislature_election"
+    "https://sos.nebraska.gov/sites/default/files/doc/elections/2026/Final_Statewide_General_Candidate_Filing_List_9.11.26.pdf",
+    "https://nebraskaexaminer.com/2026/05/13/nebraska-legislative-race-voters-narrow-candidates-in-11-crowded-primaries/"
    ],
-   "note": "Open; Christy Armendariz (R) retiring."
+   "note": "Open seat."
   },
   {
    "id": "legislature-ne-nebraska-legislature-district-20",
@@ -5082,7 +5379,8 @@
    "runoff": null,
    "polls": [],
    "sources": [
-    "https://en.wikipedia.org/wiki/2026_Nebraska_Legislature_election"
+    "https://sos.nebraska.gov/sites/default/files/doc/elections/2026/Final_Statewide_General_Candidate_Filing_List_9.11.26.pdf",
+    "https://nebraskaexaminer.com/2026/05/13/nebraska-legislative-race-voters-narrow-candidates-in-11-crowded-primaries/"
    ],
    "note": ""
   },
@@ -5119,9 +5417,10 @@
    "runoff": null,
    "polls": [],
    "sources": [
-    "https://en.wikipedia.org/wiki/2026_Nebraska_Legislature_election"
+    "https://sos.nebraska.gov/sites/default/files/doc/elections/2026/Final_Statewide_General_Candidate_Filing_List_9.11.26.pdf",
+    "https://nebraskaexaminer.com/2026/05/13/nebraska-legislative-race-voters-narrow-candidates-in-11-crowded-primaries/"
    ],
-   "note": "Open; Mike Moser (R) term limited. Unopposed."
+   "note": "Open seat. Dawson Brunswick is unopposed."
   },
   {
    "id": "legislature-ne-nebraska-legislature-district-24",
@@ -5142,7 +5441,7 @@
     },
     {
      "name": "Dan Winter",
-     "party": "nonpartisan",
+     "party": "Nonpartisan",
      "incumbent": false,
      "note": ""
     }
@@ -5167,7 +5466,8 @@
    "runoff": null,
    "polls": [],
    "sources": [
-    "https://en.wikipedia.org/wiki/2026_Nebraska_Legislature_election"
+    "https://sos.nebraska.gov/sites/default/files/doc/elections/2026/Final_Statewide_General_Candidate_Filing_List_9.11.26.pdf",
+    "https://nebraskaexaminer.com/2026/05/13/nebraska-legislative-race-voters-narrow-candidates-in-11-crowded-primaries/"
    ],
    "note": ""
   },
@@ -5183,7 +5483,7 @@
    "status": "upcoming",
    "candidates": [
     {
-     "name": "George Dungan III",
+     "name": "George Dungan",
      "party": "D",
      "incumbent": true,
      "note": ""
@@ -5215,7 +5515,8 @@
    "runoff": null,
    "polls": [],
    "sources": [
-    "https://en.wikipedia.org/wiki/2026_Nebraska_Legislature_election"
+    "https://sos.nebraska.gov/sites/default/files/doc/elections/2026/Final_Statewide_General_Candidate_Filing_List_9.11.26.pdf",
+    "https://nebraskaexaminer.com/2026/05/13/nebraska-legislative-race-voters-narrow-candidates-in-11-crowded-primaries/"
    ],
    "note": ""
   },
@@ -5237,8 +5538,8 @@
      "note": ""
     },
     {
-     "name": "Colby Woodson",
-     "party": "I",
+     "name": "Colby L. Woodson",
+     "party": "Nonpartisan",
      "incumbent": false,
      "note": ""
     }
@@ -5268,9 +5569,10 @@
    "runoff": null,
    "polls": [],
    "sources": [
-    "https://en.wikipedia.org/wiki/2026_Nebraska_Legislature_election"
+    "https://sos.nebraska.gov/sites/default/files/doc/elections/2026/Final_Statewide_General_Candidate_Filing_List_9.11.26.pdf",
+    "https://nebraskaexaminer.com/2026/05/13/nebraska-legislative-race-voters-narrow-candidates-in-11-crowded-primaries/"
    ],
-   "note": "Open; Jane Raybould (D) retiring."
+   "note": "Open seat."
   },
   {
    "id": "legislature-ne-nebraska-legislature-district-30",
@@ -5290,7 +5592,7 @@
      "note": ""
     },
     {
-     "name": "Janet Bock",
+     "name": "Janet M. Bock",
      "party": "D",
      "incumbent": false,
      "note": ""
@@ -5316,9 +5618,10 @@
    "runoff": null,
    "polls": [],
    "sources": [
-    "https://en.wikipedia.org/wiki/2026_Nebraska_Legislature_election"
+    "https://sos.nebraska.gov/sites/default/files/doc/elections/2026/Final_Statewide_General_Candidate_Filing_List_9.11.26.pdf",
+    "https://nebraskaexaminer.com/2026/05/13/nebraska-legislative-race-voters-narrow-candidates-in-11-crowded-primaries/"
    ],
-   "note": "Open; Myron Dorn (R) term limited."
+   "note": "Open seat."
   },
   {
    "id": "legislature-ne-nebraska-legislature-district-32",
@@ -5339,7 +5642,7 @@
     },
     {
      "name": "Shay Smith",
-     "party": "I",
+     "party": "Nonpartisan",
      "incumbent": false,
      "note": ""
     }
@@ -5364,9 +5667,10 @@
    "runoff": null,
    "polls": [],
    "sources": [
-    "https://en.wikipedia.org/wiki/2026_Nebraska_Legislature_election"
+    "https://sos.nebraska.gov/sites/default/files/doc/elections/2026/Final_Statewide_General_Candidate_Filing_List_9.11.26.pdf",
+    "https://nebraskaexaminer.com/2026/05/13/nebraska-legislative-race-voters-narrow-candidates-in-11-crowded-primaries/"
    ],
-   "note": "Open; Tom Brandt (R) term limited."
+   "note": "Open seat."
   },
   {
    "id": "legislature-ne-nebraska-legislature-district-34",
@@ -5417,7 +5721,8 @@
    "runoff": null,
    "polls": [],
    "sources": [
-    "https://en.wikipedia.org/wiki/2026_Nebraska_Legislature_election"
+    "https://sos.nebraska.gov/sites/default/files/doc/elections/2026/Final_Statewide_General_Candidate_Filing_List_9.11.26.pdf",
+    "https://nebraskaexaminer.com/2026/05/13/nebraska-legislative-race-voters-narrow-candidates-in-11-crowded-primaries/"
    ],
    "note": ""
   },
@@ -5465,9 +5770,10 @@
    "runoff": null,
    "polls": [],
    "sources": [
-    "https://en.wikipedia.org/wiki/2026_Nebraska_Legislature_election"
+    "https://sos.nebraska.gov/sites/default/files/doc/elections/2026/Final_Statewide_General_Candidate_Filing_List_9.11.26.pdf",
+    "https://nebraskaexaminer.com/2026/05/13/nebraska-legislative-race-voters-narrow-candidates-in-11-crowded-primaries/"
    ],
-   "note": "Incumbent Holdcroft (R) trailed in the primary."
+   "note": "Tompkins finished first in the primary ahead of the incumbent."
   },
   {
    "id": "legislature-ne-nebraska-legislature-district-38",
@@ -5528,9 +5834,10 @@
    "runoff": null,
    "polls": [],
    "sources": [
-    "https://en.wikipedia.org/wiki/2026_Nebraska_Legislature_election"
+    "https://sos.nebraska.gov/sites/default/files/doc/elections/2026/Final_Statewide_General_Candidate_Filing_List_9.11.26.pdf",
+    "https://nebraskaexaminer.com/2026/05/13/nebraska-legislative-race-voters-narrow-candidates-in-11-crowded-primaries/"
    ],
-   "note": "Open; Dave Murman (R) term limited. R vs R."
+   "note": "Open seat with two Republicans."
   },
   {
    "id": "legislature-ne-nebraska-legislature-district-40",
@@ -5565,9 +5872,10 @@
    "runoff": null,
    "polls": [],
    "sources": [
-    "https://en.wikipedia.org/wiki/2026_Nebraska_Legislature_election"
+    "https://sos.nebraska.gov/sites/default/files/doc/elections/2026/Final_Statewide_General_Candidate_Filing_List_9.11.26.pdf",
+    "https://nebraskaexaminer.com/2026/05/13/nebraska-legislative-race-voters-narrow-candidates-in-11-crowded-primaries/"
    ],
-   "note": "Unopposed."
+   "note": "Barry DeKay is unopposed."
   },
   {
    "id": "legislature-ne-nebraska-legislature-district-41-special",
@@ -5588,7 +5896,7 @@
     },
     {
      "name": "Jeremy Heneger",
-     "party": "nonpartisan",
+     "party": "D",
      "incumbent": false,
      "note": ""
     }
@@ -5618,9 +5926,11 @@
    "runoff": null,
    "polls": [],
    "sources": [
-    "https://en.wikipedia.org/wiki/2026_Nebraska_Legislature_election"
+    "https://sos.nebraska.gov/sites/default/files/doc/elections/2026/Final_Statewide_General_Candidate_Filing_List_9.11.26.pdf",
+    "https://norfolkdailynews.com/news/johnson-heneger-advance-to-november-election-in-district-41-legislative-race/article_67b25960-fdf2-4e77-a5b0-21ed5a73db37.html",
+    "https://nebraskaexaminer.com/2026/05/13/nebraska-legislative-race-voters-narrow-candidates-in-11-crowded-primaries/"
    ],
-   "note": "Special election for the unexpired term; appointed Sen. Fred Meyer (R) did not appear in the primary."
+   "note": "Special election for a two year term. Appointed Senator Fred Meyer did not file."
   },
   {
    "id": "legislature-ne-nebraska-legislature-district-42",
@@ -5640,8 +5950,8 @@
      "note": ""
     },
     {
-     "name": "Shaylee Scranton",
-     "party": "I",
+     "name": "Shaylee S. Scranton",
+     "party": "Nonpartisan",
      "incumbent": false,
      "note": ""
     }
@@ -5666,7 +5976,8 @@
    "runoff": null,
    "polls": [],
    "sources": [
-    "https://en.wikipedia.org/wiki/2026_Nebraska_Legislature_election"
+    "https://sos.nebraska.gov/sites/default/files/doc/elections/2026/Final_Statewide_General_Candidate_Filing_List_9.11.26.pdf",
+    "https://nebraskaexaminer.com/2026/05/13/nebraska-legislative-race-voters-narrow-candidates-in-11-crowded-primaries/"
    ],
    "note": ""
   },
@@ -5703,9 +6014,10 @@
    "runoff": null,
    "polls": [],
    "sources": [
-    "https://en.wikipedia.org/wiki/2026_Nebraska_Legislature_election"
+    "https://sos.nebraska.gov/sites/default/files/doc/elections/2026/Final_Statewide_General_Candidate_Filing_List_9.11.26.pdf",
+    "https://nebraskaexaminer.com/2026/05/13/nebraska-legislative-race-voters-narrow-candidates-in-11-crowded-primaries/"
    ],
-   "note": "Unopposed."
+   "note": "Teresa Ibach is unopposed."
   },
   {
    "id": "legislature-ne-nebraska-legislature-district-46",
@@ -5740,9 +6052,10 @@
    "runoff": null,
    "polls": [],
    "sources": [
-    "https://en.wikipedia.org/wiki/2026_Nebraska_Legislature_election"
+    "https://sos.nebraska.gov/sites/default/files/doc/elections/2026/Final_Statewide_General_Candidate_Filing_List_9.11.26.pdf",
+    "https://nebraskaexaminer.com/2026/05/13/nebraska-legislative-race-voters-narrow-candidates-in-11-crowded-primaries/"
    ],
-   "note": "Unopposed."
+   "note": "Danielle Conrad is unopposed."
   },
   {
    "id": "legislature-ne-nebraska-legislature-district-48",
@@ -5762,7 +6075,7 @@
      "note": ""
     },
     {
-     "name": "Jessica Landers",
+     "name": "Jessica M. Landers",
      "party": "R",
      "incumbent": false,
      "note": ""
@@ -5798,9 +6111,10 @@
    "runoff": null,
    "polls": [],
    "sources": [
-    "https://en.wikipedia.org/wiki/2026_Nebraska_Legislature_election"
+    "https://sos.nebraska.gov/sites/default/files/doc/elections/2026/Final_Statewide_General_Candidate_Filing_List_9.11.26.pdf",
+    "https://nebraskaexaminer.com/2026/05/13/nebraska-legislative-race-voters-narrow-candidates-in-11-crowded-primaries/"
    ],
-   "note": "R vs R."
+   "note": "Two Republicans."
   },
   {
    "id": "measure-al-amendment-1-may-19-primary",
@@ -6414,6 +6728,6 @@
   },
   "filibuster_line": 33,
   "seats_up": 25,
-  "method": "Nonpartisan top two primary on May 12; the top two advance. Party affiliations are as reported by Wikipedia. General election candidates are taken to be the top two primary finishers; the source page did not separately list certified nominees, and no withdrawals were checked."
+  "method": "Candidates are the Secretary of State's certified general election list of September 11, 2026. That list shows no parties, so party affiliations are as reported by the Nebraska Examiner after the May 12 primary."
  }
 }

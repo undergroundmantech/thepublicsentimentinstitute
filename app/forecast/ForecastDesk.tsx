@@ -1864,6 +1864,9 @@ const CSS = `
 
 .fc-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: 18px; scroll-margin-top: 90px; }
 .fc-controls .seg { margin-left: 0; }
+/* the statewide office picker holds 15 offices: let it wrap onto a second row so every office stays reachable */
+.fc-dbtabs .seg.fc-segc { flex-wrap: wrap; flex-shrink: 1; min-width: 0; max-width: 100%; row-gap: 4px; border-radius: 18px; }
+.fc-dbtabs .seg.fc-segc button { white-space: nowrap; }
 .fc-ctl-label { font-family: ${MONO}; font-size: 10px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--mute); }
 .fc-ctl-label + .seg + .fc-ctl-label { margin-left: 10px; }
 .fc-mapcard { scroll-margin-top: 90px; }

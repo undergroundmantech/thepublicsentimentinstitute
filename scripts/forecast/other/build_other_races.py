@@ -64,7 +64,8 @@ for r in rows:                                   # ids must be unique for the pa
     k = r["id"]; seen[k] = seen.get(k, 0) + 1
     if seen[k] > 1: r["id"] = f"{k}-{seen[k]}"
 order = {"court": 0, "office": 1, "board": 2, "legislature": 3, "mayor": 4, "local": 5, "measure": 6}
-rows.sort(key=lambda r: (order.get(r["category"], 9), r["stateName"], r.get("jurisdiction") or "", r.get("office") or "", r.get("seat") or ""))
+nat = lambda t: [int(x) if x.isdigit() else x for x in re.split(r"(\d+)", t or "")]   # District 2 before District 11
+rows.sort(key=lambda r: (order.get(r["category"], 9), r["stateName"], r.get("jurisdiction") or "", r.get("office") or "", nat(r.get("seat"))))
 meta = dict(updated=os.environ.get("TODAY", str(dt.date.today())), races=len(rows),
             counts={c: sum(1 for r in rows if r["category"] == c) for c in order}, nebraska=nel)
 json.dump(dict(meta=meta, races=rows), open(OUT, "w"), separators=(",", ":"))
