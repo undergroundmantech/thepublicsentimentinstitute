@@ -122,6 +122,9 @@ def run(st, table, slug, name):
     df["d2_spine"] = np.where(df.pvi_imputed.values == 1, df.d2_24.values, df.d2_pvi.values)
     unc = H["UNCONTESTED"][st]; same = H["SAMEPARTY"].get(st, {})
     INC_PTS, REDRAWN_PTS, CROSSOVER_PTS = H["INC_PTS"], H["REDRAWN_PTS"], H["CROSSOVER_PTS"]
+    # Oct 20 2026, by the user's choice: incumbency loosened, the same INC_CARRY_SCALE as the statewide personal vote,
+    # 0.5 taking an incumbent from 2 points to 1 and a crossover incumbent from 3 to 1.5; the redrawn term is unchanged
+    _ics = float(os.environ.get("INC_CARRY_SCALE", "1.0")); INC_PTS, CROSSOVER_PTS = INC_PTS * _ics, CROSSOVER_PTS * _ics
     def cand_points(r):
         if r.district in unc or r.district in same: return 0.0
         if r.inc == "D*": return CROSSOVER_PTS

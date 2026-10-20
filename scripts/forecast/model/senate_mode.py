@@ -297,8 +297,14 @@ MOVE_A = os.environ.get('NO_MOVE_A') is None   # primary structure sits with pre
 #   gap 2 to 4 points    carry 0.591  correlation 0.51   n=54
 #   gap 4 points or more carry 0.612  correlation 0.82   n=33
 # A small gap is one cycle's luck. A large one is a fact about the politician.
-def split_ticket_carry(gap_pts):
+# Oct 20 2026, by the user's choice: incumbency loosened. INC_CARRY_SCALE multiplies the share of an incumbent's past
+# personal vote that carries into 2026, 0.5 halving it from 0.612 to 0.306, and 0.206 to 0.103 for a small gap.
+INC_CARRY_SCALE = float(os.environ.get("INC_CARRY_SCALE", "1.0"))
+def personal_vote_carry(gap_pts):
     return 0.206 if abs(gap_pts) < 2.0 else 0.612
+def split_ticket_carry(gap_pts):
+    # incumbents only; Osborn's personal vote is not incumbency and uses personal_vote_carry
+    return INC_CARRY_SCALE * personal_vote_carry(gap_pts)
 SPLIT_TICKET_CARRY = 0.612
 SPLIT_TICKET_CARRY_NEW = 0.123
 # Oct 12 2026: the 2026 primaries weigh more, by the user's choice: 0.33 and 0.17 become 0.40 and 0.21
@@ -3606,7 +3612,7 @@ def run_state(st, model, shift, nat_turn_rate):
         _raw = logit(_o.D / (_o.D + _o.R)) - logit(_p.votes_dem / (_p.votes_dem + _p.votes_gop))
         _w = _p.total_votes.values
         _sz = 100 * (inv(float((_raw.values * _w).sum() / _w.sum())) - 0.5) * 2
-        cand_effect = split_ticket_carry(_sz) * _raw
+        cand_effect = personal_vote_carry(_sz) * _raw
     fin_shift, fin_why = 0.0, "no finance term for this office"
     if (cfg.get("office") == "governor" or cfg.get("office", "senate") == "senate") and not cfg.get("no_finance"):
         _p24 = P24.reindex(fl)
