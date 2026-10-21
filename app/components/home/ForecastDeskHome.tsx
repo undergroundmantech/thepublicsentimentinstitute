@@ -8,6 +8,7 @@ import { RATE, RATING_LABEL, darkLabel, fmtM, lastName, marginColor, partyColor,
 import type { MiniRace } from "@/app/lib/forecastData";
 import { Tip, useTip } from "./motion";
 import { fit, pathsBox, type CountyPath, type CountyRow } from "./countyGeo";
+import Walker, { WALKER_CSS, type WalkStop } from "./Walker";
 
 type Office = "senate" | "governor";
 type Chamber = { seatsTotal: number; demSeats: number; gopSeats: number; demControl: number; hist: [number, number][] };
@@ -60,7 +61,7 @@ export default function ForecastDeskHome({ races, chambers, notUp, initialCounty
           <div>
             <div className="eye g">2026 forecast</div>
             <h2>The map, county by county</h2>
-            <p>Hover any state for the model margin, click it to open the full race forecast. Ratings are set by margin: under 2 toss up, 2 to 6 lean, 6 to 12 likely, 12 and over safe.</p>
+            <p>Follow our canvasser through the closest races, or hover any state for the model margin and click it to open the full race forecast. Ratings are set by margin: under 2 toss up, 2 to 6 lean, 6 to 12 likely, 12 and over safe.</p>
           </div>
           <div className="seg" role="tablist" aria-label="Office">
             {(["senate", "governor"] as Office[]).map((o) => (
@@ -71,7 +72,8 @@ export default function ForecastDeskHome({ races, chambers, notUp, initialCounty
         <div className="map-wrap">
           <div className="card">
             <div className="card-b" style={{ padding: "12px 12px 16px" }}>
-              <UsMap key={office} races={list} office={office} show={show} hide={hide} onPick={(st) => { const r = list[st]; if (r) open(r.id); }} />
+              <style>{WALKER_CSS}</style>
+              <UsMap key={office} races={list} office={office} show={show} hide={hide} onPick={(st) => { const r = list[st]; if (r) open(r.id); }} go={(href) => router.push(href)} />
               <div className="legend">
                 {([["safeD", "Safe D"], ["likelyD", "Likely D"], ["leanD", "Lean D"], ["toss", "Toss up"], ["leanR", "Lean R"], ["likelyR", "Likely R"], ["safeR", "Safe R"], ["ind", "Independent"], ["none", "No race"]] as [Rating, string][]).map(([k, l]) => (
                   <span key={k}><i style={{ background: RATE[k] }} />{l}</span>
@@ -121,8 +123,14 @@ export default function ForecastDeskHome({ races, chambers, notUp, initialCounty
   );
 }
 
-function UsMap({ races, office, show, hide, onPick }: { races: Record<string, MiniRace>; office: Office; show: (h: React.ReactNode, e: React.MouseEvent) => void; hide: () => void; onPick: (st: string) => void }) {
+function UsMap({ races, office, show, hide, onPick, go }: { races: Record<string, MiniRace>; office: Office; show: (h: React.ReactNode, e: React.MouseEvent) => void; hide: () => void; onPick: (st: string) => void; go: (href: string) => void }) {
   const states = Object.entries(US_STATE_PATHS);
+  // the canvasser's route: the six closest races on this map
+  const stops: WalkStop[] = useMemo(() => Object.entries(races).filter(([st]) => US_STATE_PATHS[st]).sort((a, b) => Math.abs(a[1].m) - Math.abs(b[1].m)).slice(0, 6).map(([st, r]) => {
+    const lead = r.m < 0 ? r.dem : r.gop;
+    const c = US_STATE_PATHS[st].c;
+    return { st, x: c[0], y: c[1] + 6, title: r.name, line: `${lastName(lead)} ${r.m < 0 ? (r.ind ? "I" : "D") : "R"} +${Math.abs(r.m).toFixed(1)}`, color: r.m < 0 ? (r.ind ? "#b78cff" : "#7fa6ff") : "#ff8399", href: raceHref(r.id) };
+  }), [races]);
   return (
     <svg className="usmap" viewBox="0 0 760 440" role="img" aria-label={`${office === "senate" ? "Senate" : "Governor"} forecast map`}>
       {states.map(([st, p], i) => {
@@ -151,6 +159,7 @@ function UsMap({ races, office, show, hide, onPick }: { races: Record<string, Mi
         const r = races[st]; const rt: Rating = r ? rating(r.m, r.ind) : "none";
         return <text key={st + "t"} x={p.c[0]} y={p.c[1] + 3} style={darkLabel(rt) ? { fill: "#1a1030" } : undefined}>{st}</text>;
       })}
+      <Walker stops={stops} onOpen={go} />
     </svg>
   );
 }

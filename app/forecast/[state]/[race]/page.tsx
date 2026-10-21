@@ -5,7 +5,7 @@ import { notFound } from "next/navigation";
 import fs from "node:fs";
 import path from "node:path";
 import { getModel, isInd, type FRace } from "@/app/lib/forecastData";
-import { RATE, RATING_LABEL, RAMP_CSS, fmtM, lastName, marginColor, partyColor, rating, ratingPill, raceHref, raceIdFromRoute, STATE_NAME } from "@/app/lib/opp";
+import { RATE, RATING_LABEL, RAMP_CSS, fmtM, fmtMS, lastName, marginColor, marginColorInd, partyColor, rating, ratingPill, raceHref, raceIdFromRoute, STATE_NAME } from "@/app/lib/opp";
 import GeoMap, { type GeoTip } from "@/app/components/opp/GeoMap";
 import type { CountyPath, CountyRow } from "@/app/components/home/countyGeo";
 import { pollHref } from "@/app/polls/registry";
@@ -14,8 +14,9 @@ import JsonLd from "@/app/components/JsonLd";
 import { VoteSummary, CountyVotes, countyName, type CountyVote, type CandVote } from "@/app/components/opp/VoteTables";
 import CountyExplorer from "@/app/components/opp/CountyExplorer";
 import SectionNav from "@/app/components/opp/SectionNav";
-import { STORY_CSS, HERO_CSS, WinGauge, CandCards, ShareBars, TrendChart, ModelPath, SecTitle, phraseFor } from "@/app/components/opp/RaceStory";
-import DotState from "@/app/components/opp/DotState";
+import { STORY_CSS, ShareBars, TrendChart, ModelPath, SecTitle, phraseFor } from "@/app/components/opp/RaceStory";
+import StageHero from "@/app/components/opp/StageHero";
+import Ambient from "@/app/components/opp/Ambient";
 import { raceLd, raceMeta } from "../../seo";
 
 export const dynamicParams = false;
@@ -99,9 +100,9 @@ export default async function Page({ params }: { params: Promise<{ state: string
     unit = r.st === "AK" ? "boroughs" : r.st === "LA" ? "parishes" : "counties";
     for (const p of paths) {
       const row = rows[p.id];
-      fills[p.id] = marginColor(row[0]);
+      fills[p.id] = ind ? marginColorInd(row[0]) : marginColor(row[0]);
       const nm = names[p.id] ?? p.id;
-      tips[p.id] = { title: /county|parish|borough|city/i.test(nm) ? nm : `${nm} County`, rows: [["Simulated margin", fmtM(row[0]), row[0] < 0 ? "var(--dem2)" : "var(--gop2)"], ["Simulated votes", Math.round(row[3]).toLocaleString()]] };
+      tips[p.id] = { title: /county|parish|borough|city/i.test(nm) ? nm : `${nm} County`, rows: [["Simulated margin", fmtMS(row[0], ind), row[0] < 0 ? (ind ? "var(--ind)" : "var(--dem2)") : "var(--gop2)"], ["Simulated votes", Math.round(row[3]).toLocaleString()]] };
     }
   }
 
@@ -141,7 +142,7 @@ export default async function Page({ params }: { params: Promise<{ state: string
   ];
 
   return (
-    <div className="opp fc-xl fx">
+    <div className="opp fc-xl fx fx-dark">
       <nav className="crumbs" aria-label="Breadcrumb">
         <Link href="/">Home</Link><span className="sep">/</span><Link href="/forecast">Forecast</Link><span className="sep">/</span>
         <Link href={`/forecast?office=${r.office}`}>{r.office === "senate" ? "Senate" : r.office === "governor" ? "Governor" : "House"}</Link><span className="sep">/</span><span>{STATE_NAME[r.st] ?? r.st}{r.office === "house" ? ` ${r.district}` : ""}</span>
@@ -149,34 +150,32 @@ export default async function Page({ params }: { params: Promise<{ state: string
       <ForecastNav />
       <JsonLd data={raceLd(r)} />
       <style>{STORY_CSS}</style>
-      <style>{HERO_CSS}</style>
-      <header className="ph st-hero2">
-        <div className="sx-rv-l">
-          <div className="eye g">2026 forecast · {officeTitle}</div>
-          <h1>{Math.abs(m) >= 99
-            ? <><span className="nm" style={{ color: leadColor }}>{lead}</span> is <span className="ph-w">unopposed</span> for {raceWhere}.</>
-            : phrase
-              ? <><span className="nm" style={{ color: leadColor }}>{lead}</span> is <span className="ph-w">{phrase}</span> to win {raceWhere}.</>
-              : <><span className="nm" style={{ color: ind ? "var(--ind)" : "var(--dem2)" }}>{r.dem}</span> and <span className="nm" style={{ color: "var(--gop2)" }}>{r.gop}</span> are in a <span className="ph-w">toss up</span> for {raceWhere}.</>}</h1>
-          <p className="lede">{r.dem} vs {r.gop}{r.open ? ", an open seat" : ""}. {Math.abs(m) >= 99 ? "The seat is uncontested." : `The model has ${lastName(lead)} ahead by ${Math.abs(m).toFixed(1)} points, winning ${Math.round(leadWin * 100)} percent of ${model.meta.sims.toLocaleString()} simulated elections.`}</p>
-          <div className="st-pills">
-            <span className={`pill ${ratingPill(rt)}`} style={{ border: 0 }}>{RATING_LABEL[rt]}</span>
-            <span>Model <b className="mono">{fmtM(m, ind)}</b></span>
-            {r.pollAvg != null && <span>Polls <b className="mono">{fmtM(r.pollAvg)}</b></span>}
-            <span>Updated <b>{updated}</b></span>
-          </div>
-          {heroCands.length ? <CandCards cands={heroCands} /> : null}
-        </div>
-        {paths.length ? <DotState paths={paths} fills={fills} label={`${officeTitle} drawn in dots`} /> : <div />}
-        {Math.abs(m) < 99 ? <WinGauge win={leadWin} leadName={lastName(lead)} otherName={lastName(m < 0 ? r.gop : r.dem)} leadFull={lead} otherFull={m < 0 ? r.gop : r.dem}
-          leadColor={leadColor} otherColor={otherColor} verdict={`${lastName(lead)} ${leadWin >= 0.95 ? "all but certain" : leadWin >= 0.85 ? "very likely" : leadWin >= 0.65 ? "favored" : "slightly favored"}`} /> : null}
-      </header>
+      <Ambient />
+      <StageHero
+        eyebrow={`2026 forecast · ${officeTitle}`}
+        title={Math.abs(m) >= 99
+          ? <><span className="nm" style={{ color: leadColor }}>{lead}</span> is <span className="ph-w">unopposed</span> for {raceWhere}.</>
+          : phrase
+            ? <><span className="nm" style={{ color: leadColor }}>{lead}</span> is <span className="ph-w">{phrase}</span> to win {raceWhere}.</>
+            : <><span className="nm" style={{ color: ind ? "#b78cff" : "#7fa6ff" }}>{r.dem}</span> and <span className="nm" style={{ color: "#ff8399" }}>{r.gop}</span> are in a <span className="ph-w">toss up</span> for {raceWhere}.</>}
+        lede={<>{r.dem} vs {r.gop}{r.open ? ", an open seat" : ""}. {Math.abs(m) >= 99 ? "The seat is uncontested." : `The model has ${lastName(lead)} ahead by ${Math.abs(m).toFixed(1)} points, winning ${Math.round(leadWin * 100)} percent of ${model.meta.sims.toLocaleString()} simulated elections.`}</>}
+        pills={<>
+          <span className={`pill ${ratingPill(rt)}`}>{RATING_LABEL[rt]}</span>
+          <span>Model <b className="mono">{fmtM(m, ind)}</b></span>
+          {r.pollAvg != null && <span>Polls <b className="mono">{fmtMS(r.pollAvg, ind)}</b></span>}
+          <span>Updated <b>{updated}</b></span>
+        </>}
+        cands={heroCands.map((c) => ({ name: c.name, label: c.label, pct: c.pct, votes: c.votes, color: c.cls === "d" ? "#5b8fff" : c.cls === "r" ? "#ff4d6a" : "#b78cff" }))}
+        paths={paths} fills={fills} mapLabel={`${officeTitle} drawn in pixels, shaded by the forecast`}
+        labels={Object.fromEntries(Object.entries(tips).map(([id, t]) => { const row = t.rows.find((x) => x[0] === "Simulated margin" || x[0] === "Model"); const v = String(row?.[1] ?? ""); return [id, { t: t.title, s: row ? `${row[0]} ${v}` : "", c: v.startsWith("R") ? "#ff8399" : ind ? "#b78cff" : "#7fa6ff" }]; }))}
+        win={Math.abs(m) < 99 ? leadWin : null} focus={r.office === "house" ? r.id : undefined}
+        lead={{ name: lastName(lead), color: leadColor }} other={{ name: lastName(m < 0 ? r.gop : r.dem), color: otherColor }} />
 
       <style>{FX_CSS}</style>
       <div className="fx-kpis">
         <div className="card fx-k"><span>Rating</span><b style={{ color: sideCls === "i" ? "var(--ind)" : sideCls === "d" ? "var(--dem2)" : "var(--gop2)" }}>{RATING_LABEL[rt]}</b><small>{Math.round(leadWin * 100)}% chance for {lastName(lead)}</small></div>
         <div className="card fx-k"><span>Model margin</span><b className="mono">{Math.abs(m) >= 99 ? "Uncontested" : fmtM(m, ind)}</b><small>{r.pollAvg != null ? `Polls ${fmtM(r.pollAvg)}` : "No polls in the race"}</small></div>
-        <div className="card fx-k"><span>80 percent range</span><b className="mono">{fmtM(r.est.p10)} to {fmtM(r.est.p90)}</b><small>{model.meta.sims.toLocaleString()} simulations</small></div>
+        <div className="card fx-k"><span>80 percent range</span><b className="mono">{fmtMS(r.est.p10, ind)} to {fmtMS(r.est.p90, ind)}</b><small>{model.meta.sims.toLocaleString()} simulations</small></div>
         <div className="card fx-k"><span>Projected votes</span><b className="mono">{rv.votes ? rv.votes.total.toLocaleString("en-US") : "n/a"}</b><small>{rv.votes && rv.votes.total ? `${lastName(lead)} ${(Math.max(rv.votes.dem, rv.votes.rep) / rv.votes.total * 100).toFixed(1)}%` : ""}</small></div>
       </div>
 
@@ -231,7 +230,7 @@ export default async function Page({ params }: { params: Promise<{ state: string
                   <text x={20} y={142} style={{ font: "500 10px var(--font-m)", fill: "#8e86a3" }}>{fmtM(dist!.lo)}</text>
                   <text x={580} y={142} textAnchor="end" style={{ font: "500 10px var(--font-m)", fill: "#8e86a3" }}>{fmtM(dist!.lo + dist!.w * bins.length)}</text>
                 </svg>
-                <p style={{ fontSize: 13, marginTop: 8 }}>80 percent of simulations fall between {fmtM(r.est.p10)} and {fmtM(r.est.p90)}. Negative margins are Democratic{ind ? " or independent" : ""} wins.</p>
+                <p style={{ fontSize: 13, marginTop: 8 }}>80 percent of simulations fall between {fmtMS(r.est.p10, ind)} and {fmtMS(r.est.p90, ind)}. Negative margins are Democratic{ind ? " or independent" : ""} wins.</p>
               </div>
             </div>
           )}

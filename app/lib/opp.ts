@@ -36,6 +36,10 @@ export function darkLabel(r: Rating) { return r === "leanD" || r === "leanR" || 
 
 export const lastName = (n: string) => n.trim().split(/\s+/).pop() || n;
 
+// signed margin label that keeps the Republican side when an independent is in the left lane
+export function fmtMS(m: number, ind = false, digits = 1) {
+  return (m < 0 ? (ind ? "I +" : "D +") : "R +") + Math.abs(m).toFixed(digits);
+}
 export function fmtM(m: number, ind = false, digits = 1) {
   const a = Math.abs(m).toFixed(digits);
   if (ind) return `I +${a}`;
@@ -49,6 +53,14 @@ export function marginColor(m: number) {
     `rgb(${c1.map((v, i) => Math.round(v + (c2[i] - v) * t)).join(",")})`;
   return m < 0 ? mix([214, 226, 255], [16, 40, 140], a) : mix([255, 220, 228], [140, 10, 40], a);
 }
+// the same ramp with lavender on the left, for races where an independent holds the anti Republican lane
+export function marginColorInd(m: number) {
+  const a = Math.min(40, Math.abs(m || 0)) / 40;
+  const mix = (c1: number[], c2: number[], t: number) =>
+    `rgb(${c1.map((v, i) => Math.round(v + (c2[i] - v) * t)).join(",")})`;
+  return m < 0 ? mix([234, 226, 255], [78, 36, 170], a) : mix([255, 220, 228], [140, 10, 40], a);
+}
+export const RAMP_IND_CSS = "linear-gradient(90deg,#4e24aa 0%,#9b6bff 25%,#eae2ff 48%,#ffdce4 52%,#ff3b5c 75%,#8c0a28 100%)";
 export const RAMP_CSS = "linear-gradient(90deg,#10288c 0%,#3d7bff 25%,#d6e2ff 48%,#ffdce4 52%,#ff3b5c 75%,#8c0a28 100%)";
 
 export const PARTY_COLOR: Record<string, string> = { D: "var(--dem)", R: "var(--gop)", IND: "var(--ind)", I: "var(--ind)" };

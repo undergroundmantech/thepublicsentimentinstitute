@@ -2,7 +2,7 @@
 // County explorer for every statewide forecast: a large map with four ways to read it, a county inspector that
 // follows the cursor, step through and search, ranked county lists, and a tug of war bar of where the margin is won.
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { marginColor, RAMP_CSS } from "@/app/lib/opp";
+import { marginColor, marginColorInd, RAMP_CSS, RAMP_IND_CSS } from "@/app/lib/opp";
 import { pathsBox, type CountyPath } from "../home/countyGeo";
 
 export type XRow = { id: string; name: string; a: number; b: number; other: number; total: number };
@@ -16,10 +16,11 @@ const yesFill = (y: number) => {
   const a = Math.min(30, Math.abs(y - 50)) / 30;
   return y >= 50 ? mix([214, 242, 234], [14, 110, 88], a) : mix([252, 226, 214], [150, 58, 20], a);
 };
-const shiftFill = (s: number) => { const a = Math.min(15, Math.abs(s)) / 15; return s < 0 ? mix([226, 233, 255], [30, 70, 200], a) : mix([255, 228, 233], [190, 20, 60], a); };
+const shiftFill = (s: number, ind = false, cap = 15) => { const a = Math.min(cap, Math.abs(s)) / cap; return s < 0 ? (ind ? mix([236, 228, 255], [110, 60, 220], a) : mix([226, 233, 255], [30, 70, 200], a)) : mix([255, 228, 233], [190, 20, 60], a); };
 const turnFill = (t: number) => mix([40, 30, 60], [196, 160, 255], Math.max(0, Math.min(1, t)));
 const YES_RAMP = "linear-gradient(90deg,#963a14 0%,#e8794a 30%,#fce2d6 49%,#d6f2ea 51%,#2fbf9b 70%,#0e6e58 100%)";
 const SHIFT_RAMP = "linear-gradient(90deg,#1e46c8 0%,#e2e9ff 48%,#ffe4e9 52%,#be143c 100%)";
+const SHIFT_IND_RAMP = "linear-gradient(90deg,#6e3cdc 0%,#ece4ff 48%,#ffe4e9 52%,#be143c 100%)";
 const TURN_RAMP = "linear-gradient(90deg,#281e3c 0%,#c4a0ff 100%)";
 
 function bbox(d: string): [number, number, number, number] {
@@ -111,6 +112,7 @@ export default function CountyExplorer({ paths, rows, sides, unit = "counties", 
     anim.current = requestAnimationFrame(step);
   };
 
+  const indRace = kind === "race" && sides[0].letter === "I";
   const [mode, setMode] = useState<Mode>("margin");
   const [sel, setSel] = useState<string | null>(null);
   const [hov, setHov] = useState<string | null>(null);
@@ -126,14 +128,21 @@ export default function CountyExplorer({ paths, rows, sides, unit = "counties", 
   const rank = useMemo(() => Object.fromEntries(byVotes.map((r, i) => [r.id, i + 1])), [byVotes]);
   const maxTotal = byVotes[0]?.total || 1, minTotal = byVotes[byVotes.length - 1]?.total || 1;
   const shift = (id: string) => { const r = R[id], o = p24?.[id]; if (!r || !o) return null; const t24 = o[0] + o[1] + o[2]; if (!t24) return null; return mOf(r) - ((o[1] - o[0]) / t24) * 100; };
+  // the shift scale follows the race: 15 points, or wider when a candidate runs far from the 2024 ticket everywhere
+  const shiftCap = useMemo(() => {
+    if (!p24) return 15;
+    const v = rows.map((r) => shift(r.id)).filter((x): x is number => x != null).map(Math.abs).sort((a, b) => a - b);
+    return v.length ? Math.max(15, Math.ceil(v[Math.floor(v.length * 0.9)] / 5) * 5) : 15;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [p24, rows]);
   const m24 = (id: string) => { const o = p24?.[id]; if (!o) return null; const t = o[0] + o[1] + o[2]; return t ? ((o[1] - o[0]) / t) * 100 : null; };
 
   const fillOf = (id: string) => {
     const r = R[id];
     if (mode === "turnout") return turnFill((Math.log(r.total) - Math.log(minTotal)) / Math.max(0.01, Math.log(maxTotal) - Math.log(minTotal)));
-    if (mode === "shift") { const s = shift(id); return s == null ? "rgba(var(--line-rgb),.1)" : shiftFill(s); }
+    if (mode === "shift") { const s = shift(id); return s == null ? "rgba(var(--line-rgb),.1)" : shiftFill(s, indRace, shiftCap); }
     if (mode === "bubbles") return "rgba(var(--line-rgb),.07)";
-    return kind === "measure" ? yesFill(r.total ? (100 * r.a) / (r.a + r.b) : 50) : marginColor(mOf(r));
+    return kind === "measure" ? yesFill(r.total ? (100 * r.a) / (r.a + r.b) : 50) : (indRace ? marginColorInd(mOf(r)) : marginColor(mOf(r)));
   };
 
   // bubbles: radius by net votes, the biggest net vote county gets about a twelfth of the map's width
@@ -171,7 +180,7 @@ export default function CountyExplorer({ paths, rows, sides, unit = "counties", 
   }, [rows, byVotes, p24]);
 
   const mLabel = (m: number) => (Math.abs(m) < 0.05 ? "Even" : `${m < 0 ? sides[0].letter : sides[1].letter} +${Math.abs(m).toFixed(1)}`);
-  const sMLabel = (m: number) => (Math.abs(m) < 0.05 ? "No shift" : `${m < 0 ? "D" : "R"} +${Math.abs(m).toFixed(1)}`);
+  const sMLabel = (m: number) => (Math.abs(m) < 0.05 ? "No shift" : `${m < 0 ? sides[0].letter : sides[1].letter} +${Math.abs(m).toFixed(1)}`);
   const one = ({ counties: "county", parishes: "parish", boroughs: "borough" } as Record<string, string>)[unit] ?? "county";
   const curM = cur ? mOf(cur) : mOf(T);
   const show = cur ?? { id: "", name: stateName, ...T };
@@ -202,9 +211,9 @@ export default function CountyExplorer({ paths, rows, sides, unit = "counties", 
   const aSum = aNet.reduce((s, x) => s + x.v, 0), bSum = bNet.reduce((s, x) => s + x.v, 0), span = Math.max(aSum, bSum) * 2 || 1;
 
   const legend = mode === "turnout" ? { ramp: TURN_RAMP, l: "Fewest votes", r: "Most votes" }
-    : mode === "shift" ? { ramp: SHIFT_RAMP, l: "D +15 from 2024", r: "R +15 from 2024" }
+    : mode === "shift" ? { ramp: indRace ? SHIFT_IND_RAMP : SHIFT_RAMP, l: `${sides[0].letter} +${shiftCap} from 2024`, r: `${sides[1].letter} +${shiftCap} from 2024` }
     : mode === "bubbles" ? null
-    : kind === "measure" ? { ramp: YES_RAMP, l: "No +30", r: "Yes +30" } : { ramp: RAMP_CSS, l: "D +40", r: "R +40" };
+    : kind === "measure" ? { ramp: YES_RAMP, l: "No +30", r: "Yes +30" } : { ramp: indRace ? RAMP_IND_CSS : RAMP_CSS, l: `${sides[0].letter} +40`, r: `${sides[1].letter} +40` };
 
   const modes: [Mode, string][] = kind === "race"
     ? [["margin", "Margin"], ["shift", "Shift from 2024"], ["bubbles", "Vote bubbles"], ["turnout", "Turnout"]]
@@ -284,7 +293,7 @@ export default function CountyExplorer({ paths, rows, sides, unit = "counties", 
             <div><span>Projected votes</span><b>{short(show.total)}</b></div>
             <div><span>Net votes</span><b style={{ color: show.a > show.b ? sides[0].color : sides[1].color }}>{show.a > show.b ? sides[0].letter : sides[1].letter} +{short(Math.abs(show.a - show.b))}</b></div>
             {kind === "race" && cur && m24v != null ? <div><span>2024 president</span><b>{m24v < 0 ? "Harris" : "Trump"} +{Math.abs(m24v).toFixed(1)}</b></div> : null}
-            {kind === "race" && cur && sh != null ? <div><span>Shift since 2024</span><b style={{ color: sh < 0 ? "var(--dem2)" : "var(--gop2)" }}>{sMLabel(sh)}</b></div> : null}
+            {kind === "race" && cur && sh != null ? <div><span>Shift since 2024</span><b style={{ color: sh < 0 ? sides[0].color : "var(--gop2)" }}>{sMLabel(sh)}</b></div> : null}
           </div>
           <div className="cx-step">
             <button onClick={() => stepBy(-1)} aria-label={`Previous ${one} by size`}>Previous</button>
@@ -300,7 +309,7 @@ export default function CountyExplorer({ paths, rows, sides, unit = "counties", 
           <ol className="cx-list">
             {(lists[tab] ?? []).slice(0, 9).map((r, i) => {
               const v = tab === "shift" ? shift(r.id)! : mOf(r);
-              const col = tab === "shift" ? (v < 0 ? "var(--dem2)" : "var(--gop2)") : v < 0 ? sides[0].color : sides[1].color;
+              const col = tab === "shift" ? (v < 0 ? sides[0].color : "var(--gop2)") : v < 0 ? sides[0].color : sides[1].color;
               return (
                 <li key={r.id}><button aria-current={sel === r.id} onMouseEnter={() => setHov(r.id)} onClick={() => pick(r.id, true)}>
                   <span className="rk">{i + 1}</span><span>{r.name}</span>

@@ -82,3 +82,11 @@ html { scroll-behavior: smooth; }
   .opp-main > .opp-page, .sx-route, .opp .card, .opp .sx-rv, .opp .sx-rv-l, .opp .sx-rv-r, .opp .sx-h, .opp section.fx-sec, .opp .callout, .opp .ph::before, .sx-progress, .sx-skel { animation: none !important; }
   .sx-progress { display: none; }
 }
+
+/* race pages: a darker ground with pixel dust drifting behind everything */
+.amb-cv { position: fixed; inset: 0; z-index: -1; pointer-events: none; }
+:root:has(.fx-dark) { --bg: #060409; }
+:root[data-theme="light"]:has(.fx-dark) { --bg: #f5f3fa; }
+:root[data-theme="light"] .amb-cv { opacity: .55; filter: saturate(1.4) brightness(.6); }
+:root:has(.fx-dark) .opp .orb { opacity: .14; }
+:root:has(.fx-dark) .opp .orb.c { opacity: .08; }

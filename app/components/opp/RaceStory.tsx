@@ -196,7 +196,7 @@ export const HERO_CSS = `
 .st-cand .pt{font:800 9.5px var(--font-m);letter-spacing:.12em;text-transform:uppercase;opacity:.85}
 .st-cand .pc{text-align:right}
 .st-cand .pc b{display:block;font:800 34px/1 var(--font-d);letter-spacing:-.03em;font-variant-numeric:tabular-nums}
-.st-cand .pc small{font:800 9.5px var(--font-m);letter-spacing:.12em;text-transform:uppercase;opacity:.85}
+.st-cand .pc small{display:block;font:800 9.5px var(--font-m);letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.82)}
 .st-cand .bar{position:absolute;left:0;bottom:0;height:4px;background:rgba(255,255,255,.8);transform-origin:0 50%;animation:st-grow 1.3s cubic-bezier(.2,.8,.2,1) .3s both}
 @keyframes fb-in2{from{transform:translateX(-24px);opacity:.4}to{transform:none;opacity:1}}
 @media (prefers-reduced-motion:reduce){.st-gauge svg circle.g,.st-cand,.st-cand .bar{animation:none}}

@@ -8,8 +8,9 @@ import { RATING_LABEL, RAMP_CSS, fmtM, lastName, marginColor, rating, ratingPill
 import GeoMap, { type GeoTip } from "@/app/components/opp/GeoMap";
 import { VoteSummary, CountyVotes, countyName } from "@/app/components/opp/VoteTables";
 import CountyExplorer from "@/app/components/opp/CountyExplorer";
-import { STORY_CSS, HERO_CSS, WinGauge, phraseFor } from "@/app/components/opp/RaceStory";
-import DotState from "@/app/components/opp/DotState";
+import { STORY_CSS, phraseFor } from "@/app/components/opp/RaceStory";
+import StageHero from "@/app/components/opp/StageHero";
+import Ambient from "@/app/components/opp/Ambient";
 import type { CountyPath } from "@/app/components/home/countyGeo";
 import { dbHref, getDownballot, getDownballotCounties, type CountyRow, type DBRace } from "../../data";
 import JsonLd from "@/app/components/JsonLd";
@@ -80,32 +81,32 @@ export default async function Page({ params }: { params: Promise<{ st: string; o
   const pct = (x: number) => (v ? (100 * x / v.total).toFixed(1) : "");
 
   return (
-    <div className="opp">
+    <div className="opp fx-dark">
       <nav className="crumbs" aria-label="Breadcrumb">
         <Link href="/">Home</Link><span className="sep">/</span><Link href="/forecast">Forecast</Link><span className="sep">/</span>
         <Link href="/forecast/statewide">Statewide offices</Link><span className="sep">/</span><span>{title}</span>
       </nav>
       <ForecastNav />
       <JsonLd data={dbLd(r)} />
-      <style>{STORY_CSS + HERO_CSS}</style>
-      <header className="ph st-hero2">
-        <div className="sx-rv-l">
-          <div className="eye g">2026 forecast · {title}</div>
-          <h1>{phraseFor(leadWin)
-            ? <><span className="nm" style={{ color: m < 0 ? "#5b8fff" : "#ff4d6a" }}>{lead}</span> is <span className="ph-w">{phraseFor(leadWin)}</span> to win {r.state}&apos;s {r.officeLabel.toLowerCase()} race.</>
-            : <><span className="nm" style={{ color: "#5b8fff" }}>{r.dem}</span> and <span className="nm" style={{ color: "#ff4d6a" }}>{r.gop}</span> are in a <span className="ph-w">toss up</span> for {r.state}&apos;s {r.officeLabel.toLowerCase()}.</>}</h1>
-        <p className="lede">{r.dem} vs {r.gop}{!r.incRunning ? ", an open seat" : r.incumbent ? `, with ${r.incumbent} running again` : ""}. The model has {lastName(lead)} ahead by {Math.abs(m).toFixed(1)} points, with a {Math.round(leadWin * 100)} percent chance of winning.</p>
-          <div className="st-pills">
-            <span className={`pill ${ratingPill(rt)}`} style={{ border: 0 }}>{RATING_LABEL[rt]}</span>
-            <span>Model <b className="mono">{fmtM(m)}</b></span>
-            {r.pollAvg != null && <span>Polls <b className="mono">{fmtM(r.pollAvg)}</b></span>}
-            <span>Updated <b>{updated}</b></span>
-          </div>
-        </div>
-        {paths.length ? <DotState paths={paths} fills={fills} label={`${title} drawn in dots`} /> : <div />}
-        <WinGauge win={leadWin} leadName={lastName(lead)} otherName={lastName(m < 0 ? r.gop! : r.dem!)} leadFull={lead} otherFull={m < 0 ? r.gop! : r.dem!}
-          leadColor={m < 0 ? "#5b8fff" : "#ff4d6a"} otherColor={m < 0 ? "#ff4d6a" : "#5b8fff"} verdict={`${lastName(lead)} ${leadWin >= 0.95 ? "all but certain" : leadWin >= 0.85 ? "very likely" : leadWin >= 0.65 ? "favored" : "slightly favored"}`} />
-      </header>
+      <style>{STORY_CSS}</style>
+      <Ambient />
+      <StageHero
+        eyebrow={`2026 forecast · ${title}`}
+        title={phraseFor(leadWin)
+          ? <><span className="nm" style={{ color: m < 0 ? "#7fa6ff" : "#ff8399" }}>{lead}</span> is <span className="ph-w">{phraseFor(leadWin)}</span> to win {r.state}&apos;s {r.officeLabel.toLowerCase()} race.</>
+          : <><span className="nm" style={{ color: "#7fa6ff" }}>{r.dem}</span> and <span className="nm" style={{ color: "#ff8399" }}>{r.gop}</span> are in a <span className="ph-w">toss up</span> for {r.state}&apos;s {r.officeLabel.toLowerCase()}.</>}
+        lede={<>{r.dem} vs {r.gop}{!r.incRunning ? ", an open seat" : r.incumbent ? `, with ${r.incumbent} running again` : ""}. The model has {lastName(lead)} ahead by {Math.abs(m).toFixed(1)} points, with a {Math.round(leadWin * 100)} percent chance of winning.</>}
+        pills={<>
+          <span className={`pill ${ratingPill(rt)}`}>{RATING_LABEL[rt]}</span>
+          <span>Model <b className="mono">{fmtM(m)}</b></span>
+          {r.pollAvg != null && <span>Polls <b className="mono">{fmtM(r.pollAvg)}</b></span>}
+          <span>Updated <b>{updated}</b></span>
+        </>}
+        cands={v && v.total > 0 ? [{ name: r.dem ?? "Democrat", label: "Democrat", pct: (100 * v.dem) / v.total, votes: v.dem, color: "#5b8fff" }, { name: r.gop ?? "Republican", label: "Republican", pct: (100 * v.rep) / v.total, votes: v.rep, color: "#ff4d6a" }] : []}
+        paths={paths} fills={fills} mapLabel={`${title} drawn in pixels, shaded by the forecast`}
+        labels={Object.fromEntries(paths.map((p) => { const row = rows[p.id]; return [p.id, { t: tips[p.id]?.title ?? p.id, s: `Projected margin ${fmtM(row[0])}`, c: row[0] < 0 ? "#7fa6ff" : "#ff8399" }]; }))}
+        win={leadWin}
+        lead={{ name: lastName(lead), color: m < 0 ? "#5b8fff" : "#ff4d6a" }} other={{ name: lastName(m < 0 ? r.gop! : r.dem!), color: m < 0 ? "#ff4d6a" : "#5b8fff" }} />
 
       {paths.length > 1 ? (
         <section style={{ marginBottom: 16 }} aria-label="County explorer">
