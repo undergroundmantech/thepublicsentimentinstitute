@@ -107,6 +107,24 @@ export default async function Page({ params }: { params: Promise<{ st: string; c
         </div>
       } />
 
+      {c.votes && c.votes.total > 0 ? (
+        <div className="card" style={{ marginTop: 16 }}>
+          <div className="card-h"><h3>Projected {c.name} vote</h3><span className="eye" style={{ marginLeft: "auto" }}>{c.up} seats on the ballot</span></div>
+          <div className="tblwrap">
+            <table className="tbl">
+              <thead><tr><th>Party</th><th style={{ textAlign: "right" }}>Votes</th><th style={{ textAlign: "right" }}>Share</th></tr></thead>
+              <tbody>
+                <tr><td className="d">Democrats</td><td className="n">{c.votes.dem.toLocaleString("en-US")}</td><td className="n">{((100 * c.votes.dem) / c.votes.total).toFixed(1)}%</td></tr>
+                <tr><td className="r">Republicans</td><td className="n">{c.votes.rep.toLocaleString("en-US")}</td><td className="n">{((100 * c.votes.rep) / c.votes.total).toFixed(1)}%</td></tr>
+                <tr><td>Independents and others</td><td className="n">{c.votes.other.toLocaleString("en-US")}</td><td className="n">{((100 * c.votes.other) / c.votes.total).toFixed(1)}%</td></tr>
+                <tr style={{ fontWeight: 700 }}><td>Total</td><td className="n">{c.votes.total.toLocaleString("en-US")}</td><td className="n">100%</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p style={{ fontSize: 12.5, color: "var(--mute)", padding: "8px 14px 14px", margin: 0 }}>The sum of every district on the ballot. Each district&apos;s turnout is its 2024 top of ticket vote on today&apos;s lines, scaled to the forecast&apos;s 2026 statewide vote less a small share who skip legislative races, split by the district forecast. A district with no candidate from one party gives all its votes to the other. The district table lists each seat&apos;s projected votes.</p>
+        </div>
+      ) : null}
+
       <div className="sl-foot">
         {c.env.genericPolls.length ? (
           <div className="card">

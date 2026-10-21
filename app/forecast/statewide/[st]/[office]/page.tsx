@@ -6,6 +6,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { RATING_LABEL, RAMP_CSS, fmtM, lastName, marginColor, rating, ratingPill, STATE_NAME } from "@/app/lib/opp";
 import GeoMap, { type GeoTip } from "@/app/components/opp/GeoMap";
+import { VoteSummary, CountyVotes, countyName } from "@/app/components/opp/VoteTables";
 import type { CountyPath } from "@/app/components/home/countyGeo";
 import { dbHref, getDownballot, getDownballotCounties, type CountyRow, type DBRace } from "../../data";
 import JsonLd from "@/app/components/JsonLd";
@@ -106,6 +107,38 @@ export default async function Page({ params }: { params: Promise<{ st: string; o
               </div>
             </div>
           </div>
+
+          {v && v.total > 0 ? (
+            <VoteSummary title="Projected statewide vote" total={v.total}
+              cands={[{ name: r.dem ?? "Democrat", party: "D", votes: v.dem }, { name: r.gop ?? "Republican", party: "R", votes: v.rep },
+                ...(v.other > 0 ? [{ name: (r.others ?? []).map((o) => o.name).join(", ") || "Other candidates", party: "", votes: v.other }] : [])]}
+              note="Expected votes at the projected turnout for this office, which runs a little below the top of the ticket because some voters skip down ballot races." />
+          ) : null}
+
+          {paths.length > 0 && (
+            <CountyVotes unit={unit} demName={lastName(r.dem ?? "Democrat")} repName={lastName(r.gop ?? "Republican")}
+              rows={paths.map((p) => { const row = rows[p.id]; return { id: p.id, name: countyName(names[p.id] ?? p.id, r.st), dem: row[1], rep: row[2], other: Math.max(0, row[3] - row[1] - row[2]), total: row[3], margin: row[0] }; })} />
+          )}
+
+          {r.est.p10 != null && r.est.p90 != null && <div className="card">
+            <div className="card-h"><h3>Range of outcomes</h3><span className="eye" style={{ marginLeft: "auto" }}>80 percent of simulations</span></div>
+            <div className="card-b">
+              {(() => { const lo = Math.min(r.est.p10!, r.est.p90!), hi = Math.max(r.est.p10!, r.est.p90!); const span = Math.max(10, Math.abs(lo), Math.abs(hi)) * 1.15;
+                const X = (x: number) => 20 + ((x + span) / (2 * span)) * 560;
+                return (
+                  <svg viewBox="0 0 600 70" role="img" aria-label={`80 percent range from ${fmtM(lo)} to ${fmtM(hi)}`} style={{ width: "100%", height: "auto" }}>
+                    <rect x={20} y={28} width={560} height={10} rx={5} fill="rgba(255,255,255,.06)" />
+                    <rect x={X(lo)} y={28} width={Math.max(2, X(hi) - X(lo))} height={10} rx={5} fill={m < 0 ? "#3d7bff" : "#ff3b5c"} opacity={0.55} />
+                    <line x1={X(0)} x2={X(0)} y1={18} y2={48} stroke="var(--hi)" strokeWidth={1.5} />
+                    <circle cx={X(m)} cy={33} r={6} fill="#fff" />
+                    <text x={X(lo)} y={64} textAnchor="middle" style={{ font: "500 11px var(--font-m)", fill: "#8e86a3" }}>{fmtM(lo)}</text>
+                    <text x={X(hi)} y={64} textAnchor="middle" style={{ font: "500 11px var(--font-m)", fill: "#8e86a3" }}>{fmtM(hi)}</text>
+                    <text x={X(m)} y={14} textAnchor="middle" style={{ font: "700 11px var(--font-m)", fill: "#f3eff8" }}>{fmtM(m)}</text>
+                  </svg>
+                ); })()}
+              <p style={{ fontSize: 13, marginTop: 8 }}>80 percent of simulations fall between {fmtM(Math.min(r.est.p10!, r.est.p90!))} and {fmtM(Math.max(r.est.p10!, r.est.p90!))}. The white dot is the forecast; the line is a tie.</p>
+            </div>
+          </div>}
 
           <div className="card">
             <div className="card-h"><h3>How the model gets there</h3><span className="eye" style={{ marginLeft: "auto" }}>statewide margin at each step</span></div>

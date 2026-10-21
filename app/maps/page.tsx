@@ -70,6 +70,12 @@ export default function Page() {
   const model = readJson<Model>("forecast/model.json");
   const elect = readJson<Elect>("earlyvote-electorate.json");
   const reg = readJson<Reg>("voterreg/summary.json");
+  const bm = readJson<{ meta: { states: number }; measures: { st: string; est: { prob: number }; votes?: { yes: number; no: number } | null }[] }>("forecast/measures.json");
+  const sl = readJson<{ meta: { chambers: number; districts: number }; chambers: { st: string; demControl: number; gopControl: number }[] }>("forecast/statehouse.json");
+  const bmBy: Record<string, { n: number; pass: number }> = {};
+  for (const m of bm?.measures ?? []) { const o = (bmBy[m.st] ??= { n: 0, pass: 0 }); o.n++; if (m.est.prob > 0.5) o.pass++; }
+  const slBy: Record<string, number[]> = {};
+  for (const c of sl?.chambers ?? []) (slBy[c.st] ??= []).push(c.demControl - c.gopControl);
 
   // Forecast: the Senate race where there is one, otherwise the governor race.
   const fc: Record<string, number> = {};
@@ -132,6 +138,28 @@ export default function Page() {
       },
       leg: ["fewer", "", "more"],
       cta: "Explore totals",
+    },
+    {
+      href: "/maps/ballot-measures",
+      eye: `${bm?.measures.length ?? 0} measures`,
+      t: "Ballot measures",
+      s: "Every statewide question on the ballot, mapped by county with projected Yes and No votes.",
+      stat: bm ? `${bm.measures.filter((m) => m.est.prob > 0.5).length}` : "n/a",
+      statL: "favored to pass",
+      fill: (st: string) => { const o = bmBy[st]; return o ? seqFill(0.25 + 0.75 * (o.pass / o.n)) : "var(--mm-none)"; },
+      leg: ["fewer pass", "", "more pass"],
+      cta: "Map the measures",
+    },
+    {
+      href: "/forecast/legislatures",
+      eye: `${sl?.meta.chambers ?? 99} chambers`,
+      t: "State legislatures",
+      s: "Every state house and state senate district on a map, with each seat's odds and projected vote.",
+      stat: sl ? sl.meta.districts.toLocaleString("en-US") : "n/a",
+      statL: "districts forecast",
+      fill: (st: string) => { const v = slBy[st]; if (!v?.length) return "var(--mm-none)"; const a = v.reduce((x, y) => x + y, 0) / v.length; return leanFill(-a * 40); },
+      leg: ["R control", "", "D control"],
+      cta: "Map the chambers",
     },
   ];
 

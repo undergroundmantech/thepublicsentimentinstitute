@@ -23,7 +23,7 @@ import json, glob, math, os, re, sys
 import numpy as np, pandas as pd
 
 PUB = os.environ.get("PUB", "/tmp/site/public/forecast")
-TODAY = pd.Timestamp(os.environ.get("TODAY", "2026-10-17"))
+TODAY = pd.Timestamp(os.environ.get("TODAY") or pd.Timestamp.now(tz="America/New_York").strftime("%Y-%m-%d"))   # Oct 21 2026: was fixed at Oct 17, which aged every poll from the wrong day
 N = 2000; rng = np.random.default_rng(1103)
 lg = lambda p: np.log(np.clip(p, 1e-4, 1 - 1e-4) / (1 - np.clip(p, 1e-4, 1 - 1e-4)))
 inv = lambda z: 1 / (1 + np.exp(-z))
@@ -50,6 +50,12 @@ for r in model["races"]:
 H26 = {k: v[0] / (v[0] + v[1]) for k, v in H26.items()}
 CJ = json.load(open(f"{PUB}/counties.json"))
 NAMES = CJ.get("_n", {})
+
+# Oct 21 2026: county ids that do not match the map geometry, and the votes written to measures_counties.json
+FIPS_FIX = {"46113": "46102", "11001": "DC-DISTRICT_OF_COLUMBIA"}
+BAD_FIPS = {"00000", "36000"}
+ROLLOFF, MIDTERM_RATIO = 0.06, 0.72
+CV = {}
 
 def turnout(st):
     for k in (f"sen-{st}", f"gov-{st}", f"house-{st}"):
@@ -169,7 +175,7 @@ for m in M:
     draws = inv(mu + rng.normal(0, sd, N))
     prob = float((draws > thr).mean())
     # counties
-    cnt = {}
+    cnt = {}; cv = {}
     pcs = PC[PC.state == st]
     tw = turnout(st)
     if len(pcs) and st in STD2:
@@ -184,7 +190,16 @@ for m in M:
             a += (lg(target) - lg(cur)) * 0.9
             if abs(cur - target) < 1e-5: break
         ys = inv(a + b * x)
-        cnt = {f: round(float(100 * y), 1) for f, y in zip(pcs.fips, ys)}
+        cnt = {}; cv = {}
+        for f, y, t, wt in zip(pcs.fips, ys, pcs.D + pcs.R + pcs.O, w):
+            f = FIPS_FIX.get(f, f)
+            if f in BAD_FIPS: continue
+            cnt[f] = round(float(100 * y), 1)
+            # Oct 21 2026: projected votes on the measure. Turnout is the county's projected 2026 top of ticket vote, or its
+            # 2024 presidential vote times the midterm ratio where no 2026 race is modeled, less the share who skip the question.
+            cast = (tw[f] if f in tw else float(t) * MIDTERM_RATIO) * (1 - ROLLOFF)
+            cv[f] = [round(float(100 * y), 1), int(round(cast * y)), int(round(cast * (1 - y)))]
+        CV[f"bm-{st}-{slug(st, m['id'])}"] = cv
     out.append(dict(
         id=f"bm-{st}-{slug(st, m['id'])}", st=st, slug=slug(st, m["id"]), label=m["id"], title=m.get("short_title"), summary=m.get("summary"),
         type=m.get("type"), category=m.get("category"), group=g, lean=m.get("lean"), campaign=m.get("campaign"),
@@ -194,11 +209,13 @@ for m in M:
         polls=[dict(pollster=p.get("pollster"), sponsor=p.get("sponsor"), side=p.get("sponsor_side"), start=p.get("start"), end=p.get("end"), n=p.get("n"), pop=p.get("pop"),
                     yes=p.get("yes"), no=p.get("no"), und=p.get("undecided"), url=p.get("url"), adj=None if poll_point(p) is None else round(100 * poll_point(p), 1))
                for p in sorted(m.get("polls") or [], key=lambda p: str(p.get("end") or ""), reverse=True)],
-        sources=m.get("sources") or [], counties=cnt))
+        sources=m.get("sources") or [], counties=cnt,
+        votes=(lambda Y, Nn: dict(yes=Y, no=Nn, total=Y + Nn))(sum(v[1] for v in cv.values()), sum(v[2] for v in cv.values())) if cv else None))
     print(f"{st} {m['id'][:34]:34} {g:16} prior {100*inv(mu0):5.1f} polls {('%5.1f' % (100*poll_avg)) if poll_avg else '  -  '} est {100*inv(mu):5.1f} thr {thr:.3f} pass {prob:.2f}")
 
 hub = [[o["st"], o["label"], o["title"], o["est"]["yes"], o["est"]["prob"], o["threshold"], f"/forecast/measures/{o['st'].lower()}/{o['slug']}"] for o in out]
 json.dump(dict(updated=str(TODAY.date()), measures=hub), open(f"{PUB}/measures_hub.json", "w"), separators=(",", ":"))
 meta = dict(updated=str(TODAY.date()), measures=len(out), states=len({o["st"] for o in out} - {"DC"}), sims=N, method=__doc__.strip())
 json.dump(dict(meta=meta, measures=out), open(f"{PUB}/measures.json", "w"), separators=(",", ":"))
+json.dump(CV, open(f"{PUB}/measures_counties.json", "w"), separators=(",", ":"))
 print(len(out), "measures", sum(1 for o in out if o["est"]["prob"] > 0.5), "favored to pass")

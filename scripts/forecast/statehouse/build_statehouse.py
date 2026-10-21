@@ -22,7 +22,7 @@ from chambers import HOUSE, SENATE, TWO_YEAR_SENATE, FOUR_YEAR_HOUSE, ALL_UP_202
 
 PUB = os.environ.get("PUB", "/tmp/site/public/forecast")
 OUT = os.environ.get("OUT", f"{PUB}/statehouse.json")
-TODAY = pd.Timestamp(os.environ.get("TODAY", "2026-10-17"))
+TODAY = pd.Timestamp(os.environ.get("TODAY") or pd.Timestamp.now(tz="America/New_York").strftime("%Y-%m-%d"))   # Oct 21 2026: was fixed at Oct 17, which aged every poll from the wrong day
 N = 2000; rng = np.random.default_rng(20261017)
 SD_NAT, SD_STATE, SD_DIST, SD_SEAT = 0.055, 0.05, 0.11, 0.045
 K_CAND, K_PRIM = 0.5, 0.15
@@ -92,6 +92,21 @@ def tops(t):
     for _, x in t.iterrows():
         if x.top_d + x.top_r > 0: out[(x.chamber, x.district)] = x.top_d / (x.top_d + x.top_r)
     return out
+
+def topvotes(t, ch):
+    """Oct 21 2026: every vote cast for the top office in each district, the base of the projected 2026 district turnout."""
+    if t is None: return {}
+    g = t[(t.chamber == ch) & (t.top_d + t.top_r > 0)]
+    return {x.district: float(x.top_d + x.top_r + x.top_o) for x in g.itertuples()}
+
+def nested_senate_votes(st, t):
+    if st not in NEST or t is None: return {}
+    f, k = NEST[st]
+    h = t[(t.chamber == "house") & (t.top_d + t.top_r > 0)].copy()
+    if not len(h): return {}
+    try: h["sd"] = h.district.map(f)
+    except Exception: return {}
+    return {sd: float((g.top_d + g.top_r + g.top_o).sum()) for sd, g in h.groupby("sd") if st == "WA" or len(g) >= k}
 
 def num(d):
     m = re.match(r"^(\d+)", str(d)); return int(m.group(1)) if m else None
@@ -232,6 +247,16 @@ def nested_senate(st, t):
 # Democratic in points. Districts in REDRAWN carry no candidate term, since their last result was on other lines.
 LEAN_OVERRIDE = json.load(open("/tmp/sl/cands/lean_overrides.json"))
 
+S26 = {}
+for _r in model["races"]:
+    if _r["office"] in ("senate", "governor") and _r.get("votes") and _r["votes"].get("total"):
+        S26[_r["st"]] = max(S26.get(_r["st"], 0), _r["votes"]["total"])
+_hs = {}
+for _r in model["races"]:
+    if _r["office"] == "house" and _r.get("votes") and _r["votes"].get("total"): _hs[_r["st"]] = _hs.get(_r["st"], 0) + _r["votes"]["total"]
+for _k, _v in _hs.items(): S26.setdefault(_k, _v)
+LEG_ROLLOFF, OTHER_SHARE = 0.04, 0.015
+
 chambers, log = [], []
 for st in sorted(set(HOUSE) | set(SENATE)):
     if st not in P24 or st not in H26: log.append((st, "no 2024 presidential or 2026 House baseline")); continue
@@ -250,6 +275,16 @@ for st in sorted(set(HOUSE) | set(SENATE)):
         if not size: continue
         k24 = {d: v for (c, d), v in w24.items() if c == ch}
         k22 = {d: v for (c, d), v in w22.items() if c == ch}
+        # Oct 21 2026: projected 2026 turnout per district. The 2024 (or 2022) top office vote on today's lines, scaled so the
+        # state's house districts add to the forecast's 2026 statewide vote, less a small legislative rolloff.
+        _tb = T24.get(st) if T24.get(st) is not None and len(topvotes(T24.get(st), "house")) else T22.get(st)
+        _hv = topvotes(_tb, "house")
+        fac = (S26[st] / sum(_hv.values())) if _hv and st in S26 and sum(_hv.values()) > 0 else None
+        tvote = topvotes(_tb, ch)
+        if ch == "senate":
+            for _kk, _vv in nested_senate_votes(st, _tb).items(): tvote.setdefault(_kk, _vv)
+        if fac is None and tvote and st in S26 and ch == "senate":
+            _sv = sum(tvote.values()); fac = S26[st] / _sv if _sv > 0 else None
         # which districts are on the 2026 ballot, and who holds the rest
         if ch == "house" and st not in FOUR_YEAR_HOUSE or ch == "senate" and st in TWO_YEAR_SENATE:
             up = {d: v["seats"] for d, v in k24.items()}; hold = {}
@@ -425,6 +460,28 @@ for st in sorted(set(HOUSE) | set(SENATE)):
                 dseats += wins; rseats += r["seats"] - wins
             r["probD"] = round(float((z > 0).mean()), 4)
             r["margin"] = round(float(100 * (1 - 2 * inv(r["L"]))), 2)          # Republican minus Democratic, two party
+        # a senate district with no top office count on its lines: the 2022 count on its lines, scaled the same way, or an
+        # equal share of the state's 2026 vote, since districts are drawn to equal population
+        _t22 = topvotes(T22.get(st), ch) if ch == "senate" else {}
+        _h22 = topvotes(T22.get(st), "house")
+        fac22 = (S26[st] / sum(_h22.values())) if _h22 and st in S26 and sum(_h22.values()) > 0 else None
+        if fac22 is None and _t22 and st in S26: fac22 = S26[st] / max(1.0, sum(_t22.values()))
+        if fac is None and st in S26: fac = 1.0; tvote = {}
+        eq = S26[st] / size if st in S26 and size else None
+        _known = [tvote[r["d"]] * fac for r in rows if fac and r["d"] in tvote]
+        _med = float(np.median(_known)) if _known else None
+        for r in rows:
+            r["votes"] = None
+            if fac is None: continue
+            T = tvote[r["d"]] * fac if r["d"] in tvote else (_t22[r["d"]] * fac22 if fac22 and r["d"] in _t22 else (eq * r["seats"] if eq and not _known else _med))
+            if not T: continue
+            T *= (1 - LEG_ROLLOFF)
+            if r.get("margin") is None: continue
+            mg = max(-100.0, min(100.0, r["margin"]))
+            o = 0.0 if abs(mg) >= 100 else OTHER_SHARE
+            dv = T * (1 - o) * (0.5 - mg / 200); rv = T * (1 - o) * (0.5 + mg / 200); ov = T * o
+            if r["status"] == "independent challenger": ov, dv = ov + dv, 0.0
+            r["votes"] = [int(round(dv)), int(round(rv)), int(round(ov)), int(round(dv + rv + ov))]
         dseats += max(0, missing) * 0   # unaccounted seats are reported, not guessed
         total_known = size - max(0, missing)
         maj = size // 2 + 1
@@ -441,6 +498,7 @@ for st in sorted(set(HOUSE) | set(SENATE)):
             majority=maj, hold=held, missing=max(0, missing), filled=len(filled), current=cur,
             note=(LEAN_OVERRIDE.get(f"{st}_{ch}") or {}).get("note"),
             holdD=[[d, v["won"][0] if v["won"] else "O"] for d, v in sorted(hold.items(), key=lambda x: (num(x[0]) or 0, x[0]))],
+            votes=(lambda V: dict(dem=sum(v[0] for v in V), rep=sum(v[1] for v in V), other=sum(v[2] for v in V), total=sum(v[3] for v in V)) if V else None)([r["votes"] for r in rows if r.get("votes")]),
             demControl=round(dc, 4), gopControl=round(rc, 4), tie=round(max(0.0, 1 - dc - rc), 4),
             demSeats=round(float(dseats.mean()), 1), gopSeats=round(float(rseats.mean()), 1),
             p10=int(np.percentile(dseats, 10)), p90=int(np.percentile(dseats, 90)), median=int(np.median(dseats)),
@@ -456,7 +514,7 @@ for st in sorted(set(HOUSE) | set(SENATE)):
                             ind=(r.get("info") or {}).get("ind"), indParty=(r.get("info") or {}).get("indParty"),
                             indMain=r["status"] in ("independent challenger", "no major party candidate"),
                             note=(r.get("info") or {}).get("note"),
-                            winner=r.get("winner")) for r in rows]))
+                            winner=r.get("winner"), votes=r.get("votes")) for r in rows]))
         log.append((st, ch, size, seats_up, held, missing, round(dc, 3)))
 
 meta = dict(updated=str(TODAY.date()), chambers=len(chambers), sims=N, districts=sum(len(c["districts"]) for c in chambers),

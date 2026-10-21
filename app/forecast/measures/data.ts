@@ -8,6 +8,17 @@ export type Measure = {
   campaign?: string | null; threshold: number; thresholdNote: string; ruleNote?: string | null;
   est: { yes: number; p10: number; p90: number; prob: number }; prior: number; pollAvg: number | null; pollWeight: number;
   polls: BMPoll[]; sources: string[]; counties: Record<string, number>;
+  /** projected votes on the question, from measures_counties.json summed statewide */
+  votes?: { yes: number; no: number; total: number } | null;
+};
+/** fips to [Yes percent, Yes votes, No votes] for each measure id */
+export type MeasureCounties = Record<string, Record<string, [number, number, number]>>;
+let ccache: MeasureCounties | null = null;
+export const getMeasureCounties = (): MeasureCounties => {
+  if (ccache) return ccache;
+  try { ccache = JSON.parse(fs.readFileSync(path.join(process.cwd(), "public", "forecast", "measures_counties.json"), "utf8")) as MeasureCounties; }
+  catch { ccache = {}; }
+  return ccache;
 };
 export type MeasuresData = { meta: { updated: string; measures: number; states: number; sims: number; method: string }; measures: Measure[] };
 

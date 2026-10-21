@@ -7,7 +7,8 @@ import path from "node:path";
 import GeoMap, { type GeoTip } from "@/app/components/opp/GeoMap";
 import type { CountyPath } from "@/app/components/home/countyGeo";
 import { STATE_NAME } from "@/app/lib/opp";
-import { GROUP_LABEL, YES_RAMP, bmHref, getMeasures, verdict, yesFill, type Measure } from "../../data";
+import { GROUP_LABEL, YES_RAMP, bmHref, getMeasures, getMeasureCounties, verdict, yesFill, type Measure } from "../../data";
+import { MeasureVotes, countyName } from "@/app/components/opp/VoteTables";
 import "../../measures.css";
 import JsonLd from "@/app/components/JsonLd";
 import { measureLd, measureMeta } from "../../../seo";
@@ -55,6 +56,9 @@ export default async function Page({ params }: { params: Promise<{ st: string; s
     tips[p.id] = { title: /county|parish|city|borough|census area/i.test(nm) ? nm : `${nm}${m.st === "LA" ? " Parish" : " County"}`, rows: [["Yes", `${y.toFixed(1)}%`, "#2fbf9b"], ["No", `${(100 - y).toFixed(1)}%`, "#e8794a"]] };
   }
   const yesC = paths.filter((p) => m.counties[p.id] >= 50).length;
+  const cvs = getMeasureCounties()[m.id] ?? {};
+  const mRows = Object.entries(cvs).map(([f, v]) => ({ id: f, name: countyName(names[f] ?? f, m.st), yes: v[1], no: v[2] }));
+  for (const p of paths) { const c = cvs[p.id]; if (c && tips[p.id]) tips[p.id].rows.push(["Yes votes", c[1].toLocaleString()], ["No votes", c[2].toLocaleString()]); }
   const thr = m.threshold * 100;
   const X = (val: number) => `${Math.max(0, Math.min(100, ((val - 20) / 60) * 100))}%`;
   const lede = `${m.summary} The forecast has Yes at ${m.est.yes.toFixed(1)} percent against the ${thr === 50 ? "50" : (Math.round(thr * 10) / 10).toString()} percent it needs, a ${pct(m.est.prob)} chance to pass.`;
@@ -126,6 +130,12 @@ export default async function Page({ params }: { params: Promise<{ st: string; s
           ) : null}
         </div>
       </section>
+
+      {m.votes ? (
+        <div style={{ marginTop: 16 }}>
+          <MeasureVotes rows={mRows} yes={m.votes.yes} no={m.votes.no} unit={m.st === "LA" ? "parishes" : m.st === "AK" ? "boroughs" : "counties"} needs={m.threshold * 100} />
+        </div>
+      ) : null}
 
       <div className="bm-foot">
         <div className="card">

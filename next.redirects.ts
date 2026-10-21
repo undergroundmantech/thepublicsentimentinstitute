@@ -1,16 +1,11 @@
 // On Point Politics redirect map: every tpsielections.com URL 301s to its onpointpolitics.us route.
-// Domain level: onpointpolitics.us is the one address search engines index. Any other host that reaches
-// this deployment, onpointpolitics.com, www and tpsielections.com, is sent there path for path below,
-// so links to an old address keep their ranking instead of splitting it across two sites.
 // The retired experiments, /v2 and /polling/old/*, are answered 410 Gone by middleware.ts.
 
 type Redirect = { source: string; destination: string; permanent: boolean; has?: { type: "host"; value: string }[] };
-const MAIN = "https://onpointpolitics.us";
-const OTHER_HOSTS = ["www.onpointpolitics.us", "onpointpolitics.com", "www.onpointpolitics.com", "tpsielections.com", "www.tpsielections.com"];
+// Domain redirects live in Vercel, Settings, Domains, not here: a host rule here fought the www redirect there and looped.
 const p = (source: string, destination: string, permanent = true): Redirect => ({ source, destination, permanent });
 
 export const redirects: Redirect[] = [
-  // every other domain to the main one, first so it wins before any path rule
   // short addresses people type or search for the early vote tracker
   p("/early-vote", "/maps/early-vote"),
   p("/early-voting", "/maps/early-vote"),

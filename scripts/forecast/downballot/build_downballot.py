@@ -43,7 +43,7 @@ W = dict(T=0.30, F=0.15, G=0.10, H=0.25, P=0.20)
 INC, UNITY_K, UNITY_CAP = 0.07, 0.15, 0.08
 NAT26 = 0.56
 NAT_HOUSE_D2 = {2014: 0.4705, 2018: 0.5431, 2022: 0.4858}
-TODAY = pd.Timestamp(os.environ.get("TODAY", "2026-10-17"))
+TODAY = pd.Timestamp(os.environ.get("TODAY") or pd.Timestamp.now(tz="America/New_York").strftime("%Y-%m-%d"))   # Oct 21 2026: was fixed at Oct 17, which aged every poll from the wrong day
 OFFICE_LABEL = {"lieutenant-governor": "Lieutenant governor", "attorney-general": "Attorney general",
                 "secretary-of-state": "Secretary of state", "treasurer": "Treasurer", "auditor": "Auditor",
                 "agriculture-commissioner": "Agriculture commissioner", "railroad-commissioner": "Railroad commissioner",

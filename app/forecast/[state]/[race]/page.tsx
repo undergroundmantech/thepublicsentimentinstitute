@@ -11,6 +11,7 @@ import type { CountyPath, CountyRow } from "@/app/components/home/countyGeo";
 import { pollHref } from "@/app/polls/registry";
 import { AGGREGATES } from "@/app/_polling/lib/aggregates";
 import JsonLd from "@/app/components/JsonLd";
+import { VoteSummary, CountyVotes, countyName, type CountyVote, type CandVote } from "@/app/components/opp/VoteTables";
 import { raceLd, raceMeta } from "../../seo";
 
 export const dynamicParams = false;
@@ -53,6 +54,12 @@ export default async function Page({ params }: { params: Promise<{ state: string
 
   // the map: counties for statewide races, districts for the House
   let paths: CountyPath[] = [], fills: Record<string, string> = {}, tips: Record<string, GeoTip> = {}, hrefs: Record<string, string> | undefined, unit = "counties";
+  let countyVotes: CountyVote[] = [];
+  // the projected vote by candidate, from the race's simulated vote
+  const rv = (r as unknown as { votes?: { dem: number; rep: number; other: number; total: number }; cands?: { name: string; party: string; votes: number }[] });
+  const candVotes: CandVote[] = rv.cands?.length
+    ? rv.cands.map((c) => ({ name: c.name, party: c.party, votes: c.votes ?? 0 }))
+    : rv.votes ? [{ name: r.dem, party: "D", votes: rv.votes.dem }, { name: r.gop, party: "R", votes: rv.votes.rep }, ...(rv.votes.other > 0 ? [{ name: "Other candidates", party: "", votes: rv.votes.other }] : [])] : [];
   if (r.office === "house") {
     paths = geo.districts; unit = "districts"; hrefs = {};
     for (const p of paths) {
@@ -68,6 +75,8 @@ export default async function Page({ params }: { params: Promise<{ state: string
     const rows = (all[r.id] ?? {}) as Record<string, CountyRow>;
     const names = (all._n ?? {}) as Record<string, string>;
     paths = geo.counties.filter((p) => rows[p.id]);
+    countyVotes = paths.map((p) => { const row = rows[p.id]; const nm = countyName(names[p.id] ?? p.id, r.st);
+      return { id: p.id, name: nm, dem: row[1], rep: row[2], other: Math.max(0, row[3] - row[1] - row[2]), total: row[3], margin: row[0] }; });
     unit = r.st === "AK" ? "boroughs" : r.st === "LA" ? "parishes" : "counties";
     for (const p of paths) {
       const row = rows[p.id];
@@ -122,6 +131,15 @@ export default async function Page({ params }: { params: Promise<{ state: string
               </div>
             </div>
           </div>
+
+          {rv.votes && rv.votes.total > 0 ? (
+            <VoteSummary title={r.office === "house" ? "Projected district vote" : "Projected statewide vote"} cands={candVotes} total={rv.votes.total}
+              note={rv.votes.rep === 0 || rv.votes.dem === 0 ? "Uncontested by one of the major parties." : "Each candidate's expected vote in the On Point simulation, at the forecast's projected turnout."} />
+          ) : null}
+
+          {countyVotes.length > 0 && (
+            <CountyVotes rows={countyVotes} demName={lastName(r.dem)} repName={lastName(r.gop)} unit={unit} demLetter={ind ? "I" : "D"} />
+          )}
 
           {bins.length > 0 && (
             <div className="card">

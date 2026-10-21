@@ -10,10 +10,13 @@ export type SLDistrict = {
   last: { year: number | null; d2: number | null; won: string[] | null } | null;
   status: string; prim: number | null; polls: SLPoll[] | null; dem?: string | null; gop?: string | null; winner?: string | null;
   ind?: string | null; indParty?: string | null; indMain?: boolean; note?: string | null;
+  /** projected 2026 votes: Democrat, Republican, other or independent, total */
+  votes?: [number, number, number, number] | null;
 };
 export type SLChamber = {
   id: string; st: string; state: string; chamber: "house" | "senate"; name: string; seats: number; up: number; majority: number;
   note?: string | null;
+  votes?: { dem: number; rep: number; other: number; total: number } | null;
   hold: Record<"D" | "R" | "O", number>; missing: number; filled: number; current: Record<"D" | "R" | "O", number>; holdD?: [string, string][];
   demControl: number; gopControl: number; tie: number; demSeats: number; gopSeats: number; p10: number; p90: number; median: number;
   hist: [number, number][];

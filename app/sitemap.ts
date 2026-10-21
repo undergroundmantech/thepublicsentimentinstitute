@@ -45,6 +45,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     u("/polls/governor", today, "daily", 0.8),
     u("/maps", today, "weekly", 0.7),
     u("/maps/early-vote", today, "hourly", 0.95),
+    u("/maps/ballot-measures", ms.meta.updated, "daily", 0.85),
     u("/maps/electoral", fc, "weekly", 0.7),
     u("/maps/party-registration", today, "monthly", 0.5),
     u("/maps/voter-registration", today, "monthly", 0.5),

@@ -53,7 +53,7 @@ export default function DistrictTable({ rows, label, selected, onSelect }: { row
       </div>
       <div className="tblwrap">
         <table className="tbl sl-tbl">
-          <thead><tr><th>District</th><th>Last winner</th><th>2026 nominees</th><th style={{ textAlign: "right" }}>2024 lean</th><th style={{ textAlign: "right" }}>Forecast</th><th style={{ textAlign: "right" }}>Dem win</th><th>Rating</th></tr></thead>
+          <thead><tr><th>District</th><th>Last winner</th><th>2026 nominees</th><th style={{ textAlign: "right" }}>2024 lean</th><th style={{ textAlign: "right" }}>Forecast</th><th style={{ textAlign: "right" }}>Dem win</th><th style={{ textAlign: "right" }}>Projected D votes</th><th style={{ textAlign: "right" }}>Projected R votes</th><th style={{ textAlign: "right" }}>Total</th><th>Rating</th></tr></thead>
           <tbody>
             {list.map((x) => {
               const st = statusText(x);
@@ -69,11 +69,14 @@ export default function DistrictTable({ rows, label, selected, onSelect }: { row
                   <td className={`n ${x.lean == null ? "" : x.lean < 0 ? "d" : "r"}`}>{x.lean == null ? "" : fmtM(x.lean)}</td>
                   <td className={`n ${modeled ? (m! < 0 ? "d" : "r") : ""}`} style={modeled && x.indMain && m! < 0 ? { color: "var(--ind)" } : undefined}>{modeled ? (x.indMain ? fmtM(m!).replace("D +", "I +") : fmtM(m!)) : st ?? ""}</td>
                   <td className="n">{x.probD == null ? "" : `${Math.round(x.probD * 100)}%${x.indMain ? " I" : ""}`}</td>
+                  <td className="n d">{x.votes ? (x.indMain ? `${x.votes[2].toLocaleString("en-US")} I` : x.votes[0].toLocaleString("en-US")) : ""}</td>
+                  <td className="n r">{x.votes ? x.votes[1].toLocaleString("en-US") : ""}</td>
+                  <td className="n">{x.votes ? x.votes[3].toLocaleString("en-US") : ""}</td>
                   <td><span className={`pill ${ratingPill(rt)}`}>{RATING_LABEL[rt]}</span></td>
                 </tr>
               );
             })}
-            {!list.length ? <tr><td colSpan={7} style={{ color: "var(--mute)", padding: 24 }}>No districts match.</td></tr> : null}
+            {!list.length ? <tr><td colSpan={10} style={{ color: "var(--mute)", padding: 24 }}>No districts match.</td></tr> : null}
           </tbody>
         </table>
       </div>

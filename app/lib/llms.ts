@@ -124,6 +124,7 @@ export function llmsText(full: boolean): string {
     `* Generic ballot average: ${U("/polls/generic-ballot")}`,
     `* Trump approval average: ${U("/polls/approval")}`,
     `* Early vote tracker, with each state against its 2022 and 2024 pace on the same day before the election: ${U("/maps/early-vote")}`,
+    `* Ballot measures map, every 2026 statewide question by county with projected Yes and No votes: ${U("/maps/ballot-measures")}`,
     `* Electoral map builder: ${U("/maps/electoral")}`,
     `* Live election results: ${U("/results")}`,
     `* On Point Polling Texas poll, October 17 to 18, 2026, Talarico 48.8 Paxton 43.0 for Senate, Abbott 47.7 Hinojosa 45.2 for governor and French 45.1 Rosenthal 39.8 for Railroad Commissioner among likely voters, 661 registered voters: ${U("/on-point-polling/polls/texas-2026")}`,
