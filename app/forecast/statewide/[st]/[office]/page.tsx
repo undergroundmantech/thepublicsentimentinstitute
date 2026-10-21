@@ -8,7 +8,8 @@ import { RATING_LABEL, RAMP_CSS, fmtM, lastName, marginColor, rating, ratingPill
 import GeoMap, { type GeoTip } from "@/app/components/opp/GeoMap";
 import { VoteSummary, CountyVotes, countyName } from "@/app/components/opp/VoteTables";
 import CountyExplorer from "@/app/components/opp/CountyExplorer";
-import { STORY_CSS, NightsGrid, phraseFor } from "@/app/components/opp/RaceStory";
+import { STORY_CSS, HERO_CSS, WinGauge, phraseFor } from "@/app/components/opp/RaceStory";
+import DotState from "@/app/components/opp/DotState";
 import type { CountyPath } from "@/app/components/home/countyGeo";
 import { dbHref, getDownballot, getDownballotCounties, type CountyRow, type DBRace } from "../../data";
 import JsonLd from "@/app/components/JsonLd";
@@ -86,8 +87,8 @@ export default async function Page({ params }: { params: Promise<{ st: string; o
       </nav>
       <ForecastNav />
       <JsonLd data={dbLd(r)} />
-      <style>{STORY_CSS}</style>
-      <header className="ph st-hero">
+      <style>{STORY_CSS + HERO_CSS}</style>
+      <header className="ph st-hero2">
         <div className="sx-rv-l">
           <div className="eye g">2026 forecast · {title}</div>
           <h1>{phraseFor(leadWin)
@@ -101,7 +102,9 @@ export default async function Page({ params }: { params: Promise<{ st: string; o
             <span>Updated <b>{updated}</b></span>
           </div>
         </div>
-        <NightsGrid win={leadWin} leadName={lastName(lead)} otherName={lastName(m < 0 ? r.gop! : r.dem!)} leadColor={m < 0 ? "#5b8fff" : "#ff4d6a"} otherColor={m < 0 ? "#ff4d6a" : "#5b8fff"} sims={2000} />
+        {paths.length ? <DotState paths={paths} fills={fills} label={`${title} drawn in dots`} /> : <div />}
+        <WinGauge win={leadWin} leadName={lastName(lead)} otherName={lastName(m < 0 ? r.gop! : r.dem!)} leadFull={lead} otherFull={m < 0 ? r.gop! : r.dem!}
+          leadColor={m < 0 ? "#5b8fff" : "#ff4d6a"} otherColor={m < 0 ? "#ff4d6a" : "#5b8fff"} verdict={`${lastName(lead)} ${leadWin >= 0.95 ? "all but certain" : leadWin >= 0.85 ? "very likely" : leadWin >= 0.65 ? "favored" : "slightly favored"}`} />
       </header>
 
       {paths.length > 1 ? (

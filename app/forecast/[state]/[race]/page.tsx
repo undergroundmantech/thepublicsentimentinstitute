@@ -14,7 +14,8 @@ import JsonLd from "@/app/components/JsonLd";
 import { VoteSummary, CountyVotes, countyName, type CountyVote, type CandVote } from "@/app/components/opp/VoteTables";
 import CountyExplorer from "@/app/components/opp/CountyExplorer";
 import SectionNav from "@/app/components/opp/SectionNav";
-import { STORY_CSS, NightsGrid, ShareBars, TrendChart, ModelPath, SecTitle, phraseFor } from "@/app/components/opp/RaceStory";
+import { STORY_CSS, HERO_CSS, WinGauge, CandCards, ShareBars, TrendChart, ModelPath, SecTitle, phraseFor } from "@/app/components/opp/RaceStory";
+import DotState from "@/app/components/opp/DotState";
 import { raceLd, raceMeta } from "../../seo";
 
 export const dynamicParams = false;
@@ -130,6 +131,9 @@ export default async function Page({ params }: { params: Promise<{ state: string
     { label: "With polls", m: r.ev ? r.est.margin - r.ev.shift : r.stages.poll, note: r.pollAvg != null ? `average ${fmtM(r.pollAvg)}` : "no polls" },
     ...(r.ev ? [{ label: "With early vote", m: r.est.margin, note: "turnout so far" }] : []),
   ].filter((x) => Number.isFinite(x.m) && Math.abs(x.m) < 99);
+  const heroCands = (r.cands ?? []).filter((c) => c.pct >= 3).slice(0, 2).map((c) => ({ name: c.name, party: c.party,
+    label: c.party === "D" ? "Democrat" : c.party === "R" ? "Republican" : "Independent", pct: c.pct, votes: c.votes ?? 0,
+    cls: (c.party === "D" ? "d" : c.party === "R" ? "r" : "i") as "d" | "r" | "i" }));
   const navItems = [
     { id: "map", label: r.office === "house" ? "Map" : "Counties map" }, { id: "vote", label: "Vote share" },
     ...((r.trend?.length ?? 0) >= 3 ? [{ id: "trend", label: "Trend" }] : []), { id: "polls", label: "Polling" }, { id: "path", label: "How we got here" },
@@ -145,7 +149,8 @@ export default async function Page({ params }: { params: Promise<{ state: string
       <ForecastNav />
       <JsonLd data={raceLd(r)} />
       <style>{STORY_CSS}</style>
-      <header className="ph st-hero">
+      <style>{HERO_CSS}</style>
+      <header className="ph st-hero2">
         <div className="sx-rv-l">
           <div className="eye g">2026 forecast · {officeTitle}</div>
           <h1>{Math.abs(m) >= 99
@@ -160,8 +165,11 @@ export default async function Page({ params }: { params: Promise<{ state: string
             {r.pollAvg != null && <span>Polls <b className="mono">{fmtM(r.pollAvg)}</b></span>}
             <span>Updated <b>{updated}</b></span>
           </div>
+          {heroCands.length ? <CandCards cands={heroCands} /> : null}
         </div>
-        {Math.abs(m) < 99 ? <NightsGrid win={leadWin} leadName={lastName(lead)} otherName={lastName(m < 0 ? r.gop : r.dem)} leadColor={leadColor} otherColor={otherColor} sims={model.meta.sims} /> : null}
+        {paths.length ? <DotState paths={paths} fills={fills} label={`${officeTitle} drawn in dots`} /> : <div />}
+        {Math.abs(m) < 99 ? <WinGauge win={leadWin} leadName={lastName(lead)} otherName={lastName(m < 0 ? r.gop : r.dem)} leadFull={lead} otherFull={m < 0 ? r.gop : r.dem}
+          leadColor={leadColor} otherColor={otherColor} verdict={`${lastName(lead)} ${leadWin >= 0.95 ? "all but certain" : leadWin >= 0.85 ? "very likely" : leadWin >= 0.65 ? "favored" : "slightly favored"}`} /> : null}
       </header>
 
       <style>{FX_CSS}</style>
@@ -175,7 +183,7 @@ export default async function Page({ params }: { params: Promise<{ state: string
 
       <div className="fx-body">
         <SectionNav items={navItems} />
-        <div style={{ display: "grid", gap: 18, minWidth: 0 }}>
+        <div style={{ display: "grid", gap: 56, minWidth: 0 }}>
           <section id="map" className="st-sec">
             <SecTitle title={r.office === "house" ? "The district map" : "The county map"} sub={r.office === "house" ? "Every district in the state, shaded by its rating" : "Four ways to read the state: margin, shift from 2024, vote bubbles and turnout"} />
       {r.office !== "house" && countyVotes.length > 0 ? (

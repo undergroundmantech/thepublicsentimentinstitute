@@ -159,3 +159,89 @@ export function ModelPath({ steps, ind = false }: { steps: { label: string; m: n
 export function SecTitle({ title, sub }: { title: string; sub?: string }) {
   return <div className="st-ttl sx-h"><h2>{title}</h2>{sub ? <p>{sub}</p> : null}</div>;
 }
+
+// ── Oct 21 2026 hero pieces: the chance of winning as a dot gauge, and the candidate cards ──
+let seed = 7;
+const rnd = () => { seed = (seed * 16807) % 2147483647; return (seed - 1) / 2147483646; };
+
+export const HERO_CSS = `
+.st-hero2{position:relative;display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.9fr) minmax(300px,.8fr);gap:22px;align-items:center;padding:6px 0}
+@media (max-width:1280px){.st-hero2{grid-template-columns:minmax(0,1fr) minmax(300px,.8fr)}.st-hero2 .st-art{display:none}}
+@media (max-width:860px){.st-hero2{grid-template-columns:1fr}}
+.st-hero2 h1{font:800 clamp(34px,4.2vw,62px)/1.02 var(--font-d);letter-spacing:-.04em;margin:8px 0 14px;text-wrap:balance}
+.st-hero2 h1 .ph-w{font-style:italic;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;padding-right:.06em}
+.st-art{position:relative;height:min(46vh,460px)}
+.st-art canvas{position:absolute;inset:0;width:100%;height:100%}
+.st-gauge{padding:18px 18px 14px;text-align:center;background:linear-gradient(170deg,rgba(40,24,80,.65),rgba(14,10,26,.85))!important;border-color:rgba(160,120,255,.28)!important}
+.st-gauge .lab{font:800 10.5px var(--font-m);letter-spacing:.18em;text-transform:uppercase;color:var(--ink2)}
+.st-gauge svg{width:100%;height:auto;display:block;margin-top:4px}
+.st-gauge svg circle.g{animation:st-dot .5s cubic-bezier(.3,1.6,.5,1) both}
+.st-gauge .big{font:800 54px/1 var(--font-d);letter-spacing:-.04em;margin-top:-64px;position:relative}
+.st-gauge .who{font:800 11px var(--font-m);letter-spacing:.14em;text-transform:uppercase;color:var(--ink2);margin-top:4px}
+.st-gauge .duo{display:flex;justify-content:space-between;align-items:center;margin-top:14px}
+.st-gauge .duo div{display:flex;align-items:center;gap:8px;text-align:left}
+.st-gauge .duo div:last-child{flex-direction:row-reverse;text-align:right}
+.st-gauge .av{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;font:800 13px var(--font-d);color:#fff;border:2px solid rgba(255,255,255,.7)}
+.st-gauge .duo small{display:block;font:800 9.5px var(--font-m);letter-spacing:.12em;text-transform:uppercase;color:var(--mute)}
+.st-gauge .duo b{font:800 18px var(--font-d)}
+.st-gauge .verdict{font:800 20px var(--font-d);margin-top:12px}
+.st-gauge .sub{font:800 9.5px var(--font-m);letter-spacing:.12em;text-transform:uppercase;color:var(--mute);margin-top:4px}
+.st-cands{display:grid;gap:10px;margin-top:18px;max-width:560px}
+.st-cand{position:relative;overflow:hidden;display:grid;grid-template-columns:48px 1fr auto;gap:14px;align-items:center;border-radius:16px;padding:14px 16px;color:#fff;box-shadow:0 18px 40px -22px #000;animation:fb-in2 .7s cubic-bezier(.2,.8,.2,1) both}
+.st-cand.d{background:linear-gradient(120deg,#183a9e,#2c5fd8 65%,#5b8fff)}
+.st-cand.r{background:linear-gradient(120deg,#8a1029,#c3223a 65%,#ff5a6e);animation-delay:.1s}
+.st-cand.i{background:linear-gradient(120deg,#4b2a91,#7a4fd8 65%,#b78cff)}
+.st-cand .av{width:48px;height:48px;border-radius:14px;display:grid;place-items:center;background:rgba(255,255,255,.18);font:800 17px var(--font-d)}
+.st-cand .nm{font:800 18px var(--font-d)}
+.st-cand .pt{font:800 9.5px var(--font-m);letter-spacing:.12em;text-transform:uppercase;opacity:.85}
+.st-cand .pc{text-align:right}
+.st-cand .pc b{display:block;font:800 34px/1 var(--font-d);letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.st-cand .pc small{font:800 9.5px var(--font-m);letter-spacing:.12em;text-transform:uppercase;opacity:.85}
+.st-cand .bar{position:absolute;left:0;bottom:0;height:4px;background:rgba(255,255,255,.8);transform-origin:0 50%;animation:st-grow 1.3s cubic-bezier(.2,.8,.2,1) .3s both}
+@keyframes fb-in2{from{transform:translateX(-24px);opacity:.4}to{transform:none;opacity:1}}
+@media (prefers-reduced-motion:reduce){.st-gauge svg circle.g,.st-cand,.st-cand .bar{animation:none}}
+`;
+
+const initials = (n: string) => n.split(/\s+/).filter((w) => /^[A-Z]/.test(w)).map((w) => w[0]).slice(0, 2).join("");
+
+/** The chance of winning as a half circle of simulated nights, the leader's dots filling from the left. */
+export function WinGauge({ win, leadName, otherName, leadColor, otherColor, leadFull, otherFull, verdict }: { win: number; leadName: string; otherName: string; leadColor: string; otherColor: string; leadFull: string; otherFull: string; verdict: string }) {
+  seed = 11;
+  const N = 220, pts: { x: number; y: number; a: number }[] = [];
+  while (pts.length < N) { const a = rnd() * Math.PI, r = 70 + rnd() * 62; pts.push({ x: 150 - Math.cos(a) * r, y: 150 - Math.sin(a) * r, a }); }
+  pts.sort((p, q) => p.a - q.a);
+  const k = Math.round(win * N);
+  return (
+    <div className="card st-gauge sx-rv-r">
+      <div className="lab">Chance of winning</div>
+      <svg viewBox="0 0 300 160" role="img" aria-label={`${leadName} ${Math.round(win * 100)} percent chance of winning`}>
+        <path d="M18 150 A132 132 0 0 1 282 150" fill="none" stroke="rgba(255,255,255,.07)" strokeWidth="64" />
+        {pts.map((p, i) => <circle key={i} className="g" cx={p.x} cy={p.y} r={2.4} fill={i < k ? leadColor : otherColor} opacity={i < k ? 0.95 : 0.6} style={{ animationDelay: `${i * 5}ms` }} />)}
+      </svg>
+      <div className="big" style={{ color: leadColor }}>{Math.round(win * 100)}%</div>
+      <div className="who">{leadName}</div>
+      <div className="duo">
+        <div><span className="av" style={{ background: leadColor }}>{initials(leadFull)}</span><span><small>{leadName}</small><b style={{ color: leadColor }}>{Math.round(win * 100)}%</b></span></div>
+        <div><span className="av" style={{ background: otherColor }}>{initials(otherFull)}</span><span><small>{otherName}</small><b style={{ color: otherColor }}>{100 - Math.round(win * 100)}%</b></span></div>
+      </div>
+      <div className="verdict" style={{ color: leadColor }}>{verdict}</div>
+      <div className="sub">{leadName} wins about {Math.round(win * 100)} of 100 nights like this</div>
+    </div>
+  );
+}
+
+/** One card per candidate: projected share, votes and party, in party color. */
+export function CandCards({ cands }: { cands: { name: string; party: string; label: string; pct: number; votes: number; cls: "d" | "r" | "i" }[] }) {
+  return (
+    <div className="st-cands">
+      {cands.map((c, i) => (
+        <div key={c.name} className={`st-cand ${c.cls}`} style={{ animationDelay: `${0.1 + i * 0.1}s` }}>
+          <span className="av">{initials(c.name)}</span>
+          <div><div className="nm">{c.name}</div><div className="pt">{c.label} · {c.votes.toLocaleString("en-US")} votes</div></div>
+          <div className="pc"><b>{c.pct.toFixed(1)}%</b><small>of the vote</small></div>
+          <span className="bar" style={{ width: `${c.pct}%` }} />
+        </div>
+      ))}
+    </div>
+  );
+}

@@ -227,10 +227,10 @@ export default function ForecastDesk({ initialOffice = "house", embedded = false
   const detail = useJson<StateDetail>(sel ? `/forecast/states/${sel.st}.json` : null);
   const chamber = model && !isDB(office) ? model.chambers[office] : null;
 
+  // Oct 21 2026: clicking a race anywhere on the desk opens its full race page
   const pick = (id: string) => {
-    setSelId(id);
     setHover(null);
-    requestAnimationFrame(() => mapAnchor.current?.scrollIntoView({ behavior: "smooth", block: "start" }));
+    router.push(raceHref(id));
   };
   const back = () => setSelId(null);
   useEffect(() => { setSelId(null); setQuery(""); setShowAll(false); }, [office]);

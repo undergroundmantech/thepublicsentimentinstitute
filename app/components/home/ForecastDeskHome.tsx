@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { US_STATE_PATHS } from "@/app/_polling/lib/usStatePaths";
 import { RATE, RATING_LABEL, darkLabel, fmtM, lastName, marginColor, partyColor, rating, ratingPill, raceHref, RAMP_CSS, STATE_NAME, type Rating } from "@/app/lib/opp";
@@ -22,6 +23,8 @@ export default function ForecastDeskHome({ races, chambers, notUp, initialCounty
   picks: { raceId: string; label: string }[];
 }) {
   const [office, setOffice] = useState<Office>("senate");
+  const router = useRouter();
+  const open = (id: string) => router.push(raceHref(id));
   const { tip, show, hide } = useTip();
   const [county, setCounty] = useState<CountyBuild>(initialCounty);
   const [loading, setLoading] = useState(false);
@@ -57,7 +60,7 @@ export default function ForecastDeskHome({ races, chambers, notUp, initialCounty
           <div>
             <div className="eye g">2026 forecast</div>
             <h2>The map, county by county</h2>
-            <p>Hover any state for the model margin, click it to open the county simulation. Ratings are set by margin: under 2 toss up, 2 to 6 lean, 6 to 12 likely, 12 and over safe.</p>
+            <p>Hover any state for the model margin, click it to open the full race forecast. Ratings are set by margin: under 2 toss up, 2 to 6 lean, 6 to 12 likely, 12 and over safe.</p>
           </div>
           <div className="seg" role="tablist" aria-label="Office">
             {(["senate", "governor"] as Office[]).map((o) => (
@@ -68,7 +71,7 @@ export default function ForecastDeskHome({ races, chambers, notUp, initialCounty
         <div className="map-wrap">
           <div className="card">
             <div className="card-b" style={{ padding: "12px 12px 16px" }}>
-              <UsMap key={office} races={list} office={office} show={show} hide={hide} onPick={(st) => { const r = list[st]; if (r) pick(r.id); }} />
+              <UsMap key={office} races={list} office={office} show={show} hide={hide} onPick={(st) => { const r = list[st]; if (r) open(r.id); }} />
               <div className="legend">
                 {([["safeD", "Safe D"], ["likelyD", "Likely D"], ["leanD", "Lean D"], ["toss", "Toss up"], ["leanR", "Lean R"], ["likelyR", "Likely R"], ["safeR", "Safe R"], ["ind", "Independent"], ["none", "No race"]] as [Rating, string][]).map(([k, l]) => (
                   <span key={k}><i style={{ background: RATE[k] }} />{l}</span>
@@ -85,7 +88,7 @@ export default function ForecastDeskHome({ races, chambers, notUp, initialCounty
                   const cls = r.ind ? "i" : r.m < 0 ? "d" : "r";
                   const lead = r.m < 0 ? r.dem : r.gop;
                   return (
-                    <div key={r.id} className="race" role="button" tabIndex={0} onClick={() => pick(r.id)} onKeyDown={(e) => { if (e.key === "Enter") pick(r.id); }}>
+                    <div key={r.id} className="race" role="button" tabIndex={0} onClick={() => open(r.id)} onKeyDown={(e) => { if (e.key === "Enter") open(r.id); }}>
                       <span className="st">{r.st}</span>
                       <span className="who"><b>{r.dem}</b> vs <b>{r.gop}</b><small>{office === "senate" ? "Senate" : "Governor"}{r.open ? ", open seat" : ""}</small></span>
                       <span className={`mg ${cls}`}>{fmtM(r.m, r.ind)}<small>{lastName(lead)}</small></span>
