@@ -85,7 +85,7 @@ export function ogCard(c: Card) {
           ) : null}
           <div style={{ display: "flex", justifyContent: "space-between", fontSize: 21, color: C.mute }}>
             <div style={{ display: "flex" }}>{c.foot ?? "Forecasts, polling averages and live results"}</div>
-            <div style={{ display: "flex", fontFamily: "GeistMono", fontWeight: 700 }}>onpointpolitics.com</div>
+            <div style={{ display: "flex", fontFamily: "GeistMono", fontWeight: 700 }}>onpointpolitics.us</div>
           </div>
         </div>
       </div>

@@ -1,12 +1,22 @@
-// On Point Politics redirect map: every tpsielections.com URL 301s to its onpointpolitics.com route.
-// Domain level: point tpsielections.com at the same deployment and add a host redirect at the
-// edge (Vercel: Domains, redirect tpsielections.com to onpointpolitics.com, 308).
+// On Point Politics redirect map: every tpsielections.com URL 301s to its onpointpolitics.us route.
+// Domain level: onpointpolitics.us is the one address search engines index. Any other host that reaches
+// this deployment, onpointpolitics.com, www and tpsielections.com, is sent there path for path below,
+// so links to an old address keep their ranking instead of splitting it across two sites.
 // The retired experiments, /v2 and /polling/old/*, are answered 410 Gone by middleware.ts.
 
-type Redirect = { source: string; destination: string; permanent: boolean };
+type Redirect = { source: string; destination: string; permanent: boolean; has?: { type: "host"; value: string }[] };
+const MAIN = "https://onpointpolitics.us";
+const OTHER_HOSTS = ["www.onpointpolitics.us", "onpointpolitics.com", "www.onpointpolitics.com", "tpsielections.com", "www.tpsielections.com"];
 const p = (source: string, destination: string, permanent = true): Redirect => ({ source, destination, permanent });
 
 export const redirects: Redirect[] = [
+  // every other domain to the main one, first so it wins before any path rule
+  ...OTHER_HOSTS.map((value): Redirect => ({ source: "/:path*", has: [{ type: "host", value }], destination: `${MAIN}/:path*`, permanent: true })),
+  // short addresses people type or search for the early vote tracker
+  p("/early-vote", "/maps/early-vote"),
+  p("/early-voting", "/maps/early-vote"),
+  p("/early-vote-tracker", "/maps/early-vote"),
+  p("/early-vote/:state", "/maps/early-vote/:state"),
   // short address for the swingometer
   p("/swingometer", "/forecast/swingometer", false),
   // polls

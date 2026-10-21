@@ -191,7 +191,7 @@ export function legislaturesLd() {
     crumbsLd([["Home", "/"], ["Forecast", "/forecast"], ["State legislatures", "/forecast/legislatures"]]),
     pageLd({ name: "2026 state legislative forecast", description: d, path: "/forecast/legislatures", modified: sl.meta.updated, about: "dataset", type: "CollectionPage" }),
     datasetLd({ name: "2026 state legislative forecast", description: d, path: "/forecast/legislatures", modified: sl.meta.updated, measured: ["Chance of chamber control", "District win probability"], file: "/forecast/statehouse.json" }),
-    { "@type": "ItemList", name: "State legislative chambers", numberOfItems: sl.chambers.length, itemListElement: sl.chambers.map((c, i) => ({ "@type": "ListItem", position: i + 1, name: c.name, url: `https://onpointpolitics.com${slHref(c)}` })) },
+    { "@type": "ItemList", name: "State legislative chambers", numberOfItems: sl.chambers.length, itemListElement: sl.chambers.map((c, i) => ({ "@type": "ListItem", position: i + 1, name: c.name, url: `https://onpointpolitics.us${slHref(c)}` })) },
   );
 }
 
@@ -214,7 +214,7 @@ export function measuresLd() {
     crumbsLd([["Home", "/"], ["Forecast", "/forecast"], ["Ballot measures", "/forecast/measures"]]),
     pageLd({ name: "2026 ballot measure forecast", description: d, path: "/forecast/measures", modified: ms.meta.updated, about: "dataset", type: "CollectionPage" }),
     datasetLd({ name: "2026 ballot measure forecast", description: d, path: "/forecast/measures", modified: ms.meta.updated, measured: ["Chance to pass", "Projected Yes share"], file: "/forecast/measures.json" }),
-    { "@type": "ItemList", name: "Statewide ballot measures", numberOfItems: ms.measures.length, itemListElement: ms.measures.map((m, i) => ({ "@type": "ListItem", position: i + 1, name: `${STATE_NAME[m.st] ?? m.st} ${m.label}: ${m.title}`, url: `https://onpointpolitics.com${bmHref(m)}` })) },
+    { "@type": "ItemList", name: "Statewide ballot measures", numberOfItems: ms.measures.length, itemListElement: ms.measures.map((m, i) => ({ "@type": "ListItem", position: i + 1, name: `${STATE_NAME[m.st] ?? m.st} ${m.label}: ${m.title}`, url: `https://onpointpolitics.us${bmHref(m)}` })) },
   );
 }
 
@@ -234,17 +234,17 @@ export function methodologyLd() {
     crumbsLd([["Home", "/"], ["Forecast", "/forecast"], ["Methodology", "/forecast/methodology"]]),
     {
       "@type": "TechArticle",
-      "@id": "https://onpointpolitics.com/forecast/methodology#article",
+      "@id": "https://onpointpolitics.us/forecast/methodology#article",
       headline: "How the On Point Politics 2026 forecast works",
       description: "Fundamentals, the polling average, candidate effects, 2,000 correlated simulations, county and district models, and how chamber odds and ratings are set.",
-      url: "https://onpointpolitics.com/forecast/methodology",
+      url: "https://onpointpolitics.us/forecast/methodology",
       dateModified: `${updated}T08:00:00-04:00`,
-      author: { "@id": "https://onpointpolitics.com/#organization" },
-      publisher: { "@id": "https://onpointpolitics.com/#organization" },
-      isPartOf: { "@id": "https://onpointpolitics.com/#website" },
+      author: { "@id": "https://onpointpolitics.us/#organization" },
+      publisher: { "@id": "https://onpointpolitics.us/#organization" },
+      isPartOf: { "@id": "https://onpointpolitics.us/#website" },
       about: ["Election forecasting", "Polling average", "Monte Carlo simulation"],
       inLanguage: "en-US",
-      image: "https://onpointpolitics.com/opengraph-image.png",
+      image: "https://onpointpolitics.us/opengraph-image.png",
     },
   );
 }

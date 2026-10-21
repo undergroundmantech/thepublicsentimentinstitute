@@ -50,15 +50,15 @@ export default function Page() {
                 name: "Oklahoma",
               },
             },
-            author: { "@type": "Organization", name: "On Point Politics", url: "https://onpointpolitics.com" },
+            author: { "@type": "Organization", name: "On Point Politics", url: "https://onpointpolitics.us" },
             publisher: {
               "@type": "NewsMediaOrganization",
-              "@id": "https://onpointpolitics.com/#organization",
+              "@id": "https://onpointpolitics.us/#organization",
               name: "On Point Politics",
-              logo: { "@type": "ImageObject", url: "https://onpointpolitics.com/icon.png" },
+              logo: { "@type": "ImageObject", url: "https://onpointpolitics.us/icon.png" },
             },
-            mainEntityOfPage: "https://onpointpolitics.com" + CANONICAL,
-            image: ["https://onpointpolitics.com/opengraph-image.png"],
+            mainEntityOfPage: "https://onpointpolitics.us" + CANONICAL,
+            image: ["https://onpointpolitics.us/opengraph-image.png"],
           }),
         }}
       />

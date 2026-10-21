@@ -431,8 +431,16 @@ function EstimatePanel({ e, sub, mode, model, tilt, shade, setShade, st, adj }: 
   );
 }
 
-export default function EarlyVoteDesk() {
-  const [scope, setScope] = useState("US");           // "US" or a state abbreviation
+export default function EarlyVoteDesk({ initialScope = "US", lede, after }: { initialScope?: string; lede?: React.ReactNode; after?: React.ReactNode }) {
+  const [scope, setScope] = useState(initialScope);   // "US" or a state abbreviation
+  // Keep the address bar on the page being shown, so a state view can be shared and matches its own
+  // search page at /maps/early-vote/<state>.
+  const firstScope = useRef(true);
+  useEffect(() => {
+    if (firstScope.current) { firstScope.current = false; return; }
+    const slug = scope === "US" ? "" : "/" + (STATE_NAME[scope] ?? scope).toLowerCase().replace(/[^a-z]+/g, "-");
+    try { window.history.replaceState(null, "", `/maps/early-vote${slug}`); } catch { /* history unavailable */ }
+  }, [scope]);
   // the dashboard view: a ballot category, every ballot cast, or the ballots still to come
   const [view, setView] = useState<DashView>("total");
   const cat: View = view === "remaining" ? "total" : view;
@@ -801,8 +809,8 @@ export default function EarlyVoteDesk() {
           {national ? <span>Early vote</span> : <><button className="ev-link ev-crumbstate" onClick={() => setScope("US")}>Early vote</button><span className="sep">/</span><span>{STATE_NAME[scope] ?? scope}</span></>}
         </nav>
         <header className="ph ev-ph">
-          <div className="eye g">Early vote tracker</div>
-          <h1>{national ? <>Early vote, <em>nationwide</em></> : <>{STATE_NAME[scope] ?? scope} early <em>vote</em></>}</h1>
+          <div className="eye g">{national ? "Nationwide early vote" : "Early vote by county"}</div>
+          <h1>{national ? <>2026 early vote <em>tracker</em></> : <>{STATE_NAME[scope] ?? scope} early vote <em>tracker</em></>}</h1>
           <div className="pmeta">
             <span>General election <b>November 3, 2026</b></span>
             {data?.snapshot_date ? <span>Snapshot <b>{data.snapshot_date}</b></span> : null}
@@ -810,6 +818,7 @@ export default function EarlyVoteDesk() {
             {!national ? <button className="ev-link" onClick={() => setScope("US")}>Back to all states</button> : <span>Click a state for its counties</span>}
           </div>
         </header>
+        {lede && scope === initialScope ? lede : null}
 
         <PaceCompare scope={scope} ret={natl.returned} inp={natl.inperson}
           snapshot={natl.returned?.snapshot_date ?? natl.inperson?.snapshot_date ?? data?.snapshot_date}
@@ -1152,6 +1161,7 @@ export default function EarlyVoteDesk() {
           state has not posted it, not that the number is zero. Groups labelled Unspecified are
           ballots a state reports without a party or demographic attached.
         </p>
+        {after && scope === initialScope ? after : null}
       </div>
     </div>
   );

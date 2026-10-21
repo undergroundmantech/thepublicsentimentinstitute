@@ -3,7 +3,7 @@
 import type { Metadata } from "next";
 
 export const SITE = {
-  url: "https://onpointpolitics.com",
+  url: "https://onpointpolitics.us",
   name: "On Point Politics",
   short: "On Point",
   publisher: "On Point Polling",
@@ -76,7 +76,7 @@ export function orgLd(): LD[] {
       "@type": "NewsMediaOrganization",
       "@id": ORG_ID,
       name: SITE.name,
-      alternateName: ["On Point", "OnPoint Politics", "onpointpolitics.com"],
+      alternateName: ["On Point", "OnPoint Politics", "onpointpolitics.us", "onpointpolitics.com"],
       url: SITE.url,
       logo: { "@type": "ImageObject", url: abs(SITE.logo), width: 900, height: 900 },
       description: SITE.description,

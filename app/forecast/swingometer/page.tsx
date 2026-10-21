@@ -23,7 +23,7 @@ export default function Page() {
       <JsonLd data={graph(
         crumbsLd([["Home", "/"], ["Forecast", "/forecast"], ["Swingometer", "/forecast/swingometer"]]),
         pageLd({ name: "2026 election swingometer", description: desc, path: "/forecast/swingometer", modified: d.updated }),
-        { "@type": "WebApplication", name: "On Point Politics swingometer", url: "https://onpointpolitics.com/forecast/swingometer", applicationCategory: "ReferenceApplication", operatingSystem: "Any", isAccessibleForFree: true, description: desc, offers: { "@type": "Offer", price: 0, priceCurrency: "USD" } },
+        { "@type": "WebApplication", name: "On Point Politics swingometer", url: "https://onpointpolitics.us/forecast/swingometer", applicationCategory: "ReferenceApplication", operatingSystem: "Any", isAccessibleForFree: true, description: desc, offers: { "@type": "Offer", price: 0, priceCurrency: "USD" } },
       )} />
       <nav className="crumbs" aria-label="Breadcrumb">
         <Link href="/">Home</Link><span className="sep">/</span><Link href="/forecast">Forecast</Link><span className="sep">/</span><span>Swingometer</span>

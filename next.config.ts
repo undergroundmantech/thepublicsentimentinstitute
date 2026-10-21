@@ -6,6 +6,13 @@ import { redirects } from "./next.redirects";
 const SITE_V2 = (process.env.NEXT_PUBLIC_SITE_V2 ?? "on") === "on";
 
 const nextConfig: NextConfig = {
+  // The early vote tracker falls back to the saved civicAPI snapshots when the live feed is down, so ship
+  // them with the routes that read them.
+  outputFileTracingIncludes: {
+    "/maps/early-vote": ["./scripts/forecast/earlyvote/snapshots/**/*.json"],
+    "/maps/early-vote/[state]": ["./scripts/forecast/earlyvote/snapshots/**/*.json"],
+    "/sitemap.xml": ["./scripts/forecast/earlyvote/snapshots/**/*.json"],
+  },
   // Force the flag into the bundler's define map even when the env var is
   // unset — an undefined NEXT_PUBLIC_* is not statically replaced, which
   // would keep both site versions in every client bundle.

@@ -4,6 +4,7 @@ import type { MetadataRoute } from "next";
 import { getModel } from "@/app/lib/forecastData";
 import { raceHref } from "@/app/lib/opp";
 import { SITE } from "@/app/lib/seo";
+import { getEarlyVote } from "@/app/maps/early-vote/server";
 import { SHOW_SITUATION_ROOM } from "@/app/lib/flags";
 import { AGGREGATES } from "@/app/_polling/lib/aggregates";
 import { pollHref, stateRaceParams } from "@/app/polls/registry";
@@ -18,13 +19,14 @@ const u = (path: string, lastModified: string | Date, changeFrequency: Entry["ch
   url: `${SITE.url}${path}`, lastModified, changeFrequency, priority,
 });
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const model = getModel();
   const fc = model.meta.updated;
   const sl = getStatehouse();
   const ms = getMeasures();
   const db = getDownballot();
   const today = new Date();
+  const ev = await getEarlyVote().catch(() => null);
   const out: Entry[] = [];
 
   // section fronts
@@ -42,7 +44,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     u("/polls/senate", today, "daily", 0.8),
     u("/polls/governor", today, "daily", 0.8),
     u("/maps", today, "weekly", 0.7),
-    u("/maps/early-vote", today, "daily", 0.8),
+    u("/maps/early-vote", today, "hourly", 0.95),
     u("/maps/electoral", fc, "weekly", 0.7),
     u("/maps/party-registration", today, "monthly", 0.5),
     u("/maps/voter-registration", today, "monthly", 0.5),
@@ -71,6 +73,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
   for (const r of db.races) out.push(u(dbHref(r), db.meta.updated, "daily", 0.6));
   for (const c of sl.chambers) out.push(u(slHref(c), sl.meta.updated, "daily", 0.7));
   for (const m of ms.measures) out.push(u(bmHref(m), ms.meta.updated, "daily", 0.7));
+  // one early vote tracker page per reporting state
+  for (const s of ev?.states ?? []) out.push(u(`/maps/early-vote/${s.slug}`, ev!.snapshot, "daily", 0.8));
 
   // polling averages, every one at its canonical route
   const seen = new Set(out.map((e) => e.url));

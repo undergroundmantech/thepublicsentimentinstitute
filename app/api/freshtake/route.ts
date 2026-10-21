@@ -126,7 +126,7 @@ export async function GET() {
     const res = await fetch(SRC, {
       cache: "no-store",
       signal: ac,
-      headers: { "User-Agent": "On Point Polling election desk (onpointpolitics.com)" },
+      headers: { "User-Agent": "On Point Polling election desk (onpointpolitics.us)" },
     });
     if (!res.ok) {
       return NextResponse.json(empty(`upstream ${res.status}`), {

@@ -17,7 +17,7 @@ export async function GET(_req: Request, { params }: { params: Promise<{ avg: st
   const { avg } = await params;
   if (avg === "index") {
     return NextResponse.json({
-      averages: AGGREGATES.map((d) => ({ id: d.id, label: d.label, category: d.category, page: `https://onpointpolitics.com${pollHref(d.id)}`, json: `https://onpointpolitics.com/api/polls/${d.id}` })),
+      averages: AGGREGATES.map((d) => ({ id: d.id, label: d.label, category: d.category, page: `https://onpointpolitics.us${pollHref(d.id)}`, json: `https://onpointpolitics.us/api/polls/${d.id}` })),
     });
   }
   const def = AGGREGATES.find((d) => d.id === avg);
@@ -32,7 +32,7 @@ export async function GET(_req: Request, { params }: { params: Promise<{ avg: st
       margin: b.latest ? r1(b.latest.net) : null,
       marginText: b.latest ? def.fmtMargin(b.latest.net) : null,
       marginDefinition: `${def.seriesA.label} minus ${def.seriesB.label}`,
-      page: `https://onpointpolitics.com${pollHref(def.id)}`,
+      page: `https://onpointpolitics.us${pollHref(def.id)}`,
       source: "On Point Politics polling average, On Point Polling",
     },
     updated: last ? last.date : null,
