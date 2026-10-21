@@ -12,15 +12,15 @@ export type SenateRace = { st: string; m: number; open?: boolean };
 export const SENATE_MODEL: SenateRace[] = [
   { st: "AK", m: -1.5 }, { st: "AL", m: 25.6, open: true }, { st: "AR", m: 13.4 },
   { st: "CO", m: -20.9 }, { st: "DE", m: -29.1 }, { st: "FL", m: 6.0 },
-  { st: "GA", m: -9.3 }, { st: "IA", m: -1.0, open: true }, { st: "ID", m: 20.7 },
+  { st: "GA", m: -9.2 }, { st: "IA", m: -1.1, open: true }, { st: "ID", m: 20.7 },
   { st: "IL", m: -26.1, open: true }, { st: "KS", m: 1.0 }, { st: "KY", m: 21.6, open: true },
-  { st: "LA", m: 11.2, open: true }, { st: "MA", m: -34.4 }, { st: "ME", m: -1.8 },
-  { st: "MI", m: -3.5, open: true }, { st: "MN", m: -8.7, open: true }, { st: "MS", m: 5.7 },
+  { st: "LA", m: 11.2, open: true }, { st: "MA", m: -34.4 }, { st: "ME", m: -1.9 },
+  { st: "MI", m: -3.2, open: true }, { st: "MN", m: -8.7, open: true }, { st: "MS", m: 5.2 },
   { st: "MT", m: 19.6, open: true }, { st: "NC", m: -12.7, open: true }, { st: "NE", m: -3.0 },
   { st: "NH", m: -10.4, open: true }, { st: "NJ", m: -24.1 }, { st: "NM", m: -25.7 },
   { st: "OH", m: -2.8 }, { st: "OK", m: 27.1, open: true }, { st: "OR", m: -30.0 },
   { st: "RI", m: -35.7 }, { st: "SC", m: -1.4 }, { st: "SD", m: 13.6 },
-  { st: "TN", m: 28.0 }, { st: "TX", m: -2.0 }, { st: "VA", m: -20.2 },
+  { st: "TN", m: 28.0 }, { st: "TX", m: -2.1 }, { st: "VA", m: -20.2 },
   { st: "WV", m: 32.6 }, { st: "WY", m: 38.9, open: true },
 ];
 

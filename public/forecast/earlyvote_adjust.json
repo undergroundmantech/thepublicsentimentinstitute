@@ -181,7 +181,7 @@
    "estimatedShare": 0,
    "source": "early vote",
    "comp": -0.24,
-   "level": -0.11
+   "level": -0.1
   },
   "ID": {
    "gap": 1.969,
@@ -234,7 +234,7 @@
    "ballots": 13841,
    "estimatedShare": 0,
    "source": "early vote",
-   "comp": 0.84,
+   "comp": 0.83,
    "level": -0.03
   },
   "KY": {
@@ -497,7 +497,7 @@
    "estimatedShare": 1,
    "source": "early vote",
    "comp": 0.01,
-   "level": -0.03
+   "level": -0.04
   },
   "OK": {
    "gap": 0.173,
@@ -608,7 +608,7 @@
    "ballots": 84754,
    "estimatedShare": 1,
    "source": "early vote",
-   "comp": 0.22,
+   "comp": 0.23,
    "level": -0.03
   },
   "UT": {
@@ -708,20 +708,20 @@
  },
  "chambers": {
   "governor": {
-   "seat_change": 0.01,
-   "dem_control_before": 0.8959,
-   "dem_control": 0.8962,
-   "dem_seats": 28.37
+   "seat_change": -0.0,
+   "dem_control_before": 0.8971,
+   "dem_control": 0.897,
+   "dem_seats": 28.39
   },
   "senate": {
-   "seat_change": 0.01,
-   "dem_control_before": 0.7948,
-   "dem_control": 0.7956,
-   "dem_seats": 52.91
+   "seat_change": -0.0,
+   "dem_control_before": 0.7973,
+   "dem_control": 0.7972,
+   "dem_seats": 52.93
   },
   "house": {
-   "seat_change": 0.05,
-   "dem_control_before": 0.9035,
+   "seat_change": -0.0,
+   "dem_control_before": 0.904,
    "dem_control": 0.904,
    "dem_seats": 242.78
   }

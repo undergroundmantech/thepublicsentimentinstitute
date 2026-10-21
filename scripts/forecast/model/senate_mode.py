@@ -973,12 +973,11 @@ EXTRA_POLLS = {
     "VTG": [dict(source="University of New Hampshire", dates="September 17-21, 2026", end="2026-09-21", n=835, pop="LV", D=49, R=43, O=2, U=6)],
     # Oct 8 morning sweep: Guidant Polling for Public First Action, released Oct 7; field dates, sample size and voter type not
     # published, entered as LV with 600 ending Oct 5. Two ballots, 48 to 43 and 49 to 45, averaged into one row.
-    "MI": [# Oct 12 2026, supplied by the user: InsiderAdvantage Oct 9-10, 1,200 LV; Wedgewood Oct 8-9, 867 LV, forced choice.
+    "MI": [# Oct 12 2026, supplied by the user: InsiderAdvantage Oct 9-10, 1,200 LV. Oct 21 2026: Wedgewood Polls removed from every model at the user's request after it admitted fabricating data.
            # Oct 15 2026 8 PM sweep: Alliance for a Better Future, a group running ads for Rogers, Oct 6-8, 600 LV, released as a
            # Breitbart exclusive; polling firm not named; tagged (R); undecided by subtraction.
            dict(source="Alliance for a Better Future (R)", dates="October 6-8, 2026", end="2026-10-08", n=600, pop="LV", D=44, R=46, O=0, U=10),
            dict(source="InsiderAdvantage", dates="October 9-10, 2026", end="2026-10-10", n=1200, pop="LV", D=48, R=46, O=0, U=6),
-           dict(source="Wedgewood Polls", dates="October 8-9, 2026", end="2026-10-09", n=867, pop="LV", D=53, R=47, O=0, U=0),
            # Oct 9 2026, supplied by the user: Z to A Research for Rust Belt Rising, Sept 28-Oct 1 2026, 483 voters, part of a
            # 1,430 voter MI PA WI sample; voter type not given, entered as RV; other 3, undecided by subtraction.
            dict(source="Z to A Research for Rust Belt Rising (D)", dates="September 28-October 1, 2026", end="2026-10-01", n=483, pop="RV", D=49, R=42, O=3, U=6),
@@ -1053,7 +1052,18 @@ EXTRA_POLLS = {
     "SC": [dict(source="Rasmussen Reports", dates="September 14, 2026", end="2026-09-14", n=1006, pop="LV", D=43, R=48, O=0, U=9)],
 }
 
+# Oct 21 2026: pollsters removed from every race at the user's request, from every source: the csv files, the docx
+# tables, EXTRA_POLLS, the site sync and the hook. Wedgewood Polls admitted fabricating data.
+EXCLUDED_POLLSTERS = re.compile(os.environ.get("EXCLUDED_POLLSTERS", r"wedgewood"), re.I)
+def _drop_excluded(p):
+    if len(p) and "source" in p.columns:
+        return p[~p.source.astype(str).str.contains(EXCLUDED_POLLSTERS)].reset_index(drop=True)
+    return p
+
 def _add_extra(st, p):
+    return _drop_excluded(_add_extra_raw(st, _drop_excluded(p)))
+
+def _add_extra_raw(st, p):
     # Sept 28 2026: polls the site carried and the forecast did not (site_poll_sync.py) join EXTRA_POLLS
     import site_poll_sync as _sps
     rows = list(EXTRA_POLLS.get(st) or []) + list(_sps.SITE_SYNC.get(st) or [])
