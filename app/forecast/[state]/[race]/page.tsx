@@ -12,6 +12,9 @@ import { pollHref } from "@/app/polls/registry";
 import { AGGREGATES } from "@/app/_polling/lib/aggregates";
 import JsonLd from "@/app/components/JsonLd";
 import { VoteSummary, CountyVotes, countyName, type CountyVote, type CandVote } from "@/app/components/opp/VoteTables";
+import CountyExplorer from "@/app/components/opp/CountyExplorer";
+import SectionNav from "@/app/components/opp/SectionNav";
+import { STORY_CSS, NightsGrid, ShareBars, TrendChart, ModelPath, SecTitle, phraseFor } from "@/app/components/opp/RaceStory";
 import { raceLd, raceMeta } from "../../seo";
 
 export const dynamicParams = false;
@@ -35,6 +38,21 @@ export async function generateMetadata({ params }: { params: Promise<{ state: st
   const r = findRace(state, race);
   return r ? raceMeta(r) : {};
 }
+
+const FX_CSS = `
+.opp.fx{display:grid;grid-template-columns:minmax(0,1fr);gap:16px}
+.opp.fx > .crumbs,.opp.fx > header{margin-bottom:0}
+.fx-kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+@media (max-width:900px){.fx-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.fx-k{padding:14px 16px;display:grid;gap:4px;align-content:start}
+.fx-k span{font:700 10.5px var(--font-m);letter-spacing:.14em;text-transform:uppercase;color:var(--mute)}
+.fx-k b{font:800 26px/1.1 var(--font-d);letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.fx-k small{font-size:12.5px;color:var(--ink2)}
+.fx-grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;align-items:stretch}
+.fx-grid2 > .card{margin:0}
+@media (max-width:960px){.fx-grid2{grid-template-columns:1fr}}
+.fx-house .cmap{max-height:min(78vh,860px)}
+`;
 
 const readJson = (rel: string) => JSON.parse(fs.readFileSync(path.join(process.cwd(), "public", "forecast", rel), "utf8"));
 
@@ -98,28 +116,76 @@ export default async function Page({ params }: { params: Promise<{ state: string
   const officeTitle = r.office === "house" ? r.name : `${r.state} ${r.office === "senate" ? "Senate" : "Governor"}`;
   const sideCls = ind ? "i" : m < 0 ? "d" : "r";
 
+  const leadColor = m < 0 ? (ind ? "#b78cff" : "#5b8fff") : "#ff4d6a";
+  const otherColor = m < 0 ? "#ff4d6a" : (ind ? "#b78cff" : "#5b8fff");
+  const phrase = phraseFor(leadWin);
+  const raceWhere = r.office === "senate" ? `${r.state}'s Senate seat` : r.office === "governor" ? `${r.state}'s governorship` : `${r.state}'s ${r.name.replace(`${r.state} `, "")} District`;
+  const half = Math.abs((r.est.p90 ?? 0) - (r.est.p10 ?? 0)) / 4;
+  const shareHalf = Math.max(0.5, half);
+  const shareCands = (r.cands ?? []).filter((c) => c.pct >= 3).slice(0, 3).map((c) => ({ name: c.name, party: c.party === "D" ? "Democrat" : c.party === "R" ? "Republican" : c.party, pct: c.pct,
+    color: c.party === "D" ? "#5b8fff" : c.party === "R" ? "#ff4d6a" : "#b78cff", win: c.party === "R" ? 1 - demWin : c.name === r.dem ? demWin : undefined }));
+  const pathSteps = [
+    { label: "Partisan lean", m: r.stages.anchor, note: "the state's baseline" },
+    { label: "Fundamentals", m: r.stages.fund, note: "approval, economy, candidates" },
+    { label: "With polls", m: r.ev ? r.est.margin - r.ev.shift : r.stages.poll, note: r.pollAvg != null ? `average ${fmtM(r.pollAvg)}` : "no polls" },
+    ...(r.ev ? [{ label: "With early vote", m: r.est.margin, note: "turnout so far" }] : []),
+  ].filter((x) => Number.isFinite(x.m) && Math.abs(x.m) < 99);
+  const navItems = [
+    { id: "map", label: r.office === "house" ? "Map" : "Counties map" }, { id: "vote", label: "Vote share" },
+    ...((r.trend?.length ?? 0) >= 3 ? [{ id: "trend", label: "Trend" }] : []), { id: "polls", label: "Polling" }, { id: "path", label: "How we got here" },
+    ...(cuts.length ? [{ id: "groups", label: "Groups" }] : []), ...(countyVotes.length ? [{ id: "counties", label: "Every county" }] : []),
+  ];
+
   return (
-    <div className="opp">
+    <div className="opp fc-xl fx">
       <nav className="crumbs" aria-label="Breadcrumb">
         <Link href="/">Home</Link><span className="sep">/</span><Link href="/forecast">Forecast</Link><span className="sep">/</span>
         <Link href={`/forecast?office=${r.office}`}>{r.office === "senate" ? "Senate" : r.office === "governor" ? "Governor" : "House"}</Link><span className="sep">/</span><span>{STATE_NAME[r.st] ?? r.st}{r.office === "house" ? ` ${r.district}` : ""}</span>
       </nav>
       <ForecastNav />
       <JsonLd data={raceLd(r)} />
-      <header className="ph">
-        <div className="eye g">2026 forecast</div>
-        <h1>{officeTitle} <em>forecast</em></h1>
-        <p className="lede">{r.dem} vs {r.gop}{r.open ? ", an open seat" : ""}. {Math.abs(m) >= 99 ? "The seat is uncontested." : `The model has ${lastName(lead)} ahead by ${Math.abs(m).toFixed(1)} points, winning ${Math.round(leadWin * 100)} percent of ${model.meta.sims.toLocaleString()} simulated elections.`}</p>
-        <div className="pmeta">
-          <span className={`pill ${ratingPill(rt)}`}>{RATING_LABEL[rt]}</span>
-          <span>Model <b className="mono">{fmtM(m, ind)}</b></span>
-          {r.pollAvg != null && <span>Polls <b className="mono">{fmtM(r.pollAvg)}</b></span>}
-          <span>Updated <b>{updated}</b></span>
+      <style>{STORY_CSS}</style>
+      <header className="ph st-hero">
+        <div className="sx-rv-l">
+          <div className="eye g">2026 forecast · {officeTitle}</div>
+          <h1>{Math.abs(m) >= 99
+            ? <><span className="nm" style={{ color: leadColor }}>{lead}</span> is <span className="ph-w">unopposed</span> for {raceWhere}.</>
+            : phrase
+              ? <><span className="nm" style={{ color: leadColor }}>{lead}</span> is <span className="ph-w">{phrase}</span> to win {raceWhere}.</>
+              : <><span className="nm" style={{ color: ind ? "var(--ind)" : "var(--dem2)" }}>{r.dem}</span> and <span className="nm" style={{ color: "var(--gop2)" }}>{r.gop}</span> are in a <span className="ph-w">toss up</span> for {raceWhere}.</>}</h1>
+          <p className="lede">{r.dem} vs {r.gop}{r.open ? ", an open seat" : ""}. {Math.abs(m) >= 99 ? "The seat is uncontested." : `The model has ${lastName(lead)} ahead by ${Math.abs(m).toFixed(1)} points, winning ${Math.round(leadWin * 100)} percent of ${model.meta.sims.toLocaleString()} simulated elections.`}</p>
+          <div className="st-pills">
+            <span className={`pill ${ratingPill(rt)}`} style={{ border: 0 }}>{RATING_LABEL[rt]}</span>
+            <span>Model <b className="mono">{fmtM(m, ind)}</b></span>
+            {r.pollAvg != null && <span>Polls <b className="mono">{fmtM(r.pollAvg)}</b></span>}
+            <span>Updated <b>{updated}</b></span>
+          </div>
         </div>
+        {Math.abs(m) < 99 ? <NightsGrid win={leadWin} leadName={lastName(lead)} otherName={lastName(m < 0 ? r.gop : r.dem)} leadColor={leadColor} otherColor={otherColor} sims={model.meta.sims} /> : null}
       </header>
 
-      <div className="layout">
-        <div style={{ display: "grid", gap: 16 }}>
+      <style>{FX_CSS}</style>
+      <div className="fx-kpis">
+        <div className="card fx-k"><span>Rating</span><b style={{ color: sideCls === "i" ? "var(--ind)" : sideCls === "d" ? "var(--dem2)" : "var(--gop2)" }}>{RATING_LABEL[rt]}</b><small>{Math.round(leadWin * 100)}% chance for {lastName(lead)}</small></div>
+        <div className="card fx-k"><span>Model margin</span><b className="mono">{Math.abs(m) >= 99 ? "Uncontested" : fmtM(m, ind)}</b><small>{r.pollAvg != null ? `Polls ${fmtM(r.pollAvg)}` : "No polls in the race"}</small></div>
+        <div className="card fx-k"><span>80 percent range</span><b className="mono">{fmtM(r.est.p10)} to {fmtM(r.est.p90)}</b><small>{model.meta.sims.toLocaleString()} simulations</small></div>
+        <div className="card fx-k"><span>Projected votes</span><b className="mono">{rv.votes ? rv.votes.total.toLocaleString("en-US") : "n/a"}</b><small>{rv.votes && rv.votes.total ? `${lastName(lead)} ${(Math.max(rv.votes.dem, rv.votes.rep) / rv.votes.total * 100).toFixed(1)}%` : ""}</small></div>
+      </div>
+
+
+      <div className="fx-body">
+        <SectionNav items={navItems} />
+        <div style={{ display: "grid", gap: 18, minWidth: 0 }}>
+          <section id="map" className="st-sec">
+            <SecTitle title={r.office === "house" ? "The district map" : "The county map"} sub={r.office === "house" ? "Every district in the state, shaded by its rating" : "Four ways to read the state: margin, shift from 2024, vote bubbles and turnout"} />
+      {r.office !== "house" && countyVotes.length > 0 ? (
+        <section className="fx-sec" aria-label="County explorer">
+          <CountyExplorer paths={paths} unit={unit} stateName={STATE_NAME[r.st] ?? r.state} title={`${officeTitle} by ${unit === "parishes" ? "parish" : unit === "boroughs" ? "borough" : "county"}`}
+            rows={countyVotes.map((c) => ({ id: c.id, name: c.name, a: c.dem, b: c.rep, other: c.other, total: c.total }))}
+            sides={[{ name: lastName(r.dem), short: lastName(r.dem), color: ind ? "#b78cff" : "#3d7bff", letter: ind ? "I" : "D" }, { name: lastName(r.gop), short: lastName(r.gop), color: "#ff3b5c", letter: "R" }]} />
+        </section>
+      ) : (
+        <section className="fx-sec fx-house">
           <div className="card">
             <div className="card-h"><h3>{r.office === "house" ? `${STATE_NAME[r.st]} districts` : "County simulation"}</h3><span className="eye" style={{ marginLeft: "auto" }}>{paths.length} {unit}</span></div>
             <div className="card-b" style={{ padding: 10 }}>
@@ -131,16 +197,18 @@ export default async function Page({ params }: { params: Promise<{ state: string
               </div>
             </div>
           </div>
+        </section>
+      )}
+          </section>
 
+          <section id="vote" className="st-sec">
+            <SecTitle title="Vote share" sub="Each candidate's projected share and the range of 80 percent of simulations" />
+            {shareCands.length ? <ShareBars cands={shareCands} half={shareHalf} /> : null}
+      <div className="fx-grid2">
           {rv.votes && rv.votes.total > 0 ? (
             <VoteSummary title={r.office === "house" ? "Projected district vote" : "Projected statewide vote"} cands={candVotes} total={rv.votes.total}
               note={rv.votes.rep === 0 || rv.votes.dem === 0 ? "Uncontested by one of the major parties." : "Each candidate's expected vote in the On Point simulation, at the forecast's projected turnout."} />
           ) : null}
-
-          {countyVotes.length > 0 && (
-            <CountyVotes rows={countyVotes} demName={lastName(r.dem)} repName={lastName(r.gop)} unit={unit} demLetter={ind ? "I" : "D"} />
-          )}
-
           {bins.length > 0 && (
             <div className="card">
               <div className="card-h"><h3>Every simulated outcome</h3><span className="eye" style={{ marginLeft: "auto" }}>{model.meta.sims.toLocaleString()} sims</span></div>
@@ -159,7 +227,19 @@ export default async function Page({ params }: { params: Promise<{ state: string
               </div>
             </div>
           )}
+      </div>
+          </section>
 
+          {(r.trend?.length ?? 0) >= 3 ? (
+            <section id="trend" className="st-sec">
+              <SecTitle title="The trend" sub="Each side's chance of winning over the forecast's recent updates" />
+              <TrendChart trend={r.trend!} demName={lastName(r.dem)} gopName={lastName(r.gop)} demColor={ind ? "#b78cff" : "#3d7bff"} gopColor="#ff3b5c" />
+            </section>
+          ) : null}
+
+          <section id="polls" className="st-sec">
+            <SecTitle title="Polling" sub="Every poll in the average, and how the model reads it" />
+      <div className="fx-grid2">
           <div className="card">
             <div className="card-h"><h3>Polls of the race</h3>{agg && <Link className="btn sm" href={pollHref(agg.id)} style={{ marginLeft: "auto" }}>Full average</Link>}</div>
             <div className="tblwrap">
@@ -174,25 +254,7 @@ export default async function Page({ params }: { params: Promise<{ state: string
               </table>
             </div>
           </div>
-
-          {cuts.length > 0 && (
-            <div className="card">
-              <div className="card-h"><h3>Estimated vote by group</h3><span className="eye" style={{ marginLeft: "auto" }}>model crosstabs</span></div>
-              <div className="tblwrap">
-                <table className="tbl">
-                  <thead><tr><th>Group</th><th style={{ textAlign: "right" }}>Share</th><th style={{ textAlign: "right" }}>{lastName(r.dem)}</th><th style={{ textAlign: "right" }}>{lastName(r.gop)}</th></tr></thead>
-                  <tbody>
-                    {cuts.flatMap((c) => xt.filter((x) => x[0] === c).map((x, i) => (
-                      <tr key={c + x[1]}><td>{i === 0 && <span className="eye" style={{ display: "block", marginBottom: 2 }}>{c}</span>}{x[1]}</td><td className="n">{x[2].toFixed(0)}%</td><td className="n d">{x[3].toFixed(1)}</td><td className="n r">{x[4].toFixed(1)}</td></tr>
-                    )))}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          )}
-        </div>
-
-        <aside className="side">
+          <div style={{ display: "grid", gap: 12, alignContent: "start" }}>
           <div className="card">
             <div className="stat"><div className="k">Model margin</div><div className={`v ${sideCls === "i" ? "" : sideCls}`} style={sideCls === "i" ? { color: "var(--ind)" } : undefined}>{Math.abs(m) >= 99 ? "Uncontested" : `${lastName(lead)} +${Math.abs(m).toFixed(1)}`}</div></div>
             <div className="stat"><div className="k">Chance of winning</div>
@@ -222,11 +284,48 @@ export default async function Page({ params }: { params: Promise<{ state: string
               </p>
             ) : null}
           </div>
+          </div>
+      </div>
+          </section>
+
+          <section id="path" className="st-sec">
+            <SecTitle title="How we got here" sub="From the state's partisan lean to the forecast, one stage at a time" />
+            <ModelPath ind={ind} steps={pathSteps} />
+          </section>
+
+          <section id="groups" className="st-sec">
+            {cuts.length > 0 ? <SecTitle title="Who votes for whom" sub="Estimated vote by group from the model's simulated electorate" /> : null}
+          {cuts.length > 0 && (
+            <div className="card">
+              <div className="card-h"><h3>Estimated vote by group</h3><span className="eye" style={{ marginLeft: "auto" }}>model crosstabs</span></div>
+              <div className="tblwrap">
+                <table className="tbl">
+                  <thead><tr><th>Group</th><th style={{ textAlign: "right" }}>Share</th><th style={{ textAlign: "right" }}>{lastName(r.dem)}</th><th style={{ textAlign: "right" }}>{lastName(r.gop)}</th></tr></thead>
+                  <tbody>
+                    {cuts.flatMap((c) => xt.filter((x) => x[0] === c).map((x, i) => (
+                      <tr key={c + x[1]}><td>{i === 0 && <span className="eye" style={{ display: "block", marginBottom: 2 }}>{c}</span>}{x[1]}</td><td className="n">{x[2].toFixed(0)}%</td><td className="n d">{x[3].toFixed(1)}</td><td className="n r">{x[4].toFixed(1)}</td></tr>
+                    )))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          )}
+          </section>
+
+          {countyVotes.length > 0 ? (
+            <section id="counties" className="st-sec">
+              <SecTitle title="Every county" sub="The projected vote in each county, largest first" />
+          {countyVotes.length > 0 && (
+            <CountyVotes rows={countyVotes} demName={lastName(r.dem)} repName={lastName(r.gop)} unit={unit} demLetter={ind ? "I" : "D"} />
+          )}
+            </section>
+          ) : null}
+
           <div className="callout">
             <div className="eye">Methodology</div>
             Every county is rebuilt by simulating voters going to the polls, 2,000 times, from On Point Polling survey data, past results, and the polling average. <Link href="/forecast/methodology" style={{ textDecoration: "underline" }}>How the model works</Link>.
           </div>
-        </aside>
+        </div>
       </div>
     </div>
   );

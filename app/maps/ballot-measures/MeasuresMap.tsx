@@ -3,7 +3,8 @@
 // in the list, then a measure, and the county map shows the projected Yes share with each county's Yes and No votes.
 import React, { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
-import GeoMap, { type GeoTip } from "@/app/components/opp/GeoMap";
+import { type GeoTip } from "@/app/components/opp/GeoMap";
+import CountyExplorer from "@/app/components/opp/CountyExplorer";
 import type { CountyPath } from "@/app/components/home/countyGeo";
 
 export type MapMeasure = {
@@ -151,30 +152,15 @@ export default function MeasuresMap({ measures, states, frame, names }: {
         ) : null}
       </div>
 
-      {m ? (
-        <div className="card" style={{ marginTop: 16 }}>
-          <div className="card-h"><h3>{m.label} by {unitOf(st).replace(/ies$/, "y").replace(/es$/, "").replace(/s$/, "")}</h3><span className="eye" style={{ marginLeft: "auto" }}>{paths.length ? `${yesCounties} of ${paths.length} ${unitOf(st)} vote Yes` : "loading"}</span></div>
-          <div className="card-b" style={{ padding: 10 }}>
-            {paths.length > 1 ? <GeoMap paths={paths} fills={fills} tips={tips} label={`${m.st} ${m.label} projected vote by county`} W={1000} H={620} />
-              : <div className="empty" style={{ padding: 40, color: "var(--mute)" }}>{cv ? "One statewide unit for this measure." : "Loading the county map"}</div>}
-            <div className="bmm-leg"><span>No +30</span><i style={{ background: YES_RAMP }} /><span>Yes +30</span><span style={{ marginLeft: "auto" }}>Hover a county for its votes</span></div>
-          </div>
-          {top.length > 1 ? (
-            <div className="tblwrap">
-              <table className="tbl">
-                <thead><tr><th>Largest {unitOf(st)}</th><th style={{ textAlign: "right" }}>Yes</th><th style={{ textAlign: "right" }}>No</th><th style={{ textAlign: "right" }}>Yes share</th></tr></thead>
-                <tbody>
-                  {top.map(([f, v]) => (
-                    <tr key={f}><td>{countyLabel(names[f] ?? f, st)}</td><td className="n">{fmt(v[1])}</td><td className="n">{fmt(v[2])}</td>
-                      <td className="n" style={{ color: v[0] >= 50 ? "#2fbf9b" : "#e8794a" }}>{v[0].toFixed(1)}%</td></tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          ) : null}
-          <p style={{ fontSize: 12.5, color: "var(--mute)", padding: "8px 14px 14px", margin: 0 }}>Every {unitOf(st).replace(/ies$/, "y").replace(/es$/, "").replace(/s$/, "")} is on the <Link href={m.href}>full {m.label} forecast</Link>.</p>
+      {m && paths.length > 1 ? (
+        <div style={{ marginTop: 16 }}>
+          <CountyExplorer key={m.id} kind="measure" paths={paths} unit={unitOf(st)} stateName={m.st}
+            title={`${m.st} ${m.label} by ${unitOf(st) === "parishes" ? "parish" : unitOf(st) === "boroughs" ? "borough" : "county"}`}
+            rows={paths.map((p) => { const v = rows[p.id]; return { id: p.id, name: countyLabel(names[p.id] ?? p.id, st), a: v[1], b: v[2], other: 0, total: v[1] + v[2] }; })}
+            sides={[{ name: "Yes", short: "Yes", color: "#2fbf9b", letter: "Yes" }, { name: "No", short: "No", color: "#e8794a", letter: "No" }]} />
+          <p style={{ fontSize: 12.5, color: "var(--mute)", margin: "10px 2px 0" }}>Every county&apos;s projected Yes and No vote is on the <Link href={m.href}>full {m.label} forecast</Link>.</p>
         </div>
-      ) : null}
+      ) : m ? <div className="card sx-skel" style={{ marginTop: 16, height: 520 }} aria-label="Loading the county map" /> : null}
     </div>
   );
 }

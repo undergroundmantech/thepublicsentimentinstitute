@@ -9,6 +9,7 @@ import type { CountyPath } from "@/app/components/home/countyGeo";
 import { STATE_NAME } from "@/app/lib/opp";
 import { GROUP_LABEL, YES_RAMP, bmHref, getMeasures, getMeasureCounties, verdict, yesFill, type Measure } from "../../data";
 import { MeasureVotes, countyName } from "@/app/components/opp/VoteTables";
+import CountyExplorer from "@/app/components/opp/CountyExplorer";
 import "../../measures.css";
 import JsonLd from "@/app/components/JsonLd";
 import { measureLd, measureMeta } from "../../../seo";
@@ -64,7 +65,7 @@ export default async function Page({ params }: { params: Promise<{ st: string; s
   const lede = `${m.summary} The forecast has Yes at ${m.est.yes.toFixed(1)} percent against the ${thr === 50 ? "50" : (Math.round(thr * 10) / 10).toString()} percent it needs, a ${pct(m.est.prob)} chance to pass.`;
 
   return (
-    <div className="opp bm fc-wide">
+    <div className="opp bm fc-wide fc-xl">
       <nav className="crumbs" aria-label="Breadcrumb">
         <Link href="/">Home</Link><span className="sep">/</span><Link href="/forecast">Forecast</Link><span className="sep">/</span>
         <Link href="/forecast/measures">Ballot measures</Link><span className="sep">/</span><span>{state} {m.label}</span>
@@ -89,15 +90,8 @@ export default async function Page({ params }: { params: Promise<{ st: string; s
         </div>
       </header>
 
-      <section className="bm-top">
-        <div className="card">
-          <div className="card-h"><h3>County forecast</h3><span className="eye" style={{ marginLeft: "auto" }}>{paths.length ? `${yesC} of ${paths.length} ${m.st === "LA" ? "parishes" : "counties"} vote Yes` : "statewide"}</span></div>
-          <div className="card-b" style={{ padding: 10 }}>
-            {paths.length > 1 ? <GeoMap paths={paths} fills={fills} tips={tips} label={`${state} ${m.label} county forecast`} W={1000} H={640} /> : <div className="empty" style={{ padding: 40, color: "var(--mute)" }}>One statewide unit; no county map for this measure.</div>}
-            <div className="bm-legend"><span className="cn">No +30</span><i style={{ background: YES_RAMP }} /><span className="cy">Yes +30</span><span>Hover a county for its forecast</span></div>
-          </div>
-        </div>
-        <div className="bm-side">
+      <section className="bm-top" style={{ gridTemplateColumns: "1fr" }}>
+        <div className="bm-side" style={{ position: "static", gridTemplateColumns: "repeat(auto-fit,minmax(300px,1fr))" }}>
           <div className="card bm-odds">
             <div className="lab">Where the Yes vote lands</div>
             <div className="bm-scale" aria-label={`Forecast Yes ${m.est.yes.toFixed(1)} percent, 80 percent range ${m.est.p10.toFixed(0)} to ${m.est.p90.toFixed(0)}, needs ${thr.toFixed(1)}`}>
@@ -130,6 +124,15 @@ export default async function Page({ params }: { params: Promise<{ st: string; s
           ) : null}
         </div>
       </section>
+
+      {paths.length > 1 && mRows.length ? (
+        <section style={{ marginTop: 16 }} aria-label="County explorer">
+          <CountyExplorer kind="measure" paths={paths} unit={m.st === "LA" ? "parishes" : m.st === "AK" ? "boroughs" : "counties"} stateName={state}
+            title={`${m.label} by ${m.st === "LA" ? "parish" : "county"}`}
+            rows={mRows.map((c) => ({ id: c.id, name: c.name, a: c.yes, b: c.no, other: 0, total: c.yes + c.no }))}
+            sides={[{ name: "Yes", short: "Yes", color: "#2fbf9b", letter: "Yes" }, { name: "No", short: "No", color: "#e8794a", letter: "No" }]} />
+        </section>
+      ) : null}
 
       {m.votes ? (
         <div style={{ marginTop: 16 }}>

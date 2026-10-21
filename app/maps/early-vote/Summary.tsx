@@ -2,6 +2,7 @@
 // state by state index and the questions people search for. It is what search engines and AI answers
 // read and quote, so every number here is the same feed the interactive desk above it draws.
 import Link from "next/link";
+import Count from "@/app/components/opp/Count";
 import { type EarlyVote, type EvState, commas, millions, longDate, pct } from "./server";
 
 const ELECTION = Date.UTC(2026, 10, 3);
@@ -87,26 +88,105 @@ function Faq({ items }: { items: [string, string][] }) {
   );
 }
 
+/** The ballot board: the running national count, the mail and in person split, the party split where reported,
+ *  and the states with the most ballots, every bar growing in once. */
+function BallotBoard({ total, mail, inperson, dem, rep, ind, partyTotal, top, label }: { total: number; mail: number; inperson: number; dem: number; rep: number; ind: number; partyTotal: number;
+  top: { name: string; href?: string; total: number }[]; label: string }) {
+  const max = Math.max(1, ...top.map((t) => t.total));
+  return (
+    <div className="evb">
+      <div className="evb-count card">
+        <span className="eye">{label}</span>
+        <b className="mono"><Count value={total} /></b>
+        <small>ballots cast so far</small>
+        <div className="evb-split" aria-label={`${commas(mail)} by mail and ${commas(inperson)} in person`}>
+          <i style={{ width: `${(100 * mail) / (total || 1)}%`, background: "linear-gradient(90deg,#7b5cff,#a98bff)" }} />
+          <i style={{ width: `${(100 * inperson) / (total || 1)}%`, background: "linear-gradient(90deg,#2fbf9b,#7fe3c5)" }} />
+        </div>
+        <div className="evb-leg"><span><em style={{ background: "#a98bff" }} />Mail {millions(mail)}</span><span><em style={{ background: "#7fe3c5" }} />In person {millions(inperson)}</span></div>
+      </div>
+      {partyTotal > 0 ? (
+        <div className="evb-party card">
+          <span className="eye">Party of ballots, where reported</span>
+          <div className="evb-pbar">
+            <i style={{ width: `${(100 * dem) / partyTotal}%`, background: "var(--dem)" }}><em>D {pct(dem, partyTotal)}</em></i>
+            <i style={{ width: `${(100 * ind) / partyTotal}%`, background: "#8e86a3" }}><em>{(100 * ind) / partyTotal > 9 ? `I ${pct(ind, partyTotal)}` : ""}</em></i>
+            <i style={{ width: `${(100 * rep) / partyTotal}%`, background: "var(--gop)" }}><em>R {pct(rep, partyTotal)}</em></i>
+          </div>
+          <p>Registered {dem >= rep ? "Democrats" : "Republicans"} lead the ballots cast by <b>{(Math.abs(dem - rep) / partyTotal * 100).toFixed(1)} points</b> where party is reported. Registration shows who voted, not how.</p>
+        </div>
+      ) : null}
+      {top.length > 1 ? (
+        <div className="evb-top card">
+          <span className="eye">Most ballots</span>
+          <ol>
+            {top.map((t, i) => (
+              <li key={t.name}>
+                <span className="nm">{t.href ? <Link href={t.href}>{t.name}</Link> : t.name}</span>
+                <span className="br"><i style={{ width: `${(100 * t.total) / max}%`, animationDelay: `${i * 70}ms` }} /></span>
+                <span className="v mono">{t.total >= 1e6 ? `${(t.total / 1e6).toFixed(2)}M` : `${Math.round(t.total / 1e3)}K`}</span>
+              </li>
+            ))}
+          </ol>
+        </div>
+      ) : null}
+    </div>
+  );
+}
+
+export const BOARD_CSS = `
+.evb{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:14px;margin:6px 0 22px}
+.evb .card{padding:16px 18px;display:grid;gap:8px;align-content:start}
+.evb-count b{font:800 clamp(38px,4.4vw,58px)/1 var(--font-d);letter-spacing:-.03em;background:linear-gradient(90deg,#fff,#c9b8ff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.evb-count small{color:var(--ink2);font-size:13px}
+.evb-split{display:flex;height:10px;border-radius:5px;overflow:hidden;background:rgba(var(--line-rgb),.08);margin-top:6px}
+.evb-split i,.evb-pbar i,.evb-top .br i{display:block;transform-origin:0 50%;animation:evb-grow 1.1s cubic-bezier(.2,.8,.2,1) .2s both}
+.evb-leg{display:flex;gap:16px;font-size:12.5px;color:var(--ink2)}
+.evb-leg em{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px;vertical-align:-1px}
+.evb-pbar{display:flex;height:34px;border-radius:10px;overflow:hidden;margin-top:4px}
+.evb-pbar i{position:relative}
+.evb-pbar em{position:absolute;inset:0;display:grid;place-items:center;font:800 12px var(--font-m);font-style:normal;color:#fff;white-space:nowrap}
+.evb-party p{margin:4px 0 0;font-size:13px;color:var(--ink2);line-height:1.5}
+.evb-top ol{list-style:none;margin:0;padding:0;display:grid;gap:7px}
+.evb-top li{display:grid;grid-template-columns:104px 1fr 58px;gap:10px;align-items:center;font-size:13px}
+.evb-top .nm a{color:var(--ink);font-weight:700;text-decoration:none}
+.evb-top .br{height:8px;border-radius:4px;background:rgba(var(--line-rgb),.06);overflow:hidden}
+.evb-top .br i{height:100%;border-radius:4px;background:linear-gradient(90deg,#5b3df0,#b48cff)}
+.evb-top .v{text-align:right;color:var(--ink2);font-size:12px}
+@keyframes evb-grow{from{transform:scaleX(0)}to{transform:none}}
+@media (prefers-reduced-motion:reduce){.evb-split i,.evb-pbar i,.evb-top .br i{animation:none}}
+`;
+
 export function NationalLede({ ev }: { ev: EarlyVote }) {
   return (
-    <p className="evs-lede">
-      As of <b>{longDate(ev.snapshot)}</b>, <b>{commas(ev.total)}</b> ballots have been cast in the 2026 midterm elections across{" "}
-      <b>{ev.states.length} reporting states</b>: {millions(ev.mail)} mail ballots returned and {millions(ev.inperson)} cast in person.
-      In the states that report party, {partyLine(ev, ev.partyTotal)}. This early vote tracker updates every day with each state&apos;s
-      count, its pace against 2022 and 2024, and what the ballots so far mean for the <Link href="/forecast">On Point forecast</Link>.
-    </p>
+    <>
+      <style>{BOARD_CSS}</style>
+      <BallotBoard total={ev.total} mail={ev.mail} inperson={ev.inperson} dem={ev.dem} rep={ev.rep} ind={ev.ind} partyTotal={ev.partyTotal}
+        label={`Nationwide · ${longDate(ev.snapshot)}`} top={ev.states.slice(0, 7).map((s) => ({ name: s.name, href: `/maps/early-vote/${s.slug}`, total: s.total }))} />
+      <p className="evs-lede">
+        As of <b>{longDate(ev.snapshot)}</b>, <b>{commas(ev.total)}</b> ballots have been cast in the 2026 midterm elections across{" "}
+        <b>{ev.states.length} reporting states</b>: {millions(ev.mail)} mail ballots returned and {millions(ev.inperson)} cast in person.
+        In the states that report party, {partyLine(ev, ev.partyTotal)}. This early vote tracker updates every day with each state&apos;s
+        count, its pace against 2022 and 2024, and what the ballots so far mean for the <Link href="/forecast">On Point forecast</Link>.
+      </p>
+    </>
   );
 }
 
 export function StateLede({ ev, s, fc }: { ev: EarlyVote; s: EvState; fc?: { href: string; label: string } }) {
   const hasParty = s.partyShare > 0.5;
   return (
+    <>
+    <style>{BOARD_CSS}</style>
+    <BallotBoard total={s.total} mail={s.mail} inperson={s.inperson} dem={hasParty ? s.dem : 0} rep={hasParty ? s.rep : 0} ind={hasParty ? s.ind : 0} partyTotal={hasParty ? s.dem + s.rep + s.ind : 0}
+      label={`${s.name} · ${longDate(ev.snapshot)}`} top={[]} />
     <p className="evs-lede">
       As of <b>{longDate(ev.snapshot)}</b>, <b>{commas(s.total)}</b> ballots have been cast in {s.name}: {commas(s.mail)} mail ballots
       returned and {commas(s.inperson)} cast in person.{" "}
       {hasParty ? <>So far {partyLine(s, s.total)}.</> : <>{s.name} reports no party with its early votes, so the party mix below is an On Point Polling estimate.</>}{" "}
       Updated daily, with every county, the pace against 2022 and 2024 and the <Link href={fc?.href ?? "/forecast"}>{fc?.label ?? "On Point forecast"}</Link>.
     </p>
+    </>
   );
 }
 

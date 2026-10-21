@@ -1,5 +1,6 @@
 import "./globals.css";
 import "./opp.css";
+import "./motion.css";
 
 import type { Metadata, Viewport } from "next";
 import { Geist, JetBrains_Mono } from "next/font/google";
@@ -7,6 +8,7 @@ import Navbar from "./components/Navbar";
 import TickerBar from "./components/TickerBar";
 import Footer from "./components/Footer";
 import Ambient from "./components/Ambient";
+import Spotlight from "./components/Spotlight";
 import RolloutGate from "./components/RolloutGate";
 import { THEME_INIT_SCRIPT } from "./lib/theme";
 import JsonLd from "./components/JsonLd";
@@ -57,7 +59,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body suppressHydrationWarning>
         <RolloutGate />
+        <div className="sx-progress" aria-hidden="true" />
         <Ambient />
+        <Spotlight />
         <Navbar />
         <TickerBar />
         <main className="opp-main">

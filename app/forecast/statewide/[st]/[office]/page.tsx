@@ -7,6 +7,8 @@ import path from "node:path";
 import { RATING_LABEL, RAMP_CSS, fmtM, lastName, marginColor, rating, ratingPill, STATE_NAME } from "@/app/lib/opp";
 import GeoMap, { type GeoTip } from "@/app/components/opp/GeoMap";
 import { VoteSummary, CountyVotes, countyName } from "@/app/components/opp/VoteTables";
+import CountyExplorer from "@/app/components/opp/CountyExplorer";
+import { STORY_CSS, NightsGrid, phraseFor } from "@/app/components/opp/RaceStory";
 import type { CountyPath } from "@/app/components/home/countyGeo";
 import { dbHref, getDownballot, getDownballotCounties, type CountyRow, type DBRace } from "../../data";
 import JsonLd from "@/app/components/JsonLd";
@@ -41,7 +43,7 @@ export default async function Page({ params }: { params: Promise<{ st: string; o
   if (r.uncontested) {
     const who = r.uncontested === "D" ? r.dem : r.gop;
     return (
-      <div className="opp">
+      <div className="opp fc-xl">
         <nav className="crumbs" aria-label="Breadcrumb"><Link href="/">Home</Link><span className="sep">/</span><Link href="/forecast/statewide">Statewide offices</Link><span className="sep">/</span><span>{title}</span></nav>
         <header className="ph"><div className="eye g">2026 forecast</div><h1>{title} <em>forecast</em></h1>
           <p className="lede">{who} runs without a {r.uncontested === "D" ? "Republican" : "Democratic"} opponent, so the race is not modeled.{r.note ? ` ${r.note}` : ""}</p>
@@ -84,30 +86,34 @@ export default async function Page({ params }: { params: Promise<{ st: string; o
       </nav>
       <ForecastNav />
       <JsonLd data={dbLd(r)} />
-      <header className="ph">
-        <div className="eye g">2026 forecast</div>
-        <h1>{title} <em>forecast</em></h1>
+      <style>{STORY_CSS}</style>
+      <header className="ph st-hero">
+        <div className="sx-rv-l">
+          <div className="eye g">2026 forecast · {title}</div>
+          <h1>{phraseFor(leadWin)
+            ? <><span className="nm" style={{ color: m < 0 ? "#5b8fff" : "#ff4d6a" }}>{lead}</span> is <span className="ph-w">{phraseFor(leadWin)}</span> to win {r.state}&apos;s {r.officeLabel.toLowerCase()} race.</>
+            : <><span className="nm" style={{ color: "#5b8fff" }}>{r.dem}</span> and <span className="nm" style={{ color: "#ff4d6a" }}>{r.gop}</span> are in a <span className="ph-w">toss up</span> for {r.state}&apos;s {r.officeLabel.toLowerCase()}.</>}</h1>
         <p className="lede">{r.dem} vs {r.gop}{!r.incRunning ? ", an open seat" : r.incumbent ? `, with ${r.incumbent} running again` : ""}. The model has {lastName(lead)} ahead by {Math.abs(m).toFixed(1)} points, with a {Math.round(leadWin * 100)} percent chance of winning.</p>
-        <div className="pmeta">
-          <span className={`pill ${ratingPill(rt)}`}>{RATING_LABEL[rt]}</span>
-          <span>Model <b className="mono">{fmtM(m)}</b></span>
-          {r.pollAvg != null && <span>Polls <b className="mono">{fmtM(r.pollAvg)}</b></span>}
-          <span>Updated <b>{updated}</b></span>
+          <div className="st-pills">
+            <span className={`pill ${ratingPill(rt)}`} style={{ border: 0 }}>{RATING_LABEL[rt]}</span>
+            <span>Model <b className="mono">{fmtM(m)}</b></span>
+            {r.pollAvg != null && <span>Polls <b className="mono">{fmtM(r.pollAvg)}</b></span>}
+            <span>Updated <b>{updated}</b></span>
+          </div>
         </div>
+        <NightsGrid win={leadWin} leadName={lastName(lead)} otherName={lastName(m < 0 ? r.gop! : r.dem!)} leadColor={m < 0 ? "#5b8fff" : "#ff4d6a"} otherColor={m < 0 ? "#ff4d6a" : "#5b8fff"} sims={2000} />
       </header>
+
+      {paths.length > 1 ? (
+        <section style={{ marginBottom: 16 }} aria-label="County explorer">
+          <CountyExplorer paths={paths} unit={unit} stateName={r.state} title={`${title} by ${unit === "parishes" ? "parish" : "county"}`}
+            rows={paths.map((p) => { const row = rows[p.id]; return { id: p.id, name: countyName(names[p.id] ?? p.id, r.st), a: row[1], b: row[2], other: Math.max(0, row[3] - row[1] - row[2]), total: row[3] }; })}
+            sides={[{ name: lastName(r.dem ?? "Democrat"), short: lastName(r.dem ?? "Democrat"), color: "#3d7bff", letter: "D" }, { name: lastName(r.gop ?? "Republican"), short: lastName(r.gop ?? "Republican"), color: "#ff3b5c", letter: "R" }]} />
+        </section>
+      ) : null}
 
       <div className="layout">
         <div style={{ display: "grid", gap: 16 }}>
-          <div className="card">
-            <div className="card-h"><h3>County forecast</h3><span className="eye" style={{ marginLeft: "auto" }}>{paths.length} {unit} · {flips} lean Democratic</span></div>
-            <div className="card-b" style={{ padding: 10 }}>
-              {paths.length ? <GeoMap paths={paths} fills={fills} tips={tips} label={`${title} county forecast map`} /> : <div className="empty">No county build for this race.</div>}
-              <div className="legend" style={{ paddingInline: 8 }}>
-                <span>D +40</span><span className="ramp" style={{ flex: 1, maxWidth: 280, margin: 0, background: RAMP_CSS }} /><span>R +40</span><span style={{ marginLeft: "auto" }}>Hover a county for its projected vote</span>
-              </div>
-            </div>
-          </div>
-
           {v && v.total > 0 ? (
             <VoteSummary title="Projected statewide vote" total={v.total}
               cands={[{ name: r.dem ?? "Democrat", party: "D", votes: v.dem }, { name: r.gop ?? "Republican", party: "R", votes: v.rep },
