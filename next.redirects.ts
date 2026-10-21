@@ -11,7 +11,6 @@ const p = (source: string, destination: string, permanent = true): Redirect => (
 
 export const redirects: Redirect[] = [
   // every other domain to the main one, first so it wins before any path rule
-  ...OTHER_HOSTS.map((value): Redirect => ({ source: "/:path*", has: [{ type: "host", value }], destination: `${MAIN}/:path*`, permanent: true })),
   // short addresses people type or search for the early vote tracker
   p("/early-vote", "/maps/early-vote"),
   p("/early-voting", "/maps/early-vote"),
