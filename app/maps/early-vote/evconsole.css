@@ -1,5 +1,4 @@
 /* The early vote console. Same build as the forecast console, with a green accent for ballots. */
-:root:has(.fc-xl) { --wrap: 1680px; }
 .evc { position: relative; padding-bottom: 10px; }
 .evc-crumb { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
 .evc-head { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 24px; align-items: end; margin: 6px 0 20px; }
@@ -24,7 +23,7 @@
 .evc-tile.on::after { content: ""; position: absolute; left: 14px; right: 14px; bottom: -1px; height: 3px; border-radius: 3px 3px 0 0; background: linear-gradient(90deg, #3fd6a2, #9b7bff); }
 .evc-tile.on .lb { color: #c9f5e3; }
 
-.evc-stage { display: grid; grid-template-columns: minmax(0, 1fr) 380px; gap: 16px; align-items: start; scroll-margin-top: 90px; }
+.evc-stage { display: grid; grid-template-columns: minmax(0, 1fr) clamp(340px, 24vw, 420px); gap: 16px; align-items: start; scroll-margin-top: 90px; }
 .evc-mapcard { position: relative; border-radius: 22px; border: 1px solid var(--line); padding: 16px; overflow: hidden; isolation: isolate;
   background: radial-gradient(60% 70% at 50% 40%, rgba(63,214,162,.10), transparent 70%), rgba(var(--canvas-rgb), .55); }
 .evc-mapcard::before { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; opacity: .5;
@@ -35,7 +34,7 @@
 .evc-maphead h2 { font: 800 22px/1.15 var(--font-d); letter-spacing: -.02em; margin: 4px 0 0; }
 .evc-hint { font: 700 11px var(--font-m); letter-spacing: .1em; text-transform: uppercase; color: var(--mute); }
 .evc-mapwrap { position: relative; }
-.evc-map { width: 100%; height: auto; display: block; max-height: 640px; }
+.evc-map { width: 100%; height: auto; display: block; max-height: 820px; }
 .evc-map path { fill: rgba(var(--line-rgb), .06); stroke: var(--bg); stroke-width: .8; transform-box: fill-box; transform-origin: center; transition: transform .18s, filter .18s; animation: evc-in .5s steps(5) backwards; }
 .evc-map.cty path { stroke-width: .5; vector-effect: non-scaling-stroke; animation-duration: .4s; }
 .evc-map path.live { cursor: pointer; }

@@ -5,15 +5,15 @@ import { RAW_POLLS as APPROVAL_POLLS } from "@/app/_polling/donaldtrumpapproval/
 import { RAW_POLLS as GENERIC_POLLS } from "@/app/_polling/genericballot/data";
 import { getModel, miniRaces, isInd } from "@/app/lib/forecastData";
 import { fmtM, lastName, raceHref } from "@/app/lib/opp";
-import ForecastDeskHome, { type CountyBuild } from "@/app/components/home/ForecastDeskHome";
+import HomeGlobe, { type GRace } from "@/app/components/home/HomeGlobe";
+import HomeWhatIf from "@/app/components/home/HomeWhatIf";
+import "@/app/components/home/home2.css";
 import AveragePanel, { type TableRow } from "@/app/components/home/AveragePanel";
 import ResultCard from "@/app/components/home/ResultCard";
 import Countdown from "@/app/components/home/Countdown";
 import MiniMap from "@/app/components/home/MiniMap";
 import { CountUp, Grow } from "@/app/components/home/motion";
 import { Icon } from "@/app/components/opp/Logo";
-import fs from "node:fs";
-import path from "node:path";
 import { seo } from "@/app/lib/seo";
 
 export const metadata: Metadata = seo({"title": "On Point Politics: 2026 midterm forecasts, polling averages and live results", "description": "Who is favored in the 2026 midterms: Senate, House and governor forecasts, every state legislature and statewide ballot measure, daily polling averages and live election night results from On Point Politics.", "path": "/", "absoluteTitle": true});
@@ -38,17 +38,6 @@ function latestRows(polls: RawPoll[], ka: string, kb: string, gb: boolean): Tabl
     });
 }
 
-function countyBuild(raceId: string): CountyBuild {
-  const st = raceId.split("-")[1];
-  const dir = path.join(process.cwd(), "public", "forecast");
-  const s = JSON.parse(fs.readFileSync(path.join(dir, "states", `${st}.json`), "utf8"));
-  const c = JSON.parse(fs.readFileSync(path.join(dir, "counties.json"), "utf8"));
-  const rows = c[raceId] ?? {};
-  const names: Record<string, string> = {};
-  for (const k of Object.keys(rows)) names[k] = c._n?.[k] ?? k;
-  return { raceId, st, paths: s.counties, rows, names };
-}
-
 export default function Home() {
   const stats = getHomeStats();
   const model = getModel();
@@ -59,8 +48,11 @@ export default function Home() {
   const byClose = (o: "senate" | "governor") => Object.values(races[o]).sort((a, b) => Math.abs(a.m) - Math.abs(b.m));
   const picks = [...byClose("senate").slice(0, 4), ...byClose("governor").slice(0, 1)]
     .map((r) => ({ raceId: r.id, label: `${r.st} ${r.id.startsWith("gov") ? "Governor" : "Senate"}` }));
-  const initial = countyBuild(picks[0].raceId);
 
+  const globeRaces: Record<"senate" | "governor", GRace[]> = {
+    senate: model.races.filter((r) => r.office === "senate").map((r) => ({ id: r.id, st: r.st, name: r.name, dem: r.dem, gop: r.gop, m: r.est.margin, p: r.est.prob, ind: isInd(r), href: raceHref(r.id) })),
+    governor: model.races.filter((r) => r.office === "governor").map((r) => ({ id: r.id, st: r.st, name: r.name, dem: r.dem, gop: r.gop, m: r.est.margin, p: r.est.prob, ind: isInd(r), href: raceHref(r.id) })),
+  };
   const ap = stats.approval, gb = stats.generic;
   const gbD = r1(50 + gb.net / 2), gbR = r1(100 - gbD);
   const updated = new Date(meta.updated + "T00:00:00").toLocaleDateString("en-US", { month: "short", day: "numeric" });
@@ -83,53 +75,31 @@ export default function Home() {
 
   return (
     <div className="opp">
-      <section className="hero">
-        <div className="hero-grid">
-          <div>
-            <span className="chip"><i />Fieldwork and modeling by On Point Polling</span>
-            <h1>Every race.<br />Every county.<br /><em>On point.</em></h1>
-            <p>Polling averages, county level forecasts and live election results for the 2026 midterms, built on On Point Polling&apos;s own surveys and a transparent public poll feed.</p>
-            <div className="cta">
-              <Link className="btn g" href="/forecast">Open the forecast</Link>
-              <Link className="btn" href="/polls">Polling averages</Link>
-              <span style={{ fontSize: 12, color: "var(--mute)", marginLeft: 6 }}>Forecast updated {updated}</span>
+      <HomeGlobe races={globeRaces} odds={{ senate: sen.demControl, house: house.demControl, governor: gov.demControl }} updated={updated} daysOut={meta.daysOut} />
+      <HomeWhatIf />
+
+      <section className="sec">
+        <div className="hero-panel kpi-stack home-kpis">
+          <Link href="/polls/approval" className="glass kpi">
+            <div>
+              <div className="lab">Trump job approval</div>
+              <div className="v r"><CountUp value={r1(ap.approve)} suffix="%" /></div>
+              <div className="sub">Net <span className="mono" style={{ color: "var(--gop2)" }}>{ap.net > 0 ? "+" : ""}{ap.net.toFixed(1)}</span> · daily average, {ap.count} polls</div>
+              <div className="bar"><Grow w={ap.approve} color="var(--win)" /><Grow w={ap.disapprove} color="var(--gop)" /></div>
             </div>
-          </div>
-          <div className="hero-panel kpi-stack">
-            <Link href="/polls/approval" className="glass kpi">
-              <div>
-                <div className="lab">Trump job approval</div>
-                <div className="v r"><CountUp value={r1(ap.approve)} suffix="%" /></div>
-                <div className="sub">Net <span className="mono" style={{ color: "var(--gop2)" }}>{ap.net > 0 ? "+" : ""}{ap.net.toFixed(1)}</span> · daily average, {ap.count} polls</div>
-                <div className="bar"><Grow w={ap.approve} color="var(--win)" /><Grow w={ap.disapprove} color="var(--gop)" /></div>
-              </div>
-              {spark(ap.daily.map((d) => d.net), "#ff3b5c")}
-            </Link>
-            <Link href="/polls/generic-ballot" className="glass kpi">
-              <div>
-                <div className="lab">Generic ballot</div>
-                <div className={`v ${gb.net >= 0 ? "d" : "r"}`}>{gb.net >= 0 ? "D " : "R "}<CountUp value={r1(Math.abs(gb.net))} prefix="+" /></div>
-                <div className="sub">{gbD} D · {gbR} R two party · {gb.count} polls</div>
-                <div className="bar"><Grow w={gbD} color="var(--dem)" /><Grow w={gbR} color="var(--gop)" /></div>
-              </div>
-              {spark(gb.daily.map((d) => d.net), "#3d7bff")}
-            </Link>
-            <Link href="/forecast" className="glass kpi ctrl">
-              <div className="lab">Chance of control, {meta.sims.toLocaleString()} simulations</div>
-              <div className="odds">
-                {([["Senate", sen], ["House", house], ["Governors", gov]] as const).map(([l, c]) => {
-                  const d = c.demControl >= 0.5;
-                  return (<div key={l}><div className="big" style={{ color: d ? "var(--dem2)" : "var(--gop2)" }}><CountUp value={Math.round((d ? c.demControl : c.gopControl) * 100)} suffix="%" /><small>{l}</small></div></div>);
-                })}
-              </div>
-              <div className="sub">Chance Democrats {sen.demControl >= 0.5 ? "control" : "win"} each; Senate counts Nebraska&apos;s Osborn with the Democrats</div>
-            </Link>
-          </div>
+            {spark(ap.daily.map((d) => d.net), "#ff3b5c")}
+          </Link>
+          <Link href="/polls/generic-ballot" className="glass kpi">
+            <div>
+              <div className="lab">Generic ballot</div>
+              <div className={`v ${gb.net >= 0 ? "d" : "r"}`}>{gb.net >= 0 ? "D " : "R "}<CountUp value={r1(Math.abs(gb.net))} prefix="+" /></div>
+              <div className="sub">{gbD} D · {gbR} R two party · {gb.count} polls</div>
+              <div className="bar"><Grow w={gbD} color="var(--dem)" /><Grow w={gbR} color="var(--gop)" /></div>
+            </div>
+            {spark(gb.daily.map((d) => d.net), "#3d7bff")}
+          </Link>
         </div>
       </section>
-
-      <ForecastDeskHome races={races} chambers={{ senate: sen, governor: gov }} initialCounty={initial} picks={picks}
-        notUp={{ senD: meta.senNotUpD, senR: meta.senNotUpR, govD: meta.govNotUpD, govR: meta.govNotUpR }} />
 
       <section className="sec">
         <div className="sec-h">

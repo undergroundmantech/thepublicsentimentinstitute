@@ -7,13 +7,13 @@ import Link from "next/link";
 import { marginColor } from "@/app/lib/opp";
 import Ambient from "@/app/components/opp/Ambient";
 import Count from "@/app/components/opp/Count";
-import { getCategory, matchCounty, stateOfFips, type CategoryPayload } from "./lib";
+import { getCategory, getPartyModel, matchCounty, simulate, stateOfFips, type CategoryPayload, type PartyModel } from "./lib";
 import type { EvConsole, EvRow } from "./consoleData";
 import "./evconsole.css";
 
 type Metric = "cast" | "pace" | "party" | "model" | "expect" | "method";
 type Geo = { frame: [number, number]; states: Record<string, string>; labels?: Record<string, [number, number, number]> };
-type County = { id: string; name: string; total: number; mail: number; inperson: number; dem: number; rep: number; ind: number };
+type County = { id: string; name: string; total: number; mail: number; inperson: number; dem: number; rep: number; ind: number; uMail: number; uIn: number; md: number; mr: number; mo: number; modeled: boolean };
 
 const commas = (n: number) => Math.round(n).toLocaleString("en-US");
 const short = (n: number) => (n >= 1e6 ? `${(n / 1e6).toFixed(n >= 1e7 ? 1 : 2)}M` : n >= 1e4 ? `${Math.round(n / 1e3)}K` : commas(n));
@@ -70,6 +70,9 @@ function Meter({ have, of, label }: { have: number; of: number; label: string })
   );
 }
 
+// keep a tooltip on screen: open it to the left of the pointer near the right edge, and above it near the bottom
+const tipFlip = (t: { x: number; y: number; w?: number; h?: number }): React.CSSProperties => ({ transform: `translate(${t.w && t.x > t.w - 290 ? "calc(-100% - 16px)" : "16px"}, ${t.h && t.y > t.h - 230 ? "calc(-100% - 12px)" : "12px"})` });
+
 export default function EarlyVoteConsole({ data, initial, lede, faq }: { data: EvConsole; initial?: string; lede?: React.ReactNode; faq?: [string, string][] }) {
   const [metric, setMetric] = useState<Metric>("model");
   const [scope, setScope] = useState<string>(initial ?? "US");
@@ -77,9 +80,11 @@ export default function EarlyVoteConsole({ data, initial, lede, faq }: { data: E
   const [cGeo, setCGeo] = useState<Record<string, { id: string; d: string }[]>>({});
   const [cNames, setCNames] = useState<Record<string, string> | null>(null);
   const [cData, setCData] = useState<Record<string, { ret: CategoryPayload | null; inp: CategoryPayload | null } | "fail">>({});
-  const [tip, setTip] = useState<{ k: string; x: number; y: number } | null>(null);
+  const [tip, setTip] = useState<{ k: string; x: number; y: number; w?: number; h?: number } | null>(null);
   const [sort, setSort] = useState<"most" | "pace" | "d" | "r" | "az">("most");
   const [all, setAll] = useState(false);
+  const [pmodel, setPmodel] = useState<PartyModel | null>(null);
+  useEffect(() => { getPartyModel().then(setPmodel); }, []);
 
   const byState = useMemo(() => Object.fromEntries(data.rows.map((r) => [r.st, r])) as Record<string, EvRow>, [data.rows]);
   const row = scope === "US" ? null : byState[scope] ?? null;
@@ -108,14 +113,51 @@ export default function EarlyVoteConsole({ data, initial, lede, faq }: { data: E
     const add = (p: CategoryPayload | null, k: "mail" | "inperson") => {
       for (const [name, g] of Object.entries(p?.regions ?? {})) {
         const id = matchCounty(name, local); if (!id) continue;
-        const c = (out[id] ??= { id, name, total: 0, mail: 0, inperson: 0, dem: 0, rep: 0, ind: 0 });
+        const c = (out[id] ??= { id, name, total: 0, mail: 0, inperson: 0, dem: 0, rep: 0, ind: 0, uMail: 0, uIn: 0, md: 0, mr: 0, mo: 0, modeled: false });
         const t = sumRow(g, () => true); c[k] += t; c.total += t;
+        c[k === "mail" ? "uMail" : "uIn"] += sumRow(g, (x) => x === "Unspecified");
         c.dem += sumRow(g, (x) => x === "Democratic"); c.rep += sumRow(g, (x) => x === "Republican"); c.ind += sumRow(g, isOther);
       }
     };
     add(cd.ret, "mail"); add(cd.inp, "inperson");
-    return Object.values(out);
-  }, [scope, cData, cNames]);
+    const L = Object.values(out);
+    // modeled ballots: reported party where the county has it, the On Point party model for every Unspecified ballot
+    const est: Record<string, [number, number, number]> = {};
+    if (pmodel) {
+      for (const [mode, key] of [["returned", "uMail"], ["early", "uIn"]] as const) {
+        const places = L.filter((c) => c[key] > 0 && pmodel.mix[c.id]).map((c) => ({ key: c.id, st: scope, parts: [[c.id, c[key]] as [string, number]], votes: c[key] }));
+        if (!places.length) continue;
+        const sim = simulate(places, pmodel, mode);
+        for (const [id, e] of Object.entries(sim.byKey)) { const v = est[id] ?? [0, 0, 0]; est[id] = [v[0] + e.d * e.votes, v[1] + e.r * e.votes, v[2] + e.i * e.votes]; }
+      }
+    }
+    for (const c of L) {
+      const u = c.uMail + c.uIn, e = est[c.id];
+      if (e) { c.md = c.dem + e[0]; c.mr = c.rep + e[1]; c.mo = c.ind + e[2]; c.modeled = u > 0; }
+      else if (u > 0 && row?.pm) { c.md = c.dem + u * row.pm.d; c.mr = c.rep + u * row.pm.r; c.mo = c.ind + u * row.pm.o; c.modeled = true; }
+      else { c.md = c.dem; c.mr = c.rep; c.mo = c.ind; }
+    }
+    // keep the counties on the state's published party model: rake the modeled ballots so every county adds up to its
+    // own Unspecified count and the state adds up to its published party split
+    const pm = row?.pm;
+    const M = L.filter((c) => c.modeled && c.uMail + c.uIn > 0);
+    if (pm && M.length) {
+      const T = L.reduce((a, c) => a + c.total, 0);
+      const rep = { d: L.reduce((a, c) => a + c.dem, 0), r: L.reduce((a, c) => a + c.rep, 0), o: L.reduce((a, c) => a + c.ind, 0) };
+      const want = { d: Math.max(0, pm.d * T - rep.d), r: Math.max(0, pm.r * T - rep.r), o: Math.max(0, pm.o * T - rep.o) };
+      const e = M.map((c) => ({ c, u: c.uMail + c.uIn, d: Math.max(1e-6, c.md - c.dem), r: Math.max(1e-6, c.mr - c.rep), o: Math.max(1e-6, c.mo - c.ind) }));
+      const W = want.d + want.r + want.o, U = e.reduce((a, x) => a + x.u, 0);
+      if (W > 0 && U > 0) {
+        const tg = { d: (want.d / W) * U, r: (want.r / W) * U, o: (want.o / W) * U };
+        for (let it = 0; it < 30; it++) {
+          for (const k of ["d", "r", "o"] as const) { const sm = e.reduce((a, x) => a + x[k], 0); if (sm > 0) for (const x of e) x[k] *= tg[k] / sm; }
+          for (const x of e) { const sm = x.d + x.r + x.o; if (sm > 0) { x.d *= x.u / sm; x.r *= x.u / sm; x.o *= x.u / sm; } }
+        }
+        for (const x of e) { x.c.md = x.c.dem + x.d; x.c.mr = x.c.rep + x.r; x.c.mo = x.c.ind + x.o; }
+      }
+    }
+    return L;
+  }, [scope, cData, cNames, pmodel, row]);
   const cById = useMemo(() => Object.fromEntries((counties ?? []).map((c) => [c.id, c])), [counties]);
   const cMax = useMemo(() => Math.max(1, ...(counties ?? []).map((c) => c.total)), [counties]);
 
@@ -154,7 +196,8 @@ export default function EarlyVoteConsole({ data, initial, lede, faq }: { data: E
   };
   const cFill = (c: County | undefined): string | null => {
     if (!c) return null;
-    if (metric === "party" || metric === "model") { const m = partyM(c.dem, c.rep, c.ind); return m == null ? castFill(Math.log10(c.total + 1) / Math.log10(cMax + 1) * 0.6) : marginColor(m); }
+    if (metric === "model") { const m = partyM(c.md, c.mr, c.mo); return m == null ? null : marginColor(m); }
+    if (metric === "party") { const m = partyM(c.dem, c.rep, c.ind); return m == null ? null : marginColor(m); }
     if (metric === "method") return methodFill(c.mail / Math.max(1, c.total));
     return castFill((Math.log10(c.total + 1) / Math.log10(cMax + 1)) * 0.6);
   };
@@ -243,7 +286,7 @@ export default function EarlyVoteConsole({ data, initial, lede, faq }: { data: E
                   const r = byState[s.st], f = stFill(r);
                   return <path key={s.st} d={s.d} className={r ? "live" : "off"} style={{ fill: r ? f ?? "url(#evc-hatch)" : undefined, animationDelay: `${((s.x / W) * 0.5).toFixed(2)}s` }}
                     tabIndex={r ? 0 : -1} role={r ? "button" : undefined} aria-label={r ? `${r.name}, ${commas(r.total)} ballots` : undefined}
-                    onMouseMove={r ? (e) => { const b = (e.currentTarget.ownerSVGElement!.parentElement as HTMLElement).getBoundingClientRect(); setTip({ k: s.st, x: e.clientX - b.left, y: e.clientY - b.top }); } : undefined}
+                    onMouseMove={r ? (e) => { const b = (e.currentTarget.ownerSVGElement!.parentElement as HTMLElement).getBoundingClientRect(); setTip({ k: s.st, x: e.clientX - b.left, y: e.clientY - b.top, w: b.width, h: b.height }); } : undefined}
                     onClick={r ? () => go(s.st) : undefined} onKeyDown={r ? (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); go(s.st); } } : undefined} />;
                 })}
                 {states.filter((s) => s.w > 36).map((s) => <text key={s.st} x={s.cx} y={s.cy + 4} className={byState[s.st] ? "" : "off"}>{s.st}</text>)}
@@ -253,12 +296,12 @@ export default function EarlyVoteConsole({ data, initial, lede, faq }: { data: E
                 {cPaths.map((p) => {
                   const c = cById[p.id], f = cFill(c);
                   return <path key={p.id} d={p.d} className={c ? "live" : "off"} style={{ fill: f ?? undefined }}
-                    onMouseMove={(e) => { const b = (e.currentTarget.ownerSVGElement!.parentElement as HTMLElement).getBoundingClientRect(); setTip({ k: p.id, x: e.clientX - b.left, y: e.clientY - b.top }); }} />;
+                    onMouseMove={(e) => { const b = (e.currentTarget.ownerSVGElement!.parentElement as HTMLElement).getBoundingClientRect(); setTip({ k: p.id, x: e.clientX - b.left, y: e.clientY - b.top, w: b.width, h: b.height }); }} />;
                 })}
               </svg>) : <div className="evc-load sx-skel" />}
             {failed ? <div className="evc-fail">{R.name} county counts did not load just now. The state totals above are current as of {dateLabel}.</div> : null}
             {tipRow ? (
-              <div className="evc-tip" style={{ left: tip!.x, top: tip!.y }}>
+              <div className="evc-tip" style={{ left: tip!.x, top: tip!.y , ...tipFlip(tip!) }}>
                 <h4>{tipRow.name}</h4>
                 <div className="r"><span>Ballots</span><b>{commas(tipRow.total)}</b></div>
                 <div className="r"><span>Mail / in person</span><b>{pctS(tipRow.mail / Math.max(1, tipRow.total))} / {pctS(tipRow.inperson / Math.max(1, tipRow.total))}</b></div>
@@ -269,11 +312,16 @@ export default function EarlyVoteConsole({ data, initial, lede, faq }: { data: E
                 <div className="cta">Click for counties</div>
               </div>
             ) : tipC ? (
-              <div className="evc-tip" style={{ left: tip!.x, top: tip!.y }}>
+              <div className="evc-tip" style={{ left: tip!.x, top: tip!.y , ...tipFlip(tip!) }}>
                 <h4>{tipC.name}</h4>
                 <div className="r"><span>Ballots</span><b>{commas(tipC.total)}</b></div>
                 <div className="r"><span>Mail / in person</span><b>{commas(tipC.mail)} / {commas(tipC.inperson)}</b></div>
-                {tipC.dem + tipC.rep > 0 ? <div className="r"><span>Party of ballots</span><b className={(partyM(tipC.dem, tipC.rep, tipC.ind) ?? 0) < 0 ? "d" : "r"}>{mLabel(partyM(tipC.dem, tipC.rep, tipC.ind) ?? 0)}</b></div> : null}
+                {tipC.md + tipC.mr > 0 ? <>
+                  <div className="r"><span>{tipC.modeled ? "Modeled Democrats" : "Democrats"}</span><b className="d">{commas(tipC.md)} · {pctS(tipC.md / Math.max(1, tipC.total), 1)}</b></div>
+                  <div className="r"><span>{tipC.modeled ? "Modeled Republicans" : "Republicans"}</span><b className="r">{commas(tipC.mr)} · {pctS(tipC.mr / Math.max(1, tipC.total), 1)}</b></div>
+                  <div className="r"><span>{tipC.modeled ? "Modeled lead" : "Party lead"}</span><b className={(partyM(tipC.md, tipC.mr, tipC.mo) ?? 0) < 0 ? "d" : "r"}>{mLabel(partyM(tipC.md, tipC.mr, tipC.mo) ?? 0)}</b></div>
+                </> : null}
+                {tipC.dem + tipC.rep > 0 && tipC.modeled ? <div className="r"><span>Reported party</span><b className={(partyM(tipC.dem, tipC.rep, tipC.ind) ?? 0) < 0 ? "d" : "r"}>{mLabel(partyM(tipC.dem, tipC.rep, tipC.ind) ?? 0)}</b></div> : null}
               </div>
             ) : null}
           </div>
@@ -326,7 +374,7 @@ export default function EarlyVoteConsole({ data, initial, lede, faq }: { data: E
         ) : null}
         <div className="evc-tw">
           <table>
-            <thead><tr><th>{scope === "US" ? "State" : "County"}</th><th className="n">Ballots</th><th className="n">Mail</th><th className="n">In person</th>{scope === "US" ? <><th className="n">Of 2022 turnout</th><th className="n">Pace</th></> : null}<th className="n">Dem</th><th className="n">Rep</th>{scope === "US" ? <><th className="n">Modeled D ballots</th><th className="n">Modeled R ballots</th><th className="n">Vs expected</th></> : null}</tr></thead>
+            <thead><tr><th>{scope === "US" ? "State" : "County"}</th><th className="n">Ballots</th><th className="n">Mail</th><th className="n">In person</th>{scope === "US" ? <><th className="n">Of 2022 turnout</th><th className="n">Pace</th></> : null}{scope === "US" ? <><th className="n">Dem</th><th className="n">Rep</th><th className="n">Modeled D ballots</th><th className="n">Modeled R ballots</th><th className="n">Vs expected</th></> : <><th className="n">Democrats</th><th className="n">Republicans</th><th className="n">Lead</th></>}</tr></thead>
             <tbody>
               {scope === "US" ? (tRows as EvRow[]).slice(0, shown).map((r) => { const pt = r.dem + r.rep + r.ind; const rep = r.partyShare > 0.5 && pt > 0; return (
                 <tr key={r.st} onClick={() => go(r.st)}>
@@ -340,9 +388,10 @@ export default function EarlyVoteConsole({ data, initial, lede, faq }: { data: E
               : counties ? (tRows as County[]).slice(0, shown).map((c) => { const pt = c.dem + c.rep + c.ind; return (
                 <tr key={c.id}>
                   <td><b>{c.name}</b></td><td className="n mono">{commas(c.total)}</td><td className="n mono">{commas(c.mail)}</td><td className="n mono">{commas(c.inperson)}</td>
-                  <td className="n mono d">{pt > 0 ? pctS(c.dem / pt, 1) : R.pm ? <>{commas(R.pm.d * c.total)}<small>modeled</small></> : "n/a"}</td><td className="n mono r">{pt > 0 ? pctS(c.rep / pt, 1) : R.pm ? <>{commas(R.pm.r * c.total)}<small>modeled</small></> : "n/a"}</td>
+                  <td className="n mono d">{c.md + c.mr > 0 ? <>{commas(c.md)}<small>{pctS(c.md / Math.max(1, c.total), 1)}{c.modeled ? " modeled" : ""}</small></> : "n/a"}</td><td className="n mono r">{c.md + c.mr > 0 ? <>{commas(c.mr)}<small>{pctS(c.mr / Math.max(1, c.total), 1)}{c.modeled ? " modeled" : ""}</small></> : "n/a"}</td>
+                  <td className={`n mono ${(partyM(c.md, c.mr, c.mo) ?? 0) < 0 ? "d" : "r"}`}>{c.md + c.mr > 0 ? mLabel(partyM(c.md, c.mr, c.mo) ?? 0) : "n/a"}</td>
                 </tr>); })
-              : <tr><td colSpan={6} className="evc-note">{failed ? "County counts did not load just now." : "Loading counties"}</td></tr>}
+              : <tr><td colSpan={7} className="evc-note">{failed ? "County counts did not load just now." : "Loading counties"}</td></tr>}
             </tbody>
           </table>
         </div>

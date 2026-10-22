@@ -135,11 +135,14 @@ function useCountdown() {
   return { dd, clock: now == null ? "" : `${String(hh).padStart(2, "0")}:${String(mm).padStart(2, "0")}:${String(ss).padStart(2, "0")}` };
 }
 
+// keep a tooltip on screen: open it to the left of the pointer near the right edge, and above it near the bottom
+const tipFlip = (t: { x: number; y: number; w?: number; h?: number }): React.CSSProperties => ({ transform: `translate(${t.w && t.x > t.w - 290 ? "calc(-100% - 16px)" : "16px"}, ${t.h && t.y > t.h - 230 ? "calc(-100% - 12px)" : "12px"})` });
+
 export default function ForecastBoard({ data }: { data: BoardData }) {
   const router = useRouter();
   const [office, setOffice] = useState<Office>("senate");
   const [geo, setGeo] = useState<Geo | null>(null);
-  const [tip, setTip] = useState<{ id: string; x: number; y: number } | null>(null);
+  const [tip, setTip] = useState<{ id: string; x: number; y: number; w?: number; h?: number } | null>(null);
   useEffect(() => { fetch("/forecast/geo.json").then((r) => r.json()).then(setGeo).catch(() => {}); }, []);
   const cd = useCountdown();
 
@@ -218,7 +221,7 @@ export default function ForecastBoard({ data }: { data: BoardData }) {
               return (
                 <path key={s.key} d={s.d} className={r ? `live${rate(r) === "toss" ? " tt" : ""}` : "off"} style={r ? { fill, transitionDelay: delay } : { transitionDelay: delay }}
                   tabIndex={r ? 0 : -1} role={r ? "link" : undefined} aria-label={r ? `${r.name}, ${RATING_LABEL[rate(r)]}, ${fm(r.m, r.ind)}` : undefined}
-                  onMouseMove={r ? (e) => { const box = (e.currentTarget.ownerSVGElement!.parentElement as HTMLElement).getBoundingClientRect(); setTip({ id: s.key, x: e.clientX - box.left, y: e.clientY - box.top }); } : undefined}
+                  onMouseMove={r ? (e) => { const box = (e.currentTarget.ownerSVGElement!.parentElement as HTMLElement).getBoundingClientRect(); setTip({ id: s.key, x: e.clientX - box.left, y: e.clientY - box.top, w: box.width, h: box.height }); } : undefined}
                   onClick={r ? () => router.push(raceHref(r.id)) : undefined}
                   onKeyDown={r ? (e) => { if (e.key === "Enter") router.push(raceHref(r.id)); } : undefined} />
               );
@@ -226,7 +229,7 @@ export default function ForecastBoard({ data }: { data: BoardData }) {
             {labels.map((l) => <text key={l.st} x={l.x} y={l.y + 3}>{l.st}</text>)}
           </svg>
           {tip && tipRace ? (
-            <div className="fb-tip" style={{ left: tip.x, top: tip.y }}>
+            <div className="fb-tip" style={{ left: tip.x, top: tip.y , ...tipFlip(tip!) }}>
               <h4>{tipRace.name}</h4>
               <div className="r"><span style={{ color: tipRace.ind ? "var(--ind)" : "var(--dem2)" }}>{tipRace.dem}</span><b>{Math.round((1 - tipRace.p) * 100)}%</b></div>
               <div className="r"><span style={{ color: "var(--gop2)" }}>{tipRace.gop}</span><b>{Math.round(tipRace.p * 100)}%</b></div>

@@ -11,10 +11,10 @@ import "./whatif.css";
 
 type Race = { id: string; k: string; office: string; st: string; state: string; name: string; dem: string; gop: string; m: number; p: number; ind: boolean };
 type HRace = { id: string; st: string; d: number; name: string; dem: string; gop: string; m: number; p: number };
-type Data = { meta: { updated: string; sims: number; senNotUpD: number; senNotUpR: number; govNotUpD: number; govNotUpR: number }; chambers: Record<"senate" | "governor" | "house", { demControl: number; demSeats: number }>;
+export type Data = { meta: { updated: string; sims: number; senNotUpD: number; senNotUpR: number; govNotUpD: number; govNotUpR: number }; chambers: Record<"senate" | "governor" | "house", { demControl: number; demSeats: number }>;
   races: Race[]; dev: string; house: HRace[]; hwin: string; hbytes: number };
 type Geo = { frame: [number, number]; states: Record<string, string>; labels?: Record<string, [number, number, number]>; districts: Record<string, { d: string } | string> };
-type Pin = { side: "D" | "R"; by: number | null };
+export type Pin = { side: "D" | "R"; by: number | null };
 type Office = "senate" | "governor" | "house";
 
 const lg = (p: number) => { const q = Math.min(0.999, Math.max(0.001, p)); return Math.log(q / (1 - q)); };
@@ -43,8 +43,8 @@ function solve(A: number[][], b: number[]): number[] {   // small dense system, 
   return M.map((r, i) => r[n] / (r[i] || 1e-9));
 }
 
-type Model = { R: Race[]; H: HRace[]; N: number; dev: Float32Array[]; hw: Uint8Array; hb: number; z: Float32Array; beta: number[]; data: Data };
-function prep(d: Data): Model {
+export type Model = { R: Race[]; H: HRace[]; N: number; dev: Float32Array[]; hw: Uint8Array; hb: number; z: Float32Array; beta: number[]; data: Data };
+export function prep(d: Data): Model {
   const N = d.meta.sims, raw = Uint8Array.from(atob(d.dev), (c) => c.charCodeAt(0));
   const i16 = new Int16Array(raw.buffer);
   const dev = d.races.map((_, r) => { const a = new Float32Array(N); for (let i = 0; i < N; i++) a[i] = i16[r * N + i] / 10; return a; });
@@ -59,7 +59,7 @@ const hbit = (M: Model, j: number, i: number) => (M.hw[j * M.hb + (i >> 3)] >> (
 
 type Out = { m: number[]; p: number[]; hp: number[]; ch: Record<Office, { now: number; seats: number; base: number }>; n: number; mode: "filter" | "shift" | "none"; note: string | null };
 
-function compute(M: Model, pins: Record<string, Pin>, swing: number): Out {
+export function compute(M: Model, pins: Record<string, Pin>, swing: number): Out {
   const { R, N, dev } = M;
   const idx: Record<string, number> = {}; R.forEach((r, i) => { idx[r.id] = i; });
   const X = R.map((r, k) => { const a = new Float32Array(N); const sh = -swing * M.beta[k]; for (let i = 0; i < N; i++) a[i] = r.m + dev[k][i] + sh; return a; });
@@ -150,13 +150,16 @@ function encode(pins: Record<string, Pin>, swing: number) {
   return [p ? `p=${encodeURIComponent(p)}` : "", swing ? `s=${swing}` : ""].filter(Boolean).join("&");
 }
 
+// keep a tooltip on screen: open it to the left of the pointer near the right edge, and above it near the bottom
+const tipFlip = (t: { x: number; y: number; w?: number; h?: number }): React.CSSProperties => ({ transform: `translate(${t.w && t.x > t.w - 290 ? "calc(-100% - 16px)" : "16px"}, ${t.h && t.y > t.h - 230 ? "calc(-100% - 12px)" : "12px"})` });
+
 export default function WhatIf() {
   const [M, setM] = useState<Model | null>(null);
   const [geo, setGeo] = useState<Geo | null>(null);
   const [office, setOffice] = useState<Office>("senate");
   const [pins, setPins] = useState<Record<string, Pin>>({});
   const [swing, setSwing] = useState(0);
-  const [tip, setTip] = useState<{ k: string; x: number; y: number } | null>(null);
+  const [tip, setTip] = useState<{ k: string; x: number; y: number; w?: number; h?: number } | null>(null);
   const [tab, setTab] = useState<"moved" | "flips" | "all">("moved");
   useEffect(() => {
     fetch("/forecast/whatif.json").then((r) => r.json()).then((d: Data) => setM(prep(d))).catch(() => {});
@@ -268,7 +271,7 @@ export default function WhatIf() {
                     <g key={s.key}>
                       <path d={s.d} className={`${f ? "live" : "off"}${pin ? " pin" : ""}`} style={{ fill: f ?? undefined }}
                         tabIndex={f ? 0 : -1} role={f ? "button" : undefined} aria-label={id ? raceName(id) : undefined}
-                        onMouseMove={f && id ? (e) => { const b = (e.currentTarget.ownerSVGElement!.parentElement as HTMLElement).getBoundingClientRect(); setTip({ k: id, x: e.clientX - b.left, y: e.clientY - b.top }); } : undefined}
+                        onMouseMove={f && id ? (e) => { const b = (e.currentTarget.ownerSVGElement!.parentElement as HTMLElement).getBoundingClientRect(); setTip({ k: id, x: e.clientX - b.left, y: e.clientY - b.top, w: b.width, h: b.height }); } : undefined}
                         onClick={f && id ? () => cycle(id) : undefined} onKeyDown={f && id ? (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); cycle(id); } } : undefined} />
                       {pin ? <path d={s.d} className="pinov" style={{ fill: "url(#wif-pin)" }} /> : null}
                     </g>
@@ -278,7 +281,7 @@ export default function WhatIf() {
               </svg>
             ) : <div className="wif-load sx-skel" />}
             {tipRow ? (
-              <div className="wif-tip" style={{ left: tip!.x, top: tip!.y }}>
+              <div className="wif-tip" style={{ left: tip!.x, top: tip!.y , ...tipFlip(tip!) }}>
                 <h4>{tipRow.name}</h4>
                 <div className="r"><span style={{ color: tipRow.ind ? "#b78cff" : "#8fb0ff" }}>{tipRow.d}</span><b>{pc(tipRow.pa)}</b></div>
                 <div className="r"><span style={{ color: "#ff8399" }}>{tipRow.r}</span><b>{pc(1 - tipRow.pa)}</b></div>

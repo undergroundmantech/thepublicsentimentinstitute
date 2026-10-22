@@ -77,6 +77,9 @@ function ChanceBar({ pD, ind }: { pD: number; ind: boolean }) {
 }
 
 // ── the console ──────────────────────────────────────────────────────────────
+// keep a tooltip on screen: open it to the left of the pointer near the right edge, and above it near the bottom
+const tipFlip = (t: { x: number; y: number; w?: number; h?: number }): React.CSSProperties => ({ transform: `translate(${t.w && t.x > t.w - 290 ? "calc(-100% - 16px)" : "16px"}, ${t.h && t.y > t.h - 230 ? "calc(-100% - 12px)" : "12px"})` });
+
 export default function ForecastConsole({ data, initial, initialOffice }: { data: ConsoleData; initial: Layer; initialOffice?: string }) {
   const router = useRouter();
   const [layer, setLayer] = useState<Layer>(initial);
@@ -85,7 +88,7 @@ export default function ForecastConsole({ data, initial, initialOffice }: { data
   const [office, setOffice] = useState<string>(initialOffice && data.statewide.some((r) => r.office === initialOffice) ? initialOffice : "all");
   const [chamber, setChamber] = useState<"house" | "senate">("house");
   const [mst, setMst] = useState<string | null>(null);
-  const [tip, setTip] = useState<{ k: string; x: number; y: number } | null>(null);
+  const [tip, setTip] = useState<{ k: string; x: number; y: number; w?: number; h?: number } | null>(null);
   const [q, setQ] = useState("");
   const [sort, setSort] = useState<"close" | "d" | "r" | "az">("close");
   const [all, setAll] = useState(false);
@@ -287,7 +290,7 @@ export default function ForecastConsole({ data, initial, initialOffice }: { data
                     return (
                       <path key={s.key} d={s.d} className={f ? "live" : "off"} style={{ fill: f ?? undefined, animationDelay: `${((s.x / W) * 0.55).toFixed(2)}s` }}
                         tabIndex={f ? 0 : -1} role={f ? "button" : undefined} aria-label={f ? (layer === "measures" ? `${STATE_NAME[s.key] ?? s.key} ballot measures` : (byKey[s.key] ?? []).map((r) => `${r.name} ${fm(r.m, r.ind)}`).join(", ")) : undefined}
-                        onMouseMove={f ? (e) => { const b = (e.currentTarget.ownerSVGElement!.parentElement as HTMLElement).getBoundingClientRect(); setTip({ k: s.key, x: e.clientX - b.left, y: e.clientY - b.top }); } : undefined}
+                        onMouseMove={f ? (e) => { const b = (e.currentTarget.ownerSVGElement!.parentElement as HTMLElement).getBoundingClientRect(); setTip({ k: s.key, x: e.clientX - b.left, y: e.clientY - b.top, w: b.width, h: b.height }); } : undefined}
                         onClick={f ? () => clickKey(s.key) : undefined} onKeyDown={f ? (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); clickKey(s.key); } } : undefined} />
                     );
                   })}
@@ -295,7 +298,7 @@ export default function ForecastConsole({ data, initial, initialOffice }: { data
                 </svg>
               ) : <div className="fcx-load sx-skel" />}
               {tip && (tipRaces.length || tipMeas.length) ? (
-                <div className="fcx-tip" style={{ left: tip.x, top: tip.y }}>
+                <div className="fcx-tip" style={{ left: tip.x, top: tip.y , ...tipFlip(tip!) }}>
                   {layer === "measures" ? (
                     <><h4>{STATE_NAME[tip.k] ?? tip.k}</h4>{tipMeas.slice(0, 6).map((x) => <div className="r" key={x.href}><span>{x.label}</span><b style={{ color: x.prob > 0.5 ? "#2fbf9b" : "#e8794a" }}>{pc(x.prob)}</b></div>)}<div className="cta">Click to list this state&apos;s measures</div></>
                   ) : tipRaces.length === 1 ? (() => { const r = tipRaces[0]; return (

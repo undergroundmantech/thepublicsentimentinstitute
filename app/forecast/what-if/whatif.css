@@ -1,5 +1,4 @@
 /* What if: the scenario builder. Same build as the forecast console. */
-:root:has(.wif) { --wrap: 1680px; }
 .wif { position: relative; padding-bottom: 20px; }
 .wif .d { color: var(--dem2); } .wif .r { color: var(--gop2); } .wif .mute { color: var(--mute); font-size: 13px; }
 .wif-load { height: 520px; margin-top: 20px; }

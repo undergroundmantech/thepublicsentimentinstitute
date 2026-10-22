@@ -1,5 +1,4 @@
 /* The forecast console on /forecast. One layer at a time: tiles, map and readout, then the table. */
-:root:has(.fc-xl) { --wrap: 1680px; }
 .fcx { position: relative; padding-bottom: 10px; }
 .fcx-head { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 24px; align-items: end; margin: 6px 0 22px; }
 .fcx-head h1 { font: 800 clamp(30px, 3.2vw, 48px)/1.04 var(--font-d); letter-spacing: -.04em; margin: 8px 0 10px; text-wrap: balance; }
@@ -33,7 +32,7 @@
 @keyframes fcx-tile { from { opacity: 0; transform: translateY(10px); } }
 
 /* the map and readout */
-.fcx-stage { display: grid; grid-template-columns: minmax(0, 1fr) 380px; gap: 16px; align-items: start; }
+.fcx-stage { display: grid; grid-template-columns: minmax(0, 1fr) clamp(340px, 24vw, 420px); gap: 16px; align-items: start; }
 .fcx-mapcard { position: relative; border-radius: 22px; border: 1px solid var(--line); padding: 16px 16px 14px; overflow: hidden; isolation: isolate;
   background: radial-gradient(60% 70% at 50% 40%, rgba(120,80,255,.14), transparent 70%), rgba(var(--canvas-rgb), .55); }
 .fcx-mapcard::before { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; opacity: .5;
