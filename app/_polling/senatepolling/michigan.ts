@@ -2,7 +2,7 @@
 // Michigan — 2026 U.S. Senate: Abdul El-Sayed (D) vs. Mike Rogers (R)
 // Generated from the On Point Polling forecast poll feed (run of 2026-09-22), merged with
 // the polls this file already carried. Polls of matchups that are not on the
-// ballot were dropped. Newest poll: 2026-10-10.
+// ballot were dropped. Newest poll: 2026-10-18.
 
 export type SampleType = "LV" | "RV" | "A";
 
@@ -71,6 +71,12 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "MI-SEN-2026", "pollster": "Guidant Polling for Public First Action", "startDate": "2026-10-05", "endDate": "2026-10-05", "sampleSize": 600, "sampleType": "LV", "results": {"Abdul El-Sayed (D)": 48.5, "Mike Rogers (R)": 44.0, "Other": 1.0, "Undecided": 6.5}, "notes": "Released Oct 7. Two ballots, 48 to 43 and 49 to 45, averaged as the model does; field dates, sample size and voter type not published, so they are placeholders."},
     {"raceId": "MI-SEN-2026", "pollster": "Quantus Insights", "startDate": "2026-10-05", "endDate": "2026-10-06", "sampleSize": 762, "sampleType": "LV", "results": {"Abdul El-Sayed (D)": 48.0, "Mike Rogers (R)": 47.0, "Undecided": 5.0}, "notes": "Released Oct 7; field dates not published, so the dates shown are placeholders."},
     {"raceId": "MI-SEN-2026", "pollster": "InsiderAdvantage", "startDate": "2026-10-09", "endDate": "2026-10-10", "sampleSize": 1200, "sampleType": "LV", "results": {"Abdul El-Sayed (D)": 48.0, "Mike Rogers (R)": 46.0, "Undecided": 6.0}},
-    {"raceId": "MI-SEN-2026", "pollster": "Alliance for a Better Future (R)", "startDate": "2026-10-06", "endDate": "2026-10-08", "sampleSize": 600, "sampleType": "LV", "results": {"Abdul El-Sayed (D)": 44.0, "Mike Rogers (R)": 46.0, "Undecided": 10.0}, "notes": "Released by a group running ads for Rogers; polling firm not named."}
+    {"raceId": "MI-SEN-2026", "pollster": "Alliance for a Better Future (R)", "startDate": "2026-10-06", "endDate": "2026-10-08", "sampleSize": 600, "sampleType": "LV", "results": {"Abdul El-Sayed (D)": 44.0, "Mike Rogers (R)": 46.0, "Undecided": 10.0}, "notes": "Released by a group running ads for Rogers; polling firm not named."},
+    {"raceId": "MI-SEN-2026", "pollster": "EPIC-MRA for MIRS", "startDate": "2026-07-24", "endDate": "2026-07-31", "sampleSize": 600, "sampleType": "LV", "results": {"Abdul El-Sayed (D)": 43.0, "Mike Rogers (R)": 46.0, "Undecided": 11.0}},
+    {"raceId": "MI-SEN-2026", "pollster": "Marist University", "startDate": "2026-09-24", "endDate": "2026-09-27", "sampleSize": 1235, "sampleType": "RV", "results": {"Abdul El-Sayed (D)": 51.0, "Mike Rogers (R)": 44.0, "Other": 1.0, "Undecided": 3.0}},
+    {"raceId": "MI-SEN-2026", "pollster": "Tyson Group for Alliance for a Better Future (R)", "startDate": "2026-09-24", "endDate": "2026-09-27", "sampleSize": 600, "sampleType": "LV", "results": {"Abdul El-Sayed (D)": 44.0, "Mike Rogers (R)": 43.0, "Undecided": 13.0}},
+    {"raceId": "MI-SEN-2026", "pollster": "Rasmussen Reports", "startDate": "2026-10-12", "endDate": "2026-10-14", "sampleSize": 798, "sampleType": "LV", "results": {"Abdul El-Sayed (D)": 46.0, "Mike Rogers (R)": 44.0, "Other": 5.0, "Undecided": 5.0}},
+    {"raceId": "MI-SEN-2026", "pollster": "Marist University", "startDate": "2026-10-15", "endDate": "2026-10-18", "sampleSize": 1025, "sampleType": "LV", "results": {"Abdul El-Sayed (D)": 50.0, "Mike Rogers (R)": 48.0, "Other": 1.0, "Undecided": 2.0}},
+    {"raceId": "MI-SEN-2026", "pollster": "On Point Polling", "startDate": "2026-10-18", "endDate": "2026-10-18", "sampleSize": 518, "sampleType": "LV", "results": {"Abdul El-Sayed (D)": 48.7, "Mike Rogers (R)": 42.8, "Other": 1.8, "Undecided": 6.7}}
   ],
 };

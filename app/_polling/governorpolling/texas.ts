@@ -2,7 +2,7 @@
 // Texas — 2026 Governor: Gina Hinojosa (D) vs. Greg Abbott (R)
 // Generated from the On Point Polling forecast poll feed (run of 2026-09-22), merged with
 // the polls this file already carried. Polls of matchups that are not on the
-// ballot were dropped. Newest poll: 2026-09-30.
+// ballot were dropped. Newest poll: 2026-10-19.
 
 export type SampleType = "LV" | "RV" | "A";
 
@@ -76,6 +76,16 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "TX-GOV-2026", "pollster": "New York Times/Siena", "startDate": "2026-09-21", "endDate": "2026-09-30", "sampleSize": 600, "sampleType": "LV", "results": {"Gina Hinojosa (D)": 49.0, "Greg Abbott (R)": 46.0, "Undecided": 5.0}, "notes": "Sample size was not yet published, so 600 is a placeholder."},
     {"raceId": "TX-GOV-2026", "pollster": "YouGov", "startDate": "2026-09-28", "endDate": "2026-10-05", "sampleSize": 3625, "sampleType": "LV", "results": {"Gina Hinojosa (D)": 48.0, "Greg Abbott (R)": 47.0, "Other": 1.0, "Undecided": 5.0}},
     {"raceId": "TX-GOV-2026", "pollster": "UMass Lowell/YouGov", "startDate": "2026-09-18", "endDate": "2026-09-28", "sampleSize": 850, "sampleType": "LV", "moe": 4.5, "results": {"Gina Hinojosa (D)": 44.0, "Greg Abbott (R)": 48.0, "Pat Dixon (L)": 1.0, "Undecided": 6.0}},
-    {"raceId": "TX-GOV-2026", "pollster": "Guidant Polling for Public First Action", "startDate": "2026-10-05", "endDate": "2026-10-05", "sampleSize": 800, "sampleType": "LV", "moe": 3.46, "results": {"Gina Hinojosa (D)": 44.0, "Greg Abbott (R)": 46.0, "Other": 4.0, "Undecided": 6.0}, "notes": "Field dates not published; n about 800 from the 3.46 margin of error. Other is Dixon (L) 4."}
+    {"raceId": "TX-GOV-2026", "pollster": "Guidant Polling for Public First Action", "startDate": "2026-10-05", "endDate": "2026-10-05", "sampleSize": 800, "sampleType": "LV", "moe": 3.46, "results": {"Gina Hinojosa (D)": 44.0, "Greg Abbott (R)": 46.0, "Other": 4.0, "Undecided": 6.0}, "notes": "Field dates not published; n about 800 from the 3.46 margin of error. Other is Dixon (L) 4."},
+    {"raceId": "TX-GOV-2026", "pollster": "University of Texas/Texas Politics Project", "startDate": "2026-09-25", "endDate": "2026-10-05", "sampleSize": 1000, "sampleType": "LV", "results": {"Gina Hinojosa (D)": 49.0, "Greg Abbott (R)": 48.0, "Other": 1.0, "Undecided": 2.0}},
+    {"raceId": "TX-GOV-2026", "pollster": "ReconMR/Siena University", "startDate": "2026-10-05", "endDate": "2026-10-08", "sampleSize": 617, "sampleType": "LV", "results": {"Gina Hinojosa (D)": 47.0, "Greg Abbott (R)": 48.0, "Undecided": 5.0}},
+    {"raceId": "TX-GOV-2026", "pollster": "GBAO (D)", "startDate": "2026-10-05", "endDate": "2026-10-08", "sampleSize": 800, "sampleType": "LV", "results": {"Gina Hinojosa (D)": 47.0, "Greg Abbott (R)": 45.0, "Other": 4.0, "Undecided": 4.0}},
+    {"raceId": "TX-GOV-2026", "pollster": "Marist University", "startDate": "2026-10-08", "endDate": "2026-10-11", "sampleSize": 950, "sampleType": "LV", "results": {"Gina Hinojosa (D)": 45.0, "Greg Abbott (R)": 49.0, "Undecided": 6.0}},
+    {"raceId": "TX-GOV-2026", "pollster": "Cook Political Report/GS Strategy Group and New River Strategies", "startDate": "2026-10-09", "endDate": "2026-10-13", "sampleSize": 934, "sampleType": "LV", "results": {"Gina Hinojosa (D)": 46.0, "Greg Abbott (R)": 48.0, "Other": 3.0, "Undecided": 3.0}},
+    {"raceId": "TX-GOV-2026", "pollster": "ActiVote", "startDate": "2026-09-30", "endDate": "2026-10-14", "sampleSize": 400, "sampleType": "LV", "results": {"Gina Hinojosa (D)": 49.1, "Greg Abbott (R)": 50.9}},
+    {"raceId": "TX-GOV-2026", "pollster": "University of Houston Hobby School", "startDate": "2026-10-10", "endDate": "2026-10-14", "sampleSize": 2000, "sampleType": "LV", "results": {"Gina Hinojosa (D)": 46.0, "Greg Abbott (R)": 49.0, "Other": 2.0, "Undecided": 3.0}},
+    {"raceId": "TX-GOV-2026", "pollster": "CBS News/YouGov", "startDate": "2026-10-08", "endDate": "2026-10-16", "sampleSize": 1460, "sampleType": "LV", "results": {"Gina Hinojosa (D)": 48.0, "Greg Abbott (R)": 52.0}},
+    {"raceId": "TX-GOV-2026", "pollster": "On Point Polling", "startDate": "2026-10-17", "endDate": "2026-10-18", "sampleSize": 385, "sampleType": "LV", "results": {"Gina Hinojosa (D)": 45.2, "Greg Abbott (R)": 47.7, "Other": 3.3, "Undecided": 3.8}},
+    {"raceId": "TX-GOV-2026", "pollster": "Fox News/Beacon Research and Shaw & Company", "startDate": "2026-10-15", "endDate": "2026-10-19", "sampleSize": 1398, "sampleType": "LV", "results": {"Gina Hinojosa (D)": 47.0, "Greg Abbott (R)": 52.0, "Undecided": 1.0}}
   ],
 };

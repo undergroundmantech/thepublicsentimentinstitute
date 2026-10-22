@@ -2,7 +2,7 @@
 // Connecticut — 2026 Governor: Ned Lamont (D) vs. Ryan Fazio (R)
 // Generated from the On Point Polling forecast poll feed (run of 2026-09-22), merged with
 // the polls this file already carried. Polls of matchups that are not on the
-// ballot were dropped. Newest poll: 2026-09-21.
+// ballot were dropped. Newest poll: 2026-10-12.
 
 export type SampleType = "LV" | "RV" | "A";
 
@@ -44,6 +44,8 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "CT-GOV-2026", "pollster": "co/efficient (R)", "startDate": "2026-09-16", "endDate": "2026-09-17", "sampleSize": 979, "sampleType": "LV", "results": {"Ned Lamont (D)": 48.0, "Ryan Fazio (R)": 41.0, "Undecided": 11.0}},
     {"raceId": "CT-GOV-2026", "pollster": "University of New Hampshire", "startDate": "2026-09-17", "endDate": "2026-09-21", "sampleSize": 540, "sampleType": "LV", "moe": 4.2, "results": {"Ned Lamont (D)": 55.0, "Ryan Fazio (R)": 38.0, "Other": 1.0, "Undecided": 6.0}},
     {"raceId": "CT-GOV-2026", "pollster": "Quinnipiac University", "startDate": "2026-10-08", "endDate": "2026-10-12", "sampleSize": 1225, "sampleType": "LV", "moe": 3.8, "results": {"Ned Lamont (D)": 58.0, "Ryan Fazio (R)": 38.0, "Undecided": 3.0}, "notes": "Undecided includes 2 percent who refused."},
-    {"raceId": "CT-GOV-2026", "pollster": "Emerson College", "startDate": "2026-10-10", "endDate": "2026-10-12", "sampleSize": 800, "sampleType": "LV", "moe": 3.5, "results": {"Ned Lamont (D)": 51.0, "Ryan Fazio (R)": 38.0, "Undecided": 11.0}, "notes": "Emerson College Polling for Nexstar Media."}
+    {"raceId": "CT-GOV-2026", "pollster": "Emerson College", "startDate": "2026-10-10", "endDate": "2026-10-12", "sampleSize": 800, "sampleType": "LV", "moe": 3.5, "results": {"Ned Lamont (D)": 51.0, "Ryan Fazio (R)": 38.0, "Undecided": 11.0}, "notes": "Emerson College Polling for Nexstar Media."},
+    {"raceId": "CT-GOV-2026", "pollster": "Wesleyan SurveyLab/YouGov", "startDate": "2026-09-22", "endDate": "2026-10-07", "sampleSize": 420, "sampleType": "LV", "results": {"Ned Lamont (D)": 57.0, "Ryan Fazio (R)": 34.0, "Undecided": 9.0}},
+    {"raceId": "CT-GOV-2026", "pollster": "Sacred Heart University / WFSB / CT Insider", "startDate": "2026-10-12", "endDate": "2026-10-12", "sampleSize": 1000, "sampleType": "LV", "results": {"Ned Lamont (D)": 59.3, "Ryan Fazio (R)": 32.7, "Undecided": 8.0}}
   ],
 };

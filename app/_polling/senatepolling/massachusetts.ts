@@ -2,7 +2,7 @@
 // Massachusetts — 2026 U.S. Senate: Ed Markey (D) vs. John Deaton (R)
 // Generated from the On Point Polling forecast poll feed (run of 2026-09-22), merged with
 // the polls this file already carried. Polls of matchups that are not on the
-// ballot were dropped. Newest poll: 2026-09-22.
+// ballot were dropped. Newest poll: 2026-10-18.
 
 export type SampleType = "LV" | "RV" | "A";
 
@@ -46,6 +46,8 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "MA-SEN-2026", "pollster": "UMass Amherst/YouGov", "startDate": "2026-08-05", "endDate": "2026-08-12", "sampleSize": 800, "sampleType": "RV", "results": {"Ed Markey (D)": 51.0, "John Deaton (R)": 30.0, "Other": 3.0, "Undecided": 15.0}},
     {"raceId": "MA-SEN-2026", "pollster": "University of New Hampshire", "startDate": "2026-08-20", "endDate": "2026-08-24", "sampleSize": 881, "sampleType": "LV", "results": {"Ed Markey (D)": 49.0, "John Deaton (R)": 30.0, "Other": 8.0, "Undecided": 12.0}},
     {"raceId": "MA-SEN-2026", "pollster": "University of New Hampshire", "startDate": "2026-09-17", "endDate": "2026-09-21", "sampleSize": 564, "sampleType": "LV", "moe": 4.1, "results": {"Ed Markey (D)": 53.0, "John Deaton (R)": 30.0, "Other": 9.0, "Undecided": 8.0}, "notes": "Other is Joe Tache, Party for Socialism and Liberation, at 9."},
-    {"raceId": "MA-SEN-2026", "pollster": "MassINC Polling Group for CommonWealth Beacon", "startDate": "2026-09-14", "endDate": "2026-09-22", "sampleSize": 800, "sampleType": "LV", "results": {"Ed Markey (D)": 54.0, "John Deaton (R)": 28.0, "Undecided": 18.0}, "notes": "Includes leaners. Undecided is the remainder; other and undecided were not published separately."}
+    {"raceId": "MA-SEN-2026", "pollster": "MassINC Polling Group for CommonWealth Beacon", "startDate": "2026-09-14", "endDate": "2026-09-22", "sampleSize": 800, "sampleType": "LV", "results": {"Ed Markey (D)": 54.0, "John Deaton (R)": 28.0, "Undecided": 18.0}, "notes": "Includes leaners. Undecided is the remainder; other and undecided were not published separately."},
+    {"raceId": "MA-SEN-2026", "pollster": "UMass Amherst/WCVB/YouGov", "startDate": "2026-10-05", "endDate": "2026-10-12", "sampleSize": 800, "sampleType": "RV", "results": {"Ed Markey (D)": 56.0, "John Deaton (R)": 29.0, "Other": 11.0, "Undecided": 4.0}},
+    {"raceId": "MA-SEN-2026", "pollster": "Suffolk University/Boston Globe", "startDate": "2026-10-14", "endDate": "2026-10-18", "sampleSize": 500, "sampleType": "LV", "results": {"Ed Markey (D)": 60.0, "John Deaton (R)": 31.8, "Other": 2.2, "Undecided": 6.0}}
   ],
 };

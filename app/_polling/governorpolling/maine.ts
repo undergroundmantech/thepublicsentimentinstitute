@@ -2,7 +2,7 @@
 // Maine — 2026 Governor: Hannah Pingree (D) vs. Bobby Charles (R)
 // Generated from the On Point Polling forecast poll feed (run of 2026-09-22), merged with
 // the polls this file already carried. Polls of matchups that are not on the
-// ballot were dropped. Newest poll: 2026-10-05.
+// ballot were dropped. Newest poll: 2026-10-11.
 
 export type SampleType = "LV" | "RV" | "A";
 
@@ -49,6 +49,7 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "ME-GOV-2026", "pollster": "co/efficient (R)", "startDate": "2026-09-28", "endDate": "2026-09-30", "sampleSize": 1240, "sampleType": "LV", "results": {"Hannah Pingree (D)": 47.0, "Bobby Charles (R)": 38.0, "Other": 6.0, "Undecided": 9.0}, "notes": "Other is independent Rick Bennett."},
     {"raceId": "ME-GOV-2026", "pollster": "CBS News/YouGov", "startDate": "2026-09-23", "endDate": "2026-10-01", "sampleSize": 1144, "sampleType": "LV", "results": {"Hannah Pingree (D)": 56.0, "Bobby Charles (R)": 44.0}, "notes": "1,144 registered voters; ballot among likely voters with leaners."},
     {"raceId": "ME-GOV-2026", "pollster": "Marist College", "startDate": "2026-10-01", "endDate": "2026-10-04", "sampleSize": 1505, "sampleType": "RV", "results": {"Hannah Pingree (D)": 52.0, "Bobby Charles (R)": 40.0, "Other": 6.0, "Undecided": 2.0}, "notes": "Other is independent Rick Bennett, 6%."},
-    {"raceId": "ME-GOV-2026", "pollster": "The Washington Post-Schar School", "startDate": "2026-09-30", "endDate": "2026-10-05", "sampleSize": 800, "sampleType": "LV", "results": {"Hannah Pingree (D)": 49.0, "Bobby Charles (R)": 36.0, "Other": 11.0, "Undecided": 4.0}, "notes": "Other is Rick Bennett (I) 11."}
+    {"raceId": "ME-GOV-2026", "pollster": "The Washington Post-Schar School", "startDate": "2026-09-30", "endDate": "2026-10-05", "sampleSize": 800, "sampleType": "LV", "results": {"Hannah Pingree (D)": 49.0, "Bobby Charles (R)": 36.0, "Other": 11.0, "Undecided": 4.0}, "notes": "Other is Rick Bennett (I) 11."},
+    {"raceId": "ME-GOV-2026", "pollster": "Suffolk University", "startDate": "2026-10-08", "endDate": "2026-10-11", "sampleSize": 500, "sampleType": "LV", "results": {"Hannah Pingree (D)": 49.0, "Bobby Charles (R)": 38.0, "Undecided": 13.0}}
   ],
 };

@@ -2,7 +2,7 @@
 // South Carolina — 2026 U.S. Senate: Annie Andrews (D) vs. Darline Graham (R)
 // Generated from the On Point Polling forecast poll feed (run of 2026-09-22), merged with
 // the polls this file already carried. Polls of matchups that are not on the
-// ballot were dropped. Newest poll: 2026-09-29.
+// ballot were dropped. Newest poll: 2026-10-19.
 
 export type SampleType = "LV" | "RV" | "A";
 
@@ -42,6 +42,8 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "SC-SEN-2026", "pollster": "Rasmussen Reports", "startDate": "2026-09-14", "endDate": "2026-09-14", "sampleSize": 1006, "sampleType": "LV", "results": {"Annie Andrews (D)": 43.0, "Darline Graham (R)": 48.0}},
     {"raceId": "SC-SEN-2026", "pollster": "Trafalgar Group (R)", "startDate": "2026-09-23", "endDate": "2026-09-25", "sampleSize": 1087, "sampleType": "LV", "results": {"Annie Andrews (D)": 42.3, "Darline Graham (R)": 43.4, "Other": 5.9, "Undecided": 8.4}},
     {"raceId": "SC-SEN-2026", "pollster": "InsiderAdvantage (R)", "startDate": "2026-09-28", "endDate": "2026-09-29", "sampleSize": 1200, "sampleType": "LV", "results": {"Annie Andrews (D)": 45.0, "Darline Graham (R)": 46.0, "Other": 6.0, "Undecided": 3.0}},
-    {"raceId": "SC-SEN-2026", "pollster": "Rasmussen Reports", "startDate": "2026-10-05", "endDate": "2026-10-08", "sampleSize": 837, "sampleType": "LV", "results": {"Annie Andrews (D)": 45.0, "Darline Graham (R)": 49.0, "Undecided": 6.0}}
+    {"raceId": "SC-SEN-2026", "pollster": "Rasmussen Reports", "startDate": "2026-10-05", "endDate": "2026-10-08", "sampleSize": 837, "sampleType": "LV", "results": {"Annie Andrews (D)": 45.0, "Darline Graham (R)": 49.0, "Undecided": 6.0}},
+    {"raceId": "SC-SEN-2026", "pollster": "Trafalgar Group (R)", "startDate": "2026-10-16", "endDate": "2026-10-18", "sampleSize": 1095, "sampleType": "LV", "results": {"Annie Andrews (D)": 46.0, "Darline Graham (R)": 49.0, "Other": 5.0, "Undecided": 1.0}},
+    {"raceId": "SC-SEN-2026", "pollster": "On Point Polling", "startDate": "2026-10-18", "endDate": "2026-10-19", "sampleSize": 294, "sampleType": "LV", "results": {"Annie Andrews (D)": 45.6, "Darline Graham (R)": 42.1, "Other": 5.2, "Undecided": 7.0}}
   ],
 };

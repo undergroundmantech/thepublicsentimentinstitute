@@ -2,7 +2,7 @@
 // Wisconsin — 2026 Governor: David Crowley (D) vs. Tom Tiffany (R)
 // Generated from the On Point Polling forecast poll feed (run of 2026-09-22), merged with
 // the polls this file already carried. Polls of matchups that are not on the
-// ballot were dropped. Newest poll: 2026-08-20.
+// ballot were dropped. Newest poll: 2026-10-09.
 
 export type SampleType = "LV" | "RV" | "A";
 
@@ -41,6 +41,7 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "WI-GOV-2026", "pollster": "Marquette University", "startDate": "2026-08-12", "endDate": "2026-08-20", "sampleSize": 738, "sampleType": "LV", "results": {"David Crowley (D)": 49.0, "Tom Tiffany (R)": 44.0, "Undecided": 7.0}},
     {"raceId": "WI-GOV-2026", "pollster": "Marquette University", "startDate": "2026-09-16", "endDate": "2026-09-23", "sampleSize": 750, "sampleType": "LV", "results": {"David Crowley (D)": 49.0, "Tom Tiffany (R)": 46.0, "Undecided": 5.0}, "notes": "Likely voters. Sample size not yet posted, entered as 750, near the August wave."},
     {"raceId": "WI-GOV-2026", "pollster": "Z to A Research for Rust Belt Rising (D)", "startDate": "2026-09-28", "endDate": "2026-10-01", "sampleSize": 662, "sampleType": "RV", "results": {"David Crowley (D)": 49.0, "Tom Tiffany (R)": 44.0, "Undecided": 7.0}, "notes": "Z to A Research for Rust Belt Rising, part of a 1,430 voter Michigan, Pennsylvania and Wisconsin sample; voter type not given."},
-    {"raceId": "WI-GOV-2026", "pollster": "YouGov for City Forward Collective", "startDate": "2026-09-22", "endDate": "2026-10-09", "sampleSize": 1715, "sampleType": "A", "results": {"David Crowley (D)": 46.0, "Tom Tiffany (R)": 42.0, "Undecided": 11.0}, "notes": "Adults."}
+    {"raceId": "WI-GOV-2026", "pollster": "YouGov for City Forward Collective", "startDate": "2026-09-22", "endDate": "2026-10-09", "sampleSize": 1715, "sampleType": "A", "results": {"David Crowley (D)": 46.0, "Tom Tiffany (R)": 42.0, "Undecided": 11.0}, "notes": "Adults."},
+    {"raceId": "WI-GOV-2026", "pollster": "GBAO (D)", "startDate": "2026-07-30", "endDate": "2026-08-03", "sampleSize": 800, "sampleType": "LV", "results": {"David Crowley (D)": 47.0, "Tom Tiffany (R)": 44.0, "Other": 4.0, "Undecided": 5.0}}
   ],
 };

@@ -48,6 +48,7 @@ export default function PollingRoom({ forecast, title = "Where On Point Polling 
   const [sel, setSel] = useState<string>(released[0]?.st ?? STATE_POLLS[0].st);
   const [hov, setHov] = useState<string | null>(null);
   useEffect(() => { fetch("/forecast/geo.json").then((r) => r.json()).then(setGeo).catch(() => {}); }, []);
+  useEffect(() => { try { const q = new URLSearchParams(window.location.search).get("st"); if (q && STATE_POLLS.some((p) => p.st === q.toUpperCase())) setSel(q.toUpperCase()); } catch { /* no window */ } }, []);
   const by = useMemo(() => Object.fromEntries(STATE_POLLS.map((p) => [p.st, p])) as Record<string, StatePoll>, []);
   const shapes = useMemo(() => (geo ? Object.entries(geo.states).map(([st, d]) => { const b = bboxOf(d), lb = geo.labels?.[st]; return { st, d, x: b[0], cx: lb ? lb[0] : (b[0] + b[2]) / 2 + (NUDGE[st]?.[0] ?? 0), cy: lb ? lb[1] : (b[1] + b[3]) / 2 + (NUDGE[st]?.[1] ?? 0) }; }) : []), [geo]);
   const [W, H] = geo?.frame ?? [975, 610];
@@ -113,7 +114,8 @@ export default function PollingRoom({ forecast, title = "Where On Point Polling 
                 {cur.status === "released" ? <p>{cur.dates} · {cur.sample}{cur.moe ? ` · MOE ${cur.moe}` : ""}</p> : <p>{cur.note}</p>}
               </div>
               {cur.races.length ? cur.races.map((r) => <Race key={r.race} r={r} fc={forecast[cur.st]?.[r.race as Office]} />) : null}
-              {cur.races.length ? <p className="prm-note">Likely voters with undecideds leaned. The tick on each bar is the share before leaners were allocated.</p> : null}
+              {cur.races.length ? <p className="prm-note">Likely voters with undecideds leaned. The tick on each bar is the share before leaners were allocated, where the release gives it.</p> : null}
+              {cur.status === "released" && cur.note ? <p className="prm-note">{cur.note}</p> : null}
               <div className="prm-links">
                 {cur.href ? <Link className="btn g" href={cur.href}>{cur.hrefLabel ?? "Read the release"}</Link> : null}
                 {cur.release ? <a className="btn" href={cur.release} target="_blank" rel="noreferrer">Release on Substack</a> : null}

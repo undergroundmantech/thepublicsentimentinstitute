@@ -2,7 +2,7 @@
 // Pennsylvania — 2026 Governor: Josh Shapiro (D) vs. Stacy Garrity (R)
 // Generated from the On Point Polling forecast poll feed (run of 2026-09-22), merged with
 // the polls this file already carried. Polls of matchups that are not on the
-// ballot were dropped. Newest poll: 2026-09-21.
+// ballot were dropped. Newest poll: 2026-10-11.
 
 export type SampleType = "LV" | "RV" | "A";
 
@@ -50,6 +50,7 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "PA-GOV-2026", "pollster": "Bravo Group/PennLive", "startDate": "2026-09-16", "endDate": "2026-09-22", "sampleSize": 624, "sampleType": "RV", "results": {"Josh Shapiro (D)": 55.0, "Stacy Garrity (R)": 28.0, "Undecided": 17.0}, "notes": "Undecided includes other."},
     {"raceId": "PA-GOV-2026", "pollster": "Susquehanna Polling & Research", "startDate": "2026-09-22", "endDate": "2026-09-30", "sampleSize": 700, "sampleType": "LV", "results": {"Josh Shapiro (D)": 52.0, "Stacy Garrity (R)": 31.0, "Undecided": 17.0}},
     {"raceId": "PA-GOV-2026", "pollster": "Quinnipiac University", "startDate": "2026-10-01", "endDate": "2026-10-05", "sampleSize": 1159, "sampleType": "LV", "results": {"Josh Shapiro (D)": 59.0, "Stacy Garrity (R)": 34.0, "Ken Krawchuk (L)": 2.0, "Undecided": 5.0}},
-    {"raceId": "PA-GOV-2026", "pollster": "Z to A Research for Rust Belt Rising (D)", "startDate": "2026-09-28", "endDate": "2026-10-01", "sampleSize": 630, "sampleType": "RV", "results": {"Josh Shapiro (D)": 53.0, "Stacy Garrity (R)": 34.0, "Undecided": 13.0}, "notes": "Z to A Research for Rust Belt Rising, part of a 1,430 voter Michigan, Pennsylvania and Wisconsin sample; voter type not given."}
+    {"raceId": "PA-GOV-2026", "pollster": "Z to A Research for Rust Belt Rising (D)", "startDate": "2026-09-28", "endDate": "2026-10-01", "sampleSize": 630, "sampleType": "RV", "results": {"Josh Shapiro (D)": 53.0, "Stacy Garrity (R)": 34.0, "Undecided": 13.0}, "notes": "Z to A Research for Rust Belt Rising, part of a 1,430 voter Michigan, Pennsylvania and Wisconsin sample; voter type not given."},
+    {"raceId": "PA-GOV-2026", "pollster": "Bravo Group/PennLive", "startDate": "2026-10-05", "endDate": "2026-10-11", "sampleSize": 628, "sampleType": "RV", "results": {"Josh Shapiro (D)": 57.68, "Stacy Garrity (R)": 27.55, "Other": 5.84, "Undecided": 8.93}}
   ],
 };

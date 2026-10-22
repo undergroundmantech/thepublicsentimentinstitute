@@ -12,6 +12,8 @@ import {
 import { getPollsterEntry } from "@/app/_polling/lib/buildDailyModel";
 import StateRaceMap, { type MapRow } from "@/app/_polling/lib/StateRaceMap";
 import TrendPanel from "@/app/_polling/lib/TrendPanel";
+import Ambient from "@/app/components/opp/Ambient";
+import "./polls2.css";
 import { RATING_LABEL, STATE_NAME, fmtM, rating, ratingPill } from "@/app/lib/opp";
 
 /** A forecast race page the averages page can link to, keyed `sen-GA` or `gov-GA`. */
@@ -414,22 +416,47 @@ export default function PollingAveragesPage({ initialId, forecast }: { initialId
   /* ------------------------------ one average ------------------------------ */
   const optionIdx = options.findIndex((o) => o.id === id);
   return (
-    <div className="opp pa">
+    <div className="opp pa pa2 fx-dark">
       <style>{CSS}</style>
       <nav className="crumbs" aria-label="Breadcrumb">
         <Link href="/">Home</Link><span className="sep">/</span><Link href="/polls">Polls</Link><span className="sep">/</span>
         <Link href={GROUP_HREF[item.group] ?? "/polls"}>{GROUP_TITLE[item.group] ?? item.group}</Link><span className="sep">/</span><span>{words.crumb}</span>
       </nav>
-      <header className="ph">
-        <div className="eye g">{words.eyebrow}</div>
-        <h1>{words.h1} <em>average</em></h1>
-        <p className="lede">{lede}</p>
-        <div className="pmeta">
-          <span><b className="mono">{totalPolls}</b> polls</span>
-          {updated && <span>Updated <b>{fmtIso(updated)}</b></span>}
-          {sampleFilter !== "all" && <span className="pill pa-flt">{SAMPLE_OPTS.find((o) => o.val === sampleFilter)?.full} only</span>}
-          {h2hDef && <a className="btn sm" href={`/api/polls/${h2hDef.id}`}>Public JSON</a>}
+      <Ambient />
+      <header className="pa-hero">
+        <div className="pa-hero-l">
+          <div className="eye g">{words.eyebrow}</div>
+          <h1>{words.h1} <em>average</em></h1>
+          <p className="lede">{lede}</p>
+          <div className="pa-hero-meta">
+            <span><b>{totalPolls}</b> polls</span><span><b>{pollsterCount}</b> pollsters</span>
+            {updated && <span>Updated <b>{fmtIso(updated)}</b></span>}
+            {change30 != null && <span>30 days <b style={{ color: change30 >= 0 ? h2hDef?.seriesA.color : h2hDef?.seriesB.color }}>{signed(change30)}</b></span>}
+            {sampleFilter !== "all" && <span className="pill pa-flt">{SAMPLE_OPTS.find((o) => o.val === sampleFilter)?.full} only</span>}
+            {fc ? <Link className="pa-fc" href={fc.href}>Forecast <b>{fmtM(fc.m, fc.ind)}</b> · open the race</Link> : null}
+            {h2hDef && <a className="btn sm" href={`/api/polls/${h2hDef.id}`}>Public JSON</a>}
+          </div>
         </div>
+        {h2hDef && hLatest ? (
+          <div className="pa-hero-r">
+            <div className="pa-duel">
+              <div className="pa-side" style={{ "--c": h2hDef.seriesA.color } as React.CSSProperties}><span>{h2hDef.seriesA.label}</span><b>{hLatest.a.toFixed(1)}</b></div>
+              <div className="pa-mid"><span>{h2hDef.marginLabel}</span><b style={{ color: leadColor }}>{h2hDef.fmtMargin(hLatest.net)}</b></div>
+              <div className="pa-side r" style={{ "--c": h2hDef.seriesB.color } as React.CSSProperties}><span>{h2hDef.seriesB.label}</span><b>{hLatest.b.toFixed(1)}</b></div>
+            </div>
+            <div className="pa-tug" aria-hidden="true"><i style={{ width: `${(hLatest.a / Math.max(1, hLatest.a + hLatest.b)) * 100}%`, background: h2hDef.seriesA.color }} /><s style={{ background: h2hDef.seriesB.color }} /><em /></div>
+            <div className="pa-stream" aria-label="The newest polls, newest on the right">
+              <span className="eye">Newest {Math.min(30, h2hPolls.length)} polls</span>
+              <div className="pa-px">
+                {[...h2hPolls].sort((x, y) => x.t - y.t).slice(-30).map((q, k, arr) => (
+                  <i key={`${q.pollster}-${q.t}-${k}`} title={`${q.pollster}, ${fmtDay(q.t)}: ${h2hDef.fmtMargin(q.margin)}`}
+                    className={k === arr.length - 1 ? "new" : ""}
+                    style={{ background: q.margin >= 0 ? h2hDef.seriesA.color : h2hDef.seriesB.color, opacity: 0.35 + Math.min(1, Math.abs(q.margin) / 10) * 0.65, animationDelay: `${k * 0.03}s` }} />
+                ))}
+              </div>
+            </div>
+          </div>
+        ) : null}
       </header>
 
       {/* switch averages: group, then the race; the URL follows through pollHref */}

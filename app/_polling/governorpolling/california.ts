@@ -2,7 +2,7 @@
 // California — 2026 Governor: Xavier Becerra (D) vs. Steve Hilton (R)
 // Generated from the On Point Polling forecast poll feed (run of 2026-09-22), merged with
 // the polls this file already carried. Polls of matchups that are not on the
-// ballot were dropped. Newest poll: 2026-10-02.
+// ballot were dropped. Newest poll: 2026-10-19.
 
 export type SampleType = "LV" | "RV" | "A";
 
@@ -48,6 +48,9 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "CA-GOV-2026", "pollster": "Independent Voter Project", "startDate": "2026-09-23", "endDate": "2026-09-28", "sampleSize": 2906, "sampleType": "LV", "results": {"Xavier Becerra (D)": 48.0, "Steve Hilton (R)": 38.0, "Other": 3.0, "Undecided": 11.0}},
     {"raceId": "CA-GOV-2026", "pollster": "Manhattan Institute", "startDate": "2026-09-24", "endDate": "2026-10-01", "sampleSize": 1000, "sampleType": "LV", "results": {"Xavier Becerra (D)": 57.0, "Steve Hilton (R)": 38.0, "Undecided": 5.0}},
     {"raceId": "CA-GOV-2026", "pollster": "Independent Voter Project", "startDate": "2026-09-23", "endDate": "2026-10-02", "sampleSize": 2906, "sampleType": "LV", "results": {"Xavier Becerra (D)": 48.0, "Steve Hilton (R)": 38.0, "Undecided": 14.0}},
-    {"raceId": "CA-GOV-2026", "pollster": "David Wolfson for Hilton (R)", "startDate": "2026-10-01", "endDate": "2026-10-02", "sampleSize": 1020, "sampleType": "RV", "results": {"Xavier Becerra (D)": 45.7, "Steve Hilton (R)": 40.1, "Other": 0.1, "Undecided": 14.1}, "notes": "Hilton campaign poll; voter type not published, entered as registered voters."}
+    {"raceId": "CA-GOV-2026", "pollster": "David Wolfson for Hilton (R)", "startDate": "2026-10-01", "endDate": "2026-10-02", "sampleSize": 1020, "sampleType": "RV", "results": {"Xavier Becerra (D)": 45.7, "Steve Hilton (R)": 40.1, "Other": 0.1, "Undecided": 14.1}, "notes": "Hilton campaign poll; voter type not published, entered as registered voters."},
+    {"raceId": "CA-GOV-2026", "pollster": "David Wolfson for Hilton (R)", "startDate": "2026-08-14", "endDate": "2026-08-18", "sampleSize": 912, "sampleType": "RV", "results": {"Xavier Becerra (D)": 49.2, "Steve Hilton (R)": 41.0, "Undecided": 9.8}},
+    {"raceId": "CA-GOV-2026", "pollster": "ActiVote", "startDate": "2026-09-24", "endDate": "2026-10-16", "sampleSize": 400, "sampleType": "LV", "results": {"Xavier Becerra (D)": 62.8, "Steve Hilton (R)": 37.2}},
+    {"raceId": "CA-GOV-2026", "pollster": "Emerson College", "startDate": "2026-10-17", "endDate": "2026-10-19", "sampleSize": 1000, "sampleType": "LV", "results": {"Xavier Becerra (D)": 60.0, "Steve Hilton (R)": 33.0, "Undecided": 7.0}}
   ],
 };

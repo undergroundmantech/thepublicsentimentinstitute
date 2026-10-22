@@ -2,7 +2,7 @@
 // Maine — 2026 U.S. Senate: Troy Jackson (D) vs. Susan Collins (R)
 // Generated from the On Point Polling forecast poll feed (run of 2026-09-22), merged with
 // the polls this file already carried. Polls of matchups that are not on the
-// ballot were dropped. Newest poll: 2026-10-01.
+// ballot were dropped. Newest poll: 2026-10-14.
 
 export type SampleType = "LV" | "RV" | "A";
 
@@ -58,6 +58,7 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "ME-SEN-2026", "pollster": "Marist College", "startDate": "2026-10-01", "endDate": "2026-10-04", "sampleSize": 1505, "sampleType": "RV", "results": {"Troy Jackson (D)": 51.0, "Susan Collins (R)": 47.0, "Undecided": 2.0}},
     {"raceId": "ME-SEN-2026", "pollster": "The Washington Post-Schar School", "startDate": "2026-09-30", "endDate": "2026-10-05", "sampleSize": 800, "sampleType": "LV", "results": {"Troy Jackson (D)": 50.0, "Susan Collins (R)": 46.0, "Undecided": 4.0}, "notes": "800 likely voters."},
     {"raceId": "ME-SEN-2026", "pollster": "Rasmussen Reports", "startDate": "2026-10-05", "endDate": "2026-10-08", "sampleSize": 804, "sampleType": "LV", "results": {"Troy Jackson (D)": 49.0, "Susan Collins (R)": 47.0, "Undecided": 4.0}},
-    {"raceId": "ME-SEN-2026", "pollster": "InsiderAdvantage", "startDate": "2026-10-13", "endDate": "2026-10-14", "sampleSize": 800, "sampleType": "LV", "results": {"Troy Jackson (D)": 49.0, "Susan Collins (R)": 47.0, "Undecided": 4.0}, "notes": "Sample size not published; 800 is a placeholder."}
+    {"raceId": "ME-SEN-2026", "pollster": "InsiderAdvantage", "startDate": "2026-10-13", "endDate": "2026-10-14", "sampleSize": 800, "sampleType": "LV", "results": {"Troy Jackson (D)": 49.0, "Susan Collins (R)": 47.0, "Undecided": 4.0}, "notes": "Sample size not published; 800 is a placeholder."},
+    {"raceId": "ME-SEN-2026", "pollster": "Suffolk University", "startDate": "2026-10-08", "endDate": "2026-10-11", "sampleSize": 500, "sampleType": "LV", "results": {"Troy Jackson (D)": 49.0, "Susan Collins (R)": 47.0, "Undecided": 4.0}}
   ],
 };

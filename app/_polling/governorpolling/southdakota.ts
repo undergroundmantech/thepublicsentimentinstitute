@@ -36,6 +36,8 @@ export const RACES = [
 
 export const STATE_POLLS: Record<string, Poll[]> = {
   SD: [
-    {"raceId": "SD-GOV-2026", "pollster": "Lake Research Partners (D)", "startDate": "2026-08-26", "endDate": "2026-08-30", "sampleSize": 500, "sampleType": "LV", "results": {"Dan Ahlers (D)": 44.0, "Larry Rhoden (R)": 51.0, "Undecided": 5.0}}
+    {"raceId": "SD-GOV-2026", "pollster": "Lake Research Partners (D)", "startDate": "2026-08-26", "endDate": "2026-08-30", "sampleSize": 500, "sampleType": "LV", "results": {"Dan Ahlers (D)": 44.0, "Larry Rhoden (R)": 51.0, "Undecided": 5.0}},
+    {"raceId": "SD-GOV-2026", "pollster": "Concord Public Opinion Partners (D)", "startDate": "2026-10-06", "endDate": "2026-10-08", "sampleSize": 400, "sampleType": "LV", "results": {"Dan Ahlers (D)": 38.0, "Larry Rhoden (R)": 48.0, "Other": 4.0, "Undecided": 10.0}},
+    {"raceId": "SD-GOV-2026", "pollster": "Mason-Dixon for South Dakota News Watch and USD Chiesman Center", "startDate": "2026-10-12", "endDate": "2026-10-14", "sampleSize": 500, "sampleType": "LV", "results": {"Dan Ahlers (D)": 36.0, "Larry Rhoden (R)": 56.0, "Undecided": 8.0}}
   ],
 };

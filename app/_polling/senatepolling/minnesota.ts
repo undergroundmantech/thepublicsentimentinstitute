@@ -2,7 +2,7 @@
 // Minnesota — 2026 U.S. Senate: Peggy Flanagan (D) vs. Michele Tafoya (R)
 // Generated from the On Point Polling forecast poll feed (run of 2026-09-22), merged with
 // the polls this file already carried. Polls of matchups that are not on the
-// ballot were dropped. Newest poll: 2026-10-07.
+// ballot were dropped. Newest poll: 2026-10-15.
 
 export type SampleType = "LV" | "RV" | "A";
 
@@ -48,6 +48,7 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "MN-SEN-2026", "pollster": "Mason-Dixon for the Star Tribune", "startDate": "2026-10-05", "endDate": "2026-10-07", "sampleSize": 800, "sampleType": "LV", "results": {"Peggy Flanagan (D)": 47.0, "Michele Tafoya (R)": 43.0, "Undecided": 10.0}, "notes": "Field dates read from 10/5-7 as supplied."},
     {"raceId": "MN-SEN-2026", "pollster": "Morning Consult", "startDate": "2026-10-02", "endDate": "2026-10-07", "sampleSize": 1000, "sampleType": "RV", "results": {"Peggy Flanagan (D)": 45.0, "Michele Tafoya (R)": 41.0, "Undecided": 14.0}},
     {"raceId": "MN-SEN-2026", "pollster": "Rasmussen Reports (R)", "startDate": "2026-10-05", "endDate": "2026-10-07", "sampleSize": 856, "sampleType": "LV", "results": {"Peggy Flanagan (D)": 48.0, "Michele Tafoya (R)": 45.0, "Undecided": 7.0}},
-    {"raceId": "MN-SEN-2026", "pollster": "KSTP/SurveyUSA", "startDate": "2026-10-08", "endDate": "2026-10-12", "sampleSize": 650, "sampleType": "LV", "results": {"Peggy Flanagan (D)": 45.0, "Michele Tafoya (R)": 42.0, "Undecided": 13.0}, "notes": "The release gives its numbers in charts without a sample size, so 650 is a placeholder near the last two KSTP/SurveyUSA samples."}
+    {"raceId": "MN-SEN-2026", "pollster": "KSTP/SurveyUSA", "startDate": "2026-10-08", "endDate": "2026-10-12", "sampleSize": 650, "sampleType": "LV", "results": {"Peggy Flanagan (D)": 45.0, "Michele Tafoya (R)": 42.0, "Undecided": 13.0}, "notes": "The release gives its numbers in charts without a sample size, so 650 is a placeholder near the last two KSTP/SurveyUSA samples."},
+    {"raceId": "MN-SEN-2026", "pollster": "Trafalgar Group (R)", "startDate": "2026-10-13", "endDate": "2026-10-15", "sampleSize": 1079, "sampleType": "LV", "results": {"Peggy Flanagan (D)": 48.1, "Michele Tafoya (R)": 44.6, "Other": 1.9, "Undecided": 5.4}}
   ],
 };

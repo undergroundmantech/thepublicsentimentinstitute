@@ -31,7 +31,7 @@ export default function Page() {
         <p className="lede">On Point Polling is the polling and research arm behind On Point Politics. It fields the surveys, runs the DSMeridian likely voter model and feeds the polling averages, the 2026 forecast and election night coverage.</p>
         <div className="pmeta">
           <span>Based in <b>Miami</b></span>
-          <span>Field reports <b className="mono">9</b></span>
+          <span>Field reports <b className="mono">12</b></span>
           <span>Latest <Link href="/on-point-polling/polls"><b>South Carolina, Oct 2026</b></Link></span>
           <span>Largest sample <b className="mono">893 LV</b></span>
         </div>

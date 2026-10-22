@@ -2,7 +2,7 @@
 // Minnesota — 2026 Governor: Amy Klobuchar (D) vs. Lisa Demuth (R)
 // Generated from the On Point Polling forecast poll feed (run of 2026-09-22), merged with
 // the polls this file already carried. Polls of matchups that are not on the
-// ballot were dropped. Newest poll: 2026-09-15.
+// ballot were dropped. Newest poll: 2026-10-12.
 
 export type SampleType = "LV" | "RV" | "A";
 
@@ -41,6 +41,7 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "MN-GOV-2026", "pollster": "KSTP/SurveyUSA", "startDate": "2026-09-09", "endDate": "2026-09-14", "sampleSize": 654, "sampleType": "LV", "results": {"Amy Klobuchar (D)": 47.0, "Lisa Demuth (R)": 40.0, "Other": 3.0, "Undecided": 9.0}},
     {"raceId": "MN-GOV-2026", "pollster": "co/efficient (R)", "startDate": "2026-09-14", "endDate": "2026-09-15", "sampleSize": 833, "sampleType": "LV", "results": {"Amy Klobuchar (D)": 47.0, "Lisa Demuth (R)": 45.0, "Undecided": 9.0}},
     {"raceId": "MN-GOV-2026", "pollster": "Morning Consult", "startDate": "2026-10-02", "endDate": "2026-10-07", "sampleSize": 1000, "sampleType": "RV", "results": {"Amy Klobuchar (D)": 48.0, "Lisa Demuth (R)": 39.0, "Undecided": 13.0}},
-    {"raceId": "MN-GOV-2026", "pollster": "KSTP/SurveyUSA", "startDate": "2026-10-08", "endDate": "2026-10-12", "sampleSize": 650, "sampleType": "LV", "results": {"Amy Klobuchar (D)": 48.0, "Lisa Demuth (R)": 41.0, "Undecided": 11.0}, "notes": "The release gives its numbers in charts without a sample size, so 650 is a placeholder near the last two KSTP/SurveyUSA samples."}
+    {"raceId": "MN-GOV-2026", "pollster": "KSTP/SurveyUSA", "startDate": "2026-10-08", "endDate": "2026-10-12", "sampleSize": 650, "sampleType": "LV", "results": {"Amy Klobuchar (D)": 48.0, "Lisa Demuth (R)": 41.0, "Undecided": 11.0}, "notes": "The release gives its numbers in charts without a sample size, so 650 is a placeholder near the last two KSTP/SurveyUSA samples."},
+    {"raceId": "MN-GOV-2026", "pollster": "Mason-Dixon for the Star Tribune", "startDate": "2026-10-05", "endDate": "2026-10-07", "sampleSize": 800, "sampleType": "LV", "results": {"Amy Klobuchar (D)": 50.0, "Lisa Demuth (R)": 41.0, "Undecided": 9.0}}
   ],
 };

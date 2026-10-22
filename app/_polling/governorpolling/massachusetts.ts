@@ -2,7 +2,7 @@
 // Massachusetts — 2026 Governor: Maura Healey (D) vs. Michael Minogue (R)
 // Generated from the On Point Polling forecast poll feed (run of 2026-09-22), merged with
 // the polls this file already carried. Polls of matchups that are not on the
-// ballot were dropped. Newest poll: 2026-09-22.
+// ballot were dropped. Newest poll: 2026-10-18.
 
 export type SampleType = "LV" | "RV" | "A";
 
@@ -41,6 +41,8 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "MA-GOV-2026", "pollster": "UMass Amherst / YouGov", "startDate": "2026-08-12", "endDate": "2026-08-12", "sampleSize": 800, "sampleType": "RV", "results": {"Maura Healey (D)": 53.0, "Michael Minogue (R)": 33.0, "Other": 2.0, "Undecided": 12.0}},
     {"raceId": "MA-GOV-2026", "pollster": "University of New Hampshire", "startDate": "2026-08-24", "endDate": "2026-08-24", "sampleSize": 881, "sampleType": "LV", "results": {"Maura Healey (D)": 54.0, "Michael Minogue (R)": 30.0, "Other": 2.0, "Undecided": 14.0}},
     {"raceId": "MA-GOV-2026", "pollster": "University of New Hampshire", "startDate": "2026-09-17", "endDate": "2026-09-21", "sampleSize": 564, "sampleType": "LV", "moe": 4.1, "results": {"Maura Healey (D)": 54.0, "Michael Minogue (R)": 38.0, "Undecided": 8.0}},
-    {"raceId": "MA-GOV-2026", "pollster": "MassINC Polling Group for CommonWealth Beacon", "startDate": "2026-09-14", "endDate": "2026-09-22", "sampleSize": 800, "sampleType": "LV", "results": {"Maura Healey (D)": 54.0, "Michael Minogue (R)": 32.0, "Undecided": 14.0}, "notes": "Includes leaners. Undecided is the remainder; other and undecided were not published separately."}
+    {"raceId": "MA-GOV-2026", "pollster": "MassINC Polling Group for CommonWealth Beacon", "startDate": "2026-09-14", "endDate": "2026-09-22", "sampleSize": 800, "sampleType": "LV", "results": {"Maura Healey (D)": 54.0, "Michael Minogue (R)": 32.0, "Undecided": 14.0}, "notes": "Includes leaners. Undecided is the remainder; other and undecided were not published separately."},
+    {"raceId": "MA-GOV-2026", "pollster": "UMass Amherst/WCVB/YouGov", "startDate": "2026-10-05", "endDate": "2026-10-12", "sampleSize": 800, "sampleType": "RV", "results": {"Maura Healey (D)": 57.0, "Michael Minogue (R)": 32.0, "Other": 8.0, "Undecided": 3.0}},
+    {"raceId": "MA-GOV-2026", "pollster": "Suffolk University/Boston Globe", "startDate": "2026-10-14", "endDate": "2026-10-18", "sampleSize": 500, "sampleType": "LV", "results": {"Maura Healey (D)": 58.6, "Michael Minogue (R)": 36.0, "Other": 2.0, "Undecided": 3.4}}
   ],
 };

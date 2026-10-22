@@ -2,7 +2,7 @@
 // New Mexico — 2026 U.S. Senate: Ben Ray Luján (D) vs. Larry Marker (R)
 // Generated from the On Point Polling forecast poll feed (run of 2026-09-22), merged with
 // the polls this file already carried. Polls of matchups that are not on the
-// ballot were dropped. Newest poll: 2026-08-28.
+// ballot were dropped. Newest poll: 2026-10-09.
 
 export type SampleType = "LV" | "RV" | "A";
 
@@ -37,6 +37,7 @@ export const RACES = [
 export const STATE_POLLS: Record<string, Poll[]> = {
   NM: [
     {"raceId": "NM-SEN-2026", "pollster": "Research & Polling Inc.", "startDate": "2026-08-21", "endDate": "2026-08-28", "sampleSize": 516, "sampleType": "LV", "results": {"Ben Ray Luján (D)": 53.0, "Larry Marker (R)": 38.0, "Undecided": 9.0}},
-    {"raceId": "NM-SEN-2026", "pollster": "SurveyUSA for KOB 4", "startDate": "2026-09-25", "endDate": "2026-09-30", "sampleSize": 567, "sampleType": "LV", "results": {"Ben Ray Luján (D)": 54.0, "Larry Marker (R)": 36.0, "Undecided": 10.0}}
+    {"raceId": "NM-SEN-2026", "pollster": "SurveyUSA for KOB 4", "startDate": "2026-09-25", "endDate": "2026-09-30", "sampleSize": 567, "sampleType": "LV", "results": {"Ben Ray Luján (D)": 54.0, "Larry Marker (R)": 36.0, "Undecided": 10.0}},
+    {"raceId": "NM-SEN-2026", "pollster": "Research & Polling Inc.", "startDate": "2026-10-01", "endDate": "2026-10-09", "sampleSize": 1125, "sampleType": "LV", "results": {"Ben Ray Luján (D)": 53.0, "Larry Marker (R)": 37.0, "Undecided": 10.0}}
   ],
 };

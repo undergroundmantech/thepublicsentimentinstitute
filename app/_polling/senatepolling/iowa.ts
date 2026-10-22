@@ -2,7 +2,7 @@
 // Iowa — 2026 U.S. Senate: Josh Turek (D) vs. Ashley Hinson (R)
 // Generated from the On Point Polling forecast poll feed (run of 2026-09-22), merged with
 // the polls this file already carried. Polls of matchups that are not on the
-// ballot were dropped. Newest poll: 2026-09-30.
+// ballot were dropped. Newest poll: 2026-10-21.
 
 export type SampleType = "LV" | "RV" | "A";
 
@@ -65,6 +65,12 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "IA-SEN-2026", "pollster": "CNN/SSRS", "startDate": "2026-09-29", "endDate": "2026-10-05", "sampleSize": 801, "sampleType": "LV", "results": {"Josh Turek (D)": 43.0, "Ashley Hinson (R)": 45.0}, "notes": "Third party and undecided shares not published."},
     {"raceId": "IA-SEN-2026", "pollster": "Emerson College/Nexstar Media", "startDate": "2026-10-05", "endDate": "2026-10-06", "sampleSize": 650, "sampleType": "LV", "moe": 3.8, "results": {"Josh Turek (D)": 45.0, "Ashley Hinson (R)": 47.0, "Other": 2.0, "Undecided": 6.0}, "notes": "Other is Laehn (L) 2."},
     {"raceId": "IA-SEN-2026", "pollster": "YouGov", "startDate": "2026-10-06", "endDate": "2026-10-12", "sampleSize": 2245, "sampleType": "LV", "results": {"Josh Turek (D)": 47.0, "Ashley Hinson (R)": 46.0, "Undecided": 4.0}, "notes": "2,245 likely voters, MoE 3.1. Recalled 2024 vote in the sample: Trump 52, Harris 41."},
-    {"raceId": "IA-SEN-2026", "pollster": "Marist College", "startDate": "2026-10-08", "endDate": "2026-10-11", "sampleSize": 512, "sampleType": "LV", "results": {"Josh Turek (D)": 48.0, "Ashley Hinson (R)": 45.0, "Undecided": 7.0}, "notes": "Likely voters, MoE 6.6; the release gives 1,100 registered voters at MoE 4.5 and no likely voter count, so 512 is estimated from the two margins of error. Turek leads by 7 among registered voters."}
+    {"raceId": "IA-SEN-2026", "pollster": "Marist College", "startDate": "2026-10-08", "endDate": "2026-10-11", "sampleSize": 512, "sampleType": "LV", "results": {"Josh Turek (D)": 48.0, "Ashley Hinson (R)": 45.0, "Undecided": 7.0}, "notes": "Likely voters, MoE 6.6; the release gives 1,100 registered voters at MoE 4.5 and no likely voter count, so 512 is estimated from the two margins of error. Turek leads by 7 among registered voters."},
+    {"raceId": "IA-SEN-2026", "pollster": "New York Times/Siena", "startDate": "2026-09-22", "endDate": "2026-10-01", "sampleSize": 606, "sampleType": "LV", "results": {"Josh Turek (D)": 47.0, "Ashley Hinson (R)": 48.0, "Undecided": 5.0}},
+    {"raceId": "IA-SEN-2026", "pollster": "National Public Affairs", "startDate": "2026-10-08", "endDate": "2026-10-12", "sampleSize": 678, "sampleType": "LV", "results": {"Josh Turek (D)": 44.0, "Ashley Hinson (R)": 47.0, "Other": 4.0, "Undecided": 5.0}},
+    {"raceId": "IA-SEN-2026", "pollster": "Cook Political Report/GS Strategy Group and New River Strategies", "startDate": "2026-10-09", "endDate": "2026-10-13", "sampleSize": 602, "sampleType": "LV", "results": {"Josh Turek (D)": 46.0, "Ashley Hinson (R)": 44.0, "Other": 8.0, "Undecided": 2.0}},
+    {"raceId": "IA-SEN-2026", "pollster": "Trafalgar Group (R)", "startDate": "2026-10-13", "endDate": "2026-10-15", "sampleSize": 1094, "sampleType": "LV", "results": {"Josh Turek (D)": 44.2, "Ashley Hinson (R)": 45.9, "Other": 3.5, "Undecided": 6.4}},
+    {"raceId": "IA-SEN-2026", "pollster": "co/efficient (R)", "startDate": "2026-10-15", "endDate": "2026-10-19", "sampleSize": 863, "sampleType": "LV", "results": {"Josh Turek (D)": 45.0, "Ashley Hinson (R)": 48.0, "Other": 2.0, "Undecided": 6.0}},
+    {"raceId": "IA-SEN-2026", "pollster": "On Point Polling", "startDate": "2026-10-19", "endDate": "2026-10-21", "sampleSize": 491, "sampleType": "LV", "results": {"Josh Turek (D)": 51.6, "Ashley Hinson (R)": 46.9, "Other": 1.5}}
   ],
 };

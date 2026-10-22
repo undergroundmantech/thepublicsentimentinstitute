@@ -54,6 +54,24 @@ export const STATE_POLLS: StatePoll[] = [
       { race: "Governor", cands: [{ n: "Jermaine Johnson", p: "d", leaned: 44.9, asked: 42.5 }, { n: "Alan Wilson", p: "r", leaned: 53.1, asked: 51.1 }] },
     ],
   },
+  {
+    st: "IA", name: "Iowa", status: "released", dates: "Oct. 19 to 21, 2026", sample: "491 RV", moe: "±4.4",
+    href: "https://onpointpolitics.substack.com/p/new-polls-democrats-lead-both-iowa", hrefLabel: "Read the release",
+    races: [
+      { race: "Senate", cands: [{ n: "Josh Turek", p: "d", leaned: 51.6 }, { n: "Ashley Hinson", p: "r", leaned: 46.9 }] },
+      { race: "Governor", cands: [{ n: "Rob Sand", p: "d", leaned: 52.0 }, { n: "Zach Lahn", p: "r", leaned: 47.3 }] },
+    ],
+    note: "As asked, before leaners: Turek +4.7, Sand +3.6.",
+  },
+  {
+    st: "KS", name: "Kansas", status: "released", dates: "Oct. 19 to 21, 2026", sample: "479 RV", moe: "±4.5",
+    href: "https://onpointpolitics.substack.com/p/new-polls-democrats-lead-both-iowa", hrefLabel: "Read the release",
+    races: [
+      { race: "Senate", cands: [{ n: "Adam Hamilton", p: "d", leaned: 48.9 }, { n: "Roger Marshall", p: "r", leaned: 47.1 }] },
+      { race: "Governor", cands: [{ n: "Cindy Holscher", p: "d", leaned: 46.3 }, { n: "Ty Masterson", p: "r", leaned: 52.8 }] },
+    ],
+    note: "As asked, before leaners: Hamilton +2.5, Masterson +5.5.",
+  },
   { st: "NE", name: "Nebraska", status: "next", races: [], note: "Considering next. Not yet funded." },
   { st: "WI", name: "Wisconsin", status: "next", races: [], note: "Considering next. Not yet funded." },
 ];

@@ -36,6 +36,7 @@ export const RACES = [
 
 export const STATE_POLLS: Record<string, Poll[]> = {
   IL: [
-    {"raceId": "IL-SEN-2026", "pollster": "Public Policy Polling for Chicago News Weekly (D)", "startDate": "2026-09-30", "endDate": "2026-10-01", "sampleSize": 569, "sampleType": "LV", "results": {"Juliana Stratton (D)": 49.0, "Don Tracy (R)": 36.0, "Undecided": 15.0}}
+    {"raceId": "IL-SEN-2026", "pollster": "Public Policy Polling for Chicago News Weekly (D)", "startDate": "2026-09-30", "endDate": "2026-10-01", "sampleSize": 569, "sampleType": "LV", "results": {"Juliana Stratton (D)": 49.0, "Don Tracy (R)": 36.0, "Undecided": 15.0}},
+    {"raceId": "IL-SEN-2026", "pollster": "ActiVote", "startDate": "2026-09-26", "endDate": "2026-10-20", "sampleSize": 400, "sampleType": "LV", "results": {"Juliana Stratton (D)": 58.5, "Don Tracy (R)": 41.5}}
   ],
 };

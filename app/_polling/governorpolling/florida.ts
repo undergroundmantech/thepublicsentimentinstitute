@@ -2,7 +2,7 @@
 // Florida — 2026 Governor: David Jolly (D) vs. Byron Donalds (R)
 // Generated from the On Point Polling forecast poll feed (run of 2026-09-22), merged with
 // the polls this file already carried. Polls of matchups that are not on the
-// ballot were dropped. Newest poll: 2026-09-28. Full public poll list as of 2026-09-28.
+// ballot were dropped. Newest poll: 2026-10-19. Full public poll list as of 2026-09-28.
 
 export type SampleType = "LV" | "RV" | "A";
 
@@ -61,6 +61,14 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "FL-GOV-2026", "pollster": "Mason-Dixon for Telemundo", "startDate": "2026-09-28", "endDate": "2026-10-01", "sampleSize": 625, "sampleType": "LV", "results": {"Byron Donalds (R)": 48.0, "David Jolly (D)": 41.0, "Undecided": 11.0}},
     {"raceId": "FL-GOV-2026", "pollster": "St. Pete Polls for Florida Politics", "startDate": "2026-10-05", "endDate": "2026-10-07", "sampleSize": 836, "sampleType": "LV", "results": {"David Jolly (D)": 45.0, "Byron Donalds (R)": 45.0, "Other": 4.0, "Undecided": 6.0}, "notes": "Other and undecided not obtained, entered as placeholders."},
     {"raceId": "FL-GOV-2026", "pollster": "Targoz Market Research (R)", "startDate": "2026-09-28", "endDate": "2026-10-04", "sampleSize": 1000, "sampleType": "LV", "results": {"David Jolly (D)": 42.0, "Byron Donalds (R)": 52.0, "Undecided": 6.0}, "notes": "Sponsor connected to the Heritage Foundation. Sample size and voter type not given; 1,000 likely voters is a placeholder."},
-    {"raceId": "FL-GOV-2026", "pollster": "Change Research", "startDate": "2026-10-08", "endDate": "2026-10-10", "sampleSize": 920, "sampleType": "LV", "results": {"David Jolly (D)": 47.0, "Byron Donalds (R)": 47.0, "Undecided": 6.0}}
+    {"raceId": "FL-GOV-2026", "pollster": "Change Research", "startDate": "2026-10-08", "endDate": "2026-10-10", "sampleSize": 920, "sampleType": "LV", "results": {"David Jolly (D)": 47.0, "Byron Donalds (R)": 47.0, "Undecided": 6.0}},
+    {"raceId": "FL-GOV-2026", "pollster": "Fabrizio Lee for Donalds (R)", "startDate": "2026-08-08", "endDate": "2026-08-11", "sampleSize": 1200, "sampleType": "LV", "results": {"David Jolly (D)": 43.0, "Byron Donalds (R)": 49.0, "Undecided": 8.0}},
+    {"raceId": "FL-GOV-2026", "pollster": "Stetson University", "startDate": "2026-10-01", "endDate": "2026-10-09", "sampleSize": 716, "sampleType": "LV", "results": {"David Jolly (D)": 41.0, "Byron Donalds (R)": 52.0, "Undecided": 7.0}},
+    {"raceId": "FL-GOV-2026", "pollster": "MDW Communications (D)", "startDate": "2026-10-04", "endDate": "2026-10-10", "sampleSize": 2351, "sampleType": "LV", "results": {"David Jolly (D)": 43.8, "Byron Donalds (R)": 45.9, "Undecided": 10.3}},
+    {"raceId": "FL-GOV-2026", "pollster": "Fabrizio Lee for Donalds (R)", "startDate": "2026-10-08", "endDate": "2026-10-11", "sampleSize": 1200, "sampleType": "LV", "results": {"David Jolly (D)": 43.0, "Byron Donalds (R)": 49.0, "Undecided": 8.0}},
+    {"raceId": "FL-GOV-2026", "pollster": "YouGov for N+ Univision", "startDate": "2026-10-02", "endDate": "2026-10-15", "sampleSize": 825, "sampleType": "RV", "results": {"David Jolly (D)": 42.0, "Byron Donalds (R)": 50.0, "Other": 1.0, "Undecided": 7.0}},
+    {"raceId": "FL-GOV-2026", "pollster": "On Point Polling", "startDate": "2026-10-18", "endDate": "2026-10-18", "sampleSize": 378, "sampleType": "LV", "results": {"David Jolly (D)": 42.4, "Byron Donalds (R)": 46.6, "Other": 6.2, "Undecided": 4.8}},
+    {"raceId": "FL-GOV-2026", "pollster": "ActiVote", "startDate": "2026-10-01", "endDate": "2026-10-19", "sampleSize": 400, "sampleType": "LV", "results": {"David Jolly (D)": 48.3, "Byron Donalds (R)": 51.7}},
+    {"raceId": "FL-GOV-2026", "pollster": "University of North Florida", "startDate": "2026-10-12", "endDate": "2026-10-19", "sampleSize": 1471, "sampleType": "LV", "results": {"David Jolly (D)": 47.0, "Byron Donalds (R)": 49.0, "Undecided": 4.0}}
   ],
 };

@@ -1,6 +1,6 @@
-import Link from "next/link";
 import { AGGREGATES, buildAggregate, type AggregateDef } from "@/app/_polling/lib/aggregates";
 import { AGG_GROUPS, pollHref, PRIMARIES } from "./registry";
+import PollIndexView, { type PSection, type PTile } from "./PollIndexView";
 
 type Row = { def: AggregateDef; href: string; value: string; cls: string; n: number; updated: string | null; spark: number[] };
 
@@ -28,58 +28,19 @@ function rows(test: (d: AggregateDef) => boolean): Row[] {
   });
 }
 
-function Spark({ data, cls }: { data: number[]; cls: string }) {
-  if (data.length < 2) return null;
-  const min = Math.min(...data), max = Math.max(...data), span = max - min || 1;
-  const pts = data.map((v, i) => `${((i / (data.length - 1)) * 100).toFixed(1)},${(26 - ((v - min) / span) * 22).toFixed(1)}`).join(" ");
-  const color = cls === "d" ? "var(--dem)" : cls === "r" ? "var(--gop)" : cls === "i" ? "var(--ind)" : "var(--ink2)";
-  return (
-    <svg viewBox="0 0 100 28" preserveAspectRatio="none" style={{ width: "100%", height: 28 }} aria-hidden="true">
-      <polyline points={pts} fill="none" stroke={color} strokeWidth="1.6" vectorEffect="non-scaling-stroke" strokeLinecap="round" />
-    </svg>
-  );
-}
+const COLOR: Record<string, string> = { d: "#7fa6ff", r: "#ff8399", i: "#c9a8ff", "": "#c9c2d6" };
 
 export default function PollIndex({ groups, title, lede, crumb }: { groups: string[]; title: React.ReactNode; lede: string; crumb?: string }) {
   const sections = AGG_GROUPS.filter((g) => groups.includes(g.key)).map((g) => ({ ...g, rows: rows(g.test) })).filter((g) => g.rows.length);
   const total = sections.reduce((a, s) => a + s.rows.length, 0);
+  const latest = AGGREGATES.reduce((m, d) => d.polls.reduce((mm, p) => (p.endDate > mm ? p.endDate : mm), m), "");
+  const cut = latest ? new Date(new Date(latest + "T00:00:00").getTime() - 7 * 864e5).toISOString().slice(0, 10) : "";
+  const tile = (r: Row): PTile => ({ id: r.def.id, label: r.def.label, href: r.href, value: r.value, cls: r.cls, n: r.n, updated: r.updated, spark: r.spark,
+    net: buildAggregate(r.def).latest?.net ?? null, fresh: r.def.polls.filter((p) => p.endDate > cut).length, color: COLOR[r.cls] ?? COLOR[""] });
+  const secs: PSection[] = sections.map((s) => ({ key: s.key, title: s.title, tiles: s.rows.map(tile) }));
+  const national = secs.find((s) => s.key === "national")?.tiles ?? [];
   return (
-    <div className="opp">
-      <nav className="crumbs" aria-label="Breadcrumb">
-        <Link href="/">Home</Link><span className="sep">/</span>
-        {crumb ? <><Link href="/polls">Polls</Link><span className="sep">/</span><span>{crumb}</span></> : <span>Polls</span>}
-      </nav>
-      <header className="ph">
-        <div className="eye g">Polling averages</div>
-        <h1>{title}</h1>
-        <p className="lede">{lede}</p>
-        <div className="pmeta"><span><b>{total}</b> tracked averages</span><span>Every poll counted, weighted by recency, sample, voter screen and pollster grade</span><Link className="btn sm" href="/api/polls/generic-ballot">Public JSON</Link></div>
-      </header>
-      {sections.map((s) => (
-        <section className="sec" key={s.key} style={{ paddingBlock: "18px" }}>
-          <div className="sec-h"><div><h2 style={{ fontSize: 22 }}>{s.title}</h2></div><span className="eye" style={{ marginLeft: "auto" }}>{s.rows.length} averages</span></div>
-          <div className="tiles">
-            {s.rows.map((r) => (
-              <Link key={r.def.id} href={r.href} className="card tile">
-                <span className="t">{r.def.label}</span>
-                <span className={`v mono ${r.cls}`}>{r.value}</span>
-                <Spark data={r.spark} cls={r.cls} />
-                <span className="s">{r.n} polls{r.updated ? ` · through ${new Date(r.updated + "T00:00:00").toLocaleDateString("en-US", { month: "short", day: "numeric" })}` : ""}</span>
-              </Link>
-            ))}
-          </div>
-        </section>
-      ))}
-      {groups.includes("primaries") && (
-        <section className="sec" style={{ paddingBlock: "18px" }}>
-          <div className="sec-h"><div><h2 style={{ fontSize: 22 }}>2026 primaries</h2></div></div>
-          <div className="tiles">
-            {Object.entries(PRIMARIES).map(([k, v]) => (
-              <Link key={k} href={`/polls/${k}`} className="card tile"><span className="t">{v.title}</span><span className="s">/polls/{k}</span></Link>
-            ))}
-          </div>
-        </section>
-      )}
-    </div>
+    <PollIndexView sections={secs.filter((s) => s.key !== "national")} national={national} title={title} lede={lede} crumb={crumb} total={total}
+      primaries={groups.includes("primaries") ? Object.entries(PRIMARIES).map(([k, v]) => ({ href: `/polls/${k}`, title: v.title })) : undefined} />
   );
 }

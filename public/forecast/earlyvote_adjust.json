@@ -1,7 +1,7 @@
 {
  "snapshot": "2026-10-20",
  "daysOut": 14,
- "applied": "2026-10-21",
+ "applied": "2026-10-22",
  "settings": {
   "kappa": 0.5,
   "rho": 0.85,
@@ -180,7 +180,7 @@
    "ballots": 111540,
    "estimatedShare": 0,
    "source": "early vote",
-   "comp": -0.77,
+   "comp": -0.76,
    "level": 0.0
   },
   "ID": {
@@ -234,7 +234,7 @@
    "ballots": 55481,
    "estimatedShare": 0,
    "source": "early vote",
-   "comp": 3.53,
+   "comp": 3.5,
    "level": -0.0
   },
   "KY": {
@@ -708,20 +708,20 @@
  },
  "chambers": {
   "governor": {
-   "seat_change": 0.16,
-   "dem_control_before": 0.893,
-   "dem_control": 0.9021,
-   "dem_seats": 28.51
+   "seat_change": 0.0,
+   "dem_control_before": 0.8947,
+   "dem_control": 0.8948,
+   "dem_seats": 28.43
   },
   "senate": {
-   "seat_change": 0.24,
-   "dem_control_before": 0.7978,
-   "dem_control": 0.8165,
-   "dem_seats": 53.19
+   "seat_change": -0.0,
+   "dem_control_before": 0.8299,
+   "dem_control": 0.8299,
+   "dem_seats": 53.37
   },
   "house": {
-   "seat_change": 0.14,
-   "dem_control_before": 0.9067,
+   "seat_change": 0.0,
+   "dem_control_before": 0.9082,
    "dem_control": 0.9082,
    "dem_seats": 243.17
   }
