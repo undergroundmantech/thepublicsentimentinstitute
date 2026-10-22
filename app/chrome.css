@@ -69,7 +69,7 @@ header.opp.opp-top.scrolled .mstrip { margin-top: -31px; }
 .opp .mnav .macc-b a.all { color: var(--gold); }
 
 /* footer */
-.opp .foot .wrap .cols { grid-template-columns: minmax(220px, 1.6fr) repeat(6, minmax(0, 1fr)); gap: 28px; }
+.opp .foot .wrap .cols { grid-template-columns: minmax(220px, 1.6fr) repeat(7, minmax(0, 1fr)); gap: 24px; }
 .opp .foot .cols a { color: var(--mute); } .opp .foot .cols a:hover { color: var(--hi); }
 @media (max-width: 1200px) { .opp .foot .wrap .cols { grid-template-columns: repeat(4, minmax(0, 1fr)); } .opp .foot .wrap .cols > div:first-child { grid-column: 1 / -1; } }
 @media (max-width: 640px) { .opp .foot .wrap .cols { grid-template-columns: 1fr 1fr; } }

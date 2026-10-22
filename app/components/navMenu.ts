@@ -60,6 +60,17 @@ export const MENU: NavGroup[] = [
         { href: "/results/archive/2026-08-04", label: "August 4 primaries" },
       ] },
     ] },
+  { key: "news", label: "News", href: "/news",
+    feature: { href: "/news", eyebrow: "New", title: "The news, from every side", note: "Headlines from Left, Center and Right outlets, grouped by story, with neutral summaries." },
+    cols: [
+      { h: "Read", links: [
+        { href: "/news", label: "Front page", note: "Top stories, summarized", badge: "New" },
+        { href: "/news#wire", label: "The live wire", note: "Every outlet, grouped by story" },
+      ] },
+      { h: "Method", links: [
+        { href: "/news/sources", label: "Outlets and ratings", note: "Every outlet and why we rate it" },
+      ] },
+    ] },
   { key: "early", label: "Early Vote", href: "/maps/early-vote", cols: [] },
   { key: "maps", label: "Maps", href: "/maps",
     cols: [
