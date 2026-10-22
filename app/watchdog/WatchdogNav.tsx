@@ -11,6 +11,7 @@ export const WD_TABS = [
   { href: "/watchdog/connections", label: "Connections" },
   { href: "/watchdog/paid", label: "Who gets paid" },
   { href: "/watchdog/counties", label: "County data center" },
+  { href: "/watchdog/ledger", label: "Ledger records" },
 ];
 
 export default function WatchdogNav() {

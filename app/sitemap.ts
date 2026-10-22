@@ -43,6 +43,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     u("/watchdog/connections", fc, "daily", 0.8),
     u("/watchdog/paid", fc, "daily", 0.8),
     u("/watchdog/counties", fc, "daily", 0.8),
+    ...["", "/tape", "/races", "/candidates", "/committees", "/donors", "/vendors", "/groups", "/signals", "/scores", "/foreign", "/lobbying", "/ads", "/events", "/states", "/web"].map((x) => u(`/watchdog/ledger${x}`, fc, "daily", 0.6)),
     u("/forecast/statewide", db.meta.updated, "daily", 0.8),
     u("/forecast/legislatures", sl.meta.updated, "daily", 0.9),
     u("/forecast/measures", ms.meta.updated, "daily", 0.9),
