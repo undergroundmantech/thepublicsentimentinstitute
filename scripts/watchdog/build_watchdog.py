@@ -148,7 +148,7 @@ for a in att["attention"] + res.get("media_attention", []):
     if k in seen_att: continue
     seen_att.add(k)
     if a["person"] in ("America PAC",): continue
-    lean = a.get("lean", "other"); p = person(a["person"], lean if lean in ("D", "R") else "O", a.get("role", "commentator")); p["attention"] += 1
+    lean = {"Nick Fuentes": "R"}.get(a["person"], a.get("lean", "other")); p = person(a["person"], lean if lean in ("D", "R") else "O", a.get("role", "commentator")); p["attention"] += 1
     if a["state"] not in p["states"]: p["states"].append(a["state"])
     if a["person"] in MEDIA: p["show"] = MEDIA[a["person"]].get("show")
     attention.append({"who": a["person"], "role": a.get("role"), "lean": lean, "st": a["state"], "race": a.get("race", ""), "what": a["what"], "when": a.get("when", ""), "src": a.get("source", "")})
@@ -170,14 +170,22 @@ for e in att["endorsements"] + res.get("endorsements", []):
     kind = e.get("byKind") or ("union" if org else "politician")
     if kind == "org": kind = "organization"
     p = person(short, "D" if by in ("Barack Obama", "Bernie Sanders", "UAW") else "R" if by == "Donald Trump" else "O", "group" if kind in ("union", "organization", "newspaper") else ROLE.get(by, e.get("byRole") or "surrogate")); p["endorse"] += 1
-    p.setdefault("sides", []).append(e.get("party"))
+    # the endorser's own side: from their role ("U.S. Rep. (R-IL)", "Republican former governor"), else for a politician
+    # the side they back unless the note says they crossed over; groups, media and famous names keep no party
+    role_txt = f"{e.get('byRole', '')} {e.get('note', '')}"
+    own = "R" if re.search(r"\(R\b|\bR-[A-Z]{2}\b|Republican|\bGOP\b", e.get("byRole", "")) else "D" if re.search(r"\(D\b|\bD-[A-Z]{2}\b|Democrat|\bDFL\b", e.get("byRole", "")) else None
+    if own is None and kind == "politician" and not re.search(r"Republican|Democrat|independent|cross", e.get("note", "") or "", re.I): own = e.get("party")
+    if own: p.setdefault("sides", []).append(own)
     if e["state"] not in p["states"]: p["states"].append(e["state"])
     endorse.append({"by": short, "byFull": by, "byRole": e.get("byRole", ""), "kind": kind, "st": e["state"], "race": e.get("race", ""), "office": e.get("office") or ("governor" if "Gov" in e.get("race", "") else "senate"),
                     "cand": e["candidate"].strip(), "party": e.get("party"), "date": e.get("date") or "", "src": e.get("source", ""), "note": e.get("note", "")})
 # an endorser's colour on the map is the side they back, when they back only one side
+LEAN_OVERRIDE = {"Nick Fuentes": "R"}   # far right streamer: not a Democrat even when he urges a vote for one
 for p in people.values():
     sides = {x for x in p.pop("sides", []) if x}
     if p["party"] == "O" and len(sides) == 1: p["party"] = next(iter(sides))
+    if p["name"] in MEDIA and MEDIA[p["name"]].get("lean") in ("R", "D"): p["party"] = MEDIA[p["name"]]["lean"]
+    if p["name"] in LEAN_OVERRIDE: p["party"] = LEAN_OVERRIDE[p["name"]]
 # the people rail: everyone on the trail or paying attention, and endorsers with three or more, or a national role
 rail = [p for p in people.values() if p["visits"] or p["attention"] or p["endorse"] >= 3 or p["role"] in ROLE.values()]
 dump("trail.json", {"people": sorted(rail, key=lambda p: -(p["visits"] * 2 + p["attention"] + p["endorse"])), "visits": sorted(visits, key=lambda v: v["date"]), "attention": attention, "endorse": endorse,
@@ -213,6 +221,7 @@ for a in attention:
         media.append({"name": a["who"], "role": a["role"], "show": None, "lean": a["lean"], "ini": people[a["who"]]["ini"], "items": [x for x in attention if x["who"] == a["who"]]})
 media.sort(key=lambda m: -len(m["items"]))
 dump("endorsements.json", {"asOf": res.get("asOf"), "races": races_e, "media": media, "kinds": sorted({e["kind"] for e in endorse}),
+                           "parties": {n: p["party"] for n, p in people.items() if p["endorse"]},
                            "unconfirmed": res.get("unconfirmed", []), "note": res.get("note", "")})
 
 # ---------------------------------------------------------------- the connections graph

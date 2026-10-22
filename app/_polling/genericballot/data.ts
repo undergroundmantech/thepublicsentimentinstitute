@@ -4,7 +4,7 @@ export const GOLD_STANDARD_MULTIPLIER = 2;
 
 export const GOLD_STANDARD_NAMES = [
   // Oct 22 2026, set by the publisher: the gold standard pollsters, weighted up in every average.
-  "Big Data Poll", "Honest Poll", "Emerson", "Cygnal", "Quantus",
+  "On Point Polling", "Big Data Poll", "Honest Poll", "Emerson", "Cygnal", "Quantus",
   "New York Times", "NY Times", "NYT", "Wall Street Journal", "WSJ",
 ];
 

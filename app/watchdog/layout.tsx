@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import WatchdogNav from "./WatchdogNav";
-import Ambient from "@/app/components/opp/Ambient";
 import "./watchdog.css";
+import "./terminal.css";
 
 export const metadata: Metadata = {
   title: { default: "Watchdog: who is spending, who is campaigning, and who gets paid", template: "%s | Watchdog | On Point Politics" },
@@ -10,8 +10,8 @@ export const metadata: Metadata = {
 
 export default function WatchdogLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="opp wd fx-dark">
-      <Ambient />
+    <div className="opp wd wdt fx-dark">
+      <div className="wdt-bg" aria-hidden="true"><i className="grid" /><i className="scan" /><i className="vig" /></div>
       <WatchdogNav />
       {children}
     </div>

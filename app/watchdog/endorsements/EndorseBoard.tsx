@@ -87,8 +87,8 @@ export default function EndorseBoard({ data }: { data: Endorsements }) {
         <div className="en-bigrow">
           {big.map(([name, v]) => (
             <button key={name} type="button" className={`en-bigp${qRaw === name ? " on" : ""}`} onClick={() => setQ(qRaw === name ? "" : name)}>
-              <PersonToken ini={ini(name)} party={v.d && !v.r ? "D" : v.r && !v.d ? "R" : "O"} role={v.kind === "union" || v.kind === "organization" ? "group" : "surrogate"} size={40} />
-              <span><b>{name}</b><small>{v.n} races{v.d && v.r ? " · both parties" : ""}</small></span>
+              <PersonToken ini={ini(name)} party={data.parties?.[name] ?? "O"} role={v.kind === "union" || v.kind === "organization" ? "group" : "surrogate"} size={40} />
+              <span><b>{name}</b><small>{v.n} endorsements{v.d && v.r ? " · backs both parties" : v.d ? " · backs Democrats" : v.r ? " · backs Republicans" : ""}</small></span>
             </button>
           ))}
         </div>

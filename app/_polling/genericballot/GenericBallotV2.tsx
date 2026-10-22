@@ -11,7 +11,9 @@ import {
 } from "@/app/_polling/lib/aggregates";
 import { getPollsterEntry } from "@/app/_polling/lib/buildDailyModel";
 import { type MapRow } from "@/app/_polling/lib/StateRaceMap";
-import PollRoom, { type RoomItem } from "@/app/_polling/lib/PollRoom";
+import PollRoom from "@/app/_polling/lib/PollRoom";
+import { BOARD_GROUPS, boardGroupOf, buildBoard, type BoardGroup } from "@/app/_polling/lib/boardData";
+import "@/app/_polling/lib/whiteboard.css";
 import AverageStudio, { WeightBars } from "@/app/components/opp/AverageStudio";
 import { RECENCY_HALF_LIFE_DAYS } from "@/app/_polling/lib/buildDailyModel";
 import { R_LEAN_ESTIMATES } from "@/app/_polling/lib/aggregates";
@@ -72,6 +74,8 @@ const CATALOG: Item[] = [
   ...AGGREGATES.map((d) => ({ id: d.id, label: d.label, group: GROUP_OF(d.category), kind: "h2h" as const })),
   ...MULTI_AGGREGATES.map((d) => ({ id: d.id, label: d.label, group: d.group, kind: "multi" as const })),
 ];
+const LATEST_POLL = AGGREGATES.reduce((m, d) => d.polls.reduce((mm, p) => (p.endDate > mm ? p.endDate : mm), m), "");
+const freshCut = LATEST_POLL ? new Date(new Date(LATEST_POLL + "T00:00:00").getTime() - 7 * 864e5).toISOString().slice(0, 10) : "";
 const GROUP_ORDER = ["National", "2026 Senate", "2026 Governor", "Primaries", "2025 Races", "2024 President"];
 const GROUPS = CATALOG.reduce<string[]>((acc, c) => (acc.includes(c.group) ? acc : [...acc, c.group]), [])
   .sort((a, b) => (GROUP_ORDER.indexOf(a) + 99) % 99 - (GROUP_ORDER.indexOf(b) + 99) % 99);
@@ -141,6 +145,7 @@ export default function PollingAveragesPage({ initialId, forecast }: { initialId
   // view: "focus" = one average; "board" = every average on one page
   const [view, setView] = useState<"focus" | "board">("focus");
   const [showAllPolls, setShowAllPolls] = useState(false);
+  const [boardGroup, setBoardGroup] = useState<BoardGroup>(() => { const d = AGGREGATES.find((x) => x.id === initial.id); return d ? boardGroupOf(d) : "archive"; });
   const booted = useRef(false);
 
   // deep link support: ?race=<id> selects an average, ?view=board opens the full board
@@ -341,7 +346,7 @@ export default function PollingAveragesPage({ initialId, forecast }: { initialId
     reading = isMatchup
       ? (Math.abs(hLatest.net) < 0.05 ? "The race is even" : `${lead} ${verb} by ${Math.abs(hLatest.net).toFixed(1)} points`)
       : `${h2hDef.marginLabel} stands at ${h2hDef.fmtMargin(hLatest.net)}`;
-    reading += ` in the On Point average of ${totalPolls} public poll${totalPolls === 1 ? "" : "s"}: a robust local trend through every poll, weighted by a ${RECENCY_HALF_LIFE_DAYS} day recency half life, sample size, voter screen and pollster grade.`;
+    reading += ` in the On Point average of ${totalPolls} public poll${totalPolls === 1 ? "" : "s"}: a robust LOWESS fit through every poll, weighted by a ${RECENCY_HALF_LIFE_DAYS} day recency half life, sample size, voter screen and pollster grade, with three bisquare passes that weigh down outliers.`;
   } else if (multiDef && builtMulti?.latest) {
     const li = leaderIdx(builtMulti.latest);
     reading = `${multiDef.series[li].label} leads the field at ${builtMulti.latest[li].toFixed(1)} percent in the On Point average of ${totalPolls} public polls.`;
@@ -436,35 +441,24 @@ export default function PollingAveragesPage({ initialId, forecast }: { initialId
   }
 
   /* ------------------------------ the whiteboard room ------------------------------ */
-  const roomItems: RoomItem[] = options.map((it) => {
-    let color = "var(--ink2)", value = "", spark: number[] = [], n = 0;
-    if (it.kind === "h2h") {
-      const b = allBuilt[it.id]; const d = H2H_BY_ID[it.id];
-      if (b?.latest) { color = b.latest.net >= 0 ? d.seriesA.color : d.seriesB.color; value = d.fmtMargin(b.latest.net); spark = sample(b.daily.slice(-90).map((x) => x.net), 40); }
-      if (b) n = b.polls.length;
-    } else {
-      const b = allMulti[it.id]; const d = MULTI_BY_ID[it.id];
-      if (b?.latest) { const li = leaderIdx(b.latest); color = d.series[li].color; value = `${d.series[li].label} ${b.latest[li].toFixed(1)}`; spark = sample(b.daily.slice(-90).map((x) => x.v[li]), 40); }
-      if (b) n = b.polls.length;
-    }
-    return { id: it.id, label: shortLabel(it), value, color, spark, n };
-  });
-  const roomGroups = GROUPS.map((g) => ({ id: g, label: GROUP_TITLE[g] ?? g, count: CATALOG.filter((c) => c.group === g).length }));
-  const roomAll = CATALOG.map((c) => ({ id: c.id, label: shortLabel(c), group: c.group }));
+  const board = buildBoard(AGGREGATES, allBuilt, freshCut);
+  const roomGroups = BOARD_GROUPS.map((g) => ({ id: g.id, label: g.label, count: board.items[g.id].length }));
+  const boardOffice = boardGroup === "senate" ? "U.S. Senate" : boardGroup === "governor" ? "Governor" : boardGroup === "house" ? "U.S. House" : null;
 
   /* ------------------------------ one average ------------------------------ */
   return (
-    <div className="opp pa pa2 fx-dark">
+    <div className="opp pa pa2 wbtheme">
       <style>{CSS}</style>
-      <nav className="crumbs" aria-label="Breadcrumb">
+      <nav className="crumbs wb-crumbs" aria-label="Breadcrumb">
         <Link href="/">Home</Link><span className="sep">/</span><Link href="/polls">Polls</Link><span className="sep">/</span>
         <Link href={GROUP_HREF[item.group] ?? "/polls"}>{GROUP_TITLE[item.group] ?? item.group}</Link><span className="sep">/</span><span>{words.crumb}</span>
       </nav>
-      <Ambient />
-      {/* the whiteboard room: the way into every average */}
-      <PollRoom groups={roomGroups} group={group} onGroup={pickGroup} items={roomItems} allItems={roomAll}
-        activeId={id} onPick={(aid) => { const c = CATALOG.find((x) => x.id === aid); if (c && c.group !== group) setGroup(c.group); pickAgg(aid); }}
-        mapRows={mapRows} office={mapOffice}
+      {/* the whiteboard room: the way into every average, with this average written below the line */}
+      <PollRoom groups={roomGroups} group={boardGroup} onGroup={(g) => setBoardGroup(g as BoardGroup)} items={board.items[boardGroup]} allItems={board.all}
+        activeId={id} onPick={(aid) => { const c = CATALOG.find((x) => x.id === aid); if (!c) return; if (c.group !== group) setGroup(c.group); pickAgg(aid); }}
+        mapRows={boardOffice ? board.maps[boardGroup as "senate" | "governor" | "house"] : []} office={boardOffice}
+        onMapPick={boardGroup === "house" ? () => {} : undefined} notes={boardGroup !== "house"}
+        listTitle={boardGroup === "house" ? "Every polled district" : boardGroup === "national" ? "National averages" : boardGroup === "archive" ? "Primaries and past races" : "Every race"}
         active={h2hDef && hLatest ? { title: shortLabel(item), value: h2hDef.fmtMargin(hLatest.net), color: leadColor, polls: totalPolls } : { title: shortLabel(item), value: "", color: "", polls: totalPolls }}
         tray={<>
           <span className="eye">Voter sample</span>
@@ -481,7 +475,7 @@ export default function PollingAveragesPage({ initialId, forecast }: { initialId
             })}
           </div>
           <button type="button" className="btn sm" onClick={() => setView("board")}>Every average at once</button>
-        </>} />
+        </>}>
 
       <header className="pa-hero">
         <Pointy className="cam-pa" pose="point" prop="chart" size={104} look={-1} flip />
@@ -541,7 +535,7 @@ export default function PollingAveragesPage({ initialId, forecast }: { initialId
               <div className="card-h"><h3>What moves the average today</h3><span className="eye" style={{ marginLeft: "auto" }}>Share of today&apos;s weight</span></div>
               <div className="card-b">
                 <WeightBars polls={builtH2H.polls} seriesA={h2hDef.seriesA} seriesB={h2hDef.seriesB} fmtMargin={h2hDef.fmtMargin} marginLabel={h2hDef.marginLabel} />
-                <p className="pa-note">Each poll&apos;s weight is its sample size, voter screen, pollster grade and age, with a {RECENCY_HALF_LIFE_DAYS} day half life, then the trend fit weighs down any poll that sits far from the others. No single poll can carry more than 15 percent. Gold Standard pollsters, Big Data Poll, The Honest Poll, Emerson, Cygnal, Quantus Insights, The New York Times and The Wall Street Journal, carry the top grade. Rasmussen Reports and ActiVote are not counted. Trafalgar and InsiderAdvantage are marked R lean and moved toward the Democrat by their measured lean against other polls of the same races: {Object.values(R_LEAN_ESTIMATES).map((e) => `${e.label} ${e.lean.toFixed(1)} points over ${e.n} polls`).join(", ")}.</p>
+                <p className="pa-note">Each poll&apos;s weight is its sample size, voter screen, pollster grade and age, with a {RECENCY_HALF_LIFE_DAYS} day half life, and those weights are the kernel of a robust LOWESS fit: a local line read at the day itself, with three bisquare passes that weigh down any poll far from the rest. No single poll can carry more than 15 percent. Gold Standard pollsters, On Point Polling, Big Data Poll, The Honest Poll, Emerson, Cygnal, Quantus Insights, The New York Times and The Wall Street Journal, carry the top grade. Rasmussen Reports and ActiVote are not counted. Trafalgar and InsiderAdvantage are marked R lean and moved toward the Democrat by their measured lean against other polls of the same races: {Object.values(R_LEAN_ESTIMATES).map((e) => `${e.label} ${e.lean.toFixed(1)} points over ${e.n} polls`).join(", ")}.</p>
               </div>
             </section>
           ) : null}
@@ -706,10 +700,11 @@ export default function PollingAveragesPage({ initialId, forecast }: { initialId
 
           <div className="callout">
             <div className="eye">Methodology</div>
-            The On Point average is a robust local trend fit (LOWESS) through every public poll, weighted by recency with a {RECENCY_HALF_LIFE_DAYS} day half life, sample size, voter screen and pollster grade, and rebuilt every day. Rasmussen Reports and ActiVote are left out, and the measured Republican lean of Trafalgar and InsiderAdvantage is taken off their polls. On Point Polling polls are fielded by On Point Polling. <Link href="/on-point-polling/methodology" style={{ textDecoration: "underline" }}>How the average works</Link>.
+            The On Point average is a robust LOWESS fit through every public poll, rebuilt for every day: each poll is weighted by recency with a {RECENCY_HALF_LIFE_DAYS} day half life, sample size, voter screen and pollster grade, a local line is fit through time and read at the day itself, and three bisquare robustness passes weigh down polls far from the rest. Rasmussen Reports and ActiVote are left out, and the measured Republican lean of Trafalgar and InsiderAdvantage is taken off their polls. On Point Polling polls are fielded by On Point Polling. <Link href="/on-point-polling/methodology" style={{ textDecoration: "underline" }}>How the average works</Link>.
           </div>
         </aside>
       </div>
+      </PollRoom>
     </div>
   );
 }

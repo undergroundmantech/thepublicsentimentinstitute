@@ -24,6 +24,23 @@ export type Pollster = {
 // Republican leaning and their measured lean is taken off before they are averaged.
 export const POLLSTERS: Pollster[] = [
   {
+    name: "On Point Polling",
+    abbr: "OPP",
+    website: "https://onpointpolitics.us/on-point-polling",
+    why: [
+      "Dual panel surveys weighted with the DSMeridian likely voter model.",
+      "Full toplines, crosstabs and methodology published with every release.",
+    ],
+    standards: [
+      "Publishes field dates + sample size",
+      "States target population and mode",
+      "Provides toplines in consistent format",
+    ],
+    multiplier: 6,
+    note: "Gold Standard: the top pollster grade, 6 times the baseline weight, in every On Point average.",
+    transparency: { fieldDates: true, sampleType: true, sampleSize: true, methodology: true, sponsorDisclosure: true },
+  },
+  {
     name: "Big Data Poll",
     abbr: "BDP",
     website: "https://bigdatapoll.com",

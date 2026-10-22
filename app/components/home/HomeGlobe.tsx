@@ -14,16 +14,26 @@ import PollTrail from "@/app/components/opp/PollTrail";
 import { RATE, RATING_LABEL, rating, type Rating } from "@/app/lib/opp";
 
 export type GRace = { id: string; st: string; name: string; dem: string; gop: string; m: number; p: number; ind: boolean; href: string; pl?: [number, number, number][] };
-const HQ: [number, number] = [-80.19, 25.76];
-const NO_ST: string[] = [];
 type Office = "senate" | "governor";
 const FIPS: Record<string, string> = { "01": "AL", "02": "AK", "04": "AZ", "05": "AR", "06": "CA", "08": "CO", "09": "CT", "10": "DE", "11": "DC", "12": "FL", "13": "GA", "15": "HI", "16": "ID", "17": "IL", "18": "IN", "19": "IA", "20": "KS", "21": "KY", "22": "LA", "23": "ME", "24": "MD", "25": "MA", "26": "MI", "27": "MN", "28": "MS", "29": "MO", "30": "MT", "31": "NE", "32": "NV", "33": "NH", "34": "NJ", "35": "NM", "36": "NY", "37": "NC", "38": "ND", "39": "OH", "40": "OK", "41": "OR", "42": "PA", "44": "RI", "45": "SC", "46": "SD", "47": "TN", "48": "TX", "49": "UT", "50": "VT", "51": "VA", "53": "WA", "54": "WV", "55": "WI", "56": "WY" };
 const last = (n: string) => n.replace(/\s+(Jr\.|Sr\.|II|III|IV)$/, "").split(" ").slice(-1)[0];
 const fm = (m: number, ind = false) => (Math.abs(m) >= 99 ? "Unopposed" : Math.abs(m) < 0.05 ? "Even" : `${m < 0 ? (ind ? "I" : "D") : "R"} +${Math.abs(m).toFixed(1)}`);
 const pc = (p: number) => (p > 0.99 ? ">99%" : p < 0.01 ? "<1%" : `${Math.round(p * 100)}%`);
 type SF = Feature<Geometry, { name: string }> & { st: string };
+// the odds count up from zero on load
+function CountUp({ to }: { to: number }) {
+  const [v, setV] = useState(to);
+  useEffect(() => {
+    if (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) { setV(to); return; }
+    let raf = 0; const t0 = performance.now();
+    const step = (now: number) => { const k = Math.min(1, (now - t0) / 1400), e = 1 - Math.pow(1 - k, 3); setV(Math.round(to * e)); if (k < 1) raf = requestAnimationFrame(step); };
+    setV(0); raf = requestAnimationFrame(step); return () => cancelAnimationFrame(raf);
+  }, [to]);
+  return <>{v}%</>;
+}
+const pcN = (p: number) => (p > 0.99 || p < 0.01 ? null : Math.round(p * 100));
 
-export default function HomeGlobe({ races, odds, updated, daysOut, opStates = NO_ST }: { races: Record<Office, GRace[]>; odds: { senate: number; house: number; governor: number }; updated: string; daysOut: number; opStates?: string[] }) {
+export default function HomeGlobe({ races, odds, updated, daysOut }: { races: Record<Office, GRace[]>; odds: { senate: number; house: number; governor: number }; updated: string; daysOut: number }) {
   const router = useRouter();
   const wrap = useRef<HTMLDivElement>(null);
   const cv = useRef<HTMLCanvasElement>(null);
@@ -76,14 +86,22 @@ export default function HomeGlobe({ races, odds, updated, daysOut, opStates = NO
     size();
     const path = geoPath(proj, ctx), grat = geoGraticule10();
     const t0 = performance.now();
-    // scenery: a twinkling starfield, the odd shooting star, beacons on the closest races, fieldwork arcs from
-    // On Point HQ in Miami to every state On Point Polling has surveyed, Pointy's footprints and ballot confetti
+    // scenery: a twinkling starfield, the odd shooting star, aurora ribbons over the pole, beacons on the closest
+    // races, Pointy's route drawn between them, satellites orbiting with the closest margins, new poll pings,
+    // a radar sweep across the map, Pointy's footprints and ballot confetti
     const rnd = (i: number) => { const v = Math.sin(i * 127.1 + 311.7) * 43758.5453; return v - Math.floor(v); };
     const stars = Array.from({ length: 280 }, (_, i) => ({ x: rnd(i), y: rnd(i + 500), r: 0.35 + rnd(i + 900) * 1.35, ph: rnd(i + 1300) * 6.283, sp: 0.5 + rnd(i + 1700) * 1.8, hue: rnd(i + 2100) }));
     let shoot: { x: number; y: number; vx: number; vy: number; life: number } | null = null, nextShoot = 2500;
     const centroid = (st: string) => { const f = geo.states.find((g) => g.st === st); return f ? (geoCentroid(f as GeoPermissibleObjects) as [number, number]) : null; };
     const beacons = list.filter((r) => Math.abs(r.m) < 4 && r.st !== "AK" && r.st !== "HI").map((r, i) => ({ ll: centroid(r.st), c: Math.abs(r.m) < 1.5 ? "231,179,65" : r.m < 0 ? (r.ind ? "183,140,255" : "93,140,255") : "255,80,110", d: i * 0.37 })).filter((b) => b.ll) as { ll: [number, number]; c: string; d: number }[];
-    const arcs = opStates.map((st, i) => ({ st, ll: centroid(st), d: i * 0.29 })).filter((a) => a.ll) as { st: string; ll: [number, number]; d: number }[];
+    const colOf = (r: GRace) => (Math.abs(r.m) < 1.5 ? "231,179,65" : r.m < 0 ? (r.ind ? "183,140,255" : "93,140,255") : "255,80,110");
+    // satellites: the six closest races ride two tilted orbits around the globe
+    const sats = [...list].filter((r) => Math.abs(r.m) < 99).sort((a, b) => Math.abs(a.m) - Math.abs(b.m)).slice(0, 6)
+      .map((r, i) => ({ txt: `${r.st} ${fm(r.m, r.ind)}`, c: colOf(r), orbit: i % 2, ph: (i * 2.1) % 6.283 }));
+    // poll pings: states whose latest poll is under two weeks old light up in turn
+    const pingable = list.filter((r) => r.pl?.some(([age]) => age <= 14) && centroid(r.st)).map((r) => ({ ll: centroid(r.st) as [number, number], c: colOf(r), st: r.st, n: r.pl!.filter(([age]) => age <= 14).length }));
+    const pings: { ll: [number, number]; c: string; txt: string; t: number }[] = []; let nextPing = 900, pingIx = 0;
+    const aur = Array.from({ length: 3 }, (_, i) => ({ y: 0.08 + i * 0.07, amp: 18 + i * 9, sp: 7000 + i * 2600, hue: ["90,255,190", "130,110,255", "255,90,190"][i], w: 46 + i * 14 }));
     const steps: { ll: [number, number]; t: number; side: number }[] = []; let lastStep = 0, side = 1;
     const parts: { x: number; y: number; vx: number; vy: number; c: string; life: number; rot: number; vr: number }[] = [];
     let lastPhase = "stop";
@@ -113,6 +131,52 @@ export default function HomeGlobe({ races, odds, updated, daysOut, opStates = NO
           shoot.x += shoot.vx; shoot.y += shoot.vy; shoot.life -= 0.018; if (shoot.life <= 0 || shoot.x > W) shoot = null;
         }
       }
+      // aurora ribbons, drawn behind the globe
+      if (!reduce) {
+        ctx.save(); ctx.globalCompositeOperation = "lighter";
+        for (const a of aur) {
+          const base = H * a.y + Math.sin(t / a.sp) * 10;
+          for (let x = 0; x <= W; x += 14) {
+            const y = base + Math.sin(x / 140 + t / a.sp * 3) * a.amp + Math.sin(x / 61 - t / 2300) * 6;
+            const al = 0.045 * (0.6 + 0.4 * Math.sin(x / 90 + t / 1700)) * Math.min(1, x / (W * 0.25), (W - x) / (W * 0.25));
+            const g = ctx.createLinearGradient(0, y - a.w, 0, y + a.w * 0.4);
+            g.addColorStop(0, `rgba(${a.hue},0)`); g.addColorStop(0.7, `rgba(${a.hue},${al})`); g.addColorStop(1, `rgba(${a.hue},0)`);
+            ctx.fillStyle = g; ctx.fillRect(x, y - a.w, 15, a.w * 1.4);
+          }
+        }
+        ctx.restore();
+      }
+      // satellites on the far side of the orbit pass behind the globe
+      const satPos = (s: { orbit: number; ph: number }) => {
+        const ang = s.ph + t / (s.orbit ? 21000 : 15000) * (s.orbit ? -1 : 1) * 6.283, tilt = s.orbit ? -0.32 : 0.22;
+        const rx = R * (s.orbit ? 1.2 : 1.1), ry = R * (s.orbit ? 0.3 : 0.2);
+        const x0 = Math.cos(ang) * rx, y0 = Math.sin(ang) * ry;
+        return { x: cx + x0 * Math.cos(tilt) - y0 * Math.sin(tilt), y: cy - R * (s.orbit ? 0.12 : 0.28) + x0 * Math.sin(tilt) + y0 * Math.cos(tilt), front: Math.sin(ang) > 0, rx, ry, tilt };
+      };
+      const drawOrbit = (o: number, front: boolean) => {
+        const rx = R * (o ? 1.2 : 1.1), ry = R * (o ? 0.3 : 0.2), tilt = o ? -0.32 : 0.22, oy = cy - R * (o ? 0.12 : 0.28);
+        ctx.strokeStyle = `rgba(200,190,255,${front ? 0.16 : 0.07})`; ctx.lineWidth = 1; ctx.setLineDash([2, 6]);
+        ctx.beginPath(); ctx.ellipse(cx, oy, rx, ry, tilt, front ? 0 : Math.PI, front ? Math.PI : Math.PI * 2); ctx.stroke(); ctx.setLineDash([]);
+      };
+      const drawSat = (s: (typeof sats)[number]) => {
+        const p = satPos(s), al = p.front ? 1 : 0.35;
+        if (p.x < -40 || p.x > W + 40 || p.y < -20 || p.y > H + 20) return;
+        ctx.save(); ctx.globalAlpha = al;
+        ctx.shadowColor = `rgba(${s.c},1)`; ctx.shadowBlur = p.front ? 16 : 4;
+        ctx.fillStyle = `rgba(${s.c},1)`; ctx.fillRect(p.x - 3, p.y - 3, 6, 6);
+        ctx.shadowBlur = 0; ctx.strokeStyle = "rgba(230,225,255,.7)"; ctx.lineWidth = 1.2;
+        ctx.beginPath(); ctx.moveTo(p.x - 12, p.y); ctx.lineTo(p.x - 5, p.y); ctx.moveTo(p.x + 5, p.y); ctx.lineTo(p.x + 12, p.y); ctx.stroke();
+        ctx.fillStyle = "rgba(160,190,255,.5)"; ctx.fillRect(p.x - 13, p.y - 2.5, 5, 5); ctx.fillRect(p.x + 8, p.y - 2.5, 5, 5);
+        if (p.front) {
+          ctx.font = "800 10.5px ui-monospace, monospace"; ctx.textAlign = "left"; ctx.textBaseline = "middle";
+          const w = ctx.measureText(s.txt).width + 12;
+          ctx.fillStyle = "rgba(8,5,16,.82)"; ctx.fillRect(p.x + 16, p.y - 9, w, 18);
+          ctx.strokeStyle = `rgba(${s.c},.7)`; ctx.strokeRect(p.x + 16.5, p.y - 8.5, w - 1, 17);
+          ctx.fillStyle = "#f3eff8"; ctx.fillText(s.txt, p.x + 22, p.y + 0.5);
+        }
+        ctx.restore();
+      };
+      if (!reduce) { drawOrbit(0, false); drawOrbit(1, false); for (const s of sats) if (!satPos(s).front) drawSat(s); }
       // atmosphere and ocean
       const atm = ctx.createRadialGradient(cx, cy, R * 0.92, cx, cy, R * 1.12);
       atm.addColorStop(0, "rgba(120,90,255,.35)"); atm.addColorStop(1, "rgba(120,90,255,0)");
@@ -128,6 +192,7 @@ export default function HomeGlobe({ races, odds, updated, daysOut, opStates = NO
         ctx.beginPath(); path(f as GeoPermissibleObjects);
         ctx.fillStyle = r ? RATE[rateOf(r)] : "#2b2440";
         ctx.fill();
+        if (hoverRef.current === f.st) { ctx.fillStyle = `rgba(255,255,255,${0.12 + 0.1 * Math.sin(t / 240)})`; ctx.fill(); }
         ctx.strokeStyle = hoverRef.current === f.st ? "#fff" : "rgba(10,6,18,.9)"; ctx.lineWidth = hoverRef.current === f.st ? 2.2 : 0.8; ctx.stroke();
       }
       // labels
@@ -157,26 +222,42 @@ export default function HomeGlobe({ races, odds, updated, daysOut, opStates = NO
         }
         ctx.fillStyle = `rgba(${bc.c},1)`; ctx.beginPath(); ctx.arc(p[0], p[1], 3, 0, 6.283); ctx.fill();
       }
-      // fieldwork arcs from HQ
-      const hq = facing(HQ) ? proj(HQ) : null;
-      if (hq && arcs.length) {
-        for (const a of arcs) {
-          if (!facing(a.ll)) continue;
-          const ip = geoInterpolate(HQ, a.ll), dist = geoDistance(HQ, a.ll);
-          const pts: [number, number][] = [];
-          for (let k = 0; k <= 36; k++) { const q = proj(ip(k / 36) as [number, number]); if (!q) continue; pts.push([q[0], q[1] - Math.sin(Math.PI * k / 36) * dist * R * 0.55]); }
-          if (pts.length < 2) continue;
-          ctx.strokeStyle = "rgba(231,179,65,.38)"; ctx.lineWidth = 1.4; ctx.setLineDash([4, 5]); ctx.lineDashOffset = -t / 60;
-          ctx.beginPath(); pts.forEach((q, k) => (k ? ctx.lineTo(q[0], q[1]) : ctx.moveTo(q[0], q[1]))); ctx.stroke(); ctx.setLineDash([]);
-          const ph = ((t / 3200) + a.d) % 1, q = pts[Math.min(pts.length - 1, Math.floor(ph * pts.length))];
-          ctx.save(); ctx.shadowColor = "#e7b341"; ctx.shadowBlur = 14; ctx.fillStyle = "#ffe2a0"; ctx.beginPath(); ctx.arc(q[0], q[1], 3.2, 0, 6.283); ctx.fill(); ctx.restore();
-          const e = pts[pts.length - 1]; ctx.strokeStyle = "rgba(231,179,65,.9)"; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.arc(e[0], e[1], 5, 0, 6.283); ctx.stroke();
-        }
-        const pu = 0.5 + 0.5 * Math.sin(t / 400);
-        ctx.fillStyle = "#e7b341"; ctx.beginPath(); ctx.arc(hq[0], hq[1], 5, 0, 6.283); ctx.fill();
-        ctx.strokeStyle = `rgba(231,179,65,${0.3 + pu * 0.5})`; ctx.lineWidth = 2; ctx.beginPath(); ctx.arc(hq[0], hq[1], 9 + pu * 4, 0, 6.283); ctx.stroke();
-        ctx.font = "800 10px ui-monospace, monospace"; ctx.textAlign = "left"; ctx.fillStyle = "rgba(255,226,160,.95)"; ctx.fillText("ON POINT HQ", hq[0] + 14, hq[1] + 4);
+      // a radar sweep turning over the map
+      if (!reduce && "createConicGradient" in ctx) {
+        const a0 = (t / 5200) % 6.283;
+        const cg = (ctx as CanvasRenderingContext2D & { createConicGradient: (a: number, x: number, y: number) => CanvasGradient }).createConicGradient(a0, cx, cy);
+        cg.addColorStop(0, "rgba(160,230,255,.13)"); cg.addColorStop(0.06, "rgba(160,230,255,0)"); cg.addColorStop(1, "rgba(160,230,255,0)");
+        ctx.save(); ctx.beginPath(); path({ type: "Sphere" }); ctx.clip(); ctx.fillStyle = cg; ctx.fillRect(cx - R, cy - R, R * 2, R * 2);
+        ctx.strokeStyle = "rgba(170,235,255,.22)"; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(cx + Math.cos(a0) * R, cy + Math.sin(a0) * R); ctx.stroke(); ctx.restore();
       }
+      // Pointy's route between the closest races, a dotted path with a spark running along it
+      if (tour.length > 1) {
+        for (let k = 0; k < tour.length; k++) {
+          const a = tour[k].ll, b = tour[(k + 1) % tour.length].ll; if (!facing(a) || !facing(b)) continue;
+          const ip = geoInterpolate(a, b), pts: [number, number][] = [];
+          for (let q = 0; q <= 24; q++) { const pp = proj(ip(q / 24) as [number, number]); if (pp) pts.push([pp[0], pp[1]]); }
+          if (pts.length < 2) continue;
+          ctx.strokeStyle = "rgba(255,255,255,.22)"; ctx.lineWidth = 1.2; ctx.setLineDash([1.5, 6]); ctx.lineDashOffset = reduce ? 0 : -t / 90;
+          ctx.beginPath(); pts.forEach((q, n) => (n ? ctx.lineTo(q[0], q[1]) : ctx.moveTo(q[0], q[1]))); ctx.stroke(); ctx.setLineDash([]);
+        }
+      }
+      // new poll pings
+      if (!reduce && pingable.length) {
+        if (t > nextPing) {
+          const pg = pingable[pingIx++ % pingable.length];
+          if (facing(pg.ll)) pings.push({ ll: pg.ll, c: pg.c, txt: `${pg.st} +${pg.n} new ${pg.n === 1 ? "poll" : "polls"}`, t });
+          nextPing = t + 1500;
+        }
+        for (let k = pings.length - 1; k >= 0; k--) {
+          const pg = pings[k], age = (t - pg.t) / 2600; if (age > 1) { pings.splice(k, 1); continue; }
+          const p = proj(pg.ll); if (!p || !facing(pg.ll)) continue;
+          const s0 = 6 + age * 34;
+          ctx.strokeStyle = `rgba(${pg.c},${(1 - age) * 0.9})`; ctx.lineWidth = 1.6; ctx.strokeRect(p[0] - s0 / 2, p[1] - s0 / 2, s0, s0);
+          ctx.font = "800 10px ui-monospace, monospace"; ctx.textAlign = "center"; ctx.textBaseline = "middle";
+          ctx.fillStyle = `rgba(255,255,255,${Math.min(1, (1 - age) * 1.6)})`; ctx.fillText(pg.txt, p[0], p[1] - 22 - age * 26);
+        }
+      }
+      if (!reduce) { drawOrbit(0, true); drawOrbit(1, true); for (const s of sats) if (satPos(s).front) drawSat(s); }
       // Pointy's footprints
       for (const s0 of steps) {
         if (!facing(s0.ll)) continue; const p = proj(s0.ll); if (!p) continue;
@@ -227,6 +308,7 @@ export default function HomeGlobe({ races, odds, updated, daysOut, opStates = NO
         if (reduce) draw(performance.now());
         return;
       }
+      box.parentElement?.style.setProperty("--mx", `${x}px`); box.parentElement?.style.setProperty("--my", `${y}px`);
       const f = hit(x, y); hoverRef.current = f && bySt[f.st] ? f.st : null;
       setTip(f && bySt[f.st] ? { st: f.st, x, y, w: b.width, h: b.height } : null);
       box.style.cursor = f && bySt[f.st] ? "pointer" : "grab";
@@ -240,7 +322,7 @@ export default function HomeGlobe({ races, odds, updated, daysOut, opStates = NO
     box.addEventListener("pointermove", move); box.addEventListener("pointerdown", down); window.addEventListener("pointerup", up); box.addEventListener("pointerleave", leave);
     return () => { cancelAnimationFrame(raf); ro.disconnect(); io.disconnect(); box.removeEventListener("pointermove", move); box.removeEventListener("pointerdown", down); window.removeEventListener("pointerup", up); box.removeEventListener("pointerleave", leave); };
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [geo, bySt, tour, router, list, opStates]);
+  }, [geo, bySt, tour, router, list]);
 
   const tr = tip ? bySt[tip.st] : null;
   const closest = [...list].filter((r) => Math.abs(r.m) < 99).sort((a, b) => Math.abs(a.p - 0.5) - Math.abs(b.p - 0.5)).slice(0, 6);
@@ -275,7 +357,7 @@ export default function HomeGlobe({ races, odds, updated, daysOut, opStates = NO
           <p>The 2026 midterms on one globe. Spin it, hover a state, click it for the full forecast, or follow Pointy, our canvasser, through the closest races.</p>
           <div className="hg-odds">
             {([["Senate", odds.senate, "/forecast?office=senate"], ["House", odds.house, "/forecast?office=house"], ["Governors", odds.governor, "/forecast?office=governor"]] as const).map(([l, v, h]) => (
-              <Link key={l} href={h} className={v >= 0.5 ? "d" : "r"}><b>{pc(v >= 0.5 ? v : 1 - v)}</b><span>{v >= 0.5 ? "D" : "R"} {l}</span></Link>
+              <Link key={l} href={h} className={v >= 0.5 ? "d" : "r"}><b>{pcN(v >= 0.5 ? v : 1 - v) == null ? pc(v >= 0.5 ? v : 1 - v) : <CountUp to={pcN(v >= 0.5 ? v : 1 - v)!} />}</b><span>{v >= 0.5 ? "D" : "R"} {l}</span></Link>
             ))}
           </div>
           <div className="hg-cta"><Link className="btn g" href="/forecast">Open the forecast</Link><Link className="btn" href="/forecast/what-if">Play What if</Link><Link className="btn" href="/maps/electoral">Make a map</Link></div>
@@ -294,6 +376,7 @@ export default function HomeGlobe({ races, odds, updated, daysOut, opStates = NO
           </div>
         </div>
       </div>
+      <div className="hg-spot" aria-hidden="true" />
       <div className="hg-legend">{(["safeD", "likelyD", "leanD", "toss", "leanR", "likelyR", "safeR"] as Rating[]).map((k) => <span key={k}><i style={{ background: RATE[k] }} />{RATING_LABEL[k]}</span>)}<span><i style={{ background: RATE.ind }} />Independent</span><span className="hint">Drag to spin the globe</span></div>
     </section>
   );

@@ -20,7 +20,7 @@ export type DailyRow = {
 // Every poll's final weight is multiplied by its pollster's quality factor.
 //
 // ── TIER STRUCTURE ──────────────────────────────────────────────────────────
-//   Gold Standard → 6.00×   Big Data Poll, The Honest Poll, Emerson, Cygnal,
+//   Gold Standard → 6.00×   On Point Polling, Big Data Poll, The Honest Poll, Emerson, Cygnal,
 //                            Quantus Insights, The New York Times, The Wall Street Journal.
 //   A++           → 4.00×   Elite accuracy (mean error ~2.0)
 //   A+            → 3.00×   Top tier, strong multi-cycle track record
@@ -43,6 +43,10 @@ export const POLLSTER_SCORECARD: Record<string, { grade: string; weight: number 
   // Oct 22 2026, set by the publisher: Big Data Poll, The Honest Poll, Emerson, Cygnal,
   // Quantus Insights, The New York Times and The Wall Street Journal. These keys sit first
   // so a joint release such as The Hill/Emerson or NY Times/Siena College matches here.
+  "on point polling":                           { grade: "Gold",   weight: 6.00 },
+  "on point":                                   { grade: "Gold",   weight: 6.00 },
+  "the public sentiment institute":             { grade: "Gold",   weight: 6.00 },
+  "tpsi":                                       { grade: "Gold",   weight: 6.00 },
   "quantus insights":                           { grade: "Gold",   weight: 6.00 },
   "quantus":                                    { grade: "Gold",   weight: 6.00 },
   "big data poll":                              { grade: "Gold",   weight: 6.00 },

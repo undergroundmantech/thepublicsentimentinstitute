@@ -40,3 +40,6 @@
 @keyframes tr-ring { from { opacity: .9; transform: scale(.4); } to { opacity: 0; transform: scale(3.2); } }
 @media (max-width: 1100px) { .tr-stage { grid-template-columns: 1fr; } }
 @media (max-width: 640px) { .tr-map { padding-bottom: 70px; } }
+
+.tr-more { cursor: pointer; } .tr-more circle { fill: rgba(10,7,18,.92); stroke: var(--wg, #e7b341); stroke-width: 1.6; } .tr-more text { font: 800 10.5px var(--font-m); fill: #ffd98a; pointer-events: none; }
+.tr-more:hover circle { fill: #2a1d08; }

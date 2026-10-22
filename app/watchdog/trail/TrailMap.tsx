@@ -63,22 +63,36 @@ export default function TrailMap({ data }: { data: Trail }) {
   const fillOf = (s: string) => { const n = heat[s] ?? 0; if (!n) return "rgba(255,255,255,.035)"; const a = 0.16 + 0.6 * Math.sqrt(n / maxHeat); return `rgba(231,179,65,${a.toFixed(3)})`; };
 
   // tokens to draw
-  type Tok = { key: string; name: string; st: string; x: number; y: number; dim: boolean; date?: string; label?: string };
+  type Tok = { key: string; name: string; st: string; x: number; y: number; dim: boolean; date?: string; label?: string; size: number; more?: number };
+  // Oct 22 2026: every person fits. Each state lays its people out in rings that shrink as the crowd grows; past
+  // eleven people the state shows a counter that opens the full list in the state panel.
   const toks: Tok[] = useMemo(() => {
     const out: Tok[] = [];
     if (!geo) return out;
-    const per: Record<string, number> = {};
-    const place = (name: string, s: string, extra: Partial<Tok>) => {
-      const p = pt[s]; if (!p) return; const k = per[s] = (per[s] ?? 0) + 1; if (k > 4) return;
-      const ang = [0, -2.2, 2.2, -1.1, 1.1][k - 1] ?? 0, rr = k === 1 ? 0 : 26;
-      out.push({ key: `${name}-${s}-${k}`, name, st: s, x: p[0] + Math.sin(ang) * rr, y: p[1] - Math.cos(ang) * rr * 0.6 - 8, dim: false, ...extra });
-    };
+    const per: Record<string, { name: string; extra: Partial<Tok> }[]> = {};
+    const add = (name: string, s: string, extra: Partial<Tok>) => { if (!pt[s]) return; (per[s] ??= []).push({ name, extra }); };
     if (mode === "trail") {
-      Object.entries(here).sort((a, b) => (P[b[0]]?.visits ?? 0) - (P[a[0]]?.visits ?? 0)).forEach(([name, h]) => place(name, h.st, { dim: h.age > 10, date: h.date }));
+      Object.entries(here).sort((a, b) => (P[b[0]]?.visits ?? 0) - (P[a[0]]?.visits ?? 0)).forEach(([name, h]) => add(name, h.st, { dim: h.age > 10, date: h.date }));
     } else if (mode === "attention") {
-      const seen = new Set<string>(); att.forEach((a) => { const k = a.who + a.st; if (seen.has(k)) return; seen.add(k); place(a.who, a.st, {}); });
+      const seen = new Set<string>(); att.forEach((a) => { const k = a.who + a.st; if (seen.has(k)) return; seen.add(k); add(a.who, a.st, {}); });
     } else {
-      const seen = new Set<string>(); end.forEach((e) => { const k = e.by + e.st; if (seen.has(k)) return; seen.add(k); place(e.by, e.st, { label: e.cand }); });
+      const seen = new Set<string>(); end.forEach((e) => { const k = e.by + e.st; if (seen.has(k)) return; seen.add(k); add(e.by, e.st, { label: e.cand }); });
+      for (const s of Object.keys(per)) per[s].sort((a, b) => (P[b.name]?.endorse ?? 0) - (P[a.name]?.endorse ?? 0));
+    }
+    const SMALL = new Set(["RI", "DE", "CT", "NJ", "MD", "MA", "NH", "VT", "DC"]);
+    for (const [s, list] of Object.entries(per)) {
+      const p = pt[s];
+      const cap = SMALL.has(s) ? 3 : 11;
+      const shown = list.slice(0, cap);
+      const n = shown.length;
+      const size = n <= 1 ? 38 : n <= 4 ? 32 : n <= 7 ? 26 : 22;
+      shown.forEach((x, i) => {
+        // first person in the middle, the rest on one ring of up to 6 and a second ring beyond it
+        let dx = 0, dy = 0;
+        if (i > 0) { const ring = i <= 6 ? 1 : 2; const k = ring === 1 ? i - 1 : i - 7; const m = ring === 1 ? Math.min(6, n - 1) : n - 7; const a = (k / Math.max(1, m)) * Math.PI * 2 - Math.PI / 2; const r = (ring === 1 ? 1.05 : 1.95) * size; dx = Math.cos(a) * r; dy = Math.sin(a) * r * 0.78; }
+        out.push({ key: `${x.name}-${s}-${i}`, name: x.name, st: s, x: p[0] + dx, y: p[1] + dy - 6, dim: false, size, ...x.extra });
+      });
+      if (list.length > cap) out.push({ key: `more-${s}`, name: "", st: s, x: p[0] + size * 1.7, y: p[1] + size * 1.2, dim: false, size, more: list.length - cap });
     }
     return out;
   }, [geo, mode, here, att, end, pt, P]);
@@ -126,10 +140,15 @@ export default function TrailMap({ data }: { data: Trail }) {
               {route ? <><path d={route} className="tr-route glow" filter="url(#trglow)" /><path d={route} className="tr-route" /></> : null}
               {mode === "trail" ? shown.filter((v) => (t - tOf(v.date)) / DAY < 2.5).map((v, i) => { const p = pt[v.st]; return p ? <circle key={`${v.who}${v.date}${i}`} cx={p[0]} cy={p[1]} r="8" className="tr-ring" style={{ stroke: PARTY_COLOR[v.party] ?? "#e7b341" }} /> : null; }) : null}
               {toks.map((k) => {
+                if (k.more) return (
+                  <g key={k.key} className="tr-more" onClick={() => setSt(k.st)} role="button" aria-label={`${k.more} more in ${k.st}`}>
+                    <circle cx={k.x} cy={k.y} r={13} /><text x={k.x} y={k.y + 4} textAnchor="middle">+{k.more}</text>
+                  </g>
+                );
                 const p = P[k.name];
                 return (
-                  <g key={k.key} className={`tr-tok${k.dim ? " dim" : ""}${who === k.name ? " on" : ""}`} style={{ transform: `translate(${k.x - 14}px, ${k.y - 34}px)` }} onClick={() => setWho(who === k.name ? null : k.name)}>
-                    <PersonToken ini={p?.ini ?? k.name.slice(0, 2)} party={p?.party ?? "O"} role={p?.role} size={38} active={who === k.name} title={k.name} />
+                  <g key={k.key} className={`tr-tok${k.dim ? " dim" : ""}${who === k.name ? " on" : ""}`} style={{ transform: `translate(${k.x - k.size * 0.37}px, ${k.y - k.size * 0.9}px)` }} onClick={() => setWho(who === k.name ? null : k.name)}>
+                    <PersonToken ini={p?.ini ?? k.name.slice(0, 2)} party={p?.party ?? "O"} role={p?.role} size={k.size} active={who === k.name} title={k.name} />
                   </g>
                 );
               })}

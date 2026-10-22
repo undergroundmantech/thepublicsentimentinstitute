@@ -1,97 +1,2347 @@
-{"visits":[
-{"person":"Donald Trump","party":"R","date":"2026-08-21","state":"SC","city":"Myrtle Beach","kind":"rally","for":["Darline Graham"],"race":"SC Senate GOP runoff","note":"Rally at Myrtle Beach Convention Center ahead of Graham's runoff against Rep. Ralph Norman.","source":"https://www.live5news.com/2026/08/21/trump-heads-south-carolina-rally-sen-darline-graham-ahead-runoff/"},
-{"person":"Donald Trump","party":"R","date":"2026-09-09","state":"TX","city":"Dallas","kind":"event","for":["Ken Paxton"],"race":"RNC midterm convention; TX Senate","note":"Rally tied to the Sept 9 to 10 RNC midterm convention; praised Paxton. Exact day of his appearance not stated.","source":"https://www.cbsnews.com/texas/news/trump-fourth-texas-visit-lubbock-waco-rallies-2026-midterms/"},
-{"person":"Donald Trump","party":"R","date":"2026-09-16","state":"NC","city":"Gastonia","kind":"rally","for":["Michael Whatley"],"race":"NC Senate","note":"Airport rally at Gastonia Municipal Airport backing the GOP Senate nominee.","source":"https://abcnews4.com/news/nation-world/president-donald-trump-gastonia-campaign-rally-support-republican-gop-senate-candidates-seat-michael-whatley-north-carolina-municipal-airport"},
-{"person":"Donald Trump","party":"R","date":"2026-10-01","state":"TX","city":"Denton","kind":"event","for":[],"race":"TX statewide","note":"Economic agenda event at Peterbilt plant; CBS Texas says early October, other listings give Oct 1.","source":"https://www.cbsnews.com/texas/news/trump-fourth-texas-visit-lubbock-waco-rallies-2026-midterms/"},
-{"person":"Donald Trump","party":"R","date":"2026-10-01","state":"OK","city":"Durant","kind":"rally","for":["Mike Mazzei","Kevin Hern"],"race":"OK Governor; OK Senate","note":"Evening midterm rally at Choctaw Event Center.","source":"https://www.news9.com/oklahoma-city-news/5-things-to-know-oklahoma-storms-trump-attends-durant-rally"},
-{"person":"Donald Trump","party":"R","date":"2026-10-02","state":"AL","city":"Mobile","kind":"rally","for":["Barry Moore"],"race":"AL Senate","note":"Rally at the Mitchell Center with the GOP Senate candidate.","source":"https://abcnews4.com/news/nation-world/trump-plans-mobile-rally-oct-2-with-alabama-senate-candidate-barry-moore"},
-{"person":"Donald Trump","party":"R","date":"2026-10-03","state":"OH","city":"Vandalia","kind":"rally","for":["Jon Husted","Vivek Ramaswamy"],"race":"OH Senate; OH Governor","note":"Saturday rally near Dayton at Butler High School.","source":"https://www.wcpo.com/news/local-news/trump-rallies-ohio-republicans-in-vandalia-ahead-of-midterm-election"},
-{"person":"Donald Trump","party":"R","date":"2026-10-05","state":"NE","city":"Grand Island","kind":"rally","for":["Pete Ricketts","Jim Pillen"],"race":"NE Senate; NE Governor","note":"Rally at Pinnacle Bank Expo Center as the Ricketts race tightened against Dan Osborn.","source":"https://www.wowt.com/2026/10/05/supporters-line-up-overnight-trump-rallies-republicans-grand-island-ahead-midterms/"},
-{"person":"Donald Trump","party":"R","date":"2026-10-07","state":"TX","city":"San Antonio","kind":"rally","for":["Ken Paxton","Carlos De La Cruz"],"race":"TX Senate; TX House","note":"Freeman Coliseum rally with Paxton.","source":"https://www.ksat.com/news/local/2026/10/08/takeaways-from-president-donald-trumps-rally-in-san-antonio/"},
-{"person":"Donald Trump","party":"R","date":"2026-10-09","state":"NY","city":"Syracuse","kind":"rally","for":["Bruce Blakeman"],"race":"NY Governor","note":"Friday rally at the Oncenter praising Blakeman and criticizing Gov. Hochul.","source":"https://spectrumlocalnews.com/nys/central-ny/politics/2026/10/08/trump-to-visit-syracuse-friday-for-midterm-rally-"},
-{"person":"Donald Trump","party":"R","date":"2026-10-10","state":"TN","city":"Clarksville","kind":"rally","for":["Marsha Blackburn","Bill Hagerty"],"race":"TN GOP ticket","note":"Rally at F&M Bank Arena for Tennessee Republicans.","source":"https://newschannel9.com/news/nation-world/president-trump-promises-5k-annual-payments-rallies-tennessee-republicans-in-clarksville"},
-{"person":"Donald Trump","party":"R","date":"2026-10-12","state":"OH","city":"Youngstown","kind":"rally","for":["Jon Husted","Vivek Ramaswamy"],"race":"OH Senate; OH Governor","note":"Covelli Centre rally, his second Ohio stop in ten days.","source":"https://cnycentral.com/news/nation-world/after-weekend-visit-to-dayton-vandalia-vivek-ramaswamy-jon-husted-gop-republican-donald-trump-ohio-next-week-youngstown-covelli-centre-politics-government-senate"},
-{"person":"Donald Trump","party":"R","date":"2026-10-13","state":"AK","city":"Wasilla","kind":"rally","for":["Dan Sullivan","Nick Begich"],"race":"AK Senate; AK-AL","note":"Menard Center rally boosting Sullivan; also endorsed Wilson.","source":"https://alaskapublic.org/news/politics/elections/2026-10-13/trump-rally-brings-pardons-promises-and-endorsements-to-wasilla"},
-{"person":"Donald Trump","party":"R","date":"2026-10-14","state":"AZ","city":"Bullhead City","kind":"rally","for":["Andy Biggs"],"race":"AZ Governor","note":"Rally at Laughlin Bullhead International Airport for Biggs and local Republicans.","source":"https://www.fox10phoenix.com/election/president-trump-headlines-bullhead-city-rally-campaign-arizona-republicans"},
-{"person":"Donald Trump","party":"R","date":"2026-10-14","state":"MT","city":"Kalispell","kind":"rally","for":["Kurt Alme","Aaron Flint"],"race":"MT Senate; MT-01","note":"Majestic Valley Arena rally, same day as the Arizona stop.","source":"https://dailymontanan.com/?p=39512"},
-{"person":"Donald Trump","party":"R","date":"2026-10-16","state":"GA","city":"Dalton","kind":"rally","for":["Mike Collins","Rick Jackson"],"race":"GA Senate; GA Governor","note":"Rally at Dalton Municipal Airport with both GOP nominees.","source":"https://www.fox5atlanta.com/news/trump-returning-georgia-another-campaign-rally-saturday"},
-{"person":"Donald Trump","party":"R","date":"2026-10-17","state":"KY","city":"Highland Heights","kind":"rally","for":["Ed Gallrein"],"race":"KY-04","note":"Rally at Truist Arena on the NKU campus.","source":"https://www.foxnews.com/live-news/midterm-elections-2026-trump-kansas-latino-voters-october-19"},
-{"person":"Donald Trump","party":"R","date":"2026-10-19","state":"KS","city":"Park City","kind":"rally","for":["Roger Marshall"],"race":"KS Senate","note":"Heartland Credit Union Arena rally near Wichita.","source":"https://www.foxnews.com/live-news/midterm-elections-2026-trump-kansas-latino-voters-october-19"},
-{"person":"Donald Trump","party":"R","date":"2026-10-20","state":"NC","city":"Greenville","kind":"rally","for":["Michael Whatley"],"race":"NC Senate","note":"Rally at Pitt-Greenville Airport during early voting.","source":"https://www.foxnews.com/live-news/midterm-elections-2026-trump-north-carolina-early-voting-october-20"},
-{"person":"Howard Lutnick","party":"R","date":"2026-10-20","state":"NC","city":"Greenville","kind":"event","for":["Michael Whatley"],"race":"NC Senate","note":"Commerce Secretary appeared at the Trump rally.","source":"https://www.foxnews.com/live-news/midterm-elections-2026-trump-north-carolina-early-voting-october-20"},
-{"person":"Donald Trump","party":"R","date":"2026-10-21","state":"SC","city":"Pendleton","kind":"rally","for":["Darline Graham"],"race":"SC Senate","note":"Rally at Clemson's T. Ed Garrison Arena.","source":"https://www.foxcarolina.com/2026/10/21/live-coverage-pres-trump-upstate-midterm-rally/"},
-{"person":"Donald Trump","party":"R","date":"2026-10-22","state":"IA","city":"Sioux City","kind":"announced","for":["Ashley Hinson"],"race":"IA Senate","note":"RNC announced rally at Sioux Gateway Airport, remarks set for 6 p.m. today.","source":"https://www.wowt.com/2026/10/19/president-donald-trump-hold-rally-sioux-gateway-airport/"},
-{"person":"Donald Trump","party":"R","date":"2026-10-23","state":"FL","city":"Fort Myers","kind":"announced","for":[],"race":"FL statewide","note":"Rally planned at FGCU's Alico Arena; no specific candidate named.","source":"https://www.wgcu.org/top-story/2026-10-16/trump-to-come-to-fort-myers-oct-23-fgcu-alerts-campus-for-change-in-operations-for-special-private-event-same-day"},
-{"person":"Donald Trump","party":"R","date":"2026-10-24","state":"GA","city":"Macon","kind":"announced","for":["Mike Collins","Rick Jackson"],"race":"GA Senate; GA Governor","note":"Saturday 7 p.m. rally; venue not yet announced.","source":"https://www.fox5atlanta.com/news/trump-returning-georgia-another-campaign-rally-saturday"},
-{"person":"Donald Trump","party":"R","date":"2026-10-25","state":"MI","city":"Port Huron","kind":"announced","for":["Mike Rogers"],"race":"MI Senate","note":"Sunday rally at McMorran Place Arena organized by Trump 47 Committee.","source":"https://www.fox2detroit.com/news/trump-michigan-president-port-huron"},
-{"person":"Donald Trump","party":"R","date":"2026-10-27","state":"TX","city":"Lubbock","kind":"announced","for":["Ken Paxton"],"race":"TX Senate","note":"2:30 p.m. rally on his fourth Texas trip; one Fox blog listed Oct 20 instead.","source":"https://www.cbsnews.com/texas/news/trump-fourth-texas-visit-lubbock-waco-rallies-2026-midterms/"},
-{"person":"Donald Trump","party":"R","date":"2026-10-27","state":"TX","city":"Waco","kind":"announced","for":["Ken Paxton"],"race":"TX Senate","note":"6 p.m. rally the same day as Lubbock.","source":"https://www.cbsnews.com/texas/news/trump-fourth-texas-visit-lubbock-waco-rallies-2026-midterms/"},
-{"person":"Donald Trump","party":"R","date":"2026-11-01","state":"IA","city":"","kind":"announced","for":["Ashley Hinson","Zach Lahn"],"race":"IA Senate; IA Governor","note":"Reportedly slated second Iowa visit; city and venue not announced.","source":"https://newsweek.com/trump-iowa-rally-ashley-hinson-josh-turek-polls-12575410"},
-{"person":"JD Vance","party":"R","date":"2026-08-31","state":"MI","city":"Sterling Heights","kind":"event","for":["Mike Rogers","John James"],"race":"MI Senate; MI Governor","note":"MAGA Inc. super PAC event with Rogers and James.","source":"https://www.fox2detroit.com/news/jd-vance-mike-rogers-michigan-senate-campaign-maga-super-pac"},
-{"person":"JD Vance","party":"R","date":"2026-08-31","state":"NV","city":"Las Vegas","kind":"event","for":[],"race":"","note":"Addressed the Republican Jewish Coalition Leadership Summit at the Venetian Expo.","source":"https://thenevadaindependent.com/elections/2028/candidate-visit-tracker"},
-{"person":"JD Vance","party":"R","date":"2026-09-14","state":"KS","city":"Olathe","kind":"event","for":["Roger Marshall"],"race":"KS Senate","note":"Campaign stop at an Olathe manufacturer.","source":"https://www.kctv5.com/2026/09/14/vice-president-jd-vance-visit-johnson-county-what-know-about-mondays-olathe-stop/"},
-{"person":"JD Vance","party":"R","date":"2026-09-18","state":"IA","city":"Council Bluffs","kind":"rally","for":["Zach Lahn","Chris McGowan","Ashley Hinson"],"race":"IA Governor; IA-04; IA Senate","note":"RNC midterm rally; Hinson did not attend, but Vance voiced support for her.","source":"https://www.dakotanewsnow.com/2026/09/19/heres-how-vp-vance-visit-could-help-iowa-gop-candidates/"},
-{"person":"JD Vance","party":"R","date":"2026-09-21","state":"NC","city":"Greensboro","kind":"rally","for":["Michael Whatley"],"race":"NC Senate","note":"GOP midterm rally in Greensboro.","source":"https://ncnewsline.com/2026/09/21/gop-deploys-vance-to-nc-to-rouse-support-for-whatley/"},
-{"person":"JD Vance","party":"R","date":"2026-09-30","state":"TX","city":"Harlingen","kind":"rally","for":["Eric Flores"],"race":"TX-34","note":"Rally with the GOP challenger to Rep. Vicente Gonzalez.","source":"https://www.pbs.org/newshour/politics/watch-live-vance-addresses-gop-midterm-election-rally-in-texas"},
-{"person":"JD Vance","party":"R","date":"2026-10-01","state":"FL","city":"Lakeland","kind":"rally","for":["Byron Donalds","Ashley Moody"],"race":"FL Governor; FL Senate","note":"Described as his first Florida rally.","source":"https://www.dailysignal.com/2026/10/04/watch-inside-vances-first-ever-florida-rally/"},
-{"person":"JD Vance","party":"R","date":"2026-10-05","state":"AK","city":"Fairbanks","kind":"rally","for":["Dan Sullivan","Nick Begich"],"race":"AK Senate; AK-AL","note":"Airport hangar rally attacking Democrat Mary Peltola.","source":"https://alaskapublic.org/news/politics/2026-10-06/vance-targets-peltola-touts-energy-development-at-alaska-rally"},
-{"person":"JD Vance","party":"R","date":"2026-10-09","state":"OH","city":"Lima","kind":"rally","for":["Jon Husted","Vivek Ramaswamy"],"race":"OH Senate; OH Governor","note":"Rally at Allen County Regional Airport.","source":"https://spectrumnews1.com/oh/columbus/news/2026/10/10/vance-rallies-in-home-state"},
-{"person":"JD Vance","party":"R","date":"2026-10-13","state":"TX","city":"Tyler","kind":"rally","for":["Ken Paxton","Greg Abbott"],"race":"TX Senate; TX Governor","note":"East Texas rally at Tyler Pounds Regional Airport.","source":"https://www.kbtx.com/2026/10/13/vice-president-jd-vance-stumps-historic-gop-midterm-rally-tyler/"},
-{"person":"JD Vance","party":"R","date":"2026-10-14","state":"GA","city":"Atlanta","kind":"event","for":["Mike Collins"],"race":"GA Senate","note":"Airport meet with supporters as early voting began.","source":"https://www.atlantanewsfirst.com/2026/10/14/trumps-georgia-rally-is-days-away-jd-vance-is-meeting-supporters-atlanta-first/"},
-{"person":"JD Vance","party":"R","date":"2026-10-15","state":"MI","city":"Monroe","kind":"rally","for":["Mike Rogers"],"race":"MI Senate","note":"Trump 47 Committee rally at LevelUp Training Complex; date inferred from Thursday reference.","source":"https://wwmt.com/news/state/jd-vance-michigan-monroe-midterm-rally-town-hall-election-abdul-el-sayed-mike-rogers-politics-government-state"},
-{"person":"JD Vance","party":"R","date":"2026-10-19","state":"NC","city":"Hendersonville","kind":"rally","for":["Michael Whatley","Jennifer Balkcom"],"race":"NC Senate; NC-11","note":"Rally at Hyder Warehouse drawing an estimated 200 to 300 people.","source":"https://wlos.com/news/local/vice-president-jd-vance-campaigns-republican-candidates-gop-western-north-carolina-rally-hendersonville-midterm-elections-jennifer-balkcom-michael-whatley"},
-{"person":"JD Vance","party":"R","date":"2026-10-21","state":"OH","city":"Sharonville","kind":"rally","for":["Jon Husted","Vivek Ramaswamy","Eric Conroy"],"race":"OH Senate; OH Governor; OH-01","note":"Rally at Sharonville Convention Center in Greater Cincinnati.","source":"https://www.wyso.org/2026-10-21/vp-vance-campaigns-in-greater-cincinnati-as-midterms-approach"},
-{"person":"JD Vance","party":"R","date":"2026-10-22","state":"NE","city":"North Platte","kind":"announced","for":["Pete Ricketts"],"race":"NE Senate","note":"RNC midterm rally at D&N Event Center; Thursday date inferred; candidate tie implied, not stated.","source":"https://nebraskaexaminer.com/2026/10/17/jd-vance-is-coming-to-nebraska-for-a-north-platte-midterm-rally/"},
-{"person":"Pete Hegseth","party":"R","date":"2026-08-17","state":"IA","city":"Des Moines","kind":"event","for":["Zach Nunn"],"race":"IA-03","note":"Defense Secretary campaigned at the Iowa State Fair.","source":"https://www.bostonglobe.com/2026/08/18/nation/pete-hegseth-iowa-republicans-congress/"},
-{"person":"Joe Manchin","party":"I","date":"2026-10-21","state":"ME","city":"","kind":"event","for":["Susan Collins"],"race":"ME Senate","note":"Former Democratic senator campaigned for Republican Collins; city not stated.","source":"https://www.foxnews.com/live-news/midterm-elections-2026-trump-south-carolina-democrats-october-21"},
-{"person":"Barack Obama","party":"D","date":"2026-10-07","state":"VA","city":"","kind":"fundraiser","for":[],"race":"DSCC Senate races","note":"DSCC fireside chat fundraiser with Sen. Lisa Blunt Rochester raised $3.6 million.","source":"https://abcnews.com/Politics/obama-warns-donors-races-razors-edge-ramps-midterm/story?id=137141091"},
-{"person":"Barack Obama","party":"D","date":"2026-10-24","state":"MI","city":"Detroit","kind":"announced","for":["Abdul El-Sayed","Jocelyn Benson"],"race":"MI Senate; MI Governor","note":"Rally with Michigan Democratic nominees.","source":"https://www.pbs.org/newshour/politics/obama-to-campaign-with-el-sayed-in-detroit-as-ex-president-gets-more-involved-in-midterms"},
-{"person":"Barack Obama","party":"D","date":"2026-10-24","state":"OH","city":"Cleveland","kind":"announced","for":["Sherrod Brown","Amy Acton"],"race":"OH Senate; OH Governor","note":"Afternoon rally per press release; venue not named.","source":"https://www.cleveland19.com/2026/10/13/former-president-barack-obama-rally-cleveland/"},
-{"person":"Barack Obama","party":"D","date":"2026-10-28","state":"GA","city":"Atlanta","kind":"announced","for":["Jon Ossoff","Keisha Lance Bottoms"],"race":"GA Senate; GA Governor","note":"Rally announced; venue not stated.","source":"https://thenationaldesk.com/news/nation-world/president-obama-to-headline-rally-for-georgia-democrats-keisha-lance-bottoms-jon-ossoff-days-ahead-of-2026-midterm-elections-rrt"},
-{"person":"Bill Clinton","party":"D","date":"2026-10-20","state":"FL","city":"Hollywood","kind":"event","for":["David Jolly"],"race":"FL Governor","note":"Appearance at Koinonia Worship Center in Broward County.","source":"https://www.foxnews.com/live-news/midterm-elections-2026-trump-north-carolina-early-voting-october-20"},
-{"person":"Kamala Harris","party":"D","date":"2026-09-22","state":"MI","city":"Detroit","kind":"event","for":["Abdul El-Sayed"],"race":"MI Senate","note":"Roundtable on Black maternal health.","source":"https://www.michiganpublic.org/2026-09-23/kamala-harris-campaigns-for-senate-candidate-abdul-el-sayed-ahead-of-election-day"},
-{"person":"Kamala Harris","party":"D","date":"2026-10-21","state":"NV","city":"Las Vegas","kind":"event","for":["Aaron Ford","Dina Titus"],"race":"NV Governor; NV-01","note":"Culinary Union membership meeting launching her final midterm swing.","source":"https://www.fox5vegas.com/2026/10/14/kamala-harris-launch-final-midterm-blitz-with-las-vegas-campaign-stop/"},
-{"person":"Kamala Harris","party":"D","date":"2026-10-22","state":"MS","city":"","kind":"announced","for":["Scott Colom"],"race":"MS Senate","note":"Stop for Colom against Sen. Cindy Hyde-Smith; city not given.","source":"https://www.kiro7.com/news/politics/kamala-harris-adds/5PONHWBE6Q7PRPSGZYTX3OSJRM/"},
-{"person":"Kamala Harris","party":"D","date":"2026-10-24","state":"NH","city":"","kind":"announced","for":["Chris Pappas"],"race":"NH Senate","note":"Includes a discussion on reproductive care; city not given.","source":"https://www.kiro7.com/news/politics/kamala-harris-adds/5PONHWBE6Q7PRPSGZYTX3OSJRM/"},
-{"person":"Kamala Harris","party":"D","date":"2026-10-26","state":"WI","city":"","kind":"announced","for":["David Crowley"],"race":"WI Governor","note":"Stop for the Democratic governor nominee; city not given.","source":"https://www.kiro7.com/news/politics/kamala-harris-adds/5PONHWBE6Q7PRPSGZYTX3OSJRM/"},
-{"person":"Kamala Harris","party":"D","date":"2026-10-28","state":"GA","city":"","kind":"announced","for":["Jon Ossoff"],"race":"GA Senate","note":"Start of a three day Georgia swing through Oct 30 with voter protection events.","source":"https://www.kiro7.com/news/politics/kamala-harris-adds/5PONHWBE6Q7PRPSGZYTX3OSJRM/"},
-{"person":"Kamala Harris","party":"D","date":"2026-10-30","state":"GA","city":"Atlanta","kind":"announced","for":[],"race":"GA Democrats","note":"Speech at the Fulton County Democratic Party annual gala.","source":"https://www.kiro7.com/news/politics/kamala-harris-adds/5PONHWBE6Q7PRPSGZYTX3OSJRM/"},
-{"person":"Gavin Newsom","party":"D","date":"2026-09-03","state":"SC","city":"Hardeeville","kind":"tour stop","for":[],"race":"SC Democrats","note":"Take It Back tour stop at St. Stephen AME Church; Lowcountry stops followed. Exact day approximate.","source":"https://www.wtoc.com/2026/09/03/california-gov-gavin-newsom-rallies-jasper-co-democratic-voters-during-take-it-back-tour/"},
-{"person":"Gavin Newsom","party":"D","date":"2026-09-05","state":"NC","city":"Monroe","kind":"rally","for":["Roy Cooper"],"race":"NC Senate","note":"Labor Day weekend rally; also canvassed in Charlotte for Cooper that weekend.","source":"https://www.wbtv.com/2026/09/06/california-gov-gavin-newsom-rallies-north-carolina-democrats-over-labor-day-weekend/"},
-{"person":"Gavin Newsom","party":"D","date":"2026-10-17","state":"NH","city":"Exeter","kind":"tour stop","for":["Chris Pappas","Cinde Warmington","Stefany Shaheen"],"race":"NH Senate; NH Governor; NH-01","note":"Voter mobilization in Exeter, canvass launch in Nashua and an evening event with Shaheen. Date inferred.","source":"https://dnyuz.com/2026/10/14/gavin-newsom-to-parachute-back-into-new-hampshire-ahead-of-midterm-elections/"},
-{"person":"JB Pritzker","party":"D","date":"2026-10-10","state":"SC","city":"Charleston, Manning, Columbia","kind":"tour stop","for":["Annie Andrews","Jermaine Johnson"],"race":"SC Senate; SC Governor","note":"Statewide swing that ended with a keynote at the state NAACP convention.","source":"https://www.postandcourier.com/politics/sc-jb-pritzker-illinois-gov-2028/article_267aaef1-04e5-4b4c-a8d1-875b4bdef29b.html"},
-{"person":"Pete Buttigieg","party":"D","date":"2026-08-15","state":"NV","city":"Reno","kind":"event","for":["Sandra Jauregui","Teresa Benitez-Thompson"],"race":"NV races","note":"Brewery conversation and a veterans event with Nevada Democrats.","source":"https://thenevadaindependent.com/elections/2028/candidate-visit-tracker"},
-{"person":"Pete Buttigieg","party":"D","date":"2026-10-02","state":"NH","city":"Rochester","kind":"rally","for":["Chris Pappas","Stefany Shaheen","Cinde Warmington"],"race":"NH Senate; NH-01; NH Governor","note":"Registration rally; location sent to registrants in advance.","source":"https://granitepostnews.com/news/politics/buttigieg-rochester-nh-rally/"},
-{"person":"Pete Buttigieg","party":"D","date":"2026-10-07","state":"NV","city":"Henderson","kind":"fundraiser","for":["Susie Lee","Aaron Ford","Steven Horsford"],"race":"NV-03; NV Governor; NV-04","note":"Fundraiser with Lee, then a Las Vegas youth economy event with Ford and Horsford.","source":"https://thenevadaindependent.com/elections/2028/candidate-visit-tracker"},
-{"person":"Pete Buttigieg","party":"D","date":"2026-10-14","state":"MI","city":"Kalamazoo","kind":"rally","for":["Sean McCann"],"race":"MI-04","note":"Rally for the Democratic nominee against Rep. Bill Huizenga.","source":"https://wqxc.com/2026/10/08/977815/"},
-{"person":"Pete Buttigieg","party":"D","date":"2026-10-19","state":"VA","city":"Henrico","kind":"rally","for":["Shannon Taylor","Elaine Luria","Tom Perriello"],"race":"VA-01; VA-02; VA-05","note":"Henrico Theatre rally for three House flip targets.","source":"https://vadogwood.com/news/politics/pete-buttigieg-shannon-taylor/"},
-{"person":"Wes Moore","party":"D","date":"2026-09-26","state":"NV","city":"Las Vegas","kind":"event","for":["Aaron Ford","Steven Horsford","Susie Lee"],"race":"NV Governor; NV-04; NV-03","note":"Two canvass launches with Nevada Democrats.","source":"https://thenevadaindependent.com/elections/2028/candidate-visit-tracker"},
-{"person":"Gretchen Whitmer","party":"D","date":"2026-10-20","state":"NV","city":"Las Vegas","kind":"event","for":["Sandra Jauregui"],"race":"NV races","note":"Reproductive rights GOTV event with Elizabeth Warren, plus a Jauregui fundraiser.","source":"https://thenevadaindependent.com/elections/2028/candidate-visit-tracker"},
-{"person":"Elizabeth Warren","party":"D","date":"2026-10-20","state":"NV","city":"Las Vegas","kind":"event","for":[],"race":"NV races","note":"Joined Whitmer at a reproductive rights GOTV event with Nevada Democratic candidates.","source":"https://thenevadaindependent.com/elections/2028/candidate-visit-tracker"},
-{"person":"Andy Beshear","party":"D","date":"2026-10-22","state":"NV","city":"Las Vegas","kind":"event","for":[],"race":"","note":"Listed for an IndyFest panel; a forum appearance, not a candidate rally.","source":"https://thenevadaindependent.com/elections/2028/candidate-visit-tracker"},
-{"person":"Alexandria Ocasio-Cortez","party":"D","date":"2026-09-28","state":"NY","city":"Syracuse","kind":"tour stop","for":[],"race":"NY local and state races","note":"Final stop of an upstate tour after Buffalo and Ithaca; organizer event at All Saints church.","source":"https://www.waer.org/news/2026-09-29/rep-ocasio-cortez-vies-to-mobilize-voters-ahead-of-midterm-elections"},
-{"person":"Alexandria Ocasio-Cortez","party":"D","date":"2026-10-15","state":"MI","city":"Escanaba, Iron Mountain, Marquette","kind":"tour stop","for":["Abdul El-Sayed"],"race":"MI Senate","note":"Upper Peninsula swing ending in a Marquette rally of more than 1,200 people.","source":"https://www.michiganpublic.org/politics-government/2026-10-16/el-sayed-takes-senate-campaign-to-michigans-upper-peninsula-with-ocasio-cortez"},
-{"person":"Alexandria Ocasio-Cortez","party":"D","date":"2026-10-22","state":"ME","city":"Portland","kind":"announced","for":["Troy Jackson"],"race":"ME Senate","note":"2 p.m. town hall at State Theatre.","source":"https://www.pressherald.com/2026/10/16/aoc-to-take-part-in-portland-town-hall-next-week/"},
-{"person":"Alexandria Ocasio-Cortez","party":"D","date":"2026-10-24","state":"NV","city":"North Las Vegas","kind":"announced","for":["Steven Horsford"],"race":"NV-04","note":"Early vote rally.","source":"https://thenevadaindependent.com/elections/2028/candidate-visit-tracker"},
-{"person":"Alexandria Ocasio-Cortez","party":"D","date":"2026-10-27","state":"FL","city":"","kind":"announced","for":["Angie Nixon"],"race":"FL Senate","note":"Florida appearance announced; city not specified.","source":"https://www.foxnews.com/live-news/midterm-elections-2026-trump-north-carolina-early-voting-october-20"},
-{"person":"Bernie Sanders","party":"D","date":"2026-10-19","state":"TX","city":"El Paso","kind":"rally","for":["James Talarico"],"race":"TX Senate","note":"Abraham Chavez Theatre rally with Beto O'Rourke; Talarico campaigned elsewhere that day.","source":"https://www.foxnews.com/live-news/midterm-elections-2026-trump-north-carolina-early-voting-october-20"},
-{"person":"Hakeem Jeffries","party":"D","date":"2026-10-18","state":"OH","city":"Toledo","kind":"event","for":["Marcy Kaptur"],"race":"OH-09","note":"House Democratic leader campaigned with Kaptur in the Toledo area.","source":"https://www.foxnews.com/live-news/midterm-elections-2026-trump-kansas-latino-voters-october-19"},
-{"person":"Raphael Warnock","party":"D","date":"2026-10-07","state":"NV","city":"Las Vegas","kind":"event","for":["Aaron Ford"],"race":"NV Governor","note":"Countdown to early voting event.","source":"https://thenevadaindependent.com/elections/2028/candidate-visit-tracker"},
-{"person":"Elissa Slotkin","party":"D","date":"2026-10-07","state":"NV","city":"Reno","kind":"fundraiser","for":[],"race":"NV Democrats","note":"Washoe County Democrats fundraising dinner at Grand Sierra Resort.","source":"https://thenevadaindependent.com/elections/2028/candidate-visit-tracker"},
-{"person":"Cory Booker","party":"D","date":"2026-10-11","state":"NV","city":"Las Vegas","kind":"event","for":["Steven Horsford","Dina Titus"],"race":"NV-04; NV-01","note":"Ballot party and phonebank; Culinary Union canvass launch on Oct 12.","source":"https://thenevadaindependent.com/elections/2028/candidate-visit-tracker"},
-{"person":"Ro Khanna","party":"D","date":"2026-10-23","state":"NV","city":"Reno","kind":"announced","for":[],"race":"","note":"Students for Solidarity town hall with Don Lemon at UNR.","source":"https://thenevadaindependent.com/elections/2028/candidate-visit-tracker"}
+{
+"visits": [
+{
+"person": "Donald Trump",
+"party": "R",
+"date": "2026-08-21",
+"state": "SC",
+"city": "Myrtle Beach",
+"kind": "rally",
+"for": [
+"Darline Graham"
 ],
-"unconfirmed":[
-{"person":"Donald Trump","state":"NV","claim":"Aug 5 Las Vegas event at Red Rock Casino touting tax policy","why":"Found only in the Wikipedia rally list; the underlying news report was not reached."},
-{"person":"Donald Trump","state":"NY","claim":"Aug 14 Garden City event with Blakeman","why":"Found only in the Wikipedia rally list; the AP source was not reached."},
-{"person":"JD Vance","state":"NY","claim":"Aug 19 Southampton RNC fundraiser and Aug 20 fundraiser at Omeed Malik's home","why":"Wikipedia only; the second is sourced to a social post and has no location."},
-{"person":"JD Vance","state":"TX","claim":"Spoke at the Sept 9 to 10 Republican midterm convention in Dallas","why":"Wikipedia only; no news report reached confirming his appearance."},
-{"person":"JD Vance","state":"OH","claim":"Cincinnati event on Thursday Oct 22","why":"Fox blog mention may duplicate the Oct 21 Sharonville rally; not independently confirmed."},
-{"person":"Pete Hegseth","state":"KY","claim":"Campaigned in Kentucky for Republicans","why":"Inquirer roundup mentions it without date, city or candidate."},
-{"person":"Gavin Newsom","state":"AL","claim":"Alabama stop on Take It Back tour","why":"Named as a tour state but no city or date found."},
-{"person":"Mark Kelly","state":"NH","claim":"Planned New Hampshire visit days after Harris","why":"No date, city or candidate given."},
-{"person":"Andy Beshear","state":"IA","claim":"Headline says he campaigned in Iowa, Nevada and Ohio","why":"Article did not load, so no dates or cities were confirmed. His Iowa rally with Rob Sand was in June."},
-{"person":"Katie Britt","state":"IA","claim":"Campaigned in Iowa for Ashley Hinson around Oct 20","why":"Fox blog gives no city or exact date."},
-{"person":"Elon Musk","state":"","claim":"Midterm campaign appearances","why":"No in person midterm campaign event found."}
+"race": "SC Senate GOP runoff",
+"note": "Rally at Myrtle Beach Convention Center ahead of Graham's runoff against Rep. Ralph Norman.",
+"source": "https://www.live5news.com/2026/08/21/trump-heads-south-carolina-rally-sen-darline-graham-ahead-runoff/"
+},
+{
+"person": "Donald Trump",
+"party": "R",
+"date": "2026-09-09",
+"state": "TX",
+"city": "Dallas",
+"kind": "event",
+"for": [
+"Ken Paxton"
 ],
-"notes":"Search budget ran out before full coverage. No visits found for Walz, Shapiro, Chris Murphy or Musk, but that is not proof of none. Turning Point Action runs a New Hampshire Chase the Ballot ground program for Sununu with no dated headline rally found. Name Darline Graham is as printed by Live 5, Fox Carolina and others. Dated Oct 22 or later entries are announced, not completed. Las Vegas visits come from the Nevada Independent candidate visit tracker. Lubbock and Waco use CBS Texas's Oct 27 date over a Fox blog's Oct 20. Obama's Detroit and Cleveland rallies are both reported for Oct 24."}
+"race": "RNC midterm convention; TX Senate",
+"note": "Rally tied to the Sept 9 to 10 RNC midterm convention; praised Paxton. Exact day of his appearance not stated.",
+"source": "https://www.cbsnews.com/texas/news/trump-fourth-texas-visit-lubbock-waco-rallies-2026-midterms/"
+},
+{
+"person": "Donald Trump",
+"party": "R",
+"date": "2026-09-16",
+"state": "NC",
+"city": "Gastonia",
+"kind": "rally",
+"for": [
+"Michael Whatley"
+],
+"race": "NC Senate",
+"note": "Airport rally at Gastonia Municipal Airport backing the GOP Senate nominee.",
+"source": "https://abcnews4.com/news/nation-world/president-donald-trump-gastonia-campaign-rally-support-republican-gop-senate-candidates-seat-michael-whatley-north-carolina-municipal-airport"
+},
+{
+"person": "Donald Trump",
+"party": "R",
+"date": "2026-10-01",
+"state": "TX",
+"city": "Denton",
+"kind": "event",
+"for": [],
+"race": "TX statewide",
+"note": "Economic agenda event at Peterbilt plant; CBS Texas says early October, other listings give Oct 1.",
+"source": "https://www.cbsnews.com/texas/news/trump-fourth-texas-visit-lubbock-waco-rallies-2026-midterms/"
+},
+{
+"person": "Donald Trump",
+"party": "R",
+"date": "2026-10-01",
+"state": "OK",
+"city": "Durant",
+"kind": "rally",
+"for": [
+"Mike Mazzei",
+"Kevin Hern"
+],
+"race": "OK Governor; OK Senate",
+"note": "Evening midterm rally at Choctaw Event Center.",
+"source": "https://www.news9.com/oklahoma-city-news/5-things-to-know-oklahoma-storms-trump-attends-durant-rally"
+},
+{
+"person": "Donald Trump",
+"party": "R",
+"date": "2026-10-02",
+"state": "AL",
+"city": "Mobile",
+"kind": "rally",
+"for": [
+"Barry Moore"
+],
+"race": "AL Senate",
+"note": "Rally at the Mitchell Center with the GOP Senate candidate.",
+"source": "https://abcnews4.com/news/nation-world/trump-plans-mobile-rally-oct-2-with-alabama-senate-candidate-barry-moore"
+},
+{
+"person": "Donald Trump",
+"party": "R",
+"date": "2026-10-03",
+"state": "OH",
+"city": "Vandalia",
+"kind": "rally",
+"for": [
+"Jon Husted",
+"Vivek Ramaswamy"
+],
+"race": "OH Senate; OH Governor",
+"note": "Saturday rally near Dayton at Butler High School.",
+"source": "https://www.wcpo.com/news/local-news/trump-rallies-ohio-republicans-in-vandalia-ahead-of-midterm-election"
+},
+{
+"person": "Donald Trump",
+"party": "R",
+"date": "2026-10-05",
+"state": "NE",
+"city": "Grand Island",
+"kind": "rally",
+"for": [
+"Pete Ricketts",
+"Jim Pillen"
+],
+"race": "NE Senate; NE Governor",
+"note": "Rally at Pinnacle Bank Expo Center as the Ricketts race tightened against Dan Osborn.",
+"source": "https://www.wowt.com/2026/10/05/supporters-line-up-overnight-trump-rallies-republicans-grand-island-ahead-midterms/"
+},
+{
+"person": "Donald Trump",
+"party": "R",
+"date": "2026-10-07",
+"state": "TX",
+"city": "San Antonio",
+"kind": "rally",
+"for": [
+"Ken Paxton",
+"Carlos De La Cruz"
+],
+"race": "TX Senate; TX House",
+"note": "Freeman Coliseum rally with Paxton.",
+"source": "https://www.ksat.com/news/local/2026/10/08/takeaways-from-president-donald-trumps-rally-in-san-antonio/"
+},
+{
+"person": "Donald Trump",
+"party": "R",
+"date": "2026-10-09",
+"state": "NY",
+"city": "Syracuse",
+"kind": "rally",
+"for": [
+"Bruce Blakeman"
+],
+"race": "NY Governor",
+"note": "Friday rally at the Oncenter praising Blakeman and criticizing Gov. Hochul.",
+"source": "https://spectrumlocalnews.com/nys/central-ny/politics/2026/10/08/trump-to-visit-syracuse-friday-for-midterm-rally-"
+},
+{
+"person": "Donald Trump",
+"party": "R",
+"date": "2026-10-10",
+"state": "TN",
+"city": "Clarksville",
+"kind": "rally",
+"for": [
+"Marsha Blackburn",
+"Bill Hagerty"
+],
+"race": "TN GOP ticket",
+"note": "Rally at F&M Bank Arena for Tennessee Republicans.",
+"source": "https://newschannel9.com/news/nation-world/president-trump-promises-5k-annual-payments-rallies-tennessee-republicans-in-clarksville"
+},
+{
+"person": "Donald Trump",
+"party": "R",
+"date": "2026-10-12",
+"state": "OH",
+"city": "Youngstown",
+"kind": "rally",
+"for": [
+"Jon Husted",
+"Vivek Ramaswamy"
+],
+"race": "OH Senate; OH Governor",
+"note": "Covelli Centre rally, his second Ohio stop in ten days.",
+"source": "https://cnycentral.com/news/nation-world/after-weekend-visit-to-dayton-vandalia-vivek-ramaswamy-jon-husted-gop-republican-donald-trump-ohio-next-week-youngstown-covelli-centre-politics-government-senate"
+},
+{
+"person": "Donald Trump",
+"party": "R",
+"date": "2026-10-13",
+"state": "AK",
+"city": "Wasilla",
+"kind": "rally",
+"for": [
+"Dan Sullivan",
+"Nick Begich"
+],
+"race": "AK Senate; AK-AL",
+"note": "Menard Center rally boosting Sullivan; also endorsed Wilson.",
+"source": "https://alaskapublic.org/news/politics/elections/2026-10-13/trump-rally-brings-pardons-promises-and-endorsements-to-wasilla"
+},
+{
+"person": "Donald Trump",
+"party": "R",
+"date": "2026-10-14",
+"state": "AZ",
+"city": "Bullhead City",
+"kind": "rally",
+"for": [
+"Andy Biggs"
+],
+"race": "AZ Governor",
+"note": "Rally at Laughlin Bullhead International Airport for Biggs and local Republicans.",
+"source": "https://www.fox10phoenix.com/election/president-trump-headlines-bullhead-city-rally-campaign-arizona-republicans"
+},
+{
+"person": "Donald Trump",
+"party": "R",
+"date": "2026-10-14",
+"state": "MT",
+"city": "Kalispell",
+"kind": "rally",
+"for": [
+"Kurt Alme",
+"Aaron Flint"
+],
+"race": "MT Senate; MT-01",
+"note": "Majestic Valley Arena rally, same day as the Arizona stop.",
+"source": "https://dailymontanan.com/?p=39512"
+},
+{
+"person": "Donald Trump",
+"party": "R",
+"date": "2026-10-16",
+"state": "GA",
+"city": "Dalton",
+"kind": "rally",
+"for": [
+"Mike Collins",
+"Rick Jackson"
+],
+"race": "GA Senate; GA Governor",
+"note": "Rally at Dalton Municipal Airport with both GOP nominees.",
+"source": "https://www.fox5atlanta.com/news/trump-returning-georgia-another-campaign-rally-saturday"
+},
+{
+"person": "Donald Trump",
+"party": "R",
+"date": "2026-10-17",
+"state": "KY",
+"city": "Highland Heights",
+"kind": "rally",
+"for": [
+"Ed Gallrein"
+],
+"race": "KY-04",
+"note": "Rally at Truist Arena on the NKU campus.",
+"source": "https://www.foxnews.com/live-news/midterm-elections-2026-trump-kansas-latino-voters-october-19"
+},
+{
+"person": "Donald Trump",
+"party": "R",
+"date": "2026-10-19",
+"state": "KS",
+"city": "Park City",
+"kind": "rally",
+"for": [
+"Roger Marshall"
+],
+"race": "KS Senate",
+"note": "Heartland Credit Union Arena rally near Wichita.",
+"source": "https://www.foxnews.com/live-news/midterm-elections-2026-trump-kansas-latino-voters-october-19"
+},
+{
+"person": "Donald Trump",
+"party": "R",
+"date": "2026-10-20",
+"state": "NC",
+"city": "Greenville",
+"kind": "rally",
+"for": [
+"Michael Whatley"
+],
+"race": "NC Senate",
+"note": "Rally at Pitt-Greenville Airport during early voting.",
+"source": "https://www.foxnews.com/live-news/midterm-elections-2026-trump-north-carolina-early-voting-october-20"
+},
+{
+"person": "Howard Lutnick",
+"party": "R",
+"date": "2026-10-20",
+"state": "NC",
+"city": "Greenville",
+"kind": "event",
+"for": [
+"Michael Whatley"
+],
+"race": "NC Senate",
+"note": "Commerce Secretary appeared at the Trump rally.",
+"source": "https://www.foxnews.com/live-news/midterm-elections-2026-trump-north-carolina-early-voting-october-20"
+},
+{
+"person": "Donald Trump",
+"party": "R",
+"date": "2026-10-21",
+"state": "SC",
+"city": "Pendleton",
+"kind": "rally",
+"for": [
+"Darline Graham"
+],
+"race": "SC Senate",
+"note": "Rally at Clemson's T. Ed Garrison Arena.",
+"source": "https://www.foxcarolina.com/2026/10/21/live-coverage-pres-trump-upstate-midterm-rally/"
+},
+{
+"person": "Donald Trump",
+"party": "R",
+"date": "2026-10-22",
+"state": "IA",
+"city": "Sioux City",
+"kind": "announced",
+"for": [
+"Ashley Hinson"
+],
+"race": "IA Senate",
+"note": "RNC announced rally at Sioux Gateway Airport, remarks set for 6 p.m. today.",
+"source": "https://www.wowt.com/2026/10/19/president-donald-trump-hold-rally-sioux-gateway-airport/"
+},
+{
+"person": "Donald Trump",
+"party": "R",
+"date": "2026-10-23",
+"state": "FL",
+"city": "Fort Myers",
+"kind": "announced",
+"for": [],
+"race": "FL statewide",
+"note": "Rally planned at FGCU's Alico Arena; no specific candidate named.",
+"source": "https://www.wgcu.org/top-story/2026-10-16/trump-to-come-to-fort-myers-oct-23-fgcu-alerts-campus-for-change-in-operations-for-special-private-event-same-day"
+},
+{
+"person": "Donald Trump",
+"party": "R",
+"date": "2026-10-24",
+"state": "GA",
+"city": "Macon",
+"kind": "announced",
+"for": [
+"Mike Collins",
+"Rick Jackson"
+],
+"race": "GA Senate; GA Governor",
+"note": "Saturday 7 p.m. rally; venue not yet announced.",
+"source": "https://www.fox5atlanta.com/news/trump-returning-georgia-another-campaign-rally-saturday"
+},
+{
+"person": "Donald Trump",
+"party": "R",
+"date": "2026-10-25",
+"state": "MI",
+"city": "Port Huron",
+"kind": "announced",
+"for": [
+"Mike Rogers"
+],
+"race": "MI Senate",
+"note": "Sunday rally at McMorran Place Arena organized by Trump 47 Committee.",
+"source": "https://www.fox2detroit.com/news/trump-michigan-president-port-huron"
+},
+{
+"person": "Donald Trump",
+"party": "R",
+"date": "2026-10-27",
+"state": "TX",
+"city": "Lubbock",
+"kind": "announced",
+"for": [
+"Ken Paxton"
+],
+"race": "TX Senate",
+"note": "2:30 p.m. rally on his fourth Texas trip; one Fox blog listed Oct 20 instead.",
+"source": "https://www.cbsnews.com/texas/news/trump-fourth-texas-visit-lubbock-waco-rallies-2026-midterms/"
+},
+{
+"person": "Donald Trump",
+"party": "R",
+"date": "2026-10-27",
+"state": "TX",
+"city": "Waco",
+"kind": "announced",
+"for": [
+"Ken Paxton"
+],
+"race": "TX Senate",
+"note": "6 p.m. rally the same day as Lubbock.",
+"source": "https://www.cbsnews.com/texas/news/trump-fourth-texas-visit-lubbock-waco-rallies-2026-midterms/"
+},
+{
+"person": "Donald Trump",
+"party": "R",
+"date": "2026-11-01",
+"state": "IA",
+"city": "",
+"kind": "announced",
+"for": [
+"Ashley Hinson",
+"Zach Lahn"
+],
+"race": "IA Senate; IA Governor",
+"note": "Reportedly slated second Iowa visit; city and venue not announced.",
+"source": "https://newsweek.com/trump-iowa-rally-ashley-hinson-josh-turek-polls-12575410"
+},
+{
+"person": "JD Vance",
+"party": "R",
+"date": "2026-08-31",
+"state": "MI",
+"city": "Sterling Heights",
+"kind": "event",
+"for": [
+"Mike Rogers",
+"John James"
+],
+"race": "MI Senate; MI Governor",
+"note": "MAGA Inc. super PAC event with Rogers and James.",
+"source": "https://www.fox2detroit.com/news/jd-vance-mike-rogers-michigan-senate-campaign-maga-super-pac"
+},
+{
+"person": "JD Vance",
+"party": "R",
+"date": "2026-08-31",
+"state": "NV",
+"city": "Las Vegas",
+"kind": "event",
+"for": [],
+"race": "",
+"note": "Addressed the Republican Jewish Coalition Leadership Summit at the Venetian Expo.",
+"source": "https://thenevadaindependent.com/elections/2028/candidate-visit-tracker"
+},
+{
+"person": "JD Vance",
+"party": "R",
+"date": "2026-09-14",
+"state": "KS",
+"city": "Olathe",
+"kind": "event",
+"for": [
+"Roger Marshall"
+],
+"race": "KS Senate",
+"note": "Campaign stop at an Olathe manufacturer.",
+"source": "https://www.kctv5.com/2026/09/14/vice-president-jd-vance-visit-johnson-county-what-know-about-mondays-olathe-stop/"
+},
+{
+"person": "JD Vance",
+"party": "R",
+"date": "2026-09-18",
+"state": "IA",
+"city": "Council Bluffs",
+"kind": "rally",
+"for": [
+"Zach Lahn",
+"Chris McGowan",
+"Ashley Hinson"
+],
+"race": "IA Governor; IA-04; IA Senate",
+"note": "RNC midterm rally; Hinson did not attend, but Vance voiced support for her.",
+"source": "https://www.dakotanewsnow.com/2026/09/19/heres-how-vp-vance-visit-could-help-iowa-gop-candidates/"
+},
+{
+"person": "JD Vance",
+"party": "R",
+"date": "2026-09-21",
+"state": "NC",
+"city": "Greensboro",
+"kind": "rally",
+"for": [
+"Michael Whatley"
+],
+"race": "NC Senate",
+"note": "GOP midterm rally in Greensboro.",
+"source": "https://ncnewsline.com/2026/09/21/gop-deploys-vance-to-nc-to-rouse-support-for-whatley/"
+},
+{
+"person": "JD Vance",
+"party": "R",
+"date": "2026-09-30",
+"state": "TX",
+"city": "Harlingen",
+"kind": "rally",
+"for": [
+"Eric Flores"
+],
+"race": "TX-34",
+"note": "Rally with the GOP challenger to Rep. Vicente Gonzalez.",
+"source": "https://www.pbs.org/newshour/politics/watch-live-vance-addresses-gop-midterm-election-rally-in-texas"
+},
+{
+"person": "JD Vance",
+"party": "R",
+"date": "2026-10-01",
+"state": "FL",
+"city": "Lakeland",
+"kind": "rally",
+"for": [
+"Byron Donalds",
+"Ashley Moody"
+],
+"race": "FL Governor; FL Senate",
+"note": "Described as his first Florida rally.",
+"source": "https://www.dailysignal.com/2026/10/04/watch-inside-vances-first-ever-florida-rally/"
+},
+{
+"person": "JD Vance",
+"party": "R",
+"date": "2026-10-05",
+"state": "AK",
+"city": "Fairbanks",
+"kind": "rally",
+"for": [
+"Dan Sullivan",
+"Nick Begich"
+],
+"race": "AK Senate; AK-AL",
+"note": "Airport hangar rally attacking Democrat Mary Peltola.",
+"source": "https://alaskapublic.org/news/politics/2026-10-06/vance-targets-peltola-touts-energy-development-at-alaska-rally"
+},
+{
+"person": "JD Vance",
+"party": "R",
+"date": "2026-10-09",
+"state": "OH",
+"city": "Lima",
+"kind": "rally",
+"for": [
+"Jon Husted",
+"Vivek Ramaswamy"
+],
+"race": "OH Senate; OH Governor",
+"note": "Rally at Allen County Regional Airport.",
+"source": "https://spectrumnews1.com/oh/columbus/news/2026/10/10/vance-rallies-in-home-state"
+},
+{
+"person": "JD Vance",
+"party": "R",
+"date": "2026-10-13",
+"state": "TX",
+"city": "Tyler",
+"kind": "rally",
+"for": [
+"Ken Paxton",
+"Greg Abbott"
+],
+"race": "TX Senate; TX Governor",
+"note": "East Texas rally at Tyler Pounds Regional Airport.",
+"source": "https://www.kbtx.com/2026/10/13/vice-president-jd-vance-stumps-historic-gop-midterm-rally-tyler/"
+},
+{
+"person": "JD Vance",
+"party": "R",
+"date": "2026-10-14",
+"state": "GA",
+"city": "Atlanta",
+"kind": "event",
+"for": [
+"Mike Collins"
+],
+"race": "GA Senate",
+"note": "Airport meet with supporters as early voting began.",
+"source": "https://www.atlantanewsfirst.com/2026/10/14/trumps-georgia-rally-is-days-away-jd-vance-is-meeting-supporters-atlanta-first/"
+},
+{
+"person": "JD Vance",
+"party": "R",
+"date": "2026-10-15",
+"state": "MI",
+"city": "Monroe",
+"kind": "rally",
+"for": [
+"Mike Rogers"
+],
+"race": "MI Senate",
+"note": "Trump 47 Committee rally at LevelUp Training Complex; date inferred from Thursday reference.",
+"source": "https://wwmt.com/news/state/jd-vance-michigan-monroe-midterm-rally-town-hall-election-abdul-el-sayed-mike-rogers-politics-government-state"
+},
+{
+"person": "JD Vance",
+"party": "R",
+"date": "2026-10-19",
+"state": "NC",
+"city": "Hendersonville",
+"kind": "rally",
+"for": [
+"Michael Whatley",
+"Jennifer Balkcom"
+],
+"race": "NC Senate; NC-11",
+"note": "Rally at Hyder Warehouse drawing an estimated 200 to 300 people.",
+"source": "https://wlos.com/news/local/vice-president-jd-vance-campaigns-republican-candidates-gop-western-north-carolina-rally-hendersonville-midterm-elections-jennifer-balkcom-michael-whatley"
+},
+{
+"person": "JD Vance",
+"party": "R",
+"date": "2026-10-21",
+"state": "OH",
+"city": "Sharonville",
+"kind": "rally",
+"for": [
+"Jon Husted",
+"Vivek Ramaswamy",
+"Eric Conroy"
+],
+"race": "OH Senate; OH Governor; OH-01",
+"note": "Rally at Sharonville Convention Center in Greater Cincinnati.",
+"source": "https://www.wyso.org/2026-10-21/vp-vance-campaigns-in-greater-cincinnati-as-midterms-approach"
+},
+{
+"person": "JD Vance",
+"party": "R",
+"date": "2026-10-22",
+"state": "NE",
+"city": "North Platte",
+"kind": "announced",
+"for": [
+"Pete Ricketts"
+],
+"race": "NE Senate",
+"note": "RNC midterm rally at D&N Event Center; Thursday date inferred; candidate tie implied, not stated.",
+"source": "https://nebraskaexaminer.com/2026/10/17/jd-vance-is-coming-to-nebraska-for-a-north-platte-midterm-rally/"
+},
+{
+"person": "Pete Hegseth",
+"party": "R",
+"date": "2026-08-17",
+"state": "IA",
+"city": "Des Moines",
+"kind": "event",
+"for": [
+"Zach Nunn"
+],
+"race": "IA-03",
+"note": "Defense Secretary campaigned at the Iowa State Fair.",
+"source": "https://www.bostonglobe.com/2026/08/18/nation/pete-hegseth-iowa-republicans-congress/"
+},
+{
+"person": "Joe Manchin",
+"party": "I",
+"date": "2026-10-21",
+"state": "ME",
+"city": "",
+"kind": "event",
+"for": [
+"Susan Collins"
+],
+"race": "ME Senate",
+"note": "Former Democratic senator campaigned for Republican Collins; city not stated.",
+"source": "https://www.foxnews.com/live-news/midterm-elections-2026-trump-south-carolina-democrats-october-21"
+},
+{
+"person": "Barack Obama",
+"party": "D",
+"date": "2026-10-07",
+"state": "VA",
+"city": "",
+"kind": "fundraiser",
+"for": [],
+"race": "DSCC Senate races",
+"note": "DSCC fireside chat fundraiser with Sen. Lisa Blunt Rochester raised $3.6 million.",
+"source": "https://abcnews.com/Politics/obama-warns-donors-races-razors-edge-ramps-midterm/story?id=137141091"
+},
+{
+"person": "Barack Obama",
+"party": "D",
+"date": "2026-10-24",
+"state": "MI",
+"city": "Detroit",
+"kind": "announced",
+"for": [
+"Abdul El-Sayed",
+"Jocelyn Benson"
+],
+"race": "MI Senate; MI Governor",
+"note": "Rally with Michigan Democratic nominees.",
+"source": "https://www.pbs.org/newshour/politics/obama-to-campaign-with-el-sayed-in-detroit-as-ex-president-gets-more-involved-in-midterms"
+},
+{
+"person": "Barack Obama",
+"party": "D",
+"date": "2026-10-24",
+"state": "OH",
+"city": "Cleveland",
+"kind": "announced",
+"for": [
+"Sherrod Brown",
+"Amy Acton"
+],
+"race": "OH Senate; OH Governor",
+"note": "Afternoon rally per press release; venue not named.",
+"source": "https://www.cleveland19.com/2026/10/13/former-president-barack-obama-rally-cleveland/"
+},
+{
+"person": "Barack Obama",
+"party": "D",
+"date": "2026-10-28",
+"state": "GA",
+"city": "Atlanta",
+"kind": "announced",
+"for": [
+"Jon Ossoff",
+"Keisha Lance Bottoms"
+],
+"race": "GA Senate; GA Governor",
+"note": "Rally announced; venue not stated.",
+"source": "https://thenationaldesk.com/news/nation-world/president-obama-to-headline-rally-for-georgia-democrats-keisha-lance-bottoms-jon-ossoff-days-ahead-of-2026-midterm-elections-rrt"
+},
+{
+"person": "Bill Clinton",
+"party": "D",
+"date": "2026-10-20",
+"state": "FL",
+"city": "Hollywood",
+"kind": "event",
+"for": [
+"David Jolly"
+],
+"race": "FL Governor",
+"note": "Appearance at Koinonia Worship Center in Broward County.",
+"source": "https://www.foxnews.com/live-news/midterm-elections-2026-trump-north-carolina-early-voting-october-20"
+},
+{
+"person": "Kamala Harris",
+"party": "D",
+"date": "2026-09-22",
+"state": "MI",
+"city": "Detroit",
+"kind": "event",
+"for": [
+"Abdul El-Sayed"
+],
+"race": "MI Senate",
+"note": "Roundtable on Black maternal health.",
+"source": "https://www.michiganpublic.org/2026-09-23/kamala-harris-campaigns-for-senate-candidate-abdul-el-sayed-ahead-of-election-day"
+},
+{
+"person": "Kamala Harris",
+"party": "D",
+"date": "2026-10-21",
+"state": "NV",
+"city": "Las Vegas",
+"kind": "event",
+"for": [
+"Aaron Ford",
+"Dina Titus"
+],
+"race": "NV Governor; NV-01",
+"note": "Culinary Union membership meeting launching her final midterm swing.",
+"source": "https://www.fox5vegas.com/2026/10/14/kamala-harris-launch-final-midterm-blitz-with-las-vegas-campaign-stop/"
+},
+{
+"person": "Kamala Harris",
+"party": "D",
+"date": "2026-10-22",
+"state": "MS",
+"city": "",
+"kind": "announced",
+"for": [
+"Scott Colom"
+],
+"race": "MS Senate",
+"note": "Stop for Colom against Sen. Cindy Hyde-Smith; city not given.",
+"source": "https://www.kiro7.com/news/politics/kamala-harris-adds/5PONHWBE6Q7PRPSGZYTX3OSJRM/"
+},
+{
+"person": "Kamala Harris",
+"party": "D",
+"date": "2026-10-24",
+"state": "NH",
+"city": "",
+"kind": "announced",
+"for": [
+"Chris Pappas"
+],
+"race": "NH Senate",
+"note": "Includes a discussion on reproductive care; city not given.",
+"source": "https://www.kiro7.com/news/politics/kamala-harris-adds/5PONHWBE6Q7PRPSGZYTX3OSJRM/"
+},
+{
+"person": "Kamala Harris",
+"party": "D",
+"date": "2026-10-26",
+"state": "WI",
+"city": "",
+"kind": "announced",
+"for": [
+"David Crowley"
+],
+"race": "WI Governor",
+"note": "Stop for the Democratic governor nominee; city not given.",
+"source": "https://www.kiro7.com/news/politics/kamala-harris-adds/5PONHWBE6Q7PRPSGZYTX3OSJRM/"
+},
+{
+"person": "Kamala Harris",
+"party": "D",
+"date": "2026-10-28",
+"state": "GA",
+"city": "",
+"kind": "announced",
+"for": [
+"Jon Ossoff"
+],
+"race": "GA Senate",
+"note": "Start of a three day Georgia swing through Oct 30 with voter protection events.",
+"source": "https://www.kiro7.com/news/politics/kamala-harris-adds/5PONHWBE6Q7PRPSGZYTX3OSJRM/"
+},
+{
+"person": "Kamala Harris",
+"party": "D",
+"date": "2026-10-30",
+"state": "GA",
+"city": "Atlanta",
+"kind": "announced",
+"for": [],
+"race": "GA Democrats",
+"note": "Speech at the Fulton County Democratic Party annual gala.",
+"source": "https://www.kiro7.com/news/politics/kamala-harris-adds/5PONHWBE6Q7PRPSGZYTX3OSJRM/"
+},
+{
+"person": "Gavin Newsom",
+"party": "D",
+"date": "2026-09-03",
+"state": "SC",
+"city": "Hardeeville",
+"kind": "tour stop",
+"for": [],
+"race": "SC Democrats",
+"note": "Take It Back tour stop at St. Stephen AME Church; Lowcountry stops followed. Exact day approximate.",
+"source": "https://www.wtoc.com/2026/09/03/california-gov-gavin-newsom-rallies-jasper-co-democratic-voters-during-take-it-back-tour/"
+},
+{
+"person": "Gavin Newsom",
+"party": "D",
+"date": "2026-09-05",
+"state": "NC",
+"city": "Monroe",
+"kind": "rally",
+"for": [
+"Roy Cooper"
+],
+"race": "NC Senate",
+"note": "Labor Day weekend rally; also canvassed in Charlotte for Cooper that weekend.",
+"source": "https://www.wbtv.com/2026/09/06/california-gov-gavin-newsom-rallies-north-carolina-democrats-over-labor-day-weekend/"
+},
+{
+"person": "Gavin Newsom",
+"party": "D",
+"date": "2026-10-17",
+"state": "NH",
+"city": "Exeter",
+"kind": "tour stop",
+"for": [
+"Chris Pappas",
+"Cinde Warmington",
+"Stefany Shaheen"
+],
+"race": "NH Senate; NH Governor; NH-01",
+"note": "Voter mobilization in Exeter, canvass launch in Nashua and an evening event with Shaheen. Date inferred.",
+"source": "https://dnyuz.com/2026/10/14/gavin-newsom-to-parachute-back-into-new-hampshire-ahead-of-midterm-elections/"
+},
+{
+"person": "JB Pritzker",
+"party": "D",
+"date": "2026-10-10",
+"state": "SC",
+"city": "Charleston, Manning, Columbia",
+"kind": "tour stop",
+"for": [
+"Annie Andrews",
+"Jermaine Johnson"
+],
+"race": "SC Senate; SC Governor",
+"note": "Statewide swing that ended with a keynote at the state NAACP convention.",
+"source": "https://www.postandcourier.com/politics/sc-jb-pritzker-illinois-gov-2028/article_267aaef1-04e5-4b4c-a8d1-875b4bdef29b.html"
+},
+{
+"person": "Pete Buttigieg",
+"party": "D",
+"date": "2026-08-15",
+"state": "NV",
+"city": "Reno",
+"kind": "event",
+"for": [
+"Sandra Jauregui",
+"Teresa Benitez-Thompson"
+],
+"race": "NV races",
+"note": "Brewery conversation and a veterans event with Nevada Democrats.",
+"source": "https://thenevadaindependent.com/elections/2028/candidate-visit-tracker"
+},
+{
+"person": "Pete Buttigieg",
+"party": "D",
+"date": "2026-10-02",
+"state": "NH",
+"city": "Rochester",
+"kind": "rally",
+"for": [
+"Chris Pappas",
+"Stefany Shaheen",
+"Cinde Warmington"
+],
+"race": "NH Senate; NH-01; NH Governor",
+"note": "Registration rally; location sent to registrants in advance.",
+"source": "https://granitepostnews.com/news/politics/buttigieg-rochester-nh-rally/"
+},
+{
+"person": "Pete Buttigieg",
+"party": "D",
+"date": "2026-10-07",
+"state": "NV",
+"city": "Henderson",
+"kind": "fundraiser",
+"for": [
+"Susie Lee",
+"Aaron Ford",
+"Steven Horsford"
+],
+"race": "NV-03; NV Governor; NV-04",
+"note": "Fundraiser with Lee, then a Las Vegas youth economy event with Ford and Horsford.",
+"source": "https://thenevadaindependent.com/elections/2028/candidate-visit-tracker"
+},
+{
+"person": "Pete Buttigieg",
+"party": "D",
+"date": "2026-10-14",
+"state": "MI",
+"city": "Kalamazoo",
+"kind": "rally",
+"for": [
+"Sean McCann"
+],
+"race": "MI-04",
+"note": "Rally for the Democratic nominee against Rep. Bill Huizenga.",
+"source": "https://wqxc.com/2026/10/08/977815/"
+},
+{
+"person": "Pete Buttigieg",
+"party": "D",
+"date": "2026-10-19",
+"state": "VA",
+"city": "Henrico",
+"kind": "rally",
+"for": [
+"Shannon Taylor",
+"Elaine Luria",
+"Tom Perriello"
+],
+"race": "VA-01; VA-02; VA-05",
+"note": "Henrico Theatre rally for three House flip targets.",
+"source": "https://vadogwood.com/news/politics/pete-buttigieg-shannon-taylor/"
+},
+{
+"person": "Wes Moore",
+"party": "D",
+"date": "2026-09-26",
+"state": "NV",
+"city": "Las Vegas",
+"kind": "event",
+"for": [
+"Aaron Ford",
+"Steven Horsford",
+"Susie Lee"
+],
+"race": "NV Governor; NV-04; NV-03",
+"note": "Two canvass launches with Nevada Democrats.",
+"source": "https://thenevadaindependent.com/elections/2028/candidate-visit-tracker"
+},
+{
+"person": "Gretchen Whitmer",
+"party": "D",
+"date": "2026-10-20",
+"state": "NV",
+"city": "Las Vegas",
+"kind": "event",
+"for": [
+"Sandra Jauregui"
+],
+"race": "NV races",
+"note": "Reproductive rights GOTV event with Elizabeth Warren, plus a Jauregui fundraiser.",
+"source": "https://thenevadaindependent.com/elections/2028/candidate-visit-tracker"
+},
+{
+"person": "Elizabeth Warren",
+"party": "D",
+"date": "2026-10-20",
+"state": "NV",
+"city": "Las Vegas",
+"kind": "event",
+"for": [],
+"race": "NV races",
+"note": "Joined Whitmer at a reproductive rights GOTV event with Nevada Democratic candidates.",
+"source": "https://thenevadaindependent.com/elections/2028/candidate-visit-tracker"
+},
+{
+"person": "Andy Beshear",
+"party": "D",
+"date": "2026-10-22",
+"state": "NV",
+"city": "Las Vegas",
+"kind": "event",
+"for": [],
+"race": "",
+"note": "Listed for an IndyFest panel; a forum appearance, not a candidate rally.",
+"source": "https://thenevadaindependent.com/elections/2028/candidate-visit-tracker"
+},
+{
+"person": "Alexandria Ocasio-Cortez",
+"party": "D",
+"date": "2026-09-28",
+"state": "NY",
+"city": "Syracuse",
+"kind": "tour stop",
+"for": [],
+"race": "NY local and state races",
+"note": "Final stop of an upstate tour after Buffalo and Ithaca; organizer event at All Saints church.",
+"source": "https://www.waer.org/news/2026-09-29/rep-ocasio-cortez-vies-to-mobilize-voters-ahead-of-midterm-elections"
+},
+{
+"person": "Alexandria Ocasio-Cortez",
+"party": "D",
+"date": "2026-10-15",
+"state": "MI",
+"city": "Escanaba, Iron Mountain, Marquette",
+"kind": "tour stop",
+"for": [
+"Abdul El-Sayed"
+],
+"race": "MI Senate",
+"note": "Upper Peninsula swing ending in a Marquette rally of more than 1,200 people.",
+"source": "https://www.michiganpublic.org/politics-government/2026-10-16/el-sayed-takes-senate-campaign-to-michigans-upper-peninsula-with-ocasio-cortez"
+},
+{
+"person": "Alexandria Ocasio-Cortez",
+"party": "D",
+"date": "2026-10-22",
+"state": "ME",
+"city": "Portland",
+"kind": "announced",
+"for": [
+"Troy Jackson"
+],
+"race": "ME Senate",
+"note": "2 p.m. town hall at State Theatre.",
+"source": "https://www.pressherald.com/2026/10/16/aoc-to-take-part-in-portland-town-hall-next-week/"
+},
+{
+"person": "Alexandria Ocasio-Cortez",
+"party": "D",
+"date": "2026-10-24",
+"state": "NV",
+"city": "North Las Vegas",
+"kind": "announced",
+"for": [
+"Steven Horsford"
+],
+"race": "NV-04",
+"note": "Early vote rally.",
+"source": "https://thenevadaindependent.com/elections/2028/candidate-visit-tracker"
+},
+{
+"person": "Alexandria Ocasio-Cortez",
+"party": "D",
+"date": "2026-10-27",
+"state": "FL",
+"city": "",
+"kind": "announced",
+"for": [
+"Angie Nixon"
+],
+"race": "FL Senate",
+"note": "Florida appearance announced; city not specified.",
+"source": "https://www.foxnews.com/live-news/midterm-elections-2026-trump-north-carolina-early-voting-october-20"
+},
+{
+"person": "Bernie Sanders",
+"party": "D",
+"date": "2026-10-19",
+"state": "TX",
+"city": "El Paso",
+"kind": "rally",
+"for": [
+"James Talarico"
+],
+"race": "TX Senate",
+"note": "Abraham Chavez Theatre rally with Beto O'Rourke; Talarico campaigned elsewhere that day.",
+"source": "https://www.foxnews.com/live-news/midterm-elections-2026-trump-north-carolina-early-voting-october-20"
+},
+{
+"person": "Hakeem Jeffries",
+"party": "D",
+"date": "2026-10-18",
+"state": "OH",
+"city": "Toledo",
+"kind": "event",
+"for": [
+"Marcy Kaptur"
+],
+"race": "OH-09",
+"note": "House Democratic leader campaigned with Kaptur in the Toledo area.",
+"source": "https://www.foxnews.com/live-news/midterm-elections-2026-trump-kansas-latino-voters-october-19"
+},
+{
+"person": "Raphael Warnock",
+"party": "D",
+"date": "2026-10-07",
+"state": "NV",
+"city": "Las Vegas",
+"kind": "event",
+"for": [
+"Aaron Ford"
+],
+"race": "NV Governor",
+"note": "Countdown to early voting event.",
+"source": "https://thenevadaindependent.com/elections/2028/candidate-visit-tracker"
+},
+{
+"person": "Elissa Slotkin",
+"party": "D",
+"date": "2026-10-07",
+"state": "NV",
+"city": "Reno",
+"kind": "fundraiser",
+"for": [],
+"race": "NV Democrats",
+"note": "Washoe County Democrats fundraising dinner at Grand Sierra Resort.",
+"source": "https://thenevadaindependent.com/elections/2028/candidate-visit-tracker"
+},
+{
+"person": "Cory Booker",
+"party": "D",
+"date": "2026-10-11",
+"state": "NV",
+"city": "Las Vegas",
+"kind": "event",
+"for": [
+"Steven Horsford",
+"Dina Titus"
+],
+"race": "NV-04; NV-01",
+"note": "Ballot party and phonebank; Culinary Union canvass launch on Oct 12.",
+"source": "https://thenevadaindependent.com/elections/2028/candidate-visit-tracker"
+},
+{
+"person": "Ro Khanna",
+"party": "D",
+"date": "2026-10-23",
+"state": "NV",
+"city": "Reno",
+"kind": "announced",
+"for": [],
+"race": "",
+"note": "Students for Solidarity town hall with Don Lemon at UNR.",
+"source": "https://thenevadaindependent.com/elections/2028/candidate-visit-tracker"
+},
+{
+"person": "Donald Trump",
+"party": "R",
+"date": "2026-08-04",
+"state": "CA",
+"city": "Rancho Palos Verdes",
+"kind": "fundraiser",
+"for": [
+"Republican National Committee"
+],
+"race": "RNC national",
+"note": "Trump headlined an RNC dinner at Trump National Golf Club Los Angeles, per the 2026 presidential trips list.",
+"source": "https://en.wikipedia.org/wiki/List_of_presidential_trips_made_by_Donald_Trump_(2026)"
+},
+{
+"person": "Donald Trump",
+"party": "R",
+"date": "2026-08-05",
+"state": "NV",
+"city": "Las Vegas",
+"kind": "rally",
+"for": [
+"Joe Lombardo",
+"Adriana Fralick Guzman",
+"Jim Marchant",
+"David Flippo",
+"Marty O'Donnell",
+"Carrie Buck"
+],
+"race": "NV Governor; NV-01; NV-02; NV-03",
+"note": "At a Red Rock Casino event billed around tax relief, Trump called Gov. Lombardo on stage and praised the GOP ticket.",
+"source": "https://www.newsfromthestates.com/node/421021"
+},
+{
+"person": "Donald Trump",
+"party": "R",
+"date": "2026-08-14",
+"state": "NY",
+"city": "Garden City",
+"kind": "event",
+"for": [
+"Bruce Blakeman",
+"Todd Hood"
+],
+"race": "NY Governor",
+"note": "Trump gave a stump speech for Blakeman at the Nassau County police training center, an event held at a police facility with the GOP ticket present.",
+"source": "https://ny1.com/nyc/all-boroughs/news/2026/08/14/trump-to-appear-with-gop-candidate-for-n-y--governor-on-long-island"
+},
+{
+"person": "Donald Trump",
+"party": "R",
+"date": "2026-08-27",
+"state": "TX",
+"city": "Houston",
+"kind": "fundraiser",
+"for": [
+"Ken Paxton"
+],
+"race": "TX Senate",
+"note": "Trump headlined an RNC fundraiser in Houston aimed at boosting Paxton's Senate bid.",
+"source": "https://www.ksat.com/news/texas/2026/08/28/trump-visits-texas-to-fundraise-for-ken-paxtons-senate-bid/"
+},
+{
+"person": "JD Vance",
+"party": "R",
+"date": "2026-08-19",
+"state": "NY",
+"city": "Southampton",
+"kind": "fundraiser",
+"for": [
+"Republican National Committee"
+],
+"race": "RNC national",
+"note": "Vance headlined a Hamptons fundraiser at Omeed Malik's home reported to raise over 5 million dollars; date from the Vance trips list.",
+"source": "https://en.wikipedia.org/wiki/List_of_vice_presidential_trips_made_by_JD_Vance"
+},
+{
+"person": "JD Vance",
+"party": "R",
+"date": "2026-08-21",
+"state": "OH",
+"city": "Middletown",
+"kind": "event",
+"for": [
+"Jon Husted",
+"Vivek Ramaswamy"
+],
+"race": "OH Senate; OH Governor",
+"note": "Vance campaigned at Cleveland-Cliffs Middletown Works where Husted and Ramaswamy spoke before him.",
+"source": "https://local12.com/news/local/vance-touts-investment-middletown-speech-create-tons-of-jobs-cincinnati-cleveland-cliffs-trump-husted-moreno-ramaswamy-dewine-furnace-armco-ak-steel"
+},
+{
+"person": "JD Vance",
+"party": "R",
+"date": "2026-09-10",
+"state": "TX",
+"city": "Dallas",
+"kind": "event",
+"for": [
+"Republican candidates"
+],
+"race": "RNC midterm convention",
+"note": "Vance gave the Night Two keynote at the RNC midterm convention in Dallas.",
+"source": "https://gop.com/press-release/republican-national-committee-announces-keynote-speakers-for-2026-republican-convention"
+},
+{
+"person": "Chris Wright",
+"party": "R",
+"date": "2026-08-21",
+"state": "OH",
+"city": "Middletown",
+"kind": "event",
+"for": [
+"Jon Husted",
+"Vivek Ramaswamy"
+],
+"race": "OH Senate; OH Governor",
+"note": "The Energy Secretary introduced Vance at the Middletown campaign stop alongside Husted and Ramaswamy.",
+"source": "https://www.dailysignal.com/2026/08/24/jd-vance-ohio-figures-give-rousing-middletown-speech-on-manufacturing-investments/"
+},
+{
+"person": "Mike Johnson",
+"party": "R",
+"date": "2026-08-05",
+"state": "AZ",
+"city": "Casa Grande",
+"kind": "tour",
+"for": [
+"Juan Ciscomani"
+],
+"race": "AZ-06",
+"note": "Johnson toured a Frito-Lay plant with Bessent and Ciscomani and endorsed Ciscomani's reelection.",
+"source": "https://www.abc15.com/news/local-news/speaker-johnson-sec-of-treasury-rep-ciscomani-visit-arizona-manufacturers"
+},
+{
+"person": "Mike Johnson",
+"party": "R",
+"date": "2026-08-19",
+"state": "PA",
+"city": "Allentown",
+"kind": "visit",
+"for": [
+"Ryan Mackenzie"
+],
+"race": "PA-07",
+"note": "Johnson visited the Upper Saucon Volunteer Fire Department with Rep. Mackenzie.",
+"source": "https://politicspa.com/speaker-johnson-stumps-in-pa-07-and-pa-08-for-gop-candidates/150514/"
+},
+{
+"person": "Mike Johnson",
+"party": "R",
+"date": "2026-08-20",
+"state": "NY",
+"city": "Westchester County",
+"kind": "visit",
+"for": [
+"Mike Lawler"
+],
+"race": "NY-17",
+"note": "Johnson campaigned with Rep. Lawler at Silvio's pizza shop in Westchester County.",
+"source": "https://www.washingtonsun.com/campaigns/mike-johnson-midterms-new-york-house-majority?redirected=notus_org"
+},
+{
+"person": "Mike Johnson",
+"party": "R",
+"date": "2026-08-21",
+"state": "NY",
+"city": "Bethpage",
+"kind": "visit",
+"for": [
+"Mike LiPetri"
+],
+"race": "NY-03",
+"note": "Johnson campaigned for LiPetri at the Embassy Diner on Long Island.",
+"source": "https://www.washingtonsun.com/campaigns/mike-johnson-midterms-new-york-house-majority?redirected=notus_org"
+},
+{
+"person": "Mike Johnson",
+"party": "R",
+"date": "2026-08-21",
+"state": "NJ",
+"city": "Warren County",
+"kind": "visit",
+"for": [
+"Tom Kean Jr."
+],
+"race": "NJ-07",
+"note": "Johnson made a Friday stop in Warren County supporting Rep. Kean.",
+"source": "https://www.washingtonsun.com/campaigns/mike-johnson-midterms-new-york-house-majority?redirected=notus_org"
+},
+{
+"person": "Mike Johnson",
+"party": "R",
+"date": "2026-08-26",
+"state": "TX",
+"city": "San Antonio",
+"kind": "rally",
+"for": [
+"Carlos De La Cruz"
+],
+"race": "TX-35",
+"note": "Johnson rallied at a South Side VFW post for De La Cruz, calling the district the whole enchilada.",
+"source": "https://www.kedt.org/texas-news/2026-08-27/the-whole-enchilada-house-speaker-mike-johnson-says-all-eyes-are-on-san-antonios-new-district"
+},
+{
+"person": "Mike Johnson",
+"party": "R",
+"date": "2026-08-27",
+"state": "TX",
+"city": "San Patricio County",
+"kind": "event",
+"for": [
+"Monica De La Cruz"
+],
+"race": "TX House",
+"note": "Johnson joined Rep. Monica De La Cruz on the Thursday morning of his South Texas tour.",
+"source": "https://www.kgns.tv/2026/08/27/house-speaker-johnson-rallies-laredo-expand-gop-majority-before-midterms/"
+},
+{
+"person": "Mike Johnson",
+"party": "R",
+"date": "2026-09-29",
+"state": "WA",
+"city": "Olympia",
+"kind": "fundraiser",
+"for": [
+"John Braun"
+],
+"race": "WA-03",
+"note": "Johnson made a brief stop and met privately with Braun donors after a planned rally was canceled.",
+"source": "https://washingtonstatestandard.com/2026/10/21/house-speaker-makes-case-for-unseating-democrat-in-was-heated-congressional-race"
+},
+{
+"person": "Mike Johnson",
+"party": "R",
+"date": "2026-10-06",
+"state": "PA",
+"city": "Bethlehem",
+"kind": "event",
+"for": [
+"Ryan Mackenzie"
+],
+"race": "PA-07",
+"note": "Johnson said the Bethlehem stop was his seventh trip of the cycle to back Mackenzie.",
+"source": "https://www.washingtonexaminer.com/news/campaigns/congressional/4756500/mike-johnson-house-race-pennsylvania-top-three/"
+},
+{
+"person": "Mike Johnson",
+"party": "R",
+"date": "2026-10-07",
+"state": "WI",
+"city": "Sparta",
+"kind": "rally",
+"for": [
+"Derrick Van Orden"
+],
+"race": "WI-03",
+"note": "Johnson rallied with Van Orden at the local American Legion.",
+"source": "https://www.wpr.org/news/us-house-speaker-mike-johnson-wisconsin-derrick-van-orden-2026"
+},
+{
+"person": "Mike Johnson",
+"party": "R",
+"date": "2026-10-12",
+"state": "NM",
+"city": "Las Cruces",
+"kind": "fundraiser",
+"for": [
+"Greg Cunningham"
+],
+"race": "NM-02",
+"note": "Johnson led a closed door fundraiser for Cunningham on his second New Mexico visit.",
+"source": "https://sourcenm.com/?p=33093"
+},
+{
+"person": "Mike Johnson",
+"party": "R",
+"date": "2026-10-13",
+"state": "TX",
+"city": "Corpus Christi",
+"kind": "rally",
+"for": [
+"Monica De La Cruz",
+"Tano Tijerina",
+"Eric Flores",
+"Carlos De La Cruz"
+],
+"race": "TX House",
+"note": "Johnson held a Corpus Christi rally with South Texas House candidates; AP later confirmed he campaigned in southern Texas that week.",
+"source": "https://texasscorecard.com/decisiontexas/speaker-mike-johnson-returning-to-south-texas-as-battle-for-house-majority-intensifies/"
+},
+{
+"person": "Mike Johnson",
+"party": "R",
+"date": "2026-10-14",
+"state": "ME",
+"city": "Bangor",
+"kind": "rally",
+"for": [
+"Paul LePage"
+],
+"race": "ME-02",
+"note": "Johnson rallied for LePage at Sea Dog Brewing Co., joined by Rep. Mark Harris.",
+"source": "https://www.news4jax.com/news/politics/2026/10/14/speaker-johnson-dismisses-skeptics-as-he-campaigns-for-house-gop-in-maine-battleground/"
+},
+{
+"person": "Mike Johnson",
+"party": "R",
+"date": "2026-10-20",
+"state": "MT",
+"city": "Bozeman",
+"kind": "event",
+"for": [
+"Aaron Flint"
+],
+"race": "MT-01",
+"note": "Johnson stumped in Bozeman for Flint in the western Montana House race; the cited page is the advance notice.",
+"source": "https://nbcmontana.com/news/local/house-speaker-mike-johnson-to-campaign-for-gop-candidate-aaron-flint-in-bozeman"
+},
+{
+"person": "Mike Johnson",
+"party": "R",
+"date": "2026-10-21",
+"state": "WA",
+"city": "Chehalis",
+"kind": "event",
+"for": [
+"John Braun"
+],
+"race": "WA-03",
+"note": "Johnson campaigned for Braun at Braun Northwest against Rep. Marie Gluesenkamp Perez.",
+"source": "https://washingtonstatestandard.com/2026/10/21/house-speaker-makes-case-for-unseating-democrat-in-was-heated-congressional-race"
+},
+{
+"person": "Mike Johnson",
+"party": "R",
+"date": "2026-10-21",
+"state": "CA",
+"city": "Stockton",
+"kind": "event",
+"for": [
+"Kevin Lincoln"
+],
+"race": "CA-13",
+"note": "Johnson campaigned with Lincoln against Rep. Adam Gray.",
+"source": "https://cbsnews.com/sacramento/news/mike-johnson-campaigns-kevin-lincoln-congressional-race"
+},
+{
+"person": "Scott Bessent",
+"party": "R",
+"date": "2026-08-05",
+"state": "AZ",
+"city": "Casa Grande",
+"kind": "tour",
+"for": [
+"Juan Ciscomani"
+],
+"race": "AZ-06",
+"note": "Bessent toured a Frito-Lay plant and held a business roundtable with Johnson and Ciscomani.",
+"source": "https://www.abc15.com/news/local-news/speaker-johnson-sec-of-treasury-rep-ciscomani-visit-arizona-manufacturers"
+},
+{
+"person": "Scott Bessent",
+"party": "R",
+"date": "2026-10-21",
+"state": "SC",
+"city": "Pendleton",
+"kind": "rally",
+"for": [
+"Darline Graham"
+],
+"race": "SC Senate",
+"note": "Bessent, a South Carolina native, addressed the Trump rally crowd and urged GOP turnout.",
+"source": "https://www.live5news.com/2026/10/22/trump-rallies-gop-voters-upstate-senate-race-draws-national-spotlight/"
+},
+{
+"person": "Robert F. Kennedy Jr.",
+"party": "R",
+"date": "2026-08-17",
+"state": "IA",
+"city": "Newton",
+"kind": "event",
+"for": [
+"Mariannette Miller-Meeks"
+],
+"race": "IA-01",
+"note": "Kennedy appeared with Miller-Meeks at a public event at the Newton YMCA.",
+"source": "https://www.knopnews2.com/2026/08/18/trump-officials-campaign-with-nunn-miller-meeks-ahead-november-election/"
+},
+{
+"person": "Ted Cruz",
+"party": "R",
+"date": "2026-08-29",
+"state": "IA",
+"city": "Clive",
+"kind": "fundraiser",
+"for": [
+"Ashley Hinson"
+],
+"race": "IA Senate",
+"note": "Cruz keynoted Hinson's annual BBQ Bash fundraiser at the Horizon Events Center.",
+"source": "https://www.newsfromthestates.com/node/424965"
+},
+{
+"person": "Ted Cruz",
+"party": "R",
+"date": "2026-10-01",
+"state": "TX",
+"city": "Denton",
+"kind": "rally",
+"for": [
+"Ken Paxton"
+],
+"race": "TX Senate",
+"note": "Cruz is listed among participants at Trump's Peterbilt Motors stop with Paxton.",
+"source": "https://en.wikipedia.org/wiki/List_of_Donald_Trump_rallies_(2025%E2%80%93present)"
+},
+{
+"person": "Tim Scott",
+"party": "R",
+"date": "2026-08-21",
+"state": "SC",
+"city": "Myrtle Beach",
+"kind": "rally",
+"for": [
+"Darline Graham"
+],
+"race": "SC Senate GOP runoff",
+"note": "Scott is listed among participants at Trump's Myrtle Beach rally for Graham.",
+"source": "https://en.wikipedia.org/wiki/List_of_Donald_Trump_rallies_(2025%E2%80%93present)"
+},
+{
+"person": "Tim Scott",
+"party": "R",
+"date": "2026-09-09",
+"state": "TX",
+"city": "Dallas",
+"kind": "event",
+"for": [
+"Republican candidates"
+],
+"race": "RNC midterm convention",
+"note": "Scott spoke on day one of the RNC midterm convention.",
+"source": "https://www.djournal.com/news/nation-world/republicans-slam-democrats-and-declare-devotion-to-trump-during-unusual-midterm-convention/article_b8bf0165-303c-532f-a86c-756bc3b8b9fe.html"
+},
+{
+"person": "Tim Scott",
+"party": "R",
+"date": "2026-10-20",
+"state": "NC",
+"city": "Greenville",
+"kind": "rally",
+"for": [
+"Michael Whatley"
+],
+"race": "NC Senate",
+"note": "The NRSC chairman made the case for Whatley and the GOP ticket at Trump's Greenville rally.",
+"source": "https://www.washingtonexaminer.com/news/campaigns/congressional/4773675/republicans-north-carolina-midterms/"
+},
+{
+"person": "John Barrasso",
+"party": "R",
+"date": "2026-08-21",
+"state": "SC",
+"city": "Myrtle Beach",
+"kind": "rally",
+"for": [
+"Darline Graham"
+],
+"race": "SC Senate GOP runoff",
+"note": "Barrasso is listed among participants at Trump's Myrtle Beach rally for Graham.",
+"source": "https://en.wikipedia.org/wiki/List_of_Donald_Trump_rallies_(2025%E2%80%93present)"
+},
+{
+"person": "John Barrasso",
+"party": "R",
+"date": "2026-09-09",
+"state": "TX",
+"city": "Dallas",
+"kind": "event",
+"for": [
+"Republican candidates"
+],
+"race": "RNC midterm convention",
+"note": "Barrasso spoke on day one of the RNC midterm convention.",
+"source": "https://www.djournal.com/news/nation-world/republicans-slam-democrats-and-declare-devotion-to-trump-during-unusual-midterm-convention/article_b8bf0165-303c-532f-a86c-756bc3b8b9fe.html"
+},
+{
+"person": "Todd Blanche",
+"party": "R",
+"date": "2026-08-14",
+"state": "NY",
+"city": "Garden City",
+"kind": "rally",
+"for": [
+"Bruce Blakeman"
+],
+"race": "NY Governor",
+"note": "The Attorney General spoke before Trump at the Nassau event and endorsed Blakeman.",
+"source": "https://www.mediaite.com/online/beyond-inappropriate-attorney-general-todd-blanche-ripped-for-speaking-at-rally-to-endorse-gop-candidate/"
+},
+{
+"person": "Todd Blanche",
+"party": "R",
+"date": "2026-09-09",
+"state": "TX",
+"city": "Dallas",
+"kind": "event",
+"for": [
+"Republican candidates"
+],
+"race": "RNC midterm convention",
+"note": "Blanche spoke on day one of the RNC midterm convention.",
+"source": "https://www.djournal.com/news/nation-world/republicans-slam-democrats-and-declare-devotion-to-trump-during-unusual-midterm-convention/article_b8bf0165-303c-532f-a86c-756bc3b8b9fe.html"
+},
+{
+"person": "Kash Patel",
+"party": "R",
+"date": "2026-08-14",
+"state": "NY",
+"city": "Garden City",
+"kind": "rally",
+"for": [
+"Bruce Blakeman"
+],
+"race": "NY Governor",
+"note": "The FBI Director made a brief appearance before Trump at the Blakeman event.",
+"source": "https://lavocedinewyork.com/en/new-york/2026/08/14/trump-joins-blakeman-in-nassau-leans-on-disputed-crime-and-border-claims/"
+},
+{
+"person": "Markwayne Mullin",
+"party": "R",
+"date": "2026-10-01",
+"state": "OK",
+"city": "Durant",
+"kind": "rally",
+"for": [
+"Mike Mazzei"
+],
+"race": "OK Governor",
+"note": "The Homeland Security Secretary spoke at Trump's Choctaw Event Center rally.",
+"source": "https://www.newsfromthestates.com/node/430345"
+},
+{
+"person": "Donald Trump Jr.",
+"party": "R",
+"date": "2026-08-19",
+"state": "NY",
+"city": "Southampton",
+"kind": "fundraiser",
+"for": [
+"Republican National Committee"
+],
+"race": "RNC national",
+"note": "Trump Jr. co-hosted the Hamptons RNC fundraiser with Vance; date taken from the Vance trips list.",
+"source": "https://news.meaww.com/gallery/bettina-anderson-gives-glimpse-inside-exclusive-5m-hamptons-fundraiser-with-don-jr-and-jd-vance-mt2k1p5m"
+},
+{
+"person": "Bernie Sanders",
+"party": "D",
+"date": "2026-10-20",
+"state": "TX",
+"city": "Houston",
+"kind": "rally",
+"for": [
+"Greg Casar"
+],
+"race": "TX Democrats",
+"note": "Sanders was scheduled to rally in Houston with Greg Casar and Beto O'Rourke as special guests.",
+"source": "https://texasscorecard.com/decisiontexas/socialist-bernie-sanders-campaigns-in-texas-ahead-of-midterms/"
+},
+{
+"person": "Kamala Harris",
+"party": "D",
+"date": "2026-09-27",
+"state": "CA",
+"city": "Escondido",
+"kind": "event",
+"for": [
+"Marni von Wilpert"
+],
+"race": "CA-48",
+"note": "Harris made her first California campaign stop at the Democratic campaign headquarters in Escondido to back von Wilpert.",
+"source": "https://www.nbcpalmsprings.com/ca-us-and-world/2026/09/27/kamala-harris-makes-san-diego-stop-to-support-congressional-candidate"
+},
+{
+"person": "Wes Moore",
+"party": "D",
+"date": "2026-10-09",
+"state": "WI",
+"city": "Racine",
+"kind": "event",
+"for": [
+"David Crowley"
+],
+"race": "WI Governor",
+"note": "Moore visited the Racine County Democratic Party office in the morning to campaign for Crowley.",
+"source": "https://urbanmilwaukee.com/2026/10/10/maryland-gov-wes-moore-campaigns-for-crowley-in-wisconsin/"
+},
+{
+"person": "Andy Beshear",
+"party": "D",
+"date": "2026-10-01",
+"state": "AR",
+"city": "North Little Rock",
+"kind": "fundraiser",
+"for": [
+"Hallie Shoffner"
+],
+"race": "AR Senate",
+"note": "Beshear keynoted the Arkansas Democratic Party Ballots, Blue Jeans and BBQ fundraiser where Senate candidate Shoffner also spoke.",
+"source": "https://www.newsfromthestates.com/node/430341"
+},
+{
+"person": "Andy Beshear",
+"party": "D",
+"date": "2026-10-02",
+"state": "SC",
+"city": "Charleston",
+"kind": "tour",
+"for": [],
+"race": "SC Democrats",
+"note": "Beshear was scheduled for a South Carolina Democratic Party tour with stops in Orangeburg and Charleston counties.",
+"source": "https://abcnews4.com/news/lowcountry-and-state-politics/kentucky-gov-andy-beshear-to-make-charleston-stop-during-south-carolina-democratic-tour-politcis-general-election-primaries-charleston-south-carolina-news"
+},
+{
+"person": "Andy Beshear",
+"party": "D",
+"date": "2026-08-29",
+"state": "KY",
+"city": "Frankfort",
+"kind": "rally",
+"for": [
+"Charles Booker"
+],
+"race": "KY Senate",
+"note": "Beshear rallied with Senate candidate Charles Booker and other Kentucky Democratic hopefuls in Franklin County.",
+"source": "https://thebrunswicknews.com/news/national_news/as-midterm-elections-approach-ky-democratic-candidates-rally-in-franklin-county/article_17ca67cc-8ff5-574c-b183-7e072d828023.html"
+},
+{
+"person": "JB Pritzker",
+"party": "D",
+"date": "2026-09-09",
+"state": "TX",
+"city": "Dallas",
+"kind": "event",
+"for": [
+"Gina Hinojosa",
+"James Talarico"
+],
+"race": "TX Governor; TX Senate",
+"note": "Pritzker spoke at a Texas Democratic Party press conference in Dallas ahead of the RNC midterm convention and praised Hinojosa and Talarico.",
+"source": "https://www.newsfromthestates.com/node/427014"
+},
+{
+"person": "Pete Buttigieg",
+"party": "D",
+"date": "2026-08-07",
+"state": "MI",
+"city": "West Bloomfield",
+"kind": "event",
+"for": [
+"Jeremy Moss",
+"Sarah Pounds"
+],
+"race": "MI-11",
+"note": "Buttigieg joined a backyard canvass launch to knock doors for Moss and state House candidate Pounds.",
+"source": "https://michiganadvance.com/2026/08/07/while-stumping-for-michigan-dems-buttigieg-stresses-national-problems-have-state-level-solutions/"
+},
+{
+"person": "Pete Buttigieg",
+"party": "D",
+"date": "2026-09-13",
+"state": "NM",
+"city": "Las Cruces",
+"kind": "rally",
+"for": [
+"Deb Haaland",
+"Gabe Vasquez"
+],
+"race": "NM Governor; NM-02",
+"note": "Buttigieg rallied more than 600 people at Centennial High School for Haaland and Vasquez.",
+"source": "https://sourcenm.com/2026/09/14/buttigieg-rallies-for-haaland-vasquez-in-las-cruces/"
+},
+{
+"person": "Pete Buttigieg",
+"party": "D",
+"date": "2026-09-16",
+"state": "NY",
+"city": "Tarrytown",
+"kind": "rally",
+"for": [
+"Cait Conley"
+],
+"race": "NY-17",
+"note": "Buttigieg rallied for Cait Conley in her challenge to Rep. Mike Lawler.",
+"source": "https://www.advocate.com/politics/national/pete-buttigieg-midterms-campaigning"
+},
+{
+"person": "Pete Buttigieg",
+"party": "D",
+"date": "2026-10-03",
+"state": "NH",
+"city": "Concord",
+"kind": "event",
+"for": [
+"Maggie Goodlander"
+],
+"race": "NH-02",
+"note": "Buttigieg spoke at New Hampshire Democratic Party headquarters before canvassers went out for Democratic candidates.",
+"source": "https://news.ssbcrack.com/?p=523718"
+},
+{
+"person": "Pete Buttigieg",
+"party": "D",
+"date": "2026-10-27",
+"state": "MS",
+"city": "Gulf Coast",
+"kind": "tour",
+"for": [
+"Scott Colom"
+],
+"race": "MS Senate",
+"note": "Buttigieg is scheduled to campaign for Colom in cities along the Mississippi Gulf Coast.",
+"source": "https://www.newsfromthestates.com/article/pete-buttigieg-campaign-scott-colom-mississippi"
+},
+{
+"person": "Gavin Newsom",
+"party": "D",
+"date": "2026-09-04",
+"state": "SC",
+"city": "Aiken",
+"kind": "event",
+"for": [],
+"race": "SC Democrats",
+"note": "Newsom spoke to local Democrats in Aiken County on his Take It Back tour.",
+"source": "https://www.wrdw.com/2026/09/02/gavin-newsom-visit-aiken-county-part-south-carolina-swing/"
+},
+{
+"person": "Elissa Slotkin",
+"party": "D",
+"date": "2026-10-03",
+"state": "MI",
+"city": "Warren",
+"kind": "town hall",
+"for": [
+"Abdul El-Sayed"
+],
+"race": "MI Senate",
+"note": "Slotkin co-headlined a first ever joint town hall with El-Sayed in Macomb County.",
+"source": "https://michiganadvance.com/?p=113887"
+},
+{
+"person": "Alexandria Ocasio-Cortez",
+"party": "D",
+"date": "2026-09-24",
+"state": "NY",
+"city": "Buffalo",
+"kind": "event",
+"for": [],
+"race": "NY Democrats",
+"note": "Ocasio-Cortez met Mayor Sean Ryan and hosted a turnout event for inactive Democrats on her upstate tour.",
+"source": "https://spectrumlocalnews.com/nys/buffalo/politics/2026/09/25/aoc-visits-buffalo"
+},
+{
+"person": "Alexandria Ocasio-Cortez",
+"party": "D",
+"date": "2026-10-16",
+"state": "MI",
+"city": "Rochester",
+"kind": "rally",
+"for": [
+"Abdul El-Sayed"
+],
+"race": "MI Senate",
+"note": "Ocasio-Cortez was scheduled to rally for El-Sayed at Oakland University.",
+"source": "https://jewishinsider.com/2026/10/ocasio-cortez-el-sayed-campaign-blitz-michigan/"
+},
+{
+"person": "Hakeem Jeffries",
+"party": "D",
+"date": "2026-10-24",
+"state": "NY",
+"city": "",
+"kind": "event",
+"for": [
+"Cait Conley"
+],
+"race": "NY-17",
+"note": "Jeffries is scheduled to hold an event with Conley to kick off early voting in NY-17.",
+"source": "https://www.cityandstateny.com/politics/2026/10/jeffries-stump-conley-johnson-stump-lawler/416650/"
+},
+{
+"person": "Laura Kelly",
+"party": "D",
+"date": "2026-10-08",
+"state": "IA",
+"city": "Des Moines",
+"kind": "event",
+"for": [
+"Rob Sand"
+],
+"race": "IA Governor",
+"note": "Kansas Gov. Laura Kelly rallied educators for Sand at Iowa State Education Association headquarters.",
+"source": "https://iowacapitaldispatch.com/2026/10/08/kansas-gov-laura-kelly-rallies-iowa-educators-for-sands-campaign/"
+},
+{
+"person": "Ro Khanna",
+"party": "D",
+"date": "2026-10-11",
+"state": "IA",
+"city": "Des Moines",
+"kind": "event",
+"for": [
+"Josh Turek"
+],
+"race": "IA Senate",
+"note": "Khanna headlined state Rep. Sean Bagniewski's Fish Fry and appeared with Senate candidate Turek earlier that day.",
+"source": "https://iowacapitaldispatch.com/2026/10/11/california-u-s-rep-ro-khanna-rallies-with-iowa-democrats-ahead-of-midterms/"
+},
+{
+"person": "Ro Khanna",
+"party": "D",
+"date": "2026-10-24",
+"state": "NE",
+"city": "",
+"kind": "event",
+"for": [
+"Dan Osborn"
+],
+"race": "NE Senate",
+"note": "Khanna is scheduled to campaign in Nebraska with independent Senate candidate Dan Osborn.",
+"source": "https://politicalwire.com/2026/10/20/ro-khanna-to-campaign-in-nebraska-with-dan-osborn/"
+},
+{
+"person": "Mark Kelly",
+"party": "D",
+"date": "2026-10-19",
+"state": "AZ",
+"city": "",
+"kind": "tour",
+"for": [],
+"race": "AZ Legislature",
+"note": "Kelly was scheduled to campaign in Arizona with 18 endorsed state legislative candidates as part of a five state tour.",
+"source": "https://politicalwire.com/2026/10/18/mark-kelly-stays-on-the-campaign-trail/"
+},
+{
+"person": "Mark Kelly",
+"party": "D",
+"date": "2026-08-13",
+"state": "IA",
+"city": "Clear Lake",
+"kind": "fundraiser",
+"for": [
+"Josh Turek"
+],
+"race": "IA Senate",
+"note": "Kelly keynoted the Iowa Wing Ding Democratic fundraiser at the Surf Ballroom where Senate nominee Turek also spoke.",
+"source": "https://azmirror.com/2026/08/14/repub/in-iowa-mark-kelly-rallies-democrats-to-fight-trumps-corruption-and-stokes-2028-speculation/"
+},
+{
+"person": "Chris Murphy",
+"party": "D",
+"date": "2026-10-14",
+"state": "FL",
+"city": "Orlando",
+"kind": "event",
+"for": [
+"Angie Nixon"
+],
+"race": "FL Senate",
+"note": "Murphy campaigned with Senate candidate Nixon in Orlando.",
+"source": "https://floridaphoenix.com/2026/10/12/bernie-sanders-chris-murphy-and-ro-khanna-are-coming-to-florida-to-campaign-with-angie-nixon/"
+},
+{
+"person": "Ruben Gallego",
+"party": "D",
+"date": "2026-10-14",
+"state": "FL",
+"city": "Orlando",
+"kind": "event",
+"for": [
+"Angie Nixon"
+],
+"race": "FL Senate",
+"note": "Gallego joined Murphy in campaigning with Nixon in Orlando on Wednesday.",
+"source": "https://baynews9.com/fl/tampa/news/2026/10/14/former-president-clinton-to-campaign-with-jolly-in-south-florida"
+},
+{
+"person": "Bernie Sanders",
+"party": "D",
+"date": "2026-10-17",
+"state": "FL",
+"city": "Tampa",
+"kind": "rally",
+"for": [
+"Angie Nixon"
+],
+"race": "FL Senate",
+"note": "Sanders was scheduled to rally with Nixon at the Cuban Club in Tampa.",
+"source": "https://floridaphoenix.com/2026/10/12/bernie-sanders-chris-murphy-and-ro-khanna-are-coming-to-florida-to-campaign-with-angie-nixon/"
+},
+{
+"person": "Bernie Sanders",
+"party": "D",
+"date": "2026-10-18",
+"state": "FL",
+"city": "Gainesville",
+"kind": "rally",
+"for": [
+"Angie Nixon"
+],
+"race": "FL Senate",
+"note": "Sanders was scheduled to hold a Gainesville event with Nixon.",
+"source": "https://floridaphoenix.com/2026/10/12/bernie-sanders-chris-murphy-and-ro-khanna-are-coming-to-florida-to-campaign-with-angie-nixon/"
+},
+{
+"person": "Ro Khanna",
+"party": "D",
+"date": "2026-10-20",
+"state": "FL",
+"city": "Orlando",
+"kind": "event",
+"for": [
+"Angie Nixon"
+],
+"race": "FL Senate",
+"note": "Khanna was scheduled to campaign with Nixon in Orlando.",
+"source": "https://floridaphoenix.com/2026/10/12/bernie-sanders-chris-murphy-and-ro-khanna-are-coming-to-florida-to-campaign-with-angie-nixon/"
+},
+{
+"person": "James Clyburn",
+"party": "D",
+"date": "2026-10-12",
+"state": "FL",
+"city": "Tallahassee",
+"kind": "event",
+"for": [
+"David Jolly",
+"Gwen Graham"
+],
+"race": "FL Governor",
+"note": "Clyburn appeared with Jolly and running mate Graham in Tallahassee to court Black voters.",
+"source": "https://floridaphoenix.com/2026/10/12/david-jolly-governors-race-likely-comes-down-to-undecided-black-floridians/"
+},
+{
+"person": "Elizabeth Warren",
+"party": "D",
+"date": "2026-10-17",
+"state": "ME",
+"city": "Portland",
+"kind": "rally",
+"for": [
+"Troy Jackson",
+"Hannah Pingree"
+],
+"race": "ME Senate; ME Governor",
+"note": "Warren rallied about 1,000 people at Deering Oaks Park on the No Kings day of action with Jackson and Pingree.",
+"source": "https://mainemorningstar.com/2026/10/17/on-no-kings-day-of-action-elizabeth-warren-rallies-for-jackson-in-portland/"
+},
+{
+"person": "Cory Booker",
+"party": "D",
+"date": "2026-10-02",
+"state": "MS",
+"city": "Gulfport",
+"kind": "event",
+"for": [
+"Scott Colom"
+],
+"race": "MS Senate",
+"note": "Booker joined Colom for a Canvass with Colom volunteer event to open his fall travel.",
+"source": "https://mississippitoday.org/2026/10/01/sen-cory-booker-to-campaign-for-scott-colom-in-mississippi-senate-race/"
+},
+{
+"person": "Raphael Warnock",
+"party": "D",
+"date": "2026-10-14",
+"state": "MS",
+"city": "Jackson",
+"kind": "rally",
+"for": [
+"Scott Colom"
+],
+"race": "MS Senate",
+"note": "Warnock met faith leaders and rallied supporters at Colom's Jackson campaign headquarters.",
+"source": "https://mississippitoday.org/2026/10/14/sen-raphael-warnock-says-scott-colom-could-flip-senate-seat-democratic-like-his-georgia-upset/"
+}
+],
+"unconfirmed": [
+{
+"person": "Donald Trump",
+"state": "NV",
+"claim": "Aug 5 Las Vegas event at Red Rock Casino touting tax policy",
+"why": "Found only in the Wikipedia rally list; the underlying news report was not reached."
+},
+{
+"person": "Donald Trump",
+"state": "NY",
+"claim": "Aug 14 Garden City event with Blakeman",
+"why": "Found only in the Wikipedia rally list; the AP source was not reached."
+},
+{
+"person": "JD Vance",
+"state": "NY",
+"claim": "Aug 19 Southampton RNC fundraiser and Aug 20 fundraiser at Omeed Malik's home",
+"why": "Wikipedia only; the second is sourced to a social post and has no location."
+},
+{
+"person": "JD Vance",
+"state": "TX",
+"claim": "Spoke at the Sept 9 to 10 Republican midterm convention in Dallas",
+"why": "Wikipedia only; no news report reached confirming his appearance."
+},
+{
+"person": "JD Vance",
+"state": "OH",
+"claim": "Cincinnati event on Thursday Oct 22",
+"why": "Fox blog mention may duplicate the Oct 21 Sharonville rally; not independently confirmed."
+},
+{
+"person": "Pete Hegseth",
+"state": "KY",
+"claim": "Campaigned in Kentucky for Republicans",
+"why": "Inquirer roundup mentions it without date, city or candidate."
+},
+{
+"person": "Gavin Newsom",
+"state": "AL",
+"claim": "Alabama stop on Take It Back tour",
+"why": "Named as a tour state but no city or date found."
+},
+{
+"person": "Mark Kelly",
+"state": "NH",
+"claim": "Planned New Hampshire visit days after Harris",
+"why": "No date, city or candidate given."
+},
+{
+"person": "Andy Beshear",
+"state": "IA",
+"claim": "Headline says he campaigned in Iowa, Nevada and Ohio",
+"why": "Article did not load, so no dates or cities were confirmed. His Iowa rally with Rob Sand was in June."
+},
+{
+"person": "Katie Britt",
+"state": "IA",
+"claim": "Campaigned in Iowa for Ashley Hinson around Oct 20",
+"why": "Fox blog gives no city or exact date."
+},
+{
+"person": "Elon Musk",
+"state": "",
+"claim": "Midterm campaign appearances",
+"why": "No in person midterm campaign event found."
+},
+{
+"claim": "Mike Johnson rallied with Greg Cunningham in Albuquerque, NM-02, in late August 2026",
+"why": "Source NM gives Aug 26 in a caption but the article is dated Aug 24 and Johnson was in San Antonio the evening of Aug 26."
+},
+{
+"claim": "Mike Johnson headlined a LiPetri fundraiser in Upper Brookville, NY",
+"why": "Reported as part of the Aug 20 to 21 trip but no date given."
+},
+{
+"claim": "Mike Johnson campaigned with John Braun in Vancouver, WA in August 2026",
+"why": "Mentioned only as August with no date."
+},
+{
+"claim": "Mike Johnson made a Laredo campaign stop reported Sept 6, 2026",
+"why": "KGNS gives no date; may be the Aug 27 visit."
+},
+{
+"claim": "Scott Bessent campaigned with Miller-Meeks and Nunn in Iowa in mid August",
+"why": "Gray TV says only over the past week with no date or city."
+},
+{
+"claim": "Jamieson Greer, Kelly Loeffler, Doug Collins and Matt Whitaker visited Iowa in August",
+"why": "Listed as a parade of officials, some on official business; no dates, cities or candidates."
+},
+{
+"claim": "RFK Jr. campaigned with Zach Lahn in Iowa in August, including a bait shop visit",
+"why": "STAT gives no date or city."
+},
+{
+"claim": "RFK Jr., Bessent and Don Jr. spoke at the Sept 9 to 10 RNC midterm convention in Dallas",
+"why": "Announced as keynote speakers but the speaking day was not confirmed."
+},
+{
+"claim": "Katie Britt held a fireside chat style event with Ashley Hinson in Iowa",
+"why": "Fox live page reported it around Oct 20 with no date or city."
+},
+{
+"claim": "Tom Emmer spoke to GOP supporters in Dubuque, IA on a Thursday in October",
+"why": "No exact date or candidate named."
+},
+{
+"claim": "JD Vance in Brewer, ME on Aug 24 reiterated his LePage endorsement",
+"why": "Official Compotech visit; LePage not reported present."
+},
+{
+"claim": "JD Vance CBS town hall in Flat Rock, MI on Oct 17",
+"why": "Media town hall, not described as a campaign event with a candidate."
+},
+{
+"claim": "Pete Hegseth visited Oshkosh, WI on Aug 24",
+"why": "Official Arsenal of Freedom tour stop; no candidate confirmed present."
+},
+{
+"claim": "Brooke Rollins at the Iowa State Fair and the Farm Progress Show in Boone around Sept 1",
+"why": "No candidate named; appears official."
+},
+{
+"claim": "Ron DeSantis backed Byron Donalds at the RPOF Leadership Forum in Tampa",
+"why": "Event date not stated beyond the Sept 1 article date."
+},
+{
+"claim": "Marco Rubio campaign stops",
+"why": "Washington Examiner reported Aug 31 that Rubio has largely stayed off the campaign trail; none found."
+},
+{
+"claim": "Kamala Harris campaigned for Richard Pan at Sacramento Democratic headquarters on a Friday in early October 2026",
+"why": "Article dated Oct 8 says only Friday, so the date could be Oct 2 or Oct 9."
+},
+{
+"claim": "Alexandria Ocasio-Cortez campaigned with Rep. Josh Riley at the Ithaca apple festival and held a Cornell town hall during her Sept 24 to 27 upstate tour",
+"why": "No source gave the exact day."
+},
+{
+"claim": "Alexandria Ocasio-Cortez rallied with Angie Nixon in the Orlando and Kissimmee area in early September",
+"why": "One outlet said she went last week, but a Sept 16 Florida report still asked whether she was coming, so it conflicts."
+},
+{
+"claim": "Gavin Newsom made stops in Lancaster and Dorchester County, SC on Sept 3 or 4",
+"why": "Announced but no source confirmed the day or the event."
+},
+{
+"claim": "Gavin Newsom visited Montgomery, AL on Sept 2",
+"why": "Confirmed visit, but it had no public campaign events, so it may not count as midterm campaigning."
+},
+{
+"claim": "Gavin Newsom Exeter NH rally date",
+"why": "On file as Oct 17, but NHPR's caption dates the Exeter Town Hall rally to Oct 18."
+},
+{
+"claim": "Raphael Warnock campaigned across southern New Hampshire in early October",
+"why": "NHPR gives no city or date."
+},
+{
+"claim": "Raphael Warnock faith forums in Greenville and the Midlands, SC in October",
+"why": "Seen only as undated headlines in a news aggregator."
+},
+{
+"claim": "Senators Angela Alsobrooks and Lisa Blunt Rochester campaigned in Mississippi for Scott Colom",
+"why": "Mississippi Today says they visited but gives no dates or cities."
+},
+{
+"claim": "Mark Kelly will campaign in Maine for Troy Jackson and in Nevada, New Mexico and New Hampshire",
+"why": "Tour announced Oct 18 with no dates or cities."
+},
+{
+"claim": "Chris Murphy will campaign in North Carolina for Roy Cooper, Michigan for El-Sayed, Minnesota for Flanagan and New Hampshire for Pappas",
+"why": "CT Mirror lists the plans with no dates or cities."
+},
+{
+"claim": "Katherine Clark October tour of CA, MI, OH, NY, FL, MA, NE and PA",
+"why": "Plan only, no cities or dates."
+},
+{
+"claim": "Pete Buttigieg keynoted the New Hampshire Democratic Party annual dinner around Oct 3",
+"why": "Seen only as an aggregator headline with no date or city."
+},
+{
+"claim": "Pete Buttigieg campaign stops in North Carolina, New Jersey, Georgia and Nevada in the final weeks",
+"why": "Plan reported without dates or cities."
+},
+{
+"claim": "Pete Buttigieg shared a meal with state Sen. Cesar Blanco in El Paso in September",
+"why": "Photo caption only, and it is unclear whether it was a campaign event."
+},
+{
+"claim": "Bernie Sanders El Paso rally Oct 19 was attended by Beto O'Rourke and Greg Casar",
+"why": "Already on file; their attendance was announced, not confirmed after the event."
+},
+{
+"claim": "Rahm Emanuel traveled for events in swing districts in September",
+"why": "No states or dates given."
+},
+{
+"claim": "Kamala Harris virtual event for Angie Nixon in Florida",
+"why": "Virtual, not an in person stop."
+}
+],
+"notes": "Search budget ran out before full coverage. No visits found for Walz, Shapiro, Chris Murphy or Musk, but that is not proof of none. Turning Point Action runs a New Hampshire Chase the Ballot ground program for Sununu with no dated headline rally found. Name Darline Graham is as printed by Live 5, Fox Carolina and others. Dated Oct 22 or later entries are announced, not completed. Las Vegas visits come from the Nevada Independent candidate visit tracker. Lubbock and Waco use CBS Texas's Oct 27 date over a Fox blog's Oct 20. Obama's Detroit and Cleveland rallies are both reported for Oct 24."
+}

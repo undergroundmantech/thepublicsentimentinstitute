@@ -1,0 +1,135 @@
+/* Watchdog OS: the section reads as an investigator's terminal. Green phosphor on near black, a crime scene
+   grid behind everything, every panel a window with corner brackets, every number a readout. Party colours
+   stay on the data; green is the interface, amber marks evidence. */
+.wd.wdt {
+  --wg: #39ff9c; --wg2: #a6ffd2; --wt: #39ff9c; --wt2: #a6ffd2; --wa: #ffb547; --wbg: #030806; --wpan: rgba(4, 14, 10, .86); --wline: rgba(57, 255, 156, .22); --wline2: rgba(57, 255, 156, .45);
+  --ink: #d8ffe9; --ink2: #9fd8b8; --mute: #5f9b7b; --line: rgba(57, 255, 156, .14); --line2: rgba(57, 255, 156, .28); --glass: var(--wpan); --hi: #eafff3;
+  font-family: var(--font-m); color: var(--ink);
+}
+.opp-main > .opp-page:has(.wdt) { max-width: 1900px; }
+.wd.wdt > * { position: relative; z-index: 1; }
+.wd.wdt > .wd-nav { position: sticky; z-index: 20; }
+.wdt-bg { position: fixed !important; inset: 0; z-index: 0 !important; pointer-events: none; background: radial-gradient(120% 90% at 50% 0%, #06140d 0%, var(--wbg) 60%); }
+.wdt-bg i { position: absolute; inset: 0; display: block; }
+.wdt-bg .grid { background-image: linear-gradient(rgba(57,255,156,.06) 1px, transparent 1px), linear-gradient(90deg, rgba(57,255,156,.06) 1px, transparent 1px), linear-gradient(rgba(57,255,156,.025) 1px, transparent 1px), linear-gradient(90deg, rgba(57,255,156,.025) 1px, transparent 1px);
+  background-size: 128px 128px, 128px 128px, 32px 32px, 32px 32px; mask-image: radial-gradient(90% 80% at 50% 30%, #000 40%, transparent 100%); }
+.wdt-bg .scan { background: repeating-linear-gradient(180deg, rgba(255,255,255,.025) 0 1px, transparent 1px 3px); mix-blend-mode: screen; }
+.wdt-bg .scan::after { content: ""; position: absolute; left: 0; right: 0; height: 160px; top: -160px; background: linear-gradient(180deg, transparent, rgba(57,255,156,.06), transparent); animation: wdt-sweep 7s linear infinite; }
+.wdt-bg .vig { background: radial-gradient(130% 100% at 50% 50%, transparent 55%, rgba(0,0,0,.65) 100%); }
+
+/* caution tape and the status line */
+.wdt-tape { display: flex; gap: 0; overflow: hidden; white-space: nowrap; margin: 6px calc(50% - 50vw) 0; height: 22px; align-items: center;
+  background: repeating-linear-gradient(-45deg, #f4c430 0 16px, #121212 16px 32px); box-shadow: 0 6px 18px -10px #000; }
+.wdt-tape span { flex: none; padding: 0 28px; font: 800 11px var(--font-m); letter-spacing: .32em; color: #121212; background: #f4c430; margin-right: 64px; animation: wdt-tape 30s linear infinite; }
+.wdt-status { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 16px; margin: 0 0 12px; padding: 7px 12px; border: 1px solid var(--wline); background: rgba(2,10,6,.85); font: 600 11.5px var(--font-m); color: var(--mute); letter-spacing: .04em; }
+.wdt-status .rec { display: inline-flex; align-items: center; gap: 6px; color: #ff4d5e; font-weight: 800; } .wdt-status .rec i { width: 8px; height: 8px; border-radius: 50%; background: #ff4d5e; animation: wdt-blink 1.2s steps(2) infinite; }
+.wdt-status .path { color: var(--wa); }
+.wdt-status .typed { color: var(--wt); flex: 1; min-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.wdt-status .cur, .wd.wdt .wd-hero h1::after, .wd.wdt .lg-head h1::after { animation: wdt-blink 1s steps(2) infinite; }
+.wdt-status .clock { color: var(--ink2); font-variant-numeric: tabular-nums; }
+
+/* navigation as terminal tabs */
+.wd.wdt .wd-nav { background: linear-gradient(180deg, rgba(3,8,6,.95), rgba(3,8,6,.86)); border-bottom: 1px solid var(--wline); padding: 10px 0; margin-bottom: 0; }
+.wd.wdt .wd-brand { font: 800 15px var(--font-m); letter-spacing: .08em; text-transform: uppercase; color: var(--wt); }
+.wd.wdt .wd-brand small { margin-left: 4px; padding: 1px 5px; border: 1px solid var(--wline2); font-size: 9.5px; color: var(--wt2); }
+.wd.wdt .wd-brand i { background: var(--wt); box-shadow: 0 0 0 0 rgba(57,255,156,.7); }
+.wd.wdt .wd-tab { font: 700 12px var(--font-m); letter-spacing: .04em; color: var(--ink2); border-radius: 0; border: 1px solid transparent; padding: 7px 12px; }
+.wd.wdt .wd-tab::before { content: "./"; color: var(--mute); }
+.wd.wdt .wd-tab:hover { color: var(--wt); background: rgba(57,255,156,.06); border-color: var(--wline); }
+.wd.wdt .wd-tab.on { color: #021108; background: var(--wt); border-color: var(--wt); box-shadow: 0 0 18px -4px rgba(57,255,156,.6); }
+.wd.wdt .wd-tab.on::before { color: #04361d; }
+
+/* headlines: a prompt and a blinking cursor */
+.wd.wdt .wd-hero, .wd.wdt .lg-head { padding-top: 18px; }
+.wd.wdt .wd-hero h1, .wd.wdt .lg-head h1 { font: 800 clamp(30px, 3.6vw, 56px)/1.02 var(--font-m); letter-spacing: -.03em; color: var(--hi); text-shadow: 0 0 22px rgba(57,255,156,.18); }
+.wd.wdt .wd-hero h1::before, .wd.wdt .lg-head h1::before { content: "> "; color: var(--wt); }
+.wd.wdt .wd-hero h1::after, .wd.wdt .lg-head h1::after { content: "_"; color: var(--wt); margin-left: 4px; }
+.wd.wdt .wd-hero h1 em, .wd.wdt .lg-head h1 em { background: none; -webkit-text-fill-color: currentColor; color: var(--wt); text-shadow: 0 0 18px rgba(57,255,156,.55); }
+.wd.wdt .wd-hero .lede, .wd.wdt .lg-head .lede { font: 500 14.5px/1.6 var(--font-m); color: var(--ink2); }
+.wd.wdt .eye.gold { color: var(--wa); letter-spacing: .2em; }
+.wd.wdt .eye.gold::before { content: "// "; color: var(--mute); }
+
+/* panels: terminal windows with corner brackets */
+.wd.wdt .card {
+  border-radius: 2px; border: 1px solid var(--wline);
+  background:
+    linear-gradient(var(--wt), var(--wt)) top left / 14px 2px no-repeat, linear-gradient(var(--wt), var(--wt)) top left / 2px 14px no-repeat,
+    linear-gradient(var(--wt), var(--wt)) top right / 14px 2px no-repeat, linear-gradient(var(--wt), var(--wt)) top right / 2px 14px no-repeat,
+    linear-gradient(var(--wt), var(--wt)) bottom left / 14px 2px no-repeat, linear-gradient(var(--wt), var(--wt)) bottom left / 2px 14px no-repeat,
+    linear-gradient(var(--wt), var(--wt)) bottom right / 14px 2px no-repeat, linear-gradient(var(--wt), var(--wt)) bottom right / 2px 14px no-repeat,
+    var(--wpan);
+  box-shadow: 0 0 0 1px rgba(0,0,0,.4), 0 24px 50px -30px #000, inset 0 0 40px rgba(57,255,156,.03);
+  backdrop-filter: blur(4px);
+}
+.wd.wdt .card-h { border-bottom: 1px solid var(--wline); background: rgba(57,255,156,.04); }
+.wd.wdt .card-h h3 { font: 800 12.5px var(--font-m); letter-spacing: .14em; text-transform: uppercase; color: var(--wt); }
+.wd.wdt .card-h h3::before { content: "■ "; color: var(--wa); font-size: 9px; vertical-align: 2px; }
+.wd.wdt .card-h .eye { color: var(--mute); font-family: var(--font-m); }
+
+/* readouts */
+.wd.wdt .wd-kpi { border-radius: 2px; border: 1px solid var(--wline); background: rgba(2,12,7,.88); }
+.wd.wdt .wd-kpi span { color: var(--mute); }
+.wd.wdt .wd-kpi b { font: 800 32px/1.05 var(--font-m); letter-spacing: -.02em; color: var(--wt); text-shadow: 0 0 16px rgba(57,255,156,.45); }
+.wd.wdt .wd-kpi small { color: var(--ink2); }
+.wd.wdt .wd-kpi::after { background: linear-gradient(110deg, transparent 35%, rgba(57,255,156,.10) 50%, transparent 65%); }
+
+/* controls */
+.wd.wdt .wd-chips button, .wd.wdt .wd-btn, .wd.wdt .btn { font: 700 12px var(--font-m); letter-spacing: .03em; color: var(--ink2); background: rgba(2,12,7,.8); border: 1px solid var(--wline); border-radius: 0; }
+.wd.wdt .wd-chips button::before { content: "["; color: var(--mute); margin-right: 4px; } .wd.wdt .wd-chips button::after { content: "]"; color: var(--mute); margin-left: 4px; }
+.wd.wdt .wd-chips button:hover, .wd.wdt .wd-btn:hover, .wd.wdt .btn:hover { color: var(--wt); border-color: var(--wline2); }
+.wd.wdt .wd-chips button.on { color: #021108; background: var(--wt); border-color: var(--wt); }
+.wd.wdt .wd-chips button.on::before, .wd.wdt .wd-chips button.on::after { color: #04361d; }
+.wd.wdt .wd-input { font: 600 13px var(--font-m); border-radius: 0; border: 1px solid var(--wline); background: rgba(1,8,5,.9); color: var(--wt2); caret-color: var(--wt); }
+.wd.wdt .wd-input::placeholder { color: var(--mute); }
+.wd.wdt .wd-input:focus { outline: 1px solid var(--wt); border-color: var(--wt); box-shadow: 0 0 14px -4px rgba(57,255,156,.6); }
+.wd.wdt .wd-pill { border-radius: 0; font-family: var(--font-m); }
+.wd.wdt .wd-pill.g { color: var(--wt); border-color: var(--wline2); }
+.wd.wdt .wd-amt, .wd.wdt .g { color: var(--wa); }
+.wd.wdt .wd-bar { border-radius: 0; background: rgba(57,255,156,.07); }
+.wd.wdt .wd-tip { border-radius: 2px; background: rgba(1,10,6,.97); border: 1px solid var(--wline2); font-family: var(--font-m); color: var(--ink2); box-shadow: 0 0 24px -6px rgba(57,255,156,.35); }
+.wd.wdt .wd-tip h4 { color: var(--wt); font-family: var(--font-m); }
+.wd.wdt .wd-src { font-family: var(--font-m); color: var(--mute); }
+.wd.wdt .wd-src::before { content: "# "; color: var(--wt); }
+
+/* maps and webs: green wireframe states on a dark scope */
+.wd.wdt .tr-st, .wd.wdt .mm-st, .wd.wdt .cc-c { stroke: rgba(57,255,156,.28); }
+.wd.wdt .tr-st.on, .wd.wdt .mm-st.on { stroke: var(--wt); }
+.wd.wdt .tr-route { stroke: var(--wa); }
+.wd.wdt .tr-time b { color: var(--wt); }
+.wd.wdt .tr-fill { background: linear-gradient(90deg, rgba(57,255,156,.25), var(--wt)); }
+.wd.wdt .tr-slider input::-webkit-slider-thumb { background: var(--wt); box-shadow: 0 0 0 4px rgba(57,255,156,.25); }
+.wd.wdt .cx-stage { background: radial-gradient(70% 60% at 50% 50%, rgba(57,255,156,.07), transparent 70%), rgba(1,8,5,.75); }
+.wd.wdt .cx-rings circle { stroke: rgba(57,255,156,.14); }
+.wd.wdt .cx-pick { border-radius: 0; border-color: var(--wline2); background: rgba(57,255,156,.06); }
+.wd.wdt .cx-pick b, .wd.wdt .cx-words h4 { font-family: var(--font-m); }
+.wd.wdt .mf-t, .wd.wdt .cx-l, .wd.wdt .mm-t { font-family: var(--font-m); }
+
+/* Ledger records */
+.wd.wdt .lg-top { border-radius: 0; border-color: var(--wline); background: rgba(2,12,7,.86); }
+.wd.wdt .lg-tab { border-radius: 0; font-family: var(--font-m); }
+.wd.wdt .lg-tab.on { background: var(--wt); color: #021108; }
+.wd.wdt .lg-tape { border-bottom: 1px dashed rgba(57,255,156,.12); }
+.wd.wdt .lg-tape .amt { color: var(--wa); }
+.wd.wdt .lg-tape.k-contribution .amt { color: var(--wt); }
+.wd.wdt .lg-tbl th button { color: var(--wt); }
+.wd.wdt .lg-tbl td { border-bottom: 1px dashed rgba(57,255,156,.1); }
+.wd.wdt .lg-tbl tbody tr:hover { background: rgba(57,255,156,.05); }
+.wd.wdt .lg-link { border-bottom-color: rgba(57,255,156,.35); } .wd.wdt .lg-link:hover { color: var(--wt); border-color: var(--wt); }
+.wd.wdt .lg-brief { border-left-color: var(--wt); background: rgba(57,255,156,.05); }
+.wd.wdt .lg-meter b { font-family: var(--font-m); }
+.wd.wdt .lg-missing code { color: var(--wt); background: rgba(0,0,0,.6); border: 1px solid var(--wline); }
+.wd.wdt .lg-months i { background: linear-gradient(180deg, var(--wt2), var(--wt)); }
+.wd.wdt .lg-bar i.g { background: linear-gradient(90deg, rgba(57,255,156,.6), var(--wt)); }
+.wd.wdt .lg-loading i { background: var(--wt); }
+.wd.wdt .en-race, .wd.wdt .mw-card { animation: wdt-boot .5s ease both; }
+.wd.wdt .mw-items { border-left-color: var(--wline2); } .wd.wdt .mw-items li::before { background: var(--wt); box-shadow: 0 0 0 3px rgba(57,255,156,.18); } .wd.wdt .mw-race { color: var(--wa); }
+.wd.wdt .en-k { border-radius: 0; }
+.wd.wdt .pty-say { border-radius: 2px; background: rgba(1,10,6,.96); border-color: var(--wline2); font-family: var(--font-m); color: var(--wt2); }
+.wd.wdt .pty-say::after { background: rgba(1,10,6,.96); border-color: var(--wline2); }
+
+@keyframes wdt-sweep { from { transform: translateY(0); } to { transform: translateY(calc(100vh + 320px)); } }
+@keyframes wdt-blink { 50% { opacity: 0; } }
+@keyframes wdt-tape { from { transform: translateX(0); } to { transform: translateX(-100%); } }
+@keyframes wdt-boot { 0% { opacity: 0; filter: brightness(2) saturate(0); clip-path: inset(0 0 100% 0); } 60% { opacity: 1; clip-path: inset(0 0 0 0); } 100% { filter: none; } }
+@media (max-width: 900px) { .wd.wdt .wd-nav { padding: 8px 0; } .wdt-status .typed { min-width: 0; } }
+@media (prefers-reduced-motion: reduce) { .wdt-bg .scan::after, .wdt-tape span, .wdt-status .cur, .wd.wdt .wd-hero h1::after, .wd.wdt .lg-head h1::after { animation: none !important; } }

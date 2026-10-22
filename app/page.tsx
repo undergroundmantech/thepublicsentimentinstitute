@@ -59,7 +59,6 @@ export default function Home() {
     governor: model.races.filter((r) => r.office === "governor").map(toG),
   };
   const latestOp = STATE_POLLS.filter((s) => s.status === "released").slice(-2).map((s) => s.name).join(" and ");
-  const opStates = STATE_POLLS.filter((s) => s.status === "released").map((s) => s.st);
   const ap = stats.approval, gb = stats.generic;
   const gbD = r1(50 + gb.net / 2), gbR = r1(100 - gbD);
   const updated = new Date(meta.updated + "T00:00:00").toLocaleDateString("en-US", { month: "short", day: "numeric" });
@@ -82,7 +81,7 @@ export default function Home() {
 
   return (
     <div className="opp">
-      <HomeGlobe races={globeRaces} odds={{ senate: sen.demControl, house: house.demControl, governor: gov.demControl }} updated={updated} daysOut={meta.daysOut} opStates={opStates} />
+      <HomeGlobe races={globeRaces} odds={{ senate: sen.demControl, house: house.demControl, governor: gov.demControl }} updated={updated} daysOut={meta.daysOut} />
       <HomeWhatIf />
 
       <section className="sec">

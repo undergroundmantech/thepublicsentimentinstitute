@@ -33,5 +33,5 @@ export type ECand = { name: string; party: string | null; list: EItem[] };
 export type ERace = { key: string; st: string; office: string; race: string; state?: string; id?: string; m?: number; p?: number; href?: string; n: number; cands: ECand[] };
 export type MediaItem = { who: string; role: string; lean: string; st: string; race: string; what: string; when: string; src: string };
 export type MediaPerson = { name: string; role: string; show: string | null; lean: string; ini: string; items: MediaItem[] };
-export type Endorsements = { asOf: string; races: ERace[]; media: MediaPerson[]; kinds: string[]; unconfirmed: { claim: string; why: string }[]; note: string };
+export type Endorsements = { asOf: string; races: ERace[]; media: MediaPerson[]; kinds: string[]; parties?: Record<string, string>; unconfirmed: { claim: string; why: string }[]; note: string };
 export const getEndorsements = () => read<Endorsements>("endorsements.json");

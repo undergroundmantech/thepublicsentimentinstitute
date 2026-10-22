@@ -181,7 +181,7 @@ export default function AverageStudio({ daily, polls, seriesA, seriesB, marginLa
         ) : null}
       </div>
       <div className="stu-foot">
-        <span><i className="ln" style={{ background: lead.color }} />The line is the On Point average: a robust local trend fit through the polls, weighted by recency, sample, voter screen and pollster grade</span>
+        <span><i className="ln" style={{ background: lead.color }} />The line is the On Point average: a robust LOWESS fit through the polls, weighted by recency, sample, voter screen and pollster grade, refit three times so outliers count for less</span>
         {sized ? <span><i className="dt" />Dot size is each poll&apos;s weight today</span> : null}
         <span className="k">Hover or use the arrow keys to read any day</span>
       </div>

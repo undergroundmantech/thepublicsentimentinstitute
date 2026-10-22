@@ -2,11 +2,12 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import PollsterList from "./PollsterList";
 import { seo } from "@/app/lib/seo";
+import { RECENCY_HALF_LIFE_DAYS } from "@/app/_polling/lib/buildDailyModel";
 
 export const metadata: Metadata = seo({"title": "On Point Polling methodology", "description": "How On Point Polling fields and weights its polls with the DSMeridian likely voter model, and how On Point Politics weights Gold Standard pollsters in its averages.", "path": "/on-point-polling/methodology", "type": "article"});
 
 // kept in sync with the POLLSTERS list in ./PollsterList (a server page cannot read values out of a client module)
-const POLLSTER_COUNT = 7;
+const POLLSTER_COUNT = 8;
 
 const STAGES: [string, string, string][] = [
   ["01", "Build the electorate", "Each sample is weighted to the registered population on the state voter file: age and gender always, race and education where the sample supports it, region where every mode carries geography."],
@@ -64,6 +65,19 @@ export default function Page() {
 
         <aside className="side">
           <div className="card">
+            <div className="card-h"><h3>How the average is fit</h3><span className="eye">Robust LOWESS</span></div>
+            <div className="card-b">
+              <p style={{ fontSize: 13.5 }}>Every On Point average is a robust LOWESS fit, the locally weighted regression of Cleveland 1979, rebuilt for every day of the race. The LOWESS is the average itself, not a line drawn beside it.</p>
+              <ol className="lw-steps">
+                <li><b>Weigh each poll.</b> Sample size, voter screen, pollster grade, a {RECENCY_HALF_LIFE_DAYS} day recency half life and repeat and undecided discounts set each poll&rsquo;s weight, no poll may carry more than 15 percent, and polls older than 150 days drop out.</li>
+                <li><b>Fit a local line.</b> Those weights are the LOWESS kernel for a weighted straight line through time, read at the day itself, so a steady move in the newest polls shows up on the day instead of lagging a week behind.</li>
+                <li><b>Keep the slope honest.</b> The slope is shrunk toward flat when only a few polls carry the weight and the lift it can add is capped at 1.5 points, so one fresh poll cannot tilt the line.</li>
+                <li><b>Three robustness passes.</b> Each poll&rsquo;s distance from the fit is scored against the weighted median miss with bisquare weights, and the line is refit three times. A poll far from the rest is weighed down in proportion to how far out it sits, and ordinary sampling noise of a point or so is never cut.</li>
+              </ol>
+              <p style={{ fontSize: 13.5 }}>Excluded firms are dropped before the fit and the measured R lean comes off before the fit, so the robustness passes judge every poll on the same footing.</p>
+            </div>
+          </div>
+          <div className="card">
             <div className="card-h"><h3>How upweighting works</h3></div>
             <div className="card-b">
               <p style={{ fontSize: 13.5 }}>Gold Standard pollsters carry the top pollster grade, <span className="mono">6×</span> the weight of a baseline B grade firm, in every Senate, governor, House and national average. In the national generic ballot, approval and right track averages they also get an effective sample size inflation of <span className="mono">n′ = n × m²</span> where <span className="mono">m = 2</span>.</p>
@@ -81,6 +95,8 @@ export default function Page() {
       <style>{`
         .opp .gs-stage { display: grid; grid-template-columns: 36px 1fr; gap: 12px; padding: 14px 18px; border-top: 1px solid var(--line); }
         .opp .gs-stage:first-child { border-top: 0; }
+        .opp .lw-steps { margin: 10px 0; padding-left: 18px; display: grid; gap: 8px; font-size: 13.5px; }
+        .opp .lw-steps b { color: var(--hi); }
         .opp .gs-stage > .mono { color: var(--mute); font-weight: 700; font-size: 12px; padding-top: 2px; }
         .opp .gs-stage b { font: 700 15px var(--font-d); }
         .opp .gs-stage p { font-size: 14px; margin: 4px 0 0; }
