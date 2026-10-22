@@ -1,0 +1,36 @@
+{
+ "source": "Ledger, the user's FEC money tracker, read from screenshots of its Connections, Races, Ads and Desk pages on Oct 22 2026",
+ "asOf": "2026-10-22",
+ "campaigns": [
+  {"candidate": "James Talarico", "committee": "Talarico For Texas",
+   "paid": [["Aisle 518", 18100000, "ads, mail and other work"], ["Thematic Campaigns", 16000000, "ads, mail and other work"], ["ActBlue Technical Services", 2200000, "fundraising platform"]],
+   "gifts": [["Advancing Democracy And Mobilization PAC", 12000], ["Lobo PAC", 10000], ["Sd PAC", 10000]],
+   "outside_for": [["Lone Star Rising PAC", 5210000], ["Ab PAC", 3710000]], "outside_for_total": 12200000,
+   "outside_against": [["Texas PAC", 69900000], ["MAGA Inc.", 17500000]], "outside_against_total": 125000000,
+   "also_against": ["America PAC", "Lone Star Liberty PAC", "Truth And Courage PAC", "Defend US PAC"]}
+ ],
+ "races": [
+  {"race": "TX Senate", "raised": 108000000, "outside": 309000000, "cands": [["James Talarico", "D", 68600000], ["Ken Paxton", "R", 9250000]]},
+  {"race": "OH Senate", "raised": 58100000, "outside": 191000000, "cands": [["Sherrod Brown", "D", 38600000], ["Jon Husted", "R", 14400000]]},
+  {"race": "MI Senate", "raised": 49100000, "outside": 173000000, "cands": [["Abdul El-Sayed", "D", 14500000], ["Mike Rogers", "R", 10900000]]},
+  {"race": "IA Senate", "raised": 19000000, "outside": 80000000, "cands": [["Ashley Hinson", "R", 10200000], ["Josh Turek", "D", 6280000]]},
+  {"race": "AK Senate", "raised": 27700000, "outside": 48600000, "cands": [["Mary Peltola", "D", 18500000], ["Dan Sullivan", "R", 9140000]]},
+  {"race": "NY-12", "raised": 22700000, "outside": 43000000, "cands": [["George Conway", "D", 7090000], ["Caroline Shinkle", "R", 155000]]},
+  {"race": "NC Senate", "raised": 47200000, "outside": 42700000, "cands": [["Roy Cooper", "D", 35000000], ["Michael Whatley", "R", 11300000]]},
+  {"race": "NH Senate", "raised": 22300000, "outside": 36500000, "cands": [["Chris Pappas", "D", 15400000], ["John E. Sununu", "R", 4180000]]}
+ ],
+ "ads": [
+  {"buyer": "Kalshi Inc", "d90": 35300000, "all": 57400000, "ads": 348},
+  {"buyer": "Winsenate", "d90": 13100000, "all": 41900000, "ads": 1768},
+  {"buyer": "Blockratize Inc", "d90": 11600000, "all": 22900000, "ads": 74},
+  {"buyer": "One Nation", "d90": 8120000, "all": 25300000, "ads": 1253},
+  {"buyer": "CLF", "d90": 6480000, "all": 6480000, "ads": 1052}
+ ],
+ "tape": [
+  {"date": "2026-10-09", "group": "Your Community PAC", "against": "Brad Finstad", "amount": 954096, "what": "TV advertising", "vendor": "SKDKnickerbocker"},
+  {"date": "2026-10-09", "group": "Your Community PAC", "against": "Max Miller", "amount": 729365, "what": "TV advertising", "vendor": "Canal Partners Media"},
+  {"date": "2026-10-09", "group": "Your Community PAC", "against": "Robert J. Wittman", "amount": 544547, "what": "TV advertising", "vendor": "Old Town Media"},
+  {"date": "2026-10-09", "group": "Your Community PAC", "against": "Robert J. Wittman", "amount": 543853, "what": "TV advertising", "vendor": "Old Town Media"},
+  {"date": "2026-10-09", "group": "Your Community PAC", "against": "Max Miller", "amount": 500000, "what": "digital advertising and production", "vendor": "GPS Impact"}
+ ]
+}

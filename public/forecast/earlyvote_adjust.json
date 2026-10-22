@@ -721,9 +721,9 @@
   },
   "house": {
    "seat_change": 0.0,
-   "dem_control_before": 0.9082,
-   "dem_control": 0.9082,
-   "dem_seats": 243.17
+   "dem_control_before": 0.9194,
+   "dem_control": 0.9194,
+   "dem_seats": 244.26
   }
  }
 }

@@ -1,0 +1,35 @@
+.mf { position: relative; }
+.mf > svg { display: block; width: 100%; height: auto; }
+.mf-heads { position: relative; height: 18px; margin-bottom: 4px; font: 800 10px var(--font-m); letter-spacing: .14em; text-transform: uppercase; color: var(--mute); }
+.mf-heads span { position: absolute; transform: translateX(-30%); }
+.mf-l path { opacity: .34; transition: opacity .25s; } .mf-l:hover path { opacity: .7; } .mf-l.dim path { opacity: .06; }
+.mf-coin { fill: #ffe2a0; filter: drop-shadow(0 0 3px rgba(255,217,138,.9)); }
+.mf-n { cursor: pointer; transition: opacity .25s; } .mf-n.dim { opacity: .25; }
+.mf-t { font: 700 11.5px var(--font-b); fill: #e9e2ff; paint-order: stroke; stroke: rgba(8,5,16,.85); stroke-width: 3px; } .mf-v { font: 800 11px var(--font-m); fill: #ffd98a; }
+.mr { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 16px; }
+.mr-map { grid-row: span 2; }
+.mm { position: relative; padding: 6px 10px 10px; } .mm > svg { display: block; width: 100%; height: auto; overflow: visible; }
+.mm-load { height: 480px; margin: 12px; border-radius: 14px; }
+.mm-st { fill: rgba(255,255,255,.035); stroke: rgba(10,6,18,.95); stroke-width: .9; } .mm-st.live { fill: rgba(231,179,65,.10); cursor: pointer; } .mm-st.on { fill: rgba(231,179,65,.28); stroke: #ffd98a; }
+.mm-b { cursor: pointer; } .mm-b:focus { outline: none; }
+.mm-halo { fill: none; stroke: rgba(231,179,65,.35); stroke-width: 2; transform-box: fill-box; transform-origin: center; animation: mm-pulse 3s ease-out infinite; }
+.mm-b.on .mm-halo { stroke: #ffd98a; stroke-width: 3; }
+.mm-coin { fill: #ffd98a; opacity: 0; animation: mm-fall 2.6s ease-in infinite; }
+.mm-t { font: 800 11px var(--font-m); fill: #f3eff8; paint-order: stroke; stroke: rgba(8,5,16,.9); stroke-width: 3px; } .mm-t .g { fill: #ffd98a; }
+.mm-legend { display: flex; flex-wrap: wrap; gap: 6px 16px; padding: 4px 6px; font-size: 12px; color: var(--mute); } .mm-legend i { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 6px; }
+.mr-total b { display: block; font: 800 40px/1 var(--font-d); letter-spacing: -.03em; color: #ffd98a; } .mr-total span { font-size: 13px; color: var(--ink2); }
+.mr-split { margin: 12px 0 6px; height: 14px; } .mr-sides { display: flex; justify-content: space-between; gap: 10px; font: 700 12.5px var(--font-b); }
+.mr-ledger { margin-top: 12px; display: grid; gap: 4px; } .mr-c { display: flex; justify-content: space-between; font-size: 13px; } .mr-c b { font-family: var(--font-m); }
+.mr-groups { display: grid; gap: 2px; margin-top: 6px; }
+.mr-g { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr) 72px; gap: 10px; align-items: center; padding: 7px 0; border-top: 1px solid rgba(255,255,255,.05); text-decoration: none; color: inherit; }
+.mr-g:hover b { color: #ffd98a; } .mr-g b { display: block; font-size: 13px; } .mr-g small { font-size: 11.5px; color: var(--mute); }
+.mr-row { appearance: none; display: grid; grid-template-columns: 150px minmax(0, 1fr) 80px; gap: 12px; align-items: center; padding: 9px 16px; border: 0; border-top: 1px solid rgba(255,255,255,.05); background: none; color: inherit; cursor: pointer; text-align: left; font: inherit; }
+.mr-row:hover, .mr-row.on { background: rgba(231,179,65,.06); } .mr-row b { font-size: 13.5px; }
+.mo-tbl td a { color: inherit; text-decoration: none; } .mo-tbl td a:hover b { color: #ffd98a; }
+.mo-ad, .mo-tape { display: grid; grid-template-columns: minmax(0, 1fr) 30% 72px; gap: 12px; align-items: center; padding: 9px 16px; border-top: 1px solid rgba(255,255,255,.05); }
+.mo-tape { grid-template-columns: minmax(0, 1fr) auto; }
+.mo-ad b, .mo-tape b { display: block; font-size: 13.5px; } .mo-ad small, .mo-tape small { font-size: 12px; color: var(--mute); }
+@keyframes mm-pulse { 0% { opacity: .9; transform: scale(.92); } 100% { opacity: 0; transform: scale(1.35); } }
+@keyframes mm-fall { 0% { opacity: 0; transform: translateY(-80px); } 20% { opacity: 1; } 85% { opacity: 1; } 100% { opacity: 0; transform: translateY(0); } }
+@media (max-width: 1100px) { .mr { grid-template-columns: 1fr; } .mr-map { grid-row: auto; } }
+@media (max-width: 560px) { .mr-row { grid-template-columns: 110px minmax(0, 1fr) 64px; } .mo-ad { grid-template-columns: minmax(0, 1fr) 64px; } .mo-ad .wd-bar { display: none; } .mr-g { grid-template-columns: minmax(0, 1fr) 64px; } .mr-g .wd-bar { display: none; } }

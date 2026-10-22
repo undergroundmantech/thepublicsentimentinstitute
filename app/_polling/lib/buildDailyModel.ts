@@ -297,11 +297,11 @@ function round1(n: number): number {
 }
 
 // =============================================================================
-// Recency decay: exponent 1.3, denom 8, a half life of about six days.
-// Oct 22 2026: tightened from denom 21, a half life of about 16 days, so the
-// newest polls carry the average in the closing weeks of the campaign.
+// Recency decay: exponent 1.3, denom 21, a half life of about 16 days.
+// Oct 22 2026: briefly tightened to denom 8 (about six days), then restored to
+// denom 21 at the user's request the same day.
 // =============================================================================
-export const RECENCY_DENOM = 8;
+export const RECENCY_DENOM = 21;
 export const RECENCY_EXP = 1.3;
 export const RECENCY_HALF_LIFE_DAYS = Math.round(RECENCY_DENOM * Math.pow(Math.LN2, 1 / RECENCY_EXP) * 10) / 10;
 export function recencyWeight(daysAgo: number): number {
@@ -427,7 +427,7 @@ function pollsterRepetitionFactor(
 // Combined poll weight
 //
 // Final weight = sampleSizeWeight(n)          [sigmoid, inflection @ 1100, sat ~1.0]
-//              × recencyWeight(dAgo)           [denom=8, exp=1.3, ~6-day half-life]
+//              × recencyWeight(dAgo)           [denom=21, exp=1.3, ~16-day half-life]
 //              × sampleTypeWeight              [LV=3×, RV=1×, A=0.1×]
 //              × pollsterRepetitionFactor      [same-firm repeat discount, 21-day window]
 //              × getPollsterWeight             [538-grade multiplier; Gold=6×, B=1×]
@@ -572,9 +572,9 @@ function dayEntries(availableDesc: Poll[], c: string, dayISO: string, opts: Mode
   return entries.map((e, i) => ({ ...e, weight: capped[i] }));
 }
 
-// Polls more than 75 days old carry under a millionth of the weight of a new one at a six day half life, so they
+// Polls more than 150 days old carry a negligible share of the weight at a 16 day half life, so they
 // are left out of the day's fit; a race with fewer than three polls in that window keeps its three newest.
-const WINDOW_DAYS = 75;
+const WINDOW_DAYS = 150;
 function windowed(availableDesc: Poll[], dayISO: string): Poll[] {
   const w = availableDesc.filter((p) => daysBetween(p.endDate, dayISO) <= WINDOW_DAYS);
   return w.length >= 3 ? w : availableDesc.slice(0, 3);

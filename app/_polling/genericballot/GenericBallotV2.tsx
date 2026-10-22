@@ -243,6 +243,11 @@ export default function PollingAveragesPage({ initialId, forecast }: { initialId
         marginText: def.fmtMargin(net),
         polls: b.polls.length,
         party: lead.party ? lead.party[0] : undefined,
+        trend: (() => {
+          const sg = net >= 0 ? 1 : -1;
+          const tail = b.daily.slice(-43);
+          return tail.filter((_, i) => (tail.length - 1 - i) % 3 === 0).map((x) => x.net * sg);
+        })(),
       };
       // Texas carries two Senate matchups; the map shows the better polled one,
       // and both stay reachable from the picker.

@@ -1,6 +1,6 @@
 {
  "date": "2026-10-22",
- "statewide_run": "poll sweep 2026-10-22: S1022N against S1022OP, change applied to 2026-10-22",
+ "statewide_run": "poll sweep 2026-10-22: S1022EM against S1022N, change applied to 2026-10-22",
  "house_run": "S1021ALL full House rerun after the gap audit, applied against S1019FX with S1020PM for AK, TX and RI and S1021AM for SD, FL and OH",
  "n_sims": 2000,
  "chambers": {
@@ -18,10 +18,10 @@
    "p90": 31.0
   },
   "house": {
-   "d_majority": 90.8,
-   "d_seats_median": 241.0,
-   "p10": 218.0,
-   "p90": 271.0,
+   "d_majority": 91.9,
+   "d_seats_median": 242.0,
+   "p10": 219.0,
+   "p90": 272.0,
    "n_sims": 2000
   }
  },

@@ -1,0 +1,42 @@
+.tr-bar { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-bottom: 12px; }
+.tr-stage { display: grid; grid-template-columns: minmax(0, 1fr) 380px; gap: 16px; align-items: start; }
+.tr-map { position: relative; padding: 10px 10px 64px; overflow: hidden; }
+.tr-map > svg { display: block; width: 100%; height: auto; overflow: visible; }
+.tr-load { height: 520px; border-radius: 16px; }
+.tr-st { stroke: rgba(10,6,18,.95); stroke-width: .9; cursor: pointer; transition: fill .5s, filter .2s; }
+.tr-st:hover { filter: brightness(1.35); }
+.tr-st.on { stroke: #ffd98a; stroke-width: 2.2; }
+.tr-tok { cursor: pointer; transition: transform .7s cubic-bezier(.4,1.6,.5,1), opacity .4s; }
+.tr-tok.dim { opacity: .45; }
+.tr-tok.on { filter: drop-shadow(0 0 8px rgba(255,217,138,.9)); }
+.tr-tok:hover { filter: drop-shadow(0 0 6px rgba(255,255,255,.7)); }
+.tr-route { fill: none; stroke: #ffd98a; stroke-width: 2.4; stroke-dasharray: 6 6; animation: tr-march 1s linear infinite; }
+.tr-route.glow { stroke-width: 8; opacity: .35; stroke-dasharray: none; animation: none; }
+.tr-ring { fill: none; stroke-width: 2.5; transform-box: fill-box; transform-origin: center; animation: tr-ring 1.4s ease-out infinite; }
+.tr-time { position: absolute; left: 16px; right: 16px; bottom: 14px; display: flex; align-items: center; gap: 12px; }
+.tr-time b { font: 800 14px var(--font-m); color: #ffd98a; min-width: 56px; text-align: right; }
+.tr-slider { position: relative; flex: 1; height: 28px; display: flex; align-items: center; }
+.tr-slider input { position: relative; z-index: 2; width: 100%; appearance: none; background: transparent; height: 28px; cursor: pointer; }
+.tr-slider input::-webkit-slider-runnable-track { height: 6px; border-radius: 3px; background: rgba(255,255,255,.08); }
+.tr-slider input::-moz-range-track { height: 6px; border-radius: 3px; background: rgba(255,255,255,.08); }
+.tr-slider input::-webkit-slider-thumb { appearance: none; width: 18px; height: 18px; border-radius: 50%; background: #ffd98a; margin-top: -6px; box-shadow: 0 0 0 4px rgba(231,179,65,.25); }
+.tr-slider input::-moz-range-thumb { width: 18px; height: 18px; border-radius: 50%; background: #ffd98a; border: 0; }
+.tr-fill { position: absolute; left: 0; top: 50%; height: 6px; transform: translateY(-50%); border-radius: 3px; background: linear-gradient(90deg, rgba(231,179,65,.3), #e7b341); pointer-events: none; z-index: 1; }
+.tr-pty { right: 14px; top: 10px; bottom: auto; }
+.tr-side { display: grid; gap: 14px; }
+.tr-list { display: grid; max-height: 560px; overflow: auto; padding: 4px 0 8px; }
+.tr-list .eye.gold { padding: 10px 16px 2px; }
+.tr-item { display: grid; grid-template-columns: 30px minmax(0, 1fr); gap: 10px; align-items: start; padding: 9px 16px; border-top: 1px solid rgba(255,255,255,.05); }
+.tr-item.click { cursor: pointer; } .tr-item.click:hover { background: rgba(255,255,255,.03); }
+.tr-item b { display: block; font-size: 13px; color: var(--ink); } .tr-item small { display: block; font-size: 12px; color: var(--ink2); line-height: 1.4; }
+.tr-item a { font-size: 11px; color: var(--mute); text-decoration: underline; }
+.tr-people { margin-top: 16px; }
+.tr-rail { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 6px; padding: 10px 12px; }
+.tr-person { appearance: none; display: flex; align-items: center; gap: 10px; text-align: left; padding: 8px 10px; border-radius: 14px; border: 1px solid transparent; background: rgba(255,255,255,.025); color: inherit; cursor: pointer; transition: all .2s; }
+.tr-person:hover { border-color: rgba(255,255,255,.15); transform: translateY(-1px); }
+.tr-person.on { border-color: rgba(231,179,65,.6); background: rgba(231,179,65,.08); }
+.tr-person b { display: block; font-size: 13px; } .tr-person small { font-size: 11.5px; color: var(--mute); }
+@keyframes tr-march { to { stroke-dashoffset: -12; } }
+@keyframes tr-ring { from { opacity: .9; transform: scale(.4); } to { opacity: 0; transform: scale(3.2); } }
+@media (max-width: 1100px) { .tr-stage { grid-template-columns: 1fr; } }
+@media (max-width: 640px) { .tr-map { padding-bottom: 70px; } }

@@ -1,0 +1,11 @@
+.pd-pty { position: relative !important; right: auto; bottom: auto; animation: none; }
+.pd-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 12px; }
+.pd-card { padding: 14px 16px; display: grid; gap: 10px; animation: pd-in .5s cubic-bezier(.2,.8,.2,1) both; border-image: none; }
+.pd-card:hover { border-color: rgba(231,179,65,.45); transform: translateY(-2px); }
+.pd-top { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 2px 10px; }
+.pd-kind { grid-column: 1 / -1; font: 800 9.5px var(--font-m); letter-spacing: .12em; text-transform: uppercase; color: var(--mute); }
+.pd-name { font: 800 16px var(--font-d); letter-spacing: -.01em; color: var(--ink); text-decoration: none; } .pd-name:hover { color: #ffd98a; }
+.pd-amt { font: 800 16px var(--font-m); color: #ffd98a; }
+.pd-from { display: grid; gap: 4px; font-size: 12.5px; } .pd-from div { display: flex; justify-content: space-between; gap: 10px; } .pd-from a { color: var(--ink2); text-decoration: none; } .pd-from a.d { color: #8fb0ff; } .pd-from a.r { color: #ff8399; }
+.pd-src { font-size: 11px; color: var(--mute); } .pd-src a { color: var(--mute); text-decoration: underline; }
+@keyframes pd-in { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }

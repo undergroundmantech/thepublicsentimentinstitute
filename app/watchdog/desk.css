@@ -1,0 +1,24 @@
+.dk-hero { min-height: 300px; }
+.dk-cta { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 18px; }
+.dk-badge { position: relative; width: 300px; height: 280px; }
+.dk-radar { position: absolute; inset: 10px 20px 20px 10px; border-radius: 50%; border: 1px solid rgba(231,179,65,.25); overflow: hidden; background: radial-gradient(circle, rgba(231,179,65,.08), transparent 70%); }
+.dk-radar i { position: absolute; inset: 18%; border-radius: 50%; border: 1px dashed rgba(231,179,65,.22); } .dk-radar i:nth-child(2) { inset: 34%; } .dk-radar i:nth-child(3) { inset: 2%; }
+.dk-sweep { position: absolute; inset: 0; background: conic-gradient(from 0deg, rgba(255,217,138,.35), transparent 22%); animation: dk-spin 4s linear infinite; }
+.dk-pty { position: absolute !important; right: 10px; bottom: 0; }
+.dk-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.dk-card { color: inherit; text-decoration: none; transition: transform .25s, border-color .25s; overflow: hidden; }
+.dk-card:hover { transform: translateY(-3px); border-color: rgba(231,179,65,.5); }
+.dk-race { display: grid; grid-template-columns: 110px minmax(0, 1fr) 64px; gap: 10px; align-items: center; padding: 5px 0; font-size: 13px; } .dk-race b { text-align: right; color: #ffd98a; }
+.dk-orbit { display: block; width: 100%; height: auto; }
+.dk-orbit .ring { fill: none; stroke: rgba(231,179,65,.18); stroke-dasharray: 3 6; } .dk-orbit .ring.b { stroke-dasharray: 2 9; }
+.dk-orbit .spin { transform-origin: 200px 130px; animation: dk-spin 80s linear infinite; }
+.dk-orbit .tie { fill: none; stroke: rgba(231,179,65,.4); stroke-width: 1.4; }
+.dk-orbit .don { fill: #e7b341; stroke: #0a0711; stroke-width: 2; }
+.dk-orbit .mote { fill: #ffe2a0; filter: drop-shadow(0 0 4px #ffd98a); }
+.dk-orbit .hub { fill: #3d7bff; stroke: #ffd98a; stroke-width: 2; animation: dk-breathe 2.4s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+.dk-names { display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: 12.5px; color: var(--ink2); padding-top: 0; }
+.dk-trail { display: grid; padding: 4px 0 8px; }
+.dk-stop { display: flex; align-items: center; gap: 10px; padding: 6px 16px; border-top: 1px solid rgba(255,255,255,.05); } .dk-stop b { display: block; font-size: 13px; } .dk-stop small { font-size: 12px; color: var(--mute); }
+@keyframes dk-spin { to { transform: rotate(360deg); } }
+@keyframes dk-breathe { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.12); } }
+@media (max-width: 1100px) { .dk-grid { grid-template-columns: 1fr; } .dk-badge { display: none; } }

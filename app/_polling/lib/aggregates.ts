@@ -417,10 +417,19 @@ export function buildAggregate(def: AggregateDef): BuiltAggregate {
     ...p,
     sampleSize: effSample(p.pollster, p.sampleSize, def.gold, def.goldMult),
   }));
-  const range = getDateRange(def.polls);
+  // Oct 22 2026: the line starts at the first poll that asked this matchup. A poll of another pairing used to set the
+  // start, which drew a flat line at even before the first real poll.
+  const both = def.polls.filter((p) => {
+    const r = p.results as Record<string, number>;
+    return Number.isFinite(Number(r[def.keyA])) && Number.isFinite(Number(r[def.keyB])) && r[def.keyA] != null && r[def.keyB] != null;
+  });
+  const range = getDateRange(both.length ? both : def.polls);
   const base = buildDailyWeightedSeries(adjusted as Poll[], [def.keyA, def.keyB], range.start, range.end);
 
-  const daily: AggDaily[] = base.map((row) => {
+  const daily: AggDaily[] = base.filter((row) => {
+    const r = row as Record<string, number | string>;
+    return Number(r[def.keyA] ?? 0) !== 0 || Number(r[def.keyB] ?? 0) !== 0;
+  }).map((row) => {
     const a = Number((row as Record<string, number | string>)[def.keyA] ?? 0);
     const b = Number((row as Record<string, number | string>)[def.keyB] ?? 0);
     return { date: row.date, t: ts(row.date), a, b, net: round1(a - b) };

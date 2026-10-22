@@ -18,6 +18,7 @@ const NAV = [
   { href: "/results", label: "Results", live: RESULTS_LIVE },
   { href: "/maps/early-vote", label: "Early Vote" },
   { href: "/on-point-polling", label: "On Point Polling" },
+  { href: "/watchdog", label: "Watchdog" },
 ];
 
 export default function Navbar() {

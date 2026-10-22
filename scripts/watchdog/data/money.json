@@ -1,0 +1,2340 @@
+{
+ "asOf": "2026-10-22",
+ "races": [
+  {
+   "state": "TX",
+   "office": "Senate",
+   "outside_total": 308317919,
+   "for_D": 56476091,
+   "for_R": 251841828,
+   "top_groups": [
+    {
+     "name": "Texas PAC",
+     "side": "R",
+     "support_or_oppose": "oppose Talarico; support Paxton",
+     "target": "James Talarico / Ken Paxton",
+     "amount": 148600000
+    },
+    {
+     "name": "MAGA Inc.",
+     "side": "R",
+     "support_or_oppose": "oppose Talarico; support Paxton",
+     "target": "James Talarico / Ken Paxton",
+     "amount": 30400000
+    },
+    {
+     "name": "America PAC",
+     "side": "R",
+     "support_or_oppose": "oppose Talarico; support Paxton",
+     "target": "James Talarico / Ken Paxton",
+     "amount": 26600000
+    },
+    {
+     "name": "Lone Star Rising PAC",
+     "side": "D",
+     "support_or_oppose": "oppose Paxton; support Talarico",
+     "target": "Ken Paxton / James Talarico",
+     "amount": 21600000
+    },
+    {
+     "name": "Lone Star Liberty PAC",
+     "side": "R",
+     "support_or_oppose": "oppose Talarico; support Paxton",
+     "target": "James Talarico / Ken Paxton",
+     "amount": 20100000
+    },
+    {
+     "name": "Texas Forever",
+     "side": "D",
+     "support_or_oppose": "oppose",
+     "target": "Ken Paxton",
+     "amount": 10900000
+    },
+    {
+     "name": "Lower Costs Now",
+     "side": "D",
+     "support_or_oppose": "oppose Paxton; support Talarico",
+     "target": "Ken Paxton / James Talarico",
+     "amount": 9900000
+    },
+    {
+     "name": "Defend US PAC",
+     "side": "R",
+     "support_or_oppose": "oppose Talarico; support Paxton",
+     "target": "James Talarico / Ken Paxton",
+     "amount": 9400000
+    }
+   ],
+   "source": "Totals: https://votelog.org/investigations/senate-general-money ; groups, general election only: https://paidforpolitics.com/races/tx-senate",
+   "as_of": "2026-10-21 totals; 2026-10-20 groups"
+  },
+  {
+   "state": "OH",
+   "office": "Senate special",
+   "outside_total": 299299490,
+   "for_D": 95760176,
+   "for_R": 203539314,
+   "top_groups": [
+    {
+     "name": "SLF PAC / Senate Leadership Fund",
+     "side": "R",
+     "support_or_oppose": "oppose Brown; support Husted",
+     "target": "Sherrod Brown / Jon Husted",
+     "amount": 69700000
+    },
+    {
+     "name": "Defend American Jobs",
+     "side": "R",
+     "support_or_oppose": "support Husted; oppose Brown",
+     "target": "Jon Husted / Sherrod Brown",
+     "amount": 45900000
+    },
+    {
+     "name": "WinSenate",
+     "side": "D",
+     "support_or_oppose": "oppose Husted; support Brown",
+     "target": "Jon Husted / Sherrod Brown",
+     "amount": 42700000
+    },
+    {
+     "name": "No Going Back PAC",
+     "side": "R",
+     "support_or_oppose": "oppose Brown; support Husted",
+     "target": "Sherrod Brown / Jon Husted",
+     "amount": 27800000
+    },
+    {
+     "name": "Americans for Prosperity Action",
+     "side": "R",
+     "support_or_oppose": "oppose Brown; support Husted",
+     "target": "Sherrod Brown / Jon Husted",
+     "amount": 19600000
+    },
+    {
+     "name": "Duty and Country",
+     "side": "D",
+     "support_or_oppose": "oppose",
+     "target": "Jon Husted",
+     "amount": 13900000
+    },
+    {
+     "name": "75 PAC",
+     "side": "R",
+     "support_or_oppose": "oppose",
+     "target": "Sherrod Brown",
+     "amount": 8000000
+    },
+    {
+     "name": "America PAC",
+     "side": "R",
+     "support_or_oppose": "oppose Brown; support Husted",
+     "target": "Sherrod Brown / Jon Husted",
+     "amount": 7900000
+    },
+    {
+     "name": "Defend the Vote",
+     "side": "D",
+     "support_or_oppose": "oppose",
+     "target": "Jon Husted",
+     "amount": 7100000
+    },
+    {
+     "name": "Digital Freedom Fund",
+     "side": "R",
+     "support_or_oppose": "oppose Brown; support Husted",
+     "target": "Sherrod Brown / Jon Husted",
+     "amount": 5900000
+    }
+   ],
+   "source": "Totals: https://votelog.org/investigations/senate-general-money ; groups, cycle totals: https://paidforpolitics.com/races/oh-senate",
+   "as_of": "2026-10-21 totals; 2026-10-18 groups"
+  },
+  {
+   "state": "MI",
+   "office": "Senate",
+   "outside_total": 175444472,
+   "for_D": 57902338,
+   "for_R": 117542134,
+   "top_groups": [
+    {
+     "name": "SLF PAC / Senate Leadership Fund",
+     "side": "R",
+     "support_or_oppose": "oppose",
+     "target": "Abdul El-Sayed",
+     "amount": 36200000
+    },
+    {
+     "name": "No Going Back PAC",
+     "side": "R",
+     "support_or_oppose": "oppose El-Sayed; support Rogers",
+     "target": "Abdul El-Sayed / Mike Rogers",
+     "amount": 29800000
+    },
+    {
+     "name": "WinSenate",
+     "side": "D",
+     "support_or_oppose": "oppose Rogers; support El-Sayed",
+     "target": "Mike Rogers / Abdul El-Sayed",
+     "amount": 29200000
+    },
+    {
+     "name": "Americans for Prosperity Action",
+     "side": "R",
+     "support_or_oppose": "support Rogers; oppose El-Sayed",
+     "target": "Mike Rogers / Abdul El-Sayed",
+     "amount": 18500000
+    },
+    {
+     "name": "GLCF",
+     "side": "R",
+     "support_or_oppose": "support Rogers; oppose El-Sayed",
+     "target": "Mike Rogers / Abdul El-Sayed",
+     "amount": 11900000
+    },
+    {
+     "name": "America PAC",
+     "side": "R",
+     "support_or_oppose": "oppose El-Sayed; support Rogers",
+     "target": "Abdul El-Sayed / Mike Rogers",
+     "amount": 6500000
+    },
+    {
+     "name": "TFM",
+     "side": "R",
+     "support_or_oppose": "oppose El-Sayed; support Rogers",
+     "target": "Abdul El-Sayed / Mike Rogers",
+     "amount": 4800000
+    },
+    {
+     "name": "Defend the Vote",
+     "side": "D",
+     "support_or_oppose": "oppose",
+     "target": "Mike Rogers",
+     "amount": 4600000
+    },
+    {
+     "name": "Lower Costs Now",
+     "side": "D",
+     "support_or_oppose": "oppose Rogers; support El-Sayed",
+     "target": "Mike Rogers / Abdul El-Sayed",
+     "amount": 4500000
+    },
+    {
+     "name": "The Sentinel Action Fund",
+     "side": "R",
+     "support_or_oppose": "support Rogers; oppose El-Sayed",
+     "target": "Mike Rogers / Abdul El-Sayed",
+     "amount": 4200000
+    }
+   ],
+   "source": "Totals: https://votelog.org/investigations/senate-general-money ; groups, general: https://paidforpolitics.com/races/mi-senate ; SLF row from SLF committee page https://paidforpolitics.com/c/C00571703",
+   "as_of": "2026-10-21 totals; 2026-10-20 groups"
+  },
+  {
+   "state": "IA",
+   "office": "Senate",
+   "outside_total": 127047894,
+   "for_D": 57842561,
+   "for_R": 69205333,
+   "top_groups": [
+    {
+     "name": "SLF PAC / Senate Leadership Fund",
+     "side": "R",
+     "support_or_oppose": "oppose Turek $34,301,291; support Hinson $806,240",
+     "target": "Josh Turek / Ashley Hinson",
+     "amount": 35107531
+    },
+    {
+     "name": "WinSenate",
+     "side": "D",
+     "support_or_oppose": "oppose Hinson $28,220,350; support Turek $57,783",
+     "target": "Ashley Hinson / Josh Turek",
+     "amount": 28278133
+    },
+    {
+     "name": "Americans for Prosperity Action",
+     "side": "R",
+     "support_or_oppose": "support Hinson; oppose Turek",
+     "target": "Ashley Hinson / Josh Turek",
+     "amount": 11256137
+    },
+    {
+     "name": "Fight On Iowa",
+     "side": "R",
+     "support_or_oppose": "support Hinson; oppose Turek",
+     "target": "Ashley Hinson / Josh Turek",
+     "amount": 9349505
+    },
+    {
+     "name": "VoteVets",
+     "side": "D",
+     "support_or_oppose": "oppose",
+     "target": "Ashley Hinson",
+     "amount": 7876303
+    },
+    {
+     "name": "Lower Costs Now",
+     "side": "D",
+     "support_or_oppose": "support Turek; oppose Hinson",
+     "target": "Josh Turek / Ashley Hinson",
+     "amount": 5789507
+    },
+    {
+     "name": "AB PAC",
+     "side": "D",
+     "support_or_oppose": "support Turek; oppose Hinson",
+     "target": "Josh Turek / Ashley Hinson",
+     "amount": 5039083
+    },
+    {
+     "name": "Win It Back PAC",
+     "side": "R",
+     "support_or_oppose": "oppose",
+     "target": "Josh Turek",
+     "amount": 3789309
+    },
+    {
+     "name": "American Meat Producers PAC",
+     "side": "D",
+     "support_or_oppose": "oppose",
+     "target": "Ashley Hinson",
+     "amount": 2513500
+    },
+    {
+     "name": "America PAC",
+     "side": "R",
+     "support_or_oppose": "oppose Turek; support Hinson",
+     "target": "Josh Turek / Ashley Hinson",
+     "amount": 2469006
+    }
+   ],
+   "source": "Totals: https://votelog.org/investigations/senate-general-money ; groups: https://votelog.org/investigations/iowa-senate-general-money",
+   "as_of": "2026-10-21 totals; 2026-10-19 groups"
+  },
+  {
+   "state": "ME",
+   "office": "Senate",
+   "outside_total": 97622819,
+   "for_D": 34754316,
+   "for_R": 62868503,
+   "top_groups": [
+    {
+     "name": "SLF PAC / Senate Leadership Fund",
+     "side": "R",
+     "support_or_oppose": "oppose",
+     "target": "Troy Jackson",
+     "amount": 28900000
+    },
+    {
+     "name": "WinSenate",
+     "side": "D",
+     "support_or_oppose": "oppose Collins; support Jackson",
+     "target": "Susan Collins / Troy Jackson",
+     "amount": 24300000
+    },
+    {
+     "name": "Pine Tree Results PAC",
+     "side": "R",
+     "support_or_oppose": "oppose",
+     "target": "Troy Jackson",
+     "amount": 23500000
+    },
+    {
+     "name": "The Maine Standard",
+     "side": "R",
+     "support_or_oppose": "oppose",
+     "target": "Troy Jackson",
+     "amount": 6800000
+    },
+    {
+     "name": "Stronger Maine",
+     "side": "R",
+     "support_or_oppose": "oppose Jackson; support Collins",
+     "target": "Troy Jackson / Susan Collins",
+     "amount": 3100000
+    },
+    {
+     "name": "Government That Works PAC",
+     "side": "D",
+     "support_or_oppose": "support Jackson; oppose Collins",
+     "target": "Troy Jackson / Susan Collins",
+     "amount": 2200000
+    },
+    {
+     "name": "Lead Maine Committee",
+     "side": "R",
+     "support_or_oppose": "oppose Jackson; support Collins",
+     "target": "Troy Jackson / Susan Collins",
+     "amount": 2100000
+    },
+    {
+     "name": "America PAC",
+     "side": "R",
+     "support_or_oppose": "oppose Jackson; support Collins",
+     "target": "Troy Jackson / Susan Collins",
+     "amount": 2000000
+    },
+    {
+     "name": "CFFE PAC",
+     "side": "D",
+     "support_or_oppose": "support Jackson; oppose Collins",
+     "target": "Troy Jackson / Susan Collins",
+     "amount": 1700000
+    },
+    {
+     "name": "Planned Parenthood Votes",
+     "side": "D",
+     "support_or_oppose": "oppose Collins; support Jackson",
+     "target": "Susan Collins / Troy Jackson",
+     "amount": 1300000
+    }
+   ],
+   "source": "Totals: https://votelog.org/investigations/senate-general-money ; groups, general: https://paidforpolitics.com/races/me-senate ; SLF row: https://paidforpolitics.com/c/C00571703",
+   "as_of": "2026-10-21 totals; 2026-10-20 groups"
+  },
+  {
+   "state": "NC",
+   "office": "Senate",
+   "outside_total": 73313164,
+   "for_D": 28103005,
+   "for_R": 45210159,
+   "top_groups": [
+    {
+     "name": "SLF PAC / Senate Leadership Fund",
+     "side": "R",
+     "support_or_oppose": "oppose",
+     "target": "Roy Cooper",
+     "amount": 30200000
+    },
+    {
+     "name": "WinSenate",
+     "side": "D",
+     "support_or_oppose": "oppose Whatley; support Cooper",
+     "target": "Michael Whatley / Roy Cooper",
+     "amount": 21700000
+    },
+    {
+     "name": "No Going Back PAC",
+     "side": "R",
+     "support_or_oppose": "oppose Cooper; support Whatley",
+     "target": "Roy Cooper / Michael Whatley",
+     "amount": 9900000
+    },
+    {
+     "name": "Americans for Prosperity Action",
+     "side": "R",
+     "support_or_oppose": "support Whatley; oppose Cooper",
+     "target": "Michael Whatley / Roy Cooper",
+     "amount": 4200000
+    },
+    {
+     "name": "NC First PAC",
+     "side": "R",
+     "support_or_oppose": "oppose",
+     "target": "Roy Cooper",
+     "amount": 1200000
+    },
+    {
+     "name": "Progress North Carolina Action",
+     "side": "D",
+     "support_or_oppose": "support Cooper; oppose Whatley",
+     "target": "Roy Cooper / Michael Whatley",
+     "amount": 1200000
+    },
+    {
+     "name": "Planned Parenthood Votes North Carolina",
+     "side": "D",
+     "support_or_oppose": "support",
+     "target": "Roy Cooper",
+     "amount": 892000
+    },
+    {
+     "name": "AB PAC",
+     "side": "D",
+     "support_or_oppose": "support",
+     "target": "Roy Cooper",
+     "amount": 882000
+    }
+   ],
+   "source": "Totals: https://votelog.org/investigations/senate-general-money ; groups, general: https://paidforpolitics.com/races/nc-senate ; SLF row: https://paidforpolitics.com/c/C00571703",
+   "as_of": "2026-10-20"
+  },
+  {
+   "state": "AK",
+   "office": "Senate",
+   "outside_total": 69111213,
+   "for_D": 32483227,
+   "for_R": 36627986,
+   "top_groups": [
+    {
+     "name": "SLF PAC / Senate Leadership Fund",
+     "side": "R",
+     "support_or_oppose": "support Sullivan; oppose Peltola",
+     "target": "Dan Sullivan / Mary Peltola",
+     "amount": 12200000
+    },
+    {
+     "name": "North Star",
+     "side": "D",
+     "support_or_oppose": "support Peltola; oppose Sullivan",
+     "target": "Mary Peltola / Dan Sullivan",
+     "amount": 11400000
+    },
+    {
+     "name": "No Going Back PAC",
+     "side": "R",
+     "support_or_oppose": "support Sullivan; oppose Peltola",
+     "target": "Dan Sullivan / Mary Peltola",
+     "amount": 9100000
+    },
+    {
+     "name": "Americans for Prosperity Action",
+     "side": "R",
+     "support_or_oppose": "support Sullivan; oppose Peltola",
+     "target": "Dan Sullivan / Mary Peltola",
+     "amount": 6900000
+    },
+    {
+     "name": "Last Frontier PAC",
+     "side": "R",
+     "support_or_oppose": "oppose",
+     "target": "Mary Peltola",
+     "amount": 5400000
+    },
+    {
+     "name": "WinSenate",
+     "side": "D",
+     "support_or_oppose": "oppose",
+     "target": "Dan Sullivan",
+     "amount": 3700000
+    },
+    {
+     "name": "Women Vote",
+     "side": "D",
+     "support_or_oppose": "oppose",
+     "target": "Dan Sullivan",
+     "amount": 3600000
+    },
+    {
+     "name": "Midnight Sun PAC",
+     "side": "D",
+     "support_or_oppose": "support Peltola; oppose Sullivan",
+     "target": "Mary Peltola / Dan Sullivan",
+     "amount": 2500000
+    },
+    {
+     "name": "Forward Alaska",
+     "side": "D",
+     "support_or_oppose": "support Peltola; oppose Sullivan",
+     "target": "Mary Peltola / Dan Sullivan",
+     "amount": 2400000
+    }
+   ],
+   "source": "Totals: https://votelog.org/investigations/senate-general-money ; groups, general: https://paidforpolitics.com/races/ak-senate",
+   "as_of": "2026-10-21 totals; 2026-10-19 groups"
+  },
+  {
+   "state": "NH",
+   "office": "Senate",
+   "outside_total": 46519213,
+   "for_D": 14946200,
+   "for_R": 31573013,
+   "top_groups": [
+    {
+     "name": "WinSenate",
+     "side": "D",
+     "support_or_oppose": "oppose Sununu; support Pappas",
+     "target": "John E. Sununu / Chris Pappas",
+     "amount": 13800000
+    },
+    {
+     "name": "No Going Back PAC",
+     "side": "R",
+     "support_or_oppose": "oppose Pappas; support Sununu",
+     "target": "Chris Pappas / John E. Sununu",
+     "amount": 11800000
+    },
+    {
+     "name": "SLF PAC / Senate Leadership Fund",
+     "side": "R",
+     "support_or_oppose": "oppose",
+     "target": "Chris Pappas",
+     "amount": 9300000
+    },
+    {
+     "name": "Americans for Prosperity Action",
+     "side": "R",
+     "support_or_oppose": "support Sununu; oppose Pappas",
+     "target": "John E. Sununu / Chris Pappas",
+     "amount": 7600000
+    },
+    {
+     "name": "The Sentinel Action Fund",
+     "side": "R",
+     "support_or_oppose": "oppose",
+     "target": "Chris Pappas",
+     "amount": 1200000
+    },
+    {
+     "name": "LCV Victory Fund",
+     "side": "D",
+     "support_or_oppose": "oppose",
+     "target": "John E. Sununu",
+     "amount": 1000000
+    },
+    {
+     "name": "America PAC",
+     "side": "R",
+     "support_or_oppose": "oppose Pappas; support Sununu",
+     "target": "Chris Pappas / John E. Sununu",
+     "amount": 948000
+    }
+   ],
+   "source": "Totals: https://votelog.org/investigations/senate-general-money ; groups, general: https://paidforpolitics.com/races/nh-senate ; SLF row: https://paidforpolitics.com/c/C00571703",
+   "as_of": "2026-10-19 totals; 2026-10-20 groups"
+  },
+  {
+   "state": "NE",
+   "office": "Senate",
+   "outside_total": 40582713,
+   "for_D": 22331223,
+   "for_R": 18251490,
+   "top_groups": [
+    {
+     "name": "Nebraska Values PAC",
+     "side": "I",
+     "support_or_oppose": "oppose Ricketts; support Osborn",
+     "target": "Pete Ricketts / Dan Osborn",
+     "amount": 9300000
+    },
+    {
+     "name": "Working Class Majority PAC",
+     "side": "I",
+     "support_or_oppose": "support Osborn; oppose Ricketts",
+     "target": "Dan Osborn / Pete Ricketts",
+     "amount": 7800000
+    },
+    {
+     "name": "Cornhusker Majority",
+     "side": "R",
+     "support_or_oppose": "oppose Osborn; support Ricketts",
+     "target": "Dan Osborn / Pete Ricketts",
+     "amount": 6900000
+    },
+    {
+     "name": "Defend American Jobs",
+     "side": "R",
+     "support_or_oppose": "oppose",
+     "target": "Dan Osborn",
+     "amount": 6700000
+    },
+    {
+     "name": "The Edge Action Fund",
+     "side": "I",
+     "support_or_oppose": "support Osborn; oppose Ricketts",
+     "target": "Dan Osborn / Pete Ricketts",
+     "amount": 2500000
+    },
+    {
+     "name": "SLF PAC / Senate Leadership Fund",
+     "side": "R",
+     "support_or_oppose": "oppose Osborn; support Ricketts",
+     "target": "Dan Osborn / Pete Ricketts",
+     "amount": 2200000
+    },
+    {
+     "name": "Win It Back PAC",
+     "side": "R",
+     "support_or_oppose": "oppose",
+     "target": "Dan Osborn",
+     "amount": 2100000
+    }
+   ],
+   "source": "Totals: https://votelog.org/investigations/senate-general-money ; groups: https://paidforpolitics.com/races/ne-senate",
+   "as_of": "2026-10-19"
+  },
+  {
+   "state": "KS",
+   "office": "Senate",
+   "outside_total": 36210280,
+   "for_D": 19097915,
+   "for_R": 17112365,
+   "top_groups": [
+    {
+     "name": "SLF PAC / Senate Leadership Fund",
+     "side": "R",
+     "support_or_oppose": "oppose",
+     "target": "Adam Hamilton",
+     "amount": 6000000
+    },
+    {
+     "name": "People Over Politics Action Fund",
+     "side": "D",
+     "support_or_oppose": "oppose",
+     "target": "Roger Marshall",
+     "amount": 3400000
+    },
+    {
+     "name": "WinSenate",
+     "side": "D",
+     "support_or_oppose": "oppose",
+     "target": "Roger Marshall",
+     "amount": 3300000
+    },
+    {
+     "name": "Club for Growth Action",
+     "side": "R",
+     "support_or_oppose": "oppose",
+     "target": "Adam Hamilton",
+     "amount": 2500000
+    },
+    {
+     "name": "Main Street Fund",
+     "side": "R",
+     "support_or_oppose": "oppose",
+     "target": "Adam Hamilton",
+     "amount": 2000000
+    },
+    {
+     "name": "Americans for Prosperity Action",
+     "side": "R",
+     "support_or_oppose": "oppose Hamilton $1.0M; support Marshall $1.0M",
+     "target": "Adam Hamilton / Roger Marshall",
+     "amount": 2000000
+    }
+   ],
+   "source": "Totals: https://votelog.org/investigations/senate-general-money ; groups: https://paidforpolitics.com/races/ks-senate plus committee pages https://paidforpolitics.com/c/C00571703 https://paidforpolitics.com/c/C00865444 https://paidforpolitics.com/c/C00487470 https://paidforpolitics.com/c/C00687103",
+   "as_of": "2026-10-20 totals; race page groups as of 2026-10-06, committee rows through 2026-10-20"
+  },
+  {
+   "state": "FL",
+   "office": "Senate special",
+   "outside_total": 18174646,
+   "for_D": 6501304,
+   "for_R": 11673342,
+   "top_groups": [
+    {
+     "name": "New Deal for All",
+     "side": "D",
+     "support_or_oppose": "oppose",
+     "target": "Ashley Moody",
+     "amount": 3100000
+    },
+    {
+     "name": "AB PAC",
+     "side": "D",
+     "support_or_oppose": "support",
+     "target": "Angie Nixon",
+     "amount": 2500000
+    },
+    {
+     "name": "Stronger Safer Nation",
+     "side": "R",
+     "support_or_oppose": "oppose",
+     "target": "Angie Nixon",
+     "amount": 2300000
+    },
+    {
+     "name": "Black Voters Matter Action PAC",
+     "side": "D",
+     "support_or_oppose": "support Nixon; oppose Moody",
+     "target": "Angie Nixon / Ashley Moody",
+     "amount": 568000
+    },
+    {
+     "name": "SLF PAC / Senate Leadership Fund",
+     "side": "R",
+     "support_or_oppose": "support",
+     "target": "Ashley Moody",
+     "amount": 280000
+    }
+   ],
+   "source": "Totals: https://votelog.org/investigations/senate-general-money ; groups: https://paidforpolitics.com/races/fl-senate",
+   "as_of": "2026-10-20"
+  },
+  {
+   "state": "SC",
+   "office": "Senate",
+   "outside_total": 16070341,
+   "for_D": 4812863,
+   "for_R": 11257478,
+   "top_groups": [
+    {
+     "name": "SLF PAC / Senate Leadership Fund",
+     "side": "R",
+     "support_or_oppose": "oppose",
+     "target": "Annie Andrews",
+     "amount": 3800000
+    },
+    {
+     "name": "Security Is Strength PAC",
+     "side": "R",
+     "support_or_oppose": "support Graham; oppose Andrews; general portion",
+     "target": "Lindsey Graham / Annie Andrews",
+     "amount": 3000000
+    },
+    {
+     "name": "Fresh Start SC PAC",
+     "side": "D",
+     "support_or_oppose": "oppose Graham; support Andrews",
+     "target": "Lindsey Graham / Annie Andrews",
+     "amount": 2600000
+    },
+    {
+     "name": "American Mission",
+     "side": "R",
+     "support_or_oppose": "support; general portion",
+     "target": "Lindsey Graham",
+     "amount": 1600000
+    },
+    {
+     "name": "Building the Future",
+     "side": "R",
+     "support_or_oppose": "support",
+     "target": "Lindsey Graham",
+     "amount": 1300000
+    },
+    {
+     "name": "New Deal for All",
+     "side": "D",
+     "support_or_oppose": "oppose",
+     "target": "Lindsey Graham",
+     "amount": 1200000
+    },
+    {
+     "name": "AB PAC",
+     "side": "D",
+     "support_or_oppose": "support",
+     "target": "Annie Andrews",
+     "amount": 631000
+    }
+   ],
+   "source": "Totals: https://votelog.org/investigations/senate-general-money ; groups: https://paidforpolitics.com/races/sc-senate ; SLF row: https://paidforpolitics.com/c/C00571703",
+   "as_of": "2026-10-21 totals; 2026-10-20 groups"
+  },
+  {
+   "state": "GA",
+   "office": "Senate",
+   "outside_total": 36357202,
+   "for_D": 18741895,
+   "for_R": 17615307,
+   "top_groups": [
+    {
+     "name": "SLF PAC / Senate Leadership Fund",
+     "side": "R",
+     "support_or_oppose": "oppose",
+     "target": "Jon Ossoff",
+     "amount": 11800000
+    },
+    {
+     "name": "The Georgia Way",
+     "side": "D",
+     "support_or_oppose": "oppose Collins; support Ossoff",
+     "target": "Mike Collins / Jon Ossoff",
+     "amount": 7100000
+    },
+    {
+     "name": "Lower Costs Now",
+     "side": "D",
+     "support_or_oppose": "oppose Collins; support Ossoff",
+     "target": "Mike Collins / Jon Ossoff",
+     "amount": 5600000
+    },
+    {
+     "name": "No Going Back PAC",
+     "side": "R",
+     "support_or_oppose": "oppose Ossoff; support Collins",
+     "target": "Jon Ossoff / Mike Collins",
+     "amount": 5200000
+    },
+    {
+     "name": "AB PAC",
+     "side": "D",
+     "support_or_oppose": "support",
+     "target": "Jon Ossoff",
+     "amount": 2100000
+    },
+    {
+     "name": "New Engagement PAC",
+     "side": "D",
+     "support_or_oppose": "oppose",
+     "target": "Mike Collins",
+     "amount": 2000000
+    },
+    {
+     "name": "J Street Action Fund",
+     "side": "D",
+     "support_or_oppose": "oppose",
+     "target": "Mike Collins",
+     "amount": 470000
+    }
+   ],
+   "source": "Totals: https://votelog.org/investigations/senate-general-money ; groups, general: https://paidforpolitics.com/races/ga-senate ; SLF row: https://paidforpolitics.com/c/C00571703",
+   "as_of": "2026-10-20"
+  },
+  {
+   "state": "MN",
+   "office": "Senate",
+   "outside_total": 2676457,
+   "for_D": 1542888,
+   "for_R": 1133569,
+   "top_groups": [
+    {
+     "name": "AB PAC",
+     "side": "D",
+     "support_or_oppose": "support",
+     "target": "Peggy Flanagan",
+     "amount": 1400000
+    },
+    {
+     "name": "Minnesota Forward",
+     "side": "R",
+     "support_or_oppose": "oppose Flanagan; support Tafoya",
+     "target": "Peggy Flanagan / Michele Tafoya",
+     "amount": 1100000
+    },
+    {
+     "name": "Working America",
+     "side": "D",
+     "support_or_oppose": "support Flanagan; oppose Tafoya",
+     "target": "Peggy Flanagan / Michele Tafoya",
+     "amount": 162000
+    },
+    {
+     "name": "North Star Dawn PAC",
+     "side": "D",
+     "support_or_oppose": "primary only, mixed",
+     "target": "Angie Craig / Peggy Flanagan",
+     "amount": 14200000
+    }
+   ],
+   "source": "Totals: https://votelog.org/investigations/senate-general-money ; groups: https://paidforpolitics.com/races/mn-senate",
+   "as_of": "2026-10-20"
+  },
+  {
+   "state": "MT",
+   "office": "Senate",
+   "outside_total": 13855174,
+   "for_D": 9868156,
+   "for_R": 3987018,
+   "top_groups": [],
+   "source": "https://votelog.org/investigations/senate-general-money",
+   "as_of": "2026-10-19"
+  },
+  {
+   "state": "OH",
+   "office": "Governor",
+   "outside_total": null,
+   "for_D": null,
+   "for_R": null,
+   "top_groups": [],
+   "source": "https://mediaproject.wesleyan.edu/releases-101526/",
+   "as_of": "2026-10-11"
+  }
+ ],
+ "groups": [
+  {
+   "name": "Senate Leadership Fund / SLF PAC",
+   "side": "R",
+   "raised": 526605640,
+   "spent": 377318589,
+   "cash": 155369727,
+   "states": [
+    "OH",
+    "MI",
+    "IA",
+    "NC",
+    "ME",
+    "AK",
+    "GA",
+    "NH",
+    "KS",
+    "SC",
+    "NE",
+    "FL",
+    "TX via transfers to Texas PAC"
+   ],
+   "top_donors": [
+    {
+     "name": "Elon Musk",
+     "amount": 158000000,
+     "source": "https://thewrap.com/media-platforms/politics/elon-musk-158-million-donation-senate-gop-group-ken-paxton"
+    },
+    {
+     "name": "One Nation",
+     "amount": 70740000,
+     "source": "https://paidforpolitics.com/c/C00571703"
+    },
+    {
+     "name": "Miriam Adelson",
+     "amount": 30000000,
+     "source": "https://paidforpolitics.com/c/C00571703"
+    },
+    {
+     "name": "Stephen A. Schwarzman",
+     "amount": 17000000,
+     "source": "https://paidforpolitics.com/c/C00571703"
+    },
+    {
+     "name": "Paul Singer",
+     "amount": 14000000,
+     "source": "https://paidforpolitics.com/c/C00571703"
+    },
+    {
+     "name": "Kenneth C. Griffin",
+     "amount": 10000000,
+     "source": "https://paidforpolitics.com/c/C00571703"
+    },
+    {
+     "name": "Stephen A. Wynn",
+     "amount": 5000000,
+     "source": "https://paidforpolitics.com/c/C00571703"
+    },
+    {
+     "name": "Chevron",
+     "amount": 3900000,
+     "source": "https://legis1.com/news/slf-pac-spending-spent-17399-million-opposing-10"
+    },
+    {
+     "name": "American Petroleum Institute",
+     "amount": 3000000,
+     "source": "https://legis1.com/news/slf-pac-spending-spent-17399-million-opposing-10"
+    },
+    {
+     "name": "Green Thumb Industries / Vision Management Services LLC",
+     "amount": 2500000,
+     "source": "https://www.citizen.org/article/corporate-money-2026-midterms-surges-to-650-million/"
+    },
+    {
+     "name": "Altria Client Services",
+     "amount": 2250000,
+     "source": "https://legis1.com/news/slf-pac-spending-spent-17399-million-opposing-10"
+    },
+    {
+     "name": "Devon Energy",
+     "amount": 2000000,
+     "source": "https://legis1.com/news/slf-pac-spending-spent-17399-million-opposing-10"
+    }
+   ],
+   "top_vendors": [
+    {
+     "name": "One Nation",
+     "kind": "other",
+     "amount": 3064917,
+     "source": "https://election.org/committee/slf-pac-c00571703"
+    },
+    {
+     "name": "Strategic Advance Services LLC",
+     "kind": "other",
+     "amount": 2308422,
+     "source": "https://election.org/committee/slf-pac-c00571703"
+    },
+    {
+     "name": "DT Client Services LLC",
+     "kind": "other",
+     "amount": 989241,
+     "source": "https://election.org/committee/slf-pac-c00571703"
+    },
+    {
+     "name": "America Rising Limited LLC",
+     "kind": "consulting",
+     "amount": 494000,
+     "source": "https://election.org/committee/slf-pac-c00571703"
+    },
+    {
+     "name": "Rizzo Dukes Group",
+     "kind": "other",
+     "amount": 290980,
+     "source": "https://election.org/committee/slf-pac-c00571703"
+    },
+    {
+     "name": "Flexpoint Media",
+     "kind": "media buy",
+     "amount": null,
+     "source": "https://legis1.com/news/slf-pac-spending-spent-17399-million-opposing-10"
+    },
+    {
+     "name": "MHB Media Inc.",
+     "kind": "media buy",
+     "amount": null,
+     "source": "https://legis1.com/news/slf-pac-spending-spent-17399-million-opposing-10"
+    }
+   ],
+   "source": "https://paidforpolitics.com/c/C00571703 ; https://election.org/committee/slf-pac-c00571703 ; Q3 raised $272,900,000 per https://www.briefs.co/news/senate-leadership-fund-posts-record-haul-heads-into-final-st/ ; IE $253,160,172 through 2026-10-20",
+   "as_of": "2026-09-30 finances; 2026-10-20 IEs"
+  },
+  {
+   "name": "Senate Majority PAC / SMP",
+   "side": "D",
+   "raised": 324936219,
+   "spent": 222143337,
+   "cash": 111963552,
+   "states": [],
+   "top_donors": [
+    {
+     "name": "Majority Forward",
+     "amount": 61000000,
+     "source": "https://paidforpolitics.com/c/C00484642"
+    },
+    {
+     "name": "Democracy PAC",
+     "amount": 9000000,
+     "source": "https://paidforpolitics.com/c/C00484642"
+    },
+    {
+     "name": "Fred Eychaner",
+     "amount": 8500000,
+     "source": "https://paidforpolitics.com/c/C00484642"
+    },
+    {
+     "name": "Amos B. Hostetter Jr.",
+     "amount": 2000000,
+     "source": "https://paidforpolitics.com/c/C00484642"
+    },
+    {
+     "name": "Stephen Mandel",
+     "amount": 1500000,
+     "source": "https://paidforpolitics.com/c/C00484642"
+    }
+   ],
+   "top_vendors": [
+    {
+     "name": "Nexus Direct",
+     "kind": "mail",
+     "amount": 12702925,
+     "source": "https://election.org/committee/smp-c00484642"
+    },
+    {
+     "name": "Premier Political Compliance Inc.",
+     "kind": "other",
+     "amount": 3726312,
+     "source": "https://election.org/committee/smp-c00484642"
+    },
+    {
+     "name": "Blue Rose Research",
+     "kind": "polling",
+     "amount": 2169624,
+     "source": "https://election.org/committee/smp-c00484642"
+    },
+    {
+     "name": "Majority Institute LLC",
+     "kind": "other",
+     "amount": 1634878,
+     "source": "https://election.org/committee/smp-c00484642"
+    },
+    {
+     "name": "Authentic Campaigns",
+     "kind": "digital",
+     "amount": 1506431,
+     "source": "https://election.org/committee/smp-c00484642"
+    },
+    {
+     "name": "Elias Law Group",
+     "kind": "other",
+     "amount": 1457240,
+     "source": "https://election.org/committee/smp-c00484642"
+    },
+    {
+     "name": "Global Strategy Group LLC",
+     "kind": "polling",
+     "amount": 259536,
+     "source": "https://election.org/committee/smp-c00484642"
+    }
+   ],
+   "source": "https://paidforpolitics.com/c/C00484642 ; Q3: SMP alone $151,000,000, SMP plus affiliates $202,000,000, cash $111,800,000 per https://senatemajority.com/news/smp-posts-best-third-quarter-in-its-history-ends-with-record-cash-on-hand/ ; vendors through 2026-06-30",
+   "as_of": "2026-09-30"
+  },
+  {
+   "name": "WinSenate",
+   "side": "D",
+   "raised": 22252892,
+   "spent": 21732101,
+   "cash": 546282,
+   "states": [
+    "OH",
+    "IA",
+    "MI",
+    "NC",
+    "ME",
+    "NH",
+    "AK",
+    "KS",
+    "TX"
+   ],
+   "top_donors": [
+    {
+     "name": "SMP / Senate Majority PAC",
+     "amount": 21120000,
+     "source": "https://paidforpolitics.com/c/C00865444"
+    }
+   ],
+   "top_vendors": [
+    {
+     "name": "Waterfront Strategies",
+     "kind": "media buy",
+     "amount": 7427850,
+     "source": "https://election.org/committee/winsenate-c00865444"
+    },
+    {
+     "name": "Mvar Media LLC",
+     "kind": "consulting",
+     "amount": 688048,
+     "source": "https://election.org/committee/winsenate-c00865444"
+    },
+    {
+     "name": "C Plus K LLC",
+     "kind": "other",
+     "amount": 10544,
+     "source": "https://election.org/committee/winsenate-c00865444"
+    }
+   ],
+   "source": "https://paidforpolitics.com/c/C00865444 ; outside spending $170,701,698 through 2026-10-20",
+   "as_of": "2026-08-31 finances; 2026-10-20 IEs"
+  },
+  {
+   "name": "Congressional Leadership Fund / CLF",
+   "side": "R",
+   "raised": 257617543,
+   "spent": 103923735,
+   "cash": 155292047,
+   "states": [
+    "NC",
+    "MI",
+    "NY",
+    "CA",
+    "FL",
+    "CO",
+    "TX",
+    "AZ",
+    "IA",
+    "PA",
+    "WA",
+    "OH",
+    "WI",
+    "ME",
+    "NM"
+   ],
+   "top_donors": [
+    {
+     "name": "American Action Network",
+     "amount": 42000000,
+     "source": "https://paidforpolitics.com/c/C00504530"
+    },
+    {
+     "name": "Miriam Adelson",
+     "amount": 10000000,
+     "source": "https://paidforpolitics.com/c/C00504530"
+    },
+    {
+     "name": "Elon Musk",
+     "amount": 10000000,
+     "source": "https://paidforpolitics.com/c/C00504530"
+    },
+    {
+     "name": "Kenneth C. Griffin",
+     "amount": 5000000,
+     "source": "https://paidforpolitics.com/c/C00504530"
+    },
+    {
+     "name": "Howard W. Lutnick",
+     "amount": 5000000,
+     "source": "https://paidforpolitics.com/c/C00504530"
+    },
+    {
+     "name": "Paul E. Singer",
+     "amount": 5000000,
+     "source": "https://paidforpolitics.com/c/C00504530"
+    },
+    {
+     "name": "Blockratize Inc., Polymarket parent",
+     "amount": 1000000,
+     "source": "https://www.citizen.org/article/corporate-money-2026-midterms-surges-to-650-million/"
+    },
+    {
+     "name": "Koch GA Inc.",
+     "amount": 750000,
+     "source": "https://www.citizen.org/article/corporate-money-2026-midterms-surges-to-650-million/"
+    }
+   ],
+   "top_vendors": [],
+   "source": "https://paidforpolitics.com/c/C00504530 ; Q3 raised $94,400,000 and CLF plus AAN cycle $370,000,000 per https://www.briefs.co/news/gop-aligned-super-pac-hauls-in-94-4-million-in-q3-and-rejigg/ ; IE $138,304,867",
+   "as_of": "2026-09-30 finances; 2026-10-20 IEs"
+  },
+  {
+   "name": "House Majority PAC / HMP",
+   "side": "D",
+   "raised": 176645192,
+   "spent": 46528415,
+   "cash": 135201632,
+   "states": [
+    "FL",
+    "TX",
+    "MI",
+    "CA",
+    "PA",
+    "OH",
+    "NC",
+    "ME",
+    "CO",
+    "WI",
+    "WA",
+    "VA"
+   ],
+   "top_donors": [
+    {
+     "name": "House Majority Forward",
+     "amount": 61700000,
+     "source": "https://paidforpolitics.com/c/C00495028"
+    },
+    {
+     "name": "Fred Eychaner",
+     "amount": 5000000,
+     "source": "https://paidforpolitics.com/c/C00495028"
+    },
+    {
+     "name": "Democracy PAC",
+     "amount": 4000000,
+     "source": "https://paidforpolitics.com/c/C00495028"
+    },
+    {
+     "name": "Connie E. Ballmer",
+     "amount": 3000000,
+     "source": "https://paidforpolitics.com/c/C00495028"
+    },
+    {
+     "name": "Yes on 50, Newsom ballot committee",
+     "amount": 3000000,
+     "source": "https://paidforpolitics.com/c/C00495028"
+    },
+    {
+     "name": "American Opportunity Action",
+     "amount": 3000000,
+     "source": "https://paidforpolitics.com/c/C00495028"
+    },
+    {
+     "name": "Amos B. Hostetter Jr.",
+     "amount": 2000000,
+     "source": "https://paidforpolitics.com/c/C00495028"
+    },
+    {
+     "name": "America Votes",
+     "amount": 2000000,
+     "source": "https://paidforpolitics.com/c/C00495028"
+    },
+    {
+     "name": "George M. Marcus",
+     "amount": 2000000,
+     "source": "https://paidforpolitics.com/c/C00495028"
+    },
+    {
+     "name": "Reed Hastings",
+     "amount": 1700000,
+     "source": "https://paidforpolitics.com/c/C00495028"
+    }
+   ],
+   "top_vendors": [
+    {
+     "name": "Sapphire Strategies",
+     "kind": "other",
+     "amount": 3988883,
+     "source": "https://election.org/committee/hmp-c00495028"
+    },
+    {
+     "name": "Switchboard Public Benefit Corporation",
+     "kind": "digital",
+     "amount": 1233932,
+     "source": "https://election.org/committee/hmp-c00495028"
+    },
+    {
+     "name": "ActBlue Technical Services",
+     "kind": "digital",
+     "amount": 497744,
+     "source": "https://election.org/committee/hmp-c00495028"
+    },
+    {
+     "name": "EveryAction Inc.",
+     "kind": "digital",
+     "amount": 184974,
+     "source": "https://election.org/committee/hmp-c00495028"
+    }
+   ],
+   "source": "https://paidforpolitics.com/c/C00495028 ; IE $128,069,232 through 2026-10-20 ; Q3 HMP plus House Majority Forward $230,000,000 per https://www.washingtonexaminer.com/news/campaigns/4750184/house-democratic-super-pac-230-million-fundraising-haul/",
+   "as_of": "2026-08-31 finances; 2026-10-20 IEs"
+  },
+  {
+   "name": "MAGA Inc.",
+   "side": "R",
+   "raised": 424389503,
+   "spent": 300500000,
+   "cash": 164300000,
+   "states": [
+    "TX",
+    "TN",
+    "SC",
+    "MI",
+    "OH",
+    "IA",
+    "VA",
+    "ME",
+    "PA",
+    "NC",
+    "FL",
+    "CA",
+    "CO",
+    "WI"
+   ],
+   "top_donors": [
+    {
+     "name": "Miriam O. Adelson",
+     "amount": 25000000,
+     "source": "https://paidforpolitics.com/c/C00892471"
+    },
+    {
+     "name": "Diane Hendricks",
+     "amount": 25000000,
+     "source": "https://paidforpolitics.com/c/C00892471"
+    },
+    {
+     "name": "Jeff Yass",
+     "amount": 15000000,
+     "source": "https://paidforpolitics.com/c/C00892471"
+    },
+    {
+     "name": "Securing American Greatness Inc.",
+     "amount": 13750000,
+     "source": "https://paidforpolitics.com/c/C00892471"
+    },
+    {
+     "name": "Kelcy Warren",
+     "amount": 12500000,
+     "source": "https://paidforpolitics.com/c/C00892471"
+    },
+    {
+     "name": "Energy Transfer LP",
+     "amount": 12500000,
+     "source": "https://paidforpolitics.com/c/C00892471"
+    },
+    {
+     "name": "Greg Brockman",
+     "amount": 12500000,
+     "source": "https://paidforpolitics.com/c/C00892471"
+    },
+    {
+     "name": "Anna Brockman",
+     "amount": 12500000,
+     "source": "https://paidforpolitics.com/c/C00892471"
+    },
+    {
+     "name": "Foris DAX Inc.",
+     "amount": 10000000,
+     "source": "https://paidforpolitics.com/c/C00892471"
+    },
+    {
+     "name": "Gemini Trust Company",
+     "amount": 10000000,
+     "source": "https://www.citizen.org/article/corporate-money-2026-midterms-surges-to-650-million/"
+    },
+    {
+     "name": "RAI Services Company, Reynolds American",
+     "amount": 5000000,
+     "source": "https://www.citizen.org/article/corporate-money-2026-midterms-surges-to-650-million/"
+    }
+   ],
+   "top_vendors": [],
+   "source": "Raised through 2026-08-31: https://paidforpolitics.com/c/C00892471 ; spent $300,500,000 and cash $164,300,000 through 2026-10-14, transfers of $200,000,000 to No Going Back PAC and $25,000,000 to Safety & Affordability PAC: https://www.briefs.co/news/trump-aligned-money-machine-tops-300-million-widening-the-20/",
+   "as_of": "2026-10-14 spent and cash; 2026-08-31 raised"
+  },
+  {
+   "name": "No Going Back PAC Inc.",
+   "side": "R",
+   "raised": null,
+   "spent": 191628058,
+   "cash": null,
+   "states": [
+    "MI",
+    "OH",
+    "NH",
+    "NC",
+    "FL",
+    "AK",
+    "NY",
+    "TX",
+    "GA",
+    "WA",
+    "IA",
+    "MT"
+   ],
+   "top_donors": [
+    {
+     "name": "MAGA Inc.",
+     "amount": 200000000,
+     "source": "https://www.briefs.co/news/trump-aligned-money-machine-tops-300-million-widening-the-20/"
+    }
+   ],
+   "top_vendors": [],
+   "source": "https://paidforpolitics.com/c/C00960435 ; spent figure is IEs from 24 and 48 hour reports",
+   "as_of": "2026-10-20"
+  },
+  {
+   "name": "America PAC",
+   "side": "R",
+   "raised": 139195668,
+   "spent": 129025723,
+   "cash": 12392594,
+   "states": [
+    "TX",
+    "OH",
+    "MI",
+    "IA",
+    "ME",
+    "NH",
+    "AK",
+    "WA",
+    "AZ",
+    "PA",
+    "WI"
+   ],
+   "top_donors": [
+    {
+     "name": "Elon Musk, Q3 2026",
+     "amount": 76000000,
+     "source": "https://www.wcax.com/2026/10/12/elon-musk-quietly-becomes-biggest-known-donor-midterm-contests-he-tries-save-republicans/"
+    },
+    {
+     "name": "United States of America Inc.",
+     "amount": 27072484,
+     "source": "https://paidforpolitics.com/c/C00879510"
+    }
+   ],
+   "top_vendors": [
+    {
+     "name": "United States of America Inc.",
+     "kind": "other",
+     "amount": 30188766,
+     "source": "https://election.org/committee/america-pac-c00879510"
+    },
+    {
+     "name": "Lex Politica PLLC",
+     "kind": "other",
+     "amount": 2274303,
+     "source": "https://election.org/committee/america-pac-c00879510"
+    },
+    {
+     "name": "M2 Placement LLC",
+     "kind": "media buy",
+     "amount": 999699,
+     "source": "https://election.org/committee/america-pac-c00879510"
+    },
+    {
+     "name": "IMGE LLC",
+     "kind": "digital",
+     "amount": 810664,
+     "source": "https://election.org/committee/america-pac-c00879510"
+    },
+    {
+     "name": "OnMessage Inc.",
+     "kind": "consulting",
+     "amount": 505040,
+     "source": "https://election.org/committee/america-pac-c00879510"
+    },
+    {
+     "name": "M and B Analytics LLC",
+     "kind": "other",
+     "amount": 239998,
+     "source": "https://election.org/committee/america-pac-c00879510"
+    }
+   ],
+   "source": "https://paidforpolitics.com/c/C00879510 ; IE $60,114,978 through 2026-10-20 ; vendor data checked 2026-08-24",
+   "as_of": "2026-09-30"
+  },
+  {
+   "name": "Fairshake",
+   "side": "other",
+   "raised": 138243957,
+   "spent": 118563382,
+   "cash": 83924773,
+   "states": [
+    "IL",
+    "WI",
+    "OR",
+    "AR",
+    "MI",
+    "CA",
+    "NV"
+   ],
+   "top_donors": [
+    {
+     "name": "Ripple Labs Inc.",
+     "amount": 48000000,
+     "source": "https://paidforpolitics.com/c/C00835959"
+    },
+    {
+     "name": "Coinbase Commerce",
+     "amount": 27501739,
+     "source": "https://paidforpolitics.com/c/C00835959"
+    },
+    {
+     "name": "Coinbase",
+     "amount": 25000000,
+     "source": "https://paidforpolitics.com/c/C00835959"
+    },
+    {
+     "name": "AH Capital Management",
+     "amount": 23800000,
+     "source": "https://paidforpolitics.com/c/C00835959"
+    },
+    {
+     "name": "Digital Currency Group",
+     "amount": 1000000,
+     "source": "https://www.citizen.org/article/corporate-money-2026-midterms-surges-to-650-million/"
+    }
+   ],
+   "top_vendors": [
+    {
+     "name": "Gragert Research",
+     "kind": "polling",
+     "amount": 958750,
+     "source": "https://election.org/committee/fairshake-c00835959"
+    },
+    {
+     "name": "Impact Research",
+     "kind": "polling",
+     "amount": 897611,
+     "source": "https://election.org/committee/fairshake-c00835959"
+    },
+    {
+     "name": "Dockside Strategies",
+     "kind": "consulting",
+     "amount": 555255,
+     "source": "https://election.org/committee/fairshake-c00835959"
+    },
+    {
+     "name": "Schoen Survey Research",
+     "kind": "polling",
+     "amount": 490500,
+     "source": "https://election.org/committee/fairshake-c00835959"
+    },
+    {
+     "name": "Guidant Polling and Strategy",
+     "kind": "polling",
+     "amount": 481750,
+     "source": "https://election.org/committee/fairshake-c00835959"
+    },
+    {
+     "name": "Global Strategy Group",
+     "kind": "polling",
+     "amount": 444159,
+     "source": "https://election.org/committee/fairshake-c00835959"
+    },
+    {
+     "name": "Narrator",
+     "kind": "other",
+     "amount": 382500,
+     "source": "https://election.org/committee/fairshake-c00835959"
+    }
+   ],
+   "source": "https://paidforpolitics.com/c/C00835959 ; transfers $37,000,000 to Defend American Jobs and $33,000,000 to Protect Progress ; IE $19,412,478",
+   "as_of": "2026-09-30"
+  },
+  {
+   "name": "Defend American Jobs",
+   "side": "R",
+   "raised": 38294280,
+   "spent": 33936705,
+   "cash": 5659904,
+   "states": [
+    "OH",
+    "AL",
+    "KY",
+    "NE",
+    "FL",
+    "TX",
+    "OK",
+    "GA"
+   ],
+   "top_donors": [
+    {
+     "name": "Fairshake",
+     "amount": 37000000,
+     "source": "https://paidforpolitics.com/c/C00836221"
+    },
+    {
+     "name": "Ripple Labs Inc.",
+     "amount": 250000,
+     "source": "https://paidforpolitics.com/c/C00836221"
+    }
+   ],
+   "top_vendors": [],
+   "source": "https://paidforpolitics.com/c/C00836221 ; outside spending $86,325,707 through 2026-10-20",
+   "as_of": "2026-08-31 finances; 2026-10-20 IEs"
+  },
+  {
+   "name": "Protect Progress",
+   "side": "D",
+   "raised": 33824896,
+   "spent": 29560859,
+   "cash": 6160894,
+   "states": [
+    "TX",
+    "MD",
+    "GA",
+    "FL",
+    "MI",
+    "NY",
+    "VA",
+    "CA",
+    "NJ",
+    "IL",
+    "MA"
+   ],
+   "top_donors": [
+    {
+     "name": "Fairshake",
+     "amount": 33000000,
+     "source": "https://paidforpolitics.com/c/C00848440"
+    },
+    {
+     "name": "Ripple Labs Inc.",
+     "amount": 250000,
+     "source": "https://paidforpolitics.com/c/C00848440"
+    }
+   ],
+   "top_vendors": [],
+   "source": "https://paidforpolitics.com/c/C00848440 ; IE $29,559,272",
+   "as_of": "2026-09-30"
+  },
+  {
+   "name": "United Democracy Project",
+   "side": "other",
+   "raised": 109721116,
+   "spent": 83605165,
+   "cash": 54918846,
+   "states": [
+    "MI",
+    "MD",
+    "IL",
+    "KY",
+    "MO",
+    "NJ",
+    "CA"
+   ],
+   "top_donors": [
+    {
+     "name": "American Israel Public Affairs Committee",
+     "amount": 30000000,
+     "source": "https://paidforpolitics.com/c/C00799031"
+    },
+    {
+     "name": "Paul Singer",
+     "amount": 2500000,
+     "source": "https://paidforpolitics.com/c/C00799031"
+    },
+    {
+     "name": "Haim Saban",
+     "amount": 2000000,
+     "source": "https://paidforpolitics.com/c/C00799031"
+    },
+    {
+     "name": "Manzanita Action Fund",
+     "amount": 1600000,
+     "source": "https://paidforpolitics.com/c/C00799031"
+    },
+    {
+     "name": "Blair Frank",
+     "amount": 1500000,
+     "source": "https://paidforpolitics.com/c/C00799031"
+    },
+    {
+     "name": "Marc Rowan",
+     "amount": 1500000,
+     "source": "https://paidforpolitics.com/c/C00799031"
+    },
+    {
+     "name": "Jonathon Jacobson",
+     "amount": 1000000,
+     "source": "https://paidforpolitics.com/c/C00799031"
+    }
+   ],
+   "top_vendors": [],
+   "source": "https://paidforpolitics.com/c/C00799031 ; IE $53,698,548 through 2026-10-19 ; MI Senate: against El-Sayed $20.4M, for Haley Stevens $10.5M, primary",
+   "as_of": "2026-08-31"
+  },
+  {
+   "name": "Club for Growth Action",
+   "side": "R",
+   "raised": 52046513,
+   "spent": 44572751,
+   "cash": 7669425,
+   "states": [
+    "AK",
+    "KS",
+    "LA",
+    "TX",
+    "OH",
+    "FL",
+    "NV",
+    "MI",
+    "GA",
+    "OK",
+    "AZ",
+    "PA",
+    "TN"
+   ],
+   "top_donors": [
+    {
+     "name": "Restoration of America PAC",
+     "amount": 20000000,
+     "source": "https://paidforpolitics.com/c/C00487470"
+    },
+    {
+     "name": "Jeff Yass",
+     "amount": 16500000,
+     "source": "https://paidforpolitics.com/c/C00487470"
+    },
+    {
+     "name": "Marsha for Senate",
+     "amount": 4800000,
+     "source": "https://paidforpolitics.com/c/C00487470"
+    },
+    {
+     "name": "Peter A. Thiel",
+     "amount": 1500000,
+     "source": "https://paidforpolitics.com/c/C00487470"
+    }
+   ],
+   "top_vendors": [],
+   "source": "https://paidforpolitics.com/c/C00487470 ; IE $16,625,834",
+   "as_of": "2026-09-30"
+  },
+  {
+   "name": "Americans for Prosperity Action",
+   "side": "R",
+   "raised": 93789264,
+   "spent": 43353378,
+   "cash": 54396352,
+   "states": [
+    "MI",
+    "OH",
+    "IA",
+    "NH",
+    "AK",
+    "NC",
+    "MT",
+    "KS",
+    "CO",
+    "AZ",
+    "TX"
+   ],
+   "top_donors": [
+    {
+     "name": "Koch Inc.",
+     "amount": 30000000,
+     "source": "https://paidforpolitics.com/c/C00687103"
+    },
+    {
+     "name": "Stand Together Inc.",
+     "amount": 20000000,
+     "source": "https://paidforpolitics.com/c/C00687103"
+    },
+    {
+     "name": "S. Robson Walton",
+     "amount": 7000000,
+     "source": "https://paidforpolitics.com/c/C00687103"
+    },
+    {
+     "name": "Jim C. Walton",
+     "amount": 7000000,
+     "source": "https://paidforpolitics.com/c/C00687103"
+    },
+    {
+     "name": "Stand Together Chamber of Commerce Inc.",
+     "amount": 6500000,
+     "source": "https://paidforpolitics.com/c/C00687103"
+    },
+    {
+     "name": "Anthony Ressler",
+     "amount": 2000000,
+     "source": "https://paidforpolitics.com/c/C00687103"
+    },
+    {
+     "name": "Craig J. Duchossois",
+     "amount": 2000000,
+     "source": "https://paidforpolitics.com/c/C00687103"
+    }
+   ],
+   "top_vendors": [],
+   "source": "https://paidforpolitics.com/c/C00687103 ; IE $91,555,632 through 2026-10-20",
+   "as_of": "2026-08-31 finances; 2026-10-20 IEs"
+  },
+  {
+   "name": "Future Forward / FF PAC",
+   "side": "D",
+   "raised": 30053027,
+   "spent": 23107652,
+   "cash": 6948298,
+   "states": [
+    "PA"
+   ],
+   "top_donors": [
+    {
+     "name": "Deborah Simon",
+     "amount": 1000000,
+     "source": "https://paidforpolitics.com/c/C00669259"
+    },
+    {
+     "name": "Future Forward USA Action",
+     "amount": 495769,
+     "source": "https://paidforpolitics.com/c/C00669259"
+    }
+   ],
+   "top_vendors": [],
+   "source": "https://paidforpolitics.com/c/C00669259 ; IE $4,500",
+   "as_of": "2026-09-30"
+  },
+  {
+   "name": "Texas PAC",
+   "side": "R",
+   "raised": 158000000,
+   "spent": 131751387,
+   "cash": 26248613,
+   "states": [
+    "TX"
+   ],
+   "top_donors": [
+    {
+     "name": "Senate Leadership Fund transfers matching Musk gifts of $75M and $83M",
+     "amount": 158000000,
+     "source": "https://thewrap.com/media-platforms/politics/elon-musk-158-million-donation-senate-gop-group-ken-paxton"
+    }
+   ],
+   "top_vendors": [],
+   "source": "https://paidforpolitics.com/c/C00960211 ; IE $148,574,806: against Talarico $78.9M, for Paxton $69.7M",
+   "as_of": "2026-09-30 finances; 2026-10-20 IEs"
+  },
+  {
+   "name": "Lone Star Liberty PAC",
+   "side": "R",
+   "raised": 28151868,
+   "spent": 27633689,
+   "cash": 518179,
+   "states": [
+    "TX"
+   ],
+   "top_donors": [
+    {
+     "name": "Elon Musk",
+     "amount": 10000000,
+     "source": "https://www.wcax.com/2026/10/12/elon-musk-quietly-becomes-biggest-known-donor-midterm-contests-he-tries-save-republicans/"
+    },
+    {
+     "name": "Douglas Scharbauer",
+     "amount": 1225700,
+     "source": "https://paidforpolitics.com/c/C00901223"
+    },
+    {
+     "name": "Jonathan Knutz",
+     "amount": 1000000,
+     "source": "https://paidforpolitics.com/c/C00901223"
+    },
+    {
+     "name": "Preserve Texas Inc.",
+     "amount": 950000,
+     "source": "https://paidforpolitics.com/c/C00901223"
+    },
+    {
+     "name": "Thomas J Henry Law PLLC",
+     "amount": 646107,
+     "source": "https://paidforpolitics.com/c/C00901223"
+    }
+   ],
+   "top_vendors": [],
+   "source": "https://paidforpolitics.com/c/C00901223 ; IE $27,525,162",
+   "as_of": "2026-09-30"
+  },
+  {
+   "name": "Lone Star Rising PAC",
+   "side": "D",
+   "raised": 31272075,
+   "spent": 23506004,
+   "cash": 7766071,
+   "states": [
+    "TX"
+   ],
+   "top_donors": [
+    {
+     "name": "Reid Hoffman",
+     "amount": 11500000,
+     "source": "https://paidforpolitics.com/c/C00918268"
+    },
+    {
+     "name": "Government That Works PAC",
+     "amount": 3750000,
+     "source": "https://paidforpolitics.com/c/C00918268"
+    },
+    {
+     "name": "America Votes",
+     "amount": 900000,
+     "source": "https://paidforpolitics.com/c/C00918268"
+    }
+   ],
+   "top_vendors": [],
+   "source": "https://paidforpolitics.com/c/C00918268 ; IE $30,020,637",
+   "as_of": "2026-09-30"
+  },
+  {
+   "name": "Lower Costs Now",
+   "side": "D",
+   "raised": 38182833,
+   "spent": 11182979,
+   "cash": 26999854,
+   "states": [
+    "TX",
+    "GA",
+    "IA",
+    "MI",
+    "KS"
+   ],
+   "top_donors": [],
+   "top_vendors": [],
+   "source": "https://paidforpolitics.com/c/C00961276",
+   "as_of": "2026-09-30"
+  },
+  {
+   "name": "Texas Forever",
+   "side": "D",
+   "raised": 2250000,
+   "spent": 2113210,
+   "cash": 136790,
+   "states": [
+    "TX"
+   ],
+   "top_donors": [],
+   "top_vendors": [],
+   "source": "https://paidforpolitics.com/c/C00962308 ; IE $10,880,777 against Paxton",
+   "as_of": "2026-09-30"
+  },
+  {
+   "name": "GLCF Inc.",
+   "side": "R",
+   "raised": null,
+   "spent": null,
+   "cash": null,
+   "states": [
+    "MI"
+   ],
+   "top_donors": [],
+   "top_vendors": [
+    {
+     "name": "Smart Media Group LLC, single IE 2026-06-17",
+     "kind": "media buy",
+     "amount": 1406360,
+     "source": "https://election.org/political-ad/glcf-inc-supports-michael-j-rogers-2026-06-18-0n1p0z7"
+    },
+    {
+     "name": "Smart Media Group LLC, single IE 2026-08-03",
+     "kind": "media buy",
+     "amount": 129856,
+     "source": "https://election.org/political-ad/glcf-inc-opposes-abdul-el-sayed-2026-08-05-0nampg8"
+    }
+   ],
+   "source": "https://paidforpolitics.com/races/mi-senate",
+   "as_of": "2026-10-16"
+  },
+  {
+   "name": "Pine Tree Results PAC",
+   "side": "R",
+   "raised": 20622702,
+   "spent": 12357052,
+   "cash": 8265650,
+   "states": [
+    "ME"
+   ],
+   "top_donors": [],
+   "top_vendors": [
+    {
+     "name": "SRCP Media Inc.",
+     "kind": "media buy",
+     "amount": 1862012,
+     "source": "https://election.org/committee/pine-tree-results-pac-c00894709"
+    },
+    {
+     "name": "Morning Group",
+     "kind": "other",
+     "amount": 1135240,
+     "source": "https://election.org/committee/pine-tree-results-pac-c00894709"
+    },
+    {
+     "name": "Fabrizio Lee and Associates LLC",
+     "kind": "polling",
+     "amount": 159500,
+     "source": "https://election.org/committee/pine-tree-results-pac-c00894709"
+    },
+    {
+     "name": "Koch and Hoos LLC",
+     "kind": "other",
+     "amount": 95128,
+     "source": "https://election.org/committee/pine-tree-results-pac-c00894709"
+    },
+    {
+     "name": "Deep Root Analytics LLC",
+     "kind": "other",
+     "amount": 75000,
+     "source": "https://election.org/committee/pine-tree-results-pac-c00894709"
+    }
+   ],
+   "source": "https://election.org/committee/pine-tree-results-pac-c00894709",
+   "as_of": "2026-06-30"
+  },
+  {
+   "name": "Restoration PAC",
+   "side": "R",
+   "raised": 128500000,
+   "spent": null,
+   "cash": 17600000,
+   "states": [],
+   "top_donors": [],
+   "top_vendors": [],
+   "source": "https://superpacs.com/2026-super-pac-tracker/",
+   "as_of": "2026-09-30"
+  },
+  {
+   "name": "One Nation",
+   "side": "R",
+   "raised": null,
+   "spent": null,
+   "cash": null,
+   "states": [
+    "TX"
+   ],
+   "top_donors": [],
+   "top_vendors": [],
+   "source": "https://www.texastribune.org/2026/09/11/senate-gop-leadership-ken-paxton-john-thune-texas-spending/ ; gave SLF $70,740,000 per https://paidforpolitics.com/c/C00571703",
+   "as_of": "2026-09-30"
+  },
+  {
+   "name": "Your Community PAC",
+   "side": "other",
+   "raised": null,
+   "spent": null,
+   "cash": null,
+   "states": [],
+   "top_donors": [],
+   "top_vendors": [],
+   "source": "No 2026 cycle figures found; only 2024 cycle FEC records surfaced in search",
+   "as_of": "2026-10-22"
+  }
+ ],
+ "ads": [
+  {
+   "state": "TX",
+   "race": "Senate",
+   "spender": "All advertisers, ad spending plus reservations, more than",
+   "amount": 500000000,
+   "source": "https://time.com/article/2026/10/19/midterm-ad-spending-has-surpassed-10b-where-is-the-money-coming-from- citing AdImpact"
+  },
+  {
+   "state": "TX",
+   "race": "Senate",
+   "spender": "Texas PAC, initial broadcast TV buy 2026-09-11",
+   "amount": 51300000,
+   "source": "https://www.texastribune.org/2026/09/11/senate-gop-leadership-ken-paxton-john-thune-texas-spending/ citing AdImpact"
+  },
+  {
+   "state": "TX",
+   "race": "Senate",
+   "spender": "MAGA Inc., ad time buy early Sept",
+   "amount": 10000000,
+   "source": "https://www.texastribune.org/2026/09/11/senate-gop-leadership-ken-paxton-john-thune-texas-spending/"
+  },
+  {
+   "state": "TX",
+   "race": "Senate",
+   "spender": "Republican groups total since late May runoff through Sept reservations",
+   "amount": 81100000,
+   "source": "https://www.texastribune.org/2026/09/11/senate-gop-leadership-ken-paxton-john-thune-texas-spending/ citing AdImpact"
+  },
+  {
+   "state": "TX",
+   "race": "Senate",
+   "spender": "Democratic side total, nearly all Talarico campaign, same period",
+   "amount": 43700000,
+   "source": "https://www.texastribune.org/2026/09/11/senate-gop-leadership-ken-paxton-john-thune-texas-spending/ citing AdImpact"
+  },
+  {
+   "state": "OH",
+   "race": "Senate",
+   "spender": "All advertisers combined, more than",
+   "amount": 466000000,
+   "source": "https://www.thenation.com/article/politics/ohio-senate-race-sherrod-brown-jon-husted/ citing AdImpact"
+  },
+  {
+   "state": "OH",
+   "race": "Senate",
+   "spender": "Republican side supporting Husted, nearly",
+   "amount": 270000000,
+   "source": "https://time.com/article/2026/10/19/midterm-ad-spending-has-surpassed-10b-where-is-the-money-coming-from-"
+  },
+  {
+   "state": "OH",
+   "race": "Senate",
+   "spender": "Democratic side supporting Brown, more than",
+   "amount": 180000000,
+   "source": "https://time.com/article/2026/10/19/midterm-ad-spending-has-surpassed-10b-where-is-the-money-coming-from-"
+  },
+  {
+   "state": "ME",
+   "race": "Senate",
+   "spender": "Republican side committed or spent since January, about",
+   "amount": 114000000,
+   "source": "https://time.com/article/2026/10/19/midterm-ad-spending-has-surpassed-10b-where-is-the-money-coming-from-"
+  },
+  {
+   "state": "ME",
+   "race": "Senate",
+   "spender": "Democratic side since January, about",
+   "amount": 81000000,
+   "source": "https://time.com/article/2026/10/19/midterm-ad-spending-has-surpassed-10b-where-is-the-money-coming-from-"
+  },
+  {
+   "state": "OH",
+   "race": "Senate",
+   "spender": "Outside groups combined, airings 9/28 to 10/11",
+   "amount": 82380000,
+   "source": "https://mediaproject.wesleyan.edu/releases-101526/ citing AdImpact"
+  },
+  {
+   "state": "TX",
+   "race": "Senate",
+   "spender": "Outside groups combined, airings 9/28 to 10/11",
+   "amount": 74080000,
+   "source": "https://mediaproject.wesleyan.edu/releases-101526/"
+  },
+  {
+   "state": "MI",
+   "race": "Senate",
+   "spender": "Outside groups combined, airings 9/28 to 10/11",
+   "amount": 35680000,
+   "source": "https://mediaproject.wesleyan.edu/releases-101526/"
+  },
+  {
+   "state": "IA",
+   "race": "Senate",
+   "spender": "Outside groups combined, airings 9/28 to 10/11",
+   "amount": 30610000,
+   "source": "https://mediaproject.wesleyan.edu/releases-101526/"
+  },
+  {
+   "state": "ME",
+   "race": "Senate",
+   "spender": "Outside groups combined, airings 9/28 to 10/11",
+   "amount": 27230000,
+   "source": "https://mediaproject.wesleyan.edu/releases-101526/"
+  },
+  {
+   "state": "AK",
+   "race": "Senate",
+   "spender": "Outside groups combined, airings 9/28 to 10/11",
+   "amount": 17770000,
+   "source": "https://mediaproject.wesleyan.edu/releases-101526/"
+  },
+  {
+   "state": "NH",
+   "race": "Senate",
+   "spender": "Outside groups combined, airings 9/28 to 10/11",
+   "amount": 15840000,
+   "source": "https://mediaproject.wesleyan.edu/releases-101526/"
+  },
+  {
+   "state": "GA",
+   "race": "Senate",
+   "spender": "Outside groups combined, airings 9/28 to 10/11",
+   "amount": 11670000,
+   "source": "https://mediaproject.wesleyan.edu/releases-101526/"
+  },
+  {
+   "state": "NC",
+   "race": "Senate",
+   "spender": "Outside groups combined, airings 9/28 to 10/11",
+   "amount": 9640000,
+   "source": "https://mediaproject.wesleyan.edu/releases-101526/"
+  },
+  {
+   "state": "NE",
+   "race": "Senate",
+   "spender": "Outside groups combined, airings 9/28 to 10/11",
+   "amount": 8630000,
+   "source": "https://mediaproject.wesleyan.edu/releases-101526/"
+  },
+  {
+   "state": "KS",
+   "race": "Senate",
+   "spender": "Outside groups combined, airings 9/28 to 10/11",
+   "amount": 6680000,
+   "source": "https://mediaproject.wesleyan.edu/releases-101526/"
+  },
+  {
+   "state": "FL",
+   "race": "Senate",
+   "spender": "Outside groups combined, airings 9/28 to 10/11",
+   "amount": 3960000,
+   "source": "https://mediaproject.wesleyan.edu/releases-101526/"
+  },
+  {
+   "state": "SC",
+   "race": "Senate",
+   "spender": "Outside groups combined, airings 9/28 to 10/11",
+   "amount": 3100000,
+   "source": "https://mediaproject.wesleyan.edu/releases-101526/"
+  },
+  {
+   "state": "MN",
+   "race": "Senate",
+   "spender": "Outside groups combined, airings 9/28 to 10/11",
+   "amount": 160000,
+   "source": "https://mediaproject.wesleyan.edu/releases-101526/"
+  },
+  {
+   "state": "OH",
+   "race": "Governor",
+   "spender": "Outside groups combined, airings 9/28 to 10/11",
+   "amount": 14430000,
+   "source": "https://mediaproject.wesleyan.edu/releases-101526/"
+  },
+  {
+   "state": "NV",
+   "race": "Governor",
+   "spender": "Outside groups combined, airings 9/28 to 10/11",
+   "amount": 10500000,
+   "source": "https://mediaproject.wesleyan.edu/releases-101526/"
+  },
+  {
+   "state": "WI",
+   "race": "Governor",
+   "spender": "Outside groups combined, airings 9/28 to 10/11",
+   "amount": 8440000,
+   "source": "https://mediaproject.wesleyan.edu/releases-101526/"
+  },
+  {
+   "state": "MI",
+   "race": "Governor",
+   "spender": "Outside groups combined, airings 9/28 to 10/11",
+   "amount": 8380000,
+   "source": "https://mediaproject.wesleyan.edu/releases-101526/"
+  },
+  {
+   "state": "KS",
+   "race": "Governor",
+   "spender": "Outside groups combined, airings 9/28 to 10/11",
+   "amount": 4180000,
+   "source": "https://mediaproject.wesleyan.edu/releases-101526/"
+  },
+  {
+   "state": "AZ",
+   "race": "Governor",
+   "spender": "Outside groups combined, airings 9/28 to 10/11",
+   "amount": 3530000,
+   "source": "https://mediaproject.wesleyan.edu/releases-101526/"
+  }
+ ],
+ "notes": "OpenSecrets was blocked from this environment. CNBC and Washington Post article fetches failed. The web search budget ran out before AdImpact advertiser rankings by state could be searched, so named spender rankings by state are missing apart from the Texas PAC and MAGA Inc. Texas buys. Any further AdImpact searches need a follow up request. Every figure comes from secondary sites that compile FEC data: VoteLog for race totals, PaidForPolitics for race groups and committee finances, election.org for vendor payees, superpacs.com, briefs.co and legis1.com. These sources disagree with each other in places. Race outside_total, for_D and for_R come from VoteLog and count only the general election window. Each figure is money benefiting a candidate: IEs supporting them plus IEs opposing their opponent. In Nebraska, for_D means money benefiting the independent Dan Osborn, and pro Osborn groups are labeled side I. PaidForPolitics race pages miss recent SLF filings; SLF's latest filing shows as Aug 21 for MI, NC, ME, GA and NH. In those races the SLF rows come from the SLF committee page instead, which runs cycle to date through Oct 20. The PaidForPolitics Kansas page was last updated Oct 6. The PaidForPolitics Iowa race page leaves SLF out entirely, so the Iowa groups come from VoteLog. Where a source gave a rounded figure such as 7.1M, it is written here as 7100000. Some donor amounts add up several itemized contributions from the same listing, such as Majority Forward to SMP, House Majority Forward to HMP, Fairshake to its affiliates, and Koch to AFP Action. Donor lists show only the largest single contributions, so they are not complete totals. Raised, spent and cash dates are mixed: monthly filers through Aug 31, quarterly filers through Sept 30. MAGA Inc. spent and cash are as of Oct 14, but its raised figure is as of Aug 31. No Going Back PAC had no regular report yet; its spent figure is IEs only. SMP makes no direct IEs and spends through WinSenate. Vendor data is mostly Schedule B operating expenditures, which leave out most media buys, because buys are reported as Schedule E IEs and their payees are not added up anywhere in these sources. The only payee level media buy rows found were GLCF to Smart Media Group. legis1 names Flexpoint Media and MHB Media as SLF ad vendors but gives no amounts. No 2026 amounts were found for Canal Partners, Old Town Media, SKDK, GMMB, Screen Strategies or Mentzer Media tied to these groups. Vendor kind labels are my own classification from what each firm is known for, not from the filings. Several committees list vendors as receipt sources, likely refunds. Examples are Waterfront Strategies giving $8,257,683 to FF PAC and $813,549 to WinSenate, Mvar Media to WinSenate, and Kinetic Campaigns and Targeted Platform Media to Protect Progress. These are left out of the donor lists. America PAC reports an entity named United States of America Inc. as both its top donor and its top payee, as shown on its committee page. Musk's giving is reported differently across sources: $158M to SLF in two checks, $75M on Sept 9 and $83M about two weeks later, with SLF passing matching sums to Texas PAC the next day. America PAC got $76M from Musk per AP or more than $80M per TheWrap, and Lone Star Liberty got $10M. Musk's Q3 total was more than $276M per AP, with a cycle total of $366M per Slate or $369M per Time. Also from AdImpact via Newsweek on Oct 21: Senate ad reservations through Nov 3 are $208M Republican and $147M Democratic. Cumulative Senate ad spending as of Oct 13 is nearly $2.8B: $1.6B Republican, $1.1B Democratic, $136M independent. Your Community PAC has no 2026 data. One Nation is a 501c4 and does not report donors. The Ohio governor row has no IE total, only Wesleyan ad data. Montana was added as a competitive race but has totals only."
+}

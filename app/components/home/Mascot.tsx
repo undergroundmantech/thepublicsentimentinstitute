@@ -46,8 +46,8 @@ function PropArt({ prop, id }: { prop: Prop; id: string }) {
   }
 }
 
-export default function Mascot({ size = 96, walking, pose, prop = "clipboard", look = 1, cap = false, className, title = "Pointy, the On Point Politics canvasser" }:
-  { size?: number; walking?: boolean; pose?: Pose; prop?: Prop; look?: number; cap?: boolean; className?: string; title?: string }) {
+export default function Mascot({ size = 96, walking, pose, prop = "clipboard", look = 1, cap = false, detective = false, className, title = "Pointy, the On Point Politics canvasser" }:
+  { size?: number; walking?: boolean; pose?: Pose; prop?: Prop; look?: number; cap?: boolean; detective?: boolean; className?: string; title?: string }) {
   const id = React.useId().replace(/:/g, "");
   const p: Pose = pose ?? (walking === false ? "wave" : "walk");
   const lx = look * 5, py = p === "think" ? -6 : 2;
@@ -81,6 +81,18 @@ export default function Mascot({ size = 96, walking, pose, prop = "clipboard", l
           {cap ? (
             <g className="pty-cap"><path d="M58 92 a100 70 0 0 1 184 0 z" fill="#140b24" /><path d="M58 92 a100 70 0 0 1 184 0" fill="none" stroke={`url(#g${id})`} strokeWidth="10" /><path d="M226 88 q46 0 64 14 q-30 8 -70 4z" fill="#140b24" stroke="#9b5cff" strokeWidth="4" /><circle cx="150" cy="40" r="8" fill="#e7b341" /></g>
           ) : null}
+          {detective ? (
+            <g className="pty-det">
+              {/* a deerstalker in On Point plaid, ear flaps up, and a gold inspector's badge */}
+              <path d="M62 96 q88 -96 176 0 z" fill="#5b3a1e" />
+              <path d="M62 96 q88 -96 176 0" fill="none" stroke="#e7b341" strokeWidth="5" />
+              <g stroke="#e7b341" strokeWidth="3" opacity=".55"><path d="M96 64 L120 94" /><path d="M136 44 L150 94" /><path d="M172 44 L170 94" /><path d="M206 62 L196 94" /><path d="M80 82 L222 82" /></g>
+              <path d="M54 98 q-30 6 -36 -10 q22 -10 44 0z" fill="#5b3a1e" stroke="#e7b341" strokeWidth="3" />
+              <path d="M246 98 q30 6 36 -10 q-22 -10 -44 0z" fill="#5b3a1e" stroke="#e7b341" strokeWidth="3" />
+              <circle cx="150" cy="34" r="9" fill="#e7b341" />
+              <g transform="translate(196 236)"><path d="M0 -16 l14 6 v12 q0 12 -14 18 q-14 -6 -14 -18 v-12z" fill="#e7b341" stroke="#7a5512" strokeWidth="2" /><path d="M-5 0 l4 4 l7 -8" stroke="#3b2608" strokeWidth="3" fill="none" strokeLinecap="round" strokeLinejoin="round" /></g>
+            </g>
+          ) : null}
           {p === "think" ? <g className="pty-dots" fill="#f3eff8"><circle cx="262" cy="40" r="8" /><circle cx="286" cy="12" r="11" /><circle cx="316" cy="-22" r="15" /></g> : null}
         </g>
         {/* front arm with the prop */}
@@ -99,11 +111,11 @@ export default function Mascot({ size = 96, walking, pose, prop = "clipboard", l
 export const MASCOT_CSS = "";
 
 // Pointy as a page cameo: the mascot plus an optional speech bubble, placed by the parent with a class.
-export function Pointy({ pose = "wave", prop = "clipboard", size = 120, say, look = -1, cap, className, flip }: { pose?: Pose; prop?: Prop; size?: number; say?: React.ReactNode; look?: number; cap?: boolean; className?: string; flip?: boolean }) {
+export function Pointy({ pose = "wave", prop = "clipboard", size = 120, say, look = -1, cap, detective, className, flip }: { pose?: Pose; prop?: Prop; size?: number; say?: React.ReactNode; look?: number; cap?: boolean; detective?: boolean; className?: string; flip?: boolean }) {
   return (
     <div className={`pty-cameo${flip ? " flip" : ""}${className ? ` ${className}` : ""}`} aria-hidden={say ? undefined : true}>
       {say ? <div className="pty-say">{say}</div> : null}
-      <div className="pty-fig"><Mascot size={size} pose={pose} prop={prop} look={look} cap={cap} /></div>
+      <div className="pty-fig"><Mascot size={size} pose={pose} prop={prop} look={look} cap={cap} detective={detective} /></div>
     </div>
   );
 }
