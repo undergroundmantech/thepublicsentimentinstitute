@@ -10,8 +10,13 @@ import { Pointy } from "@/app/components/home/Mascot";
 type C = { n: string; st: string; area: number; r16?: number | null; r20?: number | null; r24?: number | null; v24?: number; pop?: { adults: number; cvap: number; wnh: number; bnh: number; his: number; oth: number }; fc?: [string, number][]; dc?: number };
 type DC = { st: string; county: string; fips: string; place: string; company: string; name: string; mw: number | null; investment_usd: number | null; status: string; opposition: string; fight: string; updated: string; source: string };
 type DCF = { projects: DC[]; policies: { st: string; county: string; kind: string; what: string; date: string; source: string }[]; polls: { st: string; pollster: string; date: string; finding: string; source: string }[] };
-type Layer = "r24" | "shift" | "fc" | "his" | "bnh" | "wnh" | "dc";
-const LAYERS: { k: Layer; l: string }[] = [{ k: "r24", l: "2024 result" }, { k: "shift", l: "Shift since 2020" }, { k: "fc", l: "2026 forecast" }, { k: "his", l: "Hispanic adults" }, { k: "bnh", l: "Black adults" }, { k: "wnh", l: "White adults" }, { k: "dc", l: "Data centers" }];
+type Layer = "r24" | "shift" | "fc" | "gov" | "house" | "turn" | "stops" | "his" | "bnh" | "wnh" | "dc";
+const LAYERS: { k: Layer; l: string }[] = [{ k: "r24", l: "2024 result" }, { k: "shift", l: "Shift since 2020" }, { k: "fc", l: "2026 Senate" }, { k: "gov", l: "2026 governor" }, { k: "house", l: "2026 House" }, { k: "turn", l: "2024 turnout" }, { k: "stops", l: "Campaign stops" }, { k: "his", l: "Hispanic adults" }, { k: "bnh", l: "Black adults" }, { k: "wnh", l: "White adults" }, { k: "dc", l: "Data centers" }];
+type Stop = { who: string; party: string; date: string; st: string; city: string; kind: string; for: string[]; src: string };
+const fcOf = (c: C | undefined, o: string) => c?.fc?.find((x) => x[0].startsWith(o + "-"))?.[1];
+const turnOf = (c: C | undefined) => (c?.v24 && c.pop?.cvap ? Math.min(100, (c.v24 / c.pop.cvap) * 100) : null);
+const fd = (iso: string) => { const t = Date.parse(iso + "T12:00:00Z"); return Number.isFinite(t) ? new Date(t).toLocaleDateString("en-US", { month: "short", day: "numeric", timeZone: "UTC" }) : iso; };
+type SortK = "n" | "r24" | "shift" | "fc" | "gov" | "turn" | "adults" | "v24";
 const ST: Record<string, string> = { AL: "Alabama", AK: "Alaska", AZ: "Arizona", AR: "Arkansas", CA: "California", CO: "Colorado", CT: "Connecticut", DE: "Delaware", DC: "District of Columbia", FL: "Florida", GA: "Georgia", HI: "Hawaii", ID: "Idaho", IL: "Illinois", IN: "Indiana", IA: "Iowa", KS: "Kansas", KY: "Kentucky", LA: "Louisiana", ME: "Maine", MD: "Maryland", MA: "Massachusetts", MI: "Michigan", MN: "Minnesota", MS: "Mississippi", MO: "Missouri", MT: "Montana", NE: "Nebraska", NV: "Nevada", NH: "New Hampshire", NJ: "New Jersey", NM: "New Mexico", NY: "New York", NC: "North Carolina", ND: "North Dakota", OH: "Ohio", OK: "Oklahoma", OR: "Oregon", PA: "Pennsylvania", RI: "Rhode Island", SC: "South Carolina", SD: "South Dakota", TN: "Tennessee", TX: "Texas", UT: "Utah", VT: "Vermont", VA: "Virginia", WA: "Washington", WV: "West Virginia", WI: "Wisconsin", WY: "Wyoming" };
 const STATUS: Record<string, string> = { announced: "#e7b341", construction: "#ff9a5c", operating: "#2fbf9b", paused: "#a79fbd", blocked: "#ff3b5c", withdrawn: "#6b6384" };
 const fm = (m: number | null | undefined) => (m == null ? "n/a" : Math.abs(m) < 0.05 ? "Even" : `${m < 0 ? "D" : "R"} +${Math.abs(m).toFixed(1)}`);
@@ -30,10 +35,15 @@ export default function CountyCenter() {
   const [q, setQ] = useState("");
   const [tip, setTip] = useState<{ x: number; y: number; f: string } | null>(null);
   const [status, setStatus] = useState<string>("all");
+  const [stops, setStops] = useState<Record<string, Stop[]>>({});
+  const [sort, setSort] = useState<{ k: SortK; d: 1 | -1 }>({ k: "v24", d: -1 });
   const wrap = useRef<HTMLDivElement>(null);
   useEffect(() => {
     Promise.all([fetch("/watchdog/us_counties.json").then((r) => r.json()), fetch("/watchdog/counties.json").then((r) => r.json()), fetch("/watchdog/datacenters.json").then((r) => r.json())])
       .then(([s, d, c]) => { setShapes(s); setData(d); setDc(c); }).catch(() => {});
+    // campaign stops from the trail, tied to the county of each stop's city
+    Promise.all([fetch("/watchdog/trail.json").then((r) => r.json()), fetch("/watchdog/stop_counties.json").then((r) => (r.ok ? r.json() : {}))])
+      .then(([t, sc]: [{ visits: Stop[] }, Record<string, string[]>]) => { const m: Record<string, Stop[]> = {}; for (const v of t.visits) for (const f of (v.city && sc[`${v.st}|${v.city}`]) || []) (m[f] ??= []).push(v); for (const k in m) m[k].sort((a, b) => b.date.localeCompare(a.date)); setStops(m); }).catch(() => {});
   }, []);
   useEffect(() => { try { const u = new URLSearchParams(window.location.search); const l = u.get("layer") as Layer | null; if (l && LAYERS.some((x) => x.k === l)) setLayer(l); const s = u.get("st"); if (s && ST[s.toUpperCase()]) setSt(s.toUpperCase()); } catch { /* no window */ } }, []);
 
@@ -50,11 +60,23 @@ export default function CountyCenter() {
     const c = data?.[f]; if (!c) return "rgba(255,255,255,.04)";
     if (layer === "r24") return c.r24 == null ? "rgba(255,255,255,.06)" : marginColor(c.r24);
     if (layer === "shift") { if (c.r24 == null || c.r20 == null) return "rgba(255,255,255,.06)"; const s = c.r24 - c.r20; return marginColor(s * 4); }
-    if (layer === "fc") { const m = c.fc?.find((x) => x[0].startsWith("sen"))?.[1] ?? c.fc?.[0]?.[1]; return m == null ? "rgba(255,255,255,.05)" : marginColor(m); }
+    if (layer === "fc" || layer === "gov" || layer === "house") { const m = fcOf(c, layer === "fc" ? "sen" : layer); return m == null ? "rgba(255,255,255,.05)" : marginColor(m); }
+    if (layer === "turn") { const t = turnOf(c); return t == null ? "rgba(255,255,255,.05)" : seq((t - 35) / 45, [47, 191, 155]); }
+    if (layer === "stops") { const n = stops[f]?.length ?? 0; return n ? seq(0.35 + Math.min(1, n / 6) * 0.65, [255, 217, 138]) : "rgba(255,255,255,.06)"; }
     if (layer === "dc") return dcBy[f] ? "rgba(231,179,65,.75)" : c.r24 == null ? "rgba(255,255,255,.05)" : "rgba(255,255,255,.07)";
     const v = c.pop?.[layer]; return v == null ? "rgba(255,255,255,.05)" : seq(v / (layer === "wnh" ? 100 : 60), layer === "his" ? [255, 154, 92] : layer === "bnh" ? [183, 140, 255] : [143, 176, 255]);
   };
-  const legend = layer === "r24" || layer === "fc" ? ["D +40", "Even", "R +40"] : layer === "shift" ? ["Moved D 10", "No move", "Moved R 10"] : layer === "dc" ? ["", "", ""] : ["0%", "", layer === "wnh" ? "100%" : "60% or more"];
+  const legend = layer === "r24" || layer === "fc" || layer === "gov" || layer === "house" ? ["D +40", "Even", "R +40"] : layer === "shift" ? ["Moved D 10", "No move", "Moved R 10"] : layer === "turn" ? ["35% of citizens", "", "80% or more"] : layer === "stops" ? ["1 stop", "", "6 or more"] : layer === "dc" ? ["", "", ""] : ["0%", "", layer === "wnh" ? "100%" : "60% or more"];
+  // the state as a whole, from its counties weighted by 2024 votes, for the "compared with the state" line
+  const stateM = useMemo(() => { const m: Record<string, number> = {}; if (!data) return m; const acc: Record<string, [number, number]> = {}; for (const c of Object.values(data)) if (c.r24 != null && c.v24) { const a = (acc[c.st] ??= [0, 0]); a[0] += c.r24 * c.v24; a[1] += c.v24; } for (const k in acc) m[k] = acc[k][0] / acc[k][1]; return m; }, [data]);
+  const rows = useMemo(() => {
+    if (!data) return [];
+    const val = (f: string, c: C, k: SortK): number | string | null => k === "n" ? c.n : k === "r24" ? c.r24 ?? null : k === "shift" ? (c.r24 != null && c.r20 != null ? c.r24 - c.r20 : null) : k === "fc" ? fcOf(c, "sen") ?? null : k === "gov" ? fcOf(c, "gov") ?? null : k === "turn" ? turnOf(c) : k === "adults" ? c.pop?.adults ?? null : c.v24 ?? null;
+    let list = Object.entries(data).filter(([, c]) => st === "all" || c.st === st);
+    if (st === "all") list = list.sort((a, b) => (b[1].v24 ?? 0) - (a[1].v24 ?? 0)).slice(0, 60);
+    return list.sort((a, b) => { const x = val(a[0], a[1], sort.k), y = val(b[0], b[1], sort.k); if (x == null) return 1; if (y == null) return -1; return (typeof x === "string" ? x.localeCompare(y as string) : (x as number) - (y as number)) * sort.d; });
+  }, [data, st, sort]);
+  const th = (k: SortK, l: string) => <th aria-sort={sort.k === k ? (sort.d === 1 ? "ascending" : "descending") : "none"}><button onClick={() => setSort((o) => ({ k, d: o.k === k ? (o.d === 1 ? -1 : 1) : k === "n" ? 1 : -1 }))}>{l}</button></th>;
   const matches = useMemo(() => { const k = q.trim().toLowerCase(); if (!data || k.length < 2) return []; return Object.entries(data).filter(([, c]) => `${c.n} ${c.st} ${ST[c.st] ?? ""}`.toLowerCase().includes(k)).slice(0, 8); }, [q, data]);
   const c = sel && data ? data[sel] : null;
   const projects = (dc?.projects ?? []).filter((p) => (st === "all" || p.st === st) && (status === "all" || p.status === status));
@@ -95,6 +117,8 @@ export default function CountyCenter() {
               <div>2024: <b>{fm(data[tip.f].r24)}</b>{data[tip.f].r20 != null && data[tip.f].r24 != null ? ` · shift ${fm((data[tip.f].r24 as number) - (data[tip.f].r20 as number))}` : ""}</div>
               {data[tip.f].fc?.[0] ? <div>{raceName(data[tip.f].fc![0][0])} forecast: <b>{fm(data[tip.f].fc![0][1])}</b></div> : null}
               {data[tip.f].pop ? <div>{data[tip.f].pop!.adults.toLocaleString()} adults · {data[tip.f].pop!.his}% Hispanic · {data[tip.f].pop!.bnh}% Black</div> : null}
+              {turnOf(data[tip.f]) != null ? <div>2024 turnout: <b>{turnOf(data[tip.f])!.toFixed(0)}%</b> of voting age citizens</div> : null}
+              {stops[tip.f]?.length ? <div className="g">{stops[tip.f].length} campaign {stops[tip.f].length === 1 ? "stop" : "stops"}: {[...new Set(stops[tip.f].map((v) => v.who))].slice(0, 3).join(", ")}</div> : null}
               {dcBy[tip.f] ? <div className="g">{dcBy[tip.f].length} data center {dcBy[tip.f].length === 1 ? "project" : "projects"}</div> : null}
             </div>
           ) : null}
@@ -112,6 +136,8 @@ export default function CountyCenter() {
               <h3 className="cc-h">{c.n}</h3>
               <div className="cc-kv"><span>Land area</span><b>{Math.round(c.area).toLocaleString()} sq mi</b></div>
               {c.v24 ? <div className="cc-kv"><span>2024 votes cast</span><b>{c.v24.toLocaleString()}</b></div> : null}
+              {turnOf(c) != null ? <div className="cc-kv"><span>2024 turnout, voting age citizens</span><b>{turnOf(c)!.toFixed(1)}%</b></div> : null}
+              {c.r24 != null && stateM[c.st] != null ? <div className="cc-kv"><span>Compared with {ST[c.st] ?? c.st}</span><b>{Math.abs(c.r24 - stateM[c.st]) < 0.5 ? "About the same" : `${Math.abs(c.r24 - stateM[c.st]).toFixed(1)} pts more ${c.r24 > stateM[c.st] ? "Republican" : "Democratic"}`}</b></div> : null}
               <div className="eye" style={{ marginTop: 12 }}>Presidential results</div>
               {(["r16", "r20", "r24"] as const).map((k, i) => { const m = c[k]; return m == null ? null : (
                 <div key={k} className="cc-res"><span>{2016 + i * 4}</span><span className="cc-rb"><i style={{ left: m < 0 ? `${50 + m / 2}%` : "50%", width: `${Math.min(50, Math.abs(m) / 2)}%`, background: m < 0 ? "#3d7bff" : "#ff3b5c" }} /></span><b className={m < 0 ? "d" : "r"}>{fm(m)}</b></div>); })}
@@ -123,6 +149,13 @@ export default function CountyCenter() {
                   <div className="cc-kv"><span>Citizens of voting age</span><b>{c.pop.cvap.toLocaleString()}</b></div>
                   <div className="cc-stack">{([["wnh", "White", "#8fb0ff"], ["his", "Hispanic", "#ff9a5c"], ["bnh", "Black", "#b78cff"], ["oth", "Asian and other", "#2fbf9b"]] as const).map(([k, l, col]) => <i key={k} style={{ width: `${c.pop![k]}%`, background: col }} title={`${l} ${c.pop![k]}%`} />)}</div>
                   <div className="cc-keys">{([["wnh", "White", "#8fb0ff"], ["his", "Hispanic", "#ff9a5c"], ["bnh", "Black", "#b78cff"], ["oth", "Asian and other", "#2fbf9b"]] as const).map(([k, l, col]) => <span key={k}><i style={{ background: col }} />{l} {c.pop![k]}%</span>)}</div>
+                </>
+              ) : null}
+              {stops[sel]?.length ? (
+                <>
+                  <div className="eye gold" style={{ marginTop: 12 }}>Campaign stops here</div>
+                  {stops[sel].map((v, i) => <div key={i} className="cc-poll"><b>{v.who} · {fd(v.date)}{v.city ? `, ${v.city}` : ""}</b><small>{v.kind}{v.for?.length ? ` for ${v.for.join(", ")}` : ""}{v.src ? <> · <a href={v.src} target="_blank" rel="noreferrer">Source</a></> : null}</small></div>)}
+                  <Link href="/watchdog/trail" className="cc-fc"><span>See the whole campaign trail</span><b>Trail</b></Link>
                 </>
               ) : null}
               {dcBy[sel] ? (
@@ -150,6 +183,27 @@ export default function CountyCenter() {
           )}
         </aside>
       </div>
+
+      <section className="card cc-tbl">
+        <div className="card-h"><h3>{st === "all" ? "The 60 biggest counties by 2024 vote" : `Every county in ${ST[st]}`}</h3><span className="eye">{rows.length} counties · click a row to open it</span></div>
+        <div className="cc-tw">
+          <table>
+            <thead><tr>{th("n", "County")}{th("r24", "2024")}{th("shift", "Shift")}{th("fc", "2026 Senate")}{th("gov", "2026 governor")}{th("turn", "Turnout")}{th("v24", "Votes")}{th("adults", "Adults")}<th><span className="cc-th">Stops</span></th></tr></thead>
+            <tbody>{rows.map(([f, r]) => { const sh = r.r24 != null && r.r20 != null ? r.r24 - r.r20 : null, sn = fcOf(r, "sen"), gv = fcOf(r, "gov"), tu = turnOf(r); return (
+              <tr key={f} className={sel === f ? "on" : ""} onClick={() => { pick(f); wrap.current?.scrollIntoView({ behavior: "smooth", block: "center" }); }}>
+                <td><b>{r.n}</b>{st === "all" ? <span>, {r.st}</span> : null}</td>
+                <td className={r.r24 == null ? "" : r.r24 < 0 ? "d" : "r"}>{fm(r.r24)}</td>
+                <td className={sh == null ? "" : sh < 0 ? "d" : "r"}>{sh == null ? "n/a" : `${sh < 0 ? "D" : "R"} +${Math.abs(sh).toFixed(1)}`}</td>
+                <td className={sn == null ? "" : sn < 0 ? "d" : "r"}>{sn == null ? "" : fm(sn)}</td>
+                <td className={gv == null ? "" : gv < 0 ? "d" : "r"}>{gv == null ? "" : fm(gv)}</td>
+                <td>{tu == null ? "" : `${tu.toFixed(0)}%`}</td>
+                <td>{r.v24 ? r.v24.toLocaleString() : ""}</td>
+                <td>{r.pop?.adults ? r.pop.adults.toLocaleString() : ""}</td>
+                <td>{stops[f]?.length ?? ""}</td>
+              </tr>); })}</tbody>
+          </table>
+        </div>
+      </section>
 
       <section className="card cc-dc">
         <div className="card-h"><h3>Data center buildouts {st !== "all" ? `in ${ST[st]}` : ""}</h3>

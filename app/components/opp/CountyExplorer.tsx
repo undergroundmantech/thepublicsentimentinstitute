@@ -7,7 +7,7 @@ import { pathsBox, type CountyPath } from "../home/countyGeo";
 
 export type XRow = { id: string; name: string; a: number; b: number; other: number; total: number };
 export type XSide = { name: string; short: string; color: string; letter: string };
-type Mode = "margin" | "shift" | "bubbles" | "turnout";
+type Mode = "margin" | "p24" | "shift" | "bubbles" | "turnout";
 
 const fmt = (n: number) => Math.round(n).toLocaleString("en-US");
 const short = (n: number) => (Math.abs(n) >= 1e6 ? `${(n / 1e6).toFixed(2)}M` : Math.abs(n) >= 1e4 ? `${(n / 1e3).toFixed(0)}K` : fmt(n));
@@ -34,7 +34,7 @@ const mOf = (r: { a: number; b: number; total: number }) => (r.total > 0 ? ((r.b
 
 export const CX_CSS = `
 :root:has(.fc-xl){--wrap:2400px}
-.cx{display:grid;grid-template-columns:minmax(0,1fr) 380px;gap:16px;align-items:start}
+.cx{display:grid;grid-template-columns:minmax(0,1fr) clamp(360px,23vw,480px);gap:16px;align-items:start}
 @media (max-width:1100px){.cx{grid-template-columns:1fr}}
 .cx-map{position:relative;overflow:hidden;padding:0}
 .cx-bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;padding:12px 14px;border-bottom:1px solid var(--line)}
@@ -45,12 +45,13 @@ export const CX_CSS = `
 .cx-seg button:focus-visible,.cx-zoom button:focus-visible,.cx-list button:focus-visible,.cx-step button:focus-visible{outline:2px solid var(--hi);outline-offset:2px}
 .cx-search{margin-left:auto;min-width:190px;font:600 13px var(--font-b);color:var(--ink);background:rgba(var(--line-rgb),.04);border:1px solid var(--line2);border-radius:10px;padding:8px 11px}
 .cx-stage{position:relative;background:radial-gradient(ellipse at 50% 40%,rgba(var(--line-rgb),.05),transparent 70%)}
-.cx-svg{display:block;width:100%;height:min(78vh,860px);touch-action:manipulation}
+.cx-svg{display:block;width:100%;height:max(600px,calc(100vh - 190px));touch-action:manipulation}
 .cx-svg path{stroke:rgba(var(--canvas-rgb),.85);stroke-width:.8;vector-effect:non-scaling-stroke;cursor:pointer;transition:fill .45s ease,opacity .25s}
 .cx-svg path.dim{opacity:.35}
 .cx-svg .cx-out{fill:none;stroke:var(--hi);stroke-width:2.6;vector-effect:non-scaling-stroke;pointer-events:none}
 .cx-svg .cx-hov{fill:none;stroke:var(--hi);stroke-width:1.6;vector-effect:non-scaling-stroke;pointer-events:none;opacity:.8}
 .cx-svg circle{stroke:rgba(var(--canvas-rgb),.9);vector-effect:non-scaling-stroke;stroke-width:1;pointer-events:none;transition:r .45s ease,opacity .3s}
+.cx-svg .cx-sub{font-family:var(--font-m);font-weight:700;fill:rgba(255,255,255,.88)}
 .cx-svg text{pointer-events:none;font-family:var(--font-b);font-weight:700;fill:#fff;paint-order:stroke;stroke:rgba(var(--canvas-rgb),.85);stroke-linejoin:round}
 .cx-zoom{position:absolute;right:14px;top:14px;display:grid;gap:6px}
 .cx-zoom button{width:34px;height:34px;border-radius:10px;border:1px solid var(--line2);background:rgba(var(--canvas-rgb),.7);color:var(--ink);font:700 16px var(--font-m);cursor:pointer;backdrop-filter:blur(8px)}
@@ -142,6 +143,7 @@ export default function CountyExplorer({ paths, rows, sides, unit = "counties", 
     if (mode === "turnout") return turnFill((Math.log(r.total) - Math.log(minTotal)) / Math.max(0.01, Math.log(maxTotal) - Math.log(minTotal)));
     if (mode === "shift") { const s = shift(id); return s == null ? "rgba(var(--line-rgb),.1)" : shiftFill(s, indRace, shiftCap); }
     if (mode === "bubbles") return "rgba(var(--line-rgb),.07)";
+    if (mode === "p24") { const m = m24(id); return m == null ? "rgba(var(--line-rgb),.1)" : marginColor(m); }
     return kind === "measure" ? yesFill(r.total ? (100 * r.a) / (r.a + r.b) : 50) : (indRace ? marginColorInd(mOf(r)) : marginColor(mOf(r)));
   };
 
@@ -193,15 +195,15 @@ export default function CountyExplorer({ paths, rows, sides, unit = "counties", 
   const labels: XRow[] = [];
   {
     const kept: [number, number, number, number][] = [];
-    for (const r of byVotes.slice(0, 24)) {
+    for (const r of byVotes.slice(0, 80)) {
       const b = boxes[r.id]; if (!b) continue;
       const cx = (b[0] + b[2]) / 2, cy = (b[1] + b[3]) / 2;
       if (cx < vb[0] || cx > vb[0] + vb[2] || cy < vb[1] || cy > vb[1] + vb[3]) continue;
-      const w = r.name.replace(/ (County|Parish|Borough|city)$/i, "").length * fs * 0.56, h = fs * 1.2;
+      const w = Math.max(r.name.replace(/ (County|Parish|Borough|city)$/i, "").length, 6) * fs * 0.56, h = fs * 2.3;
       const box: [number, number, number, number] = [cx - w / 2, cy - h / 2, cx + w / 2, cy + h / 2];
       if (kept.some((k) => box[0] < k[2] && box[2] > k[0] && box[1] < k[3] && box[3] > k[1])) continue;
       kept.push(box); labels.push(r);
-      if (labels.length >= 12) break;
+      if (labels.length >= 28) break;
     }
   }
 
@@ -210,13 +212,13 @@ export default function CountyExplorer({ paths, rows, sides, unit = "counties", 
   const bNet = rows.filter((r) => r.b > r.a).map((r) => ({ id: r.id, v: r.b - r.a })).sort((x, y) => y.v - x.v);
   const aSum = aNet.reduce((s, x) => s + x.v, 0), bSum = bNet.reduce((s, x) => s + x.v, 0), span = Math.max(aSum, bSum) * 2 || 1;
 
-  const legend = mode === "turnout" ? { ramp: TURN_RAMP, l: "Fewest votes", r: "Most votes" }
+  const legend = mode === "p24" ? { ramp: RAMP_CSS, l: "Harris +40", r: "Trump +40" } : mode === "turnout" ? { ramp: TURN_RAMP, l: "Fewest votes", r: "Most votes" }
     : mode === "shift" ? { ramp: indRace ? SHIFT_IND_RAMP : SHIFT_RAMP, l: `${sides[0].letter} +${shiftCap} from 2024`, r: `${sides[1].letter} +${shiftCap} from 2024` }
     : mode === "bubbles" ? null
     : kind === "measure" ? { ramp: YES_RAMP, l: "No +30", r: "Yes +30" } : { ramp: indRace ? RAMP_IND_CSS : RAMP_CSS, l: `${sides[0].letter} +40`, r: `${sides[1].letter} +40` };
 
   const modes: [Mode, string][] = kind === "race"
-    ? [["margin", "Margin"], ["shift", "Shift from 2024"], ["bubbles", "Vote bubbles"], ["turnout", "Turnout"]]
+    ? [["margin", "2026 margin"], ...(p24 ? [["p24", "2024 president"] as [Mode, string]] : []), ["shift", "Shift from 2024"], ["bubbles", "Vote bubbles"], ["turnout", "Turnout"]]
     : [["margin", "Yes share"], ["bubbles", "Vote bubbles"], ["turnout", "Turnout"]];
   const tabs: [typeof tab, string][] = [["big", "Most votes"], ["a", kind === "measure" ? "Most Yes" : `Best for ${sides[0].short}`], ["b", kind === "measure" ? "Most No" : `Best for ${sides[1].short}`], ["close", "Closest"], ...(p24 ? [["shift", "Biggest shift"] as [typeof tab, string]] : [])];
 
@@ -249,7 +251,7 @@ export default function CountyExplorer({ paths, rows, sides, unit = "counties", 
               }) : null}
               {hov && hov !== sel && boxes[hov] ? <path className="cx-hov" d={P.find((p) => p.id === hov)?.d} /> : null}
               {sel && boxes[sel] ? <path className="cx-out" d={P.find((p) => p.id === sel)?.d} /> : null}
-              {mode !== "bubbles" ? labels.map((r) => { const b = boxes[r.id]; return <text key={r.id} x={(b[0] + b[2]) / 2} y={(b[1] + b[3]) / 2} fontSize={fs} strokeWidth={fs / 4} textAnchor="middle" dominantBaseline="middle">{r.name.replace(/ (County|Parish|Borough|city)$/i, "")}</text>; }) : null}
+              {mode !== "bubbles" ? labels.map((r) => { const b = boxes[r.id], x = (b[0] + b[2]) / 2, y = (b[1] + b[3]) / 2; const v = mode === "p24" ? m24(r.id) : mode === "shift" ? shift(r.id) : mode === "turnout" ? null : mOf(r); const sub = mode === "turnout" ? short(r.total) : v == null ? "" : mode === "shift" ? sMLabel(v) : mode === "p24" ? (Math.abs(v) < 0.05 ? "Even" : `${v < 0 ? "D" : "R"} +${Math.abs(v).toFixed(1)}`) : kind === "measure" ? `Yes ${(r.total ? (100 * r.a) / (r.a + r.b) : 50).toFixed(0)}%` : mLabel(v); return <text key={r.id} x={x} y={y - fs * 0.55} fontSize={fs} strokeWidth={fs / 4} textAnchor="middle" dominantBaseline="middle">{r.name.replace(/ (County|Parish|Borough|city)$/i, "")}{sub ? <tspan x={x} dy={fs * 1.1} fontSize={fs * 0.86} className="cx-sub">{sub}</tspan> : null}</text>; }) : null}
             </svg>
             <div className="cx-zoom">
               <button aria-label="Zoom in" onClick={() => zoom(1.6)}>+</button>

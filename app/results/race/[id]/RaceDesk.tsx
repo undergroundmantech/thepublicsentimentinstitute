@@ -828,7 +828,7 @@ body main > div > div { padding-top: 0 !important; padding-bottom: 0 !important;
 .rd-map-toggles { display: flex; align-self: flex-start; gap: 4px; margin-bottom: 10px; padding: 3px; border-radius: 999px; background: var(--wash); border: 1px solid var(--rule); }
 .rd-map-toggles button { padding: 5px 13px; border-radius: 999px; border: 0; background: none; cursor: pointer; font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 10.5px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-dim); transition: background .15s ease, color .15s ease; }
 .rd-map-toggles button.on { background: var(--canvas); color: var(--page); }
-.rd-map { position: relative; height: clamp(400px, 56vh, 620px); width: 100%; }
+.rd-map { position: relative; height: clamp(460px, calc(100vh - 230px), 1000px); width: 100%; }
 .rd-map::before { content: ''; position: absolute; inset: -8% -4%; border-radius: 40px; background: radial-gradient(58% 58% at 50% 46%, rgba(106,108,255,0.14), transparent 72%); filter: blur(28px); pointer-events: none; }
 .rd-map .opa-er-map { position: absolute; inset: 0; width: 100%; height: 100%; }
 .rd-map .opa-er-mapvig { display: none; }

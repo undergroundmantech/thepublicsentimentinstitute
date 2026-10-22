@@ -1476,7 +1476,7 @@ html[data-theme="dark"] .desk{
   font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.08em;
   text-transform:uppercase;color:var(--ink3);transition:background .15s ease,color .15s ease}
 .rd-map-toggles button.on{background:var(--canvas);color:var(--panel)}
-.rd-map{position:relative;height:clamp(380px,54vh,580px);width:100%;border-radius:var(--r-panel);
+.rd-map{position:relative;height:clamp(460px,calc(100vh - 230px),1000px);width:100%;border-radius:var(--r-panel);
   overflow:hidden;background:var(--panel2);border:1px solid var(--hairline)}
 .rd-map-legend{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:12px;
   font-family:var(--mono);font-size:10px;letter-spacing:.04em;color:var(--ink3)}

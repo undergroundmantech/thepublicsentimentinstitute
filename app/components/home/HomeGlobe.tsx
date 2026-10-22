@@ -86,25 +86,12 @@ export default function HomeGlobe({ races, odds, updated, daysOut }: { races: Re
     size();
     const path = geoPath(proj, ctx), grat = geoGraticule10();
     const t0 = performance.now();
-    // scenery: a twinkling starfield, the odd shooting star, aurora ribbons over the pole, beacons on the closest
-    // races, Pointy's route drawn between them, satellites orbiting with the closest margins, new poll pings,
-    // a radar sweep across the map, Pointy's footprints and ballot confetti
+    // scenery: a quiet starfield, beacons on the closest races, Pointy's route drawn between them and his footprints
     const rnd = (i: number) => { const v = Math.sin(i * 127.1 + 311.7) * 43758.5453; return v - Math.floor(v); };
     const stars = Array.from({ length: 280 }, (_, i) => ({ x: rnd(i), y: rnd(i + 500), r: 0.35 + rnd(i + 900) * 1.35, ph: rnd(i + 1300) * 6.283, sp: 0.5 + rnd(i + 1700) * 1.8, hue: rnd(i + 2100) }));
-    let shoot: { x: number; y: number; vx: number; vy: number; life: number } | null = null, nextShoot = 2500;
     const centroid = (st: string) => { const f = geo.states.find((g) => g.st === st); return f ? (geoCentroid(f as GeoPermissibleObjects) as [number, number]) : null; };
     const beacons = list.filter((r) => Math.abs(r.m) < 4 && r.st !== "AK" && r.st !== "HI").map((r, i) => ({ ll: centroid(r.st), c: Math.abs(r.m) < 1.5 ? "231,179,65" : r.m < 0 ? (r.ind ? "183,140,255" : "93,140,255") : "255,80,110", d: i * 0.37 })).filter((b) => b.ll) as { ll: [number, number]; c: string; d: number }[];
-    const colOf = (r: GRace) => (Math.abs(r.m) < 1.5 ? "231,179,65" : r.m < 0 ? (r.ind ? "183,140,255" : "93,140,255") : "255,80,110");
-    // satellites: the six closest races ride two tilted orbits around the globe
-    const sats = [...list].filter((r) => Math.abs(r.m) < 99).sort((a, b) => Math.abs(a.m) - Math.abs(b.m)).slice(0, 6)
-      .map((r, i) => ({ txt: `${r.st} ${fm(r.m, r.ind)}`, c: colOf(r), orbit: i % 2, ph: (i * 2.1) % 6.283 }));
-    // poll pings: states whose latest poll is under two weeks old light up in turn
-    const pingable = list.filter((r) => r.pl?.some(([age]) => age <= 14) && centroid(r.st)).map((r) => ({ ll: centroid(r.st) as [number, number], c: colOf(r), st: r.st, n: r.pl!.filter(([age]) => age <= 14).length }));
-    const pings: { ll: [number, number]; c: string; txt: string; t: number }[] = []; let nextPing = 900, pingIx = 0;
-    const aur = Array.from({ length: 3 }, (_, i) => ({ y: 0.08 + i * 0.07, amp: 18 + i * 9, sp: 7000 + i * 2600, hue: ["90,255,190", "130,110,255", "255,90,190"][i], w: 46 + i * 14 }));
     const steps: { ll: [number, number]; t: number; side: number }[] = []; let lastStep = 0, side = 1;
-    const parts: { x: number; y: number; vx: number; vy: number; c: string; life: number; rot: number; vr: number }[] = [];
-    let lastPhase = "stop";
     const facing = (ll: [number, number]) => geoDistance(ll, [-rot.current[0], -rot.current[1]]) < 1.5;
     // the walk: leg k goes from tour[k] to tour[k+1] over the globe surface, then a pause at the stop
     let leg = 0, phase: "walk" | "stop" = "stop", tp = t0, interp = tour.length > 1 ? geoInterpolate(tour[0].ll, tour[1].ll) : null;
@@ -122,61 +109,6 @@ export default function HomeGlobe({ races, odds, updated, daysOut }: { races: Re
         ctx.fillStyle = st.hue > 0.85 ? `rgba(255,214,140,${a * 0.8})` : st.hue > 0.7 ? `rgba(160,190,255,${a * 0.8})` : `rgba(255,255,255,${a * 0.7})`;
         ctx.fillRect(st.x * W, st.y * H, st.r, st.r);
       }
-      if (!reduce) {
-        if (!shoot && t > nextShoot) { shoot = { x: W * (0.15 + Math.random() * 0.6), y: H * (0.02 + Math.random() * 0.25), vx: 9 + Math.random() * 6, vy: 3 + Math.random() * 3, life: 1 }; nextShoot = t + 5000 + Math.random() * 6000; }
-        if (shoot) {
-          const g = ctx.createLinearGradient(shoot.x, shoot.y, shoot.x - shoot.vx * 12, shoot.y - shoot.vy * 12);
-          g.addColorStop(0, `rgba(255,255,255,${shoot.life})`); g.addColorStop(1, "rgba(255,255,255,0)");
-          ctx.strokeStyle = g; ctx.lineWidth = 1.6; ctx.beginPath(); ctx.moveTo(shoot.x, shoot.y); ctx.lineTo(shoot.x - shoot.vx * 12, shoot.y - shoot.vy * 12); ctx.stroke();
-          shoot.x += shoot.vx; shoot.y += shoot.vy; shoot.life -= 0.018; if (shoot.life <= 0 || shoot.x > W) shoot = null;
-        }
-      }
-      // aurora ribbons, drawn behind the globe
-      if (!reduce) {
-        ctx.save(); ctx.globalCompositeOperation = "lighter";
-        for (const a of aur) {
-          const base = H * a.y + Math.sin(t / a.sp) * 10;
-          for (let x = 0; x <= W; x += 14) {
-            const y = base + Math.sin(x / 140 + t / a.sp * 3) * a.amp + Math.sin(x / 61 - t / 2300) * 6;
-            const al = 0.045 * (0.6 + 0.4 * Math.sin(x / 90 + t / 1700)) * Math.min(1, x / (W * 0.25), (W - x) / (W * 0.25));
-            const g = ctx.createLinearGradient(0, y - a.w, 0, y + a.w * 0.4);
-            g.addColorStop(0, `rgba(${a.hue},0)`); g.addColorStop(0.7, `rgba(${a.hue},${al})`); g.addColorStop(1, `rgba(${a.hue},0)`);
-            ctx.fillStyle = g; ctx.fillRect(x, y - a.w, 15, a.w * 1.4);
-          }
-        }
-        ctx.restore();
-      }
-      // satellites on the far side of the orbit pass behind the globe
-      const satPos = (s: { orbit: number; ph: number }) => {
-        const ang = s.ph + t / (s.orbit ? 21000 : 15000) * (s.orbit ? -1 : 1) * 6.283, tilt = s.orbit ? -0.32 : 0.22;
-        const rx = R * (s.orbit ? 1.2 : 1.1), ry = R * (s.orbit ? 0.3 : 0.2);
-        const x0 = Math.cos(ang) * rx, y0 = Math.sin(ang) * ry;
-        return { x: cx + x0 * Math.cos(tilt) - y0 * Math.sin(tilt), y: cy - R * (s.orbit ? 0.12 : 0.28) + x0 * Math.sin(tilt) + y0 * Math.cos(tilt), front: Math.sin(ang) > 0, rx, ry, tilt };
-      };
-      const drawOrbit = (o: number, front: boolean) => {
-        const rx = R * (o ? 1.2 : 1.1), ry = R * (o ? 0.3 : 0.2), tilt = o ? -0.32 : 0.22, oy = cy - R * (o ? 0.12 : 0.28);
-        ctx.strokeStyle = `rgba(200,190,255,${front ? 0.16 : 0.07})`; ctx.lineWidth = 1; ctx.setLineDash([2, 6]);
-        ctx.beginPath(); ctx.ellipse(cx, oy, rx, ry, tilt, front ? 0 : Math.PI, front ? Math.PI : Math.PI * 2); ctx.stroke(); ctx.setLineDash([]);
-      };
-      const drawSat = (s: (typeof sats)[number]) => {
-        const p = satPos(s), al = p.front ? 1 : 0.35;
-        if (p.x < -40 || p.x > W + 40 || p.y < -20 || p.y > H + 20) return;
-        ctx.save(); ctx.globalAlpha = al;
-        ctx.shadowColor = `rgba(${s.c},1)`; ctx.shadowBlur = p.front ? 16 : 4;
-        ctx.fillStyle = `rgba(${s.c},1)`; ctx.fillRect(p.x - 3, p.y - 3, 6, 6);
-        ctx.shadowBlur = 0; ctx.strokeStyle = "rgba(230,225,255,.7)"; ctx.lineWidth = 1.2;
-        ctx.beginPath(); ctx.moveTo(p.x - 12, p.y); ctx.lineTo(p.x - 5, p.y); ctx.moveTo(p.x + 5, p.y); ctx.lineTo(p.x + 12, p.y); ctx.stroke();
-        ctx.fillStyle = "rgba(160,190,255,.5)"; ctx.fillRect(p.x - 13, p.y - 2.5, 5, 5); ctx.fillRect(p.x + 8, p.y - 2.5, 5, 5);
-        if (p.front) {
-          ctx.font = "800 10.5px ui-monospace, monospace"; ctx.textAlign = "left"; ctx.textBaseline = "middle";
-          const w = ctx.measureText(s.txt).width + 12;
-          ctx.fillStyle = "rgba(8,5,16,.82)"; ctx.fillRect(p.x + 16, p.y - 9, w, 18);
-          ctx.strokeStyle = `rgba(${s.c},.7)`; ctx.strokeRect(p.x + 16.5, p.y - 8.5, w - 1, 17);
-          ctx.fillStyle = "#f3eff8"; ctx.fillText(s.txt, p.x + 22, p.y + 0.5);
-        }
-        ctx.restore();
-      };
-      if (!reduce) { drawOrbit(0, false); drawOrbit(1, false); for (const s of sats) if (!satPos(s).front) drawSat(s); }
       // atmosphere and ocean
       const atm = ctx.createRadialGradient(cx, cy, R * 0.92, cx, cy, R * 1.12);
       atm.addColorStop(0, "rgba(120,90,255,.35)"); atm.addColorStop(1, "rgba(120,90,255,0)");
@@ -206,13 +138,6 @@ export default function HomeGlobe({ races, odds, updated, daysOut }: { races: Re
         ctx.fillStyle = rt === "leanD" || rt === "leanR" || rt === "toss" ? "rgba(20,10,40,.85)" : r ? "rgba(255,255,255,.92)" : "rgba(255,255,255,.3)";
         ctx.fillText(f.st, p[0], p[1]);
       }
-      // a slow light sweeping over the globe
-      if (!reduce) {
-        const lx = cx + Math.cos(t / 6000) * R * 0.45, ly = cy - R * 0.35 + Math.sin(t / 8000) * R * 0.12;
-        const sh = ctx.createRadialGradient(lx, ly, 0, lx, ly, R * 0.75);
-        sh.addColorStop(0, "rgba(200,180,255,.10)"); sh.addColorStop(1, "rgba(200,180,255,0)");
-        ctx.save(); ctx.beginPath(); path({ type: "Sphere" }); ctx.clip(); ctx.fillStyle = sh; ctx.fillRect(cx - R, cy - R, R * 2, R * 2); ctx.restore();
-      }
       // beacons on the closest races
       for (const bc of beacons) {
         if (!facing(bc.ll)) continue; const p = proj(bc.ll); if (!p) continue;
@@ -221,14 +146,6 @@ export default function HomeGlobe({ races, odds, updated, daysOut }: { races: Re
           ctx.strokeStyle = `rgba(${bc.c},${(1 - ph) * 0.8})`; ctx.lineWidth = 2; ctx.beginPath(); ctx.arc(p[0], p[1], 4 + ph * 26, 0, 6.283); ctx.stroke();
         }
         ctx.fillStyle = `rgba(${bc.c},1)`; ctx.beginPath(); ctx.arc(p[0], p[1], 3, 0, 6.283); ctx.fill();
-      }
-      // a radar sweep turning over the map
-      if (!reduce && "createConicGradient" in ctx) {
-        const a0 = (t / 5200) % 6.283;
-        const cg = (ctx as CanvasRenderingContext2D & { createConicGradient: (a: number, x: number, y: number) => CanvasGradient }).createConicGradient(a0, cx, cy);
-        cg.addColorStop(0, "rgba(160,230,255,.13)"); cg.addColorStop(0.06, "rgba(160,230,255,0)"); cg.addColorStop(1, "rgba(160,230,255,0)");
-        ctx.save(); ctx.beginPath(); path({ type: "Sphere" }); ctx.clip(); ctx.fillStyle = cg; ctx.fillRect(cx - R, cy - R, R * 2, R * 2);
-        ctx.strokeStyle = "rgba(170,235,255,.22)"; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(cx + Math.cos(a0) * R, cy + Math.sin(a0) * R); ctx.stroke(); ctx.restore();
       }
       // Pointy's route between the closest races, a dotted path with a spark running along it
       if (tour.length > 1) {
@@ -241,23 +158,6 @@ export default function HomeGlobe({ races, odds, updated, daysOut }: { races: Re
           ctx.beginPath(); pts.forEach((q, n) => (n ? ctx.lineTo(q[0], q[1]) : ctx.moveTo(q[0], q[1]))); ctx.stroke(); ctx.setLineDash([]);
         }
       }
-      // new poll pings
-      if (!reduce && pingable.length) {
-        if (t > nextPing) {
-          const pg = pingable[pingIx++ % pingable.length];
-          if (facing(pg.ll)) pings.push({ ll: pg.ll, c: pg.c, txt: `${pg.st} +${pg.n} new ${pg.n === 1 ? "poll" : "polls"}`, t });
-          nextPing = t + 1500;
-        }
-        for (let k = pings.length - 1; k >= 0; k--) {
-          const pg = pings[k], age = (t - pg.t) / 2600; if (age > 1) { pings.splice(k, 1); continue; }
-          const p = proj(pg.ll); if (!p || !facing(pg.ll)) continue;
-          const s0 = 6 + age * 34;
-          ctx.strokeStyle = `rgba(${pg.c},${(1 - age) * 0.9})`; ctx.lineWidth = 1.6; ctx.strokeRect(p[0] - s0 / 2, p[1] - s0 / 2, s0, s0);
-          ctx.font = "800 10px ui-monospace, monospace"; ctx.textAlign = "center"; ctx.textBaseline = "middle";
-          ctx.fillStyle = `rgba(255,255,255,${Math.min(1, (1 - age) * 1.6)})`; ctx.fillText(pg.txt, p[0], p[1] - 22 - age * 26);
-        }
-      }
-      if (!reduce) { drawOrbit(0, true); drawOrbit(1, true); for (const s of sats) if (satPos(s).front) drawSat(s); }
       // Pointy's footprints
       for (const s0 of steps) {
         if (!facing(s0.ll)) continue; const p = proj(s0.ll); if (!p) continue;
@@ -281,17 +181,6 @@ export default function HomeGlobe({ races, odds, updated, daysOut }: { races: Re
         const p = proj(ll);
         if (p) { man.current.style.transform = `translate(${p[0]}px, ${p[1]}px)`; man.current.style.opacity = "1"; } else man.current.style.opacity = "0";
         if (phase === "walk" && now - lastStep > 150) { steps.push({ ll, t: now, side }); side = -side; lastStep = now; }
-        if (phase === "stop" && lastPhase === "walk" && p) {
-          const r = tour[leg].r, col = r.m < 0 ? (r.ind ? ["#b78cff", "#e2d2ff"] : ["#3d7bff", "#8fb0ff"]) : ["#ff3b5c", "#ff8399"];
-          for (let k = 0; k < 26; k++) parts.push({ x: p[0], y: p[1] - 120, vx: (Math.random() - 0.5) * 7, vy: -2 - Math.random() * 5, c: k % 3 === 0 ? "#e7b341" : col[k % 2], life: 1, rot: Math.random() * 6, vr: (Math.random() - 0.5) * 0.3 });
-        }
-        lastPhase = phase;
-      }
-      // ballot confetti
-      for (let k = parts.length - 1; k >= 0; k--) {
-        const q = parts[k]; q.x += q.vx; q.y += q.vy; q.vy += 0.16; q.vx *= 0.99; q.rot += q.vr; q.life -= 0.011;
-        if (q.life <= 0) { parts.splice(k, 1); continue; }
-        ctx.save(); ctx.translate(q.x, q.y); ctx.rotate(q.rot); ctx.globalAlpha = Math.min(1, q.life * 1.5); ctx.fillStyle = q.c; ctx.fillRect(-4, -2.5, 8, 5); ctx.restore();
       }
       if (visible && !reduce) raf = requestAnimationFrame(draw);
     };

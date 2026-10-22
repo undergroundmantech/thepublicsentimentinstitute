@@ -177,7 +177,7 @@ export default function TrailMap({ data }: { data: Trail }) {
             </div>
             <b className="mono">{new Date(t).toLocaleDateString("en-US", { month: "short", day: "numeric", timeZone: "UTC" })}</b>
           </div>
-          <Pointy className="tr-pty" pose="think" prop="magnifier" size={92} look={-1} flip detective say={<>{shown.length} stops so far. Click a figure to trace a route.</>} />
+          {zoom ? null : <Pointy className="tr-pty" pose="think" prop="magnifier" size={92} look={-1} flip detective say={<>{shown.length} stops so far. Click a figure to trace a route.</>} />}
         </div>
 
         <aside className="tr-side">
@@ -242,65 +242,114 @@ function Item({ p, title, text, src, onClick }: { p?: Person; title: string; tex
 type CountyGeo = [string, string, string][];
 type CountyMeta = Record<string, { n: string; st: string; area: number; r24?: number }>;
 let COUNTY_CACHE: Promise<[CountyGeo, CountyMeta]> | null = null;
+let STOP_CO: Promise<Record<string, string[]>> | null = null;
 function StateView({ st, statePath, data, P, party, onBack, onWho, who }: { st: string; statePath: string; data: Trail; P: Record<string, Person>; party: "all" | "R" | "D"; onBack: () => void; onWho: (n: string) => void; who: string | null }) {
   const [cg, setCg] = useState<[CountyGeo, CountyMeta] | null>(null);
-  const [hv, setHv] = useState<{ x: number; y: number; t: string; s: string } | null>(null);
+  const [sc, setSc] = useState<Record<string, string[]>>({});
+  const [hv, setHv] = useState<{ x: number; y: number; t: string; s: string[] } | null>(null);
+  const [hco, setHco] = useState<string | null>(null);
   const box = useRef<HTMLDivElement>(null);
   useEffect(() => {
     COUNTY_CACHE ??= Promise.all([fetch("/watchdog/us_counties.json").then((r) => r.json()), fetch("/watchdog/counties.json").then((r) => r.json())]) as Promise<[CountyGeo, CountyMeta]>;
     COUNTY_CACHE.then(setCg).catch(() => {});
+    STOP_CO ??= fetch("/watchdog/stop_counties.json").then((r) => (r.ok ? r.json() : {})).catch(() => ({}));
+    STOP_CO.then(setSc);
   }, []);
   const [x0, y0, x1, y1] = bbox(statePath);
-  const pad = Math.max(x1 - x0, y1 - y0) * 0.06, vb = [x0 - pad, y0 - pad, x1 - x0 + pad * 2, y1 - y0 + pad * 2];
+  const pad = Math.max(x1 - x0, y1 - y0) * 0.05, vb = [x0 - pad, y0 - pad, x1 - x0 + pad * 2, y1 - y0 + pad * 2];
+  const S = Math.min(vb[2], vb[3]);
   const counties = useMemo(() => (cg ? cg[0].filter((c) => c[1] === st) : []), [cg, st]);
+  const meta = cg?.[1];
+  const cen = useMemo(() => { const m: Record<string, [number, number]> = {}; for (const c of counties) { const b = bbox(c[2]); m[c[0]] = [(b[0] + b[2]) / 2, (b[1] + b[3]) / 2]; } return m; }, [counties]);
   const ok = (p: string) => party === "all" || p === party;
-  // everyone in the state: each endorser once, with every candidate they backed, and each figure on the trail once
-  const ppl = useMemo(() => {
-    const m = new Map<string, { name: string; endorse: string[]; stops: { date: string; city: string; kind: string; for: string[]; src: string }[]; src?: string }>();
-    for (const e of data.endorse) if (e.st === st && ok(e.party)) { const x = m.get(e.by) ?? { name: e.by, endorse: [], stops: [] }; if (!x.endorse.includes(e.cand)) x.endorse.push(e.cand); x.src ??= e.src; m.set(e.by, x); }
-    for (const v of data.visits) if (v.st === st && ok(v.party)) { const x = m.get(v.who) ?? { name: v.who, endorse: [], stops: [] }; x.stops.push({ date: v.date, city: v.city, kind: v.kind, for: v.for, src: v.src }); m.set(v.who, x); }
-    return [...m.values()].sort((a, b) => (b.stops.length ? 1e6 : 0) + tierOf(P[b.name]?.role) * 10 + (P[b.name]?.endorse ?? 0) - ((a.stops.length ? 1e6 : 0) + tierOf(P[a.name]?.role) * 10 + (P[a.name]?.endorse ?? 0)));
+  // campaign stops in this state, each tied to the county of its city
+  const stops = useMemo(() => data.visits.filter((v) => v.st === st && ok(v.party)).map((v) => ({ ...v, fips: (v.city && sc[`${st}|${v.city}`]) || [] })).sort((a, b) => b.date.localeCompare(a.date)), [data, st, party, sc]);
+  // endorsements in this state, grouped by the candidate they back
+  const byCand = useMemo(() => {
+    const m = new Map<string, { cand: string; race: string; party: string; who: { name: string; src: string; date: string }[] }>();
+    for (const e of data.endorse) if (e.st === st && ok(e.party)) {
+      const k = e.cand; const x = m.get(k) ?? { cand: e.cand, race: e.race, party: e.party, who: [] };
+      if (!x.who.some((w) => w.name === e.by)) x.who.push({ name: e.by, src: e.src, date: e.date });
+      m.set(k, x);
+    }
+    const out = [...m.values()];
+    for (const g of out) g.who.sort((a, b) => tierOf(P[b.name]?.role) - tierOf(P[a.name]?.role) || (P[b.name]?.endorse ?? 0) - (P[a.name]?.endorse ?? 0) || a.name.localeCompare(b.name));
+    return out.sort((a, b) => b.who.length - a.who.length);
   }, [data, st, party, P]);
-  // a slot for each person on the county map: county centres, biggest counties first, never two people on top of each other
-  const placed = useMemo(() => {
-    const S = Math.min(vb[2], vb[3]);
-    const n = Math.max(1, ppl.length), size = Math.max(S / 26, Math.min(S / 9, S / Math.sqrt(n) / 1.6));
-    const cents = counties.map((c) => { const b = bbox(c[2]); return { x: (b[0] + b[2]) / 2, y: (b[1] + b[3]) / 2, a: (b[2] - b[0]) * (b[3] - b[1]), n: cg?.[1][c[0]]?.n ?? "" }; }).sort((a, b) => b.a - a.a);
-    const cityHit = (city: string) => cents.find((c) => c.n && city && city.toLowerCase().startsWith(c.n.toLowerCase()));
-    const used: { x: number; y: number }[] = [], out: { p: (typeof ppl)[number]; x: number; y: number; size: number }[] = [];
-    const free = (x: number, y: number) => used.every((u) => Math.hypot(u.x - x, u.y - y) > size * 0.95);
-    let gi = 0;
-    for (const p of ppl) {
-      const hit = p.stops.length ? cityHit(p.stops[0].city) : undefined;
-      let spot = hit && free(hit.x, hit.y) ? hit : cents.find((c) => free(c.x, c.y));
-      if (!spot) { // past the last free county: a grid over the state's box
-        for (; gi < 4000 && !spot; gi++) { const cols = Math.max(3, Math.floor(vb[2] / (size * 1.05))), gx = vb[0] + size * 0.6 + (gi % cols) * size * 1.05, gy = vb[1] + size * 0.8 + Math.floor(gi / cols) * size * 1.1; if (free(gx, gy)) spot = { x: gx, y: gy, a: 0, n: "" }; }
-      }
-      if (!spot) continue;
-      used.push(spot); out.push({ p, x: spot.x, y: spot.y, size });
+  const nEnd = useMemo(() => new Set(byCand.flatMap((g) => g.who.map((w) => w.name))).size, [byCand]);
+  // stop tokens: one per person per county, set in a small ring when a county has several
+  const toks = useMemo(() => {
+    const per = new Map<string, Map<string, (typeof stops)[number][]>>();
+    for (const v of stops) for (const f of v.fips) { const m = per.get(f) ?? new Map(); m.set(v.who, [...(m.get(v.who) ?? []), v]); per.set(f, m); }
+    const size = Math.max(S / 22, Math.min(S / 9, S / 12));
+    const out: { name: string; f: string; x: number; y: number; size: number; v: (typeof stops)[number][] }[] = [];
+    for (const [f, m] of per) {
+      const c = cen[f]; if (!c) continue; const arr = [...m.entries()], n = arr.length;
+      arr.forEach(([name, v], i) => { const r = n === 1 ? 0 : size * (0.55 + n * 0.08), a = (i / n) * 6.283 - 1.57; out.push({ name, f, x: c[0] + Math.cos(a) * r, y: c[1] + Math.sin(a) * r, size, v }); });
     }
     return out;
-  }, [ppl, counties, cg, vb]);
-  const shade = (f: string) => { const r = cg?.[1][f]?.r24; if (r == null) return "rgba(255,255,255,.05)"; const lean = Math.max(-1, Math.min(1, r / 60)); return lean >= 0 ? `rgba(255,59,92,${(0.06 + lean * 0.5).toFixed(3)})` : `rgba(61,123,255,${(0.06 - lean * 0.5).toFixed(3)})`; };
+  }, [stops, cen, S]);
+  const coStops = useMemo(() => { const m: Record<string, (typeof stops)[number][]> = {}; for (const v of stops) for (const f of v.fips) (m[f] ??= []).push(v); return m; }, [stops]);
+  const noCity = stops.filter((v) => !v.fips.length);
+  const res = (f: string) => { const r = meta?.[f]?.r24; if (r == null) return "No 2024 result on file"; return r >= 0 ? `Trump +${r.toFixed(1)} in 2024` : `Harris +${(-r).toFixed(1)} in 2024`; };
+  const shade = (f: string) => { const r = meta?.[f]?.r24; if (r == null) return "rgba(255,255,255,.05)"; const lean = Math.max(-1, Math.min(1, r / 60)); return lean >= 0 ? `rgba(255,59,92,${(0.08 + lean * 0.5).toFixed(3)})` : `rgba(61,123,255,${(0.08 - lean * 0.5).toFixed(3)})`; };
+  const tip = (e: React.MouseEvent, t: string, lines: string[]) => { const b = box.current!.getBoundingClientRect(); setHv({ x: e.clientX - b.left, y: e.clientY - b.top, t, s: lines }); };
+  const coName = (f: string) => meta?.[f]?.n ?? f;
+  const suffix = st === "LA" ? " Parish" : st === "AK" ? "" : " County";
   return (
-    <div className="tr-sv" ref={box} onMouseLeave={() => setHv(null)}>
-      <div className="tr-svh"><button className="wd-btn" onClick={onBack}>Back to the national map</button><b>{STN[st] ?? st}</b><span>{ppl.filter((p) => p.endorse.length).length} endorsers · {ppl.reduce((a, p) => a + p.stops.length, 0)} campaign stops · counties shaded by the 2024 presidential vote</span></div>
-      <svg viewBox={vb.join(" ")} preserveAspectRatio="xMidYMid meet" role="img" aria-label={`${STN[st] ?? st}: county map with every endorser and campaign stop`}>
-        <path d={statePath} className="tr-sv-st" />
-        {counties.map((c) => <path key={c[0]} d={c[2]} className="tr-sv-co" style={{ fill: shade(c[0]) }} />)}
-        {placed.map(({ p, x, y, size }) => {
-          const pp = P[p.name], fl = p.stops.length > 0;
-          return (
-            <g key={p.name} className={`tr-tok${who === p.name ? " on" : ""}`} style={{ transform: `translate(${x - size * 0.37}px, ${y - size * 0.9}px)` }} onClick={() => onWho(p.name)}
-              onMouseEnter={(e) => { const b = box.current!.getBoundingClientRect(); setHv({ x: e.clientX - b.left, y: e.clientY - b.top, t: p.name, s: [p.endorse.length ? `Endorsed ${p.endorse.join(", ")}` : "", fl ? `${p.stops.length} ${p.stops.length === 1 ? "stop" : "stops"}: ${p.stops.map((v) => `${v.city || STN[st]}, ${fd(v.date)}`).join("; ")}` : ""].filter(Boolean).join(". ") }); }}>
-              <PersonToken ini={pp?.ini ?? p.name.slice(0, 2)} party={pp?.party ?? "O"} role={pp?.role} size={size} active={who === p.name} title={p.name} />
-              {fl ? <circle cx={size * 0.66} cy={size * 0.12} r={size * 0.12} className="tr-sv-flag" fill="#ffd98a" stroke="#1b1230" strokeWidth={size * 0.02} /> : null}
-            </g>
-          );
-        })}
-      </svg>
-      {hv ? <div className="wd-tip" style={{ left: hv.x + 14, top: hv.y + 12, transform: hv.x > (box.current?.clientWidth ?? 0) - 330 ? "translateX(calc(-100% - 28px))" : undefined }}><h4>{hv.t}</h4><div>{hv.s}</div></div> : null}
-      <div className="tr-svk"><span><i className="flag" />Campaigned here</span><span>Everyone else endorsed in this state</span><span>Click a figure to follow them</span></div>
+    <div className="tr-sv" ref={box} onMouseLeave={() => { setHv(null); setHco(null); }}>
+      <div className="tr-svh"><button className="wd-btn" onClick={onBack}>Back to the national map</button><b>{STN[st] ?? st}</b><span>{nEnd} endorsers · {stops.length} campaign stops in {Object.keys(coStops).length} counties · counties shaded by the 2024 presidential margin</span></div>
+      <div className="tr-sv-grid">
+        <div className="tr-sv-map">
+          <svg viewBox={vb.join(" ")} preserveAspectRatio="xMidYMid meet" role="img" aria-label={`${STN[st] ?? st}: county map with every campaign stop`}>
+            <path d={statePath} className="tr-sv-st" />
+            {counties.map((c) => (
+              <path key={c[0]} d={c[2]} className={`tr-sv-co${coStops[c[0]] ? " hit" : ""}${hco === c[0] ? " hv" : ""}`} style={{ fill: shade(c[0]) }}
+                onMouseMove={(e) => { setHco(c[0]); const v = coStops[c[0]] ?? []; tip(e, `${coName(c[0])}${suffix}`, [res(c[0]), ...(v.length ? v.map((x) => `${x.who}, ${fd(x.date)}${x.city ? ` in ${x.city}` : ""}`) : ["No campaign stops tracked"])]); }} />
+            ))}
+            {toks.map((k) => {
+              const pp = P[k.name];
+              return (
+                <g key={`${k.name}-${k.f}`} className={`tr-tok${who === k.name ? " on" : ""}`} style={{ transform: `translate(${k.x - k.size * 0.37}px, ${k.y - k.size * 0.9}px)` }} onClick={() => onWho(k.name)}
+                  onMouseMove={(e) => { e.stopPropagation(); setHco(k.f); tip(e, k.name, [`${coName(k.f)}${suffix} · ${res(k.f)}`, ...k.v.map((v) => `${fd(v.date)}${v.city ? `, ${v.city}` : ""}: ${v.kind}${v.for?.length ? ` for ${v.for.join(", ")}` : ""}`)]); }}>
+                  <PersonToken ini={pp?.ini ?? k.name.slice(0, 2)} party={pp?.party ?? "O"} role={pp?.role} size={k.size} active={who === k.name} title={k.name} />
+                </g>
+              );
+            })}
+          </svg>
+          <div className="tr-svk"><span><i className="co" />Counties with a campaign stop are outlined in gold</span><span>Hover any county for its 2024 result and stops</span><span>Click a figure to follow them</span></div>
+        </div>
+        <aside className="tr-sv-side" aria-label={`Everyone active in ${STN[st] ?? st}`}>
+          <h3>// Campaign stops <em>{stops.length}</em></h3>
+          {stops.length ? (
+            <ul className="tr-sv-stops">
+              {stops.map((v, i) => (
+                <li key={i} className={who === v.who ? "on" : ""} onClick={() => onWho(v.who)} onMouseEnter={() => setHco(v.fips[0] ?? null)}>
+                  <PersonToken ini={P[v.who]?.ini ?? v.who.slice(0, 2)} party={P[v.who]?.party ?? "O"} role={P[v.who]?.role} size={32} />
+                  <div><b>{v.who}</b><span>{fd(v.date)} · {v.city || "City not reported"}{v.fips.length ? ` · ${v.fips.map((f) => coName(f)).join(", ")}${suffix}` : ""}</span>{v.for?.length ? <small>For {v.for.join(", ")}</small> : null}</div>
+                  {v.src ? <a href={v.src} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}>Source</a> : null}
+                </li>
+              ))}
+            </ul>
+          ) : <p className="tr-sv-none">No campaign stops tracked here yet.</p>}
+          {noCity.length ? <p className="tr-sv-none">{noCity.length} {noCity.length === 1 ? "stop has" : "stops have"} no city reported, so {noCity.length === 1 ? "it is" : "they are"} listed but not placed on the map.</p> : null}
+          <h3>// Endorsements <em>{nEnd}</em></h3>
+          {byCand.map((g) => (
+            <div className="tr-sv-cand" key={g.cand}>
+              <div className="h"><i style={{ background: PARTY_COLOR[g.party] ?? PARTY_COLOR.O }} /><b>{g.cand}</b><span>{g.race} · {g.who.length}</span></div>
+              <div className="chips">
+                {g.who.map((w) => (
+                  <button key={w.name} className={`tr-sv-chip${who === w.name ? " on" : ""}`} onClick={() => onWho(w.name)} title={`${w.name} endorsed ${g.cand}${w.date ? `, ${fd(w.date)}` : ""}`}>
+                    <i style={{ background: PARTY_COLOR[P[w.name]?.party ?? "O"] ?? PARTY_COLOR.O }} />{w.name}
+                  </button>
+                ))}
+              </div>
+            </div>
+          ))}
+          {!byCand.length ? <p className="tr-sv-none">No endorsements tracked here yet.</p> : null}
+        </aside>
+      </div>
+      {hv ? <div className="wd-tip" style={{ left: hv.x + 14, top: hv.y + 12, transform: hv.x > (box.current?.clientWidth ?? 0) - 330 ? "translateX(calc(-100% - 28px))" : undefined }}><h4>{hv.t}</h4>{hv.s.slice(0, 8).map((l, i) => <div key={i}>{l}</div>)}{hv.s.length > 8 ? <div>and {hv.s.length - 8} more</div> : null}</div> : null}
     </div>
   );
 }
