@@ -34,6 +34,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     u("/", today, "hourly", 1),
     u("/forecast", fc, "daily", 1),
     u("/forecast/swingometer", fc, "daily", 0.9),
+    u("/forecast/what-if", fc, "daily", 0.9),
     u("/forecast/statewide", db.meta.updated, "daily", 0.8),
     u("/forecast/legislatures", sl.meta.updated, "daily", 0.9),
     u("/forecast/measures", ms.meta.updated, "daily", 0.9),

@@ -123,3 +123,21 @@
   .evc-tip { display: none; }
 }
 @media (prefers-reduced-motion: reduce) { .evc-map path, .evc-px i, .evc-split .bar i, .evc-party .bar i { animation: none; } .evc-map path.live:hover { transform: none; } }
+.evc-tiles { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+@media (max-width: 1240px) { .evc-tiles { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 760px) { .evc-tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.evc-pm { display: grid; gap: 6px; border: 1px solid rgba(110,230,190,.28); border-radius: 14px; padding: 12px; background: rgba(63,214,162,.05); }
+.evc-pmh { display: flex; justify-content: space-between; align-items: center; }
+.evc-pmh .eye { font: 700 10px var(--font-m); letter-spacing: .14em; text-transform: uppercase; color: #9fe3c8; }
+.evc-pmh .tag { font: 800 9.5px var(--font-m); letter-spacing: .12em; text-transform: uppercase; padding: 3px 8px; border-radius: 999px; background: rgba(var(--line-rgb), .08); color: var(--ink2); }
+.evc-pmh .tag.m { background: rgba(155,123,255,.2); color: #cbb8ff; } .evc-pmh .tag.p { background: rgba(231,179,65,.18); color: var(--gold); }
+.evc-pm .lbls { display: flex; justify-content: space-between; gap: 8px; font: 700 12px var(--font-m); color: var(--ink2); flex-wrap: wrap; }
+.evc-pm .lbls.exp { font-size: 11px; color: var(--mute); }
+.evc-pm .bar { display: flex; height: 12px; border-radius: 6px; overflow: hidden; gap: 2px; background: rgba(var(--line-rgb), .08); }
+.evc-pm .bar i { display: block; height: 100%; animation: evc-grow .8s cubic-bezier(.2,.8,.2,1) backwards; transform-origin: left; }
+.evc-pm .bar i.d { background: #3d7bff; } .evc-pm .bar i.o { background: #8e86a3; } .evc-pm .bar i.r { background: #ff3b5c; }
+.evc-pmk { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; margin-top: 4px; }
+.evc-pmk div { border: 1px solid var(--line); border-radius: 10px; padding: 7px 9px; }
+.evc-pmk span { display: block; font: 700 9px var(--font-m); letter-spacing: .12em; text-transform: uppercase; color: var(--mute); }
+.evc-pmk b { display: block; margin-top: 3px; font: 800 14px var(--font-d); white-space: nowrap; }
+.evc-tw sup { font-size: 9px; color: #cbb8ff; margin-left: 2px; }

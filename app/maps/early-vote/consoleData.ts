@@ -14,9 +14,12 @@ export type EvRow = {
   pace22: number | null; pace24: number | null;
   cps22: [number, number][]; cps24: [number, number][]; s26: [number, number][];
   fc: { href: string; label: string } | null;
+  /** the On Point party model: reported party where the state publishes it, modeled where it does not */
+  pm: { d: number; r: number; o: number; est: number; xd: number; xr: number; delta: number; shift: number | null } | null;
 };
 export type EvConsole = { snapshot: string; daysOut: number; total: number; mail: number; inperson: number; requested: number; dem: number; rep: number; ind: number; partyTotal: number;
-  t22: number; e22: number; t24: number; e24: number; rows: EvRow[]; s26: [number, number][] };
+  t22: number; e22: number; t24: number; e24: number; rows: EvRow[]; s26: [number, number][];
+  pm: { d: number; r: number; o: number; est: number; delta: number } | null; signalsDate: string | null };
 
 type Hist = { us: Record<"2022" | "2024", { turnout: number; early: number }>; states: Record<string, Partial<Record<"2022" | "2024", { turnout: number; early: number; cps?: [number, number, string?][] }>>> };
 type Feed = { snapshot_date: string; regions: Record<string, Record<string, { votes: number }>> };
@@ -55,6 +58,28 @@ function dailySeries(): Record<string, [number, number][]> {
   return out;
 }
 
+type Sig = { ballots: number; estimatedShare: number; party: { d: number; r: number; o: number }; expectedParty?: { d: number; r: number; o: number }; actualMargin: number; expectedMargin: number; delta: number };
+function signals(): { date: string | null; states: Record<string, Sig> } {
+  try {
+    const dir = path.join(process.cwd(), "scripts/forecast/earlyvote/snapshots");
+    for (const d of fs.readdirSync(dir).filter((x) => /^\d{4}-\d{2}-\d{2}$/.test(x)).sort().reverse()) {
+      const f = path.join(dir, d, "ev_signals.json");
+      if (fs.existsSync(f)) return { date: d, states: (JSON.parse(fs.readFileSync(f, "utf8")) as { states: Record<string, Sig> }).states };
+    }
+  } catch { /* no signals on this server */ }
+  return { date: null, states: {} };
+}
+// the forecast correction the early vote put on each state's marquee race, in points of margin, Republican positive
+function evShifts(): Record<string, number> {
+  const out: Record<string, number> = {};
+  for (const r of getModel().races) {
+    const ev = (r as unknown as { ev?: { shift?: number } }).ev;
+    if (r.office === "house" || !ev || typeof ev.shift !== "number") continue;
+    if (r.office === "senate" || out[r.st] == null) out[r.st] = ev.shift;
+  }
+  return out;
+}
+
 function forecastLinks(): Record<string, { href: string; label: string }> {
   const ids = new Set(getModel().races.map((r) => r.id)), out: Record<string, { href: string; label: string }> = {};
   for (const st of Object.keys(STATE_NAME)) {
@@ -69,6 +94,7 @@ export function buildEvConsole(ev: EarlyVote): EvConsole {
   const daysOut = daysOutOf(ev.snapshot);
   const series = dailySeries();
   const fc = forecastLinks();
+  const sig = signals(), shifts = evShifts();
   const rows: EvRow[] = ev.states.map((s) => {
     const h = hist.states[s.st] ?? {};
     const cp = (y: "2022" | "2024") => (h[y]?.cps ?? []).map((c) => [c[0], c[1]] as [number, number]);
@@ -78,10 +104,16 @@ export function buildEvConsole(ev: EarlyVote): EvConsole {
     if (!s26.some((p) => p[0] === daysOut)) s26.push([daysOut, s.total]);
     return { st: s.st, name: s.name, slug: s.slug, total: s.total, mail: s.mail, inperson: s.inperson, requested: s.requested, dem: s.dem, rep: s.rep, ind: s.ind, partyShare: s.partyShare,
       t22: h["2022"]?.turnout ?? null, t24: h["2024"]?.turnout ?? null, e22: h["2022"]?.early ?? null, e24: h["2024"]?.early ?? null,
-      pace22: a22 ? s.total / a22 : null, pace24: a24 ? s.total / a24 : null, cps22: c22, cps24: c24, s26, fc: fc[s.st] ?? null };
+      pace22: a22 ? s.total / a22 : null, pace24: a24 ? s.total / a24 : null, cps22: c22, cps24: c24, s26, fc: fc[s.st] ?? null,
+      pm: sig.states[s.st] ? { d: sig.states[s.st].party.d, r: sig.states[s.st].party.r, o: sig.states[s.st].party.o, est: sig.states[s.st].estimatedShare ?? 0,
+        xd: sig.states[s.st].expectedParty?.d ?? 0, xr: sig.states[s.st].expectedParty?.r ?? 0, delta: sig.states[s.st].delta ?? 0, shift: shifts[s.st] ?? null } : null };
   });
   const us26 = (series.US ?? []).filter((p) => p[0] >= daysOut).sort((a, b) => b[0] - a[0]);
   if (!us26.some((p) => p[0] === daysOut)) us26.push([daysOut, ev.total]);
-  return { snapshot: ev.snapshot, daysOut, total: ev.total, mail: ev.mail, inperson: ev.inperson, requested: ev.requested, dem: ev.dem, rep: ev.rep, ind: ev.ind, partyTotal: ev.partyTotal,
+  const pmRows = rows.filter((r) => r.pm);
+  const B = pmRows.reduce((a, r) => a + r.total, 0);
+  const pm = B ? { d: pmRows.reduce((a, r) => a + r.total * r.pm!.d, 0) / B, r: pmRows.reduce((a, r) => a + r.total * r.pm!.r, 0) / B, o: pmRows.reduce((a, r) => a + r.total * r.pm!.o, 0) / B,
+    est: pmRows.reduce((a, r) => a + r.total * r.pm!.est, 0) / B, delta: pmRows.reduce((a, r) => a + r.total * r.pm!.delta, 0) / B } : null;
+  return { pm, signalsDate: sig.date, snapshot: ev.snapshot, daysOut, total: ev.total, mail: ev.mail, inperson: ev.inperson, requested: ev.requested, dem: ev.dem, rep: ev.rep, ind: ev.ind, partyTotal: ev.partyTotal,
     t22: hist.us["2022"].turnout, e22: hist.us["2022"].early, t24: hist.us["2024"].turnout, e24: hist.us["2024"].early, rows, s26: us26 };
 }

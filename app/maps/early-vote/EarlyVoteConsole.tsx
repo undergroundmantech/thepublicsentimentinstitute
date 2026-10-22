@@ -11,7 +11,7 @@ import { getCategory, matchCounty, stateOfFips, type CategoryPayload } from "./l
 import type { EvConsole, EvRow } from "./consoleData";
 import "./evconsole.css";
 
-type Metric = "cast" | "pace" | "party" | "method";
+type Metric = "cast" | "pace" | "party" | "model" | "expect" | "method";
 type Geo = { frame: [number, number]; states: Record<string, string> };
 type County = { id: string; name: string; total: number; mail: number; inperson: number; dem: number; rep: number; ind: number };
 
@@ -25,6 +25,8 @@ const methodFill = (mailShare: number) => mix([231, 179, 65], [86, 196, 255], ma
 const paceLabel = (r: number | null) => (r == null ? "No 2022 count" : Math.abs(r - 1) < 0.005 ? "Even with 2022" : `${r > 1 ? "+" : ""}${((r - 1) * 100).toFixed(0)}% vs 2022`);
 const partyM = (d: number, r: number, i: number) => (d + r > 0 ? ((r - d) / (d + r + i)) * 100 : null);
 const mLabel = (m: number) => (Math.abs(m) < 0.05 ? "Even" : `${m < 0 ? "D" : "R"} +${Math.abs(m).toFixed(1)}`);
+const pmM = (pm: { d: number; r: number } | null | undefined) => (pm ? (pm.r - pm.d) * 100 : null);
+const dLabel = (d: number) => (Math.abs(d) < 0.05 ? "On expectations" : `${d < 0 ? "D" : "R"} +${Math.abs(d).toFixed(1)}`);
 function bboxOf(d: string): [number, number, number, number] {
   let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity; const re = /(-?\d+(?:\.\d+)?)[ ,](-?\d+(?:\.\d+)?)/g; let m: RegExpExecArray | null;
   while ((m = re.exec(d))) { const x = +m[1], y = +m[2]; if (x < x0) x0 = x; if (x > x1) x1 = x; if (y < y0) y0 = y; if (y > y1) y1 = y; }
@@ -126,11 +128,15 @@ export default function EarlyVoteConsole({ data, initial, lede, faq }: { data: E
     cast: { lb: "Ballots cast", big: short(row.total), sub: row.t22 ? `${pctS(row.total / row.t22, 1)} of all ${row.name} 2022 votes` : "No 2022 turnout on file" },
     pace: { lb: "Pace vs 2022", big: row.pace22 == null ? "n/a" : `${row.pace22 >= 1 ? "+" : ""}${((row.pace22 - 1) * 100).toFixed(0)}%`, sub: row.pace22 == null ? "No 2022 count this far out" : `Against ${row.name} at this point in 2022` },
     party: { lb: "Party of ballots", big: rM == null ? "Not reported" : mLabel(rM), sub: rM == null ? `${row.name} does not publish party` : "By party registration" },
+    model: { lb: "Party model", big: row.pm ? mLabel(pmM(row.pm) as number) : "n/a", sub: row.pm ? (row.pm.est > 0.5 ? "Modeled by On Point Polling" : row.pm.est > 0 ? "Partly modeled by On Point Polling" : "Reported by the state") : "No model for this state yet" },
+    expect: { lb: "Vs expectations", big: row.pm ? dLabel(row.pm.delta) : "n/a", sub: "Ballots so far against what the forecast expected by now" },
     method: { lb: "Mail or in person", big: pctS(row.mail / Math.max(1, row.total)), sub: "of ballots came by mail" },
   } : {
     cast: { lb: "Ballots cast", big: short(data.total), sub: `${pctS(data.total / data.t22, 1)} of all 2022 votes` },
     pace: { lb: "Pace vs 2022", big: natPace ? `${natPace >= 1 ? "+" : ""}${((natPace - 1) * 100).toFixed(0)}%` : "n/a", sub: `${paceRows.length} states with a 2022 count this far out` },
     party: { lb: "Party of ballots", big: natM == null ? "n/a" : mLabel(natM), sub: `Where ${data.rows.filter((r) => r.partyShare > 0.5).length} states report party` },
+    model: { lb: "Party model", big: data.pm ? mLabel(pmM(data.pm) as number) : "n/a", sub: "Every state, modeled where party is not reported" },
+    expect: { lb: "Vs expectations", big: data.pm ? dLabel(data.pm.delta) : "n/a", sub: "Ballots so far against what the forecast expected" },
     method: { lb: "Mail or in person", big: pctS(data.mail / Math.max(1, data.total)), sub: "of ballots came by mail" },
   };
 
@@ -142,11 +148,13 @@ export default function EarlyVoteConsole({ data, initial, lede, faq }: { data: E
     if (metric === "cast") return r.t22 ? castFill(r.total / r.t22) : castFill(0.05);
     if (metric === "pace") return r.pace22 != null ? paceFill(r.pace22) : null;
     if (metric === "party") { const m = r.partyShare > 0.5 ? partyM(r.dem, r.rep, r.ind) : null; return m == null ? null : marginColor(m); }
+    if (metric === "model") { const m = pmM(r.pm); return m == null ? null : marginColor(m); }
+    if (metric === "expect") return r.pm ? marginColor(Math.max(-40, Math.min(40, r.pm.delta * 4))) : null;
     return methodFill(r.mail / Math.max(1, r.total));
   };
   const cFill = (c: County | undefined): string | null => {
     if (!c) return null;
-    if (metric === "party") { const m = partyM(c.dem, c.rep, c.ind); return m == null ? castFill(Math.log10(c.total + 1) / Math.log10(cMax + 1) * 0.6) : marginColor(m); }
+    if (metric === "party" || metric === "model") { const m = partyM(c.dem, c.rep, c.ind); return m == null ? castFill(Math.log10(c.total + 1) / Math.log10(cMax + 1) * 0.6) : marginColor(m); }
     if (metric === "method") return methodFill(c.mail / Math.max(1, c.total));
     return castFill((Math.log10(c.total + 1) / Math.log10(cMax + 1)) * 0.6);
   };
@@ -164,7 +172,8 @@ export default function EarlyVoteConsole({ data, initial, lede, faq }: { data: E
   // the readout for the open scope
   const R = row ?? { st: "US", name: "Nationwide", total: data.total, mail: data.mail, inperson: data.inperson, requested: data.requested, dem: data.dem, rep: data.rep, ind: data.ind,
     partyShare: data.partyTotal / Math.max(1, data.total), t22: data.t22, e22: data.e22, t24: data.t24, e24: data.e24, pace22: natPace, pace24: null,
-    cps22: [] as [number, number][], cps24: [] as [number, number][], s26: data.s26, fc: { href: "/forecast", label: "On Point forecast" }, slug: "" };
+    cps22: [] as [number, number][], cps24: [] as [number, number][], s26: data.s26, fc: { href: "/forecast", label: "On Point forecast" }, slug: "",
+    pm: data.pm ? { ...data.pm, xd: 0, xr: 0, shift: null as number | null } : null };
   const party = R.partyShare > 0.5 || (scope === "US" && data.partyTotal > 0);
   const pT = scope === "US" ? data.partyTotal : R.dem + R.rep + R.ind;
   const outstanding = R.requested > R.mail ? R.requested - R.mail : 0;
@@ -173,7 +182,7 @@ export default function EarlyVoteConsole({ data, initial, lede, faq }: { data: E
   const tRows = useMemo(() => {
     if (scope !== "US") return [...(counties ?? [])].sort((a, b) => b.total - a.total);
     const L = [...data.rows];
-    const dm = (r: EvRow) => (r.partyShare > 0.5 ? partyM(r.dem, r.rep, r.ind) ?? 0 : null);
+    const dm = (r: EvRow) => (r.pm ? pmM(r.pm) : r.partyShare > 0.5 ? partyM(r.dem, r.rep, r.ind) ?? 0 : null);
     return L.sort((a, b) => sort === "most" ? b.total - a.total : sort === "pace" ? (b.pace22 ?? -1) - (a.pace22 ?? -1)
       : sort === "d" ? (dm(a) ?? 999) - (dm(b) ?? 999) : sort === "r" ? (dm(b) ?? -999) - (dm(a) ?? -999) : a.name.localeCompare(b.name));
   }, [scope, counties, data.rows, sort]);
@@ -181,7 +190,8 @@ export default function EarlyVoteConsole({ data, initial, lede, faq }: { data: E
   const tipRow = tip ? (scope === "US" ? byState[tip.k] : null) : null;
   const tipC = tip && scope !== "US" ? cById[tip.k] : null;
   const legend = metric === "cast" ? (scope === "US" ? ["Few ballots so far", "60% of 2022 turnout or more", castFill(0.02), castFill(0.6)] : ["Fewest ballots", "Most ballots", castFill(0.02), castFill(0.6)])
-    : metric === "pace" ? ["Behind 2022", "Ahead of 2022", paceFill(0.55), paceFill(1.8)] : metric === "party" ? ["More Democrats", "More Republicans", marginColor(-35), marginColor(35)] : ["In person", "By mail", methodFill(0), methodFill(1)];
+    : metric === "pace" ? ["Behind 2022", "Ahead of 2022", paceFill(0.55), paceFill(1.8)] : metric === "party" || metric === "model" ? ["More Democrats", "More Republicans", marginColor(-35), marginColor(35)]
+    : metric === "expect" ? ["Better for Democrats than expected", "Better for Republicans", marginColor(-35), marginColor(35)] : ["In person", "By mail", methodFill(0), methodFill(1)];
   const dateLabel = new Date(`${data.snapshot}T12:00:00Z`).toLocaleDateString("en-US", { month: "long", day: "numeric", timeZone: "UTC" });
 
   return (
@@ -246,6 +256,7 @@ export default function EarlyVoteConsole({ data, initial, lede, faq }: { data: E
                 {tipRow.t22 ? <div className="r"><span>Of 2022 turnout</span><b>{pctS(tipRow.total / tipRow.t22, 1)}</b></div> : null}
                 <div className="r"><span>Pace</span><b>{paceLabel(tipRow.pace22)}</b></div>
                 {tipRow.partyShare > 0.5 ? <div className="r"><span>Party of ballots</span><b className={(partyM(tipRow.dem, tipRow.rep, tipRow.ind) ?? 0) < 0 ? "d" : "r"}>{mLabel(partyM(tipRow.dem, tipRow.rep, tipRow.ind) ?? 0)}</b></div> : <div className="r"><span>Party</span><b>Not reported</b></div>}
+                {tipRow.pm ? <div className="r"><span>Party model{tipRow.pm.est > 0.5 ? ", modeled" : ""}</span><b className={(pmM(tipRow.pm) ?? 0) < 0 ? "d" : "r"}>{mLabel(pmM(tipRow.pm) ?? 0)}</b></div> : null}
                 <div className="cta">Click for counties</div>
               </div>
             ) : tipC ? (
@@ -257,7 +268,7 @@ export default function EarlyVoteConsole({ data, initial, lede, faq }: { data: E
               </div>
             ) : null}
           </div>
-          <div className="evc-legend"><span>{legend[0]}</span><i style={{ background: `linear-gradient(90deg, ${legend[2]}, ${metric === "pace" ? "rgb(240,240,240)," : metric === "party" ? "rgb(240,236,246)," : ""} ${legend[3]})` }} /><span>{legend[1]}</span>{metric === "party" || metric === "pace" ? <span className="hatch">No data</span> : null}</div>
+          <div className="evc-legend"><span>{legend[0]}</span><i style={{ background: `linear-gradient(90deg, ${legend[2]}, ${metric === "pace" ? "rgb(240,240,240)," : metric === "party" || metric === "model" || metric === "expect" ? "rgb(240,236,246)," : ""} ${legend[3]})` }} /><span>{legend[1]}</span>{metric === "party" || metric === "pace" || metric === "model" || metric === "expect" ? <span className="hatch">No data</span> : null}</div>
         </div>
 
         <aside className="evc-read" aria-live="polite">
@@ -272,7 +283,21 @@ export default function EarlyVoteConsole({ data, initial, lede, faq }: { data: E
               <div className="bar"><i className="d" style={{ width: pctS(R.dem / pT, 2) }} /><i className="o" style={{ width: pctS(R.ind / pT, 2) }} /><i className="r" style={{ width: pctS(R.rep / pT, 2) }} /></div>
               <p className="evc-note">Party registration of the voters who cast these ballots{scope === "US" ? ", in the states that publish it" : ""}. It is not how they voted.</p>
             </div>
-          ) : <p className="evc-note">{R.name} does not report the party of its early voters, so there is no party split here.</p>}
+          ) : <p className="evc-note">{R.name} does not report the party of its early voters{R.pm ? ", so the split below comes from the On Point party model." : "."}</p>}
+          {R.pm ? (
+            <div className="evc-pm">
+              <div className="evc-pmh"><span className="eye">On Point party model</span><span className={`tag ${R.pm.est > 0.5 ? "m" : R.pm.est > 0 ? "p" : "s"}`}>{R.pm.est > 0.5 ? "Modeled" : R.pm.est > 0 ? "Partly modeled" : "Reported"}</span></div>
+              <div className="lbls"><span className="d">D {pctS(R.pm.d, 1)}</span><span>Other {pctS(R.pm.o, 1)}</span><span className="r">R {pctS(R.pm.r, 1)}</span></div>
+              <div className="bar"><i className="d" style={{ width: pctS(R.pm.d, 2) }} /><i className="o" style={{ width: pctS(R.pm.o, 2) }} /><i className="r" style={{ width: pctS(R.pm.r, 2) }} /></div>
+              {R.pm.xd ? <div className="lbls exp"><span>Expected by now</span><span className="d">D {pctS(R.pm.xd, 1)}</span><span className="r">R {pctS(R.pm.xr, 1)}</span></div> : null}
+              <div className="evc-pmk">
+                <div><span>Party lead</span><b className={(pmM(R.pm) ?? 0) < 0 ? "d" : "r"}>{mLabel(pmM(R.pm) ?? 0)}</b></div>
+                <div><span>Vs expected</span><b className={R.pm.delta < 0 ? "d" : "r"}>{Math.abs(R.pm.delta) < 0.05 ? "Even" : `${R.pm.delta < 0 ? "D" : "R"} +${Math.abs(R.pm.delta).toFixed(1)}`}</b></div>
+                {R.pm.shift != null ? <div><span>Forecast effect</span><b className={R.pm.shift < 0 ? "d" : "r"}>{Math.abs(R.pm.shift) < 0.05 ? "None" : `${R.pm.shift < 0 ? "D" : "R"} +${Math.abs(R.pm.shift).toFixed(1)}`}</b></div> : null}
+              </div>
+              <p className="evc-note">{R.pm.est > 0.5 ? `${R.name} does not publish party, so On Point Polling models it from each county's count, its voter file and its past early voters.` : R.pm.est > 0 ? "Some of these ballots carry no party, so On Point Polling models that share." : "Party registration as the state reports it."} The forecast compares these ballots with what it expected by now and moves the race by the difference.</p>
+            </div>
+          ) : null}
           <div className="evc-stats">
             <div><span>Of 2022 turnout</span><b>{R.t22 ? pctS(R.total / R.t22, 1) : "n/a"}</b></div>
             <div><span>Pace</span><b className={R.pace22 == null ? "" : R.pace22 >= 1 ? "up" : "dn"}>{R.pace22 == null ? "n/a" : `${R.pace22 >= 1 ? "+" : ""}${((R.pace22 - 1) * 100).toFixed(0)}%`}</b></div>
@@ -292,7 +317,7 @@ export default function EarlyVoteConsole({ data, initial, lede, faq }: { data: E
         ) : null}
         <div className="evc-tw">
           <table>
-            <thead><tr><th>{scope === "US" ? "State" : "County"}</th><th className="n">Ballots</th><th className="n">Mail</th><th className="n">In person</th>{scope === "US" ? <><th className="n">Of 2022 turnout</th><th className="n">Pace</th></> : null}<th className="n">Dem</th><th className="n">Rep</th></tr></thead>
+            <thead><tr><th>{scope === "US" ? "State" : "County"}</th><th className="n">Ballots</th><th className="n">Mail</th><th className="n">In person</th>{scope === "US" ? <><th className="n">Of 2022 turnout</th><th className="n">Pace</th></> : null}<th className="n">Dem</th><th className="n">Rep</th>{scope === "US" ? <><th className="n">Modeled D</th><th className="n">Modeled R</th><th className="n">Vs expected</th></> : null}</tr></thead>
             <tbody>
               {scope === "US" ? (tRows as EvRow[]).slice(0, shown).map((r) => { const pt = r.dem + r.rep + r.ind; const rep = r.partyShare > 0.5 && pt > 0; return (
                 <tr key={r.st} onClick={() => go(r.st)}>
@@ -300,6 +325,8 @@ export default function EarlyVoteConsole({ data, initial, lede, faq }: { data: E
                   <td className="n mono">{r.t22 ? pctS(r.total / r.t22, 1) : "n/a"}</td>
                   <td className={`n mono ${r.pace22 == null ? "" : r.pace22 >= 1 ? "up" : "dn"}`}>{r.pace22 == null ? "n/a" : `${r.pace22 >= 1 ? "+" : ""}${((r.pace22 - 1) * 100).toFixed(0)}%`}</td>
                   <td className="n mono d">{rep ? pctS(r.dem / pt, 1) : "n/a"}</td><td className="n mono r">{rep ? pctS(r.rep / pt, 1) : "n/a"}</td>
+                  <td className="n mono d">{r.pm ? pctS(r.pm.d, 1) : "n/a"}{r.pm && r.pm.est > 0.5 ? <sup>m</sup> : null}</td><td className="n mono r">{r.pm ? pctS(r.pm.r, 1) : "n/a"}</td>
+                  <td className={`n mono ${r.pm ? (r.pm.delta < 0 ? "d" : "r") : ""}`}>{r.pm ? (Math.abs(r.pm.delta) < 0.05 ? "Even" : `${r.pm.delta < 0 ? "D" : "R"} +${Math.abs(r.pm.delta).toFixed(1)}`) : "n/a"}</td>
                 </tr>); })
               : counties ? (tRows as County[]).slice(0, shown).map((c) => { const pt = c.dem + c.rep + c.ind; return (
                 <tr key={c.id}>
