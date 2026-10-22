@@ -19,77 +19,42 @@ export type Pollster = {
   };
 };
 
+// Oct 22 2026, set by the publisher: the seven Gold Standard pollsters. Rasmussen Reports and
+// ActiVote are no longer counted in any average; Trafalgar and InsiderAdvantage are labelled
+// Republican leaning and their measured lean is taken off before they are averaged.
 export const POLLSTERS: Pollster[] = [
   {
     name: "Big Data Poll",
     abbr: "BDP",
     website: "https://bigdatapoll.com",
     why: [
-      "Pioneer in online data collection since 2016; developed methodology to eliminate response bias.",
-      "Consistent performance and recognizable house style across multiple electoral cycles.",
-      "Demonstrated strong understanding of the Trump coalition and modern polling dynamics.",
-    ],
-    standards: [
-      "Publishes field dates + sample size",
-      "States target population (A/RV/LV) and mode",
-      "Provides toplines in consistent format",
-    ],
-    multiplier: 2,
-    note: "Gold Standard upweight in On Point averages.",
-    transparency: { fieldDates: true, sampleType: true, sampleSize: true, methodology: true, sponsorDisclosure: false },
-  },
-  {
-    name: "Rasmussen Reports",
-    abbr: "RAS",
-    website: "https://www.rasmussenreports.com",
-    why: [
-      "High-frequency daily tracking ideal for time-series modeling and trend detection.",
-      "Asks questions many firms avoid, creating additional signal for sentiment measurement.",
-      "Leadership emphasizes issue salience and continuous public feedback loops.",
+      "Online data collection since 2016 with a consistent house style across cycles.",
+      "Frequent national and state releases that trend well over time.",
     ],
     standards: [
       "Publishes field dates + sample size",
       "States target population and mode",
       "Provides toplines in consistent format",
     ],
-    multiplier: 2,
-    note: "Gold Standard upweight; On Point may cap impact depending on documentation/mode considerations.",
+    multiplier: 6,
+    note: "Gold Standard: the top pollster grade, 6 times the baseline weight, in every On Point average.",
     transparency: { fieldDates: true, sampleType: true, sampleSize: true, methodology: true, sponsorDisclosure: false },
   },
   {
-    name: "AtlasIntel",
-    abbr: "ATL",
-    website: "https://atlasintel.org",
+    name: "The Honest Poll",
+    abbr: "THP",
+    website: "",
     why: [
-      "Strong performance in recent cycles across both national and swing-state environments.",
-      "Publishes politician approvals and trendable releases suitable for aggregation.",
-      "Often provides high-signal readings when documentation is present.",
+      "Named to the Gold Standard tier by On Point Politics in October 2026.",
+      "Releases carry field dates, sample sizes and toplines.",
     ],
     standards: [
       "Publishes field dates + sample size",
       "States target population and mode",
       "Provides toplines in consistent format",
     ],
-    multiplier: 2,
-    note: "Full Gold Standard upweight when documentation is present.",
-    transparency: { fieldDates: true, sampleType: true, sampleSize: true, methodology: true, sponsorDisclosure: false },
-  },
-  {
-    name: "SoCalStrategies",
-    abbr: "SCS",
-    website: "https://socalpoll.com",
-    why: [
-      "Demonstrated accuracy in the Wisconsin Supreme Court race (April 2025).",
-      "Competitive performance vs. industry in NJ/VA gubernatorial contexts (2025) per On Point Polling review.",
-      "Newer pollster with strong early performance across select environments.",
-    ],
-    standards: [
-      "Publishes field dates + sample size",
-      "States target population and mode",
-      "Provides toplines in consistent format",
-    ],
-    multiplier: 2,
-    note: "Conditional Gold Standard upweight: requires the minimum disclosure items to apply.",
+    multiplier: 6,
+    note: "Gold Standard: the top pollster grade, 6 times the baseline weight, in every On Point average.",
     transparency: { fieldDates: true, sampleType: true, sampleSize: true, methodology: true, sponsorDisclosure: false },
   },
   {
@@ -97,71 +62,84 @@ export const POLLSTERS: Pollster[] = [
     abbr: "EMR",
     website: "https://emersoncollegepolling.com",
     why: [
-      "Longstanding, widely-cited pollster with consistent reporting format across years.",
-      "Broad national and state coverage suitable for multi-environment aggregation.",
-      "Historically competitive accuracy vs. industry averages across multiple cycles.",
+      "Longstanding, widely cited pollster with a consistent reporting format across years.",
+      "Broad national, state and district coverage, including the Hill and Nexstar partnerships.",
     ],
     standards: [
       "Publishes field dates + sample size",
       "States target population and mode",
       "Provides toplines in consistent format",
     ],
-    multiplier: 2,
-    note: "Gold Standard upweight; On Point may adjust depending on project mode/field method details.",
+    multiplier: 6,
+    note: "Gold Standard: the top pollster grade, 6 times the baseline weight, in every On Point average.",
     transparency: { fieldDates: true, sampleType: true, sampleSize: true, methodology: true, sponsorDisclosure: false },
   },
   {
-    name: "Trafalgar Group",
-    abbr: "TFG",
-    website: "https://www.thetrafalgargroup.org",
+    name: "Cygnal",
+    abbr: "CYG",
+    website: "https://www.cygn.al",
     why: [
-      "Historically competitive performance in select cycles per On Point Polling review.",
-      "Recognizable approach and consistent structure across election environments.",
-      "Adds methodological diversity to aggregates when disclosures are present.",
+      "Frequent national and state releases with full toplines.",
+      "Counted under one name across its partner sponsored releases.",
     ],
     standards: [
       "Publishes field dates + sample size",
       "States target population and mode",
       "Provides toplines in consistent format",
     ],
-    multiplier: 2,
-    note: "Conditional upweight; On Point may cap impact if documentation is thin.",
+    multiplier: 6,
+    note: "Gold Standard: the top pollster grade, 6 times the baseline weight, in every On Point average.",
     transparency: { fieldDates: true, sampleType: true, sampleSize: true, methodology: true, sponsorDisclosure: false },
   },
   {
-    name: "InsiderAdvantage",
-    abbr: "IA",
-    website: "https://insideradvantage.com",
+    name: "Quantus Insights",
+    abbr: "QI",
+    website: "https://quantusinsights.org",
     why: [
-      "Often produces timely reads with clear toplines for rapid trend updates.",
-      "Useful short-window signal contributor for daily tracking cycles.",
-      "Included for upweighting when disclosure meets minimum standards.",
+      "Frequent likely voter releases in the 2026 battlegrounds.",
+      "Already the top weighted pollster in the averages before October 2026.",
     ],
     standards: [
       "Publishes field dates + sample size",
       "States target population and mode",
       "Provides toplines in consistent format",
     ],
-    multiplier: 2,
-    note: "Conditional upweight: requires minimum disclosure items to be present.",
+    multiplier: 6,
+    note: "Gold Standard: the top pollster grade, 6 times the baseline weight, in every On Point average.",
     transparency: { fieldDates: true, sampleType: true, sampleSize: true, methodology: true, sponsorDisclosure: false },
   },
   {
-    name: "Patriot Polling",
-    abbr: "PAT",
-    website: "https://patriotpolling.com",
+    name: "The New York Times/Siena",
+    abbr: "NYT",
+    website: "https://www.nytimes.com/section/upshot",
     why: [
-      "Performed well in On Point Polling review of 2024 national and state-level releases.",
-      "Produces structured releases that are easy to audit and aggregate.",
-      "Timely field windows with consistent topline reporting format.",
+      "Live caller and text to web polls of national and battleground samples.",
+      "Detailed crosstabs and full methodology published with each release.",
     ],
     standards: [
       "Publishes field dates + sample size",
       "States target population and mode",
       "Provides toplines in consistent format",
     ],
-    multiplier: 2,
-    note: "Conditional upweight: requires minimum disclosure items to be present.",
+    multiplier: 6,
+    note: "Gold Standard: the top pollster grade, 6 times the baseline weight, in every On Point average.",
+    transparency: { fieldDates: true, sampleType: true, sampleSize: true, methodology: true, sponsorDisclosure: false },
+  },
+  {
+    name: "The Wall Street Journal",
+    abbr: "WSJ",
+    website: "https://www.wsj.com",
+    why: [
+      "National and battleground polls fielded by bipartisan pollster teams.",
+      "Full toplines and methodology published with each release.",
+    ],
+    standards: [
+      "Publishes field dates + sample size",
+      "States target population and mode",
+      "Provides toplines in consistent format",
+    ],
+    multiplier: 6,
+    note: "Gold Standard: the top pollster grade, 6 times the baseline weight, in every On Point average.",
     transparency: { fieldDates: true, sampleType: true, sampleSize: true, methodology: true, sponsorDisclosure: false },
   },
 ];
@@ -218,9 +196,9 @@ export default function PollsterList() {
                       <div className="eye">Weighting note</div>
                       <p style={{ fontSize: 13.5, margin: "6px 0 0" }}>{p.note}</p>
                     </div>
-                    <a href={p.website} target="_blank" rel="noopener noreferrer" className="btn sm" style={{ justifySelf: "start" }}>
+                    {p.website ? <a href={p.website} target="_blank" rel="noopener noreferrer" className="btn sm" style={{ justifySelf: "start" }}>
                       {new URL(p.website).hostname.replace(/^www\./, "")}
-                    </a>
+                    </a> : null}
                   </div>
                 </div>
               )}

@@ -11,17 +11,26 @@ import {
   buildDailyWeightedSeries,
 } from "@/app/_polling/lib/buildDailyModel";
 import {
-  RAW_POLLS as GENERIC_POLLS,
+  RAW_POLLS as GENERIC_RAW,
   GOLD_STANDARD_NAMES as GENERIC_GOLD,
 } from "@/app/_polling/genericballot/data";
 import {
-  RAW_POLLS as APPROVAL_POLLS,
+  RAW_POLLS as APPROVAL_RAW,
   GOLD_STANDARD_NAMES as APPROVAL_GOLD,
 } from "@/app/_polling/donaldtrumpapproval/data";
 import {
-  RAW_POLLS as TRACK_POLLS,
+  RAW_POLLS as TRACK_RAW,
   GOLD_STANDARD_NAMES as TRACK_GOLD,
 } from "@/app/_polling/rightorwrongtrack/data";
+
+import { aggPolls } from "@/app/_polling/lib/aggregates";
+
+// Oct 22 2026: the home numbers read the same cleaned poll lists as the averages, with ActiVote and
+// Rasmussen Reports dropped and the measured Republican lean taken off Trafalgar and InsiderAdvantage.
+void GENERIC_RAW; void APPROVAL_RAW; void TRACK_RAW;
+const GENERIC_POLLS = aggPolls("generic-ballot");
+const APPROVAL_POLLS = aggPolls("trump-approval");
+const TRACK_POLLS = aggPolls("right-wrong-track");
 
 const round1 = (n: number) => Math.round(n * 10) / 10;
 

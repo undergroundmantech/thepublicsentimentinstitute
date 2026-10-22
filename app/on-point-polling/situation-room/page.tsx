@@ -7,10 +7,13 @@ import Link from "next/link";
 import WireGlobe from "@/app/components/WireGlobe";
 import { SENATE_MODEL, senateBalance } from "@/app/components/senateModel";
 import { getHomeStats, type HomeStats, type HomeSeriesPoint } from "@/app/_polling/lib/homeStats";
-import { RAW_POLLS as GENERIC_POLLS, GOLD_STANDARD_NAMES as GENERIC_GOLD } from "@/app/_polling/genericballot/data";
-import { RAW_POLLS as APPROVAL_POLLS, GOLD_STANDARD_NAMES as APPROVAL_GOLD } from "@/app/_polling/donaldtrumpapproval/data";
+import { GOLD_STANDARD_NAMES as GENERIC_GOLD } from "@/app/_polling/genericballot/data";
+import { GOLD_STANDARD_NAMES as APPROVAL_GOLD } from "@/app/_polling/donaldtrumpapproval/data";
+import { aggPolls } from "@/app/_polling/lib/aggregates";
 import { useElectionIndex } from "@/app/results/onpoint/lib/electionIndex.js";
 import { useUpcomingDays } from "./upcoming";
+const GENERIC_POLLS = aggPolls("generic-ballot");
+const APPROVAL_POLLS = aggPolls("trump-approval");
 
 // ─── data colors: party for party data, approve/disapprove pair for approval style numbers ───
 const D_SOFT = "#7fa6ff";   // --dem2

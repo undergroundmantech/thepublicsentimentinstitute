@@ -13,6 +13,7 @@ OUT = os.path.join(SITE, "public/watchdog")
 os.makedirs(OUT, exist_ok=True)
 J = lambda f: json.load(open(os.path.join(D, f)))
 trail, att, money, scr, dc = J("trail.json"), J("attention.json"), J("money.json"), J("ledger_screens.json"), J("dc.json")
+res = J("endorsements_research.json")   # Oct 22 2026: researched endorsements and media attention, every row sourced
 model = json.load(open(os.path.join(SITE, "public/forecast/model.json")))
 STN = {"AL":"Alabama","AK":"Alaska","AZ":"Arizona","AR":"Arkansas","CA":"California","CO":"Colorado","CT":"Connecticut","DE":"Delaware","DC":"District of Columbia","FL":"Florida","GA":"Georgia","HI":"Hawaii","ID":"Idaho","IL":"Illinois","IN":"Indiana","IA":"Iowa","KS":"Kansas","KY":"Kentucky","LA":"Louisiana","ME":"Maine","MD":"Maryland","MA":"Massachusetts","MI":"Michigan","MN":"Minnesota","MS":"Mississippi","MO":"Missouri","MT":"Montana","NE":"Nebraska","NV":"Nevada","NH":"New Hampshire","NJ":"New Jersey","NM":"New Mexico","NY":"New York","NC":"North Carolina","ND":"North Dakota","OH":"Ohio","OK":"Oklahoma","OR":"Oregon","PA":"Pennsylvania","RI":"Rhode Island","SC":"South Carolina","SD":"South Dakota","TN":"Tennessee","TX":"Texas","UT":"Utah","VT":"Vermont","VA":"Virginia","WA":"Washington","WV":"West Virginia","WI":"Wisconsin","WY":"Wyoming"}
 
@@ -140,21 +141,79 @@ for v in trail["visits"]:
     if v["state"] not in p["states"]: p["states"].append(v["state"])
     visits.append({"who": v["person"], "party": v.get("party"), "date": v["date"], "st": v["state"], "city": v.get("city", ""), "kind": v.get("kind", "event"), "for": v.get("for", []), "race": v.get("race", ""), "note": v.get("note", ""), "src": v.get("source", "")})
 attention = []
-for a in att["attention"]:
+MEDIA = {m["name"]: m for m in res.get("media_people", [])}
+seen_att = set()
+for a in att["attention"] + res.get("media_attention", []):
+    k = (a["person"], a.get("race", ""), a.get("when", ""))
+    if k in seen_att: continue
+    seen_att.add(k)
     if a["person"] in ("America PAC",): continue
     lean = a.get("lean", "other"); p = person(a["person"], lean if lean in ("D", "R") else "O", a.get("role", "commentator")); p["attention"] += 1
     if a["state"] not in p["states"]: p["states"].append(a["state"])
+    if a["person"] in MEDIA: p["show"] = MEDIA[a["person"]].get("show")
     attention.append({"who": a["person"], "role": a.get("role"), "lean": lean, "st": a["state"], "race": a.get("race", ""), "what": a["what"], "when": a.get("when", ""), "src": a.get("source", "")})
 endorse = []
-for e in att["endorsements"]:
-    by = e["by"]
+seen_e = set()
+for e in att["endorsements"] + res.get("endorsements", []):
+    by = e["by"].strip()
+    k = (by.lower(), e["candidate"].strip().lower())
+    if k in seen_e: continue
+    seen_e.add(k)
     short = "Teamsters" if by.startswith("Teamsters") else by
     org = by in ("UAW",) or "Teamsters" in by or "Fraternal" in by or "Firefighters" in by
-    p = person(short, "D" if by in ("Barack Obama", "Bernie Sanders", "UAW") else "R" if by == "Donald Trump" else "O", "group" if org else ROLE.get(by, "surrogate")); p["endorse"] += 1
+    dt, nt = (e.get("date") or "").strip(), e.get("note", "") or ""
+    mdt = re.match(r"^(\d{4}-\d{2}(?:-\d{2})?)(.*)$", dt)
+    if dt and not (mdt and not mdt.group(2).strip()):
+        extra = (mdt.group(2) if mdt else dt).strip(" ,;")
+        nt = "; ".join(x for x in (nt, extra) if x); dt = mdt.group(1) if mdt else ""
+    e = dict(e, date=dt, note=nt)
+    kind = e.get("byKind") or ("union" if org else "politician")
+    if kind == "org": kind = "organization"
+    p = person(short, "D" if by in ("Barack Obama", "Bernie Sanders", "UAW") else "R" if by == "Donald Trump" else "O", "group" if kind in ("union", "organization", "newspaper") else ROLE.get(by, e.get("byRole") or "surrogate")); p["endorse"] += 1
+    p.setdefault("sides", []).append(e.get("party"))
     if e["state"] not in p["states"]: p["states"].append(e["state"])
-    endorse.append({"by": short, "byFull": by, "st": e["state"], "race": e.get("race", ""), "cand": e["candidate"], "party": e.get("party"), "date": e.get("date", ""), "src": e.get("source", "")})
-dump("trail.json", {"people": sorted(people.values(), key=lambda p: -(p["visits"] * 2 + p["attention"] + p["endorse"])), "visits": sorted(visits, key=lambda v: v["date"]), "attention": attention, "endorse": endorse,
-                    "unconfirmed": trail.get("unconfirmed", []) + att.get("unconfirmed", []), "notes": [trail.get("notes", ""), att.get("notes", "")]})
+    endorse.append({"by": short, "byFull": by, "byRole": e.get("byRole", ""), "kind": kind, "st": e["state"], "race": e.get("race", ""), "office": e.get("office") or ("governor" if "Gov" in e.get("race", "") else "senate"),
+                    "cand": e["candidate"].strip(), "party": e.get("party"), "date": e.get("date") or "", "src": e.get("source", ""), "note": e.get("note", "")})
+# an endorser's colour on the map is the side they back, when they back only one side
+for p in people.values():
+    sides = {x for x in p.pop("sides", []) if x}
+    if p["party"] == "O" and len(sides) == 1: p["party"] = next(iter(sides))
+# the people rail: everyone on the trail or paying attention, and endorsers with three or more, or a national role
+rail = [p for p in people.values() if p["visits"] or p["attention"] or p["endorse"] >= 3 or p["role"] in ROLE.values()]
+dump("trail.json", {"people": sorted(rail, key=lambda p: -(p["visits"] * 2 + p["attention"] + p["endorse"])), "visits": sorted(visits, key=lambda v: v["date"]), "attention": attention, "endorse": endorse,
+                    "unconfirmed": trail.get("unconfirmed", []) + att.get("unconfirmed", []) + res.get("unconfirmed", []), "notes": [trail.get("notes", ""), att.get("notes", ""), res.get("note", "")]})
+
+# ---------------------------------------------------------------- the endorsements board and media watch
+fc_races = {}
+try:
+    for r in json.load(open(os.path.join(SITE, "public/forecast/model.json")))["races"]:
+        if r["office"] in ("senate", "governor"): fc_races[(r["st"], r["office"])] = r
+except Exception: pass
+by_race = {}
+for e in endorse:
+    key = f"{e['st']}-{e['office']}"
+    rr = by_race.setdefault(key, {"key": key, "st": e["st"], "office": e["office"], "race": e["race"], "cands": {}})
+    c = rr["cands"].setdefault(e["cand"], {"name": e["cand"], "party": e["party"], "list": []})
+    c["list"].append({k: e[k] for k in ("by", "byRole", "kind", "date", "src", "note")})
+races_e = []
+for rr in by_race.values():
+    f = fc_races.get((rr["st"], rr["office"]))
+    if f: rr.update(state=f["state"], id=f["id"], m=f["est"]["margin"], p=f["est"]["prob"], href=f"/forecast/{f['st'].lower()}/{f['office']}")
+    rr["cands"] = sorted(rr["cands"].values(), key=lambda c: {"D": 0, "I": 1, "R": 2}.get(c["party"], 3))
+    for c in rr["cands"]: c["list"].sort(key=lambda x: (x["kind"] != "politician", x["date"] or "9999"))
+    rr["n"] = sum(len(c["list"]) for c in rr["cands"])
+    races_e.append(rr)
+races_e.sort(key=lambda r: -r["n"])
+media = []
+for name, m in MEDIA.items():
+    items = sorted([a for a in attention if a["who"] == name], key=lambda a: a["when"] or "", reverse=True)
+    if items: media.append({"name": name, "role": m.get("role"), "show": m.get("show"), "lean": m.get("lean"), "ini": people[name]["ini"] if name in people else "", "items": items})
+for a in attention:
+    if a["who"] not in MEDIA and a["role"] in ("commentator", "podcaster", "streamer", "host", "reporter", "analyst") and a["who"] not in [x["name"] for x in media]:
+        media.append({"name": a["who"], "role": a["role"], "show": None, "lean": a["lean"], "ini": people[a["who"]]["ini"], "items": [x for x in attention if x["who"] == a["who"]]})
+media.sort(key=lambda m: -len(m["items"]))
+dump("endorsements.json", {"asOf": res.get("asOf"), "races": races_e, "media": media, "kinds": sorted({e["kind"] for e in endorse}),
+                           "unconfirmed": res.get("unconfirmed", []), "note": res.get("note", "")})
 
 # ---------------------------------------------------------------- the connections graph
 N, E = {}, []

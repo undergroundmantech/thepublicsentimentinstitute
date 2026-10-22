@@ -6,7 +6,7 @@ import { seo } from "@/app/lib/seo";
 export const metadata: Metadata = seo({"title": "On Point Polling methodology", "description": "How On Point Polling fields and weights its polls with the DSMeridian likely voter model, and how On Point Politics weights Gold Standard pollsters in its averages.", "path": "/on-point-polling/methodology", "type": "article"});
 
 // kept in sync with the POLLSTERS list in ./PollsterList (a server page cannot read values out of a client module)
-const POLLSTER_COUNT = 8;
+const POLLSTER_COUNT = 7;
 
 const STAGES: [string, string, string][] = [
   ["01", "Build the electorate", "Each sample is weighted to the registered population on the state voter file: age and gender always, race and education where the sample supports it, region where every mode carries geography."],
@@ -66,8 +66,8 @@ export default function Page() {
           <div className="card">
             <div className="card-h"><h3>How upweighting works</h3></div>
             <div className="card-b">
-              <p style={{ fontSize: 13.5 }}>Gold Standard pollsters get an effective sample size inflation of <span className="mono">n′ = n × m²</span> where <span className="mono">m = 2</span>, so <span className="mono">√n′ = 2 × √n</span>.</p>
-              <p style={{ fontSize: 13.5 }}>Their contribution to the daily weighted average is doubled relative to standard pollsters of the same raw sample size. The upweight applies only when the minimum disclosure items (field dates, sample size, sample type) are in the release.</p>
+              <p style={{ fontSize: 13.5 }}>Gold Standard pollsters carry the top pollster grade, <span className="mono">6×</span> the weight of a baseline B grade firm, in every Senate, governor, House and national average. In the national generic ballot, approval and right track averages they also get an effective sample size inflation of <span className="mono">n′ = n × m²</span> where <span className="mono">m = 2</span>.</p>
+              <p style={{ fontSize: 13.5 }}>Rasmussen Reports and ActiVote are not counted in any average. Trafalgar and InsiderAdvantage are labelled Republican leaning: each of their polls is compared with the other polls of the same race ended within three weeks of it, the gap is pooled across every race and shrunk toward zero, and that many points come off their margin before they enter the average. The adjusted figures are what the poll tables show, marked R lean.</p>
             </div>
           </div>
           <div className="card"><div className="card-b">

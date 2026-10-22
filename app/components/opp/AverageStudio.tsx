@@ -7,7 +7,7 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import "./studio.css";
 
 export type StudioDaily = { t: number; a: number; b: number; net: number };
-export type StudioPoll = { pollster: string; t: number; a: number; b: number; margin: number; sampleSize: number; sampleType: string; grade: string; share?: number; op?: boolean };
+export type StudioPoll = { pollster: string; t: number; a: number; b: number; margin: number; sampleSize: number; sampleType: string; grade: string; share?: number; op?: boolean; rLean?: number };
 type Side = { label: string; color: string; party?: string };
 type Range = "30" | "60" | "90" | "180" | "all";
 const DAY = 86400000;
@@ -172,9 +172,10 @@ export default function AverageStudio({ daily, polls, seriesA, seriesB, marginLa
         ) : null}
         {dot ? (
           <div className="stu-dtip" style={{ left: `${(dot.x / W) * 100}%`, top: dot.y, transform: dot.x > W * 0.62 ? "translate(calc(-100% - 12px), -50%)" : "translate(12px, -50%)" }}>
-            <b>{dot.p.pollster}</b><span className="g">{dot.p.grade}</span>
+            <b>{dot.p.pollster}</b><span className="g">{dot.p.grade}</span>{dot.p.rLean ? <span className="g rl">R lean</span> : null}
             <div>{fmtDate(dot.p.t, true)} · {dot.p.sampleSize > 0 ? dot.p.sampleSize.toLocaleString() : "n/a"} {dot.p.sampleType}</div>
             <div>{seriesA.label} {dot.p.a} · {seriesB.label} {dot.p.b} · <b style={{ color: colOf(dot.p.margin) }}>{fm(dot.p.margin)}</b></div>
+            {dot.p.rLean ? <div className="w">Republican leaning firm: moved {dot.p.rLean.toFixed(1)} points toward the Democrat before averaging</div> : null}
             {dot.p.share != null ? <div className="w">Weight in today&apos;s average: <b>{pc(dot.p.share)}</b></div> : null}
           </div>
         ) : null}
@@ -199,7 +200,7 @@ export function WeightBars({ polls, seriesA, seriesB, fmtMargin, marginLabel = "
     <div className="stu-wb">
       {top.map((p, i) => (
         <div className="row" key={i}>
-          <span className="who"><b>{p.pollster}</b><small>{fmtDate(p.t)} · {p.sampleSize > 0 ? p.sampleSize.toLocaleString() : "n/a"} {p.sampleType} · {p.grade}</small></span>
+          <span className="who"><b>{p.pollster}</b><small>{fmtDate(p.t)} · {p.sampleSize > 0 ? p.sampleSize.toLocaleString() : "n/a"} {p.sampleType} · {p.grade}{p.rLean ? ` · R lean, ${p.rLean.toFixed(1)} off` : ""}</small></span>
           <span className="bar"><i style={{ width: `${((p.share ?? 0) / mx) * 100}%`, background: p.margin >= 0 ? seriesA.color : seriesB.color, animationDelay: `${i * 0.05}s` }} /></span>
           <span className="pc mono">{pc(p.share ?? 0)}</span>
           <span className="mg mono" style={{ color: p.margin >= 0 ? seriesA.color : seriesB.color }}>{fm(p.margin)}</span>

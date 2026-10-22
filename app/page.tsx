@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { getHomeStats } from "@/app/_polling/lib/homeStats";
-import { RAW_POLLS as APPROVAL_POLLS } from "@/app/_polling/donaldtrumpapproval/data";
-import { RAW_POLLS as GENERIC_POLLS } from "@/app/_polling/genericballot/data";
+import { aggPolls } from "@/app/_polling/lib/aggregates";
 import { getModel, miniRaces, isInd } from "@/app/lib/forecastData";
 import { fmtM, lastName, raceHref } from "@/app/lib/opp";
 import HomeGlobe, { type GRace } from "@/app/components/home/HomeGlobe";
@@ -17,6 +16,8 @@ import { CountUp, Grow } from "@/app/components/home/motion";
 import { Icon } from "@/app/components/opp/Logo";
 import { Pointy } from "@/app/components/home/Mascot";
 import { seo } from "@/app/lib/seo";
+const APPROVAL_POLLS = aggPolls("trump-approval");
+const GENERIC_POLLS = aggPolls("generic-ballot");
 
 export const metadata: Metadata = seo({"title": "On Point Politics: 2026 midterm forecasts, polling averages and live results", "description": "Who is favored in the 2026 midterms: Senate, House and governor forecasts, every state legislature and statewide ballot measure, daily polling averages and live election night results from On Point Politics.", "path": "/", "absoluteTitle": true});
 

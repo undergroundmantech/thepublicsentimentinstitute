@@ -20,8 +20,8 @@ export type DailyRow = {
 // Every poll's final weight is multiplied by its pollster's quality factor.
 //
 // ── TIER STRUCTURE ──────────────────────────────────────────────────────────
-//   Gold Standard → 6.00×   Quantus Insights only. Exceptional accuracy &
-//                            methodology; reserved exclusively for this firm.
+//   Gold Standard → 6.00×   Big Data Poll, The Honest Poll, Emerson, Cygnal,
+//                            Quantus Insights, The New York Times, The Wall Street Journal.
 //   A++           → 4.00×   Elite accuracy (mean error ~2.0)
 //   A+            → 3.00×   Top tier, strong multi-cycle track record
 //   A             → 2.25×   Above average
@@ -40,9 +40,23 @@ export type DailyRow = {
 // =============================================================================
 export const POLLSTER_SCORECARD: Record<string, { grade: string; weight: number }> = {
   // ── GOLD STANDARD (6.00) ─────────────────────────────────────────────────
-  // Reserved exclusively for Quantus Insights. Tier exists for this firm alone.
+  // Oct 22 2026, set by the publisher: Big Data Poll, The Honest Poll, Emerson, Cygnal,
+  // Quantus Insights, The New York Times and The Wall Street Journal. These keys sit first
+  // so a joint release such as The Hill/Emerson or NY Times/Siena College matches here.
   "quantus insights":                           { grade: "Gold",   weight: 6.00 },
   "quantus":                                    { grade: "Gold",   weight: 6.00 },
+  "big data poll":                              { grade: "Gold",   weight: 6.00 },
+  "honest poll":                                { grade: "Gold",   weight: 6.00 },
+  "emerson":                                    { grade: "Gold",   weight: 6.00 },
+  "cygnal":                                     { grade: "Gold",   weight: 6.00 },
+  "ny times/siena":                             { grade: "Gold",   weight: 6.00 },
+  "new york times":                             { grade: "Gold",   weight: 6.00 },
+  "siena/nyt":                                  { grade: "Gold",   weight: 6.00 },
+  "siena college/nyt":                          { grade: "Gold",   weight: 6.00 },
+  "/nyt":                                       { grade: "Gold",   weight: 6.00 },
+  "wall street journal":                        { grade: "Gold",   weight: 6.00 },
+  "[wsj]":                                      { grade: "Gold",   weight: 6.00 },
+  "wsj":                                        { grade: "Gold",   weight: 6.00 },
 
   // ── A++ (4.00) ───────────────────────────────────────────────────────────
   "atlasintel":                                 { grade: "A++",    weight: 4.00 },
@@ -53,7 +67,6 @@ export const POLLSTER_SCORECARD: Record<string, { grade: string; weight: number 
   // ── A+ (3.00) ────────────────────────────────────────────────────────────
   "onmessage inc.":                             { grade: "A+",     weight: 3.00 },
   "onmessage":                                  { grade: "A+",     weight: 3.00 },
-  "big data poll":                              { grade: "A+",     weight: 3.00 },
   "u. georgia spia":                            { grade: "A+",     weight: 3.00 },
   "georgia spia":                               { grade: "A+",     weight: 3.00 },
   "the washington post":                        { grade: "A+",     weight: 3.00 },
@@ -73,7 +86,6 @@ export const POLLSTER_SCORECARD: Record<string, { grade: string; weight: number 
   // ── A- (1.70) ────────────────────────────────────────────────────────────
   "susquehanna":                                { grade: "A-",     weight: 1.70 },
   "fabrizio/gbao":                              { grade: "A-",     weight: 1.70 },
-  "fabrizio/gbao [wsj]":                        { grade: "A-",     weight: 1.70 },
   "global strategy group":                      { grade: "A-",     weight: 1.70 },
   "harrisx":                                    { grade: "A-",     weight: 1.70 },
   "harris x":                                   { grade: "A-",     weight: 1.70 },
@@ -87,9 +99,6 @@ export const POLLSTER_SCORECARD: Record<string, { grade: string; weight: number 
   "j.l. partners":                              { grade: "B+",     weight: 1.30 },
   "jl partners":                                { grade: "B+",     weight: 1.30 },
   "j. l. partners":                             { grade: "B+",     weight: 1.30 },
-  "emerson":                                    { grade: "B+",     weight: 1.30 },
-  "emerson college":                            { grade: "B+",     weight: 1.30 },
-  "emerson college polling":                    { grade: "B+",     weight: 1.30 },
   "mitchell research & communications":         { grade: "B+",     weight: 1.30 },
   "mitchell research":                          { grade: "B+",     weight: 1.30 },
   "wpai":                                       { grade: "B+",     weight: 1.30 },
@@ -110,21 +119,13 @@ export const POLLSTER_SCORECARD: Record<string, { grade: string; weight: number 
   "marquette law school":                       { grade: "B",      weight: 1.00 },
   "washington post/george mason university":    { grade: "B",      weight: 1.00 },
   "washington post/george mason":               { grade: "B",      weight: 1.00 },
-  // Rasmussen: rated A+ by 538 but carries a known Republican house effect;
-  // weight held at B baseline (1.00) as a house-effect penalty.
-  "rasmussen":                                  { grade: "A+(adj)", weight: 1.00 },
-  "rasmussen reports":                          { grade: "A+(adj)", weight: 1.00 },
   // ── B- (0.75) ────────────────────────────────────────────────────────────
   "u. massachusetts - lowell":                  { grade: "B-",     weight: 0.75 },
   "umass lowell":                               { grade: "B-",     weight: 0.75 },
   "u. massachusetts lowell":                    { grade: "B-",     weight: 0.75 },
   "wick":                                       { grade: "B-",     weight: 0.75 },
-  "activote":                                   { grade: "B-",     weight: 0.75 },
   // ── C+ (0.50) ────────────────────────────────────────────────────────────
   "harper polling":                             { grade: "C+",     weight: 0.50 },
-  "siena/nyt":                                  { grade: "C+",     weight: 0.50 },
-  "siena college/nyt":                          { grade: "C+",     weight: 0.50 },
-  "siena/new york times":                       { grade: "C+",     weight: 0.50 },
   "co/efficient":                               { grade: "C+",     weight: 0.50 },
   "roanoke college":                            { grade: "C+",     weight: 0.50 },
   "spry strategies":                            { grade: "C+",     weight: 0.50 },
@@ -133,7 +134,6 @@ export const POLLSTER_SCORECARD: Record<string, { grade: string; weight: number 
   "hart research":                              { grade: "C+",     weight: 0.50 },
   "muhlenberg":                                 { grade: "C+",     weight: 0.50 },
   "muhlenberg college":                         { grade: "C+",     weight: 0.50 },
-  "cygnal":                                     { grade: "C+",     weight: 0.50 },
   "rmg research":                               { grade: "C+",     weight: 0.50 },
   "redfield & wilton strategies":               { grade: "C+",     weight: 0.50 },
   "redfield and wilton strategies":             { grade: "C+",     weight: 0.50 },
@@ -230,6 +230,19 @@ export const POLLSTER_SCORECARD: Record<string, { grade: string; weight: number 
   "soonerpoll.com":                             { grade: "Super F", weight: 0.005 },
   "soonerpoll":                                 { grade: "Super F", weight: 0.005 },
 };
+
+// Oct 22 2026, set by the publisher: ActiVote and Rasmussen Reports are left out of every
+// average. Wedgewood Polls stays out as well.
+export const EXCLUDED_POLLSTERS = /activote|rasmussen|wedgewood/i;
+export function isExcludedPollster(name: string): boolean { return EXCLUDED_POLLSTERS.test(name || ""); }
+
+// Oct 22 2026: Trafalgar and InsiderAdvantage are labelled Republican leaning. Their lean is
+// measured against the other polls of the same races in aggregates.ts and taken off their margin.
+export const R_LEAN_FIRMS: { id: string; label: string; re: RegExp }[] = [
+  { id: "trafalgar", label: "Trafalgar", re: /trafalgar/i },
+  { id: "insideradvantage", label: "InsiderAdvantage", re: /insider\s*advantage/i },
+];
+export function rLeanFirms(name: string): string[] { return R_LEAN_FIRMS.filter((f) => f.re.test(name || "")).map((f) => f.id); }
 
 // Unrated pollsters: slight penalty below B baseline.
 const UNKNOWN_POLLSTER_WEIGHT = 0.60;
@@ -582,7 +595,7 @@ function windowed(availableDesc: Poll[], dayISO: string): Poll[] {
 
 /** Each poll's share of the average on one day for one candidate, after the robust passes. */
 export function pollSharesOn(polls: Poll[], c: string, dayISO: string, opts: ModelOptions = ELECTION_PROFILE): Map<Poll, number> {
-  const availableDesc = windowed(polls.filter((p) => p.endDate <= dayISO).sort((a, b) => b.endDate.localeCompare(a.endDate)), dayISO);
+  const availableDesc = windowed(polls.filter((p) => p.endDate <= dayISO && !isExcludedPollster(p.pollster)).sort((a, b) => b.endDate.localeCompare(a.endDate)), dayISO);
   const e = dayEntries(availableDesc, c, dayISO, opts);
   const fit = localFit(e.map((x) => x.value), e.map((x) => x.x), e.map((x) => x.weight));
   const out = new Map<Poll, number>();
@@ -602,7 +615,7 @@ export function buildDailyWeightedSeries(
 ): DailyRow[] {
   const start = parseISODate(startISO);
   const end   = parseISODate(endISO);
-  const sortedDesc = [...polls].sort((a, b) => b.endDate.localeCompare(a.endDate));
+  const sortedDesc = polls.filter((p) => !isExcludedPollster(p.pollster)).sort((a, b) => b.endDate.localeCompare(a.endDate));
   const out: DailyRow[] = [];
   for (let d = new Date(start); d <= end; d.setDate(d.getDate() + 1)) {
     const dayISO = iso(d);

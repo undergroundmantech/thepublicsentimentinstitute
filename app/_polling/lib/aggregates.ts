@@ -4,6 +4,7 @@ import {
   getCandidateList,
   buildDailyWeightedSeries, pollSharesOn,
   getPollsterEntry,
+  isExcludedPollster, rLeanFirms, R_LEAN_FIRMS,
 } from "./buildDailyModel";
 
 import { RAW_POLLS as GENERIC, GOLD_STANDARD_NAMES as GENERIC_GOLD } from "../genericballot/data";
@@ -158,6 +159,8 @@ export type AggPollPoint = {
   sampleSize: number;
   sampleType: string;
   grade: string;
+  /** Points taken off a Republican leaning firm's margin, toward the Democrat, before it entered the average. */
+  rLean?: number;
 };
 
 const BLUE = "var(--dem)";
@@ -310,7 +313,7 @@ const SENATE_AGGS: AggregateDef[] = [
 
 const GOVERNOR_AGGS: AggregateDef[] = GOVERNOR_MODULES.flatMap(governorAggs);
 
-export const AGGREGATES: AggregateDef[] = [
+const RAW_AGGREGATES: AggregateDef[] = [
   {
     id: "generic-ballot",
     label: "Generic Ballot",
@@ -391,6 +394,86 @@ export const AGGREGATES: AggregateDef[] = [
   ...GOVERNOR_AGGS,
 ];
 
+/* -------------------- removed firms and Republican lean -------------------- */
+// Oct 22 2026, set by the publisher. ActiVote and Rasmussen Reports are dropped from every average.
+// Trafalgar and InsiderAdvantage are labelled Republican leaning, and their lean is measured, not assumed:
+// each of their polls is set against the polls other firms ended within three weeks of it in the same race,
+// as Republican minus Democrat margin, the gaps are pooled across every race, shrunk toward zero by
+// n / (n + 5), and that many points come off the firm's margin, half from the Republican side and half
+// added to the Democratic side. A firm that measures at or below zero is not moved. Approval, favorability
+// and right track count the White House side, the Republican side under this administration.
+
+type Side = "A" | "B";
+const R_SIDE_OVERRIDE: Record<string, Side> = { "trump-approval": "A", "vance-favorability": "A", "right-wrong-track": "A" };
+function rSideOf(d: AggregateDef): Side | null {
+  if (R_SIDE_OVERRIDE[d.id]) return R_SIDE_OVERRIDE[d.id];
+  const red = (x: Series) => x.color === RED || x.party === "Republican";
+  if (red(d.seriesA) && !red(d.seriesB)) return "A";
+  if (red(d.seriesB) && !red(d.seriesA)) return "B";
+  return null;
+}
+const LEAN_WINDOW_DAYS = 21, LEAN_SHRINK = 5, LEAN_CLIP = 12;
+const DAYMS = 86400000;
+function netR(p: Poll, d: AggregateDef, side: Side): number {
+  const r = p.results as Record<string, number>;
+  const a = Number(r[d.keyA]), b = Number(r[d.keyB]);
+  if (!Number.isFinite(a) || !Number.isFinite(b) || r[d.keyA] == null || r[d.keyB] == null) return NaN;
+  return side === "A" ? a - b : b - a;
+}
+function wmed(v: number[], w: number[]) {
+  const o = v.map((x, i) => [x, w[i]] as const).sort((x, y) => x[0] - y[0]);
+  const tot = o.reduce((s, x) => s + x[1], 0); let acc = 0;
+  for (const [x, ww] of o) { acc += ww; if (acc >= tot / 2) return x; }
+  return o[o.length - 1][0];
+}
+export type LeanEstimate = { id: string; label: string; lean: number; raw: number; n: number };
+function measureLeans(defs: AggregateDef[]): Record<string, LeanEstimate> {
+  const res: Record<string, number[]> = {};
+  for (const f of R_LEAN_FIRMS) res[f.id] = [];
+  for (const d of defs) {
+    const side = rSideOf(d); if (!side) continue;
+    const pts = d.polls.filter((p) => !isExcludedPollster(p.pollster))
+      .map((p) => ({ p, t: new Date(p.endDate + "T00:00:00").getTime(), m: netR(p, d, side), firms: rLeanFirms(p.pollster) }))
+      .filter((x) => Number.isFinite(x.m));
+    const others = pts.filter((x) => x.firms.length === 0);
+    for (const x of pts) {
+      if (!x.firms.length) continue;
+      const nb = others.filter((o) => Math.abs(o.t - x.t) <= LEAN_WINDOW_DAYS * DAYMS);
+      if (nb.length < 2) continue;
+      const ref = wmed(nb.map((o) => o.m), nb.map((o) => 1 / (1 + Math.abs(o.t - x.t) / (7 * DAYMS))));
+      const gap = Math.max(-LEAN_CLIP, Math.min(LEAN_CLIP, x.m - ref));
+      for (const f of x.firms) res[f].push(gap);
+    }
+  }
+  const out: Record<string, LeanEstimate> = {};
+  for (const f of R_LEAN_FIRMS) {
+    const g = res[f.id], n = g.length;
+    const raw = n ? g.reduce((s, x) => s + x, 0) / n : 0;
+    out[f.id] = { id: f.id, label: f.label, n, raw: round1(raw), lean: round1(Math.max(0, raw * n / (n + LEAN_SHRINK))) };
+  }
+  return out;
+}
+export const R_LEAN_ESTIMATES: Record<string, LeanEstimate> = measureLeans(RAW_AGGREGATES);
+
+function cleanPolls(d: AggregateDef): Poll[] {
+  const side = rSideOf(d);
+  return d.polls.filter((p) => !isExcludedPollster(p.pollster)).map((p) => {
+    const firms = rLeanFirms(p.pollster);
+    if (!firms.length || !side) return p;
+    const lean = firms.reduce((s, f) => s + (R_LEAN_ESTIMATES[f]?.lean ?? 0), 0) / firms.length;
+    if (!(lean > 0)) return p;
+    const rKey = side === "A" ? d.keyA : d.keyB, dKey = side === "A" ? d.keyB : d.keyA;
+    const r = { ...(p.results as Record<string, number>) };
+    if (r[rKey] == null || r[dKey] == null) return p;
+    r[rKey] = Math.round((r[rKey] - lean / 2) * 100) / 100; r[dKey] = Math.round((r[dKey] + lean / 2) * 100) / 100;
+    return { ...p, results: r, rLean: lean } as Poll;
+  });
+}
+
+export const AGGREGATES: AggregateDef[] = RAW_AGGREGATES.map((d) => ({ ...d, polls: cleanPolls(d) }));
+/** The cleaned poll list of one average: removed firms dropped, Republican lean taken off. */
+export function aggPolls(id: string): Poll[] { return AGGREGATES.find((d) => d.id === id)?.polls ?? []; }
+
 /* ----------------------------- builder ----------------------------- */
 
 function normalize(s: string) {
@@ -412,7 +495,8 @@ export type BuiltAggregate = {
   latest: { a: number; b: number; net: number } | null;
 };
 
-export function buildAggregate(def: AggregateDef): BuiltAggregate {
+export function buildAggregate(def0: AggregateDef): BuiltAggregate {
+  const def = { ...def0, polls: def0.polls.filter((p) => !isExcludedPollster(p.pollster)) };
   const adjusted = def.polls.map((p) => ({
     ...p,
     sampleSize: effSample(p.pollster, p.sampleSize, def.gold, def.goldMult),
@@ -450,6 +534,7 @@ export function buildAggregate(def: AggregateDef): BuiltAggregate {
         sampleSize: p.sampleSize,
         sampleType: p.sampleType,
         grade: getPollsterEntry(p.pollster).grade,
+        rLean: (p as Poll & { rLean?: number }).rLean,
         share: ((shA.get(adjusted[i] as Poll) ?? 0) + (shB.get(adjusted[i] as Poll) ?? 0)) / 2,
       };
     })
@@ -505,7 +590,8 @@ function multiDef(id: string, label: string, title: string, subtitle: string, po
 // files stay on disk, but nothing registers them, so no Primaries tab renders.
 export const MULTI_AGGREGATES: MultiAggregateDef[] = [];
 
-export function buildMulti(def: MultiAggregateDef): BuiltMulti {
+export function buildMulti(def0: MultiAggregateDef): BuiltMulti {
+  const def = { ...def0, polls: def0.polls.filter((p) => !isExcludedPollster(p.pollster)) };
   const adjusted = def.polls.map((p) => ({ ...p, sampleSize: effSample(p.pollster, p.sampleSize, def.gold, def.goldMult) }));
   const keys = def.series.map((s) => s.key);
   const range = getDateRange(def.polls);

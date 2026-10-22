@@ -10,9 +10,11 @@ import {
   type BuiltAggregate, type BuiltMulti, type AggregateDef, type MultiAggregateDef,
 } from "@/app/_polling/lib/aggregates";
 import { getPollsterEntry } from "@/app/_polling/lib/buildDailyModel";
-import StateRaceMap, { type MapRow } from "@/app/_polling/lib/StateRaceMap";
+import { type MapRow } from "@/app/_polling/lib/StateRaceMap";
+import PollRoom, { type RoomItem } from "@/app/_polling/lib/PollRoom";
 import AverageStudio, { WeightBars } from "@/app/components/opp/AverageStudio";
 import { RECENCY_HALF_LIFE_DAYS } from "@/app/_polling/lib/buildDailyModel";
+import { R_LEAN_ESTIMATES } from "@/app/_polling/lib/aggregates";
 import Ambient from "@/app/components/opp/Ambient";
 import "./polls2.css";
 import { RATING_LABEL, STATE_NAME, fmtM, rating, ratingPill } from "@/app/lib/opp";
@@ -177,14 +179,28 @@ export default function PollingAveragesPage({ initialId, forecast }: { initialId
   // build everything after first paint (board tiles, the state map and instant switching)
   const [allBuilt, setAllBuilt] = useState<Record<string, BuiltAggregate>>({});
   const [allMulti, setAllMulti] = useState<Record<string, BuiltMulti>>({});
+  // Oct 22 2026: built in small slices that yield to the browser, the open group first, so the
+  // whiteboard map and its geometry are not held up behind every other average.
   useEffect(() => {
     let cancelled = false;
-    const t = setTimeout(() => {
-      const a: Record<string, BuiltAggregate> = {}; for (const d of AGGREGATES) a[d.id] = buildAggregate(d);
-      const m: Record<string, BuiltMulti> = {}; for (const d of MULTI_AGGREGATES) m[d.id] = buildMulti(d);
-      if (!cancelled) { setAllBuilt(a); setAllMulti(m); }
-    }, 0);
-    return () => { cancelled = true; clearTimeout(t); };
+    const first = initial.group;
+    const order = [...AGGREGATES].sort((x, y) => Number(GROUP_OF(y.category) === first) - Number(GROUP_OF(x.category) === first));
+    const a: Record<string, BuiltAggregate> = {};
+    const tick = () => new Promise<void>((r) => setTimeout(r, 0));
+    (async () => {
+      await tick();
+      for (let i = 0; i < order.length; i += 4) {
+        if (cancelled) return;
+        for (const d of order.slice(i, i + 4)) a[d.id] = buildAggregate(d);
+        if (i % 16 === 12 || i + 4 >= order.length) setAllBuilt({ ...a });
+        await tick();
+      }
+      const m: Record<string, BuiltMulti> = {};
+      for (const d of MULTI_AGGREGATES) { if (cancelled) return; m[d.id] = buildMulti(d); await tick(); }
+      if (!cancelled) setAllMulti(m);
+    })();
+    return () => { cancelled = true; };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // sample type counts for the active average (drive the filter control and disable empty buckets)
@@ -340,7 +356,6 @@ export default function PollingAveragesPage({ initialId, forecast }: { initialId
   function pickGroup(g: string) { setGroup(g); const first = CATALOG.find((c) => c.group === g); if (first) { setId(first.id); setQuery(""); } }
   function openFocus(it: Item) { setView("focus"); setGroup(it.group); setId(it.id); setQuery(""); window.scrollTo({ top: 0, behavior: reduceMotion() ? "auto" : "smooth" }); }
   function pickAgg(aid: string) { setId(aid); setQuery(""); }
-  function pickFromMap(aid: string) { pickAgg(aid); window.scrollTo({ top: 0, behavior: reduceMotion() ? "auto" : "smooth" }); }
 
   function downloadCSV() {
     let header: (string | number)[] = [], rows: (string | number)[][] = [], fname = "onpoint-polls.csv";
@@ -361,9 +376,9 @@ export default function PollingAveragesPage({ initialId, forecast }: { initialId
     document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
   }
 
-  const pollsterCell = (name: string) => {
+  const pollsterCell = (name: string, rLean?: number) => {
     const entry = getPollsterEntry(name);
-    return <td className="pa-who"><span>{name}</span><span className={`pa-grade${gradeIsHigh(entry.grade) ? " hi" : ""}`}>{entry.grade}</span></td>;
+    return <td className="pa-who"><span>{name}</span><span className={`pa-grade${gradeIsHigh(entry.grade) ? " hi" : ""}`}>{entry.grade}</span>{rLean ? <span className="pa-grade rl" title={`Republican leaning firm: moved ${rLean.toFixed(1)} points toward the Democrat before averaging`}>R lean</span> : null}</td>;
   };
   const sampleCell = (n: number, type: string) => <td className="n">{n > 0 ? n.toLocaleString("en-US") : "n/a"}<span className="pa-type">{type}</span></td>;
 
@@ -420,8 +435,24 @@ export default function PollingAveragesPage({ initialId, forecast }: { initialId
     );
   }
 
+  /* ------------------------------ the whiteboard room ------------------------------ */
+  const roomItems: RoomItem[] = options.map((it) => {
+    let color = "var(--ink2)", value = "", spark: number[] = [], n = 0;
+    if (it.kind === "h2h") {
+      const b = allBuilt[it.id]; const d = H2H_BY_ID[it.id];
+      if (b?.latest) { color = b.latest.net >= 0 ? d.seriesA.color : d.seriesB.color; value = d.fmtMargin(b.latest.net); spark = sample(b.daily.slice(-90).map((x) => x.net), 40); }
+      if (b) n = b.polls.length;
+    } else {
+      const b = allMulti[it.id]; const d = MULTI_BY_ID[it.id];
+      if (b?.latest) { const li = leaderIdx(b.latest); color = d.series[li].color; value = `${d.series[li].label} ${b.latest[li].toFixed(1)}`; spark = sample(b.daily.slice(-90).map((x) => x.v[li]), 40); }
+      if (b) n = b.polls.length;
+    }
+    return { id: it.id, label: shortLabel(it), value, color, spark, n };
+  });
+  const roomGroups = GROUPS.map((g) => ({ id: g, label: GROUP_TITLE[g] ?? g, count: CATALOG.filter((c) => c.group === g).length }));
+  const roomAll = CATALOG.map((c) => ({ id: c.id, label: shortLabel(c), group: c.group }));
+
   /* ------------------------------ one average ------------------------------ */
-  const optionIdx = options.findIndex((o) => o.id === id);
   return (
     <div className="opp pa pa2 fx-dark">
       <style>{CSS}</style>
@@ -430,6 +461,28 @@ export default function PollingAveragesPage({ initialId, forecast }: { initialId
         <Link href={GROUP_HREF[item.group] ?? "/polls"}>{GROUP_TITLE[item.group] ?? item.group}</Link><span className="sep">/</span><span>{words.crumb}</span>
       </nav>
       <Ambient />
+      {/* the whiteboard room: the way into every average */}
+      <PollRoom groups={roomGroups} group={group} onGroup={pickGroup} items={roomItems} allItems={roomAll}
+        activeId={id} onPick={(aid) => { const c = CATALOG.find((x) => x.id === aid); if (c && c.group !== group) setGroup(c.group); pickAgg(aid); }}
+        mapRows={mapRows} office={mapOffice}
+        active={h2hDef && hLatest ? { title: shortLabel(item), value: h2hDef.fmtMargin(hLatest.net), color: leadColor, polls: totalPolls } : { title: shortLabel(item), value: "", color: "", polls: totalPolls }}
+        tray={<>
+          <span className="eye">Voter sample</span>
+          <div className="seg" role="group" aria-label="Filter polls by sample type">
+            {SAMPLE_OPTS.map((o) => {
+              const n = o.val === "all" ? baseCount : (typeCounts[o.val] ?? 0);
+              const disabled = o.val !== "all" && n === 0;
+              return (
+                <button key={o.val} type="button" className={sampleFilter === o.val ? "on" : ""} disabled={disabled} aria-pressed={sampleFilter === o.val}
+                  title={disabled ? `No ${o.full.toLowerCase()} polls for this race` : o.full} onClick={() => setSampleFilter(o.val)}>
+                  {o.label}<small>{n}</small>
+                </button>
+              );
+            })}
+          </div>
+          <button type="button" className="btn sm" onClick={() => setView("board")}>Every average at once</button>
+        </>} />
+
       <header className="pa-hero">
         <Pointy className="cam-pa" pose="point" prop="chart" size={104} look={-1} flip />
         <div className="pa-hero-l">
@@ -467,38 +520,6 @@ export default function PollingAveragesPage({ initialId, forecast }: { initialId
         ) : null}
       </header>
 
-      {/* switch averages: group, then the race; the URL follows through pollHref */}
-      <div className="card pa-switch">
-        <div className="seg pa-groups" role="tablist" aria-label="Average group">
-          {GROUPS.map((g) => (
-            <button key={g} type="button" role="tab" aria-selected={g === group} className={g === group ? "on" : ""} onClick={() => pickGroup(g)}>{GROUP_TITLE[g] ?? g}</button>
-          ))}
-        </div>
-        <label className="pa-pick">
-          <span className="sr-only">Choose an average</span>
-          <select value={optionIdx >= 0 ? id : ""} onChange={(e) => e.target.value && pickAgg(e.target.value)}>
-            {optionIdx < 0 && <option value="">Choose an average</option>}
-            {options.map((it) => <option key={it.id} value={it.id}>{shortLabel(it)}</option>)}
-          </select>
-        </label>
-        <div className="pa-switch-r">
-          <span className="eye">Voter sample</span>
-          <div className="seg" role="group" aria-label="Filter polls by sample type">
-            {SAMPLE_OPTS.map((o) => {
-              const n = o.val === "all" ? baseCount : (typeCounts[o.val] ?? 0);
-              const disabled = o.val !== "all" && n === 0;
-              return (
-                <button key={o.val} type="button" className={sampleFilter === o.val ? "on" : ""} disabled={disabled} aria-pressed={sampleFilter === o.val}
-                  title={disabled ? `No ${o.full.toLowerCase()} polls for this race` : o.full} onClick={() => setSampleFilter(o.val)}>
-                  {o.label}<small>{n}</small>
-                </button>
-              );
-            })}
-          </div>
-          <button type="button" className="btn sm" onClick={() => setView("board")}>Full board</button>
-        </div>
-      </div>
-
       {/* the studio: one interactive chart, the average itself */}
       <section className="card pa-studio">
         <div className="card-b">
@@ -520,7 +541,7 @@ export default function PollingAveragesPage({ initialId, forecast }: { initialId
               <div className="card-h"><h3>What moves the average today</h3><span className="eye" style={{ marginLeft: "auto" }}>Share of today&apos;s weight</span></div>
               <div className="card-b">
                 <WeightBars polls={builtH2H.polls} seriesA={h2hDef.seriesA} seriesB={h2hDef.seriesB} fmtMargin={h2hDef.fmtMargin} marginLabel={h2hDef.marginLabel} />
-                <p className="pa-note">Each poll&apos;s weight is its sample size, voter screen, pollster grade and age, with a {RECENCY_HALF_LIFE_DAYS} day half life, then the trend fit weighs down any poll that sits far from the others. No single poll can carry more than 15 percent.</p>
+                <p className="pa-note">Each poll&apos;s weight is its sample size, voter screen, pollster grade and age, with a {RECENCY_HALF_LIFE_DAYS} day half life, then the trend fit weighs down any poll that sits far from the others. No single poll can carry more than 15 percent. Gold Standard pollsters, Big Data Poll, The Honest Poll, Emerson, Cygnal, Quantus Insights, The New York Times and The Wall Street Journal, carry the top grade. Rasmussen Reports and ActiVote are not counted. Trafalgar and InsiderAdvantage are marked R lean and moved toward the Democrat by their measured lean against other polls of the same races: {Object.values(R_LEAN_ESTIMATES).map((e) => `${e.label} ${e.lean.toFixed(1)} points over ${e.n} polls`).join(", ")}.</p>
               </div>
             </section>
           ) : null}
@@ -558,7 +579,7 @@ export default function PollingAveragesPage({ initialId, forecast }: { initialId
                       const mi = leaderIdx(p.v);
                       return (
                         <tr key={`${p.pollster}-${p.date}-${i}`}>
-                          {pollsterCell(p.pollster)}
+                          {pollsterCell(p.pollster, (p as { rLean?: number }).rLean)}
                           <td className="n">{fmtDay(p.t)}</td>
                           {sampleCell(p.sampleSize, p.sampleType)}
                           {multiDef.series.map((s, ci) => (
@@ -600,7 +621,7 @@ export default function PollingAveragesPage({ initialId, forecast }: { initialId
                       const mColor = p.margin > 0 ? h2hDef.seriesA.color : p.margin < 0 ? h2hDef.seriesB.color : "var(--mute)";
                       return (
                         <tr key={`${p.pollster}-${p.date}-${i}`}>
-                          {pollsterCell(p.pollster)}
+                          {pollsterCell(p.pollster, (p as { rLean?: number }).rLean)}
                           <td className="n">{fmtDay(p.t)}</td>
                           {sampleCell(p.sampleSize, p.sampleType)}
                           <td className="n">{round0(p.a)}</td>
@@ -629,14 +650,6 @@ export default function PollingAveragesPage({ initialId, forecast }: { initialId
             )}
           </section>
 
-          {mapOffice && (
-            <section className="card">
-              <div className="card-h"><h3>Every 2026 {mapOffice === "Governor" ? "governor" : "Senate"} average</h3><span className="eye" style={{ marginLeft: "auto" }}>Click a state</span></div>
-              <div className="card-b">
-                {mapRows.length ? <StateRaceMap rows={mapRows} activeId={id} onPick={pickFromMap} office={mapOffice} /> : <div className="empty">Building state averages</div>}
-              </div>
-            </section>
-          )}
         </div>
 
         <aside className="side">
@@ -693,7 +706,7 @@ export default function PollingAveragesPage({ initialId, forecast }: { initialId
 
           <div className="callout">
             <div className="eye">Methodology</div>
-            The On Point average is a robust local trend fit (LOWESS) through every public poll, weighted by recency with a {RECENCY_HALF_LIFE_DAYS} day half life, sample size, voter screen and pollster grade, and rebuilt every day. On Point Polling polls are fielded by On Point Polling. <Link href="/on-point-polling/methodology" style={{ textDecoration: "underline" }}>How the average works</Link>.
+            The On Point average is a robust local trend fit (LOWESS) through every public poll, weighted by recency with a {RECENCY_HALF_LIFE_DAYS} day half life, sample size, voter screen and pollster grade, and rebuilt every day. Rasmussen Reports and ActiVote are left out, and the measured Republican lean of Trafalgar and InsiderAdvantage is taken off their polls. On Point Polling polls are fielded by On Point Polling. <Link href="/on-point-polling/methodology" style={{ textDecoration: "underline" }}>How the average works</Link>.
           </div>
         </aside>
       </div>
@@ -732,6 +745,7 @@ const CSS = `
 .pa .pa-who span:first-child { color: var(--ink); font-weight: 600; }
 .pa .pa-grade { display: inline-block; margin-left: 8px; padding: 1px 5px; border: 1px solid var(--line2); border-radius: 5px; font: 600 10px var(--font-m); color: var(--mute); }
 .pa .pa-grade.hi { color: var(--ink); border-color: rgba(var(--line-rgb),.35); }
+.pa .pa-grade.rl { color: #ff8399; border-color: rgba(255,59,92,.45); background: rgba(255,59,92,.1); }
 .pa .pa-type { color: var(--mute); margin-left: 6px; }
 .pa .pa-mcell { display: inline-flex; align-items: center; justify-content: flex-end; gap: 10px; }
 .pa .pa-mbar { position: relative; width: 64px; height: 6px; border-radius: 3px; background: rgba(var(--line-rgb),.06); flex-shrink: 0; }

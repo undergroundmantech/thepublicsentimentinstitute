@@ -5,6 +5,8 @@ import { usePathname } from "next/navigation";
 export const WD_TABS = [
   { href: "/watchdog", label: "Desk" },
   { href: "/watchdog/trail", label: "Campaign trail" },
+  { href: "/watchdog/endorsements", label: "Endorsements" },
+  { href: "/watchdog/media", label: "Media watch" },
   { href: "/watchdog/money", label: "Money flow" },
   { href: "/watchdog/connections", label: "Connections" },
   { href: "/watchdog/paid", label: "Who gets paid" },

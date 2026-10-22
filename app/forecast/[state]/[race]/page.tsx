@@ -140,9 +140,20 @@ export default async function Page({ params }: { params: Promise<{ state: string
   const heroCands = (r.cands ?? []).filter((c) => c.pct >= 3).slice(0, 2).map((c) => ({ name: c.name, party: c.party,
     label: c.party === "D" ? "Democrat" : c.party === "R" ? "Republican" : "Independent", pct: c.pct, votes: c.votes ?? 0,
     cls: (c.party === "D" ? "d" : c.party === "R" ? "r" : "i") as "d" | "r" | "i" }));
+  // Oct 22 2026: endorsements and media attention from Watchdog, read at build time
+  let endorse: { n: number; cands: { name: string; party: string | null; list: { by: string; byRole: string; src: string }[] }[] } | null = null;
+  let mediaHere: { who: string; what: string; src: string }[] = [];
+  if (r.office === "senate" || r.office === "governor") {
+    try {
+      const ed = JSON.parse(fs.readFileSync(path.join(process.cwd(), "public", "watchdog", "endorsements.json"), "utf8"));
+      endorse = ed.races.find((x: { key: string }) => x.key === `${r.st}-${r.office}`) ?? null;
+      const word = r.office === "senate" ? "Senate" : "Gov";
+      mediaHere = ed.media.flatMap((m: { items: { who: string; st: string; race: string; what: string; src: string }[] }) => m.items).filter((a: { st: string; race: string }) => a.st === r.st && a.race.includes(word));
+    } catch { endorse = null; }
+  }
   const navItems = [
     { id: "map", label: r.office === "house" ? "Map" : "Counties map" }, { id: "vote", label: "Vote share" },
-    ...((r.trend?.length ?? 0) >= 3 ? [{ id: "trend", label: "Trend" }] : []), { id: "polls", label: "Polling" }, { id: "path", label: "How we got here" },
+    ...((r.trend?.length ?? 0) >= 3 ? [{ id: "trend", label: "Trend" }] : []), { id: "polls", label: "Polling" }, ...(endorse && endorse.n ? [{ id: "endorse", label: "Endorsements" }] : []), { id: "path", label: "How we got here" },
     ...(cuts.length ? [{ id: "groups", label: "Groups" }] : []), ...(countyVotes.length ? [{ id: "counties", label: "Every county" }] : []),
   ];
 
@@ -254,12 +265,12 @@ export default async function Page({ params }: { params: Promise<{ state: string
             {agg && built && built.daily.length ? (
               <div className="card ptr-card">
                 <div className="card-b">
-                  <AverageStudio title={`The ${STATE_NAME[r.st] ?? r.st} ${r.office === "senate" ? "Senate" : "governor"} polling average`} daily={built.daily} polls={built.polls.map((q) => ({ pollster: q.pollster, t: q.t, a: q.a, b: q.b, margin: q.margin, sampleSize: q.sampleSize, sampleType: q.sampleType, grade: q.grade, share: q.share, op: q.pollster.startsWith("On Point") }))}
+                  <AverageStudio title={`The ${STATE_NAME[r.st] ?? r.st} ${r.office === "senate" ? "Senate" : "governor"} polling average`} daily={built.daily} polls={built.polls.map((q) => ({ pollster: q.pollster, t: q.t, a: q.a, b: q.b, margin: q.margin, sampleSize: q.sampleSize, sampleType: q.sampleType, grade: q.grade, share: q.share, rLean: q.rLean, op: q.pollster.startsWith("On Point") }))}
                     seriesA={{ label: agg.seriesA.label, color: agg.seriesA.color, party: agg.seriesA.party }} seriesB={{ label: agg.seriesB.label, color: agg.seriesB.color, party: agg.seriesB.party }} marginLabel={agg.marginLabel} unit={agg.unit} height={360} />
                 </div>
                 <div className="ptr-wb">
                   <div className="eye">What moves the average today</div>
-                  <WeightBars polls={built.polls.map((q) => ({ pollster: q.pollster, t: q.t, a: q.a, b: q.b, margin: q.margin, sampleSize: q.sampleSize, sampleType: q.sampleType, grade: q.grade, share: q.share }))} seriesA={{ label: agg.seriesA.label, color: agg.seriesA.color }} seriesB={{ label: agg.seriesB.label, color: agg.seriesB.color }} marginLabel={agg.marginLabel} limit={6} />
+                  <WeightBars polls={built.polls.map((q) => ({ pollster: q.pollster, t: q.t, a: q.a, b: q.b, margin: q.margin, sampleSize: q.sampleSize, sampleType: q.sampleType, grade: q.grade, share: q.share, rLean: q.rLean }))} seriesA={{ label: agg.seriesA.label, color: agg.seriesA.color }} seriesB={{ label: agg.seriesB.label, color: agg.seriesB.color }} marginLabel={agg.marginLabel} limit={6} />
                 </div>
                 <p className="ptr-note">This is the same On Point polling average as the <Link href={pollHref(agg.id)} style={{ textDecoration: "underline" }}>full average page</Link>. The forecast reads the polls through its own Election Day projection, shown as the On Point average in the table below, and blends it with partisan lean and fundamentals.</p>
                 <Pointy className="ptr-pty" pose="point" prop="chart" size={96} look={-1} flip />
@@ -322,6 +333,29 @@ export default async function Page({ params }: { params: Promise<{ state: string
           </div>
       </div>
           </section>
+          {endorse && endorse.n > 0 ? (
+            <section id="endorse" className="st-sec">
+              <SecTitle title="Who has endorsed" sub={`${endorse.n} public endorsements in this race, each with where it was reported.`} />
+<style>{`.fe-card{display:grid;gap:14px;padding:16px 18px}.fe-cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px}.fe-h{display:flex;justify-content:space-between;align-items:baseline;padding-bottom:6px;border-bottom:1px solid var(--line)}.fe-h b{font-size:15px}.fe-h .d{color:#8fb0ff}.fe-h .r{color:#ff8399}.fe-col ul{list-style:none;margin:0;padding:0}.fe-col li{display:flex;justify-content:space-between;gap:10px;padding:6px 0;border-bottom:1px solid rgba(var(--line-rgb),.06);font-size:13px}.fe-col li small{display:block;color:var(--mute);font-size:11.5px}.fe-col li a,.fe-media a{font-size:11px;color:var(--mute);text-decoration:underline;white-space:nowrap}.fe-media{border-top:1px solid var(--line);padding-top:10px}.fe-media p{margin:6px 0 0;font-size:13px;line-height:1.45;color:var(--ink2)}`}</style>
+              <div className="card fe-card">
+                <div className="fe-cols">
+                  {endorse.cands.map((c) => (
+                    <div key={c.name} className="fe-col">
+                      <div className="fe-h"><b className={c.party === "D" ? "d" : c.party === "R" ? "r" : ""}>{c.name}</b><span className="mono">{c.list.length}</span></div>
+                      <ul>{c.list.slice(0, 8).map((x, i) => <li key={i}><span><b>{x.by}</b>{x.byRole ? <small>{x.byRole}</small> : null}</span>{x.src ? <a href={x.src} target="_blank" rel="noreferrer">source</a> : null}</li>)}</ul>
+                    </div>
+                  ))}
+                </div>
+                {mediaHere.length ? (
+                  <div className="fe-media">
+                    <div className="eye">On the air</div>
+                    {mediaHere.slice(0, 5).map((a, i) => <p key={i}><b>{a.who}:</b> {a.what} {a.src ? <a href={a.src} target="_blank" rel="noreferrer">source</a> : null}</p>)}
+                  </div>
+                ) : null}
+                <Link href="/watchdog/endorsements" className="btn sm" style={{ justifySelf: "start" }}>Every endorsement on Watchdog</Link>
+              </div>
+            </section>
+          ) : null}
 
           <section id="path" className="st-sec">
             <SecTitle title="How we got here" sub="From the state's partisan lean to the forecast, one stage at a time" />

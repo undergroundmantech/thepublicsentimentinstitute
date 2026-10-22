@@ -26,3 +26,12 @@ export const getTrail = () => read<Trail>("trail.json");
 export const getGraph = () => read<Graph>("graph.json");
 
 export const usd = (n: number | null | undefined) => (n == null ? "n/a" : n >= 1e9 ? `$${(n / 1e9).toFixed(2)}B` : n >= 1e6 ? `$${(n / 1e6).toFixed(n >= 1e8 ? 0 : 1)}M` : n >= 1e3 ? `$${Math.round(n / 1e3)}K` : `$${Math.round(n)}`);
+
+// Oct 22 2026: the endorsements board and media watch, from scripts/watchdog/data/endorsements_research.json
+export type EItem = { by: string; byRole: string; kind: string; date: string; src: string; note?: string };
+export type ECand = { name: string; party: string | null; list: EItem[] };
+export type ERace = { key: string; st: string; office: string; race: string; state?: string; id?: string; m?: number; p?: number; href?: string; n: number; cands: ECand[] };
+export type MediaItem = { who: string; role: string; lean: string; st: string; race: string; what: string; when: string; src: string };
+export type MediaPerson = { name: string; role: string; show: string | null; lean: string; ini: string; items: MediaItem[] };
+export type Endorsements = { asOf: string; races: ERace[]; media: MediaPerson[]; kinds: string[]; unconfirmed: { claim: string; why: string }[]; note: string };
+export const getEndorsements = () => read<Endorsements>("endorsements.json");

@@ -45,3 +45,5 @@
 @keyframes stu-grow { from { transform: scaleX(0); } to { transform: scaleX(1); } }
 @media (max-width: 640px) { .stu-foot .k { display: none; } .stu-wb .row { grid-template-columns: minmax(0, 1fr) 70px 42px; } .stu-wb .mg { display: none; } }
 @media (prefers-reduced-motion: reduce) { .stu .stu-line { animation: none; stroke-dashoffset: 0; } .stu .stu-dot, .stu .stu-pulse, .stu-wb .bar i { animation: none; } }
+
+.stu-dtip .g.rl { margin-left: 4px; background: rgba(255,59,92,.16); color: #ff8399; border-color: rgba(255,59,92,.4); }
