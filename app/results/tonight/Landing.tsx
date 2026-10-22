@@ -20,18 +20,18 @@ const NEXT_ELECTION = {
   kicker: "Next election",
   state: "Nationwide",
   date: "Tuesday, November 3, 2026",
-  iso: "2026-11-03T19:00:00-05:00",
+  iso: "2026-11-03T18:00:00-05:00",
   title: "2026 Midterm General Election",
   deck:
-    "The whole House, a third of the Senate and 36 governorships. On Point Polling race ratings " +
-    "are live now; the forecast model and the election night board follow as the " +
-    "calendar closes in. First polls close at 7:00 PM ET.",
-  cta: { href: "/forecast", label: "See the 2026 race ratings" },
+    "The whole House, 35 Senate seats, 36 governorships and more than a thousand races down the ballot. " +
+    "The situation monitor follows every one of them live from civicAPI against the On Point Politics forecast, " +
+    "with the expected vote in every county. First polls close at 6:00 PM ET.",
+  cta: { href: "/results/monitor", label: "Open the situation monitor" },
   stats: [
     { k: "House seats", v: "435" },
     { k: "Senate seats", v: "35" },
     { k: "Governorships", v: "36" },
-    { k: "First polls close", v: "7:00 PM ET" },
+    { k: "First polls close", v: "6:00 PM ET" },
   ],
 };
 
@@ -57,8 +57,8 @@ const ARCHIVE = [
 ];
 
 const ELSEWHERE = [
-  { href: "/floridaprimary", label: "Florida GOP Primary", note: "Interactive scenario engine · all 67 counties" },
-  { href: "/forecast", label: "2026 Race Ratings", note: "Senate & governor competitiveness" },
+  { href: "/results/2026", label: "Every November 3 race", note: "Expected and reported vote, county by county" },
+  { href: "/forecast", label: "The 2026 forecast", note: "Senate, House, governors and every race down the ballot" },
   { href: "/electoralmap", label: "Electoral Map", note: "Build your own map" },
   { href: "/results/archive", label: "Results by date", note: "Browse every tracked night" },
 ];

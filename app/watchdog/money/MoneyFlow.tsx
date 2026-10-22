@@ -1,6 +1,7 @@
 "use client";
 // Money flow: the biggest donors, the outside groups they fund, and the races those groups spend in, as one river.
 // Ribbons are drawn to scale; gold coins ride each ribbon, more of them on the bigger flows. Hover any band or name.
+import FloatTip, { WD_SCOPE } from "@/app/components/opp/FloatTip";
 import React, { useMemo, useState } from "react";
 import type { Money } from "../data";
 
@@ -42,7 +43,7 @@ export default function MoneyFlow({ flow }: { flow: Money["flow"] }) {
           {L.links.map((l, i) => <linearGradient key={i} id={`mfg${i}`} x1="0" x2="1"><stop offset="0" stopColor={colorOf(l.s)} /><stop offset="1" stopColor={colorOf(l.t)} /></linearGradient>)}
         </defs>
         {L.links.map((l, i) => (
-          <g key={i} className={`mf-l${on(l) ? "" : " dim"}`} onMouseMove={(e) => { const b = (e.currentTarget.ownerSVGElement as SVGSVGElement).getBoundingClientRect(); setTip({ x: e.clientX - b.left, y: e.clientY - b.top, t: `${node(l.s).name} to ${node(l.t).name}: ${usd(l.v)}` }); }} onMouseLeave={() => setTip(null)}>
+          <g key={i} className={`mf-l${on(l) ? "" : " dim"}`} onMouseMove={(e) => setTip({ x: e.clientX, y: e.clientY, t: `${node(l.s).name} to ${node(l.t).name}: ${usd(l.v)}` })} onMouseLeave={() => setTip(null)}>
             <path d={l.d} stroke={`url(#mfg${i})`} strokeWidth={l.w} fill="none" />
             {on(l) ? (() => { const cnt = Math.max(1, Math.round((l.v / maxV) * 5)); return Array.from({ length: cnt }, (_, k) => (
               <circle key={k} r={Math.min(4, 1.4 + l.w * 0.06)} className="mf-coin"><animateMotion dur={`${3.2 + (i % 5) * 0.4}s`} begin={`${(k / cnt) * 3.2}s`} repeatCount="indefinite" path={l.d} /></circle>
@@ -59,7 +60,7 @@ export default function MoneyFlow({ flow }: { flow: Money["flow"] }) {
           );
         })}
       </svg>
-      {tip ? <div className="wd-tip" style={{ left: tip.x + 14, top: tip.y + 10 }}>{tip.t}</div> : null}
+      {tip ? <FloatTip x={tip.x} y={tip.y} scope={WD_SCOPE}>{tip.t}</FloatTip> : null}
     </div>
   );
 }

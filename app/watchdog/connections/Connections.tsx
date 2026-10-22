@@ -7,6 +7,7 @@
 // Oct 22 2026: the stage fills the screen and the layout gives every label its own box, so nothing sits on top of
 // anything else. Every candidate's own campaign committee joins the web from the Ledger snapshot when it is on the
 // site, with the committee's biggest donors and the firms it paid.
+import FloatTip, { WD_SCOPE } from "@/app/components/opp/FloatTip";
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import PersonToken, { PARTY_COLOR } from "../PersonToken";
@@ -326,12 +327,12 @@ export default function Connections({ graph: graph0, initial = "c:James Talarico
           </g>
         </svg>
         {hovNode && hovPos ? (() => { const s = scr(hovPos); return (
-          <div className="wd-tip" style={{ left: `${(s.x / W) * 100}%`, top: `${(s.y / H) * 100}%`, transform: s.x > W * 0.6 ? "translate(calc(-100% - 18px), -50%)" : "translate(18px, -50%)" }}>
+          <FloatTip scope={WD_SCOPE} x={(stageRef.current?.getBoundingClientRect().left ?? 0) + (s.x / W) * (stageRef.current?.clientWidth ?? W)} y={(stageRef.current?.getBoundingClientRect().top ?? 0) + (s.y / H) * (stageRef.current?.clientHeight ?? H)}>
             <h4>{hovNode.name}</h4>
             <div style={{ opacity: .75 }}>{KIND[hovNode.kind]}{hovNode.race ? ` · ${hovNode.race}` : ""}</div>
             {(idx.get(hovNode.id) ?? []).filter((e) => net.edges.includes(e)).sort((a, b) => (b.v ?? 0) - (a.v ?? 0)).slice(0, 4).map((e, i) => <div key={i}>{line(e, byId)}</div>)}
             <div style={{ marginTop: 4, color: "#ffd98a" }}>Click to trace, drag to move</div>
-          </div>); })() : null}
+          </FloatTip>); })() : null}
         <div className="cx-tools">
           <button className="wd-btn" onClick={() => setView((v) => ({ k: Math.min(3, v.k * 1.25), x: W / 2 - (W / 2 - v.x) * 1.25, y: H / 2 - (H / 2 - v.y) * 1.25 }))} aria-label="Zoom in">+</button>
           <button className="wd-btn" onClick={() => setView((v) => ({ k: Math.max(0.5, v.k / 1.25), x: W / 2 - (W / 2 - v.x) / 1.25, y: H / 2 - (H / 2 - v.y) / 1.25 }))} aria-label="Zoom out">−</button>

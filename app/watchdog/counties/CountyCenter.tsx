@@ -2,6 +2,7 @@
 // The county data center: every county in the country on one map. Color it by the 2024 result, the shift since 2020,
 // the 2026 forecast, who lives there, or where the data centers are going. Pick a state to zoom in, search any
 // county, click one for everything we have on it.
+import FloatTip, { WD_SCOPE } from "@/app/components/opp/FloatTip";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { marginColor } from "@/app/lib/opp";
@@ -124,7 +125,7 @@ export default function CountyCenter() {
               <g className={`cc-g l-${layer}`}>
                 {shapes.map(([f, s, d]) => (
                   <path key={f} d={d} className={`cc-c${sel === f ? " on" : ""}${st !== "all" && s !== st ? " off" : ""}`} style={{ fill: fill(f) }}
-                    onMouseMove={(e) => { const b = wrap.current!.getBoundingClientRect(); setTip({ x: e.clientX - b.left, y: e.clientY - b.top, f }); }} onClick={() => pick(f)} />
+                    onMouseMove={(e) => setTip({ x: e.clientX, y: e.clientY, f })} onClick={() => pick(f)} />
                 ))}
               </g>
               {layer === "dc" ? Object.entries(centers).map(([f, [x, y]]) => {
@@ -135,7 +136,7 @@ export default function CountyCenter() {
             </svg>
           ) : <div className="cc-load sx-skel" />}
           {tip && data?.[tip.f] ? (
-            <div className="wd-tip" style={{ left: tip.x + 14, top: tip.y + 12, transform: tip.x > (wrap.current?.clientWidth ?? 0) - 300 ? "translateX(calc(-100% - 28px))" : undefined }}>
+            <FloatTip x={tip.x} y={tip.y} scope={WD_SCOPE}>
               <h4>{data[tip.f].n}, {data[tip.f].st}</h4>
               <div>2024: <b>{fm(data[tip.f].r24)}</b>{data[tip.f].r20 != null && data[tip.f].r24 != null ? ` · shift ${fm((data[tip.f].r24 as number) - (data[tip.f].r20 as number))}` : ""}</div>
               {data[tip.f].fc?.[0] ? <div>{raceName(data[tip.f].fc![0][0])} forecast: <b>{fm(data[tip.f].fc![0][1])}</b></div> : null}
@@ -146,7 +147,7 @@ export default function CountyCenter() {
               {turnOf(data[tip.f]) != null ? <div>2024 turnout: <b>{turnOf(data[tip.f])!.toFixed(0)}%</b> of voting age citizens</div> : null}
               {stops[tip.f]?.length ? <div className="g">{stops[tip.f].length} campaign {stops[tip.f].length === 1 ? "stop" : "stops"}: {[...new Set(stops[tip.f].map((v) => v.who))].slice(0, 3).join(", ")}</div> : null}
               {dcBy[tip.f] ? <div className="g">{dcBy[tip.f].length} data center {dcBy[tip.f].length === 1 ? "project" : "projects"}</div> : null}
-            </div>
+            </FloatTip>
           ) : null}
           <div className="cc-legend">
             {layer === "dc" ? Object.entries(STATUS).map(([k, v]) => <span key={k}><i style={{ background: v, borderRadius: "50%" }} />{k[0].toUpperCase() + k.slice(1)}</span>)

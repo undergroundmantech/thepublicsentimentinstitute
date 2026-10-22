@@ -1,0 +1,107 @@
+// The site's one menu: the masthead menus, the phone menu and the footer all read it.
+export type NavLink = { href: string; label: string; note?: string; badge?: string };
+export type NavCol = { h: string; links: NavLink[] };
+export type NavGroup = { key: string; label: string; href: string; live?: boolean; cols: NavCol[]; feature?: { href: string; eyebrow: string; title: string; note: string } };
+
+export const MENU: NavGroup[] = [
+  { key: "forecast", label: "Forecast", href: "/forecast",
+    feature: { href: "/forecast", eyebrow: "2026 midterms", title: "The full forecast", note: "Every Senate, House and governor race, simulated 2,000 times." },
+    cols: [
+      { h: "Federal and governors", links: [
+        { href: "/forecast?office=senate", label: "Senate", note: "35 races and control odds" },
+        { href: "/forecast?office=house", label: "House", note: "All 435 districts" },
+        { href: "/forecast?office=governor", label: "Governors", note: "36 races" },
+      ] },
+      { h: "Down the ballot", links: [
+        { href: "/forecast/statewide", label: "Statewide offices", note: "Attorneys general, secretaries of state and more" },
+        { href: "/forecast/legislatures", label: "State legislatures", note: "Every chamber, every district" },
+        { href: "/forecast/measures", label: "Ballot measures", note: "145 statewide questions" },
+        { href: "/forecast/other", label: "Courts, mayors and local", note: "Judicial, municipal and special races" },
+      ] },
+      { h: "Scenarios and method", links: [
+        { href: "/what-if", label: "What If", note: "Pick winners, watch every race follow" },
+        { href: "/swingometer", label: "Swingometer", note: "Move any group of voters" },
+        { href: "/forecast/methodology", label: "Methodology", note: "How the model works" },
+        { href: "/forecast/changelog", label: "Changelog", note: "Every update, dated" },
+      ] },
+    ] },
+  { key: "polls", label: "Polls", href: "/polls",
+    feature: { href: "/polls", eyebrow: "Polling averages", title: "The whiteboard", note: "Every public poll, weighted, with the leans shown." },
+    cols: [
+      { h: "Races", links: [
+        { href: "/polls/senate", label: "Senate averages" },
+        { href: "/polls/governor", label: "Governor averages" },
+        { href: "/polls/house", label: "House district polls" },
+        { href: "/polls/2028", label: "2028 primaries" },
+      ] },
+      { h: "National", links: [
+        { href: "/polls/generic-ballot", label: "Generic ballot" },
+        { href: "/polls/approval", label: "Trump approval" },
+        { href: "/polls/approval/vance", label: "Vance approval" },
+        { href: "/polls/right-track", label: "Right track, wrong track" },
+      ] },
+      { h: "Archive", links: [
+        { href: "/polls/archive/2024", label: "2024 presidential polls" },
+        { href: "/on-point-polling/polls", label: "On Point Polling releases" },
+      ] },
+    ] },
+  { key: "results", label: "Results", href: "/results", live: true,
+    feature: { href: "/results/monitor", eyebrow: "New", title: "Situation monitor", note: "Every November 3 race on one globe, live from civicAPI against our forecast." },
+    cols: [
+      { h: "November 3", links: [
+        { href: "/results/monitor", label: "Situation monitor", note: "Full screen globe of every race", badge: "New" },
+        { href: "/results/2026", label: "Every race", note: "Expected and reported vote, county by county" },
+        { href: "/results", label: "Election night desk", note: "Countdown and coverage" },
+      ] },
+      { h: "Past nights", links: [
+        { href: "/results/archive", label: "Results archive", note: "Every tracked night" },
+        { href: "/results/archive/2026-08-25", label: "August 25 runoffs" },
+        { href: "/results/archive/2026-08-18", label: "August 18 primaries" },
+        { href: "/results/archive/2026-08-04", label: "August 4 primaries" },
+      ] },
+    ] },
+  { key: "early", label: "Early Vote", href: "/maps/early-vote", cols: [] },
+  { key: "maps", label: "Maps", href: "/maps",
+    cols: [
+      { h: "Build and explore", links: [
+        { href: "/maps/electoral", label: "Electoral map", note: "Make your own map" },
+        { href: "/maps/ballot-measures", label: "Ballot measures map" },
+        { href: "/watchdog/counties", label: "County data center", note: "Every county, every layer" },
+      ] },
+      { h: "Voters", links: [
+        { href: "/maps/early-vote", label: "Early vote tracker" },
+        { href: "/maps/party-registration", label: "Party registration" },
+        { href: "/maps/voter-registration", label: "Voter registration" },
+      ] },
+    ] },
+  { key: "watchdog", label: "Watchdog", href: "/watchdog",
+    feature: { href: "/watchdog", eyebrow: "Investigations", title: "Follow the money", note: "Who pays for the midterms and where the money lands." },
+    cols: [
+      { h: "Money", links: [
+        { href: "/watchdog/money", label: "Money flow" },
+        { href: "/watchdog/paid", label: "Who gets paid" },
+        { href: "/watchdog/connections", label: "Connections" },
+        { href: "/watchdog/ledger", label: "Ledger records" },
+      ] },
+      { h: "People and places", links: [
+        { href: "/watchdog/trail", label: "Campaign trail" },
+        { href: "/watchdog/endorsements", label: "Endorsements" },
+        { href: "/watchdog/media", label: "Media watch" },
+        { href: "/watchdog/counties", label: "County data center" },
+      ] },
+    ] },
+  { key: "opp", label: "On Point Polling", href: "/on-point-polling",
+    cols: [
+      { h: "Our polling", links: [
+        { href: "/on-point-polling/polls", label: "Poll releases" },
+        { href: "/on-point-polling/methodology", label: "Methodology" },
+        { href: "/on-point-polling/situation-room", label: "Situation room" },
+      ] },
+      { h: "Work with us", links: [
+        { href: "/on-point-polling/services", label: "Partner with us" },
+        { href: "/on-point-polling/weighting-room", label: "The Weighting Room" },
+        { href: "/portal/login", label: "Client portal" },
+        { href: "/contact", label: "Contact" },
+      ] },
+    ] },
+];

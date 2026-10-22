@@ -1,4 +1,5 @@
 "use client";
+import FloatTip from "@/app/components/opp/FloatTip";
 import { useEffect, useRef, useState } from "react";
 
 /** Counts up from 0 to the target once on mount, with a cubic ease out, keeping the target's decimals. */
@@ -44,10 +45,5 @@ export function useTip() {
 }
 export function Tip({ tip }: { tip: TipState }) {
   if (!tip) return null;
-  let x = tip.x + 14, y = tip.y + 14;
-  if (typeof window !== "undefined") {
-    if (x + 240 > window.innerWidth) x = tip.x - 250;
-    if (y + 140 > window.innerHeight) y = tip.y - 140;
-  }
-  return <div className="tip" style={{ display: "block", left: x, top: y }}>{tip.html}</div>;
+  return <FloatTip x={tip.x} y={tip.y} className="tip" scope="opp">{tip.html}</FloatTip>;
 }

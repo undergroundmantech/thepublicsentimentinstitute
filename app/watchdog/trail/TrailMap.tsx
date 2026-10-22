@@ -2,6 +2,7 @@
 // The campaign trail: every confirmed stop by the national figures campaigning in the 2026 midterms, who is putting
 // attention on which state, and who has endorsed whom. Press play to watch the figures hop from stop to stop; pick a
 // person to draw their whole route; click a state for everything that happened there.
+import FloatTip, { WD_SCOPE } from "@/app/components/opp/FloatTip";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import PersonToken, { PARTY_COLOR } from "../PersonToken";
@@ -143,7 +144,7 @@ export default function TrailMap({ data }: { data: Trail }) {
               </defs>
               {Object.entries(geo.states).map(([s, d]) => (
                 <path key={s} d={d} className={`tr-st${st === s ? " on" : ""}`} style={{ fill: fillOf(s) }} onClick={() => { setSt(s); setZoom(s); }}
-                  onMouseMove={(e) => { const b = wrap.current!.getBoundingClientRect(); setTip({ x: e.clientX - b.left, y: e.clientY - b.top, st: s }); }} />
+                  onMouseMove={(e) => setTip({ x: e.clientX, y: e.clientY, st: s })} />
               ))}
               {route ? <><path d={route} className="tr-route glow" filter="url(#trglow)" /><path d={route} className="tr-route" /></> : null}
               {mode === "trail" ? shown.filter((v) => (t - tOf(v.date)) / DAY < 2.5).map((v, i) => { const p = pt[v.st]; return p ? <circle key={`${v.who}${v.date}${i}`} cx={p[0]} cy={p[1]} r="8" className="tr-ring" style={{ stroke: PARTY_COLOR[v.party] ?? "#e7b341" }} /> : null; }) : null}
@@ -163,11 +164,11 @@ export default function TrailMap({ data }: { data: Trail }) {
             </svg>
           ) : <div className="tr-load sx-skel" />}
           {tip && !zoom ? (
-            <div className="wd-tip" style={{ left: tip.x + 14, top: tip.y + 12, transform: tip.x > (wrap.current?.clientWidth ?? 0) - 330 ? "translateX(calc(-100% - 28px))" : undefined }}>
+            <FloatTip x={tip.x} y={tip.y} scope={WD_SCOPE}>
               <h4>{STN[tip.st] ?? tip.st}</h4>
               <div>{data.visits.filter((v) => v.st === tip.st && okParty(v.party)).length} trail stops · {data.attention.filter((a) => a.st === tip.st).length} attention · {data.endorse.filter((e) => e.st === tip.st).length} endorsements</div>
               <div style={{ opacity: .8, marginTop: 4 }}>Click for the county map and the full list</div>
-            </div>
+            </FloatTip>
           ) : null}
           <div className="tr-time">
             <button className="wd-btn" onClick={() => { if (t >= END) setT(START); setPlaying((p) => !p); }} aria-label={playing ? "Pause" : "Play the campaign from August"}>{playing ? "Pause" : "Play"}</button>
@@ -293,7 +294,7 @@ function StateView({ st, statePath, data, P, party, onBack, onWho, who }: { st: 
   const noCity = stops.filter((v) => !v.fips.length);
   const res = (f: string) => { const r = meta?.[f]?.r24; if (r == null) return "No 2024 result on file"; return r >= 0 ? `Trump +${r.toFixed(1)} in 2024` : `Harris +${(-r).toFixed(1)} in 2024`; };
   const shade = (f: string) => { const r = meta?.[f]?.r24; if (r == null) return "rgba(255,255,255,.05)"; const lean = Math.max(-1, Math.min(1, r / 60)); return lean >= 0 ? `rgba(255,59,92,${(0.08 + lean * 0.5).toFixed(3)})` : `rgba(61,123,255,${(0.08 - lean * 0.5).toFixed(3)})`; };
-  const tip = (e: React.MouseEvent, t: string, lines: string[]) => { const b = box.current!.getBoundingClientRect(); setHv({ x: e.clientX - b.left, y: e.clientY - b.top, t, s: lines }); };
+  const tip = (e: React.MouseEvent, t: string, lines: string[]) => setHv({ x: e.clientX, y: e.clientY, t, s: lines });
   const coName = (f: string) => meta?.[f]?.n ?? f;
   const suffix = st === "LA" ? " Parish" : st === "AK" ? "" : " County";
   return (
@@ -349,7 +350,7 @@ function StateView({ st, statePath, data, P, party, onBack, onWho, who }: { st: 
           {!byCand.length ? <p className="tr-sv-none">No endorsements tracked here yet.</p> : null}
         </aside>
       </div>
-      {hv ? <div className="wd-tip" style={{ left: hv.x + 14, top: hv.y + 12, transform: hv.x > (box.current?.clientWidth ?? 0) - 330 ? "translateX(calc(-100% - 28px))" : undefined }}><h4>{hv.t}</h4>{hv.s.slice(0, 8).map((l, i) => <div key={i}>{l}</div>)}{hv.s.length > 8 ? <div>and {hv.s.length - 8} more</div> : null}</div> : null}
+      {hv ? <FloatTip x={hv.x} y={hv.y} scope={WD_SCOPE}><h4>{hv.t}</h4>{hv.s.slice(0, 8).map((l, i) => <div key={i}>{l}</div>)}{hv.s.length > 8 ? <div>and {hv.s.length - 8} more</div> : null}</FloatTip> : null}
     </div>
   );
 }

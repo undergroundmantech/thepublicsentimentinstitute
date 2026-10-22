@@ -1,25 +1,13 @@
 import Link from "next/link";
 import { Lockup } from "./opp/Logo";
+import { MENU } from "./navMenu";
 import { Pointy } from "@/app/components/home/Mascot";
 
-const COLS = [
-  { h: "Polls", links: [
-    ["/polls/approval", "Trump approval"], ["/polls/generic-ballot", "Generic ballot"], ["/polls/senate", "Senate"],
-    ["/polls/governor", "Governor"], ["/polls/2028", "2028 primary"], ["/polls", "All averages"],
-  ] },
-  { h: "Forecast", links: [
-    ["/forecast?office=senate", "Senate"], ["/forecast?office=house", "House"], ["/forecast?office=governor", "Governor"], ["/swingometer", "Swingometer"],
-    ["/forecast/statewide", "Statewide offices"], ["/forecast/legislatures", "State legislatures"], ["/forecast/measures", "Ballot measures"], ["/forecast/methodology", "Methodology"], ["/forecast/changelog", "Changelog"],
-  ] },
-  { h: "Results", links: [
-    ["/results/tonight", "Live desk"], ["/results/archive", "Archive"], ["/maps/electoral", "Electoral map"],
-    ["/maps/party-registration", "Party registration"], ["/maps/early-vote", "Early vote"],
-  ] },
-  { h: "On Point Polling", links: [
-    ["/on-point-polling", "About"], ["/on-point-polling/polls", "Poll releases"], ["/on-point-polling/services", "Partner with us"],
-    ["/on-point-polling/weighting-room", "The Weighting Room"], ["/portal/login", "Client portal"], ["/contact", "Contact"],
-  ] },
-] as const;
+// The footer lists the same groups as the masthead menus (navMenu.ts), every link in each group.
+const COLS = MENU.filter((g) => g.cols.length).map((g) => ({
+  h: g.label,
+  links: [[g.href, `All of ${g.label}`] as const, ...g.cols.flatMap((c) => c.links.map((l) => [l.href, l.label] as const))].filter((x, i, arr) => arr.findIndex((y) => y[0] === x[0]) === i),
+}));
 
 export default function Footer() {
   return (
@@ -33,6 +21,7 @@ export default function Footer() {
               <p style={{ margin: 0, maxWidth: "40ch", color: "var(--mute)" }}>
                 Polling averages, election forecasts and live results. Fieldwork and modeling by On Point Polling, Miami.
               </p>
+              <p style={{ margin: "14px 0 0", display: "flex", gap: 12, flexWrap: "wrap" }}><Link href="/maps/early-vote">Early vote tracker</Link><Link href="/search">Search</Link><Link href="/llms.txt">For language models</Link></p>
             </div>
             {COLS.map((c) => (
               <div key={c.h}>
