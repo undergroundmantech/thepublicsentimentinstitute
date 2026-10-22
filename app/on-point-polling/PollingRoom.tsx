@@ -8,7 +8,7 @@ import { marginColor } from "@/app/lib/opp";
 import { STATE_POLLS, FUND_LINE, FUND_URL, type PollRace, type StatePoll } from "./polls/pollMapData";
 import "./pollroom.css";
 
-type Geo = { frame: [number, number]; states: Record<string, string> };
+type Geo = { frame: [number, number]; states: Record<string, string>; labels?: Record<string, [number, number, number]> };
 type Office = "Senate" | "Governor";
 export type RoomForecast = Record<string, Partial<Record<Office, { m: number; href: string }>>>;
 
@@ -49,7 +49,7 @@ export default function PollingRoom({ forecast, title = "Where On Point Polling 
   const [hov, setHov] = useState<string | null>(null);
   useEffect(() => { fetch("/forecast/geo.json").then((r) => r.json()).then(setGeo).catch(() => {}); }, []);
   const by = useMemo(() => Object.fromEntries(STATE_POLLS.map((p) => [p.st, p])) as Record<string, StatePoll>, []);
-  const shapes = useMemo(() => (geo ? Object.entries(geo.states).map(([st, d]) => { const b = bboxOf(d); return { st, d, x: b[0], cx: (b[0] + b[2]) / 2 + (NUDGE[st]?.[0] ?? 0), cy: (b[1] + b[3]) / 2 + (NUDGE[st]?.[1] ?? 0) }; }) : []), [geo]);
+  const shapes = useMemo(() => (geo ? Object.entries(geo.states).map(([st, d]) => { const b = bboxOf(d), lb = geo.labels?.[st]; return { st, d, x: b[0], cx: lb ? lb[0] : (b[0] + b[2]) / 2 + (NUDGE[st]?.[0] ?? 0), cy: lb ? lb[1] : (b[1] + b[3]) / 2 + (NUDGE[st]?.[1] ?? 0) }; }) : []), [geo]);
   const [W, H] = geo?.frame ?? [975, 610];
   const raceOf = (p: StatePoll) => p.races.find((r) => r.race === office) ?? null;
   const fillOf = (p?: StatePoll) => { if (!p) return undefined; if (p.status !== "released") return undefined; const r = raceOf(p); return r ? marginColor(-marginOf(r) * 1.6) : undefined; };

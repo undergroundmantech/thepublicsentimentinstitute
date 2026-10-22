@@ -141,3 +141,7 @@
 .evc-pmk span { display: block; font: 700 9px var(--font-m); letter-spacing: .12em; text-transform: uppercase; color: var(--mute); }
 .evc-pmk b { display: block; margin-top: 3px; font: 800 14px var(--font-d); white-space: nowrap; }
 .evc-tw sup { font-size: 9px; color: #cbb8ff; margin-left: 2px; }
+.evc-meta .mb dd small { display: block; font: 700 11px var(--font-m); color: var(--mute); margin-top: 1px; }
+.evc-meta .mb.d { border-color: rgba(61,123,255,.45); background: rgba(61,123,255,.08); } .evc-meta .mb.d dd { color: var(--dem2); }
+.evc-meta .mb.r { border-color: rgba(255,59,92,.45); background: rgba(255,59,92,.08); } .evc-meta .mb.r dd { color: var(--gop2); }
+.evc-tw td small { display: block; font-size: 10.5px; color: var(--mute); }

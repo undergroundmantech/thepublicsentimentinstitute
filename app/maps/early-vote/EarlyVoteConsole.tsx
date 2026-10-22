@@ -12,7 +12,7 @@ import type { EvConsole, EvRow } from "./consoleData";
 import "./evconsole.css";
 
 type Metric = "cast" | "pace" | "party" | "model" | "expect" | "method";
-type Geo = { frame: [number, number]; states: Record<string, string> };
+type Geo = { frame: [number, number]; states: Record<string, string>; labels?: Record<string, [number, number, number]> };
 type County = { id: string; name: string; total: number; mail: number; inperson: number; dem: number; rep: number; ind: number };
 
 const commas = (n: number) => Math.round(n).toLocaleString("en-US");
@@ -71,7 +71,7 @@ function Meter({ have, of, label }: { have: number; of: number; label: string })
 }
 
 export default function EarlyVoteConsole({ data, initial, lede, faq }: { data: EvConsole; initial?: string; lede?: React.ReactNode; faq?: [string, string][] }) {
-  const [metric, setMetric] = useState<Metric>("cast");
+  const [metric, setMetric] = useState<Metric>("model");
   const [scope, setScope] = useState<string>(initial ?? "US");
   const [geo, setGeo] = useState<Geo | null>(null);
   const [cGeo, setCGeo] = useState<Record<string, { id: string; d: string }[]>>({});
@@ -142,7 +142,7 @@ export default function EarlyVoteConsole({ data, initial, lede, faq }: { data: E
 
 
   // the map
-  const states = useMemo(() => (geo ? Object.entries(geo.states).map(([st, d]) => { const b = bboxOf(d); return { st, d, x: b[0], cx: (b[0] + b[2]) / 2, cy: (b[1] + b[3]) / 2, w: b[2] - b[0] }; }) : []), [geo]);
+  const states = useMemo(() => (geo ? Object.entries(geo.states).map(([st, d]) => { const b = bboxOf(d), lb = geo.labels?.[st]; return { st, d, x: b[0], cx: lb ? lb[0] : (b[0] + b[2]) / 2, cy: lb ? lb[1] : (b[1] + b[3]) / 2, w: lb ? lb[2] : b[2] - b[0] }; }) : []), [geo]);
   const stFill = (r: EvRow | undefined): string | null => {
     if (!r) return null;
     if (metric === "cast") return r.t22 ? castFill(r.total / r.t22) : castFill(0.05);
@@ -175,6 +175,10 @@ export default function EarlyVoteConsole({ data, initial, lede, faq }: { data: E
     cps22: [] as [number, number][], cps24: [] as [number, number][], s26: data.s26, fc: { href: "/forecast", label: "On Point forecast" }, slug: "",
     pm: data.pm ? { ...data.pm, xd: 0, xr: 0, shift: null as number | null } : null };
   const party = R.partyShare > 0.5 || (scope === "US" && data.partyTotal > 0);
+  // modeled ballots so far: the On Point party model applied to every ballot cast
+  const mB = scope === "US"
+    ? data.rows.reduce((a, r) => (r.pm ? { d: a.d + r.pm.d * r.total, r: a.r + r.pm.r * r.total, o: a.o + r.pm.o * r.total, n: a.n + r.total } : a), { d: 0, r: 0, o: 0, n: 0 })
+    : R.pm ? { d: R.pm.d * R.total, r: R.pm.r * R.total, o: R.pm.o * R.total, n: R.total } : null;
   const pT = scope === "US" ? data.partyTotal : R.dem + R.rep + R.ind;
   const outstanding = R.requested > R.mail ? R.requested - R.mail : 0;
 
@@ -205,6 +209,11 @@ export default function EarlyVoteConsole({ data, initial, lede, faq }: { data: E
           {lede ? <div className="evc-lede">{lede}</div> : null}
         </div>
         <dl className="evc-meta">
+          {mB && mB.n ? <>
+            <div className="mb d"><dt>Modeled Democrats</dt><dd>{short(mB.d)}<small>{pctS(mB.d / mB.n, 1)}</small></dd></div>
+            <div className="mb r"><dt>Modeled Republicans</dt><dd>{short(mB.r)}<small>{pctS(mB.r / mB.n, 1)}</small></dd></div>
+            <div className="mb o"><dt>Modeled other</dt><dd>{short(mB.o)}<small>{pctS(mB.o / mB.n, 1)}</small></dd></div>
+          </> : null}
           <div><dt>By mail</dt><dd>{short(R.mail)}</dd></div>
           <div><dt>In person</dt><dd>{short(R.inperson)}</dd></div>
           {scope === "US" ? <div><dt>States reporting</dt><dd>{data.rows.length}</dd></div> : <div><dt>Counties</dt><dd>{counties ? counties.length : "..."}</dd></div>}
@@ -286,8 +295,8 @@ export default function EarlyVoteConsole({ data, initial, lede, faq }: { data: E
           ) : <p className="evc-note">{R.name} does not report the party of its early voters{R.pm ? ", so the split below comes from the On Point party model." : "."}</p>}
           {R.pm ? (
             <div className="evc-pm">
-              <div className="evc-pmh"><span className="eye">On Point party model</span><span className={`tag ${R.pm.est > 0.5 ? "m" : R.pm.est > 0 ? "p" : "s"}`}>{R.pm.est > 0.5 ? "Modeled" : R.pm.est > 0 ? "Partly modeled" : "Reported"}</span></div>
-              <div className="lbls"><span className="d">D {pctS(R.pm.d, 1)}</span><span>Other {pctS(R.pm.o, 1)}</span><span className="r">R {pctS(R.pm.r, 1)}</span></div>
+              <div className="evc-pmh"><span className="eye">On Point party model</span><span className={`tag ${scope === "US" ? "p" : R.pm.est > 0.5 ? "m" : R.pm.est > 0 ? "p" : "s"}`}>{scope === "US" ? `${pctS(R.pm.est)} modeled` : R.pm.est > 0.5 ? "Modeled" : R.pm.est > 0 ? "Partly modeled" : "Reported"}</span></div>
+              <div className="lbls"><span className="d">D {pctS(R.pm.d, 1)} · {short(R.pm.d * R.total)}</span><span>Other {pctS(R.pm.o, 1)}</span><span className="r">R {pctS(R.pm.r, 1)} · {short(R.pm.r * R.total)}</span></div>
               <div className="bar"><i className="d" style={{ width: pctS(R.pm.d, 2) }} /><i className="o" style={{ width: pctS(R.pm.o, 2) }} /><i className="r" style={{ width: pctS(R.pm.r, 2) }} /></div>
               {R.pm.xd ? <div className="lbls exp"><span>Expected by now</span><span className="d">D {pctS(R.pm.xd, 1)}</span><span className="r">R {pctS(R.pm.xr, 1)}</span></div> : null}
               <div className="evc-pmk">
@@ -295,7 +304,7 @@ export default function EarlyVoteConsole({ data, initial, lede, faq }: { data: E
                 <div><span>Vs expected</span><b className={R.pm.delta < 0 ? "d" : "r"}>{Math.abs(R.pm.delta) < 0.05 ? "Even" : `${R.pm.delta < 0 ? "D" : "R"} +${Math.abs(R.pm.delta).toFixed(1)}`}</b></div>
                 {R.pm.shift != null ? <div><span>Forecast effect</span><b className={R.pm.shift < 0 ? "d" : "r"}>{Math.abs(R.pm.shift) < 0.05 ? "None" : `${R.pm.shift < 0 ? "D" : "R"} +${Math.abs(R.pm.shift).toFixed(1)}`}</b></div> : null}
               </div>
-              <p className="evc-note">{R.pm.est > 0.5 ? `${R.name} does not publish party, so On Point Polling models it from each county's count, its voter file and its past early voters.` : R.pm.est > 0 ? "Some of these ballots carry no party, so On Point Polling models that share." : "Party registration as the state reports it."} The forecast compares these ballots with what it expected by now and moves the race by the difference.</p>
+              <p className="evc-note">{scope === "US" ? "Every reporting state on one scale: reported party where a state publishes it, and the On Point Polling model of each county where it does not." : R.pm.est > 0.5 ? `${R.name} does not publish party, so On Point Polling models it from each county's count, its voter file and its past early voters.` : R.pm.est > 0 ? "Some of these ballots carry no party, so On Point Polling models that share." : "Party registration as the state reports it."} The forecast compares these ballots with what it expected by now and moves the race by the difference.</p>
             </div>
           ) : null}
           <div className="evc-stats">
@@ -317,7 +326,7 @@ export default function EarlyVoteConsole({ data, initial, lede, faq }: { data: E
         ) : null}
         <div className="evc-tw">
           <table>
-            <thead><tr><th>{scope === "US" ? "State" : "County"}</th><th className="n">Ballots</th><th className="n">Mail</th><th className="n">In person</th>{scope === "US" ? <><th className="n">Of 2022 turnout</th><th className="n">Pace</th></> : null}<th className="n">Dem</th><th className="n">Rep</th>{scope === "US" ? <><th className="n">Modeled D</th><th className="n">Modeled R</th><th className="n">Vs expected</th></> : null}</tr></thead>
+            <thead><tr><th>{scope === "US" ? "State" : "County"}</th><th className="n">Ballots</th><th className="n">Mail</th><th className="n">In person</th>{scope === "US" ? <><th className="n">Of 2022 turnout</th><th className="n">Pace</th></> : null}<th className="n">Dem</th><th className="n">Rep</th>{scope === "US" ? <><th className="n">Modeled D ballots</th><th className="n">Modeled R ballots</th><th className="n">Vs expected</th></> : null}</tr></thead>
             <tbody>
               {scope === "US" ? (tRows as EvRow[]).slice(0, shown).map((r) => { const pt = r.dem + r.rep + r.ind; const rep = r.partyShare > 0.5 && pt > 0; return (
                 <tr key={r.st} onClick={() => go(r.st)}>
@@ -325,13 +334,13 @@ export default function EarlyVoteConsole({ data, initial, lede, faq }: { data: E
                   <td className="n mono">{r.t22 ? pctS(r.total / r.t22, 1) : "n/a"}</td>
                   <td className={`n mono ${r.pace22 == null ? "" : r.pace22 >= 1 ? "up" : "dn"}`}>{r.pace22 == null ? "n/a" : `${r.pace22 >= 1 ? "+" : ""}${((r.pace22 - 1) * 100).toFixed(0)}%`}</td>
                   <td className="n mono d">{rep ? pctS(r.dem / pt, 1) : "n/a"}</td><td className="n mono r">{rep ? pctS(r.rep / pt, 1) : "n/a"}</td>
-                  <td className="n mono d">{r.pm ? pctS(r.pm.d, 1) : "n/a"}{r.pm && r.pm.est > 0.5 ? <sup>m</sup> : null}</td><td className="n mono r">{r.pm ? pctS(r.pm.r, 1) : "n/a"}</td>
+                  <td className="n mono d">{r.pm ? <>{commas(r.pm.d * r.total)}<small>{pctS(r.pm.d, 1)}{r.pm.est > 0.5 ? " modeled" : ""}</small></> : "n/a"}</td><td className="n mono r">{r.pm ? <>{commas(r.pm.r * r.total)}<small>{pctS(r.pm.r, 1)}</small></> : "n/a"}</td>
                   <td className={`n mono ${r.pm ? (r.pm.delta < 0 ? "d" : "r") : ""}`}>{r.pm ? (Math.abs(r.pm.delta) < 0.05 ? "Even" : `${r.pm.delta < 0 ? "D" : "R"} +${Math.abs(r.pm.delta).toFixed(1)}`) : "n/a"}</td>
                 </tr>); })
               : counties ? (tRows as County[]).slice(0, shown).map((c) => { const pt = c.dem + c.rep + c.ind; return (
                 <tr key={c.id}>
                   <td><b>{c.name}</b></td><td className="n mono">{commas(c.total)}</td><td className="n mono">{commas(c.mail)}</td><td className="n mono">{commas(c.inperson)}</td>
-                  <td className="n mono d">{pt > 0 ? pctS(c.dem / pt, 1) : "n/a"}</td><td className="n mono r">{pt > 0 ? pctS(c.rep / pt, 1) : "n/a"}</td>
+                  <td className="n mono d">{pt > 0 ? pctS(c.dem / pt, 1) : R.pm ? <>{commas(R.pm.d * c.total)}<small>modeled</small></> : "n/a"}</td><td className="n mono r">{pt > 0 ? pctS(c.rep / pt, 1) : R.pm ? <>{commas(R.pm.r * c.total)}<small>modeled</small></> : "n/a"}</td>
                 </tr>); })
               : <tr><td colSpan={6} className="evc-note">{failed ? "County counts did not load just now." : "Loading counties"}</td></tr>}
             </tbody>

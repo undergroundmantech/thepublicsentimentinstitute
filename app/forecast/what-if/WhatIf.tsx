@@ -13,7 +13,7 @@ type Race = { id: string; k: string; office: string; st: string; state: string; 
 type HRace = { id: string; st: string; d: number; name: string; dem: string; gop: string; m: number; p: number };
 type Data = { meta: { updated: string; sims: number; senNotUpD: number; senNotUpR: number; govNotUpD: number; govNotUpR: number }; chambers: Record<"senate" | "governor" | "house", { demControl: number; demSeats: number }>;
   races: Race[]; dev: string; house: HRace[]; hwin: string; hbytes: number };
-type Geo = { frame: [number, number]; states: Record<string, string>; districts: Record<string, { d: string } | string> };
+type Geo = { frame: [number, number]; states: Record<string, string>; labels?: Record<string, [number, number, number]>; districts: Record<string, { d: string } | string> };
 type Pin = { side: "D" | "R"; by: number | null };
 type Office = "senate" | "governor" | "house";
 
@@ -186,7 +186,7 @@ export default function WhatIf() {
     if (office === "house") return Object.entries(geo.districts).map(([id, v]) => { const d = typeof v === "string" ? v : v.d; return { key: id, d, x: bboxOf(d)[0] }; });
     return Object.entries(geo.states).map(([st, d]) => ({ key: st, d, x: bboxOf(d)[0] }));
   }, [geo, office]);
-  const labels = useMemo(() => (geo && office !== "house" ? Object.entries(geo.states).map(([st, d]) => { const b = bboxOf(d); return { st, x: (b[0] + b[2]) / 2, y: (b[1] + b[3]) / 2, w: b[2] - b[0] }; }).filter((l) => l.w > 36) : []), [geo, office]);
+  const labels = useMemo(() => (geo && office !== "house" ? Object.entries(geo.states).map(([st, d]) => { const b = bboxOf(d), lb = geo.labels?.[st]; return { st, x: lb ? lb[0] : (b[0] + b[2]) / 2, y: lb ? lb[1] : (b[1] + b[3]) / 2, w: lb ? lb[2] : b[2] - b[0] }; }).filter((l) => l.w > 36) : []), [geo, office]);
   const [W, H] = geo?.frame ?? [975, 610];
 
   if (!M || !out) return <div className="wif"><div className="wif-load sx-skel" /></div>;

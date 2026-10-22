@@ -22,7 +22,7 @@ export type ConsoleData = {
   senate: CRace[]; governor: CRace[]; house: CRace[]; statewide: CRace[]; legis: CLeg[]; measures: CMeas[];
   ch: Record<"senate" | "governor" | "house", CChamber>; updated: string; daysOut: number; sims: number; generic: number | null; ev: { ballots: number; states: number } | null;
 };
-type Geo = { frame: [number, number]; states: Record<string, string>; districts: Record<string, { d: string } | string> };
+type Geo = { frame: [number, number]; states: Record<string, string>; labels?: Record<string, [number, number, number]>; districts: Record<string, { d: string } | string> };
 
 const LAYERS: { k: Layer; label: string; q: string }[] = [
   { k: "senate", label: "Senate", q: "senate" }, { k: "house", label: "House", q: "house" }, { k: "governor", label: "Governors", q: "governor" },
@@ -134,7 +134,7 @@ export default function ForecastConsole({ data, initial, initialOffice }: { data
     if (layer === "house") return Object.entries(geo.districts).map(([id, v]) => { const d = typeof v === "string" ? v : v.d; return { key: id, d, x: bboxOf(d)[0] }; });
     return Object.entries(geo.states).map(([st, d]) => ({ key: st, d, x: bboxOf(d)[0] }));
   }, [geo, layer]);
-  const labels = useMemo(() => (geo && layer !== "house" ? Object.entries(geo.states).map(([st, d]) => { const b = bboxOf(d); return { st, x: (b[0] + b[2]) / 2, y: (b[1] + b[3]) / 2, w: b[2] - b[0] }; }).filter((l) => l.w > 36) : []), [geo, layer]);
+  const labels = useMemo(() => (geo && layer !== "house" ? Object.entries(geo.states).map(([st, d]) => { const b = bboxOf(d), lb = geo.labels?.[st]; return { st, x: lb ? lb[0] : (b[0] + b[2]) / 2, y: lb ? lb[1] : (b[1] + b[3]) / 2, w: lb ? lb[2] : b[2] - b[0] }; }).filter((l) => l.w > 36) : []), [geo, layer]);
   const [W, H] = geo?.frame ?? [975, 610];
   const fillOf = (k: string): string | null => {
     if (layer === "measures") { const L = measBySt[k]; if (!L) return null; return passFill(L.filter((x) => x.prob > 0.5).length / L.length * 0.9 + 0.05); }

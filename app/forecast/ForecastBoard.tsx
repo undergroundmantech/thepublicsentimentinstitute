@@ -11,7 +11,7 @@ export type BRace = { id: string; st: string; state: string; d: number; name: st
 export type BChamber = { demControl: number; demSeats: number; median: number; seatsTotal: number; p10: number; p90: number; notUpD: number; notUpR: number; majority: number };
 export type BoardData = { senate: BRace[]; governor: BRace[]; house: BRace[]; ch: Record<"senate" | "governor" | "house", BChamber>; updated: string };
 type Office = "senate" | "house" | "governor";
-type Geo = { frame: [number, number]; states: Record<string, string>; districts: Record<string, { d: string; box?: number[] } | string> };
+type Geo = { frame: [number, number]; states: Record<string, string>; labels?: Record<string, [number, number, number]>; districts: Record<string, { d: string; box?: number[] } | string> };
 
 const ORDER: Rating[] = ["safeD", "likelyD", "leanD", "toss", "leanR", "likelyR", "safeR"];
 const last = (n: string) => n.replace(/\s+(Jr\.|Sr\.|II|III|IV)$/, "").split(" ").slice(-1)[0];
@@ -162,7 +162,7 @@ export default function ForecastBoard({ data }: { data: BoardData }) {
     if (office === "house") return Object.entries(geo.districts).map(([id, v]) => { const d = typeof v === "string" ? v : v.d; return { key: id, d, x: bboxOf(d)[0] }; });
     return Object.entries(geo.states).map(([st, d]) => ({ key: st, d, x: bboxOf(d)[0] }));
   }, [geo, office]);
-  const labels = useMemo(() => (geo && office !== "house" ? Object.entries(geo.states).map(([st, d]) => { const b = bboxOf(d); return { st, x: (b[0] + b[2]) / 2, y: (b[1] + b[3]) / 2, w: b[2] - b[0] }; }).filter((l) => l.w > 38) : []), [geo, office]);
+  const labels = useMemo(() => (geo && office !== "house" ? Object.entries(geo.states).map(([st, d]) => { const b = bboxOf(d), lb = geo.labels?.[st]; return { st, x: lb ? lb[0] : (b[0] + b[2]) / 2, y: lb ? lb[1] : (b[1] + b[3]) / 2, w: lb ? lb[2] : b[2] - b[0] }; }).filter((l) => l.w > 38) : []), [geo, office]);
   const [W, H] = geo?.frame ?? [975, 610];
 
   const word = office === "senate" ? { t: "U.S. Senate", s: `Projection · ${races.length} seats up in 2026`, of: "of 100", maj: "the majority" }
