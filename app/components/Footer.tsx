@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Lockup } from "./opp/Logo";
+import { Pointy } from "@/app/components/home/Mascot";
 
 const COLS = [
   { h: "Polls", links: [
@@ -23,7 +24,8 @@ const COLS = [
 export default function Footer() {
   return (
     <footer className="opp">
-      <div className="foot">
+      <div className="foot" style={{ position: "relative" }}>
+        <Pointy className="cam-foot" pose="sit" prop="flag" size={110} look={-1} />
         <div className="wrap">
           <div className="cols">
             <div>

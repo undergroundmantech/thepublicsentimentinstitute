@@ -2,6 +2,7 @@
 
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
+import { Pointy } from "@/app/components/home/Mascot";
 import AggregatePollChart from "@/app/components/AggregatePollChart";
 import MultiCandidateChart from "@/app/components/MultiCandidateChart";
 import { pollHref } from "@/app/polls/registry";
@@ -424,6 +425,7 @@ export default function PollingAveragesPage({ initialId, forecast }: { initialId
       </nav>
       <Ambient />
       <header className="pa-hero">
+        <Pointy className="cam-pa" pose="point" prop="chart" size={104} look={-1} flip />
         <div className="pa-hero-l">
           <div className="eye g">{words.eyebrow}</div>
           <h1>{words.h1} <em>average</em></h1>

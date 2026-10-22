@@ -6,6 +6,7 @@ import { RAW_POLLS as GENERIC_POLLS } from "@/app/_polling/genericballot/data";
 import { getModel, miniRaces, isInd } from "@/app/lib/forecastData";
 import { fmtM, lastName, raceHref } from "@/app/lib/opp";
 import HomeGlobe, { type GRace } from "@/app/components/home/HomeGlobe";
+import { STATE_POLLS } from "@/app/on-point-polling/polls/pollMapData";
 import HomeWhatIf from "@/app/components/home/HomeWhatIf";
 import "@/app/components/home/home2.css";
 import AveragePanel, { type TableRow } from "@/app/components/home/AveragePanel";
@@ -14,6 +15,7 @@ import Countdown from "@/app/components/home/Countdown";
 import MiniMap from "@/app/components/home/MiniMap";
 import { CountUp, Grow } from "@/app/components/home/motion";
 import { Icon } from "@/app/components/opp/Logo";
+import { Pointy } from "@/app/components/home/Mascot";
 import { seo } from "@/app/lib/seo";
 
 export const metadata: Metadata = seo({"title": "On Point Politics: 2026 midterm forecasts, polling averages and live results", "description": "Who is favored in the 2026 midterms: Senate, House and governor forecasts, every state legislature and statewide ballot measure, daily polling averages and live election night results from On Point Politics.", "path": "/", "absoluteTitle": true});
@@ -49,10 +51,14 @@ export default function Home() {
   const picks = [...byClose("senate").slice(0, 4), ...byClose("governor").slice(0, 1)]
     .map((r) => ({ raceId: r.id, label: `${r.st} ${r.id.startsWith("gov") ? "Governor" : "Senate"}` }));
 
+  const toG = (r: (typeof model.races)[number]): GRace => ({ id: r.id, st: r.st, name: r.name, dem: r.dem, gop: r.gop, m: r.est.margin, p: r.est.prob, ind: isInd(r), href: raceHref(r.id),
+    pl: (r.polls ?? []).slice(0, 30).map((x) => [x.age, Math.round(x.margin * 10) / 10, x.n || 600] as [number, number, number]) });
   const globeRaces: Record<"senate" | "governor", GRace[]> = {
-    senate: model.races.filter((r) => r.office === "senate").map((r) => ({ id: r.id, st: r.st, name: r.name, dem: r.dem, gop: r.gop, m: r.est.margin, p: r.est.prob, ind: isInd(r), href: raceHref(r.id) })),
-    governor: model.races.filter((r) => r.office === "governor").map((r) => ({ id: r.id, st: r.st, name: r.name, dem: r.dem, gop: r.gop, m: r.est.margin, p: r.est.prob, ind: isInd(r), href: raceHref(r.id) })),
+    senate: model.races.filter((r) => r.office === "senate").map(toG),
+    governor: model.races.filter((r) => r.office === "governor").map(toG),
   };
+  const latestOp = STATE_POLLS.filter((s) => s.status === "released").slice(-2).map((s) => s.name).join(" and ");
+  const opStates = STATE_POLLS.filter((s) => s.status === "released").map((s) => s.st);
   const ap = stats.approval, gb = stats.generic;
   const gbD = r1(50 + gb.net / 2), gbR = r1(100 - gbD);
   const updated = new Date(meta.updated + "T00:00:00").toLocaleDateString("en-US", { month: "short", day: "numeric" });
@@ -75,7 +81,7 @@ export default function Home() {
 
   return (
     <div className="opp">
-      <HomeGlobe races={globeRaces} odds={{ senate: sen.demControl, house: house.demControl, governor: gov.demControl }} updated={updated} daysOut={meta.daysOut} />
+      <HomeGlobe races={globeRaces} odds={{ senate: sen.demControl, house: house.demControl, governor: gov.demControl }} updated={updated} daysOut={meta.daysOut} opStates={opStates} />
       <HomeWhatIf />
 
       <section className="sec">
@@ -102,7 +108,8 @@ export default function Home() {
       </section>
 
       <section className="sec">
-        <div className="sec-h">
+        <div className="sec-h home-ph">
+          <Pointy className="home-pty pa pty-side" pose="point" prop="chart" size={112} look={-1} flip say={<>Generic ballot: <span className={gb.net >= 0 ? "d" : "r"}><b>{gb.net >= 0 ? "D" : "R"} +{Math.abs(gb.net).toFixed(1)}</b></span> across {gb.count} polls.</>} />
           <div><div className="eye g">Polling averages</div><h2>Trends that see past the noise</h2>
             <p>Every public poll, weighted by recency, sample, voter screen and pollster grade. Race pages add robust LOWESS trend lines at three spans and an Election Day projection.</p></div>
           <Link className="btn more" href="/polls">All averages</Link>
@@ -122,7 +129,7 @@ export default function Home() {
       </section>
 
       <section className="sec">
-        <div className="sec-h"><div><div className="eye g">Results desk</div><h2>Live returns, called by the desk</h2></div><span className="pill live" style={{ marginBottom: 6 }}>Election night ready</span></div>
+        <div className="sec-h home-ph"><Pointy className="home-pty rd pty-side" pose="wave" prop="megaphone" size={104} look={1} say={<>{meta.daysOut} days until the desk goes live.</>} /><div><div className="eye g">Results desk</div><h2>Live returns, called by the desk</h2></div><span className="pill live" style={{ marginBottom: 6 }}>Election night ready</span></div>
         <div className="grid3">
           <ResultCard raceId={86349} title="Florida Governor, GOP primary" date="Aug 18" href="/results/2026-08-18/florida-governor-republican-primary" names={["Byron Donalds", "James Fishback", "Jay Collins"]} />
           <ResultCard raceId={87529} title="Oklahoma Governor, GOP runoff" date="Aug 25" href="/results/2026-08-25/oklahoma-governor-republican-runoff" names={["Gentner Drummond", "Mike Mazzei"]} />
@@ -131,7 +138,7 @@ export default function Home() {
       </section>
 
       <section className="sec">
-        <div className="sec-h"><div><div className="eye g">From On Point Polling</div><h2>Latest releases and model notes</h2></div><Link className="btn more" href="/on-point-polling/polls">All releases</Link></div>
+        <div className="sec-h home-ph"><Pointy className="home-pty op pty-side" pose="idle" prop="clipboard" size={104} look={-1} flip cap say={<>Fresh from the field: <b>{latestOp}</b>.</>} /><div><div className="eye g">From On Point Polling</div><h2>Latest releases and model notes</h2></div><Link className="btn more" href="/on-point-polling/polls">All releases</Link></div>
         <div className="grid4">
           <Link href="/on-point-polling/polls/texas-2026" className="card story">
             <div className="thumb"><svg viewBox="0 0 320 180" aria-hidden="true"><rect width="320" height="180" fill="#120820" /><g fontFamily="var(--font-m)" fontSize="11" fill="#c9c2d6"><text x="20" y="44">SENATE</text><text x="20" y="104">GOVERNOR</text></g><rect x="20" y="54" width="280" height="14" rx="7" fill="rgba(255,255,255,.07)" /><rect x="20" y="54" width="137" height="14" rx="7" fill="#3d7bff" /><rect x="180" y="54" width="120" height="14" rx="7" fill="#ff3b5c" /><rect x="20" y="114" width="280" height="14" rx="7" fill="rgba(255,255,255,.07)" /><rect x="20" y="114" width="127" height="14" rx="7" fill="#3d7bff" /><rect x="166" y="114" width="134" height="14" rx="7" fill="#ff3b5c" /></svg><span className="lab">On Point Polling · Texas</span></div>
@@ -164,6 +171,7 @@ export default function Home() {
             <Link className="btn" href="/contact">Contact the desk</Link>
           </div>
           <Icon className="icon" size={260} gradient />
+          <Pointy className="home-pty band" pose="cheer" prop="megaphone" size={120} look={-1} flip />
         </div>
       </section>
     </div>

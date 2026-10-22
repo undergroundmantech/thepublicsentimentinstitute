@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { Pointy } from "@/app/components/home/Mascot";
 import { seo } from "@/app/lib/seo";
 import PollingRoom from "../PollingRoom";
 import { roomForecast } from "../roomForecast";
@@ -38,7 +39,8 @@ export default function Page() {
   return (
     <div className="opp fx-dark">
       <nav className="crumbs" aria-label="Breadcrumb"><Link href="/">Home</Link><span className="sep">/</span><Link href="/on-point-polling">On Point Polling</Link><span className="sep">/</span><span>Polls</span></nav>
-      <header className="ph">
+      <header className="ph" style={{ position: "relative" }}>
+        <Pointy className="cam-hero cam-ev pty-side" pose="wave" prop="clipboard" size={118} look={-1} flip cap say={<>Twelve releases and counting. Every crosstab goes public.</>} />
         <div className="eye g">Fieldwork by On Point Polling</div>
         <h1>Poll <em>releases</em></h1>
         <p className="lede">Surveys fielded by On Point Polling for On Point Politics: dual panel samples weighted with the DSMeridian likely voter model, published with toplines and crosstabs.</p>

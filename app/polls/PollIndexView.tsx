@@ -3,6 +3,7 @@
 // trend, filterable by name and sortable by how close the race is, how many polls it has, or by name.
 import React, { useMemo, useState } from "react";
 import Link from "next/link";
+import { Pointy } from "@/app/components/home/Mascot";
 import Ambient from "@/app/components/opp/Ambient";
 import "@/app/_polling/genericballot/polls2.css";
 
@@ -42,6 +43,7 @@ export default function PollIndexView({ sections, national, title, lede, crumb, 
         {crumb ? <><Link href="/polls">Polls</Link><span className="sep">/</span><span>{crumb}</span></> : <span>Polls</span>}
       </nav>
       <header className="pi2-hero">
+        <Pointy className="cam-hero cam-pi pty-side l" pose="think" prop="magnifier" size={120} look={1} say={<>I read every new poll in every race, twice a day.</>} />
         <div>
           <div className="eye g">Polling averages · {total} tracked · {fresh} new polls this week</div>
           <h1>{title}</h1>

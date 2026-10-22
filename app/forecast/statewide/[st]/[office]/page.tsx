@@ -11,6 +11,7 @@ import CountyExplorer from "@/app/components/opp/CountyExplorer";
 import { STORY_CSS, phraseFor } from "@/app/components/opp/RaceStory";
 import StageHero from "@/app/components/opp/StageHero";
 import Ambient from "@/app/components/opp/Ambient";
+import PollTrail from "@/app/components/opp/PollTrail";
 import type { CountyPath } from "@/app/components/home/countyGeo";
 import { dbHref, getDownballot, getDownballotCounties, type CountyRow, type DBRace } from "../../data";
 import JsonLd from "@/app/components/JsonLd";
@@ -168,6 +169,7 @@ export default async function Page({ params }: { params: Promise<{ st: string; o
 
           <div className="card">
             <div className="card-h"><h3>Polls of the race</h3><span className="eye" style={{ marginLeft: "auto" }}>{r.polls.length || "no"} {r.polls.length === 1 ? "poll" : "polls"}</span></div>
+            {r.polls.length ? <div className="ptr-wrap"><PollTrail polls={r.polls.map((p) => ({ age: p.age, margin: p.margin, n: p.n ?? undefined, pollster: p.pollster, op: p.pollster.startsWith("On Point") }))} avg={r.pollAvg ?? null} asOf={data.meta.updated} dem={r.dem ? lastName(r.dem) : "Democrat"} gop={r.gop ? lastName(r.gop) : "Republican"} height={210} /></div> : null}
             <div className="tblwrap">
               <table className="tbl">
                 <thead><tr><th>Pollster</th><th>Sample</th><th style={{ textAlign: "right" }}>Ended</th><th style={{ textAlign: "right" }}>{lastName(r.dem!)}</th><th style={{ textAlign: "right" }}>{lastName(r.gop!)}</th><th style={{ textAlign: "right" }}>Margin</th></tr></thead>

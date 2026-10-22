@@ -4,6 +4,7 @@
 // state to drop into its counties, and read the state's numbers, its pace chart and every county below.
 import React, { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
+import { Pointy } from "@/app/components/home/Mascot";
 import { marginColor } from "@/app/lib/opp";
 import Ambient from "@/app/components/opp/Ambient";
 import Count from "@/app/components/opp/Count";
@@ -246,6 +247,7 @@ export default function EarlyVoteConsole({ data, initial, lede, faq }: { data: E
       <Ambient tint="#9fe3c8" />
       <nav className="crumbs" aria-label="Breadcrumb"><Link href="/">Home</Link><span className="sep">/</span><Link href="/maps">Maps</Link><span className="sep">/</span>{scope === "US" ? <span>Early vote</span> : <><button className="evc-crumb" onClick={() => go("US")}>Early vote</button><span className="sep">/</span><span>{R.name}</span></>}</nav>
       <header className="evc-head">
+        <Pointy className="cam-hero cam-ev pty-side" pose="wave" prop="ballot" size={118} look={-1} flip say={<>Every county&apos;s ballots, modeled by party as they come in.</>} />
         <div>
           <div className="eye g">2026 early vote · as of {dateLabel} · {data.daysOut} days out</div>
           <h1 id="evc-h"><Count value={R.total} /> <span>ballots cast {scope === "US" ? "so far" : `in ${R.name}`}</span></h1>

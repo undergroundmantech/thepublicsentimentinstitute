@@ -5,6 +5,7 @@
 // through that party's strengths; right click clears one unit. The address bar carries the map so it can be shared.
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
+import { Pointy } from "@/app/components/home/Mascot";
 import ForecastNav from "@/app/components/opp/ForecastNav";
 import "./electoral.css";
 
@@ -137,6 +138,7 @@ export default function ElectoralBoard() {
       <ForecastNav />
       <nav className="crumbs" aria-label="Breadcrumb"><Link href="/">Home</Link><span className="sep">/</span><Link href="/maps">Maps</Link><span className="sep">/</span><span>Map maker</span></nav>
       <header className="emk-head">
+        <Pointy className="cam-hero cam-top pty-side" pose="point" prop="pointer" size={96} look={-1} flip say={<>Pick a color, then click or drag across states to paint.</>} />
         <div>
           <div className="eye g">2026 map maker · forecast updated {new Date(model.meta.updated + "T00:00:00").toLocaleDateString("en-US", { month: "short", day: "numeric" })}</div>
           <h1>Make your own <em>2026 map</em></h1>

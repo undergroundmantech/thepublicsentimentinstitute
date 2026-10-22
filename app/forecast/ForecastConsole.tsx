@@ -6,6 +6,8 @@
 // Clicking a state or district opens its full race page.
 import React, { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
+import PollTrail from "@/app/components/opp/PollTrail";
+import { Pointy } from "@/app/components/home/Mascot";
 import { useRouter } from "next/navigation";
 import { RATE, RATING_LABEL, rating, ratingPill, STATE_NAME, type Rating } from "@/app/lib/opp";
 import USLegisMap, { type USChamber } from "@/app/components/opp/USLegisMap";
@@ -14,7 +16,7 @@ import Ambient from "@/app/components/opp/Ambient";
 import "./console.css";
 
 export type Layer = "senate" | "house" | "governor" | "statewide" | "legis" | "measures";
-export type CRace = { id: string; st: string; state: string; d: number; name: string; dem: string; gop: string; m: number; p: number; ind: boolean; href: string; open: boolean; p10: number; p90: number; office?: string; officeLabel?: string };
+export type CRace = { id: string; st: string; state: string; d: number; name: string; dem: string; gop: string; m: number; p: number; ind: boolean; href: string; open: boolean; p10: number; p90: number; office?: string; officeLabel?: string; pl?: [number, number, number, number][] };
 export type CChamber = { demControl: number; demSeats: number; median: number; seatsTotal: number; p10: number; p90: number; majority: number; trend: number[]; notUpD: number; notUpR: number };
 export type CLeg = { id: string; st: string; state: string; chamber: "house" | "senate"; name: string; seats: number; up: number; majority: number; demControl: number; gopControl: number; demSeats: number; gopSeats: number; p10: number; p90: number; href: string };
 export type CMeas = { st: string; label: string; title: string; yes: number; prob: number; thr: number; href: string };
@@ -80,6 +82,8 @@ function ChanceBar({ pD, ind }: { pD: number; ind: boolean }) {
 // keep a tooltip on screen: open it to the left of the pointer near the right edge, and above it near the bottom
 const tipFlip = (t: { x: number; y: number; w?: number; h?: number }): React.CSSProperties => ({ transform: `translate(${t.w && t.x > t.w - 290 ? "calc(-100% - 16px)" : "16px"}, ${t.h && t.y > t.h - 230 ? "calc(-100% - 12px)" : "12px"})` });
 
+const trailOf = (r: CRace) => (r.pl ?? []).map(([age, margin, n, op]) => ({ age, margin, n, op: !!op }));
+
 export default function ForecastConsole({ data, initial, initialOffice }: { data: ConsoleData; initial: Layer; initialOffice?: string }) {
   const router = useRouter();
   const [layer, setLayer] = useState<Layer>(initial);
@@ -94,6 +98,16 @@ export default function ForecastConsole({ data, initial, initialOffice }: { data
   const [all, setAll] = useState(false);
 
   useEffect(() => { setLayer(initial); }, [initial]);
+  // ?office= picks the layer the console opens on, so old desk links still land in the right place
+  useEffect(() => {
+    let q = "";
+    try { q = (new URLSearchParams(window.location.search).get("office") ?? "").toLowerCase(); } catch { return; }
+    if (!q) return;
+    const l: Layer = q === "house" ? "house" : q === "governor" || q === "governors" || q === "gov" ? "governor" : q === "legislatures" || q === "legislature" || q === "sl" ? "legis"
+      : q === "measures" || q === "ballot-measures" ? "measures" : q === "statewide" || q.includes("-") ? "statewide" : "senate";
+    setLayer(l);
+    if (q.includes("-") && data.statewide.some((r) => r.office === q)) setOffice(q);
+  }, [data.statewide]);
   useEffect(() => { fetch("/forecast/geo.json").then((r) => r.json()).then(setGeo).catch(() => {}); }, []);
   useEffect(() => {
     if (layer !== "legis" || legisFull) return;
@@ -234,6 +248,8 @@ export default function ForecastConsole({ data, initial, initialOffice }: { data
       <Ambient />
       <nav className="crumbs" aria-label="Breadcrumb"><Link href="/">Home</Link><span className="sep">/</span><span>Forecast</span></nav>
       <header className="fcx-head">
+          <Pointy key={layer} className="fcx-pty pty-side" pose={layer === "measures" ? "think" : "point"} prop="none" size={92} look={-1} flip cap
+            say={closest[0] ? <>Closest {layer === "legis" ? "chamber" : layer === "measures" ? "measure" : "race"}: <b>{closest[0].name}</b>, <span className={closest[0].cls === "r" || closest[0].cls === "no" ? "r" : "d"}>{closest[0].val}</span></> : undefined} />
         <div>
           <div className="eye g">2026 midterm forecast · {data.daysOut} days out</div>
           <h1 id="fcx-h">Every 2026 race, <em>in one place.</em></h1>
@@ -306,6 +322,7 @@ export default function ForecastConsole({ data, initial, initialOffice }: { data
                       <div className="r"><span style={{ color: dColor(r.ind) }}>{r.dem}</span><b>{pc(1 - r.p)}</b></div>
                       <div className="r"><span style={{ color: "#ff8399" }}>{r.gop}</span><b>{pc(r.p)}</b></div>
                       <div className="r"><span>{RATING_LABEL[rateOf(r)]}</span><b>{fm(r.m, r.ind)}</b></div>
+                      {r.pl?.length ? <div className="fcx-tptr"><div className="eye">{r.pl.length} {r.pl.length === 1 ? "poll" : "polls"}, Democrats up</div><PollTrail polls={trailOf(r)} compact width={220} ind={r.ind} uid={`tp${r.id}`} /></div> : null}
                       <div className="cta">Click for the full race</div></>); })() : (
                     <><h4>{STATE_NAME[tip.k] ?? tip.k}</h4>{tipRaces.slice(0, 6).map((r) => <div className="r" key={r.id}><span>{r.officeLabel ?? r.name}</span><b style={{ color: r.m < 0 ? "#7fa6ff" : "#ff8399" }}>{fm(r.m)}</b></div>)}<div className="cta">Click for the closest one</div></>
                   )}
@@ -359,7 +376,7 @@ export default function ForecastConsole({ data, initial, initialOffice }: { data
         <div className="fcx-tw">
           <table>
             <thead>
-              {tableRows.kind === "race" ? <tr><th>Race</th><th>Candidates</th><th className="n">Margin</th><th>Chance</th><th>Rating</th></tr>
+              {tableRows.kind === "race" ? <tr><th>Race</th><th>Candidates</th><th className="n">Margin</th><th className="fcx-pcol">Polls</th><th>Chance</th><th>Rating</th></tr>
                 : tableRows.kind === "legis" ? <tr><th>Chamber</th><th className="n">Seats up</th><th className="n">Majority</th><th className="n">Expected D seats</th><th>Control</th></tr>
                 : <tr><th>Measure</th><th>What it does</th><th className="n">Yes</th><th>Chance to pass</th></tr>}
             </thead>
@@ -369,6 +386,7 @@ export default function ForecastConsole({ data, initial, initialOffice }: { data
                   <td><Link href={r.href}><b>{r.name}</b></Link><small>{r.open ? "Open seat" : "Incumbent running"}</small></td>
                   <td><span style={{ color: dColor(r.ind) }}>{r.dem}</span><span className="vs">vs</span><span style={{ color: "#ff8399" }}>{r.gop}</span></td>
                   <td className={`n mono ${r.m < 0 ? (r.ind ? "i" : "d") : "r"}`}>{fm(r.m, r.ind)}</td>
+                  <td className="fcx-pcol">{r.pl?.length ? <span className="fcx-spk"><PollTrail polls={trailOf(r)} compact width={120} ind={r.ind} uid={`tr${r.id}`} /><small className="mono">{r.pl.length}</small></span> : <small className="mono" style={{ opacity: .5 }}>none</small>}</td>
                   <td><ChanceBar pD={1 - r.p} ind={r.ind} /><small className="mono">{r.m < 0 ? pc(1 - r.p) : pc(r.p)}</small></td>
                   <td><span className={`pill ${ratingPill(rt)}`}>{RATING_LABEL[rt]}</span></td>
                 </tr>); })

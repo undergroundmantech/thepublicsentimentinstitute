@@ -3,6 +3,7 @@
 // 100 pixel nights. Shared by the main race pages and the statewide office pages.
 import React from "react";
 import PixelStage, { type StageLabel } from "./PixelStage";
+import { Pointy } from "@/app/components/home/Mascot";
 
 export type StageCand = { name: string; label: string; pct: number; votes: number; color: string };
 
@@ -108,6 +109,7 @@ export default function StageHero({ eyebrow, title, lede, pills, cands, paths, f
   return (
     <header className="sg" aria-label="Race overview">
       <style>{STAGE_CSS}</style>
+      <Pointy className="cam-sg" pose="wave" prop="clipboard" size={96} look={-1} flip />
       <div className="sg-top">
         <span className="sg-marq"><span className="sg-bulbs" aria-hidden="true">{[0, 1, 2, 3, 4, 5].map((i) => <i key={i} />)}</span>{eyebrow}<span className="sg-bulbs" aria-hidden="true">{[0, 1, 2, 3, 4, 5].map((i) => <i key={i} />)}</span></span>
         <h1>{title}</h1>

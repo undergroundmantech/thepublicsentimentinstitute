@@ -4,7 +4,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { prep, compute, type Data, type Model, type Pin } from "@/app/forecast/what-if/WhatIf";
-import Mascot from "./Mascot";
+import { Pointy } from "./Mascot";
 
 const pc = (p: number) => (p > 0.995 ? ">99%" : p < 0.005 ? "<1%" : `${Math.round(p * 100)}%`);
 const last = (n: string) => n.replace(/\s+(Jr\.|Sr\.|II|III|IV)$/, "").split(" ").slice(-1)[0];
@@ -15,7 +15,13 @@ export default function HomeWhatIf() {
   useEffect(() => { fetch("/forecast/whatif.json").then((r) => r.json()).then((d: Data) => setM(prep(d))).catch(() => {}); }, []);
   const out = useMemo(() => (M ? compute(M, pins, 0) : null), [M, pins]);
   const picks = useMemo(() => (M ? M.R.map((r, k) => ({ r, k })).filter(({ r }) => Math.abs(r.m) < 99).sort((a, b) => Math.abs(a.r.p - 0.5) - Math.abs(b.r.p - 0.5)).slice(0, 12) : []), [M]);
-  const toggle = (id: string, side: "D" | "R") => setPins((o) => { const n = { ...o }; if (n[id]?.side === side) delete n[id]; else n[id] = { side, by: null }; return n; });
+  const [joy, setJoy] = useState(false);
+  const toggle = (id: string, side: "D" | "R") => { setJoy(true); setPins((o) => { const n = { ...o }; if (n[id]?.side === side) delete n[id]; else n[id] = { side, by: null }; return n; }); };
+  useEffect(() => { if (!joy) return; const t = setTimeout(() => setJoy(false), 1500); return () => clearTimeout(t); }, [joy, pins]);
+  const npin = Object.keys(pins).length;
+  const sen = out?.ch.senate;
+  const say = !out ? "Loading the simulations" : !npin ? <>Call a race below and I will rerun all <b>{M!.N.toLocaleString()}</b> simulations.</>
+    : sen ? <>With your {npin} {npin === 1 ? "pick" : "picks"}, <span className={sen.now >= 0.5 ? "d" : "r"}><b>{sen.now >= 0.5 ? "Democrats" : "Republicans"}</b></span> win the Senate in <b>{pc(sen.now >= 0.5 ? sen.now : 1 - sen.now)}</b>.</> : null;
   const q = Object.entries(pins).map(([id, p]) => `${id}:${p.side}`).join(",");
   const Ch = ({ k, label }: { k: "senate" | "house" | "governor"; label: string }) => {
     const c = out?.ch[k]; if (!c) return <div className="hw-ch sx-skel" style={{ height: 104 }} />;
@@ -31,7 +37,7 @@ export default function HomeWhatIf() {
   };
   return (
     <section className="hw" aria-labelledby="hw-h">
-      <div className="hw-mascot" aria-hidden="true"><Mascot size={120} walking={false} look={-1} /></div>
+      <Pointy className="hw-mascot pty-side" pose={joy ? "cheer" : npin ? "point" : "think"} prop={joy ? "flag" : npin ? "none" : "ballot"} size={130} look={-1} flip={!!npin && !joy} say={say} />
       <div className="hw-grid">
         <div>
           <div className="eye g">What if</div>

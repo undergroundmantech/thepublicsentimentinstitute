@@ -144,3 +144,14 @@
   .fcx-links { grid-template-columns: 1fr; }
 }
 @media (prefers-reduced-motion: reduce) { .fcx-tile, .fcx-map path, .fcx-px i { animation: none; } .fcx-map path.live:hover { transform: none; } }
+
+/* Pointy on the map card, and poll trails in the tooltip and table */
+.fcx-mapcard { position: relative; }
+.fcx-head { position: relative; }
+.fcx-head .fcx-pty { right: 0; bottom: 62px; }
+.fcx-tptr { margin-top: 8px; padding-top: 8px; border-top: 1px solid rgba(255,255,255,.1); }
+.fcx-tptr .eye { font: 800 9px var(--font-m); letter-spacing: .12em; text-transform: uppercase; color: #a79fbd; margin-bottom: 2px; }
+.fcx-tptr .ptr { height: 42px; }
+.fcx-spk { display: inline-flex; align-items: center; gap: 6px; }
+.fcx-spk .ptr { width: 96px; height: 28px; }
+@media (max-width: 900px) { .fcx-pcol { display: none; } }

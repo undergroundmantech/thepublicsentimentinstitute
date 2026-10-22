@@ -17,6 +17,8 @@ import SectionNav from "@/app/components/opp/SectionNav";
 import { STORY_CSS, ShareBars, TrendChart, ModelPath, SecTitle, phraseFor } from "@/app/components/opp/RaceStory";
 import StageHero from "@/app/components/opp/StageHero";
 import Ambient from "@/app/components/opp/Ambient";
+import PollTrail from "@/app/components/opp/PollTrail";
+import { Pointy } from "@/app/components/home/Mascot";
 import { raceLd, raceMeta } from "../../seo";
 
 export const dynamicParams = false;
@@ -246,6 +248,16 @@ export default async function Page({ params }: { params: Promise<{ state: string
 
           <section id="polls" className="st-sec">
             <SecTitle title="Polling" sub="Every poll in the average, and how the model reads it" />
+            {(r.polls?.length ?? 0) > 0 ? (
+              <div className="card ptr-card">
+                <div className="card-h"><h3>Every poll, over time</h3><span className="eye" style={{ marginLeft: "auto" }}>{r.polls!.length} polls · dot size is sample</span></div>
+                <div className="ptr-wrap">
+                  <PollTrail polls={r.polls!.map((p) => ({ age: p.age, margin: p.margin, n: p.n, pollster: p.pollster, op: p.pollster.startsWith("On Point") }))} avg={r.pollAvg ?? null} asOf={model.meta.updated} ind={ind} dem={lastName(r.dem)} gop={lastName(r.gop)} />
+                </div>
+                <p className="ptr-note">The line is a recency smoothed trend of the polls shown, weighted by sample size; the gold marker is the On Point average the model uses.{r.polls!.some((p) => p.pollster.startsWith("On Point")) ? " Gold outlined diamonds are On Point Polling surveys." : ""}</p>
+                <Pointy className="ptr-pty" pose="point" prop="none" size={96} look={1} flip />
+              </div>
+            ) : null}
       <div className="fx-grid2">
           <div className="card">
             <div className="card-h"><h3>Polls of the race</h3>{agg && <Link className="btn sm" href={pollHref(agg.id)} style={{ marginLeft: "auto" }}>Full average</Link>}</div>

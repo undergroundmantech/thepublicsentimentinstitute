@@ -1,0 +1,19 @@
+/* PollTrail chart */
+.ptr{display:block;color:var(--ink2,#cfc7e2);overflow:visible}
+.ptr .ptr-ax{font:600 10px var(--font-m);fill:var(--mute,#8e86a3)}
+.ptr .ptr-side{font:800 10px var(--font-m);letter-spacing:.12em;text-transform:uppercase;opacity:.75}
+.ptr .ptr-end-l{font:800 13px var(--font-m)}
+.ptr .ptr-line path{stroke-dasharray:2400;stroke-dashoffset:2400;animation:ptr-draw 1.6s .15s cubic-bezier(.3,.7,.3,1) forwards}
+.ptr .ptr-dot{transform-box:fill-box;transform-origin:center;animation:ptr-pop .5s both}
+.ptr .ptr-end{animation:ptr-pulse 2.2s ease-in-out infinite}
+.ptr.cmp .ptr-line path{animation-duration:.9s}
+.ptr-empty{padding:18px;color:var(--mute);font-size:13px}
+@keyframes ptr-draw{to{stroke-dashoffset:0}}
+@keyframes ptr-pop{from{transform:scale(0)}to{transform:scale(1)}}
+@keyframes ptr-pulse{0%,100%{opacity:1}50%{opacity:.55}}
+@media (prefers-reduced-motion:reduce){.ptr .ptr-line path{animation:none;stroke-dashoffset:0}.ptr .ptr-dot,.ptr .ptr-end{animation:none}}
+.ptr-card{position:relative;margin-bottom:12px}
+.ptr-wrap{padding:10px 14px 2px}
+.ptr-note{font-size:12.5px;color:var(--mute);padding:0 18px 14px;margin:0}
+.ptr-card .ptr-pty{right:26px;top:-86px}
+.ptr-mini{display:block;width:100%;height:46px;margin-top:6px}

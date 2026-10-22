@@ -4,13 +4,14 @@
 // considering next are hatched. Click a state for its full result, the sample, and where the forecast has it.
 import React, { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
+import PollTrail from "@/app/components/opp/PollTrail";
 import { marginColor } from "@/app/lib/opp";
 import { STATE_POLLS, FUND_LINE, FUND_URL, type PollRace, type StatePoll } from "./polls/pollMapData";
 import "./pollroom.css";
 
 type Geo = { frame: [number, number]; states: Record<string, string>; labels?: Record<string, [number, number, number]> };
 type Office = "Senate" | "Governor";
-export type RoomForecast = Record<string, Partial<Record<Office, { m: number; href: string }>>>;
+export type RoomForecast = Record<string, Partial<Record<Office, { m: number; href: string; pl?: [number, number, number, number][] }>>>;
 
 const marginOf = (r: PollRace) => { const d = r.cands.find((c) => c.p === "d"), g = r.cands.find((c) => c.p === "r"); return d && g ? d.leaned - g.leaned : 0; };
 const ml = (m: number) => (Math.abs(m) < 0.05 ? "Even" : `${m > 0 ? "D" : "R"} +${Math.abs(m).toFixed(1)}`);
@@ -24,7 +25,7 @@ function bboxOf(d: string): [number, number, number, number] {
 // tag nudges for states whose box center sits off the shape, in map units
 const NUDGE: Record<string, [number, number]> = { FL: [40, 8], MI: [22, 30], TX: [6, 10], SC: [0, 0], OH: [0, 0], NE: [0, 0], WI: [0, 4] };
 
-function Race({ r, fc }: { r: PollRace; fc?: { m: number; href: string } }) {
+function Race({ r, fc }: { r: PollRace; fc?: { m: number; href: string; pl?: [number, number, number, number][] } }) {
   const m = marginOf(r), d = r.cands.find((c) => c.p === "d"), g = r.cands.find((c) => c.p === "r");
   return (
     <div className="prm-race">
@@ -36,6 +37,7 @@ function Race({ r, fc }: { r: PollRace; fc?: { m: number; href: string } }) {
           <b>{c.leaned.toFixed(1)}%</b>
         </div>
       ))}
+      {fc?.pl?.length ? <div className="prm-ptr"><span>Every public poll of the race · gold diamonds are ours</span><PollTrail polls={fc.pl.map(([age, margin, n, op]) => ({ age, margin, n, op: !!op }))} width={420} height={130} dem={d ? d.n.split(" ").slice(-1)[0] : "Democrat"} gop={g ? g.n.split(" ").slice(-1)[0] : "Republican"} uid={`pr${r.race}${fc.href.length}`} /></div> : null}
       {fc && d && g ? <Link href={fc.href} className="prm-fc">On Point forecast <b className={fc.m < 0 ? "d" : "r"}>{fl(fc.m)}</b><span>Open the race</span></Link> : null}
     </div>
   );

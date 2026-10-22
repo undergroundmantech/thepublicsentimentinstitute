@@ -6,6 +6,7 @@
 // simulation to that margin and moves every other race by its simulated relationship with it.
 import React, { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
+import { Pointy } from "@/app/components/home/Mascot";
 import { RATE, RATING_LABEL, rating, raceHref, STATE_NAME, type Rating } from "@/app/lib/opp";
 import "./whatif.css";
 
@@ -240,6 +241,7 @@ export default function WhatIf() {
     <section className="wif" aria-labelledby="wif-h">
       <nav className="crumbs" aria-label="Breadcrumb"><Link href="/">Home</Link><span className="sep">/</span><Link href="/forecast">Forecast</Link><span className="sep">/</span><span>What if</span></nav>
       <header className="wif-head">
+        <Pointy className="cam-hero cam-top pty-side" size={96} pose={Object.keys(pins).length ? "cheer" : "think"} prop={Object.keys(pins).length ? "flag" : "ballot"} look={-1} flip say={Object.keys(pins).length ? <>Every other race just moved with your picks.</> : <>Pick a winner anywhere and watch the rest follow.</>} />
         <div>
           <div className="eye g">Scenario builder · {M.N.toLocaleString()} joint simulations</div>
           <h1 id="wif-h">What if <em>this race goes this way?</em></h1>

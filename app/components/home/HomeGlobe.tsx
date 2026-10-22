@@ -9,10 +9,13 @@ import { geoOrthographic, geoPath, geoGraticule10, geoContains, geoCentroid, geo
 import { feature } from "topojson-client";
 import type { Topology, GeometryCollection } from "topojson-specification";
 import type { Feature, Geometry } from "geojson";
-import Mascot, { MASCOT_CSS } from "./Mascot";
+import Mascot from "./Mascot";
+import PollTrail from "@/app/components/opp/PollTrail";
 import { RATE, RATING_LABEL, rating, type Rating } from "@/app/lib/opp";
 
-export type GRace = { id: string; st: string; name: string; dem: string; gop: string; m: number; p: number; ind: boolean; href: string };
+export type GRace = { id: string; st: string; name: string; dem: string; gop: string; m: number; p: number; ind: boolean; href: string; pl?: [number, number, number][] };
+const HQ: [number, number] = [-80.19, 25.76];
+const NO_ST: string[] = [];
 type Office = "senate" | "governor";
 const FIPS: Record<string, string> = { "01": "AL", "02": "AK", "04": "AZ", "05": "AR", "06": "CA", "08": "CO", "09": "CT", "10": "DE", "11": "DC", "12": "FL", "13": "GA", "15": "HI", "16": "ID", "17": "IL", "18": "IN", "19": "IA", "20": "KS", "21": "KY", "22": "LA", "23": "ME", "24": "MD", "25": "MA", "26": "MI", "27": "MN", "28": "MS", "29": "MO", "30": "MT", "31": "NE", "32": "NV", "33": "NH", "34": "NJ", "35": "NM", "36": "NY", "37": "NC", "38": "ND", "39": "OH", "40": "OK", "41": "OR", "42": "PA", "44": "RI", "45": "SC", "46": "SD", "47": "TN", "48": "TX", "49": "UT", "50": "VT", "51": "VA", "53": "WA", "54": "WV", "55": "WI", "56": "WY" };
 const last = (n: string) => n.replace(/\s+(Jr\.|Sr\.|II|III|IV)$/, "").split(" ").slice(-1)[0];
@@ -20,7 +23,7 @@ const fm = (m: number, ind = false) => (Math.abs(m) >= 99 ? "Unopposed" : Math.a
 const pc = (p: number) => (p > 0.99 ? ">99%" : p < 0.01 ? "<1%" : `${Math.round(p * 100)}%`);
 type SF = Feature<Geometry, { name: string }> & { st: string };
 
-export default function HomeGlobe({ races, odds, updated, daysOut }: { races: Record<Office, GRace[]>; odds: { senate: number; house: number; governor: number }; updated: string; daysOut: number }) {
+export default function HomeGlobe({ races, odds, updated, daysOut, opStates = NO_ST }: { races: Record<Office, GRace[]>; odds: { senate: number; house: number; governor: number }; updated: string; daysOut: number; opStates?: string[] }) {
   const router = useRouter();
   const wrap = useRef<HTMLDivElement>(null);
   const cv = useRef<HTMLCanvasElement>(null);
@@ -73,6 +76,18 @@ export default function HomeGlobe({ races, odds, updated, daysOut }: { races: Re
     size();
     const path = geoPath(proj, ctx), grat = geoGraticule10();
     const t0 = performance.now();
+    // scenery: a twinkling starfield, the odd shooting star, beacons on the closest races, fieldwork arcs from
+    // On Point HQ in Miami to every state On Point Polling has surveyed, Pointy's footprints and ballot confetti
+    const rnd = (i: number) => { const v = Math.sin(i * 127.1 + 311.7) * 43758.5453; return v - Math.floor(v); };
+    const stars = Array.from({ length: 280 }, (_, i) => ({ x: rnd(i), y: rnd(i + 500), r: 0.35 + rnd(i + 900) * 1.35, ph: rnd(i + 1300) * 6.283, sp: 0.5 + rnd(i + 1700) * 1.8, hue: rnd(i + 2100) }));
+    let shoot: { x: number; y: number; vx: number; vy: number; life: number } | null = null, nextShoot = 2500;
+    const centroid = (st: string) => { const f = geo.states.find((g) => g.st === st); return f ? (geoCentroid(f as GeoPermissibleObjects) as [number, number]) : null; };
+    const beacons = list.filter((r) => Math.abs(r.m) < 4 && r.st !== "AK" && r.st !== "HI").map((r, i) => ({ ll: centroid(r.st), c: Math.abs(r.m) < 1.5 ? "231,179,65" : r.m < 0 ? (r.ind ? "183,140,255" : "93,140,255") : "255,80,110", d: i * 0.37 })).filter((b) => b.ll) as { ll: [number, number]; c: string; d: number }[];
+    const arcs = opStates.map((st, i) => ({ st, ll: centroid(st), d: i * 0.29 })).filter((a) => a.ll) as { st: string; ll: [number, number]; d: number }[];
+    const steps: { ll: [number, number]; t: number; side: number }[] = []; let lastStep = 0, side = 1;
+    const parts: { x: number; y: number; vx: number; vy: number; c: string; life: number; rot: number; vr: number }[] = [];
+    let lastPhase = "stop";
+    const facing = (ll: [number, number]) => geoDistance(ll, [-rot.current[0], -rot.current[1]]) < 1.5;
     // the walk: leg k goes from tour[k] to tour[k+1] over the globe surface, then a pause at the stop
     let leg = 0, phase: "walk" | "stop" = "stop", tp = t0, interp = tour.length > 1 ? geoInterpolate(tour[0].ll, tour[1].ll) : null;
     if (tour[0]) setStop(tour[0].r);
@@ -83,6 +98,21 @@ export default function HomeGlobe({ races, odds, updated, daysOut }: { races: Re
       proj.rotate(rot.current);
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, W, H);
       const [cx, cy] = proj.translate(), R = proj.scale();
+      // stars
+      for (const st of stars) {
+        const a = 0.25 + 0.75 * (0.5 + 0.5 * Math.sin(st.ph + t / 1000 * st.sp));
+        ctx.fillStyle = st.hue > 0.85 ? `rgba(255,214,140,${a * 0.8})` : st.hue > 0.7 ? `rgba(160,190,255,${a * 0.8})` : `rgba(255,255,255,${a * 0.7})`;
+        ctx.fillRect(st.x * W, st.y * H, st.r, st.r);
+      }
+      if (!reduce) {
+        if (!shoot && t > nextShoot) { shoot = { x: W * (0.15 + Math.random() * 0.6), y: H * (0.02 + Math.random() * 0.25), vx: 9 + Math.random() * 6, vy: 3 + Math.random() * 3, life: 1 }; nextShoot = t + 5000 + Math.random() * 6000; }
+        if (shoot) {
+          const g = ctx.createLinearGradient(shoot.x, shoot.y, shoot.x - shoot.vx * 12, shoot.y - shoot.vy * 12);
+          g.addColorStop(0, `rgba(255,255,255,${shoot.life})`); g.addColorStop(1, "rgba(255,255,255,0)");
+          ctx.strokeStyle = g; ctx.lineWidth = 1.6; ctx.beginPath(); ctx.moveTo(shoot.x, shoot.y); ctx.lineTo(shoot.x - shoot.vx * 12, shoot.y - shoot.vy * 12); ctx.stroke();
+          shoot.x += shoot.vx; shoot.y += shoot.vy; shoot.life -= 0.018; if (shoot.life <= 0 || shoot.x > W) shoot = null;
+        }
+      }
       // atmosphere and ocean
       const atm = ctx.createRadialGradient(cx, cy, R * 0.92, cx, cy, R * 1.12);
       atm.addColorStop(0, "rgba(120,90,255,.35)"); atm.addColorStop(1, "rgba(120,90,255,0)");
@@ -111,6 +141,49 @@ export default function HomeGlobe({ races, odds, updated, daysOut }: { races: Re
         ctx.fillStyle = rt === "leanD" || rt === "leanR" || rt === "toss" ? "rgba(20,10,40,.85)" : r ? "rgba(255,255,255,.92)" : "rgba(255,255,255,.3)";
         ctx.fillText(f.st, p[0], p[1]);
       }
+      // a slow light sweeping over the globe
+      if (!reduce) {
+        const lx = cx + Math.cos(t / 6000) * R * 0.45, ly = cy - R * 0.35 + Math.sin(t / 8000) * R * 0.12;
+        const sh = ctx.createRadialGradient(lx, ly, 0, lx, ly, R * 0.75);
+        sh.addColorStop(0, "rgba(200,180,255,.10)"); sh.addColorStop(1, "rgba(200,180,255,0)");
+        ctx.save(); ctx.beginPath(); path({ type: "Sphere" }); ctx.clip(); ctx.fillStyle = sh; ctx.fillRect(cx - R, cy - R, R * 2, R * 2); ctx.restore();
+      }
+      // beacons on the closest races
+      for (const bc of beacons) {
+        if (!facing(bc.ll)) continue; const p = proj(bc.ll); if (!p) continue;
+        for (let k = 0; k < 2; k++) {
+          const ph = ((t / 2200) + bc.d + k * 0.5) % 1;
+          ctx.strokeStyle = `rgba(${bc.c},${(1 - ph) * 0.8})`; ctx.lineWidth = 2; ctx.beginPath(); ctx.arc(p[0], p[1], 4 + ph * 26, 0, 6.283); ctx.stroke();
+        }
+        ctx.fillStyle = `rgba(${bc.c},1)`; ctx.beginPath(); ctx.arc(p[0], p[1], 3, 0, 6.283); ctx.fill();
+      }
+      // fieldwork arcs from HQ
+      const hq = facing(HQ) ? proj(HQ) : null;
+      if (hq && arcs.length) {
+        for (const a of arcs) {
+          if (!facing(a.ll)) continue;
+          const ip = geoInterpolate(HQ, a.ll), dist = geoDistance(HQ, a.ll);
+          const pts: [number, number][] = [];
+          for (let k = 0; k <= 36; k++) { const q = proj(ip(k / 36) as [number, number]); if (!q) continue; pts.push([q[0], q[1] - Math.sin(Math.PI * k / 36) * dist * R * 0.55]); }
+          if (pts.length < 2) continue;
+          ctx.strokeStyle = "rgba(231,179,65,.38)"; ctx.lineWidth = 1.4; ctx.setLineDash([4, 5]); ctx.lineDashOffset = -t / 60;
+          ctx.beginPath(); pts.forEach((q, k) => (k ? ctx.lineTo(q[0], q[1]) : ctx.moveTo(q[0], q[1]))); ctx.stroke(); ctx.setLineDash([]);
+          const ph = ((t / 3200) + a.d) % 1, q = pts[Math.min(pts.length - 1, Math.floor(ph * pts.length))];
+          ctx.save(); ctx.shadowColor = "#e7b341"; ctx.shadowBlur = 14; ctx.fillStyle = "#ffe2a0"; ctx.beginPath(); ctx.arc(q[0], q[1], 3.2, 0, 6.283); ctx.fill(); ctx.restore();
+          const e = pts[pts.length - 1]; ctx.strokeStyle = "rgba(231,179,65,.9)"; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.arc(e[0], e[1], 5, 0, 6.283); ctx.stroke();
+        }
+        const pu = 0.5 + 0.5 * Math.sin(t / 400);
+        ctx.fillStyle = "#e7b341"; ctx.beginPath(); ctx.arc(hq[0], hq[1], 5, 0, 6.283); ctx.fill();
+        ctx.strokeStyle = `rgba(231,179,65,${0.3 + pu * 0.5})`; ctx.lineWidth = 2; ctx.beginPath(); ctx.arc(hq[0], hq[1], 9 + pu * 4, 0, 6.283); ctx.stroke();
+        ctx.font = "800 10px ui-monospace, monospace"; ctx.textAlign = "left"; ctx.fillStyle = "rgba(255,226,160,.95)"; ctx.fillText("ON POINT HQ", hq[0] + 14, hq[1] + 4);
+      }
+      // Pointy's footprints
+      for (const s0 of steps) {
+        if (!facing(s0.ll)) continue; const p = proj(s0.ll); if (!p) continue;
+        const age = (now - s0.t) / 4200; if (age > 1) continue;
+        ctx.fillStyle = `rgba(255,255,255,${(1 - age) * 0.55})`; ctx.beginPath(); ctx.ellipse(p[0] + s0.side * 4, p[1], 2.6, 1.6, 0, 0, 6.283); ctx.fill();
+      }
+      while (steps.length && now - steps[0].t > 4200) steps.shift();
       // the canvasser
       if (tour.length && man.current) {
         let ll = tour[leg].ll;
@@ -126,6 +199,18 @@ export default function HomeGlobe({ races, odds, updated, daysOut }: { races: Re
         }
         const p = proj(ll);
         if (p) { man.current.style.transform = `translate(${p[0]}px, ${p[1]}px)`; man.current.style.opacity = "1"; } else man.current.style.opacity = "0";
+        if (phase === "walk" && now - lastStep > 150) { steps.push({ ll, t: now, side }); side = -side; lastStep = now; }
+        if (phase === "stop" && lastPhase === "walk" && p) {
+          const r = tour[leg].r, col = r.m < 0 ? (r.ind ? ["#b78cff", "#e2d2ff"] : ["#3d7bff", "#8fb0ff"]) : ["#ff3b5c", "#ff8399"];
+          for (let k = 0; k < 26; k++) parts.push({ x: p[0], y: p[1] - 120, vx: (Math.random() - 0.5) * 7, vy: -2 - Math.random() * 5, c: k % 3 === 0 ? "#e7b341" : col[k % 2], life: 1, rot: Math.random() * 6, vr: (Math.random() - 0.5) * 0.3 });
+        }
+        lastPhase = phase;
+      }
+      // ballot confetti
+      for (let k = parts.length - 1; k >= 0; k--) {
+        const q = parts[k]; q.x += q.vx; q.y += q.vy; q.vy += 0.16; q.vx *= 0.99; q.rot += q.vr; q.life -= 0.011;
+        if (q.life <= 0) { parts.splice(k, 1); continue; }
+        ctx.save(); ctx.translate(q.x, q.y); ctx.rotate(q.rot); ctx.globalAlpha = Math.min(1, q.life * 1.5); ctx.fillStyle = q.c; ctx.fillRect(-4, -2.5, 8, 5); ctx.restore();
       }
       if (visible && !reduce) raf = requestAnimationFrame(draw);
     };
@@ -155,20 +240,19 @@ export default function HomeGlobe({ races, odds, updated, daysOut }: { races: Re
     box.addEventListener("pointermove", move); box.addEventListener("pointerdown", down); window.addEventListener("pointerup", up); box.addEventListener("pointerleave", leave);
     return () => { cancelAnimationFrame(raf); ro.disconnect(); io.disconnect(); box.removeEventListener("pointermove", move); box.removeEventListener("pointerdown", down); window.removeEventListener("pointerup", up); box.removeEventListener("pointerleave", leave); };
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [geo, bySt, tour, router]);
+  }, [geo, bySt, tour, router, list, opStates]);
 
   const tr = tip ? bySt[tip.st] : null;
   const closest = [...list].filter((r) => Math.abs(r.m) < 99).sort((a, b) => Math.abs(a.p - 0.5) - Math.abs(b.p - 0.5)).slice(0, 6);
   return (
     <section className="hg" aria-label="2026 forecast globe">
-      <style>{MASCOT_CSS}</style>
       <div className="hg-stage" ref={wrap}>
         <canvas ref={cv} className="hg-cv" role="img" aria-label={`The 2026 ${office} forecast on a globe, each state shaded by its rating`} />
         <div className="hg-man" ref={man} aria-hidden="true">
-          <div className={`hg-flip${dir < 0 ? " l" : ""}`}><Mascot size={150} walking={walking} look={dir} /></div>
+          <div className={`hg-flip${dir < 0 ? " l" : ""}`}><Mascot size={150} pose={walking ? "walk" : "cheer"} prop={walking ? "clipboard" : "flag"} look={dir} cap /></div>
           {stop ? (
             <button className="hg-bub" onClick={() => router.push(stop.href)} aria-hidden="true" tabIndex={-1}>
-              <b>{stop.name}</b><span className={stop.m < 0 ? (stop.ind ? "i" : "d") : "r"}>{last(stop.m < 0 ? stop.dem : stop.gop)} {fm(stop.m, stop.ind)}</span><small>Click for the race</small>
+              <b>{stop.name}</b><span className={stop.m < 0 ? (stop.ind ? "i" : "d") : "r"}>{last(stop.m < 0 ? stop.dem : stop.gop)} {fm(stop.m, stop.ind)}</span>{stop.pl?.length ? <span className="hg-bptr"><PollTrail polls={stop.pl.map(([age, margin, n]) => ({ age, margin, n }))} compact width={200} ind={stop.ind} uid={`hb${stop.id}`} /><em>{stop.pl.length} polls</em></span> : null}<small>Click for the race</small>
             </button>
           ) : null}
         </div>
@@ -178,6 +262,7 @@ export default function HomeGlobe({ races, odds, updated, daysOut }: { races: Re
             <div className="r"><span style={{ color: tr.ind ? "#b78cff" : "#8fb0ff" }}>{tr.dem}</span><b>{pc(1 - tr.p)}</b></div>
             <div className="r"><span style={{ color: "#ff8399" }}>{tr.gop}</span><b>{pc(tr.p)}</b></div>
             <div className="r"><span>{RATING_LABEL[rateOf(tr)]}</span><b>{fm(tr.m, tr.ind)}</b></div>
+            {tr.pl?.length ? <div className="hg-tptr"><span>{tr.pl.length} polls</span><PollTrail polls={tr.pl.map(([age, margin, n]) => ({ age, margin, n }))} compact width={220} ind={tr.ind} uid={`ht${tr.id}`} /></div> : null}
             <div className="cta">Click for the full race</div>
           </div>
         ) : null}

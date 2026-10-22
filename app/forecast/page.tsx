@@ -13,26 +13,15 @@ export function generateMetadata(): Metadata { return hubMeta(); }
 
 const readPub = <T,>(f: string): T => JSON.parse(fs.readFileSync(path.join(process.cwd(), "public", "forecast", f), "utf8")) as T;
 
-// ?office= picks the layer the console opens on, so the old desk links still land in the right place
-function layerOf(q: string): Layer {
-  if (q === "senate" || q === "sen") return "senate";
-  if (q === "house") return "house";
-  if (q === "governor" || q === "governors" || q === "gov") return "governor";
-  if (q === "legislatures" || q === "legislature" || q === "sl") return "legis";
-  if (q === "measures" || q === "ballot-measures") return "measures";
-  if (q === "statewide" || q.includes("-")) return "statewide";
-  return "senate";
-}
-
 // /forecast is one console: pick a layer, read its map, its odds and its closest races, then every race in it.
-export default async function ForecastPage({ searchParams }: { searchParams: Promise<Record<string, string | string[] | undefined>> }) {
-  const sp = await searchParams;
-  const raw = Array.isArray(sp.office) ? sp.office[0] : sp.office;
-  const q = (raw ?? "").toLowerCase();
+// Static on purpose: the page reads public/forecast at build time, so it never needs those files inside a serverless
+// function. The ?office= layer pick happens in the browser, in ForecastConsole.
+export default function ForecastPage() {
   const model = getModel();
   const pick = (o: string): CRace[] => model.races.filter((r) => r.office === o).map((r) => ({
     id: r.id, st: r.st, state: r.state, d: r.district, name: r.name, dem: r.dem, gop: r.gop, m: r.est.margin, p: r.est.prob, ind: isInd(r), href: raceHref(r.id),
     open: !!r.open, p10: r.est.p10 ?? r.est.margin, p90: r.est.p90 ?? r.est.margin,
+    pl: (r.polls ?? []).slice(0, 40).map((x) => [x.age, Math.round(x.margin * 10) / 10, x.n || 600, x.pollster.startsWith("On Point") ? 1 : 0] as [number, number, number, number]),
   }));
   const chOf = (k: "senate" | "governor" | "house") => {
     const c = model.chambers[k];
@@ -44,7 +33,8 @@ export default async function ForecastPage({ searchParams }: { searchParams: Pro
     const un = r.uncontested;
     const m = un ? (un === "D" ? -100 : 100) : r.est.margin;
     return { id: r.id, st: r.st, state: r.state, d: 0, name: `${r.state} ${r.officeLabel.toLowerCase()}`, dem: r.dem ?? "No Democrat", gop: r.gop ?? "No Republican", m, p: un ? (un === "D" ? 0 : 1) : r.est.prob,
-      ind: false, href: raceHref(r.id), open: !r.incRunning, p10: r.est.p10 ?? m, p90: r.est.p90 ?? m, office: r.office, officeLabel: r.officeLabel };
+      ind: false, href: raceHref(r.id), open: !r.incRunning, p10: r.est.p10 ?? m, p90: r.est.p90 ?? m, office: r.office, officeLabel: r.officeLabel,
+      pl: (r.polls ?? []).slice(0, 30).map((x) => [x.age, Math.round(x.margin * 10) / 10, x.n || 600, x.pollster.startsWith("On Point") ? 1 : 0] as [number, number, number, number]) };
   });
   const sl = readPub<{ chambers: { id: string; st: string; state: string; chamber: "house" | "senate"; name: string; seats: number; up: number; majority: number; demControl: number; gopControl: number; demSeats: number; gopSeats: number; p10: number; p90: number }[] }>("statehouse_hub.json");
   const bm = readPub<{ measures: [string, string, string, number, number, number, string][] }>("measures_hub.json");
@@ -60,7 +50,7 @@ export default async function ForecastPage({ searchParams }: { searchParams: Pro
   return (
     <>
       <JsonLd data={hubLd()} />
-      <div className="opp fc-page fc-xl fx-dark"><ForecastConsole data={data} initial={layerOf(q)} initialOffice={q.includes("-") ? q : undefined} /></div>
+      <div className="opp fc-page fc-xl fx-dark"><ForecastConsole data={data} initial="senate" /></div>
       <div className="opp fc-page fc-wide">
         <details className="fcx-index">
           <summary>Browse every forecast page as a plain index</summary>

@@ -1,0 +1,98 @@
+/* Pointy, the On Point mascot. Limbs turn around their joints in viewBox units, so props in a hand never move the pivot. */
+.pty { overflow: visible; display: block; max-width: none !important; flex: none; }
+.pty .pty-leg, .pty .pty-arm, .pty .pty-body, .pty .pty-all, .pty .pty-sh, .pty .pty-cap { transform-box: view-box; }
+.pty .pty-arm.f { transform-origin: 250px 174px; }
+.pty .pty-arm.b { transform-origin: 50px 174px; }
+.pty .pty-leg.l { transform-origin: 123px 292px; }
+.pty .pty-leg.r { transform-origin: 177px 292px; }
+.pty .pty-body, .pty .pty-all { transform-origin: 150px 400px; }
+.pty .pty-sh { transform-origin: 150px 408px; }
+.pty .pty-lid { animation: pty-blink 4.6s infinite; }
+.pty .pty-pupil { transition: cx .3s, cy .3s; }
+
+/* walk */
+.pty.pose-walk .pty-leg.l { animation: pty-swing .5s ease-in-out infinite alternate; }
+.pty.pose-walk .pty-leg.r { animation: pty-swing .5s ease-in-out infinite alternate-reverse; }
+.pty.pose-walk .pty-arm.b { animation: pty-arm .5s ease-in-out infinite alternate-reverse; }
+.pty.pose-walk .pty-arm.f { animation: pty-arm2 .5s ease-in-out infinite alternate; }
+.pty.pose-walk .pty-body { animation: pty-bob .25s ease-in-out infinite alternate; }
+.pty.pose-walk .pty-sh { animation: pty-shadow .25s ease-in-out infinite alternate; }
+/* idle: breathing */
+.pty.pose-idle .pty-body { animation: pty-breathe 2.4s ease-in-out infinite; }
+.pty.pose-idle .pty-arm.f { transform: rotate(-10deg); }
+/* wave */
+.pty.pose-wave .pty-arm.f { animation: pty-wave .7s ease-in-out infinite alternate; }
+.pty.pose-wave .pty-body { animation: pty-breathe 2.4s ease-in-out infinite; }
+/* point: arm out to the right with a little jab */
+.pty.pose-point .pty-arm.f { animation: pty-jab 1.6s ease-in-out infinite; }
+.pty.pose-point .pty-arm.b { transform: rotate(14deg); }
+.pty.pose-point .pty-body { transform: rotate(4deg); }
+/* cheer: both arms up, hopping */
+.pty.pose-cheer .pty-arm.f { animation: pty-cheerf .45s ease-in-out infinite alternate; }
+.pty.pose-cheer .pty-arm.b { animation: pty-cheerb .45s ease-in-out infinite alternate; }
+.pty.pose-cheer .pty-all { animation: pty-hop .9s cubic-bezier(.3,.7,.4,1) infinite; }
+.pty.pose-cheer .pty-sh { animation: pty-hopsh .9s cubic-bezier(.3,.7,.4,1) infinite; }
+.pty.pose-cheer .pty-spark { animation: pty-twinkle 1.2s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+/* think: hand to chin, thought dots */
+.pty.pose-think .pty-arm.f { transform: rotate(56deg); }
+.pty.pose-think .pty-dots circle { animation: pty-dot 1.8s ease-in-out infinite; }
+.pty.pose-think .pty-dots circle:nth-child(2) { animation-delay: .25s; } .pty.pose-think .pty-dots circle:nth-child(3) { animation-delay: .5s; }
+.pty.pose-think .pty-body { animation: pty-breathe 3s ease-in-out infinite; }
+/* sit: legs folded, body lowered, swinging feet */
+.pty.pose-sit .pty-all { transform: translateY(30px); }
+.pty.pose-sit .pty-leg.l { animation: pty-dangle 1.4s ease-in-out infinite alternate; }
+.pty.pose-sit .pty-leg.r { animation: pty-dangle 1.4s ease-in-out infinite alternate-reverse; }
+.pty.pose-sit .pty-arm.f { transform: rotate(-24deg); }
+/* props */
+.pty .pty-waves path { animation: pty-waves 1s ease-out infinite; }
+.pty .pty-waves path:nth-child(2) { animation-delay: .3s; }
+.pty .pty-cloth { transform-box: fill-box; transform-origin: 0 50%; animation: pty-cloth 1.1s ease-in-out infinite alternate; }
+
+@keyframes pty-swing { from { transform: rotate(-24deg); } to { transform: rotate(24deg); } }
+@keyframes pty-arm { from { transform: rotate(-20deg); } to { transform: rotate(20deg); } }
+@keyframes pty-arm2 { from { transform: rotate(-12deg); } to { transform: rotate(14deg); } }
+@keyframes pty-bob { from { transform: translateY(0); } to { transform: translateY(-7px); } }
+@keyframes pty-breathe { 0%, 100% { transform: translateY(0) scale(1, 1); } 50% { transform: translateY(-3px) scale(1.01, .99); } }
+@keyframes pty-shadow { from { transform: scaleX(1); } to { transform: scaleX(.9); } }
+@keyframes pty-wave { from { transform: rotate(-150deg); } to { transform: rotate(-110deg); } }
+@keyframes pty-jab { 0%, 60%, 100% { transform: rotate(-96deg); } 70% { transform: rotate(-90deg) translateX(-8px); } 80% { transform: rotate(-98deg); } }
+@keyframes pty-cheerf { from { transform: rotate(-150deg); } to { transform: rotate(-170deg); } }
+@keyframes pty-cheerb { from { transform: rotate(150deg); } to { transform: rotate(170deg); } }
+@keyframes pty-hop { 0%, 100% { transform: translateY(0); } 40% { transform: translateY(-30px); } 60% { transform: translateY(-26px); } }
+@keyframes pty-hopsh { 0%, 100% { transform: scaleX(1); opacity: 1; } 40%, 60% { transform: scaleX(.7); opacity: .5; } }
+@keyframes pty-twinkle { 0%, 100% { opacity: .2; transform: scale(.7); } 50% { opacity: 1; transform: scale(1.1); } }
+@keyframes pty-dot { 0%, 100% { opacity: .25; } 50% { opacity: 1; } }
+@keyframes pty-dangle { from { transform: rotate(-16deg) scaleY(.8); } to { transform: rotate(16deg) scaleY(.8); } }
+@keyframes pty-waves { from { opacity: 1; transform: translateX(0); } to { opacity: 0; transform: translateX(14px); } }
+@keyframes pty-cloth { from { transform: skewY(-4deg) scaleX(1); } to { transform: skewY(5deg) scaleX(.94); } }
+@keyframes pty-blink { 0%, 93%, 100% { height: 0; } 95%, 97% { height: 48px; } }
+
+/* Pointy as a cameo on a page */
+.pty-cameo { position: absolute; z-index: 3; pointer-events: none; display: flex; flex-direction: column; align-items: center; gap: 4px; animation: pty-in .7s cubic-bezier(.2,.9,.3,1.2) both; }
+.pty-cameo .pty-fig { filter: drop-shadow(0 14px 18px rgba(0,0,0,.55)); }
+.pty-cameo.flip .pty-fig { transform: scaleX(-1); }
+.pty-say { pointer-events: auto; position: relative; max-width: 230px; padding: 9px 12px; border-radius: 14px; background: rgba(12,7,22,.94); border: 1px solid rgba(255,255,255,.18); color: #f3eff8; font: 600 12.5px/1.35 var(--font-b); box-shadow: 0 16px 36px -18px #000; text-align: left; animation: pty-pop .4s .45s steps(4) both; }
+.pty-say::after { content: ""; position: absolute; left: 50%; bottom: -7px; width: 12px; height: 12px; transform: translateX(-50%) rotate(45deg); background: rgba(12,7,22,.94); border-right: 1px solid rgba(255,255,255,.18); border-bottom: 1px solid rgba(255,255,255,.18); }
+.pty-say b { color: #fff; } .pty-say .d { color: #8fb0ff; } .pty-say .r { color: #ff8399; }
+.pty-say a { color: #c9b6ff; text-decoration: underline; }
+@keyframes pty-in { from { transform: translateY(40px) scale(.85); opacity: 0; } to { transform: none; opacity: 1; } }
+@keyframes pty-pop { from { opacity: 0; transform: scale(.5); } to { opacity: 1; transform: none; } }
+@media (max-width: 900px) { .pty-cameo:not(.keep) { display: none; } }
+@media (prefers-reduced-motion: reduce) { .pty *, .pty-cameo, .pty-say { animation: none !important; } }
+
+/* where Pointy stands on each page */
+.pi2-hero, .pa-hero, .evc-head, .wif-head, .emk-head { position: relative; }
+.pty-cameo.pty-side { flex-direction: row; align-items: center; gap: 10px; }
+.pty-cameo.pty-side.l { flex-direction: row-reverse; }
+.pty-cameo.pty-side .pty-say { max-width: 210px; }
+.pty-cameo.pty-side .pty-say::after { left: auto; right: -7px; bottom: auto; top: 50%; transform: translateY(-50%) rotate(-45deg); }
+.pty-cameo.pty-side.l .pty-say::after { right: auto; left: -7px; transform: translateY(-50%) rotate(135deg); }
+.cam-hero { right: 12px; bottom: 100%; }
+.cam-top { bottom: calc(100% - 28px); }
+.cam-ev { right: 16px; top: 4px; bottom: auto; }
+.cam-pi { left: 24px; right: auto; top: 26px; bottom: auto; }
+.cam-pa { right: calc(50% + 4px); bottom: -6px; }
+.cam-sg { right: max(16px, calc(50vw - 840px)); top: 30px; z-index: 4; }
+.cam-404 { right: -230px; top: 30px; }
+.cam-foot { right: 9%; bottom: calc(100% - 26px); }
+@media (max-width: 1240px) { .cam-404 { position: relative; right: auto; top: auto; align-items: flex-start; margin-bottom: 12px; } }
