@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "NEXT_PUBLIC_SITE_V2=\"${NEXT_PUBLIC_SITE_V2:-on}\" next dev",
-    "build": "next build",
+    "build": "next build --webpack",
     "start": "next start",
     "lint": "eslint"
   },
