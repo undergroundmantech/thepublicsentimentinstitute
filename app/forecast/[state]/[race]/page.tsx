@@ -9,7 +9,8 @@ import { RATE, RATING_LABEL, RAMP_CSS, fmtM, fmtMS, lastName, marginColor, margi
 import GeoMap, { type GeoTip } from "@/app/components/opp/GeoMap";
 import type { CountyPath, CountyRow } from "@/app/components/home/countyGeo";
 import { pollHref } from "@/app/polls/registry";
-import { AGGREGATES } from "@/app/_polling/lib/aggregates";
+import { AGGREGATES, buildAggregate } from "@/app/_polling/lib/aggregates";
+import AverageStudio, { WeightBars } from "@/app/components/opp/AverageStudio";
 import JsonLd from "@/app/components/JsonLd";
 import { VoteSummary, CountyVotes, countyName, type CountyVote, type CandVote } from "@/app/components/opp/VoteTables";
 import CountyExplorer from "@/app/components/opp/CountyExplorer";
@@ -114,7 +115,9 @@ export default async function Page({ params }: { params: Promise<{ state: string
   const maxC = Math.max(1, ...bins.map((b) => b.c));
 
   // polls: the pinned average, then each poll in the model
-  const agg = AGGREGATES.find((d) => d.stateAbbr === r.st && d.category === (r.office === "senate" ? "2026 Senate" : "2026 Governor"));
+  // Texas carries more than one Senate matchup; the race page uses the best polled one
+  const agg = AGGREGATES.filter((d) => d.stateAbbr === r.st && d.category === (r.office === "senate" ? "2026 Senate" : "2026 Governor")).sort((a, b) => b.polls.length - a.polls.length)[0];
+  const built = agg ? buildAggregate(agg) : null;
   const xt = r.office !== "house" ? ((readJson("crosstabs.json") as Record<string, [string, string, number, number, number, number][]>)[r.id] ?? []) : [];
   const cuts = [...new Set(xt.map((x) => x[0]))].filter((c) => c !== "All voters").slice(0, 4);
   const officeTitle = r.office === "house" ? r.name : `${r.state} ${r.office === "senate" ? "Senate" : "Governor"}`;
@@ -248,13 +251,26 @@ export default async function Page({ params }: { params: Promise<{ state: string
 
           <section id="polls" className="st-sec">
             <SecTitle title="Polling" sub="Every poll in the average, and how the model reads it" />
-            {(r.polls?.length ?? 0) > 0 ? (
+            {agg && built && built.daily.length ? (
+              <div className="card ptr-card">
+                <div className="card-b">
+                  <AverageStudio title={`The ${STATE_NAME[r.st] ?? r.st} ${r.office === "senate" ? "Senate" : "governor"} polling average`} daily={built.daily} polls={built.polls.map((q) => ({ pollster: q.pollster, t: q.t, a: q.a, b: q.b, margin: q.margin, sampleSize: q.sampleSize, sampleType: q.sampleType, grade: q.grade, share: q.share, op: q.pollster.startsWith("On Point") }))}
+                    seriesA={{ label: agg.seriesA.label, color: agg.seriesA.color, party: agg.seriesA.party }} seriesB={{ label: agg.seriesB.label, color: agg.seriesB.color, party: agg.seriesB.party }} marginLabel={agg.marginLabel} unit={agg.unit} height={360} />
+                </div>
+                <div className="ptr-wb">
+                  <div className="eye">What moves the average today</div>
+                  <WeightBars polls={built.polls.map((q) => ({ pollster: q.pollster, t: q.t, a: q.a, b: q.b, margin: q.margin, sampleSize: q.sampleSize, sampleType: q.sampleType, grade: q.grade, share: q.share }))} seriesA={{ label: agg.seriesA.label, color: agg.seriesA.color }} seriesB={{ label: agg.seriesB.label, color: agg.seriesB.color }} marginLabel={agg.marginLabel} limit={6} />
+                </div>
+                <p className="ptr-note">This is the same On Point polling average as the <Link href={pollHref(agg.id)} style={{ textDecoration: "underline" }}>full average page</Link>. The forecast reads the polls through its own Election Day projection, shown as the On Point average in the table below, and blends it with partisan lean and fundamentals.</p>
+                <Pointy className="ptr-pty" pose="point" prop="chart" size={96} look={-1} flip />
+              </div>
+            ) : (r.polls?.length ?? 0) > 0 ? (
               <div className="card ptr-card">
                 <div className="card-h"><h3>Every poll, over time</h3><span className="eye" style={{ marginLeft: "auto" }}>{r.polls!.length} polls · dot size is sample</span></div>
                 <div className="ptr-wrap">
                   <PollTrail polls={r.polls!.map((p) => ({ age: p.age, margin: p.margin, n: p.n, pollster: p.pollster, op: p.pollster.startsWith("On Point") }))} avg={r.pollAvg ?? null} asOf={model.meta.updated} ind={ind} dem={lastName(r.dem)} gop={lastName(r.gop)} />
                 </div>
-                <p className="ptr-note">The line is a recency smoothed trend of the polls shown, weighted by sample size; the gold marker is the On Point average the model uses.{r.polls!.some((p) => p.pollster.startsWith("On Point")) ? " Gold outlined diamonds are On Point Polling surveys." : ""}</p>
+                <p className="ptr-note">The line is a recency smoothed trend of the polls shown; the gold marker is the On Point average the model uses.</p>
                 <Pointy className="ptr-pty" pose="point" prop="none" size={96} look={1} flip />
               </div>
             ) : null}

@@ -3,7 +3,6 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { Pointy } from "@/app/components/home/Mascot";
-import AggregatePollChart from "@/app/components/AggregatePollChart";
 import MultiCandidateChart from "@/app/components/MultiCandidateChart";
 import { pollHref } from "@/app/polls/registry";
 import {
@@ -12,7 +11,8 @@ import {
 } from "@/app/_polling/lib/aggregates";
 import { getPollsterEntry } from "@/app/_polling/lib/buildDailyModel";
 import StateRaceMap, { type MapRow } from "@/app/_polling/lib/StateRaceMap";
-import TrendPanel from "@/app/_polling/lib/TrendPanel";
+import AverageStudio, { WeightBars } from "@/app/components/opp/AverageStudio";
+import { RECENCY_HALF_LIFE_DAYS } from "@/app/_polling/lib/buildDailyModel";
 import Ambient from "@/app/components/opp/Ambient";
 import "./polls2.css";
 import { RATING_LABEL, STATE_NAME, fmtM, rating, ratingPill } from "@/app/lib/opp";
@@ -259,6 +259,7 @@ export default function PollingAveragesPage({ initialId, forecast }: { initialId
     if (key === "sample") return (p.sampleSize as number) || 0;
     if (key === "pollster") return String(p.pollster).toLowerCase();
     if (key === "margin") return (p.margin as number) ?? 0;
+    if (key === "share") return (p.share as number) ?? 0;
     if (key === "a") return (p.a as number) ?? 0;
     if (key === "b") return (p.b as number) ?? 0;
     if (key.startsWith("c")) { const i = +key.slice(1); const v = p.v?.[i]; return Number.isFinite(v) ? (v as number) : -Infinity; }
@@ -319,7 +320,7 @@ export default function PollingAveragesPage({ initialId, forecast }: { initialId
     reading = isMatchup
       ? (Math.abs(hLatest.net) < 0.05 ? "The race is even" : `${lead} ${verb} by ${Math.abs(hLatest.net).toFixed(1)} points`)
       : `${h2hDef.marginLabel} stands at ${h2hDef.fmtMargin(hLatest.net)}`;
-    reading += ` in the On Point average of ${totalPolls} public poll${totalPolls === 1 ? "" : "s"}, weighted by recency, sample size, voter screen and pollster grade.`;
+    reading += ` in the On Point average of ${totalPolls} public poll${totalPolls === 1 ? "" : "s"}: a robust local trend through every poll, weighted by a ${RECENCY_HALF_LIFE_DAYS} day recency half life, sample size, voter screen and pollster grade.`;
   } else if (multiDef && builtMulti?.latest) {
     const li = leaderIdx(builtMulti.latest);
     reading = `${multiDef.series[li].label} leads the field at ${builtMulti.latest[li].toFixed(1)} percent in the On Point average of ${totalPolls} public polls.`;
@@ -372,7 +373,7 @@ export default function PollingAveragesPage({ initialId, forecast }: { initialId
         <header className="ph">
           <div className="eye g">Polling averages</div>
           <h1>The full <em>board</em></h1>
-          <p className="lede">Every average On Point Politics tracks, with its latest reading and trend. Open any tile for the chart, the trend lines and every poll.</p>
+          <p className="lede">Every average On Point Politics tracks, with its latest reading and trend. Open any tile for the interactive chart, what moves it and every poll.</p>
           <div className="pmeta">
             <span><b>{CATALOG.length}</b> averages</span>
             <span>Weighted by recency, sample size, voter screen and pollster grade</span>
@@ -493,27 +494,28 @@ export default function PollingAveragesPage({ initialId, forecast }: { initialId
         </div>
       </div>
 
+      {/* the studio: one interactive chart, the average itself */}
+      <section className="card pa-studio">
+        <div className="card-b">
+          {dailyArr.length === 0 ? (
+            <div className="empty">No {(SAMPLE_OPTS.find((o) => o.val === sampleFilter)?.full ?? "matching").toLowerCase()} polls for this average.</div>
+          ) : isMulti && builtMulti && multiDef ? (
+            <MultiCandidateChart animKey={`${multiDef.id}:${sampleFilter}`} daily={builtMulti.daily} polls={builtMulti.polls} series={multiDef.series} unit={multiDef.unit} />
+          ) : builtH2H && h2hDef ? (
+            <AverageStudio animKey={`${h2hDef.id}:${sampleFilter}`} title="The average over time" daily={builtH2H.daily} polls={builtH2H.polls.map((q) => ({ ...q, op: q.pollster.startsWith("On Point") }))}
+              seriesA={h2hDef.seriesA} seriesB={h2hDef.seriesB} fmtMargin={h2hDef.fmtMargin} marginLabel={h2hDef.marginLabel} unit={h2hDef.unit} height={420} />
+          ) : null}
+        </div>
+      </section>
+
       <div className="layout">
         <div className="pa-main">
-          <section className="card">
-            <div className="card-h"><h3>Average over time</h3><span className="eye" style={{ marginLeft: "auto" }}>Each dot is one poll</span></div>
-            <div className="card-b">
-              {dailyArr.length === 0 ? (
-                <div className="empty">No {(SAMPLE_OPTS.find((o) => o.val === sampleFilter)?.full ?? "matching").toLowerCase()} polls for this average.</div>
-              ) : isMulti && builtMulti && multiDef ? (
-                <MultiCandidateChart animKey={`${multiDef.id}:${sampleFilter}`} daily={builtMulti.daily} polls={builtMulti.polls} series={multiDef.series} unit={multiDef.unit} />
-              ) : builtH2H && h2hDef ? (
-                <AggregatePollChart animKey={`${h2hDef.id}:${sampleFilter}`} daily={builtH2H.daily} polls={builtH2H.polls} seriesA={h2hDef.seriesA} seriesB={h2hDef.seriesB} fmtMargin={h2hDef.fmtMargin} marginLabel={h2hDef.marginLabel} unit={h2hDef.unit} />
-              ) : null}
-            </div>
-          </section>
-
-          {!isMulti && h2hDef ? (
+          {!isMulti && h2hDef && builtH2H?.polls.some((q) => (q.share ?? 0) > 0) ? (
             <section className="card">
-              <div className="card-h"><h3>Trend lines</h3><span className="eye" style={{ marginLeft: "auto" }}>LOWESS, each poll counts once</span></div>
+              <div className="card-h"><h3>What moves the average today</h3><span className="eye" style={{ marginLeft: "auto" }}>Share of today&apos;s weight</span></div>
               <div className="card-b">
-                <TrendPanel key={`${h2hDef.id}:${sampleFilter}`} def={h2hDef}
-                  polls={sampleFilter === "all" ? h2hDef.polls : h2hDef.polls.filter((p) => canonType(p.sampleType) === sampleFilter)} />
+                <WeightBars polls={builtH2H.polls} seriesA={h2hDef.seriesA} seriesB={h2hDef.seriesB} fmtMargin={h2hDef.fmtMargin} marginLabel={h2hDef.marginLabel} />
+                <p className="pa-note">Each poll&apos;s weight is its sample size, voter screen, pollster grade and age, with a {RECENCY_HALF_LIFE_DAYS} day half life, then the trend fit weighs down any poll that sits far from the others. No single poll can carry more than 15 percent.</p>
               </div>
             </section>
           ) : null}
@@ -573,6 +575,7 @@ export default function PollingAveragesPage({ initialId, forecast }: { initialId
                       {sortHead("a", h2hDef.seriesA.label)}
                       {sortHead("b", h2hDef.seriesB.label)}
                       {sortHead("margin", h2hDef.marginLabel)}
+                      {sortHead("share", "Weight")}
                     </tr>
                   </thead>
                   <tbody>
@@ -584,6 +587,7 @@ export default function PollingAveragesPage({ initialId, forecast }: { initialId
                         <td className="n" style={{ color: h2hDef.seriesA.color }}>{hLatest.a.toFixed(1)}</td>
                         <td className="n" style={{ color: h2hDef.seriesB.color }}>{hLatest.b.toFixed(1)}</td>
                         <td className="n" style={{ color: leadColor }}>{h2hDef.fmtMargin(hLatest.net)}</td>
+                        <td className="n">100%</td>
                       </tr>
                     )}
                     {rowsH2H.map((p, i) => {
@@ -602,10 +606,11 @@ export default function PollingAveragesPage({ initialId, forecast }: { initialId
                               <span className="pa-mnum" style={{ color: mColor }}>{h2hDef.fmtMargin(round1(p.margin))}</span>
                             </span>
                           </td>
+                          <td className="n pa-wt">{(p.share ?? 0) >= 0.0005 ? <><i style={{ width: `${Math.min(100, (p.share ?? 0) * 400)}%` }} />{((p.share ?? 0) * 100).toFixed(1)}%</> : <span className="pa-zero">0%</span>}</td>
                         </tr>
                       );
                     })}
-                    {visH2H.length === 0 && <tr><td colSpan={6} className="empty">No pollsters match &ldquo;{query}&rdquo;.</td></tr>}
+                    {visH2H.length === 0 && <tr><td colSpan={7} className="empty">No pollsters match &ldquo;{query}&rdquo;.</td></tr>}
                   </tbody>
                 </table>
               ) : null}
@@ -683,7 +688,7 @@ export default function PollingAveragesPage({ initialId, forecast }: { initialId
 
           <div className="callout">
             <div className="eye">Methodology</div>
-            The On Point average weights every public poll by recency, sample size, voter screen and pollster grade, and is rebuilt every day. On Point Polling polls are fielded by On Point Polling. <Link href="/on-point-polling/methodology" style={{ textDecoration: "underline" }}>How the average works</Link>.
+            The On Point average is a robust local trend fit (LOWESS) through every public poll, weighted by recency with a {RECENCY_HALF_LIFE_DAYS} day half life, sample size, voter screen and pollster grade, and rebuilt every day. On Point Polling polls are fielded by On Point Polling. <Link href="/on-point-polling/methodology" style={{ textDecoration: "underline" }}>How the average works</Link>.
           </div>
         </aside>
       </div>
@@ -728,6 +733,10 @@ const CSS = `
 .pa .pa-mbar::before { content: ""; position: absolute; left: 50%; top: -2px; bottom: -2px; width: 1px; background: rgba(var(--line-rgb),.2); }
 .pa .pa-mbar span { position: absolute; top: 0; bottom: 0; border-radius: 3px; }
 .pa .pa-mnum { font-weight: 700; min-width: 64px; text-align: right; }
+.pa .pa-studio { margin-bottom: 16px; }
+.pa .pa-wt { position: relative; min-width: 74px; }
+.pa .pa-wt i { position: absolute; right: 0; top: 50%; height: 18px; transform: translateY(-50%); background: rgba(231,179,65,.14); border-radius: 4px; }
+.pa .pa-zero { opacity: .4; }
 .pa .pa-fold { display: flex; justify-content: center; padding: 14px; }
 .pa .stat .v.mono-n { font-variant-numeric: tabular-nums; }
 .pa .pa-split { display: flex; height: 6px; border-radius: 99px; overflow: hidden; background: rgba(var(--line-rgb),.08); margin-top: 8px; gap: 2px; }

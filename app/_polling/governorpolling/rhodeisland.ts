@@ -2,7 +2,7 @@
 // Rhode Island — 2026 Governor: Helena Foulkes (D) vs. Aaron Guckian (R)
 // Generated from the On Point Polling forecast poll feed (run of 2026-09-22), merged with
 // the polls this file already carried. Polls of matchups that are not on the
-// ballot were dropped. Newest poll: 2026-09-25.
+// ballot were dropped. Newest poll: 2026-10-11.
 
 export type SampleType = "LV" | "RV" | "A";
 
@@ -39,6 +39,7 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "RI-GOV-2026", "pollster": "Emerson College", "startDate": "2026-08-22", "endDate": "2026-08-22", "sampleSize": 1000, "sampleType": "LV", "results": {"Helena Foulkes (D)": 45.0, "Aaron Guckian (R)": 18.0, "Other": 21.0, "Undecided": 14.0}},
     {"raceId": "RI-GOV-2026", "pollster": "University of New Hampshire", "startDate": "2026-08-24", "endDate": "2026-08-24", "sampleSize": 750, "sampleType": "LV", "results": {"Helena Foulkes (D)": 40.0, "Aaron Guckian (R)": 15.0, "Other": 19.0, "Undecided": 19.0}},
     {"raceId": "RI-GOV-2026", "pollster": "University of New Hampshire", "startDate": "2026-09-17", "endDate": "2026-09-21", "sampleSize": 598, "sampleType": "LV", "moe": 4.0, "results": {"Helena Foulkes (D)": 44.0, "Aaron Guckian (R)": 17.0, "Other": 29.0, "Undecided": 10.0}, "notes": "Other is independent Ken Block at 25, ahead of the Republican, plus CD Reynolds at 2."},
-    {"raceId": "RI-GOV-2026", "pollster": "Opinion Diagnostics", "startDate": "2026-09-23", "endDate": "2026-09-25", "sampleSize": 800, "sampleType": "LV", "results": {"Helena Foulkes (D)": 41.0, "Aaron Guckian (R)": 19.0, "Other": 24.0, "Undecided": 16.0}}
+    {"raceId": "RI-GOV-2026", "pollster": "Opinion Diagnostics", "startDate": "2026-09-23", "endDate": "2026-09-25", "sampleSize": 800, "sampleType": "LV", "results": {"Helena Foulkes (D)": 41.0, "Aaron Guckian (R)": 19.0, "Other": 24.0, "Undecided": 16.0}},
+    {"raceId": "RI-GOV-2026", "pollster": "Emerson College/WPRI", "startDate": "2026-10-08", "endDate": "2026-10-11", "sampleSize": 800, "sampleType": "LV", "results": {"Helena Foulkes (D)": 44, "Aaron Guckian (R)": 10, "Other": 36, "Undecided": 9}},
   ],
 };

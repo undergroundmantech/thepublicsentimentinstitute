@@ -2,7 +2,7 @@
 // Florida — 2026 Governor: David Jolly (D) vs. Byron Donalds (R)
 // Generated from the On Point Polling forecast poll feed (run of 2026-09-22), merged with
 // the polls this file already carried. Polls of matchups that are not on the
-// ballot were dropped. Newest poll: 2026-10-19. Full public poll list as of 2026-09-28.
+// ballot were dropped. Newest poll: 2026-10-20. Full public poll list as of 2026-09-28.
 
 export type SampleType = "LV" | "RV" | "A";
 
@@ -69,6 +69,7 @@ export const STATE_POLLS: Record<string, Poll[]> = {
     {"raceId": "FL-GOV-2026", "pollster": "YouGov for N+ Univision", "startDate": "2026-10-02", "endDate": "2026-10-15", "sampleSize": 825, "sampleType": "RV", "results": {"David Jolly (D)": 42.0, "Byron Donalds (R)": 50.0, "Other": 1.0, "Undecided": 7.0}},
     {"raceId": "FL-GOV-2026", "pollster": "On Point Polling", "startDate": "2026-10-18", "endDate": "2026-10-18", "sampleSize": 378, "sampleType": "LV", "results": {"David Jolly (D)": 42.4, "Byron Donalds (R)": 46.6, "Other": 6.2, "Undecided": 4.8}},
     {"raceId": "FL-GOV-2026", "pollster": "ActiVote", "startDate": "2026-10-01", "endDate": "2026-10-19", "sampleSize": 400, "sampleType": "LV", "results": {"David Jolly (D)": 48.3, "Byron Donalds (R)": 51.7}},
-    {"raceId": "FL-GOV-2026", "pollster": "University of North Florida", "startDate": "2026-10-12", "endDate": "2026-10-19", "sampleSize": 1471, "sampleType": "LV", "results": {"David Jolly (D)": 47.0, "Byron Donalds (R)": 49.0, "Undecided": 4.0}}
+    {"raceId": "FL-GOV-2026", "pollster": "University of North Florida", "startDate": "2026-10-12", "endDate": "2026-10-19", "sampleSize": 1471, "sampleType": "LV", "results": {"David Jolly (D)": 47.0, "Byron Donalds (R)": 49.0, "Undecided": 4.0}},
+    {"raceId": "FL-GOV-2026", "pollster": "co/efficient (R)", "startDate": "2026-10-18", "endDate": "2026-10-20", "sampleSize": 1014, "sampleType": "LV", "results": {"David Jolly (D)": 40.0, "Byron Donalds (R)": 49.0, "Undecided": 11.0}}
   ],
 };

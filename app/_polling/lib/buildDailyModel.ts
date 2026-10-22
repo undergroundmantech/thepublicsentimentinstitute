@@ -297,10 +297,15 @@ function round1(n: number): number {
 }
 
 // =============================================================================
-// Recency decay — exponent 1.3 (softer than 1.8), denom 21 (~14-day half-life)
+// Recency decay: exponent 1.3, denom 8, a half life of about six days.
+// Oct 22 2026: tightened from denom 21, a half life of about 16 days, so the
+// newest polls carry the average in the closing weeks of the campaign.
 // =============================================================================
+export const RECENCY_DENOM = 8;
+export const RECENCY_EXP = 1.3;
+export const RECENCY_HALF_LIFE_DAYS = Math.round(RECENCY_DENOM * Math.pow(Math.LN2, 1 / RECENCY_EXP) * 10) / 10;
 export function recencyWeight(daysAgo: number): number {
-  return Math.exp(-Math.pow(daysAgo / 21, 1.3));
+  return Math.exp(-Math.pow(daysAgo / RECENCY_DENOM, RECENCY_EXP));
 }
 
 // =============================================================================
@@ -422,7 +427,7 @@ function pollsterRepetitionFactor(
 // Combined poll weight
 //
 // Final weight = sampleSizeWeight(n)          [sigmoid, inflection @ 1100, sat ~1.0]
-//              × recencyWeight(dAgo)           [denom=21, exp=1.3, ~14-day half-life]
+//              × recencyWeight(dAgo)           [denom=8, exp=1.3, ~6-day half-life]
 //              × sampleTypeWeight              [LV=3×, RV=1×, A=0.1×]
 //              × pollsterRepetitionFactor      [same-firm repeat discount, 21-day window]
 //              × getPollsterWeight             [538-grade multiplier; Gold=6×, B=1×]
@@ -487,25 +492,102 @@ export function getDateRange(polls: Poll[]) {
 }
 
 // =============================================================================
-// Outlier correction — Z-score clipping per candidate
+// The average: a robust local trend fit (LOWESS) on the weighted polls.
+//
+// Oct 22 2026: the LOWESS trend used to be a second chart beside the average.
+// It is now the average itself. For each day and each candidate, every poll
+// available that day keeps its full weight above (sample, recency, screen,
+// pollster grade, repeat and undecided discounts, with the 15 percent cap),
+// and those weights are the local kernel of a LOWESS fit:
+//   1. a weighted local linear fit in time, read at the day itself, so a
+//      steady move in the newest polls shows up rather than lagging behind;
+//   2. the slope is shrunk toward flat when few polls carry the weight, and the
+//      lift it can add is capped, so one poll cannot tilt the line;
+//   3. three robustness passes with bisquare weights on the residuals (the
+//      Cleveland 1979 recipe), which replace the old z score clipping: an odd
+//      poll is weighed down in proportion to how far it sits from the fit.
 // =============================================================================
-const OUTLIER_Z_THRESHOLD = 2.0;
-const OUTLIER_MIN_POLLS   = 3;
+const LOESS_PASSES = 3;
+const SLOPE_SHRINK_N = 6;       // slope x neff / (neff + 6)
+const MAX_SLOPE = 0.35;         // points per day
+const MAX_LIFT = 1.5;           // points the slope may add at the day itself
+const MIN_SPREAD_DAYS = 2;      // below this weighted spread in time, no slope
 
-function clipOutliers(values: number[]): number[] {
-  if (values.length < OUTLIER_MIN_POLLS) return values;
+// weighted median, so the robustness scale is set by the polls that carry the day, not by old ones
+function wmedian(a: number[], w: number[]): number {
+  const idx = a.map((_, i) => i).filter((i) => w[i] > 0).sort((i, j) => a[i] - a[j]);
+  const tot = idx.reduce((t, i) => t + w[i], 0); if (!idx.length || tot <= 0) return 0;
+  let acc = 0; for (const i of idx) { acc += w[i]; if (acc >= tot / 2) return a[i]; }
+  return a[idx[idx.length - 1]];
+}
 
-  const mean = values.reduce((a, b) => a + b, 0) / values.length;
-  const variance = values.reduce((s, v) => s + (v - mean) ** 2, 0) / (values.length - 1);
-  const stddev = Math.sqrt(variance);
+/** One day's robust local fit. x is days before the day (0 or negative), w the poll weights. */
+export function localFit(v: number[], x: number[], w: number[]): { value: number; weights: number[] } {
+  const n = v.length;
+  if (!n) return { value: 0, weights: [] };
+  const r = new Array(n).fill(1);
+  let value = 0, ww: number[] = w.slice();
+  const passes = n >= 4 ? LOESS_PASSES + 1 : 1;
+  for (let pass = 0; pass < passes; pass++) {
+    ww = w.map((wi, i) => wi * r[i]);
+    const S = ww.reduce((a, b) => a + b, 0);
+    if (S <= 0) { ww = w.slice(); break; }
+    const xm = ww.reduce((a, wi, i) => a + wi * x[i], 0) / S;
+    const ym = ww.reduce((a, wi, i) => a + wi * v[i], 0) / S;
+    let Sxx = 0, Sxy = 0, S2 = 0;
+    for (let i = 0; i < n; i++) { Sxx += ww[i] * (x[i] - xm) ** 2; Sxy += ww[i] * (x[i] - xm) * (v[i] - ym); S2 += ww[i] * ww[i]; }
+    const neff = S2 > 0 ? (S * S) / S2 : 0;
+    let b = 0;
+    if (neff >= 3 && Sxx / S >= MIN_SPREAD_DAYS * MIN_SPREAD_DAYS) {
+      b = (Sxy / Sxx) * (neff / (neff + SLOPE_SHRINK_N));
+      b = clamp(b, -MAX_SLOPE, MAX_SLOPE);
+    }
+    const lift = clamp(b * (0 - xm), -MAX_LIFT, MAX_LIFT);
+    value = ym + lift;
+    if (pass === passes - 1) break;
+    const res = v.map((vi, i) => vi - (ym + b * (x[i] - xm)));
+    // a floor of one point on the scale: polls that differ by ordinary sampling noise are never cut
+    const s = Math.max(1, wmedian(res.map(Math.abs), ww));
+    for (let i = 0; i < n; i++) { const u = res[i] / (6 * s); r[i] = Math.abs(u) < 1 ? (1 - u * u) ** 2 : 0; }
+  }
+  const tot = ww.reduce((a, b) => a + b, 0) || 1;
+  return { value, weights: ww.map((x) => x / tot) };
+}
 
-  if (stddev === 0) return values;
+/** Weighted entries for one candidate on one day, newest first, with the share cap applied. */
+function dayEntries(availableDesc: Poll[], c: string, dayISO: string, opts: ModelOptions) {
+  const pollsterMeta = new Map<string, { occ: number; newestDate: string }>();
+  const entries: { poll: Poll; value: number; weight: number; x: number }[] = [];
+  for (const p of availableDesc) {
+    const v = p.results[c];
+    if (typeof v !== "number") continue;
+    const key = normalizePollsterKey(p.pollster);
+    const meta = pollsterMeta.get(key) ?? { occ: 0, newestDate: p.endDate };
+    const occ = meta.occ + 1;
+    pollsterMeta.set(key, { occ, newestDate: meta.occ === 0 ? p.endDate : meta.newestDate });
+    const daysSinceNewest = occ === 1 ? 0 : daysBetween(p.endDate, meta.newestDate);
+    entries.push({ poll: p, value: v, weight: pollWeight(p, dayISO, occ, daysSinceNewest, opts), x: -daysBetween(p.endDate, dayISO) });
+  }
+  const capped = capPollShares(entries.map((e) => e.weight), opts.maxPollShare);
+  return entries.map((e, i) => ({ ...e, weight: capped[i] }));
+}
 
-  return values.map((v) => {
-    const z = (v - mean) / stddev;
-    if (Math.abs(z) <= OUTLIER_Z_THRESHOLD) return v;
-    return mean + Math.sign(z) * OUTLIER_Z_THRESHOLD * stddev;
-  });
+// Polls more than 75 days old carry under a millionth of the weight of a new one at a six day half life, so they
+// are left out of the day's fit; a race with fewer than three polls in that window keeps its three newest.
+const WINDOW_DAYS = 75;
+function windowed(availableDesc: Poll[], dayISO: string): Poll[] {
+  const w = availableDesc.filter((p) => daysBetween(p.endDate, dayISO) <= WINDOW_DAYS);
+  return w.length >= 3 ? w : availableDesc.slice(0, 3);
+}
+
+/** Each poll's share of the average on one day for one candidate, after the robust passes. */
+export function pollSharesOn(polls: Poll[], c: string, dayISO: string, opts: ModelOptions = ELECTION_PROFILE): Map<Poll, number> {
+  const availableDesc = windowed(polls.filter((p) => p.endDate <= dayISO).sort((a, b) => b.endDate.localeCompare(a.endDate)), dayISO);
+  const e = dayEntries(availableDesc, c, dayISO, opts);
+  const fit = localFit(e.map((x) => x.value), e.map((x) => x.x), e.map((x) => x.weight));
+  const out = new Map<Poll, number>();
+  e.forEach((x, i) => out.set(x.poll, fit.weights[i] ?? 0));
+  return out;
 }
 
 // =============================================================================
@@ -520,54 +602,17 @@ export function buildDailyWeightedSeries(
 ): DailyRow[] {
   const start = parseISODate(startISO);
   const end   = parseISODate(endISO);
-
-  const sorted = [...polls].sort((a, b) => a.endDate.localeCompare(b.endDate));
+  const sortedDesc = [...polls].sort((a, b) => b.endDate.localeCompare(a.endDate));
   const out: DailyRow[] = [];
-
   for (let d = new Date(start); d <= end; d.setDate(d.getDate() + 1)) {
     const dayISO = iso(d);
-
-    const available = sorted.filter((p) => p.endDate <= dayISO);
-    const availableDesc = [...available].sort((a, b) => b.endDate.localeCompare(a.endDate));
-
+    const availableDesc = windowed(sortedDesc.filter((p) => p.endDate <= dayISO), dayISO);
     const row: DailyRow = { date: dayISO };
-
     for (const c of candidates) {
-      const pollsterMeta = new Map<string, { occ: number; newestDate: string }>();
-      const entries: { value: number; weight: number }[] = [];
-
-      for (const p of availableDesc) {
-        const v = p.results[c];
-        if (typeof v !== "number") continue;
-
-        const key = normalizePollsterKey(p.pollster);
-        const meta = pollsterMeta.get(key) ?? { occ: 0, newestDate: p.endDate };
-        const occ = meta.occ + 1;
-        pollsterMeta.set(key, { occ, newestDate: meta.occ === 0 ? p.endDate : meta.newestDate });
-
-        const daysSinceNewest = occ === 1 ? 0 : daysBetween(p.endDate, meta.newestDate);
-
-        entries.push({
-          value: v,
-          weight: pollWeight(p, dayISO, occ, daysSinceNewest, opts),
-        });
-      }
-
-      const clipped = clipOutliers(entries.map((e) => e.value));
-      const weights = capPollShares(entries.map((e) => e.weight), opts.maxPollShare);
-
-      let num = 0;
-      let den = 0;
-      for (let i = 0; i < entries.length; i++) {
-        num += clipped[i] * weights[i];
-        den += weights[i];
-      }
-
-      row[c] = den > 0 ? round1(num / den) : 0;
+      const e = dayEntries(availableDesc, c, dayISO, opts);
+      row[c] = e.length ? round1(localFit(e.map((x) => x.value), e.map((x) => x.x), e.map((x) => x.weight)).value) : 0;
     }
-
     out.push(row);
   }
-
   return out;
 }

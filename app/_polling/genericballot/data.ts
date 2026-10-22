@@ -13,6 +13,20 @@ export const GOLD_STANDARD_NAMES = [
 ];
 
 export const RAW_POLLS: Poll[] = [
+  // ── Added Oct 22, 2026: releases through Oct 20 ──
+  { pollster: "Economist/YouGov", endDate: "2026-10-12", sampleSize: 1403, sampleType: "RV", results: { Democrats: 46, Republicans: 39 } },   // Oct 10 to 12, registered voters
+  { pollster: "Cygnal", endDate: "2026-10-10", sampleSize: 1500, sampleType: "LV", results: { Democrats: 51, Republicans: 42 } },   // Oct 7 to 10
+  { pollster: "Fox News", endDate: "2026-10-12", sampleSize: 1202, sampleType: "RV", results: { Democrats: 54, Republicans: 45 } },   // Beacon Research and Shaw & Company, Oct 9 to 12
+  { pollster: "NBC News/SurveyMonkey", endDate: "2026-10-12", sampleSize: 0, sampleType: "RV", results: { Democrats: 55, Republicans: 45 } },   // Decision Desk, Sep 28 to Oct 12; RV count not published
+  { pollster: "ABC/Washington Post/Ipsos", endDate: "2026-10-13", sampleSize: 2032, sampleType: "RV", results: { Democrats: 50, Republicans: 42 } },   // Oct 9 to 13, registered voters
+  { pollster: "Rasmussen Reports", endDate: "2026-10-14", sampleSize: 1789, sampleType: "LV", results: { Democrats: 48, Republicans: 44 } },   // Oct 8 to 14
+  { pollster: "RMG Research", endDate: "2026-10-14", sampleSize: 2000, sampleType: "RV", results: { Democrats: 51, Republicans: 43 } },   // Napolitan News, Oct 13 to 14, with leaners
+  { pollster: "ActiVote", endDate: "2026-10-14", sampleSize: 1000, sampleType: "LV", results: { Democrats: 53.3, Republicans: 46.7 } },   // Oct 4 to 14
+  { pollster: "Siena/NYT", endDate: "2026-10-19", sampleSize: 3494, sampleType: "LV", results: { Democrats: 52, Republicans: 41 } },   // Oct 12 to 19, numbers via Newsweek
+  { pollster: "Strength In Numbers/Verasight", endDate: "2026-10-19", sampleSize: 0, sampleType: "RV", results: { Democrats: 52, Republicans: 41 } },   // Oct 13 to 19; RV count not published
+  { pollster: "CNN/SSRS", endDate: "2026-10-18", sampleSize: 0, sampleType: "RV", results: { Democrats: 49, Republicans: 39 } },   // Oct 15 to 18; RV count not published
+  { pollster: "Reuters/Ipsos", endDate: "2026-10-19", sampleSize: 1279, sampleType: "RV", results: { Democrats: 47, Republicans: 35 } },   // Oct 16 to 19
+  { pollster: "Echelon Insights", endDate: "2026-10-19", sampleSize: 1010, sampleType: "LV", results: { Democrats: 50, Republicans: 45 } },   // Oct 15 to 19, with leaners
   // ── Added Oct 14, 2026: releases through the Oct 5 to 9 NewsNation/DDHQ poll ──
   { pollster: "NewsNation", endDate: "2026-10-09", sampleSize: 974, sampleType: "LV", results: { Democrats: 49, Republicans: 42 } },   // NewsNation/DDHQ by TrueDot.ai, Oct 5 to 9
   { pollster: "Financial Times", endDate: "2026-10-06", sampleSize: 2275, sampleType: "LV", results: { Democrats: 52, Republicans: 44 } },   // FT/Focaldata, Oct 3 to 6

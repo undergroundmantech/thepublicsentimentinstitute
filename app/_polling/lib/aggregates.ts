@@ -2,7 +2,7 @@ import {
   Poll,
   getDateRange,
   getCandidateList,
-  buildDailyWeightedSeries,
+  buildDailyWeightedSeries, pollSharesOn,
   getPollsterEntry,
 } from "./buildDailyModel";
 
@@ -148,6 +148,7 @@ export type AggregateDef = {
 
 export type AggDaily = { date: string; t: number; a: number; b: number; net: number };
 export type AggPollPoint = {
+  share?: number;
   pollster: string;
   date: string;
   t: number;
@@ -425,8 +426,10 @@ export function buildAggregate(def: AggregateDef): BuiltAggregate {
     return { date: row.date, t: ts(row.date), a, b, net: round1(a - b) };
   });
 
+  // each poll's share of the latest day's average, after the robust passes, averaged over both sides
+  const shA = pollSharesOn(adjusted as Poll[], def.keyA, range.end), shB = pollSharesOn(adjusted as Poll[], def.keyB, range.end);
   const polls: AggPollPoint[] = def.polls
-    .map((p) => {
+    .map((p, i) => {
       const a = Number((p.results as Record<string, number>)[def.keyA] ?? NaN);
       const b = Number((p.results as Record<string, number>)[def.keyB] ?? NaN);
       return {
@@ -438,6 +441,7 @@ export function buildAggregate(def: AggregateDef): BuiltAggregate {
         sampleSize: p.sampleSize,
         sampleType: p.sampleType,
         grade: getPollsterEntry(p.pollster).grade,
+        share: ((shA.get(adjusted[i] as Poll) ?? 0) + (shB.get(adjusted[i] as Poll) ?? 0)) / 2,
       };
     })
     .filter((p) => Number.isFinite(p.a) && Number.isFinite(p.b));

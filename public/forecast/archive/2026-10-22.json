@@ -1,6 +1,6 @@
 {
  "date": "2026-10-22",
- "statewide_run": "poll sweep 2026-10-22: S1022OP against S1021PM, change applied to 2026-10-21",
+ "statewide_run": "poll sweep 2026-10-22: S1022N against S1022OP, change applied to 2026-10-22",
  "house_run": "S1021ALL full House rerun after the gap audit, applied against S1019FX with S1020PM for AK, TX and RI and S1021AM for SD, FL and OH",
  "n_sims": 2000,
  "chambers": {
@@ -12,7 +12,7 @@
    "d_control_without_osborn": 79.5
   },
   "governors": {
-   "d_majority": 89.5,
+   "d_majority": 89.2,
    "d_median": 28.0,
    "p10": 25.0,
    "p90": 31.0
@@ -539,12 +539,12 @@
   "FLG": {
    "office": "governor",
    "n_sims": 2000,
-   "margin": -4.73,
-   "win_d": 20.32,
-   "p10": -12.52,
-   "p90": 3.39,
+   "margin": -5.23,
+   "win_d": 17.79,
+   "p10": -13.02,
+   "p90": 2.89,
    "deterministic_margin": -2.029526010063705,
-   "n_polls": 34,
+   "n_polls": 35,
    "poll_house_index": 5.0,
    "poll_avg": {
     "D": 44.5045118542151,
@@ -2205,12 +2205,12 @@
   "PAG": {
    "office": "governor",
    "n_sims": 2000,
-   "margin": 23.44,
+   "margin": 23.43,
    "win_d": 99.95,
-   "p10": 17.18,
-   "p90": 29.86,
+   "p10": 17.17,
+   "p90": 29.85,
    "deterministic_margin": 23.740350111299534,
-   "n_polls": 16,
+   "n_polls": 17,
    "poll_house_index": 5.5,
    "poll_avg": {
     "D": 55.67896196419896,

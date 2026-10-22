@@ -111,7 +111,7 @@ export default function Home() {
         <div className="sec-h home-ph">
           <Pointy className="home-pty pa pty-side" pose="point" prop="chart" size={112} look={-1} flip say={<>Generic ballot: <span className={gb.net >= 0 ? "d" : "r"}><b>{gb.net >= 0 ? "D" : "R"} +{Math.abs(gb.net).toFixed(1)}</b></span> across {gb.count} polls.</>} />
           <div><div className="eye g">Polling averages</div><h2>Trends that see past the noise</h2>
-            <p>Every public poll, weighted by recency, sample, voter screen and pollster grade. Race pages add robust LOWESS trend lines at three spans and an Election Day projection.</p></div>
+            <p>One line per race: a robust local trend fit through every public poll, weighted by recency with a six day half life, sample, voter screen and pollster grade. Hover any day to read it.</p></div>
           <Link className="btn more" href="/polls">All averages</Link>
         </div>
         <div className="grid2">
@@ -154,7 +154,7 @@ export default function Home() {
           </Link>
           <Link href="/forecast/methodology" className="card story">
             <div className="thumb"><svg viewBox="0 0 320 180" aria-hidden="true"><rect width="320" height="180" fill="#120820" /><g fill="none" stroke="#e7b341" strokeWidth="2" opacity=".9"><path d="M20,120 Q80,40 160,90 T300,70" /></g><g fill="#e7b341" opacity=".5"><circle cx="40" cy="110" r="3" /><circle cx="90" cy="70" r="3" /><circle cx="130" cy="95" r="3" /><circle cx="200" cy="80" r="3" /><circle cx="250" cy="60" r="3" /><circle cx="285" cy="75" r="3" /></g></svg><span className="lab">Methods</span></div>
-            <div className="card-b"><h3>How On Point averages polls: robust LOWESS at three spans</h3><p>Every poll is one observation at its field midpoint.</p><div className="meta">Sep 28 · Methodology</div></div>
+            <div className="card-b"><h3>How On Point averages polls: one robust LOWESS line, weighted</h3><p>The trend fit is now the average itself, with a six day recency half life for the final weeks.</p><div className="meta">Oct 22 · Methodology</div></div>
           </Link>
         </div>
       </section>
