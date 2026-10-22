@@ -150,6 +150,9 @@ export type AggregateDef = {
 export type AggDaily = { date: string; t: number; a: number; b: number; net: number };
 export type AggPollPoint = {
   share?: number;
+  /** where the average counts the poll, after a measured partisan lean is taken off; equal to a, b otherwise */
+  adjA?: number; adjB?: number; adjMargin?: number;
+  lean?: { dir: "R" | "D"; pts: number; firms: string };
   pollster: string;
   date: string;
   t: number;
@@ -426,7 +429,7 @@ function wmed(v: number[], w: number[]) {
   for (const [x, ww] of o) { acc += ww; if (acc >= tot / 2) return x; }
   return o[o.length - 1][0];
 }
-export type LeanEstimate = { id: string; label: string; lean: number; raw: number; n: number };
+export type LeanEstimate = { id: string; label: string; dir: "R" | "D"; lean: number; raw: number; n: number };
 function measureLeans(defs: AggregateDef[]): Record<string, LeanEstimate> {
   const res: Record<string, number[]> = {};
   for (const f of R_LEAN_FIRMS) res[f.id] = [];
@@ -449,24 +452,34 @@ function measureLeans(defs: AggregateDef[]): Record<string, LeanEstimate> {
   for (const f of R_LEAN_FIRMS) {
     const g = res[f.id], n = g.length;
     const raw = n ? g.reduce((s, x) => s + x, 0) / n : 0;
-    out[f.id] = { id: f.id, label: f.label, n, raw: round1(raw), lean: round1(Math.max(0, raw * n / (n + LEAN_SHRINK))) };
+    // raw is the firm's Republican margin against the other polls; an R lean firm counts when it runs to the right,
+    // a D lean firm when it runs to the left, and either is shrunk toward zero by its number of polls
+    const toward = f.dir === "R" ? raw : -raw;
+    out[f.id] = { id: f.id, label: f.label, dir: f.dir, n, raw: round1(raw), lean: round1(Math.max(0, toward * n / (n + LEAN_SHRINK))) };
   }
   return out;
 }
 export const R_LEAN_ESTIMATES: Record<string, LeanEstimate> = measureLeans(RAW_AGGREGATES);
 
+export type PollLean = { dir: "R" | "D"; pts: number; firms: string };
 function cleanPolls(d: AggregateDef): Poll[] {
   const side = rSideOf(d);
   return d.polls.filter((p) => !isExcludedPollster(p.pollster)).map((p) => {
     const firms = rLeanFirms(p.pollster);
     if (!firms.length || !side) return p;
-    const lean = firms.reduce((s, f) => s + (R_LEAN_ESTIMATES[f]?.lean ?? 0), 0) / firms.length;
+    // a joint release of an R lean and a D lean firm would cancel; every listed joint release is two R lean firms
+    const est = firms.map((f) => R_LEAN_ESTIMATES[f]).filter(Boolean);
+    const dir = est[0]?.dir ?? "R";
+    const lean = est.filter((e) => e.dir === dir).reduce((s, e) => s + e.lean, 0) / Math.max(1, est.filter((e) => e.dir === dir).length);
     if (!(lean > 0)) return p;
     const rKey = side === "A" ? d.keyA : d.keyB, dKey = side === "A" ? d.keyB : d.keyA;
-    const r = { ...(p.results as Record<string, number>) };
+    const raw = p.results as Record<string, number>;
+    const r = { ...raw };
     if (r[rKey] == null || r[dKey] == null) return p;
-    r[rKey] = Math.round((r[rKey] - lean / 2) * 100) / 100; r[dKey] = Math.round((r[dKey] + lean / 2) * 100) / 100;
-    return { ...p, results: r, rLean: lean } as Poll;
+    const sg = dir === "R" ? 1 : -1;   // an R lean poll moves toward the Democrat, a D lean poll toward the Republican
+    r[rKey] = Math.round((r[rKey] - sg * lean / 2) * 100) / 100; r[dKey] = Math.round((r[dKey] + sg * lean / 2) * 100) / 100;
+    const L: PollLean = { dir, pts: lean, firms: est.map((e) => e.label).join(" and ") };
+    return { ...p, results: r, published: raw, lean: L, rLean: dir === "R" ? lean : undefined } as Poll;
   });
 }
 
@@ -523,9 +536,14 @@ export function buildAggregate(def0: AggregateDef): BuiltAggregate {
   const shA = pollSharesOn(adjusted as Poll[], def.keyA, range.end), shB = pollSharesOn(adjusted as Poll[], def.keyB, range.end);
   const polls: AggPollPoint[] = def.polls
     .map((p, i) => {
-      const a = Number((p.results as Record<string, number>)[def.keyA] ?? NaN);
-      const b = Number((p.results as Record<string, number>)[def.keyB] ?? NaN);
+      // tables show the poll as published; the chart places it where the average counts it
+      const pub = ((p as Poll & { published?: Record<string, number> }).published ?? p.results) as Record<string, number>;
+      const a = Number(pub[def.keyA] ?? NaN);
+      const b = Number(pub[def.keyB] ?? NaN);
+      const ua = Number((p.results as Record<string, number>)[def.keyA] ?? NaN), ub = Number((p.results as Record<string, number>)[def.keyB] ?? NaN);
       return {
+        adjA: ua, adjB: ub, adjMargin: round1(ua - ub),
+        lean: (p as Poll & { lean?: PollLean }).lean,
         pollster: p.pollster.replace(/\*\*/g, "").trim(),
         date: p.endDate,
         t: ts(p.endDate),

@@ -73,8 +73,8 @@
   --shadow-grad: 0 8px 30px rgba(131,68,156,.4);
 
   /* layout */
-  --wrap: 1280px;
-  --gutter: 20px;
+  --wrap: 2400px;   /* Oct 22 2026: pages run the full width of a desktop or laptop screen */
+  --gutter: clamp(20px, 2.6vw, 56px);
 }
 
 /* ---------- 2) Aliases, so page code written for the On Point Polling tokens keeps working ---------- */

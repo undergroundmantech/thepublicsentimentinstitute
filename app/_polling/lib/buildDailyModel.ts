@@ -242,11 +242,21 @@ export function isExcludedPollster(name: string): boolean { return EXCLUDED_POLL
 
 // Oct 22 2026: Trafalgar and InsiderAdvantage are labelled Republican leaning. Their lean is
 // measured against the other polls of the same races in aggregates.ts and taken off their margin.
-export const R_LEAN_FIRMS: { id: string; label: string; re: RegExp }[] = [
-  { id: "trafalgar", label: "Trafalgar", re: /trafalgar/i },
-  { id: "insideradvantage", label: "InsiderAdvantage", re: /insider\s*advantage/i },
+// Oct 22 2026: partisan lean firms in the site averages, each lean measured from the data in aggregates.ts.
+// dir is the side the firm leans to; its polls are moved the other way by the measured lean before averaging,
+// while every table shows the poll as published.
+export type LeanDir = "R" | "D";
+export const LEAN_FIRMS: { id: string; label: string; re: RegExp; dir: LeanDir }[] = [
+  { id: "trafalgar", label: "Trafalgar", re: /trafalgar/i, dir: "R" },
+  { id: "insideradvantage", label: "InsiderAdvantage", re: /insider\s*advantage/i, dir: "R" },
+  { id: "impactresearch", label: "Impact Research", re: /impact\s*research/i, dir: "D" },
 ];
-export function rLeanFirms(name: string): string[] { return R_LEAN_FIRMS.filter((f) => f.re.test(name || "")).map((f) => f.id); }
+export const R_LEAN_FIRMS = LEAN_FIRMS;
+// a bipartisan release, like Fabrizio Ward with Impact Research, is not a partisan internal
+const BIPARTISAN = /fabrizio|bipartisan/i;
+export function leanFirms(name: string): string[] { return LEAN_FIRMS.filter((f) => f.re.test(name || "") && !(f.dir === "D" && BIPARTISAN.test(name || ""))).map((f) => f.id); }
+export const rLeanFirms = leanFirms;
+export const leanDirOf = (id: string): LeanDir => LEAN_FIRMS.find((f) => f.id === id)?.dir ?? "R";
 
 // Unrated pollsters: slight penalty below B baseline.
 const UNKNOWN_POLLSTER_WEIGHT = 0.60;

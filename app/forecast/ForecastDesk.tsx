@@ -1871,7 +1871,7 @@ const CSS = `
 .fc-ctl-label + .seg + .fc-ctl-label { margin-left: 10px; }
 .fc-mapcard { scroll-margin-top: 90px; }
 .fc-mapwrap { position: relative; margin-top: 16px; }
-.fc-map { display: block; width: 100%; max-width: 1180px; height: auto; margin: 0 auto; overflow: visible; }
+.fc-map { display: block; width: 100%; max-width: min(1600px, calc((100vh - 120px) * 1.7)); height: auto; margin: 0 auto; overflow: visible; }
 .fc-map.race { width: min(760px, 100%); }
 .fc-map-idle { fill: var(--fc-idle); stroke: rgba(var(--fc-ink-rgb),calc(0.06 * var(--fc-struct))); stroke-width: 0.8; }
 .fc-map-race { stroke: rgba(var(--canvas-rgb),0.7); stroke-width: 0.7; cursor: pointer; transition: filter .15s ease; }

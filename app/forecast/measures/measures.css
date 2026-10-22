@@ -1,5 +1,5 @@
 /* Ballot measure forecast pages. Yes is teal and No is orange so the party colors stay with the parties. */
-:root:has(.fc-wide){--wrap:1840px}
+:root:has(.fc-wide){--wrap:2400px}
 .bm{--yes:#2fbf9b;--no:#e8794a}
 .bm .bm-head{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:18px 32px;align-items:end;margin-bottom:18px}
 @media (max-width:1100px){.bm .bm-head{grid-template-columns:1fr}}

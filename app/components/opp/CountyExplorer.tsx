@@ -33,7 +33,7 @@ function bbox(d: string): [number, number, number, number] {
 const mOf = (r: { a: number; b: number; total: number }) => (r.total > 0 ? ((r.b - r.a) / r.total) * 100 : 0);
 
 export const CX_CSS = `
-:root:has(.fc-xl){--wrap:1680px}
+:root:has(.fc-xl){--wrap:2400px}
 .cx{display:grid;grid-template-columns:minmax(0,1fr) 380px;gap:16px;align-items:start}
 @media (max-width:1100px){.cx{grid-template-columns:1fr}}
 .cx-map{position:relative;overflow:hidden;padding:0}

@@ -93,6 +93,6 @@ html { scroll-behavior: smooth; }
 
 /* wide map pages: the forecast console, early vote, what if and polling map use nearly the whole screen */
 .opp-main > .opp-page:has(.fcx, .evc, .wif, .prm, .usl, .mm, .pm-page, .vr-page, .bmm, .cx) { max-width: 1880px; }
-:root:has(.fcx, .evc, .wif, .prm) { --wrap: 1880px; }
+:root:has(.fcx, .evc, .wif, .prm) { --wrap: 2400px; }
 .fcx-mapcard, .evc-mapcard, .wif-mapcard, .prm-mapcard { overflow: visible !important; }
 .fcx-tip, .evc-tip, .wif-tip, .fb-tip { z-index: 40 !important; max-width: 300px; }

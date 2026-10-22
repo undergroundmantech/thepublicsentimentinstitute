@@ -47,3 +47,8 @@
 @media (prefers-reduced-motion: reduce) { .stu .stu-line { animation: none; stroke-dashoffset: 0; } .stu .stu-dot, .stu .stu-pulse, .stu-wb .bar i { animation: none; } }
 
 .stu-dtip .g.rl { margin-left: 4px; background: rgba(255,59,92,.16); color: #ff8399; border-color: rgba(255,59,92,.4); }
+/* lean firms: the published poll as a hollow dot, joined to where the average counts it */
+.stu .stu-lean line { stroke: rgba(255,255,255,.35); stroke-width: 1.5; stroke-dasharray: 2 3; }
+.stu .stu-lean circle { fill: none; stroke-width: 1.8; opacity: .85; }
+.stu-dtip .g.dl { color: #8fb0ff; border-color: rgba(143,176,255,.55); }
+.stu-foot .dt.lh { background: none !important; border: 1.8px solid currentColor; box-shadow: none !important; }

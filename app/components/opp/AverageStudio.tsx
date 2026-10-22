@@ -7,7 +7,11 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import "./studio.css";
 
 export type StudioDaily = { t: number; a: number; b: number; net: number };
-export type StudioPoll = { pollster: string; t: number; a: number; b: number; margin: number; sampleSize: number; sampleType: string; grade: string; share?: number; op?: boolean; rLean?: number };
+export type StudioPoll = { pollster: string; t: number; a: number; b: number; margin: number; sampleSize: number; sampleType: string; grade: string; share?: number; op?: boolean; rLean?: number;
+  /** where the average counts the poll when a measured partisan lean is taken off; a, b and margin stay as published */
+  adjA?: number; adjB?: number; adjMargin?: number; lean?: { dir: "R" | "D"; pts: number; firms: string } };
+const am = (p: StudioPoll) => p.adjMargin ?? p.margin, aa = (p: StudioPoll) => p.adjA ?? p.a, ab = (p: StudioPoll) => p.adjB ?? p.b;
+const leanNote = (p: StudioPoll) => p.lean ? `${p.lean.firms} runs about ${p.lean.pts.toFixed(1)} points to the ${p.lean.dir === "R" ? "right" : "left"} of other polls of the same races, measured from the data, so the average counts this poll ${p.lean.pts.toFixed(1)} points toward the ${p.lean.dir === "R" ? "Democrat" : "Republican"}. The hollow dot is the poll as published.` : "";
 type Side = { label: string; color: string; party?: string };
 type Range = "30" | "60" | "90" | "180" | "all";
 const DAY = 86400000;
@@ -30,7 +34,7 @@ export default function AverageStudio({ daily, polls, seriesA, seriesB, marginLa
   const fm = useMemo(() => fmtMargin ?? defaultFmt(seriesA, seriesB, marginLabel), [fmtMargin, seriesA, seriesB, marginLabel]);
   const isRace = marginLabel === "Margin";
   const spanDays = daily.length ? (daily[daily.length - 1].t - daily[0].t) / DAY : 0;
-  const [view, setView] = useState<"margin" | "share">("margin");
+  const [view, setView] = useState<"margin" | "share">("share");   // Oct 22 2026: opens on each candidate's line, the publisher's choice
   const [range, setRange] = useState<Range>(defaultRange ?? (spanDays > 200 ? "180" : "all"));
   const [sized, setSized] = useState(true);
   const [hover, setHover] = useState<{ t: number; x: number } | null>(null);
@@ -48,7 +52,7 @@ export default function AverageStudio({ daily, polls, seriesA, seriesB, marginLa
   const maxShare = Math.max(0.0001, ...polls.map((p) => p.share ?? 0));
 
   // y scale
-  const vals = view === "margin" ? [...D.map((d) => d.net), ...P.map((p) => p.margin), 0] : [...D.flatMap((d) => [d.a, d.b]), ...P.flatMap((p) => [p.a, p.b])];
+  const vals = view === "margin" ? [...D.map((d) => d.net), ...P.flatMap((p) => [p.margin, am(p)]), 0] : [...D.flatMap((d) => [d.a, d.b]), ...P.flatMap((p) => [p.a, p.b, aa(p), ab(p)])];
   let lo = Math.min(...vals), hi = Math.max(...vals);
   if (!Number.isFinite(lo)) { lo = -5; hi = 5; }
   const pad = Math.max(1.5, (hi - lo) * 0.08); lo -= pad; hi += pad;
@@ -125,8 +129,9 @@ export default function AverageStudio({ daily, polls, seriesA, seriesB, marginLa
             <>
               <path d={area} fill={`url(#${uid}ga)`} clipPath={`url(#${uid}u)`} />
               <path d={area} fill={`url(#${uid}gb)`} clipPath={`url(#${uid}d)`} />
-              {P.map((p, i) => <circle key={i} cx={x(p.t)} cy={y(p.margin)} r={r(p)} fill={colOf(p.margin)} className={`stu-dot${p.op ? " op" : ""}`} style={{ animationDelay: `${Math.min(1.2, i * 0.008)}s` }}
-                onPointerEnter={() => setDot({ p, x: x(p.t), y: y(p.margin) })} onPointerLeave={() => setDot(null)} />)}
+              {P.filter((p) => p.lean).map((p, i) => <g key={"g" + i} className="stu-lean" pointerEvents="none"><line x1={x(p.t)} x2={x(p.t)} y1={y(p.margin)} y2={y(am(p))} /><circle cx={x(p.t)} cy={y(p.margin)} r={Math.max(3, r(p) * 0.8)} stroke={colOf(p.margin)} /></g>)}
+              {P.map((p, i) => <circle key={i} cx={x(p.t)} cy={y(am(p))} r={r(p)} fill={colOf(am(p))} className={`stu-dot${p.op ? " op" : ""}${p.lean ? " ln" : ""}`} style={{ animationDelay: `${Math.min(1.2, i * 0.008)}s` }}
+                onPointerEnter={() => setDot({ p, x: x(p.t), y: y(am(p)) })} onPointerLeave={() => setDot(null)} />)}
               <path d={netPath} className="stu-line" stroke={seriesA.color} clipPath={`url(#${uid}u)`} />
               <path d={netPath} className="stu-line" stroke={seriesB.color} clipPath={`url(#${uid}d)`} />
             </>
@@ -134,8 +139,9 @@ export default function AverageStudio({ daily, polls, seriesA, seriesB, marginLa
             <>
               <path d={shareArea} fill="rgba(255,255,255,.04)" />
               {P.map((p, i) => <g key={i}>
-                <circle cx={x(p.t)} cy={y(p.a)} r={r(p) * 0.8} fill={seriesA.color} className="stu-dot" onPointerEnter={() => setDot({ p, x: x(p.t), y: y(p.a) })} onPointerLeave={() => setDot(null)} />
-                <circle cx={x(p.t)} cy={y(p.b)} r={r(p) * 0.8} fill={seriesB.color} className="stu-dot" onPointerEnter={() => setDot({ p, x: x(p.t), y: y(p.b) })} onPointerLeave={() => setDot(null)} />
+                {p.lean ? <g className="stu-lean" pointerEvents="none"><line x1={x(p.t)} x2={x(p.t)} y1={y(p.a)} y2={y(aa(p))} /><line x1={x(p.t)} x2={x(p.t)} y1={y(p.b)} y2={y(ab(p))} /><circle cx={x(p.t)} cy={y(p.a)} r={Math.max(3, r(p) * 0.65)} stroke={seriesA.color} /><circle cx={x(p.t)} cy={y(p.b)} r={Math.max(3, r(p) * 0.65)} stroke={seriesB.color} /></g> : null}
+                <circle cx={x(p.t)} cy={y(aa(p))} r={r(p) * 0.8} fill={seriesA.color} className={`stu-dot${p.lean ? " ln" : ""}`} onPointerEnter={() => setDot({ p, x: x(p.t), y: y(aa(p)) })} onPointerLeave={() => setDot(null)} />
+                <circle cx={x(p.t)} cy={y(ab(p))} r={r(p) * 0.8} fill={seriesB.color} className={`stu-dot${p.lean ? " ln" : ""}`} onPointerEnter={() => setDot({ p, x: x(p.t), y: y(ab(p)) })} onPointerLeave={() => setDot(null)} />
               </g>)}
               <path d={aPath} className="stu-line" stroke={seriesA.color} />
               <path d={bPath} className="stu-line" stroke={seriesB.color} />
@@ -172,10 +178,11 @@ export default function AverageStudio({ daily, polls, seriesA, seriesB, marginLa
         ) : null}
         {dot ? (
           <div className="stu-dtip" style={{ left: `${(dot.x / W) * 100}%`, top: dot.y, transform: dot.x > W * 0.62 ? "translate(calc(-100% - 12px), -50%)" : "translate(12px, -50%)" }}>
-            <b>{dot.p.pollster}</b><span className="g">{dot.p.grade}</span>{dot.p.rLean ? <span className="g rl">R lean</span> : null}
+            <b>{dot.p.pollster}</b><span className="g">{dot.p.grade}</span>{dot.p.lean ? <span className={`g ${dot.p.lean.dir === "R" ? "rl" : "dl"}`}>Lean {dot.p.lean.dir}</span> : null}
             <div>{fmtDate(dot.p.t, true)} · {dot.p.sampleSize > 0 ? dot.p.sampleSize.toLocaleString() : "n/a"} {dot.p.sampleType}</div>
-            <div>{seriesA.label} {dot.p.a} · {seriesB.label} {dot.p.b} · <b style={{ color: colOf(dot.p.margin) }}>{fm(dot.p.margin)}</b></div>
-            {dot.p.rLean ? <div className="w">Republican leaning firm: moved {dot.p.rLean.toFixed(1)} points toward the Democrat before averaging</div> : null}
+            <div>{dot.p.lean ? "As published: " : ""}{seriesA.label} {dot.p.a} · {seriesB.label} {dot.p.b} · <b style={{ color: colOf(dot.p.margin) }}>{fm(dot.p.margin)}</b></div>
+            {dot.p.lean ? <div>In the average: <b style={{ color: colOf(am(dot.p)) }}>{fm(am(dot.p))}</b></div> : null}
+            {dot.p.lean ? <div className="w">{leanNote(dot.p)}</div> : null}
             {dot.p.share != null ? <div className="w">Weight in today&apos;s average: <b>{pc(dot.p.share)}</b></div> : null}
           </div>
         ) : null}
@@ -183,6 +190,7 @@ export default function AverageStudio({ daily, polls, seriesA, seriesB, marginLa
       <div className="stu-foot">
         <span><i className="ln" style={{ background: lead.color }} />The line is the On Point average: a robust LOWESS fit through the polls, weighted by recency, sample, voter screen and pollster grade, refit three times so outliers count for less</span>
         {sized ? <span><i className="dt" />Dot size is each poll&apos;s weight today</span> : null}
+        {P.some((p) => p.lean) ? <span><i className="dt lh" />Hollow dot: a lean firm&apos;s poll as published; the filled dot is where the average counts it, after its measured lean is taken off</span> : null}
         <span className="k">Hover or use the arrow keys to read any day</span>
       </div>
     </div>
@@ -200,7 +208,7 @@ export function WeightBars({ polls, seriesA, seriesB, fmtMargin, marginLabel = "
     <div className="stu-wb">
       {top.map((p, i) => (
         <div className="row" key={i}>
-          <span className="who"><b>{p.pollster}</b><small>{fmtDate(p.t)} · {p.sampleSize > 0 ? p.sampleSize.toLocaleString() : "n/a"} {p.sampleType} · {p.grade}{p.rLean ? ` · R lean, ${p.rLean.toFixed(1)} off` : ""}</small></span>
+          <span className="who"><b>{p.pollster}</b><small>{fmtDate(p.t)} · {p.sampleSize > 0 ? p.sampleSize.toLocaleString() : "n/a"} {p.sampleType} · {p.grade}{p.lean ? ` · ${p.lean.dir} lean, counted ${fm(am(p))} in the average` : ""}</small></span>
           <span className="bar"><i style={{ width: `${((p.share ?? 0) / mx) * 100}%`, background: p.margin >= 0 ? seriesA.color : seriesB.color, animationDelay: `${i * 0.05}s` }} /></span>
           <span className="pc mono">{pc(p.share ?? 0)}</span>
           <span className="mg mono" style={{ color: p.margin >= 0 ? seriesA.color : seriesB.color }}>{fm(p.margin)}</span>

@@ -45,7 +45,7 @@ export default function HomeWhatIf() {
           <p>Pick a winner in any of the closest races below. Every other race and control of each chamber moves with it, because the forecast&apos;s {M ? M.N.toLocaleString() : "2,000"} simulations tie the races together through one national environment, regional swings and shifts among groups of voters.</p>
           <div className="hw-chs"><Ch k="senate" label="Senate" /><Ch k="house" label="House" /><Ch k="governor" label="Governors" /></div>
           <div className="hw-acts">
-            <Link className="btn g" href={`/forecast/what-if${q ? `?p=${encodeURIComponent(q)}` : ""}`}>Open the full What if</Link>
+            <Link className="btn g" href={`/what-if${q ? `?p=${encodeURIComponent(q)}` : ""}`}>Open the full What if</Link>
             <button className="btn" onClick={() => setPins({})}>Reset</button>
             {out && Object.keys(pins).length ? <span className="mute">{out.mode === "filter" ? `${out.n.toLocaleString()} simulations match your picks` : "Held at typical winning margins"}</span> : null}
           </div>

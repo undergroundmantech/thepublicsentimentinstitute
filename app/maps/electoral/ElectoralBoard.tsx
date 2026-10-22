@@ -223,7 +223,7 @@ export default function ElectoralBoard() {
       </div>
 
       <div className="emk-foot">
-        <Link href="/forecast/what-if" className="emk-link"><span className="eye g">Go further</span><b>What if</b><small>Pick winners and watch the model move every other race with them</small></Link>
+        <Link href="/what-if" className="emk-link"><span className="eye g">Go further</span><b>What if</b><small>Pick winners and watch the model move every other race with them</small></Link>
         <Link href="/forecast" className="emk-link"><span className="eye">The forecast</span><b>Every race</b><small>Odds, maps and every race in one place</small></Link>
       </div>
     </div>

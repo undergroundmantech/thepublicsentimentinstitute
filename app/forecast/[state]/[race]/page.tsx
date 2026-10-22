@@ -60,6 +60,25 @@ const FX_CSS = `
 `;
 
 const readJson = (rel: string) => JSON.parse(fs.readFileSync(path.join(process.cwd(), "public", "forecast", rel), "utf8"));
+// Oct 22 2026: each poll in the race table as the pollster published it. The forecast counts polls after their house
+// effect and undecided split; the table shows the published result and the trail chart shows the counted one.
+type PubPoll = { p: string; end: string; n: number; R: number; D: number };
+let PUB: Record<string, PubPoll[]> | null = null;
+const normP = (x: string) => x.toLowerCase().replace(/\([rd]\)/g, "").replace(/university|college|poll(ing)?|research|group|the /g, "").replace(/[^a-z0-9]+/g, "");
+function publishedFor(id: string, list: { pollster: string; n: number; age: number }[]) {
+  if (!PUB) { try { PUB = readJson("polls_published.json"); } catch { PUB = {}; } }
+  const pool = [...(PUB![id] ?? [])], REF = Date.parse("2026-10-15T00:00:00Z");
+  return list.map((q) => {
+    const k = normP(q.pollster);
+    const c = pool.filter((x) => x.n === q.n && (normP(x.p) === k || normP(x.p).includes(k) || k.includes(normP(x.p))));
+    if (!c.length) return null;
+    c.sort((a, b) => Math.abs(Math.max(0, (REF - Date.parse(a.end + "T00:00:00Z")) / 864e5) - q.age) - Math.abs(Math.max(0, (REF - Date.parse(b.end + "T00:00:00Z")) / 864e5) - q.age));
+    pool.splice(pool.indexOf(c[0]), 1);
+    return c[0];
+  });
+}
+const LEAN_CHIP: [RegExp, "R" | "D"][] = [[/trafalgar/i, "R"], [/insider\s*advantage/i, "R"], [/impact\s*research/i, "D"]];
+const leanOf = (name: string) => /fabrizio|bipartisan/i.test(name) ? null : LEAN_CHIP.find(([re]) => re.test(name))?.[1] ?? null;
 
 export default async function Page({ params }: { params: Promise<{ state: string; race: string }> }) {
   const { state, race } = await params;
@@ -265,12 +284,12 @@ export default async function Page({ params }: { params: Promise<{ state: string
             {agg && built && built.daily.length ? (
               <div className="card ptr-card">
                 <div className="card-b">
-                  <AverageStudio title={`The ${STATE_NAME[r.st] ?? r.st} ${r.office === "senate" ? "Senate" : "governor"} polling average`} daily={built.daily} polls={built.polls.map((q) => ({ pollster: q.pollster, t: q.t, a: q.a, b: q.b, margin: q.margin, sampleSize: q.sampleSize, sampleType: q.sampleType, grade: q.grade, share: q.share, rLean: q.rLean, op: q.pollster.startsWith("On Point") }))}
+                  <AverageStudio title={`The ${STATE_NAME[r.st] ?? r.st} ${r.office === "senate" ? "Senate" : "governor"} polling average`} daily={built.daily} polls={built.polls.map((q) => ({ pollster: q.pollster, t: q.t, a: q.a, b: q.b, margin: q.margin, sampleSize: q.sampleSize, sampleType: q.sampleType, grade: q.grade, share: q.share, rLean: q.rLean, adjA: q.adjA, adjB: q.adjB, adjMargin: q.adjMargin, lean: q.lean, op: q.pollster.startsWith("On Point") }))}
                     seriesA={{ label: agg.seriesA.label, color: agg.seriesA.color, party: agg.seriesA.party }} seriesB={{ label: agg.seriesB.label, color: agg.seriesB.color, party: agg.seriesB.party }} marginLabel={agg.marginLabel} unit={agg.unit} height={360} />
                 </div>
                 <div className="ptr-wb">
                   <div className="eye">What moves the average today</div>
-                  <WeightBars polls={built.polls.map((q) => ({ pollster: q.pollster, t: q.t, a: q.a, b: q.b, margin: q.margin, sampleSize: q.sampleSize, sampleType: q.sampleType, grade: q.grade, share: q.share, rLean: q.rLean }))} seriesA={{ label: agg.seriesA.label, color: agg.seriesA.color }} seriesB={{ label: agg.seriesB.label, color: agg.seriesB.color }} marginLabel={agg.marginLabel} limit={6} />
+                  <WeightBars polls={built.polls.map((q) => ({ pollster: q.pollster, t: q.t, a: q.a, b: q.b, margin: q.margin, sampleSize: q.sampleSize, sampleType: q.sampleType, grade: q.grade, share: q.share, rLean: q.rLean, adjA: q.adjA, adjB: q.adjB, adjMargin: q.adjMargin, lean: q.lean }))} seriesA={{ label: agg.seriesA.label, color: agg.seriesA.color }} seriesB={{ label: agg.seriesB.label, color: agg.seriesB.color }} marginLabel={agg.marginLabel} limit={6} />
                 </div>
                 <p className="ptr-note">This is the same On Point polling average as the <Link href={pollHref(agg.id)} style={{ textDecoration: "underline" }}>full average page</Link>. The forecast reads the polls through its own Election Day projection, shown as the On Point average in the table below, and blends it with partisan lean and fundamentals.</p>
                 <Pointy className="ptr-pty" pose="point" prop="chart" size={96} look={-1} flip />
@@ -293,11 +312,13 @@ export default async function Page({ params }: { params: Promise<{ state: string
                 <thead><tr><th>Pollster</th><th>Sample</th><th style={{ textAlign: "right" }}>Age</th><th style={{ textAlign: "right" }}>Margin</th></tr></thead>
                 <tbody>
                   <tr className="avg"><td>On Point average</td><td>{r.pollLevel === "lowess" ? "LOWESS Election Day projection" : "Weighted average"}</td><td className="n" /><td className={`n ${r.pollAvg != null ? (r.pollAvg < 0 ? "d" : "r") : ""}`}>{r.pollAvg != null ? fmtM(r.pollAvg) : "No polls"}</td></tr>
-                  {(r.polls ?? []).slice(0, 25).map((p, i) => (
-                    <tr key={i}><td>{p.pollster}</td><td className="mono" style={{ color: "var(--ink2)" }}>{p.n ? p.n.toLocaleString() : ""} {p.kind}</td><td className="n">{p.age}d</td><td className={`n ${p.margin < 0 ? "d" : p.margin > 0 ? "r" : ""}`}>{fmtM(p.margin)}</td></tr>
-                  ))}
+                  {(() => { const L = (r.polls ?? []).slice(0, 25), pub = r.st === "MT" ? L.map(() => null) : publishedFor(r.id, L); return L.map((p, i) => {
+                    const q = pub[i], m = q ? Math.round((q.R - q.D) * 10) / 10 : p.margin, ln = leanOf(p.pollster);
+                    return <tr key={i}><td>{p.pollster}{ln ? <span className={`fx-lean ${ln === "R" ? "r" : "d"}`} title={`${ln === "R" ? "Republican" : "Democratic"} leaning firm. Shown as published; the forecast's house effect adjusts it.`}>Lean {ln}</span> : null}</td><td className="mono" style={{ color: "var(--ink2)" }}>{p.n ? p.n.toLocaleString() : ""} {p.kind}</td><td className="n">{p.age}d</td><td className={`n ${m < 0 ? "d" : m > 0 ? "r" : ""}`} title={q ? `Published: ${r.dem.split(" ").slice(-1)[0]} ${q.D}, ${r.gop.split(" ").slice(-1)[0]} ${q.R}. The forecast counts it at ${fmtM(p.margin)}` : undefined}>{Math.abs(m) < 0.05 ? "Even" : fmtM(m)}{q ? <small className="fx-pub">{q.D} to {q.R}</small> : null}</td></tr>; }); })()}
                 </tbody>
               </table>
+              <p className="fx-pubnote">Each margin is the poll as the pollster published it. The forecast counts every poll after its house effect and the undecided split, which is what the trail above shows; hover a margin for the counted value. Lean R and Lean D mark partisan leaning firms.</p>
+              <style>{`.fx-lean{display:inline-block;margin-left:7px;padding:0 5px;border-radius:5px;font:700 10px var(--font-m);vertical-align:1px}.fx-lean.r{color:#ff8399;border:1px solid rgba(255,59,92,.45);background:rgba(255,59,92,.1)}.fx-lean.d{color:#8fb0ff;border:1px solid rgba(143,176,255,.5);background:rgba(91,140,255,.1)}.fx-pub{display:block;font:600 10.5px var(--font-m);color:var(--mute)}.fx-pubnote{margin:8px 2px 0;font-size:12px;color:var(--mute);line-height:1.45}`}</style>
             </div>
           </div>
           <div style={{ display: "grid", gap: 12, alignContent: "start" }}>

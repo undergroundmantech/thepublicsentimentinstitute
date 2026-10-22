@@ -11,7 +11,7 @@
 .hub .d{color:var(--dem2)}.hub .r{color:var(--gop2)}
 
 /* wide board: the forecast runs wider than the rest of the site */
-:root:has(.fc-wide){--wrap:1840px}
+:root:has(.fc-wide){--wrap:2400px}
 .hub-top{display:grid;grid-template-columns:minmax(0,1fr) 400px;gap:16px;align-items:stretch}
 .hub-side{display:grid;gap:14px;align-content:start;grid-template-rows:auto 1fr}
 @media (max-width:1280px){.hub-top{grid-template-columns:1fr}.hub-side{order:-1}}
@@ -21,7 +21,7 @@
 .hub-stagecard::before{content:"";position:absolute;left:50%;bottom:-40%;width:110%;aspect-ratio:2/1;transform:translateX(-50%);border-radius:50% 50% 0 0;
   background:radial-gradient(closest-side,rgba(var(--line-rgb),.07),transparent 70%);pointer-events:none}
 .hub-grand{position:relative}
-.hub-grand-stage{position:relative;max-width:1500px;margin:0 auto;width:100%}
+.hub-grand-stage{position:relative;max-width:min(1900px, calc((100vh - 140px) * 1.75));margin:0 auto;width:100%}
 .hub-grand-mid{position:absolute;left:50%;transform:translateX(-50%);display:grid;justify-items:center;gap:4px;text-align:center;pointer-events:none}
 .hub-grand-n{font:800 clamp(22px,4.4vw,52px)/1 var(--font-d);letter-spacing:-.04em;color:var(--hi)}
 .hub-grand-mid .eye{font-size:clamp(8px,1.1vw,11px)}

@@ -6,7 +6,7 @@
   --ink: #d8ffe9; --ink2: #9fd8b8; --mute: #5f9b7b; --line: rgba(57, 255, 156, .14); --line2: rgba(57, 255, 156, .28); --glass: var(--wpan); --hi: #eafff3;
   font-family: var(--font-m); color: var(--ink);
 }
-.opp-main > .opp-page:has(.wdt) { max-width: 1900px; }
+.opp-main > .opp-page:has(.wdt) { max-width: none; }
 .wd.wdt > * { position: relative; z-index: 1; }
 .wd.wdt > .wd-nav { position: sticky; z-index: 20; }
 .wdt-bg { position: fixed !important; inset: 0; z-index: 0 !important; pointer-events: none; background: radial-gradient(120% 90% at 50% 0%, #06140d 0%, var(--wbg) 60%); }

@@ -381,9 +381,10 @@ export default function PollingAveragesPage({ initialId, forecast }: { initialId
     document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
   }
 
-  const pollsterCell = (name: string, rLean?: number) => {
+  // a lean firm shows its published numbers in the table; the chip says how the average counts it
+  const pollsterCell = (name: string, lean?: { dir: "R" | "D"; pts: number }) => {
     const entry = getPollsterEntry(name);
-    return <td className="pa-who"><span>{name}</span><span className={`pa-grade${gradeIsHigh(entry.grade) ? " hi" : ""}`}>{entry.grade}</span>{rLean ? <span className="pa-grade rl" title={`Republican leaning firm: moved ${rLean.toFixed(1)} points toward the Democrat before averaging`}>R lean</span> : null}</td>;
+    return <td className="pa-who"><span>{name}</span><span className={`pa-grade${gradeIsHigh(entry.grade) ? " hi" : ""}`}>{entry.grade}</span>{lean ? <span className={`pa-grade ${lean.dir === "R" ? "rl" : "dl"}`} title={`${lean.dir === "R" ? "Republican" : "Democratic"} leaning firm: shown as published; the average counts it ${lean.pts.toFixed(1)} points toward the ${lean.dir === "R" ? "Democrat" : "Republican"}, its measured lean against other polls of the same races`}>Lean {lean.dir}</span> : null}</td>;
   };
   const sampleCell = (n: number, type: string) => <td className="n">{n > 0 ? n.toLocaleString("en-US") : "n/a"}<span className="pa-type">{type}</span></td>;
 
@@ -535,7 +536,7 @@ export default function PollingAveragesPage({ initialId, forecast }: { initialId
               <div className="card-h"><h3>What moves the average today</h3><span className="eye" style={{ marginLeft: "auto" }}>Share of today&apos;s weight</span></div>
               <div className="card-b">
                 <WeightBars polls={builtH2H.polls} seriesA={h2hDef.seriesA} seriesB={h2hDef.seriesB} fmtMargin={h2hDef.fmtMargin} marginLabel={h2hDef.marginLabel} />
-                <p className="pa-note">Each poll&apos;s weight is its sample size, voter screen, pollster grade and age, with a {RECENCY_HALF_LIFE_DAYS} day half life, and those weights are the kernel of a robust LOWESS fit: a local line read at the day itself, with three bisquare passes that weigh down any poll far from the rest. No single poll can carry more than 15 percent. Gold Standard pollsters, On Point Polling, Big Data Poll, The Honest Poll, Emerson, Cygnal, Quantus Insights, The New York Times and The Wall Street Journal, carry the top grade. Rasmussen Reports and ActiVote are not counted. Trafalgar and InsiderAdvantage are marked R lean and moved toward the Democrat by their measured lean against other polls of the same races: {Object.values(R_LEAN_ESTIMATES).map((e) => `${e.label} ${e.lean.toFixed(1)} points over ${e.n} polls`).join(", ")}.</p>
+                <p className="pa-note">Each poll&apos;s weight is its sample size, voter screen, pollster grade and age, with a {RECENCY_HALF_LIFE_DAYS} day half life, and those weights are the kernel of a robust LOWESS fit: a local line read at the day itself, with three bisquare passes that weigh down any poll far from the rest. No single poll can carry more than 15 percent. Gold Standard pollsters, On Point Polling, Big Data Poll, The Honest Poll, Emerson, Cygnal, Quantus Insights, The New York Times and The Wall Street Journal, carry the top grade. Rasmussen Reports and ActiVote are not counted. Trafalgar and InsiderAdvantage are marked Lean R and Impact Research Lean D. The tables show every poll as published; the average counts a lean firm&apos;s poll moved the other way by its measured lean against other polls of the same races, and the chart shows that move as a hollow dot for the poll as published joined to the filled dot the average counts: {Object.values(R_LEAN_ESTIMATES).map((e) => `${e.label} ${e.lean.toFixed(1)} points ${e.dir === "R" ? "right" : "left"} over ${e.n} polls`).join(", ")}.</p>
               </div>
             </section>
           ) : null}
@@ -573,7 +574,7 @@ export default function PollingAveragesPage({ initialId, forecast }: { initialId
                       const mi = leaderIdx(p.v);
                       return (
                         <tr key={`${p.pollster}-${p.date}-${i}`}>
-                          {pollsterCell(p.pollster, (p as { rLean?: number }).rLean)}
+                          {pollsterCell(p.pollster, (p as { lean?: { dir: "R" | "D"; pts: number } }).lean)}
                           <td className="n">{fmtDay(p.t)}</td>
                           {sampleCell(p.sampleSize, p.sampleType)}
                           {multiDef.series.map((s, ci) => (
@@ -615,7 +616,7 @@ export default function PollingAveragesPage({ initialId, forecast }: { initialId
                       const mColor = p.margin > 0 ? h2hDef.seriesA.color : p.margin < 0 ? h2hDef.seriesB.color : "var(--mute)";
                       return (
                         <tr key={`${p.pollster}-${p.date}-${i}`}>
-                          {pollsterCell(p.pollster, (p as { rLean?: number }).rLean)}
+                          {pollsterCell(p.pollster, (p as { lean?: { dir: "R" | "D"; pts: number } }).lean)}
                           <td className="n">{fmtDay(p.t)}</td>
                           {sampleCell(p.sampleSize, p.sampleType)}
                           <td className="n">{round0(p.a)}</td>
@@ -700,7 +701,7 @@ export default function PollingAveragesPage({ initialId, forecast }: { initialId
 
           <div className="callout">
             <div className="eye">Methodology</div>
-            The On Point average is a robust LOWESS fit through every public poll, rebuilt for every day: each poll is weighted by recency with a {RECENCY_HALF_LIFE_DAYS} day half life, sample size, voter screen and pollster grade, a local line is fit through time and read at the day itself, and three bisquare robustness passes weigh down polls far from the rest. Rasmussen Reports and ActiVote are left out, and the measured Republican lean of Trafalgar and InsiderAdvantage is taken off their polls. On Point Polling polls are fielded by On Point Polling. <Link href="/on-point-polling/methodology" style={{ textDecoration: "underline" }}>How the average works</Link>.
+            The On Point average is a robust LOWESS fit through every public poll, rebuilt for every day: each poll is weighted by recency with a {RECENCY_HALF_LIFE_DAYS} day half life, sample size, voter screen and pollster grade, a local line is fit through time and read at the day itself, and three bisquare robustness passes weigh down polls far from the rest. Rasmussen Reports and ActiVote are left out, and the measured lean of Trafalgar and InsiderAdvantage, to the right, and Impact Research, to the left, is taken off their polls in the average while the tables show them as published. On Point Polling polls are fielded by On Point Polling. <Link href="/on-point-polling/methodology" style={{ textDecoration: "underline" }}>How the average works</Link>.
           </div>
         </aside>
       </div>
@@ -741,6 +742,7 @@ const CSS = `
 .pa .pa-grade { display: inline-block; margin-left: 8px; padding: 1px 5px; border: 1px solid var(--line2); border-radius: 5px; font: 600 10px var(--font-m); color: var(--mute); }
 .pa .pa-grade.hi { color: var(--ink); border-color: rgba(var(--line-rgb),.35); }
 .pa .pa-grade.rl { color: #ff8399; border-color: rgba(255,59,92,.45); background: rgba(255,59,92,.1); }
+.pa-grade.dl { color: #8fb0ff; border-color: rgba(143,176,255,.5); background: rgba(91,140,255,.1); }
 .pa .pa-type { color: var(--mute); margin-left: 6px; }
 .pa .pa-mcell { display: inline-flex; align-items: center; justify-content: flex-end; gap: 10px; }
 .pa .pa-mbar { position: relative; width: 64px; height: 6px; border-radius: 3px; background: rgba(var(--line-rgb),.06); flex-shrink: 0; }

@@ -1,7 +1,7 @@
 .tr-bar { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-bottom: 12px; }
 .tr-stage { display: grid; grid-template-columns: minmax(0, 1fr) 380px; gap: 16px; align-items: start; }
 .tr-map { position: relative; padding: 10px 10px 64px; overflow: hidden; }
-.tr-map > svg { display: block; width: 100%; height: auto; overflow: visible; }
+.tr-map > svg { display: block; width: 100%; height: auto; max-height: calc(100vh - 190px); overflow: visible; }
 .tr-load { height: 520px; border-radius: 16px; }
 .tr-st { stroke: rgba(10,6,18,.95); stroke-width: .9; cursor: pointer; transition: fill .5s, filter .2s; }
 .tr-st:hover { filter: brightness(1.35); }
@@ -43,3 +43,13 @@
 
 .tr-more { cursor: pointer; } .tr-more circle { fill: rgba(10,7,18,.92); stroke: var(--wg, #e7b341); stroke-width: 1.6; } .tr-more text { font: 800 10.5px var(--font-m); fill: #ffd98a; pointer-events: none; }
 .tr-more:hover circle { fill: #2a1d08; }
+/* one state, county by county */
+.tr-sv { position: relative; }
+.tr-sv > svg { display: block; width: 100%; height: max(520px, calc(100vh - 250px)); overflow: visible; }
+.tr-svh { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; padding: 4px 4px 10px; }
+.tr-svh b { font: 800 20px var(--font-d); } .tr-svh span { font-size: 12.5px; color: var(--mute); }
+.tr-sv-st { fill: rgba(255,255,255,.03); stroke: rgba(231,179,65,.7); stroke-width: .6; vector-effect: non-scaling-stroke; }
+.tr-sv-co { stroke: rgba(10,6,18,.85); stroke-width: .6; vector-effect: non-scaling-stroke; }
+.tr-sv-flag { fill: #ffd98a; stroke: #1b1230; stroke-width: .4; }
+.tr-svk { display: flex; flex-wrap: wrap; gap: 6px 16px; padding: 8px 4px 0; font: 700 11px var(--font-m); color: var(--mute); }
+.tr-svk .flag { display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: #ffd98a; margin-right: 6px; vertical-align: -1px; }

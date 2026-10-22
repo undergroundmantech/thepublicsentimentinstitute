@@ -42,7 +42,7 @@
 .sl .sl-flips small{font:600 12px var(--font-b);color:var(--mute);letter-spacing:0}
 
 /* wide layout: the forecast pages run wider than the rest of the site */
-:root:has(.fc-wide){--wrap:1840px}
+:root:has(.fc-wide){--wrap:2400px}
 .sl-wide .sl-head{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:18px 32px;align-items:end;margin-bottom:18px}
 @media (max-width:1100px){.sl-wide .sl-head{grid-template-columns:1fr}}
 .sl-wide .sl-head h1{font:800 clamp(30px,3.6vw,52px)/1.02 var(--font-d);letter-spacing:-.04em;margin:8px 0 10px}

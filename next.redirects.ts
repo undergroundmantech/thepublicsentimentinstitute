@@ -11,8 +11,10 @@ export const redirects: Redirect[] = [
   p("/early-voting", "/maps/early-vote"),
   p("/early-vote-tracker", "/maps/early-vote"),
   p("/early-vote/:state", "/maps/early-vote/:state"),
-  // short address for the swingometer
-  p("/swingometer", "/forecast/swingometer", false),
+  // Oct 22 2026: the swingometer and What If are their own pages
+  p("/forecast/swingometer", "/swingometer"),
+  p("/forecast/what-if", "/what-if"),
+  p("/whatif", "/what-if"),
   // polls
   p("/polling/donaldtrumpapproval", "/polls/approval"),
   p("/polling/jdvanceapproval", "/polls/approval/vance"),

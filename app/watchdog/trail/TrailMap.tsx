@@ -14,6 +14,11 @@ const START = Date.parse("2026-08-01T12:00:00Z"), END = Date.parse("2026-11-03T1
 const STN: Record<string, string> = { AL: "Alabama", AK: "Alaska", AZ: "Arizona", AR: "Arkansas", CA: "California", CO: "Colorado", CT: "Connecticut", DE: "Delaware", FL: "Florida", GA: "Georgia", HI: "Hawaii", ID: "Idaho", IL: "Illinois", IN: "Indiana", IA: "Iowa", KS: "Kansas", KY: "Kentucky", LA: "Louisiana", ME: "Maine", MD: "Maryland", MA: "Massachusetts", MI: "Michigan", MN: "Minnesota", MS: "Mississippi", MO: "Missouri", MT: "Montana", NE: "Nebraska", NV: "Nevada", NH: "New Hampshire", NJ: "New Jersey", NM: "New Mexico", NY: "New York", NC: "North Carolina", ND: "North Dakota", OH: "Ohio", OK: "Oklahoma", OR: "Oregon", PA: "Pennsylvania", RI: "Rhode Island", SC: "South Carolina", SD: "South Dakota", TN: "Tennessee", TX: "Texas", UT: "Utah", VT: "Vermont", VA: "Virginia", WA: "Washington", WV: "West Virginia", WI: "Wisconsin", WY: "Wyoming" };
 const fd = (iso: string) => { const t = Date.parse(iso + "T12:00:00Z"); return Number.isFinite(t) ? new Date(t).toLocaleDateString("en-US", { month: "short", day: "numeric", timeZone: "UTC" }) : iso; };
 const tOf = (iso: string) => { const t = Date.parse(iso.slice(0, 10) + "T12:00:00Z"); return Number.isFinite(t) ? t : NaN; };
+// Oct 22 2026: on the national endorsements map each state shows its three most important endorsers and a count of
+// the rest; a click on any state opens its county map with every endorser and every campaign stop there.
+const TIER: [RegExp, number][] = [[/^president$/i, 100], [/former president/i, 92], [/^vice president$/i, 88], [/former vice president/i, 80], [/majority leader|minority leader|speaker|whip/i, 70],
+  [/governor/i, 66], [/senator/i, 62], [/cabinet/i, 60], [/representative|rep\./i, 50], [/surrogate/i, 48], [/celebrity|musician/i, 44], [/podcaster|host|commentator|streamer|influencer/i, 40], [/activist|business/i, 36], [/group/i, 20]];
+const tierOf = (role?: string) => TIER.find(([re]) => re.test(role ?? ""))?.[1] ?? 30;
 function bbox(d: string) { let x0 = 1e9, y0 = 1e9, x1 = -1e9, y1 = -1e9; const re = /(-?\d+\.?\d*)[ ,](-?\d+\.?\d*)/g; let m; while ((m = re.exec(d))) { const x = +m[1], y = +m[2]; if (x < x0) x0 = x; if (y < y0) y0 = y; if (x > x1) x1 = x; if (y > y1) y1 = y; } return [x0, y0, x1, y1]; }
 
 export default function TrailMap({ data }: { data: Trail }) {
@@ -25,6 +30,7 @@ export default function TrailMap({ data }: { data: Trail }) {
   const [t, setT] = useState<number>(() => Math.min(END, Date.parse("2026-10-22T12:00:00Z")));
   const [playing, setPlaying] = useState(false);
   const [tip, setTip] = useState<{ x: number; y: number; st: string } | null>(null);
+  const [zoom, setZoom] = useState<string | null>(null);
   const wrap = useRef<HTMLDivElement>(null);
   useEffect(() => { fetch("/forecast/geo.json").then((r) => r.json()).then(setGeo).catch(() => {}); }, []);
   useEffect(() => {
@@ -77,12 +83,13 @@ export default function TrailMap({ data }: { data: Trail }) {
       const seen = new Set<string>(); att.forEach((a) => { const k = a.who + a.st; if (seen.has(k)) return; seen.add(k); add(a.who, a.st, {}); });
     } else {
       const seen = new Set<string>(); end.forEach((e) => { const k = e.by + e.st; if (seen.has(k)) return; seen.add(k); add(e.by, e.st, { label: e.cand }); });
-      for (const s of Object.keys(per)) per[s].sort((a, b) => (P[b.name]?.endorse ?? 0) - (P[a.name]?.endorse ?? 0));
+      const imp = (n: string) => tierOf(P[n]?.role) * 10 + (P[n]?.endorse ?? 0);
+      for (const s of Object.keys(per)) per[s].sort((a, b) => imp(b.name) - imp(a.name));
     }
     const SMALL = new Set(["RI", "DE", "CT", "NJ", "MD", "MA", "NH", "VT", "DC"]);
     for (const [s, list] of Object.entries(per)) {
       const p = pt[s];
-      const cap = SMALL.has(s) ? 3 : 11;
+      const cap = mode === "endorse" ? (SMALL.has(s) ? 1 : 3) : SMALL.has(s) ? 3 : 11;
       const shown = list.slice(0, cap);
       const n = shown.length;
       const size = n <= 1 ? 38 : n <= 4 ? 32 : n <= 7 ? 26 : 22;
@@ -92,7 +99,7 @@ export default function TrailMap({ data }: { data: Trail }) {
         if (i > 0) { const ring = i <= 6 ? 1 : 2; const k = ring === 1 ? i - 1 : i - 7; const m = ring === 1 ? Math.min(6, n - 1) : n - 7; const a = (k / Math.max(1, m)) * Math.PI * 2 - Math.PI / 2; const r = (ring === 1 ? 1.05 : 1.95) * size; dx = Math.cos(a) * r; dy = Math.sin(a) * r * 0.78; }
         out.push({ key: `${x.name}-${s}-${i}`, name: x.name, st: s, x: p[0] + dx, y: p[1] + dy - 6, dim: false, size, ...x.extra });
       });
-      if (list.length > cap) out.push({ key: `more-${s}`, name: "", st: s, x: p[0] + size * 1.7, y: p[1] + size * 1.2, dim: false, size, more: list.length - cap });
+      if (list.length > cap) out.push({ key: `more-${s}`, name: "", st: s, x: p[0] + size * (mode === "endorse" ? 1.45 : 1.7), y: p[1] + size * (mode === "endorse" ? 0.2 : 1.2), dim: false, size, more: list.length - cap });
     }
     return out;
   }, [geo, mode, here, att, end, pt, P]);
@@ -128,20 +135,21 @@ export default function TrailMap({ data }: { data: Trail }) {
 
       <div className="tr-stage">
         <div className="tr-map card" ref={wrap} onMouseLeave={() => setTip(null)}>
-          {geo ? (
+          {geo && zoom ? <StateView st={zoom} statePath={geo.states[zoom]} data={data} P={P} party={party} onBack={() => setZoom(null)} onWho={(n) => setWho(who === n ? null : n)} who={who} />
+          : geo ? (
             <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label="Map of the 2026 campaign trail">
               <defs>
                 <filter id="trglow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="4" /></filter>
               </defs>
               {Object.entries(geo.states).map(([s, d]) => (
-                <path key={s} d={d} className={`tr-st${st === s ? " on" : ""}`} style={{ fill: fillOf(s) }} onClick={() => setSt(s === st ? null : s)}
+                <path key={s} d={d} className={`tr-st${st === s ? " on" : ""}`} style={{ fill: fillOf(s) }} onClick={() => { setSt(s); setZoom(s); }}
                   onMouseMove={(e) => { const b = wrap.current!.getBoundingClientRect(); setTip({ x: e.clientX - b.left, y: e.clientY - b.top, st: s }); }} />
               ))}
               {route ? <><path d={route} className="tr-route glow" filter="url(#trglow)" /><path d={route} className="tr-route" /></> : null}
               {mode === "trail" ? shown.filter((v) => (t - tOf(v.date)) / DAY < 2.5).map((v, i) => { const p = pt[v.st]; return p ? <circle key={`${v.who}${v.date}${i}`} cx={p[0]} cy={p[1]} r="8" className="tr-ring" style={{ stroke: PARTY_COLOR[v.party] ?? "#e7b341" }} /> : null; }) : null}
               {toks.map((k) => {
                 if (k.more) return (
-                  <g key={k.key} className="tr-more" onClick={() => setSt(k.st)} role="button" aria-label={`${k.more} more in ${k.st}`}>
+                  <g key={k.key} className="tr-more" onClick={() => { setSt(k.st); setZoom(k.st); }} role="button" aria-label={`${k.more} more in ${k.st}`}>
                     <circle cx={k.x} cy={k.y} r={13} /><text x={k.x} y={k.y + 4} textAnchor="middle">+{k.more}</text>
                   </g>
                 );
@@ -154,11 +162,11 @@ export default function TrailMap({ data }: { data: Trail }) {
               })}
             </svg>
           ) : <div className="tr-load sx-skel" />}
-          {tip ? (
+          {tip && !zoom ? (
             <div className="wd-tip" style={{ left: tip.x + 14, top: tip.y + 12, transform: tip.x > (wrap.current?.clientWidth ?? 0) - 330 ? "translateX(calc(-100% - 28px))" : undefined }}>
               <h4>{STN[tip.st] ?? tip.st}</h4>
               <div>{data.visits.filter((v) => v.st === tip.st && okParty(v.party)).length} trail stops · {data.attention.filter((a) => a.st === tip.st).length} attention · {data.endorse.filter((e) => e.st === tip.st).length} endorsements</div>
-              <div style={{ opacity: .8, marginTop: 4 }}>Click for the full list</div>
+              <div style={{ opacity: .8, marginTop: 4 }}>Click for the county map and the full list</div>
             </div>
           ) : null}
           <div className="tr-time">
@@ -175,7 +183,7 @@ export default function TrailMap({ data }: { data: Trail }) {
         <aside className="tr-side">
           {st ? (
             <div className="card">
-              <div className="card-h"><h3>{STN[st] ?? st}</h3><button className="wd-btn" style={{ marginLeft: "auto" }} onClick={() => setSt(null)}>Close</button></div>
+              <div className="card-h"><h3>{STN[st] ?? st}</h3><button className="wd-btn" style={{ marginLeft: "auto" }} onClick={() => { setSt(null); setZoom(null); }}>Close</button></div>
               <div className="tr-list">
                 {stVisits.length ? <div className="eye gold">On the trail</div> : null}
                 {stVisits.map((v, i) => <Item key={`v${i}`} p={P[v.who]} title={`${v.who} · ${fd(v.date)}${v.city ? `, ${v.city}` : ""}`} text={`${v.kind === "announced" ? "Announced: " : ""}${v.note}${v.for.length ? ` For ${v.for.join(", ")}.` : ""}`} src={v.src} />)}
@@ -226,6 +234,73 @@ function Item({ p, title, text, src, onClick }: { p?: Person; title: string; tex
     <div className={`tr-item${onClick ? " click" : ""}`} onClick={onClick} role={onClick ? "button" : undefined} tabIndex={onClick ? 0 : undefined} onKeyDown={onClick ? (e) => { if (e.key === "Enter") onClick(); } : undefined}>
       {p ? <PersonToken ini={p.ini} party={p.party} role={p.role} size={34} /> : <span style={{ width: 27 }} />}
       <span><b>{title}</b><small>{text}</small>{src ? <a href={src} target="_blank" rel="noreferrer" onClick={(e) => e.stopPropagation()}>Source</a> : null}</span>
+    </div>
+  );
+}
+
+/* ---------------------------------------------------------------- one state, county by county */
+type CountyGeo = [string, string, string][];
+type CountyMeta = Record<string, { n: string; st: string; area: number; r24?: number }>;
+let COUNTY_CACHE: Promise<[CountyGeo, CountyMeta]> | null = null;
+function StateView({ st, statePath, data, P, party, onBack, onWho, who }: { st: string; statePath: string; data: Trail; P: Record<string, Person>; party: "all" | "R" | "D"; onBack: () => void; onWho: (n: string) => void; who: string | null }) {
+  const [cg, setCg] = useState<[CountyGeo, CountyMeta] | null>(null);
+  const [hv, setHv] = useState<{ x: number; y: number; t: string; s: string } | null>(null);
+  const box = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    COUNTY_CACHE ??= Promise.all([fetch("/watchdog/us_counties.json").then((r) => r.json()), fetch("/watchdog/counties.json").then((r) => r.json())]) as Promise<[CountyGeo, CountyMeta]>;
+    COUNTY_CACHE.then(setCg).catch(() => {});
+  }, []);
+  const [x0, y0, x1, y1] = bbox(statePath);
+  const pad = Math.max(x1 - x0, y1 - y0) * 0.06, vb = [x0 - pad, y0 - pad, x1 - x0 + pad * 2, y1 - y0 + pad * 2];
+  const counties = useMemo(() => (cg ? cg[0].filter((c) => c[1] === st) : []), [cg, st]);
+  const ok = (p: string) => party === "all" || p === party;
+  // everyone in the state: each endorser once, with every candidate they backed, and each figure on the trail once
+  const ppl = useMemo(() => {
+    const m = new Map<string, { name: string; endorse: string[]; stops: { date: string; city: string; kind: string; for: string[]; src: string }[]; src?: string }>();
+    for (const e of data.endorse) if (e.st === st && ok(e.party)) { const x = m.get(e.by) ?? { name: e.by, endorse: [], stops: [] }; if (!x.endorse.includes(e.cand)) x.endorse.push(e.cand); x.src ??= e.src; m.set(e.by, x); }
+    for (const v of data.visits) if (v.st === st && ok(v.party)) { const x = m.get(v.who) ?? { name: v.who, endorse: [], stops: [] }; x.stops.push({ date: v.date, city: v.city, kind: v.kind, for: v.for, src: v.src }); m.set(v.who, x); }
+    return [...m.values()].sort((a, b) => (b.stops.length ? 1e6 : 0) + tierOf(P[b.name]?.role) * 10 + (P[b.name]?.endorse ?? 0) - ((a.stops.length ? 1e6 : 0) + tierOf(P[a.name]?.role) * 10 + (P[a.name]?.endorse ?? 0)));
+  }, [data, st, party, P]);
+  // a slot for each person on the county map: county centres, biggest counties first, never two people on top of each other
+  const placed = useMemo(() => {
+    const S = Math.min(vb[2], vb[3]);
+    const n = Math.max(1, ppl.length), size = Math.max(S / 26, Math.min(S / 9, S / Math.sqrt(n) / 1.6));
+    const cents = counties.map((c) => { const b = bbox(c[2]); return { x: (b[0] + b[2]) / 2, y: (b[1] + b[3]) / 2, a: (b[2] - b[0]) * (b[3] - b[1]), n: cg?.[1][c[0]]?.n ?? "" }; }).sort((a, b) => b.a - a.a);
+    const cityHit = (city: string) => cents.find((c) => c.n && city && city.toLowerCase().startsWith(c.n.toLowerCase()));
+    const used: { x: number; y: number }[] = [], out: { p: (typeof ppl)[number]; x: number; y: number; size: number }[] = [];
+    const free = (x: number, y: number) => used.every((u) => Math.hypot(u.x - x, u.y - y) > size * 0.95);
+    let gi = 0;
+    for (const p of ppl) {
+      const hit = p.stops.length ? cityHit(p.stops[0].city) : undefined;
+      let spot = hit && free(hit.x, hit.y) ? hit : cents.find((c) => free(c.x, c.y));
+      if (!spot) { // past the last free county: a grid over the state's box
+        for (; gi < 4000 && !spot; gi++) { const cols = Math.max(3, Math.floor(vb[2] / (size * 1.05))), gx = vb[0] + size * 0.6 + (gi % cols) * size * 1.05, gy = vb[1] + size * 0.8 + Math.floor(gi / cols) * size * 1.1; if (free(gx, gy)) spot = { x: gx, y: gy, a: 0, n: "" }; }
+      }
+      if (!spot) continue;
+      used.push(spot); out.push({ p, x: spot.x, y: spot.y, size });
+    }
+    return out;
+  }, [ppl, counties, cg, vb]);
+  const shade = (f: string) => { const r = cg?.[1][f]?.r24; if (r == null) return "rgba(255,255,255,.05)"; const lean = Math.max(-1, Math.min(1, r / 60)); return lean >= 0 ? `rgba(255,59,92,${(0.06 + lean * 0.5).toFixed(3)})` : `rgba(61,123,255,${(0.06 - lean * 0.5).toFixed(3)})`; };
+  return (
+    <div className="tr-sv" ref={box} onMouseLeave={() => setHv(null)}>
+      <div className="tr-svh"><button className="wd-btn" onClick={onBack}>Back to the national map</button><b>{STN[st] ?? st}</b><span>{ppl.filter((p) => p.endorse.length).length} endorsers · {ppl.reduce((a, p) => a + p.stops.length, 0)} campaign stops · counties shaded by the 2024 presidential vote</span></div>
+      <svg viewBox={vb.join(" ")} preserveAspectRatio="xMidYMid meet" role="img" aria-label={`${STN[st] ?? st}: county map with every endorser and campaign stop`}>
+        <path d={statePath} className="tr-sv-st" />
+        {counties.map((c) => <path key={c[0]} d={c[2]} className="tr-sv-co" style={{ fill: shade(c[0]) }} />)}
+        {placed.map(({ p, x, y, size }) => {
+          const pp = P[p.name], fl = p.stops.length > 0;
+          return (
+            <g key={p.name} className={`tr-tok${who === p.name ? " on" : ""}`} style={{ transform: `translate(${x - size * 0.37}px, ${y - size * 0.9}px)` }} onClick={() => onWho(p.name)}
+              onMouseEnter={(e) => { const b = box.current!.getBoundingClientRect(); setHv({ x: e.clientX - b.left, y: e.clientY - b.top, t: p.name, s: [p.endorse.length ? `Endorsed ${p.endorse.join(", ")}` : "", fl ? `${p.stops.length} ${p.stops.length === 1 ? "stop" : "stops"}: ${p.stops.map((v) => `${v.city || STN[st]}, ${fd(v.date)}`).join("; ")}` : ""].filter(Boolean).join(". ") }); }}>
+              <PersonToken ini={pp?.ini ?? p.name.slice(0, 2)} party={pp?.party ?? "O"} role={pp?.role} size={size} active={who === p.name} title={p.name} />
+              {fl ? <circle cx={size * 0.66} cy={size * 0.12} r={size * 0.12} className="tr-sv-flag" fill="#ffd98a" stroke="#1b1230" strokeWidth={size * 0.02} /> : null}
+            </g>
+          );
+        })}
+      </svg>
+      {hv ? <div className="wd-tip" style={{ left: hv.x + 14, top: hv.y + 12, transform: hv.x > (box.current?.clientWidth ?? 0) - 330 ? "translateX(calc(-100% - 28px))" : undefined }}><h4>{hv.t}</h4><div>{hv.s}</div></div> : null}
+      <div className="tr-svk"><span><i className="flag" />Campaigned here</span><span>Everyone else endorsed in this state</span><span>Click a figure to follow them</span></div>
     </div>
   );
 }

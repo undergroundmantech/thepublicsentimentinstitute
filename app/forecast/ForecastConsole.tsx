@@ -414,8 +414,8 @@ export default function ForecastConsole({ data, initial, initialOffice }: { data
       ) : null}
 
       <div className="fcx-links">
-        <Link href="/forecast/what-if"><span className="eye g">New</span><b>What if</b><small>Pick winners in any race and watch every other race move with them</small></Link>
-        <Link href="/forecast/swingometer"><span className="eye">Try it</span><b>Swingometer</b><small>Move any group of voters and watch every race move with them</small></Link>
+        <Link href="/what-if"><span className="eye g">New</span><b>What if</b><small>Pick winners in any race and watch every other race move with them</small></Link>
+        <Link href="/swingometer"><span className="eye">Try it</span><b>Swingometer</b><small>Move any group of voters and watch every race move with them</small></Link>
         <Link href="/maps/early-vote"><span className="eye">Live</span><b>Early vote tracker</b><small>Ballots cast so far, by state, party and method</small></Link>
         <Link href="/forecast/other"><span className="eye">Down ballot</span><b>Every other race</b><small>Mayors, courts and local races we are watching</small></Link>
         <Link href="/forecast/methodology"><span className="eye">How it works</span><b>Methodology</b><small>Fundamentals, polls, early vote and 2,000 simulations</small></Link>

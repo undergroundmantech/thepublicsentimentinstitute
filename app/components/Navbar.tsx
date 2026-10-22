@@ -13,7 +13,8 @@ const RESULTS_LIVE = true;
 const NAV = [
   { href: "/polls", label: "Polls" },
   { href: "/forecast", label: "Forecast" },
-  { href: "/forecast/swingometer", label: "Swingometer" },
+  { href: "/what-if", label: "What If" },
+  { href: "/swingometer", label: "Swingometer" },
   { href: "/maps", label: "Maps" },
   { href: "/results", label: "Results", live: RESULTS_LIVE },
   { href: "/maps/early-vote", label: "Early Vote" },
@@ -38,7 +39,7 @@ export default function Navbar() {
   // /maps/early-vote belongs to Early Vote, not Maps
   const active = (href: string) => {
     if (href === "/maps") return pathname.startsWith("/maps") && !pathname.startsWith("/maps/early-vote");
-    if (href === "/forecast") return pathname.startsWith("/forecast") && !pathname.startsWith("/forecast/swingometer");
+    if (href === "/forecast") return pathname.startsWith("/forecast");
     return pathname === href || pathname.startsWith(href + "/");
   };
 

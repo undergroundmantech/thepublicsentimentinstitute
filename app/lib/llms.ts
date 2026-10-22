@@ -112,7 +112,7 @@ export function llmsText(full: boolean): string {
   h("Main pages");
   L.push(
     `* 2026 forecast hub, every forecast on one board: ${U("/forecast")}`,
-    `* Swingometer, shift any group of voters and watch every race and chamber move: ${U("/forecast/swingometer")}`,
+    `* Swingometer, shift any group of voters and watch every race and chamber move: ${U("/swingometer")}`,
     `* Statewide offices forecast, attorney general, secretary of state and more: ${U("/forecast/statewide")}`,
     `* State legislative forecast, every chamber and district: ${U("/forecast/legislatures")}`,
     `* Ballot measure forecast: ${U("/forecast/measures")}`,

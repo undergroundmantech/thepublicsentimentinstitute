@@ -360,7 +360,7 @@ export default function HomeGlobe({ races, odds, updated, daysOut }: { races: Re
               <Link key={l} href={h} className={v >= 0.5 ? "d" : "r"}><b>{pcN(v >= 0.5 ? v : 1 - v) == null ? pc(v >= 0.5 ? v : 1 - v) : <CountUp to={pcN(v >= 0.5 ? v : 1 - v)!} />}</b><span>{v >= 0.5 ? "D" : "R"} {l}</span></Link>
             ))}
           </div>
-          <div className="hg-cta"><Link className="btn g" href="/forecast">Open the forecast</Link><Link className="btn" href="/forecast/what-if">Play What if</Link><Link className="btn" href="/maps/electoral">Make a map</Link></div>
+          <div className="hg-cta"><Link className="btn g" href="/forecast">Open the forecast</Link><Link className="btn" href="/what-if">Play What if</Link><Link className="btn" href="/maps/electoral">Make a map</Link></div>
         </div>
         <div className="hg-side">
           <div className="hg-tabs" role="tablist" aria-label="Office">

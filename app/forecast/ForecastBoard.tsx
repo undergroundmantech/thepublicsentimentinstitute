@@ -263,7 +263,7 @@ export default function ForecastBoard({ data }: { data: BoardData }) {
                 {states.map((s) => <option key={s} value={s}>{s}</option>)}
               </select>
             </label>
-            <Link href="/forecast/swingometer">Swingometer<small style={{ color: "var(--mute)", fontWeight: 600 }}>move any group of voters</small></Link>
+            <Link href="/swingometer">Swingometer<small style={{ color: "var(--mute)", fontWeight: 600 }}>move any group of voters</small></Link>
           </div>
           <a className="fb-cta" href="#fc-desk">Every race, ranked <span aria-hidden="true">↓</span></a>
           <div className="fb-more">

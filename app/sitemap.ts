@@ -33,8 +33,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   out.push(
     u("/", today, "hourly", 1),
     u("/forecast", fc, "daily", 1),
-    u("/forecast/swingometer", fc, "daily", 0.9),
-    u("/forecast/what-if", fc, "daily", 0.9),
+    u("/swingometer", fc, "daily", 0.9),
+    u("/what-if", fc, "daily", 0.9),
     u("/watchdog", fc, "daily", 0.8),
     u("/watchdog/trail", fc, "daily", 0.8),
     u("/watchdog/endorsements", fc, "daily", 0.8),

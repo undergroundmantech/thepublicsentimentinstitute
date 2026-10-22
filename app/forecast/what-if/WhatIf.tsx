@@ -171,7 +171,7 @@ export default function WhatIf() {
       if (s) setSwing(Math.max(-10, Math.min(10, +s || 0)));
     } catch { /* no window */ }
   }, []);
-  useEffect(() => { try { const q = encode(pins, swing); window.history.replaceState(null, "", `/forecast/what-if${q ? `?${q}` : ""}`); } catch { /* history unavailable */ } }, [pins, swing]);
+  useEffect(() => { try { const q = encode(pins, swing); window.history.replaceState(null, "", `/what-if${q ? `?${q}` : ""}`); } catch { /* history unavailable */ } }, [pins, swing]);
 
   const out = useMemo(() => (M ? compute(M, pins, swing) : null), [M, pins, swing]);
   const byId = useMemo(() => { const o: Record<string, number> = {}; M?.R.forEach((r, i) => { o[r.id] = i; }); return o; }, [M]);
@@ -239,7 +239,7 @@ export default function WhatIf() {
 
   return (
     <section className="wif" aria-labelledby="wif-h">
-      <nav className="crumbs" aria-label="Breadcrumb"><Link href="/">Home</Link><span className="sep">/</span><Link href="/forecast">Forecast</Link><span className="sep">/</span><span>What if</span></nav>
+      <nav className="crumbs" aria-label="Breadcrumb"><Link href="/">Home</Link><span className="sep">/</span><span>What if</span></nav>
       <header className="wif-head">
         <Pointy className="cam-hero cam-top pty-side" size={96} pose={Object.keys(pins).length ? "cheer" : "think"} prop={Object.keys(pins).length ? "flag" : "ballot"} look={-1} flip say={Object.keys(pins).length ? <>Every other race just moved with your picks.</> : <>Pick a winner anywhere and watch the rest follow.</>} />
         <div>

@@ -76,3 +76,5 @@
 .wbtheme .wbr-below .stu-wb .bar { background: rgba(42,45,51,.08); } .wbtheme .wbr-below .stu-wb .pc { color: #7a5204; }
 .wbtheme .wbr-below svg text { font-family: var(--font-hand); }
 @media (max-width: 1000px) { .wbtheme .wbr-below .pa-hero { grid-template-columns: 1fr; } }
+.wbtheme .wbr-below .pa-grade.dl { color: #1f57c8; border-color: rgba(31,87,200,.55); background: rgba(31,87,200,.08); }
+.wbtheme .wbr-below .stu .stu-lean line { stroke: rgba(42,45,51,.45); }
