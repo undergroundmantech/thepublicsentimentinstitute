@@ -14,8 +14,9 @@
 .usl-ramp b{font-weight:600;font-size:11.5px;margin:0 8px;white-space:nowrap}
 .usl-note{display:inline-flex;align-items:center;gap:6px}
 .usl-note i.hatch{width:14px;height:10px;border-radius:2px;background:repeating-linear-gradient(45deg,rgba(140,130,160,.4) 0 2px,transparent 2px 5px)}
-.usl-tip{position:fixed}
-.usl .hub-tip{position:fixed;z-index:60;width:236px;padding:12px 14px;border-radius:12px;background:rgba(var(--bg2-rgb,8,6,12),.96);border:1px solid var(--line2);box-shadow:0 20px 50px rgba(0,0,0,.5);pointer-events:none;display:grid;gap:5px;font-size:12.5px;backdrop-filter:blur(10px)}
+.usl{position:relative}
+.usl-tip{position:absolute}
+.usl .hub-tip{position:absolute;z-index:60;width:236px;padding:12px 14px;border-radius:12px;background:#0c0814;color:#f3eff8;border:1px solid var(--line2);box-shadow:0 20px 50px rgba(0,0,0,.5);pointer-events:none;display:grid;gap:5px;font-size:12.5px;backdrop-filter:blur(10px)}
 .usl .hub-tip b{font:700 14px/1.2 var(--font-d);color:var(--hi)}
 .usl .hub-tip-row{display:flex;justify-content:space-between;gap:8px;font-size:12px}
 .usl .hub-tip-bar{display:block;height:5px;border-radius:99px;background:var(--gop);overflow:hidden}
@@ -30,3 +31,7 @@
 .usl-regions{display:flex;flex-direction:column;align-items:flex-end;gap:4px;margin-top:6px}
 .usl-hint{position:absolute;left:10px;bottom:8px;font-size:11px;color:var(--mute);pointer-events:none}
 @media (max-width:640px){.usl-regions{display:none}}
+
+.usl .hub-tip .eye{font:700 10px var(--font-m);letter-spacing:.14em;text-transform:uppercase;color:#a79fbd}
+.usl .hub-tip .d{color:#8fb0ff}.usl .hub-tip .r{color:#ff8399}
+:root[data-theme="light"] .usl .hub-tip{background:#fff;color:#16092a}

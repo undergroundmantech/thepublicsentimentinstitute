@@ -31,6 +31,7 @@ function bboxOf(s: string): [number, number, number, number] {
 export default function USLegisMap({ chambers, height, which: whichProp, bare }: { chambers: USChamber[]; height?: number; which?: "house" | "senate"; bare?: boolean }) {
   const router = useRouter();
   const wrap = useRef<HTMLDivElement>(null);
+  const root = useRef<HTMLDivElement>(null);
   const cv = useRef<HTMLCanvasElement>(null);
   const [W, setW] = useState(0);
   const [map, setMap] = useState<USMap | null>(null);
@@ -160,9 +161,9 @@ export default function USLegisMap({ chambers, height, which: whichProp, bare }:
     return null;
   };
 
-  const tipLeft = hover ? Math.min(hover.x + 14, (typeof window !== "undefined" ? window.innerWidth : 1200) - 260) : 0;
+  const tipLeft = hover ? Math.max(0, Math.min(hover.x + 14, (root.current?.clientWidth ?? 1200) - 250)) : 0;
   return (
-    <div className="usl">
+    <div className="usl" ref={root}>
       <div className="usl-bar">
         {bare ? null : <div className="seg" aria-label="Chamber">
           <button className={which === "house" ? "on" : ""} onClick={() => setWhich("house")}>State houses</button>
@@ -190,7 +191,7 @@ export default function USLegisMap({ chambers, height, which: whichProp, bare }:
               if (Math.abs(dx) + Math.abs(dy) > 4) dr.moved = true;
               if (dr.moved) { setHover(null); setView((v) => clampView({ s: v.s, x: dr.vx + dx, y: dr.vy + dy })); if (cv.current) cv.current.style.cursor = "grabbing"; return; }
             }
-            const c = hit(e); setHover(c ? { c, x: e.clientX, y: e.clientY } : null); if (cv.current) cv.current.style.cursor = c ? "pointer" : view.s > 1 ? "grab" : "default";
+            const c = hit(e); const rb = root.current?.getBoundingClientRect(); setHover(c ? { c, x: e.clientX - (rb?.left ?? 0), y: e.clientY - (rb?.top ?? 0) } : null); if (cv.current) cv.current.style.cursor = c ? "pointer" : view.s > 1 ? "grab" : "default";
           }}
           onMouseLeave={() => { setHover(null); drag.current = null; }}
           onDoubleClick={(e) => { const b = cv.current!.getBoundingClientRect(); zoomAt(2.2, e.clientX - b.left, e.clientY - b.top); }}
