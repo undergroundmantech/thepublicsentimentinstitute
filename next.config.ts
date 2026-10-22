@@ -9,8 +9,11 @@ const nextConfig: NextConfig = {
   // The early vote tracker falls back to the saved civicAPI snapshots when the live feed is down, so ship
   // them with the routes that read them.
   outputFileTracingIncludes: {
-    "/maps/early-vote": ["./scripts/forecast/earlyvote/snapshots/**/*.json"],
-    "/maps/early-vote/[state]": ["./scripts/forecast/earlyvote/snapshots/**/*.json"],
+    "/maps/early-vote": ["./scripts/forecast/earlyvote/snapshots/**/*.json", "./public/earlyvote-history.json", "./public/forecast/model.json"],
+    "/maps/early-vote/[state]": ["./scripts/forecast/earlyvote/snapshots/**/*.json", "./public/earlyvote-history.json", "./public/forecast/model.json"],
+    "/forecast": ["./public/forecast/model.json", "./public/forecast/downballot.json", "./public/forecast/statehouse_hub.json", "./public/forecast/measures_hub.json", "./public/forecast/measures.json"],
+    "/on-point-polling": ["./public/forecast/model.json"],
+    "/on-point-polling/polls": ["./public/forecast/model.json"],
     "/sitemap.xml": ["./scripts/forecast/earlyvote/snapshots/**/*.json"],
   },
   // Force the flag into the bundler's define map even when the env var is

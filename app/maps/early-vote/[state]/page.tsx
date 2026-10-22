@@ -1,13 +1,15 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { notFound } from "next/navigation";
-import EarlyVoteDesk from "../EarlyVoteDesk";
+import EarlyVoteConsole from "../EarlyVoteConsole";
+import { buildEvConsole } from "../consoleData";
 import JsonLd from "@/app/components/JsonLd";
 import { seo, graph, pageLd, datasetLd, crumbsLd } from "@/app/lib/seo";
 import { getModel } from "@/app/lib/forecastData";
 import { raceHref } from "@/app/lib/opp";
 import { STATE_NAME } from "../lib";
 import { getEarlyVote, commas, longDate, pct, slugOf, type EarlyVote } from "../server";
-import { StateLede, StateIndex, stateFaq, faqLd } from "../Summary";
+import { stateFaq, faqLd } from "../Summary";
 
 // The same hourly rebuild as the national tracker. Reporting states are built ahead; any other state is built
 // the first time it is asked for, once it reports.
@@ -74,9 +76,14 @@ export default async function StateEarlyVotePage({ params }: Props) {
           faqLd(stateFaq(ev, s)),
         )} />
       ) : null}
-      <EarlyVoteDesk initialScope={f.st}
-        lede={s && ev ? <StateLede ev={ev} s={s} fc={fc} /> : undefined}
-        after={s && ev ? <StateIndex ev={ev} s={s} /> : undefined} />
+      {ev ? (
+        <div className="opp fc-page fc-xl fx-dark">
+          <EarlyVoteConsole data={buildEvConsole(ev)} initial={s ? f.st : undefined} faq={s ? stateFaq(ev, s) : undefined}
+            lede={s ? <p>As of {longDate(ev.snapshot)}, {commas(s.total)} ballots have been cast in {f.name}: {commas(s.mail)} by mail and {commas(s.inperson)} in person.
+              {s.partyShare > 0.5 ? ` Registered Democrats cast ${pct(s.dem, s.total)} of them and registered Republicans ${pct(s.rep, s.total)}.` : ` ${f.name} does not publish the party of its early voters.`}{" "}
+              See the <Link href={fc.href}>{fc.label}</Link>.</p> : <p>{f.name} has not reported any 2026 early ballots yet. The count appears here the day it does.</p>} />
+        </div>
+      ) : null}
     </>
   );
 }

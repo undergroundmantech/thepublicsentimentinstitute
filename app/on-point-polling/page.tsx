@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { seo } from "@/app/lib/seo";
+import PollingRoom from "./PollingRoom";
+import { roomForecast } from "./roomForecast";
 
 export const metadata: Metadata = seo({"title": "On Point Polling: the polling arm behind On Point Politics", "description": "On Point Polling is the polling and research arm behind On Point Politics: statewide and national surveys, the DSMeridian likely voter model and dual panel fieldwork.", "path": "/on-point-polling"});
 
@@ -21,7 +23,7 @@ const LINKS = [
 
 export default function Page() {
   return (
-    <div className="opp">
+    <div className="opp fx-dark">
       <nav className="crumbs" aria-label="Breadcrumb"><Link href="/">Home</Link><span className="sep">/</span><span>On Point Polling</span></nav>
       <header className="ph">
         <div className="eye g">On Point Polling</div>
@@ -29,11 +31,13 @@ export default function Page() {
         <p className="lede">On Point Polling is the polling and research arm behind On Point Politics. It fields the surveys, runs the DSMeridian likely voter model and feeds the polling averages, the 2026 forecast and election night coverage.</p>
         <div className="pmeta">
           <span>Based in <b>Miami</b></span>
-          <span>Field reports <b className="mono">7</b></span>
-          <span>Latest <Link href="/on-point-polling/polls/texas-2026"><b>Texas, Oct 2026</b></Link></span>
+          <span>Field reports <b className="mono">9</b></span>
+          <span>Latest <Link href="/on-point-polling/polls"><b>South Carolina, Oct 2026</b></Link></span>
           <span>Largest sample <b className="mono">893 LV</b></span>
         </div>
       </header>
+
+      <PollingRoom forecast={roomForecast()} />
 
       <div className="layout">
         <div style={{ display: "grid", gap: 16, minWidth: 0 }}>

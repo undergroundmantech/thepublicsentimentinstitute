@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
-import EarlyVoteDesk from "./EarlyVoteDesk";
+import EarlyVoteConsole from "./EarlyVoteConsole";
+import { buildEvConsole } from "./consoleData";
 import JsonLd from "@/app/components/JsonLd";
 import { seo, graph, pageLd, datasetLd, crumbsLd, abs } from "@/app/lib/seo";
-import { getEarlyVote, commas, longDate, EV_KEYWORDS } from "./server";
-import { NationalLede, NationalIndex, nationalFaq, faqLd } from "./Summary";
+import { getEarlyVote, commas, longDate, millions, EV_KEYWORDS } from "./server";
+import { nationalFaq, faqLd } from "./Summary";
 
 // Rebuilt at most once an hour, so the count in search results and share cards stays current without a deploy.
 export const revalidate = 3600;
@@ -37,7 +38,13 @@ export default async function EarlyVotePage() {
             itemListElement: ev.states.map((s, i) => ({ "@type": "ListItem", position: i + 1, name: `${s.name} early vote tracker`, url: abs(`${PATH}/${s.slug}`) })) },
         )} />
       ) : null}
-      <EarlyVoteDesk lede={ev ? <NationalLede ev={ev} /> : undefined} after={ev ? <NationalIndex ev={ev} /> : undefined} />
+      {ev ? (
+        <div className="opp fc-page fc-xl fx-dark">
+          <EarlyVoteConsole data={buildEvConsole(ev)} faq={nationalFaq(ev)}
+            lede={<p>As of {longDate(ev.snapshot)}, {commas(ev.total)} ballots have been cast in the 2026 midterms across {ev.states.length} reporting states: {millions(ev.mail)} mail ballots returned and {millions(ev.inperson)} cast in person.
+              {ev.partyTotal > 0 ? ` In the states that publish party, registered Democrats cast ${((100 * ev.dem) / ev.partyTotal).toFixed(1)} percent of those ballots and registered Republicans ${((100 * ev.rep) / ev.partyTotal).toFixed(1)} percent.` : ""}</p>} />
+        </div>
+      ) : null}
     </>
   );
 }

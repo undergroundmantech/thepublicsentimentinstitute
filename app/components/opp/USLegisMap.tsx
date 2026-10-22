@@ -28,14 +28,15 @@ function bboxOf(s: string): [number, number, number, number] {
   return [x0, y0, x1, y1];
 }
 
-export default function USLegisMap({ chambers, height }: { chambers: USChamber[]; height?: number }) {
+export default function USLegisMap({ chambers, height, which: whichProp, bare }: { chambers: USChamber[]; height?: number; which?: "house" | "senate"; bare?: boolean }) {
   const router = useRouter();
   const wrap = useRef<HTMLDivElement>(null);
   const cv = useRef<HTMLCanvasElement>(null);
   const [W, setW] = useState(0);
   const [map, setMap] = useState<USMap | null>(null);
   const [geo, setGeo] = useState<GeoStates | null>(null);
-  const [which, setWhich] = useState<"house" | "senate">("house");
+  const [whichS, setWhich] = useState<"house" | "senate">("house");
+  const which = whichProp ?? whichS;
   const [mode, setMode] = useState<LegisMode>("odds");
   const [hover, setHover] = useState<{ c: Cell; x: number; y: number } | null>(null);
   // zoom and pan, in screen pixels: screen = view.s * k * frame + (view.x, view.y)
@@ -163,10 +164,10 @@ export default function USLegisMap({ chambers, height }: { chambers: USChamber[]
   return (
     <div className="usl">
       <div className="usl-bar">
-        <div className="seg" aria-label="Chamber">
+        {bare ? null : <div className="seg" aria-label="Chamber">
           <button className={which === "house" ? "on" : ""} onClick={() => setWhich("house")}>State houses</button>
           <button className={which === "senate" ? "on" : ""} onClick={() => setWhich("senate")}>State senates</button>
-        </div>
+        </div>}
         <div className="seg" aria-label="Color by">
           {(["odds", "margin", "flips"] as LegisMode[]).map((m) => <button key={m} className={mode === m ? "on" : ""} onClick={() => setMode(m)}>{MODE_LABEL[m]}</button>)}
         </div>

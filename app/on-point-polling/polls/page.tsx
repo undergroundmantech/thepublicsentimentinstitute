@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { seo } from "@/app/lib/seo";
-import PollMap from "./PollMap";
+import PollingRoom from "../PollingRoom";
+import { roomForecast } from "../roomForecast";
 
 export const metadata: Metadata = seo({"title": "On Point Polling poll releases", "description": "Toplines, crosstabs and methodology from every On Point Polling survey for On Point Politics, including the October 2026 Michigan, Ohio, Texas and Florida Senate and governor polls, with a map of every state polled.", "path": "/on-point-polling/polls"});
 
@@ -32,7 +33,7 @@ function Thumb({ seed }: { seed: number }) {
 
 export default function Page() {
   return (
-    <div className="opp">
+    <div className="opp fx-dark">
       <nav className="crumbs" aria-label="Breadcrumb"><Link href="/">Home</Link><span className="sep">/</span><Link href="/on-point-polling">On Point Polling</Link><span className="sep">/</span><span>Polls</span></nav>
       <header className="ph">
         <div className="eye g">Fieldwork by On Point Polling</div>
@@ -40,7 +41,7 @@ export default function Page() {
         <p className="lede">Surveys fielded by On Point Polling for On Point Politics: dual panel samples weighted with the DSMeridian likely voter model, published with toplines and crosstabs.</p>
         <div className="pmeta"><span>Releases <b className="mono">{RELEASES.length}</b></span><span>Latest <b>October 2026</b></span></div>
       </header>
-      <PollMap />
+      <PollingRoom forecast={roomForecast()} title="Every state poll, on one map" />
       <div className="layout">
         <div className="grid2">
           {RELEASES.map((r, i) => (
