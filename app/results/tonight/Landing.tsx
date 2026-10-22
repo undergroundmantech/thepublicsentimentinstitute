@@ -185,7 +185,7 @@ const CSS = `
 .desk h1,.desk h2{font-family:var(--sans);font-weight:800;letter-spacing:-.028em}
 .desk .prose{font-family:var(--sans);line-height:1.6}
 
-.shell{max-width:1180px;margin:0 auto;padding:26px 22px 70px}
+.shell{max-width:2400px;margin:0 auto;padding:26px clamp(20px,2.6vw,56px) 70px}
 
 /* hero */
 .hero{padding-bottom:22px;border-bottom:1px solid var(--hairline)}

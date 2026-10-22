@@ -330,7 +330,7 @@ html[data-theme="dark"] .desk{--k3:#8a63ef}
   border-radius:var(--r-pill);padding:5px 12px;background:var(--panel);cursor:pointer}
 .utility-button:hover{color:var(--ink)}
 
-.shell{max-width:1180px;margin:0 auto;padding:26px 22px 70px}
+.shell{max-width:2400px;margin:0 auto;padding:26px clamp(20px,2.6vw,56px) 70px}
 
 .archive-banner{display:flex;justify-content:space-between;align-items:center;gap:12px;
   flex-wrap:wrap;margin-bottom:16px;padding:9px 13px;border-radius:var(--r-card);

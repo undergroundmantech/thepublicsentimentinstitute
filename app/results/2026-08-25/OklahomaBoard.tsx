@@ -1511,7 +1511,7 @@ html[data-theme="dark"] .desk{
 .utility-button:hover{color:var(--ink)}
 .utility-button.lg{padding:10px 18px;font-size:10px;white-space:nowrap}
 
-.shell{max-width:1180px;margin:0 auto;padding:26px 22px 70px}
+.shell{max-width:2400px;margin:0 auto;padding:26px clamp(20px,2.6vw,56px) 70px}
 
 /* race header */
 .archive-banner{display:flex;justify-content:space-between;align-items:center;gap:12px;

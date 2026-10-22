@@ -26,7 +26,7 @@ const RACE_PAGES = new Set([
 
 export default function ResultsArchive() {
   return (
-    <main style={{ maxWidth: 900, margin: "0 auto", padding: "40px 16px 80px", fontFamily: "var(--font-body)" }}>
+    <main style={{ maxWidth: 1600, margin: "0 auto", padding: "40px clamp(20px,2.6vw,56px) 80px", fontFamily: "var(--font-body)" }}>
       <div style={{ marginBottom: 32 }}>
         <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: "0.18em", color: "var(--muted2)", textTransform: "uppercase", marginBottom: 8 }}>
           ON POINT POLLING
